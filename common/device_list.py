@@ -8,11 +8,14 @@ import gobject
 
 class device_list(generic_list):
 	__gsignals__ = {
-		'device-disconnected' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_STRING,)),
-		'device-connected' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_STRING,)),
+		#@param: device
 		'device-found' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
-		'discovery-started' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
-		'discovery-finished' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_STRING,))
+		#@param: device TreeIter
+		'device-selected' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
+		#@param: tuple (key, value)
+		'device-property-changed' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+		#@param: tuple (key, value)
+		'adapter-property-changed' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
 	}
 
 
@@ -56,6 +59,13 @@ class device_list(generic_list):
 		]
 		generic_list.__init__(self, data)
 		
+		self.connect("cursor-changed", self.on_cursor_changed)
+		
+		
+	def on_cursor_changed(self, treeview):
+		row = self.get(self.selected(), "device")
+		dev = row["device"]
+		self.emit("device-selected", dev)
 		
 	def on_connection_change(self):
 		pass
@@ -77,17 +87,15 @@ class device_list(generic_list):
 		
 	
 	def on_property_changed(self, key, value):
-		if key is "Discovering":
-			if value:
-				self.emit("discovery-started")
-			else:
-				self.emit("discovery-finished")
+		self.emit("adapter-property-changed", (key, value))
 				
 				
 	def on_device_property_changed(self, key, value, path):
 		dev = Bluez.Device(path)
 		iter = self.find_device(dev)
 		self.row_update_event(iter, key, value)
+		
+		self.emit("device-property-changed", (key, value))
 	
 	##### virtual funcs #####
 	
