@@ -31,6 +31,15 @@ class main_device_list(device_list):
 			klass = get_minor_class(props["Class"]).capitalize()
 		except:
 			klass = "Unknown"
+		
+		try:
+			self.row_update_event(iter, "Paired", props["Paired"])
+		except:
+			pass
+		try:
+			self.row_update_event(iter, "Trusted", props["Trusted"])
+		except:
+			pass
 			
 
 		name = props["Alias"]
@@ -39,5 +48,17 @@ class main_device_list(device_list):
 		caption = "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" % {"0":name, "1":klass, "2":address}
 		self.set(iter, caption=caption, device_pb=icon)
 
-
+	def row_update_event(self, iter, key, value):
+		print iter, key, value
+		if key == "Trusted":
+			if value:
+				self.set(iter, trusted_pb=get_icon("bluetooth", 48))
+			else:
+				self.set(iter, trusted_pb=None)
+		elif key == "Paired":
+			if value:
+				self.set(iter, bonded_pb=get_icon("bluetooth", 48))
+			else:
+				self.set(iter, bonded_pb=None)
+			
 

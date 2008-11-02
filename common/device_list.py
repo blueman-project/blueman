@@ -31,7 +31,7 @@ class device_list(generic_list):
 			["device_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":0}, None],
 			
 			#device caption
-			["caption", str, gtk.CellRendererText(), {"markup":1}, None],
+			["caption", str, gtk.CellRendererText(), {"markup":1}, None, {"expand": True}],
 
 			["device", object],
 
@@ -50,6 +50,7 @@ class device_list(generic_list):
 			["rssi", float],
 			["lq", float],
 			["tpl", float],
+			["dbus_path", str]
 			#["test", 'PyObject', CellRendererPixbufTable(), {"pixbuffs":16}, None]
 		
 		]
@@ -82,8 +83,11 @@ class device_list(generic_list):
 			else:
 				self.emit("discovery-finished")
 				
-	def on_device_property_changed(self, key, value):
-		print "dev ", key, value
+				
+	def on_device_property_changed(self, key, value, path):
+		dev = Bluez.Device(path)
+		iter = self.find_device(dev)
+		self.row_update_event(iter, key, value)
 	
 	##### virtual funcs #####
 	
@@ -91,9 +95,26 @@ class device_list(generic_list):
 	def level_setup_event(self, iter, device, conn_info):
 		pass
 	
-	#called when row needs to be setup
+	#called when row needs to be initialized
 	def row_setup_event(self, iter, device):
-		print "row_setup_event"
+		pass
+		
+	#called when a property for a device changes
+	def row_update_event(self, iter, key, value):
+		pass
+		
+	#called when device is created
+	def on_device_created(self, path):
+		dev = Bluez.Device(path)
+		self.AppendDevice(dev)
+	
+	#called when device is removed
+	def on_device_removed(self, path):
+		iter = self.find_device_by_path(path)
+		row = self.get(iter, "device")
+		dev = row["device"]
+		self.RemoveDevice(dev, iter)
+		
 		
 	#########################
 	
@@ -105,6 +126,8 @@ class device_list(generic_list):
 			
 		self.adapter.HandleSignal(self.on_device_found, "DeviceFound")
 		self.adapter.HandleSignal(self.on_property_changed, "PropertyChanged")
+		self.adapter.HandleSignal(self.on_device_created, "DeviceCreated")
+		self.adapter.HandleSignal(self.on_device_removed, "DeviceRemoved")
 		
 	def DisplayKnownDevices():
 		pass
@@ -130,11 +153,18 @@ class device_list(generic_list):
    				return self.get_iter(i)
    		
    		return None
-   			
+   		
+   	def find_device_by_path(self, path):
+   		rows = self.get_conditional(dbus_path=path)
+   		if rows == []:
+   			return None
+   		else:
+   			return self.get_iter(rows[0])
 
 		
 	def AppendDevice(self, device):
-		if self.find_device(device) == None:
+		iter = self.find_device(device)
+		if iter == None:
 
 			iter = self.append(device_pb=None, 
 					caption="", 
@@ -149,25 +179,48 @@ class device_list(generic_list):
 					trusted=False,
 					rssi=-1,
 					lq=-1,
-					tpl=-1
+					tpl=-1,
+					dbus_path=""
 					)
 
 			self.row_setup_event(iter, device)
 			
 			props = device.GetProperties()
+			try:
+				self.set(iter, dbus_path=device.GetObjectPath())
+			except:
+				pass
+			
 			if not "Fake" in props:
-				device.HandleSignal(self.on_device_property_changed, "PropertyChanged")
-				
+				device.HandleSignal(self.on_device_property_changed, "PropertyChanged", path_keyword="path")
+		
+		
+		else:
+			row = self.get(iter, "device")
+			existing_dev = row["device"]
+			
+			props = existing_dev.GetProperties()
+			props_new = device.GetProperties()
+			if "Fake" in props and not "Fake" in props_new:
+				self.set(iter, device=device, dbus_path=device.GetObjectPath())
+				self.row_setup_event(iter, device)
 	
 	def PrependDevice(self):
 		pass
 		
-	def RemoveDevice(self, device):
-		iter = self.find_device(device)
+	def RemoveDevice(self, device, iter=None):
+		if iter == None:
+			iter = self.find_device(device)
+		
 		self.delete(iter)
-		props = device.GetProperties()
-		if not "Fake" in props:
+		
+		try:
+			props = device.GetProperties()
+		except:
 			device.UnHandleSignal(self.on_device_property_changed, "PropertyChanged")
+		else:
+			if not "Fake" in props:
+				device.UnHandleSignal(self.on_device_property_changed, "PropertyChanged")
 		
 	def SetFilter(self):
 		pass
