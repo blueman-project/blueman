@@ -12,10 +12,10 @@ class device_list(generic_list):
 		'device-found' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
 		#@param: device TreeIter
 		'device-selected' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
-		#@param: tuple (key, value)
-		'device-property-changed' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
-		#@param: tuple (key, value)
-		'adapter-property-changed' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+		#@param: device, (key, value)
+		'device-property-changed' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
+		#@param: adapter, (key, value)
+		'adapter-property-changed' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
 	}
 
 
@@ -59,18 +59,29 @@ class device_list(generic_list):
 		]
 		generic_list.__init__(self, data)
 		
-		self.connect("cursor-changed", self.on_cursor_changed)
+		
+		self.selection.connect("changed", self.on_selection_changed)
+		
+		self.filter = self.liststore.filter_new()
+		self.filter.set_visible_func(self.is_visible)
+		
+	def is_visible(self, model, iter):
+		print model, iter
+		
+		#todo: padaryti filtravima
+		
+		return True
 		
 		
-	def on_cursor_changed(self, treeview):
-		row = self.get(self.selected(), "device")
+	def on_selection_changed(self, selection):
+		iter = self.selected()
+		row = self.get(iter, "device")
 		dev = row["device"]
-		self.emit("device-selected", dev)
+		self.emit("device-selected", dev, iter)
 		
-	def on_connection_change(self):
-		pass
 		
 	def on_adapter_change(self):
+		#todo
 		pass
 		
 		
@@ -87,7 +98,7 @@ class device_list(generic_list):
 		
 	
 	def on_property_changed(self, key, value):
-		self.emit("adapter-property-changed", (key, value))
+		self.emit("adapter-property-changed", self.adapter, (key, value))
 				
 				
 	def on_device_property_changed(self, key, value, path):
@@ -95,7 +106,7 @@ class device_list(generic_list):
 		iter = self.find_device(dev)
 		self.row_update_event(iter, key, value)
 		
-		self.emit("device-property-changed", (key, value))
+		self.emit("device-property-changed", dev, (key, value))
 	
 	##### virtual funcs #####
 	
@@ -138,16 +149,17 @@ class device_list(generic_list):
 		self.adapter.HandleSignal(self.on_device_removed, "DeviceRemoved")
 		
 	def DisplayKnownDevices():
+		#todo
 		pass
 		
 
 		
 	def DiscoverDevices(self):
 		self.adapter.StartDiscovery()
-		
-		pass
+
 		
 	def StopDiscovery(self):
+		#todo
 		pass
 		
 	
@@ -170,11 +182,28 @@ class device_list(generic_list):
    			return self.get_iter(rows[0])
 
 		
-	def AppendDevice(self, device):
+	def add_device(self, device, append=True):
 		iter = self.find_device(device)
 		if iter == None:
-
-			iter = self.append(device_pb=None, 
+			if append:
+				iter = self.append(device_pb=None, 
+						caption="", 
+						device=device,
+						rssi_pb=None,
+						lq_pb=None,
+						tpl_pb=None,
+						bonded_pb=None,
+						trusted_pb=None,
+						connected=False,
+						bonded=False,
+						trusted=False,
+						rssi=-1,
+						lq=-1,
+						tpl=-1,
+						dbus_path=""
+						)
+			else:
+				iter = self.prepend(device_pb=None, 
 					caption="", 
 					device=device,
 					rssi_pb=None,
@@ -213,8 +242,11 @@ class device_list(generic_list):
 				self.set(iter, device=device, dbus_path=device.GetObjectPath())
 				self.row_setup_event(iter, device)
 	
-	def PrependDevice(self):
-		pass
+	def PrependDevice(self, device):
+		self.add_device(device, False)
+		
+	def AppendDevice(self, device):
+		self.add_device(device, True)
 		
 	def RemoveDevice(self, device, iter=None):
 		if iter == None:
@@ -231,6 +263,7 @@ class device_list(generic_list):
 				device.UnHandleSignal(self.on_device_property_changed, "PropertyChanged")
 		
 	def SetFilter(self):
+		#todo
 		pass
 	
 	

@@ -10,7 +10,16 @@ print t.get_minor_class(268)
 win = gtk.Window()
 
 
+
+
+def ch(l, dev, kv):
+	print l, dev, kv
+	
+	
+
+
 a = main_device_list("hci0");
+a.connect("device-property-changed", ch)
 a.DiscoverDevices()
 
 win.add(a)

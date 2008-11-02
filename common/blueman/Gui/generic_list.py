@@ -27,7 +27,8 @@ class generic_list(gtk.TreeView):
 		gtk.TreeView.__init__(self)
 
 		self._load(data)
-
+		
+		self.selection = self.get_selection()
 
 	def _load(self, data):
 		
@@ -66,13 +67,9 @@ class generic_list(gtk.TreeView):
 
     
 	def selected(self):
-            	try:
-            		rowid = self.get_cursor()
-             		rowid = rowid[0][0]
-             	except:
-             		return None
+		(model, iter) = self.selection.get_selected()
                
-               	return rowid
+               	return iter
 
                 	
     
