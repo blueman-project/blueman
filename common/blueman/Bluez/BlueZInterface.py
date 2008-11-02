@@ -51,9 +51,21 @@ class BlueZInterface(object):
         The handler function will be called when specific signal is emmited.
         For available signals of each interface, check BlueZ4 documents.
         '''
-        raise_type_error(handler, types.FunctionType)
+       # raise_type_error(handler, types.FunctionType)
         raise_type_error(signal, types.StringType)
         self.__bus.add_signal_receiver(handler,
+                                       signal,
+                                       self.__interface_name,
+                                       'org.bluez',
+                                       self.__obj_path)
+    def UnHandleSignal(self, handler, signal):
+        '''
+        The handler function will be called when specific signal is emmited.
+        For available signals of each interface, check BlueZ4 documents.
+        '''
+       # raise_type_error(handler, types.FunctionType)
+        raise_type_error(signal, types.StringType)
+        self.__bus.remove_signal_receiver(handler,
                                        signal,
                                        self.__interface_name,
                                        'org.bluez',

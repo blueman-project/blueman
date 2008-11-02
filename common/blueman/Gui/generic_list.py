@@ -91,7 +91,7 @@ class generic_list(gtk.TreeView):
     			return False
     			
     	
-    	def add(self, **columns):
+    	def _add(self, **columns):
     		ids_len = len(self.ids)
     		cols_len = len(columns)
     		
@@ -106,7 +106,15 @@ class generic_list(gtk.TreeView):
     			else:
     				raise Exception, "Invalid key %s" % k
     				
-		return self.liststore.append(items.values())
+		return items.values()
+		
+	def append(self, **columns):
+		vals = self._add(**columns)
+		return self.liststore.append(vals)
+	
+	def prepend(self, **columns):
+		vals = self._add(**columns)
+		return self.liststore.prepend(vals)
     		
 	def get_conditional(self, **cols):
    		ret = []
