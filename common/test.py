@@ -19,8 +19,8 @@ def ch(l, dev, kv):
 
 
 a = main_device_list("hci0");
-a.connect("device-property-changed", ch)
-a.DiscoverDevices()
+#a.connect("device-property-changed", ch)
+a.DisplayKnownDevices()
 
 win.add(a)
 win.show_all()

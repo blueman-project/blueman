@@ -1,8 +1,10 @@
 from blueman.Gui.generic_list import generic_list
 from blueman.Main.Device import Device
+from blueman.Lib import conn_info
 import blueman.Bluez as Bluez
 import gtk
 import gobject
+import re
 
 
 
@@ -16,6 +18,8 @@ class device_list(generic_list):
 		'device-property-changed' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
 		#@param: adapter, (key, value)
 		'adapter-property-changed' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
+		#@param: progress (0 to 1)
+		'discovery-progress' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_FLOAT,)),
 	}
 
 
@@ -25,9 +29,14 @@ class device_list(generic_list):
 			self.manager = Bluez.Manager("gobject")
 		except:
 			self.manager = None
+			
+		self.__discovery_time = 0
+		self.adapter = None
+		self.discovering = False
 		
 
 		self.SetAdapter(adapter)
+
 
 		data = [
 			#device picture
@@ -107,11 +116,43 @@ class device_list(generic_list):
 		self.row_update_event(iter, key, value)
 		
 		self.emit("device-property-changed", dev, (key, value))
+		
+		if key == "Connected":
+			if value:
+				self.monitor_power_levels(dev)
+			else:
+				
+				self.level_setup_event(iter, dev, None)
+		
+		
+	def monitor_power_levels(self, device):
+		def update(iter, device, cinfo):
+			props = device.GetProperties()
+			if not self.iter_is_valid(iter) or not props["Connected"]:
+				print "stopping monitor"
+				cinfo.deinit()
+				return False
+			else:
+				self.level_setup_event(iter, device, cinfo)
+				return True
+		
+		
+		props = device.GetProperties()
+		print "starting monitor", props
+		if "Connected" in props and props["Connected"]:
+			iter = self.find_device(device)
+			
+			
+			hci = re.search(".*(hci[0-9]*)", self.adapter.GetObjectPath()).groups(0)[0]
+			cinfo = conn_info(props["Address"], hci)
+			gobject.timeout_add(1000, update, iter, device, cinfo)
+		
 	
 	##### virtual funcs #####
 	
 	#called when power levels need updating
-	def level_setup_event(self, iter, device, conn_info):
+	#if cinfo is None then info icons need to be removed
+	def level_setup_event(self, iter, device, cinfo):
 		pass
 	
 	#called when row needs to be initialized
@@ -121,46 +162,80 @@ class device_list(generic_list):
 	#called when a property for a device changes
 	def row_update_event(self, iter, key, value):
 		pass
+	
+	#called when device needs to be added to the list
+	#default action: append
+	def device_add_event(self, device):
+		self.AppendDevice(device)
 		
-	#called when device is created
+	
+	#########################
+	
 	def on_device_created(self, path):
 		dev = Bluez.Device(path)
-		self.AppendDevice(dev)
+		self.device_add_event(dev)
+		
 	
-	#called when device is removed
 	def on_device_removed(self, path):
 		iter = self.find_device_by_path(path)
 		row = self.get(iter, "device")
 		dev = row["device"]
 		self.RemoveDevice(dev, iter)
-		
-		
-	#########################
 	
 	def SetAdapter(self, adapter=None):
+		if self.adapter != None:
+			self.adapter.UnHandleSignal(self.on_device_found, "DeviceFound")
+			self.adapter.UnHandleSignal(self.on_property_changed, "PropertyChanged")
+			self.adapter.UnHandleSignal(self.on_device_created, "DeviceCreated")
+			self.adapter.UnHandleSignal(self.on_device_removed, "DeviceRemoved")
+		
 		try:
 			self.adapter = self.manager.GetAdapter(adapter)
+			self.adapter.HandleSignal(self.on_device_found, "DeviceFound")
+			self.adapter.HandleSignal(self.on_property_changed, "PropertyChanged")
+			self.adapter.HandleSignal(self.on_device_created, "DeviceCreated")
+			self.adapter.HandleSignal(self.on_device_removed, "DeviceRemoved")
 		except:
 			self.adapter = None
 			
-		self.adapter.HandleSignal(self.on_device_found, "DeviceFound")
-		self.adapter.HandleSignal(self.on_property_changed, "PropertyChanged")
-		self.adapter.HandleSignal(self.on_device_created, "DeviceCreated")
-		self.adapter.HandleSignal(self.on_device_removed, "DeviceRemoved")
-		
-	def DisplayKnownDevices():
-		#todo
-		pass
-		
 
 		
-	def DiscoverDevices(self):
+	def DisplayKnownDevices(self):
+		self.clear()
+		devices = self.adapter.ListDevices()
+		for device in devices:
+			self.device_add_event(device)
+
+
+
+	def update_progress(self, time, totaltime):
+		if not self.discovering:
+			return False
+		
+		self.__discovery_time += time
+			
+		progress = self.__discovery_time / totaltime
+		
+			
+			
+		if self.__discovery_time >= totaltime:
+			self.StopDiscovery()
+			return False
+
+		self.emit("discovery-progress", progress)
+		return True
+		
+	def DiscoverDevices(self, time=10):
+		self.__discovery_time = 0
 		self.adapter.StartDiscovery()
+		self.discovering = True
+		T = 1.0/24*1000 #24fps
+		gobject.timeout_add(int(T), self.update_progress, T/1000, time)
 
 		
 	def StopDiscovery(self):
-		#todo
-		pass
+		self.discovering = False
+		self.adapter.StopDiscovery()
 		
 	
 	#searches for existing devices in the list
@@ -230,6 +305,8 @@ class device_list(generic_list):
 			
 			if not "Fake" in props:
 				device.HandleSignal(self.on_device_property_changed, "PropertyChanged", path_keyword="path")
+				if props["Connected"]:
+					self.monitor_power_levels(device)
 		
 		
 		else:

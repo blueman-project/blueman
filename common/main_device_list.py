@@ -17,7 +17,11 @@ class main_device_list(device_list):
 	
 	def __init__(self, adapter=None):
 		device_list.__init__(self, adapter)
-		
+	
+	def level_setup_event(self, iter, device, cinfo):
+		print "level setup", iter, device, cinfo
+		return True
+	
 	def row_setup_event(self, iter, device):
 		props = device.GetProperties()
 		print props
