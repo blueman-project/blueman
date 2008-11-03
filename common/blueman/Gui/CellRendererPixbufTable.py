@@ -1,0 +1,97 @@
+import gtk
+import gobject
+
+
+class CellRendererPixbufTable(gtk.GenericCellRenderer):
+	__gproperties__ = {
+		"pixbuffs": (gobject.TYPE_PYOBJECT, "pixbuf", "pixbuf", gobject.PARAM_READWRITE)
+
+	}
+
+	def __init__(self):
+		self.__gobject_init__()
+
+
+		self.set_property("yalign", 0.5)
+		self.set_property("xalign", 0.5)
+
+	
+	def do_set_property(self, pspec, value):
+			setattr(self, pspec.name, value)
+
+	def do_get_property(self, pspec):
+			return getattr(self, pspec.name)
+
+	def on_render(self, window, widget, background_area, cell_area, expose_area, flags):
+		if not self.pixbuffs or self.pixbuffs.cols == 0:
+			return
+
+
+		pix_rect = gtk.gdk.Rectangle()
+		pix_rect.x, pix_rect.y, pix_rect.width, pix_rect.height = self.on_get_size(widget, cell_area)
+
+		
+		pix_rect.x += cell_area.x
+		pix_rect.y += cell_area.y
+		pix_rect.width  -= 2 * self.get_property("xpad") + (self.pixbuffs.total_width - self.pixbuffs.size)
+		pix_rect.height -= 2 * self.get_property("ypad") + (self.pixbuffs.total_height - self.pixbuffs.size)
+
+		
+		row = 0
+		col = 0
+		
+	
+		for k,v in self.pixbuffs.get().iteritems():
+			#print rows
+			if row == self.pixbuffs.rows:
+				y_space = 0
+				row=0
+				col+=1
+
+			else:
+				y_space = self.pixbuffs.spacingy
+				
+			if col == 0 or col == self.pixbuffs.cols:
+				x_space = 0
+			else:
+				x_space = self.pixbuffs.spacingx
+		
+				
+
+			draw_rect = cell_area.intersect(pix_rect)
+			draw_rect = expose_area.intersect(draw_rect)
+			
+			if self.pixbuffs.cols > 2:
+				z = self.pixbuffs.size*(self.pixbuffs.cols-1)
+			else:
+				z = 0
+
+			window.draw_pixbuf(
+					widget.style.black_gc, 
+					v, 
+					draw_rect.x - pix_rect.x, #source x
+					draw_rect.y - pix_rect.y, #source y
+					int(draw_rect.x + self.pixbuffs.size * col + x_space*col + (cell_area.width-self.pixbuffs.total_width) * self.get_property("xalign")), #dest x
+					int(draw_rect.y + self.pixbuffs.size * row + y_space*row + (cell_area.height-self.pixbuffs.total_height) * self.get_property("yalign")), #dest y
+					draw_rect.width,
+					draw_rect.height,
+					gtk.gdk.RGB_DITHER_NONE,
+					0,
+					0
+					)
+			
+			row += 1
+
+
+	def on_get_size(self, widget, cell_area):
+		if not self.pixbuffs or self.pixbuffs.cols == 0:
+			return 0, 0, 0, 0
+
+
+		calc_width  = self.get_property("xpad") * 2 + self.pixbuffs.size + (self.pixbuffs.total_width - self.pixbuffs.size)
+		calc_height = self.get_property("ypad") * 2 + self.pixbuffs.size + (self.pixbuffs.total_height - self.pixbuffs.size)
+		x_offset = 0
+		y_offset = 0
+		return x_offset, y_offset, calc_width, calc_height
+
+gobject.type_register(CellRendererPixbufTable)

@@ -1,5 +1,28 @@
+#
+#
+# blueman
+# (c) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public
+# License as published by the Free Software Foundation; either
+# version 2.1 of the License, or (at your option) any later version.
+# 
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public
+# License along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+#
+
 from blueman.Gui.generic_list import generic_list
+from blueman.Main.FakeDevice import FakeDevice
 from blueman.Main.Device import Device
+from blueman.device_class import get_major_class
+
 from blueman.Lib import conn_info
 import blueman.Bluez as Bluez
 import gtk
@@ -24,13 +47,20 @@ class device_list(generic_list):
 
 
 	def __init__(self, adapter=None, tabledata=[]):
-		#gobject.__init__(self);
+		def on_adapter_removed(path):
+			if path == self.__adapter_path:
+				self.clear()
+				self.SetAdapter()		
+		
+		
 		try:
 			self.manager = Bluez.Manager("gobject")
+			self.manager.HandleSignal(on_adapter_removed, "AdapterRemoved")
 		except:
 			self.manager = None
 			
 		self.__discovery_time = 0
+		self.__adapter_path = None
 		self.adapter = None
 		self.discovering = False
 		
@@ -49,15 +79,7 @@ class device_list(generic_list):
 		
 		self.selection.connect("changed", self.on_selection_changed)
 		
-		self.filter = self.liststore.filter_new()
-		self.filter.set_visible_func(self.is_visible)
-		
-	def is_visible(self, model, iter):
-		print model, iter
-		
-		#todo: padaryti filtravima
-		
-		return True
+		self.filter = "handheld"
 		
 		
 	def on_selection_changed(self, selection):
@@ -67,21 +89,21 @@ class device_list(generic_list):
 		self.emit("device-selected", dev, iter)
 		
 		
-	def on_adapter_change(self):
-		#todo
-		pass
-		
+
 		
 	def on_device_found(self, address, props):
-		try:
-			dev = self.adapter.FindDevice(address)
-		except:
-			props["Address"] = address
-			props["Fake"] = True
-			dev = Device(props)
+		if self.discovering:
+			try:
+				dev = self.adapter.FindDevice(address)
+			except:
+				props["Address"] = address
+				props["Fake"] = True
+				dev = FakeDevice(props)
+			
+			device = Device(dev)
 		
-		self.emit("device-found", dev)
-		self.AppendDevice(dev)
+			self.emit("device-found", device)
+			self.device_add_event(device)
 		
 	
 	def on_property_changed(self, key, value):
@@ -90,6 +112,7 @@ class device_list(generic_list):
 				
 	def on_device_property_changed(self, key, value, path):
 		dev = Bluez.Device(path)
+		dev = Device(dev)
 		iter = self.find_device(dev)
 		self.row_update_event(iter, key, value)
 		
@@ -105,8 +128,8 @@ class device_list(generic_list):
 		
 	def monitor_power_levels(self, device):
 		def update(iter, device, cinfo):
-			props = device.GetProperties()
-			if not self.iter_is_valid(iter) or not props["Connected"]:
+			
+			if not self.iter_is_valid(iter) or not device.GetProperties()["Connected"]:
 				print "stopping monitor"
 				cinfo.deinit()
 				return False
@@ -116,7 +139,7 @@ class device_list(generic_list):
 		
 		
 		props = device.GetProperties()
-		print "starting monitor", props
+		print "starting monitor"
 		if "Connected" in props and props["Connected"]:
 			iter = self.find_device(device)
 			
@@ -151,6 +174,7 @@ class device_list(generic_list):
 	
 	def on_device_created(self, path):
 		dev = Bluez.Device(path)
+		dev = Device(dev)
 		self.device_add_event(dev)
 		
 	
@@ -173,19 +197,12 @@ class device_list(generic_list):
 			self.adapter.HandleSignal(self.on_property_changed, "PropertyChanged")
 			self.adapter.HandleSignal(self.on_device_created, "DeviceCreated")
 			self.adapter.HandleSignal(self.on_device_removed, "DeviceRemoved")
+			self.__adapter_path = self.adapter.GetObjectPath()
 		except:
 			self.adapter = None
 			
 
 		
-	def DisplayKnownDevices(self):
-		self.clear()
-		devices = self.adapter.ListDevices()
-		for device in devices:
-			self.device_add_event(device)
-
-
-
 	def update_progress(self, time, totaltime):
 		if not self.discovering:
 			return False
@@ -194,26 +211,12 @@ class device_list(generic_list):
 			
 		progress = self.__discovery_time / totaltime
 		
-			
-			
 		if self.__discovery_time >= totaltime:
 			self.StopDiscovery()
 			return False
 
 		self.emit("discovery-progress", progress)
 		return True
-		
-	def DiscoverDevices(self, time=10):
-		self.__discovery_time = 0
-		self.adapter.StartDiscovery()
-		self.discovering = True
-		T = 1.0/24*1000 #24fps
-		gobject.timeout_add(int(T), self.update_progress, T/1000, time)
-
-		
-	def StopDiscovery(self):
-		self.discovering = False
-		self.adapter.StopDiscovery()
 		
 	
 	#searches for existing devices in the list
@@ -300,6 +303,25 @@ class device_list(generic_list):
 				self.set(iter, device=device, dbus_path=device.GetObjectPath())
 				self.row_setup_event(iter, device)
 	
+	
+	def DisplayKnownDevices(self):
+		self.clear()
+		devices = self.adapter.ListDevices()
+		for device in devices:
+			self.device_add_event(Device(device))
+	
+	def DiscoverDevices(self, time=10):
+		self.__discovery_time = 0
+		self.adapter.StartDiscovery()
+		self.discovering = True
+		T = 1.0/24*1000 #24fps
+		gobject.timeout_add(int(T), self.update_progress, T/1000, time)
+
+		
+	def StopDiscovery(self):
+		self.discovering = False
+		self.adapter.StopDiscovery()
+	
 	def PrependDevice(self, device):
 		self.add_device(device, False)
 		
@@ -319,10 +341,32 @@ class device_list(generic_list):
 		else:
 			if not "Fake" in props:
 				device.UnHandleSignal(self.on_device_property_changed, "PropertyChanged")
+				
+	def clear(self):
+		for i in self.liststore:
+			iter = i.iter
+			device = self.get(iter, "device")["device"]
+			self.RemoveDevice(device, iter)
+	
 		
 	def SetFilter(self):
-		#todo
-		pass
+		self.clear()
+		
+		def is_visible(self, model, iter):
+		#print model, iter
+		
+		print "Filter", iter
+		if self.filter_type != None:
+			device = self.get(iter, "device")["device"]
+			
+			maj_class = get_major_class(device.Class)
+			if maj_class != self.filter_type:
+
+				return True
+			
+		
+		
+		return True
 	
 	
 
