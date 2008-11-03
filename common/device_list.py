@@ -23,7 +23,7 @@ class device_list(generic_list):
 	}
 
 
-	def __init__(self, adapter=None):
+	def __init__(self, adapter=None, tabledata=[]):
 		#gobject.__init__(self);
 		try:
 			self.manager = Bluez.Manager("gobject")
@@ -36,36 +36,14 @@ class device_list(generic_list):
 		
 
 		self.SetAdapter(adapter)
+		data = []
+		data = data + tabledata
 
-
-		data = [
-			#device picture
-			["device_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":0}, None],
-			
-			#device caption
-			["caption", str, gtk.CellRendererText(), {"markup":1}, None, {"expand": True}],
-
+		data = data +	[
 			["device", object],
-
-			
-			["rssi_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":3}, None, {"spacing": 0}],
-			["lq_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":4}, None, {"spacing": 0}],
-			["tpl_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":5}, None, {"spacing": 0}],
-			
-			["bonded_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":6}, None, {"spacing": 0}],
-			["trusted_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":7}, None, {"spacing": 0}],
-			
-			["connected", bool],
-			["bonded", bool],
-			["trusted", bool],	
-			
-			["rssi", float],
-			["lq", float],
-			["tpl", float],
 			["dbus_path", str]
-			#["test", 'PyObject', CellRendererPixbufTable(), {"pixbuffs":16}, None]
-		
 		]
+		
 		generic_list.__init__(self, data)
 		
 		
@@ -261,7 +239,8 @@ class device_list(generic_list):
 		iter = self.find_device(device)
 		if iter == None:
 			if append:
-				iter = self.append(device_pb=None, 
+				iter = self.liststore.append()
+				'''iter = self.append(device_pb=None, 
 						caption="", 
 						device=device,
 						rssi_pb=None,
@@ -276,9 +255,10 @@ class device_list(generic_list):
 						lq=-1,
 						tpl=-1,
 						dbus_path=""
-						)
+						)'''
 			else:
-				iter = self.prepend(device_pb=None, 
+				iter = self.liststore.prepend()
+				'''iter = self.prepend(device_pb=None, 
 					caption="", 
 					device=device,
 					rssi_pb=None,
@@ -293,8 +273,9 @@ class device_list(generic_list):
 					lq=-1,
 					tpl=-1,
 					dbus_path=""
-					)
-
+					)'''
+			
+			self.set(iter, device=device)
 			self.row_setup_event(iter, device)
 			
 			props = device.GetProperties()

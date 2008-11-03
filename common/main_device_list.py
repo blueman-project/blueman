@@ -16,7 +16,34 @@ def get_icon(name, size=24):
 class main_device_list(device_list):
 	
 	def __init__(self, adapter=None):
-		device_list.__init__(self, adapter)
+		data = [
+			#device picture
+			["device_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":0}, None],
+			
+			#device caption
+			["caption", str, gtk.CellRendererText(), {"markup":1}, None, {"expand": True}],
+
+			
+			["rssi_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":2}, None, {"spacing": 0}],
+			["lq_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":3}, None, {"spacing": 0}],
+			["tpl_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":4}, None, {"spacing": 0}],
+			
+			["bonded_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":5}, None, {"spacing": 0}],
+			["trusted_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":6}, None, {"spacing": 0}],
+			
+			["connected", bool],
+			["bonded", bool],
+			["trusted", bool],	
+			
+			["rssi", float],
+			["lq", float],
+			["tpl", float]
+
+			#["test", 'PyObject', CellRendererPixbufTable(), {"pixbuffs":16}, None]
+		
+		]
+		device_list.__init__(self, adapter, data)
+		
 	
 	def level_setup_event(self, iter, device, cinfo):
 		print "level setup", iter, device, cinfo
