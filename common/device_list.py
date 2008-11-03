@@ -79,8 +79,6 @@ class device_list(generic_list):
 		
 		self.selection.connect("changed", self.on_selection_changed)
 		
-		self.filter = "handheld"
-		
 		
 	def on_selection_changed(self, selection):
 		iter = self.selected()
@@ -348,25 +346,6 @@ class device_list(generic_list):
 			device = self.get(iter, "device")["device"]
 			self.RemoveDevice(device, iter)
 	
-		
-	def SetFilter(self):
-		self.clear()
-		
-		def is_visible(self, model, iter):
-		#print model, iter
-		
-		print "Filter", iter
-		if self.filter_type != None:
-			device = self.get(iter, "device")["device"]
-			
-			maj_class = get_major_class(device.Class)
-			if maj_class != self.filter_type:
-
-				return True
-			
-		
-		
-		return True
 	
 	
 
