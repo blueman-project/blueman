@@ -61,20 +61,28 @@ class CellRendererPixbufTable(gtk.GenericCellRenderer):
 			draw_rect = cell_area.intersect(pix_rect)
 			draw_rect = expose_area.intersect(draw_rect)
 			
+			
 			if self.pixbuffs.cols > 2:
 				z = self.pixbuffs.size*(self.pixbuffs.cols-1)
 			else:
 				z = 0
-
+			
+			h = v.get_height()
+			w = v.get_width()
+			#if w > h:
+			#	x = 
+				
+			
+			
 			window.draw_pixbuf(
 					widget.style.black_gc, 
 					v, 
 					draw_rect.x - pix_rect.x, #source x
 					draw_rect.y - pix_rect.y, #source y
-					int(draw_rect.x + self.pixbuffs.size * col + x_space*col + (cell_area.width-self.pixbuffs.total_width) * self.get_property("xalign")), #dest x
+					int(draw_rect.x + self.pixbuffs.size * col + x_space*col + (cell_area.width-self.pixbuffs.total_width) * self.get_property("xalign") + (h - w)/2), #dest x
 					int(draw_rect.y + self.pixbuffs.size * row + y_space*row + (cell_area.height-self.pixbuffs.total_height) * self.get_property("yalign")), #dest y
-					draw_rect.width,
-					draw_rect.height,
+					-1,
+					-1,
 					gtk.gdk.RGB_DITHER_NONE,
 					0,
 					0
@@ -92,6 +100,7 @@ class CellRendererPixbufTable(gtk.GenericCellRenderer):
 		calc_height = self.get_property("ypad") * 2 + self.pixbuffs.size + (self.pixbuffs.total_height - self.pixbuffs.size)
 		x_offset = 0
 		y_offset = 0
+		
 		return x_offset, y_offset, calc_width, calc_height
 
 gobject.type_register(CellRendererPixbufTable)

@@ -59,8 +59,8 @@ class main_device_list(device_list):
 			["lq_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":3}, None, {"spacing": 0}],
 			["tpl_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":4}, None, {"spacing": 0}],
 			
-			["bonded_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":5}, None, {"spacing": 0}],
-			["trusted_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":6}, None, {"spacing": 0}],
+			#trusted/bonded icons
+			["tb_icons", 'PyObject', CellRendererPixbufTable(), {"pixbuffs":5}, None],
 			
 			["connected", bool],
 			["bonded", bool],
@@ -68,9 +68,9 @@ class main_device_list(device_list):
 			
 			["rssi", float],
 			["lq", float],
-			["tpl", float],
+			["tpl", float]
 
-			["svc_icons", 'PyObject', CellRendererPixbufTable(), {"pixbuffs":13}, None]
+			
 		
 		]
 		device_list.__init__(self, adapter, data)
@@ -94,38 +94,49 @@ class main_device_list(device_list):
 
 		icon = get_icon("blueman-"+klass, 48)
 		
-		try:
-			self.row_update_event(iter, "Paired", props["Paired"])
-		except:
-			pass
-		try:
-			self.row_update_event(iter, "Trusted", props["Trusted"])
-		except:
-			pass
+		
+		
 			
-		#tab = PixbufTable()
-		#tab.set("audio", get_icon("computer"))
+		tab = PixbufTable(spacingy=2)
 
-		#self.set(iter, svc_icons=tab)
+		self.set(iter, tb_icons=tab)
 
 		name = props["Alias"]
 		address = props["Address"]
 
 		caption = "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" % {"0":name, "1":klass.capitalize(), "2":address}
 		self.set(iter, caption=caption, device_pb=icon)
+		
+		try:
+			self.row_update_event(iter, "Trusted", props["Trusted"])
+		except:
+			pass
+		#try:
+		self.row_update_event(iter, "Paired", props["Paired"])
+		#except:
+			#pass
 
 	def row_update_event(self, iter, key, value):
-		#print iter, key, value
+		print "Set", iter, key, value
 		if key == "Trusted":
 			if value:
-				self.set(iter, trusted_pb=get_icon("blueman-trust", 48))
+				pbs = self.get(iter, "tb_icons")["tb_icons"]
+				pbs.set("trusted", get_icon("blueman-trust", 24))
+				self.set(iter, tb_icons=pbs)
 			else:
-				self.set(iter, trusted_pb=None)
+				pbs = self.get(iter, "tb_icons")["tb_icons"]
+				pbs.set("trusted", None)
+				self.set(iter, tb_icons=pbs)
+		
 		elif key == "Paired":
 			if value:
-				self.set(iter, bonded_pb=get_icon("blueman-bond", 48))
+				pbs = self.get(iter, "tb_icons")["tb_icons"]
+				pbs.set("bonded", get_icon("blueman-bond", 24))
+				self.set(iter, tb_icons=pbs)
 			else:
-				self.set(iter, bonded_pb=None)
+				pbs = self.get(iter, "tb_icons")["tb_icons"]
+				pbs.set("bonded", None)
+				self.set(iter, tb_icons=pbs)
 				
 	
 	def level_setup_event(self, iter, device, cinfo):

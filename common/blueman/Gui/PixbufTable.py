@@ -44,5 +44,11 @@ class PixbufTable:
 		return self.pixbuffs
 		
 	def set(self, name, pixbuf):
-		self.pixbuffs[name] = pixbuf
+		if pixbuf != None:
+			self.pixbuffs[name] = pixbuf
+		else:
+			if name in self.pixbuffs:
+				del self.pixbuffs[name]
 		self.recalc()
+
+
