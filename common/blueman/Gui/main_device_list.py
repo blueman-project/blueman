@@ -18,7 +18,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-from device_list import device_list
+from blueman.Gui.device_list import device_list
 from blueman.Gui.PixbufTable import PixbufTable
 from blueman.Gui.CellRendererPixbufTable import CellRendererPixbufTable
 from blueman.device_class import get_minor_class

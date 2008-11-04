@@ -19,29 +19,7 @@
 #
 
 
-class Device:
+class toolbar:
 
-
-	def __init__(self, instance):
-		self.Device = instance
-		
-		self.Services = {}
-		self.Class = 0
-		
-		self.GetProperties = self.Device.GetProperties
-		
-		self.Class = self.GetProperties()["Class"]
-		
-		if not "Fake" in self.Device.GetProperties():
-			services = self.Device.ListServiceInterfaces()
-			
-			for service in services:
-				name = service.GetInterfaceName().split(".")
-				name = name[len(name)-1].lower()
-				self.Services[name] = service
-			
-			
-			self.HandleSignal = self.Device.HandleSignal
-			self.UnHandleSignal = self.Device.UnHandleSignal
-			self.GetObjectPath = self.Device.GetObjectPath
-
+	def __init__(self, builder, device_list):
+		pass

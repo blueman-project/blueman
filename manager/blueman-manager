@@ -1,0 +1,28 @@
+#!/usr/bin/python
+
+import sys
+
+sys.path = ["/home/walmis/Desktop/trunk/common/"] + sys.path
+
+import gtk
+
+from blueman.constants import *
+from blueman.Gui.main_device_list import main_device_list
+
+
+ic = gtk.icon_theme_get_default()
+
+ic.prepend_search_path(ICON_PATH)
+ic.prepend_search_path(ICON_PATH + "/devices")
+ic.prepend_search_path(ICON_PATH + "/signal")
+
+
+builder = gtk.Builder()
+builder.add_from_file(UI_PATH +"/manager-main.ui")
+
+window = builder.get_object("window")
+window.show_all()
+
+
+
+gtk.main()
