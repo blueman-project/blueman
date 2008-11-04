@@ -144,6 +144,7 @@ class device_list(generic_list):
 			
 			hci = re.search(".*(hci[0-9]*)", self.adapter.GetObjectPath()).groups(0)[0]
 			cinfo = conn_info(props["Address"], hci)
+			self.level_setup_event(iter, device, cinfo)
 			gobject.timeout_add(1000, update, iter, device, cinfo)
 		
 	
@@ -167,6 +168,9 @@ class device_list(generic_list):
 	def device_add_event(self, device):
 		self.AppendDevice(device)
 		
+	def device_remove_event(self, device):
+		pass
+		
 	
 	#########################
 	
@@ -181,6 +185,7 @@ class device_list(generic_list):
 		row = self.get(iter, "device")
 		dev = row["device"]
 		self.RemoveDevice(dev, iter)
+		self.device_remove_event(dev)
 	
 	def SetAdapter(self, adapter=None):
 		if self.adapter != None:
@@ -241,40 +246,9 @@ class device_list(generic_list):
 		if iter == None:
 			if append:
 				iter = self.liststore.append()
-				'''iter = self.append(device_pb=None, 
-						caption="", 
-						device=device,
-						rssi_pb=None,
-						lq_pb=None,
-						tpl_pb=None,
-						bonded_pb=None,
-						trusted_pb=None,
-						connected=False,
-						bonded=False,
-						trusted=False,
-						rssi=-1,
-						lq=-1,
-						tpl=-1,
-						dbus_path=""
-						)'''
 			else:
 				iter = self.liststore.prepend()
-				'''iter = self.prepend(device_pb=None, 
-					caption="", 
-					device=device,
-					rssi_pb=None,
-					lq_pb=None,
-					tpl_pb=None,
-					bonded_pb=None,
-					trusted_pb=None,
-					connected=False,
-					bonded=False,
-					trusted=False,
-					rssi=-1,
-					lq=-1,
-					tpl=-1,
-					dbus_path=""
-					)'''
+
 			
 			self.set(iter, device=device)
 			self.row_setup_event(iter, device)
