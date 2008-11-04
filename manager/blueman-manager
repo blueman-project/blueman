@@ -8,6 +8,7 @@ import gtk
 
 from blueman.constants import *
 from blueman.Gui.main_device_list import main_device_list
+from blueman.Gui.toolbar import toolbar
 
 
 
@@ -32,10 +33,34 @@ class blueman:
 		self.List.show()
 		sw.add(self.List)
 		
-		self.List.DisplayKnownDevices()
 		
+		self.Toolbar = toolbar(self)
+		
+		
+		
+		self.List.DisplayKnownDevices()
 		window.show()
 		gtk.main()
+		
+	def add_device(self, device):
+		pass
+		
+			
+	def remove_device(self, device):
+		pass
+		
+	def inquiry(self):
+		pass
+		
+	def setup(self, device):
+		pass
+		
+	def bond(self, device):
+		pass
+		
+	def toggle_trust(self, device):
+		pass
+
 		
 
 

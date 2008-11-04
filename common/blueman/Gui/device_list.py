@@ -37,8 +37,11 @@ class device_list(generic_list):
 		'device-found' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
 		#@param: device TreeIter
 		'device-selected' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
-		#@param: device, (key, value)
-		'device-property-changed' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
+		#@param: device, TreeIter, (key, value)
+		#note: there is a special property "Fake", it's not a real property, 
+		#but it is used to notify when device changes state from "Fake" to a real BlueZ object
+		#the callback would be called with Fake=False
+		'device-property-changed' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
 		#@param: adapter, (key, value)
 		'adapter-property-changed' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
 		#@param: progress (0 to 1)
@@ -114,7 +117,7 @@ class device_list(generic_list):
 		iter = self.find_device(dev)
 		self.row_update_event(iter, key, value)
 		
-		self.emit("device-property-changed", dev, (key, value))
+		self.emit("device-property-changed", dev, iter, (key, value))
 		
 		if key == "Connected":
 			if value:

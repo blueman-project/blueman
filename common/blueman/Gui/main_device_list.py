@@ -62,9 +62,9 @@ class main_device_list(device_list):
 			#trusted/bonded icons
 			["tb_icons", 'PyObject', CellRendererPixbufTable(), {"pixbuffs":5}, None],
 			
-			["connected", bool],
-			["bonded", bool],
-			["trusted", bool],	
+			["connected", bool], #used for quick access instead of device.GetProperties
+			["bonded", bool], #used for quick access instead of device.GetProperties
+			["trusted", bool], #used for quick access instead of device.GetProperties	
 			
 			["rssi", float],
 			["lq", float],
@@ -122,21 +122,21 @@ class main_device_list(device_list):
 			if value:
 				pbs = self.get(iter, "tb_icons")["tb_icons"]
 				pbs.set("trusted", get_icon("blueman-trust", 24))
-				self.set(iter, tb_icons=pbs)
+				self.set(iter, tb_icons=pbs, trusted=True)
 			else:
 				pbs = self.get(iter, "tb_icons")["tb_icons"]
 				pbs.set("trusted", None)
-				self.set(iter, tb_icons=pbs)
+				self.set(iter, tb_icons=pbs, trusted=False)
 		
 		elif key == "Paired":
 			if value:
 				pbs = self.get(iter, "tb_icons")["tb_icons"]
 				pbs.set("bonded", get_icon("blueman-bond", 24))
-				self.set(iter, tb_icons=pbs)
+				self.set(iter, tb_icons=pbs, bonded=True)
 			else:
 				pbs = self.get(iter, "tb_icons")["tb_icons"]
 				pbs.set("bonded", None)
-				self.set(iter, tb_icons=pbs)
+				self.set(iter, tb_icons=pbs, bonded=False)
 				
 	
 	def level_setup_event(self, iter, device, cinfo):
