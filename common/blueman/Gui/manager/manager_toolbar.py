@@ -20,7 +20,7 @@
 def _(a):
 	return a
 
-class toolbar:
+class manager_toolbar:
 
 	def __init__(self, blueman):
 		self.blueman = blueman

@@ -44,7 +44,7 @@ def get_icon(name, size=24):
 
 
 
-class main_device_list(device_list):
+class manager_device_list(device_list):
 	
 	def __init__(self, adapter=None):
 		data = [

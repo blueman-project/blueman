@@ -7,8 +7,8 @@ sys.path = ["/home/walmis/Desktop/trunk/common/"] + sys.path
 import gtk
 
 from blueman.constants import *
-from blueman.Gui.main_device_list import main_device_list
-from blueman.Gui.toolbar import toolbar
+from blueman.Gui.manager.manager_device_list import manager_device_list
+from blueman.Gui.manager.manager_toolbar import manager_toolbar
 
 
 
@@ -29,12 +29,12 @@ class blueman:
 		window = self.Builder.get_object("window")
 		sw = self.Builder.get_object("scrollview")
 		
-		self.List = main_device_list()
+		self.List = manager_device_list()
 		self.List.show()
 		sw.add(self.List)
 		
 		
-		self.Toolbar = toolbar(self)
+		self.Toolbar = manager_toolbar(self)
 		
 		
 		

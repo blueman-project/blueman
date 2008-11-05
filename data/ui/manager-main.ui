@@ -25,7 +25,7 @@
             <property name="show_arrow">False</property>
             <property name="icon_size_set">True</property>
             <child>
-              <object class="GtkToolButton" id="toolbutton6">
+              <object class="GtkToolButton" id="b_search">
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
                 <property name="tooltip_text">Search for nearby devices</property>
@@ -47,7 +47,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkToolButton" id="toolbutton2">
+              <object class="GtkToolButton" id="b_add">
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
                 <property name="label" translatable="yes">Add</property>
@@ -59,7 +59,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkToolButton" id="toolbutton9">
+              <object class="GtkToolButton" id="b_setup">
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
                 <property name="tooltip_text">Setup this device</property>
@@ -86,7 +86,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkToolButton" id="tb_remove">
+              <object class="GtkToolButton" id="b_remove">
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
                 <property name="label" translatable="yes">Remove</property>
