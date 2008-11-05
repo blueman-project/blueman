@@ -277,6 +277,8 @@ class device_list(generic_list):
 			if "Fake" in props and not "Fake" in props_new:
 				self.set(iter, device=device, dbus_path=device.GetObjectPath())
 				self.row_setup_event(iter, device)
+				self.emit("device-property-changed", iter, device, ("Fake", False))
+				self.row_update_event(iter, "Fake", False)
 	
 	
 	def DisplayKnownDevices(self):

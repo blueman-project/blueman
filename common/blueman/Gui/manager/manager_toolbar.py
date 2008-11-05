@@ -30,11 +30,13 @@ class manager_toolbar:
 		
 		self.b_bond = blueman.Builder.get_object("b_bond")
 		self.b_trust = blueman.Builder.get_object("b_trust")
-		
+		self.b_remove = blueman.Builder.get_object("b_remove")
+		self.b_add = blueman.Builder.get_object("b_add")
+		self.b_setup = blueman.Builder.get_object("b_setup")
 		
 		
 	def on_device_selected(self, dev_list, device, iter):
-		row = dev_list.get(iter, "bonded", "trusted")
+		row = dev_list.get(iter, "bonded", "trusted", "fake")
 		if row["bonded"]:
 			self.b_bond.props.sensitive = False
 		else:
@@ -47,11 +49,25 @@ class manager_toolbar:
 			self.b_trust.props.sensitive = True
 			self.b_trust.props.label = _("Trust")
 			
+		if row["fake"]:
+			self.b_remove.props.sensitive = False
+			self.b_add.props.sensitive = True
+			self.b_setup.props.sensitive = True
+			self.b_bond.props.sensitive = True
+		else:
+			self.b_remove.props.sensitive = True
+			
 	def on_device_propery_changed(self, dev_list, device, iter, kv):
 		(key, value) = kv
 		if key == "Trusted" or key == "Paired":
 			if dev_list.compare(iter, dev_list.selected()):
 				self.on_device_selected(dev_list, device, iter)
+				
+		elif key == "Fake":
+			if not value:
+				self.b_remove.props.sensitive = True
+			else:
+				self.b_remove.props.sensitie = False
 				
 		
 		

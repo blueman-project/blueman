@@ -65,6 +65,8 @@ class manager_device_list(device_list):
 			["connected", bool], #used for quick access instead of device.GetProperties
 			["bonded", bool], #used for quick access instead of device.GetProperties
 			["trusted", bool], #used for quick access instead of device.GetProperties	
+			["fake", bool], #used for quick access instead of device.GetProperties, 
+					#fake determines whether device is "discovered" or a real bluez device
 			
 			["rssi", float],
 			["lq", float],
@@ -94,7 +96,10 @@ class manager_device_list(device_list):
 
 		icon = get_icon("blueman-"+klass, 48)
 		
-		
+		if "Fake" in props:
+			self.set(iter, fake=True)
+		else:
+			self.set(iter, fake=False)
 		
 			
 		tab = PixbufTable(spacingy=2)
@@ -111,10 +116,10 @@ class manager_device_list(device_list):
 			self.row_update_event(iter, "Trusted", props["Trusted"])
 		except:
 			pass
-		#try:
-		self.row_update_event(iter, "Paired", props["Paired"])
-		#except:
-			#pass
+		try:
+			self.row_update_event(iter, "Paired", props["Paired"])
+		except:
+			pass
 
 	def row_update_event(self, iter, key, value):
 		print "Set", iter, key, value
@@ -137,6 +142,7 @@ class manager_device_list(device_list):
 				pbs = self.get(iter, "tb_icons")["tb_icons"]
 				pbs.set("bonded", None)
 				self.set(iter, tb_icons=pbs, bonded=False)
+				
 				
 	
 	def level_setup_event(self, iter, device, cinfo):
