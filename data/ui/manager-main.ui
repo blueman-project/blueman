@@ -78,7 +78,7 @@
                 <property name="sensitive">False</property>
                 <property name="tooltip_text">Create bonding with the device</property>
                 <property name="label" translatable="yes">Bond</property>
-                <property name="icon_name">locked</property>
+                <property name="stock_id">gtk-dialog-authentication</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -102,7 +102,7 @@
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
                 <property name="label" translatable="yes">Trust</property>
-                <property name="icon_name">password</property>
+                <property name="stock_id">gtk-yes</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -119,7 +119,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkToolButton" id="toolbutton1">
+              <object class="GtkToolButton" id="toolbutton2">
                 <property name="visible">True</property>
                 <property name="is_important">True</property>
                 <property name="label" translatable="yes">Send File</property>
@@ -131,7 +131,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkToolButton" id="toolbutton2">
+              <object class="GtkToolButton" id="toolbutton3">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">Browse</property>
                 <property name="stock_id">gtk-open</property>
