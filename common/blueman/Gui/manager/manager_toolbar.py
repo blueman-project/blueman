@@ -54,9 +54,11 @@ class manager_toolbar:
 			
 			if row["trusted"]:
 				self.b_trust.props.sensitive = True
+				self.b_trust.props.stock_id = "gtk-no"
 				self.b_trust.props.label = _("Untrust")
 			else:
 				self.b_trust.props.sensitive = True
+				self.b_trust.props.stock_id = "gtk-yes"
 				self.b_trust.props.label = _("Trust")
 			
 			if row["fake"]:

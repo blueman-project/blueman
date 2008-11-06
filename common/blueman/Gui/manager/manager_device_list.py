@@ -126,7 +126,7 @@ class manager_device_list(device_list):
 		if key == "Trusted":
 			if value:
 				pbs = self.get(iter, "tb_icons")["tb_icons"]
-				pbs.set("trusted", get_icon("blueman-trust", 24))
+				pbs.set("trusted", get_icon("gtk-yes", 24))
 				self.set(iter, tb_icons=pbs, trusted=True)
 			else:
 				pbs = self.get(iter, "tb_icons")["tb_icons"]
@@ -136,7 +136,7 @@ class manager_device_list(device_list):
 		elif key == "Paired":
 			if value:
 				pbs = self.get(iter, "tb_icons")["tb_icons"]
-				pbs.set("bonded", get_icon("blueman-bond", 24))
+				pbs.set("bonded", get_icon("gtk-dialog-authentication", 24))
 				self.set(iter, tb_icons=pbs, bonded=True)
 			else:
 				pbs = self.get(iter, "tb_icons")["tb_icons"]
