@@ -36,6 +36,7 @@ class device_list(generic_list):
 		#@param: device
 		'device-found' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
 		#@param: device TreeIter
+		#note: None None is given when there ar no more rows
 		'device-selected' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
 		#@param: device, TreeIter, (key, value)
 		#note: there is a special property "Fake", it's not a real property, 
@@ -324,6 +325,8 @@ class device_list(generic_list):
 			iter = i.iter
 			device = self.get(iter, "device")["device"]
 			self.RemoveDevice(device, iter)
+			
+		self.emit("device-selected", None, None)
 	
 	
 	

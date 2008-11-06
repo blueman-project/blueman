@@ -35,27 +35,37 @@ class manager_toolbar:
 		self.b_setup = blueman.Builder.get_object("b_setup")
 		
 		
+		
+		
 	def on_device_selected(self, dev_list, device, iter):
-		row = dev_list.get(iter, "bonded", "trusted", "fake")
-		if row["bonded"]:
+		if device == None or iter == None:
 			self.b_bond.props.sensitive = False
-		else:
-			self.b_bond.props.sensitive = True
-			
-		if row["trusted"]:
-			self.b_trust.props.sensitive = True
-			self.b_trust.props.label = _("Untrust")
-		else:
-			self.b_trust.props.sensitive = True
-			self.b_trust.props.label = _("Trust")
-			
-		if row["fake"]:
 			self.b_remove.props.sensitive = False
-			self.b_add.props.sensitive = True
-			self.b_setup.props.sensitive = True
-			self.b_bond.props.sensitive = True
+			self.b_trust.props.sensitive = False
+			self.b_setup.props.sensitive = False
+			self.b_add.props.sensitive = False
 		else:
-			self.b_remove.props.sensitive = True
+			row = dev_list.get(iter, "bonded", "trusted", "fake")
+			self.b_setup.props.sensitive = True
+			if row["bonded"]:
+				self.b_bond.props.sensitive = False
+			else:
+				self.b_bond.props.sensitive = True
+			
+			if row["trusted"]:
+				self.b_trust.props.sensitive = True
+				self.b_trust.props.label = _("Untrust")
+			else:
+				self.b_trust.props.sensitive = True
+				self.b_trust.props.label = _("Trust")
+			
+			if row["fake"]:
+				self.b_remove.props.sensitive = False
+				self.b_add.props.sensitive = True
+			
+				self.b_bond.props.sensitive = True
+			else:
+				self.b_remove.props.sensitive = True
 			
 	def on_device_propery_changed(self, dev_list, device, iter, kv):
 		(key, value) = kv
