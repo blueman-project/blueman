@@ -1,4 +1,5 @@
 from blueman.constants import *
+import gtk
 
 def get_icon(name, size=24):
 	ic = gtk.icon_theme_get_default()
