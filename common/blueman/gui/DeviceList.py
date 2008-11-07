@@ -91,7 +91,7 @@ class DeviceList(GenericList):
 			["dbus_path", str]
 		]
 		
-		generic_list.__init__(self, data)
+		GenericList.__init__(self, data)
 		
 		self.SetAdapter(adapter)
 		

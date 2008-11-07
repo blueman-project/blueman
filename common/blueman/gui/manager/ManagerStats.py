@@ -24,13 +24,13 @@ import gtk
 
 from blueman.gui.Animation import Animation
 from blueman.main.SpeedCalc import SpeedCalc
-from blueman.functions import get_icon, adapter_path_to_name
+from blueman.Functions import get_icon, adapter_path_to_name
 
 import gettext
 _ = gettext.gettext
 
 
-class manager_stats:
+class ManagerStats:
 	
 	def __init__(self, blueman):
 		
@@ -92,9 +92,9 @@ class manager_stats:
 		hbox.pack_start(self.im_download, False, False)
 		hbox.show_all()
 		
-		self.up_blinker = animation(self.im_upload, [get_icon("blueman-up-inactive", 15), get_icon("blueman-up-active", 15)])
-		#self.down_blinker = animation(self.im_download, ["/down_inactive.png", "/down_active.png"])
-		self.down_blinker = animation(self.im_download, [get_icon("blueman-down-inactive", 16), get_icon("blueman-down-active", 16)])
+		self.up_blinker = Animation(self.im_upload, [get_icon("blueman-up-inactive", 15), get_icon("blueman-up-active", 15)])
+		#self.down_blinker = Animation(self.im_download, ["/down_inactive.png", "/down_active.png"])
+		self.down_blinker = Animation(self.im_download, [get_icon("blueman-down-inactive", 16), get_icon("blueman-down-active", 16)])
 		
 		self.start_update()
 		
