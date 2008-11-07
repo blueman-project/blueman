@@ -18,6 +18,7 @@
 # 
 
 import gtk
+from blueman.Sdp import *
 
 class ManagerDeviceMenu:
 
@@ -31,14 +32,21 @@ class ManagerDeviceMenu:
 		
 	def generate_menu(self):
 		props = self.Device.GetProperties()
-		print props
 		if "Fake" in props:
 			print "fake device"
 			
 			
 		else:
-			#for name, service in self.Device.Services.iteritems():
-				
+			for name, service in self.Device.Services.iteritems():
+				if name == "serial":
+					uuids = props["UUIDs"]
+					for uuid in uuids:
+						uuid = uuid128_to_uuid16(uuid)
+						if uuid == SERIAL_PORT_SVCLASS_ID:
+							print "spp"
+							
+						if uuid == DIALUP_NET_SVCLASS_ID:
+							print "dun"
 				
 				
 			print "real device"
