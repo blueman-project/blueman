@@ -16,3 +16,28 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
+
+import gtk
+
+class manager_device_menu:
+
+	def __init__(self, blueman):
+		
+		self.Menu = gtk.Menu()
+
+		self.Device = blueman.List.get(blueman.List.selected(), "device")["device"]
+		
+		self.generate_menu()
+		
+	def generate_menu(self):
+		props = self.Device.GetProperties()
+		
+		if "Fake" in props:
+			print "fake device"
+			
+			
+		else:
+			for k, v in self.Device.Services.iteritems():
+				print k
+			print "real device"
+		
