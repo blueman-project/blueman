@@ -22,8 +22,8 @@ import blueman.Lib as Lib
 import gobject
 import gtk
 
-from blueman.Gui.animation import animation
-from blueman.Main.speed_calc import speed_calc
+from blueman.gui.Animation import Animation
+from blueman.main.SpeedCalc import SpeedCalc
 from blueman.functions import get_icon, adapter_path_to_name
 
 import gettext
@@ -43,8 +43,8 @@ class manager_stats:
 		
 		self.time= None
 		
-		self.up_speed = speed_calc()
-		self.down_speed = speed_calc()
+		self.up_speed = SpeedCalc()
+		self.down_speed = SpeedCalc()
 			
 		up = get_icon("blueman-up-inactive", 15)
 		down = get_icon("blueman-down-inactive", 15)

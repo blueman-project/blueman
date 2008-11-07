@@ -29,7 +29,7 @@ from blueman.constants import *
 from blueman.functions import *
 import dbus
 import dbus.glib
-import blueman.Bluez as Bluez
+import blueman.bluez as Bluez
 from blueman.gui.applet.PopupMenu import PopupMenu
 
 
@@ -38,7 +38,7 @@ class BluemanApplet:
 	def __init__(self):
 		icon_pixbuf = get_icon('blueman')
 		self.status_icon = gtk.status_icon_new_from_pixbuf(icon_pixbuf)
-		self.popup_menu = popup_menu(self.status_icon)
+		self.popup_menu = PopupMenu(self.status_icon)
 		
 		#determine if icon should be visible (in case adapters are present)
 		self.bus = dbus.SystemBus()
@@ -76,4 +76,4 @@ class BluemanApplet:
 		if self.Manager.ListAdapters() == []:
 			self.status_icon.set_visible(False)
 
-blueman_applet()
+BluemanApplet()

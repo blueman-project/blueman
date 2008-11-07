@@ -17,13 +17,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 
-from blueman.Gui.generic_list import generic_list
-from blueman.Main.FakeDevice import FakeDevice
-from blueman.Main.Device import Device
-from blueman.device_class import get_major_class
+from blueman.gui.GenericList import GenericList
+from blueman.main.FakeDevice import FakeDevice
+from blueman.main.Device import Device
+from blueman.deviceclass import get_major_class
 
 from blueman.Lib import conn_info
-import blueman.Bluez as Bluez
+import blueman.bluez as Bluez
 import gtk
 import gobject
 import re

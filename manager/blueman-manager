@@ -27,16 +27,16 @@ sys.path = ["../common/"] + sys.path
 import gtk
 
 from blueman.constants import *
-from blueman.Gui.manager.manager_device_list import manager_device_list
-from blueman.Gui.manager.manager_toolbar import manager_toolbar
-from blueman.Gui.manager.manager_menu import manager_menu
-from blueman.Gui.manager.manager_stats import manager_stats
+from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
+from blueman.gui.manager.ManagerToolbar import ManagerToolbar
+from blueman.gui.manager.ManagerMenu import ManagerMenu
+from blueman.gui.manager.ManagerStats import ManagerStats
 
 
 
 
 
-class blueman:
+class Blueman:
 
 	def __init__(self):
 		#set icon path
@@ -51,7 +51,7 @@ class blueman:
 		window = self.Builder.get_object("window")
 		sw = self.Builder.get_object("scrollview")
 		
-		self.List = manager_device_list()
+		self.List = ManagerDeviceList()
 		self.List.show()
 		sw.add(self.List)
 		
@@ -59,9 +59,9 @@ class blueman:
 		#	self.List.DisplayKnownDevices()
 		
 		
-		self.Toolbar = manager_toolbar(self)
-		self.Menu = manager_menu(self)
-		self.Stats = manager_stats(self)
+		self.Toolbar = ManagerToolbar(self)
+		self.Menu = ManagerMenu(self)
+		self.Stats = ManagerStats(self)
 		
 		self.List.connect("adapter-changed", self.on_adapter_changed)
 		
@@ -97,4 +97,4 @@ class blueman:
 
 
 
-blueman()
+Blueman()

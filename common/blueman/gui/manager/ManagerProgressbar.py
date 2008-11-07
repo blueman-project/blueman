@@ -22,7 +22,7 @@ import gtk
 import gtk.gdk
 from blueman.functions import get_icon
 
-class manager_progressbar(gobject.GObject):
+class ManagerProgressbar(gobject.GObject):
 
 	__gsignals__ = {
 		'cancelled' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),

@@ -21,7 +21,7 @@
 import gobject
 import gtk
 
-class animation:
+class Animation:
 	
 
 	def __init__(self, image, images, rate=1, rev=False):

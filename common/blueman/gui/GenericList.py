@@ -21,7 +21,7 @@
 import gtk
 
 
-class generic_list(gtk.TreeView):
+class GenericList(gtk.TreeView):
 
 	def __init__(self, data):
 		gtk.TreeView.__init__(self)

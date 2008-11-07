@@ -29,7 +29,7 @@ _ = gettext.gettext
 
 import gtk
 
-class popup_menu:
+class PopupMenu:
 
 	def __init__(self, status_icon):
 		status_icon.connect('popup-menu', self.on_popup_menu)

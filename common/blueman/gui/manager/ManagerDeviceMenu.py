@@ -19,7 +19,7 @@
 
 import gtk
 
-class manager_device_menu:
+class ManagerDeviceMenu:
 
 	def __init__(self, blueman):
 		

@@ -18,10 +18,10 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-from blueman.Gui.device_list import device_list
-from blueman.Gui.PixbufTable import PixbufTable
-from blueman.Gui.CellRendererPixbufTable import CellRendererPixbufTable
-from blueman.device_class import get_minor_class
+from blueman.gui.DeviceList import DeviceList
+from blueman.gui.PixbufTable import PixbufTable
+from blueman.gui.CellRendererPixbufTable import CellRendererPixbufTable
+from blueman.DeviceClass import get_minor_class
 
 import gtk
 from blueman.constants import *
@@ -30,7 +30,7 @@ from blueman.functions import get_icon
 import gettext
 _ = gettext.gettext
 
-class manager_device_list(device_list):
+class ManagerDeviceList(DeviceList):
 	
 	def __init__(self, adapter=None):
 		data = [
@@ -61,7 +61,7 @@ class manager_device_list(device_list):
 			
 		
 		]
-		device_list.__init__(self, adapter, data)
+		DeviceList.__init__(self, adapter, data)
 		self.set_headers_visible(False)
 		self.props.has_tooltip = True
 		
