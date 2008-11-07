@@ -20,7 +20,7 @@
 from blueman.gui.GenericList import GenericList
 from blueman.main.FakeDevice import FakeDevice
 from blueman.main.Device import Device
-from blueman.deviceclass import get_major_class
+from blueman.DeviceClass import get_major_class
 
 from blueman.Lib import conn_info
 import blueman.bluez as Bluez
@@ -28,9 +28,9 @@ import gtk
 import gobject
 import re
 
-from blueman.functions import adapter_path_to_name
+from blueman.Functions import adapter_path_to_name
 
-class device_list(generic_list):
+class DeviceList(GenericList):
 	__gsignals__ = {
 		#@param: device
 		'device-found' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),

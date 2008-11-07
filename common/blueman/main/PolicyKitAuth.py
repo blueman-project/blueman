@@ -27,7 +27,7 @@ import dbus
 PolicyKit related services.
 '''
 
-class polkit_auth(object):
+class PolicyKitAuth(object):
     '''
     Obtains sudo/root access,
     asking the user for authentication if necessary,

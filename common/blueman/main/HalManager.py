@@ -22,7 +22,7 @@ import re
 
 
 
-class hal_manager(dbus.proxies.Interface):
+class HalManager(dbus.proxies.Interface):
 	ports = []
 	layer = None
 	def __init__(self):

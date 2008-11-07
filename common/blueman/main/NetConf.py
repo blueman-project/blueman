@@ -22,7 +22,7 @@
 import os
 import re
 import commands
-import blueman.constants as constants
+import blueman.Constants as Constants
 import re
 
 DHCP_CONFIG_FILE = "/etc/dhcp3/dhcpd.conf"
@@ -42,7 +42,7 @@ def netstatus():
 	masq=0
 	type=0
 	
-	path = os.path.join( constants.PREFIX, "bin/blueman-ifup")
+	path = os.path.join( Constants.PREFIX, "bin/blueman-ifup")
 	f=open(path)
 	for line in f:
 		m = re.match("^MASQ=(.*)", line)
@@ -76,7 +76,7 @@ def have(t):
 		return False
 
 
-class netconf:
+class NetConf:
 	def __init__(self, ipaddress, allow_nat = True, subnet = "255.255.255.0"):
 		self.ip_address = ipaddress
 		if ipaddress != None:
@@ -151,14 +151,14 @@ class netconf:
 	
 		
 	def _uninstall_ifup(self):
- 		path = os.path.join( constants.PREFIX, "bin/blueman-ifup")
+ 		path = os.path.join( Constants.PREFIX, "bin/blueman-ifup")
  		f = open(path, "w");
  		f.write("#!/bin/bash\n")
  		f.write("MASQ=0\nIP=0\nDHCP=0\n\nif [ \"$1\" == \"pan0\" ]; then\n\tavahi-autoipd $1\nfi""")
  		f.close()
  		
  	def _install_ifup(self):
- 		path = os.path.join( constants.PREFIX, "bin/blueman-ifup")
+ 		path = os.path.join( Constants.PREFIX, "bin/blueman-ifup")
  		f = open( path, "w" )
  		ifup = self._generate_ifup()
  		f.write(ifup)
@@ -204,11 +204,11 @@ fi
 		return ifup_script
 
 
-class netconf_dhcpd(netconf):
+class NetConfDhcpd(NetConf):
 
 
 	def __init__(self, ipaddress, allow_nat = True):
-		netconf.__init__(self, ipaddress, allow_nat)
+		NetConf.__init__(self, ipaddress, allow_nat)
 		
 		self.dhcp_config, self.existing_subnet = self._read_dhcp_config()
 		
@@ -307,9 +307,9 @@ class netconf_dhcpd(netconf):
  	
 
 
-class netconf_dnsmasq(netconf):
+class NetConfDnsMasq(NetConf):
 	def __init__(self, ipaddress, allow_nat = True):
-		netconf.__init__(self, ipaddress, allow_nat)
+		NetConf.__init__(self, ipaddress, allow_nat)
 		
 	def get_dhcp_exec_config(self):
 		return ("dnsmasq", "--dhcp-range=%s,%s,60m --dhcp-option=option:router,%s --interface=pan1" % (self.ip_range_start, self.ip_range_end, self.ip_address))

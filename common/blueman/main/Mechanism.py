@@ -23,7 +23,7 @@ import time
 import dbus
 
 
-class mechanism(dbus.proxies.Interface):
+class Mechanism(dbus.proxies.Interface):
 	def __init__(self):
 		self.bus = dbus.SystemBus()
 		

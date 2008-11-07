@@ -1,4 +1,4 @@
-from blueman.constants import *
+from blueman.Constants import *
 import gtk
 import re
 

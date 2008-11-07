@@ -20,7 +20,7 @@
 
 import time
 
-class speed_calc:
+class SpeedCalc:
 	
 	def __init__(self, moving_avg = 3):
 		self.moving_avg = moving_avg

@@ -24,8 +24,8 @@ from blueman.gui.CellRendererPixbufTable import CellRendererPixbufTable
 from blueman.DeviceClass import get_minor_class
 
 import gtk
-from blueman.constants import *
-from blueman.functions import get_icon
+from blueman.Constants import *
+from blueman.Functions import get_icon
 
 import gettext
 _ = gettext.gettext

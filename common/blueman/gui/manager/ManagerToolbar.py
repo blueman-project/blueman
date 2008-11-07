@@ -19,7 +19,7 @@
 import gettext
 _ = gettext.gettext
 
-class manager_toolbar:
+class ManagerToolbar:
 
 	def __init__(self, blueman):
 		self.blueman = blueman
