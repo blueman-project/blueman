@@ -16,69 +16,80 @@ int find_conn(int s, int dev_id, long arg)
 	struct hci_conn_list_req *cl;
 	struct hci_conn_info *ci;
 	int i;
+	int ret = 0;
 
-	if (!(cl = malloc(10 * sizeof(*ci) + sizeof(*cl)))) {
-		return 0;
-	}
+	if (!(cl = malloc(10 * sizeof(*ci) + sizeof(*cl))))
+		goto out;
+
 	cl->dev_id = dev_id;
 	cl->conn_num = 10;
 	ci = cl->conn_info;
 
-	if (ioctl(s, HCIGETCONNLIST, (void *) cl)) {
-		return 0;
-	}
+	if (ioctl(s, HCIGETCONNLIST, (void *) cl))
+		goto out;
 
 	for (i = 0; i < cl->conn_num; i++, ci++)
-		if (!bacmp((bdaddr_t *) arg, &ci->bdaddr))
-			return 1;
+		if (!bacmp((bdaddr_t *) arg, &ci->bdaddr)) {
+			ret = 1;
+			goto out;
+		}
 
-	return 0;
+out:
+	free(cl);
+	return ret;
 }
 
 
 
-int connection_init(int dev_id, char *addr, struct conn_info_handles *ci) {
-	
-	struct hci_conn_info_req *cr;
+int connection_init(int dev_id, char *addr, struct conn_info_handles *ci)
+{
+	struct hci_conn_info_req *cr = NULL;
 	bdaddr_t bdaddr;
 	
 	int dd;
+	int ret = 1;
 
 	str2ba(addr, &bdaddr);
 
 	if (dev_id < 0) {
 		dev_id = hci_for_each_dev(HCI_UP, find_conn, (long) &bdaddr);
 		if (dev_id < 0) {
-			return ERR_NOT_CONNECTED;
+			ret = ERR_NOT_CONNECTED;
+			goto out;
 		}
 	}
 
 	dd = hci_open_dev(dev_id);
 	if (dd < 0) {
-		return ERR_HCI_DEV_OPEN_FAILED;
+		ret = ERR_HCI_DEV_OPEN_FAILED;
+		goto out;
 	}
 
 	cr = malloc(sizeof(*cr) + sizeof(struct hci_conn_info));
 	if (!cr) {
-		return ERR_CANNOT_ALLOCATE;
+		ret = ERR_CANNOT_ALLOCATE;
+		goto out;
 	}
 
 	bacpy(&cr->bdaddr, &bdaddr);
 	cr->type = ACL_LINK;
 	if (ioctl(dd, HCIGETCONNINFO, (unsigned long) cr) < 0) {
-		return ERR_GET_CONN_INFO_FAILED;
+		ret = ERR_GET_CONN_INFO_FAILED;
+		goto out;
 	}
 	
 	ci->dd = dd;
 	ci->handle = cr->conn_info->handle;
 
-	free(cr);
-
-	return 1;
-
+out:
+	if (cr)
+		free(cr);
+	
+	return ret;
 }
 
-int connection_get_rssi(struct conn_info_handles *ci, int8_t *ret_rssi) {
+int connection_get_rssi(struct conn_info_handles *ci, int8_t *ret_rssi)
+{
 	int8_t rssi;
 	if (hci_read_rssi(ci->dd, htobs(ci->handle), &rssi, 1000) < 0) {
 		return ERR_READ_RSSI_FAILED;
@@ -88,7 +99,8 @@ int connection_get_rssi(struct conn_info_handles *ci, int8_t *ret_rssi) {
 
 }
 
-int connection_get_lq(struct conn_info_handles *ci, uint8_t *ret_lq) {
+int connection_get_lq(struct conn_info_handles *ci, uint8_t *ret_lq)
+{
 	uint8_t lq;
 	if (hci_read_link_quality(ci->dd, htobs(ci->handle), &lq, 1000) < 0) {
 		return ERR_READ_LQ_FAILED;
@@ -97,7 +109,8 @@ int connection_get_lq(struct conn_info_handles *ci, uint8_t *ret_lq) {
 	return 1;
 }
 
-int connection_get_tpl(struct conn_info_handles *ci, int8_t *ret_tpl, uint8_t type) { 	
+int connection_get_tpl(struct conn_info_handles *ci, int8_t *ret_tpl, uint8_t type)
+{ 	
 	int8_t level;
 	if (hci_read_transmit_power_level(ci->dd, htobs(ci->handle), type, &level, 1000) < 0) {
 		return ERR_READ_TPL_FAILED;
@@ -106,62 +119,60 @@ int connection_get_tpl(struct conn_info_handles *ci, int8_t *ret_tpl, uint8_t ty
 	return 1;
 }
 	
-int connection_close(struct conn_info_handles *ci) {
-	
+int connection_close(struct conn_info_handles *ci)
+{
 	hci_close_dev(ci->dd);
 	return 1;
 }
 
-
-
-
 int
-get_rfcomm_list(struct rfcomm_dev_list_req **ret)
+get_rfcomm_list(struct rfcomm_dev_list_req **result)
 {
-
-	int ctl;
+	struct rfcomm_dev_list_req *dl;
+	struct rfcomm_dev_info *di;
+	int ctl = -1;
+	int ret = 1;
 
 	ctl = socket(AF_BLUETOOTH, SOCK_RAW, BTPROTO_RFCOMM);
 	if (ctl < 0) {
-		return ERR_SOCKET_FAILED; //Can't open RFCOMM control socket
+		ret = ERR_SOCKET_FAILED; //Can't open RFCOMM control socket
+		goto out;
 	}
-
-	
-	struct rfcomm_dev_list_req *dl;
-	struct rfcomm_dev_info *di;
-	
 
 	dl = malloc(sizeof(*dl) + RFCOMM_MAX_DEV * sizeof(*di));
 	if(dl == NULL) {
-		return ERR_CANNOT_ALLOCATE;
+		ret = ERR_CANNOT_ALLOCATE;
+		goto out;
 	}
-
 
 	dl->dev_num = RFCOMM_MAX_DEV;
 	di = dl->dev_info;
 
 	if (ioctl(ctl, RFCOMMGETDEVLIST, (void *) dl) < 0) {
-		return ERR_GET_RFCOMM_LIST_FAILED;
+		ret = ERR_GET_RFCOMM_LIST_FAILED;
+		goto out;
 	}
 
-	*ret = dl;
+	*result = dl;
 	
-	return 1;
-	
-
+out:
+	if (ctl >= 0)
+		close(ctl);
+	return ret;
 }
 
 float get_page_timeout(int hdev)
 {
 	struct hci_request rq;
 	int s;
+	float ret;
 
 	if ((s = hci_open_dev(hdev)) < 0) {
-		return ERR_HCI_DEV_OPEN_FAILED;
+		ret = ERR_HCI_DEV_OPEN_FAILED;
+		goto out;
 	}
 
 	memset(&rq, 0, sizeof(rq));
-
 
 	uint16_t timeout;
 	read_page_timeout_rp rp;
@@ -172,14 +183,20 @@ float get_page_timeout(int hdev)
 	rq.rlen = READ_PAGE_TIMEOUT_RP_SIZE;
 
 	if (hci_send_req(s, &rq, 1000) < 0) {
-		return ERR_CANT_READ_PAGE_TIMEOUT;
+		ret = ERR_CANT_READ_PAGE_TIMEOUT;
+		goto out;
 	}
 	if (rp.status) {
-		return ERR_READ_PAGE_TIMEOUT;
+		ret = ERR_READ_PAGE_TIMEOUT;
+		goto out;
 	}
 	
 	timeout = btohs(rp.timeout);
-	return ((float)timeout * 0.625);
+	ret = ((float)timeout * 0.625);
 
+out:
+	if (s >= 0)
+		hci_close_dev(s);
+	return ret;
 }
 

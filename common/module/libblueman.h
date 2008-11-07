@@ -21,5 +21,5 @@ int connection_get_rssi(struct conn_info_handles *ci, int8_t *ret_rssi);
 int connection_get_lq(struct conn_info_handles *ci, uint8_t *ret_lq);
 int connection_get_tpl(struct conn_info_handles *ci, int8_t *ret_tpl, uint8_t type);
 int connection_close(struct conn_info_handles *ci);
-int get_rfcomm_list(struct rfcomm_dev_list_req **ret);
+int get_rfcomm_list(struct rfcomm_dev_list_req **result);
 float get_page_timeout(int hdev);
