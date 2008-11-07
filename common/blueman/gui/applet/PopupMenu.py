@@ -23,7 +23,8 @@ from subprocess import *
 
 sys.path = ["../common/"] + sys.path
 
-from blueman.constants import *
+from blueman.Constants import *
+from blueman.Functions import *
 import gettext
 _ = gettext.gettext
 
@@ -86,7 +87,29 @@ class PopupMenu:
 		pass
 		
 	def on_about(self, menu_item):
-		about = gtk.AboutDialog()
-		about.set_name(PACKAGE)
-		about.set_version(VERSION)
+		gtk.about_dialog_set_email_hook(self.email_hook, None)
+		gtk.about_dialog_set_url_hook(self.url_hook, None)
 		
+		about = gtk.AboutDialog()
+		about.set_name('Blueman applet')
+		about.set_version(VERSION)
+		about.set_copyright('Copyright \xc2\xa9 2008 Valmantas Paliksa\n'\
+							'Copyright \xc2\xa9 2008 Tadas Dailyda')
+		about.set_comments('Blueman is GTK based Bluetooth manager')
+		about.set_website(WEBSITE)
+		about.set_icon(get_icon('blueman'))
+		about.set_logo(get_icon('blueman', 48))
+		authors = ['Valmantas Paliksa <walmis@balticum-tv.lt>',
+					'Tadas Dailyda <tadas@dailyda.com>']
+		about.set_authors(authors)
+		about.run()
+		about.destroy()
+	
+	def uri_open(self, uri):
+		Popen(['xdg-open', uri], stdout=PIPE)
+	
+	def email_hook(self, dialog, email, black_hole):
+		self.uri_open('mailto:'+email)
+		
+	def url_hook(self, dialog, url, black_hole):
+		self.uri_open(url)
