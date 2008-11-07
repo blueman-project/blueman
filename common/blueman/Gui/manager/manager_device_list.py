@@ -154,8 +154,8 @@ class manager_device_list(device_list):
 						lq_pb=get_icon("blueman-lq-%s" % rnd(lq_perc), 48),
 						tpl_pb=get_icon("blueman-tpl-%s" % rnd(tpl_perc), 48),
 						rssi=rssi_perc,
-						lq=tpl_perc,
-						tpl=lq_perc,
+						lq=lq_perc,
+						tpl=tpl_perc,
 						connected=True)
 			else:
 				self.set(iter, rssi_pb=None, lq_pb=None, tpl_pb=None, connected=False)
