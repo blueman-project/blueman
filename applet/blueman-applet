@@ -26,13 +26,37 @@ sys.path = ["../common/"] + sys.path
 import gtk
 
 from blueman.constants import *
+from blueman.functions import *
+import blueman.Bluez as Bluez
 
 
 class blueman_applet:
 
 	def __init__(self):
-		status_icon = gtk.status_icon_new_from_file(ICON_PATH + '/blueman.svg')
-		status_icon.set_blinking(True)
+		icon_pixbuf = get_icon('blueman.svg')
+		self.status_icon = gtk.status_icon_new_from_pixbuf(icon_pixbuf)
+		
+		#determine if icon should be visible (in case adapters are present)
+		try:
+			self.Manager = Bluez.Manager("gobject")
+			self.Manager.HandleSignal(self.on_adapter_removed, "AdapterRemoved")
+			self.Manager.HandleSignal(self.on_adapter_added, "AdapterAdded")
+			if self.Manager.ListAdapters() == []:
+				self.status_icon.set_visible(False)
+		except:
+			self.Manager = None
+			print 'Bluez DBus API not available'
+			sys.exit()
+		
 		gtk.main()
+		
+	def on_adapter_added(self, path):
+		print 'Added ', path
+		self.status_icon.set_visible(True)
+		
+	def on_adapter_removed(self, path):
+		print 'Removed ', path
+		if self.Manager.ListAdapters() == []:
+			self.status_icon.set_visible(False)
 
 blueman_applet()
