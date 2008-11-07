@@ -21,6 +21,7 @@ import gtk
 import blueman.Bluez as Bluez
 
 from blueman.Gui.manager.manager_device_menu import manager_device_menu
+from blueman.Gui.manager.manager_progressbar import manager_progressbar
 
 class manager_menu:
 
@@ -46,7 +47,7 @@ class manager_menu:
 		blueman.List.connect("adapter-property-changed", self.on_adapter_property_changed)
 		blueman.List.connect("device-selected", self.on_device_selected)
 		
-		
+		manager_progressbar(blueman)
 		self.adapters = adapters = blueman.List.Manager.ListAdapters()
 		
 		self.generate_adapter_menu()

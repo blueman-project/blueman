@@ -31,13 +31,15 @@ class manager_device_menu:
 		
 	def generate_menu(self):
 		props = self.Device.GetProperties()
-		
+		print props
 		if "Fake" in props:
 			print "fake device"
 			
 			
 		else:
-			for k, v in self.Device.Services.iteritems():
-				print k
+			#for name, service in self.Device.Services.iteritems():
+				
+				
+				
 			print "real device"
 		
