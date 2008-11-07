@@ -30,6 +30,7 @@ from blueman.functions import *
 import dbus
 import dbus.glib
 import blueman.Bluez as Bluez
+from blueman.Gui.applet.popup_menu import popup_menu
 
 
 class blueman_applet:
@@ -37,6 +38,7 @@ class blueman_applet:
 	def __init__(self):
 		icon_pixbuf = get_icon('blueman')
 		self.status_icon = gtk.status_icon_new_from_pixbuf(icon_pixbuf)
+		self.popup_menu = popup_menu(self.status_icon)
 		
 		#determine if icon should be visible (in case adapters are present)
 		self.bus = dbus.SystemBus()
