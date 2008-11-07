@@ -20,6 +20,8 @@
 import gtk
 import blueman.Bluez as Bluez
 
+from blueman.Gui.manager.manager_device_menu import manager_device_menu
+
 class manager_menu:
 
 	def __init__(self, blueman):
@@ -41,12 +43,23 @@ class manager_menu:
 		
 		blueman.List.connect("adapter-added", self.on_adapter_added)
 		blueman.List.connect("adapter-removed", self.on_adapter_removed)
+		blueman.List.connect("adapter-property-changed", self.on_adapter_property_changed)
+		blueman.List.connect("device-selected", self.on_device_selected)
 		
 		
 		self.adapters = adapters = blueman.List.Manager.ListAdapters()
 		
 		self.generate_adapter_menu()
 
+	def on_device_selected(self, List, device, iter):
+		if iter and device:
+			manager_device_menu(self.blueman)
+
+
+	def on_adapter_property_changed(self, list, adapter, kv):
+		(key, value) = kv
+		if key == "Name":
+			self.generate_adapter_menu()
 		
 	def generate_adapter_menu(self):
 		menu = gtk.Menu()
