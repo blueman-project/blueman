@@ -102,10 +102,10 @@ class device_list(generic_list):
 		
 	def on_selection_changed(self, selection):
 		iter = self.selected()
-		print iter
-		row = self.get(iter, "device")
-		dev = row["device"]
-		self.emit("device-selected", dev, iter)
+		if iter:
+			row = self.get(iter, "device")
+			dev = row["device"]
+			self.emit("device-selected", dev, iter)
 		
 		
 
@@ -314,7 +314,7 @@ class device_list(generic_list):
 	def DisplayKnownDevices(self):
 		self.clear()
 		devices = self.Adapter.ListDevices()
-		print "devices", devices
+
 		for device in devices:
 			self.device_add_event(Device(device))
 	

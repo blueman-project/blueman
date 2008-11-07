@@ -85,7 +85,6 @@ class manager_device_list(device_list):
 	
 	def row_setup_event(self, iter, device):
 		props = device.GetProperties()
-		print props
 
 			
 		try:
@@ -122,7 +121,7 @@ class manager_device_list(device_list):
 			pass
 
 	def row_update_event(self, iter, key, value):
-		print "Set", iter, key, value
+
 		if key == "Trusted":
 			if value:
 				pbs = self.get(iter, "tb_icons")["tb_icons"]
