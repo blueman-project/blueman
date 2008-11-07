@@ -25,23 +25,7 @@ from blueman.device_class import get_minor_class
 
 import gtk
 from blueman.constants import *
-
-
-def get_icon(name, size=24):
-	ic = gtk.icon_theme_get_default()
-	if not ICON_PATH in ic.get_search_path():
-		ic.prepend_search_path(ICON_PATH)
-		ic.prepend_search_path(ICON_PATH + "/devices")
-		ic.prepend_search_path(ICON_PATH + "/signal")
-	try:
-		icon = ic.load_icon(name, size, 0) 
-	except:
-		icon = ic.load_icon("bluetooth", size, 0) 
-
-	
-	return icon
-	
-
+from blueman.functions import get_icon
 
 
 class manager_device_list(device_list):

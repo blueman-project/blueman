@@ -26,6 +26,10 @@ class manager_toolbar:
 		
 		self.blueman.List.connect("device-selected", self.on_device_selected)
 		self.blueman.List.connect("device-property-changed", self.on_device_propery_changed)
+		self.blueman.List.connect("adapter-changed", self.on_adapter_changed)
+		
+		self.b_search = blueman.Builder.get_object("b_search")
+		self.b_search.connect("clicked", self.on_search_clicked)
 		
 		self.b_bond = blueman.Builder.get_object("b_bond")
 		self.b_trust = blueman.Builder.get_object("b_trust")
@@ -34,7 +38,14 @@ class manager_toolbar:
 		self.b_setup = blueman.Builder.get_object("b_setup")
 		
 		
+	def on_search_clicked(self, button):
+		pass
 		
+	def on_adapter_changed(self, list, adapter_path):
+		if adapter_path == None:
+			self.b_search.props.sensitive = False
+		else:
+			self.b_search.props.sensitive = True
 		
 	def on_device_selected(self, dev_list, device, iter):
 		if device == None or iter == None:
