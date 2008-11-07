@@ -86,5 +86,7 @@ class popup_menu:
 		pass
 		
 	def on_about(self, menu_item):
-		pass
+		about = gtk.AboutDialog()
+		about.set_name(PACKAGE)
+		about.set_version(VERSION)
 		

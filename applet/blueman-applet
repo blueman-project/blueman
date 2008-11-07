@@ -30,10 +30,10 @@ from blueman.functions import *
 import dbus
 import dbus.glib
 import blueman.Bluez as Bluez
-from blueman.Gui.applet.popup_menu import popup_menu
+from blueman.gui.applet.PopupMenu import PopupMenu
 
 
-class blueman_applet:
+class BluemanApplet:
 
 	def __init__(self):
 		icon_pixbuf = get_icon('blueman')
