@@ -27,6 +27,8 @@ import gtk
 from blueman.constants import *
 from blueman.functions import get_icon
 
+import gettext
+_ = gettext.gettext
 
 class manager_device_list(device_list):
 	
@@ -61,6 +63,11 @@ class manager_device_list(device_list):
 		]
 		device_list.__init__(self, adapter, data)
 		self.set_headers_visible(False)
+		self.props.has_tooltip = True
+		
+		self.connect("query-tooltip", self.tooltip_query)		
+		self.tooltip_row = -1
+		self.tooltip_col = None
 		
 	
 	def level_setup_event(self, iter, device, cinfo):
@@ -145,13 +152,100 @@ class manager_device_list(device_list):
 
 				self.set(iter,  rssi_pb=get_icon("blueman-rssi-%s" % rnd(rssi_perc), 48),
 						lq_pb=get_icon("blueman-lq-%s" % rnd(lq_perc), 48),
-						tpl_pb=get_icon("blueman-tpl-%s" % rnd(tpl_perc), 48))
+						tpl_pb=get_icon("blueman-tpl-%s" % rnd(tpl_perc), 48),
+						rssi=rssi_perc,
+						lq=tpl_perc,
+						tpl=lq_perc,
+						connected=True)
 			else:
-				self.set(iter, rssi_pb=None, lq_pb=None, tpl_pb=None)
+				self.set(iter, rssi_pb=None, lq_pb=None, tpl_pb=None, connected=False)
 		else:
 			print "invisible"
 		#set_signal("rssi", rssi_perc, "/signal/rssi/rssi_", ".png", self.row)
 		#set_signal("lq", lq_perc, "/signal/lq/lq_", ".png", self.row)
 		#set_signal("tpl", tpl_perc, "/signal/tpl/tpl_", ".png", self.row)
+		
+	
+	def tooltip_query(self, tw, x, y, kb, tooltip):
+
+		#print args
+		#args[4].set_text("test"+str(args[1]))
+
+		path = self.get_path_at_pos(x, y)
+
+
+		if path:
+			if path[0][0] != self.tooltip_row or path[1] != self.tooltip_col:
+				self.tooltip_row = path[0][0]
+				self.tooltip_col = path[1]
+				return False
+			
+			if path[1] == self.columns["tb_icons"]:
+				iter = self.get_iter(path[0][0])
+
+				row = self.get(iter, "trusted", "bonded")
+				trusted = row["trusted"]
+				bonded = row["bonded"]
+				
+				if trusted and bonded:
+					tooltip.set_markup(_("<b>Trusted and Bonded</b>"))
+				elif bonded:
+					tooltip.set_markup(_("<b>Bonded</b>"))
+				elif trusted:
+					tooltip.set_markup(_("<b>Trusted</b>"))
+				
+					
+				self.tooltip_row = path[0][0]
+				self.tooltip_col = path[1]
+				return True
+
+			
+			if path[1] == self.columns["tpl_pb"] or path[1] == self.columns["lq_pb"] or path[1] == self.columns["rssi_pb"]:
+				iter = self.get_iter(path[0][0])
+
+				dt = self.get(iter, "connected")["connected"]
+				#print dt
+				if dt:
+					rssi = self.get(iter, "rssi")["rssi"]
+					lq = self.get(iter, "lq")["lq"]
+					tpl = self.get(iter, "tpl")["tpl"]
+					
+					if rssi < 30:
+						rssi_state = _("Poor")
+					
+					if rssi < 40 and rssi > 30:
+						rssi_state = _("Sub-optimal")
+
+					elif rssi > 40 and rssi < 60:
+						rssi_state = _("Optimal")
+					
+					elif rssi > 60:
+						rssi_state = _("Much")
+					
+					elif rssi > 70:
+						rssi_state = _("Too much")
+						
+					
+					if tpl < 30:
+						tpl_state = _("Low")
+					
+					if tpl < 40 and tpl > 30:
+						tpl_state = _("Sub-optimal")
+
+					elif tpl > 40 and rssi < 60:
+						tpl_state = _("Optimal")
+					
+					elif tpl > 60:
+						tpl_state = _("High")
+					
+					elif tpl > 70:
+						tpl_state = _("Very High")
+						
+											
+					tooltip.set_markup(_("<b>Connected</b>\nReceived Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>\nLink Quality: %(lq)u%%\nTransmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>") % {"rssi_state": rssi_state, "rssi":rssi, "lq":lq, "tpl":tpl, "tpl_state": tpl_state})
+					self.tooltip_row = path[0][0]
+					self.tooltip_col = path[1]
+					return True	
+		return False
 			
 
