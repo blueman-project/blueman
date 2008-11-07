@@ -34,15 +34,22 @@ class popup_menu:
 		
 		menu_items = []
 		menu_items += [gtk.MenuItem(_('Setup new device')+'...', False)]
+		menu_items[-1].connect('activate', self.on_setup_new)
 		menu_items += [gtk.MenuItem(_('Send files to device')+'...', False)]
+		menu_items[-1].connect('activate', self.on_send)
 		if OBEX_BROWSE_AVAILABLE:
 			menu_items += [gtk.MenuItem(_('Browse files on device')+'...', False)]
+			menu_items[-1].connect('activate', self.on_browse)
 		menu_items += [gtk.SeparatorMenuItem()]
 		menu_items += [gtk.MenuItem(_('Devices')+'...', False)]
+		menu_items[-1].connect('activate', self.on_devices)
 		menu_items += [gtk.MenuItem(_('Adapters')+'...', False)]
+		menu_items[-1].connect('activate', self.on_adapters)
 		menu_items += [gtk.MenuItem(_('Local services')+'...', False)]
+		menu_items[-1].connect('activate', self.on_local_services)
 		menu_items += [gtk.SeparatorMenuItem()]
 		menu_items += [gtk.ImageMenuItem(gtk.STOCK_ABOUT)]
+		menu_items[-1].connect('activate', self.on_about)
 		
 		self.menu = gtk.Menu()
 		for menu_item in menu_items:
@@ -52,4 +59,25 @@ class popup_menu:
 	def on_popup_menu(self, status_icon, button, activate_time):
 		self.menu.popup(None, None, gtk.status_icon_position_menu,
 						button, activate_time, status_icon)
+						
+	def on_setup_new(self, menu_item):
+		pass
+		
+	def on_send(self, menu_item):
+		pass
+		
+	def on_browse(self, menu_item):
+		pass
+		
+	def on_devices(self, menu_item):
+		pass
+		
+	def on_adapters(self, menu_item):
+		pass
+		
+	def on_local_services(self, menu_item):
+		pass
+		
+	def on_about(self, menu_item):
+		pass
 		
