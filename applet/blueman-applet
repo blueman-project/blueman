@@ -27,35 +27,50 @@ import gtk
 
 from blueman.constants import *
 from blueman.functions import *
+import dbus
+import dbus.glib
 import blueman.Bluez as Bluez
 
 
 class blueman_applet:
 
 	def __init__(self):
-		icon_pixbuf = get_icon('blueman.svg')
+		icon_pixbuf = get_icon('blueman')
 		self.status_icon = gtk.status_icon_new_from_pixbuf(icon_pixbuf)
 		
 		#determine if icon should be visible (in case adapters are present)
+		self.bus = dbus.SystemBus()
+		self.bus.watch_name_owner('org.bluez', self.on_dbus_name_owner_change)
+		self.manager_init()
+		
+		gtk.main()
+		
+	def manager_init(self):
 		try:
-			self.Manager = Bluez.Manager("gobject")
-			self.Manager.HandleSignal(self.on_adapter_removed, "AdapterRemoved")
-			self.Manager.HandleSignal(self.on_adapter_added, "AdapterAdded")
+			self.Manager = Bluez.Manager('gobject')
+			self.Manager.HandleSignal(self.on_adapter_removed, 'AdapterRemoved')
+			self.Manager.HandleSignal(self.on_adapter_added, 'AdapterAdded')
 			if self.Manager.ListAdapters() == []:
 				self.status_icon.set_visible(False)
 		except:
 			self.Manager = None
-			print 'Bluez DBus API not available'
-			sys.exit()
+			self.status_icon.set_visible(False)
+			print 'Bluez DBus API not available. Listening for DBus name ownership changes'
 		
-		gtk.main()
+	def on_dbus_name_owner_change(self, owner):
+		print 'org.bluez owner changed to ', owner
+		if owner == '':
+			self.Manager = None
+			self.status_icon.set_visible(False)
+		elif self.Manager == None:
+			self.manager_init()
 		
 	def on_adapter_added(self, path):
-		print 'Added ', path
+		print 'Adapter added ', path
 		self.status_icon.set_visible(True)
 		
 	def on_adapter_removed(self, path):
-		print 'Removed ', path
+		print 'Adapter removed ', path
 		if self.Manager.ListAdapters() == []:
 			self.status_icon.set_visible(False)
 
