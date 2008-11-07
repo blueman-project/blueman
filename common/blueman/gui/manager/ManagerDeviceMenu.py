@@ -19,16 +19,37 @@
 
 import gtk
 from blueman.Sdp import *
+from blueman.Functions import *
+
+import gettext
+_ = gettext.gettext
 
 class ManagerDeviceMenu:
 
-	def __init__(self, blueman):
-		
-		self.Menu = gtk.Menu()
+	def __init__(self, blueman, menushell=None):
+		if menushell == None:
+			self.Menu = gtk.Menu()
+		else:
+			self.Menu = menushell
 
 		self.Device = blueman.List.get(blueman.List.selected(), "device")["device"]
 		
 		self.generate_menu()
+		
+		
+	def create_menuitem(self, text, image):
+		item = gtk.ImageMenuItem()
+		item.set_image(gtk.image_new_from_pixbuf(image))
+		
+		label = gtk.Label()
+		label.set_text(text)
+		label.set_alignment(0,0.5)
+
+		label.show()
+		
+		item.add(label)
+		
+		return item
 		
 	def generate_menu(self):
 		props = self.Device.GetProperties()
@@ -40,14 +61,48 @@ class ManagerDeviceMenu:
 			for name, service in self.Device.Services.iteritems():
 				if name == "serial":
 					uuids = props["UUIDs"]
+					
+					item = self.create_menuitem(_("Serial Ports"), get_icon("modem", 16))
+					sub = gtk.Menu()
+					sub.show()
+					item.set_submenu(sub)
+					item.show()
+					self.Menu.append(item)
 					for uuid in uuids:
-						uuid = uuid128_to_uuid16(uuid)
-						if uuid == SERIAL_PORT_SVCLASS_ID:
-							print "spp"
+						
+						uuid16 = uuid128_to_uuid16(uuid)
+						if uuid16 == SERIAL_PORT_SVCLASS_ID:
+							item = self.create_menuitem(_("Dialup Service"), get_icon("modem", 16))
+							sub.append(item)
+							item.show()
 							
-						if uuid == DIALUP_NET_SVCLASS_ID:
-							print "dun"
-				
+						if uuid16 == DIALUP_NET_SVCLASS_ID:
+							item = self.create_menuitem(_("Serial Service"), get_icon("modem", 16))
+							sub.append(item)
+							item.show()
+							
+					
+				if name == "input":
+					sprops = service.GetProperties()
+					print props
+					print sprops
+					if sprops["Connected"]:
+						item = self.create_menuitem(_("Disconnect Input Service"), get_icon("mouse", 16))
+					else:
+						item = self.create_menuitem(_("Connect Input Service"), get_icon("mouse", 16))
+					item.show()
+					self.Menu.append(item)
+					
+				if name == "network":
+					sprops = service.GetProperties()
+					
+					print sprops
+					if sprops["Connected"]:
+						item = self.create_menuitem(_("Disconnect Network Service"), get_icon("network", 16))
+					else:
+						item = self.create_menuitem(_("Connect Network Service"), get_icon("network", 16))
+					item.show()
+					self.Menu.append(item)
 				
 			print "real device"
 		

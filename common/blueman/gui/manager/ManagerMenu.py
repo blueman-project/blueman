@@ -47,14 +47,18 @@ class ManagerMenu:
 		blueman.List.connect("adapter-property-changed", self.on_adapter_property_changed)
 		blueman.List.connect("device-selected", self.on_device_selected)
 		
-		ManagerProgressbar(blueman)
+		
 		self.adapters = adapters = blueman.List.Manager.ListAdapters()
 		
 		self.generate_adapter_menu()
+		
+
 
 	def on_device_selected(self, List, device, iter):
 		if iter and device:
-			ManagerDeviceMenu(self.blueman)
+			x = gtk.Menu()
+			self.item_device.set_submenu(x)
+			a = ManagerDeviceMenu(self.blueman, x)
 
 
 	def on_adapter_property_changed(self, list, adapter, kv):
