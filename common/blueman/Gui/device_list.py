@@ -28,9 +28,7 @@ import gtk
 import gobject
 import re
 
-
-def adapter_path_to_name(path):
-	return re.search(".*(hci[0-9]*)", path).groups(0)[0]
+from blueman.functions import adapter_path_to_name
 
 class device_list(generic_list):
 	__gsignals__ = {

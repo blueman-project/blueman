@@ -1,5 +1,6 @@
 from blueman.constants import *
 import gtk
+import re
 
 def get_icon(name, size=24):
 	ic = gtk.icon_theme_get_default()
@@ -14,3 +15,6 @@ def get_icon(name, size=24):
 
 	
 	return icon
+	
+def adapter_path_to_name(path):
+	return re.search(".*(hci[0-9]*)", path).groups(0)[0]

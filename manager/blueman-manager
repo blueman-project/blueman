@@ -30,6 +30,7 @@ from blueman.constants import *
 from blueman.Gui.manager.manager_device_list import manager_device_list
 from blueman.Gui.manager.manager_toolbar import manager_toolbar
 from blueman.Gui.manager.manager_menu import manager_menu
+from blueman.Gui.manager.manager_stats import manager_stats
 
 
 
@@ -60,6 +61,7 @@ class blueman:
 		
 		self.Toolbar = manager_toolbar(self)
 		self.Menu = manager_menu(self)
+		self.Stats = manager_stats(self)
 		
 		self.List.connect("adapter-changed", self.on_adapter_changed)
 		

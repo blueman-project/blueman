@@ -164,14 +164,21 @@
         <child>
           <object class="GtkAlignment" id="alignment5">
             <property name="visible">True</property>
+            <property name="left_padding">2</property>
+            <property name="right_padding">2</property>
             <child>
-              <object class="GtkHBox" id="hbox4">
+              <object class="GtkHBox" id="statusbar_hb">
                 <property name="visible">True</property>
+                <property name="spacing">2</property>
                 <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
+                  <object class="GtkLabel" id="statusbar_label">
+                    <property name="visible">True</property>
+                    <property name="xalign">0</property>
+                    <property name="xpad">8</property>
+                  </object>
+                  <packing>
+                    <property name="position">0</property>
+                  </packing>
                 </child>
               </object>
             </child>
