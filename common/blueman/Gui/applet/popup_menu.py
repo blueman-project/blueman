@@ -18,6 +18,8 @@
 # 
 
 import sys
+import os.path
+from subprocess import *
 
 sys.path = ["../common/"] + sys.path
 
@@ -59,21 +61,26 @@ class popup_menu:
 	def on_popup_menu(self, status_icon, button, activate_time):
 		self.menu.popup(None, None, gtk.status_icon_position_menu,
 						button, activate_time, status_icon)
+	
+	def spawn(self, command):
+		command = os.path.join(BIN_DIR, command)
+		print 'Launching ', command
+		popen = Popen(command, stdout=PIPE)
 						
 	def on_setup_new(self, menu_item):
-		pass
+		self.spawn('blueman-wizard')
 		
 	def on_send(self, menu_item):
-		pass
+		self.spawn('blueman-sendto')
 		
 	def on_browse(self, menu_item):
-		pass
+		self.spawn('blueman-browse')
 		
 	def on_devices(self, menu_item):
-		pass
+		self.spawn('blueman-manager')
 		
 	def on_adapters(self, menu_item):
-		pass
+		self.spawn('blueman-adapters')
 		
 	def on_local_services(self, menu_item):
 		pass
