@@ -21,3 +21,4 @@ from Manager import Manager
 from Agent import Agent
 from Agent import AgentMethod
 from Device import Device
+from Adapter import Adapter

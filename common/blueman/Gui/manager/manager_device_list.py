@@ -155,6 +155,7 @@ class manager_device_list(device_list):
 				lq = float(cinfo.get_lq())
 				tpl = float(cinfo.get_tpl())
 
+
 				rssi_perc = 50 + (rssi / 127 / 2 * 100)
 				tpl_perc = 50 + (tpl / 127 / 2 * 100)
 				lq_perc = lq / 255 * 100

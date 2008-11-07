@@ -181,7 +181,7 @@ class generic_list(gtk.TreeView):
 		self.liststore.clear()
 		
 	def iter_is_valid(self, iter):
-		return self.liststore.iter_is_valid(iter)
+		return self.get_model().iter_is_valid(iter)
 		
 	def compare(self, iter_a, iter_b):
 		return self.get_model().get_path(iter_a) == self.get_model().get_path(iter_b)

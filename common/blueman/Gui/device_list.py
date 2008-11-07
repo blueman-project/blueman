@@ -1,22 +1,21 @@
+# Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
+# Copyright (C) 2008 Tadas Dailyda <tadas at dailyda dot com>
 #
+# Licensed under the GNU General Public License Version 3
 #
-# blueman
-# (c) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
 #
-# This library is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public
-# License as published by the Free Software Foundation; either
-# version 2.1 of the License, or (at your option) any later version.
-# 
-# This library is distributed in the hope that it will be useful,
+# This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public
-# License along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
 #
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# 
 
 from blueman.Gui.generic_list import generic_list
 from blueman.Main.FakeDevice import FakeDevice
@@ -30,6 +29,8 @@ import gobject
 import re
 
 
+def adapter_path_to_name(path):
+	return re.search(".*(hci[0-9]*)", path).groups(0)[0]
 
 class device_list(generic_list):
 	__gsignals__ = {
@@ -47,29 +48,43 @@ class device_list(generic_list):
 		'adapter-property-changed' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
 		#@param: progress (0 to 1)
 		'discovery-progress' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_FLOAT,)),
+		
+		#@param: new adapter path, None if there are no more adapters
+		'adapter-changed' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+		
+		#@param: adapter path
+		'adapter-added' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+		'adapter-removed' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
 	}
 
 
 	def __init__(self, adapter=None, tabledata=[]):
 		def on_adapter_removed(path):
+			gobject.timeout_add(50, self.emit, "adapter-removed", path)
 			if path == self.__adapter_path:
 				self.clear()
-				self.SetAdapter()		
+				self.SetAdapter()	
+				
+		def on_adapter_added(path):
+			gobject.timeout_add(50, self.emit, "adapter-added", path)
+			if self.Adapter == None:
+				self.SetAdapter(path)	
 		
 		
 		try:
-			self.manager = Bluez.Manager("gobject")
-			self.manager.HandleSignal(on_adapter_removed, "AdapterRemoved")
+			self.Manager = Bluez.Manager("gobject")
+			self.Manager.HandleSignal(on_adapter_removed, "AdapterRemoved")
+			self.Manager.HandleSignal(on_adapter_added, "AdapterAdded")
 		except:
-			self.manager = None
+			self.Manager = None
 			
 		self.__discovery_time = 0
 		self.__adapter_path = None
-		self.adapter = None
+		self.Adapter = None
 		self.discovering = False
 		
 
-		self.SetAdapter(adapter)
+		
 		data = []
 		data = data + tabledata
 
@@ -80,12 +95,14 @@ class device_list(generic_list):
 		
 		generic_list.__init__(self, data)
 		
+		self.SetAdapter(adapter)
 		
 		self.selection.connect("changed", self.on_selection_changed)
 		
 		
 	def on_selection_changed(self, selection):
 		iter = self.selected()
+		print iter
 		row = self.get(iter, "device")
 		dev = row["device"]
 		self.emit("device-selected", dev, iter)
@@ -96,7 +113,7 @@ class device_list(generic_list):
 	def on_device_found(self, address, props):
 		if self.discovering:
 			try:
-				dev = self.adapter.FindDevice(address)
+				dev = self.Adapter.FindDevice(address)
 			except:
 				props["Address"] = address
 				props["Fake"] = True
@@ -109,7 +126,7 @@ class device_list(generic_list):
 		
 	
 	def on_property_changed(self, key, value):
-		self.emit("adapter-property-changed", self.adapter, (key, value))
+		self.emit("adapter-property-changed", self.Adapter, (key, value))
 				
 				
 	def on_device_property_changed(self, key, value, path):
@@ -130,7 +147,6 @@ class device_list(generic_list):
 		
 	def monitor_power_levels(self, device):
 		def update(iter, device, cinfo):
-			
 			if not self.iter_is_valid(iter) or not device.GetProperties()["Connected"]:
 				print "stopping monitor"
 				cinfo.deinit()
@@ -146,7 +162,7 @@ class device_list(generic_list):
 			iter = self.find_device(device)
 			
 			
-			hci = re.search(".*(hci[0-9]*)", self.adapter.GetObjectPath()).groups(0)[0]
+			hci = re.search(".*(hci[0-9]*)", self.Adapter.GetObjectPath()).groups(0)[0]
 			cinfo = conn_info(props["Address"], hci)
 			self.level_setup_event(iter, device, cinfo)
 			gobject.timeout_add(1000, update, iter, device, cinfo)
@@ -191,22 +207,35 @@ class device_list(generic_list):
 		self.RemoveDevice(dev, iter)
 		self.device_remove_event(dev)
 	
+	
 	def SetAdapter(self, adapter=None):
-		if self.adapter != None:
-			self.adapter.UnHandleSignal(self.on_device_found, "DeviceFound")
-			self.adapter.UnHandleSignal(self.on_property_changed, "PropertyChanged")
-			self.adapter.UnHandleSignal(self.on_device_created, "DeviceCreated")
-			self.adapter.UnHandleSignal(self.on_device_removed, "DeviceRemoved")
+		
+		if adapter != None:
+			adapter = adapter_path_to_name(adapter)
+		
+		print adapter
+		if self.Adapter != None:
+			self.Adapter.UnHandleSignal(self.on_device_found, "DeviceFound")
+			self.Adapter.UnHandleSignal(self.on_property_changed, "PropertyChanged")
+			self.Adapter.UnHandleSignal(self.on_device_created, "DeviceCreated")
+			self.Adapter.UnHandleSignal(self.on_device_removed, "DeviceRemoved")
 		
 		try:
-			self.adapter = self.manager.GetAdapter(adapter)
-			self.adapter.HandleSignal(self.on_device_found, "DeviceFound")
-			self.adapter.HandleSignal(self.on_property_changed, "PropertyChanged")
-			self.adapter.HandleSignal(self.on_device_created, "DeviceCreated")
-			self.adapter.HandleSignal(self.on_device_removed, "DeviceRemoved")
-			self.__adapter_path = self.adapter.GetObjectPath()
-		except:
-			self.adapter = None
+			self.Adapter = self.Manager.GetAdapter(adapter)
+			self.Adapter.HandleSignal(self.on_device_found, "DeviceFound")
+			self.Adapter.HandleSignal(self.on_property_changed, "PropertyChanged")
+			self.Adapter.HandleSignal(self.on_device_created, "DeviceCreated")
+			self.Adapter.HandleSignal(self.on_device_removed, "DeviceRemoved")
+			self.__adapter_path = self.Adapter.GetObjectPath()
+			
+			
+			gobject.timeout_add(50, self.emit, "adapter-changed", self.__adapter_path)
+			#self.emit("adapter-changed", self.__adapter_path)
+		except Bluez.errors.DBusNoSuchAdapterError:
+			self.Adapter = None
+			self.emit("adapter-changed", None)
+			
+		self.clear()
 			
 
 		
@@ -284,21 +313,28 @@ class device_list(generic_list):
 	
 	def DisplayKnownDevices(self):
 		self.clear()
-		devices = self.adapter.ListDevices()
+		devices = self.Adapter.ListDevices()
+		print "devices", devices
 		for device in devices:
 			self.device_add_event(Device(device))
 	
 	def DiscoverDevices(self, time=10):
 		self.__discovery_time = 0
-		self.adapter.StartDiscovery()
+		self.Adapter.StartDiscovery()
 		self.discovering = True
 		T = 1.0/24*1000 #24fps
 		gobject.timeout_add(int(T), self.update_progress, T/1000, time)
 
+	def IsValidAdapter(self):
+		if self.Adapter == None:
+			return False
+		else:
+			return True
+		
 		
 	def StopDiscovery(self):
 		self.discovering = False
-		self.adapter.StopDiscovery()
+		self.Adapter.StopDiscovery()
 	
 	def PrependDevice(self, device):
 		self.add_device(device, False)
@@ -327,6 +363,7 @@ class device_list(generic_list):
 			self.RemoveDevice(device, iter)
 			
 		self.emit("device-selected", None, None)
+		self.liststore.clear()
 	
 	
 	
