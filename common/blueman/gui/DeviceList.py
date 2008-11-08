@@ -58,13 +58,14 @@ class DeviceList(GenericList):
 
 	def __init__(self, adapter=None, tabledata=[]):
 		def on_adapter_removed(path):
-			gobject.timeout_add(50, self.emit, "adapter-removed", path)
+			self.emit("adapter-removed", path)
 			if path == self.__adapter_path:
 				self.clear()
 				self.SetAdapter()	
 				
 		def on_adapter_added(path):
 			gobject.timeout_add(50, self.emit, "adapter-added", path)
+			#self.emit("adapter-added", path)
 			if self.Adapter == None:
 				self.SetAdapter(path)	
 		
@@ -124,6 +125,7 @@ class DeviceList(GenericList):
 		
 	
 	def on_property_changed(self, key, value):
+		print "adapter propery changed"
 		self.emit("adapter-property-changed", self.Adapter, (key, value))
 				
 				

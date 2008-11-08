@@ -40,8 +40,12 @@ _ = gettext.gettext
 class BluemanApplet:
 
 	def __init__(self):
-		icon_pixbuf = get_icon('blueman')
-		self.status_icon = gtk.status_icon_new_from_pixbuf(icon_pixbuf)
+		ic = gtk.icon_theme_get_default()
+		ic.prepend_search_path(ICON_PATH)
+		ic.prepend_search_path(ICON_PATH + "/devices")
+		ic.prepend_search_path(ICON_PATH + "/signal")
+		
+		self.status_icon = gtk.status_icon_new_from_icon_name("blueman")
 		self.status_icon.connect('popup-menu', self.on_popup_menu)
 		self.build_popup_menu()
 		
