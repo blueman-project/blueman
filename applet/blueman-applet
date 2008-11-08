@@ -61,8 +61,7 @@ class BluemanApplet:
 			self.Manager = Bluez.Manager('gobject')
 			self.Manager.HandleSignal(self.on_adapter_removed, 'AdapterRemoved')
 			self.Manager.HandleSignal(self.on_adapter_added, 'AdapterAdded')
-			if self.Manager.ListAdapters() == []:
-				self.status_icon.set_visible(False)
+			self.status_icon.set_visible(self.Manager.ListAdapters() != [])
 		except:
 			self.Manager = None
 			self.status_icon.set_visible(False)
