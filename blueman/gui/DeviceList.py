@@ -64,10 +64,21 @@ class DeviceList(GenericList):
 				self.SetAdapter()	
 				
 		def on_adapter_added(path):
-			gobject.timeout_add(50, self.emit, "adapter-added", path)
+			def property_changed(key, val):
+				if key == "Powered":
+					self.emit("adapter-added", path)
+					a.UnHandleSignal(property_changed, "PropertyChanged")
+						
+					if self.Adapter == None:
+						self.SetAdapter(path)	
+
+								
+			
+			a = Bluez.Adapter(path)
+			a.HandleSignal(property_changed, "PropertyChanged")
+			#gobject.timeout_add(50, self.emit, "adapter-added", path)
 			#self.emit("adapter-added", path)
-			if self.Adapter == None:
-				self.SetAdapter(path)	
+
 		
 		
 		try:
@@ -209,6 +220,7 @@ class DeviceList(GenericList):
 	
 	
 	def SetAdapter(self, adapter=None):
+		self.clear()
 		
 		if adapter != None:
 			adapter = adapter_path_to_name(adapter)
@@ -229,13 +241,13 @@ class DeviceList(GenericList):
 			self.__adapter_path = self.Adapter.GetObjectPath()
 			
 			
-			gobject.timeout_add(50, self.emit, "adapter-changed", self.__adapter_path)
-			#self.emit("adapter-changed", self.__adapter_path)
+			#gobject.timeout_add(50, self.emit, "adapter-changed", self.__adapter_path)
+			self.emit("adapter-changed", self.__adapter_path)
 		except Bluez.errors.DBusNoSuchAdapterError:
 			self.Adapter = None
 			self.emit("adapter-changed", None)
 			
-		self.clear()
+		
 			
 
 		
@@ -282,7 +294,6 @@ class DeviceList(GenericList):
 			else:
 				iter = self.liststore.prepend()
 
-			
 			self.set(iter, device=device)
 			self.row_setup_event(iter, device)
 			
@@ -291,7 +302,7 @@ class DeviceList(GenericList):
 				self.set(iter, dbus_path=device.GetObjectPath())
 			except:
 				pass
-			
+
 			if not "Fake" in props:
 				device.HandleSignal(self.on_device_property_changed, "PropertyChanged", path_keyword="path")
 				if props["Connected"]:
@@ -314,7 +325,6 @@ class DeviceList(GenericList):
 	def DisplayKnownDevices(self):
 		self.clear()
 		devices = self.Adapter.ListDevices()
-
 		for device in devices:
 			self.device_add_event(Device(device))
 	
@@ -357,13 +367,15 @@ class DeviceList(GenericList):
 				device.UnHandleSignal(self.on_device_property_changed, "PropertyChanged")
 				
 	def clear(self):
-		for i in self.liststore:
-			iter = i.iter
-			device = self.get(iter, "device")["device"]
-			self.RemoveDevice(device, iter)
-			
-		self.emit("device-selected", None, None)
-		self.liststore.clear()
+		if len(self.liststore):
+			print "clearing2"
+			for i in self.liststore:
+				iter = i.iter
+				device = self.get(iter, "device")["device"]
+				self.RemoveDevice(device, iter)
+			self.liststore.clear()
+			self.emit("device-selected", None, None)
+		
 	
 	
 	

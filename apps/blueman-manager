@@ -57,7 +57,7 @@ class Blueman:
 		
 		#if self.List.IsValidAdapter():
 		#	self.List.DisplayKnownDevices()
-		
+		self.List.DisplayKnownDevices()
 		
 		self.Toolbar = ManagerToolbar(self)
 		self.Menu = ManagerMenu(self)
@@ -76,7 +76,6 @@ class Blueman:
 		
 	def add_device(self, device):
 		pass
-		
 			
 	def remove_device(self, device):
 		pass
@@ -91,6 +90,16 @@ class Blueman:
 		pass
 		
 	def toggle_trust(self, device):
+		pass
+		
+	def send(self, device, File=None):
+		pass
+		
+		
+	def browse(self, device):
+		pass
+		
+	def disconnect(self, device):
 		pass
 
 		

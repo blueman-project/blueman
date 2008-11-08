@@ -56,9 +56,14 @@ class ManagerMenu:
 
 	def on_device_selected(self, List, device, iter):
 		if iter and device:
-			x = gtk.Menu()
-			self.item_device.set_submenu(x)
-			a = ManagerDeviceMenu(self.blueman, x)
+			sub = self.item_device.get_submenu()
+			if sub == None:
+				print "init"
+				x = ManagerDeviceMenu(self.blueman)
+				self.item_device.set_submenu(x)
+			else:
+				print "Regen"
+				sub.Generate()
 
 
 	def on_adapter_property_changed(self, list, adapter, kv):

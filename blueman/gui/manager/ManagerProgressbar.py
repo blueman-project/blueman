@@ -27,7 +27,7 @@ class ManagerProgressbar(gobject.GObject):
 	__gsignals__ = {
 		'cancelled' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
 	}
-	def __init__(self, blueman):
+	def __init__(self, blueman, cancellable=True):
 		def on_enter(evbox, event):
 			c = gtk.gdk.Cursor( gtk.gdk.HAND2)
 			self.window.window.set_cursor(c)
@@ -36,17 +36,22 @@ class ManagerProgressbar(gobject.GObject):
 			self.window.window.set_cursor(None)
 			
 		def on_clicked(evbox, event):
-			self.button.props.sensitive = False
+			self.eventbox.props.sensitive = False
 			self.emit("cancelled")
 		
 		gobject.GObject.__init__(self)
-		hbox = blueman.Builder.get_object("statusbar_hb")
+		
+		self.cancellable = cancellable
+		
+		self.hbox = hbox = blueman.Builder.get_object("statusbar_hb")
 		
 		self.progressbar = gtk.ProgressBar()
 		self.seperator = gtk.VSeparator()
-		self.button = gtk.image_new_from_pixbuf(get_icon("gtk-stop", 16))
 		
-		eventbox = gtk.EventBox()
+
+		self.button = gtk.image_new_from_pixbuf(get_icon("gtk-stop", 16))
+	
+		self.eventbox = eventbox = gtk.EventBox()
 		eventbox.add(self.button)
 		eventbox.connect("enter-notify-event", on_enter)
 		eventbox.connect("leave-notify-event", on_leave)
@@ -56,20 +61,55 @@ class ManagerProgressbar(gobject.GObject):
 		self.progressbar.set_size_request(100, 15)
 		self.progressbar.set_ellipsize(pango.ELLIPSIZE_END)
 		self.progressbar.set_text("Connecting")
+		self.progressbar.set_pulse_step(0.05)
 		
 		self.window = blueman.Builder.get_object("window")
 
-		
 		hbox.pack_end(eventbox, False, False)
 		hbox.pack_end(self.progressbar, False, False)
 		hbox.pack_end(self.seperator, False, False)
 		hbox.show_all()
 		
+		if not self.cancellable:
+			self.eventbox.props.visible = False
+		
+		self.gsource = None
+		self.finalized = False
+		
+	def finalize(self):
+		if not self.finalized:
+			self.stop()
+
+			self.hbox.remove(self.eventbox)
+			self.hbox.remove(self.progressbar)
+			self.hbox.remove(self.seperator)
+			self.finalized = True
 		
 		
+	def set_cancellable(self, b, hide=False):
+		if b:
+			self.eventbox.props.visible = True
+			self.eventbox.props.sensitive = True
+		else:
+			if hide:
+				self.eventbox.props.visible = False
+			else:
+				self.eventbox.props.sensitive = False
+		
+	def set_label(self, label):
+		self.progressbar.props.text = label
+		
+	def fraction(self, frac):
+		pass
 	
 	def start(self):
-		pass
+		def pulse():
+			self.progressbar.pulse()
+			return True
+		
+		self.gsource = gobject.timeout_add(1000/24, pulse)
 	
 	def stop(self):
-		pass
+		if self.gsource != None:
+			gobject.source_remove(self.gsource)
+		self.progressbar.set_fraction(0.0)

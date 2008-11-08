@@ -104,11 +104,17 @@ class HalManager(dbus.proxies.Interface):
 			
 			self.Remove(dev)
 			
-	def unregister(self, device_file):
+			
+	def unregister_dev(self, device_file):
 		ports = self.FindDeviceStringMatch("serial.device", device_file)
 		for port in ports:
 			self.Remove(port)
 			
+	def unregister_addr(self, dev_address):
+		ports = self.FindDeviceStringMatch("info.bluetooth_address", device_file)
+		for port in ports:
+			self.Remove(port)
+	
 	def exists(self, device_file):
 		ports = self.FindDeviceStringMatch("serial.device", device_file)
 		return len(ports) > 0

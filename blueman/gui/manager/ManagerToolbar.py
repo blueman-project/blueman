@@ -42,6 +42,7 @@ class ManagerToolbar:
 		pass
 		
 	def on_adapter_changed(self, list, adapter_path):
+		print "toolbar adapter", adapter_path
 		if adapter_path == None:
 			self.b_search.props.sensitive = False
 		else:

@@ -1,0 +1,173 @@
+#!/usr/bin/python 
+import sys
+sys.path = ["/home/walmis/Desktop/trunk"] + sys.path
+
+import dbus
+import dbus.service
+from dbus.mainloop.glib import DBusGMainLoop
+
+import gobject
+import os
+import subprocess
+import re
+
+
+from blueman.main.NetConf import *
+from blueman.main.HalManager import HalManager
+
+timeout = 20
+time = 0
+
+
+
+def timer(*args):
+	global time
+	time+=1
+	if time == timeout:
+		loop.quit()
+		
+	return True
+
+class conf_service(dbus.service.Object):
+	def __init__(self):
+
+		self.bus = dbus.SystemBus();
+		self.bus.request_name("org.blueman.Mechanism")
+		dbus.service.Object.__init__(self, self.bus, "/")
+		
+		service = self.bus.get_object('org.freedesktop.PolicyKit', '/')
+		self.polkit = dbus.Interface(service, 'org.freedesktop.PolicyKit')
+
+
+	def confirm_authorization(self, busname, action_id):
+		global time
+		time = 0
+		res = self.polkit.IsSystemBusNameAuthorized(action_id, busname, False)
+		
+		if res != "yes":
+			raise dbus.DBusException, "Not authorized"
+	
+	
+	
+	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="sbs", out_signature="b", sender_keyword="caller")
+
+	def NetworkSetup(self, ip_address, allow_nat, server_type, caller):
+		self.confirm_authorization(caller, "org.blueman.network.setup")
+	
+		if ip_address == "0":
+			if server_type == "dnsmasq":
+				nc = NetConfDnsMasq(None)
+			else:
+				nc = NetConfDhcpd(None)
+			
+			nc.uninstall()
+			return True
+		else:
+			if ip_chk(ip_address):
+
+				if server_type == "dnsmasq":
+					nc = NetConfDnsMasq(ip_address, allow_nat)
+				else:
+					nc = NetConfDhcpd(ip_address, allow_nat)
+		
+				nc.install()
+
+				return True
+			else:
+				return dbus.DBusException("IP Invalid")
+				
+	
+	
+	@dbus.service.signal(dbus_interface='org.blueman.Mechanism', signature='ss')
+	def dhcpStatus(self, interface, status_str):
+		pass
+
+	@dbus.service.signal(dbus_interface='org.blueman.Mechanism', signature='sus')
+	def dhcpReturn(self, interface, return_code, bound_to):
+		pass
+
+
+
+
+
+	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="s", out_signature="", sender_keyword="caller")
+
+	def dhcpClient(self, net_interface, caller):
+		global bound_to
+		self.confirm_authorization(caller, "org.blueman.dhcp.client")
+		
+		bound_to = "None"
+	
+		rxp = re.compile("bound to (\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) .*")
+		
+		
+		p = subprocess.Popen("dhclient -1 %s" % net_interface, shell=True, bufsize=128, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+
+		def io_callback(source, condition):
+			global time, bound_to
+			time = 0
+			line = p.stdout.readline()
+			
+			match = rxp.search(line)
+
+			if match:
+				bound_to = match.groups()[0]
+			
+			#line = line.strip("\n")
+			
+			self.dhcpStatus(net_interface, line)
+			
+			if condition != gobject.IO_IN:
+				return False
+	
+			return True
+
+		def child_closed(pid, cond):
+			global bound_to
+			print "closed ", cond
+			self.dhcpReturn(net_interface, int(cond), bound_to)
+
+
+		gobject.io_add_watch(p.stdout, gobject.IO_IN | gobject.IO_HUP | gobject.IO_ERR, io_callback)
+
+		gobject.child_watch_add(p.pid, child_closed)
+
+
+			
+	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="ss", out_signature="b")	
+	def HalRegisterModemPort(self, rfcomm_device, bd_addr):
+		halmgr = HalManager()
+		print "** Registering modem"
+		halmgr.register(rfcomm_device, bd_addr)
+
+
+	
+	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="s", out_signature="")
+	def HalUnregisterModemPortAddr(self, address):
+		halmgr = HalManager()
+		print "** Unregistering modem"
+		halmgr.unregister_addr(address)
+		
+	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="s", out_signature="")
+	def HalUnregisterModemPortDev(self, rfcomm_device):
+		halmgr = HalManager()
+		print "** Unregistering modem"
+		halmgr.unregister_dev(rfcomm_device)
+		
+	
+	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="", out_signature="b")
+	def HalUnregisterAllModemPorts(self):
+		pass
+		
+	
+
+DBusGMainLoop(set_as_default=True)
+loop = gobject.MainLoop()
+
+conf_service()
+gobject.timeout_add(1000, timer)
+
+
+loop.run()
+

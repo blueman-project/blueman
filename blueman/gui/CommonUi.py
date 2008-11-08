@@ -55,3 +55,4 @@ def show_about_dialog(app_name):
 	about.run()
 	about.destroy()
 
+

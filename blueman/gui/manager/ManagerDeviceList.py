@@ -25,7 +25,8 @@ from blueman.DeviceClass import get_minor_class
 
 import gtk
 from blueman.Constants import *
-from blueman.Functions import get_icon
+from blueman.Functions import *
+
 
 import gettext
 _ = gettext.gettext
@@ -46,7 +47,7 @@ class ManagerDeviceList(DeviceList):
 			["tpl_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":4}, None, {"spacing": 0}],
 			
 			#trusted/bonded icons
-			["tb_icons", 'PyObject', CellRendererPixbufTable(), {"pixbuffs":5}, None],
+			#["tb_icons", 'PyObject', CellRendererPixbufTable(), {"pixbuffs":5}, None],
 			
 			["connected", bool], #used for quick access instead of device.GetProperties
 			["bonded", bool], #used for quick access instead of device.GetProperties
@@ -70,31 +71,32 @@ class ManagerDeviceList(DeviceList):
 		self.tooltip_col = None
 		
 	
-	def level_setup_event(self, iter, device, cinfo):
-
-		return True
+	def get_device_icon(self, klass):
+		return get_icon("blueman-"+klass.replace(" ", "-").lower(), 48)
 	
 	def row_setup_event(self, iter, device):
 		props = device.GetProperties()
 
 			
+
 		try:
 			klass = get_minor_class(props["Class"])
 		except:
 			klass = "Unknown"
-			
-
-		icon = get_icon("blueman-"+klass, 48)
+		
+		icon = self.get_device_icon(klass)
+		
 		
 		if "Fake" in props:
 			self.set(iter, fake=True)
+			fake = True
 		else:
 			self.set(iter, fake=False)
-		
+			fake = False
 			
-		tab = PixbufTable(spacingy=2)
-
-		self.set(iter, tb_icons=tab)
+			
+		icon = make_device_icon(icon, "Paired" in props and props["Paired"], "Trusted" in props and props["Trusted"], fake) 
+		
 
 		name = props["Alias"]
 		address = props["Address"]
@@ -115,23 +117,27 @@ class ManagerDeviceList(DeviceList):
 
 		if key == "Trusted":
 			if value:
-				pbs = self.get(iter, "tb_icons")["tb_icons"]
-				pbs.set("trusted", get_icon("gtk-yes", 24))
-				self.set(iter, tb_icons=pbs, trusted=True)
+				#pbs = self.get(iter, "tb_icons")["tb_icons"]
+				#pbs.set("trusted", get_icon("gtk-yes", 24))
+				#self.set(iter, tb_icons=pbs, trusted=True)
+				pass
 			else:
-				pbs = self.get(iter, "tb_icons")["tb_icons"]
-				pbs.set("trusted", None)
-				self.set(iter, tb_icons=pbs, trusted=False)
+				pass
+				#pbs = self.get(iter, "tb_icons")["tb_icons"]
+				#pbs.set("trusted", None)
+				#self.set(iter, tb_icons=pbs, trusted=False)
 		
 		elif key == "Paired":
 			if value:
-				pbs = self.get(iter, "tb_icons")["tb_icons"]
-				pbs.set("bonded", get_icon("gtk-dialog-authentication", 24))
-				self.set(iter, tb_icons=pbs, bonded=True)
+				#pbs = self.get(iter, "tb_icons")["tb_icons"]
+				#pbs.set("bonded", get_icon("gtk-dialog-authentication", 24))
+				#self.set(iter, tb_icons=pbs, bonded=True)
+				pass
 			else:
-				pbs = self.get(iter, "tb_icons")["tb_icons"]
-				pbs.set("bonded", None)
-				self.set(iter, tb_icons=pbs, bonded=False)
+				#pbs = self.get(iter, "tb_icons")["tb_icons"]
+				#pbs.set("bonded", None)
+				#self.set(iter, tb_icons=pbs, bonded=False)
+				pass
 				
 				
 	
@@ -180,19 +186,21 @@ class ManagerDeviceList(DeviceList):
 				self.tooltip_col = path[1]
 				return False
 			
-			if path[1] == self.columns["tb_icons"]:
+			if path[1] == self.columns["device_pb"]:
 				iter = self.get_iter(path[0][0])
-
+				
 				row = self.get(iter, "trusted", "bonded")
 				trusted = row["trusted"]
 				bonded = row["bonded"]
-				
+				print trusted, bonded
 				if trusted and bonded:
 					tooltip.set_markup(_("<b>Trusted and Bonded</b>"))
 				elif bonded:
 					tooltip.set_markup(_("<b>Bonded</b>"))
 				elif trusted:
 					tooltip.set_markup(_("<b>Trusted</b>"))
+				else:
+					return False
 				
 					
 				self.tooltip_row = path[0][0]

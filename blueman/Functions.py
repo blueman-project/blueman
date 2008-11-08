@@ -39,3 +39,29 @@ def get_icon(name, size=24):
 	
 def adapter_path_to_name(path):
 	return re.search(".*(hci[0-9]*)", path).groups(0)[0]
+	
+
+
+def make_device_icon(target, is_bonded=False, is_trusted=False, is_discovered=False):
+	sources = []
+	if is_bonded:
+		sources.append((get_icon("gtk-dialog-authentication", 16), 0, 0, 200))
+		
+	if is_trusted:
+		sources.append((get_icon("gtk-yes", 16), 0, 32, 200))
+	
+	if is_discovered:
+		sources.append((get_icon("gtk-search", 24), 24, 0, 255))
+
+	return composite_icon(target, sources)
+
+
+#pixbuf, [(pixbuf, x, y, alpha), (pixbuf, x, y, alpha)]
+
+def composite_icon(target, sources):
+	
+	for source in sources:
+
+		source[0].composite(target, source[1], source[2], source[0].get_width(), source[0].get_height(), source[1], source[2], 1, 1, gtk.gdk.INTERP_NEAREST, source[3])
+		
+	return target
