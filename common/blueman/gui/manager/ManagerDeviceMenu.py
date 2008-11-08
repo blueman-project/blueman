@@ -17,6 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 
+import gobject
 import gtk
 from blueman.Sdp import *
 from blueman.Functions import *
@@ -24,9 +25,13 @@ from blueman.Functions import *
 import gettext
 _ = gettext.gettext
 
-class ManagerDeviceMenu:
-
+class ManagerDeviceMenu(gobject.GObject):
+	__gsignals__ = {
+		'regenerate' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
+	}
 	def __init__(self, blueman, menushell=None):
+		gobject.GObject.__init__(self)
+		
 		if menushell == None:
 			self.Menu = gtk.Menu()
 		else:
@@ -84,8 +89,6 @@ class ManagerDeviceMenu:
 					
 				if name == "input":
 					sprops = service.GetProperties()
-					print props
-					print sprops
 					if sprops["Connected"]:
 						item = self.create_menuitem(_("Disconnect Input Service"), get_icon("mouse", 16))
 					else:
@@ -95,14 +98,50 @@ class ManagerDeviceMenu:
 					
 				if name == "network":
 					sprops = service.GetProperties()
+					uuids = props["UUIDs"]
 					
-					print sprops
-					if sprops["Connected"]:
-						item = self.create_menuitem(_("Disconnect Network Service"), get_icon("network", 16))
-					else:
-						item = self.create_menuitem(_("Connect Network Service"), get_icon("network", 16))
+					item = self.create_menuitem(_("Network Access"), get_icon("network", 16))
 					item.show()
 					self.Menu.append(item)
-				
-			print "real device"
+					sub = gtk.Menu()
+					sub.show()
+					item.set_submenu(sub)
+					
+					for uuid in uuids:
+
+						uuid16 = uuid128_to_uuid16(uuid)
+						if uuid16 == SERIAL_PORT_SVCLASS_ID:
+							item = self.create_menuitem(_("Group Network"), get_icon("modem", 16))
+							sub.append(item)
+							item.show()
+							
+						if uuid16 == DIALUP_NET_SVCLASS_ID:
+							item = self.create_menuitem(_("Network Access Point"), get_icon("modem", 16))
+							sub.append(item)
+							item.show()
+					
+					
+
+					
+				if name == "headset":
+					sprops = service.GetProperties()
+					
+					if sprops["Connected"]:
+						item = self.create_menuitem(_("Disconnect Headset Service"), get_icon("audio", 16))
+					else:
+						item = self.create_menuitem(_("Connect Headset Service"), get_icon("audio", 16))
+					item.show()
+					self.Menu.append(item)
+					
+
+				if name == "audiosink":
+					sprops = service.GetProperties()
+					
+					if sprops["Connected"]:
+						item = self.create_menuitem(_("Disconnect A2DP Service"), get_icon("audio", 16))
+					else:
+						item = self.create_menuitem(_("Connect A2DP Service"), get_icon("audio", 16))
+					item.show()
+					self.Menu.append(item)
+
 		
