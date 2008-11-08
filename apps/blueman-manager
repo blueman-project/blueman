@@ -19,21 +19,21 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 
- 
+
+import os.path
 import sys
-
-sys.path = ["../"] + sys.path
-
 import gtk
+
+#support running uninstalled
+_dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if os.path.exists(os.path.join(_dirname,"ChangeLog")):
+	sys.path.insert(0, _dirname)
 
 from blueman.Constants import *
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 from blueman.gui.manager.ManagerToolbar import ManagerToolbar
 from blueman.gui.manager.ManagerMenu import ManagerMenu
 from blueman.gui.manager.ManagerStats import ManagerStats
-
-
-
 
 
 class Blueman:

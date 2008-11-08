@@ -22,13 +22,15 @@
 import sys
 from subprocess import *
 import os.path
-
-sys.path = ["../"] + sys.path
-
 import gtk
 
-from blueman.Constants import *
+#support running uninstalled
+_dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if os.path.exists(os.path.join(_dirname,"ChangeLog")):
+	sys.path.insert(0, _dirname)
+
 from blueman.Functions import *
+from blueman.Constants import *
 import dbus
 import dbus.glib
 import blueman.bluez as Bluez
