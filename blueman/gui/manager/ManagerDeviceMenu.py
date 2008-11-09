@@ -320,30 +320,43 @@ class ManagerDeviceMenu(gtk.Menu):
 			item = gtk.SeparatorMenuItem()
 			item.show()
 			self.append(item)
-			found = False
+
+			send_item = self.create_menuitem(_("Send a file..."), get_icon("gtk-copy", 16))
+			send_item.props.sensitive = False
+			self.append(send_item)
+			send_item.show()
+			
+			browse_item = self.create_menuitem(_("Browse device..."), get_icon("gtk-open", 16))
+			browse_item.props.sensitive = False
+			self.append(browse_item)
+			browse_item.show()			
+
 			for uuid in uuids:
 				uuid16 = uuid128_to_uuid16(uuid)
 				if uuid16 == OBEX_OBJPUSH_SVCLASS_ID:
-					item = self.create_menuitem(_("Send a file..."), get_icon("gtk-copy", 16))
-					self.append(item)
-					item.show()
-					found = True
+					#connect
+					send_item.props.sensitive = True
+
 					
 				if uuid16 == OBEX_FILETRANS_SVCLASS_ID:
-					item = self.create_menuitem(_("Browse device..."), get_icon("gtk-open", 16))
-					self.append(item)
-					item.show()
-					found = True
+					#connect
+					browse_item.props.sensitive = True
+
 					
-			if found:
-				item = gtk.SeparatorMenuItem()
-				item.show()
-				self.append(item)
-					
+
+			item = gtk.SeparatorMenuItem()
+			item.show()
+			self.append(item)
+			
+			item = self.create_menuitem(_("Bond"), get_icon("gtk-dialog-authentication", 16))
+			self.append(item)
+			item.show()
 			if not props["Paired"]:
-				item = self.create_menuitem(_("Bond"), get_icon("gtk-dialog-authentication", 16))
-				self.append(item)
-				item.show()
+				#connect
+				pass
+			else:
+				item.props.sensitive = False
+
 				
 			if not props["Trusted"]:
 				item = self.create_menuitem(_("Trust"), get_icon("blueman-trust", 16))
@@ -366,13 +379,19 @@ class ManagerDeviceMenu(gtk.Menu):
 			self.append(item)
 			item.show()
 			
+			item = gtk.SeparatorMenuItem()
+			item.show()
+			self.append(item)
+			
+			item = self.create_menuitem(_("Disconnect Device"), get_icon("gtk-disconnect", 16))
+			self.append(item)
+			item.show()
 			if props["Connected"]:
-				item = gtk.SeparatorMenuItem()
-				item.show()
-				self.append(item)
+				#connect
+				pass
+			else:
+				item.props.sensitive = False
 				
-				item = self.create_menuitem(_("Disconnect Device"), get_icon("gtk-disconnect", 16))
-				self.append(item)
-				item.show()
+
 
 		
