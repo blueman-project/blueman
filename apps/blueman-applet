@@ -22,6 +22,10 @@
 import sys
 from subprocess import *
 import os.path
+import pynotify
+import dbus
+import dbus.glib
+import gobject
 import gtk
 
 #support running uninstalled
@@ -32,8 +36,6 @@ if os.path.exists(os.path.join(_dirname,"ChangeLog")):
 from blueman.Functions import *
 from blueman.main.applet.DbusService import DbusService
 from blueman.Constants import *
-import dbus
-import dbus.glib
 import blueman.bluez as Bluez
 from blueman.gui.CommonUi import show_about_dialog
 import gettext
@@ -44,7 +46,10 @@ class BluemanApplet:
 
 	def __init__(self):
 		setup_icon_path()
+		if not pynotify.init("Blueman"):
+			print 'Error: Failed to init pynotify'
 		
+		self.status_icon = gtk.StatusIcon()
 		self.status_icon = gtk.status_icon_new_from_icon_name("bluetooth")
 		self.status_icon.connect('popup-menu', self.on_popup_menu)
 		self.build_popup_menu()
@@ -140,5 +145,18 @@ class BluemanApplet:
 		
 	def on_about(self, menu_item):
 		show_about_dialog('Blueman '+_('applet'))
+		
+	def show_notification(self, summary, message, timeout=-1, action=None, action_cb=None):
+		n = pynotify.Notification(summary, message)
+		if action:
+			n.add_action("button", action, action_cb)
+		if timeout != -1:
+			n.set_timeout(timeout)
+		if self.status_icon.get_visible():
+			screen, area, orientation = self.status_icon.get_geometry()
+			n.set_hint("x", area.x + area.width/2)
+			n.set_hint("y", area.y + area.height)
+		n.show()
 
 BluemanApplet()
+
