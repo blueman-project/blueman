@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <interface>
+  <requires lib="gtk+" version="2.14"/>
   <!-- interface-naming-policy project-wide -->
   <object class="GtkWindow" id="window">
     <property name="title" translatable="yes">Bluetoth Devices</property>
@@ -166,17 +167,30 @@
             <property name="left_padding">2</property>
             <property name="right_padding">2</property>
             <child>
-              <object class="GtkHBox" id="statusbar_hb">
+              <object class="GtkHBox" id="hbox1">
                 <property name="visible">True</property>
-                <property name="spacing">2</property>
                 <child>
-                  <object class="GtkLabel" id="statusbar_label">
+                  <object class="GtkHBox" id="statusbar1_hb">
                     <property name="visible">True</property>
-                    <property name="xalign">0</property>
-                    <property name="xpad">8</property>
+                    <property name="spacing">2</property>
+                    <child>
+                      <placeholder/>
+                    </child>
                   </object>
                   <packing>
                     <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkHBox" id="statusbar2_hb">
+                    <property name="visible">True</property>
+                    <property name="spacing">2</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="position">1</property>
                   </packing>
                 </child>
               </object>
