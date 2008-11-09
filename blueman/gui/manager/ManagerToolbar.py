@@ -27,19 +27,36 @@ class ManagerToolbar:
 		self.blueman.List.connect("device-selected", self.on_device_selected)
 		self.blueman.List.connect("device-property-changed", self.on_device_propery_changed)
 		self.blueman.List.connect("adapter-changed", self.on_adapter_changed)
+		self.blueman.List.connect("adapter-property-changed", self.on_adapter_property_changed)
 		
 		self.b_search = blueman.Builder.get_object("b_search")
-		self.b_search.connect("clicked", self.on_search_clicked)
+		self.b_search.connect("clicked", lambda button: blueman.inquiry())
 		
 		self.b_bond = blueman.Builder.get_object("b_bond")
 		self.b_trust = blueman.Builder.get_object("b_trust")
 		self.b_remove = blueman.Builder.get_object("b_remove")
 		self.b_add = blueman.Builder.get_object("b_add")
+		self.b_add.connect("clicked", self.on_add)
 		self.b_setup = blueman.Builder.get_object("b_setup")
 		
+		if blueman.List.IsValidAdapter():
+			self.b_search.props.sensitive = True
 		
-	def on_search_clicked(self, button):
-		pass
+	def on_add(self, button):
+		selected = self.blueman.List.selected()
+		if selected != None:
+			row = self.blueman.List.get(selected, "device")
+			device = row["device"]
+			if device.Fake:
+				self.blueman.add_device(device)
+		
+		
+	def on_adapter_property_changed(self, List, adapter, (key, value)):
+		if key == "Discovering":
+			if value:
+				self.b_search.props.sensitive = False
+			else:
+				self.b_search.props.sensitive = True
 		
 	def on_adapter_changed(self, list, adapter_path):
 		print "toolbar adapter", adapter_path
@@ -79,6 +96,7 @@ class ManagerToolbar:
 				self.b_bond.props.sensitive = True
 			else:
 				self.b_remove.props.sensitive = True
+				self.b_add.props.sensitive = False
 			
 	def on_device_propery_changed(self, dev_list, device, iter, kv):
 		(key, value) = kv

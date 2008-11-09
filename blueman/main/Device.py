@@ -32,6 +32,7 @@ class Device:
 		self.Class = self.GetProperties()["Class"]
 		
 		if not "Fake" in self.Device.GetProperties():
+			self.Fake = False
 			services = self.Device.ListServiceInterfaces()
 			
 			for service in services:
@@ -43,4 +44,6 @@ class Device:
 			self.HandleSignal = self.Device.HandleSignal
 			self.UnHandleSignal = self.Device.UnHandleSignal
 			self.GetObjectPath = self.Device.GetObjectPath
+		else:
+			self.Fake = True
 

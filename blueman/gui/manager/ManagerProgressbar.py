@@ -27,7 +27,7 @@ class ManagerProgressbar(gobject.GObject):
 	__gsignals__ = {
 		'cancelled' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
 	}
-	def __init__(self, blueman, cancellable=True):
+	def __init__(self, blueman, cancellable=True, text="Connecting"):
 		def on_enter(evbox, event):
 			c = gtk.gdk.Cursor( gtk.gdk.HAND2)
 			self.window.window.set_cursor(c)
@@ -60,7 +60,7 @@ class ManagerProgressbar(gobject.GObject):
 		
 		self.progressbar.set_size_request(100, 15)
 		self.progressbar.set_ellipsize(pango.ELLIPSIZE_END)
-		self.progressbar.set_text("Connecting")
+		self.progressbar.set_text(text)
 		self.progressbar.set_pulse_step(0.05)
 		
 		self.window = blueman.Builder.get_object("window")
@@ -100,7 +100,8 @@ class ManagerProgressbar(gobject.GObject):
 		self.progressbar.props.text = label
 		
 	def fraction(self, frac):
-		pass
+		if not self.finalized:
+			self.progressbar.set_fraction(frac)
 	
 	def start(self):
 		def pulse():

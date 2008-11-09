@@ -23,6 +23,13 @@ from blueman.Constants import *
 import gtk
 import re
 
+def setup_icon_path():
+	ic = gtk.icon_theme_get_default()
+	ic.prepend_search_path(ICON_PATH)
+	ic.prepend_search_path(ICON_PATH + "/devices")
+	ic.prepend_search_path(ICON_PATH + "/signal")
+	ic.prepend_search_path(ICON_PATH + "/scalable")
+
 def get_icon(name, size=24):
 	ic = gtk.icon_theme_get_default()
 	if not ICON_PATH in ic.get_search_path():
@@ -59,7 +66,7 @@ def make_device_icon(target, is_bonded=False, is_trusted=False, is_discovered=Fa
 #pixbuf, [(pixbuf, x, y, alpha), (pixbuf, x, y, alpha)]
 
 def composite_icon(target, sources):
-	
+	target = target.copy()
 	for source in sources:
 
 		source[0].composite(target, source[1], source[2], source[0].get_width(), source[0].get_height(), source[1], source[2], 1, 1, gtk.gdk.INTERP_NEAREST, source[3])

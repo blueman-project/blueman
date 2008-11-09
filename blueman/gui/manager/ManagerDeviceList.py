@@ -57,7 +57,8 @@ class ManagerDeviceList(DeviceList):
 			
 			["rssi", float],
 			["lq", float],
-			["tpl", float]
+			["tpl", float],
+			["orig_icon", 'GdkPixbuf']
 
 			
 		
@@ -74,10 +75,18 @@ class ManagerDeviceList(DeviceList):
 	def get_device_icon(self, klass):
 		return get_icon("blueman-"+klass.replace(" ", "-").lower(), 48)
 	
+	
+	def device_add_event(self, device):
+		if device.Fake:
+			self.PrependDevice(device)
+		else:
+			self.AppendDevice(device)
+			
+		
+	
 	def row_setup_event(self, iter, device):
 		props = device.GetProperties()
 
-			
 
 		try:
 			klass = get_minor_class(props["Class"])
@@ -86,23 +95,16 @@ class ManagerDeviceList(DeviceList):
 		
 		icon = self.get_device_icon(klass)
 		
-		
-		if "Fake" in props:
-			self.set(iter, fake=True)
-			fake = True
-		else:
-			self.set(iter, fake=False)
-			fake = False
-			
-			
-		icon = make_device_icon(icon, "Paired" in props and props["Paired"], "Trusted" in props and props["Trusted"], fake) 
+		#cicon = make_device_icon(icon, "Paired" in props and props["Paired"], "Trusted" in props and props["Trusted"], fake) 
 		
 
 		name = props["Alias"]
 		address = props["Address"]
 
 		caption = "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" % {"0":name, "1":klass.capitalize(), "2":address}
-		self.set(iter, caption=caption, device_pb=icon)
+		self.set(iter, caption=caption, orig_icon=icon)
+		
+		self.row_update_event(iter, "Fake", device.Fake)
 		
 		try:
 			self.row_update_event(iter, "Trusted", props["Trusted"])
@@ -116,28 +118,32 @@ class ManagerDeviceList(DeviceList):
 	def row_update_event(self, iter, key, value):
 
 		if key == "Trusted":
+			row = self.get(iter, "bonded", "orig_icon")
 			if value:
-				#pbs = self.get(iter, "tb_icons")["tb_icons"]
-				#pbs.set("trusted", get_icon("gtk-yes", 24))
-				#self.set(iter, tb_icons=pbs, trusted=True)
-				pass
+				icon = make_device_icon(row["orig_icon"], row["bonded"], True, False) 
+				self.set(iter, device_pb=icon, trusted=True)
 			else:
-				pass
-				#pbs = self.get(iter, "tb_icons")["tb_icons"]
-				#pbs.set("trusted", None)
-				#self.set(iter, tb_icons=pbs, trusted=False)
+				icon = make_device_icon(row["orig_icon"], row["bonded"], False, False) 
+				self.set(iter, device_pb=icon, trusted=False)
+			
 		
 		elif key == "Paired":
+			row = self.get(iter, "trusted", "orig_icon")
 			if value:
-				#pbs = self.get(iter, "tb_icons")["tb_icons"]
-				#pbs.set("bonded", get_icon("gtk-dialog-authentication", 24))
-				#self.set(iter, tb_icons=pbs, bonded=True)
-				pass
+				icon = make_device_icon(row["orig_icon"], True, row["trusted"], False) 
+				self.set(iter, device_pb=icon, bonded=True)
 			else:
-				#pbs = self.get(iter, "tb_icons")["tb_icons"]
-				#pbs.set("bonded", None)
-				#self.set(iter, tb_icons=pbs, bonded=False)
-				pass
+				icon = make_device_icon(row["orig_icon"], False, row["trusted"], False) 
+				self.set(iter, device_pb=icon, bonded=False)
+				
+		elif key == "Fake":
+			row = self.get(iter, "bonded", "trusted", "orig_icon")
+			if value:
+				icon = make_device_icon(row["orig_icon"], False, False, True) 
+				self.set(iter, device_pb=icon, fake=True)
+			else:
+				icon = make_device_icon(row["orig_icon"], row["bonded"], row["trusted"], False) 
+				self.set(iter, device_pb=icon, fake=False)
 				
 				
 	
@@ -192,7 +198,6 @@ class ManagerDeviceList(DeviceList):
 				row = self.get(iter, "trusted", "bonded")
 				trusted = row["trusted"]
 				bonded = row["bonded"]
-				print trusted, bonded
 				if trusted and bonded:
 					tooltip.set_markup(_("<b>Trusted and Bonded</b>"))
 				elif bonded:

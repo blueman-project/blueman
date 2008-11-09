@@ -184,5 +184,8 @@ class GenericList(gtk.TreeView):
 		return self.get_model().iter_is_valid(iter)
 		
 	def compare(self, iter_a, iter_b):
-		return self.get_model().get_path(iter_a) == self.get_model().get_path(iter_b)
+		if iter_a != None and iter_b != None:
+			return self.get_model().get_path(iter_a) == self.get_model().get_path(iter_b)
+		else:
+			return False
 

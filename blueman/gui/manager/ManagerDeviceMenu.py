@@ -44,6 +44,7 @@ class ManagerDeviceMenu(gtk.Menu):
 		#object, args,
 		self.Signals = SignalTracker()
 		
+		self.Blueman.List.connect("device-property-changed", self.on_device_property_changed)
 		self.Generate()
 
 		
@@ -166,16 +167,20 @@ class ManagerDeviceMenu(gtk.Menu):
 		
 		
 		
-	def on_device_property_changed(self, key, value):
-		if key == "Connected":
-			self.Generate()
+	def on_device_property_changed(self, List, device, iter, (key, value)):
+		if List.compare(iter, List.selected()):
+			if key == "Connected":
+				self.Generate()
+			if key == "Fake":
+				self.Generate()
 		
 	def Generate(self):
 		print "Gen"
 		self.clear()
 		
 		device = self.Blueman.List.get(self.Blueman.List.selected(), "device")["device"]
-		self.Signals.Handle(device, self.on_device_property_changed, "PropertyChanged")
+		
+		
 		op = self.get_op(device)
 		
 		if op != None:
@@ -187,12 +192,17 @@ class ManagerDeviceMenu(gtk.Menu):
 		
 		
 		props = device.GetProperties()
-		uuids = props["UUIDs"]
+		
 		if "Fake" in props:
 			print "fake device"
 			
 			
 		else:
+			
+			
+			uuids = props["UUIDs"]
+			
+			
 			for name, service in device.Services.iteritems():
 				if name == "serial":
 					
@@ -345,6 +355,14 @@ class ManagerDeviceMenu(gtk.Menu):
 				item.show()
 				
 			item = self.create_menuitem(_("Setup..."), get_icon("gtk-properties", 16))
+			self.append(item)
+			item.show()
+			
+			item = gtk.SeparatorMenuItem()
+			item.show()
+			self.append(item)
+			
+			item = self.create_menuitem(_("Remove..."), get_icon("gtk-delete", 16))
 			self.append(item)
 			item.show()
 			

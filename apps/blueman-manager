@@ -30,25 +30,24 @@ if os.path.exists(os.path.join(_dirname,"ChangeLog")):
 	sys.path.insert(0, _dirname)
 
 from blueman.Constants import *
+from blueman.Functions import *
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 from blueman.gui.manager.ManagerToolbar import ManagerToolbar
 from blueman.gui.manager.ManagerMenu import ManagerMenu
 from blueman.gui.manager.ManagerStats import ManagerStats
+from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 
 
 class Blueman:
 
 	def __init__(self):
-		#set icon path
-		ic = gtk.icon_theme_get_default()
-		ic.prepend_search_path(ICON_PATH)
-		ic.prepend_search_path(ICON_PATH + "/devices")
-		ic.prepend_search_path(ICON_PATH + "/signal")
+		setup_icon_path()
 		
 		self.Builder = gtk.Builder()
 		self.Builder.add_from_file(UI_PATH +"/manager-main.ui")
 
 		window = self.Builder.get_object("window")
+		window.props.icon_name = "bluetooth"
 		sw = self.Builder.get_object("scrollview")
 		
 		self.List = ManagerDeviceList()
@@ -75,13 +74,34 @@ class Blueman:
 			self.List.DisplayKnownDevices()
 		
 	def add_device(self, device):
-		pass
+		def ok(*args):
+			print args
+			prog.finalize()
+		
+		def err(*args):
+			prog.finalize()
+		
+		address = device.GetProperties()["Address"]
+		adapter = self.List.Adapter
+		
+		prog = ManagerProgressbar(self, text="Adding")
+		prog.start()
+		adapter.CreateDevice(address, reply_handler=ok, error_handler=err)
 			
 	def remove_device(self, device):
 		pass
 		
 	def inquiry(self):
-		pass
+		def prop_changed(List, adapter, kv):	
+			(key, value) = kv
+			if key == "Discovering" and not value:
+				prog.finalize()
+				
+		prog = ManagerProgressbar(self, text="Searching")
+		prog.connect("cancelled", lambda x: self.List.StopDiscovery())
+		self.List.DiscoverDevices()
+		self.List.connect("discovery-progress", lambda x,y: prog.fraction(y))
+		self.List.connect("adapter-property-changed", prop_changed)
 		
 	def setup(self, device):
 		pass

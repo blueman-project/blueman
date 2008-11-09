@@ -41,6 +41,7 @@ class ManagerMenu:
 		
 		self.item_adapter.show()
 		self.item_device.show()
+		self.item_device.props.sensitive = False
 		
 		blueman.List.connect("adapter-added", self.on_adapter_added)
 		blueman.List.connect("adapter-removed", self.on_adapter_removed)
@@ -56,6 +57,7 @@ class ManagerMenu:
 
 	def on_device_selected(self, List, device, iter):
 		if iter and device:
+			self.item_device.props.sensitive = True
 			sub = self.item_device.get_submenu()
 			if sub == None:
 				print "init"
@@ -64,6 +66,9 @@ class ManagerMenu:
 			else:
 				print "Regen"
 				sub.Generate()
+				
+		else:
+			self.item_device.props.sensitive = False
 
 
 	def on_adapter_property_changed(self, list, adapter, kv):

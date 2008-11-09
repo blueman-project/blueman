@@ -155,7 +155,7 @@ class Adapter(BaseInterface):
     # ListDevices
 
     @raise_dbus_error
-    def CreateDevice(self, address):
+    def CreateDevice(self, address, reply_handler=None, error_handler=None):
         '''
         Creates a new dbus object path for a remote device,
         then returns Device instance. This method will connect to
@@ -163,8 +163,27 @@ class Adapter(BaseInterface):
         If the dbus object path for the remote device already exists
         this method will fail.
         '''
-        obj_path = self.GetInterface().CreateDevice(address)
-        return Device.Device(obj_path)
+        def reply_handler_wrapper(obj_path):
+            if not callable(reply_handler):
+                return
+            reply_handler(Device.Device(obj_path))
+
+        def error_handler_wrapper(exception):
+            exception = errors.parse_dbus_error(exception)
+            if not callable(error_handler):
+                raise exception
+            error_handler(exception)
+
+        if reply_handler is None and error_handler is None:
+            obj_path = self.GetInterface().CreateDevice(address)
+            return Device.Device(obj_path)
+        else:
+            self.GetInterface().CreateDevice(address,
+                                                   reply_handler=reply_handler_wrapper,
+                                                   error_handler=error_handler_wrapper)
+            return None
+
+
     # CreateDevice
 
     @raise_dbus_error

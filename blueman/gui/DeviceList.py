@@ -35,7 +35,7 @@ class DeviceList(GenericList):
 		#@param: device
 		'device-found' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
 		#@param: device TreeIter
-		#note: None None is given when there ar no more rows
+		#note: None None is given when there ar no more rows, or when selected device is removed
 		'device-selected' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
 		#@param: device, TreeIter, (key, value)
 		#note: there is a special property "Fake", it's not a real property, 
@@ -140,7 +140,8 @@ class DeviceList(GenericList):
 		self.emit("adapter-property-changed", self.Adapter, (key, value))
 				
 				
-	def on_device_property_changed(self, key, value, path):
+	def on_device_property_changed(self, key, value, path, *args):
+		print "list: device_prop_ch", key, value, path, args
 		dev = Bluez.Device(path)
 		dev = Device(dev)
 		iter = self.find_device(dev)
@@ -318,8 +319,12 @@ class DeviceList(GenericList):
 			if "Fake" in props and not "Fake" in props_new:
 				self.set(iter, device=device, dbus_path=device.GetObjectPath())
 				self.row_setup_event(iter, device)
-				self.emit("device-property-changed", iter, device, ("Fake", False))
+				self.emit("device-property-changed", device, iter, ("Fake", False))
 				self.row_update_event(iter, "Fake", False)
+				
+				device.HandleSignal(self.on_device_property_changed, "PropertyChanged", path_keyword="path")
+				if props_new["Connected"]:
+					self.monitor_power_levels(device)
 	
 	
 	def DisplayKnownDevices(self):
@@ -356,6 +361,8 @@ class DeviceList(GenericList):
 		if iter == None:
 			iter = self.find_device(device)
 		
+		if self.compare(self.selected(), iter):
+			self.emit("device-selected", None, None)
 		self.delete(iter)
 		
 		try:
@@ -366,9 +373,10 @@ class DeviceList(GenericList):
 			if not "Fake" in props:
 				device.UnHandleSignal(self.on_device_property_changed, "PropertyChanged")
 				
+
+				
 	def clear(self):
 		if len(self.liststore):
-			print "clearing2"
 			for i in self.liststore:
 				iter = i.iter
 				device = self.get(iter, "device")["device"]
