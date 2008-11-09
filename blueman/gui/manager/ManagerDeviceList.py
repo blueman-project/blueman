@@ -77,10 +77,11 @@ class ManagerDeviceList(DeviceList):
 	
 	
 	def device_add_event(self, device):
-		if device.Fake:
-			self.PrependDevice(device)
-		else:
-			self.AppendDevice(device)
+		self.PrependDevice(device)
+		#if device.Fake:
+		#	self.PrependDevice(device)
+		#else:
+		#	self.AppendDevice(device)
 			
 		
 	

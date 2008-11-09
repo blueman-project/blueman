@@ -94,7 +94,7 @@ class ManagerToolbar:
 			if row["fake"]:
 				self.b_remove.props.sensitive = False
 				self.b_add.props.sensitive = True
-			
+				self.b_trust.props.sensitive = False
 				self.b_bond.props.sensitive = True
 			else:
 				self.b_remove.props.sensitive = True
