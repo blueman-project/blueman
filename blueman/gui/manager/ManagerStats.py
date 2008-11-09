@@ -78,7 +78,7 @@ class ManagerStats:
 		self.downarrow.set_tooltip_text(_("Total data received and rate of transmission"))
 		self.downarrow.set_from_stock(gtk.STOCK_GO_DOWN, 1)
 		
-		hbox = blueman.Builder.get_object("statusbar2_hb")
+		hbox = blueman.Builder.get_object("statusbar2")
 
 		hbox.pack_start(self.uparrow, True, False)
 		hbox.pack_start(self.up_rate, False, False)

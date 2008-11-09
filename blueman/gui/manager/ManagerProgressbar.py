@@ -43,7 +43,7 @@ class ManagerProgressbar(gobject.GObject):
 		
 		self.cancellable = cancellable
 		
-		self.hbox = hbox = blueman.Builder.get_object("statusbar1_hb")
+		self.hbox = hbox = blueman.Builder.get_object("statusbar1")
 		
 		self.progressbar = gtk.ProgressBar()
 		self.seperator = gtk.VSeparator()
@@ -67,7 +67,7 @@ class ManagerProgressbar(gobject.GObject):
 
 		hbox.pack_end(eventbox, True, False)
 		hbox.pack_end(self.progressbar, False, False)
-		hbox.pack_end(self.seperator, False, False)
+		#hbox.pack_end(self.seperator, False, False)
 		hbox.show_all()
 		
 		if not self.cancellable:
@@ -82,7 +82,7 @@ class ManagerProgressbar(gobject.GObject):
 
 			self.hbox.remove(self.eventbox)
 			self.hbox.remove(self.progressbar)
-			self.hbox.remove(self.seperator)
+			#self.hbox.remove(self.seperator)
 			self.finalized = True
 		
 		
