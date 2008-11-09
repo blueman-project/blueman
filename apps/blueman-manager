@@ -56,11 +56,13 @@ class Blueman:
 		
 		#if self.List.IsValidAdapter():
 		#	self.List.DisplayKnownDevices()
-		self.List.DisplayKnownDevices()
+		
 		
 		self.Toolbar = ManagerToolbar(self)
 		self.Menu = ManagerMenu(self)
 		self.Stats = ManagerStats(self)
+		
+		self.List.DisplayKnownDevices(autoselect=True)
 		
 		self.List.connect("adapter-changed", self.on_adapter_changed)
 		
@@ -71,7 +73,7 @@ class Blueman:
 		
 	def on_adapter_changed(self, list, adapter):
 		if adapter != None:
-			self.List.DisplayKnownDevices()
+			self.List.DisplayKnownDevices(autoselect=True)
 		
 	def add_device(self, device):
 		def ok(*args):

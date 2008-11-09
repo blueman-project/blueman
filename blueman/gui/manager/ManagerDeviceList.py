@@ -78,16 +78,10 @@ class ManagerDeviceList(DeviceList):
 	
 	def device_add_event(self, device):
 		self.PrependDevice(device)
-		#if device.Fake:
-		#	self.PrependDevice(device)
-		#else:
-		#	self.AppendDevice(device)
-			
 		
 	
 	def row_setup_event(self, iter, device):
 		props = device.GetProperties()
-
 
 		try:
 			klass = get_minor_class(props["Class"])

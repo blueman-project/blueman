@@ -327,11 +327,14 @@ class DeviceList(GenericList):
 					self.monitor_power_levels(device)
 	
 	
-	def DisplayKnownDevices(self):
+	def DisplayKnownDevices(self, autoselect=False):
 		self.clear()
 		devices = self.Adapter.ListDevices()
 		for device in devices:
 			self.device_add_event(Device(device))
+			
+		if autoselect:
+			self.selection.select_path(0)
 	
 	def DiscoverDevices(self, time=10):
 		self.__discovery_time = 0
