@@ -38,6 +38,8 @@ class ManagerToolbar:
 		self.b_add = blueman.Builder.get_object("b_add")
 		self.b_add.connect("clicked", self.on_add)
 		self.b_setup = blueman.Builder.get_object("b_setup")
+		self.b_send = blueman.Builder.get_object("b_send")
+		#self.b_send.
 		
 		if blueman.List.IsValidAdapter():
 			self.b_search.props.sensitive = True
@@ -82,11 +84,11 @@ class ManagerToolbar:
 			
 			if row["trusted"]:
 				self.b_trust.props.sensitive = True
-				self.b_trust.props.stock_id = "gtk-no"
+				self.b_trust.props.icon_name = "blueman-untrust"
 				self.b_trust.props.label = _("Untrust")
 			else:
 				self.b_trust.props.sensitive = True
-				self.b_trust.props.stock_id = "gtk-yes"
+				self.b_trust.props.icon_name = "blueman-trust"
 				self.b_trust.props.label = _("Trust")
 			
 			if row["fake"]:

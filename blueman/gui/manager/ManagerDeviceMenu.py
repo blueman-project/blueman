@@ -346,11 +346,11 @@ class ManagerDeviceMenu(gtk.Menu):
 				item.show()
 				
 			if not props["Trusted"]:
-				item = self.create_menuitem(_("Trust"), get_icon("gtk-yes", 16))
+				item = self.create_menuitem(_("Trust"), get_icon("blueman-trust", 16))
 				self.append(item)
 				item.show()
 			else:
-				item = self.create_menuitem(_("Untrust"), get_icon("gtk-no", 16))
+				item = self.create_menuitem(_("Untrust"), get_icon("blueman-untrust", 16))
 				self.append(item)
 				item.show()
 				

@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <interface>
+  <requires lib="gtk+" version="2.14"/>
   <!-- interface-naming-policy project-wide -->
   <object class="GtkWindow" id="window">
     <property name="title" translatable="yes">Bluetoth Devices</property>
@@ -57,6 +58,31 @@
               </packing>
             </child>
             <child>
+              <object class="GtkToolButton" id="b_bond">
+                <property name="visible">True</property>
+                <property name="sensitive">False</property>
+                <property name="tooltip_text">Create bonding with the device</property>
+                <property name="label" translatable="yes">Bond</property>
+                <property name="stock_id">gtk-dialog-authentication</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkToolButton" id="b_trust">
+                <property name="visible">True</property>
+                <property name="sensitive">False</property>
+                <property name="label" translatable="yes">Trust</property>
+                <property name="icon_name">blueman-trust</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkToolButton" id="b_setup">
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
@@ -71,36 +97,11 @@
               </packing>
             </child>
             <child>
-              <object class="GtkToolButton" id="b_bond">
-                <property name="visible">True</property>
-                <property name="sensitive">False</property>
-                <property name="tooltip_text">Create bonding with the device</property>
-                <property name="label" translatable="yes">Bond</property>
-                <property name="stock_id">gtk-dialog-authentication</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="homogeneous">True</property>
-              </packing>
-            </child>
-            <child>
               <object class="GtkToolButton" id="b_remove">
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
                 <property name="label" translatable="yes">Remove</property>
                 <property name="stock_id">gtk-delete</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="homogeneous">True</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkToolButton" id="b_trust">
-                <property name="visible">True</property>
-                <property name="sensitive">False</property>
-                <property name="label" translatable="yes">Trust</property>
-                <property name="stock_id">gtk-yes</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -121,7 +122,7 @@
                 <property name="visible">True</property>
                 <property name="is_important">True</property>
                 <property name="label" translatable="yes">Send File</property>
-                <property name="stock_id">gtk-copy</property>
+                <property name="icon_name">blueman-send-file</property>
               </object>
               <packing>
                 <property name="expand">False</property>
