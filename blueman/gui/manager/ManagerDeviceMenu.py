@@ -206,12 +206,11 @@ class ManagerDeviceMenu(gtk.Menu):
 			for name, service in device.Services.iteritems():
 				if name == "serial":
 					
-					item = self.create_menuitem(_("Serial Ports"), get_icon("modem", 16))
+					
 					sub = gtk.Menu()
 					sub.show()
-					item.set_submenu(sub)
-					item.show()
-					self.append(item)
+
+					num_ports = 0
 					for uuid in uuids:
 						
 						uuid16 = uuid128_to_uuid16(uuid)
@@ -220,12 +219,20 @@ class ManagerDeviceMenu(gtk.Menu):
 							item.connect("activate", self.on_connect, device, name, uuid)
 							sub.append(item)
 							item.show()
+							num_ports += 1
 							
 						if uuid16 == SERIAL_PORT_SVCLASS_ID:
 							item = self.create_menuitem(_("Serial Service"), get_icon("modem", 16))
 							item.connect("activate", self.on_connect, device, name, uuid)
 							sub.append(item)
 							item.show()
+							num_ports += 1
+							
+					if num_ports > 0:
+						item = self.create_menuitem(_("Serial Ports"), get_icon("modem", 16))
+						item.set_submenu(sub)
+						item.show()
+						self.append(item)
 							
 					item = gtk.SeparatorMenuItem()
 					item.show()
