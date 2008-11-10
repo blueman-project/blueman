@@ -47,7 +47,7 @@ class Blueman:
 		self.Builder.add_from_file(UI_PATH +"/manager-main.ui")
 
 		window = self.Builder.get_object("window")
-		window.props.icon_name = "bluetooth"
+		window.props.icon_name = "blueman"
 		sw = self.Builder.get_object("scrollview")
 		
 		self.List = ManagerDeviceList()

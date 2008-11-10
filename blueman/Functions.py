@@ -33,7 +33,7 @@ def get_icon(name, size=24):
 	try:
 		icon = ic.load_icon(name, size, 0) 
 	except:
-		icon = ic.load_icon("bluetooth", size, 0) 
+		icon = ic.load_icon("blueman", size, 0) 
 
 	return icon
 	
