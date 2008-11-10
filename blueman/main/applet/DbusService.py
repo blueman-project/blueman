@@ -39,7 +39,7 @@ class DbusService(dbus.service.Object):
 	
 	#in: bluez_device_path, rfcomm_device
 	@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="ss", out_signature="")
-	def register_modem(self, device_path, rfcomm_device):
+	def RegisterModem(self, device_path, rfcomm_device):
 		a = PolicyKitAuth()
 		authorized = a.is_authorized("org.blueman.hal.manager")
 		if not authorized:
@@ -56,7 +56,7 @@ class DbusService(dbus.service.Object):
 		
 	#in: bluez_device_path, rfcomm_device
 	@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="s", out_signature="")
-	def unregister_modem(self, device):
+	def UnregisterModem(self, device):
 		a = PolicyKitAuth()
 		authorized = a.is_authorized("org.blueman.hal.manager")
 		if not authorized:
@@ -69,11 +69,11 @@ class DbusService(dbus.service.Object):
 		print "Unegistered modem"
 		
 	@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="ss", out_signature="s", async_callbacks=("ok","err"))
-	def rfcomm_connect(self, device, uuid, ok, err):
+	def RfcommConnect(self, device, uuid, ok, err):
 		def reply(rfcomm):
 			uuid16 = uuid128_to_uuid16(uuid)
 			if uuid16 == DIALUP_NET_SVCLASS_ID:
-				self.register_modem(device, rfcomm)
+				self.RegisterModem(device, rfcomm)
 			
 			ok(rfcomm)
 
@@ -84,7 +84,7 @@ class DbusService(dbus.service.Object):
 		
 		
 	@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="ss", out_signature="")
-	def rfcomm_disconnect(self, device, rfdevice):
+	def RfcommDisconnect(self, device, rfdevice):
 		dev = Device(BluezDevice(device))
 		dev.Services["serial"].Disconnect(rfdevice)
 		self.unregister_modem(rfdevice)
@@ -94,5 +94,5 @@ class DbusService(dbus.service.Object):
 		
 	#in: interface name
 	@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="s", out_signature="")
-	def dhcp_client(self, interface):
+	def DhcpClient(self, interface):
 		print "run dhcp"

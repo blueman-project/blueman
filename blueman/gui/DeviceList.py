@@ -366,7 +366,6 @@ class DeviceList(GenericList):
 		
 		if self.compare(self.selected(), iter):
 			self.emit("device-selected", None, None)
-		self.delete(iter)
 		
 		try:
 			props = device.GetProperties()
@@ -376,6 +375,7 @@ class DeviceList(GenericList):
 			if not "Fake" in props:
 				device.UnHandleSignal(self.on_device_property_changed, "PropertyChanged")
 				
+		self.delete(iter)
 
 				
 	def clear(self):

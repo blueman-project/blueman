@@ -145,8 +145,14 @@ class ManagerDeviceMenu(gtk.Menu):
 			
 		elif service_id == "serial":
 			uuid = args[0]
-			appl = Applet()
-			appl.rfcomm_connect(device.GetObjectPath(), uuid, reply_handler=success, error_handler=fail)
+			try:
+				appl = Applet()
+			except:
+				print "** Failed to connect to applet"
+				fail()
+				return
+			else:
+				appl.RfcommConnect(device.GetObjectPath(), uuid, reply_handler=success, error_handler=fail)
 		
 		else:
 			svc.Connect(reply_handler=success, error_handler=fail)
@@ -159,9 +165,13 @@ class ManagerDeviceMenu(gtk.Menu):
 	def on_disconnect(self, item, device, service_id, *args):
 		svc = device.Services[service_id]
 		if service_id == "serial":
-			a = Applet()
-			a.rfcomm_disconnect(device.GetObjectPath(), args[0])
-			self.Generate()
+			try:
+				appl = Applet()
+			except:
+				print "** Failed to connect to applet"
+			else:
+				appl.RfcommDisconnect(device.GetObjectPath(), args[0])
+				self.Generate()
 		else:
 			svc.Disconnect()
 		
