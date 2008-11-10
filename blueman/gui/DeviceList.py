@@ -136,7 +136,7 @@ class DeviceList(GenericList):
 		
 	
 	def on_property_changed(self, key, value):
-		print "adapter propery changed"
+		print "adapter propery changed", key, value
 		self.emit("adapter-property-changed", self.Adapter, (key, value))
 				
 				
@@ -207,6 +207,7 @@ class DeviceList(GenericList):
 	#########################
 	
 	def on_device_created(self, path):
+		print "created", path
 		dev = Bluez.Device(path)
 		dev = Device(dev)
 		self.device_add_event(dev)
@@ -375,8 +376,17 @@ class DeviceList(GenericList):
 			if not "Fake" in props:
 				device.UnHandleSignal(self.on_device_property_changed, "PropertyChanged")
 				
+		device.Destroy()
+				
 		self.delete(iter)
-
+		
+	def GetSelectedDevice(self):
+		selected = self.selected()
+		if selected != None:
+			row = self.get(selected, "device")
+			device = row["device"]
+			return device
+	
 				
 	def clear(self):
 		if len(self.liststore):
@@ -386,8 +396,5 @@ class DeviceList(GenericList):
 				self.RemoveDevice(device, iter)
 			self.liststore.clear()
 			self.emit("device-selected", None, None)
-		
-	
-	
 	
 

@@ -33,6 +33,7 @@ _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if os.path.exists(os.path.join(_dirname,"ChangeLog")):
 	sys.path.insert(0, _dirname)
 
+from blueman.main.SignalTracker import SignalTracker
 from blueman.Functions import *
 from blueman.main.applet.DbusService import DbusService
 from blueman.Constants import *
@@ -59,15 +60,18 @@ class BluemanApplet:
 		self.bus.watch_name_owner('org.bluez', self.on_dbus_name_owner_change)
 		self.manager_init()
 		
+		self.signals = SignalTracker()
+		
 		DbusService(self)
 		
 		gtk.main()
 		
 	def manager_init(self):
 		try:
+			self.signals.DisconnectAll()
 			self.Manager = Bluez.Manager('gobject')
-			self.Manager.HandleSignal(self.on_adapter_removed, 'AdapterRemoved')
-			self.Manager.HandleSignal(self.on_adapter_added, 'AdapterAdded')
+			self.signals.Handle("bluez", self.Manager, self.on_adapter_removed, 'AdapterRemoved')
+			self.signals.Handle("bluez", self.Manager, self.on_adapter_added, 'AdapterAdded')
 			self.status_icon.set_visible(self.Manager.ListAdapters() != [])
 		except:
 			self.Manager = None
@@ -120,11 +124,6 @@ class BluemanApplet:
 		self.menu.popup(None, None, gtk.status_icon_position_menu,
 						button, activate_time, status_icon)
 	
-	def spawn(self, command):
-		command = os.path.join(BIN_DIR, command)
-		print 'Launching ', command
-		popen = Popen(command, stdout=PIPE)
-						
 	def on_setup_new(self, menu_item):
 		self.spawn('blueman-wizard')
 		

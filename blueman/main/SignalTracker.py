@@ -22,14 +22,21 @@ class SignalTracker:
 	def __init__(self):
 		self.signals = []
 		
-	def Handle(self, obj, *args):
-		obj.HandleSignal(*args)
-		self.signals.append((obj, args))
+	def Handle(self, type, obj, *args):
+		if type == "bluez":
+			obj.HandleSignal(*args)
+		elif type == "gobject":
+			args = obj.connect(*args)
+			
+		self.signals.append((type, obj, args))
 		
 	def DisconnectAll(self):
 		for sig in self.signals:
-			(obj, args) = sig
-			obj.UnHandleSignal(*args)
+			(type, obj, args) = sig
+			if type == "bluez":
+				obj.UnHandleSignal(*args)
+			elif type == "gobject":
+				obj.disconnect(args)
 		
 		self.signals = []
-		
+

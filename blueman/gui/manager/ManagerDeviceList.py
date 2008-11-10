@@ -22,6 +22,7 @@ from blueman.gui.DeviceList import DeviceList
 from blueman.gui.PixbufTable import PixbufTable
 from blueman.gui.CellRendererPixbufTable import CellRendererPixbufTable
 from blueman.DeviceClass import get_minor_class
+from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 
 import gtk
 from blueman.Constants import *
@@ -33,7 +34,7 @@ _ = gettext.gettext
 
 class ManagerDeviceList(DeviceList):
 	
-	def __init__(self, adapter=None):
+	def __init__(self, adapter=None, inst=None):
 		data = [
 			#device picture
 			["device_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":0}, None],
@@ -66,11 +67,36 @@ class ManagerDeviceList(DeviceList):
 		DeviceList.__init__(self, adapter, data)
 		self.set_headers_visible(False)
 		self.props.has_tooltip = True
+		self.Blueman = inst
 		
 		self.connect("query-tooltip", self.tooltip_query)		
 		self.tooltip_row = -1
 		self.tooltip_col = None
 		
+		self.connect("button_press_event", self.on_event_clicked)
+		self.connect("button_release_event", self.on_event_clicked)
+		
+		self.menu = None
+		
+	
+	def on_event_clicked(self, widget, event):
+
+		if event.type==gtk.gdk.BUTTON_PRESS and event.button==3:
+			path = self.get_path_at_pos(int(event.x), int(event.y))
+			if path != None:
+				row = self.get(path[0][0], "device")
+			
+			if row:
+				device = row["device"]
+				if self.Blueman != None:
+					if self.menu == None:
+						self.menu = ManagerDeviceMenu(self.Blueman)
+					else:
+						self.menu.Generate()
+					self.menu.popup(None, None, None, event.button, event.time)
+					#@context_menu(address, event)
+	
+	
 	
 	def get_device_icon(self, klass):
 		return get_icon("blueman-"+klass.replace(" ", "-").lower(), 48)
@@ -81,20 +107,15 @@ class ManagerDeviceList(DeviceList):
 		
 	
 	def row_setup_event(self, iter, device):
-		props = device.GetProperties()
-
 		try:
-			klass = get_minor_class(props["Class"])
+			klass = get_minor_class(device.Class)
 		except:
 			klass = "Unknown"
 		
 		icon = self.get_device_icon(klass)
-		
-		#cicon = make_device_icon(icon, "Paired" in props and props["Paired"], "Trusted" in props and props["Trusted"], fake) 
-		
 
-		name = props["Alias"]
-		address = props["Address"]
+		name = device.Alias
+		address = device.Address
 
 		caption = "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" % {"0":name, "1":klass.capitalize(), "2":address}
 		self.set(iter, caption=caption, orig_icon=icon)
@@ -102,11 +123,11 @@ class ManagerDeviceList(DeviceList):
 		self.row_update_event(iter, "Fake", device.Fake)
 		
 		try:
-			self.row_update_event(iter, "Trusted", props["Trusted"])
+			self.row_update_event(iter, "Trusted", device.Trusted)
 		except:
 			pass
 		try:
-			self.row_update_event(iter, "Paired", props["Paired"])
+			self.row_update_event(iter, "Paired", device.Paired)
 		except:
 			pass
 

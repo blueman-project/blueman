@@ -17,6 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 import gettext
+from blueman.Sdp import *
 _ = gettext.gettext
 
 class ManagerToolbar:
@@ -34,23 +35,33 @@ class ManagerToolbar:
 		
 		self.b_bond = blueman.Builder.get_object("b_bond")
 		self.b_trust = blueman.Builder.get_object("b_trust")
+		self.b_trust.connect("clicked", self.on_trust)
 		self.b_remove = blueman.Builder.get_object("b_remove")
 		self.b_add = blueman.Builder.get_object("b_add")
 		self.b_add.connect("clicked", self.on_add)
 		self.b_setup = blueman.Builder.get_object("b_setup")
 		self.b_send = blueman.Builder.get_object("b_send")
-		#self.b_send.
+		#self.b_send.connect("clicked", self.on_browse)
+		self.b_browse = blueman.Builder.get_object("b_browse")
+		self.b_browse.connect("clicked", self.on_browse)
 		
 		if blueman.List.IsValidAdapter():
 			self.b_search.props.sensitive = True
 		
+	def on_trust(self, button):
+		device = self.blueman.List.GetSelectedDevice()
+		if device != None:
+			self.blueman.toggle_trust(device)
+	
+	def on_browse(self, button):
+		device = self.blueman.List.GetSelectedDevice()
+		if device != None:
+			self.blueman.browse(device)
+	
 	def on_add(self, button):
-		selected = self.blueman.List.selected()
-		if selected != None:
-			row = self.blueman.List.get(selected, "device")
-			device = row["device"]
-			if device.Fake:
-				self.blueman.add_device(device)
+		device = self.blueman.List.GetSelectedDevice()
+		if device != None and device.Fake:
+			self.blueman.add_device(device)
 		
 		
 	def on_adapter_property_changed(self, List, adapter, (key, value)):
@@ -99,18 +110,35 @@ class ManagerToolbar:
 			else:
 				self.b_remove.props.sensitive = True
 				self.b_add.props.sensitive = False
+				
+			self.update_send_browse(device)
 			
-	def on_device_propery_changed(self, dev_list, device, iter, kv):
-		(key, value) = kv
-		if key == "Trusted" or key == "Paired":
-			if dev_list.compare(iter, dev_list.selected()):
+	def update_send_browse(self, device):
+		self.b_send.props.sensitive = False
+		self.b_browse.props.sensitive = False
+		if device != None:
+			for uuid in device.UUIDs:
+				uuid16 = uuid128_to_uuid16(uuid)
+				if uuid16 == OBEX_OBJPUSH_SVCLASS_ID:
+					self.b_send.props.sensitive = True
+
+				if uuid16 == OBEX_FILETRANS_SVCLASS_ID:
+					self.b_browse.props.sensitive = True
+			
+			
+	def on_device_propery_changed(self, dev_list, device, iter, (key, value)):
+		if dev_list.compare(iter, dev_list.selected()):
+			if key == "Trusted" or key == "Paired":
 				self.on_device_selected(dev_list, device, iter)
 				
-		elif key == "Fake":
-			if not value:
-				self.b_remove.props.sensitive = True
-			else:
-				self.b_remove.props.sensitie = False
+			elif key == "Fake":
+				if not value:
+					self.b_remove.props.sensitive = True
+				else:
+					self.b_remove.props.sensitie = False
+					
+			elif key == "UUIDs":
+				self.update_send_browse(device)
 				
 		
 		

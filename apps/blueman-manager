@@ -37,6 +37,10 @@ from blueman.gui.manager.ManagerMenu import ManagerMenu
 from blueman.gui.manager.ManagerStats import ManagerStats
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 
+from subprocess import call
+
+import gettext
+_ = gettext.gettext
 
 class Blueman:
 
@@ -47,10 +51,12 @@ class Blueman:
 		self.Builder.add_from_file(UI_PATH +"/manager-main.ui")
 
 		window = self.Builder.get_object("window")
+		window.connect("delete-event", lambda w,x : gtk.main_quit())
 		window.props.icon_name = "blueman"
 		sw = self.Builder.get_object("scrollview")
 		
-		self.List = ManagerDeviceList()
+		self.List = ManagerDeviceList(inst=self)
+
 		self.List.show()
 		sw.add(self.List)
 		
@@ -86,7 +92,7 @@ class Blueman:
 		address = device.GetProperties()["Address"]
 		adapter = self.List.Adapter
 		
-		prog = ManagerProgressbar(self, text="Adding")
+		prog = ManagerProgressbar(self, text=_("Adding"))
 		prog.start()
 		adapter.CreateDevice(address, reply_handler=ok, error_handler=err)
 			
@@ -99,7 +105,7 @@ class Blueman:
 			if key == "Discovering" and not value:
 				prog.finalize()
 				
-		prog = ManagerProgressbar(self, text="Searching")
+		prog = ManagerProgressbar(self, text=_("Searching"))
 		prog.connect("cancelled", lambda x: self.List.StopDiscovery())
 		self.List.DiscoverDevices()
 		self.List.connect("discovery-progress", lambda x,y: prog.fraction(y))
@@ -112,17 +118,19 @@ class Blueman:
 		pass
 		
 	def toggle_trust(self, device):
-		pass
+		props = device.GetProperties()
+		device.Trusted = not device.Trusted
 		
 	def send(self, device, File=None):
 		pass
 		
 		
 	def browse(self, device):
-		pass
+		props = device.GetProperties()
+		call(["nautilus", "--browser", "obex://[%s]" % props["Address"]])
 		
 	def disconnect(self, device):
-		pass
+		device.Disconnect()
 
 		
 

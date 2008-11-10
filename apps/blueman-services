@@ -1,0 +1,31 @@
+#!/usr/bin/python
+
+import os
+import sys
+#support running uninstalled
+_dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if os.path.exists(os.path.join(_dirname,"ChangeLog")):
+	sys.path.insert(0, _dirname)
+
+import gtk
+import blueman.bluez as Bluez
+from blueman.bluez.ServiceInterface import ServiceInterface
+
+class BluemanServices:
+
+
+	def __init__(self):
+		self.Manager = Bluez.Manager('gobject')
+		adapter = self.Manager.GetAdapter()
+		
+		s = ServiceInterface("org.bluez.NetworkRouter", adapter.GetObjectPath(), ["GetProperties"])
+		print s.GetProperties()
+		
+		s = ServiceInterface("org.bluez.NetworkHub", adapter.GetObjectPath(), ["GetProperties"])
+		print s.GetProperties()
+		
+		
+		gtk.main()
+		
+		
+BluemanServices()

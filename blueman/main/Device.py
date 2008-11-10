@@ -16,22 +16,29 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
-
+# Device class
+# acts as a caching proxy to the Bluez dbus interface
+from blueman.main.SignalTracker import SignalTracker
 
 class Device:
 
 
 	def __init__(self, instance):
+		self.Properties = {}
+		
 		self.Device = instance
 		
 		self.Services = {}
-		self.Class = 0
+
+
+		self.Signals = SignalTracker()
 		
-		self.GetProperties = self.Device.GetProperties
 		
-		self.Class = self.GetProperties()["Class"]
+		print "caching initial properties"
+		self.Properties = self.Device.GetProperties()
+
 		
-		if not "Fake" in self.Device.GetProperties():
+		if not "Fake" in self.Properties:
 			self.Fake = False
 			services = self.Device.ListServiceInterfaces()
 			
@@ -39,11 +46,44 @@ class Device:
 				name = service.GetInterfaceName().split(".")
 				name = name[len(name)-1].lower()
 				self.Services[name] = service
-			
-			
-			self.HandleSignal = self.Device.HandleSignal
-			self.UnHandleSignal = self.Device.UnHandleSignal
-			self.GetObjectPath = self.Device.GetObjectPath
+
+				
+			self.Signals.Handle("bluez", self.Device, self.property_changed, "PropertyChanged")			
+
 		else:
 			self.Fake = True
+			
+	def property_changed(self, key, value):
+		self.Properties[key] = value
+			
+	def Destroy(self):
+		self.Signals.DisconnectAll()
+			
+	def __del__(self):
+		print "DEBUG: deleting Device instance", self.Properties["Name"]
+			
+	def GetProperties(self):
+		print "Properties requested"
+		return self.Properties
+			
+	def __getattr__(self, name):
+		
+		if name in self.__dict__["Properties"]:
+			print "Single property requested", name
+			return self.__dict__["Properties"][name]
+		else:
+			return getattr(self.Device, name)
+			
+	def __setattr__(self, key, value):
+		if "Properties" in self.__dict__ and key in self.__dict__["Properties"]:
+			print "Setting property", key, value
+			self.__dict__["Device"].SetProperty(key, value)
+		else:
+			self.__dict__[key] = value
+	
+	
+	
+	
+	
+	
 

@@ -22,6 +22,14 @@
 from blueman.Constants import *
 import gtk
 import re
+import os
+from subprocess import Popen, PIPE
+
+
+def spawn(command):
+	command = os.path.join(BIN_DIR, command)
+	print 'Launching ', command
+	popen = Popen(command, stdout=PIPE)
 
 def setup_icon_path():
 	ic = gtk.icon_theme_get_default()

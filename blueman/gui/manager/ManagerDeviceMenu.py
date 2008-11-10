@@ -39,12 +39,15 @@ class ManagerDeviceMenu(gtk.Menu):
 		gtk.Menu.__init__(self)
 		self.Blueman = blueman
 
-		
+		self.is_popup = False
 		
 		#object, args,
 		self.Signals = SignalTracker()
+		self.MainSignals = SignalTracker()
 		
-		self.Blueman.List.connect("device-property-changed", self.on_device_property_changed)
+		self.MainSignals.Handle("gobject", self.Blueman.List, "device-property-changed", self.on_device_property_changed)
+
+		
 		self.Generate()
 
 		
@@ -53,6 +56,17 @@ class ManagerDeviceMenu(gtk.Menu):
 		print "deleting devicemenu"
 	#	gobject.GObject.__del__(self)
 	
+	
+	def popup(self, *args):
+		self.is_popup = True
+		#we need to disconnect all signals, or python will not free the menu object
+		def disconnectall(x):
+			self.Signals.DisconnectAll()
+			self.MainSignals.DisconnectAll()
+		
+		self.Signals.Handle("gobject", self, "selection-done", disconnectall)
+		
+		gtk.Menu.popup(self, *args)
 	
 	def clear(self):
 		self.Signals.DisconnectAll()
@@ -201,16 +215,14 @@ class ManagerDeviceMenu(gtk.Menu):
 			return
 		
 		
-		props = device.GetProperties()
-		
-		if "Fake" in props:
+		if device.Fake:
 			print "fake device"
 			
 			
 		else:
 			
 			
-			uuids = props["UUIDs"]
+			uuids = device.UUIDs
 			
 			
 			for name, service in device.Services.iteritems():
@@ -226,14 +238,14 @@ class ManagerDeviceMenu(gtk.Menu):
 						uuid16 = uuid128_to_uuid16(uuid)
 						if uuid16 == DIALUP_NET_SVCLASS_ID:
 							item = self.create_menuitem(_("Dialup Service"), get_icon("modem", 16))
-							item.connect("activate", self.on_connect, device, name, uuid)
+							self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name, uuid)
 							sub.append(item)
 							item.show()
 							num_ports += 1
 							
 						if uuid16 == SERIAL_PORT_SVCLASS_ID:
 							item = self.create_menuitem(_("Serial Service"), get_icon("modem", 16))
-							item.connect("activate", self.on_connect, device, name, uuid)
+							self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name, uuid)
 							sub.append(item)
 							item.show()
 							num_ports += 1
@@ -250,31 +262,33 @@ class ManagerDeviceMenu(gtk.Menu):
 							
 					rfcomms = rfcomm_list()
 					for dev in rfcomms:
-						if dev["dst"] == props["Address"]:
+						if dev["dst"] == device.Address:
 							if dev["state"] == "connected":
 								devname = "/dev/rfcomm%s" % dev["id"]
 							
 								item = self.create_menuitem(_("Disconnect %s" % devname), get_icon("gtk-disconnect", 16))
-								item.connect("activate", self.on_disconnect, device, name, devname)
+								self.Signals.Handle("gobject", item, "activate", self.on_disconnect, device, name, devname)
 								sub.append(item)
 								item.show()
 					
 							
 					
 				if name == "input":
-					self.Signals.Handle(service, self.service_property_changed, "PropertyChanged")
+					self.Signals.Handle("bluez", service, self.service_property_changed, "PropertyChanged")
 					sprops = service.GetProperties()
 					if sprops["Connected"]:
 						item = self.create_menuitem(_("Disconnect Input Service"), get_icon("mouse", 16))
-						item.connect("activate", self.on_disconnect, device, name)
+						self.Signals.Handle("gobject", item, "activate", self.on_disconnect, device, name)
+
 					else:
 						item = self.create_menuitem(_("Connect Input Service"), get_icon("mouse", 16))
-						item.connect("activate", self.on_connect, device, name)
+						self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name)
+
 					item.show()
 					self.append(item)
 					
 				if name == "network":
-					self.Signals.Handle(service, self.service_property_changed, "PropertyChanged")
+					self.Signals.Handle("bluez", service, self.service_property_changed, "PropertyChanged")
 					sprops = service.GetProperties()
 					
 					if not sprops["Connected"]:
@@ -290,18 +304,18 @@ class ManagerDeviceMenu(gtk.Menu):
 							uuid16 = uuid128_to_uuid16(uuid)
 							if uuid16 == GN_SVCLASS_ID:
 								item = self.create_menuitem(_("Group Network"), get_icon("network-server", 16))
-								item.connect("activate", self.on_connect, device, name, uuid)
+								self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name, uuid)
 								sub.append(item)
 								item.show()
 							
 							if uuid16 == NAP_SVCLASS_ID:
 								item = self.create_menuitem(_("Network Access Point"), get_icon("network-server", 16))
-								item.connect("activate", self.on_connect, device, name, uuid)
+								self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name, uuid)
 								sub.append(item)
 								item.show()
 					else:
 						item = self.create_menuitem(_("Disconnect Network"), get_icon("gtk-disconnect", 16))
-						item.connect("activate", self.on_disconnect, device, name)
+						self.Signals.Handle("gobject", item, "activate", self.on_disconnect, device, name)
 						item.show()
 						self.append(item)
 					
@@ -313,10 +327,10 @@ class ManagerDeviceMenu(gtk.Menu):
 					
 					if sprops["Connected"]:
 						item = self.create_menuitem(_("Disconnect Headset Service"), get_icon("audio", 16))
-						item.connect("activate", self.on_connect, device, name)
+						self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name)
 					else:
 						item = self.create_menuitem(_("Connect Headset Service"), get_icon("audio", 16))
-						item.connect("activate", self.on_disconnect, device, name)
+						self.Signals.Handle("gobject", item, "activate", self.on_disconnect, device, name)
 					item.show()
 					self.append(item)
 					
@@ -326,10 +340,10 @@ class ManagerDeviceMenu(gtk.Menu):
 					
 					if sprops["Connected"]:
 						item = self.create_menuitem(_("Disconnect A2DP Service"), get_icon("audio", 16))
-						item.connect("activate", self.on_connect, device, name)
+						self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name)
 					else:
 						item = self.create_menuitem(_("Connect A2DP Service"), get_icon("audio", 16))
-						item.connect("activate", self.on_disconnect, device, name)
+						self.Signals.Handle("gobject", item, "activate", self.on_disconnect, device, name)
 					item.show()
 					self.append(item)
 					
@@ -368,14 +382,14 @@ class ManagerDeviceMenu(gtk.Menu):
 			item = self.create_menuitem(_("Bond"), get_icon("gtk-dialog-authentication", 16))
 			self.append(item)
 			item.show()
-			if not props["Paired"]:
+			if not device.Paired:
 				#connect
 				pass
 			else:
 				item.props.sensitive = False
 
 				
-			if not props["Trusted"]:
+			if not device.Trusted:
 				item = self.create_menuitem(_("Trust"), get_icon("blueman-trust", 16))
 				self.append(item)
 				item.show()
@@ -403,7 +417,7 @@ class ManagerDeviceMenu(gtk.Menu):
 			item = self.create_menuitem(_("Disconnect Device"), get_icon("gtk-disconnect", 16))
 			self.append(item)
 			item.show()
-			if props["Connected"]:
+			if device.Connected:
 				#connect
 				pass
 			else:
