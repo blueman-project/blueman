@@ -25,6 +25,7 @@ class Device:
 
 	def __init__(self, instance):
 		self.Properties = {}
+		self.Fake = True
 		
 		self.Device = instance
 		
@@ -49,9 +50,6 @@ class Device:
 
 				
 			self.Signals.Handle("bluez", self.Device, self.property_changed, "PropertyChanged")			
-
-		else:
-			self.Fake = True
 			
 	def property_changed(self, key, value):
 		self.Properties[key] = value
@@ -69,13 +67,12 @@ class Device:
 	def __getattr__(self, name):
 		
 		if name in self.__dict__["Properties"]:
-			print "Single property requested", name
 			return self.__dict__["Properties"][name]
 		else:
 			return getattr(self.Device, name)
 			
 	def __setattr__(self, key, value):
-		if "Properties" in self.__dict__ and key in self.__dict__["Properties"]:
+		if not key in self.__dict__ and "Properties" in self.__dict__ and key in self.__dict__["Properties"]:
 			print "Setting property", key, value
 			self.__dict__["Device"].SetProperty(key, value)
 		else:

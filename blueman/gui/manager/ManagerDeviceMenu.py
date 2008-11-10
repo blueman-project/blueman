@@ -59,12 +59,16 @@ class ManagerDeviceMenu(gtk.Menu):
 	
 	def popup(self, *args):
 		self.is_popup = True
-		#we need to disconnect all signals, or python will not free the menu object
+		
+		self.MainSignals.DisconnectAll()
+		self.MainSignals.Handle("gobject", self.Blueman.List, "device-property-changed", self.on_device_property_changed)
+
 		def disconnectall(x):
-			self.Signals.DisconnectAll()
 			self.MainSignals.DisconnectAll()
 		
-		self.Signals.Handle("gobject", self, "selection-done", disconnectall)
+		self.MainSignals.Handle("gobject", self, "selection-done", disconnectall)
+
+		self.Generate()
 		
 		gtk.Menu.popup(self, *args)
 	
@@ -192,18 +196,29 @@ class ManagerDeviceMenu(gtk.Menu):
 		
 		
 	def on_device_property_changed(self, List, device, iter, (key, value)):
+		
 		if List.compare(iter, List.selected()):
-			if key == "Connected":
+			if key == "Connected"\
+			or key =="Fake"\
+			or key == "Trusted"\
+			or key == "Paired":
 				self.Generate()
-			if key == "Fake":
-				self.Generate()
+
 		
 	def Generate(self):
 		print "Gen"
+
 		self.clear()
 		
-		device = self.Blueman.List.get(self.Blueman.List.selected(), "device")["device"]
-		
+		if not self.is_popup:
+			device = self.Blueman.List.get(self.Blueman.List.selected(), "device")["device"]
+		else:
+			(x,y) = self.Blueman.List.get_pointer()
+			path = self.Blueman.List.get_path_at_pos(x, y)
+			if path != None:
+				device = self.Blueman.List.get(path[0][0], "device")["device"]
+			else:
+				return
 		
 		op = self.get_op(device)
 		
@@ -407,6 +422,7 @@ class ManagerDeviceMenu(gtk.Menu):
 			self.append(item)
 			
 			item = self.create_menuitem(_("Remove..."), get_icon("gtk-delete", 16))
+			self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.remove(device))
 			self.append(item)
 			item.show()
 			
@@ -418,8 +434,8 @@ class ManagerDeviceMenu(gtk.Menu):
 			self.append(item)
 			item.show()
 			if device.Connected:
-				#connect
-				pass
+				self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.disconnect(device))
+
 			else:
 				item.props.sensitive = False
 				

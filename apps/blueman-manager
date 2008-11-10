@@ -23,6 +23,7 @@
 import os.path
 import sys
 import gtk
+import dbus
 
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -95,9 +96,6 @@ class Blueman:
 		prog = ManagerProgressbar(self, text=_("Adding"))
 		prog.start()
 		adapter.CreateDevice(address, reply_handler=ok, error_handler=err)
-			
-	def remove_device(self, device):
-		pass
 		
 	def inquiry(self):
 		def prop_changed(List, adapter, kv):	
@@ -115,7 +113,9 @@ class Blueman:
 		pass
 		
 	def bond(self, device):
-		pass
+		name = adapter_path_to_name(self.List.Adapter.GetObjectPath())
+
+		self.List.Adapter.CreatePairedDevice(device.Address, dbus.ObjectPath("/org/blueman/agent/"+name), "DisplayYesNo")
 		
 	def toggle_trust(self, device):
 		props = device.GetProperties()
@@ -124,10 +124,12 @@ class Blueman:
 	def send(self, device, File=None):
 		pass
 		
+	def remove(self, device):
+		self.List.Adapter.RemoveDevice(device.Device)
+		
 		
 	def browse(self, device):
-		props = device.GetProperties()
-		call(["nautilus", "--browser", "obex://[%s]" % props["Address"]])
+		call(["nautilus", "--browser", "obex://[%s]" % device.Address])
 		
 	def disconnect(self, device):
 		device.Disconnect()

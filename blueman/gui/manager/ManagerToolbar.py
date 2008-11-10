@@ -34,9 +34,11 @@ class ManagerToolbar:
 		self.b_search.connect("clicked", lambda button: blueman.inquiry())
 		
 		self.b_bond = blueman.Builder.get_object("b_bond")
+		self.b_bond.connect("clicked", self.on_bond)
 		self.b_trust = blueman.Builder.get_object("b_trust")
 		self.b_trust.connect("clicked", self.on_trust)
 		self.b_remove = blueman.Builder.get_object("b_remove")
+		self.b_remove.connect("clicked", self.on_remove)
 		self.b_add = blueman.Builder.get_object("b_add")
 		self.b_add.connect("clicked", self.on_add)
 		self.b_setup = blueman.Builder.get_object("b_setup")
@@ -48,6 +50,17 @@ class ManagerToolbar:
 		if blueman.List.IsValidAdapter():
 			self.b_search.props.sensitive = True
 		
+	def on_bond(self, button):
+		device = self.blueman.List.GetSelectedDevice()
+		if device != None:
+			self.blueman.bond(device)
+	
+	def on_remove(self, button):
+		device = self.blueman.List.GetSelectedDevice()
+		if device != None:
+			self.blueman.remove(device)
+	
+	
 	def on_trust(self, button):
 		device = self.blueman.List.GetSelectedDevice()
 		if device != None:
@@ -116,7 +129,7 @@ class ManagerToolbar:
 	def update_send_browse(self, device):
 		self.b_send.props.sensitive = False
 		self.b_browse.props.sensitive = False
-		if device != None:
+		if device != None and not device.Fake:
 			for uuid in device.UUIDs:
 				uuid16 = uuid128_to_uuid16(uuid)
 				if uuid16 == OBEX_OBJPUSH_SVCLASS_ID:
@@ -124,6 +137,8 @@ class ManagerToolbar:
 
 				if uuid16 == OBEX_FILETRANS_SVCLASS_ID:
 					self.b_browse.props.sensitive = True
+		if device.Fake:
+			self.b_send.props.sensitive = True
 			
 			
 	def on_device_propery_changed(self, dev_list, device, iter, (key, value)):

@@ -218,13 +218,12 @@ class Adapter(BaseInterface):
                 raise exception
             error_handler(exception)
 
-        raise_type_error(agent, Agent.Agent)
         if reply_handler is None and error_handler is None:
-            obj_path = self.GetInterface().CreatePairedDevice(address, agent.GetObjectPath(), capability)
+            obj_path = self.GetInterface().CreatePairedDevice(address, agent, capability)
             return Device.Device(obj_path)
         else:
             self.GetInterface().CreatePairedDevice(address,
-                                                   agent.GetObjectPath(),
+                                                   agent,
                                                    capability,
                                                    reply_handler=reply_handler_wrapper,
                                                    error_handler=error_handler_wrapper)

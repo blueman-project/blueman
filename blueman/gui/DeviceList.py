@@ -142,24 +142,26 @@ class DeviceList(GenericList):
 				
 	def on_device_property_changed(self, key, value, path, *args):
 		print "list: device_prop_ch", key, value, path, args
-		dev = Bluez.Device(path)
-		dev = Device(dev)
-		iter = self.find_device(dev)
-		self.row_update_event(iter, key, value)
+
+		iter = self.find_device_by_path(path)
 		
-		self.emit("device-property-changed", dev, iter, (key, value))
+		if iter != None:
+			dev = self.get(iter, "device")["device"]
+			self.row_update_event(iter, key, value)
 		
-		if key == "Connected":
-			if value:
-				self.monitor_power_levels(dev)
-			else:
+			self.emit("device-property-changed", dev, iter, (key, value))
+		
+			if key == "Connected":
+				if value:
+					self.monitor_power_levels(dev)
+				else:
 				
-				self.level_setup_event(iter, dev, None)
+					self.level_setup_event(iter, dev, None)
 		
 		
 	def monitor_power_levels(self, device):
 		def update(iter, device, cinfo):
-			if not self.iter_is_valid(iter) or not device.GetProperties()["Connected"]:
+			if not self.iter_is_valid(iter) or not device.Connected:
 				print "stopping monitor"
 				cinfo.deinit()
 				return False

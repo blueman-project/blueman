@@ -86,15 +86,13 @@ class ManagerDeviceList(DeviceList):
 			if path != None:
 				row = self.get(path[0][0], "device")
 			
-			if row:
-				device = row["device"]
-				if self.Blueman != None:
-					if self.menu == None:
-						self.menu = ManagerDeviceMenu(self.Blueman)
-					else:
-						self.menu.Generate()
-					self.menu.popup(None, None, None, event.button, event.time)
-					#@context_menu(address, event)
+				if row:
+					device = row["device"]
+					if self.Blueman != None:
+						if self.menu == None:
+							self.menu = ManagerDeviceMenu(self.Blueman)
+					
+						self.menu.popup(None, None, None, event.button, event.time)
 	
 	
 	
@@ -105,18 +103,25 @@ class ManagerDeviceList(DeviceList):
 	def device_add_event(self, device):
 		self.PrependDevice(device)
 		
+	def make_caption(self, name, klass, address):
+		return "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" % {"0":name, "1":klass.capitalize(), "2":address}
+		
 	
 	def row_setup_event(self, iter, device):
 		try:
 			klass = get_minor_class(device.Class)
 		except:
 			klass = "Unknown"
+			
+		
 		
 		icon = self.get_device_icon(klass)
 
 		name = device.Alias
 		address = device.Address
-
+		
+		caption = self.make_caption(name, klass, address)
+		
 		caption = "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" % {"0":name, "1":klass.capitalize(), "2":address}
 		self.set(iter, caption=caption, orig_icon=icon)
 		
@@ -132,7 +137,7 @@ class ManagerDeviceList(DeviceList):
 			pass
 
 	def row_update_event(self, iter, key, value):
-
+		print "row update event", key, value
 		if key == "Trusted":
 			row = self.get(iter, "bonded", "orig_icon")
 			if value:
@@ -160,6 +165,13 @@ class ManagerDeviceList(DeviceList):
 			else:
 				icon = make_device_icon(row["orig_icon"], row["bonded"], row["trusted"], False) 
 				self.set(iter, device_pb=icon, fake=False)
+				
+		elif key == "Alias" or key == "Class":
+			device = self.get(iter, "device")["device"]
+			c = self.make_caption(value, get_minor_class(device.Class), device.Address)
+			self.set(iter, caption=c)
+				
+
 				
 				
 	
