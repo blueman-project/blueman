@@ -34,47 +34,34 @@ class ManagerToolbar:
 		self.b_search.connect("clicked", lambda button: blueman.inquiry())
 		
 		self.b_bond = blueman.Builder.get_object("b_bond")
-		self.b_bond.connect("clicked", self.on_bond)
+		self.b_bond.connect("clicked", self.on_action, self.blueman.bond)
+		
 		self.b_trust = blueman.Builder.get_object("b_trust")
-		self.b_trust.connect("clicked", self.on_trust)
+		self.b_trust.connect("clicked", self.on_action, self.blueman.toggle_trust)
+		
 		self.b_remove = blueman.Builder.get_object("b_remove")
-		self.b_remove.connect("clicked", self.on_remove)
+		self.b_remove.connect("clicked", self.on_action, self.blueman.remove)
+		
 		self.b_add = blueman.Builder.get_object("b_add")
-		self.b_add.connect("clicked", self.on_add)
+		self.b_add.connect("clicked", self.on_action, self.blueman.add_device)
+		
 		self.b_setup = blueman.Builder.get_object("b_setup")
+		self.b_setup.connect("clicked", self.on_action, self.blueman.setup)
+		
 		self.b_send = blueman.Builder.get_object("b_send")
-		#self.b_send.connect("clicked", self.on_browse)
+		self.b_send.connect("clicked", self.on_action, self.blueman.send)
+		
 		self.b_browse = blueman.Builder.get_object("b_browse")
-		self.b_browse.connect("clicked", self.on_browse)
+		self.b_browse.connect("clicked", self.on_action, self.blueman.browse)
 		
 		if blueman.List.IsValidAdapter():
 			self.b_search.props.sensitive = True
 		
-	def on_bond(self, button):
+	def on_action(self, button, func):
 		device = self.blueman.List.GetSelectedDevice()
 		if device != None:
-			self.blueman.bond(device)
-	
-	def on_remove(self, button):
-		device = self.blueman.List.GetSelectedDevice()
-		if device != None:
-			self.blueman.remove(device)
-	
-	
-	def on_trust(self, button):
-		device = self.blueman.List.GetSelectedDevice()
-		if device != None:
-			self.blueman.toggle_trust(device)
-	
-	def on_browse(self, button):
-		device = self.blueman.List.GetSelectedDevice()
-		if device != None:
-			self.blueman.browse(device)
-	
-	def on_add(self, button):
-		device = self.blueman.List.GetSelectedDevice()
-		if device != None and device.Fake:
-			self.blueman.add_device(device)
+			func(device)
+
 		
 		
 	def on_adapter_property_changed(self, List, adapter, (key, value)):

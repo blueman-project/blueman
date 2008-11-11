@@ -210,7 +210,7 @@ class ManagerDeviceMenu(gtk.Menu):
 
 		self.clear()
 		
-		if not self.is_popup:
+		if not self.is_popup or self.props.visible:
 			device = self.Blueman.List.get(self.Blueman.List.selected(), "device")["device"]
 		else:
 			(x,y) = self.Blueman.List.get_pointer()
@@ -231,7 +231,25 @@ class ManagerDeviceMenu(gtk.Menu):
 		
 		
 		if device.Fake:
-			print "fake device"
+			item = self.create_menuitem("Add Device", get_icon("gtk-add", 16))
+			self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.add_device(device))
+			item.show()
+			self.append(item)
+			
+			item = self.create_menuitem("Bond", get_icon("gtk-dialog-authentication", 16))
+			self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.bond(device))
+			self.append(item)
+			item.show()
+			
+			item = gtk.SeparatorMenuItem()
+			item.show()
+			self.append(item)
+			
+			send_item = self.create_menuitem(_("Send a file..."), get_icon("gtk-copy", 16))
+			self.Signals.Handle("gobject", send_item, "activate", lambda x: self.Blueman.send(device))
+			send_item.show()
+			self.append(send_item)
+			
 			
 			
 		else:
@@ -380,12 +398,12 @@ class ManagerDeviceMenu(gtk.Menu):
 			for uuid in uuids:
 				uuid16 = uuid128_to_uuid16(uuid)
 				if uuid16 == OBEX_OBJPUSH_SVCLASS_ID:
-					#connect
+					self.Signals.Handle("gobject", send_item, "activate", lambda x: self.Blueman.send(device))
 					send_item.props.sensitive = True
 
 					
 				if uuid16 == OBEX_FILETRANS_SVCLASS_ID:
-					#connect
+					self.Signals.Handle("gobject", browse_item, "activate", lambda x: self.Blueman.browse(device))
 					browse_item.props.sensitive = True
 
 					
@@ -395,26 +413,29 @@ class ManagerDeviceMenu(gtk.Menu):
 			self.append(item)
 			
 			item = self.create_menuitem(_("Bond"), get_icon("gtk-dialog-authentication", 16))
+			
 			self.append(item)
 			item.show()
 			if not device.Paired:
-				#connect
-				pass
+				self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.bond(device))
 			else:
 				item.props.sensitive = False
 
 				
 			if not device.Trusted:
 				item = self.create_menuitem(_("Trust"), get_icon("blueman-trust", 16))
+				self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.toggle_trust(device))
 				self.append(item)
 				item.show()
 			else:
 				item = self.create_menuitem(_("Untrust"), get_icon("blueman-untrust", 16))
 				self.append(item)
+				self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.toggle_trust(device))
 				item.show()
 				
 			item = self.create_menuitem(_("Setup..."), get_icon("gtk-properties", 16))
 			self.append(item)
+			self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.setup(device))
 			item.show()
 			
 			item = gtk.SeparatorMenuItem()
