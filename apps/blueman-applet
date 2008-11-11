@@ -88,10 +88,12 @@ class BluemanApplet:
 		
 	def on_adapter_added(self, path):
 		print 'Adapter added ', path
+		self.show_notification("Adapter Attached", "A new adapter has been connected to the system")
 		self.status_icon.set_visible(True)
 		
 	def on_adapter_removed(self, path):
 		print 'Adapter removed ', path
+		self.show_notification("Adapter Removed", "")
 		if self.Manager.ListAdapters() == []:
 			self.status_icon.set_visible(False)
 			
@@ -145,12 +147,16 @@ class BluemanApplet:
 	def on_about(self, menu_item):
 		show_about_dialog('Blueman '+_('applet'))
 		
-	def show_notification(self, summary, message, timeout=-1, action=None, action_cb=None):
+	def show_notification(self, summary, message, timeout=-1, icon=None, action=None, action_cb=None):
 		n = pynotify.Notification(summary, message)
 		if action:
 			n.add_action("button", action, action_cb)
 		if timeout != -1:
 			n.set_timeout(timeout)
+		
+		if icon != None:
+			n.set_icon_from_pixbuf(icon)
+		
 		if self.status_icon.get_visible():
 			screen, area, orientation = self.status_icon.get_geometry()
 			n.set_hint("x", area.x + area.width/2)

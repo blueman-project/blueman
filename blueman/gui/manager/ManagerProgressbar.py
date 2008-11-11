@@ -79,7 +79,7 @@ class ManagerProgressbar(gobject.GObject):
 	def finalize(self):
 		if not self.finalized:
 			self.stop()
-
+			self.window.window.set_cursor(None)
 			self.hbox.remove(self.eventbox)
 			self.hbox.remove(self.progressbar)
 			#self.hbox.remove(self.seperator)

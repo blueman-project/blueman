@@ -61,6 +61,7 @@ class DeviceList(GenericList):
 			self.emit("adapter-removed", path)
 			if path == self.__adapter_path:
 				self.clear()
+				self.Adapter = None
 				self.SetAdapter()	
 				
 		def on_adapter_added(path):
@@ -361,7 +362,8 @@ class DeviceList(GenericList):
 		
 	def StopDiscovery(self):
 		self.discovering = False
-		self.Adapter.StopDiscovery()
+		if self.Adapter != None:
+			self.Adapter.StopDiscovery()
 	
 	def PrependDevice(self, device):
 		self.add_device(device, False)

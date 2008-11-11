@@ -48,7 +48,7 @@ class ManagerMenu:
 		blueman.List.connect("adapter-removed", self.on_adapter_removed)
 		blueman.List.connect("adapter-property-changed", self.on_adapter_property_changed)
 		blueman.List.connect("device-selected", self.on_device_selected)
-		
+		blueman.List.connect("adapter-changed", self.on_adapter_changed)
 		
 		self.adapters = adapters = blueman.List.Manager.ListAdapters()
 		
@@ -126,6 +126,9 @@ class ManagerMenu:
 		for adapter in self.adapters:
 			if adapter.GetObjectPath() == adapter_path:
 				self.adapters.remove(adapter)
+		self.generate_adapter_menu()
+		
+	def on_adapter_changed(self, List, path):
 		self.generate_adapter_menu()
 		
 		
