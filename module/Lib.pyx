@@ -2,6 +2,9 @@
 
 cdef extern from "malloc.h":
 	cdef void free(void *ptr)
+	
+cdef extern from "string.h":
+	cdef char* strerror(int errnum)
 
 cdef extern from "bluetooth/bluetooth.h":
 	ctypedef struct bdaddr_t:
@@ -80,6 +83,8 @@ cdef extern from "libblueman.h":
 	cdef int connection_close(conn_info_handles *ci)
 	cdef int get_rfcomm_list(rfcomm_dev_list_req **ret)
 	cdef float get_page_timeout(int hdev)
+	cdef int _create_bridge(char* name)
+	cdef int _destroy_bridge(char* name)
 
 ERR = {
 	-1:"Can't allocate memory",
@@ -140,9 +145,26 @@ def rfcomm_list():
 	free(dl)
 
 	return devs
+	
+import exceptions
+class BridgeException(exceptions.Exception):
+	def __init__(self, value):
+		self.value = value
+		
+	def __str__(self):
+		return repr(self.value)
+		
 
 
-
+def create_bridge(name="pan1"):
+	err = _create_bridge(name)
+	if err < 0:
+		raise BridgeException(strerror(-err))
+	
+def destroy_bridge(name="pan1"):
+	err = _destroy_bridge(name)
+	if err < 0:
+		raise BridgeException(strerror(-err))
 
 
 cdef class conn_info:

@@ -23,3 +23,6 @@ int connection_get_tpl(struct conn_info_handles *ci, int8_t *ret_tpl, uint8_t ty
 int connection_close(struct conn_info_handles *ci);
 int get_rfcomm_list(struct rfcomm_dev_list_req **result);
 float get_page_timeout(int hdev);
+
+int _create_bridge(const char* name);
+int _destroy_bridge(const char* name);

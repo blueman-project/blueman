@@ -24,13 +24,53 @@
 #include <stdlib.h>
 #include <sys/ioctl.h>
 #include <sys/socket.h>
+#include <linux/sockios.h>
 
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/hci.h>
 #include <bluetooth/hci_lib.h>
 #include <bluetooth/rfcomm.h>
+#include <errno.h>
 
 #include "libblueman.h"
+
+
+int _create_bridge(const char* name) {
+	int sock;
+	sock = socket(AF_INET, SOCK_STREAM, 0);
+	if (sock < 0) {
+		return -errno;
+	}
+	
+	int err;
+
+	err = ioctl(sock, SIOCBRADDBR, name);
+	if (err < 0)
+		return -errno;
+		
+	close(sock);
+	
+	return 0;
+}
+	
+	
+int _destroy_bridge(const char* name) {
+	int sock;
+	sock = socket(AF_INET, SOCK_STREAM, 0);
+	if (sock < 0) {
+		return -errno;
+	}
+	
+	int err;
+
+	err = ioctl(sock, SIOCBRDELBR, name);
+	if (err < 0)
+		return -errno;
+		
+	close(socket);
+	
+	return 0;
+}
 
 int find_conn(int s, int dev_id, long arg)
 {
