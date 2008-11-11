@@ -251,10 +251,29 @@
                   </object>
                 </child>
                 <child type="label">
-                  <object class="GtkLabel" id="label1">
+                  <object class="GtkHBox" id="hbox5">
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">&lt;b&gt;Network Settings&lt;/b&gt;</property>
-                    <property name="use_markup">True</property>
+                    <property name="spacing">6</property>
+                    <child>
+                      <object class="GtkImage" id="image1">
+                        <property name="visible">True</property>
+                        <property name="pixel_size">32</property>
+                        <property name="icon_name">gtk-network</property>
+                      </object>
+                      <packing>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label10">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">&lt;b&gt;Network Settings&lt;/b&gt;</property>
+                        <property name="use_markup">True</property>
+                      </object>
+                      <packing>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
                   </object>
                 </child>
               </object>
