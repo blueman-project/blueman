@@ -181,9 +181,19 @@ class ManagerDeviceList(DeviceList):
 		#print self.window.get_state() & gtk.gdk.WINDOW_STATE_ICONIFIED
 		if True:
 			if cinfo != None:
-				rssi = float(cinfo.get_rssi())
-				lq = float(cinfo.get_lq())
-				tpl = float(cinfo.get_tpl())
+				try:
+					rssi = float(cinfo.get_rssi())
+				except:
+					rssi = 0
+				try:
+					lq = float(cinfo.get_lq())
+				except:
+					lq = 0
+				
+				try:
+					tpl = float(cinfo.get_tpl())
+				except:
+					tpl = 0
 
 
 				rssi_perc = 50 + (rssi / 127 / 2 * 100)

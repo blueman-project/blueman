@@ -225,6 +225,9 @@ class DeviceList(GenericList):
 	
 	def SetAdapter(self, adapter=None):
 		self.clear()
+		if self.discovering:
+			self.emit("adapter-property-changed", self.Adapter, ("Discovering", False))
+			self.StopDiscovery()
 		
 		if adapter != None and not re.match("hci[0-9]*", adapter):
 			print "path to"
@@ -245,12 +248,10 @@ class DeviceList(GenericList):
 			self.Adapter.HandleSignal(self.on_device_removed, "DeviceRemoved")
 			self.__adapter_path = self.Adapter.GetObjectPath()
 			
-			
-			#gobject.timeout_add(50, self.emit, "adapter-changed", self.__adapter_path)
 			self.emit("adapter-changed", self.__adapter_path)
 		except Bluez.errors.DBusNoSuchAdapterError:
 			#try loading default adapter
-			if len(self.Manager.ListAdapters) > 0:
+			if len(self.Manager.ListAdapters()) > 0:
 				self.SetAdapter()
 			else:
 				self.Adapter = None

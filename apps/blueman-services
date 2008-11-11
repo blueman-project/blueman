@@ -19,10 +19,13 @@ class BluemanServices:
 		adapter = self.Manager.GetAdapter()
 		
 		s = ServiceInterface("org.bluez.NetworkRouter", adapter.GetObjectPath(), ["GetProperties"])
-		print s.GetProperties()
+		print "router properties", s.GetProperties()
 		
 		s = ServiceInterface("org.bluez.NetworkHub", adapter.GetObjectPath(), ["GetProperties"])
-		print s.GetProperties()
+		print "hub properties",s.GetProperties()
+		
+		s = ServiceInterface("org.bluez.NetworkPeer", adapter.GetObjectPath(), ["GetProperties"])
+		print "peer properties",s.GetProperties()
 		
 		
 		gtk.main()

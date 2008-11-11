@@ -24,6 +24,7 @@ import os.path
 import sys
 import gtk
 import dbus
+import gobject
 
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -111,8 +112,7 @@ class Blueman:
 		adapter.CreateDevice(address, reply_handler=ok, error_handler=err)
 		
 	def inquiry(self):
-		def prop_changed(List, adapter, kv):	
-			(key, value) = kv
+		def prop_changed(List, adapter, (key, value)):
 			if key == "Discovering" and not value:
 				prog.finalize()
 				
@@ -125,10 +125,33 @@ class Blueman:
 	def setup(self, device):
 		pass
 		
+	def _prog_msg(self, prog, msg):
+		prog.stop()
+		prog.set_label(msg)
+		prog.set_cancellable(False)
+		gobject.timeout_add(1500, prog.finalize)
+		
 	def bond(self, device):
+		def ok(*args):
+			print args
+			self._prog_msg(prog, _("Success"))
+		
+		def err(*args):
+			print args
+			self._prog_msg(prog, _("Failure"))
+		
+		address = device.GetProperties()["Address"]
+		adapter = self.List.Adapter
+		
+		prog = ManagerProgressbar(self, text=_("Bonding"))
+		prog.start()
+		
 		name = adapter_path_to_name(self.List.Adapter.GetObjectPath())
+		self.List.Adapter.CreatePairedDevice(device.Address, dbus.ObjectPath("/org/blueman/agent/"+name), "DisplayYesNo", reply_handler=ok, error_handler=err)
+		
+		
 
-		self.List.Adapter.CreatePairedDevice(device.Address, dbus.ObjectPath("/org/blueman/agent/"+name), "DisplayYesNo")
+
 		
 	def toggle_trust(self, device):
 		props = device.GetProperties()
