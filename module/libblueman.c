@@ -45,8 +45,10 @@ int _create_bridge(const char* name) {
 	int err;
 
 	err = ioctl(sock, SIOCBRADDBR, name);
-	if (err < 0)
+	if (err < 0) {
+		close(sock);
 		return -errno;
+	}
 		
 	close(sock);
 	
@@ -64,10 +66,12 @@ int _destroy_bridge(const char* name) {
 	int err;
 
 	err = ioctl(sock, SIOCBRDELBR, name);
-	if (err < 0)
+	if (err < 0) {
+		close(sock);
 		return -errno;
+	}
 		
-	close(socket);
+	close(sock);
 	
 	return 0;
 }
