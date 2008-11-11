@@ -76,7 +76,7 @@ class Config(gobject.GObject):
 	
 	def value_changed(self, client, key, value):
 		name = os.path.basename(key)
-		self.emit("property_changed", name, self.get_value(name))
+		self.emit("property-changed", name, self.get_value(name))
 	
 	def __init__(self, subdir=""):
 		self.subdir = subdir
