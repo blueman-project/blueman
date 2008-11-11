@@ -22,6 +22,7 @@ import blueman.bluez as Bluez
 
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
+from blueman.Functions import adapter_path_to_name
 
 class ManagerMenu:
 
@@ -112,6 +113,7 @@ class ManagerMenu:
 		if menuitem.props.active:
 			if adapter_path != self.blueman.List.Adapter.GetObjectPath():
 				print "selected", adapter_path
+				self.blueman.Config.props.last_adapter = adapter_path_to_name(adapter_path)
 				self.blueman.List.SetAdapter(adapter_path)
 		
 		

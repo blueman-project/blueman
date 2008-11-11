@@ -34,6 +34,7 @@ dnl ----------------------------------
 PKG_CHECK_MODULES(BLUEMAN,
 		bluez			>= 4.0
 		gtk+-2.0		>= 2.12
+		gconf-2.0		>= 2.20
 		pygtk-2.0		>= 2.12
 		pygobject-2.0	>= 2.12
 		dbus-python		>= 0.80.2

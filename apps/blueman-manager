@@ -37,6 +37,7 @@ from blueman.gui.manager.ManagerToolbar import ManagerToolbar
 from blueman.gui.manager.ManagerMenu import ManagerMenu
 from blueman.gui.manager.ManagerStats import ManagerStats
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
+from blueman.main.Config import Config
 
 from subprocess import call
 
@@ -46,30 +47,42 @@ _ = gettext.gettext
 class Blueman:
 
 	def __init__(self):
+		def on_window_delete(window, event):
+			(x, y) = window.get_size()
+			self.Config.props.window_height = y
+			self.Config.props.window_width = x
+			gtk.main_quit()
+		
 		setup_icon_path()
 		
 		self.Builder = gtk.Builder()
 		self.Builder.add_from_file(UI_PATH +"/manager-main.ui")
+		self.Config = Config()
 
 		window = self.Builder.get_object("window")
-		window.connect("delete-event", lambda w,x : gtk.main_quit())
+		window.connect("delete-event", on_window_delete)
 		window.props.icon_name = "blueman"
+		
+		h = self.Config.props.window_height
+		w = self.Config.props.window_width
+		if w != None and h != None:
+			window.resize(w, h)
+			
+		
 		sw = self.Builder.get_object("scrollview")
 		
-		self.List = ManagerDeviceList(inst=self)
+		self.List = ManagerDeviceList(adapter=self.Config.props.last_adapter, inst=self)
 
 		self.List.show()
 		sw.add(self.List)
-		
-		#if self.List.IsValidAdapter():
-		#	self.List.DisplayKnownDevices()
 		
 		
 		self.Toolbar = ManagerToolbar(self)
 		self.Menu = ManagerMenu(self)
 		self.Stats = ManagerStats(self)
 		
-		self.List.DisplayKnownDevices(autoselect=True)
+		if self.List.IsValidAdapter():
+			self.List.DisplayKnownDevices(autoselect=True)
 		
 		self.List.connect("adapter-changed", self.on_adapter_changed)
 		
