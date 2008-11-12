@@ -110,12 +110,11 @@ class ManagerDeviceList(DeviceList):
 	def row_setup_event(self, iter, device):
 		try:
 			klass = get_minor_class(device.Class)
+			icon = self.get_device_icon(klass)
 		except:
 			klass = "Unknown"
-			
+			icon = get_icon("blueman", 48)
 		
-		
-		icon = self.get_device_icon(klass)
 
 		name = device.Alias
 		address = device.Address

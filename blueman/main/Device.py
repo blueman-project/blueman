@@ -57,11 +57,11 @@ class Device:
 	def Destroy(self):
 		self.Signals.DisconnectAll()
 			
-	def __del__(self):
-		print "DEBUG: deleting Device instance"
+	#def __del__(self):
+	#	print "DEBUG: deleting Device instance"
 			
 	def GetProperties(self):
-		print "Properties requested"
+		#print "Properties requested"
 		return self.Properties
 			
 	def __getattr__(self, name):
