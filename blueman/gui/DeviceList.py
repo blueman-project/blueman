@@ -123,6 +123,7 @@ class DeviceList(GenericList):
 		
 	def on_device_found(self, address, props):
 		if self.discovering:
+
 			try:
 				dev = self.Adapter.FindDevice(address)
 			except:

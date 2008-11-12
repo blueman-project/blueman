@@ -58,7 +58,7 @@ class Device:
 		self.Signals.DisconnectAll()
 			
 	def __del__(self):
-		print "DEBUG: deleting Device instance", self.Properties["Name"]
+		print "DEBUG: deleting Device instance"
 			
 	def GetProperties(self):
 		print "Properties requested"

@@ -87,7 +87,7 @@ class DbusService(dbus.service.Object):
 	def RfcommDisconnect(self, device, rfdevice):
 		dev = Device(BluezDevice(device))
 		dev.Services["serial"].Disconnect(rfdevice)
-		self.unregister_modem(rfdevice)
+		self.UnregisterModem(rfdevice)
 		print "Disonnecting rfcomm device"
 
 		
