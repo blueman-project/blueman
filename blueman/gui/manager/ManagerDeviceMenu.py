@@ -34,10 +34,12 @@ _ = gettext.gettext
 class ManagerDeviceMenu(gtk.Menu):
 
 	__ops__ = {}
+	__instances__ = []
 	
 	def __init__(self, blueman):
 		gtk.Menu.__init__(self)
 		self.Blueman = blueman
+		self.SelectedDevice = None
 
 		self.is_popup = False
 		
@@ -47,6 +49,7 @@ class ManagerDeviceMenu(gtk.Menu):
 		
 		self.MainSignals.Handle("gobject", self.Blueman.List, "device-property-changed", self.on_device_property_changed)
 
+		ManagerDeviceMenu.__instances__.append(self)
 		
 		self.Generate()
 
@@ -90,6 +93,14 @@ class ManagerDeviceMenu(gtk.Menu):
 		
 	def unset_op(self, device):
 		del ManagerDeviceMenu.__ops__[device.GetObjectPath()]
+		for inst in ManagerDeviceMenu.__instances__:
+			print "op: regenerating instance", inst
+			if inst.SelectedDevice == self.SelectedDevice and inst != self:
+				inst.Generate()
+				return
+				
+		
+		
 	
 		
 	def service_property_changed(self, key, value):
@@ -196,7 +207,7 @@ class ManagerDeviceMenu(gtk.Menu):
 		
 		
 	def on_device_property_changed(self, List, device, iter, (key, value)):
-		
+
 		if List.compare(iter, List.selected()):
 			if key == "Connected"\
 			or key =="Fake"\
@@ -219,6 +230,7 @@ class ManagerDeviceMenu(gtk.Menu):
 				device = self.Blueman.List.get(path[0][0], "device")["device"]
 			else:
 				return
+		self.SelectedDevice = device
 		
 		op = self.get_op(device)
 		
