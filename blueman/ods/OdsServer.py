@@ -19,6 +19,48 @@
 
 from blueman.ods.OdsBase import OdsBase
 
-class OdsSession(OdsBase):
+class OdsServer(OdsBase):
+	__gsignals__ = {
+		'started' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
+		'stopped' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
+		'closed' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
+		'error-occured' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
+		'session-created' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+		'session-removed' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+	}
+	
 	def __init__(self, obj_path):
 		OdsBase.__init__(self, "org.openobex.Server", obj_path)
+		
+		self.Handle("Started", self.on_started)
+		self.Handle("Stopped", self.on_stopped)
+		self.Handle("Closed", self.on_closed)
+		self.Handle("ErrorOccured", self.on_error)
+		self.Handle("SessionCreated", self.on_session_created)
+		self.Handle("SessionRemoved", self.on_session_removed)
+		
+		self.sessions = {}
+		
+	def on_started(self):
+		self.emit("started")
+		
+	def on_stopped(self):
+		self.emit("stopped")
+		
+	def on_closed(self):
+		self.emit("closed")
+		self.DisconnectAll()
+		
+	def on_error(self, err_name, err_message):
+		self.emit("error-occured", err_name, err_message)
+		self.DisconnectAll()
+		
+	def on_session_created(self, path):
+		self.sessions[path] = OdsServerSession(path)
+		self.emit("session-created", path)
+		
+	def on_session_removed(self, path):
+		self.emit("session-removed", path)
+	
+	
+	

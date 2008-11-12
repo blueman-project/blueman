@@ -31,6 +31,7 @@ class OdsManager(OdsBase):
 	#@self.OdsMethod	
 	def CreateBluetoothServer(self, source_addr="00:00:00:00:00:00", pattern="opp", require_paring=False):
 		def reply(path):
+			print pattern, "server created"
 			self.Servers[pattern] = OdsServer(path)
 			
 		def err(*args):

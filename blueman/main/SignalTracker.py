@@ -20,23 +20,27 @@
 class SignalTracker:
 
 	def __init__(self):
-		self.signals = []
+		self.__signals = []
 		
-	def Handle(self, type, obj, *args):
+	def Handle(self, type, obj, *args, **kwargs):
 		if type == "bluez":
 			obj.HandleSignal(*args)
 		elif type == "gobject":
 			args = obj.connect(*args)
+		elif type == "dbus":
+			obj.bus.add_signal_receiver(*args, **kwargs)
 			
-		self.signals.append((type, obj, args))
+		self.__signals.append((type, obj, args, kwargs))
 		
 	def DisconnectAll(self):
-		for sig in self.signals:
-			(type, obj, args) = sig
+		for sig in self.__signals:
+			(type, obj, args, kwargs) = sig
 			if type == "bluez":
-				obj.UnHandleSignal(*args)
+				obj.UnHandleSignal(*args, **kwargs)
 			elif type == "gobject":
 				obj.disconnect(args)
+			elif type == "dbus":
+				obj.bus.remove_signal_receiver(*args, **kwargs)
 		
-		self.signals = []
+		self.__signals = []
 

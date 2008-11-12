@@ -17,9 +17,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 
+import gobject
 import dbus
+from blueman.main.SignalTracker import SignalTracker
 
-class OdsBase(dbus.proxies.Interface):
+class OdsBase(dbus.proxies.Interface, SignalTracker, gobject.GObject):
 	
 	def OdsMethod(fn):
 		def new(self, *args, **kwargs):
@@ -32,4 +34,12 @@ class OdsBase(dbus.proxies.Interface):
 		self.bus = dbus.SessionBus()
 		
 		service = self.bus.get_object("org.openobex", obj_path)
+		SignalTracker.__init__(self)
 		dbus.proxies.Interface.__init__(self, service, service_name)
+		gobject.GObject.__init__(self)
+		
+	def Handle(self, signame, handler):
+		SignalTracker.Handle("dbus", self, handler, signame, self.dbus_interface) 
+		
+	def GHandle(self, name, callback, *args):
+		SignalTracker.Handle("gobject", self, name, callback, *args) 
