@@ -16,8 +16,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
-
+from blueman.main.Config import Config
 from blueman.ods.OdsManager import OdsManager
+import os.path
 
 class Transfer(OdsManager):
 
@@ -28,6 +29,8 @@ class Transfer(OdsManager):
 		
 		#check options
 		self.create_server()
+		
+		self.Config = Config("transfer")
 		
 		
 	def on_server_created(self, inst, server):
@@ -53,7 +56,12 @@ class Transfer(OdsManager):
 		
 		server.GHandle("started", on_started)
 		server.GHandle("session-created", on_session_created)
-		server.Start("/home/walmis", True, True)
+		
+		
+		if self.Config.props.opp_shared_path == None:
+			self.Config.props.opp_shared_path = os.path.expanduser("~")
+		
+		server.Start(self.Config.props.opp_shared_path, True, True)
 		
 	def on_server_destroyed(self, inst, server):
 		pass

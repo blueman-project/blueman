@@ -49,7 +49,7 @@ class Config(gobject.GObject):
 				else:
 					raise AttributeError("Cant set this type in gconf")
 				
-				func(BLUEMAN_PATH + self.Config.subdir + "/" + key, value)
+				func(BLUEMAN_PATH + "/" + self.Config.subdir + "/" + key, value)
 				
 		def __getattr__(self, key):
 			if key == "Config" or key in self.__dict__:
@@ -58,7 +58,7 @@ class Config(gobject.GObject):
 				return self.Config.get_value(key)
 				
 	def get_value(self, key):
-		val = self.client.get(BLUEMAN_PATH + self.subdir + "/" + key)
+		val = self.client.get(BLUEMAN_PATH + "/" + self.subdir + "/" + key)
 		if val != None:
 			if val.type == gconf.VALUE_STRING:
 				return val.get_string()
