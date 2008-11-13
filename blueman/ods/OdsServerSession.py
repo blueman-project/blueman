@@ -40,6 +40,8 @@ class OdsServerSession(OdsBase):
 		self.Handle("TransferCompleted", self.on_trans_complete)
 		self.Handle("ErrorOccured", self.on_error)
 		
+	def __del__(self):
+		print "deleting session"
 		
 	def on_cancelled(self):
 		self.emit("cancelled")
