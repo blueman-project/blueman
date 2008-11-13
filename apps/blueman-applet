@@ -36,6 +36,7 @@ if os.path.exists(os.path.join(_dirname,"ChangeLog")):
 from blueman.main.applet.Transfer import Transfer
 from blueman.main.SignalTracker import SignalTracker
 from blueman.Functions import *
+from blueman.main.applet.BluezAgent import BluezAgent
 from blueman.main.applet.DbusService import DbusService
 from blueman.Constants import *
 import blueman.bluez as Bluez
@@ -77,11 +78,23 @@ class BluemanApplet:
 			self.Manager = Bluez.Manager('gobject')
 			self.signals.Handle("bluez", self.Manager, self.on_adapter_removed, 'AdapterRemoved')
 			self.signals.Handle("bluez", self.Manager, self.on_adapter_added, 'AdapterAdded')
-			self.status_icon.set_visible(self.Manager.ListAdapters() != [])
-		except:
+			adapters = self.Manager.ListAdapters()
+			self.status_icon.set_visible(adapters != [])
+			for adapter in adapters:
+				self.register_agent(adapter.GetObjectPath())
+		except Exception, e:
+			print e
 			self.Manager = None
 			self.status_icon.set_visible(False)
 			print 'Bluez DBus API not available. Listening for DBus name ownership changes'
+			
+	def register_agent(self, adapter):
+		try:
+			adapter_obj = Bluez.Adapter(adapter)
+			agent = BluezAgent(self, adapter)
+			adapter_obj.GetInterface().RegisterAgent(agent.dbus_path, 'DisplayYesNo')
+		except:
+			print 'Failed to register agent'
 		
 	def on_dbus_name_owner_change(self, owner):
 		print 'org.bluez owner changed to ', owner
@@ -94,6 +107,7 @@ class BluemanApplet:
 	def on_adapter_added(self, path):
 		print 'Adapter added ', path
 		self.status_icon.set_visible(True)
+		self.register_agent(self, path)
 		
 	def on_adapter_removed(self, path):
 		print 'Adapter removed ', path
@@ -149,7 +163,40 @@ class BluemanApplet:
 		
 	def on_about(self, menu_item):
 		show_about_dialog('Blueman '+_('applet'))
+	
+	def build_passkey_dialog(self, device_alias, dialog_msg, is_numeric):
+		def on_insert_text(editable, new_text, new_text_length, position):
+			if not new_text.isdigit():
+				editable.stop_emission("insert-text")
 		
+		builder = gtk.Builder()
+		builder.add_from_file(UI_PATH +"/applet-passkey.ui")
+		dialog = builder.get_object("dialog")
+		def on_delete(window, event):
+			print 'window delete'
+		dialog.connect("delete-event", on_delete)
+		dialog.props.icon_name = "blueman"
+		dev_name = builder.get_object("device_name")
+		dev_name.set_markup("<b>"+device_alias+"</b>")
+		msg = builder.get_object("message")
+		msg.set_text(dialog_msg)
+		pin_entry = builder.get_object("pin_entry")
+		show_input = builder.get_object("show_input_check")
+		if (is_numeric):
+			pin_entry.set_max_length(6)
+			pin_entry.set_width_chars(6)
+			pin_entry.connect("insert-text", on_insert_text)
+			show_input.props.active = True
+		else:
+			pin_entry.set_max_length(16)
+			pin_entry.set_width_chars(16)
+			pin_entry.set_visibility(False)
+		show_input.connect("toggled", lambda x: pin_entry.set_visibility(x.props.active))
+		accept_button = builder.get_object("accept")
+		pin_entry.connect("changed", lambda x: accept_button.set_sensitive(x.get_text() != ''))
+		
+		return (dialog, pin_entry)
+	
 	def show_notification(self, summary, message, timeout=-1, action=None, action_cb=None):
 		n = pynotify.Notification(summary, message)
 		if action:
@@ -159,8 +206,9 @@ class BluemanApplet:
 		if self.status_icon.get_visible():
 			screen, area, orientation = self.status_icon.get_geometry()
 			n.set_hint("x", area.x + area.width/2)
-			n.set_hint("y", area.y + area.height)
+			n.set_hint("y", area.y + area.height/2)
 		n.show()
+		return n
 
 BluemanApplet()
 

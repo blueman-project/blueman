@@ -39,66 +39,84 @@ class BluezAgent(dbus.service.Object):
 		self.applet = applet
 		self.adapter = adapter
 		self.dialog = None
-		self.bus = dbus.SessionBus();
-		self.bus.request_name("org.blueman.Applet")
+		self.bus = dbus.SystemBus();
 		adapter_name = os.path.basename(adapter)
-		dbus.service.Object.__init__(self, self.bus, "/org/blueman/agent/"+adapter_name)
-	
-	def on_dialog_response(self, dialog, response_id, ok, err):
-		if response_id == gtk.RESPONSE_REJECT:
-			err(AgentErrorRejected())
-		ok()
+		self.dbus_path = "/org/blueman/agent/"+adapter_name
+		dbus.service.Object.__init__(self, self.bus, self.dbus_path)
+		
+	def __del__(self):
+		print 'Agent on path', self.dbus_path, 'deleted'
 	
 	@dbus.service.method(dbus_interface='org.bluez.Agent', in_signature="", out_signature="")
 	def Release(self):
 		self.Cancel()
+		self.remove_from_connection()
 	
-	def passkey_common(self, device_path, dialog_msg, notify_msg, ok, err):
+	def on_notification_close(self, n, action):
+		self.dialog.show()
+		self.applet.status_icon.set_blinking(False)
+	
+	def on_dialog_response(self, dialog, response_id, is_numeric, ok, err):
+		print 'dialog response'
+		if response_id == gtk.RESPONSE_REJECT:
+			err(AgentErrorRejected())
+		else:
+			ret = self.pin_entry.get_text()
+			if is_numeric:
+				ret = int(ret)
+			ok(ret)
+	
+	def passkey_common(self, device_path, dialog_msg, notify_msg, is_numeric, ok, err):
 		device = Bluez.Device(device_path)
-		address = device.Address
-		name = device.Name
+		props = device.GetProperties()
+		address = props['Address']
+		name = props['Name']
 		alias = address
 		if name:
 			alias = "%s (%s)" % (name, address)
 		notify_message = _('Pairing request for %s') % (alias)
 		
 		if self.dialog:
+			print 'Agent: Another dialog still active, cancelling'
 			raise AgentErrorCanceled
 		
-		self.dialog = self.applet.build_passkey_dialog(alias, dialog_msg, False)
+		self.dialog, self.pin_entry = self.applet.build_passkey_dialog(alias, dialog_msg, is_numeric)
 		if not self.dialog:
+			print 'Agent: Failed to build dialog'
 			raise AgentErrorCanceled
 		
-		self.applet.show_notification(_('Bluetooth device'), notify_message, 0,
-									notify_msg, self.on_notification_close)
-		self.dialog.connect('response', self.on_dialog_response, ok, err)
-		self.dialog.show()
+		self.n = self.applet.show_notification(_('Bluetooth device'), notify_message, 0,
+										notify_msg, self.on_notification_close)
+		self.applet.status_icon.set_blinking(True)
+		self.dialog.connect('response', self.on_dialog_response, is_numeric, ok, err)
 	
 	@dbus.service.method(dbus_interface='org.bluez.Agent', in_signature="o", out_signature="s", async_callbacks=("ok","err"))
 	def RequestPinCode(self, device_path, ok, err):
 		dialog_msg = _('Enter PIN code for authentication:')
 		notify_msg = _('Enter PIN code')
-		return self.passkey_common(device_path, dialog_msg, notify_msg, ok, err)
+		print 'Agent.RequestPinCode'
+		self.passkey_common(device_path, dialog_msg, notify_msg, False, ok, err)
 		
 	@dbus.service.method(dbus_interface='org.bluez.Agent', in_signature="o", out_signature="u", async_callbacks=("ok","err"))
 	def RequestPasskey(self, device, ok, err):
 		dialog_msg = _('Enter passkey for authentication:')
 		notify_msg = _('Enter passkey')
-		return self.passkey_common(device_path, dialog_msg, notify_msg, ok, err)
+		print 'Agent.RequestPasskey'
+		self.passkey_common(device_path, dialog_msg, notify_msg, True, ok, err)
 	
 	@dbus.service.method(dbus_interface='org.bluez.Agent', in_signature="ouy", out_signature="")
 	def DisplayPasskey(self, device, passkey, entered):
 		pass
 	
-	@dbus.service.method(dbus_interface='org.bluez.Agent', in_signature="ou", out_signature="")
+	@dbus.service.method(dbus_interface='org.bluez.Agent', in_signature="ou", out_signature="", async_callbacks=("ok","err"))
 	def RequestConfirmation(self, device, passkey, ok, err):
 		pass
 	
-	@dbus.service.method(dbus_interface='org.bluez.Agent', in_signature="os", out_signature="")
+	@dbus.service.method(dbus_interface='org.bluez.Agent', in_signature="os", out_signature="", async_callbacks=("ok","err"))
 	def Authorize(self, device, uuid, ok, err):
 		pass
 	
-	@dbus.service.method(dbus_interface='org.bluez.Agent', in_signature="s", out_signature="")
+	@dbus.service.method(dbus_interface='org.bluez.Agent', in_signature="s", out_signature="", async_callbacks=("ok","err"))
 	def ConfirmModeChange(self, mode, ok, err):
 		pass
 	
