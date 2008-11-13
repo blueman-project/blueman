@@ -172,9 +172,6 @@ class BluemanApplet:
 		builder = gtk.Builder()
 		builder.add_from_file(UI_PATH +"/applet-passkey.ui")
 		dialog = builder.get_object("dialog")
-		def on_delete(window, event):
-			print 'window delete'
-		dialog.connect("delete-event", on_delete)
 		dialog.props.icon_name = "blueman"
 		dev_name = builder.get_object("device_name")
 		dev_name.set_markup("<b>"+device_alias+"</b>")
