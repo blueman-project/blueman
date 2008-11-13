@@ -49,7 +49,7 @@ class Config(gobject.GObject):
 				else:
 					raise AttributeError("Cant set this type in gconf")
 				
-				func(BLUEMAN_PATH + "/" + self.Config.subdir + "/" + key, value)
+				func(BLUEMAN_PATH + "/" + self.Config.subdir + key, value)
 				
 		def __getattr__(self, key):
 			if key == "Config" or key in self.__dict__:
@@ -79,7 +79,7 @@ class Config(gobject.GObject):
 		self.emit("property-changed", name, self.get_value(name))
 	
 	def __init__(self, subdir=""):
-		self.subdir = subdir
+		self.subdir = subdir + "/"
 		gobject.GObject.__init__(self)
 		
 		self.client = gconf.client_get_default ()
