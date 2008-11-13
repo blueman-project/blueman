@@ -16,6 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
+import gobject
 
 from blueman.ods.OdsBase import OdsBase
 from blueman.ods.OdsServer import OdsServer
@@ -23,19 +24,27 @@ from blueman.main.SignalTracker import SignalTracker
 
 
 class OdsManager(OdsBase):
+	__gsignals__ = {
+		'server-created' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+		'server-destroyed' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+
+	}
+	
 	def __init__(self):
 		OdsBase.__init__(self, "org.openobex.Manager", "/org/openobex")
 		
 		self.Servers = {}
+
 	
 	#@self.OdsMethod	
-	def CreateBluetoothServer(self, source_addr="00:00:00:00:00:00", pattern="opp", require_paring=False):
+	def create_server(self, source_addr="00:00:00:00:00:00", pattern="opp", require_pairing=False):
 		def reply(path):
-			print pattern, "server created"
-			self.Servers[pattern] = OdsServer(path)
+			server = OdsServer(path)
+			self.emit("server-created", server)
+			self.Servers[pattern] = server
 			
 		def err(*args):
 			pass
 		
-		OdsBase.CreateBluetoothServer(source, pattern, require_pairing, reply_handler=reply, error_handler=err)
+		self.CreateBluetoothServer(source_addr, pattern, require_pairing, reply_handler=reply, error_handler=err)
 

@@ -16,17 +16,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
-
+import gobject
 from blueman.ods.OdsBase import OdsBase
+from blueman.ods.OdsServerSession import OdsServerSession
 
 class OdsServer(OdsBase):
 	__gsignals__ = {
-		'started' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
-		'stopped' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
-		'closed' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
-		'error-occured' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
-		'session-created' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
-		'session-removed' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+		'started' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, ()),
+		'stopped' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, ()),
+		'closed' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, ()),
+		'error-occured' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
+		'session-created' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+		'session-removed' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
 	}
 	
 	def __init__(self, obj_path):
@@ -57,10 +58,12 @@ class OdsServer(OdsBase):
 		
 	def on_session_created(self, path):
 		self.sessions[path] = OdsServerSession(path)
-		self.emit("session-created", path)
+		self.emit("session-created", self.sessions[path])
 		
 	def on_session_removed(self, path):
 		self.emit("session-removed", path)
+		self.sessions[path].DisconnectAll()
+		del self.sessions[path]
 	
 	
 	

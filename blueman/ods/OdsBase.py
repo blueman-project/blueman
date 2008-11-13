@@ -23,23 +23,28 @@ from blueman.main.SignalTracker import SignalTracker
 
 class OdsBase(dbus.proxies.Interface, SignalTracker, gobject.GObject):
 	
-	def OdsMethod(fn):
-		def new(self, *args, **kwargs):
+#	def OdsMethod(fn):
+#		def new(self, *args, **kwargs):
 
-			fn(self, *args, **kwargs)
-			getattr(super(OdsBase,self), fn.__name__)(*args, **kwargs)
-		return new
+#			fn(self, *args, **kwargs)
+#			getattr(super(OdsBase,self), fn.__name__)(*args, **kwargs)
+#		return new
 	
 	def __init__(self, service_name, obj_path):
 		self.bus = dbus.SessionBus()
 		
 		service = self.bus.get_object("org.openobex", obj_path)
+		gobject.GObject.__init__(self)
 		SignalTracker.__init__(self)
 		dbus.proxies.Interface.__init__(self, service, service_name)
-		gobject.GObject.__init__(self)
+		
 		
 	def Handle(self, signame, handler):
-		SignalTracker.Handle("dbus", self, handler, signame, self.dbus_interface) 
+		SignalTracker.Handle(self, "dbus", self, handler, signame, self.dbus_interface)
 		
-	def GHandle(self, name, callback, *args):
-		SignalTracker.Handle("gobject", self, name, callback, *args) 
+	def GHandle(self, *args):
+		SignalTracker.Handle(self, "gobject", self, *args)
+		
+		
+	#def GHandle(self, name, callback, *args):
+	#	SignalTracker.Handle("gobject", self, name, callback, *args) 

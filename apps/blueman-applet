@@ -33,6 +33,7 @@ _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if os.path.exists(os.path.join(_dirname,"ChangeLog")):
 	sys.path.insert(0, _dirname)
 
+from blueman.main.applet.Transfer import Transfer
 from blueman.main.SignalTracker import SignalTracker
 from blueman.Functions import *
 from blueman.main.applet.DbusService import DbusService
@@ -52,6 +53,8 @@ class BluemanApplet:
 		if not pynotify.init("Blueman"):
 			print 'Error: Failed to init pynotify'
 		
+		self.signals = SignalTracker()
+		
 		self.status_icon = gtk.StatusIcon()
 		self.status_icon = gtk.status_icon_new_from_icon_name("bluetooth")
 		self.status_icon.connect('popup-menu', self.on_popup_menu)
@@ -62,9 +65,10 @@ class BluemanApplet:
 		self.bus.watch_name_owner('org.bluez', self.on_dbus_name_owner_change)
 		self.manager_init()
 		
-		self.signals = SignalTracker()
+		
 		
 		DbusService(self)
+		Transfer()
 		
 		gtk.main()
 		
