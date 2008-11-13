@@ -25,15 +25,15 @@ import blueman.bluez as Bluez
 import gettext
 _ = gettext.gettext
 
+class AgentErrorRejected(dbus.DBusException):
+	def __init__(self):
+		dbus.DBusException.__init__(self, name='org.bluez.Error.Rejected')
+
+class AgentErrorCanceled(dbus.DBusException):
+	def __init__(self):
+		dbus.DBusException.__init__(self, name='org.bluez.Error.Canceled')
+
 class BluezAgent(dbus.service.Object):
-	
-	class AgentErrorRejected(dbus.DBusException):
-		def __init__(self):
-			dbus.DBusException.__init__(self, name='org.bluez.Error.Rejected')
-	
-	class AgentErrorCanceled(dbus.DBusException):
-		def __init__(self):
-			dbus.DBusException.__init__(self, name='org.bluez.Error.Canceled')
 	
 	def __init__(self, applet, adapter):
 		self.applet = applet
@@ -57,14 +57,15 @@ class BluezAgent(dbus.service.Object):
 		self.applet.status_icon.set_blinking(False)
 	
 	def on_dialog_response(self, dialog, response_id, is_numeric, ok, err):
-		print 'dialog response'
-		if response_id == gtk.RESPONSE_REJECT:
-			err(AgentErrorRejected())
-		else:
+		if response_id == gtk.RESPONSE_ACCEPT:
 			ret = self.pin_entry.get_text()
 			if is_numeric:
 				ret = int(ret)
 			ok(ret)
+		else:
+			err(AgentErrorRejected())
+		dialog.destroy()
+		self.dialog = None
 	
 	def passkey_common(self, device_path, dialog_msg, notify_msg, is_numeric, ok, err):
 		device = Bluez.Device(device_path)

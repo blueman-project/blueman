@@ -112,7 +112,6 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
                 <property name="use_stock">True</property>
-                <property name="response_id">-2</property>
                 <property name="label" translatable="yes">gtk-cancel</property>
               </object>
               <packing>
@@ -128,7 +127,6 @@
                 <property name="has_default">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_stock">True</property>
-                <property name="response_id">-3</property>
                 <property name="label" translatable="yes">gtk-ok</property>
               </object>
               <packing>
@@ -144,5 +142,9 @@
         </child>
       </object>
     </child>
+    <action-widgets>
+      <action-widget response="-2">reject</action-widget>
+      <action-widget response="-3">accept</action-widget>
+    </action-widgets>
   </object>
 </interface>
