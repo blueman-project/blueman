@@ -82,6 +82,7 @@ class Transfer(OdsManager):
 					if not self.transfers[session.object_path]["finished"]:
 						gobject.source_remove(self.transfers[session.object_path]["updater"])
 						self.transfers[session.object_path]["notification"] = None
+					
 						
 
 
@@ -94,8 +95,14 @@ class Transfer(OdsManager):
 					if not t["waiting"]:
 						if t["finished"]:
 							print "show final"
+							n.disconnect(closed_sig)
+							
+							gobject.source_remove(self.transfers[session.object_path]["updater"])
+							
+							del self.transfers[session.object_path]
+							
 							n.close()
-							#del self.transfers[session.object_path]
+							
 							return False
 						
 						else:
@@ -125,7 +132,7 @@ class Transfer(OdsManager):
 				n.add_action("reject", _("Reject"), access_cb)
 				n.add_action("default", "Default Action", access_cb)
 				n.show()
-				n.connect("closed", on_closed)
+				closed_sig = n.connect("closed", on_closed)
 				
 				self.transfers[session.object_path] = {}
 				self.transfers[session.object_path]["notification"] = n
@@ -139,16 +146,21 @@ class Transfer(OdsManager):
 					#print "progress", bytes_transferred
 					self.transfers[session.object_path]["transferred"] = bytes_transferred
 					
-				def transfer_finished(session):
-					self.transfers[session.object_path]["finished"] = True
-					update_notification(n)
-					
+				def transfer_finished(session, type):
+					print "---", type
+					try:
+						if not self.transfers[session.object_path]["finished"]:
+							self.transfers[session.object_path]["finished"] = True
+							update_notification(n)
+					except KeyError:
+						pass
+						
 					
 				session.GHandle("transfer-progress", transfer_progress)
-				session.GHandle("cancelled", transfer_finished)
-				#session.GHandle("disconnected", transfer_finished)
-				session.GHandle("transfer-completed", transfer_finished)
-				session.GHandle("error-occured", transfer_finished)
+				session.GHandle("cancelled", transfer_finished, "cancelled")
+				session.GHandle("disconnected", transfer_finished, "disconnected")
+				session.GHandle("transfer-completed", transfer_finished, "completed")
+				session.GHandle("error-occured", transfer_finished, "error")
 				
 			session.GHandle("transfer-started", on_transfer_started)
 		

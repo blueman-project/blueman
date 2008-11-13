@@ -61,6 +61,7 @@ class OdsServer(OdsBase):
 		self.emit("session-created", self.sessions[path])
 		
 	def on_session_removed(self, path):
+		print "Session removed"
 		self.emit("session-removed", path)
 		self.sessions[path].DisconnectAll()
 		del self.sessions[path]
