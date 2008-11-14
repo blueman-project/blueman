@@ -36,11 +36,23 @@ class Transfer(OdsManager):
 		self.Applet = applet
 		self.GHandle("server-created", self.on_server_created)
 		self.transfers = {}
-		
-		#check options
-		self.create_server()
-		
 		self.Config = Config("transfer")
+		
+
+		#check options
+		if self.Config.props.opp_enabled == None:
+			self.Config.props.opp_enabled = True
+		
+		if self.Config.props.ftp_enabled == None:
+			self.Config.props.ftp_enabled = True
+		
+		if self.Config.props.opp_enabled:
+			self.create_server()
+		
+		if self.Config.props.ftp_enabled:
+			self.create_server(pattern="ftp", require_pairing=True)
+		
+		
 	def access_cb(self, n, action):
 		print "cb", action
 		
@@ -49,11 +61,13 @@ class Transfer(OdsManager):
 		else:
 			session.Reject()
 		
-	def on_server_created(self, inst, server):
+	def on_server_created(self, inst, server, pattern):
 		def on_started(server):
-			print "Started"
+			print pattern, "Started"
 			
 		def on_session_created(server, session):
+			if pattern != "opp":
+				return
 			print "session created"
 			def on_transfer_started(session, filename, local_path, total_bytes):
 				def on_cancel(n, action):
@@ -193,8 +207,17 @@ class Transfer(OdsManager):
 		
 		if self.Config.props.opp_shared_path == None:
 			self.Config.props.opp_shared_path = os.path.expanduser("~")
+			
+		if self.Config.props.ftp_shared_path == None:
+			self.Config.props.ftp_shared_path = os.path.expanduser("~")
 		
-		server.Start(self.Config.props.opp_shared_path, True, False)
+		if pattern == "opp":
+			server.Start(self.Config.props.opp_shared_path, True, False)
+		elif pattern == "ftp":
+			if self.Config.props.ftp_allow_write == None:
+				self.Config.props.ftp_allow_write = False
+			
+			server.Start(self.Config.props.ftp_shared_path, self.Config.props.ftp_allow_write, True)
 		
 	def on_server_destroyed(self, inst, server):
 		pass

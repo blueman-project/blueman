@@ -25,27 +25,18 @@ from blueman.main.SignalTracker import SignalTracker
 
 class OdsManager(OdsBase):
 	__gsignals__ = {
-		'server-created' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+		'server-created' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,gobject.TYPE_STRING,)),
 		'server-destroyed' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
-
 	}
 	
 	def __init__(self):
 		OdsBase.__init__(self, "org.openobex.Manager", "/org/openobex")
 		
-		self.bus.watch_name_owner('org.openobex', self.on_dbus_name_owner_change)
-		
 		self.Servers = {}
 
-	def on_dbus_name_owner_change(self, owner):
-		print "name ch", owner
-		#if owner == '':
-			
-		#else:
-			
 		
 	def DisconnectAll(self, *args):
-		for k,v in self.Server.iteritems():
+		for k,v in self.Servers.iteritems():
 			v.DisconnectAll()
 		self.Servers = {}
 		OdsBase.DisconnectAll(self, *args)
@@ -55,7 +46,7 @@ class OdsManager(OdsBase):
 	def create_server(self, source_addr="00:00:00:00:00:00", pattern="opp", require_pairing=False):
 		def reply(path):
 			server = OdsServer(path)
-			self.emit("server-created", server)
+			self.emit("server-created", server, pattern)
 			self.Servers[pattern] = server
 			
 		def err(*args):
