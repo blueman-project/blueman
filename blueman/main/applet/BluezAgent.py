@@ -56,7 +56,7 @@ class BluezAgent(dbus.service.Object):
 		self.dialog.show()
 		self.applet.status_icon.set_blinking(False)
 	
-	def on_dialog_response(self, dialog, response_id, is_numeric, ok, err):
+	def passkey_dialog_cb(self, dialog, response_id, is_numeric, ok, err):
 		if response_id == gtk.RESPONSE_ACCEPT:
 			ret = self.pin_entry.get_text()
 			if is_numeric:
@@ -66,8 +66,19 @@ class BluezAgent(dbus.service.Object):
 			err(AgentErrorRejected())
 		dialog.destroy()
 		self.dialog = None
+		
+	def auth_dialog_cb(self, dialog, response_id, device_path, ok, err):
+		if response_id == gtk.RESPONSE_YES:
+			if self.always_grant.props.active:
+				device = Bluez.Device(device_path)
+				device.SetProperty("Trusted", True)
+			ok()
+		else:
+			err(AgentErrorRejected())
+		dialog.destroy()
+		self.dialog = None
 	
-	def passkey_common(self, device_path, dialog_msg, notify_msg, is_numeric, ok, err):
+	def get_device_alias(self, device_path):
 		device = Bluez.Device(device_path)
 		props = device.GetProperties()
 		address = props['Address']
@@ -75,6 +86,10 @@ class BluezAgent(dbus.service.Object):
 		alias = address
 		if name:
 			alias = "%s (%s)" % (name, address)
+		return alias
+	
+	def passkey_common(self, device_path, dialog_msg, notify_msg, is_numeric, ok, err):
+		alias = self.get_device_alias(device_path)
 		notify_message = _('Pairing request for %s') % (alias)
 		
 		if self.dialog:
@@ -89,21 +104,21 @@ class BluezAgent(dbus.service.Object):
 		self.n = self.applet.show_notification(_('Bluetooth device'), notify_message, 0,
 										notify_msg, self.on_notification_close)
 		self.applet.status_icon.set_blinking(True)
-		self.dialog.connect('response', self.on_dialog_response, is_numeric, ok, err)
+		self.dialog.connect('response', self.passkey_dialog_cb, is_numeric, ok, err)
 	
 	@dbus.service.method(dbus_interface='org.bluez.Agent', in_signature="o", out_signature="s", async_callbacks=("ok","err"))
-	def RequestPinCode(self, device_path, ok, err):
+	def RequestPinCode(self, device, ok, err):
+		print 'Agent.RequestPinCode'
 		dialog_msg = _('Enter PIN code for authentication:')
 		notify_msg = _('Enter PIN code')
-		print 'Agent.RequestPinCode'
-		self.passkey_common(device_path, dialog_msg, notify_msg, False, ok, err)
+		self.passkey_common(device, dialog_msg, notify_msg, False, ok, err)
 		
 	@dbus.service.method(dbus_interface='org.bluez.Agent', in_signature="o", out_signature="u", async_callbacks=("ok","err"))
 	def RequestPasskey(self, device, ok, err):
+		print 'Agent.RequestPasskey'
 		dialog_msg = _('Enter passkey for authentication:')
 		notify_msg = _('Enter passkey')
-		print 'Agent.RequestPasskey'
-		self.passkey_common(device_path, dialog_msg, notify_msg, True, ok, err)
+		self.passkey_common(device, dialog_msg, notify_msg, True, ok, err)
 	
 	@dbus.service.method(dbus_interface='org.bluez.Agent', in_signature="ouy", out_signature="")
 	def DisplayPasskey(self, device, passkey, entered):
@@ -115,7 +130,24 @@ class BluezAgent(dbus.service.Object):
 	
 	@dbus.service.method(dbus_interface='org.bluez.Agent', in_signature="os", out_signature="", async_callbacks=("ok","err"))
 	def Authorize(self, device, uuid, ok, err):
-		pass
+		print 'Agent.Authorize'
+		alias = self.get_device_alias(device)
+		notify_message = _('Authorization request for %s') % (alias)
+		notify_action = _('Check authorization')
+		
+		if self.dialog:
+			print 'Agent: Another dialog still active, cancelling'
+			raise AgentErrorCanceled
+			
+		self.dialog, self.always_grant = self.applet.build_auth_dialog(alias, uuid)
+		if not self.dialog:
+			print 'Agent: Failed to build dialog'
+			raise AgentErrorCanceled
+			
+		self.n = self.applet.show_notification(_('Bluetooth device'), notify_message, 0,
+										notify_action, self.on_notification_close)
+		self.applet.status_icon.set_blinking(True)
+		self.dialog.connect('response', self.auth_dialog_cb, device, ok, err)
 	
 	@dbus.service.method(dbus_interface='org.bluez.Agent', in_signature="s", out_signature="", async_callbacks=("ok","err"))
 	def ConfirmModeChange(self, mode, ok, err):

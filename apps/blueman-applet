@@ -159,7 +159,7 @@ class BluemanApplet:
 		spawn('blueman-adapters')
 		
 	def on_local_services(self, menu_item):
-		pass
+		spawn('blueman-services')
 		
 	def on_about(self, menu_item):
 		show_about_dialog('Blueman '+_('applet'))
@@ -183,7 +183,7 @@ class BluemanApplet:
 			pin_entry.set_max_length(6)
 			pin_entry.set_width_chars(6)
 			pin_entry.connect("insert-text", on_insert_text)
-			show_input.props.active = True
+			show_input.hide()
 		else:
 			pin_entry.set_max_length(16)
 			pin_entry.set_width_chars(16)
@@ -193,6 +193,20 @@ class BluemanApplet:
 		pin_entry.connect("changed", lambda x: accept_button.set_sensitive(x.get_text() != ''))
 		
 		return (dialog, pin_entry)
+		
+	def build_auth_dialog(self, device_alias, uuid):
+		builder = gtk.Builder()
+		builder.add_from_file(UI_PATH+"/applet-authorize.ui")
+		dialog = builder.get_object("dialog")
+		dialog.props.icon_name = "blueman"
+		dev_name = builder.get_object("device_name")
+		dev_name.set_markup("<b>"+device_alias+"</b>")
+		msg = builder.get_object("message")
+		message = _("Grant access to %s?") % ("<i>"+uuid+"</i>")
+		msg.set_markup(message)
+		always_grant_check = builder.get_object("always_grant_check")
+		
+		return (dialog, always_grant_check)
 	
 	def show_notification(self, summary, message, timeout=-1, action=None, action_cb=None):
 		n = pynotify.Notification(summary, message)
