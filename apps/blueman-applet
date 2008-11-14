@@ -194,11 +194,17 @@ class BluemanApplet:
 		
 		return (dialog, pin_entry)
 	
-	def show_notification(self, summary, message, timeout=-1, actions= None):
+	def show_notification(self, summary, message, timeout=-1, actions= None, actions_cb=None):
+		def on_notification_closed(n):
+			actions_cb(n, 'default')
+			n.disconnect(closed_sig)
+		
 		n = pynotify.Notification(summary, message)
 		if actions:
 			for action in actions:
-				n.add_action(action[0], action[0], action[1])
+				n.add_action(action[0], action[1], actions_cb)
+			n.add_action('default', 'Default Action', actions_cb)
+		closed_sig = n.connect('closed', on_notification_closed)
 		if timeout != -1:
 			n.set_timeout(timeout)
 		if self.status_icon.get_visible():

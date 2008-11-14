@@ -92,7 +92,7 @@ class BluezAgent(dbus.service.Object):
 			raise AgentErrorCanceled
 		
 		self.n = self.applet.show_notification(_('Bluetooth device'), notify_message, 0,
-										[[notify_msg, self.on_notification_close]])
+										[['action', notify_msg]], self.on_notification_close)
 		self.applet.status_icon.set_blinking(True)
 		self.dialog.connect('response', self.passkey_dialog_cb, is_numeric, ok, err)
 	
@@ -114,15 +114,12 @@ class BluezAgent(dbus.service.Object):
 	def DisplayPasskey(self, device, passkey, entered):
 		pass
 	
-	def on_confirm_confirm(self, n, action):
+	def on_confirm_action(self, n, action):
 		self.applet.status_icon.set_blinking(False)
-		self.confirm_ok_cb()
-		self.confirm_ok_cb = None
-		self.confirm_err_cb = None
-	
-	def on_confirm_deny(self, n, action):
-		self.applet.status_icon.set_blinking(False)
-		self.auth_err_cb(AgentErrorRejected())
+		if action == "confirm":
+			self.confirm_ok_cb()
+		else:
+			self.auth_err_cb(AgentErrorRejected())
 		self.confirm_ok_cb = None
 		self.confirm_err_cb = None
 	
@@ -131,30 +128,23 @@ class BluezAgent(dbus.service.Object):
 		print 'Agent.RequestConfirmation'
 		alias = self.get_device_alias(device)
 		notify_message = (_('Pairing request for:')+'\n<b>%s</b>\n'+_('Confirm value for authentication:')+' <b>%s</b>') % (alias, passkey)
-		action_confirm = [_('Confirm'), self.on_confirm_confirm]
-		action_deny = [_('Deny'), self.on_confirm_deny]
+		actions = [['confirm', _('Confirm')], ['deny', _('Deny')]]
 		
 		self.confirm_ok_cb = ok
 		self.confirm_err_cb = err
 		self.n = self.applet.show_notification(_('Bluetooth device'), notify_message, 0,
-											[action_confirm, action_deny])
+												actions, self.on_confirm_action)
 		self.applet.status_icon.set_blinking(True)
 	
-	def on_auth_always_accept(self, n, action):
-		device = Bluez.Device(self.auth_dev_path)
-		device.SetProperty("Trusted", True)
-		self.on_auth_accept(n, action)
-		
-	def on_auth_accept(self, n, action):
+	def on_auth_action(self, n, action):
 		self.applet.status_icon.set_blinking(False)
-		self.auth_ok_cb()
-		self.auth_dev_path = None
-		self.auth_ok_cb = None
-		self.auth_err_cb = None
-		
-	def on_auth_deny(self, n, action):
-		self.applet.status_icon.set_blinking(False)
-		self.auth_err_cb(AgentErrorRejected())
+		if action == "always":
+			device = Bluez.Device(self.auth_dev_path)
+			device.SetProperty("Trusted", True)
+		if action == "always" or action == "accept":
+			self.auth_ok_cb()
+		else:
+			self.auth_err_cb(AgentErrorRejected())
 		self.auth_dev_path = None
 		self.auth_ok_cb = None
 		self.auth_err_cb = None
@@ -166,15 +156,15 @@ class BluezAgent(dbus.service.Object):
 		uuid16 = uuid128_to_uuid16(uuid)
 		service = uuid16_to_name(uuid16)
 		notify_message = (_('Authorization request for:')+'\n<b>%s</b>\n'+_('Service:')+' <b>%s</b>') % (alias, service)
-		action_always_accept = [_('Always accept'), self.on_auth_always_accept]
-		action_accept = [_('Accept'), self.on_auth_accept]
-		action_deny = [_('Deny'), self.on_auth_deny]
+		actions = [['always', _('Always accept')],
+					['accept', _('Accept')],
+					['deny', _('Deny')]]
 		
 		self.auth_dev_path = device
 		self.auth_ok_cb = ok
 		self.auth_err_cb = err
 		self.n = self.applet.show_notification(_('Bluetooth device'), notify_message, 0,
-										[action_always_accept, action_accept, action_deny])
+												actions, self.on_auth_action)
 		self.applet.status_icon.set_blinking(True)
 	
 	@dbus.service.method(dbus_interface='org.bluez.Agent', in_signature="s", out_signature="", async_callbacks=("ok","err"))
