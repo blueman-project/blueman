@@ -143,7 +143,7 @@ class BluezAgent(dbus.service.Object):
 		alias = self.get_device_alias(device)
 		uuid16 = uuid128_to_uuid16(uuid)
 		service = uuid16_to_name(uuid16)
-		notify_message = _('Authorization request for:\n <b>%s</b>\nService: <b>%s</b>') % (alias, service)
+		notify_message = _('Authorization request for:\n<b>%s</b>\nService: <b>%s</b>') % (alias, service)
 		action_always_accept = [_('Always accept'), self.on_auth_always_accept]
 		action_accept = [_('Accept'), self.on_auth_accept]
 		action_deny = [_('Deny'), self.on_auth_deny]
