@@ -66,17 +66,6 @@ class BluezAgent(dbus.service.Object):
 			err(AgentErrorRejected())
 		dialog.destroy()
 		self.dialog = None
-		
-	def auth_dialog_cb(self, dialog, response_id, device_path, ok, err):
-		if response_id == gtk.RESPONSE_YES:
-			if self.always_grant.props.active:
-				device = Bluez.Device(device_path)
-				device.SetProperty("Trusted", True)
-			ok()
-		else:
-			err(AgentErrorRejected())
-		dialog.destroy()
-		self.dialog = None
 	
 	def get_device_alias(self, device_path):
 		device = Bluez.Device(device_path)
@@ -151,7 +140,7 @@ class BluezAgent(dbus.service.Object):
 	def Authorize(self, device, uuid, ok, err):
 		print 'Agent.Authorize'
 		alias = self.get_device_alias(device)
-		notify_message = _('Authorization request for %s') % (alias)
+		notify_message = _('Authorization request for %s\nService: %s') % (alias, uuid)
 		action_always_accept = [_('Always accept'), self.on_auth_always_accept]
 		action_accept = [_('Accept'), self.on_auth_accept]
 		action_deny = [_('Deny'), self.on_auth_deny]
