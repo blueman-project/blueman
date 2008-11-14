@@ -193,25 +193,12 @@ class BluemanApplet:
 		pin_entry.connect("changed", lambda x: accept_button.set_sensitive(x.get_text() != ''))
 		
 		return (dialog, pin_entry)
-		
-	def build_auth_dialog(self, device_alias, uuid):
-		builder = gtk.Builder()
-		builder.add_from_file(UI_PATH+"/applet-authorize.ui")
-		dialog = builder.get_object("dialog")
-		dialog.props.icon_name = "blueman"
-		dev_name = builder.get_object("device_name")
-		dev_name.set_markup("<b>"+device_alias+"</b>")
-		msg = builder.get_object("message")
-		message = _("Grant access to %s?") % ("<i>"+uuid+"</i>")
-		msg.set_markup(message)
-		always_grant_check = builder.get_object("always_grant_check")
-		
-		return (dialog, always_grant_check)
 	
-	def show_notification(self, summary, message, timeout=-1, action=None, action_cb=None):
+	def show_notification(self, summary, message, timeout=-1, actions= None):
 		n = pynotify.Notification(summary, message)
-		if action:
-			n.add_action("button", action, action_cb)
+		if actions:
+			for action in actions:
+				n.add_action(action[0], action[0], action[1])
 		if timeout != -1:
 			n.set_timeout(timeout)
 		if self.status_icon.get_visible():

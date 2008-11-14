@@ -102,7 +102,7 @@ class BluezAgent(dbus.service.Object):
 			raise AgentErrorCanceled
 		
 		self.n = self.applet.show_notification(_('Bluetooth device'), notify_message, 0,
-										notify_msg, self.on_notification_close)
+										[[notify_msg, self.on_notification_close]])
 		self.applet.status_icon.set_blinking(True)
 		self.dialog.connect('response', self.passkey_dialog_cb, is_numeric, ok, err)
 	
@@ -128,26 +128,40 @@ class BluezAgent(dbus.service.Object):
 	def RequestConfirmation(self, device, passkey, ok, err):
 		pass
 	
+	def on_auth_always_accept(self, n, action):
+		device = Bluez.Device(self.auth_dev_path)
+		device.SetProperty("Trusted", True)
+		self.on_auth_accept(n, action)
+		
+	def on_auth_accept(self, n, action):
+		self.applet.status_icon.set_blinking(False)
+		self.auth_ok_cb()
+		self.auth_dev_path = None
+		self.auth_ok_cb = None
+		self.auth_err_cb = None
+		
+	def on_auth_deny(self, n, action):
+		self.applet.status_icon.set_blinking(False)
+		self.auth_err_cb(AgentErrorRejected())
+		self.auth_dev_path = None
+		self.auth_ok_cb = None
+		self.auth_err_cb = None
+	
 	@dbus.service.method(dbus_interface='org.bluez.Agent', in_signature="os", out_signature="", async_callbacks=("ok","err"))
 	def Authorize(self, device, uuid, ok, err):
 		print 'Agent.Authorize'
 		alias = self.get_device_alias(device)
 		notify_message = _('Authorization request for %s') % (alias)
-		notify_action = _('Check authorization')
+		action_always_accept = [_('Always accept'), self.on_auth_always_accept]
+		action_accept = [_('Accept'), self.on_auth_accept]
+		action_deny = [_('Deny'), self.on_auth_deny]
 		
-		if self.dialog:
-			print 'Agent: Another dialog still active, cancelling'
-			raise AgentErrorCanceled
-			
-		self.dialog, self.always_grant = self.applet.build_auth_dialog(alias, uuid)
-		if not self.dialog:
-			print 'Agent: Failed to build dialog'
-			raise AgentErrorCanceled
-			
+		self.auth_dev_path = device
+		self.auth_ok_cb = ok
+		self.auth_err_cb = err
 		self.n = self.applet.show_notification(_('Bluetooth device'), notify_message, 0,
-										notify_action, self.on_notification_close)
+										[action_always_accept, action_accept, action_deny])
 		self.applet.status_icon.set_blinking(True)
-		self.dialog.connect('response', self.auth_dialog_cb, device, ok, err)
 	
 	@dbus.service.method(dbus_interface='org.bluez.Agent', in_signature="s", out_signature="", async_callbacks=("ok","err"))
 	def ConfirmModeChange(self, mode, ok, err):
