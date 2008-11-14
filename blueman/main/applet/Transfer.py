@@ -16,11 +16,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
+from blueman.main.SpeedCalc import SpeedCalc
 from blueman.main.Config import Config
 from blueman.ods.OdsManager import OdsManager
 from blueman.main.Device import Device
 from blueman.Functions import *
-import os.path
+from subprocess import call
+import os
 import pynotify
 import gettext
 import gobject
@@ -72,6 +74,9 @@ class Transfer(OdsManager):
 							print "clearing actions"
 							n.clear_actions()
 							n.add_action("cancel", _("Cancel"), on_cancel)
+							n.set_urgency(pynotify.URGENCY_NORMAL)
+							n.set_timeout(0)
+							
 							update_notification(n)
 					
 				def on_closed(n):
@@ -86,7 +91,19 @@ class Transfer(OdsManager):
 						
 
 
-						
+				def show_open():
+					temp = []
+					def on_open(n, action):
+						temp.remove(n)
+						call(["xdg-open", local_path])
+					
+					n = pynotify.Notification(_("File Saved"), _("Would you like to open %s?") % filename)
+					n.set_icon_from_pixbuf(get_icon("gtk-save", 48))
+					n.add_action("open", _("Open"), on_open)
+					n.attach_to_status_icon(self.Applet.status_icon)
+					n.show()
+					temp.append(n)
+					return n
 
 						
 				def update_notification(n):
@@ -94,7 +111,8 @@ class Transfer(OdsManager):
 
 					if not t["waiting"]:
 						if t["finished"]:
-							print "show final"
+							if t["transferred"] == t["total"]:
+								show_open()
 							n.disconnect(closed_sig)
 							
 							gobject.source_remove(self.transfers[session.object_path]["updater"])
@@ -106,8 +124,12 @@ class Transfer(OdsManager):
 							return False
 						
 						else:
-						
-							n.update("a", "Receiving File %s (%s)" % (os.path.basename(self.transfers[session.object_path]["filename"]), self.transfers[session.object_path]["transferred"]))
+
+							spd = format_bytes(t["calc"].calc(t["transferred"]))
+							trans = format_bytes(t["transferred"])
+							tot = format_bytes(t["total"])
+		
+							n.update("Receiving File", "Receiving File %s\n%.2f%s out of %.2f%s (%.2f%s/s)" % (t["filename"],trans[0], trans[1], tot[0], tot[1], spd[0], spd[1]))
 							n.show()
 					
 					return True
@@ -140,6 +162,7 @@ class Transfer(OdsManager):
 				self.transfers[session.object_path]["total"] = total_bytes
 				self.transfers[session.object_path]["finished"] = False
 				self.transfers[session.object_path]["waiting"] = True
+				self.transfers[session.object_path]["calc"] = SpeedCalc()
 				self.transfers[session.object_path]["updater"] = gobject.timeout_add(1000, update_notification, n)
 				
 				def transfer_progress(session, bytes_transferred):

@@ -42,6 +42,12 @@ class OdsServer(OdsBase):
 		
 		self.sessions = {}
 		
+	def DisconnectAll(self, *args):
+		for k, v in self.sessions.iteritems():
+			v.DisconnectAll()
+		self.sessions = {}
+		OdsBase.DisconnectAll(self, *args)
+		
 	def on_started(self):
 		self.emit("started")
 		

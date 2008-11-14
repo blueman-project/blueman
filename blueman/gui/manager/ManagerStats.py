@@ -25,6 +25,7 @@ import gtk
 from blueman.gui.Animation import Animation
 from blueman.main.SpeedCalc import SpeedCalc
 from blueman.Functions import get_icon, adapter_path_to_name
+from blueman.Functions import format_bytes
 
 import gettext
 _ = gettext.gettext
@@ -135,8 +136,8 @@ class ManagerStats:
 				_tx = devinfo["stat"]["byte_tx"]
 				_rx = devinfo["stat"]["byte_rx"]
 
-				tx, s_tx = self.format_bytes(_tx)
-				rx, s_rx = self.format_bytes(_rx)
+				tx, s_tx = format_bytes(_tx)
+				rx, s_rx = format_bytes(_rx)
 		
 				_u_speed = self.up_speed.calc(_tx)
 				_d_speed = self.down_speed.calc(_rx)
@@ -146,31 +147,14 @@ class ManagerStats:
 		
 
 		
-				u_speed, s_u_speed = self.format_bytes(_u_speed)
-				d_speed, s_d_speed = self.format_bytes(_d_speed)
+				u_speed, s_u_speed = format_bytes(_u_speed)
+				d_speed, s_d_speed = format_bytes(_d_speed)
 		
 				self.set_data(tx, s_tx, rx, s_rx, u_speed, s_u_speed, d_speed, s_d_speed)
 		
 		return 1
 
-	def format_bytes(self, size):
-		ret = 0.0
-		size = float(size)
-		suffix = ""
-		if size < 1024:
-			ret = size
-			suffix = "B"
-		elif size > 1024 and size < (1024*1024):
-			ret = size / 1024
-			suffix = "kB"
-		elif size > (1024*1024) and size < (1024*1024*1024):
-			ret = size / (1024*1024)
-			suffix = "mB"
-		else:
-			ret = size / (1024*1024*1024)
-			suffix="gB"
-			
-		return (ret, suffix)
+
 
 	def start_update(self):
 		self._update()

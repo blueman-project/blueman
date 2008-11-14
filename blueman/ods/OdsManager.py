@@ -33,8 +33,23 @@ class OdsManager(OdsBase):
 	def __init__(self):
 		OdsBase.__init__(self, "org.openobex.Manager", "/org/openobex")
 		
+		self.bus.watch_name_owner('org.openobex', self.on_dbus_name_owner_change)
+		
 		self.Servers = {}
 
+	def on_dbus_name_owner_change(self, owner):
+		print "name ch", owner
+		#if owner == '':
+			
+		#else:
+			
+		
+	def DisconnectAll(self, *args):
+		for k,v in self.Server.iteritems():
+			v.DisconnectAll()
+		self.Servers = {}
+		OdsBase.DisconnectAll(self, *args)
+		
 	
 	#@self.OdsMethod	
 	def create_server(self, source_addr="00:00:00:00:00:00", pattern="opp", require_pairing=False):

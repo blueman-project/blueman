@@ -71,3 +71,22 @@ def composite_icon(target, sources):
 		source[0].composite(target, source[1], source[2], source[0].get_width(), source[0].get_height(), source[1], source[2], 1, 1, gtk.gdk.INTERP_NEAREST, source[3])
 		
 	return target
+	
+def format_bytes(size):
+	ret = 0.0
+	size = float(size)
+	suffix = ""
+	if size < 1024:
+		ret = size
+		suffix = "B"
+	elif size > 1024 and size < (1024*1024):
+		ret = size / 1024
+		suffix = "KB"
+	elif size > (1024*1024) and size < (1024*1024*1024):
+		ret = size / (1024*1024)
+		suffix = "MB"
+	else:
+		ret = size / (1024*1024*1024)
+		suffix="GB"
+		
+	return (ret, suffix)
