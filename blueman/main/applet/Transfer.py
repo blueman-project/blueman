@@ -1,3 +1,4 @@
+# coding=utf-8
 # Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
 # Copyright (C) 2008 Tadas Dailyda <tadas at dailyda dot com>
 #
@@ -45,31 +46,31 @@ class Transfer(OdsManager):
 		
 		if self.Config.props.ftp_enabled == None:
 			self.Config.props.ftp_enabled = True
+			
+		self.start_server("opp")
+		self.start_server("ftp")
+
 		
-		if self.Config.props.opp_enabled:
-			self.create_server()
-		
-		if self.Config.props.ftp_enabled:
-			self.create_server(pattern="ftp", require_pairing=True)
-		
-		
-	def access_cb(self, n, action):
-		print "cb", action
-		
-		if action == "accept":
-			session.Accept()
-		else:
-			session.Reject()
+	def start_server(self, pattern):
+		print "Start", pattern
+		if pattern == "opp":
+			if self.Config.props.opp_enabled:
+				self.create_server()
+		elif pattern == "ftp":
+			if self.Config.props.ftp_enabled:
+				self.create_server(pattern="ftp", require_pairing=True)
 		
 	def on_server_created(self, inst, server, pattern):
 		def on_started(server):
 			print pattern, "Started"
 			
 		def on_session_created(server, session):
+			print pattern, "session created"
 			if pattern != "opp":
 				return
-			print "session created"
+			
 			def on_transfer_started(session, filename, local_path, total_bytes):
+				print local_path
 				def on_cancel(n, action):
 					session.Cancel()
 					print "cancel"
@@ -109,6 +110,7 @@ class Transfer(OdsManager):
 					temp = []
 					def on_open(n, action):
 						temp.remove(n)
+						print "open", path
 						call(["xdg-open", local_path])
 					
 					n = pynotify.Notification(_("File Saved"), _("Would you like to open %s?") % filename)

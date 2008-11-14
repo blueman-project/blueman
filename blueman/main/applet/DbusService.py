@@ -96,3 +96,17 @@ class DbusService(dbus.service.Object):
 	@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="s", out_signature="")
 	def DhcpClient(self, interface):
 		print "run dhcp"
+		
+	
+	@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="ss", out_signature="")
+	def TransferControl(self, server, action):
+		if action == "stop":
+			self.applet.Transfer.destroy_server(server)
+		elif action == "start":
+			self.applet.Transfer.start_server(server)
+		else:
+			print "Got unknown action"
+		
+	
+	
+	

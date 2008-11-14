@@ -50,7 +50,28 @@ class OdsManager(OdsBase):
 			self.Servers[pattern] = server
 			
 		def err(*args):
-			pass
+			print "Couldn't create %s server" % pattern, args
 		
 		self.CreateBluetoothServer(source_addr, pattern, require_pairing, reply_handler=reply, error_handler=err)
+		
+	def destroy_server(self, pattern="opp"):
+		print "Destroy %s server" % pattern
+		def on_stopped(server):
+			print "server stopped"
+			server.Close()
+		
+		def on_closed(server):
+			print "server closed"
+			self.emit("server-destroyed", self.Servers[pattern].object_path)
+			del self.Servers[pattern]
+		
+		try:
+			self.Servers[pattern].GHandle("stopped", on_stopped)
+			self.Servers[pattern].GHandle("closed", on_closed)
+			self.Servers[pattern].Stop()
+
+		except KeyError:
+			pass
+		
+		
 
