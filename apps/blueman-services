@@ -9,8 +9,11 @@ if os.path.exists(os.path.join(_dirname,"ChangeLog")):
 
 import gtk
 import blueman.bluez as Bluez
+from blueman.gui.GenericList import GenericList
 from blueman.bluez.ServiceInterface import ServiceInterface
 
+from blueman.Functions import *
+from blueman.Constants import *
 class BluemanServices:
 
 
@@ -18,17 +21,53 @@ class BluemanServices:
 		self.Manager = Bluez.Manager('gobject')
 		adapter = self.Manager.GetAdapter()
 		
-		s = ServiceInterface("org.bluez.NetworkRouter", adapter.GetObjectPath(), ["GetProperties"])
-		print "router properties", s.GetProperties()
+		self.Builder = gtk.Builder()
+		self.Builder.add_from_file(UI_PATH +"/services.ui")
 		
-		s = ServiceInterface("org.bluez.NetworkHub", adapter.GetObjectPath(), ["GetProperties"])
-		print "hub properties",s.GetProperties()
+		data = [
+			["picture", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":0}, None],
+			["caption", str, gtk.CellRendererText(), {"markup":1}, None, {"expand": True}],
+			["id", str],
+		]
 		
-		s = ServiceInterface("org.bluez.NetworkPeer", adapter.GetObjectPath(), ["GetProperties"])
-		print "peer properties",s.GetProperties()
+		ls = GenericList(data)
+		ls.props.headers_visible = False
+		ls.append(picture=get_icon("gtk-network", 32), caption="Network", id="network")
+		ls.append(picture=get_icon("gtk-open", 32), caption="Transfer", id="transfer")
+		ls.selection.connect("changed", self.on_selection_changed)
+		self.List = ls
+
+				
+		self.Builder.get_object("viewport1").add(ls)
+		ls.show()
+		
+		self.Dialog = self.Builder.get_object("dialog")
+		self.Dialog.show()
+		
+		#s = ServiceInterface("org.bluez.NetworkRouter", adapter.GetObjectPath(), ["GetProperties"])
+		#print "router properties", s.GetProperties()
+		
+		#s = ServiceInterface("org.bluez.NetworkHub", adapter.GetObjectPath(), ["GetProperties"])
+		#print "hub properties",s.GetProperties()
+		
+		#s = ServiceInterface("org.bluez.NetworkPeer", adapter.GetObjectPath(), ["GetProperties"])
+		#print "peer properties",s.GetProperties()
+		
+		self.page = "network"
 		
 		
 		gtk.main()
 		
+	def set_page(self, pageid):
+		self.Builder.get_object(self.page).props.visible = False
+		self.Builder.get_object(pageid).props.visible = True
+		self.page = pageid
+	
+	def on_selection_changed(self, selection):
+		iter = self.List.selected()
+		row = self.List.get(iter, "id")
+		id = row["id"]
+		
+		self.set_page(id)
 		
 BluemanServices()
