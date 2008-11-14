@@ -307,23 +307,27 @@
                         <property name="visible">True</property>
                         <property name="spacing">10</property>
                         <child>
-                          <object class="GtkHBox" id="hbox4">
+                          <object class="GtkHBox" id="hbox6">
                             <property name="visible">True</property>
+                            <property name="spacing">2</property>
                             <child>
-                              <object class="GtkLabel" id="label11">
-                                <property name="label" translatable="yes">Share/Storage:</property>
+                              <object class="GtkLabel" id="label12">
+                                <property name="visible">True</property>
+                                <property name="label" translatable="yes">Shared Folder:</property>
                               </object>
                               <packing>
+                                <property name="expand">False</property>
                                 <property name="position">0</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFileChooserButton" id="filechooserbutton2">
+                              <object class="GtkFileChooserButton" id="filechooserbutton4">
                                 <property name="visible">True</property>
                                 <property name="action">select-folder</property>
                                 <property name="title" translatable="yes">Select Shared/Storage folder</property>
                               </object>
                               <packing>
+                                <property name="expand">False</property>
                                 <property name="position">1</property>
                               </packing>
                             </child>
