@@ -11,6 +11,7 @@ import gtk
 import blueman.bluez as Bluez
 from blueman.gui.GenericList import GenericList
 from blueman.bluez.ServiceInterface import ServiceInterface
+from blueman.main.Config import Config
 
 from blueman.Functions import *
 from blueman.Constants import *
@@ -52,16 +53,58 @@ class BluemanServices:
 		
 		#s = ServiceInterface("org.bluez.NetworkPeer", adapter.GetObjectPath(), ["GetProperties"])
 		#print "peer properties",s.GetProperties()
+		self.TransConf = Config("transfer")
+		self.TransConf.connect("property-changed", self.on_property_changed)
+		
+		self.Signals = {}
 		
 		self.page = "network"
 		
 		
 		gtk.main()
 		
+	def on_property_changed(self, config, key, value):
+		if config == self.TransConf:
+			if key == "opp_enabled":
+				self.Builder.get_object(key).props.active = value
+			if key == "ftp_enabled":
+				self.Builder.get_object(key).props.active = value
+			if key == "ftp_allow_write":
+				self.Builder.get_object(key).props.active = value
+		
 	def set_page(self, pageid):
 		self.Builder.get_object(self.page).props.visible = False
 		self.Builder.get_object(pageid).props.visible = True
 		self.page = pageid
+		
+		if pageid == "transfer":
+			self.setup_transfer()
+			
+			
+	def on_toggled(self, checkbutton, name):
+		if self.page == "transfer":
+			setattr(self.TransConf.props, name, checkbutton.props.active)
+			
+	def setup_transfer(self):
+		opp_enabled = self.Builder.get_object("opp_enabled")
+		ftp_enabled = self.Builder.get_object("ftp_enabled")
+		ftp_allow_write = self.Builder.get_object("ftp_allow_write")
+		opp_accept = self.Builder.get_object("opp_accept")
+		
+		opp_enabled.props.active = self.TransConf.props.opp_enabled
+		ftp_enabled.props.active = self.TransConf.props.ftp_enabled
+		ftp_allow_write.props.active = self.TransConf.props.ftp_allow_write
+		opp_accept.props.active = self.TransConf.props.opp_accept
+		
+		if self.TransConf.props.shared_path != None:
+			self.Builder.get_object("shared_path").set_current_folder(self.TransConf.props.shared_path)
+			
+		opp_enabled.connect("toggled", self.on_toggled, "opp_enabled")
+		ftp_enabled.connect("toggled", self.on_toggled, "ftp_enabled")
+		ftp_allow_write.connect("toggled", self.on_toggled, "ftp_allow_write")
+		opp_accept.connect("toggled", self.on_toggled, "opp_accept")
+		
+
 	
 	def on_selection_changed(self, selection):
 		iter = self.List.selected()

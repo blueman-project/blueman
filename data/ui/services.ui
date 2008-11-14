@@ -321,7 +321,7 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkFileChooserButton" id="filechooserbutton4">
+                              <object class="GtkFileChooserButton" id="shared_path">
                                 <property name="visible">True</property>
                                 <property name="action">select-folder</property>
                                 <property name="title" translatable="yes">Select Shared/Storage folder</property>
@@ -351,7 +351,7 @@
                                   <object class="GtkVBox" id="vbox5">
                                     <property name="visible">True</property>
                                     <child>
-                                      <object class="GtkCheckButton" id="checkbutton8">
+                                      <object class="GtkCheckButton" id="opp_enabled">
                                         <property name="label" translatable="yes">Enabled</property>
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
@@ -363,7 +363,7 @@
                                       </packing>
                                     </child>
                                     <child>
-                                      <object class="GtkCheckButton" id="checkbutton9">
+                                      <object class="GtkCheckButton" id="opp_accept">
                                         <property name="label" translatable="yes">Accept files from trusted devices</property>
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
@@ -405,7 +405,7 @@
                                   <object class="GtkVBox" id="vbox6">
                                     <property name="visible">True</property>
                                     <child>
-                                      <object class="GtkCheckButton" id="checkbutton14">
+                                      <object class="GtkCheckButton" id="ftp_enabled">
                                         <property name="label" translatable="yes">Enabled</property>
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
@@ -417,7 +417,7 @@
                                       </packing>
                                     </child>
                                     <child>
-                                      <object class="GtkCheckButton" id="checkbutton11">
+                                      <object class="GtkCheckButton" id="ftp_allow_write">
                                         <property name="label" translatable="yes">Allow devices to write/delete</property>
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
@@ -493,6 +493,7 @@
               <object class="GtkButton" id="button3">
                 <property name="label" translatable="yes">gtk-apply</property>
                 <property name="visible">True</property>
+                <property name="sensitive">False</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_stock">True</property>

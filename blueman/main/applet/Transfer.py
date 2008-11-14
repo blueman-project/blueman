@@ -109,9 +109,9 @@ class Transfer(OdsManager):
 				def show_open():
 					temp = []
 					def on_open(n, action):
-						temp.remove(n)
 						print "open", path
 						call(["xdg-open", local_path])
+						temp.remove(n)
 					
 					n = pynotify.Notification(_("File Saved"), _("Would you like to open %s?") % filename)
 					n.set_icon_from_pixbuf(get_icon("gtk-save", 48))
@@ -140,7 +140,7 @@ class Transfer(OdsManager):
 							return False
 						
 						else:
-
+							
 							spd = format_bytes(t["calc"].calc(t["transferred"]))
 							trans = format_bytes(t["transferred"])
 							tot = format_bytes(t["total"])
@@ -207,11 +207,11 @@ class Transfer(OdsManager):
 		server.GHandle("session-created", on_session_created)
 		
 		
-		if self.Config.props.opp_shared_path == None:
-			self.Config.props.opp_shared_path = os.path.expanduser("~")
+		if self.Config.props.shared_path == None:
+			self.Config.props.shared_path = os.path.expanduser("~")
 			
-		if self.Config.props.ftp_shared_path == None:
-			self.Config.props.ftp_shared_path = os.path.expanduser("~")
+		if self.Config.props.shared_path == None:
+			self.Config.props.shared_path = os.path.expanduser("~")
 		
 		if pattern == "opp":
 			server.Start(self.Config.props.opp_shared_path, True, False)
