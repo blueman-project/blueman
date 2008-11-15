@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 import dbus
-class Applet(dbus.proxies.Interface):
+class AppletService(dbus.proxies.Interface):
 	def __init__(self):
 		self.bus = dbus.SessionBus()
 		

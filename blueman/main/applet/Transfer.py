@@ -47,18 +47,38 @@ class Transfer(OdsManager):
 		if self.Config.props.ftp_enabled == None:
 			self.Config.props.ftp_enabled = True
 			
-		self.start_server("opp")
-		self.start_server("ftp")
+		self.create_server("opp")
+		self.create_server("ftp")
 
 		
-	def start_server(self, pattern):
-		print "Start", pattern
+	def create_server(self, pattern):
 		if pattern == "opp":
 			if self.Config.props.opp_enabled:
-				self.create_server()
+				OdsManager.create_server(self)
 		elif pattern == "ftp":
 			if self.Config.props.ftp_enabled:
-				self.create_server(pattern="ftp", require_pairing=True)
+				OdsManager.create_server(self, pattern="ftp", require_pairing=True)
+				
+				
+	def start_server(self, pattern):
+		server = self.get_server(pattern)
+		if server != None:
+			if self.Config.props.shared_path == None:
+				self.Config.props.shared_path = os.path.expanduser("~")
+			
+			if self.Config.props.shared_path == None:
+				self.Config.props.shared_path = os.path.expanduser("~")
+			
+			if pattern == "opp":
+				server.Start(self.Config.props.shared_path, True, False)
+			elif pattern == "ftp":
+				if self.Config.props.ftp_allow_write == None:
+					self.Config.props.ftp_allow_write = False
+			
+				server.Start(self.Config.props.shared_path, self.Config.props.ftp_allow_write, True)
+			return True
+		else:
+			return False
 		
 	def on_server_created(self, inst, server, pattern):
 		def on_started(server):
@@ -207,19 +227,7 @@ class Transfer(OdsManager):
 		server.GHandle("session-created", on_session_created)
 		
 		
-		if self.Config.props.shared_path == None:
-			self.Config.props.shared_path = os.path.expanduser("~")
-			
-		if self.Config.props.shared_path == None:
-			self.Config.props.shared_path = os.path.expanduser("~")
-		
-		if pattern == "opp":
-			server.Start(self.Config.props.opp_shared_path, True, False)
-		elif pattern == "ftp":
-			if self.Config.props.ftp_allow_write == None:
-				self.Config.props.ftp_allow_write = False
-			
-			server.Start(self.Config.props.ftp_shared_path, self.Config.props.ftp_allow_write, True)
+		self.start_server(pattern)
 		
 	def on_server_destroyed(self, inst, server):
 		pass

@@ -41,13 +41,20 @@ class OdsManager(OdsBase):
 		self.Servers = {}
 		OdsBase.DisconnectAll(self, *args)
 		
+		
+	def get_server(self, pattern):
+		try:
+			return self.Servers[pattern]
+		except KeyError:
+			return None
 	
 	#@self.OdsMethod	
 	def create_server(self, source_addr="00:00:00:00:00:00", pattern="opp", require_pairing=False):
 		def reply(path):
 			server = OdsServer(path)
-			self.emit("server-created", server, pattern)
 			self.Servers[pattern] = server
+			self.emit("server-created", server, pattern)
+			
 			
 		def err(*args):
 			print "Couldn't create %s server" % pattern, args

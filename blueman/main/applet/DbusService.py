@@ -99,14 +99,34 @@ class DbusService(dbus.service.Object):
 		
 	
 	@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="ss", out_signature="")
-	def TransferControl(self, server, action):
-		if action == "stop":
-			self.applet.Transfer.destroy_server(server)
+	def TransferControl(self, pattern, action):
+		print pattern, action
+		if action == "destroy":
+			self.applet.Transfer.destroy_server(pattern)
+		elif action == "stop":
+			server = self.applet.Transfer.get_server(pattern)
+			if server != None:
+				server.Stop()
+		
+		elif action == "create":
+			self.applet.Transfer.create_server(pattern)
+			
 		elif action == "start":
-			self.applet.Transfer.start_server(server)
+			self.applet.Transfer.start_server(pattern)
+		
+		
 		else:
 			print "Got unknown action"
 		
-	
+	@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="s", out_signature="u")
+	def TransferStatus(self, pattern):
+		server = self.applet.Transfer.get_server(pattern)
+		if server != None:
+			if server.IsStarted():
+				return 2
+			else:
+				return 1
+		else:
+			return 0
 	
 	

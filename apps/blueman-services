@@ -12,9 +12,14 @@ import blueman.bluez as Bluez
 from blueman.gui.GenericList import GenericList
 from blueman.bluez.ServiceInterface import ServiceInterface
 from blueman.main.Config import Config
+from blueman.main.AppletService import AppletService
 
 from blueman.Functions import *
 from blueman.Constants import *
+
+TRANSFER, NETWORK = range(2)
+
+
 class BluemanServices:
 
 
@@ -53,15 +58,74 @@ class BluemanServices:
 		
 		#s = ServiceInterface("org.bluez.NetworkPeer", adapter.GetObjectPath(), ["GetProperties"])
 		#print "peer properties",s.GetProperties()
-		self.TransConf = Config("transfer")
-		self.TransConf.connect("property-changed", self.on_property_changed)
+		self.TransConf = None
 		
 		self.Signals = {}
 		
 		self.page = "network"
 		
+		self.changes = []
+		self.changes.insert(TRANSFER, [])
+		self.changes.insert(NETWORK, [])
+
+		
+		self.Builder.get_object("b_apply").connect("clicked", self.on_apply_clicked)
+		
 		
 		gtk.main()
+		
+		
+	def on_apply_clicked(self, button):
+		if self.changes[TRANSFER] != []:
+			try:
+				a = AppletService()
+			except:
+				print "failed to connect to applet"
+			else:
+				c = self.changes[TRANSFER]
+				if "opp_enabled" in c:
+					if not self.TransConf.props.opp_enabled:
+						a.TransferControl("opp", "destroy")
+				
+				if "ftp_enabled" in c:
+					if not self.TransConf.props.ftp_enabled:
+						a.TransferControl("ftp", "destroy")
+				
+				
+				if "opp_accept" in c or "shared_path" in c or "opp_enabled" in c:
+					if self.TransConf.props.opp_enabled:
+						state = a.TransferStatus("opp")
+						if state == 0: #destroyed
+							a.TransferControl("opp", "create")
+						elif state == 2: #running
+							a.TransferControl("opp", "stop")
+							a.TransferControl("opp", "start")
+						elif state == 1:
+							a.TransferControl("opp", "start")
+							
+				
+				if "ftp_allow_write" in c or "shared_path" in c or "ftp_enabled" in c:
+					if self.TransConf.props.ftp_enabled:
+						state = a.TransferStatus("ftp")
+						if state == 0: #destroyed
+							a.TransferControl("ftp", "create")
+						elif state == 2: #running
+							a.TransferControl("ftp", "stop")
+							a.TransferControl("ftp", "start")
+						elif state == 1:
+							a.TransferControl("ftp", "start")
+				
+				print "ok"
+				self.changes[TRANSFER] = []
+				
+				
+			print "transfer apply"
+		
+		if self.changes[NETWORK] != []:
+			print "network apply"
+			
+		
+		self.update_changed_state()
 		
 	def on_property_changed(self, config, key, value):
 		if config == self.TransConf:
@@ -71,6 +135,21 @@ class BluemanServices:
 				self.Builder.get_object(key).props.active = value
 			if key == "ftp_allow_write":
 				self.Builder.get_object(key).props.active = value
+			if key == "shared_path":
+				self.Builder.get_object(key).set_current_folder(value)
+			
+			if key != "shared_path":
+				if key in self.changes[TRANSFER]:
+					self.changes[TRANSFER].remove(key)
+				else:
+					self.changes[TRANSFER].append(key)
+			else:
+				if not key in self.changes[TRANSFER]:
+					self.changes[TRANSFER].append(key)
+				
+
+				
+		self.update_changed_state()
 		
 	def set_page(self, pageid):
 		self.Builder.get_object(self.page).props.visible = False
@@ -85,24 +164,44 @@ class BluemanServices:
 		if self.page == "transfer":
 			setattr(self.TransConf.props, name, checkbutton.props.active)
 			
-	def setup_transfer(self):
-		opp_enabled = self.Builder.get_object("opp_enabled")
-		ftp_enabled = self.Builder.get_object("ftp_enabled")
-		ftp_allow_write = self.Builder.get_object("ftp_allow_write")
-		opp_accept = self.Builder.get_object("opp_accept")
-		
-		opp_enabled.props.active = self.TransConf.props.opp_enabled
-		ftp_enabled.props.active = self.TransConf.props.ftp_enabled
-		ftp_allow_write.props.active = self.TransConf.props.ftp_allow_write
-		opp_accept.props.active = self.TransConf.props.opp_accept
-		
-		if self.TransConf.props.shared_path != None:
-			self.Builder.get_object("shared_path").set_current_folder(self.TransConf.props.shared_path)
+	def update_changed_state(self):
+		b_apply = self.Builder.get_object("b_apply")
+		changed = False
+		for i in self.changes:
+			print i
+			changed = changed or (i != [])
+		print changed
+				
+		if changed:
+			b_apply.props.sensitive = True
+		else:
+			b_apply.props.sensitive = False
 			
-		opp_enabled.connect("toggled", self.on_toggled, "opp_enabled")
-		ftp_enabled.connect("toggled", self.on_toggled, "ftp_enabled")
-		ftp_allow_write.connect("toggled", self.on_toggled, "ftp_allow_write")
-		opp_accept.connect("toggled", self.on_toggled, "opp_accept")
+			
+	def setup_transfer(self):
+		if self.TransConf == None:
+			self.TransConf = Config("transfer")
+			self.TransConf.connect("property-changed", self.on_property_changed)
+			opp_enabled = self.Builder.get_object("opp_enabled")
+			ftp_enabled = self.Builder.get_object("ftp_enabled")
+			ftp_allow_write = self.Builder.get_object("ftp_allow_write")
+			opp_accept = self.Builder.get_object("opp_accept")
+			shared_path = self.Builder.get_object("shared_path")
+		
+			opp_enabled.props.active = self.TransConf.props.opp_enabled
+			ftp_enabled.props.active = self.TransConf.props.ftp_enabled
+			ftp_allow_write.props.active = self.TransConf.props.ftp_allow_write
+			opp_accept.props.active = self.TransConf.props.opp_accept
+			shared_path.set_filename(self.TransConf.props.shared_path)
+		
+			if self.TransConf.props.shared_path != None:
+				self.Builder.get_object("shared_path").set_current_folder(self.TransConf.props.shared_path)
+			
+			opp_enabled.connect("toggled", self.on_toggled, "opp_enabled")
+			ftp_enabled.connect("toggled", self.on_toggled, "ftp_enabled")
+			ftp_allow_write.connect("toggled", self.on_toggled, "ftp_allow_write")
+			opp_accept.connect("toggled", self.on_toggled, "opp_accept")
+			shared_path.connect("current-folder-changed", lambda x: setattr(self.TransConf.props, "shared_path", x.get_filename()))
 		
 
 	

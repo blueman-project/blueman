@@ -24,7 +24,7 @@ from blueman.Functions import *
 from blueman.main.SignalTracker import SignalTracker
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 
-from blueman.main.manager.Applet import Applet
+from blueman.main.AppletService import AppletService
 
 from blueman.Lib import rfcomm_list
 
@@ -175,7 +175,7 @@ class ManagerDeviceMenu(gtk.Menu):
 		elif service_id == "serial":
 			uuid = args[0]
 			try:
-				appl = Applet()
+				appl = AppletService()
 			except:
 				print "** Failed to connect to applet"
 				fail()
@@ -195,7 +195,7 @@ class ManagerDeviceMenu(gtk.Menu):
 		svc = device.Services[service_id]
 		if service_id == "serial":
 			try:
-				appl = Applet()
+				appl = AppletService()
 			except:
 				print "** Failed to connect to applet"
 			else:
