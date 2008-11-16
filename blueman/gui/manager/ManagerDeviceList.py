@@ -101,7 +101,10 @@ class ManagerDeviceList(DeviceList):
 	
 	
 	def device_add_event(self, device):
-		self.PrependDevice(device)
+		if self.Blueman.Config.props.latest_last:
+			self.AppendDevice(device)
+		else:
+			self.PrependDevice(device)
 		
 	def make_caption(self, name, klass, address):
 		return "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" % {"0":name, "1":klass.capitalize(), "2":address}

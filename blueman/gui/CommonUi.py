@@ -1,3 +1,4 @@
+# coding=utf-8
 # Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
 # Copyright (C) 2008 Tadas Dailyda <tadas at dailyda dot com>
 #
@@ -43,13 +44,13 @@ def show_about_dialog(app_name):
 	about = gtk.AboutDialog()
 	about.set_name(app_name)
 	about.set_version(VERSION)
-	about.set_copyright('Copyright \xc2\xa9 2008 Valmantas Paliksa\n'\
+	about.set_copyright('Copyright \xc2\xa9 2008 Valmantas Palikša\n'\
 						'Copyright \xc2\xa9 2008 Tadas Dailyda')
-	about.set_comments(_('Blueman is GTK based Bluetooth manager'))
+	about.set_comments(_('Blueman is a GTK based Bluetooth manager'))
 	about.set_website(WEBSITE)
 	about.set_icon(get_icon('blueman'))
 	about.set_logo(get_icon('blueman', 48))
-	authors = ['Valmantas Paliksa <walmis@balticum-tv.lt>',
+	authors = ['Valmantas Palikša <walmis@balticum-tv.lt>',
 				'Tadas Dailyda <tadas@dailyda.com>']
 	about.set_authors(authors)
 	about.run()

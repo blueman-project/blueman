@@ -19,10 +19,15 @@
 
 import gtk
 import blueman.bluez as Bluez
-
+from blueman.Functions import *
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.Functions import adapter_path_to_name
+from blueman.gui.CommonUi import *
+import gettext
+
+_ = gettext.gettext
+
 
 class ManagerMenu:
 
@@ -33,14 +38,81 @@ class ManagerMenu:
 		
 		self.adapter_items = []
 		
-		self.item_adapter = gtk.MenuItem("_Adapter")
-		self.item_device = gtk.MenuItem("_Device")
-		
+		self.item_adapter = gtk.MenuItem(_("_Adapter"))
+		self.item_device = gtk.MenuItem(_("_Device"))
+		self.item_view = gtk.MenuItem(_("_View"))
+		self.item_help = gtk.MenuItem(_("_Help"))
 		
 		self.Menubar.append(self.item_adapter)
 		self.Menubar.append(self.item_device)
+		self.Menubar.append(self.item_view)
+		self.Menubar.append(self.item_help)
+		
+		
+		help_menu = gtk.Menu()
+		
+		self.item_help.set_submenu(help_menu)
+		help_menu.show()
+		
+		item = gtk.ImageMenuItem("gtk-help")
+		help_menu.append(item)
+		item.show()
+		
+		item = gtk.ImageMenuItem("gtk-about")
+		item.connect("activate", lambda x: show_about_dialog('Blueman '+_('Device Manager')))
+		help_menu.append(item)
+		item.show()
+		
+		view_menu = gtk.Menu()
+		self.item_view.set_submenu(view_menu)
+		view_menu.show()
+		
+		item = gtk.CheckMenuItem(_("Show Toolbar"))
+		if self.blueman.Config.props.show_toolbar == None:
+			item.props.active = True
+		else:
+			if not self.blueman.Config.props.show_toolbar:
+				item.props.active = False
+			else:
+				item.props.active = True
+		item.connect("activate", lambda x: setattr(self.blueman.Config.props, "show_toolbar", x.props.active))
+		view_menu.append(item)
+		item.show()
+		
+		item = gtk.CheckMenuItem(_("Show Statusbar"))
+		if self.blueman.Config.props.show_statusbar == None:
+			item.props.active = True
+		else:
+			if not self.blueman.Config.props.show_statusbar:
+				item.props.active = False
+			else:
+				item.props.active = True
+		item.connect("activate", lambda x: setattr(self.blueman.Config.props, "show_statusbar", x.props.active))
+		view_menu.append(item)
+		item.show()
+		
+		item = gtk.SeparatorMenuItem()
+		view_menu.append(item)
+		item.show()
+		
+		itemf = gtk.RadioMenuItem(None, _("Latest Device First"))
+		view_menu.append(itemf)
+		itemf.show()
+		
+		iteml = gtk.RadioMenuItem(itemf, _("Latest Device Last"))
+		view_menu.append(iteml)
+		iteml.show()
+		
+		if self.blueman.Config.props.latest_last:
+			iteml.props.active = True
+		else:
+			itemf.props.active = True
+		itemf.connect("activate",  lambda x: setattr(self.blueman.Config.props, "latest_last", not x.props.active))
+		iteml.connect("activate",  lambda x: setattr(self.blueman.Config.props, "latest_last", x.props.active))
 		
 		self.item_adapter.show()
+		self.item_view.show()
+		self.item_help.show()
 		self.item_device.show()
 		self.item_device.props.sensitive = False
 		
@@ -102,6 +174,15 @@ class ManagerMenu:
 			
 			item.show()
 			menu.prepend(item)
+		
+		sep = gtk.SeparatorMenuItem()
+		sep.show()
+		menu.prepend(sep)
+		
+		item = create_menuitem(_("Search"), get_icon("gtk-search", 16))
+		item.connect("activate", lambda x: self.blueman.inquiry())
+		item.show()
+		menu.prepend(item)
 		
 		m = self.item_adapter.get_submenu()
 		if m != None:

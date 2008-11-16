@@ -53,12 +53,27 @@ class Blueman:
 			self.Config.props.window_height = y
 			self.Config.props.window_width = x
 			gtk.main_quit()
+			
+		def on_property_changed(config, key, value):
+			if key == "show_toolbar":
+				if value:
+					self.Builder.get_object("toolbar2").props.visible = True
+				else:
+					self.Builder.get_object("toolbar2").props.visible = False
+			elif key == "show_statusbar":
+				if value:
+					self.Builder.get_object("statusbar").props.visible = True
+				else:
+					self.Builder.get_object("statusbar").props.visible = False
+			elif key == "latest_last":
+				self.List.DisplayKnownDevices(autoselect=True)
 		
 		setup_icon_path()
 		
 		self.Builder = gtk.Builder()
 		self.Builder.add_from_file(UI_PATH +"/manager-main.ui")
 		self.Config = Config()
+		
 
 		window = self.Builder.get_object("window")
 		window.connect("delete-event", on_window_delete)
@@ -87,6 +102,13 @@ class Blueman:
 		
 		self.List.connect("adapter-changed", self.on_adapter_changed)
 		
+		self.Config.connect("property-changed", on_property_changed)
+		
+		if self.Config.props.show_toolbar != None:
+			on_property_changed(self.Config, "show_toolbar", self.Config.props.show_toolbar)
+			
+		if self.Config.props.show_statusbar != None:
+			on_property_changed(self.Config, "show_statusbar", self.Config.props.show_statusbar)
 		
 		window.show()
 		gtk.main()
