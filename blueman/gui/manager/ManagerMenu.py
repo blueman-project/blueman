@@ -37,6 +37,7 @@ class ManagerMenu:
 		self.Menubar = blueman.Builder.get_object("menu")
 		
 		self.adapter_items = []
+		self.Search = None
 		
 		self.item_adapter = gtk.MenuItem(_("_Adapter"))
 		self.item_device = gtk.MenuItem(_("_Device"))
@@ -122,7 +123,7 @@ class ManagerMenu:
 		blueman.List.connect("device-selected", self.on_device_selected)
 		blueman.List.connect("adapter-changed", self.on_adapter_changed)
 		
-		self.adapters = adapters = blueman.List.Manager.ListAdapters()
+		self.adapters = blueman.List.Manager.ListAdapters()
 		
 		self.generate_adapter_menu()
 		
@@ -148,6 +149,12 @@ class ManagerMenu:
 		(key, value) = kv
 		if key == "Name":
 			self.generate_adapter_menu()
+		elif key == "Discovering":
+			if self.Search:
+				if value:
+					self.Search.props.sensitive = False
+				else:
+					self.Search.props.sensitive = True
 		
 	def generate_adapter_menu(self):
 		menu = gtk.Menu()
@@ -183,6 +190,10 @@ class ManagerMenu:
 		item.connect("activate", lambda x: self.blueman.inquiry())
 		item.show()
 		menu.prepend(item)
+		self.Search = item
+		
+		if self.adapters == []:
+			item.props.sensitive = False
 		
 		m = self.item_adapter.get_submenu()
 		if m != None:
