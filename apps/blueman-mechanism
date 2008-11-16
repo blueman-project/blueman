@@ -56,22 +56,23 @@ class conf_service(dbus.service.Object):
 	
 		if ip_address == "0":
 			info = netstatus()
+			nc = None
 			if info["type"] == "dnsmasq":
 				nc = NetConfDnsMasq(None)
-			else:
+			elif info["type"] == "dhcpd":
 				nc = NetConfDhcpd(None)
-			
-			nc.uninstall()
+			if nc:
+				nc.uninstall()
 			return True
 		else:
 			if ip_chk(ip_address):
-
+				nc = None
 				if server_type == "dnsmasq":
 					nc = NetConfDnsMasq(ip_address, allow_nat)
-				else:
+				elif server_type == "dhcpd":
 					nc = NetConfDhcpd(ip_address, allow_nat)
-		
-				nc.install()
+				if nc:
+					nc.install()
 
 				return True
 			else:
