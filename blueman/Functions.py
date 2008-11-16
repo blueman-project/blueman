@@ -119,6 +119,7 @@ def check_single_instance(id, unhide_func=None):
 	if os.path.exists(lockfile):
 		f = open(lockfile)
 		pid = f.read()
+		f.close()
 		if len(pid) > 0:
 			isrunning = os.path.exists("/proc/%s" % pid)
 
