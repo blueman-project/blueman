@@ -38,6 +38,7 @@ from blueman.main.SignalTracker import SignalTracker
 from blueman.Functions import *
 from blueman.main.applet.BluezAgent import BluezAgent
 from blueman.main.applet.DbusService import DbusService
+from blueman.main.applet.NetworkManager import NetworkManager
 from blueman.Constants import *
 import blueman.bluez as Bluez
 from blueman.gui.CommonUi import show_about_dialog
@@ -54,8 +55,8 @@ class BluemanApplet:
 		if not pynotify.init("Blueman"):
 			print 'Error: Failed to init pynotify'
 		
-		self.signals = SignalTracker()
-		
+		self.Signals = SignalTracker()
+		self.Agents = []
 		self.status_icon = gtk.StatusIcon()
 		self.status_icon = gtk.status_icon_new_from_icon_name("bluetooth")
 		self.status_icon.connect('popup-menu', self.on_popup_menu)
@@ -67,32 +68,41 @@ class BluemanApplet:
 		self.manager_init()
 
 		
+		
 		DbusService(self)
+		
 		self.Transfer = Transfer(self)
 		
 		gtk.main()
 		
 	def manager_init(self):
 		try:
-			self.signals.DisconnectAll()
+			for agent in self.Agents:
+				agent.remove_from_connection()
+				self.Agents = []
+			
+			self.Signals.DisconnectAll()
 			self.Manager = Bluez.Manager('gobject')
-			self.signals.Handle("bluez", self.Manager, self.on_adapter_removed, 'AdapterRemoved')
-			self.signals.Handle("bluez", self.Manager, self.on_adapter_added, 'AdapterAdded')
+			self.NM = NetworkManager(self)
+			self.Signals.Handle("bluez", self.Manager, self.on_adapter_removed, 'AdapterRemoved')
+			self.Signals.Handle("bluez", self.Manager, self.on_adapter_added, 'AdapterAdded')
 			adapters = self.Manager.ListAdapters()
 			self.status_icon.set_visible(adapters != [])
 			for adapter in adapters:
-				self.register_agent(adapter.GetObjectPath())
-		except Exception, e:
+				self.register_agent(adapter)
+		except dbus.exceptions.DBusException, e:
 			print e
 			self.Manager = None
+			self.NM = None
 			self.status_icon.set_visible(False)
 			print 'Bluez DBus API not available. Listening for DBus name ownership changes'
 			
 	def register_agent(self, adapter):
 		try:
-			adapter_obj = Bluez.Adapter(adapter)
-			agent = BluezAgent(self, adapter)
-			adapter_obj.GetInterface().RegisterAgent(agent.dbus_path, 'DisplayYesNo')
+			agent = BluezAgent(self, adapter.GetObjectPath())
+			adapter.GetInterface().RegisterAgent(agent.dbus_path, 'DisplayYesNo')
+			self.Agents.append(agent)
+
 		except:
 			print 'Failed to register agent'
 		

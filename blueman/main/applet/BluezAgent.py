@@ -45,6 +45,7 @@ class BluezAgent(dbus.service.Object):
 		self.dbus_path = "/org/blueman/agent/"+adapter_name
 		dbus.service.Object.__init__(self, self.bus, self.dbus_path)
 		
+		
 	def __del__(self):
 		print 'Agent on path', self.dbus_path, 'deleted'
 	
