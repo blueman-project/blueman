@@ -76,6 +76,10 @@ class Blueman:
 		
 
 		window = self.Builder.get_object("window")
+
+		
+		check_single_instance("blueman-manager", lambda: window.present())
+		
 		window.connect("delete-event", on_window_delete)
 		window.props.icon_name = "blueman"
 		

@@ -21,6 +21,8 @@ from blueman.Constants import *
 import gtk
 import re
 import os
+import signal
+import atexit
 from subprocess import Popen, PIPE
 
 
@@ -104,3 +106,32 @@ def create_menuitem(text, image):
 	item.add(label)
 	
 	return item
+	
+def check_single_instance(id, unhide_func=None):
+	def handler(signum, frame):
+		if unhide_func:
+			unhide_func()
+
+	if unhide_func:
+		signal.signal(signal.SIGUSR1, handler)
+	
+	lockfile = os.path.expanduser("/tmp/%s-%s" % (id, os.getuid()))
+	if os.path.exists(lockfile):
+		f = open(lockfile)
+		pid = f.read()
+		if len(pid) > 0:
+			isrunning = os.path.exists("/proc/%s" % pid)
+
+			if not isrunning:
+				os.remove(lockfile)
+			else:
+				print "there is an instance already running"
+				os.kill(int(pid), signal.SIGUSR1)
+				exit()
+		else:
+			os.remove(lockfile)
+
+	f = file(lockfile, "w")
+	f.write(str(os.getpid()))
+	f.close()
+	atexit.register(lambda:os.remove(lockfile))
