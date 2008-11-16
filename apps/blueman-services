@@ -28,11 +28,16 @@ class BluemanServices:
 
 
 	def __init__(self):
+		gtk.window_set_auto_startup_notification(True)
 		self.Manager = Bluez.Manager('gobject')
 		adapter = self.Manager.GetAdapter()
 		
 		self.Builder = gtk.Builder()
 		self.Builder.add_from_file(UI_PATH +"/services.ui")
+		
+		self.Dialog = self.Builder.get_object("dialog")
+		self.Dialog.set_startup_id("blueman-services")
+		self.Dialog.connect("delete-event", lambda x, y: gtk.main_quit())
 		
 		data = [
 			["picture", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":0}, None],
@@ -51,8 +56,8 @@ class BluemanServices:
 		self.Builder.get_object("viewport1").add(ls)
 		ls.show()
 		
-		self.Dialog = self.Builder.get_object("dialog")
-		self.Dialog.show()
+
+		
 		
 		#s = ServiceInterface("org.bluez.NetworkRouter", adapter.GetObjectPath(), ["GetProperties", "SetProperty"])
 		#print "router properties", s.GetProperties()
@@ -81,6 +86,7 @@ class BluemanServices:
 		self.Builder.get_object("b_apply").connect("clicked", self.on_apply_clicked)
 		self.Builder.get_object("b_close").connect("clicked", lambda x: gtk.main_quit())
 		
+		self.Dialog.show()
 		gtk.main()
 		
 		

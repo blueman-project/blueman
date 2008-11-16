@@ -40,26 +40,29 @@ def netstatus():
 	masq=0
 	type=0
 	
-	path = os.path.join( PREFIX, "bin/blueman-ifup")
-	f=open(path)
-	for line in f:
-		m = re.match("^MASQ=(.*)", line)
-		if m:
-			masq = int(m.groups(1)[0])
+	try:
+		path = os.path.join( PREFIX, "bin/blueman-ifup")
+		f=open(path)
+		for line in f:
+			m = re.match("^MASQ=(.*)", line)
+			if m:
+				masq = int(m.groups(1)[0])
 		
-		m = re.match("^DHCP=(.*)", line)
-		if m:
-			dhcp = int(m.groups(1)[0])
+			m = re.match("^DHCP=(.*)", line)
+			if m:
+				dhcp = int(m.groups(1)[0])
 		
-		m = re.match("^IP=(.*)", line)
-		if m:
-			ip = m.groups(1)[0]
+			m = re.match("^IP=(.*)", line)
+			if m:
+				ip = m.groups(1)[0]
 		
-		m = re.match("^TYPE=(.*)", line)
-		if m:
-			type = m.groups(1)[0]
+			m = re.match("^TYPE=(.*)", line)
+			if m:
+				type = m.groups(1)[0]
 			
-	f.close()
+		f.close()
+	except IOError:
+		pass
 			
 	return {"dhcp":dhcp, "ip":ip, "masq":masq, "type":type}
 
