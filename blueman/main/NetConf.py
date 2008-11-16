@@ -36,7 +36,7 @@ def ip_chk(ip_str):
       
 def netstatus():
 	dhcp=0
-	ip=0
+	ip="0"
 	masq=0
 	type=0
 	
