@@ -126,20 +126,23 @@ class BluemanApplet:
 			
 	def build_popup_menu(self):
 		menu_items = []
-		menu_items += [gtk.MenuItem(_('Setup new device')+'...', False)]
+		menu_items += [create_menuitem(_('Setup new device')+'...', get_icon("gtk-new", 16))]
 		menu_items[-1].connect('activate', self.on_setup_new)
-		menu_items += [gtk.MenuItem(_('Send files to device')+'...', False)]
+		menu_items += [create_menuitem(_('Send files to device')+'...', get_icon("blueman-send-file", 16))]
 		menu_items[-1].connect('activate', self.on_send)
 		if OBEX_BROWSE_AVAILABLE:
-			menu_items += [gtk.MenuItem(_('Browse files on device')+'...', False)]
+			menu_items += [create_menuitem(_('Browse files on device')+'...', get_icon("gtk-open", 16))]
 			menu_items[-1].connect('activate', self.on_browse)
 		menu_items += [gtk.SeparatorMenuItem()]
 		menu_items += [gtk.MenuItem(_('Devices')+'...', False)]
 		menu_items[-1].connect('activate', self.on_devices)
-		menu_items += [gtk.MenuItem(_('Adapters')+'...', False)]
+		
+		menu_items += [create_menuitem(_('Adapters')+'...', get_icon("blueman-device", 16))]
 		menu_items[-1].connect('activate', self.on_adapters)
-		menu_items += [gtk.MenuItem(_('Local services')+'...', False)]
+		
+		menu_items += [create_menuitem(_('Local services')+'...', get_icon("gtk-preferences", 16))]
 		menu_items[-1].connect('activate', self.on_local_services)
+		
 		menu_items += [gtk.SeparatorMenuItem()]
 		menu_items += [gtk.ImageMenuItem(gtk.STOCK_ABOUT)]
 		menu_items[-1].connect('activate', self.on_about)
