@@ -1,8 +1,9 @@
 PACKAGE="blueman"
-VERSION="0.11"
+VERSION="0.99"
 WEBSITE="http://blueman.tuxfamily.org"
 PREFIX="/usr"
 BIN_DIR="./"
 ICON_PATH = "../data/icons"
 UI_PATH = "../data/ui"
 OBEX_BROWSE_AVAILABLE = True
+DHCP_CONFIG_FILE = "/etc/dhcp3/dhcpd.conf"

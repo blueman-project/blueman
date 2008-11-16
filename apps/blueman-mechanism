@@ -55,7 +55,8 @@ class conf_service(dbus.service.Object):
 		self.confirm_authorization(caller, "org.blueman.network.setup")
 	
 		if ip_address == "0":
-			if server_type == "dnsmasq":
+			info = netstatus()
+			if info["type"] == "dnsmasq":
 				nc = NetConfDnsMasq(None)
 			else:
 				nc = NetConfDhcpd(None)

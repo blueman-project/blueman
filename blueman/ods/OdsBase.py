@@ -44,7 +44,4 @@ class OdsBase(dbus.proxies.Interface, SignalTracker, gobject.GObject):
 		
 	def GHandle(self, *args):
 		SignalTracker.Handle(self, "gobject", self, *args)
-		
-		
-	#def GHandle(self, name, callback, *args):
-	#	SignalTracker.Handle("gobject", self, name, callback, *args) 
+

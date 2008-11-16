@@ -16,8 +16,12 @@ from blueman.main.AppletService import AppletService
 
 from blueman.Functions import *
 from blueman.Constants import *
+import blueman.main.NetConf as NetConf
+from blueman.main.Mechanism import Mechanism
+from blueman.main.PolicyKitAuth import PolicyKitAuth
 
-TRANSFER, NETWORK = range(2)
+TRANSFER = 0
+NETWORK = 1
 
 
 class BluemanServices:
@@ -50,7 +54,9 @@ class BluemanServices:
 		self.Dialog = self.Builder.get_object("dialog")
 		self.Dialog.show()
 		
-		#s = ServiceInterface("org.bluez.NetworkRouter", adapter.GetObjectPath(), ["GetProperties"])
+		#s = ServiceInterface("org.bluez.NetworkRouter", adapter.GetObjectPath(), ["GetProperties", "SetProperty"])
+		#print "router properties", s.GetProperties()
+		#s.SetProperty("Enabled", False)
 		#print "router properties", s.GetProperties()
 		
 		#s = ServiceInterface("org.bluez.NetworkHub", adapter.GetObjectPath(), ["GetProperties"])
@@ -59,15 +65,18 @@ class BluemanServices:
 		#s = ServiceInterface("org.bluez.NetworkPeer", adapter.GetObjectPath(), ["GetProperties"])
 		#print "peer properties",s.GetProperties()
 		self.TransConf = None
+		self.NetConf = None
 		
 		self.Signals = {}
 		
 		self.page = "network"
 		
-		self.changes = []
-		self.changes.insert(TRANSFER, [])
-		self.changes.insert(NETWORK, [])
+		self.changes = {}
+		self.changes[TRANSFER] = []
+		self.changes[NETWORK] = []
+		self.ignored_keys = []
 
+		self.set_page("network")
 		
 		self.Builder.get_object("b_apply").connect("clicked", self.on_apply_clicked)
 		
@@ -124,11 +133,40 @@ class BluemanServices:
 		if self.changes[NETWORK] != []:
 			print "network apply"
 			
+			auth = PolicyKitAuth()
+			authorized = auth.is_authorized("org.blueman.network.setup")
+			if not authorized:
+				authorized = auth.obtain_authorization(self.Builder.get_object("nap_enable"), "org.blueman.network.setup")
+			if authorized:
+				m = Mechanism()
+				if self.NetConf.props.nap_enable:
+					
+					r_dnsmasq = self.Builder.get_object("r_dnsmasq")
+					if r_dnsmasq.props.active:
+						stype = "dnsmasq"
+					else:
+						stype = "dhcpd"
+					
+					net_ip = self.Builder.get_object("net_ip")
+					net_nat = self.Builder.get_object("net_nat")
+					
+					m.NetworkSetup(net_ip.props.text, net_nat.props.active, stype)
+					
+				else:
+					m.NetworkSetup("0",0,"0")
+					#disable
+				
+				self.changes[NETWORK] = []
+			else:
+				print "Unauth"
+				
+			
 		
 		self.update_changed_state()
 		
 	def on_property_changed(self, config, key, value):
 		if config == self.TransConf:
+
 			if key == "opp_enabled":
 				self.Builder.get_object(key).props.active = value
 			if key == "ftp_enabled":
@@ -146,7 +184,26 @@ class BluemanServices:
 			else:
 				if not key in self.changes[TRANSFER]:
 					self.changes[TRANSFER].append(key)
-				
+					
+		elif config == self.NetConf:
+			if key in self.ignored_keys:
+				self.ignored_keys.remove(key)
+				return
+			
+			if key == "nap_enable":
+				print value
+				self.Builder.get_object(key).props.active = value
+				nap_frame = self.Builder.get_object("nap_frame")
+				if value:
+					nap_frame.props.sensitive = True
+				else:
+					nap_frame.props.sensitive = False
+					
+			if key in self.changes[NETWORK]:
+				if key != "ip":
+					self.changes[NETWORK].remove(key)
+			else:
+				self.changes[NETWORK].append(key)
 
 				
 		self.update_changed_state()
@@ -158,19 +215,20 @@ class BluemanServices:
 		
 		if pageid == "transfer":
 			self.setup_transfer()
+		elif pageid == "network":
+			self.setup_network()
 			
-			
-	def on_toggled(self, checkbutton, name):
-		if self.page == "transfer":
-			setattr(self.TransConf.props, name, checkbutton.props.active)
 			
 	def update_changed_state(self):
 		b_apply = self.Builder.get_object("b_apply")
 		changed = False
-		for i in self.changes:
+		for k,i in self.changes.iteritems():
 			print i
 			changed = changed or (i != [])
-		print changed
+		
+		if "ip" in self.changes[NETWORK]:
+			if not NetConf.ip_chk(self.Builder.get_object("net_ip").props.text):
+				changed = False
 				
 		if changed:
 			b_apply.props.sensitive = True
@@ -197,12 +255,77 @@ class BluemanServices:
 			if self.TransConf.props.shared_path != None:
 				self.Builder.get_object("shared_path").set_current_folder(self.TransConf.props.shared_path)
 			
-			opp_enabled.connect("toggled", self.on_toggled, "opp_enabled")
-			ftp_enabled.connect("toggled", self.on_toggled, "ftp_enabled")
-			ftp_allow_write.connect("toggled", self.on_toggled, "ftp_allow_write")
-			opp_accept.connect("toggled", self.on_toggled, "opp_accept")
+			opp_enabled.connect("toggled", lambda x: setattr(self.TransConf.props, "opp_enabled", x.props.active))
+			ftp_enabled.connect("toggled", lambda x: setattr(self.TransConf.props, "ftp_enabled", x.props.active))
+			ftp_allow_write.connect("toggled", lambda x: setattr(self.TransConf.props, "ftp_allow_write", x.props.active))
+			opp_accept.connect("toggled", lambda x: setattr(self.TransConf.props, "opp_accept", x.props.active))
 			shared_path.connect("current-folder-changed", lambda x: setattr(self.TransConf.props, "shared_path", x.get_filename()))
 		
+	def setup_network(self):
+		if self.NetConf == None:
+			self.NetConf = Config("network")
+			self.NetConf.connect("property-changed", self.on_property_changed)
+
+			gn_enable = self.Builder.get_object("gn_enable")
+			nap_enable = self.Builder.get_object("nap_enable")
+			r_dnsmasq = self.Builder.get_object("r_dnsmasq")
+			r_dhcpd = self.Builder.get_object("r_dhcpd")
+			net_ip = self.Builder.get_object("net_ip")
+			net_nat = self.Builder.get_object("net_nat")
+			
+			nap_frame = self.Builder.get_object("nap_frame")
+			warning = self.Builder.get_object("warning")
+			
+			
+			nap_enable.props.active = self.NetConf.props.nap_enable
+			gn_enable.props.active = self.NetConf.props.gn_enable
+			
+			if not self.NetConf.props.nap_enable:
+				nap_frame.props.sensitive = False
+				
+			ns = NetConf.netstatus()
+			
+			if ns["ip"] != '0':
+				net_ip.props.text = ns["ip"]
+			
+			if ns["masq"] != 0:
+				net_nat.props.active = ns["masq"]
+				
+			if ns["dhcp"] == 0:
+				nap_frame.props.sensitive = False
+				nap_enable.props.active = False
+				if self.NetConf.props.nap_enable:
+					self.ignored_keys.append("nap_enable")
+				self.NetConf.props.nap_enable = False
+				
+				
+			if ns["type"] != 0:
+				if ns["type"] == "dnsmasq":
+					r_dnsmasq.props.active = True
+				else:
+					r_dhcpd.props.active = True
+			
+			if not NetConf.have("dnsmasq") and not NetConf.have("dhcpd3"):
+				nap_frame.props.sensitive = False
+				warning.props.visible = True
+				warning.props.sensitive = True
+				nap_enable.props.sensitive = False
+				self.NetConf.props.nap_enable = False
+				
+			if not NetConf.have("dnsmasq"):
+				r_dnsmasq.props.sensitive = False
+				r_dnsmasq.props.active = False
+				r_dhcpd.props.active = True
+			
+			if not NetConf.have("dhcpd3"):
+				r_dhcpd.props.sensitive = False
+				r_dhcpd.props.active = False
+				r_dnsmasq.props.active = True
+			
+			net_nat.connect("toggled", lambda x: self.on_property_changed(self.NetConf, "nat", x.props.active))
+			net_ip.connect("changed", lambda x: self.on_property_changed(self.NetConf, "ip", x.props.text))
+			gn_enable.connect("toggled", lambda x: setattr(self.NetConf.props, "gn_enable", x.props.active))
+			nap_enable.connect("toggled", lambda x: setattr(self.NetConf.props, "nap_enable", x.props.active))
 
 	
 	def on_selection_changed(self, selection):

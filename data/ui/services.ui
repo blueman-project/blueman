@@ -60,7 +60,7 @@
                                   <object class="GtkVBox" id="vbox11">
                                     <property name="visible">True</property>
                                     <child>
-                                      <object class="GtkCheckButton" id="checkbutton12">
+                                      <object class="GtkCheckButton" id="gn_enable">
                                         <property name="label" translatable="yes">Group Network</property>
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
@@ -73,7 +73,7 @@
                                       </packing>
                                     </child>
                                     <child>
-                                      <object class="GtkCheckButton" id="checkbutton13">
+                                      <object class="GtkCheckButton" id="nap_enable">
                                         <property name="label" translatable="yes">Network Access Point (NAP)</property>
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
@@ -103,7 +103,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkFrame" id="frame6">
+                          <object class="GtkFrame" id="nap_frame">
                             <property name="visible">True</property>
                             <property name="label_xalign">0</property>
                             <property name="shadow_type">none</property>
@@ -135,7 +135,7 @@
                                             <property name="visible">True</property>
                                             <property name="spacing">2</property>
                                             <child>
-                                              <object class="GtkRadioButton" id="radiobutton23">
+                                              <object class="GtkRadioButton" id="r_dhcpd">
                                                 <property name="label" translatable="yes">dhcpd3</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
@@ -149,14 +149,14 @@
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkRadioButton" id="radiobutton24">
+                                              <object class="GtkRadioButton" id="r_dnsmasq">
                                                 <property name="label" translatable="yes">dnsmasq</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="receives_default">False</property>
                                                 <property name="active">True</property>
                                                 <property name="draw_indicator">True</property>
-                                                <property name="group">radiobutton23</property>
+                                                <property name="group">r_dhcpd</property>
                                               </object>
                                               <packing>
                                                 <property name="expand">False</property>
@@ -170,7 +170,7 @@
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkEntry" id="entry6">
+                                          <object class="GtkEntry" id="net_ip">
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
                                             <property name="text" translatable="yes">192.168.20.1</property>
@@ -201,7 +201,7 @@
                                       </packing>
                                     </child>
                                     <child>
-                                      <object class="GtkCheckButton" id="checkbutton17">
+                                      <object class="GtkCheckButton" id="net_nat">
                                         <property name="label" translatable="yes">Enable Routing (NAT)</property>
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
@@ -217,7 +217,7 @@
                               </object>
                             </child>
                             <child type="label">
-                              <object class="GtkLabel" id="label25">
+                              <object class="GtkLabel" id="label3">
                                 <property name="visible">True</property>
                                 <property name="label" translatable="yes">&lt;b&gt;NAP Settings&lt;/b&gt;</property>
                                 <property name="use_markup">True</property>
@@ -230,17 +230,54 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkFrame" id="frame5">
+                          <object class="GtkViewport" id="warning">
+                            <property name="resize_mode">queue</property>
+                            <child>
+                              <object class="GtkHBox" id="hbox12">
+                                <property name="visible">True</property>
+                                <property name="spacing">2</property>
+                                <child>
+                                  <object class="GtkImage" id="image9">
+                                    <property name="visible">True</property>
+                                    <property name="xpad">4</property>
+                                    <property name="ypad">4</property>
+                                    <property name="stock">gtk-dialog-warning</property>
+                                    <property name="icon-size">1</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel" id="label17">
+                                    <property name="visible">True</property>
+                                    <property name="label" translatable="yes">&lt;b&gt;No DHCP servers installed&lt;/b&gt;</property>
+                                    <property name="use_markup">True</property>
+                                  </object>
+                                  <packing>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="position">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkFrame" id="frame1">
                             <property name="visible">True</property>
                             <property name="label_xalign">0</property>
                             <property name="shadow_type">none</property>
                             <child>
-                              <object class="GtkAlignment" id="alignment6">
+                              <object class="GtkAlignment" id="alignment4">
                                 <property name="visible">True</property>
                                 <property name="top_padding">2</property>
                                 <property name="left_padding">12</property>
                                 <child>
-                                  <object class="GtkCheckButton" id="checkbutton15">
+                                  <object class="GtkCheckButton" id="dhcp_client1">
                                     <property name="label" translatable="yes">Run DHCP Client automatically</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
@@ -251,7 +288,7 @@
                               </object>
                             </child>
                             <child type="label">
-                              <object class="GtkLabel" id="label18">
+                              <object class="GtkLabel" id="label15">
                                 <property name="visible">True</property>
                                 <property name="label" translatable="yes">&lt;b&gt;Client Settings&lt;/b&gt;</property>
                                 <property name="use_markup">True</property>
@@ -260,7 +297,7 @@
                           </object>
                           <packing>
                             <property name="expand">False</property>
-                            <property name="position">2</property>
+                            <property name="position">3</property>
                           </packing>
                         </child>
                       </object>

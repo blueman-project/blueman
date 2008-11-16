@@ -22,11 +22,9 @@
 import os
 import re
 import commands
-import blueman.Constants as Constants
+from blueman.Constants import *
+from blueman.Lib import create_bridge, destroy_bridge, BridgeException
 import re
-
-DHCP_CONFIG_FILE = "/etc/dhcp3/dhcpd.conf"
-
 
 def ip_chk(ip_str):
    pattern = r"\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b"
@@ -42,7 +40,7 @@ def netstatus():
 	masq=0
 	type=0
 	
-	path = os.path.join( Constants.PREFIX, "bin/blueman-ifup")
+	path = os.path.join( PREFIX, "bin/blueman-ifup")
 	f=open(path)
 	for line in f:
 		m = re.match("^MASQ=(.*)", line)
@@ -123,11 +121,22 @@ class NetConf:
 		self._uninstall_ifup()
 		self._kill_dhcp()
 		self._restore_iptables()
+		try:
+			destroy_bridge()
+		except BridgeException, msg:
+			print "Unable to destroy bridge:", msg
 
 	def reload_settings(self):
 		self._kill_dhcp()
 		self._restore_iptables()
+		
+		try:
+			create_bridge()
+		except BridgeException, msg:
+			print "Unable to create bridge:", msg
+		
 		self._execute_ifup()
+
 		
 
 	def _execute_ifup(self):		
@@ -151,14 +160,14 @@ class NetConf:
 	
 		
 	def _uninstall_ifup(self):
- 		path = os.path.join( Constants.PREFIX, "bin/blueman-ifup")
+ 		path = os.path.join( PREFIX, "bin/blueman-ifup")
  		f = open(path, "w");
  		f.write("#!/bin/bash\n")
  		f.write("MASQ=0\nIP=0\nDHCP=0\n\nif [ \"$1\" == \"pan0\" ]; then\n\tavahi-autoipd $1\nfi""")
  		f.close()
  		
  	def _install_ifup(self):
- 		path = os.path.join( Constants.PREFIX, "bin/blueman-ifup")
+ 		path = os.path.join( PREFIX, "bin/blueman-ifup")
  		f = open( path, "w" )
  		ifup = self._generate_ifup()
  		f.write(ifup)

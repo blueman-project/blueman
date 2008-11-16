@@ -25,7 +25,7 @@ BLUEMAN_PATH = "/apps/blueman"
 class Config(gobject.GObject):
 	__gsignals__ = {
 		#@param: self key value
-		'property-changed' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
+		'property-changed' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
 	}
 	
 	class props:
@@ -75,8 +75,9 @@ class Config(gobject.GObject):
 
 	
 	def value_changed(self, client, key, value):
-		name = os.path.basename(key)
-		self.emit("property-changed", name, self.get_value(name))
+		if os.path.dirname(key) == BLUEMAN_PATH + self.subdir:
+			name = os.path.basename(key)
+			self.emit("property-changed", name, self.get_value(name))
 	
 	def __init__(self, subdir=""):
 		self.subdir = subdir
@@ -88,7 +89,7 @@ class Config(gobject.GObject):
 		
 		self.props = Config.props(self)
 		
-		self.client.add_dir(BLUEMAN_PATH + self.subdir, gconf.CLIENT_PRELOAD_RECURSIVE)
+		self.client.add_dir(BLUEMAN_PATH + self.subdir, gconf.CLIENT_PRELOAD_NONE)
 		self.client.connect("value_changed", self.value_changed)
 
 
