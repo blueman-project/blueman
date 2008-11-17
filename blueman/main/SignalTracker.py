@@ -26,33 +26,28 @@ class SignalTracker:
 		self._signals = []
 		
 	def Handle(self, *args, **kwargs):
-		auto = False
-
-		if not type(args[0]) == str:
-			auto = True
+		auto = not type(args[0]) == str:
 
 		if auto:
 			obj = args[0]
 			args = args[1:]
 			if isinstance(obj, BlueZInterface):
 				objtype = "bluez"
-				obj.HandleSignal(*args)
 			elif isinstance(obj, gobject.GObject):
 				objtype = "gobject"
-				args = obj.connect(*args)
 			elif isinstance(obj, dbus.proxies.Interface):
 				objtype = "dbus"
-				obj.bus.add_signal_receiver(*args, **kwargs)
 		else:
 			objtype = args[0]
 			obj = args[1]
 			args = args[2:]
-			if objtype == "bluez":
-				obj.HandleSignal(*args)
-			elif objtype == "gobject":
-				args = obj.connect(*args)
-			elif objtype == "dbus":
-				obj.bus.add_signal_receiver(*args, **kwargs)
+		
+		if objtype == "bluez":
+			obj.HandleSignal(*args)
+		elif objtype == "gobject":
+			args = obj.connect(*args)
+		elif objtype == "dbus":
+			obj.bus.add_signal_receiver(*args, **kwargs)
 
 		self._signals.append((objtype, obj, args, kwargs))
 		

@@ -1,0 +1,114 @@
+#!/usr/bin/python
+
+# Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
+# Copyright (C) 2008 Tadas Dailyda <tadas at dailyda dot com>
+#
+# Licensed under the GNU General Public License Version 3
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# 
+
+import gtk
+import dbus
+import dbus.glib
+import gobject
+import os.path
+
+#support running uninstalled
+_dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if os.path.exists(os.path.join(_dirname,"ChangeLog")):
+	sys.path.insert(0, _dirname)
+	
+import blueman.bluez as Bluez
+from blueman.main.SignalTracker import SignalTracker
+	
+import gettext
+_ = gettext.gettext
+
+class BluemanAdapters:
+	def __init__(self):
+		self.bus = dbus.SystemBus()
+		self.bus.watch_name_owner('org.bluez', self.on_dbus_name_owner_change)
+		
+		builder = gtk.Builder()
+		builder.add_from_file(UI_PATH +"/adapters.ui")
+		self.dialog = builder.get_object("dialog")
+		self.dialog.connect("response", self.on_dialog_response)
+		self.notebook = builder.get_object("notebook")
+		self.tabs = []
+		
+		try:
+			self.signals = SignalTracker()
+			self.manager = Bluez.Manager('gobject')
+			self.signals.Handle("bluez", self.Manager, self.on_adapter_removed, 'AdapterRemoved')
+			self.signals.Handle("bluez", self.Manager, self.on_adapter_added, 'AdapterAdded')
+			adapters = self.manager.ListAdapters()
+			for adapter in adapters:
+				self.build_adapter_tab(adapter)
+		except Exception, e:
+			print e
+			self.manager = None
+			#fixme: show error dialog and exit
+			
+		#todo: activate a particular tab according to command line option
+		self.dialog.show()
+		gtk.main()
+		
+	def on_dialog_response(self, dialog, response_id):
+		#todo: save changes if any
+		gtk.main_quit()
+	
+	def on_adapter_removed(self, adapter_path):
+		adapter_name = os.path.basename(adapter_path)
+		adapter_tab = self.tabs[adapter_name]
+		#todo: remove tab if not active. If active, show a warning and disable controls
+	
+	def on_adapter_added(self, adapter_path):
+		adapter_name = os.path.basename(adapter_path)
+		self.build_adapter_tab(self, Bluez.Adapter(adapter_path))
+	
+	def on_dbus_name_owner_change(self, owner):
+		print 'org.bluez owner changed to ', owner
+		if owner == '':
+			self.Manager = None
+			#fixme: show error dialog and exit
+	
+	def build_adapter_tab(self, adapter):
+		def on_hidden_toggle(radio):
+			adapter_settings.discoverable = False
+		def on_always_toggle(radio):
+			adapter_settings.discoverable = True
+			adapter_settings.discoverable_timeout = 0
+		def on_temporary_toggle(radio):
+			adapter_settings.discoverable = True
+			adapter_settings.discoverable_timeout = 0
+		def on_scale_format_value(scale, value):
+			pass
+		
+		adapter_settings = []
+		builder = gtk.Builder()
+		builder.add_from_file(UI_PATH +"/adapters-tab.ui")
+		vbox = builder.get_object("vbox1")
+		hidden_radio = builder.get_object("hidden1")
+		adapter_settings.signals.Handle("gobject", hidden_radio, on_hidden_toggle,"toggled")
+		always_radio = builder.get_object("always")
+		adapter_settings.signals.Handle("gobject", always_radio, on_always_toggle,"toggled")
+		temporary_radio = builder.get_object("temporary")
+		adapter_settings.signals.Handle("gobject", temporary_radio, on_temporary_toggle,"toggled")
+		
+		hscale = builder.get_object("hscale")
+		adapter_settings.signals.Handle("gobject", hscale, on_scale_format_value, "format-value")
+		
+		#todo: setup all controls
+		#todo: add a tab to notebook
