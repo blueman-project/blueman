@@ -112,8 +112,8 @@ def check_single_instance(id, unhide_func=None):
 		if unhide_func:
 			unhide_func()
 
-	if unhide_func:
-		signal.signal(signal.SIGUSR1, handler)
+
+	signal.signal(signal.SIGUSR1, handler)
 	
 	lockfile = os.path.expanduser("/tmp/%s-%s" % (id, os.getuid()))
 	if os.path.exists(lockfile):

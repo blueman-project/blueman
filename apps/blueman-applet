@@ -55,6 +55,8 @@ class BluemanApplet:
 		if not pynotify.init("Blueman"):
 			print 'Error: Failed to init pynotify'
 		
+		check_single_instance("blueman-applet")
+		
 		self.Signals = SignalTracker()
 		self.Agents = []
 		self.status_icon = gtk.StatusIcon()
