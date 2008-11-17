@@ -163,7 +163,7 @@ class DeviceList(GenericList):
 		
 	def monitor_power_levels(self, device):
 		def update(iter, device, cinfo):
-			if not self.iter_is_valid(iter) or not device.Connected:
+			if not self.find_device(device) or not device.Connected:
 				print "stopping monitor"
 				cinfo.deinit()
 				return False
@@ -405,7 +405,7 @@ class DeviceList(GenericList):
 				iter = i.iter
 				device = self.get(iter, "device")["device"]
 				self.RemoveDevice(device, iter)
-			self.liststore.clear()
+			#self.liststore.clear()
 			self.emit("device-selected", None, None)
 	
 

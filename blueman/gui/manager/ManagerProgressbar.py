@@ -48,7 +48,6 @@ class ManagerProgressbar(gobject.GObject):
 		self.hbox = hbox = blueman.Builder.get_object("statusbar1")
 		
 		self.progressbar = gtk.ProgressBar()
-		self.seperator = gtk.VSeparator()
 		
 
 		self.button = gtk.image_new_from_pixbuf(get_icon("gtk-stop", 16))
@@ -69,11 +68,12 @@ class ManagerProgressbar(gobject.GObject):
 
 		hbox.pack_end(eventbox, True, False)
 		hbox.pack_end(self.progressbar, False, False)
-		#hbox.pack_end(self.seperator, False, False)
+
 		if ManagerProgressbar.__instances__ != []:
-			ManagerProgressbar.__instances__[-1].hbox.props.visible = False
-		hbox.show_all()
+			print "hiding", ManagerProgressbar.__instances__[-1]
+			ManagerProgressbar.__instances__[-1].hide()
 		
+		self.show()
 		if not self.cancellable:
 			self.eventbox.props.visible = False
 		
@@ -81,6 +81,17 @@ class ManagerProgressbar(gobject.GObject):
 		self.finalized = False
 		
 		ManagerProgressbar.__instances__.append(self)
+		
+	def show(self):
+		self.progressbar.props.visible = True
+		self.eventbox.props.visible = True
+		self.button.props.visible = True
+		
+	def hide(self):
+		self.progressbar.props.visible = False
+		self.eventbox.props.visible = False
+		self.button.props.visible = False
+		
 		
 	def finalize(self):
 		if not self.finalized:
@@ -99,7 +110,7 @@ class ManagerProgressbar(gobject.GObject):
 						ManagerProgressbar.__instances__.pop()
 					else:
 						#show last active progress bar
-						ManagerProgressbar.__instances__.hbox.props.visible = True
+						inst.show()
 						break
 		
 		
