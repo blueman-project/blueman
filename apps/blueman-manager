@@ -134,6 +134,8 @@ class Blueman:
 		adapter = self.List.Adapter
 		
 		prog = ManagerProgressbar(self, text=_("Adding"))
+		prog.connect("cancelled", lambda x: self.List.Adapter.GetInterface().CancelDeviceCreation(device.Address))
+		
 		prog.start()
 		adapter.CreateDevice(address, reply_handler=ok, error_handler=err)
 		
@@ -170,6 +172,7 @@ class Blueman:
 		adapter = self.List.Adapter
 		
 		prog = ManagerProgressbar(self, text=_("Bonding"))
+		prog.connect("cancelled", lambda x: self.List.Adapter.GetInterface().CancelDeviceCreation(device.Address))
 		prog.start()
 		
 		name = adapter_path_to_name(self.List.Adapter.GetObjectPath())

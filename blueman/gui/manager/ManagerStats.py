@@ -79,7 +79,7 @@ class ManagerStats:
 		self.downarrow.set_tooltip_text(_("Total data received and rate of transmission"))
 		self.downarrow.set_from_stock(gtk.STOCK_GO_DOWN, 1)
 		
-		hbox = blueman.Builder.get_object("statusbar2")
+		self.hbox = hbox = blueman.Builder.get_object("statusbar2")
 
 		hbox.pack_start(self.uparrow, True, False)
 		hbox.pack_start(self.up_rate, False, False)
@@ -129,7 +129,7 @@ class ManagerStats:
 	
 	
 	def _update(self):
-		if True: #get_toplevel().visible():
+		if self.hbox.parent.parent.parent.props.visible:
 
 			if self.hci != None:
 				devinfo = Lib.device_info(self.hci)

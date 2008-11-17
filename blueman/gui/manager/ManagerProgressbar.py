@@ -41,7 +41,7 @@ class ManagerProgressbar(gobject.GObject):
 			self.emit("cancelled")
 		
 		gobject.GObject.__init__(self)
-		
+		self.Blueman = blueman
 		
 		self.cancellable = cancellable
 		
@@ -83,6 +83,8 @@ class ManagerProgressbar(gobject.GObject):
 		ManagerProgressbar.__instances__.append(self)
 		
 	def show(self):
+		if not self.Blueman.Config.props.show_statusbar:
+			self.Blueman.Builder.get_object("statusbar").props.visible = True
 		self.progressbar.props.visible = True
 		self.eventbox.props.visible = True
 		self.button.props.visible = True
@@ -101,7 +103,7 @@ class ManagerProgressbar(gobject.GObject):
 			self.hbox.remove(self.progressbar)
 			#self.hbox.remove(self.seperator)
 			self.finalized = True
-			print ManagerProgressbar.__instances__
+			
 			if ManagerProgressbar.__instances__[-1] == self:
 				ManagerProgressbar.__instances__.pop()
 				#remove all finalized instances
@@ -112,6 +114,10 @@ class ManagerProgressbar(gobject.GObject):
 						#show last active progress bar
 						inst.show()
 						break
+						
+			if ManagerProgressbar.__instances__ == []:
+				if not self.Blueman.Config.props.show_statusbar:
+					self.Blueman.Builder.get_object("statusbar").props.visible = False
 		
 		
 	def set_cancellable(self, b, hide=False):

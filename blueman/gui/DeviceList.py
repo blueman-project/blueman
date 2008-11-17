@@ -281,12 +281,10 @@ class DeviceList(GenericList):
 	
 	#searches for existing devices in the list
 	def find_device(self, device):
-		print "find"
    		for i in range(len(self.liststore)):
    			row = self.get(i, "device")
    			if device.Address == row["device"].Address:
    				return self.get_iter(i)
-   		
    		return None
    		
    	def find_device_by_path(self, path):
