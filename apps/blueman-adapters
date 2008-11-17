@@ -74,12 +74,17 @@ class BluemanAdapters:
 		gtk.main()
 		
 	def on_dialog_response(self, dialog, response_id):
-		for settings in self.tabs:
+		for hci, settings in self.tabs.iteritems():
 			if settings['changed']:
-				pass
 				#save changes
-		#unconnect signals and destroy all tabs
-		gtk.main_quit()
+				adapter = settings['adapter']
+				adapter.SetProperty('Name', settings['name'])
+				adapter.SetProperty('Discoverable', settings['discoverable'])
+				timeout = int(settings['discoverable_timeout']*60)
+				adapter.SetProperty('DiscoverableTimeout', timeout)
+				settings['changed'] = False
+		if response_id != gtk.RESPONSE_APPLY:
+			gtk.main_quit()
 	
 	def on_adapter_added(self, adapter_path):
 		def on_property_changed(name, value):
@@ -148,6 +153,7 @@ class BluemanAdapters:
 			adapter_settings['changed'] = True
 		
 		props = adapter.GetProperties()
+		adapter_settings['adapter'] = adapter
 		adapter_settings['signals'] = SignalTracker()
 		adapter_settings['signals'].Handle(adapter, on_property_changed, "PropertyChanged")
 		adapter_settings['address'] = props['Address']
