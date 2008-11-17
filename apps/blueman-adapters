@@ -40,13 +40,14 @@ import gettext
 _ = gettext.gettext
 
 class BluemanAdapters:
-	def __init__(self):
+	def __init__(self, selected_hci_dev):
 		self.bus = dbus.SystemBus()
 		self.bus.watch_name_owner('org.bluez', self.on_dbus_name_owner_change)
 		
 		builder = gtk.Builder()
 		builder.add_from_file(UI_PATH +"/adapters.ui")
 		self.dialog = builder.get_object("dialog")
+		self.dialog.props.icon_name = "blueman"
 		self.dialog.connect("response", self.on_dialog_response)
 		self.notebook = builder.get_object("notebook")
 		self.tabs = {}
@@ -63,7 +64,12 @@ class BluemanAdapters:
 			self.manager = None
 			#fixme: show error dialog and exit
 			
-		#todo: activate a particular tab according to command line option
+		#activate a particular tab according to command line option
+		if selected_hci_dev in self.tabs:
+			hci_dev_num = int(selected_hci_dev[3:])
+			self.notebook.set_current_page(hci_dev_num)
+		else:
+			print 'Error: the selected adapter does not exist'
 		self.dialog.show()
 		gtk.main()
 		
@@ -207,4 +213,9 @@ class BluemanAdapters:
 		self.notebook.remove_page(hci_dev_num)
 		#leave actual tab contents intact in case adapter becomes present once again
 
-BluemanAdapters()
+if __name__ == '__main__':
+	adapter = None
+	if len(sys.argv) > 1:
+		adapter = sys.argv[1]
+	BluemanAdapters(adapter)
+
