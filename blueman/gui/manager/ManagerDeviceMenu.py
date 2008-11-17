@@ -84,7 +84,12 @@ class ManagerDeviceMenu(gtk.Menu):
 	
 	def set_op(self, device, message):
 		ManagerDeviceMenu.__ops__[device.GetObjectPath()] = message
-		
+		for inst in ManagerDeviceMenu.__instances__:
+			print "op: regenerating instance", inst
+			if inst.SelectedDevice == self.SelectedDevice and not (inst.is_popup and not inst.props.visible):
+				inst.Generate()
+
+	
 	def get_op(self, device):
 		try:
 			return ManagerDeviceMenu.__ops__[device.GetObjectPath()]
@@ -95,23 +100,15 @@ class ManagerDeviceMenu(gtk.Menu):
 		del ManagerDeviceMenu.__ops__[device.GetObjectPath()]
 		for inst in ManagerDeviceMenu.__instances__:
 			print "op: regenerating instance", inst
-			if inst.SelectedDevice == self.SelectedDevice and inst != self:
+			if inst.SelectedDevice == self.SelectedDevice and not (inst.is_popup and not inst.props.visible):
 				inst.Generate()
-				return
-				
-		
-		
-	
+
 		
 	def service_property_changed(self, key, value):
 		if key == "Connected":
 			self.Generate()
 		
-		
-		
 
-		
-		
 	def on_connect(self, item, device, service_id, *args):
 		def prog_msg(msg):
 			prog.stop()
@@ -128,7 +125,7 @@ class ManagerDeviceMenu(gtk.Menu):
 			print "success", args2
 			prog_msg(_("Success!"))
 			self.unset_op(device)
-			self.Generate()
+
 			
 		def fail(*args):
 			
@@ -136,18 +133,18 @@ class ManagerDeviceMenu(gtk.Menu):
 			
 			self.unset_op(device)
 			print "fail", args
-			self.Generate()
+
 			
 		def cancel(prog, *args):
 			try:
 				svc.Disconnect(*args)
 			except:
 				pass
-			prog_msg("Cancelled")
+			prog_msg(_("Cancelled"))
 			self.unset_op(device)
 		
 		svc = device.Services[service_id]
-		self.set_op(device, "Connecting...")
+		self.set_op(device, _("Connecting..."))
 		prog = ManagerProgressbar(self.Blueman, False)
 		
 		if service_id == "network":
@@ -177,7 +174,6 @@ class ManagerDeviceMenu(gtk.Menu):
 			
 			
 		prog.start()
-		self.Generate()
 		
 	def on_disconnect(self, item, device, service_id, *args):
 		svc = device.Services[service_id]
@@ -231,12 +227,12 @@ class ManagerDeviceMenu(gtk.Menu):
 		
 		
 		if device.Fake:
-			item = create_menuitem("Add Device", get_icon("gtk-add", 16))
+			item = create_menuitem(_("Add Device"), get_icon("gtk-add", 16))
 			self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.add_device(device))
 			item.show()
 			self.append(item)
 			
-			item = create_menuitem("Bond", get_icon("gtk-dialog-authentication", 16))
+			item = create_menuitem(_("Bond"), get_icon("gtk-dialog-authentication", 16))
 			self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.bond(device))
 			self.append(item)
 			item.show()
@@ -299,7 +295,7 @@ class ManagerDeviceMenu(gtk.Menu):
 							if dev["state"] == "connected":
 								devname = "/dev/rfcomm%s" % dev["id"]
 							
-								item = create_menuitem(_("Disconnect %s" % devname), get_icon("gtk-disconnect", 16))
+								item = create_menuitem(_("Disconnect %s") % devname, get_icon("gtk-disconnect", 16))
 								self.Signals.Handle("gobject", item, "activate", self.on_disconnect, device, name, devname)
 								sub.append(item)
 								item.show()
@@ -438,12 +434,36 @@ class ManagerDeviceMenu(gtk.Menu):
 			self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.setup(device))
 			item.show()
 			
+			def update_services(item):
+				def prog_msg(msg):
+					prog.stop()
+					prog.set_label(msg)
+					prog.set_cancellable(False)
+					self.unset_op(device)
+					gobject.timeout_add(1500, prog.finalize)
+				
+				def reply(*args):
+					prog_msg(_("Success!"))
+					
+				def error(*args):
+					print "err", args
+					prog_msg(_("Fail"))
+				prog = ManagerProgressbar(self.Blueman, False, _("Refreshing"))
+				prog.start()
+				self.set_op(device, _("Refreshing Services..."))
+				device.GetInterface().DiscoverServices("", reply_handler=reply, error_handler=error)
+			
+			item = create_menuitem(_("Refresh Services"), get_icon("gtk-refresh", 16))
+			self.append(item)
+			self.Signals.Handle(item, "activate", update_services)
+			item.show()
+			
 			item = gtk.SeparatorMenuItem()
 			item.show()
 			self.append(item)
 			
 			item = create_menuitem(_("Remove..."), get_icon("gtk-delete", 16))
-			self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.remove(device))
+			self.Signals.Handle(item, "activate", lambda x: self.Blueman.remove(device))
 			self.append(item)
 			item.show()
 			
@@ -455,7 +475,7 @@ class ManagerDeviceMenu(gtk.Menu):
 			self.append(item)
 			item.show()
 			if device.Connected:
-				self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.disconnect(device))
+				self.Signals.Handle(item, "activate", lambda x: self.Blueman.disconnect(device))
 
 			else:
 				item.props.sensitive = False

@@ -38,7 +38,10 @@ class Device:
 		print "caching initial properties"
 		self.Properties = self.Device.GetProperties()
 
-		
+		self.init_services()
+			
+	
+	def init_services(self):
 		if not "Fake" in self.Properties:
 			self.Fake = False
 			services = self.Device.ListServiceInterfaces()
@@ -49,10 +52,12 @@ class Device:
 				self.Services[name] = service
 
 				
-			self.Signals.Handle("bluez", self.Device, self.property_changed, "PropertyChanged")			
-			
+			self.Signals.Handle(self.Device, self.property_changed, "PropertyChanged")
+	
 	def property_changed(self, key, value):
 		self.Properties[key] = value
+		if key == "UUIDs":
+			self.init_services()
 			
 	def Destroy(self):
 		self.Signals.DisconnectAll()

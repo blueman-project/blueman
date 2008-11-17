@@ -21,6 +21,8 @@ import gobject
 import gtk
 import gtk.gdk
 from blueman.Functions import get_icon
+import gettext
+_ = gettext.gettext
 
 class ManagerProgressbar(gobject.GObject):
 
@@ -28,7 +30,7 @@ class ManagerProgressbar(gobject.GObject):
 		'cancelled' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
 	}
 	__instances__ = []
-	def __init__(self, blueman, cancellable=True, text="Connecting"):
+	def __init__(self, blueman, cancellable=True, text=_("Connecting")):
 		def on_enter(evbox, event):
 			c = gtk.gdk.Cursor( gtk.gdk.HAND2)
 			self.window.window.set_cursor(c)
@@ -54,6 +56,7 @@ class ManagerProgressbar(gobject.GObject):
 	
 		self.eventbox = eventbox = gtk.EventBox()
 		eventbox.add(self.button)
+		eventbox.props.tooltip_text = _("Cancel Operation")
 		eventbox.connect("enter-notify-event", on_enter)
 		eventbox.connect("leave-notify-event", on_leave)
 		eventbox.connect("button-press-event", on_clicked)
@@ -75,7 +78,7 @@ class ManagerProgressbar(gobject.GObject):
 		
 		self.show()
 		if not self.cancellable:
-			self.eventbox.props.visible = False
+			self.eventbox.props.sensitive = False
 		
 		self.gsource = None
 		self.finalized = False
