@@ -22,46 +22,49 @@ import gobject
 
 class SignalTracker:
 
-	def __init__(self, auto=False):
+	def __init__(self):
 		self._signals = []
-		self._auto = auto
 		
 	def Handle(self, *args, **kwargs):
-		
-		if self._auto:
+		auto = False
+
+		if not type(args[0]) == str:
+			auto = True
+
+		if auto:
 			obj = args[0]
 			args = args[1:]
 			if isinstance(obj, BlueZInterface):
-				type = "bluez"
+				objtype = "bluez"
 				obj.HandleSignal(*args)
 			elif isinstance(obj, gobject.GObject):
-				type = "gobject"
+				objtype = "gobject"
 				args = obj.connect(*args)
 			elif isinstance(obj, dbus.proxies.Interface):
-				type = "dbus"
+				objtype = "dbus"
 				obj.bus.add_signal_receiver(*args, **kwargs)
 		else:
-			type = args[0]
+			objtype = args[0]
 			obj = args[1]
 			args = args[2:]
-			if type == "bluez":
+			if objtype == "bluez":
 				obj.HandleSignal(*args)
-			elif type == "gobject":
+			elif objtype == "gobject":
 				args = obj.connect(*args)
-			elif type == "dbus":
+			elif objtype == "dbus":
 				obj.bus.add_signal_receiver(*args, **kwargs)
-			
-		self._signals.append((type, obj, args, kwargs))
+
+		self._signals.append((objtype, obj, args, kwargs))
 		
 	def DisconnectAll(self):
 		for sig in self._signals:
 			
-			(type, obj, args, kwargs) = sig
-			if type == "bluez":
+			(objtype, obj, args, kwargs) = sig
+			if objtype == "bluez":
 				obj.UnHandleSignal(*args, **kwargs)
-			elif type == "gobject":
+			elif objtype == "gobject":
 				obj.disconnect(args)
-			elif type == "dbus":
+			elif objtype == "dbus":
 				obj.bus.remove_signal_receiver(*args, **kwargs)
 		
 		self._signals = []
