@@ -26,7 +26,7 @@ class SignalTracker:
 		self._signals = []
 		
 	def Handle(self, *args, **kwargs):
-		auto = not type(args[0]) == str:
+		auto = not type(args[0]) == str
 
 		if auto:
 			obj = args[0]
