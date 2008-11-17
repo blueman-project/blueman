@@ -223,6 +223,4 @@ class ManagerMenu:
 	def on_adapter_changed(self, List, path):
 		self.generate_adapter_menu()
 		
-		
 
-	#def 

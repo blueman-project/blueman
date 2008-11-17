@@ -27,6 +27,7 @@ class ManagerProgressbar(gobject.GObject):
 	__gsignals__ = {
 		'cancelled' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
 	}
+	__instances__ = []
 	def __init__(self, blueman, cancellable=True, text="Connecting"):
 		def on_enter(evbox, event):
 			c = gtk.gdk.Cursor( gtk.gdk.HAND2)
@@ -40,6 +41,7 @@ class ManagerProgressbar(gobject.GObject):
 			self.emit("cancelled")
 		
 		gobject.GObject.__init__(self)
+		
 		
 		self.cancellable = cancellable
 		
@@ -68,6 +70,8 @@ class ManagerProgressbar(gobject.GObject):
 		hbox.pack_end(eventbox, True, False)
 		hbox.pack_end(self.progressbar, False, False)
 		#hbox.pack_end(self.seperator, False, False)
+		if ManagerProgressbar.__instances__ != []:
+			ManagerProgressbar.__instances__[-1].hbox.props.visible = False
 		hbox.show_all()
 		
 		if not self.cancellable:
@@ -75,6 +79,8 @@ class ManagerProgressbar(gobject.GObject):
 		
 		self.gsource = None
 		self.finalized = False
+		
+		ManagerProgressbar.__instances__.append(self)
 		
 	def finalize(self):
 		if not self.finalized:
@@ -84,6 +90,17 @@ class ManagerProgressbar(gobject.GObject):
 			self.hbox.remove(self.progressbar)
 			#self.hbox.remove(self.seperator)
 			self.finalized = True
+			print ManagerProgressbar.__instances__
+			if ManagerProgressbar.__instances__[-1] == self:
+				ManagerProgressbar.__instances__.pop()
+				#remove all finalized instances
+				for inst in reversed(ManagerProgressbar.__instances__):
+					if inst.finalized:
+						ManagerProgressbar.__instances__.pop()
+					else:
+						#show last active progress bar
+						ManagerProgressbar.__instances__.hbox.props.visible = True
+						break
 		
 		
 	def set_cancellable(self, b, hide=False):
