@@ -101,6 +101,10 @@ class ManagerDeviceList(DeviceList):
 	
 	
 	def device_add_event(self, device):
+		if self.discovering:
+			self.PrependDevice(device)
+			return
+
 		if self.Blueman.Config.props.latest_last:
 			self.AppendDevice(device)
 		else:
