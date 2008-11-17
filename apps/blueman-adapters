@@ -23,7 +23,9 @@ import gtk
 import dbus
 import dbus.glib
 import gobject
+import pango
 import os.path
+import sys
 
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -31,6 +33,7 @@ if os.path.exists(os.path.join(_dirname,"ChangeLog")):
 	sys.path.insert(0, _dirname)
 	
 import blueman.bluez as Bluez
+from blueman.Constants import *
 from blueman.main.SignalTracker import SignalTracker
 	
 import gettext
@@ -46,27 +49,29 @@ class BluemanAdapters:
 		self.dialog = builder.get_object("dialog")
 		self.dialog.connect("response", self.on_dialog_response)
 		self.notebook = builder.get_object("notebook")
-		self.tabs = []
+		self.tabs = {}
 		
-		try:
-			self.signals = SignalTracker()
-			self.manager = Bluez.Manager('gobject')
-			self.signals.Handle("bluez", self.Manager, self.on_adapter_removed, 'AdapterRemoved')
-			self.signals.Handle("bluez", self.Manager, self.on_adapter_added, 'AdapterAdded')
-			adapters = self.manager.ListAdapters()
-			for adapter in adapters:
-				self.build_adapter_tab(adapter)
-		except Exception, e:
-			print e
-			self.manager = None
-			#fixme: show error dialog and exit
+		#try:
+		self.signals = SignalTracker()
+		self.manager = Bluez.Manager('gobject')
+		self.signals.Handle("bluez", self.manager, self.on_adapter_removed, 'AdapterRemoved')
+		self.signals.Handle("bluez", self.manager, self.on_adapter_added, 'AdapterAdded')
+		adapters = self.manager.ListAdapters()
+		for adapter in adapters:
+			self.add_to_notebook(adapter)
+		#except Exception, e:
+		#	print e
+		#	self.manager = None
+		#	#fixme: show error dialog and exit
 			
 		#todo: activate a particular tab according to command line option
+		self.notebook.show()
 		self.dialog.show()
 		gtk.main()
 		
 	def on_dialog_response(self, dialog, response_id):
 		#todo: save changes if any
+		#unconnect signals and destroy all tabs
 		gtk.main_quit()
 	
 	def on_adapter_removed(self, adapter_path):
@@ -85,30 +90,121 @@ class BluemanAdapters:
 			#fixme: show error dialog and exit
 	
 	def build_adapter_tab(self, adapter):
-		def on_hidden_toggle(radio):
-			adapter_settings.discoverable = False
-		def on_always_toggle(radio):
-			adapter_settings.discoverable = True
-			adapter_settings.discoverable_timeout = 0
-		def on_temporary_toggle(radio):
-			adapter_settings.discoverable = True
-			adapter_settings.discoverable_timeout = 0
-		def on_scale_format_value(scale, value):
-			pass
+		adapter_settings = {}
 		
-		adapter_settings = []
+		def on_hidden_toggle(radio):
+			if not radio.props.active:
+				return
+			print 'on_hidden_toggle'
+			adapter_settings['discoverable'] = False
+			print adapter_settings['discoverable']
+			hscale.set_sensitive(False)
+			hscale.set_value(0)
+			on_scale_format_value(hscale, 0)
+			adapter_settings['changed'] = True
+		def on_always_toggle(radio):
+			if not radio.props.active:
+				return
+			print 'on_always_toggle'
+			adapter_settings['discoverable'] = True
+			adapter_settings['discoverable_timeout'] = 0
+			hscale.set_sensitive(False)
+			hscale.set_value(0)
+			on_scale_format_value(hscale, 0)
+			adapter_settings['changed'] = True
+		def on_temporary_toggle(radio):
+			if not radio.props.active:
+				return
+			print 'on_temporary_toggle'
+			adapter_settings['discoverable'] = True
+			adapter_settings['discoverable_timeout'] = 3
+			hscale.set_sensitive(True)
+			hscale.set_value(adapter_settings['discoverable_timeout'])
+			on_scale_format_value(hscale, adapter_settings['discoverable_timeout'])
+			adapter_settings['changed'] = True
+		def on_scale_format_value(scale, value):
+			print adapter_settings['discoverable']
+			if value == 0:
+				if adapter_settings['discoverable']:
+					return _('always')
+				return _('hidden')
+			return gettext.ngettext('%d minute', '%d minutes', value) % (value)
+		def on_scale_value_changed(scale):
+			adapter_settings['discoverable_timeout'] = scale.get_value()
+			adapter_settings['changed'] = True
+		def on_name_changed(entry):
+			adapter_settings['name'] = entry.get_text()
+			adapter_settings['changed'] = True
+		
+		props = adapter.GetProperties()
+		adapter_settings['signals'] = SignalTracker()
+		#adapter_settings['signals'].Handle(adapter, "PropertyChanged", on_property_changed)
+		adapter_settings['address'] = props['Address']
+		adapter_settings['name'] = props['Name']
+		adapter_settings['discoverable'] = props['Discoverable']
+		#we use count timeout in minutes
+		adapter_settings['discoverable_timeout'] = props['DiscoverableTimeout']/60
+		adapter_settings['changed'] = False
+		print props['DiscoverableTimeout']
+		print adapter_settings['discoverable_timeout']
+		
 		builder = gtk.Builder()
 		builder.add_from_file(UI_PATH +"/adapters-tab.ui")
-		vbox = builder.get_object("vbox1")
-		hidden_radio = builder.get_object("hidden1")
-		adapter_settings.signals.Handle("gobject", hidden_radio, on_hidden_toggle,"toggled")
-		always_radio = builder.get_object("always")
-		adapter_settings.signals.Handle("gobject", always_radio, on_always_toggle,"toggled")
-		temporary_radio = builder.get_object("temporary")
-		adapter_settings.signals.Handle("gobject", temporary_radio, on_temporary_toggle,"toggled")
+		adapter_settings['vbox'] = builder.get_object("vbox1")
 		
 		hscale = builder.get_object("hscale")
-		adapter_settings.signals.Handle("gobject", hscale, on_scale_format_value, "format-value")
+		hscale.set_range(0, 30)
+		hscale.set_value(adapter_settings['discoverable_timeout'])
+		adapter_settings['signals'].Handle(hscale, "format-value", on_scale_format_value)
+		adapter_settings['signals'].Handle(hscale, "value-changed", on_scale_value_changed)
 		
-		#todo: setup all controls
-		#todo: add a tab to notebook
+		hidden_radio = builder.get_object("hidden1")
+		if not adapter_settings['discoverable']:
+			hidden_radio.set_active(True)
+		adapter_settings['signals'].Handle(hidden_radio, "toggled", on_hidden_toggle)
+		always_radio = builder.get_object("always")
+		if adapter_settings['discoverable'] and adapter_settings['discoverable_timeout'] == 0:
+			always_radio.set_active(True)
+		adapter_settings['signals'].Handle(always_radio, "toggled", on_always_toggle)
+		temporary_radio = builder.get_object("temporary")
+		if adapter_settings['discoverable'] and adapter_settings['discoverable_timeout'] > 0:
+			temporary_radio.set_active(True)
+		adapter_settings['signals'].Handle(temporary_radio, "toggled", on_temporary_toggle)
+		
+		name_entry = builder.get_object("name_entry")
+		name_entry.set_text(adapter_settings['name'])
+		adapter_settings['signals'].Handle(name_entry, "changed", on_name_changed)
+		
+		return adapter_settings
+		
+	def get_tab_label(self, hci_dev):
+		name = self.tabs[hci_dev]['name']
+		hci_dev_num = int(hci_dev[3:])
+		if name == '':
+			name = _('Adapter')+' %d' % (hci_dev_num+1)
+		label = gtk.Label(name)
+		label.set_max_width_chars(20)
+		label.set_ellipsize(pango.ELLIPSIZE_END)
+		
+		return label
+	
+	def add_to_notebook(self, adapter):
+		hci_dev = os.path.basename(adapter.GetObjectPath())
+		hci_dev_num = int(hci_dev[3:])
+		
+		if not hci_dev in self.tabs:
+			self.tabs[hci_dev] = self.build_adapter_tab(adapter)
+		else:
+			#might need to update settings at this point
+			pass
+		settings = self.tabs[hci_dev]
+		self.notebook.insert_page(settings['vbox'], self.get_tab_label(hci_dev), hci_dev_num)
+	
+	def remove_from_notebook(self, adapter):
+		hci_dev = os.path.basename(adapter.GetObjectPath())
+		hci_dev_num = int(hci_dev[3:])
+		
+		self.notebook.remove_page(hci_dev_num)
+		#leave actual tab contents intact in case adapter becomes present once again
+
+BluemanAdapters()

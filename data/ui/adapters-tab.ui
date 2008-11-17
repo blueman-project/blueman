@@ -63,7 +63,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkHScale" id="hscale1">
+          <object class="GtkHScale" id="hscale">
             <property name="visible">True</property>
             <property name="sensitive">False</property>
             <property name="can_focus">True</property>
@@ -97,9 +97,11 @@
           </packing>
         </child>
         <child>
-          <object class="GtkEntry" id="entry1">
+          <object class="GtkEntry" id="name_entry">
+            <property name="width_request">240</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
+            <property name="max_length">248</property>
           </object>
           <packing>
             <property name="position">1</property>

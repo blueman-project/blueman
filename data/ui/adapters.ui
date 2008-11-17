@@ -5,7 +5,8 @@
   <object class="GtkDialog" id="dialog">
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Bluetooth adapter preferences</property>
-    <property name="icon">blueman</property>
+    <property name="resizable">False</property>
+    <property name="window_position">center</property>
     <property name="type_hint">normal</property>
     <property name="has_separator">False</property>
     <child internal-child="vbox">
@@ -31,6 +32,7 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_stock">True</property>
+                <property name="response_id">0</property>
                 <property name="label" translatable="yes">gtk-apply</property>
               </object>
               <packing>
@@ -43,6 +45,7 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_stock">True</property>
+                <property name="response_id">0</property>
                 <property name="label" translatable="yes">gtk-close</property>
               </object>
               <packing>
