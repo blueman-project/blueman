@@ -402,7 +402,7 @@ class DeviceList(GenericList):
 				iter = i.iter
 				device = self.get(iter, "device")["device"]
 				self.RemoveDevice(device, iter)
-			#self.liststore.clear()
+			self.liststore.clear()
 			self.emit("device-selected", None, None)
 	
 

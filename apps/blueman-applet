@@ -59,9 +59,7 @@ class BluemanApplet:
 		check_single_instance("blueman-applet")
 		
 		
-		self.disc_items = []
-		self.disc_items.append(gtk.SeparatorMenuItem())
-		self.disc_items.append(create_menuitem(_('Make Discoverable'), get_icon("gtk-search", 16)))
+		self.disc_item = create_menuitem(_('Make Discoverable'), get_icon("gtk-search", 16))
 		
 		
 		self.Signals = SignalTracker()
@@ -136,6 +134,9 @@ class BluemanApplet:
 			
 	def build_popup_menu(self):
 		menu_items = []
+		menu_items += [self.disc_item]
+		menu_items += [gtk.SeparatorMenuItem()]
+		
 		menu_items += [create_menuitem(_('Setup new device')+'...', get_icon("gtk-new", 16))]
 		menu_items[-1].connect('activate', self.on_setup_new)
 		menu_items += [create_menuitem(_('Send files to device')+'...', get_icon("blueman-send-file", 16))]
@@ -154,9 +155,6 @@ class BluemanApplet:
 		menu_items[-1].connect('activate', self.on_local_services)
 		
 		
-		menu_items += [self.disc_items[0]]
-		
-		menu_items += [self.disc_items[1]]
 		
 		menu_items += [gtk.SeparatorMenuItem()]
 		menu_items += [gtk.ImageMenuItem(gtk.STOCK_ABOUT)]

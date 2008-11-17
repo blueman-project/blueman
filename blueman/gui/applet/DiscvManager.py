@@ -19,6 +19,8 @@
 
 from blueman.main.SignalTracker import SignalTracker
 import gobject
+import gettext
+_ = gettext.gettext
 
 class DiscvManager(SignalTracker):
 
@@ -30,7 +32,8 @@ class DiscvManager(SignalTracker):
 			
 		self.Handle(self.Applet.Manager, self.on_default_adapter_changed, "DefaultAdapterChanged")
 		
-		self.Applet.disc_items[1].connect("activate", self.on_set_discoverable)
+		self.Applet.disc_item.connect("activate", self.on_set_discoverable)
+		self.Applet.disc_item.props.tooltip_text = _("Make the default adapter visible for 3 minutes")
 		
 		self.init_adapter()
 		self.update_menuitems()
@@ -80,13 +83,12 @@ class DiscvManager(SignalTracker):
 			props = self.adapter.GetProperties()
 		except:
 			for item in self.Applet.disc_items:
-				item.props.visible = False
+				self.Applet.disc_item.props.visible = False
 		else:
 			if not props["Discoverable"] or props["DiscoverableTimeout"] > 0:
-				for item in self.Applet.disc_items:
-					item.props.visible = True
+				self.Applet.disc_item.props.visible = True
+
 			else:
-				for item in self.Applet.disc_items:
-					item.props.visible = False
+				self.Applet.disc_item.props.visible = False
 		
 		
