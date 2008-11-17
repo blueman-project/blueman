@@ -163,7 +163,7 @@ class DeviceList(GenericList):
 		
 	def monitor_power_levels(self, device):
 		def update(iter, device, cinfo):
-			if not self.find_device(device) or not device.Connected:
+			if not device.Connected or not self.find_device(device):
 				print "stopping monitor"
 				cinfo.deinit()
 				return False
