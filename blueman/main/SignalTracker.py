@@ -16,6 +16,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
+from blueman.bluez.BlueZInterface import BlueZInterface
+import dbus
+import gobject
 
 class SignalTracker:
 
@@ -45,3 +48,17 @@ class SignalTracker:
 		
 		self._signals = []
 
+class AutoSignalTracker(SignalTracker):
+	
+	def Handle(self, obj, *args, **kwargs):
+		if isinstance(obj, BlueZInterface):
+			SignalTracker.Handle(self, "bluez", *args, **kwargs)
+		elif isinstance(obj, gobject.GObject):
+			SignalTracker.Handle(self, "gobject", *args, **kwargs)
+		elif isinstance(obj, dbus.proxies.Interface):
+			SignalTracker.Handle("dbus", *args, **kwargs)
+		
+		
+		
+		
+		
