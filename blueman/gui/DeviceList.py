@@ -281,11 +281,10 @@ class DeviceList(GenericList):
 	
 	#searches for existing devices in the list
 	def find_device(self, device):
-		props1 = device.GetProperties()
+		print "find"
    		for i in range(len(self.liststore)):
    			row = self.get(i, "device")
-   			props2 = row["device"].GetProperties()
-   			if props1["Address"] == props2["Address"]:
+   			if device.Address == row["device"].Address:
    				return self.get_iter(i)
    		
    		return None
