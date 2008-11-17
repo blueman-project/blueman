@@ -74,7 +74,10 @@ class BluemanAdapters:
 		gtk.main()
 		
 	def on_dialog_response(self, dialog, response_id):
-		#todo: save changes if any
+		for settings in self.tabs:
+			if settings['changed']:
+				pass
+				#save changes
 		#unconnect signals and destroy all tabs
 		gtk.main_quit()
 	

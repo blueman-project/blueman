@@ -32,7 +32,6 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_stock">True</property>
-                <property name="response_id">0</property>
                 <property name="label" translatable="yes">gtk-apply</property>
               </object>
               <packing>
@@ -45,7 +44,6 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_stock">True</property>
-                <property name="response_id">0</property>
                 <property name="label" translatable="yes">gtk-close</property>
               </object>
               <packing>
@@ -61,5 +59,9 @@
         </child>
       </object>
     </child>
+	<action-widgets>
+      <action-widget response="-10">apply</action-widget>
+      <action-widget response="-7">close</action-widget>
+    </action-widgets>
   </object>
 </interface>
