@@ -252,7 +252,7 @@ class ManagerDeviceMenu(gtk.Menu):
 			
 			
 			uuids = device.UUIDs
-			
+			print device.Services
 			
 			for name, service in device.Services.iteritems():
 				if name == "serial":
@@ -355,11 +355,11 @@ class ManagerDeviceMenu(gtk.Menu):
 					sprops = service.GetProperties()
 					
 					if sprops["Connected"]:
-						item = create_menuitem(_("Disconnect Headset Service"), get_icon("audio", 16))
-						self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name)
-					else:
-						item = create_menuitem(_("Connect Headset Service"), get_icon("audio", 16))
+						item = create_menuitem(_("Disconnect Headset Service"), get_icon("blueman-handsfree", 16))
 						self.Signals.Handle("gobject", item, "activate", self.on_disconnect, device, name)
+					else:
+						item = create_menuitem(_("Connect Headset Service"), get_icon("blueman-handsfree", 16))
+						self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name)
 					item.show()
 					self.append(item)
 					
@@ -368,11 +368,11 @@ class ManagerDeviceMenu(gtk.Menu):
 					sprops = service.GetProperties()
 					
 					if sprops["Connected"]:
-						item = create_menuitem(_("Disconnect A2DP Service"), get_icon("audio", 16))
-						self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name)
-					else:
-						item = create_menuitem(_("Connect A2DP Service"), get_icon("audio", 16))
+						item = create_menuitem(_("Disconnect A2DP Service"), get_icon("blueman-headset", 16))
 						self.Signals.Handle("gobject", item, "activate", self.on_disconnect, device, name)
+					else:
+						item = create_menuitem(_("Connect A2DP Service"), get_icon("blueman-headset", 16))
+						self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name)
 					item.show()
 					self.append(item)
 					

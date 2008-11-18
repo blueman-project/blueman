@@ -205,6 +205,13 @@ class ManagerDeviceList(DeviceList):
 				rssi_perc = 50 + (rssi / 127 / 2 * 100)
 				tpl_perc = 50 + (tpl / 127 / 2 * 100)
 				lq_perc = lq / 255 * 100
+				
+				if lq_perc < 10:
+					lq_perc = 10
+				if rssi_perc < 10:
+					rssi_perc = 10
+				if tpl_perc < 10:
+					tpl_perc = 10
 
 				self.set(iter,  rssi_pb=get_icon("blueman-rssi-%s" % rnd(rssi_perc), 48),
 						lq_pb=get_icon("blueman-lq-%s" % rnd(lq_perc), 48),
