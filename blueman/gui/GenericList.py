@@ -181,7 +181,7 @@ class GenericList(gtk.TreeView):
 		self.liststore.clear()
 		
 	def iter_is_valid(self, iter):
-		return self.get_model().iter_is_valid(iter)
+		raise Exception("Deprecated")
 		
 	def compare(self, iter_a, iter_b):
 		if iter_a != None and iter_b != None:

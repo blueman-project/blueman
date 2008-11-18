@@ -39,6 +39,9 @@ from blueman.main.SignalTracker import SignalTracker
 import gettext
 _ = gettext.gettext
 
+
+#@tadas: Padaryk, kad nereiktu apply spaust, nebutinas jis
+
 class BluemanAdapters:
 	def __init__(self, selected_hci_dev):
 		self.bus = dbus.SystemBus()
