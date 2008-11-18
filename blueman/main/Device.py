@@ -37,16 +37,17 @@ class Device:
 		
 		print "caching initial properties"
 		self.Properties = self.Device.GetProperties()
-		self.Signals.Handle(self.Device, self.property_changed, "PropertyChanged")
+		
 		self.init_services()
 			
 	
 	def init_services(self):
 		print "Loading services"
+		self.Signals.DisconnectAll()
 		if not "Fake" in self.Properties:
 			self.Fake = False
 			services = self.Device.ListServiceInterfaces()
-			
+			self.Signals.Handle(self.Device, self.property_changed, "PropertyChanged")
 			for service in services:
 				name = service.GetInterfaceName().split(".")
 				name = name[len(name)-1].lower()
