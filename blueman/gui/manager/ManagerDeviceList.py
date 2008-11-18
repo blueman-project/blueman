@@ -43,9 +43,9 @@ class ManagerDeviceList(DeviceList):
 			["caption", str, gtk.CellRendererText(), {"markup":1}, None, {"expand": True}],
 
 			
-			["rssi_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":2}, None, {"spacing": 0}],
-			["lq_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":3}, None, {"spacing": 0}],
-			["tpl_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":4}, None, {"spacing": 0}],
+			["rssi_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":2}, None, {"spacing": 0, "sizing": gtk.TREE_VIEW_COLUMN_AUTOSIZE}],
+			["lq_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":3}, None, {"spacing": 0, "sizing": gtk.TREE_VIEW_COLUMN_AUTOSIZE}],
+			["tpl_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":4}, None, {"spacing": 0, "sizing": gtk.TREE_VIEW_COLUMN_AUTOSIZE}],
 			
 			#trusted/bonded icons
 			#["tb_icons", 'PyObject', CellRendererPixbufTable(), {"pixbuffs":5}, None],
