@@ -23,12 +23,21 @@ import re
 import os
 import signal
 import atexit
-from subprocess import call
+from subprocess import Popen
+import gobject
 
 
-def spawn(command):
-	command = os.path.join(BIN_DIR, command)
-	call([command])
+def spawn(command, system=False):
+
+	def child_closed(pid, cond):
+		print command, "closed"
+	if not system:
+		if type(command) == list:
+			command[0] = os.path.join(BIN_DIR, command[0])
+		else:
+			command = os.path.join(BIN_DIR, command)
+	p = Popen(command)
+	gobject.child_watch_add(p.pid, child_closed)
 
 def setup_icon_path():
 	ic = gtk.icon_theme_get_default()

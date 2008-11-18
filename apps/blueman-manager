@@ -40,8 +40,6 @@ from blueman.gui.manager.ManagerStats import ManagerStats
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.Config import Config
 
-from subprocess import call
-
 import gettext
 _ = gettext.gettext
 
@@ -179,7 +177,10 @@ class Blueman:
 		self.List.Adapter.CreatePairedDevice(device.Address, dbus.ObjectPath("/org/blueman/agent/"+name), "DisplayYesNo", reply_handler=ok, error_handler=err)
 		
 		
-
+	def adapter_properties(self):
+		adapter = self.List.Adapter
+		name = os.path.basename(adapter.GetObjectPath())
+		spawn(["blueman-adapters", name])
 
 		
 	def toggle_trust(self, device):
@@ -194,7 +195,7 @@ class Blueman:
 		
 		
 	def browse(self, device):
-		call(["nautilus", "--browser", "obex://[%s]" % device.Address])
+		spawn(("nautilus", "--browser", "obex://[%s]" % device.Address), True)
 		
 	def disconnect(self, device):
 		device.Disconnect()

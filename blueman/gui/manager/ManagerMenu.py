@@ -164,7 +164,7 @@ class ManagerMenu:
 		menu.append(sep)
 		
 		settings = gtk.ImageMenuItem("gtk-preferences")
-
+		settings.connect("activate", lambda x: self.blueman.adapter_properties())
 		settings.show()
 		menu.append(settings)
 		
