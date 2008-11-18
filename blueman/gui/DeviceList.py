@@ -212,9 +212,11 @@ class DeviceList(GenericList):
 	
 	def on_device_created(self, path):
 		print "created", path
-		dev = Bluez.Device(path)
-		dev = Device(dev)
-		self.device_add_event(dev)
+		iter = self.find_device_by_path(path)
+		if iter == None:
+			dev = Bluez.Device(path)
+			dev = Device(dev)
+			self.device_add_event(dev)
 		
 	
 	def on_device_removed(self, path):

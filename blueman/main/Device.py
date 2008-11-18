@@ -47,11 +47,14 @@ class Device:
 		if not "Fake" in self.Properties:
 			self.Fake = False
 			services = self.Device.ListServiceInterfaces()
-			self.Signals.Handle(self.Device, self.property_changed, "PropertyChanged")
+			self.Services = {}
 			for service in services:
 				name = service.GetInterfaceName().split(".")
 				name = name[len(name)-1].lower()
 				self.Services[name] = service
+			
+			
+			self.Signals.Handle(self.Device, self.property_changed, "PropertyChanged")
 
 				
 			
