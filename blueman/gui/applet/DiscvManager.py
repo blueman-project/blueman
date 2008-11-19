@@ -81,11 +81,13 @@ class DiscvManager:
 				self.time_left = value
 				self.timeout = gobject.timeout_add(1000, self.on_update)
 				
-		elif key == "Discoverable":
+		elif key == "Discoverable" or key == "Powered":
 			if self.timeout != None:
 				gobject.source_remove(self.timeout)
 			self.time_left = -1
 			self.timeout = None
+
+			
 				
 				
 		self.update_menuitems()
@@ -98,7 +100,7 @@ class DiscvManager:
 			for item in self.Applet.disc_items:
 				self.Applet.disc_item.props.visible = False
 		else:
-			if not props["Discoverable"] or props["DiscoverableTimeout"] > 0:
+			if (not props["Discoverable"] or props["DiscoverableTimeout"] > 0) and props["Powered"]:
 				self.Applet.disc_item.props.visible = True
 				self.Applet.disc_item.get_child().props.label = _('Make Discoverable')
 				self.Applet.disc_item.props.sensitive = True

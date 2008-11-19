@@ -52,8 +52,10 @@ class BluezAgent(dbus.service.Object):
 	
 	@dbus.service.method(dbus_interface='org.bluez.Agent', in_signature="", out_signature="")
 	def Release(self):
+		print "Release"
 		self.Cancel()
 		self.remove_from_connection()
+		self.applet.Agents.remove(self)
 	
 	def on_notification_close(self, n, action):
 		self.dialog.show()
