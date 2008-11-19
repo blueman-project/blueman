@@ -60,7 +60,7 @@ class BluemanApplet:
 		
 		
 		self.disc_item = create_menuitem(_('Make Discoverable'), get_icon("gtk-search", 16))
-		self.flight_mode = gtk.CheckMenuItem(_("Flight Mode"))
+		self.flight_mode = create_menuitem(_("Bluetooth Off"), get_icon("gtk-stop", 16))
 		self.flight_mode.props.tooltip_text = _("Turn off all adapters")
 		
 		
