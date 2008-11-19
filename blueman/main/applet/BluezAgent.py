@@ -20,6 +20,7 @@ import dbus
 import dbus.glib
 import dbus.service
 import os.path
+from blueman.Functions import get_icon
 import gtk
 import blueman.bluez as Bluez
 from blueman.Sdp import *
@@ -93,7 +94,9 @@ class BluezAgent(dbus.service.Object):
 			raise AgentErrorCanceled
 		
 		self.n = self.applet.show_notification(_('Bluetooth device'), notify_message, 0,
-										[['action', notify_msg]], self.on_notification_close)
+										[['action', notify_msg]], 
+										self.on_notification_close, 
+										pixbuf=get_icon("gtk-dialog-authentication", 48))
 		self.applet.status_icon.set_blinking(True)
 		self.dialog.connect('response', self.passkey_dialog_cb, is_numeric, ok, err)
 	
@@ -134,7 +137,8 @@ class BluezAgent(dbus.service.Object):
 		self.confirm_ok_cb = ok
 		self.confirm_err_cb = err
 		self.n = self.applet.show_notification(_('Bluetooth device'), notify_message, 0,
-												actions, self.on_confirm_action)
+												actions, self.on_confirm_action,
+												pixbuf=get_icon("gtk-dialog-authentication", 48))
 		self.applet.status_icon.set_blinking(True)
 	
 	def on_auth_action(self, n, action):
@@ -145,7 +149,8 @@ class BluezAgent(dbus.service.Object):
 		if action == "always" or action == "accept":
 			self.auth_ok_cb()
 		else:
-			self.auth_err_cb(AgentErrorRejected())
+			if self.auth_err_cb:
+				self.auth_err_cb(AgentErrorRejected())
 		self.auth_dev_path = None
 		self.auth_ok_cb = None
 		self.auth_err_cb = None
@@ -165,7 +170,8 @@ class BluezAgent(dbus.service.Object):
 		self.auth_ok_cb = ok
 		self.auth_err_cb = err
 		self.n = self.applet.show_notification(_('Bluetooth device'), notify_message, 0,
-												actions, self.on_auth_action)
+												actions, self.on_auth_action,
+												pixbuf=get_icon("gtk-dialog-authentication", 48))
 		self.applet.status_icon.set_blinking(True)
 	
 	@dbus.service.method(dbus_interface='org.bluez.Agent', in_signature="s", out_signature="", async_callbacks=("ok","err"))

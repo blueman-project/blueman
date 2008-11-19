@@ -131,10 +131,10 @@ class DeviceList(GenericList):
 				props["Fake"] = True
 				dev = FakeDevice(props)
 			
-			device = Device(dev)
-		
-			self.emit("device-found", device)
-			self.device_add_event(device)
+			if not self.find_device(dev):
+				device = Device(dev)
+				self.emit("device-found", device)
+				self.device_add_event(device)
 		
 	
 	def on_property_changed(self, key, value):

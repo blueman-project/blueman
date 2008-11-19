@@ -17,23 +17,22 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 
-from blueman.main.SignalTracker import SignalTracker
 import gobject
 import gettext
 _ = gettext.gettext
 
-class DiscvManager(SignalTracker):
+class DiscvManager:
 
 	def __init__(self, applet):
-		SignalTracker.__init__(self)
+
 		self.Applet = applet
 		self.adapter = None
 		self.time_left = -1
 			
-		self.Handle(self.Applet.Manager, self.on_default_adapter_changed, "DefaultAdapterChanged")
+		self.Applet.Signals.Handle(self.Applet.Manager, self.on_default_adapter_changed, "DefaultAdapterChanged")
 		
-		self.Applet.disc_item.connect("activate", self.on_set_discoverable)
-		self.Applet.disc_item.props.tooltip_text = _("Make the default adapter visible for 3 minutes")
+		self.Applet.Signals.Handle(self.Applet.disc_item, "activate", self.on_set_discoverable)
+		self.Applet.disc_item.props.tooltip_text = _("Make the default adapter visible for 1 minute")
 		
 		self.init_adapter()
 		self.update_menuitems()
@@ -42,11 +41,15 @@ class DiscvManager(SignalTracker):
 		
 	def on_update(self):
 		self.time_left -= 1
-		print self.time_left
+		self.Applet.disc_item.get_child().props.label = _("Discoverable... %ss") % self.time_left
+		self.Applet.disc_item.props.sensitive = False
+
 		return True
 		
 	def on_set_discoverable(self, item):
-		print "disc"
+		if self.adapter:
+			self.adapter.SetProperty("Discoverable", True)
+			self.adapter.SetProperty("DiscoverableTimeout", 60)
 		
 	
 	def init_adapter(self):
@@ -54,7 +57,7 @@ class DiscvManager(SignalTracker):
 			self.adapter.UnHandleSignal(self.on_adapter_property_changed, "PropertyChanged")
 		try:
 			self.adapter = self.Applet.Manager.GetAdapter()
-			self.adapter.HandleSignal(self.on_adapter_property_changed, "PropertyChanged")
+			self.Applet.Signals.Handle(self.adapter, self.on_adapter_property_changed, "PropertyChanged")
 		except:
 			self.adapter = None
 	
@@ -72,8 +75,18 @@ class DiscvManager(SignalTracker):
 				self.time_left = -1
 				self.timeout = None
 			else:
+				if self.time_left > -1:
+					if self.timeout != None:
+						gobject.source_remove(self.timeout)
 				self.time_left = value
 				self.timeout = gobject.timeout_add(1000, self.on_update)
+				
+		elif key == "Discoverable":
+			if self.timeout != None:
+				gobject.source_remove(self.timeout)
+			self.time_left = -1
+			self.timeout = None
+				
 				
 		self.update_menuitems()
 			
@@ -87,6 +100,8 @@ class DiscvManager(SignalTracker):
 		else:
 			if not props["Discoverable"] or props["DiscoverableTimeout"] > 0:
 				self.Applet.disc_item.props.visible = True
+				self.Applet.disc_item.get_child().props.label = _('Make Discoverable')
+				self.Applet.disc_item.props.sensitive = True
 
 			else:
 				self.Applet.disc_item.props.visible = False

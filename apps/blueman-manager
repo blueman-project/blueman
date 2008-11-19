@@ -50,6 +50,10 @@ class Blueman:
 			(x, y) = window.get_size()
 			self.Config.props.window_height = y
 			self.Config.props.window_width = x
+			
+			(x, y) = window.get_position()
+			self.Config.props.window_posx = x
+			self.Config.props.window_posy = y
 			gtk.main_quit()
 			
 		def on_property_changed(config, key, value):
@@ -85,6 +89,11 @@ class Blueman:
 		w = self.Config.props.window_width
 		if w != None and h != None:
 			window.resize(w, h)
+			
+		x = self.Config.props.window_posx
+		y = self.Config.props.window_posy
+		if x and y:
+			window.move(x, y)
 			
 		
 		sw = self.Builder.get_object("scrollview")
