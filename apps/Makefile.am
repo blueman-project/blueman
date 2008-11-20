@@ -4,3 +4,5 @@ bin_PROGRAMS =			\
 	blueman-manager		\
 	blueman-services
 
+dist_pkglib_DATA = 		\
+	blueman-mechanism
