@@ -1,11 +1,9 @@
 SUBDIRS = 		\
-	applet		\
-	common		\
+	apps		\
+	blueman		\
 	data		\
-	manager		\
-	po			\
-	sendto		\
-	wizard
+	module		\
+	po
 
 EXTRA_DIST = 			\
 	intltool-extract.in	\

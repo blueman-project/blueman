@@ -1,0 +1,4 @@
+SUBDIRS = 	\
+	actions	\
+	devices	\
+	status

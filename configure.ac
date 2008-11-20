@@ -23,6 +23,9 @@ dnl ----------------------------------
 AC_SUBST(VERSION)
 AC_SUBST(PACKAGE)
 
+AS_AC_EXPAND(SYSCONFDIR, $sysconfdir)
+AC_SUBST(SYSCONFDIR)
+AS_AC_EXPAND(BINDIR, $bindir)
 AS_AC_EXPAND(DATADIR, $datarootdir)
 AC_SUBST(DATADIR)
 AS_AC_EXPAND(PYTHONDIR, $pythondir)
