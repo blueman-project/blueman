@@ -1,6 +1,5 @@
 SUBDIRS =	\
-	applet	\
-	manager
+	applet
 
 bluemandir = $(pythondir)/blueman/main
 blueman_PYTHON = 		\

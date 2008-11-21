@@ -80,7 +80,6 @@ blueman/gui/applet/Makefile
 blueman/gui/manager/Makefile
 blueman/main/Makefile
 blueman/main/applet/Makefile
-blueman/main/manager/Makefile
 blueman/ods/Makefile
 data/Makefile
 data/configs/Makefile
