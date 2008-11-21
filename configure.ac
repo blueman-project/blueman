@@ -6,6 +6,7 @@ AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION)
 
 AM_MAINTAINER_MODE
 AC_PROG_CC
+AC_PROG_LIBTOOL
 PKG_PROG_PKG_CONFIG
 
 GETTEXT_PACKAGE="blueman"
@@ -16,6 +17,22 @@ IT_PROG_INTLTOOL([0.35.0])
 
 AM_PATH_PYTHON(2.4)
 AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(Could not find Python headers)])
+
+AC_ARG_VAR([PYREXC], [Pyrex compiler])
+if test "x$PYREXC" = "x"; then
+   AC_PATH_PROG([PYREXC],[pyrexc])
+fi
+AC_SUBST([PYREXC])
+AC_MSG_CHECKING([for pyrexc executable])
+AC_MSG_RESULT([${PYREXC}])
+if test "x$PYREXC" = "x"; then
+   AC_MSG_ERROR([Fatal: pyrexc not found.
+
+Get Pyrex from
+  * your system's packages (recommended)
+  * upstream at http://www.cosc.canterbury.ac.nz/greg.ewing/python/Pyrex/
+])
+fi
 
 dnl ----------------------------------
 dnl - Various paths and other defines
@@ -34,6 +51,10 @@ AC_SUBST(PYTHONDIR)
 dnl ----------------------------------
 dnl - Dependencies - TODO: split into sections
 dnl ----------------------------------
+PKG_CHECK_MODULES(BLUEZ, bluez >= 4.0)
+AC_SUBST(BLUEZ_CFLAGS)
+AC_SUBST(BLUEZ_LIBS)
+
 PKG_CHECK_MODULES(BLUEMAN,
 		bluez			>= 4.0
 		gtk+-2.0		>= 2.12
@@ -79,6 +100,7 @@ data/icons/hicolor/scalable/Makefile
 data/icons/hicolor/scalable/devices/Makefile
 data/icons/main_icon/Makefile
 data/ui/Makefile
+module/Makefile
 po/Makefile.in
 ])
 

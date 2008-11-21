@@ -6,6 +6,6 @@ iconsdir = $(themedir)/$(size)/$(context)
 
 icons_DATA =				\
 	blueman-trust.png		\
-	blueman-unstrust.png
+	blueman-untrust.png
 
 EXTRA_DIST = $(icons_DATA)

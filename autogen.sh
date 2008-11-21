@@ -22,6 +22,7 @@ fi
 
 aclocal || exit $?
 autoheader || exit $?
+libtoolize --copy --automake || exit $?
 intltoolize --automake --copy --force || exit $?
 automake --add-missing --copy || exit $?
 autoconf || exit $?
