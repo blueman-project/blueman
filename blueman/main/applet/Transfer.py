@@ -165,7 +165,7 @@ class Transfer(OdsManager):
 							trans = format_bytes(t["transferred"])
 							tot = format_bytes(t["total"])
 		
-							n.update("Receiving File", "Receiving File %s\n%.2f%s out of %.2f%s (%.2f%s/s)" % (t["filename"],trans[0], trans[1], tot[0], tot[1], spd[0], spd[1]))
+							n.update(_("Receiving File"), _("Receiving File %(0)s\n%(1).2f%(2)s out of %(3).2f%(4)s (%(5).2f%(6)s/s)") % {0:t["filename"],1:trans[0], 2:trans[1], 3:tot[0], 4:tot[1], 5:spd[0], 6:spd[1]))
 							n.show()
 					
 					return True
@@ -182,7 +182,7 @@ class Transfer(OdsManager):
 					name = info["BluetoothAddress"]
 				
 				icon = composite_icon(get_icon("blueman-send-file", 48), [(get_icon("blueman", 24), 24, 24, 255)])
-				n = pynotify.Notification(_("Incoming File"), _("Incoming file %s from %s") % (os.path.basename(filename), name))
+				n = pynotify.Notification(_("Incoming File"), _("Incoming file %(0)s from %(1)s") % {0:os.path.basename(filename), 1:name})
 				n.set_icon_from_pixbuf(icon)
 				n.set_category("bluetooth.transfer")
 				n.attach_to_status_icon(self.Applet.status_icon)
