@@ -61,6 +61,24 @@ blueman/main/Makefile
 blueman/main/applet/Makefile
 blueman/main/manager/Makefile
 blueman/ods/Makefile
+data/Makefile
+data/configs/Makefile
+data/icons/Makefile
+data/icons/hicolor/Makefile
+data/icons/hicolor/16x16/Makefile
+data/icons/hicolor/16x16/actions/Makefile
+data/icons/hicolor/16x16/devices/Makefile
+data/icons/hicolor/16x16/status/Makefile
+data/icons/hicolor/32x32/Makefile
+data/icons/hicolor/32x32/actions/Makefile
+data/icons/hicolor/48x48/Makefile
+data/icons/hicolor/48x48/actions/Makefile
+data/icons/hicolor/48x48/devices/Makefile
+data/icons/hicolor/48x48/status/Makefile
+data/icons/hicolor/scalable/Makefile
+data/icons/hicolor/scalable/devices/Makefile
+data/icons/main_icon/Makefile
+data/ui/Makefile
 po/Makefile.in
 ])
 
