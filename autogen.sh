@@ -4,7 +4,7 @@
 srcdir=`dirname $0`
 test -z "$srcdir" && srcdir=.
 
-PROJECT="bluez-gnome"
+PROJECT="blueman"
 
 (test -f $srcdir/configure.ac) || {
     echo -n "**Error**: Directory \"\'$srcdir\'\" does not look like the"
