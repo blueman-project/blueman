@@ -20,7 +20,7 @@ DISTCLEANFILES = \
 	$(CLEANFILES) 
 
 EXTRA_DIST =	\
-	defs.py.in
+	Constants.py.in
 	
 clean-local:
 	rm -rf *.pyc *.pyo 
