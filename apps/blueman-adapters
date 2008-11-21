@@ -34,6 +34,7 @@ if os.path.exists(os.path.join(_dirname,"ChangeLog")):
 	
 import blueman.bluez as Bluez
 from blueman.Constants import *
+from blueman.Functions import setup_icon_path
 from blueman.main.SignalTracker import SignalTracker
 	
 import gettext
@@ -44,13 +45,14 @@ _ = gettext.gettext
 
 class BluemanAdapters:
 	def __init__(self, selected_hci_dev):
+		setup_icon_path()
 		self.bus = dbus.SystemBus()
 		self.bus.watch_name_owner('org.bluez', self.on_dbus_name_owner_change)
 		
 		builder = gtk.Builder()
 		builder.add_from_file(UI_PATH +"/adapters.ui")
 		self.dialog = builder.get_object("dialog")
-		self.dialog.props.icon_name = "blueman"
+		self.dialog.props.icon_name = "blueman-device"
 		self.dialog.connect("response", self.on_dialog_response)
 		self.notebook = builder.get_object("notebook")
 		self.tabs = {}
