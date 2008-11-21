@@ -11,3 +11,15 @@ $(dbus_services_DATA): $(dbus_services_in_files) Makefile
 policykitdir = $(datadir)/PolicyKit/policy
 policykit_DATA = org.blueman.policy
 
+EXTRA_DIST =					\
+	org.blueman.Mechanism.conf	\
+	org.blueman.Mechanism.service.in	\
+	org.blueman.policy
+
+CLEANFILES =		\
+	org.blueman.Mechanism.service	\
+	$(BUILT_SOURCES)
+	
+DISTCLEANFILES = \
+	$(CLEANFILES)
+
