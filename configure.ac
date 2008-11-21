@@ -1,6 +1,6 @@
 AC_PREREQ(2.61)
 
-AC_INIT(blueman, 0.1svn)
+AC_INIT(blueman, 0.99)
 AC_CONFIG_HEADERS(config.h)
 AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION)
 
@@ -32,7 +32,7 @@ AS_AC_EXPAND(PYTHONDIR, $pythondir)
 AC_SUBST(PYTHONDIR)
 
 dnl ----------------------------------
-dnl - Dependencies
+dnl - Dependencies - TODO: split into sections
 dnl ----------------------------------
 PKG_CHECK_MODULES(BLUEMAN,
 		bluez			>= 4.0
@@ -46,9 +46,22 @@ PKG_CHECK_MODULES(BLUEMAN,
 AC_SUBST(BLUEMAN_CFLAGS)
 AC_SUBST(BLUEMAN_LIBS)
 
+dnl - TODO: add checks for python modules
 
 AC_OUTPUT([
 Makefile
+apps/Makefile
+blueman/Makefile
+blueman/Constants.py
+blueman/bluez/Makefile
+blueman/gui/Makefile
+blueman/gui/applet/Makefile
+blueman/gui/manager/Makefile
+blueman/main/Makefile
+blueman/main/applet/Makefile
+blueman/main/manager/Makefile
+blueman/ods/Makefile
+po/Makefile.in
 ])
 
 

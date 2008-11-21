@@ -1,4 +1,5 @@
-bin_PROGRAMS =			\
+appsdir = $(bindir)
+apps_SCRIPTS =			\
 	blueman-adapters	\
 	blueman-applet		\
 	blueman-manager		\
