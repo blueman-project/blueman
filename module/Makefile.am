@@ -1,9 +1,10 @@
 BUILT_SOURCES = Lib.c
 
-pyexec_LTLIBRARIES = libblueman.la
-libblueman_la_CFLAGS = $(BLUEZ_CFLAGS) @PYTHON_INCLUDES@
-libblueman_la_LIBADD = $(BLUEZ_LIBS)
-libblueman_la_SOURCES = \
+pyexec_LTLIBRARIES = Lib.la
+Lib_la_CFLAGS = $(BLUEZ_CFLAGS) @PYTHON_INCLUDES@
+Lib_la_LDFLAGS = -module -avoid-version -fPIC
+Lib_la_LIBADD = $(BLUEZ_LIBS)
+Lib_la_SOURCES = \
 	Lib.c			\
 	libblueman.c	\
 	libblueman.h
