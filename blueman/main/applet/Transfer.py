@@ -165,7 +165,7 @@ class Transfer(OdsManager):
 							trans = format_bytes(t["transferred"])
 							tot = format_bytes(t["total"])
 		
-							n.update(_("Receiving File"), _("Receiving File %(0)s\n%(1).2f%(2)s out of %(3).2f%(4)s (%(5).2f%(6)s/s)") % {0:t["filename"],1:trans[0], 2:trans[1], 3:tot[0], 4:tot[1], 5:spd[0], 6:spd[1]))
+							n.update(_("Receiving File"), _("Receiving File %(0)s\n%(1).2f%(2)s out of %(3).2f%(4)s (%(5).2f%(6)s/s)") % {0:t["filename"],1:trans[0], 2:trans[1], 3:tot[0], 4:tot[1], 5:spd[0], 6:spd[1]})
 							n.show()
 					
 					return True
