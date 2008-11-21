@@ -5,5 +5,5 @@ apps_SCRIPTS =			\
 	blueman-manager		\
 	blueman-services
 
-dist_pkglib_DATA = 		\
+dist_pkglib_SCRIPTS = 	\
 	blueman-mechanism

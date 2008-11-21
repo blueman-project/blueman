@@ -1,6 +1,7 @@
 BUILT_SOURCES = Lib.c
 
-pyexec_LTLIBRARIES = Lib.la
+bluemanlibdir = $(pyexecdir)/blueman
+bluemanlib_LTLIBRARIES = Lib.la
 Lib_la_CFLAGS = $(BLUEZ_CFLAGS) @PYTHON_INCLUDES@
 Lib_la_LDFLAGS = -module -avoid-version -fPIC
 Lib_la_LIBADD = $(BLUEZ_LIBS)
