@@ -22,7 +22,6 @@ from blueman.main.Config import Config
 from blueman.ods.OdsManager import OdsManager
 from blueman.main.Device import Device
 from blueman.Functions import *
-from subprocess import call
 import os
 import pynotify
 import gettext
@@ -129,8 +128,8 @@ class Transfer(OdsManager):
 				def show_open():
 					temp = []
 					def on_open(n, action):
-						print "open", path
-						call(["xdg-open", local_path])
+						print "open", local_path
+						spawn(["xdg-open", local_path], True)
 						temp.remove(n)
 					
 					n = pynotify.Notification(_("File Saved"), _("Would you like to open %s?") % filename)
@@ -165,31 +164,34 @@ class Transfer(OdsManager):
 							trans = format_bytes(t["transferred"])
 							tot = format_bytes(t["total"])
 		
-							n.update(_("Receiving File"), _("Receiving File %(0)s\n%(1).2f%(2)s out of %(3).2f%(4)s (%(5).2f%(6)s/s)") % {0:t["filename"],1:trans[0], 2:trans[1], 3:tot[0], 4:tot[1], 5:spd[0], 6:spd[1]})
+							n.update(_("Receiving File"), _("Receiving File %(0)s\n%(1).2f%(2)s out of %(3).2f%(4)s (%(5).2f%(6)s/s)") % {"0":t["filename"],"1":trans[0], "2":trans[1], "3":tot[0], "4":tot[1], "5":spd[0], "6":spd[1]})
 							n.show()
 					
 					return True
 						
 				
 				info = server.GetServerSessionInfo(session.object_path)
-
+				trusted = False
 				try:
-					dev = self.Applet.Manager.FindDevice(info["BluetoothAddress"])
+					dev = self.Applet.Manager.GetAdapter().FindDevice(info["BluetoothAddress"])
 					dev = Device(dev)
 					name = dev.Alias
+					trusted = dev.Trusted
 					dev.Destroy()
-				except:
+				except Exception, e:
+					print e
 					name = info["BluetoothAddress"]
 				
+				
 				icon = composite_icon(get_icon("blueman-send-file", 48), [(get_icon("blueman", 24), 24, 24, 255)])
-				n = pynotify.Notification(_("Incoming File"), _("Incoming file %(0)s from %(1)s") % {0:os.path.basename(filename), 1:name})
+				n = pynotify.Notification(_("Incoming File"), _("Incoming file %(0)s from %(1)s") % {"0":os.path.basename(filename), "1":name})
 				n.set_icon_from_pixbuf(icon)
 				n.set_category("bluetooth.transfer")
 				n.attach_to_status_icon(self.Applet.status_icon)
 				n.add_action("accept", _("Accept"), access_cb)
 				n.add_action("reject", _("Reject"), access_cb)
 				n.add_action("default", "Default Action", access_cb)
-				n.show()
+				
 				closed_sig = n.connect("closed", on_closed)
 				
 				self.transfers[session.object_path] = {}
@@ -200,6 +202,12 @@ class Transfer(OdsManager):
 				self.transfers[session.object_path]["waiting"] = True
 				self.transfers[session.object_path]["calc"] = SpeedCalc()
 				self.transfers[session.object_path]["updater"] = gobject.timeout_add(1000, update_notification, n)
+				self.transfers[session.object_path]["transferred"] = 0
+				
+				if not self.Config.props.opp_accept or not trusted:
+					n.show()
+				else:
+					access_cb(n, "accept")
 				
 				def transfer_progress(session, bytes_transferred):
 					#print "progress", bytes_transferred

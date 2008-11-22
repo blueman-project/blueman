@@ -221,10 +221,11 @@ class DeviceList(GenericList):
 	
 	def on_device_removed(self, path):
 		iter = self.find_device_by_path(path)
-		row = self.get(iter, "device")
-		dev = row["device"]
-		self.RemoveDevice(dev, iter)
-		self.device_remove_event(dev)
+		if iter:
+			row = self.get(iter, "device")
+			dev = row["device"]
+			self.RemoveDevice(dev, iter)
+			self.device_remove_event(dev)
 	
 	
 	def SetAdapter(self, adapter=None):
