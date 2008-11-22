@@ -19,6 +19,12 @@
 import dbus
 from blueman.main.Config import Config
 from blueman.bluez.ServiceInterface import ServiceInterface
+from blueman.main.Mechanism import Mechanism
+from blueman.main.PolicyKitAuth import PolicyKitAuth
+from blueman.Functions import get_icon
+import gettext
+
+_ = gettext.gettext
 
 class NetworkManager():
 
@@ -28,11 +34,58 @@ class NetworkManager():
 		self.Config = Config("network")
 		self.Applet.Signals.Handle("gobject", self.Config, "property-changed", self.on_config_changed)
 		
+		self.Applet.Signals.Handle("dbus", self.Applet, 
+						self.on_network_prop_changed, 
+						"PropertyChanged",
+						"org.bluez.Network",
+						path_keyword="path")
+						
+		
 		self.set_nap(self.Config.props.nap_enable or False)
 		self.set_gn(self.Config.props.gn_enable or False)
 		
+		self.dhcp_notif = None
+	
 	def __del__(self):
 		print "networkmanager deleted"
+		
+	def on_network_prop_changed(self, key, value, path):
+		
+		if key == "Device":
+			if value != "":
+				a= PolicyKitAuth()
+				auth = a.is_authorized("org.blueman.dhcp.client")
+				if not auth:
+					auth = a.obtain_authorization(None, "org.blueman.dhcp.client")
+				
+				if auth:
+					
+					def reply(interface, condition, bound_to):
+						if condition == 0:
+							self.dhcp_notif.update(_("Bluetooth Network"), 
+								 _("Interface %(0)s bound to IP address %(1)s") % {"0": interface, "1": bound_to})
+						else:
+							self.dhcp_notif.update(_("Bluetooth Network"), 
+								 _("Failed to acquire an IP address on %s") % (interface))
+						
+						self.dhcp_notif.set_timeout(-1)
+						self.dhcp_notif.show()
+						
+						self.dhcp_notif = None
+					
+					def err(*args):
+						print args
+						self.dhcp_notif.update(_("Bluetooth Network"), 
+							 _("Failed to acquire an IP address on %s") % (value))
+						self.dhcp_notif.set_timeout(-1)
+						self.dhcp_notif.show()
+						self.dhcp_notif = None
+					
+					self.dhcp_notif = self.Applet.show_notification(_("Bluetooth Network"), 
+									_("Acquiring an IP address on %s" % value), 0, pixbuf=get_icon("gtk-network", 48))
+
+					m = Mechanism()
+					m.DhcpClient(value, reply_handler=reply, error_handler=err)
 		
 		
 	def on_config_changed(self, config, key, value):

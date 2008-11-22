@@ -192,7 +192,8 @@ if [ "$1" == "pan0" ]; then
 fi
 
 if [ "$1" == "pan1" ]; then
-
+	python -c "from blueman.Lib import create_bridge; create_bridge('pan1')"
+	
 	ifconfig pan1 %s netmask 255.255.255.0 up
 
 	if ! [ -a /tmp/blueman-iptbl-lock ]; then

@@ -10,7 +10,7 @@ import gobject
 import os
 import subprocess
 import re
-
+from signal import SIGKILL
 
 from blueman.main.NetConf import *
 from blueman.main.HalManager import HalManager
@@ -80,21 +80,18 @@ class conf_service(dbus.service.Object):
 				
 	
 	
-	@dbus.service.signal(dbus_interface='org.blueman.Mechanism', signature='ss')
-	def dhcpStatus(self, interface, status_str):
-		pass
+	#@dbus.service.signal(dbus_interface='org.blueman.Mechanism', signature='ss')
+	#def dhcpStatus(self, interface, status_str):
+	#	pass
 
-	@dbus.service.signal(dbus_interface='org.blueman.Mechanism', signature='sus')
-	def dhcpReturn(self, interface, return_code, bound_to):
-		pass
-
-
+	#@dbus.service.signal(dbus_interface='org.blueman.Mechanism', signature='sus')
+	#def dhcpReturn(self, interface, return_code, bound_to):
+	#	pass
 
 
+	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="s", out_signature="sus", sender_keyword="caller", async_callbacks=("ok", "err"))
 
-	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="s", out_signature="", sender_keyword="caller")
-
-	def dhcpClient(self, net_interface, caller):
+	def DhcpClient(self, net_interface, caller, ok, err):
 		global bound_to
 		self.confirm_authorization(caller, "org.blueman.dhcp.client")
 		
@@ -103,7 +100,16 @@ class conf_service(dbus.service.Object):
 		rxp = re.compile("bound to (\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) .*")
 		
 		
-		p = subprocess.Popen("dhclient -1 %s" % net_interface, shell=True, bufsize=128, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+		p = subprocess.Popen("dhclient -e IF_METRIC=100 -1 %s" % net_interface, shell=True, bufsize=128, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+		
+		def on_timeout():
+			print "Killing dhcpd"
+			os.kill(p.pid, SIGKILL)
+			return False
+		
+		
+		timeout = gobject.timeout_add(20000, on_timeout)
 
 
 		def io_callback(source, condition):
@@ -118,7 +124,7 @@ class conf_service(dbus.service.Object):
 			
 			#line = line.strip("\n")
 			
-			self.dhcpStatus(net_interface, line)
+			#self.dhcpStatus(net_interface, line)
 			
 			if condition != gobject.IO_IN:
 				return False
@@ -128,7 +134,8 @@ class conf_service(dbus.service.Object):
 		def child_closed(pid, cond):
 			global bound_to
 			print "closed ", cond
-			self.dhcpReturn(net_interface, int(cond), bound_to)
+			gobject.source_remove(timeout)
+			ok(net_interface, int(cond), bound_to)
 
 
 		gobject.io_add_watch(p.stdout, gobject.IO_IN | gobject.IO_HUP | gobject.IO_ERR, io_callback)
