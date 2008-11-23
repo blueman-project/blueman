@@ -23,7 +23,7 @@ from blueman.Sdp import *
 from blueman.Functions import *
 from blueman.main.SignalTracker import SignalTracker
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
-
+from blueman.main.Config import Config
 from blueman.main.AppletService import AppletService
 
 from blueman.Lib import rfcomm_list
@@ -252,7 +252,6 @@ class ManagerDeviceMenu(gtk.Menu):
 			
 			
 			uuids = device.UUIDs
-			print device.Services
 			
 			for name, service in device.Services.iteritems():
 				if name == "serial":
@@ -347,8 +346,22 @@ class ManagerDeviceMenu(gtk.Menu):
 						self.Signals.Handle("gobject", item, "activate", self.on_disconnect, device, name)
 						item.show()
 						self.append(item)
+						
+						c = Config("network")
+						if c.props.dhcp_client:
+							def renew(x):
+								try:
+									appl = AppletService()
+								except:
+									print "** Failed to connect to applet"
+								else:
+							
+									appl.DhcpClient(sprops["Device"])
 					
-					
+							item = create_menuitem(_("Renew IP Address"), get_icon("gtk-refresh", 16))
+							self.Signals.Handle("gobject", item, "activate", renew)
+							item.show()
+							self.append(item)
 
 					
 				if name == "headset":

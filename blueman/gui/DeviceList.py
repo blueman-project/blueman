@@ -123,14 +123,10 @@ class DeviceList(GenericList):
 		
 	def on_device_found(self, address, props):
 		if self.discovering:
-
-			try:
-				dev = self.Adapter.FindDevice(address)
-			except:
-				props["Address"] = address
-				props["Fake"] = True
-				dev = FakeDevice(props)
-			
+			props["Address"] = address
+			props["Fake"] = True
+			dev = FakeDevice(props)
+		
 			if not self.find_device(dev):
 				device = Device(dev)
 				self.emit("device-found", device)

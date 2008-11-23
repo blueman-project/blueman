@@ -50,42 +50,49 @@ class NetworkManager():
 		print "networkmanager deleted"
 		
 	def on_network_prop_changed(self, key, value, path):
-		
+		if self.Config.props.dhcp_client == None:
+			self.Config.props.dhcp_client = True
+			
+		if not self.Config.props.dhcp_client:
+			return
 		if key == "Device":
-			if value != "":
-				a= PolicyKitAuth()
-				auth = a.is_authorized("org.blueman.dhcp.client")
-				if not auth:
-					auth = a.obtain_authorization(None, "org.blueman.dhcp.client")
+			self.dhcp_acquire(value)
+		
+	def dhcp_acquire(self, device):
+		if device != "":
+			a= PolicyKitAuth()
+			auth = a.is_authorized("org.blueman.dhcp.client")
+			if not auth:
+				auth = a.obtain_authorization(None, "org.blueman.dhcp.client")
+			
+			if auth:
 				
-				if auth:
-					
-					def reply(interface, condition, bound_to):
-						if condition == 0:
-							self.dhcp_notif.update(_("Bluetooth Network"), 
-								 _("Interface %(0)s bound to IP address %(1)s") % {"0": interface, "1": bound_to})
-						else:
-							self.dhcp_notif.update(_("Bluetooth Network"), 
-								 _("Failed to acquire an IP address on %s") % (interface))
-						
-						self.dhcp_notif.set_timeout(-1)
-						self.dhcp_notif.show()
-						
-						self.dhcp_notif = None
-					
-					def err(*args):
-						print args
+				def reply(interface, condition, bound_to):
+					if condition == 0:
 						self.dhcp_notif.update(_("Bluetooth Network"), 
-							 _("Failed to acquire an IP address on %s") % (value))
-						self.dhcp_notif.set_timeout(-1)
-						self.dhcp_notif.show()
-						self.dhcp_notif = None
+							 _("Interface %(0)s bound to IP address %(1)s") % {"0": interface, "1": bound_to})
+					else:
+						self.dhcp_notif.update(_("Bluetooth Network"), 
+							 _("Failed to acquire an IP address on %s") % (interface))
 					
-					self.dhcp_notif = self.Applet.show_notification(_("Bluetooth Network"), 
-									_("Acquiring an IP address on %s" % value), 0, pixbuf=get_icon("gtk-network", 48))
+					self.dhcp_notif.set_timeout(-1)
+					self.dhcp_notif.show()
+					
+					self.dhcp_notif = None
+				
+				def err(*args):
+					print args
+					self.dhcp_notif.update(_("Bluetooth Network"), 
+						 _("Failed to acquire an IP address on %s") % (device))
+					self.dhcp_notif.set_timeout(-1)
+					self.dhcp_notif.show()
+					self.dhcp_notif = None
+				
+				self.dhcp_notif = self.Applet.show_notification(_("Bluetooth Network"), 
+								_("Acquiring an IP address on %s" % device), 0, pixbuf=get_icon("gtk-network", 48))
 
-					m = Mechanism()
-					m.DhcpClient(value, reply_handler=reply, error_handler=err)
+				m = Mechanism()
+				m.DhcpClient(device, reply_handler=reply, error_handler=err)
 		
 		
 	def on_config_changed(self, config, key, value):

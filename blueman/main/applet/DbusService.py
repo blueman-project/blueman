@@ -95,7 +95,7 @@ class DbusService(dbus.service.Object):
 	#in: interface name
 	@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="s", out_signature="")
 	def DhcpClient(self, interface):
-		print "run dhcp"
+		self.applet.NM.dhcp_acquire(interface)
 		
 	
 	@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="ss", out_signature="")
