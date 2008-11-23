@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 # Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
 # Copyright (C) 2008 Tadas Dailyda <tadas at dailyda dot com>
 #
@@ -19,19 +17,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 
-from optparse import OptionParser
-
-_ = gettext.gettext
+import gtk
 
 
-class SendTo:
-
-	parser = OptionParser()
-	parser.add_option("-d", "--device", dest="device",
-			action="store", help=_("Send files to this device"), metavar="ADDRESS")
+class DeviceSelectorDialog(gtk.Dialog):
+	pass
 	
-	(options, args) = parser.parse_args()
+
 	
-	print options, args
-	
-SendTo()

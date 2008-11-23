@@ -135,6 +135,9 @@ class DeviceList(GenericList):
 	
 	def on_property_changed(self, key, value):
 		print "adapter propery changed", key, value
+		if key == "Discovering":
+			if not value and self.discovering:
+				self.StopDiscovery()
 		self.emit("adapter-property-changed", self.Adapter, (key, value))
 				
 				
@@ -343,12 +346,13 @@ class DeviceList(GenericList):
 		if autoselect:
 			self.selection.select_path(0)
 	
-	def DiscoverDevices(self, time=10):
-		self.__discovery_time = 0
-		self.Adapter.StartDiscovery()
-		self.discovering = True
-		T = 1.0/24*1000 #24fps
-		gobject.timeout_add(int(T), self.update_progress, T/1000, time)
+	def DiscoverDevices(self, time=9.5):
+		if not self.discovering:
+			self.__discovery_time = 0
+			self.Adapter.StartDiscovery()
+			self.discovering = True
+			T = 1.0/24*1000 #24fps
+			gobject.timeout_add(int(T), self.update_progress, T/1000, time)
 
 	def IsValidAdapter(self):
 		if self.Adapter == None:

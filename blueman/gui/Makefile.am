@@ -10,6 +10,9 @@ blueman_PYTHON = 		\
 	DeviceList.py		\
 	GenericList.py		\
 	PixbufTable.py		\
+	DeviceSelectorWidget.py		\
+	DeviceSelectorList.py		\
+	DeviceSelectorDialog.py		\
 	__init__.py
 
 CLEANFILES =		\
