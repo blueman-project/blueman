@@ -25,10 +25,10 @@ class GenericList(gtk.TreeView):
 
 	def __init__(self, data):
 		gtk.TreeView.__init__(self)
-
+		self.selection = self.get_selection()
 		self._load(data)
 		
-		self.selection = self.get_selection()
+		
 
 	def _load(self, data):
 		

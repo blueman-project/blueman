@@ -58,7 +58,7 @@ class BlueZInterface(object):
                                        self.__interface_name,
                                        'org.bluez',
                                        self.__obj_path, **kwargs)
-    def UnHandleSignal(self, handler, signal):
+    def UnHandleSignal(self, handler, signal, **kwargs):
         '''
         The handler function will be called when specific signal is emmited.
         For available signals of each interface, check BlueZ4 documents.
@@ -69,6 +69,6 @@ class BlueZInterface(object):
                                        signal,
                                        self.__interface_name,
                                        'org.bluez',
-                                       self.__obj_path)
+                                       self.__obj_path, **kwargs)
     # HandleSignal
 # BlueZInterface

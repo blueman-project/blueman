@@ -57,7 +57,8 @@ class Device:
 			self.Signals.Handle(self.Device, self.property_changed, "PropertyChanged")
 
 				
-			
+	def Copy(self):
+		return Device(self.Device)
 	
 	def property_changed(self, key, value):
 		self.Properties[key] = value

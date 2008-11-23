@@ -26,7 +26,7 @@ class DeviceSelectorList(DeviceList):
 	def __init__(self, adapter=None):
 		data = [
 			#device picture
-			["found_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":0}, None],
+			["found_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":0}, None, {"spacing": 0, "sizing": gtk.TREE_VIEW_COLUMN_AUTOSIZE}],
 			["device_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":1}, None],
 			
 			#device caption

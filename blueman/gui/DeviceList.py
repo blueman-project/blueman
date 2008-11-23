@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
-
+from blueman.main.SignalTracker import SignalTracker
 from blueman.gui.GenericList import GenericList
 from blueman.main.FakeDevice import FakeDevice
 from blueman.main.Device import Device
@@ -56,6 +56,9 @@ class DeviceList(GenericList):
 	}
 
 
+	def __del__(self):
+		print "deleting mainlist"
+
 	def __init__(self, adapter=None, tabledata=[]):
 		def on_adapter_removed(path):
 			self.emit("adapter-removed", path)
@@ -77,15 +80,13 @@ class DeviceList(GenericList):
 			
 			a = Bluez.Adapter(path)
 			a.HandleSignal(property_changed, "PropertyChanged")
-			#gobject.timeout_add(50, self.emit, "adapter-added", path)
-			#self.emit("adapter-added", path)
 
-		
+		self.signals = SignalTracker()
 		
 		try:
 			self.Manager = Bluez.Manager("gobject")
-			self.Manager.HandleSignal(on_adapter_removed, "AdapterRemoved")
-			self.Manager.HandleSignal(on_adapter_added, "AdapterAdded")
+			self.signals.Handle(self.Manager, on_adapter_removed, "AdapterRemoved")
+			self.signals.Handle(self.Manager, on_adapter_added, "AdapterAdded")
 		except:
 			self.Manager = None
 			
@@ -105,10 +106,30 @@ class DeviceList(GenericList):
 		]
 		
 		GenericList.__init__(self, data)
+		self.adapter_signals = SignalTracker()
+		self.device_signals = SignalTracker()
 		
 		self.SetAdapter(adapter)
 		
-		self.selection.connect("changed", self.on_selection_changed)
+		
+		self.signals.Handle(self.selection, "changed", self.on_selection_changed)
+
+
+	def destroy(self):
+		print "destroying"
+		self.adapter_signals.DisconnectAll()
+		self.device_signals.DisconnectAll()
+		self.signals.DisconnectAll()
+		self.device_signals = None
+		#self.clear()
+		if len(self.liststore):
+			for i in self.liststore:
+				iter = i.iter
+				device = self.get(iter, "device")["device"]
+				device.Destroy()
+		GenericList.destroy(self)
+
+		
 		
 		
 	def on_selection_changed(self, selection):
@@ -141,8 +162,8 @@ class DeviceList(GenericList):
 		self.emit("adapter-property-changed", self.Adapter, (key, value))
 				
 				
-	def on_device_property_changed(self, key, value, path, *args):
-		print "list: device_prop_ch", key, value, path, args
+	def on_device_property_changed(self, key, value, path, *args, **kwargs):
+		print "list: device_prop_ch", key, value, path, args, kwargs
 
 		iter = self.find_device_by_path(path)
 		
@@ -239,17 +260,14 @@ class DeviceList(GenericList):
 		
 		print adapter
 		if self.Adapter != None:
-			self.Adapter.UnHandleSignal(self.on_device_found, "DeviceFound")
-			self.Adapter.UnHandleSignal(self.on_property_changed, "PropertyChanged")
-			self.Adapter.UnHandleSignal(self.on_device_created, "DeviceCreated")
-			self.Adapter.UnHandleSignal(self.on_device_removed, "DeviceRemoved")
+			self.adapter_signals.DisconnectAll()
 		
 		try:
 			self.Adapter = self.Manager.GetAdapter(adapter)
-			self.Adapter.HandleSignal(self.on_device_found, "DeviceFound")
-			self.Adapter.HandleSignal(self.on_property_changed, "PropertyChanged")
-			self.Adapter.HandleSignal(self.on_device_created, "DeviceCreated")
-			self.Adapter.HandleSignal(self.on_device_removed, "DeviceRemoved")
+			self.adapter_signals.Handle(self.Adapter, self.on_device_found, "DeviceFound")
+			self.adapter_signals.Handle(self.Adapter, self.on_property_changed, "PropertyChanged")
+			self.adapter_signals.Handle(self.Adapter, self.on_device_created, "DeviceCreated")
+			self.adapter_signals.Handle(self.Adapter, self.on_device_removed, "DeviceRemoved")
 			self.__adapter_path = self.Adapter.GetObjectPath()
 			
 			self.emit("adapter-changed", self.__adapter_path)
@@ -315,7 +333,11 @@ class DeviceList(GenericList):
 				pass
 
 			if not "Fake" in props:
-				device.HandleSignal(self.on_device_property_changed, "PropertyChanged", path_keyword="path")
+				self.device_signals.Handle("bluez", device, 
+							self.on_device_property_changed, 
+							"PropertyChanged",
+							sigid=device.GetObjectPath(),
+							path_keyword="path")
 				if props["Connected"]:
 					self.monitor_power_levels(device)
 		
@@ -332,7 +354,11 @@ class DeviceList(GenericList):
 				self.emit("device-property-changed", device, iter, ("Fake", False))
 				self.row_update_event(iter, "Fake", False)
 				
-				device.HandleSignal(self.on_device_property_changed, "PropertyChanged", path_keyword="path")
+				self.device_signals.Handle("bluez", device, 
+							self.on_device_property_changed, 
+							"PropertyChanged", 
+							sigid=device.GetObjectPath(), 
+							path_keyword="path")
 				if props_new["Connected"]:
 					self.monitor_power_levels(device)
 	
@@ -382,10 +408,10 @@ class DeviceList(GenericList):
 		try:
 			props = device.GetProperties()
 		except:
-			device.UnHandleSignal(self.on_device_property_changed, "PropertyChanged")
+			self.device_signals.Disconnect(device.GetObjectPath())
 		else:
 			if not "Fake" in props:
-				device.UnHandleSignal(self.on_device_property_changed, "PropertyChanged")
+				self.device_signals.Disconnect(device.GetObjectPath())
 				
 		device.Destroy()
 				

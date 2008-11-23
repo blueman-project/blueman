@@ -30,7 +30,9 @@ class DeviceSelectorWidget(gtk.VBox):
 	def __init__(self, adapter=None):
 	
 		gtk.VBox.__init__(self)
+		
 		self.props.spacing = 1
+		self.set_size_request(360, 340)
 		
 		sw = gtk.ScrolledWindow()
 		self.List = devlist = DeviceSelectorList(adapter)
@@ -73,7 +75,13 @@ class DeviceSelectorWidget(gtk.VBox):
 		self.List.connect("adapter-added", self.on_adapter_added)
 		self.List.connect("adapter-removed", self.on_adapter_removed)
 		self.List.connect("adapter-property-changed", self.on_adapter_prop_changed)
+		
 		self.update_adapters_list()
+		
+	def __del__(self):
+		self.List.destroy()
+		print "Deleting widget"
+
 
 	def on_discovery_progress(self, devlist, fraction):
 		self.pbar.props.fraction = fraction

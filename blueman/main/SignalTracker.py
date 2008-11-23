@@ -27,7 +27,12 @@ class SignalTracker:
 		
 	def Handle(self, *args, **kwargs):
 		auto = not type(args[0]) == str
-
+		if "sigid" in kwargs:
+			sigid = kwargs["sigid"]
+			del kwargs["sigid"]
+		else:
+			sigid = None
+		
 		if auto:
 			obj = args[0]
 			args = args[1:]
@@ -37,26 +42,43 @@ class SignalTracker:
 				objtype = "gobject"
 			elif isinstance(obj, dbus.proxies.Interface):
 				objtype = "dbus"
+			else:
+				raise Exception, "Unknown object type"
 		else:
 			objtype = args[0]
 			obj = args[1]
 			args = args[2:]
 		
 		if objtype == "bluez":
-			obj.HandleSignal(*args)
+			obj.HandleSignal(*args, **kwargs)
 		elif objtype == "gobject":
 			args = obj.connect(*args)
 		elif objtype == "dbus":
 			obj.bus.add_signal_receiver(*args, **kwargs)
 
-		self._signals.append((objtype, obj, args, kwargs))
+		self._signals.append((sigid, objtype, obj, args, kwargs))
 		
+	def Disconnect(self, sigid):
+		for sig in self._signals:
+			(_sigid, objtype, obj, args, kwargs) = sig
+			if sigid != None and _sigid == sigid:
+				print "disconnecting", sigid
+				if objtype == "bluez":
+					obj.UnHandleSignal(*args)
+				elif objtype == "gobject":
+					obj.disconnect(args)
+				elif objtype == "dbus":
+					obj.bus.remove_signal_receiver(*args, **kwargs)
+					
+				self._signals.remove(sig)
+				
+	
 	def DisconnectAll(self):
 		for sig in self._signals:
 			
-			(objtype, obj, args, kwargs) = sig
+			(sigid, objtype, obj, args, kwargs) = sig
 			if objtype == "bluez":
-				obj.UnHandleSignal(*args, **kwargs)
+				obj.UnHandleSignal(*args)
 			elif objtype == "gobject":
 				obj.disconnect(args)
 			elif objtype == "dbus":
