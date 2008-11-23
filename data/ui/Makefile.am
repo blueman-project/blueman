@@ -5,6 +5,7 @@ ui_DATA =				\
 	adapters-tab.ui		\
 	applet-passkey.ui	\
 	manager-main.ui		\
-	services.ui
+	services.ui	\
+	device-list-widget.ui
 
 EXTRA_DIST = $(ui_DATA)
