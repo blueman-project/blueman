@@ -84,92 +84,13 @@ class Transfer(OdsManager):
 			print pattern, "Started"
 			
 		def on_session_created(server, session):
+			self.transfers[session.object_path] = {}
 			print pattern, "session created"
 			if pattern != "opp":
 				return
 			
 			def on_transfer_started(session, filename, local_path, total_bytes):
-				print local_path
-				def on_cancel(n, action):
-					session.Cancel()
-					print "cancel"
-				
-				def access_cb(n, action):
-					t = self.transfers[session.object_path]
-					
-					if t["waiting"]:
-						if action == "accept":
-							session.Accept()
-						else:
-							session.Reject()
-						
-						if not t["notification"] == None:
-							t["waiting"] = False
-							print "clearing actions"
-							n.clear_actions()
-							n.add_action("cancel", _("Cancel"), on_cancel)
-							n.set_urgency(pynotify.URGENCY_NORMAL)
-							n.set_timeout(0)
-							
-							update_notification(n)
-					
-				def on_closed(n):
-					t = self.transfers[session.object_path]
-					if t["waiting"]:
-						session.Reject()
-					
-					if not self.transfers[session.object_path]["finished"]:
-						gobject.source_remove(self.transfers[session.object_path]["updater"])
-						self.transfers[session.object_path]["notification"] = None
-					
-						
-
-
-				def show_open():
-					temp = []
-					def on_open(n, action):
-						print "open", local_path
-						spawn(["xdg-open", local_path], True)
-						temp.remove(n)
-					
-					n = pynotify.Notification(_("File Saved"), _("Would you like to open %s?") % filename)
-					n.set_icon_from_pixbuf(get_icon("gtk-save", 48))
-					n.add_action("open", _("Open"), on_open)
-					n.attach_to_status_icon(self.Applet.status_icon)
-					n.show()
-					temp.append(n)
-					return n
-
-						
-				def update_notification(n):
-					t = self.transfers[session.object_path]
-
-					if not t["waiting"]:
-						if t["finished"]:
-							if t["transferred"] == t["total"]:
-								show_open()
-							n.disconnect(closed_sig)
-							
-							gobject.source_remove(self.transfers[session.object_path]["updater"])
-							
-							del self.transfers[session.object_path]
-							
-							n.close()
-							
-							return False
-						
-						else:
-							
-							spd = format_bytes(t["calc"].calc(t["transferred"]))
-							trans = format_bytes(t["transferred"])
-							tot = format_bytes(t["total"])
-		
-							n.update(_("Receiving File"), _("Receiving File %(0)s\n%(1).2f%(2)s out of %(3).2f%(4)s (%(5).2f%(6)s/s)") % {"0":t["filename"],"1":trans[0], "2":trans[1], "3":tot[0], "4":tot[1], "5":spd[0], "6":spd[1]})
-							n.show()
-					
-					return True
-						
-				
+				print "transfer started", filename
 				info = server.GetServerSessionInfo(session.object_path)
 				trusted = False
 				try:
@@ -181,8 +102,8 @@ class Transfer(OdsManager):
 				except Exception, e:
 					print e
 					name = info["BluetoothAddress"]
-				
-				
+			
+			
 				icon = composite_icon(get_icon("blueman-send-file", 48), [(get_icon("blueman", 24), 24, 24, 255)])
 				n = pynotify.Notification(_("Incoming File"), _("Incoming file %(0)s from %(1)s") % {"0":os.path.basename(filename), "1":name})
 				n.set_icon_from_pixbuf(icon)
@@ -191,10 +112,10 @@ class Transfer(OdsManager):
 				n.add_action("accept", _("Accept"), access_cb)
 				n.add_action("reject", _("Reject"), access_cb)
 				n.add_action("default", "Default Action", access_cb)
-				
+			
 				closed_sig = n.connect("closed", on_closed)
-				
-				self.transfers[session.object_path] = {}
+			
+			
 				self.transfers[session.object_path]["notification"] = n
 				self.transfers[session.object_path]["filename"] = filename
 				self.transfers[session.object_path]["total"] = total_bytes
@@ -203,32 +124,115 @@ class Transfer(OdsManager):
 				self.transfers[session.object_path]["calc"] = SpeedCalc()
 				self.transfers[session.object_path]["updater"] = gobject.timeout_add(1000, update_notification, n)
 				self.transfers[session.object_path]["transferred"] = 0
-				
+				self.transfers[session.object_path]["transferred"] = 0
+				self.transfers[session.object_path]["closed_sig"] = closed_sig
 				if not self.Config.props.opp_accept or not trusted:
 					n.show()
 				else:
 					access_cb(n, "accept")
+			
+			def on_cancel(n, action):
+				session.Cancel()
+				print "cancel"
 				
-				def transfer_progress(session, bytes_transferred):
-					#print "progress", bytes_transferred
-					self.transfers[session.object_path]["transferred"] = bytes_transferred
+			def access_cb(n, action):
+				t = self.transfers[session.object_path]
+				print action
+				if t["waiting"]:
+					if action == "accept":
+						session.Accept()
+					else:
+						session.Reject()
 					
-				def transfer_finished(session, type):
-					print "---", type
-					try:
-						if not self.transfers[session.object_path]["finished"]:
-							self.transfers[session.object_path]["finished"] = True
-							update_notification(n)
-					except KeyError:
-						pass
+					if not t["notification"] == None:
+						t["waiting"] = False
+						print "clearing actions"
+						n.clear_actions()
+						n.add_action("cancel", _("Cancel"), on_cancel)
+						n.set_urgency(pynotify.URGENCY_NORMAL)
+						n.set_timeout(0)
 						
-					
-				session.GHandle("transfer-progress", transfer_progress)
-				session.GHandle("cancelled", transfer_finished, "cancelled")
-				session.GHandle("disconnected", transfer_finished, "disconnected")
-				session.GHandle("transfer-completed", transfer_finished, "completed")
-				session.GHandle("error-occurred", transfer_finished, "error")
+						update_notification(n)
 				
+			def on_closed(n):
+				t = self.transfers[session.object_path]
+				if t["waiting"]:
+					session.Reject()
+				
+				if not self.transfers[session.object_path]["finished"]:
+					gobject.source_remove(self.transfers[session.object_path]["updater"])
+					self.transfers[session.object_path]["notification"] = None
+				
+					
+
+
+			def show_open():
+				temp = []
+				def on_open(n, action):
+					print "open", local_path
+					spawn(["xdg-open", local_path], True)
+					temp.remove(n)
+				
+				n = pynotify.Notification(_("File Saved"), _("Would you like to open %s?") % filename)
+				n.set_icon_from_pixbuf(get_icon("gtk-save", 48))
+				n.add_action("open", _("Open"), on_open)
+				n.attach_to_status_icon(self.Applet.status_icon)
+				n.show()
+				temp.append(n)
+				return n
+
+					
+			def update_notification(n):
+				t = self.transfers[session.object_path]
+
+				if not t["waiting"]:
+					if t["finished"]:
+						if t["transferred"] == t["total"]:
+							show_open()
+						self.transfers[session.object_path]["notification"].disconnect(self.transfers[session.object_path]["closed_sig"])
+						
+						gobject.source_remove(self.transfers[session.object_path]["updater"])
+						
+						self.transfers[session.object_path] = {}
+						
+						n.close()
+						
+						return False
+					
+					else:
+						
+						spd = format_bytes(t["calc"].calc(t["transferred"]))
+						trans = format_bytes(t["transferred"])
+						tot = format_bytes(t["total"])
+	
+						n.update(_("Receiving File"), _("Receiving File %(0)s\n%(1).2f%(2)s out of %(3).2f%(4)s (%(5).2f%(6)s/s)") % {"0":t["filename"],"1":trans[0], "2":trans[1], "3":tot[0], "4":tot[1], "5":spd[0], "6":spd[1]})
+						n.show()
+				
+				return True
+					
+			
+
+			
+			def transfer_progress(session, bytes_transferred):
+				#print "progress", bytes_transferred
+				self.transfers[session.object_path]["transferred"] = bytes_transferred
+				
+			def transfer_finished(session, type):
+				print "---", type
+				try:
+					if not self.transfers[session.object_path]["finished"]:
+						self.transfers[session.object_path]["finished"] = True
+						update_notification(self.transfers[session.object_path]["notification"])
+				except KeyError:
+					pass
+					
+				
+			session.GHandle("transfer-progress", transfer_progress)
+			session.GHandle("cancelled", transfer_finished, "cancelled")
+			session.GHandle("disconnected", transfer_finished, "disconnected")
+			session.GHandle("transfer-completed", transfer_finished, "completed")
+			session.GHandle("error-occurred", transfer_finished, "error")
+			
 			session.GHandle("transfer-started", on_transfer_started)
 		
 		server.GHandle("started", on_started)
