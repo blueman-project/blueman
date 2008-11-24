@@ -134,6 +134,7 @@
                     <child>
                       <object class="GtkProgressBar" id="pb_file">
                         <property name="visible">True</property>
+                        <property name="tooltip_text" translatable="yes">File Progress</property>
                         <property name="ellipsize">end</property>
                       </object>
                       <packing>
@@ -145,6 +146,7 @@
                       <object class="GtkProgressBar" id="pb_total">
                         <property name="height_request">7</property>
                         <property name="visible">True</property>
+                        <property name="tooltip_text" translatable="yes">Total Progress</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -157,36 +159,6 @@
               <packing>
                 <property name="fill">False</property>
                 <property name="position">2</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkHBox" id="hb_msg">
-                <property name="spacing">8</property>
-                <child>
-                  <object class="GtkImage" id="i_msg_icon">
-                    <property name="visible">True</property>
-                    <property name="stock">gtk-dialog-warning</property>
-                    <property name="icon-size">4</property>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="l_message">
-                    <property name="visible">True</property>
-                    <property name="xalign">0</property>
-                    <property name="label" translatable="yes">Operation Unsupported</property>
-                  </object>
-                  <packing>
-                    <property name="position">1</property>
-                  </packing>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="position">3</property>
               </packing>
             </child>
           </object>

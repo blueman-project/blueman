@@ -65,5 +65,9 @@ class OdsSession(OdsBase):
 		self.emit("transfer-completed")
 		
 	def on_error(self, name, msg):
+		if name == "org.openobex.Error.LinkError":
+			self.Connected = False
+			self.Disconnect()
+		
 		self.emit("error-occurred", name, msg)
 		#self.DisconnectAll()

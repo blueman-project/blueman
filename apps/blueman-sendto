@@ -188,15 +188,17 @@ class Sender(gobject.GObject):
 		
 		
 	def on_session_disconnected(self, session):
-		self.session.Close()
+		if self.session:
+			self.session.Close()
 		
 	def on_session_destroyed(self, manager, path):
 		print "session destroyed"
-		self.session = None
+		if self.session.object_path == path:
+			self.session = None
 		
 	def on_session_connected(self, session):
 		print "commence transfer"
-		
+		self.sesion = session
 		self.process_queue()
 		
 	def on_session_error(self, session, name, msg):
@@ -218,11 +220,13 @@ class Sender(gobject.GObject):
 		elif resp == gtk.RESPONSE_NO:
 			self.total_bytes -= os.path.getsize(self.files[-1])
 			self.total_transferred -= self.transferred
+			self.transferred = 0
 			del self.files[-1]
 			self.process_queue()
 		elif resp == gtk.RESPONSE_YES:
 			self.total_transferred -= self.transferred
-			if not self.session.Connected:
+			self.transferred = 0
+			if not self.session or not self.session.Connected:
 				self.create_session()
 			else:
 				self.process_queue()
