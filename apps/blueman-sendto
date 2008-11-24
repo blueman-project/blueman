@@ -79,7 +79,7 @@ class Sender(gobject.GObject):
 		self.transferred = 0
 		self.bytes = 0
 		
-		self.speed = SpeedCalc()
+		self.speed = SpeedCalc(6)
 
 		
 		for f in self.files:
@@ -90,6 +90,9 @@ class Sender(gobject.GObject):
 				self.files.remove(f)
 		
 		self.num_files = len(self.files)
+		if self.num_files == 1:
+			self.pb_total.props.visible = False
+			
 		
 		self.manager = OdsManager()
 		
