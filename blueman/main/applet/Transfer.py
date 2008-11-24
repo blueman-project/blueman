@@ -227,7 +227,7 @@ class Transfer(OdsManager):
 				session.GHandle("cancelled", transfer_finished, "cancelled")
 				session.GHandle("disconnected", transfer_finished, "disconnected")
 				session.GHandle("transfer-completed", transfer_finished, "completed")
-				session.GHandle("error-occured", transfer_finished, "error")
+				session.GHandle("error-occurred", transfer_finished, "error")
 				
 			session.GHandle("transfer-started", on_transfer_started)
 		

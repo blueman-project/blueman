@@ -53,7 +53,6 @@ class DeviceSelectorDialog(gtk.Dialog):
 		#(adapter, device)
 		self.selection = None
 		
-		self.connect("response", self.on_response)
 		self.selector.List.connect("device-selected", self.on_device_selected)
 		self.selector.List.connect("adapter-changed", self.on_adapter_changed)
 		
@@ -62,12 +61,11 @@ class DeviceSelectorDialog(gtk.Dialog):
 		
 	def on_device_selected(self, devlist, device, iter):
 		self.selection = (devlist.Adapter.GetObjectPath(), device)
-	
-	def on_response(self, dialog, reponse):
-		if self.selection:
-			self.selection = (self.selection[0], self.selection[1].Copy())
 		
-	def GetSelection():
-		return self.selection
+	def GetSelection(self):
+		if self.selection:
+			return (self.selection[0], self.selection[1].Copy())
+		else:
+			return None
 		
 

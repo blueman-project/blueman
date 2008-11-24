@@ -17,9 +17,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 import gobject
-
+import os
 from blueman.ods.OdsBase import OdsBase
 from blueman.ods.OdsServer import OdsServer
+from blueman.ods.OdsSession import OdsSession
 from blueman.main.SignalTracker import SignalTracker
 
 
@@ -27,12 +28,37 @@ class OdsManager(OdsBase):
 	__gsignals__ = {
 		'server-created' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,gobject.TYPE_STRING,)),
 		'server-destroyed' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+		'session-created' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+		'session-destroyed' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
 	}
 	
 	def __init__(self):
 		OdsBase.__init__(self, "org.openobex.Manager", "/org/openobex")
 		
 		self.Servers = {}
+		self.Sessions = {}
+		
+		self.Handle("SessionClosed", self.on_session_closed)
+		self.Handle("SessionConnectError", self.on_session_error)
+		self.Handle("SessionConnected", self.on_session_connected)
+		
+	def on_session_closed(self, session_path):
+		print "__Session Closed__"
+		self.Sessions[os.path.basename(session_path)].DisconnectAll()
+		del self.Sessions[os.path.basename(session_path)]
+		self.emit("session-destroyed", session_path)
+	
+	def on_session_connected(self, session_path):
+		print "session_connected"
+		session = self.Sessions[os.path.basename(session_path)]
+		session.emit("connected")
+	
+	def on_session_error(self, session_path, err_name, err_msg):
+		print "__error__"
+		session = self.Sessions[os.path.basename(session_path)]
+		session.emit("error-occurred", err_name, err_msg)
+		
+		#self.on_session_closed(session_path)
 
 		
 	def DisconnectAll(self, *args):
@@ -48,7 +74,19 @@ class OdsManager(OdsBase):
 		except KeyError:
 			return None
 	
-	#@self.OdsMethod	
+	
+	def create_session(self, dest_addr, source_addr="00:00:00:00:00:00", pattern="opp"):
+		def reply(session_path):
+			session = OdsSession(session_path)
+			self.Sessions[os.path.basename(session_path)] = session
+			self.emit("session-created", session)
+		def err(*args):
+			print "session err", args
+	
+	
+		self.CreateBluetoothSession(dest_addr, source_addr, pattern, reply_handler=reply, error_handler=err)
+	
+	
 	def create_server(self, source_addr="00:00:00:00:00:00", pattern="opp", require_pairing=False):
 		def reply(path):
 			server = OdsServer(path)

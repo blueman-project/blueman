@@ -261,7 +261,7 @@ class DeviceList(GenericList):
 		print adapter
 		if self.Adapter != None:
 			self.adapter_signals.DisconnectAll()
-		
+
 		try:
 			self.Adapter = self.Manager.GetAdapter(adapter)
 			self.adapter_signals.Handle(self.Adapter, self.on_device_found, "DeviceFound")
@@ -271,7 +271,8 @@ class DeviceList(GenericList):
 			self.__adapter_path = self.Adapter.GetObjectPath()
 			
 			self.emit("adapter-changed", self.__adapter_path)
-		except Bluez.errors.DBusNoSuchAdapterError:
+		except Bluez.errors.DBusNoSuchAdapterError, e:
+			print e
 			#try loading default adapter
 			if len(self.Manager.ListAdapters()) > 0:
 				self.SetAdapter()

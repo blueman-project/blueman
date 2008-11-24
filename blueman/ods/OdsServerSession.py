@@ -27,7 +27,7 @@ class OdsServerSession(OdsBase):
 		'transfer-started' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
 		'transfer-progress' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
 		'transfer-completed' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, ()),
-		'error-occured' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
+		'error-occurred' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
 	}
 	
 	def __init__(self, obj_path):
@@ -38,7 +38,7 @@ class OdsServerSession(OdsBase):
 		self.Handle("TransferStarted", self.on_trans_started)
 		self.Handle("TransferProgress", self.on_trans_progress)
 		self.Handle("TransferCompleted", self.on_trans_complete)
-		self.Handle("ErrorOccured", self.on_error)
+		self.Handle("ErrorOccurred", self.on_error)
 		
 	def __del__(self):
 		print "deleting session"
@@ -61,5 +61,5 @@ class OdsServerSession(OdsBase):
 		self.emit("transfer-completed")
 		
 	def on_error(self, name, msg):
-		self.emit("error-occured", name, msg)
+		self.emit("error-occurred", name, msg)
 		#self.DisconnectAll()

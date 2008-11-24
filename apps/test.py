@@ -12,5 +12,4 @@ w = DeviceSelectorDialog()
 
 w.run()
 w.destroy()
-del w
-gtk.main()
+

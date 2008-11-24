@@ -117,7 +117,7 @@ class DeviceSelectorWidget(gtk.VBox):
 	def on_adapter_changed(self, devlist, adapter_path):
 		print "changed"
 		if adapter_path == None:
-			self.update_adapters_list(self)
+			self.update_adapters_list()
 		else:
 			if self.List.Adapter:
 				print "a"
