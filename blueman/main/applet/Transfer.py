@@ -107,6 +107,7 @@ class Transfer(OdsManager):
 				icon = composite_icon(get_icon("blueman-send-file", 48), [(get_icon("blueman", 24), 24, 24, 255)])
 				n = pynotify.Notification(_("Incoming File"), _("Incoming file %(0)s from %(1)s") % {"0":os.path.basename(filename), "1":name})
 				n.set_icon_from_pixbuf(icon)
+				n.set_timeout(30)
 				n.set_category("bluetooth.transfer")
 				n.attach_to_status_icon(self.Applet.status_icon)
 				n.add_action("accept", _("Accept"), access_cb)
@@ -115,7 +116,6 @@ class Transfer(OdsManager):
 			
 				closed_sig = n.connect("closed", on_closed)
 			
-			
 				self.transfers[session.object_path]["notification"] = n
 				self.transfers[session.object_path]["filename"] = filename
 				self.transfers[session.object_path]["total"] = total_bytes
@@ -123,7 +123,6 @@ class Transfer(OdsManager):
 				self.transfers[session.object_path]["waiting"] = True
 				self.transfers[session.object_path]["calc"] = SpeedCalc()
 				self.transfers[session.object_path]["updater"] = gobject.timeout_add(1000, update_notification, n)
-				self.transfers[session.object_path]["transferred"] = 0
 				self.transfers[session.object_path]["transferred"] = 0
 				self.transfers[session.object_path]["closed_sig"] = closed_sig
 				if not self.Config.props.opp_accept or not trusted:
@@ -189,7 +188,7 @@ class Transfer(OdsManager):
 					if t["finished"]:
 						if t["transferred"] == t["total"]:
 							show_open()
-						self.transfers[session.object_path]["notification"].disconnect(self.transfers[session.object_path]["closed_sig"])
+						n.disconnect(self.transfers[session.object_path]["closed_sig"])
 						
 						gobject.source_remove(self.transfers[session.object_path]["updater"])
 						
