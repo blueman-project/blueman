@@ -107,7 +107,7 @@ class Transfer(OdsManager):
 				icon = composite_icon(get_icon("blueman-send-file", 48), [(get_icon("blueman", 24), 24, 24, 255)])
 				n = pynotify.Notification(_("Incoming File"), _("Incoming file %(0)s from %(1)s") % {"0":os.path.basename(filename), "1":name})
 				n.set_icon_from_pixbuf(icon)
-				n.set_timeout(30)
+				n.set_timeout(30000)
 				n.set_category("bluetooth.transfer")
 				n.attach_to_status_icon(self.Applet.status_icon)
 				n.add_action("accept", _("Accept"), access_cb)
