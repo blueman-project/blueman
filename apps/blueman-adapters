@@ -34,14 +34,13 @@ if os.path.exists(os.path.join(_dirname,"ChangeLog")):
 	
 import blueman.bluez as Bluez
 from blueman.Constants import *
-from blueman.Functions import setup_icon_path
+from blueman.Functions import setup_icon_path, enable_rgba_colormap
 from blueman.main.SignalTracker import SignalTracker
 	
 import gettext
 _ = gettext.gettext
 
-
-#@tadas: Padaryk, kad nereiktu apply spaust, nebutinas jis
+enable_rgba_colormap()
 
 class BluemanAdapters:
 	def __init__(self, selected_hci_dev):

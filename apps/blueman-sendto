@@ -44,6 +44,8 @@ from blueman.main.SpeedCalc import SpeedCalc
 
 from blueman.ods.OdsManager import OdsManager
 
+enable_rgba_colormap()
+
 class Sender(gobject.GObject):
 	__gsignals__ = {
 		'result' : (gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE, (gobject.TYPE_BOOLEAN,)),

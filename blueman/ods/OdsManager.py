@@ -44,19 +44,26 @@ class OdsManager(OdsBase):
 		
 	def on_session_closed(self, session_path):
 		print "__Session Closed__"
-		self.Sessions[os.path.basename(session_path)].DisconnectAll()
-		del self.Sessions[os.path.basename(session_path)]
-		self.emit("session-destroyed", session_path)
+		session_path = os.path.basename(session_path)
+		if session_path in self.Sessions:
+			self.Sessions[session_path].DisconnectAll()
+			del self.Sessions[session_path]
+			self.emit("session-destroyed", session_path)
 	
 	def on_session_connected(self, session_path):
 		print "session_connected"
-		session = self.Sessions[os.path.basename(session_path)]
-		session.emit("connected")
+		session_path = os.path.basename(session_path)
+		if session_path in self.Sessions:
+			session = self.Sessions[session_path]
+			if not session.Connected:
+				session.emit("connected")
 	
 	def on_session_error(self, session_path, err_name, err_msg):
 		print "__error__"
-		session = self.Sessions[os.path.basename(session_path)]
-		session.emit("error-occurred", err_name, err_msg)
+		session_path = os.path.basename(session_path)
+		if session_path in self.Sessions:
+			session = self.Sessions[session_path]
+			session.emit("error-occurred", err_name, err_msg)
 		
 		#self.on_session_closed(session_path)
 

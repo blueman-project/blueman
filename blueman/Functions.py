@@ -27,6 +27,13 @@ from subprocess import Popen
 import gobject
 
 
+def enable_rgba_colormap():
+	screen = gtk.gdk.display_get_default().get_default_screen()
+	colormap = screen.get_rgba_colormap()
+	if colormap == None:
+		colormap = screen.get_rgb_colormap()
+	gtk.widget_set_default_colormap(colormap)
+
 def spawn(command, system=False):
 
 	def child_closed(pid, cond):

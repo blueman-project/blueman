@@ -77,7 +77,7 @@ class BluemanApplet:
 		self.bus.watch_name_owner('org.bluez', self.on_dbus_name_owner_change)
 		self.manager_init()
 
-		
+		enable_rgba_colormap()
 		
 		
 		DbusService(self)
