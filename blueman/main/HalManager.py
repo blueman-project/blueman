@@ -30,6 +30,15 @@ class HalManager(dbus.proxies.Interface):
 		obj = self.bus.get_object('org.freedesktop.Hal', '/org/freedesktop/Hal/Manager')
 		dbus.proxies.Interface.__init__(self, obj, 'org.freedesktop.Hal.Manager')
 		
+	
+	def register_netdev(self, devicename):
+		devices = self.FindDeviceStringMatch("net.interface", devicename)
+		if len(devices):
+			for device in devices:
+				obj = self.bus.get_object('org.freedesktop.Hal', device)
+				device = dbus.Interface(obj, 'org.freedesktop.Hal.Device')
+				device.SetPropertyString("info.category", "net.80203")
+				device.AddCapability("net.80203")
 
 	def register(self, device_file, bd_addr):
 	

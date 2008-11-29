@@ -144,7 +144,7 @@ class conf_service(dbus.service.Object):
 
 
 			
-	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="ss", out_signature="b")	
+	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="ss", out_signature="")	
 	def HalRegisterModemPort(self, rfcomm_device, bd_addr):
 		halmgr = HalManager()
 		print "** Registering modem"
@@ -165,10 +165,15 @@ class conf_service(dbus.service.Object):
 		halmgr.unregister_dev(rfcomm_device)
 		
 	
-	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="", out_signature="b")
+	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="", out_signature="")
 	def HalUnregisterAllModemPorts(self):
 		pass
 		
+		
+	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="", out_signature="")
+	def HalRegisterNetDev(self, devicename):
+		halmgr = HalManager()
+		halmgr.register_netdev(devicename)
 	
 
 DBusGMainLoop(set_as_default=True)

@@ -202,8 +202,13 @@ class BluemanServices:
 			if key in self.ignored_keys:
 				self.ignored_keys.remove(key)
 				return
-			if key == "dhcp_client":
-				self.Builder.get_object(key).props.active = value
+			if key == "rb_blueman" or key == "dhcp_client":
+				if value:
+					self.Builder.get_object("rb_blueman").props.active = True
+				else:
+					self.Builder.get_object("rb_nm").props.active = True
+				return
+			if key == "rb_nm":
 				return
 			
 			if key == "nap_enable":
@@ -288,13 +293,13 @@ class BluemanServices:
 			r_dhcpd = self.Builder.get_object("r_dhcpd")
 			net_ip = self.Builder.get_object("net_ip")
 			net_nat = self.Builder.get_object("net_nat")
-			dhcp_client = self.Builder.get_object("dhcp_client")
-			
+			rb_nm = self.Builder.get_object("rb_nm")
+			rb_blueman = self.Builder.get_object("rb_blueman")
 			
 			nap_frame = self.Builder.get_object("nap_frame")
 			warning = self.Builder.get_object("warning")
 			
-			dhcp_client.props.active = self.NetConf.props.dhcp_client
+			rb_blueman.props.active = self.NetConf.props.dhcp_client
 			nap_enable.props.active = self.NetConf.props.nap_enable
 			gn_enable.props.active = self.NetConf.props.gn_enable
 			
@@ -352,8 +357,8 @@ class BluemanServices:
 			nap_enable.connect("toggled", lambda x: self.on_property_changed(self.NetConf, "nap_enable", x.props.active))
 	
 			
-			dhcp_client.connect("toggled", lambda x: setattr(self.NetConf.props, "dhcp_client", x.props.active))
-	
+			rb_nm.connect("toggled", lambda x: setattr(self.NetConf.props, "dhcp_client", not x.props.active))
+			rb_blueman.connect("toggled", lambda x: setattr(self.NetConf.props, "dhcp_client", x.props.active))
 	def on_selection_changed(self, selection):
 		iter = self.List.selected()
 		row = self.List.get(iter, "id")

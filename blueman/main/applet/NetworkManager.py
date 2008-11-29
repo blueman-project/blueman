@@ -53,10 +53,14 @@ class NetworkManager():
 		if self.Config.props.dhcp_client == None:
 			self.Config.props.dhcp_client = True
 			
-		if not self.Config.props.dhcp_client:
-			return
+
 		if key == "Device":
-			self.dhcp_acquire(value)
+			if not self.Config.props.dhcp_client:
+				if value != "":
+					m = Mechanism()
+					m.HalRegisterNetDev(value)
+			else:
+				self.dhcp_acquire(value)
 		
 	def dhcp_acquire(self, device):
 		if device != "":

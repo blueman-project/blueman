@@ -35,6 +35,8 @@ ngettext = gettext.ngettext
 _ = gettext.gettext
 
 from blueman.bluez.Adapter import Adapter
+from blueman.main.Device import Device
+from blueman.bluez.Manager import Manager
 from blueman.Functions import *
 from blueman.Constants import *
 from blueman.gui.DeviceSelectorDialog import DeviceSelectorDialog
@@ -189,7 +191,10 @@ class Sender(gobject.GObject):
 		
 	def on_session_disconnected(self, session):
 		if self.session:
-			self.session.Close()
+			try:
+				self.session.Close()
+			except:
+				print "Warning: Session already closed"
 		
 	def on_session_destroyed(self, manager, path):
 		print "session destroyed"
@@ -265,21 +270,40 @@ class SendTo:
 		if options.device == None:
 			if not self.select_device():
 				exit()
-			sender = None
-			if len(args) == 0:
-				if not self.select_files():
-					exit()
-				else:
-					sender = Sender(self.device, self.adapter, self.files)
-			else:
-				sender = Sender(self.device, self.adapter, args)
-				
-			def on_result(sender, res):
-				gtk.main_quit()
-			sender.connect("result", on_result)
+
+			self.do_send()
 			
+		else:
+			m = Manager("gobject")
+			try:
+				adapter = m.GetAdapter()
+			except:
+				print "Error: No Adapters present"
+				exit()
+			try:
+				d = adapter.FindDevice(options.device)
+			except:
+				print "Error: No such device"
+				exit()
+			else:
+				self.device = Device(d)
+			self.adapter = adapter.GetObjectPath()
+			self.do_send()
 		
 		gtk.main()
+		
+	def do_send(self):
+		if len(self.args) == 0:
+			if not self.select_files():
+				exit()
+			else:
+				sender = Sender(self.device, self.adapter, self.files)
+		else:
+			sender = Sender(self.device, self.adapter, self.args)
+			
+		def on_result(sender, res):
+			gtk.main_quit()
+		sender.connect("result", on_result)
 		
 		
 	def select_files(self):
