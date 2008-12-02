@@ -284,14 +284,18 @@ class ManagerDeviceMenu(gtk.Menu):
 						item.show()
 						self.append(item)
 							
-					item = gtk.SeparatorMenuItem()
-					item.show()
-					sub.append(item)
 							
 					rfcomms = rfcomm_list()
+					
+					sep = False
 					for dev in rfcomms:
 						if dev["dst"] == device.Address:
 							if dev["state"] == "connected":
+								if not sep:
+									item = gtk.SeparatorMenuItem()
+									item.show()
+									sub.append(item)
+								
 								devname = "/dev/rfcomm%s" % dev["id"]
 							
 								item = create_menuitem(_("Disconnect %s") % devname, get_icon("gtk-disconnect", 16))

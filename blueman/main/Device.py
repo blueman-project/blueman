@@ -39,11 +39,13 @@ class Device:
 		self.Properties = self.Device.GetProperties()
 		
 		self.init_services()
-			
+		
+		if not self.Fake:
+			self.Signals.Handle("bluez", self.Device, self.property_changed, "PropertyChanged")
 	
 	def init_services(self):
 		print "Loading services"
-		self.Signals.DisconnectAll()
+
 		if not "Fake" in self.Properties:
 			self.Fake = False
 			services = self.Device.ListServiceInterfaces()
@@ -54,7 +56,7 @@ class Device:
 				self.Services[name] = service
 			
 			
-			self.Signals.Handle(self.Device, self.property_changed, "PropertyChanged")
+			
 
 				
 	def Copy(self):
