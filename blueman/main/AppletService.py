@@ -17,11 +17,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 import dbus
-class AppletService(dbus.proxies.Interface):
+from blueman.main.SignalTracker import SignalTracker
+class AppletService(dbus.proxies.Interface, SignalTracker):
 	def __init__(self):
+		SignalTracker.__init__(self)
 		self.bus = dbus.SessionBus()
 		
 		service = self.bus.get_object("org.blueman.Applet", "/")
 		dbus.proxies.Interface.__init__(self, service, "org.blueman.Applet")
 
-	
+	def Handle(self, signame, handler):
+		SignalTracker.Handle(self, "dbus", self, handler, signame, self.dbus_interface, path=self.object_path)

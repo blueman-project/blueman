@@ -23,7 +23,7 @@
 import os.path
 import sys
 import gtk
-import dbus
+import dbus, dbus.glib
 import gobject
 
 #support running uninstalled
@@ -38,6 +38,7 @@ from blueman.gui.manager.ManagerToolbar import ManagerToolbar
 from blueman.gui.manager.ManagerMenu import ManagerMenu
 from blueman.gui.manager.ManagerStats import ManagerStats
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
+from blueman.main.AppletService import AppletService
 from blueman.main.Config import Config
 
 import gettext
@@ -71,15 +72,46 @@ class Blueman:
 					self.Builder.get_object("statusbar").props.visible = False
 			elif key == "latest_last":
 				self.List.DisplayKnownDevices(autoselect=True)
+				
+		def on_bt_status_changed(status):
+			if not status:
+				d = gtk.MessageDialog(  window,
+					type=gtk.MESSAGE_ERROR)
+				d.props.icon_name = "blueman"
+				d.props.text = _("Bluetooth Turned Off")
+				d.props.secondary_text = _("Bluetooth needs to be turned on for the device manager to function")
+
+				d.add_button(gtk.STOCK_QUIT, gtk.RESPONSE_NO)
+				d.add_button(_("Enable Bluetooth"), gtk.RESPONSE_YES)
+				resp = d.run()
+				d.destroy()
+				if resp != gtk.RESPONSE_YES:
+					try:
+						gtk.main_quit()
+					except:
+						exit()
+				else:
+					self.Applet.SetBluetoothStatus(True)
+				
+
 		
 		setup_icon_path()
+		
 		
 		self.Builder = gtk.Builder()
 		self.Builder.add_from_file(UI_PATH +"/manager-main.ui")
 		self.Config = Config()
 		
-
 		window = self.Builder.get_object("window")
+		
+		try:
+			self.Applet = AppletService()
+		except:
+			print "Blueman applet needs to be running"
+			exit()
+		if not self.Applet.GetBluetoothStatus():
+			on_bt_status_changed(False)
+		self.Applet.Handle("BluetoothStatusChanged", on_bt_status_changed)
 
 		
 		check_single_instance("blueman-manager", lambda: window.present())

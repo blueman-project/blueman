@@ -11,17 +11,13 @@ import gtk
 import blueman.bluez as Bluez
 from blueman.gui.GenericList import GenericList
 from blueman.bluez.ServiceInterface import ServiceInterface
-from blueman.main.Config import Config
-from blueman.main.AppletService import AppletService
+
 
 from blueman.Functions import *
 from blueman.Constants import *
-import blueman.main.NetConf as NetConf
-from blueman.main.Mechanism import Mechanism
-from blueman.main.PolicyKitAuth import PolicyKitAuth
 
-TRANSFER = 0
-NETWORK = 1
+import blueman.plugins.services
+from blueman.plugins.ServicePlugin import ServicePlugin
 
 enable_rgba_colormap()
 
@@ -37,7 +33,7 @@ class BluemanServices:
 		self.Builder.add_from_file(UI_PATH +"/services.ui")
 		
 		self.Dialog = self.Builder.get_object("dialog")
-		self.Dialog.set_startup_id("blueman-services")
+
 		self.Dialog.connect("delete-event", lambda x, y: gtk.main_quit())
 		
 		data = [
@@ -48,41 +44,21 @@ class BluemanServices:
 		
 		ls = GenericList(data)
 		ls.props.headers_visible = False
-		ls.append(picture=get_icon("gtk-network", 32), caption="Network", id="network")
-		ls.append(picture=get_icon("gtk-open", 32), caption="Transfer", id="transfer")
+
 		ls.selection.connect("changed", self.on_selection_changed)
 		self.List = ls
 
 				
 		self.Builder.get_object("viewport1").add(ls)
 		ls.show()
-		
 
 		
-		
-		#s = ServiceInterface("org.bluez.NetworkRouter", adapter.GetObjectPath(), ["GetProperties", "SetProperty"])
-		#print "router properties", s.GetProperties()
-		#s.SetProperty("Enabled", False)
-		#print "router properties", s.GetProperties()
-		
-		#s = ServiceInterface("org.bluez.NetworkHub", adapter.GetObjectPath(), ["GetProperties"])
-		#print "hub properties",s.GetProperties()
-		
-		#s = ServiceInterface("org.bluez.NetworkPeer", adapter.GetObjectPath(), ["GetProperties"])
-		#print "peer properties",s.GetProperties()
-		self.TransConf = None
-		self.NetConf = None
-		
-		self.Signals = {}
-		
-		self.page = "network"
-		
-		self.changes = {}
-		self.changes[TRANSFER] = []
-		self.changes[NETWORK] = []
-		self.ignored_keys = []
+		self.container = self.Builder.get_object("hbox1")
 
-		self.set_page("network")
+		
+		self.load_plugins()
+		
+		self.set_page(None)
 		
 		self.Builder.get_object("b_apply").connect("clicked", self.on_apply_clicked)
 		self.Builder.get_object("b_close").connect("clicked", lambda x: gtk.main_quit())
@@ -90,276 +66,75 @@ class BluemanServices:
 		self.Dialog.show()
 		gtk.main()
 		
+	def option_changed(self):
+		rets = self.plugin_exec("on_query_apply_state")
+		show_apply = False
+		for ret in rets:
+			if ret == -1:
+				show_apply = False
+				break
+			show_apply = show_apply or ret
+			
+		b_apply = self.Builder.get_object("b_apply")
+		b_apply.props.sensitive = show_apply
 		
-	def on_apply_clicked(self, button):
-		if self.changes[TRANSFER] != []:
+	def load_plugins(self):
+		path = os.path.dirname(blueman.plugins.services.__file__)
+		plugins = []
+		for root, dirs, files in os.walk(path):
+			for f in files:
+				if f.endswith(".py") and not (f.endswith(".pyc") or f.endswith("_.py")):
+					plugins.append(f[0:-3])
+		print plugins
+		for plugin in plugins:
 			try:
-				a = AppletService()
-			except:
-				print "failed to connect to applet"
-			else:
-				c = self.changes[TRANSFER]
-				if "opp_enabled" in c:
-					if not self.TransConf.props.opp_enabled:
-						a.TransferControl("opp", "destroy")
-				
-				if "ftp_enabled" in c:
-					if not self.TransConf.props.ftp_enabled:
-						a.TransferControl("ftp", "destroy")
-				
-				
-				if "opp_accept" in c or "shared_path" in c or "opp_enabled" in c:
-					if self.TransConf.props.opp_enabled:
-						state = a.TransferStatus("opp")
-						if state == 0: #destroyed
-							a.TransferControl("opp", "create")
-						elif state == 2: #running
-							a.TransferControl("opp", "stop")
-							a.TransferControl("opp", "start")
-						elif state == 1:
-							a.TransferControl("opp", "start")
-							
-				
-				if "ftp_allow_write" in c or "shared_path" in c or "ftp_enabled" in c:
-					if self.TransConf.props.ftp_enabled:
-						state = a.TransferStatus("ftp")
-						if state == 0: #destroyed
-							a.TransferControl("ftp", "create")
-						elif state == 2: #running
-							a.TransferControl("ftp", "stop")
-							a.TransferControl("ftp", "start")
-						elif state == 1:
-							a.TransferControl("ftp", "start")
-				
-				print "ok"
-				self.changes[TRANSFER] = []
-				
-				
-			print "transfer apply"
-		
-		if self.changes[NETWORK] != []:
-			print "network apply"
+				__import__("blueman.plugins.services.%s" % plugin, None, None, [])
+			except ImportError, e:
+				print "Unable to load %s plugin\n%s" % (plugin, e)
 			
-			auth = PolicyKitAuth()
-			authorized = auth.is_authorized("org.blueman.network.setup")
-			if not authorized:
-				authorized = auth.obtain_authorization(self.Builder.get_object("nap_enable"), "org.blueman.network.setup")
-			if authorized:
-				m = Mechanism()
-				nap_enable = self.Builder.get_object("nap_enable")
-				if nap_enable.props.active:
-					
-					r_dnsmasq = self.Builder.get_object("r_dnsmasq")
-					if r_dnsmasq.props.active:
-						stype = "dnsmasq"
-					else:
-						stype = "dhcpd"
-					
-					net_ip = self.Builder.get_object("net_ip")
-					net_nat = self.Builder.get_object("net_nat")
-					
-					m.NetworkSetup(net_ip.props.text, net_nat.props.active, stype)
-					if not self.NetConf.props.nap_enable: #race condition workaround
-						self.ignored_keys.append("nap_enable")
-					self.NetConf.props.nap_enable = True
-					
-				else:
-					if self.NetConf.props.nap_enable: #race condition workaround
-						self.ignored_keys.append("nap_enable")
-					self.NetConf.props.nap_enable = False
-					m.NetworkSetup("0",0,"0")
-					#disable
-				
-				self.changes[NETWORK] = []
-			else:
-				print "Unauth"
-				
-			
-		
-		self.update_changed_state()
-		
-	def on_property_changed(self, config, key, value):
-		if config == self.TransConf:
 
-			if key == "opp_enabled":
-				self.Builder.get_object(key).props.active = value
-			if key == "ftp_enabled":
-				self.Builder.get_object(key).props.active = value
-			if key == "ftp_allow_write":
-				self.Builder.get_object(key).props.active = value
-			if key == "shared_path":
-				self.Builder.get_object(key).set_current_folder(value)
+		for cls in ServicePlugin.__subclasses__():
+			inst = cls(self)
+			(name, icon) = inst.on_load(self.container)
+			self.setup_list_item(inst, name, icon)
 			
-			if key != "shared_path":
-				if key in self.changes[TRANSFER]:
-					self.changes[TRANSFER].remove(key)
-				else:
-					self.changes[TRANSFER].append(key)
-			else:
-				if not key in self.changes[TRANSFER]:
-					self.changes[TRANSFER].append(key)
-					
-		elif config == self.NetConf:
-			if key in self.ignored_keys:
-				self.ignored_keys.remove(key)
-				return
-			if key == "rb_blueman" or key == "dhcp_client":
-				if value:
-					self.Builder.get_object("rb_blueman").props.active = True
-				else:
-					self.Builder.get_object("rb_nm").props.active = True
-				return
-			if key == "rb_nm":
-				return
 			
-			if key == "nap_enable":
-				print "nap_enable", value
-				self.Builder.get_object(key).props.active = value
-				nap_frame = self.Builder.get_object("nap_frame")
-				if value:
-					nap_frame.props.sensitive = True
-				else:
-					nap_frame.props.sensitive = False
-					
-			if key in self.changes[NETWORK]:
-				if key != "ip":
-					self.changes[NETWORK].remove(key)
-			else:
-				self.changes[NETWORK].append(key)
+	def setup_list_item(self, inst, name, icon):
+		self.List.append(picture=get_icon(icon, 32), caption=name, id=inst.__class__.__name__)
+		
 
-				
-		self.update_changed_state()
+	#executes a function on all plugin instances
+	def plugin_exec(self, function, *args, **kwargs):
+		rets = []
+		for inst in ServicePlugin.instances:
+			ret = getattr(inst, function)(*args, **kwargs)
+			rets.append(ret)
+			
+		return rets
+
+
+	
+	def on_apply_clicked(self, button):
+		self.plugin_exec("on_apply")
+		self.option_changed()
+
+
 		
 	def set_page(self, pageid):
-		self.Builder.get_object(self.page).props.visible = False
-		self.Builder.get_object(pageid).props.visible = True
-		self.page = pageid
-		
-		if pageid == "transfer":
-			self.setup_transfer()
-		elif pageid == "network":
-			self.setup_network()
+		print "Set page", pageid
+		if len(ServicePlugin.instances) == 0:
+			return
+		#set the first item
+		if pageid == None:
+			pageid = ServicePlugin.instances[0].__class__.__name__
+		for inst in ServicePlugin.instances:
+			if inst.__class__.__name__ == pageid:
+				inst._on_enter()
+			else:
+				inst._on_leave()
 			
 			
-	def update_changed_state(self):
-		b_apply = self.Builder.get_object("b_apply")
-		changed = False
-		for k,i in self.changes.iteritems():
-			print i
-			changed = changed or (i != [])
-		
-		if "ip" in self.changes[NETWORK]:
-			if not NetConf.ip_chk(self.Builder.get_object("net_ip").props.text):
-				changed = False
-				
-		if changed:
-			b_apply.props.sensitive = True
-		else:
-			b_apply.props.sensitive = False
-			
-			
-	def setup_transfer(self):
-		if self.TransConf == None:
-			self.TransConf = Config("transfer")
-			self.TransConf.connect("property-changed", self.on_property_changed)
-			opp_enabled = self.Builder.get_object("opp_enabled")
-			ftp_enabled = self.Builder.get_object("ftp_enabled")
-			ftp_allow_write = self.Builder.get_object("ftp_allow_write")
-			opp_accept = self.Builder.get_object("opp_accept")
-			shared_path = self.Builder.get_object("shared_path")
-		
-			opp_enabled.props.active = self.TransConf.props.opp_enabled
-			ftp_enabled.props.active = self.TransConf.props.ftp_enabled
-			ftp_allow_write.props.active = self.TransConf.props.ftp_allow_write
-			opp_accept.props.active = self.TransConf.props.opp_accept
-			shared_path.set_filename(self.TransConf.props.shared_path)
-		
-			if self.TransConf.props.shared_path != None:
-				self.Builder.get_object("shared_path").set_current_folder(self.TransConf.props.shared_path)
-			
-			opp_enabled.connect("toggled", lambda x: setattr(self.TransConf.props, "opp_enabled", x.props.active))
-			ftp_enabled.connect("toggled", lambda x: setattr(self.TransConf.props, "ftp_enabled", x.props.active))
-			ftp_allow_write.connect("toggled", lambda x: setattr(self.TransConf.props, "ftp_allow_write", x.props.active))
-			opp_accept.connect("toggled", lambda x: setattr(self.TransConf.props, "opp_accept", x.props.active))
-			shared_path.connect("current-folder-changed", lambda x: setattr(self.TransConf.props, "shared_path", x.get_filename()))
-		
-	def setup_network(self):
-		if self.NetConf == None:
-			self.NetConf = Config("network")
-			self.NetConf.connect("property-changed", self.on_property_changed)
 
-			gn_enable = self.Builder.get_object("gn_enable")
-			nap_enable = self.Builder.get_object("nap_enable")
-			r_dnsmasq = self.Builder.get_object("r_dnsmasq")
-			r_dhcpd = self.Builder.get_object("r_dhcpd")
-			net_ip = self.Builder.get_object("net_ip")
-			net_nat = self.Builder.get_object("net_nat")
-			rb_nm = self.Builder.get_object("rb_nm")
-			rb_blueman = self.Builder.get_object("rb_blueman")
-			
-			nap_frame = self.Builder.get_object("nap_frame")
-			warning = self.Builder.get_object("warning")
-			
-			rb_blueman.props.active = self.NetConf.props.dhcp_client
-			nap_enable.props.active = self.NetConf.props.nap_enable
-			gn_enable.props.active = self.NetConf.props.gn_enable
-			
-			if not self.NetConf.props.nap_enable:
-				nap_frame.props.sensitive = False
-				
-			ns = NetConf.netstatus()
-			
-			if ns["ip"] != '0':
-				net_ip.props.text = ns["ip"]
-				#if not self.NetConf.props.nap_enable:
-				#	self.ignored_keys.append("nap_enable")
-				self.NetConf.props.nap_enable = True
-
-			
-			if ns["masq"] != 0:
-				net_nat.props.active = ns["masq"]
-				
-			if ns["dhcp"] == 0:
-				nap_frame.props.sensitive = False
-				nap_enable.props.active = False
-				if self.NetConf.props.nap_enable:
-					self.ignored_keys.append("nap_enable")
-				self.NetConf.props.nap_enable = False
-				
-				
-			if ns["type"] != 0:
-				if ns["type"] == "dnsmasq":
-					r_dnsmasq.props.active = True
-				else:
-					r_dhcpd.props.active = True
-			
-			if not NetConf.have("dnsmasq") and not NetConf.have("dhcpd3"):
-				nap_frame.props.sensitive = False
-				warning.props.visible = True
-				warning.props.sensitive = True
-				nap_enable.props.sensitive = False
-				if self.NetConf.props.nap_enable:
-					self.ignored_keys.append("nap_enable")
-				self.NetConf.props.nap_enable = False
-				
-			if not NetConf.have("dnsmasq"):
-				r_dnsmasq.props.sensitive = False
-				r_dnsmasq.props.active = False
-				r_dhcpd.props.active = True
-			
-			if not NetConf.have("dhcpd3"):
-				r_dhcpd.props.sensitive = False
-				r_dhcpd.props.active = False
-				r_dnsmasq.props.active = True
-			
-			net_nat.connect("toggled", lambda x: self.on_property_changed(self.NetConf, "nat", x.props.active))
-			net_ip.connect("changed", lambda x: self.on_property_changed(self.NetConf, "ip", x.props.text))
-			gn_enable.connect("toggled", lambda x: setattr(self.NetConf.props, "gn_enable", x.props.active))
-			nap_enable.connect("toggled", lambda x: self.on_property_changed(self.NetConf, "nap_enable", x.props.active))
-	
-			
-			rb_nm.connect("toggled", lambda x: setattr(self.NetConf.props, "dhcp_client", not x.props.active))
-			rb_blueman.connect("toggled", lambda x: setattr(self.NetConf.props, "dhcp_client", x.props.active))
 	def on_selection_changed(self, selection):
 		iter = self.List.selected()
 		row = self.List.get(iter, "id")

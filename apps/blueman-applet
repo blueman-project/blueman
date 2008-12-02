@@ -58,6 +58,7 @@ class BluemanApplet:
 		
 		check_single_instance("blueman-applet")
 		
+		self.DbusSvc = DbusService(self)
 		
 		self.disc_item = create_menuitem(_('Make Discoverable'), get_icon("gtk-search", 16))
 		self.turnoff_item = create_menuitem(_("Bluetooth Off"), get_icon("gtk-stop", 16))
@@ -80,7 +81,7 @@ class BluemanApplet:
 		enable_rgba_colormap()
 		
 		
-		DbusService(self)
+		
 		
 		self.Transfer = Transfer(self)
 		
@@ -93,9 +94,11 @@ class BluemanApplet:
 			if value:
 				self.turnoff_item.get_child().props.label = _("Bluetooth On")
 				self.turnoff_item.set_image(gtk.image_new_from_pixbuf(get_icon("gtk-yes", 16)))
+				self.DbusSvc.BluetoothStatusChanged(False)
 			else:
 				self.turnoff_item.get_child().props.label = _("Bluetooth Off")
 				self.turnoff_item.set_image(gtk.image_new_from_pixbuf(get_icon("gtk-stop", 16)))
+				self.DbusSvc.BluetoothStatusChanged(True)
 			if key in self.__dict__:
 				print "off", self.__dict__[key], value
 				if self.__dict__[key] != value:

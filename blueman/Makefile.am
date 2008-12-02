@@ -2,7 +2,8 @@ SUBDIRS =	\
 	bluez	\
 	gui		\
 	main	\
-	ods
+	ods	\
+	plugins
 
 bluemandir = $(pythondir)/blueman
 blueman_PYTHON = 	\

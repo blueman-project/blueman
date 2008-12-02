@@ -78,6 +78,8 @@ blueman/bluez/Makefile
 blueman/gui/Makefile
 blueman/gui/applet/Makefile
 blueman/gui/manager/Makefile
+blueman/plugins/Makefile
+blueman/plugins/services/Makefile
 blueman/main/Makefile
 blueman/main/applet/Makefile
 blueman/ods/Makefile
