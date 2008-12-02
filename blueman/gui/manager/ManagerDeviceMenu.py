@@ -252,7 +252,7 @@ class ManagerDeviceMenu(gtk.Menu):
 			
 			
 			uuids = device.UUIDs
-			
+			item = None
 			for name, service in device.Services.iteritems():
 				if name == "serial":
 					
@@ -330,7 +330,8 @@ class ManagerDeviceMenu(gtk.Menu):
 						sub = gtk.Menu()
 						sub.show()
 						item.set_submenu(sub)
-					
+						
+						added = False
 						for uuid in uuids:
 
 							uuid16 = uuid128_to_uuid16(uuid)
@@ -339,12 +340,17 @@ class ManagerDeviceMenu(gtk.Menu):
 								self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name, uuid)
 								sub.append(item)
 								item.show()
+								added = True
 							
 							if uuid16 == NAP_SVCLASS_ID:
 								item = create_menuitem(_("Network Access Point"), get_icon("network-server", 16))
 								self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name, uuid)
 								sub.append(item)
 								item.show()
+								added = True
+						if not added:
+							item.destroy()
+							item = None
 					else:
 						item = create_menuitem(_("Disconnect Network"), get_icon("gtk-disconnect", 16))
 						self.Signals.Handle("gobject", item, "activate", self.on_disconnect, device, name)
@@ -393,10 +399,10 @@ class ManagerDeviceMenu(gtk.Menu):
 					item.show()
 					self.append(item)
 					
-					
-			item = gtk.SeparatorMenuItem()
-			item.show()
-			self.append(item)
+			if item:
+				item = gtk.SeparatorMenuItem()
+				item.show()
+				self.append(item)
 
 			send_item = create_menuitem(_("Send a file..."), get_icon("gtk-copy", 16))
 			send_item.props.sensitive = False
