@@ -85,6 +85,7 @@ class BluemanServices:
 			for f in files:
 				if f.endswith(".py") and not (f.endswith(".pyc") or f.endswith("_.py")):
 					plugins.append(f[0:-3])
+		plugins.sort()
 		print plugins
 		for plugin in plugins:
 			try:
