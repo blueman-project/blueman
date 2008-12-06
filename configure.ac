@@ -15,7 +15,7 @@ AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [The gettext package])
 AM_GLIB_GNU_GETTEXT
 IT_PROG_INTLTOOL([0.35.0])
 
-AM_PATH_PYTHON(2.4)
+AM_PATH_PYTHON(2.5)
 AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(Could not find Python headers)])
 
 AC_ARG_VAR([PYREXC], [Pyrex compiler])
@@ -43,31 +43,79 @@ AC_SUBST(PACKAGE)
 AS_AC_EXPAND(SYSCONFDIR, $sysconfdir)
 AC_SUBST(SYSCONFDIR)
 AS_AC_EXPAND(BINDIR, $bindir)
+AC_SUBST(BINDIR)
 AS_AC_EXPAND(DATADIR, $datarootdir)
 AC_SUBST(DATADIR)
 AS_AC_EXPAND(PYTHONDIR, $pythondir)
 AC_SUBST(PYTHONDIR)
 
-dnl ----------------------------------
-dnl - Dependencies - TODO: split into sections
-dnl ----------------------------------
+
+test "x$prefix" = xNONE && prefix=$ac_default_prefix
+test "x$exec_prefix" = xNONE && exec_prefix=$prefix
+
+dnl AS_AC_EXPAND([PREFIX], $prefix)
+AC_SUBST(prefix)
+
+pkgdatadir="${DATADIR}/${PACKAGE}"
+AC_SUBST(pkgdatadir)
+
+
+AC_ARG_ENABLE(devel,
+[  --enable-devel           Developer mode ],
+[
+  pkgdatadir='../data'
+  BINDIR='./'
+])
+
+dnl ---------------------------------
+dnl dhcp config file location
+dnl ---------------------------------
+
+dhconfig='/etc/dhcp3/dhcpd.conf'
+AC_ARG_WITH(dhcp_config,
+[  --with-dhcp-config=PATH           set dhcp3 server configuration path],
+dhconfig="$with_dhcp_config"
+)
+AC_SUBST(dhconfig)
+
+dnl ---------------------------------
+
 PKG_CHECK_MODULES(BLUEZ, bluez >= 4.0)
 AC_SUBST(BLUEZ_CFLAGS)
 AC_SUBST(BLUEZ_LIBS)
 
-PKG_CHECK_MODULES(BLUEMAN,
-		bluez			>= 4.0
-		gtk+-2.0		>= 2.12
-		gconf-2.0		>= 2.20
-		pygtk-2.0		>= 2.12
-		pygobject-2.0	>= 2.12
-		dbus-python		>= 0.80.2
-		notify-python	>= 0.1.1
-)
-AC_SUBST(BLUEMAN_CFLAGS)
-AC_SUBST(BLUEMAN_LIBS)
+AM_CHECK_PYMOD(gtk,,,[AC_MSG_ERROR(Could not find Python module gtk >= 2.12)])
 
-dnl - TODO: add checks for python modules
+AC_MSG_CHECKING([if pygtk is >= 2.12])
+if AC_RUN_LOG([$PYTHON -c '
+import gtk, sys
+(maj, mid, min) = gtk.pygtk_version
+if maj != 2 or mid < 12:
+	sys.exit(1)
+
+']); then
+  AC_MSG_RESULT([yes])
+else
+  AC_MSG_RESULT([no])
+  AC_MSG_ERROR([pygtk must be version 2.12 or higher])
+fi
+
+
+AM_CHECK_PYMOD(pynotify,,,[AC_MSG_ERROR(Could not find Python module pynotify)])
+AM_CHECK_PYMOD(dbus,,,[AC_MSG_ERROR(Could not find Python module dbus)])
+AM_CHECK_PYMOD(gconf,,,[AC_MSG_ERROR(Could not find Python module gconf)])
+AM_CHECK_PYMOD(gobject,,,[AC_MSG_ERROR(Could not find Python module gobject)])
+
+
+
+
+
+PKG_CHECK_MODULES(BLUEZ,
+		bluez	>= 4.21
+)
+AC_SUBST(BLUEZ_CFLAGS)
+AC_SUBST(BLUEZ_LIBS)
+
 
 AC_OUTPUT([
 Makefile

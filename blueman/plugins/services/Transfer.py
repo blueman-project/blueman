@@ -58,11 +58,10 @@ class Transfer(ServicePlugin):
 		if key == "shared_path":
 			self.Builder.get_object(key).set_current_folder(value)
 		
-		if key != "shared_path":
+		if key == "shared_path":
 			self.option_changed_notify(key, False)
 		else:
 			self.option_changed_notify(key)
-
 	
 	def on_apply(self):
 		if self.on_query_apply_state() == True:
