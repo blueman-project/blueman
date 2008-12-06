@@ -8,13 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-21 20:29+0200\n"
+"POT-Creation-Date: 2008-12-06 15:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Friendly name</b>"
@@ -62,7 +63,7 @@ msgstr ""
 
 #: ../data/ui/manager-main.ui.h:3
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:235
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:411
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:434
 msgid "Bond"
 msgstr ""
 
@@ -83,140 +84,196 @@ msgid "Send File"
 msgstr ""
 
 #: ../data/ui/manager-main.ui.h:8
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:432
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:455
 msgid "Setup..."
 msgstr ""
 
 #: ../data/ui/manager-main.ui.h:9
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:422
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:445
 #: ../blueman/gui/manager/ManagerToolbar.py:103
 msgid "Trust"
 msgstr ""
 
 #: ../data/ui/services.ui.h:1
-msgid "<b>Client Settings</b>"
-msgstr ""
-
-#: ../data/ui/services.ui.h:2
-msgid "<b>File Transfer</b>"
-msgstr ""
-
-#: ../data/ui/services.ui.h:3
-msgid "<b>NAP Settings</b>"
-msgstr ""
-
-#: ../data/ui/services.ui.h:4
-msgid "<b>Network Settings</b>"
-msgstr ""
-
-#: ../data/ui/services.ui.h:5
-msgid "<b>No DHCP servers installed</b>"
-msgstr ""
-
-#: ../data/ui/services.ui.h:6
-msgid "<b>Object Push</b>"
-msgstr ""
-
-#: ../data/ui/services.ui.h:7
-msgid "<b>Services</b>"
-msgstr ""
-
-#: ../data/ui/services.ui.h:8
-msgid "<b>Transfer Settings</b>"
-msgstr ""
-
-#: ../data/ui/services.ui.h:9
-msgid "Accept files from trusted devices"
-msgstr ""
-
-#: ../data/ui/services.ui.h:10
-msgid "Allow devices to write/delete"
-msgstr ""
-
-#: ../data/ui/services.ui.h:11
-msgid "DHCP server type:"
-msgstr ""
-
-#: ../data/ui/services.ui.h:12
-msgid "Enable Routing (NAT)"
-msgstr ""
-
-#: ../data/ui/services.ui.h:13
-msgid "Enabled"
-msgstr ""
-
-#: ../data/ui/services.ui.h:14 ../blueman/gui/manager/ManagerDeviceMenu.py:335
-msgid "Group Network"
-msgstr ""
-
-#: ../data/ui/services.ui.h:15
-msgid "IP Address:"
-msgstr ""
-
-#: ../data/ui/services.ui.h:16
 msgid "Local Services"
 msgstr ""
 
-#: ../data/ui/services.ui.h:17
+#: ../data/ui/services-network.ui.h:1
+msgid "<b>Client Settings</b>"
+msgstr ""
+
+#: ../data/ui/services-network.ui.h:2
+msgid "<b>NAP Settings</b>"
+msgstr ""
+
+#: ../data/ui/services-network.ui.h:3
+msgid "<b>Network Settings</b>"
+msgstr ""
+
+#: ../data/ui/services-network.ui.h:4
+msgid "<b>No DHCP servers installed</b>"
+msgstr ""
+
+#: ../data/ui/services-network.ui.h:5
+msgid "<b>Services</b>"
+msgstr ""
+
+#: ../data/ui/services-network.ui.h:6
+msgid "DHCP server type:"
+msgstr ""
+
+#: ../data/ui/services-network.ui.h:7
+msgid "Enable Routing (NAT)"
+msgstr ""
+
+#: ../data/ui/services-network.ui.h:8
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:339
+msgid "Group Network"
+msgstr ""
+
+#: ../data/ui/services-network.ui.h:9
+msgid "IP Address:"
+msgstr ""
+
+#: ../data/ui/services-network.ui.h:10
+msgid "Integrate with NetworkManager"
+msgstr ""
+
+#: ../data/ui/services-network.ui.h:11
+msgid "Let Blueman handle the network interfaces"
+msgstr ""
+
+#: ../data/ui/services-network.ui.h:12
 msgid "Network Access Point (NAP)"
 msgstr ""
 
-#: ../data/ui/services.ui.h:18
-msgid "Run DHCP Client automatically"
+#: ../data/ui/services-transfer.ui.h:1
+msgid "<b>File Transfer</b>"
 msgstr ""
 
-#: ../data/ui/services.ui.h:19
+#: ../data/ui/services-transfer.ui.h:2
+msgid "<b>Object Push</b>"
+msgstr ""
+
+#: ../data/ui/services-transfer.ui.h:3
+msgid "<b>Transfer Settings</b>"
+msgstr ""
+
+#: ../data/ui/services-transfer.ui.h:4
+msgid "Accept files from trusted devices"
+msgstr ""
+
+#: ../data/ui/services-transfer.ui.h:5
+msgid "Allow devices to write/delete"
+msgstr ""
+
+#: ../data/ui/services-transfer.ui.h:6
+msgid "Enabled"
+msgstr ""
+
+#: ../data/ui/services-transfer.ui.h:7
 msgid "Select Shared/Storage folder"
 msgstr ""
 
-#: ../data/ui/services.ui.h:20
+#: ../data/ui/services-transfer.ui.h:8
 msgid "Shared Folder:"
 msgstr ""
 
-#: ../blueman/main/applet/Transfer.py:111
-msgid "Cancel"
+#: ../data/ui/send-dialog.ui.h:1
+msgid "<b>File:</b>"
 msgstr ""
 
-#: ../blueman/main/applet/Transfer.py:136
-msgid "File Saved"
+#: ../data/ui/send-dialog.ui.h:2
+msgid "<b>To:</b>"
 msgstr ""
 
-#: ../blueman/main/applet/Transfer.py:136
+#: ../data/ui/send-dialog.ui.h:3
+msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
+msgstr ""
+
+#: ../data/ui/send-dialog.ui.h:4
+msgid "Bluetooth File Transfer"
+msgstr ""
+
+#: ../data/ui/send-dialog.ui.h:5
+msgid "File Progress"
+msgstr ""
+
+#: ../data/ui/send-dialog.ui.h:6
+msgid "Total Progress"
+msgstr ""
+
+#: ../data/ui/send-dialog.ui.h:7
+msgid "gtk-cancel"
+msgstr ""
+
+#: ../blueman/main/applet/NetworkManager.py:76
+#: ../blueman/main/applet/NetworkManager.py:79
+#: ../blueman/main/applet/NetworkManager.py:89
+#: ../blueman/main/applet/NetworkManager.py:95
+msgid "Bluetooth Network"
+msgstr ""
+
+#: ../blueman/main/applet/NetworkManager.py:77
 #, python-format
-msgid "Would you like to open %s?"
+msgid "Interface %(0)s bound to IP address %(1)s"
 msgstr ""
 
-#: ../blueman/main/applet/Transfer.py:138
-msgid "Open"
-msgstr ""
-
-#: ../blueman/main/applet/Transfer.py:168
-msgid "Receiving File"
-msgstr ""
-
-#: ../blueman/main/applet/Transfer.py:168
+#: ../blueman/main/applet/NetworkManager.py:80
+#: ../blueman/main/applet/NetworkManager.py:90
 #, python-format
-msgid ""
-"Receiving File %(0)s\n"
-"%(1).2f%(2)s out of %(3).2f%(4)s (%(5).2f%(6)s/s)"
+msgid "Failed to acquire an IP address on %s"
 msgstr ""
 
-#: ../blueman/main/applet/Transfer.py:185
+#: ../blueman/main/applet/NetworkManager.py:96
+#, python-format
+msgid "Acquiring an IP address on %s"
+msgstr ""
+
+#: ../blueman/main/applet/Transfer.py:108
 msgid "Incoming File"
 msgstr ""
 
-#: ../blueman/main/applet/Transfer.py:185
+#: ../blueman/main/applet/Transfer.py:108
 #, python-format
 msgid "Incoming file %(0)s from %(1)s"
 msgstr ""
 
-#: ../blueman/main/applet/Transfer.py:189
+#: ../blueman/main/applet/Transfer.py:113
 #: ../blueman/main/applet/BluezAgent.py:168
 msgid "Accept"
 msgstr ""
 
-#: ../blueman/main/applet/Transfer.py:190
+#: ../blueman/main/applet/Transfer.py:114
 msgid "Reject"
+msgstr ""
+
+#: ../blueman/main/applet/Transfer.py:150
+msgid "Cancel"
+msgstr ""
+
+#: ../blueman/main/applet/Transfer.py:175
+msgid "File Saved"
+msgstr ""
+
+#: ../blueman/main/applet/Transfer.py:175
+#, python-format
+msgid "Would you like to open %s?"
+msgstr ""
+
+#: ../blueman/main/applet/Transfer.py:177
+msgid "Open"
+msgstr ""
+
+#: ../blueman/main/applet/Transfer.py:207
+msgid "Receiving File"
+msgstr ""
+
+#: ../blueman/main/applet/Transfer.py:207
+#, python-format
+msgid ""
+"Receiving File %(0)s\n"
+"%(1).2f%(2)s out of %(3).2f%(4)s (%(5).2f%(6)s/s)"
 msgstr ""
 
 #: ../blueman/main/applet/BluezAgent.py:87
@@ -275,6 +332,10 @@ msgstr ""
 msgid "Always accept"
 msgstr ""
 
+#: ../blueman/gui/DeviceSelectorDialog.py:31
+msgid "Select Device"
+msgstr ""
+
 #: ../blueman/gui/CommonUi.py:49
 msgid "Blueman is a GTK based Bluetooth manager"
 msgstr ""
@@ -288,11 +349,11 @@ msgstr ""
 msgid "Discoverable... %ss"
 msgstr ""
 
-#: ../blueman/gui/applet/DiscvManager.py:105
+#: ../blueman/gui/applet/DiscvManager.py:110
 msgid "Make Discoverable"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerProgressbar.py:33
+#: ../blueman/gui/manager/ManagerProgressbar.py:33 ../apps/blueman-sendto:68
 msgid "Connecting"
 msgstr ""
 
@@ -301,7 +362,7 @@ msgid "Cancel Operation"
 msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:126
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:446
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:469
 msgid "Success!"
 msgstr ""
 
@@ -322,93 +383,97 @@ msgid "Add Device"
 msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:244
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:384
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:407
 msgid "Send a file..."
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:269
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:268
 msgid "Dialup Service"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:276
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:275
 msgid "Serial Service"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:283
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:282
 msgid "Serial Ports"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:298
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:301
 #, python-format
 msgid "Disconnect %s"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:309
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:312
 msgid "Disconnect Input Service"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:313
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:316
 msgid "Connect Input Service"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:324
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:327
 msgid "Network Access"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:341
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:346
 msgid "Network Access Point"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:346
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:355
 msgid "Disconnect Network"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:358
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:371
+msgid "Renew IP Address"
+msgstr ""
+
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:381
 msgid "Disconnect Headset Service"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:361
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:384
 msgid "Connect Headset Service"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:371
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:394
 msgid "Disconnect A2DP Service"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:374
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:397
 msgid "Connect A2DP Service"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:389
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:412
 msgid "Browse device..."
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:427
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:450
 #: ../blueman/gui/manager/ManagerToolbar.py:99
 msgid "Untrust"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:450
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:473
 msgid "Fail"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:451
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:474
 msgid "Refreshing"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:453
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:476
 msgid "Refreshing Services..."
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:456
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:479
 msgid "Refresh Services"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:465
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:488
 msgid "Remove..."
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:474
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:497
 msgid "Disconnect Device"
 msgstr ""
 
@@ -518,34 +583,89 @@ msgstr ""
 msgid "Latest Device Last"
 msgstr ""
 
-#: ../apps/blueman-manager:143
+#: ../apps/blueman-manager:81
+msgid "Bluetooth Turned Off"
+msgstr ""
+
+#: ../apps/blueman-manager:82
+msgid "Bluetooth needs to be turned on for the device manager to function"
+msgstr ""
+
+#: ../apps/blueman-manager:85
+msgid "Enable Bluetooth"
+msgstr ""
+
+#: ../apps/blueman-manager:177
 msgid "Adding"
 msgstr ""
 
-#: ../apps/blueman-manager:154
+#: ../apps/blueman-manager:188
 msgid "Searching"
 msgstr ""
 
-#: ../apps/blueman-manager:172
+#: ../apps/blueman-manager:206
 msgid "Success"
 msgstr ""
 
-#: ../apps/blueman-manager:176
+#: ../apps/blueman-manager:210
 msgid "Failure"
 msgstr ""
 
-#: ../apps/blueman-manager:181
+#: ../apps/blueman-manager:215
 msgid "Bonding"
 msgstr ""
 
-#: ../apps/blueman-applet:63 ../apps/blueman-applet:97
+#: ../apps/blueman-applet:64 ../apps/blueman-applet:104
 msgid "Bluetooth Off"
 msgstr ""
 
-#: ../apps/blueman-applet:64
+#: ../apps/blueman-applet:65
 msgid "Turn off all adapters"
 msgstr ""
 
-#: ../apps/blueman-applet:94
+#: ../apps/blueman-applet:100
 msgid "Bluetooth On"
+msgstr ""
+
+#: ../apps/blueman-sendto:134
+msgid "Transferring File %(0)s/%(1)s (0 B/s) ETA: ∞"
+msgstr ""
+
+#: ../apps/blueman-sendto:160
+#, c-format
+msgid "%.0f Minute"
+msgid_plural "%.0f Minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../apps/blueman-sendto:162
+#, c-format
+msgid "%.0f Second"
+msgid_plural "%.0f Seconds"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../apps/blueman-sendto:165
+msgid "Sending File %(0)s/%(1)s (%(2).2f %(3)s/s) ETA: %(4)s"
+msgstr ""
+
+#: ../apps/blueman-sendto:216
+#, c-format
+msgid "Error occurred while sending file %s"
+msgstr ""
+
+#: ../apps/blueman-sendto:219
+msgid "Skip"
+msgstr ""
+
+#: ../apps/blueman-sendto:220
+msgid "Retry"
+msgstr ""
+
+#: ../apps/blueman-sendto:262
+msgid "Send files to this device"
+msgstr ""
+
+#: ../apps/blueman-sendto:312
+msgid "Select files you want to send"
 msgstr ""

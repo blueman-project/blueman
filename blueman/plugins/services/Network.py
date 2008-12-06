@@ -48,6 +48,7 @@ class Network(ServicePlugin):
 		self.widget.props.visible = False
 
 	def on_property_changed(self, netconf, key, value):
+		print self.ignored_keys
 		if key in self.ignored_keys:
 			self.ignored_keys.remove(key)
 			return
@@ -58,6 +59,10 @@ class Network(ServicePlugin):
 				self.Builder.get_object("rb_nm").props.active = True
 			return
 		if key == "rb_nm":
+			return
+		
+		if key == "gn_enable":
+			self.Builder.get_object(key).props.active = value
 			return
 		
 		if key == "nap_enable":
@@ -164,7 +169,7 @@ class Network(ServicePlugin):
 		if ns["dhcp"] == 0:
 			nap_frame.props.sensitive = False
 			nap_enable.props.active = False
-			if self.NetConf.props.nap_enable:
+			if self.NetConf.props.nap_enable or self.NetConf.props.nap_enable == None:
 				self.ignored_keys.append("nap_enable")
 			self.NetConf.props.nap_enable = False
 			
@@ -180,7 +185,7 @@ class Network(ServicePlugin):
 			warning.props.visible = True
 			warning.props.sensitive = True
 			nap_enable.props.sensitive = False
-			if self.NetConf.props.nap_enable:
+			if self.NetConf.props.nap_enable or self.NetConf.props.nap_enable == None:
 				self.ignored_keys.append("nap_enable")
 			self.NetConf.props.nap_enable = False
 			

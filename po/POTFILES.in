@@ -3,6 +3,10 @@
 [type: gettext/glade]data/ui/applet-passkey.ui
 [type: gettext/glade]data/ui/manager-main.ui
 [type: gettext/glade]data/ui/services.ui
+[type: gettext/glade]data/ui/services-network.ui
+[type: gettext/glade]data/ui/services-transfer.ui
+[type: gettext/glade]data/ui/send-dialog.ui
+
 blueman/bluez/ServiceInterface.py
 blueman/bluez/Agent.py
 blueman/bluez/Device.py
@@ -40,6 +44,13 @@ blueman/Constants.py
 blueman/__init__.py
 blueman/DeviceClass.py
 blueman/Functions.py
+blueman/plugins/ServicePlugin.py
+blueman/plugins/__init__.py
+blueman/plugins/services/Transfer.py
+blueman/plugins/services/__init__.py
+blueman/plugins/services/Network.py
+blueman/gui/DeviceSelectorDialog.py
+blueman/gui/DeviceSelectorWidget.py
 blueman/gui/DeviceList.py
 blueman/gui/GenericList.py
 blueman/gui/CellRendererPixbufTable.py
@@ -47,6 +58,7 @@ blueman/gui/PixbufTable.py
 blueman/gui/__init__.py
 blueman/gui/Animation.py
 blueman/gui/CommonUi.py
+blueman/gui/DeviceSelectorList.py
 blueman/gui/applet/DiscvManager.py
 blueman/gui/applet/__init__.py
 blueman/gui/manager/ManagerProgressbar.py
@@ -56,7 +68,9 @@ blueman/gui/manager/__init__.py
 blueman/gui/manager/ManagerDeviceList.py
 blueman/gui/manager/ManagerStats.py
 blueman/gui/manager/ManagerMenu.py
+
 apps/blueman-manager
 apps/blueman-services
 apps/blueman-applet
 apps/blueman-adapters
+apps/blueman-sendto

@@ -7,3 +7,9 @@ ICON_PATH = "@pkgdatadir@/icons"
 UI_PATH = "@pkgdatadir@/ui"
 OBEX_BROWSE_AVAILABLE = True
 DHCP_CONFIG_FILE = "@dhconfig@"
+
+import os
+if os.path.exists("../apps") and os.path.exists("../data"):
+	BIN_DIR = "./"
+	ICON_PATH = "../data/icons"
+	UI_PATH = "../data/ui"

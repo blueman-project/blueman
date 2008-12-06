@@ -27,10 +27,13 @@ import pango
 import os.path
 import sys
 
-#support running uninstalled
+import blueman.Constants
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if os.path.exists(os.path.join(_dirname,"ChangeLog")):
 	sys.path.insert(0, _dirname)
+	blueman.Constants.BIN_DIR = "./"
+	blueman.Constants.ICON_PATH = "../data/icons"
+	blueman.Constants.UI_PATH = "../data/ui"
 	
 import blueman.bluez as Bluez
 from blueman.Constants import *
@@ -40,6 +43,8 @@ from blueman.main.SignalTracker import SignalTracker
 import gettext
 _ = gettext.gettext
 
+
+		
 enable_rgba_colormap()
 
 class BluemanAdapters:

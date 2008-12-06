@@ -60,13 +60,6 @@ pkgdatadir="${DATADIR}/${PACKAGE}"
 AC_SUBST(pkgdatadir)
 
 
-AC_ARG_ENABLE(devel,
-[  --enable-devel           Developer mode ],
-[
-  pkgdatadir='../data'
-  BINDIR='./'
-])
-
 dnl ---------------------------------
 dnl dhcp config file location
 dnl ---------------------------------
