@@ -86,7 +86,7 @@ class ManagerProgressbar(gobject.GObject):
 		ManagerProgressbar.__instances__.append(self)
 		
 	def show(self):
-		if not self.Blueman.Config.props.show_statusbar:
+		if self.Blueman.Config.props.show_statusbar == False:
 			self.Blueman.Builder.get_object("statusbar").props.visible = True
 		self.progressbar.props.visible = True
 		self.eventbox.props.visible = True
@@ -119,7 +119,7 @@ class ManagerProgressbar(gobject.GObject):
 						break
 						
 			if ManagerProgressbar.__instances__ == []:
-				if not self.Blueman.Config.props.show_statusbar:
+				if self.Blueman.Config.props.show_statusbar == False:
 					self.Blueman.Builder.get_object("statusbar").props.visible = False
 		
 		
