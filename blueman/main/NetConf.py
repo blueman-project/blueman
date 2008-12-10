@@ -21,10 +21,12 @@
 
 import os
 import re
+from stat import S_IEXEC
 import commands
 from blueman.Constants import *
 from blueman.Lib import create_bridge, destroy_bridge, BridgeException
 import re
+from commands import getstatusoutput
 
 def ip_chk(ip_str):
    pattern = r"\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b"
@@ -143,10 +145,10 @@ class NetConf:
 		
 
 	def _execute_ifup(self):		
-		os.system("blueman-ifup pan1")
-		
+		status = getstatusoutput("blueman-ifup pan1")
+		if status[0] > 0:
+			raise Exception(status[1])
 
-		
 		
 	def _restore_iptables(self):
 		if os.path.exists("/tmp/blueman-iptbl-lock"):
@@ -175,6 +177,7 @@ class NetConf:
  		ifup = self._generate_ifup()
  		f.write(ifup)
  		f.close()
+ 		os.chmod(path, S_IEXEC)
  		
  					
 	def _generate_ifup(self):
@@ -192,9 +195,9 @@ if [ "$1" == "pan0" ]; then
 fi
 
 if [ "$1" == "pan1" ]; then
-	python -c "from blueman.Lib import create_bridge; create_bridge('pan1')"
-	
-	ifconfig pan1 %s netmask 255.255.255.0 up
+	python -c "from blueman.Lib import create_bridge; create_bridge('pan1')" || exit 1
+
+	ifconfig pan1 %s netmask 255.255.255.0 up || exit 1
 
 	if ! [ -a /tmp/blueman-iptbl-lock ]; then
 		
@@ -206,9 +209,10 @@ if [ "$1" == "pan1" ]; then
 		fi
 	fi
 	if ! [ -a /tmp/blueman-dh-lock ]; then
-		%s %s
+		%s %s || exit 1
 		PID=`pidof -s -o %%PPID -x %s`
 		echo $PID > /tmp/blueman-dh-lock
+
 	fi
 	
 fi
