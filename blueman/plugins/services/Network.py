@@ -25,6 +25,8 @@ import blueman.main.NetConf as NetConf
 from blueman.main.Config import Config
 from blueman.main.PolicyKitAuth import PolicyKitAuth
 from blueman.main.Mechanism import Mechanism
+import gettext
+_ = gettext.gettext
 
 class Network(ServicePlugin):
 
@@ -102,10 +104,17 @@ class Network(ServicePlugin):
 					net_ip = self.Builder.get_object("net_ip")
 					net_nat = self.Builder.get_object("net_nat")
 					
-					m.NetworkSetup(net_ip.props.text, net_nat.props.active, stype)
-					if not self.NetConf.props.nap_enable: #race condition workaround
-						self.ignored_keys.append("nap_enable")
-					self.NetConf.props.nap_enable = True
+					try:
+						m.NetworkSetup(net_ip.props.text, net_nat.props.active, stype)
+						if not self.NetConf.props.nap_enable: #race condition workaround
+							self.ignored_keys.append("nap_enable")
+						self.NetConf.props.nap_enable = True
+					except Exception, e:
+						d = gtk.MessageDialog( None, buttons=gtk.BUTTONS_OK, type=gtk.MESSAGE_ERROR)
+						d.props.text = _("Failed to apply network settings")
+						d.props.secondary_text = e
+						d.run()
+						d.destroy()
 					
 				else:
 					if self.NetConf.props.nap_enable: #race condition workaround
