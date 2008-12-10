@@ -21,12 +21,12 @@
 
 import os
 import re
-from stat import S_IEXEC
 import commands
 from blueman.Constants import *
 from blueman.Lib import create_bridge, destroy_bridge, BridgeException
 import re
 from commands import getstatusoutput
+import dbus
 
 def ip_chk(ip_str):
    pattern = r"\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b"
@@ -147,7 +147,7 @@ class NetConf:
 	def _execute_ifup(self):		
 		status = getstatusoutput("blueman-ifup pan1")
 		if status[0] > 0:
-			raise Exception(status[1])
+			raise Exception, status[1]
 
 		
 	def _restore_iptables(self):
@@ -177,7 +177,7 @@ class NetConf:
  		ifup = self._generate_ifup()
  		f.write(ifup)
  		f.close()
- 		os.chmod(path, S_IEXEC)
+ 		os.chmod(path, 0755)
  		
  					
 	def _generate_ifup(self):

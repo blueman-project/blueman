@@ -115,7 +115,7 @@ class Network(ServicePlugin):
 						d.props.secondary_text = e
 						d.run()
 						d.destroy()
-					
+						return
 				else:
 					if self.NetConf.props.nap_enable: #race condition workaround
 						self.ignored_keys.append("nap_enable")
