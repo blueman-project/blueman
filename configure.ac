@@ -49,7 +49,6 @@ AC_SUBST(DATADIR)
 AS_AC_EXPAND(PYTHONDIR, $pythondir)
 AC_SUBST(PYTHONDIR)
 
-
 test "x$prefix" = xNONE && prefix=$ac_default_prefix
 test "x$exec_prefix" = xNONE && exec_prefix=$prefix
 
@@ -59,6 +58,8 @@ AC_SUBST(prefix)
 pkgdatadir="${DATADIR}/${PACKAGE}"
 AC_SUBST(pkgdatadir)
 
+AS_AC_EXPAND(LOCALEDIR, $datarootdir/locale)
+AC_SUBST(LOCALEDIR)
 
 dnl ---------------------------------
 dnl dhcp config file location

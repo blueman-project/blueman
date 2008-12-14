@@ -25,7 +25,6 @@ class BluemanServices:
 
 
 	def __init__(self):
-		gtk.window_set_auto_startup_notification(True)
 		self.Manager = Bluez.Manager('gobject')
 		adapter = self.Manager.GetAdapter()
 		
@@ -33,6 +32,7 @@ class BluemanServices:
 		self.Builder.add_from_file(UI_PATH +"/services.ui")
 		
 		self.Dialog = self.Builder.get_object("dialog")
+		check_single_instance("blueman-services", lambda: self.Dialog.present())
 
 		self.Dialog.connect("delete-event", lambda x, y: gtk.main_quit())
 		

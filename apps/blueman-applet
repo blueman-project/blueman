@@ -39,6 +39,7 @@ from blueman.main.SignalTracker import SignalTracker
 from blueman.Functions import *
 from blueman.main.applet.BluezAgent import BluezAgent
 from blueman.main.applet.DbusService import DbusService
+from blueman.main.Mechanism import Mechanism
 from blueman.main.applet.NetworkManager import NetworkManager
 from blueman.gui.applet.DiscvManager import DiscvManager
 from blueman.Constants import *
@@ -86,9 +87,21 @@ class BluemanApplet:
 		except:
 			print "Unable to initialize obex-data-server"
 			self.Transfer = None
-		
+			
+		self.load_nap_settings()
+			
 		gtk.main()
 
+
+	def load_nap_settings(self):
+		print "Loading NAP settings"
+		def reply():
+			pass
+		def err():
+			print "Failed"
+		
+		m = Mechanism()
+		m.NetworkSetup("reload", 0, "0", reply_handler=reply, error_handler=err)
 
 	def on_obex_owner_changed(self, owner):
 		if owner != "" and not self.Transfer:

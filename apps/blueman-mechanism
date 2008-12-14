@@ -15,7 +15,7 @@ from signal import SIGKILL
 from blueman.main.NetConf import *
 from blueman.main.HalManager import HalManager
 
-timeout = 20
+timeout = 30
 time = 0
 
 
@@ -52,8 +52,21 @@ class conf_service(dbus.service.Object):
 	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="sbs", out_signature="", sender_keyword="caller")
 
 	def NetworkSetup(self, ip_address, allow_nat, server_type, caller):
+		if ip_address == "reload":
+			info = netstatus()
+			nc = None
+			if info["ip"] != "0":
+				if info["type"] == "dnsmasq":
+					nc = NetConfDnsMasq(None)
+				elif info["type"] == "dhcpd":
+					nc = NetConfDhcpd(None)
+				
+				if nc:
+					nc.reload_settings()
+			
+			return
+		
 		self.confirm_authorization(caller, "org.blueman.network.setup")
-	
 		if ip_address == "0":
 			info = netstatus()
 			nc = None
@@ -76,7 +89,6 @@ class conf_service(dbus.service.Object):
 
 			else:
 				return dbus.DBusException("IP Invalid")
-				
 	
 	
 	#@dbus.service.signal(dbus_interface='org.blueman.Mechanism', signature='ss')

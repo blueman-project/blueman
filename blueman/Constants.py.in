@@ -9,6 +9,11 @@ OBEX_BROWSE_AVAILABLE = True
 DHCP_CONFIG_FILE = "@dhconfig@"
 
 import os
+import gettext
+
+gettext.bindtextdomain("@GETTEXT_PACKAGE@", "@LOCALEDIR@")
+gettext.textdomain("@GETTEXT_PACKAGE@")
+
 if os.path.exists("../apps") and os.path.exists("../data"):
 	BIN_DIR = "./"
 	ICON_PATH = "../data/icons"

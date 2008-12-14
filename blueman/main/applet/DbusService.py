@@ -128,17 +128,7 @@ class DbusService(dbus.service.Object):
 				return 1
 		else:
 			return 0
-			
-	@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="s", out_signature="u")
-	def TransferStatus(self, pattern):
-		server = self.applet.Transfer.get_server(pattern)
-		if server != None:
-			if server.IsStarted():
-				return 2
-			else:
-				return 1
-		else:
-			return 0
+
 	
 	@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="b", out_signature="")
 	def SetBluetoothStatus(self, status):
@@ -151,5 +141,21 @@ class DbusService(dbus.service.Object):
 	@dbus.service.signal(dbus_interface='org.blueman.Applet', signature='b')
 	def BluetoothStatusChanged(self, state):
 		pass
+		
+	
+	@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="sosas", async_callbacks=("ok","err"))
+	def ServiceProxy(self, interface, object_path, method, args, ok, err):
+		bus = dbus.SystemBus()
+		service = bus.get_object("org.bluez", object_path)
+		method = service.get_dbus_method(method, interface)
+		
+		def reply(*args):
+			ok(*args)
+		def error(*args):
+			err(*args)
+		
+		method(reply_handler=reply, error_handler=error, *args)
+
+	
 	
 	

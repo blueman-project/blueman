@@ -147,29 +147,30 @@ class ManagerDeviceMenu(gtk.Menu):
 		self.set_op(device, _("Connecting..."))
 		prog = ManagerProgressbar(self.Blueman, False)
 		
+		try:
+			appl = AppletService()
+		except:
+			print "** Failed to connect to applet"
+			fail()
+			return
+		
 		if service_id == "network":
 			uuid = args[0]
-			svc.Connect(uuid, reply_handler=success, error_handler=fail)
+			appl.ServiceProxy(svc.GetInterfaceName(), svc.GetObjectPath(), "Connect", [uuid], reply_handler=success, error_handler=fail)
 			#prog.set_cancellable(True)
 			#prog.connect("cancelled", cancel)
 			
 		elif service_id == "input":
-			svc.Connect(reply_handler=success, error_handler=fail)
+			appl.ServiceProxy(svc.GetInterfaceName(), svc.GetObjectPath(), "Connect", [], reply_handler=success, error_handler=fail)
 			#prog.connect("cancelled", cancel)
 			
 		elif service_id == "serial":
 			uuid = args[0]
-			try:
-				appl = AppletService()
-			except:
-				print "** Failed to connect to applet"
-				fail()
-				return
-			else:
-				appl.RfcommConnect(device.GetObjectPath(), uuid, reply_handler=success, error_handler=fail)
+
+			appl.RfcommConnect(device.GetObjectPath(), uuid, reply_handler=success, error_handler=fail)
 		
 		else:
-			svc.Connect(reply_handler=success, error_handler=fail)
+			appl.ServiceProxy(svc.GetInterfaceName(), svc.GetObjectPath(), "Connect", [], reply_handler=success, error_handler=fail)
 			
 			
 			
@@ -186,7 +187,12 @@ class ManagerDeviceMenu(gtk.Menu):
 				appl.RfcommDisconnect(device.GetObjectPath(), args[0])
 				self.Generate()
 		else:
-			svc.Disconnect()
+			try:
+				appl = AppletService()
+			except:
+				print "** Failed to connect to applet"
+				return
+			appl.ServiceProxy(svc.GetInterfaceName(), svc.GetObjectPath(), "Disconnect", [])
 		
 		
 		
