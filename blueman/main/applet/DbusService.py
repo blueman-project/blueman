@@ -74,10 +74,20 @@ class DbusService(dbus.service.Object):
 			uuid16 = uuid128_to_uuid16(uuid)
 			if uuid16 == DIALUP_NET_SVCLASS_ID:
 				self.RegisterModem(device, rfcomm)
+				def on_propery_change(device, key, value):
+					if key == "Connected":
+						self.UnregisterModem(rfcomm)
+						device.disconnect(id)
+						device.Destroy()
+						
+				id = dev.connect("property-changed", on_propery_change)
 			
 			ok(rfcomm)
 
 		dev = Device(BluezDevice(device))
+
+		self.applet.recent_menu.notify(dev, "org.bluez.Serial", [uuid] )
+		
 		dev.Services["serial"].Connect(uuid, reply_handler=reply, error_handler=err)
 		print "Connecting rfcomm device"
 		
@@ -144,10 +154,16 @@ class DbusService(dbus.service.Object):
 		
 	
 	@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="sosas", async_callbacks=("ok","err"))
-	def ServiceProxy(self, interface, object_path, method, args, ok, err):
+	def ServiceProxy(self, interface, object_path, _method, args, ok, err):
 		bus = dbus.SystemBus()
 		service = bus.get_object("org.bluez", object_path)
-		method = service.get_dbus_method(method, interface)
+		method = service.get_dbus_method(_method, interface)
+		
+		
+		if _method == "Connect":
+			dev = Device(BluezDevice(object_path))
+			self.applet.recent_menu.notify(dev, interface, args )
+		
 		
 		def reply(*args):
 			ok(*args)

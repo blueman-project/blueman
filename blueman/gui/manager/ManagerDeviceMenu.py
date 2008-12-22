@@ -301,6 +301,7 @@ class ManagerDeviceMenu(gtk.Menu):
 									item = gtk.SeparatorMenuItem()
 									item.show()
 									sub.append(item)
+									sep = True
 								
 								devname = "/dev/rfcomm%s" % dev["id"]
 							

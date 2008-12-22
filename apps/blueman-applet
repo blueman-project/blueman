@@ -49,7 +49,7 @@ import gettext
 _ = gettext.gettext
 
 
-
+from blueman.gui.applet.RecentConns import RecentConns
 
 class BluemanApplet:
 
@@ -60,6 +60,8 @@ class BluemanApplet:
 		
 		check_single_instance("blueman-applet")
 		
+		self.menu = gtk.Menu()
+		
 		self.DbusSvc = DbusService(self)
 		
 		self.disc_item = create_menuitem(_('Make Discoverable'), get_icon("gtk-search", 16))
@@ -68,12 +70,16 @@ class BluemanApplet:
 		self.turnoff_item.connect("activate", lambda x: self.on_bluetooth_toggled())
 		self.bluetooth_off = False
 		
+		
+		self.recent_item = create_menuitem(_('Recent Connections')+'...', get_icon("document-open-recent", 16))
+		self.recent_menu = RecentConns(self)
+		
 		self.Signals = SignalTracker()
 		self.Agents = []
 		self.status_icon = gtk.StatusIcon()
 		self.status_icon = gtk.status_icon_new_from_icon_name("bluetooth")
 		self.status_icon.connect('popup-menu', self.on_popup_menu)
-		self.build_popup_menu()
+		
 		
 		#determine if icon should be visible (in case adapters are present)
 		self.bus = dbus.SystemBus()
@@ -89,7 +95,9 @@ class BluemanApplet:
 			self.Transfer = None
 			
 		self.load_nap_settings()
-			
+		
+		self.build_popup_menu()
+		
 		gtk.main()
 
 
@@ -106,6 +114,11 @@ class BluemanApplet:
 	def on_obex_owner_changed(self, owner):
 		if owner != "" and not self.Transfer:
 			self.Transfer = Transfer(self)
+			
+			
+	def add_recent_connection(self, address, service):
+		pass
+	
 			
 	def __setattr__(self, key, value):
 		if key == "bluetooth_off":
@@ -139,8 +152,6 @@ class BluemanApplet:
 			self.Signals.DisconnectAll()
 			self.Manager = Bluez.Manager('gobject')
 			
-			
-			
 			self.DiscvManager = DiscvManager(self)
 			self.NM = NetworkManager(self)
 			self.Signals.Handle("bluez", self.Manager, self.on_adapter_removed, 'AdapterRemoved')
@@ -152,6 +163,8 @@ class BluemanApplet:
 				props = adapter.GetProperties()
 				if not props["Powered"]:
 					self.bluetooth_off = True
+					
+			self.recent_menu.set_manager(self.Manager)
 		
 		except dbus.exceptions.DBusException, e:
 			print e
@@ -200,6 +213,7 @@ class BluemanApplet:
 			self.status_icon.set_visible(False)
 			
 	def build_popup_menu(self):
+		
 		menu_items = []
 		menu_items += [self.turnoff_item]
 		menu_items += [self.disc_item]
@@ -209,9 +223,19 @@ class BluemanApplet:
 		menu_items[-1].connect('activate', self.on_setup_new)
 		menu_items += [create_menuitem(_('Send files to device')+'...', get_icon("blueman-send-file", 16))]
 		menu_items[-1].connect('activate', self.on_send)
+		
+		menu_items += [gtk.SeparatorMenuItem()]
+		
+		
 		if OBEX_BROWSE_AVAILABLE:
 			menu_items += [create_menuitem(_('Browse files on device')+'...', get_icon("gtk-open", 16))]
 			menu_items[-1].connect('activate', self.on_browse)
+		
+		menu_items += [gtk.SeparatorMenuItem()]
+		
+		menu_items += [self.recent_item]
+		menu_items[-1].set_submenu(self.recent_menu)
+
 		menu_items += [gtk.SeparatorMenuItem()]
 		menu_items += [gtk.MenuItem(_('Devices')+'...', False)]
 		menu_items[-1].connect('activate', self.on_devices)
@@ -222,13 +246,11 @@ class BluemanApplet:
 		menu_items += [create_menuitem(_('Local services')+'...', get_icon("gtk-preferences", 16))]
 		menu_items[-1].connect('activate', self.on_local_services)
 		
-		
-		
 		menu_items += [gtk.SeparatorMenuItem()]
 		menu_items += [gtk.ImageMenuItem(gtk.STOCK_ABOUT)]
 		menu_items[-1].connect('activate', self.on_about)
 		
-		self.menu = gtk.Menu()
+		
 		for menu_item in menu_items:
 			self.menu.append(menu_item)
 			menu_item.show()

@@ -46,6 +46,10 @@ class Config(gobject.GObject):
 					func = self.Config.client.set_bool
 				elif type(value) == float:
 					func = self.Config.client.set_float
+				elif type(value) == list:
+					def x(key, val):
+						self.Config.client.set_list(key, gconf.VALUE_STRING, val)
+					func = x
 				else:
 					raise AttributeError("Cant set this type in gconf")
 				
@@ -56,20 +60,28 @@ class Config(gobject.GObject):
 				return self.__dict__[key]
 			else:
 				return self.Config.get_value(key)
-				
+	# convert a GConfValue to python native value
+	def gval2pyval(self, val):
+		if val.type == gconf.VALUE_STRING:
+			return val.get_string()
+		elif val.type == gconf.VALUE_FLOAT:
+			return val.get_float()
+		elif val.type == gconf.VALUE_INT:
+			return val.get_int()
+		elif val.type == gconf.VALUE_BOOL:
+			return val.get_bool()
+		elif val.type == gconf.VALUE_LIST:
+			x = []
+			for item in val.get_list():
+				x.append(self.gval2pyval(item))
+			return x
+		else:
+			raise AttributeError("Cant get this type from gconf")
+	
 	def get_value(self, key):
 		val = self.client.get(BLUEMAN_PATH + self.subdir + "/" + key)
 		if val != None:
-			if val.type == gconf.VALUE_STRING:
-				return val.get_string()
-			elif val.type == gconf.VALUE_FLOAT:
-				return val.get_float()
-			elif val.type == gconf.VALUE_INT:
-				return val.get_int()
-			elif val.type == gconf.VALUE_BOOL:
-				return val.get_bool()
-			else:
-				raise AttributeError("Cant get this type from gconf")
+			return self.gval2pyval(val)
 		else:
 			return None
 

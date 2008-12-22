@@ -80,7 +80,6 @@ class DiscvManager:
 						gobject.source_remove(self.timeout)
 				self.time_left = value
 
-				self.on_update()
 				self.timeout = gobject.timeout_add(1000, self.on_update)
 				return
 				
