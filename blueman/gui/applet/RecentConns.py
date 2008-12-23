@@ -36,12 +36,13 @@ _ = gettext.gettext
 
 
 def store_state():
-	for i in RecentConns.items:
+	items = RecentConns.items
+	for i in items:
 		i["device"] = None
 		i["mitem"] = None
 		i["gsignal"] = 0
 		
-	dump = base64.b64encode(zlib.compress(marshal.dumps(RecentConns.items), 9))
+	dump = base64.b64encode(zlib.compress(marshal.dumps(items), 9))
 	
 	c = Config()
 	c.props.recent_connections = dump
@@ -130,6 +131,8 @@ class RecentConns(gtk.Menu):
 		RecentConns.items.append(item)
 		self.initialize()
 		
+		store_state()
+		
 	def on_item_activated(self, menu_item, item):
 		print "Connect", item["address"], item["service"]
 		
@@ -139,23 +142,19 @@ class RecentConns(gtk.Menu):
 		except:
 			RecentConns.items.remove(item)
 		else:
-			c = gtk.gdk.Cursor(gtk.gdk.WATCH)
-			cn = gtk.gdk.Cursor(gtk.gdk.ARROW)
-			screen = gtk.gdk.screen_get_default()
+			sn = startup_notification("Bluetooth Connection", desc=_("Connecting to %s") % item["mitem"].get_child().props.label, icon="blueman")
 			
 			
 			def reply(*args):
 				self.Applet.show_notification(_("Connected"), _("Connected to %s") % item["mitem"].get_child().props.label, pixbuf=get_icon("gtk-connect", 48))
 				item["mitem"].props.sensitive = True
-				screen.get_root_window().set_cursor(cn)
+				sn.complete()
 				
 			def err(reason):
 				self.Applet.show_notification(_("Failed to connect"), str(reason).split(": ")[-1], pixbuf=get_icon("gtk-dialog-error", 48))
 				item["mitem"].props.sensitive = True
-				screen.get_root_window().set_cursor(cn)
-			
+				sn.complete()
 
-			screen.get_root_window().set_cursor(c)
 			
 			service.Connect(reply_handler=reply, error_handler=err, *item["conn_args"])
 			

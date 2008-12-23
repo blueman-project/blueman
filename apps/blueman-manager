@@ -231,7 +231,8 @@ class Blueman:
 		device.Trusted = not device.Trusted
 		
 	def send(self, device, File=None):
-		spawn(["blueman-sendto", "--device=%s" % device.Address])
+		sn = startup_notification("Blueman Sendto", _("Starting File Sender"), bin_name="blueman-sendto", icon="blueman")
+		spawn(["blueman-sendto", "--device=%s" % device.Address], sn=sn)
 		
 	def remove(self, device):
 		self.List.Adapter.RemoveDevice(device.Device)

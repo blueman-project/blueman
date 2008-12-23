@@ -74,10 +74,6 @@ AC_SUBST(dhconfig)
 
 dnl ---------------------------------
 
-PKG_CHECK_MODULES(BLUEZ, bluez >= 4.0)
-AC_SUBST(BLUEZ_CFLAGS)
-AC_SUBST(BLUEZ_LIBS)
-
 AM_CHECK_PYMOD(gtk,,,[AC_MSG_ERROR(Could not find Python module gtk >= 2.12)])
 
 AC_MSG_CHECKING([if pygtk is >= 2.12])
@@ -106,6 +102,8 @@ AM_CHECK_PYMOD(gobject,,,[AC_MSG_ERROR(Could not find Python module gobject)])
 
 PKG_CHECK_MODULES(BLUEZ,
 		bluez	>= 4.21
+		libstartup-notification-1.0 >= 0.9
+		gdk-2.0 >= 2.12
 )
 AC_SUBST(BLUEZ_CFLAGS)
 AC_SUBST(BLUEZ_LIBS)

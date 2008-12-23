@@ -256,3 +256,152 @@ def device_info(hci_name="hci0"):
 
 	return dict(z)
 
+cdef extern from "X11/X.h":
+	ctypedef Time
+
+cdef extern from "libsn/sn-launcher.h":
+	cdef struct SnLauncherContext
+
+	cdef void        sn_launcher_context_ref               (SnLauncherContext *context)
+	cdef void        sn_launcher_context_unref             (SnLauncherContext *context)
+
+
+	cdef void        sn_launcher_context_initiate          (SnLauncherContext *context, char *launcher_name, char *launchee_name, Time timestamp)
+	cdef void        sn_launcher_context_complete          (SnLauncherContext *context)
+	cdef char*       sn_launcher_context_get_startup_id    (SnLauncherContext *context)
+	cdef int         sn_launcher_context_get_initiated     (SnLauncherContext *context)
+
+	cdef void        sn_launcher_context_setup_child_process (SnLauncherContext *context)
+
+	cdef void sn_launcher_context_set_name        (SnLauncherContext *context,
+		                                   char        *name)
+	cdef void sn_launcher_context_set_description (SnLauncherContext *context,
+		                                   char        *description)
+	cdef void sn_launcher_context_set_workspace   (SnLauncherContext *context,
+		                                  int                workspace)
+	cdef void sn_launcher_context_set_wmclass     (SnLauncherContext *context,
+		                                   char        *klass)
+	cdef void sn_launcher_context_set_binary_name (SnLauncherContext *context,
+		                                   char        *name)
+	cdef void sn_launcher_context_set_icon_name   (SnLauncherContext *context,
+		                                   char        *name)
+
+	cdef void sn_launcher_context_set_extra_property (SnLauncherContext *context,
+		                                      char        *name,
+		                                      char        *value)
+
+
+	cdef void sn_launcher_context_get_initiated_time   (SnLauncherContext *context,
+		                                       long              *tv_sec,
+		                                       long              *tv_usec)
+	cdef void sn_launcher_context_get_last_active_time (SnLauncherContext *context,
+		                                       long              *tv_sec,
+		                                       long              *tv_usec)
+
+cdef extern SnLauncherContext* GetSnLauncherContext()
+
+
+cdef class sn_launcher:
+	cdef SnLauncherContext* ctx
+	
+	def __cinit__(self):
+		self.ctx = GetSnLauncherContext()
+		
+		
+	def __dealloc__(self):
+		if self.ctx == NULL:
+			raise Exception, "SnLauncherContext == NULL"
+		sn_launcher_context_unref(self.ctx)
+
+		
+	def initiate(self, char* launcher_name, char* launchee_name, timestamp):
+		sn_launcher_context_ref(self.ctx)
+		sn_launcher_context_initiate(self.ctx, launcher_name, launchee_name, timestamp)
+		sn_launcher_context_unref(self.ctx)
+	
+	def complete(self):
+		sn_launcher_context_ref(self.ctx)
+		sn_launcher_context_complete(self.ctx)
+		sn_launcher_context_unref(self.ctx)
+		
+	def get_startup_id(self):
+		cdef char* ret
+		if self.ctx == NULL:
+			raise Exception, "SnLauncherContext == NULL"
+		sn_launcher_context_ref(self.ctx)
+		ret = sn_launcher_context_get_startup_id(self.ctx)
+		sn_launcher_context_unref(self.ctx)
+		if ret != NULL:
+			return ret
+		else:
+			return None
+		
+	def get_initiated(self):
+		sn_launcher_context_ref(self.ctx)
+		ret = bool(sn_launcher_context_get_initiated(self.ctx))
+		sn_launcher_context_unref(self.ctx)
+		return ret
+	
+	def setup_child_process(self):
+		sn_launcher_context_ref(self.ctx)
+		sn_launcher_context_setup_child_process(self.ctx)
+		sn_launcher_context_unref(self.ctx)
+	
+	def set_name(self, char* name):
+		sn_launcher_context_ref(self.ctx)
+		sn_launcher_context_set_name(self.ctx, name)
+		sn_launcher_context_unref(self.ctx)
+		
+	def set_description(self, char* descr):
+		sn_launcher_context_ref(self.ctx)
+		sn_launcher_context_set_description(self.ctx, descr)
+		sn_launcher_context_unref(self.ctx)
+		
+	def set_workspace(self, int workspace):
+		sn_launcher_context_ref(self.ctx)
+		sn_launcher_context_set_workspace(self.ctx, workspace)
+		sn_launcher_context_unref(self.ctx)
+		
+	def set_wmclass(self, char* klass):
+		sn_launcher_context_ref(self.ctx)
+		sn_launcher_context_set_wmclass(self.ctx, klass)
+		sn_launcher_context_unref(self.ctx)
+		
+	def set_binary_name(self, char* name):
+		sn_launcher_context_ref(self.ctx)
+		
+		sn_launcher_context_set_binary_name(self.ctx, name)
+		sn_launcher_context_unref(self.ctx)
+		
+	def set_icon_name(self, char* name):
+		sn_launcher_context_ref(self.ctx)
+		sn_launcher_context_set_icon_name(self.ctx, name)
+		sn_launcher_context_unref(self.ctx)
+		
+	def set_extra_property(self, char* key, char* value):
+		sn_launcher_context_ref(self.ctx)
+		sn_launcher_context_set_extra_property(self.ctx, key, value)
+		sn_launcher_context_unref(self.ctx)
+		
+	def get_initiated_time(self):
+		sn_launcher_context_ref(self.ctx)
+		cdef long tv_sec
+		cdef long tv_usec
+		sn_launcher_context_get_initiated_time(self.ctx, &tv_sec, &tv_usec)
+		sn_launcher_context_unref(self.ctx)
+		return (tv_sec, tv_usec)
+		
+	def get_last_active_time(self):
+		sn_launcher_context_ref(self.ctx)
+		cdef long tv_sec
+		cdef long tv_usec
+		sn_launcher_context_get_last_active_time(self.ctx, &tv_sec, &tv_usec)
+		sn_launcher_context_unref(self.ctx)
+		return (tv_sec, tv_usec)
+
+
+
+
+
+
+

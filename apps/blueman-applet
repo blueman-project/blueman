@@ -33,7 +33,6 @@ _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if os.path.exists(os.path.join(_dirname,"ChangeLog")):
 	sys.path.insert(0, _dirname)
 	
-
 from blueman.main.applet.Transfer import Transfer
 from blueman.main.SignalTracker import SignalTracker
 from blueman.Functions import *
@@ -260,22 +259,28 @@ class BluemanApplet:
 						button, activate_time, status_icon)
 	
 	def on_setup_new(self, menu_item):
-		spawn('blueman-wizard')
+		sn = startup_notification("Blueman Wizard", _("Starting File Sender"), bin_name="blueman-sendto", icon="blueman")
+		spawn('blueman-wizard', sn=sn)
 		
 	def on_send(self, menu_item):
-		spawn('blueman-sendto')
+		sn = startup_notification("Blueman Sendto", _("Starting File Sender"), bin_name="blueman-sendto", icon="blueman")
+		spawn('blueman-sendto', sn=sn)
 		
 	def on_browse(self, menu_item):
-		spawn('blueman-browse')
+		sn = startup_notification("Blueman Browse", _("Starting File Browser"), bin_name="blueman-browse", icon="blueman")
+		spawn('blueman-browse', sn=sn)
 		
 	def on_devices(self, menu_item):
-		spawn('blueman-manager')
+		sn = startup_notification("Blueman Manager", _("Starting Device Manager"), bin_name="blueman-manger", icon="blueman")
+		spawn('blueman-manager', sn=sn)
 		
 	def on_adapters(self, menu_item):
-		spawn('blueman-adapters')
+		sn = startup_notification("Blueman Adapters", _("Starting Adapter Preferences"), bin_name="blueman-adapters", icon="blueman")
+		spawn('blueman-adapters', sn=sn)
 		
 	def on_local_services(self, menu_item):
-		spawn('blueman-services')
+		sn = startup_notification("Blueman Services", _("Starting Service Preferences"), bin_name="blueman-services", icon="blueman")
+		spawn('blueman-services', sn=sn)
 		
 	def on_about(self, menu_item):
 		show_about_dialog('Blueman '+_('applet'))

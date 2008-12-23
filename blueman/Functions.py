@@ -26,6 +26,22 @@ import atexit
 from subprocess import Popen
 import gobject
 
+from blueman.Lib import sn_launcher
+
+def startup_notification(name, desc=None, bin_name=None, icon=None):
+	sn = sn_launcher()
+	sn.set_name(name)
+	if bin_name:
+		sn.set_binary_name(bin_name)
+	if icon:
+		sn.set_icon_name(icon)
+		
+	if desc:
+		sn.set_description(desc)
+	
+	sn.initiate("", "", gtk.get_current_event_time())
+	
+	return sn
 
 def enable_rgba_colormap():
 	screen = gtk.gdk.display_get_default().get_default_screen()
@@ -34,16 +50,25 @@ def enable_rgba_colormap():
 		colormap = screen.get_rgb_colormap()
 	gtk.widget_set_default_colormap(colormap)
 
-def spawn(command, system=False):
+def spawn(command, system=False, sn=None):
 
 	def child_closed(pid, cond):
 		print command, "closed"
+		sn.complete()
 	if not system:
 		if type(command) == list:
 			command[0] = os.path.join(BIN_DIR, command[0])
 		else:
 			command = os.path.join(BIN_DIR, command)
-	p = Popen(command)
+	
+	if not sn:
+		env=None
+	else:
+		env = os.environ
+		id = sn.get_startup_id()
+		env["DESKTOP_STARTUP_ID"] = id
+	
+	p = Popen(command, env=env)
 	gobject.child_watch_add(p.pid, child_closed)
 
 def setup_icon_path():
