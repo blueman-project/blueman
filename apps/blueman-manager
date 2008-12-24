@@ -33,6 +33,7 @@ if os.path.exists(os.path.join(_dirname,"ChangeLog")):
 
 from blueman.Constants import *
 from blueman.Functions import *
+from blueman.main.Device import Device
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 from blueman.gui.manager.ManagerToolbar import ManagerToolbar
 from blueman.gui.manager.ManagerMenu import ManagerMenu
@@ -164,21 +165,22 @@ class Blueman:
 			self.List.DisplayKnownDevices(autoselect=True)
 		
 	def add_device(self, device):
-		def ok(*args):
-			print args
+
+		def ok(device):
+			dev = Device(device)
+			self.List.add_device(dev)
 			prog.finalize()
 		
 		def err(*args):
 			prog.finalize()
 		
-		address = device.GetProperties()["Address"]
 		adapter = self.List.Adapter
 		
 		prog = ManagerProgressbar(self, text=_("Adding"))
 		prog.connect("cancelled", lambda x: self.List.Adapter.GetInterface().CancelDeviceCreation(device.Address))
 		
 		prog.start()
-		adapter.CreateDevice(address, reply_handler=ok, error_handler=err)
+		adapter.CreateDevice(device.Address, reply_handler=ok, error_handler=err)
 		
 	def inquiry(self):
 		def prop_changed(List, adapter, (key, value)):
@@ -201,8 +203,10 @@ class Blueman:
 		gobject.timeout_add(1500, prog.finalize)
 		
 	def bond(self, device):
-		def ok(*args):
-			print args
+		def ok(device):
+			if device.Temp:
+				dev = Device(device)
+				self.List.add_device(dev)
 			self._prog_msg(prog, _("Success"))
 		
 		def err(*args):

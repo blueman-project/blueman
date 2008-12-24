@@ -35,6 +35,7 @@ class Device(gobject.GObject):
 		
 		self.Properties = {}
 		self.Fake = True
+		self.Temp = False
 		
 		self.Device = instance
 		
@@ -106,7 +107,7 @@ class Device(gobject.GObject):
 		
 		if name in self.__dict__["Properties"]:
 			if not self.Valid:
-				raise Exception, "Attempted to get properties for an invalidated device"
+				print "Warning: Attempted to get properties for an invalidated device"
 			return self.__dict__["Properties"][name]
 		else:
 			return getattr(self.Device, name)

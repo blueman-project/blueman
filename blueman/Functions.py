@@ -102,7 +102,7 @@ def make_device_icon(target, is_bonded=False, is_trusted=False, is_discovered=Fa
 		sources.append((get_icon("blueman-trust", 16), 0, 32, 200))
 	
 	if is_discovered:
-		sources.append((get_icon("gtk-search", 24), 24, 0, 255))
+		sources.append((get_icon("gtk-find", 24), 24, 0, 255))
 
 	return composite_icon(target, sources)
 

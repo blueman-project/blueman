@@ -110,9 +110,11 @@ class Network(ServicePlugin):
 							self.ignored_keys.append("nap_enable")
 						self.NetConf.props.nap_enable = True
 					except Exception, e:
+						lines = str(e).splitlines()
+						
 						d = gtk.MessageDialog( None, buttons=gtk.BUTTONS_OK, type=gtk.MESSAGE_ERROR)
 						d.props.text = _("Failed to apply network settings")
-						d.props.secondary_text = e
+						d.props.secondary_text = lines[-1]
 						d.run()
 						d.destroy()
 						return

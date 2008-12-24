@@ -27,6 +27,7 @@ import blueman.bluez as Bluez
 import gtk
 import gobject
 import re
+import copy
 
 from blueman.Functions import adapter_path_to_name
 
@@ -183,7 +184,7 @@ class DeviceList(GenericList):
 		
 	def monitor_power_levels(self, device):
 		def update(iter, device, cinfo):
-			if not device.Connected or not self.find_device(device):
+			if not device.Valid or not self.find_device(device) or not device.Connected:
 				print "stopping monitor"
 				cinfo.deinit()
 				return False
@@ -236,6 +237,7 @@ class DeviceList(GenericList):
 		if iter == None:
 			dev = Bluez.Device(path)
 			dev = Device(dev)
+			dev.Temp = True
 			self.device_add_event(dev)
 		
 	
@@ -318,6 +320,7 @@ class DeviceList(GenericList):
 		
 	def add_device(self, device, append=True):
 		iter = self.find_device(device)
+
 		if iter == None:
 			if append:
 				iter = self.liststore.append()
@@ -341,7 +344,7 @@ class DeviceList(GenericList):
 							path_keyword="path")
 				if props["Connected"]:
 					self.monitor_power_levels(device)
-		
+					
 		
 		else:
 			row = self.get(iter, "device")
@@ -349,11 +352,20 @@ class DeviceList(GenericList):
 			
 			props = existing_dev.GetProperties()
 			props_new = device.GetProperties()
-			if "Fake" in props and not "Fake" in props_new:
+
+			#turn a Fake device to a Real device
+			n = not "Fake" in props and not "Fake" in props_new
+			if n:
+				print "Updating existing dev"
+				self.device_signals.Disconnect(existing_dev.GetObjectPath())
+				existing_dev.Destroy()
+			
+			if ("Fake" in props and not "Fake" in props_new) or n:
 				self.set(iter, device=device, dbus_path=device.GetObjectPath())
 				self.row_setup_event(iter, device)
-				self.emit("device-property-changed", device, iter, ("Fake", False))
-				self.row_update_event(iter, "Fake", False)
+				if not n:
+					self.emit("device-property-changed", device, iter, ("Fake", False))
+					self.row_update_event(iter, "Fake", False)
 				
 				self.device_signals.Handle("bluez", device, 
 							self.on_device_property_changed, 
@@ -362,7 +374,14 @@ class DeviceList(GenericList):
 							path_keyword="path")
 				if props_new["Connected"]:
 					self.monitor_power_levels(device)
-	
+			#turn a Real device to a Fake device
+			elif not "Fake" in props and "Fake" in props_new:
+				print "Convert"
+				self.set(iter, device=device, dbus_path=None)
+				self.row_setup_event(iter, device)
+				self.emit("device-property-changed", device, iter, ("Fake", True))
+				self.row_update_event(iter, "Fake", True)
+
 	
 	def DisplayKnownDevices(self, autoselect=False):
 		self.clear()
@@ -400,10 +419,11 @@ class DeviceList(GenericList):
 		self.add_device(device, True)
 		
 	def RemoveDevice(self, device, iter=None):
+		print device
 		if iter == None:
 			iter = self.find_device(device)
 		
-		if self.compare(self.selected(), iter):
+		if not device.Temp and self.compare(self.selected(), iter):
 			self.emit("device-selected", None, None)
 		
 		try:
@@ -413,10 +433,21 @@ class DeviceList(GenericList):
 		else:
 			if not "Fake" in props:
 				self.device_signals.Disconnect(device.GetObjectPath())
-				
-		device.Destroy()
-				
-		self.delete(iter)
+		
+		if device.Temp:
+			print "converting to fake"
+
+			props = copy.deepcopy(props)
+			props["Fake"] = True
+			dev = FakeDevice(props)
+		
+
+			device = Device(dev)
+			self.device_add_event(device)
+			
+		else:
+			device.Destroy()
+			self.delete(iter)
 		
 	def GetSelectedDevice(self):
 		selected = self.selected()

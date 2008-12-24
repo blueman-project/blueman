@@ -36,6 +36,7 @@ _ = gettext.gettext
 
 from blueman.bluez.Adapter import Adapter
 from blueman.main.Device import Device
+from blueman.main.FakeDevice import FakeDevice
 from blueman.bluez.Manager import Manager
 from blueman.Functions import *
 from blueman.Constants import *
@@ -285,10 +286,15 @@ class SendTo:
 			try:
 				d = adapter.FindDevice(options.device)
 			except:
-				print "Error: No such device"
-				exit()
-			else:
-				self.device = Device(d)
+				info = {}
+				info["Address"] = options.device
+				info["Name"] = info["Address"].replace(":", "-")
+				info["Alias"] = info["Name"]
+				info["Fake"] = True
+				
+				d = FakeDevice(info)
+
+			self.device = Device(d)
 			self.adapter = adapter.GetObjectPath()
 			self.do_send()
 		

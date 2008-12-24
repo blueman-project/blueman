@@ -63,7 +63,7 @@ class BluemanApplet:
 		
 		self.DbusSvc = DbusService(self)
 		
-		self.disc_item = create_menuitem(_('Make Discoverable'), get_icon("gtk-search", 16))
+		self.disc_item = create_menuitem(_('Make Discoverable'), get_icon("gtk-find", 16))
 		self.turnoff_item = create_menuitem(_("Bluetooth Off"), get_icon("gtk-stop", 16))
 		self.turnoff_item.props.tooltip_text = _("Turn off all adapters")
 		self.turnoff_item.connect("activate", lambda x: self.on_bluetooth_toggled())
@@ -76,7 +76,7 @@ class BluemanApplet:
 		self.Signals = SignalTracker()
 		self.Agents = []
 		self.status_icon = gtk.StatusIcon()
-		self.status_icon = gtk.status_icon_new_from_icon_name("bluetooth")
+		self.status_icon = gtk.status_icon_new_from_icon_name("blueman")
 		self.status_icon.connect('popup-menu', self.on_popup_menu)
 		
 		
@@ -99,14 +99,17 @@ class BluemanApplet:
 		
 		gtk.main()
 
-
 	def load_nap_settings(self):
 		print "Loading NAP settings"
 		def reply():
 			pass
-		def err(*args):
-			print "Failed to load NAP settings"
-			print args
+		def err(excp):
+			lines = str(excp).splitlines()
+			d = gtk.MessageDialog( None, buttons=gtk.BUTTONS_OK, type=gtk.MESSAGE_ERROR)
+			d.props.text = _("Failed to apply network settings")
+			d.props.secondary_text = lines[-1] + "\n\n"+_("You might not be able to connect to the Bluetooth network via this machine")
+			d.run()
+			d.destroy()
 		
 		m = Mechanism()
 		m.NetworkSetup("reload", 0, "0", reply_handler=reply, error_handler=err)

@@ -30,17 +30,20 @@ from blueman.main.Config import Config
 from blueman.Functions import *
 from blueman.main.Device import Device
 import blueman.Sdp as sdp
-
+from copy import copy
 
 _ = gettext.gettext
 
 
 def store_state():
-	items = RecentConns.items
-	for i in items:
-		i["device"] = None
-		i["mitem"] = None
-		i["gsignal"] = 0
+	items = []
+	for i in RecentConns.items:
+		x = i.copy()
+		x["device"] = None
+		x["mitem"] = None
+		x["gsignal"] = 0
+		items.append(x)
+
 		
 	dump = base64.b64encode(zlib.compress(marshal.dumps(items), 9))
 	

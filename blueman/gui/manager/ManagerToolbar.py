@@ -111,6 +111,8 @@ class ManagerToolbar:
 				self.b_remove.props.sensitive = True
 				self.b_add.props.sensitive = False
 				
+
+				
 			self.update_send_browse(device)
 			
 	def update_send_browse(self, device):
@@ -134,12 +136,10 @@ class ManagerToolbar:
 				self.on_device_selected(dev_list, device, iter)
 				
 			elif key == "Fake":
-				if not value:
-					
-					self.on_device_selected(dev_list, device, iter)
-					self.update_send_browse(device)
-				else:
-					self.b_remove.props.sensitie = False
+				self.on_device_selected(dev_list, device, iter)
+				self.update_send_browse(device)
+
+
 					
 					
 			elif key == "UUIDs":
