@@ -86,7 +86,7 @@ class DbusService(dbus.service.Object):
 
 		dev = Device(BluezDevice(device))
 
-		self.applet.recent_menu.notify(dev, "org.bluez.Serial", [uuid] )
+		self.applet.recent_menu.notify(dev.Copy(), "org.bluez.Serial", [uuid] )
 		
 		dev.Services["serial"].Connect(uuid, reply_handler=reply, error_handler=err)
 		print "Connecting rfcomm device"

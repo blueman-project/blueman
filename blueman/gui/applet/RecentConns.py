@@ -155,8 +155,10 @@ class RecentConns(gtk.Menu):
 				item["mitem"].props.sensitive = True
 				sn.complete()
 
-			
-			service.Connect(reply_handler=reply, error_handler=err, *item["conn_args"])
+			if item["service"] == "org.bluez.Serial":
+				self.Applet.DbusSvc.RfcommConnect(item["device"].GetObjectPath(), item["conn_args"][0], reply, err)
+			else:
+				service.Connect(reply_handler=reply, error_handler=err, *item["conn_args"])
 			
 			item["time"] = time.time()
 			self.initialize()

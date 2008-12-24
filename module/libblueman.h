@@ -28,6 +28,3 @@ float get_page_timeout(int hdev);
 int _create_bridge(const char* name);
 int _destroy_bridge(const char* name);
 
-#include <libsn/sn-launcher.h>
-
-SnLauncherContext* GetSnLauncherContext();

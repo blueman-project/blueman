@@ -129,7 +129,7 @@ def rfcomm_list():
 		raise Exception, ERR[res]
 	
 	devs = []
-	for i from 0 <= i < dl.dev_num: 
+	for 0 <= i < dl.dev_num:
 		ba2str(&dl.dev_info[i].src, src)
 		ba2str(&dl.dev_info[i].dst, dst)
 		
@@ -226,7 +226,7 @@ def device_info(hci_name="hci0"):
 	ba2str(&di.bdaddr, addr)
 	
 	feats = []
-	for i from 0 <= i < 8: 
+	for 0 <= i < 8: 
 		feats.append(di.features[i])
 	
 	x = [("err_rx", di.stat.err_rx),
@@ -257,11 +257,22 @@ def device_info(hci_name="hci0"):
 	return dict(z)
 
 cdef extern from "X11/X.h":
-	ctypedef Time
+	ctypedef unsigned long Time
+	ctypedef struct Display
+
+cdef extern from "libsn/sn-common.h":
+	ctypedef struct SnDisplay
+	ctypedef void (* SnDisplayErrorTrapPush) (SnDisplay *display, Display *xdisplay)
+	ctypedef void (* SnDisplayErrorTrapPop)  (SnDisplay *display, Display *xdisplay)
+	SnDisplay* sn_display_new (Display                *xdisplay,
+                                       SnDisplayErrorTrapPush  push_trap_func,
+                                       SnDisplayErrorTrapPop   pop_trap_func)
+	cdef void       sn_display_ref             (SnDisplay              *display)
+	cdef void       sn_display_unref           (SnDisplay              *display)
 
 cdef extern from "libsn/sn-launcher.h":
 	cdef struct SnLauncherContext
-
+	cdef SnLauncherContext* sn_launcher_context_new (SnDisplay *display, int screen)
 	cdef void        sn_launcher_context_ref               (SnLauncherContext *context)
 	cdef void        sn_launcher_context_unref             (SnLauncherContext *context)
 
@@ -298,23 +309,64 @@ cdef extern from "libsn/sn-launcher.h":
 		                                       long              *tv_sec,
 		                                       long              *tv_usec)
 
+
+
 cdef extern SnLauncherContext* GetSnLauncherContext()
 
+cdef extern from "Python.h":
+	cdef struct PyObject
+
+cdef extern from "stdio.h":
+	cdef int printf(char* format, ...)
+	
+cdef extern from "glib-object.h":
+	ctypedef struct GObject
+	
+cdef extern from "pygobject.h":
+	cdef GObject* pygobject_get(object)
+	
+cdef extern from "gdk/gdkx.h":
+	ctypedef struct GdkDisplay
+	cdef void gdk_error_trap_push ()
+	cdef void gdk_error_trap_pop ()
+	cdef Display* gdk_x11_display_get_xdisplay(GdkDisplay*)
+
+cdef void sn_error_trap_push(SnDisplay *display, Display *xdisplay):
+	gdk_error_trap_push ()
+	
+cdef void sn_error_trap_pop(SnDisplay *display, Display *xdisplay):
+	gdk_error_trap_pop ()
+
+import gtk
 
 cdef class sn_launcher:
 	cdef SnLauncherContext* ctx
 	
-	def __cinit__(self):
-		self.ctx = GetSnLauncherContext()
+
+	def __cinit__(self, display, int screen):
+		if type(display) != gtk.gdk.DisplayX11:
+			raise TypeError, "Display must be a gtk.gdk.DisplayX11"
+			
+		cdef GObject* dpy
+		cdef SnDisplay* sn_dpy
+		
+		dpy = pygobject_get(display)
+		
+		if dpy != NULL:
+			sn_dpy =  sn_display_new(gdk_x11_display_get_xdisplay(<GdkDisplay*>dpy), sn_error_trap_push, sn_error_trap_pop)
+			self.ctx = sn_launcher_context_new(sn_dpy, screen)
+			sn_display_unref(sn_dpy)
+		else:
+			raise RuntimeError, "GdkDisplay is NULL"
 		
 		
 	def __dealloc__(self):
 		if self.ctx == NULL:
-			raise Exception, "SnLauncherContext == NULL"
+			raise RuntimeError, "SnLauncherContext is NULL"
 		sn_launcher_context_unref(self.ctx)
 
 		
-	def initiate(self, char* launcher_name, char* launchee_name, timestamp):
+	def initiate(self, char* launcher_name, char* launchee_name, Time timestamp):
 		sn_launcher_context_ref(self.ctx)
 		sn_launcher_context_initiate(self.ctx, launcher_name, launchee_name, timestamp)
 		sn_launcher_context_unref(self.ctx)
@@ -326,8 +378,7 @@ cdef class sn_launcher:
 		
 	def get_startup_id(self):
 		cdef char* ret
-		if self.ctx == NULL:
-			raise Exception, "SnLauncherContext == NULL"
+
 		sn_launcher_context_ref(self.ctx)
 		ret = sn_launcher_context_get_startup_id(self.ctx)
 		sn_launcher_context_unref(self.ctx)

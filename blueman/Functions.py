@@ -29,8 +29,11 @@ import gobject
 from blueman.Lib import sn_launcher
 
 def startup_notification(name, desc=None, bin_name=None, icon=None):
-	sn = sn_launcher()
+	dpy = gtk.gdk.display_get_default()
+	screen = dpy.get_default_screen().get_number()
+	sn = sn_launcher(dpy, screen)
 	sn.set_name(name)
+	
 	if bin_name:
 		sn.set_binary_name(bin_name)
 	if icon:

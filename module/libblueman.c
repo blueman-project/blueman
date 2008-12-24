@@ -267,51 +267,6 @@ out:
 
 
 
-//startup notification
-#include <libsn/sn-common.h>
-#include <libsn/sn-launcher.h>
-#include <gdk/gdkx.h>
-
-static void
-sn_error_trap_push (SnDisplay *display,
-                    Display   *xdisplay)
-{
-        gdk_error_trap_push ();
-}
-
-static void
-sn_error_trap_pop (SnDisplay *display,
-                   Display   *xdisplay)
-{
-        gdk_error_trap_pop ();
-}
-
-
-static SnDisplay* GetDefaultSnDisplay() {
-	gdk_init(NULL, NULL);
-	GdkDisplay* g_dpy = gdk_display_get_default();
-	if (!g_dpy) {
-		printf("Could not get display\n");
-		return NULL;
-	}
-	
-	SnDisplay* sn_dpy = sn_display_new(gdk_x11_display_get_xdisplay(g_dpy), sn_error_trap_push, sn_error_trap_pop);
-	return sn_dpy;
-}
-
-SnLauncherContext* GetSnLauncherContext() {
-	SnDisplay* dpy = GetDefaultSnDisplay();
-	if(dpy) {
-		SnLauncherContext* ctx = sn_launcher_context_new(dpy, gdk_screen_get_number (gdk_screen_get_default()));
-		sn_display_unref(dpy);
-		return ctx;
-	}
-	return NULL;
-}
-
-
-
-
 
 
 
