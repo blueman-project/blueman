@@ -104,8 +104,9 @@ class BluemanApplet:
 		print "Loading NAP settings"
 		def reply():
 			pass
-		def err():
-			print "Failed"
+		def err(*args):
+			print "Failed to load NAP settings"
+			print args
 		
 		m = Mechanism()
 		m.NetworkSetup("reload", 0, "0", reply_handler=reply, error_handler=err)
