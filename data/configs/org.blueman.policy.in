@@ -3,35 +3,34 @@
  "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
  "http://www.freedesktop.org/standards/PolicyKit/1.0/policyconfig.dtd">
 <policyconfig>
-  <vendor>The Blueman Project</vendor>
+  <_vendor>The Blueman Project</_vendor>
   <vendor_url>http://blueman.tuxfamily.org</vendor_url>
   <icon_name>bluetooth</icon_name>
   
    <action id="org.blueman.network.setup">
-    <description>Configure Bluetooth Network</description>
-    <message>System policy prevents modifying the configuration</message>
+    <_description>Configure Bluetooth Network</_description>
+    <_message>System policy prevents modifying the configuration</_message>
 
     <defaults>
       <allow_inactive>no</allow_inactive>
       <allow_active>auth_admin</allow_active>
-
 
     </defaults>
   </action>
   
   <action id="org.blueman.hal.manager">
-    <description>Configure Bluetooth Modems</description>
-    <message>System policy prevents modifying the configuration</message>
+    <_description>Configure Bluetooth Modems</_description>
+    <_message>System policy prevents modifying the configuration</_message>
 
     <defaults>
       <allow_inactive>no</allow_inactive>
-      <allow_active>auth_admin</allow_active>
+      <allow_active>auth_admin_keep_always</allow_active>
     </defaults>
   </action>
   
   <action id="org.blueman.dhcp.client">
-    <description>Launch DHCP client</description>
-    <message>Launching DHCP client requires privileges</message>
+    <_description>Launch DHCP client</_description>
+    <_message>Launching DHCP client requires privileges</_message>
     <defaults>
       <allow_inactive>no</allow_inactive>
       <allow_active>auth_admin_keep_always</allow_active>

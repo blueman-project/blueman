@@ -337,13 +337,13 @@ cdef void sn_error_trap_push(SnDisplay *display, Display *xdisplay):
 cdef void sn_error_trap_pop(SnDisplay *display, Display *xdisplay):
 	gdk_error_trap_pop ()
 
-import gtk
 
 cdef class sn_launcher:
 	cdef SnLauncherContext* ctx
 	
 
 	def __cinit__(self, display, int screen):
+		import gtk
 		if type(display) != gtk.gdk.DisplayX11:
 			raise TypeError, "Display must be a gtk.gdk.DisplayX11"
 			
