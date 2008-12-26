@@ -1,3 +1,6 @@
+import gettext
+_ = gettext.gettext
+
 service_cls= [
 	"positioning",
 	"networking",
@@ -31,6 +34,16 @@ computer_minor_cls = [
 	"palm",
 	"wearable"
 ]
+computer_minor_cls_i18n = [
+	_("uncategorized"),
+	_("desktop"),
+	_("server"),
+	_("laptop"),
+	_("handheld"),
+	_("palm"),
+	"wearable"
+]
+
 
 phone_minor_cls = [
 	"uncategorized",
@@ -40,7 +53,14 @@ phone_minor_cls = [
 	"modem",
 	"isdn"
 ]
-
+phone_minor_cls_i18n = [
+	_("uncategorized"),
+	_("cellular"),
+	_("cordless"),
+	_("smart phone"),
+	_("modem"),
+	_("isdn")
+]
 access_point_minor_cls = [
 	"fully",
 	"1-17 percent",
@@ -73,14 +93,39 @@ audio_video_minor_cls = [
 	"unknown",
 	"gaming/toy"
 ]
-
+audio_video_minor_cls_i18n = [
+	"uncategorized",
+	_("headset"),
+	_("handsfree"),
+	_("unknown"),
+	_("microphone"),
+	"loudspeaker",
+	"headphones",
+	"portable audio",
+	"car audio",
+	"set-top box",
+	"hifi audio",
+	"vcr",
+	"video camera",
+	"camcorder",
+	"video monitor",
+	"video display and loudspeaker",
+	"video conferencing",
+	"unknown",
+	"gaming/toy"
+]
 peripheral_minor_cls = [
 	"uncategorized",
 	"keyboard",
 	"pointing",
 	"combo"
 ]
-
+peripheral_minor_cls_i18n = [
+	"uncategorized",
+	_("keyboard"),
+	_("pointing"),
+	"combo"
+]
 
 imaging_minor_cls = [
 	"display",
@@ -114,7 +159,7 @@ def get_major_class(klass):
 	return major_cls[index]
 
 
-def get_minor_class(klass):
+def get_minor_class(klass, i18n=False):
 	i = (klass >> 8) & 0x1F
 	
 	
@@ -122,13 +167,19 @@ def get_minor_class(klass):
 	if i == 1: 
 		minor_index = (klass >> 2) & 0x3F;
 		if minor_index < len(computer_minor_cls):
-			return computer_minor_cls[minor_index]
+			if i18n:
+				return computer_minor_cls_i18n[minor_index]
+			else:
+				return computer_minor_cls[minor_index]
 		else:
 			return ""
 	elif i == 2:
 		minor_index = (klass >> 2) & 0x3F;
 		if (minor_index < len(phone_minor_cls)):
-			return phone_minor_cls[minor_index];
+			if i18n:
+				return phone_minor_cls_i18n[minor_index]
+			else:
+				return phone_minor_cls[minor_index]
 		return "";
 	elif i == 3:
 		minor_index = (klass >> 5) & 0x07;
@@ -139,17 +190,23 @@ def get_minor_class(klass):
 	elif i == 4: 
 		minor_index = (klass >> 2) & 0x3F;
 		if (minor_index < len(audio_video_minor_cls)):
-			return audio_video_minor_cls[minor_index];
+			if i18n:
+				return audio_video_minor_cls_i18n[minor_index];
+			else:
+				return audio_video_minor_cls[minor_index];
 		else:
 			return "";
 	elif i == 5:
 		minor_index = (klass >> 6) & 0x03;
 		if (minor_index < len(peripheral_minor_cls)):
-			return peripheral_minor_cls[minor_index];
+			if i18n:
+				return peripheral_minor_cls_i18n[minor_index];
+			else:
+				return peripheral_minor_cls[minor_index];
 		else:
 			return "";
 	elif i == 6:
-		return imaging
+		return "imaging"
 		
 	elif i == 7:
 		minor_index = (klass >> 2) & 0x3F;

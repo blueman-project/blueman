@@ -54,6 +54,7 @@ class Sender(gobject.GObject):
 	def __init__(self, device, adapter, files):
 		gobject.GObject.__init__(self)
 		self.Builder = gtk.Builder()
+		self.Builder.set_translation_domain("blueman")
 		self.Builder.add_from_file(UI_PATH +"/send-dialog.ui")
 		self.window = self.Builder.get_object("window")
 		

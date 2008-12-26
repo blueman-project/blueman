@@ -192,8 +192,6 @@ class ManagerMenu:
 		menu.prepend(item)
 		self.Search = item
 		
-		if self.adapters == []:
-			item.props.sensitive = False
 		
 		m = self.item_adapter.get_submenu()
 		if m != None:
@@ -221,6 +219,10 @@ class ManagerMenu:
 		self.generate_adapter_menu()
 		
 	def on_adapter_changed(self, List, path):
-		self.generate_adapter_menu()
+		if path == None:
+			self.item_adapter.props.sensitive = False
+		else:
+			self.item_adapter.props.sensitive = True
+			self.generate_adapter_menu()
 		
 

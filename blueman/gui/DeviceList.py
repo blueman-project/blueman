@@ -71,12 +71,13 @@ class DeviceList(GenericList):
 		def on_adapter_added(path):
 			def property_changed(key, val):
 				if key == "Powered":
-					self.emit("adapter-added", path)
+					
 					a.UnHandleSignal(property_changed, "PropertyChanged")
 						
 					if self.Adapter == None:
 						self.SetAdapter(path)	
-
+					
+					self.emit("adapter-added", path)
 								
 			
 			a = Bluez.Adapter(path)

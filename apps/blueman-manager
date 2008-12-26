@@ -100,7 +100,9 @@ class Blueman:
 		
 		
 		self.Builder = gtk.Builder()
+		self.Builder.set_translation_domain("blueman")
 		self.Builder.add_from_file(UI_PATH +"/manager-main.ui")
+		print self.Builder.get_translation_domain()
 		self.Config = Config()
 		
 		window = self.Builder.get_object("window")

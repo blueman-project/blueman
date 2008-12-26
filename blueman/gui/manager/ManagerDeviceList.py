@@ -121,7 +121,8 @@ class ManagerDeviceList(DeviceList):
 		except:
 			klass = "Unknown"
 			icon = get_icon("blueman", 48)
-		
+		#get translated version
+		klass = get_minor_class(device.Class, True)
 
 		name = device.Alias
 		address = device.Address

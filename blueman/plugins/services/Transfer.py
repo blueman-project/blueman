@@ -18,19 +18,21 @@
 # 
 
 import gtk
+import gettext
 from blueman.Constants import *
 from blueman.plugins.ServicePlugin import ServicePlugin
 
 from blueman.main.AppletService import AppletService
 from blueman.main.Config import Config
 
-
+_ = gettext.gettext
 
 class Transfer(ServicePlugin):
 
 	def on_load(self, container):
 		
 		self.Builder = gtk.Builder()
+		self.Builder.set_translation_domain("blueman")
 		self.Builder.add_from_file(UI_PATH +"/services-transfer.ui")
 		self.widget = self.Builder.get_object("transfer")
 		
@@ -39,7 +41,7 @@ class Transfer(ServicePlugin):
 		container.pack_start(self.widget)
 		self.setup_transfer()
 		
-		return ("Transfer", "gtk-open")
+		return (_("Transfer"), "gtk-open")
 		
 	def on_enter(self):
 		self.widget.props.visible = True

@@ -29,6 +29,7 @@ class BluemanServices:
 		adapter = self.Manager.GetAdapter()
 		
 		self.Builder = gtk.Builder()
+		self.Builder.set_translation_domain("blueman")
 		self.Builder.add_from_file(UI_PATH +"/services.ui")
 		
 		self.Dialog = self.Builder.get_object("dialog")

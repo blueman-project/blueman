@@ -30,6 +30,7 @@ EXTRA_DIST =					\
 CLEANFILES =		\
 	org.blueman.Mechanism.service	\
 	org.blueman.policy		\
+	blueman-applet.service		\
 	$(BUILT_SOURCES)
 	
 DISTCLEANFILES = \

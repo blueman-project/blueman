@@ -32,7 +32,8 @@ import gtk
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if os.path.exists(os.path.join(_dirname,"ChangeLog")):
 	sys.path.insert(0, _dirname)
-	
+
+from blueman.Constants import *
 from blueman.main.applet.Transfer import Transfer
 from blueman.main.SignalTracker import SignalTracker
 from blueman.Functions import *
@@ -41,7 +42,7 @@ from blueman.main.applet.DbusService import DbusService
 from blueman.main.Mechanism import Mechanism
 from blueman.main.applet.NetworkManager import NetworkManager
 from blueman.gui.applet.DiscvManager import DiscvManager
-from blueman.Constants import *
+
 import blueman.bluez as Bluez
 from blueman.gui.CommonUi import show_about_dialog
 import gettext
@@ -63,14 +64,14 @@ class BluemanApplet:
 		
 		self.DbusSvc = DbusService(self)
 		
-		self.disc_item = create_menuitem(_('Make Discoverable'), get_icon("gtk-find", 16))
+		self.disc_item = create_menuitem(_("Make Discoverable"), get_icon("gtk-find", 16))
 		self.turnoff_item = create_menuitem(_("Bluetooth Off"), get_icon("gtk-stop", 16))
 		self.turnoff_item.props.tooltip_text = _("Turn off all adapters")
 		self.turnoff_item.connect("activate", lambda x: self.on_bluetooth_toggled())
 		self.bluetooth_off = False
 		
 		
-		self.recent_item = create_menuitem(_('Recent Connections')+'...', get_icon("document-open-recent", 16))
+		self.recent_item = create_menuitem(_("Recent Connections")+'...', get_icon("document-open-recent", 16))
 		self.recent_menu = RecentConns(self)
 		
 		self.Signals = SignalTracker()
@@ -127,11 +128,11 @@ class BluemanApplet:
 		if key == "bluetooth_off":
 			print "bt_off", value
 			if value:
-				self.turnoff_item.get_child().props.label = _("Bluetooth On")
+				self.turnoff_item.get_child().props.label = _("Turn Bluetooth On")
 				self.turnoff_item.set_image(gtk.image_new_from_pixbuf(get_icon("gtk-yes", 16)))
 				self.DbusSvc.BluetoothStatusChanged(False)
 			else:
-				self.turnoff_item.get_child().props.label = _("Bluetooth Off")
+				self.turnoff_item.get_child().props.label = _("Turn Bluetooth Off")
 				self.turnoff_item.set_image(gtk.image_new_from_pixbuf(get_icon("gtk-stop", 16)))
 				self.DbusSvc.BluetoothStatusChanged(True)
 			if key in self.__dict__:
@@ -222,16 +223,16 @@ class BluemanApplet:
 		menu_items += [self.disc_item]
 		menu_items += [gtk.SeparatorMenuItem()]
 		
-		menu_items += [create_menuitem(_('Setup new device')+'...', get_icon("gtk-new", 16))]
+		menu_items += [create_menuitem(_("Setup new device")+'...', get_icon("gtk-new", 16))]
 		menu_items[-1].connect('activate', self.on_setup_new)
-		menu_items += [create_menuitem(_('Send files to device')+'...', get_icon("blueman-send-file", 16))]
+		menu_items += [create_menuitem(_("Send files to device")+'...', get_icon("blueman-send-file", 16))]
 		menu_items[-1].connect('activate', self.on_send)
 		
 		menu_items += [gtk.SeparatorMenuItem()]
 		
 		
 		if OBEX_BROWSE_AVAILABLE:
-			menu_items += [create_menuitem(_('Browse files on device')+'...', get_icon("gtk-open", 16))]
+			menu_items += [create_menuitem(_("Browse files on device")+'...', get_icon("gtk-open", 16))]
 			menu_items[-1].connect('activate', self.on_browse)
 		
 		menu_items += [gtk.SeparatorMenuItem()]
@@ -240,13 +241,13 @@ class BluemanApplet:
 		menu_items[-1].set_submenu(self.recent_menu)
 
 		menu_items += [gtk.SeparatorMenuItem()]
-		menu_items += [gtk.MenuItem(_('Devices')+'...', False)]
+		menu_items += [gtk.MenuItem(_("Devices")+'...', False)]
 		menu_items[-1].connect('activate', self.on_devices)
 		
-		menu_items += [create_menuitem(_('Adapters')+'...', get_icon("blueman-device", 16))]
+		menu_items += [create_menuitem(_("Adapters")+'...', get_icon("blueman-device", 16))]
 		menu_items[-1].connect('activate', self.on_adapters)
 		
-		menu_items += [create_menuitem(_('Local services')+'...', get_icon("gtk-preferences", 16))]
+		menu_items += [create_menuitem(_("Local Services")+'...', get_icon("gtk-preferences", 16))]
 		menu_items[-1].connect('activate', self.on_local_services)
 		
 		menu_items += [gtk.SeparatorMenuItem()]

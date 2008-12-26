@@ -62,7 +62,6 @@ class SignalTracker:
 		for sig in self._signals:
 			(_sigid, objtype, obj, args, kwargs) = sig
 			if sigid != None and _sigid == sigid:
-				print "disconnecting", sigid
 				if objtype == "bluez":
 					obj.UnHandleSignal(*args)
 				elif objtype == "gobject":

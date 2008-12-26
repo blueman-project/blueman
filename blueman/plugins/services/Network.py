@@ -33,6 +33,7 @@ class Network(ServicePlugin):
 	def on_load(self, container):
 		
 		self.Builder = gtk.Builder()
+		self.Builder.set_translation_domain("blueman")
 		self.Builder.add_from_file(UI_PATH +"/services-network.ui")
 		self.widget = self.Builder.get_object("network")
 		
@@ -41,7 +42,7 @@ class Network(ServicePlugin):
 		container.pack_start(self.widget)
 		self.setup_network()
 		
-		return ("Network", "gtk-network")
+		return (_("Network"), "gtk-network")
 		
 	def on_enter(self):
 		self.widget.props.visible = True

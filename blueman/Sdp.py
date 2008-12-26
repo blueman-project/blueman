@@ -1,3 +1,6 @@
+import gettext
+_ = gettext.gettext
+
 SDP_SERVER_SVCLASS_ID		= 0x1000
 BROWSE_GRP_DESC_SVCLASS_ID	= 0x1001
 PUBLIC_BROWSE_GROUP		= 0x1002
@@ -95,7 +98,7 @@ uuid_names[0x1001] = "BrowseGroupDescriptorServiceClassID"
 uuid_names[0x1002] = "Public Browse Group"
 uuid_names[0x1101] = "Serial Port"
 uuid_names[0x1102] = "LAN Access Using PPP"
-uuid_names[0x1103] = "Dialup Networking (DUN)"
+uuid_names[0x1103] = _("Dialup Networking (DUN)")
 uuid_names[0x1104] = "IrMC Sync"
 uuid_names[0x1105] = "OBEX Object Push"
 uuid_names[0x1106] = "OBEX File Transfer"

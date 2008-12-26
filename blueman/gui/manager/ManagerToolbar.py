@@ -75,6 +75,7 @@ class ManagerToolbar:
 		print "toolbar adapter", adapter_path
 		if adapter_path == None:
 			self.b_search.props.sensitive = False
+			self.update_send_browse(None)
 		else:
 			self.b_search.props.sensitive = True
 		
@@ -126,7 +127,7 @@ class ManagerToolbar:
 
 				if uuid16 == OBEX_FILETRANS_SVCLASS_ID:
 					self.b_browse.props.sensitive = True
-		if device.Fake:
+		if device and device.Fake:
 			self.b_send.props.sensitive = True
 			
 			

@@ -27,7 +27,7 @@
               <object class="GtkToolButton" id="b_search">
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
-                <property name="tooltip_text">Search for nearby devices</property>
+                <property name="tooltip_text" translatable="yes">Search for nearby devices</property>
                 <property name="is_important">True</property>
                 <property name="label" translatable="yes">Search</property>
                 <property name="stock_id">gtk-find</property>
@@ -61,7 +61,7 @@
               <object class="GtkToolButton" id="b_bond">
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
-                <property name="tooltip_text">Create bonding with the device</property>
+                <property name="tooltip_text" translatable="yes">Create bonding with the device</property>
                 <property name="label" translatable="yes">Bond</property>
                 <property name="stock_id">gtk-dialog-authentication</property>
               </object>
@@ -86,7 +86,7 @@
               <object class="GtkToolButton" id="b_setup">
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
-                <property name="tooltip_text">Setup this device</property>
+                <property name="tooltip_text" translatable="yes">Setup this device</property>
                 <property name="is_important">True</property>
                 <property name="label" translatable="yes">Setup...</property>
                 <property name="stock_id">gtk-properties</property>

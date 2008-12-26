@@ -6,16 +6,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2008-12-25 21:21+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-12-26 14:09+0200\n"
 "PO-Revision-Date: 2008-12-26 10:39+0000\n"
 "Last-Translator: Valmantas Palikša <walmis@balticum-tv.lt>\n"
 "Language-Team: Lithuanian <lt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"(n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%"
+"100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Launchpad-Export-Date: 2008-12-26 10:41+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
@@ -202,8 +202,7 @@ msgid "<b>To:</b>"
 msgstr "<b>Į:</b>"
 
 #: ../data/ui/send-dialog.ui.h:3
-msgid ""
-"<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
+msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr ""
 "<span weight=\"bold\" size=\"large\">Siunčiami failai per Bluetooth</span>"
 
@@ -354,89 +353,73 @@ msgstr "Paslauga:"
 msgid "Always accept"
 msgstr "Visada leisti"
 
-#: ../blueman/DeviceClass.py:29 ../blueman/DeviceClass.py:39
+#: ../blueman/DeviceClass.py:38 ../blueman/DeviceClass.py:57
 msgid "uncategorized"
 msgstr "nežinomas"
 
-#: ../blueman/DeviceClass.py:30
+#: ../blueman/DeviceClass.py:39
 msgid "desktop"
 msgstr "stacionarus kompiuteris"
 
-#: ../blueman/DeviceClass.py:31
+#: ../blueman/DeviceClass.py:40
 msgid "server"
 msgstr "serveris"
 
-#: ../blueman/DeviceClass.py:32
+#: ../blueman/DeviceClass.py:41
 msgid "laptop"
 msgstr "nešiojamas kompiuteris"
 
-#: ../blueman/DeviceClass.py:33
+#: ../blueman/DeviceClass.py:42
 msgid "handheld"
 msgstr "delnins kompiuteris"
 
-#: ../blueman/DeviceClass.py:34
+#: ../blueman/DeviceClass.py:43
 msgid "palm"
 msgstr "palm kompiuteris"
 
-#: ../blueman/DeviceClass.py:40
+#: ../blueman/DeviceClass.py:58
 msgid "cellular"
 msgstr "mobilus telefonas"
 
-#: ../blueman/DeviceClass.py:41
+#: ../blueman/DeviceClass.py:59
 msgid "cordless"
 msgstr "belaidis telefonas"
 
-#: ../blueman/DeviceClass.py:42
+#: ../blueman/DeviceClass.py:60
 msgid "smart phone"
 msgstr "išmanusis telefonas"
 
-#: ../blueman/DeviceClass.py:43
+#: ../blueman/DeviceClass.py:61
 msgid "modem"
 msgstr "modemas"
 
-#: ../blueman/DeviceClass.py:44
+#: ../blueman/DeviceClass.py:62
 msgid "isdn"
 msgstr "isdn"
 
-#: ../blueman/DeviceClass.py:60
+#: ../blueman/DeviceClass.py:98
 msgid "headset"
 msgstr "ausinė(s)"
 
-#: ../blueman/DeviceClass.py:61
+#: ../blueman/DeviceClass.py:99
 msgid "handsfree"
 msgstr "laisvų rankų įranga"
 
-#: ../blueman/DeviceClass.py:62
+#: ../blueman/DeviceClass.py:100
 msgid "unknown"
 msgstr "Nežinoma"
 
-#: ../blueman/DeviceClass.py:63
+#: ../blueman/DeviceClass.py:101
 msgid "microphone"
 msgstr "mikrofonas"
 
-#: ../blueman/DeviceClass.py:82
+#: ../blueman/DeviceClass.py:125
 msgid "keyboard"
 msgstr "klaviatūra"
 
-#: ../blueman/DeviceClass.py:83
+#: ../blueman/DeviceClass.py:126
 msgid "pointing"
 msgstr "pelė"
-
-#: ../blueman/DeviceClass.py:89
-msgid "display"
-msgstr "ekranas"
-
-#: ../blueman/DeviceClass.py:90
-msgid "camera"
-msgstr "kamera"
-
-#: ../blueman/DeviceClass.py:91
-msgid "scanner"
-msgstr "skeneris"
-
-#: ../blueman/DeviceClass.py:92
-msgid "printer"
-msgstr "spausdintuvas"
 
 #: ../blueman/plugins/services/Transfer.py:44
 msgid "Transfer"
@@ -627,53 +610,53 @@ msgstr "Pašalinti..."
 msgid "Disconnect Device"
 msgstr "Atjungti Įrenginį"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:253
+#: ../blueman/gui/manager/ManagerDeviceList.py:254
 msgid "<b>Trusted and Bonded</b>"
 msgstr "<b>Patikėtas ir Suporuotas</b>"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:255
+#: ../blueman/gui/manager/ManagerDeviceList.py:256
 msgid "<b>Bonded</b>"
 msgstr "<b>Suporuotas</b>"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:257
+#: ../blueman/gui/manager/ManagerDeviceList.py:258
 msgid "<b>Trusted</b>"
 msgstr "<b>Patikimas</b>"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:278
+#: ../blueman/gui/manager/ManagerDeviceList.py:279
 msgid "Poor"
 msgstr "Prastas"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:281
-#: ../blueman/gui/manager/ManagerDeviceList.py:297
+#: ../blueman/gui/manager/ManagerDeviceList.py:282
+#: ../blueman/gui/manager/ManagerDeviceList.py:298
 msgid "Sub-optimal"
 msgstr "Silpnas"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:284
-#: ../blueman/gui/manager/ManagerDeviceList.py:300
+#: ../blueman/gui/manager/ManagerDeviceList.py:285
+#: ../blueman/gui/manager/ManagerDeviceList.py:301
 msgid "Optimal"
 msgstr "Optimalus"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:287
+#: ../blueman/gui/manager/ManagerDeviceList.py:288
 msgid "Much"
 msgstr "Didelis"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:290
+#: ../blueman/gui/manager/ManagerDeviceList.py:291
 msgid "Too much"
 msgstr "Per Didėlis"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:294
+#: ../blueman/gui/manager/ManagerDeviceList.py:295
 msgid "Low"
 msgstr "Žemas"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:303
+#: ../blueman/gui/manager/ManagerDeviceList.py:304
 msgid "High"
 msgstr "Aukštas"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:306
+#: ../blueman/gui/manager/ManagerDeviceList.py:307
 msgid "Very High"
 msgstr "Labai aukštas"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:309
+#: ../blueman/gui/manager/ManagerDeviceList.py:310
 #, python-format
 msgid ""
 "<b>Connected</b>\n"
@@ -912,3 +895,15 @@ msgstr "Siųsti failus šiam įrenginiui"
 #: ../apps/blueman-sendto:319
 msgid "Select files you want to send"
 msgstr "Pasirinkite failus kuriuos norite siųsti"
+
+#~ msgid "display"
+#~ msgstr "ekranas"
+
+#~ msgid "camera"
+#~ msgstr "kamera"
+
+#~ msgid "scanner"
+#~ msgstr "skeneris"
+
+#~ msgid "printer"
+#~ msgstr "spausdintuvas"
