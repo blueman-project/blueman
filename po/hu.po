@@ -1,75 +1,76 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Hungarian translation for blueman
+# Copyright (c) 2007 Rosetta Contributors and Canonical Ltd 2007
+# This file is distributed under the same license as the blueman package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2007.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
+"Project-Id-Version: blueman\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2008-12-25 21:21+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2008-12-17 13:29+0000\n"
+"Last-Translator: Thomas Martin Klein <kleintamasmarton@gmail.com>\n"
+"Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Launchpad-Export-Date: 2008-12-26 10:41+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Friendly name</b>"
-msgstr ""
+msgstr "<b>Friendly name</b>"
 
 #: ../data/ui/adapters-tab.ui.h:2
 msgid "<b>Visibility setting</b>"
-msgstr ""
+msgstr "<b>Láthatóság beállítás</b>"
 
 #: ../data/ui/adapters-tab.ui.h:3
 msgid "Always visible"
-msgstr ""
+msgstr "Mindig látható"
 
 #: ../data/ui/adapters-tab.ui.h:4
 msgid "Hidden"
-msgstr ""
+msgstr "Rejtett"
 
 #: ../data/ui/adapters-tab.ui.h:5
 msgid "Temporary visible"
-msgstr ""
+msgstr "Átmenetileg látható"
 
 #: ../data/ui/adapters.ui.h:1
 msgid "Bluetooth adapter preferences"
-msgstr ""
+msgstr "Bluetooth adapter tulajdonságok"
 
 #: ../data/ui/applet-passkey.ui.h:1
 msgid "Authentication request"
-msgstr ""
+msgstr "Hitelesítési kérés"
 
 #: ../data/ui/applet-passkey.ui.h:2
 msgid "Pairing request for device:"
-msgstr ""
+msgstr "Eszközpárosítási kérés az eszközhöz:"
 
 #: ../data/ui/applet-passkey.ui.h:3
 msgid "Show input"
-msgstr ""
+msgstr "Bemenet mutatása"
 
 #: ../data/ui/manager-main.ui.h:1
 msgid "Add"
-msgstr ""
+msgstr "Hozzáad"
 
 #: ../data/ui/manager-main.ui.h:2
 msgid "Bluetooth Devices"
-msgstr ""
+msgstr "Bluetooth eszközök"
 
 #: ../data/ui/manager-main.ui.h:3
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:241
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:441
 msgid "Bond"
-msgstr ""
+msgstr "Párosítás"
 
 #: ../data/ui/manager-main.ui.h:4
 msgid "Browse"
-msgstr ""
+msgstr "Tallózás"
 
 #: ../data/ui/manager-main.ui.h:5
 msgid "Create bonding with the device"
@@ -77,11 +78,11 @@ msgstr ""
 
 #: ../data/ui/manager-main.ui.h:6
 msgid "Remove"
-msgstr ""
+msgstr "Eltávolít"
 
 #: ../data/ui/manager-main.ui.h:7 ../blueman/gui/manager/ManagerMenu.py:189
 msgid "Search"
-msgstr ""
+msgstr "Keresés"
 
 #: ../data/ui/manager-main.ui.h:8
 msgid "Search for nearby devices"
@@ -89,7 +90,7 @@ msgstr ""
 
 #: ../data/ui/manager-main.ui.h:9
 msgid "Send File"
-msgstr ""
+msgstr "Fájl küldése"
 
 #: ../data/ui/manager-main.ui.h:10
 msgid "Setup this device"
@@ -98,70 +99,70 @@ msgstr ""
 #: ../data/ui/manager-main.ui.h:11
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:462
 msgid "Setup..."
-msgstr ""
+msgstr "Beállítás..."
 
 #: ../data/ui/manager-main.ui.h:12
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:452
 #: ../blueman/gui/manager/ManagerToolbar.py:104
 msgid "Trust"
-msgstr ""
+msgstr "Megbízható"
 
 #: ../data/ui/services.ui.h:1 ../apps/blueman-applet:250
 msgid "Local Services"
-msgstr ""
+msgstr "Helyi szolgáltatások"
 
 #: ../data/ui/services-network.ui.h:1
 msgid "<b>Client Settings</b>"
-msgstr ""
+msgstr "<b>Kliens beállítások</b>"
 
 #: ../data/ui/services-network.ui.h:2
 msgid "<b>NAP Settings</b>"
-msgstr ""
+msgstr "<b>NAP Beállítások</b>"
 
 #: ../data/ui/services-network.ui.h:3
 msgid "<b>Network Settings</b>"
-msgstr ""
+msgstr "<b>Hálózat beállításai</b>"
 
 #: ../data/ui/services-network.ui.h:4
 msgid "<b>No DHCP servers installed</b>"
-msgstr ""
+msgstr "<b>Nincs telepített DHCP kiszolgáló</b>"
 
 #: ../data/ui/services-network.ui.h:5
 msgid "<b>Services</b>"
-msgstr ""
+msgstr "<b>Szolgáltatások</b>"
 
 #: ../data/ui/services-network.ui.h:6
 msgid "DHCP server type:"
-msgstr ""
+msgstr "DHCP server típus:"
 
 #: ../data/ui/services-network.ui.h:7
 msgid "Enable Routing (NAT)"
-msgstr ""
+msgstr "Útváasztást engedélyez (NAT)"
 
 #: ../data/ui/services-network.ui.h:8
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:346
 msgid "Group Network"
-msgstr ""
+msgstr "Csoport Hálózat"
 
 #: ../data/ui/services-network.ui.h:9
 msgid "IP Address:"
-msgstr ""
+msgstr "IP cím:"
 
 #: ../data/ui/services-network.ui.h:10
 msgid "Integrate with NetworkManager"
-msgstr ""
+msgstr "Intergrálás a NetworkManager-el"
 
 #: ../data/ui/services-network.ui.h:11
 msgid "Let Blueman handle the network interfaces"
-msgstr ""
+msgstr "Kezelje  Bluemon a hálűózati eszközöket"
 
 #: ../data/ui/services-network.ui.h:12
 msgid "Network Access Point (NAP)"
-msgstr ""
+msgstr "Network Access Point (NAP)"
 
 #: ../data/ui/services-transfer.ui.h:1
 msgid "<b>File Transfer</b>"
-msgstr ""
+msgstr "<b>Fájl átvitel</b>"
 
 #: ../data/ui/services-transfer.ui.h:2
 msgid "<b>Object Push</b>"
@@ -169,55 +170,58 @@ msgstr ""
 
 #: ../data/ui/services-transfer.ui.h:3
 msgid "<b>Transfer Settings</b>"
-msgstr ""
+msgstr "<b>Átvitel beállításai</b>"
 
 #: ../data/ui/services-transfer.ui.h:4
 msgid "Accept files from trusted devices"
-msgstr ""
+msgstr "Elfogad fájlokat hitelesített eszközöktől"
 
 #: ../data/ui/services-transfer.ui.h:5
 msgid "Allow devices to write/delete"
-msgstr ""
+msgstr "Engedélyez eszközöknek írást/olvasást"
 
 #: ../data/ui/services-transfer.ui.h:6
 msgid "Enabled"
-msgstr ""
+msgstr "Engedélyezett"
 
 #: ../data/ui/services-transfer.ui.h:7
 msgid "Select Shared/Storage folder"
-msgstr ""
+msgstr "Megosztási/Tárolási mappa választás"
 
 #: ../data/ui/services-transfer.ui.h:8
 msgid "Shared Folder:"
-msgstr ""
+msgstr "Megosztott Mappa:"
 
 #: ../data/ui/send-dialog.ui.h:1
 msgid "<b>File:</b>"
-msgstr ""
+msgstr "<b>Fájl:</b>"
 
 #: ../data/ui/send-dialog.ui.h:2
 msgid "<b>To:</b>"
-msgstr ""
+msgstr "<b>Cél:</b>"
 
 #: ../data/ui/send-dialog.ui.h:3
-msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
+msgid ""
+"<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr ""
+"<span weight=\"bold\" size=\"large\">Fájlok küldése Bluetoothon "
+"keresztül</span>"
 
 #: ../data/ui/send-dialog.ui.h:4
 msgid "Bluetooth File Transfer"
-msgstr ""
+msgstr "Bluetooth fájlátvitel"
 
 #: ../data/ui/send-dialog.ui.h:5
 msgid "File Progress"
-msgstr ""
+msgstr "Fájl Folyamatban"
 
 #: ../data/ui/send-dialog.ui.h:6
 msgid "Total Progress"
-msgstr ""
+msgstr "Teljes Folyamat"
 
 #: ../data/ui/send-dialog.ui.h:7
 msgid "gtk-cancel"
-msgstr ""
+msgstr "gtk-mégse"
 
 #: ../blueman/Sdp.py:101
 msgid "Dialup Networking (DUN)"
@@ -228,62 +232,62 @@ msgstr ""
 #: ../blueman/main/applet/NetworkManager.py:89
 #: ../blueman/main/applet/NetworkManager.py:95
 msgid "Bluetooth Network"
-msgstr ""
+msgstr "Bluetooth Hálózat"
 
 #: ../blueman/main/applet/NetworkManager.py:77
 #, python-format
 msgid "Interface %(0)s bound to IP address %(1)s"
-msgstr ""
+msgstr "A %(0)s eszközhöz a %(1)s IP cím lett hozzárendelve"
 
 #: ../blueman/main/applet/NetworkManager.py:80
 #: ../blueman/main/applet/NetworkManager.py:90
 #, python-format
 msgid "Failed to acquire an IP address on %s"
-msgstr ""
+msgstr "%s eszközön az ip cím beszerzése sikertelen."
 
 #: ../blueman/main/applet/NetworkManager.py:96
 #, python-format
 msgid "Acquiring an IP address on %s"
-msgstr ""
+msgstr "Ip cím beszerzése a(z) %s esztöztől"
 
 #: ../blueman/main/applet/Transfer.py:108
 msgid "Incoming File"
-msgstr ""
+msgstr "Fájl fogadás"
 
 #: ../blueman/main/applet/Transfer.py:108
 #, python-format
 msgid "Incoming file %(0)s from %(1)s"
-msgstr ""
+msgstr "%(0)s. fájl fogadása %(1)s-ból"
 
 #: ../blueman/main/applet/Transfer.py:113
 #: ../blueman/main/applet/BluezAgent.py:168
 msgid "Accept"
-msgstr ""
+msgstr "Elfogad"
 
 #: ../blueman/main/applet/Transfer.py:114
 msgid "Reject"
-msgstr ""
+msgstr "Elutasítás"
 
 #: ../blueman/main/applet/Transfer.py:150
 msgid "Cancel"
-msgstr ""
+msgstr "Mégse"
 
 #: ../blueman/main/applet/Transfer.py:175
 msgid "File Saved"
-msgstr ""
+msgstr "Fájl mentve"
 
 #: ../blueman/main/applet/Transfer.py:175
 #, python-format
 msgid "Would you like to open %s?"
-msgstr ""
+msgstr "Megnyitja %s-t?"
 
 #: ../blueman/main/applet/Transfer.py:177
 msgid "Open"
-msgstr ""
+msgstr "Megnyit"
 
 #: ../blueman/main/applet/Transfer.py:207
 msgid "Receiving File"
-msgstr ""
+msgstr "Fájl fogadása"
 
 #: ../blueman/main/applet/Transfer.py:207
 #, python-format
@@ -291,50 +295,52 @@ msgid ""
 "Receiving File %(0)s\n"
 "%(1).2f%(2)s out of %(3).2f%(4)s (%(5).2f%(6)s/s)"
 msgstr ""
+"%(0)s fogadása\n"
+"%(1).2f%(2)s kész %(3).2f%(4)s-ból (%(5).2f%(6)s/mp)"
 
 #: ../blueman/main/applet/BluezAgent.py:87
 #, python-format
 msgid "Pairing request for %s"
-msgstr ""
+msgstr "Párosításkérés a(z) %s eszköztől"
 
 #: ../blueman/main/applet/BluezAgent.py:98
 #: ../blueman/main/applet/BluezAgent.py:141
 #: ../blueman/main/applet/BluezAgent.py:174
 msgid "Bluetooth device"
-msgstr ""
+msgstr "Bluetooth eszköz"
 
 #: ../blueman/main/applet/BluezAgent.py:108
 msgid "Enter PIN code for authentication:"
-msgstr ""
+msgstr "Írja be a hitelesítéshez a PIN kódot:"
 
 #: ../blueman/main/applet/BluezAgent.py:109
 msgid "Enter PIN code"
-msgstr ""
+msgstr "Írja be a PIN kódot"
 
 #: ../blueman/main/applet/BluezAgent.py:115
 msgid "Enter passkey for authentication:"
-msgstr ""
+msgstr "Írja be az azonosításhoz használt jelszót:"
 
 #: ../blueman/main/applet/BluezAgent.py:116
 msgid "Enter passkey"
-msgstr ""
+msgstr "Adja meg a jelszókulcsot"
 
 #: ../blueman/main/applet/BluezAgent.py:136
 msgid "Pairing request for:"
-msgstr ""
+msgstr "Párosítási kérelem ehhez:"
 
 #: ../blueman/main/applet/BluezAgent.py:136
 msgid "Confirm value for authentication:"
-msgstr ""
+msgstr "Erősítse meg az azonosításhoz használt értéket:"
 
 #: ../blueman/main/applet/BluezAgent.py:137
 msgid "Confirm"
-msgstr ""
+msgstr "Megerősít"
 
 #: ../blueman/main/applet/BluezAgent.py:137
 #: ../blueman/main/applet/BluezAgent.py:169
 msgid "Deny"
-msgstr ""
+msgstr "Megtagadás"
 
 #: ../blueman/main/applet/BluezAgent.py:166
 msgid "Authorization request for:"
@@ -342,11 +348,11 @@ msgstr ""
 
 #: ../blueman/main/applet/BluezAgent.py:166
 msgid "Service:"
-msgstr ""
+msgstr "Szolgáltatás:"
 
 #: ../blueman/main/applet/BluezAgent.py:167
 msgid "Always accept"
-msgstr ""
+msgstr "Mindig elfogad"
 
 #: ../blueman/DeviceClass.py:29 ../blueman/DeviceClass.py:39
 msgid "uncategorized"
@@ -402,7 +408,7 @@ msgstr ""
 
 #: ../blueman/DeviceClass.py:62
 msgid "unknown"
-msgstr ""
+msgstr "ismeretlen"
 
 #: ../blueman/DeviceClass.py:63
 msgid "microphone"
@@ -446,24 +452,24 @@ msgstr ""
 
 #: ../blueman/gui/DeviceSelectorDialog.py:31
 msgid "Select Device"
-msgstr ""
+msgstr "Eszközválasztás"
 
 #: ../blueman/gui/CommonUi.py:49
 msgid "Blueman is a GTK based Bluetooth manager"
-msgstr ""
+msgstr "A Blueman egy GTK alapú Bluetooth kezelő"
 
 #: ../blueman/gui/applet/DiscvManager.py:35
 msgid "Make the default adapter visible for 1 minute"
-msgstr ""
+msgstr "Láthatóvá teszi az alapértelmezett csatolót 1 percig"
 
 #: ../blueman/gui/applet/DiscvManager.py:44
 #, python-format
 msgid "Discoverable... %ss"
-msgstr ""
+msgstr "Látható... %ss"
 
 #: ../blueman/gui/applet/DiscvManager.py:110 ../apps/blueman-applet:67
 msgid "Make Discoverable"
-msgstr ""
+msgstr "Láthatóvá tesz"
 
 #: ../blueman/gui/applet/RecentConns.py:148
 #, python-format
@@ -490,7 +496,7 @@ msgstr ""
 
 #: ../blueman/gui/applet/RecentConns.py:179
 msgid "Service"
-msgstr ""
+msgstr "Szolgáltatás"
 
 #: ../blueman/gui/applet/RecentConns.py:184
 #, python-format
@@ -499,173 +505,173 @@ msgstr ""
 
 #: ../blueman/gui/manager/ManagerProgressbar.py:33 ../apps/blueman-sendto:70
 msgid "Connecting"
-msgstr ""
+msgstr "Kapcsolódás"
 
 #: ../blueman/gui/manager/ManagerProgressbar.py:59
 msgid "Cancel Operation"
-msgstr ""
+msgstr "Művelet megszakítása"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:126
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:476
 msgid "Success!"
-msgstr ""
+msgstr "Siker!"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:132
 msgid "Failed"
-msgstr ""
+msgstr "Sikertelen"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:143
 msgid "Cancelled"
-msgstr ""
+msgstr "Megszakítva"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:147
 msgid "Connecting..."
-msgstr ""
+msgstr "Kapcsolódás..."
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:236
 msgid "Add Device"
-msgstr ""
+msgstr "Eszköz hozzáadás"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:250
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:414
 msgid "Send a file..."
-msgstr ""
+msgstr "Fájl küldés..."
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:274
 msgid "Dialup Service"
-msgstr ""
+msgstr "Tárcsázó szolgáltatás"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:281
 msgid "Serial Service"
-msgstr ""
+msgstr "Soros Szolgáltatás"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:288
 msgid "Serial Ports"
-msgstr ""
+msgstr "Soros portok"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:308
 #, python-format
 msgid "Disconnect %s"
-msgstr ""
+msgstr "%s leválasztása"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:319
 msgid "Disconnect Input Service"
-msgstr ""
+msgstr "Beviteli szolgáltatás kikapcsolása"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:323
 msgid "Connect Input Service"
-msgstr ""
+msgstr "Beviteli szolgáltatás bekapcsolása"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:334
 msgid "Network Access"
-msgstr ""
+msgstr "Hálózat hozzáférés"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:353
 msgid "Network Access Point"
-msgstr ""
+msgstr "Hálózati Hozzáférési Pont"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:362
 msgid "Disconnect Network"
-msgstr ""
+msgstr "Hálózat bontás"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:378
 msgid "Renew IP Address"
-msgstr ""
+msgstr "IP cím újrakérése"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:388
 msgid "Disconnect Headset Service"
-msgstr ""
+msgstr "Headset szolgáltatás bontás"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:391
 msgid "Connect Headset Service"
-msgstr ""
+msgstr "Headset szolgáltatás csatlakozás"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:401
 msgid "Disconnect A2DP Service"
-msgstr ""
+msgstr "A2DP szolgáltatás kikapcsolása"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:404
 msgid "Connect A2DP Service"
-msgstr ""
+msgstr "A2DB szolgáltatás bekapcsolása"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:419
 msgid "Browse device..."
-msgstr ""
+msgstr "Eszköz tallózása..."
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:457
 #: ../blueman/gui/manager/ManagerToolbar.py:100
 msgid "Untrust"
-msgstr ""
+msgstr "Hitelesítést töröl"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:480
 msgid "Fail"
-msgstr ""
+msgstr "Hiba"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:481
 msgid "Refreshing"
-msgstr ""
+msgstr "Frissítés"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:483
 msgid "Refreshing Services..."
-msgstr ""
+msgstr "Szolgáltatások Frissítése..."
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:486
 msgid "Refresh Services"
-msgstr ""
+msgstr "Szolgáltatások frissítése"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:495
 msgid "Remove..."
-msgstr ""
+msgstr "Eltávolítás..."
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:504
 msgid "Disconnect Device"
-msgstr ""
+msgstr "Eszköz leválasztása"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:253
 msgid "<b>Trusted and Bonded</b>"
-msgstr ""
+msgstr "<b>Hitelesítve és Párosítva</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:255
 msgid "<b>Bonded</b>"
-msgstr ""
+msgstr "<b>Párosítva</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:257
 msgid "<b>Trusted</b>"
-msgstr ""
+msgstr "<b>Engedélyezett</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:278
 msgid "Poor"
-msgstr ""
+msgstr "Rossz"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:281
 #: ../blueman/gui/manager/ManagerDeviceList.py:297
 msgid "Sub-optimal"
-msgstr ""
+msgstr "Nem optimális"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:284
 #: ../blueman/gui/manager/ManagerDeviceList.py:300
 msgid "Optimal"
-msgstr ""
+msgstr "Optimális"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:287
 msgid "Much"
-msgstr ""
+msgstr "Sok"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:290
 msgid "Too much"
-msgstr ""
+msgstr "Túl sok"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:294
 msgid "Low"
-msgstr ""
+msgstr "Alacsony"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:303
 msgid "High"
-msgstr ""
+msgstr "Magas"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:306
 msgid "Very High"
-msgstr ""
+msgstr "Nagyon magas"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:309
 #, python-format
@@ -675,57 +681,61 @@ msgid ""
 "Link Quality: %(lq)u%%\n"
 "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr ""
+"<b>Kapcsolódva</b>\n"
+"Vételi Jelerősség: %(rssi)u%% <i>(%(rssi_state)s)</i>\n"
+"Kapcsolat Minősége: %(lq)u%%\n"
+"Adóteljesítmény: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
 #: ../blueman/gui/manager/ManagerStats.py:53
 #: ../blueman/gui/manager/ManagerStats.py:56
 msgid "Data activity indication"
-msgstr ""
+msgstr "Adatforgalom kijelzés"
 
 #: ../blueman/gui/manager/ManagerStats.py:66
 #: ../blueman/gui/manager/ManagerStats.py:79
 msgid "Total data received and rate of transmission"
-msgstr ""
+msgstr "Összes fogadott adat és átviteli sebeesség"
 
 #: ../blueman/gui/manager/ManagerStats.py:71
 #: ../blueman/gui/manager/ManagerStats.py:74
 msgid "Total data sent and rate of transmission"
-msgstr ""
+msgstr "Összes küldött adat és átviteli sebesség"
 
 #: ../blueman/gui/manager/ManagerMenu.py:42
 msgid "_Adapter"
-msgstr ""
+msgstr "_Adapter"
 
 #: ../blueman/gui/manager/ManagerMenu.py:43
 msgid "_Device"
-msgstr ""
+msgstr "_Eszköz"
 
 #: ../blueman/gui/manager/ManagerMenu.py:44
 msgid "_View"
-msgstr ""
+msgstr "_Nézet"
 
 #: ../blueman/gui/manager/ManagerMenu.py:45
 msgid "_Help"
-msgstr ""
+msgstr "_Súgó"
 
 #: ../blueman/gui/manager/ManagerMenu.py:63
 msgid "Device Manager"
-msgstr ""
+msgstr "Eszközkezelő"
 
 #: ../blueman/gui/manager/ManagerMenu.py:71
 msgid "Show Toolbar"
-msgstr ""
+msgstr "Eszköztár megjelenítése"
 
 #: ../blueman/gui/manager/ManagerMenu.py:83
 msgid "Show Statusbar"
-msgstr ""
+msgstr "Állapotsor megjelenítése"
 
 #: ../blueman/gui/manager/ManagerMenu.py:99
 msgid "Latest Device First"
-msgstr ""
+msgstr "A legujabb eszköz legyen az első"
 
 #: ../blueman/gui/manager/ManagerMenu.py:103
 msgid "Latest Device Last"
-msgstr ""
+msgstr "A legújabb eszköz legyen az utolsósía"
 
 #: ../data/blueman.desktop.in.h:1
 msgid "Blueman Applet"
@@ -733,7 +743,7 @@ msgstr ""
 
 #: ../data/blueman.desktop.in.h:2 ../data/blueman-manager.desktop.in.h:1
 msgid "Blueman Bluetooth Manager"
-msgstr ""
+msgstr "Blueman Bluetooth Manager"
 
 #: ../data/configs/org.blueman.policy.in.h:1
 msgid "Configure Bluetooth Modems"
@@ -741,7 +751,7 @@ msgstr ""
 
 #: ../data/configs/org.blueman.policy.in.h:2
 msgid "Configure Bluetooth Network"
-msgstr ""
+msgstr "Bluetooth hálózat konfigurálása"
 
 #: ../data/configs/org.blueman.policy.in.h:3
 msgid "Launch DHCP client"
@@ -753,43 +763,43 @@ msgstr ""
 
 #: ../data/configs/org.blueman.policy.in.h:5
 msgid "System policy prevents modifying the configuration"
-msgstr ""
+msgstr "Rendszer jogosultságok megakadályozzák a konfiguráció módosítását"
 
 #: ../data/configs/org.blueman.policy.in.h:6
 msgid "The Blueman Project"
-msgstr ""
+msgstr "A Blueman projekt"
 
 #: ../apps/blueman-manager:82
 msgid "Bluetooth Turned Off"
-msgstr ""
+msgstr "BLuetooth kikapcsolva"
 
 #: ../apps/blueman-manager:83
 msgid "Bluetooth needs to be turned on for the device manager to function"
-msgstr ""
+msgstr "Be kell kapcsolni a Bluetoothot az Eszközkezelő működéséhez"
 
 #: ../apps/blueman-manager:86
 msgid "Enable Bluetooth"
-msgstr ""
+msgstr "Bluetooth Bekapcsolása"
 
 #: ../apps/blueman-manager:181
 msgid "Adding"
-msgstr ""
+msgstr "Hozzáadás"
 
 #: ../apps/blueman-manager:192
 msgid "Searching"
-msgstr ""
+msgstr "Keresés"
 
 #: ../apps/blueman-manager:212
 msgid "Success"
-msgstr ""
+msgstr "Siker"
 
 #: ../apps/blueman-manager:216
 msgid "Failure"
-msgstr ""
+msgstr "Sikertelen"
 
 #: ../apps/blueman-manager:221
 msgid "Bonding"
-msgstr ""
+msgstr "Párosítás"
 
 #: ../apps/blueman-manager:240 ../apps/blueman-applet:267
 #: ../apps/blueman-applet:271
@@ -798,11 +808,11 @@ msgstr ""
 
 #: ../apps/blueman-applet:68
 msgid "Bluetooth Off"
-msgstr ""
+msgstr "Bluetooth Kikapcsolva"
 
 #: ../apps/blueman-applet:69
 msgid "Turn off all adapters"
-msgstr ""
+msgstr "Minden adapter kikapcsolása"
 
 #: ../apps/blueman-applet:74
 msgid "Recent Connections"
@@ -865,37 +875,37 @@ msgstr ""
 #, c-format
 msgid "%.0f Minute"
 msgid_plural "%.0f Minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%.0f perc"
+msgstr[1] "%.0f perc"
 
 #: ../apps/blueman-sendto:164
 #, c-format
 msgid "%.0f Second"
 msgid_plural "%.0f Seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%.0f másodperc"
+msgstr[1] "%.0f másodperc"
 
 #: ../apps/blueman-sendto:167
 msgid "Sending File %(0)s/%(1)s (%(2).2f %(3)s/s) ETA: %(4)s"
-msgstr ""
+msgstr "Fájl üldése %(0)s/%(1)s (%(2).2f %(3)s/s) ETA: %(4)s"
 
 #: ../apps/blueman-sendto:218
 #, c-format
 msgid "Error occurred while sending file %s"
-msgstr ""
+msgstr "Hiba történt a(z) %s fájl küldése során"
 
 #: ../apps/blueman-sendto:221
 msgid "Skip"
-msgstr ""
+msgstr "Kihagy"
 
 #: ../apps/blueman-sendto:222
 msgid "Retry"
-msgstr ""
+msgstr "Ismét"
 
 #: ../apps/blueman-sendto:264
 msgid "Send files to this device"
-msgstr ""
+msgstr "Fájlok küldése erre az eszközre"
 
 #: ../apps/blueman-sendto:319
 msgid "Select files you want to send"
-msgstr ""
+msgstr "Válassza ki a küldendő fájlokat"

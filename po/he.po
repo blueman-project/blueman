@@ -1,21 +1,22 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Hebrew translation for blueman
+# Copyright (c) 2007 Rosetta Contributors and Canonical Ltd 2007
+# This file is distributed under the same license as the blueman package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2007.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
+"Project-Id-Version: blueman\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2008-12-25 21:21+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2008-08-10 19:18+0000\n"
+"Last-Translator: Yaron <sh.yaron@gmail.com>\n"
+"Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Launchpad-Export-Date: 2008-12-26 10:41+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Friendly name</b>"
@@ -55,7 +56,7 @@ msgstr ""
 
 #: ../data/ui/manager-main.ui.h:1
 msgid "Add"
-msgstr ""
+msgstr "הוסף"
 
 #: ../data/ui/manager-main.ui.h:2
 msgid "Bluetooth Devices"
@@ -65,11 +66,11 @@ msgstr ""
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:241
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:441
 msgid "Bond"
-msgstr ""
+msgstr "אגד"
 
 #: ../data/ui/manager-main.ui.h:4
 msgid "Browse"
-msgstr ""
+msgstr "עיון"
 
 #: ../data/ui/manager-main.ui.h:5
 msgid "Create bonding with the device"
@@ -77,7 +78,7 @@ msgstr ""
 
 #: ../data/ui/manager-main.ui.h:6
 msgid "Remove"
-msgstr ""
+msgstr "הסר"
 
 #: ../data/ui/manager-main.ui.h:7 ../blueman/gui/manager/ManagerMenu.py:189
 msgid "Search"
@@ -89,7 +90,7 @@ msgstr ""
 
 #: ../data/ui/manager-main.ui.h:9
 msgid "Send File"
-msgstr ""
+msgstr "שלח קובץ"
 
 #: ../data/ui/manager-main.ui.h:10
 msgid "Setup this device"
@@ -120,7 +121,7 @@ msgstr ""
 
 #: ../data/ui/services-network.ui.h:3
 msgid "<b>Network Settings</b>"
-msgstr ""
+msgstr "<b>הגדרות רשת</b>"
 
 #: ../data/ui/services-network.ui.h:4
 msgid "<b>No DHCP servers installed</b>"
@@ -157,7 +158,7 @@ msgstr ""
 
 #: ../data/ui/services-network.ui.h:12
 msgid "Network Access Point (NAP)"
-msgstr ""
+msgstr "נקודת גישה לרשת (NAP)"
 
 #: ../data/ui/services-transfer.ui.h:1
 msgid "<b>File Transfer</b>"
@@ -200,7 +201,8 @@ msgid "<b>To:</b>"
 msgstr ""
 
 #: ../data/ui/send-dialog.ui.h:3
-msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
+msgid ""
+"<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr ""
 
 #: ../data/ui/send-dialog.ui.h:4
@@ -266,7 +268,7 @@ msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:150
 msgid "Cancel"
-msgstr ""
+msgstr "ביטול"
 
 #: ../blueman/main/applet/Transfer.py:175
 msgid "File Saved"
@@ -402,7 +404,7 @@ msgstr ""
 
 #: ../blueman/DeviceClass.py:62
 msgid "unknown"
-msgstr ""
+msgstr "לא ידוע"
 
 #: ../blueman/DeviceClass.py:63
 msgid "microphone"
@@ -490,7 +492,7 @@ msgstr ""
 
 #: ../blueman/gui/applet/RecentConns.py:179
 msgid "Service"
-msgstr ""
+msgstr "שירות"
 
 #: ../blueman/gui/applet/RecentConns.py:184
 #, python-format
@@ -520,7 +522,7 @@ msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:147
 msgid "Connecting..."
-msgstr ""
+msgstr "מתחבר..."
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:236
 msgid "Add Device"
@@ -627,45 +629,45 @@ msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:255
 msgid "<b>Bonded</b>"
-msgstr ""
+msgstr "<b>מאוגד</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:257
 msgid "<b>Trusted</b>"
-msgstr ""
+msgstr "<b>מהימן</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:278
 msgid "Poor"
-msgstr ""
+msgstr "גרוע"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:281
 #: ../blueman/gui/manager/ManagerDeviceList.py:297
 msgid "Sub-optimal"
-msgstr ""
+msgstr "לא מיטבי"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:284
 #: ../blueman/gui/manager/ManagerDeviceList.py:300
 msgid "Optimal"
-msgstr ""
+msgstr "מיטבי"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:287
 msgid "Much"
-msgstr ""
+msgstr "מספיק"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:290
 msgid "Too much"
-msgstr ""
+msgstr "יותר מדי"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:294
 msgid "Low"
-msgstr ""
+msgstr "נמוך"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:303
 msgid "High"
-msgstr ""
+msgstr "גבוה"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:306
 msgid "Very High"
-msgstr ""
+msgstr "מאוד גבוה"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:309
 #, python-format
@@ -675,21 +677,25 @@ msgid ""
 "Link Quality: %(lq)u%%\n"
 "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr ""
+"<b>מחובר</b>\n"
+"עוצמת האות המתקבל: %(rssi)u%% <i>(%(rssi_state)s)</i>\n"
+"איכות הקישורית: %(lq)u%%\n"
+"עוצמת רמת התשדורת: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
 #: ../blueman/gui/manager/ManagerStats.py:53
 #: ../blueman/gui/manager/ManagerStats.py:56
 msgid "Data activity indication"
-msgstr ""
+msgstr "אבחנת פעילות הנתונים"
 
 #: ../blueman/gui/manager/ManagerStats.py:66
 #: ../blueman/gui/manager/ManagerStats.py:79
 msgid "Total data received and rate of transmission"
-msgstr ""
+msgstr "סך כל הנתונים שהתקבלו וקצב ההעברה"
 
 #: ../blueman/gui/manager/ManagerStats.py:71
 #: ../blueman/gui/manager/ManagerStats.py:74
 msgid "Total data sent and rate of transmission"
-msgstr ""
+msgstr "סך כל הנתונים שנשלחו וקצב ההעברה"
 
 #: ../blueman/gui/manager/ManagerMenu.py:42
 msgid "_Adapter"
@@ -705,7 +711,7 @@ msgstr ""
 
 #: ../blueman/gui/manager/ManagerMenu.py:45
 msgid "_Help"
-msgstr ""
+msgstr "_עזרה"
 
 #: ../blueman/gui/manager/ManagerMenu.py:63
 msgid "Device Manager"
@@ -733,7 +739,7 @@ msgstr ""
 
 #: ../data/blueman.desktop.in.h:2 ../data/blueman-manager.desktop.in.h:1
 msgid "Blueman Bluetooth Manager"
-msgstr ""
+msgstr "מנהל בלוטות' Blueman"
 
 #: ../data/configs/org.blueman.policy.in.h:1
 msgid "Configure Bluetooth Modems"
@@ -789,7 +795,7 @@ msgstr ""
 
 #: ../apps/blueman-manager:221
 msgid "Bonding"
-msgstr ""
+msgstr "קישור"
 
 #: ../apps/blueman-manager:240 ../apps/blueman-applet:267
 #: ../apps/blueman-applet:271
