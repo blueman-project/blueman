@@ -1,0 +1,1559 @@
+2008-12-24 14:47  walmis
+
+	* apps/blueman-applet, apps/blueman-manager,
+	  apps/blueman-mechanism, apps/blueman-sendto,
+	  blueman/Functions.py, blueman/gui/DeviceList.py,
+	  blueman/gui/applet/RecentConns.py,
+	  blueman/gui/manager/ManagerToolbar.py, blueman/main/Device.py,
+	  blueman/plugins/services/Network.py: many bugfixes
+
+2008-12-24 09:22  walmis
+
+	* apps/blueman-applet: fixed wrong parameter count exception
+
+2008-12-24 09:15  walmis
+
+	* blueman/Functions.py, blueman/gui/applet/RecentConns.py,
+	  blueman/main/applet/DbusService.py, configure.ac, module/Lib.pyx,
+	  module/libblueman.c, module/libblueman.h: Updated libsn wrapper,
+	  fixed some bugs with recent connections
+
+2008-12-23 18:26  walmis
+
+	* apps/blueman-applet, apps/blueman-manager, blueman/Functions.py,
+	  blueman/gui/applet/RecentConns.py, configure.ac, module/Lib.pyx,
+	  module/Makefile.am, module/libblueman.c, module/libblueman.h:
+	  libstartup-notification support
+
+2008-12-22 16:48  walmis
+
+	* apps/blueman-applet, blueman/Sdp.py,
+	  blueman/gui/applet/DiscvManager.py,
+	  blueman/gui/applet/Makefile.am,
+	  blueman/gui/applet/RecentConns.py,
+	  blueman/gui/manager/ManagerDeviceMenu.py, blueman/main/Config.py,
+	  blueman/main/Device.py, blueman/main/applet/DbusService.py: New
+	  feature: Recent connections in the applet menu, allows quickly
+	  connecting to most used services
+
+2008-12-14 12:27  walmis
+
+	* apps/blueman-applet, apps/blueman-mechanism,
+	  apps/blueman-services, blueman/Constants.py.in,
+	  blueman/gui/manager/ManagerDeviceMenu.py,
+	  blueman/main/applet/DbusService.py, configure.ac: fix bug that
+	  disconnects network when manager is closed
+	  initialize NAP stuff when applet is launched
+
+2008-12-10 15:21  walmis
+
+	* apps/blueman-mechanism, blueman/main/NetConf.py,
+	  blueman/plugins/services/Network.py: netconf improvements #3
+
+2008-12-10 14:18  walmis
+
+	* blueman/main/NetConf.py, blueman/plugins/services/Network.py:
+	  netconf improvements #2
+
+2008-12-10 12:56  walmis
+
+	* blueman/gui/applet/DiscvManager.py, blueman/main/NetConf.py:
+	  netconf improvements
+
+2008-12-07 10:24  walmis
+
+	* blueman/gui/manager/ManagerProgressbar.py: small bugfix
+
+2008-12-06 18:28  walmis
+
+	* apps/blueman-adapters: undo a mistake
+
+2008-12-06 18:26  walmis
+
+	* apps/blueman-adapters, apps/blueman-applet,
+	  blueman/Constants.py.in, blueman/plugins/services/Network.py,
+	  configure.ac, po/POTFILES.in, po/blueman.pot: automagically set
+	  constant paths when running uninstalled
+
+2008-12-06 12:26  walmis
+
+	* apps/blueman-applet, blueman/Constants.py.in,
+	  blueman/gui/applet/DiscvManager.py,
+	  blueman/plugins/services/Transfer.py, configure.ac,
+	  data/ui/Makefile.am: buld system now works properly. Fixed some
+	  misc minor bugs
+
+2008-12-05 08:41  walmis
+
+	* apps/blueman-services: sort service plugins before loading
+
+2008-12-02 19:50  walmis
+
+	* blueman/gui/manager/ManagerDeviceMenu.py: few more minor tweaks
+
+2008-12-02 19:45  walmis
+
+	* apps/blueman-applet, blueman/gui/manager/ManagerDeviceMenu.py,
+	  blueman/main/Device.py: few minor bug fixes
+
+2008-12-02 17:35  walmis
+
+	* data/ui/services-network.ui, data/ui/services-transfer.ui: make
+	  service manager modular
+
+2008-12-02 17:35  walmis
+
+	* apps/blueman-applet, apps/blueman-manager, apps/blueman-services,
+	  blueman/Makefile.am, blueman/main/AppletService.py,
+	  blueman/main/applet/DbusService.py, blueman/plugins,
+	  blueman/plugins/Makefile.am, blueman/plugins/ServicePlugin.py,
+	  blueman/plugins/__init__.py, blueman/plugins/services,
+	  blueman/plugins/services/Makefile.am,
+	  blueman/plugins/services/Network.py,
+	  blueman/plugins/services/Transfer.py,
+	  blueman/plugins/services/__init__.py, configure.ac,
+	  data/ui/services.ui: make service manager modular
+
+2008-11-29 17:00  walmis
+
+	* apps/blueman-adapters, apps/blueman-applet, apps/blueman-manager,
+	  apps/blueman-sendto, apps/blueman-services, blueman/Functions.py,
+	  blueman/ods/OdsManager.py: Added rgba colormap support
+
+2008-11-29 14:10  walmis
+
+	* apps/blueman-mechanism, apps/blueman-sendto,
+	  apps/blueman-services, blueman/main/HalManager.py,
+	  blueman/main/applet/NetworkManager.py, data/ui/services.ui:
+	  blueman-sendto now understands the --device parameter.
+	  Added NetworkManager support, by editing bnep* device's HAL
+	  entries
+
+2008-11-26 13:30  walmis
+
+	* blueman/main/applet/Transfer.py: fixed stupid mistake, 30ms
+	  notification timeout
+
+2008-11-25 19:47  walmis
+
+	* blueman/main/applet/Transfer.py: tweaked transfer service a bit
+
+2008-11-24 22:21  walmis
+
+	* apps/blueman-sendto, blueman/ods/OdsSession.py,
+	  data/ui/send-dialog.ui: some transfer client fixes
+
+2008-11-24 22:20  walmis
+
+	* blueman/main/applet/Transfer.py: some transfer server fixes
+
+2008-11-24 19:50  walmis
+
+	* apps/blueman-sendto: dont show second progress bar when
+	  transferring single file
+
+2008-11-24 19:37  walmis
+
+	* apps/blueman-sendto: show eta for current file, not all files
+
+2008-11-24 19:22  walmis
+
+	* apps/blueman-sendto, apps/test.py, blueman/gui/DeviceList.py,
+	  blueman/gui/DeviceSelectorDialog.py,
+	  blueman/gui/DeviceSelectorWidget.py,
+	  blueman/main/applet/Transfer.py, blueman/ods/OdsBase.py,
+	  blueman/ods/OdsManager.py, blueman/ods/OdsServerSession.py,
+	  blueman/ods/OdsSession.py, data/ui/send-dialog.ui: initial sendto
+	  commit
+
+2008-11-23 19:33  walmis
+
+	* data/ui/Makefile.am: update makefile
+
+2008-11-23 19:32  walmis
+
+	* data/ui/device-list-widget.ui: add missing ui file
+
+2008-11-23 19:30  walmis
+
+	* apps/test.py, blueman/bluez/BlueZInterface.py,
+	  blueman/gui/DeviceList.py, blueman/gui/DeviceSelectorDialog.py,
+	  blueman/gui/DeviceSelectorList.py,
+	  blueman/gui/DeviceSelectorWidget.py, blueman/gui/GenericList.py,
+	  blueman/main/Device.py, blueman/main/SignalTracker.py: device
+	  selector dialog and many other improvements
+
+2008-11-23 16:05  walmis
+
+	* apps/blueman-sendto, apps/test.py, blueman/gui/DeviceList.py,
+	  blueman/gui/DeviceSelectorDialog.py,
+	  blueman/gui/DeviceSelectorList.py,
+	  blueman/gui/DeviceSelectorWidget.py, blueman/gui/Makefile.am:
+	  device selector widget +- complete
+
+2008-11-23 10:20  walmis
+
+	* apps/Makefile.am, apps/blueman-sendto, blueman/gui/DeviceList.py,
+	  blueman/gui/manager/ManagerDeviceMenu.py,
+	  blueman/main/applet/DbusService.py,
+	  blueman/main/applet/NetworkManager.py: fixed some bugs, improved
+	  dhcp client support and started working on blueman-sendto
+
+2008-11-22 20:09  walmis
+
+	* apps/blueman-mechanism, blueman/main/NetConf.py,
+	  blueman/main/applet/NetworkManager.py: dhcp client support
+
+2008-11-22 15:00  walmis
+
+	* blueman/gui/DeviceList.py, blueman/main/applet/Transfer.py:
+	  automatic accept in opp service now works
+
+2008-11-21 21:02  walmis
+
+	* blueman/main/applet/Transfer.py: fixed illegal syntax
+
+2008-11-21 18:31  walmis
+
+	* blueman/main/applet/Transfer.py, data/ui/adapters-tab.ui,
+	  data/ui/adapters.ui, data/ui/applet-passkey.ui,
+	  data/ui/services.ui, po/LINGUAS, po/POTFILES.in,
+	  po/POTFILES.skip, po/blueman.pot: translation updates
+
+2008-11-21 17:05  tadas
+
+	* apps/Makefile.am, data/configs/Makefile.am, po/POTFILES.in,
+	  po/POTFILES.skip: make distcheck now workds
+
+2008-11-21 16:47  tadas
+
+	* blueman/Makefile.am, po/ChangeLog: autoshit
+
+2008-11-21 16:27  tadas
+
+	* autogen.sh: autogen
+
+2008-11-21 16:25  walmis
+
+	* apps/blueman-adapters: updates
+
+2008-11-21 16:25  walmis
+
+	* apps/blueman-applet: updates
+
+2008-11-21 16:22  walmis
+
+	* blueman/Constants.py.in:
+
+2008-11-21 16:11  tadas
+
+	* apps/Makefile.am, module/Makefile.am: autotools fixes
+
+2008-11-21 16:05  tadas
+
+	* module/Makefile.am: fix Lib name
+
+2008-11-21 15:55  tadas
+
+	* blueman/main/Makefile.am, blueman/main/manager, configure.ac:
+	  make install works
+
+2008-11-21 15:49  tadas
+
+	* ., module: more svn:ignore
+
+2008-11-21 15:46  tadas
+
+	* po/LINGUAS: fix
+
+2008-11-21 15:44  tadas
+
+	* autogen.sh, configure.ac, data/configs, data/configs/Makefile.am,
+	  data/icons/hicolor/32x32/actions/Makefile.am,
+	  data/icons/hicolor/48x48/status/Makefile.am, module/Makefile,
+	  module/Makefile.am: more autotools
+
+2008-11-21 14:41  tadas
+
+	* blueman, configure.ac, data, data/Makefile.am, data/configs,
+	  data/configs/Makefile, data/icons, data/icons/hicolor,
+	  data/icons/hicolor/16x16, data/icons/hicolor/16x16/actions,
+	  data/icons/hicolor/16x16/devices,
+	  data/icons/hicolor/16x16/status, data/icons/hicolor/32x32,
+	  data/icons/hicolor/32x32/actions, data/icons/hicolor/48x48,
+	  data/icons/hicolor/48x48/actions,
+	  data/icons/hicolor/48x48/devices,
+	  data/icons/hicolor/48x48/status, data/icons/hicolor/scalable,
+	  data/icons/hicolor/scalable/devices, data/icons/main_icon,
+	  data/icons/main_icon/Makefile.am,
+	  data/icons/main_icon/blueman-16.png,
+	  data/icons/main_icon/blueman-22.png,
+	  data/icons/main_icon/blueman-24.png,
+	  data/icons/main_icon/blueman-32.png,
+	  data/icons/main_icon/blueman-48.png,
+	  data/icons/main_icon/blueman.svg,
+	  data/icons/main_icon/hicolor_apps_16x16_blueman.png,
+	  data/icons/main_icon/hicolor_apps_22x22_blueman.png,
+	  data/icons/main_icon/hicolor_apps_24x24_blueman.png,
+	  data/icons/main_icon/hicolor_apps_32x32_blueman.png,
+	  data/icons/main_icon/hicolor_apps_48x48_blueman.png,
+	  data/icons/main_icon/hicolor_apps_scalable_blueman.svg, data/ui:
+	  another bunch of shit
+
+2008-11-21 14:15  tadas
+
+	* apps, apps/Makefile.am, blueman, blueman/Constants.py,
+	  blueman/Constants.py.in, blueman/Makefile.am, blueman/bluez,
+	  blueman/bluez/Makefile.am, blueman/gui, blueman/gui/Makefile.am,
+	  blueman/gui/applet, blueman/gui/applet/Makefile.am,
+	  blueman/gui/manager, blueman/gui/manager/Makefile.am,
+	  blueman/main, blueman/main/Makefile.am, blueman/main/applet,
+	  blueman/main/applet/Makefile.am, blueman/main/manager,
+	  blueman/main/manager/Makefile.am, blueman/ods,
+	  blueman/ods/Makefile.am, configure.ac, po, po/LINGUAS,
+	  po/POTFILES.in: Further autotools work
+
+2008-11-20 20:38  tadas
+
+	* apps/Makefile.am, apps/blueman-adapters,
+	  data/configs/Makefile.am,
+	  data/configs/org.blueman.Mechanism.service,
+	  data/configs/org.blueman.Mechanism.service.in,
+	  data/icons/Makefile.am, data/icons/hicolor/Makefile.am,
+	  data/ui/Makefile.am: more autotools
+
+2008-11-20 19:49  tadas
+
+	* Makefile.am, apps/Makefile.am, configure.ac, data/Makefile.am,
+	  data/configs/Makefile.am, data/icons/hicolor/16x16/Makefile.am,
+	  data/icons/hicolor/16x16/actions/Makefile.am,
+	  data/icons/hicolor/16x16/devices/Makefile.am,
+	  data/icons/hicolor/16x16/status/Makefile.am,
+	  data/icons/hicolor/32x32/Makefile.am,
+	  data/icons/hicolor/32x32/actions/Makefile.am,
+	  data/icons/hicolor/48x48/Makefile.am,
+	  data/icons/hicolor/48x48/actions/Makefile.am,
+	  data/icons/hicolor/48x48/devices/Makefile.am,
+	  data/icons/hicolor/48x48/status/Makefile.am,
+	  data/icons/hicolor/Makefile.am,
+	  data/icons/hicolor/scalable/Makefile.am,
+	  data/icons/hicolor/scalable/devices/Makefile.am: autotools stuff
+
+2008-11-19 20:36  walmis
+
+	* apps/blueman-applet, blueman/gui/applet/DiscvManager.py,
+	  blueman/main/applet/BluezAgent.py: partial bluetooth off feature
+	  implementation
+
+2008-11-19 15:01  walmis
+
+	* apps/blueman-applet: change menuitem
+
+2008-11-19 13:52  walmis
+
+	* apps/blueman-applet, apps/blueman-manager,
+	  blueman/gui/DeviceList.py, blueman/gui/applet/DiscvManager.py,
+	  blueman/main/FakeDevice.py, blueman/main/applet/BluezAgent.py:
+	  added icons to bond/auth notifications, fixed ant exception after
+	  auth, manager window now remembers it's position, and some other
+	  fixes
+
+2008-11-18 22:27  walmis
+
+	* blueman/gui/DeviceList.py, blueman/main/Device.py: fix bug when
+	  refreshing svcs
+
+2008-11-18 22:00  walmis
+
+	* blueman/main/Device.py: latest stuff
+
+2008-11-18 21:46  walmis
+
+	* blueman/gui/manager/ManagerDeviceList.py,
+	  blueman/gui/manager/ManagerDeviceMenu.py: latest stuff
+
+2008-11-18 21:30  walmis
+
+	* apps/blueman-manager, blueman/Functions.py,
+	  blueman/gui/manager/ManagerMenu.py, blueman/main/Device.py: some
+	  bugfixes
+
+2008-11-18 18:30  walmis
+
+	* data/icons/hicolor/16x16/devices,
+	  data/icons/hicolor/16x16/devices/blueman-device.png: add 16x16
+	  blueman-device icons
+
+2008-11-18 17:30  walmis
+
+	* blueman/Functions.py, blueman/gui/manager/ManagerDeviceList.py:
+	  tweaks
+
+2008-11-18 07:25  walmis
+
+	* data/ui/manager-main.ui: fix typo
+
+2008-11-18 07:22  walmis
+
+	* apps/blueman-adapters, blueman/gui/GenericList.py: add todo
+	  message
+
+2008-11-17 21:56  tadas
+
+	* apps/blueman-adapters: adapters pretty much final
+
+2008-11-17 21:43  walmis
+
+	* blueman/gui/manager/ManagerDeviceList.py: list tweak
+
+2008-11-17 21:41  tadas
+
+	* apps/blueman-adapters, data/ui/adapters.ui: adapters
+
+2008-11-17 21:35  walmis
+
+	* apps/blueman-applet, blueman/gui/DeviceList.py,
+	  blueman/gui/applet/DiscvManager.py: possible segfault fix and
+	  tweaked applet menu
+
+2008-11-17 21:28  tadas
+
+	* apps/blueman-adapters, data/ui/adapters-tab.ui: adapters
+
+2008-11-17 20:57  walmis
+
+	* apps/blueman-applet, blueman/gui/applet,
+	  blueman/gui/applet/DiscvManager.py,
+	  blueman/gui/applet/__init__.py: applet set discoverable shortcut
+	  devel
+
+2008-11-17 20:45  tadas
+
+	* apps/blueman-adapters, data/ui/adapters-tab.ui: adapter
+
+2008-11-17 19:21  tadas
+
+	* apps/blueman-adapters, data/ui/adapters-tab.ui,
+	  data/ui/adapters.ui: adapters
+
+2008-11-17 19:20  walmis
+
+	* apps/blueman-applet, blueman/Functions.py: allow only one
+	  instance of applet
+
+2008-11-17 19:16  walmis
+
+	* blueman/gui/manager/ManagerDeviceMenu.py,
+	  blueman/gui/manager/ManagerProgressbar.py,
+	  blueman/main/Device.py: add a refresh services function
+
+2008-11-17 17:38  walmis
+
+	* apps/blueman-manager, blueman/gui/DeviceList.py,
+	  blueman/gui/manager/ManagerProgressbar.py,
+	  blueman/gui/manager/ManagerStats.py: popup statusbar if hidden
+	  when there is a progressbar. Disable status update when statusbar
+	  is hidden
+
+2008-11-17 17:09  tadas
+
+	* blueman/main/SignalTracker.py: adapters and SignalTracker update
+
+2008-11-17 17:09  tadas
+
+	* apps/blueman-adapters, blueman/main/SignalTracker.py,
+	  data/ui/adapters-tab.ui, data/ui/adapters.ui: adapters and
+	  SignalTracker update
+
+2008-11-17 17:06  walmis
+
+	* blueman/main/SignalTracker.py: better signaltracker
+
+2008-11-17 16:56  walmis
+
+	* blueman/gui/DeviceList.py, blueman/main/SignalTracker.py: better
+	  signaltracker
+
+2008-11-17 16:41  walmis
+
+	* blueman/gui/DeviceList.py: small tweak
+
+2008-11-17 16:39  walmis
+
+	* blueman/main/SignalTracker.py: added AutoSignalTracker
+
+2008-11-17 16:00  walmis
+
+	* blueman/gui/DeviceList.py,
+	  blueman/gui/manager/ManagerProgressbar.py: fixed segfault when
+	  using iter_is_valid, now use find_device() instead. And finalized
+	  progressbar stack
+
+2008-11-17 15:20  walmis
+
+	* blueman/gui/manager/ManagerMenu.py,
+	  blueman/gui/manager/ManagerProgressbar.py: progress bar stack
+	  test
+
+2008-11-16 17:30  walmis
+
+	* blueman/gui/manager/ManagerMenu.py: disable search menu item when
+	  discovering
+
+2008-11-16 17:15  walmis
+
+	* blueman/Functions.py: close file after reading
+
+2008-11-16 17:13  walmis
+
+	* data/ui/manager-main.ui: fix manager ui
+
+2008-11-16 17:10  walmis
+
+	* apps/blueman-manager, blueman/Functions.py: added a function to
+	  make sure only one instance is running, and made device manager
+	  only to have a single instance
+
+2008-11-16 16:20  walmis
+
+	* apps/blueman-mechanism, data/configs/Makefile: fixed few bugs
+
+2008-11-16 15:56  walmis
+
+	* blueman/main/NetConf.py: fix
+
+2008-11-16 15:55  walmis
+
+	* apps/blueman-services, blueman/main/NetConf.py: fix exception
+
+2008-11-16 15:16  walmis
+
+	* apps/blueman-manager, blueman/gui/CommonUi.py,
+	  blueman/gui/manager/ManagerDeviceList.py,
+	  blueman/gui/manager/ManagerMenu.py, data/ui/manager-main.ui:
+	  added view and help menus to the manager
+
+2008-11-16 14:03  walmis
+
+	* apps/blueman-applet, blueman/Functions.py,
+	  blueman/gui/manager/ManagerDeviceMenu.py: added icons to applet's
+	  menu items
+
+2008-11-16 13:54  walmis
+
+	* apps/blueman-applet, apps/blueman-services,
+	  blueman/main/applet/BluezAgent.py,
+	  blueman/main/applet/NetworkManager.py, data/ui/services.ui:
+	  latest service stuff and fixed bug in applet, preventing agents
+	  to register after bluez is restarted
+
+2008-11-16 10:20  walmis
+
+	* apps/blueman-mechanism, apps/blueman-services,
+	  blueman/Constants.py, blueman/main/Config.py,
+	  blueman/main/NetConf.py, blueman/ods/OdsBase.py,
+	  data/ui/services.ui: latest service stuff
+
+2008-11-15 13:15  tadas
+
+	* data/ui/adapters.ui: adapters
+
+2008-11-15 11:35  walmis
+
+	* apps/blueman-services, blueman/gui/manager/ManagerDeviceMenu.py,
+	  blueman/main/AppletService.py,
+	  blueman/main/applet/DbusService.py,
+	  blueman/main/applet/Transfer.py, blueman/main/manager/Applet.py,
+	  blueman/ods/OdsManager.py, data/ui/services.ui: transfer settings
+	  working
+
+2008-11-14 21:40  walmis
+
+	* apps/blueman-services, blueman/main/applet/Transfer.py,
+	  data/ui/services.ui: service dialog devel
+
+2008-11-14 20:54  tadas
+
+	* apps/blueman-applet, blueman/Functions.py,
+	  blueman/main/applet/BluezAgent.py: notification fixes
+
+2008-11-14 20:22  walmis
+
+	* apps/blueman-applet, blueman/main/applet/DbusService.py,
+	  blueman/main/applet/Transfer.py, blueman/ods/OdsManager.py,
+	  blueman/ods/OdsServer.py, data/ui/services.ui: latest transfer
+	  stuff
+
+2008-11-14 17:28  tadas
+
+	* blueman/main/applet/BluezAgent.py: Agent.RequestConfirmation
+
+2008-11-14 16:58  tadas
+
+	* blueman/main/applet/BluezAgent.py: agent updates
+
+2008-11-14 16:55  tadas
+
+	* blueman/main/applet/BluezAgent.py: agent updates
+
+2008-11-14 16:05  walmis
+
+	* blueman/Sdp.py: sdp: some names look better now
+
+2008-11-14 16:02  walmis
+
+	* blueman/Sdp.py: add sdp uuid16 to name lookup
+
+2008-11-14 15:50  tadas
+
+	* blueman/main/applet/BluezAgent.py: minor
+
+2008-11-14 15:44  walmis
+
+	* data/ui/services.ui: service dialog test
+
+2008-11-14 15:44  tadas
+
+	* apps/blueman-applet, blueman/main/applet/BluezAgent.py,
+	  data/ui/applet-authorize.ui: Redo Agent.Authorize
+
+2008-11-14 15:39  walmis
+
+	* apps/blueman-services, data/ui/services.ui: service dialog test
+
+2008-11-14 15:26  tadas
+
+	* apps/blueman-applet, blueman/main/applet/BluezAgent.py,
+	  data/ui/applet-authorize.ui: Agent.Authorize now works
+
+2008-11-14 13:40  walmis
+
+	* blueman/main/applet/Transfer.py, blueman/ods/OdsBase.py,
+	  blueman/ods/OdsManager.py: latest transfer stuff
+
+2008-11-14 11:52  walmis
+
+	* blueman/Functions.py, blueman/gui/manager/ManagerStats.py,
+	  blueman/main/SpeedCalc.py, blueman/main/applet/Transfer.py,
+	  blueman/ods/OdsManager.py, blueman/ods/OdsServer.py: latest
+	  transfer stuff
+
+2008-11-13 23:52  tadas
+
+	* blueman/main/applet/BluezAgent.py, data/ui/applet-passkey.ui: Now
+	  it works
+
+2008-11-13 23:52  tadas
+
+	* apps/blueman-applet: it works
+
+2008-11-13 22:00  walmis
+
+	* blueman/main/applet/Transfer.py, blueman/ods/OdsServer.py: latest
+	  transfer stuff
+
+2008-11-13 21:56  tadas
+
+	* apps/blueman-applet, blueman/main/applet/BluezAgent.py,
+	  data/ui/applet-passkey.ui: agentas
+
+2008-11-13 21:29  walmis
+
+	* apps/blueman-applet, blueman/main/applet/Transfer.py,
+	  blueman/ods/OdsServerSession.py: latest transfer stuff
+
+2008-11-13 20:12  walmis
+
+	* blueman/main/Config.py: fix double slash issue in config
+
+2008-11-13 20:08  walmis
+
+	* blueman/main/Config.py: fix double slash issue in config
+
+2008-11-13 20:06  walmis
+
+	* blueman/main/Config.py: fix double slash issue in config
+
+2008-11-13 16:46  walmis
+
+	* apps/blueman-applet, blueman/main/Config.py,
+	  blueman/main/applet/Transfer.py: use home dir by default in
+	  transfer()
+
+2008-11-13 16:33  walmis
+
+	* apps/blueman-applet, blueman/main/SignalTracker.py,
+	  blueman/main/applet/Transfer.py, blueman/ods/OdsBase.py,
+	  blueman/ods/OdsManager.py, blueman/ods/OdsServer.py,
+	  blueman/ods/OdsServerSession.py, blueman/ods/__init__.py: ods
+	  support progressing
+
+2008-11-13 07:03  walmis
+
+	* data/icons/hicolor/32x32/actions/blueman-untrust.png: missed an
+	  icon
+
+2008-11-12 20:49  walmis
+
+	* data/icons/hicolor/scalable/actions: remove a few icons
+
+2008-11-12 20:41  walmis
+
+	* blueman/gui/manager/ManagerDeviceList.py,
+	  blueman/gui/manager/ManagerToolbar.py, blueman/main/Device.py:
+	  fix a few bug in device manager
+
+2008-11-12 19:18  walmis
+
+	* blueman/main/SignalTracker.py, blueman/ods/OdsBase.py,
+	  blueman/ods/OdsManager.py, blueman/ods/OdsServer.py,
+	  blueman/ods/OdsServerSession.py: more work on ods wrapper
+
+2008-11-12 15:36  walmis
+
+	* apps/blueman-applet, blueman/gui/DeviceList.py,
+	  blueman/main/Device.py, blueman/main/applet/DbusService.py,
+	  blueman/ods, blueman/ods/OdsBase.py, blueman/ods/OdsManager.py,
+	  blueman/ods/OdsServer.py, blueman/ods/OdsSession.py: ods classes
+
+2008-11-12 10:02  walmis
+
+	* blueman/gui/manager/ManagerDeviceMenu.py: Fixed bug on some
+	  ocassion menu does not update
+
+2008-11-11 21:07  walmis
+
+	* data/ui/services.ui: service dialog dev
+
+2008-11-11 20:21  walmis
+
+	* data/ui/services.ui: one more tweak
+
+2008-11-11 20:13  walmis
+
+	* data/ui/services.ui: tweaked service dialog
+
+2008-11-11 20:06  walmis
+
+	* data/ui/services.ui: preliminary service dialog
+
+2008-11-11 19:30  walmis
+
+	* apps/blueman-applet, blueman/gui/manager/ManagerDeviceMenu.py,
+	  blueman/gui/manager/ManagerToolbar.py: fix some bugs in the
+	  manager, connect all items to callbacks
+
+2008-11-11 17:15  walmis
+
+	* apps/blueman-applet, blueman/gui/DeviceList.py,
+	  blueman/gui/manager/ManagerMenu.py,
+	  blueman/gui/manager/ManagerProgressbar.py: applet test
+
+2008-11-11 15:22  walmis
+
+	* apps/blueman-manager, apps/blueman-services,
+	  blueman/gui/DeviceList.py,
+	  blueman/gui/manager/ManagerDeviceList.py: stop discovery when
+	  adapter is changed
+
+2008-11-11 10:52  walmis
+
+	* module/Makefile: force symlink
+
+2008-11-11 10:51  walmis
+
+	* module/libblueman.c: close socket if ioctl fails
+
+2008-11-11 10:50  walmis
+
+	* blueman/main/Config.py: typo
+
+2008-11-11 10:47  walmis
+
+	* apps/blueman-manager, blueman/Functions.py,
+	  blueman/gui/DeviceList.py, blueman/gui/manager/ManagerMenu.py,
+	  blueman/main/Config.py, configure.ac: add gconf support
+
+2008-11-11 08:54  walmis
+
+	* module/Lib.pyx, module/Makefile, module/libblueman.c,
+	  module/libblueman.h: added bridge create/remove functionality to
+	  C module
+
+2008-11-10 22:35  tadas
+
+	* blueman/main/applet/BluezAgent.py, data/ui/applet-passkey.ui:
+	  furthet applet agent dev
+
+2008-11-10 22:27  walmis
+
+	* apps/blueman-manager, blueman/bluez/Adapter.py,
+	  blueman/gui/DeviceList.py,
+	  blueman/gui/manager/ManagerDeviceList.py,
+	  blueman/gui/manager/ManagerDeviceMenu.py,
+	  blueman/gui/manager/ManagerToolbar.py, blueman/main/Device.py:
+	  latest devel
+
+2008-11-10 20:53  tadas
+
+	* blueman/main/applet/BluezAgent.py, data/ui/applet-passkey.ui:
+	  applet passkey input dialog fail
+
+2008-11-10 17:57  walmis
+
+	* data/ui/manager-main.ui: removed requires from ui
+
+2008-11-10 17:56  walmis
+
+	* apps/blueman-applet, apps/blueman-manager, apps/blueman-services,
+	  blueman/Functions.py, blueman/gui/DeviceList.py,
+	  blueman/gui/manager/ManagerDeviceList.py,
+	  blueman/gui/manager/ManagerDeviceMenu.py,
+	  blueman/gui/manager/ManagerToolbar.py, blueman/main/Device.py,
+	  blueman/main/SignalTracker.py, data/ui/manager-main.ui: fixes,
+	  tweaks, the works
+
+2008-11-10 12:27  walmis
+
+	* blueman/Functions.py: gtk-missing-image instead of blueman as
+	  default icon
+
+2008-11-10 09:06  walmis
+
+	* apps/blueman-manager, blueman/Functions.py: renamed bluetooth
+	  icons to blueman
+
+2008-11-10 09:04  walmis
+
+	* blueman/Functions.py, blueman/gui/DeviceList.py,
+	  blueman/gui/manager/ManagerDeviceMenu.py,
+	  blueman/main/applet/DbusService.py: renamed dbus methods, handle
+	  exception if applet is not running
+
+2008-11-09 23:52  tadas
+
+	* apps/blueman-applet: Add notification support for applet
+
+2008-11-09 21:15  walmis
+
+	* blueman/gui/manager/ManagerDeviceMenu.py: Tweaked menu a little
+
+2008-11-09 20:51  walmis
+
+	* blueman/gui/manager/ManagerDeviceMenu.py: use insensitive instead
+	  of invisible items in the device menu
+
+2008-11-09 20:27  walmis
+
+	* blueman/gui/manager/ManagerProgressbar.py,
+	  blueman/gui/manager/ManagerStats.py, data/ui/manager-main.ui:
+	  left side test
+
+2008-11-09 20:16  walmis
+
+	* blueman/gui/manager/ManagerProgressbar.py,
+	  blueman/gui/manager/ManagerStats.py, data/ui/manager-main.ui:
+	  progress bar test
+
+2008-11-09 19:59  walmis
+
+	* apps/blueman-manager, blueman/gui/DeviceList.py,
+	  blueman/gui/manager/ManagerDeviceList.py: select first row
+	  automatically
+
+2008-11-09 19:45  walmis
+
+	* blueman/gui/manager/ManagerDeviceList.py,
+	  blueman/gui/manager/ManagerToolbar.py: reversed list
+
+2008-11-09 19:33  tadas
+
+	* data/ui/manager-main.ui: remove requires tag from ui file
+
+2008-11-09 19:23  walmis
+
+	* data/icons/hicolor/scalable, data/icons/hicolor/scalable/actions,
+	  data/icons/hicolor/scalable/actions/blueman-trust.svg,
+	  data/icons/hicolor/scalable/actions/blueman-untrust.svg,
+	  data/icons/hicolor/scalable/devices,
+	  data/icons/hicolor/scalable/devices/blueman-device.svg: icons
+	  revisited
+
+2008-11-09 19:23  walmis
+
+	* data/icons/main_icon, data/icons/main_icon/blueman-16.png,
+	  data/icons/main_icon/blueman-22.png,
+	  data/icons/main_icon/blueman-24.png,
+	  data/icons/main_icon/blueman-32.png,
+	  data/icons/main_icon/blueman-48.png,
+	  data/icons/main_icon/blueman.svg: icons revisited
+
+2008-11-09 19:22  walmis
+
+	* blueman/Functions.py, blueman/gui/manager/ManagerDeviceMenu.py,
+	  blueman/gui/manager/ManagerToolbar.py,
+	  data/icons/blueman-down-active.png,
+	  data/icons/blueman-down-inactive.png,
+	  data/icons/blueman-send-file.png, data/icons/blueman-trust.png,
+	  data/icons/blueman-up-active.png,
+	  data/icons/blueman-up-inactive.png, data/icons/devices,
+	  data/icons/hicolor, data/icons/hicolor/16x16,
+	  data/icons/hicolor/16x16/actions,
+	  data/icons/hicolor/16x16/actions/blueman-trust.png,
+	  data/icons/hicolor/16x16/status,
+	  data/icons/hicolor/16x16/status/blueman-down-active.png,
+	  data/icons/hicolor/16x16/status/blueman-down-inactive.png,
+	  data/icons/hicolor/16x16/status/blueman-up-active.png,
+	  data/icons/hicolor/16x16/status/blueman-up-inactive.png,
+	  data/icons/hicolor/32x32, data/icons/hicolor/32x32/actions,
+	  data/icons/hicolor/32x32/actions/blueman-trust.png,
+	  data/icons/hicolor/48x48, data/icons/hicolor/48x48/actions,
+	  data/icons/hicolor/48x48/actions/blueman-send-file.png,
+	  data/icons/hicolor/48x48/devices,
+	  data/icons/hicolor/48x48/devices/blueman-camera.png,
+	  data/icons/hicolor/48x48/devices/blueman-cellular.png,
+	  data/icons/hicolor/48x48/devices/blueman-desktop.png,
+	  data/icons/hicolor/48x48/devices/blueman-handheld.png,
+	  data/icons/hicolor/48x48/devices/blueman-handsfree.png,
+	  data/icons/hicolor/48x48/devices/blueman-headset.png,
+	  data/icons/hicolor/48x48/devices/blueman-keyboard.png,
+	  data/icons/hicolor/48x48/devices/blueman-laptop.png,
+	  data/icons/hicolor/48x48/devices/blueman-loudspeaker.png,
+	  data/icons/hicolor/48x48/devices/blueman-mouse.png,
+	  data/icons/hicolor/48x48/devices/blueman-pointing.png,
+	  data/icons/hicolor/48x48/devices/blueman-scanner.png,
+	  data/icons/hicolor/48x48/devices/blueman-server.png,
+	  data/icons/hicolor/48x48/devices/blueman-smart-phone.png,
+	  data/icons/hicolor/48x48/status,
+	  data/icons/hicolor/48x48/status/blueman-lq-10.png,
+	  data/icons/hicolor/48x48/status/blueman-lq-100.png,
+	  data/icons/hicolor/48x48/status/blueman-lq-20.png,
+	  data/icons/hicolor/48x48/status/blueman-lq-30.png,
+	  data/icons/hicolor/48x48/status/blueman-lq-40.png,
+	  data/icons/hicolor/48x48/status/blueman-lq-50.png,
+	  data/icons/hicolor/48x48/status/blueman-lq-60.png,
+	  data/icons/hicolor/48x48/status/blueman-lq-70.png,
+	  data/icons/hicolor/48x48/status/blueman-lq-80.png,
+	  data/icons/hicolor/48x48/status/blueman-lq-90.png,
+	  data/icons/hicolor/48x48/status/blueman-rssi-10.png,
+	  data/icons/hicolor/48x48/status/blueman-rssi-100.png,
+	  data/icons/hicolor/48x48/status/blueman-rssi-20.png,
+	  data/icons/hicolor/48x48/status/blueman-rssi-30.png,
+	  data/icons/hicolor/48x48/status/blueman-rssi-40.png,
+	  data/icons/hicolor/48x48/status/blueman-rssi-50.png,
+	  data/icons/hicolor/48x48/status/blueman-rssi-60.png,
+	  data/icons/hicolor/48x48/status/blueman-rssi-70.png,
+	  data/icons/hicolor/48x48/status/blueman-rssi-80.png,
+	  data/icons/hicolor/48x48/status/blueman-rssi-90.png,
+	  data/icons/hicolor/48x48/status/blueman-tpl-10.png,
+	  data/icons/hicolor/48x48/status/blueman-tpl-100.png,
+	  data/icons/hicolor/48x48/status/blueman-tpl-20.png,
+	  data/icons/hicolor/48x48/status/blueman-tpl-30.png,
+	  data/icons/hicolor/48x48/status/blueman-tpl-40.png,
+	  data/icons/hicolor/48x48/status/blueman-tpl-50.png,
+	  data/icons/hicolor/48x48/status/blueman-tpl-60.png,
+	  data/icons/hicolor/48x48/status/blueman-tpl-70.png,
+	  data/icons/hicolor/48x48/status/blueman-tpl-80.png,
+	  data/icons/hicolor/48x48/status/blueman-tpl-90.png,
+	  data/icons/scalable, data/icons/signal, data/ui/manager-main.ui:
+	  icons revisited
+
+2008-11-09 15:09  walmis
+
+	* apps/blueman-applet, apps/blueman-manager, blueman/Functions.py,
+	  blueman/bluez/Adapter.py, blueman/gui/DeviceList.py,
+	  blueman/gui/GenericList.py,
+	  blueman/gui/manager/ManagerDeviceList.py,
+	  blueman/gui/manager/ManagerDeviceMenu.py,
+	  blueman/gui/manager/ManagerMenu.py,
+	  blueman/gui/manager/ManagerProgressbar.py,
+	  blueman/gui/manager/ManagerToolbar.py, blueman/main/Device.py,
+	  data/icons/16x16, data/icons/22x22, data/icons/24x24,
+	  data/icons/32x32, data/icons/48x48,
+	  data/icons/blueman-send-file.png, data/icons/blueman-trust.png,
+	  data/ui/manager-main.ui: revisited icon layout and latest stuff
+
+2008-11-09 14:49  walmis
+
+	* data/icons/16x16, data/icons/16x16/blueman.png, data/icons/22x22,
+	  data/icons/22x22/blueman.png, data/icons/24x24,
+	  data/icons/24x24/blueman.png, data/icons/32x32,
+	  data/icons/32x32/blueman.png, data/icons/48x48,
+	  data/icons/48x48/blueman-send-file.png,
+	  data/icons/48x48/blueman-trust.png, data/icons/48x48/blueman.png,
+	  data/icons/blueman-bond.png, data/icons/blueman-browse.png,
+	  data/icons/blueman-connect.png, data/icons/blueman-device.svg,
+	  data/icons/blueman-disconnect.png,
+	  data/icons/blueman-inquiry.png, data/icons/blueman-list.png,
+	  data/icons/blueman-properties.png, data/icons/blueman-remove.png,
+	  data/icons/blueman-send-file.png, data/icons/blueman-stop.png,
+	  data/icons/blueman-trust.png, data/icons/blueman-unbond.png,
+	  data/icons/blueman.svg, data/icons/scalable,
+	  data/icons/scalable/blueman-device.svg,
+	  data/icons/scalable/blueman.svg: revisited icon layout
+
+2008-11-09 10:50  walmis
+
+	* data/configs/Makefile: tweaked configs makefile
+
+2008-11-08 21:25  walmis
+
+	* apps/blueman-applet, apps/blueman-manager,
+	  apps/blueman-mechanism, blueman/Functions.py,
+	  blueman/gui/CommonUi.py, blueman/gui/DeviceList.py,
+	  blueman/gui/manager/ManagerDeviceList.py,
+	  blueman/gui/manager/ManagerDeviceMenu.py,
+	  blueman/gui/manager/ManagerMenu.py,
+	  blueman/gui/manager/ManagerProgressbar.py,
+	  blueman/gui/manager/ManagerToolbar.py,
+	  blueman/main/HalManager.py, blueman/main/SignalTracker.py,
+	  blueman/main/applet, blueman/main/applet/DbusService.py,
+	  blueman/main/applet/__init__.py, blueman/main/manager,
+	  blueman/main/manager/Applet.py, blueman/main/manager/__init__.py,
+	  data/configs, data/configs/Makefile,
+	  data/configs/org.blueman.Mechanism.conf,
+	  data/configs/org.blueman.Mechanism.service,
+	  data/configs/org.blueman.policy: going to sleep :)
+
+2008-11-08 09:56  tadas
+
+	* apps/blueman-applet, apps/blueman-manager, blueman/Functions.py:
+	  do some path automation
+
+2008-11-08 09:18  tadas
+
+	* apps/blueman-applet, apps/blueman-manager, blueman, common,
+	  module: one more moving around
+
+2008-11-08 09:16  walmis
+
+	* common/blueman/gui/manager/ManagerDeviceMenu.py: stuff
+
+2008-11-08 09:11  tadas
+
+	* common/blueman/Constants.py: finish moving apps to apps folder
+
+2008-11-08 09:09  tadas
+
+	* adapters, applet, apps/blueman-applet, apps/blueman-manager,
+	  browse, fake_bin, manager, sendto, wizard: moving around
+
+2008-11-08 09:07  tadas
+
+	* applet/blueman-applet, apps: tarpinis commitas
+
+2008-11-08 08:40  walmis
+
+	* applet/blueman-applet, common/blueman/gui/DeviceList.py: fixed
+	  applet icon
+
+2008-11-08 07:48  tadas
+
+	* applet/blueman-applet, common/blueman/gui/CommonUi.py,
+	  common/blueman/gui/applet: Better divide applet code
+
+2008-11-07 22:14  tadas
+
+	* common/blueman/Constants.py,
+	  common/blueman/gui/applet/PopupMenu.py: About dialog for applet
+	  (to be generalized)
+
+2008-11-07 21:53  walmis
+
+	* common/blueman/gui/manager/ManagerDeviceMenu.py,
+	  common/blueman/gui/manager/ManagerMenu.py: einu miegot
+
+2008-11-07 20:47  walmis
+
+	* common/blueman/Sdp.py,
+	  common/blueman/gui/manager/ManagerDeviceMenu.py: add Sdp.py
+
+2008-11-07 19:44  tadas
+
+	* common/blueman/gui/DeviceList.py,
+	  common/blueman/gui/manager/ManagerStats.py: even more
+
+2008-11-07 19:40  tadas
+
+	* common/blueman/Functions.py, common/blueman/gui/DeviceList.py,
+	  common/blueman/gui/manager/ManagerDeviceList.py,
+	  common/blueman/gui/manager/ManagerMenu.py,
+	  common/blueman/gui/manager/ManagerProgressbar.py,
+	  common/blueman/gui/manager/ManagerToolbar.py,
+	  common/blueman/main/HalManager.py,
+	  common/blueman/main/Mechanism.py, common/blueman/main/NetConf.py,
+	  common/blueman/main/PolicyKitAuth.py,
+	  common/blueman/main/SpeedCalc.py,
+	  common/blueman/main/hal_manager.py,
+	  common/blueman/main/mechanism.py, common/blueman/main/netconf.py,
+	  common/blueman/main/polkit_auth.py,
+	  common/blueman/main/speed_calc.py, manager/blueman-manager: ir
+	  dar
+
+2008-11-07 19:28  tadas
+
+	* applet/blueman-applet, common/blueman/Constants.py,
+	  common/blueman/DeviceClass.py, common/blueman/Functions.py,
+	  common/blueman/constants.py, common/blueman/device_class.py,
+	  common/blueman/functions.py: one more
+
+2008-11-07 19:23  tadas
+
+	* applet/blueman-applet, common/blueman/gui/Animation.py,
+	  common/blueman/gui/DeviceList.py,
+	  common/blueman/gui/GenericList.py,
+	  common/blueman/gui/animation.py,
+	  common/blueman/gui/applet/PopupMenu.py,
+	  common/blueman/gui/applet/popup_menu.py,
+	  common/blueman/gui/device_list.py,
+	  common/blueman/gui/generic_list.py,
+	  common/blueman/gui/manager/ManagerDeviceList.py,
+	  common/blueman/gui/manager/ManagerDeviceMenu.py,
+	  common/blueman/gui/manager/ManagerMenu.py,
+	  common/blueman/gui/manager/ManagerProgressbar.py,
+	  common/blueman/gui/manager/ManagerStats.py,
+	  common/blueman/gui/manager/ManagerToolbar.py,
+	  common/blueman/gui/manager/manager_device_list.py,
+	  common/blueman/gui/manager/manager_device_menu.py,
+	  common/blueman/gui/manager/manager_menu.py,
+	  common/blueman/gui/manager/manager_progressbar.py,
+	  common/blueman/gui/manager/manager_stats.py,
+	  common/blueman/gui/manager/manager_toolbar.py,
+	  manager/blueman-manager: Further massive rename
+
+2008-11-07 19:02  tadas
+
+	* applet/blueman-applet, common/blueman/Bluez, common/blueman/Gui,
+	  common/blueman/Main, common/blueman/bluez,
+	  common/blueman/constants.py, common/blueman/gui,
+	  common/blueman/gui/applet/popup_menu.py, common/blueman/main:
+	  massive rename
+
+2008-11-07 18:33  walmis
+
+	* common/blueman/Gui/manager/manager_device_menu.py,
+	  common/blueman/Gui/manager/manager_menu.py,
+	  common/blueman/Gui/manager/manager_progressbar.py,
+	  common/blueman/Main/Device.py: progress bar sample
+
+2008-11-07 18:31  tadas
+
+	* browse, common/blueman/Gui/applet/popup_menu.py: add browse dir,
+	  applet improvements
+
+2008-11-07 17:06  tadas
+
+	* adapters, common/blueman/Gui/applet/popup_menu.py,
+	  common/blueman/constants.py, fake_bin, fake_bin/blueman-manager:
+	  applet menu action
+
+2008-11-07 16:39  tadas
+
+	* applet/blueman-applet, common/blueman/Gui/applet,
+	  common/blueman/Gui/applet/__init__.py,
+	  common/blueman/Gui/applet/popup_menu.py,
+	  common/blueman/constants.py: applet menu
+
+2008-11-07 16:21  walmis
+
+	* common/blueman/Gui/manager/manager_context_menu.py,
+	  common/blueman/Gui/manager/manager_device_menu.py: forgot a few
+	  files
+
+2008-11-07 16:20  walmis
+
+	* common/blueman/Gui/manager/manager_menu.py,
+	  common/blueman/Main/hal_manager.py,
+	  common/blueman/Main/mechanism.py, common/blueman/Main/netconf.py,
+	  common/blueman/Main/polkit_auth.py: moved some classes from
+	  blueman 0.5
+
+2008-11-07 15:23  walmis
+
+	* common/blueman/Gui/manager/manager_device_list.py: typo
+
+2008-11-07 15:16  walmis
+
+	* common/blueman/Gui/manager/manager_device_list.py: added tooltips
+	  to the device list
+
+2008-11-07 14:48  walmis
+
+	* data/icons/blueman-down-active.png,
+	  data/icons/blueman-down-inactive.png,
+	  data/icons/blueman-up-active.png,
+	  data/icons/blueman-up-inactive.png: cooler status icons :)
+
+2008-11-07 14:36  tadas
+
+	* applet/blueman-applet: applet watches for org.bluez owner change
+
+2008-11-07 14:04  walmis
+
+	* common/blueman/Gui/animation.py,
+	  common/blueman/Gui/device_list.py,
+	  common/blueman/Gui/manager/manager_stats.py,
+	  common/blueman/Main/speed_calc.py, common/blueman/functions.py,
+	  data/ui/manager-main.ui, manager/blueman-manager: add statusbar
+	  information
+
+2008-11-07 13:46  tadas
+
+	* applet/blueman-applet: applet sensing adapter disappearance
+
+2008-11-07 12:57  walmis
+
+	* common/blueman/functions.py: typo
+
+2008-11-07 12:54  walmis
+
+	* common/blueman/functions.py: typo
+
+2008-11-07 12:52  walmis
+
+	* common/blueman/Gui/manager/manager_device_list.py,
+	  common/blueman/Gui/manager/manager_toolbar.py,
+	  common/blueman/functions.py: add functions.py
+
+2008-11-07 12:47  tadas
+
+	* applet/blueman-applet: blinking applet
+
+2008-11-07 12:17  walmis
+
+	* common/blueman/constants.py: remove more hardcoded paths
+
+2008-11-07 12:14  walmis
+
+	* common/blueman/Gui/device_list.py,
+	  common/blueman/Gui/manager/manager_device_list.py,
+	  manager/blueman-manager: remove hardcoded path
+
+2008-11-07 12:03  walmis
+
+	* common/blueman/Bluez/__init__.py,
+	  common/blueman/Gui/device_list.py,
+	  common/blueman/Gui/generic_list.py,
+	  common/blueman/Gui/manager/manager_context_menu.py,
+	  common/blueman/Gui/manager/manager_device_list.py,
+	  common/blueman/Gui/manager/manager_menu.py,
+	  common/blueman/Gui/manager/manager_toolbar.py,
+	  common/module/Makefile, manager/blueman-manager: switching
+	  adapter now possible
+
+2008-11-07 09:34  tadas
+
+	* AUTHORS, COPYING, common/module/libblueman.c,
+	  data/ui/manager-main.ui: Update copyright
+
+2008-11-07 09:09  tadas
+
+	* common/module/libblueman.c, common/module/libblueman.h: Fix
+	  memory leaks and cleanup a bit
+
+2008-11-06 22:42  walmis
+
+	* common/blueman/Gui/manager/manager_device_list.py,
+	  common/blueman/Gui/manager/manager_toolbar.py: few gui tweaks
+
+2008-11-06 22:25  walmis
+
+	* data/ui/manager-main.ui: gui test 2
+
+2008-11-06 22:11  walmis
+
+	* data/ui/manager-main.ui: update ui template
+
+2008-11-06 19:20  tadas
+
+	* ., AUTHORS, COPYING, ChangeLog, INSTALL, Makefile.am, NEWS,
+	  README, acinclude.m4, autogen.sh, configure.ac, po,
+	  po/POTFILES.in: Initial autotools magic
+
+2008-11-06 18:17  walmis
+
+	* data/icons/blueman-down-active.png,
+	  data/icons/blueman-down-inactive.png,
+	  data/icons/blueman-up-active.png,
+	  data/icons/blueman-up-inactive.png: update up/down icons
+
+2008-11-06 17:58  walmis
+
+	* common/blueman/Gui/device_list.py,
+	  common/blueman/Gui/manager/manager_toolbar.py,
+	  data/icons/blueman-device.svg, data/icons/blueman.svg: add a few
+	  icons
+
+2008-11-05 14:29  walmis
+
+	* common/blueman/Gui/device_list.py,
+	  common/blueman/Gui/manager/manager_context_menu.py,
+	  common/blueman/Gui/manager/manager_device_list.py,
+	  common/blueman/Gui/manager/manager_toolbar.py: latest devel
+
+2008-11-05 13:34  walmis
+
+	* common/blueman/Gui/context_menu.py,
+	  common/blueman/Gui/main_device_list.py,
+	  common/blueman/Gui/manager,
+	  common/blueman/Gui/manager/__init__.py,
+	  common/blueman/Gui/manager/manager_device_list.py,
+	  common/blueman/Gui/manager/manager_menu.py,
+	  common/blueman/Gui/manager/manager_toolbar.py,
+	  common/blueman/Gui/toolbar.py, data/ui/manager-main.ui,
+	  manager/blueman-manager: restructured module hierarchy a bit.
+	  moved device-manager gui classes to Gui/manager
+
+2008-11-04 21:23  walmis
+
+	* common/blueman/Gui/context_menu.py,
+	  common/blueman/Gui/device_list.py,
+	  common/blueman/Gui/generic_list.py,
+	  common/blueman/Gui/main_device_list.py,
+	  common/blueman/Gui/toolbar.py, data/ui/manager-main.ui,
+	  manager/blueman-manager: started work on the toolbar
+
+2008-11-04 18:26  walmis
+
+	* common/blueman/Gui/CellRendererPixbufTable.py,
+	  common/blueman/Gui/PixbufTable.py,
+	  common/blueman/Gui/main_device_list.py, data/ui/manager-main.ui,
+	  manager/blueman-manager: latest devel
+
+2008-11-04 15:23  walmis
+
+	* data/ui/manager-main.ui: gui test
+
+2008-11-04 15:09  tadas
+
+	* data/ui/manager-main.ui: one more ui
+
+2008-11-04 14:33  walmis
+
+	* data/ui/manager-main.ui: gui test
+
+2008-11-04 14:29  walmis
+
+	* data/ui/manager-main.ui: gui test
+
+2008-11-04 14:12  walmis
+
+	* common/blueman/Gui/device_list.py,
+	  common/blueman/Gui/main_device_list.py,
+	  common/blueman/Gui/toolbar.py, common/blueman/Main/Device.py,
+	  common/blueman/constants.py, common/device_list.py,
+	  common/main_device_list.py, data/ui, data/ui/manager-main.ui,
+	  manager, manager/blueman-manager: started device manager devel
+
+2008-11-04 12:32  walmis
+
+	* common/blueman/constants.py, common/device_list.py,
+	  common/main_device_list.py: latest devel
+
+2008-11-04 11:02  walmis
+
+	* data/icons/addfav.png, data/icons/blueman-bond.png,
+	  data/icons/blueman-browse.png, data/icons/blueman-connect.png,
+	  data/icons/blueman-disconnect.png,
+	  data/icons/blueman-down-active.png,
+	  data/icons/blueman-down-inactive.png,
+	  data/icons/blueman-inquiry.png, data/icons/blueman-list.png,
+	  data/icons/blueman-properties.png, data/icons/blueman-remove.png,
+	  data/icons/blueman-send-file.png, data/icons/blueman-stop.png,
+	  data/icons/blueman-trust.png, data/icons/blueman-unbond.png,
+	  data/icons/blueman-up-active.png,
+	  data/icons/blueman-up-inactive.png, data/icons/bond.png,
+	  data/icons/bond_bt.png, data/icons/browse.png,
+	  data/icons/con_1.png, data/icons/con_2.png,
+	  data/icons/devices/blueman-camera.png,
+	  data/icons/devices/blueman-cellular.png,
+	  data/icons/devices/blueman-desktop.png,
+	  data/icons/devices/blueman-handheld.png,
+	  data/icons/devices/blueman-handsfree.png,
+	  data/icons/devices/blueman-headset.png,
+	  data/icons/devices/blueman-keyboard.png,
+	  data/icons/devices/blueman-laptop.png,
+	  data/icons/devices/blueman-loudspeaker.png,
+	  data/icons/devices/blueman-mouse.png,
+	  data/icons/devices/blueman-pointing.png,
+	  data/icons/devices/blueman-scanner.png,
+	  data/icons/devices/blueman-server.png,
+	  data/icons/devices/blueman-smart-phone.png,
+	  data/icons/devices/camera.png, data/icons/devices/cellular.png,
+	  data/icons/devices/desktop.png, data/icons/devices/handheld.png,
+	  data/icons/devices/handsfree.png, data/icons/devices/headset.png,
+	  data/icons/devices/keyboard.png, data/icons/devices/laptop.png,
+	  data/icons/devices/loudspeaker.png, data/icons/devices/mouse.png,
+	  data/icons/devices/p535.png, data/icons/devices/palm.png,
+	  data/icons/devices/pda.png, data/icons/devices/pointing.png,
+	  data/icons/devices/scanner.png, data/icons/devices/server.png,
+	  data/icons/devices/smart phone.png, data/icons/down_active.png,
+	  data/icons/down_inactive.png, data/icons/favs.png,
+	  data/icons/hasbonding.png, data/icons/inquiry.png,
+	  data/icons/listseen.png, data/icons/lock_bt.png,
+	  data/icons/properties.png, data/icons/remfav.png,
+	  data/icons/sendfile.png, data/icons/signal/blueman-lq-10.png,
+	  data/icons/signal/blueman-lq-100.png,
+	  data/icons/signal/blueman-lq-20.png,
+	  data/icons/signal/blueman-lq-30.png,
+	  data/icons/signal/blueman-lq-40.png,
+	  data/icons/signal/blueman-lq-50.png,
+	  data/icons/signal/blueman-lq-60.png,
+	  data/icons/signal/blueman-lq-70.png,
+	  data/icons/signal/blueman-lq-80.png,
+	  data/icons/signal/blueman-lq-90.png,
+	  data/icons/signal/blueman-rssi-10.png,
+	  data/icons/signal/blueman-rssi-100.png,
+	  data/icons/signal/blueman-rssi-20.png,
+	  data/icons/signal/blueman-rssi-30.png,
+	  data/icons/signal/blueman-rssi-40.png,
+	  data/icons/signal/blueman-rssi-50.png,
+	  data/icons/signal/blueman-rssi-60.png,
+	  data/icons/signal/blueman-rssi-70.png,
+	  data/icons/signal/blueman-rssi-80.png,
+	  data/icons/signal/blueman-rssi-90.png,
+	  data/icons/signal/blueman-tpl-10.png,
+	  data/icons/signal/blueman-tpl-100.png,
+	  data/icons/signal/blueman-tpl-20.png,
+	  data/icons/signal/blueman-tpl-30.png,
+	  data/icons/signal/blueman-tpl-40.png,
+	  data/icons/signal/blueman-tpl-50.png,
+	  data/icons/signal/blueman-tpl-60.png,
+	  data/icons/signal/blueman-tpl-70.png,
+	  data/icons/signal/blueman-tpl-80.png,
+	  data/icons/signal/blueman-tpl-90.png, data/icons/signal/lq,
+	  data/icons/signal/rssi, data/icons/signal/tpl,
+	  data/icons/stop.png, data/icons/trust.png,
+	  data/icons/trust16.png, data/icons/trust16_g.png,
+	  data/icons/unbond.png, data/icons/up_active.png,
+	  data/icons/up_inactive.png: reorganized icons
+
+2008-11-03 20:41  walmis
+
+	* common/device_list.py: removed filter
+
+2008-11-03 20:37  walmis
+
+	* common/blueman/Gui/CellRendererPixbufTable.py,
+	  common/blueman/Gui/PixbufTable.py, common/blueman/Main/Device.py,
+	  common/blueman/Main/FakeDevice.py, common/device_list.py,
+	  common/main_device_list.py: latest devel
+
+2008-11-03 13:43  walmis
+
+	* common/device_list.py, common/main_device_list.py: more abstract
+	  list initialization
+
+2008-11-03 11:52  walmis
+
+	* common/device_list.py, common/main_device_list.py,
+	  common/test.py: Latest devel
+
+2008-11-03 09:43  walmis
+
+	* common/module, common/module/Lib.pyx, common/module/Makefile,
+	  common/module/libblueman.c, common/module/libblueman.h: Added C
+	  module with a simple makefile
+
+2008-11-02 22:08  walmis
+
+	* common/blueman/Gui/generic_list.py, common/device_list.py,
+	  common/test.py: dynamic device list development
+
+2008-11-02 21:19  walmis
+
+	* common/device_list.py: dynamic device list development
+
+2008-11-02 20:02  walmis
+
+	* common/blueman/Bluez/BlueZInterface.py,
+	  common/blueman/Bluez/__init__.py, common/device_list.py,
+	  common/main_device_list.py: dynamic device list development
+
+2008-11-02 17:51  walmis
+
+	* data/icons, data/icons/addfav.png, data/icons/bond.png,
+	  data/icons/bond_bt.png, data/icons/browse.png,
+	  data/icons/con_1.png, data/icons/con_2.png, data/icons/devices,
+	  data/icons/devices/camera.png, data/icons/devices/cellular.png,
+	  data/icons/devices/desktop.png, data/icons/devices/handheld.png,
+	  data/icons/devices/handsfree.png, data/icons/devices/headset.png,
+	  data/icons/devices/keyboard.png, data/icons/devices/laptop.png,
+	  data/icons/devices/loudspeaker.png, data/icons/devices/mouse.png,
+	  data/icons/devices/p535.png, data/icons/devices/palm.png,
+	  data/icons/devices/pda.png, data/icons/devices/pointing.png,
+	  data/icons/devices/scanner.png, data/icons/devices/server.png,
+	  data/icons/devices/smart phone.png, data/icons/down_active.png,
+	  data/icons/down_inactive.png, data/icons/favs.png,
+	  data/icons/hasbonding.png, data/icons/inquiry.png,
+	  data/icons/listseen.png, data/icons/lock_bt.png,
+	  data/icons/properties.png, data/icons/remfav.png,
+	  data/icons/sendfile.png, data/icons/signal, data/icons/signal/lq,
+	  data/icons/signal/lq/lq_10.png, data/icons/signal/lq/lq_100.png,
+	  data/icons/signal/lq/lq_20.png, data/icons/signal/lq/lq_30.png,
+	  data/icons/signal/lq/lq_40.png, data/icons/signal/lq/lq_50.png,
+	  data/icons/signal/lq/lq_60.png, data/icons/signal/lq/lq_70.png,
+	  data/icons/signal/lq/lq_80.png, data/icons/signal/lq/lq_90.png,
+	  data/icons/signal/rssi, data/icons/signal/rssi/rssi_10.png,
+	  data/icons/signal/rssi/rssi_100.png,
+	  data/icons/signal/rssi/rssi_20.png,
+	  data/icons/signal/rssi/rssi_30.png,
+	  data/icons/signal/rssi/rssi_40.png,
+	  data/icons/signal/rssi/rssi_50.png,
+	  data/icons/signal/rssi/rssi_60.png,
+	  data/icons/signal/rssi/rssi_70.png,
+	  data/icons/signal/rssi/rssi_80.png,
+	  data/icons/signal/rssi/rssi_90.png, data/icons/signal/tpl,
+	  data/icons/signal/tpl/tpl_10.png,
+	  data/icons/signal/tpl/tpl_100.png,
+	  data/icons/signal/tpl/tpl_20.png,
+	  data/icons/signal/tpl/tpl_30.png,
+	  data/icons/signal/tpl/tpl_40.png,
+	  data/icons/signal/tpl/tpl_50.png,
+	  data/icons/signal/tpl/tpl_60.png,
+	  data/icons/signal/tpl/tpl_70.png,
+	  data/icons/signal/tpl/tpl_80.png,
+	  data/icons/signal/tpl/tpl_90.png, data/icons/stop.png,
+	  data/icons/trust.png, data/icons/trust16.png,
+	  data/icons/trust16_g.png, data/icons/unbond.png,
+	  data/icons/up_active.png, data/icons/up_inactive.png: added icons
+
+2008-11-02 17:45  walmis
+
+	* common/blueman/Bluez/BlueZInterface.py,
+	  common/blueman/Gui/generic_list.py, common/blueman/Main,
+	  common/blueman/Main/Device.py, common/blueman/Main/__init__.py,
+	  common/blueman/device_class.py, common/device_list.py,
+	  common/main_device_list.py, common/test.py: Working on device
+	  list
+
+2008-11-02 12:43  walmis
+
+	* common/blueman, common/blueman/Bluez,
+	  common/blueman/Bluez/Adapter.py, common/blueman/Bluez/Agent.py,
+	  common/blueman/Bluez/BaseInterface.py,
+	  common/blueman/Bluez/BlueZInterface.py,
+	  common/blueman/Bluez/Device.py, common/blueman/Bluez/Manager.py,
+	  common/blueman/Bluez/ServiceInterface.py,
+	  common/blueman/Bluez/__init__.py, common/blueman/Bluez/errors.py,
+	  common/blueman/Bluez/utils.py, common/blueman/Gui,
+	  common/blueman/Gui/__init__.py,
+	  common/blueman/Gui/generic_list.py, common/blueman/__init__.py,
+	  common/device_list.py: module layout
+
+2008-11-02 12:42  walmis
+
+	* common/test.py: module layout
+
+2008-11-01 22:11  tadas
+
+	* common: one more dir
+
+2008-11-01 21:46  tadas
+
+	* applet, data, sendto, wizard: basic layout
+
+2008-11-01 20:50  tadas
+
+	* .: sturukturura
+

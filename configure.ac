@@ -49,11 +49,16 @@ AC_SUBST(DATADIR)
 AS_AC_EXPAND(PYTHONDIR, $pythondir)
 AC_SUBST(PYTHONDIR)
 
+AS_AC_EXPAND(PKGLIBDIR, $libdir/blueman)
+AC_SUBST(PKGLIBDIR)
+
 test "x$prefix" = xNONE && prefix=$ac_default_prefix
 test "x$exec_prefix" = xNONE && exec_prefix=$prefix
 
 dnl AS_AC_EXPAND([PREFIX], $prefix)
 AC_SUBST(prefix)
+
+
 
 pkgdatadir="${DATADIR}/${PACKAGE}"
 AC_SUBST(pkgdatadir)
@@ -143,6 +148,9 @@ data/icons/hicolor/scalable/Makefile
 data/icons/hicolor/scalable/devices/Makefile
 data/icons/main_icon/Makefile
 data/ui/Makefile
+data/man/Makefile
+data/configs/blueman-applet.service
+data/configs/org.blueman.Mechanism.service
 module/Makefile
 po/Makefile.in
 ])
