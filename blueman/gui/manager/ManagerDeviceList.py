@@ -175,7 +175,7 @@ class ManagerDeviceList(DeviceList):
 				
 		elif key == "Alias" or key == "Class":
 			device = self.get(iter, "device")["device"]
-			c = self.make_caption(value, get_minor_class(device.Class), device.Address)
+			c = self.make_caption(value, get_minor_class(device.Class, True), device.Address)
 			self.set(iter, caption=c)
 				
 

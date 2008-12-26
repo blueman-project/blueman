@@ -118,6 +118,7 @@ class Transfer(OdsManager):
 			
 				self.transfers[session.object_path]["notification"] = n
 				self.transfers[session.object_path]["filename"] = filename
+				self.transfers[session.object_path]["filepath"] = local_path
 				self.transfers[session.object_path]["total"] = total_bytes
 				self.transfers[session.object_path]["finished"] = False
 				self.transfers[session.object_path]["waiting"] = True
@@ -166,19 +167,22 @@ class Transfer(OdsManager):
 
 
 			def show_open():
+				print "open"
+				path = self.transfers[session.object_path]["filepath"]
+				name = self.transfers[session.object_path]["filename"]
+				
 				temp = []
 				def on_open(n, action):
-					print "open", local_path
-					spawn(["xdg-open", local_path], True)
+					spawn(["xdg-open", path], True)
 					temp.remove(n)
 				
-				n = pynotify.Notification(_("File Saved"), _("Would you like to open %s?") % filename)
+				n = pynotify.Notification(_("File Saved"), _("Would you like to open %s?") % name)
 				n.set_icon_from_pixbuf(get_icon("gtk-save", 48))
 				n.add_action("open", _("Open"), on_open)
 				n.attach_to_status_icon(self.Applet.status_icon)
 				n.show()
 				temp.append(n)
-				return n
+
 
 					
 			def update_notification(n):
@@ -186,16 +190,17 @@ class Transfer(OdsManager):
 
 				if not t["waiting"]:
 					if t["finished"]:
-						if t["transferred"] == t["total"]:
-							show_open()
+						#print t["transferred"], t["total"]
+						#if t["transferred"] == t["total"]:
+						
 						n.disconnect(self.transfers[session.object_path]["closed_sig"])
 						
 						gobject.source_remove(self.transfers[session.object_path]["updater"])
-						
-						self.transfers[session.object_path] = {}
-						
+
 						n.close()
 						
+						show_open()
+						del self.transfers[session.object_path]
 						return False
 					
 					else:

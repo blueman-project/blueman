@@ -57,7 +57,8 @@ def spawn(command, system=False, sn=None):
 
 	def child_closed(pid, cond):
 		print command, "closed"
-		sn.complete()
+		if sn:
+			sn.complete()
 	if not system:
 		if type(command) == list:
 			command[0] = os.path.join(BIN_DIR, command[0])

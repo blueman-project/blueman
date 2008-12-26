@@ -206,9 +206,8 @@ class Blueman:
 		
 	def bond(self, device):
 		def ok(device):
-			if device.Temp:
-				dev = Device(device)
-				self.List.add_device(dev)
+			dev = Device(device)
+			self.List.add_device(dev)
 			self._prog_msg(prog, _("Success"))
 		
 		def err(*args):
