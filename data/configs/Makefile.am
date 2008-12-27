@@ -2,11 +2,10 @@ dbusdir = $(sysconfdir)/dbus-1/system.d
 dbus_DATA = org.blueman.Mechanism.conf
 
 dbus_servicesdir = $(datadir)/dbus-1/system-services
-dbus_services_DATA = org.blueman.Mechanism.service.in
+dbus_services_DATA = org.blueman.Mechanism.service
 
-	
 dbus_sessdir = $(datadir)/dbus-1/services
-dbus_sess_DATA = blueman-applet.service.in
+dbus_sess_DATA = blueman-applet.service
 
 
 @INTLTOOL_POLICY_RULE@ 
@@ -17,7 +16,6 @@ policykit_DATA = $(policykit_in_files:.policy.in=.policy)
 
 EXTRA_DIST =					\
 	org.blueman.Mechanism.conf		\
-	org.blueman.Mechanism.service.in	\
 	$(dbus_sess_DATA)		\
 	$(dbus_services_DATA)
 
