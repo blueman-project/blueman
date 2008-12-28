@@ -146,6 +146,8 @@ class DeviceList(GenericList):
 		
 	def on_device_found(self, address, props):
 		if self.discovering:
+			dprint("Device discovered", address)
+			
 			props["Address"] = address
 			props["Fake"] = True
 			dev = FakeDevice(props)
