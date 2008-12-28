@@ -34,6 +34,8 @@ class BluemanServices:
 		self.Builder.add_from_file(UI_PATH +"/services.ui")
 		
 		self.Dialog = self.Builder.get_object("dialog")
+		self.Dialog.resize(480, 420)
+
 		check_single_instance("blueman-services", lambda: self.Dialog.present())
 
 		self.Dialog.connect("delete-event", lambda x, y: gtk.main_quit())

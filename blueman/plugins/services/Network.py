@@ -191,7 +191,8 @@ class Network(ServicePlugin):
 				r_dnsmasq.props.active = True
 			else:
 				r_dhcpd.props.active = True
-		
+		warning.props.visible = True
+		warning.props.sensitive = True
 		if not NetConf.have("dnsmasq") and not NetConf.have("dhcpd3"):
 			nap_frame.props.sensitive = False
 			warning.props.visible = True
