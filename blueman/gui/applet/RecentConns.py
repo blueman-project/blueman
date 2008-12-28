@@ -36,19 +36,20 @@ _ = gettext.gettext
 
 
 def store_state():
-	items = []
-	for i in RecentConns.items:
-		x = i.copy()
-		x["device"] = None
-		x["mitem"] = None
-		x["gsignal"] = 0
-		items.append(x)
+	if RecentConns.items:
+		items = []
+		for i in RecentConns.items:
+			x = i.copy()
+			x["device"] = None
+			x["mitem"] = None
+			x["gsignal"] = 0
+			items.append(x)
 
 		
-	dump = base64.b64encode(zlib.compress(marshal.dumps(items), 9))
+		dump = base64.b64encode(zlib.compress(marshal.dumps(items), 9))
 	
-	c = Config()
-	c.props.recent_connections = dump
+		c = Config()
+		c.props.recent_connections = dump
 
 atexit.register(store_state)
 
@@ -137,7 +138,7 @@ class RecentConns(gtk.Menu):
 		store_state()
 		
 	def on_item_activated(self, menu_item, item):
-		print "Connect", item["address"], item["service"]
+		dprint("Connect", item["address"], item["service"])
 		
 		sv_name = item["service"].split(".")[-1].lower()
 		try:

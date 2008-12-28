@@ -1,4 +1,4 @@
-# Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
+from blueman.Functions import dprint# Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
 # Copyright (C) 2008 Tadas Dailyda <tadas at dailyda dot com>
 #
 # Licensed under the GNU General Public License Version 3
@@ -80,7 +80,7 @@ class DeviceSelectorWidget(gtk.VBox):
 		
 	def __del__(self):
 		self.List.destroy()
-		print "Deleting widget"
+		dprint("Deleting widget")
 
 
 	def on_discovery_progress(self, devlist, fraction):
@@ -105,7 +105,7 @@ class DeviceSelectorWidget(gtk.VBox):
 		self.update_adapters_list()
 	
 	def on_adapter_selected(self, cb_adapters):
-		print "selected"
+		dprint("selected")
 		iter = cb_adapters.get_active_iter()
 		if iter:
 			adapter_path = cb_adapters.get_model().get_value(iter, 1)
@@ -115,12 +115,12 @@ class DeviceSelectorWidget(gtk.VBox):
 
 		
 	def on_adapter_changed(self, devlist, adapter_path):
-		print "changed"
+		dprint("changed")
 		if adapter_path == None:
 			self.update_adapters_list()
 		else:
 			if self.List.Adapter:
-				print "a"
+				dprint("a")
 				self.List.DisplayKnownDevices()
 
 

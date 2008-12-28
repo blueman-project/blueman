@@ -1,3 +1,4 @@
+from blueman.Functions import dprint
 # Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
 # Copyright (C) 2008 Tadas Dailyda <tadas at dailyda dot com>
 #
@@ -35,7 +36,7 @@ class Config(gobject.GObject):
 			if key == "Config" or key in self.__dict__:
 				self.__dict__[key] = value
 			else:
-				print "setting gconf", key, value
+				dprint("setting gconf", key, value)
 				func = None
 			
 				if type(value) == str:
@@ -92,10 +93,10 @@ class Config(gobject.GObject):
 			self.emit("property-changed", name, self.get_value(name))
 	
 	def __init__(self, subdir=""):
+		gobject.GObject.__init__(self)
 		self.subdir = subdir
 		if self.subdir != "":
 			self.subdir = "/" + self.subdir 
-		gobject.GObject.__init__(self)
 		
 		self.client = gconf.client_get_default ()
 		

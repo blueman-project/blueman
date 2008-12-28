@@ -1,3 +1,68 @@
+2008-12-27 10:55  walmis
+
+	* data/configs/Makefile.am: fixed makefile
+
+2008-12-26 20:46  walmis
+
+	* ChangeLog, configure.ac, data/Makefile.am,
+	  data/blueman-manager.desktop.in, data/blueman.desktop.in,
+	  data/configs/Makefile.am,
+	  data/configs/org.blueman.Mechanism.service.in, data/man,
+	  data/man/Makefile.am, data/man/blueman-adapters.1,
+	  data/man/blueman-applet.1, data/man/blueman-manager.1,
+	  data/man/blueman-sendto.1, data/man/blueman-services.1,
+	  po/blueman.pot: added preliminary man pages and some build system
+	  updates
+
+2008-12-26 12:53  walmis
+
+	* apps/blueman-manager, blueman/Functions.py,
+	  blueman/gui/manager/ManagerDeviceList.py,
+	  blueman/main/applet/Transfer.py: some more bugfixes
+
+2008-12-26 12:10  walmis
+
+	* apps/blueman-adapters, apps/blueman-applet, apps/blueman-manager,
+	  apps/blueman-sendto, apps/blueman-services,
+	  blueman/DeviceClass.py, blueman/Sdp.py,
+	  blueman/gui/DeviceList.py,
+	  blueman/gui/manager/ManagerDeviceList.py,
+	  blueman/gui/manager/ManagerMenu.py,
+	  blueman/gui/manager/ManagerToolbar.py,
+	  blueman/main/SignalTracker.py,
+	  blueman/plugins/services/Network.py,
+	  blueman/plugins/services/Transfer.py, data/Makefile.am,
+	  data/configs/Makefile.am, data/ui/manager-main.ui, po, po/af.po,
+	  po/ar.po, po/bg.po, po/blueman.pot, po/bs.po, po/ca.po, po/cs.po,
+	  po/da.po, po/de.po, po/el.po, po/en_GB.po, po/es.po, po/fa.po,
+	  po/fi.po, po/fr.po, po/gl.po, po/he.po, po/hu.po, po/id.po,
+	  po/it.po, po/ja.po, po/kk.po, po/ko.po, po/lt.po, po/nb.po,
+	  po/nds.po, po/nl.po, po/pl.po, po/pt.po, po/pt_BR.po, po/ro.po,
+	  po/ru.po, po/sk.po, po/sl.po, po/sv.po, po/ta.po, po/tr.po,
+	  po/uk.po, po/vi.po, po/zh_CN.po, po/zh_TW.po: updated makefiles
+	  and some misc fixes
+
+2008-12-26 11:53  walmis
+
+	* po, po/LINGUAS, po/af.po, po/ar.po, po/bg.po, po/blueman.pot,
+	  po/bs.po, po/ca.po, po/cs.po, po/da.po, po/de.po, po/el.po,
+	  po/en_GB.po, po/es.po, po/fa.po, po/fi.po, po/fr.po, po/gl.po,
+	  po/he.po, po/hu.po, po/id.po, po/it.po, po/ja.po, po/kk.po,
+	  po/ko.po, po/lt.po, po/nb.po, po/nds.po, po/nl.po, po/pl.po,
+	  po/pt.po, po/pt_BR.po, po/ro.po, po/ru.po, po/sk.po, po/sl.po,
+	  po/sv.po, po/ta.po, po/tr.po, po/uk.po, po/vi.po, po/zh_CN.po,
+	  po/zh_TW.po: merged translations, fixed bugs
+
+2008-12-25 13:32  walmis
+
+	* apps/test.py, data/Makefile.am, data/blueman-manager.desktop.in,
+	  data/blueman.desktop.in, data/configs/Makefile.am,
+	  data/configs/blueman-applet.service.in,
+	  data/configs/org.blueman.policy,
+	  data/configs/org.blueman.policy.in, module/Lib.pyx,
+	  po/POTFILES.in, po/blueman.pot: desktop entries added, few bugs
+	  fixed
+
 2008-12-24 14:47  walmis
 
 	* apps/blueman-applet, apps/blueman-manager,

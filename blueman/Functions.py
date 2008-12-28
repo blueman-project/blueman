@@ -23,10 +23,29 @@ import re
 import os
 import signal
 import atexit
+import sys
 from subprocess import Popen
 import gobject
 
 from blueman.Lib import sn_launcher
+
+GREEN = lambda(x): "\x1b[32;01m"+x+"\x1b[39;49;00m"
+BLUE = lambda(x): "\x1b[34;01m"+x+"\x1b[39;49;00m"
+BOLD = lambda(x): "\033[1m"+x+"\033[0m"
+
+def dprint(*args):
+	s = ""
+	for a in args:
+		s += (str(a) + " ")
+	co = sys._getframe(1).f_code
+	
+	fname = BOLD(co.co_name)
+	
+	print "_________"
+	print "%s %s" % (fname, "(%s:%d)" % (co.co_filename, co.co_firstlineno))
+	print s
+
+
 
 def startup_notification(name, desc=None, bin_name=None, icon=None):
 	dpy = gtk.gdk.display_get_default()
@@ -56,7 +75,7 @@ def enable_rgba_colormap():
 def spawn(command, system=False, sn=None):
 
 	def child_closed(pid, cond):
-		print command, "closed"
+		dprint(command, "closed")
 		if sn:
 			sn.complete()
 	if not system:

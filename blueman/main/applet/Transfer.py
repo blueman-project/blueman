@@ -81,16 +81,16 @@ class Transfer(OdsManager):
 		
 	def on_server_created(self, inst, server, pattern):
 		def on_started(server):
-			print pattern, "Started"
+			dprint(pattern, "Started")
 			
 		def on_session_created(server, session):
 			self.transfers[session.object_path] = {}
-			print pattern, "session created"
+			dprint(pattern, "session created")
 			if pattern != "opp":
 				return
 			
 			def on_transfer_started(session, filename, local_path, total_bytes):
-				print "transfer started", filename
+				dprint("transfer started", filename)
 				info = server.GetServerSessionInfo(session.object_path)
 				trusted = False
 				try:
@@ -100,7 +100,7 @@ class Transfer(OdsManager):
 					trusted = dev.Trusted
 					dev.Destroy()
 				except Exception, e:
-					print e
+					dprint(e)
 					name = info["BluetoothAddress"]
 			
 			
@@ -133,11 +133,11 @@ class Transfer(OdsManager):
 			
 			def on_cancel(n, action):
 				session.Cancel()
-				print "cancel"
+				dprint("cancel")
 				
 			def access_cb(n, action):
 				t = self.transfers[session.object_path]
-				print action
+				dprint(action)
 				if t["waiting"]:
 					if action == "accept":
 						session.Accept()
@@ -146,7 +146,7 @@ class Transfer(OdsManager):
 					
 					if not t["notification"] == None:
 						t["waiting"] = False
-						print "clearing actions"
+						dprint("clearing actions")
 						n.clear_actions()
 						n.add_action("cancel", _("Cancel"), on_cancel)
 						n.set_urgency(pynotify.URGENCY_NORMAL)
@@ -167,7 +167,7 @@ class Transfer(OdsManager):
 
 
 			def show_open():
-				print "open"
+				dprint("open")
 				path = self.transfers[session.object_path]["filepath"]
 				name = self.transfers[session.object_path]["filename"]
 				
@@ -222,7 +222,7 @@ class Transfer(OdsManager):
 				self.transfers[session.object_path]["transferred"] = bytes_transferred
 				
 			def transfer_finished(session, type):
-				print "---", type
+				dprint("---", type)
 				try:
 					if not self.transfers[session.object_path]["finished"]:
 						self.transfers[session.object_path]["finished"] = True

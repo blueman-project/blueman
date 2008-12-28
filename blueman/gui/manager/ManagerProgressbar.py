@@ -73,7 +73,7 @@ class ManagerProgressbar(gobject.GObject):
 		hbox.pack_end(self.progressbar, False, False)
 
 		if ManagerProgressbar.__instances__ != []:
-			print "hiding", ManagerProgressbar.__instances__[-1]
+			dprint("hiding", ManagerProgressbar.__instances__[-1])
 			ManagerProgressbar.__instances__[-1].hide()
 		
 		self.show()

@@ -56,7 +56,7 @@ class ManagerDeviceMenu(gtk.Menu):
 		
 
 	def __del__(self):
-		print "deleting devicemenu"
+		dprint("deleting devicemenu")
 	#	gobject.GObject.__del__(self)
 	
 	
@@ -85,7 +85,7 @@ class ManagerDeviceMenu(gtk.Menu):
 	def set_op(self, device, message):
 		ManagerDeviceMenu.__ops__[device.GetObjectPath()] = message
 		for inst in ManagerDeviceMenu.__instances__:
-			print "op: regenerating instance", inst
+			dprint("op: regenerating instance", inst)
 			if inst.SelectedDevice == self.SelectedDevice and not (inst.is_popup and not inst.props.visible):
 				inst.Generate()
 
@@ -99,7 +99,7 @@ class ManagerDeviceMenu(gtk.Menu):
 	def unset_op(self, device):
 		del ManagerDeviceMenu.__ops__[device.GetObjectPath()]
 		for inst in ManagerDeviceMenu.__instances__:
-			print "op: regenerating instance", inst
+			dprint("op: regenerating instance", inst)
 			if inst.SelectedDevice == self.SelectedDevice and not (inst.is_popup and not inst.props.visible):
 				inst.Generate()
 
@@ -122,7 +122,7 @@ class ManagerDeviceMenu(gtk.Menu):
 			#	dev = args[0]
 			#	appl.register_modem(device.GetObjectPath(), dev)
 			
-			print "success", args2
+			dprint("success", args2)
 			prog_msg(_("Success!"))
 			self.unset_op(device)
 
@@ -132,7 +132,7 @@ class ManagerDeviceMenu(gtk.Menu):
 			prog_msg(_("Failed"))
 			
 			self.unset_op(device)
-			print "fail", args
+			dprint("fail", args)
 
 			
 		def cancel(prog, *args):
@@ -150,7 +150,7 @@ class ManagerDeviceMenu(gtk.Menu):
 		try:
 			appl = AppletService()
 		except:
-			print "** Failed to connect to applet"
+			dprint("** Failed to connect to applet")
 			fail()
 			return
 		
@@ -182,7 +182,7 @@ class ManagerDeviceMenu(gtk.Menu):
 			try:
 				appl = AppletService()
 			except:
-				print "** Failed to connect to applet"
+				dprint("** Failed to connect to applet")
 			else:
 				appl.RfcommDisconnect(device.GetObjectPath(), args[0])
 				self.Generate()
@@ -190,7 +190,7 @@ class ManagerDeviceMenu(gtk.Menu):
 			try:
 				appl = AppletService()
 			except:
-				print "** Failed to connect to applet"
+				dprint("** Failed to connect to applet")
 				return
 			appl.ServiceProxy(svc.GetInterfaceName(), svc.GetObjectPath(), "Disconnect", [])
 		
@@ -207,7 +207,7 @@ class ManagerDeviceMenu(gtk.Menu):
 
 		
 	def Generate(self):
-		print "Gen"
+		dprint("Gen")
 
 		self.clear()
 		
@@ -370,7 +370,7 @@ class ManagerDeviceMenu(gtk.Menu):
 								try:
 									appl = AppletService()
 								except:
-									print "** Failed to connect to applet"
+									dprint("** Failed to connect to applet")
 								else:
 							
 									appl.DhcpClient(sprops["Device"])
@@ -476,7 +476,7 @@ class ManagerDeviceMenu(gtk.Menu):
 					prog_msg(_("Success!"))
 					
 				def error(*args):
-					print "err", args
+					dprint("err", args)
 					prog_msg(_("Fail"))
 				prog = ManagerProgressbar(self.Blueman, False, _("Refreshing"))
 				prog.start()

@@ -22,7 +22,7 @@ from blueman.ods.OdsBase import OdsBase
 from blueman.ods.OdsServer import OdsServer
 from blueman.ods.OdsSession import OdsSession
 from blueman.main.SignalTracker import SignalTracker
-
+from blueman.Functions import dprint
 
 class OdsManager(OdsBase):
 	__gsignals__ = {
@@ -43,7 +43,7 @@ class OdsManager(OdsBase):
 		self.Handle("SessionConnected", self.on_session_connected)
 		
 	def on_session_closed(self, session_path):
-		print "__Session Closed__"
+		dprint("__Session Closed__")
 		session_path = os.path.basename(session_path)
 		if session_path in self.Sessions:
 			self.Sessions[session_path].DisconnectAll()
@@ -51,7 +51,7 @@ class OdsManager(OdsBase):
 			self.emit("session-destroyed", session_path)
 	
 	def on_session_connected(self, session_path):
-		print "session_connected"
+		dprint("session_connected")
 		session_path = os.path.basename(session_path)
 		if session_path in self.Sessions:
 			session = self.Sessions[session_path]
@@ -59,7 +59,7 @@ class OdsManager(OdsBase):
 				session.emit("connected")
 	
 	def on_session_error(self, session_path, err_name, err_msg):
-		print "__error__"
+		dprint("__error__")
 		session_path = os.path.basename(session_path)
 		if session_path in self.Sessions:
 			session = self.Sessions[session_path]
@@ -88,7 +88,7 @@ class OdsManager(OdsBase):
 			self.Sessions[os.path.basename(session_path)] = session
 			self.emit("session-created", session)
 		def err(*args):
-			print "session err", args
+			dprint("session err", args)
 	
 	
 		self.CreateBluetoothSession(dest_addr, source_addr, pattern, reply_handler=reply, error_handler=err)
@@ -102,18 +102,18 @@ class OdsManager(OdsBase):
 			
 			
 		def err(*args):
-			print "Couldn't create %s server" % pattern, args
+			dprint("Couldn't create %s server" % pattern, args)
 		
 		self.CreateBluetoothServer(source_addr, pattern, require_pairing, reply_handler=reply, error_handler=err)
 		
 	def destroy_server(self, pattern="opp"):
-		print "Destroy %s server" % pattern
+		dprint("Destroy %s server" % pattern)
 		def on_stopped(server):
-			print "server stopped"
+			dprint("server stopped")
 			server.Close()
 		
 		def on_closed(server):
-			print "server closed"
+			dprint("server closed")
 			self.emit("server-destroyed", self.Servers[pattern].object_path)
 			del self.Servers[pattern]
 		

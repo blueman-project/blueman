@@ -19,6 +19,7 @@
 
 import gobject
 import gettext
+from blueman.Functions import dprint
 _ = gettext.gettext
 
 class DiscvManager:
@@ -62,12 +63,12 @@ class DiscvManager:
 			self.adapter = None
 	
 	def on_default_adapter_changed(self, path):
-		print path
+		dprint(path)
 		if path != "":
 			self.init_adapter()
 			
 	def on_adapter_property_changed(self, key, value):
-		print "prop", key, value
+		dprint("prop", key, value)
 		if key == "DiscoverableTimeout":
 			if value == 0: #always visible
 				if self.timeout != None:
@@ -84,7 +85,7 @@ class DiscvManager:
 				return
 				
 		elif (key == "Discoverable" and not value) or (key == "Powered" and not value):
-			print "Stop"
+			dprint("Stop")
 			if self.timeout != None:
 				gobject.source_remove(self.timeout)
 			self.time_left = -1
@@ -100,7 +101,7 @@ class DiscvManager:
 		try:
 			props = self.adapter.GetProperties()
 		except Exception, e:
-			print "warning: Adapter is None"
+			dprint("warning: Adapter is None")
 			self.Applet.disc_item.props.visible = False
 
 		else:

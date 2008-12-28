@@ -3,6 +3,7 @@ bluemandir = $(pythondir)/blueman/plugins/services
 blueman_PYTHON = 	\
 	Network.py	\
 	Transfer.py	\
+	Headset.py	\
 	__init__.py
 
 CLEANFILES =		\

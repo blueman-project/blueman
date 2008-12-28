@@ -1,4 +1,4 @@
-# Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
+from blueman.Functions import dprint# Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
 # Copyright (C) 2008 Tadas Dailyda <tadas at dailyda dot com>
 #
 # Licensed under the GNU General Public License Version 3
@@ -72,7 +72,7 @@ class ManagerToolbar:
 				self.b_search.props.sensitive = True
 		
 	def on_adapter_changed(self, list, adapter_path):
-		print "toolbar adapter", adapter_path
+		dprint("toolbar adapter", adapter_path)
 		if adapter_path == None:
 			self.b_search.props.sensitive = False
 			self.update_send_browse(None)

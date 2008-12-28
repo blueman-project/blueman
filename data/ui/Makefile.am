@@ -9,6 +9,7 @@ ui_DATA =				\
 	device-list-widget.ui	\
 	services-network.ui \
 	services-transfer.ui	\
+	services-headset.ui	\
 	send-dialog.ui
 
 EXTRA_DIST = $(ui_DATA)

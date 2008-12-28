@@ -29,7 +29,7 @@ import gobject
 import re
 import copy
 
-from blueman.Functions import adapter_path_to_name
+from blueman.Functions import adapter_path_to_name, dprint
 
 class DeviceList(GenericList):
 	__gsignals__ = {
@@ -58,7 +58,7 @@ class DeviceList(GenericList):
 
 
 	def __del__(self):
-		print "deleting mainlist"
+		dprint("deleting mainlist")
 
 	def __init__(self, adapter=None, tabledata=[]):
 		def on_adapter_removed(path):
@@ -118,7 +118,7 @@ class DeviceList(GenericList):
 
 
 	def destroy(self):
-		print "destroying"
+		dprint("destroying")
 		self.adapter_signals.DisconnectAll()
 		self.device_signals.DisconnectAll()
 		self.signals.DisconnectAll()
@@ -157,7 +157,7 @@ class DeviceList(GenericList):
 		
 	
 	def on_property_changed(self, key, value):
-		print "adapter propery changed", key, value
+		dprint("adapter propery changed", key, value)
 		if key == "Discovering":
 			if not value and self.discovering:
 				self.StopDiscovery()
@@ -165,7 +165,7 @@ class DeviceList(GenericList):
 				
 				
 	def on_device_property_changed(self, key, value, path, *args, **kwargs):
-		print "list: device_prop_ch", key, value, path, args, kwargs
+		dprint("list: device_prop_ch", key, value, path, args, kwargs)
 
 		iter = self.find_device_by_path(path)
 		
@@ -186,7 +186,7 @@ class DeviceList(GenericList):
 	def monitor_power_levels(self, device):
 		def update(iter, device, cinfo):
 			if not device.Valid or not self.find_device(device) or not device.Connected:
-				print "stopping monitor"
+				dprint("stopping monitor")
 				cinfo.deinit()
 				return False
 			else:
@@ -195,7 +195,7 @@ class DeviceList(GenericList):
 		
 		
 		props = device.GetProperties()
-		print "starting monitor"
+		dprint("starting monitor")
 		if "Connected" in props and props["Connected"]:
 			iter = self.find_device(device)
 			
@@ -233,7 +233,7 @@ class DeviceList(GenericList):
 	#########################
 	
 	def on_device_created(self, path):
-		print "created", path
+		dprint("created", path)
 		iter = self.find_device_by_path(path)
 		if iter == None:
 			dev = Bluez.Device(path)
@@ -258,10 +258,10 @@ class DeviceList(GenericList):
 			self.StopDiscovery()
 		
 		if adapter != None and not re.match("hci[0-9]*", adapter):
-			print "path to"
+			dprint("path to")
 			adapter = adapter_path_to_name(adapter)
 		
-		print adapter
+		dprint(adapter)
 		if self.Adapter != None:
 			self.adapter_signals.DisconnectAll()
 
@@ -275,7 +275,7 @@ class DeviceList(GenericList):
 			
 			self.emit("adapter-changed", self.__adapter_path)
 		except Bluez.errors.DBusNoSuchAdapterError, e:
-			print e
+			dprint(e)
 			#try loading default adapter
 			if len(self.Manager.ListAdapters()) > 0:
 				self.SetAdapter()
@@ -357,7 +357,7 @@ class DeviceList(GenericList):
 			#turn a Fake device to a Real device
 			n = not "Fake" in props and not "Fake" in props_new
 			if n:
-				print "Updating existing dev"
+				dprint("Updating existing dev")
 				self.device_signals.Disconnect(existing_dev.GetObjectPath())
 				existing_dev.Destroy()
 			
@@ -377,7 +377,7 @@ class DeviceList(GenericList):
 					self.monitor_power_levels(device)
 			#turn a Real device to a Fake device
 			elif not "Fake" in props and "Fake" in props_new:
-				print "Convert"
+				dprint("Convert")
 				self.set(iter, device=device, dbus_path=None)
 				self.row_setup_event(iter, device)
 				self.emit("device-property-changed", device, iter, ("Fake", True))
@@ -420,7 +420,7 @@ class DeviceList(GenericList):
 		self.add_device(device, True)
 		
 	def RemoveDevice(self, device, iter=None):
-		print device
+		dprint(device)
 		if iter == None:
 			iter = self.find_device(device)
 		
@@ -436,7 +436,7 @@ class DeviceList(GenericList):
 				self.device_signals.Disconnect(device.GetObjectPath())
 		
 		if device.Temp:
-			print "converting to fake"
+			dprint("converting to fake")
 
 			props = copy.deepcopy(props)
 			props["Fake"] = True

@@ -1,4 +1,4 @@
-# Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
+from blueman.Functions import dprint# Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
 # Copyright (C) 2008 Tadas Dailyda <tadas at dailyda dot com>
 #
 # Licensed under the GNU General Public License Version 3
@@ -71,7 +71,7 @@ class Transfer(ServicePlugin):
 			try:
 				a = AppletService()
 			except:
-				print "failed to connect to applet"
+				dprint("failed to connect to applet")
 			else:
 				c = self.get_options()
 				if "opp_enabled" in c:
@@ -110,7 +110,7 @@ class Transfer(ServicePlugin):
 				self.clear_options()
 				
 				
-			print "transfer apply"
+			dprint("transfer apply")
 
 
 	

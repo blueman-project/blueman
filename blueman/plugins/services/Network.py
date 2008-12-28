@@ -1,4 +1,4 @@
-# Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
+from blueman.Functions import dprint# Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
 # Copyright (C) 2008 Tadas Dailyda <tadas at dailyda dot com>
 #
 # Licensed under the GNU General Public License Version 3
@@ -51,7 +51,7 @@ class Network(ServicePlugin):
 		self.widget.props.visible = False
 
 	def on_property_changed(self, netconf, key, value):
-		print self.ignored_keys
+		dprint(self.ignored_keys)
 		if key in self.ignored_keys:
 			self.ignored_keys.remove(key)
 			return
@@ -69,7 +69,7 @@ class Network(ServicePlugin):
 			return
 		
 		if key == "nap_enable":
-			print "nap_enable", value
+			dprint("nap_enable", value)
 			self.Builder.get_object(key).props.active = value
 			nap_frame = self.Builder.get_object("nap_frame")
 			if value:
@@ -85,7 +85,7 @@ class Network(ServicePlugin):
 	def on_apply(self):
 
 		if self.on_query_apply_state() == True:
-			print "network apply"
+			dprint("network apply")
 			
 			auth = PolicyKitAuth()
 			authorized = auth.is_authorized("org.blueman.network.setup")
@@ -128,7 +128,7 @@ class Network(ServicePlugin):
 				
 				self.clear_options()
 			else:
-				print "Unauth"
+				dprint("Unauth")
 	
 	def on_query_apply_state(self):
 		changed = False

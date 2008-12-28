@@ -1,4 +1,4 @@
-# Agent.py - class Agent and decorator AgentMethod
+from blueman.Functions import dprint# Agent.py - class Agent and decorator AgentMethod
 #
 # Copyright (C) 2008 Vinicius Gomes <vcgomes [at] gmail [dot] com>
 # Copyright (C) 2008 Li Dongyang <Jerry87905 [at] gmail [dot] com>
@@ -82,7 +82,7 @@ class Agent(dbus.service.Object):
         agent, because when this method gets called it has
         already been unregistered.
         '''
-        print "Release"
+        dprint("Release")
     # Release
 
     @AgentMethod
@@ -93,7 +93,7 @@ class Agent(dbus.service.Object):
         The return value should be a string of 1-16 characters
         length. The string can be alphanumeric.
         '''
-        print "RequestPinCode (%s)" % (device)
+        dprint("RequestPinCode (%s)" % (device))
         return raw_input("Enter PIN Code:")
     # RequestPinCode
 
@@ -105,7 +105,7 @@ class Agent(dbus.service.Object):
         The return value should be a numeric value
         between 0-999999.
         '''
-        print "RequestPasskey (%s)" % (device)
+        dprint("RequestPasskey (%s)" % (device))
         passkey = raw_input("Enter Passkey:")
         return dbus.UInt32(passkey)
     # RequestPasskey
@@ -123,7 +123,7 @@ class Agent(dbus.service.Object):
         During the pairing process this method might be
         called multiple times to update the entered value.
         '''
-        print "DisplayPasskey (%s, %d)" % (device, passkey)
+        dprint("DisplayPasskey (%s, %d)" % (device, passkey))
     # DisplayPasskey
 
     @AgentMethod
@@ -134,7 +134,7 @@ class Agent(dbus.service.Object):
         To confirm the value it should return an empty reply
         or an error in case the passkey is invalid.
         '''
-        print "RequestConfirmation (%s, %d)" % (device, passkey)
+        dprint("RequestConfirmation (%s, %d)" % (device, passkey))
         confirm = raw_input("Confirm passkey (y/n): ")
         if confirm == 'y':
             return
@@ -147,7 +147,7 @@ class Agent(dbus.service.Object):
         This method gets called when the service daemon
         needs to authorize a connection/service request.
         '''
-        print "Authorize (%s, %s)" % (device, uuid)
+        dprint("Authorize (%s, %s)" % (device, uuid))
     # Authorize
 
     @AgentMethod
@@ -157,7 +157,7 @@ class Agent(dbus.service.Object):
         that needs to be confirmed by the user. An example
         would be leaving flight mode.
         '''
-        print "ConfirmModeChange (%s)" % (mode)
+        dprint("ConfirmModeChange (%s)" % (mode))
     # ConfirmModeChange
 
     @AgentMethod
@@ -166,6 +166,6 @@ class Agent(dbus.service.Object):
         This method gets called to indicate that the agent
         request failed before a reply was returned.
         '''
-        print "Cancel"
+        dprint("Cancel")
     # Cancel
 # Agent

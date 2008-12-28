@@ -22,6 +22,7 @@ import gobject
 from blueman.main.SignalTracker import SignalTracker
 from blueman.bluez.Adapter import Adapter
 import os
+from blueman.Functions import dprint
 
 class Device(gobject.GObject):
 
@@ -47,7 +48,7 @@ class Device(gobject.GObject):
 		
 		
 		
-		print "caching initial properties"
+		dprint("caching initial properties")
 		self.Properties = self.Device.GetProperties()
 		
 		self.init_services()
@@ -61,12 +62,12 @@ class Device(gobject.GObject):
 			
 	def on_device_removed(self, path):
 		if path == self._obj_path:
-			print "Invalidating device", path
+			dprint("Invalidating device", path)
 			self.emit("invalidated")
 			self.Destroy()
 	
 	def init_services(self):
-		print "Loading services"
+		dprint("Loading services")
 
 		if not "Fake" in self.Properties:
 			self.Fake = False
@@ -95,7 +96,7 @@ class Device(gobject.GObject):
 		self.Signals.DisconnectAll()
 			
 	#def __del__(self):
-	#	print "DEBUG: deleting Device instance"
+	#	dprint("DEBUG: deleting Device instance")
 			
 	def GetProperties(self):
 		#print "Properties requested"
@@ -107,7 +108,7 @@ class Device(gobject.GObject):
 		
 		if name in self.__dict__["Properties"]:
 			if not self.Valid:
-				print "Warning: Attempted to get properties for an invalidated device"
+				dprint("Warning: Attempted to get properties for an invalidated device")
 			return self.__dict__["Properties"][name]
 		else:
 			return getattr(self.Device, name)
@@ -116,7 +117,7 @@ class Device(gobject.GObject):
 		if not key in self.__dict__ and "Properties" in self.__dict__ and key in self.__dict__["Properties"]:
 			if not self.Valid:
 				raise Exception, "Attempted to set properties for an invalidated device"
-			print "Setting property", key, value
+			dprint("Setting property", key, value)
 			self.__dict__["Device"].SetProperty(key, value)
 		else:
 			self.__dict__[key] = value

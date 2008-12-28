@@ -95,14 +95,13 @@ class Blueman:
 					self.Applet.SetBluetoothStatus(True)
 				
 
-		
+		check_single_instance("blueman-manager", lambda: window.present())
 		setup_icon_path()
 		
 		
 		self.Builder = gtk.Builder()
 		self.Builder.set_translation_domain("blueman")
 		self.Builder.add_from_file(UI_PATH +"/manager-main.ui")
-		print self.Builder.get_translation_domain()
 		self.Config = Config()
 		
 		window = self.Builder.get_object("window")
@@ -116,8 +115,6 @@ class Blueman:
 			on_bt_status_changed(False)
 		self.Applet.Handle("BluetoothStatusChanged", on_bt_status_changed)
 
-		
-		check_single_instance("blueman-manager", lambda: window.present())
 		
 		window.connect("delete-event", on_window_delete)
 		window.props.icon_name = "blueman"

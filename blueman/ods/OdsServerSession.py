@@ -19,6 +19,7 @@
 
 import gobject
 from blueman.ods.OdsBase import OdsBase
+from blueman.Functions import dprint
 
 class OdsServerSession(OdsBase):
 	__gsignals__ = {
@@ -41,7 +42,7 @@ class OdsServerSession(OdsBase):
 		self.Handle("ErrorOccurred", self.on_error)
 		
 	def __del__(self):
-		print "deleting session"
+		dprint("deleting session")
 		
 	def on_cancelled(self):
 		self.emit("cancelled")

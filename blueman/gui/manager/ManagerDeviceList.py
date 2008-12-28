@@ -144,7 +144,7 @@ class ManagerDeviceList(DeviceList):
 			pass
 
 	def row_update_event(self, iter, key, value):
-		print "row update event", key, value
+		dprint("row update event", key, value)
 		if key == "Trusted":
 			row = self.get(iter, "bonded", "orig_icon")
 			if value:
@@ -224,7 +224,7 @@ class ManagerDeviceList(DeviceList):
 			else:
 				self.set(iter, rssi_pb=None, lq_pb=None, tpl_pb=None, connected=False)
 		else:
-			print "invisible"
+			dprint("invisible")
 		#set_signal("rssi", rssi_perc, "/signal/rssi/rssi_", ".png", self.row)
 		#set_signal("lq", lq_perc, "/signal/lq/lq_", ".png", self.row)
 		#set_signal("tpl", tpl_perc, "/signal/tpl/tpl_", ".png", self.row)

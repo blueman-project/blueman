@@ -20,6 +20,7 @@ import blueman.plugins.services
 from blueman.plugins.ServicePlugin import ServicePlugin
 
 enable_rgba_colormap()
+setup_icon_path()
 
 class BluemanServices:
 
@@ -87,12 +88,12 @@ class BluemanServices:
 				if f.endswith(".py") and not (f.endswith(".pyc") or f.endswith("_.py")):
 					plugins.append(f[0:-3])
 		plugins.sort()
-		print plugins
+		dprint(plugins)
 		for plugin in plugins:
 			try:
 				__import__("blueman.plugins.services.%s" % plugin, None, None, [])
 			except ImportError, e:
-				print "Unable to load %s plugin\n%s" % (plugin, e)
+				dprint("Unable to load %s plugin\n%s" % (plugin, e))
 			
 
 		for cls in ServicePlugin.__subclasses__():
@@ -123,7 +124,7 @@ class BluemanServices:
 
 		
 	def set_page(self, pageid):
-		print "Set page", pageid
+		dprint("Set page", pageid)
 		if len(ServicePlugin.instances) == 0:
 			return
 		#set the first item

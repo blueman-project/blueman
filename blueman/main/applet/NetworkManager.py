@@ -21,7 +21,7 @@ from blueman.main.Config import Config
 from blueman.bluez.ServiceInterface import ServiceInterface
 from blueman.main.Mechanism import Mechanism
 from blueman.main.PolicyKitAuth import PolicyKitAuth
-from blueman.Functions import get_icon
+from blueman.Functions import get_icon, dprint
 import gettext
 
 _ = gettext.gettext
@@ -47,7 +47,7 @@ class NetworkManager():
 		self.dhcp_notif = None
 	
 	def __del__(self):
-		print "networkmanager deleted"
+		dprint("networkmanager deleted")
 		
 	def on_network_prop_changed(self, key, value, path):
 		if self.Config.props.dhcp_client == None:
@@ -85,7 +85,7 @@ class NetworkManager():
 					self.dhcp_notif = None
 				
 				def err(*args):
-					print args
+					dprint(args)
 					self.dhcp_notif.update(_("Bluetooth Network"), 
 						 _("Failed to acquire an IP address on %s") % (device))
 					self.dhcp_notif.set_timeout(-1)
@@ -107,7 +107,7 @@ class NetworkManager():
 		
 		
 	def set_nap(self, on):
-		print "set nap", on
+		dprint("set nap", on)
 		if self.Applet.Manager != None:
 			adapters = self.Applet.Manager.ListAdapters()
 			for adapter in adapters:
@@ -118,7 +118,7 @@ class NetworkManager():
 					pass
 				
 	def set_gn(self, on):
-		print "set gn", on
+		dprint("set gn", on)
 		if self.Applet.Manager != None:
 			adapters = self.Applet.Manager.ListAdapters()
 			for adapter in adapters:

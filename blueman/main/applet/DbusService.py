@@ -1,4 +1,4 @@
-# Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
+from blueman.Functions import dprint# Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
 # Copyright (C) 2008 Tadas Dailyda <tadas at dailyda dot com>
 #
 # Licensed under the GNU General Public License Version 3
@@ -52,7 +52,7 @@ class DbusService(dbus.service.Object):
 			m = Mechanism()
 			m.HalRegisterModemPort(rfcomm_device, props["Address"])
 			
-		print "Registered modem"
+		dprint("Registered modem")
 		
 	#in: bluez_device_path, rfcomm_device
 	@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="s", out_signature="")
@@ -66,7 +66,7 @@ class DbusService(dbus.service.Object):
 			m = Mechanism()
 			m.HalUnregisterModemPortDev(device)
 			
-		print "Unegistered modem"
+		dprint("Unegistered modem")
 		
 	@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="ss", out_signature="s", async_callbacks=("ok","err"))
 	def RfcommConnect(self, device, uuid, ok, err):
@@ -89,7 +89,7 @@ class DbusService(dbus.service.Object):
 		self.applet.recent_menu.notify(dev.Copy(), "org.bluez.Serial", [uuid] )
 		
 		dev.Services["serial"].Connect(uuid, reply_handler=reply, error_handler=err)
-		print "Connecting rfcomm device"
+		dprint("Connecting rfcomm device")
 		
 		
 		
@@ -98,7 +98,7 @@ class DbusService(dbus.service.Object):
 		dev = Device(BluezDevice(device))
 		dev.Services["serial"].Disconnect(rfdevice)
 		self.UnregisterModem(rfdevice)
-		print "Disonnecting rfcomm device"
+		dprint("Disonnecting rfcomm device")
 
 		
 		
@@ -110,7 +110,7 @@ class DbusService(dbus.service.Object):
 	
 	@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="ss", out_signature="")
 	def TransferControl(self, pattern, action):
-		print pattern, action
+		dprint(pattern, action)
 		if action == "destroy":
 			self.applet.Transfer.destroy_server(pattern)
 		elif action == "stop":
@@ -126,7 +126,7 @@ class DbusService(dbus.service.Object):
 		
 		
 		else:
-			print "Got unknown action"
+			dprint("Got unknown action")
 		
 	@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="s", out_signature="u")
 	def TransferStatus(self, pattern):

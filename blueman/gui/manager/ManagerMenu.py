@@ -134,11 +134,11 @@ class ManagerMenu:
 			self.item_device.props.sensitive = True
 			sub = self.item_device.get_submenu()
 			if sub == None:
-				print "init"
+				dprint("init")
 				x = ManagerDeviceMenu(self.blueman)
 				self.item_device.set_submenu(x)
 			else:
-				print "Regen"
+				dprint("Regen")
 				sub.Generate()
 				
 		else:
@@ -202,7 +202,7 @@ class ManagerMenu:
 	def on_adapter_selected(self, menuitem, adapter_path):
 		if menuitem.props.active:
 			if adapter_path != self.blueman.List.Adapter.GetObjectPath():
-				print "selected", adapter_path
+				dprint("selected", adapter_path)
 				self.blueman.Config.props.last_adapter = adapter_path_to_name(adapter_path)
 				self.blueman.List.SetAdapter(adapter_path)
 		
