@@ -45,9 +45,6 @@ class NetworkManager():
 		self.set_gn(self.Config.props.gn_enable or False)
 		
 		self.dhcp_notif = None
-	
-	def __del__(self):
-		dprint("networkmanager deleted")
 		
 	def on_network_prop_changed(self, key, value, path):
 		if self.Config.props.dhcp_client == None:

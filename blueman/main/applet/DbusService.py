@@ -1,4 +1,5 @@
-from blueman.Functions import dprint# Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
+
+# Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
 # Copyright (C) 2008 Tadas Dailyda <tadas at dailyda dot com>
 #
 # Licensed under the GNU General Public License Version 3
@@ -21,11 +22,12 @@ import dbus.glib
 import dbus.service
 
 import gtk
-
+from blueman.Functions import dprint
 from blueman.main.PolicyKitAuth import PolicyKitAuth
 from blueman.main.Mechanism import Mechanism
 from blueman.bluez.Device import Device as BluezDevice
 from blueman.main.Device import Device
+from blueman.main.NMMonitor import NMMonitor
 from blueman.Sdp import *
 
 class DbusService(dbus.service.Object):
@@ -51,6 +53,7 @@ class DbusService(dbus.service.Object):
 			
 			m = Mechanism()
 			m.HalRegisterModemPort(rfcomm_device, props["Address"])
+
 			
 		dprint("Registered modem")
 		
@@ -74,14 +77,15 @@ class DbusService(dbus.service.Object):
 			uuid16 = uuid128_to_uuid16(uuid)
 			if uuid16 == DIALUP_NET_SVCLASS_ID:
 				self.RegisterModem(device, rfcomm)
-				def on_propery_change(device, key, value):
-					if key == "Connected":
-						self.UnregisterModem(rfcomm)
-						device.disconnect(id)
-						device.Destroy()
-						
-				id = dev.connect("property-changed", on_propery_change)
-			
+
+				def on_disconnected(mon, bt_disconnect):
+					if not bt_disconnect:
+						dev.Services["serial"].Disconnect(rfcomm)
+					self.UnregisterModem(rfcomm)
+					mon.disconnect(sig)
+				mon = NMMonitor(dev, rfcomm)
+				sig = mon.connect("disconnected", on_disconnected)
+				
 			ok(rfcomm)
 
 		dev = Device(BluezDevice(device))

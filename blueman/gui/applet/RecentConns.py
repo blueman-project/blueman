@@ -73,8 +73,9 @@ class RecentConns(gtk.Menu):
 			self.remove(child)
 		self.foreach(each)
 
-		RecentConns.items.sort(compare_by("time"))
+		RecentConns.items.sort(compare_by("time"), reverse=True)
 		RecentConns.items = RecentConns.items[0:5]
+		RecentConns.items.reverse()
 		
 		if len(RecentConns.items) == 0:
 			self.Item.props.sensitive = False
@@ -133,6 +134,7 @@ class RecentConns(gtk.Menu):
 				return
 		
 		RecentConns.items.append(item)
+		dprint(RecentConns.items)
 		self.initialize()
 		
 		store_state()
