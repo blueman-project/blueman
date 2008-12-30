@@ -34,6 +34,83 @@ Get Pyrex from
 ])
 fi
 
+
+#--------------------------------------------------------------------
+# Default paths for installation
+#--------------------------------------------------------------------
+
+if test "$prefix" = ""; then
+  prefix=/usr/local
+fi
+if test "$prefix" = "NONE"; then
+  prefix=/usr/local
+fi
+if test "$exec_prefix" = ""; then
+  exec_prefix=${prefix}
+fi
+if test "$exec_prefix" = "NONE"; then
+  exec_prefix=${prefix}
+fi
+if test "$exec_prefix" = '${prefix}'; then
+  exec_prefix=${prefix}
+fi
+if test "$includedir" = ""; then
+  includedir=${prefix}/include
+fi
+if test "$includedir" = "NONE"; then
+  includedir=${prefix}/include
+fi
+if test "$includedir" = '${prefix}/include'; then
+  includedir=${prefix}/include
+fi
+if test "$libdir" = ""; then
+  libdir=${exec_prefix}/lib
+fi
+if test "$libdir" = "NONE"; then
+  libdir=${exec_prefix}/lib
+fi
+if test "$libdir" = '${exec_prefix}/lib'; then
+  libdir=${exec_prefix}/lib
+fi
+if test "$bindir" = ""; then
+  bindir=${exec_prefix}/bin
+fi
+if test "$bindir" = "NONE"; then
+  bindir=${exec_prefix}/bin
+fi
+if test "$bindir" = '${exec_prefix}/bin'; then
+  bindir=${exec_prefix}/bin
+fi
+if test "$datadir" = ""; then
+  datadir=${prefix}/share
+fi
+if test "$datadir" = "NONE"; then
+  datadir=${prefix}/share
+fi
+if test "$datadir" = '${prefix}/share'; then
+  datadir=${prefix}/share
+fi
+if test "$mandir" = ""; then
+  mandir=${prefix}/man
+fi
+if test "$mandir" = "NONE"; then
+  mandir=${prefix}/man
+fi
+if test "$mandir" = '${prefix}/man'; then
+  mandir=${prefix}/man
+fi
+if test "$libexecdir" = ""; then
+  libexecdir=${exec_prefix}/libexec
+fi
+if test "$libexecdir" = "NONE"; then
+  libexecdir=${exec_prefix}/libexec
+fi
+if test "$libexecdir" = '${exec_prefix}/libexec'; then
+  libexecdir=${exec_prefix}/libexec
+fi
+
+
+
 dnl ----------------------------------
 dnl - Various paths and other defines
 dnl ----------------------------------
@@ -52,8 +129,8 @@ AC_SUBST(PYTHONDIR)
 AS_AC_EXPAND(PKGLIBDIR, $libdir/blueman)
 AC_SUBST(PKGLIBDIR)
 
-test "x$prefix" = xNONE && prefix=$ac_default_prefix
-test "x$exec_prefix" = xNONE && exec_prefix=$prefix
+AS_AC_EXPAND(LIBEXECDIR, $libexecdir)
+AC_SUBST(LIBEXECDIR)
 
 dnl AS_AC_EXPAND([PREFIX], $prefix)
 AC_SUBST(prefix)
