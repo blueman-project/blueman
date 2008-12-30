@@ -18,7 +18,10 @@
 # 
 
 from blueman.Constants import *
-import gtk
+try:
+	import gtk
+except:
+	pass
 import re
 import os
 import signal

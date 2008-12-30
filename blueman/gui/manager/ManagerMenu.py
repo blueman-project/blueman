@@ -186,7 +186,7 @@ class ManagerMenu:
 		sep.show()
 		menu.prepend(sep)
 		
-		item = create_menuitem(_("Search"), get_icon("gtk-search", 16))
+		item = create_menuitem(_("Search"), get_icon("gtk-find", 16))
 		item.connect("activate", lambda x: self.blueman.inquiry())
 		item.show()
 		menu.prepend(item)

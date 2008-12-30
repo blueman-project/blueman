@@ -152,17 +152,24 @@ class NetConf:
 
 		
 	def _restore_iptables(self):
-		if os.path.exists("/tmp/blueman-iptbl-lock"):
-			f = open("/tmp/blueman-iptbl-lock")
-			rule = f.readline()
+		if os.path.exists("/var/run/blueman-iptbl-lock"):
+			f = open("/var/run/blueman-iptbl-lock")
+			lines = []
+			for line in f:
+				lines.append(line)
 			f.close()
-			os.system("rm -f /tmp/blueman-iptbl-lock")
-			os.system("iptables -t nat -D POSTROUTING %s" % rule)
+			os.system("rm -f /var/run/blueman-iptbl-lock")
+			
+			for l in lines:
+				os.system("/sbin/iptables %s" % l)
+			
+			
+			
 			
 	def _kill_dhcp(self):
-		if os.path.exists("/tmp/blueman-dh-lock"):
-			os.system("cat /tmp/blueman-dh-lock | xargs kill")
-			os.system("rm -f /tmp/blueman-dh-lock")
+		if os.path.exists("/var/run/blueman-dh-lock"):
+			os.system("cat /var/run/blueman-dh-lock | xargs kill")
+			os.system("rm -f /var/run/blueman-dh-lock")
 	
 		
 	def _uninstall_ifup(self):
@@ -190,6 +197,7 @@ MASQ=%s
 IP=%s
 DHCP=1
 TYPE=%s
+PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
 
 if [ "$1" == "pan0" ]; then
 	avahi-autoipd $1
@@ -200,19 +208,28 @@ if [ "$1" == "pan1" ]; then
 
 	ifconfig pan1 %s netmask 255.255.255.0 up || exit 1
 
-	if ! [ -a /tmp/blueman-iptbl-lock ]; then
+	if ! [ -a /var/run/blueman-iptbl-lock ]; then
 		
 		if [ "$MASQ" == "1" ]; then
 			echo 1 > /proc/sys/net/ipv4/ip_forward
 			rule="-s %s/255.255.255.0 -j MASQUERADE"
 			iptables -t nat -A POSTROUTING $rule
-			echo $rule > /tmp/blueman-iptbl-lock
+			echo -t nat -D POSTROUTING $rule > /var/run/blueman-iptbl-lock
+			
+			iptables -t filter -I FORWARD -i pan1 -j ACCEPT
+			echo -t filter -D FORWARD -i pan1 -j ACCEPT >> /var/run/blueman-iptbl-lock
+			
+			iptables -t filter -I FORWARD -o pan1 -j ACCEPT
+			echo -t filter -D FORWARD -o pan1 -j ACCEPT >> /var/run/blueman-iptbl-lock
+			
+			iptables -t filter -I INPUT -i pan1 -j ACCEPT
+			echo -t filter -D INPUT -i pan1 -j ACCEPT >> /var/run/blueman-iptbl-lock
 		fi
 	fi
-	if ! [ -a /tmp/blueman-dh-lock ]; then
+	if ! [ -a /var/run/blueman-dh-lock ]; then
 		%s %s || exit 1
 		PID=`pidof -s -o %%PPID -x %s`
-		echo $PID > /tmp/blueman-dh-lock
+		echo $PID > /var/run/blueman-dh-lock
 
 	fi
 	
