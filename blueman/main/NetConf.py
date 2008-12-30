@@ -68,6 +68,12 @@ def netstatus():
 		pass
 			
 	return {"dhcp":dhcp, "ip":ip, "masq":masq, "type":type}
+	
+def nc_is_running():
+	if os.path.exists("/var/run/blueman-dh-lock") or os.path.exists("/var/run/blueman-iptbl-lock"):
+		return True
+	else:
+		return False
 
 
 def have(t):
