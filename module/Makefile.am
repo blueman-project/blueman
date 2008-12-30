@@ -1,16 +1,16 @@
-BUILT_SOURCES = Lib.c
+BUILT_SOURCES = _blueman.c
 
-bluemanlibdir = $(pyexecdir)/blueman
-bluemanlib_LTLIBRARIES = Lib.la
-Lib_la_CFLAGS = $(BLUEZ_CFLAGS) @PYTHON_INCLUDES@ -DSN_API_NOT_YET_FROZEN
-Lib_la_LDFLAGS = -module -avoid-version -fPIC
-Lib_la_LIBADD = $(BLUEZ_LIBS)
-Lib_la_SOURCES = \
-	Lib.c			\
+bluemanlibdir = $(pyexecdir)
+bluemanlib_LTLIBRARIES = _blueman.la
+_blueman_la_CFLAGS = $(BLUEZ_CFLAGS) @PYTHON_INCLUDES@ -DSN_API_NOT_YET_FROZEN
+_blueman_la_LDFLAGS = -module -avoid-version -fPIC
+_blueman_la_LIBADD = $(BLUEZ_LIBS)
+_blueman_la_SOURCES = \
+	_blueman.c			\
 	libblueman.c	\
 	libblueman.h
 
-Lib.c: Lib.pyx
+_blueman.c: _blueman.pyx
 	$(PYREXC) -o $@ $<
 	
 EXTRA_DIST = Lib.pyx

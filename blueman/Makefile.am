@@ -10,7 +10,8 @@ blueman_PYTHON = 	\
 	Constants.py	\
 	DeviceClass.py	\
 	Functions.py	\
-	Sdp.py			\
+	Sdp.py		\
+	Lib.py		\
 	__init__.py
 
 CLEANFILES =		\

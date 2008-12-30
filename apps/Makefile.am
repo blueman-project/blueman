@@ -8,7 +8,8 @@ APPS =					\
 appsdir = $(bindir)
 apps_SCRIPTS = $(APPS)
 
-dist_pkglib_SCRIPTS = 	\
+polkitdir = $(libexecdir)
+polkit_SCRIPTS = 	\
 	blueman-mechanism
 	
 EXTRA_DIST = $(APPS) blueman-mechanism
