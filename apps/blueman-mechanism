@@ -54,7 +54,7 @@ class conf_service(dbus.service.Object):
 		if ip_address == "reload":
 			info = netstatus()
 			nc = None
-			if info["ip"] != "0":
+			if info["ip"] != "0" and not nc_is_running():
 				if info["type"] == "dnsmasq":
 					nc = NetConfDnsMasq(None)
 				elif info["type"] == "dhcpd":
