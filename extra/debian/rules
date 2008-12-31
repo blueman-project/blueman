@@ -1,0 +1,21 @@
+#!/usr/bin/make -f
+
+include /usr/share/cdbs/1/rules/debhelper.mk
+# Including this file gets us a simple patch system.  You can just
+# drop patches in debian/patches, and they will be automatically
+# applied and unapplied.
+include /usr/share/cdbs/1/rules/simple-patchsys.mk
+# Including this gives us a number of rules typical to a GNOME
+# program, including setting GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1.
+# Note that this class inherits from autotools.mk and docbookxml.mk,
+# so you don't need to include those too.
+include /usr/share/cdbs/1/class/gnome.mk
+
+
+binary-install/blueman::
+	dh_pycentral
+
+install/blueman::
+	rm -f $(CURDIR)/debian/blueman/usr/lib/python2.5/site-packages/blueman/Lib.la
+	rm -f $(CURDIR)/debian/blueman/usr/lib/python2.5/site-packages/blueman/Lib.a
+

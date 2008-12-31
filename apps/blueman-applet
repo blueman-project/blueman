@@ -346,7 +346,8 @@ class BluemanApplet:
 	def show_notification(self, summary, message, timeout=-1, actions= None, actions_cb=None, pixbuf=None):
 		def on_notification_closed(n):
 			n.disconnect(closed_sig)
-			actions_cb(n, 'default')
+			if actions_cb:
+				actions_cb(n, 'default')
 			
 		
 		n = pynotify.Notification(summary, message)

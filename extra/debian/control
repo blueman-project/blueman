@@ -1,0 +1,39 @@
+Source: blueman
+Section: gnome
+Priority: optional
+Maintainer: Valmantas Palikša <walmis@balticum-tv.lt>
+Standards-Version: 3.8.0
+XS-Python-Version: >= 2.5
+Build-Depends: debhelper (>= 7),
+               autotools-dev,
+               cdbs,
+               libglib2.0-dev,
+               libtool,
+               libgtk2.0-dev,
+               libstartup-notification0-dev,
+               python-gobject-dev,
+               libbluetooth-dev,
+               intltool,
+               python2.5-dev,
+               python-central
+
+Package: blueman
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, python (>= 2.5), dbus, bluez (>= 4.22), obex-data-server (>= 0.3), python-notify, python-gtk2, python-gconf, python-dbus, python-gobject
+Conflicts: bluez-gnome
+Replaces: bluez-gnome
+Recommends: dnsmasq
+Homepage: http://blueman.tuxfamily.org
+XB-Python-Version: >= 2.5
+Description: A Graphical bluetooth manager
+ Blueman is designed to provide simple, yet effective means for 
+ controlling BlueZ API and simplifying bluetooth tasks such as:
+  Connecting to 3G/EDGE/GPRS via dial-up
+  Connecting to/Creating bluetooth networks
+  Connecting to input devices
+  Connecting to audio devices
+  Sending/Receiving/Browsing files via OBEX
+  Pairing
+ .
+ Blueman also integrates with Network Manager 0.7, so any Dialup/Network
+ connections will be made available (via HAL) to Network Manager.

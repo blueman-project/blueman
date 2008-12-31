@@ -17,13 +17,16 @@ from blueman.main.HalManager import HalManager
 timeout = 30
 time = 0
 
-
+dhcp_pids = []
 
 def timer(*args):
 	global time
-	time+=1
-	if time == timeout:
-		loop.quit()
+	if len(dhcp_pids) == 0:
+		time+=1
+		if time == timeout:
+			loop.quit()
+	else:
+		time = 0
 		
 	return True
 
@@ -110,8 +113,8 @@ class conf_service(dbus.service.Object):
 		rxp = re.compile("bound to (\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) .*")
 		
 		
-		p = subprocess.Popen("dhclient -e IF_METRIC=100 -1 %s" % net_interface, shell=True, bufsize=128, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-
+		p = subprocess.Popen(["/sbin/dhclient", "-d", "-e", "IF_METRIC=100", "-1", net_interface], bufsize=128, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+		dhcp_pids.append(p.pid)
 		
 		def on_timeout():
 			print "Killing dhcpd"
@@ -145,6 +148,7 @@ class conf_service(dbus.service.Object):
 			global bound_to
 			print "closed ", cond
 			gobject.source_remove(timeout)
+			dhcp_pids.remove(pid)
 			ok(net_interface, int(cond), bound_to)
 
 

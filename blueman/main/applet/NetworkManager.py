@@ -78,8 +78,6 @@ class NetworkManager():
 					
 					self.dhcp_notif.set_timeout(-1)
 					self.dhcp_notif.show()
-					
-					self.dhcp_notif = None
 				
 				def err(*args):
 					dprint(args)
@@ -87,7 +85,9 @@ class NetworkManager():
 						 _("Failed to acquire an IP address on %s") % (device))
 					self.dhcp_notif.set_timeout(-1)
 					self.dhcp_notif.show()
-					self.dhcp_notif = None
+				
+				if self.dhcp_notif != None:
+					self.dhcp_notif.close()
 				
 				self.dhcp_notif = self.Applet.show_notification(_("Bluetooth Network"), 
 								_("Acquiring an IP address on %s" % device), 0, pixbuf=get_icon("gtk-network", 48))
