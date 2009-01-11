@@ -1,4 +1,4 @@
-from blueman.Functions import dprint# Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
+# Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
 # Copyright (C) 2008 Tadas Dailyda <tadas at dailyda dot com>
 #
 # Licensed under the GNU General Public License Version 3
@@ -24,6 +24,7 @@ from blueman.plugins.ServicePlugin import ServicePlugin
 
 from blueman.main.AppletService import AppletService
 from blueman.main.Config import Config
+from blueman.Functions import dprint
 
 _ = gettext.gettext
 
@@ -136,10 +137,10 @@ class Transfer(ServicePlugin):
 		ftp_enabled.props.active = self.TransConf.props.ftp_enabled
 		ftp_allow_write.props.active = self.TransConf.props.ftp_allow_write
 		opp_accept.props.active = self.TransConf.props.opp_accept
-		shared_path.set_filename(self.TransConf.props.shared_path)
-	
+		
 		if self.TransConf.props.shared_path != None:
 			self.Builder.get_object("shared_path").set_current_folder(self.TransConf.props.shared_path)
+			shared_path.set_filename(self.TransConf.props.shared_path)
 		
 		opp_enabled.connect("toggled", lambda x: setattr(self.TransConf.props, "opp_enabled", x.props.active))
 		ftp_enabled.connect("toggled", lambda x: setattr(self.TransConf.props, "ftp_enabled", x.props.active))

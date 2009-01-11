@@ -20,7 +20,7 @@ import dbus
 import dbus.glib
 import dbus.service
 import os.path
-from blueman.Functions import get_icon
+from blueman.Functions import get_icon, dprint
 import gtk
 import blueman.bluez as Bluez
 from blueman.Sdp import *
