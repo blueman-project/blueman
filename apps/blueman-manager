@@ -72,7 +72,10 @@ class Blueman:
 				else:
 					self.Builder.get_object("statusbar").props.visible = False
 			elif key == "latest_last":
-				self.List.DisplayKnownDevices(autoselect=True)
+				try:	
+					self.List.DisplayKnownDevices(autoselect=True)
+				except:
+					pass
 				
 		def on_bt_status_changed(status):
 			if not status:

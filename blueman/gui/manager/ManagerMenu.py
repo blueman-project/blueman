@@ -126,7 +126,7 @@ class ManagerMenu:
 		self.adapters = blueman.List.Manager.ListAdapters()
 		
 		self.generate_adapter_menu()
-		
+		self.on_adapter_changed(blueman.List, blueman.List.GetAdapterPath())
 
 
 	def on_device_selected(self, List, device, iter):

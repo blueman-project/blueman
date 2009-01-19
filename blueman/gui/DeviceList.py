@@ -409,6 +409,9 @@ class DeviceList(GenericList):
 		else:
 			return True
 		
+	def GetAdapterPath(self):
+		if self.IsValidAdapter():
+			return self.__adapter_path	
 		
 	def StopDiscovery(self):
 		self.discovering = False

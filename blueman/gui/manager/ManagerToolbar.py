@@ -54,8 +54,7 @@ class ManagerToolbar:
 		self.b_browse = blueman.Builder.get_object("b_browse")
 		self.b_browse.connect("clicked", self.on_action, self.blueman.browse)
 		
-		if blueman.List.IsValidAdapter():
-			self.b_search.props.sensitive = True
+		self.on_adapter_changed(blueman.List, blueman.List.GetAdapterPath())
 		
 	def on_action(self, button, func):
 		device = self.blueman.List.GetSelectedDevice()

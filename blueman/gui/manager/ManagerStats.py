@@ -92,6 +92,7 @@ class ManagerStats:
 		hbox.pack_start(self.im_upload, False, False)
 		hbox.pack_start(self.im_download, False, False)
 		hbox.show_all()
+		self.on_adapter_changed(blueman.List, blueman.List.GetAdapterPath())
 		
 		self.up_blinker = Animation(self.im_upload, [get_icon("blueman-up-inactive", 15), get_icon("blueman-up-active", 15)])
 		#self.down_blinker = Animation(self.im_download, ["/down_inactive.png", "/down_active.png"])
@@ -102,8 +103,10 @@ class ManagerStats:
 	def on_adapter_changed(self, List, adapter_path):
 		if adapter_path != None:
 			self.hci = adapter_path_to_name(adapter_path)
+			self.hbox.props.sensitive = True
 		else:
 			self.hci = None
+			self.hbox.props.sensitive = False
 			
 		self.up_speed.reset()
 		self.down_speed.reset()
