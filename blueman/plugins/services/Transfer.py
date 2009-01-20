@@ -139,8 +139,7 @@ class Transfer(ServicePlugin):
 		opp_accept.props.active = self.TransConf.props.opp_accept
 		
 		if self.TransConf.props.shared_path != None:
-			self.Builder.get_object("shared_path").set_current_folder(self.TransConf.props.shared_path)
-			shared_path.set_filename(self.TransConf.props.shared_path)
+			shared_path.set_current_folder(self.TransConf.props.shared_path)
 		
 		opp_enabled.connect("toggled", lambda x: setattr(self.TransConf.props, "opp_enabled", x.props.active))
 		ftp_enabled.connect("toggled", lambda x: setattr(self.TransConf.props, "ftp_enabled", x.props.active))
