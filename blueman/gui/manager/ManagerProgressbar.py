@@ -20,7 +20,7 @@ import pango
 import gobject
 import gtk
 import gtk.gdk
-from blueman.Functions import get_icon
+from blueman.Functions import get_icon, dprint
 import gettext
 _ = gettext.gettext
 
