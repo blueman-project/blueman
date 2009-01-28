@@ -103,7 +103,6 @@ class DiscvManager:
 		except Exception, e:
 			dprint("warning: Adapter is None")
 			self.Applet.disc_item.props.visible = False
-
 		else:
 			if (not props["Discoverable"] or props["DiscoverableTimeout"] > 0) and props["Powered"]:
 				

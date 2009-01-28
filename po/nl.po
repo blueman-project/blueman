@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-26 14:09+0200\n"
+"POT-Creation-Date: 2009-01-28 16:40+0200\n"
 "PO-Revision-Date: 2008-09-28 13:49+0000\n"
 "Last-Translator: domkop <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -103,11 +103,11 @@ msgstr ""
 
 #: ../data/ui/manager-main.ui.h:12
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:452
-#: ../blueman/gui/manager/ManagerToolbar.py:104
+#: ../blueman/gui/manager/ManagerToolbar.py:103
 msgid "Trust"
 msgstr ""
 
-#: ../data/ui/services.ui.h:1 ../apps/blueman-applet:250
+#: ../data/ui/services.ui.h:1 ../apps/blueman-applet:282
 msgid "Local Services"
 msgstr ""
 
@@ -141,6 +141,7 @@ msgstr ""
 
 #: ../data/ui/services-network.ui.h:8
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:346
+#: ../apps/blueman-assistant:265
 msgid "Group Network"
 msgstr "Groep Netwerk"
 
@@ -220,29 +221,58 @@ msgstr ""
 msgid "gtk-cancel"
 msgstr ""
 
+#: ../data/ui/assistant.ui.h:1
+msgid "<b>Congratulations, device successfully added</b>"
+msgstr ""
+
+#: ../data/ui/assistant.ui.h:2
+#, fuzzy
+msgid "<b>Connect to:</b>"
+msgstr "<b>Gekoppeld</b>"
+
+#: ../data/ui/assistant.ui.h:3
+msgid "<b>Please wait...</b>"
+msgstr ""
+
+#: ../data/ui/assistant.ui.h:4
+msgid "<b>Select pairing method to use:</b>"
+msgstr ""
+
+#: ../data/ui/assistant.ui.h:5
+msgid "Don't Pair"
+msgstr ""
+
+#: ../data/ui/assistant.ui.h:6
+msgid "Use My Own Passkey:"
+msgstr ""
+
+#: ../data/ui/assistant.ui.h:7
+msgid "Use Random Passkey"
+msgstr ""
+
 #: ../blueman/Sdp.py:101
 msgid "Dialup Networking (DUN)"
 msgstr ""
 
+#: ../blueman/main/applet/NetworkManager.py:73
 #: ../blueman/main/applet/NetworkManager.py:76
-#: ../blueman/main/applet/NetworkManager.py:79
-#: ../blueman/main/applet/NetworkManager.py:89
-#: ../blueman/main/applet/NetworkManager.py:95
+#: ../blueman/main/applet/NetworkManager.py:84
+#: ../blueman/main/applet/NetworkManager.py:92
 msgid "Bluetooth Network"
 msgstr ""
 
-#: ../blueman/main/applet/NetworkManager.py:77
+#: ../blueman/main/applet/NetworkManager.py:74
 #, python-format
 msgid "Interface %(0)s bound to IP address %(1)s"
 msgstr ""
 
-#: ../blueman/main/applet/NetworkManager.py:80
-#: ../blueman/main/applet/NetworkManager.py:90
+#: ../blueman/main/applet/NetworkManager.py:77
+#: ../blueman/main/applet/NetworkManager.py:85
 #, python-format
 msgid "Failed to acquire an IP address on %s"
 msgstr ""
 
-#: ../blueman/main/applet/NetworkManager.py:96
+#: ../blueman/main/applet/NetworkManager.py:93
 #, python-format
 msgid "Acquiring an IP address on %s"
 msgstr ""
@@ -265,28 +295,28 @@ msgstr ""
 msgid "Reject"
 msgstr "Afkeuren"
 
-#: ../blueman/main/applet/Transfer.py:150
+#: ../blueman/main/applet/Transfer.py:151
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: ../blueman/main/applet/Transfer.py:175
+#: ../blueman/main/applet/Transfer.py:179
 msgid "File Saved"
 msgstr ""
 
-#: ../blueman/main/applet/Transfer.py:175
+#: ../blueman/main/applet/Transfer.py:179
 #, python-format
 msgid "Would you like to open %s?"
 msgstr ""
 
-#: ../blueman/main/applet/Transfer.py:177
+#: ../blueman/main/applet/Transfer.py:181
 msgid "Open"
 msgstr ""
 
-#: ../blueman/main/applet/Transfer.py:207
+#: ../blueman/main/applet/Transfer.py:212
 msgid "Receiving File"
 msgstr ""
 
-#: ../blueman/main/applet/Transfer.py:207
+#: ../blueman/main/applet/Transfer.py:212
 #, python-format
 msgid ""
 "Receiving File %(0)s\n"
@@ -417,7 +447,7 @@ msgstr ""
 msgid "pointing"
 msgstr ""
 
-#: ../blueman/plugins/services/Transfer.py:44
+#: ../blueman/plugins/services/Transfer.py:45
 msgid "Transfer"
 msgstr ""
 
@@ -425,7 +455,7 @@ msgstr ""
 msgid "Network"
 msgstr ""
 
-#: ../blueman/plugins/services/Network.py:117 ../apps/blueman-applet:110
+#: ../blueman/plugins/services/Network.py:117 ../apps/blueman-applet:146
 msgid "Failed to apply network settings"
 msgstr ""
 
@@ -437,47 +467,47 @@ msgstr ""
 msgid "Blueman is a GTK based Bluetooth manager"
 msgstr ""
 
-#: ../blueman/gui/applet/DiscvManager.py:35
+#: ../blueman/gui/applet/DiscvManager.py:36
 msgid "Make the default adapter visible for 1 minute"
 msgstr ""
 
-#: ../blueman/gui/applet/DiscvManager.py:44
+#: ../blueman/gui/applet/DiscvManager.py:45
 #, python-format
 msgid "Discoverable... %ss"
 msgstr ""
 
-#: ../blueman/gui/applet/DiscvManager.py:110 ../apps/blueman-applet:67
+#: ../blueman/gui/applet/DiscvManager.py:111 ../apps/blueman-applet:73
 msgid "Make Discoverable"
 msgstr ""
 
-#: ../blueman/gui/applet/RecentConns.py:148
+#: ../blueman/gui/applet/RecentConns.py:151
 #, python-format
 msgid "Connecting to %s"
 msgstr ""
 
-#: ../blueman/gui/applet/RecentConns.py:152
+#: ../blueman/gui/applet/RecentConns.py:155
 msgid "Connected"
 msgstr ""
 
-#: ../blueman/gui/applet/RecentConns.py:152
+#: ../blueman/gui/applet/RecentConns.py:155
 #, python-format
 msgid "Connected to %s"
 msgstr ""
 
-#: ../blueman/gui/applet/RecentConns.py:157
+#: ../blueman/gui/applet/RecentConns.py:160
 msgid "Failed to connect"
 msgstr ""
 
-#: ../blueman/gui/applet/RecentConns.py:177
+#: ../blueman/gui/applet/RecentConns.py:180
 #, python-format
 msgid "Network Access (%s)"
 msgstr ""
 
-#: ../blueman/gui/applet/RecentConns.py:179
+#: ../blueman/gui/applet/RecentConns.py:182
 msgid "Service"
 msgstr ""
 
-#: ../blueman/gui/applet/RecentConns.py:184
+#: ../blueman/gui/applet/RecentConns.py:187
 #, python-format
 msgid "%(service)s on %(device)s"
 msgstr ""
@@ -546,6 +576,7 @@ msgid "Network Access"
 msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:353
+#: ../apps/blueman-assistant:270
 msgid "Network Access Point"
 msgstr "Netwerk Toeganspunt"
 
@@ -578,7 +609,7 @@ msgid "Browse device..."
 msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:457
-#: ../blueman/gui/manager/ManagerToolbar.py:100
+#: ../blueman/gui/manager/ManagerToolbar.py:99
 msgid "Untrust"
 msgstr ""
 
@@ -748,24 +779,28 @@ msgstr "Systeembeleid voorkomt het wijzigen van de configuratie"
 msgid "The Blueman Project"
 msgstr "Het Blueman Project"
 
-#: ../apps/blueman-manager:82
+#: ../apps/blueman-manager:85
 msgid "Bluetooth Turned Off"
 msgstr ""
 
-#: ../apps/blueman-manager:83
+#: ../apps/blueman-manager:86
 msgid "Bluetooth needs to be turned on for the device manager to function"
 msgstr ""
 
-#: ../apps/blueman-manager:86
+#: ../apps/blueman-manager:89
 msgid "Enable Bluetooth"
 msgstr ""
 
-#: ../apps/blueman-manager:181
+#: ../apps/blueman-manager:181 ../apps/blueman-assistant:210
 msgid "Adding"
 msgstr ""
 
 #: ../apps/blueman-manager:192
 msgid "Searching"
+msgstr ""
+
+#: ../apps/blueman-manager:199 ../apps/blueman-applet:299
+msgid "Starting Bluetooth Assistant"
 msgstr ""
 
 #: ../apps/blueman-manager:212
@@ -780,69 +815,68 @@ msgstr ""
 msgid "Bonding"
 msgstr "Koppelen"
 
-#: ../apps/blueman-manager:240 ../apps/blueman-applet:267
-#: ../apps/blueman-applet:271
+#: ../apps/blueman-manager:232 ../apps/blueman-applet:315
+msgid "Starting Adapter Preferences"
+msgstr ""
+
+#: ../apps/blueman-manager:241 ../apps/blueman-applet:303
 msgid "Starting File Sender"
 msgstr ""
 
-#: ../apps/blueman-applet:68
+#: ../apps/blueman-applet:74
 msgid "Bluetooth Off"
 msgstr ""
 
-#: ../apps/blueman-applet:69
+#: ../apps/blueman-applet:75
 msgid "Turn off all adapters"
 msgstr ""
 
-#: ../apps/blueman-applet:74
+#: ../apps/blueman-applet:80
 msgid "Recent Connections"
 msgstr ""
 
-#: ../apps/blueman-applet:111
+#: ../apps/blueman-applet:147
 msgid ""
 "You might not be able to connect to the Bluetooth network via this machine"
 msgstr ""
 
-#: ../apps/blueman-applet:131
+#: ../apps/blueman-applet:163
 msgid "Turn Bluetooth On"
 msgstr ""
 
-#: ../apps/blueman-applet:135
+#: ../apps/blueman-applet:167
 msgid "Turn Bluetooth Off"
 msgstr ""
 
-#: ../apps/blueman-applet:226
+#: ../apps/blueman-applet:258
 msgid "Setup new device"
 msgstr ""
 
-#: ../apps/blueman-applet:228
+#: ../apps/blueman-applet:260
 msgid "Send files to device"
 msgstr ""
 
-#: ../apps/blueman-applet:235
+#: ../apps/blueman-applet:267
 msgid "Browse files on device"
 msgstr ""
 
-#: ../apps/blueman-applet:244
+#: ../apps/blueman-applet:276
 msgid "Devices"
 msgstr ""
 
-#: ../apps/blueman-applet:247
+#: ../apps/blueman-applet:279
 msgid "Adapters"
 msgstr ""
 
-#: ../apps/blueman-applet:275
+#: ../apps/blueman-applet:307
 msgid "Starting File Browser"
 msgstr ""
 
-#: ../apps/blueman-applet:279
+#: ../apps/blueman-applet:311
 msgid "Starting Device Manager"
 msgstr ""
 
-#: ../apps/blueman-applet:283
-msgid "Starting Adapter Preferences"
-msgstr ""
-
-#: ../apps/blueman-applet:287
+#: ../apps/blueman-applet:319
 msgid "Starting Service Preferences"
 msgstr ""
 
@@ -886,5 +920,56 @@ msgid "Send files to this device"
 msgstr ""
 
 #: ../apps/blueman-sendto:319
-msgid "Select files you want to send"
+msgid "Select files to send"
+msgstr ""
+
+#: ../apps/blueman-assistant:33
+msgid "Start configuration assistant for this device"
+msgstr ""
+
+#: ../apps/blueman-assistant:48
+msgid "Bluetooth Assistant"
+msgstr ""
+
+#: ../apps/blueman-assistant:209
+msgid "<b>Adding Device...</b>"
+msgstr ""
+
+#: ../apps/blueman-assistant:215
+#, c-format
+msgid ""
+"<b>Pairing in progress...</b>\n"
+"\n"
+"Enter passkey <b>%s</b> on the device."
+msgstr ""
+
+#: ../apps/blueman-assistant:222
+msgid "<b>Failed to add device</b>"
+msgstr ""
+
+#: ../apps/blueman-assistant:257
+#, fuzzy
+msgid "Input Service"
+msgstr "Service:"
+
+#: ../apps/blueman-assistant:275
+#, fuzzy
+msgid "A2DP Service"
+msgstr "Service:"
+
+#: ../apps/blueman-assistant:280
+#, fuzzy
+msgid "Headset Service"
+msgstr "Serial Service"
+
+#: ../apps/blueman-assistant:284
+msgid "Don't connect"
+msgstr ""
+
+#: ../apps/blueman-assistant:297
+msgid "<b>Device added and connected successfuly</b>"
+msgstr ""
+
+#: ../apps/blueman-assistant:303
+msgid "<b>Device added successfuly, but failed to connect</b>"
 msgstr ""
