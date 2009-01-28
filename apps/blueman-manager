@@ -196,7 +196,8 @@ class Blueman:
 		self.List.connect("adapter-property-changed", prop_changed)
 		
 	def setup(self, device):
-		pass
+		sn = startup_notification("Bluetooth Assistant", _("Starting Bluetooth Assistant"), bin_name="blueman-assistant", icon="blueman")
+		spawn(["blueman-assistant", "--device=%s" % device.Address], sn=sn)
 		
 	def _prog_msg(self, prog, msg):
 		prog.stop()
@@ -228,7 +229,8 @@ class Blueman:
 	def adapter_properties(self):
 		adapter = self.List.Adapter
 		name = os.path.basename(adapter.GetObjectPath())
-		spawn(["blueman-adapters", name])
+		sn = startup_notification("Blueman Adapters", _("Starting Adapter Preferences"), bin_name="blueman-adapters", icon="blueman")
+		spawn(["blueman-adapters", name], sn=sn)
 
 		
 	def toggle_trust(self, device):

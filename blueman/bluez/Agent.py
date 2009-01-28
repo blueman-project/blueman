@@ -1,4 +1,4 @@
-from blueman.Functions import dprint# Agent.py - class Agent and decorator AgentMethod
+# Agent.py - class Agent and decorator AgentMethod
 #
 # Copyright (C) 2008 Vinicius Gomes <vcgomes [at] gmail [dot] com>
 # Copyright (C) 2008 Li Dongyang <Jerry87905 [at] gmail [dot] com>
@@ -21,6 +21,7 @@ import inspect
 import dbus
 import dbus.service
 import errors
+from blueman.Functions import dprint
 
 __SIGNATURES__ = {'Release':('', ''),
                   'RequestPinCode':('o', 's'),

@@ -57,7 +57,7 @@ class DeviceSelectorWidget(gtk.VBox):
 		self.cb_adapters.connect("changed", self.on_adapter_selected)
 		self.cb_adapters.add_attribute(cell, 'text', 0) 
 
-		button = self.Builder.get_object("b_search2")
+		button = self.Builder.get_object("b_search")
 		button.connect("clicked", self.on_search_clicked)
 		
 		self.pbar = self.Builder.get_object("progressbar1")
@@ -120,7 +120,6 @@ class DeviceSelectorWidget(gtk.VBox):
 			self.update_adapters_list()
 		else:
 			if self.List.Adapter:
-				dprint("a")
 				self.List.DisplayKnownDevices()
 
 

@@ -27,6 +27,7 @@ import dbus
 import dbus.glib
 import gobject
 import gtk
+import gtk.gdk
 
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -83,8 +84,16 @@ class BluemanApplet:
 		self.Agents = []
 		self.status_icon = gtk.StatusIcon()
 		self.status_icon = gtk.status_icon_new_from_icon_name("blueman")
+		self.status_icon.set_tooltip("Blueman")
 		self.status_icon.connect('popup-menu', self.on_popup_menu)
 		
+		
+		def on_activate(status_icon):
+			#self.on_popup_menu(status_icon, 
+			event = gtk.get_current_event()
+			self.on_popup_menu(status_icon, event.button, event.time)
+		
+		self.status_icon.connect('activate', on_activate)
 		
 		#determine if icon should be visible (in case adapters are present)
 		self.bus = dbus.SystemBus()
@@ -287,8 +296,8 @@ class BluemanApplet:
 						button, activate_time, status_icon)
 	
 	def on_setup_new(self, menu_item):
-		sn = startup_notification("Blueman Wizard", _("Starting File Sender"), bin_name="blueman-sendto", icon="blueman")
-		spawn('blueman-wizard', sn=sn)
+		sn = startup_notification("Bluetooth Assistant", _("Starting Bluetooth Assistant"), bin_name="blueman-assistant", icon="blueman")
+		spawn('blueman-assistant', sn=sn)
 		
 	def on_send(self, menu_item):
 		sn = startup_notification("Blueman Sendto", _("Starting File Sender"), bin_name="blueman-sendto", icon="blueman")

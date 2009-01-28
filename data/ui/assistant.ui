@@ -1,0 +1,187 @@
+<?xml version="1.0"?>
+<interface>
+  <requires lib="gtk+" version="2.14"/>
+  <!-- interface-naming-policy project-wide -->
+  <object class="GtkAssistant" id="assistant">
+    <property name="border_width">6</property>
+    <property name="icon_name">blueman</property>
+    <child>
+      <object class="GtkAlignment" id="a_page1">
+        <property name="visible">True</property>
+        <child>
+          <placeholder/>
+        </child>
+      </object>
+      <packing>
+        <property name="page_type">intro</property>
+        <property name="title">Device</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkAlignment" id="a_page2">
+        <property name="visible">True</property>
+        <property name="xscale">0.8399999737739563</property>
+        <property name="yscale">0</property>
+        <child>
+          <object class="GtkVBox" id="vbox1">
+            <property name="visible">True</property>
+            <property name="spacing">10</property>
+            <child>
+              <object class="GtkLabel" id="label3">
+                <property name="visible">True</property>
+                <property name="xalign">0</property>
+                <property name="label" translatable="yes">&lt;b&gt;Select pairing method to use:&lt;/b&gt;</property>
+                <property name="use_markup">True</property>
+              </object>
+              <packing>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkRadioButton" id="r_randp">
+                <property name="label" translatable="yes">Use Random Passkey</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">False</property>
+                <property name="active">True</property>
+                <property name="draw_indicator">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkHBox" id="hbox2">
+                <property name="visible">True</property>
+                <property name="spacing">4</property>
+                <child>
+                  <object class="GtkRadioButton" id="r_myp">
+                    <property name="label" translatable="yes">Use My Own Passkey:</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="draw_indicator">True</property>
+                    <property name="group">r_randp</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="e_myp">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="width_chars">16</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkRadioButton" id="r_dontp">
+                <property name="label" translatable="yes">Don't Pair</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">False</property>
+                <property name="draw_indicator">True</property>
+                <property name="group">r_randp</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="position">3</property>
+              </packing>
+            </child>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="title">Pairing</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkLabel" id="l_page3">
+        <property name="visible">True</property>
+        <property name="label" translatable="yes">&lt;b&gt;Pairing in progress...&lt;/b&gt;
+
+Enter passkey &lt;b&gt;0000&lt;/b&gt; on the device.</property>
+        <property name="use_markup">True</property>
+      </object>
+      <packing>
+        <property name="page_type">progress</property>
+        <property name="title">Pairing</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkAlignment" id="a_page4">
+        <property name="visible">True</property>
+        <property name="yscale">0</property>
+        <property name="left_padding">12</property>
+        <child>
+          <object class="GtkVBox" id="vbox3">
+            <property name="visible">True</property>
+            <property name="spacing">6</property>
+            <child>
+              <object class="GtkLabel" id="label2">
+                <property name="visible">True</property>
+                <property name="xalign">0</property>
+                <property name="label" translatable="yes">&lt;b&gt;Connect to:&lt;/b&gt;</property>
+                <property name="use_markup">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkVBox" id="svcs">
+                <property name="visible">True</property>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="title">Connect</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkLabel" id="l_page5">
+        <property name="visible">True</property>
+        <property name="label" translatable="yes">&lt;b&gt;Please wait...&lt;/b&gt;</property>
+        <property name="use_markup">True</property>
+      </object>
+      <packing>
+        <property name="page_type">progress</property>
+        <property name="title">Connecting...</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkLabel" id="l_page6">
+        <property name="visible">True</property>
+        <property name="label" translatable="yes">&lt;b&gt;Congratulations, device successfully added&lt;/b&gt;</property>
+        <property name="use_markup">True</property>
+        <property name="wrap">True</property>
+        <property name="wrap_mode">word-char</property>
+      </object>
+      <packing>
+        <property name="page_type">summary</property>
+        <property name="title">Finished</property>
+      </packing>
+    </child>
+  </object>
+</interface>

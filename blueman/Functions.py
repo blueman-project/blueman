@@ -69,11 +69,12 @@ def startup_notification(name, desc=None, bin_name=None, icon=None):
 	return sn
 
 def enable_rgba_colormap():
-	screen = gtk.gdk.display_get_default().get_default_screen()
-	colormap = screen.get_rgba_colormap()
-	if colormap == None:
-		colormap = screen.get_rgb_colormap()
-	gtk.widget_set_default_colormap(colormap)
+	#screen = gtk.gdk.display_get_default().get_default_screen()
+	#colormap = screen.get_rgba_colormap()
+	#if colormap == None:
+	#	colormap = screen.get_rgb_colormap()
+	#gtk.widget_set_default_colormap(colormap)
+	pass
 
 def spawn(command, system=False, sn=None):
 

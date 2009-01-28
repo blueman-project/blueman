@@ -3,7 +3,8 @@ APPS =					\
 	blueman-applet		\
 	blueman-manager		\
 	blueman-services	\
-	blueman-sendto
+	blueman-sendto		\
+	blueman-assistant
 	
 appsdir = $(bindir)
 apps_SCRIPTS = $(APPS)

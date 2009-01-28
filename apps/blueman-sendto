@@ -316,9 +316,9 @@ class SendTo:
 		
 		
 	def select_files(self):
-		d = gtk.FileChooserDialog(_("Select files you want to send"), buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT,
+		d = gtk.FileChooserDialog(_("Select files to send"), buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT,
 											gtk.STOCK_OK, gtk.RESPONSE_ACCEPT))
-											
+		d.props.icon_name = "blueman-send-file"									
 		d.set_select_multiple(True)
 		resp = d.run()
 		

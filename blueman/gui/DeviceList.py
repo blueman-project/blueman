@@ -323,7 +323,11 @@ class DeviceList(GenericList):
 		
 	def add_device(self, device, append=True):
 		iter = self.find_device(device)
-
+		#device belongs to another adapter
+		if not device.Fake:
+			if not device.get_object_path().startswith(self.Adapter.GetObjectPath()):
+				return
+			
 		if iter == None:
 			if append:
 				iter = self.liststore.append()
@@ -424,11 +428,11 @@ class DeviceList(GenericList):
 	def AppendDevice(self, device):
 		self.add_device(device, True)
 		
-	def RemoveDevice(self, device, iter=None):
+	def RemoveDevice(self, device, iter=None, force=False):
 		dprint(device)
 		if iter == None:
 			iter = self.find_device(device)
-		
+
 		if not device.Temp and self.compare(self.selected(), iter):
 			self.emit("device-selected", None, None)
 		
@@ -440,7 +444,7 @@ class DeviceList(GenericList):
 			if not "Fake" in props:
 				self.device_signals.Disconnect(device.GetObjectPath())
 		
-		if device.Temp:
+		if device.Temp and not force:
 			dprint("converting to fake")
 
 			props = copy.deepcopy(props)
@@ -468,7 +472,7 @@ class DeviceList(GenericList):
 			for i in self.liststore:
 				iter = i.iter
 				device = self.get(iter, "device")["device"]
-				self.RemoveDevice(device, iter)
+				self.RemoveDevice(device, iter, True)
 			self.liststore.clear()
 			self.emit("device-selected", None, None)
 	

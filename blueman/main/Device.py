@@ -60,6 +60,10 @@ class Device(gobject.GObject):
 			adapter = Adapter(object_path.replace("/"+os.path.basename(object_path), ""))
 			self.Signals.Handle("bluez", adapter, self.on_device_removed, "DeviceRemoved")
 			
+	def get_object_path(self):
+		if not self.Fake:
+			return self._obj_path
+			
 	def on_device_removed(self, path):
 		if path == self._obj_path:
 			dprint("Invalidating device", path)

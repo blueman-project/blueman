@@ -197,6 +197,7 @@ class RecentConns(gtk.Menu):
 	def get_device(self, item):
 		adapter = self.Manager.GetAdapter(item["adapter"])
 		return Device(adapter.FindDevice(item["address"]))
+
 		
 		
 	def recover_state(self):
@@ -211,11 +212,12 @@ class RecentConns(gtk.Menu):
 			return
 		
 		for i in reversed(items):
-			#try:
-			i["device"] = self.get_device(i)
-			i["gsignal"] = i["device"].connect("invalidated", self.on_device_removed, i)
-			#except Exe:
-			#	items.remove(i)
+			try:
+				i["device"] = self.get_device(i)
+			except:
+				items.remove(i)
+			else:
+				i["gsignal"] = i["device"].connect("invalidated", self.on_device_removed, i)
 			
 		RecentConns.items = items
 		

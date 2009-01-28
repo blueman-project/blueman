@@ -10,6 +10,7 @@ ui_DATA =				\
 	services-network.ui \
 	services-transfer.ui	\
 	services-headset.ui	\
-	send-dialog.ui
+	send-dialog.ui		\
+	assistant.ui
 
 EXTRA_DIST = $(ui_DATA)
