@@ -30,7 +30,6 @@ from blueman.main.Config import Config
 from blueman.Functions import *
 from blueman.main.Device import Device
 import blueman.Sdp as sdp
-from copy import copy
 
 _ = gettext.gettext
 
