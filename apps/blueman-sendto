@@ -170,6 +170,7 @@ class Sender(gobject.GObject):
 										"3": units,
 										"4": eta}
 			self._last_update = tm
+		
 		self.pb_file.props.fraction = float(progress) / self.bytes
 		self.pb_total.props.fraction = float(self.total_transferred) / self.total_bytes
 
@@ -190,7 +191,8 @@ class Sender(gobject.GObject):
 		
 		
 	def send_file(self, file_path):
-		self.session.SendFile(file_path)
+		if self.session.Connected:
+			self.session.SendFile(file_path)
 		
 		
 	def on_session_disconnected(self, session):
@@ -212,6 +214,7 @@ class Sender(gobject.GObject):
 		
 	def on_session_error(self, session, name, msg):
 		print "session err", name, msg
+		
 		d = gtk.MessageDialog(  self.window,
 					type=gtk.MESSAGE_ERROR)
 		d.props.text = msg
@@ -231,21 +234,23 @@ class Sender(gobject.GObject):
 			self.total_transferred -= self.transferred
 			self.transferred = 0
 			del self.files[-1]
+			if not self.session or not self.session.Connected:
+				self.create_session()
 			self.process_queue()
 		elif resp == gtk.RESPONSE_YES:
 			self.total_transferred -= self.transferred
 			self.transferred = 0
 			if not self.session or not self.session.Connected:
 				self.create_session()
-			else:
-				self.process_queue()
+
+			self.process_queue()
 		else:
 			self.on_cancel(None)
 
 		
 		
 	def on_session_created(self, manager, session):
-		print manager, session
+		dprint()
 		self.session = session
 		session.GHandle("connected", self.on_session_connected)
 		session.GHandle("disconnected", self.on_session_disconnected)
