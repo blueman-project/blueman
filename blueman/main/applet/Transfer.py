@@ -121,6 +121,7 @@ class Transfer(OdsManager):
 				self.transfers[session.object_path]["filepath"] = local_path
 				self.transfers[session.object_path]["total"] = total_bytes
 				self.transfers[session.object_path]["finished"] = False
+				self.transfers[session.object_path]["failed"] = False
 				self.transfers[session.object_path]["waiting"] = True
 				self.transfers[session.object_path]["calc"] = SpeedCalc()
 				self.transfers[session.object_path]["updater"] = gobject.timeout_add(1000, update_notification, n)
@@ -146,15 +147,18 @@ class Transfer(OdsManager):
 					
 					if not t["notification"] == None:
 						t["waiting"] = False
-						dprint("clearing actions")
-						n.clear_actions()
-						n.add_action("cancel", _("Cancel"), on_cancel)
-						n.set_urgency(pynotify.URGENCY_NORMAL)
-						n.set_timeout(0)
-						
-						update_notification(n)
+						if action == "reject" or action == "default":
+							n.close()
+						else:
+							dprint("clearing actions")
+							n.clear_actions()
+							n.add_action("cancel", _("Cancel"), on_cancel)
+							n.set_urgency(pynotify.URGENCY_NORMAL)
+							n.set_timeout(0)
+							update_notification(n)
 				
 			def on_closed(n):
+				dprint("closed")
 				t = self.transfers[session.object_path]
 				if t["waiting"]:
 					session.Reject()
@@ -162,8 +166,6 @@ class Transfer(OdsManager):
 				if not self.transfers[session.object_path]["finished"]:
 					gobject.source_remove(self.transfers[session.object_path]["updater"])
 					self.transfers[session.object_path]["notification"] = None
-				
-					
 
 
 			def show_open():
@@ -187,20 +189,18 @@ class Transfer(OdsManager):
 					
 			def update_notification(n):
 				t = self.transfers[session.object_path]
-
+				dprint(t["finished"])
 				if not t["waiting"]:
 					if t["finished"]:
 						#print t["transferred"], t["total"]
 						#if t["transferred"] == t["total"]:
-						
-						n.disconnect(self.transfers[session.object_path]["closed_sig"])
-						
-						gobject.source_remove(self.transfers[session.object_path]["updater"])
+						if n:
+							n.disconnect(self.transfers[session.object_path]["closed_sig"])
+							n.close()
 
-						n.close()
+						if not t["failed"]:
+							show_open()
 						
-						show_open()
-						del self.transfers[session.object_path]
 						return False
 					
 					else:
@@ -223,12 +223,23 @@ class Transfer(OdsManager):
 				
 			def transfer_finished(session, type):
 				dprint("---", type)
-				try:
-					if not self.transfers[session.object_path]["finished"]:
+				#try:
+				if not self.transfers[session.object_path]["finished"]:
+					if type != "cancelled" and type != "error":
 						self.transfers[session.object_path]["finished"] = True
 						update_notification(self.transfers[session.object_path]["notification"])
-				except KeyError:
-					pass
+					else:
+						self.transfers[session.object_path]["failed"] = True
+						self.transfers[session.object_path]["finished"] = True
+						
+				if type == "disconnected":
+					del self.transfers[session.object_path]
+					
+				if type == "completed":
+					gobject.source_remove(self.transfers[session.object_path]["updater"])
+					
+				#except KeyError:
+				#	pass
 					
 				
 			session.GHandle("transfer-progress", transfer_progress)
