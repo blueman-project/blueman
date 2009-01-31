@@ -23,6 +23,7 @@ from blueman.gui.PixbufTable import PixbufTable
 from blueman.gui.CellRendererPixbufTable import CellRendererPixbufTable
 from blueman.DeviceClass import get_minor_class
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
+from blueman.Sdp import *
 
 import gtk
 from blueman.Constants import *
@@ -61,8 +62,6 @@ class ManagerDeviceList(DeviceList):
 			["tpl", float],
 			["orig_icon", 'GdkPixbuf']
 
-			
-		
 		]
 		DeviceList.__init__(self, adapter, data)
 		self.set_headers_visible(False)
@@ -78,6 +77,67 @@ class ManagerDeviceList(DeviceList):
 		
 		self.menu = None
 		
+		self.connect("drag_data_received", self.drag_recv)
+		self.connect("drag-motion", self.drag_motion)
+
+		self.drag_dest_set(gtk.DEST_DEFAULT_ALL, [], gtk.gdk.ACTION_COPY|gtk.gdk.ACTION_DEFAULT)
+		self.drag_dest_add_uri_targets()
+	
+	def drag_recv(self, widget, context, x, y, selection, target_type, time):
+		print context, selection, target_type
+
+		uris = []
+		for u in selection.get_uris():
+			match = re.match("file://(.*)", u)
+			if match:
+				f = match.groups(1)[0]
+				uris.append(f)
+
+				
+		context.finish(True, False, time)
+		
+		path = self.get_path_at_pos(x, y)
+		if path:
+			iter = self.get_iter(path[0][0])
+			device = self.get(iter, "device")["device"]
+			uris.insert(0, "blueman-sendto")
+			uris.insert(1, "--device=%s" % device.Address)
+			
+			spawn(uris)
+			context.finish(True, False, time)
+		else:
+			context.finish(False, False, time)
+		
+		return True
+
+	
+	def drag_motion(self, widget, drag_context, x, y, timestamp):
+		path = self.get_path_at_pos(x, y)
+		if path != None:
+			if path[0][0] != self.selected():
+				iter = self.get_iter(path[0][0])
+				device = self.get(iter, "device")["device"]
+				if not device.Fake:	
+					found = False
+					for uuid in device.UUIDs:
+						uuid16 = uuid128_to_uuid16(uuid)
+						if uuid16 == OBEX_OBJPUSH_SVCLASS_ID:
+							found = True
+							break
+					if found:
+						drag_context.drag_status(gtk.gdk.ACTION_COPY, timestamp)
+						self.set_cursor(path[0])
+						return True
+					else:
+						drag_context.drag_status(gtk.gdk.ACTION_DEFAULT, timestamp)
+						return False
+				else:
+					drag_context.drag_status(gtk.gdk.ACTION_COPY, timestamp)
+					return True
+		else:
+			drag_context.drag_status(gtk.gdk.ACTION_DEFAULT, timestamp)
+			return False			
+
 	
 	def on_event_clicked(self, widget, event):
 
