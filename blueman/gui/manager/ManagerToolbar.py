@@ -49,9 +49,11 @@ class ManagerToolbar:
 		self.b_setup.connect("clicked", self.on_action, self.blueman.setup)
 		
 		self.b_send = blueman.Builder.get_object("b_send")
+		self.b_send.props.sensitive = False
 		self.b_send.connect("clicked", self.on_action, self.blueman.send)
 		
 		self.b_browse = blueman.Builder.get_object("b_browse")
+		self.b_browse.props.sensitive = False
 		self.b_browse.connect("clicked", self.on_action, self.blueman.browse)
 		
 		self.on_adapter_changed(blueman.List, blueman.List.GetAdapterPath())

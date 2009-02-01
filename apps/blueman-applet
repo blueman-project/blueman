@@ -158,11 +158,11 @@ class BluemanApplet:
 		if key == "bluetooth_off":
 			dprint("bt_off", value)
 			if value:
-				self.turnoff_item.get_child().props.label = _("Turn Bluetooth On")
+				self.turnoff_item.get_child().set_markup(_("<b>Turn Bluetooth On</b>"))
 				self.turnoff_item.set_image(gtk.image_new_from_pixbuf(get_icon("gtk-yes", 16)))
 				self.DbusSvc.BluetoothStatusChanged(False)
 			else:
-				self.turnoff_item.get_child().props.label = _("Turn Bluetooth Off")
+				self.turnoff_item.get_child().set_markup(_("<b>Turn Bluetooth Off</b>"))
 				self.turnoff_item.set_image(gtk.image_new_from_pixbuf(get_icon("gtk-stop", 16)))
 				self.DbusSvc.BluetoothStatusChanged(True)
 			if key in self.__dict__:
