@@ -96,6 +96,12 @@ fi
 if test "$mandir" = "NONE"; then
   mandir=${prefix}/man
 fi
+if test "$sysconfdir" = "NONE"; then
+  sysconfdir=/etc
+fi
+if test "$sysconfdir" = ""; then
+  sysconfdir=/etc
+fi
 if test "$mandir" = '${prefix}/man'; then
   mandir=${prefix}/man
 fi
