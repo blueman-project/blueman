@@ -89,9 +89,7 @@ class BluemanApplet:
 		
 		
 		def on_activate(status_icon):
-			#self.on_popup_menu(status_icon, 
-			event = gtk.get_current_event()
-			self.on_popup_menu(status_icon, event.button, event.time)
+			self.on_devices(None)
 		
 		self.status_icon.connect('activate', on_activate)
 		
@@ -257,11 +255,10 @@ class BluemanApplet:
 		
 		menu_items += [create_menuitem(_("Setup new device")+'...', get_icon("gtk-new", 16))]
 		menu_items[-1].connect('activate', self.on_setup_new)
+		menu_items += [gtk.SeparatorMenuItem()]
 		menu_items += [create_menuitem(_("Send files to device")+'...', get_icon("blueman-send-file", 16))]
 		menu_items[-1].connect('activate', self.on_send)
-		
-		menu_items += [gtk.SeparatorMenuItem()]
-		
+
 		
 		if OBEX_BROWSE_AVAILABLE:
 			menu_items += [create_menuitem(_("Browse files on device")+'...', get_icon("gtk-open", 16))]
