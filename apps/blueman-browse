@@ -1,0 +1,53 @@
+#!/usr/bin/python
+# Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
+# Copyright (C) 2008 Tadas Dailyda <tadas at dailyda dot com>
+#
+# Licensed under the GNU General Public License Version 3
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# 
+
+import os, sys
+
+#support running uninstalled
+_dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if os.path.exists(os.path.join(_dirname,"ChangeLog")):
+	sys.path.insert(0, _dirname)
+	
+import gtk
+import gobject
+from optparse import OptionParser
+import gettext
+import time
+ngettext = gettext.ngettext
+_ = gettext.gettext
+
+from blueman.gui.DeviceSelectorDialog import DeviceSelectorDialog
+from blueman.Functions import *
+
+class Browse:
+	def __init__(self):
+		setup_icon_path()
+	
+		usage = "Usage: %prog [options]"
+		parser = OptionParser(usage)
+		parser.add_option("-d", "--device", dest="device",
+				action="store", help=_("Browse this device"), metavar="ADDRESS")
+	
+		(options, args) = parser.parse_args()
+		self.options = options
+		self.args = args
+		
+		
+Browse()
