@@ -40,7 +40,7 @@ class HalManager(dbus.proxies.Interface):
 				device.SetPropertyString("info.category", "net.80203")
 				device.AddCapability("net.80203")
 
-	def register(self, device_file, bd_addr):
+	def register(self, device_file, bd_addr, type=0):
 	
 		ref = self.NewDevice()
 		#print ref
@@ -77,8 +77,12 @@ class HalManager(dbus.proxies.Interface):
 
 		device.SetPropertyString("serial.originating_device", "/org/freedesktop/Hal/devices/%s" % "rfcomm%s" % portid)	
 
-		device.StringListAppend("modem.command_sets", "GSM-07.07")
-		device.StringListAppend("modem.command_sets", "GSM-07.05")
+
+		if type == 1:
+			device.StringListAppend("modem.command_sets", "IS-707-A")
+		else:
+			device.StringListAppend("modem.command_sets", "GSM-07.07")
+			device.StringListAppend("modem.command_sets", "GSM-07.05")
 
 		device.AddCapability("serial")
 		device.AddCapability("modem")

@@ -28,6 +28,7 @@ from blueman.main.Mechanism import Mechanism
 from blueman.bluez.Device import Device as BluezDevice
 from blueman.main.Device import Device
 from blueman.main.NMMonitor import NMMonitor
+from blueman.main.Config import Config
 from blueman.Sdp import *
 
 class DbusService(dbus.service.Object):
@@ -52,10 +53,12 @@ class DbusService(dbus.service.Object):
 			props = dev.GetProperties()
 			
 			m = Mechanism()
-			m.HalRegisterModemPort(rfcomm_device, props["Address"])
+			conns = Config("conn_types")
+			type = getattr(conns.props, props["Address"])
+			m.HalRegisterModemPort(rfcomm_device, props["Address"], type or 0)
 
 			
-		dprint("Registered modem")
+			dprint("Registered modem, type: %d" % type)
 		
 	#in: bluez_device_path, rfcomm_device
 	@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="s", out_signature="")
