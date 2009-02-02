@@ -25,6 +25,7 @@
 #include <sys/ioctl.h>
 #include <sys/socket.h>
 #include <linux/sockios.h>
+#include <linux/if.h>
 
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/hci.h>
@@ -64,6 +65,25 @@ int _destroy_bridge(const char* name) {
 	}
 	
 	int err;
+	
+	struct ifreq req;
+	memset(&req, 0, sizeof (struct ifreq));
+	strncpy(req.ifr_name, name, IFNAMSIZ);
+	
+	err = ioctl(sock, SIOCGIFFLAGS, &req);
+	if (err < 0) {
+		close(sock);
+		return -errno;
+	}
+	
+	req.ifr_flags &= ~(IFF_UP | IFF_RUNNING);
+
+	err = ioctl(sock, SIOCSIFFLAGS, &req);
+
+	if (err < 0) {
+		close(sock);
+		return -errno;
+	}
 
 	err = ioctl(sock, SIOCBRDELBR, name);
 	if (err < 0) {

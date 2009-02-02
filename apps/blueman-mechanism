@@ -12,6 +12,7 @@ import re
 from signal import SIGKILL
 
 from blueman.main.NetConf import *
+from blueman.Functions import dprint
 from blueman.main.HalManager import HalManager
 
 timeout = 30
@@ -54,6 +55,7 @@ class conf_service(dbus.service.Object):
 	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="sbs", out_signature="", sender_keyword="caller")
 
 	def NetworkSetup(self, ip_address, allow_nat, server_type, caller):
+		dprint(ip_address, allow_nat, server_type)
 		if ip_address == "reload":
 			info = netstatus()
 			nc = None
@@ -72,12 +74,16 @@ class conf_service(dbus.service.Object):
 		if ip_address == "0":
 			info = netstatus()
 			nc = None
-			if info["type"] == "dnsmasq":
-				nc = NetConfDnsMasq(None)
-			elif info["type"] == "dhcpd":
-				nc = NetConfDhcpd(None)
-			if nc:
-				nc.uninstall()
+			try:
+				if info["type"] == "dnsmasq":
+					nc = NetConfDnsMasq(None)
+				elif info["type"] == "dhcpd":
+					nc = NetConfDhcpd(None)
+			except:
+				#fallback
+				nc = NetConf(None)
+			
+			nc.uninstall()
 
 		else:
 			if ip_chk(ip_address):

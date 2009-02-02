@@ -116,7 +116,7 @@ class NetConf:
 		pass	
 		
 	def get_type(self):
-		raise Exception, "netconf::get_type() not overridden"
+		return None
 	##/virtual funcs		
 	
 	
