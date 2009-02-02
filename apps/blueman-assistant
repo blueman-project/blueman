@@ -19,6 +19,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 
+PAGE_DEVLIST =    0
+PAGE_PASSKEY =    1
+PAGE_PAIRING =    2
+PAGE_CONNECT =    3
+PAGE_CONNECTING = 4
+PAGE_FINISH =     5
+
+
 import os
 import sys
 import gtk
@@ -81,7 +89,7 @@ class Assistant(Agent):
 				if self.Device.Paired:
 					self.assistant.set_current_page(3)
 				else:
-					self.assistant.set_current_page(1)
+					self.assistant.set_current_page(PAGE_PASSKEY)
 			except:
 				info = {}
 				info["Address"] = options.device
@@ -91,7 +99,7 @@ class Assistant(Agent):
 				
 				self.Device = FakeDevice(info)
 				self.Adapter = adapter
-				self.assistant.set_current_page(1)
+				self.assistant.set_current_page(PAGE_PASSKEY)
 		
 		
 		
@@ -126,11 +134,12 @@ class Assistant(Agent):
 		self.cust_passkey.connect("changed", self.on_passkey_changed)
 		
 		self.Builder.get_object("r_dontp").connect("toggled", self.on_pairing_method_changed, 2)
-		self.Builder.get_object("r_myp").connect("toggled", self.on_pairing_method_changed, 1)
-		self.Builder.get_object("r_randp").connect("toggled", self.on_pairing_method_changed, 0)
+		self.Builder.get_object("r_myp").connect("toggled", self.on_pairing_method_changed, PAGE_PASSKEY)
+		self.Builder.get_object("r_randp").connect("toggled", self.on_pairing_method_changed, PAGE_DEVLIST)
 		
 		self.dev_widget = DeviceSelectorWidget()
 		self.dev_widget.List.connect("device-selected", self.on_device_selected)
+		self.dev_widget.List.connect("row-activated", self.on_row_activated)
 		
 		self.assistant.set_forward_page_func(self.next_page_fn, None)
 			
@@ -140,29 +149,36 @@ class Assistant(Agent):
 		self.assistant.show()
 		gtk.main()
 		
+	def on_row_activated(self, treeview, path, view_column, *args):
+		self.assistant.set_current_page(self.next_page_fn(self.assistant.get_current_page(), None))
+		
 		
 	def next_page_fn(self, page, data):
-		if page == 0:
+		if page == PAGE_DEVLIST:
 			if self.Device.Fake or not self.Device.Paired:
-				return 1
+				return PAGE_PASSKEY
 			else:
-				return 3
-		elif page == 1:
+				return PAGE_CONNECT
+		elif page == PAGE_PASSKEY:
 			if not self.Device.Fake and not self.Device.Paired and self.PairType == 2:
-				return 3
+				return PAGE_CONNECT
 			#self.assistant.set_page_complete(self.page2, True)
-			return 2
-		elif page == 2:
-			return 3
-		elif page == 3:
+			return PAGE_PAIRING
+		elif page == PAGE_PAIRING:
+			if len(self.Device.Services) == 0:
+				return PAGE_FINISH
+				
+			return PAGE_CONNECT
+		elif page == PAGE_CONNECT:
+			
 			if self.Service and self.Service[0]:
-				return 4
+				return PAGE_CONNECTING
 			else:
-				return 5
-		elif page == 4:
-			return 5
-		elif page == 5:
-			return 6
+				return PAGE_FINISH
+		elif page == PAGE_CONNECTING:
+			return PAGE_FINISH
+		elif page == PAGE_FINISH:
+			return PAGE_FINISH+1
 			
 		return page
 		
@@ -221,10 +237,10 @@ class Assistant(Agent):
 
 	def on_prepare(self, assistant, page):
 		num = assistant.get_current_page()
-		if num == 1:
+		if num == PAGE_PASSKEY:
 			self.assistant.set_page_complete(self.page2, True)
 		
-		elif num == 2:
+		elif num == PAGE_PAIRING:
 			if self.Device.Fake and self.PairType == 2:
 				self.page3.set_markup(_("<b>Adding Device...</b>"))
 				self.assistant.set_page_title(self.page3, _("Adding"))
@@ -248,7 +264,7 @@ class Assistant(Agent):
 			else:
 				self.Adapter.CreateDevice(self.Device.Address, reply_handler=ok, error_handler=err)
 		
-		elif num == 3:
+		elif num == PAGE_CONNECT:
 			self.svc_vbox.foreach(lambda x, y: self.svc_vbox.remove(x), None)
 			
 			print self.Device.Services
@@ -308,7 +324,7 @@ class Assistant(Agent):
 
 			rbs[0].emit("toggled")
 			
-		elif num == 4:
+		elif num == PAGE_CONNECTING:
 			print "connect"
 			appl = AppletService()
 			svc = self.Device.Services[self.Service[0]]
@@ -317,13 +333,13 @@ class Assistant(Agent):
 				self.page6.set_markup(_("<b>Device added and connected successfuly</b>"))
 				self.assistant.set_page_complete(self.page5, True)
 				self.assistant.set_page_header_image(self.page6, get_icon("gtk-yes", 32))
-				self.assistant.set_current_page(5)
+				self.assistant.set_current_page(PAGE_FINISH)
 				
 			def fail(*args):
 				self.page6.set_markup(_("<b>Device added successfuly, but failed to connect</b>"))
 				self.assistant.set_page_complete(self.page5, True)
 				self.assistant.set_page_header_image(self.page6, get_icon("gtk-dialog-warning", 32))
-				self.assistant.set_current_page(5)
+				self.assistant.set_current_page(PAGE_FINISH)
 			
 			if self.Service[0] == "network":
 				uuid = self.Service[1][0]
