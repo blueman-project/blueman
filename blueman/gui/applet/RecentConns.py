@@ -73,7 +73,7 @@ class RecentConns(gtk.Menu):
 		self.foreach(each)
 
 		RecentConns.items.sort(compare_by("time"), reverse=True)
-		RecentConns.items = RecentConns.items[0:5]
+		RecentConns.items = RecentConns.items[0:6]
 		RecentConns.items.reverse()
 		
 		if len(RecentConns.items) == 0:
@@ -83,7 +83,7 @@ class RecentConns(gtk.Menu):
 
 		count = 0
 		for item in RecentConns.items:
-			if count < 5:
+			if count < 6:
 				self.add_item(item)
 				count+=1
 	#set bluez manager interface
