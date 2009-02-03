@@ -7,6 +7,22 @@
     <property name="icon_name">blueman</property>
     <property name="type_hint">dialog</property>
     <child>
+      <object class="GtkLabel" id="l_page0">
+        <property name="visible">True</property>
+        <property name="xpad">12</property>
+        <property name="label" translatable="yes">&lt;b&gt;Welcome to the bluetooth device setup assistant. &lt;/b&gt;
+
+
+It will walk you through the process of configuring and connecting to your bluetooth enabled devices.</property>
+        <property name="use_markup">True</property>
+        <property name="wrap">True</property>
+      </object>
+      <packing>
+        <property name="page_type">intro</property>
+        <property name="title">Introduction</property>
+      </packing>
+    </child>
+    <child>
       <object class="GtkAlignment" id="a_page1">
         <property name="visible">True</property>
         <child>
@@ -14,15 +30,15 @@
         </child>
       </object>
       <packing>
-        <property name="page_type">intro</property>
         <property name="title">Device</property>
       </packing>
     </child>
     <child>
       <object class="GtkAlignment" id="a_page2">
         <property name="visible">True</property>
-        <property name="xscale">0.8399999737739563</property>
         <property name="yscale">0</property>
+        <property name="left_padding">12</property>
+        <property name="right_padding">12</property>
         <child>
           <object class="GtkVBox" id="vbox1">
             <property name="visible">True</property>
@@ -125,6 +141,7 @@ Enter passkey &lt;b&gt;0000&lt;/b&gt; on the device.</property>
         <property name="visible">True</property>
         <property name="yscale">0</property>
         <property name="left_padding">12</property>
+        <property name="right_padding">12</property>
         <child>
           <object class="GtkVBox" id="vbox3">
             <property name="visible">True</property>
