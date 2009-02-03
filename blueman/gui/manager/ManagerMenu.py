@@ -55,7 +55,22 @@ class ManagerMenu:
 		self.item_help.set_submenu(help_menu)
 		help_menu.show()
 		
-		item = gtk.ImageMenuItem("gtk-help")
+		item = create_menuitem(_("Get Help Online..."), get_icon("gnome-help", 16))
+		item.connect("activate", lambda x: spawn(["xdg-open", WEBSITE+"/forum"], True))
+		help_menu.append(item)
+		item.show()
+		
+		item = create_menuitem(_("Translate This Application..."), get_icon("gnome-translate", 16))
+		item.connect("activate", lambda x: spawn(["xdg-open", "https://translations.launchpad.net/blueman"], True))
+		help_menu.append(item)
+		item.show()
+		
+		item = create_menuitem(_("Report a Problem"), get_icon("gtk-dialog-warning", 16))
+		item.connect("activate", lambda x: spawn(["xdg-open", "https://bugs.launchpad.net/blueman/1.0/+bugs"], True))
+		help_menu.append(item)
+		item.show()
+		
+		item = gtk.SeparatorMenuItem()
 		help_menu.append(item)
 		item.show()
 		
