@@ -109,6 +109,18 @@ def get_icon(name, size=24):
 		icon = ic.load_icon(name, size, 0) 
 	except:
 		icon = ic.load_icon("gtk-missing-image", size, 0) 
+	
+	if icon.props.width > size:	
+		new_w = size
+		new_h = int(size * ( float(icon.props.width) / icon.props.height ))
+		icon = icon.scale_simple(new_w, new_h, gtk.gdk.INTERP_BILINEAR)
+	
+	if icon.props.height > size:
+		new_w = int(size * ( float(icon.props.height) / icon.props.width ))
+		new_h = size
+		icon = icon.scale_simple(dest_width, dest_height, gtk.gdk.INTERP_BILINEAR)
+	
+		
 
 	return icon
 	
