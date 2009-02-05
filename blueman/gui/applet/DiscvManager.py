@@ -66,6 +66,7 @@ class DiscvManager:
 		dprint(path)
 		if path != "":
 			self.init_adapter()
+			self.update_menuitems()
 			
 	def on_adapter_property_changed(self, key, value):
 		dprint("prop", key, value)
