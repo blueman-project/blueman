@@ -60,7 +60,8 @@ class Transfer(ServicePlugin):
 			self.Builder.get_object(key).props.active = value
 		if key == "shared_path":
 			self.Builder.get_object(key).set_current_folder(value)
-		
+		if key == "browse_command":
+			return
 		if key == "shared_path":
 			self.option_changed_notify(key, False)
 		else:
@@ -132,15 +133,21 @@ class Transfer(ServicePlugin):
 		ftp_allow_write = self.Builder.get_object("ftp_allow_write")
 		opp_accept = self.Builder.get_object("opp_accept")
 		shared_path = self.Builder.get_object("shared_path")
+		obex_cmd = self.Builder.get_object("e_obex_cmd")
 	
 		opp_enabled.props.active = self.TransConf.props.opp_enabled
 		ftp_enabled.props.active = self.TransConf.props.ftp_enabled
 		ftp_allow_write.props.active = self.TransConf.props.ftp_allow_write
 		opp_accept.props.active = self.TransConf.props.opp_accept
+		if self.TransConf.props.browse_command == None:
+			self.TransConf.props.browse_command = DEF_BROWSE_COMMAND
+		
+		obex_cmd.props.text = self.TransConf.props.browse_command
 		
 		if self.TransConf.props.shared_path != None:
 			shared_path.set_current_folder(self.TransConf.props.shared_path)
 		
+		obex_cmd.connect("changed", lambda x: setattr(self.TransConf.props, "browse_command", x.props.text))
 		opp_enabled.connect("toggled", lambda x: setattr(self.TransConf.props, "opp_enabled", x.props.active))
 		ftp_enabled.connect("toggled", lambda x: setattr(self.TransConf.props, "ftp_enabled", x.props.active))
 		ftp_allow_write.connect("toggled", lambda x: setattr(self.TransConf.props, "ftp_allow_write", x.props.active))

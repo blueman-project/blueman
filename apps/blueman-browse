@@ -33,8 +33,11 @@ import time
 ngettext = gettext.ngettext
 _ = gettext.gettext
 
+from blueman.bluez.Manager import Manager
 from blueman.gui.DeviceSelectorDialog import DeviceSelectorDialog
 from blueman.Functions import *
+from blueman.Constants import DEF_BROWSE_COMMAND
+from blueman.main.Config import Config
 
 class Browse:
 	def __init__(self):
@@ -48,6 +51,48 @@ class Browse:
 		(options, args) = parser.parse_args()
 		self.options = options
 		self.args = args
+		
+		if options.device == None:
+			dev = self.select_device()
+			if not dev:
+				exit()
+
+			addr = dev.Address
+			
+		else:
+			addr = options.device
+		
+		conf = Config("transfer")
+		if conf.props.browse_command == None:
+			conf.props.browse_command = DEF_BROWSE_COMMAND
+		
+		cmd = conf.props.browse_command.replace("%d", addr)
+		args = cmd.split(" ")
+		try:	
+			spawn(args, True)
+		except Exception, e:
+			dprint(e)
+			d = gtk.MessageDialog( None, buttons=gtk.BUTTONS_OK, type=gtk.MESSAGE_ERROR)
+			d.props.text = _("Failed to launch \"%s\"") % args[0]
+			d.props.secondary_text = "%s\n\n"  % e + _("You can enter an alternate browser in service settings")
+			d.run()
+			d.destroy()
+		
+	def select_device(self):
+		d = DeviceSelectorDialog()
+		resp = d.run()
+		d.destroy()
+		if resp == gtk.RESPONSE_ACCEPT:
+			sel = d.GetSelection()
+			if sel:
+				return sel[1]
+			else:
+				return None
+		else:
+			return None
+
+
+		
 		
 		
 Browse()

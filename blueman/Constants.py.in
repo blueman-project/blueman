@@ -8,6 +8,8 @@ UI_PATH = "@pkgdatadir@/ui"
 OBEX_BROWSE_AVAILABLE = True
 DHCP_CONFIG_FILE = "@dhconfig@"
 
+DEF_BROWSE_COMMAND = "nautilus --browser obex://[%d]"
+
 import os
 import gettext
 
