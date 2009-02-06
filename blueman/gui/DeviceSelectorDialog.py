@@ -56,6 +56,11 @@ class DeviceSelectorDialog(gtk.Dialog):
 		self.selector.List.connect("device-selected", self.on_device_selected)
 		self.selector.List.connect("adapter-changed", self.on_adapter_changed)
 		
+		self.selector.List.connect("row-activated", self.on_row_activated)
+		
+	def on_row_activated(self, treeview, path, view_column, *args):
+		self.response(gtk.RESPONSE_ACCEPT)
+		
 	def on_adapter_changed(self, devlist, adapter):
 		self.selection = None
 		
