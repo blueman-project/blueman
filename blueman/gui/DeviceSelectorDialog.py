@@ -28,7 +28,7 @@ class DeviceSelectorDialog(gtk.Dialog):
 	
 	
 
-	def __init__(self, title=_("Select Device"), parent=None):
+	def __init__(self, title=_("Select Device"), parent=None, discover=True):
 
 		gtk.Dialog.__init__(self, title, parent, 0, (gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT,
 						 	     gtk.STOCK_OK,     gtk.RESPONSE_ACCEPT))
@@ -55,6 +55,8 @@ class DeviceSelectorDialog(gtk.Dialog):
 		
 		self.selector.List.connect("device-selected", self.on_device_selected)
 		self.selector.List.connect("adapter-changed", self.on_adapter_changed)
+		if discover:
+			self.selector.List.DiscoverDevices()
 		
 		self.selector.List.connect("row-activated", self.on_row_activated)
 		
