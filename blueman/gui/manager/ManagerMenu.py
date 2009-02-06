@@ -60,7 +60,7 @@ class ManagerMenu:
 		help_menu.append(item)
 		item.show()
 		
-		item = create_menuitem(_("Translate This Application..."), get_icon("gnome-translate", 16))
+		item = create_menuitem(_("Translate This Application..."), get_icon("config-language", 16))
 		item.connect("activate", lambda x: spawn(["xdg-open", "https://translations.launchpad.net/blueman"], True))
 		help_menu.append(item)
 		item.show()
