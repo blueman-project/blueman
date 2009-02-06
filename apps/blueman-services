@@ -18,6 +18,7 @@ from blueman.Constants import *
 
 import blueman.plugins.services
 from blueman.plugins.ServicePlugin import ServicePlugin
+from blueman.main.Config import Config
 
 enable_rgba_colormap()
 setup_icon_path()
@@ -32,6 +33,8 @@ class BluemanServices:
 		self.Builder = gtk.Builder()
 		self.Builder.set_translation_domain("blueman")
 		self.Builder.add_from_file(UI_PATH +"/services.ui")
+		
+		self.Config = Config()
 		
 		self.Dialog = self.Builder.get_object("dialog")
 		self.Dialog.resize(480, 420)
@@ -62,7 +65,11 @@ class BluemanServices:
 		
 		self.load_plugins()
 		
-		self.set_page(None)
+		try:
+			ls.selection.select_path(self.Config.props.services_last_item)
+		except:
+			ls.selection.select_path(0)
+
 		
 		self.Builder.get_object("b_apply").connect("clicked", self.on_apply_clicked)
 		self.Builder.get_object("b_close").connect("clicked", lambda x: gtk.main_quit())
@@ -127,6 +134,7 @@ class BluemanServices:
 		
 	def set_page(self, pageid):
 		dprint("Set page", pageid)
+		
 		if len(ServicePlugin.instances) == 0:
 			return
 		#set the first item
@@ -142,6 +150,8 @@ class BluemanServices:
 
 	def on_selection_changed(self, selection):
 		iter = self.List.selected()
+		if self.List.get_cursor()[0]:
+			self.Config.props.services_last_item = self.List.get_cursor()[0][0]
 		row = self.List.get(iter, "id")
 		id = row["id"]
 		
