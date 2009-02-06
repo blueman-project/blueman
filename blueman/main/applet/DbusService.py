@@ -58,7 +58,7 @@ class DbusService(dbus.service.Object):
 			m.HalRegisterModemPort(rfcomm_device, props["Address"], type or 0)
 
 			
-			dprint("Registered modem, type: %d" % type)
+			dprint("Registered modem, type: %s" % type)
 		
 	#in: bluez_device_path, rfcomm_device
 	@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="s", out_signature="")

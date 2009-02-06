@@ -89,7 +89,7 @@ class Assistant(Agent):
 				self.Device = Device(d)
 				self.Adapter = adapter
 				if self.Device.Paired:
-					self.assistant.set_current_page(3)
+					self.assistant.set_current_page(PAGE_CONNECT)
 				else:
 					self.assistant.set_current_page(PAGE_PASSKEY)
 			except:

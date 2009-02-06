@@ -61,7 +61,7 @@ class Browse:
 			
 		else:
 			addr = options.device
-		
+		addr = addr.strip(" ")
 		conf = Config("transfer")
 		if conf.props.browse_command == None:
 			conf.props.browse_command = DEF_BROWSE_COMMAND
