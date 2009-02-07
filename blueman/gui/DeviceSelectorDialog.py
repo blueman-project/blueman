@@ -34,6 +34,7 @@ class DeviceSelectorDialog(gtk.Dialog):
 						 	     gtk.STOCK_OK,     gtk.RESPONSE_ACCEPT))
 		
 		
+		self.set_has_separator(False)
 		self.props.resizable = False
 		self.props.icon_name = "blueman"
 		self.selector = DeviceSelectorWidget()
@@ -45,7 +46,7 @@ class DeviceSelectorDialog(gtk.Dialog):
 		align = gtk.Alignment(0.5,0.5,1.0,1.0)
 		align.add(self.selector)
 		
-		align.set_padding(5,5,5,5)
+		align.set_padding(6,6,6,6)
 		align.show()
 		self.vbox.pack_start(align)
 		

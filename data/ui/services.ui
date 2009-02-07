@@ -9,16 +9,17 @@
     <property name="window_position">center</property>
     <property name="icon_name">blueman</property>
     <property name="type_hint">normal</property>
+    <property name="has_separator">False</property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox1">
         <property name="visible">True</property>
-        <property name="spacing">2</property>
+        <property name="spacing">6</property>
         <child>
           <object class="GtkHBox" id="hbox1">
             <property name="visible">True</property>
-            <property name="spacing">4</property>
             <child>
               <object class="GtkViewport" id="viewport1">
+                <property name="width_request">120</property>
                 <property name="visible">True</property>
                 <property name="resize_mode">queue</property>
                 <child>
