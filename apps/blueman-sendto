@@ -61,13 +61,12 @@ class Sender(gobject.GObject):
 		self.l_dest = self.Builder.get_object("l_dest")
 		self.l_file = self.Builder.get_object("l_file")
 		
-		self.pb_total = self.Builder.get_object("pb_total")
-		self.pb_file = self.Builder.get_object("pb_file")
+		self.pb = self.Builder.get_object("pb")
 		
 		self.b_cancel = self.Builder.get_object("b_cancel")
 		self.b_cancel.connect("clicked", self.on_cancel)
 		
-		self.pb_file.props.text = _("Connecting")
+		self.pb.props.text = _("Connecting")
 		
 		self.device = device
 		self.adapter = Adapter(adapter)
@@ -83,7 +82,6 @@ class Sender(gobject.GObject):
 		
 		#bytes transferred on a current transfer
 		self.transferred = 0
-		self.bytes = 0
 		
 		self.speed = SpeedCalc(6)
 
@@ -96,9 +94,6 @@ class Sender(gobject.GObject):
 				self.files.remove(f)
 		
 		self.num_files = len(self.files)
-		if self.num_files == 1:
-			self.pb_total.props.visible = False
-			
 		
 		self.manager = OdsManager()
 		
@@ -133,11 +128,9 @@ class Sender(gobject.GObject):
 		
 	def on_transfer_started(self, session, filename, path, size):
 		print "transfer started"
-		self.pb_file.props.text = _("Transferring File %(0)s/%(1)s (0 B/s) ETA: ∞") % {"1": self.num_files, 
+		self.pb.props.text = _("Transferring File %(0)s/%(1)s (0 B/s) ETA: ∞") % {"1": self.num_files, 
 									"0": (self.num_files - len(self.files)+1)}
-		self.speed.reset()
 		self.l_file.props.label = filename
-		self.bytes = size
 		self._last_bytes = 0
 		self.transferred = 0
 		
@@ -156,7 +149,7 @@ class Sender(gobject.GObject):
 			spd = self.speed.calc(progress)
 			(size, units) = format_bytes(spd)
 			try:
-				x = ((self.bytes-self.transferred) / spd)+1
+				x = ((self.total_bytes-self.total_transferred) / spd)+1
 				if x > 60:
 					x = x / 60
 					eta = ngettext("%.0f Minute", "%.0f Minutes", x) % x
@@ -164,22 +157,18 @@ class Sender(gobject.GObject):
 					eta = ngettext("%.0f Second", "%.0f Seconds", x) % x
 			except ZeroDivisionError:
 				eta = "∞"
-			self.pb_file.props.text = _("Sending File %(0)s/%(1)s (%(2).2f %(3)s/s) ETA: %(4)s") % {"1": self.num_files, 
-										"0": (self.num_files - len(self.files)+1),
-										"2": size,
-										"3": units,
-										"4": eta}
+			self.pb.props.text = _("Sending File %(0)s/%(1)s (%(2).2f %(3)s/s) ETA: %(4)s") % {"1": self.num_files, 
+									"0": (self.num_files - len(self.files)+1),
+									"2": size,
+									"3": units,
+									"4": eta}
 			self._last_update = tm
 		
-		self.pb_file.props.fraction = float(progress) / self.bytes
-		self.pb_total.props.fraction = float(self.total_transferred) / self.total_bytes
+		self.pb.props.fraction = float(self.total_transferred) / self.total_bytes
 
 		
 	def on_transfer_completed(self, session):
 		del self.files[-1]
-		if len(self.files):
-			self.pb_file.props.fraction = 0
-		
 		
 		self.process_queue()
 		

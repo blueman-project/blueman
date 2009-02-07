@@ -4,7 +4,6 @@
   <!-- interface-naming-policy project-wide -->
   <object class="GtkDialog" id="window">
     <property name="width_request">400</property>
-    <property name="height_request">230</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Bluetooth File Transfer</property>
     <property name="resizable">False</property>
@@ -19,12 +18,13 @@
         <child>
           <object class="GtkVBox" id="vbox3">
             <property name="visible">True</property>
-            <property name="spacing">16</property>
+            <property name="border_width">6</property>
+            <property name="spacing">6</property>
             <child>
-              <object class="GtkHBox" id="hbox1">
+              <object class="GtkHBox" id="hbox4">
                 <property name="visible">True</property>
                 <child>
-                  <object class="GtkImage" id="image3">
+                  <object class="GtkImage" id="image1">
                     <property name="visible">True</property>
                     <property name="pixel_size">48</property>
                     <property name="icon_name">bluetooth</property>
@@ -35,7 +35,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="label3">
+                  <object class="GtkLabel" id="label2">
                     <property name="visible">True</property>
                     <property name="xalign">0.0099999997764825821</property>
                     <property name="label" translatable="yes">&lt;span weight="bold" size="large"&gt;Sending files via Bluetooth&lt;/span&gt;</property>
@@ -52,112 +52,71 @@
               </packing>
             </child>
             <child>
-              <object class="GtkVBox" id="vbox1">
+              <object class="GtkTable" id="table1">
                 <property name="visible">True</property>
+                <property name="n_rows">2</property>
+                <property name="n_columns">2</property>
+                <property name="column_spacing">6</property>
+                <property name="row_spacing">6</property>
                 <child>
-                  <object class="GtkHBox" id="hbox3">
+                  <object class="GtkLabel" id="label4">
+                    <property name="width_request">0</property>
                     <property name="visible">True</property>
-                    <property name="spacing">2</property>
-                    <child>
-                      <object class="GtkLabel" id="label2">
-                        <property name="visible">True</property>
-                        <property name="xalign">0</property>
-                        <property name="label" translatable="yes">&lt;b&gt;To:&lt;/b&gt;</property>
-                        <property name="use_markup">True</property>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="l_dest">
-                        <property name="visible">True</property>
-                        <property name="xalign">0</property>
-                        <property name="ellipsize">end</property>
-                      </object>
-                      <packing>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
+                    <property name="xalign">1</property>
+                    <property name="label" translatable="yes">&lt;b&gt;To:&lt;/b&gt;</property>
+                    <property name="use_markup">True</property>
                   </object>
                   <packing>
-                    <property name="expand">False</property>
-                    <property name="position">0</property>
+                    <property name="x_options">GTK_FILL</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkHBox" id="hbox4">
+                  <object class="GtkLabel" id="l_dest">
                     <property name="visible">True</property>
-                    <property name="spacing">2</property>
-                    <child>
-                      <object class="GtkLabel" id="label9">
-                        <property name="visible">True</property>
-                        <property name="xalign">0</property>
-                        <property name="label" translatable="yes">&lt;b&gt;File:&lt;/b&gt;</property>
-                        <property name="use_markup">True</property>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="l_file">
-                        <property name="visible">True</property>
-                        <property name="xalign">0</property>
-                        <property name="ellipsize">end</property>
-                      </object>
-                      <packing>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
+                    <property name="xalign">0</property>
                   </object>
                   <packing>
-                    <property name="expand">False</property>
-                    <property name="position">1</property>
+                    <property name="left_attach">1</property>
+                    <property name="right_attach">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label7">
+                    <property name="width_request">50</property>
+                    <property name="visible">True</property>
+                    <property name="xalign">1</property>
+                    <property name="label" translatable="yes">&lt;b&gt;File:&lt;/b&gt;</property>
+                    <property name="use_markup">True</property>
+                  </object>
+                  <packing>
+                    <property name="top_attach">1</property>
+                    <property name="bottom_attach">2</property>
+                    <property name="x_options">GTK_FILL</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="l_file">
+                    <property name="visible">True</property>
+                    <property name="xalign">0</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="right_attach">2</property>
+                    <property name="top_attach">1</property>
+                    <property name="bottom_attach">2</property>
                   </packing>
                 </child>
               </object>
               <packing>
+                <property name="padding">6</property>
                 <property name="position">1</property>
               </packing>
             </child>
             <child>
-              <object class="GtkAlignment" id="alignment2">
+              <object class="GtkProgressBar" id="pb">
                 <property name="visible">True</property>
-                <property name="xscale">0.92000001668930054</property>
-                <child>
-                  <object class="GtkVBox" id="vbox7">
-                    <property name="visible">True</property>
-                    <property name="spacing">1</property>
-                    <child>
-                      <object class="GtkProgressBar" id="pb_file">
-                        <property name="visible">True</property>
-                        <property name="tooltip_text" translatable="yes">File Progress</property>
-                        <property name="ellipsize">end</property>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkProgressBar" id="pb_total">
-                        <property name="height_request">7</property>
-                        <property name="visible">True</property>
-                        <property name="tooltip_text" translatable="yes">Total Progress</property>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                  </object>
-                </child>
               </object>
               <packing>
-                <property name="fill">False</property>
                 <property name="position">2</property>
               </packing>
             </child>
@@ -180,7 +139,6 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_stock">True</property>
-                <property name="response_id">0</property>
               </object>
               <packing>
                 <property name="position">1</property>
@@ -195,6 +153,9 @@
         </child>
       </object>
     </child>
+    <action-widgets>
+      <action-widget response="0">b_cancel</action-widget>
+    </action-widgets>
   </object>
   <object class="GtkImage" id="image1">
     <property name="visible">True</property>
