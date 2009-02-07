@@ -16,6 +16,6 @@ binary-install/blueman::
 	dh_pycentral
 
 install/blueman::
-	rm -f $(CURDIR)/debian/blueman/usr/lib/python2.5/site-packages/blueman/Lib.la
-	rm -f $(CURDIR)/debian/blueman/usr/lib/python2.5/site-packages/blueman/Lib.a
+	rm -f $(CURDIR)/debian/blueman/usr/lib/python2.5/site-packages/_blueman.la
+	rm -f $(CURDIR)/debian/blueman/usr/lib/python2.5/site-packages/_blueman.a
 

@@ -19,10 +19,11 @@ Build-Depends: debhelper (>= 7),
 
 Package: blueman
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, python (>= 2.5), dbus, bluez (>= 4.22), obex-data-server (>= 0.3), python-notify, python-gtk2, python-gconf, python-dbus, python-gobject
+Depends: ${shlibs:Depends}, ${misc:Depends}, python (>= 2.5), dbus, bluez (>= 4.25), obex-data-server (>= 0.3), python-notify, python-gtk2, python-gconf, python-dbus, python-gobject
 Conflicts: bluez-gnome
 Replaces: bluez-gnome
-Recommends: dnsmasq
+Provides: bluez-gnome
+Recommends: dnsmasq-base
 Homepage: http://blueman-project.org
 XB-Python-Version: >= 2.5
 Description: A Graphical bluetooth manager

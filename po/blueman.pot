@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-01 11:20+0200\n"
+"POT-Creation-Date: 2009-02-07 19:15+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,7 +38,7 @@ msgid "Temporary visible"
 msgstr ""
 
 #: ../data/ui/adapters.ui.h:1
-msgid "Bluetooth adapter preferences"
+msgid "Bluetooth Adapters"
 msgstr ""
 
 #: ../data/ui/applet-passkey.ui.h:1
@@ -79,7 +79,7 @@ msgstr ""
 msgid "Remove"
 msgstr ""
 
-#: ../data/ui/manager-main.ui.h:7 ../blueman/gui/manager/ManagerMenu.py:189
+#: ../data/ui/manager-main.ui.h:7 ../blueman/gui/manager/ManagerMenu.py:204
 msgid "Search"
 msgstr ""
 
@@ -102,11 +102,11 @@ msgstr ""
 
 #: ../data/ui/manager-main.ui.h:12
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:480
-#: ../blueman/gui/manager/ManagerToolbar.py:103
+#: ../blueman/gui/manager/ManagerToolbar.py:105
 msgid "Trust"
 msgstr ""
 
-#: ../data/ui/services.ui.h:1 ../apps/blueman-applet:282
+#: ../data/ui/services.ui.h:1 ../apps/blueman-applet:279
 msgid "Local Services"
 msgstr ""
 
@@ -140,7 +140,7 @@ msgstr ""
 
 #: ../data/ui/services-network.ui.h:8
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:374
-#: ../apps/blueman-assistant:265
+#: ../apps/blueman-assistant:310
 msgid "Group Network"
 msgstr ""
 
@@ -161,34 +161,49 @@ msgid "Network Access Point (NAP)"
 msgstr ""
 
 #: ../data/ui/services-transfer.ui.h:1
-msgid "<b>File Transfer</b>"
+msgid "<b>Browsing</b>"
 msgstr ""
 
 #: ../data/ui/services-transfer.ui.h:2
-msgid "<b>Object Push</b>"
+msgid "<b>File Receiving (Object Push)</b>"
 msgstr ""
 
 #: ../data/ui/services-transfer.ui.h:3
-msgid "<b>Transfer Settings</b>"
+msgid "<b>File Sharing (FTP)</b>"
 msgstr ""
 
 #: ../data/ui/services-transfer.ui.h:4
-msgid "Accept files from trusted devices"
+msgid "<b>Transfer Settings</b>"
 msgstr ""
 
 #: ../data/ui/services-transfer.ui.h:5
-msgid "Allow devices to write/delete"
+msgid "Accept files from trusted devices"
 msgstr ""
 
 #: ../data/ui/services-transfer.ui.h:6
-msgid "Enabled"
+msgid "Advanced"
 msgstr ""
 
 #: ../data/ui/services-transfer.ui.h:7
+msgid "Allow devices to write/delete"
+msgstr ""
+
+#: ../data/ui/services-transfer.ui.h:9
+#, no-c-format
+msgid ""
+"Command to start an obex ftp browser.\n"
+"<i>%d</i> is substituted with device address."
+msgstr ""
+
+#: ../data/ui/services-transfer.ui.h:11
+msgid "Enabled"
+msgstr ""
+
+#: ../data/ui/services-transfer.ui.h:12
 msgid "Select Shared/Storage folder"
 msgstr ""
 
-#: ../data/ui/services-transfer.ui.h:8
+#: ../data/ui/services-transfer.ui.h:13
 msgid "Shared Folder:"
 msgstr ""
 
@@ -237,14 +252,23 @@ msgid "<b>Select pairing method to use:</b>"
 msgstr ""
 
 #: ../data/ui/assistant.ui.h:5
+msgid ""
+"<b>Welcome to the bluetooth device setup assistant. </b>\n"
+"\n"
+"\n"
+"It will walk you through the process of configuring and connecting to your "
+"bluetooth enabled devices."
+msgstr ""
+
+#: ../data/ui/assistant.ui.h:9
 msgid "Don't Pair"
 msgstr ""
 
-#: ../data/ui/assistant.ui.h:6
+#: ../data/ui/assistant.ui.h:10
 msgid "Use My Own Passkey:"
 msgstr ""
 
-#: ../data/ui/assistant.ui.h:7
+#: ../data/ui/assistant.ui.h:11
 msgid "Use Random Passkey"
 msgstr ""
 
@@ -453,7 +477,7 @@ msgstr ""
 msgid "Network"
 msgstr ""
 
-#: ../blueman/plugins/services/Network.py:117 ../apps/blueman-applet:146
+#: ../blueman/plugins/services/Network.py:117 ../apps/blueman-applet:144
 msgid "Failed to apply network settings"
 msgstr ""
 
@@ -474,7 +498,7 @@ msgstr ""
 msgid "Discoverable... %ss"
 msgstr ""
 
-#: ../blueman/gui/applet/DiscvManager.py:110 ../apps/blueman-applet:73
+#: ../blueman/gui/applet/DiscvManager.py:111 ../apps/blueman-applet:73
 msgid "Make Discoverable"
 msgstr ""
 
@@ -574,7 +598,7 @@ msgid "Network Access"
 msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:381
-#: ../apps/blueman-assistant:270
+#: ../apps/blueman-assistant:315
 msgid "Network Access Point"
 msgstr ""
 
@@ -607,7 +631,7 @@ msgid "Browse device..."
 msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:485
-#: ../blueman/gui/manager/ManagerToolbar.py:99
+#: ../blueman/gui/manager/ManagerToolbar.py:101
 msgid "Untrust"
 msgstr ""
 
@@ -721,23 +745,35 @@ msgstr ""
 msgid "_Help"
 msgstr ""
 
+#: ../blueman/gui/manager/ManagerMenu.py:58
+msgid "Get Help Online..."
+msgstr ""
+
 #: ../blueman/gui/manager/ManagerMenu.py:63
+msgid "Translate This Application..."
+msgstr ""
+
+#: ../blueman/gui/manager/ManagerMenu.py:68
+msgid "Report a Problem"
+msgstr ""
+
+#: ../blueman/gui/manager/ManagerMenu.py:78
 msgid "Device Manager"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerMenu.py:71
+#: ../blueman/gui/manager/ManagerMenu.py:86
 msgid "Show Toolbar"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerMenu.py:83
+#: ../blueman/gui/manager/ManagerMenu.py:98
 msgid "Show Statusbar"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerMenu.py:99
+#: ../blueman/gui/manager/ManagerMenu.py:114
 msgid "Latest Device First"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerMenu.py:103
+#: ../blueman/gui/manager/ManagerMenu.py:118
 msgid "Latest Device Last"
 msgstr ""
 
@@ -747,6 +783,10 @@ msgstr ""
 
 #: ../data/blueman.desktop.in.h:2 ../data/blueman-manager.desktop.in.h:1
 msgid "Blueman Bluetooth Manager"
+msgstr ""
+
+#: ../data/blueman-manager.desktop.in.h:2
+msgid "Bluetooth Manager"
 msgstr ""
 
 #: ../data/configs/org.blueman.policy.in.h:1
@@ -785,7 +825,7 @@ msgstr ""
 msgid "Enable Bluetooth"
 msgstr ""
 
-#: ../apps/blueman-manager:181 ../apps/blueman-assistant:210
+#: ../apps/blueman-manager:181 ../apps/blueman-assistant:255
 msgid "Adding"
 msgstr ""
 
@@ -793,7 +833,7 @@ msgstr ""
 msgid "Searching"
 msgstr ""
 
-#: ../apps/blueman-manager:199 ../apps/blueman-applet:299
+#: ../apps/blueman-manager:199 ../apps/blueman-applet:296
 msgid "Starting Bluetooth Assistant"
 msgstr ""
 
@@ -809,11 +849,11 @@ msgstr ""
 msgid "Bonding"
 msgstr ""
 
-#: ../apps/blueman-manager:232 ../apps/blueman-applet:315
+#: ../apps/blueman-manager:232 ../apps/blueman-applet:312
 msgid "Starting Adapter Preferences"
 msgstr ""
 
-#: ../apps/blueman-manager:241 ../apps/blueman-applet:303
+#: ../apps/blueman-manager:241 ../apps/blueman-applet:300
 msgid "Starting File Sender"
 msgstr ""
 
@@ -833,48 +873,48 @@ msgstr ""
 msgid "Bluetooth applet"
 msgstr ""
 
-#: ../apps/blueman-applet:147
+#: ../apps/blueman-applet:145
 msgid ""
 "You might not be able to connect to the Bluetooth network via this machine"
 msgstr ""
 
-#: ../apps/blueman-applet:163
-msgid "Turn Bluetooth On"
+#: ../apps/blueman-applet:161
+msgid "<b>Turn Bluetooth On</b>"
 msgstr ""
 
-#: ../apps/blueman-applet:167
-msgid "Turn Bluetooth Off"
+#: ../apps/blueman-applet:165
+msgid "<b>Turn Bluetooth Off</b>"
 msgstr ""
 
-#: ../apps/blueman-applet:258
+#: ../apps/blueman-applet:256
 msgid "Setup new device"
 msgstr ""
 
-#: ../apps/blueman-applet:260
+#: ../apps/blueman-applet:259
 msgid "Send files to device"
 msgstr ""
 
-#: ../apps/blueman-applet:267
+#: ../apps/blueman-applet:264
 msgid "Browse files on device"
 msgstr ""
 
-#: ../apps/blueman-applet:276
+#: ../apps/blueman-applet:273
 msgid "Devices"
 msgstr ""
 
-#: ../apps/blueman-applet:279
+#: ../apps/blueman-applet:276
 msgid "Adapters"
 msgstr ""
 
-#: ../apps/blueman-applet:307
+#: ../apps/blueman-applet:304
 msgid "Starting File Browser"
 msgstr ""
 
-#: ../apps/blueman-applet:311
+#: ../apps/blueman-applet:308
 msgid "Starting Device Manager"
 msgstr ""
 
-#: ../apps/blueman-applet:319
+#: ../apps/blueman-applet:316
 msgid "Starting Service Preferences"
 msgstr ""
 
@@ -921,19 +961,19 @@ msgstr ""
 msgid "Select files to send"
 msgstr ""
 
-#: ../apps/blueman-assistant:33
+#: ../apps/blueman-assistant:63
 msgid "Start configuration assistant for this device"
 msgstr ""
 
-#: ../apps/blueman-assistant:48
+#: ../apps/blueman-assistant:78
 msgid "Bluetooth Assistant"
 msgstr ""
 
-#: ../apps/blueman-assistant:209
+#: ../apps/blueman-assistant:254
 msgid "<b>Adding Device...</b>"
 msgstr ""
 
-#: ../apps/blueman-assistant:215
+#: ../apps/blueman-assistant:260
 #, c-format
 msgid ""
 "<b>Pairing in progress...</b>\n"
@@ -941,30 +981,43 @@ msgid ""
 "Enter passkey <b>%s</b> on the device."
 msgstr ""
 
-#: ../apps/blueman-assistant:222
+#: ../apps/blueman-assistant:267
 msgid "<b>Failed to add device</b>"
 msgstr ""
 
-#: ../apps/blueman-assistant:257
+#: ../apps/blueman-assistant:302
 msgid "Input Service"
 msgstr ""
 
-#: ../apps/blueman-assistant:275
+#: ../apps/blueman-assistant:320
 msgid "A2DP Service"
 msgstr ""
 
-#: ../apps/blueman-assistant:280
+#: ../apps/blueman-assistant:325
 msgid "Headset Service"
 msgstr ""
 
-#: ../apps/blueman-assistant:284
+#: ../apps/blueman-assistant:329
 msgid "Don't connect"
 msgstr ""
 
-#: ../apps/blueman-assistant:297
+#: ../apps/blueman-assistant:344
 msgid "<b>Device added and connected successfuly</b>"
 msgstr ""
 
-#: ../apps/blueman-assistant:303
+#: ../apps/blueman-assistant:350
 msgid "<b>Device added successfuly, but failed to connect</b>"
+msgstr ""
+
+#: ../apps/blueman-browse:49
+msgid "Browse this device"
+msgstr ""
+
+#: ../apps/blueman-browse:76
+#, c-format
+msgid "Failed to launch \"%s\""
+msgstr ""
+
+#: ../apps/blueman-browse:77
+msgid "You can enter an alternate browser in service settings"
 msgstr ""
