@@ -27,18 +27,6 @@
             <property name="visible">True</property>
             <property name="layout_style">end</property>
             <child>
-              <object class="GtkButton" id="apply">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
-                <property name="label" translatable="no">gtk-apply</property>
-              </object>
-              <packing>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
               <object class="GtkButton" id="close">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -60,7 +48,6 @@
       </object>
     </child>
 	<action-widgets>
-      <action-widget response="-10">apply</action-widget>
       <action-widget response="-7">close</action-widget>
     </action-widgets>
   </object>

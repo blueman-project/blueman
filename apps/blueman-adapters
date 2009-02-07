@@ -70,11 +70,12 @@ class BluemanAdapters:
 			#fixme: show error dialog and exit
 			
 		#activate a particular tab according to command line option
-		if selected_hci_dev in self.tabs:
-			hci_dev_num = int(selected_hci_dev[3:])
-			self.notebook.set_current_page(hci_dev_num)
-		else:
-			print 'Error: the selected adapter does not exist'
+		if selected_hci_dev != None:
+			if selected_hci_dev in self.tabs:
+				hci_dev_num = int(selected_hci_dev[3:])
+				self.notebook.set_current_page(hci_dev_num)
+			else:
+				print 'Error: the selected adapter does not exist'
 		self.dialog.show()
 		gtk.main()
 		
@@ -84,12 +85,7 @@ class BluemanAdapters:
 				#save changes
 				adapter = settings['adapter']
 				adapter.SetProperty('Name', settings['name'])
-				adapter.SetProperty('Discoverable', settings['discoverable'])
-				timeout = int(settings['discoverable_timeout']*60)
-				adapter.SetProperty('DiscoverableTimeout', timeout)
-				settings['changed'] = False
-		if response_id != gtk.RESPONSE_APPLY:
-			gtk.main_quit()
+		gtk.main_quit()
 	
 	def on_adapter_added(self, adapter_path):
 		def on_property_changed(name, value):
@@ -118,27 +114,27 @@ class BluemanAdapters:
 			if not radio.props.active:
 				return
 			adapter_settings['discoverable'] = False
+			adapter.SetProperty('Discoverable', False)
 			hscale.set_sensitive(False)
 			#we need to triger "format-value" signal
 			hscale.set_value(1)
 			hscale.set_value(0)
-			adapter_settings['changed'] = True
 		def on_always_toggle(radio):
 			if not radio.props.active:
 				return
 			adapter_settings['discoverable'] = True
+			adapter.SetProperty('Discoverable', True)
 			hscale.set_sensitive(False)
 			#we need to triger "format-value" signal
 			hscale.set_value(1)
 			hscale.set_value(0)
-			adapter_settings['changed'] = True
 		def on_temporary_toggle(radio):
 			if not radio.props.active:
 				return
 			adapter_settings['discoverable'] = True
+			adapter.SetProperty('Discoverable', True)
 			hscale.set_sensitive(True)
 			hscale.set_value(3)
-			adapter_settings['changed'] = True
 		def on_scale_format_value(scale, value):
 			if value == 0:
 				if adapter_settings['discoverable']:
@@ -149,10 +145,11 @@ class BluemanAdapters:
 				return gettext.ngettext('%d minute', '%d minutes', value) % (value)
 		def on_scale_value_changed(scale):
 			val = scale.get_value()
+			print 'value: ', val
 			if val == 0 and adapter_settings['discoverable']:
 				always_radio.props.active = True
-			adapter_settings['discoverable_timeout'] = val
-			adapter_settings['changed'] = True
+			timeout = int(val*60)
+			adapter.SetProperty('DiscoverableTimeout', timeout)
 		def on_name_changed(entry):
 			adapter_settings['name'] = entry.get_text()
 			adapter_settings['changed'] = True
@@ -176,8 +173,10 @@ class BluemanAdapters:
 		hscale = builder.get_object("hscale")
 		hscale.set_range(0, 30)
 		hscale.set_increments(1, 1)
+		hscale.set_update_policy(gtk.UPDATE_DISCONTINUOUS)
 		if adapter_settings['discoverable']:
 			hscale.set_value(adapter_settings['discoverable_timeout'])
+			hscale.set_sensitive(adapter_settings['discoverable_timeout'] > 0)
 		adapter_settings['signals'].Handle(hscale, "format-value", on_scale_format_value)
 		adapter_settings['signals'].Handle(hscale, "value-changed", on_scale_value_changed)
 		
