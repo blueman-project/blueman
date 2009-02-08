@@ -193,7 +193,10 @@ def check_single_instance(id, unhide_func=None):
 		if unhide_func:
 			f = open(lockfile)
 			f.readline()
-			event_time = long(f.readline())
+			try:
+				event_time = long(f.readline())
+			except:
+				event_time = 0
 			f.close()
 			unhide_func(event_time)
 
@@ -204,7 +207,10 @@ def check_single_instance(id, unhide_func=None):
 	if os.path.exists(lockfile):
 		f = open(lockfile)
 		pid = int(f.readline())
-		event_time = int(f.readline())
+		try:
+			event_time = int(f.readline())
+		except:
+			event_time = 0
 		f.close()
 		if pid > 0:
 			isrunning = os.path.exists("/proc/%s" % pid)
