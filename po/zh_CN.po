@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bluez-gnome\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-08 16:47+0200\n"
+"POT-Creation-Date: 2009-02-08 18:09+0200\n"
 "PO-Revision-Date: 2008-12-15 01:42+0000\n"
 "Last-Translator: BiOgErM <Unknown>\n"
 "Language-Team: Chinese (China) <zh_CN@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2008-12-26 10:41+0000\n"
+"X-Launchpad-Export-Date: 2009-02-08 14:40+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -30,7 +30,7 @@ msgstr "可见性设置"
 msgid "Always visible"
 msgstr "总是可见"
 
-#: ../data/ui/adapters-tab.ui.h:4
+#: ../data/ui/adapters-tab.ui.h:4 ../apps/blueman-adapters:145
 msgid "Hidden"
 msgstr "隐藏"
 
@@ -39,9 +39,8 @@ msgid "Temporary visible"
 msgstr "暂时可见"
 
 #: ../data/ui/adapters.ui.h:1
-#, fuzzy
 msgid "Bluetooth Adapters"
-msgstr "蓝牙分析器"
+msgstr ""
 
 #: ../data/ui/applet-passkey.ui.h:1
 msgid "Authentication request"
@@ -55,55 +54,63 @@ msgstr "设备配对请求："
 msgid "Show input"
 msgstr "显示输入"
 
-#: ../data/ui/manager-main.ui.h:1
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:2
 msgid "Add"
 msgstr "添加"
 
-#: ../data/ui/manager-main.ui.h:2
+#: ../data/ui/manager-main.ui.h:3
 msgid "Bluetooth Devices"
 msgstr "蓝牙设备"
 
-#: ../data/ui/manager-main.ui.h:3
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:5
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:246
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:474
 msgid "Bond"
 msgstr "配对"
 
-#: ../data/ui/manager-main.ui.h:4
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:7
 msgid "Browse"
 msgstr "浏览"
 
-#: ../data/ui/manager-main.ui.h:5
+#: ../data/ui/manager-main.ui.h:8
 msgid "Create bonding with the device"
 msgstr ""
 
-#: ../data/ui/manager-main.ui.h:6
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:10
 msgid "Remove"
 msgstr "移除"
 
-#: ../data/ui/manager-main.ui.h:7 ../blueman/gui/manager/ManagerMenu.py:204
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:12 ../blueman/gui/manager/ManagerMenu.py:204
 msgid "Search"
 msgstr "查找"
 
-#: ../data/ui/manager-main.ui.h:8
+#: ../data/ui/manager-main.ui.h:13
 msgid "Search for nearby devices"
 msgstr ""
 
-#: ../data/ui/manager-main.ui.h:9
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:15
 msgid "Send File"
 msgstr "发送文件"
 
-#: ../data/ui/manager-main.ui.h:10
+#: ../data/ui/manager-main.ui.h:16
 msgid "Setup this device"
 msgstr ""
 
-#: ../data/ui/manager-main.ui.h:11
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:18
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:241
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:495
 msgid "Setup..."
 msgstr "设置..."
 
-#: ../data/ui/manager-main.ui.h:12
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:20
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:485
 #: ../blueman/gui/manager/ManagerToolbar.py:105
 msgid "Trust"
@@ -164,19 +171,16 @@ msgid "Network Access Point (NAP)"
 msgstr "网络连接点 (NAP)"
 
 #: ../data/ui/services-transfer.ui.h:1
-#, fuzzy
 msgid "<b>Advanced</b>"
-msgstr "<b>绑定</b>"
+msgstr ""
 
 #: ../data/ui/services-transfer.ui.h:2
-#, fuzzy
 msgid "<b>File Receiving (Object Push)</b>"
-msgstr "<b>对象推送</b>"
+msgstr ""
 
 #: ../data/ui/services-transfer.ui.h:3
-#, fuzzy
 msgid "<b>File Sharing (FTP)</b>"
-msgstr "<b>文件传输</b>"
+msgstr ""
 
 #: ../data/ui/services-transfer.ui.h:4
 msgid "<b>Transfer Settings</b>"
@@ -225,18 +229,13 @@ msgstr "<span weight=\"bold\" size=\"large\">经由蓝牙发送文件</span>"
 msgid "Bluetooth File Transfer"
 msgstr "蓝牙文件传输"
 
-#: ../data/ui/send-dialog.ui.h:5
-msgid "gtk-cancel"
-msgstr "gtk-取消"
-
 #: ../data/ui/assistant.ui.h:1
 msgid "<b>Congratulations, device successfully added</b>"
 msgstr ""
 
 #: ../data/ui/assistant.ui.h:2
-#, fuzzy
 msgid "<b>Connect to:</b>"
-msgstr "<b>绑定</b>"
+msgstr ""
 
 #: ../data/ui/assistant.ui.h:3
 msgid "<b>Please wait...</b>"
@@ -247,14 +246,13 @@ msgid "<b>Select pairing method to use:</b>"
 msgstr ""
 
 #: ../data/ui/assistant.ui.h:5
-#, fuzzy
 msgid ""
 "<b>Welcome to the bluetooth device setup assistant. </b>\n"
 "\n"
 "\n"
 "It will walk you through the process of configuring and connecting to your "
 "bluetooth enabled devices."
-msgstr "本设备安装向导将帮助您在这台电脑上配置带有蓝牙功能的相关设备。"
+msgstr ""
 
 #: ../data/ui/assistant.ui.h:9
 msgid "Don't Pair"
@@ -415,71 +413,88 @@ msgstr "服务："
 msgid "Always accept"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:38 ../blueman/DeviceClass.py:57
+#. translators: device class
+#: ../blueman/DeviceClass.py:39 ../blueman/DeviceClass.py:64
 msgid "uncategorized"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:39
+#. translators: device class
+#: ../blueman/DeviceClass.py:41
 msgid "desktop"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:40
+#. translators: device class
+#: ../blueman/DeviceClass.py:43
 msgid "server"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:41
+#. translators: device class
+#: ../blueman/DeviceClass.py:45
 msgid "laptop"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:42
+#. translators: device class
+#: ../blueman/DeviceClass.py:47
 msgid "handheld"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:43
+#. translators: device class
+#: ../blueman/DeviceClass.py:49
 msgid "palm"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:58
+#. translators: device class
+#: ../blueman/DeviceClass.py:66
 msgid "cellular"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:59
+#. translators: device class
+#: ../blueman/DeviceClass.py:68
 msgid "cordless"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:60
+#. translators: device class
+#: ../blueman/DeviceClass.py:70
 msgid "smart phone"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:61
+#. translators: device class
+#: ../blueman/DeviceClass.py:72
 msgid "modem"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:62
+#. translators: device class
+#: ../blueman/DeviceClass.py:74
 msgid "isdn"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:98
+#. translators: device class
+#: ../blueman/DeviceClass.py:111
 msgid "headset"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:99
+#. translators: device class
+#: ../blueman/DeviceClass.py:113
 msgid "handsfree"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:100
+#. translators: device class
+#: ../blueman/DeviceClass.py:115
 msgid "unknown"
 msgstr "未知的"
 
-#: ../blueman/DeviceClass.py:101
+#. translators: device class
+#: ../blueman/DeviceClass.py:117
 msgid "microphone"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:125
+#. translators: device class
+#: ../blueman/DeviceClass.py:142
 msgid "keyboard"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:126
+#. translators: device class
+#: ../blueman/DeviceClass.py:144
 msgid "pointing"
 msgstr ""
 
@@ -896,9 +911,8 @@ msgid "Recent Connections"
 msgstr ""
 
 #: ../apps/blueman-applet:87
-#, fuzzy
 msgid "Bluetooth applet"
-msgstr "蓝牙管理器小程序"
+msgstr ""
 
 #: ../apps/blueman-applet:145
 msgid ""
@@ -906,9 +920,8 @@ msgid ""
 msgstr ""
 
 #: ../apps/blueman-applet:161
-#, fuzzy
 msgid "<b>Turn Bluetooth On</b>"
-msgstr "<b>传输设置</b>"
+msgstr ""
 
 #: ../apps/blueman-applet:165
 msgid "<b>Turn Bluetooth Off</b>"
@@ -945,6 +958,17 @@ msgstr ""
 #: ../apps/blueman-applet:316
 msgid "Starting Service Preferences"
 msgstr ""
+
+#: ../apps/blueman-adapters:143
+#, fuzzy
+msgid "Always"
+msgstr "总是可见"
+
+#: ../apps/blueman-adapters:147
+#, fuzzy, c-format
+msgid "%d Minute"
+msgid_plural "%d Minutes"
+msgstr[0] "%g 分钟"
 
 #: ../apps/blueman-sendto:103
 msgid "obex-data-server is probably not installed"
@@ -986,23 +1010,20 @@ msgid "Send files to this device"
 msgstr ""
 
 #: ../apps/blueman-sendto:328
-#, fuzzy
 msgid "Select files to send"
-msgstr "选择要发送的文件"
+msgstr ""
 
 #: ../apps/blueman-assistant:63
 msgid "Start configuration assistant for this device"
 msgstr ""
 
 #: ../apps/blueman-assistant:78
-#, fuzzy
 msgid "Bluetooth Assistant"
-msgstr "蓝牙小程序"
+msgstr ""
 
 #: ../apps/blueman-assistant:254
-#, fuzzy
 msgid "<b>Adding Device...</b>"
-msgstr "<b>服务</b>"
+msgstr "<b>添加设备中...</b>"
 
 #: ../apps/blueman-assistant:260
 #, c-format
@@ -1013,31 +1034,24 @@ msgid ""
 msgstr ""
 
 #: ../apps/blueman-assistant:267
-#, fuzzy
 msgid "<b>Failed to add device</b>"
 msgstr ""
-"\n"
-"<b>适配器类型</b>"
 
 #: ../apps/blueman-assistant:302
-#, fuzzy
 msgid "Input Service"
-msgstr "输入服务"
+msgstr ""
 
 #: ../apps/blueman-assistant:320
-#, fuzzy
 msgid "A2DP Service"
-msgstr "服务"
+msgstr ""
 
 #: ../apps/blueman-assistant:325
-#, fuzzy
 msgid "Headset Service"
-msgstr "串口服务"
+msgstr ""
 
 #: ../apps/blueman-assistant:329
-#, fuzzy
 msgid "Don't connect"
-msgstr "断开(_D)"
+msgstr ""
 
 #: ../apps/blueman-assistant:344
 msgid "<b>Device added and connected successfuly</b>"
@@ -1048,9 +1062,8 @@ msgid "<b>Device added successfuly, but failed to connect</b>"
 msgstr ""
 
 #: ../apps/blueman-browse:49
-#, fuzzy
 msgid "Browse this device"
-msgstr "浏览设备"
+msgstr ""
 
 #: ../apps/blueman-browse:76
 #, c-format
@@ -1061,14 +1074,8 @@ msgstr ""
 msgid "You can enter an alternate browser in service settings"
 msgstr ""
 
-#~ msgid "Bluetooth adapter preferences"
-#~ msgstr "蓝牙适配器属性"
-
-#~ msgid "File Progress"
-#~ msgstr "文件进程"
-
-#~ msgid "Total Progress"
-#~ msgstr "总进程"
+#~ msgid "gtk-cancel"
+#~ msgstr "gtk-取消"
 
 #~ msgid "Services"
 #~ msgstr "服务"
@@ -1202,6 +1209,9 @@ msgstr ""
 #~ msgid "Couldn't execute command: %s\n"
 #~ msgstr "无法执行命令：%s\n"
 
+#~ msgid "Browse Devices"
+#~ msgstr "浏览设备"
+
 #~ msgid "Select device to browse"
 #~ msgstr "选择要浏览的设备"
 
@@ -1213,6 +1223,9 @@ msgstr ""
 
 #~ msgid "Setup New Device"
 #~ msgstr "安装新设备"
+
+#~ msgid "Bluetooth Applet"
+#~ msgstr "蓝牙小程序"
 
 #~ msgid "Confirmation request"
 #~ msgstr "请求确认"
@@ -1249,6 +1262,9 @@ msgstr ""
 
 #~ msgid "Public file sharing has been activated"
 #~ msgstr "公共文件共享已经被激活"
+
+#~ msgid "Bluetooth Manager applet"
+#~ msgstr "蓝牙管理器小程序"
 
 #~ msgid "Bluetooth Preferences"
 #~ msgstr "蓝牙首选项"
@@ -1289,6 +1305,9 @@ msgstr ""
 #~ msgid "Network service"
 #~ msgstr "网络服务"
 
+#~ msgid "Input service"
+#~ msgstr "输入服务"
+
 #~ msgid "Audio service"
 #~ msgstr "音频服务"
 
@@ -1306,9 +1325,6 @@ msgstr ""
 
 #~ msgid "1 minute"
 #~ msgstr "1分钟"
-
-#~ msgid "%g minutes"
-#~ msgstr "%g 分钟"
 
 #~ msgid "Set _Trusted"
 #~ msgstr "设定信任的(_T)"
@@ -1387,6 +1403,9 @@ msgstr ""
 
 #~ msgid "Input devices"
 #~ msgstr "输入设备"
+
+#~ msgid "_Disconnect"
+#~ msgstr "断开(_D)"
 
 #~ msgid "Network devices"
 #~ msgstr "网络设备"
@@ -1498,6 +1517,9 @@ msgstr ""
 
 #~ msgid "Can't live import from"
 #~ msgstr "无法从以下来源实时导入："
+
+#~ msgid "Bluetooth Analyzer"
+#~ msgstr "蓝牙分析器"
 
 #~ msgid "Open _Recent"
 #~ msgstr "打开最近文件(_R)"
@@ -1645,6 +1667,13 @@ msgstr ""
 #~ "\n"
 #~ "<b>适配器名称</b>"
 
+#~ msgid ""
+#~ "\n"
+#~ "<b>Class of device</b>"
+#~ msgstr ""
+#~ "\n"
+#~ "<b>适配器类型</b>"
+
 #~ msgid "Sort by RSSI"
 #~ msgstr "通过RSSI筛选"
 
@@ -1656,6 +1685,11 @@ msgstr ""
 
 #~ msgid "Stop discovery"
 #~ msgstr "停止探测"
+
+#~ msgid ""
+#~ "The device wizard will walk you through the process of configuring "
+#~ "Bluetooth enabled devices for use with this computer."
+#~ msgstr "本设备安装向导将帮助您在这台电脑上配置带有蓝牙功能的相关设备。"
 
 #~ msgid ""
 #~ "\n"
@@ -1685,6 +1719,9 @@ msgstr ""
 #~ "正在为 %s 进行配对\n"
 #~ "\n"
 #~ "点击此处以打开确认窗口"
+
+#~ msgid "Select file to send"
+#~ msgstr "选择要发送的文件"
 
 #~ msgid "Device type"
 #~ msgstr "设备类型"

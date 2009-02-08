@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-08 16:47+0200\n"
-"PO-Revision-Date: 2008-04-12 10:43+0000\n"
-"Last-Translator: Sanel <Unknown>\n"
+"POT-Creation-Date: 2009-02-08 18:09+0200\n"
+"PO-Revision-Date: 2009-02-05 22:46+0000\n"
+"Last-Translator: Kenan Dervišević <kenan3008@gmail.com>\n"
 "Language-Team: Bosnian <bs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2008-12-26 10:41+0000\n"
+"X-Launchpad-Export-Date: 2009-02-08 14:40+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -29,11 +29,11 @@ msgstr ""
 
 #: ../data/ui/adapters-tab.ui.h:3
 msgid "Always visible"
-msgstr ""
+msgstr "Uvijek vidljivo"
 
-#: ../data/ui/adapters-tab.ui.h:4
+#: ../data/ui/adapters-tab.ui.h:4 ../apps/blueman-adapters:145
 msgid "Hidden"
-msgstr ""
+msgstr "Sakriven"
 
 #: ../data/ui/adapters-tab.ui.h:5
 msgid "Temporary visible"
@@ -45,7 +45,7 @@ msgstr ""
 
 #: ../data/ui/applet-passkey.ui.h:1
 msgid "Authentication request"
-msgstr ""
+msgstr "Zahtjev za provjeru identiteta"
 
 #: ../data/ui/applet-passkey.ui.h:2
 msgid "Pairing request for device:"
@@ -55,55 +55,63 @@ msgstr ""
 msgid "Show input"
 msgstr ""
 
-#: ../data/ui/manager-main.ui.h:1
-msgid "Add"
-msgstr ""
-
+#. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:2
+msgid "Add"
+msgstr "Dodaj"
+
+#: ../data/ui/manager-main.ui.h:3
 msgid "Bluetooth Devices"
 msgstr ""
 
-#: ../data/ui/manager-main.ui.h:3
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:5
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:246
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:474
 msgid "Bond"
-msgstr ""
+msgstr "Veza"
 
-#: ../data/ui/manager-main.ui.h:4
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:7
 msgid "Browse"
-msgstr ""
+msgstr "Potraži"
 
-#: ../data/ui/manager-main.ui.h:5
+#: ../data/ui/manager-main.ui.h:8
 msgid "Create bonding with the device"
 msgstr ""
 
-#: ../data/ui/manager-main.ui.h:6
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:10
 msgid "Remove"
-msgstr ""
+msgstr "Ukloni"
 
-#: ../data/ui/manager-main.ui.h:7 ../blueman/gui/manager/ManagerMenu.py:204
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:12 ../blueman/gui/manager/ManagerMenu.py:204
 msgid "Search"
-msgstr ""
+msgstr "Pretraga"
 
-#: ../data/ui/manager-main.ui.h:8
+#: ../data/ui/manager-main.ui.h:13
 msgid "Search for nearby devices"
 msgstr ""
 
-#: ../data/ui/manager-main.ui.h:9
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:15
 msgid "Send File"
-msgstr ""
+msgstr "Pošalji datoteku"
 
-#: ../data/ui/manager-main.ui.h:10
+#: ../data/ui/manager-main.ui.h:16
 msgid "Setup this device"
 msgstr ""
 
-#: ../data/ui/manager-main.ui.h:11
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:18
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:241
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:495
 msgid "Setup..."
-msgstr ""
+msgstr "Podešavanje..."
 
-#: ../data/ui/manager-main.ui.h:12
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:20
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:485
 #: ../blueman/gui/manager/ManagerToolbar.py:105
 msgid "Trust"
@@ -149,7 +157,7 @@ msgstr ""
 
 #: ../data/ui/services-network.ui.h:9
 msgid "IP Address:"
-msgstr ""
+msgstr "IP adresa:"
 
 #: ../data/ui/services-network.ui.h:10
 msgid "Integrate with NetworkManager"
@@ -196,7 +204,7 @@ msgstr ""
 
 #: ../data/ui/services-transfer.ui.h:10
 msgid "Enabled"
-msgstr ""
+msgstr "Uključeno"
 
 #: ../data/ui/services-transfer.ui.h:11
 msgid "Select Shared/Storage folder"
@@ -220,10 +228,6 @@ msgstr ""
 
 #: ../data/ui/send-dialog.ui.h:4
 msgid "Bluetooth File Transfer"
-msgstr ""
-
-#: ../data/ui/send-dialog.ui.h:5
-msgid "gtk-cancel"
 msgstr ""
 
 #: ../data/ui/assistant.ui.h:1
@@ -318,15 +322,15 @@ msgstr ""
 #: ../blueman/main/applet/Transfer.py:113
 #: ../blueman/main/applet/BluezAgent.py:168
 msgid "Accept"
-msgstr ""
+msgstr "Prihvati"
 
 #: ../blueman/main/applet/Transfer.py:114
 msgid "Reject"
-msgstr ""
+msgstr "Odbaci"
 
 #: ../blueman/main/applet/Transfer.py:155
 msgid "Cancel"
-msgstr ""
+msgstr "Odustani"
 
 #: ../blueman/main/applet/Transfer.py:181
 msgid "File Saved"
@@ -339,7 +343,7 @@ msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:183
 msgid "Open"
-msgstr ""
+msgstr "Otvori"
 
 #: ../blueman/main/applet/Transfer.py:212
 msgid "Receiving File"
@@ -389,12 +393,12 @@ msgstr ""
 
 #: ../blueman/main/applet/BluezAgent.py:137
 msgid "Confirm"
-msgstr ""
+msgstr "Potvrdi"
 
 #: ../blueman/main/applet/BluezAgent.py:137
 #: ../blueman/main/applet/BluezAgent.py:169
 msgid "Deny"
-msgstr ""
+msgstr "Zabrani"
 
 #: ../blueman/main/applet/BluezAgent.py:166
 msgid "Authorization request for:"
@@ -408,77 +412,94 @@ msgstr ""
 msgid "Always accept"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:38 ../blueman/DeviceClass.py:57
+#. translators: device class
+#: ../blueman/DeviceClass.py:39 ../blueman/DeviceClass.py:64
 msgid "uncategorized"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:39
+#. translators: device class
+#: ../blueman/DeviceClass.py:41
 msgid "desktop"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:40
+#. translators: device class
+#: ../blueman/DeviceClass.py:43
 msgid "server"
-msgstr ""
+msgstr "server"
 
-#: ../blueman/DeviceClass.py:41
+#. translators: device class
+#: ../blueman/DeviceClass.py:45
 msgid "laptop"
-msgstr ""
+msgstr "laptop"
 
-#: ../blueman/DeviceClass.py:42
+#. translators: device class
+#: ../blueman/DeviceClass.py:47
 msgid "handheld"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:43
+#. translators: device class
+#: ../blueman/DeviceClass.py:49
 msgid "palm"
-msgstr ""
+msgstr "palm"
 
-#: ../blueman/DeviceClass.py:58
+#. translators: device class
+#: ../blueman/DeviceClass.py:66
 msgid "cellular"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:59
+#. translators: device class
+#: ../blueman/DeviceClass.py:68
 msgid "cordless"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:60
+#. translators: device class
+#: ../blueman/DeviceClass.py:70
 msgid "smart phone"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:61
+#. translators: device class
+#: ../blueman/DeviceClass.py:72
 msgid "modem"
-msgstr ""
+msgstr "modem"
 
-#: ../blueman/DeviceClass.py:62
+#. translators: device class
+#: ../blueman/DeviceClass.py:74
 msgid "isdn"
-msgstr ""
+msgstr "isdn"
 
-#: ../blueman/DeviceClass.py:98
+#. translators: device class
+#: ../blueman/DeviceClass.py:111
 msgid "headset"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:99
+#. translators: device class
+#: ../blueman/DeviceClass.py:113
 msgid "handsfree"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:100
+#. translators: device class
+#: ../blueman/DeviceClass.py:115
 msgid "unknown"
-msgstr ""
+msgstr "nepoznato"
 
-#: ../blueman/DeviceClass.py:101
+#. translators: device class
+#: ../blueman/DeviceClass.py:117
 msgid "microphone"
-msgstr ""
+msgstr "mikrofon"
 
-#: ../blueman/DeviceClass.py:125
+#. translators: device class
+#: ../blueman/DeviceClass.py:142
 msgid "keyboard"
-msgstr ""
+msgstr "tastatura"
 
-#: ../blueman/DeviceClass.py:126
+#. translators: device class
+#: ../blueman/DeviceClass.py:144
 msgid "pointing"
 msgstr ""
 
 #: ../blueman/plugins/services/Transfer.py:45
 msgid "Transfer"
-msgstr ""
+msgstr "Transfer"
 
 #: ../blueman/plugins/services/Transfer.py:132 ../apps/blueman-sendto:102
 msgid "obex-data-server not available"
@@ -486,7 +507,7 @@ msgstr ""
 
 #: ../blueman/plugins/services/Network.py:45
 msgid "Network"
-msgstr ""
+msgstr "Mreža"
 
 #: ../blueman/plugins/services/Network.py:117 ../apps/blueman-applet:144
 msgid "Failed to apply network settings"
@@ -516,16 +537,16 @@ msgstr ""
 #: ../blueman/gui/applet/RecentConns.py:150
 #, python-format
 msgid "Connecting to %s"
-msgstr ""
+msgstr "Povezujem se sa %s"
 
 #: ../blueman/gui/applet/RecentConns.py:154
 msgid "Connected"
-msgstr ""
+msgstr "Povezan"
 
 #: ../blueman/gui/applet/RecentConns.py:154
 #, python-format
 msgid "Connected to %s"
-msgstr ""
+msgstr "Povezan s %s"
 
 #: ../blueman/gui/applet/RecentConns.py:159
 msgid "Failed to connect"
@@ -538,7 +559,7 @@ msgstr ""
 
 #: ../blueman/gui/applet/RecentConns.py:181
 msgid "Service"
-msgstr ""
+msgstr "Uređaj"
 
 #: ../blueman/gui/applet/RecentConns.py:186
 #, python-format
@@ -547,28 +568,28 @@ msgstr ""
 
 #: ../blueman/gui/manager/ManagerProgressbar.py:33 ../apps/blueman-sendto:69
 msgid "Connecting"
-msgstr ""
+msgstr "Povezivanje"
 
 #: ../blueman/gui/manager/ManagerProgressbar.py:59
 msgid "Cancel Operation"
-msgstr ""
+msgstr "Poništi operaciju"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:126
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:509
 msgid "Success!"
-msgstr ""
+msgstr "Uspjeh!"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:132
 msgid "Failed"
-msgstr ""
+msgstr "Neuspješno"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:143
 msgid "Cancelled"
-msgstr ""
+msgstr "Otkazano"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:147
 msgid "Connecting..."
-msgstr ""
+msgstr "Spajam se..."
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:236
 msgid "Add Device"
@@ -684,7 +705,7 @@ msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:339
 msgid "Poor"
-msgstr ""
+msgstr "Slab"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:342
 #: ../blueman/gui/manager/ManagerDeviceList.py:358
@@ -694,7 +715,7 @@ msgstr ""
 #: ../blueman/gui/manager/ManagerDeviceList.py:345
 #: ../blueman/gui/manager/ManagerDeviceList.py:361
 msgid "Optimal"
-msgstr ""
+msgstr "Optimalno"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:348
 msgid "Much"
@@ -706,15 +727,15 @@ msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:355
 msgid "Low"
-msgstr ""
+msgstr "Nisko"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:364
 msgid "High"
-msgstr ""
+msgstr "Visoko"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:367
 msgid "Very High"
-msgstr ""
+msgstr "Veoma visoko"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:370
 #, python-format
@@ -750,11 +771,11 @@ msgstr ""
 
 #: ../blueman/gui/manager/ManagerMenu.py:44
 msgid "_View"
-msgstr ""
+msgstr "_Pogled"
 
 #: ../blueman/gui/manager/ManagerMenu.py:45
 msgid "_Help"
-msgstr ""
+msgstr "_Pomoć"
 
 #: ../blueman/gui/manager/ManagerMenu.py:58
 msgid "Get Help Online..."
@@ -770,11 +791,11 @@ msgstr ""
 
 #: ../blueman/gui/manager/ManagerMenu.py:78
 msgid "Device Manager"
-msgstr ""
+msgstr "Upravitelj uređajima"
 
 #: ../blueman/gui/manager/ManagerMenu.py:86
 msgid "Show Toolbar"
-msgstr ""
+msgstr "Prikaži traku s alatima"
 
 #: ../blueman/gui/manager/ManagerMenu.py:98
 msgid "Show Statusbar"
@@ -846,7 +867,7 @@ msgstr ""
 
 #: ../apps/blueman-manager:192
 msgid "Searching"
-msgstr ""
+msgstr "Traženje"
 
 #: ../apps/blueman-manager:199 ../apps/blueman-applet:296
 msgid "Starting Bluetooth Assistant"
@@ -854,7 +875,7 @@ msgstr ""
 
 #: ../apps/blueman-manager:212
 msgid "Success"
-msgstr ""
+msgstr "Uspješno"
 
 #: ../apps/blueman-manager:216
 msgid "Failure"
@@ -915,7 +936,7 @@ msgstr ""
 
 #: ../apps/blueman-applet:273
 msgid "Devices"
-msgstr ""
+msgstr "Uređaji"
 
 #: ../apps/blueman-applet:276
 msgid "Adapters"
@@ -932,6 +953,19 @@ msgstr ""
 #: ../apps/blueman-applet:316
 msgid "Starting Service Preferences"
 msgstr ""
+
+#: ../apps/blueman-adapters:143
+#, fuzzy
+msgid "Always"
+msgstr "Uvijek vidljivo"
+
+#: ../apps/blueman-adapters:147
+#, c-format
+msgid "%d Minute"
+msgid_plural "%d Minutes"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #: ../apps/blueman-sendto:103
 msgid "obex-data-server is probably not installed"
@@ -962,11 +996,11 @@ msgstr ""
 
 #: ../apps/blueman-sendto:228
 msgid "Skip"
-msgstr ""
+msgstr "Preskoči"
 
 #: ../apps/blueman-sendto:229
 msgid "Retry"
-msgstr ""
+msgstr "Pokušaj ponovo"
 
 #: ../apps/blueman-sendto:273
 msgid "Send files to this device"

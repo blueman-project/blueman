@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-08 16:47+0200\n"
-"PO-Revision-Date: 2008-08-16 21:27+0000\n"
-"Last-Translator: Murat Bişkin <mbiskin@gmail.com>\n"
+"POT-Creation-Date: 2009-02-08 18:09+0200\n"
+"PO-Revision-Date: 2009-01-09 16:00+0000\n"
+"Last-Translator: zeugma <Unknown>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2008-12-26 10:41+0000\n"
+"X-Launchpad-Export-Date: 2009-02-08 14:40+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -28,11 +28,11 @@ msgstr ""
 
 #: ../data/ui/adapters-tab.ui.h:3
 msgid "Always visible"
-msgstr ""
+msgstr "Daima görünür"
 
-#: ../data/ui/adapters-tab.ui.h:4
+#: ../data/ui/adapters-tab.ui.h:4 ../apps/blueman-adapters:145
 msgid "Hidden"
-msgstr ""
+msgstr "Gizli"
 
 #: ../data/ui/adapters-tab.ui.h:5
 msgid "Temporary visible"
@@ -44,7 +44,7 @@ msgstr ""
 
 #: ../data/ui/applet-passkey.ui.h:1
 msgid "Authentication request"
-msgstr ""
+msgstr "Doğrulama gerekli"
 
 #: ../data/ui/applet-passkey.ui.h:2
 msgid "Pairing request for device:"
@@ -52,65 +52,73 @@ msgstr ""
 
 #: ../data/ui/applet-passkey.ui.h:3
 msgid "Show input"
-msgstr ""
+msgstr "Girişi göster"
 
-#: ../data/ui/manager-main.ui.h:1
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:2
 msgid "Add"
 msgstr "Ekle"
 
-#: ../data/ui/manager-main.ui.h:2
-msgid "Bluetooth Devices"
-msgstr ""
-
 #: ../data/ui/manager-main.ui.h:3
+msgid "Bluetooth Devices"
+msgstr "Bluetooth Aygitları"
+
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:5
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:246
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:474
 msgid "Bond"
 msgstr "Eşleştir"
 
-#: ../data/ui/manager-main.ui.h:4
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:7
 msgid "Browse"
-msgstr ""
+msgstr "Gözat"
 
-#: ../data/ui/manager-main.ui.h:5
+#: ../data/ui/manager-main.ui.h:8
 msgid "Create bonding with the device"
 msgstr ""
 
-#: ../data/ui/manager-main.ui.h:6
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:10
 msgid "Remove"
 msgstr "Kaldır"
 
-#: ../data/ui/manager-main.ui.h:7 ../blueman/gui/manager/ManagerMenu.py:204
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:12 ../blueman/gui/manager/ManagerMenu.py:204
 msgid "Search"
-msgstr ""
+msgstr "Ara"
 
-#: ../data/ui/manager-main.ui.h:8
+#: ../data/ui/manager-main.ui.h:13
 msgid "Search for nearby devices"
 msgstr ""
 
-#: ../data/ui/manager-main.ui.h:9
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:15
 msgid "Send File"
-msgstr ""
+msgstr "Dosya Gönder"
 
-#: ../data/ui/manager-main.ui.h:10
+#: ../data/ui/manager-main.ui.h:16
 msgid "Setup this device"
 msgstr ""
 
-#: ../data/ui/manager-main.ui.h:11
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:18
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:241
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:495
 msgid "Setup..."
-msgstr ""
+msgstr "Kur..."
 
-#: ../data/ui/manager-main.ui.h:12
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:20
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:485
 #: ../blueman/gui/manager/ManagerToolbar.py:105
 msgid "Trust"
-msgstr ""
+msgstr "Güvenilirlik"
 
 #: ../data/ui/services.ui.h:1 ../apps/blueman-applet:279
 msgid "Local Services"
-msgstr ""
+msgstr "Yerel Servisler"
 
 #: ../data/ui/services-network.ui.h:1
 msgid "<b>Client Settings</b>"
@@ -118,11 +126,11 @@ msgstr ""
 
 #: ../data/ui/services-network.ui.h:2
 msgid "<b>NAP Settings</b>"
-msgstr ""
+msgstr "<b>NAP Ayarları</b>"
 
 #: ../data/ui/services-network.ui.h:3
 msgid "<b>Network Settings</b>"
-msgstr ""
+msgstr "<b>Ağ Ayarları</b>"
 
 #: ../data/ui/services-network.ui.h:4
 msgid "<b>No DHCP servers installed</b>"
@@ -130,11 +138,11 @@ msgstr ""
 
 #: ../data/ui/services-network.ui.h:5
 msgid "<b>Services</b>"
-msgstr ""
+msgstr "<b>Servisler</b>"
 
 #: ../data/ui/services-network.ui.h:6
 msgid "DHCP server type:"
-msgstr ""
+msgstr "DHCP sunucu tipi:"
 
 #: ../data/ui/services-network.ui.h:7
 msgid "Enable Routing (NAT)"
@@ -148,7 +156,7 @@ msgstr "Şebekeyi grupla"
 
 #: ../data/ui/services-network.ui.h:9
 msgid "IP Address:"
-msgstr ""
+msgstr "IP Adresi"
 
 #: ../data/ui/services-network.ui.h:10
 msgid "Integrate with NetworkManager"
@@ -163,9 +171,8 @@ msgid "Network Access Point (NAP)"
 msgstr ""
 
 #: ../data/ui/services-transfer.ui.h:1
-#, fuzzy
 msgid "<b>Advanced</b>"
-msgstr "<b>Bağlı</b>"
+msgstr ""
 
 #: ../data/ui/services-transfer.ui.h:2
 msgid "<b>File Receiving (Object Push)</b>"
@@ -177,7 +184,7 @@ msgstr ""
 
 #: ../data/ui/services-transfer.ui.h:4
 msgid "<b>Transfer Settings</b>"
-msgstr ""
+msgstr "<b>Transfer Ayarları</b>"
 
 #: ../data/ui/services-transfer.ui.h:5
 msgid "Accept files from trusted devices"
@@ -196,7 +203,7 @@ msgstr ""
 
 #: ../data/ui/services-transfer.ui.h:10
 msgid "Enabled"
-msgstr ""
+msgstr "Etkinleştirildi"
 
 #: ../data/ui/services-transfer.ui.h:11
 msgid "Select Shared/Storage folder"
@@ -204,11 +211,11 @@ msgstr ""
 
 #: ../data/ui/services-transfer.ui.h:12
 msgid "Shared Folder:"
-msgstr ""
+msgstr "Paylaşım Klasörleri"
 
 #: ../data/ui/send-dialog.ui.h:1
 msgid "<b>File:</b>"
-msgstr ""
+msgstr "<b>Dosya:</b>"
 
 #: ../data/ui/send-dialog.ui.h:2
 msgid "<b>To:</b>"
@@ -217,13 +224,11 @@ msgstr ""
 #: ../data/ui/send-dialog.ui.h:3
 msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr ""
+"<span weight=\"bold\" size=\"large\">Bluetooth yoluyla dosyaları yollamak\r\n"
+"</span>"
 
 #: ../data/ui/send-dialog.ui.h:4
 msgid "Bluetooth File Transfer"
-msgstr ""
-
-#: ../data/ui/send-dialog.ui.h:5
-msgid "gtk-cancel"
 msgstr ""
 
 #: ../data/ui/assistant.ui.h:1
@@ -231,9 +236,8 @@ msgid "<b>Congratulations, device successfully added</b>"
 msgstr ""
 
 #: ../data/ui/assistant.ui.h:2
-#, fuzzy
 msgid "<b>Connect to:</b>"
-msgstr "<b>Bağlı</b>"
+msgstr ""
 
 #: ../data/ui/assistant.ui.h:3
 msgid "<b>Please wait...</b>"
@@ -269,12 +273,14 @@ msgid "Adapter selection"
 msgstr ""
 
 #: ../data/ui/device-list-widget.ui.h:2
+#, fuzzy
 msgid "Search for devices"
-msgstr ""
+msgstr "Dosyaları Aygıta Gönder"
 
 #: ../data/ui/services-headset.ui.h:1
+#, fuzzy
 msgid "<b>Headset Settings</b>"
-msgstr ""
+msgstr "<b>Transfer Ayarları</b>"
 
 #: ../data/ui/services-headset.ui.h:2
 msgid "Command to execute when answer button is pressed:"
@@ -289,7 +295,7 @@ msgstr ""
 #: ../blueman/main/applet/NetworkManager.py:84
 #: ../blueman/main/applet/NetworkManager.py:92
 msgid "Bluetooth Network"
-msgstr ""
+msgstr "Bluetooth Ağı"
 
 #: ../blueman/main/applet/NetworkManager.py:74
 #, python-format
@@ -319,11 +325,11 @@ msgstr ""
 #: ../blueman/main/applet/Transfer.py:113
 #: ../blueman/main/applet/BluezAgent.py:168
 msgid "Accept"
-msgstr ""
+msgstr "Kabul Et"
 
 #: ../blueman/main/applet/Transfer.py:114
 msgid "Reject"
-msgstr ""
+msgstr "Reddet"
 
 #: ../blueman/main/applet/Transfer.py:155
 msgid "Cancel"
@@ -331,7 +337,7 @@ msgstr "İptal"
 
 #: ../blueman/main/applet/Transfer.py:181
 msgid "File Saved"
-msgstr ""
+msgstr "Dosya Kaydedildi"
 
 #: ../blueman/main/applet/Transfer.py:181
 #, python-format
@@ -340,7 +346,7 @@ msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:183
 msgid "Open"
-msgstr ""
+msgstr "Aç"
 
 #: ../blueman/main/applet/Transfer.py:212
 msgid "Receiving File"
@@ -362,7 +368,7 @@ msgstr ""
 #: ../blueman/main/applet/BluezAgent.py:141
 #: ../blueman/main/applet/BluezAgent.py:174
 msgid "Bluetooth device"
-msgstr ""
+msgstr "Bluetooth aygıtı"
 
 #: ../blueman/main/applet/BluezAgent.py:108
 msgid "Enter PIN code for authentication:"
@@ -370,11 +376,11 @@ msgstr ""
 
 #: ../blueman/main/applet/BluezAgent.py:109
 msgid "Enter PIN code"
-msgstr ""
+msgstr "PİN codunu girin"
 
 #: ../blueman/main/applet/BluezAgent.py:115
 msgid "Enter passkey for authentication:"
-msgstr ""
+msgstr "Doğrulama için geçiş anahtarını girin:"
 
 #: ../blueman/main/applet/BluezAgent.py:116
 msgid "Enter passkey"
@@ -390,12 +396,12 @@ msgstr ""
 
 #: ../blueman/main/applet/BluezAgent.py:137
 msgid "Confirm"
-msgstr ""
+msgstr "Doğrula"
 
 #: ../blueman/main/applet/BluezAgent.py:137
 #: ../blueman/main/applet/BluezAgent.py:169
 msgid "Deny"
-msgstr ""
+msgstr "Reddet"
 
 #: ../blueman/main/applet/BluezAgent.py:166
 msgid "Authorization request for:"
@@ -407,79 +413,96 @@ msgstr "Servis:"
 
 #: ../blueman/main/applet/BluezAgent.py:167
 msgid "Always accept"
-msgstr ""
+msgstr "Her zaman kabul et"
 
-#: ../blueman/DeviceClass.py:38 ../blueman/DeviceClass.py:57
+#. translators: device class
+#: ../blueman/DeviceClass.py:39 ../blueman/DeviceClass.py:64
 msgid "uncategorized"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:39
-msgid "desktop"
-msgstr ""
-
-#: ../blueman/DeviceClass.py:40
-msgid "server"
-msgstr ""
-
+#. translators: device class
 #: ../blueman/DeviceClass.py:41
-msgid "laptop"
-msgstr ""
+msgid "desktop"
+msgstr "masaüstü"
 
-#: ../blueman/DeviceClass.py:42
+#. translators: device class
+#: ../blueman/DeviceClass.py:43
+msgid "server"
+msgstr "sunucu"
+
+#. translators: device class
+#: ../blueman/DeviceClass.py:45
+msgid "laptop"
+msgstr "dizüstü"
+
+#. translators: device class
+#: ../blueman/DeviceClass.py:47
 msgid "handheld"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:43
+#. translators: device class
+#: ../blueman/DeviceClass.py:49
 msgid "palm"
-msgstr ""
+msgstr "palm"
 
-#: ../blueman/DeviceClass.py:58
+#. translators: device class
+#: ../blueman/DeviceClass.py:66
 msgid "cellular"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:59
+#. translators: device class
+#: ../blueman/DeviceClass.py:68
 msgid "cordless"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:60
+#. translators: device class
+#: ../blueman/DeviceClass.py:70
 msgid "smart phone"
-msgstr ""
+msgstr "smart phone"
 
-#: ../blueman/DeviceClass.py:61
+#. translators: device class
+#: ../blueman/DeviceClass.py:72
 msgid "modem"
-msgstr ""
+msgstr "modem"
 
-#: ../blueman/DeviceClass.py:62
+#. translators: device class
+#: ../blueman/DeviceClass.py:74
 msgid "isdn"
-msgstr ""
+msgstr "isdn"
 
-#: ../blueman/DeviceClass.py:98
+#. translators: device class
+#: ../blueman/DeviceClass.py:111
 msgid "headset"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:99
+#. translators: device class
+#: ../blueman/DeviceClass.py:113
 msgid "handsfree"
 msgstr ""
 
-#: ../blueman/DeviceClass.py:100
+#. translators: device class
+#: ../blueman/DeviceClass.py:115
 msgid "unknown"
 msgstr "bilinmeyen"
 
-#: ../blueman/DeviceClass.py:101
+#. translators: device class
+#: ../blueman/DeviceClass.py:117
 msgid "microphone"
-msgstr ""
+msgstr "mikrofon"
 
-#: ../blueman/DeviceClass.py:125
+#. translators: device class
+#: ../blueman/DeviceClass.py:142
 msgid "keyboard"
-msgstr ""
+msgstr "klavye"
 
-#: ../blueman/DeviceClass.py:126
+#. translators: device class
+#: ../blueman/DeviceClass.py:144
 msgid "pointing"
 msgstr ""
 
 #: ../blueman/plugins/services/Transfer.py:45
 msgid "Transfer"
-msgstr ""
+msgstr "Transfer"
 
 #: ../blueman/plugins/services/Transfer.py:132 ../apps/blueman-sendto:102
 msgid "obex-data-server not available"
@@ -487,7 +510,7 @@ msgstr ""
 
 #: ../blueman/plugins/services/Network.py:45
 msgid "Network"
-msgstr ""
+msgstr "Ağ"
 
 #: ../blueman/plugins/services/Network.py:117 ../apps/blueman-applet:144
 msgid "Failed to apply network settings"
@@ -495,7 +518,7 @@ msgstr ""
 
 #: ../blueman/gui/DeviceSelectorDialog.py:31
 msgid "Select Device"
-msgstr ""
+msgstr "Aygıt Seç"
 
 #: ../blueman/gui/CommonUi.py:49
 msgid "Blueman is a GTK based Bluetooth manager"
@@ -508,11 +531,11 @@ msgstr ""
 #: ../blueman/gui/applet/DiscvManager.py:45
 #, python-format
 msgid "Discoverable... %ss"
-msgstr ""
+msgstr "Keşfedilebilir... %ss"
 
 #: ../blueman/gui/applet/DiscvManager.py:111 ../apps/blueman-applet:73
 msgid "Make Discoverable"
-msgstr ""
+msgstr "Keşfedilebilir  yap"
 
 #: ../blueman/gui/applet/RecentConns.py:150
 #, python-format
@@ -521,7 +544,7 @@ msgstr ""
 
 #: ../blueman/gui/applet/RecentConns.py:154
 msgid "Connected"
-msgstr ""
+msgstr "Bağlandı"
 
 #: ../blueman/gui/applet/RecentConns.py:154
 #, python-format
@@ -539,7 +562,7 @@ msgstr ""
 
 #: ../blueman/gui/applet/RecentConns.py:181
 msgid "Service"
-msgstr ""
+msgstr "Servis"
 
 #: ../blueman/gui/applet/RecentConns.py:186
 #, python-format
@@ -548,24 +571,24 @@ msgstr ""
 
 #: ../blueman/gui/manager/ManagerProgressbar.py:33 ../apps/blueman-sendto:69
 msgid "Connecting"
-msgstr ""
+msgstr "Bağlanıyor"
 
 #: ../blueman/gui/manager/ManagerProgressbar.py:59
 msgid "Cancel Operation"
-msgstr ""
+msgstr "İşlemi İptal Et"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:126
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:509
 msgid "Success!"
-msgstr ""
+msgstr "Başarılı!"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:132
 msgid "Failed"
-msgstr ""
+msgstr "Başarısız"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:143
 msgid "Cancelled"
-msgstr ""
+msgstr "Vazgeçildi"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:147
 msgid "Connecting..."
@@ -573,12 +596,12 @@ msgstr "Bağlanıyor..."
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:236
 msgid "Add Device"
-msgstr ""
+msgstr "Aygıt Ekle"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:255
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:447
 msgid "Send a file..."
-msgstr ""
+msgstr "Dosya gönder..."
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:279
 msgid "Dialup Service"
@@ -590,12 +613,12 @@ msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:299
 msgid "Serial Ports"
-msgstr ""
+msgstr "Seri Portlar"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:341
 #, python-format
 msgid "Disconnect %s"
-msgstr ""
+msgstr "%s bağlantısını kes"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:352
 msgid "Disconnect Input Service"
@@ -607,7 +630,7 @@ msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:367
 msgid "Network Access"
-msgstr ""
+msgstr "Network Access"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:386
 #: ../apps/blueman-assistant:315
@@ -616,7 +639,7 @@ msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:395
 msgid "Disconnect Network"
-msgstr ""
+msgstr "Ağ bağlantısını kes"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:411
 msgid "Renew IP Address"
@@ -624,19 +647,19 @@ msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:421
 msgid "Disconnect Headset Service"
-msgstr ""
+msgstr "Kulaklık Servis Bağlantısını Kes"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:424
 msgid "Connect Headset Service"
-msgstr ""
+msgstr "Kulaklık Servis Bağlantısını Sağla"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:434
 msgid "Disconnect A2DP Service"
-msgstr ""
+msgstr "A2DP Hizmet Bağlantısını Kes"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:437
 msgid "Connect A2DP Service"
-msgstr ""
+msgstr "A2DP Hizmetini Bağla"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:452
 msgid "Browse device..."
@@ -653,23 +676,23 @@ msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:514
 msgid "Refreshing"
-msgstr ""
+msgstr "Yenileniyor"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:516
 msgid "Refreshing Services..."
-msgstr ""
+msgstr "Servisler Yenileniyor..."
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:519
 msgid "Refresh Services"
-msgstr ""
+msgstr "Servieleri Yenile"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:528
 msgid "Remove..."
-msgstr ""
+msgstr "Kaldır..."
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:537
 msgid "Disconnect Device"
-msgstr ""
+msgstr "Aygıt Bağlantısını Kes"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:314
 msgid "<b>Trusted and Bonded</b>"
@@ -695,7 +718,7 @@ msgstr ""
 #: ../blueman/gui/manager/ManagerDeviceList.py:345
 #: ../blueman/gui/manager/ManagerDeviceList.py:361
 msgid "Optimal"
-msgstr ""
+msgstr "En Uygun"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:348
 msgid "Much"
@@ -747,15 +770,15 @@ msgstr ""
 
 #: ../blueman/gui/manager/ManagerMenu.py:43
 msgid "_Device"
-msgstr ""
+msgstr "_Aygıt"
 
 #: ../blueman/gui/manager/ManagerMenu.py:44
 msgid "_View"
-msgstr ""
+msgstr "_Görünüm"
 
 #: ../blueman/gui/manager/ManagerMenu.py:45
 msgid "_Help"
-msgstr ""
+msgstr "_Yardım"
 
 #: ../blueman/gui/manager/ManagerMenu.py:58
 msgid "Get Help Online..."
@@ -771,15 +794,15 @@ msgstr ""
 
 #: ../blueman/gui/manager/ManagerMenu.py:78
 msgid "Device Manager"
-msgstr ""
+msgstr "Aygıt Yöneticisi"
 
 #: ../blueman/gui/manager/ManagerMenu.py:86
 msgid "Show Toolbar"
-msgstr ""
+msgstr "Araç Çubuğunu Göster"
 
 #: ../blueman/gui/manager/ManagerMenu.py:98
 msgid "Show Statusbar"
-msgstr ""
+msgstr "Durum çubuğunu Göster"
 
 #: ../blueman/gui/manager/ManagerMenu.py:114
 msgid "Latest Device First"
@@ -790,9 +813,8 @@ msgid "Latest Device Last"
 msgstr ""
 
 #: ../blueman/plugins/services/Headset.py:43
-#, fuzzy
 msgid "Headset"
-msgstr "Servis:"
+msgstr ""
 
 #: ../data/blueman.desktop.in.h:1
 msgid "Blueman Applet"
@@ -804,15 +826,15 @@ msgstr ""
 
 #: ../data/blueman-manager.desktop.in.h:2
 msgid "Bluetooth Manager"
-msgstr ""
+msgstr "Bluetooth Yöneticisi"
 
 #: ../data/configs/org.blueman.policy.in.h:1
 msgid "Configure Bluetooth Modems"
-msgstr ""
+msgstr "Bluetooth Modemleri Ayarla"
 
 #: ../data/configs/org.blueman.policy.in.h:2
 msgid "Configure Bluetooth Network"
-msgstr ""
+msgstr "Bluetooth Ağını Ayarla"
 
 #: ../data/configs/org.blueman.policy.in.h:3
 msgid "Launch DHCP client"
@@ -828,7 +850,7 @@ msgstr ""
 
 #: ../data/configs/org.blueman.policy.in.h:6
 msgid "The Blueman Project"
-msgstr ""
+msgstr "Blueman Projesi"
 
 #: ../apps/blueman-manager:85
 msgid "Bluetooth Turned Off"
@@ -844,11 +866,11 @@ msgstr ""
 
 #: ../apps/blueman-manager:181 ../apps/blueman-assistant:255
 msgid "Adding"
-msgstr ""
+msgstr "Ekleniyor"
 
 #: ../apps/blueman-manager:192
 msgid "Searching"
-msgstr ""
+msgstr "Aranıyor"
 
 #: ../apps/blueman-manager:199 ../apps/blueman-applet:296
 msgid "Starting Bluetooth Assistant"
@@ -856,7 +878,7 @@ msgstr ""
 
 #: ../apps/blueman-manager:212
 msgid "Success"
-msgstr ""
+msgstr "Başarılı"
 
 #: ../apps/blueman-manager:216
 msgid "Failure"
@@ -876,7 +898,7 @@ msgstr ""
 
 #: ../apps/blueman-applet:74
 msgid "Bluetooth Off"
-msgstr ""
+msgstr "Bluetooth Kapalı"
 
 #: ../apps/blueman-applet:75
 msgid "Turn off all adapters"
@@ -909,7 +931,7 @@ msgstr ""
 
 #: ../apps/blueman-applet:259
 msgid "Send files to device"
-msgstr ""
+msgstr "Dosyaları Aygıta Gönder"
 
 #: ../apps/blueman-applet:264
 msgid "Browse files on device"
@@ -917,7 +939,7 @@ msgstr ""
 
 #: ../apps/blueman-applet:273
 msgid "Devices"
-msgstr ""
+msgstr "Aygıtlar"
 
 #: ../apps/blueman-applet:276
 msgid "Adapters"
@@ -935,27 +957,36 @@ msgstr ""
 msgid "Starting Service Preferences"
 msgstr ""
 
+#: ../apps/blueman-adapters:143
+#, fuzzy
+msgid "Always"
+msgstr "Her zaman kabul et"
+
+#: ../apps/blueman-adapters:147
+#, fuzzy, c-format
+msgid "%d Minute"
+msgid_plural "%d Minutes"
+msgstr[0] "%.0f Dakika"
+
 #: ../apps/blueman-sendto:103
 msgid "obex-data-server is probably not installed"
 msgstr ""
 
 #: ../apps/blueman-sendto:142 ../apps/blueman-sendto:175
 msgid "Sending File %(0)s/%(1)s (%(2).2f %(3)s/s) ETA: %(4)s"
-msgstr ""
+msgstr "Dosya Gönderiliyor %(0)s/%(1)s (%(2).2f %(3)s/s) ETA: %(4)s"
 
 #: ../apps/blueman-sendto:170
 #, c-format
 msgid "%.0f Minute"
 msgid_plural "%.0f Minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%.0f Dakika"
 
 #: ../apps/blueman-sendto:172
 #, c-format
 msgid "%.0f Second"
 msgid_plural "%.0f Seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%.0f Saniye"
 
 #: ../apps/blueman-sendto:225
 #, c-format
@@ -964,15 +995,15 @@ msgstr ""
 
 #: ../apps/blueman-sendto:228
 msgid "Skip"
-msgstr ""
+msgstr "Atla"
 
 #: ../apps/blueman-sendto:229
 msgid "Retry"
-msgstr ""
+msgstr "Yeniden Dene"
 
 #: ../apps/blueman-sendto:273
 msgid "Send files to this device"
-msgstr ""
+msgstr "Aygıta dosyaları yolla"
 
 #: ../apps/blueman-sendto:328
 msgid "Select files to send"
@@ -1003,19 +1034,16 @@ msgid "<b>Failed to add device</b>"
 msgstr ""
 
 #: ../apps/blueman-assistant:302
-#, fuzzy
 msgid "Input Service"
-msgstr "Servis:"
+msgstr ""
 
 #: ../apps/blueman-assistant:320
-#, fuzzy
 msgid "A2DP Service"
-msgstr "Servis:"
+msgstr ""
 
 #: ../apps/blueman-assistant:325
-#, fuzzy
 msgid "Headset Service"
-msgstr "Servis:"
+msgstr ""
 
 #: ../apps/blueman-assistant:329
 msgid "Don't connect"
@@ -1041,3 +1069,6 @@ msgstr ""
 #: ../apps/blueman-browse:77
 msgid "You can enter an alternate browser in service settings"
 msgstr ""
+
+#~ msgid "gtk-cancel"
+#~ msgstr "gtk-iptal"

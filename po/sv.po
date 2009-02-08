@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-08 16:47+0200\n"
-"PO-Revision-Date: 2008-12-12 09:28+0000\n"
+"POT-Creation-Date: 2009-02-08 18:09+0200\n"
+"PO-Revision-Date: 2009-02-06 21:30+0000\n"
 "Last-Translator: Daniel Nylander <yeager@ubuntu.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2008-12-26 10:41+0000\n"
+"X-Launchpad-Export-Date: 2009-02-08 14:40+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -30,7 +30,7 @@ msgstr "<b>Synlighetsinställning</b>"
 msgid "Always visible"
 msgstr "Alltid synlig"
 
-#: ../data/ui/adapters-tab.ui.h:4
+#: ../data/ui/adapters-tab.ui.h:4 ../apps/blueman-adapters:145
 msgid "Hidden"
 msgstr "Dold"
 
@@ -39,9 +39,8 @@ msgid "Temporary visible"
 msgstr "Temporärt synlig"
 
 #: ../data/ui/adapters.ui.h:1
-#, fuzzy
 msgid "Bluetooth Adapters"
-msgstr "Bluetooth Nätverk"
+msgstr "Blåtandsadaptrar"
 
 #: ../data/ui/applet-passkey.ui.h:1
 msgid "Authentication request"
@@ -55,55 +54,63 @@ msgstr "Ihopparningsbegäran för enhet:"
 msgid "Show input"
 msgstr "Visa inmatning"
 
-#: ../data/ui/manager-main.ui.h:1
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:2
 msgid "Add"
 msgstr "Lägg till"
 
-#: ../data/ui/manager-main.ui.h:2
+#: ../data/ui/manager-main.ui.h:3
 msgid "Bluetooth Devices"
 msgstr "Blåtandsenheter"
 
-#: ../data/ui/manager-main.ui.h:3
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:5
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:246
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:474
 msgid "Bond"
 msgstr "Para ihop"
 
-#: ../data/ui/manager-main.ui.h:4
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:7
 msgid "Browse"
 msgstr "Bläddra"
 
-#: ../data/ui/manager-main.ui.h:5
+#: ../data/ui/manager-main.ui.h:8
 msgid "Create bonding with the device"
-msgstr ""
+msgstr "Skapa ihopparning med enheten"
 
-#: ../data/ui/manager-main.ui.h:6
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:10
 msgid "Remove"
 msgstr "Ta bort"
 
-#: ../data/ui/manager-main.ui.h:7 ../blueman/gui/manager/ManagerMenu.py:204
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:12 ../blueman/gui/manager/ManagerMenu.py:204
 msgid "Search"
 msgstr "Sök"
 
-#: ../data/ui/manager-main.ui.h:8
+#: ../data/ui/manager-main.ui.h:13
 msgid "Search for nearby devices"
-msgstr ""
+msgstr "Sök efter närliggande enheter"
 
-#: ../data/ui/manager-main.ui.h:9
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:15
 msgid "Send File"
 msgstr "Skicka fil"
 
-#: ../data/ui/manager-main.ui.h:10
+#: ../data/ui/manager-main.ui.h:16
 msgid "Setup this device"
-msgstr ""
+msgstr "Konfigurera denna enhet"
 
-#: ../data/ui/manager-main.ui.h:11
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:18
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:241
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:495
 msgid "Setup..."
 msgstr "Konfigurera..."
 
-#: ../data/ui/manager-main.ui.h:12
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:20
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:485
 #: ../blueman/gui/manager/ManagerToolbar.py:105
 msgid "Trust"
@@ -164,19 +171,16 @@ msgid "Network Access Point (NAP)"
 msgstr "Anslutningspunkt (NAP)"
 
 #: ../data/ui/services-transfer.ui.h:1
-#, fuzzy
 msgid "<b>Advanced</b>"
-msgstr "<b>Ihopkopplad</b>"
+msgstr ""
 
 #: ../data/ui/services-transfer.ui.h:2
-#, fuzzy
 msgid "<b>File Receiving (Object Push)</b>"
-msgstr "<b>Object Push</b>"
+msgstr ""
 
 #: ../data/ui/services-transfer.ui.h:3
-#, fuzzy
 msgid "<b>File Sharing (FTP)</b>"
-msgstr "<b>Filöverföring</b>"
+msgstr ""
 
 #: ../data/ui/services-transfer.ui.h:4
 msgid "<b>Transfer Settings</b>"
@@ -196,6 +200,8 @@ msgid ""
 "Command to start an obex ftp browser.\n"
 "<i>%d</i> is substituted with device address."
 msgstr ""
+"Kommando för att starta en obex ftp-bläddrare.\n"
+"<i>%d</i> ersätts med enhetens adress."
 
 #: ../data/ui/services-transfer.ui.h:10
 msgid "Enabled"
@@ -225,26 +231,21 @@ msgstr "<span weight=\"bold\" size=\"large\">Skicka filer via Bluetooth</span>"
 msgid "Bluetooth File Transfer"
 msgstr "Bluetooth filöverföring"
 
-#: ../data/ui/send-dialog.ui.h:5
-msgid "gtk-cancel"
-msgstr "Avbryt"
-
 #: ../data/ui/assistant.ui.h:1
 msgid "<b>Congratulations, device successfully added</b>"
-msgstr ""
+msgstr "<b>Gratulerar, enheten lades till</b>"
 
 #: ../data/ui/assistant.ui.h:2
-#, fuzzy
 msgid "<b>Connect to:</b>"
-msgstr "<b>Ihopkopplad</b>"
+msgstr "<b>Anslut till:</b>"
 
 #: ../data/ui/assistant.ui.h:3
 msgid "<b>Please wait...</b>"
-msgstr ""
+msgstr "<b>Vänta...</b>"
 
 #: ../data/ui/assistant.ui.h:4
 msgid "<b>Select pairing method to use:</b>"
-msgstr ""
+msgstr "<b>Välj hopparningsmetod att använda:</b>"
 
 #: ../data/ui/assistant.ui.h:5
 msgid ""
@@ -254,26 +255,33 @@ msgid ""
 "It will walk you through the process of configuring and connecting to your "
 "bluetooth enabled devices."
 msgstr ""
+"<b>Välkommen till konfigurationsguiden för blåtandsenheter. </b>\n"
+"\n"
+"\n"
+"Den kommer att hjälpa dig med att konfigurera och ansluta till dina "
+"blåtandsaktiverade enheter."
 
 #: ../data/ui/assistant.ui.h:9
 msgid "Don't Pair"
-msgstr ""
+msgstr "Para inte ihop"
 
 #: ../data/ui/assistant.ui.h:10
 msgid "Use My Own Passkey:"
-msgstr ""
+msgstr "Använd min egna lösennyckel:"
 
 #: ../data/ui/assistant.ui.h:11
 msgid "Use Random Passkey"
-msgstr ""
+msgstr "Använd slumpmässig lösennyckel"
 
 #: ../data/ui/device-list-widget.ui.h:1
+#, fuzzy
 msgid "Adapter selection"
-msgstr ""
+msgstr "Adaptrar"
 
 #: ../data/ui/device-list-widget.ui.h:2
+#, fuzzy
 msgid "Search for devices"
-msgstr ""
+msgstr "Sök efter närliggande enheter"
 
 #: ../data/ui/services-headset.ui.h:1
 #, fuzzy
@@ -286,7 +294,7 @@ msgstr ""
 
 #: ../blueman/Sdp.py:101
 msgid "Dialup Networking (DUN)"
-msgstr ""
+msgstr "Uppringt nätverk (DUN)"
 
 #: ../blueman/main/applet/NetworkManager.py:73
 #: ../blueman/main/applet/NetworkManager.py:76
@@ -415,77 +423,94 @@ msgstr "Tjänst:"
 msgid "Always accept"
 msgstr "Acceptera alltid"
 
-#: ../blueman/DeviceClass.py:38 ../blueman/DeviceClass.py:57
+#. translators: device class
+#: ../blueman/DeviceClass.py:39 ../blueman/DeviceClass.py:64
 msgid "uncategorized"
-msgstr ""
+msgstr "okategoriserad"
 
-#: ../blueman/DeviceClass.py:39
-msgid "desktop"
-msgstr ""
-
-#: ../blueman/DeviceClass.py:40
-msgid "server"
-msgstr ""
-
+#. translators: device class
 #: ../blueman/DeviceClass.py:41
-msgid "laptop"
-msgstr ""
+msgid "desktop"
+msgstr "stationär dator"
 
-#: ../blueman/DeviceClass.py:42
-msgid "handheld"
-msgstr ""
-
+#. translators: device class
 #: ../blueman/DeviceClass.py:43
+msgid "server"
+msgstr "server"
+
+#. translators: device class
+#: ../blueman/DeviceClass.py:45
+msgid "laptop"
+msgstr "bärbar dator"
+
+#. translators: device class
+#: ../blueman/DeviceClass.py:47
+msgid "handheld"
+msgstr "handdator"
+
+#. translators: device class
+#: ../blueman/DeviceClass.py:49
 msgid "palm"
-msgstr ""
+msgstr "palm"
 
-#: ../blueman/DeviceClass.py:58
+#. translators: device class
+#: ../blueman/DeviceClass.py:66
 msgid "cellular"
-msgstr ""
+msgstr "mobil"
 
-#: ../blueman/DeviceClass.py:59
+#. translators: device class
+#: ../blueman/DeviceClass.py:68
 msgid "cordless"
-msgstr ""
+msgstr "sladdlös"
 
-#: ../blueman/DeviceClass.py:60
+#. translators: device class
+#: ../blueman/DeviceClass.py:70
 msgid "smart phone"
-msgstr ""
+msgstr "telefondator"
 
-#: ../blueman/DeviceClass.py:61
+#. translators: device class
+#: ../blueman/DeviceClass.py:72
 msgid "modem"
-msgstr ""
+msgstr "modem"
 
-#: ../blueman/DeviceClass.py:62
+#. translators: device class
+#: ../blueman/DeviceClass.py:74
 msgid "isdn"
-msgstr ""
+msgstr "isdn"
 
-#: ../blueman/DeviceClass.py:98
+#. translators: device class
+#: ../blueman/DeviceClass.py:111
 msgid "headset"
-msgstr ""
+msgstr "headset"
 
-#: ../blueman/DeviceClass.py:99
+#. translators: device class
+#: ../blueman/DeviceClass.py:113
 msgid "handsfree"
-msgstr ""
+msgstr "handsfree"
 
-#: ../blueman/DeviceClass.py:100
+#. translators: device class
+#: ../blueman/DeviceClass.py:115
 msgid "unknown"
 msgstr "okänt"
 
-#: ../blueman/DeviceClass.py:101
+#. translators: device class
+#: ../blueman/DeviceClass.py:117
 msgid "microphone"
-msgstr ""
+msgstr "mikrofon"
 
-#: ../blueman/DeviceClass.py:125
+#. translators: device class
+#: ../blueman/DeviceClass.py:142
 msgid "keyboard"
-msgstr ""
+msgstr "tangentbord"
 
-#: ../blueman/DeviceClass.py:126
+#. translators: device class
+#: ../blueman/DeviceClass.py:144
 msgid "pointing"
-msgstr ""
+msgstr "pekenhet"
 
 #: ../blueman/plugins/services/Transfer.py:45
 msgid "Transfer"
-msgstr ""
+msgstr "Överföring"
 
 #: ../blueman/plugins/services/Transfer.py:132 ../apps/blueman-sendto:102
 msgid "obex-data-server not available"
@@ -493,11 +518,11 @@ msgstr ""
 
 #: ../blueman/plugins/services/Network.py:45
 msgid "Network"
-msgstr ""
+msgstr "Nätverk"
 
 #: ../blueman/plugins/services/Network.py:117 ../apps/blueman-applet:144
 msgid "Failed to apply network settings"
-msgstr ""
+msgstr "Misslyckades med att verkställa nätverksinställningar"
 
 #: ../blueman/gui/DeviceSelectorDialog.py:31
 msgid "Select Device"
@@ -523,25 +548,25 @@ msgstr "Gör upptäckningsbar"
 #: ../blueman/gui/applet/RecentConns.py:150
 #, python-format
 msgid "Connecting to %s"
-msgstr ""
+msgstr "Ansluter till %s"
 
 #: ../blueman/gui/applet/RecentConns.py:154
 msgid "Connected"
-msgstr ""
+msgstr "Ansluten"
 
 #: ../blueman/gui/applet/RecentConns.py:154
 #, python-format
 msgid "Connected to %s"
-msgstr ""
+msgstr "Ansluten till %s"
 
 #: ../blueman/gui/applet/RecentConns.py:159
 msgid "Failed to connect"
-msgstr ""
+msgstr "Misslyckades med att ansluta"
 
 #: ../blueman/gui/applet/RecentConns.py:179
 #, python-format
 msgid "Network Access (%s)"
-msgstr ""
+msgstr "Nätverksåtkomst (%s)"
 
 #: ../blueman/gui/applet/RecentConns.py:181
 msgid "Service"
@@ -550,7 +575,7 @@ msgstr "Tjänst"
 #: ../blueman/gui/applet/RecentConns.py:186
 #, python-format
 msgid "%(service)s on %(device)s"
-msgstr ""
+msgstr "%(service)s på %(device)s"
 
 #: ../blueman/gui/manager/ManagerProgressbar.py:33 ../apps/blueman-sendto:69
 msgid "Connecting"
@@ -769,15 +794,15 @@ msgstr "_Hjälp"
 
 #: ../blueman/gui/manager/ManagerMenu.py:58
 msgid "Get Help Online..."
-msgstr ""
+msgstr "Få hjälp på nätet..."
 
 #: ../blueman/gui/manager/ManagerMenu.py:63
 msgid "Translate This Application..."
-msgstr ""
+msgstr "Översätt detta program..."
 
 #: ../blueman/gui/manager/ManagerMenu.py:68
 msgid "Report a Problem"
-msgstr ""
+msgstr "Rapportera ett fel"
 
 #: ../blueman/gui/manager/ManagerMenu.py:78
 msgid "Device Manager"
@@ -802,24 +827,23 @@ msgstr "Senaste enheten sist"
 #: ../blueman/plugins/services/Headset.py:43
 #, fuzzy
 msgid "Headset"
-msgstr "Anslut headset-tjänst"
+msgstr "headset"
 
 #: ../data/blueman.desktop.in.h:1
 msgid "Blueman Applet"
-msgstr ""
+msgstr "Panelprogrammet Blueman"
 
 #: ../data/blueman.desktop.in.h:2 ../data/blueman-manager.desktop.in.h:1
 msgid "Blueman Bluetooth Manager"
 msgstr "Blåtandshanteraren Blueman"
 
 #: ../data/blueman-manager.desktop.in.h:2
-#, fuzzy
 msgid "Bluetooth Manager"
-msgstr "Blåtandshanteraren Blueman"
+msgstr "Bluetooth-hanterare"
 
 #: ../data/configs/org.blueman.policy.in.h:1
 msgid "Configure Bluetooth Modems"
-msgstr ""
+msgstr "Konfigurera blåtandsmodem"
 
 #: ../data/configs/org.blueman.policy.in.h:2
 msgid "Configure Bluetooth Network"
@@ -863,7 +887,7 @@ msgstr "Söker"
 
 #: ../apps/blueman-manager:199 ../apps/blueman-applet:296
 msgid "Starting Bluetooth Assistant"
-msgstr ""
+msgstr "Startar Blåtandsguide"
 
 #: ../apps/blueman-manager:212
 msgid "Success"
@@ -879,11 +903,11 @@ msgstr "Ihopparning"
 
 #: ../apps/blueman-manager:232 ../apps/blueman-applet:312
 msgid "Starting Adapter Preferences"
-msgstr ""
+msgstr "Startar adapterinställningar"
 
 #: ../apps/blueman-manager:241 ../apps/blueman-applet:300
 msgid "Starting File Sender"
-msgstr ""
+msgstr "Startar filsändare"
 
 #: ../apps/blueman-applet:74
 msgid "Bluetooth Off"
@@ -895,59 +919,68 @@ msgstr "Stäng av alla adaptrar"
 
 #: ../apps/blueman-applet:80
 msgid "Recent Connections"
-msgstr ""
+msgstr "Tidigare anslutningar"
 
 #: ../apps/blueman-applet:87
-#, fuzzy
 msgid "Bluetooth applet"
-msgstr "Bluetooth Nätverk"
+msgstr "Blåtandspanelprogram"
 
 #: ../apps/blueman-applet:145
 msgid ""
 "You might not be able to connect to the Bluetooth network via this machine"
-msgstr ""
+msgstr "Du kanske inte kan ansluta till blåtandsnätverket via denna maskin"
 
 #: ../apps/blueman-applet:161
-#, fuzzy
 msgid "<b>Turn Bluetooth On</b>"
-msgstr "<b>Överföringsinställningar</b>"
+msgstr "<b>Aktivera Bluetooth</b>"
 
 #: ../apps/blueman-applet:165
-#, fuzzy
 msgid "<b>Turn Bluetooth Off</b>"
-msgstr "Bluetooth avslaget"
+msgstr "<b>Inaktivera Bluetooth</b>"
 
 #: ../apps/blueman-applet:256
 msgid "Setup new device"
-msgstr ""
+msgstr "Konfigurera ny enhet"
 
 #: ../apps/blueman-applet:259
 msgid "Send files to device"
-msgstr ""
+msgstr "Skicka filer till enhet"
 
 #: ../apps/blueman-applet:264
 msgid "Browse files on device"
-msgstr ""
+msgstr "Blädra i filer på enhet"
 
 #: ../apps/blueman-applet:273
 msgid "Devices"
-msgstr ""
+msgstr "Enheter"
 
 #: ../apps/blueman-applet:276
 msgid "Adapters"
-msgstr ""
+msgstr "Adaptrar"
 
 #: ../apps/blueman-applet:304
 msgid "Starting File Browser"
-msgstr ""
+msgstr "Startar filbläddrare"
 
 #: ../apps/blueman-applet:308
 msgid "Starting Device Manager"
-msgstr ""
+msgstr "Startar enhetshanterare"
 
 #: ../apps/blueman-applet:316
 msgid "Starting Service Preferences"
-msgstr ""
+msgstr "Startar tjänsteinställningar"
+
+#: ../apps/blueman-adapters:143
+#, fuzzy
+msgid "Always"
+msgstr "Acceptera alltid"
+
+#: ../apps/blueman-adapters:147
+#, fuzzy, c-format
+msgid "%d Minute"
+msgid_plural "%d Minutes"
+msgstr[0] "%.0f minut"
+msgstr[1] "%.0f minuter"
 
 #: ../apps/blueman-sendto:103
 msgid "obex-data-server is probably not installed"
@@ -989,23 +1022,20 @@ msgid "Send files to this device"
 msgstr "Skicka filer till denna enhet"
 
 #: ../apps/blueman-sendto:328
-#, fuzzy
 msgid "Select files to send"
-msgstr "Välj filer att sända"
+msgstr "Välj filer att skicka"
 
 #: ../apps/blueman-assistant:63
 msgid "Start configuration assistant for this device"
-msgstr ""
+msgstr "Starta konfigurationsguiden för denna enhet"
 
 #: ../apps/blueman-assistant:78
-#, fuzzy
 msgid "Bluetooth Assistant"
-msgstr "Blåtandsenheter"
+msgstr "Blåtandsguide"
 
 #: ../apps/blueman-assistant:254
-#, fuzzy
 msgid "<b>Adding Device...</b>"
-msgstr "<b>Tjänster</b>"
+msgstr "<b>Lägger Till Enhet...</b>"
 
 #: ../apps/blueman-assistant:260
 #, c-format
@@ -1014,61 +1044,50 @@ msgid ""
 "\n"
 "Enter passkey <b>%s</b> on the device."
 msgstr ""
+"<b>Ihopparning pågår...</b>\n"
+"\n"
+"Ange lösennyckeln <b>%s</b> på enheten."
 
 #: ../apps/blueman-assistant:267
 msgid "<b>Failed to add device</b>"
-msgstr ""
+msgstr "<b>Misslyckades med att lägga till enheten</b>"
 
 #: ../apps/blueman-assistant:302
-#, fuzzy
 msgid "Input Service"
-msgstr "Anslut inmatningstjänst"
+msgstr "Inmatningstjänst"
 
 #: ../apps/blueman-assistant:320
-#, fuzzy
 msgid "A2DP Service"
-msgstr "Anslut A2DP-tjänst"
+msgstr "A2DP-tjänst"
 
 #: ../apps/blueman-assistant:325
-#, fuzzy
 msgid "Headset Service"
-msgstr "Anslut headset-tjänst"
+msgstr "Headset-tjänst"
 
 #: ../apps/blueman-assistant:329
-#, fuzzy
 msgid "Don't connect"
-msgstr "Koppla från %s"
+msgstr "Anslut inte"
 
 #: ../apps/blueman-assistant:344
 msgid "<b>Device added and connected successfuly</b>"
-msgstr ""
+msgstr "<b>Enheten har lagts till och anslutits</b>"
 
 #: ../apps/blueman-assistant:350
 msgid "<b>Device added successfuly, but failed to connect</b>"
-msgstr ""
+msgstr "<b>Enheten har lagts till men gick inte att ansluta till</b>"
 
 #: ../apps/blueman-browse:49
-#, fuzzy
 msgid "Browse this device"
-msgstr "Bläddra enhet..."
+msgstr "Bläddra i denna enhet"
 
 #: ../apps/blueman-browse:76
 #, c-format
 msgid "Failed to launch \"%s\""
-msgstr ""
+msgstr "Misslyckades med att starta \"%s\""
 
 #: ../apps/blueman-browse:77
 msgid "You can enter an alternate browser in service settings"
-msgstr ""
+msgstr "Du kan ange en alternativ webbläsare i tjänsteinställningarna"
 
-#~ msgid "Bluetooth adapter preferences"
-#~ msgstr "Inställningar för blåtandsadapter"
-
-#~ msgid "File Progress"
-#~ msgstr "Filförlopp"
-
-#~ msgid "Total Progress"
-#~ msgstr "Totalt förlopp"
-
-#~ msgid "Transferring File %(0)s/%(1)s (0 B/s) ETA: ∞"
-#~ msgstr "Överför fil %(0)s/%(1)s (0 B/s) Återstående tid: ∞"
+#~ msgid "gtk-cancel"
+#~ msgstr "Avbryt"

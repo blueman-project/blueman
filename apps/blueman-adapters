@@ -26,6 +26,8 @@ import gobject
 import pango
 import os.path
 import sys
+import gettext
+_ = gettext.gettext
 
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -36,9 +38,6 @@ import blueman.bluez as Bluez
 from blueman.Constants import *
 from blueman.Functions import setup_icon_path, enable_rgba_colormap, check_single_instance
 from blueman.main.SignalTracker import SignalTracker
-	
-import gettext
-_ = gettext.gettext
 
 enable_rgba_colormap()
 
@@ -141,11 +140,11 @@ class BluemanAdapters:
 		def on_scale_format_value(scale, value):
 			if value == 0:
 				if adapter_settings['discoverable']:
-					return _('always')
+					return _("Always")
 				else:
-					return _('hidden')
+					return _("Hidden")
 			else:
-				return gettext.ngettext('%d minute', '%d minutes', value) % (value)
+				return gettext.ngettext("%d Minute", "%d Minutes", value) % (value)
 		def on_scale_value_changed(scale):
 			val = scale.get_value()
 			print 'value: ', val

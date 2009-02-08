@@ -35,11 +35,17 @@ computer_minor_cls = [
 	"wearable"
 ]
 computer_minor_cls_i18n = [
+	#translators: device class
 	_("uncategorized"),
+	#translators: device class
 	_("desktop"),
+	#translators: device class
 	_("server"),
+	#translators: device class
 	_("laptop"),
+	#translators: device class
 	_("handheld"),
+	#translators: device class
 	_("palm"),
 	"wearable"
 ]
@@ -54,11 +60,17 @@ phone_minor_cls = [
 	"isdn"
 ]
 phone_minor_cls_i18n = [
+	#translators: device class
 	_("uncategorized"),
+	#translators: device class
 	_("cellular"),
+	#translators: device class
 	_("cordless"),
+	#translators: device class
 	_("smart phone"),
+	#translators: device class
 	_("modem"),
+	#translators: device class
 	_("isdn")
 ]
 access_point_minor_cls = [
@@ -95,9 +107,13 @@ audio_video_minor_cls = [
 ]
 audio_video_minor_cls_i18n = [
 	"uncategorized",
+	#translators: device class
 	_("headset"),
+	#translators: device class
 	_("handsfree"),
+	#translators: device class
 	_("unknown"),
+	#translators: device class
 	_("microphone"),
 	"loudspeaker",
 	"headphones",
@@ -122,7 +138,9 @@ peripheral_minor_cls = [
 ]
 peripheral_minor_cls_i18n = [
 	"uncategorized",
+	#translators: device class
 	_("keyboard"),
+	#translators: device class
 	_("pointing"),
 	"combo"
 ]
