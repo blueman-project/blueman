@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-08 18:09+0200\n"
 "PO-Revision-Date: 2008-12-26 19:00+0000\n"
 "Last-Translator: Karl Skewes <Unknown>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-02-08 14:40+0000\n"
+"X-Launchpad-Export-Date: 2009-02-08 21:12+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -222,7 +222,8 @@ msgid "<b>To:</b>"
 msgstr "<b>宛先:</b>"
 
 #: ../data/ui/send-dialog.ui.h:3
-msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
+msgid ""
+"<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr "<span weight=\"bold\" size=\"large\">Bluetoothでファイルを送信</span>"
 
 #: ../data/ui/send-dialog.ui.h:4
@@ -267,19 +268,16 @@ msgid "Use Random Passkey"
 msgstr ""
 
 #: ../data/ui/device-list-widget.ui.h:1
-#, fuzzy
 msgid "Adapter selection"
-msgstr "アダプター"
+msgstr ""
 
 #: ../data/ui/device-list-widget.ui.h:2
-#, fuzzy
 msgid "Search for devices"
-msgstr "付近のデバイスを検索"
+msgstr ""
 
 #: ../data/ui/services-headset.ui.h:1
-#, fuzzy
 msgid "<b>Headset Settings</b>"
-msgstr "<b>転送 設定</b>"
+msgstr ""
 
 #: ../data/ui/services-headset.ui.h:2
 msgid "Command to execute when answer button is pressed:"
@@ -814,9 +812,8 @@ msgid "Latest Device Last"
 msgstr "最新デバイスを最後に"
 
 #: ../blueman/plugins/services/Headset.py:43
-#, fuzzy
 msgid "Headset"
-msgstr "ヘッドセット"
+msgstr ""
 
 #: ../data/blueman.desktop.in.h:1
 msgid "Blueman Applet"
@@ -960,15 +957,15 @@ msgid "Starting Service Preferences"
 msgstr "サービス設定を実行中"
 
 #: ../apps/blueman-adapters:143
-#, fuzzy
 msgid "Always"
-msgstr "常に許可"
+msgstr ""
 
 #: ../apps/blueman-adapters:147
-#, fuzzy, c-format
+#, c-format
 msgid "%d Minute"
 msgid_plural "%d Minutes"
-msgstr[0] "%.0f 分"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../apps/blueman-sendto:103
 msgid "obex-data-server is probably not installed"
@@ -1071,6 +1068,3 @@ msgstr ""
 #: ../apps/blueman-browse:77
 msgid "You can enter an alternate browser in service settings"
 msgstr ""
-
-#~ msgid "gtk-cancel"
-#~ msgstr "gtk-cancel"

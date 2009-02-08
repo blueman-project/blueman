@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-08 18:09+0200\n"
 "PO-Revision-Date: 2009-01-17 18:19+0000\n"
 "Last-Translator: Jakub Žáček <dawon.cz@gmail.com>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-02-08 14:40+0000\n"
+"X-Launchpad-Export-Date: 2009-02-08 21:12+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -222,10 +222,11 @@ msgid "<b>To:</b>"
 msgstr ""
 
 #: ../data/ui/send-dialog.ui.h:3
-msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
+msgid ""
+"<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr ""
-"<span weight=\"bold\" size=\"large\">Odesílání souborů pomocí Bluetooth</"
-"span>"
+"<span weight=\"bold\" size=\"large\">Odesílání souborů pomocí "
+"Bluetooth</span>"
 
 #: ../data/ui/send-dialog.ui.h:4
 msgid "Bluetooth File Transfer"
@@ -269,19 +270,16 @@ msgid "Use Random Passkey"
 msgstr ""
 
 #: ../data/ui/device-list-widget.ui.h:1
-#, fuzzy
 msgid "Adapter selection"
-msgstr "Adaptéry"
+msgstr ""
 
 #: ../data/ui/device-list-widget.ui.h:2
-#, fuzzy
 msgid "Search for devices"
-msgstr "Hledat zařízení v dosahu"
+msgstr ""
 
 #: ../data/ui/services-headset.ui.h:1
-#, fuzzy
 msgid "<b>Headset Settings</b>"
-msgstr "<b>Nastavení přenosu</b>"
+msgstr ""
 
 #: ../data/ui/services-headset.ui.h:2
 msgid "Command to execute when answer button is pressed:"
@@ -819,9 +817,8 @@ msgid "Latest Device Last"
 msgstr "Nejnovější zařízení poslední"
 
 #: ../blueman/plugins/services/Headset.py:43
-#, fuzzy
 msgid "Headset"
-msgstr "headset"
+msgstr ""
 
 #: ../data/blueman.desktop.in.h:1
 msgid "Blueman Applet"
@@ -965,17 +962,15 @@ msgid "Starting Service Preferences"
 msgstr "Spouštím možnost služby"
 
 #: ../apps/blueman-adapters:143
-#, fuzzy
 msgid "Always"
-msgstr "Vždy přijmout"
+msgstr ""
 
 #: ../apps/blueman-adapters:147
-#, fuzzy, c-format
+#, c-format
 msgid "%d Minute"
 msgid_plural "%d Minutes"
-msgstr[0] "%.0f Minuta"
-msgstr[1] "%.0f Minuty"
-msgstr[2] "%.0f Minut"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../apps/blueman-sendto:103
 msgid "obex-data-server is probably not installed"
@@ -1082,6 +1077,3 @@ msgstr ""
 #: ../apps/blueman-browse:77
 msgid "You can enter an alternate browser in service settings"
 msgstr ""
-
-#~ msgid "gtk-cancel"
-#~ msgstr "gtk-cancel"

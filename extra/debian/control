@@ -19,7 +19,7 @@ Build-Depends: debhelper (>= 7),
 
 Package: blueman
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, python (>= 2.5), dbus, bluez (>= 4.25), obex-data-server (>= 0.3), python-notify, python-gtk2, python-gconf, python-dbus, python-gobject
+Depends: ${shlibs:Depends}, ${misc:Depends}, python (>= 2.5), dbus, bluez (>= 4.25), obex-data-server (>= 0.4.3), python-notify, python-gtk2 (>= 2.12), python-gconf, python-dbus, python-gobject, policykit-gnome
 Conflicts: bluez-gnome
 Replaces: bluez-gnome
 Provides: bluez-gnome

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-08 18:09+0200\n"
 "PO-Revision-Date: 2007-12-14 18:13+0000\n"
 "Last-Translator: onlyeriko <onlyeriko@gmail.com>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-02-08 14:40+0000\n"
+"X-Launchpad-Export-Date: 2009-02-08 21:12+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -222,7 +222,8 @@ msgid "<b>To:</b>"
 msgstr ""
 
 #: ../data/ui/send-dialog.ui.h:3
-msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
+msgid ""
+"<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr ""
 
 #: ../data/ui/send-dialog.ui.h:4
@@ -744,8 +745,8 @@ msgid ""
 "Link Quality: %(lq)u%%\n"
 "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr ""
-"<b>연결됨</b>신호 강도 받음: %(rssi)u%% <i>(%(rssi_state)s)</i>연결 상태: %"
-"(lq)u%%파워 상태 보냄: %(tpl)u%% <i>(%(tpl_state)s)</i>"
+"<b>연결됨</b>신호 강도 받음: %(rssi)u%% <i>(%(rssi_state)s)</i>연결 상태: %(lq)u%%파워 상태 "
+"보냄: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
 #: ../blueman/gui/manager/ManagerStats.py:53
 #: ../blueman/gui/manager/ManagerStats.py:56
@@ -964,6 +965,7 @@ msgstr ""
 msgid "%d Minute"
 msgid_plural "%d Minutes"
 msgstr[0] ""
+msgstr[1] ""
 
 #: ../apps/blueman-sendto:103
 msgid "obex-data-server is probably not installed"

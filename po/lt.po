@@ -6,17 +6,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-08 18:09+0200\n"
-"PO-Revision-Date: 2009-02-08 13:30+0000\n"
+"PO-Revision-Date: 2009-02-08 16:54+0000\n"
 "Last-Translator: Valmantas Palikša <walmis@balticum-tv.lt>\n"
 "Language-Team: Lithuanian <lt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%"
-"100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-02-08 14:40+0000\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"(n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Launchpad-Export-Date: 2009-02-08 21:12+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -225,7 +225,8 @@ msgid "<b>To:</b>"
 msgstr "<b>Į:</b>"
 
 #: ../data/ui/send-dialog.ui.h:3
-msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
+msgid ""
+"<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr ""
 "<span weight=\"bold\" size=\"large\">Siunčiami failai per Bluetooth</span>"
 
@@ -274,23 +275,20 @@ msgid "Use Random Passkey"
 msgstr "Naudoti Atsitiktinį Raktą"
 
 #: ../data/ui/device-list-widget.ui.h:1
-#, fuzzy
 msgid "Adapter selection"
-msgstr "Adapteriai"
+msgstr "Adapterio pasirinkimas"
 
 #: ../data/ui/device-list-widget.ui.h:2
-#, fuzzy
 msgid "Search for devices"
-msgstr "Ieškoti šalimų įrenginių"
+msgstr "Ieškoti įrenginių"
 
 #: ../data/ui/services-headset.ui.h:1
-#, fuzzy
 msgid "<b>Headset Settings</b>"
-msgstr "<b>Siuntimo Nustatymai</b>"
+msgstr "<b>Ausinių Nustatymai</b>"
 
 #: ../data/ui/services-headset.ui.h:2
 msgid "Command to execute when answer button is pressed:"
-msgstr ""
+msgstr "Komanda, kurią paleisti nuspaudus \"atsiliepti\" mygtuką:"
 
 #: ../blueman/Sdp.py:101
 msgid "Dialup Networking (DUN)"
@@ -825,9 +823,8 @@ msgid "Latest Device Last"
 msgstr "Naujausias Įrenginys Paskutinis"
 
 #: ../blueman/plugins/services/Headset.py:43
-#, fuzzy
 msgid "Headset"
-msgstr "ausinė(s)"
+msgstr "Ausinės"
 
 #: ../data/blueman.desktop.in.h:1
 msgid "Blueman Applet"
@@ -923,7 +920,7 @@ msgstr "Pastarieji Prisijungimai"
 
 #: ../apps/blueman-applet:87
 msgid "Bluetooth applet"
-msgstr ""
+msgstr "Bluetooth valdymas"
 
 #: ../apps/blueman-applet:145
 msgid ""
@@ -972,17 +969,16 @@ msgid "Starting Service Preferences"
 msgstr "Paleidžiami Paslaugų Nustatymai"
 
 #: ../apps/blueman-adapters:143
-#, fuzzy
 msgid "Always"
-msgstr "Visada leisti"
+msgstr "Visada"
 
 #: ../apps/blueman-adapters:147
-#, fuzzy, c-format
+#, c-format
 msgid "%d Minute"
 msgid_plural "%d Minutes"
-msgstr[0] "%.0f Minutė"
-msgstr[1] "%.0f Minučių"
-msgstr[2] "%.0f Minutės"
+msgstr[0] "%d Minutė"
+msgstr[1] "%d Minutės"
+msgstr[2] "%d Minučių"
 
 #: ../apps/blueman-sendto:103
 msgid "obex-data-server is probably not installed"
@@ -1092,6 +1088,3 @@ msgstr "Nepavyko paleisti \"%s\""
 #: ../apps/blueman-browse:77
 msgid "You can enter an alternate browser in service settings"
 msgstr "Jūs galite pasirinkti alternatyvią naršyklę paslaugų nustatymuose"
-
-#~ msgid "gtk-cancel"
-#~ msgstr "gtk-cancel"
