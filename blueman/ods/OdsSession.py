@@ -44,6 +44,7 @@ class OdsSession(OdsBase):
 	def __del__(self):
 		dprint("deleting session")
 		
+	#this is executed by gobject, before the connected signal is emitted
 	def do_connected(self):
 		self.Connected = True
 		

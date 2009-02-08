@@ -94,8 +94,16 @@ class Sender(gobject.GObject):
 				self.files.remove(f)
 		
 		self.num_files = len(self.files)
-		
-		self.manager = OdsManager()
+		try:
+			self.manager = OdsManager()
+		except:
+			d = gtk.MessageDialog(  self.window,
+			type=gtk.MESSAGE_ERROR, buttons=gtk.BUTTONS_OK)
+			d.props.text = _("obex-data-server not available")
+			d.props.secondary_text = _("obex-data-server is probably not installed")
+			d.run()
+			d.destroy()
+			exit(1)
 		
 		self.l_file.props.label = os.path.basename(self.files[-1])
 		
@@ -128,8 +136,15 @@ class Sender(gobject.GObject):
 		
 	def on_transfer_started(self, session, filename, path, size):
 		print "transfer started"
-		self.pb.props.text = _("Transferring File %(0)s/%(1)s (0 B/s) ETA: ∞") % {"1": self.num_files, 
-									"0": (self.num_files - len(self.files)+1)}
+		
+		#first transfer
+		if self.total_transferred == 0:
+			self.pb.props.text = _("Sending File %(0)s/%(1)s (%(2).2f %(3)s/s) ETA: %(4)s") % {"1": self.num_files, 
+										"0": (self.num_files - len(self.files)+1),
+										"2": 0.0,
+										"3": "B/s",
+										"4": "∞" }
+		
 		self.l_file.props.label = filename
 		self._last_bytes = 0
 		self.transferred = 0
@@ -146,15 +161,15 @@ class Sender(gobject.GObject):
 		
 		tm = time.time()
 		if tm - self._last_update > 0.5:
-			spd = self.speed.calc(progress)
+			spd = self.speed.calc(self.total_transferred)
 			(size, units) = format_bytes(spd)
 			try:
 				x = ((self.total_bytes-self.total_transferred) / spd)+1
 				if x > 60:
 					x = x / 60
-					eta = ngettext("%.0f Minute", "%.0f Minutes", x) % x
+					eta = ngettext("%.0f Minute", "%.0f Minutes", round(x)) % x
 				else:
-					eta = ngettext("%.0f Second", "%.0f Seconds", x) % x
+					eta = ngettext("%.0f Second", "%.0f Seconds", round(x)) % x
 			except ZeroDivisionError:
 				eta = "∞"
 			self.pb.props.text = _("Sending File %(0)s/%(1)s (%(2).2f %(3)s/s) ETA: %(4)s") % {"1": self.num_files, 
@@ -203,7 +218,7 @@ class Sender(gobject.GObject):
 		
 	def on_session_error(self, session, name, msg):
 		print "session err", name, msg
-		
+		self.speed.reset()
 		d = gtk.MessageDialog(  self.window,
 					type=gtk.MESSAGE_ERROR)
 		d.props.text = msg

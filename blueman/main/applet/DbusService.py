@@ -135,8 +135,10 @@ class DbusService(dbus.service.Object):
 		else:
 			dprint("Got unknown action")
 		
-	@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="s", out_signature="u")
+	@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="s", out_signature="d")
 	def TransferStatus(self, pattern):
+		if not self.applet.Transfer:
+			return -1
 		server = self.applet.Transfer.get_server(pattern)
 		if server != None:
 			if server.IsStarted():

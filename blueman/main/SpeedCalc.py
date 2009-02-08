@@ -26,7 +26,12 @@ class SpeedCalc:
 		self.moving_avg = moving_avg
 		self.log = []
 		
+		self.reference = 0
+		
 	def calc(self, amount):
+		if self.log == []:
+			self.reference = amount
+		amount -= self.reference	
 		curtime = round(time.time(), 2)
 		self.log.append((curtime, amount))
 		if len(self.log) >= 2:

@@ -56,7 +56,6 @@ class OdsManager(OdsBase):
 		if session_path in self.Sessions:
 			session = self.Sessions[session_path]
 			if not session.Connected:
-				session.do_connected()
 				session.emit("connected")
 	
 	def on_session_error(self, session_path, err_name, err_msg):
