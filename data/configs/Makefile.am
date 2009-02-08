@@ -16,8 +16,9 @@ policykit_DATA = $(policykit_in_files:.policy.in=.policy)
 
 EXTRA_DIST =					\
 	org.blueman.Mechanism.conf		\
-	$(dbus_sess_DATA)		\
-	$(dbus_services_DATA)
+	blueman-applet.service.in		\
+	org.blueman.Mechanism.service.in		\
+	org.blueman.policy.in
 
 CLEANFILES =		\
 	org.blueman.Mechanism.service	\

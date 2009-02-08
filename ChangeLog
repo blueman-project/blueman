@@ -1,3 +1,318 @@
+2009-02-08 00:06  tadas
+
+	* data/ui/services-network.ui, data/ui/services-transfer.ui: HIG
+	  rulez
+
+2009-02-07 23:54  tadas
+
+	* blueman/gui/DeviceSelectorDialog.py,
+	  data/ui/device-list-widget.ui, data/ui/services-headset.ui,
+	  data/ui/services-network.ui, data/ui/services-transfer.ui,
+	  data/ui/services.ui: Fix dialog spacing
+
+2009-02-07 23:30  tadas
+
+	* apps/blueman-sendto, blueman/ods/OdsManager.py,
+	  data/ui/send-dialog.ui: Redesign sendto UI a bit and fix sending
+	  several files
+
+2009-02-07 21:13  walmis
+
+	* po/blueman.pot: update po template
+
+2009-02-07 21:08  walmis
+
+	* extra/debian/control, extra/debian/rules, po/blueman.pot: update
+	  debian info
+
+2009-02-07 19:53  tadas
+
+	* apps/blueman-adapters, data/ui/adapters.ui: adapters improvements
+
+2009-02-07 17:10  walmis
+
+	* data/blueman-manager.desktop.in: rename
+
+2009-02-07 17:03  walmis
+
+	* data/ui/services-transfer.ui: move the browse command to
+	  "advanced" expander
+
+2009-02-06 21:01  walmis
+
+	* apps/blueman-browse, blueman/gui/DeviceSelectorDialog.py:
+	  initiate discovery by default in device selector dialog
+
+2009-02-06 18:16  walmis
+
+	* po/POTFILES.in: update potfiles.in
+
+2009-02-06 17:52  walmis
+
+	* apps/blueman-services: blueman-service now remembers last
+	  selected item
+
+2009-02-06 17:02  walmis
+
+	* blueman/gui/DeviceSelectorDialog.py: accept double clicks in
+	  device selection dialogs
+
+2009-02-06 16:19  walmis
+
+	* blueman/gui/manager/ManagerMenu.py: use config-language icon
+	  instead of gnome-translate
+
+2009-02-06 13:26  walmis
+
+	* apps/blueman-assistant, apps/blueman-browse,
+	  apps/blueman-manager, blueman/main/applet/DbusService.py: few
+	  random bugs fixed
+
+2009-02-06 12:47  walmis
+
+	* apps/blueman-browse, blueman/Constants.py.in,
+	  blueman/plugins/services/Transfer.py, data/man/Makefile.am,
+	  data/man/blueman-assistant.1, data/man/blueman-browse.1,
+	  data/ui/services-transfer.ui: Finished blueman-browse. Added
+	  missing man pages
+
+2009-02-05 18:45  walmis
+
+	* blueman/gui/applet/DiscvManager.py: small bugfix
+
+2009-02-03 20:11  walmis
+
+	* blueman/Functions.py: downscale icons from broken themes
+
+2009-02-03 19:42  walmis
+
+	* apps/blueman-assistant, data/ui/assistant.ui: blueman-assistant:
+	  added intro page
+
+2009-02-03 18:59  walmis
+
+	* blueman/gui/applet/RecentConns.py: show 6 recent conns instead of
+	  5
+
+2009-02-03 18:14  walmis
+
+	* blueman/gui/manager/ManagerMenu.py, data/ui/adapters.ui: Make
+	  help menu nicer and more useful
+
+2009-02-02 19:06  walmis
+
+	* apps/blueman-mechanism, blueman/main/NetConf.py,
+	  module/libblueman.c: Add fallback method to disable network
+	  settings. Bring down bridge
+	  interface before removing it
+
+2009-02-02 12:41  walmis
+
+	* apps/blueman-assistant, extra/debian/control: update debian
+	  package info. Some improvement to blueman-assistant
+
+2009-02-01 22:25  walmis
+
+	* apps/blueman-applet, blueman/gui/manager/ManagerToolbar.py:
+	  initially disable send/browse tool items
+
+2009-02-01 21:58  walmis
+
+	* apps/blueman-applet: left click open device manager
+
+2009-02-01 21:48  walmis
+
+	* configure.ac: sysconfdir = /etc by default
+
+2009-02-01 20:12  walmis
+
+	* apps/blueman-browse: started working on blueman-browse.
+
+2009-02-01 20:11  walmis
+
+	* apps/Makefile.am, apps/blueman-assistant: started working on
+	  blueman-browse. Added licence header to blueman-assistant
+
+2009-02-01 10:37  walmis
+
+	* apps/blueman-mechanism, blueman/gui/manager/ManagerDeviceMenu.py,
+	  blueman/main/HalManager.py, blueman/main/applet/DbusService.py,
+	  po/af.po, po/ar.po, po/bg.po, po/blueman.pot, po/bs.po, po/ca.po,
+	  po/cs.po, po/da.po, po/de.po, po/el.po, po/en_GB.po, po/es.po,
+	  po/fa.po, po/fi.po, po/fr.po, po/gl.po, po/he.po, po/hu.po,
+	  po/id.po, po/it.po, po/ja.po, po/kk.po, po/ko.po, po/lt.po,
+	  po/nb.po, po/nds.po, po/nl.po, po/pl.po, po/pt.po, po/pt_BR.po,
+	  po/ro.po, po/ru.po, po/sk.po, po/sl.po, po/sv.po, po/ta.po,
+	  po/tr.po, po/uk.po, po/vi.po, po/zh_CN.po, po/zh_TW.po: added
+	  CDMA support
+
+2009-01-31 20:41  walmis
+
+	* blueman/Constants.py.in: update projects website
+
+2009-01-31 11:00  walmis
+
+	* blueman/gui/manager/ManagerDeviceList.py: add drag&drop support
+	  in the main list for sending files
+
+2009-01-30 10:38  walmis
+
+	* blueman/main/applet/Transfer.py: fixed some bugs in obex receiver
+
+2009-01-29 21:57  walmis
+
+	* apps/blueman-sendto: fix exception when skipping files in
+	  blueman-sendto
+
+2009-01-29 19:55  walmis
+
+	* data/ui/assistant.ui: set dialog hint in assistant.ui
+
+2009-01-29 19:25  walmis
+
+	* blueman/gui/applet/RecentConns.py,
+	  data/configs/org.blueman.Mechanism.conf: fix dbus config
+
+2009-01-28 17:48  walmis
+
+	* apps/blueman-applet, blueman/gui/applet/DiscvManager.py,
+	  po/af.po, po/ar.po, po/bg.po, po/blueman.pot, po/bs.po, po/ca.po,
+	  po/cs.po, po/da.po, po/de.po, po/el.po, po/en_GB.po, po/es.po,
+	  po/fa.po, po/fi.po, po/fr.po, po/gl.po, po/he.po, po/hu.po,
+	  po/id.po, po/it.po, po/ja.po, po/kk.po, po/ko.po, po/lt.po,
+	  po/nb.po, po/nds.po, po/nl.po, po/pl.po, po/pt.po, po/pt_BR.po,
+	  po/ro.po, po/ru.po, po/sk.po, po/sl.po, po/sv.po, po/ta.po,
+	  po/tr.po, po/uk.po, po/vi.po, po/zh_CN.po, po/zh_TW.po: few minor
+	  tweaks
+
+2009-01-28 14:38  walmis
+
+	* data/ui/assistant.ui: mark string as untranslatable
+
+2009-01-28 12:15  walmis
+
+	* apps/Makefile.am, apps/blueman-applet, apps/blueman-assistant,
+	  apps/blueman-manager, apps/blueman-sendto, blueman/Functions.py,
+	  blueman/bluez/Agent.py, blueman/gui/DeviceList.py,
+	  blueman/gui/DeviceSelectorWidget.py,
+	  blueman/gui/applet/RecentConns.py, blueman/main/Device.py,
+	  blueman/main/FakeDevice.py, data/ui/Makefile.am,
+	  data/ui/assistant.ui, data/ui/device-list-widget.ui,
+	  po/POTFILES.in: Implemented blueman-assistant, fixed some bugs
+	  along the way
+
+2009-01-21 19:44  walmis
+
+	* blueman/gui/manager/ManagerProgressbar.py: add missing dprint
+
+2009-01-20 11:28  walmis
+
+	* blueman/plugins/services/Transfer.py: fix bug that prevents obex
+	  shared path of saving properly
+
+2009-01-19 13:28  walmis
+
+	* apps/blueman-manager, blueman/gui/DeviceList.py,
+	  blueman/gui/manager/ManagerMenu.py,
+	  blueman/gui/manager/ManagerStats.py,
+	  blueman/gui/manager/ManagerToolbar.py: fix few initialization
+	  bugs in manager when no adapters are initially present
+
+2009-01-11 09:07  walmis
+
+	* blueman/main/applet/BluezAgent.py,
+	  blueman/plugins/services/Transfer.py: fix lp #315951, #315945
+
+2008-12-31 11:37  walmis
+
+	* apps/blueman-applet, apps/blueman-mechanism,
+	  blueman/main/applet/NetworkManager.py, extra, extra/debian,
+	  extra/debian/changelog, extra/debian/compat,
+	  extra/debian/control, extra/debian/copyright, extra/debian/dirs,
+	  extra/debian/postinst, extra/debian/prerm, extra/debian/rules:
+	  Improved dhcp management, some misc bugfixes. Added a debian
+	  build directory in "extra" folder
+
+2008-12-30 16:11  walmis
+
+	* blueman/main/NetConf.py: do not reload network settings on applet
+	  startup, if they are already enabled
+
+2008-12-30 16:10  walmis
+
+	* apps/blueman-mechanism: do not reload network settings on applet
+	  startup, if they are already enabled
+
+2008-12-30 15:51  walmis
+
+	* blueman/Functions.py, blueman/gui/manager/ManagerMenu.py,
+	  blueman/main/NetConf.py, blueman/plugins/services/Network.py:
+	  improved support in fedora
+
+2008-12-30 12:46  walmis
+
+	* apps/Makefile.am, blueman/Lib.py, blueman/Makefile.am,
+	  data/configs/org.blueman.Mechanism.service.in, module/Lib.pyx,
+	  module/Makefile.am, module/_blueman.pyx: fixed compatibility
+	  issues with fedora 10
+
+2008-12-30 12:42  walmis
+
+	* configure.ac: add default paths to configure.ac
+
+2008-12-29 12:38  walmis
+
+	* blueman/gui/applet/RecentConns.py, blueman/main/Makefile.am,
+	  blueman/main/NMMonitor.py, blueman/main/applet/DbusService.py,
+	  blueman/main/applet/NetworkManager.py: Disconnect dialup service
+	  after network manager disconnect.
+	  Fixed a bug in recent conns.
+
+2008-12-28 20:24  walmis
+
+	* apps/blueman-services, blueman/plugins/services/Network.py,
+	  data/ui/services-network.ui, data/ui/services.ui: tweaked
+	  services ui a bit
+
+2008-12-28 19:32  walmis
+
+	* blueman/plugins/applet/Makefile.am: add missing makefile
+
+2008-12-28 19:26  walmis
+
+	* blueman/gui/DeviceList.py, configure.ac: build fix
+
+2008-12-28 13:43  walmis
+
+	* ChangeLog, apps/blueman-applet, apps/blueman-manager,
+	  apps/blueman-services, blueman/Functions.py,
+	  blueman/bluez/Agent.py, blueman/gui/DeviceList.py,
+	  blueman/gui/DeviceSelectorWidget.py,
+	  blueman/gui/applet/DiscvManager.py,
+	  blueman/gui/applet/RecentConns.py,
+	  blueman/gui/manager/ManagerDeviceList.py,
+	  blueman/gui/manager/ManagerDeviceMenu.py,
+	  blueman/gui/manager/ManagerMenu.py,
+	  blueman/gui/manager/ManagerProgressbar.py,
+	  blueman/gui/manager/ManagerToolbar.py, blueman/main/Config.py,
+	  blueman/main/Device.py, blueman/main/NetConf.py,
+	  blueman/main/applet/BluezAgent.py,
+	  blueman/main/applet/DbusService.py,
+	  blueman/main/applet/NetworkManager.py,
+	  blueman/main/applet/Transfer.py, blueman/ods/OdsManager.py,
+	  blueman/ods/OdsServer.py, blueman/ods/OdsServerSession.py,
+	  blueman/ods/OdsSession.py, blueman/plugins/AppletPlugin.py,
+	  blueman/plugins/Makefile.am, blueman/plugins/applet,
+	  blueman/plugins/applet/Headset.py,
+	  blueman/plugins/applet/__init__.py,
+	  blueman/plugins/services/Headset.py,
+	  blueman/plugins/services/Makefile.am,
+	  blueman/plugins/services/Network.py,
+	  blueman/plugins/services/Transfer.py, data/ui/Makefile.am,
+	  data/ui/services-headset.ui: Added custom action for headset
+	  answer events.
+	  New debugging system.
+
 2008-12-27 10:55  walmis
 
 	* data/configs/Makefile.am: fixed makefile

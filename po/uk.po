@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-08 13:52+0200\n"
+"POT-Creation-Date: 2009-02-08 16:47+0200\n"
 "PO-Revision-Date: 2008-08-09 19:03+0000\n"
 "Last-Translator: Valmantas Palikša <walmis@balticum-tv.lt>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -64,8 +64,8 @@ msgid "Bluetooth Devices"
 msgstr ""
 
 #: ../data/ui/manager-main.ui.h:3
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:241
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:469
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:246
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:474
 msgid "Bond"
 msgstr ""
 
@@ -98,12 +98,13 @@ msgid "Setup this device"
 msgstr ""
 
 #: ../data/ui/manager-main.ui.h:11
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:490
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:241
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:495
 msgid "Setup..."
 msgstr ""
 
 #: ../data/ui/manager-main.ui.h:12
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:480
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:485
 #: ../blueman/gui/manager/ManagerToolbar.py:105
 msgid "Trust"
 msgstr ""
@@ -141,7 +142,7 @@ msgid "Enable Routing (NAT)"
 msgstr ""
 
 #: ../data/ui/services-network.ui.h:8
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:374
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:379
 #: ../apps/blueman-assistant:310
 msgid "Group Network"
 msgstr ""
@@ -260,6 +261,22 @@ msgstr ""
 
 #: ../data/ui/assistant.ui.h:11
 msgid "Use Random Passkey"
+msgstr ""
+
+#: ../data/ui/device-list-widget.ui.h:1
+msgid "Adapter selection"
+msgstr ""
+
+#: ../data/ui/device-list-widget.ui.h:2
+msgid "Search for devices"
+msgstr ""
+
+#: ../data/ui/services-headset.ui.h:1
+msgid "<b>Headset Settings</b>"
+msgstr ""
+
+#: ../data/ui/services-headset.ui.h:2
+msgid "Command to execute when answer button is pressed:"
 msgstr ""
 
 #: ../blueman/Sdp.py:101
@@ -537,7 +554,7 @@ msgid "Cancel Operation"
 msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:126
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:504
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:509
 msgid "Success!"
 msgstr ""
 
@@ -557,99 +574,99 @@ msgstr ""
 msgid "Add Device"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:250
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:442
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:255
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:447
 msgid "Send a file..."
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:274
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:279
 msgid "Dialup Service"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:281
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:286
 msgid "Serial Service"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:294
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:299
 msgid "Serial Ports"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:336
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:341
 #, python-format
 msgid "Disconnect %s"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:347
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:352
 msgid "Disconnect Input Service"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:351
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:356
 msgid "Connect Input Service"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:362
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:367
 msgid "Network Access"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:381
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:386
 #: ../apps/blueman-assistant:315
 msgid "Network Access Point"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:390
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:395
 msgid "Disconnect Network"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:406
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:411
 msgid "Renew IP Address"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:416
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:421
 msgid "Disconnect Headset Service"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:419
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:424
 msgid "Connect Headset Service"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:429
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:434
 msgid "Disconnect A2DP Service"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:432
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:437
 msgid "Connect A2DP Service"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:447
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:452
 msgid "Browse device..."
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:485
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:490
 #: ../blueman/gui/manager/ManagerToolbar.py:101
 msgid "Untrust"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:508
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:513
 msgid "Fail"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:509
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:514
 msgid "Refreshing"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:511
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:516
 msgid "Refreshing Services..."
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:514
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:519
 msgid "Refresh Services"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:523
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:528
 msgid "Remove..."
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:532
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:537
 msgid "Disconnect Device"
 msgstr ""
 
@@ -769,6 +786,10 @@ msgstr ""
 
 #: ../blueman/gui/manager/ManagerMenu.py:118
 msgid "Latest Device Last"
+msgstr ""
+
+#: ../blueman/plugins/services/Headset.py:43
+msgid "Headset"
 msgstr ""
 
 #: ../data/blueman.desktop.in.h:1
