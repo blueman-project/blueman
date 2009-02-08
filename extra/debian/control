@@ -12,14 +12,14 @@ Build-Depends: debhelper (>= 7),
                libgtk2.0-dev,
                libstartup-notification0-dev,
                python-gobject-dev,
-               libbluetooth-dev,
+               libbluetooth-dev (>= 4.0),
                intltool,
                python2.5-dev,
                python-central
 
 Package: blueman
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, python (>= 2.5), dbus, bluez (>= 4.25), obex-data-server (>= 0.4.3), python-notify, python-gtk2 (>= 2.12), python-gconf, python-dbus, python-gobject, policykit-gnome
+Depends: ${shlibs:Depends}, ${misc:Depends}, python (>= 2.5), dbus, bluez (>= 4.25), obex-data-server (>= 0.4.3), python-notify, python-gtk2 (>= 2.12), python-gconf, python-dbus, python-gobject, policykit-gnome, notification-daemon
 Conflicts: bluez-gnome
 Replaces: bluez-gnome
 Provides: bluez-gnome
