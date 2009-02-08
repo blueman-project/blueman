@@ -15,7 +15,12 @@ Build-Depends: debhelper (>= 7),
                libbluetooth-dev (>= 4.0),
                intltool,
                python2.5-dev,
-               python-central
+               python-central,
+               python-gtk2 (>= 2.12), 
+               python-gconf, 
+               python-dbus, 
+               python-gobject,
+               python-notify
 
 Package: blueman
 Architecture: any
