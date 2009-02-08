@@ -13,4 +13,4 @@ _blueman_la_SOURCES = \
 _blueman.c: _blueman.pyx
 	$(PYREXC) -o $@ $<
 	
-EXTRA_DIST = Lib.pyx
+EXTRA_DIST = _blueman.pyx
