@@ -88,12 +88,13 @@ def spawn(command, system=False, sn=None):
 		else:
 			command = os.path.join(BIN_DIR, command)
 	
-	if not sn:
-		env=None
-	else:
-		env = os.environ
+	env = os.environ
+	
+	if sn:
 		id = sn.get_startup_id()
 		env["DESKTOP_STARTUP_ID"] = id
+		
+	env["BLUEMAN_EVENT_TIME"] = str(gtk.get_current_event_time())
 	
 	p = Popen(command, env=env)
 	gobject.child_watch_add(p.pid, child_closed)
@@ -187,31 +188,43 @@ def create_menuitem(text, image):
 	return item
 	
 def check_single_instance(id, unhide_func=None):
+	lockfile = os.path.expanduser("/tmp/%s-%s" % (id, os.getuid()))
 	def handler(signum, frame):
 		if unhide_func:
-			unhide_func()
+			f = open(lockfile)
+			f.readline()
+			event_time = long(f.readline())
+			f.close()
+			unhide_func(event_time)
 
 
 	signal.signal(signal.SIGUSR1, handler)
 	
-	lockfile = os.path.expanduser("/tmp/%s-%s" % (id, os.getuid()))
+	
 	if os.path.exists(lockfile):
 		f = open(lockfile)
-		pid = f.read()
+		pid = int(f.readline())
+		event_time = int(f.readline())
 		f.close()
-		if len(pid) > 0:
+		if pid > 0:
 			isrunning = os.path.exists("/proc/%s" % pid)
 
 			if not isrunning:
 				os.remove(lockfile)
 			else:
 				print "there is an instance already running"
-				os.kill(int(pid), signal.SIGUSR1)
+				time = os.getenv("BLUEMAN_EVENT_TIME") or 0
+				
+				f = file(lockfile, "w")
+				f.write("%s\n%s" % (str(pid), str(time)))
+				f.close()
+				
+				os.kill(pid, signal.SIGUSR1)
 				exit()
 		else:
 			os.remove(lockfile)
 
 	f = file(lockfile, "w")
-	f.write(str(os.getpid()))
+	f.write("%s\n%s" % (str(os.getpid()), "0"))
 	f.close()
 	atexit.register(lambda:os.remove(lockfile))

@@ -34,7 +34,7 @@ if os.path.exists(os.path.join(_dirname,"ChangeLog")):
 	
 import blueman.bluez as Bluez
 from blueman.Constants import *
-from blueman.Functions import setup_icon_path, enable_rgba_colormap
+from blueman.Functions import setup_icon_path, enable_rgba_colormap, check_single_instance
 from blueman.main.SignalTracker import SignalTracker
 	
 import gettext
@@ -52,6 +52,9 @@ class BluemanAdapters:
 		builder.set_translation_domain("blueman")
 		builder.add_from_file(UI_PATH +"/adapters.ui")
 		self.dialog = builder.get_object("dialog")
+		
+		check_single_instance("blueman-adapters", lambda time: self.dialog.present_with_time(time))
+		
 		self.dialog.props.icon_name = "blueman-device"
 		self.dialog.connect("response", self.on_dialog_response)
 		self.notebook = builder.get_object("notebook")

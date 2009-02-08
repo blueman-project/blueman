@@ -98,7 +98,7 @@ class Blueman:
 					self.Applet.SetBluetoothStatus(True)
 				
 
-		check_single_instance("blueman-manager", lambda: window.present())
+		check_single_instance("blueman-manager", lambda time: window.present_with_time(time))
 		setup_icon_path()
 		
 		

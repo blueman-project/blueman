@@ -238,10 +238,15 @@ class ManagerDeviceMenu(gtk.Menu):
 			item.show()
 			self.append(item)
 			
+			item = create_menuitem(_("Setup..."), get_icon("gtk-properties", 16))
+			self.append(item)
+			self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.setup(device))
+			item.show()
+			
 			item = create_menuitem(_("Bond"), get_icon("gtk-dialog-authentication", 16))
 			self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.bond(device))
 			self.append(item)
-			item.show()
+			item.show()			
 			
 			item = gtk.SeparatorMenuItem()
 			item.show()
