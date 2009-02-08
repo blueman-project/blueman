@@ -60,7 +60,6 @@
                 <property name="row_spacing">6</property>
                 <child>
                   <object class="GtkLabel" id="label4">
-                    <property name="width_request">0</property>
                     <property name="visible">True</property>
                     <property name="xalign">1</property>
                     <property name="label" translatable="yes">&lt;b&gt;To:&lt;/b&gt;</property>
@@ -74,6 +73,7 @@
                   <object class="GtkLabel" id="l_dest">
                     <property name="visible">True</property>
                     <property name="xalign">0</property>
+                    <property name="ellipsize">end</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
@@ -82,7 +82,6 @@
                 </child>
                 <child>
                   <object class="GtkLabel" id="label7">
-                    <property name="width_request">50</property>
                     <property name="visible">True</property>
                     <property name="xalign">1</property>
                     <property name="label" translatable="yes">&lt;b&gt;File:&lt;/b&gt;</property>
@@ -91,13 +90,14 @@
                   <packing>
                     <property name="top_attach">1</property>
                     <property name="bottom_attach">2</property>
-                    <property name="x_options">GTK_FILL</property>
+                    <property name="x_options"></property>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="l_file">
                     <property name="visible">True</property>
                     <property name="xalign">0</property>
+                    <property name="ellipsize">middle</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
