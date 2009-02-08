@@ -8,12 +8,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-07 23:12+0200\n"
+"POT-Creation-Date: 2009-02-08 13:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
@@ -161,7 +161,7 @@ msgid "Network Access Point (NAP)"
 msgstr ""
 
 #: ../data/ui/services-transfer.ui.h:1
-msgid "<b>Browsing</b>"
+msgid "<b>Advanced</b>"
 msgstr ""
 
 #: ../data/ui/services-transfer.ui.h:2
@@ -181,29 +181,25 @@ msgid "Accept files from trusted devices"
 msgstr ""
 
 #: ../data/ui/services-transfer.ui.h:6
-msgid "Advanced"
-msgstr ""
-
-#: ../data/ui/services-transfer.ui.h:7
 msgid "Allow devices to write/delete"
 msgstr ""
 
-#: ../data/ui/services-transfer.ui.h:9
+#: ../data/ui/services-transfer.ui.h:8
 #, no-c-format
 msgid ""
 "Command to start an obex ftp browser.\n"
 "<i>%d</i> is substituted with device address."
 msgstr ""
 
-#: ../data/ui/services-transfer.ui.h:11
+#: ../data/ui/services-transfer.ui.h:10
 msgid "Enabled"
 msgstr ""
 
-#: ../data/ui/services-transfer.ui.h:12
+#: ../data/ui/services-transfer.ui.h:11
 msgid "Select Shared/Storage folder"
 msgstr ""
 
-#: ../data/ui/services-transfer.ui.h:13
+#: ../data/ui/services-transfer.ui.h:12
 msgid "Shared Folder:"
 msgstr ""
 
@@ -224,14 +220,6 @@ msgid "Bluetooth File Transfer"
 msgstr ""
 
 #: ../data/ui/send-dialog.ui.h:5
-msgid "File Progress"
-msgstr ""
-
-#: ../data/ui/send-dialog.ui.h:6
-msgid "Total Progress"
-msgstr ""
-
-#: ../data/ui/send-dialog.ui.h:7
 msgid "gtk-cancel"
 msgstr ""
 
@@ -473,6 +461,10 @@ msgstr ""
 msgid "Transfer"
 msgstr ""
 
+#: ../blueman/plugins/services/Transfer.py:132 ../apps/blueman-sendto:102
+msgid "obex-data-server not available"
+msgstr ""
+
 #: ../blueman/plugins/services/Network.py:45
 msgid "Network"
 msgstr ""
@@ -534,7 +526,7 @@ msgstr ""
 msgid "%(service)s on %(device)s"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerProgressbar.py:33 ../apps/blueman-sendto:70
+#: ../blueman/gui/manager/ManagerProgressbar.py:33 ../apps/blueman-sendto:69
 msgid "Connecting"
 msgstr ""
 
@@ -918,46 +910,46 @@ msgstr ""
 msgid "Starting Service Preferences"
 msgstr ""
 
-#: ../apps/blueman-sendto:136
-msgid "Transferring File %(0)s/%(1)s (0 B/s) ETA: ∞"
+#: ../apps/blueman-sendto:103
+msgid "obex-data-server is probably not installed"
 msgstr ""
 
-#: ../apps/blueman-sendto:162
+#: ../apps/blueman-sendto:142 ../apps/blueman-sendto:175
+msgid "Sending File %(0)s/%(1)s (%(2).2f %(3)s/s) ETA: %(4)s"
+msgstr ""
+
+#: ../apps/blueman-sendto:170
 #, c-format
 msgid "%.0f Minute"
 msgid_plural "%.0f Minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../apps/blueman-sendto:164
+#: ../apps/blueman-sendto:172
 #, c-format
 msgid "%.0f Second"
 msgid_plural "%.0f Seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../apps/blueman-sendto:167
-msgid "Sending File %(0)s/%(1)s (%(2).2f %(3)s/s) ETA: %(4)s"
-msgstr ""
-
-#: ../apps/blueman-sendto:221
+#: ../apps/blueman-sendto:225
 #, c-format
 msgid "Error occurred while sending file %s"
 msgstr ""
 
-#: ../apps/blueman-sendto:224
+#: ../apps/blueman-sendto:228
 msgid "Skip"
 msgstr ""
 
-#: ../apps/blueman-sendto:225
+#: ../apps/blueman-sendto:229
 msgid "Retry"
 msgstr ""
 
-#: ../apps/blueman-sendto:269
+#: ../apps/blueman-sendto:273
 msgid "Send files to this device"
 msgstr ""
 
-#: ../apps/blueman-sendto:324
+#: ../apps/blueman-sendto:328
 msgid "Select files to send"
 msgstr ""
 

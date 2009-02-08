@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-01 11:20+0200\n"
+"POT-Creation-Date: 2009-02-08 13:52+0200\n"
 "PO-Revision-Date: 2008-12-16 12:15+0000\n"
 "Last-Translator: obo <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -39,8 +39,9 @@ msgid "Temporary visible"
 msgstr "Visibilità temporanea"
 
 #: ../data/ui/adapters.ui.h:1
-msgid "Bluetooth adapter preferences"
-msgstr "Preferenze dell'adattatore bluetooth"
+#, fuzzy
+msgid "Bluetooth Adapters"
+msgstr "Rete Bluetooth"
 
 #: ../data/ui/applet-passkey.ui.h:1
 msgid "Authentication request"
@@ -80,7 +81,7 @@ msgstr ""
 msgid "Remove"
 msgstr "Rimuovi"
 
-#: ../data/ui/manager-main.ui.h:7 ../blueman/gui/manager/ManagerMenu.py:189
+#: ../data/ui/manager-main.ui.h:7 ../blueman/gui/manager/ManagerMenu.py:204
 msgid "Search"
 msgstr "Cerca"
 
@@ -103,11 +104,11 @@ msgstr "Setup..."
 
 #: ../data/ui/manager-main.ui.h:12
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:480
-#: ../blueman/gui/manager/ManagerToolbar.py:103
+#: ../blueman/gui/manager/ManagerToolbar.py:105
 msgid "Trust"
 msgstr "Affidabilità"
 
-#: ../data/ui/services.ui.h:1 ../apps/blueman-applet:282
+#: ../data/ui/services.ui.h:1 ../apps/blueman-applet:279
 msgid "Local Services"
 msgstr "Servizi Locali"
 
@@ -141,7 +142,7 @@ msgstr "Abilita Instradamento (NAT)"
 
 #: ../data/ui/services-network.ui.h:8
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:374
-#: ../apps/blueman-assistant:265
+#: ../apps/blueman-assistant:310
 msgid "Group Network"
 msgstr "Gruppo rete"
 
@@ -162,34 +163,48 @@ msgid "Network Access Point (NAP)"
 msgstr "Network Access Point (NAP)"
 
 #: ../data/ui/services-transfer.ui.h:1
-msgid "<b>File Transfer</b>"
-msgstr "<b>Trasferimento File</b>"
+#, fuzzy
+msgid "<b>Advanced</b>"
+msgstr "<b>Collegato</b>"
 
 #: ../data/ui/services-transfer.ui.h:2
-msgid "<b>Object Push</b>"
+#, fuzzy
+msgid "<b>File Receiving (Object Push)</b>"
 msgstr "<b>Spinta Oggetto</b>"
 
 #: ../data/ui/services-transfer.ui.h:3
+#, fuzzy
+msgid "<b>File Sharing (FTP)</b>"
+msgstr "<b>Trasferimento File</b>"
+
+#: ../data/ui/services-transfer.ui.h:4
 msgid "<b>Transfer Settings</b>"
 msgstr "<b>Impostazioni Trasferimenti</b>"
 
-#: ../data/ui/services-transfer.ui.h:4
+#: ../data/ui/services-transfer.ui.h:5
 msgid "Accept files from trusted devices"
 msgstr "Accetta file da dispositivi affidabili"
 
-#: ../data/ui/services-transfer.ui.h:5
+#: ../data/ui/services-transfer.ui.h:6
 msgid "Allow devices to write/delete"
 msgstr "Permetti ai dispositivi di scrivere/cancellare"
 
-#: ../data/ui/services-transfer.ui.h:6
+#: ../data/ui/services-transfer.ui.h:8
+#, no-c-format
+msgid ""
+"Command to start an obex ftp browser.\n"
+"<i>%d</i> is substituted with device address."
+msgstr ""
+
+#: ../data/ui/services-transfer.ui.h:10
 msgid "Enabled"
 msgstr "Abilitato"
 
-#: ../data/ui/services-transfer.ui.h:7
+#: ../data/ui/services-transfer.ui.h:11
 msgid "Select Shared/Storage folder"
 msgstr "Seleziona cartella Condivisa/Di Deposito"
 
-#: ../data/ui/services-transfer.ui.h:8
+#: ../data/ui/services-transfer.ui.h:12
 msgid "Shared Folder:"
 msgstr "Cartella Condivisa:"
 
@@ -210,14 +225,6 @@ msgid "Bluetooth File Transfer"
 msgstr "Trasferimento file"
 
 #: ../data/ui/send-dialog.ui.h:5
-msgid "File Progress"
-msgstr "Avanzamento file"
-
-#: ../data/ui/send-dialog.ui.h:6
-msgid "Total Progress"
-msgstr "Avanzamento totale"
-
-#: ../data/ui/send-dialog.ui.h:7
 msgid "gtk-cancel"
 msgstr "gtk-annulla"
 
@@ -239,14 +246,23 @@ msgid "<b>Select pairing method to use:</b>"
 msgstr ""
 
 #: ../data/ui/assistant.ui.h:5
+msgid ""
+"<b>Welcome to the bluetooth device setup assistant. </b>\n"
+"\n"
+"\n"
+"It will walk you through the process of configuring and connecting to your "
+"bluetooth enabled devices."
+msgstr ""
+
+#: ../data/ui/assistant.ui.h:9
 msgid "Don't Pair"
 msgstr ""
 
-#: ../data/ui/assistant.ui.h:6
+#: ../data/ui/assistant.ui.h:10
 msgid "Use My Own Passkey:"
 msgstr ""
 
-#: ../data/ui/assistant.ui.h:7
+#: ../data/ui/assistant.ui.h:11
 msgid "Use Random Passkey"
 msgstr ""
 
@@ -453,11 +469,15 @@ msgstr ""
 msgid "Transfer"
 msgstr ""
 
+#: ../blueman/plugins/services/Transfer.py:132 ../apps/blueman-sendto:102
+msgid "obex-data-server not available"
+msgstr ""
+
 #: ../blueman/plugins/services/Network.py:45
 msgid "Network"
 msgstr ""
 
-#: ../blueman/plugins/services/Network.py:117 ../apps/blueman-applet:146
+#: ../blueman/plugins/services/Network.py:117 ../apps/blueman-applet:144
 msgid "Failed to apply network settings"
 msgstr ""
 
@@ -478,7 +498,7 @@ msgstr "Rendi l'adattatore predefinito visibile per 1 minuto"
 msgid "Discoverable... %ss"
 msgstr "Raggiungibile... %ss"
 
-#: ../blueman/gui/applet/DiscvManager.py:110 ../apps/blueman-applet:73
+#: ../blueman/gui/applet/DiscvManager.py:111 ../apps/blueman-applet:73
 msgid "Make Discoverable"
 msgstr "Rendi Raggiungibile"
 
@@ -514,7 +534,7 @@ msgstr "Servizio"
 msgid "%(service)s on %(device)s"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerProgressbar.py:33 ../apps/blueman-sendto:70
+#: ../blueman/gui/manager/ManagerProgressbar.py:33 ../apps/blueman-sendto:69
 msgid "Connecting"
 msgstr "Connessione"
 
@@ -578,7 +598,7 @@ msgid "Network Access"
 msgstr "Accesso Alla Rete"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:381
-#: ../apps/blueman-assistant:270
+#: ../apps/blueman-assistant:315
 msgid "Network Access Point"
 msgstr "Punto di accesso alla rete"
 
@@ -611,7 +631,7 @@ msgid "Browse device..."
 msgstr "Esplora dispositivo..."
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:485
-#: ../blueman/gui/manager/ManagerToolbar.py:99
+#: ../blueman/gui/manager/ManagerToolbar.py:101
 msgid "Untrust"
 msgstr "Non-Fiducia"
 
@@ -729,23 +749,35 @@ msgstr "_Visualizza"
 msgid "_Help"
 msgstr "_Aiuto"
 
+#: ../blueman/gui/manager/ManagerMenu.py:58
+msgid "Get Help Online..."
+msgstr ""
+
 #: ../blueman/gui/manager/ManagerMenu.py:63
+msgid "Translate This Application..."
+msgstr ""
+
+#: ../blueman/gui/manager/ManagerMenu.py:68
+msgid "Report a Problem"
+msgstr ""
+
+#: ../blueman/gui/manager/ManagerMenu.py:78
 msgid "Device Manager"
 msgstr "Gestore Dispositivi"
 
-#: ../blueman/gui/manager/ManagerMenu.py:71
+#: ../blueman/gui/manager/ManagerMenu.py:86
 msgid "Show Toolbar"
 msgstr "Mostra Barra Degli Strumenti"
 
-#: ../blueman/gui/manager/ManagerMenu.py:83
+#: ../blueman/gui/manager/ManagerMenu.py:98
 msgid "Show Statusbar"
 msgstr "Mostra Barra Di Stato"
 
-#: ../blueman/gui/manager/ManagerMenu.py:99
+#: ../blueman/gui/manager/ManagerMenu.py:114
 msgid "Latest Device First"
 msgstr "Ultimo Dispositivo All'Inizio"
 
-#: ../blueman/gui/manager/ManagerMenu.py:103
+#: ../blueman/gui/manager/ManagerMenu.py:118
 msgid "Latest Device Last"
 msgstr "Ultimo Dispositivo Alla Fine"
 
@@ -755,6 +787,11 @@ msgstr ""
 
 #: ../data/blueman.desktop.in.h:2 ../data/blueman-manager.desktop.in.h:1
 msgid "Blueman Bluetooth Manager"
+msgstr "Blueman Gestore Bluetooth"
+
+#: ../data/blueman-manager.desktop.in.h:2
+#, fuzzy
+msgid "Bluetooth Manager"
 msgstr "Blueman Gestore Bluetooth"
 
 #: ../data/configs/org.blueman.policy.in.h:1
@@ -794,7 +831,7 @@ msgstr "Il Bluetooth deve essere acceso perchè il gestore dispositivi funzioni"
 msgid "Enable Bluetooth"
 msgstr "Abilita Bluetooth"
 
-#: ../apps/blueman-manager:181 ../apps/blueman-assistant:210
+#: ../apps/blueman-manager:181 ../apps/blueman-assistant:255
 msgid "Adding"
 msgstr "Aggiunta"
 
@@ -802,7 +839,7 @@ msgstr "Aggiunta"
 msgid "Searching"
 msgstr "Ricerca"
 
-#: ../apps/blueman-manager:199 ../apps/blueman-applet:299
+#: ../apps/blueman-manager:199 ../apps/blueman-applet:296
 msgid "Starting Bluetooth Assistant"
 msgstr ""
 
@@ -818,11 +855,11 @@ msgstr "Errore"
 msgid "Bonding"
 msgstr "In collegamento"
 
-#: ../apps/blueman-manager:232 ../apps/blueman-applet:315
+#: ../apps/blueman-manager:232 ../apps/blueman-applet:312
 msgid "Starting Adapter Preferences"
 msgstr ""
 
-#: ../apps/blueman-manager:241 ../apps/blueman-applet:303
+#: ../apps/blueman-manager:241 ../apps/blueman-applet:300
 msgid "Starting File Sender"
 msgstr ""
 
@@ -843,110 +880,112 @@ msgstr ""
 msgid "Bluetooth applet"
 msgstr "Rete Bluetooth"
 
-#: ../apps/blueman-applet:147
+#: ../apps/blueman-applet:145
 msgid ""
 "You might not be able to connect to the Bluetooth network via this machine"
 msgstr ""
 
-#: ../apps/blueman-applet:163
-msgid "Turn Bluetooth On"
-msgstr ""
+#: ../apps/blueman-applet:161
+#, fuzzy
+msgid "<b>Turn Bluetooth On</b>"
+msgstr "<b>Impostazioni Trasferimenti</b>"
 
-#: ../apps/blueman-applet:167
-msgid "Turn Bluetooth Off"
-msgstr ""
+#: ../apps/blueman-applet:165
+#, fuzzy
+msgid "<b>Turn Bluetooth Off</b>"
+msgstr "Bluetooth Spento"
 
-#: ../apps/blueman-applet:258
+#: ../apps/blueman-applet:256
 msgid "Setup new device"
 msgstr ""
 
-#: ../apps/blueman-applet:260
+#: ../apps/blueman-applet:259
 msgid "Send files to device"
 msgstr ""
 
-#: ../apps/blueman-applet:267
+#: ../apps/blueman-applet:264
 msgid "Browse files on device"
 msgstr ""
 
-#: ../apps/blueman-applet:276
+#: ../apps/blueman-applet:273
 msgid "Devices"
 msgstr ""
 
-#: ../apps/blueman-applet:279
+#: ../apps/blueman-applet:276
 msgid "Adapters"
 msgstr ""
 
-#: ../apps/blueman-applet:307
+#: ../apps/blueman-applet:304
 msgid "Starting File Browser"
 msgstr ""
 
-#: ../apps/blueman-applet:311
+#: ../apps/blueman-applet:308
 msgid "Starting Device Manager"
 msgstr ""
 
-#: ../apps/blueman-applet:319
+#: ../apps/blueman-applet:316
 msgid "Starting Service Preferences"
 msgstr ""
 
-#: ../apps/blueman-sendto:136
-msgid "Transferring File %(0)s/%(1)s (0 B/s) ETA: ∞"
-msgstr "Trasferimento File %(0)s/%(1)s (0 B/s) ETA: ∞"
+#: ../apps/blueman-sendto:103
+msgid "obex-data-server is probably not installed"
+msgstr ""
 
-#: ../apps/blueman-sendto:162
+#: ../apps/blueman-sendto:142 ../apps/blueman-sendto:175
+msgid "Sending File %(0)s/%(1)s (%(2).2f %(3)s/s) ETA: %(4)s"
+msgstr "Invio File %(0)s/%(1)s (%(2).2f %(3)s/s) ETA: %(4)s"
+
+#: ../apps/blueman-sendto:170
 #, c-format
 msgid "%.0f Minute"
 msgid_plural "%.0f Minutes"
 msgstr[0] "%.0f Minuto"
 msgstr[1] "%.0f Minuti"
 
-#: ../apps/blueman-sendto:164
+#: ../apps/blueman-sendto:172
 #, c-format
 msgid "%.0f Second"
 msgid_plural "%.0f Seconds"
 msgstr[0] "%.0f Secondo"
 msgstr[1] "%.0f Secondi"
 
-#: ../apps/blueman-sendto:167
-msgid "Sending File %(0)s/%(1)s (%(2).2f %(3)s/s) ETA: %(4)s"
-msgstr "Invio File %(0)s/%(1)s (%(2).2f %(3)s/s) ETA: %(4)s"
-
-#: ../apps/blueman-sendto:221
+#: ../apps/blueman-sendto:225
 #, c-format
 msgid "Error occurred while sending file %s"
 msgstr "Errore nel trasferimento file %s"
 
-#: ../apps/blueman-sendto:224
+#: ../apps/blueman-sendto:228
 msgid "Skip"
 msgstr "Salta"
 
-#: ../apps/blueman-sendto:225
+#: ../apps/blueman-sendto:229
 msgid "Retry"
 msgstr "Riprova"
 
-#: ../apps/blueman-sendto:269
+#: ../apps/blueman-sendto:273
 msgid "Send files to this device"
 msgstr "Invia files a questo dispositivo"
 
-#: ../apps/blueman-sendto:324
+#: ../apps/blueman-sendto:328
 #, fuzzy
 msgid "Select files to send"
 msgstr "Seleziona files da inviare"
 
-#: ../apps/blueman-assistant:33
+#: ../apps/blueman-assistant:63
 msgid "Start configuration assistant for this device"
 msgstr ""
 
-#: ../apps/blueman-assistant:48
+#: ../apps/blueman-assistant:78
 #, fuzzy
 msgid "Bluetooth Assistant"
 msgstr "Dispositivi Bluetooth"
 
-#: ../apps/blueman-assistant:209
+#: ../apps/blueman-assistant:254
 #, fuzzy
 msgid "<b>Adding Device...</b>"
 msgstr "<b>Servizi</b>"
 
-#: ../apps/blueman-assistant:215
+#: ../apps/blueman-assistant:260
 #, c-format
 msgid ""
 "<b>Pairing in progress...</b>\n"
@@ -954,34 +993,60 @@ msgid ""
 "Enter passkey <b>%s</b> on the device."
 msgstr ""
 
-#: ../apps/blueman-assistant:222
+#: ../apps/blueman-assistant:267
 msgid "<b>Failed to add device</b>"
 msgstr ""
 
-#: ../apps/blueman-assistant:257
+#: ../apps/blueman-assistant:302
 #, fuzzy
 msgid "Input Service"
 msgstr "Servizio di Input Di Connessione"
 
-#: ../apps/blueman-assistant:275
+#: ../apps/blueman-assistant:320
 #, fuzzy
 msgid "A2DP Service"
 msgstr "Connetti Servizio A2DP"
 
-#: ../apps/blueman-assistant:280
+#: ../apps/blueman-assistant:325
 #, fuzzy
 msgid "Headset Service"
 msgstr "Connetti Servizio Di Headset"
 
-#: ../apps/blueman-assistant:284
+#: ../apps/blueman-assistant:329
 #, fuzzy
 msgid "Don't connect"
 msgstr "Disconnetti %s"
 
-#: ../apps/blueman-assistant:297
+#: ../apps/blueman-assistant:344
 msgid "<b>Device added and connected successfuly</b>"
 msgstr ""
 
-#: ../apps/blueman-assistant:303
+#: ../apps/blueman-assistant:350
 msgid "<b>Device added successfuly, but failed to connect</b>"
 msgstr ""
+
+#: ../apps/blueman-browse:49
+#, fuzzy
+msgid "Browse this device"
+msgstr "Esplora dispositivo..."
+
+#: ../apps/blueman-browse:76
+#, c-format
+msgid "Failed to launch \"%s\""
+msgstr ""
+
+#: ../apps/blueman-browse:77
+msgid "You can enter an alternate browser in service settings"
+msgstr ""
+
+#~ msgid "Bluetooth adapter preferences"
+#~ msgstr "Preferenze dell'adattatore bluetooth"
+
+#~ msgid "File Progress"
+#~ msgstr "Avanzamento file"
+
+#~ msgid "Total Progress"
+#~ msgstr "Avanzamento totale"
+
+#~ msgid "Transferring File %(0)s/%(1)s (0 B/s) ETA: ∞"
+#~ msgstr "Trasferimento File %(0)s/%(1)s (0 B/s) ETA: ∞"

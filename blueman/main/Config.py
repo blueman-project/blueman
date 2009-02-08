@@ -1,4 +1,3 @@
-from blueman.Functions import dprint
 # Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
 # Copyright (C) 2008 Tadas Dailyda <tadas at dailyda dot com>
 #
@@ -17,9 +16,11 @@ from blueman.Functions import dprint
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
+
 import gconf
 import gobject
 import os.path
+from blueman.Functions import dprint
 
 BLUEMAN_PATH = "/apps/blueman"
 
