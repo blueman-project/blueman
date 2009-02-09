@@ -11,6 +11,7 @@ include /usr/share/cdbs/1/rules/simple-patchsys.mk
 # so you don't need to include those too.
 include /usr/share/cdbs/1/class/gnome.mk
 
+DEB_CONFIGURE_EXTRA_FLAGS := --disable-runtime-deps-check
 
 binary-install/blueman::
 	dh_pycentral
