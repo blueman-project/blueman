@@ -162,16 +162,10 @@ AC_SUBST(dhconfig)
 
 dnl ---------------------------------
 deps_check=1
-dnl disable runtime deps check
-AC_ARG_ENABLE(runtime-deps-check,
-    [  --disable-runtime-deps-check         Do not check runtime dependencies (for package builders)],
-    [   if test "x$enableval" = "xno"; then
-            deps_check=1
-        else
-            deps_check=0
-            fi])
-
-
+AC_ARG_WITH(no_runtime_deps_check,
+[  --with-no-runtime-deps-check disable runtime dependency check (for package maintainers)],
+deps_check=0
+)
 
 dnl ----------------------------
 
