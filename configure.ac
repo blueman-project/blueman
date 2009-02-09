@@ -161,6 +161,21 @@ dhconfig="$with_dhcp_config"
 AC_SUBST(dhconfig)
 
 dnl ---------------------------------
+deps_check=1
+dnl disable runtime deps check
+AC_ARG_ENABLE(runtime-deps-check,
+    [  --disable-runtime-deps-check         Do not check runtime dependencies (for package builders)],
+    [   if test "x$enableval" = "xno"; then
+            deps_check=1
+        else
+            deps_check=0
+            fi])
+
+
+
+dnl ----------------------------
+
+if test $deps_check = 1; then
 
 AM_CHECK_PYMOD(gtk,,,[AC_MSG_ERROR(Could not find Python module gtk >= 2.12)])
 
@@ -185,7 +200,7 @@ AM_CHECK_PYMOD(gconf,,,[AC_MSG_ERROR(Could not find Python module gconf)])
 AM_CHECK_PYMOD(gobject,,,[AC_MSG_ERROR(Could not find Python module gobject)])
 
 
-
+fi
 
 
 PKG_CHECK_MODULES(BLUEZ,
