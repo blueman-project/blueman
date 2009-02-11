@@ -40,6 +40,9 @@ class Device(gobject.GObject):
 		
 		self.Device = instance
 		
+		#fix lp:#327718
+		self.Icon = "blueman"
+		
 		self.Services = {}
 
 		self.Valid = True
