@@ -22,7 +22,7 @@ import dbus
 import gettext
 import time
 import atexit
-import marshal
+import pickle
 import base64
 import gtk.gdk
 import zlib
@@ -45,7 +45,7 @@ def store_state():
 			items.append(x)
 
 		
-		dump = base64.b64encode(zlib.compress(marshal.dumps(items), 9))
+		dump = base64.b64encode(zlib.compress(pickle.dumps(items, pickle.HIGHEST_PROTOCOL), 9))
 	
 		c = Config()
 		c.props.recent_connections = dump
@@ -203,7 +203,7 @@ class RecentConns(gtk.Menu):
 		c = Config()
 		dump = c.props.recent_connections
 		try:
-			items = marshal.loads(zlib.decompress(base64.b64decode(dump)))
+			items = pickle.loads(zlib.decompress(base64.b64decode(dump)))
 		except:
 			items = None
 		if items == None:

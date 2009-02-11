@@ -40,16 +40,14 @@ class Device(gobject.GObject):
 		
 		self.Device = instance
 		
-		#fix lp:#327718
-		self.Icon = "blueman"
+		#set fallback icon, fixes lp:#327718
+		self.Device.Icon = "blueman"
 		
 		self.Services = {}
 
 		self.Valid = True
 
 		self.Signals = SignalTracker()
-		
-		
 		
 		dprint("caching initial properties")
 		self.Properties = self.Device.GetProperties()
@@ -62,7 +60,7 @@ class Device(gobject.GObject):
 			object_path = self.Device.GetObjectPath()
 			adapter = Adapter(object_path.replace("/"+os.path.basename(object_path), ""))
 			self.Signals.Handle("bluez", adapter, self.on_device_removed, "DeviceRemoved")
-			
+		
 	def get_object_path(self):
 		if not self.Fake:
 			return self._obj_path
@@ -112,7 +110,7 @@ class Device(gobject.GObject):
 		return self.Properties
 			
 	def __getattr__(self, name):
-		
+		dprint(name)
 		if name in self.__dict__["Properties"]:
 			if not self.Valid:
 				dprint("Warning: Attempted to get properties for an invalidated device")
