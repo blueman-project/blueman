@@ -29,7 +29,7 @@ from blueman.main.Config import Config
 _ = gettext.gettext
 
 class Headset(ServicePlugin):
-
+	__plugin_info__ = (_("Headset"), "blueman-headset")
 	def on_load(self, container):
 		
 		self.Builder = gtk.Builder()

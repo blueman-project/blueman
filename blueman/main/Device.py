@@ -27,8 +27,8 @@ from blueman.Functions import dprint
 class Device(gobject.GObject):
 
 	__gsignals__ = {
-		'invalidated' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
-		'property-changed': (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
+		'invalidated' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, ()),
+		'property-changed': (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
 	}
 	
 	def __init__(self, instance):
@@ -110,7 +110,6 @@ class Device(gobject.GObject):
 		return self.Properties
 			
 	def __getattr__(self, name):
-		dprint(name)
 		if name in self.__dict__["Properties"]:
 			if not self.Valid:
 				dprint("Warning: Attempted to get properties for an invalidated device")

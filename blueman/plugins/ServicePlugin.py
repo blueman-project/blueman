@@ -19,6 +19,7 @@
 
 class ServicePlugin(object):
 	instances = []
+	__plugin_info__ = None
 	
 	def __init__(self, services_inst):
 		ServicePlugin.instances.append(self)
@@ -27,6 +28,7 @@ class ServicePlugin(object):
 		self.__services_inst = services_inst
 		
 		self.__is_exposed = False
+		self._is_loaded = False
 		
 	def _on_enter(self):
 		if not self.__is_exposed:

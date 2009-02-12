@@ -29,7 +29,7 @@ from blueman.Functions import dprint
 _ = gettext.gettext
 
 class Transfer(ServicePlugin):
-
+	__plugin_info__ = (_("Transfer"), "gtk-open")
 	def on_load(self, container):
 		
 		self.Builder = gtk.Builder()
@@ -42,7 +42,7 @@ class Transfer(ServicePlugin):
 		container.pack_start(self.widget)
 		self.setup_transfer()
 		
-		return (_("Transfer"), "gtk-open")
+		return True
 		
 	def on_enter(self):
 		self.widget.props.visible = True

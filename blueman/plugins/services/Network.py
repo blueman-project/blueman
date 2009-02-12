@@ -29,7 +29,7 @@ import gettext
 _ = gettext.gettext
 
 class Network(ServicePlugin):
-
+	__plugin_info__ = (_("Network"), "gtk-network")
 	def on_load(self, container):
 		
 		self.Builder = gtk.Builder()

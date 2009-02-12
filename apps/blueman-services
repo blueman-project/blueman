@@ -107,8 +107,11 @@ class BluemanServices:
 
 		for cls in ServicePlugin.__subclasses__():
 			inst = cls(self)
-			(name, icon) = inst.on_load(self.container)
-			self.setup_list_item(inst, name, icon)
+			if not cls.__plugin_info__:
+				dprint("Invalid plugin info in %s" % (plugin))
+			else:
+				(name, icon) = cls.__plugin_info__
+				self.setup_list_item(inst, name, icon)
 			
 			
 	def setup_list_item(self, inst, name, icon):
@@ -142,6 +145,10 @@ class BluemanServices:
 			pageid = ServicePlugin.instances[0].__class__.__name__
 		for inst in ServicePlugin.instances:
 			if inst.__class__.__name__ == pageid:
+				if not inst._is_loaded:
+					inst.on_load(self.container)
+					inst._is_loaded = True
+
 				inst._on_enter()
 			else:
 				inst._on_leave()
