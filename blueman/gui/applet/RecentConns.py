@@ -111,6 +111,7 @@ class RecentConns(gtk.Menu):
 		self.initialize()
 		
 	def notify(self, device, service_interface, conn_args):
+		dprint(device, service_interface, conn_args)
 		item = {}
 		object_path = device.GetObjectPath()
 		item["adapter"] = os.path.basename(object_path.replace("/"+os.path.basename(object_path), ""))
@@ -133,7 +134,6 @@ class RecentConns(gtk.Menu):
 				return
 		
 		RecentConns.items.append(item)
-		dprint(RecentConns.items)
 		self.initialize()
 		
 		store_state()

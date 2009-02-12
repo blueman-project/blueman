@@ -50,6 +50,11 @@ enable_rgba_colormap()
 class Blueman:
 
 	def __init__(self):
+		check_single_instance("blueman-manager", lambda time: window.present_with_time(time))
+		self.Builder = gtk.Builder()
+		self.Builder.set_translation_domain("blueman")
+		self.Builder.add_from_file(UI_PATH +"/manager-main.ui")
+				
 		def on_window_delete(window, event):
 			(x, y) = window.get_size()
 			self.Config.props.window_height = y
@@ -96,72 +101,87 @@ class Blueman:
 						exit()
 				else:
 					self.Applet.SetBluetoothStatus(True)
+		
+		def on_bluez_name_owner_changed(owner):
+			dprint('org.bluez owner changed to ', owner)
+			if owner == '':
+				window = self.Builder.get_object("window")
+				try:
+					window.hide()
+				except:
+					window = None
+				d = gtk.MessageDialog(window, type=gtk.MESSAGE_ERROR)
+				d.props.icon_name = "blueman"
+				d.props.text = _("Connection to BlueZ failed")
+
+				d.props.secondary_text = _("Bluez daemon is not running, blueman-manager cannot continue.")
+
+				d.add_button(gtk.STOCK_CLOSE, gtk.RESPONSE_NO)
+				d.run()
+				d.destroy()	
+				gtk.main_quit()
+			else:
 				
-
-		check_single_instance("blueman-manager", lambda time: window.present_with_time(time))
-		setup_icon_path()
+				setup_icon_path()
 		
+				self.Config = Config()
 		
-		self.Builder = gtk.Builder()
-		self.Builder.set_translation_domain("blueman")
-		self.Builder.add_from_file(UI_PATH +"/manager-main.ui")
-		self.Config = Config()
+				window = self.Builder.get_object("window")
 		
-		window = self.Builder.get_object("window")
-		
-		try:
-			self.Applet = AppletService()
-		except:
-			print "Blueman applet needs to be running"
-			exit()
-		if not self.Applet.GetBluetoothStatus():
-			on_bt_status_changed(False)
-		self.Applet.Handle("BluetoothStatusChanged", on_bt_status_changed)
+				try:
+					self.Applet = AppletService()
+				except:
+					print "Blueman applet needs to be running"
+					exit()
+				if not self.Applet.GetBluetoothStatus():
+					on_bt_status_changed(False)
+				self.Applet.Handle("BluetoothStatusChanged", on_bt_status_changed)
 
 		
-		window.connect("delete-event", on_window_delete)
-		window.props.icon_name = "blueman"
+				window.connect("delete-event", on_window_delete)
+				window.props.icon_name = "blueman"
 		
-		h = self.Config.props.window_height
-		w = self.Config.props.window_width
-		if w != None and h != None:
-			window.resize(w, h)
+				h = self.Config.props.window_height
+				w = self.Config.props.window_width
+				if w != None and h != None:
+					window.resize(w, h)
 			
-		x = self.Config.props.window_posx
-		y = self.Config.props.window_posy
-		if x and y:
-			window.move(x, y)
+				x = self.Config.props.window_posx
+				y = self.Config.props.window_posy
+				if x and y:
+					window.move(x, y)
 			
 		
-		sw = self.Builder.get_object("scrollview")
+				sw = self.Builder.get_object("scrollview")
 		
-		self.List = ManagerDeviceList(adapter=self.Config.props.last_adapter, inst=self)
+				self.List = ManagerDeviceList(adapter=self.Config.props.last_adapter, inst=self)
 
-		self.List.show()
-		sw.add(self.List)
+				self.List.show()
+				sw.add(self.List)
 		
 		
-		self.Toolbar = ManagerToolbar(self)
-		self.Menu = ManagerMenu(self)
-		self.Stats = ManagerStats(self)
+				self.Toolbar = ManagerToolbar(self)
+				self.Menu = ManagerMenu(self)
+				self.Stats = ManagerStats(self)
 		
-		if self.List.IsValidAdapter():
-			self.List.DisplayKnownDevices(autoselect=True)
+				if self.List.IsValidAdapter():
+					self.List.DisplayKnownDevices(autoselect=True)
 		
-		self.List.connect("adapter-changed", self.on_adapter_changed)
+				self.List.connect("adapter-changed", self.on_adapter_changed)
 		
-		self.Config.connect("property-changed", on_property_changed)
+				self.Config.connect("property-changed", on_property_changed)
 		
-		if self.Config.props.show_toolbar != None:
-			on_property_changed(self.Config, "show_toolbar", self.Config.props.show_toolbar)
+				if self.Config.props.show_toolbar != None:
+					on_property_changed(self.Config, "show_toolbar", self.Config.props.show_toolbar)
 			
-		if self.Config.props.show_statusbar != None:
-			on_property_changed(self.Config, "show_statusbar", self.Config.props.show_statusbar)
-		
-		window.show()
+				if self.Config.props.show_statusbar != None:
+					on_property_changed(self.Config, "show_statusbar", self.Config.props.show_statusbar)
+				
+				window.show()
+						
+		dbus.SystemBus().watch_name_owner('org.bluez', on_bluez_name_owner_changed)
 		gtk.main()
-		
-		
+
 	def on_adapter_changed(self, list, adapter):
 		if adapter != None:
 			self.List.DisplayKnownDevices(autoselect=True)
