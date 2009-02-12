@@ -50,11 +50,18 @@ enable_rgba_colormap()
 class Blueman:
 
 	def __init__(self):
-		check_single_instance("blueman-manager", lambda time: window.present_with_time(time))
+		
 		self.Builder = gtk.Builder()
 		self.Builder.set_translation_domain("blueman")
 		self.Builder.add_from_file(UI_PATH +"/manager-main.ui")
-				
+	
+		window = self.Builder.get_object("window")
+	
+		def do_present(time):
+			if window.props.visible:
+				window.present_with_time(time)
+	
+		check_single_instance("blueman-manager", do_present)	
 		def on_window_delete(window, event):
 			(x, y) = window.get_size()
 			self.Config.props.window_height = y
@@ -83,7 +90,9 @@ class Blueman:
 					pass
 				
 		def on_bt_status_changed(status):
+			window = self.Builder.get_object("window")
 			if not status:
+				window.hide()
 				d = gtk.MessageDialog(  window,
 					type=gtk.MESSAGE_ERROR)
 				d.props.icon_name = "blueman"
@@ -95,21 +104,17 @@ class Blueman:
 				resp = d.run()
 				d.destroy()
 				if resp != gtk.RESPONSE_YES:
-					try:
-						gtk.main_quit()
-					except:
-						exit()
+					gtk.main_quit()
 				else:
-					self.Applet.SetBluetoothStatus(True)
+					def ret(*args):
+						pass
+					self.Applet.SetBluetoothStatus(True, reply_handler=ret, error_handler=ret)
+			else:
+				window.show()
 		
 		def on_bluez_name_owner_changed(owner):
 			dprint('org.bluez owner changed to ', owner)
 			if owner == '':
-				window = self.Builder.get_object("window")
-				try:
-					window.hide()
-				except:
-					window = None
 				d = gtk.MessageDialog(window, type=gtk.MESSAGE_ERROR)
 				d.props.icon_name = "blueman"
 				d.props.text = _("Connection to BlueZ failed")
@@ -119,7 +124,7 @@ class Blueman:
 				d.add_button(gtk.STOCK_CLOSE, gtk.RESPONSE_NO)
 				d.run()
 				d.destroy()	
-				gtk.main_quit()
+				exit()
 			else:
 				
 				setup_icon_path()

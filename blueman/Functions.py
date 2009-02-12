@@ -216,6 +216,7 @@ def check_single_instance(id, unhide_func=None):
 			isrunning = os.path.exists("/proc/%s" % pid)
 
 			if not isrunning:
+				print "Stale PID, overwriting"
 				os.remove(lockfile)
 			else:
 				print "there is an instance already running"

@@ -203,9 +203,13 @@ class DeviceList(GenericList):
 			
 			
 			hci = re.search(".*(hci[0-9]*)", self.Adapter.GetObjectPath()).groups(0)[0]
-			cinfo = conn_info(props["Address"], hci)
-			self.level_setup_event(iter, device, cinfo)
-			gobject.timeout_add(1000, update, iter, device, cinfo)
+			try:
+				cinfo = conn_info(props["Address"], hci)
+			except:
+				dprint("Failed to get power levels")
+			else:
+				self.level_setup_event(iter, device, cinfo)
+				gobject.timeout_add(1000, update, iter, device, cinfo)
 		
 	
 	##### virtual funcs #####

@@ -62,7 +62,7 @@ class Adapter(BaseInterface):
     # GetProperties
 
     @raise_dbus_error
-    def SetProperty(self, name, value):
+    def SetProperty(self, name, value, **kwargs):
         '''
         Changes the value of the specified property. Only
         properties that are listed a read-write are changeable.
@@ -70,7 +70,7 @@ class Adapter(BaseInterface):
         '''
         if type(value) == types.IntType:
             value = dbus.UInt32(value)
-        self.GetInterface().SetProperty(name, value)
+        self.GetInterface().SetProperty(name, value, **kwargs)
     # SetProperty
 
     @raise_dbus_error
