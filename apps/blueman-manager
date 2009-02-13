@@ -237,7 +237,7 @@ class Blueman:
 			self._prog_msg(prog, _("Success"))
 		
 		def err(*args):
-			print args
+			dprint(args)
 			self._prog_msg(prog, _("Failure"))
 		
 		address = device.GetProperties()["Address"]

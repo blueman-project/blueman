@@ -30,7 +30,7 @@ import gtk
 import gtk.gdk
 
 #support running uninstalled
-_dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+_dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if os.path.exists(os.path.join(_dirname,"ChangeLog")):
 	sys.path.insert(0, _dirname)
 
@@ -60,7 +60,7 @@ class BluemanApplet:
 	def __init__(self):
 		setup_icon_path()
 		if not pynotify.init("Blueman"):
-			dprint('Error: Failed to init pynotify')
+			dprint("Error: Failed to init pynotify")
 		
 		check_single_instance("blueman-applet")
 		
@@ -78,7 +78,7 @@ class BluemanApplet:
 		self.bluetooth_off = False
 		
 		
-		self.recent_item = create_menuitem(_("Recent Connections")+'...', get_icon("document-open-recent", 16))
+		self.recent_item = create_menuitem(_("Recent Connections")+"...", get_icon("document-open-recent", 16))
 		self.recent_menu = RecentConns(self)
 		
 		self.Signals = SignalTracker()
@@ -86,21 +86,21 @@ class BluemanApplet:
 		self.status_icon = gtk.StatusIcon()
 		self.status_icon = gtk.status_icon_new_from_icon_name("blueman")
 		self.status_icon.set_tooltip(_("Bluetooth applet"))
-		self.status_icon.connect('popup-menu', self.on_popup_menu)
+		self.status_icon.connect("popup-menu", self.on_popup_menu)
 		
 		def on_activate(status_icon):
 			self.on_devices(None)
 		
-		self.status_icon.connect('activate', on_activate)
+		self.status_icon.connect("activate", on_activate)
 		
 		self.build_popup_menu()
 		
 		#determine if icon should be visible (in case adapters are present)
 		self.bus = dbus.SystemBus()
-		self.bus.watch_name_owner('org.bluez', self.on_dbus_name_owner_change)
+		self.bus.watch_name_owner("org.bluez", self.on_dbus_name_owner_change)
 
 		self.sess_bus = dbus.SessionBus()
-		self.sess_bus.watch_name_owner('org.openobex', self.on_obex_owner_changed)
+		self.sess_bus.watch_name_owner("org.openobex", self.on_obex_owner_changed)
 		try:
 			self.Transfer = Transfer(self)
 		except:
@@ -183,12 +183,12 @@ class BluemanApplet:
 				self.Agents = []
 
 			self.Signals.DisconnectAll()
-			self.Manager = Bluez.Manager('gobject')
+			self.Manager = Bluez.Manager("gobject")
 			
 			self.DiscvManager = DiscvManager(self)
 			self.NM = NetworkManager(self)
-			self.Signals.Handle("bluez", self.Manager, self.on_adapter_removed, 'AdapterRemoved')
-			self.Signals.Handle("bluez", self.Manager, self.on_adapter_added, 'AdapterAdded')
+			self.Signals.Handle("bluez", self.Manager, self.on_adapter_removed, "AdapterRemoved")
+			self.Signals.Handle("bluez", self.Manager, self.on_adapter_added, "AdapterAdded")
 			adapters = self.Manager.ListAdapters()
 			self.status_icon.set_visible(adapters != [])
 			for adapter in adapters:
@@ -205,28 +205,28 @@ class BluemanApplet:
 			self.DiscvManager = None
 			self.NM = None
 			self.status_icon.set_visible(False)
-			dprint('Bluez DBus API not available. Listening for DBus name ownership changes')
+			dprint("Bluez DBus API not available. Listening for DBus name ownership changes")
 			
 	def register_agent(self, adapter):
 		try:
 			agent = BluezAgent(self, adapter.GetObjectPath())
-			adapter.GetInterface().RegisterAgent(agent.dbus_path, 'DisplayYesNo')
+			adapter.GetInterface().RegisterAgent(agent.dbus_path, "DisplayYesNo")
 			self.Agents.append(agent)
 
 		except Exception, e:
-			dprint('Failed to register agent')
+			dprint("Failed to register agent")
 			dprint(e)
 		
 	def on_dbus_name_owner_change(self, owner):
-		dprint('org.bluez owner changed to', owner)
-		if owner == '':
+		dprint("org.bluez owner changed to", owner)
+		if owner == "":
 			self.Manager = None
 			self.status_icon.set_visible(False)
 		elif self.Manager == None:
 			self.manager_init()
 		
 	def on_adapter_added(self, path):
-		dprint('Adapter added ', path)
+		dprint("Adapter added ", path)
 		def on_prop_change(key, value):
 			if key == "Powered" and value:
 				adapter.UnHandleSignal(on_prop_change, "PropertyChanged")
@@ -241,7 +241,7 @@ class BluemanApplet:
 
 		
 	def on_adapter_removed(self, path):
-		dprint('Adapter removed ', path)
+		dprint("Adapter removed ", path)
 		if self.Manager.ListAdapters() == []:
 			self.status_icon.set_visible(False)
 			
@@ -252,16 +252,16 @@ class BluemanApplet:
 		menu_items += [self.disc_item]
 		menu_items += [gtk.SeparatorMenuItem()]
 		
-		menu_items += [create_menuitem(_("Setup new device")+'...', get_icon("gtk-new", 16))]
-		menu_items[-1].connect('activate', self.on_setup_new)
+		menu_items += [create_menuitem(_("Setup new device")+"...", get_icon("gtk-new", 16))]
+		menu_items[-1].connect("activate", self.on_setup_new)
 		menu_items += [gtk.SeparatorMenuItem()]
-		menu_items += [create_menuitem(_("Send files to device")+'...', get_icon("blueman-send-file", 16))]
-		menu_items[-1].connect('activate', self.on_send)
+		menu_items += [create_menuitem(_("Send files to device")+"...", get_icon("blueman-send-file", 16))]
+		menu_items[-1].connect("activate", self.on_send)
 
 		
 		if OBEX_BROWSE_AVAILABLE:
-			menu_items += [create_menuitem(_("Browse files on device")+'...', get_icon("gtk-open", 16))]
-			menu_items[-1].connect('activate', self.on_browse)
+			menu_items += [create_menuitem(_("Browse files on device")+"...", get_icon("gtk-open", 16))]
+			menu_items[-1].connect("activate", self.on_browse)
 		
 		menu_items += [gtk.SeparatorMenuItem()]
 		
@@ -269,18 +269,18 @@ class BluemanApplet:
 		menu_items[-1].set_submenu(self.recent_menu)
 
 		menu_items += [gtk.SeparatorMenuItem()]
-		menu_items += [gtk.MenuItem(_("Devices")+'...', False)]
-		menu_items[-1].connect('activate', self.on_devices)
+		menu_items += [gtk.MenuItem(_("Devices")+"...", False)]
+		menu_items[-1].connect("activate", self.on_devices)
 		
-		menu_items += [create_menuitem(_("Adapters")+'...', get_icon("blueman-device", 16))]
-		menu_items[-1].connect('activate', self.on_adapters)
+		menu_items += [create_menuitem(_("Adapters")+"...", get_icon("blueman-device", 16))]
+		menu_items[-1].connect("activate", self.on_adapters)
 		
-		menu_items += [create_menuitem(_("Local Services")+'...', get_icon("gtk-preferences", 16))]
-		menu_items[-1].connect('activate', self.on_local_services)
+		menu_items += [create_menuitem(_("Local Services")+"...", get_icon("gtk-preferences", 16))]
+		menu_items[-1].connect("activate", self.on_local_services)
 		
 		menu_items += [gtk.SeparatorMenuItem()]
 		menu_items += [gtk.ImageMenuItem(gtk.STOCK_ABOUT)]
-		menu_items[-1].connect('activate', self.on_about)
+		menu_items[-1].connect("activate", self.on_about)
 		
 		
 		for menu_item in menu_items:
@@ -293,67 +293,39 @@ class BluemanApplet:
 	
 	def on_setup_new(self, menu_item):
 		sn = startup_notification("Bluetooth Assistant", _("Starting Bluetooth Assistant"), bin_name="blueman-assistant", icon="blueman")
-		spawn('blueman-assistant', sn=sn)
+		spawn("blueman-assistant", sn=sn)
 		
 	def on_send(self, menu_item):
 		sn = startup_notification("Blueman Sendto", _("Starting File Sender"), bin_name="blueman-sendto", icon="blueman")
-		spawn('blueman-sendto', sn=sn)
+		spawn("blueman-sendto", sn=sn)
 		
 	def on_browse(self, menu_item):
 		sn = startup_notification("Blueman Browse", _("Starting File Browser"), bin_name="blueman-browse", icon="blueman")
-		spawn('blueman-browse', sn=sn)
+		spawn("blueman-browse", sn=sn)
 		
 	def on_devices(self, menu_item):
 		sn = startup_notification("Blueman Manager", _("Starting Device Manager"), bin_name="blueman-manger", icon="blueman")
-		spawn('blueman-manager', sn=sn)
+		spawn("blueman-manager", sn=sn)
 		
 	def on_adapters(self, menu_item):
 		sn = startup_notification("Blueman Adapters", _("Starting Adapter Preferences"), bin_name="blueman-adapters", icon="blueman")
-		spawn('blueman-adapters', sn=sn)
+		spawn("blueman-adapters", sn=sn)
 		
 	def on_local_services(self, menu_item):
 		sn = startup_notification("Blueman Services", _("Starting Service Preferences"), bin_name="blueman-services", icon="blueman")
-		spawn('blueman-services', sn=sn)
+		spawn("blueman-services", sn=sn)
 		
 	def on_about(self, menu_item):
-		show_about_dialog('Blueman '+_('applet'))
-	
-	def build_passkey_dialog(self, device_alias, dialog_msg, is_numeric):
-		def on_insert_text(editable, new_text, new_text_length, position):
-			if not new_text.isdigit():
-				editable.stop_emission("insert-text")
-		
-		builder = gtk.Builder()
-		builder.add_from_file(UI_PATH +"/applet-passkey.ui")
-		dialog = builder.get_object("dialog")
-		dialog.props.icon_name = "blueman"
-		dev_name = builder.get_object("device_name")
-		dev_name.set_markup("<b>"+device_alias+"</b>")
-		msg = builder.get_object("message")
-		msg.set_text(dialog_msg)
-		pin_entry = builder.get_object("pin_entry")
-		show_input = builder.get_object("show_input_check")
-		if (is_numeric):
-			pin_entry.set_max_length(6)
-			pin_entry.set_width_chars(6)
-			pin_entry.connect("insert-text", on_insert_text)
-			show_input.hide()
-		else:
-			pin_entry.set_max_length(16)
-			pin_entry.set_width_chars(16)
-			pin_entry.set_visibility(False)
-		show_input.connect("toggled", lambda x: pin_entry.set_visibility(x.props.active))
-		accept_button = builder.get_object("accept")
-		pin_entry.connect("changed", lambda x: accept_button.set_sensitive(x.get_text() != ''))
-		
-		return (dialog, pin_entry)
+		show_about_dialog("Blueman "+_("applet"))
 	
 	def show_notification(self, summary, message, timeout=-1, actions= None, actions_cb=None, pixbuf=None):
 		def on_notification_closed(n):
 			n.disconnect(closed_sig)
 			if actions_cb:
-				actions_cb(n, 'default')
-			
+				actions_cb(n, "closed")
+		def on_action(*args):
+			n.disconnect(closed_sig)
+			actions_cb(*args)	
 		
 		n = pynotify.Notification(summary, message)
 		if pixbuf:
@@ -361,9 +333,9 @@ class BluemanApplet:
 		
 		if actions:
 			for action in actions:
-				n.add_action(action[0], action[1], actions_cb)
-			n.add_action('default', 'Default Action', actions_cb)
-		closed_sig = n.connect('closed', on_notification_closed)
+				n.add_action(action[0], action[1], on_action)
+			n.add_action("default", "Default Action", on_action)
+		closed_sig = n.connect("closed", on_notification_closed)
 		if timeout != -1:
 			n.set_timeout(timeout)
 		if self.status_icon.get_visible():

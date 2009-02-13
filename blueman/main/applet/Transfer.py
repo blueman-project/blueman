@@ -173,19 +173,17 @@ class Transfer(OdsManager):
 				path = self.transfers[session.object_path]["filepath"]
 				name = self.transfers[session.object_path]["filename"]
 				
-				temp = []
 				def on_open(n, action):
-					spawn(["xdg-open", path], True)
-					temp.remove(n)
+					dprint(action)
+					if action == "open":
+						try:
+							spawn(["xdg-open", path], True)
+						except Exception, e:
+							dprint(e)
 				
-				n = pynotify.Notification(_("File Saved"), _("Would you like to open %s?") % name)
-				n.set_icon_from_pixbuf(get_icon("gtk-save", 48))
-				n.add_action("open", _("Open"), on_open)
-				n.attach_to_status_icon(self.Applet.status_icon)
-				n.show()
-				temp.append(n)
-
-
+				n = self.Applet.show_notification(_("File Saved"), _("Would you like to open %s?") % name, timeout=0, 
+									actions=[["open", _("Open")]], 
+									actions_cb=on_open, pixbuf=get_icon("gtk-save", 48))
 					
 			def update_notification(n):
 				t = self.transfers[session.object_path]
@@ -199,7 +197,7 @@ class Transfer(OdsManager):
 							n.close()
 
 						if not t["failed"]:
-							show_open()
+							gobject.idle_add(show_open)
 						
 						return False
 					
