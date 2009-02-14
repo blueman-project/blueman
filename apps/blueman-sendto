@@ -271,7 +271,10 @@ class SendTo:
 		parser = OptionParser(usage)
 		parser.add_option("-d", "--device", dest="device",
 				action="store", help=_("Send files to this device"), metavar="ADDRESS")
-	
+		
+		parser.add_option("", "--dest", dest="device",
+				action="store", help="Same as --device", metavar="ADDRESS")	
+		
 		(options, args) = parser.parse_args()
 		self.options = options
 		self.args = args
