@@ -82,7 +82,7 @@ class OdsManager(OdsBase):
 			return None
 	
 	
-	def create_session(self, dest_addr, source_addr="00:00:00:00:00:00", pattern="opp"):
+	def create_session(self, dest_addr, source_addr="00:00:00:00:00:00", pattern="opp", error_handler=None):
 		def reply(session_path):
 			session = OdsSession(session_path)
 			self.Sessions[os.path.basename(session_path)] = session
@@ -90,8 +90,9 @@ class OdsManager(OdsBase):
 		def err(*args):
 			dprint("session err", args)
 	
-	
-		self.CreateBluetoothSession(dest_addr, source_addr, pattern, reply_handler=reply, error_handler=err)
+		if not error_handler:
+			error_handler=err
+		self.CreateBluetoothSession(dest_addr, source_addr, pattern, reply_handler=reply, error_handler=error_handler)
 	
 	
 	def create_server(self, source_addr="00:00:00:00:00:00", pattern="opp", require_pairing=False):

@@ -71,7 +71,6 @@ class Sender(gobject.GObject):
 		self.device = device
 		self.adapter = Adapter(adapter)
 		self.files = files
-		
 		self.session = None
 		
 		self.total_bytes = 0
@@ -85,13 +84,18 @@ class Sender(gobject.GObject):
 		
 		self.speed = SpeedCalc(6)
 
-		
-		for f in self.files:
+		for i in range(len(self.files)-1,-1,-1):
+			f = self.files[i]
+			match = re.match("file://(.*)", f)
+			if match:
+				f = self.files[i] = match.groups(1)[0]
+			
 			if os.path.exists(f) and not os.path.isdir(f):
 				f =  os.path.abspath(f)
 				self.total_bytes += os.path.getsize(f)
 			else:
 				self.files.remove(f)
+
 		
 		self.num_files = len(self.files)
 		try:
@@ -103,6 +107,9 @@ class Sender(gobject.GObject):
 			d.props.secondary_text = _("obex-data-server is probably not installed")
 			d.run()
 			d.destroy()
+			exit(1)
+		
+		if self.num_files == 0:
 			exit(1)
 		
 		self.l_file.props.label = os.path.basename(self.files[-1])
@@ -120,8 +127,19 @@ class Sender(gobject.GObject):
 		
 		
 	def create_session(self):
+		def on_error(msg):
+			d = gtk.MessageDialog(  self.window,
+			type=gtk.MESSAGE_ERROR, buttons=(gtk.BUTTONS_CLOSE))
+			d.props.text = _("Error occurred")
+			d.props.icon_name = "blueman"
+			d.props.secondary_text = str(msg).split(":")[1].strip(" ")
+		
+			resp = d.run()
+			d.destroy()
+			exit(1)
+		
 		props = self.adapter.GetProperties()
-		self.manager.create_session(self.device.Address, props["Address"])
+		self.manager.create_session(self.device.Address, props["Address"], error_handler=on_error)
 		
 	def on_cancel(self, button):
 		if self.session:
@@ -223,7 +241,8 @@ class Sender(gobject.GObject):
 					type=gtk.MESSAGE_ERROR)
 		d.props.text = msg
 		d.props.secondary_text = _("Error occurred while sending file %s") % os.path.basename(self.files[-1])
-
+		d.props.icon_name = "blueman"
+		
 		if len(self.files) > 1:
 			d.add_button(_("Skip"), gtk.RESPONSE_NO)
 		d.add_button(_("Retry"), gtk.RESPONSE_YES)
