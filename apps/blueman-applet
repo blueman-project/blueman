@@ -201,12 +201,16 @@ class BluemanApplet:
 		
 		except dbus.exceptions.DBusException, e:
 			dprint(e)
-			self.Manager = None
-			self.DiscvManager = None
-			self.NM = None
-			self.status_icon.set_visible(False)
+			self.manager_deinit()
 			dprint("Bluez DBus API not available. Listening for DBus name ownership changes")
-			
+	
+	def manager_deinit(self):
+		self.Signals.DisconnectAll()
+		self.Manager = None
+		self.DiscvManager = None
+		self.NM = None
+		self.status_icon.set_visible(False)		
+	
 	def register_agent(self, adapter):
 		try:
 			agent = BluezAgent(self, adapter.GetObjectPath())
@@ -220,8 +224,7 @@ class BluemanApplet:
 	def on_dbus_name_owner_change(self, owner):
 		dprint("org.bluez owner changed to", owner)
 		if owner == "":
-			self.Manager = None
-			self.status_icon.set_visible(False)
+			self.manager_deinit()
 		elif self.Manager == None:
 			self.manager_init()
 		

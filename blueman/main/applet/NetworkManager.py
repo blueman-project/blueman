@@ -47,10 +47,7 @@ class NetworkManager():
 		self.dhcp_notif = None
 		
 	def on_network_prop_changed(self, key, value, path):
-		if self.Config.props.dhcp_client == None:
-			self.Config.props.dhcp_client = True
 			
-
 		if key == "Device":
 			if not self.Config.props.dhcp_client:
 				if value != "":
@@ -60,6 +57,7 @@ class NetworkManager():
 				self.dhcp_acquire(value)
 		
 	def dhcp_acquire(self, device):
+		dprint("Get ip")
 		if device != "":
 			a= PolicyKitAuth()
 			auth = a.is_authorized("org.blueman.dhcp.client")
