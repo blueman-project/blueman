@@ -132,28 +132,28 @@ class ManagerStats:
 	
 	
 	def _update(self):
-		if self.hbox.parent.parent.parent.props.visible:
+		#if self.hbox.parent.parent.parent.props.visible:
 
-			if self.hci != None:
-				devinfo = Lib.device_info(self.hci)
-				_tx = devinfo["stat"]["byte_tx"]
-				_rx = devinfo["stat"]["byte_rx"]
+		if self.hci != None:
+			devinfo = Lib.device_info(self.hci)
+			_tx = devinfo["stat"]["byte_tx"]
+			_rx = devinfo["stat"]["byte_rx"]
 
-				tx, s_tx = format_bytes(_tx)
-				rx, s_rx = format_bytes(_rx)
-		
-				_u_speed = self.up_speed.calc(_tx)
-				_d_speed = self.down_speed.calc(_rx)
-		
-				self.set_blinker_by_speed(self.up_blinker, _u_speed)
-				self.set_blinker_by_speed(self.down_blinker, _d_speed)
-		
+			tx, s_tx = format_bytes(_tx)
+			rx, s_rx = format_bytes(_rx)
+	
+			_u_speed = self.up_speed.calc(_tx)
+			_d_speed = self.down_speed.calc(_rx)
+	
+			self.set_blinker_by_speed(self.up_blinker, _u_speed)
+			self.set_blinker_by_speed(self.down_blinker, _d_speed)
+	
 
-		
-				u_speed, s_u_speed = format_bytes(_u_speed)
-				d_speed, s_d_speed = format_bytes(_d_speed)
-		
-				self.set_data(tx, s_tx, rx, s_rx, u_speed, s_u_speed, d_speed, s_d_speed)
+	
+			u_speed, s_u_speed = format_bytes(_u_speed)
+			d_speed, s_d_speed = format_bytes(_d_speed)
+	
+			self.set_data(tx, s_tx, rx, s_rx, u_speed, s_u_speed, d_speed, s_d_speed)
 		
 		return 1
 

@@ -88,18 +88,27 @@ class ManagerProgressbar(gobject.GObject):
 	def show(self):
 		if self.Blueman.Config.props.show_statusbar == False:
 			self.Blueman.Builder.get_object("statusbar").props.visible = True
+
+		
+		if self.Blueman.Stats.hbox.size_request()[0] + self.progressbar.size_request()[0] + 16 > self.Blueman.window.get_size()[0]:
+			self.Blueman.Stats.hbox.hide_all()
+
+		
 		self.progressbar.props.visible = True
 		self.eventbox.props.visible = True
-		self.button.props.visible = True
-		
+		self.button.props.visible = True		
+	
 	def hide(self):
+		self.Blueman.Stats.hbox.show_all()		
 		self.progressbar.props.visible = False
 		self.eventbox.props.visible = False
 		self.button.props.visible = False
 		
+
 		
 	def finalize(self):
 		if not self.finalized:
+			self.hide()
 			self.stop()
 			self.window.window.set_cursor(None)
 			self.hbox.remove(self.eventbox)

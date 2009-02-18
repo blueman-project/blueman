@@ -54,7 +54,7 @@ class DeviceSelectorList(DeviceList):
 		self.row_update_event(iter, "Icon", device.Icon)
 		
 	def device_add_event(self, device):
-		if self.discovering:
+		if device.Fake:
 			self.PrependDevice(device)
 		else:
 			self.AppendDevice(device)

@@ -161,7 +161,7 @@ class ManagerDeviceList(DeviceList):
 	
 	
 	def device_add_event(self, device):
-		if self.discovering:
+		if device.Fake:
 			self.PrependDevice(device)
 			return
 

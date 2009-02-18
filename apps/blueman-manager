@@ -55,19 +55,19 @@ class Blueman:
 		self.Builder.set_translation_domain("blueman")
 		self.Builder.add_from_file(UI_PATH +"/manager-main.ui")
 	
-		window = self.Builder.get_object("window")
+		self.window = self.Builder.get_object("window")
 	
 		def do_present(time):
-			if window.props.visible:
-				window.present_with_time(time)
+			if self.window.props.visible:
+				self.window.present_with_time(time)
 	
 		check_single_instance("blueman-manager", do_present)	
 		def on_window_delete(window, event):
-			(x, y) = window.get_size()
+			(x, y) = self.window.get_size()
 			self.Config.props.window_height = y
 			self.Config.props.window_width = x
 			
-			(x, y) = window.get_position()
+			(x, y) = self.window.get_position()
 			self.Config.props.window_posx = x
 			self.Config.props.window_posy = y
 			gtk.main_quit()
@@ -90,9 +90,8 @@ class Blueman:
 					pass
 				
 		def on_bt_status_changed(status):
-			window = self.Builder.get_object("window")
 			if not status:
-				window.hide()
+				self.window.hide()
 				d = gtk.MessageDialog(  window,
 					type=gtk.MESSAGE_ERROR)
 				d.props.icon_name = "blueman"
@@ -110,7 +109,7 @@ class Blueman:
 						pass
 					self.Applet.SetBluetoothStatus(True, reply_handler=ret, error_handler=ret)
 			else:
-				window.show()
+				self.window.show()
 		
 		def on_bluez_name_owner_changed(owner):
 			dprint('org.bluez owner changed to ', owner)
@@ -131,8 +130,6 @@ class Blueman:
 		
 				self.Config = Config()
 		
-				window = self.Builder.get_object("window")
-		
 				try:
 					self.Applet = AppletService()
 				except:
@@ -143,18 +140,18 @@ class Blueman:
 				self.Applet.Handle("BluetoothStatusChanged", on_bt_status_changed)
 
 		
-				window.connect("delete-event", on_window_delete)
-				window.props.icon_name = "blueman"
+				self.window.connect("delete-event", on_window_delete)
+				self.window.props.icon_name = "blueman"
 		
 				h = self.Config.props.window_height
 				w = self.Config.props.window_width
 				if w != None and h != None:
-					window.resize(w, h)
+					self.window.resize(w, h)
 			
 				x = self.Config.props.window_posx
 				y = self.Config.props.window_posy
 				if x and y:
-					window.move(x, y)
+					self.window.move(x, y)
 			
 		
 				sw = self.Builder.get_object("scrollview")
@@ -182,7 +179,7 @@ class Blueman:
 				if self.Config.props.show_statusbar != None:
 					on_property_changed(self.Config, "show_statusbar", self.Config.props.show_statusbar)
 				
-				window.show()
+				self.window.show()
 						
 		dbus.SystemBus().watch_name_owner('org.bluez', on_bluez_name_owner_changed)
 		gtk.main()
