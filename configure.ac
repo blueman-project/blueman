@@ -190,7 +190,6 @@ fi
 
 AM_CHECK_PYMOD(pynotify,,,[AC_MSG_ERROR(Could not find Python module pynotify)])
 AM_CHECK_PYMOD(dbus,,,[AC_MSG_ERROR(Could not find Python module dbus)])
-AM_CHECK_PYMOD(gconf,,,[AC_MSG_ERROR(Could not find Python module gconf)])
 AM_CHECK_PYMOD(gobject,,,[AC_MSG_ERROR(Could not find Python module gobject)])
 
 
