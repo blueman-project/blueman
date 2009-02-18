@@ -24,6 +24,15 @@ import os
 import atexit
 import dbus.service, dbus.glib
 import weakref
+import signal
+from blueman.Functions import dprint
+
+def sighandler():
+	print "got signal"
+	exit()
+
+signal.signal(signal.SIGTERM, sighandler)
+signal.signal(signal.SIGHUP, sighandler)
 
 dbus.service.Object.SUPPORTS_MULTIPLE_OBJECT_PATHS = True
 
@@ -37,7 +46,6 @@ class Monitor(dbus.service.Object):
 
 		self.plugin = plugin
 		self.sigs = SignalTracker()
-		print "starting monitor"
 		self.bus = dbus.SessionBus();
 		
 		dbus.service.Object.__init__(self)
@@ -70,9 +78,6 @@ class Monitor(dbus.service.Object):
 	@dbus.service.signal(dbus_interface="org.blueman.Config")
 	def ValueChanged(self, section, key, value):
 		pass
-		
-	def __del__(self):
-		print "deleting monitor"
 
 class File(ConfigPlugin):
 	__priority__ = 1
@@ -83,7 +88,6 @@ class File(ConfigPlugin):
 	timeout = None
 
 	def __del__(self):
-		print "deleting file"
 		self.Monitor.sigs.DisconnectAll()
 		self.Monitor.remove_from_connection()
 		del self.Monitor
@@ -118,7 +122,7 @@ class File(ConfigPlugin):
 	
 	@staticmethod	
 	def save():
-		print "Saving"
+		dprint("Saving config")
 		f = open(cfg_path, "w")
 		print File.__db__
 		pickle.dump(File.__db__, f)
@@ -126,7 +130,6 @@ class File(ConfigPlugin):
 
 	
 	def set(self, key, value, local=False):
-		print "set", key, value
 		if key in self.config[self.section]:
 			prev = self.config[self.section][key]
 		else:

@@ -37,7 +37,7 @@ for plugin in plugins:
 	try:
 		__import__("blueman.plugins.config.%s" % plugin, None, None, [])
 	except ImportError, e:
-		dprint("Unable to load %s plugin\n%s" % (plugin, e))
+		dprint("Skipping plugin %s\n%s" % (plugin, e))
 
 def compare(a, b):
 	return cmp(a.__priority__, b.__priority__)
