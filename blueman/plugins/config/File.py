@@ -124,7 +124,6 @@ class File(ConfigPlugin):
 	def save():
 		dprint("Saving config")
 		f = open(cfg_path, "w")
-		print File.__db__
 		pickle.dump(File.__db__, f)
 		f.close()
 
