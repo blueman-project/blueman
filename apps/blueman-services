@@ -37,7 +37,7 @@ class BluemanServices:
 		self.Config = Config()
 		
 		self.Dialog = self.Builder.get_object("dialog")
-		self.Dialog.resize(480, 420)
+		self.Dialog.resize(520, 420)
 
 		check_single_instance("blueman-services", lambda time: self.Dialog.present_with_time(time))
 
