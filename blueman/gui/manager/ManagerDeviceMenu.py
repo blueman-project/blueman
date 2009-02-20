@@ -237,16 +237,19 @@ class ManagerDeviceMenu(gtk.Menu):
 			self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.add_device(device))
 			item.show()
 			self.append(item)
+			item.props.tooltip_text = _("Add this device to known devices list")
 			
 			item = create_menuitem(_("Setup..."), get_icon("gtk-properties", 16))
 			self.append(item)
 			self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.setup(device))
 			item.show()
+			item.props.tooltip_text = _("Run the setup assistant for this device")
 			
 			item = create_menuitem(_("Bond"), get_icon("gtk-dialog-authentication", 16))
 			self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.bond(device))
 			self.append(item)
 			item.show()			
+			item.props.tooltip_text = _("Create bonding with the device")
 			
 			item = gtk.SeparatorMenuItem()
 			item.show()
@@ -472,7 +475,7 @@ class ManagerDeviceMenu(gtk.Menu):
 			self.append(item)
 			
 			item = create_menuitem(_("Bond"), get_icon("gtk-dialog-authentication", 16))
-			
+			item.props.tooltip_text = _("Create bonding with the device")
 			self.append(item)
 			item.show()
 			if not device.Paired:
@@ -491,11 +494,13 @@ class ManagerDeviceMenu(gtk.Menu):
 				self.append(item)
 				self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.toggle_trust(device))
 				item.show()
+			item.props.tooltip_text = _("Mark/Unmark this device as trusted")
 				
 			item = create_menuitem(_("Setup..."), get_icon("gtk-properties", 16))
 			self.append(item)
 			self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.setup(device))
 			item.show()
+			item.props.tooltip_text = _("Run the setup assistant for this device")
 			
 			def update_services(item):
 				def prog_msg(msg):
@@ -529,6 +534,7 @@ class ManagerDeviceMenu(gtk.Menu):
 			self.Signals.Handle(item, "activate", lambda x: self.Blueman.remove(device))
 			self.append(item)
 			item.show()
+			item.props.tooltip_text = _("Remove this device from the known devices list")
 			
 			item = gtk.SeparatorMenuItem()
 			item.show()

@@ -49,6 +49,7 @@
               <object class="GtkToolButton" id="b_add">
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
+                <property name="tooltip_text" translatable="yes">Add this device to known devices list</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Add</property>
                 <property name="stock_id">gtk-add</property>
               </object>
@@ -74,6 +75,7 @@
               <object class="GtkToolButton" id="b_trust">
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
+                <property name="tooltip_text" translatable="yes">Mark/Unmark this device as trusted</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Trust</property>
                 <property name="icon_name">blueman-trust</property>
               </object>
@@ -86,7 +88,7 @@
               <object class="GtkToolButton" id="b_setup">
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
-                <property name="tooltip_text" translatable="yes">Setup this device</property>
+                <property name="tooltip_text" translatable="yes">Run the setup assistant for this device</property>
                 <property name="is_important">True</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Setup...</property>
                 <property name="stock_id">gtk-properties</property>
@@ -100,6 +102,7 @@
               <object class="GtkToolButton" id="b_remove">
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
+                <property name="tooltip_text" translatable="yes">Remove this device from the known devices list</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Remove</property>
                 <property name="stock_id">gtk-delete</property>
               </object>
@@ -120,6 +123,7 @@
             <child>
               <object class="GtkToolButton" id="b_send">
                 <property name="visible">True</property>
+                <property name="tooltip_text" translatable="yes">Send file(s) to the device</property>
                 <property name="is_important">True</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Send File</property>
                 <property name="icon_name">blueman-send-file</property>
@@ -132,6 +136,7 @@
             <child>
               <object class="GtkToolButton" id="b_browse">
                 <property name="visible">True</property>
+                <property name="tooltip_text" translatable="yes">Browse the device using obex ftp</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Browse</property>
                 <property name="stock_id">gtk-open</property>
               </object>
