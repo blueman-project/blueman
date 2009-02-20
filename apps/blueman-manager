@@ -92,7 +92,7 @@ class Blueman:
 		def on_bt_status_changed(status):
 			if not status:
 				self.window.hide()
-				d = gtk.MessageDialog(  window,
+				d = gtk.MessageDialog(  self.window,
 					type=gtk.MESSAGE_ERROR)
 				d.props.icon_name = "blueman"
 				d.props.text = _("Bluetooth Turned Off")
@@ -114,7 +114,8 @@ class Blueman:
 		def on_bluez_name_owner_changed(owner):
 			dprint('org.bluez owner changed to ', owner)
 			if owner == '':
-				d = gtk.MessageDialog(window, type=gtk.MESSAGE_ERROR)
+				self.window.hide()
+				d = gtk.MessageDialog(self.window, type=gtk.MESSAGE_ERROR)
 				d.props.icon_name = "blueman"
 				d.props.text = _("Connection to BlueZ failed")
 
@@ -123,7 +124,10 @@ class Blueman:
 				d.add_button(gtk.STOCK_CLOSE, gtk.RESPONSE_NO)
 				d.run()
 				d.destroy()	
-				exit()
+				try:
+					exit(1)
+				except:
+					gtk.main_quit()
 			else:
 				
 				setup_icon_path()
