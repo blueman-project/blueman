@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-08 18:09+0200\n"
-"PO-Revision-Date: 2009-01-22 17:08+0000\n"
-"Last-Translator: BasicXP <x12ozmouse@ya.ru>\n"
+"PO-Revision-Date: 2009-02-13 18:18+0000\n"
+"Last-Translator: Valmantas Palikša <walmis@balticum-tv.lt>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-02-08 21:12+0000\n"
+"X-Launchpad-Export-Date: 2009-02-20 09:40+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -41,7 +41,7 @@ msgstr "Временно видимый"
 
 #: ../data/ui/adapters.ui.h:1
 msgid "Bluetooth Adapters"
-msgstr ""
+msgstr "Адаптеры Bluetooth"
 
 #: ../data/ui/applet-passkey.ui.h:1
 msgid "Authentication request"
@@ -97,7 +97,7 @@ msgstr "Поиск устройств"
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:15
 msgid "Send File"
-msgstr "Отправить файл"
+msgstr "Отпр. файл"
 
 #: ../data/ui/manager-main.ui.h:16
 msgid "Setup this device"
@@ -173,15 +173,15 @@ msgstr "Точка доступа к сети (NAP)"
 
 #: ../data/ui/services-transfer.ui.h:1
 msgid "<b>Advanced</b>"
-msgstr ""
+msgstr "<b>Дополнительно</b>"
 
 #: ../data/ui/services-transfer.ui.h:2
 msgid "<b>File Receiving (Object Push)</b>"
-msgstr ""
+msgstr "<b>Приём файлов (Object Push)</b>"
 
 #: ../data/ui/services-transfer.ui.h:3
 msgid "<b>File Sharing (FTP)</b>"
-msgstr ""
+msgstr "<b>Общие файлы (FTP)</b>"
 
 #: ../data/ui/services-transfer.ui.h:4
 msgid "<b>Transfer Settings</b>"
@@ -201,6 +201,8 @@ msgid ""
 "Command to start an obex ftp browser.\n"
 "<i>%d</i> is substituted with device address."
 msgstr ""
+"Команда запуска обозревателя файлов OBEX.\n"
+"<i>%d</i> связан с адресом устройства"
 
 #: ../data/ui/services-transfer.ui.h:10
 msgid "Enabled"
@@ -234,19 +236,19 @@ msgstr "Передача файлов Bluetooth"
 
 #: ../data/ui/assistant.ui.h:1
 msgid "<b>Congratulations, device successfully added</b>"
-msgstr ""
+msgstr "<b>Поздравляем, устройство успешно добавлено</b>"
 
 #: ../data/ui/assistant.ui.h:2
 msgid "<b>Connect to:</b>"
-msgstr ""
+msgstr "<b>Подключиться к:</b>"
 
 #: ../data/ui/assistant.ui.h:3
 msgid "<b>Please wait...</b>"
-msgstr ""
+msgstr "<b>Пожалуйста, подождите...</b>"
 
 #: ../data/ui/assistant.ui.h:4
 msgid "<b>Select pairing method to use:</b>"
-msgstr ""
+msgstr "<b>Выберите способ рисования:</b>"
 
 #: ../data/ui/assistant.ui.h:5
 msgid ""
@@ -256,34 +258,37 @@ msgid ""
 "It will walk you through the process of configuring and connecting to your "
 "bluetooth enabled devices."
 msgstr ""
+"<b>Добро пожаловать в мастер установки устройств Bluetooth </b>\n"
+"\n"
+"Данный мастер поможет вам подключить и настроить ваши устройства bluetooth"
 
 #: ../data/ui/assistant.ui.h:9
 msgid "Don't Pair"
-msgstr ""
+msgstr "Не связывать"
 
 #: ../data/ui/assistant.ui.h:10
 msgid "Use My Own Passkey:"
-msgstr ""
+msgstr "Использовать личный пароль"
 
 #: ../data/ui/assistant.ui.h:11
 msgid "Use Random Passkey"
-msgstr ""
+msgstr "Использовать личный пароль"
 
 #: ../data/ui/device-list-widget.ui.h:1
 msgid "Adapter selection"
-msgstr ""
+msgstr "Выбор адаптера"
 
 #: ../data/ui/device-list-widget.ui.h:2
 msgid "Search for devices"
-msgstr ""
+msgstr "Поиск устройств"
 
 #: ../data/ui/services-headset.ui.h:1
 msgid "<b>Headset Settings</b>"
-msgstr ""
+msgstr "<b>Настройки гарнитуры</b>"
 
 #: ../data/ui/services-headset.ui.h:2
 msgid "Command to execute when answer button is pressed:"
-msgstr ""
+msgstr "Команда, выполняемая при нажатии кнопки вопроса"
 
 #: ../blueman/Sdp.py:101
 msgid "Dialup Networking (DUN)"
@@ -507,7 +512,7 @@ msgstr "Передача"
 
 #: ../blueman/plugins/services/Transfer.py:132 ../apps/blueman-sendto:102
 msgid "obex-data-server not available"
-msgstr ""
+msgstr "Сервер obex недоступен"
 
 #: ../blueman/plugins/services/Network.py:45
 msgid "Network"
@@ -787,15 +792,15 @@ msgstr "_Справка"
 
 #: ../blueman/gui/manager/ManagerMenu.py:58
 msgid "Get Help Online..."
-msgstr ""
+msgstr "Получить помощь в Интернете..."
 
 #: ../blueman/gui/manager/ManagerMenu.py:63
 msgid "Translate This Application..."
-msgstr ""
+msgstr "Перевести программу..."
 
 #: ../blueman/gui/manager/ManagerMenu.py:68
 msgid "Report a Problem"
-msgstr ""
+msgstr "Сообщить об ошибке"
 
 #: ../blueman/gui/manager/ManagerMenu.py:78
 msgid "Device Manager"
@@ -819,7 +824,7 @@ msgstr "Конец списка последних устройств"
 
 #: ../blueman/plugins/services/Headset.py:43
 msgid "Headset"
-msgstr ""
+msgstr "Гарнитура"
 
 #: ../data/blueman.desktop.in.h:1
 msgid "Blueman Applet"
@@ -880,7 +885,7 @@ msgstr "Идёт поиск"
 
 #: ../apps/blueman-manager:199 ../apps/blueman-applet:296
 msgid "Starting Bluetooth Assistant"
-msgstr ""
+msgstr "Запустить помощник Bluetooth"
 
 #: ../apps/blueman-manager:212
 msgid "Success"
@@ -916,7 +921,7 @@ msgstr "Недавние соединения"
 
 #: ../apps/blueman-applet:87
 msgid "Bluetooth applet"
-msgstr ""
+msgstr "Апплет Bluetooth"
 
 #: ../apps/blueman-applet:145
 msgid ""
@@ -926,11 +931,11 @@ msgstr ""
 
 #: ../apps/blueman-applet:161
 msgid "<b>Turn Bluetooth On</b>"
-msgstr ""
+msgstr "<b>Включить Bluetooth</b>"
 
 #: ../apps/blueman-applet:165
 msgid "<b>Turn Bluetooth Off</b>"
-msgstr ""
+msgstr "<b>Отключить Bluetooth</b>"
 
 #: ../apps/blueman-applet:256
 msgid "Setup new device"
@@ -966,18 +971,19 @@ msgstr "Запуск настроек службы"
 
 #: ../apps/blueman-adapters:143
 msgid "Always"
-msgstr ""
+msgstr "Всегда"
 
 #: ../apps/blueman-adapters:147
 #, c-format
 msgid "%d Minute"
 msgid_plural "%d Minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d минут"
+msgstr[1] "%d Минут"
+msgstr[2] "%d Минут"
 
 #: ../apps/blueman-sendto:103
 msgid "obex-data-server is probably not installed"
-msgstr ""
+msgstr "obex сервер не установлен"
 
 #: ../apps/blueman-sendto:142 ../apps/blueman-sendto:175
 msgid "Sending File %(0)s/%(1)s (%(2).2f %(3)s/s) ETA: %(4)s"
@@ -1018,15 +1024,15 @@ msgstr "Отправить файлы на это устройство"
 
 #: ../apps/blueman-sendto:328
 msgid "Select files to send"
-msgstr ""
+msgstr "Выберите файлы для отправки"
 
 #: ../apps/blueman-assistant:63
 msgid "Start configuration assistant for this device"
-msgstr ""
+msgstr "Запустить помощник bluetooth для этого устройства"
 
 #: ../apps/blueman-assistant:78
 msgid "Bluetooth Assistant"
-msgstr ""
+msgstr "Помощник bluetooth"
 
 #: ../apps/blueman-assistant:254
 msgid "<b>Adding Device...</b>"
@@ -1039,44 +1045,47 @@ msgid ""
 "\n"
 "Enter passkey <b>%s</b> on the device."
 msgstr ""
+"<b>Связывание...</b>\n"
+"\n"
+"Введите пароль для следующего устройства: <b>%s</b>"
 
 #: ../apps/blueman-assistant:267
 msgid "<b>Failed to add device</b>"
-msgstr ""
+msgstr "<b>Невозможно добавить устройство</b>"
 
 #: ../apps/blueman-assistant:302
 msgid "Input Service"
-msgstr ""
+msgstr "Служба ввода"
 
 #: ../apps/blueman-assistant:320
 msgid "A2DP Service"
-msgstr ""
+msgstr "Служба A2DP"
 
 #: ../apps/blueman-assistant:325
 msgid "Headset Service"
-msgstr ""
+msgstr "Служба гарнитуры"
 
 #: ../apps/blueman-assistant:329
 msgid "Don't connect"
-msgstr ""
+msgstr "Не подключаться"
 
 #: ../apps/blueman-assistant:344
 msgid "<b>Device added and connected successfuly</b>"
-msgstr ""
+msgstr "<b>Устройство успешно добавлено и соединено</b>"
 
 #: ../apps/blueman-assistant:350
 msgid "<b>Device added successfuly, but failed to connect</b>"
-msgstr ""
+msgstr "<b>Устройство успешно добавлено, но соединение невозможно</b>"
 
 #: ../apps/blueman-browse:49
 msgid "Browse this device"
-msgstr ""
+msgstr "Обзор устройства"
 
 #: ../apps/blueman-browse:76
 #, c-format
 msgid "Failed to launch \"%s\""
-msgstr ""
+msgstr "Не удалось запустить «%s»"
 
 #: ../apps/blueman-browse:77
 msgid "You can enter an alternate browser in service settings"
-msgstr ""
+msgstr "Вы можете выбрать альтернативный обозреватель в настройках служб"

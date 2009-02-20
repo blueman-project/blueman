@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-08 18:09+0200\n"
-"PO-Revision-Date: 2009-02-07 19:35+0000\n"
-"Last-Translator: Valmantas Palikša <walmis@balticum-tv.lt>\n"
+"PO-Revision-Date: 2009-02-14 10:52+0000\n"
+"Last-Translator: DiegoJ <diegojromerolopez@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-02-08 21:12+0000\n"
+"X-Launchpad-Export-Date: 2009-02-20 09:40+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -40,7 +40,7 @@ msgstr "Temporalmente visible"
 
 #: ../data/ui/adapters.ui.h:1
 msgid "Bluetooth Adapters"
-msgstr ""
+msgstr "Adaptadores Bluetooth"
 
 #: ../data/ui/applet-passkey.ui.h:1
 msgid "Authentication request"
@@ -172,7 +172,7 @@ msgstr "Punto de acceso de la red (NAP)"
 
 #: ../data/ui/services-transfer.ui.h:1
 msgid "<b>Advanced</b>"
-msgstr ""
+msgstr "<b>Avanzadas</b>"
 
 #: ../data/ui/services-transfer.ui.h:2
 msgid "<b>File Receiving (Object Push)</b>"
@@ -180,7 +180,7 @@ msgstr ""
 
 #: ../data/ui/services-transfer.ui.h:3
 msgid "<b>File Sharing (FTP)</b>"
-msgstr ""
+msgstr "<b>Compartir archivo (FTP)</b>"
 
 #: ../data/ui/services-transfer.ui.h:4
 msgid "<b>Transfer Settings</b>"
@@ -200,6 +200,8 @@ msgid ""
 "Command to start an obex ftp browser.\n"
 "<i>%d</i> is substituted with device address."
 msgstr ""
+"Orden para iniciar un navegador ftp obex.\n"
+"<i>%d</i> se sustituye por la direccion del dispositivo."
 
 #: ../data/ui/services-transfer.ui.h:10
 msgid "Enabled"
@@ -241,7 +243,7 @@ msgstr "<b>Conectar a:</b>"
 
 #: ../data/ui/assistant.ui.h:3
 msgid "<b>Please wait...</b>"
-msgstr "<b>Por favor, espera...</b>"
+msgstr "<b>Espere un momento...</b>"
 
 #: ../data/ui/assistant.ui.h:4
 msgid "<b>Select pairing method to use:</b>"
@@ -255,6 +257,7 @@ msgid ""
 "It will walk you through the process of configuring and connecting to your "
 "bluetooth enabled devices."
 msgstr ""
+"<b>Bienvenido al asistente de configuración del dispositivo bluetooth.</ b>"
 
 #: ../data/ui/assistant.ui.h:9
 msgid "Don't Pair"
@@ -270,19 +273,19 @@ msgstr "Usar clave de paso aleatoria"
 
 #: ../data/ui/device-list-widget.ui.h:1
 msgid "Adapter selection"
-msgstr ""
+msgstr "Selección del adaptador"
 
 #: ../data/ui/device-list-widget.ui.h:2
 msgid "Search for devices"
-msgstr ""
+msgstr "Buscar dispositivos"
 
 #: ../data/ui/services-headset.ui.h:1
 msgid "<b>Headset Settings</b>"
-msgstr ""
+msgstr "<b>Configuraciones del auricular</b>"
 
 #: ../data/ui/services-headset.ui.h:2
 msgid "Command to execute when answer button is pressed:"
-msgstr ""
+msgstr "Comando a ejecutar cuando se pulse el botón de respuesta:"
 
 #: ../blueman/Sdp.py:101
 msgid "Dialup Networking (DUN)"
@@ -506,7 +509,7 @@ msgstr "Transferir"
 
 #: ../blueman/plugins/services/Transfer.py:132 ../apps/blueman-sendto:102
 msgid "obex-data-server not available"
-msgstr ""
+msgstr "obex-data-server no disponible"
 
 #: ../blueman/plugins/services/Network.py:45
 msgid "Network"
@@ -786,15 +789,15 @@ msgstr "Ay_uda"
 
 #: ../blueman/gui/manager/ManagerMenu.py:58
 msgid "Get Help Online..."
-msgstr ""
+msgstr "Obtener ayuda en línea..."
 
 #: ../blueman/gui/manager/ManagerMenu.py:63
 msgid "Translate This Application..."
-msgstr ""
+msgstr "Traducir esta aplicación..."
 
 #: ../blueman/gui/manager/ManagerMenu.py:68
 msgid "Report a Problem"
-msgstr ""
+msgstr "Informar de un problema"
 
 #: ../blueman/gui/manager/ManagerMenu.py:78
 msgid "Device Manager"
@@ -818,7 +821,7 @@ msgstr "Los últimos dispositivos al final"
 
 #: ../blueman/plugins/services/Headset.py:43
 msgid "Headset"
-msgstr ""
+msgstr "Auriculares"
 
 #: ../data/blueman.desktop.in.h:1
 msgid "Blueman Applet"
@@ -926,11 +929,11 @@ msgstr ""
 
 #: ../apps/blueman-applet:161
 msgid "<b>Turn Bluetooth On</b>"
-msgstr ""
+msgstr "<b>Activar Bluetooth</b>"
 
 #: ../apps/blueman-applet:165
 msgid "<b>Turn Bluetooth Off</b>"
-msgstr ""
+msgstr "<b>Desactivar Bluetooth</b>"
 
 #: ../apps/blueman-applet:256
 msgid "Setup new device"
@@ -966,18 +969,18 @@ msgstr "Iniciando las preferencias del servicio"
 
 #: ../apps/blueman-adapters:143
 msgid "Always"
-msgstr ""
+msgstr "Siempre"
 
 #: ../apps/blueman-adapters:147
 #, c-format
 msgid "%d Minute"
 msgid_plural "%d Minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d Minuto"
+msgstr[1] "%d Minutos"
 
 #: ../apps/blueman-sendto:103
 msgid "obex-data-server is probably not installed"
-msgstr ""
+msgstr "Probaplemente obex-data-server no esté instalado"
 
 #: ../apps/blueman-sendto:142 ../apps/blueman-sendto:175
 msgid "Sending File %(0)s/%(1)s (%(2).2f %(3)s/s) ETA: %(4)s"
@@ -1073,13 +1076,14 @@ msgstr "<b>Dispositivo se ha añadido con éxito, pero falló al conectar</b>"
 
 #: ../apps/blueman-browse:49
 msgid "Browse this device"
-msgstr ""
+msgstr "Explorar este dispositivo"
 
 #: ../apps/blueman-browse:76
 #, c-format
 msgid "Failed to launch \"%s\""
-msgstr ""
+msgstr "Fallo al ejecutar «%s»"
 
 #: ../apps/blueman-browse:77
 msgid "You can enter an alternate browser in service settings"
 msgstr ""
+"Puede introducir un navegador distinto en las opciones de los servicios"
