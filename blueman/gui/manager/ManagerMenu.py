@@ -212,7 +212,15 @@ class ManagerMenu:
 		if m != None:
 			m.deactivate()
 		self.item_adapter.set_submenu(menu)
-		
+
+		sep = gtk.SeparatorMenuItem()
+		sep.show()
+		menu.append(sep)		
+
+		item = gtk.ImageMenuItem("gtk-quit")
+		item.connect("activate", lambda x: gtk.main_quit())
+		item.show()
+		menu.append(item)
 		
 	def on_adapter_selected(self, menuitem, adapter_path):
 		if menuitem.props.active:
