@@ -118,6 +118,9 @@ class DbusService(dbus.service.Object):
 	@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="ss", out_signature="")
 	def TransferControl(self, pattern, action):
 		dprint(pattern, action)
+		if not self.applet.Transfer:
+			return
+			
 		if action == "destroy":
 			self.applet.Transfer.destroy_server(pattern)
 		elif action == "stop":

@@ -48,9 +48,13 @@ class Transfer(OdsManager):
 			
 		self.create_server("opp")
 		self.create_server("ftp")
+		
+	def __del__(self):
+		print "deleting transfer"
 
 		
 	def create_server(self, pattern):
+
 		if pattern == "opp":
 			if self.Config.props.opp_enabled:
 				OdsManager.create_server(self)
@@ -60,6 +64,7 @@ class Transfer(OdsManager):
 				
 				
 	def start_server(self, pattern):
+
 		server = self.get_server(pattern)
 		if server != None:
 			if self.Config.props.shared_path == None:

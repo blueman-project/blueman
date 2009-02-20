@@ -81,6 +81,7 @@ class BluemanApplet:
 		self.recent_item = create_menuitem(_("Recent Connections")+"...", get_icon("document-open-recent", 16))
 		self.recent_menu = RecentConns(self)
 		
+		self.Transfer = None
 		self.Signals = SignalTracker()
 		self.Agents = []
 		self.status_icon = gtk.StatusIcon()
@@ -101,16 +102,18 @@ class BluemanApplet:
 
 		self.sess_bus = dbus.SessionBus()
 		self.sess_bus.watch_name_owner("org.openobex", self.on_obex_owner_changed)
-		try:
-			self.Transfer = Transfer(self)
-		except:
-			dprint("Unable to initialize obex-data-server")
-			self.Transfer = None
 			
 		self.load_nap_settings()
 		
+		gobject.idle_add(self.try_start_ods)
+		
 		gtk.main()
 	
+	def try_start_ods(self):
+		try:
+			self.sess_bus.start_service_by_name("org.openobex")
+		except dbus.DBusException, e:
+			dprint("Could not acquire obex-data-server", e)		
 	
 	def load_plugins(self):
 		path = os.path.dirname(blueman.plugins.applet.__file__)
@@ -149,8 +152,13 @@ class BluemanApplet:
 		m.NetworkSetup("reload", 0, "0", reply_handler=reply, error_handler=err)
 
 	def on_obex_owner_changed(self, owner):
-		if owner != "" and not self.Transfer:
+		dprint("obex owner changed:", owner)
+		if owner != "":
 			self.Transfer = Transfer(self)
+		else:
+			if self.Transfer:
+				self.Transfer.DisconnectAll()
+			self.Transfer = None
 	
 			
 	def __setattr__(self, key, value):

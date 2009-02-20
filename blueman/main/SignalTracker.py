@@ -67,7 +67,7 @@ class SignalTracker:
 				elif objtype == "gobject":
 					obj.disconnect(args)
 				elif objtype == "dbus":
-					obj.bus.remove_signal_receiver(*args, **kwargs)
+					obj.bus.remove_signal_receiver(*args)
 					
 				self._signals.remove(sig)
 				

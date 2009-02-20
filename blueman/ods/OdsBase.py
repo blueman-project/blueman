@@ -42,7 +42,7 @@ class OdsBase(dbus.proxies.Interface, gobject.GObject):
 		self._signals.DisconnectAll()
 		
 	def Handle(self, signame, handler):
-		self._signals.Handle("dbus", self, handler, signame, self.dbus_interface, path=self.object_path)
+		self._signals.Handle("dbus", self, handler, signame, self.dbus_interface, None, self.object_path)
 		
 	def GHandle(self, *args):
 		self._signals.Handle("gobject", self, *args)
