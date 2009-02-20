@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- some distributions show all bluetooth interfaces as net.80203, which can cause strange behaviour in network manager, 
+for example NM trying to get dhcp address for an incoming connection -->
+<deviceinfo version="0.2">
+	<device>
+		<match key="net.interface" contains="bnep">
+			<match key="info.category" string="net.80203">
+				<merge key="info.category" type="string">net.bluetooth</merge>
+				<merge key="info.product" type="string">Bluetooth Interface</merge>
+				<merge key="info.capabilities" type="strlist">net, net.bluetooth</merge>
+				<merge key="net.bluetooth.mac_address" type="copy_property">net.80203.mac_address</merge>
+				<remove key="net.80203.mac_address"/>
+			</match>
+		</match>
+	</device>
+</deviceinfo>
