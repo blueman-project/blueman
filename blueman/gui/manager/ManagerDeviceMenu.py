@@ -220,6 +220,9 @@ class ManagerDeviceMenu(gtk.Menu):
 				device = self.Blueman.List.get(path[0][0], "device")["device"]
 			else:
 				return
+				
+		if not device.Valid:
+			return
 		self.SelectedDevice = device
 		
 		op = self.get_op(device)

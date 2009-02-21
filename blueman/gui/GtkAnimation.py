@@ -181,6 +181,7 @@ class CellFade(AnimBase):
 		self.sig = tw.connect_after("expose-event", self.on_expose)
 		
 		self.row = gtk.TreeRowReference(tw.props.model, path)
+		self.selection = tw.get_selection()
 		self.style = tw.rc_get_style()
 		self.columns = []
 		for i in columns:
@@ -236,9 +237,11 @@ class CellFade(AnimBase):
 				detail = "cell_even" if path[0] % 2 == 0 else "cell_odd"
 				if self.tw.props.rules_hint:
 					detail += "_ruled"
-			
+				
+				selected = self.tw.props.model.get_path(self.selection.get_selected()[1]) == path
+				
 				self.tw.style.paint_flat_box(event.window, 
-							     gtk.STATE_SELECTED if (self.tw.get_cursor()[0] == path) else gtk.STATE_NORMAL, 
+							     gtk.STATE_SELECTED if (selected) else gtk.STATE_NORMAL, 
 							     0, 
 							     isected, 
 							     self.tw, 

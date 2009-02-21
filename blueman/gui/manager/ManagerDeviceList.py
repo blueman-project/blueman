@@ -168,18 +168,21 @@ class ManagerDeviceList(DeviceList):
 	
 	
 	def device_remove_event(self, device, iter):
-		row_fader = self.get(iter, "row_fader")["row_fader"]
+		if device.Temp:
+			DeviceList.device_remove_event(self, device, iter)
+		else:
+			row_fader = self.get(iter, "row_fader")["row_fader"]
 		
-		def on_finished(fader):
+			def on_finished(fader):
 			
-			fader.disconnect(signal)
-			fader.freeze()
-			DeviceList.device_remove_event(self, device, iter)	
+				fader.disconnect(signal)
+				fader.freeze()
+				DeviceList.device_remove_event(self, device, iter)	
 		
-		signal = row_fader.connect("animation-finished", on_finished)
-		row_fader.thaw()
-		self.emit("device-selected", None, None)
-		row_fader.animate(start=row_fader.get_state(), end=0.0, duration=400)
+			signal = row_fader.connect("animation-finished", on_finished)
+			row_fader.thaw()
+			self.emit("device-selected", None, None)
+			row_fader.animate(start=row_fader.get_state(), end=0.0, duration=400)
 	
 	def device_add_event(self, device):
 		if device.Fake:
