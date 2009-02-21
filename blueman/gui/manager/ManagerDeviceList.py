@@ -33,6 +33,8 @@ from blueman.Functions import *
 import gettext
 _ = gettext.gettext
 
+from blueman.gui.GtkAnimation import TreeRowFade, CellFade
+
 class ManagerDeviceList(DeviceList):
 	
 	def __init__(self, adapter=None, inst=None):
@@ -60,8 +62,11 @@ class ManagerDeviceList(DeviceList):
 			["rssi", float],
 			["lq", float],
 			["tpl", float],
-			["orig_icon", 'GdkPixbuf']
-
+			["orig_icon", 'GdkPixbuf'],
+			["cell_fader", gobject.TYPE_PYOBJECT],
+			["row_fader", gobject.TYPE_PYOBJECT],
+			["levels_visible", bool],
+			["initial_anim", bool],
 		]
 		DeviceList.__init__(self, adapter, data)
 		self.set_headers_visible(False)
@@ -82,6 +87,8 @@ class ManagerDeviceList(DeviceList):
 
 		self.drag_dest_set(gtk.DEST_DEFAULT_ALL, [], gtk.gdk.ACTION_COPY|gtk.gdk.ACTION_DEFAULT)
 		self.drag_dest_add_uri_targets()
+		
+		
 	
 	def drag_recv(self, widget, context, x, y, selection, target_type, time):
 		print context, selection, target_type
@@ -160,6 +167,20 @@ class ManagerDeviceList(DeviceList):
 		return get_icon("blueman-"+klass.replace(" ", "-").lower(), 48)
 	
 	
+	def device_remove_event(self, device, iter):
+		row_fader = self.get(iter, "row_fader")["row_fader"]
+		
+		def on_finished(fader):
+			
+			fader.disconnect(signal)
+			fader.freeze()
+			DeviceList.device_remove_event(self, device, iter)	
+		
+		signal = row_fader.connect("animation-finished", on_finished)
+		row_fader.thaw()
+		self.emit("device-selected", None, None)
+		row_fader.animate(start=row_fader.get_state(), end=0.0, duration=400)
+	
 	def device_add_event(self, device):
 		if device.Fake:
 			self.PrependDevice(device)
@@ -175,6 +196,26 @@ class ManagerDeviceList(DeviceList):
 		
 	
 	def row_setup_event(self, iter, device):
+
+		if not self.get(iter, "initial_anim")["initial_anim"]:
+			
+			cell_fader = CellFade(self, self.props.model.get_path(iter), [2,3,4])
+			row_fader = TreeRowFade(self, self.props.model.get_path(iter))
+		
+		
+			self.set(iter, row_fader=row_fader, cell_fader=cell_fader, levels_visible=False)
+		
+			cell_fader.freeze()		
+			def on_finished(fader):
+				fader.disconnect(signal)
+				fader.freeze()
+		
+			signal = row_fader.connect("animation-finished", on_finished)
+			row_fader.set_state(0.0)
+			row_fader.animate(start=0.0, end=1.0, duration=500)
+			
+			self.set(iter, initial_anim=True)
+		
 		try:
 			klass = get_minor_class(device.Class)
 			icon = self.get_device_icon(klass)
@@ -262,7 +303,6 @@ class ManagerDeviceList(DeviceList):
 				except:
 					tpl = 0
 
-
 				rssi_perc = 50 + (rssi / 127 / 2 * 100)
 				tpl_perc = 50 + (tpl / 127 / 2 * 100)
 				lq_perc = lq / 255 * 100
@@ -274,6 +314,24 @@ class ManagerDeviceList(DeviceList):
 				if tpl_perc < 10:
 					tpl_perc = 10
 
+				row = self.get(iter, "levels_visible", "cell_fader")
+				if not row["levels_visible"]:
+					dprint("animating up")
+					self.set(iter, levels_visible=True)
+					fader = row["cell_fader"]
+					fader.thaw()
+					fader.set_state(0.0)
+					fader.animate(start=0.0, end=1.0, duration=400)
+					
+					def on_finished(fader):
+						fader.freeze()
+						fader.disconnect(signal)
+						
+					signal = fader.connect("animation-finished", on_finished )
+					
+					
+					
+					
 				self.set(iter,  rssi_pb=get_icon("blueman-rssi-%s" % rnd(rssi_perc), 48),
 						lq_pb=get_icon("blueman-lq-%s" % rnd(lq_perc), 48),
 						tpl_pb=get_icon("blueman-tpl-%s" % rnd(tpl_perc), 48),
@@ -282,12 +340,25 @@ class ManagerDeviceList(DeviceList):
 						tpl=tpl_perc,
 						connected=True)
 			else:
-				self.set(iter, rssi_pb=None, lq_pb=None, tpl_pb=None, connected=False)
+				
+				row = self.get(iter, "levels_visible", "cell_fader")
+				if row["levels_visible"]:
+					dprint("animating down")
+					self.set(iter, levels_visible=False)
+					fader = row["cell_fader"]
+					fader.thaw()
+					fader.set_state(1.0)
+					fader.animate(start=fader.get_state(), end=0.0, duration=400)
+					def on_finished(fader):
+						fader.disconnect(signal)
+						fader.freeze()
+						self.set(iter, rssi_pb=None, lq_pb=None, tpl_pb=None, connected=False)
+					
+					signal = fader.connect("animation-finished", on_finished)
+
+				
 		else:
 			dprint("invisible")
-		#set_signal("rssi", rssi_perc, "/signal/rssi/rssi_", ".png", self.row)
-		#set_signal("lq", lq_perc, "/signal/lq/lq_", ".png", self.row)
-		#set_signal("tpl", tpl_perc, "/signal/tpl/tpl_", ".png", self.row)
 		
 	
 	def tooltip_query(self, tw, x, y, kb, tooltip):

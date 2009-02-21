@@ -232,8 +232,8 @@ class DeviceList(GenericList):
 	def device_add_event(self, device):
 		self.AppendDevice(device)
 		
-	def device_remove_event(self, device):
-		pass
+	def device_remove_event(self, device, iter):
+		self.RemoveDevice(device, iter)
 		
 	
 	#########################
@@ -253,8 +253,8 @@ class DeviceList(GenericList):
 		if iter:
 			row = self.get(iter, "device")
 			dev = row["device"]
-			self.RemoveDevice(dev, iter)
-			self.device_remove_event(dev)
+			
+			self.device_remove_event(dev, iter)
 	
 	
 	def SetAdapter(self, adapter=None):
@@ -443,7 +443,7 @@ class DeviceList(GenericList):
 		try:
 			props = device.GetProperties()
 		except:
-			self.device_signals.Disconnect(device.GetObjectPath())
+			self.device_signals.Disconnect(device.get_object_path())
 		else:
 			if not "Fake" in props:
 				self.device_signals.Disconnect(device.GetObjectPath())

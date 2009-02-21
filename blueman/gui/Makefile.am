@@ -13,7 +13,8 @@ blueman_PYTHON = 		\
 	DeviceSelectorWidget.py		\
 	DeviceSelectorList.py		\
 	DeviceSelectorDialog.py		\
-	__init__.py
+	__init__.py			\
+	GtkAnimation.py
 
 CLEANFILES =		\
 	$(BUILT_SOURCES)

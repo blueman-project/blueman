@@ -97,7 +97,7 @@ class Device(gobject.GObject):
 			
 	def Destroy(self):
 		self.Valid = False
-		self.Device = None
+		#self.Device = None
 		self.Signals.DisconnectAll()
 			
 	#def __del__(self):
