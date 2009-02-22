@@ -238,7 +238,7 @@ class CellFade(AnimBase):
 				if self.tw.props.rules_hint:
 					detail += "_ruled"
 				
-				selected = self.tw.props.model.get_path(self.selection.get_selected()[1]) == path
+				selected = self.selection.get_selected()[1] and self.tw.props.model.get_path(self.selection.get_selected()[1]) == path
 				
 				self.tw.style.paint_flat_box(event.window, 
 							     gtk.STATE_SELECTED if (selected) else gtk.STATE_NORMAL, 

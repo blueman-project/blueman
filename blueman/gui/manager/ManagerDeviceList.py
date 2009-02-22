@@ -286,10 +286,13 @@ class ManagerDeviceList(DeviceList):
 				
 				
 	
-	def level_setup_event(self, iter, device, cinfo):
+	def level_setup_event(self, row_ref, device, cinfo):
 		def rnd(value):
 			return int(round(value,-1))
-		#print self.window.get_state() & gtk.gdk.WINDOW_STATE_ICONIFIED
+		if not row_ref.valid():	
+			return
+			
+		iter = self.get_iter(row_ref.get_path())
 		if True:
 			if cinfo != None:
 				try:
@@ -317,6 +320,7 @@ class ManagerDeviceList(DeviceList):
 				if tpl_perc < 10:
 					tpl_perc = 10
 
+				
 				row = self.get(iter, "levels_visible", "cell_fader")
 				if not row["levels_visible"]:
 					dprint("animating up")
@@ -355,7 +359,8 @@ class ManagerDeviceList(DeviceList):
 					def on_finished(fader):
 						fader.disconnect(signal)
 						fader.freeze()
-						self.set(iter, rssi_pb=None, lq_pb=None, tpl_pb=None, connected=False)
+						if row_ref.valid():
+							self.set(iter, rssi_pb=None, lq_pb=None, tpl_pb=None, connected=False)
 					
 					signal = fader.connect("animation-finished", on_finished)
 

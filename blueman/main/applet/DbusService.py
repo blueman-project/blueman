@@ -26,6 +26,8 @@ from blueman.Functions import dprint
 from blueman.main.PolicyKitAuth import PolicyKitAuth
 from blueman.main.Mechanism import Mechanism
 from blueman.bluez.Device import Device as BluezDevice
+from blueman.bluez.Adapter import Adapter
+from blueman.main.applet.BluezAgent import TempAgent
 from blueman.main.Device import Device
 from blueman.main.NMMonitor import NMMonitor
 from blueman.main.Config import Config
@@ -184,6 +186,30 @@ class DbusService(dbus.service.Object):
 		
 		method(reply_handler=reply, error_handler=error, *args)
 
+	@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="ssbu", async_callbacks=("ok","err"))
+	def CreateDevice(self, adapter_path, address, pair, time, ok, err):
+		if self.applet.Manager:
+			adapter = Adapter(adapter_path)
+
+			if pair:
+				agent_path = "/org/blueman/agent/temp/"+address.replace(":", "")
+				agent = TempAgent(self.applet, agent_path, time)
+				adapter.GetInterface().CreatePairedDevice(address, agent_path, "DisplayYesNo", error_handler=err, reply_handler=ok)
+				
+			else:
+				adapter.GetInterface().CreateDevice(address, error_handler=err, reply_handler=ok)
+				
+		else:
+			err()
 	
+	@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="ss", async_callbacks=("ok","err"))
+	def CancelDeviceCreation(self, adapter_path, address, ok, err):
+		if self.applet.Manager:
+			adapter = Adapter(adapter_path)
+
+			adapter.GetInterface().CancelDeviceCreation(address, error_handler=err, reply_handler=ok)
+				
+		else:
+			err()		
 	
-	
+		

@@ -26,7 +26,9 @@ from blueman.Lib import conn_info
 import blueman.bluez as Bluez
 import gtk
 import gobject
+import os
 import re
+import dbus
 import copy
 
 from blueman.Functions import adapter_path_to_name, dprint
@@ -71,7 +73,7 @@ class DeviceList(GenericList):
 		def on_adapter_added(path):
 			def property_changed(key, val):
 				if key == "Powered":
-					
+					dprint("adapter powered", path)
 					a.UnHandleSignal(property_changed, "PropertyChanged")
 						
 					if self.Adapter == None:
@@ -128,7 +130,7 @@ class DeviceList(GenericList):
 			for i in self.liststore:
 				iter = i.iter
 				device = self.get(iter, "device")["device"]
-				device.Destroy()
+				#device.Destroy()
 		GenericList.destroy(self)
 
 		
@@ -181,18 +183,30 @@ class DeviceList(GenericList):
 				if value:
 					self.monitor_power_levels(dev)
 				else:
-				
-					self.level_setup_event(iter, dev, None)
+					r = gtk.TreeRowReference(self.props.model, self.props.model.get_path(iter))
+					self.level_setup_event(r, dev, None)
+					
+			elif key == "Paired":
+				if value and dev.Temp:
+					dev.Temp = False
 		
 		
 	def monitor_power_levels(self, device):
-		def update(iter, device, cinfo):
-			if not device.Valid or not self.find_device(device) or not device.Connected:
-				dprint("stopping monitor")
+		def update(row_ref, cinfo):
+			if not row_ref.valid():
+				dprint("stopping monitor (row does not exist)")
 				cinfo.deinit()
 				return False
+			
+			iter = self.props.model.get_iter(row_ref.get_path())
+			device = self.get(iter, "device")["device"]
+			if not device.Valid or not device.Connected:
+				dprint("stopping monitor (not connected)")
+				cinfo.deinit()
+				self.level_setup_event(row_ref, device, None)
+				return False
 			else:
-				self.level_setup_event(iter, device, cinfo)
+				self.level_setup_event(row_ref, device, cinfo)
 				return True
 		
 		
@@ -202,14 +216,15 @@ class DeviceList(GenericList):
 			iter = self.find_device(device)
 			
 			
-			hci = re.search(".*(hci[0-9]*)", self.Adapter.GetObjectPath()).groups(0)[0]
+			hci = os.path.basename(self.Adapter.GetObjectPath())
 			try:
 				cinfo = conn_info(props["Address"], hci)
 			except:
 				dprint("Failed to get power levels")
 			else:
-				self.level_setup_event(iter, device, cinfo)
-				gobject.timeout_add(1000, update, iter, device, cinfo)
+				r = gtk.TreeRowReference(self.props.model, self.props.model.get_path(iter))
+				self.level_setup_event(r, device, cinfo)
+				gobject.timeout_add(1000, update, r, cinfo)
 		
 	
 	##### virtual funcs #####
@@ -283,12 +298,16 @@ class DeviceList(GenericList):
 		except Bluez.errors.DBusNoSuchAdapterError, e:
 			dprint(e)
 			#try loading default adapter
-			if len(self.Manager.ListAdapters()) > 0:
+			if len(self.Manager.ListAdapters()) > 0 and adapter != None:
 				self.SetAdapter()
 			else:
 				self.Adapter = None
 				self.emit("adapter-changed", None)
-			
+				
+		except dbus.DBusServiceUnknownError:
+			dprint("Dbus error while trying to get adapter.")
+			self.Adapter = None
+			self.emit("adapter-changed", None)			
 		
 			
 
@@ -369,11 +388,12 @@ class DeviceList(GenericList):
 			if n:
 				dprint("Updating existing dev")
 				self.device_signals.Disconnect(existing_dev.GetObjectPath())
-				existing_dev.Destroy()
+				#existing_dev.Destroy()
 			
 			if ("Fake" in props and not "Fake" in props_new) or n:
 				self.set(iter, device=device, dbus_path=device.GetObjectPath())
 				self.row_setup_event(iter, device)
+				
 				if not n:
 					self.emit("device-property-changed", device, iter, ("Fake", False))
 					self.row_update_event(iter, "Fake", False)
@@ -383,8 +403,7 @@ class DeviceList(GenericList):
 							"PropertyChanged", 
 							sigid=device.GetObjectPath(), 
 							path_keyword="path")
-				if props_new["Connected"]:
-					self.monitor_power_levels(device)
+
 			#turn a Real device to a Fake device
 			elif not "Fake" in props and "Fake" in props_new:
 				dprint("Convert")
@@ -460,7 +479,7 @@ class DeviceList(GenericList):
 			self.device_add_event(device)
 			
 		else:
-			device.Destroy()
+			#device.Destroy()
 			self.delete(iter)
 		
 	def GetSelectedDevice(self):

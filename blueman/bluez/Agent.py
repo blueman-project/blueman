@@ -26,7 +26,7 @@ from blueman.Functions import dprint
 __SIGNATURES__ = {'Release':('', ''),
                   'RequestPinCode':('o', 's'),
                   'RequestPasskey':('o', 'u'),
-                  'DisplayPasskey':('ou', ''),
+                  'DisplayPasskey':('ouu', ''),
                   'RequestConfirmation':('ou', ''),
                   'Authorize':('os', ''),
                   'ConfirmModeChange':('s', ''),
@@ -95,7 +95,7 @@ class Agent(dbus.service.Object):
         length. The string can be alphanumeric.
         '''
         dprint("RequestPinCode (%s)" % (device))
-        return raw_input("Enter PIN Code:")
+
     # RequestPinCode
 
     @AgentMethod
@@ -107,12 +107,11 @@ class Agent(dbus.service.Object):
         between 0-999999.
         '''
         dprint("RequestPasskey (%s)" % (device))
-        passkey = raw_input("Enter Passkey:")
-        return dbus.UInt32(passkey)
+
     # RequestPasskey
 
     @AgentMethod
-    def DisplayPasskey(self, device, passkey):
+    def DisplayPasskey(self, device, passkey, entered):
         '''
         This method gets called when the service daemon
         needs to display a passkey for an authentication.
@@ -136,10 +135,7 @@ class Agent(dbus.service.Object):
         or an error in case the passkey is invalid.
         '''
         dprint("RequestConfirmation (%s, %d)" % (device, passkey))
-        confirm = raw_input("Confirm passkey (y/n): ")
-        if confirm == 'y':
-            return
-        raise errors. DBusAuthenticationRejectedError("Passkey doesn't match")
+
     # RequestConfirmation
 
     @AgentMethod

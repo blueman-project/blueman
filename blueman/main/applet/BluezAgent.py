@@ -28,6 +28,8 @@ import gettext
 from blueman.Constants import *
 _ = gettext.gettext
 
+from blueman.bluez.Agent import Agent, AgentMethod
+
 class AgentErrorRejected(dbus.DBusException):
 	def __init__(self):
 		dbus.DBusException.__init__(self, name="org.bluez.Error.Rejected")
@@ -35,168 +37,16 @@ class AgentErrorRejected(dbus.DBusException):
 class AgentErrorCanceled(dbus.DBusException):
 	def __init__(self):
 		dbus.DBusException.__init__(self, name="org.bluez.Error.Canceled")
-
-class BluezAgent(dbus.service.Object):
-	
-	def __init__(self, applet, adapter):
+		
+		
+class CommonAgent(Agent):
+	def __init__(self, applet, path):
+		Agent.__init__(self, path)
 		self.applet = applet
-		self.adapter = adapter
+		self.dbus_path = path
 		self.dialog = None
-		self.n = None
-		self.bus = dbus.SystemBus();
-		adapter_name = os.path.basename(adapter)
-		self.dbus_path = "/org/blueman/agent/"+adapter_name
-		dbus.service.Object.__init__(self, self.bus, self.dbus_path)
-		
-		
-	def __del__(self):
-		dprint("Agent on path", self.dbus_path, "deleted")
-	
-	@dbus.service.method(dbus_interface="org.bluez.Agent", in_signature="", out_signature="")
-	def Release(self):
-		dprint("Release")
-		self.Cancel()
-		self.remove_from_connection()
-		self.applet.Agents.remove(self)
-	
-	def on_notification_close(self, n, action):
-		if action != "closed":
-			self.dialog.show()
-		else:
-			if self.dialog:
-				self.dialog.response(gtk.RESPONSE_REJECT)
-		self.applet.status_icon.set_blinking(False)
-		self.n = None
-	
-	def passkey_dialog_cb(self, dialog, response_id, is_numeric, ok, err):
-		if response_id == gtk.RESPONSE_ACCEPT:
-			ret = self.pin_entry.get_text()
-			if is_numeric:
-				ret = int(ret)
-			ok(ret)
-		else:
-			err(AgentErrorRejected())
-		dialog.destroy()
-		self.dialog = None
-	
-	def get_device_alias(self, device_path):
-		device = Bluez.Device(device_path)
-		props = device.GetProperties()
-		address = props["Address"]
-		name = props["Name"]
-		alias = address
-		if name:
-			alias = "<b>%s</b> (%s)" % (name, address)
-		return alias
-	
-	def passkey_common(self, device_path, dialog_msg, notify_msg, is_numeric, ok, err):
-		alias = self.get_device_alias(device_path)
-		notify_message = _("Pairing request for %s") % (alias)
-		
-		if self.dialog:
-			dprint("Agent: Another dialog still active, cancelling")
-			raise AgentErrorCanceled
-		
-		self.dialog, self.pin_entry = self.build_passkey_dialog(alias, dialog_msg, is_numeric)
-		if not self.dialog:
-			dprint("Agent: Failed to build dialog")
-			raise AgentErrorCanceled
-		
-		self.n = self.applet.show_notification(_("Bluetooth device"), notify_message, 20000,
-										[["action", notify_msg]], 
-										self.on_notification_close, 
-										pixbuf=get_icon("gtk-dialog-authentication", 48))
-		self.applet.status_icon.set_blinking(True)
-		self.dialog.connect("response", self.passkey_dialog_cb, is_numeric, ok, err)
-	
-	@dbus.service.method(dbus_interface="org.bluez.Agent", in_signature="o", out_signature="s", async_callbacks=("ok","err"))
-	def RequestPinCode(self, device, ok, err):
-		dprint("Agent.RequestPinCode")
-		dialog_msg = _("Enter PIN code for authentication:")
-		notify_msg = _("Enter PIN code")
-		self.passkey_common(device, dialog_msg, notify_msg, False, ok, err)
-		
-	@dbus.service.method(dbus_interface="org.bluez.Agent", in_signature="o", out_signature="u", async_callbacks=("ok","err"))
-	def RequestPasskey(self, device, ok, err):
-		dprint("Agent.RequestPasskey")
-		dialog_msg = _("Enter passkey for authentication:")
-		notify_msg = _("Enter passkey")
-		self.passkey_common(device, dialog_msg, notify_msg, True, ok, err)
-	
-	@dbus.service.method(dbus_interface="org.bluez.Agent", in_signature="ouy", out_signature="")
-	def DisplayPasskey(self, device, passkey, entered):
-		pass
-	
-	def on_confirm_action(self, n, action):
-		self.applet.status_icon.set_blinking(False)
-		if action == "confirm":
-			self.confirm_ok_cb()
-		else:
-			self.auth_err_cb(AgentErrorRejected())
-		self.confirm_ok_cb = None
-		self.confirm_err_cb = None
-	
-	@dbus.service.method(dbus_interface="org.bluez.Agent", in_signature="ou", out_signature="", async_callbacks=("ok","err"))
-	def RequestConfirmation(self, device, passkey, ok, err):
-		dprint("Agent.RequestConfirmation")
-		alias = self.get_device_alias(device)
-		notify_message = (_("Pairing request for:")+"\n<b>%s</b>\n"+_("Confirm value for authentication:")+" <b>%s</b>") % (alias, passkey)
-		actions = [["confirm", _("Confirm")], ["deny", _("Deny")]]
-		
-		self.confirm_ok_cb = ok
-		self.confirm_err_cb = err
-		self.n = self.applet.show_notification(_("Bluetooth device"), notify_message, 20000,
-												actions, self.on_confirm_action,
-												pixbuf=get_icon("gtk-dialog-authentication", 48))
-		self.applet.status_icon.set_blinking(True)
-	
-	def on_auth_action(self, n, action):
-		self.applet.status_icon.set_blinking(False)
-		if action == "always":
-			device = Bluez.Device(self.auth_dev_path)
-			device.SetProperty("Trusted", True)
-		if action == "always" or action == "accept":
-			self.auth_ok_cb()
-		else:
-			if self.auth_err_cb:
-				self.auth_err_cb(AgentErrorRejected())
-		self.auth_dev_path = None
-		self.auth_ok_cb = None
-		self.auth_err_cb = None
-	
-	@dbus.service.method(dbus_interface="org.bluez.Agent", in_signature="os", out_signature="", async_callbacks=("ok","err"))
-	def Authorize(self, device, uuid, ok, err):
-		dprint("Agent.Authorize")
-		alias = self.get_device_alias(device)
-		uuid16 = uuid128_to_uuid16(uuid)
-		service = uuid16_to_name(uuid16)
-		notify_message = (_("Authorization request for:")+"\n<b>%s</b>\n"+_("Service:")+" <b>%s</b>") % (alias, service)
-		actions = [["always", _("Always accept")],
-					["accept", _("Accept")],
-					["deny", _("Deny")]]
-		
-		self.auth_dev_path = device
-		self.auth_ok_cb = ok
-		self.auth_err_cb = err
-		self.n = self.applet.show_notification(_("Bluetooth device"), notify_message, 20000,
-												actions, self.on_auth_action,
-												pixbuf=get_icon("gtk-dialog-authentication", 48))
-		self.applet.status_icon.set_blinking(True)
-	
-	@dbus.service.method(dbus_interface="org.bluez.Agent", in_signature="s", out_signature="", async_callbacks=("ok","err"))
-	def ConfirmModeChange(self, mode, ok, err):
-		pass
-	
-	@dbus.service.method(dbus_interface="org.bluez.Agent", in_signature="", out_signature="")
-	def Cancel(self):
-		dprint("cancelled")
-		if self.dialog:
-			self.dialog.response(gtk.RESPONSE_REJECT)
-		try:
-			self.n.close()
-		except:
-			pass
-			
+		self.n = None	
+				
 	def build_passkey_dialog(self, device_alias, dialog_msg, is_numeric):
 		def on_insert_text(editable, new_text, new_text_length, position):
 			if not new_text.isdigit():
@@ -208,7 +58,7 @@ class BluezAgent(dbus.service.Object):
 		dialog = builder.get_object("dialog")
 		dialog.props.icon_name = "blueman"
 		dev_name = builder.get_object("device_name")
-		dev_name.set_markup("<b>"+device_alias+"</b>")
+		dev_name.set_markup(device_alias)
 		msg = builder.get_object("message")
 		msg.set_text(dialog_msg)
 		pin_entry = builder.get_object("pin_entry")
@@ -228,3 +78,205 @@ class BluezAgent(dbus.service.Object):
 		
 		return (dialog, pin_entry)
 
+	def get_device_alias(self, device_path):
+		device = Bluez.Device(device_path)
+		props = device.GetProperties()
+		address = props["Address"]
+		name = props["Name"]
+		alias = address
+		if name:
+			alias = "<b>%s</b> (%s)" % (name, address)
+		return alias
+		
+
+	def ask_passkey(self, device_path, dialog_msg, notify_msg, is_numeric, notification, ok, err):
+		def on_notification_close(n, action):
+			if action != "closed":
+				self.dialog.show()
+			else:
+				if self.dialog:
+					self.dialog.response(gtk.RESPONSE_REJECT)
+			self.applet.status_icon.set_blinking(False)
+			self.n = None
+			
+		def passkey_dialog_cb(dialog, response_id):
+			if response_id == gtk.RESPONSE_ACCEPT:
+				ret = pin_entry.get_text()
+				if is_numeric:
+					ret = int(ret)
+				ok(ret)
+			else:
+				err(AgentErrorRejected())
+			dialog.destroy()
+			self.dialog = None
+		
+		alias = self.get_device_alias(device_path)
+		notify_message = _("Pairing request for %s") % (alias)
+		
+		if self.dialog:
+			dprint("Agent: Another dialog still active, cancelling")
+			err(AgentErrorCanceled())
+		
+		self.dialog, pin_entry = self.build_passkey_dialog(alias, dialog_msg, is_numeric)
+		if not self.dialog:
+			dprint("Agent: Failed to build dialog")
+			err(AgentErrorCanceled())
+		
+		if notification:
+			self.n = self.applet.show_notification(_("Bluetooth device"), notify_message, 0,
+											[["action", notify_msg]], 
+											on_notification_close, 
+											pixbuf=get_icon("gtk-dialog-authentication", 48))
+			self.applet.status_icon.set_blinking(True)
+		else:
+			self.dialog.show()
+		
+		self.dialog.connect("response", passkey_dialog_cb)
+						
+	def __del__(self):
+		dprint("Agent on path", self.dbus_path, "deleted")
+	
+	@AgentMethod	
+	def Release(self):
+		dprint("Release")
+		self.Cancel()
+		self.remove_from_connection()
+		self.applet.Agents.remove(self)
+	
+	@AgentMethod	
+	def Cancel(self):
+		dprint("cancelled")
+		if self.dialog:
+			self.dialog.response(gtk.RESPONSE_REJECT)
+		try:
+			self.n.close()
+		except:
+			pass		
+		
+class AdapterAgent(CommonAgent):
+	
+	def __init__(self, applet, adapter):
+		self.adapter = adapter
+		self.n = None
+		
+		adapter_name = os.path.basename(adapter.GetObjectPath())
+		
+		CommonAgent.__init__(self, applet, "/org/blueman/agent/adapter/"+adapter_name )
+	
+	@AgentMethod
+	def RequestPinCode(self, device, ok, err):
+		dprint("Agent.RequestPinCode")
+		dialog_msg = _("Enter PIN code for authentication:")
+		notify_msg = _("Enter PIN code")
+		self.ask_passkey(device, dialog_msg, notify_msg, False, True, ok, err)
+	
+	@AgentMethod	
+	def RequestPasskey(self, device, ok, err):
+		dprint("Agent.RequestPasskey")
+		dialog_msg = _("Enter passkey for authentication:")
+		notify_msg = _("Enter passkey")
+		self.ask_passkey(device, dialog_msg, notify_msg, True, True, ok, err)
+	
+	@AgentMethod
+	def DisplayPasskey(self, device, passkey, entered):
+		pass
+	
+	@AgentMethod
+	def RequestConfirmation(self, device, passkey, ok, err):
+		def on_confirm_action(n, action):
+			self.applet.status_icon.set_blinking(False)
+			if action == "confirm":
+				ok()
+			else:
+				err(AgentErrorRejected())
+		
+		dprint("Agent.RequestConfirmation")
+		alias = self.get_device_alias(device)
+		notify_message = (_("Pairing request for:")+"\n<b>%s</b>\n"+_("Confirm value for authentication:")+" <b>%s</b>") % (alias, passkey)
+		actions = [["confirm", _("Confirm")], ["deny", _("Deny")]]
+		
+		self.n = self.applet.show_notification(_("Bluetooth device"), notify_message, 0,
+												actions, on_confirm_action,
+												pixbuf=get_icon("gtk-dialog-authentication", 48))
+		self.applet.status_icon.set_blinking(True)
+	
+
+	@AgentMethod
+	def Authorize(self, device, uuid, ok, err):
+		
+		def on_auth_action(n, action):
+			dprint(action)
+
+			self.applet.status_icon.set_blinking(False)
+			if action == "always":
+				device = Bluez.Device(n._device)
+				device.SetProperty("Trusted", True)
+			if action == "always" or action == "accept":
+				ok()
+			else:
+				err(AgentErrorRejected())
+			
+			self.n = None
+		
+		dprint("Agent.Authorize")
+		alias = self.get_device_alias(device)
+		uuid16 = uuid128_to_uuid16(uuid)
+		service = uuid16_to_name(uuid16)
+		notify_message = (_("Authorization request for:")+"\n<b>%s</b>\n"+_("Service:")+" <b>%s</b>") % (alias, service)
+		actions = [["always", _("Always accept")],
+					["accept", _("Accept")],
+					["deny", _("Deny")]]
+		
+		self.n = self.applet.show_notification(_("Bluetooth device"), notify_message, 0,
+												actions, on_auth_action,
+												pixbuf=get_icon("gtk-dialog-authentication", 48))
+		self.n._device = device									
+		self.applet.status_icon.set_blinking(True)
+	
+	@AgentMethod
+	def ConfirmModeChange(self, mode, ok, err):
+		pass
+	
+class TempAgent(CommonAgent):
+	def __init__(self, applet, path, time):
+		CommonAgent.__init__(self, applet, path)
+		self.time = time
+		
+	@AgentMethod
+	def RequestPinCode(self, device, ok, err):
+		dprint("Agent.RequestPinCode")
+		dialog_msg = _("Enter PIN code for authentication:")
+		notify_msg = _("Enter PIN code")
+		self.ask_passkey(device, dialog_msg, notify_msg, False, False, ok, err)
+		if self.dialog:
+			self.dialog.present_with_time(self.time)
+	
+	@AgentMethod	
+	def RequestPasskey(self, device, ok, err):
+		dprint("Agent.RequestPasskey")
+		dialog_msg = _("Enter passkey for authentication:")
+		notify_msg = _("Enter passkey")
+		self.ask_passkey(device, dialog_msg, notify_msg, True, False, ok, err)			
+		if self.dialog:
+			self.dialog.present_with_time(self.time)
+			
+	@AgentMethod
+	def RequestConfirmation(self, device, passkey, ok, err):
+		dprint("Agent.RequestConfirmation")
+		alias = self.get_device_alias(device)
+		
+		dialog = gtk.MessageDialog(buttons=gtk.BUTTONS_YES_NO)
+		dialog.props.use_markup = True
+		dialog.props.icon_name = "gtk-dialog-authentication"
+		dialog.props.secondary_use_markup = True
+		dialog.props.title = _("Confirm value")
+		dialog.props.text = _("Pairing with: %s") % alias
+		dialog.props.secondary_text = _("Confirm value for authentication:") + "<b>%s</b>"
+		resp = dialog.run()
+		if resp == gtk.RESPONSE_YES:
+			ok()
+		else:
+			err(AgentErrorRejected())
+		
+		
+		

@@ -197,10 +197,11 @@ class ManagerDeviceMenu(gtk.Menu):
 		
 		
 	def on_device_property_changed(self, List, device, iter, (key, value)):
-
+#		print "menu:", key, value
 		if List.compare(iter, List.selected()):
 			if key == "Connected"\
 			or key =="Fake"\
+			or key == "UUIDs"\
 			or key == "Trusted"\
 			or key == "Paired":
 				self.Generate()

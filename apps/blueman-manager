@@ -34,6 +34,7 @@ if os.path.exists(os.path.join(_dirname,"ChangeLog")):
 from blueman.Constants import *
 from blueman.Functions import *
 from blueman.main.Device import Device
+from blueman.bluez.Device import Device as BluezDevice
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 from blueman.gui.manager.ManagerToolbar import ManagerToolbar
 from blueman.gui.manager.ManagerMenu import ManagerMenu
@@ -233,7 +234,7 @@ class Blueman:
 		
 	def bond(self, device):
 		def ok(device):
-			dev = Device(device)
+			dev = Device(BluezDevice(device))
 			self.List.add_device(dev)
 			self._prog_msg(prog, _("Success"))
 		
@@ -241,15 +242,18 @@ class Blueman:
 			dprint(args)
 			self._prog_msg(prog, _("Failure"))
 		
+		applet = AppletService()
+		
 		address = device.GetProperties()["Address"]
 		adapter = self.List.Adapter
 		
 		prog = ManagerProgressbar(self, text=_("Bonding"))
-		prog.connect("cancelled", lambda x: self.List.Adapter.GetInterface().CancelDeviceCreation(device.Address))
+		prog.connect("cancelled", lambda x: applet.CancelDeviceCreation(adapter.GetObjectPath(), device.Address))
 		prog.start()
 		
 		name = adapter_path_to_name(self.List.Adapter.GetObjectPath())
-		self.List.Adapter.CreatePairedDevice(device.Address, dbus.ObjectPath("/org/blueman/agent/"+name), "DisplayYesNo", reply_handler=ok, error_handler=err)
+
+		applet.CreateDevice(adapter.GetObjectPath(), device.Address, True, gtk.get_current_event_time(), reply_handler=ok, error_handler=err) 
 		
 		
 	def adapter_properties(self):

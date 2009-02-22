@@ -48,7 +48,18 @@ def dprint(*args):
 	print "%s %s" % (fname, "(%s:%d)" % (co.co_filename, co.co_firstlineno))
 	print s
 
-
+def wait_for_adapter(bluez_adapter, callback, timeout=200):
+	def on_prop_change(key, value):
+		if key == "Powered" and value:
+			dprint("adapter powered", path)
+			adapter.UnHandleSignal(on_prop_change, "PropertyChanged")
+			
+			self.status_icon.set_visible(True)
+			self.register_agent(adapter)
+			if self.bluetooth_off:
+				adapter.SetProperty("Powered", False)
+				
+	bluez_adapter.HandleSignal(on_prop_change, "PropertyChanged")
 
 def startup_notification(name, desc=None, bin_name=None, icon=None):
 	dpy = gtk.gdk.display_get_default()

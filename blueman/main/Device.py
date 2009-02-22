@@ -23,7 +23,8 @@ from blueman.main.SignalTracker import SignalTracker
 from blueman.bluez.Adapter import Adapter
 import os
 from blueman.Functions import dprint
-
+import weakref
+#import traceback
 class Device(gobject.GObject):
 
 	__gsignals__ = {
@@ -53,21 +54,24 @@ class Device(gobject.GObject):
 		self.Properties = self.Device.GetProperties()
 		
 		self.init_services()
-		
+		w = weakref.ref(self)
 		if not self.Fake:
 			self._obj_path = self.Device.GetObjectPath()
-			self.Signals.Handle("bluez", self.Device, self.property_changed, "PropertyChanged")
+			self.Signals.Handle("bluez", self.Device, lambda key, value: w() and w().property_changed(key, value), "PropertyChanged")
 			object_path = self.Device.GetObjectPath()
 			adapter = Adapter(object_path.replace("/"+os.path.basename(object_path), ""))
-			self.Signals.Handle("bluez", adapter, self.on_device_removed, "DeviceRemoved")
-		
+			self.Signals.Handle("bluez", adapter, lambda path: w() and w().on_device_removed(path), "DeviceRemoved")
+	
+	def __del__(self):
+		dprint("deleting device", self.get_object_path())
+		self.Destroy()
+			
 	def get_object_path(self):
 		if not self.Fake:
 			return self._obj_path
 			
 	def on_device_removed(self, path):
 		if path == self._obj_path:
-			dprint("Invalidating device", path)
 			self.emit("invalidated")
 			self.Destroy()
 	
@@ -96,6 +100,7 @@ class Device(gobject.GObject):
 			self.init_services()
 			
 	def Destroy(self):
+		dprint("invalidating device", self.get_object_path())
 		self.Valid = False
 		#self.Device = None
 		self.Signals.DisconnectAll()
@@ -112,7 +117,8 @@ class Device(gobject.GObject):
 	def __getattr__(self, name):
 		if name in self.__dict__["Properties"]:
 			if not self.Valid:
-				dprint("Warning: Attempted to get properties for an invalidated device")
+				#traceback.print_stack()
+				dprint("Warning: Attempted to get %s property for an invalidated device" % name)
 			return self.__dict__["Properties"][name]
 		else:
 			return getattr(self.Device, name)

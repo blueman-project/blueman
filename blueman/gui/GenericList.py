@@ -166,12 +166,12 @@ class GenericList(gtk.TreeView):
 
         	
   	
-    	def get_iter(self, id):
-        	if id == None:
+    	def get_iter(self, path):
+        	if path == None:
         		return None
         	
         	try:
-            		return self.liststore.get_iter_from_string(str(id))
+            		return self.liststore.get_iter(path)
         	except:
             		return None
             		
