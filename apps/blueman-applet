@@ -256,7 +256,7 @@ class BluemanApplet:
 
 		adapter = Bluez.Adapter(path)
 		wait_for_adapter(adapter, on_activate)
-		self.Signals.Handle(adapter, self.on_adapter_property_changed, "PropertyChanged")
+		#self.Signals.Handle(adapter, self.on_adapter_property_changed, "PropertyChanged")
 		
 	def on_adapter_removed(self, path):
 		dprint("Adapter removed ", path)

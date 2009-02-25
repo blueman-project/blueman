@@ -192,7 +192,7 @@ class AdapterAgent(CommonAgent):
 		
 		dprint("Agent.RequestConfirmation")
 		alias = self.get_device_alias(device)
-		notify_message = (_("Pairing request for:")+"\n<b>%s</b>\n"+_("Confirm value for authentication:")+" <b>%s</b>") % (alias, passkey)
+		notify_message = (_("Pairing request for:")+"\n%s\n"+_("Confirm value for authentication:")+" <b>%s</b>") % (alias, passkey)
 		actions = [["confirm", _("Confirm")], ["deny", _("Deny")]]
 		
 		self.n = self.applet.show_notification(_("Bluetooth device"), notify_message, 0,
@@ -222,7 +222,7 @@ class AdapterAgent(CommonAgent):
 		alias = self.get_device_alias(device)
 		uuid16 = uuid128_to_uuid16(uuid)
 		service = uuid16_to_name(uuid16)
-		notify_message = (_("Authorization request for:")+"\n<b>%s</b>\n"+_("Service:")+" <b>%s</b>") % (alias, service)
+		notify_message = (_("Authorization request for:")+"\n%s\n"+_("Service:")+" <b>%s</b>") % (alias, service)
 		actions = [["always", _("Always accept")],
 					["accept", _("Accept")],
 					["deny", _("Deny")]]
@@ -271,7 +271,7 @@ class TempAgent(CommonAgent):
 		dialog.props.secondary_use_markup = True
 		dialog.props.title = _("Confirm value")
 		dialog.props.text = _("Pairing with: %s") % alias
-		dialog.props.secondary_text = _("Confirm value for authentication:") + "<b>%s</b>"
+		dialog.props.secondary_text = _("Confirm value for authentication:") + "<b>%s</b>" % passkey
 		resp = dialog.run()
 		if resp == gtk.RESPONSE_YES:
 			ok()

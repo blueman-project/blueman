@@ -49,7 +49,7 @@ def dprint(*args):
 	print "%s %s" % (fname, "(%s:%d)" % (co.co_filename, co.co_firstlineno))
 	print s
 
-def wait_for_adapter(bluez_adapter, callback, timeout=500):
+def wait_for_adapter(bluez_adapter, callback, timeout=1000):
 	def on_prop_change(key, value):
 		if key == "Powered" and value:
 			gobject.source_remove(source)
