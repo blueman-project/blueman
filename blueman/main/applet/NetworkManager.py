@@ -40,11 +40,13 @@ class NetworkManager():
 						"org.bluez.Network",
 						path_keyword="path")
 						
-		
-		self.set_nap(self.Config.props.nap_enable or False)
-		self.set_gn(self.Config.props.gn_enable or False)
-		
+		self.update_status()
+
 		self.dhcp_notif = None
+		
+	def update_status(self):
+		self.set_nap(self.Config.props.nap_enable or False)
+		self.set_gn(self.Config.props.gn_enable or False)		
 		
 	def on_network_prop_changed(self, key, value, path):
 			

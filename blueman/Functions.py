@@ -35,6 +35,7 @@ from blueman.Lib import sn_launcher
 GREEN = lambda(x): "\x1b[32;01m"+x+"\x1b[39;49;00m"
 BLUE = lambda(x): "\x1b[34;01m"+x+"\x1b[39;49;00m"
 BOLD = lambda(x): "\033[1m"+x+"\033[0m"
+YELLOW = lambda(x): "\x1b[33;01m"+x+"\x1b[39;49;00m"
 
 def dprint(*args):
 	s = ""
@@ -48,17 +49,21 @@ def dprint(*args):
 	print "%s %s" % (fname, "(%s:%d)" % (co.co_filename, co.co_firstlineno))
 	print s
 
-def wait_for_adapter(bluez_adapter, callback, timeout=200):
+def wait_for_adapter(bluez_adapter, callback, timeout=500):
 	def on_prop_change(key, value):
 		if key == "Powered" and value:
-			dprint("adapter powered", path)
-			adapter.UnHandleSignal(on_prop_change, "PropertyChanged")
-			
-			self.status_icon.set_visible(True)
-			self.register_agent(adapter)
-			if self.bluetooth_off:
-				adapter.SetProperty("Powered", False)
-				
+			gobject.source_remove(source)
+			bluez_adapter.UnHandleSignal(on_prop_change, "PropertyChanged")
+			callback()
+	
+	def on_timeout():
+		bluez_adapter.UnHandleSignal(on_prop_change, "PropertyChanged")
+		gobject.source_remove(source)
+		dprint(YELLOW("Warning:"), "Bluez didn't provide 'Powered' property in a reasonable timeout\nAssuming adapter is ready")
+		callback()
+		
+		
+	source = gobject.timeout_add(timeout, on_timeout)
 	bluez_adapter.HandleSignal(on_prop_change, "PropertyChanged")
 
 def startup_notification(name, desc=None, bin_name=None, icon=None):

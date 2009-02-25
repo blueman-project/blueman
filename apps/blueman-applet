@@ -237,21 +237,26 @@ class BluemanApplet:
 		elif self.Manager == None:
 			self.manager_init()
 		
+	def on_adapter_property_changed(self, key, value):
+		if key == "Powered":
+			if not value:
+				print "Unpowered"
+	
 	def on_adapter_added(self, path):
 		dprint("Adapter added ", path)
-		def on_prop_change(key, value):
-			if key == "Powered" and value:
-				dprint("adapter powered", path)
-				adapter.UnHandleSignal(on_prop_change, "PropertyChanged")
+		def on_activate():
+			dprint("Adapter activated")
+			
+			self.status_icon.set_visible(True)
+			self.register_agent(adapter)
+			if self.bluetooth_off:
+				adapter.SetProperty("Powered", False)
 				
-				self.status_icon.set_visible(True)
-				self.register_agent(adapter)
-				if self.bluetooth_off:
-					adapter.SetProperty("Powered", False)
+			self.NM.update_status()
 
 		adapter = Bluez.Adapter(path)
-		adapter.HandleSignal(on_prop_change, "PropertyChanged")
-
+		wait_for_adapter(adapter, on_activate)
+		self.Signals.Handle(adapter, self.on_adapter_property_changed, "PropertyChanged")
 		
 	def on_adapter_removed(self, path):
 		dprint("Adapter removed ", path)

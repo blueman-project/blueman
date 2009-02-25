@@ -29,10 +29,14 @@ import zlib
 from blueman.main.Config import Config
 from blueman.Functions import *
 from blueman.main.Device import Device
+from blueman.bluez.Device import Device as BluezDevice
+from blueman.bluez.Adapter import Adapter
+from blueman.main.SignalTracker import SignalTracker
 import blueman.Sdp as sdp
 
 _ = gettext.gettext
 
+REGISTRY_VERSION = 0
 
 def store_state():
 	if RecentConns.items:
@@ -45,7 +49,7 @@ def store_state():
 			items.append(x)
 
 		
-		dump = base64.b64encode(zlib.compress(pickle.dumps(items, pickle.HIGHEST_PROTOCOL), 9))
+		dump = base64.b64encode(zlib.compress(pickle.dumps((REGISTRY_VERSION, items), pickle.HIGHEST_PROTOCOL), 9))
 	
 		c = Config()
 		c.props.recent_connections = dump
@@ -59,10 +63,13 @@ class RecentConns(gtk.Menu):
 	def __init__(self, applet):
 		self.Item = applet.recent_item
 		self.Applet = applet
+		self.Signals = SignalTracker()
+		self.Adapters = []
 		gtk.Menu.__init__(self)
 		
 		
 	def initialize(self):
+		dprint("rebuilding menu")
 		def compare_by (fieldname):
 			def compare_two_dicts (a, b):
 				return cmp(a[fieldname], b[fieldname])
@@ -86,20 +93,37 @@ class RecentConns(gtk.Menu):
 			if count < 6:
 				self.add_item(item)
 				count+=1
+	
 	#set bluez manager interface
 	def set_manager(self, manager):
 		self.Manager = manager
+		
+		#get adapter paths, not objects
+		adapters = self.Manager.ListAdapters()
+		self.Adapters = {}
+		for adapter in adapters:
+			p = adapter.GetProperties()
+			self.Adapters[str(adapter.GetObjectPath())] = str(p["Address"])
+		
+		
+		self.Signals.DisconnectAll()
+		self.Signals.Handle("bluez", self.Manager, self.on_adapter_added, "AdapterAdded")
+		self.Signals.Handle("bluez", self.Manager, self.on_adapter_removed, "AdapterRemoved")
+		
 		if RecentConns.items != None:
 			for i in reversed(RecentConns.items):
+					
+				if i["device"]:
+					if i["gsignal"]:
+						i["device"].disconnect(i["gsignal"])
+					#i["device"].Destroy()
+				
 				try:
-					if i["device"]:
-						if i["gsignal"]:
-							i["device"].disconnect(i["gsignal"])
-						i["device"].Destroy()
 					i["device"] = self.get_device(i)
 					i["gsignal"] = i["device"].connect("invalidated", self.on_device_removed, i)
 				except:
-					RecentConns.items.remove(i)
+					pass
+
 		else:
 			self.recover_state()
 		
@@ -110,12 +134,39 @@ class RecentConns(gtk.Menu):
 		RecentConns.items.remove(item)
 		self.initialize()
 		
+	def on_adapter_added(self, path):
+		a = Adapter(path)
+		def on_activated():
+			props = a.GetProperties()
+			self.Adapters[str(path)] = str(props["Address"])
+			self.initialize()
+		
+		wait_for_adapter(a, on_activated)
+		
+	def on_adapter_removed(self, path):
+		try:
+			del self.Adapters[str(path)]
+		except:
+			dprint("Adapter not found in list")
+		
+		self.initialize()
+		
 	def notify(self, device, service_interface, conn_args):
 		dprint(device, service_interface, conn_args)
 		item = {}
 		object_path = device.GetObjectPath()
-		item["adapter"] = os.path.basename(object_path.replace("/"+os.path.basename(object_path), ""))
+		try:
+			adapter = Adapter(device.Adapter)
+		except:
+			dprint("adapter not found")
+			return
+			
+		props = adapter.GetProperties()
+		
+		item["adapter"] = props["Address"]
 		item["address"] = device.Address
+		item["alias"] = device.Alias
+		item["icon"] = device.Icon
 		item["service"] = service_interface
 		item["conn_args"] = conn_args
 		item["time"] = time.time()
@@ -180,13 +231,30 @@ class RecentConns(gtk.Menu):
 		else:
 			name = item["service"].split(".")[-1] + " " + _("Service")
 			name = name.capitalize()
-		
-		
 
-		mitem = create_menuitem(_("%(service)s on %(device)s") % {"service":name, "device":device.Alias}, get_icon(device.Icon, 16))
+		mitem = create_menuitem(_("%(service)s on %(device)s") % {"service":name, "device":item["alias"]}, get_icon(item["icon"], 16))
 		item["mitem"] = mitem
 		mitem.connect("activate", self.on_item_activated, item)
 
+		if item["adapter"] not in self.Adapters.values():
+			if item["device"] and item["gsignal"]:
+				item["device"].disconnect(item["gsignal"])
+			
+			item["device"] = None
+		elif not item["device"] and item["adapter"] in self.Adapters.values():
+			try:
+				dev = self.get_device(item)
+				item["device"] = dev
+				item["gsignal"] = item["device"].connect("invalidated", self.on_device_removed, item)
+				
+			except:
+				RecentConns.items.remove(item)
+				self.initialize()
+
+		if not item["device"]:
+			mitem.props.sensitive = False
+			mitem.props.tooltip_text = _("Adapter for this connection is not available")
+		
 		
 		self.prepend(mitem)
 		mitem.show()
@@ -203,9 +271,14 @@ class RecentConns(gtk.Menu):
 		c = Config()
 		dump = c.props.recent_connections
 		try:
-			items = pickle.loads(zlib.decompress(base64.b64decode(dump)))
+			(version, items) = pickle.loads(zlib.decompress(base64.b64decode(dump)))
 		except:
 			items = None
+			version = None
+		
+		if version == None or version != REGISTRY_VERSION:
+			items = None
+		
 		if items == None:
 			RecentConns.items = []
 			return
@@ -213,8 +286,9 @@ class RecentConns(gtk.Menu):
 		for i in reversed(items):
 			try:
 				i["device"] = self.get_device(i)
-			except:
-				items.remove(i)
+			except Exception, e:
+				print e
+				i["device"] = None
 			else:
 				i["gsignal"] = i["device"].connect("invalidated", self.on_device_removed, i)
 			

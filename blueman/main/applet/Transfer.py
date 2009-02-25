@@ -38,7 +38,6 @@ class Transfer(OdsManager):
 		self.transfers = {}
 		self.Config = Config("transfer")
 		
-
 		#check options
 		if self.Config.props.opp_enabled == None:
 			self.Config.props.opp_enabled = True

@@ -31,7 +31,7 @@ import re
 import dbus
 import copy
 
-from blueman.Functions import adapter_path_to_name, dprint
+from blueman.Functions import wait_for_adapter, adapter_path_to_name, dprint
 
 class DeviceList(GenericList):
 	__gsignals__ = {
@@ -71,19 +71,17 @@ class DeviceList(GenericList):
 				self.SetAdapter()	
 				
 		def on_adapter_added(path):
-			def property_changed(key, val):
-				if key == "Powered":
-					dprint("adapter powered", path)
-					a.UnHandleSignal(property_changed, "PropertyChanged")
-						
-					if self.Adapter == None:
-						self.SetAdapter(path)	
+			def on_activate():
+				dprint("adapter powered", path)
 					
-					self.emit("adapter-added", path)
+				if self.Adapter == None:
+					self.SetAdapter(path)	
+				
+				self.emit("adapter-added", path)
 								
 			
 			a = Bluez.Adapter(path)
-			a.HandleSignal(property_changed, "PropertyChanged")
+			wait_for_adapter(a, on_activate)
 
 		self.signals = SignalTracker()
 		
