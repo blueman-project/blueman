@@ -56,6 +56,12 @@ def store_state():
 
 atexit.register(store_state)
 
+class AdapterNotFound(Exception):
+	pass
+	
+class DeviceNotFound(Exception):
+	pass
+
 class RecentConns(gtk.Menu):
 	
 	items = None
@@ -262,8 +268,14 @@ class RecentConns(gtk.Menu):
 		
 		
 	def get_device(self, item):
-		adapter = self.Manager.GetAdapter(item["adapter"])
-		return Device(adapter.FindDevice(item["address"]))
+		try:
+			adapter = self.Manager.GetAdapter(item["adapter"])
+		except:
+			raise AdapterNotFound
+		try:	
+			return Device(adapter.FindDevice(item["address"]))
+		except:
+			raise DeviceNotFound
 
 		
 		
@@ -286,9 +298,10 @@ class RecentConns(gtk.Menu):
 		for i in reversed(items):
 			try:
 				i["device"] = self.get_device(i)
-			except Exception, e:
-				print e
+			except AdapterNotFound:
 				i["device"] = None
+			except DeviceNotFound:
+				items.remove(i)
 			else:
 				i["gsignal"] = i["device"].connect("invalidated", self.on_device_removed, i)
 			

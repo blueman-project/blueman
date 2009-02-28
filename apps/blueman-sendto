@@ -30,6 +30,7 @@ import gtk
 import gobject
 from optparse import OptionParser
 import gettext
+import urllib
 import time
 ngettext = gettext.ngettext
 _ = gettext.gettext
@@ -88,8 +89,8 @@ class Sender(gobject.GObject):
 			f = self.files[i]
 			match = re.match("file://(.*)", f)
 			if match:
-				f = self.files[i] = match.groups(1)[0]
-			
+				f = self.files[i] = urllib.unquote(match.groups(1)[0])
+				
 			if os.path.exists(f) and not os.path.isdir(f):
 				f =  os.path.abspath(f)
 				self.total_bytes += os.path.getsize(f)

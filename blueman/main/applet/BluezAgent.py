@@ -26,6 +26,7 @@ import blueman.bluez as Bluez
 from blueman.Sdp import *
 import gettext
 from blueman.Constants import *
+from blueman.gui.Notification import Notification
 _ = gettext.gettext
 
 from blueman.bluez.Agent import Agent, AgentMethod
@@ -56,6 +57,7 @@ class CommonAgent(Agent):
 		builder.add_from_file(UI_PATH +"/applet-passkey.ui")
 		builder.set_translation_domain("blueman")
 		dialog = builder.get_object("dialog")
+		dialog.set_focus_on_map(False)
 		dialog.props.icon_name = "blueman"
 		dev_name = builder.get_object("device_name")
 		dev_name.set_markup(device_alias)
@@ -96,8 +98,8 @@ class CommonAgent(Agent):
 			else:
 				if self.dialog:
 					self.dialog.response(gtk.RESPONSE_REJECT)
-			self.applet.status_icon.set_blinking(False)
-			self.n = None
+			#self.applet.status_icon.set_blinking(False)
+
 			
 		def passkey_dialog_cb(dialog, response_id):
 			if response_id == gtk.RESPONSE_ACCEPT:
@@ -123,13 +125,10 @@ class CommonAgent(Agent):
 			err(AgentErrorCanceled())
 		
 		if notification:
-			self.n = self.applet.show_notification(_("Bluetooth device"), notify_message, 0,
-											[["action", notify_msg]], 
-											on_notification_close, 
-											pixbuf=get_icon("gtk-dialog-authentication", 48))
-			self.applet.status_icon.set_blinking(True)
-		else:
-			self.dialog.show()
+			Notification(_("Bluetooth device"), notify_message, pixbuf=get_icon("blueman", 48))
+			#self.applet.status_icon.set_blinking(True)
+
+		self.dialog.show()
 		
 		self.dialog.connect("response", passkey_dialog_cb)
 						
@@ -184,7 +183,7 @@ class AdapterAgent(CommonAgent):
 	@AgentMethod
 	def RequestConfirmation(self, device, passkey, ok, err):
 		def on_confirm_action(n, action):
-			self.applet.status_icon.set_blinking(False)
+			#self.applet.status_icon.set_blinking(False)
 			if action == "confirm":
 				ok()
 			else:
@@ -193,12 +192,12 @@ class AdapterAgent(CommonAgent):
 		dprint("Agent.RequestConfirmation")
 		alias = self.get_device_alias(device)
 		notify_message = (_("Pairing request for:")+"\n%s\n"+_("Confirm value for authentication:")+" <b>%s</b>") % (alias, passkey)
-		actions = [["confirm", _("Confirm")], ["deny", _("Deny")]]
+		actions = [["confirm", _("Confirm"), "gtk-yes"], ["deny", _("Deny"), "gtk-no"]]
 		
-		self.n = self.applet.show_notification(_("Bluetooth device"), notify_message, 0,
-												actions, on_confirm_action,
-												pixbuf=get_icon("gtk-dialog-authentication", 48))
-		self.applet.status_icon.set_blinking(True)
+		Notification(_("Bluetooth device"), notify_message, 0,
+								actions, on_confirm_action,
+								pixbuf=get_icon("gtk-dialog-authentication", 48))
+		#self.applet.status_icon.set_blinking(True)
 	
 
 	@AgentMethod
@@ -207,7 +206,7 @@ class AdapterAgent(CommonAgent):
 		def on_auth_action(n, action):
 			dprint(action)
 
-			self.applet.status_icon.set_blinking(False)
+			#self.applet.status_icon.set_blinking(False)
 			if action == "always":
 				device = Bluez.Device(n._device)
 				device.SetProperty("Trusted", True)
@@ -223,15 +222,15 @@ class AdapterAgent(CommonAgent):
 		uuid16 = uuid128_to_uuid16(uuid)
 		service = uuid16_to_name(uuid16)
 		notify_message = (_("Authorization request for:")+"\n%s\n"+_("Service:")+" <b>%s</b>") % (alias, service)
-		actions = [["always", _("Always accept")],
-					["accept", _("Accept")],
-					["deny", _("Deny")]]
+		actions = [["always", _("Always accept"), "blueman-trust"],
+					["accept", _("Accept"), "gtk-yes"],
+					["deny", _("Deny"), "gtk-no"]]
 		
-		self.n = self.applet.show_notification(_("Bluetooth device"), notify_message, 0,
-												actions, on_auth_action,
-												pixbuf=get_icon("gtk-dialog-authentication", 48))
-		self.n._device = device									
-		self.applet.status_icon.set_blinking(True)
+		n = Notification(_("Bluetooth authorization"), notify_message, 0,
+								actions, on_auth_action,
+								pixbuf=get_icon("gtk-dialog-authentication", 48))
+		n._device = device									
+		#self.applet.status_icon.set_blinking(True)
 	
 	@AgentMethod
 	def ConfirmModeChange(self, mode, ok, err):

@@ -30,6 +30,10 @@ class ManagerToolbar:
 		self.blueman.List.connect("adapter-changed", self.on_adapter_changed)
 		self.blueman.List.connect("adapter-property-changed", self.on_adapter_property_changed)
 		
+		#toolbar = blueman.Builder.get_object("toolbar2")
+		#for c in toolbar.get_children():
+		#	c.set_expand(True)
+		
 		self.b_search = blueman.Builder.get_object("b_search")
 		self.b_search.connect("clicked", lambda button: blueman.inquiry())
 		
@@ -38,6 +42,15 @@ class ManagerToolbar:
 		
 		self.b_trust = blueman.Builder.get_object("b_trust")
 		self.b_trust.connect("clicked", self.on_action, self.blueman.toggle_trust)
+		self.b_trust.set_homogeneous(False)
+		
+		self.b_trust.props.label = _("Untrust")
+		size = self.b_trust.size_request()
+		self.b_trust.props.label = _("Trust")
+		size2 = self.b_trust.size_request()
+		
+		self.b_trust.props.width_request = max(size[0], size2[0])
+		
 		
 		self.b_remove = blueman.Builder.get_object("b_remove")
 		self.b_remove.connect("clicked", self.on_action, self.blueman.remove)
@@ -47,14 +60,17 @@ class ManagerToolbar:
 		
 		self.b_setup = blueman.Builder.get_object("b_setup")
 		self.b_setup.connect("clicked", self.on_action, self.blueman.setup)
+		self.b_setup.set_homogeneous(False)
 		
 		self.b_send = blueman.Builder.get_object("b_send")
 		self.b_send.props.sensitive = False
 		self.b_send.connect("clicked", self.on_action, self.blueman.send)
+		self.b_send.set_homogeneous(False)
 		
 		self.b_browse = blueman.Builder.get_object("b_browse")
 		self.b_browse.props.sensitive = False
 		self.b_browse.connect("clicked", self.on_action, self.blueman.browse)
+		#self.b_browse.set_homogeneous(False)
 		
 		self.on_adapter_changed(blueman.List, blueman.List.GetAdapterPath())
 		
@@ -99,10 +115,11 @@ class ManagerToolbar:
 				self.b_trust.props.sensitive = True
 				self.b_trust.props.icon_name = "blueman-untrust"
 				self.b_trust.props.label = _("Untrust")
+
 			else:
 				self.b_trust.props.sensitive = True
 				self.b_trust.props.icon_name = "blueman-trust"
-				self.b_trust.props.label = _("Trust")
+				self.b_trust.props.label = _("Trust")				
 			
 			if row["fake"]:
 				self.b_remove.props.sensitive = False

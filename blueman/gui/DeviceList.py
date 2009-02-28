@@ -196,6 +196,9 @@ class DeviceList(GenericList):
 				cinfo.deinit()
 				return False
 			
+			if not self.props.model:
+				return False
+				
 			iter = self.props.model.get_iter(row_ref.get_path())
 			device = self.get(iter, "device")["device"]
 			if not device.Valid or not device.Connected:

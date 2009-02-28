@@ -43,6 +43,7 @@ from blueman.main.applet.DbusService import DbusService
 from blueman.main.Mechanism import Mechanism
 from blueman.main.applet.NetworkManager import NetworkManager
 from blueman.gui.applet.DiscvManager import DiscvManager
+from blueman.gui.Notification import Notification
 
 import blueman.plugins.applet
 from blueman.plugins.AppletPlugin import AppletPlugin
@@ -351,33 +352,6 @@ class BluemanApplet:
 		
 	def on_about(self, menu_item):
 		show_about_dialog("Blueman "+_("applet"))
-	
-	def show_notification(self, summary, message, timeout=-1, actions= None, actions_cb=None, pixbuf=None):
-		def on_notification_closed(n):
-			n.disconnect(closed_sig)
-			if actions_cb:
-				actions_cb(n, "closed")
-		def on_action(*args):
-			n.disconnect(closed_sig)
-			actions_cb(*args)	
-		
-		n = pynotify.Notification(summary, message)
-		if pixbuf:
-			n.set_icon_from_pixbuf(pixbuf)
-		
-		if actions:
-			for action in actions:
-				n.add_action(action[0], action[1], on_action)
-			n.add_action("default", "Default Action", on_action)
-		closed_sig = n.connect("closed", on_notification_closed)
-		if timeout != -1:
-			n.set_timeout(timeout)
-		if self.status_icon.get_visible():
-			screen, area, orientation = self.status_icon.get_geometry()
-			n.set_hint("x", area.x + area.width/2)
-			n.set_hint("y", area.y + area.height/2)
-		n.show()
-		return n
 
 BluemanApplet()
 

@@ -4,7 +4,7 @@
   <!-- interface-naming-policy project-wide -->
   <object class="GtkDialog" id="dialog">
     <property name="border_width">5</property>
-    <property name="title" translatable="yes">Authentication request</property>
+    <property name="title" translatable="yes">Pairing request</property>
     <property name="resizable">False</property>
     <property name="window_position">center</property>
     <property name="type_hint">dialog</property>
@@ -82,11 +82,11 @@
                 </child>
                 <child>
                   <object class="GtkCheckButton" id="show_input_check">
+                    <property name="label" translatable="yes">Show input</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="draw_indicator">True</property>
-                    <property name="label" translatable="yes">Show input</property>
                   </object>
                   <packing>
                     <property name="position">4</property>
@@ -108,11 +108,11 @@
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="reject">
+                <property name="label">gtk-cancel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
                 <property name="use_stock">True</property>
-                <property name="label" translatable="no">gtk-cancel</property>
               </object>
               <packing>
                 <property name="position">0</property>
@@ -120,6 +120,7 @@
             </child>
             <child>
               <object class="GtkButton" id="accept">
+                <property name="label">gtk-ok</property>
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
                 <property name="can_focus">True</property>
@@ -127,7 +128,6 @@
                 <property name="has_default">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_stock">True</property>
-                <property name="label" translatable="no">gtk-ok</property>
               </object>
               <packing>
                 <property name="position">1</property>
