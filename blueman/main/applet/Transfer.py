@@ -179,19 +179,18 @@ class Transfer(OdsManager):
 						if t["total"] > 350000:	
 							icon = get_icon("blueman", 48)
 							self.transfers[session.object_path]["notification"] = Notification(_("File received"), 
-									     _("File %(0)s from %(1)s successfully received") % {"0":t["filename"], "1":t["name"]},
+							_("File %(0)s from %(1)s successfully received") % {"0":"<b>"+t["filename"]+"</b>", "1":"<b>"+t["name"]+"</b>"},
 									      pixbuf=icon, status_icon=self.Applet.status_icon)
 						
 					else:
 						t["failed"] = True
 						t["finished"] = True
-						if t["notification"]:
-							t["notification"].close()					
+					
 						t = self.transfers[session.object_path]
 						icon = get_icon("blueman", 48)
 
 						self.transfers[session.object_path]["notification"] = Notification(_("Transfer failed"), 
-								_("Transfer of file %(0)s failed") % {"0":t["filename"], "1":t["name"]},
+								_("Transfer of file %(0)s failed") % {"0":"<b>"+t["filename"]+"</b>", "1":"<b>"+t["name"]+"</b>"},
 								 pixbuf=icon, status_icon=self.Applet.status_icon)
 						
 				if type == "disconnected":

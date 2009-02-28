@@ -125,7 +125,7 @@ class CommonAgent(Agent):
 			err(AgentErrorCanceled())
 		
 		if notification:
-			Notification(_("Bluetooth device"), notify_message, pixbuf=get_icon("blueman", 48))
+			Notification(_("Bluetooth device"), notify_message, pixbuf=get_icon("blueman", 48), status_icon=self.applet.status_icon)
 			#self.applet.status_icon.set_blinking(True)
 
 		self.dialog.show()
@@ -196,7 +196,7 @@ class AdapterAgent(CommonAgent):
 		
 		Notification(_("Bluetooth device"), notify_message, 0,
 								actions, on_confirm_action,
-								pixbuf=get_icon("gtk-dialog-authentication", 48))
+								pixbuf=get_icon("gtk-dialog-authentication", 48), status_icon=self.applet.status_icon)
 		#self.applet.status_icon.set_blinking(True)
 	
 
@@ -228,7 +228,7 @@ class AdapterAgent(CommonAgent):
 		
 		n = Notification(_("Bluetooth authorization"), notify_message, 0,
 								actions, on_auth_action,
-								pixbuf=get_icon("gtk-dialog-authentication", 48))
+								pixbuf=get_icon("gtk-dialog-authentication", 48), status_icon=self.applet.status_icon)
 		n._device = device									
 		#self.applet.status_icon.set_blinking(True)
 	

@@ -22,6 +22,21 @@ import cairo
 import gobject
 import weakref
 
+class LinearController(object):
+	def get_value(self, input):
+		return input
+		
+class BezierController(LinearController):
+	def __init__(self, curvature=0.5, start=0.0, end=1.0):
+		self.curvature = curvature
+		self.start = start
+		self.end = end
+		
+	def __b(self, t, p1, p2, p3):
+		return (1-t)**2*p1 + 2*(1-t)*t*p2 + t**2*p3
+		
+	def get_value(self, input):
+		return self.__b(input, self.start, self.curvature, self.end)
 
 class AnimBase(gobject.GObject):
 	__gsignals__ = {
@@ -33,6 +48,10 @@ class AnimBase(gobject.GObject):
 		self._source = None
 		self._state = state
 		self.frozen = False
+		self.controller = LinearController()
+		
+	def set_controller(self, cls, *params):
+		self.controller = cls(*params)
 
 	def _do_transition(self):
 		if abs(self._end-self._start) < 0.000001:
@@ -43,19 +62,19 @@ class AnimBase(gobject.GObject):
 		if self._end-self._start < 0:
 			if self._state <= self._end:
 				self._state = self._end
-				self.state_changed(self._state)
+				self._state_changed(self._state)
 				self._source = None
 				self.emit("animation-finished")
 				return False
 		else:
 			if self._state >= self._end:
 				self._state = self._end
-				self.state_changed(self._state)
+				self._state_changed(self._state)
 				self._source = None
 				self.emit("animation-finished")
 				return False
 		
-		self.state_changed(self._state)
+		self._state_changed(self._state)
 		return True
 
 	def thaw(self):
@@ -91,9 +110,12 @@ class AnimBase(gobject.GObject):
 			return
 			
 
-		self.state_changed(self._state)
+		self._state_changed(self._state)
 		self._source = gobject.timeout_add(int(1.0/24*1000), self._do_transition)
 			
+		
+	def _state_changed(self, state):
+		self.state_changed(self.controller.get_value(state))
 		
 	def state_changed(self, state):
 		pass
@@ -103,7 +125,7 @@ class AnimBase(gobject.GObject):
 		
 	def set_state(self, state):
 		self._state = state
-		self.state_changed(state)
+		self._state_changed(state)
 		
 	def is_animating(self):
 		return self._source != None

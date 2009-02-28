@@ -20,11 +20,11 @@
 import pynotify
 import gtk
 from blueman.Functions import dprint
-from blueman.gui.GtkAnimation import AnimBase
+from blueman.gui.GtkAnimation import AnimBase, BezierController
 
 pynotify.init("blueman")
 
-OPACITY_START = 0.80
+OPACITY_START = 0.7
 
 class Fade(AnimBase):
 	def __init__(self, window):
@@ -37,6 +37,7 @@ class Fade(AnimBase):
 class NotificationDialog(gtk.MessageDialog):
 	def __init__(self, summary, message, timeout=-1, actions=None, actions_cb=None, pixbuf=None, status_icon=None):
 		gtk.MessageDialog.__init__(self, parent=None, flags=0, type=gtk.MESSAGE_QUESTION, buttons=gtk.BUTTONS_NONE, message_format=None)
+		
 		self.set_focus_on_map(False)
 		
 		self.bubble = NotificationBubble(summary, message, pixbuf=pixbuf)
@@ -62,34 +63,47 @@ class NotificationDialog(gtk.MessageDialog):
 				i += 1
 		self.actions[gtk.RESPONSE_DELETE_EVENT] = "close"
 		
-		#self.props.use_markup = True
 		self.props.secondary_use_markup = True
 		self.resize(350, 50)
 		
-		self.props.opacity = OPACITY_START
-		
 		self.fader = Fade(self)
+		self.fader.set_state(OPACITY_START)
 		
 		self.props.skip_taskbar_hint = False
-		self.update(summary, message)
 		
+		self.props.title = summary
+		self.props.text = summary
+		self.props.secondary_text = message
+		
+		orig_w = self.size_request()[0]
+		self.action_area.hide()
+		self.props.width_request = max(self.size_request()[0], orig_w)
+
 		if pixbuf:
 			self.set_icon_from_pixbuf(pixbuf)
 		
 		self.connect("response", self.dialog_response)
 		self.props.icon_name = "blueman"		
-		self.show()
 		
+		self.entered = False
 		def on_enter(widget, event):
-			if self.window == gtk.gdk.window_at_pointer()[0]:
+			if self.window == gtk.gdk.window_at_pointer()[0] or not self.entered:
 				self.fader.animate(start=self.fader.get_state(), end=1.0, duration=500)
+				self.entered = True
 		
 		def on_leave(widget, event):
 			if not gtk.gdk.window_at_pointer():
+				self.entered = False
 				self.fader.animate(start=self.fader.get_state(), end=OPACITY_START, duration=500)
+				
+		def on_focus(self, *args):
+			self.action_area.show()
 		
 		self.connect("enter-notify-event", on_enter)
 		self.connect("leave-notify-event", on_leave)
+		self.connect("focus-in-event", on_focus)
+		
+		self.present()
 		
 	def get_id(self):
 		if self.bubble:
