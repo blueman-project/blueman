@@ -206,6 +206,17 @@ class BluemanApplet:
 					self.bluetooth_off = True
 					
 			self.recent_menu.set_manager(self.Manager)
+			
+			if self.Transfer and self.DbusSvc:
+				status = self.DbusSvc.TransferStatus("opp")
+				if status == 0:
+					self.DbusSvc.TransferControl("opp","create")
+					self.DbusSvc.TransferControl("opp","start")
+				
+				status = self.DbusSvc.TransferStatus("ftp")
+				if status == 0:
+					self.DbusSvc.TransferControl("ftp","create")
+					self.DbusSvc.TransferControl("ftp","start")		
 		
 		except dbus.exceptions.DBusException, e:
 			dprint(e)
@@ -217,7 +228,11 @@ class BluemanApplet:
 		self.Manager = None
 		self.DiscvManager = None
 		self.NM = None
-		self.status_icon.set_visible(False)		
+		self.status_icon.set_visible(False)
+		
+		if self.Transfer and self.DbusSvc:
+			self.DbusSvc.TransferControl("opp","destroy")
+			self.DbusSvc.TransferControl("ftp","destroy")
 	
 	def register_agent(self, adapter):
 		dprint("Registering agent")
