@@ -128,7 +128,9 @@ class Sender(gobject.GObject):
 		
 		
 	def create_session(self):
+		dprint("Creating session")
 		def on_error(msg):
+			dprint("Failed to create session")
 			d = gtk.MessageDialog(  self.window,
 			type=gtk.MESSAGE_ERROR, buttons=(gtk.BUTTONS_CLOSE))
 			d.props.text = _("Error occurred")
@@ -154,7 +156,7 @@ class Sender(gobject.GObject):
 		self.emit("result", False)
 		
 	def on_transfer_started(self, session, filename, path, size):
-		print "transfer started"
+		dprint("transfer started")
 		
 		#first transfer
 		if self.total_transferred == 0:
@@ -214,6 +216,7 @@ class Sender(gobject.GObject):
 		
 		
 	def send_file(self, file_path):
+		dprint(file_path)
 		if self.session.Connected:
 			self.session.SendFile(file_path)
 		
