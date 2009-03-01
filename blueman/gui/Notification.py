@@ -67,13 +67,15 @@ class NotificationDialog(gtk.MessageDialog):
 		self.resize(350, 50)
 		
 		self.fader = Fade(self)
-		self.fader.set_state(OPACITY_START)
+		
 		
 		self.props.skip_taskbar_hint = False
 		
 		self.props.title = summary
 		self.props.text = summary
 		self.props.secondary_text = message
+		
+		self.props.window_position = gtk.WIN_POS_CENTER
 		
 		orig_w = self.size_request()[0]
 		self.action_area.hide()
@@ -104,6 +106,7 @@ class NotificationDialog(gtk.MessageDialog):
 		self.connect("focus-in-event", on_focus)
 		
 		self.present()
+		self.fader.set_state(OPACITY_START)
 		
 	def get_id(self):
 		if self.bubble:
@@ -173,6 +176,7 @@ class NotificationBubble(pynotify.Notification):
 			screen, area, orientation = status_icon.get_geometry()
 			self.set_hint("x", area.x + area.width/2)
 			self.set_hint("y", area.y + area.height/2)
+		
 		self.show()	
 		
 	def get_id(self):
