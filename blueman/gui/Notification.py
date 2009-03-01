@@ -153,6 +153,7 @@ class NotificationBubble(pynotify.Notification):
 			self.disconnect(closed_sig)
 			if actions_cb:
 				actions_cb(n, "closed")
+		
 		def on_action(*args):
 			self.disconnect(closed_sig)
 			actions_cb(*args)	

@@ -199,6 +199,10 @@ class Transfer(OdsManager):
 						self.transfers[session.object_path]["notification"] = Notification(_("Transfer failed"), 
 								_("Transfer of file %(0)s failed") % {"0":"<b>"+t["filename"]+"</b>", "1":"<b>"+t["name"]+"</b>"},
 								 pixbuf=icon, status_icon=self.Applet.status_icon)
+						if t["total"] > 350000:
+							t["normal_transfers"] -= 1
+						else:
+							t["silent_transfers"] -= 1
 						
 				if type == "disconnected":
 					t = self.transfers[session.object_path]
