@@ -176,8 +176,9 @@ class Transfer(OdsManager):
 			def transfer_progress(session, bytes_transferred):
 				self.transfers[session.object_path]["transferred"] = bytes_transferred
 				
-			def transfer_finished(session, type):
-				dprint("---", type)
+			def transfer_finished(session, *args):
+				type = args[-1]
+				dprint(args)
 				if not self.transfers[session.object_path]["finished"]:
 					t = self.transfers[session.object_path]
 					if type != "cancelled" and type != "error":
