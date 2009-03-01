@@ -61,14 +61,14 @@ class NotificationDialog(gtk.MessageDialog):
 					im.show()
 					button.props.image = im
 				i += 1
+				
 		self.actions[gtk.RESPONSE_DELETE_EVENT] = "close"
 		
 		self.props.secondary_use_markup = True
 		self.resize(350, 50)
 		
 		self.fader = Fade(self)
-		
-		
+
 		self.props.skip_taskbar_hint = False
 		
 		self.props.title = summary
@@ -76,10 +76,6 @@ class NotificationDialog(gtk.MessageDialog):
 		self.props.secondary_text = message
 		
 		self.props.window_position = gtk.WIN_POS_CENTER
-		
-		orig_w = self.size_request()[0]
-		self.action_area.hide()
-		self.props.width_request = max(self.size_request()[0], orig_w)
 
 		if pixbuf:
 			self.set_icon_from_pixbuf(pixbuf)
@@ -97,16 +93,15 @@ class NotificationDialog(gtk.MessageDialog):
 			if not gtk.gdk.window_at_pointer():
 				self.entered = False
 				self.fader.animate(start=self.fader.get_state(), end=OPACITY_START, duration=500)
-				
-		def on_focus(self, *args):
-			self.action_area.show()
 		
 		self.connect("enter-notify-event", on_enter)
 		self.connect("leave-notify-event", on_leave)
-		self.connect("focus-in-event", on_focus)
+
 		
-		self.present()
-		self.fader.set_state(OPACITY_START)
+		self.set_opacity(OPACITY_START)
+		self.show()
+		self.set_opacity(OPACITY_START)
+
 		
 	def get_id(self):
 		if self.bubble:
@@ -152,7 +147,7 @@ class NotificationBubble(pynotify.Notification):
 	def __init__(self, summary, message, timeout=-1, actions= None, actions_cb=None, pixbuf=None, status_icon=None):
 		pynotify.Notification.__init__(self, summary, message)
 
-		def on_notification_closed(n):
+		def on_notification_closed(n, *args):
 			self.disconnect(closed_sig)
 			if actions_cb:
 				actions_cb(n, "closed")
