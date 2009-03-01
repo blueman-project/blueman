@@ -125,7 +125,7 @@ class CommonAgent(Agent):
 			err(AgentErrorCanceled())
 		
 		if notification:
-			Notification(_("Bluetooth device"), notify_message, pixbuf=get_icon("blueman", 48), status_icon=self.applet.status_icon)
+			Notification(_("Bluetooth"), notify_message, pixbuf=get_icon("blueman", 48), status_icon=self.applet.status_icon)
 			#self.applet.status_icon.set_blinking(True)
 
 		self.dialog.show()
@@ -194,9 +194,9 @@ class AdapterAgent(CommonAgent):
 		notify_message = (_("Pairing request for:")+"\n%s\n"+_("Confirm value for authentication:")+" <b>%s</b>") % (alias, passkey)
 		actions = [["confirm", _("Confirm"), "gtk-yes"], ["deny", _("Deny"), "gtk-no"]]
 		
-		Notification(_("Bluetooth device"), notify_message, 0,
+		Notification("Bluetooth", notify_message, 0,
 								actions, on_confirm_action,
-								pixbuf=get_icon("gtk-dialog-authentication", 48), status_icon=self.applet.status_icon)
+								pixbuf=get_icon("blueman", 48), status_icon=self.applet.status_icon)
 		#self.applet.status_icon.set_blinking(True)
 	
 
@@ -226,9 +226,9 @@ class AdapterAgent(CommonAgent):
 					["accept", _("Accept"), "gtk-yes"],
 					["deny", _("Deny"), "gtk-no"]]
 		
-		n = Notification(_("Bluetooth authorization"), notify_message, 0,
+		n = Notification("Bluetooth", notify_message, 0,
 								actions, on_auth_action,
-								pixbuf=get_icon("gtk-dialog-authentication", 48), status_icon=self.applet.status_icon)
+								pixbuf=get_icon("blueman", 48), status_icon=self.applet.status_icon)
 		n._device = device									
 		#self.applet.status_icon.set_blinking(True)
 	

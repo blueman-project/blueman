@@ -94,6 +94,7 @@ class Transfer(OdsManager):
 			self.transfers[session.object_path] = {}
 			self.transfers[session.object_path]["notification"] = None
 			self.transfers[session.object_path]["silent_transfers"] = 0
+			self.transfers[session.object_path]["normal_transfers"] = 0
 			
 			dprint(pattern, "session created")
 			if pattern != "opp":
@@ -132,11 +133,17 @@ class Transfer(OdsManager):
 					n = Notification(_("Incoming file"), 
 					_("Incoming file %(0)s from %(1)s") % {"0":"<b>"+os.path.basename(filename)+"</b>", "1":"<b>"+name+"</b>"},
 							30000, [["accept", _("Accept"), "gtk-yes"],["reject", _("Reject"), "gtk-no"]], access_cb, icon, self.Applet.status_icon)
+					
+					if total_bytes > 350000:
+						self.transfers[session.object_path]["normal_transfers"] += 1
+					else:
+						self.transfers[session.object_path]["silent_transfers"] += 1
 				else:
 					if total_bytes > 350000:
 						n = Notification(_("Receiving file"), _("Receiving file %(0)s from %(1)s") % {"0":os.path.basename(filename), "1":name},
 								pixbuf=icon, status_icon=self.Applet.status_icon)
 
+						self.transfers[session.object_path]["normal_transfers"] += 1
 					else:
 						self.transfers[session.object_path]["silent_transfers"] += 1
 						n = None
@@ -194,8 +201,16 @@ class Transfer(OdsManager):
 								 pixbuf=icon, status_icon=self.Applet.status_icon)
 						
 				if type == "disconnected":
-					if self.transfers[session.object_path]["silent_transfers"] > 0:
-						icon = get_icon("blueman", 48)
+					t = self.transfers[session.object_path]
+					icon = get_icon("blueman", 48)
+					
+					if t["normal_transfers"] == 0 and t["silent_transfers"] > 0:
+						Notification(_("Files received"), 
+							     _("Received %d files in the background") % self.transfers[session.object_path]["silent_transfers"],
+							     pixbuf=icon, status_icon=self.Applet.status_icon)						
+					
+					elif t["normal_transfers"] > 0 and t["silent_transfers"] > 0:
+						
 						Notification(_("Files received"), 
 							     _("Received %d more files in the background") % self.transfers[session.object_path]["silent_transfers"],
 							     pixbuf=icon, status_icon=self.Applet.status_icon)
