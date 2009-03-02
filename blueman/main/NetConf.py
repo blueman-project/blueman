@@ -353,7 +353,8 @@ class NetConfDnsMasq(NetConf):
 		NetConf.__init__(self, ipaddress, allow_nat)
 		
 	def get_dhcp_exec_config(self):
-		return ("dnsmasq", "--dhcp-range=%s,%s,60m --dhcp-option=option:router,%s --interface=pan1" % (self.ip_range_start, self.ip_range_end, self.ip_address))
+		return ("dnsmasq", "--bind-interfaces --dhcp-range=%s,%s,60m --dhcp-option=option:router,%s --except-interface=lo --interface=pan1" % (self.ip_range_start, self.ip_range_end, self.ip_address))
+
 
 	def get_type(self):
 		return "dnsmasq"
