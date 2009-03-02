@@ -65,6 +65,8 @@ class BluemanApplet:
 		
 		check_single_instance("blueman-applet")
 		
+		self.pixbuf = None
+		
 		self.load_plugins()
 		
 		self.menu = gtk.Menu()
@@ -76,8 +78,12 @@ class BluemanApplet:
 		self.turnoff_item = create_menuitem(_("Bluetooth Off"), get_icon("gtk-stop", 16))
 		self.turnoff_item.props.tooltip_text = _("Turn off all adapters")
 		self.turnoff_item.connect("activate", lambda x: self.on_bluetooth_toggled())
-		self.bluetooth_off = False
 		
+		self.status_icon = gtk.StatusIcon()
+		self.status_icon.connect("size-changed", self.on_status_icon_resized)
+		self.status_icon.set_tooltip(_("Bluetooth applet"))		
+		
+		self.bluetooth_off = False
 		
 		self.recent_item = create_menuitem(_("Recent Connections")+"...", get_icon("document-open-recent", 16))
 		self.recent_menu = RecentConns(self)
@@ -85,9 +91,8 @@ class BluemanApplet:
 		self.Transfer = None
 		self.Signals = SignalTracker()
 		self.Agents = []
-		self.status_icon = gtk.StatusIcon()
-		self.status_icon = gtk.status_icon_new_from_icon_name("blueman")
-		self.status_icon.set_tooltip(_("Bluetooth applet"))
+
+		
 		self.status_icon.connect("popup-menu", self.on_popup_menu)
 		
 		def on_activate(status_icon):
@@ -109,6 +114,13 @@ class BluemanApplet:
 		gobject.idle_add(self.try_start_ods)
 		
 		gtk.main()
+		
+	def on_status_icon_resized(self, statusicon, size):
+		print "resize", size
+		self.pixbuf = get_icon("blueman", size)
+		self.status_icon.set_from_pixbuf( opacify_pixbuf(self.pixbuf, 100 if self.bluetooth_off else 255) )
+		#screen, rect, orien = self.status_icon.get_geometry()
+		return True
 	
 	def try_start_ods(self):
 		try:
@@ -169,10 +181,15 @@ class BluemanApplet:
 				self.turnoff_item.get_child().set_markup(_("<b>Turn Bluetooth On</b>"))
 				self.turnoff_item.set_image(gtk.image_new_from_pixbuf(get_icon("gtk-yes", 16)))
 				self.DbusSvc.BluetoothStatusChanged(False)
+				if self.pixbuf:
+					self.status_icon.set_from_pixbuf( opacify_pixbuf(self.pixbuf, 100) )
 			else:
 				self.turnoff_item.get_child().set_markup(_("<b>Turn Bluetooth Off</b>"))
 				self.turnoff_item.set_image(gtk.image_new_from_pixbuf(get_icon("gtk-stop", 16)))
 				self.DbusSvc.BluetoothStatusChanged(True)
+				if self.pixbuf:
+					self.status_icon.set_from_pixbuf( opacify_pixbuf(self.pixbuf, 255) )
+			
 			if key in self.__dict__:
 				dprint("off", self.__dict__[key], value)
 				if self.__dict__[key] != value:
