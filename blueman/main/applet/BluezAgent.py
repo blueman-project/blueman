@@ -125,7 +125,7 @@ class CommonAgent(Agent):
 			err(AgentErrorCanceled())
 		
 		if notification:
-			Notification(_("Bluetooth"), notify_message, pixbuf=get_icon("blueman", 48), status_icon=self.applet.status_icon)
+			Notification("Bluetooth", notify_message, pixbuf=get_icon("blueman", 48), status_icon=self.applet.status_icon)
 			#self.applet.status_icon.set_blinking(True)
 
 		self.dialog.show()

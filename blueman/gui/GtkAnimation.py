@@ -48,6 +48,7 @@ class AnimBase(gobject.GObject):
 		self._source = None
 		self._state = state
 		self.frozen = False
+		self.fps = 24.0
 		self.controller = LinearController()
 		
 	def set_controller(self, cls, *params):
@@ -103,7 +104,7 @@ class AnimBase(gobject.GObject):
 			self.emit("animation-finished")
 		
 		try:
-			self._step_size = (end-start) / (24.0 * (duration/1000.0))
+			self._step_size = (end-start) / (self.fps * (duration/1000.0))
 		except ZeroDivisionError:
 			self._state = end
 
@@ -111,7 +112,7 @@ class AnimBase(gobject.GObject):
 			
 
 		self._state_changed(self._state)
-		self._source = gobject.timeout_add(int(1.0/24*1000), self._do_transition)
+		self._source = gobject.timeout_add(int(1.0/self.fps*1000), self._do_transition)
 			
 		
 	def _state_changed(self, state):

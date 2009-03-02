@@ -25,6 +25,7 @@ from blueman.Functions import *
 import os
 import pynotify
 import gettext
+from gettext import ngettext
 import gobject
 from blueman.gui.Notification import Notification
 
@@ -140,7 +141,8 @@ class Transfer(OdsManager):
 						self.transfers[session.object_path]["silent_transfers"] += 1
 				else:
 					if total_bytes > 350000:
-						n = Notification(_("Receiving file"), _("Receiving file %(0)s from %(1)s") % {"0":os.path.basename(filename), "1":name},
+						n = Notification(_("Receiving file"), 
+						_("Receiving file %(0)s from %(1)s") % {"0":"<b>"+os.path.basename(filename)+"</b>", "1":"<b>"+name+"</b>"},
 								pixbuf=icon, status_icon=self.Applet.status_icon)
 
 						self.transfers[session.object_path]["normal_transfers"] += 1
@@ -168,7 +170,7 @@ class Transfer(OdsManager):
 					if action == "accept":
 						session.Accept()
 						self.allowed_devices.append(t["address"])
-						gobject.timeout_add(50000, self.allowed_devices.remove, t["address"])
+						gobject.timeout_add(60000, self.allowed_devices.remove, t["address"])
 					else:
 						session.Reject()
 					t["waiting"] = False
@@ -211,13 +213,16 @@ class Transfer(OdsManager):
 					
 					if t["normal_transfers"] == 0 and t["silent_transfers"] > 0:
 						Notification(_("Files received"), 
-							     _("Received %d files in the background") % self.transfers[session.object_path]["silent_transfers"],
+							     ngettext("Received %d file in the background",
+							    	      "Received %d files in the background", 
+							    	      self.transfers[session.object_path]["silent_transfers"]),
 							     pixbuf=icon, status_icon=self.Applet.status_icon)						
 					
 					elif t["normal_transfers"] > 0 and t["silent_transfers"] > 0:
 						
 						Notification(_("Files received"), 
-							     _("Received %d more files in the background") % self.transfers[session.object_path]["silent_transfers"],
+							     ngettext("Received %d more file in the background",
+							     "Received %d more files in the background", self.transfers[session.object_path]["silent_transfers"]),
 							     pixbuf=icon, status_icon=self.Applet.status_icon)
 					
 					del self.transfers[session.object_path]

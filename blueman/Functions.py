@@ -160,6 +160,12 @@ def make_device_icon(target, is_bonded=False, is_trusted=False, is_discovered=Fa
 	return composite_icon(target, sources)
 
 
+def opacify_pixbuf(pixbuf, alpha):
+	new = pixbuf.copy()
+	new.fill(0x00000000)
+	pixbuf.composite(new, 0, 0, pixbuf.props.width, pixbuf.props.height, 0, 0, 1, 1, gtk.gdk.INTERP_BILINEAR, alpha)
+	return new
+
 #pixbuf, [(pixbuf, x, y, alpha), (pixbuf, x, y, alpha)]
 
 def composite_icon(target, sources):
