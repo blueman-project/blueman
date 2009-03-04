@@ -119,13 +119,16 @@ def setup_icon_path():
 	ic = gtk.icon_theme_get_default()
 	ic.prepend_search_path(ICON_PATH)
 
-def get_icon(name, size=24):
+def get_icon(name, size=24, fallback="gtk-missing-image"):
 	ic = gtk.icon_theme_get_default()
 
 	try:
 		icon = ic.load_icon(name, size, 0) 
 	except:
-		icon = ic.load_icon("gtk-missing-image", size, 0) 
+		try:
+			icon = ic.load_icon(fallback, size, 0) 
+		except:
+			icon = ic.load_icon("gtk-missing-image", size, 0) 
 	
 	if icon.props.width > size:	
 		new_w = size

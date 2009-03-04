@@ -95,6 +95,7 @@ class ManagerDeviceList(DeviceList):
 
 		uris = []
 		for u in selection.get_uris():
+			print u
 			match = re.match("file://(.*)", u)
 			if match:
 				f = match.groups(1)[0]
@@ -164,7 +165,7 @@ class ManagerDeviceList(DeviceList):
 	
 	
 	def get_device_icon(self, klass):
-		return get_icon("blueman-"+klass.replace(" ", "-").lower(), 48)
+		return get_icon("blueman-"+klass.replace(" ", "-").lower(), 48, "blueman")
 	
 	
 	def device_remove_event(self, device, iter):
@@ -219,12 +220,11 @@ class ManagerDeviceList(DeviceList):
 			
 			self.set(iter, initial_anim=True)
 		
-		try:
-			klass = get_minor_class(device.Class)
-			icon = self.get_device_icon(klass)
-		except:
-			klass = "Unknown"
-			icon = get_icon("blueman", 48)
+
+		klass = get_minor_class(device.Class)
+		icon = self.get_device_icon(klass)
+
+
 		#get translated version
 		klass = get_minor_class(device.Class, True)
 
