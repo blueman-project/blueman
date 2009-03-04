@@ -171,30 +171,12 @@ dnl ----------------------------
 
 if test $deps_check = 1; then
 
-AM_CHECK_PYMOD(gtk,,,[AC_MSG_ERROR(Could not find Python module gtk >= 2.12)])
-
-AC_MSG_CHECKING([if pygtk is >= 2.12])
-if AC_RUN_LOG([$PYTHON -c '
-import gtk, sys
-(maj, mid, min) = gtk.pygtk_version
-if maj != 2 or mid < 12:
-	sys.exit(1)
-
-']); then
-  AC_MSG_RESULT([yes])
-else
-  AC_MSG_RESULT([no])
-  AC_MSG_ERROR([pygtk must be version 2.12 or higher])
-fi
-
-
-AM_CHECK_PYMOD(pynotify,,,[AC_MSG_ERROR(Could not find Python module pynotify)])
+PKG_CHECK_MODULES(PYGTK, pygtk-2.0 >= 2.12.0)
+PKG_CHECK_MODULES(PYNOTIFY, notify-python)
 AM_CHECK_PYMOD(dbus,,,[AC_MSG_ERROR(Could not find Python module dbus)])
 AM_CHECK_PYMOD(gobject,,,[AC_MSG_ERROR(Could not find Python module gobject)])
 
-
 fi
-
 
 PKG_CHECK_MODULES(BLUEZ,
 		bluez	>= 4.21
