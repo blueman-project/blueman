@@ -427,7 +427,7 @@ class DeviceList(GenericList):
 			self.__discovery_time = 0
 			self.Adapter.StartDiscovery()
 			self.discovering = True
-			T = 1.0/24*1000 #24fps
+			T = 1.0/15*1000
 			gobject.timeout_add(int(T), self.update_progress, T/1000, time)
 
 	def IsValidAdapter(self):

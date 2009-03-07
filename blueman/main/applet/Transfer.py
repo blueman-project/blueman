@@ -215,14 +215,15 @@ class Transfer(OdsManager):
 						Notification(_("Files received"), 
 							     ngettext("Received %d file in the background",
 							    	      "Received %d files in the background", 
-							    	      self.transfers[session.object_path]["silent_transfers"]),
+							    	      self.transfers[session.object_path]["silent_transfers"]) % self.transfers[session.object_path]["silent_transfers"],
 							     pixbuf=icon, status_icon=self.Applet.status_icon)						
 					
 					elif t["normal_transfers"] > 0 and t["silent_transfers"] > 0:
 						
 						Notification(_("Files received"), 
 							     ngettext("Received %d more file in the background",
-							     "Received %d more files in the background", self.transfers[session.object_path]["silent_transfers"]),
+							     "Received %d more files in the background", 
+							     self.transfers[session.object_path]["silent_transfers"]) % self.transfers[session.object_path]["silent_transfers"],
 							     pixbuf=icon, status_icon=self.Applet.status_icon)
 					
 					del self.transfers[session.object_path]
