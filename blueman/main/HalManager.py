@@ -69,7 +69,9 @@ class HalManager(dbus.proxies.Interface):
 		device.SetPropertyString("info.bluetooth_address", bd_addr)
 		device.SetPropertyString("info.product", "DUN (%s)" % (bd_addr))
 		device.SetPropertyString("info.vendor", "Bluetooth")
-
+		device.SetPropertyString("info.linux.driver", "rfcomm")
+		device.SetPropertyString("linux.sysfs_path", "/sys/class/tty/rfcomm%s" % portid) 
+		
 		device.SetPropertyInteger("serial.port", portid)
 		device.SetPropertyString("serial.device", device_file)
 		device.SetPropertyString("linux.device_file", device_file)
