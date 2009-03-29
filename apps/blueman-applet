@@ -35,206 +35,245 @@ if os.path.exists(os.path.join(_dirname,"ChangeLog")):
 	sys.path.insert(0, _dirname)
 
 from blueman.Constants import *
-from blueman.main.applet.Transfer import Transfer
-from blueman.main.SignalTracker import SignalTracker
+
 from blueman.Functions import *
-from blueman.main.applet.BluezAgent import AdapterAgent
+from blueman.Functions import _
+
 from blueman.main.applet.DbusService import DbusService
-from blueman.main.Mechanism import Mechanism
-from blueman.main.applet.NetworkManager import NetworkManager
-from blueman.gui.applet.DiscvManager import DiscvManager
-from blueman.gui.Notification import Notification
+from blueman.main.Config import Config
 
 import blueman.plugins.applet
 from blueman.plugins.AppletPlugin import AppletPlugin
 
 import blueman.bluez as Bluez
-from blueman.gui.CommonUi import show_about_dialog
-import gettext
-_ = gettext.gettext
 
+from blueman.main.SignalTracker import SignalTracker
 
-from blueman.gui.applet.RecentConns import RecentConns
+class BluemanApplet(object):
 
-class BluemanApplet:
+	class Plugins(gobject.GObject):
+		__gsignals__ = {
+			'plugin-loaded' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_STRING,)),
+			'plugin-unloaded' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_STRING,)),
+		}
+		
+		def __init__(self, applet):
+			gobject.GObject.__init__(self)
+			self.__plugins = {}
+			self.__classes = {}
+			self.__deps = {}
+			self.__loaded = []
+			self.applet = applet
+			self.__config = Config()
 
+			if self.__config.props.applet_plugins == None:
+				self.__config.props.applet_plugins = []					
+
+			self.__config.connect('property-changed', self.on_property_changed)
+		
+		
+		def on_property_changed(self, config, key, value):
+			if key == "applet_plugins":
+				if type(value) == list:
+					for item in value:
+						disable = item[0] == "!"
+						if disable:
+							item = item[1:]
+						try:
+							cls = self.__classes[item]
+							if not cls.__unloadable__ and disable:
+								print YELLOW("warning:"), item, "is not unloadable"
+							elif item in self.__loaded and disable:
+								self.Unload(item)
+							elif item not in self.__loaded and not disable:
+								self.Load(item)
+
+						except KeyError:
+							print YELLOW("warning:"), "Plugin %s not found" % item
+							continue
+							
+		def GetClasses(self):
+			return self.__classes
+			
+		def GetLoaded(self):
+			return self.__loaded
+			
+		def GetDependencies(self):
+			return self.__deps
+			
+		def Load(self, name=None):
+			if name:
+				self.__load_plugin(self.__classes[name])
+				return 
+				
+			path = os.path.dirname(blueman.plugins.applet.__file__)
+			plugins = []
+			for root, dirs, files in os.walk(path):
+				for f in files:
+					if f.endswith(".py") and not (f.endswith(".pyc") or f.endswith("_.py")):
+						plugins.append(f[0:-3])
+
+			dprint(plugins)
+			for plugin in plugins:
+				try:
+					__import__("blueman.plugins.applet.%s" % plugin, None, None, [])
+				except ImportError, e:
+					dprint("Unable to load %s plugin\n%s" % (plugin, e))
+			
+			
+			for cls in AppletPlugin.__subclasses__():
+				self.__classes[cls.__name__] = cls
+				if not cls.__name__ in self.__deps:
+					self.__deps[cls.__name__] = []
+				
+				for c in cls.__depends__:
+					if not c in self.__deps:
+						self.__deps[c] = []
+					self.__deps[c].append(cls.__name__)
+			
+				
+			c = self.__config.props.applet_plugins
+			for name, cls in self.__classes.iteritems():
+				for dep in self.__deps[name]:
+					#plugins that are required by not unloadable plugins are not unloadable too
+					if not self.__classes[dep].__unloadable__:
+						cls.__unloadable__ = False				
+				
+				if (cls.__autoload__ or cls.__name__ in c) and not (cls.__unloadable__ and "!"+cls.__name__ in c):
+					self.__load_plugin(cls)
+
+		def __load_plugin(self, cls):
+			if cls.__name__ in self.__loaded:
+				return
+				
+			for dep in cls.__depends__:
+				if not dep in self.__loaded:
+					if not dep in self.__classes:
+						raise "Could not satisfy dependency %s -> %s" % (cls.__name__, dep)
+					self.__load_plugin(self.__classes[dep])		
+			
+			dprint("loading", cls)
+			inst = cls(self.applet)
+			self.__plugins[cls.__name__] = inst
+			
+			inst._load(self.applet)
+			self.__loaded.append(cls.__name__)
+			self.emit("plugin-loaded", cls.__name__)
+			
+		def __getattr__(self, key):
+			try:
+				return self.__plugins[key]
+			except:
+				return self.__dict__[key]
+
+		def Unload(self, name):
+			if self.__classes[name].__unloadable__:
+				for d in self.__deps[name]:
+			 		self.Unload(d)
+			 		
+				if name in self.__loaded:
+				 	dprint("Unloading %s" % name)
+				 	try:
+				 		inst = self.__plugins[name]
+				 		inst._unload()
+				 	except NotImplementedError:
+				 		print "Plugin cannot be unloaded"
+				 	else:
+				 		self.__loaded.remove(name)
+				 		del self.__plugins[name]
+				 		self.emit("plugin-unloaded", name)
+				 	
+			else:
+				raise Exception("Plugin %s is not unloadable" % name)
+		
+		def SetConfig(self, plugin, state):
+			plugins = self.__config.props.applet_plugins 
+			if plugin in plugins:
+				plugins.remove(plugin)
+			elif "!"+plugin in plugins:
+				plugins.remove("!"+plugin)
+				
+			plugins.append("!"+plugin if not state else plugin)
+			self.__config.props.applet_plugins = plugins
+			
+		def get_plugins(self):
+			return self.__plugins
+						
+		#executes a function on all plugin instances
+		def Run(self, function, *args, **kwargs):
+			rets = []
+			for inst in AppletPlugin.instances:
+				ret = getattr(inst, function)(*args, **kwargs)
+				rets.append(ret)
+			
+			return rets
+					
 	def __init__(self):
 		setup_icon_path()
 		if not pynotify.init("Blueman"):
 			dprint("Error: Failed to init pynotify")
 		
 		check_single_instance("blueman-applet")
-		
-		self.pixbuf = None
-		
-		self.load_plugins()
-		
-		self.menu = gtk.Menu()
-		self.Manager = None
-		
-		self.DbusSvc = DbusService(self)
-		
-		self.disc_item = create_menuitem(_("Make Discoverable"), get_icon("gtk-find", 16))
-		self.turnoff_item = create_menuitem(_("Bluetooth Off"), get_icon("gtk-stop", 16))
-		self.turnoff_item.props.tooltip_text = _("Turn off all adapters")
-		self.turnoff_item.connect("activate", lambda x: self.on_bluetooth_toggled())
-		
-		self.status_icon = gtk.StatusIcon()
-		self.status_icon.connect("size-changed", self.on_status_icon_resized)
-		self.status_icon.set_tooltip(_("Bluetooth applet"))		
-		
-		self.bluetooth_off = False
-		
-		self.recent_item = create_menuitem(_("Recent Connections")+"...", get_icon("document-open-recent", 16))
-		self.recent_menu = RecentConns(self)
-		
-		self.Transfer = None
-		self.Signals = SignalTracker()
-		self.Agents = []
 
+
+		self.Manager = None
+		self.DbusSvc = DbusService(self)
+		self.Signals = SignalTracker()
 		
-		self.status_icon.connect("popup-menu", self.on_popup_menu)
+		self.Plugins = BluemanApplet.Plugins(self)
+		self.Plugins.Load()
 		
-		def on_activate(status_icon):
-			self.on_devices(None)
-		
-		self.status_icon.connect("activate", on_activate)
-		
-		self.build_popup_menu()
-		
-		#determine if icon should be visible (in case adapters are present)
+
+			
+		self.Plugins.Run("on_plugins_loaded")
+	
+
 		self.bus = dbus.SystemBus()
 		self.bus.watch_name_owner("org.bluez", self.on_dbus_name_owner_change)
-
-		self.sess_bus = dbus.SessionBus()
-		self.sess_bus.watch_name_owner("org.openobex", self.on_obex_owner_changed)
-			
-		self.load_nap_settings()
 		
-		gobject.idle_add(self.try_start_ods)
+		self.bus.add_signal_receiver(self.on_adapter_property_changed, "PropertyChanged", "org.bluez.Adapter", "org.bluez", path_keyword="path")
+
+#			
+#		self.load_nap_settings()
+#		
+#		
 		
 		gtk.main()
 		
-	def on_status_icon_resized(self, statusicon, size):
-		print "resize", size
-		self.pixbuf = get_icon("blueman", size)
-		self.status_icon.set_from_pixbuf( opacify_pixbuf(self.pixbuf, 100 if self.bluetooth_off else 255) )
-		#screen, rect, orien = self.status_icon.get_geometry()
-		return True
+
 	
-	def try_start_ods(self):
-		try:
-			self.sess_bus.start_service_by_name("org.openobex")
-		except dbus.DBusException, e:
-			dprint("Could not acquire obex-data-server", e)		
 	
-	def load_plugins(self):
-		path = os.path.dirname(blueman.plugins.applet.__file__)
-		plugins = []
-		for root, dirs, files in os.walk(path):
-			for f in files:
-				if f.endswith(".py") and not (f.endswith(".pyc") or f.endswith("_.py")):
-					plugins.append(f[0:-3])
-		plugins.sort()
-		dprint(plugins)
-		for plugin in plugins:
-			try:
-				__import__("blueman.plugins.applet.%s" % plugin, None, None, [])
-			except ImportError, e:
-				dprint("Unable to load %s plugin\n%s" % (plugin, e))
+	
+
+
+#	def load_nap_settings(self):
+#		dprint("Loading NAP settings")
+#		def reply():
+#			pass
+#		def err(excp):
+#			lines = str(excp).splitlines()
+#			d = gtk.MessageDialog( None, buttons=gtk.BUTTONS_OK, type=gtk.MESSAGE_ERROR)
+#			d.props.text = _("Failed to apply network settings")
+#			d.props.secondary_text = lines[-1] + "\n\n"+_("You might not be able to connect to the Bluetooth network via this machine")
+#			d.run()
+#			d.destroy()
+#		
+#		m = Mechanism()
+#		m.NetworkSetup("reload", 0, "0", reply_handler=reply, error_handler=err)
 			
 
-		for cls in AppletPlugin.__subclasses__():
-			inst = cls()
-			inst.on_load(self)
 
-
-	def load_nap_settings(self):
-		dprint("Loading NAP settings")
-		def reply():
-			pass
-		def err(excp):
-			lines = str(excp).splitlines()
-			d = gtk.MessageDialog( None, buttons=gtk.BUTTONS_OK, type=gtk.MESSAGE_ERROR)
-			d.props.text = _("Failed to apply network settings")
-			d.props.secondary_text = lines[-1] + "\n\n"+_("You might not be able to connect to the Bluetooth network via this machine")
-			d.run()
-			d.destroy()
-		
-		m = Mechanism()
-		m.NetworkSetup("reload", 0, "0", reply_handler=reply, error_handler=err)
-
-	def on_obex_owner_changed(self, owner):
-		dprint("obex owner changed:", owner)
-		if owner != "":
-			self.Transfer = Transfer(self)
-		else:
-			if self.Transfer:
-				self.Transfer.DisconnectAll()
-			self.Transfer = None
-	
-			
-	def __setattr__(self, key, value):
-		if key == "bluetooth_off":
-			dprint("bt_off", value)
-			if value:
-				self.turnoff_item.get_child().set_markup(_("<b>Turn Bluetooth On</b>"))
-				self.turnoff_item.set_image(gtk.image_new_from_pixbuf(get_icon("gtk-yes", 16)))
-				self.DbusSvc.BluetoothStatusChanged(False)
-				if self.pixbuf:
-					self.status_icon.set_from_pixbuf( opacify_pixbuf(self.pixbuf, 100) )
-			else:
-				self.turnoff_item.get_child().set_markup(_("<b>Turn Bluetooth Off</b>"))
-				self.turnoff_item.set_image(gtk.image_new_from_pixbuf(get_icon("gtk-stop", 16)))
-				self.DbusSvc.BluetoothStatusChanged(True)
-				if self.pixbuf:
-					self.status_icon.set_from_pixbuf( opacify_pixbuf(self.pixbuf, 255) )
-			
-			if key in self.__dict__:
-				dprint("off", self.__dict__[key], value)
-				if self.__dict__[key] != value:
-					adapters = self.Manager.ListAdapters()
-					for adapter in adapters:
-						adapter.SetProperty("Powered", not value)
-					
-		self.__dict__[key] = value
-		
-	def on_bluetooth_toggled(self):
-		self.bluetooth_off = not self.bluetooth_off
 	
 	def manager_init(self):
 		try:
-			for agent in self.Agents:
-				agent.Release()
-			self.Agents = []
 
 			self.Signals.DisconnectAll()
 			self.Manager = Bluez.Manager("gobject")
-			
-			self.DiscvManager = DiscvManager(self)
-			self.NM = NetworkManager(self)
+			self.Plugins.Run("on_manager_state_changed", True)
+#			
+#			self.NM = NetworkManager(self)
 			self.Signals.Handle("bluez", self.Manager, self.on_adapter_removed, "AdapterRemoved")
 			self.Signals.Handle("bluez", self.Manager, self.on_adapter_added, "AdapterAdded")
-			adapters = self.Manager.ListAdapters()
-			self.status_icon.set_visible(adapters != [])
-			for adapter in adapters:
-				self.register_agent(adapter)
-				props = adapter.GetProperties()
-				if not props["Powered"]:
-					self.bluetooth_off = True
-					
-			self.recent_menu.set_manager(self.Manager)
-			
-			if self.Transfer and self.DbusSvc:
-				status = self.DbusSvc.TransferStatus("opp")
-				if status == 0:
-					self.DbusSvc.TransferControl("opp","create")
-					self.DbusSvc.TransferControl("opp","start")
-				
-				status = self.DbusSvc.TransferStatus("ftp")
-				if status == 0:
-					self.DbusSvc.TransferControl("ftp","create")
-					self.DbusSvc.TransferControl("ftp","start")		
 		
 		except dbus.exceptions.DBusException, e:
 			dprint(e)
@@ -244,24 +283,10 @@ class BluemanApplet:
 	def manager_deinit(self):
 		self.Signals.DisconnectAll()
 		self.Manager = None
-		self.DiscvManager = None
-		self.NM = None
-		self.status_icon.set_visible(False)
-		
-		if self.Transfer and self.DbusSvc:
-			self.DbusSvc.TransferControl("opp","destroy")
-			self.DbusSvc.TransferControl("ftp","destroy")
-	
-	def register_agent(self, adapter):
-		dprint("Registering agent")
-		try:
-			agent = AdapterAgent(self, adapter)
-			adapter.RegisterAgent(agent, "DisplayYesNo")
-			self.Agents.append(agent)
 
-		except Exception, e:
-			dprint("Failed to register agent")
-			dprint(e)
+		self.Plugins.Run("on_manager_state_changed", False)
+	
+
 		
 	def on_dbus_name_owner_change(self, owner):
 		dprint("org.bluez owner changed to", owner)
@@ -270,105 +295,23 @@ class BluemanApplet:
 		elif self.Manager == None:
 			self.manager_init()
 		
-	def on_adapter_property_changed(self, key, value):
-		if key == "Powered":
-			if not value:
-				print "Unpowered"
+	def on_adapter_property_changed(self, key, value, path):
+		self.Plugins.Run("on_adapter_property_changed", path, key, value)
 	
 	def on_adapter_added(self, path):
 		dprint("Adapter added ", path)
 		def on_activate():
 			dprint("Adapter activated")
-			
-			self.status_icon.set_visible(True)
-			self.register_agent(adapter)
-			if self.bluetooth_off:
-				adapter.SetProperty("Powered", False)
-				
-			self.NM.update_status()
+			self.Plugins.Run("on_adapter_added", path)
+
+			#self.NM.update_status() #fixme
 
 		adapter = Bluez.Adapter(path)
 		wait_for_adapter(adapter, on_activate)
-		#self.Signals.Handle(adapter, self.on_adapter_property_changed, "PropertyChanged")
 		
 	def on_adapter_removed(self, path):
 		dprint("Adapter removed ", path)
-		
-		if self.Manager.ListAdapters() == []:
-			self.status_icon.set_visible(False)
-			
-	def build_popup_menu(self):
-		
-		menu_items = []
-		menu_items += [self.turnoff_item]
-		menu_items += [self.disc_item]
-		menu_items += [gtk.SeparatorMenuItem()]
-		
-		menu_items += [create_menuitem(_("Setup new device")+"...", get_icon("gtk-new", 16))]
-		menu_items[-1].connect("activate", self.on_setup_new)
-		menu_items += [gtk.SeparatorMenuItem()]
-		menu_items += [create_menuitem(_("Send files to device")+"...", get_icon("blueman-send-file", 16))]
-		menu_items[-1].connect("activate", self.on_send)
-
-		
-		if OBEX_BROWSE_AVAILABLE:
-			menu_items += [create_menuitem(_("Browse files on device")+"...", get_icon("gtk-open", 16))]
-			menu_items[-1].connect("activate", self.on_browse)
-		
-		menu_items += [gtk.SeparatorMenuItem()]
-		
-		menu_items += [self.recent_item]
-		menu_items[-1].set_submenu(self.recent_menu)
-
-		menu_items += [gtk.SeparatorMenuItem()]
-		menu_items += [gtk.MenuItem(_("Devices")+"...", False)]
-		menu_items[-1].connect("activate", self.on_devices)
-		
-		menu_items += [create_menuitem(_("Adapters")+"...", get_icon("blueman-device", 16))]
-		menu_items[-1].connect("activate", self.on_adapters)
-		
-		menu_items += [create_menuitem(_("Local Services")+"...", get_icon("gtk-preferences", 16))]
-		menu_items[-1].connect("activate", self.on_local_services)
-		
-		menu_items += [gtk.SeparatorMenuItem()]
-		menu_items += [gtk.ImageMenuItem(gtk.STOCK_ABOUT)]
-		menu_items[-1].connect("activate", self.on_about)
-		
-		
-		for menu_item in menu_items:
-			self.menu.append(menu_item)
-			menu_item.show()
-			
-	def on_popup_menu(self, status_icon, button, activate_time):
-		self.menu.popup(None, None, gtk.status_icon_position_menu,
-						button, activate_time, status_icon)
-	
-	def on_setup_new(self, menu_item):
-		sn = startup_notification("Bluetooth Assistant", _("Starting Bluetooth Assistant"), bin_name="blueman-assistant", icon="blueman")
-		spawn("blueman-assistant", sn=sn)
-		
-	def on_send(self, menu_item):
-		sn = startup_notification("Blueman Sendto", _("Starting File Sender"), bin_name="blueman-sendto", icon="blueman")
-		spawn("blueman-sendto", sn=sn)
-		
-	def on_browse(self, menu_item):
-		sn = startup_notification("Blueman Browse", _("Starting File Browser"), bin_name="blueman-browse", icon="blueman")
-		spawn("blueman-browse", sn=sn)
-		
-	def on_devices(self, menu_item):
-		sn = startup_notification("Blueman Manager", _("Starting Device Manager"), bin_name="blueman-manger", icon="blueman")
-		spawn("blueman-manager", sn=sn)
-		
-	def on_adapters(self, menu_item):
-		sn = startup_notification("Blueman Adapters", _("Starting Adapter Preferences"), bin_name="blueman-adapters", icon="blueman")
-		spawn("blueman-adapters", sn=sn)
-		
-	def on_local_services(self, menu_item):
-		sn = startup_notification("Blueman Services", _("Starting Service Preferences"), bin_name="blueman-services", icon="blueman")
-		spawn("blueman-services", sn=sn)
-		
-	def on_about(self, menu_item):
-		show_about_dialog("Blueman "+_("applet"))
+		self.Plugins.Run("on_adapter_removed", path)
 
 BluemanApplet()
 

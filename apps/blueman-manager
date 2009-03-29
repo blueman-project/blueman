@@ -40,7 +40,6 @@ from blueman.gui.manager.ManagerToolbar import ManagerToolbar
 from blueman.gui.manager.ManagerMenu import ManagerMenu
 from blueman.gui.manager.ManagerStats import ManagerStats
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
-from blueman.main.AppletService import AppletService
 from blueman.main.Config import Config
 
 import gettext
@@ -93,22 +92,7 @@ class Blueman:
 		def on_bt_status_changed(status):
 			if not status:
 				self.window.hide()
-				d = gtk.MessageDialog(  self.window,
-					type=gtk.MESSAGE_ERROR)
-				d.props.icon_name = "blueman"
-				d.props.text = _("Bluetooth Turned Off")
-				d.props.secondary_text = _("Bluetooth needs to be turned on for the device manager to function")
-
-				d.add_button(gtk.STOCK_QUIT, gtk.RESPONSE_NO)
-				d.add_button(_("Enable Bluetooth"), gtk.RESPONSE_YES)
-				resp = d.run()
-				d.destroy()
-				if resp != gtk.RESPONSE_YES:
-					gtk.main_quit()
-				else:
-					def ret(*args):
-						pass
-					self.Applet.SetBluetoothStatus(True, reply_handler=ret, error_handler=ret)
+				check_bluetooth_status(_("Bluetooth needs to be turned on for the device manager to function"), lambda: gtk.main_quit())
 			else:
 				self.window.show()
 		
@@ -216,10 +200,20 @@ class Blueman:
 			if key == "Discovering" and not value:
 				prog.finalize()
 				
+		def on_progress(list, frac):
+			if abs(1.0 - frac) <= 0.00001:
+				if not prog.started():
+					prog.start()
+			else:
+				prog.fraction(frac)
+				
 		prog = ManagerProgressbar(self, text=_("Searching"))
 		prog.connect("cancelled", lambda x: self.List.StopDiscovery())
-		self.List.DiscoverDevices()
-		self.List.connect("discovery-progress", lambda x,y: prog.fraction(y))
+		try:
+			self.List.DiscoverDevices()
+		except:
+			prog.finalize()
+		self.List.connect("discovery-progress", on_progress)
 		self.List.connect("adapter-property-changed", prop_changed)
 		
 	def setup(self, device):

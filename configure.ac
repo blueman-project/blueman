@@ -1,6 +1,6 @@
 AC_PREREQ(2.61)
 
-AC_INIT(blueman, 1.02)
+AC_INIT(blueman, 1.1)
 AC_CONFIG_HEADERS(config.h)
 AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION)
 
@@ -184,6 +184,8 @@ PKG_CHECK_MODULES(BLUEZ,
 		gdk-2.0 >= 2.12
 		pygobject-2.0 >= 2.12
 		gobject-2.0 >= 2.12
+		glib-2.0 >= 2.16
+		gthread-2.0 >= 2.16
 )
 AC_SUBST(BLUEZ_CFLAGS)
 AC_SUBST(BLUEZ_LIBS)
@@ -221,6 +223,7 @@ data/icons/hicolor/48x48/devices/Makefile
 data/icons/hicolor/48x48/status/Makefile
 data/icons/hicolor/scalable/Makefile
 data/icons/hicolor/scalable/devices/Makefile
+data/icons/hicolor/scalable/actions/Makefile
 data/icons/main_icon/Makefile
 data/ui/Makefile
 data/man/Makefile

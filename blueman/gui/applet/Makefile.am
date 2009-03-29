@@ -1,7 +1,6 @@
 bluemandir = $(pythondir)/blueman/gui/applet
 blueman_PYTHON = 		\
-	DiscvManager.py		\
-	RecentConns.py		\
+	PluginDialog.py		\
 	__init__.py
 
 CLEANFILES =		\

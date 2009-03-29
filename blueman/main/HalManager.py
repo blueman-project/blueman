@@ -19,9 +19,22 @@
 
 import dbus
 import re
+from blueman.Lib import probe_modem
+from blueman.Functions import dprint
+import os
+import gobject
 
+def mkname():
+    i = 0
+    while 1:
+        i += 1
+        yield "/lib/udev/rules.d/33-%d-blueman.rules" % i
+name = mkname()
 
-
+def getUniqueSynset(hasDupes):
+	unique_trick = [ uniq for uniq in hasDupes if uniq not in locals()['_[1]'] ]
+	return unique_trick
+									        
 class HalManager(dbus.proxies.Interface):
 	ports = []
 	layer = None
@@ -40,17 +53,15 @@ class HalManager(dbus.proxies.Interface):
 				device.SetPropertyString("info.category", "net.80203")
 				device.AddCapability("net.80203")
 
-	def register(self, device_file, bd_addr, type=0):
-	
-		ref = self.NewDevice()
-		#print ref
-		
+	def register(self, device_file, bd_addr):
+
 		existing = self.FindDeviceStringMatch("serial.device", device_file)
 
 		if len(existing) > 0:
+			dprint("Already registered")
 			return False		
 		
-		
+		ref = self.NewDevice()
 		r = re.search("rfcomm([0-9]*)$", device_file)
 		portid = int(r.groups()[0])
 		
@@ -63,34 +74,79 @@ class HalManager(dbus.proxies.Interface):
 			dev = self._create_layer()
 		else:
 			dev = dev[0]
-
-		device.SetPropertyString("info.category", "serial")
-		device.SetPropertyString("info.parent", dev)
-		device.SetPropertyString("info.bluetooth_address", bd_addr)
-		device.SetPropertyString("info.product", "DUN (%s)" % (bd_addr))
-		device.SetPropertyString("info.vendor", "Bluetooth")
-		device.SetPropertyString("info.linux.driver", "rfcomm")
-		device.SetPropertyString("linux.sysfs_path", "/sys/class/tty/rfcomm%s" % portid) 
 		
-		device.SetPropertyInteger("serial.port", portid)
-		device.SetPropertyString("serial.device", device_file)
-		device.SetPropertyString("linux.device_file", device_file)
-		device.SetPropertyString("serial.type", "unknown")
+		def probe_response(capabilities):
+			dprint("Device capabilities: %s" % capabilities)
 
-		device.SetPropertyString("serial.originating_device", "/org/freedesktop/Hal/devices/%s" % "rfcomm%s" % portid)	
+			if capabilities == None or capabilities == []:
+				dprint("Removing temp UDI")
+				#self.Remove(ref)
+			else:
+				
+				try:
+					dprint("Generating udev rule")
+					rule_file = name.next()
+					rule = open(rule_file, "w")
+					rule.write("DEVPATH==\"*/rfcomm%d\", ENV{ID_NM_MODEM_PROBED}=\"1\", " % portid)
+					caps = []
+					for cap in capabilities:
+						if cap == "GSM-07.07" or cap == "GSM-07.05":
+							caps.append("ENV{ID_NM_MODEM_GSM}=\"1\"")
+						elif cap == "IS-707-A" or cap == "IS-707-P":
+							caps.append("ENV{ID_NM_MODEM_IS707_A}=\"1\"")
+						elif cap == "IS-856":
+							caps.append("ENV{ID_NM_MODEM_IS856}=\"1\"")
+						elif cap == "IS-856-A":
+							caps.append("ENV{ID_NM_MODEM_IS856_A}=\"1\"")
+							
+					caps = getUniqueSynset(caps)
+					rule.write(", ".join(caps))
+					rule.close()
+					
+				except IOError:
+					dprint("Failed to generate udev rule")
+				
+				else:
+					#this causes hal to register a rfcomm device
+					uevent = open("/sys/class/tty/rfcomm%s/uevent" % portid, "w")
+					uevent.write("change")
+					uevent.close()
+					
+					
+				def check_hal(device):
+					found_devs = self.FindDeviceStringMatch("linux.device_file", "/dev/rfcomm%d" % portid)
+					if len(found_devs):
+						self.Remove(found_devs[0])
 
+					dprint("Adding our own rfcomm device to hal")
+					device.SetPropertyString("info.category", "serial")
+					device.SetPropertyString("info.parent", dev)
+					device.SetPropertyString("info.bluetooth_address", bd_addr)
+					device.SetPropertyString("info.product", "DUN (%s)" % (bd_addr))
+					device.SetPropertyString("info.vendor", "Bluetooth")
+					device.SetPropertyString("info.linux.driver", "rfcomm")
+					device.SetPropertyString("linux.sysfs_path", "/sys/class/tty/rfcomm%s" % portid) 
 
-		if type == 1:
-			device.StringListAppend("modem.command_sets", "IS-707-A")
-		else:
-			device.StringListAppend("modem.command_sets", "GSM-07.07")
-			device.StringListAppend("modem.command_sets", "GSM-07.05")
+					device.SetPropertyInteger("serial.port", portid)
+					device.SetPropertyString("serial.device", device_file)
+					device.SetPropertyString("linux.device_file", device_file)
+					device.SetPropertyString("serial.type", "unknown")
 
-		device.AddCapability("serial")
-		device.AddCapability("modem")
+					device.SetPropertyString("serial.originating_device", "/org/freedesktop/Hal/devices/%s" % "rfcomm%s" % portid)
 
+					device.AddCapability("serial")
+					device.AddCapability("modem")	
+					device.SetMultipleProperties({"modem.command_sets": capabilities})
+				
+					self.CommitToGdl(ref, "/org/freedesktop/Hal/devices/%s" % "rfcomm%s" % portid)
+						
+					gobject.timeout_add(1000, os.unlink, rule_file)
+		
+				gobject.timeout_add(1000, check_hal, device)
+		
 
-		self.CommitToGdl(ref, "/org/freedesktop/Hal/devices/%s" % "rfcomm%s" % portid)
+		dprint("Probing device %s for capabilities" % device_file)
+		probe_modem(device_file, probe_response)
 		
 		return True
 		

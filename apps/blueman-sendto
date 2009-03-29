@@ -28,6 +28,7 @@ if os.path.exists(os.path.join(_dirname,"ChangeLog")):
 	
 import gtk
 import gobject
+import dbus.glib
 from optparse import OptionParser
 import gettext
 import urllib
@@ -43,6 +44,7 @@ from blueman.Functions import *
 from blueman.Constants import *
 from blueman.gui.DeviceSelectorDialog import DeviceSelectorDialog
 from blueman.main.SpeedCalc import SpeedCalc
+from blueman.main.AppletService import AppletService
 
 from blueman.ods.OdsManager import OdsManager
 
@@ -229,17 +231,17 @@ class Sender(gobject.GObject):
 				print "Warning: Session already closed"
 		
 	def on_session_destroyed(self, manager, path):
-		print "session destroyed"
+		dprint("session destroyed")
 		if self.session.object_path == path:
 			self.session = None
 		
 	def on_session_connected(self, session):
-		print "commence transfer"
+		dprint("commence transfer")
 		self.sesion = session
 		self.process_queue()
 		
 	def on_session_error(self, session, name, msg):
-		print "session err", name, msg
+		dprint("session err", name, msg)
 		self.speed.reset()
 		d = gtk.MessageDialog(  self.window,
 					type=gtk.MESSAGE_ERROR)
@@ -299,6 +301,9 @@ class SendTo:
 				action="store", help="Same as --device", metavar="ADDRESS")	
 		
 		(options, args) = parser.parse_args()
+		
+		check_bluetooth_status(_("Bluetooth needs to be turned on for file sending to work"), lambda: exit())
+		
 		self.options = options
 		self.args = args
 		

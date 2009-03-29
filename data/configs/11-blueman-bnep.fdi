@@ -4,6 +4,7 @@ for example NM trying to get dhcp address for an incoming connection -->
 <deviceinfo version="0.2">
 	<device>
 		<match key="net.interface" contains="bnep">
+			<merge key="info.linux.driver" type="string">bnep</merge>
 			<match key="info.category" string="net.80203">
 				<merge key="info.category" type="string">net.bluetooth</merge>
 				<merge key="info.product" type="string">Bluetooth Interface</merge>
@@ -13,4 +14,9 @@ for example NM trying to get dhcp address for an incoming connection -->
 			</match>
 		</match>
 	</device>
+	<device>
+		<match key="info.category" contains="bluetooth_acl">
+			<merge key="info.linux.driver" type="string">btusb</merge>
+		</match>
+	</device>	
 </deviceinfo>

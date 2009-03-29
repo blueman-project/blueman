@@ -34,7 +34,7 @@ class Gconf(ConfigPlugin):
 		
 		self.client = gconf.client_get_default ()
 		
-		self.client.add_dir(BLUEMAN_PATH + self.section, gconf.CLIENT_PRELOAD_NONE)
+		self.client.add_dir(BLUEMAN_PATH + self.section, gconf.CLIENT_PRELOAD_ONELEVEL)
 		self.client.connect("value_changed", self.value_changed)
 
 	# convert a GConfValue to python native value

@@ -82,6 +82,12 @@ class DeviceList(GenericList):
 			
 			a = Bluez.Adapter(path)
 			wait_for_adapter(a, on_activate)
+			
+		#cache for fast lookup in the list	
+		self.address_to_row = {}
+		self.path_to_row = {}
+		
+		self.monitored_devices = []
 
 		self.signals = SignalTracker()
 		
@@ -152,10 +158,18 @@ class DeviceList(GenericList):
 			props["Fake"] = True
 			dev = FakeDevice(props)
 		
-			if not self.find_device(dev):
+			iter = self.find_device(dev)
+			if not iter:
 				device = Device(dev)
 				self.emit("device-found", device)
 				self.device_add_event(device)
+				iter = self.find_device(device)
+				self.row_update_event(iter, "RSSI", props["RSSI"])
+			else:
+				self.row_update_event(iter, "Alias", props["Alias"])
+				
+			print "RSSI:", props["RSSI"]
+				
 		
 	
 	def on_property_changed(self, key, value):
@@ -190,13 +204,15 @@ class DeviceList(GenericList):
 		
 		
 	def monitor_power_levels(self, device):
-		def update(row_ref, cinfo):
+		def update(row_ref, cinfo, address):
 			if not row_ref.valid():
 				dprint("stopping monitor (row does not exist)")
 				cinfo.deinit()
+				self.monitored_devices.remove(props["Address"])
 				return False
 			
 			if not self.props.model:
+				self.monitored_devices.remove(props["Address"])
 				return False
 				
 			iter = self.props.model.get_iter(row_ref.get_path())
@@ -205,6 +221,7 @@ class DeviceList(GenericList):
 				dprint("stopping monitor (not connected)")
 				cinfo.deinit()
 				self.level_setup_event(row_ref, device, None)
+				self.monitored_devices.remove(props["Address"])
 				return False
 			else:
 				self.level_setup_event(row_ref, device, cinfo)
@@ -212,10 +229,10 @@ class DeviceList(GenericList):
 		
 		
 		props = device.GetProperties()
-		dprint("starting monitor")
-		if "Connected" in props and props["Connected"]:
+		
+		if "Connected" in props and props["Connected"] and props["Address"] not in self.monitored_devices:
+			dprint("starting monitor")
 			iter = self.find_device(device)
-			
 			
 			hci = os.path.basename(self.Adapter.GetObjectPath())
 			try:
@@ -225,8 +242,8 @@ class DeviceList(GenericList):
 			else:
 				r = gtk.TreeRowReference(self.props.model, self.props.model.get_path(iter))
 				self.level_setup_event(r, device, cinfo)
-				gobject.timeout_add(1000, update, r, cinfo)
-		
+				gobject.timeout_add(1000, update, r, cinfo, props["Address"])
+				self.monitored_devices.append(props["Address"])
 	
 	##### virtual funcs #####
 	
@@ -319,29 +336,17 @@ class DeviceList(GenericList):
 		self.__discovery_time += time
 			
 		progress = self.__discovery_time / totaltime
-		
-		if self.__discovery_time >= totaltime:
-			self.StopDiscovery()
-			return False
+		if progress >= 1.0:
+			progress = 1.0
+		#if self.__discovery_time >= totaltime:
+			#self.StopDiscovery()
+			#return False
 
 		self.emit("discovery-progress", progress)
 		return True
 		
 	
-	#searches for existing devices in the list
-	def find_device(self, device):
-   		for i in range(len(self.liststore)):
-   			row = self.get(i, "device")
-   			if device.Address == row["device"].Address:
-   				return self.get_iter(i)
-   		return None
-   		
-   	def find_device_by_path(self, path):
-   		rows = self.get_conditional(dbus_path=path)
-   		if rows == []:
-   			return None
-   		else:
-   			return self.get_iter(rows[0])
+
 
 		
 	def add_device(self, device, append=True):
@@ -352,6 +357,7 @@ class DeviceList(GenericList):
 				return
 			
 		if iter == None:
+			dprint("adding new device")
 			if append:
 				iter = self.liststore.append()
 			else:
@@ -403,10 +409,13 @@ class DeviceList(GenericList):
 							"PropertyChanged", 
 							sigid=device.GetObjectPath(), 
 							path_keyword="path")
+				
+				if props_new["Connected"]:
+					self.monitor_power_levels(device)
 
 			#turn a Real device to a Fake device
 			elif not "Fake" in props and "Fake" in props_new:
-				dprint("Convert")
+				dprint("converting: real to discovered")
 				self.set(iter, device=device, dbus_path=None)
 				self.row_setup_event(iter, device)
 				self.emit("device-property-changed", device, iter, ("Fake", True))
@@ -422,7 +431,7 @@ class DeviceList(GenericList):
 		if autoselect:
 			self.selection.select_path(0)
 	
-	def DiscoverDevices(self, time=9.5):
+	def DiscoverDevices(self, time=10.24):
 		if not self.discovering:
 			self.__discovery_time = 0
 			self.Adapter.StartDiscovery()
@@ -498,5 +507,78 @@ class DeviceList(GenericList):
 				self.RemoveDevice(device, iter, True)
 			self.liststore.clear()
 			self.emit("device-selected", None, None)
+		
+		self.address_to_row = {}
+		self.path_to_row = {}
 	
+	def find_device(self, device):
+   		try:
+   			row = self.address_to_row[device.Address]
+			if row.valid():
+				path = row.get_path()
+				iter = self.props.model.get_iter(path)
+				return iter
+			else:
+				del self.address_to_row[device.Address]
+				return None
+				
+		except KeyError:
+			return None
+
+   		
+   	def find_device_by_path(self, path):
+   		try:
+   			row = self.path_to_row[path]
+   			if row.valid():
+				path = row.get_path()
+				iter = self.props.model.get_iter(path)
+				return iter
+			else:
+				del self.path_to_row[path]
+				return None
+   		except KeyError:
+   			return None
+   			
+   			
+	def do_cache(self, iter, kwargs):
+		if "device" in kwargs:
+			if kwargs["device"]:
+				self.address_to_row[kwargs["device"].Address] = gtk.TreeRowReference(self.props.model, self.props.model.get_path(iter))
+				dprint("Caching new device %s" % kwargs["device"].Address)
+
+		if "dbus_path" in kwargs:
+			if kwargs["dbus_path"] != None:
+				self.path_to_row[kwargs["dbus_path"]] = gtk.TreeRowReference(self.props.model, self.props.model.get_path(iter))
+			else:
+				existing = self.get(iter, "dbus_path")["dbus_path"]
+				if existing != None:
+					del self.path_to_row[existing]
+   			
+	def append(self, **columns):
+		iter = GenericList.append(self, **columns)
+		self.do_cache(iter, columns)
+	
+	def prepend(self, **columns):
+		iter = GenericList.prepend(self, **columns)
+		self.do_cache(iter, columns)
+		
+	def set(self, iter, **kwargs):
+		self.do_cache(iter, kwargs)
+		GenericList.set(self, iter, **kwargs)
+		
+
+#	#searches for existing devices in the list
+#	def find_device(self, device):
+#   		for i in range(len(self.liststore)):
+#   			row = self.get(i, "device")
+#   			if device.Address == row["device"].Address:
+#   				return self.get_iter(i)
+#   		return None
+# 
+#   	def find_device_by_path(self, path):
+#   		rows = self.get_conditional(dbus_path=path)
+#   		if rows == []:
+#   			return None
+#   		else:
+#   			return self.get_iter(rows[0])
 

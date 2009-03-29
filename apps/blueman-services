@@ -8,10 +8,7 @@ if os.path.exists(os.path.join(_dirname,"ChangeLog")):
 	sys.path.insert(0, _dirname)
 
 import gtk
-import blueman.bluez as Bluez
 from blueman.gui.GenericList import GenericList
-from blueman.bluez.ServiceInterface import ServiceInterface
-
 
 from blueman.Functions import *
 from blueman.Constants import *
@@ -24,11 +21,7 @@ enable_rgba_colormap()
 setup_icon_path()
 
 class BluemanServices:
-
-
 	def __init__(self):
-		self.Manager = Bluez.Manager('gobject')
-		adapter = self.Manager.GetAdapter()
 		
 		self.Builder = gtk.Builder()
 		self.Builder.set_translation_domain("blueman")
@@ -106,7 +99,10 @@ class BluemanServices:
 			
 
 		for cls in ServicePlugin.__subclasses__():
-			inst = cls(self)
+			try:
+				inst = cls(self)
+			except:
+				continue
 			if not cls.__plugin_info__:
 				dprint("Invalid plugin info in %s" % (plugin))
 			else:

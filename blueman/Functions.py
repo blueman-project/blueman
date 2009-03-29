@@ -29,25 +29,57 @@ import atexit
 import sys
 from subprocess import Popen
 import gobject
-
+import gettext
 from blueman.Lib import sn_launcher
+_ = gettext.gettext
 
 GREEN = lambda(x): "\x1b[32;01m"+x+"\x1b[39;49;00m"
 BLUE = lambda(x): "\x1b[34;01m"+x+"\x1b[39;49;00m"
 BOLD = lambda(x): "\033[1m"+x+"\033[0m"
 YELLOW = lambda(x): "\x1b[33;01m"+x+"\x1b[39;49;00m"
 
+import fcntl, struct, termios
+in_fg = os.getpgrp() == struct.unpack('h', fcntl.ioctl(0, termios.TIOCGPGRP, "  "))[0]
+
+
 def dprint(*args):
-	s = ""
-	for a in args:
-		s += (str(a) + " ")
-	co = sys._getframe(1).f_code
+	#dont print if in the background
+	if in_fg:
+		
+		s = ""
+		for a in args:
+			s += (str(a) + " ")
+		co = sys._getframe(1).f_code
 	
-	fname = BOLD(co.co_name)
+		fname = BOLD(co.co_name)
 	
-	print "_________"
-	print "%s %s" % (fname, "(%s:%d)" % (co.co_filename, co.co_firstlineno))
-	print s
+		print "_________"
+		print "%s %s" % (fname, "(%s:%d)" % (co.co_filename, co.co_firstlineno))
+		print s
+
+
+from blueman.main.AppletService import AppletService
+def check_bluetooth_status(message, exitfunc, *args, **kwargs):
+	try:
+		applet = AppletService()
+	except:
+		print "Blueman applet needs to be running"
+		exitfunc()
+	if not applet.GetBluetoothStatus():
+		
+			d = gtk.MessageDialog(None, type=gtk.MESSAGE_ERROR)
+			d.props.icon_name = "blueman"
+			d.props.text = _("Bluetooth Turned Off")
+			d.props.secondary_text = message
+
+			d.add_button(gtk.STOCK_QUIT, gtk.RESPONSE_NO)
+			d.add_button(_("Enable Bluetooth"), gtk.RESPONSE_YES)
+			resp = d.run()
+			d.destroy()
+			if resp != gtk.RESPONSE_YES:
+				exitfunc()
+			else:
+				applet.SetBluetoothStatus(True, *args, **kwargs)		
 
 def wait_for_adapter(bluez_adapter, callback, timeout=1000):
 	def on_prop_change(key, value):
@@ -146,21 +178,7 @@ def get_icon(name, size=24, fallback="gtk-missing-image"):
 	
 def adapter_path_to_name(path):
 	return re.search(".*(hci[0-9]*)", path).groups(0)[0]
-	
 
-
-def make_device_icon(target, is_bonded=False, is_trusted=False, is_discovered=False):
-	sources = []
-	if is_bonded:
-		sources.append((get_icon("gtk-dialog-authentication", 16), 0, 0, 200))
-		
-	if is_trusted:
-		sources.append((get_icon("blueman-trust", 16), 0, 32, 200))
-	
-	if is_discovered:
-		sources.append((get_icon("gtk-find", 24), 24, 0, 255))
-
-	return composite_icon(target, sources)
 
 
 def opacify_pixbuf(pixbuf, alpha):

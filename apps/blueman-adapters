@@ -36,7 +36,7 @@ if os.path.exists(os.path.join(_dirname,"ChangeLog")):
 	
 import blueman.bluez as Bluez
 from blueman.Constants import *
-from blueman.Functions import setup_icon_path, enable_rgba_colormap, check_single_instance
+from blueman.Functions import setup_icon_path, enable_rgba_colormap, check_single_instance, check_bluetooth_status
 from blueman.main.SignalTracker import SignalTracker
 
 enable_rgba_colormap()
@@ -53,6 +53,8 @@ class BluemanAdapters:
 		self.dialog = builder.get_object("dialog")
 		
 		check_single_instance("blueman-adapters", lambda time: self.dialog.present_with_time(time))
+		
+		check_bluetooth_status(_("Bluetooth needs to be turned on for the adapter manager to work"), lambda: exit())
 		
 		self.dialog.props.icon_name = "blueman-device"
 		self.dialog.connect("response", self.on_dialog_response)

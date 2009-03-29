@@ -32,7 +32,10 @@ from blueman.main.Device import Device
 from blueman.bluez.Device import Device as BluezDevice
 from blueman.bluez.Adapter import Adapter
 from blueman.main.SignalTracker import SignalTracker
+from blueman.gui.Notification import Notification
 import blueman.Sdp as sdp
+
+from blueman.plugins.AppletPlugin import AppletPlugin
 
 _ = gettext.gettext
 
@@ -62,18 +65,58 @@ class AdapterNotFound(Exception):
 class DeviceNotFound(Exception):
 	pass
 
-class RecentConns(gtk.Menu):
+class RecentConns(AppletPlugin, gtk.Menu):
+	__depends__ = ["Menu", "PowerManager"]
+	__icon__ = "document-open-recent"
+	__description__ = _("Provides a menu item that contains last used connections for quick access")
+	__author__ = "Walmis"
+	
+	__options__  = {
+		"max_items" : (int,
+				  6,
+				  #the maximum number of items RecentConns menu will display
+				  _("Maximum items"),
+				  _("The maximum number of items RecentConns menu will display"),
+				  6,
+				  20)
+	}
 	
 	items = None
 	
-	def __init__(self, applet):
-		self.Item = applet.recent_item
+	def on_load(self, applet):
 		self.Applet = applet
-		self.Signals = SignalTracker()
 		self.Adapters = []
 		gtk.Menu.__init__(self)
 		
+		self.Item = create_menuitem(_("Recent Connections")+"...", get_icon("document-open-recent", 16))
+		self.Applet.Plugins.Menu.Register(self, self.Item, 52)
+		self.Applet.Plugins.Menu.Register(self, gtk.SeparatorMenuItem(), 53)
 		
+		self.Item.set_submenu(self)
+		
+		
+	def change_sensitivity(self, sensitive):
+		dprint(sensitive, self.Applet.Plugins.PowerManager.GetBluetoothStatus())
+		sensitive = sensitive and self.Applet.Manager and self.Applet.Plugins.PowerManager.GetBluetoothStatus() 
+		self.Item.props.sensitive = sensitive
+		
+	def on_manager_state_changed(self, state):
+		self.change_sensitivity(state)
+		
+	def on_bluetooth_power_state_changed(self, state):
+		self.change_sensitivity(state)		
+		
+		
+	def on_unload(self):
+		self.destroy()
+		self.Applet.Plugins.Menu.Unregister(self)
+		if RecentConns.items:
+			for i in reversed(RecentConns.items):
+				if i["device"]:
+					if i["gsignal"]:
+						i["device"].disconnect(i["gsignal"])
+						i["gsignal"] = None
+	
 	def initialize(self):
 		dprint("rebuilding menu")
 		def compare_by (fieldname):
@@ -86,7 +129,7 @@ class RecentConns(gtk.Menu):
 		self.foreach(each)
 
 		RecentConns.items.sort(compare_by("time"), reverse=True)
-		RecentConns.items = RecentConns.items[0:6]
+		RecentConns.items = RecentConns.items[0:self.get_option("max_items")]
 		RecentConns.items.reverse()
 		
 		if len(RecentConns.items) == 0:
@@ -96,44 +139,39 @@ class RecentConns(gtk.Menu):
 
 		count = 0
 		for item in RecentConns.items:
-			if count < 6:
+			if count < self.get_option("max_items"):
 				self.add_item(item)
 				count+=1
 	
-	#set bluez manager interface
-	def set_manager(self, manager):
-		self.Manager = manager
+	def on_manager_state_changed(self, state):
+		if state:
+			self.Item.props.sensitive = True
+			adapters = self.Applet.Manager.ListAdapters()
+			self.Adapters = {}
+			for adapter in adapters:
+				p = adapter.GetProperties()
+				self.Adapters[str(adapter.GetObjectPath())] = str(p["Address"])
 		
-		#get adapter paths, not objects
-		adapters = self.Manager.ListAdapters()
-		self.Adapters = {}
-		for adapter in adapters:
-			p = adapter.GetProperties()
-			self.Adapters[str(adapter.GetObjectPath())] = str(p["Address"])
-		
-		
-		self.Signals.DisconnectAll()
-		self.Signals.Handle("bluez", self.Manager, self.on_adapter_added, "AdapterAdded")
-		self.Signals.Handle("bluez", self.Manager, self.on_adapter_removed, "AdapterRemoved")
-		
-		if RecentConns.items != None:
-			for i in reversed(RecentConns.items):
+			if RecentConns.items != None:
+				for i in reversed(RecentConns.items):
 					
-				if i["device"]:
-					if i["gsignal"]:
-						i["device"].disconnect(i["gsignal"])
-					#i["device"].Destroy()
+					if i["device"]:
+						if i["gsignal"]:
+							i["device"].disconnect(i["gsignal"])
+						#i["device"].Destroy()
 				
-				try:
-					i["device"] = self.get_device(i)
-					i["gsignal"] = i["device"].connect("invalidated", self.on_device_removed, i)
-				except:
-					pass
+					try:
+						i["device"] = self.get_device(i)
+						i["gsignal"] = i["device"].connect("invalidated", self.on_device_removed, i)
+					except:
+						pass
 
-		else:
-			self.recover_state()
+			else:
+				self.recover_state()
 		
-		self.initialize()
+			self.initialize()
+		else:
+			self.Item.props.sensitive = False
 	
 	def on_device_removed(self, device, item):
 		device.disconnect(item["gsignal"])
@@ -204,16 +242,19 @@ class RecentConns(gtk.Menu):
 		except:
 			RecentConns.items.remove(item)
 		else:
-			sn = startup_notification("Bluetooth Connection", desc=_("Connecting to %s") % item["mitem"].get_child().props.label, icon="blueman")
+			sn = startup_notification("Bluetooth Connection", desc=_("Connecting to %s") % item["mitem"].get_child().props.label, 
+									  icon="blueman")
 			
 			
 			def reply(*args):
-				self.Applet.show_notification(_("Connected"), _("Connected to %s") % item["mitem"].get_child().props.label, pixbuf=get_icon("gtk-connect", 48))
+				Notification(_("Connected"), _("Connected to %s") % item["mitem"].get_child().props.label, pixbuf=get_icon("gtk-connect", 48), 					
+							status_icon=self.Applet.Plugins.StatusIcon)
 				item["mitem"].props.sensitive = True
 				sn.complete()
 				
 			def err(reason):
-				self.Applet.show_notification(_("Failed to connect"), str(reason).split(": ")[-1], pixbuf=get_icon("gtk-dialog-error", 48))
+				Notification(_("Failed to connect"), str(reason).split(": ")[-1], pixbuf=get_icon("gtk-dialog-error", 48),
+							status_icon=self.Applet.Plugins.StatusIcon)
 				item["mitem"].props.sensitive = True
 				sn.complete()
 
@@ -269,7 +310,7 @@ class RecentConns(gtk.Menu):
 		
 	def get_device(self, item):
 		try:
-			adapter = self.Manager.GetAdapter(item["adapter"])
+			adapter = self.Applet.Manager.GetAdapter(item["adapter"])
 		except:
 			raise AdapterNotFound
 		try:	

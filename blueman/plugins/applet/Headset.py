@@ -17,16 +17,23 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 from blueman.Functions import *
+from blueman.Functions import _
 from blueman.main.Config import Config
 from blueman.plugins.AppletPlugin import AppletPlugin
 import dbus
 
 class Headset(AppletPlugin):
-	
+	__author__ = "Walmis"
+	__description__ = _("Runs a command when answer button is pressed on a headset")
+	__icon__ = "blueman-headset"
+		
 	def on_load(self, applet):
-		bus = dbus.SystemBus()
-		bus.add_signal_receiver(self.on_answer_requested, "AnswerRequested", "org.bluez.Headset")
+		self.bus = dbus.SystemBus()
+		self.bus.add_signal_receiver(self.on_answer_requested, "AnswerRequested", "org.bluez.Headset")
 		self.Config = Config("headset")
+		
+	def on_unload(self):
+		self.bus.remove_signal_receiver(self.on_answer_requested, "AnswerRequested", "org.bluez.Headset")
 		
 	def on_answer_requested(self):
 		c = self.Config.props.command

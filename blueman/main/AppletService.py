@@ -27,4 +27,4 @@ class AppletService(dbus.proxies.Interface, SignalTracker):
 		dbus.proxies.Interface.__init__(self, service, "org.blueman.Applet")
 
 	def Handle(self, signame, handler):
-		SignalTracker.Handle(self, "dbus", self, handler, signame, self.dbus_interface, path=self.object_path)
+		SignalTracker.Handle(self, "dbus", self.bus, handler, signame, self.dbus_interface, path=self.object_path)

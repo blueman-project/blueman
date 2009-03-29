@@ -28,7 +28,7 @@ _ = gettext.gettext
 import gtk
 
 
-def show_about_dialog(app_name):
+def show_about_dialog(app_name, run=True):
 	def uri_open(uri):
 		Popen(['xdg-open', uri], stdout=PIPE)
 
@@ -53,7 +53,10 @@ def show_about_dialog(app_name):
 	authors = ['Valmantas Palikša <walmis@balticum-tv.lt>',
 				'Tadas Dailyda <tadas@dailyda.com>']
 	about.set_authors(authors)
-	about.run()
-	about.destroy()
+	if run:
+		about.run()
+		about.destroy()
+	else:
+		return about
 
 

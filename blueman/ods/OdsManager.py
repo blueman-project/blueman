@@ -23,6 +23,7 @@ from blueman.ods.OdsServer import OdsServer
 from blueman.ods.OdsSession import OdsSession
 from blueman.main.SignalTracker import SignalTracker
 from blueman.Functions import dprint
+import weakref
 
 class OdsManager(OdsBase):
 	__gsignals__ = {
@@ -69,12 +70,17 @@ class OdsManager(OdsBase):
 
 		
 	def DisconnectAll(self, *args):
-		for k,v in self.Servers.iteritems():
-			v.DisconnectAll()
-		self.Servers = {}
-		OdsBase.DisconnectAll(self, *args)
+		def on_destroyed(inst, path):
+			if len(self.Servers)-1 == 0:
+				OdsBase.DisconnectAll(self, *args)
 		
-		
+		OdsBase.GHandle(self, "server-destroyed", on_destroyed)
+		if len(self.Servers) == 0:
+			on_destroyed(None)
+		else:	
+			for k,v in self.Servers.iteritems():
+				self.destroy_server(k)
+
 	def get_server(self, pattern):
 		try:
 			return self.Servers[pattern]
@@ -94,18 +100,20 @@ class OdsManager(OdsBase):
 			error_handler=err
 		self.CreateBluetoothSession(dest_addr, source_addr, pattern, reply_handler=reply, error_handler=error_handler)
 	
-	
+	@staticmethod
+	def __server_created(ref, path, pattern):
+
+		server = OdsServer(path)
+		ref().Servers[pattern] = server
+		ref().emit("server-created", server, pattern)
+		
 	def create_server(self, source_addr="00:00:00:00:00:00", pattern="opp", require_pairing=False):
-		def reply(path):
-			server = OdsServer(path)
-			self.Servers[pattern] = server
-			self.emit("server-created", server, pattern)
-			
-			
+		ref = weakref.ref(self)
+	
 		def err(*args):
 			dprint("Couldn't create %s server" % pattern, args)
 		
-		self.CreateBluetoothServer(source_addr, pattern, require_pairing, reply_handler=reply, error_handler=err)
+		self.CreateBluetoothServer(source_addr, pattern, require_pairing, reply_handler=lambda x: OdsManager.__server_created(ref, x, pattern), error_handler=err)
 		
 	def destroy_server(self, pattern="opp"):
 		dprint("Destroy %s server" % pattern)
@@ -121,10 +129,12 @@ class OdsManager(OdsBase):
 		try:
 			self.Servers[pattern].GHandle("stopped", on_stopped)
 			self.Servers[pattern].GHandle("closed", on_closed)
-			self.Servers[pattern].Stop()
-
+			try:
+				self.Servers[pattern].Stop()
+			except:
+				#ods probably died
+				gobject.idle_add(on_closed, self.Servers[pattern])
+		
 		except KeyError:
 			pass
-		
-		
 

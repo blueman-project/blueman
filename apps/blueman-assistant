@@ -63,6 +63,9 @@ class Assistant(Agent):
 				action="store", help=_("Start configuration assistant for this device"), metavar="ADDRESS")
 	
 		(options, args) = parser.parse_args()
+		
+		check_bluetooth_status(_("Bluetooth needs to be turned on for the bluetooth assistant to work"), lambda: exit())
+		
 		self.options = options		
 		
 		self.Device = None

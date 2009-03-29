@@ -8,9 +8,12 @@ _blueman_la_LIBADD = $(BLUEZ_LIBS)
 _blueman_la_SOURCES = \
 	_blueman.c			\
 	libblueman.c	\
-	libblueman.h
+	libblueman.h	\
+	modem-prober.h \
+	modem-prober.c
 
 _blueman.c: _blueman.pyx
 	$(PYREXC) -o $@ $<
 	
 EXTRA_DIST = _blueman.pyx
+CLEANFILES := _blueman.c

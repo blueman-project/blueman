@@ -451,8 +451,16 @@ cdef class sn_launcher:
 		return (tv_sec, tv_usec)
 
 
+cdef extern from "modem-prober.h":
+	cdef void c_probe_modem "probe_modem" (char* device, object callback)
 
+def probe_modem(node, callback):
 
-
-
+	if not callable(callback):
+		raise TypeError, "callback must be callable"
+		
+	if node != None:
+		c_probe_modem(node, callback)
+	else:
+		raise TypeError, "device node must not be None"
 

@@ -18,8 +18,11 @@
 # NMMonitor: Monitors a selected device and emits a signal when it was disconnected via NetworkManager
 import gobject
 import dbus
-from blueman.Functions import dprint
+from blueman.Functions import *
+from blueman.Functions import _
+
 from blueman.main.SignalTracker import SignalTracker
+from blueman.plugins.AppletPlugin import AppletPlugin
 
 
 NM_DEVICE_STATE_UNKNOWN = 0,
@@ -87,48 +90,58 @@ NM_DEVICE_STATE_ACTIVATED = 8
 NM_DEVICE_STATE_FAILED = 9
 
 
-class NMMonitor(gobject.GObject):
+class NMMonitor(AppletPlugin, gobject.GObject):
 	__gsignals__ = {
-		'disconnected' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_BOOLEAN,)),
+		#args: udi
+		'disconnected' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_STRING,)),
+		#args: udi
+		'modem-removed' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_STRING,)),
+		#args: udi, bdaddr
+		'modem-added' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_STRING, gobject.TYPE_STRING,)),
 	}
 	
-	def __init__(self, device, rfcomm_node):
+	__icon__ = "network"
+	__description__ = _("Monitors NetworkManager's modem connections and automatically disconnects bluetooth link after the network connection is closed")
+	__author__ = "Walmis"
+	
+	def on_load(self, applet):
 		gobject.GObject.__init__(self)
-		dprint(device, rfcomm_node)
+
 		self.bus = dbus.SystemBus()
 		obj = self.bus.get_object('org.freedesktop.Hal', '/org/freedesktop/Hal/Manager')
 		
-		hal_mgr = dbus.Interface(obj, 'org.freedesktop.Hal.Manager')
-
-		existing = hal_mgr.FindDeviceStringMatch("serial.device", rfcomm_node)
-		if len(existing) > 0:
-			udi = existing[0]
-		else:
-			return
-			
-		try:
-			obj = self.bus.get_object('org.freedesktop.NetworkManager', udi)
-			self.nm_iface = dbus.Interface(obj, 'org.freedesktop.NetworkManager.Device')
-		except:
-			return
+		self.hal_mgr = dbus.Interface(obj, 'org.freedesktop.Hal.Manager')
+		
+		self.monitored_udis = []
 		
 		self.signals = SignalTracker()
-		self.signals.Handle("dbus", self, 
-						self.on_device_state_changed, 
-						"StateChanged",
-						"org.freedesktop.NetworkManager.Device",
-						path=udi)
-						
-		self.signals.Handle("bluez", device.Device, self.on_device_propery_changed, "PropertyChanged")
 		
-	def on_device_propery_changed(self, key, value):
-		if key == "Connected" and not value:
-			self.signals.DisconnectAll()
-			self.emit("disconnected", True)
+		
+		self.signals.Handle("dbus", self.bus, self.on_device_state_changed, "StateChanged", "org.freedesktop.NetworkManager.Device", path_keyword="udi")
+		self.signals.Handle("dbus", self.bus, self.on_device_added, "DeviceAdded", "org.freedesktop.Hal.Manager")
+		self.signals.Handle("dbus", self.bus, self.on_device_removed, "DeviceRemoved", "org.freedesktop.Hal.Manager")
+#		self.signals.Handle("bluez", device.Device, self.on_device_propery_changed, "PropertyChanged")
+		
+	def on_unload(self):
+		self.signals.DisconnectAll()	
+	
+	def on_device_removed(self, udi):
+		if udi in self.monitored_udis:
+			self.monitored_udis.remove(udi)
+			self.emit("modem-removed", udi)
+		
+	def on_device_added(self, udi):
+		obj = self.bus.get_object('org.freedesktop.Hal', udi)
+		device = dbus.Interface(obj, 'org.freedesktop.Hal.Device')		
+		
+		if device.QueryCapability("modem") and device.GetPropertyString("info.linux.driver") == "rfcomm":
+			self.monitored_udis.append(udi)
+			self.emit("modem-added", udi, device.GetPropertyString("info.bluetooth_address"))
+
 						
-	def on_device_state_changed(self, state, prev_state, reason):
-		dprint("state=%u prev_state=%u reason=%u" % (state, prev_state, reason))
-		if state <= 3 and 3 < prev_state <= 8:
-			self.signals.DisconnectAll()
-			self.emit("disconnected", False)
+	def on_device_state_changed(self, state, prev_state, reason, udi):
+		if udi in self.monitored_udis:
+			dprint("state=%u prev_state=%u reason=%u" % (state, prev_state, reason))
+			if state <= 3 and 3 < prev_state <= 8:
+				self.emit("disconnected", udi)
 						

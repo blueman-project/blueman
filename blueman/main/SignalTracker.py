@@ -19,7 +19,7 @@
 from blueman.bluez.BlueZInterface import BlueZInterface
 import dbus
 import gobject
-
+import traceback
 class SignalTracker:
 
 	def __init__(self):
@@ -54,7 +54,13 @@ class SignalTracker:
 		elif objtype == "gobject":
 			args = obj.connect(*args)
 		elif objtype == "dbus":
-			obj.bus.add_signal_receiver(*args, **kwargs)
+			if isinstance(obj, dbus.Bus):
+				obj.add_signal_receiver(*args, **kwargs)
+			else:
+				print "Deprecated use of dbus signaltracker"
+				traceback.print_stack()
+				obj.bus.add_signal_receiver(*args, **kwargs)
+				
 
 		self._signals.append((sigid, objtype, obj, args, kwargs))
 		
@@ -67,7 +73,10 @@ class SignalTracker:
 				elif objtype == "gobject":
 					obj.disconnect(args)
 				elif objtype == "dbus":
-					obj.bus.remove_signal_receiver(*args)
+					if isinstance(obj, dbus.Bus):
+						obj.remove_signal_receiver(*args)
+					else:
+						obj.bus.remove_signal_receiver(*args)
 					
 				self._signals.remove(sig)
 				
@@ -81,7 +90,10 @@ class SignalTracker:
 			elif objtype == "gobject":
 				obj.disconnect(args)
 			elif objtype == "dbus":
-				obj.bus.remove_signal_receiver(*args)
+				if isinstance(obj, dbus.Bus):
+					obj.remove_signal_receiver(*args)
+				else:
+					obj.bus.remove_signal_receiver(*args)
 		
 		self._signals = []
 

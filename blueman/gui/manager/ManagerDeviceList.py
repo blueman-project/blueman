@@ -88,20 +88,21 @@ class ManagerDeviceList(DeviceList):
 		self.drag_dest_set(gtk.DEST_DEFAULT_ALL, [], gtk.gdk.ACTION_COPY|gtk.gdk.ACTION_DEFAULT)
 		self.drag_dest_add_uri_targets()
 		
+		self.set_search_equal_func(self.search_func)
 		
+		
+		
+	def search_func(self, model, column, key, iter):
+		row = self.get(iter, "caption")
+		if key.lower() in row["caption"].lower():
+			return False
+		print model, column, key, iter
+		return True	
 	
 	def drag_recv(self, widget, context, x, y, selection, target_type, time):
-		print context, selection, target_type
 
-		uris = []
-		for u in selection.get_uris():
-			print u
-			match = re.match("file://(.*)", u)
-			if match:
-				f = match.groups(1)[0]
-				uris.append(f)
-
-				
+		uris = selection.get_uris()
+			
 		context.finish(True, False, time)
 		
 		path = self.get_path_at_pos(x, y)
@@ -141,6 +142,7 @@ class ManagerDeviceList(DeviceList):
 						return False
 				else:
 					drag_context.drag_status(gtk.gdk.ACTION_COPY, timestamp)
+					self.set_cursor(path[0])
 					return True
 		else:
 			drag_context.drag_status(gtk.gdk.ACTION_DEFAULT, timestamp)
@@ -166,6 +168,25 @@ class ManagerDeviceList(DeviceList):
 	
 	def get_device_icon(self, klass):
 		return get_icon("blueman-"+klass.replace(" ", "-").lower(), 48, "blueman")
+		
+	
+
+
+	def make_device_icon(self, target, is_bonded=False, is_trusted=False, is_discovered=False, opacity=255):
+		if opacity != 255:
+			target = opacify_pixbuf(target, opacity)
+		
+		sources = []
+		if is_bonded:
+			sources.append((get_icon("gtk-dialog-authentication", 16), 0, 0, 200))
+		
+		if is_trusted:
+			sources.append((get_icon("blueman-trust", 16), 0, 32, 200))
+	
+		if is_discovered:
+			sources.append((get_icon("gtk-find", 24), 24, 0, 255))
+
+		return composite_icon(target, sources)
 	
 	
 	def device_remove_event(self, device, iter):
@@ -188,6 +209,7 @@ class ManagerDeviceList(DeviceList):
 	def device_add_event(self, device):
 		if device.Fake:
 			self.PrependDevice(device)
+			gobject.idle_add(self.props.vadjustment.set_value , 0)
 			return
 
 		if self.Blueman.Config.props.latest_last:
@@ -200,7 +222,6 @@ class ManagerDeviceList(DeviceList):
 		
 	
 	def row_setup_event(self, iter, device):
-
 		if not self.get(iter, "initial_anim")["initial_anim"]:
 			
 			cell_fader = CellFade(self, self.props.model.get_path(iter), [2,3,4])
@@ -233,7 +254,7 @@ class ManagerDeviceList(DeviceList):
 		
 		caption = self.make_caption(name, klass, address)
 		
-		caption = "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" % {"0":name, "1":klass.capitalize(), "2":address}
+		#caption = "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" % {"0":name, "1":klass.capitalize(), "2":address}
 		self.set(iter, caption=caption, orig_icon=icon)
 		
 		self.row_update_event(iter, "Fake", device.Fake)
@@ -246,44 +267,67 @@ class ManagerDeviceList(DeviceList):
 			self.row_update_event(iter, "Paired", device.Paired)
 		except:
 			pass
-
+			
+				
 	def row_update_event(self, iter, key, value):
 		dprint("row update event", key, value)
-		if key == "Trusted":
+		
+		#this property is only emitted when device is fake
+		if key == "RSSI":
+			row = self.get(iter, "orig_icon")
+			
+			#minimum opacity 90
+			#maximum opacity 255
+			#rssi at minimum opacity -100
+			#rssi at maximum opacity -45
+			# y = kx + b
+			#solve linear system
+			#{ 90 = k * -100 + b
+			#{ 255 = k * -45 + b
+			# k = 3
+			# b = 390
+			#and we have a formula for opacity based on rssi :)
+			opacity = int(3 * value + 390)
+			if opacity > 255:
+				opacity = 255
+			if opacity < 90:
+				opacity = 90
+			print "opacity", opacity
+			icon = self.make_device_icon(row["orig_icon"], is_discovered=True, opacity=opacity) 
+			self.set(iter, device_pb=icon)
+		
+		elif key == "Trusted":
 			row = self.get(iter, "bonded", "orig_icon")
 			if value:
-				icon = make_device_icon(row["orig_icon"], row["bonded"], True, False) 
+				icon = self.make_device_icon(row["orig_icon"], row["bonded"], True, False) 
 				self.set(iter, device_pb=icon, trusted=True)
 			else:
-				icon = make_device_icon(row["orig_icon"], row["bonded"], False, False) 
+				icon = self.make_device_icon(row["orig_icon"], row["bonded"], False, False) 
 				self.set(iter, device_pb=icon, trusted=False)
 			
 		
 		elif key == "Paired":
 			row = self.get(iter, "trusted", "orig_icon")
 			if value:
-				icon = make_device_icon(row["orig_icon"], True, row["trusted"], False) 
+				icon = self.make_device_icon(row["orig_icon"], True, row["trusted"], False) 
 				self.set(iter, device_pb=icon, bonded=True)
 			else:
-				icon = make_device_icon(row["orig_icon"], False, row["trusted"], False) 
+				icon = self.make_device_icon(row["orig_icon"], False, row["trusted"], False) 
 				self.set(iter, device_pb=icon, bonded=False)
 				
 		elif key == "Fake":
 			row = self.get(iter, "bonded", "trusted", "orig_icon")
 			if value:
-				icon = make_device_icon(row["orig_icon"], False, False, True) 
+				icon = self.make_device_icon(row["orig_icon"], False, False, True) 
 				self.set(iter, device_pb=icon, fake=True)
 			else:
-				icon = make_device_icon(row["orig_icon"], row["bonded"], row["trusted"], False) 
+				icon = self.make_device_icon(row["orig_icon"], row["bonded"], row["trusted"], False) 
 				self.set(iter, device_pb=icon, fake=False)
 				
 		elif key == "Alias" or key == "Class":
 			device = self.get(iter, "device")["device"]
 			c = self.make_caption(value, get_minor_class(device.Class, True), device.Address)
 			self.set(iter, caption=c)
-				
-
-				
 				
 	
 	def level_setup_event(self, row_ref, device, cinfo):
@@ -321,7 +365,7 @@ class ManagerDeviceList(DeviceList):
 					tpl_perc = 10
 
 				
-				row = self.get(iter, "levels_visible", "cell_fader")
+				row = self.get(iter, "levels_visible", "cell_fader", "rssi", "lq", "tpl")
 				if not row["levels_visible"]:
 					dprint("animating up")
 					self.set(iter, levels_visible=True)
@@ -336,12 +380,17 @@ class ManagerDeviceList(DeviceList):
 						
 					signal = fader.connect("animation-finished", on_finished )
 					
+				if rnd(row["rssi"]) != rnd(rssi_perc):
+					self.set(iter, rssi_pb=get_icon("blueman-rssi-%s" % rnd(rssi_perc), 48))
+				
+				if rnd(row["lq"]) != rnd(lq_perc):
+					self.set(iter, lq_pb=get_icon("blueman-lq-%s" % rnd(lq_perc), 48))
+				
+				if rnd(row["tpl"]) != rnd(tpl_perc):
+					self.set(iter, tpl_pb=get_icon("blueman-tpl-%s" % rnd(tpl_perc), 48))
 					
 					
-					
-				self.set(iter,  rssi_pb=get_icon("blueman-rssi-%s" % rnd(rssi_perc), 48),
-						lq_pb=get_icon("blueman-lq-%s" % rnd(lq_perc), 48),
-						tpl_pb=get_icon("blueman-tpl-%s" % rnd(tpl_perc), 48),
+				self.set(iter,
 						rssi=rssi_perc,
 						lq=lq_perc,
 						tpl=tpl_perc,
@@ -351,7 +400,10 @@ class ManagerDeviceList(DeviceList):
 				row = self.get(iter, "levels_visible", "cell_fader")
 				if row["levels_visible"]:
 					dprint("animating down")
-					self.set(iter, levels_visible=False)
+					self.set(iter, levels_visible=False,
+						rssi=-1,
+						lq=-1,
+						tpl=-1)
 					fader = row["cell_fader"]
 					fader.thaw()
 					fader.set_state(1.0)

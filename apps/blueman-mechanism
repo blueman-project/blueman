@@ -11,11 +11,20 @@ import subprocess
 import re
 from signal import SIGKILL
 
+
+
+timeout = 30
+
+#support running uninstalled
+_dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if os.path.exists(os.path.join(_dirname,"ChangeLog")):
+	sys.path.insert(0, _dirname)
+	timeout = 9999
+
 from blueman.main.NetConf import *
 from blueman.Functions import dprint
 from blueman.main.HalManager import HalManager
-
-timeout = 30
+import gtk
 time = 0
 
 dhcp_pids = []
@@ -40,7 +49,6 @@ class conf_service(dbus.service.Object):
 		
 		service = self.bus.get_object('org.freedesktop.PolicyKit', '/')
 		self.polkit = dbus.Interface(service, 'org.freedesktop.PolicyKit')
-
 
 	def confirm_authorization(self, busname, action_id):
 		global time
@@ -123,7 +131,7 @@ class conf_service(dbus.service.Object):
 		dhcp_pids.append(p.pid)
 		
 		def on_timeout():
-			print "Killing dhcpd"
+			dprint("Killing dhcpd")
 			os.kill(p.pid, SIGKILL)
 			return False
 		
@@ -152,7 +160,7 @@ class conf_service(dbus.service.Object):
 
 		def child_closed(pid, cond):
 			global bound_to
-			print "closed ", cond
+			dprint("closed ", cond)
 			gobject.source_remove(timeout)
 			dhcp_pids.remove(pid)
 			ok(net_interface, int(cond), bound_to)
@@ -164,24 +172,23 @@ class conf_service(dbus.service.Object):
 
 
 			
-	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="ssu", out_signature="")	
-	def HalRegisterModemPort(self, rfcomm_device, bd_addr, type):
+	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="ss", out_signature="")	
+	def HalRegisterModemPort(self, rfcomm_device, bd_addr):
 		halmgr = HalManager()
-		print "** Registering modem"
-		halmgr.register(rfcomm_device, bd_addr, type)
-
+		dprint("** Registering modem")
+		halmgr.register(rfcomm_device, bd_addr)
 
 	
 	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="s", out_signature="")
 	def HalUnregisterModemPortAddr(self, address):
 		halmgr = HalManager()
-		print "** Unregistering modem"
+		dprint("** Unregistering modem")
 		halmgr.unregister_addr(address)
 		
 	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="s", out_signature="")
 	def HalUnregisterModemPortDev(self, rfcomm_device):
 		halmgr = HalManager()
-		print "** Unregistering modem"
+		dprint("** Unregistering modem")
 		halmgr.unregister_dev(rfcomm_device)
 		
 	

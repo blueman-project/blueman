@@ -297,39 +297,39 @@ class ManagerDeviceMenu(gtk.Menu):
 							num_ports += 1
 							
 					if num_ports > 0:
-						def on_type_changed(item, type):
-							if item.active:
-								setattr(conns.props, device.Address, type)
-							
-						conns = Config("conn_types")
+#						def on_type_changed(item, type):
+#							if item.active:
+#								setattr(conns.props, device.Address, type)
+#							
+#						conns = Config("conn_types")
 						
 						item = create_menuitem(_("Serial Ports"), get_icon("modem", 16))
 						item.set_submenu(sub)
 						item.show()
 						self.append(item)
 						
-						item = gtk.SeparatorMenuItem()
-						item.show()
-						sub.append(item)
-						
-						gsm_item = gtk.RadioMenuItem(None, "GSM/3G")
-						gsm_item.show()
-						
-						sub.append(gsm_item)
-						
-						cdma_item = gtk.RadioMenuItem(gsm_item, "CDMA")
-						cdma_item.show()
-						
-						sub.append(cdma_item)		
-						
-						t = getattr(conns.props, device.Address)
-						if t == None or t == 0:
-							gsm_item.set_active(True)
-						else:
-							cdma_item.set_active(True)
-						
-						gsm_item.connect("activate", on_type_changed, 0)	
-						cdma_item.connect("activate", on_type_changed, 1)		
+#						item = gtk.SeparatorMenuItem()
+#						item.show()
+#						sub.append(item)
+#						
+#						gsm_item = gtk.RadioMenuItem(None, "GSM/3G")
+#						gsm_item.show()
+#						
+#						sub.append(gsm_item)
+#						
+#						cdma_item = gtk.RadioMenuItem(gsm_item, "CDMA")
+#						cdma_item.show()
+#						
+#						sub.append(cdma_item)		
+#						
+#						t = getattr(conns.props, device.Address)
+#						if t == None or t == 0:
+#							gsm_item.set_active(True)
+#						else:
+#							cdma_item.set_active(True)
+#						
+#						gsm_item.connect("activate", on_type_changed, 0)	
+#						cdma_item.connect("activate", on_type_changed, 1)		
 					
 					rfcomms = rfcomm_list()
 					
@@ -345,7 +345,7 @@ class ManagerDeviceMenu(gtk.Menu):
 								
 								devname = "/dev/rfcomm%s" % dev["id"]
 							
-								item = create_menuitem(_("Disconnect %s") % devname, get_icon("gtk-disconnect", 16))
+								item = create_menuitem(_("Disconnect %s") % "rfcomm%d" % dev["id"], get_icon("gtk-disconnect", 16))
 								self.Signals.Handle("gobject", item, "activate", self.on_disconnect, device, name, devname)
 								sub.append(item)
 								item.show()

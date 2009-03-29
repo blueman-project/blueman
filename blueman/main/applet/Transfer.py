@@ -23,11 +23,11 @@ from blueman.ods.OdsManager import OdsManager
 from blueman.main.Device import Device
 from blueman.Functions import *
 import os
-import pynotify
 import gettext
 from gettext import ngettext
 import gobject
 from blueman.gui.Notification import Notification
+import weakref
 
 _ = gettext.gettext
 
@@ -36,8 +36,12 @@ class Transfer(OdsManager):
 	def __init__(self, applet):
 		OdsManager.__init__(self)
 		self.Applet = applet
+		try:
+			self.status_icon = self.Applet.Plugins.StatusIcon
+		except:
+			self.status_icon = None
+		
 		self.GHandle("server-created", self.on_server_created)
-		self.transfers = {}
 		self.Config = Config("transfer")
 		
 		#check options
@@ -53,8 +57,7 @@ class Transfer(OdsManager):
 		self.allowed_devices = []
 		
 	def __del__(self):
-		print "deleting transfer"
-
+		dprint("deleting Transfer instance")
 		
 	def create_server(self, pattern):
 
@@ -90,158 +93,179 @@ class Transfer(OdsManager):
 	def on_server_created(self, inst, server, pattern):
 		def on_started(server):
 			dprint(pattern, "Started")
+
+		server.GHandle("started", on_started)
+		server.GHandle("session-created", self.on_session_created)			
+		server.pattern = pattern
+		self.start_server(pattern)
+		
+	
+
+	def on_session_created(self, server, session):
+		dprint(server.pattern, "session created")
+		if server.pattern != "opp":
+			return	
+		
+		session.GHandle("transfer-progress", self.transfer_progress)
+		session.GHandle("cancelled", self.transfer_finished, "cancelled")
+		session.GHandle("disconnected", self.transfer_finished, "disconnected")
+		session.GHandle("transfer-completed", self.transfer_finished, "completed")
+		session.GHandle("error-occurred", self.transfer_finished, "error")
+		session.GHandle("transfer-started", self.on_transfer_started)
+				
+		session.transfer = {}
+		session.transfer["notification"] = None
+		session.transfer["silent_transfers"] = 0
+		session.transfer["normal_transfers"] = 0
+		
+		session.server = server
+		
+
+		
+	def on_transfer_started(self, session, filename, local_path, total_bytes):
+		dprint("transfer started", filename)
+		info = session.server.GetServerSessionInfo(session.object_path)
+		trusted = False
+		try:
+			dev = self.Applet.Manager.GetAdapter().FindDevice(info["BluetoothAddress"])
+			dev = Device(dev)
+			name = dev.Alias
+			trusted = dev.Trusted
+		except Exception, e:
+			dprint(e)
+			name = info["BluetoothAddress"]
+	
+		wsession = weakref.proxy(session)
+		wself = weakref.proxy(self)
+		
+		icon = get_icon("blueman", 48)
+
+		session.transfer["filename"] = filename
+		session.transfer["filepath"] = local_path
+		session.transfer["total"] = total_bytes
+		session.transfer["finished"] = False
+		session.transfer["failed"] = False
+		session.transfer["waiting"] = True
+		
+		session.transfer["address"] = info["BluetoothAddress"]
+		session.transfer["name"] = name
+		
+		session.transfer["transferred"] = 0
+		
+		def access_cb(n, action):
+			dprint(action)
+	
+			if action == "closed":
+				if wsession.transfer["waiting"]:
+					wsession.Reject()					
+	
+			if wsession.transfer["waiting"]:
+				if action == "accept":
+					wsession.Accept()
+					wself.allowed_devices.append(wsession.transfer["address"])
+					gobject.timeout_add(60000, wself.allowed_devices.remove, wsession.transfer["address"])
+				else:
+					wsession.Reject()
+				wsession.transfer["waiting"] = False
+		
+		if info["BluetoothAddress"] not in self.allowed_devices and not (self.Config.props.opp_accept and trusted):
 			
-		def on_session_created(server, session):
-			self.transfers[session.object_path] = {}
-			self.transfers[session.object_path]["notification"] = None
-			self.transfers[session.object_path]["silent_transfers"] = 0
-			self.transfers[session.object_path]["normal_transfers"] = 0
+			n = Notification(_("Incoming file"), 
+			_("Incoming file %(0)s from %(1)s") % {"0":"<b>"+os.path.basename(filename)+"</b>", "1":"<b>"+name+"</b>"},
+					30000, [["accept", _("Accept"), "gtk-yes"],["reject", _("Reject"), "gtk-no"]], access_cb, icon, self.status_icon)
 			
-			dprint(pattern, "session created")
-			if pattern != "opp":
-				return
+			if total_bytes > 350000:
+				session.transfer["normal_transfers"] += 1
+			else:
+				session.transfer["silent_transfers"] += 1
+		else:
+			if total_bytes > 350000:
+				n = Notification(_("Receiving file"), 
+				_("Receiving file %(0)s from %(1)s") % {"0":"<b>"+os.path.basename(filename)+"</b>", "1":"<b>"+name+"</b>"},
+						pixbuf=icon, status_icon=self.status_icon)
+
+				session.transfer["normal_transfers"] += 1
+			else:
+				session.transfer["silent_transfers"] += 1
+				n = None
 			
-			def on_transfer_started(session, filename, local_path, total_bytes):
-				dprint("transfer started", filename)
-				info = server.GetServerSessionInfo(session.object_path)
-				trusted = False
-				try:
-					dev = self.Applet.Manager.GetAdapter().FindDevice(info["BluetoothAddress"])
-					dev = Device(dev)
-					name = dev.Alias
-					trusted = dev.Trusted
-				except Exception, e:
-					dprint(e)
-					name = info["BluetoothAddress"]
-			
+			access_cb(n, "accept")
+		
+		session.transfer["notification"] = n
+	
+	def transfer_progress(self, session, bytes_transferred):
+		session.transfer["transferred"] = bytes_transferred
+		
+	def add_open(self, n, name, path):
+		if Notification.actions_supported():
+			print "adding action"
+			def on_open(*args):
+				print "open"
+				spawn(["xdg-open", path], True)
+
+			n.add_action("open", name, on_open)
+			n.show()	
+		
+		
+	def transfer_finished(self, session, *args):
+		type = args[-1]
+		dprint(args)
+		if not session.transfer["finished"]:
+
+			if type != "cancelled" and type != "error":
+				session.transfer["finished"] = True
+
+				if session.transfer["total"] > 350000:	
+					icon = get_icon("blueman", 48)
+					n = Notification(_("File received"), 
+					_("File %(0)s from %(1)s successfully received") % {"0":"<b>"+session.transfer["filename"]+"</b>", "1":"<b>"+session.transfer["name"]+"</b>"},
+							      pixbuf=icon, status_icon=self.status_icon)
+					self.add_open(n, "Open", session.transfer["filepath"])
+			else:
+				session.transfer["failed"] = True
+				session.transfer["finished"] = True
 			
 				icon = get_icon("blueman", 48)
 
-				self.transfers[session.object_path]["filename"] = filename
-				self.transfers[session.object_path]["filepath"] = local_path
-				self.transfers[session.object_path]["total"] = total_bytes
-				self.transfers[session.object_path]["finished"] = False
-				self.transfers[session.object_path]["failed"] = False
-				self.transfers[session.object_path]["waiting"] = True
-				
-				self.transfers[session.object_path]["address"] = info["BluetoothAddress"]
-				self.transfers[session.object_path]["name"] = name
-				
-				self.transfers[session.object_path]["transferred"] = 0
-				
-				if info["BluetoothAddress"] not in self.allowed_devices or (self.Config.props.opp_accept and not trusted):
-					
-					n = Notification(_("Incoming file"), 
-					_("Incoming file %(0)s from %(1)s") % {"0":"<b>"+os.path.basename(filename)+"</b>", "1":"<b>"+name+"</b>"},
-							30000, [["accept", _("Accept"), "gtk-yes"],["reject", _("Reject"), "gtk-no"]], access_cb, icon, self.Applet.status_icon)
-					
-					if total_bytes > 350000:
-						self.transfers[session.object_path]["normal_transfers"] += 1
-					else:
-						self.transfers[session.object_path]["silent_transfers"] += 1
+				session.transfer["notification"] = Notification(_("Transfer failed"), 
+						_("Transfer of file %(0)s failed") % {"0":"<b>"+session.transfer["filename"]+"</b>", "1":"<b>"+session.transfer["name"]+"</b>"},
+						 pixbuf=icon, status_icon=self.status_icon)
+				if session.transfer["total"] > 350000:
+					session.transfer["normal_transfers"] -= 1
 				else:
-					if total_bytes > 350000:
-						n = Notification(_("Receiving file"), 
-						_("Receiving file %(0)s from %(1)s") % {"0":"<b>"+os.path.basename(filename)+"</b>", "1":"<b>"+name+"</b>"},
-								pixbuf=icon, status_icon=self.Applet.status_icon)
-
-						self.transfers[session.object_path]["normal_transfers"] += 1
-					else:
-						self.transfers[session.object_path]["silent_transfers"] += 1
-						n = None
-					
-					access_cb(n, "accept")
+					session.transfer["silent_transfers"] -= 1
 				
-				self.transfers[session.object_path]["notification"] = n
+		if type == "disconnected":
+			icon = get_icon("blueman", 48)
 			
-			def on_cancel(n, action):
-				session.Cancel()
-				dprint("cancel")
+			if session.transfer["normal_transfers"] == 0 and session.transfer["silent_transfers"] == 1:
+					n = Notification(_("File received"), 
+					_("File %(0)s from %(1)s successfully received") % {"0":"<b>"+session.transfer["filename"]+"</b>", "1":"<b>"+session.transfer["name"]+"</b>"},
+							      pixbuf=icon, status_icon=self.status_icon)
+							      
+					self.add_open(n, "Open", session.transfer["filepath"])
+							      					
+			elif session.transfer["normal_transfers"] == 0 and session.transfer["silent_transfers"] > 0:
+				n = Notification(_("Files received"), 
+					     ngettext("Received %d file in the background",
+					    	      "Received %d files in the background", 
+					    	      session.transfer["silent_transfers"]) % session.transfer["silent_transfers"],
+					     pixbuf=icon, status_icon=self.status_icon)						
 				
-			def access_cb(n, action):
-				t = self.transfers[session.object_path]
-				dprint(action)
-				
-				if action == "closed":
-					if t["waiting"]:
-						session.Reject()					
-				
-				if t["waiting"]:
-					if action == "accept":
-						session.Accept()
-						self.allowed_devices.append(t["address"])
-						gobject.timeout_add(60000, self.allowed_devices.remove, t["address"])
-					else:
-						session.Reject()
-					t["waiting"] = False
-
-			def transfer_progress(session, bytes_transferred):
-				self.transfers[session.object_path]["transferred"] = bytes_transferred
-				
-			def transfer_finished(session, *args):
-				type = args[-1]
-				dprint(args)
-				if not self.transfers[session.object_path]["finished"]:
-					t = self.transfers[session.object_path]
-					if type != "cancelled" and type != "error":
-						t["finished"] = True
-
-						if t["total"] > 350000:	
-							icon = get_icon("blueman", 48)
-							self.transfers[session.object_path]["notification"] = Notification(_("File received"), 
-							_("File %(0)s from %(1)s successfully received") % {"0":"<b>"+t["filename"]+"</b>", "1":"<b>"+t["name"]+"</b>"},
-									      pixbuf=icon, status_icon=self.Applet.status_icon)
-						
-					else:
-						t["failed"] = True
-						t["finished"] = True
-					
-						t = self.transfers[session.object_path]
-						icon = get_icon("blueman", 48)
-
-						self.transfers[session.object_path]["notification"] = Notification(_("Transfer failed"), 
-								_("Transfer of file %(0)s failed") % {"0":"<b>"+t["filename"]+"</b>", "1":"<b>"+t["name"]+"</b>"},
-								 pixbuf=icon, status_icon=self.Applet.status_icon)
-						if t["total"] > 350000:
-							t["normal_transfers"] -= 1
-						else:
-							t["silent_transfers"] -= 1
-						
-				if type == "disconnected":
-					t = self.transfers[session.object_path]
-					icon = get_icon("blueman", 48)
-					
-					if t["normal_transfers"] == 0 and t["silent_transfers"] > 0:
-						Notification(_("Files received"), 
-							     ngettext("Received %d file in the background",
-							    	      "Received %d files in the background", 
-							    	      self.transfers[session.object_path]["silent_transfers"]) % self.transfers[session.object_path]["silent_transfers"],
-							     pixbuf=icon, status_icon=self.Applet.status_icon)						
-					
-					elif t["normal_transfers"] > 0 and t["silent_transfers"] > 0:
-						
-						Notification(_("Files received"), 
-							     ngettext("Received %d more file in the background",
-							     "Received %d more files in the background", 
-							     self.transfers[session.object_path]["silent_transfers"]) % self.transfers[session.object_path]["silent_transfers"],
-							     pixbuf=icon, status_icon=self.Applet.status_icon)
-					
-					del self.transfers[session.object_path]
-					
-				
-			session.GHandle("transfer-progress", transfer_progress)
-			session.GHandle("cancelled", transfer_finished, "cancelled")
-			session.GHandle("disconnected", transfer_finished, "disconnected")
-			session.GHandle("transfer-completed", transfer_finished, "completed")
-			session.GHandle("error-occurred", transfer_finished, "error")
+				self.add_open(n, "Open Location", self.Config.props.shared_path)
 			
-			session.GHandle("transfer-started", on_transfer_started)
-		
-		server.GHandle("started", on_started)
-		server.GHandle("session-created", on_session_created)
-		
-		
-		self.start_server(pattern)
-		
+			elif session.transfer["normal_transfers"] > 0 and session.transfer["silent_transfers"] > 0:
+				
+				n = Notification(_("Files received"), 
+					     ngettext("Received %d more file in the background",
+					     "Received %d more files in the background", 
+					     session.transfer["silent_transfers"]) % session.transfer["silent_transfers"],
+					     pixbuf=icon, status_icon=self.status_icon)
+				self.add_open(n, "Open Location", self.Config.props.shared_path)
+				
+			del session.transfer
+			del session.server
+
+
 	def on_server_destroyed(self, inst, server):
 		pass

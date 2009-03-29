@@ -40,7 +40,12 @@ class Transfer(ServicePlugin):
 		self.ignored_keys = []
 		
 		container.pack_start(self.widget)
-		self.setup_transfer()
+		a = AppletService()
+		if "TransferService" in a.QueryPlugins():
+			self.setup_transfer()
+		else:
+			self.widget.props.sensitive = False
+			self.widget.props.tooltip_text = _("Applet's transfer service plugin is disabled")
 		
 		return True
 		

@@ -22,6 +22,7 @@ import dbus.service
 import os.path
 from blueman.Functions import get_icon, dprint
 import gtk
+import gobject
 import blueman.bluez as Bluez
 from blueman.Sdp import *
 import gettext
@@ -39,11 +40,20 @@ class AgentErrorCanceled(dbus.DBusException):
 	def __init__(self):
 		dbus.DBusException.__init__(self, name="org.bluez.Error.Canceled")
 		
-		
-class CommonAgent(Agent):
-	def __init__(self, applet, path):
+class DummyGObjectMeta(dbus.service.InterfaceType, gobject.GObjectMeta):
+    pass 
+    		
+class CommonAgent(gobject.GObject, Agent):
+	__metaclass__ = DummyGObjectMeta
+	__gsignals__ = {
+		'released' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, ()),
+	}	
+	
+	def __init__(self, status_icon, path):
 		Agent.__init__(self, path)
-		self.applet = applet
+		gobject.GObject.__init__(self)
+		
+		self.status_icon = status_icon
 		self.dbus_path = path
 		self.dialog = None
 		self.n = None	
@@ -125,7 +135,7 @@ class CommonAgent(Agent):
 			err(AgentErrorCanceled())
 		
 		if notification:
-			Notification("Bluetooth", notify_message, pixbuf=get_icon("blueman", 48), status_icon=self.applet.status_icon)
+			Notification("Bluetooth", notify_message, pixbuf=get_icon("blueman", 48), status_icon=self.status_icon)
 			#self.applet.status_icon.set_blinking(True)
 
 		self.dialog.show()
@@ -140,7 +150,7 @@ class CommonAgent(Agent):
 		dprint("Release")
 		self.Cancel()
 		self.remove_from_connection()
-		self.applet.Agents.remove(self)
+		self.emit("released")
 	
 	@AgentMethod	
 	def Cancel(self):
@@ -154,13 +164,13 @@ class CommonAgent(Agent):
 		
 class AdapterAgent(CommonAgent):
 	
-	def __init__(self, applet, adapter):
+	def __init__(self, status_icon, adapter):
 		self.adapter = adapter
 		self.n = None
 		
 		adapter_name = os.path.basename(adapter.GetObjectPath())
 		
-		CommonAgent.__init__(self, applet, "/org/blueman/agent/adapter/"+adapter_name )
+		CommonAgent.__init__(self, status_icon, "/org/blueman/agent/adapter/"+adapter_name )
 	
 	@AgentMethod
 	def RequestPinCode(self, device, ok, err):
@@ -196,7 +206,7 @@ class AdapterAgent(CommonAgent):
 		
 		Notification("Bluetooth", notify_message, 0,
 								actions, on_confirm_action,
-								pixbuf=get_icon("blueman", 48), status_icon=self.applet.status_icon)
+								pixbuf=get_icon("blueman", 48), status_icon=self.status_icon)
 		#self.applet.status_icon.set_blinking(True)
 	
 
@@ -228,7 +238,7 @@ class AdapterAgent(CommonAgent):
 		
 		n = Notification("Bluetooth", notify_message, 0,
 								actions, on_auth_action,
-								pixbuf=get_icon("blueman", 48), status_icon=self.applet.status_icon)
+								pixbuf=get_icon("blueman", 48), status_icon=self.status_icon)
 		n._device = device									
 		#self.applet.status_icon.set_blinking(True)
 	
@@ -237,8 +247,8 @@ class AdapterAgent(CommonAgent):
 		pass
 	
 class TempAgent(CommonAgent):
-	def __init__(self, applet, path, time):
-		CommonAgent.__init__(self, applet, path)
+	def __init__(self, status_icon, path, time):
+		CommonAgent.__init__(self, status_icon, path)
 		self.time = time
 		
 	@AgentMethod

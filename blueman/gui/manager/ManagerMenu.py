@@ -66,7 +66,7 @@ class ManagerMenu:
 		item.show()
 		
 		item = create_menuitem(_("Report a Problem"), get_icon("gtk-dialog-warning", 16))
-		item.connect("activate", lambda x: spawn(["xdg-open", "https://bugs.launchpad.net/blueman/1.0/+bugs"], True))
+		item.connect("activate", lambda x: spawn(["xdg-open", "https://bugs.launchpad.net/blueman"], True))
 		help_menu.append(item)
 		item.show()
 		

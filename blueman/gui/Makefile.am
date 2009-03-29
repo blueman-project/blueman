@@ -3,19 +3,7 @@ SUBDIRS = 	\
 	manager
 
 bluemandir = $(pythondir)/blueman/gui
-blueman_PYTHON = 		\
-	Animation.py		\
-	CellRendererPixbufTable.py	\
-	CommonUi.py			\
-	DeviceList.py		\
-	GenericList.py		\
-	PixbufTable.py		\
-	DeviceSelectorWidget.py		\
-	DeviceSelectorList.py		\
-	DeviceSelectorDialog.py		\
-	__init__.py			\
-	GtkAnimation.py			\
-	Notification.py
+blueman_PYTHON = AdapterInfo.py Animation.py CellRendererPixbufTable.py CommonUi.py DeviceList.py DeviceSelectorDialog.py DeviceSelectorList.py DeviceSelectorWidget.py GenericList.py GtkAnimation.py __init__.py Notification.py PixbufTable.py
 
 CLEANFILES =		\
 	$(BUILT_SOURCES)

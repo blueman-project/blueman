@@ -2,19 +2,7 @@ SUBDIRS =	\
 	applet
 
 bluemandir = $(pythondir)/blueman/main
-blueman_PYTHON = 		\
-	AppletService.py	\
-	Config.py		\
-	Device.py		\
-	FakeDevice.py		\
-	HalManager.py		\
-	Mechanism.py		\
-	NetConf.py		\
-	PolicyKitAuth.py	\
-	SignalTracker.py	\
-	SpeedCalc.py		\
-	NMMonitor.py		\
-	__init__.py	
+blueman_PYTHON = AppletService.py Config.py Device.py FakeDevice.py HalManager.py __init__.py KillSwitch.py Mechanism.py NetConf.py PolicyKitAuth.py SignalTracker.py SpeedCalc.py
 
 CLEANFILES =		\
 	$(BUILT_SOURCES)

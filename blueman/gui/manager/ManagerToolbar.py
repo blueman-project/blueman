@@ -130,9 +130,7 @@ class ManagerToolbar:
 				self.b_remove.props.sensitive = True
 				self.b_add.props.sensitive = False
 				
-
-				
-			self.update_send_browse(device)
+		self.update_send_browse(device)
 			
 	def update_send_browse(self, device):
 		self.b_send.props.sensitive = False
@@ -158,9 +156,6 @@ class ManagerToolbar:
 				self.on_device_selected(dev_list, device, iter)
 				self.update_send_browse(device)
 
-
-					
-					
 			elif key == "UUIDs":
 				self.update_send_browse(device)
 				

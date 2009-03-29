@@ -5,6 +5,6 @@ context = actions
 iconsdir = $(themedir)/$(size)/$(context)
 
 icons_DATA =		\
-	blueman-trust.png
+	blueman-trust.png blueman-plugin.png
 
 EXTRA_DIST = $(icons_DATA)

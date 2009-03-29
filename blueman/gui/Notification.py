@@ -179,10 +179,15 @@ class NotificationBubble(pynotify.Notification):
 	
 
 class Notification(object):
+	@staticmethod
+	def actions_supported():
+		return "actions" in pynotify.get_server_caps()
+	
 	def __new__(cls, summary, message, timeout=-1, actions= None, actions_cb=None, pixbuf=None, status_icon=None):
 		if not "actions" in pynotify.get_server_caps():
 			if actions != None:
 				return NotificationDialog(summary, message, timeout, actions, actions_cb, pixbuf, status_icon)
 				
 		return NotificationBubble(summary, message, timeout, actions, actions_cb, pixbuf, status_icon)
-		
+
+

@@ -1,0 +1,114 @@
+# Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
+# Copyright (C) 2008 Tadas Dailyda <tadas at dailyda dot com>
+#
+# Licensed under the GNU General Public License Version 3
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# 
+from blueman.Functions import *
+from blueman.Functions import _
+from blueman.plugins.AppletPlugin import AppletPlugin
+import blueman.bluez as Bluez
+import dbus
+import types
+
+class PowerManager(AppletPlugin):
+	__depends__ = ["StatusIcon", "Menu"]
+	__unloadable__ = False
+	__description__ = _("Controls bluetooth adapter power states")
+	__author__ = "Walmis"
+	
+	def on_load(self, applet):
+		AppletPlugin.add_method(self.on_bluetooth_power_state_changed)
+		
+		self.Applet = applet
+		
+		self.item = create_menuitem(_("Bluetooth Off"), get_icon("gtk-stop", 16))
+		self.item.props.tooltip_text = _("Turn off all adapters")
+		self.item.connect("activate", lambda x: self.on_bluetooth_toggled())
+		
+		#print self.GetBluetoothStatus
+		
+		self.Applet.Plugins.Menu.Register(self, self.item, 0)
+		
+		self.Applet.DbusSvc.add_method(self.SetBluetoothStatus, in_signature="b", out_signature="")
+		self.Applet.DbusSvc.add_method(self.GetBluetoothStatus, in_signature="", out_signature="b")
+		self.BluetoothStatusChanged = self.Applet.DbusSvc.add_signal("BluetoothStatusChanged", signature="b")
+		
+		self.bluetooth_off = False
+		
+	def on_query_status_icon_visibility(self):
+		print self
+
+	def SetBluetoothStatus(self, status):
+		self.bluetooth_off = not status
+	
+	def GetBluetoothStatus(self):
+		return not self.bluetooth_off
+
+		
+	def on_manager_state_changed(self, state):
+		if state:
+			adapters = self.Applet.Manager.ListAdapters()
+			for adapter in adapters:
+				props = adapter.GetProperties()
+				if not props["Powered"]:
+					self.bluetooth_off = True
+	
+	def on_bluetooth_toggled(self):
+		self.bluetooth_off = not self.bluetooth_off
+		
+	def on_status_icon_pixbuf_ready(self, pixbuf):
+		opacity = 255 if self.GetBluetoothStatus() else 100
+		self.Applet.Plugins.StatusIcon.set_from_pixbuf( opacify_pixbuf(pixbuf, opacity) )
+		return True
+		
+	def on_adapter_added(self, path):
+		if self.bluetooth_off:
+			adapter = Bluez.Adapter(path)
+			adapter.SetProperty("Powered", False)		
+		
+	def __setattr__(self, key, value):
+		if key == "bluetooth_off":
+			dprint("bt_off", value)
+
+			if key in self.__dict__:
+				dprint("off", self.__dict__[key], value)
+				if self.__dict__[key] != value:
+					adapters = self.Applet.Manager.ListAdapters()
+					for adapter in adapters:
+						adapter.SetProperty("Powered", not value)
+				else:
+					return
+
+			self.__dict__[key] = value					
+			if value:
+				self.item.get_child().set_markup(_("<b>Turn Bluetooth On</b>"))
+				self.item.set_image(gtk.image_new_from_pixbuf(get_icon("gtk-yes", 16)))
+				self.BluetoothStatusChanged(False)
+				self.Applet.Plugins.Run("on_bluetooth_power_state_changed", False)
+				if self.Applet.Plugins.StatusIcon.pixbuf:
+					self.Applet.Plugins.StatusIcon.set_from_pixbuf( opacify_pixbuf(self.Applet.Plugins.StatusIcon.pixbuf, 100) )
+			else:
+				self.item.get_child().set_markup(_("<b>Turn Bluetooth Off</b>"))
+				self.item.set_image(gtk.image_new_from_pixbuf(get_icon("gtk-stop", 16)))
+				self.BluetoothStatusChanged(True)
+				self.Applet.Plugins.Run("on_bluetooth_power_state_changed", True)
+				if self.Applet.Plugins.StatusIcon.pixbuf:
+					self.Applet.Plugins.StatusIcon.set_from_pixbuf( opacify_pixbuf(self.Applet.Plugins.StatusIcon.pixbuf, 255) )
+		else:				
+			self.__dict__[key] = value
+		
+	def on_bluetooth_power_state_changed(*args):
+		pass
