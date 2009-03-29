@@ -39,7 +39,10 @@ BOLD = lambda(x): "\033[1m"+x+"\033[0m"
 YELLOW = lambda(x): "\x1b[33;01m"+x+"\x1b[39;49;00m"
 
 import fcntl, struct, termios
-in_fg = os.getpgrp() == struct.unpack('h', fcntl.ioctl(0, termios.TIOCGPGRP, "  "))[0]
+try:
+	in_fg = os.getpgrp() == struct.unpack('h', fcntl.ioctl(0, termios.TIOCGPGRP, "  "))[0]
+except:
+	in_fg = False
 
 
 def dprint(*args):
