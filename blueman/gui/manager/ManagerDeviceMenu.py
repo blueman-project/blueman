@@ -271,9 +271,9 @@ class ManagerDeviceMenu(gtk.Menu):
 			
 			uuids = device.UUIDs
 			item = None
+			items = []
 			for name, service in device.Services.iteritems():
 				if name == "serial":
-					
 					
 					sub = gtk.Menu()
 					sub.show()
@@ -306,7 +306,7 @@ class ManagerDeviceMenu(gtk.Menu):
 						item = create_menuitem(_("Serial Ports"), get_icon("modem", 16))
 						item.set_submenu(sub)
 						item.show()
-						self.append(item)
+						items.append((90, item))
 						
 #						item = gtk.SeparatorMenuItem()
 #						item.show()
@@ -350,22 +350,6 @@ class ManagerDeviceMenu(gtk.Menu):
 								sub.append(item)
 								item.show()
 					
-							
-					
-				if name == "input":
-					self.Signals.Handle("bluez", service, self.service_property_changed, "PropertyChanged")
-					sprops = service.GetProperties()
-					if sprops["Connected"]:
-						item = create_menuitem(_("Disconnect Input Service"), get_icon("mouse", 16))
-						self.Signals.Handle("gobject", item, "activate", self.on_disconnect, device, name)
-
-					else:
-						item = create_menuitem(_("Connect Input Service"), get_icon("mouse", 16))
-						self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name)
-
-					item.show()
-					self.append(item)
-					
 				if name == "network":
 					self.Signals.Handle("bluez", service, self.service_property_changed, "PropertyChanged")
 					sprops = service.GetProperties()
@@ -373,7 +357,7 @@ class ManagerDeviceMenu(gtk.Menu):
 					if not sprops["Connected"]:
 						item = create_menuitem(_("Network Access"), get_icon("network", 16))
 						item.show()
-						self.append(item)
+						items.append((80, item))
 						sub = gtk.Menu()
 						sub.show()
 						item.set_submenu(sub)
@@ -402,7 +386,7 @@ class ManagerDeviceMenu(gtk.Menu):
 						item = create_menuitem(_("Disconnect Network"), get_icon("gtk-disconnect", 16))
 						self.Signals.Handle("gobject", item, "activate", self.on_disconnect, device, name)
 						item.show()
-						self.append(item)
+						items.append((80, item))
 						
 						c = Config("network")
 						if c.props.dhcp_client:
@@ -418,8 +402,21 @@ class ManagerDeviceMenu(gtk.Menu):
 							item = create_menuitem(_("Renew IP Address"), get_icon("gtk-refresh", 16))
 							self.Signals.Handle("gobject", item, "activate", renew)
 							item.show()
-							self.append(item)
+							items.append((81, item))
+					
+				if name == "input":
+					self.Signals.Handle("bluez", service, self.service_property_changed, "PropertyChanged")
+					sprops = service.GetProperties()
+					if sprops["Connected"]:
+						item = create_menuitem(_("Disconnect Input Service"), get_icon("mouse", 16))
+						self.Signals.Handle("gobject", item, "activate", self.on_disconnect, device, name)
 
+					else:
+						item = create_menuitem(_("Connect Input Service"), get_icon("mouse", 16))
+						self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name)
+
+					item.show()
+					items.append((0, item))
 					
 				if name == "headset":
 					sprops = service.GetProperties()
@@ -431,7 +428,7 @@ class ManagerDeviceMenu(gtk.Menu):
 						item = create_menuitem(_("Connect Headset Service"), get_icon("blueman-handsfree", 16))
 						self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name)
 					item.show()
-					self.append(item)
+					items.append((10, item))
 					
 
 				if name == "audiosink":
@@ -444,13 +441,19 @@ class ManagerDeviceMenu(gtk.Menu):
 						item = create_menuitem(_("Connect A2DP Service"), get_icon("blueman-headset", 16))
 						self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name)
 					item.show()
-					self.append(item)
+					items.append((20, item))
 					
-			if item:
+			items.sort(lambda a, b: cmp(a[0], b[0]))
+			for priority, item in items:
+				self.append(item)
+			
+			if items != []:
 				item = gtk.SeparatorMenuItem()
 				item.show()
 				self.append(item)
-
+			
+			del items
+			
 			send_item = create_menuitem(_("Send a file..."), get_icon("gtk-copy", 16))
 			send_item.props.sensitive = False
 			self.append(send_item)
