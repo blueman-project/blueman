@@ -16,4 +16,4 @@ _blueman.c: _blueman.pyx
 	$(PYREXC) -o $@ $<
 	
 EXTRA_DIST = _blueman.pyx
-CLEANFILES := _blueman.c
+CLEANFILES = _blueman.c

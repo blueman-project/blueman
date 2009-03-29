@@ -94,7 +94,7 @@ class AppletPlugin(object):
 		
 	@staticmethod
 	def add_method(func):
-		func.__self__.__methods.append(func.__name__)
+		func.im_self.__methods.append(func.__name__)
 		
 		if func.__name__ in AppletPlugin.__dict__:
 			raise MethodAlreadyExists
