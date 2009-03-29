@@ -11,6 +11,7 @@ ui_DATA =				\
 	services-transfer.ui	\
 	services-headset.ui	\
 	send-dialog.ui		\
-	assistant.ui
+	assistant.ui		\
+	applet-plugins-widget.ui
 
 EXTRA_DIST = $(ui_DATA)
