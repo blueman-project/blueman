@@ -89,8 +89,8 @@ class AppletPlugin(object):
 	
 	def _load(self, applet):
 		self.on_load(applet)
-		if applet.Manager:
-			self.on_manager_state_changed(True)
+		self.on_manager_state_changed(applet.Manager != None)
+			
 		
 	@staticmethod
 	def add_method(func):

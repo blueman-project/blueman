@@ -38,7 +38,7 @@ class PowerManager(AppletPlugin):
 		self.item.props.tooltip_text = _("Turn off all adapters")
 		self.item.connect("activate", lambda x: self.on_bluetooth_toggled())
 		
-		#print self.GetBluetoothStatus
+		dbus.SystemBus().add_signal_receiver(self.adapter_property_changed, "PropertyChanged", "org.bluez.Adapter", "org.bluez", path_keyword="path")
 		
 		self.Applet.Plugins.Menu.Register(self, self.item, 0)
 		
@@ -56,6 +56,13 @@ class PowerManager(AppletPlugin):
 	
 	def GetBluetoothStatus(self):
 		return not self.bluetooth_off
+		
+	def adapter_property_changed(self, key, value, path):
+		if key == "Powered":
+			if value and self.bluetooth_off:
+				dprint("adapter powered on while in off state, turning it back off...")
+				adapter = Bluez.Adapter(path)
+				adapter.SetProperty("Powered", False)
 
 		
 	def on_manager_state_changed(self, state):

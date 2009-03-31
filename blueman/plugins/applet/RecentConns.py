@@ -94,17 +94,19 @@ class RecentConns(AppletPlugin, gtk.Menu):
 		
 		self.Item.set_submenu(self)
 		
+		self.deferred = False
+		
+		
 		
 	def change_sensitivity(self, sensitive):
-		dprint(sensitive, self.Applet.Plugins.PowerManager.GetBluetoothStatus())
 		sensitive = sensitive and self.Applet.Manager and self.Applet.Plugins.PowerManager.GetBluetoothStatus() 
 		self.Item.props.sensitive = sensitive
 		
-	def on_manager_state_changed(self, state):
-		self.change_sensitivity(state)
-		
 	def on_bluetooth_power_state_changed(self, state):
-		self.change_sensitivity(state)		
+		self.change_sensitivity(state)
+		if state and self.deferred:
+			self.deferred = False
+			self.on_manager_state_changed(state)	
 		
 		
 	def on_unload(self):
@@ -144,7 +146,13 @@ class RecentConns(AppletPlugin, gtk.Menu):
 				count+=1
 	
 	def on_manager_state_changed(self, state):
+		
 		if state:
+			if not self.Applet.Plugins.PowerManager.GetBluetoothStatus():
+				self.deferred = True
+				self.Item.props.sensitive = False
+				return 
+			
 			self.Item.props.sensitive = True
 			adapters = self.Applet.Manager.ListAdapters()
 			self.Adapters = {}
@@ -172,6 +180,9 @@ class RecentConns(AppletPlugin, gtk.Menu):
 			self.initialize()
 		else:
 			self.Item.props.sensitive = False
+			return
+			
+		self.change_sensitivity(state)
 	
 	def on_device_removed(self, device, item):
 		device.disconnect(item["gsignal"])

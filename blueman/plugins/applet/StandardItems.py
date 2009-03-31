@@ -32,6 +32,8 @@ class StandardItems(AppletPlugin):
 	def on_load(self, applet):
 		self.Applet = applet
 		
+		applet.Plugins.Menu.Register(self, gtk.SeparatorMenuItem(), 21)
+		
 		self.new_dev = create_menuitem(_("Setup new device")+"...", get_icon("gtk-new", 16))
 		self.new_dev.connect("activate", self.on_setup_new)
 		

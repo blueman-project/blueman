@@ -42,8 +42,7 @@ class DiscvManager(AppletPlugin):
 	
 	def on_load(self, applet):
 		self.item = create_menuitem(_("Make Discoverable"), get_icon("gtk-find", 16))
-		applet.Plugins.Menu.Register(self, self.item, 20, True)
-		applet.Plugins.Menu.Register(self, gtk.SeparatorMenuItem(), 21)
+		applet.Plugins.Menu.Register(self, self.item, 20, False)
 
 		self.Applet = applet
 		self.adapter = None
@@ -73,7 +72,8 @@ class DiscvManager(AppletPlugin):
 			self.update_menuitems()
 			self.Applet.Manager.HandleSignal(self.on_default_adapter_changed, "DefaultAdapterChanged")
 		else:
-			self.adapter = None	
+			self.adapter = None
+			self.update_menuitems()
 		
 	def on_update(self):
 		self.time_left -= 1
@@ -139,7 +139,7 @@ class DiscvManager(AppletPlugin):
 			if (not props["Discoverable"] or props["DiscoverableTimeout"] > 0) and props["Powered"]:
 				
 				self.item.props.visible = True
-				self.item.get_child().props.label = _('Make Discoverable')
+				self.item.get_child().props.label = _("Make Discoverable")
 				self.item.props.sensitive = True
 
 			else:
