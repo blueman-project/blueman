@@ -233,36 +233,9 @@ class BluemanApplet(object):
 		
 		self.bus.add_signal_receiver(self.on_adapter_property_changed, "PropertyChanged", "org.bluez.Adapter", "org.bluez", path_keyword="path")
 
-#			
-#		self.load_nap_settings()
-#		
-#		
-		
+
 		gtk.main()
 		
-
-	
-	
-	
-
-
-#	def load_nap_settings(self):
-#		dprint("Loading NAP settings")
-#		def reply():
-#			pass
-#		def err(excp):
-#			lines = str(excp).splitlines()
-#			d = gtk.MessageDialog( None, buttons=gtk.BUTTONS_OK, type=gtk.MESSAGE_ERROR)
-#			d.props.text = _("Failed to apply network settings")
-#			d.props.secondary_text = lines[-1] + "\n\n"+_("You might not be able to connect to the Bluetooth network via this machine")
-#			d.run()
-#			d.destroy()
-#		
-#		m = Mechanism()
-#		m.NetworkSetup("reload", 0, "0", reply_handler=reply, error_handler=err)
-			
-
-
 	
 	def manager_init(self):
 		try:
@@ -270,8 +243,7 @@ class BluemanApplet(object):
 			self.Signals.DisconnectAll()
 			self.Manager = Bluez.Manager("gobject")
 			self.Plugins.Run("on_manager_state_changed", True)
-#			
-#			self.NM = NetworkManager(self)
+
 			self.Signals.Handle("bluez", self.Manager, self.on_adapter_removed, "AdapterRemoved")
 			self.Signals.Handle("bluez", self.Manager, self.on_adapter_added, "AdapterAdded")
 		
@@ -303,8 +275,6 @@ class BluemanApplet(object):
 		def on_activate():
 			dprint("Adapter activated")
 			self.Plugins.Run("on_adapter_added", path)
-
-			#self.NM.update_status() #fixme
 
 		adapter = Bluez.Adapter(path)
 		wait_for_adapter(adapter, on_activate)

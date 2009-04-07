@@ -2,7 +2,6 @@ bluemandir = $(pythondir)/blueman/main/applet
 blueman_PYTHON = 		\
 	BluezAgent.py		\
 	DbusService.py		\
-	NetworkManager.py	\
 	Transfer.py			\
 	__init__.py	
 

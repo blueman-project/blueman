@@ -16,33 +16,60 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
-import dbus
+from blueman.Functions import *
+from blueman.Functions import _
 from blueman.main.Config import Config
 from blueman.bluez.ServiceInterface import ServiceInterface
 from blueman.main.Mechanism import Mechanism
+from blueman.main.SignalTracker import SignalTracker
 from blueman.main.PolicyKitAuth import PolicyKitAuth
-from blueman.Functions import get_icon, dprint
-import gettext
+from blueman.plugins.AppletPlugin import AppletPlugin
+from blueman.gui.Notification import Notification
+import dbus
 
-_ = gettext.gettext
-
-class NetworkManager():
-
-	def __init__(self, applet):
+class Networking(AppletPlugin):
+	__icon__ = "network"
+	__description__ = _("Provides bluetooth networking support")
+	__author__ = "Walmis"
+	def on_load(self, applet):
 		self.Applet = applet
+		self.Signals = SignalTracker()
 		
 		self.Config = Config("network")
-		self.Applet.Signals.Handle("gobject", self.Config, "property-changed", self.on_config_changed)
+		self.Signals.Handle("gobject", self.Config, "property-changed", self.on_config_changed)
 		
-		self.Applet.Signals.Handle("dbus", self.Applet, 
+		self.Signals.Handle("dbus", dbus.SystemBus(), 
 						self.on_network_prop_changed, 
 						"PropertyChanged",
 						"org.bluez.Network",
 						path_keyword="path")
 						
 		self.update_status()
-
+		
 		self.dhcp_notif = None
+		
+		self.load_nap_settings()
+		
+	def load_nap_settings(self):
+		dprint("Loading NAP settings")
+		def reply():
+			pass
+		def err(excp):
+			lines = str(excp).splitlines()
+			d = gtk.MessageDialog( None, buttons=gtk.BUTTONS_OK, type=gtk.MESSAGE_ERROR)
+			d.props.text = _("Failed to apply network settings")
+			d.props.secondary_text = lines[-1] + "\n\n"+_("You might not be able to connect to the Bluetooth network via this machine")
+			d.run()
+			d.destroy()
+		
+		m = Mechanism()
+		m.NetworkSetup("reload", 0, "0", reply_handler=reply, error_handler=err)
+		
+	def on_unload(self):
+		self.Signals.DisconnectAll()
+		
+	def on_adapter_added(self, path):
+		self.update_status()
 		
 	def update_status(self):
 		self.set_nap(self.Config.props.nap_enable or False)
