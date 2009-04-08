@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-02-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-04-08 09:48+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -43,9 +43,8 @@ msgid "Bluetooth Adapters"
 msgstr "蓝牙适配器"
 
 #: ../data/ui/applet-passkey.ui.h:1
-#, fuzzy
 msgid "Pairing request"
-msgstr "配对请求:"
+msgstr ""
 
 #: ../data/ui/applet-passkey.ui.h:2
 msgid "Pairing request for device:"
@@ -252,7 +251,8 @@ msgid "<b>To:</b>"
 msgstr "<b>收件人：</b>"
 
 #: ../data/ui/send-dialog.ui.h:3
-msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
+msgid ""
+"<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr "<span weight=\"bold\" size=\"large\">经由蓝牙发送文件</span>"
 
 #: ../data/ui/send-dialog.ui.h:4
@@ -321,24 +321,20 @@ msgid "Command to execute when answer button is pressed:"
 msgstr "按下应答按钮时执行命令:"
 
 #: ../data/ui/applet-plugins-widget.ui.h:1
-#, fuzzy
 msgid "<b>Author:</b>"
-msgstr "<b>收件人：</b>"
+msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:2
-#, fuzzy
 msgid "<b>Depends on:</b>"
-msgstr "<b>收件人：</b>"
+msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:3
-#, fuzzy
 msgid "<b>Plugin description:</b>"
-msgstr "<b>客户端设置</b>"
+msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:4
-#, fuzzy
 msgid "Not specified"
-msgstr "未指定"
+msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:5
 msgid "Unknown"
@@ -430,9 +426,8 @@ msgid ""
 msgstr ""
 
 #: ../blueman/plugins/applet/Headset.py:27
-#, fuzzy
 msgid "Runs a command when answer button is pressed on a headset"
-msgstr "按下应答按钮时执行命令:"
+msgstr ""
 
 #: ../blueman/plugins/applet/AuthAgent.py:29
 msgid "Provides passkey, authentication services for BlueZ daemon"
@@ -521,9 +516,8 @@ msgid ""
 msgstr ""
 
 #: ../blueman/plugins/applet/ModemManager.py:35
-#, fuzzy
 msgid "Registers rfcomm ports as modem devices"
-msgstr "从远程设备接收文件"
+msgstr ""
 
 #: ../blueman/plugins/applet/DiscvManager.py:32
 msgid ""
@@ -532,9 +526,8 @@ msgid ""
 msgstr ""
 
 #: ../blueman/plugins/applet/DiscvManager.py:37
-#, fuzzy
 msgid "Discoverable timeout"
-msgstr "可发现... %ss"
+msgstr ""
 
 #: ../blueman/plugins/applet/DiscvManager.py:38
 msgid "Amount of time in seconds discoverable mode will last"
@@ -546,9 +539,8 @@ msgid "Make Discoverable"
 msgstr "使可发现"
 
 #: ../blueman/plugins/applet/DiscvManager.py:53
-#, fuzzy
 msgid "Make the default adapter temporarily visible"
-msgstr "让默认适配器可见一分钟"
+msgstr ""
 
 #: ../blueman/plugins/applet/DiscvManager.py:80
 #, python-format
@@ -705,9 +697,8 @@ msgid "Blueman is a GTK based Bluetooth manager"
 msgstr "Blueman 是基于 GTK 的蓝牙管理器"
 
 #: ../blueman/gui/AdapterInfo.py:27
-#, fuzzy
 msgid "Adapter Properties"
-msgstr "选择适配器"
+msgstr ""
 
 #: ../blueman/gui/applet/PluginDialog.py:98
 #: ../blueman/gui/applet/PluginDialog.py:99
@@ -777,7 +768,7 @@ msgstr "串口服务"
 #. def on_type_changed(item, type):
 #. if item.active:
 #. setattr(conns.props, device.Address, type)
-#.
+#. 
 #. conns = Config("conn_types")
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:306
 msgid "Serial Ports"
@@ -984,9 +975,8 @@ msgid "Dialup Networking (DUN)"
 msgstr "拨号网络 (DUN)"
 
 #: ../blueman/main/applet/Transfer.py:173
-#, fuzzy
 msgid "Incoming file"
-msgstr "文件传入"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:174
 #, python-format
@@ -1003,20 +993,18 @@ msgid "Reject"
 msgstr "拒绝"
 
 #: ../blueman/main/applet/Transfer.py:183
-#, fuzzy
 msgid "Receiving file"
-msgstr "文件接收中"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:184
-#, fuzzy, python-format
+#, python-format
 msgid "Receiving file %(0)s from %(1)s"
-msgstr "从 %(1)s 传入文件 %(0)s"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:220
 #: ../blueman/main/applet/Transfer.py:242
-#, fuzzy
 msgid "File received"
-msgstr "文件已保存"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:221
 #: ../blueman/main/applet/Transfer.py:243
@@ -1025,9 +1013,8 @@ msgid "File %(0)s from %(1)s successfully received"
 msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:230
-#, fuzzy
 msgid "Transfer failed"
-msgstr "传输"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:231
 #, python-format
@@ -1036,21 +1023,22 @@ msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:249
 #: ../blueman/main/applet/Transfer.py:259
-#, fuzzy
 msgid "Files received"
-msgstr "文件已保存"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:250
 #, python-format
 msgid "Received %d file in the background"
 msgid_plural "Received %d files in the background"
 msgstr[0] ""
+msgstr[1] ""
 
 #: ../blueman/main/applet/Transfer.py:260
 #, python-format
 msgid "Received %d more file in the background"
 msgid_plural "Received %d more files in the background"
 msgstr[0] ""
+msgstr[1] ""
 
 #: ../blueman/main/applet/BluezAgent.py:126
 #, python-format
@@ -1108,14 +1096,13 @@ msgid "Always accept"
 msgstr "总是同意"
 
 #: ../blueman/main/applet/BluezAgent.py:281
-#, fuzzy
 msgid "Confirm value"
-msgstr "确认"
+msgstr ""
 
 #: ../blueman/main/applet/BluezAgent.py:282
-#, fuzzy, python-format
+#, python-format
 msgid "Pairing with: %s"
-msgstr "%s 配对请求"
+msgstr ""
 
 #: ../blueman/main/applet/NetworkManager.py:73
 #: ../blueman/main/applet/NetworkManager.py:76
@@ -1209,9 +1196,8 @@ msgid "Bonding"
 msgstr "尝试配对"
 
 #: ../apps/blueman-adapters:57
-#, fuzzy
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
-msgstr "设备管理器需要开启蓝牙才能工作"
+msgstr ""
 
 #: ../apps/blueman-adapters:145
 msgid "Always"
@@ -1265,9 +1251,8 @@ msgid "Send files to this device"
 msgstr "发送文件到此设备"
 
 #: ../apps/blueman-sendto:305
-#, fuzzy
 msgid "Bluetooth needs to be turned on for file sending to work"
-msgstr "设备管理器需要开启蓝牙才能工作"
+msgstr ""
 
 #: ../apps/blueman-sendto:359
 msgid "Select files to send"
@@ -1278,9 +1263,8 @@ msgid "Start configuration assistant for this device"
 msgstr "为此设备启动配置助手"
 
 #: ../apps/blueman-assistant:67
-#, fuzzy
 msgid "Bluetooth needs to be turned on for the bluetooth assistant to work"
-msgstr "设备管理器需要开启蓝牙才能工作"
+msgstr ""
 
 #: ../apps/blueman-assistant:81
 msgid "Bluetooth Assistant"
@@ -1341,35 +1325,6 @@ msgstr "启动 \"%s\" 失败"
 #: ../apps/blueman-browse:77
 msgid "You can enter an alternate browser in service settings"
 msgstr "您可以在服务设置中输入另一个浏览器"
-
-#~ msgid "Bluetooth"
-#~ msgstr "蓝牙"
-
-#~ msgid ""
-#~ "You might not be able to connect to the Bluetooth network via this machine"
-#~ msgstr "您可能无法由此机器连接到蓝牙网络"
-
-#~ msgid "Authentication request"
-#~ msgstr "身份验证请求"
-
-#~ msgid "Cancel"
-#~ msgstr "取消"
-
-#~ msgid "Would you like to open %s?"
-#~ msgstr "是否打开 %s?"
-
-#~ msgid "Open"
-#~ msgstr "打开"
-
-#~ msgid ""
-#~ "Receiving File %(0)s\n"
-#~ "%(1).2f%(2)s out of %(3).2f%(4)s (%(5).2f%(6)s/s)"
-#~ msgstr ""
-#~ "文件 %(0)s 接受中\n"
-#~ "%(1).2f%(2)s, 共 %(3).2f%(4)s (%(5).2f%(6)s/s)"
-
-#~ msgid "Bluetooth device"
-#~ msgstr "蓝牙设备"
 
 #~ msgid "Services"
 #~ msgstr "服务"
@@ -1449,6 +1404,9 @@ msgstr "您可以在服务设置中输入另一个浏览器"
 #~ msgid "Created bonding with %s"
 #~ msgstr "已和 %s 完成绑定"
 
+#~ msgid "Bluetooth device"
+#~ msgstr "蓝牙设备"
+
 #~ msgid "Removed bonding with %s"
 #~ msgstr "与 %s 的绑定已移除"
 
@@ -1494,6 +1452,9 @@ msgstr "您可以在服务设置中输入另一个浏览器"
 #~ msgid "Bluetooth Applet"
 #~ msgstr "蓝牙小程序"
 
+#~ msgid "Authentication request"
+#~ msgstr "身份验证请求"
+
 #~ msgid "Confirmation request"
 #~ msgstr "请求确认"
 
@@ -1538,6 +1499,9 @@ msgstr "您可以在服务设置中输入另一个浏览器"
 
 #~ msgid "General"
 #~ msgstr "通用"
+
+#~ msgid "Receive files from remote devices"
+#~ msgstr "从远程设备接收文件"
 
 #~ msgid "Share files from public folder"
 #~ msgstr "从公共文件夹共享文件"
@@ -1646,8 +1610,7 @@ msgstr "您可以在服务设置中输入另一个浏览器"
 #~ msgstr "从服务中删除设备条目？"
 
 #~ msgid ""
-#~ "If you delete the device entry, you can't use it with this service "
-#~ "anymore."
+#~ "If you delete the device entry, you can't use it with this service anymore."
 #~ msgstr "如果删除了设备条目，您就不能够在这个服务中使用它了。"
 
 #~ msgid "Connecting to device"
@@ -1677,6 +1640,9 @@ msgstr "您可以在服务设置中输入另一个浏览器"
 #~ msgid "Network devices"
 #~ msgstr "网络设备"
 
+#~ msgid "Bluetooth"
+#~ msgstr "蓝牙"
+
 #~ msgid "Configure Bluetooth settings"
 #~ msgstr "配置蓝牙设置"
 
@@ -1692,16 +1658,16 @@ msgstr "您可以在服务设置中输入另一个浏览器"
 #~ msgstr "如果存在 hal ,应当被用作自动首选项设置"
 
 #~ msgid ""
-#~ "If HAL should be used to automatically adjust settings like class of "
-#~ "device etc."
+#~ "If HAL should be used to automatically adjust settings like class of device "
+#~ "etc."
 #~ msgstr "如果 hal 存在，应当被用作自动调节设置例如设备的类别"
 
 #~ msgid "If authorization requests should be automatically granted"
 #~ msgstr "认证请求是否被自动批准"
 
 #~ msgid ""
-#~ "If authorization requests should be granted all the time without asking "
-#~ "the user for confirmation."
+#~ "If authorization requests should be granted all the time without asking the "
+#~ "user for confirmation."
 #~ msgstr "认证请求是否永远不需要确认就被自动批准"
 
 #~ msgid "If receiving of remote files via Bluetooth is enabled"
@@ -1951,8 +1917,8 @@ msgstr "您可以在服务设置中输入另一个浏览器"
 #~ msgstr "停止探测"
 
 #~ msgid ""
-#~ "The device wizard will walk you through the process of configuring "
-#~ "Bluetooth enabled devices for use with this computer."
+#~ "The device wizard will walk you through the process of configuring Bluetooth "
+#~ "enabled devices for use with this computer."
 #~ msgstr "本设备安装向导将帮助您在这台电脑上配置带有蓝牙功能的相关设备。"
 
 #~ msgid ""

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-03-29 18:14+0300\n"
 "PO-Revision-Date: 2008-12-26 19:00+0000\n"
 "Last-Translator: Karl Skewes <Unknown>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-02-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-04-08 09:48+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -43,9 +43,8 @@ msgid "Bluetooth Adapters"
 msgstr ""
 
 #: ../data/ui/applet-passkey.ui.h:1
-#, fuzzy
 msgid "Pairing request"
-msgstr "ペアリング要求:"
+msgstr ""
 
 #: ../data/ui/applet-passkey.ui.h:2
 msgid "Pairing request for device:"
@@ -250,7 +249,8 @@ msgid "<b>To:</b>"
 msgstr "<b>宛先:</b>"
 
 #: ../data/ui/send-dialog.ui.h:3
-msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
+msgid ""
+"<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr "<span weight=\"bold\" size=\"large\">Bluetoothでファイルを送信</span>"
 
 #: ../data/ui/send-dialog.ui.h:4
@@ -315,26 +315,22 @@ msgid "Command to execute when answer button is pressed:"
 msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:1
-#, fuzzy
 msgid "<b>Author:</b>"
-msgstr "<b>宛先:</b>"
+msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:2
-#, fuzzy
 msgid "<b>Depends on:</b>"
-msgstr "<b>宛先:</b>"
+msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:3
-#, fuzzy
 msgid "<b>Plugin description:</b>"
-msgstr "<b>クライアント 設定</b>"
+msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:4
 msgid "Not specified"
 msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:5
-#, fuzzy
 msgid "Unknown"
 msgstr "不明"
 
@@ -524,9 +520,8 @@ msgid ""
 msgstr ""
 
 #: ../blueman/plugins/applet/DiscvManager.py:37
-#, fuzzy
 msgid "Discoverable timeout"
-msgstr "検出可能... %ss"
+msgstr ""
 
 #: ../blueman/plugins/applet/DiscvManager.py:38
 msgid "Amount of time in seconds discoverable mode will last"
@@ -538,9 +533,8 @@ msgid "Make Discoverable"
 msgstr "検出可能に変更"
 
 #: ../blueman/plugins/applet/DiscvManager.py:53
-#, fuzzy
 msgid "Make the default adapter temporarily visible"
-msgstr "デフォルトアダプターを１分間公開"
+msgstr ""
 
 #: ../blueman/plugins/applet/DiscvManager.py:80
 #, python-format
@@ -669,15 +663,16 @@ msgstr "デバイスを選択"
 #: ../blueman/gui/CommonUi.py:47
 msgid "translator-credits"
 msgstr ""
+"Launchpad Contributions:\n"
+"  Karl Skewes https://launchpad.net/~karl-garagedori"
 
 #: ../blueman/gui/CommonUi.py:50
 msgid "Blueman is a GTK based Bluetooth manager"
 msgstr "BluemanとはGTKのBluetoothマネージャーです"
 
 #: ../blueman/gui/AdapterInfo.py:27
-#, fuzzy
 msgid "Adapter Properties"
-msgstr "アダプター"
+msgstr ""
 
 #: ../blueman/gui/applet/PluginDialog.py:98
 #: ../blueman/gui/applet/PluginDialog.py:99
@@ -747,7 +742,7 @@ msgstr "シリアルサービス"
 #. def on_type_changed(item, type):
 #. if item.active:
 #. setattr(conns.props, device.Address, type)
-#.
+#. 
 #. conns = Config("conn_types")
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:306
 msgid "Serial Ports"
@@ -950,9 +945,8 @@ msgid "Dialup Networking (DUN)"
 msgstr "ダイアルアップネットワーキング （DUN)"
 
 #: ../blueman/main/applet/Transfer.py:173
-#, fuzzy
 msgid "Incoming file"
-msgstr "受信ファイル"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:174
 #, python-format
@@ -969,20 +963,18 @@ msgid "Reject"
 msgstr "拒否する"
 
 #: ../blueman/main/applet/Transfer.py:183
-#, fuzzy
 msgid "Receiving file"
-msgstr "受信ファイル"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:184
-#, fuzzy, python-format
+#, python-format
 msgid "Receiving file %(0)s from %(1)s"
-msgstr "%(1)s より受信ファイル %(0)s"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:220
 #: ../blueman/main/applet/Transfer.py:242
-#, fuzzy
 msgid "File received"
-msgstr "ファイルが保存されました"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:221
 #: ../blueman/main/applet/Transfer.py:243
@@ -991,9 +983,8 @@ msgid "File %(0)s from %(1)s successfully received"
 msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:230
-#, fuzzy
 msgid "Transfer failed"
-msgstr "転送"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:231
 #, python-format
@@ -1002,21 +993,22 @@ msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:249
 #: ../blueman/main/applet/Transfer.py:259
-#, fuzzy
 msgid "Files received"
-msgstr "ファイルが保存されました"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:250
 #, python-format
 msgid "Received %d file in the background"
 msgid_plural "Received %d files in the background"
 msgstr[0] ""
+msgstr[1] ""
 
 #: ../blueman/main/applet/Transfer.py:260
 #, python-format
 msgid "Received %d more file in the background"
 msgid_plural "Received %d more files in the background"
 msgstr[0] ""
+msgstr[1] ""
 
 #: ../blueman/main/applet/BluezAgent.py:126
 #, python-format
@@ -1074,9 +1066,8 @@ msgid "Always accept"
 msgstr "常に許可"
 
 #: ../blueman/main/applet/BluezAgent.py:281
-#, fuzzy
 msgid "Confirm value"
-msgstr "確認"
+msgstr ""
 
 #: ../blueman/main/applet/BluezAgent.py:282
 #, python-format
@@ -1302,29 +1293,3 @@ msgstr ""
 #: ../apps/blueman-browse:77
 msgid "You can enter an alternate browser in service settings"
 msgstr ""
-
-#, fuzzy
-#~ msgid "Bluetooth"
-#~ msgstr "Bluetoothが切れています"
-
-#~ msgid "Authentication request"
-#~ msgstr "認証要求"
-
-#~ msgid "Cancel"
-#~ msgstr "キャンセル"
-
-#~ msgid "Would you like to open %s?"
-#~ msgstr "%s を開きますか？"
-
-#~ msgid "Open"
-#~ msgstr "開く"
-
-#~ msgid ""
-#~ "Receiving File %(0)s\n"
-#~ "%(1).2f%(2)s out of %(3).2f%(4)s (%(5).2f%(6)s/s)"
-#~ msgstr ""
-#~ "受信ファイル %(0)s\n"
-#~ "%(1).2f%(2)s / %(3).2f%(4)s (%(5).2f%(6)s/s)"
-
-#~ msgid "Bluetooth device"
-#~ msgstr "Bluetooth デバイス"

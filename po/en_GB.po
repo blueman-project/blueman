@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-03-29 18:14+0300\n"
 "PO-Revision-Date: 2009-01-25 13:12+0000\n"
 "Last-Translator: Jen Ockwell <jenfraggleubuntu@googlemail.com>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-02-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-04-08 09:48+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -43,9 +43,8 @@ msgid "Bluetooth Adapters"
 msgstr ""
 
 #: ../data/ui/applet-passkey.ui.h:1
-#, fuzzy
 msgid "Pairing request"
-msgstr "Pairing request for:"
+msgstr ""
 
 #: ../data/ui/applet-passkey.ui.h:2
 msgid "Pairing request for device:"
@@ -250,7 +249,8 @@ msgid "<b>To:</b>"
 msgstr "<b>To:</b>"
 
 #: ../data/ui/send-dialog.ui.h:3
-msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
+msgid ""
+"<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr ""
 "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 
@@ -316,28 +316,24 @@ msgid "Command to execute when answer button is pressed:"
 msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:1
-#, fuzzy
 msgid "<b>Author:</b>"
-msgstr "<b>To:</b>"
+msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:2
-#, fuzzy
 msgid "<b>Depends on:</b>"
-msgstr "<b>To:</b>"
+msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:3
-#, fuzzy
 msgid "<b>Plugin description:</b>"
-msgstr "<b>Client Settings</b>"
+msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:4
 msgid "Not specified"
 msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:5
-#, fuzzy
 msgid "Unknown"
-msgstr "unknown"
+msgstr ""
 
 #: ../blueman/Functions.py:72
 msgid "Bluetooth Turned Off"
@@ -525,9 +521,8 @@ msgid ""
 msgstr ""
 
 #: ../blueman/plugins/applet/DiscvManager.py:37
-#, fuzzy
 msgid "Discoverable timeout"
-msgstr "Discoverable... %ss"
+msgstr ""
 
 #: ../blueman/plugins/applet/DiscvManager.py:38
 msgid "Amount of time in seconds discoverable mode will last"
@@ -539,9 +534,8 @@ msgid "Make Discoverable"
 msgstr "Make Discoverable"
 
 #: ../blueman/plugins/applet/DiscvManager.py:53
-#, fuzzy
 msgid "Make the default adapter temporarily visible"
-msgstr "Make the default adapter visible for 1 minute"
+msgstr ""
 
 #: ../blueman/plugins/applet/DiscvManager.py:80
 #, python-format
@@ -670,15 +664,18 @@ msgstr "Select Device"
 #: ../blueman/gui/CommonUi.py:47
 msgid "translator-credits"
 msgstr ""
+"Launchpad Contributions:\n"
+"  Jen Ockwell https://launchpad.net/~rj-ockwell\n"
+"  John Drinkwater https://launchpad.net/~johndrinkwater\n"
+"  Tristan Brindle https://launchpad.net/~tristan-brindle"
 
 #: ../blueman/gui/CommonUi.py:50
 msgid "Blueman is a GTK based Bluetooth manager"
 msgstr "Blueman is a GTK based Bluetooth manager"
 
 #: ../blueman/gui/AdapterInfo.py:27
-#, fuzzy
 msgid "Adapter Properties"
-msgstr "Adaptors"
+msgstr ""
 
 #: ../blueman/gui/applet/PluginDialog.py:98
 #: ../blueman/gui/applet/PluginDialog.py:99
@@ -748,7 +745,7 @@ msgstr "Serial Service"
 #. def on_type_changed(item, type):
 #. if item.active:
 #. setattr(conns.props, device.Address, type)
-#.
+#. 
 #. conns = Config("conn_types")
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:306
 msgid "Serial Ports"
@@ -955,9 +952,8 @@ msgid "Dialup Networking (DUN)"
 msgstr "Dialup Networking (DUN)"
 
 #: ../blueman/main/applet/Transfer.py:173
-#, fuzzy
 msgid "Incoming file"
-msgstr "Incoming File"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:174
 #, python-format
@@ -974,20 +970,18 @@ msgid "Reject"
 msgstr "Reject"
 
 #: ../blueman/main/applet/Transfer.py:183
-#, fuzzy
 msgid "Receiving file"
-msgstr "Receiving File"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:184
-#, fuzzy, python-format
+#, python-format
 msgid "Receiving file %(0)s from %(1)s"
-msgstr "Incoming file %(0)s from %(1)s"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:220
 #: ../blueman/main/applet/Transfer.py:242
-#, fuzzy
 msgid "File received"
-msgstr "File Saved"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:221
 #: ../blueman/main/applet/Transfer.py:243
@@ -996,9 +990,8 @@ msgid "File %(0)s from %(1)s successfully received"
 msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:230
-#, fuzzy
 msgid "Transfer failed"
-msgstr "Transfer"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:231
 #, python-format
@@ -1007,9 +1000,8 @@ msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:249
 #: ../blueman/main/applet/Transfer.py:259
-#, fuzzy
 msgid "Files received"
-msgstr "File Saved"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:250
 #, python-format
@@ -1081,14 +1073,13 @@ msgid "Always accept"
 msgstr "Always accept"
 
 #: ../blueman/main/applet/BluezAgent.py:281
-#, fuzzy
 msgid "Confirm value"
-msgstr "Confirm"
+msgstr ""
 
 #: ../blueman/main/applet/BluezAgent.py:282
-#, fuzzy, python-format
+#, python-format
 msgid "Pairing with: %s"
-msgstr "Pairing request for %s"
+msgstr ""
 
 #: ../blueman/main/applet/NetworkManager.py:73
 #: ../blueman/main/applet/NetworkManager.py:76
@@ -1182,9 +1173,8 @@ msgid "Bonding"
 msgstr "Bonding"
 
 #: ../apps/blueman-adapters:57
-#, fuzzy
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
-msgstr "Bluetooth needs to be turned on for the device manager to function"
+msgstr ""
 
 #: ../apps/blueman-adapters:145
 msgid "Always"
@@ -1241,9 +1231,8 @@ msgid "Send files to this device"
 msgstr "Send files to this device"
 
 #: ../apps/blueman-sendto:305
-#, fuzzy
 msgid "Bluetooth needs to be turned on for file sending to work"
-msgstr "Bluetooth needs to be turned on for the device manager to function"
+msgstr ""
 
 #: ../apps/blueman-sendto:359
 msgid "Select files to send"
@@ -1254,9 +1243,8 @@ msgid "Start configuration assistant for this device"
 msgstr ""
 
 #: ../apps/blueman-assistant:67
-#, fuzzy
 msgid "Bluetooth needs to be turned on for the bluetooth assistant to work"
-msgstr "Bluetooth needs to be turned on for the device manager to function"
+msgstr ""
 
 #: ../apps/blueman-assistant:81
 msgid "Bluetooth Assistant"
@@ -1314,34 +1302,3 @@ msgstr ""
 #: ../apps/blueman-browse:77
 msgid "You can enter an alternate browser in service settings"
 msgstr ""
-
-#, fuzzy
-#~ msgid "Bluetooth"
-#~ msgstr "Bluetooth Off"
-
-#~ msgid ""
-#~ "You might not be able to connect to the Bluetooth network via this machine"
-#~ msgstr ""
-#~ "You might not be able to connect to the Bluetooth network via this machine"
-
-#~ msgid "Authentication request"
-#~ msgstr "Authentication request"
-
-#~ msgid "Cancel"
-#~ msgstr "Cancel"
-
-#~ msgid "Would you like to open %s?"
-#~ msgstr "Would you like to open %s?"
-
-#~ msgid "Open"
-#~ msgstr "Open"
-
-#~ msgid ""
-#~ "Receiving File %(0)s\n"
-#~ "%(1).2f%(2)s out of %(3).2f%(4)s (%(5).2f%(6)s/s)"
-#~ msgstr ""
-#~ "Receiving File %(0)s\n"
-#~ "%(1).2f%(2)s out of %(3).2f%(4)s (%(5).2f%(6)s/s)"
-
-#~ msgid "Bluetooth device"
-#~ msgstr "Bluetooth device"

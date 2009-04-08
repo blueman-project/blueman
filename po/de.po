@@ -6,16 +6,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-03-29 18:14+0300\n"
-"PO-Revision-Date: 2009-02-24 19:33+0000\n"
-"Last-Translator: Steve Markgraf <steve@steve-m.de>\n"
+"PO-Revision-Date: 2009-04-08 09:42+0000\n"
+"Last-Translator: Valmantas Palikša <walmis@balticum-tv.lt>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-02-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-04-08 09:48+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -43,9 +43,8 @@ msgid "Bluetooth Adapters"
 msgstr "Bluetooth-Adapter"
 
 #: ../data/ui/applet-passkey.ui.h:1
-#, fuzzy
 msgid "Pairing request"
-msgstr "Bekanntmachungsanfrage für:"
+msgstr "Kopplungsanfrage"
 
 #: ../data/ui/applet-passkey.ui.h:2
 msgid "Pairing request for device:"
@@ -252,7 +251,8 @@ msgid "<b>To:</b>"
 msgstr "<b>Nach:</b>"
 
 #: ../data/ui/send-dialog.ui.h:3
-msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
+msgid ""
+"<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr ""
 "<span weight=\"bold\" size=\"large\">Dateien via Bluetooth senden</span>"
 
@@ -323,26 +323,22 @@ msgid "Command to execute when answer button is pressed:"
 msgstr "Auszuführender Befehl, wenn Rufannahmeknopf gedrückt wird:"
 
 #: ../data/ui/applet-plugins-widget.ui.h:1
-#, fuzzy
 msgid "<b>Author:</b>"
-msgstr "<b>Nach:</b>"
+msgstr "<b>Autor:</b>"
 
 #: ../data/ui/applet-plugins-widget.ui.h:2
-#, fuzzy
 msgid "<b>Depends on:</b>"
-msgstr "<b>Nach:</b>"
+msgstr "<b>Ist Abhängig von:</b>"
 
 #: ../data/ui/applet-plugins-widget.ui.h:3
-#, fuzzy
 msgid "<b>Plugin description:</b>"
-msgstr "<b>Client-Einstellungen</b>"
+msgstr "<b>Plugin Beschreibung:</b>"
 
 #: ../data/ui/applet-plugins-widget.ui.h:4
 msgid "Not specified"
-msgstr ""
+msgstr "Nicht angegeben"
 
 #: ../data/ui/applet-plugins-widget.ui.h:5
-#, fuzzy
 msgid "Unknown"
 msgstr "Unbekannt"
 
@@ -358,15 +354,17 @@ msgstr "Bluetooth einschalten"
 msgid ""
 "Provides a menu item that contains last used connections for quick access"
 msgstr ""
+"Erstellt einen Menüpunkt, der die zuletzt verwendeten Verbindungen als "
+"Schnellzugriff bereithält"
 
 #. the maximum number of items RecentConns menu will display
 #: ../blueman/plugins/applet/RecentConns.py:78
 msgid "Maximum items"
-msgstr ""
+msgstr "Maximalanzahl"
 
 #: ../blueman/plugins/applet/RecentConns.py:79
 msgid "The maximum number of items RecentConns menu will display"
-msgstr ""
+msgstr "Maximalanzahl der angezeigten Schnellzugriffe"
 
 #: ../blueman/plugins/applet/RecentConns.py:91
 msgid "Recent Connections"
@@ -406,23 +404,27 @@ msgstr "%(service)s auf %(device)s"
 
 #: ../blueman/plugins/applet/RecentConns.py:303
 msgid "Adapter for this connection is not available"
-msgstr ""
+msgstr "Adapter für diese Verbindung ist nicht verfügbar"
 
 #: ../blueman/plugins/applet/NMMonitor.py:104
 msgid ""
 "Monitors NetworkManager's modem connections and automatically disconnects "
 "bluetooth link after the network connection is closed"
 msgstr ""
+"Überwacht die Modemverbindungen des Netzwerk-Managers und beendet "
+"automatisch die Bluetooth-Verbindung wenn die Modemverbindung getrennt wird"
 
 #: ../blueman/plugins/applet/DBusService.py:36
 msgid "Provides DBus API for other Blueman components"
-msgstr ""
+msgstr "Stellt eine DBus API für andere Blueman Komponenten bereit"
 
 #: ../blueman/plugins/applet/KillSwitch.py:31
 msgid ""
 "Toggles a Bluetooth killswitch when Bluetooth power state changes. Some "
 "laptops, mostly Dells have this feature"
 msgstr ""
+"Verändert den Bluetoothstatus wenn zwischen Akku und Netzstrom gewechselt "
+"wird. Einige Notebooks, vorallem Dell, haben diese Funktion"
 
 #: ../blueman/plugins/applet/PulseAudio.py:30
 msgid ""
@@ -430,15 +432,19 @@ msgid ""
 "connected.\n"
 "<b>Note:</b> Requires pulseaudio 0.9.14 or higher"
 msgstr ""
+"Läd automatisch das pulseaudio-bluetooth-Modul wenn ein Audiogerät verbunden "
+"wird.\n"
+"<b>Hinweis:</b> Benötigt Pulseaudio 0.9.14 oder höher"
 
 #: ../blueman/plugins/applet/Headset.py:27
-#, fuzzy
 msgid "Runs a command when answer button is pressed on a headset"
-msgstr "Auszuführender Befehl, wenn Rufannahmeknopf gedrückt wird:"
+msgstr ""
+"Führt einen Befehl aus, wenn der Abheben-Knopf an einem Headset gedrückt wird"
 
 #: ../blueman/plugins/applet/AuthAgent.py:29
 msgid "Provides passkey, authentication services for BlueZ daemon"
 msgstr ""
+"Stellt das Passkey-Authentifizierungsservice für den BlueZ-Daemon bereit"
 
 #: ../blueman/plugins/applet/StandardItems.py:35
 msgid "Setup new device"
@@ -491,7 +497,7 @@ msgstr "Applet"
 #: ../blueman/plugins/applet/StandardItems.py:125
 #: ../blueman/gui/applet/PluginDialog.py:39
 msgid "Plugins"
-msgstr ""
+msgstr "Plugins"
 
 #: ../blueman/plugins/applet/StatusIcon.py:40
 msgid "Bluetooth applet"
@@ -499,7 +505,7 @@ msgstr "Bluetooth-Applet"
 
 #: ../blueman/plugins/applet/PowerManager.py:29
 msgid "Controls bluetooth adapter power states"
-msgstr ""
+msgstr "Kontrolliert den Strom-Status des Bluetooth-Adapters"
 
 #: ../blueman/plugins/applet/PowerManager.py:37
 msgid "Bluetooth Off"
@@ -524,7 +530,7 @@ msgstr ""
 
 #: ../blueman/plugins/applet/ModemManager.py:35
 msgid "Registers rfcomm ports as modem devices"
-msgstr ""
+msgstr "Registriert die rfcomm-Ports als Modem-Ports"
 
 #: ../blueman/plugins/applet/DiscvManager.py:32
 msgid ""
@@ -533,13 +539,12 @@ msgid ""
 msgstr ""
 
 #: ../blueman/plugins/applet/DiscvManager.py:37
-#, fuzzy
 msgid "Discoverable timeout"
-msgstr "Sichtbar... %ss"
+msgstr ""
 
 #: ../blueman/plugins/applet/DiscvManager.py:38
 msgid "Amount of time in seconds discoverable mode will last"
-msgstr ""
+msgstr "Zeitspanne (in Sekunden) die der Adapter sichtbar sein wird"
 
 #: ../blueman/plugins/applet/DiscvManager.py:44
 #: ../blueman/plugins/applet/DiscvManager.py:142
@@ -547,9 +552,8 @@ msgid "Make Discoverable"
 msgstr "Sichtbar machen"
 
 #: ../blueman/plugins/applet/DiscvManager.py:53
-#, fuzzy
 msgid "Make the default adapter temporarily visible"
-msgstr "Standard-Adapter für 1 Minute sichtbar machen"
+msgstr "Mach den Standard-Adapter vorübergehend sichtbar"
 
 #: ../blueman/plugins/applet/DiscvManager.py:80
 #, python-format
@@ -558,7 +562,7 @@ msgstr "Sichtbar... %ss"
 
 #: ../blueman/plugins/applet/TransferService.py:30
 msgid "Provides OBEX file transfer capabilities"
-msgstr ""
+msgstr "Stellt OBEX Dateiübertragungs-Funktionen bereit"
 
 #: ../blueman/plugins/services/Transfer.py:32
 msgid "Transfer"
@@ -566,7 +570,7 @@ msgstr "Übertragung"
 
 #: ../blueman/plugins/services/Transfer.py:48
 msgid "Applet's transfer service plugin is disabled"
-msgstr ""
+msgstr "Das Plugin für den Datentransferservice ist deaktiviert"
 
 #: ../blueman/plugins/services/Transfer.py:137 ../apps/blueman-sendto:109
 msgid "obex-data-server not available"
@@ -678,24 +682,42 @@ msgstr "Gerät auswählen"
 #: ../blueman/gui/CommonUi.py:47
 msgid "translator-credits"
 msgstr ""
+"Launchpad Contributions:\n"
+"  Bernhard Gehl https://launchpad.net/~bernhard-gehl\n"
+"  Jochen Kemnade https://launchpad.net/~jochenkemnade\n"
+"  Julian Jacques Maurer https://launchpad.net/~mail-julianjmaurer\n"
+"  Keruskerfuerst https://launchpad.net/~arminmohring\n"
+"  Mark Stuppacher https://launchpad.net/~mark-happynet\n"
+"  MyUser https://launchpad.net/~myuser\n"
+"  Nils https://launchpad.net/~nilswoetzel\n"
+"  Patrick Schaake https://launchpad.net/~patrick-schaake\n"
+"  Peter Altherr https://launchpad.net/~peter-altherr\n"
+"  Sekhmet https://launchpad.net/~sekhmet\n"
+"  Steve Markgraf https://launchpad.net/~steve-m\n"
+"  TH@mint https://launchpad.net/~timhfs\n"
+"  Tobias Duehr https://launchpad.net/~mrbordello\n"
+"  Vinzenz Vietzke https://launchpad.net/~v1nz\n"
+"  Waldemar R. https://launchpad.net/~lux5\n"
+"  ahsamuel https://launchpad.net/~samuel-orsenne\n"
+"  dauerbaustelle https://launchpad.net/~dauerbaustelle\n"
+"  mx82 https://launchpad.net/~mx82"
 
 #: ../blueman/gui/CommonUi.py:50
 msgid "Blueman is a GTK based Bluetooth manager"
 msgstr "Blueman ist ein GTK-basierter Bluetooth-Manager"
 
 #: ../blueman/gui/AdapterInfo.py:27
-#, fuzzy
 msgid "Adapter Properties"
-msgstr "Adapterauswahl"
+msgstr "Adapter-Einstellungen"
 
 #: ../blueman/gui/applet/PluginDialog.py:98
 #: ../blueman/gui/applet/PluginDialog.py:99
 msgid "Unspecified"
-msgstr ""
+msgstr "Nicht festgelegt"
 
 #: ../blueman/gui/applet/PluginDialog.py:139
 msgid "Dependency issue"
-msgstr ""
+msgstr "Abhängigkeitsproblem"
 
 #: ../blueman/gui/applet/PluginDialog.py:140
 #, python-format
@@ -704,6 +726,9 @@ msgid ""
 "also unload <b>\"%(0)s\"</b>.\n"
 "Proceed?"
 msgstr ""
+"Plugin <b>\"%(0)s\"</b> hängt von Plugin <b>%(1)s</b> ab. Deaktivieren von "
+"Plugin <b>%(1)s</b> wird auch das Plugin <b>\"%(0)s\"</b> deaktivieren.\n"
+"Fortfahren?"
 
 #: ../blueman/gui/manager/ManagerProgressbar.py:33 ../apps/blueman-sendto:72
 msgid "Connecting"
@@ -756,7 +781,7 @@ msgstr "Serieller Dienst"
 #. def on_type_changed(item, type):
 #. if item.active:
 #. setattr(conns.props, device.Address, type)
-#.
+#. 
 #. conns = Config("conn_types")
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:306
 msgid "Serial Ports"
@@ -963,9 +988,8 @@ msgid "Dialup Networking (DUN)"
 msgstr "Einwahl-Netzwerk (DUN)"
 
 #: ../blueman/main/applet/Transfer.py:173
-#, fuzzy
 msgid "Incoming file"
-msgstr "Ankommende Datei"
+msgstr "Eingehende Datei"
 
 #: ../blueman/main/applet/Transfer.py:174
 #, python-format
@@ -982,56 +1006,52 @@ msgid "Reject"
 msgstr "Ablehnen"
 
 #: ../blueman/main/applet/Transfer.py:183
-#, fuzzy
 msgid "Receiving file"
-msgstr "Empfange Datei"
+msgstr "empfange Datei"
 
 #: ../blueman/main/applet/Transfer.py:184
-#, fuzzy, python-format
+#, python-format
 msgid "Receiving file %(0)s from %(1)s"
-msgstr "Ankommende Datei %(0)s von %(1)s"
+msgstr "Empfange Datei %(0)s von %(1)s"
 
 #: ../blueman/main/applet/Transfer.py:220
 #: ../blueman/main/applet/Transfer.py:242
-#, fuzzy
 msgid "File received"
-msgstr "Datei gespeichert"
+msgstr "Datei empfangen"
 
 #: ../blueman/main/applet/Transfer.py:221
 #: ../blueman/main/applet/Transfer.py:243
 #, python-format
 msgid "File %(0)s from %(1)s successfully received"
-msgstr ""
+msgstr "Datei %(0)s von %(1)s erfolgreich empfangen"
 
 #: ../blueman/main/applet/Transfer.py:230
-#, fuzzy
 msgid "Transfer failed"
-msgstr "Übertragung"
+msgstr "Übertragung fehlgeschlagen"
 
 #: ../blueman/main/applet/Transfer.py:231
 #, python-format
 msgid "Transfer of file %(0)s failed"
-msgstr ""
+msgstr "Transfer der Datei %(0)s fehlgeschlagen"
 
 #: ../blueman/main/applet/Transfer.py:249
 #: ../blueman/main/applet/Transfer.py:259
-#, fuzzy
 msgid "Files received"
-msgstr "Datei gespeichert"
+msgstr "Dateien empfangen"
 
 #: ../blueman/main/applet/Transfer.py:250
 #, python-format
 msgid "Received %d file in the background"
 msgid_plural "Received %d files in the background"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d Datei im Hintergrund empfangen"
+msgstr[1] "%d Dateien im Hintergrund empfangen"
 
 #: ../blueman/main/applet/Transfer.py:260
 #, python-format
 msgid "Received %d more file in the background"
 msgid_plural "Received %d more files in the background"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "weitere %d Datei im Hintergrund empfangen"
+msgstr[1] "weitere %d Dateien im Hintergrund empfangen"
 
 #: ../blueman/main/applet/BluezAgent.py:126
 #, python-format
@@ -1089,14 +1109,13 @@ msgid "Always accept"
 msgstr "Immer annehmen"
 
 #: ../blueman/main/applet/BluezAgent.py:281
-#, fuzzy
 msgid "Confirm value"
-msgstr "Bestätigen"
+msgstr "Wert bestätigen"
 
 #: ../blueman/main/applet/BluezAgent.py:282
-#, fuzzy, python-format
+#, python-format
 msgid "Pairing with: %s"
-msgstr "Bekanntmachungsanfrage von %s"
+msgstr "Kopplung mit: %s"
 
 #: ../blueman/main/applet/NetworkManager.py:73
 #: ../blueman/main/applet/NetworkManager.py:76
@@ -1193,10 +1212,9 @@ msgid "Bonding"
 msgstr "Kopplung"
 
 #: ../apps/blueman-adapters:57
-#, fuzzy
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
 msgstr ""
-"Bluetooth muss eingeschaltet sein, damit der Gerätemanager funktioniert"
+"Bluetooth muss eingeschaltet sein, damit der Adapter-Manager funktioniert"
 
 #: ../apps/blueman-adapters:145
 msgid "Always"
@@ -1253,10 +1271,9 @@ msgid "Send files to this device"
 msgstr "Sende Datei zu diesem Gerät"
 
 #: ../apps/blueman-sendto:305
-#, fuzzy
 msgid "Bluetooth needs to be turned on for file sending to work"
 msgstr ""
-"Bluetooth muss eingeschaltet sein, damit der Gerätemanager funktioniert"
+"Bluetooth muss eingeschaltet sein, damit Dateien verschickt werden können"
 
 #: ../apps/blueman-sendto:359
 msgid "Select files to send"
@@ -1267,10 +1284,9 @@ msgid "Start configuration assistant for this device"
 msgstr "Starte Konfigurationsassistent für dieses Gerät"
 
 #: ../apps/blueman-assistant:67
-#, fuzzy
 msgid "Bluetooth needs to be turned on for the bluetooth assistant to work"
 msgstr ""
-"Bluetooth muss eingeschaltet sein, damit der Gerätemanager funktioniert"
+"Bluetooth muss eingeschaltet sein, damit der Bluetooth-Assistent funktioniert"
 
 #: ../apps/blueman-assistant:81
 msgid "Bluetooth Assistant"
@@ -1332,35 +1348,3 @@ msgstr "Starten von \"%s\" fehlgeschlagen"
 msgid "You can enter an alternate browser in service settings"
 msgstr ""
 "Sie können in den Dienste-Einstellungen einen alternativen Browser eintragen."
-
-#, fuzzy
-#~ msgid "Bluetooth"
-#~ msgstr "Bluetooth aus"
-
-#~ msgid ""
-#~ "You might not be able to connect to the Bluetooth network via this machine"
-#~ msgstr ""
-#~ "Sie können sich möglicherweise nicht von diesem Computer aus mit dem "
-#~ "Bluetooth-Netzwerk verbinden"
-
-#~ msgid "Authentication request"
-#~ msgstr "Authentifizierungsanfrage"
-
-#~ msgid "Cancel"
-#~ msgstr "Abbrechen"
-
-#~ msgid "Would you like to open %s?"
-#~ msgstr "Möchten Sie %s öffnen?"
-
-#~ msgid "Open"
-#~ msgstr "Öffnen"
-
-#~ msgid ""
-#~ "Receiving File %(0)s\n"
-#~ "%(1).2f%(2)s out of %(3).2f%(4)s (%(5).2f%(6)s/s)"
-#~ msgstr ""
-#~ "Empfange Datei %(0)s\n"
-#~ "%(1).2f%(2)s von %(3).2f%(4)s (%(5).2f%(6)s/s)"
-
-#~ msgid "Bluetooth device"
-#~ msgstr "Bluetooth-Gerät"

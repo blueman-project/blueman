@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-03-29 18:14+0300\n"
 "PO-Revision-Date: 2009-02-05 22:46+0000\n"
 "Last-Translator: Kenan Dervišević <kenan3008@gmail.com>\n"
@@ -14,9 +14,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-02-25 15:16+0000\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Launchpad-Export-Date: 2009-04-08 09:48+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -250,7 +250,8 @@ msgid "<b>To:</b>"
 msgstr ""
 
 #: ../data/ui/send-dialog.ui.h:3
-msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
+msgid ""
+"<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr ""
 
 #: ../data/ui/send-dialog.ui.h:4
@@ -331,9 +332,8 @@ msgid "Not specified"
 msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:5
-#, fuzzy
 msgid "Unknown"
-msgstr "nepoznato"
+msgstr ""
 
 #: ../blueman/Functions.py:72
 msgid "Bluetooth Turned Off"
@@ -664,6 +664,9 @@ msgstr ""
 #: ../blueman/gui/CommonUi.py:47
 msgid "translator-credits"
 msgstr ""
+"Launchpad Contributions:\n"
+"  Kenan Dervišević https://launchpad.net/~kenan3008\n"
+"  Sanel https://launchpad.net/~sanel-bih"
 
 #: ../blueman/gui/CommonUi.py:50
 msgid "Blueman is a GTK based Bluetooth manager"
@@ -741,7 +744,7 @@ msgstr ""
 #. def on_type_changed(item, type):
 #. if item.active:
 #. setattr(conns.props, device.Address, type)
-#.
+#. 
 #. conns = Config("conn_types")
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:306
 msgid "Serial Ports"
@@ -982,9 +985,8 @@ msgid "File %(0)s from %(1)s successfully received"
 msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:230
-#, fuzzy
 msgid "Transfer failed"
-msgstr "Transfer"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:231
 #, python-format
@@ -1002,7 +1004,6 @@ msgid "Received %d file in the background"
 msgid_plural "Received %d files in the background"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
 
 #: ../blueman/main/applet/Transfer.py:260
 #, python-format
@@ -1010,7 +1011,6 @@ msgid "Received %d more file in the background"
 msgid_plural "Received %d more files in the background"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
 
 #: ../blueman/main/applet/BluezAgent.py:126
 #, python-format
@@ -1068,9 +1068,8 @@ msgid "Always accept"
 msgstr ""
 
 #: ../blueman/main/applet/BluezAgent.py:281
-#, fuzzy
 msgid "Confirm value"
-msgstr "Potvrdi"
+msgstr ""
 
 #: ../blueman/main/applet/BluezAgent.py:282
 #, python-format
@@ -1298,12 +1297,3 @@ msgstr ""
 #: ../apps/blueman-browse:77
 msgid "You can enter an alternate browser in service settings"
 msgstr ""
-
-#~ msgid "Authentication request"
-#~ msgstr "Zahtjev za provjeru identiteta"
-
-#~ msgid "Cancel"
-#~ msgstr "Odustani"
-
-#~ msgid "Open"
-#~ msgstr "Otvori"

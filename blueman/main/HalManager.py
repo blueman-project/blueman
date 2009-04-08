@@ -80,7 +80,7 @@ class HalManager(dbus.proxies.Interface):
 
 			if capabilities == None or capabilities == []:
 				dprint("Removing temp UDI")
-				#self.Remove(ref)
+				return False
 			else:
 				
 				try:

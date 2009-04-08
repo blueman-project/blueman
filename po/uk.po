@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-03-29 18:14+0300\n"
 "PO-Revision-Date: 2009-02-21 11:51+0000\n"
 "Last-Translator: Eugene Babiy <eugene.babiy@gmail.com>\n"
@@ -14,9 +14,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-02-25 15:16+0000\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Launchpad-Export-Date: 2009-04-08 09:48+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -44,9 +44,8 @@ msgid "Bluetooth Adapters"
 msgstr "Пристрої Bluetooth"
 
 #: ../data/ui/applet-passkey.ui.h:1
-#, fuzzy
 msgid "Pairing request"
-msgstr "Запит з'єднання для:"
+msgstr ""
 
 #: ../data/ui/applet-passkey.ui.h:2
 msgid "Pairing request for device:"
@@ -253,7 +252,8 @@ msgid "<b>To:</b>"
 msgstr "<b>Для:</b>"
 
 #: ../data/ui/send-dialog.ui.h:3
-msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
+msgid ""
+"<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr ""
 "<span weight=\"bold\" size=\"large\">Відправка файлів через Bluetooth</span>"
 
@@ -324,28 +324,24 @@ msgid "Command to execute when answer button is pressed:"
 msgstr "Команда для виконання після натискання клавіші відповіді:"
 
 #: ../data/ui/applet-plugins-widget.ui.h:1
-#, fuzzy
 msgid "<b>Author:</b>"
-msgstr "<b>Для:</b>"
+msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:2
-#, fuzzy
 msgid "<b>Depends on:</b>"
-msgstr "<b>Для:</b>"
+msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:3
-#, fuzzy
 msgid "<b>Plugin description:</b>"
-msgstr "<b>Налаштування Клієнта</b>"
+msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:4
 msgid "Not specified"
 msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:5
-#, fuzzy
 msgid "Unknown"
-msgstr "невідомий"
+msgstr ""
 
 #: ../blueman/Functions.py:72
 msgid "Bluetooth Turned Off"
@@ -433,9 +429,8 @@ msgid ""
 msgstr ""
 
 #: ../blueman/plugins/applet/Headset.py:27
-#, fuzzy
 msgid "Runs a command when answer button is pressed on a headset"
-msgstr "Команда для виконання після натискання клавіші відповіді:"
+msgstr ""
 
 #: ../blueman/plugins/applet/AuthAgent.py:29
 msgid "Provides passkey, authentication services for BlueZ daemon"
@@ -534,9 +529,8 @@ msgid ""
 msgstr ""
 
 #: ../blueman/plugins/applet/DiscvManager.py:37
-#, fuzzy
 msgid "Discoverable timeout"
-msgstr "Видимий... %ss"
+msgstr ""
 
 #: ../blueman/plugins/applet/DiscvManager.py:38
 msgid "Amount of time in seconds discoverable mode will last"
@@ -548,9 +542,8 @@ msgid "Make Discoverable"
 msgstr "Зробити Вилимим"
 
 #: ../blueman/plugins/applet/DiscvManager.py:53
-#, fuzzy
 msgid "Make the default adapter temporarily visible"
-msgstr "Зробити типовий пристрій видимим протягом 1 хвилини"
+msgstr ""
 
 #: ../blueman/plugins/applet/DiscvManager.py:80
 #, python-format
@@ -679,15 +672,18 @@ msgstr "Вибрати Пристрій"
 #: ../blueman/gui/CommonUi.py:47
 msgid "translator-credits"
 msgstr ""
+"Launchpad Contributions:\n"
+"  Eugene Babiy https://launchpad.net/~eugene-babiy\n"
+"  Valmantas Palikša https://launchpad.net/~walmis\n"
+"  shcherbet https://launchpad.net/~shcherbet"
 
 #: ../blueman/gui/CommonUi.py:50
 msgid "Blueman is a GTK based Bluetooth manager"
 msgstr "Blueman - менеджер Bluetooth на основі GTK"
 
 #: ../blueman/gui/AdapterInfo.py:27
-#, fuzzy
 msgid "Adapter Properties"
-msgstr "Вибір пристрою"
+msgstr ""
 
 #: ../blueman/gui/applet/PluginDialog.py:98
 #: ../blueman/gui/applet/PluginDialog.py:99
@@ -757,7 +753,7 @@ msgstr "Сервіс Serial"
 #. def on_type_changed(item, type):
 #. if item.active:
 #. setattr(conns.props, device.Address, type)
-#.
+#. 
 #. conns = Config("conn_types")
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:306
 msgid "Serial Ports"
@@ -964,9 +960,8 @@ msgid "Dialup Networking (DUN)"
 msgstr "З'єднання Dialup (DUN)"
 
 #: ../blueman/main/applet/Transfer.py:173
-#, fuzzy
 msgid "Incoming file"
-msgstr "Вхідний Файл"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:174
 #, python-format
@@ -983,20 +978,18 @@ msgid "Reject"
 msgstr "Відхилити"
 
 #: ../blueman/main/applet/Transfer.py:183
-#, fuzzy
 msgid "Receiving file"
-msgstr "Отримання Файла"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:184
-#, fuzzy, python-format
+#, python-format
 msgid "Receiving file %(0)s from %(1)s"
-msgstr "Вхідний файл %(0)s від %(1)s"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:220
 #: ../blueman/main/applet/Transfer.py:242
-#, fuzzy
 msgid "File received"
-msgstr "Файл Збережено"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:221
 #: ../blueman/main/applet/Transfer.py:243
@@ -1005,9 +998,8 @@ msgid "File %(0)s from %(1)s successfully received"
 msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:230
-#, fuzzy
 msgid "Transfer failed"
-msgstr "Передача"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:231
 #, python-format
@@ -1016,9 +1008,8 @@ msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:249
 #: ../blueman/main/applet/Transfer.py:259
-#, fuzzy
 msgid "Files received"
-msgstr "Файл Збережено"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:250
 #, python-format
@@ -1026,7 +1017,6 @@ msgid "Received %d file in the background"
 msgid_plural "Received %d files in the background"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
 
 #: ../blueman/main/applet/Transfer.py:260
 #, python-format
@@ -1034,7 +1024,6 @@ msgid "Received %d more file in the background"
 msgid_plural "Received %d more files in the background"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
 
 #: ../blueman/main/applet/BluezAgent.py:126
 #, python-format
@@ -1092,14 +1081,13 @@ msgid "Always accept"
 msgstr "Завжди приймати"
 
 #: ../blueman/main/applet/BluezAgent.py:281
-#, fuzzy
 msgid "Confirm value"
-msgstr "Підтвердити"
+msgstr ""
 
 #: ../blueman/main/applet/BluezAgent.py:282
-#, fuzzy, python-format
+#, python-format
 msgid "Pairing with: %s"
-msgstr "Запит з'єднання для %s"
+msgstr ""
 
 #: ../blueman/main/applet/NetworkManager.py:73
 #: ../blueman/main/applet/NetworkManager.py:76
@@ -1193,9 +1181,8 @@ msgid "Bonding"
 msgstr "З'єднання"
 
 #: ../apps/blueman-adapters:57
-#, fuzzy
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
-msgstr "Необхідно увімкнути Bluetooth для роботи менеджера пристроїв"
+msgstr ""
 
 #: ../apps/blueman-adapters:145
 msgid "Always"
@@ -1255,9 +1242,8 @@ msgid "Send files to this device"
 msgstr "Надіслати файли на пристрій"
 
 #: ../apps/blueman-sendto:305
-#, fuzzy
 msgid "Bluetooth needs to be turned on for file sending to work"
-msgstr "Необхідно увімкнути Bluetooth для роботи менеджера пристроїв"
+msgstr ""
 
 #: ../apps/blueman-sendto:359
 msgid "Select files to send"
@@ -1268,9 +1254,8 @@ msgid "Start configuration assistant for this device"
 msgstr "Завантажити помічник налаштування для цього пристрою"
 
 #: ../apps/blueman-assistant:67
-#, fuzzy
 msgid "Bluetooth needs to be turned on for the bluetooth assistant to work"
-msgstr "Необхідно увімкнути Bluetooth для роботи менеджера пристроїв"
+msgstr ""
 
 #: ../apps/blueman-assistant:81
 msgid "Bluetooth Assistant"
@@ -1332,34 +1317,3 @@ msgstr "Завантаження \"%s\" невдале"
 msgid "You can enter an alternate browser in service settings"
 msgstr ""
 "Ви можете ввести альтернативний навігатор/браузер в налаштуваннях сервісу"
-
-#, fuzzy
-#~ msgid "Bluetooth"
-#~ msgstr "Bluetooth Вимкнено"
-
-#~ msgid ""
-#~ "You might not be able to connect to the Bluetooth network via this machine"
-#~ msgstr ""
-#~ "Ви мабуть не зможете з'єднатись з мережею Bluetooth через цей комп'ютер"
-
-#~ msgid "Authentication request"
-#~ msgstr "Запит аутентифікації"
-
-#~ msgid "Cancel"
-#~ msgstr "Відмінити"
-
-#~ msgid "Would you like to open %s?"
-#~ msgstr "Ви бажаєте відкрити %s?"
-
-#~ msgid "Open"
-#~ msgstr "Відкрити"
-
-#~ msgid ""
-#~ "Receiving File %(0)s\n"
-#~ "%(1).2f%(2)s out of %(3).2f%(4)s (%(5).2f%(6)s/s)"
-#~ msgstr ""
-#~ "Отримання Файла %(0)s\n"
-#~ "%(1).2f%(2)s з %(3).2f%(4)s (%(5).2f%(6)s/s)"
-
-#~ msgid "Bluetooth device"
-#~ msgstr "Пристрій Bluetooth"

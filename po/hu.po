@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-03-29 18:14+0300\n"
 "PO-Revision-Date: 2009-02-25 14:52+0000\n"
 "Last-Translator: Valmantas Palikša <walmis@balticum-tv.lt>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-02-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-04-08 09:49+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -43,9 +43,8 @@ msgid "Bluetooth Adapters"
 msgstr ""
 
 #: ../data/ui/applet-passkey.ui.h:1
-#, fuzzy
 msgid "Pairing request"
-msgstr "Párosítási kérelem ehhez:"
+msgstr ""
 
 #: ../data/ui/applet-passkey.ui.h:2
 msgid "Pairing request for device:"
@@ -250,10 +249,11 @@ msgid "<b>To:</b>"
 msgstr "<b>Cél:</b>"
 
 #: ../data/ui/send-dialog.ui.h:3
-msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
+msgid ""
+"<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr ""
-"<span weight=\"bold\" size=\"large\">Fájlok küldése Bluetoothon keresztül</"
-"span>"
+"<span weight=\"bold\" size=\"large\">Fájlok küldése Bluetoothon "
+"keresztül</span>"
 
 #: ../data/ui/send-dialog.ui.h:4
 msgid "Bluetooth File Transfer"
@@ -317,28 +317,24 @@ msgid "Command to execute when answer button is pressed:"
 msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:1
-#, fuzzy
 msgid "<b>Author:</b>"
-msgstr "<b>Cél:</b>"
+msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:2
-#, fuzzy
 msgid "<b>Depends on:</b>"
-msgstr "<b>Cél:</b>"
+msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:3
-#, fuzzy
 msgid "<b>Plugin description:</b>"
-msgstr "<b>Kliens beállítások</b>"
+msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:4
 msgid "Not specified"
 msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:5
-#, fuzzy
 msgid "Unknown"
-msgstr "ismeretlen"
+msgstr "Ismeretlen"
 
 #: ../blueman/Functions.py:72
 msgid "Bluetooth Turned Off"
@@ -526,9 +522,8 @@ msgid ""
 msgstr ""
 
 #: ../blueman/plugins/applet/DiscvManager.py:37
-#, fuzzy
 msgid "Discoverable timeout"
-msgstr "Látható... %ss"
+msgstr ""
 
 #: ../blueman/plugins/applet/DiscvManager.py:38
 msgid "Amount of time in seconds discoverable mode will last"
@@ -540,9 +535,8 @@ msgid "Make Discoverable"
 msgstr "Láthatóvá tesz"
 
 #: ../blueman/plugins/applet/DiscvManager.py:53
-#, fuzzy
 msgid "Make the default adapter temporarily visible"
-msgstr "Láthatóvá teszi az alapértelmezett csatolót 1 percig"
+msgstr ""
 
 #: ../blueman/plugins/applet/DiscvManager.py:80
 #, python-format
@@ -671,6 +665,16 @@ msgstr "Eszközválasztás"
 #: ../blueman/gui/CommonUi.py:47
 msgid "translator-credits"
 msgstr ""
+"Launchpad Contributions:\n"
+"  Bálint Fekete https://launchpad.net/~kaktusztea\n"
+"  Kántor Dániel https://launchpad.net/~kdani3\n"
+"  MBA https://launchpad.net/~mbalazs\n"
+"  Peter Nagy https://launchpad.net/~antronin\n"
+"  Pittmann Tamás https://launchpad.net/~zaivaldi\n"
+"  Thomas Martin Klein https://launchpad.net/~kleintamasmarton\n"
+"  Thuma Gábor https://launchpad.net/~thuma\n"
+"  Török Attila https://launchpad.net/~torokati44\n"
+"  kavkar https://launchpad.net/~kavkar"
 
 #: ../blueman/gui/CommonUi.py:50
 msgid "Blueman is a GTK based Bluetooth manager"
@@ -748,7 +752,7 @@ msgstr "Soros Szolgáltatás"
 #. def on_type_changed(item, type):
 #. if item.active:
 #. setattr(conns.props, device.Address, type)
-#.
+#. 
 #. conns = Config("conn_types")
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:306
 msgid "Serial Ports"
@@ -955,9 +959,8 @@ msgid "Dialup Networking (DUN)"
 msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:173
-#, fuzzy
 msgid "Incoming file"
-msgstr "Fájl fogadás"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:174
 #, python-format
@@ -974,20 +977,18 @@ msgid "Reject"
 msgstr "Elutasítás"
 
 #: ../blueman/main/applet/Transfer.py:183
-#, fuzzy
 msgid "Receiving file"
-msgstr "Fájl fogadása"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:184
-#, fuzzy, python-format
+#, python-format
 msgid "Receiving file %(0)s from %(1)s"
-msgstr "%(0)s. fájl fogadása %(1)s-ból"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:220
 #: ../blueman/main/applet/Transfer.py:242
-#, fuzzy
 msgid "File received"
-msgstr "Fájl mentve"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:221
 #: ../blueman/main/applet/Transfer.py:243
@@ -1006,9 +1007,8 @@ msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:249
 #: ../blueman/main/applet/Transfer.py:259
-#, fuzzy
 msgid "Files received"
-msgstr "Fájl mentve"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:250
 #, python-format
@@ -1080,14 +1080,13 @@ msgid "Always accept"
 msgstr "Mindig elfogad"
 
 #: ../blueman/main/applet/BluezAgent.py:281
-#, fuzzy
 msgid "Confirm value"
-msgstr "Megerősít"
+msgstr ""
 
 #: ../blueman/main/applet/BluezAgent.py:282
-#, fuzzy, python-format
+#, python-format
 msgid "Pairing with: %s"
-msgstr "Párosításkérés a(z) %s eszköztől"
+msgstr ""
 
 #: ../blueman/main/applet/NetworkManager.py:73
 #: ../blueman/main/applet/NetworkManager.py:76
@@ -1181,9 +1180,8 @@ msgid "Bonding"
 msgstr "Párosítás"
 
 #: ../apps/blueman-adapters:57
-#, fuzzy
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
-msgstr "Be kell kapcsolni a Bluetoothot az Eszközkezelő működéséhez"
+msgstr ""
 
 #: ../apps/blueman-adapters:145
 msgid "Always"
@@ -1240,9 +1238,8 @@ msgid "Send files to this device"
 msgstr "Fájlok küldése erre az eszközre"
 
 #: ../apps/blueman-sendto:305
-#, fuzzy
 msgid "Bluetooth needs to be turned on for file sending to work"
-msgstr "Be kell kapcsolni a Bluetoothot az Eszközkezelő működéséhez"
+msgstr ""
 
 #: ../apps/blueman-sendto:359
 msgid "Select files to send"
@@ -1253,9 +1250,8 @@ msgid "Start configuration assistant for this device"
 msgstr ""
 
 #: ../apps/blueman-assistant:67
-#, fuzzy
 msgid "Bluetooth needs to be turned on for the bluetooth assistant to work"
-msgstr "Be kell kapcsolni a Bluetoothot az Eszközkezelő működéséhez"
+msgstr ""
 
 #: ../apps/blueman-assistant:81
 msgid "Bluetooth Assistant"
@@ -1313,29 +1309,3 @@ msgstr ""
 #: ../apps/blueman-browse:77
 msgid "You can enter an alternate browser in service settings"
 msgstr ""
-
-#, fuzzy
-#~ msgid "Bluetooth"
-#~ msgstr "Bluetooth Kikapcsolva"
-
-#~ msgid "Authentication request"
-#~ msgstr "Hitelesítési kérés"
-
-#~ msgid "Cancel"
-#~ msgstr "Mégse"
-
-#~ msgid "Would you like to open %s?"
-#~ msgstr "Megnyitja %s-t?"
-
-#~ msgid "Open"
-#~ msgstr "Megnyit"
-
-#~ msgid ""
-#~ "Receiving File %(0)s\n"
-#~ "%(1).2f%(2)s out of %(3).2f%(4)s (%(5).2f%(6)s/s)"
-#~ msgstr ""
-#~ "%(0)s fogadása\n"
-#~ "%(1).2f%(2)s kész %(3).2f%(4)s-ból (%(5).2f%(6)s/mp)"
-
-#~ msgid "Bluetooth device"
-#~ msgstr "Bluetooth eszköz"

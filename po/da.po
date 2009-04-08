@@ -6,16 +6,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-03-29 18:14+0300\n"
-"PO-Revision-Date: 2009-02-24 18:54+0000\n"
+"PO-Revision-Date: 2009-03-31 15:51+0000\n"
 "Last-Translator: Mads Konradsen <Unknown>\n"
 "Language-Team: Danish <da@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-02-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-04-08 09:48+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -43,9 +43,8 @@ msgid "Bluetooth Adapters"
 msgstr "Bluetooth adaptere"
 
 #: ../data/ui/applet-passkey.ui.h:1
-#, fuzzy
 msgid "Pairing request"
-msgstr "Sammensætnings forespørgsel for:"
+msgstr "Parrings forespørgsel"
 
 #: ../data/ui/applet-passkey.ui.h:2
 msgid "Pairing request for device:"
@@ -63,7 +62,7 @@ msgstr "Tilføj"
 #: ../data/ui/manager-main.ui.h:3
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:244
 msgid "Add this device to known devices list"
-msgstr ""
+msgstr "Tilføj denne enhed til listen over kendte enheder"
 
 #: ../data/ui/manager-main.ui.h:4
 msgid "Bluetooth Devices"
@@ -83,7 +82,7 @@ msgstr "Gennemse"
 
 #: ../data/ui/manager-main.ui.h:9
 msgid "Browse the device using obex ftp"
-msgstr ""
+msgstr "Gennemse enheden med obex ftp"
 
 #: ../data/ui/manager-main.ui.h:10
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:256
@@ -94,7 +93,7 @@ msgstr "Opretter bånd med enheden"
 #: ../data/ui/manager-main.ui.h:11
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:501
 msgid "Mark/Unmark this device as trusted"
-msgstr ""
+msgstr "Marker/Afmarker denne enhed som betroet"
 
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:13
@@ -104,13 +103,13 @@ msgstr "Fjern"
 #: ../data/ui/manager-main.ui.h:14
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:541
 msgid "Remove this device from the known devices list"
-msgstr ""
+msgstr "Fjern denne enhed fra listen over kendte enheder"
 
 #: ../data/ui/manager-main.ui.h:15
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:250
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:507
 msgid "Run the setup assistant for this device"
-msgstr ""
+msgstr "Start opsætnings assistenten for denne enhed"
 
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:17 ../blueman/gui/manager/ManagerMenu.py:204
@@ -128,7 +127,7 @@ msgstr "Send fil"
 
 #: ../data/ui/manager-main.ui.h:21
 msgid "Send file(s) to the device"
-msgstr ""
+msgstr "Send fil(er) til enheden"
 
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:23
@@ -252,8 +251,10 @@ msgid "<b>To:</b>"
 msgstr "<b>Til:</b>"
 
 #: ../data/ui/send-dialog.ui.h:3
-msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
-msgstr "<span weight=\"bold\" size=\"large\">Sender filer via bluetooth</span>"
+msgid ""
+"<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
+msgstr ""
+"<span weight=\"bold\" size=\"large\">Sender filer via bluetooth</span>"
 
 #: ../data/ui/send-dialog.ui.h:4
 msgid "Bluetooth File Transfer"
@@ -307,7 +308,7 @@ msgstr "Adapter valg"
 
 #: ../data/ui/device-list-widget.ui.h:2
 msgid "Device search progress"
-msgstr ""
+msgstr "Enheds søgnings fremgang"
 
 #: ../data/ui/device-list-widget.ui.h:3
 msgid "Search for devices"
@@ -322,28 +323,24 @@ msgid "Command to execute when answer button is pressed:"
 msgstr "Kommando der skal udføres når svar knappen bliver trykket på:"
 
 #: ../data/ui/applet-plugins-widget.ui.h:1
-#, fuzzy
 msgid "<b>Author:</b>"
-msgstr "<b>Til:</b>"
+msgstr "<b>Forfatter:</b>"
 
 #: ../data/ui/applet-plugins-widget.ui.h:2
-#, fuzzy
 msgid "<b>Depends on:</b>"
-msgstr "<b>Til:</b>"
+msgstr "<b>Afhænger af:</b>"
 
 #: ../data/ui/applet-plugins-widget.ui.h:3
-#, fuzzy
 msgid "<b>Plugin description:</b>"
-msgstr "<b>Klient indstillinger</b>"
+msgstr "<b>Plugin beskrivelse:</b>"
 
 #: ../data/ui/applet-plugins-widget.ui.h:4
 msgid "Not specified"
-msgstr ""
+msgstr "Ikke specificeret"
 
 #: ../data/ui/applet-plugins-widget.ui.h:5
-#, fuzzy
 msgid "Unknown"
-msgstr "ukendt"
+msgstr "Ukendt"
 
 #: ../blueman/Functions.py:72
 msgid "Bluetooth Turned Off"
@@ -357,15 +354,18 @@ msgstr "Aktiver bluetooth"
 msgid ""
 "Provides a menu item that contains last used connections for quick access"
 msgstr ""
+"Muligører et menu element der indeholder de sidst brugte forbindelser for at "
+"give hurtig adgang"
 
 #. the maximum number of items RecentConns menu will display
 #: ../blueman/plugins/applet/RecentConns.py:78
 msgid "Maximum items"
-msgstr ""
+msgstr "Maksimum elementer"
 
 #: ../blueman/plugins/applet/RecentConns.py:79
 msgid "The maximum number of items RecentConns menu will display"
 msgstr ""
+"Det maksimale antal elementer som SenesteForbindelser menuen vil vise"
 
 #: ../blueman/plugins/applet/RecentConns.py:91
 msgid "Recent Connections"
@@ -405,23 +405,27 @@ msgstr "%(service)s på %(device)s"
 
 #: ../blueman/plugins/applet/RecentConns.py:303
 msgid "Adapter for this connection is not available"
-msgstr ""
+msgstr "En adapter for denne forbindelse er ikke tilgængelig"
 
 #: ../blueman/plugins/applet/NMMonitor.py:104
 msgid ""
 "Monitors NetworkManager's modem connections and automatically disconnects "
 "bluetooth link after the network connection is closed"
 msgstr ""
+"Overvåger NetworkManagerens modem forbindelser og afbryder automatisk "
+"bluetooth forbindelsen efter at netværksforbindelsen er lukket"
 
 #: ../blueman/plugins/applet/DBusService.py:36
 msgid "Provides DBus API for other Blueman components"
-msgstr ""
+msgstr "Muligører DBus API for andre Blueman komponenter"
 
 #: ../blueman/plugins/applet/KillSwitch.py:31
 msgid ""
 "Toggles a Bluetooth killswitch when Bluetooth power state changes. Some "
 "laptops, mostly Dells have this feature"
 msgstr ""
+"Skifter en Bluetooth killswitch når Bluetooth strøm tilstanden ændres. Nogen "
+"laptops, primært Dell have denne mulighed"
 
 #: ../blueman/plugins/applet/PulseAudio.py:30
 msgid ""
@@ -429,15 +433,17 @@ msgid ""
 "connected.\n"
 "<b>Note:</b> Requires pulseaudio 0.9.14 or higher"
 msgstr ""
+"Indlæser automatisk pulseaudio bluetooth module efter en lydenhed er "
+"forbundet\n"
+"Note: Kræver pulseaudio 0.9.14 eller nyere"
 
 #: ../blueman/plugins/applet/Headset.py:27
-#, fuzzy
 msgid "Runs a command when answer button is pressed on a headset"
-msgstr "Kommando der skal udføres når svar knappen bliver trykket på:"
+msgstr "Kører en kommando når svar knappen bliver trykket på, på et headset"
 
 #: ../blueman/plugins/applet/AuthAgent.py:29
 msgid "Provides passkey, authentication services for BlueZ daemon"
-msgstr ""
+msgstr "Muligører passkey, godkendelses services for BlueZ daemon"
 
 #: ../blueman/plugins/applet/StandardItems.py:35
 msgid "Setup new device"
@@ -485,12 +491,12 @@ msgstr "Starter tjeneste indstillinger"
 
 #: ../blueman/plugins/applet/StandardItems.py:123
 msgid "applet"
-msgstr ""
+msgstr "applet"
 
 #: ../blueman/plugins/applet/StandardItems.py:125
 #: ../blueman/gui/applet/PluginDialog.py:39
 msgid "Plugins"
-msgstr ""
+msgstr "Plugins"
 
 #: ../blueman/plugins/applet/StatusIcon.py:40
 msgid "Bluetooth applet"
@@ -498,7 +504,7 @@ msgstr "Bluetooth panelprogram"
 
 #: ../blueman/plugins/applet/PowerManager.py:29
 msgid "Controls bluetooth adapter power states"
-msgstr ""
+msgstr "Styrer bluetooth adapterens strøm tilstand"
 
 #: ../blueman/plugins/applet/PowerManager.py:37
 msgid "Bluetooth Off"
@@ -520,25 +526,27 @@ msgstr "<b>Sæt bluetooth fra</b>"
 msgid ""
 "Provides a menu for the applet and an API for other plugins to manipulate it"
 msgstr ""
+"Muligører en menu for appleten og en API så andre plugins kan manipulere den."
 
 #: ../blueman/plugins/applet/ModemManager.py:35
 msgid "Registers rfcomm ports as modem devices"
-msgstr ""
+msgstr "Registrerer rfcoom porte som modem enheder"
 
 #: ../blueman/plugins/applet/DiscvManager.py:32
 msgid ""
 "Provides a menu item for making the default adapter temporarily visible when "
 "it is set to hidden by default"
 msgstr ""
+"Muligører et menu element der gør standard adapteren midlertidig synlig når "
+"den er sat til usynlig fra standard"
 
 #: ../blueman/plugins/applet/DiscvManager.py:37
-#, fuzzy
 msgid "Discoverable timeout"
-msgstr "Synlig... %ss"
+msgstr "Synlighed blev tidsafbrudt"
 
 #: ../blueman/plugins/applet/DiscvManager.py:38
 msgid "Amount of time in seconds discoverable mode will last"
-msgstr ""
+msgstr "Mængde tid angivet i sekunder som Synlighed skal være aktiveret"
 
 #: ../blueman/plugins/applet/DiscvManager.py:44
 #: ../blueman/plugins/applet/DiscvManager.py:142
@@ -546,9 +554,8 @@ msgid "Make Discoverable"
 msgstr "Gør synlig"
 
 #: ../blueman/plugins/applet/DiscvManager.py:53
-#, fuzzy
 msgid "Make the default adapter temporarily visible"
-msgstr "Gør standard adapteren synlig i 1 minut"
+msgstr "Gør standard adapteren midlertidigt synlig"
 
 #: ../blueman/plugins/applet/DiscvManager.py:80
 #, python-format
@@ -557,7 +564,7 @@ msgstr "Synlig... %ss"
 
 #: ../blueman/plugins/applet/TransferService.py:30
 msgid "Provides OBEX file transfer capabilities"
-msgstr ""
+msgstr "Muligører OBEX filoverførsels kompatibilitet"
 
 #: ../blueman/plugins/services/Transfer.py:32
 msgid "Transfer"
@@ -565,7 +572,7 @@ msgstr "Overfør"
 
 #: ../blueman/plugins/services/Transfer.py:48
 msgid "Applet's transfer service plugin is disabled"
-msgstr ""
+msgstr "Applets overførsels service plugin er deaktiveret"
 
 #: ../blueman/plugins/services/Transfer.py:137 ../apps/blueman-sendto:109
 msgid "obex-data-server not available"
@@ -677,24 +684,25 @@ msgstr "Vælg enhed"
 #: ../blueman/gui/CommonUi.py:47
 msgid "translator-credits"
 msgstr ""
+"Launchpad Contributions:\n"
+"  Mads Konradsen https://launchpad.net/~mads-hk"
 
 #: ../blueman/gui/CommonUi.py:50
 msgid "Blueman is a GTK based Bluetooth manager"
 msgstr "Blueman er en GTK baseret bluetooth håndtering"
 
 #: ../blueman/gui/AdapterInfo.py:27
-#, fuzzy
 msgid "Adapter Properties"
-msgstr "Adapter valg"
+msgstr "Adapter indstillinger"
 
 #: ../blueman/gui/applet/PluginDialog.py:98
 #: ../blueman/gui/applet/PluginDialog.py:99
 msgid "Unspecified"
-msgstr ""
+msgstr "Uspecificeret"
 
 #: ../blueman/gui/applet/PluginDialog.py:139
 msgid "Dependency issue"
-msgstr ""
+msgstr "Afhængigheds problem"
 
 #: ../blueman/gui/applet/PluginDialog.py:140
 #, python-format
@@ -703,6 +711,9 @@ msgid ""
 "also unload <b>\"%(0)s\"</b>.\n"
 "Proceed?"
 msgstr ""
+"Plugin <b>\"%(0)s\"</b> afhænger af <b>%(1)s</b>. Deaktiverer <b>%(1)s</b> "
+"vil også blive deaktiveret <b>\"%(0)s\"</b>.\n"
+"Fortsæt?"
 
 #: ../blueman/gui/manager/ManagerProgressbar.py:33 ../apps/blueman-sendto:72
 msgid "Connecting"
@@ -755,7 +766,7 @@ msgstr "Seriel tjeneste"
 #. def on_type_changed(item, type):
 #. if item.active:
 #. setattr(conns.props, device.Address, type)
-#.
+#. 
 #. conns = Config("conn_types")
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:306
 msgid "Serial Ports"
@@ -962,7 +973,6 @@ msgid "Dialup Networking (DUN)"
 msgstr "Dialup netværk (DUN)"
 
 #: ../blueman/main/applet/Transfer.py:173
-#, fuzzy
 msgid "Incoming file"
 msgstr "Indkommende fil"
 
@@ -981,56 +991,52 @@ msgid "Reject"
 msgstr "Afvis"
 
 #: ../blueman/main/applet/Transfer.py:183
-#, fuzzy
 msgid "Receiving file"
 msgstr "Modtager fil"
 
 #: ../blueman/main/applet/Transfer.py:184
-#, fuzzy, python-format
+#, python-format
 msgid "Receiving file %(0)s from %(1)s"
-msgstr "Indkommende fil %(0)s fra %(1)s"
+msgstr "Modtager fil %(0)s fra %(1)s"
 
 #: ../blueman/main/applet/Transfer.py:220
 #: ../blueman/main/applet/Transfer.py:242
-#, fuzzy
 msgid "File received"
-msgstr "Fil gemt"
+msgstr "Fil modtaget"
 
 #: ../blueman/main/applet/Transfer.py:221
 #: ../blueman/main/applet/Transfer.py:243
 #, python-format
 msgid "File %(0)s from %(1)s successfully received"
-msgstr ""
+msgstr "Fil %(0)s fra %(1)s blev modtaget"
 
 #: ../blueman/main/applet/Transfer.py:230
-#, fuzzy
 msgid "Transfer failed"
-msgstr "Overfør"
+msgstr "Overførsels fejl"
 
 #: ../blueman/main/applet/Transfer.py:231
 #, python-format
 msgid "Transfer of file %(0)s failed"
-msgstr ""
+msgstr "Overførsel af filen %(0)s fejlede"
 
 #: ../blueman/main/applet/Transfer.py:249
 #: ../blueman/main/applet/Transfer.py:259
-#, fuzzy
 msgid "Files received"
-msgstr "Fil gemt"
+msgstr "Filer modtaget"
 
 #: ../blueman/main/applet/Transfer.py:250
 #, python-format
 msgid "Received %d file in the background"
 msgid_plural "Received %d files in the background"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Modtog %d fil i baggrunden"
+msgstr[1] "Modtog %d filer i baggrunden"
 
 #: ../blueman/main/applet/Transfer.py:260
 #, python-format
 msgid "Received %d more file in the background"
 msgid_plural "Received %d more files in the background"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Modtog %d fil mere i baggrunden"
+msgstr[1] "Modtog %d filer mere i baggrunden"
 
 #: ../blueman/main/applet/BluezAgent.py:126
 #, python-format
@@ -1088,14 +1094,13 @@ msgid "Always accept"
 msgstr "Accepter altid"
 
 #: ../blueman/main/applet/BluezAgent.py:281
-#, fuzzy
 msgid "Confirm value"
-msgstr "Bekræft"
+msgstr "Bekræft værdi"
 
 #: ../blueman/main/applet/BluezAgent.py:282
-#, fuzzy, python-format
+#, python-format
 msgid "Pairing with: %s"
-msgstr "Sammensætnings forespørgsel for %s"
+msgstr "Sammensætter med: %s"
 
 #: ../blueman/main/applet/NetworkManager.py:73
 #: ../blueman/main/applet/NetworkManager.py:76
@@ -1162,11 +1167,11 @@ msgstr "Bluetooth skal være tændt for at enhedshåndteringen kan fungere"
 
 #: ../apps/blueman-manager:105
 msgid "Connection to BlueZ failed"
-msgstr ""
+msgstr "Forbindelse til BlueZ fejlede"
 
 #: ../apps/blueman-manager:107
 msgid "Bluez daemon is not running, blueman-manager cannot continue."
-msgstr ""
+msgstr "Bluez daemon kører ikke, blueman-manager kan ikke fortsætte."
 
 #: ../apps/blueman-manager:192 ../apps/blueman-assistant:258
 msgid "Adding"
@@ -1189,9 +1194,8 @@ msgid "Bonding"
 msgstr "Sammensætter"
 
 #: ../apps/blueman-adapters:57
-#, fuzzy
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
-msgstr "Bluetooth skal være tændt for at enhedshåndteringen kan fungere"
+msgstr "Bluetooth skal være aktiveret for at adapter håndteringen virker"
 
 #: ../apps/blueman-adapters:145
 msgid "Always"
@@ -1210,7 +1214,7 @@ msgstr "obex-data-server er ikke installeret ordentligt"
 
 #: ../apps/blueman-sendto:138
 msgid "Error occurred"
-msgstr ""
+msgstr "Fejl opstod"
 
 #: ../apps/blueman-sendto:165 ../apps/blueman-sendto:198
 msgid "Sending File %(0)s/%(1)s (%(2).2f %(3)s/s) ETA: %(4)s"
@@ -1248,9 +1252,8 @@ msgid "Send files to this device"
 msgstr "Send filer til denne enhed"
 
 #: ../apps/blueman-sendto:305
-#, fuzzy
 msgid "Bluetooth needs to be turned on for file sending to work"
-msgstr "Bluetooth skal være tændt for at enhedshåndteringen kan fungere"
+msgstr "Bluetooth skal være aktiveret for filoverførsel virker"
 
 #: ../apps/blueman-sendto:359
 msgid "Select files to send"
@@ -1261,9 +1264,8 @@ msgid "Start configuration assistant for this device"
 msgstr "Start konfigurations assistent for denne enhed"
 
 #: ../apps/blueman-assistant:67
-#, fuzzy
 msgid "Bluetooth needs to be turned on for the bluetooth assistant to work"
-msgstr "Bluetooth skal være tændt for at enhedshåndteringen kan fungere"
+msgstr "Bluetooth skal være aktiveret for at bluetooth assistenten virker"
 
 #: ../apps/blueman-assistant:81
 msgid "Bluetooth Assistant"
@@ -1324,34 +1326,3 @@ msgstr "Kunne ikke starte \"%s\""
 #: ../apps/blueman-browse:77
 msgid "You can enter an alternate browser in service settings"
 msgstr "Du kan fastsætte en anden browser under tjeneste indstillinger"
-
-#, fuzzy
-#~ msgid "Bluetooth"
-#~ msgstr "Bluetooth fra"
-
-#~ msgid ""
-#~ "You might not be able to connect to the Bluetooth network via this machine"
-#~ msgstr ""
-#~ "Du kan muligvis ikke forbinde til bluetooth netværket via denne maskine"
-
-#~ msgid "Authentication request"
-#~ msgstr "Anmodning om godkendelse"
-
-#~ msgid "Cancel"
-#~ msgstr "Annullér"
-
-#~ msgid "Would you like to open %s?"
-#~ msgstr "Ønsker du at åbne %s?"
-
-#~ msgid "Open"
-#~ msgstr "Åben"
-
-#~ msgid ""
-#~ "Receiving File %(0)s\n"
-#~ "%(1).2f%(2)s out of %(3).2f%(4)s (%(5).2f%(6)s/s)"
-#~ msgstr ""
-#~ "Modtager fil %(0)s\n"
-#~ "%(1).2f%(2)s ud af %(3).2f%(4)s (%(5).2f%(6)s/s)"
-
-#~ msgid "Bluetooth device"
-#~ msgstr "Bluetooth enhed"

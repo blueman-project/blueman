@@ -6,16 +6,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-03-29 18:14+0300\n"
-"PO-Revision-Date: 2009-01-17 18:19+0000\n"
-"Last-Translator: Jakub Žáček <dawon.cz@gmail.com>\n"
+"PO-Revision-Date: 2009-03-08 22:14+0000\n"
+"Last-Translator: DrakecZ <Drakec48@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-02-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-04-08 09:49+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -40,12 +40,11 @@ msgstr "Dočasně viditelné"
 
 #: ../data/ui/adapters.ui.h:1
 msgid "Bluetooth Adapters"
-msgstr ""
+msgstr "Bluetooth Adaptéry"
 
 #: ../data/ui/applet-passkey.ui.h:1
-#, fuzzy
 msgid "Pairing request"
-msgstr "Požadavek na spárování pro:"
+msgstr "Párová žádost"
 
 #: ../data/ui/applet-passkey.ui.h:2
 msgid "Pairing request for device:"
@@ -63,7 +62,7 @@ msgstr "Přidat"
 #: ../data/ui/manager-main.ui.h:3
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:244
 msgid "Add this device to known devices list"
-msgstr ""
+msgstr "Přidat toto zařízení do seznamu známých zařízení"
 
 #: ../data/ui/manager-main.ui.h:4
 msgid "Bluetooth Devices"
@@ -83,7 +82,7 @@ msgstr "Procházet"
 
 #: ../data/ui/manager-main.ui.h:9
 msgid "Browse the device using obex ftp"
-msgstr ""
+msgstr "Procházet zařízení pomocí obex ftp"
 
 #: ../data/ui/manager-main.ui.h:10
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:256
@@ -94,7 +93,7 @@ msgstr "Vytvořit spojení se zařízením"
 #: ../data/ui/manager-main.ui.h:11
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:501
 msgid "Mark/Unmark this device as trusted"
-msgstr ""
+msgstr "Označit/Odznačit toto zařízení jako důvěryhodné"
 
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:13
@@ -104,13 +103,13 @@ msgstr "Odstranit"
 #: ../data/ui/manager-main.ui.h:14
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:541
 msgid "Remove this device from the known devices list"
-msgstr ""
+msgstr "Odebrat toto zařízení ze seznamu důvěryhodných zařízení"
 
 #: ../data/ui/manager-main.ui.h:15
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:250
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:507
 msgid "Run the setup assistant for this device"
-msgstr ""
+msgstr "Spustit instalačního pomocníka pro toto zařízení"
 
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:17 ../blueman/gui/manager/ManagerMenu.py:204
@@ -128,7 +127,7 @@ msgstr "Odeslat soubor"
 
 #: ../data/ui/manager-main.ui.h:21
 msgid "Send file(s) to the device"
-msgstr ""
+msgstr "Odeslat soubor(y) do zařízení"
 
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:23
@@ -192,7 +191,7 @@ msgstr "Integrovat se Síťovým manažerem"
 
 #: ../data/ui/services-network.ui.h:11
 msgid "Let Blueman handle the network interfaces"
-msgstr ""
+msgstr "Nechte Bluemana zvládnout síťová rozhraní"
 
 #: ../data/ui/services-network.ui.h:12
 msgid "Network Access Point (NAP)"
@@ -200,15 +199,15 @@ msgstr "Síťový přístupový bod (NAP)"
 
 #: ../data/ui/services-transfer.ui.h:1
 msgid "<b>Advanced</b>"
-msgstr ""
+msgstr "<b>Rozšířené</b>"
 
 #: ../data/ui/services-transfer.ui.h:2
 msgid "<b>File Receiving (Object Push)</b>"
-msgstr ""
+msgstr "<b>Příjem Souborů (Object Push)</b>"
 
 #: ../data/ui/services-transfer.ui.h:3
 msgid "<b>File Sharing (FTP)</b>"
-msgstr ""
+msgstr "<b>Sdílení Souborů (FTP)</b>"
 
 #: ../data/ui/services-transfer.ui.h:4
 msgid "<b>Transfer Settings</b>"
@@ -228,6 +227,8 @@ msgid ""
 "Command to start an obex ftp browser.\n"
 "<i>%d</i> is substituted with device address."
 msgstr ""
+"Příkaz ke spuštění obex ftp prohlížeče.\n"
+"<i>%d</i> je nahrazována adresou zařízení."
 
 #: ../data/ui/services-transfer.ui.h:10
 msgid "Enabled"
@@ -247,13 +248,14 @@ msgstr "<b>Soubor:</b>"
 
 #: ../data/ui/send-dialog.ui.h:2
 msgid "<b>To:</b>"
-msgstr ""
+msgstr "<b>K:</b>"
 
 #: ../data/ui/send-dialog.ui.h:3
-msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
+msgid ""
+"<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr ""
-"<span weight=\"bold\" size=\"large\">Odesílání souborů pomocí Bluetooth</"
-"span>"
+"<span weight=\"bold\" size=\"large\">Odesílání souborů pomocí "
+"Bluetooth</span>"
 
 #: ../data/ui/send-dialog.ui.h:4
 msgid "Bluetooth File Transfer"
@@ -261,19 +263,19 @@ msgstr "Přenos Souboru pomocí Bluetooth"
 
 #: ../data/ui/assistant.ui.h:1
 msgid "<b>Congratulations, device successfully added</b>"
-msgstr ""
+msgstr "<b>Gratuluji, zařízení úspěšně přidáno</b>"
 
 #: ../data/ui/assistant.ui.h:2
 msgid "<b>Connect to:</b>"
-msgstr ""
+msgstr "<b>Připojuji se::</b>"
 
 #: ../data/ui/assistant.ui.h:3
 msgid "<b>Please wait...</b>"
-msgstr ""
+msgstr "<b>Prosím čekejte...</b>"
 
 #: ../data/ui/assistant.ui.h:4
 msgid "<b>Select pairing method to use:</b>"
-msgstr ""
+msgstr "<b>Vyberte párovací metodu k použití:</b>"
 
 #: ../data/ui/assistant.ui.h:5
 msgid ""
@@ -283,62 +285,62 @@ msgid ""
 "It will walk you through the process of configuring and connecting to your "
 "bluetooth enabled devices."
 msgstr ""
+"<b>Vítejte v nastavení zařízení. </b>\n"
+"\n"
+"\n"
+"Provedu vás procesem nastavení a připojení k vašemu Bluetooth zařízení."
 
 #: ../data/ui/assistant.ui.h:9
 msgid "Don't Pair"
-msgstr ""
+msgstr "Nepárujte"
 
 #: ../data/ui/assistant.ui.h:10
 msgid "Use My Own Passkey:"
-msgstr ""
+msgstr "Použít Vlastní Paklíč"
 
 #: ../data/ui/assistant.ui.h:11
 msgid "Use Random Passkey"
-msgstr ""
+msgstr "Použít Náhodný Paklíč"
 
 #: ../data/ui/device-list-widget.ui.h:1
 msgid "Adapter selection"
-msgstr ""
+msgstr "Adapter Selekce"
 
 #: ../data/ui/device-list-widget.ui.h:2
 msgid "Device search progress"
-msgstr ""
+msgstr "Zařízení prohledává"
 
 #: ../data/ui/device-list-widget.ui.h:3
 msgid "Search for devices"
-msgstr ""
+msgstr "Hledám zařízení"
 
 #: ../data/ui/services-headset.ui.h:1
 msgid "<b>Headset Settings</b>"
-msgstr ""
+msgstr "<b>Nastavení Sluchátek</b>"
 
 #: ../data/ui/services-headset.ui.h:2
 msgid "Command to execute when answer button is pressed:"
-msgstr ""
+msgstr "Příkaz k vykonání odpovědi tlačítko je stisknuto:"
 
 #: ../data/ui/applet-plugins-widget.ui.h:1
-#, fuzzy
 msgid "<b>Author:</b>"
-msgstr "<b>Důvěryhodný</b>"
+msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:2
-#, fuzzy
 msgid "<b>Depends on:</b>"
-msgstr "<b>Přátelské jméno</b>"
+msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:3
-#, fuzzy
 msgid "<b>Plugin description:</b>"
-msgstr "<b>Nastavení klienta</b>"
+msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:4
 msgid "Not specified"
 msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:5
-#, fuzzy
 msgid "Unknown"
-msgstr "neznámé"
+msgstr "Neznámé"
 
 #: ../blueman/Functions.py:72
 msgid "Bluetooth Turned Off"
@@ -400,7 +402,7 @@ msgstr "%(service)s na %(device)s"
 
 #: ../blueman/plugins/applet/RecentConns.py:303
 msgid "Adapter for this connection is not available"
-msgstr ""
+msgstr "Adaptér pro toto spojení není přístupný"
 
 #: ../blueman/plugins/applet/NMMonitor.py:104
 msgid ""
@@ -455,7 +457,7 @@ msgstr "Adaptéry"
 
 #: ../blueman/plugins/applet/StandardItems.py:99 ../apps/blueman-manager:220
 msgid "Starting Bluetooth Assistant"
-msgstr ""
+msgstr "Spouštím Bluetooth Asistenta"
 
 #: ../blueman/plugins/applet/StandardItems.py:103 ../apps/blueman-manager:265
 msgid "Starting File Sender"
@@ -479,7 +481,7 @@ msgstr "Spouštím možnost služby"
 
 #: ../blueman/plugins/applet/StandardItems.py:123
 msgid "applet"
-msgstr ""
+msgstr "applet"
 
 #: ../blueman/plugins/applet/StandardItems.py:125
 #: ../blueman/gui/applet/PluginDialog.py:39
@@ -488,7 +490,7 @@ msgstr ""
 
 #: ../blueman/plugins/applet/StatusIcon.py:40
 msgid "Bluetooth applet"
-msgstr ""
+msgstr "Bluetooth applet"
 
 #: ../blueman/plugins/applet/PowerManager.py:29
 msgid "Controls bluetooth adapter power states"
@@ -504,11 +506,11 @@ msgstr "Vypnout všechny adaptéry"
 
 #: ../blueman/plugins/applet/PowerManager.py:97
 msgid "<b>Turn Bluetooth On</b>"
-msgstr ""
+msgstr "<b>Zapnout Bluetooth</b>"
 
 #: ../blueman/plugins/applet/PowerManager.py:104
 msgid "<b>Turn Bluetooth Off</b>"
-msgstr ""
+msgstr "<b>Vypnout Bluetooth</b>"
 
 #: ../blueman/plugins/applet/Menu.py:28
 msgid ""
@@ -526,9 +528,8 @@ msgid ""
 msgstr ""
 
 #: ../blueman/plugins/applet/DiscvManager.py:37
-#, fuzzy
 msgid "Discoverable timeout"
-msgstr "Viditelné... %ss"
+msgstr ""
 
 #: ../blueman/plugins/applet/DiscvManager.py:38
 msgid "Amount of time in seconds discoverable mode will last"
@@ -540,9 +541,8 @@ msgid "Make Discoverable"
 msgstr "Zviditelnit"
 
 #: ../blueman/plugins/applet/DiscvManager.py:53
-#, fuzzy
 msgid "Make the default adapter temporarily visible"
-msgstr "Zviditelnit výchozí adpatér na 1 minutu"
+msgstr ""
 
 #: ../blueman/plugins/applet/DiscvManager.py:80
 #, python-format
@@ -563,7 +563,7 @@ msgstr ""
 
 #: ../blueman/plugins/services/Transfer.py:137 ../apps/blueman-sendto:109
 msgid "obex-data-server not available"
-msgstr ""
+msgstr "obex-data-server není přístupný"
 
 #: ../blueman/plugins/services/Network.py:32
 #: ../blueman/plugins/services/Network.py:45
@@ -577,7 +577,7 @@ msgstr "Selhalo použití síťových nastavení"
 #: ../blueman/plugins/services/Headset.py:32
 #: ../blueman/plugins/services/Headset.py:43
 msgid "Headset"
-msgstr ""
+msgstr "Sluchátka"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:39 ../blueman/DeviceClass.py:64
@@ -602,7 +602,7 @@ msgstr "laptop"
 #. translators: device class
 #: ../blueman/DeviceClass.py:47
 msgid "handheld"
-msgstr ""
+msgstr "kapesní"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:49
@@ -617,7 +617,7 @@ msgstr "mobilní"
 #. translators: device class
 #: ../blueman/DeviceClass.py:68
 msgid "cordless"
-msgstr ""
+msgstr "bezdrátový"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:70
@@ -662,7 +662,7 @@ msgstr "klávesnice"
 #. translators: device class
 #: ../blueman/DeviceClass.py:144
 msgid "pointing"
-msgstr ""
+msgstr "bodování"
 
 #: ../blueman/gui/DeviceSelectorDialog.py:31
 msgid "Select Device"
@@ -671,15 +671,23 @@ msgstr "Vybrat zařízení"
 #: ../blueman/gui/CommonUi.py:47
 msgid "translator-credits"
 msgstr ""
+"Launchpad Contributions:\n"
+"  6n64 https://launchpad.net/~6n\n"
+"  Dr.Silenec https://launchpad.net/~dr-silenec\n"
+"  DrakecZ https://launchpad.net/~drakec48\n"
+"  Jakub Žáček https://launchpad.net/~dawon\n"
+"  Kamil Páral https://launchpad.net/~kamil.paral\n"
+"  Mr. Ego https://launchpad.net/~pavel-benak\n"
+"  clever_fox https://launchpad.net/~clever-fox\n"
+"  xills pills https://launchpad.net/~adamturan"
 
 #: ../blueman/gui/CommonUi.py:50
 msgid "Blueman is a GTK based Bluetooth manager"
 msgstr "Blueman ja manažer pro bluetooth založený na GTK"
 
 #: ../blueman/gui/AdapterInfo.py:27
-#, fuzzy
 msgid "Adapter Properties"
-msgstr "Adaptéry"
+msgstr ""
 
 #: ../blueman/gui/applet/PluginDialog.py:98
 #: ../blueman/gui/applet/PluginDialog.py:99
@@ -749,7 +757,7 @@ msgstr "Služba sérivého portu"
 #. def on_type_changed(item, type):
 #. if item.active:
 #. setattr(conns.props, device.Address, type)
-#.
+#. 
 #. conns = Config("conn_types")
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:306
 msgid "Serial Ports"
@@ -862,15 +870,15 @@ msgstr "_Nápověda"
 
 #: ../blueman/gui/manager/ManagerMenu.py:58
 msgid "Get Help Online..."
-msgstr ""
+msgstr "Získat Pomoc Online..."
 
 #: ../blueman/gui/manager/ManagerMenu.py:63
 msgid "Translate This Application..."
-msgstr ""
+msgstr "Přeložit Aplikaci..."
 
 #: ../blueman/gui/manager/ManagerMenu.py:68
 msgid "Report a Problem"
-msgstr ""
+msgstr "Oznámit Problém"
 
 #: ../blueman/gui/manager/ManagerMenu.py:78
 msgid "Device Manager"
@@ -955,9 +963,8 @@ msgid "Dialup Networking (DUN)"
 msgstr "Vytáčené připojení (DUN)"
 
 #: ../blueman/main/applet/Transfer.py:173
-#, fuzzy
 msgid "Incoming file"
-msgstr "Příchozí soubor"
+msgstr "Přicházející Soubor"
 
 #: ../blueman/main/applet/Transfer.py:174
 #, python-format
@@ -974,58 +981,54 @@ msgid "Reject"
 msgstr "Odmítnout"
 
 #: ../blueman/main/applet/Transfer.py:183
-#, fuzzy
 msgid "Receiving file"
-msgstr "Přijímání souboru"
+msgstr "Příjmám Soubor"
 
 #: ../blueman/main/applet/Transfer.py:184
-#, fuzzy, python-format
+#, python-format
 msgid "Receiving file %(0)s from %(1)s"
-msgstr "Příchozí soubor %(0)s ze %(1)s"
+msgstr "Příjímám Soubor %(0)s from %(1)s"
 
 #: ../blueman/main/applet/Transfer.py:220
 #: ../blueman/main/applet/Transfer.py:242
-#, fuzzy
 msgid "File received"
-msgstr "Soubor uložen"
+msgstr "Soubor Přjat"
 
 #: ../blueman/main/applet/Transfer.py:221
 #: ../blueman/main/applet/Transfer.py:243
 #, python-format
 msgid "File %(0)s from %(1)s successfully received"
-msgstr ""
+msgstr "Soubor %(0)s from %(1)s úspěšně přijat"
 
 #: ../blueman/main/applet/Transfer.py:230
-#, fuzzy
 msgid "Transfer failed"
-msgstr "Přenos"
+msgstr "Přenos selhal"
 
 #: ../blueman/main/applet/Transfer.py:231
 #, python-format
 msgid "Transfer of file %(0)s failed"
-msgstr ""
+msgstr "Přenos souborů %(0)s selhal"
 
 #: ../blueman/main/applet/Transfer.py:249
 #: ../blueman/main/applet/Transfer.py:259
-#, fuzzy
 msgid "Files received"
-msgstr "Soubor uložen"
+msgstr "Soubory přijaty"
 
 #: ../blueman/main/applet/Transfer.py:250
 #, python-format
 msgid "Received %d file in the background"
 msgid_plural "Received %d files in the background"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Příjem %d souboru na pozadí"
+msgstr[1] "Příjem %d souborů na pozadí"
+msgstr[2] "Příjem %d souborů na pozadí"
 
 #: ../blueman/main/applet/Transfer.py:260
 #, python-format
 msgid "Received %d more file in the background"
 msgid_plural "Received %d more files in the background"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Příjem %d souboru na pozadí."
+msgstr[1] "Příjem %d více souborů na pozadí."
+msgstr[2] "Příjem %d více souborů na pozadí."
 
 #: ../blueman/main/applet/BluezAgent.py:126
 #, python-format
@@ -1083,14 +1086,13 @@ msgid "Always accept"
 msgstr "Vždy přijmout"
 
 #: ../blueman/main/applet/BluezAgent.py:281
-#, fuzzy
 msgid "Confirm value"
-msgstr "Potvrdit"
+msgstr "Potvrdit hodnotu"
 
 #: ../blueman/main/applet/BluezAgent.py:282
-#, fuzzy, python-format
+#, python-format
 msgid "Pairing with: %s"
-msgstr "Požadavek na spárování s %s"
+msgstr "Páruji s %s"
 
 #: ../blueman/main/applet/NetworkManager.py:73
 #: ../blueman/main/applet/NetworkManager.py:76
@@ -1157,11 +1159,11 @@ msgstr "Bluetooth musí být zapnutý, aby správce zařízení fungoval"
 
 #: ../apps/blueman-manager:105
 msgid "Connection to BlueZ failed"
-msgstr ""
+msgstr "Připojení k BlueZ selhalo"
 
 #: ../apps/blueman-manager:107
 msgid "Bluez daemon is not running, blueman-manager cannot continue."
-msgstr ""
+msgstr "Bluez daemon neběží, blueman-manager nemůže pokračovat."
 
 #: ../apps/blueman-manager:192 ../apps/blueman-assistant:258
 msgid "Adding"
@@ -1184,28 +1186,28 @@ msgid "Bonding"
 msgstr "Spárování"
 
 #: ../apps/blueman-adapters:57
-#, fuzzy
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
-msgstr "Bluetooth musí být zapnutý, aby správce zařízení fungoval"
+msgstr ""
 
 #: ../apps/blueman-adapters:145
 msgid "Always"
-msgstr ""
+msgstr "Vždy"
 
 #: ../apps/blueman-adapters:149
 #, c-format
 msgid "%d Minute"
 msgid_plural "%d Minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d Minuta"
+msgstr[1] "%d Minuty"
+msgstr[2] "%d Minuty"
 
 #: ../apps/blueman-sendto:110
 msgid "obex-data-server is probably not installed"
-msgstr ""
+msgstr "obex-data-server není pravděpodobně nainstalován"
 
 #: ../apps/blueman-sendto:138
 msgid "Error occurred"
-msgstr ""
+msgstr "Nastala chyba"
 
 #: ../apps/blueman-sendto:165 ../apps/blueman-sendto:198
 msgid "Sending File %(0)s/%(1)s (%(2).2f %(3)s/s) ETA: %(4)s"
@@ -1245,26 +1247,24 @@ msgid "Send files to this device"
 msgstr "Odeslat soubory do tohoto zařízení"
 
 #: ../apps/blueman-sendto:305
-#, fuzzy
 msgid "Bluetooth needs to be turned on for file sending to work"
-msgstr "Bluetooth musí být zapnutý, aby správce zařízení fungoval"
+msgstr ""
 
 #: ../apps/blueman-sendto:359
 msgid "Select files to send"
-msgstr ""
+msgstr "Vyberte soubory k odeslání"
 
 #: ../apps/blueman-assistant:63
 msgid "Start configuration assistant for this device"
-msgstr ""
+msgstr "Spustit konfiguračnho asistenta pro toto zařízení"
 
 #: ../apps/blueman-assistant:67
-#, fuzzy
 msgid "Bluetooth needs to be turned on for the bluetooth assistant to work"
-msgstr "Bluetooth musí být zapnutý, aby správce zařízení fungoval"
+msgstr ""
 
 #: ../apps/blueman-assistant:81
 msgid "Bluetooth Assistant"
-msgstr ""
+msgstr "Bluetooth Asistent"
 
 #: ../apps/blueman-assistant:257
 msgid "<b>Adding Device...</b>"
@@ -1277,70 +1277,47 @@ msgid ""
 "\n"
 "Enter passkey <b>%s</b> on the device."
 msgstr ""
+"<b>Párování...</b>\n"
+"\n"
+"Zadejte paklíč <b>%s</b> na zařízení."
 
 #: ../apps/blueman-assistant:270
 msgid "<b>Failed to add device</b>"
-msgstr ""
+msgstr "<b>Nepodařilo se přidat zařízení</b>"
 
 #: ../apps/blueman-assistant:305
 msgid "Input Service"
-msgstr ""
+msgstr "Vstupní Služby"
 
 #: ../apps/blueman-assistant:323
 msgid "A2DP Service"
-msgstr ""
+msgstr "A2DP Služby"
 
 #: ../apps/blueman-assistant:328
 msgid "Headset Service"
-msgstr ""
+msgstr "Sluchátka"
 
 #: ../apps/blueman-assistant:332
 msgid "Don't connect"
-msgstr ""
+msgstr "Nepřipojovat"
 
 #: ../apps/blueman-assistant:347
 msgid "<b>Device added and connected successfuly</b>"
-msgstr ""
+msgstr "<b>Zařízení úspěšně přidáno a připojeno</b>"
 
 #: ../apps/blueman-assistant:353
 msgid "<b>Device added successfuly, but failed to connect</b>"
-msgstr ""
+msgstr "<b>Zařízení přidané úspěšně, ale nepodařilo se připojit</b>"
 
 #: ../apps/blueman-browse:49
 msgid "Browse this device"
-msgstr ""
+msgstr "Procházet zařízení"
 
 #: ../apps/blueman-browse:76
 #, c-format
 msgid "Failed to launch \"%s\""
-msgstr ""
+msgstr "Nepodařilo se spustit \"%s\""
 
 #: ../apps/blueman-browse:77
 msgid "You can enter an alternate browser in service settings"
-msgstr ""
-
-#, fuzzy
-#~ msgid "Bluetooth"
-#~ msgstr "Bluetooth vypnuto"
-
-#~ msgid "Authentication request"
-#~ msgstr "Požadavek na ověření"
-
-#~ msgid "Cancel"
-#~ msgstr "Storno"
-
-#~ msgid "Would you like to open %s?"
-#~ msgstr "Chcete otevřít %s?"
-
-#~ msgid "Open"
-#~ msgstr "Otevřít"
-
-#~ msgid ""
-#~ "Receiving File %(0)s\n"
-#~ "%(1).2f%(2)s out of %(3).2f%(4)s (%(5).2f%(6)s/s)"
-#~ msgstr ""
-#~ "Přijímání souboru %(0)s\n"
-#~ "%(1).2f%(2)s ze %(3).2f%(4)s (%(5).2f%(6)s/s)"
-
-#~ msgid "Bluetooth device"
-#~ msgstr "Bluetooth zářízení"
+msgstr "Můžete zadat alternativní prohlížeče v nastavení"

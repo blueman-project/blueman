@@ -6,16 +6,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-03-29 18:14+0300\n"
-"PO-Revision-Date: 2009-01-09 16:00+0000\n"
-"Last-Translator: zeugma <Unknown>\n"
+"PO-Revision-Date: 2009-03-04 07:24+0000\n"
+"Last-Translator: Said Tahsin Dane <Unknown>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-02-25 15:16+0000\n"
+"X-Launchpad-Export-Date: 2009-04-08 09:48+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -24,7 +24,7 @@ msgstr ""
 
 #: ../data/ui/adapters-tab.ui.h:2
 msgid "<b>Visibility setting</b>"
-msgstr ""
+msgstr "Görünebilirlik ayarı"
 
 #: ../data/ui/adapters-tab.ui.h:3
 msgid "Always visible"
@@ -36,19 +36,19 @@ msgstr "Gizli"
 
 #: ../data/ui/adapters-tab.ui.h:5
 msgid "Temporary visible"
-msgstr ""
+msgstr "Geçici olarak görünür"
 
 #: ../data/ui/adapters.ui.h:1
 msgid "Bluetooth Adapters"
-msgstr ""
+msgstr "Bluetooth Adaptörleri"
 
 #: ../data/ui/applet-passkey.ui.h:1
 msgid "Pairing request"
-msgstr ""
+msgstr "Eşleşme isteği"
 
 #: ../data/ui/applet-passkey.ui.h:2
 msgid "Pairing request for device:"
-msgstr ""
+msgstr "Cihaz için eşleşme isteği:"
 
 #: ../data/ui/applet-passkey.ui.h:3
 msgid "Show input"
@@ -62,7 +62,7 @@ msgstr "Ekle"
 #: ../data/ui/manager-main.ui.h:3
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:244
 msgid "Add this device to known devices list"
-msgstr ""
+msgstr "Bu aygıtı bilinen aygıtlar listesine ekle"
 
 #: ../data/ui/manager-main.ui.h:4
 msgid "Bluetooth Devices"
@@ -82,13 +82,13 @@ msgstr "Gözat"
 
 #: ../data/ui/manager-main.ui.h:9
 msgid "Browse the device using obex ftp"
-msgstr ""
+msgstr "Cihaza obex ftp kullanarak gözat"
 
 #: ../data/ui/manager-main.ui.h:10
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:256
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:482
 msgid "Create bonding with the device"
-msgstr ""
+msgstr "Aygıtla eşleştirme oluştur"
 
 #: ../data/ui/manager-main.ui.h:11
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:501
@@ -103,13 +103,13 @@ msgstr "Kaldır"
 #: ../data/ui/manager-main.ui.h:14
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:541
 msgid "Remove this device from the known devices list"
-msgstr ""
+msgstr "Bu aygıtı bilinen aygıtlar listesinden kaldır"
 
 #: ../data/ui/manager-main.ui.h:15
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:250
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:507
 msgid "Run the setup assistant for this device"
-msgstr ""
+msgstr "Bu aygıt için kurulum asistanını başlat"
 
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:17 ../blueman/gui/manager/ManagerMenu.py:204
@@ -118,7 +118,7 @@ msgstr "Ara"
 
 #: ../data/ui/manager-main.ui.h:18
 msgid "Search for nearby devices"
-msgstr ""
+msgstr "Yakındaki aygıtları ara"
 
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:20
@@ -127,7 +127,7 @@ msgstr "Dosya Gönder"
 
 #: ../data/ui/manager-main.ui.h:21
 msgid "Send file(s) to the device"
-msgstr ""
+msgstr "Aygıta dosyaları gönder"
 
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:23
@@ -161,7 +161,7 @@ msgstr "<b>Ağ Ayarları</b>"
 
 #: ../data/ui/services-network.ui.h:4
 msgid "<b>No DHCP servers installed</b>"
-msgstr ""
+msgstr "DHCP sunucusu yüklü değil"
 
 #: ../data/ui/services-network.ui.h:5
 msgid "<b>Services</b>"
@@ -183,7 +183,7 @@ msgstr "Şebekeyi grupla"
 
 #: ../data/ui/services-network.ui.h:9
 msgid "IP Address:"
-msgstr "IP Adresi"
+msgstr "IP Adresi:"
 
 #: ../data/ui/services-network.ui.h:10
 msgid "Integrate with NetworkManager"
@@ -249,7 +249,8 @@ msgid "<b>To:</b>"
 msgstr ""
 
 #: ../data/ui/send-dialog.ui.h:3
-msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
+msgid ""
+"<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr ""
 "<span weight=\"bold\" size=\"large\">Bluetooth yoluyla dosyaları yollamak\r\n"
 "</span>"
@@ -316,14 +317,12 @@ msgid "Command to execute when answer button is pressed:"
 msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:1
-#, fuzzy
 msgid "<b>Author:</b>"
-msgstr "<b>Dosya:</b>"
+msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:2
-#, fuzzy
 msgid "<b>Depends on:</b>"
-msgstr "<b>Servisler</b>"
+msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:3
 msgid "<b>Plugin description:</b>"
@@ -334,9 +333,8 @@ msgid "Not specified"
 msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:5
-#, fuzzy
 msgid "Unknown"
-msgstr "bilinmeyen"
+msgstr ""
 
 #: ../blueman/Functions.py:72
 msgid "Bluetooth Turned Off"
@@ -524,9 +522,8 @@ msgid ""
 msgstr ""
 
 #: ../blueman/plugins/applet/DiscvManager.py:37
-#, fuzzy
 msgid "Discoverable timeout"
-msgstr "Keşfedilebilir... %ss"
+msgstr ""
 
 #: ../blueman/plugins/applet/DiscvManager.py:38
 msgid "Amount of time in seconds discoverable mode will last"
@@ -668,6 +665,14 @@ msgstr "Aygıt Seç"
 #: ../blueman/gui/CommonUi.py:47
 msgid "translator-credits"
 msgstr ""
+"Launchpad Contributions:\n"
+"  DenizCakir https://launchpad.net/~dezincakir\n"
+"  Emre UGUR https://launchpad.net/~emrwe\n"
+"  Murat Bişkin https://launchpad.net/~muratbiskin\n"
+"  Said Tahsin Dane https://launchpad.net/~tasomaniac\n"
+"  blablamate https://launchpad.net/~blablamate\n"
+"  denz https://launchpad.net/~psycho2dct\n"
+"  zeugma https://launchpad.net/~sunder67"
 
 #: ../blueman/gui/CommonUi.py:50
 msgid "Blueman is a GTK based Bluetooth manager"
@@ -745,7 +750,7 @@ msgstr ""
 #. def on_type_changed(item, type):
 #. if item.active:
 #. setattr(conns.props, device.Address, type)
-#.
+#. 
 #. conns = Config("conn_types")
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:306
 msgid "Serial Ports"
@@ -976,9 +981,8 @@ msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:220
 #: ../blueman/main/applet/Transfer.py:242
-#, fuzzy
 msgid "File received"
-msgstr "Dosya Kaydedildi"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:221
 #: ../blueman/main/applet/Transfer.py:243
@@ -987,9 +991,8 @@ msgid "File %(0)s from %(1)s successfully received"
 msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:230
-#, fuzzy
 msgid "Transfer failed"
-msgstr "Transfer"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:231
 #, python-format
@@ -998,21 +1001,22 @@ msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:249
 #: ../blueman/main/applet/Transfer.py:259
-#, fuzzy
 msgid "Files received"
-msgstr "Dosya Kaydedildi"
+msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:250
 #, python-format
 msgid "Received %d file in the background"
 msgid_plural "Received %d files in the background"
 msgstr[0] ""
+msgstr[1] ""
 
 #: ../blueman/main/applet/Transfer.py:260
 #, python-format
 msgid "Received %d more file in the background"
 msgid_plural "Received %d more files in the background"
 msgstr[0] ""
+msgstr[1] ""
 
 #: ../blueman/main/applet/BluezAgent.py:126
 #, python-format
@@ -1070,9 +1074,8 @@ msgid "Always accept"
 msgstr "Her zaman kabul et"
 
 #: ../blueman/main/applet/BluezAgent.py:281
-#, fuzzy
 msgid "Confirm value"
-msgstr "Doğrula"
+msgstr ""
 
 #: ../blueman/main/applet/BluezAgent.py:282
 #, python-format
@@ -1298,19 +1301,3 @@ msgstr ""
 #: ../apps/blueman-browse:77
 msgid "You can enter an alternate browser in service settings"
 msgstr ""
-
-#, fuzzy
-#~ msgid "Bluetooth"
-#~ msgstr "Bluetooth Kapalı"
-
-#~ msgid "Authentication request"
-#~ msgstr "Doğrulama gerekli"
-
-#~ msgid "Cancel"
-#~ msgstr "İptal"
-
-#~ msgid "Open"
-#~ msgstr "Aç"
-
-#~ msgid "Bluetooth device"
-#~ msgstr "Bluetooth aygıtı"
