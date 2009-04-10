@@ -44,6 +44,7 @@ class StatusIcon(AppletPlugin, gtk.StatusIcon):
 	
 	def Query(self):
 		rets = self.Applet.Plugins.Run("on_query_status_icon_visibility")
+
 		if not StatusIcon.FORCE_SHOW in rets:
 			if StatusIcon.FORCE_HIDE in rets:
 				self.props.visible = False
@@ -55,6 +56,8 @@ class StatusIcon(AppletPlugin, gtk.StatusIcon):
 						self.props.visible = False
 					else:
 						self.props.visible = True
+		else:
+			self.props.visible = True
 		
 	def on_adapter_added(self, path):
 		self.Query()

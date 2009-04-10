@@ -42,7 +42,6 @@ class KillSwitch(AppletPlugin):
 		self.Manager.SetGlobalState(state)
 		
 	def on_query_status_icon_visibility(self):
-		return 2
 		if self.Manager.GetGlobalState():
 			return 1 #StatusIcon.SHOW
 		else:
