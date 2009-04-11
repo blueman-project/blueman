@@ -102,7 +102,8 @@ class ManagerDeviceList(DeviceList):
 	def drag_recv(self, widget, context, x, y, selection, target_type, time):
 
 		uris = selection.get_uris()
-			
+		uris = list(uris)
+		
 		context.finish(True, False, time)
 		
 		path = self.get_path_at_pos(x, y)
