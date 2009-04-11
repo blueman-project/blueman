@@ -82,9 +82,11 @@ class PowerManager(AppletPlugin):
 		return True
 		
 	def on_adapter_added(self, path):
+		adapter = Bluez.Adapter(path)
 		if self.bluetooth_off:
-			adapter = Bluez.Adapter(path)
-			adapter.SetProperty("Powered", False)		
+			adapter.SetProperty("Powered", False)
+		else:
+			adapter.SetProperty("Powered", True)		
 		
 	def __setattr__(self, key, value):
 		if key == "bluetooth_off":
