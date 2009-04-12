@@ -26,7 +26,6 @@ import pickle
 import base64
 import gtk.gdk
 import zlib
-from blueman.main.Config import Config
 from blueman.Functions import *
 from blueman.main.Device import Device
 from blueman.bluez.Device import Device as BluezDevice
@@ -41,23 +40,7 @@ _ = gettext.gettext
 
 REGISTRY_VERSION = 0
 
-def store_state():
-	if RecentConns.items:
-		items = []
-		for i in RecentConns.items:
-			x = i.copy()
-			x["device"] = None
-			x["mitem"] = None
-			x["gsignal"] = 0
-			items.append(x)
 
-		
-		dump = base64.b64encode(zlib.compress(pickle.dumps((REGISTRY_VERSION, items), pickle.HIGHEST_PROTOCOL), 9))
-	
-		c = Config()
-		c.props.recent_connections = dump
-
-atexit.register(store_state)
 
 class AdapterNotFound(Exception):
 	pass
@@ -78,10 +61,13 @@ class RecentConns(AppletPlugin, gtk.Menu):
 				  _("Maximum items"),
 				  _("The maximum number of items RecentConns menu will display"),
 				  6,
-				  20)
+				  20),
+		"recent_connections" : (str, "")
 	}
 	
 	items = None
+	atexit_registered = False
+
 	
 	def on_load(self, applet):
 		self.Applet = applet
@@ -95,6 +81,25 @@ class RecentConns(AppletPlugin, gtk.Menu):
 		self.Item.set_submenu(self)
 		
 		self.deferred = False
+		if not RecentConns.atexit_registered:
+			atexit.register(self.store_state)
+			RecentConns.atexit_registered = True
+		
+	def store_state(self):
+		if RecentConns.items:
+			items = []
+			for i in RecentConns.items:
+				x = i.copy()
+				x["device"] = None
+				x["mitem"] = None
+				x["gsignal"] = 0
+				items.append(x)
+
+		
+			dump = base64.b64encode(zlib.compress(pickle.dumps((REGISTRY_VERSION, items), pickle.HIGHEST_PROTOCOL), 9))
+	
+			self.set_option("recent_connections", dump)
+
 		
 		
 		
@@ -332,8 +337,7 @@ class RecentConns(AppletPlugin, gtk.Menu):
 		
 		
 	def recover_state(self):
-		c = Config()
-		dump = c.props.recent_connections
+		dump = self.get_option("recent_connections")
 		try:
 			(version, items) = pickle.loads(zlib.decompress(base64.b64decode(dump)))
 		except:
