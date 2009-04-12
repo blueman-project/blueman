@@ -22,6 +22,7 @@
     </child>
     <child>
       <object class="GtkVBox" id="vbox1">
+        <property name="width_request">370</property>
         <property name="visible">True</property>
         <property name="spacing">12</property>
         <child>
@@ -69,13 +70,13 @@
         </child>
         <child>
           <object class="GtkLabel" id="description">
+            <property name="width_request">360</property>
             <property name="visible">True</property>
             <property name="xalign">0</property>
             <property name="yalign">0</property>
             <property name="label" translatable="yes">Not specified</property>
             <property name="use_markup">True</property>
             <property name="wrap">True</property>
-            <property name="wrap_mode">word-char</property>
             <property name="selectable">True</property>
           </object>
           <packing>
