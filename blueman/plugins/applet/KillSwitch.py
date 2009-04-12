@@ -27,14 +27,28 @@ import blueman.main.KillSwitch as _KillSwitch
 
 class KillSwitch(AppletPlugin):
 	__author__ = "Walmis"
-	__autoload__ = False
-	__description__ = _("Toggles a Bluetooth killswitch when Bluetooth power state changes. Some laptops, mostly Dells have this feature")
+	__description__ = _("Toggles a Bluetooth killswitch when Bluetooth power state changes. Some laptops, mostly Dells have this feature\n<b>Note</b>: This plugin stays on automatically if it detects a killswitch.")
 	__depends__ = ["PowerManager", "StatusIcon"]
 	__icon__ = "system-shutdown"
+	__options__  = {
+		"checked" : (bool, False)
+	}
 	
 	def on_load(self, applet):
 		self.Manager = _KillSwitch.Manager()
 		
+		if not self.get_option("checked"):
+			gobject.timeout_add(1000, self.check)
+			
+	def check(self):
+		try:
+			if len(self.Manager.devices) == 0:
+				self.set_option("checked", True)
+				#this machine does not support bluetooth killswitch, let's unload
+				self.Applet.Plugins.SetConfig("KillSwitch", False)
+		except:
+			pass		
+
 	def on_unload(self):
 		pass
 		
