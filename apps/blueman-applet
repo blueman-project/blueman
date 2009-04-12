@@ -154,11 +154,15 @@ class BluemanApplet(object):
 			
 			dprint("loading", cls)
 			inst = cls(self.applet)
-			self.__plugins[cls.__name__] = inst
+			try:
+				inst._load(self.applet)
+			except:
+				dprint("Failed to load", cls.__name__)
+			else:
+				self.__plugins[cls.__name__] = inst
 			
-			inst._load(self.applet)
-			self.__loaded.append(cls.__name__)
-			self.emit("plugin-loaded", cls.__name__)
+				self.__loaded.append(cls.__name__)
+				self.emit("plugin-loaded", cls.__name__)
 			
 		def __getattr__(self, key):
 			try:
