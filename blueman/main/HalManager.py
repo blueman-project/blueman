@@ -53,13 +53,14 @@ class HalManager(dbus.proxies.Interface):
 				device.SetPropertyString("info.category", "net.80203")
 				device.AddCapability("net.80203")
 
-	def register(self, device_file, bd_addr):
+	def register(self, device_file, bd_addr, ok, err):
 
 		existing = self.FindDeviceStringMatch("serial.device", device_file)
 
 		if len(existing) > 0:
 			dprint("Already registered")
-			return False		
+			ok()
+			return	
 		
 		ref = self.NewDevice()
 		r = re.search("rfcomm([0-9]*)$", device_file)
@@ -80,9 +81,9 @@ class HalManager(dbus.proxies.Interface):
 
 			if capabilities == None or capabilities == []:
 				dprint("Removing temp UDI")
-				return False
+				err(Exception)
 			else:
-				
+				ok()
 				try:
 					dprint("Generating udev rule")
 					rule_file = name.next()
@@ -144,11 +145,8 @@ class HalManager(dbus.proxies.Interface):
 		
 				gobject.timeout_add(1000, check_hal, device)
 		
-
 		dprint("Probing device %s for capabilities" % device_file)
 		probe_modem(device_file, probe_response)
-		
-		return True
 		
 	def _create_layer(self):
 		ref = self.NewDevice()
@@ -189,10 +187,4 @@ class HalManager(dbus.proxies.Interface):
 	def exists(self, device_file):
 		ports = self.FindDeviceStringMatch("serial.device", device_file)
 		return len(ports) > 0
-			
-			
-	
-			
-		
-		
 		

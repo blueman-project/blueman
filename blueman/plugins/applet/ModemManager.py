@@ -57,10 +57,22 @@ class ModemManager(AppletPlugin):
 		
 			m = Mechanism()
 
-			m.HalRegisterModemPort(rfcomm_device, props["Address"])
+			def reply():
+				dprint("Registered modem")
+				
+			def err(excp):
+				d = gtk.MessageDialog(None, type=gtk.MESSAGE_WARNING)
+				d.props.icon_name = "blueman"
+				d.props.text = _("CDMA or GSM not supported")
+				d.props.secondary_text = _("The device %s does not appear to support GSM/CDMA.\nThis connection will not work.") % props["Alias"]
 
-		
-			dprint("Registered modem")
+				d.add_button(gtk.STOCK_OK, gtk.RESPONSE_NO)
+				resp = d.run()
+				d.destroy()
+
+			m.HalRegisterModemPort(rfcomm_device, props["Address"], reply_handler=reply, error_handler=err)
+
+			
 		
 	#in: bluez_device_path, rfcomm_device
 	#@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="s", out_signature="")
