@@ -22,11 +22,13 @@ import dbus
 import gettext
 import time
 import atexit
+import weakref
 import pickle
 import base64
 import gtk.gdk
 import zlib
 from blueman.Functions import *
+from blueman.Functions import _
 from blueman.main.Device import Device
 from blueman.bluez.Device import Device as BluezDevice
 from blueman.bluez.Adapter import Adapter
@@ -36,17 +38,21 @@ import blueman.Sdp as sdp
 
 from blueman.plugins.AppletPlugin import AppletPlugin
 
-_ = gettext.gettext
-
 REGISTRY_VERSION = 0
-
-
 
 class AdapterNotFound(Exception):
 	pass
 	
 class DeviceNotFound(Exception):
 	pass
+
+def store_state():
+	try:
+		RecentConns.inst.store_state()
+	except ReferenceError:
+		pass
+		
+atexit.register(store_state)
 
 class RecentConns(AppletPlugin, gtk.Menu):
 	__depends__ = ["Menu", "PowerManager"]
@@ -66,8 +72,7 @@ class RecentConns(AppletPlugin, gtk.Menu):
 	}
 	
 	items = None
-	atexit_registered = False
-
+	inst = None
 	
 	def on_load(self, applet):
 		self.Applet = applet
@@ -81,9 +86,7 @@ class RecentConns(AppletPlugin, gtk.Menu):
 		self.Item.set_submenu(self)
 		
 		self.deferred = False
-		if not RecentConns.atexit_registered:
-			atexit.register(self.store_state)
-			RecentConns.atexit_registered = True
+		RecentConns.inst = weakref.proxy(self)
 		
 	def store_state(self):
 		if RecentConns.items:
@@ -100,9 +103,6 @@ class RecentConns(AppletPlugin, gtk.Menu):
 	
 			self.set_option("recent_connections", dump)
 
-		
-		
-		
 	def change_sensitivity(self, sensitive):
 		sensitive = sensitive and self.Applet.Manager and self.Applet.Plugins.PowerManager.GetBluetoothStatus() and (len(RecentConns.items) > 0)
 		self.Item.props.sensitive = sensitive
@@ -123,6 +123,9 @@ class RecentConns(AppletPlugin, gtk.Menu):
 					if i["gsignal"]:
 						i["device"].disconnect(i["gsignal"])
 						i["gsignal"] = None
+			
+		RecentConns.items = None
+		self.destroy()
 	
 	def initialize(self):
 		dprint("rebuilding menu")
@@ -136,6 +139,10 @@ class RecentConns(AppletPlugin, gtk.Menu):
 		self.foreach(each)
 
 		RecentConns.items.sort(compare_by("time"), reverse=True)
+		for i in RecentConns.items[self.get_option("max_items"):]:
+			if i["gsignal"]:
+				i["device"].disconnect(i["gsignal"])
+				
 		RecentConns.items = RecentConns.items[0:self.get_option("max_items")]
 		RecentConns.items.reverse()
 		
@@ -171,6 +178,7 @@ class RecentConns(AppletPlugin, gtk.Menu):
 					if i["device"]:
 						if i["gsignal"]:
 							i["device"].disconnect(i["gsignal"])
+							i["gsignal"] = 0
 						#i["device"].Destroy()
 				
 					try:
@@ -232,7 +240,6 @@ class RecentConns(AppletPlugin, gtk.Menu):
 		item["time"] = time.time()
 		item["device"] = device #device object
 		item["mitem"] = None #menu item object
-		item["gsignal"] = item["device"].connect("invalidated", self.on_device_removed, item)
 		
 		for i in RecentConns.items:
 			if i["adapter"] == item["adapter"] and \
@@ -240,14 +247,19 @@ class RecentConns(AppletPlugin, gtk.Menu):
 			   i["service"] == item["service"] and \
 			   i["conn_args"] == item["conn_args"]:
 				i["time"] = item["time"]
+				if i["gsignal"]:
+					i["device"].disconnect(i["gsignal"])				
+				
 				i["device"] = item["device"]
+				i["gsignal"] = item["device"].connect("invalidated", self.on_device_removed, i)
 				self.initialize()
 				return
 		
+		item["gsignal"] = item["device"].connect("invalidated", self.on_device_removed, item)
 		RecentConns.items.append(item)
 		self.initialize()
 		
-		store_state()
+		self.store_state()
 		
 	def on_item_activated(self, menu_item, item):
 		dprint("Connect", item["address"], item["service"])

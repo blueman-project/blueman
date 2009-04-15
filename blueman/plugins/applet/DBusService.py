@@ -63,7 +63,7 @@ class DBusService(AppletPlugin):
 			dev = Device(BluezDevice(object_path))
 			try:
 				self.Applet.Plugins.RecentConns.notify(dev, interface, args )
-			except NameError:
+			except KeyError:
 				dprint("RecentConns plugin is unavailable")
 		
 		
@@ -106,7 +106,7 @@ class DBusService(AppletPlugin):
 		dev = Device(BluezDevice(device))
 		try:
 			self.Applet.Plugins.RecentConns.notify(dev.Copy(), "org.bluez.Serial", [uuid] )
-		except NameError:
+		except KeyError:
 			pass
 		
 		dev.Services["serial"].Connect(uuid, reply_handler=reply, error_handler=err)
