@@ -157,7 +157,11 @@ class HalManager(dbus.proxies.Interface):
 		bt_adapter = self.FindDeviceByCapability("bluetooth_hci");
 
 		device.SetPropertyString("info.linux.driver", "rfcomm")
-		device.SetPropertyString("info.parent", bt_adapter[0])
+		try:
+			device.SetPropertyString("info.parent", bt_adapter[0])
+		except:
+			pass
+			
 		device.SetPropertyString("info.product", "Bluetooth RFCOMM")
 
 		self.CommitToGdl(ref, "/org/freedesktop/Hal/devices/bt_rfcomm_layer")
