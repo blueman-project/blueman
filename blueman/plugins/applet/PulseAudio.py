@@ -20,7 +20,9 @@ from blueman.Functions import *
 from blueman.Functions import _
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.bluez.Device import Device
+from blueman.gui.Notification import Notification
 from subprocess import Popen
+import gobject
 
 import dbus
 from blueman.main.SignalTracker import SignalTracker
@@ -43,11 +45,11 @@ class PulseAudio(AppletPlugin):
 		
 	def on_a2pd_prop_change(self, key, value, device):
 		if key == "Connected" and value:
-			self.setup_pa(device, "a2dp")
+			gobject.timeout_add(500, self.setup_pa, device, "a2dp")
 		
 	def on_hsp_prop_change(self, key, value, device):
 		if key == "Connected" and value:
-			self.setup_pa(device, "hsp")
+			gobject.timeout_add(500, self.setup_pa, device, "hsp")
 		
 	def setup_pa(self, device_path, profile):
 		device = Device(device_path)
@@ -60,8 +62,17 @@ class PulseAudio(AppletPlugin):
 			dprint("Spawn result", cond)
 			if cond != 0:
 				dprint("Failed to load pulseaudio module")
+				Notification(_("Bluetooth Audio"), 
+							 _("Failed to initialize PulseAudio Bluetooth module. Bluetooth audio over PulseAudio will not work."), 
+							 pixbuf=get_icon("gtk-dialog-error", 48), 
+							 status_icon=self.Applet.Plugins.StatusIcon)				
 			else:
 				dprint("Pulseaudio module loaded successfully")
+				Notification(_("Bluetooth Audio"), 
+							 _("Successfully connected to a Bluetooth audio device. This device will now be available in the PulseAudio mixer"), 
+							 pixbuf=get_icon("audio-card", 48), 
+							 status_icon=self.Applet.Plugins.StatusIcon)
+							 
 
 		p = Popen(cmd)
 		gobject.child_watch_add(p.pid, child_closed)
