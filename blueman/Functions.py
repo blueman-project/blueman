@@ -97,7 +97,11 @@ def wait_for_adapter(bluez_adapter, callback, timeout=1000):
 		dprint(YELLOW("Warning:"), "Bluez didn't provide 'Powered' property in a reasonable timeout\nAssuming adapter is ready")
 		callback()
 		
-		
+	props = bluez_adapter.GetProperties()
+	if props["Address"] != "00:00:00:00:00:00":
+		callback()
+		return
+			
 	source = gobject.timeout_add(timeout, on_timeout)
 	bluez_adapter.HandleSignal(on_prop_change, "PropertyChanged")
 
