@@ -30,3 +30,4 @@
 #define MODEM_CAP_IS856_A     0x0200 /* CDMA 3G EVDO rev A */ 
 
 void probe_modem(char* device, PyObject* callback);
+void set_probe_debug(gboolean);

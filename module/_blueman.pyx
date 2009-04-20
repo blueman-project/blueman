@@ -453,6 +453,7 @@ cdef class sn_launcher:
 
 cdef extern from "modem-prober.h":
 	cdef void c_probe_modem "probe_modem" (char* device, object callback)
+	cdef void c_set_probe_debug "set_probe_debug" (int debug)
 
 def probe_modem(node, callback):
 
@@ -463,4 +464,10 @@ def probe_modem(node, callback):
 		c_probe_modem(node, callback)
 	else:
 		raise TypeError, "device node must not be None"
+		
+def set_probe_debug(enable):
+	c_set_probe_debug(int(enable))
+	
+	
+	
 

@@ -11,8 +11,6 @@ import subprocess
 import re
 from signal import SIGKILL
 
-
-
 timeout = 30
 
 #support running uninstalled
@@ -24,6 +22,12 @@ if os.path.exists(os.path.join(_dirname,"ChangeLog")):
 from blueman.main.NetConf import *
 from blueman.Functions import dprint
 from blueman.main.HalManager import HalManager
+
+from blueman.Lib import set_probe_debug
+
+if "--debug" in sys.argv:
+	print "Enabled verbose output"
+	set_probe_debug(True)
 
 time = 0
 

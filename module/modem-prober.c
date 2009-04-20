@@ -36,6 +36,10 @@
 
 static gboolean verbose = FALSE;
 
+void set_probe_debug(gboolean debug) {
+	verbose = debug;
+}
+
 struct modem_caps {
 	char *name;
 	guint32 bits;
