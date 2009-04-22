@@ -44,11 +44,13 @@ class Networking(AppletPlugin):
 						"org.bluez.Network",
 						path_keyword="path")
 						
-		self.update_status()
-		
 		self.dhcp_notif = None
 		
 		self.load_nap_settings()
+		
+	def on_manager_state_changed(self, state):
+		if state:
+			self.update_status()
 		
 	def load_nap_settings(self):
 		dprint("Loading NAP settings")
@@ -143,13 +145,13 @@ class Networking(AppletPlugin):
 				
 	def set_gn(self, on):
 		dprint("set gn", on)
+		m = Mechanism()
+		m.SetGN(on)
 		if self.Applet.Manager != None:
 			adapters = self.Applet.Manager.ListAdapters()
 			for adapter in adapters:
 				s = ServiceInterface("org.bluez.NetworkHub", adapter.GetObjectPath(), ["GetProperties", "SetProperty"])
 				try:
 					s.SetProperty("Enabled", on)
-					m = Mechanism()
-					m.SetGN(on)
 				except:
 					pass

@@ -318,9 +318,9 @@ class NetConfDhcpd(NetConf):
 		subnet += """subnet %s netmask 255.255.255.0 {
 				option domain-name-servers %s;
 				option subnet-mask 255.255.255.0;
-				option routers %s;
+				%s
 				range %s %s;
-				}\n""" % (self.ip_range_mask, dns, self.ip_address, self.ip_range_start, self.ip_range_end)
+				}\n""" % (self.ip_range_mask, dns, "option routers %s" % self.ip_address if self.allow_nat else "" , self.ip_range_start, self.ip_range_end)
 		
 		subnet += "#### END BLUEMAN AUTOMAGIC SUBNET ####\n"
 		
@@ -353,8 +353,13 @@ class NetConfDnsMasq(NetConf):
 		NetConf.__init__(self, ipaddress, allow_nat)
 		
 	def get_dhcp_exec_config(self):
-		return ("dnsmasq", "--bind-interfaces --dhcp-range=%s,%s,60m --dhcp-option=option:router,%s --except-interface=lo --interface=pan1" % (self.ip_range_start, self.ip_range_end, self.ip_address))
-
+		if self.allow_nat:
+			rtr = "--dhcp-option=option:router,%s" % self.ip_address
+		else:
+			rtr = "--dhcp-option=3 --dhcp-option=6" #no route and no dns
+		x = ("dnsmasq", "--bind-interfaces --dhcp-range=%s,%s,60m --except-interface=lo --interface=pan1 %s" % (self.ip_range_start, self.ip_range_end, rtr))
+		
+		return x
 
 	def get_type(self):
 		return "dnsmasq"
