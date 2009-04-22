@@ -149,5 +149,7 @@ class Networking(AppletPlugin):
 				s = ServiceInterface("org.bluez.NetworkHub", adapter.GetObjectPath(), ["GetProperties", "SetProperty"])
 				try:
 					s.SetProperty("Enabled", on)
+					m = Mechanism()
+					m.SetGN(on)
 				except:
 					pass

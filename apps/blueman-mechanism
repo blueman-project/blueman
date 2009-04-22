@@ -11,6 +11,8 @@ import subprocess
 import re
 from signal import SIGKILL
 
+loop = gobject.MainLoop()
+
 timeout = 30
 
 #support running uninstalled
@@ -33,16 +35,23 @@ time = 0
 
 dhcp_pids = []
 
-def timer(*args):
-	global time
-	if len(dhcp_pids) == 0:
-		time+=1
-		if time == timeout:
-			loop.quit()
-	else:
-		time = 0
+class Timer:
+	def __init__(self):
+		self.time = 0
+		gobject.timeout_add(1000, self.tick)
+	
+	def tick(self):
+		if len(dhcp_pids) == 0:
+			self.time+=1
+			if self.time == timeout:
+				loop.quit()
+		else:
+			self.time = 0
+			
+	def reset(self):
+		self.time = 0
 		
-	return True
+timer = Timer()
 
 class conf_service(dbus.service.Object):
 	def __init__(self):
@@ -55,14 +64,22 @@ class conf_service(dbus.service.Object):
 		self.polkit = dbus.Interface(service, 'org.freedesktop.PolicyKit')
 
 	def confirm_authorization(self, busname, action_id):
-		global time
-		time = 0
+		timer.reset()
 		res = self.polkit.IsSystemBusNameAuthorized(action_id, busname, False)
 		
 		if res != "yes":
 			raise dbus.DBusException, "Not authorized"
 	
 	
+	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="b", out_signature="", sender_keyword="caller")
+	def SetGN(self, enabled, caller):
+		timer.reset()
+		if enabled:	
+			p = subprocess.Popen(["/usr/sbin/avahi-autoipd", "-D", "pan0"], bufsize=128)
+		else:
+			p = subprocess.Popen(["/usr/sbin/avahi-autoipd", "-k", "pan0"], bufsize=128)
+		
+		
 	
 	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="sbs", out_signature="", sender_keyword="caller")
 
@@ -121,7 +138,6 @@ class conf_service(dbus.service.Object):
 
 
 	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="s", out_signature="sus", sender_keyword="caller", async_callbacks=("ok", "err"))
-
 	def DhcpClient(self, net_interface, caller, ok, err):
 		global bound_to
 		self.confirm_authorization(caller, "org.blueman.dhcp.client")
@@ -144,8 +160,8 @@ class conf_service(dbus.service.Object):
 
 
 		def io_callback(source, condition):
-			global time, bound_to
-			time = 0
+			global bound_to
+			timer.reset()
 			line = p.stdout.readline()
 			
 			match = rxp.search(line)
@@ -208,10 +224,8 @@ class conf_service(dbus.service.Object):
 	
 
 DBusGMainLoop(set_as_default=True)
-loop = gobject.MainLoop()
 
 conf_service()
-gobject.timeout_add(1000, timer)
 
 
 loop.run()
