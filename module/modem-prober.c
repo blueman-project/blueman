@@ -49,6 +49,7 @@ static struct modem_caps modem_caps[] = {
 	{"+CGSM",     MODEM_CAP_GSM},
 	{"+CIS707-A", MODEM_CAP_IS707_A},
 	{"+CIS707",   MODEM_CAP_IS707_A},
+	{"CIS707",    MODEM_CAP_IS707_A}, /* Qualcomm Gobi */
 	{"+CIS707P",  MODEM_CAP_IS707_P},
 	{"CIS-856",   MODEM_CAP_IS856},
 	{"CIS-856-A", MODEM_CAP_IS856_A},
@@ -84,7 +85,7 @@ modem_send_command (int fd, const char *cmd)
 			 * for() loop eventually.
 			 */
 			if ((written < 0) && (errno != EAGAIN)) {
-				verbose ("error writing command: %d\n", errno);
+				g_printerr ("error writing command: %d\n", errno);
 				return FALSE;
 			}
 			eagain_count--;
@@ -258,22 +259,69 @@ parse_gmm (const char *buf)
 	return gsm ? MODEM_CAP_GSM : 0;
 }
 
-static int modem_probe_caps(int fd)
+static int modem_probe_caps(int fd, glong timeout_ms)
 {
 	const char *gcap_responses[] = { GCAP_TAG, NULL };
-	const char *terminators[] = { "OK", "ERROR", "ERR", NULL };
+	const char *terminators[] = { "OK", "ERROR", "ERR", "+CME ERROR", NULL };
 	char *reply = NULL;
-	int idx, term_idx, ret = 0;
+	int idx = -1, term_idx = -1, ret = 0;
+	gboolean try_ati = FALSE;
+	GTimeVal start, end;
+	gboolean send_success;
 
-	if (!modem_send_command (fd, "AT+GCAP\r\n"))
-		return -1;
+	/* If a delay was specified, start a bit later */
+	if (timeout_ms > 500) {
+		g_usleep (500000);
+		timeout_ms -= 500;
+	}
 
-	idx = modem_wait_reply (fd, 3, gcap_responses, terminators, &term_idx, &reply);
-	if (0 == term_idx && 0 == idx) {
-		/* Success */
-		verbose ("GCAP response: %s", reply);
-		ret = parse_gcap (reply);
-	} else if (1 == term_idx || 2 == term_idx) {
+	/* Standard response timeout case */
+	timeout_ms += 3000;
+
+	while (timeout_ms > 0) {
+		GTimeVal diff;
+		gulong sleep_time = 100000;
+
+		g_get_current_time (&start);
+
+		idx = term_idx = 0;
+		send_success = modem_send_command (fd, "AT+GCAP\r\n");
+		if (send_success)
+			idx = modem_wait_reply (fd, 2, gcap_responses, terminators, &term_idx, &reply);
+		else
+			sleep_time = 300000;
+
+		g_get_current_time (&end);
+		g_timeval_subtract (&diff, &end, &start);
+		timeout_ms -= (diff.tv_sec * 1000) + (diff.tv_usec / 1000);
+
+		if (send_success) {
+			if (0 == term_idx && 0 == idx) {
+				/* Success */
+				verbose ("GCAP response: %s", reply);
+				ret = parse_gcap (reply);
+				break;
+			} else if (0 == term_idx && -1 == idx) {
+				/* Just returned "OK" but no GCAP (Sierra) */
+				try_ati = TRUE;
+				break;
+			} else if (3 == term_idx && -1 == idx) {
+				/* No SIM (Huawei) */
+				try_ati = TRUE;
+				break;
+			} else if (1 == term_idx || 2 == term_idx) {
+				try_ati = TRUE;
+			} else
+				verbose ("timed out waiting for GCAP reply (idx %d, term_idx %d)", idx, term_idx);
+			g_free (reply);
+			reply = NULL;
+		}
+
+		g_usleep (sleep_time);
+		timeout_ms -= sleep_time / 1000;
+	}
+
+	if (!ret && try_ati) {
 		const char *ati_responses[] = { GCAP_TAG, NULL };
 
 		/* Many cards (ex Sierra 860 & 875) won't accept AT+GCAP but
@@ -291,8 +339,7 @@ static int modem_probe_caps(int fd)
 				ret = parse_gcap (reply);
 			}
 		}
-	} else
-		verbose ("timed out waiting for GCAP reply (idx %d, term_idx %d)", idx, term_idx);
+	}
 
 	g_free (reply);
 	reply = NULL;
@@ -313,6 +360,7 @@ static int modem_probe_caps(int fd)
 
 	return ret;
 }
+
 
 struct thread_info {
 	char* device;
@@ -412,7 +460,7 @@ static gpointer do_probe(gpointer data) {
 	attrs.c_cflag |= (B9600 | CS8 | CREAD | PARENB);
 	
 	tcsetattr (fd, TCSANOW, &attrs);
-	caps = modem_probe_caps (fd);
+	caps = modem_probe_caps (fd, 0);
 	tcsetattr (fd, TCSANOW, &orig);
 	
 	close(fd);
