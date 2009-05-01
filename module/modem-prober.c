@@ -259,6 +259,32 @@ parse_gmm (const char *buf)
 	return gsm ? MODEM_CAP_GSM : 0;
 }
 
+static int
+g_timeval_subtract (GTimeVal *result, GTimeVal *x, GTimeVal *y)
+{
+	int nsec;
+
+	/* Perform the carry for the later subtraction by updating y. */
+	if (x->tv_usec < y->tv_usec) {
+		nsec = (y->tv_usec - x->tv_usec) / G_USEC_PER_SEC + 1;
+		y->tv_usec -= G_USEC_PER_SEC * nsec;
+		y->tv_sec += nsec;
+	}
+	if (x->tv_usec - y->tv_usec > G_USEC_PER_SEC) {
+		nsec = (x->tv_usec - y->tv_usec) / G_USEC_PER_SEC;
+		y->tv_usec += G_USEC_PER_SEC * nsec;
+		y->tv_sec -= nsec;
+	}
+
+	/* Compute the time remaining to wait.
+	   tv_usec is certainly positive. */
+	result->tv_sec = x->tv_sec - y->tv_sec;
+	result->tv_usec = x->tv_usec - y->tv_usec;
+
+	/* Return 1 if result is negative. */
+	return x->tv_sec < y->tv_sec;
+}
+
 static int modem_probe_caps(int fd, glong timeout_ms)
 {
 	const char *gcap_responses[] = { GCAP_TAG, NULL };
