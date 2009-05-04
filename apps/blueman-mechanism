@@ -79,6 +79,8 @@ class conf_service(dbus.service.Object):
 		else:
 			p = subprocess.Popen(["/usr/sbin/avahi-autoipd", "-k", "pan0"], bufsize=128)
 		
+		#reap the child
+		gobject.child_watch_add(p.pid, lambda pid, cond: 0)
 		
 	
 	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="sbs", out_signature="", sender_keyword="caller")
