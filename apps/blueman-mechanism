@@ -31,7 +31,6 @@ if "--debug" in sys.argv:
 	print "Enabled verbose output"
 	set_probe_debug(True)
 
-time = 0
 
 dhcp_pids = []
 
@@ -47,6 +46,8 @@ class Timer:
 				loop.quit()
 		else:
 			self.time = 0
+		
+		return True
 			
 	def reset(self):
 		self.time = 0
@@ -86,6 +87,7 @@ class conf_service(dbus.service.Object):
 	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="sbs", out_signature="", sender_keyword="caller")
 
 	def NetworkSetup(self, ip_address, allow_nat, server_type, caller):
+		timer.reset()
 		dprint(ip_address, allow_nat, server_type)
 		if ip_address == "reload":
 			info = netstatus()
@@ -141,6 +143,7 @@ class conf_service(dbus.service.Object):
 
 	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="s", out_signature="sus", sender_keyword="caller", async_callbacks=("ok", "err"))
 	def DhcpClient(self, net_interface, caller, ok, err):
+		timer.reset()
 		global bound_to
 		self.confirm_authorization(caller, "org.blueman.dhcp.client")
 		
@@ -196,6 +199,7 @@ class conf_service(dbus.service.Object):
 			
 	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="ss", out_signature="", async_callbacks=("ok", "err"))	
 	def HalRegisterModemPort(self, rfcomm_device, bd_addr, ok, err):
+		timer.reset()
 		halmgr = HalManager()
 		dprint("** Registering modem")
 		halmgr.register(rfcomm_device, bd_addr, ok, err)
@@ -203,12 +207,14 @@ class conf_service(dbus.service.Object):
 	
 	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="s", out_signature="")
 	def HalUnregisterModemPortAddr(self, address):
+		timer.reset()
 		halmgr = HalManager()
 		dprint("** Unregistering modem")
 		halmgr.unregister_addr(address)
 		
 	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="s", out_signature="")
 	def HalUnregisterModemPortDev(self, rfcomm_device):
+		timer.reset()
 		halmgr = HalManager()
 		dprint("** Unregistering modem")
 		halmgr.unregister_dev(rfcomm_device)
@@ -221,6 +227,7 @@ class conf_service(dbus.service.Object):
 		
 	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="", out_signature="")
 	def HalRegisterNetDev(self, devicename):
+		timer.reset()
 		halmgr = HalManager()
 		halmgr.register_netdev(devicename)
 	
