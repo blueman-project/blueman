@@ -31,6 +31,7 @@ if "--debug" in sys.argv:
 	print "Enabled verbose output"
 	set_probe_debug(True)
 
+os.environ["PATH"] = "/usr/bin:/bin:/usr/sbin:/sbin"
 
 dhcp_pids = []
 
@@ -76,7 +77,7 @@ class conf_service(dbus.service.Object):
 	def SetGN(self, enabled, caller):
 		timer.reset()
 		if enabled:	
-			p = subprocess.Popen(["/usr/sbin/avahi-autoipd", "-D", "pan0"], bufsize=128)
+			p = subprocess.Popen(["/usr/sbin/avahi-autoipd", "-D", "pan0"], env=os.environ, bufsize=128)
 		else:
 			p = subprocess.Popen(["/usr/sbin/avahi-autoipd", "-k", "pan0"], bufsize=128)
 		
