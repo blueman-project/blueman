@@ -43,6 +43,7 @@ class Device(gobject.GObject):
 		
 		#set fallback icon, fixes lp:#327718
 		self.Device.Icon = "blueman"
+		self.Device.Class = "unknown"
 		
 		self.Services = {}
 
