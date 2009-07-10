@@ -355,12 +355,12 @@ class ManagerDeviceMenu(gtk.Menu):
 					sprops = service.GetProperties()
 					
 					if not sprops["Connected"]:
-						item = create_menuitem(_("Network Access"), get_icon("network", 16))
-						item.show()
-						items.append((80, item))
+						mitem = create_menuitem(_("Network Access"), get_icon("network", 16))
+						mitem.show()
+						
 						sub = gtk.Menu()
 						sub.show()
-						item.set_submenu(sub)
+						mitem.set_submenu(sub)
 						
 						added = False
 						for uuid in uuids:
@@ -380,8 +380,10 @@ class ManagerDeviceMenu(gtk.Menu):
 								item.show()
 								added = True
 						if not added:
-							item.destroy()
+							mitem.destroy()
 							item = None
+						else:
+							items.append((80, mitem))
 					else:
 						item = create_menuitem(_("Disconnect Network"), get_icon("gtk-disconnect", 16))
 						self.Signals.Handle("gobject", item, "activate", self.on_disconnect, device, name)
@@ -446,7 +448,7 @@ class ManagerDeviceMenu(gtk.Menu):
 			items.sort(lambda a, b: cmp(a[0], b[0]))
 			for priority, item in items:
 				self.append(item)
-			
+			print items
 			if items != []:
 				item = gtk.SeparatorMenuItem()
 				item.show()
