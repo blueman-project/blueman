@@ -448,7 +448,7 @@ class ManagerDeviceMenu(gtk.Menu):
 			items.sort(lambda a, b: cmp(a[0], b[0]))
 			for priority, item in items:
 				self.append(item)
-			print items
+
 			if items != []:
 				item = gtk.SeparatorMenuItem()
 				item.show()
