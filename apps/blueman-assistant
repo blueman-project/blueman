@@ -261,9 +261,9 @@ class Assistant(Agent):
 					self.Passkey = "%04d" % random.randint(0, 9999)
 
 				pages[PAGE_PAIRING].set_markup(_("<b>Pairing in progress...</b>\n\nEnter passkey <b>%s</b> on the device.") % self.Passkey)
-			
-			def ok(*args):
-				self.Device = self.dev_widget.List.GetSelectedDevice()
+
+			def ok(dev):
+				self.Device = Device(dev)
 				self.assistant.set_current_page(PAGE_CONNECT)
 			def err(err):
 				print err
