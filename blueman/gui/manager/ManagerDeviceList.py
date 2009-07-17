@@ -498,8 +498,13 @@ class ManagerDeviceList(DeviceList):
 					elif tpl > 70:
 						tpl_state = _("Very High")
 						
-											
-					tooltip.set_markup(_("<b>Connected</b>\nReceived Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>\nLink Quality: %(lq)u%%\nTransmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>") % {"rssi_state": rssi_state, "rssi":rssi, "lq":lq, "tpl":tpl, "tpl_state": tpl_state})
+					if path[1] == self.columns["tpl_pb"]:
+						tooltip.set_markup(_("<b>Connected</b>\nReceived Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>\nLink Quality: %(lq)u%%\n<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>") % {"rssi_state": rssi_state, "rssi":rssi, "lq":lq, "tpl":tpl, "tpl_state": tpl_state})
+					elif path[1] == self.columns["lq_pb"]:
+						tooltip.set_markup(_("<b>Connected</b>\nReceived Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>\n<b>Link Quality: %(lq)u%%</b>\nTransmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>") % {"rssi_state": rssi_state, "rssi":rssi, "lq":lq, "tpl":tpl, "tpl_state": tpl_state})
+					elif path[1] == self.columns["rssi_pb"]:
+						tooltip.set_markup(_("<b>Connected</b>\n<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>\nLink Quality: %(lq)u%%\nTransmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>") % {"rssi_state": rssi_state, "rssi":rssi, "lq":lq, "tpl":tpl, "tpl_state": tpl_state})
+					
 					self.tooltip_row = path[0][0]
 					self.tooltip_col = path[1]
 					return True	
