@@ -287,5 +287,4 @@ class TempAgent(CommonAgent):
 		else:
 			err(AgentErrorRejected())
 		
-		
-		
+		dialog.destroy()
