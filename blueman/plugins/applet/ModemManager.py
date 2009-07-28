@@ -22,6 +22,7 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.PolicyKitAuth import PolicyKitAuth
 from blueman.main.Mechanism import Mechanism
 from blueman.main.Config import Config
+from blueman.gui.Notification import Notification
 from blueman.Sdp import *
 
 from blueman.main.SignalTracker import SignalTracker
@@ -120,6 +121,8 @@ class ModemManager(AppletPlugin):
 				
 			signals.Handle("bluez", device.Device, device_propery_changed, "PropertyChanged")	
 			self.RegisterModem(device.get_object_path(), port)
+		else:
+			Notification(_("Serial port connected"), _("Serial port service on device <b>%s</b> now will be available via <b>%s</b>") % (device.Alias, port), pixbuf=get_icon("network-wired", 48), status_icon=self.Applet.Plugins.StatusIcon)
 
 		
 	def on_rfcomm_disconnect(self, port):
