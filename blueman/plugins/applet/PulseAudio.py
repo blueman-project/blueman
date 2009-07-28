@@ -21,6 +21,7 @@ from blueman.Functions import _
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.bluez.Device import Device
 from blueman.gui.Notification import Notification
+from blueman.main.NetConf import have
 from subprocess import Popen
 import gobject
 
@@ -31,15 +32,24 @@ class PulseAudio(AppletPlugin):
 	__author__ = "Walmis"
 	__description__ = _("Automatically loads pulseaudio bluetooth module after audio device is connected.\n<b>Note:</b> Requires pulseaudio 0.9.14 or higher")
 	__icon__ = "audio-card"
-	__autoload__ = False
-
+	__options__  = {
+		"checked" : (bool, False)
+	}
 	def on_load(self, applet):
 		self.signals = SignalTracker()
+		if not self.get_option("checked"):
+			self.set_option("checked", True)
+			if not have("pactl"):
+				applet.Plugins.SetConfig("PulseAudio", False)
+				return
+			
 		self.bus = dbus.SystemBus()
 		
 		self.signals.Handle("dbus", self.bus, self.on_a2pd_prop_change, "PropertyChanged", "org.bluez.AudioSink", path_keyword="device")
 		self.signals.Handle("dbus", self.bus, self.on_hsp_prop_change, "PropertyChanged", "org.bluez.Headset", path_keyword="device")
 		
+	
+	
 	def on_unload(self):
 		self.signals.DisconnectAll()
 		
