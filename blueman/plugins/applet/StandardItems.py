@@ -74,10 +74,17 @@ class StandardItems(AppletPlugin):
 		about = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
 		self.Applet.Plugins.Menu.Register(self, about, 90)
 		
+		self.plugins = create_menuitem(_("Plugins"), get_icon("blueman-plugin", 16))
+		self.plugins.connect("activate", self.on_plugins)
+		
+		self.Applet.Plugins.Menu.Register(self, self.plugins, 85)
+		
 		about.connect("activate", self.on_about)
 		
 		def on_activate(status_icon):
 			self.on_devices(None)
+			
+			
 		
 		self.Applet.Plugins.StatusIcon.connect("activate", on_activate)
 		
