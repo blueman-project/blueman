@@ -258,10 +258,9 @@ class BluemanApplet(object):
 	
 	def manager_deinit(self):
 		self.Signals.DisconnectAll()
-		self.Manager = None
-
+		
 		self.Plugins.Run("on_manager_state_changed", False)
-	
+		self.Manager = None
 
 		
 	def on_dbus_name_owner_change(self, owner):
