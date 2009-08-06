@@ -124,7 +124,7 @@ class RecentConns(AppletPlugin, gtk.Menu):
 						i["device"].disconnect(i["gsignal"])
 						i["gsignal"] = None
 			
-		RecentConns.items = None
+		RecentConns.items = []
 		self.destroy()
 	
 	def initialize(self):
