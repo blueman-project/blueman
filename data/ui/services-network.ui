@@ -124,12 +124,19 @@
                                 </child>
                                 <child>
                                   <object class="GtkRadioButton" id="r_dnsmasq">
-                                    <property name="label">dnsmasq</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">False</property>
+                                    <property name="tooltip_text" translatable="yes">Recommended</property>
                                     <property name="draw_indicator">True</property>
                                     <property name="group">r_dhcpd</property>
+                                    <child>
+                                      <object class="GtkLabel" id="label1">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">&lt;b&gt;dnsmasq&lt;/b&gt;</property>
+                                        <property name="use_markup">True</property>
+                                      </object>
+                                    </child>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
