@@ -72,7 +72,8 @@ class DiscvManager(AppletPlugin):
 			self.update_menuitems()
 			self.Applet.Manager.HandleSignal(self.on_default_adapter_changed, "DefaultAdapterChanged")
 		else:
-			self.Applet.Manager.UnHandleSignal(self.on_default_adapter_changed, "DefaultAdapterChanged")
+			if self.Applet.Manager:
+				self.Applet.Manager.UnHandleSignal(self.on_default_adapter_changed, "DefaultAdapterChanged")
 			
 			self.adapter = None
 			self.update_menuitems()

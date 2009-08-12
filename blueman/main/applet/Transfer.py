@@ -22,6 +22,7 @@ from blueman.main.Config import Config
 from blueman.ods.OdsManager import OdsManager
 from blueman.main.Device import Device
 from blueman.Functions import *
+from blueman.Lib import get_special_dir, SpecialDirType
 import os
 import gettext
 from gettext import ngettext
@@ -70,14 +71,13 @@ class Transfer(OdsManager):
 				
 				
 	def start_server(self, pattern):
-
 		server = self.get_server(pattern)
 		if server != None:
 			if self.Config.props.shared_path == None:
-				self.Config.props.shared_path = os.path.expanduser("~")
+				self.Config.props.shared_path = get_special_dir(SpecialDirType.PUBLIC_SHARE)
 			
 			if self.Config.props.shared_path == None:
-				self.Config.props.shared_path = os.path.expanduser("~")
+				self.Config.props.shared_path = get_special_dir(SpecialDirType.PUBLIC_SHARE)
 			
 			if pattern == "opp":
 				server.Start(self.Config.props.shared_path, True, False)

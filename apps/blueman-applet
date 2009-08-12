@@ -156,8 +156,9 @@ class BluemanApplet(object):
 			inst = cls(self.applet)
 			try:
 				inst._load(self.applet)
-			except:
-				dprint("Failed to load", cls.__name__)
+			except Exception, e:
+				dprint("Failed to load %s\n%s" % (cls.__name__, e))
+				
 			else:
 				self.__plugins[cls.__name__] = inst
 			
