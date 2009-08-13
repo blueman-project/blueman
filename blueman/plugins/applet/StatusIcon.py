@@ -52,10 +52,13 @@ class StatusIcon(AppletPlugin, gtk.StatusIcon):
 				if not self.Applet.Manager:
 					self.props.visible = False
 				else:
-					if self.Applet.Manager.ListAdapters() == []:
+					try:
+						if self.Applet.Manager.ListAdapters() == []:
+							self.props.visible = False
+						else:
+							self.props.visible = True
+					except:
 						self.props.visible = False
-					else:
-						self.props.visible = True
 		else:
 			self.props.visible = True
 		
