@@ -210,62 +210,65 @@ class Transfer(OdsManager):
 	def transfer_finished(self, session, *args):
 		type = args[-1]
 		dprint(args)
-		if not session.transfer["finished"]:
+		try:
+			if session.transfer["finished"]:
 
-			if type != "cancelled" and type != "error":
-				session.transfer["finished"] = True
+				if type != "cancelled" and type != "error":
+					session.transfer["finished"] = True
 
-				if session.transfer["total"] > 350000:	
-					icon = get_icon("blueman", 48)
-					n = Notification(_("File received"), 
-					_("File %(0)s from %(1)s successfully received") % {"0":"<b>"+session.transfer["filename"]+"</b>", "1":"<b>"+session.transfer["name"]+"</b>"},
-							      pixbuf=icon, status_icon=self.status_icon)
-					self.add_open(n, "Open", session.transfer["filepath"])
-			else:
-				session.transfer["failed"] = True
-				session.transfer["finished"] = True
-			
-				icon = get_icon("blueman", 48)
-
-				session.transfer["notification"] = Notification(_("Transfer failed"), 
-						_("Transfer of file %(0)s failed") % {"0":"<b>"+session.transfer["filename"]+"</b>", "1":"<b>"+session.transfer["name"]+"</b>"},
-						 pixbuf=icon, status_icon=self.status_icon)
-				if session.transfer["total"] > 350000:
-					session.transfer["normal_transfers"] -= 1
+					if session.transfer["total"] > 350000:	
+						icon = get_icon("blueman", 48)
+						n = Notification(_("File received"), 
+						_("File %(0)s from %(1)s successfully received") % {"0":"<b>"+session.transfer["filename"]+"</b>", "1":"<b>"+session.transfer["name"]+"</b>"},
+									pixbuf=icon, status_icon=self.status_icon)
+						self.add_open(n, "Open", session.transfer["filepath"])
 				else:
-					session.transfer["silent_transfers"] -= 1
-				
-		if type == "disconnected":
-			icon = get_icon("blueman", 48)
+					session.transfer["failed"] = True
+					session.transfer["finished"] = True
 			
-			if session.transfer["normal_transfers"] == 0 and session.transfer["silent_transfers"] == 1:
-					n = Notification(_("File received"), 
-					_("File %(0)s from %(1)s successfully received") % {"0":"<b>"+session.transfer["filename"]+"</b>", "1":"<b>"+session.transfer["name"]+"</b>"},
-							      pixbuf=icon, status_icon=self.status_icon)
-							      
-					self.add_open(n, "Open", session.transfer["filepath"])
-							      					
-			elif session.transfer["normal_transfers"] == 0 and session.transfer["silent_transfers"] > 0:
-				n = Notification(_("Files received"), 
-					     ngettext("Received %d file in the background",
-					    	      "Received %d files in the background", 
-					    	      session.transfer["silent_transfers"]) % session.transfer["silent_transfers"],
-					     pixbuf=icon, status_icon=self.status_icon)						
-				
-				self.add_open(n, "Open Location", self.Config.props.shared_path)
-			
-			elif session.transfer["normal_transfers"] > 0 and session.transfer["silent_transfers"] > 0:
-				
-				n = Notification(_("Files received"), 
-					     ngettext("Received %d more file in the background",
-					     "Received %d more files in the background", 
-					     session.transfer["silent_transfers"]) % session.transfer["silent_transfers"],
-					     pixbuf=icon, status_icon=self.status_icon)
-				self.add_open(n, "Open Location", self.Config.props.shared_path)
-				
-			del session.transfer
-			del session.server
+					icon = get_icon("blueman", 48)
 
+					session.transfer["notification"] = Notification(_("Transfer failed"), 
+							_("Transfer of file %(0)s failed") % {"0":"<b>"+session.transfer["filename"]+"</b>", "1":"<b>"+session.transfer["name"]+"</b>"},
+							 pixbuf=icon, status_icon=self.status_icon)
+					if session.transfer["total"] > 350000:
+						session.transfer["normal_transfers"] -= 1
+					else:
+						session.transfer["silent_transfers"] -= 1
+				
+			if type == "disconnected":
+				icon = get_icon("blueman", 48)
+			
+				if session.transfer["normal_transfers"] == 0 and session.transfer["silent_transfers"] == 1:
+						n = Notification(_("File received"), 
+						_("File %(0)s from %(1)s successfully received") % {"0":"<b>"+session.transfer["filename"]+"</b>", "1":"<b>"+session.transfer["name"]+"</b>"},
+									pixbuf=icon, status_icon=self.status_icon)
+									
+						self.add_open(n, "Open", session.transfer["filepath"])
+														
+				elif session.transfer["normal_transfers"] == 0 and session.transfer["silent_transfers"] > 0:
+					n = Notification(_("Files received"), 
+						     ngettext("Received %d file in the background",
+						    	      "Received %d files in the background", 
+						    	      session.transfer["silent_transfers"]) % session.transfer["silent_transfers"],
+						     pixbuf=icon, status_icon=self.status_icon)						
+				
+					self.add_open(n, "Open Location", self.Config.props.shared_path)
+			
+				elif session.transfer["normal_transfers"] > 0 and session.transfer["silent_transfers"] > 0:
+				
+					n = Notification(_("Files received"), 
+						     ngettext("Received %d more file in the background",
+						     "Received %d more files in the background", 
+						     session.transfer["silent_transfers"]) % session.transfer["silent_transfers"],
+						     pixbuf=icon, status_icon=self.status_icon)
+					self.add_open(n, "Open Location", self.Config.props.shared_path)
+				
+				del session.transfer
+				del session.server
+		
+		except KeyError:
+			pass
 
 	def on_server_destroyed(self, inst, server):
 		pass

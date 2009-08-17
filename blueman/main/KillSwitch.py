@@ -49,7 +49,10 @@ class KillSwitch(dbus.proxies.Interface):
 		self.__switch = KillSwitch.__Switch(udi)
 		
 	def SetPower(self, state):
-		self.__switch.SetPower(state)
+		try:
+			self.__switch.SetPower(state)
+		except dbus.DbusException:
+			dprint("Failed to toggle killswitch")
 		
 	def GetPower(self):
 		return self.__switch.GetPower()
@@ -91,6 +94,7 @@ class Manager:
 				
 	def SetGlobalState(self, state):
 		dprint("Setting killswitches to", state)
+
 		for dev in self.devices:
 			print "Setting", dev.udi, "to", state
 			dev.SetPower(state)
@@ -98,6 +102,7 @@ class Manager:
 			self.state = True
 		else:
 			self.state = state
+
 		
 	def GetGlobalState(self):
 		try:
