@@ -64,9 +64,6 @@ class Blueman:
 		area = MessageArea()
 		vbox.pack_start(area, False)
 		vbox.reorder_child(area, 3)
-		
-		area._show_message("testas\nbla bla\n blalbabad")
-		
 	
 		def do_present(time):
 			if self.window.props.visible:
