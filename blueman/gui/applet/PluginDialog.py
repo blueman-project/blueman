@@ -84,6 +84,8 @@ class PluginDialog(gtk.Dialog):
 		self.sig_b = self.applet.Plugins.connect("plugin-unloaded", self.plugin_state_changed, False)
 		self.connect("response", self.on_response)
 		
+		self.list.set_cursor(0)
+		
 	def on_response(self, dialog, resp):
 		self.applet.Plugins.disconnect(self.sig_a)
 		self.applet.Plugins.disconnect(self.sig_b)
