@@ -30,6 +30,7 @@ import sys
 from subprocess import Popen
 import gobject
 import gettext
+import traceback
 from blueman.Lib import sn_launcher
 _ = gettext.gettext
 
@@ -185,6 +186,15 @@ def get_icon(name, size=24, fallback="gtk-missing-image"):
 	
 def adapter_path_to_name(path):
 	return re.search(".*(hci[0-9]*)", path).groups(0)[0]
+
+#format error
+def e_(msg):
+	if isinstance(msg, Exception):
+		return str(msg) + "\n" + traceback.format_exc()
+	else:
+		msg = str(msg)
+		return msg.split(": ")[1]
+	
 
 
 

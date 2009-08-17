@@ -80,32 +80,6 @@ class Assistant(Agent):
 		self.assistant = self.Builder.get_object("assistant")
 		self.assistant.set_title(_("Bluetooth Assistant"))
 			
-		if options.device != None:
-			m = Manager("gobject")
-			try:
-				adapter = m.GetAdapter()
-			except:
-				print "Error: No Adapters present"
-				exit(1)
-			try:
-				d = adapter.FindDevice(options.device)
-				self.Device = Device(d)
-				self.Adapter = adapter
-				if self.Device.Paired:
-					self.assistant.set_current_page(PAGE_CONNECT)
-				else:
-					self.assistant.set_current_page(PAGE_PASSKEY)
-			except:
-				info = {}
-				info["Address"] = options.device
-				info["Name"] = info["Address"].replace(":", "-")
-				info["Alias"] = info["Name"]
-				info["Fake"] = True
-				
-				self.Device = FakeDevice(info)
-				self.Adapter = adapter
-				self.assistant.set_current_page(PAGE_PASSKEY)
-		
 		
 		self.assistant.connect("prepare", self.on_prepare)
 		self.assistant.connect("close", self.on_close)
@@ -150,6 +124,34 @@ class Assistant(Agent):
 		self.assistant.set_forward_page_func(self.next_page_fn, None)
 			
 		pages[PAGE_DEVLIST].add(self.dev_widget)
+		
+		if options.device != None:
+			m = Manager("gobject")
+			try:
+				adapter = m.GetAdapter()
+			except:
+				print "Error: No Adapters present"
+				exit(1)
+			try:
+				d = adapter.FindDevice(options.device)
+				self.Device = Device(d)
+				self.Adapter = adapter
+				if self.Device.Paired:
+					self.assistant.set_current_page(PAGE_CONNECT)
+				else:
+					self.assistant.set_current_page(PAGE_PASSKEY)
+			except:
+				info = {}
+				info["Address"] = options.device
+				info["Name"] = info["Address"].replace(":", "-")
+				info["Alias"] = info["Name"]
+				info["Fake"] = True
+				
+				self.Device = FakeDevice(info)
+				self.Adapter = adapter
+				self.assistant.set_current_page(PAGE_PASSKEY)
+							
+
 		self.dev_widget.show()
 		self.dev_widget.List.DiscoverDevices()
 		self.assistant.show()

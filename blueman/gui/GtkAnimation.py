@@ -101,7 +101,6 @@ class AnimBase(gobject.GObject):
 		
 		if self._source:
 			gobject.source_remove(self._source)
-			self.emit("animation-finished")
 		
 		try:
 			self._step_size = (end-start) / (self.fps * (duration/1000.0))
@@ -281,5 +280,32 @@ class CellFade(AnimBase):
 		
 	def state_changed(self, state):
 		self.tw.queue_draw()
-		#print state		
+		#print state
+		
+class WidgetFade(AnimBase):
+	def __init__(self, widget, color):
+		AnimBase.__init__(self, 1.0)
+		
+		self.widget = widget
+		self.color = color
+		
+		self.sig = widget.connect_after("expose-event", self.on_expose)
+		
+	def on_expose(self, window, event):
+		if not self.frozen:
+			cr = event.window.cairo_create()
+
+			rect = self.widget.allocation
+			cr.rectangle(rect)
+			cr.clip()		
+		
+			cr.set_source_rgba((1.0/65535)*self.color.red, (1.0/65535)*self.color.green, (1.0/65535)*self.color.blue, 1.0-self.get_state())
+			cr.set_operator(cairo.OPERATOR_OVER)
+		 	cr.paint()		
+
+	
+	def state_changed(self, state):
+		self.widget.queue_draw()		
+	
+					
 

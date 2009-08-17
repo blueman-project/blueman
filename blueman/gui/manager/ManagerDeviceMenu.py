@@ -25,6 +25,7 @@ from blueman.main.SignalTracker import SignalTracker
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.Config import Config
 from blueman.main.AppletService import AppletService
+from blueman.gui.MessageArea import MessageArea
 
 from blueman.Lib import rfcomm_list
 
@@ -124,8 +125,8 @@ class ManagerDeviceMenu(gtk.Menu):
 			
 			dprint("success", args2)
 			prog_msg(_("Success!"))
+			MessageArea.close()
 			self.unset_op(device)
-
 			
 		def fail(*args):
 			
@@ -133,7 +134,7 @@ class ManagerDeviceMenu(gtk.Menu):
 			
 			self.unset_op(device)
 			dprint("fail", args)
-
+			MessageArea.show_message(_("Connection Failed: ") + e_(str(args[0])))
 			
 		def cancel(prog, *args):
 			try:
@@ -521,10 +522,13 @@ class ManagerDeviceMenu(gtk.Menu):
 				
 				def reply(*args):
 					prog_msg(_("Success!"))
+					MessageArea.close()
 					
 				def error(*args):
 					dprint("err", args)
 					prog_msg(_("Fail"))
+					MessageArea.show_message(e_(str(args[0])))					
+					
 				prog = ManagerProgressbar(self.Blueman, False, _("Refreshing"))
 				prog.start()
 				self.set_op(device, _("Refreshing Services..."))

@@ -42,6 +42,8 @@ from blueman.gui.manager.ManagerStats import ManagerStats
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.Config import Config
 
+from blueman.gui.MessageArea import MessageArea
+
 import gettext
 _ = gettext.gettext
 
@@ -56,6 +58,15 @@ class Blueman:
 		self.Builder.add_from_file(UI_PATH +"/manager-main.ui")
 	
 		self.window = self.Builder.get_object("window")
+		
+		
+		vbox = self.Builder.get_object("vbox1")
+		area = MessageArea()
+		vbox.pack_start(area, False)
+		vbox.reorder_child(area, 3)
+		
+		area._show_message("testas\nbla bla\n blalbabad")
+		
 	
 		def do_present(time):
 			if self.window.props.visible:
@@ -183,9 +194,11 @@ class Blueman:
 			dev = Device(device)
 			self.List.add_device(dev)
 			prog.finalize()
+			MessageArea.close()
 		
 		def err(*args):
 			prog.finalize()
+			MessageArea.show_message(e_(str(args[0])))
 		
 		adapter = self.List.Adapter
 		
@@ -211,8 +224,10 @@ class Blueman:
 		prog.connect("cancelled", lambda x: self.List.StopDiscovery())
 		try:
 			self.List.DiscoverDevices()
-		except:
+		except Exception, e:
 			prog.finalize()
+			MessageArea.show_message(e_(e))
+			
 		self.List.connect("discovery-progress", on_progress)
 		self.List.connect("adapter-property-changed", prop_changed)
 		
@@ -231,10 +246,12 @@ class Blueman:
 			dev = Device(BluezDevice(device))
 			self.List.add_device(dev)
 			self._prog_msg(prog, _("Success"))
+			MessageArea.close()
 		
 		def err(*args):
 			dprint(args)
 			self._prog_msg(prog, _("Failure"))
+			MessageArea.show_message(e_(str(args[0])))
 		
 		applet = AppletService()
 		
