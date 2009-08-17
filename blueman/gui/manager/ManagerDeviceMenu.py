@@ -118,18 +118,20 @@ class ManagerDeviceMenu(gtk.Menu):
 			gobject.timeout_add(1500, prog.finalize)
 		
 		def success(*args2):
-			#uuid16 = uuid128_to_uuid16(args[0])
-			#if service_id == "serial": #and uuid16 == DIALUP_NET_SVCLASS_ID:
-			#	dev = args[0]
-			#	appl.register_modem(device.GetObjectPath(), dev)
+			uuid16 = uuid128_to_uuid16(args[0])
 			
 			dprint("success", args2)
 			prog_msg(_("Success!"))
-			MessageArea.close()
+			
+			
+			if service_id == "serial" and uuid16 == SERIAL_PORT_SVCLASS_ID:
+				MessageArea.show_message(_("Serial port connected to %s") % args2[0], gtk.STOCK_DIALOG_INFO)
+			else:
+				MessageArea.close()
+			
 			self.unset_op(device)
 			
 		def fail(*args):
-			
 			prog_msg(_("Failed"))
 			
 			self.unset_op(device)

@@ -153,6 +153,11 @@ class MessageArea(gtk.EventBox):
 		self.label.set_tooltip_text(text)
 		self.icon.set_from_stock(icon, gtk.ICON_SIZE_MENU)
 		
+		if icon == gtk.STOCK_DIALOG_WARNING:
+			self.hl_anim.color = gtk.gdk.Color(65535,0,0)
+		else:
+			self.hl_anim.color = gtk.gdk.Color(0,0,65535)
+		
 		def on_finished(anim):
 			anim.disconnect(sig)
 			anim.freeze()		
