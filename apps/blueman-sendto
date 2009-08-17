@@ -144,7 +144,7 @@ class Sender(gobject.GObject):
 			exit(1)
 		
 		props = self.adapter.GetProperties()
-		self.manager.create_session(self.device.Address, props["Address"], error_handler=on_error)
+		self.session = self.manager.create_session(self.device.Address, props["Address"], error_handler=on_error)
 		
 	def on_cancel(self, button):
 		if self.session:
@@ -236,9 +236,9 @@ class Sender(gobject.GObject):
 			self.session = None
 		
 	def on_session_connected(self, session):
-		dprint("commence transfer")
-		self.sesion = session
-		self.process_queue()
+		if session == self.session:
+			dprint("commence transfer")
+			self.process_queue()
 		
 	def on_session_error(self, session, name, msg):
 		dprint("session err", name, msg)
