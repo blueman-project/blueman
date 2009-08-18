@@ -252,11 +252,11 @@ class ManagerDeviceMenu(gtk.Menu):
 			item.show()
 			item.props.tooltip_text = _("Run the setup assistant for this device")
 			
-			item = create_menuitem(_("Bond"), get_icon("gtk-dialog-authentication", 16))
+			item = create_menuitem(_("Pair"), get_icon("gtk-dialog-authentication", 16))
 			self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.bond(device))
 			self.append(item)
 			item.show()			
-			item.props.tooltip_text = _("Create bonding with the device")
+			item.props.tooltip_text = _("Create pairing with the device")
 			
 			item = gtk.SeparatorMenuItem()
 			item.show()
@@ -486,8 +486,8 @@ class ManagerDeviceMenu(gtk.Menu):
 			item.show()
 			self.append(item)
 			
-			item = create_menuitem(_("Bond"), get_icon("gtk-dialog-authentication", 16))
-			item.props.tooltip_text = _("Create bonding with the device")
+			item = create_menuitem(_("Pair"), get_icon("gtk-dialog-authentication", 16))
+			item.props.tooltip_text = _("Create pairing with the device")
 			self.append(item)
 			item.show()
 			if not device.Paired:
