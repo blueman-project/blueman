@@ -20,6 +20,7 @@ from blueman.Functions import *
 from blueman.Functions import _
 from blueman.plugins.AppletPlugin import AppletPlugin
 import blueman.bluez as Bluez
+from blueman.bluez.errors import BluezDBusException
 import dbus
 import types
 
@@ -94,15 +95,24 @@ class PowerManager(AppletPlugin):
 	def __setattr__(self, key, value):
 		if key == "bluetooth_off":
 			dprint("bt_off", value)
-
-			if key in self.__dict__:
-				dprint("off", self.__dict__[key], value)
-				if self.__dict__[key] != value:
-					adapters = self.Applet.Manager.ListAdapters()
-					for adapter in adapters:
-						adapter.SetProperty("Powered", not value)
-				else:
-					return
+			try:
+				if key in self.__dict__:
+					dprint("off", self.__dict__[key], value)
+					if self.__dict__[key] != value:
+						adapters = self.Applet.Manager.ListAdapters()
+						for adapter in adapters:
+							adapter.SetProperty("Powered", not value)
+					else:
+						return
+			except BluezDBusException, e:
+				d = gtk.MessageDialog(parent=None, flags=0, type=gtk.MESSAGE_ERROR, buttons=gtk.BUTTONS_CLOSE, message_format=None)
+				
+				d.props.text = _("Failed to set bluetooth power")
+				d.props.secondary_text = _("The error reported is: %s") % str(e)
+				d.props.icon_name = "blueman"
+				d.run()
+				d.destroy()
+				return
 
 			self.__dict__[key] = value					
 			if value:
