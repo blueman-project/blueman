@@ -51,7 +51,7 @@ class KillSwitch(dbus.proxies.Interface):
 	def SetPower(self, state):
 		try:
 			self.__switch.SetPower(state)
-		except dbus.DbusException:
+		except dbus.DBusException:
 			dprint("Failed to toggle killswitch")
 		
 	def GetPower(self):
