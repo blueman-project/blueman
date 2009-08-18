@@ -76,7 +76,7 @@ class RecentConns(AppletPlugin, gtk.Menu):
 	
 	def on_load(self, applet):
 		self.Applet = applet
-		self.Adapters = []
+		self.Adapters = {}
 		gtk.Menu.__init__(self)
 		
 		self.Item = create_menuitem(_("Recent Connections")+"...", get_icon("document-open-recent", 16))
