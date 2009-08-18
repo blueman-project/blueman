@@ -7,6 +7,9 @@
     <property name="icon_name">blueman</property>
     <property name="type_hint">dialog</property>
     <child>
+      <placeholder/>
+    </child>
+    <child>
       <object class="GtkLabel" id="l_page0">
         <property name="visible">True</property>
         <property name="xpad">12</property>
@@ -42,6 +45,7 @@ It will walk you through the process of configuring and connecting to your bluet
         <child>
           <object class="GtkVBox" id="vbox1">
             <property name="visible">True</property>
+            <property name="orientation">vertical</property>
             <property name="spacing">10</property>
             <child>
               <object class="GtkLabel" id="label3">
@@ -74,7 +78,7 @@ It will walk you through the process of configuring and connecting to your bluet
                 <property name="spacing">4</property>
                 <child>
                   <object class="GtkRadioButton" id="r_myp">
-                    <property name="label" translatable="yes">Use My Own Passkey:</property>
+                    <property name="label" translatable="yes">Use Custom Passkey:</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
@@ -104,7 +108,7 @@ It will walk you through the process of configuring and connecting to your bluet
             </child>
             <child>
               <object class="GtkRadioButton" id="r_dontp">
-                <property name="label" translatable="yes">Don't Pair</property>
+                <property name="label" translatable="yes">Proceed Without Pairing</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
@@ -145,6 +149,7 @@ Enter passkey &lt;b&gt;0000&lt;/b&gt; on the device.</property>
         <child>
           <object class="GtkVBox" id="vbox3">
             <property name="visible">True</property>
+            <property name="orientation">vertical</property>
             <property name="spacing">6</property>
             <child>
               <object class="GtkLabel" id="label2">
