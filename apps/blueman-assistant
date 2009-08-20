@@ -125,6 +125,10 @@ class Assistant(Agent):
 			
 		pages[PAGE_DEVLIST].add(self.dev_widget)
 		
+		self.dev_widget.show()
+		self.dev_widget.List.DiscoverDevices()
+		self.assistant.show()
+				
 		if options.device != None:
 			m = Manager("gobject")
 			try:
@@ -151,10 +155,9 @@ class Assistant(Agent):
 				self.Adapter = adapter
 				self.assistant.set_current_page(PAGE_PASSKEY)
 							
+		
 
-		self.dev_widget.show()
-		self.dev_widget.List.DiscoverDevices()
-		self.assistant.show()
+		
 		gtk.main()
 		
 	def on_row_activated(self, treeview, path, view_column, *args):
