@@ -487,6 +487,8 @@ def get_special_dir(t):
 	d = g_get_user_special_dir(t)
 	if d == NULL:
 		return None
+	else:
+		return d
 	
 	
 	
