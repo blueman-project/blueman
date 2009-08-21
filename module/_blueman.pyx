@@ -483,7 +483,10 @@ class SpecialDirType:
 
 
 def get_special_dir(t):
-	return g_get_user_special_dir(t)
+	cdef char* d
+	d = g_get_user_special_dir(t)
+	if d == NULL:
+		return None
 	
 	
 	

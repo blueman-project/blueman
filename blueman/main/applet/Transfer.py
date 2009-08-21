@@ -74,10 +74,11 @@ class Transfer(OdsManager):
 		server = self.get_server(pattern)
 		if server != None:
 			if self.Config.props.shared_path == None:
-				self.Config.props.shared_path = get_special_dir(SpecialDirType.PUBLIC_SHARE)
-			
-			if self.Config.props.shared_path == None:
-				self.Config.props.shared_path = get_special_dir(SpecialDirType.PUBLIC_SHARE)
+				d = get_special_dir(SpecialDirType.PUBLIC_SHARE)
+				if d == None:
+					self.Config.props.shared_path = os.path.expanduser("~")
+				else:	
+					self.Config.props.shared_path = d
 			
 			if pattern == "opp":
 				server.Start(self.Config.props.shared_path, True, False)

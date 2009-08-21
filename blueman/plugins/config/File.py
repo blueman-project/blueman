@@ -25,6 +25,7 @@ import atexit
 import dbus.service, dbus.glib
 import weakref
 import signal
+import glib
 from blueman.Functions import dprint
 
 def sighandler():
@@ -51,32 +52,27 @@ class Monitor(dbus.service.Object):
 		dbus.service.Object.__init__(self)
 		self.add_to_connection(self.bus, self.inst_id)
 		
-		self.sigs.Handle("dbus", self, self.on_value_changed, "ValueChanged", "org.blueman.Config")
+		self.sigs.Handle("dbus", self.bus, self.on_value_changed, "ValueChanged", "org.blueman.Config")
 		
-	def on_value_changed(self, section, key, value):
-		if isinstance(value, int):
-			value = int(value)
-		elif isinstance(value, long):
-			value = long(value)
-		elif isinstance(value, float):
-			value = float(value)
-		elif isinstance(value, str):
-			value = str(value)
-		elif isinstance(value, unicode):
-			value = unicode(value)
+	def on_value_changed(self, section, data):
+		
+		s = "".join(chr(b) for b in data)
+
+		(key, value) = pickle.loads(s)
 			
 		key = str(key)
-
+		
 		if self.plugin().section == section:
+			
 			self.plugin().set(key, value, True)
 		else:
 			if not section in File.__db__:
 				File.__db__[section] = {}
-				
+	
 			File.__db__[section][key] = value
 		
-	@dbus.service.signal(dbus_interface="org.blueman.Config")
-	def ValueChanged(self, section, key, value):
+	@dbus.service.signal(dbus_interface="org.blueman.Config", signature='say')
+	def ValueChanged(self, section, data):
 		pass
 
 class File(ConfigPlugin):
@@ -126,19 +122,25 @@ class File(ConfigPlugin):
 		f = open(cfg_path, "w")
 		pickle.dump(File.__db__, f)
 		f.close()
+		File.timeout = None
 
 	
 	def set(self, key, value, local=False):
+		
 		if key in self.config[self.section]:
 			prev = self.config[self.section][key]
 		else:
 			prev = None
-			
+
 		self.config[self.section][key] = value
 		if prev != value:
 			self.emit("property-changed", key, value)
+			
 			if not local:
-				self.Monitor.ValueChanged(self.section, key, value)
+				if File.timeout:
+					glib.source_remove(File.timeout)
+				File.timeout = glib.timeout_add(1000, File.save)
+				self.Monitor.ValueChanged(self.section, pickle.dumps((key, value), pickle.HIGHEST_PROTOCOL))
 		
 	def get(self, key):
 		if key in self.config[self.section]:

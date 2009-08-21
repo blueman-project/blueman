@@ -30,7 +30,9 @@ import gobject
 import gtk
 
 class SerialManager(AppletPlugin):
-
+	__icon__ = "modem"
+	__author__ = "Walmis"
+	
 	def on_load(self, applet):
 		pass
 		
