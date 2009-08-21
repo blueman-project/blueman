@@ -237,16 +237,8 @@ def format_bytes(size):
 	return (ret, suffix)
 	
 def create_menuitem(text, image):
-	item = gtk.ImageMenuItem()
+	item = gtk.ImageMenuItem(text)
 	item.set_image(gtk.image_new_from_pixbuf(image))
-	
-	label = gtk.Label()
-	label.set_text(text)
-	label.set_alignment(0,0.5)
-
-	label.show()
-	
-	item.add(label)
 	
 	return item
 	

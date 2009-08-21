@@ -41,7 +41,7 @@ class DiscvManager(AppletPlugin):
 	}
 	
 	def on_load(self, applet):
-		self.item = create_menuitem(_("Make Discoverable"), get_icon("gtk-find", 16))
+		self.item = create_menuitem(_("_Make Discoverable"), get_icon("gtk-find", 16))
 		applet.Plugins.Menu.Register(self, self.item, 20, False)
 
 		self.Applet = applet
@@ -142,7 +142,7 @@ class DiscvManager(AppletPlugin):
 			if (not props["Discoverable"] or props["DiscoverableTimeout"] > 0) and props["Powered"]:
 				
 				self.item.props.visible = True
-				self.item.get_child().props.label = _("Make Discoverable")
+				self.item.get_child().props.label = _("_Make Discoverable")
 				self.item.props.sensitive = True
 
 			else:
