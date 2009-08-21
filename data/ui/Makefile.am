@@ -12,6 +12,7 @@ ui_DATA =				\
 	services-headset.ui	\
 	send-dialog.ui		\
 	assistant.ui		\
-	applet-plugins-widget.ui
+	applet-plugins-widget.ui \
+	gsm-settings.ui
 
 EXTRA_DIST = $(ui_DATA)

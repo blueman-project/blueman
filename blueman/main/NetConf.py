@@ -167,7 +167,7 @@ class NetConf:
 			os.system("rm -f /var/run/blueman-iptbl-lock")
 			
 			for l in lines:
-				os.system("/sbin/iptables %s" % l)
+				os.system("iptables %s" % l)
 			
 			
 			

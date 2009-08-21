@@ -1,6 +1,6 @@
 AC_PREREQ(2.61)
 
-AC_INIT(blueman, 1.19)
+AC_INIT(blueman, 1.20)
 AC_CONFIG_HEADERS(config.h)
 AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION)
 
@@ -166,6 +166,18 @@ AC_ARG_WITH(no_runtime_deps_check,
 [  --with-no-runtime-deps-check disable runtime dependency check (for package maintainers)],
 deps_check=0
 )
+
+polkit_val=1
+AC_ARG_ENABLE(polkit,
+[  --enable-polkit=[yes/no] Enable policykit support],,enable_polkit=yes)
+if test "x$enable_polkit" = "xyes"; then
+        polkit_val=1
+else
+        polkit_val=0
+fi
+AC_SUBST(polkit_val)
+
+
 
 dnl ----------------------------
 

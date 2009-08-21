@@ -46,6 +46,8 @@ class PluginDialog(gtk.Dialog):
 		self.author = self.Builder.get_object("author")
 		self.depends_hdr = self.Builder.get_object("depends_hdr")
 		self.depends_txt = self.Builder.get_object("depends_txt")
+		self.conflicts_hdr = self.Builder.get_object("conflicts_hdr")
+		self.conflicts_txt = self.Builder.get_object("conflicts_txt")
 		self.plugin_name = self.Builder.get_object("name")
 	
 		widget = self.Builder.get_object("all")
@@ -108,6 +110,13 @@ class PluginDialog(gtk.Dialog):
 			self.depends_hdr.props.visible = False
 			self.depends_txt.props.visible = False
 		
+		if cls.__conflicts__ != []:
+			self.conflicts_hdr.props.visible = True
+			self.conflicts_txt.props.visible = True
+			self.conflicts_txt.props.label = ", ".join(cls.__conflicts__)
+		else:
+			self.conflicts_hdr.props.visible = False
+			self.conflicts_txt.props.visible = False		
 		
 	def populate(self):
 		classes = self.applet.Plugins.GetClasses()
@@ -142,7 +151,35 @@ class PluginDialog(gtk.Dialog):
 			dialog.props.secondary_text = _("Plugin <b>\"%(0)s\"</b> depends on <b>%(1)s</b>. Unloading <b>%(1)s</b> will also unload <b>\"%(0)s\"</b>.\nProceed?") % {"0": ", ".join(to_unload), "1": name}
 			
 			resp = dialog.run()
+			if resp != gtk.RESPONSE_YES:
+				dialog.destroy()
+				return
+			
 			dialog.destroy()
+		
+		conflicts = self.applet.Plugins.GetConflicts()[name]	
+		to_unload = []
+		for conf in conflicts:
+			if conf in loaded:
+				to_unload.append(conf)
+		
+		if to_unload != []:
+			dialog = gtk.MessageDialog(self, type=gtk.MESSAGE_QUESTION, buttons=gtk.BUTTONS_YES_NO)
+			dialog.props.secondary_use_markup = True
+			dialog.props.icon_name = "blueman"
+			dialog.props.text = _("Dependency issue")
+			dialog.props.secondary_text = _("Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will unload <b>%(0)s</b>.\nProceed?") % {"0": ", ".join(to_unload), "1": name}
+			
+			resp = dialog.run()
+			if resp != gtk.RESPONSE_YES:
+				dialog.destroy()
+				return
+			
+			dialog.destroy()
+			
+			for p in to_unload:
+				self.applet.Plugins.SetConfig(p, False)				
+		
 		
 		loaded = name in self.applet.Plugins.GetLoaded()
 		cls = self.applet.Plugins.SetConfig(name, not loaded)

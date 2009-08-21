@@ -27,6 +27,8 @@ from blueman.main.HalManager import HalManager
 
 from blueman.Lib import set_probe_debug
 
+from blueman.Constants import POLKIT
+
 if "--debug" in sys.argv:
 	print "Enabled verbose output"
 	set_probe_debug(True)
@@ -67,6 +69,9 @@ class conf_service(dbus.service.Object):
 
 	def confirm_authorization(self, busname, action_id):
 		timer.reset()
+		if not POLKIT:
+			return
+			
 		res = self.polkit.IsSystemBusNameAuthorized(action_id, busname, False)
 		
 		if res != "yes":
@@ -133,13 +138,25 @@ class conf_service(dbus.service.Object):
 				return dbus.DBusException("IP Invalid")
 	
 	
-	#@dbus.service.signal(dbus_interface='org.blueman.Mechanism', signature='ss')
-	#def dhcpStatus(self, interface, status_str):
-	#	pass
+	def ppp_connected(self, ppp, port, ok, err):
+		ok(port)
+		
+	def ppp_error(self, ppp, message, ok, err):
+		err(dbus.DBusException(message))
+	
+	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="sss", out_signature="s", sender_keyword="caller", async_callbacks=("ok", "err"))
+	def PPPConnect(self, port, number, apn, caller, ok, err):
+		timer.reset()
+		from blueman.main.PPPConnection import PPPConnection
+		
+		#self.confirm_authorization(caller, "org.blueman.network.setup")
 
-	#@dbus.service.signal(dbus_interface='org.blueman.Mechanism', signature='sus')
-	#def dhcpReturn(self, interface, return_code, bound_to):
-	#	pass
+		ppp = PPPConnection(port, number, apn)
+		ppp.connect("error-occurred", self.ppp_error, ok, err)
+		ppp.connect("connected", self.ppp_connected, ok, err)
+		
+		ppp.Connect()
+		
 
 
 	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="s", out_signature="sus", sender_keyword="caller", async_callbacks=("ok", "err"))

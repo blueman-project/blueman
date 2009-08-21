@@ -32,10 +32,11 @@ import blueman.bluez as Bluez
 import gobject
 import gtk
 
-class ModemManager(AppletPlugin):
-	__description__ = _("Registers rfcomm ports as modem devices")
+class NMIntegration(AppletPlugin):
+	__description__ = _("Makes DUN/PAN connections available for NetworkManager 0.7")
 	__icon__ = "modem"
 	__depends__ = ["DBusService"]
+	__conflicts__ = ["PPPSupport"]
 	__author__ = "Walmis"
 	
 	def on_load(self, applet):
@@ -121,9 +122,15 @@ class ModemManager(AppletPlugin):
 				
 			signals.Handle("bluez", device.Device, device_propery_changed, "PropertyChanged")	
 			self.RegisterModem(device.get_object_path(), port)
+		
+	def rfcomm_connect_handler(self, device, uuid, reply_handler, error_handler):
+		uuid16 = uuid128_to_uuid16(uuid)
+		if uuid16 == DIALUP_NET_SVCLASS_ID:
+			device.Services["serial"].Connect(uuid, reply_handler=reply_handler, error_handler=error_handler)
+			return True
 		else:
-			Notification(_("Serial port connected"), _("Serial port service on device <b>%s</b> now will be available via <b>%s</b>") % (device.Alias, port), pixbuf=get_icon("network-wired", 48), status_icon=self.Applet.Plugins.StatusIcon)
-
+			return False	
+		
 		
 	def on_rfcomm_disconnect(self, port):
 		self.UnregisterModem(port)

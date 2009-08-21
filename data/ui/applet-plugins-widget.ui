@@ -24,6 +24,7 @@
       <object class="GtkVBox" id="vbox1">
         <property name="width_request">370</property>
         <property name="visible">True</property>
+        <property name="orientation">vertical</property>
         <property name="spacing">12</property>
         <child>
           <object class="GtkHBox" id="hbox2">
@@ -134,6 +135,30 @@
           <packing>
             <property name="expand">False</property>
             <property name="position">6</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="conflicts_hdr">
+            <property name="visible">True</property>
+            <property name="xalign">0</property>
+            <property name="yalign">0</property>
+            <property name="label" translatable="yes">&lt;b&gt;Conflicts with:&lt;/b&gt;</property>
+            <property name="use_markup">True</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="position">7</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="conflicts_txt">
+            <property name="visible">True</property>
+            <property name="xalign">0</property>
+            <property name="yalign">0</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="position">8</property>
           </packing>
         </child>
       </object>

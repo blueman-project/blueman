@@ -28,6 +28,9 @@ class MethodAlreadyExists(Exception):
 	
 class AppletPlugin(object):
 	__depends__ = []
+	__conflicts__ = []
+	__priority__ = 0
+	
 	__description__ = None
 	__author__ = None
 	

@@ -20,6 +20,7 @@
 import os
 import time
 import dbus
+from blueman.Constants import POLKIT
 
 
 '''
@@ -27,61 +28,67 @@ PolicyKit related services.
 '''
 
 class PolicyKitAuth(object):
-    '''
-    Obtains sudo/root access,
-    asking the user for authentication if necessary,
-    using PolicyKit
-    '''
+	'''
+	Obtains sudo/root access,
+	asking the user for authentication if necessary,
+	using PolicyKit
+	'''
 
-    def is_authorized(self, action_id):
-        '''
-        Ask PolicyKit whether we are already authorized.
-        '''
+	def is_authorized(self, action_id):
+		'''
+		Ask PolicyKit whether we are already authorized.
+		'''
+		if not POLKIT:
+			return True
+		
+		# Check whether the process is authorized:
+		pid = dbus.UInt32(os.getpid())
+		authorized = self.policy_kit.IsProcessAuthorized(action_id, pid, False)
 
-        # Check whether the process is authorized:
-        pid = dbus.UInt32(os.getpid())
-        authorized = self.policy_kit.IsProcessAuthorized(action_id, pid, False)
+		return ('yes' == authorized)
 
-        return ('yes' == authorized)
+	def obtain_authorization(self, widget, action_id):
+		'''
+		Try to obtain authoriztation for the specified action.
+		'''
+		if not POLKIT:
+			return True
+			
+		xid = (widget and widget.get_toplevel().window.xid or 0)
+		xid, pid = dbus.UInt32(xid), dbus.UInt32(os.getpid())
 
-    def obtain_authorization(self, widget, action_id):
-        '''
-        Try to obtain authoriztation for the specified action.
-        '''
+		granted = self.auth_agent.ObtainAuthorization(action_id, xid, pid)
 
-        xid = (widget and widget.get_toplevel().window.xid or 0)
-        xid, pid = dbus.UInt32(xid), dbus.UInt32(os.getpid())
-
-        granted = self.auth_agent.ObtainAuthorization(action_id, xid, pid)
-
-        return bool(granted)
+		return bool(granted)
     
-    def obtain_authorization_async(self, widget, action_id, reply, err):
-        '''
-        Try to obtain authoriztation for the specified action.
-        '''
+	def obtain_authorization_async(self, widget, action_id, reply, err):
+		'''
+		Try to obtain authoriztation for the specified action.
+		'''
+		if not POLKIT:
+			reply(True)
+		
+		xid = (widget and widget.get_toplevel().window.xid or 0)
+		xid, pid = dbus.UInt32(xid), dbus.UInt32(os.getpid())
 
-        xid = (widget and widget.get_toplevel().window.xid or 0)
-        xid, pid = dbus.UInt32(xid), dbus.UInt32(os.getpid())
-
-        self.auth_agent.ObtainAuthorization(action_id, xid, pid, reply_handler=reply, error_handler=err)
+		self.auth_agent.ObtainAuthorization(action_id, xid, pid, reply_handler=reply, error_handler=err)
 
 
-    def __get_policy_kit(self):
-        '''Retreive the D-Bus interface of PolicyKit.'''
+	def __get_policy_kit(self):
+		'''Retreive the D-Bus interface of PolicyKit.'''
 
-        # retreiving the interface raises DBusException on error:
-        service = dbus.SystemBus().get_object('org.freedesktop.PolicyKit', '/')
-        return dbus.Interface(service, 'org.freedesktop.PolicyKit')
+		# retreiving the interface raises DBusException on error:
+		service = dbus.SystemBus().get_object('org.freedesktop.PolicyKit', '/')
+		return dbus.Interface(service, 'org.freedesktop.PolicyKit')
 
-    def __get_auth_agent(self):
-        '''Retreive the D-Bus interface of the PolicyKit authentication agent.'''
+	def __get_auth_agent(self):
+		'''Retreive the D-Bus interface of the PolicyKit authentication agent.'''
 
-        # retreiving the interface raises DBusException on error:
-        return dbus.SessionBus().get_object(
-            'org.freedesktop.PolicyKit.AuthenticationAgent', '/',
-            'org.gnome.PolicyKit.AuthorizationManager.SingleInstance')
+		# retreiving the interface raises DBusException on error:
+		return dbus.SessionBus().get_object(
+			'org.freedesktop.PolicyKit.AuthenticationAgent', '/',
+			'org.gnome.PolicyKit.AuthorizationManager.SingleInstance')
 
-    auth_agent = property(__get_auth_agent)
-    policy_kit = property(__get_policy_kit)
+	auth_agent = property(__get_auth_agent)
+	policy_kit = property(__get_policy_kit)
 

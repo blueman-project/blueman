@@ -41,6 +41,7 @@ class DBusService(AppletPlugin):
 		
 		AppletPlugin.add_method(self.on_rfcomm_connected)
 		AppletPlugin.add_method(self.on_rfcomm_disconnect)
+		AppletPlugin.add_method(self.rfcomm_connect_handler)
 		
 		self.add_dbus_method(self.ServiceProxy, in_signature="sosas", async_callbacks=("ok","err"))
 		self.add_dbus_method(self.CreateDevice, in_signature="ssbu", async_callbacks=("ok","err"))
@@ -108,9 +109,21 @@ class DBusService(AppletPlugin):
 			self.Applet.Plugins.RecentConns.notify(dev.Copy(), "org.bluez.Serial", [uuid] )
 		except KeyError:
 			pass
+			
+		rets = self.Applet.Plugins.Run("rfcomm_connect_handler", dev, uuid, reply, err)
+		if True in rets:
+			pass
+		else:
+			dprint("No handler registered")
+			err(dbus.DBusException("Service not supported\nPossibly the plugin that handles this service is not loaded"))
 		
-		dev.Services["serial"].Connect(uuid, reply_handler=reply, error_handler=err)
-		dprint("Connecting rfcomm device")
+		
+		#dev.Services["serial"].Connect(uuid, reply_handler=reply, error_handler=err)
+		#dprint("Connecting rfcomm device")
+		
+		
+	def rfcomm_connect_handler(self, device, uuid, reply_handler, error_handler):
+		return False
 		
 		
 	def RfcommDisconnect(self, device, rfdevice):

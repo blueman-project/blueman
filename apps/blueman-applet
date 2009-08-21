@@ -62,6 +62,7 @@ class BluemanApplet(object):
 			self.__plugins = {}
 			self.__classes = {}
 			self.__deps = {}
+			self.__cfls = {}
 			self.__loaded = []
 			self.applet = applet
 			self.__config = Config()
@@ -101,6 +102,9 @@ class BluemanApplet(object):
 		def GetDependencies(self):
 			return self.__deps
 			
+		def GetConflicts(self):
+			return self.__cfls
+			
 		def Load(self, name=None):
 			if name:
 				self.__load_plugin(self.__classes[name])
@@ -126,11 +130,19 @@ class BluemanApplet(object):
 				if not cls.__name__ in self.__deps:
 					self.__deps[cls.__name__] = []
 				
+				if not cls.__name__ in self.__cfls:
+					self.__cfls[cls.__name__] = []				
+				
 				for c in cls.__depends__:
 					if not c in self.__deps:
 						self.__deps[c] = []
 					self.__deps[c].append(cls.__name__)
-			
+				
+				for c in cls.__conflicts__:
+					if not c in self.__cfls:
+						self.__cfls[c] = []
+					self.__cfls[c].append(cls.__name__)	
+					print self.__cfls	
 				
 			c = self.__config.props.applet_plugins
 			for name, cls in self.__classes.iteritems():
@@ -150,7 +162,15 @@ class BluemanApplet(object):
 				if not dep in self.__loaded:
 					if not dep in self.__classes:
 						raise "Could not satisfy dependency %s -> %s" % (cls.__name__, dep)
-					self.__load_plugin(self.__classes[dep])		
+					self.__load_plugin(self.__classes[dep])	
+					
+			for cfl in cls.__conflicts__:
+				if cfl in self.__loaded:
+					if cls.__priority__ > self.__classes[cfl].__priority__:
+						self.Unload(cfl)
+					else:
+						dprint("Not loading conflicting plugin %s due to lower priority" % cls.__name__)
+						return
 			
 			dprint("loading", cls)
 			inst = cls(self.applet)

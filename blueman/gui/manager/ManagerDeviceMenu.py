@@ -170,10 +170,10 @@ class ManagerDeviceMenu(gtk.Menu):
 		elif service_id == "serial":
 			uuid = args[0]
 
-			appl.RfcommConnect(device.GetObjectPath(), uuid, reply_handler=success, error_handler=fail)
+			appl.RfcommConnect(device.GetObjectPath(), uuid, reply_handler=success, error_handler=fail, timeout=200)
 		
 		else:
-			appl.ServiceProxy(svc.GetInterfaceName(), svc.GetObjectPath(), "Connect", [], reply_handler=success, error_handler=fail)
+			appl.ServiceProxy(svc.GetInterfaceName(), svc.GetObjectPath(), "Connect", [], reply_handler=success, error_handler=fail, timeout=200)
 			
 			
 			
@@ -291,6 +291,21 @@ class ManagerDeviceMenu(gtk.Menu):
 							sub.append(item)
 							item.show()
 							num_ports += 1
+							def open_settings(i, device):
+								from blueman.gui.GsmSettings import GsmSettings
+								d = GsmSettings(device.Address)
+								d.run()
+								d.destroy()
+							a = AppletService()
+							if "PPPSupport" in a.QueryPlugins():
+								item = gtk.SeparatorMenuItem()
+								item.show()
+								sub.append(item)
+							
+								item = create_menuitem(_("Dialup Settings"), get_icon("gtk-preferences", 16))
+								sub.append(item)
+								item.show()
+								self.Signals.Handle("gobject", item, "activate", open_settings, device)
 							
 						if uuid16 == SERIAL_PORT_SVCLASS_ID:
 							item = create_menuitem(_("Serial Service"), get_icon("modem", 16))

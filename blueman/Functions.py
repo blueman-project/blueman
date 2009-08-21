@@ -193,7 +193,10 @@ def e_(msg):
 		return str(msg) + "\n" + traceback.format_exc()
 	else:
 		msg = str(msg)
-		return msg.split(": ")[1]
+		
+		s = msg.split(": ")			
+		del s[0]
+		return ": ".join(s)
 	
 
 

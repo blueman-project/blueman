@@ -7,6 +7,7 @@ ICON_PATH = "@pkgdatadir@/icons"
 UI_PATH = "@pkgdatadir@/ui"
 OBEX_BROWSE_AVAILABLE = True
 DHCP_CONFIG_FILE = "@dhconfig@"
+POLKIT = @polkit_val@
 
 DEF_BROWSE_COMMAND = "nautilus --browser obex://[%d]"
 
