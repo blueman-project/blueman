@@ -10,7 +10,7 @@
 [type: gettext/glade]data/ui/device-list-widget.ui
 [type: gettext/glade]data/ui/services-headset.ui
 [type: gettext/glade]data/ui/applet-plugins-widget.ui
-
+[type: gettext/glade]data/ui/gsm-settings.ui
 blueman/Functions.py
 blueman/plugins/ConfigPlugin.py
 blueman/plugins/AppletPlugin.py
@@ -30,7 +30,9 @@ blueman/plugins/applet/StatusIcon.py
 blueman/plugins/applet/__init__.py
 blueman/plugins/applet/PowerManager.py
 blueman/plugins/applet/Menu.py
-blueman/plugins/applet/ModemManager.py
+blueman/plugins/applet/NMIntegration.py
+blueman/plugins/applet/PPPSupport.py
+blueman/plugins/applet/SerialManager.py
 blueman/plugins/applet/DiscvManager.py
 blueman/plugins/applet/TransferService.py
 blueman/plugins/__init__.py
@@ -59,6 +61,7 @@ blueman/gui/Animation.py
 blueman/gui/CommonUi.py
 blueman/gui/GenericList.py
 blueman/gui/GtkAnimation.py
+blueman/gui/GsmSettings.py
 blueman/gui/MessageArea.py
 blueman/gui/applet/PluginDialog.py
 blueman/gui/applet/__init__.py
