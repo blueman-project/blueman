@@ -228,7 +228,7 @@ class Sender(gobject.GObject):
 			try:
 				self.session.Close()
 			except:
-				print "Warning: Session already closed"
+				dprint("Warning: Session already closed")
 		
 	def on_session_destroyed(self, manager, path):
 		dprint("session destroyed")
@@ -246,6 +246,7 @@ class Sender(gobject.GObject):
 		d = gtk.MessageDialog(  self.window,
 					type=gtk.MESSAGE_ERROR)
 		d.props.text = msg
+		d.props.modal = True
 		d.props.secondary_text = _("Error occurred while sending file %s") % os.path.basename(self.files[-1])
 		d.props.icon_name = "blueman"
 		
@@ -254,28 +255,31 @@ class Sender(gobject.GObject):
 		d.add_button(_("Retry"), gtk.RESPONSE_YES)
 		d.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
 		
-		resp = d.run()
-		d.destroy()
-		if resp == gtk.STOCK_CANCEL:
-			self.on_cancel(None)
-		elif resp == gtk.RESPONSE_NO:
-			self.total_bytes -= os.path.getsize(self.files[-1])
-			self.total_transferred -= self.transferred
-			self.transferred = 0
-			del self.files[-1]
-			if not self.session or not self.session.Connected:
-				self.create_session()
-			self.process_queue()
-		elif resp == gtk.RESPONSE_YES:
-			self.total_transferred -= self.transferred
-			self.transferred = 0
-			if not self.session or not self.session.Connected:
-				self.create_session()
+		
+		def on_response(dialog, resp):
+			dialog.destroy()
+			if resp == gtk.STOCK_CANCEL:
+				self.on_cancel(None)
+			elif resp == gtk.RESPONSE_NO:
+				self.total_bytes -= os.path.getsize(self.files[-1])
+				self.total_transferred -= self.transferred
+				self.transferred = 0
+				del self.files[-1]
+				if not self.session or not self.session.Connected:
+					self.create_session()
+				self.process_queue()
+			elif resp == gtk.RESPONSE_YES:
+				self.total_transferred -= self.transferred
+				self.transferred = 0
+				if not self.session or not self.session.Connected:
+					self.create_session()
 
-			self.process_queue()
-		else:
-			self.on_cancel(None)
-
+				self.process_queue()
+			else:
+				self.on_cancel(None)			
+		
+		d.connect("response", on_response)
+		d.show()
 		
 		
 	def on_session_created(self, manager, session):
