@@ -304,8 +304,12 @@ class RecentConns(AppletPlugin, gtk.Menu):
 		elif item["service"] == "org.bluez.Network":
 			name = _("Network Access (%s)") % sdp.uuid16_to_name(sdp.uuid128_to_uuid16(item["conn_args"][0]))
 		else:
-			name = item["service"].split(".")[-1] + " " + _("Service")
-			name = name.capitalize()
+			try:
+				name = sdp.bluez_to_friendly_name(item["service"].split(".")[-1].lower())
+			except:
+				name = item["service"].split(".")[-1] + " " + _("Service")
+				name = name.capitalize()
+
 
 		mitem = create_menuitem(_("%(service)s on %(device)s") % {"service":name, "device":item["alias"]}, get_icon(item["icon"], 16))
 		item["mitem"] = mitem

@@ -325,9 +325,14 @@ class Assistant(Agent):
 							self.svc_vbox.pack_start(rbs[-1], False)
 			
 				elif name == "audiosink":
-					rbs.append(gtk.RadioButton(get_first_item(), _("A2DP Service")))
+					rbs.append(gtk.RadioButton(get_first_item(), _("A2DP Sink (Send Audio)")))
 					rbs[-1].connect("toggled", self.on_service_toggled, name)
 					self.svc_vbox.pack_start(rbs[-1], False)
+				
+				elif name == "audiosource":
+					rbs.append(gtk.RadioButton(get_first_item(), _("A2DP Source (Receive Audio)")))
+					rbs[-1].connect("toggled", self.on_service_toggled, name)
+					self.svc_vbox.pack_start(rbs[-1], False)				
 				
 				elif name == "headset":
 					rbs.append(gtk.RadioButton(get_first_item(), _("Headset Service")))

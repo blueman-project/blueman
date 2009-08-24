@@ -118,7 +118,10 @@ class ManagerDeviceMenu(gtk.Menu):
 			gobject.timeout_add(1500, prog.finalize)
 		
 		def success(*args2):
-			uuid16 = uuid128_to_uuid16(args[0])
+			try:
+				uuid16 = uuid128_to_uuid16(args[0])
+			except:
+				uuid16 = 0
 			
 			dprint("success", args2)
 			prog_msg(_("Success!"))
@@ -455,14 +458,28 @@ class ManagerDeviceMenu(gtk.Menu):
 					sprops = service.GetProperties()
 					
 					if sprops["Connected"]:
-						item = create_menuitem(_("Disconnect A2DP Service"), get_icon("blueman-headset", 16))
+						item = create_menuitem(_("Disconnect A2DP Sink"), get_icon("blueman-headset", 16))
 						self.Signals.Handle("gobject", item, "activate", self.on_disconnect, device, name)
 					else:
-						item = create_menuitem(_("Connect A2DP Service"), get_icon("blueman-headset", 16))
+						item = create_menuitem(_("Connect A2DP Sink"), get_icon("blueman-headset", 16))
+						item.props.tooltip_text = _("Allows to send audio to remote device")
 						self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name)
 					item.show()
 					items.append((20, item))
+				
+				if name == "audiosource":
+					sprops = service.GetProperties()
 					
+					if not sprops["State"] == "disconnected":
+						item = create_menuitem(_("Disconnect A2DP Source"), get_icon("blueman-headset", 16))
+						self.Signals.Handle("gobject", item, "activate", self.on_disconnect, device, name)
+					else:
+						item = create_menuitem(_("Connect A2DP Source"), get_icon("blueman-headset", 16))
+						item.props.tooltip_text = _("Allows to receive audio from remote device")
+						self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name)
+					item.show()
+					items.append((20, item))
+										
 			items.sort(lambda a, b: cmp(a[0], b[0]))
 			for priority, item in items:
 				self.append(item)

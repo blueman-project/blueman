@@ -105,8 +105,8 @@ uuid_names[0x1106] = "OBEX File Transfer"
 uuid_names[0x1107] = "IrMC Sync Command"
 uuid_names[0x1108] = "Headset"
 uuid_names[0x1109] = "Cordless Telephony"
-uuid_names[0x110a] = "Audio Source"
-uuid_names[0x110b] = "Audio Sink"
+uuid_names[0x110a] = _("Audio Source")
+uuid_names[0x110b] = _("Audio Sink")
 uuid_names[0x110c] = "Remote Control Target"
 uuid_names[0x110d] = "Advanced Audio"
 uuid_names[0x110e] = "Remote Control"
@@ -163,5 +163,16 @@ def uuid16_to_name(uuid16):
 
 
 def uuid128_to_uuid16(uuid128):
-	return int('0x'+uuid128[4:8], 16)
+	try:
+		return int('0x'+uuid128[4:8], 16)
+	except:
+		return 0
+		
+def bluez_to_friendly_name(svc):
+	if svc == "audiosink":
+		return uuid_names[0x110b]
+	elif svc == "audiosource":
+		return uuid_names[0x110a]
+	else:
+		raise Exception
 
