@@ -126,7 +126,17 @@ class Assistant(Agent):
 		pages[PAGE_DEVLIST].add(self.dev_widget)
 		
 		self.dev_widget.show()
-		self.dev_widget.List.DiscoverDevices()
+		if self.dev_widget.List.IsValidAdapter():
+			self.dev_widget.List.DiscoverDevices()
+		else:
+			d = gtk.MessageDialog(type=gtk.MESSAGE_ERROR, )
+			d.props.text = _("No adapters found")
+			d.props.icon_name = "blueman"
+			d.props.title = "Blueman Assistant"
+			d.add_button(gtk.STOCK_CLOSE, gtk.RESPONSE_CANCEL)
+			d.run()
+			exit(1)
+		
 		self.assistant.show()
 				
 		if options.device != None:
