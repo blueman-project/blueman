@@ -35,7 +35,9 @@ class PowerManager(AppletPlugin):
 		
 		self.Applet = applet
 		
-		self.item = create_menuitem(_("Bluetooth Off"), get_icon("gtk-stop", 16))
+		self.item = create_menuitem(_("<b>Bluetooth Off</b>"), get_icon("gtk-stop", 16))
+		self.item.get_child().set_markup(_("<b>Turn Bluetooth Off</b>"))
+		
 		self.item.props.tooltip_text = _("Turn off all adapters")
 		self.item.connect("activate", lambda x: self.on_bluetooth_toggled())
 		
@@ -91,20 +93,22 @@ class PowerManager(AppletPlugin):
 				adapter.SetProperty("Powered", True)				
 		
 		wait_for_adapter(adapter, on_ready)
+
+	
+		
 	
 	def __setattr__(self, key, value):
 		if key == "bluetooth_off":
 			dprint("bt_off", value)
-			try:
+			def set_global_state():
 				if key in self.__dict__:
 					dprint("off", self.__dict__[key], value)
-					if self.__dict__[key] != value:
-						adapters = self.Applet.Manager.ListAdapters()
-						for adapter in adapters:
-							adapter.SetProperty("Powered", not value)
-					else:
-						return
-			except BluezDBusException, e:
+					adapters = self.Applet.Manager.ListAdapters()
+					for adapter in adapters:
+						adapter.SetProperty("Powered", not value)
+		
+			
+			def error(e):
 				d = gtk.MessageDialog(parent=None, flags=0, type=gtk.MESSAGE_ERROR, buttons=gtk.BUTTONS_CLOSE, message_format=None)
 				
 				d.props.text = _("Failed to set bluetooth power")
@@ -112,23 +116,40 @@ class PowerManager(AppletPlugin):
 				d.props.icon_name = "blueman"
 				d.run()
 				d.destroy()
-				return
-
-			self.__dict__[key] = value					
-			if value:
-				self.item.get_child().set_markup(_("<b>Turn Bluetooth On</b>"))
-				self.item.set_image(gtk.image_new_from_pixbuf(get_icon("gtk-yes", 16)))
-				self.BluetoothStatusChanged(False)
-				self.Applet.Plugins.Run("on_bluetooth_power_state_changed", False)
-				if self.Applet.Plugins.StatusIcon.pixbuf:
-					self.Applet.Plugins.StatusIcon.set_from_pixbuf( opacify_pixbuf(self.Applet.Plugins.StatusIcon.pixbuf, 100) )
-			else:
-				self.item.get_child().set_markup(_("<b>Turn Bluetooth Off</b>"))
-				self.item.set_image(gtk.image_new_from_pixbuf(get_icon("gtk-stop", 16)))
-				self.BluetoothStatusChanged(True)
-				self.Applet.Plugins.Run("on_bluetooth_power_state_changed", True)
-				if self.Applet.Plugins.StatusIcon.pixbuf:
-					self.Applet.Plugins.StatusIcon.set_from_pixbuf( opacify_pixbuf(self.Applet.Plugins.StatusIcon.pixbuf, 255) )
+			
+			if not key in self.__dict__:
+				self.__dict__[key] = value
+			
+			if self.__dict__[key] != value:
+				self.__dict__[key] = value
+									
+				if value:
+					try:
+						set_global_state()
+					except BluezDBusException, e:	
+						error(e)
+						return
+				
+					self.item.get_child().set_markup(_("<b>Turn Bluetooth On</b>"))
+					self.item.set_image(gtk.image_new_from_pixbuf(get_icon("gtk-yes", 16)))
+					self.BluetoothStatusChanged(False)
+					self.Applet.Plugins.Run("on_bluetooth_power_state_changed", False)
+					if self.Applet.Plugins.StatusIcon.pixbuf:
+						self.Applet.Plugins.StatusIcon.set_from_pixbuf( opacify_pixbuf(self.Applet.Plugins.StatusIcon.pixbuf, 100) )
+				else:
+					self.item.get_child().set_markup(_("<b>Turn Bluetooth Off</b>"))
+					self.item.set_image(gtk.image_new_from_pixbuf(get_icon("gtk-stop", 16)))
+					self.BluetoothStatusChanged(True)
+					self.Applet.Plugins.Run("on_bluetooth_power_state_changed", True)
+					try:
+						set_global_state()
+					except BluezDBusException, e:	
+						error(e)
+						self.bluetooth_off = True
+						return
+					
+					if self.Applet.Plugins.StatusIcon.pixbuf:
+						self.Applet.Plugins.StatusIcon.set_from_pixbuf( opacify_pixbuf(self.Applet.Plugins.StatusIcon.pixbuf, 255) )
 		else:				
 			self.__dict__[key] = value
 		

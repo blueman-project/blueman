@@ -23,6 +23,7 @@ from blueman.Functions import _
 
 from blueman.main.SignalTracker import SignalTracker
 from blueman.plugins.AppletPlugin import AppletPlugin
+from blueman.main.KillSwitchNG import KillSwitchNG, RFKillType, RFKillState
 import blueman.main.KillSwitch as _KillSwitch
 
 class KillSwitch(AppletPlugin):
@@ -35,10 +36,26 @@ class KillSwitch(AppletPlugin):
 	}
 	
 	def on_load(self, applet):
-		self.Manager = _KillSwitch.Manager()
+		self.signal = None
+		try:
+			self.Manager = KillSwitchNG()
+			self.signal = self.Manager.connect("switch-changed", self.on_switch_changed)
+			dprint("Using the new killswitch system")
+		except OSError, e:
+			dprint("Using the old killswitch system", e)
+			self.Manager = _KillSwitch.Manager()
 		
-		if not self.get_option("checked"):
-			gobject.timeout_add(1000, self.check)
+			if not self.get_option("checked"):
+				gobject.timeout_add(1000, self.check)
+			
+	def on_switch_changed(self, manager, switch):
+		if switch.type == RFKillType.BLUETOOTH:
+			s = manager.GetGlobalState()
+			dprint(s, switch.soft)
+			if not s and (switch.soft == 1 or switch.hard == 1):
+				self.Applet.Plugins.PowerManager.SetBluetoothStatus(False)
+			elif s and (switch.soft == 0 or switch.hard == 0):
+				self.Applet.Plugins.PowerManager.SetBluetoothStatus(True)
 			
 	def check(self):
 		try:
@@ -50,9 +67,11 @@ class KillSwitch(AppletPlugin):
 			pass		
 
 	def on_unload(self):
-		pass
+		if self.signal:
+			self.Manager.disconnect(self.signal)
 		
 	def on_bluetooth_power_state_changed(self, state):
+		dprint(state)
 		self.Manager.SetGlobalState(state)
 		
 	def on_query_status_icon_visibility(self):

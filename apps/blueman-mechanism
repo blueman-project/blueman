@@ -88,7 +88,12 @@ class conf_service(dbus.service.Object):
 		
 		#reap the child
 		gobject.child_watch_add(p.pid, lambda pid, cond: 0)
-		
+	
+	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="b", out_signature="")
+	def SetRfkillState(self, state):		
+		from blueman.main.KillSwitchNG import KillSwitchNG
+		k = KillSwitchNG()
+		k.SetGlobalState(state)
 	
 	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="sbs", out_signature="", sender_keyword="caller")
 
