@@ -35,7 +35,7 @@ class GsmSettings(gtk.Dialog):
 		vbox = self.Builder.get_object("vbox1")
 		
 		self.config = Config("gsm_settings/" + bd_address)
-		
+		self.props.icon_name = "network-wireless"
 		self.props.title = _("GSM Settings")
 		
 		self.props.resizable = False
