@@ -180,23 +180,24 @@ class PPPConnection(gobject.GObject):
 
 		self.buffer += os.read(self.file, 128)
 
-		if self.buffer.endswith("\r\n"):
-			for t in terminators:
-				if t in self.buffer:
-					self.term_found = True
-					break;	
+		lines = self.buffer.split("\r\n")
 
-		
-		if self.term_found:
-			a = self.buffer.replace("\n", "\\n").replace("\r", "\\r")
-			print "<-- \"", a, "\""	
-			
-			
-			lines = self.buffer.split("\r\n")
-			for l in lines:
-				if l == "":
-					lines.remove(l)
+		found = False
+		for l in lines:
+			if l == "":
+				pass		
+			else:
+				for t in terminators:
+					if t in l:
+						found = True
 
+		if found:
+			try:
+				lines.remove("")
+			except:
+				pass
+			print "<-- ", lines
+			
 			on_done(lines, None)
 			return False		
 			
