@@ -42,7 +42,7 @@ class KillSwitch(AppletPlugin):
 			self.signal = self.Manager.connect("switch-changed", self.on_switch_changed)
 			dprint("Using the new killswitch system")
 		except OSError, e:
-			dprint("Using the old killswitch system", e)
+			dprint("Using the old killswitch system, reason:", e)
 			self.Manager = _KillSwitch.Manager()
 		
 			if not self.get_option("checked"):

@@ -68,7 +68,9 @@ class KillSwitchNG(gobject.GObject):
 		except OSError, e:
 			if e.errno == errno.EACCES:
 				self.fd = os.open("/dev/rfkill", os.O_RDONLY | os.O_NONBLOCK)
-		
+			else:
+				raise e
+
 		ref = weakref.ref(self)
 		self.iom = gobject.io_add_watch(self.fd, gobject.IO_IN | gobject.IO_ERR | gobject.IO_HUP, lambda *args: ref() and ref().io_event(*args) )
 		
