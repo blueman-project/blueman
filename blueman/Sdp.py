@@ -159,8 +159,10 @@ uuid_names[0x2112] = "AppleAgent"
 
 
 def uuid16_to_name(uuid16):
-	return uuid_names[uuid16]
-
+	try:
+		return uuid_names[uuid16]
+	except:
+		return "Unknown"
 
 def uuid128_to_uuid16(uuid128):
 	try:
