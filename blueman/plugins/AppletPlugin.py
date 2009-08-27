@@ -91,9 +91,12 @@ class AppletPlugin(object):
 		print "Deleting plugin instance", self
 	
 	def _load(self, applet):
-		self.on_load(applet)
-		self.on_manager_state_changed(applet.Manager != None)
-			
+		try:
+			self.on_load(applet)
+			self.on_manager_state_changed(applet.Manager != None)
+		except Exception, e:
+			AppletPlugin.instances.remove(self)
+			raise e
 		
 	@staticmethod
 	def add_method(func):
