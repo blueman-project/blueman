@@ -53,7 +53,7 @@ class connection:
 	def on_error(self, error):
 		print "error occurred", error
 		self.error_handler(error)
-		self.device.Services["serial"].Disconnect(self.port)
+		gobject.timeout_add(1000, self.device.Services["serial"].Disconnect, self.port)
 		
 	def on_connected(self, iface):
 		print "connected to iface", iface
