@@ -175,6 +175,7 @@ class PPPConnection(gobject.GObject):
 	def on_data_ready(self, source, condition, terminators, on_done):
 		if condition & glib.IO_ERR or condition & glib.IO_HUP:
 			on_done(None, PPPException("Socket error"))
+			os.close(self.file)
 			return False
 
 		self.buffer += os.read(self.file, 128)
@@ -205,7 +206,7 @@ class PPPConnection(gobject.GObject):
 		def on_timeout():
 			glib.source_remove(self.io_watch)
 			callback(None, PPPException("Modem initialization timed out"))
-
+			os.close(self.file)
 			return False
 			
 			
