@@ -58,6 +58,7 @@ class connection:
 	def on_connected(self, iface):
 		print "connected to iface", iface
 		self.reply_handler(self.port)
+		self.Applet.Plugins.Run("on_ppp_connected", device, port, iface)
 		
 		Notification(_("Connected"), _("Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\nNetwork is now available through <b>%(1)s</b>") % {"0":self.device.Alias, "1":iface}, pixbuf=get_icon("network-wireless", 48), status_icon=self.Applet.Plugins.StatusIcon)	
 
@@ -72,9 +73,12 @@ class PPPSupport(AppletPlugin):
 	__priority__ = 0
 	
 	def on_load(self, applet):
-		pass
+		AppletPlugin.add_method(self.on_ppp_connected)
 		
 	def on_unload(self):
+		pass
+		
+	def on_ppp_connected(self, device, rfcomm, ppp_port):
 		pass
 		
 	def on_rfcomm_connected(self, device, port, uuid):
