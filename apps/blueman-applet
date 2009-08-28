@@ -142,7 +142,6 @@ class BluemanApplet(object):
 					if not c in self.__cfls:
 						self.__cfls[c] = []
 					self.__cfls[c].append(cls.__name__)	
-					print self.__cfls	
 				
 			c = self.__config.props.applet_plugins
 			for name, cls in self.__classes.iteritems():
