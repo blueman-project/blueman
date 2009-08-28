@@ -161,15 +161,18 @@ class BluemanApplet(object):
 				if not dep in self.__loaded:
 					if not dep in self.__classes:
 						raise "Could not satisfy dependency %s -> %s" % (cls.__name__, dep)
-					self.__load_plugin(self.__classes[dep])	
+					try:
+						self.__load_plugin(self.__classes[dep])	
+					except Exception, e:
+						dprint(e)
+						return
 					
 			for cfl in cls.__conflicts__:
 				if cfl in self.__loaded:
 					if cls.__priority__ > self.__classes[cfl].__priority__:
 						self.Unload(cfl)
 					else:
-						dprint("Not loading conflicting plugin %s due to lower priority" % cls.__name__)
-						return
+						raise Exception("Not loading conflicting plugin %s due to lower priority" % cls.__name__)
 			
 			dprint("loading", cls)
 			inst = cls(self.applet)
