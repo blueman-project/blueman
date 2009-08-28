@@ -133,11 +133,12 @@ class NMMonitor(AppletPlugin, gobject.GObject):
 	def on_device_added(self, udi):
 		obj = self.bus.get_object('org.freedesktop.Hal', udi)
 		device = dbus.Interface(obj, 'org.freedesktop.Hal.Device')		
-		
-		if device.QueryCapability("modem") and device.GetPropertyString("info.linux.driver") == "rfcomm":
-			self.monitored_udis.append(udi)
-			self.emit("modem-added", udi, device.GetPropertyString("info.bluetooth_address"))
-
+		try:
+			if device.QueryCapability("modem") and device.GetPropertyString("info.linux.driver") == "rfcomm":
+				self.monitored_udis.append(udi)
+				self.emit("modem-added", udi, device.GetPropertyString("info.bluetooth_address"))
+		except:
+			pass
 						
 	def on_device_state_changed(self, state, prev_state, reason, udi):
 		if udi in self.monitored_udis:
