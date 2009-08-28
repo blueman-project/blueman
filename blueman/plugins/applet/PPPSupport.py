@@ -58,7 +58,7 @@ class connection:
 	def on_connected(self, iface):
 		print "connected to iface", iface
 		self.reply_handler(self.port)
-		self.Applet.Plugins.Run("on_ppp_connected", device, port, iface)
+		self.Applet.Plugins.Run("on_ppp_connected", self.device, self.port, iface)
 		
 		Notification(_("Connected"), _("Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\nNetwork is now available through <b>%(1)s</b>") % {"0":self.device.Alias, "1":iface}, pixbuf=get_icon("network-wireless", 48), status_icon=self.Applet.Plugins.StatusIcon)	
 
