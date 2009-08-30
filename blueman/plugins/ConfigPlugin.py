@@ -56,5 +56,8 @@ class ConfigPlugin(gobject.GObject):
 		
 	def set(self, key, val):
 		pass
+		
+	def list_dirs(self):
+		pass
 	
 

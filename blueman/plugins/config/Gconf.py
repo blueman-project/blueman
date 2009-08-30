@@ -86,3 +86,10 @@ class Gconf(ConfigPlugin):
 			return self.gval2pyval(val)
 		else:
 			return None
+			
+	def list_dirs(self):
+		rets = self.client.all_dirs(BLUEMAN_PATH + self.section)
+		l = []
+		for r in rets:
+			l.append(r.replace(BLUEMAN_PATH + "/", ""))
+		return l

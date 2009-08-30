@@ -27,6 +27,7 @@ import weakref
 import signal
 import glib
 from blueman.Functions import dprint
+import copy
 
 def sighandler():
 	print "got signal"
@@ -55,7 +56,6 @@ class Monitor(dbus.service.Object):
 		self.sigs.Handle("dbus", self.bus, self.on_value_changed, "ValueChanged", "org.blueman.Config")
 		
 	def on_value_changed(self, section, data):
-		
 		s = "".join(chr(b) for b in data)
 
 		(key, value) = pickle.loads(s)
@@ -63,7 +63,6 @@ class Monitor(dbus.service.Object):
 		key = str(key)
 		
 		if self.plugin().section == section:
-			
 			self.plugin().set(key, value, True)
 		else:
 			if not section in File.__db__:
@@ -76,7 +75,7 @@ class Monitor(dbus.service.Object):
 		pass
 
 class File(ConfigPlugin):
-	__priority__ = 1
+	__priority__ = -1
 	__plugin__ = "file"
 	
 	__db__ = None
@@ -100,9 +99,9 @@ class File(ConfigPlugin):
 				f = open(cfg_path, "r")
 				File.__db__ = pickle.load(f)
 				f.close()
-			except:
+			except Exception, e:
 				File.__db__ = {}
-			
+
 			atexit.register(File.save)
 
 		
@@ -120,7 +119,7 @@ class File(ConfigPlugin):
 	def save():
 		dprint("Saving config")
 		f = open(cfg_path, "w")
-		pickle.dump(File.__db__, f)
+		pickle.dump(File.__db__, f, pickle.HIGHEST_PROTOCOL)
 		f.close()
 		File.timeout = None
 
@@ -131,9 +130,9 @@ class File(ConfigPlugin):
 			prev = self.config[self.section][key]
 		else:
 			prev = None
-
-		self.config[self.section][key] = value
+		
 		if prev != value:
+			self.config[self.section][key] = copy.deepcopy(value)
 			self.emit("property-changed", key, value)
 			
 			if not local:
@@ -144,6 +143,16 @@ class File(ConfigPlugin):
 		
 	def get(self, key):
 		if key in self.config[self.section]:
-			return self.config[self.section][key]
+			return copy.deepcopy(self.config[self.section][key])
 		else:
 			return None
+			
+	def list_dirs(self):
+		l = []
+		for key in self.config.iterkeys():
+			if self.section in key:
+				k = key.replace(self.section, "")
+				s = k.split("/")
+				if len(s) > 1:
+					l.append(self.section + "/" + s[1])
+		return l

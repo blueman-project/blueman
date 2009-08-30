@@ -151,7 +151,10 @@ class BluemanApplet(object):
 						cls.__unloadable__ = False				
 				
 				if (cls.__autoload__ or cls.__name__ in c) and not (cls.__unloadable__ and "!"+cls.__name__ in c):
-					self.__load_plugin(cls)
+					try:
+						self.__load_plugin(cls)
+					except:
+						pass
 
 		def __load_plugin(self, cls):
 			if cls.__name__ in self.__loaded:
