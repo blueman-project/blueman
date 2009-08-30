@@ -75,7 +75,7 @@ class Monitor(dbus.service.Object):
 		pass
 
 class File(ConfigPlugin):
-	__priority__ = -1
+	__priority__ = 1
 	__plugin__ = "file"
 	
 	__db__ = None
