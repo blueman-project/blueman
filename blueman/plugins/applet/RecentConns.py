@@ -104,6 +104,7 @@ class RecentConns(AppletPlugin, gtk.Menu):
 			self.set_option("recent_connections", dump)
 
 	def change_sensitivity(self, sensitive):
+		dprint("bt_status", self.Applet.Plugins.PowerManager.GetBluetoothStatus())
 		sensitive = sensitive and self.Applet.Manager and self.Applet.Plugins.PowerManager.GetBluetoothStatus() and RecentConns.items != None and (len(RecentConns.items) > 0)
 		self.Item.props.sensitive = sensitive
 		
@@ -129,6 +130,9 @@ class RecentConns(AppletPlugin, gtk.Menu):
 	
 	def initialize(self):
 		dprint("rebuilding menu")
+		if not RecentConns.items:
+			self.recover_state()
+			
 		def compare_by (fieldname):
 			def compare_two_dicts (a, b):
 				return cmp(a[fieldname], b[fieldname])
@@ -147,9 +151,9 @@ class RecentConns(AppletPlugin, gtk.Menu):
 		RecentConns.items.reverse()
 		
 		if len(RecentConns.items) == 0:
-			self.Item.props.sensitive = False
+			self.change_sensitivity(False)
 		else:
-			self.Item.props.sensitive = True
+			self.change_sensitivity(True)
 
 		count = 0
 		for item in RecentConns.items:
