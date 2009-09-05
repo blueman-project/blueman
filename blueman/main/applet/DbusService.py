@@ -46,7 +46,7 @@ class DbusService(dbus.service.Object):
 		
 	def add_method(self, func, dbus_interface='org.blueman.Applet', in_signature="", *args, **kwargs):
 		name = func.__name__	
-		
+
 		if name in self.__class__.__dict__:
 			raise MethodAlreadyExists
 		
@@ -74,6 +74,9 @@ dec = dbus.service.method(dbus_interface, in_signature, *args, **kwargs)(%(0)s)"
 
 		
 		setattr(self.__class__, name, dec)
+		if not dbus_interface in self._dbus_class_table[self.__class__.__module__+"."+self.__class__.__name__]:
+			self._dbus_class_table[self.__class__.__module__+"."+self.__class__.__name__][dbus_interface] = {}
+		
 		self._dbus_class_table[self.__class__.__module__+"."+self.__class__.__name__][dbus_interface][name] = dec
 	
 	def add_signal(self, name, dbus_interface='org.blueman.Applet', signature="", *args, **kwargs):
@@ -88,6 +91,8 @@ dec = dbus.service.method(dbus_interface, in_signature, *args, **kwargs)(%(0)s)"
 
 		dec = dbus.service.signal(dbus_interface, signature, *args, **kwargs)(func)
 		setattr(self.__class__, func.__name__, dec)
+		if not dbus_interface in self._dbus_class_table[self.__class__.__module__+"."+self.__class__.__name__]:
+			self._dbus_class_table[self.__class__.__module__+"."+self.__class__.__name__][dbus_interface] = {}
 		self._dbus_class_table[self.__class__.__module__+"."+self.__class__.__name__][dbus_interface][func.__name__] = dec
 
 		return getattr(self, func.__name__)
@@ -96,16 +101,7 @@ dec = dbus.service.method(dbus_interface, in_signature, *args, **kwargs)(%(0)s)"
 		print "remove", name
 		delattr(self.__class__, name)
 		del self._dbus_class_table[self.__class__.__module__+"."+self.__class__.__name__]['org.blueman.Applet'][name]	
-		
-		
 
-
-		
-		
-	#in: interface name
-	@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="s", out_signature="")
-	def DhcpClient(self, interface):
-		self.applet.NM.dhcp_acquire(interface)
 		
 	
 

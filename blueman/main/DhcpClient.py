@@ -21,6 +21,7 @@ import gobject
 import struct
 import subprocess
 from blueman.Functions import dprint
+from blueman.Lib import get_net_address
 
 
 class DhcpClient(gobject.GObject):
@@ -30,31 +31,40 @@ class DhcpClient(gobject.GObject):
 		'error-occurred' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
 	}	
 	
-	def __init__(self, interface):
+	def __init__(self, interface, timeout=30):
 		gobject.GObject.__init__(self)
 	
 		self.interface = interface
+		self.timeout = timeout
+	
+	def Connect(self):
 	
 		try:
-			self.dhclient = subprocess.Popen(["dhclient", "-e", "IF_METRIC=100", "-1", interface])
+			self.dhclient = subprocess.Popen(["dhclient", "-e", "IF_METRIC=100", "-1", self.interface])
 		except:
 			raise Exception("dhclient binary not found")
 			
 		gobject.timeout_add(1000, self.check_dhclient)
+		gobject.timeout_add(self.timeout*1000, self.on_timeout)
 
-	def get_ip_address(self, ifname):
-		SIOCGIFADDR = 0x8915
-		s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-		return socket.inet_ntoa(fcntl.ioctl(s.fileno(), SIOCGIFADDR, struct.pack('256s', ifname[:15]))[20:24])		
+		
+	def on_timeout(self):
+		if self.dhclient.poll() == None:
+			dprint("Timeout reached, terminating dhclient")
+			self.dhclient.terminate()
 		
 	def check_dhclient(self):
 		status = self.dhclient.poll()
 		if status != None:
 			if status == 0:
-				ip = self.get_ip_address(self.interface)
-				dprint("bound to", ip)
-				self.emit("connected", ip)
+				def complete():
+					ip = get_net_address(self.interface)
+					dprint("bound to", ip)
+					self.emit("connected", ip)	
+				
+				gobject.timeout_add(1000, complete)
 				return False
+				
 			else:
 				dprint("dhclient failed with status code", status)
 				self.emit("error-occurred", status)

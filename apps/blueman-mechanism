@@ -29,6 +29,8 @@ from blueman.Lib import set_probe_debug
 
 from blueman.Constants import POLKIT
 
+DBusGMainLoop(set_as_default=True)
+
 if "--debug" in sys.argv:
 	print "Enabled verbose output"
 	set_probe_debug(True)
@@ -40,23 +42,29 @@ dhcp_pids = []
 class Timer:
 	def __init__(self):
 		self.time = 0
+		self.stopped = False
 		gobject.timeout_add(1000, self.tick)
 	
 	def tick(self):
-		if len(dhcp_pids) == 0:
+		if not self.stopped:
 			self.time+=1
 			if self.time == timeout:
 				loop.quit()
-		else:
-			self.time = 0
-		
+
 		return True
 			
 	def reset(self):
 		self.time = 0
 		
+	def stop(self):
+		self.stopped = True
+		
+	def resume(self):
+		self.stopped = False
+		self.reset()
+		
 timer = Timer()
-
+		
 class conf_service(dbus.service.Object):
 	def __init__(self):
 
@@ -64,16 +72,15 @@ class conf_service(dbus.service.Object):
 		self.bus.request_name("org.blueman.Mechanism")
 		dbus.service.Object.__init__(self, self.bus, "/")
 		
-		service = self.bus.get_object('org.freedesktop.PolicyKit', '/')
-		self.polkit = dbus.Interface(service, 'org.freedesktop.PolicyKit')
+
 
 	def confirm_authorization(self, busname, action_id):
 		timer.reset()
 		if not POLKIT:
 			return
 			
-		res = self.polkit.IsSystemBusNameAuthorized(action_id, busname, False)
-		
+		res = self.bus.call_blocking("org.freedesktop.PolicyKit", "/", "org.freedesktop.PolicyKit", "IsSystemBusNameAuthorized", "ssb", (action_id, busname, False))	
+
 		if res != "yes":
 			raise dbus.DBusException, "Not authorized"
 	
@@ -145,13 +152,15 @@ class conf_service(dbus.service.Object):
 	
 	def ppp_connected(self, ppp, port, ok, err):
 		ok(port)
+		timer.resume()
 		
 	def ppp_error(self, ppp, message, ok, err):
 		err(dbus.DBusException(message))
+		timer.resume()
 	
 	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="sss", out_signature="s", sender_keyword="caller", async_callbacks=("ok", "err"))
 	def PPPConnect(self, port, number, apn, caller, ok, err):
-		timer.reset()
+		timer.stop()
 		from blueman.main.PPPConnection import PPPConnection
 		
 		#self.confirm_authorization(caller, "org.blueman.network.setup")
@@ -163,63 +172,31 @@ class conf_service(dbus.service.Object):
 		ppp.Connect()
 		
 
-
-	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="s", out_signature="sus", sender_keyword="caller", async_callbacks=("ok", "err"))
+		
+	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="s", out_signature="s", sender_keyword="caller", async_callbacks=("ok", "err"))
 	def DhcpClient(self, net_interface, caller, ok, err):
-		timer.reset()
-		global bound_to
+		timer.stop()
+
 		self.confirm_authorization(caller, "org.blueman.dhcp.client")
 		
-		bound_to = "None"
+		from blueman.main.DhcpClient import DhcpClient
+		def dh_error(dh, message, ok, err):
+			err(message)
+			timer.resume()
+		
+		def dh_connected(dh, ip, ok, err):
+			ok(ip)
+			timer.resume()
+		
+		dh = DhcpClient(net_interface)
+		dh.connect("error-occurred", dh_error, ok, err)
+		dh.connect("connected", dh_connected, ok, err)		
+		try:
+			dh.Connect()
+		except Exception, e:
+			err(e)
+		
 	
-		rxp = re.compile("bound to (\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) .*")
-		
-		
-		p = subprocess.Popen(["/sbin/dhclient", "-d", "-e", "IF_METRIC=100", "-1", net_interface], bufsize=128, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-		dhcp_pids.append(p.pid)
-		
-		def on_timeout():
-			dprint("Killing dhcpd")
-			os.kill(p.pid, SIGKILL)
-			return False
-		
-		
-		timeout = gobject.timeout_add(20000, on_timeout)
-
-
-		def io_callback(source, condition):
-			global bound_to
-			timer.reset()
-			line = p.stdout.readline()
-			
-			match = rxp.search(line)
-
-			if match:
-				bound_to = match.groups()[0]
-			
-			#line = line.strip("\n")
-			
-			#self.dhcpStatus(net_interface, line)
-			
-			if condition != gobject.IO_IN:
-				return False
-	
-			return True
-
-		def child_closed(pid, cond):
-			global bound_to
-			dprint("closed ", cond)
-			gobject.source_remove(timeout)
-			dhcp_pids.remove(pid)
-			ok(net_interface, int(cond), bound_to)
-
-
-		gobject.io_add_watch(p.stdout, gobject.IO_IN | gobject.IO_HUP | gobject.IO_ERR, io_callback)
-
-		gobject.child_watch_add(p.pid, child_closed)
-
-
-			
 	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="ss", out_signature="", async_callbacks=("ok", "err"))	
 	def HalRegisterModemPort(self, rfcomm_device, bd_addr, ok, err):
 		timer.reset()
@@ -255,7 +232,7 @@ class conf_service(dbus.service.Object):
 		halmgr.register_netdev(devicename)
 	
 
-DBusGMainLoop(set_as_default=True)
+
 
 conf_service()
 

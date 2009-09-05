@@ -19,6 +19,8 @@
  *
  */
 
+#include <netinet/in.h>
+#include <arpa/inet.h>
 #include <ctype.h>
 #include <fcntl.h>
 #include <stdlib.h>
@@ -35,6 +37,23 @@
 
 #include "libblueman.h"
 
+char* get_net_address(char* iface) {
+	int sock = socket(AF_INET, SOCK_STREAM, 0);
+	if (sock < 0) {
+		return NULL;
+	}
+		
+	struct ifreq ifr;
+	strncpy(ifr.ifr_name, iface, IFNAMSIZ);
+	
+	int err = ioctl(sock, SIOCGIFADDR, &ifr);
+	if (err < 0) {
+		close(sock);
+		return NULL;
+	}
+	
+	return inet_ntoa(((struct sockaddr_in*) &ifr.ifr_addr)->sin_addr);
+}
 
 int _create_bridge(const char* name) {
 	int sock;

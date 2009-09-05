@@ -31,9 +31,12 @@ class Networking(AppletPlugin):
 	__icon__ = "network"
 	__description__ = _("Provides bluetooth networking support")
 	__author__ = "Walmis"
+	
 	def on_load(self, applet):
 		self.Applet = applet
 		self.Signals = SignalTracker()
+		
+		self.add_dbus_method(self.DhcpClient, in_signature="s")
 		
 		self.Config = Config("network")
 		self.Signals.Handle("gobject", self.Config, "property-changed", self.on_config_changed)
@@ -86,6 +89,10 @@ class Networking(AppletPlugin):
 					m.HalRegisterNetDev(value)
 			else:
 				self.dhcp_acquire(value)
+				
+	#dbus method
+	def DhcpClient(self, interface):
+		self.dhcp_acquire(interface)
 		
 	def dhcp_acquire(self, device):
 		dprint("Get ip")
@@ -97,32 +104,24 @@ class Networking(AppletPlugin):
 			
 			if auth:
 				
-				def reply(interface, condition, bound_to):
-					if condition == 0:
-						self.dhcp_notif.update(_("Bluetooth Network"), 
-							 _("Interface %(0)s bound to IP address %(1)s") % {"0": interface, "1": bound_to})
-					else:
-						self.dhcp_notif.update(_("Bluetooth Network"), 
-							 _("Failed to acquire an IP address on %s") % (interface))
-					
-					self.dhcp_notif.set_timeout(-1)
-					self.dhcp_notif.show()
+				def reply(ip_address):
+
+					Notification(_("Bluetooth Network"), _("Interface %(0)s bound to IP address %(1)s") % {"0": device, "1": ip_address}, 
+						pixbuf=get_icon("gtk-network", 48), 
+						status_icon=self.Applet.Plugins.StatusIcon)
 				
-				def err(*args):
-					dprint(args)
-					self.dhcp_notif.update(_("Bluetooth Network"), 
-						 _("Failed to acquire an IP address on %s") % (device))
-					self.dhcp_notif.set_timeout(-1)
-					self.dhcp_notif.show()
+				def err(msg):
+					dprint(msg)
+					Notification(_("Bluetooth Network"), _("Failed to obtain an IP address on %s") % (device), 
+						pixbuf=get_icon("gtk-network", 48), 
+						status_icon=self.Applet.Plugins.StatusIcon)
 				
-				if self.dhcp_notif != None:
-					self.dhcp_notif.close()
-				
-				self.dhcp_notif = self.Applet.show_notification(_("Bluetooth Network"), 
-								_("Acquiring an IP address on %s" % device), 0, pixbuf=get_icon("gtk-network", 48))
+				Notification(_("Bluetooth Network"), _("Trying to obtain an IP address on %s\nPlease wait..." % device), 
+					pixbuf=get_icon("gtk-network", 48), 
+					status_icon=self.Applet.Plugins.StatusIcon)
 
 				m = Mechanism()
-				m.DhcpClient(device, reply_handler=reply, error_handler=err)
+				m.DhcpClient(device, reply_handler=reply, error_handler=err, timeout=120)
 		
 		
 	def on_config_changed(self, config, key, value):

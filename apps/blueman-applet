@@ -22,6 +22,7 @@
 import sys
 from subprocess import *
 import os.path
+import os
 import pynotify
 import dbus
 import dbus.glib
@@ -122,7 +123,7 @@ class BluemanApplet(object):
 				try:
 					__import__("blueman.plugins.applet.%s" % plugin, None, None, [])
 				except ImportError, e:
-					dprint("Unable to load %s plugin\n%s" % (plugin, e))
+					dprint("Unable to load plugin module %s\n%s" % (plugin, e))
 			
 			
 			for cls in AppletPlugin.__subclasses__():
@@ -183,6 +184,8 @@ class BluemanApplet(object):
 				inst._load(self.applet)
 			except Exception, e:
 				dprint("Failed to load %s\n%s" % (cls.__name__, e))
+				if not cls.__unloadable__:
+					os._exit(1)
 				
 			else:
 				self.__plugins[cls.__name__] = inst

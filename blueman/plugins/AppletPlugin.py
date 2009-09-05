@@ -20,6 +20,7 @@
 import gobject
 from blueman.main.Config import Config
 import gtk
+import traceback
 
 ictheme = gtk.icon_theme_get_default()
 
@@ -96,6 +97,7 @@ class AppletPlugin(object):
 			self.on_manager_state_changed(applet.Manager != None)
 		except Exception, e:
 			AppletPlugin.instances.remove(self)
+			traceback.print_exc()
 			raise e
 		
 	@staticmethod

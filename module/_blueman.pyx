@@ -85,6 +85,17 @@ cdef extern from "libblueman.h":
 	cdef float get_page_timeout(int hdev)
 	cdef int _create_bridge(char* name)
 	cdef int _destroy_bridge(char* name)
+	cdef char* c_get_net_address "get_net_address" (char* iface)
+	
+	
+def get_net_address(iface):
+	cdef char* addr
+	if iface != None:
+		addr = c_get_net_address(iface)
+		if addr == NULL:
+			return None
+		else:
+			return addr
 
 ERR = {
 	-1:"Can't allocate memory",

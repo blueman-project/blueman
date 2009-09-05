@@ -414,18 +414,20 @@ class ManagerDeviceMenu(gtk.Menu):
 						c = Config("network")
 						if c.props.dhcp_client:
 							def renew(x):
-								try:
-									appl = AppletService()
-								except:
-									dprint("** Failed to connect to applet")
-								else:
+								appl.DhcpClient(sprops["Device"])							
 							
-									appl.DhcpClient(sprops["Device"])
-					
-							item = create_menuitem(_("Renew IP Address"), get_icon("gtk-refresh", 16))
-							self.Signals.Handle("gobject", item, "activate", renew)
-							item.show()
-							items.append((81, item))
+							try:
+								appl = AppletService()
+							
+							except:
+								dprint("** Failed to connect to applet")
+							
+							else:
+								if "Networking" in appl.QueryPlugins():
+									item = create_menuitem(_("Renew IP Address"), get_icon("gtk-refresh", 16))
+									self.Signals.Handle("gobject", item, "activate", renew)
+									item.show()
+									items.append((81, item))
 					
 				if name == "input":
 					self.Signals.Handle("bluez", service, self.service_property_changed, "PropertyChanged")
