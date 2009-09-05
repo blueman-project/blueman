@@ -24,13 +24,15 @@ from blueman.Functions import *
 class DeviceSelectorList(DeviceList):
 
 	def __init__(self, adapter=None):
+		cr = gtk.CellRendererText()
+		cr.props.ellipsize = pango.ELLIPSIZE_END
 		data = [
 			#device picture
 			["found_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":0}, None, {"spacing": 0, "sizing": gtk.TREE_VIEW_COLUMN_AUTOSIZE}],
 			["device_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":1}, None],
 			
 			#device caption
-			["caption", str, gtk.CellRendererText(), {"markup":2}, None, {"expand": True}],
+			["caption", str, cr, {"markup":2}, None, {"expand": True}],
 
 			["bonded_icon", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":3}, None],
 			["trusted_icon", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":4}, None]

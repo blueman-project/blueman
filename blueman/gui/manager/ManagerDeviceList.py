@@ -26,6 +26,7 @@ from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.Sdp import *
 
 import gtk
+import pango
 from blueman.Constants import *
 from blueman.Functions import *
 
@@ -38,12 +39,14 @@ from blueman.gui.GtkAnimation import TreeRowFade, CellFade
 class ManagerDeviceList(DeviceList):
 	
 	def __init__(self, adapter=None, inst=None):
+		cr = gtk.CellRendererText()
+		cr.props.ellipsize = pango.ELLIPSIZE_END
 		data = [
 			#device picture
 			["device_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":0}, None],
 			
 			#device caption
-			["caption", str, gtk.CellRendererText(), {"markup":1}, None, {"expand": True}],
+			["caption", str, cr, {"markup":1}, None, {"expand": True}],
 
 			
 			["rssi_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":2}, None, {"spacing": 0, "sizing": gtk.TREE_VIEW_COLUMN_AUTOSIZE}],
