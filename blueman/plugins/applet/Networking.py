@@ -47,7 +47,7 @@ class Networking(AppletPlugin):
 						"org.bluez.Network",
 						path_keyword="path")
 						
-		self.dhcp_notif = None
+		self.quering = []
 		
 		self.load_nap_settings()
 		
@@ -95,7 +95,11 @@ class Networking(AppletPlugin):
 		self.dhcp_acquire(interface)
 		
 	def dhcp_acquire(self, device):
-		dprint("Get ip")
+		if device not in self.quering:
+			self.quering.append(device)
+		else:
+			return
+			
 		if device != "":
 			a= PolicyKitAuth()
 			auth = a.is_authorized("org.blueman.dhcp.client")
@@ -109,12 +113,16 @@ class Networking(AppletPlugin):
 					Notification(_("Bluetooth Network"), _("Interface %(0)s bound to IP address %(1)s") % {"0": device, "1": ip_address}, 
 						pixbuf=get_icon("gtk-network", 48), 
 						status_icon=self.Applet.Plugins.StatusIcon)
+					
+					self.quering.remove(device)
 				
 				def err(msg):
 					dprint(msg)
 					Notification(_("Bluetooth Network"), _("Failed to obtain an IP address on %s") % (device), 
 						pixbuf=get_icon("gtk-network", 48), 
 						status_icon=self.Applet.Plugins.StatusIcon)
+						
+					self.quering.remove(device)
 				
 				Notification(_("Bluetooth Network"), _("Trying to obtain an IP address on %s\nPlease wait..." % device), 
 					pixbuf=get_icon("gtk-network", 48), 

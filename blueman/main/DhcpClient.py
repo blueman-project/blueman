@@ -31,6 +31,8 @@ class DhcpClient(gobject.GObject):
 		'error-occurred' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
 	}	
 	
+	quering = []
+	
 	def __init__(self, interface, timeout=30):
 		gobject.GObject.__init__(self)
 	
@@ -38,7 +40,11 @@ class DhcpClient(gobject.GObject):
 		self.timeout = timeout
 	
 	def Connect(self):
-	
+		if self.interface in DhcpClient.quering:
+			raise Exception("dhclient already running on this interface")
+		else:
+			DhcpClient.quering.append(self.interface)
+			
 		try:
 			self.dhclient = subprocess.Popen(["dhclient", "-e", "IF_METRIC=100", "-1", self.interface])
 		except:
@@ -63,11 +69,13 @@ class DhcpClient(gobject.GObject):
 					self.emit("connected", ip)	
 				
 				gobject.timeout_add(1000, complete)
+				DhcpClient.quering.remove(self.interface)
 				return False
 				
 			else:
 				dprint("dhclient failed with status code", status)
 				self.emit("error-occurred", status)
+				DhcpClient.quering.remove(self.interface)
 				return False
 			
 		return True		
