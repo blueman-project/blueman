@@ -31,6 +31,7 @@ import pango
 import dbus
 import time
 import datetime
+import gettext
 
 ui_def = """
 <?xml version="1.0"?>
@@ -331,7 +332,7 @@ class Monitor(gobject.GObject):
 		
 		dtx = tx - self.last_tx
 		drx = rx - self.last_rx
-		print dtx, drx, self.config.props.tx, self.config.props.rx
+
 		if dtx < 0:
 			dtx = 0
 		if drx < 0:
