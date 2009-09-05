@@ -18,6 +18,7 @@
 # 
 
 import gtk
+import pango
 from blueman.gui.DeviceList import DeviceList
 from blueman.Functions import *
 
