@@ -428,7 +428,12 @@ class Dialog:
 			if self.cb_device.get_active() == -1:
 				self.cb_device.set_active(0)
 		else:
-			pass
+			d = gtk.MessageDialog(parent=self.dialog, flags=gtk.DIALOG_MODAL, type=gtk.MESSAGE_INFO, buttons=gtk.BUTTONS_CLOSE, message_format=_("No usage statistics are available yet. Try establishing a connection first and then check this page."))
+			d.props.icon_name = "blueman"
+			d.run()
+			d.destroy()
+			self.on_response(None, None)
+			return
 		
 		self.dialog.show()
 	
@@ -517,6 +522,8 @@ class Dialog:
 class NetUsage(AppletPlugin, gobject.GObject):
 	__depends__ = ["PPPSupport", "Menu"]
 	__icon__ = "network-wireless"
+	__description__ = _("Allows you to monitor your (mobile broadband) network traffic usage. Useful for limited data access plans. This plugin tracks every device seperately.")
+	__author__ = "Walmis"
 	__autoload__ = False
 	__gsignals__ = {
 		'monitor-added' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
