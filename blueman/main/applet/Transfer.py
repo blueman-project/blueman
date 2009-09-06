@@ -171,7 +171,7 @@ class Transfer(OdsManager):
 		
 		if info["BluetoothAddress"] not in self.allowed_devices and not (self.Config.props.opp_accept and trusted):
 			
-			n = Notification(_("Incoming file"), 
+			n = Notification(_("Incoming file over Bluetooth"), 
 			_("Incoming file %(0)s from %(1)s") % {"0":"<b>"+os.path.basename(filename)+"</b>", "1":"<b>"+name+"</b>"},
 					30000, [["accept", _("Accept"), "gtk-yes"],["reject", _("Reject"), "gtk-no"]], access_cb, icon, self.status_icon)
 			

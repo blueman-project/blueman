@@ -38,8 +38,6 @@ class NotificationDialog(gtk.MessageDialog):
 	def __init__(self, summary, message, timeout=-1, actions=None, actions_cb=None, pixbuf=None, status_icon=None):
 		gtk.MessageDialog.__init__(self, parent=None, flags=0, type=gtk.MESSAGE_QUESTION, buttons=gtk.BUTTONS_NONE, message_format=None)
 		
-		self.set_focus_on_map(False)
-		
 		self.bubble = NotificationBubble(summary, message, pixbuf=pixbuf)
 		
 		i = 100
@@ -99,7 +97,7 @@ class NotificationDialog(gtk.MessageDialog):
 
 		
 		self.set_opacity(OPACITY_START)
-		self.show()
+		self.present()
 		self.set_opacity(OPACITY_START)
 
 		
@@ -135,7 +133,7 @@ class NotificationDialog(gtk.MessageDialog):
 		
 		self.props.text = summary
 		self.props.secondary_text = message
-		self.show()
+		self.present()
 		
 	def set_icon_from_pixbuf(self, pixbuf):
 		im = gtk.image_new_from_pixbuf(pixbuf)

@@ -23,6 +23,7 @@ import os.path
 from blueman.Functions import get_icon, dprint
 import gtk
 import gobject
+import cgi
 import blueman.bluez as Bluez
 from blueman.Sdp import *
 import gettext
@@ -67,7 +68,7 @@ class CommonAgent(gobject.GObject, Agent):
 		builder.add_from_file(UI_PATH +"/applet-passkey.ui")
 		builder.set_translation_domain("blueman")
 		dialog = builder.get_object("dialog")
-		dialog.set_focus_on_map(False)
+
 		dialog.props.icon_name = "blueman"
 		dev_name = builder.get_object("device_name")
 		dev_name.set_markup(device_alias)
@@ -97,14 +98,14 @@ class CommonAgent(gobject.GObject, Agent):
 		name = props["Name"]
 		alias = address
 		if name:
-			alias = "<b>%s</b> (%s)" % (name, address)
+			alias = "<b>%s</b> (%s)" % (cgi.escape(name), address)
 		return alias
 		
 
 	def ask_passkey(self, device_path, dialog_msg, notify_msg, is_numeric, notification, ok, err):
 		def on_notification_close(n, action):
 			if action != "closed":
-				self.dialog.show()
+				self.dialog.present()
 			else:
 				if self.dialog:
 					self.dialog.response(gtk.RESPONSE_REJECT)
@@ -135,12 +136,11 @@ class CommonAgent(gobject.GObject, Agent):
 			err(AgentErrorCanceled())
 		
 		if notification:
-			Notification("Bluetooth", notify_message, pixbuf=get_icon("blueman", 48), status_icon=self.status_icon)
+			Notification(_("Bluetooth Authentication"), notify_message, pixbuf=get_icon("blueman", 48), status_icon=self.status_icon)
 			#self.applet.status_icon.set_blinking(True)
-
-		self.dialog.show()
 		
 		self.dialog.connect("response", passkey_dialog_cb)
+		self.dialog.present()		
 						
 	def __del__(self):
 		dprint("Agent on path", self.dbus_path, "deleted")
@@ -236,7 +236,7 @@ class AdapterAgent(CommonAgent):
 					["accept", _("Accept"), "gtk-yes"],
 					["deny", _("Deny"), "gtk-no"]]
 		
-		n = Notification("Bluetooth", notify_message, 0,
+		n = Notification(_("Bluetooth Authentication"), notify_message, 0,
 								actions, on_auth_action,
 								pixbuf=get_icon("blueman", 48), status_icon=self.status_icon)
 		n._device = device									
