@@ -212,7 +212,7 @@ class Transfer(OdsManager):
 		type = args[-1]
 		dprint(args)
 		try:
-			if session.transfer["finished"]:
+			if not session.transfer["finished"]:
 
 				if type != "cancelled" and type != "error":
 					session.transfer["finished"] = True
