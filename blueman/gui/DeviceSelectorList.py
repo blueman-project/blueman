@@ -19,6 +19,7 @@
 
 import gtk
 import pango
+import cgi
 from blueman.gui.DeviceList import DeviceList
 from blueman.Functions import *
 
@@ -83,7 +84,7 @@ class DeviceSelectorList(DeviceList):
 				self.set(iter, found_pb=None)
 				
 		elif key == "Alias":
-			self.set(iter, caption=value)
+			self.set(iter, caption=cgi.escape(value))
 			
 		elif key == "Icon":
 			self.set(iter, device_pb=get_icon(value, 16))

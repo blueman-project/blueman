@@ -29,7 +29,7 @@ import gtk
 import pango
 from blueman.Constants import *
 from blueman.Functions import *
-
+import cgi
 
 import gettext
 _ = gettext.gettext
@@ -222,7 +222,7 @@ class ManagerDeviceList(DeviceList):
 			self.PrependDevice(device)
 		
 	def make_caption(self, name, klass, address):
-		return "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" % {"0":name, "1":klass.capitalize(), "2":address}
+		return "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" % {"0":cgi.escape(name), "1":klass.capitalize(), "2":address}
 		
 	
 	def row_setup_event(self, iter, device):

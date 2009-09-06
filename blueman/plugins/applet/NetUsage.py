@@ -26,6 +26,7 @@ from blueman.main.Device import Device
 import gobject
 import weakref
 import os
+import cgi
 import gtk
 import pango
 import dbus
@@ -407,7 +408,7 @@ class Dialog:
 			d = os.path.basename(d)
 			for m in parent.monitors:
 				if d == m.device.Address:
-					iter = self.liststore.append([d, "%s\n<small>%s</small>" % (m.device.Alias, m.device.Address), _("Connected:") + " " + m.interface, m])
+					iter = self.liststore.append([d, self.get_caption(m.device.Alias, m.device.Address), _("Connected:") + " " + m.interface, m])
 					if self.cb_device.get_active() == -1:
 						self.cb_device.set_active_iter(iter)
 					added = True
@@ -419,7 +420,7 @@ class Dialog:
 						try:
 							device = a.FindDevice(d)
 							device = Device(device)
-							name = "%s\n<small>%s</small>" % (device.Alias, device.Address)
+							name = self.get_caption(device.Alias, device.Address)
 						except:
 							pass
 
@@ -467,6 +468,9 @@ class Dialog:
 		self.config = Config("plugins/NetUsage/"+addr)
 		self.update_counts(self.config.props.tx, self.config.props.rx)
 		self.update_time()
+		
+	def get_caption(self, name, address):
+		return "%s\n<small>%s</small>" % (cgi.escape(name), address)
 
 	def update_counts(self, tx, rx):
 		tx = int(tx)
@@ -506,10 +510,10 @@ class Dialog:
 			(val,) = self.liststore.get(iter, 0)
 			
 			if val == monitor.device.Address:
-				self.liststore.set(iter, 1, "%s\n<small>%s</small>" % (monitor.device.Alias, monitor.device.Address), 2, _("Connected:") + " " + monitor.interface, 3, monitor)
+				self.liststore.set(iter, 1, self.get_caption(monitor.device.Alias, monitor.device.Address), 2, _("Connected:") + " " + monitor.interface, 3, monitor)
 				return
 				
-		self.liststore.append([monitor.device.Address, monitor.device.Alias, _("Connected:") + " " + monitor.interface, monitor])
+		self.liststore.append([monitor.device.Address, self.get_caption(monitor.device.Alias, monitor.device.Address), _("Connected:") + " " + monitor.interface, monitor])
 		
 	def monitor_removed(self, parent, monitor):
 		for row in self.liststore:
@@ -517,7 +521,7 @@ class Dialog:
 			(val,) = self.liststore.get(iter, 0)
 
 			if val == monitor.device.Address:
-				self.liststore.set(iter, 1, "%s\n<small>%s</small>" % (monitor.device.Alias, monitor.device.Address), 2, _("Not Connected"), 3, None)
+				self.liststore.set(iter, 1, self.get_caption(monitor.device.Alias, monitor.device.Address), 2, _("Not Connected"), 3, None)
 				return
 
 class NetUsage(AppletPlugin, gobject.GObject):
