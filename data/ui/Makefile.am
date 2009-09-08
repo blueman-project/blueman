@@ -13,6 +13,7 @@ ui_DATA =				\
 	send-dialog.ui		\
 	assistant.ui		\
 	applet-plugins-widget.ui \
-	gsm-settings.ui
+	gsm-settings.ui		\
+	net-usage.ui
 
 EXTRA_DIST = $(ui_DATA)
