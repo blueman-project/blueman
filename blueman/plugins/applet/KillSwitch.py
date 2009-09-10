@@ -47,6 +47,9 @@ class KillSwitch(AppletPlugin):
 		
 			if not self.get_option("checked"):
 				gobject.timeout_add(1000, self.check)
+				
+		if not self.Manager.GetGlobalState():	
+			self.Applet.Plugins.PowerManager.SetBluetoothStatus(False)
 			
 	def on_switch_changed(self, manager, switch):
 		if switch.type == RFKillType.BLUETOOTH:
