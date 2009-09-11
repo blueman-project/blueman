@@ -23,8 +23,7 @@ if os.path.exists(os.path.join(_dirname,"ChangeLog")):
 
 from blueman.main.NetConf import *
 from blueman.Functions import dprint
-from blueman.main.HalManager import HalManager
-
+	
 from blueman.Lib import set_probe_debug
 
 from blueman.Constants import POLKIT
@@ -199,6 +198,7 @@ class conf_service(dbus.service.Object):
 	
 	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="ss", out_signature="", async_callbacks=("ok", "err"))	
 	def HalRegisterModemPort(self, rfcomm_device, bd_addr, ok, err):
+		from blueman.main.HalManager import HalManager
 		timer.reset()
 		halmgr = HalManager()
 		dprint("** Registering modem")
@@ -207,6 +207,7 @@ class conf_service(dbus.service.Object):
 	
 	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="s", out_signature="")
 	def HalUnregisterModemPortAddr(self, address):
+		from blueman.main.HalManager import HalManager
 		timer.reset()
 		halmgr = HalManager()
 		dprint("** Unregistering modem")
@@ -214,28 +215,20 @@ class conf_service(dbus.service.Object):
 		
 	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="s", out_signature="")
 	def HalUnregisterModemPortDev(self, rfcomm_device):
+		from blueman.main.HalManager import HalManager
 		timer.reset()
 		halmgr = HalManager()
 		dprint("** Unregistering modem")
 		halmgr.unregister_dev(rfcomm_device)
-		
-	
-	#@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="", out_signature="")
-	#def HalUnregisterAllModemPorts(self):
-	#	pass
-		
+
 		
 	@dbus.service.method(dbus_interface='org.blueman.Mechanism', in_signature="", out_signature="")
 	def HalRegisterNetDev(self, devicename):
+		from blueman.main.HalManager import HalManager
 		timer.reset()
 		halmgr = HalManager()
 		halmgr.register_netdev(devicename)
-	
-
-
 
 conf_service()
-
-
 loop.run()
 

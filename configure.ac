@@ -35,85 +35,20 @@ Get Pyrex from
 fi
 
 
-#--------------------------------------------------------------------
-# Default paths for installation
-#--------------------------------------------------------------------
+if test "$sysconfdir" = "\${prefix}/etc" \
+    && { test "$prefix" = "NONE" || test "$prefix" = "/usr" \
+      || test "$prefix" = "/usr/" ; } ; then
+    if test "$( (uname -s) )" = "Linux" ; then
+      sysconfdir=/etc
+    fi
+    (
+    prefix=$ac_default_prefix
+    sysconfdir=`eval echo "$sysconfdir"`
+    AC_MSG_NOTICE([configuration directory is "$sysconfdir".])
+    AC_MSG_NOTICE([use --sysconfdir to override.])
+    )
+fi
 
-if test "$prefix" = ""; then
-  prefix=/usr/local
-fi
-if test "$prefix" = "NONE"; then
-  prefix=/usr/local
-fi
-if test "$exec_prefix" = ""; then
-  exec_prefix=${prefix}
-fi
-if test "$exec_prefix" = "NONE"; then
-  exec_prefix=${prefix}
-fi
-if test "$exec_prefix" = '${prefix}'; then
-  exec_prefix=${prefix}
-fi
-if test "$includedir" = ""; then
-  includedir=${prefix}/include
-fi
-if test "$includedir" = "NONE"; then
-  includedir=${prefix}/include
-fi
-if test "$includedir" = '${prefix}/include'; then
-  includedir=${prefix}/include
-fi
-if test "$libdir" = ""; then
-  libdir=${exec_prefix}/lib
-fi
-if test "$libdir" = "NONE"; then
-  libdir=${exec_prefix}/lib
-fi
-if test "$libdir" = '${exec_prefix}/lib'; then
-  libdir=${exec_prefix}/lib
-fi
-if test "$bindir" = ""; then
-  bindir=${exec_prefix}/bin
-fi
-if test "$bindir" = "NONE"; then
-  bindir=${exec_prefix}/bin
-fi
-if test "$bindir" = '${exec_prefix}/bin'; then
-  bindir=${exec_prefix}/bin
-fi
-if test "$datadir" = ""; then
-  datadir=${prefix}/share
-fi
-if test "$datadir" = "NONE"; then
-  datadir=${prefix}/share
-fi
-if test "$datadir" = '${prefix}/share'; then
-  datadir=${prefix}/share
-fi
-if test "$mandir" = ""; then
-  mandir=${prefix}/man
-fi
-if test "$mandir" = "NONE"; then
-  mandir=${prefix}/man
-fi
-if test "$sysconfdir" = "NONE"; then
-  sysconfdir=/etc
-fi
-if test "$sysconfdir" = ""; then
-  sysconfdir=/etc
-fi
-if test "$mandir" = '${prefix}/man'; then
-  mandir=${prefix}/man
-fi
-if test "$libexecdir" = ""; then
-  libexecdir=${exec_prefix}/libexec
-fi
-if test "$libexecdir" = "NONE"; then
-  libexecdir=${exec_prefix}/libexec
-fi
-if test "$libexecdir" = '${exec_prefix}/libexec'; then
-  libexecdir=${exec_prefix}/libexec
-fi
 
 
 
@@ -167,15 +102,26 @@ AC_ARG_WITH(no_runtime_deps_check,
 deps_check=0
 )
 
-polkit_val=1
+polkit_val="yes"
 AC_ARG_ENABLE(polkit,
 [  --enable-polkit=[yes/no] Enable policykit support],,enable_polkit=yes)
 if test "x$enable_polkit" = "xyes"; then
-        polkit_val=1
+        polkit_val="yes"
 else
-        polkit_val=0
+        polkit_val="no"
 fi
 AC_SUBST(polkit_val)
+
+hal_en="yes"
+AC_ARG_ENABLE(hal,
+[  --enable-hal=[yes/no] Enable/disable Hal support],,enable_hal=yes)
+if test "x$enable_hal" = "xyes"; then
+        hal_en="yes"
+else
+        hal_en="no"
+fi
+AC_SUBST(hal_en)
+AM_CONDITIONAL(ENABLE_HAL, test "x$hal_en" = "xyes")
 
 
 
@@ -251,4 +197,8 @@ echo $PACKAGE $VERSION
 echo
 
 echo Prefix : $prefix
+echo sysconfig dir : $sysconfdir
+echo HAL support enabled: $hal_en
+echo Policykit Enabled: $polkit_val
+echo Dhcpd 3 configuration file: $dhconfig
 echo
