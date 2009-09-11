@@ -7,8 +7,10 @@ dbus_services_DATA = org.blueman.Mechanism.service
 dbus_sessdir = $(datadir)/dbus-1/services
 dbus_sess_DATA = blueman-applet.service
 
+if ENABLE_HAL	
 hal_fdidir = $(datadir)/hal/fdi/information/20thirdparty
 hal_fdi_DATA = 11-blueman-bnep.fdi
+endif
 
 @INTLTOOL_POLICY_RULE@ 
 policykitdir = $(datadir)/PolicyKit/policy
@@ -21,7 +23,10 @@ EXTRA_DIST =					\
 	blueman-applet.service.in		\
 	org.blueman.Mechanism.service.in		\
 	org.blueman.policy.in			\
-	11-blueman-bnep.fdi
+
+if ENABLE_HAL	
+EXTRA_DIST += 11-blueman-bnep.fdi
+endif
 
 CLEANFILES =		\
 	org.blueman.Mechanism.service	\
