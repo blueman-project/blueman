@@ -50,9 +50,17 @@ class DBusService(AppletPlugin):
 		self.add_dbus_method(self.RfcommDisconnect, in_signature="ss", out_signature="")
 		
 		self.add_dbus_method(self.QueryPlugins, in_signature="", out_signature="as")
+		self.add_dbus_method(self.QueryAvailablePlugins, in_signature="", out_signature="as")
+		self.add_dbus_method(self.SetPluginConfig, in_signature="sb", out_signature="")
 		
 	def QueryPlugins(self):
 		return self.Applet.Plugins.GetLoaded()
+		
+	def QueryAvailablePlugins(self):
+		return self.Applet.Plugins.GetClasses()
+		
+	def SetPluginConfig(self, plugin, value):
+		self.Applet.Plugins.SetConfig(plugin, value)
 	
 	def ServiceProxy(self, interface, object_path, _method, args, ok, err):
 		bus = dbus.SystemBus()

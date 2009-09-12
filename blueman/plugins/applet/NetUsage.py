@@ -274,7 +274,7 @@ class Dialog:
 				return
 
 class NetUsage(AppletPlugin, gobject.GObject):
-	__depends__ = ["PPPSupport", "Menu"]
+	__depends__ = ["Menu"]
 	__icon__ = "network-wireless"
 	__description__ = _("Allows you to monitor your (mobile broadband) network traffic usage. Useful for limited data access plans. This plugin tracks every device seperately.")
 	__author__ = "Walmis"

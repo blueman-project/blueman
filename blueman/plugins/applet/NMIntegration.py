@@ -38,6 +38,7 @@ class NMIntegration(AppletPlugin):
 	__depends__ = ["DBusService"]
 	__conflicts__ = ["PPPSupport"]
 	__author__ = "Walmis"
+	__priority__ = 1
 	
 	def on_load(self, applet):
 		pass

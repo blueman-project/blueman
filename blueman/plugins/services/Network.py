@@ -25,6 +25,7 @@ import blueman.main.NetConf as NetConf
 from blueman.main.Config import Config
 from blueman.main.PolicyKitAuth import PolicyKitAuth
 from blueman.main.Mechanism import Mechanism
+from blueman.main.AppletService import AppletService
 import gettext
 _ = gettext.gettext
 
@@ -155,7 +156,9 @@ class Network(ServicePlugin):
 		net_nat = self.Builder.get_object("net_nat")
 		rb_nm = self.Builder.get_object("rb_nm")
 		rb_blueman = self.Builder.get_object("rb_blueman")
-		
+		rb_dun_nm = self.Builder.get_object("rb_dun_nm")
+		rb_dun_blueman = self.Builder.get_object("rb_dun_blueman")
+				
 		nap_frame = self.Builder.get_object("nap_frame")
 		warning = self.Builder.get_object("warning")
 		
@@ -219,3 +222,30 @@ class Network(ServicePlugin):
 		
 		rb_nm.connect("toggled", lambda x: setattr(self.NetConf.props, "dhcp_client", not x.props.active))
 		rb_blueman.connect("toggled", lambda x: setattr(self.NetConf.props, "dhcp_client", x.props.active))
+		
+		applet = AppletService()
+		
+		def dun_support_toggled(rb, x):
+			if rb.props.active and x == "nm":
+				applet.SetPluginConfig("PPPSupport", False)
+				applet.SetPluginConfig("NMIntegration", True)
+			elif rb.props.active and x == "blueman":
+				applet.SetPluginConfig("NMIntegration", False)
+				applet.SetPluginConfig("PPPSupport", True)
+				
+		if "PPPSupport" in applet.QueryPlugins():
+			rb_dun_blueman.props.active = True
+		
+		if not "NMIntegration" in applet.QueryAvailablePlugins():
+			rb_dun_nm.props.sensitive = False
+			rb_dun_nm.props.tooltip_text = _("Not currently supported with this setup")
+		
+		rb_dun_nm.connect("toggled", dun_support_toggled, "nm")
+		rb_dun_blueman.connect("toggled", dun_support_toggled, "blueman")
+		
+		if not HAL_ENABLED:
+			rb_nm.props.sensitive = False
+			rb_nm.props.tooltip_text = _("Not currently supported with this setup")
+			
+			if rb_nm.props.active:
+				rb_blueman.props.active = True
