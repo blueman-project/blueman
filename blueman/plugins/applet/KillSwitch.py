@@ -24,8 +24,11 @@ from blueman.Functions import _
 from blueman.main.SignalTracker import SignalTracker
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.KillSwitchNG import KillSwitchNG, RFKillType, RFKillState
-import blueman.main.KillSwitch as _KillSwitch
-
+try:
+	import blueman.main.KillSwitch as _KillSwitch
+except:
+	pass
+	
 class KillSwitch(AppletPlugin):
 	__author__ = "Walmis"
 	__description__ = _("Toggles a Bluetooth killswitch when Bluetooth power state changes. Some laptops, mostly Dells have this feature\n<b>Note</b>: This plugin stays on automatically if it detects a killswitch.")
@@ -43,7 +46,10 @@ class KillSwitch(AppletPlugin):
 			dprint("Using the new killswitch system")
 		except OSError, e:
 			dprint("Using the old killswitch system, reason:", e)
-			self.Manager = _KillSwitch.Manager()
+			try:
+				self.Manager = _KillSwitch.Manager()
+			except:
+				raise Exception("Failed to initialize killswitch manager")
 		
 			if not self.get_option("checked"):
 				gobject.timeout_add(1000, self.check)
