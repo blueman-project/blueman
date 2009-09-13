@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-10 12:26+0300\n"
+"POT-Creation-Date: 2009-09-13 10:38+0300\n"
 "PO-Revision-Date: 2009-04-17 17:45+0000\n"
 "Last-Translator: Yuki Kodama <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -149,8 +149,9 @@ msgid "Local Services"
 msgstr "ローカルサービス"
 
 #: ../data/ui/services-network.ui.h:1
-msgid "<b>Client Settings</b>"
-msgstr "<b>クライアント設定</b>"
+#, fuzzy
+msgid "<b>DUN Support</b>"
+msgstr "<b>作者:</b>"
 
 #: ../data/ui/services-network.ui.h:2
 msgid "<b>NAP Settings</b>"
@@ -165,45 +166,57 @@ msgid "<b>No DHCP servers installed</b>"
 msgstr "<b>DHCPサーバがインストールされていません</b>"
 
 #: ../data/ui/services-network.ui.h:5
+#, fuzzy
+msgid "<b>PAN Support</b>"
+msgstr "<b>作者:</b>"
+
+#: ../data/ui/services-network.ui.h:6
 msgid "<b>Services</b>"
 msgstr "<b>サービス</b>"
 
-#: ../data/ui/services-network.ui.h:6
+#: ../data/ui/services-network.ui.h:7
 #, fuzzy
 msgid "<b>dnsmasq</b>"
 msgstr "<b>高度な設定</b>"
 
-#: ../data/ui/services-network.ui.h:7
+#: ../data/ui/services-network.ui.h:8
+#, fuzzy
+msgid "Blueman"
+msgstr "Bluemanアプレット"
+
+#: ../data/ui/services-network.ui.h:9
+#, fuzzy
+msgid "Blueman (dhclient)"
+msgstr "Bluemanアプレット"
+
+#: ../data/ui/services-network.ui.h:10
 msgid "DHCP server type:"
 msgstr "DHCPサーバの種類:"
 
-#: ../data/ui/services-network.ui.h:8
+#: ../data/ui/services-network.ui.h:11
 msgid "Enable Routing (NAT)"
 msgstr "ルーティングを有効 （NAT)"
 
-#: ../data/ui/services-network.ui.h:9
+#: ../data/ui/services-network.ui.h:12
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:391 ../blueman/Sdp.py:121
 #: ../apps/blueman-assistant:328
 msgid "Group Network"
 msgstr "グループネットワーク"
 
-#: ../data/ui/services-network.ui.h:10
+#: ../data/ui/services-network.ui.h:13
 msgid "IP Address:"
 msgstr "IPアドレス:"
 
-#: ../data/ui/services-network.ui.h:11
-msgid "Integrate with NetworkManager"
-msgstr "NetworkManagerに統合する"
-
-#: ../data/ui/services-network.ui.h:12
-msgid "Let Blueman handle the network interfaces"
-msgstr "Bluemanにネットワークインタフェースを処理させる"
-
-#: ../data/ui/services-network.ui.h:13
+#: ../data/ui/services-network.ui.h:14
 msgid "Network Access Point (NAP)"
 msgstr "ネットワークアクセスポイント（NAP)"
 
-#: ../data/ui/services-network.ui.h:14
+#: ../data/ui/services-network.ui.h:15
+#, fuzzy
+msgid "NetworkManager"
+msgstr "ネットワーク"
+
+#: ../data/ui/services-network.ui.h:16
 msgid "Recommended"
 msgstr ""
 
@@ -481,7 +494,7 @@ msgstr ""
 msgid "Provides DBus API for other Blueman components"
 msgstr "他のBluemanコンポーネントにDBus APIを提供する"
 
-#: ../blueman/plugins/applet/KillSwitch.py:31
+#: ../blueman/plugins/applet/KillSwitch.py:34
 msgid ""
 "Toggles a Bluetooth killswitch when Bluetooth power state changes. Some "
 "laptops, mostly Dells have this feature\n"
@@ -522,7 +535,7 @@ msgid "Provides bluetooth networking support"
 msgstr ""
 
 #: ../blueman/plugins/applet/Networking.py:65
-#: ../blueman/plugins/services/Network.py:117
+#: ../blueman/plugins/services/Network.py:118
 msgid "Failed to apply network settings"
 msgstr "ネットワーク設定を有効に失敗しました"
 
@@ -729,11 +742,11 @@ msgstr ""
 msgid "Makes DUN/PAN connections available for NetworkManager 0.7"
 msgstr ""
 
-#: ../blueman/plugins/applet/NMIntegration.py:68
+#: ../blueman/plugins/applet/NMIntegration.py:69
 msgid "CDMA or GSM not supported"
 msgstr "CDMAまたはGSMは対応していません"
 
-#: ../blueman/plugins/applet/NMIntegration.py:69
+#: ../blueman/plugins/applet/NMIntegration.py:70
 #, python-format
 msgid ""
 "The device %s does not appear to support GSM/CDMA.\n"
@@ -811,10 +824,15 @@ msgstr ""
 msgid "obex-data-server not available"
 msgstr "OBEXデータサーバが利用できません"
 
-#: ../blueman/plugins/services/Network.py:32
-#: ../blueman/plugins/services/Network.py:45
+#: ../blueman/plugins/services/Network.py:33
+#: ../blueman/plugins/services/Network.py:46
 msgid "Network"
 msgstr "ネットワーク"
+
+#: ../blueman/plugins/services/Network.py:241
+#: ../blueman/plugins/services/Network.py:248
+msgid "Not currently supported with this setup"
+msgstr ""
 
 #: ../blueman/plugins/services/Headset.py:32
 #: ../blueman/plugins/services/Headset.py:43
@@ -1512,9 +1530,14 @@ msgstr "OBEXデータサーバがインストールされていない可能性�
 msgid "Error occurred"
 msgstr "エラーが発生しました"
 
-#: ../apps/blueman-sendto:165 ../apps/blueman-sendto:198
-msgid "Sending File %(0)s/%(1)s (%(2).2f %(3)s/s) ETA: %(4)s"
-msgstr "送信ファイル %(0)s/%(1)s (%(2).2f %(3)s/s) ETA: %(4)s"
+#: ../apps/blueman-sendto:165 ../apps/blueman-sendto:199
+#, fuzzy
+msgid "Sending File"
+msgstr "ファイルを送信"
+
+#: ../apps/blueman-sendto:165 ../apps/blueman-sendto:199
+msgid "ETA:"
+msgstr ""
 
 #: ../apps/blueman-sendto:193
 #, c-format
@@ -1528,28 +1551,28 @@ msgid "%.0f Second"
 msgid_plural "%.0f Seconds"
 msgstr[0] "%.0f 秒"
 
-#: ../apps/blueman-sendto:250
+#: ../apps/blueman-sendto:251
 #, c-format
 msgid "Error occurred while sending file %s"
 msgstr "ファイル %s を送信中でエラーが発生しました"
 
-#: ../apps/blueman-sendto:254
+#: ../apps/blueman-sendto:255
 msgid "Skip"
 msgstr "スキップ"
 
-#: ../apps/blueman-sendto:255
+#: ../apps/blueman-sendto:256
 msgid "Retry"
 msgstr "再実行"
 
-#: ../apps/blueman-sendto:302
+#: ../apps/blueman-sendto:303
 msgid "Send files to this device"
 msgstr "このデバイスにファイルを送信中"
 
-#: ../apps/blueman-sendto:309
+#: ../apps/blueman-sendto:310
 msgid "Bluetooth needs to be turned on for file sending to work"
 msgstr "ファイル転送のためにBluetoothの電源をオンにする必要があります"
 
-#: ../apps/blueman-sendto:363
+#: ../apps/blueman-sendto:364
 msgid "Select files to send"
 msgstr "送信するファイルを選択してください"
 
@@ -1595,11 +1618,11 @@ msgid "Input Service"
 msgstr "入力サービス"
 
 #: ../apps/blueman-assistant:338
-msgid "A2DP Sink (Send Audio)"
+msgid "A2DP Sink (Receive Audio)"
 msgstr ""
 
 #: ../apps/blueman-assistant:343
-msgid "A2DP Source (Receive Audio)"
+msgid "A2DP Source (Send Audio)"
 msgstr ""
 
 #: ../apps/blueman-assistant:348
@@ -1630,6 +1653,18 @@ msgstr "%s の起動に失敗しました"
 #: ../apps/blueman-browse:77
 msgid "You can enter an alternate browser in service settings"
 msgstr "サービス設定の代替ブラウザを使うことができます"
+
+#~ msgid "<b>Client Settings</b>"
+#~ msgstr "<b>クライアント設定</b>"
+
+#~ msgid "Integrate with NetworkManager"
+#~ msgstr "NetworkManagerに統合する"
+
+#~ msgid "Let Blueman handle the network interfaces"
+#~ msgstr "Bluemanにネットワークインタフェースを処理させる"
+
+#~ msgid "Sending File %(0)s/%(1)s (%(2).2f %(3)s/s) ETA: %(4)s"
+#~ msgstr "送信ファイル %(0)s/%(1)s (%(2).2f %(3)s/s) ETA: %(4)s"
 
 #~ msgid "Acquiring an IP address on %s"
 #~ msgstr "%s でIPアドレス取得中"

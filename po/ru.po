@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-10 12:26+0300\n"
+"POT-Creation-Date: 2009-09-13 10:38+0300\n"
 "PO-Revision-Date: 2009-04-03 09:05+0000\n"
 "Last-Translator: Lucky <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -150,8 +150,9 @@ msgid "Local Services"
 msgstr "Локальные службы"
 
 #: ../data/ui/services-network.ui.h:1
-msgid "<b>Client Settings</b>"
-msgstr "<b>Настройки клиента</b>"
+#, fuzzy
+msgid "<b>DUN Support</b>"
+msgstr "<b>Автор:</b>"
 
 #: ../data/ui/services-network.ui.h:2
 msgid "<b>NAP Settings</b>"
@@ -166,45 +167,57 @@ msgid "<b>No DHCP servers installed</b>"
 msgstr "<b>DHCP сервер не установлен</b>"
 
 #: ../data/ui/services-network.ui.h:5
+#, fuzzy
+msgid "<b>PAN Support</b>"
+msgstr "<b>Автор:</b>"
+
+#: ../data/ui/services-network.ui.h:6
 msgid "<b>Services</b>"
 msgstr "<b>Службы</b>"
 
-#: ../data/ui/services-network.ui.h:6
+#: ../data/ui/services-network.ui.h:7
 #, fuzzy
 msgid "<b>dnsmasq</b>"
 msgstr "<b>Дополнительно</b>"
 
-#: ../data/ui/services-network.ui.h:7
+#: ../data/ui/services-network.ui.h:8
+#, fuzzy
+msgid "Blueman"
+msgstr "Апплет Blueman"
+
+#: ../data/ui/services-network.ui.h:9
+#, fuzzy
+msgid "Blueman (dhclient)"
+msgstr "Апплет Blueman"
+
+#: ../data/ui/services-network.ui.h:10
 msgid "DHCP server type:"
 msgstr "Тип DHCP сервера"
 
-#: ../data/ui/services-network.ui.h:8
+#: ../data/ui/services-network.ui.h:11
 msgid "Enable Routing (NAT)"
 msgstr "Включить маршрутизацию (NAT)"
 
-#: ../data/ui/services-network.ui.h:9
+#: ../data/ui/services-network.ui.h:12
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:391 ../blueman/Sdp.py:121
 #: ../apps/blueman-assistant:328
 msgid "Group Network"
 msgstr "Групповая сеть"
 
-#: ../data/ui/services-network.ui.h:10
+#: ../data/ui/services-network.ui.h:13
 msgid "IP Address:"
 msgstr "IP-адрес:"
 
-#: ../data/ui/services-network.ui.h:11
-msgid "Integrate with NetworkManager"
-msgstr "Интегрировать с NetworkManager"
-
-#: ../data/ui/services-network.ui.h:12
-msgid "Let Blueman handle the network interfaces"
-msgstr "Разрешить Blueman поддержку сетевых интерфейсов"
-
-#: ../data/ui/services-network.ui.h:13
+#: ../data/ui/services-network.ui.h:14
 msgid "Network Access Point (NAP)"
 msgstr "Точка доступа к сети (NAP)"
 
-#: ../data/ui/services-network.ui.h:14
+#: ../data/ui/services-network.ui.h:15
+#, fuzzy
+msgid "NetworkManager"
+msgstr "Сеть"
+
+#: ../data/ui/services-network.ui.h:16
 msgid "Recommended"
 msgstr ""
 
@@ -485,7 +498,7 @@ msgstr ""
 msgid "Provides DBus API for other Blueman components"
 msgstr "Предоставляет DBus API для других компонентов Blueman"
 
-#: ../blueman/plugins/applet/KillSwitch.py:31
+#: ../blueman/plugins/applet/KillSwitch.py:34
 msgid ""
 "Toggles a Bluetooth killswitch when Bluetooth power state changes. Some "
 "laptops, mostly Dells have this feature\n"
@@ -530,7 +543,7 @@ msgid "Provides bluetooth networking support"
 msgstr ""
 
 #: ../blueman/plugins/applet/Networking.py:65
-#: ../blueman/plugins/services/Network.py:117
+#: ../blueman/plugins/services/Network.py:118
 msgid "Failed to apply network settings"
 msgstr "Невозможно применить сетевые настройки"
 
@@ -744,11 +757,11 @@ msgstr "Предоставляет меню апплета и API для дру�
 msgid "Makes DUN/PAN connections available for NetworkManager 0.7"
 msgstr ""
 
-#: ../blueman/plugins/applet/NMIntegration.py:68
+#: ../blueman/plugins/applet/NMIntegration.py:69
 msgid "CDMA or GSM not supported"
 msgstr ""
 
-#: ../blueman/plugins/applet/NMIntegration.py:69
+#: ../blueman/plugins/applet/NMIntegration.py:70
 #, python-format
 msgid ""
 "The device %s does not appear to support GSM/CDMA.\n"
@@ -824,10 +837,15 @@ msgstr "Сервис передачи отключен"
 msgid "obex-data-server not available"
 msgstr "Сервер obex недоступен"
 
-#: ../blueman/plugins/services/Network.py:32
-#: ../blueman/plugins/services/Network.py:45
+#: ../blueman/plugins/services/Network.py:33
+#: ../blueman/plugins/services/Network.py:46
 msgid "Network"
 msgstr "Сеть"
+
+#: ../blueman/plugins/services/Network.py:241
+#: ../blueman/plugins/services/Network.py:248
+msgid "Not currently supported with this setup"
+msgstr ""
 
 #: ../blueman/plugins/services/Headset.py:32
 #: ../blueman/plugins/services/Headset.py:43
@@ -1558,9 +1576,14 @@ msgstr "obex сервер не установлен"
 msgid "Error occurred"
 msgstr "Возникла ошибка"
 
-#: ../apps/blueman-sendto:165 ../apps/blueman-sendto:198
-msgid "Sending File %(0)s/%(1)s (%(2).2f %(3)s/s) ETA: %(4)s"
-msgstr "Отправка Файла %(0)s/%(1)s (%(2).2f %(3)s/s) Осталось: %(4)сек"
+#: ../apps/blueman-sendto:165 ../apps/blueman-sendto:199
+#, fuzzy
+msgid "Sending File"
+msgstr "Отпр. файл"
+
+#: ../apps/blueman-sendto:165 ../apps/blueman-sendto:199
+msgid "ETA:"
+msgstr ""
 
 #: ../apps/blueman-sendto:193
 #, c-format
@@ -1578,28 +1601,28 @@ msgstr[0] "%.0f Секунда"
 msgstr[1] "%.0f Секунд"
 msgstr[2] "%.0f Секунд"
 
-#: ../apps/blueman-sendto:250
+#: ../apps/blueman-sendto:251
 #, c-format
 msgid "Error occurred while sending file %s"
 msgstr "Произошла ошибка вовремя отправки файла %s"
 
-#: ../apps/blueman-sendto:254
+#: ../apps/blueman-sendto:255
 msgid "Skip"
 msgstr "Пропустить"
 
-#: ../apps/blueman-sendto:255
+#: ../apps/blueman-sendto:256
 msgid "Retry"
 msgstr "Повторить"
 
-#: ../apps/blueman-sendto:302
+#: ../apps/blueman-sendto:303
 msgid "Send files to this device"
 msgstr "Отправить файлы на это устройство"
 
-#: ../apps/blueman-sendto:309
+#: ../apps/blueman-sendto:310
 msgid "Bluetooth needs to be turned on for file sending to work"
 msgstr "Чтобы работала передача файлов нужно включить Bluetooth"
 
-#: ../apps/blueman-sendto:363
+#: ../apps/blueman-sendto:364
 msgid "Select files to send"
 msgstr "Выберите файлы для отправки"
 
@@ -1643,11 +1666,11 @@ msgid "Input Service"
 msgstr "Служба ввода"
 
 #: ../apps/blueman-assistant:338
-msgid "A2DP Sink (Send Audio)"
+msgid "A2DP Sink (Receive Audio)"
 msgstr ""
 
 #: ../apps/blueman-assistant:343
-msgid "A2DP Source (Receive Audio)"
+msgid "A2DP Source (Send Audio)"
 msgstr ""
 
 #: ../apps/blueman-assistant:348
@@ -1678,6 +1701,18 @@ msgstr "Не удалось запустить «%s»"
 #: ../apps/blueman-browse:77
 msgid "You can enter an alternate browser in service settings"
 msgstr "Вы можете выбрать альтернативный обозреватель в настройках служб"
+
+#~ msgid "<b>Client Settings</b>"
+#~ msgstr "<b>Настройки клиента</b>"
+
+#~ msgid "Integrate with NetworkManager"
+#~ msgstr "Интегрировать с NetworkManager"
+
+#~ msgid "Let Blueman handle the network interfaces"
+#~ msgstr "Разрешить Blueman поддержку сетевых интерфейсов"
+
+#~ msgid "Sending File %(0)s/%(1)s (%(2).2f %(3)s/s) ETA: %(4)s"
+#~ msgstr "Отправка Файла %(0)s/%(1)s (%(2).2f %(3)s/s) Осталось: %(4)сек"
 
 #~ msgid "Acquiring an IP address on %s"
 #~ msgstr "Получение IP адреса для %s"

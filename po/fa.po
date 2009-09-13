@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-10 12:26+0300\n"
+"POT-Creation-Date: 2009-09-13 10:38+0300\n"
 "PO-Revision-Date: 2008-03-22 23:10+0000\n"
 "Last-Translator: Artin <Unknown>\n"
 "Language-Team: Persian <fa@li.org>\n"
@@ -148,7 +148,7 @@ msgid "Local Services"
 msgstr ""
 
 #: ../data/ui/services-network.ui.h:1
-msgid "<b>Client Settings</b>"
+msgid "<b>DUN Support</b>"
 msgstr ""
 
 #: ../data/ui/services-network.ui.h:2
@@ -164,44 +164,53 @@ msgid "<b>No DHCP servers installed</b>"
 msgstr ""
 
 #: ../data/ui/services-network.ui.h:5
-msgid "<b>Services</b>"
+msgid "<b>PAN Support</b>"
 msgstr ""
 
 #: ../data/ui/services-network.ui.h:6
-msgid "<b>dnsmasq</b>"
+msgid "<b>Services</b>"
 msgstr ""
 
 #: ../data/ui/services-network.ui.h:7
-msgid "DHCP server type:"
+msgid "<b>dnsmasq</b>"
 msgstr ""
 
 #: ../data/ui/services-network.ui.h:8
-msgid "Enable Routing (NAT)"
+msgid "Blueman"
 msgstr ""
 
 #: ../data/ui/services-network.ui.h:9
+msgid "Blueman (dhclient)"
+msgstr ""
+
+#: ../data/ui/services-network.ui.h:10
+msgid "DHCP server type:"
+msgstr ""
+
+#: ../data/ui/services-network.ui.h:11
+msgid "Enable Routing (NAT)"
+msgstr ""
+
+#: ../data/ui/services-network.ui.h:12
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:391 ../blueman/Sdp.py:121
 #: ../apps/blueman-assistant:328
 msgid "Group Network"
 msgstr ""
 
-#: ../data/ui/services-network.ui.h:10
+#: ../data/ui/services-network.ui.h:13
 msgid "IP Address:"
 msgstr ""
 
-#: ../data/ui/services-network.ui.h:11
-msgid "Integrate with NetworkManager"
-msgstr ""
-
-#: ../data/ui/services-network.ui.h:12
-msgid "Let Blueman handle the network interfaces"
-msgstr ""
-
-#: ../data/ui/services-network.ui.h:13
+#: ../data/ui/services-network.ui.h:14
 msgid "Network Access Point (NAP)"
 msgstr ""
 
-#: ../data/ui/services-network.ui.h:14
+#: ../data/ui/services-network.ui.h:15
+#, fuzzy
+msgid "NetworkManager"
+msgstr "مدیریت Bluetooth"
+
+#: ../data/ui/services-network.ui.h:16
 msgid "Recommended"
 msgstr ""
 
@@ -465,7 +474,7 @@ msgstr ""
 msgid "Provides DBus API for other Blueman components"
 msgstr ""
 
-#: ../blueman/plugins/applet/KillSwitch.py:31
+#: ../blueman/plugins/applet/KillSwitch.py:34
 msgid ""
 "Toggles a Bluetooth killswitch when Bluetooth power state changes. Some "
 "laptops, mostly Dells have this feature\n"
@@ -506,7 +515,7 @@ msgid "Provides bluetooth networking support"
 msgstr ""
 
 #: ../blueman/plugins/applet/Networking.py:65
-#: ../blueman/plugins/services/Network.py:117
+#: ../blueman/plugins/services/Network.py:118
 msgid "Failed to apply network settings"
 msgstr ""
 
@@ -704,11 +713,11 @@ msgstr ""
 msgid "Makes DUN/PAN connections available for NetworkManager 0.7"
 msgstr ""
 
-#: ../blueman/plugins/applet/NMIntegration.py:68
+#: ../blueman/plugins/applet/NMIntegration.py:69
 msgid "CDMA or GSM not supported"
 msgstr ""
 
-#: ../blueman/plugins/applet/NMIntegration.py:69
+#: ../blueman/plugins/applet/NMIntegration.py:70
 #, python-format
 msgid ""
 "The device %s does not appear to support GSM/CDMA.\n"
@@ -782,9 +791,14 @@ msgstr ""
 msgid "obex-data-server not available"
 msgstr ""
 
-#: ../blueman/plugins/services/Network.py:32
-#: ../blueman/plugins/services/Network.py:45
+#: ../blueman/plugins/services/Network.py:33
+#: ../blueman/plugins/services/Network.py:46
 msgid "Network"
+msgstr ""
+
+#: ../blueman/plugins/services/Network.py:241
+#: ../blueman/plugins/services/Network.py:248
+msgid "Not currently supported with this setup"
 msgstr ""
 
 #: ../blueman/plugins/services/Headset.py:32
@@ -1465,8 +1479,13 @@ msgstr ""
 msgid "Error occurred"
 msgstr ""
 
-#: ../apps/blueman-sendto:165 ../apps/blueman-sendto:198
-msgid "Sending File %(0)s/%(1)s (%(2).2f %(3)s/s) ETA: %(4)s"
+#: ../apps/blueman-sendto:165 ../apps/blueman-sendto:199
+#, fuzzy
+msgid "Sending File"
+msgstr "ارسال پرونده"
+
+#: ../apps/blueman-sendto:165 ../apps/blueman-sendto:199
+msgid "ETA:"
 msgstr ""
 
 #: ../apps/blueman-sendto:193
@@ -1483,28 +1502,28 @@ msgid_plural "%.0f Seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../apps/blueman-sendto:250
+#: ../apps/blueman-sendto:251
 #, c-format
 msgid "Error occurred while sending file %s"
 msgstr ""
 
-#: ../apps/blueman-sendto:254
+#: ../apps/blueman-sendto:255
 msgid "Skip"
 msgstr ""
 
-#: ../apps/blueman-sendto:255
+#: ../apps/blueman-sendto:256
 msgid "Retry"
 msgstr ""
 
-#: ../apps/blueman-sendto:302
+#: ../apps/blueman-sendto:303
 msgid "Send files to this device"
 msgstr ""
 
-#: ../apps/blueman-sendto:309
+#: ../apps/blueman-sendto:310
 msgid "Bluetooth needs to be turned on for file sending to work"
 msgstr ""
 
-#: ../apps/blueman-sendto:363
+#: ../apps/blueman-sendto:364
 msgid "Select files to send"
 msgstr ""
 
@@ -1545,11 +1564,11 @@ msgid "Input Service"
 msgstr ""
 
 #: ../apps/blueman-assistant:338
-msgid "A2DP Sink (Send Audio)"
+msgid "A2DP Sink (Receive Audio)"
 msgstr ""
 
 #: ../apps/blueman-assistant:343
-msgid "A2DP Source (Receive Audio)"
+msgid "A2DP Source (Send Audio)"
 msgstr ""
 
 #: ../apps/blueman-assistant:348
