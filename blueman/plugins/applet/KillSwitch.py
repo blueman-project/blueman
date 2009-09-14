@@ -58,7 +58,7 @@ class KillSwitch(AppletPlugin):
 		self.Manager.connect("switch-added", self.on_switch_added)
 				
 
-	def on_switch_added(self, switch):
+	def on_switch_added(self, manager, switch):
 		if switch.type == RFKillType.BLUETOOTH:
 			dprint("killswitch registered", switch.idx)
 			if not self.Manager.GetGlobalState():	
