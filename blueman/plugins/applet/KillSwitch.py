@@ -50,13 +50,21 @@ class KillSwitch(AppletPlugin):
 				self.Manager = _KillSwitch.Manager()
 			except:
 				raise Exception("Failed to initialize killswitch manager")
+				
 		
 			if not self.get_option("checked"):
 				gobject.timeout_add(1000, self.check)
 				
-		if not self.Manager.GetGlobalState():	
-			self.Applet.Plugins.PowerManager.SetBluetoothStatus(False)
-			
+		self.Manager.connect("switch-added", self.on_switch_added)
+				
+
+	def on_switch_added(self, switch):
+		if switch.type == RFKillType.BLUETOOTH:
+			dprint("killswitch registered", switch.idx)
+			if not self.Manager.GetGlobalState():	
+				self.Applet.Plugins.PowerManager.SetBluetoothStatus(False)		
+		
+				
 	def on_switch_changed(self, manager, switch):
 		if switch.type == RFKillType.BLUETOOTH:
 			s = manager.GetGlobalState()

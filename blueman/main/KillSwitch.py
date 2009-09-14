@@ -48,6 +48,16 @@ class KillSwitch(dbus.proxies.Interface):
 			
 		self.__switch = KillSwitch.__Switch(udi)
 		
+		self.hard = 0
+		self.idx = self.udi
+		self.type = 2 #RfkillType.BLUETOOTH
+		
+	def __getattr__(self, key):
+		if key == "soft":
+			return self.GetPower()
+		else:
+			return self.__dict__[key]
+		
 	def SetPower(self, state):
 		try:
 			self.__switch.SetPower(state)
@@ -58,8 +68,13 @@ class KillSwitch(dbus.proxies.Interface):
 		return self.__switch.GetPower()
 		
 	
-class Manager:
+class Manager(gobject.GObject):
 	__inst = None
+	__gsignals__ = {
+		'switch-changed' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+		'switch-added' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+		'switch-removed' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+	}
 	def __new__(cls):
 		if not Manager.__inst:
 			return super(Manager, cls).__new__(cls)
@@ -68,11 +83,14 @@ class Manager:
 	
 	def __init__(self):
 		if not Manager.__inst:
+			gobject.GObject.__init__(self)
 			Manager.__inst = self
 			
 			dbus.SystemBus().watch_name_owner("org.freedesktop.Hal", self.hal_name_owner_changed)
 
 	def hal_name_owner_changed(self, owner):
+		for dev in self.devices:
+			self.emit("switch-removed", dev)
 		self.devices = []
 		if owner != "":
 			self.Hal = HalManager()
@@ -89,8 +107,9 @@ class Manager:
 				sw = KillSwitch(dev)
 				self.devices.append(sw)
 				self.state &= sw.GetPower()
+				self.emit("switch-added", sw)
 			except WrongType:
-				pass	
+				pass
 				
 	def SetGlobalState(self, state):
 		dprint("Setting killswitches to", state)
