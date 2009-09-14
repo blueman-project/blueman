@@ -85,7 +85,8 @@ class Manager(gobject.GObject):
 		if not Manager.__inst:
 			gobject.GObject.__init__(self)
 			Manager.__inst = self
-			
+			self.devices = []
+			self.state = True
 			dbus.SystemBus().watch_name_owner("org.freedesktop.Hal", self.hal_name_owner_changed)
 
 	def hal_name_owner_changed(self, owner):
