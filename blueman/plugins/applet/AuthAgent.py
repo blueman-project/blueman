@@ -33,8 +33,13 @@ class AuthAgent(AppletPlugin):
 	
 	def on_load(self, applet):
 		self.Applet = applet
+		self.add_dbus_method(self.SetTimeHint, in_signature="u")
 		
 		self.agents = []
+		self.last_event_time = 0
+		
+	def SetTimeHint(self, time):
+		self.last_event_time = time
 		
 	def on_unload(self):
 		for agent in self.agents:
@@ -57,11 +62,14 @@ class AuthAgent(AppletPlugin):
 	def on_released(self, agent):
 		agent.disconnect(agent.signal)
 		self.agents.remove(agent)
+		
+	def get_event_time(self):
+		return self.last_event_time
 				
 	def register_agent(self, adapter):
 		dprint("Registering agent")
 		try:
-			agent = AdapterAgent(self.Applet.Plugins.StatusIcon, adapter)
+			agent = AdapterAgent(self.Applet.Plugins.StatusIcon, adapter, self.get_event_time)
 			agent.signal = agent.connect("released", self.on_released)
 			adapter.RegisterAgent(agent, "DisplayYesNo")
 			self.agents.append(agent)

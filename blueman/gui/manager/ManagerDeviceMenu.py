@@ -159,7 +159,11 @@ class ManagerDeviceMenu(gtk.Menu):
 			dprint("** Failed to connect to applet")
 			fail()
 			return
-		
+		try:
+			appl.SetTimeHint(gtk.get_current_event_time())
+		except:
+			pass
+			
 		if service_id == "network":
 			uuid = args[0]
 			appl.ServiceProxy(svc.GetInterfaceName(), svc.GetObjectPath(), "Connect", [uuid], reply_handler=success, error_handler=fail)

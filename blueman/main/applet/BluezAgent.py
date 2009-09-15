@@ -57,7 +57,7 @@ class CommonAgent(gobject.GObject, Agent):
 		self.status_icon = status_icon
 		self.dbus_path = path
 		self.dialog = None
-		self.n = None	
+		self.n = None
 				
 	def build_passkey_dialog(self, device_alias, dialog_msg, is_numeric):
 		def on_insert_text(editable, new_text, new_text_length, position):
@@ -140,7 +140,7 @@ class CommonAgent(gobject.GObject, Agent):
 			#self.applet.status_icon.set_blinking(True)
 		
 		self.dialog.connect("response", passkey_dialog_cb)
-		self.dialog.present()		
+		self.dialog.present()
 						
 	def __del__(self):
 		dprint("Agent on path", self.dbus_path, "deleted")
@@ -164,9 +164,11 @@ class CommonAgent(gobject.GObject, Agent):
 		
 class AdapterAgent(CommonAgent):
 	
-	def __init__(self, status_icon, adapter):
+	def __init__(self, status_icon, adapter, time_func):
 		self.adapter = adapter
 		self.n = None
+		self.time_func = time_func
+		
 		
 		adapter_name = os.path.basename(adapter.GetObjectPath())
 		
@@ -178,14 +180,18 @@ class AdapterAgent(CommonAgent):
 		dialog_msg = _("Enter PIN code for authentication:")
 		notify_msg = _("Enter PIN code")
 		self.ask_passkey(device, dialog_msg, notify_msg, False, True, ok, err)
-	
+		if self.dialog:
+			self.dialog.present_with_time(self.time_func())
+				
 	@AgentMethod	
 	def RequestPasskey(self, device, ok, err):
 		dprint("Agent.RequestPasskey")
 		dialog_msg = _("Enter passkey for authentication:")
 		notify_msg = _("Enter passkey")
 		self.ask_passkey(device, dialog_msg, notify_msg, True, True, ok, err)
-	
+		if self.dialog:
+			self.dialog.present_with_time(self.time_func())
+				
 	@AgentMethod
 	def DisplayPasskey(self, device, passkey, entered):
 		pass
