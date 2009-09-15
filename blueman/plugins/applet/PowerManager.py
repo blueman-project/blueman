@@ -74,6 +74,7 @@ class PowerManager(AppletPlugin):
 				props = adapter.GetProperties()
 				if not props["Powered"]:
 					self.bluetooth_off = True
+					return
 	
 	def on_bluetooth_toggled(self):
 		self.bluetooth_off = not self.bluetooth_off
