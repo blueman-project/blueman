@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-09-13 10:38+0300\n"
 "PO-Revision-Date: 2008-05-01 21:10+0000\n"
 "Last-Translator: Matej Urbančič <Unknown>\n"
@@ -14,9 +14,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
-"%100==4 ? 3 : 0);\n"
-"X-Launchpad-Export-Date: 2009-04-18 16:28+0000\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
+"n%100==4 ? 3 : 0);\n"
+"X-Launchpad-Export-Date: 2009-09-16 15:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: SLOVENIA\n"
 "X-Poedit-Language: Slovenian\n"
@@ -210,9 +210,8 @@ msgid "Network Access Point (NAP)"
 msgstr ""
 
 #: ../data/ui/services-network.ui.h:15
-#, fuzzy
 msgid "NetworkManager"
-msgstr "Upravljalnik Bluetooth"
+msgstr ""
 
 #: ../data/ui/services-network.ui.h:16
 msgid "Recommended"
@@ -270,7 +269,8 @@ msgid "<b>To:</b>"
 msgstr ""
 
 #: ../data/ui/send-dialog.ui.h:3
-msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
+msgid ""
+"<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr ""
 
 #: ../data/ui/send-dialog.ui.h:4
@@ -493,9 +493,8 @@ msgstr ""
 
 #: ../blueman/plugins/applet/PulseAudio.py:75
 #: ../blueman/plugins/applet/PulseAudio.py:81
-#, fuzzy
 msgid "Bluetooth Audio"
-msgstr "Upravljalnik Bluetooth"
+msgstr ""
 
 #: ../blueman/plugins/applet/PulseAudio.py:76
 msgid ""
@@ -576,24 +575,18 @@ msgid "day"
 msgid_plural "days"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
 
 #: ../blueman/plugins/applet/NetUsage.py:206
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
 
 #: ../blueman/plugins/applet/NetUsage.py:207
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
 
 #: ../blueman/plugins/applet/NetUsage.py:209
 #, python-format
@@ -631,18 +624,16 @@ msgid "_Browse files on device"
 msgstr ""
 
 #: ../blueman/plugins/applet/StandardItems.py:57
-#, fuzzy
 msgid "_Devices"
-msgstr "Storitev"
+msgstr ""
 
 #: ../blueman/plugins/applet/StandardItems.py:62
 msgid "Adap_ters"
 msgstr ""
 
 #: ../blueman/plugins/applet/StandardItems.py:67
-#, fuzzy
 msgid "_Local Services"
-msgstr "Storitev"
+msgstr ""
 
 #: ../blueman/plugins/applet/StandardItems.py:77
 msgid "_Plugins"
@@ -1018,7 +1009,7 @@ msgstr ""
 #. def on_type_changed(item, type):
 #. if item.active:
 #. setattr(conns.props, device.Address, type)
-#.
+#. 
 #. conns = Config("conn_types")
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:327
 msgid "Serial Ports"
@@ -1335,9 +1326,8 @@ msgstr ""
 
 #: ../blueman/main/applet/BluezAgent.py:139
 #: ../blueman/main/applet/BluezAgent.py:239
-#, fuzzy
 msgid "Bluetooth Authentication"
-msgstr "Upravljalnik Bluetooth"
+msgstr ""
 
 #: ../blueman/main/applet/BluezAgent.py:178
 #: ../blueman/main/applet/BluezAgent.py:257
@@ -1490,9 +1480,8 @@ msgid "Error occurred"
 msgstr ""
 
 #: ../apps/blueman-sendto:165 ../apps/blueman-sendto:199
-#, fuzzy
 msgid "Sending File"
-msgstr "Pošlji datoteko"
+msgstr ""
 
 #: ../apps/blueman-sendto:165 ../apps/blueman-sendto:199
 msgid "ETA:"
@@ -1609,6 +1598,3 @@ msgstr ""
 #: ../apps/blueman-browse:77
 msgid "You can enter an alternate browser in service settings"
 msgstr ""
-
-#~ msgid "Bond"
-#~ msgstr "Povazava"

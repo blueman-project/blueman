@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-09-13 10:38+0300\n"
 "PO-Revision-Date: 2008-12-25 08:31+0000\n"
 "Last-Translator: arruah <Unknown>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-04-18 16:28+0000\n"
+"X-Launchpad-Export-Date: 2009-09-16 15:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -265,7 +265,8 @@ msgid "<b>To:</b>"
 msgstr ""
 
 #: ../data/ui/send-dialog.ui.h:3
-msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
+msgid ""
+"<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr ""
 
 #: ../data/ui/send-dialog.ui.h:4
@@ -388,9 +389,8 @@ msgid "<b>Uploaded:</b>"
 msgstr ""
 
 #: ../data/ui/net-usage.ui.h:6
-#, fuzzy
 msgid "Reset"
-msgstr "Бас тарту"
+msgstr ""
 
 #: ../data/ui/net-usage.ui.h:7
 msgid "Traffic statistics"
@@ -552,15 +552,13 @@ msgstr ""
 #: ../blueman/plugins/applet/NetUsage.py:160
 #: ../blueman/plugins/applet/NetUsage.py:262
 #: ../blueman/plugins/applet/NetUsage.py:265
-#, fuzzy
 msgid "Connected:"
-msgstr "Қосылуда"
+msgstr ""
 
 #: ../blueman/plugins/applet/NetUsage.py:176
 #: ../blueman/plugins/applet/NetUsage.py:273
-#, fuzzy
 msgid "Not Connected"
-msgstr "Қосылуда"
+msgstr ""
 
 #: ../blueman/plugins/applet/NetUsage.py:182
 msgid ""
@@ -572,16 +570,19 @@ msgstr ""
 msgid "day"
 msgid_plural "days"
 msgstr[0] ""
+msgstr[1] ""
 
 #: ../blueman/plugins/applet/NetUsage.py:206
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] ""
+msgstr[1] ""
 
 #: ../blueman/plugins/applet/NetUsage.py:207
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] ""
+msgstr[1] ""
 
 #: ../blueman/plugins/applet/NetUsage.py:209
 #, python-format
@@ -619,18 +620,16 @@ msgid "_Browse files on device"
 msgstr ""
 
 #: ../blueman/plugins/applet/StandardItems.py:57
-#, fuzzy
 msgid "_Devices"
-msgstr "Қызмет:"
+msgstr ""
 
 #: ../blueman/plugins/applet/StandardItems.py:62
 msgid "Adap_ters"
 msgstr ""
 
 #: ../blueman/plugins/applet/StandardItems.py:67
-#, fuzzy
 msgid "_Local Services"
-msgstr "Қызмет:"
+msgstr ""
 
 #: ../blueman/plugins/applet/StandardItems.py:77
 msgid "_Plugins"
@@ -971,9 +970,8 @@ msgid "Failed"
 msgstr "Жеткізу қатесі"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:142
-#, fuzzy
 msgid "Connection Failed: "
-msgstr "Қосылуда"
+msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:149
 msgid "Cancelled"
@@ -1007,7 +1005,7 @@ msgstr ""
 #. def on_type_changed(item, type):
 #. if item.active:
 #. setattr(conns.props, device.Address, type)
-#.
+#. 
 #. conns = Config("conn_types")
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:327
 msgid "Serial Ports"
@@ -1056,9 +1054,8 @@ msgid "Disconnect A2DP Sink"
 msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:466
-#, fuzzy
 msgid "Connect A2DP Sink"
-msgstr "Қосылуда"
+msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:467
 msgid "Allows to send audio to remote device"
@@ -1452,9 +1449,8 @@ msgid "Failure"
 msgstr ""
 
 #: ../apps/blueman-manager:258
-#, fuzzy
 msgid "Pairing"
-msgstr "Іздеу"
+msgstr ""
 
 #: ../apps/blueman-adapters:57
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
@@ -1480,9 +1476,8 @@ msgid "Error occurred"
 msgstr ""
 
 #: ../apps/blueman-sendto:165 ../apps/blueman-sendto:199
-#, fuzzy
 msgid "Sending File"
-msgstr "Файл жіберу"
+msgstr ""
 
 #: ../apps/blueman-sendto:165 ../apps/blueman-sendto:199
 msgid "ETA:"
@@ -1599,6 +1594,3 @@ msgstr ""
 #: ../apps/blueman-browse:77
 msgid "You can enter an alternate browser in service settings"
 msgstr ""
-
-#~ msgid "Bond"
-#~ msgstr "Құнды"

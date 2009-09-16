@@ -6,16 +6,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-09-13 10:38+0300\n"
-"PO-Revision-Date: 2009-02-25 14:52+0000\n"
-"Last-Translator: Valmantas Palikša <walmis@balticum-tv.lt>\n"
+"PO-Revision-Date: 2009-09-15 09:36+0000\n"
+"Last-Translator: Muszela Balázs <bazsi86@gmail.com>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-04-18 16:29+0000\n"
+"X-Launchpad-Export-Date: 2009-09-16 15:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -177,7 +177,7 @@ msgstr ""
 
 #: ../data/ui/services-network.ui.h:8
 msgid "Blueman"
-msgstr ""
+msgstr "Blueman"
 
 #: ../data/ui/services-network.ui.h:9
 msgid "Blueman (dhclient)"
@@ -206,9 +206,8 @@ msgid "Network Access Point (NAP)"
 msgstr "Network Access Point (NAP)"
 
 #: ../data/ui/services-network.ui.h:15
-#, fuzzy
 msgid "NetworkManager"
-msgstr "Hálózat hozzáférés"
+msgstr "HálózatKezelő"
 
 #: ../data/ui/services-network.ui.h:16
 msgid "Recommended"
@@ -216,7 +215,7 @@ msgstr ""
 
 #: ../data/ui/services-transfer.ui.h:1
 msgid "<b>Advanced</b>"
-msgstr ""
+msgstr "<b>Haladó</b>"
 
 #: ../data/ui/services-transfer.ui.h:2
 msgid "<b>File Receiving (Object Push)</b>"
@@ -266,10 +265,11 @@ msgid "<b>To:</b>"
 msgstr "<b>Cél:</b>"
 
 #: ../data/ui/send-dialog.ui.h:3
-msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
+msgid ""
+"<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr ""
-"<span weight=\"bold\" size=\"large\">Fájlok küldése Bluetoothon keresztül</"
-"span>"
+"<span weight=\"bold\" size=\"large\">Fájlok küldése Bluetoothon "
+"keresztül</span>"
 
 #: ../data/ui/send-dialog.ui.h:4
 msgid "Bluetooth File Transfer"
@@ -350,7 +350,7 @@ msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:5
 msgid "Not specified"
-msgstr ""
+msgstr "Nincs megadva"
 
 #: ../data/ui/applet-plugins-widget.ui.h:6
 #: ../blueman/plugins/applet/NetUsage.py:211
@@ -359,9 +359,8 @@ msgid "Unknown"
 msgstr "Ismeretlen"
 
 #: ../data/ui/gsm-settings.ui.h:1
-#, fuzzy
 msgid "<b>GSM settings</b>"
-msgstr "<b>NAP Beállítások</b>"
+msgstr ""
 
 #: ../data/ui/gsm-settings.ui.h:2
 msgid "APN:"
@@ -372,34 +371,28 @@ msgid "Number:"
 msgstr ""
 
 #: ../data/ui/net-usage.ui.h:1
-#, fuzzy
 msgid "<b>Downloaded:</b>"
-msgstr "<b>Párosítva</b>"
+msgstr "<b>Letöltve:</b>"
 
 #: ../data/ui/net-usage.ui.h:2
-#, fuzzy
 msgid "<b>Log duration:</b>"
-msgstr "<b>Cél:</b>"
+msgstr ""
 
 #: ../data/ui/net-usage.ui.h:3
-#, fuzzy
 msgid "<b>Log started:</b>"
-msgstr "<b>Engedélyezett</b>"
+msgstr ""
 
 #: ../data/ui/net-usage.ui.h:4
-#, fuzzy
 msgid "<b>Total:</b>"
-msgstr "<b>Cél:</b>"
+msgstr "<b>Teljes:</b>"
 
 #: ../data/ui/net-usage.ui.h:5
-#, fuzzy
 msgid "<b>Uploaded:</b>"
-msgstr "<b>Párosítva</b>"
+msgstr "<b>Feltöltve:</b>"
 
 #: ../data/ui/net-usage.ui.h:6
-#, fuzzy
 msgid "Reset"
-msgstr "Elutasítás"
+msgstr "Visszaállít"
 
 #: ../data/ui/net-usage.ui.h:7
 msgid "Traffic statistics"
@@ -438,7 +431,7 @@ msgstr ""
 #: ../blueman/plugins/applet/RecentConns.py:277
 #, python-format
 msgid "Connecting to %s"
-msgstr ""
+msgstr "Kapcsolódás %s"
 
 #: ../blueman/plugins/applet/RecentConns.py:282
 #: ../blueman/plugins/applet/PPPSupport.py:63
@@ -448,7 +441,7 @@ msgstr ""
 #: ../blueman/plugins/applet/RecentConns.py:282
 #, python-format
 msgid "Connected to %s"
-msgstr ""
+msgstr "Kapcsolódva %s-hez"
 
 #: ../blueman/plugins/applet/RecentConns.py:288
 msgid "Failed to connect"
@@ -498,9 +491,8 @@ msgstr ""
 
 #: ../blueman/plugins/applet/PulseAudio.py:75
 #: ../blueman/plugins/applet/PulseAudio.py:81
-#, fuzzy
 msgid "Bluetooth Audio"
-msgstr "Bluetooth Kikapcsolva"
+msgstr ""
 
 #: ../blueman/plugins/applet/PulseAudio.py:76
 msgid ""
@@ -544,16 +536,16 @@ msgid "Interface %(0)s bound to IP address %(1)s"
 msgstr "A %(0)s eszközhöz a %(1)s IP cím lett hozzárendelve"
 
 #: ../blueman/plugins/applet/Networking.py:121
-#, fuzzy, python-format
+#, python-format
 msgid "Failed to obtain an IP address on %s"
-msgstr "%s eszközön az ip cím beszerzése sikertelen."
+msgstr ""
 
 #: ../blueman/plugins/applet/Networking.py:127
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Trying to obtain an IP address on %s\n"
 "Please wait..."
-msgstr "%s eszközön az ip cím beszerzése sikertelen."
+msgstr ""
 
 #: ../blueman/plugins/applet/AuthAgent.py:29
 msgid "Provides passkey, authentication services for BlueZ daemon"
@@ -562,15 +554,13 @@ msgstr ""
 #: ../blueman/plugins/applet/NetUsage.py:160
 #: ../blueman/plugins/applet/NetUsage.py:262
 #: ../blueman/plugins/applet/NetUsage.py:265
-#, fuzzy
 msgid "Connected:"
-msgstr "Kapcsolódás"
+msgstr ""
 
 #: ../blueman/plugins/applet/NetUsage.py:176
 #: ../blueman/plugins/applet/NetUsage.py:273
-#, fuzzy
 msgid "Not Connected"
-msgstr "Soros portok"
+msgstr ""
 
 #: ../blueman/plugins/applet/NetUsage.py:182
 msgid ""
@@ -612,43 +602,36 @@ msgid ""
 msgstr ""
 
 #: ../blueman/plugins/applet/NetUsage.py:297
-#, fuzzy
 msgid "Network Usage"
-msgstr "Hálózat hozzáférés"
+msgstr ""
 
 #: ../blueman/plugins/applet/NetUsage.py:298
 msgid "Shows network traffic usage"
 msgstr ""
 
 #: ../blueman/plugins/applet/StandardItems.py:37
-#, fuzzy
 msgid "_Setup new device"
-msgstr "Eszközválasztás"
+msgstr ""
 
 #: ../blueman/plugins/applet/StandardItems.py:44
-#, fuzzy
 msgid "Send _files to device"
-msgstr "Fájlok küldése erre az eszközre"
+msgstr ""
 
 #: ../blueman/plugins/applet/StandardItems.py:49
-#, fuzzy
 msgid "_Browse files on device"
-msgstr "Eszköz tallózása..."
+msgstr ""
 
 #: ../blueman/plugins/applet/StandardItems.py:57
-#, fuzzy
 msgid "_Devices"
-msgstr "_Eszköz"
+msgstr ""
 
 #: ../blueman/plugins/applet/StandardItems.py:62
-#, fuzzy
 msgid "Adap_ters"
-msgstr "_Adapter"
+msgstr ""
 
 #: ../blueman/plugins/applet/StandardItems.py:67
-#, fuzzy
 msgid "_Local Services"
-msgstr "Helyi szolgáltatások"
+msgstr ""
 
 #: ../blueman/plugins/applet/StandardItems.py:77
 msgid "_Plugins"
@@ -696,9 +679,8 @@ msgid "Controls bluetooth adapter power states"
 msgstr ""
 
 #: ../blueman/plugins/applet/PowerManager.py:38
-#, fuzzy
 msgid "<b>Bluetooth Off</b>"
-msgstr "Bluetooth Kikapcsolva"
+msgstr ""
 
 #: ../blueman/plugins/applet/PowerManager.py:39
 #: ../blueman/plugins/applet/PowerManager.py:139
@@ -756,9 +738,8 @@ msgid ""
 msgstr ""
 
 #: ../blueman/plugins/applet/SerialManager.py:45
-#, fuzzy
 msgid "Serial port connected"
-msgstr "Soros portok"
+msgstr ""
 
 #: ../blueman/plugins/applet/SerialManager.py:45
 #, python-format
@@ -782,9 +763,8 @@ msgstr ""
 
 #: ../blueman/plugins/applet/DiscvManager.py:44
 #: ../blueman/plugins/applet/DiscvManager.py:145
-#, fuzzy
 msgid "_Make Discoverable"
-msgstr "Láthatóvá tesz"
+msgstr ""
 
 #: ../blueman/plugins/applet/DiscvManager.py:52
 msgid "Make the default adapter temporarily visible"
@@ -919,14 +899,17 @@ msgstr "Eszközválasztás"
 msgid "translator-credits"
 msgstr ""
 "Launchpad Contributions:\n"
-"  Attila Török https://launchpad.net/~torokati44\n"
 "  Bálint Fekete https://launchpad.net/~kaktusztea\n"
+"  Csarlee https://launchpad.net/~karesz-cskr\n"
 "  Kántor Dániel https://launchpad.net/~kdani3\n"
 "  MBA https://launchpad.net/~mbalazs\n"
+"  Muszela Balázs https://launchpad.net/~bazsi86\n"
 "  Peter Nagy https://launchpad.net/~antronin\n"
 "  Pittmann Tamás https://launchpad.net/~zaivaldi\n"
 "  Thomas Martin Klein https://launchpad.net/~kleintamasmarton\n"
 "  Thuma Gábor https://launchpad.net/~thuma\n"
+"  TÖRÖK Attila https://launchpad.net/~torokati44\n"
+"  Varga Zoltán https://launchpad.net/~wazzeg\n"
 "  kavkar https://launchpad.net/~kavkar"
 
 #: ../blueman/gui/CommonUi.py:50
@@ -991,18 +974,17 @@ msgid "Success!"
 msgstr "Siker!"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:131
-#, fuzzy, python-format
+#, python-format
 msgid "Serial port connected to %s"
-msgstr "Soros portok"
+msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:138
 msgid "Failed"
 msgstr "Sikertelen"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:142
-#, fuzzy
 msgid "Connection Failed: "
-msgstr "Kapcsolódás"
+msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:149
 msgid "Cancelled"
@@ -1026,9 +1008,8 @@ msgid "Dialup Service"
 msgstr "Tárcsázó szolgáltatás"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:308
-#, fuzzy
 msgid "Dialup Settings"
-msgstr "Tárcsázó szolgáltatás"
+msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:314
 msgid "Serial Service"
@@ -1037,7 +1018,7 @@ msgstr "Soros Szolgáltatás"
 #. def on_type_changed(item, type):
 #. if item.active:
 #. setattr(conns.props, device.Address, type)
-#.
+#. 
 #. conns = Config("conn_types")
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:327
 msgid "Serial Ports"
@@ -1082,28 +1063,24 @@ msgid "Connect Headset Service"
 msgstr "Headset szolgáltatás csatlakozás"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:463
-#, fuzzy
 msgid "Disconnect A2DP Sink"
-msgstr "A2DP szolgáltatás kikapcsolása"
+msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:466
-#, fuzzy
 msgid "Connect A2DP Sink"
-msgstr "A2DB szolgáltatás bekapcsolása"
+msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:467
 msgid "Allows to send audio to remote device"
 msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:476
-#, fuzzy
 msgid "Disconnect A2DP Source"
-msgstr "A2DP szolgáltatás kikapcsolása"
+msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:479
-#, fuzzy
 msgid "Connect A2DP Source"
-msgstr "A2DB szolgáltatás bekapcsolása"
+msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:480
 msgid "Allows to receive audio from remote device"
@@ -1247,43 +1224,31 @@ msgid "Very High"
 msgstr "Nagyon magas"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:505
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<b>Connected</b>\n"
 "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>\n"
 "Link Quality: %(lq)u%%\n"
 "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr ""
-"<b>Kapcsolódva</b>\n"
-"Vételi Jelerősség: %(rssi)u%% <i>(%(rssi_state)s)</i>\n"
-"Kapcsolat Minősége: %(lq)u%%\n"
-"Adóteljesítmény: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:507
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<b>Connected</b>\n"
 "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>\n"
 "<b>Link Quality: %(lq)u%%</b>\n"
 "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr ""
-"<b>Kapcsolódva</b>\n"
-"Vételi Jelerősség: %(rssi)u%% <i>(%(rssi_state)s)</i>\n"
-"Kapcsolat Minősége: %(lq)u%%\n"
-"Adóteljesítmény: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:509
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<b>Connected</b>\n"
 "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>\n"
 "Link Quality: %(lq)u%%\n"
 "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr ""
-"<b>Kapcsolódva</b>\n"
-"Vételi Jelerősség: %(rssi)u%% <i>(%(rssi_state)s)</i>\n"
-"Kapcsolat Minősége: %(lq)u%%\n"
-"Adóteljesítmény: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
 #: ../blueman/Sdp.py:101
 msgid "Dialup Networking (DUN)"
@@ -1370,9 +1335,8 @@ msgstr "Párosításkérés a(z) %s eszköztől"
 
 #: ../blueman/main/applet/BluezAgent.py:139
 #: ../blueman/main/applet/BluezAgent.py:239
-#, fuzzy
 msgid "Bluetooth Authentication"
-msgstr "Bluetooth Kikapcsolva"
+msgstr ""
 
 #: ../blueman/main/applet/BluezAgent.py:178
 #: ../blueman/main/applet/BluezAgent.py:257
@@ -1498,9 +1462,8 @@ msgid "Failure"
 msgstr "Sikertelen"
 
 #: ../apps/blueman-manager:258
-#, fuzzy
 msgid "Pairing"
-msgstr "Keresés"
+msgstr ""
 
 #: ../apps/blueman-adapters:57
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
@@ -1526,9 +1489,8 @@ msgid "Error occurred"
 msgstr ""
 
 #: ../apps/blueman-sendto:165 ../apps/blueman-sendto:199
-#, fuzzy
 msgid "Sending File"
-msgstr "Fájl küldése"
+msgstr ""
 
 #: ../apps/blueman-sendto:165 ../apps/blueman-sendto:199
 msgid "ETA:"
@@ -1645,24 +1607,3 @@ msgstr ""
 #: ../apps/blueman-browse:77
 msgid "You can enter an alternate browser in service settings"
 msgstr ""
-
-#~ msgid "<b>Client Settings</b>"
-#~ msgstr "<b>Kliens beállítások</b>"
-
-#~ msgid "Integrate with NetworkManager"
-#~ msgstr "Intergrálás a NetworkManager-el"
-
-#~ msgid "Let Blueman handle the network interfaces"
-#~ msgstr "Kezelje  Bluemon a hálűózati eszközöket"
-
-#~ msgid "Sending File %(0)s/%(1)s (%(2).2f %(3)s/s) ETA: %(4)s"
-#~ msgstr "Fájl üldése %(0)s/%(1)s (%(2).2f %(3)s/s) ETA: %(4)s"
-
-#~ msgid "Acquiring an IP address on %s"
-#~ msgstr "Ip cím beszerzése a(z) %s esztöztől"
-
-#~ msgid "Bond"
-#~ msgstr "Párosítás"
-
-#~ msgid "Bonding"
-#~ msgstr "Párosítás"
