@@ -56,7 +56,7 @@ class KillSwitch(dbus.proxies.Interface):
 		if key == "soft":
 			return self.GetPower()
 		else:
-			return self.__dict__[key]
+			return dbus.proxies.Interface.__getattr__(self, key)
 		
 	def SetPower(self, state):
 		try:
