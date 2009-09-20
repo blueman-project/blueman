@@ -62,7 +62,7 @@ class KillSwitch(AppletPlugin):
 			dprint("killswitch registered", switch.idx)
 			if not self.Manager.GetGlobalState():	
 				self.Applet.Plugins.PowerManager.SetBluetoothStatus(False)
-			
+
 			pm_state = self.Applet.Plugins.PowerManager.GetBluetoothStatus()
 			if self.Manager.GetGlobalState() != pm_state:
 				self.Manager.SetGlobalState(pm_state)

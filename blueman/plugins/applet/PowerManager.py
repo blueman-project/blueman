@@ -49,7 +49,7 @@ class PowerManager(AppletPlugin):
 		self.BluetoothStatusChanged = self.Applet.DbusSvc.add_signal("BluetoothStatusChanged", signature="b")
 		
 		self.bluetooth_off = False
-		self.state_change_deffered = -1
+		self.state_change_deferred = -1
 		
 	def on_query_status_icon_visibility(self):
 		print self
@@ -58,7 +58,10 @@ class PowerManager(AppletPlugin):
 		self.bluetooth_off = not status
 	
 	def GetBluetoothStatus(self):
-		return not self.bluetooth_off
+		if self.state_change_deferred != -1:
+			return not self.state_change_deferred
+		else:
+			return not self.bluetooth_off
 		
 	def adapter_property_changed(self, key, value, path):
 		if key == "Powered":
@@ -74,14 +77,14 @@ class PowerManager(AppletPlugin):
 				props = adapter.GetProperties()
 				if not props["Powered"]:
 					self.bluetooth_off = True
-					if self.state_change_deffered != -1:
+					if self.state_change_deferred != -1:
 						break
 					else:
 						return
 			
-			if self.state_change_deffered != -1:
-				self.bluetooth_off = self.state_change_deffered
-				self.state_change_deffered = -1
+			if self.state_change_deferred != -1:
+				self.bluetooth_off = self.state_change_deferred
+				self.state_change_deferred = -1
 	
 	def on_bluetooth_toggled(self):
 		self.bluetooth_off = not self.bluetooth_off
@@ -130,7 +133,7 @@ class PowerManager(AppletPlugin):
 				self.__dict__[key] = value
 			
 			if not self.Applet.Manager:
-				self.state_change_deffered = value
+				self.state_change_deferred = value
 				return
 			
 			if self.__dict__[key] != value:
