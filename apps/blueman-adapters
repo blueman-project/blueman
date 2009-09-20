@@ -26,8 +26,6 @@ import gobject
 import pango
 import os.path
 import sys
-import gettext
-_ = gettext.gettext
 
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
