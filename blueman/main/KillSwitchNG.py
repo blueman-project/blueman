@@ -108,14 +108,16 @@ class KillSwitchNG(gobject.GObject):
 		
 		
 	def SetGlobalState(self, state):
-		dprint("set", state)
-		#if we have permission, we just send an event, else we use the dbus interface		
-		try:
-			event = struct.pack("IBBBB", 0, RFKillType.BLUETOOTH, RFKillOp.CHANGE_ALL, (0 if state else 1), 0)
-			os.write(self.fd, event)
-		except:	
-			m = Mechanism()
-			m.SetRfkillState(state)
+
+		if state != self.state:	
+			dprint("set", state)
+			#if we have permission, we just send an event, else we use the dbus interface				
+			try:
+				event = struct.pack("IBBBB", 0, RFKillType.BLUETOOTH, RFKillOp.CHANGE_ALL, (0 if state else 1), 0)
+				os.write(self.fd, event)
+			except:	
+				m = Mechanism()
+				m.SetRfkillState(state)
 			
 
 		
