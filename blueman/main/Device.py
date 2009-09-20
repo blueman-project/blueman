@@ -22,7 +22,6 @@ import gobject
 from blueman.main.SignalTracker import SignalTracker
 from blueman.bluez.Adapter import Adapter
 import os
-from blueman.Functions import dprint
 import weakref
 #import traceback
 class Device(gobject.GObject):

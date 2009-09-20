@@ -22,8 +22,6 @@ from subprocess import *
 
 from blueman.Constants import *
 from blueman.Functions import *
-import gettext
-_ = gettext.gettext
 
 import gtk
 

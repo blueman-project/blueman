@@ -18,7 +18,6 @@
 # 
 
 import gtk
-import gettext
 from blueman.Constants import *
 from blueman.Functions import setup_icon_path
 from blueman.plugins.ServicePlugin import ServicePlugin
@@ -26,7 +25,6 @@ from blueman.plugins.ServicePlugin import ServicePlugin
 from blueman.main.AppletService import AppletService
 from blueman.main.Config import Config
 
-_ = gettext.gettext
 
 class Headset(ServicePlugin):
 	__plugin_info__ = (_("Headset"), "blueman-headset")

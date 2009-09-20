@@ -24,13 +24,9 @@ from blueman.main.Device import Device
 from blueman.Functions import *
 from blueman.Lib import get_special_dir, SpecialDirType
 import os
-import gettext
-from gettext import ngettext
 import gobject
 from blueman.gui.Notification import Notification
 import weakref
-
-_ = gettext.gettext
 
 class Transfer(OdsManager):
 

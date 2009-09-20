@@ -20,7 +20,6 @@
 import gobject
 import dbus
 from blueman.main.SignalTracker import SignalTracker
-from blueman.Functions import dprint
 
 class OdsBase(dbus.proxies.Interface, gobject.GObject):
 	

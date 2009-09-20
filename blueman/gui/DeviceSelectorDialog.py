@@ -19,10 +19,6 @@
 
 import gtk
 from blueman.gui.DeviceSelectorWidget import DeviceSelectorWidget
-import gettext
-
-_ = gettext.gettext
-
 
 class DeviceSelectorDialog(gtk.Dialog):
 	

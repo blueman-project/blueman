@@ -26,10 +26,8 @@ import gobject
 import cgi
 import blueman.bluez as Bluez
 from blueman.Sdp import *
-import gettext
 from blueman.Constants import *
 from blueman.gui.Notification import Notification
-_ = gettext.gettext
 
 from blueman.bluez.Agent import Agent, AgentMethod
 

@@ -1,6 +1,3 @@
-import gettext
-_ = gettext.gettext
-
 SDP_SERVER_SVCLASS_ID		= 0x1000
 BROWSE_GRP_DESC_SVCLASS_ID	= 0x1001
 PUBLIC_BROWSE_GROUP		= 0x1002
@@ -162,7 +159,7 @@ def uuid16_to_name(uuid16):
 	try:
 		return uuid_names[uuid16]
 	except:
-		return "Unknown"
+		return _("Unknown")
 
 def uuid128_to_uuid16(uuid128):
 	try:

@@ -20,7 +20,6 @@
 import dbus
 import re
 from blueman.Lib import probe_modem
-from blueman.Functions import dprint
 import os
 import gobject
 

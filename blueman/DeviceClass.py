@@ -1,6 +1,3 @@
-import gettext
-_ = gettext.gettext
-
 service_cls= [
 	"positioning",
 	"networking",
@@ -243,11 +240,4 @@ def get_minor_class(klass, i18n=False):
 			return "";
 
 	return "";
-		
-	
-	
-	
-	
-	
-	
 

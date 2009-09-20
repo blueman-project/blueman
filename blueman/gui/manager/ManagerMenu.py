@@ -24,10 +24,6 @@ from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.Functions import adapter_path_to_name
 from blueman.gui.CommonUi import *
-import gettext
-
-_ = gettext.gettext
-
 
 class ManagerMenu:
 

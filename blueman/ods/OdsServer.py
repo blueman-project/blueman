@@ -17,7 +17,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 import gobject
-from blueman.Functions import dprint
 from blueman.ods.OdsBase import OdsBase
 from blueman.ods.OdsServerSession import OdsServerSession
 

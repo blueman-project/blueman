@@ -26,7 +26,6 @@ import dbus.service, dbus.glib
 import weakref
 import signal
 import glib
-from blueman.Functions import dprint
 import copy
 
 def sighandler():

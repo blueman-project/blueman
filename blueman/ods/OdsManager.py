@@ -22,7 +22,6 @@ from blueman.ods.OdsBase import OdsBase
 from blueman.ods.OdsServer import OdsServer
 from blueman.ods.OdsSession import OdsSession
 from blueman.main.SignalTracker import SignalTracker
-from blueman.Functions import dprint
 import weakref
 
 class OdsManager(OdsBase):

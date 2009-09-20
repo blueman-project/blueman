@@ -19,9 +19,7 @@
 
 import gtk
 from blueman.Constants import *
-
 from blueman.Functions import *
-from blueman.Functions import _
 
 from blueman.gui.GenericList import GenericList
 import weakref

@@ -16,9 +16,7 @@ from blueman.Functions import dprint# Copyright (C) 2008 Valmantas Paliksa <walm
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
-import gettext
 from blueman.Sdp import *
-_ = gettext.gettext
 
 class ManagerToolbar:
 

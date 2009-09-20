@@ -31,9 +31,6 @@ from blueman.Constants import *
 from blueman.Functions import *
 import cgi
 
-import gettext
-_ = gettext.gettext
-
 from blueman.gui.GtkAnimation import TreeRowFade, CellFade
 
 class ManagerDeviceList(DeviceList):

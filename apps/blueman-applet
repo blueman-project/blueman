@@ -36,9 +36,7 @@ if os.path.exists(os.path.join(_dirname,"ChangeLog")):
 	sys.path.insert(0, _dirname)
 
 from blueman.Constants import *
-
 from blueman.Functions import *
-from blueman.Functions import _
 
 from blueman.main.applet.DbusService import DbusService
 from blueman.main.Config import Config

@@ -30,8 +30,6 @@ import gobject
 from optparse import OptionParser
 import gettext
 import time
-ngettext = gettext.ngettext
-_ = gettext.gettext
 
 from blueman.bluez.Manager import Manager
 from blueman.gui.DeviceSelectorDialog import DeviceSelectorDialog

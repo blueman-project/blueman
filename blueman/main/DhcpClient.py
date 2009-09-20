@@ -20,7 +20,6 @@ import fcntl
 import gobject
 import struct
 import subprocess
-from blueman.Functions import dprint
 from blueman.Lib import get_net_address
 
 

@@ -16,13 +16,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
- 
 import gtk
 import pango
-
 from blueman.gui.GtkAnimation import WidgetFade
 from blueman.Functions import get_icon
-from blueman.Functions import _
 
 class MessageArea(gtk.EventBox):
 	_inst_ = None

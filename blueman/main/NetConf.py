@@ -27,7 +27,6 @@ from blueman.Lib import create_bridge, destroy_bridge, BridgeException
 import re
 from commands import getstatusoutput
 import dbus
-from blueman.Functions import dprint
 
 def ip_chk(ip_str):
    pattern = r"\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b"

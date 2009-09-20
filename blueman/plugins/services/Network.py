@@ -26,8 +26,6 @@ from blueman.main.Config import Config
 from blueman.main.PolicyKitAuth import PolicyKitAuth
 from blueman.main.Mechanism import Mechanism
 from blueman.main.AppletService import AppletService
-import gettext
-_ = gettext.gettext
 
 class Network(ServicePlugin):
 	__plugin_info__ = (_("Network"), "gtk-network")

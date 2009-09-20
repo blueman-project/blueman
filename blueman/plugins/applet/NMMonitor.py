@@ -19,7 +19,6 @@
 import gobject
 import dbus
 from blueman.Functions import *
-from blueman.Functions import _
 
 from blueman.main.SignalTracker import SignalTracker
 from blueman.plugins.AppletPlugin import AppletPlugin

@@ -14,9 +14,11 @@ DEF_BROWSE_COMMAND = "nautilus --browser obex://[%d]"
 
 import os
 import gettext
+import __builtin__
 
-gettext.bindtextdomain("@GETTEXT_PACKAGE@", "@LOCALEDIR@")
-gettext.textdomain("@GETTEXT_PACKAGE@")
+translation = gettext.translation("@GETTEXT_PACKAGE@", "@LOCALEDIR@", fallback=True)
+translation.install(unicode=True)
+__builtin__.ngettext = translation.ungettext
 
 if os.path.exists("../apps") and os.path.exists("../data"):
 	BIN_DIR = "./"

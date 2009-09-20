@@ -17,7 +17,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 from blueman.Functions import *
-from blueman.Functions import _
 from blueman.main.Config import Config
 from blueman.plugins.AppletPlugin import AppletPlugin
 import dbus

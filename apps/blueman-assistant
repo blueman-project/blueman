@@ -49,8 +49,6 @@ from blueman.main.FakeDevice import FakeDevice
 from blueman.main.Device import Device
 from blueman.main.AppletService import AppletService
 from blueman.Sdp import *
-import gettext
-_ = gettext.gettext
 
 class Assistant(Agent):
 	def __init__(self):

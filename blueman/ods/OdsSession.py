@@ -18,7 +18,6 @@
 # 
 import gobject
 from blueman.ods.OdsBase import OdsBase
-from blueman.Functions import dprint
 
 class OdsSession(OdsBase):
 	__gsignals__ = {

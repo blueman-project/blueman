@@ -18,7 +18,6 @@
 # 
 
 import gtk
-import gettext
 from blueman.Constants import *
 from blueman.plugins.ServicePlugin import ServicePlugin
 
@@ -26,7 +25,6 @@ from blueman.main.AppletService import AppletService
 from blueman.main.Config import Config
 from blueman.Functions import dprint
 
-_ = gettext.gettext
 
 class Transfer(ServicePlugin):
 	__plugin_info__ = (_("Transfer"), "gtk-open")

@@ -29,10 +29,9 @@ import atexit
 import sys
 from subprocess import Popen
 import gobject
-import gettext
 import traceback
 from blueman.Lib import sn_launcher
-_ = gettext.gettext
+import __builtin__
 
 GREEN = lambda(x): "\x1b[32;01m"+x+"\x1b[39;49;00m"
 BLUE = lambda(x): "\x1b[34;01m"+x+"\x1b[39;49;00m"
@@ -61,6 +60,7 @@ def dprint(*args):
 		print "%s %s" % (fname, "(%s:%d)" % (co.co_filename, co.co_firstlineno))
 		print s
 
+__builtin__.dprint = dprint
 
 from blueman.main.AppletService import AppletService
 def check_bluetooth_status(message, exitfunc, *args, **kwargs):

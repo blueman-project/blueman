@@ -28,7 +28,6 @@ import base64
 import gtk.gdk
 import zlib
 from blueman.Functions import *
-from blueman.Functions import _
 from blueman.main.Device import Device
 from blueman.bluez.Device import Device as BluezDevice
 from blueman.bluez.Adapter import Adapter

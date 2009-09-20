@@ -29,9 +29,6 @@ from blueman.gui.MessageArea import MessageArea
 
 from blueman.Lib import rfcomm_list
 
-import gettext
-_ = gettext.gettext
-
 class ManagerDeviceMenu(gtk.Menu):
 
 	__ops__ = {}

@@ -19,7 +19,6 @@
 import dbus
 import gobject
 from blueman.main.HalManager import HalManager
-from blueman.Functions import dprint
 
 class WrongType(Exception):
 	pass

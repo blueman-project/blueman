@@ -18,7 +18,6 @@
 
 from blueman.main.Config import Config
 from blueman.Functions import *
-from blueman.Functions import _
 from blueman.Constants import *
 import gtk
 

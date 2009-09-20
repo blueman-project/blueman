@@ -19,7 +19,6 @@
 
 import gobject
 import weakref
-from blueman.Functions import dprint
 
 class ConfigPlugin(gobject.GObject):
 	__plugin__ = None
