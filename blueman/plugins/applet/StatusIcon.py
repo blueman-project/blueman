@@ -30,16 +30,22 @@ class StatusIcon(AppletPlugin, gtk.StatusIcon):
 
 	def on_load(self, applet):
 		gtk.StatusIcon.__init__(self)
-		self.Applet = applet
-		
+		self.lines = {}
 		self.pixbuf = None
 		
 		self.connect("size-changed", self.on_status_icon_resized)
 		
-		self.set_tooltip(_("Bluetooth applet"))
+		self.SetTextLine(0, _("Bluetooth Enabled"))
+		
 		
 		AppletPlugin.add_method(self.on_query_status_icon_visibility)
 		AppletPlugin.add_method(self.on_status_icon_pixbuf_ready)
+		
+	def on_bluetooth_power_state_changed(self, state):
+		if state:
+			self.SetTextLine(0, _("Bluetooth Enabled"))
+		else:
+			self.SetTextLine(0, _("Bluetooth Disabled"))
 	
 	def Query(self):
 		rets = self.Applet.Plugins.Run("on_query_status_icon_visibility")
@@ -60,6 +66,27 @@ class StatusIcon(AppletPlugin, gtk.StatusIcon):
 						self.props.visible = False
 		else:
 			self.props.visible = True
+			
+	def SetTextLine(self, id, text):
+		if text:
+			self.lines[id] = text
+		else:
+			try:
+				del self.lines[id]
+			except:
+				pass
+				
+		self.update_tooltip()
+
+			
+	def update_tooltip(self):
+		s = ""
+		keys = self.lines.keys()
+		keys.sort()
+		for k in keys:
+			s += self.lines[k] + "\n"
+			
+		self.props.tooltip_markup = s[:-1]
 			
 	def IconShouldChange(self):
 		self.on_status_icon_resized(self, self.props.size)

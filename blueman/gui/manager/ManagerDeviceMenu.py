@@ -215,8 +215,6 @@ class ManagerDeviceMenu(gtk.Menu):
 
 		
 	def Generate(self):
-		dprint("Gen")
-
 		self.clear()
 		
 		if not self.is_popup or self.props.visible:
