@@ -1,10 +1,10 @@
 themedir = $(pkgdatadir)/icons/hicolor
 size = scalable
-context = devices
+context = status
 
 iconsdir = $(themedir)/$(size)/$(context)
 
 icons_DATA =			\
-	blueman-device.svg
+	blueman-x.svg
 
 EXTRA_DIST = $(icons_DATA)

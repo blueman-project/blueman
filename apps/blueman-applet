@@ -238,6 +238,15 @@ class BluemanApplet(object):
 				rets.append(ret)
 			
 			return rets
+			
+		#executes a function on all plugin instances, runs a callback after each plugin returns something
+		def RunEx(self, function, callback, *args, **kwargs):
+			for inst in AppletPlugin.instances:
+				ret = getattr(inst, function)(*args, **kwargs)
+				ret = callback(inst, ret) 
+				if ret != None:
+					args = ret
+
 					
 	def __init__(self):
 		setup_icon_path()

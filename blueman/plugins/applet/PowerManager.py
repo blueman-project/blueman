@@ -91,8 +91,14 @@ class PowerManager(AppletPlugin):
 		
 	def on_status_icon_pixbuf_ready(self, pixbuf):
 		opacity = 255 if self.GetBluetoothStatus() else 100
-		self.Applet.Plugins.StatusIcon.set_from_pixbuf( opacify_pixbuf(pixbuf, opacity) )
-		return True
+		pixbuf = opacify_pixbuf(pixbuf, opacity)
+
+		if opacity < 255:
+			x_size = int(pixbuf.props.height / 2.1)
+			x = gtk.icon_theme_get_default().load_icon("blueman-x", x_size, 0) 
+			pixbuf = composite_icon(pixbuf, [(x, pixbuf.props.height - x_size, pixbuf.props.height - x_size, 200)])
+		
+		return pixbuf
 		
 	def on_adapter_added(self, path):
 		adapter = Bluez.Adapter(path)
@@ -150,8 +156,7 @@ class PowerManager(AppletPlugin):
 					self.item.set_image(gtk.image_new_from_pixbuf(get_icon("gtk-yes", 16)))
 					self.BluetoothStatusChanged(False)
 					self.Applet.Plugins.Run("on_bluetooth_power_state_changed", False)
-					if self.Applet.Plugins.StatusIcon.pixbuf:
-						self.Applet.Plugins.StatusIcon.set_from_pixbuf( opacify_pixbuf(self.Applet.Plugins.StatusIcon.pixbuf, 100) )
+					self.Applet.Plugins.StatusIcon.IconShouldChange()
 				else:
 					self.item.get_child().set_markup(_("<b>Turn Bluetooth Off</b>"))
 					self.item.set_image(gtk.image_new_from_pixbuf(get_icon("gtk-stop", 16)))
@@ -164,8 +169,7 @@ class PowerManager(AppletPlugin):
 						self.bluetooth_off = True
 						return
 					
-					if self.Applet.Plugins.StatusIcon.pixbuf:
-						self.Applet.Plugins.StatusIcon.set_from_pixbuf( opacify_pixbuf(self.Applet.Plugins.StatusIcon.pixbuf, 255) )
+					self.Applet.Plugins.StatusIcon.IconShouldChange()
 		else:				
 			self.__dict__[key] = value
 		

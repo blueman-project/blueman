@@ -1,3 +1,4 @@
 SUBDIRS = 	\
 	devices	\
-	actions
+	actions \
+	status

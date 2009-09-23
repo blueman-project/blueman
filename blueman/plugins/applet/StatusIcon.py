@@ -60,6 +60,9 @@ class StatusIcon(AppletPlugin, gtk.StatusIcon):
 						self.props.visible = False
 		else:
 			self.props.visible = True
+			
+	def IconShouldChange(self):
+		self.on_status_icon_resized(self, self.props.size)
 		
 	def on_adapter_added(self, path):
 		self.Query()
@@ -72,11 +75,15 @@ class StatusIcon(AppletPlugin, gtk.StatusIcon):
 		
 	def on_status_icon_resized(self, statusicon, size):
 		self.pixbuf = get_icon("blueman", size)
+		
+		def callback(inst, ret):
+			if isinstance(ret, gtk.gdk.Pixbuf):
+				self.pixbuf = ret
+				return (self.pixbuf,)
+				
+		self.Applet.Plugins.RunEx("on_status_icon_pixbuf_ready", callback, self.pixbuf)
 
-		ret = self.Applet.Plugins.Run("on_status_icon_pixbuf_ready", self.pixbuf)
-		if True in ret:
-			return True
-		self.set_from_pixbuf( self.pixbuf )
+		self.set_from_pixbuf(self.pixbuf)
 		return True
 		
 	def on_query_status_icon_visibility(self):
