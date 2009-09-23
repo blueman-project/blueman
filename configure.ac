@@ -182,6 +182,7 @@ data/icons/hicolor/48x48/status/Makefile
 data/icons/hicolor/scalable/Makefile
 data/icons/hicolor/scalable/devices/Makefile
 data/icons/hicolor/scalable/actions/Makefile
+data/icons/hicolor/scalable/status/Makefile
 data/icons/main_icon/Makefile
 data/ui/Makefile
 data/man/Makefile
