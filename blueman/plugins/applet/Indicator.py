@@ -19,6 +19,7 @@
 from blueman.Functions import *
 import dbus
 import gtk
+import gobject
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.SignalTracker import SignalTracker
 import blueman.bluez as bluez
@@ -32,6 +33,8 @@ class Indicator(AppletPlugin):
 	def on_load(self, applet):
 		self.num_connections = 0
 		self.active = False
+		self.initialized = False
+		
 		self.signals = SignalTracker()
 		self.signals.Handle("dbus", dbus.SystemBus(), self.on_device_property_changed, "PropertyChanged", "org.bluez.Device")
 	
@@ -63,7 +66,7 @@ class Indicator(AppletPlugin):
 				if "Connected" in props:
 					if props["Connected"]:
 						self.num_connections += 1
-		
+		dprint("Found %d existing connections" % self.num_connections)
 		if (self.num_connections > 0 and not self.active) or (self.num_connections == 0 and self.active):				
 			self.Applet.Plugins.StatusIcon.IconShouldChange()
 			
@@ -83,7 +86,14 @@ class Indicator(AppletPlugin):
 		
 	def on_manager_state_changed(self, state):
 		if state:
-			self.enumerate_connections()
+			if not self.initialized:
+				self.enumerate_connections()
+				self.initialized = True
+			else:
+				gobject.timeout_add(1000, self.enumerate_connections)
+		else:
+			self.num_connections = 0
+			self.update_statusicon()
 			
 	def on_device_property_changed(self, key, value):
 		if key == "Connected":
