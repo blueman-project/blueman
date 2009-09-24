@@ -28,6 +28,7 @@
 #include <sys/socket.h>
 #include <linux/sockios.h>
 #include <linux/if.h>
+#include <linux/if_bridge.h>
 
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/hci.h>
@@ -55,6 +56,15 @@ char* get_net_address(char* iface) {
 	return inet_ntoa(((struct sockaddr_in*) &ifr.ifr_addr)->sin_addr);
 }
 
+static inline unsigned long __tv_to_jiffies(const struct timeval *tv)
+{
+        unsigned long long jif;
+
+        jif = 1000000ULL * tv->tv_sec + tv->tv_usec;
+
+        return jif/10000;
+}
+        
 int _create_bridge(const char* name) {
 	int sock;
 	sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -70,8 +80,27 @@ int _create_bridge(const char* name) {
 		return -errno;
 	}
 		
-	close(sock);
 	
+	struct timeval tv;
+        tv.tv_sec = 0;
+        tv.tv_usec = 1000000 * (0 - tv.tv_sec);
+        
+        
+        unsigned long args[5];
+        struct ifreq ifr;
+        
+        args[0] = BRCTL_SET_BRIDGE_FORWARD_DELAY;
+        args[1] = __tv_to_jiffies(&tv);
+        args[2] = 0;
+        args[3] = 0;
+        args[4] = 0;
+        
+        memcpy(ifr.ifr_name, name, IFNAMSIZ);
+        ((unsigned long *)(&ifr.ifr_data))[0] = (unsigned long)args;
+        
+	ioctl(sock, SIOCDEVPRIVATE, &ifr);
+	
+	close(sock);
 	return 0;
 }
 	
