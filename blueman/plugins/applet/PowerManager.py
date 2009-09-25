@@ -95,7 +95,7 @@ class PowerManager(AppletPlugin):
 
 		if opacity < 255:
 			x_size = int(pixbuf.props.height / 2.1)
-			x = gtk.icon_theme_get_default().load_icon("blueman-x", x_size, 0) 
+			x = get_icon("blueman-x", x_size) 
 			pixbuf = composite_icon(pixbuf, [(x, pixbuf.props.height - x_size, pixbuf.props.height - x_size, 200)])
 		
 		return pixbuf

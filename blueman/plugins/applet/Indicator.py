@@ -26,7 +26,7 @@ import blueman.bluez as bluez
 
 class Indicator(AppletPlugin):
 	__author__ = "Walmis"
-	__depends__ = ["StatusIcon"]
+	__depends__ = ["StatusIcon", "PowerManager"]
 	__icon__ = "blueman-txrx"
 	__description__ = _("Adds an indication on the status icon when bluetooth is active and shows the number of connections in the tooltip.")
 		
@@ -49,7 +49,7 @@ class Indicator(AppletPlugin):
 		if self.num_connections > 0:
 			self.active = True
 			x_size = int(pixbuf.props.height / 2.3)
-			x = gtk.icon_theme_get_default().load_icon("blueman-txrx", x_size, 0) 
+			x = get_icon("blueman-txrx", x_size) 
 			pixbuf = composite_icon(pixbuf, [(x, pixbuf.props.height - x_size, 0, 230)])
 	
 			return pixbuf
