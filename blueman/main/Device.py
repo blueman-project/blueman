@@ -21,6 +21,7 @@
 import gobject
 from blueman.main.SignalTracker import SignalTracker
 from blueman.bluez.Adapter import Adapter
+from blueman.bluez.Device import Device as BluezDevice
 import os
 import weakref
 #import traceback
@@ -38,7 +39,10 @@ class Device(gobject.GObject):
 		self.Fake = True
 		self.Temp = False
 		
-		self.Device = instance
+		if isinstance(instance, str):
+			self.Device = BluezDevice(instance)
+		else:
+			self.Device = instance
 		
 		#set fallback icon, fixes lp:#327718
 		self.Device.Icon = "blueman"

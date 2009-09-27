@@ -15,7 +15,10 @@ pa_context_index_cb_t = CFUNCTYPE(None, c_void_p, c_int, py_object)
 
 class NullError(Exception):
 	pass
-
+	
+class PANotConnected(Exception):
+	pass
+	
 class pa_module_info(Structure):
 	_fields_ = [("index", c_uint),
                     ("name", c_char_p),
@@ -83,6 +86,10 @@ class PulseAudioUtils(gobject.GObject):
 		'connected' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, ()),
 		'disconnected' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, ()),
 	}
+	
+	def check_connected(self):
+		if not self.connected:
+			raise PANotConnected("Connection to PulseAudio daemon is not established")
 	
 	def pa_context_event(self, pa_context, userdata):
 		state = self.pa.pa_context_get_state(pa_context)
@@ -168,35 +175,38 @@ class PulseAudioUtils(gobject.GObject):
 				
 		pythonapi.Py_DecRef(py_object(info))
 	
-	def pa_list_sources(self, callback):
+	def ListSources(self, callback):
+		self.check_connected()
 		info = {"callback" : callback, "cb_info": pa_source_info_cb_t(self.pa_get_source_info_cb), "sources" : {} }
 		pythonapi.Py_IncRef(py_object(info))
 		
-		if self.connected:
-			self.pa.pa_operation_unref(self.pa.pa_context_get_source_info_list(self.pa_context, info["cb_info"], py_object(info)))
+		
+		self.pa.pa_operation_unref(self.pa.pa_context_get_source_info_list(self.pa_context, info["cb_info"], py_object(info)))
 	
-	def pa_list_sinks(self, callback):
+	def ListSinks(self, callback):
+		self.check_connected()
 		info = {"callback" : callback, "cb_info": pa_source_info_cb_t(self.pa_get_source_info_cb), "sources" : {} }
 		pythonapi.Py_IncRef(py_object(info))
 		
-		if self.connected:
-			self.pa.pa_operation_unref(self.pa.pa_context_get_sink_info_list(self.pa_context, info["cb_info"], py_object(info)))
+		self.pa.pa_operation_unref(self.pa.pa_context_get_sink_info_list(self.pa_context, info["cb_info"], py_object(info)))
 			
 #### Module API #######	
 	def ListModules(self, callback):
+		self.check_connected()
 		info = {"callback" : callback, "cb_info": pa_module_info_cb_t(self.pa_get_module_info_cb), "modules" : {} }
 		pythonapi.Py_IncRef(py_object(info))
 		
-		if self.connected:
-			self.pa.pa_operation_unref(self.pa.pa_context_get_module_info_list(self.pa_context, info["cb_info"], py_object(info)))
+		self.pa.pa_operation_unref(self.pa.pa_context_get_module_info_list(self.pa_context, info["cb_info"], py_object(info)))
 				
 	def UnloadModule(self, index, callback):
+		self.check_connected()
 		info = {"callback" : callback, "cb": pa_context_index_cb_t(self.unload_module_cb) }
 		
 		pythonapi.Py_IncRef(py_object(info))
 		self.pa.pa_operation_unref(self.pa.pa_context_unload_module(self.pa_context, index, info["cb"], py_object(info)))		
 	
 	def LoadModule(self, name, args, callback):
+		self.check_connected()
 		info = {"callback": callback, "cb_index": pa_context_index_cb_t(self.pa_load_module_cb)}
 		pythonapi.Py_IncRef(py_object(info))
 		

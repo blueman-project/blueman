@@ -18,15 +18,53 @@
 # 
 from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.bluez.Device import Device
+from blueman.bluez.Device import Device as BluezDevice
+from blueman.main.Device import Device
 from blueman.gui.Notification import Notification
 from blueman.main.NetConf import have
 from blueman.main.PulseAudioUtils import PulseAudioUtils
-from subprocess import Popen
+from subprocess import Popen, PIPE
 import gobject
 
 import dbus
 from blueman.main.SignalTracker import SignalTracker
+
+class SourceRedirector:
+	def __init__(self, module_id, device_path, pa_utils):
+		self.module_id = module_id
+		self.pa_utils = pa_utils
+		self.device = Device(device_path)
+		self.signals = SignalTracker()
+		self.signals.Handle("dbus", dbus.SystemBus(), self.on_source_prop_change, "PropertyChanged", "org.bluez.AudioSource", path=device_path)
+		
+		self.pacat = None
+		self.parec = None
+		
+		dprint("Starting source redirector")
+		def sources_cb(sources):
+			for k, v in sources.iteritems():
+				props = v["proplist"]
+				if "bluetooth.protocol" in props:
+					if props["bluetooth.protocol"] == "a2dp_source":
+						if v["owner_module"] == self.module_id:
+							dprint("Found source", k)
+							self.start_redirect(k)
+		
+		self.pa_utils.ListSources(sources_cb)
+		
+	def start_redirect(self, source):
+		self.parec = Popen(["parec", "-d", str(source)], stdout=PIPE)
+		self.pacat = Popen(["pacat", "--client-name=Blueman", "--stream-name=%s" % self.device.Address, "--property=application.icon_name=blueman"], stdin=self.parec.stdout)
+		
+	def on_source_prop_change(self, key, value):
+		if key == "State":
+			if value == "disconnected":
+				if self.pacat:
+					self.pacat.terminate()
+				if self.parec:
+					self.parec.terminate()
+				self.signals.DisconnectAll()
+				self.pa_utils.UnloadModule(self.module_id, lambda x: dprint(x))
 
 class PulseAudio(AppletPlugin):
 	__author__ = "Walmis"
@@ -44,6 +82,8 @@ class PulseAudio(AppletPlugin):
 				return
 			
 		self.bus = dbus.SystemBus()
+		
+		self.connected_sources = []
 		
 		self.signals.Handle("dbus", self.bus, self.on_sink_prop_change, "PropertyChanged", "org.bluez.AudioSink", path_keyword="device")
 		self.signals.Handle("dbus", self.bus, self.on_source_prop_change, "PropertyChanged", "org.bluez.AudioSource", path_keyword="device")
@@ -65,6 +105,20 @@ class PulseAudio(AppletPlugin):
 		
 	def on_source_prop_change(self, key, value, device):
 		dprint(key, value)
+		def load_cb(res):
+			dprint(res)
+			if res:
+				SourceRedirector(res, device, self.pulse_utils)
+			
+		if key == "State":
+			if value == "connected":
+				if not device in self.connected_sources:
+					self.connected_sources.append(device)
+					self.pulse_utils.LoadModule("module-bluetooth-device", "path=%s profile=a2dp_source" % device, load_cb)
+					
+			elif value == "disconnected":
+				if device in self.connected_sources:
+					self.connected_sources.remove(device)		
 		
 	def on_sink_prop_change(self, key, value, device):
 		if key == "Connected" and value:
@@ -75,7 +129,7 @@ class PulseAudio(AppletPlugin):
 			gobject.timeout_add(500, self.setup_pa, device, "hsp")
 		
 	def setup_pa(self, device_path, profile):
-		device = Device(device_path)
+		device = BluezDevice(device_path)
 		props = device.GetProperties()
 		
 		def load_cb(res):
