@@ -39,6 +39,7 @@ class SourceRedirector:
 		
 		self.pacat = None
 		self.parec = None
+		self.loopback_id = None
 		
 		dprint("Starting source redirector")
 		def sources_cb(sources):
@@ -54,8 +55,16 @@ class SourceRedirector:
 		self.pa_utils.ListSources(sources_cb)
 		
 	def start_redirect(self, source):
-		self.parec = Popen(["parec", "-d", str(source)], stdout=PIPE)
-		self.pacat = Popen(["pacat", "--client-name=Blueman", "--stream-name=%s" % self.device.Address, "--property=application.icon_name=blueman"], stdin=self.parec.stdout)
+		#self.parec = Popen(["parec", "-d", str(source)], stdout=PIPE)
+		#self.pacat = Popen(["pacat", "--client-name=Blueman", "--stream-name=%s" % self.device.Address, "--property=application.icon_name=blueman"], stdin=self.parec.stdout)
+		def on_load(res):
+			dprint("module-loopback load result", res)
+			if res < 0:
+				pass
+			else:
+				self.loopback_id = res
+				
+		self.pa_utils.LoadModule("module-loopback", "source=%d" % source, on_load)
 		
 	def on_source_prop_change(self, key, value):
 		if key == "State":
@@ -64,6 +73,9 @@ class SourceRedirector:
 					self.pacat.terminate()
 				if self.parec:
 					self.parec.terminate()
+				if self.loopback_id:
+					self.pa_utils.UnloadModule(self.loopback_id, lambda x: dprint("Loopback module unload result", x))
+				
 				self.signals.DisconnectAll()
 				self.pa_utils.UnloadModule(self.module_id, lambda x: dprint(x))
 
