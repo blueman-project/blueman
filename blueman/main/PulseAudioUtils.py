@@ -183,23 +183,24 @@ class PulseAudioUtils(gobject.GObject):
 			self.pa.pa_operation_unref(self.pa.pa_context_get_sink_info_list(self.pa_context, info["cb_info"], py_object(info)))
 			
 #### Module API #######	
-	def pa_list_modules(self, callback):
+	def ListModules(self, callback):
 		info = {"callback" : callback, "cb_info": pa_module_info_cb_t(self.pa_get_module_info_cb), "modules" : {} }
 		pythonapi.Py_IncRef(py_object(info))
 		
 		if self.connected:
 			self.pa.pa_operation_unref(self.pa.pa_context_get_module_info_list(self.pa_context, info["cb_info"], py_object(info)))
 				
-	def pa_unload_module(self, index, callback):
+	def UnloadModule(self, index, callback):
 		info = {"callback" : callback, "cb": pa_context_index_cb_t(self.unload_module_cb) }
 		
 		pythonapi.Py_IncRef(py_object(info))
 		self.pa.pa_operation_unref(self.pa.pa_context_unload_module(self.pa_context, index, info["cb"], py_object(info)))		
 	
-	def pa_load_module(self, name, args, callback):
+	def LoadModule(self, name, args, callback):
 		info = {"callback": callback, "cb_index": pa_context_index_cb_t(self.pa_load_module_cb)}
 		pythonapi.Py_IncRef(py_object(info))
 		
+		self.pa.pa_context_load_module.argtypes = (c_void_p, c_char_p, c_char_p, c_void_p, py_object)
 		self.pa.pa_operation_unref(self.pa.pa_context_load_module(self.pa_context, name, args, info["cb_index"], py_object(info)))
 
 #####################			

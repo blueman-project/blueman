@@ -21,6 +21,7 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.bluez.Device import Device
 from blueman.gui.Notification import Notification
 from blueman.main.NetConf import have
+from blueman.main.PulseAudioUtils import PulseAudioUtils
 from subprocess import Popen
 import gobject
 
@@ -44,15 +45,28 @@ class PulseAudio(AppletPlugin):
 			
 		self.bus = dbus.SystemBus()
 		
-		self.signals.Handle("dbus", self.bus, self.on_a2pd_prop_change, "PropertyChanged", "org.bluez.AudioSink", path_keyword="device")
+		self.signals.Handle("dbus", self.bus, self.on_sink_prop_change, "PropertyChanged", "org.bluez.AudioSink", path_keyword="device")
+		self.signals.Handle("dbus", self.bus, self.on_source_prop_change, "PropertyChanged", "org.bluez.AudioSource", path_keyword="device")
 		self.signals.Handle("dbus", self.bus, self.on_hsp_prop_change, "PropertyChanged", "org.bluez.Headset", path_keyword="device")
 		
-	
+		self.pulse_utils = PulseAudioUtils()
+		self.signals.Handle(self.pulse_utils, "connected", self.on_pulse_connected)
+		
+	def on_pulse_connected(self, pa_utils):
+		def modules_cb(modules):
+			for k, v in modules.iteritems():
+				if v["name"] == "module-bluetooth-discover":
+					pa_utils.UnloadModule(k, lambda x: dprint(x))
+			
+		self.pulse_utils.ListModules(modules_cb)			
 	
 	def on_unload(self):
 		self.signals.DisconnectAll()
 		
-	def on_a2pd_prop_change(self, key, value, device):
+	def on_source_prop_change(self, key, value, device):
+		dprint(key, value)
+		
+	def on_sink_prop_change(self, key, value, device):
 		if key == "Connected" and value:
 			gobject.timeout_add(500, self.setup_pa, device, "a2dp")
 		
@@ -64,12 +78,9 @@ class PulseAudio(AppletPlugin):
 		device = Device(device_path)
 		props = device.GetProperties()
 		
-		cmd = ["pactl", "load-module", "module-bluetooth-device", "address=%s" % props["Address"], "profile=%s" % profile]
-		
-		dprint("Loading pulseaudio module\nexec:", " ".join(cmd))
-		def child_closed(pid, cond):
-			dprint("Spawn result", cond)
-			if cond != 0:
+		def load_cb(res):
+			dprint("Load result", res)
+			if res < 0:
 				dprint("Failed to load pulseaudio module")
 				Notification(_("Bluetooth Audio"), 
 							 _("Failed to initialize PulseAudio Bluetooth module. Bluetooth audio over PulseAudio will not work."), 
@@ -80,8 +91,6 @@ class PulseAudio(AppletPlugin):
 				Notification(_("Bluetooth Audio"), 
 							 _("Successfully connected to a Bluetooth audio device. This device will now be available in the PulseAudio mixer"), 
 							 pixbuf=get_icon("audio-card", 48), 
-							 status_icon=self.Applet.Plugins.StatusIcon)
-							 
-
-		p = Popen(cmd)
-		gobject.child_watch_add(p.pid, child_closed)
+							 status_icon=self.Applet.Plugins.StatusIcon)			
+		
+		self.pulse_utils.LoadModule("module-bluetooth-device", "address=%s profile=%s" % (props["Address"], profile), load_cb)
