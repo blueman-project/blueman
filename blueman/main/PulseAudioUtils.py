@@ -13,6 +13,9 @@ PA_CONTEXT_TERMINATED	= 6
 pa_context_notify_cb_t = CFUNCTYPE(None, c_void_p, c_void_p)
 pa_context_index_cb_t = CFUNCTYPE(None, c_void_p, c_int, py_object)
 
+class NullError(Exception):
+	pass
+
 class pa_module_info(Structure):
 	_fields_ = [("index", c_uint),
                     ("name", c_char_p),
@@ -20,8 +23,60 @@ class pa_module_info(Structure):
                     ("n_used", c_uint),
                     ("proplist", c_void_p),
                     ]
-                    
+
+class pa_sample_spec(Structure):
+    pass
+
+pa_sample_spec._fields_ = [
+    ('format', c_int),
+    ('rate', c_uint32),
+    ('channels', c_uint8),
+]
+
+class pa_channel_map(Structure):
+    pass
+pa_channel_map._fields_ = [
+    ('channels', c_uint8),
+    ('map', c_int * 32),
+]
+
+class pa_cvolume(Structure):
+    pass
+pa_cvolume._fields_ = [
+    ('channels', c_uint8),
+    ('values', c_uint32 * 32),
+]
+
+class pa_source_info(Structure):
+    pass
+pa_source_info._fields_ = [
+    ('name', c_char_p),
+    ('index', c_uint32),
+    ('description', c_char_p),
+    ('sample_spec', pa_sample_spec),
+    ('channel_map', pa_channel_map),
+    ('owner_module', c_uint32),
+    ('volume', pa_cvolume),
+    ('mute', c_int),
+    ('monitor_of_sink', c_uint32),
+    ('monitor_of_sink_name', c_char_p),
+    ('latency', c_ulong),
+    ('driver', c_char_p),
+    ('flags', c_int),
+    ('proplist', c_void_p),
+    ('configured_latency', c_ulong),
+    #('base_volume', pa_volume_t),
+    #('state', pa_source_state_t),
+    #('n_volume_steps', uint32_t),
+    #('card', uint32_t),
+    #('n_ports', uint32_t),
+    #('ports', POINTER(POINTER(pa_source_port_info))),
+   # ('active_port', POINTER(pa_source_port_info)),
+]
+
+           
 pa_module_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(pa_module_info), c_int, py_object)
+pa_source_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(pa_source_info), c_int, py_object)
 
 class PulseAudioUtils(gobject.GObject):
 	__gsignals__ = {
@@ -48,32 +103,85 @@ class PulseAudioUtils(gobject.GObject):
 			pla = self.pa.pa_proplist_to_string_sep(module_info[0].proplist, "|")
 			pl = cast(pla, c_char_p)
 			
+			ls = pl.value.split("|")
+			proplist = {}
+			for item in ls:
+				spl = map(lambda x: x.strip(" \""), item.split("="))
+				proplist[spl[0]] = spl[1]
+				
 			info["modules"][module_info[0].index] = {
 				"name": module_info[0].name,
 				"argument": module_info[0].argument,
 				"n_used" : module_info[0].n_used,
-				"proplist": pl.value.split("|")
+				"proplist": proplist
 
 			}
 			del pl
 			self.pa.pa_xfree(pla)
 
 		if eol:
-			info["callback"](info["modules"])
+			if info["callback"]:
+				info["callback"](info["modules"])
 			pythonapi.Py_DecRef(py_object(info))
+			
+	def pa_get_source_info_cb(self, context, source_info, eol, info):
+		if source_info:
+			props = {}
+			pla = self.pa.pa_proplist_to_string_sep(source_info[0].proplist, "|")
+			pl = cast(pla, c_char_p)
+			ls = pl.value.split("|")
+
+			del pl
+			self.pa.pa_xfree(pla)
+			
+			proplist = {}
+			for item in ls:
+				spl = map(lambda x: x.strip(" \""), item.split("="))
+				proplist[spl[0]] = spl[1]
+
+			
+			info["sources"][source_info[0].index] = {
+				"name": source_info[0].name,
+				"proplist": proplist,
+				"description": source_info[0].description,
+				"owner_module": source_info[0].owner_module,
+				"driver": source_info[0].driver
+			}
+
+		if eol:
+			if info["callback"]:
+				info["callback"](info["sources"])
+				pythonapi.Py_DecRef(py_object(info))
 			
 	
 	def unload_module_cb(self, context, success, info):
-		info["callback"](success)
+		if info["callback"]:
+			info["callback"](success)
 		pythonapi.Py_DecRef(py_object(info))
 	
 	def pa_load_module_cb(self, context, idx, info):
-		if idx < 0:
-			info["callback"](-self.pa.pa_context_errno(context))
-		else:
-			info["callback"](idx)
+		if info["callback"]:
+			if idx < 0:
+				info["callback"](-self.pa.pa_context_errno(context))
+			else:
+				info["callback"](idx)
+				
 		pythonapi.Py_DecRef(py_object(info))
-
+	
+	def pa_list_sources(self, callback):
+		info = {"callback" : callback, "cb_info": pa_source_info_cb_t(self.pa_get_source_info_cb), "sources" : {} }
+		pythonapi.Py_IncRef(py_object(info))
+		
+		if self.connected:
+			self.pa.pa_operation_unref(self.pa.pa_context_get_source_info_list(self.pa_context, info["cb_info"], py_object(info)))
+	
+	def pa_list_sinks(self, callback):
+		info = {"callback" : callback, "cb_info": pa_source_info_cb_t(self.pa_get_source_info_cb), "sources" : {} }
+		pythonapi.Py_IncRef(py_object(info))
+		
+		if self.connected:
+			self.pa.pa_operation_unref(self.pa.pa_context_get_sink_info_list(self.pa_context, info["cb_info"], py_object(info)))
+			
 #### Module API #######	
 	def pa_list_modules(self, callback):
 		info = {"callback" : callback, "cb_info": pa_module_info_cb_t(self.pa_get_module_info_cb), "modules" : {} }
@@ -113,6 +221,8 @@ class PulseAudioUtils(gobject.GObject):
 		
 
 		self.pa_context = self.pa.pa_context_new (self.pa_mainloop_api, "Blueman")
+		if not self.pa_context:
+			raise NullError("PA Context returned NULL")
 		
 		self.pa.pa_context_set_state_callback(self.pa_context, self.ctx_cb, None);
 
