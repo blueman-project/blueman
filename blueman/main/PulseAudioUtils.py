@@ -158,8 +158,7 @@ class PulseAudioUtils(gobject.GObject):
 		if eol:
 			if info["callback"]:
 				info["callback"](info["sources"])
-				pythonapi.Py_DecRef(py_object(info))
-			
+			pythonapi.Py_DecRef(py_object(info))
 	
 	def unload_module_cb(self, context, success, info):
 		if info["callback"]:

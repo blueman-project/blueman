@@ -28,14 +28,15 @@ import gobject
 
 import dbus
 from blueman.main.SignalTracker import SignalTracker
-
+import gc
 class SourceRedirector:
 	def __init__(self, module_id, device_path, pa_utils):
 		self.module_id = module_id
 		self.pa_utils = pa_utils
 		self.device = Device(device_path)
 		self.signals = SignalTracker()
-		self.signals.Handle("dbus", dbus.SystemBus(), self.on_source_prop_change, "PropertyChanged", "org.bluez.AudioSource", path=device_path)
+		self.bus = dbus.SystemBus()
+		self.signals.Handle("dbus", self.bus, self.on_source_prop_change, "PropertyChanged", "org.bluez.AudioSource", path=device_path)
 		
 		self.pacat = None
 		self.parec = None
@@ -55,12 +56,12 @@ class SourceRedirector:
 		self.pa_utils.ListSources(sources_cb)
 		
 	def start_redirect(self, source):
-		#self.parec = Popen(["parec", "-d", str(source)], stdout=PIPE)
-		#self.pacat = Popen(["pacat", "--client-name=Blueman", "--stream-name=%s" % self.device.Address, "--property=application.icon_name=blueman"], stdin=self.parec.stdout)
+
 		def on_load(res):
 			dprint("module-loopback load result", res)
 			if res < 0:
-				pass
+				self.parec = Popen(["parec", "-d", str(source)], stdout=PIPE)
+				self.pacat = Popen(["pacat", "--client-name=Blueman", "--stream-name=%s" % self.device.Address, "--property=application.icon_name=blueman"], stdin=self.parec.stdout)
 			else:
 				self.loopback_id = res
 				
@@ -78,6 +79,10 @@ class SourceRedirector:
 				
 				self.signals.DisconnectAll()
 				self.pa_utils.UnloadModule(self.module_id, lambda x: dprint(x))
+				del self.pa_utils
+				
+	def __del__(self):
+		dprint("Destroying redirector")
 
 class PulseAudio(AppletPlugin):
 	__author__ = "Walmis"
@@ -130,7 +135,7 @@ class PulseAudio(AppletPlugin):
 			if value == "connected":
 				if not device in self.connected_sources:
 					self.connected_sources.append(device)
-					self.pulse_utils.LoadModule("module-bluetooth-device", "path=%s profile=a2dp_source" % device, load_cb)
+					self.pulse_utils.LoadModule("module-bluetooth-device", "path=%s profile=a2dp_source source_properties=device.icon_name=blueman card_properties=device.icon_name=blueman" % device, load_cb)
 					
 			elif value == "disconnected":
 				if device in self.connected_sources:
@@ -173,4 +178,4 @@ class PulseAudio(AppletPlugin):
 							 pixbuf=get_icon("audio-card", 48), 
 							 status_icon=self.Applet.Plugins.StatusIcon)		
 		
-		self.pulse_utils.LoadModule("module-bluetooth-device", "address=%s profile=%s" % (props["Address"], profile), load_cb)
+		self.pulse_utils.LoadModule("module-bluetooth-device", "address=%s profile=%s sink_properties=device.icon_name=blueman card_properties=device.icon_name=blueman" % (props["Address"], profile), load_cb)
