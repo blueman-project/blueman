@@ -28,7 +28,7 @@ import gobject
 
 import dbus
 from blueman.main.SignalTracker import SignalTracker
-import gc
+
 class SourceRedirector:
 	def __init__(self, module_id, device_path, pa_utils):
 		self.module_id = module_id
