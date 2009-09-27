@@ -49,6 +49,7 @@ class SourceRedirector:
 						if v["owner_module"] == self.module_id:
 							dprint("Found source", k)
 							self.start_redirect(k)
+							return
 		
 		self.pa_utils.ListSources(sources_cb)
 		
