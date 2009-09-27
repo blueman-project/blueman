@@ -86,6 +86,9 @@ class PulseAudio(AppletPlugin):
 		
 		self.connected_sources = []
 		
+		#path -> module id mapping
+		self.connected_sinks = {}
+		
 		self.signals.Handle("dbus", self.bus, self.on_sink_prop_change, "PropertyChanged", "org.bluez.AudioSink", path_keyword="device")
 		self.signals.Handle("dbus", self.bus, self.on_source_prop_change, "PropertyChanged", "org.bluez.AudioSource", path_keyword="device")
 		self.signals.Handle("dbus", self.bus, self.on_hsp_prop_change, "PropertyChanged", "org.bluez.Headset", path_keyword="device")
@@ -125,9 +128,19 @@ class PulseAudio(AppletPlugin):
 		if key == "Connected" and value:
 			gobject.timeout_add(500, self.setup_pa, device, "a2dp")
 		
+		elif key == "Connected" and not value:
+			if device in self.connected_sinks:
+				self.pulse_utils.UnloadModule(self.connected_sinks[device], lambda x: dprint("Unload module-bluetooth-device result", x))
+				del self.connected_sinks[device]
+		
 	def on_hsp_prop_change(self, key, value, device):
 		if key == "Connected" and value:
 			gobject.timeout_add(500, self.setup_pa, device, "hsp")
+		
+		elif key == "Connected" and not value:
+			if device in self.connected_sinks:
+				self.pulse_utils.UnloadModule(self.connected_sinks[device], lambda x: dprint("Unload module-bluetooth-device result", x))
+				del self.connected_sinks[device]
 		
 	def setup_pa(self, device_path, profile):
 		device = BluezDevice(device_path)
@@ -136,16 +149,16 @@ class PulseAudio(AppletPlugin):
 		def load_cb(res):
 			dprint("Load result", res)
 			if res < 0:
-				dprint("Failed to load pulseaudio module")
+
 				Notification(_("Bluetooth Audio"), 
 							 _("Failed to initialize PulseAudio Bluetooth module. Bluetooth audio over PulseAudio will not work."), 
 							 pixbuf=get_icon("gtk-dialog-error", 48), 
 							 status_icon=self.Applet.Plugins.StatusIcon)				
 			else:
-				dprint("Pulseaudio module loaded successfully")
+				self.connected_sinks[device_path] = res
 				Notification(_("Bluetooth Audio"), 
 							 _("Successfully connected to a Bluetooth audio device. This device will now be available in the PulseAudio mixer"), 
 							 pixbuf=get_icon("audio-card", 48), 
-							 status_icon=self.Applet.Plugins.StatusIcon)			
+							 status_icon=self.Applet.Plugins.StatusIcon)		
 		
 		self.pulse_utils.LoadModule("module-bluetooth-device", "address=%s profile=%s" % (props["Address"], profile), load_cb)

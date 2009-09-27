@@ -81,6 +81,27 @@ pa_source_info._fields_ = [
 pa_module_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(pa_module_info), c_int, py_object)
 pa_source_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(pa_source_info), c_int, py_object)
 
+class PropList(dict):
+	def __init__(self, lib, pointer):
+		self.pa = lib
+		self.pl = pointer
+	
+	def __getitem__(self, key):
+		print "PL getitem"
+		self.pa.pa_proplist_gets.restype = c_char_p
+		self.pa.pa_proplist_gets.argtypes = (c_void_p, c_char_p)
+		
+		item = self.pa.pa_proplist_gets(self.pl, key)
+		if not item:
+			raise KeyError
+		else:
+			return item
+		
+	def __setitem__(self, key, value):
+		self.pa.pa_proplist_sets.argtypes = (c_void_p, c_char_p, c_char_p)
+		self.pa.pa_proplist_sets(self.pl, key, value)		
+	
+
 class PulseAudioUtils(gobject.GObject):
 	__gsignals__ = {
 		'connected' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, ()),
@@ -120,7 +141,7 @@ class PulseAudioUtils(gobject.GObject):
 				"name": module_info[0].name,
 				"argument": module_info[0].argument,
 				"n_used" : module_info[0].n_used,
-				"proplist": proplist
+				"proplist": PropList(self.pa, module_info[0].proplist),
 
 			}
 			del pl
@@ -212,6 +233,7 @@ class PulseAudioUtils(gobject.GObject):
 		
 		self.pa.pa_context_load_module.argtypes = (c_void_p, c_char_p, c_char_p, c_void_p, py_object)
 		self.pa.pa_operation_unref(self.pa.pa_context_load_module(self.pa_context, name, args, info["cb_index"], py_object(info)))
+
 
 #####################			
 	
