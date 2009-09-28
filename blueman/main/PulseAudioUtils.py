@@ -212,7 +212,11 @@ class PulseAudioUtils(gobject.GObject):
 		self.pa.pa_context_load_module.argtypes = (c_void_p, c_char_p, c_char_p, c_void_p, py_object)
 		self.pa.pa_operation_unref(self.pa.pa_context_load_module(self.pa_context, name, args, info["cb_index"], py_object(info)))
 
-#####################			
+#####################	
+
+	def GetVersion(self):
+		self.pa.pa_get_library_version.restype = c_char_p
+		return self.pa.pa_get_library_version()
 	
 	def __init__(self):
 		gobject.GObject.__init__(self)

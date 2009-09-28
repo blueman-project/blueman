@@ -111,13 +111,14 @@ class PulseAudio(AppletPlugin):
 		self.signals.Handle("dbus", self.bus, self.on_hsp_prop_change, "PropertyChanged", "org.bluez.Headset", path_keyword="device")
 		
 		self.pulse_utils = PulseAudioUtils()
+		dprint("PulseAudio version:", self.pulse_utils.GetVersion())
 		self.signals.Handle(self.pulse_utils, "connected", self.on_pulse_connected)
 		
 	def on_pulse_connected(self, pa_utils):
 		def modules_cb(modules):
 			for k, v in modules.iteritems():
 				if v["name"] == "module-bluetooth-discover":
-					pa_utils.UnloadModule(k, lambda x: dprint(x))
+					pa_utils.UnloadModule(k, lambda x: dprint("Unload module-bluetooth-discover result", x))
 			
 		self.pulse_utils.ListModules(modules_cb)			
 	
@@ -177,5 +178,9 @@ class PulseAudio(AppletPlugin):
 							 _("Successfully connected to a Bluetooth audio device. This device will now be available in the PulseAudio mixer"), 
 							 pixbuf=get_icon("audio-card", 48), 
 							 status_icon=self.Applet.Plugins.StatusIcon)		
-		
-		self.pulse_utils.LoadModule("module-bluetooth-device", "address=%s profile=%s sink_properties=device.icon_name=blueman card_properties=device.icon_name=blueman" % (props["Address"], profile), load_cb)
+		if int(self.pulse_utils.GetVersion().split(".")[2]) >= 18:
+			args = "address=%s profile=%s sink_properties=device.icon_name=blueman card_properties=device.icon_name=blueman"
+		else:
+			args = "address=%s profile=%s"
+			
+		self.pulse_utils.LoadModule("module-bluetooth-device", args % (props["Address"], profile), load_cb)
