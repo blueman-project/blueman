@@ -78,7 +78,7 @@ class SourceRedirector:
 					self.pa_utils.UnloadModule(self.loopback_id, lambda x: dprint("Loopback module unload result", x))
 				
 				self.signals.DisconnectAll()
-				self.pa_utils.UnloadModule(self.module_id, lambda x: dprint(x))
+				self.pa_utils.UnloadModule(self.module_id, lambda x: dprint("Unload (source) module-bluetooth-device result", x))
 				del self.pa_utils
 				
 	def __del__(self):
