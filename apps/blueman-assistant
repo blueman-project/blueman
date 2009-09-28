@@ -124,9 +124,8 @@ class Assistant(Agent):
 		pages[PAGE_DEVLIST].add(self.dev_widget)
 		
 		self.dev_widget.show()
-		if self.dev_widget.List.IsValidAdapter():
-			self.dev_widget.List.DiscoverDevices()
-		else:
+		
+		if not self.dev_widget.List.IsValidAdapter():
 			d = gtk.MessageDialog(type=gtk.MESSAGE_ERROR, )
 			d.props.text = _("No adapters found")
 			d.props.icon_name = "blueman"
@@ -163,7 +162,8 @@ class Assistant(Agent):
 				self.Adapter = adapter
 				self.assistant.set_current_page(PAGE_PASSKEY)
 							
-		
+		else:
+			self.dev_widget.List.DiscoverDevices()
 
 		
 		gtk.main()
