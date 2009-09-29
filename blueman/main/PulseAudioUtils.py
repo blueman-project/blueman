@@ -101,6 +101,7 @@ class PulseAudioUtils(gobject.GObject):
 			if self.connected:
 				self.emit("disconnected")
 				self.connected = False
+				gobject.timeout_add(2000, self.Connect)
 			
 			
 	def pa_get_module_info_cb(self, context, module_info, eol, info):
@@ -237,10 +238,15 @@ class PulseAudioUtils(gobject.GObject):
 		self.pa_context = self.pa.pa_context_new (self.pa_mainloop_api, "Blueman")
 		if not self.pa_context:
 			raise NullError("PA Context returned NULL")
-		
+			
 		self.pa.pa_context_set_state_callback(self.pa_context, self.ctx_cb, None);
-
-		self.pa.pa_context_connect (self.pa_context, None, 0, None)
+		
+		self.Connect()
+		
+		
+	def Connect(self):
+		if not self.connected:
+			self.pa.pa_context_connect (self.pa_context, None, 0, None)
 		
 	def __del__(self):
 		pythonapi.Py_IncRef(py_object(self))

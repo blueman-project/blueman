@@ -89,10 +89,10 @@ class DBusService(AppletPlugin):
 			if pair:
 				agent_path = "/org/blueman/agent/temp/"+address.replace(":", "")
 				agent = TempAgent(self.Applet.Plugins.StatusIcon, agent_path, time)
-				adapter.GetInterface().CreatePairedDevice(address, agent_path, "DisplayYesNo", error_handler=err, reply_handler=ok)
+				adapter.GetInterface().CreatePairedDevice(address, agent_path, "DisplayYesNo", error_handler=err, reply_handler=ok, timeout=120)
 				
 			else:
-				adapter.GetInterface().CreateDevice(address, error_handler=err, reply_handler=ok)
+				adapter.GetInterface().CreateDevice(address, error_handler=err, reply_handler=ok, timeout=120)
 				
 		else:
 			err()

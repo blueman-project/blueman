@@ -258,7 +258,7 @@ class Blueman:
 		
 		name = adapter_path_to_name(self.List.Adapter.GetObjectPath())
 
-		applet.CreateDevice(adapter.GetObjectPath(), device.Address, True, gtk.get_current_event_time(), reply_handler=ok, error_handler=err) 
+		applet.CreateDevice(adapter.GetObjectPath(), device.Address, True, gtk.get_current_event_time(), reply_handler=ok, error_handler=err, timeout=120) 
 		
 		
 	def adapter_properties(self):
