@@ -43,7 +43,7 @@ if os.path.exists(os.path.join(_dirname,"ChangeLog")):
 
 from blueman.Functions import *
 from blueman.gui.DeviceSelectorWidget import DeviceSelectorWidget
-from blueman.bluez.Agent import Agent
+from blueman.bluez.Agent import Agent, AgentMethod
 from blueman.bluez.Manager import Manager
 from blueman.main.FakeDevice import FakeDevice
 from blueman.main.Device import Device
@@ -245,11 +245,15 @@ class Assistant(Agent):
 			self.assistant.set_page_complete(pages[PAGE_DEVLIST], True)
 			self.Device = device
 			self.Adapter = list.Adapter
-
+	
+	@AgentMethod
 	def RequestPinCode(self, device):
+		dprint("Agent.RequestPinCode")
 		return self.Passkey
 	
+	@AgentMethod
 	def RequestPasskey(self, device):
+		dprint("Agent.RequestPasskey")
 		return self.Passkey
 		
 	def on_close(self, assistant):

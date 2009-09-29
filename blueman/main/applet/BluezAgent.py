@@ -145,14 +145,14 @@ class CommonAgent(gobject.GObject, Agent):
 	
 	@AgentMethod	
 	def Release(self):
-		dprint("Release")
+		dprint("Agent.Release")
 		self.Cancel()
 		self.remove_from_connection()
 		self.emit("released")
 	
 	@AgentMethod	
 	def Cancel(self):
-		dprint("cancelled")
+		dprint("Agent.Cancel")
 		if self.dialog:
 			self.dialog.response(gtk.RESPONSE_REJECT)
 		try:
@@ -192,7 +192,7 @@ class AdapterAgent(CommonAgent):
 				
 	@AgentMethod
 	def DisplayPasskey(self, device, passkey, entered):
-		pass
+		dprint("Agent.DisplayPasskey")
 	
 	@AgentMethod
 	def RequestConfirmation(self, device, passkey, ok, err):
@@ -248,7 +248,7 @@ class AdapterAgent(CommonAgent):
 	
 	@AgentMethod
 	def ConfirmModeChange(self, mode, ok, err):
-		pass
+		dprint("Agent.ConfirmModeChange")
 	
 class TempAgent(CommonAgent):
 	def __init__(self, status_icon, path, time):
