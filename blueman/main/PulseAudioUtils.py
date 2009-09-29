@@ -101,7 +101,8 @@ class PulseAudioUtils(gobject.GObject):
 			if self.connected:
 				self.emit("disconnected")
 				self.connected = False
-				gobject.timeout_add(2000, self.Connect)
+				if state == PA_CONTEXT_FAILED:
+					gobject.timeout_add(2000, self.Connect)
 			
 			
 	def pa_get_module_info_cb(self, context, module_info, eol, info):
@@ -234,18 +235,22 @@ class PulseAudioUtils(gobject.GObject):
 		self.pa_mainloop = self.pa_m.pa_glib_mainloop_new(self.g.g_main_context_default())
 		self.pa_mainloop_api = self.pa_m.pa_glib_mainloop_get_api(self.pa_mainloop)
 		
+		self.pa_context = None
 
-		self.pa_context = self.pa.pa_context_new (self.pa_mainloop_api, "Blueman")
-		if not self.pa_context:
-			raise NullError("PA Context returned NULL")
-			
-		self.pa.pa_context_set_state_callback(self.pa_context, self.ctx_cb, None);
 		
 		self.Connect()
 		
 		
 	def Connect(self):
 		if not self.connected:
+			if self.pa_context:
+				self.pa.pa_context_unref(self.pa_context)
+			
+			self.pa_context = self.pa.pa_context_new (self.pa_mainloop_api, "Blueman")
+			if not self.pa_context:
+				raise NullError("PA Context returned NULL")
+			
+			self.pa.pa_context_set_state_callback(self.pa_context, self.ctx_cb, None)
 			self.pa.pa_context_connect (self.pa_context, None, 0, None)
 		
 	def __del__(self):
