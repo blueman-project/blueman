@@ -74,13 +74,12 @@ class KillSwitchNG(gobject.GObject):
 		else:
 			flags |= os.O_RDWR
 		
-		if not (mode & stat.S_IROTH) != 0:
+		if (mode & stat.S_IROTH) == 0:
 			m = Mechanism()
 			m.DevRfkillChmod()
 		
 			
 		flags |= os.O_NONBLOCK
-		
 		
 		self.fd = os.open("/dev/rfkill", flags)
 
