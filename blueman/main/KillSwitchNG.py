@@ -23,6 +23,7 @@ import errno
 import gobject
 from blueman.main.Mechanism import Mechanism
 from blueman.Functions import dprint
+import stat
 
 class RFKillType:
 	ALL       = 	0
@@ -63,13 +64,25 @@ class KillSwitchNG(gobject.GObject):
 		gobject.GObject.__init__(self)
 		self.state = True
 		self.switches = {}
-		try:
-			self.fd = os.open("/dev/rfkill", os.O_RDWR | os.O_NONBLOCK)
-		except OSError, e:
-			if e.errno == errno.EACCES:
-				self.fd = os.open("/dev/rfkill", os.O_RDONLY | os.O_NONBLOCK)
-			else:
-				raise e
+		
+		mode = os.stat("/dev/rfkill").st_mode
+		
+		flags = 0
+		
+		if (mode & stat.S_IWOTH) == 0:
+			flags |= os.O_RDONLY
+		else:
+			flags |= os.O_RDWR
+		
+		if not (mode & stat.S_IROTH) != 0:
+			m = Mechanism()
+			m.DevRfkillChmod()
+		
+			
+		flags |= os.O_NONBLOCK
+		
+		
+		self.fd = os.open("/dev/rfkill", flags)
 
 		ref = weakref.ref(self)
 		self.iom = gobject.io_add_watch(self.fd, gobject.IO_IN | gobject.IO_ERR | gobject.IO_HUP, lambda *args: ref() and ref().io_event(*args) )
