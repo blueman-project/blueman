@@ -250,11 +250,8 @@ class CellFade(AnimBase):
 				#print isected
 				#print rect
 				pixmap = gtk.gdk.Pixmap(event.window, isected.width, isected.height)
-				cr2 = pixmap.cairo_create()
-			
-				cr2.set_source_pixmap(event.window, -isected.x, -isected.y)
-				cr2.paint()
-			
+				gc = gtk.gdk.GC(event.window)
+				pixmap.draw_drawable(gc, event.window, isected.x, isected.y, 0, 0, isected.width, isected.height)
 			
 				detail = "cell_even" if path[0] % 2 == 0 else "cell_odd"
 				if self.tw.props.rules_hint:
