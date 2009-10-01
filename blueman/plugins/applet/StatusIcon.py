@@ -101,7 +101,7 @@ class StatusIcon(AppletPlugin, gtk.StatusIcon):
 		self.Query()
 		
 	def on_status_icon_resized(self, statusicon, size):
-		self.pixbuf = get_icon("blueman", size)
+		self.pixbuf = get_icon("blueman-tray", size, fallback="blueman")
 		
 		def callback(inst, ret):
 			if isinstance(ret, gtk.gdk.Pixbuf):
