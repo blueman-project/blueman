@@ -49,6 +49,7 @@ class MessageArea(gtk.EventBox):
 		self.hbox.set_border_width(2)
 		
 		self.icon = gtk.Image()
+		self.icon.props.xpad = 4
 		self.label = gtk.Label()
 		self.label.props.xalign = 0
 		self.label.set_ellipsize(pango.ELLIPSIZE_END)
@@ -115,7 +116,8 @@ class MessageArea(gtk.EventBox):
 		def _set_style(wg):
 			if isinstance(wg, gtk.Container):
 				for w in wg:
-					_set_style(w)
+					if not isinstance(w, gtk.Button):
+						_set_style(w)
 
 			wg.set_style(style)
 		
@@ -180,11 +182,10 @@ class MessageArea(gtk.EventBox):
 			self.b_more.props.visible = False
 		
 	def expose_event(self, window, event):
-		
-		window.style.paint_flat_box(window.window,
-			gtk.STATE_NORMAL, gtk.SHADOW_NONE,
+		window.style.paint_box(window.window,
+			gtk.STATE_NORMAL, gtk.SHADOW_IN,
 			None, window, "tooltip",
-			window.allocation.x, window.allocation.y-1, window.allocation.width, window.allocation.height+1)
+			window.allocation.x, window.allocation.y, window.allocation.width, window.allocation.height)		
 
 		return False
 
