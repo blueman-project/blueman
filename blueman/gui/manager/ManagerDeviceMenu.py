@@ -589,10 +589,20 @@ class ManagerDeviceMenu(gtk.Menu):
 			self.append(item)
 			
 			item = create_menuitem(_("Disconnect Device"), get_icon("gtk-disconnect", 16))
+			item.props.tooltip_text = _("Forcefully disconnect a device")
+			
 			self.append(item)
 			item.show()
+			
+			def on_disconnect(item):
+				def finished(*args):
+					self.unset_op(device)
+
+				self.set_op(device, _("Disconnecting..."))
+				self.Blueman.disconnect(device, reply_handler=finished, error_handler=finished)
+			
 			if device.Connected:
-				self.Signals.Handle(item, "activate", lambda x: self.Blueman.disconnect(device))
+				self.Signals.Handle(item, "activate", on_disconnect)
 
 			else:
 				item.props.sensitive = False

@@ -283,8 +283,8 @@ class Blueman:
 	def browse(self, device):
 		spawn(["blueman-browse", "-d %s" % device.Address])
 		
-	def disconnect(self, device):
-		device.Disconnect()
+	def disconnect(self, device, *args, **kwargs):
+		device.Disconnect(*args, **kwargs)
 
 		
 

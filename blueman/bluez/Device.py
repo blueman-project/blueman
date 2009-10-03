@@ -103,7 +103,7 @@ class Device(BaseInterface):
     # CancelDiscovery
 
     @raise_dbus_error
-    def Disconnect(self):
+    def Disconnect(self, *args, **kwargs):
         '''
         This method disconnects a specific remote device by
         terminating the low-level ACL connection. The use of
@@ -115,6 +115,6 @@ class Device(BaseInterface):
         their connections gracefully before the ACL connection
         is terminated.
         '''
-        self.GetInterface().Disconnect()
+        self.GetInterface().Disconnect(*args, **kwargs)
     # Disconnect
 # Device
