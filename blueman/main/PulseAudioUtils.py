@@ -108,11 +108,15 @@ class PulseAudioUtils(gobject.GObject):
 	def pa_get_module_info_cb(self, context, module_info, eol, info):
 
 		if module_info:
+			if module_info[0].proplist:
+				pla = self.pa.pa_proplist_to_string_sep(module_info[0].proplist, "|")
+				pl = cast(pla, c_char_p)
+				ls = pl.value.split("|")
+				del pl
+				self.pa.pa_xfree(pla)
+			else:
+				ls = []
 			
-			pla = self.pa.pa_proplist_to_string_sep(module_info[0].proplist, "|")
-			pl = cast(pla, c_char_p)
-			
-			ls = pl.value.split("|")
 			proplist = {}
 			for item in ls:
 				spl = map(lambda x: x.strip(" \""), item.split("="))
@@ -125,8 +129,7 @@ class PulseAudioUtils(gobject.GObject):
 				"proplist": proplist
 
 			}
-			del pl
-			self.pa.pa_xfree(pla)
+
 
 		if eol:
 			if info["callback"]:
@@ -135,13 +138,15 @@ class PulseAudioUtils(gobject.GObject):
 			
 	def pa_get_source_info_cb(self, context, source_info, eol, info):
 		if source_info:
-			props = {}
-			pla = self.pa.pa_proplist_to_string_sep(source_info[0].proplist, "|")
-			pl = cast(pla, c_char_p)
-			ls = pl.value.split("|")
+			if source_info[0].proplist:
+				pla = self.pa.pa_proplist_to_string_sep(source_info[0].proplist, "|")
+				pl = cast(pla, c_char_p)
+				ls = pl.value.split("|")
 
-			del pl
-			self.pa.pa_xfree(pla)
+				del pl
+				self.pa.pa_xfree(pla)
+			else:
+				ls = []
 			
 			proplist = {}
 			for item in ls:
