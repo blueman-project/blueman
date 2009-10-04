@@ -173,6 +173,7 @@ class NMPANSupport(AppletPlugin):
 	__icon__ = "network"
 	__author__ = "Walmis"
 	__description__ = _("Provides support for Personal Area Networking (PAN) introduced in NetworkManager 0.8")
+	__priority__ = 1
 	
 	def on_load(self, applet):
 		self.bus = dbus.SystemBus()
