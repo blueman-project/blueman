@@ -41,6 +41,7 @@ class DBusService(AppletPlugin):
 		AppletPlugin.add_method(self.on_rfcomm_connected)
 		AppletPlugin.add_method(self.on_rfcomm_disconnect)
 		AppletPlugin.add_method(self.rfcomm_connect_handler)
+		AppletPlugin.add_method(self.service_connect_handler)
 		
 		self.add_dbus_method(self.ServiceProxy, in_signature="sosas", async_callbacks=("ok","err"))
 		self.add_dbus_method(self.CreateDevice, in_signature="ssbu", async_callbacks=("ok","err"))
@@ -74,13 +75,22 @@ class DBusService(AppletPlugin):
 			except KeyError:
 				dprint("RecentConns plugin is unavailable")
 		
+		self.handled = False
+		def cb(inst, ret):
+			if ret == True:
+				self.handled = True
+				#stop further execution
+				raise StopException
 		
-		def reply(*args):
-			ok(*args)
-		def error(*args):
-			err(*args)
+		self.Applet.Plugins.RunEx("service_connect_handler", cb, interface, object_path, _method, args, ok, err)
+
+		if not self.handled:
+			method(reply_handler=ok, error_handler=err, *args)
+			
+		del self.handled
 		
-		method(reply_handler=reply, error_handler=error, *args)
+	def service_connect_handler(self, interface, object_path, _method, args, ok, err):
+		pass
 
 	def CreateDevice(self, adapter_path, address, pair, time, ok, err):
 		if self.Applet.Manager:

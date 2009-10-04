@@ -65,9 +65,13 @@ class PluginDialog(gtk.Dialog):
 			#device caption
 			["name", str, gtk.CellRendererText(), {"markup":3}, None, {"expand": True}]
 		]
-		
+
 		
 		self.list = GenericList(data)
+		#self.sorted = gtk.TreeModelSort(self.list.liststore)
+		self.list.liststore.set_sort_column_id(3, gtk.SORT_ASCENDING)
+		self.list.liststore.set_sort_func(3, self.list_compare_func)
+		
 		self.list.selection.connect("changed", lambda *args: ref() and ref().on_selection_changed(*args))
 		
 		self.list.props.headers_visible = False
@@ -85,6 +89,27 @@ class PluginDialog(gtk.Dialog):
 		self.connect("response", self.on_response)
 		
 		self.list.set_cursor(0)
+		
+	def list_compare_func(self, treemodel, iter1, iter2):
+		a = self.list.get(iter1, "activatable", "name")
+		b = self.list.get(iter2, "activatable", "name")
+
+		if (a["activatable"] and b["activatable"]) or (not a["activatable"] and not b["activatable"]):
+			if a["name"] == b["name"]:
+				return 0
+			if a["name"] < b["name"]:
+				return -1
+			else:
+				return 1
+		
+		else:
+			if a["activatable"] and not b["activatable"]:
+				return -1
+			elif not a["activatable"] and b["activatable"]:
+				return 1
+
+		print "aaa"
+		
 		
 	def on_response(self, dialog, resp):
 		self.applet.Plugins.disconnect(self.sig_a)
@@ -120,11 +145,7 @@ class PluginDialog(gtk.Dialog):
 		classes = self.applet.Plugins.GetClasses()
 		loaded = self.applet.Plugins.GetLoaded()
 		for name, cls in classes.iteritems():
-			if cls.__unloadable__:
-				func = self.list.prepend
-			else:
-				func = self.list.append
-			func(active=(name in loaded), icon=cls.__icon__, activatable=(cls.__unloadable__), name=name)
+			self.list.append(active=(name in loaded), icon=cls.__icon__, activatable=(cls.__unloadable__), name=name)
 			
 	def plugin_state_changed(self, plugins, name, loaded):
 		row = self.list.get_conditional(name=name)

@@ -217,11 +217,10 @@ class Network(ServicePlugin):
 		gn_enable.connect("toggled", lambda x: setattr(self.NetConf.props, "gn_enable", x.props.active))
 		nap_enable.connect("toggled", lambda x: self.on_property_changed(self.NetConf, "nap_enable", x.props.active))
 
-		
-		rb_nm.connect("toggled", lambda x: setattr(self.NetConf.props, "dhcp_client", not x.props.active))
-		rb_blueman.connect("toggled", lambda x: setattr(self.NetConf.props, "dhcp_client", x.props.active))
-		
 		applet = AppletService()
+		
+		avail_plugins = applet.QueryAvailablePlugins()
+		active_plugins = applet.QueryPlugins()
 		
 		def dun_support_toggled(rb, x):
 			if rb.props.active and x == "nm":
@@ -231,19 +230,52 @@ class Network(ServicePlugin):
 				applet.SetPluginConfig("NMIntegration", False)
 				applet.SetPluginConfig("PPPSupport", True)
 				
-		if "PPPSupport" in applet.QueryPlugins():
+		def pan_support_toggled(rb, x):
+			if rb.props.active and x == "nm":
+				applet.SetPluginConfig("DhcpClient", False)
+				
+				if HAL_ENABLED:
+					applet.SetPluginConfig("NMIntegration", True)
+				else:
+					applet.SetPluginConfig("NMPANSupport", True)
+					
+			elif rb.props.active and x == "blueman":
+				if HAL_ENABLED:
+					applet.SetPluginConfig("NMIntegration", False)
+				else:
+					applet.SetPluginConfig("NMPANSupport", False)
+					
+				applet.SetPluginConfig("DhcpClient", True)		
+	
+				
+		if "PPPSupport" in active_plugins:
 			rb_dun_blueman.props.active = True
-		
-		if not "NMIntegration" in applet.QueryAvailablePlugins():
+
+		if HAL_ENABLED:
+			if not "NMIntegration" in avail_plugins:
+				rb_dun_nm.props.sensitive = False
+				rb_dun_nm.props.tooltip_text = _("Not currently supported with this setup")
+
+				rb_nm.props.sensitive = False
+				rb_nm.props.tooltip_text = _("Not currently supported with this setup")
+		else:
+			print "false"
 			rb_dun_nm.props.sensitive = False
-			rb_dun_nm.props.tooltip_text = _("Not currently supported with this setup")
-		
+			rb_dun_nm.props.tooltip_text = _("Not currently supported with this setup")		
+			
+			if "NMPANSupport" in avail_plugins:
+				rb_nm.props.sensitive = True
+				
+		if "NMPANSupport" in active_plugins:
+			rb_nm.props.active = True
+			
+				
+		rb_nm.connect("toggled", pan_support_toggled, "nm")
+		rb_blueman.connect("toggled", pan_support_toggled, "blueman")
+				
 		rb_dun_nm.connect("toggled", dun_support_toggled, "nm")
 		rb_dun_blueman.connect("toggled", dun_support_toggled, "blueman")
-		
-		if not HAL_ENABLED:
-			rb_nm.props.sensitive = False
-			rb_nm.props.tooltip_text = _("Not currently supported with this setup")
-			
-			if rb_nm.props.active:
-				rb_blueman.props.active = True
+
+				
+				
+				

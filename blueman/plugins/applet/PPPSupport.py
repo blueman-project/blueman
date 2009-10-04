@@ -66,7 +66,7 @@ class connection:
 class PPPSupport(AppletPlugin):
 	__depends__ = ["DBusService"]
 	__conflicts__ = ["NMIntegration"]
-	__description__ = _("Internal support for connecting to GSM network without the aid of NetworkManager")
+	__description__ = _("Provides basic support for connecting to the internet via DUN profile.")
 	__author__ = "Walmis"
 	__icon__ = "modem"
 	__priority__ = 0

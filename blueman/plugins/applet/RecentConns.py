@@ -292,10 +292,11 @@ class RecentConns(AppletPlugin, gtk.Menu):
 			if item["service"] == "org.bluez.Serial":
 				self.Applet.DbusSvc.RfcommConnect(item["device"].GetObjectPath(), item["conn_args"][0], reply, err)
 			else:
-				service.Connect(reply_handler=reply, error_handler=err, *item["conn_args"])
+				#service.Connect(reply_handler=reply, error_handler=err, *item["conn_args"])
+				self.Applet.DbusSvc.ServiceProxy(item["service"], item["device"].GetObjectPath(), "Connect", item["conn_args"], reply, err)
 			
-			item["time"] = time.time()
-			self.initialize()
+			#item["time"] = time.time()
+			#self.initialize()
 			item["mitem"].props.sensitive = False
 			
 		

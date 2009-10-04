@@ -17,6 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 from blueman.Functions import *
+from blueman.Constants import HAL_ENABLED
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.PolicyKitAuth import PolicyKitAuth
 from blueman.main.Mechanism import Mechanism
@@ -31,11 +32,14 @@ import blueman.bluez as Bluez
 import gobject
 import gtk
 
+if not HAL_ENABLED:
+	raise ImportError("NMIntegration (deprecated) requires hal support")
+
 class NMIntegration(AppletPlugin):
 	__description__ = _("Makes DUN/PAN connections available for NetworkManager 0.7")
 	__icon__ = "modem"
 	__depends__ = ["DBusService"]
-	__conflicts__ = ["PPPSupport"]
+	__conflicts__ = ["PPPSupport", "DhcpClient"]
 	__author__ = "Walmis"
 	__priority__ = 1
 	

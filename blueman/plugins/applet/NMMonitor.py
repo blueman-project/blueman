@@ -88,6 +88,9 @@ NM_DEVICE_STATE_ACTIVATED = 8
 # */
 NM_DEVICE_STATE_FAILED = 9
 
+if not HAL_ENABLED:
+	raise ImportError("NMMonitor (deprecated) requires hal support")
+
 
 class NMMonitor(AppletPlugin, gobject.GObject):
 	__gsignals__ = {

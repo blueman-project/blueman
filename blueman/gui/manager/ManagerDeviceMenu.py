@@ -163,12 +163,12 @@ class ManagerDeviceMenu(gtk.Menu):
 			
 		if service_id == "network":
 			uuid = args[0]
-			appl.ServiceProxy(svc.GetInterfaceName(), svc.GetObjectPath(), "Connect", [uuid], reply_handler=success, error_handler=fail)
+			appl.ServiceProxy(svc.GetInterfaceName(), svc.GetObjectPath(), "Connect", [uuid], reply_handler=success, error_handler=fail, timeout=200)
 			#prog.set_cancellable(True)
 			#prog.connect("cancelled", cancel)
 			
 		elif service_id == "input":
-			appl.ServiceProxy(svc.GetInterfaceName(), svc.GetObjectPath(), "Connect", [], reply_handler=success, error_handler=fail)
+			appl.ServiceProxy(svc.GetInterfaceName(), svc.GetObjectPath(), "Connect", [], reply_handler=success, error_handler=fail, timeout=200)
 			#prog.connect("cancelled", cancel)
 			
 		elif service_id == "serial":
@@ -410,23 +410,19 @@ class ManagerDeviceMenu(gtk.Menu):
 						item.show()
 						items.append((80, item))
 						
-						c = Config("network")
-						if c.props.dhcp_client:
-							def renew(x):
-								appl.DhcpClient(sprops["Device"])							
-							
-							try:
-								appl = AppletService()
-							
-							except:
-								dprint("** Failed to connect to applet")
-							
-							else:
-								if "Networking" in appl.QueryPlugins():
-									item = create_menuitem(_("Renew IP Address"), get_icon("gtk-refresh", 16))
-									self.Signals.Handle("gobject", item, "activate", renew)
-									item.show()
-									items.append((81, item))
+						try:
+							appl = AppletService()							
+						except:
+							dprint("** Failed to connect to applet")
+						else:
+							if "DhcpSupport" in appl.QueryPlugins():
+								def renew(x):
+									appl.DhcpClient(sprops["Device"])							
+						
+								item = create_menuitem(_("Renew IP Address"), get_icon("gtk-refresh", 16))
+								self.Signals.Handle("gobject", item, "activate", renew)
+								item.show()
+								items.append((81, item))
 					
 				if name == "input":
 					self.Signals.Handle("bluez", service, self.service_property_changed, "PropertyChanged")

@@ -21,32 +21,22 @@ from blueman.main.Config import Config
 from blueman.bluez.ServiceInterface import ServiceInterface
 from blueman.main.Mechanism import Mechanism
 from blueman.main.SignalTracker import SignalTracker
-from blueman.main.PolicyKitAuth import PolicyKitAuth
+
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.gui.Notification import Notification
+
 import dbus
 
 class Networking(AppletPlugin):
 	__icon__ = "network"
-	__description__ = _("Provides bluetooth networking support")
+	__description__ = _("Manages local network services, like NAP bridges")
 	__author__ = "Walmis"
 	
 	def on_load(self, applet):
 		self.Applet = applet
 		self.Signals = SignalTracker()
 		
-		self.add_dbus_method(self.DhcpClient, in_signature="s")
-		
 		self.Config = Config("network")
 		self.Signals.Handle("gobject", self.Config, "property-changed", self.on_config_changed)
-		
-		self.Signals.Handle("dbus", dbus.SystemBus(), 
-						self.on_network_prop_changed, 
-						"PropertyChanged",
-						"org.bluez.Network",
-						path_keyword="path")
-						
-		self.quering = []
 		
 		self.load_nap_settings()
 		
@@ -78,59 +68,8 @@ class Networking(AppletPlugin):
 	def update_status(self):
 		self.set_nap(self.Config.props.nap_enable or False)
 		self.set_gn(self.Config.props.gn_enable or False)		
-		
-	def on_network_prop_changed(self, key, value, path):
-			
-		if key == "Device":
-			if not self.Config.props.dhcp_client:
-				if value != "":
-					m = Mechanism()
-					m.HalRegisterNetDev(value)
-			else:
-				self.dhcp_acquire(value)
-				
-	#dbus method
-	def DhcpClient(self, interface):
-		self.dhcp_acquire(interface)
-		
-	def dhcp_acquire(self, device):
-		if device not in self.quering:
-			self.quering.append(device)
-		else:
-			return
-			
-		if device != "":
-			a= PolicyKitAuth()
-			auth = a.is_authorized("org.blueman.dhcp.client")
-			if not auth:
-				auth = a.obtain_authorization(None, "org.blueman.dhcp.client")
-			
-			if auth:
-				
-				def reply(ip_address):
 
-					Notification(_("Bluetooth Network"), _("Interface %(0)s bound to IP address %(1)s") % {"0": device, "1": ip_address}, 
-						pixbuf=get_icon("gtk-network", 48), 
-						status_icon=self.Applet.Plugins.StatusIcon)
-					
-					self.quering.remove(device)
-				
-				def err(msg):
-					dprint(msg)
-					Notification(_("Bluetooth Network"), _("Failed to obtain an IP address on %s") % (device), 
-						pixbuf=get_icon("gtk-network", 48), 
-						status_icon=self.Applet.Plugins.StatusIcon)
-						
-					self.quering.remove(device)
-				
-				Notification(_("Bluetooth Network"), _("Trying to obtain an IP address on %s\nPlease wait..." % device), 
-					pixbuf=get_icon("gtk-network", 48), 
-					status_icon=self.Applet.Plugins.StatusIcon)
 
-				m = Mechanism()
-				m.DhcpClient(device, reply_handler=reply, error_handler=err, timeout=120)
-		
-		
 	def on_config_changed(self, config, key, value):
 		if key == "nap_enable":
 			self.set_nap(value)

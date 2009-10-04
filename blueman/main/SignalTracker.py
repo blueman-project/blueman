@@ -74,7 +74,10 @@ class SignalTracker:
 					obj.disconnect(args)
 				elif objtype == "dbus":
 					if isinstance(obj, dbus.Bus):
-						obj.remove_signal_receiver(*args)
+						if "path" in kwargs:
+							obj.remove_signal_receiver(*args, **kwargs)
+						else:
+							obj.remove_signal_receiver(*args)
 					else:
 						obj.bus.remove_signal_receiver(*args)
 					

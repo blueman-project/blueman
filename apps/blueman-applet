@@ -29,6 +29,7 @@ import dbus.glib
 import gobject
 import gtk
 import gtk.gdk
+import __builtin__
 
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -47,6 +48,10 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 import blueman.bluez as Bluez
 
 from blueman.main.SignalTracker import SignalTracker
+
+class StopException(Exception):
+	pass
+__builtin__.StopException = StopException
 
 class BluemanApplet(object):
 
@@ -141,6 +146,8 @@ class BluemanApplet(object):
 					if not c in self.__cfls:
 						self.__cfls[c] = []
 					self.__cfls[c].append(cls.__name__)	
+					if c not in self.__cfls[cls.__name__]:
+						self.__cfls[cls.__name__].append(c)
 				
 			c = self.__config.props.applet_plugins
 			for name, cls in self.__classes.iteritems():
@@ -168,8 +175,9 @@ class BluemanApplet(object):
 					except Exception, e:
 						dprint(e)
 						return
-					
-			for cfl in cls.__conflicts__:
+						
+			for cfl in self.__cfls[cls.__name__]:
+			
 				if cfl in self.__loaded:
 					if cls.__priority__ > self.__classes[cfl].__priority__:
 						self.Unload(cfl)
@@ -243,7 +251,10 @@ class BluemanApplet(object):
 		def RunEx(self, function, callback, *args, **kwargs):
 			for inst in AppletPlugin.instances:
 				ret = getattr(inst, function)(*args, **kwargs)
-				ret = callback(inst, ret) 
+				try:
+					ret = callback(inst, ret) 
+				except StopException:
+					return
 				if ret != None:
 					args = ret
 
