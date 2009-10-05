@@ -30,13 +30,14 @@ from blueman.main.SignalTracker import SignalTracker
 import blueman.bluez as Bluez
 
 import gobject
+import dbus
 import gtk
 
 if not HAL_ENABLED:
 	raise ImportError("NMIntegration (deprecated) requires hal support")
 
 class NMIntegration(AppletPlugin):
-	__description__ = _("Makes DUN/PAN connections available for NetworkManager 0.7")
+	__description__ = _("<b>Deprecated</b>\nMakes DUN/PAN connections available for NetworkManager 0.7")
 	__icon__ = "modem"
 	__depends__ = ["DBusService"]
 	__conflicts__ = ["PPPSupport", "DhcpClient"]
@@ -44,10 +45,22 @@ class NMIntegration(AppletPlugin):
 	__priority__ = 1
 	
 	def on_load(self, applet):
-		pass
+		self.Signals = SignalTracker()
+			
+		self.Signals.Handle("dbus", dbus.SystemBus(), 
+						self.on_network_prop_changed, 
+						"PropertyChanged",
+						"org.bluez.Network",
+						path_keyword="path")
 		
 	def on_unload(self):
-		pass
+		self.Signals.DisconnectAll()
+		
+	def on_network_prop_changed(self, key, value, path):
+		if key == "Device":
+			if value != "":
+				m = Mechanism()
+				m.HalRegisterNetDev(value)
 
 	#in: bluez_device_path, rfcomm_device
 	#@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="ss", out_signature="")
