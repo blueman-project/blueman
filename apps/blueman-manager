@@ -206,6 +206,8 @@ class Blueman:
 		def prop_changed(List, adapter, (key, value)):
 			if key == "Discovering" and not value:
 				prog.finalize()
+				self.List.disconnect(s1)
+				self.List.disconnect(s2)
 				
 		def on_progress(list, frac):
 			if abs(1.0 - frac) <= 0.00001:
@@ -222,8 +224,8 @@ class Blueman:
 			prog.finalize()
 			MessageArea.show_message(e_(e))
 			
-		self.List.connect("discovery-progress", on_progress)
-		self.List.connect("adapter-property-changed", prop_changed)
+		s1 = self.List.connect("discovery-progress", on_progress)
+		s2 = self.List.connect("adapter-property-changed", prop_changed)
 		
 	def setup(self, device):
 		sn = startup_notification("Bluetooth Assistant", _("Starting Bluetooth Assistant"), bin_name="blueman-assistant", icon="blueman")
