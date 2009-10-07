@@ -20,9 +20,8 @@ import pango
 import gobject
 import gtk
 import gtk.gdk
-from blueman.Functions import get_icon, dprint
-import gettext
-_ = gettext.gettext
+from blueman.Functions import get_icon
+from blueman.main.SignalTracker import SignalTracker
 
 class ManagerProgressbar(gobject.GObject):
 
@@ -51,15 +50,16 @@ class ManagerProgressbar(gobject.GObject):
 		
 		self.progressbar = gtk.ProgressBar()
 		
+		self.signals = SignalTracker()
 
 		self.button = gtk.image_new_from_pixbuf(get_icon("gtk-stop", 16))
 	
 		self.eventbox = eventbox = gtk.EventBox()
 		eventbox.add(self.button)
 		eventbox.props.tooltip_text = _("Cancel Operation")
-		eventbox.connect("enter-notify-event", on_enter)
-		eventbox.connect("leave-notify-event", on_leave)
-		eventbox.connect("button-press-event", on_clicked)
+		self.signals.Handle(eventbox, "enter-notify-event", on_enter)
+		self.signals.Handle(eventbox, "leave-notify-event", on_leave)
+		self.signals.Handle(eventbox, "button-press-event", on_clicked)
 
 		
 		self.progressbar.set_size_request(100, 15)
@@ -84,6 +84,9 @@ class ManagerProgressbar(gobject.GObject):
 		self.finalized = False
 		
 		ManagerProgressbar.__instances__.append(self)
+		
+	def connect(self, *args):
+		self.signals.Handle("gobject", super(ManagerProgressbar, self), *args)
 		
 	def show(self):
 		if self.Blueman.Config.props.show_statusbar == False:
@@ -130,6 +133,8 @@ class ManagerProgressbar(gobject.GObject):
 			if ManagerProgressbar.__instances__ == []:
 				if self.Blueman.Config.props.show_statusbar == False:
 					self.Blueman.Builder.get_object("statusbar").props.visible = False
+					
+			self.signals.DisconnectAll()
 		
 		
 	def set_cancellable(self, b, hide=False):

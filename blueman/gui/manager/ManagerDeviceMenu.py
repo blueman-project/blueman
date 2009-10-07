@@ -29,6 +29,13 @@ from blueman.gui.MessageArea import MessageArea
 
 from blueman.Lib import rfcomm_list
 
+def get_x_icon(icon_name, size):
+	ic = get_icon(icon_name, size) 
+	x = get_icon("blueman-x", 8) 
+	pixbuf = composite_icon(ic, [(x, ic.props.height - 8, ic.props.height - 8, 200)])
+	
+	return pixbuf
+
 class ManagerDeviceMenu(gtk.Menu):
 
 	__ops__ = {}
@@ -50,8 +57,6 @@ class ManagerDeviceMenu(gtk.Menu):
 		ManagerDeviceMenu.__instances__.append(self)
 		
 		self.Generate()
-
-		
 
 	def __del__(self):
 		dprint("deleting devicemenu")
@@ -200,8 +205,7 @@ class ManagerDeviceMenu(gtk.Menu):
 				dprint("** Failed to connect to applet")
 				return
 			appl.ServiceProxy(svc.GetInterfaceName(), svc.GetObjectPath(), "Disconnect", [])
-		
-		
+
 		
 	def on_device_property_changed(self, List, device, iter, (key, value)):
 #		print "menu:", key, value
@@ -213,7 +217,6 @@ class ManagerDeviceMenu(gtk.Menu):
 			or key == "Paired":
 				self.Generate()
 
-		
 	def Generate(self):
 		self.clear()
 		
@@ -272,8 +275,9 @@ class ManagerDeviceMenu(gtk.Menu):
 			
 			
 		else:
-			
-			
+			connectables = 0
+			disconnectables = 0
+			dprint(device.Alias)
 			uuids = device.UUIDs
 			item = None
 			items = []
@@ -352,22 +356,19 @@ class ManagerDeviceMenu(gtk.Menu):
 #						cdma_item.connect("activate", on_type_changed, 1)		
 					
 					rfcomms = rfcomm_list()
-					
-					sep = False
 					for dev in rfcomms:
 						if dev["dst"] == device.Address:
 							if dev["state"] == "connected":
-								if not sep:
-									item = gtk.SeparatorMenuItem()
-									item.show()
-									sub.append(item)
-									sep = True
-								
-								devname = "/dev/rfcomm%s" % dev["id"]
+								if dev["channel"] == 1:
+									devname = _("Dial-up Port")
+								elif dev["channel"] == 6:
+									devname = _("Serial Port")
+								else:
+									devname = _("Serial Port %s") % "rfcomm%d" % dev["id"]
 							
-								item = create_menuitem(_("Disconnect %s") % "rfcomm%d" % dev["id"], get_icon("gtk-disconnect", 16))
-								self.Signals.Handle("gobject", item, "activate", self.on_disconnect, device, name, devname)
-								sub.append(item)
+								item = create_menuitem(devname, get_x_icon("modem", 16))
+								self.Signals.Handle("gobject", item, "activate", self.on_disconnect, device, name, "/dev/rfcomm%d" % dev["id"])
+								items.append((120, item))
 								item.show()
 					
 				if name == "network":
@@ -375,108 +376,142 @@ class ManagerDeviceMenu(gtk.Menu):
 					sprops = service.GetProperties()
 					
 					if not sprops["Connected"]:
-						mitem = create_menuitem(_("Network Access"), get_icon("network", 16))
-						mitem.show()
-						
-						sub = gtk.Menu()
-						sub.show()
-						mitem.set_submenu(sub)
-						
-						added = False
+											
 						for uuid in uuids:
-
 							uuid16 = uuid128_to_uuid16(uuid)
 							if uuid16 == GN_SVCLASS_ID:
-								item = create_menuitem(_("Group Network"), get_icon("network-server", 16))
+								item = create_menuitem(_("Group Network"), get_icon("network-wireless", 16))
 								self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name, uuid)
-								sub.append(item)
 								item.show()
-								added = True
-							
+								items.append((80, item))
+						
 							if uuid16 == NAP_SVCLASS_ID:
-								item = create_menuitem(_("Network Access Point"), get_icon("network-server", 16))
+								item = create_menuitem(_("Network Access Point"), get_icon("network-wireless", 16))
 								self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name, uuid)
-								sub.append(item)
 								item.show()
-								added = True
-						if not added:
-							mitem.destroy()
-							item = None
-						else:
-							items.append((80, mitem))
+								items.append((81, item))
+
+
 					else:
-						item = create_menuitem(_("Disconnect Network"), get_icon("gtk-disconnect", 16))
+						item = create_menuitem(_("Network"), get_x_icon("network-wireless", 16))
 						self.Signals.Handle("gobject", item, "activate", self.on_disconnect, device, name)
 						item.show()
-						items.append((80, item))
+						items.append((101, item))
 						
 						try:
 							appl = AppletService()							
 						except:
 							dprint("** Failed to connect to applet")
 						else:
-							if "DhcpSupport" in appl.QueryPlugins():
+							if "DhcpClient" in appl.QueryPlugins():
 								def renew(x):
 									appl.DhcpClient(sprops["Device"])							
-						
 								item = create_menuitem(_("Renew IP Address"), get_icon("gtk-refresh", 16))
 								self.Signals.Handle("gobject", item, "activate", renew)
 								item.show()
-								items.append((81, item))
+								items.append((201, item))
 					
 				if name == "input":
 					self.Signals.Handle("bluez", service, self.service_property_changed, "PropertyChanged")
 					sprops = service.GetProperties()
 					if sprops["Connected"]:
-						item = create_menuitem(_("Disconnect Input Service"), get_icon("mouse", 16))
+						item = create_menuitem(_("Input Service"), get_x_icon("mouse", 16))
 						self.Signals.Handle("gobject", item, "activate", self.on_disconnect, device, name)
+						items.append((100, item))
 
 					else:
-						item = create_menuitem(_("Connect Input Service"), get_icon("mouse", 16))
+						item = create_menuitem(_("Input Service"), get_icon("mouse", 16))
 						self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name)
-
+						items.append((0, item))
+				
 					item.show()
-					items.append((0, item))
+					
 					
 				if name == "headset":
 					sprops = service.GetProperties()
 					
 					if sprops["Connected"]:
-						item = create_menuitem(_("Disconnect Headset Service"), get_icon("blueman-handsfree", 16))
+						item = create_menuitem(_("Headset Service"), get_icon("blueman-handsfree", 16))
 						self.Signals.Handle("gobject", item, "activate", self.on_disconnect, device, name)
+						items.append((110, item))
 					else:
-						item = create_menuitem(_("Connect Headset Service"), get_icon("blueman-handsfree", 16))
+						item = create_menuitem(_("Headset Service"), get_icon("blueman-handsfree", 16))
 						self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name)
+						items.append((10, item))
+						
 					item.show()
-					items.append((10, item))
+					
 					
 
 				if name == "audiosink":
 					sprops = service.GetProperties()
 					
 					if sprops["Connected"]:
-						item = create_menuitem(_("Disconnect A2DP Sink"), get_icon("blueman-headset", 16))
+						item = create_menuitem(_("Audio Sink"), get_icon("blueman-headset", 16))
 						self.Signals.Handle("gobject", item, "activate", self.on_disconnect, device, name)
+						items.append((120, item))
 					else:
-						item = create_menuitem(_("Connect A2DP Sink"), get_icon("blueman-headset", 16))
+						item = create_menuitem(_("Audio Sink"), get_icon("blueman-headset", 16))
 						item.props.tooltip_text = _("Allows to send audio to remote device")
 						self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name)
+						items.append((20, item))
+						
 					item.show()
-					items.append((20, item))
+					
 				
 				if name == "audiosource":
 					sprops = service.GetProperties()
 					
 					if not sprops["State"] == "disconnected":
-						item = create_menuitem(_("Disconnect A2DP Source"), get_icon("blueman-headset", 16))
+						item = create_menuitem(_("Audio Source"), get_icon("blueman-headset", 16))
 						self.Signals.Handle("gobject", item, "activate", self.on_disconnect, device, name)
+						items.append((121, item))
 					else:
-						item = create_menuitem(_("Connect A2DP Source"), get_icon("blueman-headset", 16))
+						item = create_menuitem(_("Audio Source"), get_icon("blueman-headset", 16))
 						item.props.tooltip_text = _("Allows to receive audio from remote device")
 						self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name)
+						items.append((21, item))
 					item.show()
-					items.append((20, item))
-										
+					
+			have_disconnectables = False
+			have_connectables = False
+
+			if True in map(lambda x: x[0] >= 100, items):
+				have_disconnectables = True
+			
+			if True in map(lambda x: x[0] < 100, items):
+				have_connectables = True
+				
+			if True in map(lambda x: x[0] >= 200, items):
+				item = gtk.SeparatorMenuItem()
+				item.show()
+				items.append((199, item))
+				
+			
+			if have_connectables:		
+				item = gtk.MenuItem()
+				label = gtk.Label()
+				label.set_markup(_("<b>Connect To:</b>"))
+				label.props.xalign = 0.0
+			
+				label.show()
+				item.add(label)
+				item.props.sensitive = False
+				item.show()
+				items.append((10, item))
+				
+			if have_disconnectables:		
+				item = gtk.MenuItem()
+				label = gtk.Label()
+				label.set_markup(_("<b>Disconnect:</b>"))
+				label.props.xalign = 0.0
+			
+				label.show()
+				item.add(label)
+				item.props.sensitive = False
+				item.show()
+				items.append((99, item))		
+						
 			items.sort(lambda a, b: cmp(a[0], b[0]))
 			for priority, item in items:
 				self.append(item)
