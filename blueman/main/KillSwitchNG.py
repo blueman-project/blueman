@@ -64,19 +64,21 @@ class KillSwitchNG(gobject.GObject):
 		gobject.GObject.__init__(self)
 		self.state = True
 		self.switches = {}
-		
+
 		mode = os.stat("/dev/rfkill").st_mode
 		
 		flags = 0
-		
-		if (mode & stat.S_IWOTH) == 0:
-			flags |= os.O_RDONLY
+		if os.getuid() == 0:
+			flags = os.O_RDWR
 		else:
-			flags |= os.O_RDWR
+			if (mode & stat.S_IWOTH) == 0:
+				flags = os.O_RDONLY
+			else:
+				flags = os.O_RDWR
 		
-		if (mode & stat.S_IROTH) == 0:
-			m = Mechanism()
-			m.DevRfkillChmod()
+			if (mode & stat.S_IROTH) == 0:
+				m = Mechanism()
+				m.DevRfkillChmod()
 		
 			
 		flags |= os.O_NONBLOCK
@@ -122,13 +124,13 @@ class KillSwitchNG(gobject.GObject):
 	def SetGlobalState(self, state):
 		dprint("set", state)
 		#if we have permission, we just send an event, else we use the dbus interface				
-		try:
+		if os.getuid() == 0:
 			event = struct.pack("IBBBB", 0, RFKillType.BLUETOOTH, RFKillOp.CHANGE_ALL, (0 if state else 1), 0)
 			os.write(self.fd, event)
-		except:	
+		else:
 			m = Mechanism()
 			m.SetRfkillState(state)
-			
+
 
 		
 	def GetGlobalState(self):

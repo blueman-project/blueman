@@ -1,25 +1,26 @@
 #!/usr/bin/python 
 import sys
+import os
 
+timeout = 30
+#support running uninstalled
+_dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if os.path.exists(os.path.join(_dirname,"ChangeLog")):
+	sys.path.insert(0, _dirname)
+	timeout = 9999
+	
 import dbus
 import dbus.service
 from dbus.mainloop.glib import DBusGMainLoop
 import blueman.Functions
 import gobject
-import os
+
 import subprocess
 import re
 from signal import SIGKILL
 
 loop = gobject.MainLoop()
 
-timeout = 30
-
-#support running uninstalled
-_dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-if os.path.exists(os.path.join(_dirname,"ChangeLog")):
-	sys.path.insert(0, _dirname)
-	timeout = 9999
 
 from blueman.main.NetConf import *
 	
