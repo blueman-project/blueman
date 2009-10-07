@@ -38,10 +38,11 @@ class KillSwitch(AppletPlugin):
 	}
 	
 	def on_load(self, applet):
-		self.signal = None
+		self.signals = SignalTracker()
+
 		try:
 			self.Manager = KillSwitchNG()
-			self.signal = self.Manager.connect("switch-changed", self.on_switch_changed)
+			self.signals.Handle(self.Manager, "switch-changed", self.on_switch_changed)
 			dprint("Using the new killswitch system")
 		except OSError, e:
 			dprint("Using the old killswitch system, reason:", e)
@@ -54,7 +55,7 @@ class KillSwitch(AppletPlugin):
 			if not self.get_option("checked"):
 				gobject.timeout_add(1000, self.check)
 				
-		self.Manager.connect("switch-added", self.on_switch_added)
+		self.signals.Handle(self.Manager, "switch-added", self.on_switch_added)
 				
 
 	def on_switch_added(self, manager, switch):
@@ -87,8 +88,7 @@ class KillSwitch(AppletPlugin):
 			pass		
 
 	def on_unload(self):
-		if self.signal:
-			self.Manager.disconnect(self.signal)
+		self.signals.DisconnectAll()
 		
 	def on_bluetooth_power_state_changed(self, state):
 		dprint(state)
