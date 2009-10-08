@@ -223,12 +223,20 @@ class Network(ServicePlugin):
 		active_plugins = applet.QueryPlugins()
 		
 		def dun_support_toggled(rb, x):
-			if rb.props.active and x == "nm":
-				applet.SetPluginConfig("PPPSupport", False)
-				applet.SetPluginConfig("NMIntegration", True)
-			elif rb.props.active and x == "blueman":
-				applet.SetPluginConfig("NMIntegration", False)
-				applet.SetPluginConfig("PPPSupport", True)
+			if HAL_ENABLED:
+				if rb.props.active and x == "nm":
+					applet.SetPluginConfig("PPPSupport", False)
+					applet.SetPluginConfig("NMIntegration", True)
+				elif rb.props.active and x == "blueman":
+					applet.SetPluginConfig("NMIntegration", False)
+					applet.SetPluginConfig("PPPSupport", True)
+			else:
+				if rb.props.active and x == "nm":
+					applet.SetPluginConfig("PPPSupport", False)
+					applet.SetPluginConfig("NMDUNSupport", True)
+				elif rb.props.active and x == "blueman":
+					applet.SetPluginConfig("NMDUNSupport", False)
+					applet.SetPluginConfig("PPPSupport", True)				
 				
 		def pan_support_toggled(rb, x):
 			if rb.props.active and x == "nm":
@@ -259,16 +267,23 @@ class Network(ServicePlugin):
 				rb_nm.props.sensitive = False
 				rb_nm.props.tooltip_text = _("Not currently supported with this setup")
 		else:
-			print "false"
-			rb_dun_nm.props.sensitive = False
-			rb_dun_nm.props.tooltip_text = _("Not currently supported with this setup")		
+			if "NMDUNSupport" in avail_plugins:
+				rb_dun_nm.props.sensitive = True
+			else:
+				rb_dun_nm.props.sensitive = False
+				rb_dun_nm.props.tooltip_text = _("Not currently supported with this setup")		
 			
 			if "NMPANSupport" in avail_plugins:
 				rb_nm.props.sensitive = True
+			else:
+				rb_nm.props.sensitive = False
+				rb_nm.props.tooltip_text = _("Not currently supported with this setup")
 				
-		if "NMPANSupport" in active_plugins:
-			rb_nm.props.active = True
-			
+			if "NMPANSupport" in active_plugins:
+				rb_nm.props.active = True
+		
+			if "NMDUNSupport" in active_plugins:
+				rb_dun_nm.props.active = True		
 				
 		rb_nm.connect("toggled", pan_support_toggled, "nm")
 		rb_blueman.connect("toggled", pan_support_toggled, "blueman")
