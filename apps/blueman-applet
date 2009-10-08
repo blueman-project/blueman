@@ -115,7 +115,11 @@ class BluemanApplet(object):
 			
 		def Load(self, name=None):
 			if name:
-				self.__load_plugin(self.__classes[name])
+				try:
+					self.__load_plugin(self.__classes[name])
+				except LoadException:
+					pass
+					
 				return 
 				
 			path = os.path.dirname(blueman.plugins.applet.__file__)
