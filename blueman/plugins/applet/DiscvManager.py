@@ -20,6 +20,7 @@ from blueman.Functions import *
 import gettext
 
 from blueman.plugins.AppletPlugin import AppletPlugin
+from blueman.main.SignalTracker import SignalTracker
 
 import gobject
 import gtk
@@ -40,6 +41,8 @@ class DiscvManager(AppletPlugin):
 	}
 	
 	def on_load(self, applet):
+		self.Signals = SignalTracker()
+		
 		self.item = create_menuitem(_("_Make Discoverable"), get_icon("gtk-find", 16))
 		applet.Plugins.Menu.Register(self, self.item, 20, False)
 
@@ -47,7 +50,7 @@ class DiscvManager(AppletPlugin):
 		self.adapter = None
 		self.time_left = -1
 			
-		self.item.connect("activate", self.on_set_discoverable)
+		self.Signals.Handle(self.item, "activate", self.on_set_discoverable)
 		self.item.props.tooltip_text = _("Make the default adapter temporarily visible")
 		
 		self.timeout = None
@@ -59,20 +62,15 @@ class DiscvManager(AppletPlugin):
 		if self.timeout:
 			gobject.source_remove(self.timeout)
 			
-		if self.adapter:
-			self.adapter.UnHandleSignal(self.on_adapter_property_changed, "PropertyChanged")
-		
-		if self.Applet.Manager:
-			self.Applet.Manager.UnHandleSignal(self.on_default_adapter_changed, "DefaultAdapterChanged")
+		self.Signals.DisconnectAll()
 		
 	def on_manager_state_changed(self, state):
 		if state:
 			self.init_adapter()
 			self.update_menuitems()
-			self.Applet.Manager.HandleSignal(self.on_default_adapter_changed, "DefaultAdapterChanged")
+			self.Signals.Handle(self.Applet.Manager, self.on_default_adapter_changed, "DefaultAdapterChanged", sigid=0)
 		else:
-			if self.Applet.Manager:
-				self.Applet.Manager.UnHandleSignal(self.on_default_adapter_changed, "DefaultAdapterChanged")
+			self.Signals.Disconnect(0)
 			
 			self.adapter = None
 			self.update_menuitems()
