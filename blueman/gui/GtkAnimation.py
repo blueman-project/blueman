@@ -40,7 +40,7 @@ class BezierController(LinearController):
 
 class AnimBase(gobject.GObject):
 	__gsignals__ = {
-		'animation-finished' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, ()),
+		'animation-finished' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
 	}
 	
 	def __init__(self, state=1.0):
@@ -193,6 +193,51 @@ class TreeRowFade(AnimBase):
 	def state_changed(self, state):
 		self.tw.queue_draw()
 		#print state
+		
+class TreeRowColorFade(TreeRowFade):
+	def __init__(self, tw, path, color):
+		TreeRowFade.__init__(self, tw, path, None)
+		
+		self.color = color
+		
+	def do_animation_finished(self):
+		self.unref()
+	
+	def on_expose(self, widget, event):
+		if self.frozen:
+			return
+
+		if not self.row.valid():
+			self.tw.disconnect(self.sig)
+			self.sig = None
+			return
+			
+		path = self.row.get_path()
+		
+		area = gtk.gdk.Rectangle()
+		
+		cr = event.window.cairo_create()
+		
+		color = self.style.base[0]
+
+		if not self.columns:
+			columns = self.tw.get_columns()
+		else:
+			columns = self.columns
+			
+		for col in columns:
+			cr.save()
+			
+			rect = self.tw.get_background_area(path, col)
+			isected = event.area.intersect(rect)
+			cr.rectangle(isected)
+			cr.clip()
+
+			cr.set_source_rgba((1.0/65535)*self.color.red, (1.0/65535)*self.color.green, (1.0/65535)*self.color.blue, 1.0-self.get_state())
+			cr.set_operator(cairo.OPERATOR_OVER)
+	 		cr.paint()
+			
+			cr.restore()	
 
 class CellFade(AnimBase):
 	def __init__(self, tw, path, columns=None):

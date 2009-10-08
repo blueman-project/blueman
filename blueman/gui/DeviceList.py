@@ -88,6 +88,7 @@ class DeviceList(GenericList):
 		self.path_to_row = {}
 		
 		self.monitored_devices = []
+		self.discovered_devices = []
 
 		self.signals = SignalTracker()
 		
@@ -157,11 +158,14 @@ class DeviceList(GenericList):
 			props["Address"] = address
 			props["Fake"] = True
 			dev = FakeDevice(props)
+			device = Device(dev)
+			
+			if not address in self.discovered_devices:
+				self.emit("device-found", device)
+				self.discovered_devices.append(address)		
 		
 			iter = self.find_device(dev)
 			if not iter:
-				device = Device(dev)
-				self.emit("device-found", device)
 				self.device_add_event(device)
 				iter = self.find_device(device)
 				self.row_update_event(iter, "RSSI", props["RSSI"])
@@ -177,6 +181,9 @@ class DeviceList(GenericList):
 		if key == "Discovering":
 			if not value and self.discovering:
 				self.StopDiscovery()
+				
+			self.discovered_devices = []
+				
 		self.emit("adapter-property-changed", self.Adapter, (key, value))
 				
 				

@@ -31,7 +31,7 @@ from blueman.Constants import *
 from blueman.Functions import *
 import cgi
 
-from blueman.gui.GtkAnimation import TreeRowFade, CellFade
+from blueman.gui.GtkAnimation import TreeRowColorFade, TreeRowFade, CellFade
 
 class ManagerDeviceList(DeviceList):
 	
@@ -90,6 +90,11 @@ class ManagerDeviceList(DeviceList):
 		
 		self.set_search_equal_func(self.search_func)
 		
+	def do_device_found(self, device):
+		iter = self.find_device(device)
+		if iter:
+			anim = TreeRowColorFade(self, self.props.model.get_path(iter), gtk.gdk.color_parse("blue"))
+			anim.animate(start=0.8, end=1.0)
 		
 		
 	def search_func(self, model, column, key, iter):
