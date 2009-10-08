@@ -1,4 +1,4 @@
-# Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
+# Copyright (C) 2009 Valmantas Paliksa <walmis at balticum-tv dot lt>
 #
 # Licensed under the GNU General Public License Version 3
 #
@@ -14,7 +14,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-# NMMonitor: Monitors a selected device and emits a signal when it was disconnected via NetworkManager
+
 import gobject
 import dbus
 from blueman.Sdp import *
