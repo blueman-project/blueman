@@ -312,13 +312,28 @@ from blueman.main.Config import Config
 import pickle
 import base64
 
+sdp_cache = {}
+sdp_conf = Config("sdp")
+
+def on_sdp_changed(c, key, value):
+	if key in sdp_cache:
+		s = pickle.loads(base64.b64decode(value))
+		sdp_cache[key] = s
+	
+sdp_conf.connect("property-changed", on_sdp_changed)
+
 def sdp_get_cached(address):
-	c = Config("sdp")
-	d = c.get(address)
-	if d:
-		return pickle.loads(base64.b64decode(d))
+	if not address in sdp_cache:
+		
+		d = sdp_conf.get(address)
+		if d:
+			s = pickle.loads(base64.b64decode(d))
+			sdp_cache[address] = s
+			return s
+		else:
+			raise KeyError("No sdp info for %s found" % address)
 	else:
-		raise KeyError("No sdp info for %s found" % address)
+		return sdp_cache[address]
 		
 def sdp_get_cached_rfcomm(address):
 	local_sdp = sdp_get_cached(address)
@@ -338,6 +353,8 @@ def sdp_get_cached_rfcomm(address):
 					
 			elif k == SDP_PRIMARY_LANG_BASE:
 				name = v[1]
+				if name:
+					name = name.strip("\n\r ")
 			
 			elif k == SDP_ATTR_SVCLASS_ID_LIST:
 				def m(x):
