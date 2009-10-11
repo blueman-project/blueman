@@ -154,6 +154,139 @@ uuid_names[0x1401] = "MDPSource"
 uuid_names[0x1402] = "MDPSink"
 uuid_names[0x2112] = "AppleAgent"
 
+#import xml.parsers.expat
+import xml.dom.minidom
+
+"""<record>
+	<attribute id="0x0000">
+		<uint32 value="0x0001000b" />
+	</attribute>
+	<attribute id="0x0001">
+		<sequence>
+			<uuid value="0x1101" />
+			<uuid value="0xcafe" />
+			<uuid value="1428cf80-b59d-11de-0029-0a3c01274823" />
+		</sequence>
+	</attribute>
+	<attribute id="0x0003">
+		<uuid value="1428cf80-b59d-11de-0029-0a3c01274823" />
+	</attribute>
+	<attribute id="0x0004">
+		<sequence>
+			<sequence>
+				<uuid value="0x0100" />
+				<uint16 value="0x0003" />
+			</sequence>
+			<sequence>
+				<uuid value="0x0003" />
+				<uint8 value="0x19" />
+			</sequence>
+		</sequence>
+	</attribute>
+	<attribute id="0x0005">
+		<sequence>
+			<uuid value="0x1002" />
+		</sequence>
+	</attribute>
+	<attribute id="0x0100">
+		<text value="GpsGateGPS" />
+	</attribute>
+	<attribute id="0x0101">
+		<text value="GpsGate Bluetooth GPS " />
+	</attribute>
+</record>"""
+
+
+SDP_ATTR_RECORD_HANDLE			= 0x0000
+SDP_ATTR_SVCLASS_ID_LIST		= 0x0001
+SDP_ATTR_RECORD_STATE			= 0x0002
+SDP_ATTR_SERVICE_ID			= 0x0003
+SDP_ATTR_PROTO_DESC_LIST		= 0x0004
+SDP_ATTR_BROWSE_GRP_LIST		= 0x0005
+SDP_ATTR_LANG_BASE_ATTR_ID_LIST		= 0x0006
+SDP_ATTR_SVCINFO_TTL			= 0x0007
+SDP_ATTR_SERVICE_AVAILABILITY		= 0x0008
+SDP_ATTR_PFILE_DESC_LIST		= 0x0009
+SDP_ATTR_DOC_URL			= 0x000a
+SDP_ATTR_CLNT_EXEC_URL			= 0x000b
+SDP_ATTR_ICON_URL			= 0x000c
+SDP_ATTR_ADD_PROTO_DESC_LIST		= 0x000d
+
+SDP_PRIMARY_LANG_BASE 			= 0x0100
+
+SDP_UUID	= 0x0001
+UDP_UUID	= 0x0002
+RFCOMM_UUID	= 0x0003
+TCP_UUID	= 0x0004
+TCS_BIN_UUID	= 0x0005
+TCS_AT_UUID	= 0x0006
+OBEX_UUID	= 0x0008
+IP_UUID		= 0x0009
+FTP_UUID	= 0x000a
+HTTP_UUID	= 0x000c
+WSP_UUID	= 0x000e
+BNEP_UUID	= 0x000f
+UPNP_UUID	= 0x0010
+HIDP_UUID	= 0x0011
+HCRP_CTRL_UUID	= 0x0012
+HCRP_DATA_UUID	= 0x0014
+HCRP_NOTE_UUID	= 0x0016
+AVCTP_UUID	= 0x0017
+AVDTP_UUID	= 0x0019
+CMTP_UUID	= 0x001b
+UDI_UUID	= 0x001d
+MCAP_CTRL_UUID	= 0x001e
+MCAP_DATA_UUID	= 0x001f
+L2CAP_UUID	= 0x0100
+
+def parse_sdp_xml(services):
+	svc_list = []	
+	
+	
+	def get_value(typename, val):
+		if "int" in typename:
+			return (typename, int(val, 16))
+		else:
+			return (typename, val)
+	
+	def HandleRecord(record):
+		svc_list.append(HandleAttribs(record.getElementsByTagName("attribute")))
+
+		
+	def HandleSequence(sequence):
+		ls = []
+		for i in sequence.childNodes:
+			if i.nodeName == "sequence":
+				r = HandleSequence(i)
+				ls.append(r)
+			else:
+				if i.nodeType != i.TEXT_NODE:
+					ls.append(get_value(i.nodeName, i.getAttribute("value")))
+					
+		return ls
+		
+		
+	def HandleAttribs(attribs):
+		attr_list = {}
+		for attrib in attribs:
+			id = attrib.getAttribute("id")
+			id = int(id, 16)
+			
+			for i in attrib.childNodes:
+				if i.nodeName == "sequence":
+					attr_list[id] = HandleSequence(i)
+
+				elif i.nodeType != i.TEXT_NODE:
+					attr_list[id] = get_value(i.nodeName, i.getAttribute("value"))
+					
+		return attr_list
+	
+	for k, v in services.iteritems():
+		dom = xml.dom.minidom.parseString(v)
+
+		HandleRecord(dom.getElementsByTagName("record")[0])
+
+	return svc_list
 
 def uuid16_to_name(uuid16):
 	try:
@@ -174,4 +307,74 @@ def bluez_to_friendly_name(svc):
 		return uuid_names[0x110a]
 	else:
 		raise Exception
+		
+from blueman.main.Config import Config
+import pickle
+import base64
+
+def sdp_get_cached(address):
+	c = Config("sdp")
+	d = c.get(address)
+	if d:
+		return pickle.loads(base64.b64decode(d))
+	else:
+		raise KeyError("No sdp info for %s found" % address)
+		
+def sdp_get_cached_rfcomm(address):
+	local_sdp = sdp_get_cached(address)
+	ls = []
+	for svc in local_sdp:
+		channel = 0
+		name = None
+		uuids = None
+	
+		for k, v in svc.iteritems():
+			if k == SDP_ATTR_PROTO_DESC_LIST:
+				#print v
+				for i in v:
+					if i[0][0] == "uuid" and int(i[0][1], 16) == RFCOMM_UUID:
+						#print "Channel", i[1][1]	
+						channel = i[1][1]
+					
+			elif k == SDP_PRIMARY_LANG_BASE:
+				name = v[1]
+			
+			elif k == SDP_ATTR_SVCLASS_ID_LIST:
+				def m(x):
+					try:
+						return int(x[1], 16)
+					except:
+						pass
+			
+				uuids = map(m, v)
+		ls.append((name, channel, uuids))	
+
+	return ls
+
+def sdp_get_serial_type(address, pattern):
+	pattern = str(pattern)
+	if "-" in pattern:
+		return (uuid128_to_uuid16(pattern),)
+	else:
+		s = sdp_get_cached_rfcomm(address)
+		for name, channel, uuids in s:
+			if str(channel) == pattern:
+				return tuple(uuids)
+				
+def sdp_get_serial_name(address, pattern):
+	pattern = str(pattern)
+	if "-" in pattern:
+		return uuid16_to_name(uuid128_to_uuid16(pattern))
+	else:
+		try:
+			s = sdp_get_cached_rfcomm(address)
+		except:
+			return _("Unknown")
+			
+		for name, channel, uuids in s:
+			if str(channel) == pattern:
+				if name == None:
+					return _("Unknown")
+				else:
+					return name.strip("\n\r ")
 

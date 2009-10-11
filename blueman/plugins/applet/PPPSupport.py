@@ -50,12 +50,10 @@ class connection:
 		m.PPPConnect(port, c.props.number, c.props.apn, reply_handler=self.on_connected, error_handler=self.on_error, timeout=200)	
 	
 	def on_error(self, error):
-		print "error occurred", error
 		self.error_handler(error)
 		gobject.timeout_add(1000, self.device.Services["serial"].Disconnect, self.port)
 		
 	def on_connected(self, iface):
-		print "connected to iface", iface
 		self.reply_handler(self.port)
 		self.Applet.Plugins.Run("on_ppp_connected", self.device, self.port, iface)
 		
@@ -84,8 +82,8 @@ class PPPSupport(AppletPlugin):
 		pass
 		
 	def rfcomm_connect_handler(self, device, uuid, reply, err):
-		uuid16 = uuid128_to_uuid16(uuid)
-		if uuid16 == DIALUP_NET_SVCLASS_ID:
+		uuid16 = sdp_get_serial_type(device.Address, uuid)
+		if DIALUP_NET_SVCLASS_ID in uuid16:
 		
 			def local_reply(port):
 				connection(self.Applet, device, port, reply, err)

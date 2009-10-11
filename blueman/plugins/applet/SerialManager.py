@@ -29,7 +29,7 @@ import gobject
 import gtk
 
 class SerialManager(AppletPlugin):
-	__icon__ = "modem"
+	__icon__ = "blueman-serial"
 	__author__ = "Walmis"
 	
 	def on_load(self, applet):
@@ -39,13 +39,14 @@ class SerialManager(AppletPlugin):
 		pass
 		
 	def on_rfcomm_connected(self, device, port, uuid):
-		uuid16 = uuid128_to_uuid16(uuid)
-		if uuid16 == SERIAL_PORT_SVCLASS_ID:
+		uuid16 = sdp_get_serial_type(device.Address, uuid)
+		if SERIAL_PORT_SVCLASS_ID in uuid16:
 			Notification(_("Serial port connected"), _("Serial port service on device <b>%s</b> now will be available via <b>%s</b>") % (device.Alias, port), pixbuf=get_icon("network-wired", 48), status_icon=self.Applet.Plugins.StatusIcon)	
 			
 	def rfcomm_connect_handler(self, device, uuid, reply, err):
-		uuid16 = uuid128_to_uuid16(uuid)
-		if uuid16 == SERIAL_PORT_SVCLASS_ID:	
+		uuid16 = sdp_get_serial_type(device.Address, uuid)
+		
+		if SERIAL_PORT_SVCLASS_ID in uuid16:
 			device.Services["serial"].Connect(uuid, reply_handler=reply, error_handler=err)
 		
 			return True

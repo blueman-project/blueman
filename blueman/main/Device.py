@@ -39,7 +39,7 @@ class Device(gobject.GObject):
 		self.Fake = True
 		self.Temp = False
 		
-		if isinstance(instance, str):
+		if isinstance(instance, str) or isinstance(instance, unicode):
 			self.Device = BluezDevice(instance)
 		else:
 			self.Device = instance

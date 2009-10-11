@@ -177,7 +177,7 @@ class ManagerDeviceMenu(gtk.Menu):
 			#prog.connect("cancelled", cancel)
 			
 		elif service_id == "serial":
-			uuid = args[0]
+			uuid = str(args[0])
 
 			appl.RfcommConnect(device.GetObjectPath(), uuid, reply_handler=success, error_handler=fail, timeout=200)
 		
@@ -219,6 +219,8 @@ class ManagerDeviceMenu(gtk.Menu):
 
 	def Generate(self):
 		self.clear()
+		
+		appl = AppletService()	
 		
 		if not self.is_popup or self.props.visible:
 			device = self.Blueman.List.get(self.Blueman.List.selected(), "device")["device"]
@@ -275,103 +277,122 @@ class ManagerDeviceMenu(gtk.Menu):
 			
 			
 		else:
-			connectables = 0
-			disconnectables = 0
 			dprint(device.Alias)
 			uuids = device.UUIDs
 			item = None
 			items = []
 			for name, service in device.Services.iteritems():
 				if name == "serial":
+					ports_list = rfcomm_list()
+					def flt(dev):
+						if dev["dst"] == device.Address and dev["state"] == "connected":
+							return dev["channel"]
 					
-					sub = gtk.Menu()
-					sub.show()
+					active_ports = map(flt, ports_list)
+					
+					
+					def get_port_id(channel):
+						for dev in ports_list:
+							if dev["dst"] == device.Address and dev["state"] == "connected" and dev["channel"] == channel:
+								return dev["id"]
+					
+					serial_items = []
 
 					num_ports = 0
-					for uuid in uuids:
+					has_dun = False		
+					try:
+						for port_name, channel, uuid in sdp_get_cached_rfcomm(device.Address):
+							
+							if SERIAL_PORT_SVCLASS_ID in uuid:
+								if name is not None:
+									if channel in active_ports:
+										item = create_menuitem(port_name, get_x_icon("blueman-serial", 16))
+										self.Signals.Handle("gobject", item, "activate", self.on_disconnect, device, name, "/dev/rfcomm%d" % get_port_id(channel))
+										item.show()
+										items.append((150, item))
+									else:
+										item = create_menuitem(port_name, get_icon("blueman-serial", 16))
+										self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name, channel)
+										item.show()
+										serial_items.append(item)
+
+								
+							elif DIALUP_NET_SVCLASS_ID in uuid:
+								if name is not None:
+									if channel in active_ports:
+										item = create_menuitem(port_name, get_x_icon("modem", 16))
+										self.Signals.Handle("gobject", item, "activate", self.on_disconnect, device, name, "/dev/rfcomm%d" % get_port_id(channel))
+										item.show()
+										items.append((150, item))
+									else:
+										item = create_menuitem(port_name, get_icon("modem", 16))
+										self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name, channel)
+										item.show()
+										serial_items.append(item)
+										has_dun = True
+							
+					except KeyError:
+						for uuid in uuids:
+							uuid16 = uuid128_to_uuid16(uuid)
+							if uuid16 == DIALUP_NET_SVCLASS_ID:
+								item = create_menuitem(_("Dialup Service"), get_icon("modem", 16))
+								self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name, uuid)
+								item.show()
+								serial_items.append(item)
+								has_dun = True
+								
+							if uuid16 == SERIAL_PORT_SVCLASS_ID:
+								item = create_menuitem(_("Serial Service"), get_icon("blueman-serial", 16))
+								self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name, uuid)
+								item.show()
+								serial_items.append(item)
+								
+								
+						for dev in ports_list:
+							if dev["dst"] == device.Address:
+								if dev["state"] == "connected":
+									devname = _("Serial Port %s") % "rfcomm%d" % dev["id"]
 						
-						uuid16 = uuid128_to_uuid16(uuid)
-						if uuid16 == DIALUP_NET_SVCLASS_ID:
-							item = create_menuitem(_("Dialup Service"), get_icon("modem", 16))
-							self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name, uuid)
-							sub.append(item)
-							item.show()
-							num_ports += 1
-							def open_settings(i, device):
-								from blueman.gui.GsmSettings import GsmSettings
-								d = GsmSettings(device.Address)
-								d.run()
-								d.destroy()
-							a = AppletService()
-							if "PPPSupport" in a.QueryPlugins():
-								item = gtk.SeparatorMenuItem()
-								item.show()
-								sub.append(item)
+									item = create_menuitem(devname, get_x_icon("modem", 16))
+									self.Signals.Handle("gobject", item, "activate", self.on_disconnect, device, name, "/dev/rfcomm%d" % dev["id"])
+									items.append((120, item))
+									item.show()
+				
+					def open_settings(i, device):
+						from blueman.gui.GsmSettings import GsmSettings
+						d = GsmSettings(device.Address)
+						d.run()
+						d.destroy()	
+					
+					if has_dun and "PPPSupport" in appl.QueryPlugins():
+						item = gtk.SeparatorMenuItem()
+						item.show()
+						serial_items.append(item)
+				
+						item = create_menuitem(_("Dialup Settings"), get_icon("gtk-preferences", 16))
+						serial_items.append(item)
+						item.show()
+						self.Signals.Handle("gobject", item, "activate", open_settings, device)		
 							
-								item = create_menuitem(_("Dialup Settings"), get_icon("gtk-preferences", 16))
-								sub.append(item)
-								item.show()
-								self.Signals.Handle("gobject", item, "activate", open_settings, device)
 							
-						if uuid16 == SERIAL_PORT_SVCLASS_ID:
-							item = create_menuitem(_("Serial Service"), get_icon("modem", 16))
-							self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name, uuid)
-							sub.append(item)
-							item.show()
-							num_ports += 1
-							
-					if num_ports > 0:
-#						def on_type_changed(item, type):
-#							if item.active:
-#								setattr(conns.props, device.Address, type)
-#							
-#						conns = Config("conn_types")
+					if len(serial_items) > 1:
+						sub = gtk.Menu()
+						sub.show()
 						
 						item = create_menuitem(_("Serial Ports"), get_icon("modem", 16))
 						item.set_submenu(sub)
 						item.show()
 						items.append((90, item))
 						
-#						item = gtk.SeparatorMenuItem()
-#						item.show()
-#						sub.append(item)
-#						
-#						gsm_item = gtk.RadioMenuItem(None, "GSM/3G")
-#						gsm_item.show()
-#						
-#						sub.append(gsm_item)
-#						
-#						cdma_item = gtk.RadioMenuItem(gsm_item, "CDMA")
-#						cdma_item.show()
-#						
-#						sub.append(cdma_item)		
-#						
-#						t = getattr(conns.props, device.Address)
-#						if t == None or t == 0:
-#							gsm_item.set_active(True)
-#						else:
-#							cdma_item.set_active(True)
-#						
-#						gsm_item.connect("activate", on_type_changed, 0)	
-#						cdma_item.connect("activate", on_type_changed, 1)		
+						for item in serial_items:
+							sub.append(item)
 					
-					rfcomms = rfcomm_list()
-					for dev in rfcomms:
-						if dev["dst"] == device.Address:
-							if dev["state"] == "connected":
-								if dev["channel"] == 1:
-									devname = _("Dial-up Port")
-								elif dev["channel"] == 6:
-									devname = _("Serial Port")
-								else:
-									devname = _("Serial Port %s") % "rfcomm%d" % dev["id"]
-							
-								item = create_menuitem(devname, get_x_icon("modem", 16))
-								self.Signals.Handle("gobject", item, "activate", self.on_disconnect, device, name, "/dev/rfcomm%d" % dev["id"])
-								items.append((120, item))
-								item.show()
+					else:
+						for item in serial_items:
+							items.append((80, item))
+
 					
-				if name == "network":
+				elif name == "network":
 					self.Signals.Handle("bluez", service, self.service_property_changed, "PropertyChanged")
 					sprops = service.GetProperties()
 					
@@ -398,20 +419,16 @@ class ManagerDeviceMenu(gtk.Menu):
 						item.show()
 						items.append((101, item))
 						
-						try:
-							appl = AppletService()							
-						except:
-							dprint("** Failed to connect to applet")
-						else:
-							if "DhcpClient" in appl.QueryPlugins():
-								def renew(x):
-									appl.DhcpClient(sprops["Device"])							
-								item = create_menuitem(_("Renew IP Address"), get_icon("gtk-refresh", 16))
-								self.Signals.Handle("gobject", item, "activate", renew)
-								item.show()
-								items.append((201, item))
+
+						if "DhcpClient" in appl.QueryPlugins():
+							def renew(x):
+								appl.DhcpClient(sprops["Device"])							
+							item = create_menuitem(_("Renew IP Address"), get_icon("gtk-refresh", 16))
+							self.Signals.Handle("gobject", item, "activate", renew)
+							item.show()
+							items.append((201, item))
 					
-				if name == "input":
+				elif name == "input":
 					self.Signals.Handle("bluez", service, self.service_property_changed, "PropertyChanged")
 					sprops = service.GetProperties()
 					if sprops["Connected"]:
@@ -422,12 +439,12 @@ class ManagerDeviceMenu(gtk.Menu):
 					else:
 						item = create_menuitem(_("Input Service"), get_icon("mouse", 16))
 						self.Signals.Handle("gobject", item, "activate", self.on_connect, device, name)
-						items.append((0, item))
+						items.append((1, item))
 				
 					item.show()
 					
 					
-				if name == "headset":
+				elif name == "headset":
 					sprops = service.GetProperties()
 					
 					if sprops["Connected"]:
@@ -443,7 +460,7 @@ class ManagerDeviceMenu(gtk.Menu):
 					
 					
 
-				if name == "audiosink":
+				elif name == "audiosink":
 					sprops = service.GetProperties()
 					
 					if sprops["Connected"]:
@@ -459,7 +476,7 @@ class ManagerDeviceMenu(gtk.Menu):
 					item.show()
 					
 				
-				if name == "audiosource":
+				elif name == "audiosource":
 					sprops = service.GetProperties()
 					
 					if not sprops["State"] == "disconnected":
@@ -498,7 +515,7 @@ class ManagerDeviceMenu(gtk.Menu):
 				item.add(label)
 				item.props.sensitive = False
 				item.show()
-				items.append((10, item))
+				items.append((0, item))
 				
 			if have_disconnectables:		
 				item = gtk.MenuItem()
@@ -586,7 +603,7 @@ class ManagerDeviceMenu(gtk.Menu):
 					self.unset_op(device)
 					gobject.timeout_add(1500, prog.finalize)
 				
-				def reply(*args):
+				def reply():
 					prog_msg(_("Success!"))
 					MessageArea.close()
 					
@@ -598,7 +615,7 @@ class ManagerDeviceMenu(gtk.Menu):
 				prog = ManagerProgressbar(self.Blueman, False, _("Refreshing"))
 				prog.start()
 				self.set_op(device, _("Refreshing Services..."))
-				device.GetInterface().DiscoverServices("", reply_handler=reply, error_handler=error)
+				appl.RefreshServices(device.GetObjectPath(), reply_handler=reply, error_handler=error)
 			
 			item = create_menuitem(_("Refresh Services"), get_icon("gtk-refresh", 16))
 			self.append(item)

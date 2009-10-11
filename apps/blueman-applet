@@ -171,7 +171,12 @@ class BluemanApplet(object):
 						pass
 						
 		def Disabled(self, plugin):
-			return "!"+plugin in self.__config.props.applet_plugins
+			plugins = self.__config.props.applet_plugins
+			return "!"+plugin in plugins
+			
+		def Enabled(self, plugin):
+			plugins = self.__config.props.applet_plugins
+			return plugin in plugins
 
 		def __load_plugin(self, cls):
 			if cls.__name__ in self.__loaded:
@@ -189,12 +194,12 @@ class BluemanApplet(object):
 						
 			for cfl in self.__cfls[cls.__name__]:
 				if cfl in self.__classes:
-					if self.__classes[cfl].__priority__ > cls.__priority__ and not self.Disabled(cfl):
+					if self.__classes[cfl].__priority__ > cls.__priority__ and not self.Disabled(cfl) and not self.Enabled(cls.__name__):
 						dprint("Not loading %s because it's conflict has higher priority" % cls.__name__)
 						return
 					
 				if cfl in self.__loaded:
-					if cls.__priority__ > self.__classes[cfl].__priority__:
+					if cls.__priority__ > self.__classes[cfl].__priority__ and not self.Enabled(cfl):
 						self.Unload(cfl)
 					else:
 						raise LoadException("Not loading conflicting plugin %s due to lower priority" % cls.__name__)

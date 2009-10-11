@@ -17,6 +17,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 from blueman.Functions import *
+import pickle
+import base64
+from blueman.main.Config import Config
+from blueman.Sdp import parse_sdp_xml
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.applet.BluezAgent import AdapterAgent
 
@@ -48,10 +52,22 @@ class DBusService(AppletPlugin):
 		self.add_dbus_method(self.CancelDeviceCreation, in_signature="ss", async_callbacks=("ok","err"))
 		self.add_dbus_method(self.RfcommConnect, in_signature="ss", out_signature="s", async_callbacks=("ok","err"))
 		self.add_dbus_method(self.RfcommDisconnect, in_signature="ss", out_signature="")
+		self.add_dbus_method(self.RefreshServices, in_signature="s", out_signature="", async_callbacks=("ok","err"))
 		
 		self.add_dbus_method(self.QueryPlugins, in_signature="", out_signature="as")
 		self.add_dbus_method(self.QueryAvailablePlugins, in_signature="", out_signature="as")
 		self.add_dbus_method(self.SetPluginConfig, in_signature="sb", out_signature="")
+		
+	def RefreshServices(self, path, ok, err):
+		device = Device(path)
+		def reply(svcs):
+			parsed = parse_sdp_xml(svcs)
+			c = Config("sdp")
+			c.set(device.Address, base64.b64encode(pickle.dumps(parsed, pickle.HIGHEST_PROTOCOL)))
+			ok()
+
+		
+		device.GetInterface().DiscoverServices("", reply_handler=reply, error_handler=err)
 		
 	def QueryPlugins(self):
 		return self.Applet.Plugins.GetLoaded()

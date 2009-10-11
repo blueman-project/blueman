@@ -141,8 +141,8 @@ class NMIntegration(AppletPlugin):
 			self.RegisterModem(device.get_object_path(), port)
 		
 	def rfcomm_connect_handler(self, device, uuid, reply_handler, error_handler):
-		uuid16 = uuid128_to_uuid16(uuid)
-		if uuid16 == DIALUP_NET_SVCLASS_ID:
+		uuid16 = sdp_get_serial_type(device.Address, uuid)
+		if DIALUP_NET_SVCLASS_ID in uuid16:
 			device.Services["serial"].Connect(uuid, reply_handler=reply_handler, error_handler=error_handler)
 			return True
 		else:

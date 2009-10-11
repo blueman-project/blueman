@@ -35,8 +35,8 @@ class NMDUNSupport(AppletPlugin):
 		pass
 		
 	def rfcomm_connect_handler(self, device, uuid, reply, err):
-		uuid16 = uuid128_to_uuid16(uuid)
-		if uuid16 == DIALUP_NET_SVCLASS_ID:	
+		uuid16 = sdp_get_serial_type(device.Address, uuid)
+		if DIALUP_NET_SVCLASS_ID in uuid16:		
 			device.Services["serial"].Connect(uuid, reply_handler=reply, error_handler=err)
 		
 			return True
