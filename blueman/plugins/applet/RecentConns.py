@@ -304,7 +304,7 @@ class RecentConns(AppletPlugin, gtk.Menu):
 		device = item["device"]
 		
 		if item["service"] == "org.bluez.Serial":
-			name = sdp.sdp_get_serial_name(device.Address, item["conn_args"][0])
+			name = sdp.sdp_get_serial_name(item["address"], item["conn_args"][0])
 
 		elif item["service"] == "org.bluez.Network":
 			name = _("Network Access (%s)") % sdp.uuid16_to_name(sdp.uuid128_to_uuid16(item["conn_args"][0]))
