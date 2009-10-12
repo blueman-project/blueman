@@ -318,12 +318,17 @@ class NMPANSupport(AppletPlugin):
 			uuid = args[0]
 			name = uuid16_to_name(uuid128_to_uuid16(uuid))
 			d = Device(object_path)
-			params = {}
-			params["bluetooth"] = {"name": "bluetooth", "bdaddr":  str(d.Address), "type" : "panu"}
-			params["connection"] = {"autoconnect": False, "id": str("%s on %s") % (name, d.Alias), "uuid" : str(uuid1()), "type": "bluetooth"}
-			params['ipv4'] = {'addresses': dbus.Array([], dbus.Signature("i")), 'dns': dbus.Array([], dbus.Signature("i")), "method": "auto", "routes": dbus.Array([], dbus.Signature("i"))}		
 			
-			NewConnectionBuilder(self, params, ok, err)
+			conn = self.find_active_connection(d.Address, "panu")
+			if conn:
+				err(dbus.DBusException(_("Already connected")))
+			else:
+				params = {}
+				params["bluetooth"] = {"name": "bluetooth", "bdaddr":  str(d.Address), "type" : "panu"}
+				params["connection"] = {"autoconnect": False, "id": str("%s on %s") % (name, d.Alias), "uuid" : str(uuid1()), "type": "bluetooth"}
+				params['ipv4'] = {'addresses': dbus.Array([], dbus.Signature("i")), 'dns': dbus.Array([], dbus.Signature("i")), "method": "auto", "routes": dbus.Array([], dbus.Signature("i"))}		
+			
+				NewConnectionBuilder(self, params, ok, err)
 				
 			return True
 			
