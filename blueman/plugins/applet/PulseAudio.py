@@ -128,15 +128,16 @@ class PulseAudio(AppletPlugin):
 	def on_source_prop_change(self, key, value, device):
 		dprint(key, value)
 		def load_cb(res):
-			dprint(res)
-			if res:
+			dprint("Load module-bluetooth-device result", res)
+			if res >= 0:
 				SourceRedirector(res, device, self.pulse_utils)
 			
 		if key == "State":
 			if value == "connected":
 				if not device in self.connected_sources:
 					self.connected_sources.append(device)
-					self.pulse_utils.LoadModule("module-bluetooth-device", "path=%s profile=a2dp_source source_properties=device.icon_name=blueman card_properties=device.icon_name=blueman" % device, load_cb)
+					d = Device(device)
+					self.pulse_utils.LoadModule("module-bluetooth-device", "path=%s address=%s profile=a2dp_source source_properties=device.icon_name=blueman card_properties=device.icon_name=blueman" % (device, d.Address), load_cb)
 					
 			elif value == "disconnected":
 				if device in self.connected_sources:
