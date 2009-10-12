@@ -78,6 +78,7 @@ class Assistant(Agent):
 		self.assistant = self.Builder.get_object("assistant")
 		self.assistant.set_title(_("Bluetooth Assistant"))
 			
+		self.applet = AppletService()
 		
 		self.assistant.connect("prepare", self.on_prepare)
 		self.assistant.connect("close", self.on_close)
@@ -281,7 +282,12 @@ class Assistant(Agent):
 
 			def ok(dev):
 				self.Device = Device(dev)
-				self.assistant.set_current_page(PAGE_CONNECT)
+				
+				def refresh_cb(*args):
+					self.assistant.set_current_page(PAGE_CONNECT)
+				
+				self.applet.RefreshServices(self.Device.GetObjectPath(), reply_handler=refresh_cb, error_handler=refresh_cb)
+				
 			def err(err):
 				print err
 				pages[PAGE_FINISH].set_markup(_("<b>Failed to add device</b>"))
@@ -362,7 +368,7 @@ class Assistant(Agent):
 			
 		elif num == PAGE_CONNECTING:
 			print "connect"
-			appl = AppletService()
+			
 			svc = self.Device.Services[self.Service[0]]
 			
 			def success(*args):
@@ -379,13 +385,13 @@ class Assistant(Agent):
 			
 			if self.Service[0] == "network":
 				uuid = self.Service[1][0]
-				appl.ServiceProxy(svc.GetInterfaceName(), svc.GetObjectPath(), "Connect", [uuid], reply_handler=success, error_handler=fail)
+				self.applet.ServiceProxy(svc.GetInterfaceName(), svc.GetObjectPath(), "Connect", [uuid], reply_handler=success, error_handler=fail)
 			
 			elif self.Service[0] == "serial":
 				uuid = self.Service[1][0]
-				appl.RfcommConnect(self.Device.GetObjectPath(), uuid, reply_handler=success, error_handler=fail)
+				self.applet.RfcommConnect(self.Device.GetObjectPath(), uuid, reply_handler=success, error_handler=fail)
 			else:
-				appl.ServiceProxy(svc.GetInterfaceName(), svc.GetObjectPath(), "Connect", [], reply_handler=success, error_handler=fail)
+				self.applet.ServiceProxy(svc.GetInterfaceName(), svc.GetObjectPath(), "Connect", [], reply_handler=success, error_handler=fail)
 			
 			
 
