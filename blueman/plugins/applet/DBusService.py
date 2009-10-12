@@ -100,7 +100,7 @@ class DBusService(AppletPlugin):
 		
 		
 		if _method == "Connect":
-			dev = Device(BluezDevice(object_path))
+			dev = Device(object_path)
 			try:
 				self.Applet.Plugins.RecentConns.notify(dev, interface, args )
 			except KeyError:

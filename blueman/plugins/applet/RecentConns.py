@@ -276,6 +276,7 @@ class RecentConns(AppletPlugin, gtk.Menu):
 			sn = startup_notification("Bluetooth Connection", desc=_("Connecting to %s") % item["mitem"].get_child().props.label, 
 									  icon="blueman")
 			
+			item["mitem"].props.sensitive = False
 			
 			def reply(*args):
 				Notification(_("Connected"), _("Connected to %s") % item["mitem"].get_child().props.label, pixbuf=get_icon("gtk-connect", 48), 					
@@ -292,12 +293,7 @@ class RecentConns(AppletPlugin, gtk.Menu):
 			if item["service"] == "org.bluez.Serial":
 				self.Applet.DbusSvc.RfcommConnect(item["device"].GetObjectPath(), item["conn_args"][0], reply, err)
 			else:
-				#service.Connect(reply_handler=reply, error_handler=err, *item["conn_args"])
 				self.Applet.DbusSvc.ServiceProxy(item["service"], item["device"].GetObjectPath(), "Connect", item["conn_args"], reply, err)
-			
-			#item["time"] = time.time()
-			#self.initialize()
-			item["mitem"].props.sensitive = False
 			
 		
 	def add_item(self, item):
@@ -315,10 +311,14 @@ class RecentConns(AppletPlugin, gtk.Menu):
 				name = item["service"].split(".")[-1] + " " + _("Service")
 				name = name.capitalize()
 
-
-		mitem = create_menuitem(_("%(service)s on %(device)s") % {"service":name, "device":item["alias"]}, get_icon(item["icon"], 16))
-		item["mitem"] = mitem
-		mitem.connect("activate", self.on_item_activated, item)
+		if not item["mitem"]:
+			mitem = create_menuitem("", get_icon(item["icon"], 16))
+			item["mitem"] = mitem
+			mitem.connect("activate", self.on_item_activated, item)
+		else:
+			mitem = item["mitem"]
+			
+		item["mitem"].props.label = (_("%(service)s on %(device)s") % {"service":name, "device":item["alias"]})
 
 		if item["adapter"] not in self.Adapters.values():
 			if item["device"] and item["gsignal"]:
