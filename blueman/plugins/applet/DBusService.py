@@ -126,14 +126,16 @@ class DBusService(AppletPlugin):
 	def CreateDevice(self, adapter_path, address, pair, time, ok, err):
 		if self.Applet.Manager:
 			adapter = Adapter(adapter_path)
-
+			def reply(path):
+				self.RefreshServices(path, ok, err)
+				
 			if pair:
 				agent_path = "/org/blueman/agent/temp/"+address.replace(":", "")
 				agent = TempAgent(self.Applet.Plugins.StatusIcon, agent_path, time)
 				adapter.GetInterface().CreatePairedDevice(address, agent_path, "DisplayYesNo", error_handler=err, reply_handler=ok, timeout=120)
 				
 			else:
-				adapter.GetInterface().CreateDevice(address, error_handler=err, reply_handler=ok, timeout=120)
+				adapter.GetInterface().CreateDevice(address, error_handler=err, reply_handler=reply, timeout=120)
 				
 		else:
 			err()

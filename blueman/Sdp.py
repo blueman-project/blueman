@@ -154,48 +154,7 @@ uuid_names[0x1401] = "MDPSource"
 uuid_names[0x1402] = "MDPSink"
 uuid_names[0x2112] = "AppleAgent"
 
-#import xml.parsers.expat
 import xml.dom.minidom
-
-"""<record>
-	<attribute id="0x0000">
-		<uint32 value="0x0001000b" />
-	</attribute>
-	<attribute id="0x0001">
-		<sequence>
-			<uuid value="0x1101" />
-			<uuid value="0xcafe" />
-			<uuid value="1428cf80-b59d-11de-0029-0a3c01274823" />
-		</sequence>
-	</attribute>
-	<attribute id="0x0003">
-		<uuid value="1428cf80-b59d-11de-0029-0a3c01274823" />
-	</attribute>
-	<attribute id="0x0004">
-		<sequence>
-			<sequence>
-				<uuid value="0x0100" />
-				<uint16 value="0x0003" />
-			</sequence>
-			<sequence>
-				<uuid value="0x0003" />
-				<uint8 value="0x19" />
-			</sequence>
-		</sequence>
-	</attribute>
-	<attribute id="0x0005">
-		<sequence>
-			<uuid value="0x1002" />
-		</sequence>
-	</attribute>
-	<attribute id="0x0100">
-		<text value="GpsGateGPS" />
-	</attribute>
-	<attribute id="0x0101">
-		<text value="GpsGate Bluetooth GPS " />
-	</attribute>
-</record>"""
-
 
 SDP_ATTR_RECORD_HANDLE			= 0x0000
 SDP_ATTR_SVCLASS_ID_LIST		= 0x0001
@@ -316,7 +275,7 @@ sdp_cache = {}
 sdp_conf = Config("sdp")
 
 def on_sdp_changed(c, key, value):
-	if key in sdp_cache:
+	if value and key in sdp_cache:
 		s = pickle.loads(base64.b64decode(value))
 		sdp_cache[key] = s
 	
