@@ -82,6 +82,7 @@ class ManagerDeviceMenu(gtk.Menu):
 		self.Signals.DisconnectAll()
 		def each(child):
 			self.remove(child)
+			child.destroy()
 			
 		self.foreach(each)
 	
