@@ -121,7 +121,7 @@ class ManagerDeviceMenu(gtk.Menu):
 		
 		def success(*args2):
 			try:
-				uuid16 = uuid128_to_uuid16(args[0])
+				uuid16 = sdp_get_serial_type(device.Address, args[0])
 			except:
 				uuid16 = 0
 			
@@ -129,7 +129,7 @@ class ManagerDeviceMenu(gtk.Menu):
 			prog_msg(_("Success!"))
 			
 			
-			if service_id == "serial" and uuid16 == SERIAL_PORT_SVCLASS_ID:
+			if service_id == "serial" and SERIAL_PORT_SVCLASS_ID in uuid16:
 				MessageArea.show_message(_("Serial port connected to %s") % args2[0], gtk.STOCK_DIALOG_INFO)
 			else:
 				MessageArea.close()
