@@ -101,8 +101,10 @@ class PulseAudioUtils(gobject.GObject):
 			if self.connected:
 				self.emit("disconnected")
 				self.connected = False
-				if state == PA_CONTEXT_FAILED:
-					gobject.timeout_add(2000, self.Connect)
+		
+		if state == PA_CONTEXT_FAILED:
+			dprint("Pulseaudio probably crashed, restarting in 5s")
+			gobject.timeout_add(5000, self.Connect)
 			
 			
 	def pa_get_module_info_cb(self, context, module_info, eol, info):
