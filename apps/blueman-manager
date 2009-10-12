@@ -286,7 +286,8 @@ class Blueman:
 		spawn(["blueman-browse", "-d %s" % device.Address])
 		
 	def disconnect(self, device, *args, **kwargs):
-		device.Disconnect(*args, **kwargs)
+		applet = AppletService()
+		applet.DisconnectDevice(device.get_object_path(), *args, **kwargs)
 
 		
 

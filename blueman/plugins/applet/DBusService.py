@@ -46,6 +46,7 @@ class DBusService(AppletPlugin):
 		AppletPlugin.add_method(self.on_rfcomm_disconnect)
 		AppletPlugin.add_method(self.rfcomm_connect_handler)
 		AppletPlugin.add_method(self.service_connect_handler)
+		AppletPlugin.add_method(self.on_device_disconnect)
 		
 		self.add_dbus_method(self.ServiceProxy, in_signature="sosas", async_callbacks=("ok","err"))
 		self.add_dbus_method(self.CreateDevice, in_signature="ssbu", async_callbacks=("ok","err"))
@@ -57,6 +58,7 @@ class DBusService(AppletPlugin):
 		self.add_dbus_method(self.QueryPlugins, in_signature="", out_signature="as")
 		self.add_dbus_method(self.QueryAvailablePlugins, in_signature="", out_signature="as")
 		self.add_dbus_method(self.SetPluginConfig, in_signature="sb", out_signature="")
+		self.add_dbus_method(self.DisconnectDevice, in_signature="o", out_signature="", async_callbacks=("ok","err"))
 		
 	def RefreshServices(self, path, ok, err):
 		device = Device(path)
@@ -71,6 +73,19 @@ class DBusService(AppletPlugin):
 		
 	def QueryPlugins(self):
 		return self.Applet.Plugins.GetLoaded()
+		
+	def DisconnectDevice(self, obj_path, ok, err):
+		dev = Device(obj_path)	
+
+		self.Applet.Plugins.Run("on_device_disconnect", dev)
+
+		def on_timeout():
+			dev.Disconnect(reply_handler=ok, error_handler=err)
+		
+		gobject.timeout_add(1000, on_timeout)		
+		
+	def on_device_disconnect(self, device):
+		pass
 		
 	def QueryAvailablePlugins(self):
 		return self.Applet.Plugins.GetClasses()
