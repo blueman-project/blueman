@@ -23,7 +23,6 @@ import dbus.service
 
 import gtk
 from blueman.Functions import dprint
-from blueman.main.PolicyKitAuth import PolicyKitAuth
 from blueman.main.Mechanism import Mechanism
 
 from blueman.bluez.Adapter import Adapter

@@ -19,7 +19,6 @@
 from blueman.Functions import *
 from blueman.Constants import HAL_ENABLED
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.main.PolicyKitAuth import PolicyKitAuth
 from blueman.main.Mechanism import Mechanism
 from blueman.main.Config import Config
 from blueman.gui.Notification import Notification
@@ -65,45 +64,33 @@ class NMIntegration(AppletPlugin):
 	#in: bluez_device_path, rfcomm_device
 	#@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="ss", out_signature="")
 	def RegisterModem(self, device_path, rfcomm_device):
-		a = PolicyKitAuth()
-		authorized = a.is_authorized("org.blueman.hal.manager")
-		if not authorized:
-			authorized = a.obtain_authorization(False, "org.blueman.hal.manager")
+		dev = Bluez.Device(device_path)
+		props = dev.GetProperties()
 	
-		if authorized:
-			dev = Bluez.Device(device_path)
-			props = dev.GetProperties()
-		
-			m = Mechanism()
+		m = Mechanism()
 
-			def reply():
-				dprint("Registered modem")
-				
-			def err(excp):
-				d = gtk.MessageDialog(None, type=gtk.MESSAGE_WARNING)
-				d.props.icon_name = "blueman"
-				d.props.text = _("CDMA or GSM not supported")
-				d.props.secondary_text = _("The device %s does not appear to support GSM/CDMA.\nThis connection will not work.") % props["Alias"]
+		def reply():
+			dprint("Registered modem")
+			
+		def err(excp):
+			d = gtk.MessageDialog(None, type=gtk.MESSAGE_WARNING)
+			d.props.icon_name = "blueman"
+			d.props.text = _("CDMA or GSM not supported")
+			d.props.secondary_text = _("The device %s does not appear to support GSM/CDMA.\nThis connection will not work.") % props["Alias"]
 
-				d.add_button(gtk.STOCK_OK, gtk.RESPONSE_NO)
-				resp = d.run()
-				d.destroy()
+			d.add_button(gtk.STOCK_OK, gtk.RESPONSE_NO)
+			resp = d.run()
+			d.destroy()
 
-			m.HalRegisterModemPort(rfcomm_device, props["Address"], reply_handler=reply, error_handler=err)
+		m.HalRegisterModemPort(rfcomm_device, props["Address"], reply_handler=reply, error_handler=err)
 
 			
 		
 	#in: bluez_device_path, rfcomm_device
 	#@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="s", out_signature="")
 	def UnregisterModem(self, device):
-		a = PolicyKitAuth()
-		authorized = a.is_authorized("org.blueman.hal.manager")
-		if not authorized:
-			authorized = a.obtain_authorization(False, "org.blueman.hal.manager")
-		
-		if authorized:
-			m = Mechanism()
-			m.HalUnregisterModemPortDev(device)
+		m = Mechanism()
+		m.HalUnregisterModemPortDev(device)
 			
 		dprint("Unregistered modem")
 		
@@ -128,13 +115,13 @@ class NMIntegration(AppletPlugin):
 				self.UnregisterModem(port)
 			
 	
-		uuid16 = uuid128_to_uuid16(uuid)
-		if uuid16 == DIALUP_NET_SVCLASS_ID:
+		uuid16 = sdp_get_serial_type(device.Address, uuid)
+		if DIALUP_NET_SVCLASS_ID in uuid16:
 			try:
 				signals.Handle(self.Applet.Plugins.NMMonitor, "modem-added", modem_added)
 				signals.Handle(self.Applet.Plugins.NMMonitor, "modem-removed", modem_removed)
 				signals.Handle(self.Applet.Plugins.NMMonitor, "disconnected", disconnected)
-			except NameError:
+			except KeyError:
 				pass
 				
 			signals.Handle("bluez", device.Device, device_propery_changed, "PropertyChanged")	

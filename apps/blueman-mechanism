@@ -71,16 +71,28 @@ class conf_service(dbus.service.Object):
 		self.bus.request_name("org.blueman.Mechanism")
 		dbus.service.Object.__init__(self, self.bus, "/")
 		
-
+		o = self.bus.get_object("org.freedesktop.PolicyKit1", "/org/freedesktop/PolicyKit1/Authority", True)
+		
+		self.pk = dbus.proxies.Interface(o, "org.freedesktop.PolicyKit1.Authority")
 
 	def confirm_authorization(self, busname, action_id):
 		timer.reset()
 		if not POLKIT:
 			return
-			
-		res = self.bus.call_blocking("org.freedesktop.PolicyKit", "/", "org.freedesktop.PolicyKit", "IsSystemBusNameAuthorized", "ssb", (action_id, busname, False))	
 
-		if res != "yes":
+#		res = self.bus.call_blocking("org.freedesktop.PolicyKit1", 
+#					     "/org/freedesktop/PolicyKit1/Authority", 
+#					     "org.freedesktop.PolicyKit1.Authority", 
+#					     "CheckAuthorization", 
+#					     "sa{sv}sa{ss}us", 
+#					     (("system-bus-name", {"name": busname}),
+#					       action_id, dbus.Dictionary({}, dbus.Signature("ss")), 0x1, ""))	
+		res = self.pk.CheckAuthorization(("system-bus-name", {"name": busname}),
+				     		  action_id, dbus.Dictionary({}, dbus.Signature("ss")), 0x1, "")
+					       
+		dprint(res)
+		(is_authorized, is_challenge, details) = res
+		if not is_authorized:
 			raise dbus.DBusException, "Not authorized"
 	
 	

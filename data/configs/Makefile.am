@@ -13,7 +13,7 @@ hal_fdi_DATA = 11-blueman-bnep.fdi
 endif
 
 @INTLTOOL_POLICY_RULE@ 
-policykitdir = $(datadir)/PolicyKit/policy
+policykitdir = $(datadir)/polkit-1/actions
 policykit_in_files = org.blueman.policy.in
 policykit_DATA = $(policykit_in_files:.policy.in=.policy)
 

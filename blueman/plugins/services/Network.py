@@ -23,7 +23,6 @@ from blueman.plugins.ServicePlugin import ServicePlugin
 
 import blueman.main.NetConf as NetConf
 from blueman.main.Config import Config
-from blueman.main.PolicyKitAuth import PolicyKitAuth
 from blueman.main.Mechanism import Mechanism
 from blueman.main.AppletService import AppletService
 
@@ -86,48 +85,44 @@ class Network(ServicePlugin):
 		if self.on_query_apply_state() == True:
 			dprint("network apply")
 			
-			auth = PolicyKitAuth()
-			authorized = auth.is_authorized("org.blueman.network.setup")
-			if not authorized:
-				authorized = auth.obtain_authorization(self.Builder.get_object("nap_enable"), "org.blueman.network.setup")
-			if authorized:
-				m = Mechanism()
-				nap_enable = self.Builder.get_object("nap_enable")
-				if nap_enable.props.active:
-					
-					r_dnsmasq = self.Builder.get_object("r_dnsmasq")
-					if r_dnsmasq.props.active:
-						stype = "dnsmasq"
-					else:
-						stype = "dhcpd"
-					
-					net_ip = self.Builder.get_object("net_ip")
-					net_nat = self.Builder.get_object("net_nat")
-					
-					try:
-						m.NetworkSetup(net_ip.props.text, net_nat.props.active, stype)
-						if not self.NetConf.props.nap_enable: #race condition workaround
-							self.ignored_keys.append("nap_enable")
-						self.NetConf.props.nap_enable = True
-					except Exception, e:
-						lines = str(e).splitlines()
-						
-						d = gtk.MessageDialog( None, buttons=gtk.BUTTONS_OK, type=gtk.MESSAGE_ERROR)
-						d.props.text = _("Failed to apply network settings")
-						d.props.secondary_text = lines[-1]
-						d.run()
-						d.destroy()
-						return
-				else:
-					if self.NetConf.props.nap_enable: #race condition workaround
-						self.ignored_keys.append("nap_enable")
-					self.NetConf.props.nap_enable = False
-					m.NetworkSetup("0",0,"0")
-					#disable
+
+			m = Mechanism()
+			nap_enable = self.Builder.get_object("nap_enable")
+			if nap_enable.props.active:
 				
-				self.clear_options()
+				r_dnsmasq = self.Builder.get_object("r_dnsmasq")
+				if r_dnsmasq.props.active:
+					stype = "dnsmasq"
+				else:
+					stype = "dhcpd"
+				
+				net_ip = self.Builder.get_object("net_ip")
+				net_nat = self.Builder.get_object("net_nat")
+				
+				try:
+					m.NetworkSetup(net_ip.props.text, net_nat.props.active, stype)
+					if not self.NetConf.props.nap_enable: #race condition workaround
+						self.ignored_keys.append("nap_enable")
+					self.NetConf.props.nap_enable = True
+				except Exception, e:
+					lines = str(e).splitlines()
+					
+					d = gtk.MessageDialog( None, buttons=gtk.BUTTONS_OK, type=gtk.MESSAGE_ERROR)
+					d.props.icon_name = "gtk-dialog-error"
+					d.props.text = _("Failed to apply network settings")
+					d.props.secondary_text = lines[-1]
+					d.run()
+					d.destroy()
+					return
 			else:
-				dprint("Unauth")
+				if self.NetConf.props.nap_enable: #race condition workaround
+					self.ignored_keys.append("nap_enable")
+				self.NetConf.props.nap_enable = False
+				m.NetworkSetup("0",0,"0")
+				#disable
+			
+			self.clear_options()
+
 	
 	def on_query_apply_state(self):
 		changed = False

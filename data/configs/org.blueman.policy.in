@@ -4,16 +4,16 @@
  "http://www.freedesktop.org/standards/PolicyKit/1.0/policyconfig.dtd">
 <policyconfig>
   <_vendor>The Blueman Project</_vendor>
-  <vendor_url>http://blueman.tuxfamily.org</vendor_url>
-  <icon_name>bluetooth</icon_name>
+  <vendor_url>http://blueman-project.org</vendor_url>
+  <icon_name>blueman</icon_name>
   
    <action id="org.blueman.network.setup">
     <_description>Configure Bluetooth Network</_description>
-    <_message>System policy prevents modifying the configuration</_message>
+    <_message>Configuring networking requires privileges</_message>
 
     <defaults>
       <allow_inactive>no</allow_inactive>
-      <allow_active>yes</allow_active>
+      <allow_active>auth_admin_keep</allow_active>
 
     </defaults>
   </action>
@@ -24,7 +24,7 @@
 
     <defaults>
       <allow_inactive>no</allow_inactive>
-      <allow_active>auth_admin_keep_always</allow_active>
+      <allow_active>auth_admin_keep</allow_active>
     </defaults>
   </action>
   

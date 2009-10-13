@@ -15,7 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from blueman.main.PolicyKitAuth import PolicyKitAuth
 from blueman.gui.Notification import Notification
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Mechanism import Mechanism
@@ -59,32 +58,25 @@ class DhcpClient(AppletPlugin):
 			return
 			
 		if device != "":
-			a= PolicyKitAuth()
-			auth = a.is_authorized("org.blueman.dhcp.client")
-			if not auth:
-				auth = a.obtain_authorization(None, "org.blueman.dhcp.client")
-			
-			if auth:
-				
-				def reply(ip_address):
+			def reply(ip_address):
 
-					Notification(_("Bluetooth Network"), _("Interface %(0)s bound to IP address %(1)s") % {"0": device, "1": ip_address}, 
-						pixbuf=get_icon("gtk-network", 48), 
-						status_icon=self.Applet.Plugins.StatusIcon)
-					
-					self.quering.remove(device)
-				
-				def err(msg):
-					dprint(msg)
-					Notification(_("Bluetooth Network"), _("Failed to obtain an IP address on %s") % (device), 
-						pixbuf=get_icon("gtk-network", 48), 
-						status_icon=self.Applet.Plugins.StatusIcon)
-						
-					self.quering.remove(device)
-				
-				Notification(_("Bluetooth Network"), _("Trying to obtain an IP address on %s\nPlease wait..." % device), 
+				Notification(_("Bluetooth Network"), _("Interface %(0)s bound to IP address %(1)s") % {"0": device, "1": ip_address}, 
 					pixbuf=get_icon("gtk-network", 48), 
 					status_icon=self.Applet.Plugins.StatusIcon)
+				
+				self.quering.remove(device)
+			
+			def err(msg):
+				dprint(msg)
+				Notification(_("Bluetooth Network"), _("Failed to obtain an IP address on %s") % (device), 
+					pixbuf=get_icon("gtk-network", 48), 
+					status_icon=self.Applet.Plugins.StatusIcon)
+					
+				self.quering.remove(device)
+			
+			Notification(_("Bluetooth Network"), _("Trying to obtain an IP address on %s\nPlease wait..." % device), 
+				pixbuf=get_icon("gtk-network", 48), 
+				status_icon=self.Applet.Plugins.StatusIcon)
 
-				m = Mechanism()
-				m.DhcpClient(device, reply_handler=reply, error_handler=err, timeout=120)
+			m = Mechanism()
+			m.DhcpClient(device, reply_handler=reply, error_handler=err, timeout=120)
