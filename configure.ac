@@ -112,9 +112,9 @@ else
 fi
 AC_SUBST(polkit_val)
 
-hal_en="yes"
+hal_en="no"
 AC_ARG_ENABLE(hal,
-[  --enable-hal=[yes/no] Enable/disable Hal support],,enable_hal=yes)
+[  --enable-hal=[yes/no] Enable/disable Hal support],,enable_hal=no)
 if test "x$enable_hal" = "xyes"; then
         hal_en="yes"
 else
@@ -199,7 +199,7 @@ echo
 
 echo Prefix : $prefix
 echo sysconfig dir : $sysconfdir
-echo HAL support enabled: $hal_en
-echo Policykit Enabled: $polkit_val
+echo "HAL support enabled (deprecated): $hal_en"
+echo Policykit-1 Enabled: $polkit_val
 echo Dhcpd 3 configuration file: $dhconfig
 echo
