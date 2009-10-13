@@ -317,6 +317,8 @@ class RecentConns(AppletPlugin, gtk.Menu):
 			mitem.connect("activate", self.on_item_activated, item)
 		else:
 			mitem = item["mitem"]
+			mitem.props.sensitive = True
+			mitem.props.tooltip_text = None
 			
 		item["mitem"].props.label = (_("%(service)s on %(device)s") % {"service":name, "device":item["alias"]})
 
