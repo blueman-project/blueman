@@ -21,7 +21,7 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Config import Config
 from blueman.gui.Notification import Notification
 from blueman.Sdp import *
-
+from blueman.Lib import rfcomm_list
 
 import blueman.bluez as Bluez
 
@@ -41,7 +41,7 @@ class SerialManager(AppletPlugin):
 	def on_rfcomm_connected(self, device, port, uuid):
 		uuid16 = sdp_get_serial_type(device.Address, uuid)
 		if SERIAL_PORT_SVCLASS_ID in uuid16:
-			Notification(_("Serial port connected"), _("Serial port service on device <b>%s</b> now will be available via <b>%s</b>") % (device.Alias, port), pixbuf=get_icon("network-wired", 48), status_icon=self.Applet.Plugins.StatusIcon)	
+			Notification(_("Serial port connected"), _("Serial port service on device <b>%s</b> now will be available via <b>%s</b>") % (device.Alias, port), pixbuf=get_icon("blueman-serial", 48), status_icon=self.Applet.Plugins.StatusIcon)	
 			
 	def rfcomm_connect_handler(self, device, uuid, reply, err):
 		uuid16 = sdp_get_serial_type(device.Address, uuid)
@@ -52,3 +52,25 @@ class SerialManager(AppletPlugin):
 			return True
 		else:
 			return False
+			
+	def on_device_disconnect(self, device):
+		ports = rfcomm_list()
+		
+		def flt(dev):
+			if dev["dst"] == device.Address and dev["state"] == "connected":
+				return dev["id"]
+		
+		active_ports = map(flt, ports)
+		try:
+			serial = device.Services["serial"]
+		
+			for port in active_ports:
+				name = "/dev/rfcomm%d" % port
+				try:
+					serial.Disconnect(name)
+				except:
+					dprint("Failed to disconnect", name)
+		except Exception, e:
+			dprint("OOPS", e)
+			
+		
