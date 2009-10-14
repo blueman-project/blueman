@@ -295,7 +295,7 @@ class NetUsage(AppletPlugin, gobject.GObject):
 		
 		item = create_menuitem(_("Network Usage"), get_icon("network-wireless", 16))
 		item.props.tooltip_text = _("Shows network traffic usage")
-		item.connect("activate", self.activate_ui)
+		self.signals.Handle(item, "activate", self.activate_ui)
 		self.Applet.Plugins.Menu.Register(self, item, 84, True)
 		
 	def on_network_property_changed(self, key, value, path):
@@ -309,6 +309,7 @@ class NetUsage(AppletPlugin, gobject.GObject):
 		Dialog(self)
 		
 	def on_unload(self):
+		self.signals.DisconnectAll()
 		self.Applet.Plugins.Menu.Unregister(self)
 
 	def monitor_interface(self, device, interface):
