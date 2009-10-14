@@ -270,6 +270,7 @@ def bluez_to_friendly_name(svc):
 from blueman.main.Config import Config
 import pickle
 import base64
+import zlib
 
 sdp_cache = {}
 sdp_conf = Config("sdp")
@@ -286,7 +287,12 @@ def sdp_get_cached(address):
 		
 		d = sdp_conf.get(address)
 		if d:
-			s = pickle.loads(base64.b64decode(d))
+			try:
+				s = pickle.loads(zlib.decompress(base64.b64decode(d)))
+			except Exception, e:
+				dprint(e)
+				raise KeyError
+				
 			sdp_cache[address] = s
 			return s
 		else:
@@ -353,4 +359,8 @@ def sdp_get_serial_name(address, pattern):
 					return _("Unknown")
 				else:
 					return name.strip("\n\r ")
+					
+def sdp_save(address, records):
+	data = base64.b64encode(zlib.compress(pickle.dumps(records, pickle.HIGHEST_PROTOCOL)))
+	sdp_conf.set(address, data)
 

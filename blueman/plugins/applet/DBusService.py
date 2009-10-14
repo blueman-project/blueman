@@ -20,7 +20,7 @@ from blueman.Functions import *
 import pickle
 import base64
 from blueman.main.Config import Config
-from blueman.Sdp import parse_sdp_xml
+from blueman.Sdp import parse_sdp_xml, sdp_save
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.applet.BluezAgent import AdapterAgent
 
@@ -63,12 +63,10 @@ class DBusService(AppletPlugin):
 	def RefreshServices(self, path, ok, err):
 		device = Device(path)
 		def reply(svcs):
-			parsed = parse_sdp_xml(svcs)
-			c = Config("sdp")
-			c.set(device.Address, base64.b64encode(pickle.dumps(parsed, pickle.HIGHEST_PROTOCOL)))
+			records = parse_sdp_xml(svcs)
+			sdp_save(device.Address, records)
 			ok()
 
-		
 		device.GetInterface().DiscoverServices("", reply_handler=reply, error_handler=err)
 		
 	def QueryPlugins(self):
