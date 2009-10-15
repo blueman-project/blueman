@@ -70,10 +70,9 @@ class conf_service(dbus.service.Object):
 		self.bus = dbus.SystemBus();
 		self.bus.request_name("org.blueman.Mechanism")
 		dbus.service.Object.__init__(self, self.bus, "/")
-		
-		o = self.bus.get_object("org.freedesktop.PolicyKit1", "/org/freedesktop/PolicyKit1/Authority", True)
-		
-		self.pk = dbus.proxies.Interface(o, "org.freedesktop.PolicyKit1.Authority")
+		if POLKIT:
+			o = self.bus.get_object("org.freedesktop.PolicyKit1", "/org/freedesktop/PolicyKit1/Authority", True)
+			self.pk = dbus.proxies.Interface(o, "org.freedesktop.PolicyKit1.Authority")
 
 	def confirm_authorization(self, busname, action_id):
 		timer.reset()
