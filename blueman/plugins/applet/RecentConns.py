@@ -50,8 +50,6 @@ def store_state():
 		RecentConns.inst.store_state()
 	except ReferenceError:
 		pass
-		
-atexit.register(store_state)
 
 class RecentConns(AppletPlugin, gtk.Menu):
 	__depends__ = ["Menu", "PowerManager"]
@@ -72,11 +70,15 @@ class RecentConns(AppletPlugin, gtk.Menu):
 	
 	items = None
 	inst = None
+	atexit_registered = False
 	
 	def on_load(self, applet):
 		self.Applet = applet
 		self.Adapters = {}
 		gtk.Menu.__init__(self)
+		if not RecentConns.atexit_registered:
+			atexit.register(store_state)
+			RecentConns.atexit_registered = True
 		
 		self.Item = create_menuitem(_("Recent Connections")+"...", get_icon("document-open-recent", 16))
 		self.Applet.Plugins.Menu.Register(self, self.Item, 52)
