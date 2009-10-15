@@ -153,11 +153,13 @@ class PowerManager(AppletPlugin):
 						return
 				
 					self.item.get_child().set_markup(_("<b>Turn Bluetooth On</b>"))
+					self.item.props.tooltip_text = _("Turn on all adapters")
 					self.item.set_image(gtk.image_new_from_pixbuf(get_icon("gtk-yes", 16)))
 					self.BluetoothStatusChanged(False)
 					self.Applet.Plugins.Run("on_bluetooth_power_state_changed", False)
 				else:
 					self.item.get_child().set_markup(_("<b>Turn Bluetooth Off</b>"))
+					self.item.props.tooltip_text = _("Turn off all adapters")
 					self.item.set_image(gtk.image_new_from_pixbuf(get_icon("gtk-stop", 16)))
 					self.BluetoothStatusChanged(True)
 					try:

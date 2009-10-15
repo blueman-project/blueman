@@ -96,11 +96,10 @@ class KillSwitch(AppletPlugin):
 		
 	def on_query_status_icon_visibility(self):
 		state = self.Manager.GetGlobalState()
-		dprint(self.Manager.devices)
+
 		if state:
 			if isinstance(self.Manager, KillSwitchNG) and len(self.Manager.devices) > 0:
 				return 2
-			
 			
 			return 1 #StatusIcon.SHOW
 		else:
