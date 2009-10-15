@@ -41,7 +41,8 @@ class NMIntegration(AppletPlugin):
 	__depends__ = ["DBusService"]
 	__conflicts__ = ["PPPSupport", "DhcpClient"]
 	__author__ = "Walmis"
-	__priority__ = 1
+	if HAL_ENABLED:
+		__priority__ = 2
 	
 	def on_load(self, applet):
 		self.Signals = SignalTracker()
