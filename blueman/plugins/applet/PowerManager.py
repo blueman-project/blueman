@@ -162,16 +162,16 @@ class PowerManager(AppletPlugin):
 					self.item.props.tooltip_text = _("Turn off all adapters")
 					self.item.set_image(gtk.image_new_from_pixbuf(get_icon("gtk-stop", 16)))
 					self.BluetoothStatusChanged(True)
+					
+					self.Applet.Plugins.Run("on_bluetooth_power_state_changed", True)
+					
 					try:
 						set_global_state()
 					except BluezDBusException, e:	
 						error(e)
 						self.bluetooth_off = True
 						return
-						
-					self.Applet.Plugins.Run("on_bluetooth_power_state_changed", True)
-					
-					
+							
 				self.Applet.Plugins.StatusIcon.IconShouldChange()
 		else:				
 			self.__dict__[key] = value

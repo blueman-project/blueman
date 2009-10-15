@@ -72,7 +72,7 @@ class KillSwitch(AppletPlugin):
 	def on_switch_changed(self, manager, switch):
 		if switch.type == RFKillType.BLUETOOTH:
 			s = manager.GetGlobalState()
-			dprint(s, switch.soft)
+			dprint("Global state:", s, "switch.soft:", switch.soft)
 			if not s and (switch.soft == 1 or switch.hard == 1):
 				self.Applet.Plugins.PowerManager.SetBluetoothStatus(False)
 			elif s and (switch.soft == 0 or switch.hard == 0):
@@ -96,14 +96,15 @@ class KillSwitch(AppletPlugin):
 		
 	def on_query_status_icon_visibility(self):
 		state = self.Manager.GetGlobalState()
-
 		if state:
 			if isinstance(self.Manager, KillSwitchNG) and len(self.Manager.devices) > 0:
 				return 2
 			
 			return 1 #StatusIcon.SHOW
-		else:
+		elif len(self.Manager.devices) > 0 and not state:
 			#if killswitch removes the bluetooth adapter, dont hide the statusicon,
 			#so that the user could turn bluetooth back on.
 			return 2 #StatusIcon.FORCE_SHOW
+			
+		return 1
 		

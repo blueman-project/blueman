@@ -30,6 +30,7 @@ import gobject
 import gtk
 import gtk.gdk
 import __builtin__
+import traceback
 
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -262,9 +263,13 @@ class BluemanApplet(object):
 		def Run(self, function, *args, **kwargs):
 			rets = []
 			for inst in AppletPlugin.instances:
-				ret = getattr(inst, function)(*args, **kwargs)
-				rets.append(ret)
-			
+				try:
+					ret = getattr(inst, function)(*args, **kwargs)
+					rets.append(ret)
+				except Exception, e:
+					dprint("Function", function, "on", inst.__class__.__name__, "Failed")
+					traceback.print_exc()
+				
 			return rets
 			
 		#executes a function on all plugin instances, runs a callback after each plugin returns something
@@ -275,6 +280,11 @@ class BluemanApplet(object):
 					ret = callback(inst, ret) 
 				except StopException:
 					return
+				except Exception, e:
+					dprint("Function", function, "on", inst.__class__.__name__, "Failed")
+					traceback.print_exc()
+					return
+					
 				if ret != None:
 					args = ret
 
@@ -325,10 +335,8 @@ class BluemanApplet(object):
 	
 	def manager_deinit(self):
 		self.Signals.DisconnectAll()
-		
-		self.Plugins.Run("on_manager_state_changed", False)
 		self.Manager = None
-
+		self.Plugins.Run("on_manager_state_changed", False)
 		
 	def on_dbus_name_owner_change(self, owner):
 		dprint("org.bluez owner changed to", owner)
