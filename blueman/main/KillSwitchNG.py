@@ -94,6 +94,19 @@ class KillSwitchNG(gobject.GObject):
 			os.close(self.fd)
 		except:
 			pass
+			
+			
+	def __devices(self):
+		def m(x):
+			if x.type == RFKillType.BLUETOOTH:
+				return x
+		stuff = map(m, self.switches.values())
+		#FIXME: filter Nones
+		#stuff.remove(None)
+		return stuff
+	
+	
+	devices = property(__devices)
 		
 		
 	def io_event(self, source, condition):

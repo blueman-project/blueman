@@ -46,10 +46,12 @@ class StatusIcon(AppletPlugin, gtk.StatusIcon):
 			self.SetTextLine(0, _("Bluetooth Enabled"))
 		else:
 			self.SetTextLine(0, _("Bluetooth Disabled"))
+			
+		self.Query()
 	
 	def Query(self):
 		rets = self.Applet.Plugins.Run("on_query_status_icon_visibility")
-
+		dprint(rets)
 		if not StatusIcon.FORCE_SHOW in rets:
 			if StatusIcon.FORCE_HIDE in rets:
 				self.props.visible = False
@@ -58,6 +60,7 @@ class StatusIcon(AppletPlugin, gtk.StatusIcon):
 					self.props.visible = False
 				else:
 					try:
+						dprint("checking adapters")
 						if self.Applet.Manager.ListAdapters() == []:
 							self.props.visible = False
 						else:

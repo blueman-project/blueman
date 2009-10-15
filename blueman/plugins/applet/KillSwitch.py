@@ -95,7 +95,13 @@ class KillSwitch(AppletPlugin):
 		self.Manager.SetGlobalState(state)
 		
 	def on_query_status_icon_visibility(self):
-		if self.Manager.GetGlobalState():
+		state = self.Manager.GetGlobalState()
+		dprint(self.Manager.devices)
+		if state:
+			if isinstance(self.Manager, KillSwitchNG) and len(self.Manager.devices) > 0:
+				return 2
+			
+			
 			return 1 #StatusIcon.SHOW
 		else:
 			#if killswitch removes the bluetooth adapter, dont hide the statusicon,
