@@ -54,14 +54,15 @@ class SerialManager(AppletPlugin):
 			return False
 			
 	def on_device_disconnect(self, device):
-		ports = rfcomm_list()
+		if "serial" in device.Services:
+			ports = rfcomm_list()
 		
-		def flt(dev):
-			if dev["dst"] == device.Address and dev["state"] == "connected":
-				return dev["id"]
+			def flt(dev):
+				if dev["dst"] == device.Address and dev["state"] == "connected":
+					return dev["id"]
 		
-		active_ports = map(flt, ports)
-		try:
+			active_ports = map(flt, ports)
+			
 			serial = device.Services["serial"]
 		
 			for port in active_ports:
@@ -70,7 +71,5 @@ class SerialManager(AppletPlugin):
 					serial.Disconnect(name)
 				except:
 					dprint("Failed to disconnect", name)
-		except Exception, e:
-			dprint("OOPS", e)
 			
 		
