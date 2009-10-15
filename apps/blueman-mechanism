@@ -71,21 +71,22 @@ class conf_service(dbus.service.Object):
 		self.bus.request_name("org.blueman.Mechanism")
 		dbus.service.Object.__init__(self, self.bus, "/")
 		if POLKIT:
-			o = self.bus.get_object("org.freedesktop.PolicyKit1", "/org/freedesktop/PolicyKit1/Authority", True)
-			self.pk = dbus.proxies.Interface(o, "org.freedesktop.PolicyKit1.Authority")
+			try:
+				o = self.bus.get_object("org.freedesktop.PolicyKit1", "/org/freedesktop/PolicyKit1/Authority", True)
+				self.pk = dbus.proxies.Interface(o, "org.freedesktop.PolicyKit1.Authority")
+			except:
+				self.pk = None
+		else:
+			self.pk = None
 
 	def confirm_authorization(self, busname, action_id):
 		timer.reset()
 		if not POLKIT:
 			return
+		else:
+			if not self.pk:
+				raise dbus.DBusException("Blueman was built with PolicyKit-1 support, but it's not available on the system")
 
-#		res = self.bus.call_blocking("org.freedesktop.PolicyKit1", 
-#					     "/org/freedesktop/PolicyKit1/Authority", 
-#					     "org.freedesktop.PolicyKit1.Authority", 
-#					     "CheckAuthorization", 
-#					     "sa{sv}sa{ss}us", 
-#					     (("system-bus-name", {"name": busname}),
-#					       action_id, dbus.Dictionary({}, dbus.Signature("ss")), 0x1, ""))	
 		res = self.pk.CheckAuthorization(("system-bus-name", {"name": busname}),
 				     		  action_id, dbus.Dictionary({}, dbus.Signature("ss")), 0x1, "")
 					       
