@@ -48,7 +48,7 @@ class Device(gobject.GObject):
 		self.Device.Icon = "blueman"
 		self.Device.Class = "unknown"
 		
-		self.Services = {}
+		self.__services = {}
 
 		self.Valid = True
 
@@ -57,7 +57,9 @@ class Device(gobject.GObject):
 		dprint("caching initial properties")
 		self.Properties = self.Device.GetProperties()
 		
-		self.init_services()
+		if not "Fake" in self.Properties:
+			self.Fake = False
+		
 		w = weakref.ref(self)
 		if not self.Fake:
 			self._obj_path = self.Device.GetObjectPath()
@@ -65,6 +67,13 @@ class Device(gobject.GObject):
 			object_path = self.Device.GetObjectPath()
 			adapter = Adapter(object_path.replace("/"+os.path.basename(object_path), ""))
 			self.Signals.Handle("bluez", adapter, lambda path: w() and w().on_device_removed(path), "DeviceRemoved")
+			
+	@property
+	def Services(self):
+		if len(self.__services) == 0:
+			self.init_services()
+		
+		return self.__services
 	
 	def __del__(self):
 		dprint("deleting device", self.get_object_path())
@@ -82,14 +91,13 @@ class Device(gobject.GObject):
 	def init_services(self):
 		dprint("Loading services")
 
-		if not "Fake" in self.Properties:
-			self.Fake = False
+		if not self.Fake:
 			services = self.Device.ListServiceInterfaces()
-			self.Services = {}
+			self.__services = {}
 			for service in services:
 				name = service.GetInterfaceName().split(".")
 				name = name[len(name)-1].lower()
-				self.Services[name] = service
+				self.__services[name] = service
 			
 
 	def Copy(self):
