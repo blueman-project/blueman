@@ -66,10 +66,11 @@ class SerialManager(AppletPlugin):
 			serial = device.Services["serial"]
 		
 			for port in active_ports:
-				name = "/dev/rfcomm%d" % port
-				try:
-					serial.Disconnect(name)
-				except:
-					dprint("Failed to disconnect", name)
+				if port:
+					name = "/dev/rfcomm%d" % port
+					try:
+						serial.Disconnect(name)
+					except:
+						dprint("Failed to disconnect", name)
 			
 		
