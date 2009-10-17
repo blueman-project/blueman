@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-14 22:43+0300\n"
+"POT-Creation-Date: 2009-10-17 19:11+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1064,64 +1064,77 @@ msgid ""
 "You might not be able to connect to the Bluetooth network via this machine"
 msgstr ""
 
-#: ../blueman/plugins/applet/NMDUNSupport.py:26
+#: ../blueman/plugins/applet/NMDUNSupport.py:85
+msgid "Bluetooth Dialup"
+msgstr ""
+
+#: ../blueman/plugins/applet/NMDUNSupport.py:86
+#, python-format
+msgid "DUN connection on %s will now be available in Network Manager"
+msgstr ""
+
+#: ../blueman/plugins/applet/NMDUNSupport.py:96
+msgid "Modem Manager did not support the connection"
+msgstr ""
+
+#: ../blueman/plugins/applet/NMDUNSupport.py:104
 msgid ""
 "Provides support for Dial Up Networking (DUN) with ModemManager and "
 "NetworkManager 0.8"
 msgstr ""
 
-#: ../blueman/plugins/applet/RecentConns.py:59
+#: ../blueman/plugins/applet/RecentConns.py:57
 msgid ""
 "Provides a menu item that contains last used connections for quick access"
 msgstr ""
 
 #. the maximum number of items RecentConns menu will display
-#: ../blueman/plugins/applet/RecentConns.py:66
+#: ../blueman/plugins/applet/RecentConns.py:64
 msgid "Maximum items"
 msgstr ""
 
-#: ../blueman/plugins/applet/RecentConns.py:67
+#: ../blueman/plugins/applet/RecentConns.py:65
 msgid "The maximum number of items RecentConns menu will display"
 msgstr ""
 
-#: ../blueman/plugins/applet/RecentConns.py:81
+#: ../blueman/plugins/applet/RecentConns.py:83
 msgid "Recent Connections"
 msgstr ""
 
-#: ../blueman/plugins/applet/RecentConns.py:276
+#: ../blueman/plugins/applet/RecentConns.py:278
 #, python-format
 msgid "Connecting to %s"
 msgstr ""
 
-#: ../blueman/plugins/applet/RecentConns.py:282
+#: ../blueman/plugins/applet/RecentConns.py:284
 #: ../blueman/plugins/applet/PPPSupport.py:60
 msgid "Connected"
 msgstr ""
 
-#: ../blueman/plugins/applet/RecentConns.py:282
+#: ../blueman/plugins/applet/RecentConns.py:284
 #, python-format
 msgid "Connected to %s"
 msgstr ""
 
-#: ../blueman/plugins/applet/RecentConns.py:288
+#: ../blueman/plugins/applet/RecentConns.py:290
 msgid "Failed to connect"
 msgstr ""
 
-#: ../blueman/plugins/applet/RecentConns.py:306
+#: ../blueman/plugins/applet/RecentConns.py:308
 #, python-format
 msgid "Network Access (%s)"
 msgstr ""
 
-#: ../blueman/plugins/applet/RecentConns.py:311
+#: ../blueman/plugins/applet/RecentConns.py:313
 msgid "Service"
 msgstr ""
 
-#: ../blueman/plugins/applet/RecentConns.py:323
+#: ../blueman/plugins/applet/RecentConns.py:325
 #, python-format
 msgid "%(service)s on %(device)s"
 msgstr ""
 
-#: ../blueman/plugins/applet/RecentConns.py:342
+#: ../blueman/plugins/applet/RecentConns.py:344
 msgid "Adapter for this connection is not available"
 msgstr ""
 
@@ -1223,18 +1236,18 @@ msgid ""
 "<b>Note:</b> Requires pulseaudio 0.9.15 or higher"
 msgstr ""
 
-#: ../blueman/plugins/applet/PulseAudio.py:172
 #: ../blueman/plugins/applet/PulseAudio.py:178
+#: ../blueman/plugins/applet/PulseAudio.py:184
 msgid "Bluetooth Audio"
 msgstr ""
 
-#: ../blueman/plugins/applet/PulseAudio.py:173
+#: ../blueman/plugins/applet/PulseAudio.py:179
 msgid ""
 "Failed to initialize PulseAudio Bluetooth module. Bluetooth audio over "
 "PulseAudio will not work."
 msgstr ""
 
-#: ../blueman/plugins/applet/PulseAudio.py:179
+#: ../blueman/plugins/applet/PulseAudio.py:185
 msgid ""
 "Successfully connected to a Bluetooth audio device. This device will now be "
 "available in the PulseAudio mixer"
@@ -1273,11 +1286,11 @@ msgid ""
 "Makes DUN/PAN connections available for NetworkManager 0.7"
 msgstr ""
 
-#: ../blueman/plugins/applet/NMIntegration.py:78
+#: ../blueman/plugins/applet/NMIntegration.py:79
 msgid "CDMA or GSM not supported"
 msgstr ""
 
-#: ../blueman/plugins/applet/NMIntegration.py:79
+#: ../blueman/plugins/applet/NMIntegration.py:80
 #, python-format
 msgid ""
 "The device %s does not appear to support GSM/CDMA.\n"
@@ -1373,6 +1386,7 @@ msgid "<b>Turn Bluetooth Off</b>"
 msgstr ""
 
 #: ../blueman/plugins/applet/PowerManager.py:40
+#: ../blueman/plugins/applet/PowerManager.py:162
 msgid "Turn off all adapters"
 msgstr ""
 
@@ -1387,6 +1401,10 @@ msgstr ""
 
 #: ../blueman/plugins/applet/PowerManager.py:155
 msgid "<b>Turn Bluetooth On</b>"
+msgstr ""
+
+#: ../blueman/plugins/applet/PowerManager.py:156
+msgid "Turn on all adapters"
 msgstr ""
 
 #: ../blueman/plugins/services/Network.py:260
