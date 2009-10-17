@@ -25,6 +25,7 @@ import blueman.main.NetConf as NetConf
 from blueman.main.Config import Config
 from blueman.main.Mechanism import Mechanism
 from blueman.main.AppletService import AppletService
+from random import randint
 
 class Network(ServicePlugin):
 	__plugin_info__ = (_("Network"), "gtk-network")
@@ -158,6 +159,8 @@ class Network(ServicePlugin):
 		rb_blueman.props.active = self.NetConf.props.dhcp_client
 		nap_enable.props.active = self.NetConf.props.nap_enable
 		gn_enable.props.active = self.NetConf.props.gn_enable
+		
+		net_ip.props.text = "10.%d.%d.1" % (randint(0, 255), randint(0, 255))
 		
 		if not self.NetConf.props.nap_enable:
 			nap_frame.props.sensitive = False
