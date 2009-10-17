@@ -106,12 +106,18 @@ class PulseAudio(AppletPlugin):
 		#path -> module id mapping
 		self.connected_sinks = {}
 		
+		self.pulse_utils = PulseAudioUtils()
+		version = self.pulse_utils.GetVersion()
+		dprint("PulseAudio version:", version)
+		
+		if int(version.split(".")[2]) < 15:
+			raise Exception("PulseAudio too old, required 0.9.15 or higher")
+		
 		self.signals.Handle("dbus", self.bus, self.on_sink_prop_change, "PropertyChanged", "org.bluez.AudioSink", path_keyword="device")
 		self.signals.Handle("dbus", self.bus, self.on_source_prop_change, "PropertyChanged", "org.bluez.AudioSource", path_keyword="device")
 		self.signals.Handle("dbus", self.bus, self.on_hsp_prop_change, "PropertyChanged", "org.bluez.Headset", path_keyword="device")
 		
-		self.pulse_utils = PulseAudioUtils()
-		dprint("PulseAudio version:", self.pulse_utils.GetVersion())
+
 		self.signals.Handle(self.pulse_utils, "connected", self.on_pulse_connected)
 		
 	def on_pulse_connected(self, pa_utils):
