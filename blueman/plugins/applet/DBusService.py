@@ -60,6 +60,11 @@ class DBusService(AppletPlugin):
 		self.add_dbus_method(self.SetPluginConfig, in_signature="sb", out_signature="")
 		self.add_dbus_method(self.DisconnectDevice, in_signature="o", out_signature="", async_callbacks=("ok","err"))
 		
+		dbus.SystemBus().add_signal_receiver(self.on_device_added, "DeviceCreated", "org.bluez.Adapter")
+		
+	def on_device_added(self, path):
+		self.RefreshServices(path, (lambda *args: None), (lambda *args: None))
+		
 	def RefreshServices(self, path, ok, err):
 		device = Device(path)
 		def reply(svcs):
@@ -124,8 +129,6 @@ class DBusService(AppletPlugin):
 	def CreateDevice(self, adapter_path, address, pair, time, ok, err):
 		if self.Applet.Manager:
 			adapter = Adapter(adapter_path)
-			def reply(path):
-				self.RefreshServices(path, ok, err)
 				
 			if pair:
 				agent_path = "/org/blueman/agent/temp/"+address.replace(":", "")
@@ -133,7 +136,7 @@ class DBusService(AppletPlugin):
 				adapter.GetInterface().CreatePairedDevice(address, agent_path, "DisplayYesNo", error_handler=err, reply_handler=ok, timeout=120)
 				
 			else:
-				adapter.GetInterface().CreateDevice(address, error_handler=err, reply_handler=reply, timeout=120)
+				adapter.GetInterface().CreateDevice(address, error_handler=err, reply_handler=ok, timeout=120)
 				
 		else:
 			err()
