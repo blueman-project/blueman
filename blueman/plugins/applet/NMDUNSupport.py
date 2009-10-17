@@ -63,6 +63,8 @@ class ConnectionHandler:
 			gobject.source_remove(self.timeout)
 		self.signals.DisconnectAll()
 		
+		del self.device
+		
 	def on_mm_device_added(self, path):
 		dprint(path)
 		props = self.parent.bus.call_blocking("org.freedesktop.ModemManager", 
