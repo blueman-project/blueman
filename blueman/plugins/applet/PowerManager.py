@@ -164,7 +164,7 @@ class PowerManager(AppletPlugin):
 					self.BluetoothStatusChanged(True)
 					
 					self.Applet.Plugins.Run("on_bluetooth_power_state_changed", True)
-					
+					#FIXME: possible race condition here
 					try:
 						set_global_state()
 					except BluezDBusException, e:	

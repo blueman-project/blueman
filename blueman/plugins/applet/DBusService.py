@@ -152,7 +152,7 @@ class DBusService(AppletPlugin):
 			self.Applet.Plugins.Run("on_rfcomm_connected", dev, rfcomm, uuid)
 			ok(rfcomm)
 
-		dev = Device(BluezDevice(device))
+		dev = Device(device)
 		try:
 			self.Applet.Plugins.RecentConns.notify(dev.Copy(), "org.bluez.Serial", [uuid] )
 		except KeyError:
@@ -164,10 +164,6 @@ class DBusService(AppletPlugin):
 		else:
 			dprint("No handler registered")
 			err(dbus.DBusException("Service not supported\nPossibly the plugin that handles this service is not loaded"))
-		
-		
-		#dev.Services["serial"].Connect(uuid, reply_handler=reply, error_handler=err)
-		#dprint("Connecting rfcomm device")
 		
 		
 	def rfcomm_connect_handler(self, device, uuid, reply_handler, error_handler):
