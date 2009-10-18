@@ -222,6 +222,10 @@ class Transfer(OdsManager):
 				else:
 					session.transfer["failed"] = True
 					session.transfer["finished"] = True
+					
+					n = session.transfer["notification"]
+					if n:
+						n.close()
 			
 					icon = get_icon("blueman", 48)
 
