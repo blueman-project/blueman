@@ -1,5 +1,6 @@
 from ctypes import *
 import gobject
+import weakref
 import blueman.Functions
 
 PA_CONTEXT_UNCONNECTED =  0
@@ -10,7 +11,7 @@ PA_CONTEXT_READY	= 4
 PA_CONTEXT_FAILED	= 5
 PA_CONTEXT_TERMINATED	= 6
 	
-pa_context_notify_cb_t = CFUNCTYPE(None, c_void_p, c_void_p)
+pa_context_notify_cb_t = CFUNCTYPE(None, c_void_p, py_object)
 pa_context_index_cb_t = CFUNCTYPE(None, c_void_p, c_int, py_object)
 
 class NullError(Exception):
@@ -91,7 +92,11 @@ class PulseAudioUtils(gobject.GObject):
 		if not self.connected:
 			raise PANotConnected("Connection to PulseAudio daemon is not established")
 	
-	def pa_context_event(self, pa_context, userdata):
+	@staticmethod
+	def pa_context_event(pa_context, self):
+		if not self:
+			return
+			
 		state = self.pa.pa_context_get_state(pa_context)
 		dprint(state)
 		if state == PA_CONTEXT_READY:
@@ -234,8 +239,7 @@ class PulseAudioUtils(gobject.GObject):
 		
 		self.connected = False
 		
-		self.ctx_cb = pa_context_notify_cb_t(self.pa_context_event)
-		pythonapi.Py_DecRef(py_object(self))
+		self.ctx_cb = pa_context_notify_cb_t(PulseAudioUtils.pa_context_event)
 
 		self.pa = CDLL("libpulse.so.0")
 		self.pa_m = CDLL("libpulse-mainloop-glib.so.0")
@@ -260,12 +264,13 @@ class PulseAudioUtils(gobject.GObject):
 			if not self.pa_context:
 				raise NullError("PA Context returned NULL")
 			
-			self.pa.pa_context_set_state_callback(self.pa_context, self.ctx_cb, None)
+			self.weak = weakref.proxy(self)
+			
+			self.pa.pa_context_set_state_callback.argtypes = (c_void_p, pa_context_notify_cb_t, py_object)
+			self.pa.pa_context_set_state_callback(self.pa_context, self.ctx_cb, self.weak)
 			self.pa.pa_context_connect (self.pa_context, None, 0, None)
 		
 	def __del__(self):
-		pythonapi.Py_IncRef(py_object(self))
-		
 		dprint("Destroying PulseAudioUtils instance")
 		
 		self.pa.pa_context_disconnect(self.pa_context)
