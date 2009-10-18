@@ -55,10 +55,9 @@ class StatusIcon(AppletPlugin, gtk.StatusIcon):
 			return
 			
 		rets = self.Applet.Plugins.Run("on_query_status_icon_visibility")
-
-		if not StatusIcon.FORCE_SHOW in rets:
-			if StatusIcon.FORCE_HIDE in rets:
-				self.props.visible = False
+		if StatusIcon.FORCE_HIDE in rets:
+			if StatusIcon.FORCE_SHOW in rets:
+				self.props.visible = True
 			else:
 				try:
 					if self.Applet.Manager.ListAdapters() == []:
@@ -68,7 +67,7 @@ class StatusIcon(AppletPlugin, gtk.StatusIcon):
 				except:
 					self.props.visible = False
 		else:
-			self.props.visible = True
+			self.props.visible = False
 			
 	def SetTextLine(self, id, text):
 		if text:
