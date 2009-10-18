@@ -91,7 +91,11 @@ class Networking(AppletPlugin):
 	def set_gn(self, on):
 		dprint("set gn", on)
 		m = Mechanism()
-		m.SetGN(on)
+		try:
+			m.SetGN(on)
+		except:
+			dprint("Problem encountered while launching avahi-autoipd")
+
 		if self.Applet.Manager != None:
 			adapters = self.Applet.Manager.ListAdapters()
 			for adapter in adapters:
