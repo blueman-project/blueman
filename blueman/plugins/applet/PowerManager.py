@@ -50,9 +50,6 @@ class PowerManager(AppletPlugin):
 		
 		self.bluetooth_off = False
 		self.state_change_deferred = -1
-		
-	def on_query_status_icon_visibility(self):
-		print self
 
 	def SetBluetoothStatus(self, status):
 		self.bluetooth_off = not status
