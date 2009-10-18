@@ -20,12 +20,9 @@ policykit_DATA = $(policykit_in_files:.policy.in=.policy)
 
 EXTRA_DIST = org.blueman.Mechanism.conf		\
 	blueman-applet.service.in		\
-	org.blueman.Mechanism.service.in		\
-	org.blueman.policy.in	
-
-if ENABLE_HAL	
-EXTRA_DIST += 11-blueman-bnep.fdi
-endif
+	org.blueman.Mechanism.service.in	\
+	org.blueman.policy.in			\
+	11-blueman-bnep.fdi
 
 CLEANFILES =		\
 	org.blueman.Mechanism.service	\
