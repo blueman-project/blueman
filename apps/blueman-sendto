@@ -80,6 +80,9 @@ class Sender(gobject.GObject):
 		self._last_bytes = 0
 		self._last_update = 0
 		
+		self.error_dialog = None
+		self.cancelling = False
+		
 		#bytes transferred on a current transfer
 		self.transferred = 0
 		
@@ -145,15 +148,24 @@ class Sender(gobject.GObject):
 		self.manager.create_session(self.device.Address, props["Address"], error_handler=on_error)
 		
 	def on_cancel(self, button):
+		def reply(*args):
+			self.session.Disconnect()
+			self.emit("result", False)
+		
+		self.pb.props.text = _("Cancelling")
+		button.props.sensitive = False
+		
 		if self.session:
 			if self.session.Connected:
-				self.session.Cancel()
-				self.session.Disconnect()
+				self.session.Cancel(reply_handler=reply, error_handler=reply)
 			else:
 				print self.session.object_path
 				self.manager.CancelSessionConnect(self.session.object_path)
+				self.emit("result", False)
+		else:
+			self.emit("result", False)
 			
-		self.emit("result", False)
+		
 		
 	def on_transfer_started(self, session, filename, path, size):
 		dprint("transfer started")
@@ -218,7 +230,7 @@ class Sender(gobject.GObject):
 		
 	def send_file(self, file_path):
 		dprint(file_path)
-		if self.session.Connected:
+		if self.session and self.session.Connected:
 			self.session.SendFile(file_path)
 		
 		
@@ -230,7 +242,6 @@ class Sender(gobject.GObject):
 				dprint("Warning: Session already closed")
 		
 	def on_session_destroyed(self, manager, path):
-		dprint("session destroyed")
 		if self.session.object_path == path:
 			self.session = None
 		
@@ -241,44 +252,48 @@ class Sender(gobject.GObject):
 		
 	def on_session_error(self, session, name, msg):
 		dprint("session err", name, msg)
-		self.speed.reset()
-		d = gtk.MessageDialog(  self.window,
-					type=gtk.MESSAGE_ERROR)
-		d.props.text = msg
-		d.props.modal = True
-		d.props.secondary_text = _("Error occurred while sending file %s") % os.path.basename(self.files[-1])
-		d.props.icon_name = "blueman"
+		if not self.error_dialog:	
+			self.speed.reset()
+			d = gtk.MessageDialog(  self.window,
+						type=gtk.MESSAGE_ERROR)
+			d.props.text = msg
+			d.props.modal = True
+			d.props.secondary_text = _("Error occurred while sending file %s") % os.path.basename(self.files[-1])
+			d.props.icon_name = "blueman"
 		
-		if len(self.files) > 1:
-			d.add_button(_("Skip"), gtk.RESPONSE_NO)
-		d.add_button(_("Retry"), gtk.RESPONSE_YES)
-		d.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
+			if len(self.files) > 1:
+				d.add_button(_("Skip"), gtk.RESPONSE_NO)
+			d.add_button(_("Retry"), gtk.RESPONSE_YES)
+			d.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
 		
 		
-		def on_response(dialog, resp):
-			dialog.destroy()
-			if resp == gtk.STOCK_CANCEL:
-				self.on_cancel(None)
-			elif resp == gtk.RESPONSE_NO:
-				self.total_bytes -= os.path.getsize(self.files[-1])
-				self.total_transferred -= self.transferred
-				self.transferred = 0
-				del self.files[-1]
-				if not self.session or not self.session.Connected:
-					self.create_session()
-				self.process_queue()
-			elif resp == gtk.RESPONSE_YES:
-				self.total_transferred -= self.transferred
-				self.transferred = 0
-				if not self.session or not self.session.Connected:
-					self.create_session()
+			def on_response(dialog, resp):
+				dialog.destroy()
+				self.error_dialog = None
+				
+				if resp == gtk.STOCK_CANCEL:
+					self.on_cancel(None)
+				elif resp == gtk.RESPONSE_NO:
+					self.total_bytes -= os.path.getsize(self.files[-1])
+					self.total_transferred -= self.transferred
+					self.transferred = 0
+					del self.files[-1]
+					if not self.session or not self.session.Connected:
+						self.create_session()
+					self.process_queue()
+				elif resp == gtk.RESPONSE_YES:
+					self.total_transferred -= self.transferred
+					self.transferred = 0
+					if not self.session or not self.session.Connected:
+						self.create_session()
 
-				self.process_queue()
-			else:
-				self.on_cancel(None)			
+					self.process_queue()
+				else:
+					self.on_cancel(None)		
 		
-		d.connect("response", on_response)
-		d.show()
+			d.connect("response", on_response)
+			d.show()
+			self.error_dialog = d
 		
 		
 	def on_session_created(self, manager, session):

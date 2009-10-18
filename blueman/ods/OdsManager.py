@@ -44,7 +44,7 @@ class OdsManager(OdsBase):
 		
 	def on_session_closed(self, session_path):
 		dprint("__Session Closed__")
-		session_path = os.path.basename(session_path)
+		#session_path = os.path.basename(session_path)
 		if session_path in self.Sessions:
 			self.Sessions[session_path].DisconnectAll()
 			del self.Sessions[session_path]
@@ -52,7 +52,7 @@ class OdsManager(OdsBase):
 	
 	def on_session_connected(self, session_path):
 		dprint("session_connected")
-		session_path = os.path.basename(session_path)
+		#session_path = os.path.basename(session_path)
 		if session_path in self.Sessions:
 			session = self.Sessions[session_path]
 			if not session.Connected:
@@ -60,7 +60,7 @@ class OdsManager(OdsBase):
 	
 	def on_session_error(self, session_path, err_name, err_msg):
 		dprint("__error__")
-		session_path = os.path.basename(session_path)
+		#session_path = os.path.basename(session_path)
 		if session_path in self.Sessions:
 			session = self.Sessions[session_path]
 			session.emit("error-occurred", err_name, err_msg)
@@ -90,7 +90,7 @@ class OdsManager(OdsBase):
 	def create_session(self, dest_addr, source_addr="00:00:00:00:00:00", pattern="opp", error_handler=None):
 		def reply(session_path):
 			session = OdsSession(session_path)
-			self.Sessions[os.path.basename(session_path)] = session
+			self.Sessions[session_path] = session
 			self.emit("session-created", session)
 		def err(*args):
 			dprint("session err", args)
