@@ -89,7 +89,9 @@ class PulseAudio(AppletPlugin):
 	__description__ = _("Automatically loads pulseaudio bluetooth module after audio device is connected.\n<b>Note:</b> Requires pulseaudio 0.9.15 or higher")
 	__icon__ = "audio-card"
 	__options__  = {
-		"checked" : (bool, False)
+		"checked" : (bool, False),
+		"make_default_sink": (bool, True, "Make default sink", "Make the a2dp audio sink the default after connection"),
+		"move_streams": (bool, True, "Move streams", "Move existing audio streams to bluetooth device")
 	}
 	def on_load(self, applet):
 		self.signals = SignalTracker()
@@ -166,6 +168,31 @@ class PulseAudio(AppletPlugin):
 			if device in self.connected_sinks:
 				self.pulse_utils.UnloadModule(self.connected_sinks[device], lambda x: dprint("Unload module-bluetooth-device result", x))
 				del self.connected_sinks[device]
+			
+	def move_pa_streams(self, sink_id):
+		def inputs_cb(inputs):
+			for k, v in inputs.iteritems():
+				dprint("moving stream", v["name"], "to sink", sink_id)
+				self.pulse_utils.MoveSinkInput(k, sink_id, None)
+		
+		self.pulse_utils.ListSinkInputs(inputs_cb)
+				
+	def setup_pa_sinks(self, module_id):
+		dprint("module", module_id)
+		
+		def sinks_cb(sinks):
+			for k, v in sinks.iteritems():
+				if v["owner_module"] == module_id:
+					if self.get_option("make_default_sink"):
+						dprint("Making sink", v["name"], "the default")
+						self.pulse_utils.SetDefaultSink(v["name"], None)
+					if self.get_option("move_streams"):
+						self.move_pa_streams(k)
+					
+		
+		self.pulse_utils.ListSinks(sinks_cb)
+		
+		
 		
 	def setup_pa(self, device_path, profile):
 		device = BluezDevice(device_path)
@@ -177,14 +204,17 @@ class PulseAudio(AppletPlugin):
 
 				Notification(_("Bluetooth Audio"), 
 							 _("Failed to initialize PulseAudio Bluetooth module. Bluetooth audio over PulseAudio will not work."), 
-							 pixbuf=get_icon("gtk-dialog-error", 48), 
+							 pixbuf=get_notification_icon("gtk-dialog-error"), 
 							 status_icon=self.Applet.Plugins.StatusIcon)				
 			else:
 				self.connected_sinks[device_path] = res
 				Notification(_("Bluetooth Audio"), 
 							 _("Successfully connected to a Bluetooth audio device. This device will now be available in the PulseAudio mixer"), 
-							 pixbuf=get_icon("audio-card", 48), 
-							 status_icon=self.Applet.Plugins.StatusIcon)		
+							 pixbuf=get_notification_icon("audio-card"), 
+							 status_icon=self.Applet.Plugins.StatusIcon)	
+							 
+				self.setup_pa_sinks(res)
+							 	
 		if int(self.pulse_utils.GetVersion().split(".")[2]) >= 18:
 			args = "address=%s profile=%s sink_properties=device.icon_name=blueman card_properties=device.icon_name=blueman"
 		else:

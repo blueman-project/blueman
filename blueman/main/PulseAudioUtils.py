@@ -64,7 +64,7 @@ pa_source_info._fields_ = [
     ('mute', c_int),
     ('monitor_of_sink', c_uint32),
     ('monitor_of_sink_name', c_char_p),
-    ('latency', c_ulong),
+    ('latency', c_uint64),
     ('driver', c_char_p),
     ('flags', c_int),
     ('proplist', c_void_p),
@@ -78,9 +78,29 @@ pa_source_info._fields_ = [
    # ('active_port', POINTER(pa_source_port_info)),
 ]
 
+class pa_sink_input_info(Structure):
+    pass
+pa_sink_input_info._fields_ = [
+    ('index', c_uint32),
+    ('name', c_char_p),
+    ('owner_module', c_uint32),
+    ('client', c_uint32),
+    ('sink', c_uint32),
+    ('sample_spec', pa_sample_spec),
+    ('channel_map', pa_channel_map),
+    ('volume', pa_cvolume),
+    ('buffer_usec', c_uint64),
+    ('sink_usec', c_uint64),
+    ('resample_method', c_char_p),
+    ('driver', c_char_p),
+    ('mute', c_int),
+    ('proplist', c_void_p),
+]
+
            
 pa_module_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(pa_module_info), c_int, py_object)
 pa_source_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(pa_source_info), c_int, py_object)
+pa_sink_input_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(pa_sink_input_info), c_int, py_object)
 
 class PulseAudioUtils(gobject.GObject):
 	__gsignals__ = {
@@ -112,122 +132,179 @@ class PulseAudioUtils(gobject.GObject):
 			gobject.timeout_add(5000, self.Connect)
 			
 		self.prev_state = state
+		
+	def __get_proplist(self, proplist):
+		if proplist:
+			pla = self.pa.pa_proplist_to_string_sep(proplist, "|")
+			pl = cast(pla, c_char_p)
+			ls = pl.value.split("|")
+			del pl
+			self.pa.pa_xfree(pla)
+		else:
+			ls = []
+		
+		proplist = {}
+		for item in ls:
+			spl = map(lambda x: x.strip(" \""), item.split("="))
+			proplist[spl[0]] = spl[1]
 			
-			
-	def pa_get_module_info_cb(self, context, module_info, eol, info):
-
-		if module_info:
-			if module_info[0].proplist:
-				pla = self.pa.pa_proplist_to_string_sep(module_info[0].proplist, "|")
-				pl = cast(pla, c_char_p)
-				ls = pl.value.split("|")
-				del pl
-				self.pa.pa_xfree(pla)
-			else:
-				ls = []
-			
-			proplist = {}
-			for item in ls:
-				spl = map(lambda x: x.strip(" \""), item.split("="))
-				proplist[spl[0]] = spl[1]
-				
-			info["modules"][module_info[0].index] = {
-				"name": module_info[0].name,
-				"argument": module_info[0].argument,
-				"n_used" : module_info[0].n_used,
-				"proplist": proplist
-
-			}
-
-
+		return proplist
+		
+	def __list_callback(self, context, entry_info, eol, info):
+		if entry_info:
+			info["handler"](entry_info, False)
+		
 		if eol:
-			if info["callback"]:
-				info["callback"](info["modules"])
+			info["handler"](None, True)
 			pythonapi.Py_DecRef(py_object(info))
-			
-	def pa_get_source_info_cb(self, context, source_info, eol, info):
-		if source_info:
-			if source_info[0].proplist:
-				pla = self.pa.pa_proplist_to_string_sep(source_info[0].proplist, "|")
-				pl = cast(pla, c_char_p)
-				ls = pl.value.split("|")
-
-				del pl
-				self.pa.pa_xfree(pla)
-			else:
-				ls = []
-			
-			proplist = {}
-			for item in ls:
-				spl = map(lambda x: x.strip(" \""), item.split("="))
-				proplist[spl[0]] = spl[1]
-
-			
-			info["sources"][source_info[0].index] = {
-				"name": source_info[0].name,
-				"proplist": proplist,
-				"description": source_info[0].description,
-				"owner_module": source_info[0].owner_module,
-				"driver": source_info[0].driver
-			}
-
-		if eol:
-			if info["callback"]:
-				info["callback"](info["sources"])
-			pythonapi.Py_DecRef(py_object(info))
-	
-	def unload_module_cb(self, context, success, info):
-		if info["callback"]:
-			info["callback"](success)
-		pythonapi.Py_DecRef(py_object(info))
-	
-	def pa_load_module_cb(self, context, idx, info):
-		if info["callback"]:
-			if idx < 0:
-				info["callback"](-self.pa.pa_context_errno(context))
-			else:
-				info["callback"](idx)
+		
+	def __init_list_callback(self, function, cb_type, handler, *args):
+		info = {"cb_info": cb_type(self.__list_callback), "handler": handler }
+		pythonapi.Py_IncRef(py_object(info))
+		
+		args += (info["cb_info"], py_object(info))
+		self.pa.pa_operation_unref(function(self.pa_context, *args))	
+		
+	def simple_callback(self, handler, function, *args):
 				
-		pythonapi.Py_DecRef(py_object(info))
+		def wrapper(context, res, data):
+			if handler:
+				handler(res)
+			pythonapi.Py_DecRef(data)
+			
+		cb = pa_context_index_cb_t(wrapper)
+		pythonapi.Py_IncRef(py_object(cb))
+		
+		args += (cb, py_object(cb))
+		
+		self.pa.pa_operation_unref(function(self.pa_context, *args))
 	
 	def ListSources(self, callback):
 		self.check_connected()
-		info = {"callback" : callback, "cb_info": pa_source_info_cb_t(self.pa_get_source_info_cb), "sources" : {} }
-		pythonapi.Py_IncRef(py_object(info))
-		
-		
-		self.pa.pa_operation_unref(self.pa.pa_context_get_source_info_list(self.pa_context, info["cb_info"], py_object(info)))
 	
-	def ListSinks(self, callback):
-		self.check_connected()
-		info = {"callback" : callback, "cb_info": pa_source_info_cb_t(self.pa_get_source_info_cb), "sources" : {} }
-		pythonapi.Py_IncRef(py_object(info))
+		data = {}
+		def handler(entry_info, end):	
+			if end:
+				callback(data)
+				return
 		
-		self.pa.pa_operation_unref(self.pa.pa_context_get_sink_info_list(self.pa_context, info["cb_info"], py_object(info)))
+			props = self.__get_proplist(entry_info[0].proplist)
+		
+			data[entry_info[0].index] = {
+				"name": entry_info[0].name,
+				"proplist": props,
+				"description": entry_info[0].description,
+				"owner_module": entry_info[0].owner_module,
+				"driver": entry_info[0].driver
+			}
+			if end:
+				callback(data)
+		
+		
+		self.__init_list_callback(self.pa.pa_context_get_source_info_list,
+					  pa_source_info_cb_t, handler)		
+		
+	
+	def ListSinks(self, callback, id=None):
+		self.check_connected()
+		
+		data = {}
+		def handler(entry_info, end):
+			if end:
+				callback(data)
+				return
+			props = self.__get_proplist(entry_info[0].proplist)		
+			
+			data[entry_info[0].index] = {
+				"name": entry_info[0].name,
+				"proplist": props,
+				"description": entry_info[0].description,
+				"owner_module": entry_info[0].owner_module,
+				"driver": entry_info[0].driver
+			}
+			
+			if end:
+				callback(data)
+		if id != None:
+			self.__init_list_callback(self.pa.pa_context_get_sink_info_list,
+				  pa_source_info_cb_t, handler, id)	
+		else:	
+			self.__init_list_callback(self.pa.pa_context_get_sink_info_list,
+						  pa_source_info_cb_t, handler)
+		
+	def ListSinkInputs(self, callback):
+		self.check_connected()
+		
+		data = {}
+		def handler(entry_info, end):	
+			if end:
+				callback(data)
+				return
+				
+			props = self.__get_proplist(entry_info[0].proplist)
+
+			data[entry_info[0].index] = {
+				"name": entry_info[0].name,
+				"proplist": props,
+				"owner_module": entry_info[0].owner_module,
+				"sink": entry_info[0].sink,
+				"driver": entry_info[0].driver
+			}
+
+		self.__init_list_callback(self.pa.pa_context_get_sink_input_info_list,
+					  pa_sink_input_info_cb_t, handler)
+					  
+	def MoveSinkInput(self, input_id, sink_id, callback):
+		self.check_connected()
+		
+		self.simple_callback(callback, self.pa.pa_context_move_sink_input_by_index, int(input_id), int(sink_id))
+		
+	def SetDefaultSink(self, name, callback):
+		self.check_connected()
+		
+		self.pa.pa_context_load_module.argtypes = (c_void_p, c_char_p, c_void_p, py_object)
+		self.simple_callback(callback, self.pa.pa_context_set_default_sink, name)			
+
 			
 #### Module API #######	
 	def ListModules(self, callback):
 		self.check_connected()
-		info = {"callback" : callback, "cb_info": pa_module_info_cb_t(self.pa_get_module_info_cb), "modules" : {} }
-		pythonapi.Py_IncRef(py_object(info))
 		
-		self.pa.pa_operation_unref(self.pa.pa_context_get_module_info_list(self.pa_context, info["cb_info"], py_object(info)))
+		data = {}
+		def handler(entry_info, end):
+			if end:
+				callback(data)
+				return
+		
+			props = self.__get_proplist(entry_info[0].proplist)
+			data[entry_info[0].index] = {
+				"name": entry_info[0].name,
+				"argument": entry_info[0].argument,
+				"n_used" : entry_info[0].n_used,
+				"proplist": props
+			}
+			
+		self.__init_list_callback(self.pa.pa_context_get_module_info_list,
+			  pa_module_info_cb_t, handler)
 				
 	def UnloadModule(self, index, callback):
 		self.check_connected()
-		info = {"callback" : callback, "cb": pa_context_index_cb_t(self.unload_module_cb) }
-		
-		pythonapi.Py_IncRef(py_object(info))
-		self.pa.pa_operation_unref(self.pa.pa_context_unload_module(self.pa_context, index, info["cb"], py_object(info)))		
+			
+		self.simple_callback(callback, self.pa.pa_context_unload_module, index)		
 	
 	def LoadModule(self, name, args, callback):
 		self.check_connected()
-		info = {"callback": callback, "cb_index": pa_context_index_cb_t(self.pa_load_module_cb)}
-		pythonapi.Py_IncRef(py_object(info))
+		
+		def handler(res):	
+			if res < 0:
+				callback(-self.pa.pa_context_errno(self.pa_context))
+			else:
+				callback(res)
 		
 		self.pa.pa_context_load_module.argtypes = (c_void_p, c_char_p, c_char_p, c_void_p, py_object)
-		self.pa.pa_operation_unref(self.pa.pa_context_load_module(self.pa_context, name, args, info["cb_index"], py_object(info)))
-
+		
+		self.simple_callback(handler, self.pa.pa_context_load_module, name, args)
+		
 #####################	
 
 	def GetVersion(self):

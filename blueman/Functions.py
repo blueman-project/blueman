@@ -184,6 +184,12 @@ def get_icon(name, size=24, fallback="gtk-missing-image"):
 
 	return icon
 	
+def get_notification_icon(icon, main_icon="blueman"):
+	main = get_icon(main_icon, 48)
+	sub = get_icon(icon, 24)
+	
+	return composite_icon(main, [(sub, 24, 24, 255)])
+	
 def adapter_path_to_name(path):
 	return re.search(".*(hci[0-9]*)", path).groups(0)[0]
 
