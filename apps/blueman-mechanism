@@ -44,7 +44,8 @@ class Tee(object):
 		self.buffer+=data
 		if self.buffer.endswith("\n"):
 			self.stdout.write(self.buffer)
-			syslog.syslog(self.buffer)
+			if self.buffer != "\n":
+				syslog.syslog(self.buffer)
 			self.buffer = ""
 
 

@@ -22,6 +22,7 @@ import termios
 import os
 import subprocess
 import gobject
+import errno
 import re
 
 pppd_errors = {}
@@ -69,50 +70,63 @@ class PPPConnection(gobject.GObject):
 		self.pppd = None
 		self.file = None
 		
+		self.commands = [("ATZ", self.simple_callback), 
+				 ("ATE0", self.simple_callback), 
+				 ("AT+GCAP", self.simple_callback), 
+				 ("ATD%s" % self.number, self.connect_callback, ["CONNECT", "NO CARRIER", "BUSY", "NO ANSWER", "NO DIALTONE", "OK", "ERR", "ERROR"])
+				]
+		if self.apn != "":		
+			self.commands.insert(-1, ("AT+CGDCONT=1, \"IP\",\"%s\"" % self.apn, self.simple_callback))
+				
+	def cleanup(self):
+		os.close(self.file)
+		self.file = None
+	
+	def simple_callback(self, response):
+		pass
+		
+	def connect_callback(self, response):
+		if "CONNECT" in response:
+			dprint("Starting pppd")
+			self.pppd = subprocess.Popen(["/usr/sbin/pppd", "%s" % self.port, "defaultroute", "updetach", "usepeerdns"], bufsize=1, stdout=subprocess.PIPE)
+			glib.io_add_watch(self.pppd.stdout, glib.IO_IN | glib.IO_ERR | glib.IO_HUP, self.on_pppd_stdout)
+			glib.timeout_add(1000, self.check_pppd)				
+			
+			self.cleanup()
+		else:
+			self.cleanup()
+			raise PPPException("Bad modem response %s, expected CONNECT" % response[0])
+	
+	def __cmd_response_cb(self, response, exception, item_id):
+		if exception:
+			self.emit("error-occurred", str(exception))
+		else:	
+			try:
+				self.commands[item_id][1](response)
+			except PPPException, e:
+				self.emit("error-occurred", str(e))
+				return
+				
+			self.send_commands(item_id+1)
+
+	
+	def send_commands(self, id=0):
+		try:
+			item = self.commands[id]
+		except IndexError:
+			return
+			
+		if len(item) == 3:
+			(command, callback, terminators) = item
+		else:
+			(command, callback) = item
+			terminators = ["OK", "ERROR", "ERR"]
+			
+		self.send_command(command)
+		self.wait_for_reply(self.__cmd_response_cb, terminators, id)	
+				
+
 	def Connect(self):
-
-		self.event = 1
-
-		def common_callback(res, exception):
-			if exception:
-				self.emit("error-occurred", str(exception))
-				
-			elif self.event == 1:
-				self.send_command("ATZ")
-				self.wait_for_reply(common_callback, ["OK", "ERROR"])					
-
-				
-			elif self.event == 2:
-				self.send_command("ATE1")
-				self.wait_for_reply(common_callback)				
-			
-			elif self.event == 3:
-				self.send_command("AT+GCAP")
-				self.wait_for_reply(common_callback)				
-			
-			elif self.event == 4:
-				if self.apn != "":
-					self.send_command("AT+CGDCONT=1, \"IP\",\"%s\"" % self.apn)
-					self.wait_for_reply(common_callback, ["OK", "ERROR", "ERR"])
-				else:
-					self.event+=1
-					common_callback(None, None)
-					return
-			
-			elif self.event == 5:
-				self.send_command("ATD%s" % self.number)
-				self.wait_for_reply(common_callback, ["CONNECT", "NO CARRIER", "BUSY", "NO ANSWER", "NO DIALTONE", "OK", "ERR", "ERROR"])
-				
-			elif self.event == 6:
-				print "Starting pppd"
-				self.pppd = subprocess.Popen(["/usr/sbin/pppd", "%s" % self.port, "defaultroute", "updetach", "usepeerdns"], bufsize=1, stdout=subprocess.PIPE)
-				glib.io_add_watch(self.pppd.stdout, glib.IO_IN | glib.IO_ERR | glib.IO_HUP, self.on_pppd_stdout)
-				glib.timeout_add(1000, self.check_pppd)				
-				
-				os.close(self.file)	
-				
-			
-			self.event+=1
 			
 		self.file = os.open(self.port, os.O_RDWR | os.O_EXCL | os.O_NONBLOCK)
 		tty.setraw(self.file)
@@ -134,8 +148,7 @@ class PPPConnection(gobject.GObject):
 		
 		termios.tcflush(self.file, termios.TCIOFLUSH)
 		
-		self.send_command("AT")
-		self.wait_for_reply(common_callback)	
+		self.send_commands()	
 		
 	def on_pppd_stdout(self, source, cond):
 		if cond & glib.IO_ERR or cond & glib.IO_HUP:
@@ -168,17 +181,25 @@ class PPPConnection(gobject.GObject):
 		return True
 
 	def send_command(self, command):
-		print "-->", command
+		dprint("-->", command)
 		os.write(self.file, "%s\r\n" % command)
 		termios.tcdrain(self.file)
 		
 	def on_data_ready(self, source, condition, terminators, on_done):
 		if condition & glib.IO_ERR or condition & glib.IO_HUP:
 			on_done(None, PPPException("Socket error"))
-			os.close(self.file)
+			self.cleanup()
 			return False
-
-		self.buffer += os.read(self.file, 128)
+		try:
+			self.buffer += os.read(self.file, 128)
+		except OSError, e:
+			if e.errno == errno.EAGAIN:
+				return True
+			else:
+				on_done(None, PPPException("Socket error"))
+				dprint(e)
+				self.cleanup()
+				return False
 
 		lines = self.buffer.split("\r\n")
 
@@ -192,28 +213,26 @@ class PPPConnection(gobject.GObject):
 						found = True
 
 		if found:
-			try:
-				lines.remove("")
-			except:
-				pass
-			print "<-- ", lines
+			lines = filter(lambda x: x != "", lines)
+			lines = map(lambda x: x.strip("\r\n"), lines)
+			dprint("<-- ", lines)
 			
 			on_done(lines, None)
 			return False		
 			
 		return True
 		
-	def wait_for_reply(self, callback, terminators=["OK", "ERROR"]):
+	def wait_for_reply(self, callback, terminators=["OK", "ERROR"], *user_data):
 		def on_timeout():
 			glib.source_remove(self.io_watch)
-			callback(None, PPPException("Modem initialization timed out"))
-			os.close(self.file)
+			callback(None, PPPException("Modem initialization timed out"), *user_data)
+			self.cleanup()
 			return False
 			
 			
 		def on_done(ret, exception):
 			glib.source_remove(self.timeout)
-			callback(ret, exception)
+			callback(ret, exception, *user_data)
 			
 		
 		self.buffer = ""
@@ -221,8 +240,4 @@ class PPPConnection(gobject.GObject):
 				
 		self.io_watch = glib.io_add_watch(self.file, glib.IO_IN | glib.IO_ERR | glib.IO_HUP, self.on_data_ready, terminators, on_done)
 		self.timeout = glib.timeout_add(15000, on_timeout)
-
-
-
-
 		
