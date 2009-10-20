@@ -13,7 +13,10 @@ import dbus
 import dbus.service
 from dbus.mainloop.glib import DBusGMainLoop
 import blueman.Functions
+import __builtin__
+
 import gobject
+import syslog
 
 import subprocess
 import re
@@ -21,17 +24,47 @@ from signal import SIGKILL
 
 loop = gobject.MainLoop()
 
-
 from blueman.main.NetConf import *
 	
 from blueman.Lib import set_probe_debug
 
 from blueman.Constants import POLKIT
 
+class Tee(object):
+	def __init__(self):
+		self.stdout = sys.stdout
+		self.stderr = sys.stderr
+		sys.stdout = self
+		sys.stderr = self
+		self.buffer = ""
+	def __del__(self):
+		sys.stdout = self.stdout
+		sys.stderr = self.stderr
+	def write(self, data):
+		self.buffer+=data
+		if self.buffer.endswith("\n"):
+			self.stdout.write(self.buffer)
+			syslog.syslog(self.buffer)
+			self.buffer = ""
+
+
+syslog.openlog("blueman-mechanism", 0, syslog.LOG_DAEMON)
+a = Tee()
+
+def prnt(*args):
+	s = ""
+	for a in args:
+		s += (str(a) + " ")
+	print s
+	
+__builtin__.dprint = prnt
+
+dprint("Starting blueman-mechanism")
+
 DBusGMainLoop(set_as_default=True)
 
 if "--debug" in sys.argv:
-	print "Enabled verbose output"
+	dprint("Enabled verbose output")
 	set_probe_debug(True)
 
 os.environ["PATH"] = "/usr/bin:/bin:/usr/sbin:/sbin"
@@ -48,6 +81,7 @@ class Timer:
 		if not self.stopped:
 			self.time+=1
 			if self.time == timeout:
+				dprint("Exiting")
 				loop.quit()
 
 		return True
