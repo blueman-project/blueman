@@ -276,11 +276,11 @@ class PluginDialog(gtk.Dialog):
 		row = self.list.get_conditional(name=name)
 		self.list.set(row[0], active=loaded)
 		
+		cls = self.applet.Plugins.GetClasses()[name]
 		if not loaded:
-			cls = self.applet.Plugins.GetClasses()[name]
 			self.update_config_widget(cls)
 			self.b_prefs.props.sensitive = False
-		else:
+		elif cls.is_configurable():
 			self.b_prefs.props.sensitive = True
 			
 	def on_toggled(self, cellrenderer, path):
