@@ -146,7 +146,7 @@ class ManagerMenu:
 		if self.device_menu:
 			device = self.blueman.List.GetSelectedDevice()
 			if not self.device_menu.SelectedDevice or device.Address != self.device_menu.SelectedDevice.Address:
-				gobject.idle_add(self.device_menu.Generate)
+				gobject.idle_add(self.device_menu.Generate, priority=gobject.PRIORITY_HIGH)
 
 	def on_device_selected(self, List, device, iter):
 		if iter and device:
