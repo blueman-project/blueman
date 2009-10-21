@@ -37,6 +37,8 @@ class ManagerMenu:
 		
 		self.item_adapter = gtk.MenuItem(_("_Adapter"))
 		self.item_device = gtk.MenuItem(_("_Device"))
+		self.item_device.connect("activate", self.on_device_activate)
+		
 		self.item_view = gtk.MenuItem(_("_View"))
 		self.item_help = gtk.MenuItem(_("_Help"))
 		
@@ -137,20 +139,23 @@ class ManagerMenu:
 		self.adapters = blueman.List.Manager.ListAdapters()
 		
 		self.on_adapter_changed(blueman.List, blueman.List.GetAdapterPath())
-
+		
+		self.device_menu = None
+		
+	def on_device_activate(self, item):
+		if self.device_menu:
+			device = self.blueman.List.GetSelectedDevice()
+			if not self.device_menu.SelectedDevice or device.Address != self.device_menu.SelectedDevice.Address:
+				gobject.idle_add(self.device_menu.Generate)
 
 	def on_device_selected(self, List, device, iter):
 		if iter and device:
 			self.item_device.props.sensitive = True
-			sub = self.item_device.get_submenu()
-			if sub == None:
-				dprint("init")
-				x = ManagerDeviceMenu(self.blueman)
-				self.item_device.set_submenu(x)
-			else:
-				dprint("Regen")
-				sub.Generate()
-				
+
+			if self.device_menu == None:
+				self.device_menu = ManagerDeviceMenu(self.blueman)
+				self.item_device.set_submenu(self.device_menu)
+		
 		else:
 			self.item_device.props.sensitive = False
 
