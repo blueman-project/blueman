@@ -28,6 +28,7 @@ class SettingsWidget(gtk.VBox):
 	def __init__(self, inst):
 		gtk.VBox.__init__(self)
 		self.inst = inst
+		self.props.spacing = 2
 		
 		self.construct_settings()
 		self.show_all()

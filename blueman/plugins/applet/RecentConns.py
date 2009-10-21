@@ -62,7 +62,7 @@ class RecentConns(AppletPlugin, gtk.Menu):
 				  6,
 				  #the maximum number of items RecentConns menu will display
 				  _("Maximum items"),
-				  _("The maximum number of items RecentConns menu will display"),
+				  _("The maximum number of items recent connections menu will display."),
 				  6,
 				  20),
 		"recent_connections" : (str, "")
