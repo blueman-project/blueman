@@ -24,6 +24,89 @@ from blueman.Functions import *
 from blueman.gui.GenericList import GenericList
 import weakref
 
+class SettingsWidget(gtk.VBox):
+	def __init__(self, inst):
+		gtk.VBox.__init__(self)
+		self.inst = inst
+		
+		self.construct_settings()
+		self.show_all()
+		
+	def construct_settings(self):
+		for k, v in self.inst.__class__.__options__.iteritems():
+			if len(v) > 2:
+				dtype = v[0]
+				def_value = v[1]
+				short_desc = v[2]
+				full_desc = v[3]
+				if dtype == int:
+					range_start = v[4]
+					range_end = v[5]
+					
+				l = gtk.Label(short_desc)
+				l.props.xalign = 0.0
+				self.pack_start(self.get_control_widget(k, v), False, False)
+				
+				l = gtk.Label("<i>"+full_desc+"</i>")
+				l.props.use_markup = True
+				l.props.xalign = 0.0
+				self.pack_start(l, False, False)
+				
+				sep = gtk.HSeparator()
+				sep.props.height_request = 10
+				self.pack_start(sep, False, False)
+				
+	def handle_change(self, widget, opt, params, prop):
+		val = params[0](getattr(widget.props, prop))
+		dprint("changed", opt, val)
+		
+		self.inst.set_option(opt, val)
+		
+				
+	def get_control_widget(self, opt, params):
+		if params[0] == bool:
+			c = gtk.CheckButton(params[2])
+			
+			c.props.active = self.inst.get_option(opt)
+			c.connect("toggled", self.handle_change, opt, params, "active")
+			return c
+			
+		elif params[0] == int:
+			b = gtk.HBox()
+			l = gtk.Label(params[2])
+			b.pack_start(l, False, False)
+			
+			r = gtk.SpinButton()
+			b.pack_start(r, False, False)
+			b.props.spacing = 6
+			
+			r.set_numeric(True)
+			r.set_increments(1, 3)
+			r.set_range(params[4], params[5])
+			
+			r.props.value = self.inst.get_option(opt)
+			r.connect("value-changed", self.handle_change, opt, params, "value")
+			
+			return b
+			
+		elif params[0] == str:
+			b = gtk.HBox()
+			l = gtk.Label(params[2])
+			b.pack_start(l, False, False)
+			
+			e = gtk.Entry()
+			b.pack_start(e, False, False)
+			b.props.spacing = 6
+			
+			e.props.text = self.inst.get_option(opt)
+			e.connect("changed", self.handle_change, opt, params, "text")
+			
+			return b			
+				
+		
+		
+		
+
 class PluginDialog(gtk.Dialog):
 	def __init__(self, applet):
 		gtk.Dialog.__init__(self, buttons=(gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE))
@@ -47,6 +130,12 @@ class PluginDialog(gtk.Dialog):
 		self.conflicts_hdr = self.Builder.get_object("conflicts_hdr")
 		self.conflicts_txt = self.Builder.get_object("conflicts_txt")
 		self.plugin_name = self.Builder.get_object("name")
+		
+		self.main_container = self.Builder.get_object("main_container")
+		self.content_vbox = self.Builder.get_object("content_vbox")
+	
+		self.b_prefs = self.Builder.get_object("b_prefs")
+		self.b_prefs.connect("toggled", self.on_prefs_toggled)
 	
 		widget = self.Builder.get_object("all")
 		
@@ -107,8 +196,6 @@ class PluginDialog(gtk.Dialog):
 				return -1
 			elif not a["activatable"] and b["activatable"]:
 				return 1
-
-		print "aaa"
 		
 		
 	def on_response(self, dialog, resp):
@@ -139,7 +226,44 @@ class PluginDialog(gtk.Dialog):
 			self.conflicts_txt.props.label = ", ".join(cls.__conflicts__)
 		else:
 			self.conflicts_hdr.props.visible = False
-			self.conflicts_txt.props.visible = False		
+			self.conflicts_txt.props.visible = False
+			
+		if cls.is_configurable() and name in self.applet.Plugins.GetLoaded():
+			self.b_prefs.props.sensitive = True
+		else:
+			self.b_prefs.props.sensitive = False
+			
+		self.update_config_widget(cls)
+		
+	def on_prefs_toggled(self, button):
+		model, iter = self.list.selection.get_selected()
+		name = self.list.get(iter, "name")["name"]
+		cls = self.applet.Plugins.GetClasses()[name]
+		
+		self.update_config_widget(cls)
+		
+	def update_config_widget(self, cls):
+		if self.b_prefs.props.active:
+			if not cls.is_configurable():
+				self.b_prefs.props.active = False
+				return
+				
+			if not cls.__instance__:
+				self.b_prefs.props.active = False
+			else:
+				c = self.main_container.get_child()
+				self.main_container.remove(c)
+				if isinstance(c, SettingsWidget):
+					c.destroy()
+			
+				self.main_container.add(SettingsWidget(cls.__instance__))
+		
+		else:
+			c = self.main_container.get_child()
+			self.main_container.remove(c)
+			if isinstance(c, SettingsWidget):
+				c.destroy()
+			self.main_container.add(self.content_vbox)
 		
 	def populate(self):
 		classes = self.applet.Plugins.GetClasses()
@@ -150,8 +274,14 @@ class PluginDialog(gtk.Dialog):
 	def plugin_state_changed(self, plugins, name, loaded):
 		row = self.list.get_conditional(name=name)
 		self.list.set(row[0], active=loaded)
-			
 		
+		if not loaded:
+			cls = self.applet.Plugins.GetClasses()[name]
+			self.update_config_widget(cls)
+			self.b_prefs.props.sensitive = False
+		else:
+			self.b_prefs.props.sensitive = True
+			
 	def on_toggled(self, cellrenderer, path):
 		name = self.list.get(path, "name")["name"]
 		

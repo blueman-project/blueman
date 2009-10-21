@@ -25,17 +25,23 @@ class Headset(AppletPlugin):
 	__author__ = "Walmis"
 	__description__ = _("Runs a command when answer button is pressed on a headset")
 	__icon__ = "blueman-headset"
+	
+	__options__  = {
+		"command" : (str,
+				  "",
+				  _("Command"),
+				  _("Command to execute when answer button is pressed:"))
+	}
 		
 	def on_load(self, applet):
 		self.bus = dbus.SystemBus()
 		self.bus.add_signal_receiver(self.on_answer_requested, "AnswerRequested", "org.bluez.Headset")
-		self.Config = Config("headset")
 		
 	def on_unload(self):
 		self.bus.remove_signal_receiver(self.on_answer_requested, "AnswerRequested", "org.bluez.Headset")
 		
 	def on_answer_requested(self):
-		c = self.Config.props.command
+		c = self.get_option("command")
 		if c and c != "":
 			args = c.split(" ")
 			try:

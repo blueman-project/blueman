@@ -40,6 +40,8 @@ class AppletPlugin(object):
 	__autoload__ = True
 	
 	__options__ = {}
+	
+	__instance__ = None
 
 	instances = []
 	def __init__(self, applet):
@@ -61,6 +63,11 @@ class AppletPlugin(object):
 			for k, v in self.__options__.iteritems():
 				if getattr(self.__config.props, k) == None:
 					setattr(self.__config.props, k, v[1])
+	
+	@classmethod
+	def is_configurable(cls):
+		res = map(lambda x: (len(x) > 2), cls.__options__.values())
+		return True in res
 	
 	def get_option(self, name):
 		if not name in self.__class__.__options__:
@@ -87,6 +94,8 @@ class AppletPlugin(object):
 			
 		for sig in self.__dbus_signals:
 			self.Applet.DbusSvc.remove_registration(sig)
+			
+		self.__class__.__instance__ = None
 		
 	def __del__(self):
 		print "Deleting plugin instance", self
@@ -95,6 +104,7 @@ class AppletPlugin(object):
 		try:
 			self.on_load(applet)
 			self.on_manager_state_changed(applet.Manager != None)
+			self.__class__.__instance__ = self
 		except Exception, e:
 			AppletPlugin.instances.remove(self)
 			traceback.print_exc()

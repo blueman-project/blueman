@@ -166,7 +166,7 @@ class Network(ServicePlugin):
 			nap_frame.props.sensitive = False
 			
 		ns = NetConf.netstatus()
-		
+		dprint(ns)
 		if ns["ip"] != '0':
 			net_ip.props.text = ns["ip"]
 			#if not self.NetConf.props.nap_enable:
