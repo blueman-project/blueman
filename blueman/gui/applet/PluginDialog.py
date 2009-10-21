@@ -48,6 +48,7 @@ class SettingsWidget(gtk.VBox):
 				self.pack_start(self.get_control_widget(k, v), False, False)
 				
 				l = gtk.Label("<i>"+full_desc+"</i>")
+				l.set_line_wrap(True)
 				l.props.use_markup = True
 				l.props.xalign = 0.0
 				self.pack_start(l, False, False)
