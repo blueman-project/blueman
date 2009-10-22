@@ -37,9 +37,14 @@ class StatusIcon(AppletPlugin, gtk.StatusIcon):
 		
 		self.SetTextLine(0, _("Bluetooth Enabled"))
 		
-		
 		AppletPlugin.add_method(self.on_query_status_icon_visibility)
 		AppletPlugin.add_method(self.on_status_icon_pixbuf_ready)
+		
+		ic = gtk.icon_theme_get_default()
+		ic.connect("changed", self.on_icon_theme_changed)
+		
+	def on_icon_theme_changed(self, icon_theme):
+		self.IconShouldChange()
 		
 	def on_bluetooth_power_state_changed(self, state):
 		if state:
