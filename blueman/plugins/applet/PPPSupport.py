@@ -27,7 +27,7 @@ from blueman.main.Config import Config
 import gobject
 
 from blueman.Sdp import *
-
+import os
 import dbus
 
 class connection:
@@ -39,15 +39,23 @@ class connection:
 		self.port = port
 		self.Applet = applet
 		
-		c = Config("gsm_settings/" + device.Address)
+		res = os.popen("ps x -o pid,args | grep modem-manager").read()
+		if not res:
+			self.connect()
+		else:
+			dprint("ModemManager is running, delaying connection 5sec for it to complete probing")
+			gobject.timeout_add(5000, self.connect)
+		
+	def connect(self):
+		c = Config("gsm_settings/" + self.device.Address)
 		if c.props.apn == None:
 			c.props.apn = ""
 			
 		if c.props.number == None:
-			c.props.number = "*99#"
+			c.props.number = "*99#"	
 		
 		m = Mechanism()
-		m.PPPConnect(port, c.props.number, c.props.apn, reply_handler=self.on_connected, error_handler=self.on_error, timeout=200)	
+		m.PPPConnect(self.port, c.props.number, c.props.apn, reply_handler=self.on_connected, error_handler=self.on_error, timeout=200)	
 	
 	def on_error(self, error):
 		self.error_handler(error)
