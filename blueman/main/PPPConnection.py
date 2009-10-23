@@ -128,7 +128,8 @@ class PPPConnection(gobject.GObject):
 
 	def Connect(self):
 			
-		self.file = os.open(self.port, os.O_RDWR | os.O_EXCL | os.O_NONBLOCK)
+		self.file = os.open(self.port, os.O_RDWR | os.O_EXCL | os.O_NONBLOCK | os.O_NOCTTY)
+		
 		tty.setraw(self.file)
 		
 		attrs = termios.tcgetattr(self.file)
@@ -194,6 +195,7 @@ class PPPConnection(gobject.GObject):
 			self.buffer += os.read(self.file, 128)
 		except OSError, e:
 			if e.errno == errno.EAGAIN:
+				dprint("Got EAGAIN")
 				return True
 			else:
 				on_done(None, PPPException("Socket error"))
