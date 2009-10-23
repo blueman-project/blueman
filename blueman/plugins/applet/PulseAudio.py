@@ -212,8 +212,8 @@ class PulseAudio(AppletPlugin):
 							 _("Successfully connected to a Bluetooth audio device. This device will now be available in the PulseAudio mixer"), 
 							 pixbuf=get_notification_icon("audio-card"), 
 							 status_icon=self.Applet.Plugins.StatusIcon)	
-							 
-				self.setup_pa_sinks(res)
+				if profile == "a2dp":			 
+					self.setup_pa_sinks(res)
 							 	
 		if int(self.pulse_utils.GetVersion().split(".")[2]) >= 18:
 			args = "address=%s profile=%s sink_properties=device.icon_name=blueman card_properties=device.icon_name=blueman"
