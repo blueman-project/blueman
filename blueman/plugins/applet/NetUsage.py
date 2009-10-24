@@ -22,6 +22,7 @@ from blueman.main.Config import Config
 from blueman.main.SignalTracker import SignalTracker
 from blueman.bluez.Device import Device as BluezDevice
 from blueman.main.Device import Device
+from blueman.Lib import rfcomm_list
 import gobject
 import weakref
 import os
@@ -33,15 +34,14 @@ import time
 import datetime
 import gettext
 
-
-class Monitor(gobject.GObject):
+class MonitorBase(gobject.GObject):
 	__gsignals__ = {
 		'disconnected' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, ()),
 		'stats' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
 	}
 	def __init__(self, device, interface):
 		gobject.GObject.__init__(self)
-		self.poller = None
+		
 		self.interface = interface
 		self.device = device
 		self.config = Config("plugins/NetUsage/%s" % device.Address)
@@ -55,6 +55,59 @@ class Monitor(gobject.GObject):
 			self.config.props.rx = "0"
 		if not self.config.props.time:
 			self.config.props.time = int(time.time())
+			
+	#tx and rx must be cumulative absolute values
+	def update_stats(self, tx, rx):
+		dtx = tx - self.last_tx
+		drx = rx - self.last_rx
+
+		if dtx < 0:
+			dtx = 0
+		if drx < 0:
+			drx = 0
+			
+		self.last_rx = rx
+		self.last_tx = tx
+		if dtx > 0:
+			self.config.props.tx = str( int(self.config.props.tx) + dtx )
+		if drx > 0:
+			self.config.props.rx = str( int(self.config.props.rx) + drx )
+
+		self.emit("stats", int(self.config.props.tx), int(self.config.props.rx))
+		
+		
+	def Disconnect(self):
+		self.emit("disconnected")
+		
+class NMMonitor(MonitorBase):
+	def __init__(self, device, nm_dev_path):
+		MonitorBase.__init__(self, device, "NM")
+		dprint("created nm monitor for path", nm_dev_path)
+		self.signals = SignalTracker()
+		self.signals.Handle("dbus", 
+				    dbus.SystemBus(), 
+				    self.on_ppp_stats, 
+				    "PppStats", 
+				    "org.freedesktop.NetworkManager.Device.Serial", 
+				    path=nm_dev_path)
+				    
+		self.signals.Handle(device, "property-changed", self.on_device_property_changed)
+	
+	def on_ppp_stats(self, rx, tx):
+		self.update_stats(tx, rx)
+		
+	def on_device_property_changed(self, device, key, value):
+		if key == "Connected" and not value:
+			self.signals.DisconnectAll()
+			self.Disconnect()
+		
+
+
+class Monitor(MonitorBase):
+
+	def __init__(self, device, interface):
+		MonitorBase.__init__(self, device, interface)
+		self.poller = None
 		
 		self.poller = gobject.timeout_add(5000, self.poll_stats)	
 	
@@ -75,26 +128,10 @@ class Monitor(gobject.GObject):
 			self.ppp_port = None
 			self.interface = None
 			self.config = None
-			self.emit("disconnected")
+			self.Disconnect()
 			return False
 		
-		dtx = tx - self.last_tx
-		drx = rx - self.last_rx
-
-		if dtx < 0:
-			dtx = 0
-		if drx < 0:
-			drx = 0
-			
-		self.last_rx = rx
-		self.last_tx = tx
-		if dtx > 0:
-			self.config.props.tx = str( int(self.config.props.tx) + dtx )
-		if drx > 0:
-			self.config.props.rx = str( int(self.config.props.rx) + drx )
-
-		self.emit("stats", int(self.config.props.tx), int(self.config.props.rx))
-		
+		self.update_stats(tx, rx)
 		
 		return True				
 class Dialog:
@@ -290,7 +327,7 @@ class NetUsage(AppletPlugin, gobject.GObject):
 		self.devices = weakref.WeakValueDictionary()
 		self.signals = SignalTracker()
 		
-		bus = dbus.SystemBus()
+		bus = self.bus = dbus.SystemBus()
 		self.signals.Handle("dbus", bus, self.on_network_property_changed, "PropertyChanged", "org.bluez.Network", path_keyword="path")
 		
 		item = create_menuitem(_("Network Usage"), get_icon("network-wireless", 16))
@@ -298,12 +335,44 @@ class NetUsage(AppletPlugin, gobject.GObject):
 		self.signals.Handle(item, "activate", self.activate_ui)
 		self.Applet.Plugins.Menu.Register(self, item, 84, True)
 		
+		self.signals.Handle("dbus", bus, self.on_nm_ppp_stats, "PppStats", "org.freedesktop.NetworkManager.Device.Serial", path_keyword="path")
+		self.nm_paths = {}
+		
+	def on_nm_ppp_stats(self, down, up, path):
+		if not path in self.nm_paths:
+			props = self.bus.call_blocking("org.freedesktop.NetworkManager", 
+						       path, 
+						       "org.freedesktop.DBus.Properties", 
+						       "GetAll", 
+						       "s", 
+						       ["org.freedesktop.NetworkManager.Device"])
+						       
+			if props["Driver"] == "bluetooth" and "rfcomm" in props["Interface"]:
+				self.nm_paths[path] = True
+				
+				portid = int(props["Interface"].strip("rfcomm"))
+				
+				ls = rfcomm_list()
+				for dev in ls:
+					if dev["id"] == portid:
+						adapter = self.Applet.Manager.GetAdapter(dev["src"])
+						device = adapter.FindDevice(dev["dst"])
+						device = Device(device)
+				
+						self.monitor_interface(NMMonitor, device, path)
+						
+						return
+			else:
+				self.nm_paths[path] = False
+			
+		
+		
 	def on_network_property_changed(self, key, value, path):
 		dprint(key, value, path)
 		if key == "Device" and value != "":
 			d = BluezDevice(path)
 			d = Device(d)
-			self.monitor_interface(d, value)
+			self.monitor_interface(Monitor, d, value)
 		
 	def activate_ui(self, item):
 		Dialog(self)
@@ -312,15 +381,15 @@ class NetUsage(AppletPlugin, gobject.GObject):
 		self.signals.DisconnectAll()
 		self.Applet.Plugins.Menu.Unregister(self)
 
-	def monitor_interface(self, device, interface):
-		m = Monitor(device, interface)
+	def monitor_interface(self, montype, *args):
+		m = montype(*args)
 		self.monitors.append(m)
 		self.signals.Handle(m, "stats", self.on_stats, sigid=m)
 		self.signals.Handle(m, "disconnected", self.on_monitor_disconnected, sigid=m)
 		self.emit("monitor-added", m)		
 			
 	def on_ppp_connected(self, device, rfcomm, ppp_port):
-		self.monitor_interface(device, ppp_port)
+		self.monitor_interface(Monitor, device, ppp_port)
 
 	def on_monitor_disconnected(self, monitor):
 		self.monitors.remove(monitor)
