@@ -176,7 +176,10 @@ def get_major_class(klass):
 
 def get_minor_class(klass, i18n=False):
 	if klass == "unknown":
-		return "unknown"
+		if i18n:
+			return _("unknown")
+		else:
+			return "unknown"
 		
 	i = (klass >> 8) & 0x1F
 	
@@ -239,5 +242,8 @@ def get_minor_class(klass, i18n=False):
 		else:
 			return "";
 
-	return "";
+	if i18n:
+		return _("unknown")
+	else:
+		return "unknown"
 
