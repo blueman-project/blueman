@@ -66,22 +66,6 @@ class PowerManager(AppletPlugin):
 				dprint("adapter powered on while in off state, turning bluetooth on")
 				self.bluetooth_off = False
 
-		
-	def on_manager_state_changed(self, state):
-		if state:
-			adapters = self.Applet.Manager.ListAdapters()
-			for adapter in adapters:
-				props = adapter.GetProperties()
-				if not props["Powered"]:
-					self.bluetooth_off = True
-					if self.state_change_deferred != -1:
-						break
-					else:
-						return
-			
-			if self.state_change_deferred != -1:
-				self.bluetooth_off = self.state_change_deferred
-				self.state_change_deferred = -1
 	
 	def on_bluetooth_toggled(self):
 		self.bluetooth_off = not self.bluetooth_off
@@ -97,9 +81,17 @@ class PowerManager(AppletPlugin):
 		
 		return pixbuf
 		
+	def process_deferred(self):
+		if self.state_change_deferred != -1:
+			dprint("Setting deferred status")
+			self.bluetooth_off = self.state_change_deferred
+			self.state_change_deferred = -1
+		
 	def on_adapter_added(self, path):
 		adapter = Bluez.Adapter(path)
 		def on_ready():
+			self.process_deferred()
+			
 			if self.bluetooth_off:
 				adapter.SetProperty("Powered", False)
 			else:
@@ -134,6 +126,7 @@ class PowerManager(AppletPlugin):
 				self.__dict__[key] = value
 			
 			if not self.Applet.Manager:
+				dprint("deferring status change")
 				self.state_change_deferred = value
 				return
 			
