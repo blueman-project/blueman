@@ -106,9 +106,7 @@ class PowerManager(AppletPlugin):
 				adapter.SetProperty("Powered", True)				
 		
 		wait_for_adapter(adapter, on_ready)
-
 	
-		
 	
 	def __setattr__(self, key, value):
 		if key == "bluetooth_off":

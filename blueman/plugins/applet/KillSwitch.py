@@ -56,7 +56,7 @@ class KillSwitch(AppletPlugin):
 				gobject.timeout_add(1000, self.check)
 				
 		self.signals.Handle(self.Manager, "switch-added", self.on_switch_added)
-				
+		self.signals.Handle(self.Manager, "switch-removed", self.on_switch_removed)		
 
 	def on_switch_added(self, manager, switch):
 		if switch.type == RFKillType.BLUETOOTH:
@@ -77,6 +77,11 @@ class KillSwitch(AppletPlugin):
 				self.Applet.Plugins.PowerManager.SetBluetoothStatus(False)
 			elif s and (switch.soft == 0 or switch.hard == 0):
 				self.Applet.Plugins.PowerManager.SetBluetoothStatus(True)
+				
+	def on_switch_removed(self, manager, switch):
+		if switch.type == RFKillType.BLUETOOTH:
+			if len(manager.devices) == 0:
+				self.Applet.Plugins.StatusIcon.Query()
 			
 	def check(self):
 		try:

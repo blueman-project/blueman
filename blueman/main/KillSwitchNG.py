@@ -119,8 +119,9 @@ class KillSwitchNG(gobject.GObject):
 				self.switches[idx] = Switch(idx, type, soft, hard)
 				self.emit("switch-added", self.switches[idx])
 			elif op == RFKillOp.DEL:
-				self.emit("switch-removed", self.switches[idx])
+				sw = self.switches[idx]
 				del self.switches[idx]
+				self.emit("switch-removed", sw)
 			elif op == RFKillOp.CHANGE:
 				self.switches[idx].type = type
 				self.switches[idx].soft = soft
