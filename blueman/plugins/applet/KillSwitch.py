@@ -61,9 +61,12 @@ class KillSwitch(AppletPlugin):
 	def on_switch_added(self, manager, switch):
 		if switch.type == RFKillType.BLUETOOTH:
 			dprint("killswitch registered", switch.idx)
+			if manager.HardBlocked:
+				self.Applet.Plugins.PowerManager.SetPowerChangeable(False)
+			
 			if not self.Manager.GetGlobalState():	
 				self.Applet.Plugins.PowerManager.SetBluetoothStatus(False)
-
+			
 			pm_state = self.Applet.Plugins.PowerManager.GetBluetoothStatus()
 			if self.Manager.GetGlobalState() != pm_state:
 				self.Manager.SetGlobalState(pm_state)
@@ -72,12 +75,21 @@ class KillSwitch(AppletPlugin):
 	def on_switch_changed(self, manager, switch):
 		if switch.type == RFKillType.BLUETOOTH:
 			s = manager.GetGlobalState()
-			dprint("Global state:", s, "switch.soft:", switch.soft)
-			if not s and (switch.soft == 1 or switch.hard == 1):
+			dprint("Global state:", s, "\nswitch.soft:", switch.soft, "\nswitch.hard:", switch.hard)
+			
+			if manager.HardBlocked:
+				self.Applet.Plugins.PowerManager.SetPowerChangeable(False)
 				self.Applet.Plugins.PowerManager.SetBluetoothStatus(False)
-			elif s and (switch.soft == 0 or switch.hard == 0):
-				self.Applet.Plugins.PowerManager.SetBluetoothStatus(True)
+			else:
+				self.Applet.Plugins.PowerManager.SetPowerChangeable(True)
 				
+				if not s and (switch.soft == 1 or switch.hard == 1):
+					self.Applet.Plugins.PowerManager.SetBluetoothStatus(False)
+				elif s and (switch.soft == 0 or switch.hard == 0):
+					self.Applet.Plugins.PowerManager.SetBluetoothStatus(True)
+				
+			self.Applet.Plugins.StatusIcon.Query()
+			
 	def on_switch_removed(self, manager, switch):
 		if switch.type == RFKillType.BLUETOOTH:
 			if len(manager.devices) == 0:
@@ -97,9 +109,13 @@ class KillSwitch(AppletPlugin):
 		
 	def on_bluetooth_power_state_changed(self, state):
 		dprint(state)
-		self.Manager.SetGlobalState(state)
+		if not self.Manager.HardBlocked:
+			self.Manager.SetGlobalState(state)
 		
 	def on_query_status_icon_visibility(self):
+		if self.Manager.HardBlocked:
+			return 1
+		
 		state = self.Manager.GetGlobalState()
 		if state:
 			if isinstance(self.Manager, KillSwitchNG) and len(self.Manager.devices) > 0:

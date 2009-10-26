@@ -50,6 +50,8 @@ class PowerManager(AppletPlugin):
 		
 		self.bluetooth_off = False
 		self.state_change_deferred = -1
+		
+		self.power_changeable = True
 
 	def SetBluetoothStatus(self, status):
 		self.bluetooth_off = not status
@@ -98,8 +100,15 @@ class PowerManager(AppletPlugin):
 				adapter.SetProperty("Powered", True)				
 		
 		wait_for_adapter(adapter, on_ready)
-	
-	
+		
+	def SetPowerChangeable(self, state):
+		self.power_changeable = state
+		self.item.props.sensitive = state
+		
+	def IndicateBluetoothStatus(self, state):
+		self.BluetoothStatusChanged(state)		
+		self.Applet.Plugins.Run("on_bluetooth_power_state_changed", state)
+
 	def __setattr__(self, key, value):
 		if key == "bluetooth_off":
 			dprint("bt_off", value)
@@ -143,15 +152,15 @@ class PowerManager(AppletPlugin):
 					self.item.get_child().set_markup(_("<b>Turn Bluetooth On</b>"))
 					self.item.props.tooltip_text = _("Turn on all adapters")
 					self.item.set_image(gtk.image_new_from_pixbuf(get_icon("gtk-yes", 16)))
-					self.BluetoothStatusChanged(False)
-					self.Applet.Plugins.Run("on_bluetooth_power_state_changed", False)
+					
+					self.IndicateBluetoothStatus(False)
 				else:
 					self.item.get_child().set_markup(_("<b>Turn Bluetooth Off</b>"))
 					self.item.props.tooltip_text = _("Turn off all adapters")
 					self.item.set_image(gtk.image_new_from_pixbuf(get_icon("gtk-stop", 16)))
-					self.BluetoothStatusChanged(True)
+
+					self.IndicateBluetoothStatus(True)
 					
-					self.Applet.Plugins.Run("on_bluetooth_power_state_changed", True)
 					#FIXME: possible race condition here
 					try:
 						set_global_state()

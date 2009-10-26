@@ -152,3 +152,11 @@ class KillSwitchNG(gobject.GObject):
 		dprint(self.state)
 		return self.state
 		
+	@property
+	def HardBlocked(self):
+		for s in self.switches.itervalues():
+			if s.type == RFKillType.BLUETOOTH and s.hard:
+				return True
+		
+		return False	
+		
