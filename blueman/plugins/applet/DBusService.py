@@ -60,16 +60,14 @@ class DBusService(AppletPlugin):
 		self.add_dbus_method(self.SetPluginConfig, in_signature="sb", out_signature="")
 		self.add_dbus_method(self.DisconnectDevice, in_signature="o", out_signature="", async_callbacks=("ok","err"))
 		
-		dbus.SystemBus().add_signal_receiver(self.on_device_added, "DeviceCreated", "org.bluez.Adapter")
-		
-	def on_device_added(self, path):
-		self.RefreshServices(path, (lambda *args: None), (lambda *args: None))
-		
 	def RefreshServices(self, path, ok, err):
 		device = Device(path)
 		def reply(svcs):
-			records = parse_sdp_xml(svcs)
-			sdp_save(device.Address, records)
+			try:
+				records = parse_sdp_xml(svcs)
+				sdp_save(device.Address, records)
+			except:
+				pass
 			ok()
 
 		device.GetInterface().DiscoverServices("", reply_handler=reply, error_handler=err)
@@ -126,7 +124,11 @@ class DBusService(AppletPlugin):
 	def service_connect_handler(self, interface, object_path, _method, args, ok, err):
 		pass
 
-	def CreateDevice(self, adapter_path, address, pair, time, ok, err):
+	def CreateDevice(self, adapter_path, address, pair, time, _ok, err):
+		def ok(device):
+			_ok(device)
+			self.RefreshServices(device, (lambda *args: None), (lambda *args: None))
+		
 		if self.Applet.Manager:
 			adapter = Adapter(adapter_path)
 				
@@ -142,7 +144,7 @@ class DBusService(AppletPlugin):
 			err()
 	
 	def CancelDeviceCreation(self, adapter_path, address, ok, err):
-		if self.applet.Manager:
+		if self.Applet.Manager:
 			adapter = Adapter(adapter_path)
 
 			adapter.GetInterface().CancelDeviceCreation(address, error_handler=err, reply_handler=ok)
