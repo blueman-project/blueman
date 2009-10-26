@@ -656,6 +656,8 @@ class ManagerDeviceMenu(gtk.Menu):
 			else:
 				item.props.sensitive = False
 				
-
+			self.check_resize()
+			self.resize_children()
+			self.show_all()
 
 		
