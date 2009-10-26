@@ -239,12 +239,15 @@ def parse_sdp_xml(services):
 					attr_list[id] = get_value(i.nodeName, i.getAttribute("value"))
 					
 		return attr_list
-	
+		
 	for k, v in services.iteritems():
-		dom = xml.dom.minidom.parseString(v)
-
-		HandleRecord(dom.getElementsByTagName("record")[0])
-
+		try:
+			dom = xml.dom.minidom.parseString(v)
+			HandleRecord(dom.getElementsByTagName("record")[0])
+		except Exception, e:
+			dprint("Failed to parse xml sdp entry", e)
+			dprint(v)
+	
 	return svc_list
 
 def uuid16_to_name(uuid16):
