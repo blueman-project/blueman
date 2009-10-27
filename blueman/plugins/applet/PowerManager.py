@@ -111,8 +111,6 @@ class PowerManager(AppletPlugin):
 		foff = self.STATE_OFF_FORCED in rets
 		on = self.STATE_ON in rets
 		
-		
-		
 		new_state = True
 		if foff or off:
 				
@@ -147,7 +145,7 @@ class PowerManager(AppletPlugin):
 		
 	#dbus method
 	def SetBluetoothStatus(self, status):
-		pass
+		self.RequestPowerState(status)
 	
 	#dbus method
 	def GetBluetoothStatus(self):
@@ -160,7 +158,6 @@ class PowerManager(AppletPlugin):
 				self.RequestPowerState(True)
 			
 			self.UpdatePowerState()
-
 	
 	def on_bluetooth_toggled(self):
 		self.RequestPowerState(not self.CurrentState)
@@ -176,12 +173,6 @@ class PowerManager(AppletPlugin):
 		
 		return pixbuf
 		
-#	def process_deferred(self):
-#		if self.state_change_deferred != -1:
-#			dprint("Setting deferred status")
-#			self.bluetooth_off = self.state_change_deferred
-#			self.state_change_deferred = -1
-		
 	def on_adapter_added(self, path):
 		adapter = Bluez.Adapter(path)
 		def on_ready():
@@ -191,63 +182,4 @@ class PowerManager(AppletPlugin):
 				adapter.SetProperty("Powered", True)				
 		
 		wait_for_adapter(adapter, on_ready)
-		
-	def SetPowerChangeable(self, state):
-		self.power_changeable = state
-		self.item.props.sensitive = state
-	
-
-#	def __setattr__(self, key, value):
-#		if key == "bluetooth_off":
-#			dprint("bt_off", value)
-#			dprint("manager state", self.Applet.Manager)
-#				
-#			def set_global_state():
-#				if key in self.__dict__:
-#					dprint("off", self.__dict__[key], value)
-#					adapters = self.Applet.Manager.ListAdapters()
-#					for adapter in adapters:
-#						adapter.SetProperty("Powered", not value)
-#		
-#			
-#			def error(e):
-#				d = gtk.MessageDialog(parent=None, flags=0, type=gtk.MESSAGE_ERROR, buttons=gtk.BUTTONS_CLOSE, message_format=None)
-#				
-#				d.props.text = _("Failed to set bluetooth power")
-#				d.props.secondary_text = _("The error reported is: %s") % str(e)
-#				d.props.icon_name = "blueman"
-#				d.run()
-#				d.destroy()
-#			
-#			if not key in self.__dict__:
-#				self.__dict__[key] = value
-#			
-#			if not self.Applet.Manager:
-#				dprint("deferring status change")
-#				self.state_change_deferred = value
-#				return
-#			
-#			if self.__dict__[key] != value:
-#				self.__dict__[key] = value
-#									
-#				if value:
-#					try:
-#						set_global_state()
-#					except BluezDBusException, e:	
-#						error(e)
-#						return
-#				
-
-#					
-#					#FIXME: possible race condition here
-#					try:
-#						set_global_state()
-#					except BluezDBusException, e:	
-#						error(e)
-#						self.bluetooth_off = True
-#						return
-#							
-#				self.Applet.Plugins.StatusIcon.IconShouldChange()
-#		else:				
-#			self.__dict__[key] = value
 

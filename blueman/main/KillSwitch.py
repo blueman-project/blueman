@@ -50,12 +50,13 @@ class KillSwitch(dbus.proxies.Interface):
 		self.hard = 0
 		self.idx = self.udi
 		self.type = 2 #RfkillType.BLUETOOTH
-		
-	def __getattr__(self, key):
-		if key == "soft":
-			return self.GetPower()
-		else:
-			return dbus.proxies.Interface.__getattr__(self, key)
+	
+	@property
+	def soft(self):
+		try:
+			return not self.GetPower()
+		except:
+			return False
 		
 	def SetPower(self, state):
 		try:
@@ -86,6 +87,7 @@ class Manager(gobject.GObject):
 			Manager.__inst = self
 			self.devices = []
 			self.state = True
+			self.HardBlocked = False
 			dbus.SystemBus().watch_name_owner("org.freedesktop.Hal", self.hal_name_owner_changed)
 
 	def hal_name_owner_changed(self, owner):

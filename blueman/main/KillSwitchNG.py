@@ -146,7 +146,6 @@ class KillSwitchNG(gobject.GObject):
 			m.SetRfkillState(state)
 
 
-		
 	def GetGlobalState(self):
 		self.state = True
 		for s in self.switches.itervalues():
