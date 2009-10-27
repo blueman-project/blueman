@@ -123,10 +123,14 @@ class KillSwitchNG(gobject.GObject):
 				del self.switches[idx]
 				self.emit("switch-removed", sw)
 			elif op == RFKillOp.CHANGE:
-				self.switches[idx].type = type
-				self.switches[idx].soft = soft
-				self.switches[idx].hard = hard
-				self.emit("switch-changed", self.switches[idx])
+				orig_soft = self.switches[idx].soft
+				orig_hard = self.switches[idx].hard
+				
+				if orig_soft != soft or orig_hard != hard:
+					self.switches[idx].type = type
+					self.switches[idx].soft = soft
+					self.switches[idx].hard = hard
+					self.emit("switch-changed", self.switches[idx])
 		
 		return True
 		

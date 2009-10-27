@@ -109,7 +109,7 @@ class RecentConns(AppletPlugin, gtk.Menu):
 		sensitive = sensitive and self.Applet.Manager and self.Applet.Plugins.PowerManager.GetBluetoothStatus() and RecentConns.items != None and (len(RecentConns.items) > 0)
 		self.Item.props.sensitive = sensitive
 		
-	def on_bluetooth_power_state_changed(self, state):
+	def on_power_state_changed(self, manager, state):
 		self.change_sensitivity(state)
 		if state and self.deferred:
 			self.deferred = False

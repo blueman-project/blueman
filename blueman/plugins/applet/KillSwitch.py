@@ -61,39 +61,40 @@ class KillSwitch(AppletPlugin):
 	def on_switch_added(self, manager, switch):
 		if switch.type == RFKillType.BLUETOOTH:
 			dprint("killswitch registered", switch.idx)
-			if manager.HardBlocked:
-				self.Applet.Plugins.PowerManager.SetPowerChangeable(False)
-			
-			if not self.Manager.GetGlobalState():	
-				self.Applet.Plugins.PowerManager.SetBluetoothStatus(False)
-			
-			pm_state = self.Applet.Plugins.PowerManager.GetBluetoothStatus()
-			if self.Manager.GetGlobalState() != pm_state:
-				self.Manager.SetGlobalState(pm_state)
+#			if manager.HardBlocked:
+#				self.Applet.Plugins.PowerManager.SetPowerChangeable(False)
+#			
+#			if not self.Manager.GetGlobalState():	
+#				self.Applet.Plugins.PowerManager.SetBluetoothStatus(False)
+#			
+#			pm_state = self.Applet.Plugins.PowerManager.GetBluetoothStatus()
+#			if self.Manager.GetGlobalState() != pm_state:
+#				self.Manager.SetGlobalState(pm_state)
 		
 				
 	def on_switch_changed(self, manager, switch):
 		if switch.type == RFKillType.BLUETOOTH:
 			s = manager.GetGlobalState()
 			dprint("Global state:", s, "\nswitch.soft:", switch.soft, "\nswitch.hard:", switch.hard)
-			
-			if manager.HardBlocked:
-				self.Applet.Plugins.PowerManager.SetPowerChangeable(False)
-				self.Applet.Plugins.PowerManager.SetBluetoothStatus(False)
-			else:
-				self.Applet.Plugins.PowerManager.SetPowerChangeable(True)
-				
-				if not s and (switch.soft == 1 or switch.hard == 1):
-					self.Applet.Plugins.PowerManager.SetBluetoothStatus(False)
-				elif s and (switch.soft == 0 or switch.hard == 0):
-					self.Applet.Plugins.PowerManager.SetBluetoothStatus(True)
-				
+			self.Applet.Plugins.PowerManager.UpdatePowerState()
+
 			self.Applet.Plugins.StatusIcon.Query()
 			
 	def on_switch_removed(self, manager, switch):
 		if switch.type == RFKillType.BLUETOOTH:
 			if len(manager.devices) == 0:
 				self.Applet.Plugins.StatusIcon.Query()
+				
+	def on_power_state_query(self, manager):
+		if self.Manager.HardBlocked:
+			return manager.STATE_OFF_FORCED
+		else:
+			dprint(self.Manager.GetGlobalState())
+			if self.Manager.GetGlobalState():
+				return manager.STATE_ON
+			else:
+				return manager.STATE_OFF
+		
 			
 	def check(self):
 		try:
@@ -102,15 +103,15 @@ class KillSwitch(AppletPlugin):
 				#this machine does not support bluetooth killswitch, let's unload
 				self.Applet.Plugins.SetConfig("KillSwitch", False)
 		except:
-			pass		
+			pass	
+			
+	def on_power_state_change_requested(self, manager, state):
+		dprint(state)
+		if not self.Manager.HardBlocked:
+			self.Manager.SetGlobalState(state)			
 
 	def on_unload(self):
 		self.signals.DisconnectAll()
-		
-	def on_bluetooth_power_state_changed(self, state):
-		dprint(state)
-		if not self.Manager.HardBlocked:
-			self.Manager.SetGlobalState(state)
 		
 	def on_query_status_icon_visibility(self):
 		if self.Manager.HardBlocked:

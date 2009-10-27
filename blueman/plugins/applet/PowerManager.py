@@ -30,7 +30,9 @@ class PowerManager(AppletPlugin):
 	__author__ = "Walmis"
 	
 	def on_load(self, applet):
-		AppletPlugin.add_method(self.on_bluetooth_power_state_changed)
+		AppletPlugin.add_method(self.on_power_state_query)
+		AppletPlugin.add_method(self.on_power_state_change_requested)
+		AppletPlugin.add_method(self.on_power_state_changed)
 		
 		self.Applet = applet
 		
@@ -48,29 +50,120 @@ class PowerManager(AppletPlugin):
 		self.Applet.DbusSvc.add_method(self.GetBluetoothStatus, in_signature="", out_signature="b")
 		self.BluetoothStatusChanged = self.Applet.DbusSvc.add_signal("BluetoothStatusChanged", signature="b")
 		
-		self.bluetooth_off = False
-		self.state_change_deferred = -1
-		
+		self.adapter_state = True
+		self.current_state = True
 		self.power_changeable = True
-
-	def SetBluetoothStatus(self, status):
-		self.bluetooth_off = not status
+		
+		self.STATE_ON = 2
+		self.STATE_OFF = 1
+		self.STATE_OFF_FORCED = 0
+		
+		gobject.idle_add(self.UpdatePowerState)
 	
-	def GetBluetoothStatus(self):
-		if self.state_change_deferred != -1:
-			return not self.state_change_deferred
+	@property	
+	def CurrentState(self):
+		return self.current_state
+		
+	def on_manager_state_changed(self, state):
+		if state:
+			self.adapter_state = self.get_adapter_state()
+			self.RequestPowerState(self.adapter_state)
+		
+	def get_adapter_state(self):
+		adapters = self.Applet.Manager.ListAdapters()
+		for adapter in adapters:
+			props = adapter.GetProperties()
+			if not props["Powered"]:
+				return False
+		return True
+		
+	def set_adapter_state(self, state):
+		adapters = self.Applet.Manager.ListAdapters()
+		for adapter in adapters:
+			adapter.SetProperty("Powered", state)
+	
+		self.adapter_state = state	
+		
+	def RequestPowerState(self, state):
+		if self.current_state != state:
+			dprint("Requesting", state)
+			self.Applet.Plugins.Run("on_power_state_change_requested", self, state)
+			self.set_adapter_state(state)
+		
+	def on_power_state_change_requested(self, pm, state):
+		pass
+		
+	def on_power_state_query(self, pm):
+		if self.adapter_state:
+			return self.STATE_ON
 		else:
-			return not self.bluetooth_off
+			return self.STATE_OFF
+		
+	def on_power_state_changed(self, manager, state):
+		pass
+	
+	
+	#queries other plugins to determine the current power state
+	def UpdatePowerState(self):
+		rets = self.Applet.Plugins.Run("on_power_state_query", self)
+
+		off = True in map(lambda x: x < self.STATE_ON, rets)
+		foff = self.STATE_OFF_FORCED in rets
+		on = self.STATE_ON in rets
+		
+		
+		
+		new_state = True
+		if foff or off:
+				
+			self.item.get_child().set_markup(_("<b>Turn Bluetooth On</b>"))
+			self.item.props.tooltip_text = _("Turn on all adapters")
+			self.item.set_image(gtk.image_new_from_pixbuf(get_icon("gtk-yes", 16)))
+			
+			if foff:
+				self.item.props.sensitive = False
+			else:
+				self.item.props.sensitive = True
+			
+			new_state = False
+		
+		elif on and self.current_state != True:
+			self.item.get_child().set_markup(_("<b>Turn Bluetooth Off</b>"))
+			self.item.props.tooltip_text = _("Turn off all adapters")
+			self.item.set_image(gtk.image_new_from_pixbuf(get_icon("gtk-stop", 16)))
+			self.item.props.sensitive = True
+			
+			new_state = True
+			
+		dprint("off", off, "\nfoff", foff, "\non", on, "\ncurrent state", self.current_state, "\nnew state", new_state)
+	
+		if self.current_state != new_state:
+			dprint("Signalling", new_state)
+			self.current_state = new_state
+			
+			self.BluetoothStatusChanged(new_state)	
+			self.Applet.Plugins.Run("on_power_state_changed", self, new_state)
+			self.Applet.Plugins.StatusIcon.IconShouldChange()
+		
+	#dbus method
+	def SetBluetoothStatus(self, status):
+		pass
+	
+	#dbus method
+	def GetBluetoothStatus(self):
+		return self.CurrentState
 		
 	def adapter_property_changed(self, key, value, path):
 		if key == "Powered":
-			if value and self.bluetooth_off:
+			if value and not self.CurrentState:
 				dprint("adapter powered on while in off state, turning bluetooth on")
-				self.bluetooth_off = False
+				self.RequestPowerState(True)
+			
+			self.UpdatePowerState()
 
 	
 	def on_bluetooth_toggled(self):
-		self.bluetooth_off = not self.bluetooth_off
+		self.RequestPowerState(not self.CurrentState)
 		
 	def on_status_icon_pixbuf_ready(self, pixbuf):
 		opacity = 255 if self.GetBluetoothStatus() else 100
@@ -83,18 +176,16 @@ class PowerManager(AppletPlugin):
 		
 		return pixbuf
 		
-	def process_deferred(self):
-		if self.state_change_deferred != -1:
-			dprint("Setting deferred status")
-			self.bluetooth_off = self.state_change_deferred
-			self.state_change_deferred = -1
+#	def process_deferred(self):
+#		if self.state_change_deferred != -1:
+#			dprint("Setting deferred status")
+#			self.bluetooth_off = self.state_change_deferred
+#			self.state_change_deferred = -1
 		
 	def on_adapter_added(self, path):
 		adapter = Bluez.Adapter(path)
 		def on_ready():
-			self.process_deferred()
-			
-			if self.bluetooth_off:
+			if not self.adapter_state:
 				adapter.SetProperty("Powered", False)
 			else:
 				adapter.SetProperty("Powered", True)				
@@ -104,74 +195,59 @@ class PowerManager(AppletPlugin):
 	def SetPowerChangeable(self, state):
 		self.power_changeable = state
 		self.item.props.sensitive = state
-		
-	def IndicateBluetoothStatus(self, state):
-		self.BluetoothStatusChanged(state)		
-		self.Applet.Plugins.Run("on_bluetooth_power_state_changed", state)
+	
 
-	def __setattr__(self, key, value):
-		if key == "bluetooth_off":
-			dprint("bt_off", value)
-			dprint("manager state", self.Applet.Manager)
-				
-			def set_global_state():
-				if key in self.__dict__:
-					dprint("off", self.__dict__[key], value)
-					adapters = self.Applet.Manager.ListAdapters()
-					for adapter in adapters:
-						adapter.SetProperty("Powered", not value)
-		
-			
-			def error(e):
-				d = gtk.MessageDialog(parent=None, flags=0, type=gtk.MESSAGE_ERROR, buttons=gtk.BUTTONS_CLOSE, message_format=None)
-				
-				d.props.text = _("Failed to set bluetooth power")
-				d.props.secondary_text = _("The error reported is: %s") % str(e)
-				d.props.icon_name = "blueman"
-				d.run()
-				d.destroy()
-			
-			if not key in self.__dict__:
-				self.__dict__[key] = value
-			
-			if not self.Applet.Manager:
-				dprint("deferring status change")
-				self.state_change_deferred = value
-				return
-			
-			if self.__dict__[key] != value:
-				self.__dict__[key] = value
-									
-				if value:
-					try:
-						set_global_state()
-					except BluezDBusException, e:	
-						error(e)
-						return
-				
-					self.item.get_child().set_markup(_("<b>Turn Bluetooth On</b>"))
-					self.item.props.tooltip_text = _("Turn on all adapters")
-					self.item.set_image(gtk.image_new_from_pixbuf(get_icon("gtk-yes", 16)))
-					
-					self.IndicateBluetoothStatus(False)
-				else:
-					self.item.get_child().set_markup(_("<b>Turn Bluetooth Off</b>"))
-					self.item.props.tooltip_text = _("Turn off all adapters")
-					self.item.set_image(gtk.image_new_from_pixbuf(get_icon("gtk-stop", 16)))
+#	def __setattr__(self, key, value):
+#		if key == "bluetooth_off":
+#			dprint("bt_off", value)
+#			dprint("manager state", self.Applet.Manager)
+#				
+#			def set_global_state():
+#				if key in self.__dict__:
+#					dprint("off", self.__dict__[key], value)
+#					adapters = self.Applet.Manager.ListAdapters()
+#					for adapter in adapters:
+#						adapter.SetProperty("Powered", not value)
+#		
+#			
+#			def error(e):
+#				d = gtk.MessageDialog(parent=None, flags=0, type=gtk.MESSAGE_ERROR, buttons=gtk.BUTTONS_CLOSE, message_format=None)
+#				
+#				d.props.text = _("Failed to set bluetooth power")
+#				d.props.secondary_text = _("The error reported is: %s") % str(e)
+#				d.props.icon_name = "blueman"
+#				d.run()
+#				d.destroy()
+#			
+#			if not key in self.__dict__:
+#				self.__dict__[key] = value
+#			
+#			if not self.Applet.Manager:
+#				dprint("deferring status change")
+#				self.state_change_deferred = value
+#				return
+#			
+#			if self.__dict__[key] != value:
+#				self.__dict__[key] = value
+#									
+#				if value:
+#					try:
+#						set_global_state()
+#					except BluezDBusException, e:	
+#						error(e)
+#						return
+#				
 
-					self.IndicateBluetoothStatus(True)
-					
-					#FIXME: possible race condition here
-					try:
-						set_global_state()
-					except BluezDBusException, e:	
-						error(e)
-						self.bluetooth_off = True
-						return
-							
-				self.Applet.Plugins.StatusIcon.IconShouldChange()
-		else:				
-			self.__dict__[key] = value
-		
-	def on_bluetooth_power_state_changed(*args):
-		pass
+#					
+#					#FIXME: possible race condition here
+#					try:
+#						set_global_state()
+#					except BluezDBusException, e:	
+#						error(e)
+#						self.bluetooth_off = True
+#						return
+#							
+#				self.Applet.Plugins.StatusIcon.IconShouldChange()
+#		else:				
+#			self.__dict__[key] = value
+

@@ -99,7 +99,7 @@ class StandardItems(AppletPlugin):
 	def on_manager_state_changed(self, state):
 		self.change_sensitivity(state)
 		
-	def on_bluetooth_power_state_changed(self, state):
+	def on_power_state_changed(self, manager, state):
 		self.change_sensitivity(state)
 	
 	
