@@ -54,6 +54,8 @@ class PowerManager(AppletPlugin):
 		self.current_state = True
 		self.power_changeable = True
 		
+		self.request_in_progress = False
+		
 		self.STATE_ON = 2
 		self.STATE_OFF = 1
 		self.STATE_OFF_FORCED = 0
@@ -82,16 +84,53 @@ class PowerManager(AppletPlugin):
 		for adapter in adapters:
 			adapter.SetProperty("Powered", state)
 	
-		self.adapter_state = state	
+		self.adapter_state = state
+		
+	class Callback(object):
+		def __init__(self, parent, state):
+			self.parent = parent
+			self.num_cb = 0
+			self.called = 0
+			self.state = state
+			self.success = False
+			self.timer = gobject.timeout_add(5000, self.timeout)
+			
+		def __call__(self, result):
+			self.called += 1
+				
+			if result:
+				self.success = True
+				
+			self.check()
+			
+		def check(self):	
+			if self.called == self.num_cb:
+				dprint("callbacks done")
+				if self.success:
+					self.parent.set_adapter_state(self.state)
+					gobject.source_remove(self.timer)
+					self.parent.request_in_progress = False
+				
+		def timeout(self):
+			dprint("Timeout reached while setting power state")
+			self.UpdatePowerState()
+			self.parent.request_in_progress = False
 		
 	def RequestPowerState(self, state):
 		if self.current_state != state:
-			dprint("Requesting", state)
-			self.Applet.Plugins.Run("on_power_state_change_requested", self, state)
-			self.set_adapter_state(state)
-		
-	def on_power_state_change_requested(self, pm, state):
-		pass
+			if not self.request_in_progress:
+				self.request_in_progress = True
+				dprint("Requesting", state)
+				cb = PowerManager.Callback(self, state)
+			
+				rets = self.Applet.Plugins.Run("on_power_state_change_requested", self, state, cb)
+				cb.num_cb = len(rets)
+				cb.check()
+			else:
+				dprint("Another request in progress")
+			
+	def on_power_state_change_requested(self, pm, state, cb):
+		cb(None)
 		
 	def on_power_state_query(self, pm):
 		if self.adapter_state:

@@ -149,7 +149,7 @@ class KillSwitchNG(gobject.GObject):
 			self.update_state()		
 		
 		
-	def SetGlobalState(self, state):
+	def SetGlobalState(self, state, **kwargs):
 		dprint("set", state)
 		#if we have permission, we just send an event, else we use the dbus interface				
 		if os.getuid() == 0:
@@ -157,7 +157,7 @@ class KillSwitchNG(gobject.GObject):
 			os.write(self.fd, event)
 		else:
 			m = Mechanism()
-			m.SetRfkillState(state)
+			m.SetRfkillState(state, **kwargs)
 
 	def update_state(self):
 		self.state = True

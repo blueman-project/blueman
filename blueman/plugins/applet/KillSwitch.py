@@ -105,10 +105,18 @@ class KillSwitch(AppletPlugin):
 		except:
 			pass	
 			
-	def on_power_state_change_requested(self, manager, state):
+	def on_power_state_change_requested(self, manager, state, cb):
 		dprint(state)
+		def reply(*args):
+			cb(True)
+			
+		def error(*args):
+			cb(False)
+		
 		if not self.Manager.HardBlocked:
-			self.Manager.SetGlobalState(state)			
+			self.Manager.SetGlobalState(state, reply_handler=reply, error_handler=error)
+		else:
+			cb(True)			
 
 	def on_unload(self):
 		self.signals.DisconnectAll()
