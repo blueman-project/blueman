@@ -56,13 +56,15 @@ class Switch:
 
 class KillSwitchNG(gobject.GObject):
 	__gsignals__ = {
-		'switch-changed' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
-		'switch-added' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
-		'switch-removed' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+		'switch-changed' : (gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+		'switch-added' : (gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+		'switch-removed' : (gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
 	}
 	def __init__(self):
 		gobject.GObject.__init__(self)
 		self.state = True
+		self.hardblocked = False
+		
 		self.switches = {}
 
 		mode = os.stat("/dev/rfkill").st_mode
@@ -131,8 +133,20 @@ class KillSwitchNG(gobject.GObject):
 					self.switches[idx].soft = soft
 					self.switches[idx].hard = hard
 					self.emit("switch-changed", self.switches[idx])
-		
+					
 		return True
+		
+	def do_switch_added(self, switch):
+		if switch.type == RFKillType.BLUETOOTH:
+			self.update_state()
+	
+	def do_switch_changed(self, switch):
+		if switch.type == RFKillType.BLUETOOTH:
+			self.update_state()
+			
+	def do_switch_removed(self, switch):
+		if switch.type == RFKillType.BLUETOOTH:
+			self.update_state()		
 		
 		
 	def SetGlobalState(self, state):
@@ -145,21 +159,24 @@ class KillSwitchNG(gobject.GObject):
 			m = Mechanism()
 			m.SetRfkillState(state)
 
-
-	def GetGlobalState(self):
+	def update_state(self):
 		self.state = True
+		self.hardblocked = False
 		for s in self.switches.itervalues():
 			if s.type == RFKillType.BLUETOOTH:
+				self.hardblocked |= s.hard
 				self.state &= (s.soft == 0 and s.hard == 0)
 				
-		dprint(self.state)
+		dprint("State:", self.state)
+
+	def GetGlobalState(self):
+		return self.state
+		
+	@property
+	def GlobalState(self):
 		return self.state
 		
 	@property
 	def HardBlocked(self):
-		for s in self.switches.itervalues():
-			if s.type == RFKillType.BLUETOOTH and s.hard:
-				return True
-		
-		return False	
+		return self.hardblocked
 		
