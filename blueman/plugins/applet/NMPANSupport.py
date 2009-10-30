@@ -227,7 +227,7 @@ class NMPANSupport(AppletPlugin):
 		i = 1
 		for d in dirs:
 			try:
-				d = int(os.path.basename(x))
+				d = int(os.path.basename(d))
 			except:
 				continue
 			if d != i:
