@@ -113,7 +113,7 @@ class PowerManager(AppletPlugin):
 				
 		def timeout(self):
 			dprint("Timeout reached while setting power state")
-			self.UpdatePowerState()
+			self.parent.UpdatePowerState()
 			self.parent.request_in_progress = False
 		
 	def RequestPowerState(self, state):

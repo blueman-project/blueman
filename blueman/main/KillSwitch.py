@@ -113,7 +113,7 @@ class Manager(gobject.GObject):
 			except WrongType:
 				pass
 				
-	def SetGlobalState(self, state):
+	def SetGlobalState(self, state, **kwargs):
 		dprint("Setting killswitches to", state)
 
 		for dev in self.devices:
@@ -123,6 +123,9 @@ class Manager(gobject.GObject):
 			self.state = True
 		else:
 			self.state = state
+			
+		if "reply_handler" in kwargs:
+			kwargs["reply_handler"]()
 
 		
 	def GetGlobalState(self):
