@@ -70,13 +70,13 @@ class PPPConnection(gobject.GObject):
 		self.pppd = None
 		self.file = None
 		
-		self.commands = [("ATZ", self.simple_callback), 
+		self.commands = [("ATZ E0 V1 X4 &C1 +FCLASS=0", self.simple_callback), 
 				 ("ATE0", self.simple_callback), 
 				 ("AT+GCAP", self.simple_callback), 
 				 ("ATD%s" % self.number, self.connect_callback, ["CONNECT", "NO CARRIER", "BUSY", "NO ANSWER", "NO DIALTONE", "OK", "ERR", "ERROR"])
 				]
 		if self.apn != "":		
-			self.commands.insert(-1, ("AT+CGDCONT=1, \"IP\",\"%s\"" % self.apn, self.simple_callback))
+			self.commands.insert(-1, ('AT+CGDCONT=1,"IP","%s"' % self.apn, self.simple_callback))
 				
 	def cleanup(self):
 		os.close(self.file)
