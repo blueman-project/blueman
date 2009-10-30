@@ -157,14 +157,21 @@ class NewConnectionBuilder:
 	def on_device_state(self, state, oldstate, reason):
 		dprint("state=",state, "oldstate=", oldstate, "reason=", reason)
 		if state <= NMDeviceState.DISCONNECTED and NMDeviceState.DISCONNECTED < oldstate <= NMDeviceState.ACTIVATED:
+			if self.err_cb:
+				self.err_cb(dbus.DBusException("Connection was interrupted"))
+			
 			self.remove_connection()
 			self.cleanup()
+		
 		elif state == NMDeviceState.FAILED:
 			self.err_cb(dbus.DBusException("Network Manager Failed to activate the connection"))
 			self.remove_connection()
-			self.cleanup()
+			self.cleanup()		
+		
 		elif state == NMDeviceState.ACTIVATED:
 			self.ok_cb()
+			self.err_cb = None
+			self.ok_cb = None
 			
 	
 class NMPANSupport(AppletPlugin):
@@ -221,7 +228,7 @@ class NMPANSupport(AppletPlugin):
 		func(key, value)
 	
 	def find_free_gconf_slot(self):
-		dirs = self.client.all_dirs ("/system/networking/connections")
+		dirs = list(self.client.all_dirs ("/system/networking/connections"))
 		dirs.sort()
 		
 		i = 1
