@@ -222,15 +222,19 @@ class NMPANSupport(AppletPlugin):
 	
 	def find_free_gconf_slot(self):
 		dirs = self.client.all_dirs ("/system/networking/connections")
-		dirs = map(lambda x: int(os.path.basename(x)), dirs)
 		dirs.sort()
 		
 		i = 1
 		for d in dirs:
+			try:
+				d = int(os.path.basename(x))
+			except:
+				continue
 			if d != i:
 				return i
 			
 			i+=1
+			
 		return i
 		
 	def add_connection(self, params):
