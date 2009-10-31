@@ -31,8 +31,8 @@ from blueman.Lib import rfcomm_list
 
 def get_x_icon(icon_name, size):
 	ic = get_icon(icon_name, size) 
-	x = get_icon("blueman-x", 8) 
-	pixbuf = composite_icon(ic, [(x, ic.props.height - 8, ic.props.height - 8, 200)])
+	x = get_icon("blueman-x", size) 
+	pixbuf = composite_icon(ic, [(x, 0, 0, 255)])
 	
 	return pixbuf
 
