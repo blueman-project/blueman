@@ -206,9 +206,9 @@ class PowerManager(AppletPlugin):
 		pixbuf = opacify_pixbuf(pixbuf, opacity)
 
 		if opacity < 255:
-			x_size = int(pixbuf.props.height / 2.1)
+			x_size = int(pixbuf.props.height)
 			x = get_icon("blueman-x", x_size) 
-			pixbuf = composite_icon(pixbuf, [(x, pixbuf.props.height - x_size, pixbuf.props.height - x_size, 200)])
+			pixbuf = composite_icon(pixbuf, [(x, pixbuf.props.height - x_size, pixbuf.props.height - x_size, 255)])
 		
 		return pixbuf
 		

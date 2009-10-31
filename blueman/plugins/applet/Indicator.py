@@ -48,9 +48,9 @@ class Indicator(AppletPlugin):
 	def on_status_icon_pixbuf_ready(self, pixbuf):	
 		if self.num_connections > 0:
 			self.active = True
-			x_size = int(pixbuf.props.height / 2.3)
+			x_size = int(pixbuf.props.height)
 			x = get_icon("blueman-txrx", x_size) 
-			pixbuf = composite_icon(pixbuf, [(x, pixbuf.props.height - x_size, 0, 230)])
+			pixbuf = composite_icon(pixbuf, [(x, pixbuf.props.height - x_size, 0, 255)])
 	
 			return pixbuf
 		else:
