@@ -40,7 +40,7 @@ if os.path.exists(os.path.join(_dirname,"ChangeLog")):
 from blueman.Constants import *
 from blueman.Functions import *
 
-from blueman.main.applet.DbusService import DbusService
+from blueman.main.DbusService import DbusService
 from blueman.main.Config import Config
 
 import blueman.plugins.applet
@@ -298,13 +298,11 @@ class BluemanApplet(object):
 
 
 		self.Manager = None
-		self.DbusSvc = DbusService(self)
+		self.DbusSvc = DbusService("org.blueman.Applet", "/")
 		self.Signals = SignalTracker()
 		
 		self.Plugins = BluemanApplet.Plugins(self)
 		self.Plugins.Load()
-		
-
 			
 		self.Plugins.Run("on_plugins_loaded")
 	

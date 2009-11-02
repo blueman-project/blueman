@@ -3,7 +3,8 @@ SUBDIRS =	\
 	gui		\
 	main	\
 	ods	\
-	plugins
+	plugins \
+	iniparse
 
 bluemandir = $(pythondir)/blueman
 blueman_PYTHON = 	\

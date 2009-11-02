@@ -21,29 +21,23 @@ import dbus
 import dbus.glib
 import dbus.service
 
-import gtk
-from blueman.Functions import dprint
-from blueman.main.Mechanism import Mechanism
-
-from blueman.bluez.Adapter import Adapter
-from blueman.main.applet.BluezAgent import TempAgent
-from blueman.main.Device import Device
-
-
-
 class MethodAlreadyExists(Exception):
 	pass
 	
 class DbusService(dbus.service.Object):
-	def __init__(self, applet):
-		self.applet = applet
-		self.bus = dbus.SessionBus();
-		self.bus.request_name("org.blueman.Applet")
+	def __init__(self, interface, path, bus=dbus.SessionBus):
+		self.interface = interface
+		self.path = path
 		
+		self.bus = bus()
+		self.bus.request_name(self.interface)
 		
-		dbus.service.Object.__init__(self, self.bus, "/")
+		dbus.service.Object.__init__(self, self.bus, self.path)
 		
-	def add_method(self, func, dbus_interface='org.blueman.Applet', in_signature="", *args, **kwargs):
+	def add_method(self, func, dbus_interface=None, in_signature="", *args, **kwargs):
+		if not dbus_interface:
+			dbus_interface = self.interface
+		
 		name = func.__name__	
 
 		if name in self.__class__.__dict__:
@@ -78,7 +72,10 @@ dec = dbus.service.method(dbus_interface, in_signature, *args, **kwargs)(%(0)s)"
 		
 		self._dbus_class_table[self.__class__.__module__+"."+self.__class__.__name__][dbus_interface][name] = dec
 	
-	def add_signal(self, name, dbus_interface='org.blueman.Applet', signature="", *args, **kwargs):
+	def add_signal(self, name, dbus_interface=None, signature="", *args, **kwargs):
+		if not dbus_interface:
+			dbus_interface = self.interface
+		
 		if name in self.__class__.__dict__:
 			raise MethodAlreadyExists
 		a = ""
@@ -101,11 +98,3 @@ dec = dbus.service.method(dbus_interface, in_signature, *args, **kwargs)(%(0)s)"
 		delattr(self.__class__, name)
 		del self._dbus_class_table[self.__class__.__module__+"."+self.__class__.__name__]['org.blueman.Applet'][name]	
 
-		
-	
-
-		
-	
-	
-	
-		

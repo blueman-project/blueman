@@ -9,6 +9,7 @@ ui_DATA =				\
 	device-list-widget.ui	\
 	services-network.ui \
 	services-transfer.ui	\
+	services-audio.ui	\
 	send-dialog.ui		\
 	assistant.ui		\
 	applet-plugins-widget.ui \
