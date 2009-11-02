@@ -20,6 +20,7 @@
 import dbus
 import dbus.glib
 import dbus.service
+import inspect
 
 class MethodAlreadyExists(Exception):
 	pass
@@ -44,19 +45,10 @@ class DbusService(dbus.service.Object):
 			raise MethodAlreadyExists
 		
 		cnt = 0
-		a = ""
-		for z in dbus.Signature(in_signature):
-			a += "arg%d," % cnt
-			cnt+= 1
-			
-		a = a[0:-1]
-		
-		if "async_callbacks" in kwargs:
-			a += ","
-			a += kwargs["async_callbacks"][0]
-			a += ","
-			a += kwargs["async_callbacks"][1]
-			
+		a = inspect.getargspec(func)[0]
+		a = ",".join(a[1:])
+
+		#print name, a	
 		exec \
 """def %(0)s(self, %(1)s):
 	return self.%(0)s._orig_func(%(1)s)

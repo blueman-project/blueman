@@ -1,7 +1,8 @@
 SUBDIRS =	\
 	services	\
 	applet		\
-	config
+	config		\
+	mechanism
 
 
 bluemandir = $(pythondir)/blueman/plugins
@@ -9,6 +10,7 @@ blueman_PYTHON = 	\
 	ServicePlugin.py	\
 	AppletPlugin.py		\
 	ConfigPlugin.py		\
+	MechanismPlugin.py	\
 	__init__.py
 
 CLEANFILES =		\

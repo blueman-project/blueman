@@ -49,7 +49,7 @@ class DBusService(AppletPlugin):
 		AppletPlugin.add_method(self.on_device_disconnect)
 		
 		self.add_dbus_method(self.ServiceProxy, in_signature="sosas", async_callbacks=("ok","err"))
-		self.add_dbus_method(self.CreateDevice, in_signature="ssbu", async_callbacks=("ok","err"))
+		self.add_dbus_method(self.CreateDevice, in_signature="ssbu", async_callbacks=("_ok","err"))
 		self.add_dbus_method(self.CancelDeviceCreation, in_signature="ss", async_callbacks=("ok","err"))
 		self.add_dbus_method(self.RfcommConnect, in_signature="ss", out_signature="s", async_callbacks=("ok","err"))
 		self.add_dbus_method(self.RfcommDisconnect, in_signature="ss", out_signature="")
