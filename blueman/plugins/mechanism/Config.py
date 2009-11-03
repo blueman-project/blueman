@@ -22,10 +22,24 @@ import os
 class Config(MechanismPlugin):
 	def on_load(self):
 		self.add_dbus_method(self.SetBluezConfig, in_signature="ssss", out_signature="", sender_keyword="caller")
+		self.add_dbus_method(self.SaveBluezConfig, in_signature="s", out_signature="", sender_keyword="caller")
+		
+		self.configs = {}
 
 	def SetBluezConfig(self, file, section, key, value, caller):
 		self.confirm_authorization(caller, "org.blueman.bluez.config")
 		
-		c = BluezConfig(file)
+		if file in self.configs:
+			c = self.configs[file]
+		else:
+			c = self.configs[file] = BluezConfig(file)
+		
 		c.set(section, key, value)
-		c.write()
+		
+	def SaveBluezConfig(self, file, caller):
+		self.confirm_authorization(caller, "org.blueman.bluez.config")
+		
+		if file in self.configs:
+			self.configs[file].write()
+			del self.configs[file]
+		

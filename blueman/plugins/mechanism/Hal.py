@@ -17,6 +17,10 @@
 # 
 
 from blueman.plugins.MechanismPlugin import MechanismPlugin
+from blueman.Constants import HAL_ENABLED
+
+if not HAL_ENABLED:
+	raise ImportError("Hal disabled")
 
 class Hal(MechanismPlugin):
 	def on_load(self):

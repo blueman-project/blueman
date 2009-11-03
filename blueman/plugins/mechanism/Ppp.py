@@ -18,6 +18,7 @@
 
 from blueman.plugins.MechanismPlugin import MechanismPlugin
 import os
+import dbus
 
 class Ppp(MechanismPlugin):
 	def on_load(self):
