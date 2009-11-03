@@ -118,8 +118,9 @@ class BluemanServices:
 	def plugin_exec(self, function, *args, **kwargs):
 		rets = []
 		for inst in ServicePlugin.instances:
-			ret = getattr(inst, function)(*args, **kwargs)
-			rets.append(ret)
+			if inst._is_loaded:
+				ret = getattr(inst, function)(*args, **kwargs)
+				rets.append(ret)
 			
 		return rets
 
