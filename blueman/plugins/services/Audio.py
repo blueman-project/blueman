@@ -18,6 +18,7 @@
 # 
 
 import gtk
+import dbus
 from blueman.Constants import *
 from blueman.plugins.ServicePlugin import ServicePlugin
 
@@ -25,6 +26,7 @@ from blueman.main.AppletService import AppletService
 from blueman.main.BluezConfig import BluezConfig
 from blueman.main.Config import Config
 from blueman.Functions import dprint
+from blueman.main.Mechanism import Mechanism
 
 
 class Audio(ServicePlugin):
@@ -69,7 +71,21 @@ class Audio(ServicePlugin):
 
 	
 	def on_apply(self):
-		self.clear_options()
+		if self.get_options() != []:
+			vals = ["Sink"]
+			if self.cb_a2dp.props.active:
+				vals.append("Source")
+			if self.cb_hsp.props.active:
+				vals.append("Gateway")
+			try:
+				m = Mechanism()
+				m.SetBluezConfig("audio.conf", "General", "Enable", ",".join(vals))
+				m.SaveBluezConfig("audio.conf")
+				m.RestartBluez()
+			except dbus.DBusException, e:
+				dprint(e)
+			else:
+				self.clear_options()
 		
 	def on_cfg_changed(self, cb):
 		self.option_changed_notify(cb)
