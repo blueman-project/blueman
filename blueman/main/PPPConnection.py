@@ -73,7 +73,7 @@ class PPPConnection(gobject.GObject):
 		self.commands = [("ATZ E0 V1 X4 &C1 +FCLASS=0", self.simple_callback), 
 				 ("ATE0", self.simple_callback), 
 				 ("AT+GCAP", self.simple_callback), 
-				 ("ATD%s" % self.number, self.connect_callback, ["CONNECT", "NO CARRIER", "BUSY", "NO ANSWER", "NO DIALTONE", "OK", "ERR", "ERROR"])
+				 ("ATD%s" % self.number, self.connect_callback, ["CONNECT", "NO CARRIER", "BUSY", "NO ANSWER", "NO DIALTONE", "OK", "ERROR"])
 				]
 		if self.apn != "":		
 			self.commands.insert(-1, ('AT+CGDCONT=1,"IP","%s"' % self.apn, self.simple_callback))
@@ -120,7 +120,7 @@ class PPPConnection(gobject.GObject):
 			(command, callback, terminators) = item
 		else:
 			(command, callback) = item
-			terminators = ["OK", "ERROR", "ERR"]
+			terminators = ["OK", "ERROR"]
 			
 		self.send_command(command)
 		self.wait_for_reply(self.__cmd_response_cb, terminators, id)	
@@ -192,7 +192,7 @@ class PPPConnection(gobject.GObject):
 			self.cleanup()
 			return False
 		try:
-			self.buffer += os.read(self.file, 128)
+			self.buffer += os.read(self.file, 1)
 		except OSError, e:
 			if e.errno == errno.EAGAIN:
 				dprint("Got EAGAIN")
@@ -204,7 +204,6 @@ class PPPConnection(gobject.GObject):
 				return False
 
 		lines = self.buffer.split("\r\n")
-
 		found = False
 		for l in lines:
 			if l == "":
