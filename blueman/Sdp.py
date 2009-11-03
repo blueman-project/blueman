@@ -280,7 +280,7 @@ sdp_conf = Config("sdp")
 
 def on_sdp_changed(c, key, value):
 	if value and key in sdp_cache:
-		s = pickle.loads(base64.b64decode(value))
+		s = pickle.loads(zlib.decompress(base64.b64decode(value)))
 		sdp_cache[key] = s
 	
 sdp_conf.connect("property-changed", on_sdp_changed)
