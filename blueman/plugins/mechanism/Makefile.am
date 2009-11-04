@@ -1,6 +1,13 @@
 
 bluemandir = $(pythondir)/blueman/plugins/mechanism
-blueman_PYTHON = Config.py Hal.py __init__.py Network.py Ppp.py RfKill.py
+
+if ENABLE_HAL
+HAL = Hal.py 
+else
+HAL = 
+endif
+
+blueman_PYTHON = Config.py __init__.py Network.py Ppp.py RfKill.py $(HAL)
 
 CLEANFILES =		\
 	$(BUILT_SOURCES)
