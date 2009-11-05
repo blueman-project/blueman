@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2009-10-17 19:11+0300\n"
+"POT-Creation-Date: 2009-11-04 10:55+0200\n"
 "PO-Revision-Date: 2009-10-31 15:01+0000\n"
 "Last-Translator: Justas <Unknown>\n"
 "Language-Team: Lithuanian <lt@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "(n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-11-04 08:28+0000\n"
+"X-Launchpad-Export-Date: 2009-11-05 08:35+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -169,7 +169,7 @@ msgstr "<b>Neįdiegtas joks DHCP serveris</b>"
 msgid "<b>PAN Support</b>"
 msgstr "<b>PAN Palaikymas</b>"
 
-#: ../data/ui/services-network.ui.h:6
+#: ../data/ui/services-network.ui.h:6 ../data/ui/services-audio.ui.h:3
 msgid "<b>Services</b>"
 msgstr "<b>Paslaugos</b>"
 
@@ -260,6 +260,37 @@ msgstr "Parinkti Failų keitimosi aplanką"
 msgid "Shared Folder:"
 msgstr "Keitimosi aplankas:"
 
+#: ../data/ui/services-audio.ui.h:1
+msgid ""
+"<b>After applying these settings Bluetooth daemon will be restarted.</b>"
+msgstr ""
+
+#: ../data/ui/services-audio.ui.h:2
+msgid "<b>Audio Settings</b>"
+msgstr ""
+
+#: ../data/ui/services-audio.ui.h:4
+msgid ""
+"Advanced Audio receiver <span weight='bold' "
+"color='#cc0000'>Experimental!</span>"
+msgstr ""
+
+#: ../data/ui/services-audio.ui.h:5
+msgid "Allows this computer to act like a handsfree headset."
+msgstr ""
+
+#: ../data/ui/services-audio.ui.h:6
+msgid ""
+"Allows you to receive a2dp audio from other bluetooth devices and play it "
+"over the speakers."
+msgstr ""
+
+#: ../data/ui/services-audio.ui.h:7
+msgid ""
+"Headset Emulation <span weight='bold' color='#cc0000'>Very "
+"Experimental!</span>"
+msgstr ""
+
 #: ../data/ui/send-dialog.ui.h:1
 msgid "<b>File:</b>"
 msgstr "<b>Failas:</b>"
@@ -331,14 +362,6 @@ msgstr "Įrenginių paieškos progresas"
 msgid "Search for devices"
 msgstr "Ieškoti įrenginių"
 
-#: ../data/ui/services-headset.ui.h:1
-msgid "<b>Headset Settings</b>"
-msgstr "<b>Ausinių Nustatymai</b>"
-
-#: ../data/ui/services-headset.ui.h:2
-msgid "Command to execute when answer button is pressed:"
-msgstr "Komanda, kurią paleisti nuspaudus \"atsiliepti\" mygtuką:"
-
 #: ../data/ui/applet-plugins-widget.ui.h:1
 msgid "<b>Author:</b>"
 msgstr "<b>Autorius:</b>"
@@ -356,13 +379,21 @@ msgid "<b>Plugin description:</b>"
 msgstr "<b>Įskiepio aprašymas:</b>"
 
 #: ../data/ui/applet-plugins-widget.ui.h:5
+msgid "Configuration"
+msgstr ""
+
+#: ../data/ui/applet-plugins-widget.ui.h:6
+msgid "Configure selected plugin's preferences"
+msgstr ""
+
+#: ../data/ui/applet-plugins-widget.ui.h:7
 msgid "Not specified"
 msgstr "Nenurodyta"
 
-#: ../data/ui/applet-plugins-widget.ui.h:6 ../blueman/Sdp.py:254
-#: ../blueman/Sdp.py:354 ../blueman/Sdp.py:359
-#: ../blueman/plugins/applet/NetUsage.py:210
-#: ../blueman/plugins/applet/NetUsage.py:211
+#: ../data/ui/applet-plugins-widget.ui.h:8 ../blueman/Sdp.py:257
+#: ../blueman/Sdp.py:357 ../blueman/Sdp.py:362
+#: ../blueman/plugins/applet/NetUsage.py:247
+#: ../blueman/plugins/applet/NetUsage.py:248
 msgid "Unknown"
 msgstr "Nežinoma"
 
@@ -438,31 +469,31 @@ msgid "Receiving file %(0)s from %(1)s"
 msgstr "Priimamas failas %(0)s iš %(1)s"
 
 #: ../blueman/main/applet/Transfer.py:218
-#: ../blueman/main/applet/Transfer.py:240
+#: ../blueman/main/applet/Transfer.py:244
 msgid "File received"
 msgstr "Failas priimtas"
 
 #: ../blueman/main/applet/Transfer.py:219
-#: ../blueman/main/applet/Transfer.py:241
+#: ../blueman/main/applet/Transfer.py:245
 #, python-format
 msgid "File %(0)s from %(1)s successfully received"
 msgstr "Failas %(0)s iš %(1)s sėkmingai priimtas"
 
-#: ../blueman/main/applet/Transfer.py:228
+#: ../blueman/main/applet/Transfer.py:232
 msgid "Transfer failed"
 msgstr "Siuntimas nepavyko"
 
-#: ../blueman/main/applet/Transfer.py:229
+#: ../blueman/main/applet/Transfer.py:233
 #, python-format
 msgid "Transfer of file %(0)s failed"
 msgstr "Failo %(0)s siuntimas nepavyko"
 
-#: ../blueman/main/applet/Transfer.py:247
-#: ../blueman/main/applet/Transfer.py:257
+#: ../blueman/main/applet/Transfer.py:251
+#: ../blueman/main/applet/Transfer.py:261
 msgid "Files received"
 msgstr "Priimti failai"
 
-#: ../blueman/main/applet/Transfer.py:248
+#: ../blueman/main/applet/Transfer.py:252
 #, python-format
 msgid "Received %d file in the background"
 msgid_plural "Received %d files in the background"
@@ -470,7 +501,7 @@ msgstr[0] "Priimtas %d failas fone"
 msgstr[1] "Priimti %d failai fone"
 msgstr[2] "Priimta %d failų fone"
 
-#: ../blueman/main/applet/Transfer.py:258
+#: ../blueman/main/applet/Transfer.py:262
 #, python-format
 msgid "Received %d more file in the background"
 msgid_plural "Received %d more files in the background"
@@ -563,43 +594,43 @@ msgstr "_Adapteris"
 msgid "_Device"
 msgstr "Į_renginys"
 
-#: ../blueman/gui/manager/ManagerMenu.py:40
+#: ../blueman/gui/manager/ManagerMenu.py:41
 msgid "_View"
 msgstr "Ro_dymas"
 
-#: ../blueman/gui/manager/ManagerMenu.py:41
+#: ../blueman/gui/manager/ManagerMenu.py:42
 msgid "_Help"
 msgstr "_Pagalba"
 
-#: ../blueman/gui/manager/ManagerMenu.py:54
+#: ../blueman/gui/manager/ManagerMenu.py:55
 msgid "Get Help Online..."
 msgstr "Pagalba Internete..."
 
-#: ../blueman/gui/manager/ManagerMenu.py:59
+#: ../blueman/gui/manager/ManagerMenu.py:60
 msgid "Translate This Application..."
 msgstr "Išversti Šią Programą..."
 
-#: ../blueman/gui/manager/ManagerMenu.py:64
+#: ../blueman/gui/manager/ManagerMenu.py:65
 msgid "Report a Problem"
 msgstr "Pranešti Klaidą"
 
-#: ../blueman/gui/manager/ManagerMenu.py:74
+#: ../blueman/gui/manager/ManagerMenu.py:75
 msgid "Device Manager"
 msgstr "Įrenginių tvarkyklė"
 
-#: ../blueman/gui/manager/ManagerMenu.py:82
+#: ../blueman/gui/manager/ManagerMenu.py:83
 msgid "Show Toolbar"
 msgstr "Rodyti įrankių juostą"
 
-#: ../blueman/gui/manager/ManagerMenu.py:94
+#: ../blueman/gui/manager/ManagerMenu.py:95
 msgid "Show Statusbar"
 msgstr "Rodyti būsenos juostą"
 
-#: ../blueman/gui/manager/ManagerMenu.py:110
+#: ../blueman/gui/manager/ManagerMenu.py:111
 msgid "Latest Device First"
 msgstr "Naujausias Įrenginys Pirmas"
 
-#: ../blueman/gui/manager/ManagerMenu.py:114
+#: ../blueman/gui/manager/ManagerMenu.py:115
 msgid "Latest Device Last"
 msgstr "Naujausias Įrenginys Paskutinis"
 
@@ -750,8 +781,8 @@ msgid "Network Access Point"
 msgstr "Tinklo Prieigos Taškas"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:418
-#: ../blueman/plugins/services/Network.py:30
-#: ../blueman/plugins/services/Network.py:43
+#: ../blueman/plugins/services/Network.py:31
+#: ../blueman/plugins/services/Network.py:44
 msgid "Network"
 msgstr "Tinklas"
 
@@ -891,22 +922,22 @@ msgstr "Blueman yra GTK Bluetooth tvarkytojas"
 msgid "GSM Settings"
 msgstr "GSM Nustatymai"
 
-#: ../blueman/gui/applet/PluginDialog.py:37
+#: ../blueman/gui/applet/PluginDialog.py:122
 #: ../blueman/plugins/applet/StandardItems.py:133
 msgid "Plugins"
 msgstr "Įskiepiai"
 
-#: ../blueman/gui/applet/PluginDialog.py:125
-#: ../blueman/gui/applet/PluginDialog.py:126
+#: ../blueman/gui/applet/PluginDialog.py:214
+#: ../blueman/gui/applet/PluginDialog.py:215
 msgid "Unspecified"
 msgstr "Nenurodytas"
 
-#: ../blueman/gui/applet/PluginDialog.py:169
-#: ../blueman/gui/applet/PluginDialog.py:189
+#: ../blueman/gui/applet/PluginDialog.py:301
+#: ../blueman/gui/applet/PluginDialog.py:321
 msgid "Dependency issue"
 msgstr "Priklausomybių problema"
 
-#: ../blueman/gui/applet/PluginDialog.py:170
+#: ../blueman/gui/applet/PluginDialog.py:302
 #, python-format
 msgid ""
 "Plugin <b>\"%(0)s\"</b> depends on <b>%(1)s</b>. Unloading <b>%(1)s</b> will "
@@ -917,7 +948,7 @@ msgstr ""
 "bus išjungtas ir <b>\"%(0)s\"</b>.\n"
 "Tęsti?"
 
-#: ../blueman/gui/applet/PluginDialog.py:190
+#: ../blueman/gui/applet/PluginDialog.py:322
 #, python-format
 msgid ""
 "Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will "
@@ -994,7 +1025,8 @@ msgid "handsfree"
 msgstr "laisvų rankų įranga"
 
 #. translators: device class
-#: ../blueman/DeviceClass.py:112
+#: ../blueman/DeviceClass.py:112 ../blueman/DeviceClass.py:180
+#: ../blueman/DeviceClass.py:246
 msgid "unknown"
 msgstr "Nežinoma"
 
@@ -1017,18 +1049,18 @@ msgstr "pelė"
 msgid "Dialup Networking (DUN)"
 msgstr "Dialup Tinklas (DUN)"
 
-#: ../blueman/plugins/applet/NetUsage.py:159
-#: ../blueman/plugins/applet/NetUsage.py:261
-#: ../blueman/plugins/applet/NetUsage.py:264
+#: ../blueman/plugins/applet/NetUsage.py:196
+#: ../blueman/plugins/applet/NetUsage.py:298
+#: ../blueman/plugins/applet/NetUsage.py:301
 msgid "Connected:"
 msgstr "Prisijungta:"
 
-#: ../blueman/plugins/applet/NetUsage.py:175
-#: ../blueman/plugins/applet/NetUsage.py:272
+#: ../blueman/plugins/applet/NetUsage.py:212
+#: ../blueman/plugins/applet/NetUsage.py:309
 msgid "Not Connected"
 msgstr "Neprisijungta"
 
-#: ../blueman/plugins/applet/NetUsage.py:181
+#: ../blueman/plugins/applet/NetUsage.py:218
 msgid ""
 "No usage statistics are available yet. Try establishing a connection first "
 "and then check this page."
@@ -1036,37 +1068,37 @@ msgstr ""
 "Dar nėra sukaupta statistikos. Bandykite pirma prisijungti prie tinklo "
 "įrenginio, tada pabandykite vėl."
 
-#: ../blueman/plugins/applet/NetUsage.py:204
+#: ../blueman/plugins/applet/NetUsage.py:241
 msgid "day"
 msgid_plural "days"
 msgstr[0] "diena"
 msgstr[1] "dienos"
 msgstr[2] "dienų"
 
-#: ../blueman/plugins/applet/NetUsage.py:205
+#: ../blueman/plugins/applet/NetUsage.py:242
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "valanda"
 msgstr[1] "valandos"
 msgstr[2] "valandų"
 
-#: ../blueman/plugins/applet/NetUsage.py:206
+#: ../blueman/plugins/applet/NetUsage.py:243
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "minutė"
 msgstr[1] "minutės"
 msgstr[2] "minučių"
 
-#: ../blueman/plugins/applet/NetUsage.py:208
+#: ../blueman/plugins/applet/NetUsage.py:245
 #, python-format
 msgid "%d %s %d %s and %d %s"
 msgstr "%d %s %d %s ir %d %s"
 
-#: ../blueman/plugins/applet/NetUsage.py:239
+#: ../blueman/plugins/applet/NetUsage.py:276
 msgid "Are you sure you want to reset the counter?"
 msgstr "Ar tikrai norite pradėti skaitliuką iš naujo?"
 
-#: ../blueman/plugins/applet/NetUsage.py:278
+#: ../blueman/plugins/applet/NetUsage.py:315
 msgid ""
 "Allows you to monitor your (mobile broadband) network traffic usage. Useful "
 "for limited data access plans. This plugin tracks every device seperately."
@@ -1074,21 +1106,21 @@ msgstr ""
 "Leidžia jums stebėti perduodamų duomenų kiekį. Naudinga, kai mobilaus "
 "interneto operatorius suteikia ribotą kiekį duomenų."
 
-#: ../blueman/plugins/applet/NetUsage.py:296
+#: ../blueman/plugins/applet/NetUsage.py:333
 msgid "Network Usage"
 msgstr "Tinklo Naudojimas"
 
-#: ../blueman/plugins/applet/NetUsage.py:297
+#: ../blueman/plugins/applet/NetUsage.py:334
 msgid "Shows network traffic usage"
 msgstr "Parodo perduotų duomenų kiekį"
 
 #: ../blueman/plugins/applet/StatusIcon.py:38
-#: ../blueman/plugins/applet/StatusIcon.py:46
+#: ../blueman/plugins/applet/StatusIcon.py:51
 #: ../blueman/plugins/applet/Indicator.py:80
 msgid "Bluetooth Enabled"
 msgstr "Bluetooth Įjungtas"
 
-#: ../blueman/plugins/applet/StatusIcon.py:48
+#: ../blueman/plugins/applet/StatusIcon.py:53
 msgid "Bluetooth Disabled"
 msgstr "Bluetooth Išjungtas"
 
@@ -1097,7 +1129,7 @@ msgid "Manages local network services, like NAP bridges"
 msgstr "Leidžia keisti tinklo nustatymus, tokius kaip NAP jungtis"
 
 #: ../blueman/plugins/applet/Networking.py:54
-#: ../blueman/plugins/services/Network.py:112
+#: ../blueman/plugins/services/Network.py:113
 msgid "Failed to apply network settings"
 msgstr "Nepavyko išsaugoti tinklo nustatymų"
 
@@ -1142,8 +1174,8 @@ msgid "Maximum items"
 msgstr "Maksimalus vienetų skaičius"
 
 #: ../blueman/plugins/applet/RecentConns.py:65
-msgid "The maximum number of items RecentConns menu will display"
-msgstr "Maksimalus įrašų skaičius, kuriuos atvaizduos RecentConns meniu"
+msgid "The maximum number of items recent connections menu will display."
+msgstr ""
 
 #: ../blueman/plugins/applet/RecentConns.py:83
 msgid "Recent Connections"
@@ -1155,7 +1187,7 @@ msgid "Connecting to %s"
 msgstr "Jungiamasi prie %s"
 
 #: ../blueman/plugins/applet/RecentConns.py:284
-#: ../blueman/plugins/applet/PPPSupport.py:60
+#: ../blueman/plugins/applet/PPPSupport.py:68
 msgid "Connected"
 msgstr "Prisijungta"
 
@@ -1186,7 +1218,7 @@ msgstr "%(device)s: %(service)s"
 msgid "Adapter for this connection is not available"
 msgstr "Šio prisijungimo adapteris neprijungtas"
 
-#: ../blueman/plugins/applet/NMPANSupport.py:175
+#: ../blueman/plugins/applet/NMPANSupport.py:182
 msgid ""
 "Provides support for Personal Area Networking (PAN) introduced in "
 "NetworkManager 0.8"
@@ -1194,7 +1226,7 @@ msgstr ""
 "Suteikia tinklo (Personal Area Networking (PAN)) palaikymą atsiradusį "
 "NetworkManager 0.8 versijoje."
 
-#: ../blueman/plugins/applet/NMPANSupport.py:324
+#: ../blueman/plugins/applet/NMPANSupport.py:335
 msgid "Already connected"
 msgstr "Jau prisijungta"
 
@@ -1295,12 +1327,12 @@ msgstr ""
 "Automatiškai pakrauna PulseAudio Bluetooth modulius.\n"
 "<b>Pastaba:</b> Reikalingas PulseAudio 0.9.15 arba naujesnis."
 
-#: ../blueman/plugins/applet/PulseAudio.py:178
-#: ../blueman/plugins/applet/PulseAudio.py:184
+#: ../blueman/plugins/applet/PulseAudio.py:205
+#: ../blueman/plugins/applet/PulseAudio.py:211
 msgid "Bluetooth Audio"
 msgstr "Bluetooth garsas"
 
-#: ../blueman/plugins/applet/PulseAudio.py:179
+#: ../blueman/plugins/applet/PulseAudio.py:206
 msgid ""
 "Failed to initialize PulseAudio Bluetooth module. Bluetooth audio over "
 "PulseAudio will not work."
@@ -1308,7 +1340,7 @@ msgstr ""
 "Nepavyko paleisti PulseAudio Bluetooth modulį. Bluetooth garsas per "
 "PulseAudio neveiks."
 
-#: ../blueman/plugins/applet/PulseAudio.py:185
+#: ../blueman/plugins/applet/PulseAudio.py:212
 msgid ""
 "Successfully connected to a Bluetooth audio device. This device will now be "
 "available in the PulseAudio mixer"
@@ -1388,6 +1420,14 @@ msgstr[2] "<b>%d Aktyvių Prisijungimų</b>"
 msgid "Runs a command when answer button is pressed on a headset"
 msgstr "Paleidžia komandą kai būna nuspaustas ausinės atsiliepimo mygtukas."
 
+#: ../blueman/plugins/applet/Headset.py:32
+msgid "Command"
+msgstr ""
+
+#: ../blueman/plugins/applet/Headset.py:33
+msgid "Command to execute when answer button is pressed:"
+msgstr "Komanda, kurią paleisti nuspaudus \"atsiliepti\" mygtuką:"
+
 #: ../blueman/plugins/applet/DiscvManager.py:32
 msgid ""
 "Provides a menu item for making the default adapter temporarily visible when "
@@ -1423,7 +1463,7 @@ msgid ""
 "Provides a menu for the applet and an API for other plugins to manipulate it"
 msgstr "Sukuria meniu ir suteikia kitiems įskiepiams galimybę jį valdyti."
 
-#: ../blueman/plugins/applet/PPPSupport.py:60
+#: ../blueman/plugins/applet/PPPSupport.py:68
 #, python-format
 msgid ""
 "Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\n"
@@ -1432,7 +1472,7 @@ msgstr ""
 "Sėkmingai prisijungta prie <b>DUN</b> paslaugos per <b>%(0)s.</b>\n"
 "Tinkas dabar prieinamas per <b>%(1)s</b>"
 
-#: ../blueman/plugins/applet/PPPSupport.py:67
+#: ../blueman/plugins/applet/PPPSupport.py:75
 msgid ""
 "Provides basic support for connecting to the internet via DUN profile."
 msgstr ""
@@ -1454,48 +1494,34 @@ msgstr ""
 msgid "Controls bluetooth adapter power states"
 msgstr "Valdo Bluetooth adapterių energijos nustatymus."
 
-#: ../blueman/plugins/applet/PowerManager.py:37
+#: ../blueman/plugins/applet/PowerManager.py:39
 msgid "<b>Bluetooth Off</b>"
 msgstr "<b>Bluetooth Išjungtas</b>"
 
-#: ../blueman/plugins/applet/PowerManager.py:38
-#: ../blueman/plugins/applet/PowerManager.py:161
+#: ../blueman/plugins/applet/PowerManager.py:40
+#: ../blueman/plugins/applet/PowerManager.py:168
 msgid "<b>Turn Bluetooth Off</b>"
 msgstr "<b>Išjungti Bluetooth</b>"
 
-#: ../blueman/plugins/applet/PowerManager.py:40
-#: ../blueman/plugins/applet/PowerManager.py:162
+#: ../blueman/plugins/applet/PowerManager.py:42
+#: ../blueman/plugins/applet/PowerManager.py:169
 msgid "Turn off all adapters"
 msgstr "Išjungti visus adapterius"
 
-#: ../blueman/plugins/applet/PowerManager.py:132
-msgid "Failed to set bluetooth power"
-msgstr "Nepavyko išjungti/įjunti Bluetooth"
-
-#: ../blueman/plugins/applet/PowerManager.py:133
-#, python-format
-msgid "The error reported is: %s"
-msgstr "Pranešta klaida: %s"
-
-#: ../blueman/plugins/applet/PowerManager.py:155
+#: ../blueman/plugins/applet/PowerManager.py:156
 msgid "<b>Turn Bluetooth On</b>"
 msgstr "<b>Įjungti Bluetooth</b>"
 
-#: ../blueman/plugins/applet/PowerManager.py:156
+#: ../blueman/plugins/applet/PowerManager.py:157
 msgid "Turn on all adapters"
 msgstr "Įjungti visus adapterius"
 
-#: ../blueman/plugins/services/Network.py:260
-#: ../blueman/plugins/services/Network.py:263
-#: ../blueman/plugins/services/Network.py:269
-#: ../blueman/plugins/services/Network.py:275
+#: ../blueman/plugins/services/Network.py:262
+#: ../blueman/plugins/services/Network.py:265
+#: ../blueman/plugins/services/Network.py:271
+#: ../blueman/plugins/services/Network.py:277
 msgid "Not currently supported with this setup"
 msgstr "Kolkas nepalaikoma"
-
-#: ../blueman/plugins/services/Headset.py:30
-#: ../blueman/plugins/services/Headset.py:41
-msgid "Headset"
-msgstr "Ausinės"
 
 #: ../blueman/plugins/services/Transfer.py:30
 msgid "Transfer"
@@ -1505,7 +1531,7 @@ msgstr "Siuntimas"
 msgid "Applet's transfer service plugin is disabled"
 msgstr "Applet'o failų persiuntimo įskiepis yra išjungtas"
 
-#: ../blueman/plugins/services/Transfer.py:135 ../apps/blueman-sendto:107
+#: ../blueman/plugins/services/Transfer.py:135 ../apps/blueman-sendto:110
 msgid "obex-data-server not available"
 msgstr "obex-data-server nerastas"
 
@@ -1522,30 +1548,38 @@ msgid "Bluetooth Manager"
 msgstr "Bluetooth Tvarkyklė"
 
 #: ../data/configs/org.blueman.policy.in.h:1
+msgid "Bluetooth Configuration"
+msgstr ""
+
+#: ../data/configs/org.blueman.policy.in.h:2
+msgid "Changing Bluetooth system settings requires privileges"
+msgstr ""
+
+#: ../data/configs/org.blueman.policy.in.h:3
 msgid "Configure Bluetooth Modems"
 msgstr "Konfiguruoti Bluetooth Modemus"
 
-#: ../data/configs/org.blueman.policy.in.h:2
+#: ../data/configs/org.blueman.policy.in.h:4
 msgid "Configure Bluetooth Network"
 msgstr "Nustatyti Bluetooth Tinklą"
 
-#: ../data/configs/org.blueman.policy.in.h:3
+#: ../data/configs/org.blueman.policy.in.h:5
 msgid "Configuring networking requires privileges"
 msgstr "Tinklo konfigūravimas reikalauja privilegijų"
 
-#: ../data/configs/org.blueman.policy.in.h:4
+#: ../data/configs/org.blueman.policy.in.h:6
 msgid "Launch DHCP client"
 msgstr "Paleisti DHCP klientą"
 
-#: ../data/configs/org.blueman.policy.in.h:5
+#: ../data/configs/org.blueman.policy.in.h:7
 msgid "Launching DHCP client requires privileges"
 msgstr "DHCP kliento paleidimas reikalauja privilegijų"
 
-#: ../data/configs/org.blueman.policy.in.h:6
+#: ../data/configs/org.blueman.policy.in.h:8
 msgid "System policy prevents modifying the configuration"
 msgstr "Sistomos polisas neleidžia keisti šios konfiguracijos"
 
-#: ../data/configs/org.blueman.policy.in.h:7
+#: ../data/configs/org.blueman.policy.in.h:9
 msgid "The Blueman Project"
 msgstr "Blueman Projektas"
 
@@ -1597,23 +1631,27 @@ msgstr[0] "%d Minutė"
 msgstr[1] "%d Minutės"
 msgstr[2] "%d Minučių"
 
-#: ../apps/blueman-sendto:108
+#: ../apps/blueman-sendto:111
 msgid "obex-data-server is probably not installed"
 msgstr "obex-data-server tikriausiai nėra įdiegtas"
 
-#: ../apps/blueman-sendto:136
+#: ../apps/blueman-sendto:139
 msgid "Error occurred"
 msgstr "Įvyko klaida"
 
-#: ../apps/blueman-sendto:163 ../apps/blueman-sendto:197
+#: ../apps/blueman-sendto:155
+msgid "Cancelling"
+msgstr ""
+
+#: ../apps/blueman-sendto:175 ../apps/blueman-sendto:209
 msgid "Sending File"
 msgstr "Siunčiamas Failas"
 
-#: ../apps/blueman-sendto:163 ../apps/blueman-sendto:197
+#: ../apps/blueman-sendto:175 ../apps/blueman-sendto:209
 msgid "ETA:"
 msgstr "Liko:"
 
-#: ../apps/blueman-sendto:191
+#: ../apps/blueman-sendto:203
 #, c-format
 msgid "%.0f Minute"
 msgid_plural "%.0f Minutes"
@@ -1621,7 +1659,7 @@ msgstr[0] "%.0f Minutė"
 msgstr[1] "%.0f Minučių"
 msgstr[2] "%.0f Minutės"
 
-#: ../apps/blueman-sendto:193
+#: ../apps/blueman-sendto:205
 #, c-format
 msgid "%.0f Second"
 msgid_plural "%.0f Seconds"
@@ -1629,28 +1667,28 @@ msgstr[0] "%.0f Sekundė"
 msgstr[1] "%.0f Sekundžių"
 msgstr[2] "%.0f Sekundės"
 
-#: ../apps/blueman-sendto:249
+#: ../apps/blueman-sendto:261
 #, c-format
 msgid "Error occurred while sending file %s"
 msgstr "Įvyko klaida siunčiant failą %s"
 
-#: ../apps/blueman-sendto:253
+#: ../apps/blueman-sendto:265
 msgid "Skip"
 msgstr "Praleisti"
 
-#: ../apps/blueman-sendto:254
+#: ../apps/blueman-sendto:266
 msgid "Retry"
 msgstr "Bandyti vėl"
 
-#: ../apps/blueman-sendto:301
+#: ../apps/blueman-sendto:316
 msgid "Send files to this device"
 msgstr "Siųsti failus šiam įrenginiui"
 
-#: ../apps/blueman-sendto:308
+#: ../apps/blueman-sendto:323
 msgid "Bluetooth needs to be turned on for file sending to work"
 msgstr "Bluetooth turi būti įjungtas, kad galima būtų siųsti failus"
 
-#: ../apps/blueman-sendto:362
+#: ../apps/blueman-sendto:377
 msgid "Select files to send"
 msgstr "Pasirinkite failus siuntimui"
 
