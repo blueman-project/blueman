@@ -6,17 +6,26 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
+<<<<<<< TREE
 "Report-Msgid-Bugs-To: \n"
+=======
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+>>>>>>> MERGE-SOURCE
 "POT-Creation-Date: 2009-11-04 10:55+0200\n"
+<<<<<<< TREE
 "PO-Revision-Date: 2009-03-09 18:27+0000\n"
 "Last-Translator: Wiatrak <Unknown>\n"
+=======
+"PO-Revision-Date: 2009-11-04 11:24+0000\n"
+"Last-Translator: Metzi <mecenaso@poczta.onet.pl>\n"
+>>>>>>> MERGE-SOURCE
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-11-04 08:28+0000\n"
+"X-Launchpad-Export-Date: 2009-11-05 08:35+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -167,7 +176,7 @@ msgstr "<b>Brak zainstalowanych serwerów DHCP</b>"
 
 #: ../data/ui/services-network.ui.h:5
 msgid "<b>PAN Support</b>"
-msgstr ""
+msgstr "Wsparcie PAN"
 
 #: ../data/ui/services-network.ui.h:6 ../data/ui/services-audio.ui.h:3
 msgid "<b>Services</b>"
@@ -264,16 +273,33 @@ msgstr "Folder współdzielony"
 msgid ""
 "<b>After applying these settings Bluetooth daemon will be restarted.</b>"
 msgstr ""
+<<<<<<< TREE
+=======
+"Po zatwierdzeniu tych ustawień program serwera usług Bluetooth zostanie "
+"uruchomiony ponownie."
+>>>>>>> MERGE-SOURCE
 
 #: ../data/ui/services-audio.ui.h:2
+<<<<<<< TREE
 #, fuzzy
+=======
+>>>>>>> MERGE-SOURCE
 msgid "<b>Audio Settings</b>"
+<<<<<<< TREE
 msgstr "<b>Ustawienia NAP</b>"
+=======
+msgstr ""
+>>>>>>> MERGE-SOURCE
 
 #: ../data/ui/services-audio.ui.h:4
 msgid ""
+<<<<<<< TREE
 "Advanced Audio receiver <span weight='bold' color='#cc0000'>Experimental!</"
 "span>"
+=======
+"Advanced Audio receiver <span weight='bold' "
+"color='#cc0000'>Experimental!</span>"
+>>>>>>> MERGE-SOURCE
 msgstr ""
 
 #: ../data/ui/services-audio.ui.h:5
@@ -288,8 +314,13 @@ msgstr ""
 
 #: ../data/ui/services-audio.ui.h:7
 msgid ""
+<<<<<<< TREE
 "Headset Emulation <span weight='bold' color='#cc0000'>Very Experimental!</"
 "span>"
+=======
+"Headset Emulation <span weight='bold' color='#cc0000'>Very "
+"Experimental!</span>"
+>>>>>>> MERGE-SOURCE
 msgstr ""
 
 #: ../data/ui/send-dialog.ui.h:1
@@ -380,13 +411,24 @@ msgid "<b>Plugin description:</b>"
 msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:5
+<<<<<<< TREE
 #, fuzzy
+=======
+>>>>>>> MERGE-SOURCE
 msgid "Configuration"
+<<<<<<< TREE
 msgstr "Potwierdź"
+=======
+msgstr ""
+>>>>>>> MERGE-SOURCE
 
 #: ../data/ui/applet-plugins-widget.ui.h:6
 msgid "Configure selected plugin's preferences"
+<<<<<<< TREE
 msgstr ""
+=======
+msgstr "Konfiguracja ustawień zaznaczonych wtyczek"
+>>>>>>> MERGE-SOURCE
 
 #: ../data/ui/applet-plugins-widget.ui.h:7
 msgid "Not specified"
@@ -437,7 +479,7 @@ msgstr ""
 
 #: ../data/ui/net-usage.ui.h:7
 msgid "Traffic statistics"
-msgstr ""
+msgstr "Statystyki transferu danych"
 
 #: ../data/ui/net-usage.ui.h:8
 msgid "gtk-close"
@@ -519,7 +561,7 @@ msgstr "Żądanie powiązania dla %s"
 #: ../blueman/main/applet/BluezAgent.py:137
 #: ../blueman/main/applet/BluezAgent.py:243
 msgid "Bluetooth Authentication"
-msgstr ""
+msgstr "Autoryzacja Bluetooth"
 
 #: ../blueman/main/applet/BluezAgent.py:178
 #: ../blueman/main/applet/BluezAgent.py:261
@@ -725,7 +767,7 @@ msgstr "Nieudane"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:145
 msgid "Connection Failed: "
-msgstr ""
+msgstr "Połączenie nie powiodło się: "
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:152
 msgid "Cancelled"
@@ -812,11 +854,11 @@ msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:512
 msgid "<b>Connect To:</b>"
-msgstr ""
+msgstr "Połącz z:"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:524
 msgid "<b>Disconnect:</b>"
-msgstr ""
+msgstr "Rozłącz:"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:549
 msgid "Browse device..."
@@ -905,6 +947,7 @@ msgstr ""
 "  LordYoghurt https://launchpad.net/~lordyoghurt\n"
 "  Marek Dz. https://launchpad.net/~marqss81\n"
 "  Mateusz Sz. https://launchpad.net/~mateyko\n"
+"  Metzi https://launchpad.net/~mecenaso\n"
 "  Michał Pławsiuk (razit.pl) https://launchpad.net/~mp3-10\n"
 "  Pangram Design https://launchpad.net/~biuro-pangram\n"
 "  Piotr Adamiecki https://launchpad.net/~piotradamiecki\n"
@@ -927,7 +970,7 @@ msgstr "Blueman jest menedżerem Bluetooth opartym na GTK"
 
 #: ../blueman/gui/GsmSettings.py:38
 msgid "GSM Settings"
-msgstr ""
+msgstr "Ustawienia GSM"
 
 #: ../blueman/gui/applet/PluginDialog.py:122
 #: ../blueman/plugins/applet/StandardItems.py:133
@@ -1054,7 +1097,7 @@ msgstr "Dialup Networking (DUN)"
 #: ../blueman/plugins/applet/NetUsage.py:298
 #: ../blueman/plugins/applet/NetUsage.py:301
 msgid "Connected:"
-msgstr ""
+msgstr "Połączony:"
 
 #: ../blueman/plugins/applet/NetUsage.py:212
 #: ../blueman/plugins/applet/NetUsage.py:309
@@ -1066,6 +1109,8 @@ msgid ""
 "No usage statistics are available yet. Try establishing a connection first "
 "and then check this page."
 msgstr ""
+"Statystki nie są na razie dostępne. Spróbuj nawiązać najpierw połączenie i "
+"wtedy sprawdź statystyki."
 
 #: ../blueman/plugins/applet/NetUsage.py:241
 msgid "day"
@@ -1088,11 +1133,11 @@ msgstr[1] ""
 #: ../blueman/plugins/applet/NetUsage.py:245
 #, python-format
 msgid "%d %s %d %s and %d %s"
-msgstr ""
+msgstr "%d %s %d %s i %d %s"
 
 #: ../blueman/plugins/applet/NetUsage.py:276
 msgid "Are you sure you want to reset the counter?"
-msgstr ""
+msgstr "Czy na pewno chcesz zresetować licznik?"
 
 #: ../blueman/plugins/applet/NetUsage.py:315
 msgid ""
@@ -1112,11 +1157,11 @@ msgstr ""
 #: ../blueman/plugins/applet/StatusIcon.py:51
 #: ../blueman/plugins/applet/Indicator.py:80
 msgid "Bluetooth Enabled"
-msgstr ""
+msgstr "Bluetooth Włączony"
 
 #: ../blueman/plugins/applet/StatusIcon.py:53
 msgid "Bluetooth Disabled"
-msgstr ""
+msgstr "Bluetooth Wyłączony"
 
 #: ../blueman/plugins/applet/Networking.py:31
 msgid "Manages local network services, like NAP bridges"
@@ -1437,7 +1482,12 @@ msgid ""
 msgstr ""
 
 #: ../blueman/plugins/applet/PPPSupport.py:75
+<<<<<<< TREE
 msgid "Provides basic support for connecting to the internet via DUN profile."
+=======
+msgid ""
+"Provides basic support for connecting to the internet via DUN profile."
+>>>>>>> MERGE-SOURCE
 msgstr ""
 
 #: ../blueman/plugins/applet/SerialManager.py:44
@@ -1508,14 +1558,28 @@ msgid "Bluetooth Manager"
 msgstr "Menadżer Bluetooth"
 
 #: ../data/configs/org.blueman.policy.in.h:1
+<<<<<<< TREE
 #, fuzzy
+=======
+>>>>>>> MERGE-SOURCE
 msgid "Bluetooth Configuration"
+<<<<<<< TREE
 msgstr "Menadżer Bluetooth"
+=======
+msgstr ""
+>>>>>>> MERGE-SOURCE
 
 #: ../data/configs/org.blueman.policy.in.h:2
+<<<<<<< TREE
 #, fuzzy
+=======
+>>>>>>> MERGE-SOURCE
 msgid "Changing Bluetooth system settings requires privileges"
+<<<<<<< TREE
 msgstr "Uruchamianie klienta DHCP wymaga przywilejów"
+=======
+msgstr ""
+>>>>>>> MERGE-SOURCE
 
 #: ../data/configs/org.blueman.policy.in.h:3
 msgid "Configure Bluetooth Modems"
@@ -1603,9 +1667,16 @@ msgid "Error occurred"
 msgstr "Wystąpił błąd"
 
 #: ../apps/blueman-sendto:155
+<<<<<<< TREE
 #, fuzzy
+=======
+>>>>>>> MERGE-SOURCE
 msgid "Cancelling"
+<<<<<<< TREE
 msgstr "Przerwano"
+=======
+msgstr ""
+>>>>>>> MERGE-SOURCE
 
 #: ../apps/blueman-sendto:175 ../apps/blueman-sendto:209
 msgid "Sending File"
