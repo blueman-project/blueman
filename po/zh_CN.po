@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: bluez-gnome\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-11-04 10:55+0200\n"
-"PO-Revision-Date: 2009-10-30 05:04+0000\n"
-"Last-Translator: Jimhu <jimhuyiwei@yahoo.com.cn>\n"
+"PO-Revision-Date: 2009-11-05 13:49+0000\n"
+"Last-Translator: 王英华 <wantinghard@gmail.com>\n"
 "Language-Team: Chinese (China) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-11-05 08:35+0000\n"
+"X-Launchpad-Export-Date: 2009-11-07 04:35+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -166,7 +166,7 @@ msgstr "<b>未安装 DHCP 服务器</b>"
 
 #: ../data/ui/services-network.ui.h:5
 msgid "<b>PAN Support</b>"
-msgstr ""
+msgstr "<b>PAN 支持</b>"
 
 #: ../data/ui/services-network.ui.h:6 ../data/ui/services-audio.ui.h:3
 msgid "<b>Services</b>"
@@ -920,7 +920,8 @@ msgstr ""
 "  luojie-dune https://launchpad.net/~luojie-dune\n"
 "  lyman https://launchpad.net/~lyman\n"
 "  sascsy https://launchpad.net/~sascsy\n"
-"  yanq.wang https://launchpad.net/~nile-wangyq"
+"  yanq.wang https://launchpad.net/~nile-wangyq\n"
+"  王英华 https://launchpad.net/~wantinghard"
 
 #: ../blueman/gui/CommonUi.py:48
 msgid "Blueman is a GTK based Bluetooth manager"
@@ -1155,7 +1156,7 @@ msgstr "调制解调器管理器不支持这个连接"
 msgid ""
 "Provides support for Dial Up Networking (DUN) with ModemManager and "
 "NetworkManager 0.8"
-msgstr ""
+msgstr "使用调制解调器管理器和网络管理器 0.8 为拨号网络(DUN)提供支持"
 
 #: ../blueman/plugins/applet/RecentConns.py:57
 msgid ""
@@ -1216,11 +1217,11 @@ msgstr "这个连接的适配器不可用"
 msgid ""
 "Provides support for Personal Area Networking (PAN) introduced in "
 "NetworkManager 0.8"
-msgstr ""
+msgstr "在网络管理器 0.8 中提供对个人局域网(PAN)的支持"
 
 #: ../blueman/plugins/applet/NMPANSupport.py:335
 msgid "Already connected"
-msgstr ""
+msgstr "已连接"
 
 #: ../blueman/plugins/applet/DBusService.py:39
 msgid "Provides DBus API for other Blueman components"
@@ -1313,23 +1314,23 @@ msgstr ""
 #: ../blueman/plugins/applet/PulseAudio.py:205
 #: ../blueman/plugins/applet/PulseAudio.py:211
 msgid "Bluetooth Audio"
-msgstr ""
+msgstr "蓝牙音频"
 
 #: ../blueman/plugins/applet/PulseAudio.py:206
 msgid ""
 "Failed to initialize PulseAudio Bluetooth module. Bluetooth audio over "
 "PulseAudio will not work."
-msgstr ""
+msgstr "初始化 PulseAudio 蓝牙模块失败。在 PulseAudio 上的蓝牙音频将无法工作。"
 
 #: ../blueman/plugins/applet/PulseAudio.py:212
 msgid ""
 "Successfully connected to a Bluetooth audio device. This device will now be "
 "available in the PulseAudio mixer"
-msgstr ""
+msgstr "成功连接到蓝牙音频设备。该设备现在可以在 PulseAudio 混音器中使用。"
 
 #: ../blueman/plugins/applet/DhcpClient.py:26
 msgid "Provides a basic dhcp client for bluetooth PAN connections."
-msgstr ""
+msgstr "为蓝牙 PAN 连接提供基本的 DHCP 客户端。"
 
 #: ../blueman/plugins/applet/DhcpClient.py:63
 #: ../blueman/plugins/applet/DhcpClient.py:71
@@ -1345,7 +1346,7 @@ msgstr "接口 %(0)s 绑定到 IP 地址 %(1)s"
 #: ../blueman/plugins/applet/DhcpClient.py:71
 #, python-format
 msgid "Failed to obtain an IP address on %s"
-msgstr ""
+msgstr "在 %s 上获取 IP 地址失败"
 
 #: ../blueman/plugins/applet/DhcpClient.py:77
 #, python-format
@@ -1353,6 +1354,8 @@ msgid ""
 "Trying to obtain an IP address on %s\n"
 "Please wait..."
 msgstr ""
+"尝试在 %s 上获取一个 IP 地址\n"
+"请稍等..."
 
 #: ../blueman/plugins/applet/NMIntegration.py:39
 msgid ""
@@ -1440,11 +1443,13 @@ msgid ""
 "Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\n"
 "Network is now available through <b>%(1)s</b>"
 msgstr ""
+"成功连接到 <b>%(0)s.</b>的<b>DUN</b> 服务 \n"
+"现在可以通过 <b>%(1)s</b>连网"
 
 #: ../blueman/plugins/applet/PPPSupport.py:75
 msgid ""
 "Provides basic support for connecting to the internet via DUN profile."
-msgstr ""
+msgstr "为通过 DUN 配置文件连接到 Internet 提供基本支持。"
 
 #: ../blueman/plugins/applet/SerialManager.py:44
 msgid "Serial port connected"
@@ -1454,7 +1459,7 @@ msgstr "串口已连接"
 #, python-format
 msgid ""
 "Serial port service on device <b>%s</b> now will be available via <b>%s</b>"
-msgstr ""
+msgstr "<b>%s</b>设备上的串口服务现在可以通过<b>%s</b>使用"
 
 #: ../blueman/plugins/applet/PowerManager.py:29
 msgid "Controls bluetooth adapter power states"
@@ -1487,7 +1492,7 @@ msgstr "启用全部适配器"
 #: ../blueman/plugins/services/Network.py:271
 #: ../blueman/plugins/services/Network.py:277
 msgid "Not currently supported with this setup"
-msgstr ""
+msgstr "当前在该设置中不被支持"
 
 #: ../blueman/plugins/services/Transfer.py:30
 msgid "Transfer"
@@ -1531,7 +1536,7 @@ msgstr "配置蓝牙网络"
 
 #: ../data/configs/org.blueman.policy.in.h:5
 msgid "Configuring networking requires privileges"
-msgstr ""
+msgstr "配置网络需要权限"
 
 #: ../data/configs/org.blueman.policy.in.h:6
 msgid "Launch DHCP client"
@@ -1613,7 +1618,7 @@ msgstr "发送文件"
 
 #: ../apps/blueman-sendto:175 ../apps/blueman-sendto:209
 msgid "ETA:"
-msgstr ""
+msgstr "ETA:"
 
 #: ../apps/blueman-sendto:203
 #, c-format
