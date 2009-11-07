@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: bluez-gnome\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-11-04 10:55+0200\n"
-"PO-Revision-Date: 2009-10-30 05:04+0000\n"
-"Last-Translator: Jimhu <jimhuyiwei@yahoo.com.cn>\n"
+"PO-Revision-Date: 2009-11-05 13:49+0000\n"
+"Last-Translator: 王英华 <wantinghard@gmail.com>\n"
 "Language-Team: Chinese (China) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-11-05 08:35+0000\n"
+"X-Launchpad-Export-Date: 2009-11-07 04:35+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -166,7 +166,7 @@ msgstr "<b>未安装 DHCP 服务器</b>"
 
 #: ../data/ui/services-network.ui.h:5
 msgid "<b>PAN Support</b>"
-msgstr ""
+msgstr "<b>PAN 支持</b>"
 
 #: ../data/ui/services-network.ui.h:6 ../data/ui/services-audio.ui.h:3
 msgid "<b>Services</b>"
@@ -265,26 +265,13 @@ msgid ""
 msgstr ""
 
 #: ../data/ui/services-audio.ui.h:2
-<<<<<<< TREE
-#, fuzzy
-=======
->>>>>>> MERGE-SOURCE
 msgid "<b>Audio Settings</b>"
-<<<<<<< TREE
-msgstr "<b>NAP 设置</b>"
-=======
 msgstr ""
->>>>>>> MERGE-SOURCE
 
 #: ../data/ui/services-audio.ui.h:4
 msgid ""
-<<<<<<< TREE
-"Advanced Audio receiver <span weight='bold' color='#cc0000'>Experimental!</"
-"span>"
-=======
 "Advanced Audio receiver <span weight='bold' "
 "color='#cc0000'>Experimental!</span>"
->>>>>>> MERGE-SOURCE
 msgstr ""
 
 #: ../data/ui/services-audio.ui.h:5
@@ -299,13 +286,8 @@ msgstr ""
 
 #: ../data/ui/services-audio.ui.h:7
 msgid ""
-<<<<<<< TREE
-"Headset Emulation <span weight='bold' color='#cc0000'>Very Experimental!</"
-"span>"
-=======
 "Headset Emulation <span weight='bold' color='#cc0000'>Very "
 "Experimental!</span>"
->>>>>>> MERGE-SOURCE
 msgstr ""
 
 #: ../data/ui/send-dialog.ui.h:1
@@ -317,7 +299,8 @@ msgid "<b>To:</b>"
 msgstr "<b>收件人：</b>"
 
 #: ../data/ui/send-dialog.ui.h:3
-msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
+msgid ""
+"<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr "<span weight=\"bold\" size=\"large\">经由蓝牙发送文件</span>"
 
 #: ../data/ui/send-dialog.ui.h:4
@@ -394,16 +377,8 @@ msgid "<b>Plugin description:</b>"
 msgstr "<b>插件说明：</b>"
 
 #: ../data/ui/applet-plugins-widget.ui.h:5
-<<<<<<< TREE
-#, fuzzy
-=======
->>>>>>> MERGE-SOURCE
 msgid "Configuration"
-<<<<<<< TREE
-msgstr "确认"
-=======
 msgstr ""
->>>>>>> MERGE-SOURCE
 
 #: ../data/ui/applet-plugins-widget.ui.h:6
 msgid "Configure selected plugin's preferences"
@@ -945,7 +920,8 @@ msgstr ""
 "  luojie-dune https://launchpad.net/~luojie-dune\n"
 "  lyman https://launchpad.net/~lyman\n"
 "  sascsy https://launchpad.net/~sascsy\n"
-"  yanq.wang https://launchpad.net/~nile-wangyq"
+"  yanq.wang https://launchpad.net/~nile-wangyq\n"
+"  王英华 https://launchpad.net/~wantinghard"
 
 #: ../blueman/gui/CommonUi.py:48
 msgid "Blueman is a GTK based Bluetooth manager"
@@ -977,8 +953,8 @@ msgid ""
 "also unload <b>\"%(0)s\"</b>.\n"
 "Proceed?"
 msgstr ""
-"插件 <b>\"%(0)s\"</b> 依赖于 <b>%(1)s</b>。禁用 <b>%(1)s</b> 也将会禁用 <b>"
-"\"%(0)s\"</b>。\n"
+"插件 <b>\"%(0)s\"</b> 依赖于 <b>%(1)s</b>。禁用 <b>%(1)s</b> 也将会禁用 "
+"<b>\"%(0)s\"</b>。\n"
 "继续吗?"
 
 #: ../blueman/gui/applet/PluginDialog.py:322
@@ -988,8 +964,7 @@ msgid ""
 "unload <b>%(0)s</b>.\n"
 "Proceed?"
 msgstr ""
-"插件 <b>%(0)s</b>  与 <b>%(1)s</b>有冲突。 载入 <b>%(1)s</b>  将卸载 <b>%(0)"
-"s</b>。\n"
+"插件 <b>%(0)s</b>  与 <b>%(1)s</b>有冲突。 载入 <b>%(1)s</b>  将卸载 <b>%(0)s</b>。\n"
 "确定吗?"
 
 #. translators: device class
@@ -1130,9 +1105,7 @@ msgstr "您确定要重置计数器吗？"
 msgid ""
 "Allows you to monitor your (mobile broadband) network traffic usage. Useful "
 "for limited data access plans. This plugin tracks every device seperately."
-msgstr ""
-"允许监视您移动设备的网络流量使用量。在使用有限流量套餐时非常有用。该插件能分"
-"别跟踪每一个设备。"
+msgstr "允许监视您移动设备的网络流量使用量。在使用有限流量套餐时非常有用。该插件能分别跟踪每一个设备。"
 
 #: ../blueman/plugins/applet/NetUsage.py:333
 msgid "Network Usage"
@@ -1183,7 +1156,7 @@ msgstr "调制解调器管理器不支持这个连接"
 msgid ""
 "Provides support for Dial Up Networking (DUN) with ModemManager and "
 "NetworkManager 0.8"
-msgstr ""
+msgstr "使用调制解调器管理器和网络管理器 0.8 为拨号网络(DUN)提供支持"
 
 #: ../blueman/plugins/applet/RecentConns.py:57
 msgid ""
@@ -1196,16 +1169,8 @@ msgid "Maximum items"
 msgstr "最大项目数"
 
 #: ../blueman/plugins/applet/RecentConns.py:65
-<<<<<<< TREE
-#, fuzzy
-=======
->>>>>>> MERGE-SOURCE
 msgid "The maximum number of items recent connections menu will display."
-<<<<<<< TREE
-msgstr "将显示的最近连接的最大条目数"
-=======
 msgstr ""
->>>>>>> MERGE-SOURCE
 
 #: ../blueman/plugins/applet/RecentConns.py:83
 msgid "Recent Connections"
@@ -1252,11 +1217,11 @@ msgstr "这个连接的适配器不可用"
 msgid ""
 "Provides support for Personal Area Networking (PAN) introduced in "
 "NetworkManager 0.8"
-msgstr ""
+msgstr "在网络管理器 0.8 中提供对个人局域网(PAN)的支持"
 
 #: ../blueman/plugins/applet/NMPANSupport.py:335
 msgid "Already connected"
-msgstr ""
+msgstr "已连接"
 
 #: ../blueman/plugins/applet/DBusService.py:39
 msgid "Provides DBus API for other Blueman components"
@@ -1266,8 +1231,7 @@ msgstr "为其他 Blueman 组件提供了 DBus API"
 msgid ""
 "Monitors NetworkManager's modem connections and automatically disconnects "
 "bluetooth link after the network connection is closed"
-msgstr ""
-"监视 NetworkManager 的调制解调器连接且自动在网络连接关闭时自动断开蓝牙连接"
+msgstr "监视 NetworkManager 的调制解调器连接且自动在网络连接关闭时自动断开蓝牙连接"
 
 #: ../blueman/plugins/applet/TransferService.py:29
 msgid "Provides OBEX file transfer capabilities"
@@ -1350,23 +1314,23 @@ msgstr ""
 #: ../blueman/plugins/applet/PulseAudio.py:205
 #: ../blueman/plugins/applet/PulseAudio.py:211
 msgid "Bluetooth Audio"
-msgstr ""
+msgstr "蓝牙音频"
 
 #: ../blueman/plugins/applet/PulseAudio.py:206
 msgid ""
 "Failed to initialize PulseAudio Bluetooth module. Bluetooth audio over "
 "PulseAudio will not work."
-msgstr ""
+msgstr "初始化 PulseAudio 蓝牙模块失败。在 PulseAudio 上的蓝牙音频将无法工作。"
 
 #: ../blueman/plugins/applet/PulseAudio.py:212
 msgid ""
 "Successfully connected to a Bluetooth audio device. This device will now be "
 "available in the PulseAudio mixer"
-msgstr ""
+msgstr "成功连接到蓝牙音频设备。该设备现在可以在 PulseAudio 混音器中使用。"
 
 #: ../blueman/plugins/applet/DhcpClient.py:26
 msgid "Provides a basic dhcp client for bluetooth PAN connections."
-msgstr ""
+msgstr "为蓝牙 PAN 连接提供基本的 DHCP 客户端。"
 
 #: ../blueman/plugins/applet/DhcpClient.py:63
 #: ../blueman/plugins/applet/DhcpClient.py:71
@@ -1382,7 +1346,7 @@ msgstr "接口 %(0)s 绑定到 IP 地址 %(1)s"
 #: ../blueman/plugins/applet/DhcpClient.py:71
 #, python-format
 msgid "Failed to obtain an IP address on %s"
-msgstr ""
+msgstr "在 %s 上获取 IP 地址失败"
 
 #: ../blueman/plugins/applet/DhcpClient.py:77
 #, python-format
@@ -1390,6 +1354,8 @@ msgid ""
 "Trying to obtain an IP address on %s\n"
 "Please wait..."
 msgstr ""
+"尝试在 %s 上获取一个 IP 地址\n"
+"请稍等..."
 
 #: ../blueman/plugins/applet/NMIntegration.py:39
 msgid ""
@@ -1477,15 +1443,13 @@ msgid ""
 "Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\n"
 "Network is now available through <b>%(1)s</b>"
 msgstr ""
+"成功连接到 <b>%(0)s.</b>的<b>DUN</b> 服务 \n"
+"现在可以通过 <b>%(1)s</b>连网"
 
 #: ../blueman/plugins/applet/PPPSupport.py:75
-<<<<<<< TREE
-msgid "Provides basic support for connecting to the internet via DUN profile."
-=======
 msgid ""
 "Provides basic support for connecting to the internet via DUN profile."
->>>>>>> MERGE-SOURCE
-msgstr ""
+msgstr "为通过 DUN 配置文件连接到 Internet 提供基本支持。"
 
 #: ../blueman/plugins/applet/SerialManager.py:44
 msgid "Serial port connected"
@@ -1495,7 +1459,7 @@ msgstr "串口已连接"
 #, python-format
 msgid ""
 "Serial port service on device <b>%s</b> now will be available via <b>%s</b>"
-msgstr ""
+msgstr "<b>%s</b>设备上的串口服务现在可以通过<b>%s</b>使用"
 
 #: ../blueman/plugins/applet/PowerManager.py:29
 msgid "Controls bluetooth adapter power states"
@@ -1528,7 +1492,7 @@ msgstr "启用全部适配器"
 #: ../blueman/plugins/services/Network.py:271
 #: ../blueman/plugins/services/Network.py:277
 msgid "Not currently supported with this setup"
-msgstr ""
+msgstr "当前在该设置中不被支持"
 
 #: ../blueman/plugins/services/Transfer.py:30
 msgid "Transfer"
@@ -1555,28 +1519,12 @@ msgid "Bluetooth Manager"
 msgstr "蓝牙管理器"
 
 #: ../data/configs/org.blueman.policy.in.h:1
-<<<<<<< TREE
-#, fuzzy
-=======
->>>>>>> MERGE-SOURCE
 msgid "Bluetooth Configuration"
-<<<<<<< TREE
-msgstr "蓝牙认证"
-=======
 msgstr ""
->>>>>>> MERGE-SOURCE
 
 #: ../data/configs/org.blueman.policy.in.h:2
-<<<<<<< TREE
-#, fuzzy
-=======
->>>>>>> MERGE-SOURCE
 msgid "Changing Bluetooth system settings requires privileges"
-<<<<<<< TREE
-msgstr "启动DHCP客户端需要特权"
-=======
 msgstr ""
->>>>>>> MERGE-SOURCE
 
 #: ../data/configs/org.blueman.policy.in.h:3
 msgid "Configure Bluetooth Modems"
@@ -1588,7 +1536,7 @@ msgstr "配置蓝牙网络"
 
 #: ../data/configs/org.blueman.policy.in.h:5
 msgid "Configuring networking requires privileges"
-msgstr ""
+msgstr "配置网络需要权限"
 
 #: ../data/configs/org.blueman.policy.in.h:6
 msgid "Launch DHCP client"
@@ -1661,16 +1609,8 @@ msgid "Error occurred"
 msgstr "发生错误"
 
 #: ../apps/blueman-sendto:155
-<<<<<<< TREE
-#, fuzzy
-=======
->>>>>>> MERGE-SOURCE
 msgid "Cancelling"
-<<<<<<< TREE
-msgstr "已取消"
-=======
 msgstr ""
->>>>>>> MERGE-SOURCE
 
 #: ../apps/blueman-sendto:175 ../apps/blueman-sendto:209
 msgid "Sending File"
@@ -1678,7 +1618,7 @@ msgstr "发送文件"
 
 #: ../apps/blueman-sendto:175 ../apps/blueman-sendto:209
 msgid "ETA:"
-msgstr ""
+msgstr "ETA:"
 
 #: ../apps/blueman-sendto:203
 #, c-format
@@ -1785,17 +1725,5 @@ msgstr "启动 \"%s\" 失败"
 msgid "You can enter an alternate browser in service settings"
 msgstr "您可以在服务设置中输入另一个浏览器"
 
-<<<<<<< TREE
-#~ msgid "<b>Headset Settings</b>"
-#~ msgstr "<b>设置耳迈</b>"
-
-#~ msgid "Failed to set bluetooth power"
-#~ msgstr "设置蓝牙电源失败"
-
-#~ msgid "The error reported is: %s"
-#~ msgstr "报告错误：%s"
-
-=======
->>>>>>> MERGE-SOURCE
 #~ msgid "Headset"
 #~ msgstr "耳机"
