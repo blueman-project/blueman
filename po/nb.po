@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-11-04 10:55+0200\n"
-"PO-Revision-Date: 2009-03-21 15:11+0000\n"
-"Last-Translator: Kenneth Langdalen <Unknown>\n"
+"PO-Revision-Date: 2009-11-07 11:28+0000\n"
+"Last-Translator: Erik E. Seierstad <Unknown>\n"
 "Language-Team: Norwegian Bokmal <nb@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-11-05 08:35+0000\n"
+"X-Launchpad-Export-Date: 2009-11-08 04:35+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -109,7 +109,7 @@ msgstr "Fjern denne enheten fra listen over kjente enheter"
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:261
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:597
 msgid "Run the setup assistant for this device"
-msgstr ""
+msgstr "Start veiledet oppsett av denne enheten"
 
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:17 ../blueman/gui/manager/ManagerMenu.py:199
@@ -166,7 +166,7 @@ msgstr "<b>Det er ikke installert noen DHCP-server</b>"
 
 #: ../data/ui/services-network.ui.h:5
 msgid "<b>PAN Support</b>"
-msgstr ""
+msgstr "PAN-støtte"
 
 #: ../data/ui/services-network.ui.h:6 ../data/ui/services-audio.ui.h:3
 msgid "<b>Services</b>"
@@ -263,6 +263,8 @@ msgstr "Delt mappe:"
 msgid ""
 "<b>After applying these settings Bluetooth daemon will be restarted.</b>"
 msgstr ""
+"<b>Bluetooth-demonen blir startet på nytt etter at innstillingene blir tatt "
+"i bruk.</b>"
 
 #: ../data/ui/services-audio.ui.h:2
 msgid "<b>Audio Settings</b>"
@@ -273,16 +275,20 @@ msgid ""
 "Advanced Audio receiver <span weight='bold' "
 "color='#cc0000'>Experimental!</span>"
 msgstr ""
+"Avansert lydmottaker <span weight='bold' "
+"color='#cc0000'>(Eksperimentell!)</span>"
 
 #: ../data/ui/services-audio.ui.h:5
 msgid "Allows this computer to act like a handsfree headset."
-msgstr ""
+msgstr "La datamaskinen virke som handsfree-hodetelefon."
 
 #: ../data/ui/services-audio.ui.h:6
 msgid ""
 "Allows you to receive a2dp audio from other bluetooth devices and play it "
 "over the speakers."
 msgstr ""
+"Tillater mottak av a2dp-lyd fra andre bluetooth-enheter for avspilling over "
+"datamaskinens høyttalere."
 
 #: ../data/ui/services-audio.ui.h:7
 msgid ""
@@ -322,7 +328,7 @@ msgstr "<b>Vennligst vent...</b>"
 
 #: ../data/ui/assistant.ui.h:4
 msgid "<b>Select pairing method to use:</b>"
-msgstr ""
+msgstr "<b>Velg hvilken sammenkoblingsmetode som skal brukes:</b>"
 
 #: ../data/ui/assistant.ui.h:5
 msgid ""
@@ -367,7 +373,7 @@ msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:3
 msgid "<b>Depends on:</b>"
-msgstr ""
+msgstr "<b>Avhenger av:</b>"
 
 #: ../data/ui/applet-plugins-widget.ui.h:4
 msgid "<b>Plugin description:</b>"
@@ -394,7 +400,7 @@ msgstr "Ukjent"
 
 #: ../data/ui/gsm-settings.ui.h:1
 msgid "<b>GSM settings</b>"
-msgstr ""
+msgstr "<b>GSM-innstillinger</b>"
 
 #: ../data/ui/gsm-settings.ui.h:2
 msgid "APN:"
@@ -410,15 +416,15 @@ msgstr ""
 
 #: ../data/ui/net-usage.ui.h:2
 msgid "<b>Log duration:</b>"
-msgstr ""
+msgstr "<b>Loggens varighet:</b>"
 
 #: ../data/ui/net-usage.ui.h:3
 msgid "<b>Log started:</b>"
-msgstr ""
+msgstr "<b>Logging startet:</b>"
 
 #: ../data/ui/net-usage.ui.h:4
 msgid "<b>Total:</b>"
-msgstr ""
+msgstr "<b>Til sammen:</b>"
 
 #: ../data/ui/net-usage.ui.h:5
 msgid "<b>Uploaded:</b>"
@@ -430,7 +436,7 @@ msgstr ""
 
 #: ../data/ui/net-usage.ui.h:7
 msgid "Traffic statistics"
-msgstr ""
+msgstr "Trafikkstatistikk"
 
 #: ../data/ui/net-usage.ui.h:8
 msgid "gtk-close"
@@ -438,7 +444,7 @@ msgstr ""
 
 #: ../blueman/main/applet/Transfer.py:170
 msgid "Incoming file over Bluetooth"
-msgstr ""
+msgstr "Innkommende fil via Bluetooth"
 
 #: ../blueman/main/applet/Transfer.py:171
 #, python-format
@@ -448,7 +454,7 @@ msgstr ""
 #: ../blueman/main/applet/Transfer.py:172
 #: ../blueman/main/applet/BluezAgent.py:240
 msgid "Accept"
-msgstr ""
+msgstr "Godta"
 
 #: ../blueman/main/applet/Transfer.py:172
 msgid "Reject"
@@ -492,15 +498,15 @@ msgstr "Filer mottatt"
 #, python-format
 msgid "Received %d file in the background"
 msgid_plural "Received %d files in the background"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Mottok %d fil i bakgrunnen"
+msgstr[1] "Mottok %d filer i bakgrunnen"
 
 #: ../blueman/main/applet/Transfer.py:262
 #, python-format
 msgid "Received %d more file in the background"
 msgid_plural "Received %d more files in the background"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Mottok %d fil til i bakgrunnen"
+msgstr[1] "Mottok %d filer til i bakgrunnen"
 
 #: ../blueman/main/applet/BluezAgent.py:125
 #, python-format
@@ -515,7 +521,7 @@ msgstr ""
 #: ../blueman/main/applet/BluezAgent.py:178
 #: ../blueman/main/applet/BluezAgent.py:261
 msgid "Enter PIN code for authentication:"
-msgstr ""
+msgstr "Skriv inn PIN-koden for å godkjenne:"
 
 #: ../blueman/main/applet/BluezAgent.py:179
 #: ../blueman/main/applet/BluezAgent.py:262
@@ -560,7 +566,7 @@ msgstr "Tjeneste:"
 
 #: ../blueman/main/applet/BluezAgent.py:239
 msgid "Always accept"
-msgstr ""
+msgstr "Godkjenn hver gang"
 
 #: ../blueman/main/applet/BluezAgent.py:285
 msgid "Confirm value"
@@ -613,7 +619,7 @@ msgstr ""
 
 #: ../blueman/gui/manager/ManagerMenu.py:83
 msgid "Show Toolbar"
-msgstr ""
+msgstr "Vis verktøylinje"
 
 #: ../blueman/gui/manager/ManagerMenu.py:95
 msgid "Show Statusbar"
@@ -621,11 +627,11 @@ msgstr ""
 
 #: ../blueman/gui/manager/ManagerMenu.py:111
 msgid "Latest Device First"
-msgstr ""
+msgstr "Den siste enheten først"
 
 #: ../blueman/gui/manager/ManagerMenu.py:115
 msgid "Latest Device Last"
-msgstr ""
+msgstr "Den siste enheten til slutt"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:451
 msgid "<b>Trusted and Bonded</b>"
@@ -716,7 +722,7 @@ msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:145
 msgid "Connection Failed: "
-msgstr ""
+msgstr "Tilkobling feilet: "
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:152
 msgid "Cancelled"
