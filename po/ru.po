@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-11-04 10:55+0200\n"
-"PO-Revision-Date: 2009-11-07 19:35+0000\n"
+"PO-Revision-Date: 2009-11-08 21:46+0000\n"
 "Last-Translator: Dmitry Pikelis <xdimboy@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-11-08 04:35+0000\n"
+"X-Launchpad-Export-Date: 2009-11-09 04:35+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -274,22 +274,28 @@ msgid ""
 "Advanced Audio receiver <span weight='bold' "
 "color='#cc0000'>Experimental!</span>"
 msgstr ""
+"Дополнительные настройки приёма звука <span weight='bold' "
+"color='#cc0000'>Пробная поддержка!</span>"
 
 #: ../data/ui/services-audio.ui.h:5
 msgid "Allows this computer to act like a handsfree headset."
-msgstr ""
+msgstr "Позволяет компьютеру работать в качестве гарнитуры."
 
 #: ../data/ui/services-audio.ui.h:6
 msgid ""
 "Allows you to receive a2dp audio from other bluetooth devices and play it "
 "over the speakers."
 msgstr ""
+"Позволяет принимать звук с различных bluetooth-устройств по a2dp профилю и "
+"воспроизводить его на динамиках."
 
 #: ../data/ui/services-audio.ui.h:7
 msgid ""
 "Headset Emulation <span weight='bold' color='#cc0000'>Very "
 "Experimental!</span>"
 msgstr ""
+"Эмуляция гарнитуры <span weight='bold' color='#cc0000'>Пробная "
+"поддержка!</span>"
 
 #: ../data/ui/send-dialog.ui.h:1
 msgid "<b>File:</b>"
@@ -804,7 +810,7 @@ msgstr "Служба гарнитуры"
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:468
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:472 ../blueman/Sdp.py:106
 msgid "Audio Sink"
-msgstr ""
+msgstr "Приёмник звука"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:473
 msgid "Allows to send audio to remote device"
@@ -1280,7 +1286,7 @@ msgid ""
 msgstr ""
 "Включает killswitch, при изменении режима питания bluetooth. Некоторые "
 "ноутбуки, в основном Dell, имеют данную функцию\n"
-"<b>Замечание:</b>Плагин активируется автоматически при обнаружении "
+"<b>Замечание:</b> Плагин активируется автоматически при обнаружении "
 "killswitch."
 
 #: ../blueman/plugins/applet/StandardItems.py:36
@@ -1761,11 +1767,11 @@ msgstr "<b>Невозможно добавить устройство</b>"
 
 #: ../apps/blueman-assistant:346
 msgid "A2DP Sink (Send Audio)"
-msgstr ""
+msgstr "Приёмник A2DP (отправка звука)"
 
 #: ../apps/blueman-assistant:351
 msgid "A2DP Source (Receive Audio)"
-msgstr ""
+msgstr "Источник A2DP (получение звука)"
 
 #: ../apps/blueman-assistant:360
 msgid "Don't connect"

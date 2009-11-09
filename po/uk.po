@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-11-04 10:55+0200\n"
-"PO-Revision-Date: 2009-10-19 14:56+0000\n"
+"PO-Revision-Date: 2009-11-08 16:29+0000\n"
 "Last-Translator: atany <Unknown>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-11-05 08:35+0000\n"
+"X-Launchpad-Export-Date: 2009-11-09 04:35+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -264,32 +264,40 @@ msgstr "Каталог обміну:"
 msgid ""
 "<b>After applying these settings Bluetooth daemon will be restarted.</b>"
 msgstr ""
+"<b>Після застосування цих налаштувань буде перезавантажено службу "
+"bluetooth.</b>"
 
 #: ../data/ui/services-audio.ui.h:2
 msgid "<b>Audio Settings</b>"
-msgstr ""
+msgstr "<b>Налаштування аудіо</b>"
 
 #: ../data/ui/services-audio.ui.h:4
 msgid ""
 "Advanced Audio receiver <span weight='bold' "
 "color='#cc0000'>Experimental!</span>"
 msgstr ""
+"Розширений приймач аудіо <span weight='bold' "
+"color='#cc0000'>Експериментальний!</span>"
 
 #: ../data/ui/services-audio.ui.h:5
 msgid "Allows this computer to act like a handsfree headset."
-msgstr ""
+msgstr "Дозволяє комп’ютеру працювати в якості гарнітури."
 
 #: ../data/ui/services-audio.ui.h:6
 msgid ""
 "Allows you to receive a2dp audio from other bluetooth devices and play it "
 "over the speakers."
 msgstr ""
+"Дозволяє приймати a2dp аудіо від інших bluetooth пристроїв і відтворювати "
+"його через динаміки."
 
 #: ../data/ui/services-audio.ui.h:7
 msgid ""
 "Headset Emulation <span weight='bold' color='#cc0000'>Very "
 "Experimental!</span>"
 msgstr ""
+"Емуляція гарнітури <span weight='bold' color='#cc0000'>Дуже "
+"експериментальний!</span>"
 
 #: ../data/ui/send-dialog.ui.h:1
 msgid "<b>File:</b>"
@@ -382,11 +390,11 @@ msgstr "<b>Опис модуля:</b>"
 
 #: ../data/ui/applet-plugins-widget.ui.h:5
 msgid "Configuration"
-msgstr ""
+msgstr "Налаштування"
 
 #: ../data/ui/applet-plugins-widget.ui.h:6
 msgid "Configure selected plugin's preferences"
-msgstr ""
+msgstr "Налаштувати виділені модулі"
 
 #: ../data/ui/applet-plugins-widget.ui.h:7
 msgid "Not specified"
@@ -1183,7 +1191,7 @@ msgstr "Максимальна кількість елементів"
 
 #: ../blueman/plugins/applet/RecentConns.py:65
 msgid "The maximum number of items recent connections menu will display."
-msgstr ""
+msgstr "Максимальна кількість елементів у меню списку останніх підключень"
 
 #: ../blueman/plugins/applet/RecentConns.py:83
 msgid "Recent Connections"
@@ -1434,7 +1442,7 @@ msgstr "Виконує команду, коли на гарнітурі нати
 
 #: ../blueman/plugins/applet/Headset.py:32
 msgid "Command"
-msgstr ""
+msgstr "Команда"
 
 #: ../blueman/plugins/applet/Headset.py:33
 msgid "Command to execute when answer button is pressed:"
@@ -1562,11 +1570,11 @@ msgstr "Менеджер bluetooth"
 
 #: ../data/configs/org.blueman.policy.in.h:1
 msgid "Bluetooth Configuration"
-msgstr ""
+msgstr "Налаштування bluetooth"
 
 #: ../data/configs/org.blueman.policy.in.h:2
 msgid "Changing Bluetooth system settings requires privileges"
-msgstr ""
+msgstr "Зміна системних налаштувань bluetooth потребує достатніх прав"
 
 #: ../data/configs/org.blueman.policy.in.h:3
 msgid "Configure Bluetooth Modems"
@@ -1654,7 +1662,7 @@ msgstr "Виникла помилка"
 
 #: ../apps/blueman-sendto:155
 msgid "Cancelling"
-msgstr ""
+msgstr "Скасування"
 
 #: ../apps/blueman-sendto:175 ../apps/blueman-sendto:209
 msgid "Sending File"
@@ -1772,4 +1780,4 @@ msgstr "Не вдалося запустити \"%s\""
 #: ../apps/blueman-browse:75
 msgid "You can enter an alternate browser in service settings"
 msgstr ""
-"Ви можете ввести альтернативний навігатор/переглядач в налаштуваннях служби"
+"Ви можете вказати альтернативний навігатор/переглядач в налаштуваннях служби"
