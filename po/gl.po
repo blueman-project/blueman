@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-11-04 10:55+0200\n"
-"PO-Revision-Date: 2009-09-30 15:22+0000\n"
-"Last-Translator: Antón Méixome <meixome@gmail.com>\n"
+"PO-Revision-Date: 2009-11-10 07:40+0000\n"
+"Last-Translator: Miguel Anxo Bouzada <mbouzada@gmail.com>\n"
 "Language-Team: Galician <gl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-11-05 08:34+0000\n"
+"X-Launchpad-Export-Date: 2009-11-10 11:28+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -244,7 +244,7 @@ msgid ""
 "Command to start an obex ftp browser.\n"
 "<i>%d</i> is substituted with device address."
 msgstr ""
-"Comando para iniciar navegador de ftp obex.\n"
+"Orde para iniciar o navegador de ftp obex.\n"
 "<i>%d</i> é substituído co enderezo do dispositivo."
 
 #: ../data/ui/services-transfer.ui.h:10
@@ -263,32 +263,40 @@ msgstr "Cartafol compartido"
 msgid ""
 "<b>After applying these settings Bluetooth daemon will be restarted.</b>"
 msgstr ""
+"<b>Despois de aplicar estes axustes a Bluetooth o daemon vai ser "
+"reiniciado.</b>"
 
 #: ../data/ui/services-audio.ui.h:2
 msgid "<b>Audio Settings</b>"
-msgstr ""
+msgstr "<b>Configuración de son</b>"
 
 #: ../data/ui/services-audio.ui.h:4
 msgid ""
 "Advanced Audio receiver <span weight='bold' "
 "color='#cc0000'>Experimental!</span>"
 msgstr ""
+"Receptor de son avanzado <span weight='bold' "
+"color='#cc0000'>Experimental!</span>"
 
 #: ../data/ui/services-audio.ui.h:5
 msgid "Allows this computer to act like a handsfree headset."
-msgstr ""
+msgstr "Permite que este computador actúe como un auricular de mans libres."
 
 #: ../data/ui/services-audio.ui.h:6
 msgid ""
 "Allows you to receive a2dp audio from other bluetooth devices and play it "
 "over the speakers."
 msgstr ""
+"Permite recibir son A2DP de outros dispositivos bluetooth e reproducilo nos "
+"altofalantes."
 
 #: ../data/ui/services-audio.ui.h:7
 msgid ""
 "Headset Emulation <span weight='bold' color='#cc0000'>Very "
 "Experimental!</span>"
 msgstr ""
+"Emulación de auricular <span weight='bold' color='#cc0000'>Very "
+"Experimental!</span>"
 
 #: ../data/ui/send-dialog.ui.h:1
 msgid "<b>File:</b>"
@@ -381,11 +389,11 @@ msgstr "<b>Descrición do plugin:</b>"
 
 #: ../data/ui/applet-plugins-widget.ui.h:5
 msgid "Configuration"
-msgstr ""
+msgstr "Configuración"
 
 #: ../data/ui/applet-plugins-widget.ui.h:6
 msgid "Configure selected plugin's preferences"
-msgstr ""
+msgstr "Configurar as preferencias dos complementos seleccionados"
 
 #: ../data/ui/applet-plugins-widget.ui.h:7
 msgid "Not specified"
@@ -764,7 +772,7 @@ msgstr "Servizo de porto serie"
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:355
 #, python-format
 msgid "Serial Port %s"
-msgstr ""
+msgstr "Porto serie %s"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:373
 msgid "Dialup Settings"
@@ -804,28 +812,28 @@ msgstr "Servizo de auriculares"
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:468
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:472 ../blueman/Sdp.py:106
 msgid "Audio Sink"
-msgstr "Saída de audio (sink)"
+msgstr "Saída de son (sink)"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:473
 msgid "Allows to send audio to remote device"
-msgstr "Permite enviar audio a un dispositivo remoto"
+msgstr "Permite enviar son a un dispositivo remoto"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:484
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:488 ../blueman/Sdp.py:105
 msgid "Audio Source"
-msgstr "Fonte de audio"
+msgstr "Fonte de son"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:489
 msgid "Allows to receive audio from remote device"
-msgstr "Permite recibir audio do dispositivo remoto"
+msgstr "Permite recibir son do dispositivo remoto"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:512
 msgid "<b>Connect To:</b>"
-msgstr ""
+msgstr "<b>Conectar a:</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:524
 msgid "<b>Disconnect:</b>"
-msgstr ""
+msgstr "<b>Desconectar:</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:549
 msgid "Browse device..."
@@ -863,11 +871,11 @@ msgstr "Desconectar o dispositivo"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:641
 msgid "Forcefully disconnect a device"
-msgstr ""
+msgstr "Forzar a desconexión do dispositivo"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:650
 msgid "Disconnecting..."
-msgstr ""
+msgstr "Desconectando..."
 
 #: ../blueman/gui/manager/ManagerProgressbar.py:32 ../apps/blueman-sendto:70
 msgid "Connecting"
@@ -909,6 +917,7 @@ msgid "translator-credits"
 msgstr ""
 "Launchpad Contributions:\n"
 "  Antón Méixome https://launchpad.net/~meixome\n"
+"  Miguel Anxo Bouzada https://launchpad.net/~mbouzada\n"
 "  bradomin https://launchpad.net/~bradomin"
 
 #: ../blueman/gui/CommonUi.py:48
@@ -1121,7 +1130,7 @@ msgstr "Bluetooth desactivado"
 
 #: ../blueman/plugins/applet/Networking.py:31
 msgid "Manages local network services, like NAP bridges"
-msgstr ""
+msgstr "Xestiona servizos locais de rede como pontes NAP"
 
 #: ../blueman/plugins/applet/Networking.py:54
 #: ../blueman/plugins/services/Network.py:113
@@ -1135,22 +1144,24 @@ msgstr "Pode que non sexa quen de conectar á rede Bluetooth con esta máquina"
 
 #: ../blueman/plugins/applet/NMDUNSupport.py:85
 msgid "Bluetooth Dialup"
-msgstr ""
+msgstr "Acceso telefónico Bluetooth"
 
 #: ../blueman/plugins/applet/NMDUNSupport.py:86
 #, python-format
 msgid "DUN connection on %s will now be available in Network Manager"
-msgstr ""
+msgstr "Conexión DUN en %s agora estará dispoñible en Network Manager"
 
 #: ../blueman/plugins/applet/NMDUNSupport.py:96
 msgid "Modem Manager did not support the connection"
-msgstr ""
+msgstr "O xestor do módem non permitiu a conexión"
 
 #: ../blueman/plugins/applet/NMDUNSupport.py:104
 msgid ""
 "Provides support for Dial Up Networking (DUN) with ModemManager and "
 "NetworkManager 0.8"
 msgstr ""
+"Fornece compatibilidade para acceso telefónico a redes DUN (Dial Up "
+"Networking) con ModemManager e Network Manager 0.8"
 
 #: ../blueman/plugins/applet/RecentConns.py:57
 msgid ""
@@ -1166,7 +1177,7 @@ msgstr "Número máximo de ítems"
 
 #: ../blueman/plugins/applet/RecentConns.py:65
 msgid "The maximum number of items recent connections menu will display."
-msgstr ""
+msgstr "Número máximo de conexións recentes mostradas no menú"
 
 #: ../blueman/plugins/applet/RecentConns.py:83
 msgid "Recent Connections"
@@ -1214,10 +1225,12 @@ msgid ""
 "Provides support for Personal Area Networking (PAN) introduced in "
 "NetworkManager 0.8"
 msgstr ""
+"Fornece compatibilidade para Personal Area Networking (PAN) introducido en "
+"NetworkManager 0.8"
 
 #: ../blueman/plugins/applet/NMPANSupport.py:335
 msgid "Already connected"
-msgstr ""
+msgstr "Xa está conectado"
 
 #: ../blueman/plugins/applet/DBusService.py:39
 msgid "Provides DBus API for other Blueman components"
@@ -1314,18 +1327,21 @@ msgid ""
 "connected.\n"
 "<b>Note:</b> Requires pulseaudio 0.9.15 or higher"
 msgstr ""
+"Carga automáticamente o módulo bluetooth de Pulseaudio despois de que o "
+"dispositivo de son estea conectado.\n"
+"<b>Nota:</b> Require de Pulseaudio 0.9.15 ou superior"
 
 #: ../blueman/plugins/applet/PulseAudio.py:205
 #: ../blueman/plugins/applet/PulseAudio.py:211
 msgid "Bluetooth Audio"
-msgstr "Audio do bluetooth"
+msgstr "Son do bluetooth"
 
 #: ../blueman/plugins/applet/PulseAudio.py:206
 msgid ""
 "Failed to initialize PulseAudio Bluetooth module. Bluetooth audio over "
 "PulseAudio will not work."
 msgstr ""
-"Produciuse un fallo ao iniciar o módulo bluetooth de PulseAudio. O audio "
+"Produciuse un fallo ao iniciar o módulo bluetooth de PulseAudio. O son "
 "bluetooth pechouse, PulseAudio non funcionará"
 
 #: ../blueman/plugins/applet/PulseAudio.py:212
@@ -1333,12 +1349,12 @@ msgid ""
 "Successfully connected to a Bluetooth audio device. This device will now be "
 "available in the PulseAudio mixer"
 msgstr ""
-"Conectou correctamente co dispositivo bluetooth de audio. Este dispositivo "
-"non estará dispoñíbel no mesturador de PulseAudio"
+"Conectou correctamente co dispositivo bluetooth de son. Este dispositivo non "
+"estará dispoñíbel no mesturador de PulseAudio"
 
 #: ../blueman/plugins/applet/DhcpClient.py:26
 msgid "Provides a basic dhcp client for bluetooth PAN connections."
-msgstr ""
+msgstr "Fornece un cliente DHCP básico para conexións PAN Bluetooth."
 
 #: ../blueman/plugins/applet/DhcpClient.py:63
 #: ../blueman/plugins/applet/DhcpClient.py:71
@@ -1368,6 +1384,8 @@ msgid ""
 "<b>Deprecated</b>\n"
 "Makes DUN/PAN connections available for NetworkManager 0.7"
 msgstr ""
+"<b>Obsoleto</b>\n"
+"Realiza conexións DUN/PAN dispoñíbeis paraNetworkManager 0.7"
 
 #: ../blueman/plugins/applet/NMIntegration.py:79
 msgid "CDMA or GSM not supported"
@@ -1408,7 +1426,7 @@ msgstr ""
 
 #: ../blueman/plugins/applet/Headset.py:32
 msgid "Command"
-msgstr ""
+msgstr "Orde"
 
 #: ../blueman/plugins/applet/Headset.py:33
 msgid "Command to execute when answer button is pressed:"
@@ -1464,6 +1482,8 @@ msgstr ""
 msgid ""
 "Provides basic support for connecting to the internet via DUN profile."
 msgstr ""
+"Fornece compatibilidade básica para conectar a Internet a través dun perfil "
+"DUN."
 
 #: ../blueman/plugins/applet/SerialManager.py:44
 msgid "Serial port connected"
@@ -1500,7 +1520,7 @@ msgstr "<b>Acender o Bluetooth</b>"
 
 #: ../blueman/plugins/applet/PowerManager.py:157
 msgid "Turn on all adapters"
-msgstr ""
+msgstr "Acender todos os adaptadores"
 
 #: ../blueman/plugins/services/Network.py:262
 #: ../blueman/plugins/services/Network.py:265
@@ -1536,11 +1556,11 @@ msgstr "Xestor de bluetooth"
 
 #: ../data/configs/org.blueman.policy.in.h:1
 msgid "Bluetooth Configuration"
-msgstr ""
+msgstr "Configuración de Bluetooth"
 
 #: ../data/configs/org.blueman.policy.in.h:2
 msgid "Changing Bluetooth system settings requires privileges"
-msgstr ""
+msgstr "Cambiar os axustes de Bluetooth require privilexios"
 
 #: ../data/configs/org.blueman.policy.in.h:3
 msgid "Configure Bluetooth Modems"
@@ -1552,7 +1572,7 @@ msgstr "Configurar unha rede bluetooth"
 
 #: ../data/configs/org.blueman.policy.in.h:5
 msgid "Configuring networking requires privileges"
-msgstr ""
+msgstr "Configurar a rede require privilexios"
 
 #: ../data/configs/org.blueman.policy.in.h:6
 msgid "Launch DHCP client"
@@ -1630,7 +1650,7 @@ msgstr "Produciuse un erro"
 
 #: ../apps/blueman-sendto:155
 msgid "Cancelling"
-msgstr ""
+msgstr "Cancelando"
 
 #: ../apps/blueman-sendto:175 ../apps/blueman-sendto:209
 msgid "Sending File"
@@ -1717,11 +1737,11 @@ msgstr "<b>Fallou ao engadir o dispositivo</b>"
 
 #: ../apps/blueman-assistant:346
 msgid "A2DP Sink (Send Audio)"
-msgstr ""
+msgstr "Saída A2DP (Envía son)"
 
 #: ../apps/blueman-assistant:351
 msgid "A2DP Source (Receive Audio)"
-msgstr ""
+msgstr "Fonte A2DP (Recibe son)"
 
 #: ../apps/blueman-assistant:360
 msgid "Don't connect"
