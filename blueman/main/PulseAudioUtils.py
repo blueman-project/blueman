@@ -170,7 +170,7 @@ class PulseAudioUtils(gobject.GObject):
 		def wrapper(context, res, data):
 			if handler:
 				handler(res)
-			pythonapi.Py_DecRef(data)
+			pythonapi.Py_DecRef(py_object(data))
 			
 		cb = pa_context_index_cb_t(wrapper)
 		pythonapi.Py_IncRef(py_object(cb))
