@@ -267,7 +267,11 @@ def check_single_instance(id, unhide_func=None):
 	
 	if os.path.exists(lockfile):
 		f = open(lockfile)
-		pid = int(f.readline())
+		try:
+			pid = int(f.readline())
+		except:
+			pid = 0
+			
 		try:
 			event_time = int(f.readline())
 		except:
