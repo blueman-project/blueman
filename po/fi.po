@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-11-04 10:55+0200\n"
-"PO-Revision-Date: 2009-09-20 15:01+0000\n"
-"Last-Translator: Pekka Niemi <pekka.niemi@iki.fi>\n"
+"PO-Revision-Date: 2009-11-13 23:41+0000\n"
+"Last-Translator: Sami Olmari <jaarli@mbnet.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-11-05 08:34+0000\n"
+"X-Launchpad-Export-Date: 2009-11-14 04:38+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -263,10 +263,12 @@ msgstr "Jaettu kansio:"
 msgid ""
 "<b>After applying these settings Bluetooth daemon will be restarted.</b>"
 msgstr ""
+"<b>Asetusten hyväksymisen jälkeen Bluetooth daemon käynnistetään "
+"uudelleen.</b>"
 
 #: ../data/ui/services-audio.ui.h:2
 msgid "<b>Audio Settings</b>"
-msgstr ""
+msgstr "<b>Ääniasetukset</b>"
 
 #: ../data/ui/services-audio.ui.h:4
 msgid ""
@@ -276,7 +278,7 @@ msgstr ""
 
 #: ../data/ui/services-audio.ui.h:5
 msgid "Allows this computer to act like a handsfree headset."
-msgstr ""
+msgstr "Sallii tietokoneen käyttäytyä kuin handsfreekuuloke."
 
 #: ../data/ui/services-audio.ui.h:6
 msgid ""
@@ -289,6 +291,8 @@ msgid ""
 "Headset Emulation <span weight='bold' color='#cc0000'>Very "
 "Experimental!</span>"
 msgstr ""
+"Headset Emulointi <span weight='bold' color='#cc0000'>Erittäin "
+"kokeiluasteellal!</span>"
 
 #: ../data/ui/send-dialog.ui.h:1
 msgid "<b>File:</b>"
@@ -385,7 +389,7 @@ msgstr ""
 
 #: ../data/ui/applet-plugins-widget.ui.h:6
 msgid "Configure selected plugin's preferences"
-msgstr ""
+msgstr "Määritä valitun pluginin asetukset"
 
 #: ../data/ui/applet-plugins-widget.ui.h:7
 msgid "Not specified"
@@ -765,7 +769,7 @@ msgstr "Sarjaporttipalvelu"
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:355
 #, python-format
 msgid "Serial Port %s"
-msgstr ""
+msgstr "Sarjaportti %s"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:373
 msgid "Dialup Settings"
@@ -822,7 +826,7 @@ msgstr "Antaa vastaanottaa äänen ulkopuoliselta laitteelta"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:512
 msgid "<b>Connect To:</b>"
-msgstr ""
+msgstr "<b>Yhdistä Kohteeseen:</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:524
 msgid "<b>Disconnect:</b>"
@@ -864,11 +868,11 @@ msgstr "Katkaise yhteys laitteeseen"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:641
 msgid "Forcefully disconnect a device"
-msgstr ""
+msgstr "Katkaise yhteys laitteeseen väkisin"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:650
 msgid "Disconnecting..."
-msgstr ""
+msgstr "Katkaistaan yhteyttä..."
 
 #: ../blueman/gui/manager/ManagerProgressbar.py:32 ../apps/blueman-sendto:70
 msgid "Connecting"
@@ -1123,11 +1127,11 @@ msgstr "Näyttää verkkoliikenteen määrän"
 #: ../blueman/plugins/applet/StatusIcon.py:51
 #: ../blueman/plugins/applet/Indicator.py:80
 msgid "Bluetooth Enabled"
-msgstr ""
+msgstr "Bluetooth Otettu Käyttöön"
 
 #: ../blueman/plugins/applet/StatusIcon.py:53
 msgid "Bluetooth Disabled"
-msgstr ""
+msgstr "Bluetooth Poistettu Käytöstä"
 
 #: ../blueman/plugins/applet/Networking.py:31
 msgid "Manages local network services, like NAP bridges"
@@ -1145,7 +1149,7 @@ msgstr "Et ehkä pysty yhdistymään bluetooth-verkkoon tämän laitteen kautta"
 
 #: ../blueman/plugins/applet/NMDUNSupport.py:85
 msgid "Bluetooth Dialup"
-msgstr ""
+msgstr "Bluetooth Puhelinverkkoyhteys"
 
 #: ../blueman/plugins/applet/NMDUNSupport.py:86
 #, python-format
@@ -1161,6 +1165,8 @@ msgid ""
 "Provides support for Dial Up Networking (DUN) with ModemManager and "
 "NetworkManager 0.8"
 msgstr ""
+"Tarjoaa tuen Puhelinverkkoyhteydelle (DUN) ModemManager:in ja NetworkManager "
+"0.8:n kanssa"
 
 #: ../blueman/plugins/applet/RecentConns.py:57
 msgid ""
@@ -1322,6 +1328,9 @@ msgid ""
 "connected.\n"
 "<b>Note:</b> Requires pulseaudio 0.9.15 or higher"
 msgstr ""
+"Lataa automaattisesti pulseaudio bluetooth-modulin kun audiolaite on "
+"yhdistetty.\n"
+"<b>Huomautus:</b> Vaatii pulseaudio 0.9.15 tai uudemman"
 
 #: ../blueman/plugins/applet/PulseAudio.py:205
 #: ../blueman/plugins/applet/PulseAudio.py:211
@@ -1378,6 +1387,8 @@ msgid ""
 "<b>Deprecated</b>\n"
 "Makes DUN/PAN connections available for NetworkManager 0.7"
 msgstr ""
+"<b>Vanhentunut</b>\n"
+"Tekee DUN/PAN yhteydet saataville NetworkManager 0.7:ssä"
 
 #: ../blueman/plugins/applet/NMIntegration.py:79
 msgid "CDMA or GSM not supported"
@@ -1400,7 +1411,7 @@ msgstr ""
 
 #: ../blueman/plugins/applet/Indicator.py:77
 msgid "Bluetooth Active"
-msgstr ""
+msgstr "Bluetooth Aktiivinen"
 
 #: ../blueman/plugins/applet/Indicator.py:83
 #, python-format
@@ -1542,7 +1553,7 @@ msgstr "Bluetooth-hallinta"
 
 #: ../data/configs/org.blueman.policy.in.h:1
 msgid "Bluetooth Configuration"
-msgstr ""
+msgstr "Bluetoothin Konfigurointi"
 
 #: ../data/configs/org.blueman.policy.in.h:2
 msgid "Changing Bluetooth system settings requires privileges"
@@ -1634,7 +1645,7 @@ msgstr "Tapahtui virhe"
 
 #: ../apps/blueman-sendto:155
 msgid "Cancelling"
-msgstr ""
+msgstr "Perutaan"
 
 #: ../apps/blueman-sendto:175 ../apps/blueman-sendto:209
 msgid "Sending File"
@@ -1721,11 +1732,11 @@ msgstr "<b>Laitteen lisääminen epäonnistui</b>"
 
 #: ../apps/blueman-assistant:346
 msgid "A2DP Sink (Send Audio)"
-msgstr ""
+msgstr "A2DP Sink (Lähetä Audiota)"
 
 #: ../apps/blueman-assistant:351
 msgid "A2DP Source (Receive Audio)"
-msgstr ""
+msgstr "A2DP Lähde (Vastaanota Audiota)"
 
 #: ../apps/blueman-assistant:360
 msgid "Don't connect"
