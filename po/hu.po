@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-11-04 10:55+0200\n"
-"PO-Revision-Date: 2009-11-13 20:34+0000\n"
-"Last-Translator: Varga Zoltán <Unknown>\n"
+"PO-Revision-Date: 2009-11-16 22:06+0000\n"
+"Last-Translator: Janusz <Unknown>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-11-14 04:38+0000\n"
+"X-Launchpad-Export-Date: 2009-11-17 04:47+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -24,7 +24,7 @@ msgstr "<b>Rövid név</b>"
 
 #: ../data/ui/adapters-tab.ui.h:2
 msgid "<b>Visibility setting</b>"
-msgstr "<b>Láthatóság beállítás</b>"
+msgstr "<b>Láthatóság</b>"
 
 #: ../data/ui/adapters-tab.ui.h:3
 msgid "Always visible"
@@ -93,7 +93,7 @@ msgstr "Az eszköz megbízható/nem megbízható"
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:263
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:571
 msgid "Pair"
-msgstr "Pár"
+msgstr "Párosítás"
 
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:13
@@ -265,7 +265,7 @@ msgstr ""
 
 #: ../data/ui/services-audio.ui.h:2
 msgid "<b>Audio Settings</b>"
-msgstr ""
+msgstr "<b>Audio beállítások</b>"
 
 #: ../data/ui/services-audio.ui.h:4
 msgid ""
@@ -275,13 +275,15 @@ msgstr ""
 
 #: ../data/ui/services-audio.ui.h:5
 msgid "Allows this computer to act like a handsfree headset."
-msgstr ""
+msgstr "A számítógép használható headset-ként."
 
 #: ../data/ui/services-audio.ui.h:6
 msgid ""
 "Allows you to receive a2dp audio from other bluetooth devices and play it "
 "over the speakers."
 msgstr ""
+"Lehetővé teszi, hogy a2dp audio-t fogadjon más bluetooth-eszközről és "
+"lejátssza azt."
 
 #: ../data/ui/services-audio.ui.h:7
 msgid ""
@@ -351,7 +353,7 @@ msgstr "Adapter választás"
 
 #: ../data/ui/device-list-widget.ui.h:2
 msgid "Device search progress"
-msgstr ""
+msgstr "Eszköz keresése folyamatban"
 
 #: ../data/ui/device-list-widget.ui.h:3
 msgid "Search for devices"
@@ -573,7 +575,7 @@ msgstr ""
 
 #: ../blueman/Functions.py:76
 msgid "Bluetooth Turned Off"
-msgstr "BLuetooth kikapcsolva"
+msgstr "Bluetooth kikapcsolva"
 
 #: ../blueman/Functions.py:80
 msgid "Enable Bluetooth"
@@ -845,11 +847,11 @@ msgstr "Eszköz leválasztása"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:641
 msgid "Forcefully disconnect a device"
-msgstr ""
+msgstr "Eszköz kényszerített leválasztása"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:650
 msgid "Disconnecting..."
-msgstr ""
+msgstr "Bontás..."
 
 #: ../blueman/gui/manager/ManagerProgressbar.py:32 ../apps/blueman-sendto:70
 msgid "Connecting"
@@ -893,6 +895,7 @@ msgstr ""
 "  Bálint Fekete https://launchpad.net/~kaktusztea\n"
 "  Csarlee https://launchpad.net/~karesz-cskr\n"
 "  Gabor Kelemen https://launchpad.net/~kelemeng\n"
+"  Janusz https://launchpad.net/~janusz\n"
 "  Kántor Dániel https://launchpad.net/~kdani3\n"
 "  MBA https://launchpad.net/~mbalazs\n"
 "  Muszela Balázs https://launchpad.net/~bazsi86\n"
@@ -986,7 +989,7 @@ msgstr "vezeték nélküli"
 #. translators: device class
 #: ../blueman/DeviceClass.py:67
 msgid "smart phone"
-msgstr ""
+msgstr "okostelefon"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:69
@@ -1222,7 +1225,7 @@ msgstr ""
 
 #: ../blueman/plugins/applet/StandardItems.py:36
 msgid "_Setup new device"
-msgstr ""
+msgstr "Új eszköz beállítása"
 
 #: ../blueman/plugins/applet/StandardItems.py:43
 msgid "Send _files to device"
@@ -1356,7 +1359,7 @@ msgstr ""
 
 #: ../blueman/plugins/applet/Indicator.py:77
 msgid "Bluetooth Active"
-msgstr "Bluetooth AKtív"
+msgstr "Bluetooth Aktív"
 
 #: ../blueman/plugins/applet/Indicator.py:83
 #, python-format
