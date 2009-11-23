@@ -88,7 +88,7 @@ class PPPConnection(gobject.GObject):
 	def connect_callback(self, response):
 		if "CONNECT" in response:
 			dprint("Starting pppd")
-			self.pppd = subprocess.Popen(["/usr/sbin/pppd", "%s" % self.port, "defaultroute", "updetach", "usepeerdns"], bufsize=1, stdout=subprocess.PIPE)
+			self.pppd = subprocess.Popen(["/usr/sbin/pppd", "%s" % self.port, "115200", "defaultroute", "updetach", "usepeerdns"], bufsize=1, stdout=subprocess.PIPE)
 			glib.io_add_watch(self.pppd.stdout, glib.IO_IN | glib.IO_ERR | glib.IO_HUP, self.on_pppd_stdout)
 			glib.timeout_add(1000, self.check_pppd)				
 			
