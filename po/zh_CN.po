@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: bluez-gnome\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-11-04 10:55+0200\n"
-"PO-Revision-Date: 2009-11-07 15:15+0000\n"
-"Last-Translator: EAdam <liuannan@hotmail.com>\n"
+"PO-Revision-Date: 2009-11-21 09:24+0000\n"
+"Last-Translator: Heling Yao <Unknown>\n"
 "Language-Team: Chinese (China) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-11-08 04:35+0000\n"
+"X-Launchpad-Export-Date: 2009-11-22 04:47+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -1052,7 +1052,7 @@ msgstr "键盘"
 #. translators: device class
 #: ../blueman/DeviceClass.py:141
 msgid "pointing"
-msgstr ""
+msgstr "指向设备"
 
 #: ../blueman/Sdp.py:98
 msgid "Dialup Networking (DUN)"
@@ -1244,6 +1244,8 @@ msgid ""
 "laptops, mostly Dells have this feature\n"
 "<b>Note</b>: This plugin stays on automatically if it detects a killswitch."
 msgstr ""
+"当蓝牙电源状态改变时触发蓝牙切断开关。一些笔记本，大多数是 Dell 拥有该功能\n"
+"<b>注意</b>：当检测到有切断开关后此插件将自动运行。"
 
 #: ../blueman/plugins/applet/StandardItems.py:36
 msgid "_Setup new device"
@@ -1311,6 +1313,8 @@ msgid ""
 "connected.\n"
 "<b>Note:</b> Requires pulseaudio 0.9.15 or higher"
 msgstr ""
+"在音频设备连接后自动加载 pulseaudio 蓝牙模块。\n"
+"<b>注意:</b> 需要 pulseaudio 0.9.15 或更高版本"
 
 #: ../blueman/plugins/applet/PulseAudio.py:205
 #: ../blueman/plugins/applet/PulseAudio.py:211
@@ -1424,7 +1428,7 @@ msgstr "搜寻模式的超时时间（以秒为单位）"
 #: ../blueman/plugins/applet/DiscvManager.py:46
 #: ../blueman/plugins/applet/DiscvManager.py:142
 msgid "_Make Discoverable"
-msgstr ""
+msgstr "不可发现(_M)"
 
 #: ../blueman/plugins/applet/DiscvManager.py:54
 msgid "Make the default adapter temporarily visible"
