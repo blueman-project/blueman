@@ -265,7 +265,7 @@ class CellFade(AnimBase):
 	def on_expose(self, widget, event):
 		if self.frozen:
 			return
-		
+
 		if not self.row.valid():
 			self.tw.disconnect(self.sig)
 			self.sig = None

@@ -143,6 +143,11 @@ def spawn(command, system=False, sn=None):
 			command[0] = os.path.join(BIN_DIR, command[0])
 		else:
 			command = os.path.join(BIN_DIR, command)
+	else:
+		if type(command) == list:
+			command[0] = os.path.expanduser(command[0])
+		else:
+			command = os.path.expanduser(command)
 	
 	env = os.environ
 	

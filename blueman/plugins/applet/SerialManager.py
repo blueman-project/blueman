@@ -31,8 +31,17 @@ import gtk
 class SerialManager(AppletPlugin):
 	__icon__ = "blueman-serial"
 	__author__ = "Walmis"
-	__description__ = _("Standard SPP profile connection handler")
+	__description__ = _("Standard SPP profile connection handler, allows executing custom actions")
 	__author__ = "walmis"
+	__options__  = {
+		"script": (str, "", 
+		"Script to execute on connection", 
+		"The following arguments will be passed:\n"
+		"Address, Name, service name, uuid16s, rfcomm node\n"
+		"For example:\n"
+		"AA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0\n"
+		"uuid16s are returned as a comma seperated list"),
+	}
 	
 	def on_load(self, applet):
 		pass
@@ -43,7 +52,31 @@ class SerialManager(AppletPlugin):
 	def on_rfcomm_connected(self, device, port, uuid):
 		uuid16 = sdp_get_serial_type(device.Address, uuid)
 		if SERIAL_PORT_SVCLASS_ID in uuid16:
-			Notification(_("Serial port connected"), _("Serial port service on device <b>%s</b> now will be available via <b>%s</b>") % (device.Alias, port), pixbuf=get_icon("blueman-serial", 48), status_icon=self.Applet.Plugins.StatusIcon)	
+			Notification(_("Serial port connected"), 
+			_("Serial port service on device <b>%s</b> now will be available via <b>%s</b>") % (device.Alias, port), 
+			pixbuf=get_icon("blueman-serial", 48), 
+			status_icon=self.Applet.Plugins.StatusIcon)
+			
+			self.call_script(device.Address,
+				    	 device.Alias,
+				   	 sdp_get_serial_name(device.Address, uuid),
+				    	 uuid16,
+				    	 port)
+			
+	def call_script(self, address, name, sv_name, uuid16, node):
+		c = self.get_option("script")
+		if c and c != "":
+			args = c.split(" ")
+			try:
+				args += [address, name, sv_name, ",".join(map(lambda x: hex(x), uuid16)), node]
+				dprint(args)
+				spawn(args, True)
+			except Exception, e:
+				Notification(_("Serial port connection script failed"), 
+				_("There was a problem launching script %s\n"
+				"%s") % (c, str(e)), 
+				pixbuf=get_icon("blueman-serial", 48), 
+				status_icon=self.Applet.Plugins.StatusIcon)				
 			
 	def rfcomm_connect_handler(self, device, uuid, reply, err):
 		uuid16 = sdp_get_serial_type(device.Address, uuid)
