@@ -27,6 +27,8 @@ import gtk
 class StandardItems(AppletPlugin):
 	__depends__ = ["StatusIcon", "Menu", "PowerManager"]
 	__unloadable__ = False
+	__description__ = _("Adds standard menu items to the status icon menu")
+	__author__ = "walmis"
 	
 	def on_load(self, applet):
 		self.Applet = applet

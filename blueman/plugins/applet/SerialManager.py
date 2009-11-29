@@ -31,6 +31,8 @@ import gtk
 class SerialManager(AppletPlugin):
 	__icon__ = "blueman-serial"
 	__author__ = "Walmis"
+	__description__ = _("Standard SPP profile connection handler")
+	__author__ = "walmis"
 	
 	def on_load(self, applet):
 		pass

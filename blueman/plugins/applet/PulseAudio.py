@@ -86,7 +86,7 @@ class SourceRedirector:
 
 class PulseAudio(AppletPlugin):
 	__author__ = "Walmis"
-	__description__ = _("Automatically loads pulseaudio bluetooth module after audio device is connected.\n<b>Note:</b> Requires pulseaudio 0.9.15 or higher")
+	__description__ = _("Automatically manages Pulseaudio Bluetooth sinks/sources.\n<b>Note:</b> Requires pulseaudio 0.9.15 or higher")
 	__icon__ = "audio-card"
 	__options__  = {
 		"checked" : (bool, False),

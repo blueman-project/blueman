@@ -30,7 +30,7 @@ except:
 	
 class KillSwitch(AppletPlugin):
 	__author__ = "Walmis"
-	__description__ = _("Toggles a Bluetooth killswitch when Bluetooth power state changes. Some laptops, mostly Dells have this feature\n<b>Note</b>: This plugin stays on automatically if it detects a killswitch.")
+	__description__ = _("Toggles a platform Bluetooth killswitch when Bluetooth power state changes. Useless with USB dongles.")
 	__depends__ = ["PowerManager", "StatusIcon"]
 	__icon__ = "system-shutdown"
 	__options__  = {
