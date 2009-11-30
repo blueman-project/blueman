@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-11-04 10:55+0200\n"
-"PO-Revision-Date: 2009-11-26 16:00+0000\n"
-"Last-Translator: Pepa <Unknown>\n"
+"PO-Revision-Date: 2009-11-29 11:25+0000\n"
+"Last-Translator: Horanus <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-11-27 04:46+0000\n"
+"X-Launchpad-Export-Date: 2009-11-30 04:35+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -263,6 +263,7 @@ msgstr "Sdílený adresář:"
 msgid ""
 "<b>After applying these settings Bluetooth daemon will be restarted.</b>"
 msgstr ""
+"<b>Po použití těchto nastavení bude Bluetooth daemon restartován.</b>"
 
 #: ../data/ui/services-audio.ui.h:2
 msgid "<b>Audio Settings</b>"
@@ -273,22 +274,28 @@ msgid ""
 "Advanced Audio receiver <span weight='bold' "
 "color='#cc0000'>Experimental!</span>"
 msgstr ""
+"Rozšířený Audio přijímač<span weight='bold' "
+"color='#cc0000'>Experimentální!</span>"
 
 #: ../data/ui/services-audio.ui.h:5
 msgid "Allows this computer to act like a handsfree headset."
-msgstr ""
+msgstr "Povolit tomuto počítači chovat se jako handsfree headset."
 
 #: ../data/ui/services-audio.ui.h:6
 msgid ""
 "Allows you to receive a2dp audio from other bluetooth devices and play it "
 "over the speakers."
 msgstr ""
+"Umožní Vám přijímat a2dp audio z jiného bluetooth zařízení a přehrávat ho "
+"Vašimi reproduktory."
 
 #: ../data/ui/services-audio.ui.h:7
 msgid ""
 "Headset Emulation <span weight='bold' color='#cc0000'>Very "
 "Experimental!</span>"
 msgstr ""
+"Emulace Headsetu <span weight='bold' color='#cc0000'>Velmi "
+"Experimantální!</span>"
 
 #: ../data/ui/send-dialog.ui.h:1
 msgid "<b>File:</b>"
@@ -380,11 +387,11 @@ msgstr "<b>Popis pluginu:</b>"
 
 #: ../data/ui/applet-plugins-widget.ui.h:5
 msgid "Configuration"
-msgstr ""
+msgstr "Nastavení"
 
 #: ../data/ui/applet-plugins-widget.ui.h:6
 msgid "Configure selected plugin's preferences"
-msgstr ""
+msgstr "Upravit nastavení vybraného pluginu"
 
 #: ../data/ui/applet-plugins-widget.ui.h:7
 msgid "Not specified"
@@ -953,6 +960,9 @@ msgid ""
 "also unload <b>\"%(0)s\"</b>.\n"
 "Proceed?"
 msgstr ""
+"Plugin <b>\"%(0)s\"</b> závisí na <b>%(1)s</b>. Jeho zrušením<b>%(1)s</b> se "
+"také zruší <b>\"%(0)s\"</b>.\n"
+"Pokračovat?"
 
 #: ../blueman/gui/applet/PluginDialog.py:322
 #, python-format
@@ -1109,6 +1119,8 @@ msgid ""
 "Allows you to monitor your (mobile broadband) network traffic usage. Useful "
 "for limited data access plans. This plugin tracks every device seperately."
 msgstr ""
+"Umožní Vám monitorovat využítí (širokopásmé mobilní) sítě. Užitečné při "
+"omezeném datovém přenosu. Tento plugin monitoruje každé zařízení zvlášť."
 
 #: ../blueman/plugins/applet/NetUsage.py:333
 msgid "Network Usage"
@@ -1144,22 +1156,24 @@ msgstr "Nemusíte být schopni se připojit k síti  Bluetooth přes tento stroj
 
 #: ../blueman/plugins/applet/NMDUNSupport.py:85
 msgid "Bluetooth Dialup"
-msgstr ""
+msgstr "Bluetooth vytáčené připojení."
 
 #: ../blueman/plugins/applet/NMDUNSupport.py:86
 #, python-format
 msgid "DUN connection on %s will now be available in Network Manager"
-msgstr ""
+msgstr "Vytáčené připojení přes %s bude nyní dostupné v Network Manageru"
 
 #: ../blueman/plugins/applet/NMDUNSupport.py:96
 msgid "Modem Manager did not support the connection"
-msgstr ""
+msgstr "Modem Manager nepodporuje připojení"
 
 #: ../blueman/plugins/applet/NMDUNSupport.py:104
 msgid ""
 "Provides support for Dial Up Networking (DUN) with ModemManager and "
 "NetworkManager 0.8"
 msgstr ""
+"Poskytuje podporu pro vytáčené připojení pomocí ModemManageru a "
+"NetworkManageru 0.8"
 
 #: ../blueman/plugins/applet/RecentConns.py:57
 msgid ""
@@ -1175,7 +1189,7 @@ msgstr "Maximum položek"
 
 #: ../blueman/plugins/applet/RecentConns.py:65
 msgid "The maximum number of items recent connections menu will display."
-msgstr ""
+msgstr "Maximální počet položek nedávných spojení, které se zobrazí v menu."
 
 #: ../blueman/plugins/applet/RecentConns.py:83
 msgid "Recent Connections"
@@ -1223,6 +1237,8 @@ msgid ""
 "Provides support for Personal Area Networking (PAN) introduced in "
 "NetworkManager 0.8"
 msgstr ""
+"Poskytuje podporu pro Personal Area Networking (PAN) představeném v "
+"NetworkManageru 0.8"
 
 #: ../blueman/plugins/applet/NMPANSupport.py:335
 msgid "Already connected"
@@ -1321,6 +1337,8 @@ msgid ""
 "connected.\n"
 "<b>Note:</b> Requires pulseaudio 0.9.15 or higher"
 msgstr ""
+"Po připojení audio zařízení automaticky načte pulseaudio bluetooth modul\n"
+"<b>Poznámka:</b> Vyžaduje pulseaudio 0.9.15 nebo vyšší"
 
 #: ../blueman/plugins/applet/PulseAudio.py:205
 #: ../blueman/plugins/applet/PulseAudio.py:211
@@ -1377,6 +1395,8 @@ msgid ""
 "<b>Deprecated</b>\n"
 "Makes DUN/PAN connections available for NetworkManager 0.7"
 msgstr ""
+"<b>Neschválené</b>\n"
+"Zpřístupní DUN/PAN (Vyáčené/Osobní připojení) NetworkManageru 0.7"
 
 #: ../blueman/plugins/applet/NMIntegration.py:79
 msgid "CDMA or GSM not supported"
@@ -1396,6 +1416,8 @@ msgid ""
 "Adds an indication on the status icon when bluetooth is active and shows the "
 "number of connections in the tooltip."
 msgstr ""
+"Přidá ukazatel na ikonku statusu pokud je bluetooth aktivní a zobrazí počet "
+"spojení v nápovědě."
 
 #: ../blueman/plugins/applet/Indicator.py:77
 msgid "Bluetooth Active"
@@ -1469,6 +1491,8 @@ msgstr ""
 msgid ""
 "Provides basic support for connecting to the internet via DUN profile."
 msgstr ""
+"Poskytuje základní podporu připojení k internetu přes profil vytáčeného "
+"spojení."
 
 #: ../blueman/plugins/applet/SerialManager.py:44
 msgid "Serial port connected"
@@ -1478,7 +1502,7 @@ msgstr "Seriový port připojen"
 #, python-format
 msgid ""
 "Serial port service on device <b>%s</b> now will be available via <b>%s</b>"
-msgstr ""
+msgstr "Sériový port na zařízení <b>%s</b> teď bude dostupný skrz <b>%s</b>"
 
 #: ../blueman/plugins/applet/PowerManager.py:29
 msgid "Controls bluetooth adapter power states"
