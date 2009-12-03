@@ -80,11 +80,16 @@ class PowerManager(AppletPlugin):
 		return True
 		
 	def set_adapter_state(self, state):
-		adapters = self.Applet.Manager.ListAdapters()
-		for adapter in adapters:
-			adapter.SetProperty("Powered", state)
-	
-		self.adapter_state = state
+		try:
+			adapters = self.Applet.Manager.ListAdapters()
+			for adapter in adapters:
+				adapter.SetProperty("Powered", state)
+			
+			self.adapter_state = state
+		except:
+			pass
+		
+		
 		
 	class Callback(object):
 		def __init__(self, parent, state):
