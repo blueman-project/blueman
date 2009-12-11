@@ -111,10 +111,9 @@ class PowerManager(AppletPlugin):
 		def check(self):	
 			if self.called == self.num_cb:
 				dprint("callbacks done")
-				if self.success:
-					self.parent.set_adapter_state(self.state)
-					gobject.source_remove(self.timer)
-					self.parent.request_in_progress = False
+				self.parent.set_adapter_state(self.state)
+				gobject.source_remove(self.timer)
+				self.parent.request_in_progress = False
 				
 		def timeout(self):
 			dprint("Timeout reached while setting power state")
