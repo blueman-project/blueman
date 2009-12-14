@@ -18,7 +18,6 @@
 # 
 
 import gtk
-import pango
 from blueman.Constants import *
 from blueman.Functions import *
 
@@ -148,23 +147,18 @@ class PluginDialog(gtk.Dialog):
 		
 		cr = gtk.CellRendererToggle()
 		cr.connect("toggled", lambda *args: ref() and ref().on_toggled(*args))
-		cr_t = gtk.CellRendererText()
-		cr_t.props.wrap_width = 450
-		cr_t.props.wrap_mode = pango.WRAP_WORD
+		
 		data = [
 			["active", bool, cr, {"active":0, "activatable":1, "visible":1}, None],
 			["activatable", bool],
 			["icon", str, gtk.CellRendererPixbuf(), {"icon-name":2}, None],
 			
 			#device caption
-			["name", str],
-			
-			["desc", str, cr_t, {"markup":4}, None, {"expand": True}]
+			["name", str, gtk.CellRendererText(), {"markup":3}, None, {"expand": True}]
 		]
 
 		
 		self.list = GenericList(data)
-		self.list.props.rules_hint = True
 		#self.sorted = gtk.TreeModelSort(self.list.liststore)
 		self.list.liststore.set_sort_column_id(3, gtk.SORT_ASCENDING)
 		self.list.liststore.set_sort_func(3, self.list_compare_func)
@@ -276,17 +270,8 @@ class PluginDialog(gtk.Dialog):
 	def populate(self):
 		classes = self.applet.Plugins.GetClasses()
 		loaded = self.applet.Plugins.GetLoaded()
-			
 		for name, cls in classes.iteritems():
-			if cls.__description__:
-				desc = "\n<span size='small'>%s</span>" % cls.__description__
-			else:
-				desc = ""
-			self.list.append(active=(name in loaded), 
-					icon=cls.__icon__, 
-					activatable=(cls.__unloadable__), 
-					name=name,
-					desc=name+desc)
+			self.list.append(active=(name in loaded), icon=cls.__icon__, activatable=(cls.__unloadable__), name=name)
 			
 	def plugin_state_changed(self, plugins, name, loaded):
 		row = self.list.get_conditional(name=name)
@@ -354,3 +339,4 @@ class PluginDialog(gtk.Dialog):
 		
 		
 		
+
