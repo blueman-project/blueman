@@ -284,12 +284,19 @@ def check_single_instance(id, unhide_func=None):
 		f.close()
 		if pid > 0:
 			isrunning = os.path.exists("/proc/%s" % pid)
+			if isrunning:
+				try:
+					f = open("/proc/%s/cmdline" % pid)
+					cmdline = f.readline().replace("\0", " ")
+					f.close()
+				except:
+					cmdline = None
 
-			if not isrunning:
+			if not isrunning or (isrunning and sys.argv[0] not in cmdline):
 				print "Stale PID, overwriting"
 				os.remove(lockfile)
 			else:
-				print "there is an instance already running"
+				print "There is an instance already running"
 				time = os.getenv("BLUEMAN_EVENT_TIME") or 0
 				
 				f = file(lockfile, "w")
