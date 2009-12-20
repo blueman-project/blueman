@@ -8,19 +8,19 @@ msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-11-04 10:55+0200\n"
-"PO-Revision-Date: 2009-11-13 20:34+0000\n"
-"Last-Translator: zeugma <Unknown>\n"
+"PO-Revision-Date: 2009-12-15 23:16+0000\n"
+"Last-Translator: Serdar KAHYA <Unknown>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-11-14 04:39+0000\n"
+"X-Launchpad-Export-Date: 2009-12-17 04:41+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Friendly name</b>"
-msgstr ""
+msgstr "<b>Görünür İsim</b>"
 
 #: ../data/ui/adapters-tab.ui.h:2
 msgid "<b>Visibility setting</b>"
@@ -40,7 +40,7 @@ msgstr "Geçici olarak görünür"
 
 #: ../data/ui/adapters.ui.h:1
 msgid "Bluetooth Adapters"
-msgstr "Bluetooth Adaptörleri"
+msgstr "Bluetooth Bağdaştırıcıları"
 
 #: ../data/ui/applet-passkey.ui.h:1
 msgid "Pairing request"
@@ -66,12 +66,12 @@ msgstr "Bu aygıtı bilinen aygıtlar listesine ekle"
 
 #: ../data/ui/manager-main.ui.h:4
 msgid "Bluetooth Devices"
-msgstr "Bluetooth Aygitları"
+msgstr "Bluetooth Aygıtları"
 
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:6
 msgid "Browse"
-msgstr "Gözat"
+msgstr "Gözat…"
 
 #: ../data/ui/manager-main.ui.h:7
 msgid "Browse the device using obex ftp"
@@ -93,7 +93,7 @@ msgstr "Bu donanımı güvenilir olarak işaretle/işaretleme"
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:263
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:571
 msgid "Pair"
-msgstr "Eş"
+msgstr "Eşle"
 
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:13
@@ -150,7 +150,7 @@ msgstr "Yerel Servisler"
 
 #: ../data/ui/services-network.ui.h:1
 msgid "<b>DUN Support</b>"
-msgstr ""
+msgstr "<b>DUN Desteği</b>"
 
 #: ../data/ui/services-network.ui.h:2
 msgid "<b>NAP Settings</b>"
@@ -166,7 +166,7 @@ msgstr "DHCP sunucusu yüklü değil"
 
 #: ../data/ui/services-network.ui.h:5
 msgid "<b>PAN Support</b>"
-msgstr ""
+msgstr "<b>PAN Desteği</b>"
 
 #: ../data/ui/services-network.ui.h:6 ../data/ui/services-audio.ui.h:3
 msgid "<b>Services</b>"
@@ -174,7 +174,7 @@ msgstr "<b>Servisler</b>"
 
 #: ../data/ui/services-network.ui.h:7
 msgid "<b>dnsmasq</b>"
-msgstr ""
+msgstr "<b>dnsmaskesi</b>"
 
 #: ../data/ui/services-network.ui.h:8
 msgid "Blueman"
@@ -182,7 +182,7 @@ msgstr "Blueman"
 
 #: ../data/ui/services-network.ui.h:9
 msgid "Blueman (dhclient)"
-msgstr ""
+msgstr "Blueman (dhclient)"
 
 #: ../data/ui/services-network.ui.h:10
 msgid "DHCP server type:"
@@ -190,7 +190,7 @@ msgstr "DHCP sunucu tipi:"
 
 #: ../data/ui/services-network.ui.h:11
 msgid "Enable Routing (NAT)"
-msgstr ""
+msgstr "Yönlendirmeyi Etkinleştir (NAT)"
 
 #: ../data/ui/services-network.ui.h:12
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:405 ../blueman/Sdp.py:118
@@ -263,32 +263,38 @@ msgstr "Paylaşım Klasörleri"
 msgid ""
 "<b>After applying these settings Bluetooth daemon will be restarted.</b>"
 msgstr ""
+"<b>Bu ayarlar uygulandıktan sonra Bluetooth hizmeti yeniden "
+"başlatılacaktır.</b>"
 
 #: ../data/ui/services-audio.ui.h:2
 msgid "<b>Audio Settings</b>"
-msgstr ""
+msgstr "<b>Ses Ayarları</b>"
 
 #: ../data/ui/services-audio.ui.h:4
 msgid ""
 "Advanced Audio receiver <span weight='bold' "
 "color='#cc0000'>Experimental!</span>"
 msgstr ""
+"Gelişmiş Ses Alıcısı <span weight='bold' color='#cc0000'>Deneysel!</span>"
 
 #: ../data/ui/services-audio.ui.h:5
 msgid "Allows this computer to act like a handsfree headset."
-msgstr ""
+msgstr "Bu bilgisayarın kablosuz kulaklık seti gibi davranmasına izin ver."
 
 #: ../data/ui/services-audio.ui.h:6
 msgid ""
 "Allows you to receive a2dp audio from other bluetooth devices and play it "
 "over the speakers."
 msgstr ""
+"Diğer bluetooth cihazlarından a2dp ses alınmasını ve hoparlör üzerinden "
+"çalınmasını sağlar."
 
 #: ../data/ui/services-audio.ui.h:7
 msgid ""
 "Headset Emulation <span weight='bold' color='#cc0000'>Very "
 "Experimental!</span>"
 msgstr ""
+"Kulaklık Seti Benzetimi <span weight='bold' color='#cc0000'>Deneysel !</span>"
 
 #: ../data/ui/send-dialog.ui.h:1
 msgid "<b>File:</b>"
@@ -341,15 +347,15 @@ msgstr ""
 
 #: ../data/ui/assistant.ui.h:9
 msgid "Proceed Without Pairing"
-msgstr ""
+msgstr "Eşleme Yapmadan Devam Et"
 
 #: ../data/ui/assistant.ui.h:10
 msgid "Use Custom Passkey:"
-msgstr ""
+msgstr "Özel Anahtar Kullan:"
 
 #: ../data/ui/assistant.ui.h:11
 msgid "Use Random Passkey"
-msgstr ""
+msgstr "Rastgele Anahtar Kullan"
 
 #: ../data/ui/device-list-widget.ui.h:1
 msgid "Adapter selection"
@@ -369,11 +375,11 @@ msgstr "<b>Yazar:</b>"
 
 #: ../data/ui/applet-plugins-widget.ui.h:2
 msgid "<b>Conflicts with:</b>"
-msgstr ""
+msgstr "<b>Çakışma:</b>"
 
 #: ../data/ui/applet-plugins-widget.ui.h:3
 msgid "<b>Depends on:</b>"
-msgstr ""
+msgstr "<b>Bağımlılık:</b>"
 
 #: ../data/ui/applet-plugins-widget.ui.h:4
 msgid "<b>Plugin description:</b>"
@@ -381,11 +387,11 @@ msgstr "<b>Eklenti açıklaması:</b>"
 
 #: ../data/ui/applet-plugins-widget.ui.h:5
 msgid "Configuration"
-msgstr ""
+msgstr "Yapılandırma"
 
 #: ../data/ui/applet-plugins-widget.ui.h:6
 msgid "Configure selected plugin's preferences"
-msgstr ""
+msgstr "Seçilen eklentinin yapılandırmasını ayarla"
 
 #: ../data/ui/applet-plugins-widget.ui.h:7
 msgid "Not specified"
@@ -416,11 +422,11 @@ msgstr "<b>İndirilen:</b>"
 
 #: ../data/ui/net-usage.ui.h:2
 msgid "<b>Log duration:</b>"
-msgstr ""
+msgstr "<b>Kayıt Süresi:</b>"
 
 #: ../data/ui/net-usage.ui.h:3
 msgid "<b>Log started:</b>"
-msgstr ""
+msgstr "<b>Kayıt Başlangıcı:</b>"
 
 #: ../data/ui/net-usage.ui.h:4
 msgid "<b>Total:</b>"
@@ -444,7 +450,7 @@ msgstr "gtk-kapat"
 
 #: ../blueman/main/applet/Transfer.py:170
 msgid "Incoming file over Bluetooth"
-msgstr ""
+msgstr "Bluetooth 'dan gelen Dosya"
 
 #: ../blueman/main/applet/Transfer.py:171
 #, python-format
@@ -504,8 +510,7 @@ msgstr[0] "Arkaplanda %d dosya alındı"
 #, python-format
 msgid "Received %d more file in the background"
 msgid_plural "Received %d more files in the background"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Arka planda %d dosya daha alındı"
 
 #: ../blueman/main/applet/BluezAgent.py:125
 #, python-format
@@ -569,7 +574,7 @@ msgstr "Her zaman kabul et"
 
 #: ../blueman/main/applet/BluezAgent.py:285
 msgid "Confirm value"
-msgstr ""
+msgstr "Değeri Doğrula"
 
 #: ../blueman/main/applet/BluezAgent.py:286
 #, python-format
@@ -630,7 +635,7 @@ msgstr "İlk olarak en son Aygıt"
 
 #: ../blueman/gui/manager/ManagerMenu.py:115
 msgid "Latest Device Last"
-msgstr ""
+msgstr "Son olararak en son Aygıt"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:451
 msgid "<b>Trusted and Bonded</b>"
@@ -686,6 +691,10 @@ msgid ""
 "Link Quality: %(lq)u%%\n"
 "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr ""
+"<b>Bağlanıldı</b>\n"
+"Alım Gücü: %(rssi)u%% <i>(%(rssi_state)s)</i>\n"
+"Link Quality: %(lq)u%%\n"
+"<b>Gönderim Gücü %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:509
 #, python-format
@@ -695,6 +704,10 @@ msgid ""
 "<b>Link Quality: %(lq)u%%</b>\n"
 "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr ""
+"<b>Bağlanıldı</b>\n"
+"Alım Gücü: %(rssi)u%% <i>(%(rssi_state)s)</i>\n"
+"<b>Bağlantı Kalitesi: %(lq)u%%</b>\n"
+"Gönderim Gücü: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:511
 #, python-format
@@ -704,6 +717,10 @@ msgid ""
 "Link Quality: %(lq)u%%\n"
 "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr ""
+"<b>Bağlanıldı</b>\n"
+"<b>Alım Gücü: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>\n"
+"Bağlantı Kalitesi: %(lq)u%%\n"
+"Gönderim Gücü: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:130
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:608
@@ -713,7 +730,7 @@ msgstr "Başarılı!"
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:134
 #, python-format
 msgid "Serial port connected to %s"
-msgstr ""
+msgstr "Seri Haberleşme Portu %s ile bağlantı sağlandı"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:141
 msgid "Failed"
@@ -751,7 +768,7 @@ msgstr "Seri Hizmet"
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:355
 #, python-format
 msgid "Serial Port %s"
-msgstr ""
+msgstr "Seri Haberleşme Portu %s"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:373
 msgid "Dialup Settings"
@@ -791,28 +808,28 @@ msgstr "Kulaklık Hizmeti"
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:468
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:472 ../blueman/Sdp.py:106
 msgid "Audio Sink"
-msgstr ""
+msgstr "Ses Çıkışı"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:473
 msgid "Allows to send audio to remote device"
-msgstr ""
+msgstr "Dış aygıtlara ses gönderilmesini sağlar"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:484
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:488 ../blueman/Sdp.py:105
 msgid "Audio Source"
-msgstr ""
+msgstr "Ses Girişi"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:489
 msgid "Allows to receive audio from remote device"
-msgstr ""
+msgstr "Dış aygıtlardan ses alınmasını sağlar"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:512
 msgid "<b>Connect To:</b>"
-msgstr ""
+msgstr "<b>Şuna Bağlan:</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:524
 msgid "<b>Disconnect:</b>"
-msgstr ""
+msgstr "<b>Bağlantıyı Kes:</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:549
 msgid "Browse device..."
@@ -850,11 +867,11 @@ msgstr "Aygıt Bağlantısını Kes"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:641
 msgid "Forcefully disconnect a device"
-msgstr ""
+msgstr "Cihazı ayrılmaya zorla"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:650
 msgid "Disconnecting..."
-msgstr ""
+msgstr "Bağlantı kesiliyor..."
 
 #: ../blueman/gui/manager/ManagerProgressbar.py:32 ../apps/blueman-sendto:70
 msgid "Connecting"
@@ -898,9 +915,11 @@ msgstr ""
 "  DenizCakir https://launchpad.net/~dezincakir\n"
 "  Emre UGUR https://launchpad.net/~emrwe\n"
 "  Kubilayk https://launchpad.net/~hkubilayk\n"
+"  MindLess https://launchpad.net/~berkan-demirci\n"
 "  Murat Bişkin https://launchpad.net/~muratbiskin\n"
 "  Osman Tosun https://launchpad.net/~rainman-neu\n"
 "  Said Tahsin Dane https://launchpad.net/~tasomaniac\n"
+"  Serdar KAHYA https://launchpad.net/~kahyainsaat\n"
 "  blablamate https://launchpad.net/~blablamate\n"
 "  denz https://launchpad.net/~psycho2dct\n"
 "  zeugma https://launchpad.net/~sunder67"
@@ -946,6 +965,9 @@ msgid ""
 "unload <b>%(0)s</b>.\n"
 "Proceed?"
 msgstr ""
+"<b>%(0)s</b> eklentisi <b>%(1)s</b> eklentisi ile çakışıyor .  <b>%(1)s</b> "
+"eklentisinin yüklenmesi <b>%(0)s</b> eklentisinin silinmesini gerektiriyor.\n"
+"İşlem Uygulansın Mı?"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:36 ../blueman/DeviceClass.py:61
@@ -980,7 +1002,7 @@ msgstr "palm"
 #. translators: device class
 #: ../blueman/DeviceClass.py:63
 msgid "cellular"
-msgstr ""
+msgstr "telefon"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:65
@@ -1053,6 +1075,8 @@ msgid ""
 "No usage statistics are available yet. Try establishing a connection first "
 "and then check this page."
 msgstr ""
+"Henüz kaydedilmiş kullanım istatistiği bulunmamakta. Önce bir bağlantı "
+"kurmayı deneyin ardından bu sayfayı tekrar kontrol edin."
 
 #: ../blueman/plugins/applet/NetUsage.py:241
 msgid "day"
@@ -1076,13 +1100,16 @@ msgstr "%d %s %d %s ve %d %s"
 
 #: ../blueman/plugins/applet/NetUsage.py:276
 msgid "Are you sure you want to reset the counter?"
-msgstr ""
+msgstr "Sayacı sıfırlamak istediğinizden emin misiniz?"
 
 #: ../blueman/plugins/applet/NetUsage.py:315
 msgid ""
 "Allows you to monitor your (mobile broadband) network traffic usage. Useful "
 "for limited data access plans. This plugin tracks every device seperately."
 msgstr ""
+"(Mobil Genişband) Ağ kullanımınızı görüntülemenizi sağlar. Sınırlı "
+"bağlantılar için kullanışlı bir özelliktir . Bu eklenti her bir aygıtı ayrı "
+"ayrı takip eder."
 
 #: ../blueman/plugins/applet/NetUsage.py:333
 msgid "Network Usage"
@@ -1090,7 +1117,7 @@ msgstr "Ağ Kullanımı"
 
 #: ../blueman/plugins/applet/NetUsage.py:334
 msgid "Shows network traffic usage"
-msgstr ""
+msgstr "Ağ kullanımını görüntüler"
 
 #: ../blueman/plugins/applet/StatusIcon.py:38
 #: ../blueman/plugins/applet/StatusIcon.py:51
@@ -1104,7 +1131,7 @@ msgstr "Bluetooth Engelli"
 
 #: ../blueman/plugins/applet/Networking.py:31
 msgid "Manages local network services, like NAP bridges"
-msgstr ""
+msgstr "Yerel ağ servislerini düzenler , NAP köprüsü gibi.."
 
 #: ../blueman/plugins/applet/Networking.py:54
 #: ../blueman/plugins/services/Network.py:113
@@ -1118,16 +1145,17 @@ msgstr "Bluetooth ağa bu makine üzerinden bağlamak mümkün olmayabilir"
 
 #: ../blueman/plugins/applet/NMDUNSupport.py:85
 msgid "Bluetooth Dialup"
-msgstr ""
+msgstr "Bluetooth Araması"
 
 #: ../blueman/plugins/applet/NMDUNSupport.py:86
 #, python-format
 msgid "DUN connection on %s will now be available in Network Manager"
 msgstr ""
+"%s üzerinden DUN bağlantısı birazdan Network Manager dan kullanılabilecek"
 
 #: ../blueman/plugins/applet/NMDUNSupport.py:96
 msgid "Modem Manager did not support the connection"
-msgstr ""
+msgstr "Modem Yöneticisi bağlantıyı desteklemedi"
 
 #: ../blueman/plugins/applet/NMDUNSupport.py:104
 msgid ""
@@ -1198,7 +1226,7 @@ msgstr ""
 
 #: ../blueman/plugins/applet/NMPANSupport.py:335
 msgid "Already connected"
-msgstr ""
+msgstr "Zaten bağlı"
 
 #: ../blueman/plugins/applet/DBusService.py:39
 msgid "Provides DBus API for other Blueman components"
@@ -1223,7 +1251,7 @@ msgstr ""
 
 #: ../blueman/plugins/applet/StandardItems.py:36
 msgid "_Setup new device"
-msgstr ""
+msgstr "_Yeni Cihaz Kur"
 
 #: ../blueman/plugins/applet/StandardItems.py:43
 msgid "Send _files to device"
@@ -1231,7 +1259,7 @@ msgstr ""
 
 #: ../blueman/plugins/applet/StandardItems.py:48
 msgid "_Browse files on device"
-msgstr ""
+msgstr "Cihazdaki Dosyalara Gözat"
 
 #: ../blueman/plugins/applet/StandardItems.py:56
 msgid "_Devices"
@@ -1275,7 +1303,7 @@ msgstr "Servis Tercihleri Başlatılıyor"
 
 #: ../blueman/plugins/applet/StandardItems.py:131
 msgid "applet"
-msgstr ""
+msgstr "programcık"
 
 #: ../blueman/plugins/applet/AuthAgent.py:28
 msgid "Provides passkey, authentication services for BlueZ daemon"
@@ -1306,6 +1334,8 @@ msgid ""
 "Successfully connected to a Bluetooth audio device. This device will now be "
 "available in the PulseAudio mixer"
 msgstr ""
+"Bluetooth ses cihazına başarı ile bağlandı.Şimdi  bu cihaz PulseSes "
+"Karıştırıcısında kullanılabilir olacak."
 
 #: ../blueman/plugins/applet/DhcpClient.py:26
 msgid "Provides a basic dhcp client for bluetooth PAN connections."

@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-11-04 10:55+0200\n"
-"PO-Revision-Date: 2009-11-20 16:43+0000\n"
+"PO-Revision-Date: 2009-12-03 19:10+0000\n"
 "Last-Translator: Paco Molinero <paco@byasl.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-11-21 04:44+0000\n"
+"X-Launchpad-Export-Date: 2009-12-05 04:34+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -275,6 +275,8 @@ msgid ""
 "Advanced Audio receiver <span weight='bold' "
 "color='#cc0000'>Experimental!</span>"
 msgstr ""
+"Receptor de audio avanzado <span weight='bold' "
+"color='#cc0000'>Experimental</span>"
 
 #: ../data/ui/services-audio.ui.h:5
 msgid "Allows this computer to act like a handsfree headset."
@@ -286,12 +288,16 @@ msgid ""
 "Allows you to receive a2dp audio from other bluetooth devices and play it "
 "over the speakers."
 msgstr ""
+"Le permite recibir audio a2dp desde otro dispositivo bluetooth y jugar con "
+"los altavoces."
 
 #: ../data/ui/services-audio.ui.h:7
 msgid ""
 "Headset Emulation <span weight='bold' color='#cc0000'>Very "
 "Experimental!</span>"
 msgstr ""
+"Emulación de auriculares <span weight='bold' color='#cc0000'>Muy "
+"experimental!</span>"
 
 #: ../data/ui/send-dialog.ui.h:1
 msgid "<b>File:</b>"
@@ -917,6 +923,7 @@ msgstr ""
 "  Andres Mujica https://launchpad.net/~andres.mujica\n"
 "  Angel Guzman Maeso https://launchpad.net/~shakaran\n"
 "  Antonio Maldonado https://launchpad.net/~a.m.\n"
+"  Cross https://launchpad.net/~strokemeister\n"
 "  Dante Díaz https://launchpad.net/~dante\n"
 "  David A Páez https://launchpad.net/~orlsend\n"
 "  DiegoJ https://launchpad.net/~diegojromerolopez\n"
@@ -1172,7 +1179,7 @@ msgstr ""
 
 #: ../blueman/plugins/applet/NMDUNSupport.py:85
 msgid "Bluetooth Dialup"
-msgstr ""
+msgstr "Marcador Bluetooth"
 
 #: ../blueman/plugins/applet/NMDUNSupport.py:86
 #, python-format
@@ -1204,6 +1211,7 @@ msgstr "Nº máximo de elementos"
 #: ../blueman/plugins/applet/RecentConns.py:65
 msgid "The maximum number of items recent connections menu will display."
 msgstr ""
+"El número máximo de objetos de conexión reciente que el menú mostrará."
 
 #: ../blueman/plugins/applet/RecentConns.py:83
 msgid "Recent Connections"
@@ -1454,7 +1462,7 @@ msgstr ""
 
 #: ../blueman/plugins/applet/Headset.py:32
 msgid "Command"
-msgstr ""
+msgstr "Orden"
 
 #: ../blueman/plugins/applet/Headset.py:33
 msgid "Command to execute when answer button is pressed:"
@@ -1549,7 +1557,7 @@ msgstr "<b>Activar Bluetooth</b>"
 
 #: ../blueman/plugins/applet/PowerManager.py:157
 msgid "Turn on all adapters"
-msgstr ""
+msgstr "Encender todos los adaptadores"
 
 #: ../blueman/plugins/services/Network.py:262
 #: ../blueman/plugins/services/Network.py:265
@@ -1584,11 +1592,11 @@ msgstr "Administrador Bluetooth"
 
 #: ../data/configs/org.blueman.policy.in.h:1
 msgid "Bluetooth Configuration"
-msgstr ""
+msgstr "Configuración Bluetooth"
 
 #: ../data/configs/org.blueman.policy.in.h:2
 msgid "Changing Bluetooth system settings requires privileges"
-msgstr ""
+msgstr "Cambiar los ajustes de Bluetooth del sistema requiere de privilegios"
 
 #: ../data/configs/org.blueman.policy.in.h:3
 msgid "Configure Bluetooth Modems"
@@ -1681,7 +1689,7 @@ msgstr "Ha ocurrido un error"
 
 #: ../apps/blueman-sendto:155
 msgid "Cancelling"
-msgstr ""
+msgstr "Cancelar"
 
 #: ../apps/blueman-sendto:175 ../apps/blueman-sendto:209
 msgid "Sending File"
