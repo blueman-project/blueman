@@ -107,6 +107,11 @@ class ManagerProgressbar(gobject.GObject):
 		self.eventbox.props.visible = False
 		self.button.props.visible = False
 		
+	def message(self, msg, timeout=1500):
+		self.stop()
+		self.set_label(msg)
+		self.set_cancellable(False)
+		gobject.timeout_add(timeout, self.finalize)		
 
 		
 	def finalize(self):

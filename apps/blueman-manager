@@ -231,22 +231,16 @@ class Blueman:
 		sn = startup_notification("Bluetooth Assistant", _("Starting Bluetooth Assistant"), bin_name="blueman-assistant", icon="blueman")
 		spawn(["blueman-assistant", "--device=%s" % device.Address], sn=sn)
 		
-	def _prog_msg(self, prog, msg):
-		prog.stop()
-		prog.set_label(msg)
-		prog.set_cancellable(False)
-		gobject.timeout_add(1500, prog.finalize)
-		
 	def bond(self, device):
 		def ok(device):
 			dev = Device(BluezDevice(device))
 			self.List.add_device(dev)
-			self._prog_msg(prog, _("Success"))
+			prog.message(_("Success"))
 			MessageArea.close()
 		
 		def err(*args):
 			dprint(args)
-			self._prog_msg(prog, _("Failure"))
+			prog.message(_("Failure"))
 			MessageArea.show_message(e_(str(args[0])))
 		
 		applet = AppletService()

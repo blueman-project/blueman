@@ -114,12 +114,6 @@ class ManagerDeviceMenu(gtk.Menu):
 		
 
 	def on_connect(self, item, device, service_id, *args):
-		def prog_msg(msg):
-			prog.stop()
-			prog.set_label(msg)
-			prog.set_cancellable(False)
-			gobject.timeout_add(1500, prog.finalize)
-		
 		def success(*args2):
 			try:
 				uuid16 = sdp_get_serial_type(device.Address, args[0])
@@ -127,7 +121,7 @@ class ManagerDeviceMenu(gtk.Menu):
 				uuid16 = 0
 			
 			dprint("success", args2)
-			prog_msg(_("Success!"))
+			prog.message(_("Success!"))
 			
 			
 			if service_id == "serial" and SERIAL_PORT_SVCLASS_ID in uuid16:
@@ -138,7 +132,7 @@ class ManagerDeviceMenu(gtk.Menu):
 			self.unset_op(device)
 			
 		def fail(*args):
-			prog_msg(_("Failed"))
+			prog.message(_("Failed"))
 			
 			self.unset_op(device)
 			dprint("fail", args)
@@ -149,7 +143,7 @@ class ManagerDeviceMenu(gtk.Menu):
 				svc.Disconnect(*args)
 			except:
 				pass
-			prog_msg(_("Cancelled"))
+			prog.message(_("Cancelled"))
 			self.unset_op(device)
 		
 		svc = device.Services[service_id]
@@ -596,21 +590,15 @@ class ManagerDeviceMenu(gtk.Menu):
 			item.show()
 			item.props.tooltip_text = _("Run the setup assistant for this device")
 			
-			def update_services(item):
-				def prog_msg(msg):
-					prog.stop()
-					prog.set_label(msg)
-					prog.set_cancellable(False)
-					self.unset_op(device)
-					gobject.timeout_add(1500, prog.finalize)
-				
+			def update_services(item):		
 				def reply():
-					prog_msg(_("Success!"))
+					self.unset_op(device)
+					prog.message(_("Success!"))
 					MessageArea.close()
 					
 				def error(*args):
-					dprint("err", args)
-					prog_msg(_("Fail"))
+					self.unset_op(device)
+					prog.message(_("Fail"))
 					MessageArea.show_message(e_(str(args[0])))					
 					
 				prog = ManagerProgressbar(self.Blueman, False, _("Refreshing"))
@@ -656,8 +644,6 @@ class ManagerDeviceMenu(gtk.Menu):
 			else:
 				item.props.sensitive = False
 				
-			self.check_resize()
-			self.resize_children()
 			self.show_all()
 
 		
