@@ -88,5 +88,5 @@ dec = dbus.service.method(dbus_interface, in_signature, *args, **kwargs)(%(0)s)"
 	def remove_registration(self, name):
 		print "remove", name
 		delattr(self.__class__, name)
-		del self._dbus_class_table[self.__class__.__module__+"."+self.__class__.__name__]['org.blueman.Applet'][name]	
+		del self._dbus_class_table[self.__class__.__module__+"."+self.__class__.__name__][self.interface][name]	
 

@@ -108,7 +108,7 @@ class AppletPlugin(object):
 		except Exception, e:
 			AppletPlugin.instances.remove(self)
 			traceback.print_exc()
-			raise e
+			raise
 		
 	@staticmethod
 	def add_method(func):
@@ -124,9 +124,9 @@ class AppletPlugin(object):
 		self.__dbus_methods.append(func.__name__)
 
 	def add_dbus_signal(self, func, *args, **kwargs):
-		self.Applet.DbusSvc.add_signal(func, *args, **kwargs)
-		self.__dbus_signals.append(func.__name__)
-	
+		self.__dbus_signals.append(func)
+		return self.Applet.DbusSvc.add_signal(func, *args, **kwargs)
+		
 	#virtual funcs
 	def on_manager_state_changed(self, state):
 		pass

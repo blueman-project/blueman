@@ -20,19 +20,33 @@ from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 import blueman.bluez as Bluez
 from blueman.bluez.errors import BluezDBusException
+from blueman.main.SignalTracker import SignalTracker
 import dbus
 import types
 
 class PowerManager(AppletPlugin):
 	__depends__ = ["StatusIcon", "Menu"]
-	__unloadable__ = False
+	__unloadable__ = True
 	__description__ = _("Controls bluetooth adapter power states")
 	__author__ = "Walmis"
+	__icon__ = "gnome-power-manager"
 	
 	def on_load(self, applet):
 		AppletPlugin.add_method(self.on_power_state_query)
 		AppletPlugin.add_method(self.on_power_state_change_requested)
 		AppletPlugin.add_method(self.on_power_state_changed)
+		
+		self.add_dbus_method(self.SetBluetoothStatus, 
+						in_signature="b", 
+						out_signature="")
+		
+		self.add_dbus_method(self.GetBluetoothStatus, 
+						in_signature="", 
+						out_signature="b")
+		
+		self.BluetoothStatusChanged = self.add_dbus_signal(
+						"BluetoothStatusChanged", 
+						signature="b")		
 		
 		self.Applet = applet
 		
@@ -40,15 +54,20 @@ class PowerManager(AppletPlugin):
 		self.item.get_child().set_markup(_("<b>Turn Bluetooth Off</b>"))
 		
 		self.item.props.tooltip_text = _("Turn off all adapters")
-		self.item.connect("activate", lambda x: self.on_bluetooth_toggled())
+	
 		
-		dbus.SystemBus().add_signal_receiver(self.adapter_property_changed, "PropertyChanged", "org.bluez.Adapter", "org.bluez", path_keyword="path")
+		
+		self.signals = SignalTracker()
+		self.signals.Handle("dbus", dbus.SystemBus(),
+					self.adapter_property_changed, 
+					"PropertyChanged", 
+					"org.bluez.Adapter", 
+					"org.bluez", 
+					path_keyword="path")
+					
+		self.signals.Handle(self.item, "activate", lambda x: self.on_bluetooth_toggled())
 		
 		self.Applet.Plugins.Menu.Register(self, self.item, 0)
-		
-		self.Applet.DbusSvc.add_method(self.SetBluetoothStatus, in_signature="b", out_signature="")
-		self.Applet.DbusSvc.add_method(self.GetBluetoothStatus, in_signature="", out_signature="b")
-		self.BluetoothStatusChanged = self.Applet.DbusSvc.add_signal("BluetoothStatusChanged", signature="b")
 		
 		self.adapter_state = True
 		self.current_state = True
@@ -61,6 +80,10 @@ class PowerManager(AppletPlugin):
 		self.STATE_OFF_FORCED = 0
 		
 		gobject.idle_add(self.UpdatePowerState)
+		
+	def on_unload(self):
+		self.signals.DisconnectAll()
+		self.Applet.Plugins.Menu.Unregister(self)
 	
 	@property	
 	def CurrentState(self):

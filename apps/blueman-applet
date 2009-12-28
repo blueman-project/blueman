@@ -96,7 +96,10 @@ class BluemanApplet(object):
 							elif item in self.__loaded and disable:
 								self.Unload(item)
 							elif item not in self.__loaded and not disable:
-								self.Load(item)
+								try:
+									self.Load(item, user_action=True)
+								except:
+									self.SetConfig(item, False)
 
 						except KeyError:
 							print YELLOW("warning:"), "Plugin %s not found" % item
@@ -114,12 +117,23 @@ class BluemanApplet(object):
 		def GetConflicts(self):
 			return self.__cfls
 			
-		def Load(self, name=None):
+		def Load(self, name=None, user_action=False):
 			if name:
 				try:
 					self.__load_plugin(self.__classes[name])
-				except LoadException:
+				except LoadException, e:
 					pass
+				except Exception, e:
+					if user_action:
+						d = gtk.MessageDialog(type=gtk.MESSAGE_ERROR, 
+											  buttons=gtk.BUTTONS_CLOSE)
+						d.set_markup(_("<b>An error has occured while loading "
+									 "a plugin. Please notify the developers "
+									 "with the content of this message.</b>"))
+						d.props.secondary_text = traceback.format_exc()
+						d.run()
+						d.destroy()	
+						raise	
 					
 				return 
 				
@@ -191,7 +205,7 @@ class BluemanApplet(object):
 						self.__load_plugin(self.__classes[dep])	
 					except Exception, e:
 						dprint(e)
-						return
+						raise
 						
 			for cfl in self.__cfls[cls.__name__]:
 				if cfl in self.__classes:
@@ -213,6 +227,8 @@ class BluemanApplet(object):
 				dprint("Failed to load %s\n%s" % (cls.__name__, e))
 				if not cls.__unloadable__:
 					os._exit(1)
+					
+				raise #NOTE TO SELF: might cause bugs
 				
 			else:
 				self.__plugins[cls.__name__] = inst

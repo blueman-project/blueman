@@ -52,7 +52,7 @@ def store_state():
 		pass
 
 class RecentConns(AppletPlugin, gtk.Menu):
-	__depends__ = ["Menu", "PowerManager"]
+	__depends__ = ["Menu"]
 	__icon__ = "document-open-recent"
 	__description__ = _("Provides a menu item that contains last used connections for quick access")
 	__author__ = "Walmis"
@@ -80,7 +80,9 @@ class RecentConns(AppletPlugin, gtk.Menu):
 			atexit.register(store_state)
 			RecentConns.atexit_registered = True
 		
-		self.Item = create_menuitem(_("Recent Connections")+"...", get_icon("document-open-recent", 16))
+		self.Item = create_menuitem(_("Recent Connections")+"...", 
+									get_icon("document-open-recent", 16))
+									
 		self.Applet.Plugins.Menu.Register(self, self.Item, 52)
 		self.Applet.Plugins.Menu.Register(self, gtk.SeparatorMenuItem(), 53)
 		
@@ -100,13 +102,26 @@ class RecentConns(AppletPlugin, gtk.Menu):
 				items.append(x)
 
 		
-			dump = base64.b64encode(zlib.compress(pickle.dumps((REGISTRY_VERSION, items), pickle.HIGHEST_PROTOCOL), 9))
+			dump = base64.b64encode(
+				zlib.compress(
+					pickle.dumps((REGISTRY_VERSION, items), 
+								  pickle.HIGHEST_PROTOCOL), 
+								  9))
 	
 			self.set_option("recent_connections", dump)
 
 	def change_sensitivity(self, sensitive):
-		dprint("bt_status", self.Applet.Plugins.PowerManager.GetBluetoothStatus())
-		sensitive = sensitive and self.Applet.Manager and self.Applet.Plugins.PowerManager.GetBluetoothStatus() and RecentConns.items != None and (len(RecentConns.items) > 0)
+		try:
+			power = self.Applet.Plugins.PowerManager.GetBluetoothStatus()
+		except:
+			power = True
+		
+		sensitive = sensitive and \
+				    self.Applet.Manager and \
+				    power and \
+				    RecentConns.items != None and \
+				    (len(RecentConns.items) > 0)
+				    
 		self.Item.props.sensitive = sensitive
 		
 	def on_power_state_changed(self, manager, state):
@@ -165,10 +180,13 @@ class RecentConns(AppletPlugin, gtk.Menu):
 	def on_manager_state_changed(self, state):
 		
 		if state:
-			if not self.Applet.Plugins.PowerManager.GetBluetoothStatus():
-				self.deferred = True
-				self.Item.props.sensitive = False
-				return 
+			try:
+				if not self.Applet.Plugins.PowerManager.GetBluetoothStatus():
+					self.deferred = True
+					self.Item.props.sensitive = False
+					return
+			except:
+				pass
 			
 			self.Item.props.sensitive = True
 			adapters = self.Applet.Manager.ListAdapters()

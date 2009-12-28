@@ -25,7 +25,7 @@ import gobject
 import gtk
 
 class StandardItems(AppletPlugin):
-	__depends__ = ["StatusIcon", "Menu", "PowerManager"]
+	__depends__ = ["StatusIcon", "Menu"]
 	__unloadable__ = False
 	__description__ = _("Adds standard menu items to the status icon menu")
 	__author__ = "walmis"
@@ -90,8 +90,12 @@ class StandardItems(AppletPlugin):
 		self.Applet.Plugins.StatusIcon.connect("activate", on_activate)
 		
 	def change_sensitivity(self, sensitive):
-		dprint(sensitive, self.Applet.Plugins.PowerManager.GetBluetoothStatus())
-		sensitive = sensitive and self.Applet.Manager and self.Applet.Plugins.PowerManager.GetBluetoothStatus() 
+		try:
+			power = self.Applet.Plugins.PowerManager.GetBluetoothStatus()
+		except:
+			power = True
+			
+		sensitive = sensitive and self.Applet.Manager and power
 		self.new_dev.props.sensitive = sensitive
 		self.send.props.sensitive = sensitive
 		self.browse.props.sensitive = sensitive
