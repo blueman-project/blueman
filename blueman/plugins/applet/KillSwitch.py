@@ -127,7 +127,8 @@ class KillSwitch(AppletPlugin):
 		
 		state = self.Manager.GetGlobalState()
 		if state:
-			if isinstance(self.Manager, KillSwitchNG) and len(self.Manager.devices) > 0:
+			if isinstance(self.Manager, KillSwitchNG) and \
+				len(self.Manager.devices) > 0 and self.Applet.Manager:
 				return 2
 			
 			return 1 #StatusIcon.SHOW
