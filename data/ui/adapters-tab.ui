@@ -5,10 +5,12 @@
   <object class="GtkVBox" id="vbox1">
     <property name="visible">True</property>
     <property name="border_width">12</property>
+    <property name="orientation">vertical</property>
     <property name="spacing">12</property>
     <child>
       <object class="GtkVBox" id="vbox2">
         <property name="visible">True</property>
+        <property name="orientation">vertical</property>
         <property name="spacing">6</property>
         <child>
           <object class="GtkLabel" id="label3">
@@ -24,12 +26,12 @@
         </child>
         <child>
           <object class="GtkRadioButton" id="hidden1">
+            <property name="label" translatable="yes">Hidden</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">False</property>
             <property name="draw_indicator">True</property>
             <property name="group">radiogroup</property>
-            <property name="label" translatable="yes">Hidden</property>
           </object>
           <packing>
             <property name="position">1</property>
@@ -37,13 +39,13 @@
         </child>
         <child>
           <object class="GtkRadioButton" id="always">
+            <property name="label" translatable="yes">Always visible</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">False</property>
             <property name="active">True</property>
             <property name="draw_indicator">True</property>
             <property name="group">radiogroup</property>
-            <property name="label" translatable="yes">Always visible</property>
           </object>
           <packing>
             <property name="position">2</property>
@@ -51,12 +53,12 @@
         </child>
         <child>
           <object class="GtkRadioButton" id="temporary">
+            <property name="label" translatable="yes">Temporarily visible</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">False</property>
             <property name="draw_indicator">True</property>
             <property name="group">radiogroup</property>
-            <property name="label" translatable="yes">Temporary visible</property>
           </object>
           <packing>
             <property name="position">3</property>
@@ -82,6 +84,7 @@
     <child>
       <object class="GtkVBox" id="vbox3">
         <property name="visible">True</property>
+        <property name="orientation">vertical</property>
         <property name="spacing">6</property>
         <child>
           <object class="GtkLabel" id="label4">
@@ -113,12 +116,12 @@
     </child>
   </object>
   <object class="GtkRadioButton" id="radiogroup">
+    <property name="label">radiobutton</property>
     <property name="visible">True</property>
     <property name="can_focus">True</property>
     <property name="receives_default">False</property>
     <property name="active">True</property>
     <property name="draw_indicator">True</property>
     <property name="group">radiogroup</property>
-    <property name="label" translatable="no">radiobutton</property>
   </object>
 </interface>
