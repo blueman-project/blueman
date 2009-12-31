@@ -7,24 +7,24 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2009-11-04 10:55+0200\n"
-"PO-Revision-Date: 2009-11-23 11:43+0000\n"
-"Last-Translator: Yuki Kodama <Unknown>\n"
+"POT-Creation-Date: 2009-12-29 20:33+0200\n"
+"PO-Revision-Date: 2009-12-29 19:37+0000\n"
+"Last-Translator: Valmantas Palikša <walmis@balticum-tv.lt>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-11-24 04:37+0000\n"
+"X-Launchpad-Export-Date: 2009-12-30 04:45+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
-msgid "<b>Friendly name</b>"
-msgstr "簡易名"
+msgid "<b>Friendly Name</b>"
+msgstr ""
 
 #: ../data/ui/adapters-tab.ui.h:2
-msgid "<b>Visibility setting</b>"
-msgstr "<b>可視設定</b>"
+msgid "<b>Visibility Setting</b>"
+msgstr ""
 
 #: ../data/ui/adapters-tab.ui.h:3
 msgid "Always visible"
@@ -35,8 +35,8 @@ msgid "Hidden"
 msgstr "非表示"
 
 #: ../data/ui/adapters-tab.ui.h:5
-msgid "Temporary visible"
-msgstr "一時的に表示"
+msgid "Temporarily visible"
+msgstr ""
 
 #: ../data/ui/adapters.ui.h:1
 msgid "Bluetooth Adapters"
@@ -60,7 +60,7 @@ msgid "Add"
 msgstr "追加"
 
 #: ../data/ui/manager-main.ui.h:3
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:255
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:249
 msgid "Add this device to known devices list"
 msgstr "この機器を既知の機器一覧に追加する"
 
@@ -78,20 +78,19 @@ msgid "Browse the device using obex ftp"
 msgstr "obex ftpを使用している機器を表示する"
 
 #: ../data/ui/manager-main.ui.h:8
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:267
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:572
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:566
 msgid "Create pairing with the device"
 msgstr ""
 
 #: ../data/ui/manager-main.ui.h:9
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:591
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:585
 msgid "Mark/Unmark this device as trusted"
 msgstr "信頼できる機器としてマークを付ける・外す"
 
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:11
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:263
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:571
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:257
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:565
 msgid "Pair"
 msgstr ""
 
@@ -101,13 +100,13 @@ msgid "Remove"
 msgstr "削除"
 
 #: ../data/ui/manager-main.ui.h:14
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:634
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:622
 msgid "Remove this device from the known devices list"
 msgstr "この機器を既知の機器一覧から削除する"
 
 #: ../data/ui/manager-main.ui.h:15
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:261
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:597
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:255
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:591
 msgid "Run the setup assistant for this device"
 msgstr "この機器のセットアップウィザードを実行する"
 
@@ -131,14 +130,14 @@ msgstr "機器にファイルを送信する"
 
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:23
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:257
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:593
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:251
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:587
 msgid "Setup..."
 msgstr "セットアップ..."
 
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:25
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:582
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:576
 #: ../blueman/gui/manager/ManagerToolbar.py:47
 #: ../blueman/gui/manager/ManagerToolbar.py:120
 msgid "Trust"
@@ -173,44 +172,28 @@ msgid "<b>Services</b>"
 msgstr "<b>サービス</b>"
 
 #: ../data/ui/services-network.ui.h:7
-msgid "<b>dnsmasq</b>"
-msgstr ""
-
-#: ../data/ui/services-network.ui.h:8
-msgid "Blueman"
-msgstr ""
-
-#: ../data/ui/services-network.ui.h:9
-msgid "Blueman (dhclient)"
-msgstr ""
-
-#: ../data/ui/services-network.ui.h:10
 msgid "DHCP server type:"
 msgstr "DHCPサーバの種類:"
 
-#: ../data/ui/services-network.ui.h:11
+#: ../data/ui/services-network.ui.h:8
 msgid "Enable Routing (NAT)"
 msgstr "ルーティングを有効 （NAT)"
 
-#: ../data/ui/services-network.ui.h:12
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:405 ../blueman/Sdp.py:118
+#: ../data/ui/services-network.ui.h:9
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:399 ../blueman/Sdp.py:118
 #: ../apps/blueman-assistant:336
 msgid "Group Network"
 msgstr "グループネットワーク"
 
-#: ../data/ui/services-network.ui.h:13
+#: ../data/ui/services-network.ui.h:10
 msgid "IP Address:"
 msgstr "IPアドレス:"
 
-#: ../data/ui/services-network.ui.h:14
+#: ../data/ui/services-network.ui.h:11
 msgid "Network Access Point (NAP)"
 msgstr "ネットワークアクセスポイント（NAP)"
 
-#: ../data/ui/services-network.ui.h:15
-msgid "NetworkManager"
-msgstr ""
-
-#: ../data/ui/services-network.ui.h:16
+#: ../data/ui/services-network.ui.h:12
 msgid "Recommended"
 msgstr ""
 
@@ -280,7 +263,7 @@ msgstr ""
 
 #: ../data/ui/services-audio.ui.h:6
 msgid ""
-"Allows you to receive a2dp audio from other bluetooth devices and play it "
+"Allows you to receive a2dp audio from other Bluetooth devices and play it "
 "over the speakers."
 msgstr ""
 
@@ -325,16 +308,12 @@ msgstr "<b>使用するペアリング方法を選択してください：</b>"
 
 #: ../data/ui/assistant.ui.h:5
 msgid ""
-"<b>Welcome to the bluetooth device setup assistant. </b>\n"
+"<b>Welcome to the Bluetooth device setup assistant. </b>\n"
 "\n"
 "\n"
 "It will walk you through the process of configuring and connecting to your "
-"bluetooth enabled devices."
+"Bluetooth enabled devices."
 msgstr ""
-"<b>Bluetooth機器セットアップウィザードへようこそ。</b>\n"
-"\n"
-"\n"
-"このウィザードではBluetooth機器を使うために必要な設定と接続を行います。"
 
 #: ../data/ui/assistant.ui.h:9
 msgid "Proceed Without Pairing"
@@ -701,154 +680,158 @@ msgid ""
 "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:130
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:608
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:124
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:596
 msgid "Success!"
 msgstr "成功しました！"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:134
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:128
 #, python-format
 msgid "Serial port connected to %s"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:141
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:135
 msgid "Failed"
 msgstr "失敗しました"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:145
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:139
 msgid "Connection Failed: "
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:152
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:146
 msgid "Cancelled"
 msgstr "キャンセルしました"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:156
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:150
 msgid "Connecting..."
 msgstr "接続中..."
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:251
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:245
 msgid "Add Device"
 msgstr "デバイスの追加"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:273
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:544
-msgid "Send a file..."
-msgstr "ファイルを送信..."
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:261
+msgid "Pair with the device"
+msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:339
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:267
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:538
+msgid "Send a File..."
+msgstr ""
+
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:333
 msgid "Dialup Service"
 msgstr "ダイアルアップサービス"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:346
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:340
 msgid "Serial Service"
 msgstr "シリアルサービス"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:355
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:349
 #, python-format
 msgid "Serial Port %s"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:373
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:367
 msgid "Dialup Settings"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:383
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:377
 msgid "Serial Ports"
 msgstr "シリアルポート"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:411 ../blueman/Sdp.py:117
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:405 ../blueman/Sdp.py:117
 #: ../apps/blueman-assistant:341
 msgid "Network Access Point"
 msgstr "ネットワークアクセスポイント"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:418
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:412
 #: ../blueman/plugins/services/Network.py:31
 #: ../blueman/plugins/services/Network.py:44
 msgid "Network"
 msgstr "ネットワーク"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:427
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:421
 msgid "Renew IP Address"
 msgstr "IPアドレスを再取得"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:436
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:441
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:430
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:435
 #: ../apps/blueman-assistant:328
 msgid "Input Service"
 msgstr "入力サービス"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:452
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:456
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:446
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:450
 #: ../apps/blueman-assistant:356
 msgid "Headset Service"
 msgstr "ヘッドセットサービス"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:468
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:472 ../blueman/Sdp.py:106
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:462
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:466 ../blueman/Sdp.py:106
 msgid "Audio Sink"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:473
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:467
 msgid "Allows to send audio to remote device"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:484
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:488 ../blueman/Sdp.py:105
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:478
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:482 ../blueman/Sdp.py:105
 msgid "Audio Source"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:489
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:483
 msgid "Allows to receive audio from remote device"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:512
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:506
 msgid "<b>Connect To:</b>"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:524
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:518
 msgid "<b>Disconnect:</b>"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:549
-msgid "Browse device..."
-msgstr "デバイスをブラウズ"
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:543
+msgid "Browse Device..."
+msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:587
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:581
 #: ../blueman/gui/manager/ManagerToolbar.py:45
 #: ../blueman/gui/manager/ManagerToolbar.py:115
 msgid "Untrust"
 msgstr "信頼を解除"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:613
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:601
 msgid "Fail"
 msgstr "失敗"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:616
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:604
 msgid "Refreshing"
 msgstr "更新中"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:618
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:606
 msgid "Refreshing Services..."
 msgstr "サービスを更新中..."
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:621
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:609
 msgid "Refresh Services"
 msgstr "サービスを更新"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:630
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:618
 msgid "Remove..."
 msgstr "削除..."
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:640
-msgid "Disconnect Device"
-msgstr "デバイスを切断"
-
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:641
-msgid "Forcefully disconnect a device"
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:628
+msgid "Disconnect"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:650
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:629
+msgid "Forcefully disconnect the device"
+msgstr ""
+
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:638
 msgid "Disconnecting..."
 msgstr ""
 
@@ -892,6 +875,7 @@ msgid "translator-credits"
 msgstr ""
 "Launchpad Contributions:\n"
 "  Karl Skewes https://launchpad.net/~karl-garagedori\n"
+"  Valmantas Palikša https://launchpad.net/~walmis\n"
 "  Yuki Kodama https://launchpad.net/~kuy"
 
 #: ../blueman/gui/CommonUi.py:48
@@ -903,7 +887,7 @@ msgid "GSM Settings"
 msgstr ""
 
 #: ../blueman/gui/applet/PluginDialog.py:122
-#: ../blueman/plugins/applet/StandardItems.py:133
+#: ../blueman/plugins/applet/StandardItems.py:139
 msgid "Plugins"
 msgstr "プラグイン"
 
@@ -1083,7 +1067,8 @@ msgstr ""
 
 #: ../blueman/plugins/applet/StatusIcon.py:38
 #: ../blueman/plugins/applet/StatusIcon.py:51
-#: ../blueman/plugins/applet/Indicator.py:80
+#: ../blueman/plugins/applet/Indicator.py:94
+#: ../blueman/plugins/applet/Indicator.py:99
 msgid "Bluetooth Enabled"
 msgstr ""
 
@@ -1142,40 +1127,40 @@ msgstr ""
 msgid "Recent Connections"
 msgstr "最近接続した機器"
 
-#: ../blueman/plugins/applet/RecentConns.py:278
+#: ../blueman/plugins/applet/RecentConns.py:296
 #, python-format
 msgid "Connecting to %s"
 msgstr "%s に接続しています"
 
-#: ../blueman/plugins/applet/RecentConns.py:284
+#: ../blueman/plugins/applet/RecentConns.py:302
 #: ../blueman/plugins/applet/PPPSupport.py:68
 msgid "Connected"
 msgstr "接続の確立"
 
-#: ../blueman/plugins/applet/RecentConns.py:284
+#: ../blueman/plugins/applet/RecentConns.py:302
 #, python-format
 msgid "Connected to %s"
 msgstr "%s に接続されています"
 
-#: ../blueman/plugins/applet/RecentConns.py:290
+#: ../blueman/plugins/applet/RecentConns.py:308
 msgid "Failed to connect"
 msgstr "接続に失敗しました"
 
-#: ../blueman/plugins/applet/RecentConns.py:308
+#: ../blueman/plugins/applet/RecentConns.py:326
 #, python-format
 msgid "Network Access (%s)"
 msgstr "ネットワークアクセス (%s)"
 
-#: ../blueman/plugins/applet/RecentConns.py:313
+#: ../blueman/plugins/applet/RecentConns.py:331
 msgid "Service"
 msgstr "サービス"
 
-#: ../blueman/plugins/applet/RecentConns.py:325
+#: ../blueman/plugins/applet/RecentConns.py:343
 #, python-format
 msgid "%(service)s on %(device)s"
 msgstr "%(service)s on %(device)s"
 
-#: ../blueman/plugins/applet/RecentConns.py:344
+#: ../blueman/plugins/applet/RecentConns.py:362
 msgid "Adapter for this connection is not available"
 msgstr "この接続のためのアダプタは使用できません"
 
@@ -1196,7 +1181,7 @@ msgstr "他のBluemanコンポーネントにDBus APIを提供する"
 #: ../blueman/plugins/applet/NMMonitor.py:106
 msgid ""
 "Monitors NetworkManager's modem connections and automatically disconnects "
-"bluetooth link after the network connection is closed"
+"Bluetooth link after the network connection is closed"
 msgstr ""
 
 #: ../blueman/plugins/applet/TransferService.py:29
@@ -1205,64 +1190,67 @@ msgstr "OBEXファイル転送機能を提供する"
 
 #: ../blueman/plugins/applet/KillSwitch.py:33
 msgid ""
-"Toggles a Bluetooth killswitch when Bluetooth power state changes. Some "
-"laptops, mostly Dells have this feature\n"
-"<b>Note</b>: This plugin stays on automatically if it detects a killswitch."
+"Toggles a platform Bluetooth killswitch when Bluetooth power state changes. "
+"Useless with USB dongles."
 msgstr ""
 
-#: ../blueman/plugins/applet/StandardItems.py:36
-msgid "_Setup new device"
+#: ../blueman/plugins/applet/StandardItems.py:30
+msgid "Adds standard menu items to the status icon menu"
 msgstr ""
 
-#: ../blueman/plugins/applet/StandardItems.py:43
-msgid "Send _files to device"
+#: ../blueman/plugins/applet/StandardItems.py:38
+msgid "_Setup New Device"
 msgstr ""
 
-#: ../blueman/plugins/applet/StandardItems.py:48
-msgid "_Browse files on device"
+#: ../blueman/plugins/applet/StandardItems.py:45
+msgid "Send _Files to Device"
 msgstr ""
 
-#: ../blueman/plugins/applet/StandardItems.py:56
+#: ../blueman/plugins/applet/StandardItems.py:50
+msgid "_Browse Files on Device"
+msgstr ""
+
+#: ../blueman/plugins/applet/StandardItems.py:58
 msgid "_Devices"
 msgstr ""
 
-#: ../blueman/plugins/applet/StandardItems.py:61
+#: ../blueman/plugins/applet/StandardItems.py:63
 msgid "Adap_ters"
 msgstr ""
 
-#: ../blueman/plugins/applet/StandardItems.py:66
+#: ../blueman/plugins/applet/StandardItems.py:68
 msgid "_Local Services"
 msgstr ""
 
-#: ../blueman/plugins/applet/StandardItems.py:76
+#: ../blueman/plugins/applet/StandardItems.py:78
 msgid "_Plugins"
 msgstr ""
 
-#: ../blueman/plugins/applet/StandardItems.py:107 ../apps/blueman-manager:231
+#: ../blueman/plugins/applet/StandardItems.py:113 ../apps/blueman-manager:231
 msgid "Starting Bluetooth Assistant"
 msgstr "セットアップウィザードを開始する"
 
-#: ../blueman/plugins/applet/StandardItems.py:111 ../apps/blueman-manager:278
+#: ../blueman/plugins/applet/StandardItems.py:117 ../apps/blueman-manager:272
 msgid "Starting File Sender"
 msgstr "ファイル送信サービスを実行中"
 
-#: ../blueman/plugins/applet/StandardItems.py:115
+#: ../blueman/plugins/applet/StandardItems.py:121
 msgid "Starting File Browser"
 msgstr "ファイルブラウザを実行中"
 
-#: ../blueman/plugins/applet/StandardItems.py:119
+#: ../blueman/plugins/applet/StandardItems.py:125
 msgid "Starting Device Manager"
 msgstr "デバイスマネージャを実行中"
 
-#: ../blueman/plugins/applet/StandardItems.py:123 ../apps/blueman-manager:269
+#: ../blueman/plugins/applet/StandardItems.py:129 ../apps/blueman-manager:263
 msgid "Starting Adapter Preferences"
 msgstr "アダプター設定を実行中"
 
-#: ../blueman/plugins/applet/StandardItems.py:127
+#: ../blueman/plugins/applet/StandardItems.py:133
 msgid "Starting Service Preferences"
 msgstr "サービス設定を実行中"
 
-#: ../blueman/plugins/applet/StandardItems.py:131
+#: ../blueman/plugins/applet/StandardItems.py:137
 msgid "applet"
 msgstr "アプレット"
 
@@ -1272,8 +1260,7 @@ msgstr "BlueZデーモンのためにパスキーと認証サービスを提供�
 
 #: ../blueman/plugins/applet/PulseAudio.py:89
 msgid ""
-"Automatically loads pulseaudio bluetooth module after audio device is "
-"connected.\n"
+"Automatically manages Pulseaudio Bluetooth sinks/sources.\n"
 "<b>Note:</b> Requires pulseaudio 0.9.15 or higher"
 msgstr ""
 
@@ -1295,7 +1282,7 @@ msgid ""
 msgstr ""
 
 #: ../blueman/plugins/applet/DhcpClient.py:26
-msgid "Provides a basic dhcp client for bluetooth PAN connections."
+msgid "Provides a basic dhcp client for Bluetooth PAN connections."
 msgstr ""
 
 #: ../blueman/plugins/applet/DhcpClient.py:63
@@ -1342,15 +1329,15 @@ msgstr ""
 
 #: ../blueman/plugins/applet/Indicator.py:31
 msgid ""
-"Adds an indication on the status icon when bluetooth is active and shows the "
+"Adds an indication on the status icon when Bluetooth is active and shows the "
 "number of connections in the tooltip."
 msgstr ""
 
-#: ../blueman/plugins/applet/Indicator.py:77
+#: ../blueman/plugins/applet/Indicator.py:84
 msgid "Bluetooth Active"
 msgstr ""
 
-#: ../blueman/plugins/applet/Indicator.py:83
+#: ../blueman/plugins/applet/Indicator.py:86
 #, python-format
 msgid "<b>%d Active Connection</b>"
 msgid_plural "<b>%d Active Connections</b>"
@@ -1414,39 +1401,55 @@ msgid ""
 "Provides basic support for connecting to the internet via DUN profile."
 msgstr ""
 
-#: ../blueman/plugins/applet/SerialManager.py:44
+#: ../blueman/plugins/applet/SerialManager.py:34
+msgid ""
+"Standard SPP profile connection handler, allows executing custom actions"
+msgstr ""
+
+#: ../blueman/plugins/applet/SerialManager.py:55
 msgid "Serial port connected"
 msgstr ""
 
-#: ../blueman/plugins/applet/SerialManager.py:44
+#: ../blueman/plugins/applet/SerialManager.py:56
 #, python-format
 msgid ""
 "Serial port service on device <b>%s</b> now will be available via <b>%s</b>"
 msgstr ""
 
-#: ../blueman/plugins/applet/PowerManager.py:29
-msgid "Controls bluetooth adapter power states"
-msgstr "Bluetoothアダプタの電力状態を制御する"
+#: ../blueman/plugins/applet/SerialManager.py:75
+msgid "Serial port connection script failed"
+msgstr ""
 
-#: ../blueman/plugins/applet/PowerManager.py:39
+#: ../blueman/plugins/applet/SerialManager.py:76
+#, python-format
+msgid ""
+"There was a problem launching script %s\n"
+"%s"
+msgstr ""
+
+#: ../blueman/plugins/applet/PowerManager.py:30
+msgid "Controls Bluetooth adapter power states"
+msgstr ""
+
+#: ../blueman/plugins/applet/PowerManager.py:53
 msgid "<b>Bluetooth Off</b>"
 msgstr ""
 
-#: ../blueman/plugins/applet/PowerManager.py:40
-#: ../blueman/plugins/applet/PowerManager.py:168
+#: ../blueman/plugins/applet/PowerManager.py:54
+#: ../blueman/plugins/applet/PowerManager.py:195
 msgid "<b>Turn Bluetooth Off</b>"
 msgstr "<b>Bluetoothをオフにする</b>"
 
-#: ../blueman/plugins/applet/PowerManager.py:42
-#: ../blueman/plugins/applet/PowerManager.py:169
+#: ../blueman/plugins/applet/PowerManager.py:56
+#: ../blueman/plugins/applet/PowerManager.py:196
 msgid "Turn off all adapters"
 msgstr "全てアダプターを切る"
 
-#: ../blueman/plugins/applet/PowerManager.py:156
+#: ../blueman/plugins/applet/PowerManager.py:183
 msgid "<b>Turn Bluetooth On</b>"
 msgstr "<b>Bluetoothをオンにする</b>"
 
-#: ../blueman/plugins/applet/PowerManager.py:157
+#: ../blueman/plugins/applet/PowerManager.py:184
 msgid "Turn on all adapters"
 msgstr ""
 
@@ -1526,8 +1529,11 @@ msgid "Connection to BlueZ failed"
 msgstr "BlueZへの接続に失敗しました"
 
 #: ../apps/blueman-manager:112
-msgid "Bluez daemon is not running, blueman-manager cannot continue."
-msgstr "BlueZデーモンが起動していないため、Bluemanを続行できません。"
+msgid ""
+"Bluez daemon is not running, blueman-manager cannot continue.\n"
+"This probably means that there were no Bluetooth adapters detected or "
+"Bluetooth daemon was not started."
+msgstr ""
 
 #: ../apps/blueman-manager:199 ../apps/blueman-assistant:276
 msgid "Adding"
@@ -1537,16 +1543,22 @@ msgstr "追加中"
 msgid "Searching"
 msgstr "検索中"
 
-#: ../apps/blueman-manager:244
+#: ../apps/blueman-manager:238
 msgid "Success"
 msgstr "成功"
 
-#: ../apps/blueman-manager:249
+#: ../apps/blueman-manager:243
 msgid "Failure"
 msgstr "失敗"
 
-#: ../apps/blueman-manager:257
+#: ../apps/blueman-manager:251
 msgid "Pairing"
+msgstr ""
+
+#: ../apps/blueman-applet:130
+msgid ""
+"<b>An error has occured while loading a plugin. Please notify the developers "
+"with the content of this message.</b>"
 msgstr ""
 
 #: ../apps/blueman-adapters:55
@@ -1625,8 +1637,8 @@ msgid "Start configuration assistant for this device"
 msgstr "この機器のセットアップウィザードを開始する"
 
 #: ../apps/blueman-assistant:65
-msgid "Bluetooth needs to be turned on for the bluetooth assistant to work"
-msgstr "セットアップウィザードを開始するためにBluetoothの電源をオンにする必要があります"
+msgid "Bluetooth needs to be turned on for the Bluetooth assistant to work"
+msgstr ""
 
 #: ../apps/blueman-assistant:79
 msgid "Bluetooth Assistant"
@@ -1687,3 +1699,42 @@ msgstr "%s の起動に失敗しました"
 #: ../apps/blueman-browse:75
 msgid "You can enter an alternate browser in service settings"
 msgstr "サービス設定の代替ブラウザを使うことができます"
+
+#~ msgid "<b>Visibility setting</b>"
+#~ msgstr "<b>可視設定</b>"
+
+#~ msgid "Send a file..."
+#~ msgstr "ファイルを送信..."
+
+#~ msgid "Browse device..."
+#~ msgstr "デバイスをブラウズ"
+
+#~ msgid "Disconnect Device"
+#~ msgstr "デバイスを切断"
+
+#~ msgid "<b>Friendly name</b>"
+#~ msgstr "簡易名"
+
+#~ msgid ""
+#~ "<b>Welcome to the bluetooth device setup assistant. </b>\n"
+#~ "\n"
+#~ "\n"
+#~ "It will walk you through the process of configuring and connecting to your "
+#~ "bluetooth enabled devices."
+#~ msgstr ""
+#~ "<b>Bluetooth機器セットアップウィザードへようこそ。</b>\n"
+#~ "\n"
+#~ "\n"
+#~ "このウィザードではBluetooth機器を使うために必要な設定と接続を行います。"
+
+#~ msgid "Controls bluetooth adapter power states"
+#~ msgstr "Bluetoothアダプタの電力状態を制御する"
+
+#~ msgid "Temporary visible"
+#~ msgstr "一時的に表示"
+
+#~ msgid "Bluez daemon is not running, blueman-manager cannot continue."
+#~ msgstr "BlueZデーモンが起動していないため、Bluemanを続行できません。"
+
+#~ msgid "Bluetooth needs to be turned on for the bluetooth assistant to work"
+#~ msgstr "セットアップウィザードを開始するためにBluetoothの電源をオンにする必要があります"
