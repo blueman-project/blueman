@@ -27,7 +27,7 @@ import types
 class PowerManager(AppletPlugin):
 	__depends__ = ["StatusIcon", "Menu"]
 	__unloadable__ = True
-	__description__ = _("Controls bluetooth adapter power states")
+	__description__ = _("Controls Bluetooth adapter power states")
 	__author__ = "Walmis"
 	__icon__ = "gnome-power-manager"
 	

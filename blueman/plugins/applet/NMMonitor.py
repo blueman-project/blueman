@@ -103,7 +103,7 @@ class NMMonitor(AppletPlugin, gobject.GObject):
 	}
 	
 	__icon__ = "network"
-	__description__ = _("Monitors NetworkManager's modem connections and automatically disconnects bluetooth link after the network connection is closed")
+	__description__ = _("Monitors NetworkManager's modem connections and automatically disconnects Bluetooth link after the network connection is closed")
 	__author__ = "Walmis"
 	
 	def on_load(self, applet):

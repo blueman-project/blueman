@@ -258,13 +258,13 @@ class ManagerDeviceMenu(gtk.Menu):
 			self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.bond(device))
 			self.append(item)
 			item.show()			
-			item.props.tooltip_text = _("Create pairing with the device")
+			item.props.tooltip_text = _("Pair with the device")
 			
 			item = gtk.SeparatorMenuItem()
 			item.show()
 			self.append(item)
 			
-			send_item = create_menuitem(_("Send a file..."), get_icon("gtk-copy", 16))
+			send_item = create_menuitem(_("Send a File..."), get_icon("gtk-copy", 16))
 			self.Signals.Handle("gobject", send_item, "activate", lambda x: self.Blueman.send(device))
 			send_item.show()
 			self.append(send_item)
@@ -535,12 +535,12 @@ class ManagerDeviceMenu(gtk.Menu):
 			
 			del items
 			
-			send_item = create_menuitem(_("Send a file..."), get_icon("gtk-copy", 16))
+			send_item = create_menuitem(_("Send a File..."), get_icon("gtk-copy", 16))
 			send_item.props.sensitive = False
 			self.append(send_item)
 			send_item.show()
 			
-			browse_item = create_menuitem(_("Browse device..."), get_icon("gtk-open", 16))
+			browse_item = create_menuitem(_("Browse Device..."), get_icon("gtk-open", 16))
 			browse_item.props.sensitive = False
 			self.append(browse_item)
 			browse_item.show()			
@@ -625,8 +625,8 @@ class ManagerDeviceMenu(gtk.Menu):
 			item.show()
 			self.append(item)
 			
-			item = create_menuitem(_("Disconnect Device"), get_icon("gtk-disconnect", 16))
-			item.props.tooltip_text = _("Forcefully disconnect a device")
+			item = create_menuitem(_("Disconnect"), get_icon("gtk-disconnect", 16))
+			item.props.tooltip_text = _("Forcefully disconnect the device")
 			
 			self.append(item)
 			item.show()

@@ -15,6 +15,7 @@
         <child>
           <object class="GtkVBox" id="vbox1">
             <property name="visible">True</property>
+            <property name="orientation">vertical</property>
             <property name="spacing">12</property>
             <child>
               <object class="GtkFrame" id="frame2">
@@ -29,6 +30,7 @@
                     <child>
                       <object class="GtkVBox" id="vbox11">
                         <property name="visible">True</property>
+                        <property name="orientation">vertical</property>
                         <child>
                           <object class="GtkCheckButton" id="gn_enable">
                             <property name="label" translatable="yes">Group Network</property>
@@ -85,6 +87,7 @@
                     <child>
                       <object class="GtkVBox" id="vbox13">
                         <property name="visible">True</property>
+                        <property name="orientation">vertical</property>
                         <property name="spacing">2</property>
                         <child>
                           <object class="GtkTable" id="table6">
@@ -133,7 +136,7 @@
                                     <child>
                                       <object class="GtkLabel" id="label1">
                                         <property name="visible">True</property>
-                                        <property name="label" translatable="yes">&lt;b&gt;dnsmasq&lt;/b&gt;</property>
+                                        <property name="label">&lt;b&gt;dnsmasq&lt;/b&gt;</property>
                                         <property name="use_markup">True</property>
                                       </object>
                                     </child>
@@ -267,7 +270,7 @@
                             <property name="orientation">vertical</property>
                             <child>
                               <object class="GtkRadioButton" id="rb_nm">
-                                <property name="label" translatable="yes">NetworkManager</property>
+                                <property name="label">NetworkManager</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
@@ -280,7 +283,7 @@
                             </child>
                             <child>
                               <object class="GtkRadioButton" id="rb_blueman">
-                                <property name="label" translatable="yes">Blueman (dhclient)</property>
+                                <property name="label">Blueman (dhclient)</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
@@ -334,7 +337,7 @@
                             <property name="orientation">vertical</property>
                             <child>
                               <object class="GtkRadioButton" id="rb_dun_nm">
-                                <property name="label" translatable="yes">NetworkManager</property>
+                                <property name="label">NetworkManager</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
@@ -347,7 +350,7 @@
                             </child>
                             <child>
                               <object class="GtkRadioButton" id="rb_dun_blueman">
-                                <property name="label" translatable="yes">Blueman</property>
+                                <property name="label">Blueman</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>

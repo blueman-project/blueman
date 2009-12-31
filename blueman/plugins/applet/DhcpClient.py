@@ -23,7 +23,7 @@ from blueman.Functions import *
 import dbus
 
 class DhcpClient(AppletPlugin):
-	__description__ = _("Provides a basic dhcp client for bluetooth PAN connections.")
+	__description__ = _("Provides a basic dhcp client for Bluetooth PAN connections.")
 	__icon__= "network"
 	__author__ = "Walmis"
 	

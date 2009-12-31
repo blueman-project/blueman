@@ -109,7 +109,7 @@ class Blueman:
 				d.props.icon_name = "blueman"
 				d.props.text = _("Connection to BlueZ failed")
 
-				d.props.secondary_text = _("Bluez daemon is not running, blueman-manager cannot continue.\nThis probably means that there were no bluetooth adapters detected or bluetooth daemon was not started.")
+				d.props.secondary_text = _("Bluez daemon is not running, blueman-manager cannot continue.\nThis probably means that there were no Bluetooth adapters detected or Bluetooth daemon was not started.")
 
 				d.add_button(gtk.STOCK_CLOSE, gtk.RESPONSE_NO)
 				d.run()

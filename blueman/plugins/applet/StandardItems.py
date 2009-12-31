@@ -35,19 +35,19 @@ class StandardItems(AppletPlugin):
 		
 		applet.Plugins.Menu.Register(self, gtk.SeparatorMenuItem(), 21)
 		
-		self.new_dev = create_menuitem(_("_Setup new device")+"...", get_icon("gtk-new", 16))
+		self.new_dev = create_menuitem(_("_Setup New Device")+"...", get_icon("gtk-new", 16))
 		self.new_dev.connect("activate", self.on_setup_new)
 		
 		self.Applet.Plugins.Menu.Register(self, self.new_dev, 30)
 		
 		self.Applet.Plugins.Menu.Register(self, gtk.SeparatorMenuItem(), 31)
 		
-		self.send = create_menuitem(_("Send _files to device")+"...", get_icon("blueman-send-file", 16))
+		self.send = create_menuitem(_("Send _Files to Device")+"...", get_icon("blueman-send-file", 16))
 		self.send.connect("activate", self.on_send)
 
 		self.Applet.Plugins.Menu.Register(self, self.send, 40)
 
-		self.browse = create_menuitem(_("_Browse files on device")+"...", get_icon("gtk-open", 16))
+		self.browse = create_menuitem(_("_Browse Files on Device")+"...", get_icon("gtk-open", 16))
 		self.browse.connect("activate", self.on_browse)
 		
 		self.Applet.Plugins.Menu.Register(self, self.browse, 50)
