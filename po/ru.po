@@ -8,24 +8,24 @@ msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-12-29 20:33+0200\n"
-"PO-Revision-Date: 2009-12-29 19:42+0000\n"
-"Last-Translator: Oleg Koptev <koptev.oleg@gmail.com>\n"
+"PO-Revision-Date: 2009-12-31 23:45+0000\n"
+"Last-Translator: Maxim Petrov <maximpetrov@yahoo.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-12-30 04:45+0000\n"
+"X-Launchpad-Export-Date: 2010-01-01 05:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Friendly Name</b>"
-msgstr ""
+msgstr "<b>Имя устройства</b>"
 
 #: ../data/ui/adapters-tab.ui.h:2
 msgid "<b>Visibility Setting</b>"
-msgstr ""
+msgstr "<b>Настройки видимости</b>"
 
 #: ../data/ui/adapters-tab.ui.h:3
 msgid "Always visible"
@@ -37,7 +37,7 @@ msgstr "Скрытый"
 
 #: ../data/ui/adapters-tab.ui.h:5
 msgid "Temporarily visible"
-msgstr ""
+msgstr "Временно видим"
 
 #: ../data/ui/adapters.ui.h:1
 msgid "Bluetooth Adapters"
@@ -269,6 +269,8 @@ msgid ""
 "Allows you to receive a2dp audio from other Bluetooth devices and play it "
 "over the speakers."
 msgstr ""
+"Позволяет Вам получать a2dp аудио от других устройств Bluetooth и "
+"проигрывать его через колонки."
 
 #: ../data/ui/services-audio.ui.h:7
 msgid ""
@@ -320,6 +322,11 @@ msgid ""
 "It will walk you through the process of configuring and connecting to your "
 "Bluetooth enabled devices."
 msgstr ""
+"<b>Добро пожаловать в менеджер по установке устройств Bluetooth. </b>\n"
+"\n"
+"\n"
+"Он проведет Вас через процесс конфигурации и подключения Ваших доступных "
+"Bluetooth устройств."
 
 #: ../data/ui/assistant.ui.h:9
 msgid "Proceed Without Pairing"
@@ -734,12 +741,12 @@ msgstr "Добавить устройство"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:261
 msgid "Pair with the device"
-msgstr ""
+msgstr "Образовать пару с устройством"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:267
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:538
 msgid "Send a File..."
-msgstr ""
+msgstr "Послать файл..."
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:333
 msgid "Dialup Service"
@@ -817,7 +824,7 @@ msgstr "<b>Отключиться:</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:543
 msgid "Browse Device..."
-msgstr ""
+msgstr "Просмотр файлов на устройстве..."
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:581
 #: ../blueman/gui/manager/ManagerToolbar.py:45
@@ -847,11 +854,11 @@ msgstr "Удалить..."
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:628
 msgid "Disconnect"
-msgstr ""
+msgstr "Отключить"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:629
 msgid "Forcefully disconnect the device"
-msgstr ""
+msgstr "Принудительно отсоединить устройство"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:638
 msgid "Disconnecting..."
@@ -907,6 +914,7 @@ msgstr ""
 "  HsH https://launchpad.net/~hsh\n"
 "  Lotus33 https://launchpad.net/~minobilis\n"
 "  Lucky https://launchpad.net/~lucky+\n"
+"  Maxim Petrov https://launchpad.net/~maximpetrov\n"
 "  Maxim Strukov https://launchpad.net/~unbelll\n"
 "  NewMAN[O-Z] https://launchpad.net/~kopeikrek\n"
 "  Nkolay Parukhin https://launchpad.net/~parukhin\n"
@@ -1255,6 +1263,8 @@ msgid ""
 "Monitors NetworkManager's modem connections and automatically disconnects "
 "Bluetooth link after the network connection is closed"
 msgstr ""
+"Следить за модемными соединениями в NetworkManager'е и автоматически "
+"отключать Bluetooth после того, как сетевое соединение будет закрыто."
 
 #: ../blueman/plugins/applet/TransferService.py:29
 msgid "Provides OBEX file transfer capabilities"
@@ -1265,22 +1275,24 @@ msgid ""
 "Toggles a platform Bluetooth killswitch when Bluetooth power state changes. "
 "Useless with USB dongles."
 msgstr ""
+"Переключать Bluetooth выключатель, когда состояние питания Bluetooth "
+"изменяется. Безполезно для USB заглушек."
 
 #: ../blueman/plugins/applet/StandardItems.py:30
 msgid "Adds standard menu items to the status icon menu"
-msgstr ""
+msgstr "Добавить стандартные пункты меню к меню иконки в трее"
 
 #: ../blueman/plugins/applet/StandardItems.py:38
 msgid "_Setup New Device"
-msgstr ""
+msgstr "_Добавить новое устройство"
 
 #: ../blueman/plugins/applet/StandardItems.py:45
 msgid "Send _Files to Device"
-msgstr ""
+msgstr "Послать _файлы на устройство"
 
 #: ../blueman/plugins/applet/StandardItems.py:50
 msgid "_Browse Files on Device"
-msgstr ""
+msgstr "_Посмотреть файлы на устройстве"
 
 #: ../blueman/plugins/applet/StandardItems.py:58
 msgid "_Devices"
@@ -1336,6 +1348,8 @@ msgid ""
 "Automatically manages Pulseaudio Bluetooth sinks/sources.\n"
 "<b>Note:</b> Requires pulseaudio 0.9.15 or higher"
 msgstr ""
+"Автоматичеки управлять потоками/источниками Pulseaudio Bluetooth.\n"
+"<b>Замечание:</b> Требуется pulseaudio 0.9.15 или выше"
 
 #: ../blueman/plugins/applet/PulseAudio.py:205
 #: ../blueman/plugins/applet/PulseAudio.py:211
@@ -1360,7 +1374,7 @@ msgstr ""
 
 #: ../blueman/plugins/applet/DhcpClient.py:26
 msgid "Provides a basic dhcp client for Bluetooth PAN connections."
-msgstr ""
+msgstr "Предоставляет базовый dhcp клиент для PAN соединений Bluetooth."
 
 #: ../blueman/plugins/applet/DhcpClient.py:63
 #: ../blueman/plugins/applet/DhcpClient.py:71
@@ -1411,6 +1425,8 @@ msgid ""
 "Adds an indication on the status icon when Bluetooth is active and shows the "
 "number of connections in the tooltip."
 msgstr ""
+"Добавить индикацию в иконку трея, когда Bluetooth активен, и показывать "
+"количество подключений во всплывающей подсказке."
 
 #: ../blueman/plugins/applet/Indicator.py:84
 msgid "Bluetooth Active"
@@ -1495,6 +1511,8 @@ msgstr ""
 msgid ""
 "Standard SPP profile connection handler, allows executing custom actions"
 msgstr ""
+"Стандартный обработчик соединения SPP профиля, позволяющий выполнять "
+"стандартные действия"
 
 #: ../blueman/plugins/applet/SerialManager.py:55
 msgid "Serial port connected"
@@ -1509,7 +1527,7 @@ msgstr ""
 
 #: ../blueman/plugins/applet/SerialManager.py:75
 msgid "Serial port connection script failed"
-msgstr ""
+msgstr "Подключение по последовательному порту не удалось"
 
 #: ../blueman/plugins/applet/SerialManager.py:76
 #, python-format
@@ -1517,10 +1535,12 @@ msgid ""
 "There was a problem launching script %s\n"
 "%s"
 msgstr ""
+"Появилась проблема при запуске скрипта %s\n"
+"%s"
 
 #: ../blueman/plugins/applet/PowerManager.py:30
 msgid "Controls Bluetooth adapter power states"
-msgstr ""
+msgstr "Контролировать состояние питания Bluetooth адаптера"
 
 #: ../blueman/plugins/applet/PowerManager.py:53
 msgid "<b>Bluetooth Off</b>"
@@ -1626,6 +1646,9 @@ msgid ""
 "This probably means that there were no Bluetooth adapters detected or "
 "Bluetooth daemon was not started."
 msgstr ""
+"Демон Bluez не запущен, blueman-manager не может продолжать работу.\n"
+"Это может означать, что не было обнаружено Bluetooth адаптеров или демон "
+"Bluetooth не запущен."
 
 #: ../apps/blueman-manager:199 ../apps/blueman-assistant:276
 msgid "Adding"
@@ -1652,6 +1675,8 @@ msgid ""
 "<b>An error has occured while loading a plugin. Please notify the developers "
 "with the content of this message.</b>"
 msgstr ""
+"<b>Во время загрузки плагина возникла ошибка. Пожалуйста сообщите об этом "
+"разработчикам вместе с содержанием этого сообщения.</b>"
 
 #: ../apps/blueman-adapters:55
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
@@ -1736,7 +1761,7 @@ msgstr "Запустить помощник настройки этого уст
 
 #: ../apps/blueman-assistant:65
 msgid "Bluetooth needs to be turned on for the Bluetooth assistant to work"
-msgstr ""
+msgstr "Bluetooth должен быть включен, чтобы помощник Bluetooth работал"
 
 #: ../apps/blueman-assistant:79
 msgid "Bluetooth Assistant"
