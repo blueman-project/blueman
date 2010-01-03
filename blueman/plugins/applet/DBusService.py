@@ -93,12 +93,16 @@ class DBusService(AppletPlugin):
 		
 	def SetPluginConfig(self, plugin, value):
 		self.Applet.Plugins.SetConfig(plugin, value)
-	
-	def ServiceProxy(self, interface, object_path, _method, args, ok, err):
+		
+	def ConnectHelper(self, interface, object_path, _method, args, ok, err):
 		bus = dbus.SystemBus()
 		service = bus.get_object("org.bluez", object_path)
 		method = service.get_dbus_method(_method, interface)
 		
+		method(reply_handler=ok, error_handler=err, *args)
+				
+	
+	def ServiceProxy(self, interface, object_path, _method, args, ok, err):
 		
 		if _method == "Connect":
 			dev = Device(object_path)
@@ -117,7 +121,7 @@ class DBusService(AppletPlugin):
 		self.Applet.Plugins.RunEx("service_connect_handler", cb, interface, object_path, _method, args, ok, err)
 
 		if not self.handled:
-			method(reply_handler=ok, error_handler=err, *args)
+			self.ConnectHelper(interface, object_path, _method, args, ok, err)
 			
 		del self.handled
 		
