@@ -311,8 +311,21 @@ class PulseAudioUtils(gobject.GObject):
 		self.pa.pa_get_library_version.restype = c_char_p
 		return self.pa.pa_get_library_version()
 	
+	inst = None
+	
+	def __new__(cls):
+		if cls.inst:
+			return PulseAudioUtils.inst
+		else:
+			return super(PulseAudioUtils, cls).__new__(cls)
+	
 	def __init__(self):
+		if PulseAudioUtils.inst != None:
+			return
+			
+		PulseAudioUtils.inst = self
 		gobject.GObject.__init__(self)
+		
 		
 		self.connected = False
 		
