@@ -315,9 +315,12 @@ def sdp_get_cached_rfcomm(address):
 			if k == SDP_ATTR_PROTO_DESC_LIST:
 				#print v
 				for i in v:
-					if i[0][0] == "uuid" and int(i[0][1], 16) == RFCOMM_UUID:
-						#print "Channel", i[1][1]	
-						channel = i[1][1]
+					try:
+						if i[0][0] == "uuid" and int(i[0][1], 16) == RFCOMM_UUID:
+							#print "Channel", i[1][1]	
+							channel = i[1][1]
+					except:
+						pass
 					
 			elif k == SDP_PRIMARY_LANG_BASE:
 				name = v[1]
