@@ -11,6 +11,8 @@ blueman_PYTHON = 	\
 	AppletPlugin.py		\
 	ConfigPlugin.py		\
 	MechanismPlugin.py	\
+	BasePlugin.py		\
+	ConfigurablePlugin.py \
 	__init__.py
 
 CLEANFILES =		\

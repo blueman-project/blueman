@@ -41,270 +41,22 @@ from blueman.Constants import *
 from blueman.Functions import *
 
 from blueman.main.DbusService import DbusService
-from blueman.main.Config import Config
+
 
 import blueman.plugins.applet
 from blueman.plugins.AppletPlugin import AppletPlugin
+from blueman.plugins.BasePlugin import BasePlugin
 
 import blueman.bluez as Bluez
 
 from blueman.main.SignalTracker import SignalTracker
 
-class StopException(Exception):
-	pass
-	
-class LoadException(Exception):
-	pass
+from blueman.main.PluginManager import PersistentPluginManager
 
-__builtin__.StopException = StopException
+
 
 class BluemanApplet(object):
 
-	class Plugins(gobject.GObject):
-		__gsignals__ = {
-			'plugin-loaded' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_STRING,)),
-			'plugin-unloaded' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_STRING,)),
-		}
-		
-		def __init__(self, applet):
-			gobject.GObject.__init__(self)
-			self.__plugins = {}
-			self.__classes = {}
-			self.__deps = {}
-			self.__cfls = {}
-			self.__loaded = []
-			self.applet = applet
-			self.__config = Config()
-
-			if self.__config.props.applet_plugins == None:
-				self.__config.props.applet_plugins = []					
-
-			self.__config.connect('property-changed', self.on_property_changed)
-		
-		
-		def on_property_changed(self, config, key, value):
-			if key == "applet_plugins":
-				if type(value) == list:
-					for item in value:
-						disable = item[0] == "!"
-						if disable:
-							item = item[1:]
-						try:
-							cls = self.__classes[item]
-							if not cls.__unloadable__ and disable:
-								print YELLOW("warning:"), item, "is not unloadable"
-							elif item in self.__loaded and disable:
-								self.Unload(item)
-							elif item not in self.__loaded and not disable:
-								try:
-									self.Load(item, user_action=True)
-								except:
-									self.SetConfig(item, False)
-
-						except KeyError:
-							print YELLOW("warning:"), "Plugin %s not found" % item
-							continue
-							
-		def GetClasses(self):
-			return self.__classes
-			
-		def GetLoaded(self):
-			return self.__loaded
-			
-		def GetDependencies(self):
-			return self.__deps
-			
-		def GetConflicts(self):
-			return self.__cfls
-			
-		def Load(self, name=None, user_action=False):
-			if name:
-				try:
-					self.__load_plugin(self.__classes[name])
-				except LoadException, e:
-					pass
-				except Exception, e:
-					if user_action:
-						d = gtk.MessageDialog(type=gtk.MESSAGE_ERROR, 
-											  buttons=gtk.BUTTONS_CLOSE)
-						d.set_markup(_("<b>An error has occured while loading "
-									 "a plugin. Please notify the developers "
-									 "with the content of this message.</b>"))
-						d.props.secondary_text = traceback.format_exc()
-						d.run()
-						d.destroy()	
-						raise	
-					
-				return 
-				
-			path = os.path.dirname(blueman.plugins.applet.__file__)
-			plugins = []
-			for root, dirs, files in os.walk(path):
-				for f in files:
-					if f.endswith(".py") and not (f.endswith(".pyc") or f.endswith("_.py")):
-						plugins.append(f[0:-3])
-
-			dprint(plugins)
-			for plugin in plugins:
-				try:
-					__import__("blueman.plugins.applet.%s" % plugin, None, None, [])
-				except ImportError, e:
-					dprint("Unable to load plugin module %s\n%s" % (plugin, e))
-			
-			
-			for cls in AppletPlugin.__subclasses__():
-				self.__classes[cls.__name__] = cls
-				if not cls.__name__ in self.__deps:
-					self.__deps[cls.__name__] = []
-				
-				if not cls.__name__ in self.__cfls:
-					self.__cfls[cls.__name__] = []				
-				
-				for c in cls.__depends__:
-					if not c in self.__deps:
-						self.__deps[c] = []
-					self.__deps[c].append(cls.__name__)
-
-				for c in cls.__conflicts__:
-					if not c in self.__cfls:
-						self.__cfls[c] = []
-					self.__cfls[c].append(cls.__name__)	
-					if c not in self.__cfls[cls.__name__]:
-						self.__cfls[cls.__name__].append(c)
-	
-			c = self.__config.props.applet_plugins
-			for name, cls in self.__classes.iteritems():
-				for dep in self.__deps[name]:
-					#plugins that are required by not unloadable plugins are not unloadable too
-					if not self.__classes[dep].__unloadable__:
-						cls.__unloadable__ = False				
-				
-				if (cls.__autoload__ or cls.__name__ in c) and not (cls.__unloadable__ and "!"+cls.__name__ in c):
-					try:
-						self.__load_plugin(cls)
-					except LoadException:
-						pass
-						
-		def Disabled(self, plugin):
-			plugins = self.__config.props.applet_plugins
-			return "!"+plugin in plugins
-			
-		def Enabled(self, plugin):
-			plugins = self.__config.props.applet_plugins
-			return plugin in plugins
-
-		def __load_plugin(self, cls):
-			if cls.__name__ in self.__loaded:
-				return
-				
-			for dep in cls.__depends__:
-				if not dep in self.__loaded:
-					if not dep in self.__classes:
-						raise "Could not satisfy dependency %s -> %s" % (cls.__name__, dep)
-					try:
-						self.__load_plugin(self.__classes[dep])	
-					except Exception, e:
-						dprint(e)
-						raise
-						
-			for cfl in self.__cfls[cls.__name__]:
-				if cfl in self.__classes:
-					if self.__classes[cfl].__priority__ > cls.__priority__ and not self.Disabled(cfl) and not self.Enabled(cls.__name__):
-						dprint("Not loading %s because it's conflict has higher priority" % cls.__name__)
-						return
-					
-				if cfl in self.__loaded:
-					if cls.__priority__ > self.__classes[cfl].__priority__ and not self.Enabled(cfl):
-						self.Unload(cfl)
-					else:
-						raise LoadException("Not loading conflicting plugin %s due to lower priority" % cls.__name__)
-			
-			dprint("loading", cls)
-			inst = cls(self.applet)
-			try:
-				inst._load(self.applet)
-			except Exception, e:
-				dprint("Failed to load %s\n%s" % (cls.__name__, e))
-				if not cls.__unloadable__:
-					os._exit(1)
-					
-				raise #NOTE TO SELF: might cause bugs
-				
-			else:
-				self.__plugins[cls.__name__] = inst
-			
-				self.__loaded.append(cls.__name__)
-				self.emit("plugin-loaded", cls.__name__)
-			
-		def __getattr__(self, key):
-			try:
-				return self.__plugins[key]
-			except:
-				return self.__dict__[key]
-
-		def Unload(self, name):
-			if self.__classes[name].__unloadable__:
-				for d in self.__deps[name]:
-			 		self.Unload(d)
-			 		
-				if name in self.__loaded:
-				 	dprint("Unloading %s" % name)
-				 	try:
-				 		inst = self.__plugins[name]
-				 		inst._unload()
-				 	except NotImplementedError:
-				 		print "Plugin cannot be unloaded"
-				 	else:
-				 		self.__loaded.remove(name)
-				 		del self.__plugins[name]
-				 		self.emit("plugin-unloaded", name)
-				 	
-			else:
-				raise Exception("Plugin %s is not unloadable" % name)
-		
-		def SetConfig(self, plugin, state):
-			plugins = self.__config.props.applet_plugins 
-			if plugin in plugins:
-				plugins.remove(plugin)
-			elif "!"+plugin in plugins:
-				plugins.remove("!"+plugin)
-				
-			plugins.append("!"+plugin if not state else plugin)
-			self.__config.props.applet_plugins = plugins
-			
-		def get_plugins(self):
-			return self.__plugins
-						
-		#executes a function on all plugin instances
-		def Run(self, function, *args, **kwargs):
-			rets = []
-			for inst in AppletPlugin.instances:
-				try:
-					ret = getattr(inst, function)(*args, **kwargs)
-					rets.append(ret)
-				except Exception, e:
-					dprint("Function", function, "on", inst.__class__.__name__, "Failed")
-					traceback.print_exc()
-				
-			return rets
-			
-		#executes a function on all plugin instances, runs a callback after each plugin returns something
-		def RunEx(self, function, callback, *args, **kwargs):
-			for inst in AppletPlugin.instances:
-				ret = getattr(inst, function)(*args, **kwargs)
-				try:
-					ret = callback(inst, ret) 
-				except StopException:
-					return
-				except Exception, e:
-					dprint("Function", function, "on", inst.__class__.__name__, "Failed")
-					traceback.print_exc()
-					return
-					
-				if ret != None:
-					args = ret
-
-					
 	def __init__(self):
 		setup_icon_path()
 		if not pynotify.init("Blueman"):
@@ -317,7 +69,7 @@ class BluemanApplet(object):
 		self.DbusSvc = DbusService("org.blueman.Applet", "/")
 		self.Signals = SignalTracker()
 		
-		self.Plugins = BluemanApplet.Plugins(self)
+		self.Plugins = PersistentPluginManager(AppletPlugin, blueman.plugins.applet, self)
 		self.Plugins.Load()
 			
 		self.Plugins.Run("on_plugins_loaded")

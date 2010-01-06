@@ -1,0 +1,305 @@
+# Copyright (C) 2010 Valmantas Paliksa <walmis at balticum-tv dot lt>
+#
+# Licensed under the GNU General Public License Version 3
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# 
+
+import gobject
+import os
+import __builtin__
+import traceback
+
+from blueman.main.Config import Config
+from blueman.Functions import *
+
+class StopException(Exception):
+	pass
+	
+class LoadException(Exception):
+	pass
+
+__builtin__.StopException = StopException
+
+class PluginManager(gobject.GObject):
+	__gsignals__ = {
+		'plugin-loaded' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_STRING,)),
+		'plugin-unloaded' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_STRING,)),
+	}
+	
+	def __init__(self, plugin_class, module_path, user_data):
+		gobject.GObject.__init__(self)
+		self.__plugins = {}
+		self.__classes = {}
+		self.__deps = {}
+		self.__cfls = {}
+		self.__loaded = []
+		self.user_data = user_data
+		
+		self.module_path = module_path
+		self.plugin_class = plugin_class
+
+	@property
+	def config_list(self):
+		return []
+						
+	def GetClasses(self):
+		return self.__classes
+		
+	def GetLoaded(self):
+		return self.__loaded
+		
+	def GetDependencies(self):
+		return self.__deps
+		
+	def GetConflicts(self):
+		return self.__cfls
+		
+	def Load(self, name=None, user_action=False):
+		if name:
+			try:
+				self.__load_plugin(self.__classes[name])
+			except LoadException, e:
+				pass
+			except Exception, e:
+				if user_action:
+					d = gtk.MessageDialog(type=gtk.MESSAGE_ERROR, 
+										  buttons=gtk.BUTTONS_CLOSE)
+					d.set_markup(_("<b>An error has occured while loading "
+								 "a plugin. Please notify the developers "
+								 "with the content of this message.</b>"))
+					d.props.secondary_text = traceback.format_exc()
+					d.run()
+					d.destroy()	
+					raise	
+				
+			return 
+			
+		path = os.path.dirname(self.module_path.__file__)
+		plugins = []
+		for root, dirs, files in os.walk(path):
+			for f in files:
+				if f.endswith(".py") and not (f.endswith(".pyc") or f.endswith("_.py")):
+					plugins.append(f[0:-3])
+
+		dprint(plugins)
+		for plugin in plugins:
+			try:
+				__import__(self.module_path.__name__ + ".%s" % plugin, None, None, [])
+			except ImportError, e:
+				dprint("Unable to load plugin module %s\n%s" % (plugin, e))
+		
+		
+		for cls in self.plugin_class.__subclasses__():
+			self.__classes[cls.__name__] = cls
+			if not cls.__name__ in self.__deps:
+				self.__deps[cls.__name__] = []
+			
+			if not cls.__name__ in self.__cfls:
+				self.__cfls[cls.__name__] = []				
+			
+			for c in cls.__depends__:
+				if not c in self.__deps:
+					self.__deps[c] = []
+				self.__deps[c].append(cls.__name__)
+
+			for c in cls.__conflicts__:
+				if not c in self.__cfls:
+					self.__cfls[c] = []
+				self.__cfls[c].append(cls.__name__)	
+				if c not in self.__cfls[cls.__name__]:
+					self.__cfls[cls.__name__].append(c)
+
+		c = self.config_list
+		for name, cls in self.__classes.iteritems():
+			for dep in self.__deps[name]:
+				#plugins that are required by not unloadable plugins are not unloadable too
+				if not self.__classes[dep].__unloadable__:
+					cls.__unloadable__ = False				
+			
+			if (cls.__autoload__ or cls.__name__ in c) and not (cls.__unloadable__ and "!"+cls.__name__ in c):
+				try:
+					self.__load_plugin(cls)
+				except LoadException:
+					pass
+					
+	def Disabled(self, plugin):
+		return False
+		
+	def Enabled(self, plugin):
+		return True
+
+	def __load_plugin(self, cls):
+		if cls.__name__ in self.__loaded:
+			return
+			
+		for dep in cls.__depends__:
+			if not dep in self.__loaded:
+				if not dep in self.__classes:
+					raise "Could not satisfy dependency %s -> %s" % (cls.__name__, dep)
+				try:
+					self.__load_plugin(self.__classes[dep])	
+				except Exception, e:
+					dprint(e)
+					raise
+					
+		for cfl in self.__cfls[cls.__name__]:
+			if cfl in self.__classes:
+				if self.__classes[cfl].__priority__ > cls.__priority__ and not self.Disabled(cfl) and not self.Enabled(cls.__name__):
+					dprint("Not loading %s because it's conflict has higher priority" % cls.__name__)
+					return
+				
+			if cfl in self.__loaded:
+				if cls.__priority__ > self.__classes[cfl].__priority__ and not self.Enabled(cfl):
+					self.Unload(cfl)
+				else:
+					raise LoadException("Not loading conflicting plugin %s due to lower priority" % cls.__name__)
+		
+		dprint("loading", cls)
+		inst = cls(self.user_data)
+		try:
+			inst._load(self.user_data)
+		except Exception, e:
+			dprint("Failed to load %s\n%s" % (cls.__name__, e))
+			if not cls.__unloadable__:
+				os._exit(1)
+				
+			raise #NOTE TO SELF: might cause bugs
+			
+		else:
+			self.__plugins[cls.__name__] = inst
+		
+			self.__loaded.append(cls.__name__)
+			self.emit("plugin-loaded", cls.__name__)
+		
+	def __getattr__(self, key):
+		try:
+			return self.__plugins[key]
+		except:
+			return self.__dict__[key]
+
+	def Unload(self, name):
+		if self.__classes[name].__unloadable__:
+			for d in self.__deps[name]:
+		 		self.Unload(d)
+		 		
+			if name in self.__loaded:
+			 	dprint("Unloading %s" % name)
+			 	try:
+			 		inst = self.__plugins[name]
+			 		inst._unload()
+			 	except NotImplementedError:
+			 		print "Plugin cannot be unloaded"
+			 	else:
+			 		self.__loaded.remove(name)
+			 		del self.__plugins[name]
+			 		self.emit("plugin-unloaded", name)
+			 	
+		else:
+			raise Exception("Plugin %s is not unloadable" % name)
+	
+		
+	def get_plugins(self):
+		return self.__plugins
+					
+	#executes a function on all plugin instances
+	def Run(self, function, *args, **kwargs):
+		rets = []
+		for inst in self.__plugins.itervalues():
+			try:
+				ret = getattr(inst, function)(*args, **kwargs)
+				rets.append(ret)
+			except Exception, e:
+				dprint("Function", function, "on", inst.__class__.__name__, "Failed")
+				traceback.print_exc()
+			
+		return rets
+		
+	#executes a function on all plugin instances, runs a callback after each plugin returns something
+	def RunEx(self, function, callback, *args, **kwargs):
+		for inst in self.__plugins.itervalues():
+			ret = getattr(inst, function)(*args, **kwargs)
+			try:
+				ret = callback(inst, ret) 
+			except StopException:
+				return
+			except Exception, e:
+				dprint("Function", function, "on", inst.__class__.__name__, "Failed")
+				traceback.print_exc()
+				return
+				
+			if ret != None:
+				args = ret
+				
+				
+class PersistentPluginManager(PluginManager):
+	def __init__(self, *args):
+		super(PersistentPluginManager, self).__init__(*args)
+		
+		self.__config = Config()
+		
+		if getattr(self.__config.props, self.plugin_class.__name__) == None:
+			setattr(self.__config.props, self.plugin_class.__name__, [])					
+
+		self.__config.connect("property-changed", self.on_property_changed)		
+		
+	def Disabled(self, plugin):
+		plugins = getattr(self.__config.props, self.plugin_class.__name__)
+		return "!"+plugin in plugins
+		
+	def Enabled(self, plugin):
+		plugins = getattr(self.__config.props, self.plugin_class.__name__)
+		return plugin in plugins
+		
+	def SetConfig(self, plugin, state):
+		plugins = self.__config.get(self.plugin_class.__name__) 
+		if plugin in plugins:
+			plugins.remove(plugin)
+		elif "!"+plugin in plugins:
+			plugins.remove("!"+plugin)
+			
+		plugins.append("!"+plugin if not state else plugin)
+		
+		self.__config.set(self.plugin_class.__name__, plugins)
+		
+	@property
+	def config_list(self):
+		return self.__config.get(self.plugin_class.__name__) 
+		
+	def on_property_changed(self, config, key, value):
+		if key == self.plugin_class.__name__:
+			if type(value) == list:
+				for item in value:
+					disable = item[0] == "!"
+					if disable:
+						item = item[1:]
+
+					try:
+						cls = self.GetClasses()[item]
+						if not cls.__unloadable__ and disable:
+							print YELLOW("warning:"), item, "is not unloadable"
+						elif item in self.GetLoaded() and disable:
+							self.Unload(item)
+						elif item not in self.GetLoaded() and not disable:
+							try:
+								self.Load(item, user_action=True)
+							except:
+								self.SetConfig(item, False)
+
+					except KeyError:
+						print YELLOW("warning:"), "Plugin %s not found" % item
+						continue
+		
+	
+
