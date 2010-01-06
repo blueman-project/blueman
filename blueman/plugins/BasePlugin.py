@@ -48,8 +48,6 @@ class BasePlugin(object):
 			raise MethodAlreadyExists
 		else:
 			setattr(cls, func.__name__, func)	
-			
-		print cls.__dict__
 	
 	def _unload(self):
 		self.on_unload()

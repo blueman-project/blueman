@@ -21,7 +21,6 @@ import os
 import __builtin__
 import traceback
 
-from blueman.main.Config import Config
 from blueman.Functions import *
 
 class StopException(Exception):
@@ -233,7 +232,7 @@ class PluginManager(gobject.GObject):
 			try:
 				ret = callback(inst, ret) 
 			except StopException:
-				return
+				return ret
 			except Exception, e:
 				dprint("Function", function, "on", inst.__class__.__name__, "Failed")
 				traceback.print_exc()
@@ -241,8 +240,12 @@ class PluginManager(gobject.GObject):
 				
 			if ret != None:
 				args = ret
-				
-				
+
+try:				
+	from blueman.main.Config import Config
+except:
+	pass
+	
 class PersistentPluginManager(PluginManager):
 	def __init__(self, *args):
 		super(PersistentPluginManager, self).__init__(*args)
