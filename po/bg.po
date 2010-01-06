@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-12-29 20:33+0200\n"
-"PO-Revision-Date: 2009-12-29 19:28+0000\n"
-"Last-Translator: Vladimir Kolev <admin@vladimirkolev.com>\n"
+"PO-Revision-Date: 2010-01-05 08:03+0000\n"
+"Last-Translator: Svetoslav Stefanov <svetlisashkov@yahoo.com>\n"
 "Language-Team: Bulgarian <bg@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-12-30 04:44+0000\n"
+"X-Launchpad-Export-Date: 2010-01-06 04:32+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -263,7 +263,7 @@ msgstr ""
 
 #: ../data/ui/services-audio.ui.h:5
 msgid "Allows this computer to act like a handsfree headset."
-msgstr ""
+msgstr "Позволява компютъра да работи като безжична слушалка"
 
 #: ../data/ui/services-audio.ui.h:6
 msgid ""
@@ -552,7 +552,7 @@ msgstr ""
 
 #: ../blueman/main/applet/BluezAgent.py:285
 msgid "Confirm value"
-msgstr ""
+msgstr "Потвърждение на стойността"
 
 #: ../blueman/main/applet/BluezAgent.py:286
 #, python-format
@@ -803,7 +803,7 @@ msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:543
 msgid "Browse Device..."
-msgstr ""
+msgstr "Преглеждане на устройство..."
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:581
 #: ../blueman/gui/manager/ManagerToolbar.py:45
@@ -833,11 +833,11 @@ msgstr "Премахване..."
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:628
 msgid "Disconnect"
-msgstr ""
+msgstr "Прекъсване"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:629
 msgid "Forcefully disconnect the device"
-msgstr ""
+msgstr "Принудително изключва устройството"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:638
 msgid "Disconnecting..."
@@ -928,6 +928,9 @@ msgid ""
 "unload <b>%(0)s</b>.\n"
 "Proceed?"
 msgstr ""
+"Приставката <b>%(0)s</b> е в конфликт с <b>%(1)s</b>. Зареждането на "
+"<b>%(1)s</b> ще изключи <b>%(0)s</b>.\n"
+"Продължаване?"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:36 ../blueman/DeviceClass.py:61
@@ -1221,15 +1224,15 @@ msgstr ""
 
 #: ../blueman/plugins/applet/StandardItems.py:38
 msgid "_Setup New Device"
-msgstr ""
+msgstr "_Настройка на ново устройство"
 
 #: ../blueman/plugins/applet/StandardItems.py:45
 msgid "Send _Files to Device"
-msgstr ""
+msgstr "Изпращане на _файлове към устройство"
 
 #: ../blueman/plugins/applet/StandardItems.py:50
 msgid "_Browse Files on Device"
-msgstr ""
+msgstr "_Преглеждане на файлове на устройство"
 
 #: ../blueman/plugins/applet/StandardItems.py:58
 msgid "_Devices"
@@ -1301,6 +1304,8 @@ msgid ""
 "Successfully connected to a Bluetooth audio device. This device will now be "
 "available in the PulseAudio mixer"
 msgstr ""
+"Успешно свързване с Bluetooth аудио устройство. Устройството ще бъде "
+"достъпно в миксера на PulseAudio."
 
 #: ../blueman/plugins/applet/DhcpClient.py:26
 msgid "Provides a basic dhcp client for Bluetooth PAN connections."
@@ -1364,8 +1369,8 @@ msgstr ""
 #, python-format
 msgid "<b>%d Active Connection</b>"
 msgid_plural "<b>%d Active Connections</b>"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "<b>%d активна връзка</b>"
+msgstr[1] "<b>%d активни връзки</b>"
 
 #: ../blueman/plugins/applet/Headset.py:26
 msgid "Runs a command when answer button is pressed on a headset"
@@ -1385,6 +1390,8 @@ msgid ""
 "Provides a menu item for making the default adapter temporarily visible when "
 "it is set to hidden by default"
 msgstr ""
+"Осигурява елемент в менюто, чрез който адаптерът по подразбиране да се "
+"направи временно видим, в случаите, когато е зададен като скрит."
 
 #: ../blueman/plugins/applet/DiscvManager.py:37
 msgid "Discoverable timeout"
@@ -1401,7 +1408,7 @@ msgstr ""
 
 #: ../blueman/plugins/applet/DiscvManager.py:54
 msgid "Make the default adapter temporarily visible"
-msgstr ""
+msgstr "Включване на подразбиращият се адаптер да е временно видим"
 
 #: ../blueman/plugins/applet/DiscvManager.py:80
 #, python-format
@@ -1475,14 +1482,14 @@ msgstr "<b>Включване на Bluetooth</b>"
 
 #: ../blueman/plugins/applet/PowerManager.py:184
 msgid "Turn on all adapters"
-msgstr ""
+msgstr "Включване на всички адаптери"
 
 #: ../blueman/plugins/services/Network.py:262
 #: ../blueman/plugins/services/Network.py:265
 #: ../blueman/plugins/services/Network.py:271
 #: ../blueman/plugins/services/Network.py:277
 msgid "Not currently supported with this setup"
-msgstr ""
+msgstr "С тази настройка в момента не се поддържа"
 
 #: ../blueman/plugins/services/Transfer.py:30
 msgid "Transfer"
@@ -1510,7 +1517,7 @@ msgstr "Bluetooth Мениджър"
 
 #: ../data/configs/org.blueman.policy.in.h:1
 msgid "Bluetooth Configuration"
-msgstr ""
+msgstr "Настройка на Bluetooth"
 
 #: ../data/configs/org.blueman.policy.in.h:2
 msgid "Changing Bluetooth system settings requires privileges"
@@ -1611,11 +1618,11 @@ msgstr "Възникна грешка"
 
 #: ../apps/blueman-sendto:155
 msgid "Cancelling"
-msgstr ""
+msgstr "Отмяна"
 
 #: ../apps/blueman-sendto:175 ../apps/blueman-sendto:209
 msgid "Sending File"
-msgstr ""
+msgstr "Изпращане на файл"
 
 #: ../apps/blueman-sendto:175 ../apps/blueman-sendto:209
 msgid "ETA:"
@@ -1658,7 +1665,7 @@ msgstr ""
 
 #: ../apps/blueman-sendto:377
 msgid "Select files to send"
-msgstr ""
+msgstr "Изберете файлове за изпращане"
 
 #: ../apps/blueman-assistant:61
 msgid "Start configuration assistant for this device"
@@ -1674,7 +1681,7 @@ msgstr "Bluetooth Асистент"
 
 #: ../apps/blueman-assistant:131
 msgid "No adapters found"
-msgstr ""
+msgstr "Не са открити адаптери"
 
 #: ../apps/blueman-assistant:275
 msgid "<b>Adding Device...</b>"
