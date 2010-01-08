@@ -1,7 +1,7 @@
 from ctypes import *
 import gobject
 import weakref
-import blueman.Functions
+from blueman.Functions import YELLOW
 
 PA_CONTEXT_UNCONNECTED =  0
 PA_CONTEXT_CONNECTING	= 1
@@ -97,10 +97,37 @@ pa_sink_input_info._fields_ = [
     ('proplist', c_void_p),
 ]
 
+class pa_card_profile_info(Structure):
+    pass
+pa_card_profile_info._fields_ = [
+    ('name', c_char_p),
+    ('description', c_char_p),
+    ('n_sinks', c_uint32),
+    ('n_sources', c_uint32),
+    ('priority', c_uint32),
+]
+
+class pa_card_info(Structure):
+    pass
+pa_card_info._fields_ = [
+    ('index', c_uint32),
+    ('name', c_char_p),
+    ('owner_module', c_uint32),
+    ('driver', c_char_p),
+    ('n_profiles', c_uint32),
+    ('profiles', POINTER(pa_card_profile_info)),
+    ('active_profile', POINTER(pa_card_profile_info)),
+    ('proplist', c_void_p),
+]
+
+
+
            
 pa_module_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(pa_module_info), c_int, py_object)
 pa_source_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(pa_source_info), c_int, py_object)
 pa_sink_input_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(pa_sink_input_info), c_int, py_object)
+pa_card_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(pa_card_info), c_int, py_object)
+pa_context_subscribe_cb_t = CFUNCTYPE(None, c_void_p, c_uint32, c_uint32, c_void_p)
 
 class PulseAudioUtils(gobject.GObject):
 	__gsignals__ = {
@@ -122,6 +149,10 @@ class PulseAudioUtils(gobject.GObject):
 		if state == PA_CONTEXT_READY:
 			self.connected = True
 			self.emit("connected")
+			MASK = 0x0200 | 0x0010 #from enum pa_subscription_mask
+			self.simple_callback(lambda x: dprint(x), 
+								 self.pa.pa_context_subscribe,
+								 MASK)
 		else:
 			if self.connected:
 				self.emit("disconnected")
@@ -176,8 +207,12 @@ class PulseAudioUtils(gobject.GObject):
 		pythonapi.Py_IncRef(py_object(cb))
 		
 		args += (cb, py_object(cb))
+		op = function(self.pa_context, *args)
+		if not op:
+			dprint(YELLOW("Operation failed"))
+			print function.__name__
 		
-		self.pa.pa_operation_unref(function(self.pa_context, *args))
+		self.pa.pa_operation_unref(op)
 	
 	def ListSources(self, callback):
 		self.check_connected()
@@ -257,14 +292,74 @@ class PulseAudioUtils(gobject.GObject):
 	def MoveSinkInput(self, input_id, sink_id, callback):
 		self.check_connected()
 		
-		self.simple_callback(callback, self.pa.pa_context_move_sink_input_by_index, int(input_id), int(sink_id))
+		self.simple_callback(callback, 
+							self.pa.pa_context_move_sink_input_by_index, 
+							int(input_id), int(sink_id))
 		
 	def SetDefaultSink(self, name, callback):
 		self.check_connected()
 		
 		self.pa.pa_context_load_module.argtypes = (c_void_p, c_char_p, c_void_p, py_object)
-		self.simple_callback(callback, self.pa.pa_context_set_default_sink, name)			
-
+		self.simple_callback(callback, self.pa.pa_context_set_default_sink, name)
+		
+#CARDS		
+	def __card_info(self, card_info):
+		props = self.__get_proplist(card_info[0].proplist)
+		stuff = {
+			"name": card_info[0].name,
+			"proplist": props,
+			"owner_module": card_info[0].owner_module,
+			"driver": card_info[0].driver,
+			"index": card_info[0].index,
+		}
+		l = []
+		for i in xrange(0, card_info[0].n_profiles):
+			x = {
+			 "name": card_info[0].profiles[i].name,
+			 "description": card_info[0].profiles[i].description,
+			 "n_sinks": card_info[0].profiles[i].n_sinks,
+			 "n_sources": card_info[0].profiles[i].n_sources,
+			 "priority": card_info[0].profiles[i].priority,
+			}
+			l.append(x)	
+			
+		stuff["profiles"] = l
+		stuff["active_profile"] = card_info[0].active_profile[0].name
+		
+		return stuff
+	
+	def ListCards(self, callback):
+		self.check_connected()
+		
+		data = {}
+		def handler(entry_info, end):
+			if end:
+				callback(data)
+				return
+		
+			entry = self.__card_info(entry_info)
+			
+			data[entry["name"]] = entry			
+			
+		self.__init_list_callback(self.pa.pa_context_get_card_info_list,
+			  pa_card_info_cb_t, handler)	
+			  
+	def GetCard(self, id, callback):
+		self.check_connected()
+		
+		def handler(entry_info, end):
+			if end:
+				return
+		
+			callback(self.__card_info(entry_info))
+			
+		if type(id) == str:
+			fn = self.pa.pa_context_get_card_info_by_name
+		else:
+			fn = self.pa.pa_context_get_card_info_by_index
+			
+		self.__init_list_callback(fn,
+			  pa_card_info_cb_t, handler, id)						
 			
 #### Module API #######	
 	def ListModules(self, callback):
@@ -318,6 +413,9 @@ class PulseAudioUtils(gobject.GObject):
 			return PulseAudioUtils.inst
 		else:
 			return super(PulseAudioUtils, cls).__new__(cls)
+			
+	def __event_callback(self, context, event_type, idx, userdata):
+		dprint(event_type, idx)
 	
 	def __init__(self):
 		if PulseAudioUtils.inst != None:
@@ -326,6 +424,7 @@ class PulseAudioUtils(gobject.GObject):
 		PulseAudioUtils.inst = self
 		gobject.GObject.__init__(self)
 		
+		self.event_cb = pa_context_subscribe_cb_t(self.__event_callback)
 		
 		self.connected = False
 		
@@ -356,9 +455,18 @@ class PulseAudioUtils(gobject.GObject):
 			
 			self.weak = weakref.proxy(self)
 			
+			
+			
 			self.pa.pa_context_set_state_callback.argtypes = (c_void_p, pa_context_notify_cb_t, py_object)
 			self.pa.pa_context_set_state_callback(self.pa_context, self.ctx_cb, self.weak)
 			self.pa.pa_context_connect (self.pa_context, None, 0, None)
+			
+			self.pa.pa_context_set_subscribe_callback(self.pa_context,
+													  self.event_cb,
+													  None)
+													  
+
+											  
 		
 	def __del__(self):
 		dprint("Destroying PulseAudioUtils instance")

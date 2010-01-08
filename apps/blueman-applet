@@ -20,7 +20,6 @@
 # 
 
 import sys
-from subprocess import *
 import os.path
 import os
 import pynotify
@@ -30,7 +29,6 @@ import gobject
 import gtk
 import gtk.gdk
 import __builtin__
-import traceback
 
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -42,7 +40,6 @@ from blueman.Functions import *
 
 from blueman.main.DbusService import DbusService
 
-
 import blueman.plugins.applet
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.plugins.BasePlugin import BasePlugin
@@ -52,8 +49,6 @@ import blueman.bluez as Bluez
 from blueman.main.SignalTracker import SignalTracker
 
 from blueman.main.PluginManager import PersistentPluginManager
-
-
 
 class BluemanApplet(object):
 
