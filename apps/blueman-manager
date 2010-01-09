@@ -44,6 +44,10 @@ from blueman.main.Config import Config
 
 from blueman.gui.MessageArea import MessageArea
 
+from blueman.main.PluginManager import PluginManager
+import blueman.plugins.manager
+from blueman.plugins.ManagerPlugin import ManagerPlugin
+
 enable_rgba_colormap()
 
 class Blueman:
@@ -56,6 +60,8 @@ class Blueman:
 	
 		self.window = self.Builder.get_object("window")
 		
+		self.Plugins = PluginManager(ManagerPlugin, blueman.plugins.manager, None)
+		self.Plugins.Load()
 		
 		vbox = self.Builder.get_object("vbox1")
 		area = MessageArea()

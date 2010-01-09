@@ -17,13 +17,134 @@
 # 
 
 from blueman.plugins.ManagerPlugin import ManagerPlugin
+from blueman.main.PulseAudioUtils import PulseAudioUtils, EventType
+from blueman.main.SignalTracker import SignalTracker
+from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
+from blueman.gui.MessageArea import MessageArea
+
 import gtk
 
 class PulseAudioProfile(ManagerPlugin):
 
-	def on_request_menu_items(self, manager_menu, device):
-		dprint("WOOOOOOOOOOO")
-		item = gtk.MenuItem("test")
-		item.show()
+	def on_load(self, user_data):
+		self.devices = {}
+		self.signals = SignalTracker()
 		
-		return [(item, 300)]
+		pa = PulseAudioUtils()
+		pa.connect("event", self.on_pa_event)
+		
+	#updates all menu instances with the following device address
+	def regenerate_with_device(self, device_addr):
+		for inst in ManagerDeviceMenu.__instances__:
+			if inst.SelectedDevice.Address == device_addr and not inst.is_popup:
+				inst.Generate()
+		
+	def on_pa_event(self, utils, event, idx):
+		dprint(event, idx)
+		
+		def get_card_cb(card):
+			if card["driver"] == "module-bluetooth-device.c":
+				self.devices[card["proplist"]["device.string"]] = card
+				self.regenerate_with_device(card["proplist"]["device.string"])
+		
+		if event & EventType.CARD:
+			print "card",
+			if event & EventType.CHANGE:
+				print "change"
+				utils.GetCard(idx, get_card_cb)
+			elif event & EventType.REMOVE:
+				print "remove"
+			else:
+				print "add"
+				utils.GetCard(idx, get_card_cb)
+		
+		
+	def is_connected(self, device):
+		try:
+			s = device.Services["audiosink"]
+			props = s.GetProperties()
+			if props["Connected"]:
+				return True
+		except KeyError:
+			pass
+		
+		try:
+			s = device.Services["audiosource"]
+			props = s.GetProperties()
+			if props["State"] != "disconnected":
+				return True			
+		except KeyError:
+			pass		
+		
+		try:
+			s = device.Services["headset"]
+			props = s.GetProperties()
+			if props["State"] != "disconnected":
+				return True			
+		except KeyError:
+			pass
+			
+		return False
+		
+	def query_pa(self, device):
+		def list_cb(cards):
+			for c in cards.itervalues():
+				if c["proplist"]["device.string"] == device.Address:
+					self.devices[device.Address] = c
+					self.generate_menu(device)
+		
+		pa = PulseAudioUtils()
+		pa.ListCards(list_cb)
+		
+	def on_selection_changed(self, item, device, profile):
+		if item.get_active():
+			pa = PulseAudioUtils()
+			
+			c = self.devices[device.Address]
+			
+			def on_result(res):
+				if not res:
+					MessageArea.show_message(_("Failed to change profile to %s" % profile))
+			
+			pa.SetCardProfile(c["index"], profile, on_result)
+		
+	def generate_menu(self, device):
+		info = self.devices[device.Address]
+		items = []
+		
+		sub = gtk.Menu()
+		
+		if info:
+			for profile in info["profiles"]:	
+				i = gtk.RadioMenuItem(items[0] if len(items) else None, 
+									  profile["description"])
+									  
+				if profile["name"] == info["active_profile"]:
+					i.set_active(True)
+				
+				self.signals.Handle("gobject", i, "toggled", 
+									self.on_selection_changed,
+									device, profile["name"])
+									  
+				items.append(i)
+				sub.append(i)
+				i.show()
+				
+			self.item.set_submenu(sub)
+			self.item.show()
+		
+	def on_request_menu_items(self, manager_menu, device):
+		#self.signals.DisconnectAll()
+		self.item = gtk.MenuItem(_("Audio Profile"))
+		self.item.props.tooltip_text = _("Select audio profile for PulseAudio")
+		
+		if self.is_connected(device):
+			if not device.Address in self.devices:
+				self.query_pa(device)
+			else:
+				self.generate_menu(device)
+		
+		else:
+			pass
+		
+		return [(self.item, 300)]

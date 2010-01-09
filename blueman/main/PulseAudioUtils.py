@@ -10,6 +10,22 @@ PA_CONTEXT_SETTING_NAME	= 3
 PA_CONTEXT_READY	= 4
 PA_CONTEXT_FAILED	= 5
 PA_CONTEXT_TERMINATED	= 6
+
+class EventType:
+	SINK = 0x0000 
+	SOURCE = 0x0001 
+	SINK_INPUT = 0x0002 
+	SOURCE_OUTPUT = 0x0003 
+	MODULE = 0x0004 
+	CLIENT = 0x0005 
+	SAMPLE_CACHE = 0x0006 
+	SERVER = 0x0007 
+	CARD = 0x0009 
+	FACILITY_MASK = 0x000F 
+	NEW = 0x0000 
+	CHANGE = 0x0010 
+	REMOVE = 0x0020 
+	TYPE_MASK = 0x0030
 	
 pa_context_notify_cb_t = CFUNCTYPE(None, c_void_p, py_object)
 pa_context_index_cb_t = CFUNCTYPE(None, c_void_p, c_int, py_object)
@@ -133,6 +149,7 @@ class PulseAudioUtils(gobject.GObject):
 	__gsignals__ = {
 		'connected' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, ()),
 		'disconnected' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, ()),
+		'event': (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT)), 
 	}
 	
 	def check_connected(self):
@@ -342,7 +359,7 @@ class PulseAudioUtils(gobject.GObject):
 			data[entry["name"]] = entry			
 			
 		self.__init_list_callback(self.pa.pa_context_get_card_info_list,
-			  pa_card_info_cb_t, handler)	
+			  pa_card_info_cb_t, handler)
 			  
 	def GetCard(self, id, callback):
 		self.check_connected()
@@ -359,7 +376,15 @@ class PulseAudioUtils(gobject.GObject):
 			fn = self.pa.pa_context_get_card_info_by_index
 			
 		self.__init_list_callback(fn,
-			  pa_card_info_cb_t, handler, id)						
+			  pa_card_info_cb_t, handler, id)
+			  
+	def SetCardProfile(self, card_id, profile, callback):
+		if type(card_id) == str:
+			fn = self.pa.pa_context_set_card_profile_by_name
+		else:
+			fn = self.pa.pa_context_set_card_profile_by_index
+					
+		self.simple_callback(callback, fn, card_id, profile)						
 			
 #### Module API #######	
 	def ListModules(self, callback):
@@ -414,8 +439,12 @@ class PulseAudioUtils(gobject.GObject):
 		else:
 			return super(PulseAudioUtils, cls).__new__(cls)
 			
+
+		
+			
 	def __event_callback(self, context, event_type, idx, userdata):
 		dprint(event_type, idx)
+		self.emit("event", event_type, idx)
 	
 	def __init__(self):
 		if PulseAudioUtils.inst != None:

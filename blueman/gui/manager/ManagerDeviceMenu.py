@@ -29,13 +29,6 @@ from blueman.gui.MessageArea import MessageArea
 
 from blueman.Lib import rfcomm_list
 
-from blueman.main.PluginManager import PluginManager
-import blueman.plugins.manager
-from blueman.plugins.ManagerPlugin import ManagerPlugin
-
-Plugins = PluginManager(ManagerPlugin, blueman.plugins.manager, None)
-Plugins.Load()
-
 def get_x_icon(icon_name, size):
 	ic = get_icon(icon_name, size) 
 	x = get_icon("blueman-x", size) 
@@ -250,7 +243,7 @@ class ManagerDeviceMenu(gtk.Menu):
 			return
 			
 			
-		rets = Plugins.Run("on_request_menu_items", self, device)
+		rets = self.Blueman.Plugins.Run("on_request_menu_items", self, device)
 		
 		for ret in rets:
 			if ret:
@@ -451,7 +444,5 @@ class ManagerDeviceMenu(gtk.Menu):
 
 			else:
 				item.props.sensitive = False
-				
-			self.show_all()
 
 		
