@@ -18,33 +18,23 @@
 # 
 
 import gobject
-from blueman.main.Config import Config
+
 import gtk
 import traceback
+
+from blueman.plugins.ConfigurablePlugin import ConfigurablePlugin
 
 ictheme = gtk.icon_theme_get_default()
 
 class MethodAlreadyExists(Exception):
 	pass
 	
-class AppletPlugin(object):
-	__depends__ = []
-	__conflicts__ = []
-	__priority__ = 0
-	
-	__description__ = None
-	__author__ = None
-	
+class AppletPlugin(ConfigurablePlugin):
 	__icon__ = "blueman-plugin"
-	__unloadable__ = True
-	__autoload__ = True
 	
-	__options__ = {}
-	
-	__instance__ = None
-
-	instances = []
 	def __init__(self, applet):
+		super(AppletPlugin, self).__init__(applet)
+		
 		if not ictheme.has_icon(self.__class__.__icon__):
 			self.__class__.__icon__ = "blueman-plugin"
 		
@@ -52,72 +42,25 @@ class AppletPlugin(object):
 		
 		self.Applet = applet
 
-		self.__methods = []
+		#self.__methods = []
 		self.__dbus_methods = []
 		self.__dbus_signals = []
 		
-		AppletPlugin.instances.append(self)
-		if self.__options__ != {}:
-			self.__config = Config("plugins/" + self.__class__.__name__)
-			 
-			for k, v in self.__options__.iteritems():
-				if getattr(self.__config.props, k) == None:
-					setattr(self.__config.props, k, v[1])
-	
-	@classmethod
-	def is_configurable(cls):
-		res = map(lambda x: (len(x) > 2), cls.__options__.values())
-		return True in res
-	
-	def get_option(self, name):
-		if not name in self.__class__.__options__:
-			raise KeyError, "No such option"
-		return getattr(self.__config.props, name)
-		
-	def set_option(self, name, value):
-		if not name in self.__class__.__options__:
-			raise KeyError, "No such option"
-		opt = self.__class__.__options__[name]
-		if type(value) == opt[0]:
-			setattr(self.__config.props, name, value)
-		else:
-			raise TypeError, "Wrong type, must be %s" % repr(opt[0])		
-		
 	def _unload(self):
-		self.on_unload()
-		AppletPlugin.instances.remove(self)
-		for met in self.__methods:
-			delattr(AppletPlugin, met)
-			
+		super(AppletPlugin, self)._unload()
+		
 		for met in self.__dbus_methods:
 			self.Applet.DbusSvc.remove_registration(met)
 			
 		for sig in self.__dbus_signals:
 			self.Applet.DbusSvc.remove_registration(sig)
-			
-		self.__class__.__instance__ = None
 		
-	def __del__(self):
-		print "Deleting plugin instance", self
-	
+
 	def _load(self, applet):
-		try:
-			self.on_load(applet)
-			self.on_manager_state_changed(applet.Manager != None)
-			self.__class__.__instance__ = self
-		except Exception, e:
-			AppletPlugin.instances.remove(self)
-			traceback.print_exc()
-			raise
+		super(AppletPlugin, self)._load(applet)
 		
-	@staticmethod
-	def add_method(func):
-		func.im_self.__methods.append(func.__name__)
-		
-		if func.__name__ in AppletPlugin.__dict__:
-			raise MethodAlreadyExists
-		else:
-			setattr(AppletPlugin, func.__name__, func)
+		self.on_manager_state_changed(applet.Manager != None)
+
 			
 	def add_dbus_method(self, func, *args, **kwargs):
 		self.Applet.DbusSvc.add_method(func, *args, **kwargs)
@@ -143,9 +86,3 @@ class AppletPlugin(object):
 	#notify when all plugins finished loading	
 	def on_plugins_loaded(self):
 		pass
-		
-	def on_load(self, applet):
-		pass
-	
-	def on_unload(self):
-		raise NotImplementedError
