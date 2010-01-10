@@ -28,7 +28,7 @@ class PulseAudioProfile(ManagerPlugin):
 
 	def on_load(self, user_data):
 		self.devices = {}
-		self.signals = SignalTracker()
+		self.item = None
 		
 		pa = PulseAudioUtils()
 		pa.connect("event", self.on_pa_event)
@@ -122,9 +122,8 @@ class PulseAudioProfile(ManagerPlugin):
 				if profile["name"] == info["active_profile"]:
 					i.set_active(True)
 				
-				self.signals.Handle("gobject", i, "toggled", 
-									self.on_selection_changed,
-									device, profile["name"])
+				i.connect("toggled", self.on_selection_changed,
+						  device, profile["name"])
 									  
 				items.append(i)
 				sub.append(i)
@@ -134,17 +133,17 @@ class PulseAudioProfile(ManagerPlugin):
 			self.item.show()
 		
 	def on_request_menu_items(self, manager_menu, device):
-		#self.signals.DisconnectAll()
-		self.item = gtk.MenuItem(_("Audio Profile"))
-		self.item.props.tooltip_text = _("Select audio profile for PulseAudio")
-		
+
 		if self.is_connected(device):
+			self.item = gtk.MenuItem(_("Audio Profile"))
+			self.item.props.tooltip_text = _("Select audio profile for PulseAudio")		
+			
 			if not device.Address in self.devices:
 				self.query_pa(device)
 			else:
 				self.generate_menu(device)
 		
 		else:
-			pass
+			return
 		
 		return [(self.item, 300)]

@@ -163,23 +163,37 @@ class ManagerDeviceMenu(gtk.Menu):
 			
 		if service_id == "network":
 			uuid = args[0]
-			appl.ServiceProxy(svc.GetInterfaceName(), svc.GetObjectPath(), "Connect", [uuid], reply_handler=success, error_handler=fail, timeout=200)
+			appl.ServiceProxy(svc.GetInterfaceName(), 
+							  svc.GetObjectPath(), 
+							  "Connect", 
+							  [uuid], 
+							  reply_handler=success, 
+							  error_handler=fail, timeout=200)
 			#prog.set_cancellable(True)
 			#prog.connect("cancelled", cancel)
 			
 		elif service_id == "input":
-			appl.ServiceProxy(svc.GetInterfaceName(), svc.GetObjectPath(), "Connect", [], reply_handler=success, error_handler=fail, timeout=200)
+			appl.ServiceProxy(svc.GetInterfaceName(), 
+							  svc.GetObjectPath(), 
+							  "Connect", [], 
+							  reply_handler=success, 
+							  error_handler=fail, timeout=200)
 			#prog.connect("cancelled", cancel)
 			
 		elif service_id == "serial":
 			uuid = str(args[0])
 
-			appl.RfcommConnect(device.GetObjectPath(), uuid, reply_handler=success, error_handler=fail, timeout=200)
+			appl.RfcommConnect(device.GetObjectPath(), 
+							   uuid, 
+							   reply_handler=success, 
+							   error_handler=fail, timeout=200)
 		
 		else:
-			appl.ServiceProxy(svc.GetInterfaceName(), svc.GetObjectPath(), "Connect", [], reply_handler=success, error_handler=fail, timeout=200)
-			
-			
+			appl.ServiceProxy(svc.GetInterfaceName(), 
+							  svc.GetObjectPath(), 
+							  "Connect", [], 
+							  reply_handler=success, 
+							  error_handler=fail, timeout=200)
 			
 		prog.start()
 		
@@ -199,7 +213,8 @@ class ManagerDeviceMenu(gtk.Menu):
 			except:
 				dprint("** Failed to connect to applet")
 				return
-			appl.ServiceProxy(svc.GetInterfaceName(), svc.GetObjectPath(), "Disconnect", [])
+			appl.ServiceProxy(svc.GetInterfaceName(), 
+							  svc.GetObjectPath(), "Disconnect", [])
 
 		
 	def on_device_property_changed(self, List, device, iter, (key, value)):
@@ -252,19 +267,22 @@ class ManagerDeviceMenu(gtk.Menu):
 		
 		if device.Fake:
 			item = create_menuitem(_("Add Device"), get_icon("gtk-add", 16))
-			self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.add_device(device))
+			self.Signals.Handle("gobject", item, "activate", 
+								lambda x: self.Blueman.add_device(device))
 			item.show()
 			self.append(item)
 			item.props.tooltip_text = _("Add this device to known devices list")
 			
 			item = create_menuitem(_("Setup..."), get_icon("gtk-properties", 16))
 			self.append(item)
-			self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.setup(device))
+			self.Signals.Handle("gobject", item, "activate", 
+								lambda x: self.Blueman.setup(device))
 			item.show()
 			item.props.tooltip_text = _("Run the setup assistant for this device")
 			
 			item = create_menuitem(_("Pair"), get_icon("gtk-dialog-authentication", 16))
-			self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.bond(device))
+			self.Signals.Handle("gobject", item, "activate", 
+								lambda x: self.Blueman.bond(device))
 			self.append(item)
 			item.show()			
 			item.props.tooltip_text = _("Pair with the device")
@@ -274,7 +292,8 @@ class ManagerDeviceMenu(gtk.Menu):
 			self.append(item)
 			
 			send_item = create_menuitem(_("Send a File..."), get_icon("gtk-copy", 16))
-			self.Signals.Handle("gobject", send_item, "activate", lambda x: self.Blueman.send(device))
+			self.Signals.Handle("gobject", send_item, "activate", 
+								lambda x: self.Blueman.send(device))
 			send_item.show()
 			self.append(send_item)
 			
@@ -437,7 +456,9 @@ class ManagerDeviceMenu(gtk.Menu):
 					self.unset_op(device)
 
 				self.set_op(device, _("Disconnecting..."))
-				self.Blueman.disconnect(device, reply_handler=finished, error_handler=finished)
+				self.Blueman.disconnect(device, 
+										reply_handler=finished, 
+										error_handler=finished)
 			
 			if device.Connected:
 				self.Signals.Handle(item, "activate", on_disconnect)
