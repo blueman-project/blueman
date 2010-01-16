@@ -40,7 +40,7 @@ class PulseAudioProfile(ManagerPlugin):
 	def on_pa_ready(self, utils):
 		dprint("connected")
 		for dev in self.deferred:
-			self.regenerate_with_device(device)
+			self.regenerate_with_device(dev.Address)
 			
 		self.deferred = []
 		
