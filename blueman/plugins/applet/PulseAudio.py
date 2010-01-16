@@ -112,7 +112,7 @@ class Module(gobject.GObject):
 		
 		dprint(self.id, self.refcount)
 		
-		if self.refcount == 0:
+		if self.refcount <= 0 and self.id:
 			self.unload()
 			
 	def load(self, args, cb):

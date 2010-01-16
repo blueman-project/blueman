@@ -31,8 +31,19 @@ class PulseAudioProfile(ManagerPlugin):
 		self.devices = {}
 		self.item = None
 		
+		self.deferred = []
+		
 		pa = PulseAudioUtils()
 		pa.connect("event", self.on_pa_event)
+		pa.connect("connected", self.on_pa_ready)
+		
+	def on_pa_ready(self, utils):
+		dprint("connected")
+		for dev in self.deferred:
+			self.regenerate_with_device(device)
+			
+		self.deferred = []
+		
 		
 	#updates all menu instances with the following device address
 	def regenerate_with_device(self, device_addr):
@@ -134,8 +145,13 @@ class PulseAudioProfile(ManagerPlugin):
 			self.item.show()
 		
 	def on_request_menu_items(self, manager_menu, device):
-
+		
 		if self.is_connected(device):
+			pa = PulseAudioUtils()
+			if not pa.connected:
+				self.deferred.append(device)
+				return
+				
 			self.item = create_menuitem(_("Audio Profile"), get_icon("audio-card", 16))
 			self.item.props.tooltip_text = _("Select audio profile for PulseAudio")		
 			
