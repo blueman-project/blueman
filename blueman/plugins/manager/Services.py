@@ -42,7 +42,7 @@ class Services(ManagerPlugin):
 
 		items = []
 		uuids = device.UUIDs
-		
+		appl = AppletService()
 		for name, service in device.Services.iteritems():
 			if name == "serial":
 				ports_list = rfcomm_list()
@@ -240,7 +240,7 @@ class Services(ManagerPlugin):
 					item.show()
 					items.append((item, 101))
 					
-
+					
 					if "DhcpClient" in appl.QueryPlugins():
 						def renew(x):
 							appl.DhcpClient(sprops["Device"])							
