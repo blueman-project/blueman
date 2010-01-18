@@ -34,13 +34,13 @@ class SerialManager(AppletPlugin):
 	__description__ = _("Standard SPP profile connection handler, allows executing custom actions")
 	__author__ = "walmis"
 	__options__  = {
-		"script": (str, "", 
-		"Script to execute on connection", 
-		"The following arguments will be passed:\n"
-		"Address, Name, service name, uuid16s, rfcomm node\n"
-		"For example:\n"
-		"AA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0\n"
-		"uuid16s are returned as a comma seperated list"),
+		"script": {"type": str, "default": "", 
+					"name": "Script to execute on connection", 
+					"desc": "<span size=\"small\">The following arguments will be passed:\n"
+							"Address, Name, service name, uuid16s, rfcomm node\n"
+							"For example:\n"
+							"AA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0\n"
+							"uuid16s are returned as a comma seperated list</span>"},
 	}
 	
 	def on_load(self, applet):

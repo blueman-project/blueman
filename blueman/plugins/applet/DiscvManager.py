@@ -32,12 +32,12 @@ class DiscvManager(AppletPlugin):
 	__description__ = _("Provides a menu item for making the default adapter temporarily visible when it is set to hidden by default")
 	
 	__options__  = {
-		"time" : (int,
-				  60,
-				  _("Discoverable timeout"),
-				  _("Amount of time in seconds discoverable mode will last"),
-				  60,
-				  600)
+		"time" : {"type": int,
+				  "default": 60,
+				  "name": _("Discoverable timeout"),
+				  "desc": _("Amount of time in seconds discoverable mode will last"),
+				  "range": (60, 600)
+				 }
 	}
 	
 	def on_load(self, applet):

@@ -36,19 +36,17 @@ class SettingsWidget(gtk.VBox):
 	def construct_settings(self):
 		for k, v in self.inst.__class__.__options__.iteritems():
 			if len(v) > 2:
-				dtype = v[0]
-				def_value = v[1]
-				short_desc = v[2]
-				full_desc = v[3]
-				if dtype == int:
-					range_start = v[4]
-					range_end = v[5]
 					
-				l = gtk.Label(short_desc)
+				l = gtk.Label(v["name"])
 				l.props.xalign = 0.0
-				self.pack_start(self.get_control_widget(k, v), False, False)
+					
+				w = self.get_control_widget(k, v)
+				if "decorator" in v:
+					v["decorator"](self.inst, w, k, v)
 				
-				l = gtk.Label("<i>"+full_desc+"</i>")
+				self.pack_start(w, False, False)
+				
+				l = gtk.Label("<i>"+v["desc"]+"</i>")
 				l.set_line_wrap(True)
 				l.props.use_markup = True
 				l.props.xalign = 0.0
@@ -59,23 +57,26 @@ class SettingsWidget(gtk.VBox):
 				self.pack_start(sep, False, False)
 				
 	def handle_change(self, widget, opt, params, prop):
-		val = params[0](getattr(widget.props, prop))
+		val = params["type"](getattr(widget.props, prop))
 		dprint("changed", opt, val)
 		
 		self.inst.set_option(opt, val)
 		
 				
 	def get_control_widget(self, opt, params):
-		if params[0] == bool:
-			c = gtk.CheckButton(params[2])
+		if "widget" in params:
+			return params["widget"](self.inst, opt, params)
+			
+		elif params["type"] == bool:
+			c = gtk.CheckButton(params["name"])
 			
 			c.props.active = self.inst.get_option(opt)
 			c.connect("toggled", self.handle_change, opt, params, "active")
 			return c
 			
-		elif params[0] == int:
+		elif params["type"] == int:
 			b = gtk.HBox()
-			l = gtk.Label(params[2])
+			l = gtk.Label(params["name"])
 			b.pack_start(l, False, False)
 			
 			r = gtk.SpinButton()
@@ -84,16 +85,16 @@ class SettingsWidget(gtk.VBox):
 			
 			r.set_numeric(True)
 			r.set_increments(1, 3)
-			r.set_range(params[4], params[5])
+			r.set_range(params["range"][0], params["range"][1])
 			
 			r.props.value = self.inst.get_option(opt)
 			r.connect("value-changed", self.handle_change, opt, params, "value")
 			
 			return b
 			
-		elif params[0] == str:
+		elif params["type"] == str:
 			b = gtk.HBox()
-			l = gtk.Label(params[2])
+			l = gtk.Label(params["name"])
 			b.pack_start(l, False, False)
 			
 			e = gtk.Entry()
@@ -154,7 +155,8 @@ class PluginDialog(gtk.Dialog):
 			["icon", str, gtk.CellRendererPixbuf(), {"icon-name":2}, None],
 			
 			#device caption
-			["name", str, gtk.CellRendererText(), {"markup":3}, None, {"expand": True}]
+			["desc", str, gtk.CellRendererText(), {"markup":3}, None, {"expand": True}],
+			["name", str]
 		]
 
 		
@@ -271,7 +273,11 @@ class PluginDialog(gtk.Dialog):
 		classes = self.applet.Plugins.GetClasses()
 		loaded = self.applet.Plugins.GetLoaded()
 		for name, cls in classes.iteritems():
-			self.list.append(active=(name in loaded), icon=cls.__icon__, activatable=(cls.__unloadable__), name=name)
+			if cls.is_configurable():
+				desc = "<span weight=\"bold\">%s</span>" % name
+			else:
+				desc = name
+			self.list.append(active=(name in loaded), icon=cls.__icon__, activatable=(cls.__unloadable__), name=name, desc=desc)
 			
 	def plugin_state_changed(self, plugins, name, loaded):
 		row = self.list.get_conditional(name=name)

@@ -23,15 +23,67 @@ import gobject
 
 class StatusIcon(AppletPlugin, gtk.StatusIcon):
 	__unloadable__ = False
+	__icon__ = "blueman"
+	
+	def on_entry_changed(self, entry, ic, image):
+		
+		if ic.has_icon(self.get_option("icon")):
+			icon = gtk.STOCK_APPLY
+		else:
+			icon = gtk.STOCK_CANCEL
+			
+		image.set_from_stock(icon, gtk.ICON_SIZE_LARGE_TOOLBAR)
+		
+		if self.timeout:
+			gobject.source_remove(self.timeout)
+			
+		self.timeout = gobject.timeout_add(1000, lambda: self.IconShouldChange())
+	
+	def widget_decorator(self, widget, name, options):
+		entry = widget.get_children()[1]
+		image = gtk.Image()
+		
+		completion = gtk.EntryCompletion()
+		entry.set_completion(completion)
+		
+		liststore = gtk.ListStore(gobject.TYPE_STRING)
+		
+		completion.set_model(liststore)
+		
+		completion.set_text_column(0)
+
+		ic = gtk.icon_theme_get_default()
+		icons = ic.list_icons("Applications")
+		for i in icons:
+			liststore.append([i])
+		
+		if ic.has_icon(self.get_option("icon")):
+			icon = gtk.STOCK_APPLY
+		else:
+			icon = gtk.STOCK_CANCEL
+			
+		image.set_from_stock(icon, gtk.ICON_SIZE_LARGE_TOOLBAR)
+		image.show()
+		widget.pack_start(image, 0, 0)
+		entry.connect("changed", self.on_entry_changed, ic, image)
+		
+	__options__ = {"icon": {"type": str,
+							"default": "blueman-tray",
+							"name": _("Icon Name"),
+							"desc": _("Custom icon to use for the notification area"),
+							"decorator": widget_decorator
+						   }
+				  }
 	
 	FORCE_SHOW = 2
 	SHOW = 1
 	FORCE_HIDE = 0
-
+	
 	def on_load(self, applet):
 		gtk.StatusIcon.__init__(self)
 		self.lines = {}
 		self.pixbuf = None
+		self.timeout = None
 		
 		self.connect("size-changed", self.on_status_icon_resized)
 		
@@ -109,7 +161,7 @@ class StatusIcon(AppletPlugin, gtk.StatusIcon):
 		self.Query()
 		
 	def on_status_icon_resized(self, statusicon, size):
-		self.pixbuf = get_icon("blueman-tray", size, fallback="blueman")
+		self.pixbuf = get_icon(self.get_option("icon"), size, fallback="blueman")
 		
 		def callback(inst, ret):
 			if isinstance(ret, gtk.gdk.Pixbuf):

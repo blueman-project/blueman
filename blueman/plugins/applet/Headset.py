@@ -27,10 +27,11 @@ class Headset(AppletPlugin):
 	__icon__ = "blueman-headset"
 	
 	__options__  = {
-		"command" : (str,
-				  "",
-				  _("Command"),
-				  _("Command to execute when answer button is pressed:"))
+		"command" : {"type": str,
+				  "default": "",
+				  "name": _("Command"),
+				  "desc": _("Command to execute when answer button is pressed:")
+				  }
 	}
 		
 	def on_load(self, applet):

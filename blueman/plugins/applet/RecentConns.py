@@ -58,14 +58,14 @@ class RecentConns(AppletPlugin, gtk.Menu):
 	__author__ = "Walmis"
 	
 	__options__  = {
-		"max_items" : (int,
-				  6,
-				  #the maximum number of items RecentConns menu will display
-				  _("Maximum items"),
-				  _("The maximum number of items recent connections menu will display."),
-				  6,
-				  20),
-		"recent_connections" : (str, "")
+		"max_items" : {"type": int,
+					   "default": 6,
+					   #the maximum number of items RecentConns menu will display
+					   "name": _("Maximum items"),
+					   "desc": _("The maximum number of items recent connections menu will display."),
+					   "range": (6, 20)
+					  },
+		"recent_connections" : {"type": str, "default": ""}
 	}
 	
 	items = None

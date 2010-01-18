@@ -141,14 +141,14 @@ class PulseAudio(AppletPlugin):
 	__icon__ = "audio-card"
 	__options__  = {
 		"checked" : (bool, False),
-		"make_default_sink": (bool, 
-							  True, 
-							  _("Make default sink"), 
-							  _("Make the a2dp audio sink the default after connection")),
-		"move_streams": (bool, 
-						 True, 
-						 _("Move streams"), 
-						 _("Move existing audio streams to bluetooth device"))
+		"make_default_sink": {"type":bool, 
+							  "default": True, 
+							  "name": _("Make default sink"), 
+							  "desc": _("Make the a2dp audio sink the default after connection")},
+		"move_streams": {"type": bool, 
+						 "default": True, 
+						 "name": _("Move streams"), 
+						 "desc": _("Move existing audio streams to bluetooth device")}
 	}
 	def on_load(self, applet):
 		self.signals = SignalTracker()

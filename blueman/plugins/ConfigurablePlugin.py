@@ -36,10 +36,14 @@ class ConfigurablePlugin(BasePlugin):
 		if not name in self.__class__.__options__:
 			raise KeyError, "No such option"
 		opt = self.__class__.__options__[name]
-		if type(value) == opt[0]:
+		if type(value) == opt["type"]:
 			setattr(self.__config.props, name, value)
+			self.option_changed(name, value)
 		else:
-			raise TypeError, "Wrong type, must be %s" % repr(opt[0])
+			raise TypeError, "Wrong type, must be %s" % repr(opt["type"])
+			
+	def option_changed(self, name, value):
+		pass
 			
 	def __init__(self, parent):
 		super(ConfigurablePlugin, self).__init__(parent)
@@ -49,6 +53,6 @@ class ConfigurablePlugin(BasePlugin):
 		 
 			for k, v in self.__options__.iteritems():
 				if getattr(self.__config.props, k) == None:
-					setattr(self.__config.props, k, v[1])
+					setattr(self.__config.props, k, v["default"])
 						
 					
