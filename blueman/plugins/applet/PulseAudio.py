@@ -263,7 +263,8 @@ class PulseAudio(AppletPlugin):
 				gobject.timeout_add(500, self.setup_pa, device, "a2dp")
 		
 		elif key == "Connected" and not value:
-			self.connected_sinks.remove(device)
+			if device in self.connected_sinks:
+				self.connected_sinks.remove(device)
 			self.try_unload_module(device)
 		
 	def on_hsp_prop_change(self, key, value, device):
@@ -301,8 +302,8 @@ class PulseAudio(AppletPlugin):
 		self.pulse_utils.ListSinks(sinks_cb)
 		
 	def setup_pa(self, device_path, profile):
-		device = BluezDevice(device_path)
-		props = device.GetProperties()
+		device = Device(device_path)
+		
 		
 		def load_cb(res):
 			dprint("Load result", res)
@@ -319,13 +320,19 @@ class PulseAudio(AppletPlugin):
 							 status_icon=self.Applet.Plugins.StatusIcon)	
 				if profile == "a2dp":			 
 					self.setup_pa_sinks(res)
+			
+			#connect to other services, so pulseaudio profile switcher could work
+			try:		
+				device.Services["Audio"].Connect()
+			except:
+				pass
 							 	
 		if int(self.pulse_utils.GetVersion().split(".")[2]) >= 18:
 			args = "address=%s profile=%s sink_properties=device.icon_name=blueman card_properties=device.icon_name=blueman"
 		else:
 			args = "address=%s profile=%s"
 
-		self.load_module(device_path, args % (props["Address"], profile), load_cb)
+		self.load_module(device_path, args % (device.Address, profile), load_cb)
 		
 		
 		
