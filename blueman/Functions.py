@@ -170,6 +170,8 @@ def get_icon(name, size=24, fallback="gtk-missing-image"):
 	try:
 		icon = ic.load_icon(name, size, 0) 
 	except:
+		if not fallback:
+			raise
 		try:
 			icon = ic.load_icon(fallback, size, 0) 
 		except:
@@ -185,8 +187,6 @@ def get_icon(name, size=24, fallback="gtk-missing-image"):
 		new_h = size
 		icon = icon.scale_simple(dest_width, dest_height, gtk.gdk.INTERP_BILINEAR)
 	
-		
-
 	return icon
 	
 def get_notification_icon(icon, main_icon="blueman"):
