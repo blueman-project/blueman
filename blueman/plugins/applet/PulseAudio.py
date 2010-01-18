@@ -322,10 +322,14 @@ class PulseAudio(AppletPlugin):
 					self.setup_pa_sinks(res)
 			
 			#connect to other services, so pulseaudio profile switcher could work
-			try:		
-				device.Services["Audio"].Connect()
-			except:
-				pass
+			for s in ("headset", "audiosink", "audiosource"):	
+				try:
+					device.Services[s].Connect()
+				except KeyError:
+					pass
+				except Exception, e:
+					print e
+				
 							 	
 		if int(self.pulse_utils.GetVersion().split(".")[2]) >= 18:
 			args = "address=%s profile=%s sink_properties=device.icon_name=blueman card_properties=device.icon_name=blueman"
