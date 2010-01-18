@@ -270,7 +270,7 @@ class PulseAudio(AppletPlugin):
 		if key == "Connected" and value:
 			if not device in self.connected_hs:
 				self.connected_hs.append(device)
-				self.self.setup_pa(device, "hsp")
+				self.setup_pa(device, "hsp")
 		
 		elif key == "Connected" and not value:
 			self.try_unload_module(device)
