@@ -29,6 +29,13 @@ class Indicator(AppletPlugin):
 	__depends__ = ["StatusIcon"]
 	__icon__ = "blueman-txrx"
 	__description__ = _("Adds an indication on the status icon when Bluetooth is active and shows the number of connections in the tooltip.")
+	
+	__options__ = {"overlay": {"type": bool,
+							   "default": True,
+							   "name": _("Show overlay icon"),
+							   "desc": _("Whether to show a composition over the status icon when connected")
+							  }
+				  }
 		
 	def on_load(self, applet):
 		self.num_connections = 0
@@ -40,6 +47,10 @@ class Indicator(AppletPlugin):
 			self.on_device_property_changed, 
 			"PropertyChanged", 
 			"org.bluez.Device")
+			
+	def option_changed(self, name, value):
+		if name == "overlay":
+			self.Applet.Plugins.StatusIcon.IconShouldChange()
 	
 	def on_unload(self):
 		self.signals.DisconnectAll()
@@ -49,7 +60,7 @@ class Indicator(AppletPlugin):
 		
 	
 	def on_status_icon_pixbuf_ready(self, pixbuf):	
-		if self.num_connections > 0:
+		if self.num_connections > 0 and self.get_option("overlay"):
 			self.active = True
 			x_size = int(pixbuf.props.height)
 			x = get_icon("blueman-txrx", x_size) 
@@ -70,11 +81,12 @@ class Indicator(AppletPlugin):
 				if "Connected" in props:
 					if props["Connected"]:
 						self.num_connections += 1
-		
+
 		dprint("Found %d existing connections" % self.num_connections)
 		if (self.num_connections > 0 and not self.active) or \
 					(self.num_connections == 0 and self.active):				
-			self.Applet.Plugins.StatusIcon.IconShouldChange()
+			if self.get_option("overlay"):
+				self.Applet.Plugins.StatusIcon.IconShouldChange()
 			
 		self.update_statusicon()	
 		
@@ -101,7 +113,7 @@ class Indicator(AppletPlugin):
 	def on_manager_state_changed(self, state):
 		if state:
 			if not self.initialized:
-				self.enumerate_connections()
+				gobject.timeout_add(0, self.enumerate_connections)
 				self.initialized = True
 			else:
 				gobject.timeout_add(1000, 
