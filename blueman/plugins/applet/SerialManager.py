@@ -35,12 +35,12 @@ class SerialManager(AppletPlugin):
 	__author__ = "walmis"
 	__options__  = {
 		"script": {"type": str, "default": "", 
-					"name": "Script to execute on connection", 
-					"desc": "<span size=\"small\">The following arguments will be passed:\n"
+					"name": _("Script to execute on connection"), 
+					"desc": _("<span size=\"small\">The following arguments will be passed:\n"
 							"Address, Name, service name, uuid16s, rfcomm node\n"
 							"For example:\n"
 							"AA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0\n"
-							"uuid16s are returned as a comma seperated list</span>"},
+							"uuid16s are returned as a comma seperated list</span>")},
 	}
 	
 	def on_load(self, applet):

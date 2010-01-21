@@ -28,9 +28,11 @@ blueman/main/__init__.py
 blueman/main/AppletService.py
 blueman/main/DhcpClient.py
 blueman/main/SpeedCalc.py
+blueman/main/BluezConfig.py
 blueman/main/applet/__init__.py
 blueman/main/applet/Transfer.py
 blueman/main/applet/BluezAgent.py
+blueman/main/PluginManager.py
 blueman/main/DbusService.py
 blueman/Functions.py
 blueman/gui/manager/ManagerMenu.py
@@ -79,6 +81,18 @@ blueman/bluez/Agent.py
 blueman/plugins/config/Gconf.py
 blueman/plugins/config/__init__.py
 blueman/plugins/config/File.py
+blueman/plugins/mechanism/Hal.py
+blueman/plugins/mechanism/RfKill.py
+blueman/plugins/mechanism/Network.py
+blueman/plugins/mechanism/Ppp.py
+blueman/plugins/mechanism/Config.py
+blueman/plugins/mechanism/__init__.py
+blueman/plugins/manager/PulseAudioProfile.py
+blueman/plugins/manager/__init__.py
+blueman/plugins/manager/Services.py
+blueman/plugins/ConfigurablePlugin.py
+blueman/plugins/ManagerPlugin.py
+blueman/plugins/BasePlugin.py
 blueman/plugins/ServicePlugin.py
 blueman/plugins/ConfigPlugin.py
 blueman/plugins/AppletPlugin.py
@@ -97,6 +111,7 @@ blueman/plugins/applet/StandardItems.py
 blueman/plugins/applet/AuthAgent.py
 blueman/plugins/applet/__init__.py
 blueman/plugins/applet/PulseAudio.py
+blueman/plugins/applet/ExitItem.py
 blueman/plugins/applet/DhcpClient.py
 blueman/plugins/applet/NMIntegration.py
 blueman/plugins/applet/Indicator.py
@@ -106,10 +121,15 @@ blueman/plugins/applet/Menu.py
 blueman/plugins/applet/PPPSupport.py
 blueman/plugins/applet/SerialManager.py
 blueman/plugins/applet/PowerManager.py
+blueman/plugins/MechanismPlugin.py
 blueman/plugins/services/Network.py
 blueman/plugins/services/__init__.py
+blueman/plugins/services/Audio.py
 blueman/plugins/services/Transfer.py
-
+blueman/iniparse/config.py
+blueman/iniparse/compat.py
+blueman/iniparse/ini.py
+blueman/iniparse/__init__.py
 
 
 data/blueman.desktop.in
