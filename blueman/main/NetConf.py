@@ -217,6 +217,8 @@ if [ "$1" == "pan1" ]; then
 		
 		if [ "$MASQ" == "1" ]; then
 			echo 1 > /proc/sys/net/ipv4/ip_forward
+			echo 1 | tee /proc/sys/net/ipv4/conf/*/forwarding
+			
 			rule="-s %s/255.255.255.0 -j MASQUERADE"
 			iptables -t nat -A POSTROUTING $rule
 			echo -t nat -D POSTROUTING $rule > /var/run/blueman-iptbl-lock
