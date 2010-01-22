@@ -429,7 +429,13 @@ class PulseAudioUtils(gobject.GObject):
 
 	def GetVersion(self):
 		self.pa.pa_get_library_version.restype = c_char_p
-		return self.pa.pa_get_library_version()
+		v = self.pa.pa_get_library_version()
+		try:
+			a = v.split("-")[0].split(".")
+			a = map(lambda x: int(x), a)
+		except:
+			a = (0, 0, 0)
+		return a
 	
 	inst = None
 	
@@ -494,8 +500,6 @@ class PulseAudioUtils(gobject.GObject):
 													  self.event_cb,
 													  None)
 													  
-
-											  
 		
 	def __del__(self):
 		dprint("Destroying PulseAudioUtils instance")

@@ -170,7 +170,7 @@ class PulseAudio(AppletPlugin):
 		version = self.pulse_utils.GetVersion()
 		dprint("PulseAudio version:", version)
 		
-		if int(version.split(".")[2]) < 15:
+		if version[2] < 15:
 			raise Exception("PulseAudio too old, required 0.9.15 or higher")
 		
 		self.signals.Handle("dbus", 
