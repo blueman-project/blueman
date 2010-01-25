@@ -24,6 +24,7 @@ from blueman.Sdp import *
 from blueman.Lib import rfcomm_list
 from blueman.main.SignalTracker import SignalTracker
 from blueman.main.Device import Device
+from subprocess import PIPE
 import dbus
 
 import blueman.bluez as Bluez
@@ -112,7 +113,7 @@ class SerialManager(AppletPlugin):
 			try:
 				args += [address, name, sv_name, ",".join(map(lambda x: hex(x), uuid16)), node]
 				dprint(args)
-				p = spawn(args, True, reap=False)
+				p = spawn(args, True, reap=False, stdin=PIPE)
 				self.manage_script(address, node, p)
 			
 			except Exception, e:

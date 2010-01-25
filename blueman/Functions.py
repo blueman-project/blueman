@@ -132,7 +132,7 @@ def enable_rgba_colormap():
 	#gtk.widget_set_default_colormap(colormap)
 	pass
 
-def spawn(command, system=False, sn=None, reap=True):
+def spawn(command, system=False, sn=None, reap=True, *args, **kwargs):
 
 	def child_closed(pid, cond):
 		dprint(command, "closed")
@@ -157,7 +157,7 @@ def spawn(command, system=False, sn=None, reap=True):
 		
 	env["BLUEMAN_EVENT_TIME"] = str(gtk.get_current_event_time())
 	
-	p = Popen(command, env=env)
+	p = Popen(command, env=env, *args, **kwargs)
 	if reap:
 		gobject.child_watch_add(p.pid, child_closed)
 	return p
