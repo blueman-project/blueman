@@ -22,6 +22,9 @@ from blueman.main.Config import Config
 from blueman.gui.Notification import Notification
 from blueman.Sdp import *
 from blueman.Lib import rfcomm_list
+from blueman.main.SignalTracker import SignalTracker
+from blueman.main.Device import Device
+import dbus
 
 import blueman.bluez as Bluez
 
@@ -40,14 +43,31 @@ class SerialManager(AppletPlugin):
 							"Address, Name, service name, uuid16s, rfcomm node\n"
 							"For example:\n"
 							"AA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0\n"
-							"uuid16s are returned as a comma seperated list</span>")},
+							"uuid16s are returned as a comma seperated list\n\n"
+							"Upon device disconnection the script will be sent a HUP signal</span>")},
 	}
 	
 	def on_load(self, applet):
-		pass
+		self.signals = SignalTracker()
+		self.signals.Handle("dbus", 
+							dbus.SystemBus(), 
+							self.on_device_property_changed, 
+							"PropertyChanged", 
+							"org.bluez.Device", 
+							path_keyword="path")
+		
+		self.scripts = {}
 		
 	def on_unload(self):
-		pass
+		self.signals.DisconnectAll()
+		for k in self.scripts.iterkeys():
+			self.terminate_all_scripts(k)
+		
+	def on_device_property_changed(self, key, value, path):
+		if key == "Connected" and not value:
+			d = Device(path)
+			self.terminate_all_scripts(d.Address)
+		
 		
 	def on_rfcomm_connected(self, device, port, uuid):
 		uuid16 = sdp_get_serial_type(device.Address, uuid)
@@ -62,6 +82,28 @@ class SerialManager(AppletPlugin):
 				   	 sdp_get_serial_name(device.Address, uuid),
 				    	 uuid16,
 				    	 port)
+				    	 
+	def terminate_all_scripts(self, address):
+		try:
+			for p in self.scripts[address].itervalues():
+				dprint("Sending HUP to", p.pid)
+				p.send_signal(signal.SIGHUP)
+		except:
+			pass		
+	
+	def on_script_closed(self, pid, cond, (address,node)):
+		del self.scripts[address][node]
+		dprint("Script with PID", pid, "closed")
+				    	 
+	def manage_script(self, address, node, process):
+		if not address in self.scripts:
+			self.scripts[address] = {}
+			
+		if node in self.scripts[address]:
+			self.scripts[address][node].terminate()
+			
+		self.scripts[address][node] = process
+		gobject.child_watch_add(process.pid, self.on_script_closed, (address, node))
 			
 	def call_script(self, address, name, sv_name, uuid16, node):
 		c = self.get_option("script")
@@ -70,13 +112,21 @@ class SerialManager(AppletPlugin):
 			try:
 				args += [address, name, sv_name, ",".join(map(lambda x: hex(x), uuid16)), node]
 				dprint(args)
-				spawn(args, True)
+				p = spawn(args, True, reap=False)
+				self.manage_script(address, node, p)
+			
 			except Exception, e:
 				Notification(_("Serial port connection script failed"), 
 				_("There was a problem launching script %s\n"
 				"%s") % (c, str(e)), 
 				pixbuf=get_icon("blueman-serial", 48), 
-				status_icon=self.Applet.Plugins.StatusIcon)				
+				status_icon=self.Applet.Plugins.StatusIcon)	
+				
+	def on_rfcomm_disconnect(self, node):
+		for k, v in self.scripts.iteritems():
+			if node in v:
+				dprint("Sending HUP to", v[node].pid)
+				v[node].send_signal(signal.SIGHUP)
 			
 	def rfcomm_connect_handler(self, device, uuid, reply, err):
 		uuid16 = sdp_get_serial_type(device.Address, uuid)
@@ -89,6 +139,8 @@ class SerialManager(AppletPlugin):
 			return False
 			
 	def on_device_disconnect(self, device):
+		self.terminate_all_scripts(device.Address)
+		
 		if "serial" in device.Services:
 			ports = rfcomm_list()
 		
@@ -99,13 +151,13 @@ class SerialManager(AppletPlugin):
 			active_ports = map(flt, ports)
 			
 			serial = device.Services["serial"]
-		
+
 			for port in active_ports:
-				if port:
-					name = "/dev/rfcomm%d" % port
-					try:
-						serial.Disconnect(name)
-					except:
-						dprint("Failed to disconnect", name)
+				name = "/dev/rfcomm%d" % port
+				try:
+					dprint("Disconnecting", name)
+					serial.Disconnect(name)
+				except:
+					dprint("Failed to disconnect", name)
 			
 		
