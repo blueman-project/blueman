@@ -26,6 +26,7 @@ from blueman.main.SignalTracker import SignalTracker
 from blueman.main.Device import Device
 from subprocess import PIPE
 import dbus
+import atexit
 
 import blueman.bluez as Bluez
 
@@ -88,7 +89,7 @@ class SerialManager(AppletPlugin):
 		try:
 			for p in self.scripts[address].itervalues():
 				dprint("Sending HUP to", p.pid)
-				p.send_signal(signal.SIGHUP)
+				os.killpg(p.pid, signal.SIGHUP)
 		except:
 			pass		
 	
@@ -113,8 +114,10 @@ class SerialManager(AppletPlugin):
 			try:
 				args += [address, name, sv_name, ",".join(map(lambda x: hex(x), uuid16)), node]
 				dprint(args)
-				p = spawn(args, True, reap=False, stdin=PIPE)
+				p = spawn(args, True, reap=False, preexec_fn=lambda: os.setpgid(0, 0))
+								
 				self.manage_script(address, node, p)
+				
 			
 			except Exception, e:
 				Notification(_("Serial port connection script failed"), 
@@ -127,7 +130,8 @@ class SerialManager(AppletPlugin):
 		for k, v in self.scripts.iteritems():
 			if node in v:
 				dprint("Sending HUP to", v[node].pid)
-				v[node].send_signal(signal.SIGHUP)
+				os.killpg(v[node].pid, signal.SIGHUP)
+
 			
 	def rfcomm_connect_handler(self, device, uuid, reply, err):
 		uuid16 = sdp_get_serial_type(device.Address, uuid)
@@ -160,5 +164,13 @@ class SerialManager(AppletPlugin):
 					serial.Disconnect(name)
 				except:
 					dprint("Failed to disconnect", name)
-			
+					
+
+@atexit.register
+def exit_cleanup():
+	if SerialManager.__instance__:
+		self = SerialManager.__instance__
+		
+		for k in self.scripts.iterkeys():
+			self.terminate_all_scripts(k)	
 		
