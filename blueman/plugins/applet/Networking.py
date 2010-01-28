@@ -57,7 +57,7 @@ class Networking(AppletPlugin):
 			d.destroy()
 		
 		m = Mechanism()
-		m.NetworkSetup("reload", 0, "0", reply_handler=reply, error_handler=err)
+		m.ReloadNetwork(reply_handler=reply, error_handler=err)
 		
 	def on_unload(self):
 		self.Signals.DisconnectAll()

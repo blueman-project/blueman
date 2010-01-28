@@ -28,6 +28,7 @@ import signal
 import atexit
 import sys
 from subprocess import Popen
+import commands
 import gobject
 import traceback
 from blueman.Lib import sn_launcher
@@ -293,8 +294,7 @@ def check_single_instance(id, unhide_func=None):
 					f.close()
 				except:
 					cmdline = None
-
-			if not isrunning or (isrunning and sys.argv[0] not in cmdline):
+			if not isrunning or (isrunning and id not in cmdline):
 				print "Stale PID, overwriting"
 				os.remove(lockfile)
 			else:
@@ -314,3 +314,19 @@ def check_single_instance(id, unhide_func=None):
 	f.write("%s\n%s" % (str(os.getpid()), "0"))
 	f.close()
 	atexit.register(lambda:os.remove(lockfile))
+	
+def have(t):
+	cmd = "whereis %s" % t
+	out = commands.getoutput(cmd)
+	s = out.split(":")
+	if len(s[1]) > 0:
+		return True
+	else:
+		return False
+		
+def mask_ip4_address(ip, subnet):
+	masked_ip = ""
+	for i in range(4):
+		masked_ip += chr(ord(ip[i]) & ord(subnet[i]))
+	
+	return masked_ip

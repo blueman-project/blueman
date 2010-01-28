@@ -1,4 +1,4 @@
-from blueman.Functions import dprint# Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
+# Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
 # Copyright (C) 2008 Tadas Dailyda <tadas at dailyda dot com>
 #
 # Licensed under the GNU General Public License Version 3
@@ -19,9 +19,12 @@ from blueman.Functions import dprint# Copyright (C) 2008 Valmantas Paliksa <walm
 
 import gtk
 from blueman.Constants import *
+from blueman.Functions import have, dprint, mask_ip4_address
+from blueman.Lib import get_net_interfaces, get_net_address, get_net_netmask
+from socket import inet_ntoa, inet_aton
 from blueman.plugins.ServicePlugin import ServicePlugin
 
-import blueman.main.NetConf as NetConf
+from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler
 from blueman.main.Config import Config
 from blueman.main.Mechanism import Mechanism
 from blueman.main.AppletService import AppletService
@@ -39,8 +42,20 @@ class Network(ServicePlugin):
 		self.ignored_keys = []
 		
 		container.pack_start(self.widget)
-		self.setup_network()
 		
+		self.interfaces = []
+		for iface in get_net_interfaces():
+			if iface != "lo" and iface != "pan1":
+				print iface
+				ip = inet_aton(get_net_address(iface))
+				mask = inet_aton(get_net_netmask(iface))
+				self.interfaces.append((iface, ip, mask, mask_ip4_address(ip, mask)))
+
+		self.setup_network()
+		try:
+			self.ip_check()
+		except:
+			pass
 		return (_("Network"), "gtk-network")
 		
 	def on_enter(self):
@@ -93,15 +108,16 @@ class Network(ServicePlugin):
 				
 				r_dnsmasq = self.Builder.get_object("r_dnsmasq")
 				if r_dnsmasq.props.active:
-					stype = "dnsmasq"
+					stype = "DnsMasqHandler"
 				else:
-					stype = "dhcpd"
+					stype = "DhcpdHandler"
 				
 				net_ip = self.Builder.get_object("net_ip")
 				net_nat = self.Builder.get_object("net_nat")
 				
 				try:
-					m.NetworkSetup(net_ip.props.text, net_nat.props.active, stype)
+					m.EnableNetwork(inet_aton(net_ip.props.text), inet_aton("255.255.255.0"), stype)
+					
 					if not self.NetConf.props.nap_enable: #race condition workaround
 						self.ignored_keys.append("nap_enable")
 					self.NetConf.props.nap_enable = True
@@ -119,11 +135,42 @@ class Network(ServicePlugin):
 				if self.NetConf.props.nap_enable: #race condition workaround
 					self.ignored_keys.append("nap_enable")
 				self.NetConf.props.nap_enable = False
-				m.NetworkSetup("0",0,"0")
-				#disable
+				m.DisableNetwork()
 			
 			self.clear_options()
 
+	
+	def ip_check(self):
+		e = self.Builder.get_object("net_ip")
+		address = e.props.text
+		try:
+			if address.count(".") != 3:
+				raise Exception
+			a = inet_aton(address)
+		except:
+			e.props.secondary_icon_stock = gtk.STOCK_DIALOG_ERROR
+			e.props.secondary_icon_tooltip_text = _("Invalid IP address")
+			raise
+			
+		a_netmask = "\xff\xff\xff\0"
+		
+		a_masked = mask_ip4_address(a, a_netmask)
+
+		for iface, ip, netmask, masked in self.interfaces:
+			#print mask_ip4_address(a, netmask).encode("hex_codec"), masked.encode("hex_codec")
+			
+			if a == ip:
+				e.props.secondary_icon_stock = gtk.STOCK_DIALOG_ERROR
+				e.props.secondary_icon_tooltip_text = _("IP address conflicts with interface %s which has the same address" % iface)
+				raise Exception
+			
+			elif mask_ip4_address(a, netmask) == masked:
+				e.props.secondary_icon_stock = gtk.STOCK_DIALOG_WARNING
+				e.props.secondary_icon_tooltip_text = _("IP address overlaps with subnet of interface"
+					" %s, which has the following configuration %s/%s\nThis may cause incorrect network behavior" % (iface, inet_ntoa(ip), inet_ntoa(netmask)))
+				return
+		
+		e.props.secondary_icon_stock = None
 	
 	def on_query_apply_state(self):
 		changed = False
@@ -132,7 +179,10 @@ class Network(ServicePlugin):
 			return False
 		else:
 			if "ip" in opts:
-				if not NetConf.ip_chk(self.Builder.get_object("net_ip").props.text):
+				try:
+					self.ip_check()
+				except Exception,e:
+					print e
 					return -1
 					
 			return True
@@ -165,18 +215,18 @@ class Network(ServicePlugin):
 		if not self.NetConf.props.nap_enable:
 			nap_frame.props.sensitive = False
 			
-		ns = NetConf.netstatus()
-		if ns["ip"] != '0':
-			net_ip.props.text = ns["ip"]
+		nc = NetConf.get_default()
+		if nc.ip4_address != None:
+			net_ip.props.text = inet_ntoa(nc.ip4_address)
 			#if not self.NetConf.props.nap_enable:
 			#	self.ignored_keys.append("nap_enable")
 			self.NetConf.props.nap_enable = True
 
 		
-		if ns["masq"] != 0:
-			net_nat.props.active = ns["masq"]
+		#if ns["masq"] != 0:
+		#	net_nat.props.active = ns["masq"]
 			
-		if ns["dhcp"] == 0:
+		if nc.get_dhcp_handler() == None:
 			nap_frame.props.sensitive = False
 			nap_enable.props.active = False
 			if self.NetConf.props.nap_enable or self.NetConf.props.nap_enable == None:
@@ -184,13 +234,13 @@ class Network(ServicePlugin):
 			self.NetConf.props.nap_enable = False
 			
 			
-		if ns["type"] != 0:
-			if ns["type"] == "dnsmasq":
+		else:
+			if nc.get_dhcp_handler() == DnsMasqHandler:
 				r_dnsmasq.props.active = True
 			else:
 				r_dhcpd.props.active = True
 
-		if not NetConf.have("dnsmasq") and not NetConf.have("dhcpd3"):
+		if not have("dnsmasq") and not have("dhcpd3"):
 			nap_frame.props.sensitive = False
 			warning.props.visible = True
 			warning.props.sensitive = True
@@ -199,15 +249,17 @@ class Network(ServicePlugin):
 				self.ignored_keys.append("nap_enable")
 			self.NetConf.props.nap_enable = False
 			
-		if not NetConf.have("dnsmasq"):
+		if not have("dnsmasq"):
 			r_dnsmasq.props.sensitive = False
 			r_dnsmasq.props.active = False
 			r_dhcpd.props.active = True
 		
-		if not NetConf.have("dhcpd3"):
+		if not have("dhcpd3"):
 			r_dhcpd.props.sensitive = False
 			r_dhcpd.props.active = False
 			r_dnsmasq.props.active = True
+		
+		r_dnsmasq.connect("toggled", lambda x: self.option_changed_notify("dnsmasq"))
 		
 		net_nat.connect("toggled", lambda x: self.on_property_changed(self.NetConf, "nat", x.props.active))
 		net_ip.connect("changed", lambda x: self.on_property_changed(self.NetConf, "ip", x.props.text))

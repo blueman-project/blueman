@@ -85,17 +85,51 @@ cdef extern from "libblueman.h":
 	cdef float get_page_timeout(int hdev)
 	cdef int _create_bridge(char* name)
 	cdef int _destroy_bridge(char* name)
-	cdef char* c_get_net_address "get_net_address" (char* iface)
+	cdef char* c_get_net_address "get_net_address" (char* iface, int i)
+	cdef char** c_get_interface_list "get_interface_list" ()
 	
+cdef extern from "linux/sockios.h":
+	cdef int SIOCGIFADDR
+	cdef int SIOCGIFNETMASK
 	
 def get_net_address(iface):
 	cdef char* addr
 	if iface != None:
-		addr = c_get_net_address(iface)
+		addr = c_get_net_address(iface, SIOCGIFADDR)
 		if addr == NULL:
 			return None
 		else:
 			return addr
+			
+def get_net_netmask(iface):
+	cdef char* addr
+	if iface != None:
+		addr = c_get_net_address(iface, SIOCGIFNETMASK)
+		if addr == NULL:
+			return None
+		else:
+			return addr
+
+def get_net_interfaces():
+	cdef char** ifaces
+	cdef int i
+	i = 0
+	
+	ifaces = c_get_interface_list()
+	if ifaces == NULL:
+		return []
+		
+	ret = []
+	while 1:
+		if ifaces[i] == NULL:
+			break
+		else:
+			ret.append(ifaces[i])
+			free(ifaces[i])
+		i+=1
+		
+	free(ifaces)
+	return ret
 
 ERR = {
 	-1:"Can't allocate memory",
@@ -159,23 +193,23 @@ def rfcomm_list():
 	
 import exceptions
 class BridgeException(exceptions.Exception):
-	def __init__(self, value):
-		self.value = value
+	def __init__(self, errno):
+		self.errno = errno
 		
 	def __str__(self):
-		return repr(self.value)
+		return strerror(self.errno)
 		
 
 
 def create_bridge(name="pan1"):
 	err = _create_bridge(name)
 	if err < 0:
-		raise BridgeException(strerror(-err))
+		raise BridgeException(-err)
 	
 def destroy_bridge(name="pan1"):
 	err = _destroy_bridge(name)
 	if err < 0:
-		raise BridgeException(strerror(-err))
+		raise BridgeException(-err)
 
 
 cdef class conn_info:

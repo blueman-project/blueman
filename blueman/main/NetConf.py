@@ -1,274 +1,59 @@
-#
-#
-# dhcpconf.py
-# (c) 2007 Valmantas Paliksa <walmis at balticum-tv dot lt>
-#
-# This library is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public
-# License as published by the Free Software Foundation; either
-# version 2.1 of the License, or (at your option) any later version.
-# 
-# This library is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-# 
-# You should have received a copy of the GNU Lesser General Public
-# License along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-#
-
-
+import pickle
+import socket
 import os
+import signal
+import errno
 import re
-import commands
 from blueman.Constants import *
 from blueman.Lib import create_bridge, destroy_bridge, BridgeException
-import re
-from commands import getstatusoutput
-import dbus
+from subprocess import call, Popen
 
-def ip_chk(ip_str):
-   pattern = r"\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b"
-   r = re.match(pattern, ip_str)
-   if r:
-      return r.groups(1)
-   else:
-      return False
-      
-def netstatus():
-	dhcp=0
-	ip="0"
-	masq=0
-	type=0
+class DnsMasqHandler(object):
+	def __init__(self, netconf):
+		self.pid = None
+		self.netconf = netconf
+		
+	def do_apply(self):
+		if not self.netconf.locked("dhcp") or self.netconf.ip4_changed:
+			if self.netconf.ip4_changed:
+				self.do_remove()
+				
+			if 1:
+				rtr = "--dhcp-option=option:router,%s" % socket.inet_ntoa(self.netconf.ip4_address)
+			else:
+				rtr = "--dhcp-option=3 --dhcp-option=6" #no route and no dns
+		
+			start = self.netconf.ip4_address[:3] + chr(ord(self.netconf.ip4_address[3])+1)
+			end = self.netconf.ip4_address[:3] + "\xfe" #.254
+		
+			args = "--pid-file=/var/run/dnsmasq.pan1.pid --bind-interfaces --dhcp-range=%s,%s,60m --except-interface=lo --interface=pan1 %s" % (socket.inet_ntoa(start), socket.inet_ntoa(end), rtr)
+				
+			argv = ["dnsmasq"] + args.split(" ")
+			dprint(argv)
+			p = Popen(argv)
+		
+			ret = p.wait()
+		
+			if ret == 0:
+				dprint("Dnsmasq started correctly")
+				f = open("/var/run/dnsmasq.pan1.pid", "r")
+				self.pid = int(f.read())
+				f.close()
+				dprint("pid", self.pid)
+				self.netconf.lock("dhcp")
+			else:
+				raise Exception("dnsmasq failed to start. Check the system log for errors")	
+		
 	
-	try:
-		path = os.path.join( PREFIX, "bin/blueman-ifup")
-		f=open(path)
-		for line in f:
-			m = re.match("^MASQ=(.*)", line)
-			if m:
-				masq = int(m.groups(1)[0])
-		
-			m = re.match("^DHCP=(.*)", line)
-			if m:
-				dhcp = int(m.groups(1)[0])
-		
-			m = re.match("^IP=(.*)", line)
-			if m:
-				ip = m.groups(1)[0]
-		
-			m = re.match("^TYPE=(.*)", line)
-			if m:
-				type = m.groups(1)[0]
+	def do_remove(self):
+		if self.netconf.locked("dhcp"):
+			os.kill(self.pid, signal.SIGTERM)
+			self.netconf.unlock("dhcp")
 			
-		f.close()
-	except IOError:
-		pass
-			
-	return {"dhcp":dhcp, "ip":ip, "masq":masq, "type":type}
-	
-def nc_is_running():
-	if os.path.exists("/var/run/blueman-dh-lock") or os.path.exists("/var/run/blueman-iptbl-lock"):
-		return True
-	else:
-		return False
-
-
-def have(t):
-	cmd = "whereis %s" % t
-	out = commands.getoutput(cmd)
-	s = out.split(":")
-	if len(s[1]) > 0:
-		return True
-	else:
-		return False
-
-
-class NetConf:
-	def __init__(self, ipaddress, allow_nat = True, subnet = "255.255.255.0"):
-		self.ip_address = ipaddress
-		if ipaddress != None:
-			self._ip_address_seg = re.match("(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)", self.ip_address).groups(1)
-		
-			self._subnet_seg = re.match("(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)", subnet).groups(1)
-		
-
-			self.ip_range_start = "%s.%s.%s.%s" % (self._ip_address_seg[0], self._ip_address_seg[1], self._ip_address_seg[2], int(self._ip_address_seg[3])+1)
-			self.ip_range_end = "%s.%s.%s.254" % (self._ip_address_seg[0], self._ip_address_seg[1], self._ip_address_seg[2])
-			self.ip_range_mask = "%s.%s.%s.0" % (self._ip_address_seg[0], self._ip_address_seg[1], self._ip_address_seg[2])
-		
-			self.allow_nat = allow_nat
-			self.subnet = subnet
-			
-			self.server_type = self.get_type()
-		
-	##virtual funcs
-	def get_dhcp_exec_config(self):
-		raise Exception, "netconf::get_dhcp_exec_config() not overridden"
-		#return ("dhcpd3", "args")
-		
-	def on_install(self):
-		pass
-		
-	def on_uninstall(self):
-		pass	
-		
-	def get_type(self):
-		return None
-	##/virtual funcs		
-	
-	
-	def install(self):
-		if self.ip_address == None:
-			raise Exception, "netconf::install(): NULL ip address, cannot install"
-			
-		self._install_ifup()
-		self.on_install()
-		
-		self.reload_settings()
-		
-	def uninstall(self):	
-		self._uninstall_ifup()
-		self._kill_dhcp()
-		self._restore_iptables()
-		try:
-			destroy_bridge()
-		except BridgeException, msg:
-			dprint("Unable to destroy bridge:", msg)
-
-	def reload_settings(self):
-		self._kill_dhcp()
-		self._restore_iptables()
-		
-		try:
-			create_bridge()
-		except BridgeException, msg:
-			dprint("Unable to create bridge:", msg)
-		
-		self._execute_ifup()
-
-		
-
-	def _execute_ifup(self):		
-		status = getstatusoutput("blueman-ifup pan1")
-		if status[0] > 0:
-			raise Exception, status[1]
-
-		
-	def _restore_iptables(self):
-		if os.path.exists("/var/run/blueman-iptbl-lock"):
-			f = open("/var/run/blueman-iptbl-lock")
-			lines = []
-			for line in f:
-				lines.append(line)
-			f.close()
-			os.system("rm -f /var/run/blueman-iptbl-lock")
-			
-			for l in lines:
-				os.system("iptables %s" % l)
-			
-			
-			
-			
-	def _kill_dhcp(self):
-		if os.path.exists("/var/run/blueman-dh-lock"):
-			os.system("cat /var/run/blueman-dh-lock | xargs kill")
-			os.system("rm -f /var/run/blueman-dh-lock")
-	
-		
-	def _uninstall_ifup(self):
- 		path = os.path.join( PREFIX, "bin/blueman-ifup")
- 		f = open(path, "w");
- 		f.write("#!/bin/bash\n")
- 		f.write("MASQ=0\nIP=0\nDHCP=0\n\nif [ \"$1\" == \"pan0\" ]; then\n\tavahi-autoipd $1\nfi""")
- 		f.close()
- 		
- 	def _install_ifup(self):
- 		path = os.path.join( PREFIX, "bin/blueman-ifup")
- 		f = open( path, "w" )
- 		ifup = self._generate_ifup()
- 		f.write(ifup)
- 		f.close()
- 		os.chmod(path, 0755)
- 		
- 					
-	def _generate_ifup(self):
-		dhserver, dh_args = self.get_dhcp_exec_config()
-		
-		ifup_script = """#!/bin/bash
-#this script is generated automatically by blueman, for your own good, do not edit :)
-MASQ=%s 
-IP=%s
-DHCP=1
-TYPE=%s
-PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
-
-if [ "$1" == "pan0" ]; then
-	avahi-autoipd $1
-fi
-
-if [ "$1" == "pan1" ]; then
-	python -c "from blueman.Lib import create_bridge; create_bridge('pan1')"
-
-	ifconfig pan1 %s netmask 255.255.255.0 up || exit 1
-
-	if ! [ -a /var/run/blueman-iptbl-lock ]; then
-		
-		if [ "$MASQ" == "1" ]; then
-			echo 1 > /proc/sys/net/ipv4/ip_forward
-			echo 1 | tee /proc/sys/net/ipv4/conf/*/forwarding
-			
-			rule="-s %s/255.255.255.0 -j MASQUERADE"
-			iptables -t nat -A POSTROUTING $rule
-			echo -t nat -D POSTROUTING $rule > /var/run/blueman-iptbl-lock
-			
-			iptables -t filter -I FORWARD -i pan1 -j ACCEPT
-			echo -t filter -D FORWARD -i pan1 -j ACCEPT >> /var/run/blueman-iptbl-lock
-			
-			iptables -t filter -I FORWARD -o pan1 -j ACCEPT
-			echo -t filter -D FORWARD -o pan1 -j ACCEPT >> /var/run/blueman-iptbl-lock
-			
-			iptables -t filter -I INPUT -i pan1 -j ACCEPT
-			echo -t filter -D INPUT -i pan1 -j ACCEPT >> /var/run/blueman-iptbl-lock
-		fi
-	fi
-	if ! [ -a /var/run/blueman-dh-lock ]; then
-		%s %s || exit 1
-		PID=`pidof -s -o %%PPID -x %s`
-		echo $PID > /var/run/blueman-dh-lock
-
-	fi
-	
-fi
-
-""" % ( int(self.allow_nat), self.ip_address, self.server_type, self.ip_address, self.ip_range_mask, dhserver, dh_args, dhserver)
-		return ifup_script
-
-
-class NetConfDhcpd(NetConf):
-
-
-	def __init__(self, ipaddress, allow_nat = True):
-		NetConf.__init__(self, ipaddress, allow_nat)
-		
-		self.dhcp_config, self.existing_subnet = self._read_dhcp_config()
-		
-
-
-	def get_dhcp_exec_config(self):
-		return ("dhcpd3", "pan1")
-		
-		
-	def on_install(self):
-		self._setup_dhcpd3()
-		
-	def on_uninstall(self):
-		self._unsetup_dhcpd3()
-		
-	def get_type(self):
-		return "dhcpd"
-	
+class DhcpdHandler(object):
+	def __init__(self, netconf):
+		self.pid = None
+		self.netconf = netconf
 	
 	def _read_dhcp_config(self):
 		f = open(DHCP_CONFIG_FILE, "r")
@@ -291,11 +76,6 @@ class NetConfDhcpd(NetConf):
 		
 		return (dhcp_config, existing_subnet)
 		
-
-		
-		
-	
-	
 	def get_dns_servers(self):
 		f = open("/etc/resolv.conf", "r")
 		dns_servers = ""
@@ -313,54 +93,233 @@ class NetConfDhcpd(NetConf):
 		
 	def _generate_subnet_config(self):
 		dns = self.get_dns_servers()
+
+		masked_ip = ""
+		for i in range(4):
+			masked_ip += chr(ord(self.netconf.ip4_address[i]) & ord(self.netconf.ip4_mask[i]))
 		
+		start = self.netconf.ip4_address[:3] + chr(ord(self.netconf.ip4_address[3])+1)
+		end = self.netconf.ip4_address[:3] + "\xfe" #.254
+
 		subnet = "#### BLUEMAN AUTOMAGIC SUBNET ####\n"
 		subnet += "# Everything inside this section is destroyed after config change\n"
-		subnet += """subnet %s netmask 255.255.255.0 {
-				option domain-name-servers %s;
-				option subnet-mask 255.255.255.0;
-				%s
-				range %s %s;
-				}\n""" % (self.ip_range_mask, dns, "option routers %s" % self.ip_address if self.allow_nat else "" , self.ip_range_start, self.ip_range_end)
-		
+		subnet += """subnet %(ip_mask)s netmask %(netmask)s {
+				option domain-name-servers %(dns)s;
+				option subnet-mask %(netmask)s;
+				option routers %(rtr)s;
+				range %(start)s %(end)s;
+				}\n""" % {"ip_mask": socket.inet_ntoa(masked_ip),
+						  "netmask": socket.inet_ntoa(self.netconf.ip4_mask),
+						  "dns": dns,
+						  "rtr": socket.inet_ntoa(self.netconf.ip4_address),
+						  "start": socket.inet_ntoa(start),
+						  "end": socket.inet_ntoa(end)
+						 }
 		subnet += "#### END BLUEMAN AUTOMAGIC SUBNET ####\n"
 		
-		
 		return subnet
-		
 
-					
+	def do_apply(self):
+		if not self.netconf.locked("dhcp") or self.netconf.ip4_changed:
+			if self.netconf.ip4_changed:
+				self.do_remove()
+			
+			dhcp_config, existing_subnet = self._read_dhcp_config()
+		
+			subnet = self._generate_subnet_config()
+		
+			#if subnet != self.existing_subnet:
+			f = open(DHCP_CONFIG_FILE, "w")
+			f.write(dhcp_config)
+			f.write(subnet)
+			f.close()
+		
+			p = Popen(["dhcpd3", "-pf", "/var/run/dhcp3-server/dhcpd.pan1.pid", "pan1"])
+		
+			ret = p.wait()
 	
-	def _setup_dhcpd3(self):
-		subnet = self._generate_subnet_config()
+			if ret == 0:
+				dprint("dhcpd started correctly")
+				f = open("/var/run/dhcp3-server/dhcpd.pan1.pid", "r")
+				self.pid = int(f.read())
+				f.close()
+				dprint("pid", self.pid)
+				self.netconf.lock("dhcp")
+			else:
+				raise Exception("dhcpd failed to start. Check the system log for errors")		
 		
-		#if subnet != self.existing_subnet:
+
+ 	def do_remove(self):
+		dhcp_config, existing_subnet = self._read_dhcp_config()
 		f = open(DHCP_CONFIG_FILE, "w")
-		f.write(self.dhcp_config)
-		f.write(subnet)
+		f.write(dhcp_config)
 		f.close()
+		
+		if self.netconf.locked("dhcp"):
+			os.kill(self.pid, signal.SIGTERM)
+			self.netconf.unlock("dhcp")
+		
+		
+class_id = 10
 
+class NetConf(object):
+	default_inst = None
+	
+	@classmethod
+	def get_default(cls):
+		if NetConf.default_inst:
+			return NetConf.default_inst
+			
+		try:
+			f = open("/var/lib/blueman/network.state", "r")
+			obj = pickle.load(f)
+			if obj.version != class_id:
+				raise Exception
+			NetConf.default_inst = obj
+			f.close()	
+			return obj
+		except:
+			n = cls()
+			try:
+				n.store()
+			except:
+				return n
+			NetConf.default_inst = n
+			return n
+	
+	def __init__(self):
+		dprint()
+		self.version = class_id
+		self.dhcp_handler = None
+		self.ipt_rules = []
+		
+		self.ip4_address = None
+		self.ip4_mask = None
+		self.ip4_changed = False
 
- 	
- 	def _unsetup_dhcpd3(self):
-		f = open(DHCP_CONFIG_FILE, "w")
-		f.write(self.dhcp_config)
+			
+	def set_ipv4(self, ip, netmask):
+		if self.ip4_address != ip or self.ip4_mask != netmask:
+			self.ip4_changed = True
+		
+		self.ip4_address = ip
+		self.ip4_mask = netmask
+		
+	def get_ipv4(self):
+		return (self.ip4_address, self.ip4_mask)
+		
+	def enable_ip4_forwarding(self):
+		f = open("/proc/sys/net/ipv4/ip_forward", "w")
+		f.write("1")
 		f.close()
- 	
-
-
-class NetConfDnsMasq(NetConf):
-	def __init__(self, ipaddress, allow_nat = True):
-		NetConf.__init__(self, ipaddress, allow_nat)
 		
-	def get_dhcp_exec_config(self):
-		if self.allow_nat:
-			rtr = "--dhcp-option=option:router,%s" % self.ip_address
-		else:
-			rtr = "--dhcp-option=3 --dhcp-option=6" #no route and no dns
-		x = ("dnsmasq", "--bind-interfaces --dhcp-range=%s,%s,60m --except-interface=lo --interface=pan1 %s" % (self.ip_range_start, self.ip_range_end, rtr))
+		for d in os.listdir("/proc/sys/net/ipv4/conf"):
+			f = open("/proc/sys/net/ipv4/conf/%s/forwarding" % d, "w")
+			f.write("1")
+			f.close()
 		
-		return x
+	def add_ipt_rule(self, table, chain, rule):
+		self.ipt_rules.append((table, chain, rule))
+		args = ["/sbin/iptables", "-t", table, "-A", chain] + rule.split(" ")
+		dprint(" ".join(args))
+		ret = call(args)
+		print "Return code", ret
+		
+	def del_ipt_rules(self):
+		for table, chain, rule in self.ipt_rules:
+			call(["/sbin/iptables", "-t", table, "-D", chain] + rule.split(" "))
+		self.ipt_rules = []
+		self.unlock("iptables")
+		
+	def set_dhcp_handler(self, handler):
+		if not isinstance(self.dhcp_handler, handler):
+			running = False
+			if self.dhcp_handler:	
+				self.dhcp_handler.do_remove()
+				running = True
+				
+			self.dhcp_handler = handler(self)
+			if running:
+				self.dhcp_handler.do_apply()
+	
+	def get_dhcp_handler(self):
+		if not self.dhcp_handler:
+			return None
+			
+		return type(self.dhcp_handler)
+		
+	def apply_settings(self):
+		if self != NetConf.get_default():
+			NetConf.get_default().remove_settings()
+			NetConf.default_inst = self
+		
+		try:
+			create_bridge("pan1")
+		except BridgeException, e:
+			if e.errno != errno.EEXIST:
+				raise
+		
+		ip_str = socket.inet_ntoa(self.ip4_address)	
+		mask_str = socket.inet_ntoa(self.ip4_mask)	
+		
+		if self.ip4_changed or not self.locked("ifconfig"):
+			self.enable_ip4_forwarding()
+			
+			ret = call(["ifconfig", "pan1", ip_str, "netmask", mask_str, "up"])
+			if ret != 0:
+				raise Exception("Failed to setup interface pan1")
+			self.lock("ifconfig")
+			
+		if self.ip4_changed or not self.locked("iptables"):
+			self.del_ipt_rules()
+		
+			self.add_ipt_rule("nat", "POSTROUTING", "-s %s/%s -j MASQUERADE" % (ip_str, mask_str))
+			self.add_ipt_rule("filter", "FORWARD", "-i pan1 -j ACCEPT")
+			self.add_ipt_rule("filter", "FORWARD", "-o pan1 -j ACCEPT")
+			self.add_ipt_rule("filter", "FORWARD", "-i pan1 -j ACCEPT")
+			self.lock("iptables")
+		
+		if self.dhcp_handler:
+			self.dhcp_handler.do_apply()
+		self.ip4_changed = False
+		
+		self.store()
+		
+	def remove_settings(self):
+		dprint(self)
+		
+		if self.dhcp_handler:
+			self.dhcp_handler.do_remove()
+					
+		try:
+			destroy_bridge("pan1")
+		except:
+			pass
+		self.unlock("ifconfig")
+		
+		self.del_ipt_rules()
+		
+		self.store()
+		
+	def lock(self, key):
+		f = open("/var/run/blueman-%s" % key, "w")
+		f.close()
+		
+	def unlock(self, key):
+		try:
+			os.unlink("/var/run/blueman-%s" % key)
+		except:
+			pass
+	
+	def locked(self, key):
+		return os.path.exists("/var/run/blueman-%s" % key)
+	
+	#save the instance of this class, requires root
+	def store(self):
+		if not os.file.exists("/var/lib/blueman"):
+			os.mkdir("/var/lib/blueman")
+		f = open("/var/lib/blueman/network.state", "w")
+		pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
+		f.close()
+		
 
-	def get_type(self):
-		return "dnsmasq"

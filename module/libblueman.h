@@ -27,4 +27,4 @@ float get_page_timeout(int hdev);
 
 int _create_bridge(const char* name);
 int _destroy_bridge(const char* name);
-char* get_net_address(char* iface);
+char* get_net_address(char* iface, int _ioctl);

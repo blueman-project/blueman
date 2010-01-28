@@ -104,6 +104,7 @@ class PowerManager(AppletPlugin):
 		
 	def set_adapter_state(self, state):
 		try:
+			dprint(state)
 			adapters = self.Applet.Manager.ListAdapters()
 			for adapter in adapters:
 				adapter.SetProperty("Powered", state)
