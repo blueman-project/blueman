@@ -126,7 +126,7 @@ def get_net_interfaces():
 		else:
 			ret.append(ifaces[i])
 			free(ifaces[i])
-		i+=1
+		i = i + 1
 		
 	free(ifaces)
 	return ret
