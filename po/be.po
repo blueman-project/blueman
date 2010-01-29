@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-01-21 11:13+0200\n"
-"PO-Revision-Date: 2010-01-24 21:37+0000\n"
+"PO-Revision-Date: 2010-01-29 02:05+0000\n"
 "Last-Translator: Mikola Tsekhan <mail@tsekhan.com>\n"
 "Language-Team: Belarusian <be@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Launchpad-Export-Date: 2010-01-25 04:45+0000\n"
+"X-Launchpad-Export-Date: 2010-01-29 04:51+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -41,7 +41,7 @@ msgstr "Часова бачны"
 
 #: ../data/ui/adapters.ui.h:1
 msgid "Bluetooth Adapters"
-msgstr "Дастасаваньні Bluetooth"
+msgstr "Bluetooth адаптары"
 
 #: ../data/ui/applet-passkey.ui.h:1
 msgid "Pairing request"
@@ -93,7 +93,7 @@ msgstr "Пазначыць/зьняць пазнаку прылады як да�
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:283
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:385
 msgid "Pair"
-msgstr "Спалуч."
+msgstr "Спалучыць"
 
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:13
@@ -114,7 +114,7 @@ msgstr "Запусьціць дапаможнік усталёўкі для гэ
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:17 ../blueman/gui/manager/ManagerMenu.py:199
 msgid "Search"
-msgstr "Шукаць"
+msgstr "Пошук"
 
 #: ../data/ui/manager-main.ui.h:18
 msgid "Search for nearby devices"
@@ -150,11 +150,11 @@ msgstr "Лякальныя службы"
 
 #: ../data/ui/services-network.ui.h:1
 msgid "<b>DUN Support</b>"
-msgstr "<b>Падтрымка DUN</b>"
+msgstr "<b>Падтрымка камутаванага спалучэньня (DUN)</b>"
 
 #: ../data/ui/services-network.ui.h:2
 msgid "<b>NAP Settings</b>"
-msgstr "<b>Наладкі NAP</b>"
+msgstr "<b>Наладкі кропкі доступа да сеткі</b>"
 
 #: ../data/ui/services-network.ui.h:3
 msgid "<b>Network Settings</b>"
@@ -166,7 +166,7 @@ msgstr "<b>DHCP сервер не ўсталяваны</b>"
 
 #: ../data/ui/services-network.ui.h:5
 msgid "<b>PAN Support</b>"
-msgstr "<b>Падтрымка PAN</b>"
+msgstr "<b>Падтрымка лякальнай сеткі (PAN)</b>"
 
 #: ../data/ui/services-network.ui.h:6 ../data/ui/services-audio.ui.h:3
 msgid "<b>Services</b>"
@@ -228,7 +228,7 @@ msgid ""
 "<i>%d</i> is substituted with device address."
 msgstr ""
 "Каманда пуска азіральніка файлаў OBEX.\n"
-"<i>%d</i> зьвязаны з адрасам прылады"
+"<i>%d</i> з'яўляецца адрасам прылады"
 
 #: ../data/ui/services-transfer.ui.h:10
 msgid "Enabled"
@@ -307,7 +307,7 @@ msgstr "<b>Далучыцца да:</b>"
 
 #: ../data/ui/assistant.ui.h:3
 msgid "<b>Please wait...</b>"
-msgstr "<b>Калі ласка, пачакайце</b>"
+msgstr "<b>Калі ласка, пачакайце...</b>"
 
 #: ../data/ui/assistant.ui.h:4
 msgid "<b>Select pairing method to use:</b>"
@@ -783,7 +783,7 @@ msgstr "Абнаўленьне"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:426
 msgid "Refreshing Services..."
-msgstr "Абнаўленьне сьпіса служб"
+msgstr "Абнаўленьне сьпіса службаў..."
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:429
 msgid "Refresh Services"
@@ -1012,11 +1012,11 @@ msgstr "Выбраць аўдыё профіль для PulseAudio"
 
 #: ../blueman/plugins/manager/Services.py:122
 msgid "Dialup Service"
-msgstr "Служба Dialup"
+msgstr "Камутаванае спалучэньне (Dial-Up)"
 
 #: ../blueman/plugins/manager/Services.py:135
 msgid "Serial Service"
-msgstr "Служба пасьлядоўнага порту"
+msgstr "Пасьлядоўны порт (COM)"
 
 #: ../blueman/plugins/manager/Services.py:150
 #, python-format
@@ -1049,7 +1049,7 @@ msgstr "Служба ўводу"
 #: ../blueman/plugins/manager/Services.py:283
 #: ../blueman/plugins/manager/Services.py:291 ../apps/blueman-assistant:356
 msgid "Headset Service"
-msgstr "Служба гарнітуры"
+msgstr "Гарнітура"
 
 #: ../blueman/plugins/manager/Services.py:317
 msgid "Allows to send audio to remote device"
@@ -1422,7 +1422,7 @@ msgid ""
 msgstr ""
 "<b>Забаронена</b> \n"
 "Робіць камутуемыя далучэньні (Dial-Up), альбо далучэньні лякальнай сеткі "
-"(PAN) даступнымі для NetworkManager 0.7"
+"(PAN), даступнымі для NetworkManager 0.7"
 
 #: ../blueman/plugins/applet/NMIntegration.py:79
 msgid "CDMA or GSM not supported"
@@ -1467,8 +1467,7 @@ msgstr[2] "<b>%d актыўных далучэньняў</b>"
 
 #: ../blueman/plugins/applet/Headset.py:26
 msgid "Runs a command when answer button is pressed on a headset"
-msgstr ""
-"Выканаць каманду пасьля націску на гарнітуры кнопкі \"Прыём выкліку\""
+msgstr "Выканаць каманду пасьля націску на гарнітуры кнопкі адказу"
 
 #: ../blueman/plugins/applet/Headset.py:32
 msgid "Command"
@@ -1476,7 +1475,7 @@ msgstr "Каманда"
 
 #: ../blueman/plugins/applet/Headset.py:33
 msgid "Command to execute when answer button is pressed:"
-msgstr "Каманда, якая выконваецца пры націске кнопкі пытальніка"
+msgstr "Каманда, якая выконваецца пры націске кнопкі адказу"
 
 #: ../blueman/plugins/applet/DiscvManager.py:32
 msgid ""
@@ -1725,7 +1724,7 @@ msgstr "Заўсёды"
 #, c-format
 msgid "%d Minute"
 msgid_plural "%d Minutes"
-msgstr[0] "%d хвіліну"
+msgstr[0] "%d хвіліна"
 msgstr[1] "%d хвіліны"
 msgstr[2] "%d хвілін"
 
@@ -1735,7 +1734,7 @@ msgstr "Сэрвер obex не ўсталяваны"
 
 #: ../apps/blueman-sendto:139
 msgid "Error occurred"
-msgstr "Узьнікла памылка"
+msgstr "Адбылася памылка"
 
 #: ../apps/blueman-sendto:155
 msgid "Cancelling"
@@ -1856,7 +1855,7 @@ msgstr "Схіб пуска «%s»"
 
 #: ../apps/blueman-browse:75
 msgid "You can enter an alternate browser in service settings"
-msgstr "Вы можаце выбраць альтэрнатыўны аглядпльнік в наладках службаў"
+msgstr "Вы можаце выбраць альтэрнатыўны аглядальнік у наладках службаў"
 
 #~ msgid "Temporary visible"
 #~ msgstr "Часова бачны"

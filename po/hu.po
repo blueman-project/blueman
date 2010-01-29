@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-01-21 11:13+0200\n"
-"PO-Revision-Date: 2010-01-23 22:54+0000\n"
-"Last-Translator: Varga Zoltán <Unknown>\n"
+"PO-Revision-Date: 2010-01-28 16:04+0000\n"
+"Last-Translator: Fox <Unknown>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-01-25 04:45+0000\n"
+"X-Launchpad-Export-Date: 2010-01-29 04:51+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -1348,24 +1348,24 @@ msgid ""
 "Automatically manages Pulseaudio Bluetooth sinks/sources.\n"
 "<b>Note:</b> Requires pulseaudio 0.9.15 or higher"
 msgstr ""
-"Pulseaudio automatikus beállítása a Bluetooth elnyelőkhöz/forrásokhoz.\n"
+"Pulseaudio automatikus beállítása a Bluetooth fogadókhoz/forrásokhoz.\n"
 "<b>Megjegyzés:</b> Pulseaudio 0.9.15 vagy újabb szükséges"
 
 #: ../blueman/plugins/applet/PulseAudio.py:146
 msgid "Make default sink"
-msgstr ""
+msgstr "Alapértelmezett fogadó"
 
 #: ../blueman/plugins/applet/PulseAudio.py:147
 msgid "Make the a2dp audio sink the default after connection"
-msgstr ""
+msgstr "Az a2dp az alapértelmezett audió fogadó a csatlakozás után"
 
 #: ../blueman/plugins/applet/PulseAudio.py:150
 msgid "Move streams"
-msgstr ""
+msgstr "Adatfolyamok mozgtása"
 
 #: ../blueman/plugins/applet/PulseAudio.py:151
 msgid "Move existing audio streams to bluetooth device"
-msgstr ""
+msgstr "A létező adatfolyamok mozgatása bluetooth eszközre"
 
 #: ../blueman/plugins/applet/PulseAudio.py:312
 #: ../blueman/plugins/applet/PulseAudio.py:317
@@ -1452,11 +1452,11 @@ msgstr ""
 
 #: ../blueman/plugins/applet/Indicator.py:35
 msgid "Show overlay icon"
-msgstr ""
+msgstr "Borító ikon mutatása"
 
 #: ../blueman/plugins/applet/Indicator.py:36
 msgid "Whether to show a composition over the status icon when connected"
-msgstr ""
+msgstr "Mutassa a státusz ikonján ha csatlakozott."
 
 #: ../blueman/plugins/applet/Indicator.py:96
 msgid "Bluetooth Active"
@@ -1552,6 +1552,11 @@ msgid ""
 "AA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0\n"
 "uuid16s are returned as a comma seperated list</span>"
 msgstr ""
+"<span size=\"small\">A következő kitételek elfogadva:\n"
+"Cím, Név, szolgáltatás neve, uuid16s, rfcomm node\n"
+"Páldául:\n"
+"AA:BB:CC:DD:EE:FF, Telefon, DUN szolgáltatás, 0x1103, /dev/rfcomm0\n"
+"uuid16s a vessző után a listában</span>"
 
 #: ../blueman/plugins/applet/SerialManager.py:55
 msgid "Serial port connected"
