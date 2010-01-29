@@ -376,8 +376,6 @@ class ManagerDeviceMenu(gtk.Menu):
 					self.Signals.Handle("gobject", browse_item, "activate", lambda x: self.Blueman.browse(device))
 					browse_item.props.sensitive = True
 
-					
-
 			item = gtk.SeparatorMenuItem()
 			item.show()
 			self.append(item)

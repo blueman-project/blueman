@@ -22,9 +22,14 @@ from blueman.main.SignalTracker import SignalTracker
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.gui.MessageArea import MessageArea
 from blueman.Functions import get_icon, create_menuitem
+from blueman.main.AppletService import AppletService
 
 import gtk
 
+a = AppletService()
+if not "PulseAudio" in a.QueryPlugins():
+	raise ImportError("PulseAudio applet plugin not loaded, nothing to do here")
+			
 class PulseAudioProfile(ManagerPlugin):
 
 	def on_load(self, user_data):
@@ -104,6 +109,7 @@ class PulseAudioProfile(ManagerPlugin):
 				if c["proplist"]["device.string"] == device.Address:
 					self.devices[device.Address] = c
 					self.generate_menu(device)
+					return
 		
 		pa = PulseAudioUtils()
 		pa.ListCards(list_cb)
