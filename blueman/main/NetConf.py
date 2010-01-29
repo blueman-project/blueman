@@ -249,6 +249,12 @@ class NetConf(object):
 		return type(self.dhcp_handler)
 		
 	def apply_settings(self):
+		if self.ip4_address == None or self.ip4_mask == None:
+			if self.ip4_changed:
+				self.ip4_changed = False
+			self.store()
+			return
+		
 		if self != NetConf.get_default():
 			NetConf.get_default().remove_settings()
 			NetConf.default_inst = self
