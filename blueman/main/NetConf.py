@@ -322,7 +322,7 @@ class NetConf(object):
 	
 	#save the instance of this class, requires root
 	def store(self):
-		if not os.file.exists("/var/lib/blueman"):
+		if not os.path.exists("/var/lib/blueman"):
 			os.mkdir("/var/lib/blueman")
 		f = open("/var/lib/blueman/network.state", "w")
 		pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
