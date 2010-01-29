@@ -21,7 +21,6 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.bluez.Device import Device as BluezDevice
 from blueman.main.Device import Device
 from blueman.gui.Notification import Notification
-from blueman.main.NetConf import have
 from blueman.main.PulseAudioUtils import PulseAudioUtils
 from subprocess import Popen, PIPE
 import gobject
