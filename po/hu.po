@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2010-01-21 11:13+0200\n"
-"PO-Revision-Date: 2010-01-28 16:04+0000\n"
-"Last-Translator: Fox <Unknown>\n"
+"POT-Creation-Date: 2010-01-29 14:44+0200\n"
+"PO-Revision-Date: 2010-01-29 15:12+0000\n"
+"Last-Translator: Valmantas Palikša <walmis@balticum-tv.lt>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-01-29 04:51+0000\n"
+"X-Launchpad-Export-Date: 2010-01-30 04:37+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -573,11 +573,11 @@ msgstr ""
 "<b>Hiba lépett fel a bővítmény betöltésekor. Kérem jelezze a fejlesztőknek "
 "ennek az üzenetnek a tartalmával.</b>"
 
-#: ../blueman/Functions.py:76
+#: ../blueman/Functions.py:77
 msgid "Bluetooth Turned Off"
 msgstr "Bluetooth kikapcsolva"
 
-#: ../blueman/Functions.py:80
+#: ../blueman/Functions.py:81
 msgid "Enable Bluetooth"
 msgstr "Bluetooth bekapcsolása"
 
@@ -1045,8 +1045,8 @@ msgid "Serial Ports"
 msgstr "Soros portok"
 
 #: ../blueman/plugins/manager/Services.py:235
-#: ../blueman/plugins/services/Network.py:31
-#: ../blueman/plugins/services/Network.py:44
+#: ../blueman/plugins/services/Network.py:34
+#: ../blueman/plugins/services/Network.py:59
 msgid "Network"
 msgstr "Hálózat"
 
@@ -1158,7 +1158,7 @@ msgid "Manages local network services, like NAP bridges"
 msgstr "helyi hálózati szolgáltatások kezelése, mint a NAP kapcsolatok"
 
 #: ../blueman/plugins/applet/Networking.py:54
-#: ../blueman/plugins/services/Network.py:113
+#: ../blueman/plugins/services/Network.py:129
 msgid "Failed to apply network settings"
 msgstr "Hálózati beállítás sikertelen"
 
@@ -1533,36 +1533,33 @@ msgid ""
 msgstr ""
 "Alap támogatást nyújt a DUN profilon keresztül az intenet csatlakozáshoz."
 
-#: ../blueman/plugins/applet/SerialManager.py:34
+#: ../blueman/plugins/applet/SerialManager.py:39
 msgid ""
 "Standard SPP profile connection handler, allows executing custom actions"
 msgstr ""
 "Álatlános SPP profil kapcsolat kezelő, engedélyezi az egyéni alkalmazás "
 "használatát"
 
-#: ../blueman/plugins/applet/SerialManager.py:38
+#: ../blueman/plugins/applet/SerialManager.py:43
 msgid "Script to execute on connection"
 msgstr "Csatlakozáskor futtatandó szkript"
 
-#: ../blueman/plugins/applet/SerialManager.py:39
+#: ../blueman/plugins/applet/SerialManager.py:44
 msgid ""
 "<span size=\"small\">The following arguments will be passed:\n"
 "Address, Name, service name, uuid16s, rfcomm node\n"
 "For example:\n"
 "AA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0\n"
-"uuid16s are returned as a comma seperated list</span>"
+"uuid16s are returned as a comma seperated list\n"
+"\n"
+"Upon device disconnection the script will be sent a HUP signal</span>"
 msgstr ""
-"<span size=\"small\">A következő kitételek elfogadva:\n"
-"Cím, Név, szolgáltatás neve, uuid16s, rfcomm node\n"
-"Páldául:\n"
-"AA:BB:CC:DD:EE:FF, Telefon, DUN szolgáltatás, 0x1103, /dev/rfcomm0\n"
-"uuid16s a vessző után a listában</span>"
 
-#: ../blueman/plugins/applet/SerialManager.py:55
+#: ../blueman/plugins/applet/SerialManager.py:77
 msgid "Serial port connected"
 msgstr "Soros port csatlakoztatva"
 
-#: ../blueman/plugins/applet/SerialManager.py:56
+#: ../blueman/plugins/applet/SerialManager.py:78
 #, python-format
 msgid ""
 "Serial port service on device <b>%s</b> now will be available via <b>%s</b>"
@@ -1570,11 +1567,11 @@ msgstr ""
 "soros port szolgáltatás ezen eszközön <b>%s</b> most már lehetsééges, ezen "
 "keresztül <b>%s</b>"
 
-#: ../blueman/plugins/applet/SerialManager.py:75
+#: ../blueman/plugins/applet/SerialManager.py:123
 msgid "Serial port connection script failed"
 msgstr "Soros port kapcsolati program hiba"
 
-#: ../blueman/plugins/applet/SerialManager.py:76
+#: ../blueman/plugins/applet/SerialManager.py:124
 #, python-format
 msgid ""
 "There was a problem launching script %s\n"
@@ -1592,27 +1589,44 @@ msgid "<b>Bluetooth Off</b>"
 msgstr "<b>Bluetooth ki</b>"
 
 #: ../blueman/plugins/applet/PowerManager.py:54
-#: ../blueman/plugins/applet/PowerManager.py:195
+#: ../blueman/plugins/applet/PowerManager.py:196
 msgid "<b>Turn Bluetooth Off</b>"
 msgstr "<b>Bluetooth Kikapcsolása</b>"
 
 #: ../blueman/plugins/applet/PowerManager.py:56
-#: ../blueman/plugins/applet/PowerManager.py:196
+#: ../blueman/plugins/applet/PowerManager.py:197
 msgid "Turn off all adapters"
 msgstr "Minden hozzáférés kikapcsolása"
 
-#: ../blueman/plugins/applet/PowerManager.py:183
+#: ../blueman/plugins/applet/PowerManager.py:184
 msgid "<b>Turn Bluetooth On</b>"
 msgstr "<b>Bluetooth Bekapcsolása</b>"
 
-#: ../blueman/plugins/applet/PowerManager.py:184
+#: ../blueman/plugins/applet/PowerManager.py:185
 msgid "Turn on all adapters"
 msgstr "Minden hozzáférés bekapcsolása"
 
-#: ../blueman/plugins/services/Network.py:262
-#: ../blueman/plugins/services/Network.py:265
-#: ../blueman/plugins/services/Network.py:271
-#: ../blueman/plugins/services/Network.py:277
+#: ../blueman/plugins/services/Network.py:152
+msgid "Invalid IP address"
+msgstr ""
+
+#: ../blueman/plugins/services/Network.py:164
+#, python-format
+msgid "IP address conflicts with interface %s which has the same address"
+msgstr ""
+
+#: ../blueman/plugins/services/Network.py:169
+#, python-format
+msgid ""
+"IP address overlaps with subnet of interface %s, which has the following "
+"configuration %s/%s\n"
+"This may cause incorrect network behavior"
+msgstr ""
+
+#: ../blueman/plugins/services/Network.py:314
+#: ../blueman/plugins/services/Network.py:317
+#: ../blueman/plugins/services/Network.py:323
+#: ../blueman/plugins/services/Network.py:329
 msgid "Not currently supported with this setup"
 msgstr "Jelenleg nem támogatott ezzel a beállítással"
 
@@ -1899,3 +1913,16 @@ msgstr "Megadhat egy másik tallózót az alkalmazás beállításokban"
 
 #~ msgid "_Setup new device"
 #~ msgstr "Új eszköz beállítása"
+
+#~ msgid ""
+#~ "<span size=\"small\">The following arguments will be passed:\n"
+#~ "Address, Name, service name, uuid16s, rfcomm node\n"
+#~ "For example:\n"
+#~ "AA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0\n"
+#~ "uuid16s are returned as a comma seperated list</span>"
+#~ msgstr ""
+#~ "<span size=\"small\">A következő kitételek elfogadva:\n"
+#~ "Cím, Név, szolgáltatás neve, uuid16s, rfcomm node\n"
+#~ "Páldául:\n"
+#~ "AA:BB:CC:DD:EE:FF, Telefon, DUN szolgáltatás, 0x1103, /dev/rfcomm0\n"
+#~ "uuid16s a vessző után a listában</span>"

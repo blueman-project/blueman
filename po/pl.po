@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2010-01-21 11:13+0200\n"
-"PO-Revision-Date: 2010-01-28 11:51+0000\n"
+"POT-Creation-Date: 2010-01-29 14:44+0200\n"
+"PO-Revision-Date: 2010-01-29 14:14+0000\n"
 "Last-Translator: Burak Anıl <burak_anil_@hotmail.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2010-01-29 04:51+0000\n"
+"X-Launchpad-Export-Date: 2010-01-30 04:37+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -564,11 +564,11 @@ msgid ""
 "with the content of this message.</b>"
 msgstr ""
 
-#: ../blueman/Functions.py:76
+#: ../blueman/Functions.py:77
 msgid "Bluetooth Turned Off"
 msgstr "Bluetooth wyłączono"
 
-#: ../blueman/Functions.py:80
+#: ../blueman/Functions.py:81
 msgid "Enable Bluetooth"
 msgstr "Włącz Bluetooth"
 
@@ -1025,8 +1025,8 @@ msgid "Serial Ports"
 msgstr "Porty szeregowe"
 
 #: ../blueman/plugins/manager/Services.py:235
-#: ../blueman/plugins/services/Network.py:31
-#: ../blueman/plugins/services/Network.py:44
+#: ../blueman/plugins/services/Network.py:34
+#: ../blueman/plugins/services/Network.py:59
 msgid "Network"
 msgstr "Sieć"
 
@@ -1136,7 +1136,7 @@ msgid "Manages local network services, like NAP bridges"
 msgstr ""
 
 #: ../blueman/plugins/applet/Networking.py:54
-#: ../blueman/plugins/services/Network.py:113
+#: ../blueman/plugins/services/Network.py:129
 msgid "Failed to apply network settings"
 msgstr "Nie udało się zastosować ustawień sieciowych"
 
@@ -1484,39 +1484,41 @@ msgid ""
 "Provides basic support for connecting to the internet via DUN profile."
 msgstr ""
 
-#: ../blueman/plugins/applet/SerialManager.py:34
+#: ../blueman/plugins/applet/SerialManager.py:39
 msgid ""
 "Standard SPP profile connection handler, allows executing custom actions"
 msgstr ""
 
-#: ../blueman/plugins/applet/SerialManager.py:38
+#: ../blueman/plugins/applet/SerialManager.py:43
 msgid "Script to execute on connection"
 msgstr ""
 
-#: ../blueman/plugins/applet/SerialManager.py:39
+#: ../blueman/plugins/applet/SerialManager.py:44
 msgid ""
 "<span size=\"small\">The following arguments will be passed:\n"
 "Address, Name, service name, uuid16s, rfcomm node\n"
 "For example:\n"
 "AA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0\n"
-"uuid16s are returned as a comma seperated list</span>"
+"uuid16s are returned as a comma seperated list\n"
+"\n"
+"Upon device disconnection the script will be sent a HUP signal</span>"
 msgstr ""
 
-#: ../blueman/plugins/applet/SerialManager.py:55
+#: ../blueman/plugins/applet/SerialManager.py:77
 msgid "Serial port connected"
 msgstr ""
 
-#: ../blueman/plugins/applet/SerialManager.py:56
+#: ../blueman/plugins/applet/SerialManager.py:78
 #, python-format
 msgid ""
 "Serial port service on device <b>%s</b> now will be available via <b>%s</b>"
 msgstr ""
 
-#: ../blueman/plugins/applet/SerialManager.py:75
+#: ../blueman/plugins/applet/SerialManager.py:123
 msgid "Serial port connection script failed"
 msgstr ""
 
-#: ../blueman/plugins/applet/SerialManager.py:76
+#: ../blueman/plugins/applet/SerialManager.py:124
 #, python-format
 msgid ""
 "There was a problem launching script %s\n"
@@ -1532,27 +1534,44 @@ msgid "<b>Bluetooth Off</b>"
 msgstr ""
 
 #: ../blueman/plugins/applet/PowerManager.py:54
-#: ../blueman/plugins/applet/PowerManager.py:195
+#: ../blueman/plugins/applet/PowerManager.py:196
 msgid "<b>Turn Bluetooth Off</b>"
 msgstr "<b>Wyłącz Bluetooth</b>"
 
 #: ../blueman/plugins/applet/PowerManager.py:56
-#: ../blueman/plugins/applet/PowerManager.py:196
+#: ../blueman/plugins/applet/PowerManager.py:197
 msgid "Turn off all adapters"
 msgstr "Wyłącz wszystkie adaptery Bluetooth"
 
-#: ../blueman/plugins/applet/PowerManager.py:183
+#: ../blueman/plugins/applet/PowerManager.py:184
 msgid "<b>Turn Bluetooth On</b>"
 msgstr "<b>Włącz Bluetooth</b>"
 
-#: ../blueman/plugins/applet/PowerManager.py:184
+#: ../blueman/plugins/applet/PowerManager.py:185
 msgid "Turn on all adapters"
 msgstr ""
 
-#: ../blueman/plugins/services/Network.py:262
-#: ../blueman/plugins/services/Network.py:265
-#: ../blueman/plugins/services/Network.py:271
-#: ../blueman/plugins/services/Network.py:277
+#: ../blueman/plugins/services/Network.py:152
+msgid "Invalid IP address"
+msgstr ""
+
+#: ../blueman/plugins/services/Network.py:164
+#, python-format
+msgid "IP address conflicts with interface %s which has the same address"
+msgstr ""
+
+#: ../blueman/plugins/services/Network.py:169
+#, python-format
+msgid ""
+"IP address overlaps with subnet of interface %s, which has the following "
+"configuration %s/%s\n"
+"This may cause incorrect network behavior"
+msgstr ""
+
+#: ../blueman/plugins/services/Network.py:314
+#: ../blueman/plugins/services/Network.py:317
+#: ../blueman/plugins/services/Network.py:323
+#: ../blueman/plugins/services/Network.py:329
 msgid "Not currently supported with this setup"
 msgstr ""
 

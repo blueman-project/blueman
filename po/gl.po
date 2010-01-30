@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2010-01-21 11:13+0200\n"
-"PO-Revision-Date: 2010-01-22 07:28+0000\n"
+"POT-Creation-Date: 2010-01-29 14:44+0200\n"
+"PO-Revision-Date: 2010-01-29 15:23+0000\n"
 "Last-Translator: Miguel Anxo Bouzada <mbouzada@gmail.com>\n"
 "Language-Team: Galician <gl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-01-23 04:41+0000\n"
+"X-Launchpad-Export-Date: 2010-01-30 04:37+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -574,11 +574,11 @@ msgstr ""
 "<b>Xurdíu un erro ao cargar un complemento. Por favor notifiquello aos "
 "desenvolvedores co contido desta mensaxe.</b>"
 
-#: ../blueman/Functions.py:76
+#: ../blueman/Functions.py:77
 msgid "Bluetooth Turned Off"
 msgstr "Bluetooth desconectado"
 
-#: ../blueman/Functions.py:80
+#: ../blueman/Functions.py:81
 msgid "Enable Bluetooth"
 msgstr "Activar Bluetooth"
 
@@ -1032,8 +1032,8 @@ msgid "Serial Ports"
 msgstr "Portos serie"
 
 #: ../blueman/plugins/manager/Services.py:235
-#: ../blueman/plugins/services/Network.py:31
-#: ../blueman/plugins/services/Network.py:44
+#: ../blueman/plugins/services/Network.py:34
+#: ../blueman/plugins/services/Network.py:59
 msgid "Network"
 msgstr "Rede"
 
@@ -1146,7 +1146,7 @@ msgid "Manages local network services, like NAP bridges"
 msgstr "Xestiona servizos locais de rede como pontes NAP"
 
 #: ../blueman/plugins/applet/Networking.py:54
-#: ../blueman/plugins/services/Network.py:113
+#: ../blueman/plugins/services/Network.py:129
 msgid "Failed to apply network settings"
 msgstr "Fallou ao aplicar a configuración de rede"
 
@@ -1526,47 +1526,51 @@ msgstr ""
 "Fornece compatibilidade básica para conectar a Internet a través dun perfil "
 "DUN."
 
-#: ../blueman/plugins/applet/SerialManager.py:34
+#: ../blueman/plugins/applet/SerialManager.py:39
 msgid ""
 "Standard SPP profile connection handler, allows executing custom actions"
 msgstr ""
 "Perfíl estándar de conexión SPP do controlador, permite a execución de "
 "accións personalizadas"
 
-#: ../blueman/plugins/applet/SerialManager.py:38
+#: ../blueman/plugins/applet/SerialManager.py:43
 msgid "Script to execute on connection"
 msgstr "Scripta a xecutar na conexión"
 
-#: ../blueman/plugins/applet/SerialManager.py:39
+#: ../blueman/plugins/applet/SerialManager.py:44
 msgid ""
 "<span size=\"small\">The following arguments will be passed:\n"
 "Address, Name, service name, uuid16s, rfcomm node\n"
 "For example:\n"
 "AA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0\n"
-"uuid16s are returned as a comma seperated list</span>"
+"uuid16s are returned as a comma seperated list\n"
+"\n"
+"Upon device disconnection the script will be sent a HUP signal</span>"
 msgstr ""
-"<span size=\"small\">Deberan fornecerse os seguintes argumentos:\n"
-"Enderezo, nome, nome do servizo, uuid16s, nodo rfcomm\n"
-"Por exemplo:\n"
-"AA:BB:CC:DD:EE:FF, telefono, servizo DUN, 0x1103, /dev/rfcomm0\n"
-"uuid16s será devolto como un lista separada por vírgulas</span>"
+"<span size=\"small\">Deberan darse os seguintes argumentos:\n"
+"enderezo, nome, nome do servizo, uuid16s, nodo rfcomm\n"
+"Por exemple:\n"
+"AA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0\n"
+"uuid16s devolvese como unha lista separada por vírgulas\n"
+"\n"
+"Ao desconectar o dispositivo, o script envía un sinal HUPl</span>"
 
-#: ../blueman/plugins/applet/SerialManager.py:55
+#: ../blueman/plugins/applet/SerialManager.py:77
 msgid "Serial port connected"
 msgstr "Porto serie conectado"
 
-#: ../blueman/plugins/applet/SerialManager.py:56
+#: ../blueman/plugins/applet/SerialManager.py:78
 #, python-format
 msgid ""
 "Serial port service on device <b>%s</b> now will be available via <b>%s</b>"
 msgstr ""
 "O porto serie non dispositivo <b>%s</b> estará agora dispoñíbel vía<b>%s</b>"
 
-#: ../blueman/plugins/applet/SerialManager.py:75
+#: ../blueman/plugins/applet/SerialManager.py:123
 msgid "Serial port connection script failed"
 msgstr "Fallou o script de conexión o porto serie"
 
-#: ../blueman/plugins/applet/SerialManager.py:76
+#: ../blueman/plugins/applet/SerialManager.py:124
 #, python-format
 msgid ""
 "There was a problem launching script %s\n"
@@ -1584,27 +1588,47 @@ msgid "<b>Bluetooth Off</b>"
 msgstr "<b>Bluetooth apagado</b>"
 
 #: ../blueman/plugins/applet/PowerManager.py:54
-#: ../blueman/plugins/applet/PowerManager.py:195
+#: ../blueman/plugins/applet/PowerManager.py:196
 msgid "<b>Turn Bluetooth Off</b>"
 msgstr "<b>Apagar o Bluetooth</b>"
 
 #: ../blueman/plugins/applet/PowerManager.py:56
-#: ../blueman/plugins/applet/PowerManager.py:196
+#: ../blueman/plugins/applet/PowerManager.py:197
 msgid "Turn off all adapters"
 msgstr "Apagar todos os adaptadores"
 
-#: ../blueman/plugins/applet/PowerManager.py:183
+#: ../blueman/plugins/applet/PowerManager.py:184
 msgid "<b>Turn Bluetooth On</b>"
 msgstr "<b>Acender o Bluetooth</b>"
 
-#: ../blueman/plugins/applet/PowerManager.py:184
+#: ../blueman/plugins/applet/PowerManager.py:185
 msgid "Turn on all adapters"
 msgstr "Acender todos os adaptadores"
 
-#: ../blueman/plugins/services/Network.py:262
-#: ../blueman/plugins/services/Network.py:265
-#: ../blueman/plugins/services/Network.py:271
-#: ../blueman/plugins/services/Network.py:277
+#: ../blueman/plugins/services/Network.py:152
+msgid "Invalid IP address"
+msgstr "Enderezo IP incorrecto"
+
+#: ../blueman/plugins/services/Network.py:164
+#, python-format
+msgid "IP address conflicts with interface %s which has the same address"
+msgstr "Conflito de enderezos IP coa interface %s que ten o mesmo enderezo"
+
+#: ../blueman/plugins/services/Network.py:169
+#, python-format
+msgid ""
+"IP address overlaps with subnet of interface %s, which has the following "
+"configuration %s/%s\n"
+"This may cause incorrect network behavior"
+msgstr ""
+"A IP sobreponse coa de subrede da interface %s, que ten a seguinte "
+"configuración %s/%s\n"
+"Isto pode provocar un comportamento incorrecto da rede"
+
+#: ../blueman/plugins/services/Network.py:314
+#: ../blueman/plugins/services/Network.py:317
+#: ../blueman/plugins/services/Network.py:323
+#: ../blueman/plugins/services/Network.py:329
 msgid "Not currently supported with this setup"
 msgstr "Non é actualmente compatíbel con esta configuración"
 
@@ -1967,3 +1991,16 @@ msgstr "Pode introducir un navegador distinto nas opcións dos servizos"
 #~ msgstr ""
 #~ "Permite recibir son A2DP de outros dispositivos bluetooth e reproducilo nos "
 #~ "altofalantes."
+
+#~ msgid ""
+#~ "<span size=\"small\">The following arguments will be passed:\n"
+#~ "Address, Name, service name, uuid16s, rfcomm node\n"
+#~ "For example:\n"
+#~ "AA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0\n"
+#~ "uuid16s are returned as a comma seperated list</span>"
+#~ msgstr ""
+#~ "<span size=\"small\">Deberan fornecerse os seguintes argumentos:\n"
+#~ "Enderezo, nome, nome do servizo, uuid16s, nodo rfcomm\n"
+#~ "Por exemplo:\n"
+#~ "AA:BB:CC:DD:EE:FF, telefono, servizo DUN, 0x1103, /dev/rfcomm0\n"
+#~ "uuid16s será devolto como un lista separada por vírgulas</span>"
