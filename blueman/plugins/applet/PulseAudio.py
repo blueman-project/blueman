@@ -329,8 +329,8 @@ class PulseAudio(AppletPlugin):
 				except Exception, e:
 					print e
 				
-							 	
-		if int(self.pulse_utils.GetVersion().split(".")[2]) >= 18:
+		version = self.pulse_utils.GetVersion()
+		if version[2] >= 18:
 			args = "address=%s profile=%s sink_properties=device.icon_name=blueman card_properties=device.icon_name=blueman"
 		else:
 			args = "address=%s profile=%s"

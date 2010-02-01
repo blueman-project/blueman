@@ -110,8 +110,8 @@ class PowerManager(AppletPlugin):
 				adapter.SetProperty("Powered", state)
 			
 			self.adapter_state = state
-		except:
-			pass
+		except Exception, e:
+			dprint("Exception occurred", e)
 		
 		
 		
