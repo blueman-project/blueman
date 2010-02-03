@@ -153,7 +153,8 @@ class Sender(gobject.GObject):
 			self.emit("result", False)
 		
 		self.pb.props.text = _("Cancelling")
-		button.props.sensitive = False
+		if button:
+			button.props.sensitive = False
 		
 		if self.session:
 			if self.session.Connected:
