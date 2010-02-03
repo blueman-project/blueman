@@ -34,7 +34,7 @@ class KillSwitch(AppletPlugin):
 	__depends__ = ["PowerManager", "StatusIcon"]
 	__icon__ = "system-shutdown"
 	__options__  = {
-		"checked" : (bool, False)
+		"checked" : {"type": bool, "default": False}
 	}
 	
 	def on_load(self, applet):
