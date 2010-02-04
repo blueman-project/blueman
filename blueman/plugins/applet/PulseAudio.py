@@ -139,7 +139,7 @@ class PulseAudio(AppletPlugin):
 						"<b>Note:</b> Requires pulseaudio 0.9.15 or higher")
 	__icon__ = "audio-card"
 	__options__  = {
-		"checked" : (bool, False),
+		"checked" : {"type": bool, "default": False},
 		"make_default_sink": {"type":bool, 
 							  "default": True, 
 							  "name": _("Make default sink"), 
