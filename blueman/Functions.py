@@ -70,21 +70,22 @@ def check_bluetooth_status(message, exitfunc, *args, **kwargs):
 	except:
 		print "Blueman applet needs to be running"
 		exitfunc()
-	if not applet.GetBluetoothStatus():
+	if "PowerManager" in applet.QueryPlugins():
+		if not applet.GetBluetoothStatus():
 		
-			d = gtk.MessageDialog(None, type=gtk.MESSAGE_ERROR)
-			d.props.icon_name = "blueman"
-			d.props.text = _("Bluetooth Turned Off")
-			d.props.secondary_text = message
+				d = gtk.MessageDialog(None, type=gtk.MESSAGE_ERROR)
+				d.props.icon_name = "blueman"
+				d.props.text = _("Bluetooth Turned Off")
+				d.props.secondary_text = message
 
-			d.add_button(gtk.STOCK_QUIT, gtk.RESPONSE_NO)
-			d.add_button(_("Enable Bluetooth"), gtk.RESPONSE_YES)
-			resp = d.run()
-			d.destroy()
-			if resp != gtk.RESPONSE_YES:
-				exitfunc()
-			else:
-				applet.SetBluetoothStatus(True, *args, **kwargs)		
+				d.add_button(gtk.STOCK_QUIT, gtk.RESPONSE_NO)
+				d.add_button(_("Enable Bluetooth"), gtk.RESPONSE_YES)
+				resp = d.run()
+				d.destroy()
+				if resp != gtk.RESPONSE_YES:
+					exitfunc()
+				else:
+					applet.SetBluetoothStatus(True, *args, **kwargs)		
 
 def wait_for_adapter(bluez_adapter, callback, timeout=1000):
 	def on_prop_change(key, value):

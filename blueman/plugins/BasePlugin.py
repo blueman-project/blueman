@@ -18,6 +18,9 @@
 
 import traceback
 
+class MethodAlreadyExists(Exception):
+	pass
+
 class BasePlugin(object):
 	__depends__ = []
 	__conflicts__ = []
@@ -42,7 +45,7 @@ class BasePlugin(object):
 	
 	@classmethod
 	def add_method(cls, func):
-		func.im_self.__methods.append(func.__name__)
+		func.im_self.__methods.append((cls, func.__name__))
 
 		if func.__name__ in cls.__dict__:
 			raise MethodAlreadyExists
@@ -52,10 +55,8 @@ class BasePlugin(object):
 	def _unload(self):
 		self.on_unload()
 
-		for met in self.__methods:
-			delattr(AppletPlugin, met)
-			
-
+		for cls, met in self.__methods:
+			delattr(cls, met)
 			
 		self.__class__.__instance__ = None
 	

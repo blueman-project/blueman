@@ -135,8 +135,11 @@ class Blueman:
 				except:
 					print "Blueman applet needs to be running"
 					exit()
-				if not self.Applet.GetBluetoothStatus():
-					on_bt_status_changed(False)
+				try:
+					if not self.Applet.GetBluetoothStatus():
+						on_bt_status_changed(False)
+				except:
+					pass
 				self.Applet.Handle("BluetoothStatusChanged", on_bt_status_changed)
 
 		
