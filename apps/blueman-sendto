@@ -317,7 +317,10 @@ class SendTo:
 				action="store", help=_("Send files to this device"), metavar="ADDRESS")
 		
 		parser.add_option("", "--dest", dest="device",
-				action="store", help="Same as --device", metavar="ADDRESS")	
+				action="store", help="Same as --device", metavar="ADDRESS")
+				
+		parser.add_option("-s", "--source", dest="source",
+				action="store", help=_("Source adapter. Takes address or adapter's name eg. hci0"), metavar="PATTERN")
 		
 		(options, args) = parser.parse_args()
 		
@@ -339,7 +342,13 @@ class SendTo:
 		else:
 			m = Manager("gobject")
 			try:
-				adapter = m.GetAdapter()
+				if options.source != None:
+					try:
+						adapter = m.GetAdapter(options.source)
+					except:
+						adapter = m.GetAdapter()
+				else:
+					adapter = m.GetAdapter()
 			except:
 				print "Error: No Adapters present"
 				exit()

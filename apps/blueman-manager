@@ -276,7 +276,9 @@ class Blueman:
 		
 	def send(self, device, File=None):
 		sn = startup_notification("Blueman Sendto", _("Starting File Sender"), bin_name="blueman-sendto", icon="blueman")
-		spawn(["blueman-sendto", "--device=%s" % device.Address], sn=sn)
+		adapter = self.List.Adapter
+		props = adapter.GetProperties()
+		spawn(["blueman-sendto", "--source=%s" % props["Address"], "--device=%s" % device.Address], sn=sn)
 		
 	def remove(self, device):
 		self.List.Adapter.RemoveDevice(device.Device)
