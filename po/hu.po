@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-01-29 14:44+0200\n"
-"PO-Revision-Date: 2010-01-29 15:12+0000\n"
-"Last-Translator: Valmantas Palikša <walmis@balticum-tv.lt>\n"
+"PO-Revision-Date: 2010-02-11 20:29+0000\n"
+"Last-Translator: Fox <Unknown>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-01-30 04:37+0000\n"
+"X-Launchpad-Export-Date: 2010-02-12 04:49+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -858,7 +858,8 @@ msgstr ""
 "  TÖRÖK Attila https://launchpad.net/~torokati44\n"
 "  Valmantas Palikša https://launchpad.net/~walmis\n"
 "  Varga Zoltán https://launchpad.net/~wazzeg\n"
-"  kavkar https://launchpad.net/~kavkar"
+"  kavkar https://launchpad.net/~kavkar\n"
+"  ricsko https://launchpad.net/~ricsi91"
 
 #: ../blueman/gui/CommonUi.py:48
 msgid "Blueman is a GTK based Bluetooth manager"
@@ -1608,12 +1609,12 @@ msgstr "Minden hozzáférés bekapcsolása"
 
 #: ../blueman/plugins/services/Network.py:152
 msgid "Invalid IP address"
-msgstr ""
+msgstr "Érvénytelen IP-cím"
 
 #: ../blueman/plugins/services/Network.py:164
 #, python-format
 msgid "IP address conflicts with interface %s which has the same address"
-msgstr ""
+msgstr "Az IP-cím és a(z) %s eszköz címe ütközik, mivel megegyeznek"
 
 #: ../blueman/plugins/services/Network.py:169
 #, python-format
@@ -1622,6 +1623,9 @@ msgid ""
 "configuration %s/%s\n"
 "This may cause incorrect network behavior"
 msgstr ""
+"Az IP-cím és a(z) %s eszköz subnet fedik egymást, ami a következő "
+"beállításokat tartalmazza %s/%s\n"
+"Ez helytelen hálózati működést okozhat"
 
 #: ../blueman/plugins/services/Network.py:314
 #: ../blueman/plugins/services/Network.py:317
