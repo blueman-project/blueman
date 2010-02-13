@@ -91,8 +91,10 @@ class PowerManager(AppletPlugin):
 		
 	def on_manager_state_changed(self, state):
 		if state:
-			self.adapter_state = self.get_adapter_state()
-			self.RequestPowerState(self.adapter_state)
+			def timeout():
+				self.adapter_state = self.get_adapter_state()
+				self.RequestPowerState(self.adapter_state)
+			gobject.timeout_add(1000, timeout)
 		
 	def get_adapter_state(self):
 		adapters = self.Applet.Manager.ListAdapters()
