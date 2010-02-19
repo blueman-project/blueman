@@ -21,7 +21,7 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.bluez.Device import Device as BluezDevice
 from blueman.main.Device import Device
 from blueman.gui.Notification import Notification
-from blueman.main.PulseAudioUtils import PulseAudioUtils
+from blueman.main.PulseAudioUtils import PulseAudioUtils, EventType
 from subprocess import Popen, PIPE
 import gobject
 
@@ -195,7 +195,21 @@ class PulseAudio(AppletPlugin):
 		
 
 		self.signals.Handle(self.pulse_utils, "connected", self.on_pulse_connected)
+		self.signals.Handle(self.pulse_utils, "event", self.on_pulse_event)
+	
+	def on_pulse_event(self, pa_utils, event, idx):
+		if (EventType.CARD | EventType.CHANGE) == event:
+			dprint(event)
+			def card_cb(c):
+				dprint(c)
+				m = self.loaded_modules[c["proplist"]["bluez.path"]]
+				if c["owner_module"] == m.id:
+					if c["active_profile"] == "a2dp_source":
+						SourceRedirector(m.id, c["proplist"]["bluez.path"], pa_utils)
+			
+			pa_utils.GetCard(idx, card_cb)
 		
+	
 	def on_pulse_connected(self, pa_utils):
 		def modules_cb(modules):
 			for k, v in modules.iteritems():
@@ -248,8 +262,8 @@ class PulseAudio(AppletPlugin):
 					
 					if not m.id:
 						sig = m.connect("loaded", on_loaded)
-					else:
-						SourceRedirector(m.id, device, self.pulse_utils)
+					#else:
+					#	SourceRedirector(m.id, device, self.pulse_utils)
 					
 				except Exception, e:
 					dprint(e)
