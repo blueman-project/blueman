@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2010-01-21 11:13+0200\n"
-"PO-Revision-Date: 2010-01-28 11:51+0000\n"
-"Last-Translator: Burak Anıl <burak_anil_@hotmail.com>\n"
+"POT-Creation-Date: 2010-01-29 14:44+0200\n"
+"PO-Revision-Date: 2010-02-19 19:34+0000\n"
+"Last-Translator: mazdac <mazdac@gmail.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2010-01-29 04:51+0000\n"
+"X-Launchpad-Export-Date: 2010-02-20 04:39+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -25,7 +25,7 @@ msgstr "<b>Pryjazna Nazwa</b>"
 
 #: ../data/ui/adapters-tab.ui.h:2
 msgid "<b>Visibility Setting</b>"
-msgstr "Ustawienia widoczna"
+msgstr "<b>Ustawienia widoczności</b>"
 
 #: ../data/ui/adapters-tab.ui.h:3
 msgid "Always visible"
@@ -37,7 +37,7 @@ msgstr "Ukryty"
 
 #: ../data/ui/adapters-tab.ui.h:5
 msgid "Temporarily visible"
-msgstr ""
+msgstr "Tymczasowo widoczny"
 
 #: ../data/ui/adapters.ui.h:1
 msgid "Bluetooth Adapters"
@@ -45,11 +45,11 @@ msgstr "Adaptery Bluetooth"
 
 #: ../data/ui/applet-passkey.ui.h:1
 msgid "Pairing request"
-msgstr "Żądanie powiązania"
+msgstr "Żądanie parowania"
 
 #: ../data/ui/applet-passkey.ui.h:2
 msgid "Pairing request for device:"
-msgstr "Żądanie powiązania dla urządzenia:"
+msgstr "Żądanie parowania urządzenia:"
 
 #: ../data/ui/applet-passkey.ui.h:3
 msgid "Show input"
@@ -81,7 +81,7 @@ msgstr "Przeglądaj urządzenie poprzez protokół obex ftp"
 #: ../data/ui/manager-main.ui.h:8
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:386
 msgid "Create pairing with the device"
-msgstr ""
+msgstr "Paruj z urządzeniem"
 
 #: ../data/ui/manager-main.ui.h:9
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:405
@@ -93,7 +93,7 @@ msgstr "Zaznacz/Odznacz urządzenie jako zaufane"
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:283
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:385
 msgid "Pair"
-msgstr "Powiąż"
+msgstr "Paruj"
 
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:13
@@ -150,7 +150,7 @@ msgstr "Usługi lokalne"
 
 #: ../data/ui/services-network.ui.h:1
 msgid "<b>DUN Support</b>"
-msgstr "Wsparcie DUN"
+msgstr "<b>Wsparcie DUN</b>"
 
 #: ../data/ui/services-network.ui.h:2
 msgid "<b>NAP Settings</b>"
@@ -166,7 +166,7 @@ msgstr "<b>Brak zainstalowanych serwerów DHCP</b>"
 
 #: ../data/ui/services-network.ui.h:5
 msgid "<b>PAN Support</b>"
-msgstr "Wsparcie PAN"
+msgstr "<b>Wsparcie PAN</b>"
 
 #: ../data/ui/services-network.ui.h:6 ../data/ui/services-audio.ui.h:3
 msgid "<b>Services</b>"
@@ -219,7 +219,7 @@ msgstr "Akceptuj pliki z zaufanych urządzeń"
 
 #: ../data/ui/services-transfer.ui.h:6
 msgid "Allow devices to write/delete"
-msgstr "Zezwól urządzeniom na odczyt/zapis"
+msgstr "Zezwól urządzniom na zapis/usuwanie"
 
 #: ../data/ui/services-transfer.ui.h:8
 #, no-c-format
@@ -236,44 +236,50 @@ msgstr "Aktywne"
 
 #: ../data/ui/services-transfer.ui.h:11
 msgid "Select Shared/Storage folder"
-msgstr "Katalog dzielony/magazynu"
+msgstr "Wybierz katalog współdzilony"
 
 #: ../data/ui/services-transfer.ui.h:12
 msgid "Shared Folder:"
-msgstr "Folder współdzielony"
+msgstr "Katalog współdzilony:"
 
 #: ../data/ui/services-audio.ui.h:1
 msgid ""
 "<b>After applying these settings Bluetooth daemon will be restarted.</b>"
 msgstr ""
-"Po zatwierdzeniu tych ustawień program serwera usług Bluetooth zostanie "
-"uruchomiony ponownie."
+"<b>Po zatwierdzeniu tych ustawień usługa Bluetooth zostanie uruchomiona "
+"ponownie</b>"
 
 #: ../data/ui/services-audio.ui.h:2
 msgid "<b>Audio Settings</b>"
-msgstr ""
+msgstr "<b>Ustawienia audio</b>"
 
 #: ../data/ui/services-audio.ui.h:4
 msgid ""
 "Advanced Audio receiver <span weight='bold' "
 "color='#cc0000'>Experimental!</span>"
 msgstr ""
+"Zaawansowany odbiornik audio <span weight='bold' "
+"color='#cc0000'>Eksperymentalne!</span>"
 
 #: ../data/ui/services-audio.ui.h:5
 msgid "Allows this computer to act like a handsfree headset."
-msgstr ""
+msgstr "Zezwala temu komputerowi działać jako zestaw słuchawkowy"
 
 #: ../data/ui/services-audio.ui.h:6
 msgid ""
 "Allows you to receive a2dp audio from other Bluetooth devices and play it "
 "over the speakers."
 msgstr ""
+"Umożliwia odbieranie sygnału audio a2dp z innych urządzeń Bluetooth i "
+"odtwarzanie go na głośnikach."
 
 #: ../data/ui/services-audio.ui.h:7
 msgid ""
 "Headset Emulation <span weight='bold' color='#cc0000'>Very "
 "Experimental!</span>"
 msgstr ""
+"Emulacja zestawu słuchawkowego <span weight='bold' color='#cc0000'>Bardzo "
+"eksperymentalne!</span>"
 
 #: ../data/ui/send-dialog.ui.h:1
 msgid "<b>File:</b>"
@@ -291,7 +297,7 @@ msgstr ""
 
 #: ../data/ui/send-dialog.ui.h:4
 msgid "Bluetooth File Transfer"
-msgstr "Przesył plików za pomocą Bluetooth"
+msgstr "Transfer plików za pomocą Bluetooth"
 
 #: ../data/ui/assistant.ui.h:1
 msgid "<b>Congratulations, device successfully added</b>"
@@ -317,22 +323,27 @@ msgid ""
 "It will walk you through the process of configuring and connecting to your "
 "Bluetooth enabled devices."
 msgstr ""
+"<b>Witaj w asystencie ustawiania urządzenia Bluetooth</b>\n"
+"\n"
+"\n"
+"Asystent ten przeprowadzi Cię przez proces konfiguracji i łączenia urządzeń "
+"wspierających technologię Bluetooth."
 
 #: ../data/ui/assistant.ui.h:9
 msgid "Proceed Without Pairing"
-msgstr ""
+msgstr "Kontynuuj bez parowania"
 
 #: ../data/ui/assistant.ui.h:10
 msgid "Use Custom Passkey:"
-msgstr ""
+msgstr "Użyj wybranego przez siebie kodu dostępu"
 
 #: ../data/ui/assistant.ui.h:11
 msgid "Use Random Passkey"
-msgstr "Użyj losowego klucza"
+msgstr "Użyj losowego kodu dostępu"
 
 #: ../data/ui/device-list-widget.ui.h:1
 msgid "Adapter selection"
-msgstr "Wybór adapteru"
+msgstr "Wybór adaptera"
 
 #: ../data/ui/device-list-widget.ui.h:2
 msgid "Device search progress"
@@ -344,74 +355,74 @@ msgstr "Szukaj urządzeń"
 
 #: ../data/ui/applet-plugins-widget.ui.h:1
 msgid "<b>Author:</b>"
-msgstr ""
+msgstr "<b>Autor:</b>"
 
 #: ../data/ui/applet-plugins-widget.ui.h:2
 msgid "<b>Conflicts with:</b>"
-msgstr ""
+msgstr "<b>Konflikt z:</b>"
 
 #: ../data/ui/applet-plugins-widget.ui.h:3
 msgid "<b>Depends on:</b>"
-msgstr ""
+msgstr "<b>Zależy od:</b>"
 
 #: ../data/ui/applet-plugins-widget.ui.h:4
 msgid "<b>Plugin description:</b>"
-msgstr ""
+msgstr "<b>Opis wtyczki:</b>"
 
 #: ../data/ui/applet-plugins-widget.ui.h:5
 msgid "Configuration"
-msgstr ""
+msgstr "Konfiguracja"
 
 #: ../data/ui/applet-plugins-widget.ui.h:6
 msgid "Configure selected plugin's preferences"
-msgstr "Konfiguracja ustawień zaznaczonych wtyczek"
+msgstr "Konfiguruj ustawienia zaznaczonych wtyczek"
 
 #: ../data/ui/applet-plugins-widget.ui.h:7
 msgid "Not specified"
-msgstr ""
+msgstr "Nieokreślony"
 
 #: ../data/ui/applet-plugins-widget.ui.h:8 ../blueman/Sdp.py:257
 #: ../blueman/Sdp.py:360 ../blueman/Sdp.py:365
 #: ../blueman/plugins/applet/NetUsage.py:247
 #: ../blueman/plugins/applet/NetUsage.py:248
 msgid "Unknown"
-msgstr ""
+msgstr "Niezidenyfikowany"
 
 #: ../data/ui/gsm-settings.ui.h:1
 msgid "<b>GSM settings</b>"
-msgstr ""
+msgstr "<b>Ustawienia GSM</b>"
 
 #: ../data/ui/gsm-settings.ui.h:2
 msgid "APN:"
-msgstr ""
+msgstr "APN:"
 
 #: ../data/ui/gsm-settings.ui.h:3
 msgid "Number:"
-msgstr ""
+msgstr "Numer:"
 
 #: ../data/ui/net-usage.ui.h:1
 msgid "<b>Downloaded:</b>"
-msgstr ""
+msgstr "<b>Pobrano:</b>"
 
 #: ../data/ui/net-usage.ui.h:2
 msgid "<b>Log duration:</b>"
-msgstr ""
+msgstr "<b>Czas trwania zapisu:</b>"
 
 #: ../data/ui/net-usage.ui.h:3
 msgid "<b>Log started:</b>"
-msgstr ""
+msgstr "<b>Rozpoczęto zapisywanie:</b>"
 
 #: ../data/ui/net-usage.ui.h:4
 msgid "<b>Total:</b>"
-msgstr ""
+msgstr "<b>Całkowity:</b>"
 
 #: ../data/ui/net-usage.ui.h:5
 msgid "<b>Uploaded:</b>"
-msgstr ""
+msgstr "<b>Wysłano:</b>"
 
 #: ../data/ui/net-usage.ui.h:6
 msgid "Reset"
-msgstr ""
+msgstr "Wyzeruj"
 
 #: ../data/ui/net-usage.ui.h:7
 msgid "Traffic statistics"
@@ -419,16 +430,16 @@ msgstr "Statystyki transferu danych"
 
 #: ../data/ui/net-usage.ui.h:8
 msgid "gtk-close"
-msgstr ""
+msgstr "gtk-close"
 
 #: ../blueman/main/applet/Transfer.py:170
 msgid "Incoming file over Bluetooth"
-msgstr ""
+msgstr "Plik przychodzący przez Bluetooth"
 
 #: ../blueman/main/applet/Transfer.py:171
 #, python-format
 msgid "Incoming file %(0)s from %(1)s"
-msgstr "Przychodący plik %(0)s z %(1)s"
+msgstr "Plik przychodzący %(0)s od %(1)s"
 
 #: ../blueman/main/applet/Transfer.py:172
 #: ../blueman/main/applet/BluezAgent.py:240
@@ -451,7 +462,7 @@ msgstr "Odbieranie pliku %(0)s od %(1)s"
 #: ../blueman/main/applet/Transfer.py:218
 #: ../blueman/main/applet/Transfer.py:244
 msgid "File received"
-msgstr "Plik odebrany"
+msgstr "Odebrano plik"
 
 #: ../blueman/main/applet/Transfer.py:219
 #: ../blueman/main/applet/Transfer.py:245
@@ -492,7 +503,7 @@ msgstr[2] "Odebrane %d plików więcej w tle"
 #: ../blueman/main/applet/BluezAgent.py:125
 #, python-format
 msgid "Pairing request for %s"
-msgstr "Żądanie powiązania dla %s"
+msgstr "Żądanie sparowania dla %s"
 
 #: ../blueman/main/applet/BluezAgent.py:137
 #: ../blueman/main/applet/BluezAgent.py:243
@@ -563,12 +574,14 @@ msgid ""
 "<b>An error has occured while loading a plugin. Please notify the developers "
 "with the content of this message.</b>"
 msgstr ""
+"<b>Podczas ładowania wtyczki wystąpił błąd. Proszę wysłać treść tego "
+"komunikatu do opiekunów projektu.</b>"
 
-#: ../blueman/Functions.py:76
+#: ../blueman/Functions.py:77
 msgid "Bluetooth Turned Off"
 msgstr "Bluetooth wyłączono"
 
-#: ../blueman/Functions.py:80
+#: ../blueman/Functions.py:81
 msgid "Enable Bluetooth"
 msgstr "Włącz Bluetooth"
 
@@ -590,11 +603,11 @@ msgstr "Pomoc"
 
 #: ../blueman/gui/manager/ManagerMenu.py:55
 msgid "Get Help Online..."
-msgstr "Znajdź pomoc w sieci..."
+msgstr "Uzyskaj pomoc w sieci..."
 
 #: ../blueman/gui/manager/ManagerMenu.py:60
 msgid "Translate This Application..."
-msgstr "Przetłumacz tę aplikację..."
+msgstr "Przetłumacz tą aplikację..."
 
 #: ../blueman/gui/manager/ManagerMenu.py:65
 msgid "Report a Problem"
@@ -674,6 +687,10 @@ msgid ""
 "Link Quality: %(lq)u%%\n"
 "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr ""
+"<b>Połączono</b>\n"
+"Siła sygnału: %(rssi)u%% <i>(%(rssi_state)s)</i>\n"
+"Jakość połączenia: %(lq)u%%\n"
+"<b>Moc transmisji: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:509
 #, python-format
@@ -683,6 +700,10 @@ msgid ""
 "<b>Link Quality: %(lq)u%%</b>\n"
 "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr ""
+"<b>Połączono</b>\n"
+"Siła sygału: %(rssi)u%% <i>(%(rssi_state)s)</i>\n"
+"<b>Jakość połączenia: %(lq)u%%</b>\n"
+"Moc transmisji: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:511
 #, python-format
@@ -692,6 +713,10 @@ msgid ""
 "Link Quality: %(lq)u%%\n"
 "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr ""
+"<b>Połączono</b>\n"
+"<b>Siła sygnału: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>\n"
+"Jakość połączenia: %(lq)u%%\n"
+"Moc transmisji: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:124
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:416
@@ -701,7 +726,7 @@ msgstr "Zakończono z powodzeniem!"
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:128
 #, python-format
 msgid "Serial port connected to %s"
-msgstr ""
+msgstr "Port szeregowy podłączony do %s"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:135
 msgid "Failed"
@@ -713,7 +738,7 @@ msgstr "Połączenie nie powiodło się: "
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:146
 msgid "Cancelled"
-msgstr "Przerwano"
+msgstr "Anulowano"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:150
 msgid "Connecting..."
@@ -725,24 +750,24 @@ msgstr "Dodaj urządzenie"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:288
 msgid "Pair with the device"
-msgstr ""
+msgstr "Paruj z urządzniem"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:294
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:357
 msgid "Send a File..."
-msgstr ""
+msgstr "Wyślij plik..."
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:325
 msgid "<b>Connect To:</b>"
-msgstr "Połącz z:"
+msgstr "<b>Połącz z:</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:337
 msgid "<b>Disconnect:</b>"
-msgstr "Rozłącz:"
+msgstr "<b>Rozłącz:</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:362
 msgid "Browse Device..."
-msgstr ""
+msgstr "Przeglądaj urządzenie..."
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:401
 #: ../blueman/gui/manager/ManagerToolbar.py:45
@@ -760,11 +785,11 @@ msgstr "Odświeżanie"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:426
 msgid "Refreshing Services..."
-msgstr "Odświeżam Usługi..."
+msgstr "Odświeżanie usług..."
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:429
 msgid "Refresh Services"
-msgstr "Odśwież Usługi"
+msgstr "Odśwież usługi"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:438
 msgid "Remove..."
@@ -772,15 +797,15 @@ msgstr "Usuń..."
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:448
 msgid "Disconnect"
-msgstr ""
+msgstr "Rozłącz"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:449
 msgid "Forcefully disconnect the device"
-msgstr ""
+msgstr "Wymuś rozłącznie z urządzniem"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:458
 msgid "Disconnecting..."
-msgstr ""
+msgstr "Rozłączanie..."
 
 #: ../blueman/gui/manager/ManagerProgressbar.py:32 ../apps/blueman-sendto:70
 msgid "Connecting"
@@ -798,24 +823,24 @@ msgstr "Wskaźnik przesyłania danych"
 #: ../blueman/gui/manager/ManagerStats.py:66
 #: ../blueman/gui/manager/ManagerStats.py:79
 msgid "Total data received and rate of transmission"
-msgstr "Całkowite ratio wysyłanych i odbieranych danych"
+msgstr "Całkowita ilość odebranych danych oraz szybkość trasmisji"
 
 #: ../blueman/gui/manager/ManagerStats.py:71
 #: ../blueman/gui/manager/ManagerStats.py:74
 msgid "Total data sent and rate of transmission"
-msgstr "Całkowita ilość i ratio wysłanych danych"
+msgstr "Całkowita ilość wysłanych danych oraz szybkość transmisji"
 
 #: ../blueman/gui/DeviceSelectorDialog.py:27
 msgid "Select Device"
-msgstr "Wybór urządzenia"
+msgstr "Wybierz urządzenie"
 
 #: ../blueman/gui/MessageArea.py:60
 msgid "More"
-msgstr ""
+msgstr "Więcej"
 
 #: ../blueman/gui/MessageArea.py:73
 msgid "Close"
-msgstr ""
+msgstr "Zamknij"
 
 #: ../blueman/gui/CommonUi.py:45
 msgid "translator-credits"
@@ -857,17 +882,17 @@ msgstr "Ustawienia GSM"
 #: ../blueman/gui/applet/PluginDialog.py:123
 #: ../blueman/plugins/applet/StandardItems.py:139
 msgid "Plugins"
-msgstr ""
+msgstr "Wtyczki"
 
 #: ../blueman/gui/applet/PluginDialog.py:216
 #: ../blueman/gui/applet/PluginDialog.py:217
 msgid "Unspecified"
-msgstr ""
+msgstr "Nieokreślony"
 
 #: ../blueman/gui/applet/PluginDialog.py:307
 #: ../blueman/gui/applet/PluginDialog.py:327
 msgid "Dependency issue"
-msgstr ""
+msgstr "Problem z zależnościami"
 
 #: ../blueman/gui/applet/PluginDialog.py:308
 #, python-format
@@ -876,6 +901,9 @@ msgid ""
 "also unload <b>\"%(0)s\"</b>.\n"
 "Proceed?"
 msgstr ""
+"Wtyczka <b>\"%(0)s\"</b> zależy od <b>%(1)s</b>. Wyłączenie <b>%(1)s</b> "
+"spowoduje wyłącznie również <b>\"%(0)s\"</b>.\n"
+"Kontynuować?"
 
 #: ../blueman/gui/applet/PluginDialog.py:328
 #, python-format
@@ -884,6 +912,9 @@ msgid ""
 "unload <b>%(0)s</b>.\n"
 "Proceed?"
 msgstr ""
+"Wtyczka <b>%(0)s</b> jest wkonflikcie z <b>%(1)s</b>. Włączenie <b>%(1)s</b> "
+"spowoduje wyłączenie <b>%(0)s</b>.\n"
+"Kontynuować?"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:36 ../blueman/DeviceClass.py:61
@@ -954,7 +985,7 @@ msgstr "handsfree"
 #: ../blueman/DeviceClass.py:112 ../blueman/DeviceClass.py:180
 #: ../blueman/DeviceClass.py:246
 msgid "unknown"
-msgstr "nieznane"
+msgstr "nieznany"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:114
@@ -969,7 +1000,7 @@ msgstr "klawiatura"
 #. translators: device class
 #: ../blueman/DeviceClass.py:141
 msgid "pointing"
-msgstr "wskazując"
+msgstr "urządzenie wskazujące"
 
 #: ../blueman/Sdp.py:98
 msgid "Dialup Networking (DUN)"
@@ -978,12 +1009,12 @@ msgstr "Dialup Networking (DUN)"
 #: ../blueman/Sdp.py:105 ../blueman/plugins/manager/Services.py:332
 #: ../blueman/plugins/manager/Services.py:340
 msgid "Audio Source"
-msgstr ""
+msgstr "Źródło sygnału audio"
 
 #: ../blueman/Sdp.py:106 ../blueman/plugins/manager/Services.py:307
 #: ../blueman/plugins/manager/Services.py:315
 msgid "Audio Sink"
-msgstr ""
+msgstr "Mikser audio"
 
 #: ../blueman/Sdp.py:117 ../blueman/plugins/manager/Services.py:223
 #: ../apps/blueman-assistant:341
@@ -993,11 +1024,11 @@ msgstr "Punkt Dostępu Do Sieci"
 #: ../blueman/plugins/manager/PulseAudioProfile.py:119
 #, python-format
 msgid "Failed to change profile to %s"
-msgstr ""
+msgstr "Zmiana profilu na %s nie powiodła się"
 
 #: ../blueman/plugins/manager/PulseAudioProfile.py:155
 msgid "Audio Profile"
-msgstr ""
+msgstr "Profil dźwiękowy"
 
 #: ../blueman/plugins/manager/PulseAudioProfile.py:156
 msgid "Select audio profile for PulseAudio"
@@ -1014,19 +1045,19 @@ msgstr "Urządzenie szeregowe"
 #: ../blueman/plugins/manager/Services.py:150
 #, python-format
 msgid "Serial Port %s"
-msgstr ""
+msgstr "Port szeregowy %s"
 
 #: ../blueman/plugins/manager/Services.py:173
 msgid "Dialup Settings"
-msgstr ""
+msgstr "Ustawienia DialUp"
 
 #: ../blueman/plugins/manager/Services.py:186
 msgid "Serial Ports"
 msgstr "Porty szeregowe"
 
 #: ../blueman/plugins/manager/Services.py:235
-#: ../blueman/plugins/services/Network.py:31
-#: ../blueman/plugins/services/Network.py:44
+#: ../blueman/plugins/services/Network.py:34
+#: ../blueman/plugins/services/Network.py:59
 msgid "Network"
 msgstr "Sieć"
 
@@ -1037,20 +1068,20 @@ msgstr "Odnów adres IP"
 #: ../blueman/plugins/manager/Services.py:259
 #: ../blueman/plugins/manager/Services.py:268 ../apps/blueman-assistant:328
 msgid "Input Service"
-msgstr "Usługa Urządzeń Wejściowych"
+msgstr "Usługa urządzeń wejśćiowych"
 
 #: ../blueman/plugins/manager/Services.py:283
 #: ../blueman/plugins/manager/Services.py:291 ../apps/blueman-assistant:356
 msgid "Headset Service"
-msgstr "Usługa Zestawu Słuchawkowego"
+msgstr "Usługa zestawu słuchawkowego"
 
 #: ../blueman/plugins/manager/Services.py:317
 msgid "Allows to send audio to remote device"
-msgstr ""
+msgstr "Umożliwia wysyłanie sygnału audio do innych urządzeń"
 
 #: ../blueman/plugins/manager/Services.py:342
 msgid "Allows to receive audio from remote device"
-msgstr ""
+msgstr "Umożliwia odbieranie sygnału audio od innych urządzeń"
 
 #: ../blueman/plugins/applet/NetUsage.py:196
 #: ../blueman/plugins/applet/NetUsage.py:298
@@ -1061,7 +1092,7 @@ msgstr "Połączony:"
 #: ../blueman/plugins/applet/NetUsage.py:212
 #: ../blueman/plugins/applet/NetUsage.py:309
 msgid "Not Connected"
-msgstr ""
+msgstr "Niepołączony"
 
 #: ../blueman/plugins/applet/NetUsage.py:218
 msgid ""
@@ -1074,20 +1105,23 @@ msgstr ""
 #: ../blueman/plugins/applet/NetUsage.py:241
 msgid "day"
 msgid_plural "days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "dzień"
+msgstr[1] "dni"
+msgstr[2] "dni"
 
 #: ../blueman/plugins/applet/NetUsage.py:242
 msgid "hour"
 msgid_plural "hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "godzina"
+msgstr[1] "godziny"
+msgstr[2] "godzin"
 
 #: ../blueman/plugins/applet/NetUsage.py:243
 msgid "minute"
 msgid_plural "minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "minuta"
+msgstr[1] "minuty"
+msgstr[2] "minut"
 
 #: ../blueman/plugins/applet/NetUsage.py:245
 #, python-format
@@ -1096,47 +1130,50 @@ msgstr "%d %s %d %s i %d %s"
 
 #: ../blueman/plugins/applet/NetUsage.py:276
 msgid "Are you sure you want to reset the counter?"
-msgstr "Czy na pewno chcesz zresetować licznik?"
+msgstr "Czy na pewno chcesz wyzerować licznik?"
 
 #: ../blueman/plugins/applet/NetUsage.py:315
 msgid ""
 "Allows you to monitor your (mobile broadband) network traffic usage. Useful "
 "for limited data access plans. This plugin tracks every device seperately."
 msgstr ""
+"Umożliwia monitorowanie liczby przesłanych danych (dostęp mobilny). "
+"Użyteczne w planach taryfowych z ograniczonym transferem danych. Wtyczka "
+"śledzi każde urządzenie osobno."
 
 #: ../blueman/plugins/applet/NetUsage.py:333
 msgid "Network Usage"
-msgstr ""
+msgstr "Przesłane dane"
 
 #: ../blueman/plugins/applet/NetUsage.py:334
 msgid "Shows network traffic usage"
-msgstr ""
+msgstr "Pokazuje liczbę przesłanych danych"
 
 #: ../blueman/plugins/applet/StatusIcon.py:72
 msgid "Icon Name"
-msgstr ""
+msgstr "Nazwa ikony"
 
 #: ../blueman/plugins/applet/StatusIcon.py:73
 msgid "Custom icon to use for the notification area"
-msgstr ""
+msgstr "Dostosuj ikonę używaną w obszarze powiadamiania"
 
 #: ../blueman/plugins/applet/StatusIcon.py:90
 #: ../blueman/plugins/applet/StatusIcon.py:103
 #: ../blueman/plugins/applet/Indicator.py:106
 #: ../blueman/plugins/applet/Indicator.py:111
 msgid "Bluetooth Enabled"
-msgstr "Bluetooth Włączony"
+msgstr "Bluetooth włączony"
 
 #: ../blueman/plugins/applet/StatusIcon.py:105
 msgid "Bluetooth Disabled"
-msgstr "Bluetooth Wyłączony"
+msgstr "Bluetooth wyłączony"
 
 #: ../blueman/plugins/applet/Networking.py:31
 msgid "Manages local network services, like NAP bridges"
-msgstr ""
+msgstr "Zarządz usługami sieci lokalnej, jak mosty NAP"
 
 #: ../blueman/plugins/applet/Networking.py:54
-#: ../blueman/plugins/services/Network.py:113
+#: ../blueman/plugins/services/Network.py:129
 msgid "Failed to apply network settings"
 msgstr "Nie udało się zastosować ustawień sieciowych"
 
@@ -1149,36 +1186,38 @@ msgstr ""
 
 #: ../blueman/plugins/applet/NMDUNSupport.py:85
 msgid "Bluetooth Dialup"
-msgstr ""
+msgstr "Bluetooth Dialup"
 
 #: ../blueman/plugins/applet/NMDUNSupport.py:86
 #, python-format
 msgid "DUN connection on %s will now be available in Network Manager"
-msgstr ""
+msgstr "Połączenie DUN na %s będzie dostępne w programie NetworkManager"
 
 #: ../blueman/plugins/applet/NMDUNSupport.py:96
 msgid "Modem Manager did not support the connection"
-msgstr ""
+msgstr "Modem Manager nie obsługuje tego połączenia"
 
 #: ../blueman/plugins/applet/NMDUNSupport.py:104
 msgid ""
 "Provides support for Dial Up Networking (DUN) with ModemManager and "
 "NetworkManager 0.8"
 msgstr ""
+"Zapewnia wsparcie dla Dial Up Networking (DUN) z programami ModemManager i "
+"NetworkManager 0.8"
 
 #: ../blueman/plugins/applet/RecentConns.py:57
 msgid ""
 "Provides a menu item that contains last used connections for quick access"
-msgstr ""
+msgstr "Dostarcza element menu zawierający ostatnio używane połączenia"
 
 #. the maximum number of items RecentConns menu will display
 #: ../blueman/plugins/applet/RecentConns.py:64
 msgid "Maximum items"
-msgstr ""
+msgstr "Maksymalna ilość połączeń"
 
 #: ../blueman/plugins/applet/RecentConns.py:65
 msgid "The maximum number of items recent connections menu will display."
-msgstr ""
+msgstr "Maksymalna liczba ostatnich połączeń wyświetlana w menu."
 
 #: ../blueman/plugins/applet/RecentConns.py:83
 msgid "Recent Connections"
@@ -1192,12 +1231,12 @@ msgstr "Łączenie z %s"
 #: ../blueman/plugins/applet/RecentConns.py:302
 #: ../blueman/plugins/applet/PPPSupport.py:68
 msgid "Connected"
-msgstr "Połączony"
+msgstr "Połączono"
 
 #: ../blueman/plugins/applet/RecentConns.py:302
 #, python-format
 msgid "Connected to %s"
-msgstr "Połączone z %s"
+msgstr "Połączono z %s"
 
 #: ../blueman/plugins/applet/RecentConns.py:308
 msgid "Failed to connect"
@@ -1226,86 +1265,92 @@ msgid ""
 "Provides support for Personal Area Networking (PAN) introduced in "
 "NetworkManager 0.8"
 msgstr ""
+"Dostarcza wsparcie dla Personal Area Networking (PAN) wprowadzonego w "
+"NetworkManager 0.8"
 
 #: ../blueman/plugins/applet/NMPANSupport.py:335
 msgid "Already connected"
-msgstr ""
+msgstr "Już połączono"
 
 #: ../blueman/plugins/applet/DBusService.py:39
 msgid "Provides DBus API for other Blueman components"
-msgstr ""
+msgstr "Zapewnia API DBus dla innych komponentów Bluemana"
 
 #: ../blueman/plugins/applet/NMMonitor.py:106
 msgid ""
 "Monitors NetworkManager's modem connections and automatically disconnects "
 "Bluetooth link after the network connection is closed"
 msgstr ""
+"Monitoruje połączenia modemowe NetworkManagera i automatycznie rozłącza "
+"połączenie Bluetooth po zamknięciu połączenia sieciowego."
 
 #: ../blueman/plugins/applet/TransferService.py:29
 msgid "Provides OBEX file transfer capabilities"
-msgstr ""
+msgstr "Dostarcza możliwości transferu plików przez protokołu OBEX"
 
 #: ../blueman/plugins/applet/KillSwitch.py:33
 msgid ""
 "Toggles a platform Bluetooth killswitch when Bluetooth power state changes. "
 "Useless with USB dongles."
 msgstr ""
+"Przełącza przełącznik systemowy Bluetooth gdy nastąpi zmiana stanu "
+"zasilania. Bezużyteczne z kluczami USB."
 
 #: ../blueman/plugins/applet/StandardItems.py:30
 msgid "Adds standard menu items to the status icon menu"
-msgstr ""
+msgstr "Dodaje standardowe elementy menu do menu ikony statusu"
 
 #: ../blueman/plugins/applet/StandardItems.py:38
 msgid "_Setup New Device"
-msgstr ""
+msgstr "_Ustaw nowe urządzenie"
 
 #: ../blueman/plugins/applet/StandardItems.py:45
 msgid "Send _Files to Device"
-msgstr ""
+msgstr "Wyślij plik do urządzenia"
 
 #: ../blueman/plugins/applet/StandardItems.py:50
 msgid "_Browse Files on Device"
-msgstr ""
+msgstr "Przeglądaj pliki na urządzeniu"
 
 #: ../blueman/plugins/applet/StandardItems.py:58
 msgid "_Devices"
-msgstr ""
+msgstr "_Urządzenia"
 
 #: ../blueman/plugins/applet/StandardItems.py:63
 msgid "Adap_ters"
-msgstr ""
+msgstr "Adaptery"
 
 #: ../blueman/plugins/applet/StandardItems.py:68
 msgid "_Local Services"
-msgstr ""
+msgstr "Usługi lokalne"
 
 #: ../blueman/plugins/applet/StandardItems.py:78
 msgid "_Plugins"
-msgstr ""
+msgstr "_Wtyczki"
 
 #: ../blueman/plugins/applet/StandardItems.py:113 ../apps/blueman-manager:237
 msgid "Starting Bluetooth Assistant"
-msgstr "Uruchamianie Asystenta Bluetooth"
+msgstr "Uruchamianie asystenta Bluetooth"
 
 #: ../blueman/plugins/applet/StandardItems.py:117 ../apps/blueman-manager:278
 msgid "Starting File Sender"
-msgstr "Uruchamianie aplikacji Przesyłania Plików"
+msgstr "Uruchamianie aplikacji wysyłania plików"
 
 #: ../blueman/plugins/applet/StandardItems.py:121
 msgid "Starting File Browser"
-msgstr "Uruchamianie Przeglądarki Plików"
+msgstr "Uruchamianie aplikacji przeglądania plików"
 
 #: ../blueman/plugins/applet/StandardItems.py:125
 msgid "Starting Device Manager"
-msgstr "Uruchamianie Menedżera Urządzeń"
+msgstr "Uruchamianie menadżera urządzeń"
 
 #: ../blueman/plugins/applet/StandardItems.py:129 ../apps/blueman-manager:269
 msgid "Starting Adapter Preferences"
-msgstr "Uruchamianie aplikacji preferencji urządzenia"
+msgstr "Uruchamianie aplikacji preferencji adaptera"
 
 #: ../blueman/plugins/applet/StandardItems.py:133
 msgid "Starting Service Preferences"
-msgstr "Uruchamianie aplikacji Preferencji Usług"
+msgstr "Uruchamianie aplikacji preferensji usług"
 
 #: ../blueman/plugins/applet/StandardItems.py:137
 msgid "applet"
@@ -1313,34 +1358,36 @@ msgstr "aplet"
 
 #: ../blueman/plugins/applet/AuthAgent.py:28
 msgid "Provides passkey, authentication services for BlueZ daemon"
-msgstr ""
+msgstr "Dostarcza usługi kluczy/haseł i autentyfikacji  serwerowi BlueZ"
 
 #: ../blueman/plugins/applet/PulseAudio.py:139
 msgid ""
 "Automatically manages Pulseaudio Bluetooth sinks/sources.\n"
 "<b>Note:</b> Requires pulseaudio 0.9.15 or higher"
 msgstr ""
+"Automatycznie zarządza mikserami/źródłami Bluetooth w Pulseaudio.\n"
+"<b>Informacja:</b>Wymaga Pulseaudio w wersji 0.9.15 lub wyżesze"
 
 #: ../blueman/plugins/applet/PulseAudio.py:146
 msgid "Make default sink"
-msgstr ""
+msgstr "Ustaw jako domyśłny mikser"
 
 #: ../blueman/plugins/applet/PulseAudio.py:147
 msgid "Make the a2dp audio sink the default after connection"
-msgstr ""
+msgstr "Ustaw mikser a2dp jako domyślny po połączeniu"
 
 #: ../blueman/plugins/applet/PulseAudio.py:150
 msgid "Move streams"
-msgstr ""
+msgstr "Przenieś strumień"
 
 #: ../blueman/plugins/applet/PulseAudio.py:151
 msgid "Move existing audio streams to bluetooth device"
-msgstr ""
+msgstr "Przenieś istniejące strumienie audio na urządzenie Bluetooth"
 
 #: ../blueman/plugins/applet/PulseAudio.py:312
 #: ../blueman/plugins/applet/PulseAudio.py:317
 msgid "Bluetooth Audio"
-msgstr ""
+msgstr "Dźwięk Bluetooth"
 
 #: ../blueman/plugins/applet/PulseAudio.py:313
 msgid ""
@@ -1484,39 +1531,41 @@ msgid ""
 "Provides basic support for connecting to the internet via DUN profile."
 msgstr ""
 
-#: ../blueman/plugins/applet/SerialManager.py:34
+#: ../blueman/plugins/applet/SerialManager.py:39
 msgid ""
 "Standard SPP profile connection handler, allows executing custom actions"
 msgstr ""
 
-#: ../blueman/plugins/applet/SerialManager.py:38
+#: ../blueman/plugins/applet/SerialManager.py:43
 msgid "Script to execute on connection"
 msgstr ""
 
-#: ../blueman/plugins/applet/SerialManager.py:39
+#: ../blueman/plugins/applet/SerialManager.py:44
 msgid ""
 "<span size=\"small\">The following arguments will be passed:\n"
 "Address, Name, service name, uuid16s, rfcomm node\n"
 "For example:\n"
 "AA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0\n"
-"uuid16s are returned as a comma seperated list</span>"
+"uuid16s are returned as a comma seperated list\n"
+"\n"
+"Upon device disconnection the script will be sent a HUP signal</span>"
 msgstr ""
 
-#: ../blueman/plugins/applet/SerialManager.py:55
+#: ../blueman/plugins/applet/SerialManager.py:77
 msgid "Serial port connected"
 msgstr ""
 
-#: ../blueman/plugins/applet/SerialManager.py:56
+#: ../blueman/plugins/applet/SerialManager.py:78
 #, python-format
 msgid ""
 "Serial port service on device <b>%s</b> now will be available via <b>%s</b>"
 msgstr ""
 
-#: ../blueman/plugins/applet/SerialManager.py:75
+#: ../blueman/plugins/applet/SerialManager.py:123
 msgid "Serial port connection script failed"
 msgstr ""
 
-#: ../blueman/plugins/applet/SerialManager.py:76
+#: ../blueman/plugins/applet/SerialManager.py:124
 #, python-format
 msgid ""
 "There was a problem launching script %s\n"
@@ -1532,27 +1581,44 @@ msgid "<b>Bluetooth Off</b>"
 msgstr ""
 
 #: ../blueman/plugins/applet/PowerManager.py:54
-#: ../blueman/plugins/applet/PowerManager.py:195
+#: ../blueman/plugins/applet/PowerManager.py:196
 msgid "<b>Turn Bluetooth Off</b>"
 msgstr "<b>Wyłącz Bluetooth</b>"
 
 #: ../blueman/plugins/applet/PowerManager.py:56
-#: ../blueman/plugins/applet/PowerManager.py:196
+#: ../blueman/plugins/applet/PowerManager.py:197
 msgid "Turn off all adapters"
 msgstr "Wyłącz wszystkie adaptery Bluetooth"
 
-#: ../blueman/plugins/applet/PowerManager.py:183
+#: ../blueman/plugins/applet/PowerManager.py:184
 msgid "<b>Turn Bluetooth On</b>"
 msgstr "<b>Włącz Bluetooth</b>"
 
-#: ../blueman/plugins/applet/PowerManager.py:184
+#: ../blueman/plugins/applet/PowerManager.py:185
 msgid "Turn on all adapters"
 msgstr ""
 
-#: ../blueman/plugins/services/Network.py:262
-#: ../blueman/plugins/services/Network.py:265
-#: ../blueman/plugins/services/Network.py:271
-#: ../blueman/plugins/services/Network.py:277
+#: ../blueman/plugins/services/Network.py:152
+msgid "Invalid IP address"
+msgstr ""
+
+#: ../blueman/plugins/services/Network.py:164
+#, python-format
+msgid "IP address conflicts with interface %s which has the same address"
+msgstr ""
+
+#: ../blueman/plugins/services/Network.py:169
+#, python-format
+msgid ""
+"IP address overlaps with subnet of interface %s, which has the following "
+"configuration %s/%s\n"
+"This may cause incorrect network behavior"
+msgstr ""
+
+#: ../blueman/plugins/services/Network.py:314
+#: ../blueman/plugins/services/Network.py:317
+#: ../blueman/plugins/services/Network.py:323
+#: ../blueman/plugins/services/Network.py:329
 msgid "Not currently supported with this setup"
 msgstr ""
 
