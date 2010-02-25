@@ -8,19 +8,19 @@ msgstr ""
 "Project-Id-Version: blueman\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2010-01-29 14:44+0200\n"
-"PO-Revision-Date: 2010-02-23 22:05+0000\n"
+"PO-Revision-Date: 2010-02-24 06:02+0000\n"
 "Last-Translator: Jim Nygård <jim@nygard.priv.no>\n"
 "Language-Team: Norwegian Bokmal <nb@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-02-24 04:54+0000\n"
+"X-Launchpad-Export-Date: 2010-02-25 04:49+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Friendly Name</b>"
-msgstr ""
+msgstr "<b>Synlig navn</b>"
 
 #: ../data/ui/adapters-tab.ui.h:2
 msgid "<b>Visibility Setting</b>"
@@ -36,15 +36,15 @@ msgstr "Skjult"
 
 #: ../data/ui/adapters-tab.ui.h:5
 msgid "Temporarily visible"
-msgstr ""
+msgstr "Midlertidig synlighet"
 
 #: ../data/ui/adapters.ui.h:1
 msgid "Bluetooth Adapters"
-msgstr ""
+msgstr "Bluetoothadaptere"
 
 #: ../data/ui/applet-passkey.ui.h:1
 msgid "Pairing request"
-msgstr ""
+msgstr "Forespørsel om sammenkobling"
 
 #: ../data/ui/applet-passkey.ui.h:2
 msgid "Pairing request for device:"
@@ -80,12 +80,12 @@ msgstr "Bla gjennom enheten via obex ftp"
 #: ../data/ui/manager-main.ui.h:8
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:386
 msgid "Create pairing with the device"
-msgstr ""
+msgstr "Opprett en sammenkobling med enheten"
 
 #: ../data/ui/manager-main.ui.h:9
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:405
 msgid "Mark/Unmark this device as trusted"
-msgstr ""
+msgstr "Angi/fjern enhet som autorisert"
 
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:11
@@ -161,7 +161,7 @@ msgstr "<b>Nettverksinnstillinger</b>"
 
 #: ../data/ui/services-network.ui.h:4
 msgid "<b>No DHCP servers installed</b>"
-msgstr "<b>Det er ikke installert noen DHCP-tjenerr</b>"
+msgstr "<b>Det er ikke installert noen DHCP-tjener</b>"
 
 #: ../data/ui/services-network.ui.h:5
 msgid "<b>PAN Support</b>"
@@ -190,7 +190,7 @@ msgstr "IP-adresse:"
 
 #: ../data/ui/services-network.ui.h:11
 msgid "Network Access Point (NAP)"
-msgstr ""
+msgstr "Nettverkstillgangspunkt (NAP)"
 
 #: ../data/ui/services-network.ui.h:12
 msgid "Recommended"
@@ -262,20 +262,23 @@ msgstr ""
 
 #: ../data/ui/services-audio.ui.h:5
 msgid "Allows this computer to act like a handsfree headset."
-msgstr "La datamaskinen virke som handsfree-hodetelefon."
+msgstr "La datamaskinen virke som håndfri hodetelefon."
 
 #: ../data/ui/services-audio.ui.h:6
 msgid ""
 "Allows you to receive a2dp audio from other Bluetooth devices and play it "
 "over the speakers."
 msgstr ""
-"Lar deg motta a2dp-lyd fra andre Blåtannenheter og spille den i høyttalerne."
+"Lar deg motta a2dp-lyd fra andre Bluetoothenheter og spille den i "
+"høyttalerne."
 
 #: ../data/ui/services-audio.ui.h:7
 msgid ""
 "Headset Emulation <span weight='bold' color='#cc0000'>Very "
 "Experimental!</span>"
 msgstr ""
+"Etterligning av hodetelefoner <span weight='bold' "
+"color='#cc0000'>(funksjonalitet på forsøksstadiet)</span>"
 
 #: ../data/ui/send-dialog.ui.h:1
 msgid "<b>File:</b>"
@@ -289,11 +292,11 @@ msgstr "<b>Til:</b>"
 msgid ""
 "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr ""
-"<span weight=\"bold\" size=\"large\">Sender filer over Blåtann</span>"
+"<span weight=\"bold\" size=\"large\">Sender filer over Bluetooth</span>"
 
 #: ../data/ui/send-dialog.ui.h:4
 msgid "Bluetooth File Transfer"
-msgstr "Blåtann filoverføring"
+msgstr "Bluetooth-filoverføring"
 
 #: ../data/ui/assistant.ui.h:1
 msgid "<b>Congratulations, device successfully added</b>"
@@ -319,11 +322,11 @@ msgid ""
 "It will walk you through the process of configuring and connecting to your "
 "Bluetooth enabled devices."
 msgstr ""
-"<b>Velkommen til oppsettsassistenten for Blåtannenheter. </b>\n"
+"<b>Velkommen til oppsettsassistenten for Bluetoothenheter. </b>\n"
 "\n"
 "\n"
 "Assistenten vil hjelpe deg men konfigurasjon og oppkobling mot din "
-"Blåtannenhet."
+"Bluetoothenhet."
 
 #: ../data/ui/assistant.ui.h:9
 msgid "Proceed Without Pairing"
@@ -426,7 +429,7 @@ msgstr "Trafikkstatistikk"
 
 #: ../data/ui/net-usage.ui.h:8
 msgid "gtk-close"
-msgstr ""
+msgstr "gtk-close"
 
 #: ../blueman/main/applet/Transfer.py:170
 msgid "Incoming file over Bluetooth"
