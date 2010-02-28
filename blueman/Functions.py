@@ -258,6 +258,7 @@ def create_menuitem(text, image):
 	return item
 	
 def check_single_instance(id, unhide_func=None):
+	print "%s version %s starting" % (id, VERSION)
 	lockfile = os.path.expanduser("/tmp/%s-%s" % (id, os.getuid()))
 	def handler(signum, frame):
 		if unhide_func:
