@@ -20,8 +20,9 @@
 import gtk
 import pango
 import cgi
-from blueman.gui.DeviceList import DeviceList
 from blueman.Functions import *
+from blueman.gui.DeviceList import DeviceList
+
 
 class DeviceSelectorList(DeviceList):
 

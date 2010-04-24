@@ -16,6 +16,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
+
+from blueman.Functions import wait_for_adapter, adapter_path_to_name, dprint
+
 from blueman.main.SignalTracker import SignalTracker
 from blueman.gui.GenericList import GenericList
 from blueman.main.FakeDevice import FakeDevice
@@ -30,8 +33,6 @@ import os
 import re
 import dbus
 import copy
-
-from blueman.Functions import wait_for_adapter, adapter_path_to_name, dprint
 
 class DeviceList(GenericList):
 	__gsignals__ = {
@@ -519,14 +520,19 @@ class DeviceList(GenericList):
 		self.path_to_row = {}
 	
 	def find_device(self, device):
-   		try:
-   			row = self.address_to_row[device.Address]
+		if type(device) == str:
+			address = device
+		else:
+			address = device.Address
+			
+		try:
+			row = self.address_to_row[address]
 			if row.valid():
 				path = row.get_path()
 				iter = self.props.model.get_iter(path)
 				return iter
 			else:
-				del self.address_to_row[device.Address]
+				del self.address_to_row[address]
 				return None
 				
 		except KeyError:

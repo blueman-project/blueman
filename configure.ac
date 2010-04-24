@@ -18,6 +18,9 @@ IT_PROG_INTLTOOL([0.35.0])
 AM_PATH_PYTHON(2.5)
 AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(Could not find Python headers)])
 
+PYTHON_LIBS=`python-config --libs`
+AC_SUBST(PYTHON_LIBS)
+
 AC_ARG_VAR([PYREXC], [Pyrex compiler])
 if test "x$PYREXC" = "x"; then
    AC_PATH_PROG([PYREXC],[pyrexc])
@@ -139,7 +142,7 @@ fi
 PKG_CHECK_MODULES(BLUEZ,
 		bluez	>= 4.21
 		libstartup-notification-1.0 >= 0.9
-		gdk-2.0 >= 2.12
+		gtk+-2.0 >= 2.12
 		pygobject-2.0 >= 2.12
 		gobject-2.0 >= 2.12
 		glib-2.0 >= 2.16
@@ -152,6 +155,7 @@ AC_SUBST(BLUEZ_LIBS)
 AC_OUTPUT([
 Makefile
 apps/Makefile
+sendto/Makefile
 blueman/Makefile
 blueman/Constants.py
 blueman/bluez/Makefile
