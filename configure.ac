@@ -52,9 +52,6 @@ if test "$sysconfdir" = "\${prefix}/etc" \
     )
 fi
 
-
-
-
 dnl ----------------------------------
 dnl - Various paths and other defines
 dnl ----------------------------------
@@ -78,8 +75,6 @@ AC_SUBST(LIBEXECDIR)
 
 dnl AS_AC_EXPAND([PREFIX], $prefix)
 AC_SUBST(prefix)
-
-
 
 pkgdatadir="${DATADIR}/${PACKAGE}"
 AC_SUBST(pkgdatadir)
@@ -126,7 +121,12 @@ fi
 AC_SUBST(hal_en)
 AM_CONDITIONAL(ENABLE_HAL, test "x$hal_en" = "xyes")
 
-
+PKG_CHECK_MODULES(NST,
+   [
+      nautilus-sendto >= 2.26
+   ], have_nst="yes", have_nst="no")
+   
+AM_CONDITIONAL(HAVE_NST, test "x$have_nst" = "xyes")
 
 dnl ----------------------------
 
@@ -208,5 +208,6 @@ echo Prefix : $prefix
 echo sysconfig dir : $sysconfdir
 echo "HAL support enabled (deprecated): $hal_en"
 echo Policykit-1 Enabled: $polkit_val
+echo Nautilus sendto plugin enabled: $have_nst
 echo Dhcpd 3 configuration file: $dhconfig
 echo

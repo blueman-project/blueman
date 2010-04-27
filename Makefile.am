@@ -3,6 +3,7 @@ SUBDIRS = 		\
 	blueman		\
 	data		\
 	module		\
+	sendto		\
 	po
 
 EXTRA_DIST = 			\
