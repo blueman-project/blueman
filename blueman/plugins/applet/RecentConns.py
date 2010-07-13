@@ -80,7 +80,7 @@ class RecentConns(AppletPlugin, gtk.Menu):
 			atexit.register(store_state)
 			RecentConns.atexit_registered = True
 		
-		self.Item = create_menuitem(_("Recent Connections")+"...", 
+		self.Item = create_menuitem(_("Recent _Connections")+"...", 
 									get_icon("document-open-recent", 16))
 									
 		self.Applet.Plugins.Menu.Register(self, self.Item, 52)

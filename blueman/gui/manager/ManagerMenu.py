@@ -52,17 +52,17 @@ class ManagerMenu:
 		self.item_help.set_submenu(help_menu)
 		help_menu.show()
 		
-		item = create_menuitem(_("Get Help Online..."), get_icon("gnome-help", 16))
+		item = create_menuitem(_("_Get Help Online..."), get_icon("gnome-help", 16))
 		item.connect("activate", lambda x: spawn(["xdg-open", WEBSITE+"/forum"], True))
 		help_menu.append(item)
 		item.show()
 		
-		item = create_menuitem(_("Translate This Application..."), get_icon("config-language", 16))
+		item = create_menuitem(_("_Translate This Application..."), get_icon("config-language", 16))
 		item.connect("activate", lambda x: spawn(["xdg-open", "https://translations.launchpad.net/blueman"], True))
 		help_menu.append(item)
 		item.show()
 		
-		item = create_menuitem(_("Report a Problem"), get_icon("gtk-dialog-warning", 16))
+		item = create_menuitem(_("_Report a Problem"), get_icon("gtk-dialog-warning", 16))
 		item.connect("activate", lambda x: spawn(["xdg-open", "https://bugs.launchpad.net/blueman"], True))
 		help_menu.append(item)
 		item.show()
@@ -196,7 +196,7 @@ class ManagerMenu:
 		sep.show()
 		menu.prepend(sep)
 		
-		item = create_menuitem(_("Search"), get_icon("gtk-find", 16))
+		item = create_menuitem(_("_Search"), get_icon("gtk-find", 16))
 		item.connect("activate", lambda x: self.blueman.inquiry())
 		item.show()
 		menu.prepend(item)

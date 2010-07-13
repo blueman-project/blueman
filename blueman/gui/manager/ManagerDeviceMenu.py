@@ -266,21 +266,21 @@ class ManagerDeviceMenu(gtk.Menu):
 					items.append((pos, item))
 		
 		if device.Fake:
-			item = create_menuitem(_("Add Device"), get_icon("gtk-add", 16))
+			item = create_menuitem(_("_Add Device"), get_icon("gtk-add", 16))
 			self.Signals.Handle("gobject", item, "activate", 
 								lambda x: self.Blueman.add_device(device))
 			item.show()
 			self.append(item)
 			item.props.tooltip_text = _("Add this device to known devices list")
 			
-			item = create_menuitem(_("Setup..."), get_icon("gtk-properties", 16))
+			item = create_menuitem(_("_Setup..."), get_icon("gtk-properties", 16))
 			self.append(item)
 			self.Signals.Handle("gobject", item, "activate", 
 								lambda x: self.Blueman.setup(device))
 			item.show()
 			item.props.tooltip_text = _("Run the setup assistant for this device")
 			
-			item = create_menuitem(_("Pair"), get_icon("gtk-dialog-authentication", 16))
+			item = create_menuitem(_("_Pair"), get_icon("gtk-dialog-authentication", 16))
 			self.Signals.Handle("gobject", item, "activate", 
 								lambda x: self.Blueman.bond(device))
 			self.append(item)
@@ -291,7 +291,7 @@ class ManagerDeviceMenu(gtk.Menu):
 			item.show()
 			self.append(item)
 			
-			send_item = create_menuitem(_("Send a File..."), get_icon("gtk-copy", 16))
+			send_item = create_menuitem(_("Send a _File..."), get_icon("gtk-copy", 16))
 			self.Signals.Handle("gobject", send_item, "activate", 
 								lambda x: self.Blueman.send(device))
 			send_item.show()
@@ -354,12 +354,12 @@ class ManagerDeviceMenu(gtk.Menu):
 			
 			del items
 			
-			send_item = create_menuitem(_("Send a File..."), get_icon("gtk-copy", 16))
+			send_item = create_menuitem(_("Send a _File..."), get_icon("gtk-copy", 16))
 			send_item.props.sensitive = False
 			self.append(send_item)
 			send_item.show()
 			
-			browse_item = create_menuitem(_("Browse Device..."), get_icon("gtk-open", 16))
+			browse_item = create_menuitem(_("_Browse Device..."), get_icon("gtk-open", 16))
 			browse_item.props.sensitive = False
 			self.append(browse_item)
 			browse_item.show()			
@@ -380,7 +380,7 @@ class ManagerDeviceMenu(gtk.Menu):
 			item.show()
 			self.append(item)
 			
-			item = create_menuitem(_("Pair"), get_icon("gtk-dialog-authentication", 16))
+			item = create_menuitem(_("_Pair"), get_icon("gtk-dialog-authentication", 16))
 			item.props.tooltip_text = _("Create pairing with the device")
 			self.append(item)
 			item.show()
@@ -391,18 +391,18 @@ class ManagerDeviceMenu(gtk.Menu):
 
 				
 			if not device.Trusted:
-				item = create_menuitem(_("Trust"), get_icon("blueman-trust", 16))
+				item = create_menuitem(_("_Trust"), get_icon("blueman-trust", 16))
 				self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.toggle_trust(device))
 				self.append(item)
 				item.show()
 			else:
-				item = create_menuitem(_("Untrust"), get_icon("blueman-untrust", 16))
+				item = create_menuitem(_("_Untrust"), get_icon("blueman-untrust", 16))
 				self.append(item)
 				self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.toggle_trust(device))
 				item.show()
 			item.props.tooltip_text = _("Mark/Unmark this device as trusted")
 				
-			item = create_menuitem(_("Setup..."), get_icon("gtk-properties", 16))
+			item = create_menuitem(_("_Setup..."), get_icon("gtk-properties", 16))
 			self.append(item)
 			self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.setup(device))
 			item.show()
@@ -433,7 +433,7 @@ class ManagerDeviceMenu(gtk.Menu):
 			item.show()
 			self.append(item)
 			
-			item = create_menuitem(_("Remove..."), get_icon("gtk-delete", 16))
+			item = create_menuitem(_("_Remove..."), get_icon("gtk-delete", 16))
 			self.Signals.Handle(item, "activate", lambda x: self.Blueman.remove(device))
 			self.append(item)
 			item.show()
@@ -443,7 +443,7 @@ class ManagerDeviceMenu(gtk.Menu):
 			item.show()
 			self.append(item)
 			
-			item = create_menuitem(_("Disconnect"), get_icon("gtk-disconnect", 16))
+			item = create_menuitem(_("_Disconnect"), get_icon("gtk-disconnect", 16))
 			item.props.tooltip_text = _("Forcefully disconnect the device")
 			
 			self.append(item)
