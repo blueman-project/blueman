@@ -146,7 +146,6 @@ NstPluginInfo plugin_info = {
 	"blueman",
 	"Bluetooth (OBEX Push)",
 	GETTEXT_PACKAGE,
-	FALSE,
 	NAUTILUS_CAPS_NONE,
 	init,
 	get_contacts_widget,
