@@ -272,8 +272,7 @@ class PersistentPluginManager(PluginManager):
 		elif "!"+plugin in plugins:
 			plugins.remove("!"+plugin)
 			
-		plugins.append("!"+plugin if not state else plugin)
-		
+		plugins.append(str("!"+plugin) if not state else str(plugin))
 		self.__config.set(self.plugin_class.__name__, plugins)
 		
 	@property
