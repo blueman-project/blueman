@@ -21,7 +21,7 @@
 from blueman.gui.DeviceList import DeviceList
 from blueman.gui.PixbufTable import PixbufTable
 from blueman.gui.CellRendererPixbufTable import CellRendererPixbufTable
-from blueman.DeviceClass import get_minor_class
+from blueman.DeviceClass import get_minor_class, get_major_class
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.Sdp import *
 
@@ -249,11 +249,14 @@ class ManagerDeviceList(DeviceList):
 		
 
 		klass = get_minor_class(device.Class)
-		icon = self.get_device_icon(klass)
+		if klass != "uncategorized":
+			icon = self.get_device_icon(klass)
+			#get translated version
+			klass = get_minor_class(device.Class, True)
+		else:
+			icon = get_icon(device.Icon, 48, "blueman")
+			klass = get_major_class(device.Class)
 
-
-		#get translated version
-		klass = get_minor_class(device.Class, True)
 
 		name = device.Alias
 		address = device.Address
