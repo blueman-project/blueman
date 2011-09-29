@@ -29,7 +29,13 @@ import dbus
 from blueman.main.SignalTracker import SignalTracker
 
 class SourceRedirector:
+	instances = []
 	def __init__(self, module_id, device_path, pa_utils):
+		if module_id in SourceRedirector.instances:
+			return
+		else:
+			SourceRedirector.instances.append(module_id)
+		
 		self.module_id = module_id
 		self.pa_utils = pa_utils
 		self.device = Device(device_path)
@@ -69,7 +75,7 @@ class SourceRedirector:
 		
 	def on_source_prop_change(self, key, value):
 		if key == "State":
-			if value != "playing":
+			if value == "disconnected":
 				if self.pacat:
 					self.pacat.terminate()
 				if self.parec:
@@ -78,6 +84,8 @@ class SourceRedirector:
 					self.pa_utils.UnloadModule(self.loopback_id, lambda x: dprint("Loopback module unload result", x))
 				
 				self.signals.DisconnectAll()
+				
+				SourceRedirector.instances.remove(self.module_id)
 
 				del self.pa_utils
 				
@@ -169,8 +177,9 @@ class PulseAudio(AppletPlugin):
 		version = self.pulse_utils.GetVersion()
 		dprint("PulseAudio version:", version)
 		
-		if version[2] < 15:
-			raise Exception("PulseAudio too old, required 0.9.15 or higher")
+		if version[0] == 0:
+			if version[2] < 15:
+				raise Exception("PulseAudio too old, required 0.9.15 or higher")
 		
 		self.signals.Handle("dbus", 
 							self.bus, 
@@ -262,8 +271,8 @@ class PulseAudio(AppletPlugin):
 					
 					if not m.id:
 						sig = m.connect("loaded", on_loaded)
-					#else:
-					#	SourceRedirector(m.id, device, self.pulse_utils)
+					else:
+						SourceRedirector(m.id, device, self.pulse_utils)
 					
 				except Exception, e:
 					dprint(e)
