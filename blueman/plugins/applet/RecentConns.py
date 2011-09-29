@@ -101,7 +101,7 @@ class RecentConns(AppletPlugin, gtk.Menu):
 				x["gsignal"] = 0
 				items.append(x)
 
-		
+		try:	
 			dump = base64.b64encode(
 				zlib.compress(
 					pickle.dumps((REGISTRY_VERSION, items), 
@@ -109,6 +109,8 @@ class RecentConns(AppletPlugin, gtk.Menu):
 								  9))
 	
 			self.set_option("recent_connections", dump)
+		except:
+			dprint(YELLOW("Failed to store recent connections"))
 
 	def change_sensitivity(self, sensitive):
 		try:
