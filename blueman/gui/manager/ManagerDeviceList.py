@@ -226,6 +226,12 @@ class ManagerDeviceList(DeviceList):
 	def make_caption(self, name, klass, address):
 		return "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" % {"0":cgi.escape(name), "1":klass.capitalize(), "2":address}
 		
+	def get_device_class(self, device):
+		klass = get_minor_class(device.Class)
+		if klass != "uncategorized":
+			return get_minor_class(device.Class, True)
+		else:
+			return get_major_class(device.Class)		
 	
 	def row_setup_event(self, iter, device):
 		if not self.get(iter, "initial_anim")["initial_anim"]:
@@ -256,7 +262,6 @@ class ManagerDeviceList(DeviceList):
 		else:
 			icon = get_icon(device.Icon, 48, "blueman")
 			klass = get_major_class(device.Class)
-
 
 		name = device.Alias
 		address = device.Address
@@ -335,7 +340,7 @@ class ManagerDeviceList(DeviceList):
 				
 		elif key == "Alias" or key == "Class":
 			device = self.get(iter, "device")["device"]
-			c = self.make_caption(value, get_minor_class(device.Class, True), device.Address)
+			c = self.make_caption(value, self.get_device_class(device), device.Address)
 			self.set(iter, caption=c)
 				
 	

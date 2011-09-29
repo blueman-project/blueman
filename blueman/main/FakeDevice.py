@@ -7,6 +7,7 @@ class FakeDevice:
 		self.Address = info["Address"]
 		#info["Connected"] = False
 		self.Fake = True
+		self.UUIDs = []
 		
 	def GetProperties(self):
 		return self.info
