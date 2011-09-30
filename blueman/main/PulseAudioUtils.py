@@ -194,7 +194,8 @@ class PulseAudioUtils(gobject.GObject):
 		proplist = {}
 		for item in ls:
 			spl = map(lambda x: x.strip(" \""), item.split("="))
-			proplist[spl[0]] = spl[1]
+			if len(spl) == 2:
+				proplist[spl[0]] = spl[1]
 			
 		return proplist
 		
