@@ -27,13 +27,14 @@
 #include <gtk/gtk.h>
 
 
-#include <nautilus-sendto/nautilus-sendto-plugin.h>
+#include <nautilus-sendto-plugin.h>
 
 PyObject* self = NULL;
 PyObject* module = NULL;
 PyObject* gobject = NULL;
 
 GtkWidget* combo = NULL;
+
 
 static gboolean
 init (NstPlugin *plugin)

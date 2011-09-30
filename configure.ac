@@ -121,17 +121,10 @@ fi
 AC_SUBST(hal_en)
 AM_CONDITIONAL(ENABLE_HAL, test "x$hal_en" = "xyes")
 
-have_nst=no
+have_nst=yes
 AC_ARG_ENABLE(sendto,
 [  --enable-sendto=[yes/no] Enable nautilus-sendto plugin build],,have_nst=yes)
 
-if test "x$have_nst" = "xyes"; then
-        PKG_CHECK_MODULES(NST,
-	   [
-		  nautilus-sendto >= 2.28
-	   ], have_nst="yes", have_nst="no")
-fi
-   
 AM_CONDITIONAL(HAVE_NST, test "x$have_nst" = "xyes")
 
 dnl ----------------------------
