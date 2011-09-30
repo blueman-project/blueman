@@ -63,6 +63,9 @@ class Browse:
 		conf = Config("transfer")
 		if conf.props.browse_command == None:
 			conf.props.browse_command = DEF_BROWSE_COMMAND
+			if "nautilus" in DEF_BROWSE_COMMAND:
+				if not have("nautilus"):
+					conf.props.browse_command = "thunar obex://[%d]"
 		
 		cmd = conf.props.browse_command.replace("%d", addr)
 		args = cmd.split(" ")
