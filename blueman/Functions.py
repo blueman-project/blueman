@@ -27,7 +27,8 @@ import os
 import signal
 import atexit
 import sys
-from subprocess import Popen
+from subprocess import Popen, call
+import subprocess
 import commands
 import gobject
 import traceback
@@ -318,13 +319,9 @@ def check_single_instance(id, unhide_func=None):
 	atexit.register(lambda:os.remove(lockfile))
 	
 def have(t):
-	cmd = "whereis %s" % t
-	out = commands.getoutput(cmd)
-	s = out.split(":")
-	if len(s[1]) > 0:
-		return True
-	else:
-		return False
+	out = call(["which", t], stdout=subprocess.PIPE)
+
+	return out != 1
 		
 def mask_ip4_address(ip, subnet):
 	masked_ip = ""
