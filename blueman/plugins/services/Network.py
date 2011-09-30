@@ -193,6 +193,9 @@ class Network(ServicePlugin):
 		self.NetConf.connect("property-changed", self.on_property_changed)
 
 		gn_enable = self.Builder.get_object("gn_enable")
+		#latest bluez does not support GN, apparently
+		gn_enable.props.visible = False
+		
 		nap_enable = self.Builder.get_object("nap_enable")
 		r_dnsmasq = self.Builder.get_object("r_dnsmasq")
 		r_dhcpd = self.Builder.get_object("r_dhcpd")

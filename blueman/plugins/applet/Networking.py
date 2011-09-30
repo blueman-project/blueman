@@ -82,22 +82,25 @@ class Networking(AppletPlugin):
 		if self.Applet.Manager != None:
 			adapters = self.Applet.Manager.ListAdapters()
 			for adapter in adapters:
-				s = ServiceInterface("org.bluez.NetworkRouter", adapter.GetObjectPath(), ["GetProperties", "SetProperty"])
-				try:
-					s.SetProperty("Enabled", on)
-				except:
-					pass
+				s = ServiceInterface("org.bluez.NetworkServer", adapter.GetObjectPath(), ["Register", "Unregister"])
+				if on:
+					s.Register("nap", "pan1")
+				else:
+					s.Unregister("nap")
+
 				
 	def set_gn(self, on):
-		dprint("set gn", on)
-		m = Mechanism()
-		m.SetGN(on, reply_handler=(lambda *args: None), error_handler=(lambda *args: None))
-
-		if self.Applet.Manager != None:
-			adapters = self.Applet.Manager.ListAdapters()
-			for adapter in adapters:
-				s = ServiceInterface("org.bluez.NetworkHub", adapter.GetObjectPath(), ["GetProperties", "SetProperty"])
-				try:
-					s.SetProperty("Enabled", on)
-				except:
-					pass
+		#latest bluez does not support gn
+		pass
+#		dprint("set gn", on)
+#		m = Mechanism()
+#		m.SetGN(on, reply_handler=(lambda *args: None), error_handler=(lambda *args: None))
+#
+#		if self.Applet.Manager != None:
+#			adapters = self.Applet.Manager.ListAdapters()
+#			for adapter in adapters:
+#				s = ServiceInterface("org.bluez.NetworkServer", adapter.GetObjectPath(), ["Register", "Unregister"])
+#				if on:
+#					s.Register("gn", "pan0")
+#				else:
+#					s.Unregister("gn")
