@@ -36,9 +36,11 @@ class TransferService(AppletPlugin):
 		self.add_dbus_method(self.TransferStatus, in_signature="s", out_signature="i")
 		
 		self.sess_bus = dbus.SessionBus()
-		self.__watch = None
 
-		self.try_start_ods()
+		
+		self.__watch = dbus.bus.NameOwnerWatch(self.sess_bus, "org.openobex", self.on_obex_owner_changed)
+
+		#self.try_start_ods()
 	
 	def on_unload(self):
 		if self.__watch:
@@ -52,25 +54,12 @@ class TransferService(AppletPlugin):
 	def on_manager_state_changed(self, state):
 		
 		if state:
-			if not self.__watch:
-				self.__watch = dbus.bus.NameOwnerWatch(self.sess_bus, "org.openobex", self.on_obex_owner_changed)
-			
-			if self.Transfer:
-				status = self.TransferStatus("opp")
-
-				if status == 0:
-					self.TransferControl("opp","create")
-					self.TransferControl("opp","start")
-				
-				status = self.TransferStatus("ftp")
-
-				if status == 0:
-					self.TransferControl("ftp","create")
-					self.TransferControl("ftp","start")		
+			self.try_start_ods()
+	
 		else:
 			if self.Transfer:
-				self.TransferControl("opp","destroy")
-				self.TransferControl("ftp","destroy")
+				self.Transfer.DisconnectAll()
+				self.Transfer = None
 		
 	def try_start_ods(self):
 		try:
@@ -82,6 +71,7 @@ class TransferService(AppletPlugin):
 		dprint("obex owner changed:", owner)
 		if owner != "":
 			self.Transfer = Transfer(self.Applet)
+					
 		else:
 			if self.Transfer:
 				self.Transfer.DisconnectAll()

@@ -53,9 +53,6 @@ class Transfer(OdsManager):
 		
 		self.allowed_devices = []
 		
-	def __del__(self):
-		dprint("deleting Transfer instance")
-		
 	def create_server(self, pattern):
 
 		if pattern == "opp":

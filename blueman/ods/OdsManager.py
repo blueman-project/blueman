@@ -32,6 +32,9 @@ class OdsManager(OdsBase):
 		'session-destroyed' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
 	}
 	
+	def __del__(self):
+		dprint("deleting OdsManager instance")
+			
 	def __init__(self):
 		OdsBase.__init__(self, "org.openobex.Manager", "/org/openobex")
 		
@@ -70,6 +73,7 @@ class OdsManager(OdsBase):
 		
 	def DisconnectAll(self, *args):
 		def on_destroyed(inst, path):
+			
 			if len(self.Servers)-1 == 0:
 				OdsBase.DisconnectAll(self, *args)
 		
@@ -118,7 +122,15 @@ class OdsManager(OdsBase):
 		dprint("Destroy %s server" % pattern)
 		def on_stopped(server):
 			dprint("server stopped")
-			server.Close()
+			try:
+				server.Close()
+			except:
+				#this is a workaround for lp:735068
+				dprint("DBus error on ODS server.Close()")
+				#force close locally
+				server.DisconnectAll()
+				
+			gobject.source_remove(timeout)
 		
 		def on_closed(server):
 			dprint("server closed")
@@ -126,13 +138,16 @@ class OdsManager(OdsBase):
 			del self.Servers[pattern]
 		
 		try:
-			self.Servers[pattern].GHandle("stopped", on_stopped)
-			self.Servers[pattern].GHandle("closed", on_closed)
+			s = self.Servers[pattern]
+			s.GHandle("stopped", on_stopped)
+			s.GHandle("closed", on_closed)
 			try:
-				self.Servers[pattern].Stop()
+				s.Stop()
 			except:
 				#ods probably died
-				gobject.idle_add(on_closed, self.Servers[pattern])
+				gobject.idle_add(on_closed, s)
+				
+			timeout = gobject.timeout_add(1000, on_stopped, s)
 		
 		except KeyError:
 			pass
