@@ -13,6 +13,6 @@ libnstblueman_la_CFLAGS = @PYTHON_INCLUDES@ $(BLUEZ_CFLAGS)
 
 endif
 
-EXTRA_DIST = nautilus-bluetooth-sendto.c
+EXTRA_DIST = nautilus-bluetooth-sendto.c nautilus-sendto-plugin.h
 
-MAINTAINERCLEANFILES = Makefile.in
+MAINTAINERCLEANFILES = Makefile.in 
