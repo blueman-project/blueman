@@ -92,8 +92,9 @@ class RecentConns(AppletPlugin, gtk.Menu):
 		RecentConns.inst = weakref.proxy(self)
 		
 	def store_state(self):
+		items = []
+		
 		if RecentConns.items:
-			items = []
 			for i in RecentConns.items:
 				x = i.copy()
 				x["device"] = None
