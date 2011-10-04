@@ -353,7 +353,7 @@ class PulseAudio(AppletPlugin):
 					print e
 				
 		version = self.pulse_utils.GetVersion()
-		if version[2] >= 18:
+		if version[0] == 1 or version[2] >= 18:
 			args = "address=%s profile=%s sink_properties=device.icon_name=blueman card_properties=device.icon_name=blueman"
 		else:
 			args = "address=%s profile=%s"
