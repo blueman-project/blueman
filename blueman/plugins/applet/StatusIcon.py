@@ -85,15 +85,17 @@ class StatusIcon(AppletPlugin, gtk.StatusIcon):
 		self.pixbuf = None
 		self.timeout = None
 		
-		self.connect("size-changed", self.on_status_icon_resized)
+		#self.connect("size-changed", self.on_status_icon_resized)
 		
 		self.SetTextLine(0, _("Bluetooth Enabled"))
 		
 		AppletPlugin.add_method(self.on_query_status_icon_visibility)
-		AppletPlugin.add_method(self.on_status_icon_pixbuf_ready)
+		AppletPlugin.add_method(self.on_status_icon_query_icon)
 		
 		ic = gtk.icon_theme_get_default()
 		ic.connect("changed", self.on_icon_theme_changed)
+		
+		self.on_status_icon_resized()
 		
 	def on_icon_theme_changed(self, icon_theme):
 		self.IconShouldChange()
@@ -104,28 +106,31 @@ class StatusIcon(AppletPlugin, gtk.StatusIcon):
 		else:
 			self.SetTextLine(0, _("Bluetooth Disabled"))
 			
-		self.Query()
+		self.QueryVisibility()
 	
-	def Query(self):
+	def QueryVisibility(self):
 			
 		rets = self.Applet.Plugins.Run("on_query_status_icon_visibility")
 		if not StatusIcon.FORCE_HIDE in rets:
 			if StatusIcon.FORCE_SHOW in rets:
-				self.props.visible = True
+				self.set_visible(True)
 			else:
 				if not self.Applet.Manager:
-					self.props.visible = False
+					self.set_visible(False)
 					return
 					
 				try:
 					if self.Applet.Manager.ListAdapters() == []:
-						self.props.visible = False
+						self.set_visible(False)
 					else:
-						self.props.visible = True
+						self.set_visible(True)
 				except:
-					self.props.visible = False
+					self.set_visible(False)
 		else:
-			self.props.visible = False
+			self.set_visible(False)
+			
+	def set_visible(self, visible):
+		self.props.visible = visible
 			
 	def SetTextLine(self, id, text):
 		if text:
@@ -149,33 +154,44 @@ class StatusIcon(AppletPlugin, gtk.StatusIcon):
 		self.props.tooltip_markup = s[:-1]
 			
 	def IconShouldChange(self):
-		self.on_status_icon_resized(self, self.props.size)
+		self.on_status_icon_resized()
 		
 	def on_adapter_added(self, path):
-		self.Query()
+		self.QueryVisibility()
 		
 	def on_adapter_removed(self, path):
-		self.Query()
+		self.QueryVisibility()
 	
 	def on_manager_state_changed(self, state):
-		self.Query()
+		self.QueryVisibility()
 		
-	def on_status_icon_resized(self, statusicon, size):
-		self.pixbuf = get_icon(self.get_option("icon"), size, fallback="blueman")
+	def on_status_icon_resized(self):
+		self.icon = "blueman-tray"
+		
+		#p = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, True, 8, 22, 22)
+		#p.fill(0)
+		
+		
+		#self.pixbuf.copy_area(0, 0, self.pixbuf.props.width, self.pixbuf.props.height, p, 5, 0)
+		
+		#self.pixbuf = p
+		ic = gtk.icon_theme_get_default()
 		
 		def callback(inst, ret):
-			if isinstance(ret, gtk.gdk.Pixbuf):
-				self.pixbuf = ret
-				return (self.pixbuf,)
+			if ret != None:
+				for i in ret:
+					if ic.has_icon(i):
+						self.icon = i
+						raise StopException
 				
-		self.Applet.Plugins.RunEx("on_status_icon_pixbuf_ready", callback, self.pixbuf)
-
-		self.set_from_pixbuf(self.pixbuf)
+		self.Applet.Plugins.RunEx("on_status_icon_query_icon", callback)
+		self.props.icon_name = self.icon
+		
 		return True
 		
 	def on_query_status_icon_visibility(self):
 		return StatusIcon.SHOW
 		
-	def on_status_icon_pixbuf_ready(self, pixbuf):
-		return False
+	def on_status_icon_query_icon(self):
+		return None
 

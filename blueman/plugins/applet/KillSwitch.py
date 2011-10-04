@@ -78,12 +78,12 @@ class KillSwitch(AppletPlugin):
 			dprint("Global state:", s, "\nswitch.soft:", switch.soft, "\nswitch.hard:", switch.hard)
 			self.Applet.Plugins.PowerManager.UpdatePowerState()
 
-			self.Applet.Plugins.StatusIcon.Query()
+			self.Applet.Plugins.StatusIcon.QueryVisibility()
 			
 	def on_switch_removed(self, manager, switch):
 		if switch.type == RFKillType.BLUETOOTH:
 			if len(manager.devices) == 0:
-				self.Applet.Plugins.StatusIcon.Query()
+				self.Applet.Plugins.StatusIcon.QueryVisibility()
 				
 	def on_power_state_query(self, manager):
 		if self.Manager.HardBlocked:

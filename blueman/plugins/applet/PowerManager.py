@@ -231,16 +231,18 @@ class PowerManager(AppletPlugin):
 	def on_bluetooth_toggled(self):
 		self.RequestPowerState(not self.CurrentState)
 		
-	def on_status_icon_pixbuf_ready(self, pixbuf):
-		opacity = 255 if self.GetBluetoothStatus() else 100
-		pixbuf = opacify_pixbuf(pixbuf, opacity)
+	def on_status_icon_query_icon(self):
+		#opacity = 255 if self.GetBluetoothStatus() else 100
+		#pixbuf = opacify_pixbuf(pixbuf, opacity)
 
-		if opacity < 255:
-			x_size = int(pixbuf.props.height)
-			x = get_icon("blueman-x", x_size) 
-			pixbuf = composite_icon(pixbuf, [(x, pixbuf.props.height - x_size, pixbuf.props.height - x_size, 255)])
+		#if opacity < 255:
+		#	x_size = int(pixbuf.props.height)
+		#	x = get_icon("blueman-x", x_size) 
+		#	pixbuf = composite_icon(pixbuf, [(x, pixbuf.props.height - x_size, pixbuf.props.height - x_size, 255)])
 		
-		return pixbuf
+		#return pixbuf
+		if not self.GetBluetoothStatus():
+			return ("blueman-tray-disabled", "bluetooth-disabled") 
 		
 	def on_adapter_added(self, path):
 		adapter = Bluez.Adapter(path)

@@ -23,6 +23,7 @@ import gtk
 import traceback
 
 from blueman.plugins.ConfigurablePlugin import ConfigurablePlugin
+from functools import partial
 
 ictheme = gtk.icon_theme_get_default()
 
@@ -46,7 +47,17 @@ class AppletPlugin(ConfigurablePlugin):
 		self.__dbus_methods = []
 		self.__dbus_signals = []
 		
+		self.__overrides = []
+		
+	def override_method(self, object, method, override):
+		orig = object.__getattribute__(method)
+		object.__setattr__(method, partial(override, object))
+		self.__overrides.append((object, method, orig))
+		
 	def _unload(self):
+		for (object, method, orig) in self.__overrides:
+			object.__setattr__(method, orig)
+		
 		super(AppletPlugin, self)._unload()
 		
 		for met in self.__dbus_methods:

@@ -24,18 +24,11 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.SignalTracker import SignalTracker
 import blueman.bluez as bluez
 
-class Indicator(AppletPlugin):
+class ShowConnected(AppletPlugin):
 	__author__ = "Walmis"
 	__depends__ = ["StatusIcon"]
-	__icon__ = "blueman-txrx"
+	__icon__ = "blueman-tray-connected"
 	__description__ = _("Adds an indication on the status icon when Bluetooth is active and shows the number of connections in the tooltip.")
-	
-	__options__ = {"overlay": {"type": bool,
-							   "default": True,
-							   "name": _("Show overlay icon"),
-							   "desc": _("Whether to show a composition over the status icon when connected")
-							  }
-				  }
 		
 	def on_load(self, applet):
 		self.num_connections = 0
@@ -47,10 +40,6 @@ class Indicator(AppletPlugin):
 			self.on_device_property_changed, 
 			"PropertyChanged", 
 			"org.bluez.Device")
-			
-	def option_changed(self, name, value):
-		if name == "overlay":
-			self.Applet.Plugins.StatusIcon.IconShouldChange()
 	
 	def on_unload(self):
 		self.signals.DisconnectAll()
@@ -59,15 +48,16 @@ class Indicator(AppletPlugin):
 		self.Applet.Plugins.StatusIcon.IconShouldChange()
 		
 	
-	def on_status_icon_pixbuf_ready(self, pixbuf):	
-		if self.num_connections > 0 and self.get_option("overlay"):
+	def on_status_icon_query_icon(self):	
+		if self.num_connections > 0:
 			self.active = True
-			x_size = int(pixbuf.props.height)
-			x = get_icon("blueman-txrx", x_size) 
-			pixbuf = composite_icon(pixbuf, 
-				[(x, pixbuf.props.height - x_size, 0, 255)])
-	
-			return pixbuf
+#			x_size = int(pixbuf.props.height)
+#			x = get_icon("blueman-txrx", x_size) 
+#			pixbuf = composite_icon(pixbuf, 
+#				[(x, pixbuf.props.height - x_size, 0, 255)])
+#	
+#			return pixbuf
+			return ("blueman-tray-connected")
 		else:
 			self.active = False	
 	
@@ -85,8 +75,8 @@ class Indicator(AppletPlugin):
 		dprint("Found %d existing connections" % self.num_connections)
 		if (self.num_connections > 0 and not self.active) or \
 					(self.num_connections == 0 and self.active):				
-			if self.get_option("overlay"):
-				self.Applet.Plugins.StatusIcon.IconShouldChange()
+
+			self.Applet.Plugins.StatusIcon.IconShouldChange()
 			
 		self.update_statusicon()	
 		

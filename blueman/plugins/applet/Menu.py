@@ -77,5 +77,8 @@ class Menu(AppletPlugin):
 		self.__sort()
 		self.__load_items()
 		
+	def get_menu(self):
+		return self.__menu
+		
 			
 
