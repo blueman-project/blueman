@@ -4,6 +4,6 @@ context = status
 
 iconsdir = $(themedir)/$(size)/$(context)
 
-icons_DATA = blueman-x.svg blueman-txrx.svg
+icons_DATA = blueman-tray-active.svg
 
 EXTRA_DIST = $(icons_DATA)
