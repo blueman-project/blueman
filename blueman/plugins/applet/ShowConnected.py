@@ -57,7 +57,7 @@ class ShowConnected(AppletPlugin):
 #				[(x, pixbuf.props.height - x_size, 0, 255)])
 #	
 #			return pixbuf
-			return ("blueman-tray-active")
+			return ("blueman-tray-active",)
 		else:
 			self.active = False	
 	
