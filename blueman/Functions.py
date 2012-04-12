@@ -313,9 +313,14 @@ def check_single_instance(id, unhide_func=None):
 		else:
 			os.remove(lockfile)
 
-	f = file(lockfile, "w")
-	f.write("%s\n%s" % (str(os.getpid()), "0"))
-	f.close()
+ 	try:
+ 		fd = os.open(lockfile, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0664)
+ 		os.write(fd, "%s\n%s" % (str(os.getpid()), "0"))
+ 		os.close(fd)
+ 	except OSError:
+ 		print "There is an instance already running"
+		exit()
+		
 	atexit.register(lambda:os.remove(lockfile))
 	
 def have(t):
