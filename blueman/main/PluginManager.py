@@ -146,7 +146,7 @@ class PluginManager(gobject.GObject):
 		for dep in cls.__depends__:
 			if not dep in self.__loaded:
 				if not dep in self.__classes:
-					raise "Could not satisfy dependency %s -> %s" % (cls.__name__, dep)
+					raise Exception("Could not satisfy dependency %s -> %s" % (cls.__name__, dep))
 				try:
 					self.__load_plugin(self.__classes[dep])	
 				except Exception, e:
