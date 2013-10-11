@@ -178,7 +178,7 @@ class PulseAudio(AppletPlugin):
 		dprint("PulseAudio version:", version)
 		
 		if version[0] == 0:
-			if version[2] < 15:
+			if tuple(version) < (0, 9, 15):
 				raise Exception("PulseAudio too old, required 0.9.15 or higher")
 		
 		self.signals.Handle("dbus", 
