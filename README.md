@@ -17,7 +17,7 @@ We're currently working on blueman 2 to bring support for newer APIs like BlueZ 
 * [pulseaudio](http://www.freedesktop.org/wiki/Software/PulseAudio/)
 * [PyGObject](https://wiki.gnome.org/PyGObject)
 * [PyGTK](http://www.pygtk.org/) (>= 2.16)
-* [Python 2](http://www.python.org/) (>= 2.5)
+* [Python](http://www.python.org/) (>= 2.5)
 * [startup-notification](http://www.freedesktop.org/wiki/Software/startup-notification/)
 
 ### Additional build dependencies
