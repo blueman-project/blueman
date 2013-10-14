@@ -38,14 +38,15 @@ To install a packaged release of blueman, run ./configure, make and make install
 
 To generate and run a configure script from from source, run ./autogen.sh. You can provide configuration options to the autogen.sh script.
 
-## Binaries
+## Packaged versions
 
-Binary versions of blueman 1 are available for the following systems:
+Packaged versions of blueman 1 are available for the following systems (and probably many more):
 
 * [Arch Linux](https://www.archlinux.org/packages/?name=blueman)
 * CentOS
 * [Debian GNU/Linux](http://packages.debian.org/search?keywords=blueman)
 * [Fedora](https://apps.fedoraproject.org/packages/blueman)
+* [Gentoo Linux](http://packages.gentoo.org/package/net-wireless/blueman)
 * Linux Mint
 * [Mageia](http://mageia.madb.org/package/show/name/blueman)
 * [openSUSE](http://software.opensuse.org/package/blueman?search_term=blueman)
