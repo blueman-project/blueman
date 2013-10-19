@@ -3,4 +3,6 @@
 ## master
 
 * Fix nautilus integration
-* [pulseaudio] Fix version check
+* Fix pulseaudio version check
+* Add missing icons
+* Fix initial applet state if bluetooth is disabled
