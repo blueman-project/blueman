@@ -61,6 +61,10 @@ def dprint(*args):
 		print "_________"
 		print "%s %s" % (fname, "(%s:%d)" % (co.co_filename, co.co_firstlineno))
 		print s
+		try:
+			sys.stdout.flush()
+		except IOError:
+			pass
 
 __builtin__.dprint = dprint
 
