@@ -73,6 +73,9 @@ class Transfer(OdsManager):
                 else:
                     self.Config.props.shared_path = d
 
+            if not os.path.isdir(self.Config.props.shared_path):
+                raise Exception("Configured share directory %s does not exist" % self.Config.props.shared_path)
+
             if pattern == "opp":
                 server.Start(self.Config.props.shared_path, True, False)
             elif pattern == "ftp":
