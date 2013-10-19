@@ -9,6 +9,7 @@ We're currently working on blueman 2 to bring support for newer APIs like BlueZ 
 * [BlueZ 4](http://www.bluez.org/) (>= 4.25)
 * [dbus](http://www.freedesktop.org/wiki/Software/dbus/)
 * [dbus-python](http://www.freedesktop.org/wiki/Software/DBusBindings/#python)
+* [GLib 2](http://www.gtk.org/) (>= 2.32)
 * [GTK+ 2](http://www.gtk.org/) (>= 2.16)
 * [libappindicator](https://launchpad.net/libappindicator) (optional)
 * [notification-daemon](http://galago-project.org/)

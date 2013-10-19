@@ -394,7 +394,8 @@ struct thread_info {
 	PyObject* callback;
 };
 
-static gboolean on_finished(struct thread_info* info) {
+static gboolean on_finished(gpointer data) {
+	struct thread_info* info = data;
 	if(PyCallable_Check(info->callback)) {
 		PyObject* args, *rslt;
 		
@@ -506,11 +507,9 @@ error:
 }
 
 void probe_modem(char* device, PyObject* callback) {
-	if (!g_thread_supported ()) g_thread_init (NULL);
-	
 	struct thread_info* info = g_new0(struct thread_info, 1);
 	info->device = g_strdup(device);
 	info->callback = callback;
 	Py_INCREF(callback);
-	g_thread_create(do_probe, info, FALSE, NULL);
+	g_thread_new("probe modem", do_probe, info);
 }

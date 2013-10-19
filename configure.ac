@@ -147,8 +147,8 @@ PKG_CHECK_MODULES(BLUEZ,
 		gtk+-2.0 >= 2.12
 		pygobject-2.0 >= 2.12
 		gobject-2.0 >= 2.12
-		glib-2.0 >= 2.16
-		gthread-2.0 >= 2.16
+		glib-2.0 >= 2.32
+		gthread-2.0 >= 2.32
 )
 AC_SUBST(BLUEZ_CFLAGS)
 AC_SUBST(BLUEZ_LIBS)
