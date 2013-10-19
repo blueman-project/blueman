@@ -79,8 +79,6 @@ class PowerManager(AppletPlugin):
 		self.STATE_OFF = 1
 		self.STATE_OFF_FORCED = 0
 		
-		gobject.idle_add(self.UpdatePowerState)
-		
 	def on_unload(self):
 		self.signals.DisconnectAll()
 		self.Applet.Plugins.Menu.Unregister(self)
@@ -156,6 +154,7 @@ class PowerManager(AppletPlugin):
 				rets = self.Applet.Plugins.Run("on_power_state_change_requested", self, state, cb)
 				cb.num_cb = len(rets)
 				cb.check()
+				self.UpdatePowerState()
 			else:
 				dprint("Another request in progress")
 			
