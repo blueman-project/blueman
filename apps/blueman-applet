@@ -32,8 +32,8 @@ import __builtin__
 
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-if os.path.exists(os.path.join(_dirname,"ChangeLog")):
-	sys.path.insert(0, _dirname)
+if os.path.exists(os.path.join(_dirname, "ChangeLog")):
+    sys.path.insert(0, _dirname)
 
 from blueman.Constants import *
 from blueman.Functions import *
@@ -50,77 +50,77 @@ from blueman.main.SignalTracker import SignalTracker
 
 from blueman.main.PluginManager import PersistentPluginManager
 
+
 class BluemanApplet(object):
+    def __init__(self):
+        setup_icon_path()
+        if not pynotify.init("Blueman"):
+            dprint("Error: Failed to init pynotify")
 
-	def __init__(self):
-		setup_icon_path()
-		if not pynotify.init("Blueman"):
-			dprint("Error: Failed to init pynotify")
-		
-		check_single_instance("blueman-applet")
+        check_single_instance("blueman-applet")
+
+        self.Manager = None
+        self.DbusSvc = DbusService("org.blueman.Applet", "/")
+        self.Signals = SignalTracker()
+
+        self.Plugins = PersistentPluginManager(AppletPlugin, blueman.plugins.applet, self)
+        self.Plugins.Load()
+
+        self.Plugins.Run("on_plugins_loaded")
+
+        self.bus = dbus.SystemBus()
+        self.bus.watch_name_owner("org.bluez", self.on_dbus_name_owner_change)
+
+        self.bus.add_signal_receiver(self.on_adapter_property_changed, "PropertyChanged", "org.bluez.Adapter",
+                                     "org.bluez", path_keyword="path")
+
+        gtk.main()
 
 
-		self.Manager = None
-		self.DbusSvc = DbusService("org.blueman.Applet", "/")
-		self.Signals = SignalTracker()
-		
-		self.Plugins = PersistentPluginManager(AppletPlugin, blueman.plugins.applet, self)
-		self.Plugins.Load()
-			
-		self.Plugins.Run("on_plugins_loaded")
-	
+    def manager_init(self):
+        try:
 
-		self.bus = dbus.SystemBus()
-		self.bus.watch_name_owner("org.bluez", self.on_dbus_name_owner_change)
-		
-		self.bus.add_signal_receiver(self.on_adapter_property_changed, "PropertyChanged", "org.bluez.Adapter", "org.bluez", path_keyword="path")
+            self.Signals.DisconnectAll()
+            self.Manager = Bluez.Manager("gobject")
+            self.Plugins.Run("on_manager_state_changed", True)
 
+            self.Signals.Handle("bluez", self.Manager, self.on_adapter_removed, "AdapterRemoved")
+            self.Signals.Handle("bluez", self.Manager, self.on_adapter_added, "AdapterAdded")
 
-		gtk.main()
-		
-	
-	def manager_init(self):
-		try:
+        except dbus.exceptions.DBusException, e:
+            dprint(e)
+            self.manager_deinit()
+            dprint("Bluez DBus API not available. Listening for DBus name ownership changes")
 
-			self.Signals.DisconnectAll()
-			self.Manager = Bluez.Manager("gobject")
-			self.Plugins.Run("on_manager_state_changed", True)
+    def manager_deinit(self):
+        self.Signals.DisconnectAll()
+        self.Manager = None
+        self.Plugins.Run("on_manager_state_changed", False)
 
-			self.Signals.Handle("bluez", self.Manager, self.on_adapter_removed, "AdapterRemoved")
-			self.Signals.Handle("bluez", self.Manager, self.on_adapter_added, "AdapterAdded")
-		
-		except dbus.exceptions.DBusException, e:
-			dprint(e)
-			self.manager_deinit()
-			dprint("Bluez DBus API not available. Listening for DBus name ownership changes")
-	
-	def manager_deinit(self):
-		self.Signals.DisconnectAll()
-		self.Manager = None
-		self.Plugins.Run("on_manager_state_changed", False)
-		
-	def on_dbus_name_owner_change(self, owner):
-		dprint("org.bluez owner changed to", owner)
-		if owner == "":
-			self.manager_deinit()
-		elif self.Manager == None:
-			self.manager_init()
-		
-	def on_adapter_property_changed(self, key, value, path):
-		self.Plugins.Run("on_adapter_property_changed", path, key, value)
-	
-	def on_adapter_added(self, path):
-		dprint("Adapter added ", path)
-		def on_activate():
-			dprint("Adapter activated")
-			self.Plugins.Run("on_adapter_added", path)
+    def on_dbus_name_owner_change(self, owner):
+        dprint("org.bluez owner changed to", owner)
+        if owner == "":
+            self.manager_deinit()
+        elif self.Manager == None:
+            self.manager_init()
 
-		adapter = Bluez.Adapter(path)
-		wait_for_adapter(adapter, on_activate)
-		
-	def on_adapter_removed(self, path):
-		dprint("Adapter removed ", path)
-		self.Plugins.Run("on_adapter_removed", path)
+    def on_adapter_property_changed(self, key, value, path):
+        self.Plugins.Run("on_adapter_property_changed", path, key, value)
+
+    def on_adapter_added(self, path):
+        dprint("Adapter added ", path)
+
+        def on_activate():
+            dprint("Adapter activated")
+            self.Plugins.Run("on_adapter_added", path)
+
+        adapter = Bluez.Adapter(path)
+        wait_for_adapter(adapter, on_activate)
+
+    def on_adapter_removed(self, path):
+        dprint("Adapter removed ", path)
+        self.Plugins.Run("on_adapter_removed", path)
+
 
 BluemanApplet()
 
