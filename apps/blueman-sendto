@@ -23,9 +23,9 @@ import os, sys
 
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-if os.path.exists(os.path.join(_dirname,"ChangeLog")):
-	sys.path.insert(0, _dirname)
-	
+if os.path.exists(os.path.join(_dirname, "ChangeLog")):
+    sys.path.insert(0, _dirname)
+
 import gtk
 import gobject
 import dbus.glib
@@ -48,372 +48,376 @@ from blueman.ods.OdsManager import OdsManager
 
 enable_rgba_colormap()
 
+
 class Sender(gobject.GObject):
-	__gsignals__ = {
-		'result' : (gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE, (gobject.TYPE_BOOLEAN,)),
-	}
-	def __init__(self, device, adapter, files):
-		gobject.GObject.__init__(self)
-		self.Builder = gtk.Builder()
-		self.Builder.set_translation_domain("blueman")
-		self.Builder.add_from_file(UI_PATH +"/send-dialog.ui")
-		self.window = self.Builder.get_object("window")
-		
-		self.l_dest = self.Builder.get_object("l_dest")
-		self.l_file = self.Builder.get_object("l_file")
-		
-		self.pb = self.Builder.get_object("pb")
-		
-		self.b_cancel = self.Builder.get_object("b_cancel")
-		self.b_cancel.connect("clicked", self.on_cancel)
-		
-		self.pb.props.text = _("Connecting")
-		
-		self.device = device
-		self.adapter = Adapter(adapter)
-		self.files = files
-		self.session = None
-		
-		self.total_bytes = 0
-		self.total_transferred = 0
-		
-		self._last_bytes = 0
-		self._last_update = 0
-		
-		self.error_dialog = None
-		self.cancelling = False
-		
-		#bytes transferred on a current transfer
-		self.transferred = 0
-		
-		self.speed = SpeedCalc(6)
+    __gsignals__ = {
+    'result': (gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE, (gobject.TYPE_BOOLEAN,)),
+    }
 
-		for i in range(len(self.files)-1,-1,-1):
-			f = self.files[i]
-			match = re.match("file://(.*)", f)
-			if match:
-				f = self.files[i] = urllib.unquote(match.groups(1)[0])
-				
-			if os.path.exists(f) and not os.path.isdir(f):
-				f =  os.path.abspath(f)
-				self.total_bytes += os.path.getsize(f)
-			else:
-				self.files.remove(f)
+    def __init__(self, device, adapter, files):
+        gobject.GObject.__init__(self)
+        self.Builder = gtk.Builder()
+        self.Builder.set_translation_domain("blueman")
+        self.Builder.add_from_file(UI_PATH + "/send-dialog.ui")
+        self.window = self.Builder.get_object("window")
 
-		
-		self.num_files = len(self.files)
-		try:
-			self.manager = OdsManager()
-		except:
-			d = gtk.MessageDialog(  self.window,
-			type=gtk.MESSAGE_ERROR, buttons=gtk.BUTTONS_OK)
-			d.props.text = _("obex-data-server not available")
-			d.props.secondary_text = _("obex-data-server is probably not installed")
-			d.run()
-			d.destroy()
-			exit(1)
-		
-		if self.num_files == 0:
-			exit(1)
-		
-		self.l_file.props.label = os.path.basename(self.files[-1])
-		
-		self.manager.GHandle("session-created", self.on_session_created)
-		self.manager.GHandle("session-destroyed", self.on_session_destroyed)
-		
-		print "Sending to", device.Address
-		self.l_dest.props.label = device.Alias
-		
-		self.create_session()
-		
-		self.window.show()
+        self.l_dest = self.Builder.get_object("l_dest")
+        self.l_file = self.Builder.get_object("l_file")
 
-		
-		
-	def create_session(self):
-		dprint("Creating session")
-		def on_error(msg):
-			dprint("Failed to create session")
-			d = gtk.MessageDialog(  self.window,
-			type=gtk.MESSAGE_ERROR, buttons=(gtk.BUTTONS_CLOSE))
-			d.props.text = _("Error occurred")
-			d.props.icon_name = "blueman"
-			d.props.secondary_text = str(msg).split(":")[1].strip(" ")
-		
-			resp = d.run()
-			d.destroy()
-			exit(1)
-		
-		props = self.adapter.GetProperties()
-		self.manager.create_session(self.device.Address, props["Address"], error_handler=on_error)
-		
-	def on_cancel(self, button):
-		def reply(*args):
-			self.session.Disconnect()
-			self.emit("result", False)
-		
-		self.pb.props.text = _("Cancelling")
-		if button:
-			button.props.sensitive = False
-		
-		if self.session:
-			if self.session.Connected:
-				self.session.Cancel(reply_handler=reply, error_handler=reply)
-			else:
-				print self.session.object_path
-				self.manager.CancelSessionConnect(self.session.object_path)
-				self.emit("result", False)
-		else:
-			self.emit("result", False)
-			
-		
-		
-	def on_transfer_started(self, session, filename, path, size):
-		dprint("transfer started")
-		
-		#first transfer
-		if self.total_transferred == 0:
-			self.pb.props.text = _("Sending File") + (" %(0)s/%(1)s (%(2).2f %(3)s/s) " + _("ETA:") + " %(4)s") % {"1": self.num_files, 
-										"0": (self.num_files - len(self.files)+1),
-										"2": 0.0,
-										"3": "B/s",
-										"4": "∞" }
-		
-		self.l_file.props.label = filename
-		self._last_bytes = 0
-		self.transferred = 0
-		
-		
-	def on_transfer_progress(self, session, progress):
-		self.transferred = progress
-		if self._last_bytes == 0:
-			self.total_transferred += progress
-		else:
-			self.total_transferred += (progress - self._last_bytes) 
-		
-		self._last_bytes = progress
-		
-		tm = time.time()
-		if tm - self._last_update > 0.5:
-			spd = self.speed.calc(self.total_transferred)
-			(size, units) = format_bytes(spd)
-			try:
-				x = ((self.total_bytes-self.total_transferred) / spd)+1
-				if x > 60:
-					x = x / 60
-					eta = ngettext("%.0f Minute", "%.0f Minutes", round(x)) % x
-				else:
-					eta = ngettext("%.0f Second", "%.0f Seconds", round(x)) % x
-			except ZeroDivisionError:
-				eta = "∞"
+        self.pb = self.Builder.get_object("pb")
 
-			self.pb.props.text = _("Sending File") + (" %(0)s/%(1)s (%(2).2f %(3)s/s) " + _("ETA:") + " %(4)s") % {"1": self.num_files, 
-									"0": (self.num_files - len(self.files)+1),
-									"2": size,
-									"3": units,
-									"4": eta}
-			self._last_update = tm
-		
-		self.pb.props.fraction = float(self.total_transferred) / self.total_bytes
+        self.b_cancel = self.Builder.get_object("b_cancel")
+        self.b_cancel.connect("clicked", self.on_cancel)
 
-		
-	def on_transfer_completed(self, session):
-		del self.files[-1]
-		
-		self.process_queue()
-		
-	def process_queue(self):
-		if len(self.files) > 0:
-			self.send_file(self.files[-1])
-		else:
-			self.emit("result", True)
-		
-		
-	def send_file(self, file_path):
-		dprint(file_path)
-		if self.session and self.session.Connected:
-			self.session.SendFile(file_path)
-		
-		
-	def on_session_disconnected(self, session):
-		if self.session:
-			try:
-				self.session.Close()
-			except:
-				dprint("Warning: Session already closed")
-		
-	def on_session_destroyed(self, manager, path):
-		if self.session.object_path == path:
-			self.session = None
-		
-	def on_session_connected(self, session):
-		dprint("commence transfer")
-		self.sesion = session
-		self.process_queue()
-		
-	def on_session_error(self, session, name, msg):
-		dprint("session err", name, msg)
-		if not self.error_dialog:	
-			self.speed.reset()
-			d = gtk.MessageDialog(  self.window,
-						type=gtk.MESSAGE_ERROR)
-			d.props.text = msg
-			d.props.modal = True
-			d.props.secondary_text = _("Error occurred while sending file %s") % os.path.basename(self.files[-1])
-			d.props.icon_name = "blueman"
-		
-			if len(self.files) > 1:
-				d.add_button(_("Skip"), gtk.RESPONSE_NO)
-			d.add_button(_("Retry"), gtk.RESPONSE_YES)
-			d.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
-		
-		
-			def on_response(dialog, resp):
-				dialog.destroy()
-				self.error_dialog = None
-				
-				if resp == gtk.STOCK_CANCEL:
-					self.on_cancel(None)
-				elif resp == gtk.RESPONSE_NO:
-					self.total_bytes -= os.path.getsize(self.files[-1])
-					self.total_transferred -= self.transferred
-					self.transferred = 0
-					del self.files[-1]
-					if not self.session or not self.session.Connected:
-						self.create_session()
-					self.process_queue()
-				elif resp == gtk.RESPONSE_YES:
-					self.total_transferred -= self.transferred
-					self.transferred = 0
-					if not self.session or not self.session.Connected:
-						self.create_session()
+        self.pb.props.text = _("Connecting")
 
-					self.process_queue()
-				else:
-					self.on_cancel(None)		
-		
-			d.connect("response", on_response)
-			d.show()
-			self.error_dialog = d
-		
-		
-	def on_session_created(self, manager, session):
-		dprint()
-		self.session = session
-		session.GHandle("connected", self.on_session_connected)
-		session.GHandle("disconnected", self.on_session_disconnected)
-		session.GHandle("error-occurred", self.on_session_error)
-		session.GHandle("transfer-started", self.on_transfer_started)
-		session.GHandle("transfer-progress", self.on_transfer_progress)
-		session.GHandle("transfer-completed", self.on_transfer_completed)
-	
+        self.device = device
+        self.adapter = Adapter(adapter)
+        self.files = files
+        self.session = None
+
+        self.total_bytes = 0
+        self.total_transferred = 0
+
+        self._last_bytes = 0
+        self._last_update = 0
+
+        self.error_dialog = None
+        self.cancelling = False
+
+        #bytes transferred on a current transfer
+        self.transferred = 0
+
+        self.speed = SpeedCalc(6)
+
+        for i in range(len(self.files) - 1, -1, -1):
+            f = self.files[i]
+            match = re.match("file://(.*)", f)
+            if match:
+                f = self.files[i] = urllib.unquote(match.groups(1)[0])
+
+            if os.path.exists(f) and not os.path.isdir(f):
+                f = os.path.abspath(f)
+                self.total_bytes += os.path.getsize(f)
+            else:
+                self.files.remove(f)
+
+        self.num_files = len(self.files)
+        try:
+            self.manager = OdsManager()
+        except:
+            d = gtk.MessageDialog(self.window,
+                                  type=gtk.MESSAGE_ERROR, buttons=gtk.BUTTONS_OK)
+            d.props.text = _("obex-data-server not available")
+            d.props.secondary_text = _("obex-data-server is probably not installed")
+            d.run()
+            d.destroy()
+            exit(1)
+
+        if self.num_files == 0:
+            exit(1)
+
+        self.l_file.props.label = os.path.basename(self.files[-1])
+
+        self.manager.GHandle("session-created", self.on_session_created)
+        self.manager.GHandle("session-destroyed", self.on_session_destroyed)
+
+        print "Sending to", device.Address
+        self.l_dest.props.label = device.Alias
+
+        self.create_session()
+
+        self.window.show()
+
+
+    def create_session(self):
+        dprint("Creating session")
+
+        def on_error(msg):
+            dprint("Failed to create session")
+            d = gtk.MessageDialog(self.window,
+                                  type=gtk.MESSAGE_ERROR, buttons=(gtk.BUTTONS_CLOSE))
+            d.props.text = _("Error occurred")
+            d.props.icon_name = "blueman"
+            d.props.secondary_text = str(msg).split(":")[1].strip(" ")
+
+            resp = d.run()
+            d.destroy()
+            exit(1)
+
+        props = self.adapter.GetProperties()
+        self.manager.create_session(self.device.Address, props["Address"], error_handler=on_error)
+
+    def on_cancel(self, button):
+        def reply(*args):
+            self.session.Disconnect()
+            self.emit("result", False)
+
+        self.pb.props.text = _("Cancelling")
+        if button:
+            button.props.sensitive = False
+
+        if self.session:
+            if self.session.Connected:
+                self.session.Cancel(reply_handler=reply, error_handler=reply)
+            else:
+                print self.session.object_path
+                self.manager.CancelSessionConnect(self.session.object_path)
+                self.emit("result", False)
+        else:
+            self.emit("result", False)
+
+
+    def on_transfer_started(self, session, filename, path, size):
+        dprint("transfer started")
+
+        #first transfer
+        if self.total_transferred == 0:
+            self.pb.props.text = _("Sending File") + (" %(0)s/%(1)s (%(2).2f %(3)s/s) " + _("ETA:") + " %(4)s") % {
+            "1": self.num_files,
+            "0": (self.num_files - len(self.files) + 1),
+            "2": 0.0,
+            "3": "B/s",
+            "4": "∞"}
+
+        self.l_file.props.label = filename
+        self._last_bytes = 0
+        self.transferred = 0
+
+
+    def on_transfer_progress(self, session, progress):
+        self.transferred = progress
+        if self._last_bytes == 0:
+            self.total_transferred += progress
+        else:
+            self.total_transferred += (progress - self._last_bytes)
+
+        self._last_bytes = progress
+
+        tm = time.time()
+        if tm - self._last_update > 0.5:
+            spd = self.speed.calc(self.total_transferred)
+            (size, units) = format_bytes(spd)
+            try:
+                x = ((self.total_bytes - self.total_transferred) / spd) + 1
+                if x > 60:
+                    x = x / 60
+                    eta = ngettext("%.0f Minute", "%.0f Minutes", round(x)) % x
+                else:
+                    eta = ngettext("%.0f Second", "%.0f Seconds", round(x)) % x
+            except ZeroDivisionError:
+                eta = "∞"
+
+            self.pb.props.text = _("Sending File") + (" %(0)s/%(1)s (%(2).2f %(3)s/s) " + _("ETA:") + " %(4)s") % {
+            "1": self.num_files,
+            "0": (self.num_files - len(self.files) + 1),
+            "2": size,
+            "3": units,
+            "4": eta}
+            self._last_update = tm
+
+        self.pb.props.fraction = float(self.total_transferred) / self.total_bytes
+
+
+    def on_transfer_completed(self, session):
+        del self.files[-1]
+
+        self.process_queue()
+
+    def process_queue(self):
+        if len(self.files) > 0:
+            self.send_file(self.files[-1])
+        else:
+            self.emit("result", True)
+
+
+    def send_file(self, file_path):
+        dprint(file_path)
+        if self.session and self.session.Connected:
+            self.session.SendFile(file_path)
+
+
+    def on_session_disconnected(self, session):
+        if self.session:
+            try:
+                self.session.Close()
+            except:
+                dprint("Warning: Session already closed")
+
+    def on_session_destroyed(self, manager, path):
+        if self.session.object_path == path:
+            self.session = None
+
+    def on_session_connected(self, session):
+        dprint("commence transfer")
+        self.sesion = session
+        self.process_queue()
+
+    def on_session_error(self, session, name, msg):
+        dprint("session err", name, msg)
+        if not self.error_dialog:
+            self.speed.reset()
+            d = gtk.MessageDialog(self.window,
+                                  type=gtk.MESSAGE_ERROR)
+            d.props.text = msg
+            d.props.modal = True
+            d.props.secondary_text = _("Error occurred while sending file %s") % os.path.basename(self.files[-1])
+            d.props.icon_name = "blueman"
+
+            if len(self.files) > 1:
+                d.add_button(_("Skip"), gtk.RESPONSE_NO)
+            d.add_button(_("Retry"), gtk.RESPONSE_YES)
+            d.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
+
+
+            def on_response(dialog, resp):
+                dialog.destroy()
+                self.error_dialog = None
+
+                if resp == gtk.STOCK_CANCEL:
+                    self.on_cancel(None)
+                elif resp == gtk.RESPONSE_NO:
+                    self.total_bytes -= os.path.getsize(self.files[-1])
+                    self.total_transferred -= self.transferred
+                    self.transferred = 0
+                    del self.files[-1]
+                    if not self.session or not self.session.Connected:
+                        self.create_session()
+                    self.process_queue()
+                elif resp == gtk.RESPONSE_YES:
+                    self.total_transferred -= self.transferred
+                    self.transferred = 0
+                    if not self.session or not self.session.Connected:
+                        self.create_session()
+
+                    self.process_queue()
+                else:
+                    self.on_cancel(None)
+
+            d.connect("response", on_response)
+            d.show()
+            self.error_dialog = d
+
+
+    def on_session_created(self, manager, session):
+        dprint()
+        self.session = session
+        session.GHandle("connected", self.on_session_connected)
+        session.GHandle("disconnected", self.on_session_disconnected)
+        session.GHandle("error-occurred", self.on_session_error)
+        session.GHandle("transfer-started", self.on_transfer_started)
+        session.GHandle("transfer-progress", self.on_transfer_progress)
+        session.GHandle("transfer-completed", self.on_transfer_completed)
+
+
 class SendTo:
-	def __init__(self):
-		setup_icon_path()
-	
-		usage = "Usage: %prog [options] file1 file2 ... fileN"
-		parser = OptionParser(usage)
-		parser.add_option("-d", "--device", dest="device",
-				action="store", help=_("Send files to this device"), metavar="ADDRESS")
-		
-		parser.add_option("", "--dest", dest="device",
-				action="store", help="Same as --device", metavar="ADDRESS")
-				
-		parser.add_option("-s", "--source", dest="source",
-				action="store", help=_("Source adapter. Takes address or adapter's name eg. hci0"), metavar="PATTERN")
-		
-		(options, args) = parser.parse_args()
-		
-		check_bluetooth_status(_("Bluetooth needs to be turned on for file sending to work"), lambda: exit())
-		
-		self.options = options
-		self.args = args
-		
-		self.device = None
-		self.adapter = None
-		self.files = []
-		
-		if options.device == None:
-			if not self.select_device():
-				exit()
+    def __init__(self):
+        setup_icon_path()
 
-			self.do_send()
-			
-		else:
-			m = Manager("gobject")
-			try:
-				if options.source != None:
-					try:
-						adapter = m.GetAdapter(options.source)
-					except:
-						adapter = m.GetAdapter()
-				else:
-					adapter = m.GetAdapter()
-			except:
-				print "Error: No Adapters present"
-				exit()
-			try:
-				d = adapter.FindDevice(options.device)
-			except:
-				info = {}
-				info["Address"] = options.device
-				info["Name"] = info["Address"].replace(":", "-")
-				info["Alias"] = info["Name"]
-				info["Fake"] = True
-				
-				d = FakeDevice(info)
+        usage = "Usage: %prog [options] file1 file2 ... fileN"
+        parser = OptionParser(usage)
+        parser.add_option("-d", "--device", dest="device",
+                          action="store", help=_("Send files to this device"), metavar="ADDRESS")
 
-			self.device = Device(d)
-			self.adapter = adapter.GetObjectPath()
-			self.do_send()
-		
-		gtk.main()
-		
-	def do_send(self):
-		if len(self.args) == 0:
-			if not self.select_files():
-				exit()
-			else:
-				sender = Sender(self.device, self.adapter, self.files)
-		else:
-			sender = Sender(self.device, self.adapter, self.args)
-			
-		def on_result(sender, res):
-			gtk.main_quit()
-		sender.connect("result", on_result)
-		
-		
-	def select_files(self):
-		d = gtk.FileChooserDialog(_("Select files to send"), buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT,
-											gtk.STOCK_OK, gtk.RESPONSE_ACCEPT))
-		d.props.icon_name = "blueman-send-file"									
-		d.set_select_multiple(True)
-		resp = d.run()
-		
-		if resp == gtk.RESPONSE_ACCEPT:
-			self.files = d.get_filenames()
-			d.destroy()
-			return True
-		else:
-			d.destroy()
-			return False
+        parser.add_option("", "--dest", dest="device",
+                          action="store", help="Same as --device", metavar="ADDRESS")
 
-	
-	def select_device(self):
-		d = DeviceSelectorDialog()
-		resp = d.run()
-		d.destroy()
-		if resp == gtk.RESPONSE_ACCEPT:
-			sel = d.GetSelection()
-			if sel:
-				self.device = sel[1]
-				self.adapter = sel[0]
-				return True
-			else:
-				return False
-		else:
-			return False
-	
+        parser.add_option("-s", "--source", dest="source",
+                          action="store", help=_("Source adapter. Takes address or adapter's name eg. hci0"),
+                          metavar="PATTERN")
 
-	
+        (options, args) = parser.parse_args()
+
+        check_bluetooth_status(_("Bluetooth needs to be turned on for file sending to work"), lambda: exit())
+
+        self.options = options
+        self.args = args
+
+        self.device = None
+        self.adapter = None
+        self.files = []
+
+        if options.device == None:
+            if not self.select_device():
+                exit()
+
+            self.do_send()
+
+        else:
+            m = Manager("gobject")
+            try:
+                if options.source != None:
+                    try:
+                        adapter = m.GetAdapter(options.source)
+                    except:
+                        adapter = m.GetAdapter()
+                else:
+                    adapter = m.GetAdapter()
+            except:
+                print "Error: No Adapters present"
+                exit()
+            try:
+                d = adapter.FindDevice(options.device)
+            except:
+                info = {}
+                info["Address"] = options.device
+                info["Name"] = info["Address"].replace(":", "-")
+                info["Alias"] = info["Name"]
+                info["Fake"] = True
+
+                d = FakeDevice(info)
+
+            self.device = Device(d)
+            self.adapter = adapter.GetObjectPath()
+            self.do_send()
+
+        gtk.main()
+
+    def do_send(self):
+        if len(self.args) == 0:
+            if not self.select_files():
+                exit()
+            else:
+                sender = Sender(self.device, self.adapter, self.files)
+        else:
+            sender = Sender(self.device, self.adapter, self.args)
+
+        def on_result(sender, res):
+            gtk.main_quit()
+
+        sender.connect("result", on_result)
+
+
+    def select_files(self):
+        d = gtk.FileChooserDialog(_("Select files to send"), buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT,
+                                                                      gtk.STOCK_OK, gtk.RESPONSE_ACCEPT))
+        d.props.icon_name = "blueman-send-file"
+        d.set_select_multiple(True)
+        resp = d.run()
+
+        if resp == gtk.RESPONSE_ACCEPT:
+            self.files = d.get_filenames()
+            d.destroy()
+            return True
+        else:
+            d.destroy()
+            return False
+
+
+    def select_device(self):
+        d = DeviceSelectorDialog()
+        resp = d.run()
+        d.destroy()
+        if resp == gtk.RESPONSE_ACCEPT:
+            sel = d.GetSelection()
+            if sel:
+                self.device = sel[1]
+                self.adapter = sel[0]
+                return True
+            else:
+                return False
+        else:
+            return False
+
+
 SendTo()
