@@ -18,16 +18,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
-PAGE_INTRO =      0
-PAGE_DEVLIST =    1
-PAGE_PASSKEY =    2
-PAGE_PAIRING =    3
-PAGE_CONNECT =    4
+PAGE_INTRO = 0
+PAGE_DEVLIST = 1
+PAGE_PASSKEY = 2
+PAGE_PAIRING = 3
+PAGE_CONNECT = 4
 PAGE_CONNECTING = 5
-PAGE_FINISH =     6
+PAGE_FINISH = 6
 
 pages = {}
-
 
 import os
 import sys
@@ -38,8 +37,8 @@ from optparse import OptionParser
 
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-if os.path.exists(os.path.join(_dirname,"ChangeLog")):
-	sys.path.insert(0, _dirname)
+if os.path.exists(os.path.join(_dirname, "ChangeLog")):
+    sys.path.insert(0, _dirname)
 
 from blueman.Functions import *
 from blueman.gui.DeviceSelectorWidget import DeviceSelectorWidget
@@ -50,350 +49,354 @@ from blueman.main.Device import Device
 from blueman.main.AppletService import AppletService
 from blueman.Sdp import *
 
+
 class Assistant(Agent):
-	def __init__(self):
-		Agent.__init__(self, "/")
-		setup_icon_path()
-		
-		usage = "Usage: %prog [options]"
-		parser = OptionParser(usage)
-		parser.add_option("-d", "--device", dest="device",
-				action="store", help=_("Start configuration assistant for this device"), metavar="ADDRESS")
-	
-		(options, args) = parser.parse_args()
-		
-		check_bluetooth_status(_("Bluetooth needs to be turned on for the Bluetooth assistant to work"), lambda: exit())
-		
-		self.options = options		
-		
-		self.Device = None
-		self.Adapter = None
-		self.PairType = 0
-		self.Passkey = ""
-		self.Service = None
-		
-		self.Builder = gtk.Builder()
-		self.Builder.set_translation_domain("blueman")
-		self.Builder.add_from_file(UI_PATH +"/assistant.ui")
-		self.assistant = self.Builder.get_object("assistant")
-		self.assistant.set_title(_("Bluetooth Assistant"))
-			
-		self.applet = AppletService()
-		
-		self.assistant.connect("prepare", self.on_prepare)
-		self.assistant.connect("close", self.on_close)
-		self.assistant.connect("cancel", self.on_close)
+    def __init__(self):
+        Agent.__init__(self, "/")
+        setup_icon_path()
 
-		pages[PAGE_INTRO] = self.Builder.get_object("l_page0")
-		self.assistant.set_page_header_image(pages[PAGE_INTRO], get_icon("blueman", 32))
-		self.assistant.set_page_complete(pages[PAGE_INTRO], True)
-		
-		pages[PAGE_DEVLIST] = self.Builder.get_object("a_page1")
-		self.assistant.set_page_header_image(pages[PAGE_DEVLIST], get_icon("blueman", 32))
-		
-		pages[PAGE_PASSKEY] = self.Builder.get_object("a_page2")
-		self.assistant.set_page_header_image(pages[PAGE_PASSKEY], get_icon("gtk-dialog-authentication", 32))
-		
-		pages[PAGE_PAIRING] = self.Builder.get_object("l_page3")
-		self.assistant.set_page_header_image(pages[PAGE_PAIRING], get_icon("gtk-dialog-authentication", 32))
-		
-		pages[PAGE_CONNECT] = self.Builder.get_object("a_page4")
-		self.assistant.set_page_header_image(pages[PAGE_CONNECT], get_icon("gtk-connect", 32))
-		
-		pages[PAGE_CONNECTING] = self.Builder.get_object("l_page5")
-		self.assistant.set_page_header_image(pages[PAGE_CONNECTING], get_icon("gtk-connect", 32))
-		
-		pages[PAGE_FINISH] = self.Builder.get_object("l_page6")
-		self.assistant.set_page_header_image(pages[PAGE_FINISH], get_icon("gtk-yes", 32))
-		
-		self.svc_vbox = self.Builder.get_object("svcs")
-		
-		self.cust_passkey = self.Builder.get_object("e_myp")
-		self.cust_passkey.props.sensitive = False
-		self.cust_passkey.connect("changed", self.on_passkey_changed)
-		
-		self.Builder.get_object("r_dontp").connect("toggled", self.on_pairing_method_changed, 2)
-		self.Builder.get_object("r_myp").connect("toggled", self.on_pairing_method_changed, 1)
-		self.Builder.get_object("r_randp").connect("toggled", self.on_pairing_method_changed, 0)
-		
-		self.dev_widget = DeviceSelectorWidget()
-		self.dev_widget.List.connect("device-selected", self.on_device_selected)
-		self.dev_widget.List.connect("row-activated", self.on_row_activated)
-		
-		self.assistant.set_forward_page_func(self.next_page_fn, None)
-			
-		pages[PAGE_DEVLIST].add(self.dev_widget)
-		
-		self.dev_widget.show()
-		
-		if not self.dev_widget.List.IsValidAdapter():
-			d = gtk.MessageDialog(type=gtk.MESSAGE_ERROR, )
-			d.props.text = _("No adapters found")
-			d.props.icon_name = "blueman"
-			d.props.title = "Blueman Assistant"
-			d.add_button(gtk.STOCK_CLOSE, gtk.RESPONSE_CANCEL)
-			d.run()
-			exit(1)
-		
-		self.assistant.show()
-				
-		if options.device != None:
-			m = Manager("gobject")
-			try:
-				adapter = m.GetAdapter()
-			except:
-				print "Error: No Adapters present"
-				exit(1)
-			try:
-				d = adapter.FindDevice(options.device)
-				self.Device = Device(d)
-				self.Adapter = adapter
-				if self.Device.Paired:
-					self.assistant.set_current_page(PAGE_CONNECT)
-				else:
-					self.assistant.set_current_page(PAGE_PASSKEY)
-			except:
-				info = {}
-				info["Address"] = options.device
-				info["Name"] = info["Address"].replace(":", "-")
-				info["Alias"] = info["Name"]
-				info["Fake"] = True
-				
-				self.Device = FakeDevice(info)
-				self.Adapter = adapter
-				self.assistant.set_current_page(PAGE_PASSKEY)
-							
-		else:
-			self.dev_widget.List.DiscoverDevices()
+        usage = "Usage: %prog [options]"
+        parser = OptionParser(usage)
+        parser.add_option("-d", "--device", dest="device",
+                          action="store", help=_("Start configuration assistant for this device"), metavar="ADDRESS")
 
-		
-		gtk.main()
-		
-	def on_row_activated(self, treeview, path, view_column, *args):
-		self.assistant.set_current_page(self.next_page_fn(self.assistant.get_current_page(), None))
-		
-		
-	def next_page_fn(self, page, data):
-		if page == PAGE_INTRO:
-			return PAGE_DEVLIST
-		
-		elif page == PAGE_DEVLIST:
-			if self.Device:
-				if self.Device.Fake or not self.Device.Paired:
-					return PAGE_PASSKEY
-				else:
-					return PAGE_CONNECT
-			else:
-				return PAGE_PASSKEY
-		elif page == PAGE_PASSKEY:
-			if not self.Device.Fake and not self.Device.Paired and self.PairType == 2:
-				return PAGE_CONNECT
-			#self.assistant.set_page_complete(pages[PAGE_PASSKEY], True)
-			return PAGE_PAIRING
-		elif page == PAGE_PAIRING:
-			if len(self.Device.Services) == 0:
-				return PAGE_FINISH
-				
-			return PAGE_CONNECT
-		elif page == PAGE_CONNECT:
-			
-			if self.Service and self.Service[0]:
-				return PAGE_CONNECTING
-			else:
-				return PAGE_FINISH
-		elif page == PAGE_CONNECTING:
-			return PAGE_FINISH
-		elif page == PAGE_FINISH:
-			return PAGE_FINISH+1
-			
-		return page
-		
-		
-	def check_custom_passkey(self):
-		return len(self.cust_passkey.props.text) != 0
-		
-	def on_passkey_changed(self, e):
-		if self.PairType == 1:
-			if self.check_custom_passkey():
-				self.Passkey = e.props.text
-				self.assistant.set_page_complete(pages[PAGE_PASSKEY], True)
-			else:
-				self.assistant.set_page_complete(pages[PAGE_PASSKEY], False)
-		
-		
-	def on_pairing_method_changed(self, radio_button, type):
-		if radio_button.props.active:
-			if type == 0:
-				self.cust_passkey.props.sensitive = False
-				self.assistant.set_page_complete(pages[PAGE_PASSKEY], True)
-			elif type == 1:
-				self.cust_passkey.props.sensitive = True
-				if not self.check_custom_passkey():
-					self.assistant.set_page_complete(pages[PAGE_PASSKEY], False)
-			else:
-				self.cust_passkey.props.sensitive = False
-				self.assistant.set_page_complete(pages[PAGE_PASSKEY], True)
-			
-			self.PairType = type
-		
-		
-	def on_device_selected(self, list, device, iter):
-		if not device:
-			self.assistant.set_page_complete(pages[PAGE_DEVLIST], False)
-			self.Device = None
-			self.Adapter = list.Adapter
-		else:
-			self.assistant.set_page_complete(pages[PAGE_DEVLIST], True)
-			self.Device = device
-			self.Adapter = list.Adapter
-	
-	@AgentMethod
-	def RequestPinCode(self, device):
-		dprint("Agent.RequestPinCode")
-		return self.Passkey
-	
-	@AgentMethod
-	def RequestPasskey(self, device):
-		dprint("Agent.RequestPasskey")
-		return self.Passkey
-		
-	def on_close(self, assistant):
-		gtk.main_quit()
-		
-	def on_service_toggled(self, rb, sv_name, *args):
-		if rb.props.active:
-			self.Service = (sv_name, args)
-			self.assistant.set_page_complete(pages[PAGE_CONNECT], True)
+        (options, args) = parser.parse_args()
 
-	def on_prepare(self, assistant, page):
-		num = assistant.get_current_page()
-		if num == PAGE_PASSKEY:
-			self.assistant.set_page_complete(pages[PAGE_PASSKEY], True)
-		
-		elif num == PAGE_PAIRING:
-			if self.Device.Fake and self.PairType == 2:
-				pages[PAGE_PAIRING].set_markup(_("<b>Adding Device...</b>"))
-				self.assistant.set_page_title(pages[PAGE_PAIRING], _("Adding"))
-			else:
-				if self.PairType == 0:
-					self.Passkey = "%04d" % random.randint(0, 9999)
+        check_bluetooth_status(_("Bluetooth needs to be turned on for the Bluetooth assistant to work"), lambda: exit())
 
-				pages[PAGE_PAIRING].set_markup(_("<b>Pairing in progress...</b>\n\nEnter passkey <b>%s</b> on the device.") % self.Passkey)
+        self.options = options
 
-			def ok(dev):
-				self.Device = Device(dev)
-				
-				def refresh_cb(*args):
-					self.assistant.set_current_page(PAGE_CONNECT)
-				
-				self.applet.RefreshServices(self.Device.GetObjectPath(), reply_handler=refresh_cb, error_handler=refresh_cb)
-				
-			def err(err):
-				print err
-				pages[PAGE_FINISH].set_markup(_("<b>Failed to add device</b>"))
-				self.assistant.set_page_header_image(pages[PAGE_FINISH], get_icon("gtk-no", 32))
-				self.assistant.set_current_page(PAGE_FINISH)
-			
-			if self.PairType != 2:
-				self.Adapter.CreatePairedDevice(self.Device.Address, self.GetObjectPath(), "", reply_handler=ok, error_handler=err)
-			else:
-				self.Adapter.CreateDevice(self.Device.Address, reply_handler=ok, error_handler=err)
-		
-		elif num == PAGE_CONNECT:
-			self.svc_vbox.foreach(lambda x, y: self.svc_vbox.remove(x), None)
-			
-			print self.Device.Services
-			uuids = self.Device.UUIDs
-			rbs = []
-			def get_first_item():
-				try:
-					return rbs[0]
-				except:
-					return None
-				
-			for name, service in self.Device.Services.iteritems():
-				if name == "serial":
-					for uuid in uuids:
-						uuid16 = uuid128_to_uuid16(uuid)
-						if uuid16 == DIALUP_NET_SVCLASS_ID:
-							rbs.append(gtk.RadioButton(get_first_item(), uuid16_to_name(uuid16)))
-							rbs[-1].connect("toggled", self.on_service_toggled, name, uuid)
-							self.svc_vbox.pack_start(rbs[-1], False)
-						
-						if uuid16 == SERIAL_PORT_SVCLASS_ID:
-							rbs.append(gtk.RadioButton(get_first_item(), uuid16_to_name(uuid16)))
-							rbs[-1].connect("toggled", self.on_service_toggled, name, uuid)
-							self.svc_vbox.pack_start(rbs[-1], False)
-				elif name == "input":
-					rbs.append(gtk.RadioButton(get_first_item(), _("Input Service")))
-					rbs[-1].connect("toggled", self.on_service_toggled, name)
-					self.svc_vbox.pack_start(rbs[-1], False)
-				
-				elif name == "network":
-					for uuid in uuids:
-						uuid16 = uuid128_to_uuid16(uuid)
-						if uuid16 == GN_SVCLASS_ID:						
-							rbs.append(gtk.RadioButton(get_first_item(), _("Group Network")))
-							rbs[-1].connect("toggled", self.on_service_toggled, name, uuid)
-							self.svc_vbox.pack_start(rbs[-1], False)
-					
-						if uuid16 == NAP_SVCLASS_ID:
-							rbs.append(gtk.RadioButton(get_first_item(), _("Network Access Point")))
-							rbs[-1].connect("toggled", self.on_service_toggled, name, uuid)
-							self.svc_vbox.pack_start(rbs[-1], False)
-			
-				elif name == "audiosink":
-					rbs.append(gtk.RadioButton(get_first_item(), _("A2DP Sink (Send Audio)")))
-					rbs[-1].connect("toggled", self.on_service_toggled, name)
-					self.svc_vbox.pack_start(rbs[-1], False)
-				
-				elif name == "audiosource":
-					rbs.append(gtk.RadioButton(get_first_item(), _("A2DP Source (Receive Audio)")))
-					rbs[-1].connect("toggled", self.on_service_toggled, name)
-					self.svc_vbox.pack_start(rbs[-1], False)				
-				
-				elif name == "headset":
-					rbs.append(gtk.RadioButton(get_first_item(), _("Headset Service")))
-					rbs[-1].connect("toggled", self.on_service_toggled, name)
-					self.svc_vbox.pack_start(rbs[-1], False)
-				
-			rbs.append(gtk.RadioButton(get_first_item(), _("Don't connect")))
-			rbs[-1].connect("toggled", self.on_service_toggled, None)
-			self.svc_vbox.pack_start(rbs[-1], False, False, 8)			
-			self.svc_vbox.show_all()
+        self.Device = None
+        self.Adapter = None
+        self.PairType = 0
+        self.Passkey = ""
+        self.Service = None
 
-			rbs[0].emit("toggled")
-			if len(self.svc_vbox.get_children()) == 1:
-				self.assistant.set_current_page(self.next_page_fn(self.assistant.get_current_page(), None))
-			
-		elif num == PAGE_CONNECTING:
-			print "connect"
-			
-			svc = self.Device.Services[self.Service[0]]
-			
-			def success(*args):
-				pages[PAGE_FINISH].set_markup(_("<b>Device added and connected successfuly</b>"))
-				self.assistant.set_page_complete(pages[PAGE_CONNECTING], True)
-				self.assistant.set_page_header_image(pages[PAGE_FINISH], get_icon("gtk-yes", 32))
-				self.assistant.set_current_page(PAGE_FINISH)
-				
-			def fail(*args):
-				pages[PAGE_FINISH].set_markup(_("<b>Device added successfuly, but failed to connect</b>"))
-				self.assistant.set_page_complete(pages[PAGE_CONNECTING], True)
-				self.assistant.set_page_header_image(pages[PAGE_FINISH], get_icon("gtk-dialog-warning", 32))
-				self.assistant.set_current_page(PAGE_FINISH)
-			
-			if self.Service[0] == "network":
-				uuid = self.Service[1][0]
-				self.applet.ServiceProxy(svc.GetInterfaceName(), svc.GetObjectPath(), "Connect", [uuid], reply_handler=success, error_handler=fail)
-			
-			elif self.Service[0] == "serial":
-				uuid = self.Service[1][0]
-				self.applet.RfcommConnect(self.Device.GetObjectPath(), uuid, reply_handler=success, error_handler=fail)
-			else:
-				self.applet.ServiceProxy(svc.GetInterfaceName(), svc.GetObjectPath(), "Connect", [], reply_handler=success, error_handler=fail)
-			
-			
+        self.Builder = gtk.Builder()
+        self.Builder.set_translation_domain("blueman")
+        self.Builder.add_from_file(UI_PATH + "/assistant.ui")
+        self.assistant = self.Builder.get_object("assistant")
+        self.assistant.set_title(_("Bluetooth Assistant"))
+
+        self.applet = AppletService()
+
+        self.assistant.connect("prepare", self.on_prepare)
+        self.assistant.connect("close", self.on_close)
+        self.assistant.connect("cancel", self.on_close)
+
+        pages[PAGE_INTRO] = self.Builder.get_object("l_page0")
+        self.assistant.set_page_header_image(pages[PAGE_INTRO], get_icon("blueman", 32))
+        self.assistant.set_page_complete(pages[PAGE_INTRO], True)
+
+        pages[PAGE_DEVLIST] = self.Builder.get_object("a_page1")
+        self.assistant.set_page_header_image(pages[PAGE_DEVLIST], get_icon("blueman", 32))
+
+        pages[PAGE_PASSKEY] = self.Builder.get_object("a_page2")
+        self.assistant.set_page_header_image(pages[PAGE_PASSKEY], get_icon("gtk-dialog-authentication", 32))
+
+        pages[PAGE_PAIRING] = self.Builder.get_object("l_page3")
+        self.assistant.set_page_header_image(pages[PAGE_PAIRING], get_icon("gtk-dialog-authentication", 32))
+
+        pages[PAGE_CONNECT] = self.Builder.get_object("a_page4")
+        self.assistant.set_page_header_image(pages[PAGE_CONNECT], get_icon("gtk-connect", 32))
+
+        pages[PAGE_CONNECTING] = self.Builder.get_object("l_page5")
+        self.assistant.set_page_header_image(pages[PAGE_CONNECTING], get_icon("gtk-connect", 32))
+
+        pages[PAGE_FINISH] = self.Builder.get_object("l_page6")
+        self.assistant.set_page_header_image(pages[PAGE_FINISH], get_icon("gtk-yes", 32))
+
+        self.svc_vbox = self.Builder.get_object("svcs")
+
+        self.cust_passkey = self.Builder.get_object("e_myp")
+        self.cust_passkey.props.sensitive = False
+        self.cust_passkey.connect("changed", self.on_passkey_changed)
+
+        self.Builder.get_object("r_dontp").connect("toggled", self.on_pairing_method_changed, 2)
+        self.Builder.get_object("r_myp").connect("toggled", self.on_pairing_method_changed, 1)
+        self.Builder.get_object("r_randp").connect("toggled", self.on_pairing_method_changed, 0)
+
+        self.dev_widget = DeviceSelectorWidget()
+        self.dev_widget.List.connect("device-selected", self.on_device_selected)
+        self.dev_widget.List.connect("row-activated", self.on_row_activated)
+
+        self.assistant.set_forward_page_func(self.next_page_fn, None)
+
+        pages[PAGE_DEVLIST].add(self.dev_widget)
+
+        self.dev_widget.show()
+
+        if not self.dev_widget.List.IsValidAdapter():
+            d = gtk.MessageDialog(type=gtk.MESSAGE_ERROR, )
+            d.props.text = _("No adapters found")
+            d.props.icon_name = "blueman"
+            d.props.title = "Blueman Assistant"
+            d.add_button(gtk.STOCK_CLOSE, gtk.RESPONSE_CANCEL)
+            d.run()
+            exit(1)
+
+        self.assistant.show()
+
+        if options.device != None:
+            m = Manager("gobject")
+            try:
+                adapter = m.GetAdapter()
+            except:
+                print "Error: No Adapters present"
+                exit(1)
+            try:
+                d = adapter.FindDevice(options.device)
+                self.Device = Device(d)
+                self.Adapter = adapter
+                if self.Device.Paired:
+                    self.assistant.set_current_page(PAGE_CONNECT)
+                else:
+                    self.assistant.set_current_page(PAGE_PASSKEY)
+            except:
+                info = {}
+                info["Address"] = options.device
+                info["Name"] = info["Address"].replace(":", "-")
+                info["Alias"] = info["Name"]
+                info["Fake"] = True
+
+                self.Device = FakeDevice(info)
+                self.Adapter = adapter
+                self.assistant.set_current_page(PAGE_PASSKEY)
+
+        else:
+            self.dev_widget.List.DiscoverDevices()
+
+        gtk.main()
+
+    def on_row_activated(self, treeview, path, view_column, *args):
+        self.assistant.set_current_page(self.next_page_fn(self.assistant.get_current_page(), None))
+
+
+    def next_page_fn(self, page, data):
+        if page == PAGE_INTRO:
+            return PAGE_DEVLIST
+
+        elif page == PAGE_DEVLIST:
+            if self.Device:
+                if self.Device.Fake or not self.Device.Paired:
+                    return PAGE_PASSKEY
+                else:
+                    return PAGE_CONNECT
+            else:
+                return PAGE_PASSKEY
+        elif page == PAGE_PASSKEY:
+            if not self.Device.Fake and not self.Device.Paired and self.PairType == 2:
+                return PAGE_CONNECT
+            #self.assistant.set_page_complete(pages[PAGE_PASSKEY], True)
+            return PAGE_PAIRING
+        elif page == PAGE_PAIRING:
+            if len(self.Device.Services) == 0:
+                return PAGE_FINISH
+
+            return PAGE_CONNECT
+        elif page == PAGE_CONNECT:
+
+            if self.Service and self.Service[0]:
+                return PAGE_CONNECTING
+            else:
+                return PAGE_FINISH
+        elif page == PAGE_CONNECTING:
+            return PAGE_FINISH
+        elif page == PAGE_FINISH:
+            return PAGE_FINISH + 1
+
+        return page
+
+
+    def check_custom_passkey(self):
+        return len(self.cust_passkey.props.text) != 0
+
+    def on_passkey_changed(self, e):
+        if self.PairType == 1:
+            if self.check_custom_passkey():
+                self.Passkey = e.props.text
+                self.assistant.set_page_complete(pages[PAGE_PASSKEY], True)
+            else:
+                self.assistant.set_page_complete(pages[PAGE_PASSKEY], False)
+
+
+    def on_pairing_method_changed(self, radio_button, type):
+        if radio_button.props.active:
+            if type == 0:
+                self.cust_passkey.props.sensitive = False
+                self.assistant.set_page_complete(pages[PAGE_PASSKEY], True)
+            elif type == 1:
+                self.cust_passkey.props.sensitive = True
+                if not self.check_custom_passkey():
+                    self.assistant.set_page_complete(pages[PAGE_PASSKEY], False)
+            else:
+                self.cust_passkey.props.sensitive = False
+                self.assistant.set_page_complete(pages[PAGE_PASSKEY], True)
+
+            self.PairType = type
+
+
+    def on_device_selected(self, list, device, iter):
+        if not device:
+            self.assistant.set_page_complete(pages[PAGE_DEVLIST], False)
+            self.Device = None
+            self.Adapter = list.Adapter
+        else:
+            self.assistant.set_page_complete(pages[PAGE_DEVLIST], True)
+            self.Device = device
+            self.Adapter = list.Adapter
+
+    @AgentMethod
+    def RequestPinCode(self, device):
+        dprint("Agent.RequestPinCode")
+        return self.Passkey
+
+    @AgentMethod
+    def RequestPasskey(self, device):
+        dprint("Agent.RequestPasskey")
+        return self.Passkey
+
+    def on_close(self, assistant):
+        gtk.main_quit()
+
+    def on_service_toggled(self, rb, sv_name, *args):
+        if rb.props.active:
+            self.Service = (sv_name, args)
+            self.assistant.set_page_complete(pages[PAGE_CONNECT], True)
+
+    def on_prepare(self, assistant, page):
+        num = assistant.get_current_page()
+        if num == PAGE_PASSKEY:
+            self.assistant.set_page_complete(pages[PAGE_PASSKEY], True)
+
+        elif num == PAGE_PAIRING:
+            if self.Device.Fake and self.PairType == 2:
+                pages[PAGE_PAIRING].set_markup(_("<b>Adding Device...</b>"))
+                self.assistant.set_page_title(pages[PAGE_PAIRING], _("Adding"))
+            else:
+                if self.PairType == 0:
+                    self.Passkey = "%04d" % random.randint(0, 9999)
+
+                pages[PAGE_PAIRING].set_markup(
+                    _("<b>Pairing in progress...</b>\n\nEnter passkey <b>%s</b> on the device.") % self.Passkey)
+
+            def ok(dev):
+                self.Device = Device(dev)
+
+                def refresh_cb(*args):
+                    self.assistant.set_current_page(PAGE_CONNECT)
+
+                self.applet.RefreshServices(self.Device.GetObjectPath(), reply_handler=refresh_cb,
+                                            error_handler=refresh_cb)
+
+            def err(err):
+                print err
+                pages[PAGE_FINISH].set_markup(_("<b>Failed to add device</b>"))
+                self.assistant.set_page_header_image(pages[PAGE_FINISH], get_icon("gtk-no", 32))
+                self.assistant.set_current_page(PAGE_FINISH)
+
+            if self.PairType != 2:
+                self.Adapter.CreatePairedDevice(self.Device.Address, self.GetObjectPath(), "", reply_handler=ok,
+                                                error_handler=err)
+            else:
+                self.Adapter.CreateDevice(self.Device.Address, reply_handler=ok, error_handler=err)
+
+        elif num == PAGE_CONNECT:
+            self.svc_vbox.foreach(lambda x, y: self.svc_vbox.remove(x), None)
+
+            print self.Device.Services
+            uuids = self.Device.UUIDs
+            rbs = []
+
+            def get_first_item():
+                try:
+                    return rbs[0]
+                except:
+                    return None
+
+            for name, service in self.Device.Services.iteritems():
+                if name == "serial":
+                    for uuid in uuids:
+                        uuid16 = uuid128_to_uuid16(uuid)
+                        if uuid16 == DIALUP_NET_SVCLASS_ID:
+                            rbs.append(gtk.RadioButton(get_first_item(), uuid16_to_name(uuid16)))
+                            rbs[-1].connect("toggled", self.on_service_toggled, name, uuid)
+                            self.svc_vbox.pack_start(rbs[-1], False)
+
+                        if uuid16 == SERIAL_PORT_SVCLASS_ID:
+                            rbs.append(gtk.RadioButton(get_first_item(), uuid16_to_name(uuid16)))
+                            rbs[-1].connect("toggled", self.on_service_toggled, name, uuid)
+                            self.svc_vbox.pack_start(rbs[-1], False)
+                elif name == "input":
+                    rbs.append(gtk.RadioButton(get_first_item(), _("Input Service")))
+                    rbs[-1].connect("toggled", self.on_service_toggled, name)
+                    self.svc_vbox.pack_start(rbs[-1], False)
+
+                elif name == "network":
+                    for uuid in uuids:
+                        uuid16 = uuid128_to_uuid16(uuid)
+                        if uuid16 == GN_SVCLASS_ID:
+                            rbs.append(gtk.RadioButton(get_first_item(), _("Group Network")))
+                            rbs[-1].connect("toggled", self.on_service_toggled, name, uuid)
+                            self.svc_vbox.pack_start(rbs[-1], False)
+
+                        if uuid16 == NAP_SVCLASS_ID:
+                            rbs.append(gtk.RadioButton(get_first_item(), _("Network Access Point")))
+                            rbs[-1].connect("toggled", self.on_service_toggled, name, uuid)
+                            self.svc_vbox.pack_start(rbs[-1], False)
+
+                elif name == "audiosink":
+                    rbs.append(gtk.RadioButton(get_first_item(), _("A2DP Sink (Send Audio)")))
+                    rbs[-1].connect("toggled", self.on_service_toggled, name)
+                    self.svc_vbox.pack_start(rbs[-1], False)
+
+                elif name == "audiosource":
+                    rbs.append(gtk.RadioButton(get_first_item(), _("A2DP Source (Receive Audio)")))
+                    rbs[-1].connect("toggled", self.on_service_toggled, name)
+                    self.svc_vbox.pack_start(rbs[-1], False)
+
+                elif name == "headset":
+                    rbs.append(gtk.RadioButton(get_first_item(), _("Headset Service")))
+                    rbs[-1].connect("toggled", self.on_service_toggled, name)
+                    self.svc_vbox.pack_start(rbs[-1], False)
+
+            rbs.append(gtk.RadioButton(get_first_item(), _("Don't connect")))
+            rbs[-1].connect("toggled", self.on_service_toggled, None)
+            self.svc_vbox.pack_start(rbs[-1], False, False, 8)
+            self.svc_vbox.show_all()
+
+            rbs[0].emit("toggled")
+            if len(self.svc_vbox.get_children()) == 1:
+                self.assistant.set_current_page(self.next_page_fn(self.assistant.get_current_page(), None))
+
+        elif num == PAGE_CONNECTING:
+            print "connect"
+
+            svc = self.Device.Services[self.Service[0]]
+
+            def success(*args):
+                pages[PAGE_FINISH].set_markup(_("<b>Device added and connected successfuly</b>"))
+                self.assistant.set_page_complete(pages[PAGE_CONNECTING], True)
+                self.assistant.set_page_header_image(pages[PAGE_FINISH], get_icon("gtk-yes", 32))
+                self.assistant.set_current_page(PAGE_FINISH)
+
+            def fail(*args):
+                pages[PAGE_FINISH].set_markup(_("<b>Device added successfuly, but failed to connect</b>"))
+                self.assistant.set_page_complete(pages[PAGE_CONNECTING], True)
+                self.assistant.set_page_header_image(pages[PAGE_FINISH], get_icon("gtk-dialog-warning", 32))
+                self.assistant.set_current_page(PAGE_FINISH)
+
+            if self.Service[0] == "network":
+                uuid = self.Service[1][0]
+                self.applet.ServiceProxy(svc.GetInterfaceName(), svc.GetObjectPath(), "Connect", [uuid],
+                                         reply_handler=success, error_handler=fail)
+
+            elif self.Service[0] == "serial":
+                uuid = self.Service[1][0]
+                self.applet.RfcommConnect(self.Device.GetObjectPath(), uuid, reply_handler=success, error_handler=fail)
+            else:
+                self.applet.ServiceProxy(svc.GetInterfaceName(), svc.GetObjectPath(), "Connect", [],
+                                         reply_handler=success, error_handler=fail)
 
 
 Assistant()
