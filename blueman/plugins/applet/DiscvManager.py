@@ -25,123 +25,124 @@ from blueman.main.SignalTracker import SignalTracker
 import gobject
 import gtk
 
+
 class DiscvManager(AppletPlugin):
-	__depends__ = ["Menu"]
-	__author__ = "Walmis"
-	__icon__ = "gtk-find"
-	__description__ = _("Provides a menu item for making the default adapter temporarily visible when it is set to hidden by default")
-	
-	__options__  = {
-		"time" : {"type": int,
-				  "default": 60,
-				  "name": _("Discoverable timeout"),
-				  "desc": _("Amount of time in seconds discoverable mode will last"),
-				  "range": (60, 600)
-				 }
-	}
-	
-	def on_load(self, applet):
-		self.Signals = SignalTracker()
-		
-		self.item = create_menuitem(_("_Make Discoverable"), get_icon("gtk-find", 16))
-		applet.Plugins.Menu.Register(self, self.item, 20, False)
+    __depends__ = ["Menu"]
+    __author__ = "Walmis"
+    __icon__ = "gtk-find"
+    __description__ = _(
+        "Provides a menu item for making the default adapter temporarily visible when it is set to hidden by default")
 
-		self.Applet = applet
-		self.adapter = None
-		self.time_left = -1
-			
-		self.Signals.Handle(self.item, "activate", self.on_set_discoverable)
-		self.item.props.tooltip_text = _("Make the default adapter temporarily visible")
-		
-		self.timeout = None
-		
-	def on_unload(self):
-		self.Applet.Plugins.Menu.Unregister(self)
-		del self.item
-		
-		if self.timeout:
-			gobject.source_remove(self.timeout)
-			
-		self.Signals.DisconnectAll()
-		
-	def on_manager_state_changed(self, state):
-		if state:
-			self.init_adapter()
-			self.update_menuitems()
-			self.Signals.Handle(self.Applet.Manager, self.on_default_adapter_changed, "DefaultAdapterChanged", sigid=0)
-		else:
-			self.Signals.Disconnect(0)
-			
-			self.adapter = None
-			self.update_menuitems()
-		
-	def on_update(self):
-		self.time_left -= 1
-		self.item.get_child().props.label = _("Discoverable... %ss") % self.time_left
-		self.item.props.sensitive = False
+    __options__ = {
+    "time": {"type": int,
+             "default": 60,
+             "name": _("Discoverable timeout"),
+             "desc": _("Amount of time in seconds discoverable mode will last"),
+             "range": (60, 600)
+    }
+    }
 
-		return True
-		
-	def on_set_discoverable(self, item):
-		if self.adapter:
-			self.adapter.SetProperty("Discoverable", True)
-			self.adapter.SetProperty("DiscoverableTimeout", self.get_option("time"))
-		
-	
-	def init_adapter(self):
-		try:
-			self.adapter = self.Applet.Manager.GetAdapter()
-		except:
-			self.adapter = None
-	
-	def on_default_adapter_changed(self, path):
-		dprint(path)
-		if path != "":
-			self.init_adapter()
-			self.update_menuitems()
-			
-	def on_adapter_property_changed(self, path, key, value):
-		if self.adapter and path == self.adapter.GetObjectPath():	
-			dprint("prop", key, value)
-			if key == "DiscoverableTimeout":
-				if value == 0: #always visible
-					if self.timeout != None:
-						gobject.source_remove(self.timeout)
-					self.time_left = -1
-					self.timeout = None
-				else:
-					if self.time_left > -1:
-						if self.timeout != None:
-							gobject.source_remove(self.timeout)
-					self.time_left = value
+    def on_load(self, applet):
+        self.Signals = SignalTracker()
 
-					self.timeout = gobject.timeout_add(1000, self.on_update)
-					return
-				
-			elif (key == "Discoverable" and not value) or (key == "Powered" and not value):
-				dprint("Stop")
-				if self.timeout != None:
-					gobject.source_remove(self.timeout)
-				self.time_left = -1
-				self.timeout = None
+        self.item = create_menuitem(_("_Make Discoverable"), get_icon("gtk-find", 16))
+        applet.Plugins.Menu.Register(self, self.item, 20, False)
 
-				
-			self.update_menuitems()
-			
-			
-	def update_menuitems(self):
-		try:
-			props = self.adapter.GetProperties()
-		except Exception, e:
-			dprint("warning: Adapter is None")
-			self.item.props.visible = False
-		else:
-			if (not props["Discoverable"] or props["DiscoverableTimeout"] > 0) and props["Powered"]:
-				
-				self.item.props.visible = True
-				self.item.get_child().props.label = _("_Make Discoverable")
-				self.item.props.sensitive = True
+        self.Applet = applet
+        self.adapter = None
+        self.time_left = -1
 
-			else:
-				self.item.props.visible = False
+        self.Signals.Handle(self.item, "activate", self.on_set_discoverable)
+        self.item.props.tooltip_text = _("Make the default adapter temporarily visible")
+
+        self.timeout = None
+
+    def on_unload(self):
+        self.Applet.Plugins.Menu.Unregister(self)
+        del self.item
+
+        if self.timeout:
+            gobject.source_remove(self.timeout)
+
+        self.Signals.DisconnectAll()
+
+    def on_manager_state_changed(self, state):
+        if state:
+            self.init_adapter()
+            self.update_menuitems()
+            self.Signals.Handle(self.Applet.Manager, self.on_default_adapter_changed, "DefaultAdapterChanged", sigid=0)
+        else:
+            self.Signals.Disconnect(0)
+
+            self.adapter = None
+            self.update_menuitems()
+
+    def on_update(self):
+        self.time_left -= 1
+        self.item.get_child().props.label = _("Discoverable... %ss") % self.time_left
+        self.item.props.sensitive = False
+
+        return True
+
+    def on_set_discoverable(self, item):
+        if self.adapter:
+            self.adapter.SetProperty("Discoverable", True)
+            self.adapter.SetProperty("DiscoverableTimeout", self.get_option("time"))
+
+
+    def init_adapter(self):
+        try:
+            self.adapter = self.Applet.Manager.GetAdapter()
+        except:
+            self.adapter = None
+
+    def on_default_adapter_changed(self, path):
+        dprint(path)
+        if path != "":
+            self.init_adapter()
+            self.update_menuitems()
+
+    def on_adapter_property_changed(self, path, key, value):
+        if self.adapter and path == self.adapter.GetObjectPath():
+            dprint("prop", key, value)
+            if key == "DiscoverableTimeout":
+                if value == 0: #always visible
+                    if self.timeout != None:
+                        gobject.source_remove(self.timeout)
+                    self.time_left = -1
+                    self.timeout = None
+                else:
+                    if self.time_left > -1:
+                        if self.timeout != None:
+                            gobject.source_remove(self.timeout)
+                    self.time_left = value
+
+                    self.timeout = gobject.timeout_add(1000, self.on_update)
+                    return
+
+            elif (key == "Discoverable" and not value) or (key == "Powered" and not value):
+                dprint("Stop")
+                if self.timeout != None:
+                    gobject.source_remove(self.timeout)
+                self.time_left = -1
+                self.timeout = None
+
+            self.update_menuitems()
+
+
+    def update_menuitems(self):
+        try:
+            props = self.adapter.GetProperties()
+        except Exception, e:
+            dprint("warning: Adapter is None")
+            self.item.props.visible = False
+        else:
+            if (not props["Discoverable"] or props["DiscoverableTimeout"] > 0) and props["Powered"]:
+
+                self.item.props.visible = True
+                self.item.get_child().props.label = _("_Make Discoverable")
+                self.item.props.sensitive = True
+
+            else:
+                self.item.props.visible = False
 
