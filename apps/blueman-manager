@@ -28,8 +28,8 @@ import gobject
 
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-if os.path.exists(os.path.join(_dirname,"ChangeLog")):
-	sys.path.insert(0, _dirname)
+if os.path.exists(os.path.join(_dirname, "ChangeLog")):
+    sys.path.insert(0, _dirname)
 
 from blueman.Constants import *
 from blueman.Functions import *
@@ -50,252 +50,253 @@ from blueman.plugins.ManagerPlugin import ManagerPlugin
 
 enable_rgba_colormap()
 
+
 class Blueman:
+    def __init__(self):
 
-	def __init__(self):
-		
-		self.Builder = gtk.Builder()
-		self.Builder.set_translation_domain("blueman")
-		self.Builder.add_from_file(UI_PATH +"/manager-main.ui")
-	
-		self.window = self.Builder.get_object("window")
-		
-		self.Plugins = PluginManager(ManagerPlugin, blueman.plugins.manager, None)
-		self.Plugins.Load()
-		
-		vbox = self.Builder.get_object("vbox1")
-		area = MessageArea()
-		vbox.pack_start(area, False)
-		vbox.reorder_child(area, 3)
-	
-		def do_present(time):
-			if self.window.props.visible:
-				self.window.present_with_time(time)
-	
-		check_single_instance("blueman-manager", do_present)	
-		def on_window_delete(window, event):
-			(x, y) = self.window.get_size()
-			self.Config.props.window_height = y
-			self.Config.props.window_width = x
-			
-			(x, y) = self.window.get_position()
-			self.Config.props.window_posx = x
-			self.Config.props.window_posy = y
-			gtk.main_quit()
-			
-		def on_property_changed(config, key, value):
-			if key == "show_toolbar":
-				if value:
-					self.Builder.get_object("toolbar2").props.visible = True
-				else:
-					self.Builder.get_object("toolbar2").props.visible = False
-			elif key == "show_statusbar":
-				if value:
-					self.Builder.get_object("statusbar").props.visible = True
-				else:
-					self.Builder.get_object("statusbar").props.visible = False
-			elif key == "latest_last":
-				try:	
-					self.List.DisplayKnownDevices(autoselect=True)
-				except:
-					pass
-				
-		def on_bt_status_changed(status):
-			if not status:
-				self.window.hide()
-				check_bluetooth_status(_("Bluetooth needs to be turned on for the device manager to function"), lambda: gtk.main_quit())
-			else:
-				self.window.show()
-		
-		def on_bluez_name_owner_changed(owner):
-			dprint('org.bluez owner changed to ', owner)
-			if owner == '':
-				self.window.hide()
-				d = gtk.MessageDialog(self.window, type=gtk.MESSAGE_ERROR)
-				d.props.icon_name = "blueman"
-				d.props.text = _("Connection to BlueZ failed")
+        self.Builder = gtk.Builder()
+        self.Builder.set_translation_domain("blueman")
+        self.Builder.add_from_file(UI_PATH + "/manager-main.ui")
 
-				d.props.secondary_text = _("Bluez daemon is not running, blueman-manager cannot continue.\nThis probably means that there were no Bluetooth adapters detected or Bluetooth daemon was not started.")
+        self.window = self.Builder.get_object("window")
 
-				d.add_button(gtk.STOCK_CLOSE, gtk.RESPONSE_NO)
-				d.run()
-				d.destroy()	
-				try:
-					exit(1)
-				except:
-					gtk.main_quit()
-			else:
-				
-				setup_icon_path()
-		
-				self.Config = Config()
-		
-				try:
-					self.Applet = AppletService()
-				except:
-					print "Blueman applet needs to be running"
-					exit()
-				try:
-					if not self.Applet.GetBluetoothStatus():
-						on_bt_status_changed(False)
-				except:
-					pass
-				self.Applet.Handle("BluetoothStatusChanged", on_bt_status_changed)
+        self.Plugins = PluginManager(ManagerPlugin, blueman.plugins.manager, None)
+        self.Plugins.Load()
 
-		
-				self.window.connect("delete-event", on_window_delete)
-				self.window.props.icon_name = "blueman"
-		
-				h = self.Config.props.window_height
-				w = self.Config.props.window_width
-				if w != None and h != None:
-					self.window.resize(w, h)
-			
-				x = self.Config.props.window_posx
-				y = self.Config.props.window_posy
-				if x and y:
-					self.window.move(x, y)
-			
-		
-				sw = self.Builder.get_object("scrollview")
-		
-				self.List = ManagerDeviceList(adapter=self.Config.props.last_adapter, inst=self)
+        vbox = self.Builder.get_object("vbox1")
+        area = MessageArea()
+        vbox.pack_start(area, False)
+        vbox.reorder_child(area, 3)
 
-				self.List.show()
-				sw.add(self.List)
-		
-		
-				self.Toolbar = ManagerToolbar(self)
-				self.Menu = ManagerMenu(self)
-				self.Stats = ManagerStats(self)
-		
-				if self.List.IsValidAdapter():
-					self.List.DisplayKnownDevices(autoselect=True)
-		
-				self.List.connect("adapter-changed", self.on_adapter_changed)
-		
-				self.Config.connect("property-changed", on_property_changed)
-		
-				if self.Config.props.show_toolbar != None:
-					on_property_changed(self.Config, "show_toolbar", self.Config.props.show_toolbar)
-			
-				if self.Config.props.show_statusbar != None:
-					on_property_changed(self.Config, "show_statusbar", self.Config.props.show_statusbar)
-				
-				self.window.show()
-						
-		dbus.SystemBus().watch_name_owner('org.bluez', on_bluez_name_owner_changed)
-		gtk.main()
+        def do_present(time):
+            if self.window.props.visible:
+                self.window.present_with_time(time)
 
-	def on_adapter_changed(self, list, adapter):
-		if adapter != None:
-			self.List.DisplayKnownDevices(autoselect=True)
-		
-	def add_device(self, device):
+        check_single_instance("blueman-manager", do_present)
 
-		def ok(device):
-			dev = Device(device)
-			self.List.add_device(dev)
-			prog.finalize()
-			MessageArea.close()
-		
-		def err(*args):
-			prog.finalize()
-			MessageArea.show_message(e_(str(args[0])))
-		
-		adapter = self.List.Adapter
-		
-		prog = ManagerProgressbar(self, text=_("Adding"))
-		prog.connect("cancelled", lambda x: self.List.Adapter.GetInterface().CancelDeviceCreation(device.Address))
-		
-		prog.start()
-		adapter.CreateDevice(device.Address, reply_handler=ok, error_handler=err)
-		
-	def inquiry(self):
-		def prop_changed(List, adapter, (key, value)):
-			if key == "Discovering" and not value:
-				prog.finalize()
-				self.List.disconnect(s1)
-				self.List.disconnect(s2)
-				
-		def on_progress(list, frac):
-			if abs(1.0 - frac) <= 0.00001:
-				if not prog.started():
-					prog.start()
-			else:
-				prog.fraction(frac)
-				
-		prog = ManagerProgressbar(self, text=_("Searching"))
-		prog.connect("cancelled", lambda x: self.List.StopDiscovery())
-		try:
-			self.List.DiscoverDevices()
-		except Exception, e:
-			prog.finalize()
-			MessageArea.show_message(e_(e))
-			
-		s1 = self.List.connect("discovery-progress", on_progress)
-		s2 = self.List.connect("adapter-property-changed", prop_changed)
-		
-	def setup(self, device):
-		sn = startup_notification("Bluetooth Assistant", _("Starting Bluetooth Assistant"), bin_name="blueman-assistant", icon="blueman")
-		spawn(["blueman-assistant", "--device=%s" % device.Address], sn=sn)
-		
-	def bond(self, device):
-		def ok(device):
-			dev = Device(BluezDevice(device))
-			self.List.add_device(dev)
-			prog.message(_("Success"))
-			MessageArea.close()
-		
-		def err(*args):
-			dprint(args)
-			prog.message(_("Failure"))
-			MessageArea.show_message(e_(str(args[0])))
-		
-		applet = AppletService()
-		
-		address = device.GetProperties()["Address"]
-		adapter = self.List.Adapter
-		
-		prog = ManagerProgressbar(self, text=_("Pairing"))
-		prog.connect("cancelled", lambda x: applet.CancelDeviceCreation(adapter.GetObjectPath(), device.Address))
-		prog.start()
-		
-		name = adapter_path_to_name(self.List.Adapter.GetObjectPath())
+        def on_window_delete(window, event):
+            (x, y) = self.window.get_size()
+            self.Config.props.window_height = y
+            self.Config.props.window_width = x
 
-		applet.CreateDevice(adapter.GetObjectPath(), device.Address, True, gtk.get_current_event_time(), reply_handler=ok, error_handler=err, timeout=120) 
-		
-		
-	def adapter_properties(self):
-		adapter = self.List.Adapter
-		name = os.path.basename(adapter.GetObjectPath())
-		sn = startup_notification("Blueman Adapters", _("Starting Adapter Preferences"), bin_name="blueman-adapters", icon="blueman")
-		spawn(["blueman-adapters", name], sn=sn)
+            (x, y) = self.window.get_position()
+            self.Config.props.window_posx = x
+            self.Config.props.window_posy = y
+            gtk.main_quit()
 
-		
-	def toggle_trust(self, device):
-		props = device.GetProperties()
-		device.Trusted = not device.Trusted
-		
-	def send(self, device, File=None):
-		sn = startup_notification("Blueman Sendto", _("Starting File Sender"), bin_name="blueman-sendto", icon="blueman")
-		adapter = self.List.Adapter
-		props = adapter.GetProperties()
-		spawn(["blueman-sendto", "--source=%s" % props["Address"], "--device=%s" % device.Address], sn=sn)
-		
-	def remove(self, device):
-		self.List.Adapter.RemoveDevice(device.Device)
-		
-		
-	def browse(self, device):
-		spawn(["blueman-browse", "-d %s" % device.Address])
-		
-	def disconnect(self, device, *args, **kwargs):
-		applet = AppletService()
-		applet.DisconnectDevice(device.get_object_path(), *args, **kwargs)
+        def on_property_changed(config, key, value):
+            if key == "show_toolbar":
+                if value:
+                    self.Builder.get_object("toolbar2").props.visible = True
+                else:
+                    self.Builder.get_object("toolbar2").props.visible = False
+            elif key == "show_statusbar":
+                if value:
+                    self.Builder.get_object("statusbar").props.visible = True
+                else:
+                    self.Builder.get_object("statusbar").props.visible = False
+            elif key == "latest_last":
+                try:
+                    self.List.DisplayKnownDevices(autoselect=True)
+                except:
+                    pass
 
-		
+        def on_bt_status_changed(status):
+            if not status:
+                self.window.hide()
+                check_bluetooth_status(_("Bluetooth needs to be turned on for the device manager to function"),
+                                       lambda: gtk.main_quit())
+            else:
+                self.window.show()
 
+        def on_bluez_name_owner_changed(owner):
+            dprint('org.bluez owner changed to ', owner)
+            if owner == '':
+                self.window.hide()
+                d = gtk.MessageDialog(self.window, type=gtk.MESSAGE_ERROR)
+                d.props.icon_name = "blueman"
+                d.props.text = _("Connection to BlueZ failed")
+
+                d.props.secondary_text = _(
+                    "Bluez daemon is not running, blueman-manager cannot continue.\nThis probably means that there were no Bluetooth adapters detected or Bluetooth daemon was not started.")
+
+                d.add_button(gtk.STOCK_CLOSE, gtk.RESPONSE_NO)
+                d.run()
+                d.destroy()
+                try:
+                    exit(1)
+                except:
+                    gtk.main_quit()
+            else:
+
+                setup_icon_path()
+
+                self.Config = Config()
+
+                try:
+                    self.Applet = AppletService()
+                except:
+                    print "Blueman applet needs to be running"
+                    exit()
+                try:
+                    if not self.Applet.GetBluetoothStatus():
+                        on_bt_status_changed(False)
+                except:
+                    pass
+                self.Applet.Handle("BluetoothStatusChanged", on_bt_status_changed)
+
+                self.window.connect("delete-event", on_window_delete)
+                self.window.props.icon_name = "blueman"
+
+                h = self.Config.props.window_height
+                w = self.Config.props.window_width
+                if w != None and h != None:
+                    self.window.resize(w, h)
+
+                x = self.Config.props.window_posx
+                y = self.Config.props.window_posy
+                if x and y:
+                    self.window.move(x, y)
+
+                sw = self.Builder.get_object("scrollview")
+
+                self.List = ManagerDeviceList(adapter=self.Config.props.last_adapter, inst=self)
+
+                self.List.show()
+                sw.add(self.List)
+
+                self.Toolbar = ManagerToolbar(self)
+                self.Menu = ManagerMenu(self)
+                self.Stats = ManagerStats(self)
+
+                if self.List.IsValidAdapter():
+                    self.List.DisplayKnownDevices(autoselect=True)
+
+                self.List.connect("adapter-changed", self.on_adapter_changed)
+
+                self.Config.connect("property-changed", on_property_changed)
+
+                if self.Config.props.show_toolbar != None:
+                    on_property_changed(self.Config, "show_toolbar", self.Config.props.show_toolbar)
+
+                if self.Config.props.show_statusbar != None:
+                    on_property_changed(self.Config, "show_statusbar", self.Config.props.show_statusbar)
+
+                self.window.show()
+
+        dbus.SystemBus().watch_name_owner('org.bluez', on_bluez_name_owner_changed)
+        gtk.main()
+
+    def on_adapter_changed(self, list, adapter):
+        if adapter != None:
+            self.List.DisplayKnownDevices(autoselect=True)
+
+    def add_device(self, device):
+
+        def ok(device):
+            dev = Device(device)
+            self.List.add_device(dev)
+            prog.finalize()
+            MessageArea.close()
+
+        def err(*args):
+            prog.finalize()
+            MessageArea.show_message(e_(str(args[0])))
+
+        adapter = self.List.Adapter
+
+        prog = ManagerProgressbar(self, text=_("Adding"))
+        prog.connect("cancelled", lambda x: self.List.Adapter.GetInterface().CancelDeviceCreation(device.Address))
+
+        prog.start()
+        adapter.CreateDevice(device.Address, reply_handler=ok, error_handler=err)
+
+    def inquiry(self):
+        def prop_changed(List, adapter, (key, value)):
+            if key == "Discovering" and not value:
+                prog.finalize()
+                self.List.disconnect(s1)
+                self.List.disconnect(s2)
+
+        def on_progress(list, frac):
+            if abs(1.0 - frac) <= 0.00001:
+                if not prog.started():
+                    prog.start()
+            else:
+                prog.fraction(frac)
+
+        prog = ManagerProgressbar(self, text=_("Searching"))
+        prog.connect("cancelled", lambda x: self.List.StopDiscovery())
+        try:
+            self.List.DiscoverDevices()
+        except Exception, e:
+            prog.finalize()
+            MessageArea.show_message(e_(e))
+
+        s1 = self.List.connect("discovery-progress", on_progress)
+        s2 = self.List.connect("adapter-property-changed", prop_changed)
+
+    def setup(self, device):
+        sn = startup_notification("Bluetooth Assistant", _("Starting Bluetooth Assistant"),
+                                  bin_name="blueman-assistant", icon="blueman")
+        spawn(["blueman-assistant", "--device=%s" % device.Address], sn=sn)
+
+    def bond(self, device):
+        def ok(device):
+            dev = Device(BluezDevice(device))
+            self.List.add_device(dev)
+            prog.message(_("Success"))
+            MessageArea.close()
+
+        def err(*args):
+            dprint(args)
+            prog.message(_("Failure"))
+            MessageArea.show_message(e_(str(args[0])))
+
+        applet = AppletService()
+
+        address = device.GetProperties()["Address"]
+        adapter = self.List.Adapter
+
+        prog = ManagerProgressbar(self, text=_("Pairing"))
+        prog.connect("cancelled", lambda x: applet.CancelDeviceCreation(adapter.GetObjectPath(), device.Address))
+        prog.start()
+
+        name = adapter_path_to_name(self.List.Adapter.GetObjectPath())
+
+        applet.CreateDevice(adapter.GetObjectPath(), device.Address, True, gtk.get_current_event_time(),
+                            reply_handler=ok, error_handler=err, timeout=120)
+
+
+    def adapter_properties(self):
+        adapter = self.List.Adapter
+        name = os.path.basename(adapter.GetObjectPath())
+        sn = startup_notification("Blueman Adapters", _("Starting Adapter Preferences"), bin_name="blueman-adapters",
+                                  icon="blueman")
+        spawn(["blueman-adapters", name], sn=sn)
+
+
+    def toggle_trust(self, device):
+        props = device.GetProperties()
+        device.Trusted = not device.Trusted
+
+    def send(self, device, File=None):
+        sn = startup_notification("Blueman Sendto", _("Starting File Sender"), bin_name="blueman-sendto",
+                                  icon="blueman")
+        adapter = self.List.Adapter
+        props = adapter.GetProperties()
+        spawn(["blueman-sendto", "--source=%s" % props["Address"], "--device=%s" % device.Address], sn=sn)
+
+    def remove(self, device):
+        self.List.Adapter.RemoveDevice(device.Device)
+
+
+    def browse(self, device):
+        spawn(["blueman-browse", "-d %s" % device.Address])
+
+    def disconnect(self, device, *args, **kwargs):
+        applet = AppletService()
+        applet.DisconnectDevice(device.get_object_path(), *args, **kwargs)
 
 
 Blueman()

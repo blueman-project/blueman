@@ -22,9 +22,9 @@ import os, sys
 
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-if os.path.exists(os.path.join(_dirname,"ChangeLog")):
-	sys.path.insert(0, _dirname)
-	
+if os.path.exists(os.path.join(_dirname, "ChangeLog")):
+    sys.path.insert(0, _dirname)
+
 import gtk
 import gobject
 from optparse import OptionParser
@@ -37,63 +37,61 @@ from blueman.Functions import *
 from blueman.Constants import *
 from blueman.main.Config import Config
 
+
 class Browse:
-	def __init__(self):
-		setup_icon_path()
-	
-		usage = "Usage: %prog [options]"
-		parser = OptionParser(usage)
-		parser.add_option("-d", "--device", dest="device",
-				action="store", help=_("Browse this device"), metavar="ADDRESS")
-	
-		(options, args) = parser.parse_args()
-		self.options = options
-		self.args = args
-		
-		if options.device == None:
-			dev = self.select_device()
-			if not dev:
-				exit()
+    def __init__(self):
+        setup_icon_path()
 
-			addr = dev.Address
-			
-		else:
-			addr = options.device
-		addr = addr.strip(" ")
-		conf = Config("transfer")
-		if conf.props.browse_command == None:
-			conf.props.browse_command = DEF_BROWSE_COMMAND
-			if "nautilus" in DEF_BROWSE_COMMAND:
-				if not have("nautilus"):
-					conf.props.browse_command = "thunar obex://[%d]"
-		
-		cmd = conf.props.browse_command.replace("%d", addr)
-		args = cmd.split(" ")
-		try:	
-			spawn(args, True)
-		except Exception, e:
-			dprint(e)
-			d = gtk.MessageDialog( None, buttons=gtk.BUTTONS_OK, type=gtk.MESSAGE_ERROR)
-			d.props.text = _("Failed to launch \"%s\"") % args[0]
-			d.props.secondary_text = "%s\n\n"  % e + _("You can enter an alternate browser in service settings")
-			d.run()
-			d.destroy()
-		
-	def select_device(self):
-		d = DeviceSelectorDialog()
-		resp = d.run()
-		d.destroy()
-		if resp == gtk.RESPONSE_ACCEPT:
-			sel = d.GetSelection()
-			if sel:
-				return sel[1]
-			else:
-				return None
-		else:
-			return None
+        usage = "Usage: %prog [options]"
+        parser = OptionParser(usage)
+        parser.add_option("-d", "--device", dest="device",
+                          action="store", help=_("Browse this device"), metavar="ADDRESS")
+
+        (options, args) = parser.parse_args()
+        self.options = options
+        self.args = args
+
+        if options.device == None:
+            dev = self.select_device()
+            if not dev:
+                exit()
+
+            addr = dev.Address
+
+        else:
+            addr = options.device
+        addr = addr.strip(" ")
+        conf = Config("transfer")
+        if conf.props.browse_command == None:
+            conf.props.browse_command = DEF_BROWSE_COMMAND
+            if "nautilus" in DEF_BROWSE_COMMAND:
+                if not have("nautilus"):
+                    conf.props.browse_command = "thunar obex://[%d]"
+
+        cmd = conf.props.browse_command.replace("%d", addr)
+        args = cmd.split(" ")
+        try:
+            spawn(args, True)
+        except Exception, e:
+            dprint(e)
+            d = gtk.MessageDialog(None, buttons=gtk.BUTTONS_OK, type=gtk.MESSAGE_ERROR)
+            d.props.text = _("Failed to launch \"%s\"") % args[0]
+            d.props.secondary_text = "%s\n\n" % e + _("You can enter an alternate browser in service settings")
+            d.run()
+            d.destroy()
+
+    def select_device(self):
+        d = DeviceSelectorDialog()
+        resp = d.run()
+        d.destroy()
+        if resp == gtk.RESPONSE_ACCEPT:
+            sel = d.GetSelection()
+            if sel:
+                return sel[1]
+            else:
+                return None
+        else:
+            return None
 
 
-		
-		
-		
 Browse()

@@ -5,10 +5,10 @@ import os
 timeout = 30
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-if os.path.exists(os.path.join(_dirname,"ChangeLog")):
-	sys.path.insert(0, _dirname)
-	timeout = 9999
-	
+if os.path.exists(os.path.join(_dirname, "ChangeLog")):
+    sys.path.insert(0, _dirname)
+    timeout = 9999
+
 import dbus
 import dbus.service
 from dbus.mainloop.glib import DBusGMainLoop
@@ -28,34 +28,39 @@ from blueman.plugins.MechanismPlugin import MechanismPlugin
 
 from blueman.main.DbusService import DbusService
 
+
 class Tee(object):
-	def __init__(self):
-		self.stdout = sys.stdout
-		self.stderr = sys.stderr
-		sys.stdout = self
-		sys.stderr = self
-		self.buffer = ""
-	def __del__(self):
-		sys.stdout = self.stdout
-		sys.stderr = self.stderr
-	def write(self, data):
-		self.buffer+=data
-		if self.buffer.endswith("\n"):
-			self.stdout.write(self.buffer)
-			if self.buffer != "\n":
-				syslog.syslog(self.buffer)
-			self.buffer = ""
+    def __init__(self):
+        self.stdout = sys.stdout
+        self.stderr = sys.stderr
+        sys.stdout = self
+        sys.stderr = self
+        self.buffer = ""
+
+    def __del__(self):
+        sys.stdout = self.stdout
+        sys.stderr = self.stderr
+
+    def write(self, data):
+        self.buffer += data
+        if self.buffer.endswith("\n"):
+            self.stdout.write(self.buffer)
+            if self.buffer != "\n":
+                syslog.syslog(self.buffer)
+            self.buffer = ""
 
 
 syslog.openlog("blueman-mechanism", 0, syslog.LOG_DAEMON)
 a = Tee()
 
+
 def prnt(*args):
-	s = ""
-	for a in args:
-		s += (str(a) + " ")
-	print s
-	
+    s = ""
+    for a in args:
+        s += (str(a) + " ")
+    print s
+
+
 __builtin__.dprint = prnt
 
 dprint("Starting blueman-mechanism")
@@ -63,89 +68,89 @@ dprint("Starting blueman-mechanism")
 DBusGMainLoop(set_as_default=True)
 
 if "--debug" in sys.argv:
-	dprint("Enabled verbose output")
-	set_probe_debug(True)
+    dprint("Enabled verbose output")
+    set_probe_debug(True)
 
 os.environ["PATH"] = "/usr/bin:/bin:/usr/sbin:/sbin"
 
 dhcp_pids = []
 
+
 class Timer:
-	def __init__(self):
-		self.time = 0
-		self.stopped = False
-		gobject.timeout_add(1000, self.tick)
-	
-	def tick(self):
-		if not self.stopped:
-			self.time+=1
-			if self.time == timeout:
-				dprint("Exiting")
-				loop.quit()
+    def __init__(self):
+        self.time = 0
+        self.stopped = False
+        gobject.timeout_add(1000, self.tick)
 
-		return True
-			
-	def reset(self):
-		self.time = 0
-		
-	def stop(self):
-		self.stopped = True
-		
-	def resume(self):
-		self.stopped = False
-		self.reset()
-		
+    def tick(self):
+        if not self.stopped:
+            self.time += 1
+            if self.time == timeout:
+                dprint("Exiting")
+                loop.quit()
 
-		
+        return True
+
+    def reset(self):
+        self.time = 0
+
+    def stop(self):
+        self.stopped = True
+
+    def resume(self):
+        self.stopped = False
+        self.reset()
+
+
 class conf_service(DbusService):
-	def __init__(self):
-		DbusService.__init__(self, "org.blueman.Mechanism", "/", dbus.SystemBus)
-		self.timer = Timer()
-		
-		if POLKIT:
-			try:
-				o = self.bus.get_object("org.freedesktop.PolicyKit1", "/org/freedesktop/PolicyKit1/Authority", True)
-				self.pk = dbus.proxies.Interface(o, "org.freedesktop.PolicyKit1.Authority")
-			except:
-				self.pk = None
-		else:
-			self.pk = None
-			
-			
-		path = os.path.dirname(blueman.plugins.mechanism.__file__)
-		plugins = []
-		for root, dirs, files in os.walk(path):
-			for f in files:
-				if f.endswith(".py") and not (f.endswith(".pyc") or f.endswith("_.py")):
-					plugins.append(f[0:-3])
+    def __init__(self):
+        DbusService.__init__(self, "org.blueman.Mechanism", "/", dbus.SystemBus)
+        self.timer = Timer()
 
-		for plugin in plugins:
-			try:
-				__import__("blueman.plugins.mechanism.%s" % plugin, None, None, [])
-			except ImportError, e:
-				dprint("Skipping plugin %s\n%s" % (plugin, e))
-				
-		classes = MechanismPlugin.__subclasses__()
-		for cls in classes:
-			dprint("loading", cls.__name__)
-			cls(self)
+        if POLKIT:
+            try:
+                o = self.bus.get_object("org.freedesktop.PolicyKit1", "/org/freedesktop/PolicyKit1/Authority", True)
+                self.pk = dbus.proxies.Interface(o, "org.freedesktop.PolicyKit1.Authority")
+            except:
+                self.pk = None
+        else:
+            self.pk = None
 
-	def confirm_authorization(self, busname, action_id):
-		self.timer.reset()
-		if not POLKIT:
-			return
-		else:
-			if not self.pk:
-				raise dbus.DBusException("Blueman was built with PolicyKit-1 support, but it's not available on the system")
+        path = os.path.dirname(blueman.plugins.mechanism.__file__)
+        plugins = []
+        for root, dirs, files in os.walk(path):
+            for f in files:
+                if f.endswith(".py") and not (f.endswith(".pyc") or f.endswith("_.py")):
+                    plugins.append(f[0:-3])
 
-		res = self.pk.CheckAuthorization(("system-bus-name", {"name": busname}),
-				     		  action_id, dbus.Dictionary({}, dbus.Signature("ss")), 0x1, "")
-					       
-		dprint(res)
-		(is_authorized, is_challenge, details) = res
-		if not is_authorized:
-			raise dbus.DBusException, "Not authorized"
-	
+        for plugin in plugins:
+            try:
+                __import__("blueman.plugins.mechanism.%s" % plugin, None, None, [])
+            except ImportError, e:
+                dprint("Skipping plugin %s\n%s" % (plugin, e))
+
+        classes = MechanismPlugin.__subclasses__()
+        for cls in classes:
+            dprint("loading", cls.__name__)
+            cls(self)
+
+    def confirm_authorization(self, busname, action_id):
+        self.timer.reset()
+        if not POLKIT:
+            return
+        else:
+            if not self.pk:
+                raise dbus.DBusException(
+                    "Blueman was built with PolicyKit-1 support, but it's not available on the system")
+
+        res = self.pk.CheckAuthorization(("system-bus-name", {"name": busname}),
+                                         action_id, dbus.Dictionary({}, dbus.Signature("ss")), 0x1, "")
+
+        dprint(res)
+        (is_authorized, is_challenge, details) = res
+        if not is_authorized:
+            raise dbus.DBusException, "Not authorized"
+
 
 conf_service()
 loop.run()

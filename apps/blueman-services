@@ -4,8 +4,8 @@ import os
 import sys
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-if os.path.exists(os.path.join(_dirname,"ChangeLog")):
-	sys.path.insert(0, _dirname)
+if os.path.exists(os.path.join(_dirname, "ChangeLog")):
+    sys.path.insert(0, _dirname)
 
 import gtk
 from blueman.gui.GenericList import GenericList
@@ -20,145 +20,139 @@ from blueman.main.Config import Config
 enable_rgba_colormap()
 setup_icon_path()
 
+
 class BluemanServices:
-	def __init__(self):
-		
-		self.Builder = gtk.Builder()
-		self.Builder.set_translation_domain("blueman")
-		self.Builder.add_from_file(UI_PATH +"/services.ui")
-		
-		self.Config = Config()
-		
-		self.Dialog = self.Builder.get_object("dialog")
-		self.Dialog.resize(520, 420)
+    def __init__(self):
 
-		check_single_instance("blueman-services", lambda time: self.Dialog.present_with_time(time))
+        self.Builder = gtk.Builder()
+        self.Builder.set_translation_domain("blueman")
+        self.Builder.add_from_file(UI_PATH + "/services.ui")
 
-		self.Dialog.connect("delete-event", lambda x, y: gtk.main_quit())
-		
-		data = [
-			["picture", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":0}, None],
-			["caption", str, gtk.CellRendererText(), {"markup":1}, None, {"expand": True}],
-			["id", str],
-		]
-		
-		ls = GenericList(data)
-		ls.props.headers_visible = False
+        self.Config = Config()
 
-		ls.selection.connect("changed", self.on_selection_changed)
-		self.List = ls
+        self.Dialog = self.Builder.get_object("dialog")
+        self.Dialog.resize(520, 420)
 
-				
-		self.Builder.get_object("viewport1").add(ls)
-		ls.show()
+        check_single_instance("blueman-services", lambda time: self.Dialog.present_with_time(time))
 
-		
-		self.container = self.Builder.get_object("hbox1")
+        self.Dialog.connect("delete-event", lambda x, y: gtk.main_quit())
 
-		
-		self.load_plugins()
-		
-		try:
-			ls.selection.select_path(self.Config.props.services_last_item)
-		except:
-			ls.selection.select_path(0)
+        data = [
+            ["picture", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf": 0}, None],
+            ["caption", str, gtk.CellRendererText(), {"markup": 1}, None, {"expand": True}],
+            ["id", str],
+        ]
 
-		
-		self.Builder.get_object("b_apply").connect("clicked", self.on_apply_clicked)
-		self.Builder.get_object("b_close").connect("clicked", lambda x: gtk.main_quit())
-		
-		self.Dialog.show()
-		gtk.main()
-		
-	def option_changed(self):
-		rets = self.plugin_exec("on_query_apply_state")
-		show_apply = False
-		for ret in rets:
-			if ret == -1:
-				show_apply = False
-				break
-			show_apply = show_apply or ret
-			
-		b_apply = self.Builder.get_object("b_apply")
-		b_apply.props.sensitive = show_apply
-		
-	def load_plugins(self):
-		path = os.path.dirname(blueman.plugins.services.__file__)
-		plugins = []
-		for root, dirs, files in os.walk(path):
-			for f in files:
-				if f.endswith(".py") and not (f.endswith(".pyc") or f.endswith("_.py")):
-					plugins.append(f[0:-3])
-		plugins.sort()
-		dprint(plugins)
-		for plugin in plugins:
-			try:
-				__import__("blueman.plugins.services.%s" % plugin, None, None, [])
-			except ImportError, e:
-				dprint("Unable to load %s plugin\n%s" % (plugin, e))
-			
+        ls = GenericList(data)
+        ls.props.headers_visible = False
 
-		for cls in ServicePlugin.__subclasses__():
-			try:
-				inst = cls(self)
-			except:
-				continue
-			if not cls.__plugin_info__:
-				dprint("Invalid plugin info in %s" % (plugin))
-			else:
-				(name, icon) = cls.__plugin_info__
-				self.setup_list_item(inst, name, icon)
-			
-			
-	def setup_list_item(self, inst, name, icon):
-		self.List.append(picture=get_icon(icon, 32), caption=name, id=inst.__class__.__name__)
-		
+        ls.selection.connect("changed", self.on_selection_changed)
+        self.List = ls
 
-	#executes a function on all plugin instances
-	def plugin_exec(self, function, *args, **kwargs):
-		rets = []
-		for inst in ServicePlugin.instances:
-			if inst._is_loaded:
-				ret = getattr(inst, function)(*args, **kwargs)
-				rets.append(ret)
-			
-		return rets
+        self.Builder.get_object("viewport1").add(ls)
+        ls.show()
+
+        self.container = self.Builder.get_object("hbox1")
+
+        self.load_plugins()
+
+        try:
+            ls.selection.select_path(self.Config.props.services_last_item)
+        except:
+            ls.selection.select_path(0)
+
+        self.Builder.get_object("b_apply").connect("clicked", self.on_apply_clicked)
+        self.Builder.get_object("b_close").connect("clicked", lambda x: gtk.main_quit())
+
+        self.Dialog.show()
+        gtk.main()
+
+    def option_changed(self):
+        rets = self.plugin_exec("on_query_apply_state")
+        show_apply = False
+        for ret in rets:
+            if ret == -1:
+                show_apply = False
+                break
+            show_apply = show_apply or ret
+
+        b_apply = self.Builder.get_object("b_apply")
+        b_apply.props.sensitive = show_apply
+
+    def load_plugins(self):
+        path = os.path.dirname(blueman.plugins.services.__file__)
+        plugins = []
+        for root, dirs, files in os.walk(path):
+            for f in files:
+                if f.endswith(".py") and not (f.endswith(".pyc") or f.endswith("_.py")):
+                    plugins.append(f[0:-3])
+        plugins.sort()
+        dprint(plugins)
+        for plugin in plugins:
+            try:
+                __import__("blueman.plugins.services.%s" % plugin, None, None, [])
+            except ImportError, e:
+                dprint("Unable to load %s plugin\n%s" % (plugin, e))
+
+        for cls in ServicePlugin.__subclasses__():
+            try:
+                inst = cls(self)
+            except:
+                continue
+            if not cls.__plugin_info__:
+                dprint("Invalid plugin info in %s" % (plugin))
+            else:
+                (name, icon) = cls.__plugin_info__
+                self.setup_list_item(inst, name, icon)
 
 
-	
-	def on_apply_clicked(self, button):
-		self.plugin_exec("on_apply")
-		self.option_changed()
+    def setup_list_item(self, inst, name, icon):
+        self.List.append(picture=get_icon(icon, 32), caption=name, id=inst.__class__.__name__)
 
 
-		
-	def set_page(self, pageid):
-		dprint("Set page", pageid)
-		
-		if len(ServicePlugin.instances) == 0:
-			return
-		#set the first item
-		if pageid == None:
-			pageid = ServicePlugin.instances[0].__class__.__name__
-		for inst in ServicePlugin.instances:
-			if inst.__class__.__name__ == pageid:
-				if not inst._is_loaded:
-					inst.on_load(self.container)
-					inst._is_loaded = True
+    #executes a function on all plugin instances
+    def plugin_exec(self, function, *args, **kwargs):
+        rets = []
+        for inst in ServicePlugin.instances:
+            if inst._is_loaded:
+                ret = getattr(inst, function)(*args, **kwargs)
+                rets.append(ret)
 
-				inst._on_enter()
-			else:
-				inst._on_leave()
-			
-			
+        return rets
 
-	def on_selection_changed(self, selection):
-		iter = self.List.selected()
-		if self.List.get_cursor()[0]:
-			self.Config.props.services_last_item = self.List.get_cursor()[0][0]
-		row = self.List.get(iter, "id")
-		id = row["id"]
-		
-		self.set_page(id)
-		
+
+    def on_apply_clicked(self, button):
+        self.plugin_exec("on_apply")
+        self.option_changed()
+
+
+    def set_page(self, pageid):
+        dprint("Set page", pageid)
+
+        if len(ServicePlugin.instances) == 0:
+            return
+        #set the first item
+        if pageid == None:
+            pageid = ServicePlugin.instances[0].__class__.__name__
+        for inst in ServicePlugin.instances:
+            if inst.__class__.__name__ == pageid:
+                if not inst._is_loaded:
+                    inst.on_load(self.container)
+                    inst._is_loaded = True
+
+                inst._on_enter()
+            else:
+                inst._on_leave()
+
+
+    def on_selection_changed(self, selection):
+        iter = self.List.selected()
+        if self.List.get_cursor()[0]:
+            self.Config.props.services_last_item = self.List.get_cursor()[0][0]
+        row = self.List.get(iter, "id")
+        id = row["id"]
+
+        self.set_page(id)
+
+
 BluemanServices()
