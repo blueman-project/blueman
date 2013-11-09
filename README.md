@@ -1,6 +1,27 @@
-The original blueman project of Valmantas Palikša can be found [here](https://launchpad.net/blueman). The latest stable version is 1.23 released in Oct. 2011.
+## Description
 
-We're currently working on blueman 2 to bring support for newer APIs like BlueZ 5 and NetworkManager 0.9. Any contributions are welcome.
+Blueman is a GTK+ Bluetooth Manager
+
+Blueman is designed to provide simple, yet effective means for
+controlling BlueZ API and simplifying bluetooth tasks such as:
+
+* Connecting to 3G/EDGE/GPRS via dial-up
+* Connecting to/Creating bluetooth networks
+* Connecting to input devices
+* Connecting to audio devices
+* Sending/Receiving/Browsing files via OBEX
+* Pairing
+
+It is lightweight, easy to use, Python bases and GPL licensed.
+
+The original project page of Valmantas Palikša can be found [here](https://launchpad.net/blueman).
+Please use the GitHub issue tracker for bugs and questions.
+
+## Roadmap
+
+The latest stable version is 1.23 released in Oct. 2011.
+
+Blueman 2 will especially bring support for newer APIs like BlueZ 5 and NetworkManager 0.9 and fix a number of issues.
 
 ## Dependencies
 
@@ -35,15 +56,18 @@ We're currently working on blueman 2 to bring support for newer APIs like BlueZ 
 
 ## Installing
 
-To install a packaged release of blueman, run ./configure, make and make install.
+To install a packaged release of blueman, run `./configure && make && make install`.
 
-To generate and run a configure script from from source, run ./autogen.sh. You can provide configuration options to the autogen.sh script.
+To generate and run a configure script from source, run `./autogen.sh`.
 
 ## Packaged versions
 
-Packaged versions of blueman 1 are available for the following systems (and probably many more):
+Development snapshots of blueman 2:
 
 * [Arch Linux](https://www.archlinux.org/packages/?name=blueman)
+
+Older versions:
+
 * CentOS
 * [Debian GNU/Linux](http://packages.debian.org/search?keywords=blueman)
 * [Fedora](https://apps.fedoraproject.org/packages/blueman)
@@ -52,3 +76,8 @@ Packaged versions of blueman 1 are available for the following systems (and prob
 * [Mageia](http://mageia.madb.org/package/show/name/blueman)
 * [openSUSE](http://software.opensuse.org/package/blueman?search_term=blueman)
 * [Ubuntu](http://packages.ubuntu.com/search?keywords=blueman)
+
+## Contributing
+
+Fork, make your changes and issue a pull request. If you just want to edit a single file
+(e.g. translations in the po folder), GitHub will guide you through that process.
