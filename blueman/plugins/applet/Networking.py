@@ -53,14 +53,11 @@ class Networking(AppletPlugin):
 
     def update_status(self):
         self.set_nap(self.Config.props.nap_enable or False)
-        self.set_gn(self.Config.props.gn_enable or False)
 
 
     def on_config_changed(self, config, key, value):
         if key == "nap_enable":
             self.set_nap(value)
-        elif key == "gn_enable":
-            self.set_gn(value)
 
 
     def set_nap(self, on):
@@ -73,21 +70,3 @@ class Networking(AppletPlugin):
                     s.Register("nap", "pan1")
                 else:
                     s.Unregister("nap")
-
-
-    def set_gn(self, on):
-        #latest bluez does not support gn
-        pass
-
-    #		dprint("set gn", on)
-#		m = Mechanism()
-#		m.SetGN(on, reply_handler=(lambda *args: None), error_handler=(lambda *args: None))
-#
-#		if self.Applet.Manager != None:
-#			adapters = self.Applet.Manager.ListAdapters()
-#			for adapter in adapters:
-#				s = ServiceInterface("org.bluez.NetworkServer", adapter.GetObjectPath(), ["Register", "Unregister"])
-#				if on:
-#					s.Register("gn", "pan0")
-#				else:
-#					s.Unregister("gn")
