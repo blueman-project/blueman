@@ -104,13 +104,12 @@ class Sender(gobject.GObject):
         self.manager.GHandle("session-created", self.on_session_created)
         self.manager.GHandle("session-destroyed", self.on_session_destroyed)
 
-        print "Sending to", device.Address
+        print("Sending to", device.Address)
         self.l_dest.props.label = device.Alias
 
         self.create_session()
 
         self.window.show()
-
 
     def create_session(self):
         dprint("Creating session")
@@ -143,7 +142,7 @@ class Sender(gobject.GObject):
             if self.session.Connected:
                 self.session.Cancel(reply_handler=reply, error_handler=reply)
             else:
-                print self.session.object_path
+                print(self.session.object_path)
                 self.manager.CancelSessionConnect(self.session.object_path)
                 self.emit("result", False)
         else:
@@ -336,7 +335,7 @@ class SendTo:
                 else:
                     adapter = m.GetAdapter()
             except:
-                print "Error: No Adapters present"
+                print("Error: No Adapters present")
                 exit()
             try:
                 d = adapter.FindDevice(options.device)

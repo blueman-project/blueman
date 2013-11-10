@@ -55,9 +55,9 @@ class PluginManager(gobject.GObject):
         if name:
             try:
                 self.__load_plugin(self.__classes[name])
-            except LoadException, e:
+            except LoadException as e:
                 pass
-            except Exception, e:
+            except Exception as e:
                 if user_action:
                     d = gtk.MessageDialog(type=gtk.MESSAGE_ERROR,
                                           buttons=gtk.BUTTONS_CLOSE)
@@ -82,7 +82,7 @@ class PluginManager(gobject.GObject):
         for plugin in plugins:
             try:
                 __import__(self.module_path.__name__ + ".%s" % plugin, None, None, [])
-            except ImportError, e:
+            except ImportError as e:
                 dprint("Unable to load plugin module %s\n%s" % (plugin, e))
 
         for cls in self.plugin_class.__subclasses__():
@@ -106,7 +106,7 @@ class PluginManager(gobject.GObject):
                     self.__cfls[cls.__name__].append(c)
 
         c = self.config_list
-        for name, cls in self.__classes.iteritems():
+        for name, cls in self.__classes.items():
             for dep in self.__deps[name]:
                 #plugins that are required by not unloadable plugins are not unloadable too
                 if not self.__classes[dep].__unloadable__:
@@ -134,7 +134,7 @@ class PluginManager(gobject.GObject):
                     raise Exception("Could not satisfy dependency %s -> %s" % (cls.__name__, dep))
                 try:
                     self.__load_plugin(self.__classes[dep])
-                except Exception, e:
+                except Exception as e:
                     dprint(e)
                     raise
 
@@ -155,7 +155,7 @@ class PluginManager(gobject.GObject):
         inst = cls(self.user_data)
         try:
             inst._load(self.user_data)
-        except Exception, e:
+        except Exception as e:
             dprint("Failed to load %s\n%s" % (cls.__name__, e))
             if not cls.__unloadable__:
                 os._exit(1)
@@ -185,7 +185,7 @@ class PluginManager(gobject.GObject):
                     inst = self.__plugins[name]
                     inst._unload()
                 except NotImplementedError:
-                    print "Plugin cannot be unloaded"
+                    print("Plugin cannot be unloaded")
                 else:
                     self.__loaded.remove(name)
                     del self.__plugins[name]
@@ -201,11 +201,11 @@ class PluginManager(gobject.GObject):
     #executes a function on all plugin instances
     def Run(self, function, *args, **kwargs):
         rets = []
-        for inst in self.__plugins.itervalues():
+        for inst in self.__plugins.values():
             try:
                 ret = getattr(inst, function)(*args, **kwargs)
                 rets.append(ret)
-            except Exception, e:
+            except Exception as e:
                 dprint("Function", function, "on", inst.__class__.__name__, "Failed")
                 traceback.print_exc()
 
@@ -213,13 +213,13 @@ class PluginManager(gobject.GObject):
 
     #executes a function on all plugin instances, runs a callback after each plugin returns something
     def RunEx(self, function, callback, *args, **kwargs):
-        for inst in self.__plugins.itervalues():
+        for inst in self.__plugins.values():
             ret = getattr(inst, function)(*args, **kwargs)
             try:
                 ret = callback(inst, ret)
             except StopException:
                 return ret
-            except Exception, e:
+            except Exception as e:
                 dprint("Function", function, "on", inst.__class__.__name__, "Failed")
                 traceback.print_exc()
                 return
@@ -278,7 +278,7 @@ class PersistentPluginManager(PluginManager):
                     try:
                         cls = self.GetClasses()[item]
                         if not cls.__unloadable__ and disable:
-                            print YELLOW("warning:"), item, "is not unloadable"
+                            print(YELLOW("warning:"), item, "is not unloadable")
                         elif item in self.GetLoaded() and disable:
                             self.Unload(item)
                         elif item not in self.GetLoaded() and not disable:
@@ -288,8 +288,5 @@ class PersistentPluginManager(PluginManager):
                                 self.SetConfig(item, False)
 
                     except KeyError:
-                        print YELLOW("warning:"), "Plugin %s not found" % item
+                        print(YELLOW("warning:"), "Plugin %s not found" % item)
                         continue
-		
-	
-

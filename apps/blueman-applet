@@ -68,7 +68,7 @@ class BluemanApplet(object):
             self.Signals.Handle("bluez", self.Manager, self.on_adapter_removed, "AdapterRemoved")
             self.Signals.Handle("bluez", self.Manager, self.on_adapter_added, "AdapterAdded")
 
-        except dbus.exceptions.DBusException, e:
+        except dbus.exceptions.DBusException as e:
             dprint(e)
             self.manager_deinit()
             dprint("Bluez DBus API not available. Listening for DBus name ownership changes")

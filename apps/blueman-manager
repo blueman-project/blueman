@@ -136,7 +136,7 @@ class Blueman:
                 try:
                     self.Applet = AppletService()
                 except:
-                    print "Blueman applet needs to be running"
+                    print("Blueman applet needs to be running")
                     exit()
                 try:
                     if not self.Applet.GetBluetoothStatus():
@@ -229,7 +229,7 @@ class Blueman:
         prog.connect("cancelled", lambda x: self.List.StopDiscovery())
         try:
             self.List.DiscoverDevices()
-        except Exception, e:
+        except Exception as e:
             prog.finalize()
             MessageArea.show_message(e_(e))
 

@@ -26,7 +26,7 @@ class SignalTracker:
             elif isinstance(obj, dbus.proxies.Interface):
                 objtype = "dbus"
             else:
-                raise Exception, "Unknown object type"
+                raise Exception("Unknown object type")
         else:
             objtype = args[0]
             obj = args[1]
@@ -40,7 +40,7 @@ class SignalTracker:
             if isinstance(obj, dbus.Bus):
                 obj.add_signal_receiver(*args, **kwargs)
             else:
-                print "Deprecated use of dbus signaltracker"
+                print("Deprecated use of dbus signaltracker")
                 traceback.print_stack()
                 obj.bus.add_signal_receiver(*args, **kwargs)
 

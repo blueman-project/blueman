@@ -29,7 +29,7 @@ class KillSwitch(AppletPlugin):
             self.Manager = KillSwitchNG()
             self.signals.Handle(self.Manager, "switch-changed", self.on_switch_changed)
             dprint("Using the new killswitch system")
-        except OSError, e:
+        except OSError as e:
             dprint("Using the old killswitch system, reason:", e)
             try:
                 self.Manager = _KillSwitch.Manager()

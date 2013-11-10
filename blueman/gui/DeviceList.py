@@ -296,7 +296,7 @@ class DeviceList(GenericList):
             self.__adapter_path = self.Adapter.GetObjectPath()
 
             self.emit("adapter-changed", self.__adapter_path)
-        except Bluez.errors.DBusNoSuchAdapterError, e:
+        except Bluez.errors.DBusNoSuchAdapterError as e:
             dprint(e)
             #try loading default adapter
             if len(self.Manager.ListAdapters()) > 0 and adapter != None:

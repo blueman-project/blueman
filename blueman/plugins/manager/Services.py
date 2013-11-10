@@ -26,7 +26,7 @@ class Services(ManagerPlugin):
         items = []
         uuids = device.UUIDs
         appl = AppletService()
-        for name, service in device.Services.iteritems():
+        for name, service in device.Services.items():
             if name == "serial":
                 ports_list = rfcomm_list()
 

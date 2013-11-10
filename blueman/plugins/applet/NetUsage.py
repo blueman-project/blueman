@@ -85,7 +85,7 @@ class MonitorBase(gobject.GObject):
 class NMMonitor(MonitorBase):
     def __init__(self, device, nm_dev_path):
         MonitorBase.__init__(self, device, "NM")
-        dprint "created nm monitor for path", nm_dev_path
+        dprint("created nm monitor for path", nm_dev_path)
         self.signals = SignalTracker()
         self.signals.Handle("dbus",
                             dbus.SystemBus(),

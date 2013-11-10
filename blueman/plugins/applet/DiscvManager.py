@@ -115,7 +115,7 @@ class DiscvManager(AppletPlugin):
     def update_menuitems(self):
         try:
             props = self.adapter.GetProperties()
-        except Exception, e:
+        except Exception as e:
             dprint("warning: Adapter is None")
             self.item.props.visible = False
         else:

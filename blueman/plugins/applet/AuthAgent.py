@@ -56,8 +56,6 @@ class AuthAgent(AppletPlugin):
             adapter.RegisterAgent(agent, "DisplayYesNo")
             self.agents.append(agent)
 
-        except Exception, e:
+        except Exception as e:
             dprint("Failed to register agent")
             dprint(e)
-			
-	

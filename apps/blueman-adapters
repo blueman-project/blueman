@@ -48,8 +48,8 @@ class BluemanAdapters:
             adapters = self.manager.ListAdapters()
             for adapter in adapters:
                 self.add_to_notebook(adapter)
-        except Exception, e:
-            print e
+        except Exception as e:
+            print(e)
             self.manager = None
         #fixme: show error dialog and exit
 
@@ -59,12 +59,12 @@ class BluemanAdapters:
                 hci_dev_num = int(selected_hci_dev[3:])
                 self.notebook.set_current_page(hci_dev_num)
             else:
-                print 'Error: the selected adapter does not exist'
+                print('Error: the selected adapter does not exist')
         self.dialog.show()
         gtk.main()
 
     def on_dialog_response(self, dialog, response_id):
-        for hci, settings in self.tabs.iteritems():
+        for hci, settings in self.tabs.items():
             if settings['changed']:
                 #save changes
                 adapter = settings['adapter']
@@ -81,7 +81,7 @@ class BluemanAdapters:
         adapter.HandleSignal(on_property_changed, "PropertyChanged")
 
     def on_dbus_name_owner_change(self, owner):
-        print 'org.bluez owner changed to ', owner
+        print('org.bluez owner changed to '+owner)
         if owner == '':
             self.Manager = None
         #fixme: show error dialog and exit
@@ -135,7 +135,7 @@ class BluemanAdapters:
 
         def on_scale_value_changed(scale):
             val = scale.get_value()
-            print 'value: ', val
+            print('value: '+str(val))
             if val == 0 and adapter_settings['discoverable']:
                 always_radio.props.active = True
             timeout = int(val * 60)

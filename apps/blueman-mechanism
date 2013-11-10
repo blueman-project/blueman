@@ -58,7 +58,7 @@ def prnt(*args):
     s = ""
     for a in args:
         s += (str(a) + " ")
-    print s
+    print(s)
 
 
 __builtin__.dprint = prnt
@@ -126,7 +126,7 @@ class conf_service(DbusService):
         for plugin in plugins:
             try:
                 __import__("blueman.plugins.mechanism.%s" % plugin, None, None, [])
-            except ImportError, e:
+            except ImportError as e:
                 dprint("Skipping plugin %s\n%s" % (plugin, e))
 
         classes = MechanismPlugin.__subclasses__()
@@ -149,7 +149,7 @@ class conf_service(DbusService):
         dprint(res)
         (is_authorized, is_challenge, details) = res
         if not is_authorized:
-            raise dbus.DBusException, "Not authorized"
+            raise dbus.DBusException("Not authorized")
 
 
 conf_service()

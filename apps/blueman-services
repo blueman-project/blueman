@@ -91,7 +91,7 @@ class BluemanServices:
         for plugin in plugins:
             try:
                 __import__("blueman.plugins.services.%s" % plugin, None, None, [])
-            except ImportError, e:
+            except ImportError as e:
                 dprint("Unable to load %s plugin\n%s" % (plugin, e))
 
         for cls in ServicePlugin.__subclasses__():

@@ -82,7 +82,7 @@ class Device(gobject.GObject):
 
     def Copy(self):
         if not self.Valid:
-            raise Exception, "Attempted to copy an invalidated device"
+            raise Exception("Attempted to copy an invalidated device")
         return Device(self.Device)
 
     def property_changed(self, key, value):
@@ -103,7 +103,7 @@ class Device(gobject.GObject):
     def GetProperties(self):
         #print "Properties requested"
         if not self.Valid:
-            raise Exception, "Attempted to get properties for an invalidated device"
+            raise Exception("Attempted to get properties for an invalidated device")
         return self.Properties
 
     def __getattr__(self, name):
@@ -118,15 +118,8 @@ class Device(gobject.GObject):
     def __setattr__(self, key, value):
         if not key in self.__dict__ and "Properties" in self.__dict__ and key in self.__dict__["Properties"]:
             if not self.Valid:
-                raise Exception, "Attempted to set properties for an invalidated device"
+                raise Exception("Attempted to set properties for an invalidated device")
             dprint("Setting property", key, value)
             self.__dict__["Device"].SetProperty(key, value)
         else:
             self.__dict__[key] = value
-	
-	
-	
-	
-	
-	
-

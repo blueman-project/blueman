@@ -103,7 +103,7 @@ class Manager(gobject.GObject):
         dprint("Setting killswitches to", state)
 
         for dev in self.devices:
-            print "Setting", dev.udi, "to", state
+            print("Setting", dev.udi, "to", state)
             dev.SetPower(state)
         if len(self.devices) == 0:
             self.state = True

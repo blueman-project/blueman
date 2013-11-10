@@ -72,7 +72,7 @@ class Browse:
         args = cmd.split(" ")
         try:
             spawn(args, True)
-        except Exception, e:
+        except Exception as e:
             dprint(e)
             d = gtk.MessageDialog(None, buttons=gtk.BUTTONS_OK, type=gtk.MESSAGE_ERROR)
             d.props.text = _("Failed to launch \"%s\"") % args[0]

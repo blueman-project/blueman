@@ -107,7 +107,7 @@ class Transfer(OdsManager):
             dev = Device(dev)
             name = dev.Alias
             trusted = dev.Trusted
-        except Exception, e:
+        except Exception as e:
             dprint(e)
             name = info["BluetoothAddress"]
 
@@ -177,12 +177,10 @@ class Transfer(OdsManager):
 
     def add_open(self, n, name, path):
         if Notification.actions_supported():
-            print
-            "adding action"
+            print("adding action")
 
             def on_open(*args):
-                print
-                "open"
+                print("open")
                 spawn(["xdg-open", path], True)
 
             n.add_action("open", name, on_open)

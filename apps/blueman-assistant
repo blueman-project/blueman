@@ -124,7 +124,7 @@ class Assistant(Agent):
             try:
                 adapter = m.GetAdapter()
             except:
-                print "Error: No Adapters present"
+                print("Error: No Adapters present")
                 exit(1)
             try:
                 d = adapter.FindDevice(options.device)
@@ -272,7 +272,7 @@ class Assistant(Agent):
                                             error_handler=refresh_cb)
 
             def err(err):
-                print err
+                print(err)
                 pages[PAGE_FINISH].set_markup(_("<b>Failed to add device</b>"))
                 self.assistant.set_page_header_image(pages[PAGE_FINISH], get_icon("gtk-no", 32))
                 self.assistant.set_current_page(PAGE_FINISH)
@@ -286,7 +286,7 @@ class Assistant(Agent):
         elif num == PAGE_CONNECT:
             self.svc_vbox.foreach(lambda x, y: self.svc_vbox.remove(x), None)
 
-            print self.Device.Services
+            print(self.Device.Services)
             uuids = self.Device.UUIDs
             rbs = []
 
@@ -296,7 +296,7 @@ class Assistant(Agent):
                 except:
                     return None
 
-            for name, service in self.Device.Services.iteritems():
+            for name, service in self.Device.Services.items():
                 if name == "serial":
                     for uuid in uuids:
                         uuid16 = uuid128_to_uuid16(uuid)
@@ -352,7 +352,7 @@ class Assistant(Agent):
                 self.assistant.set_current_page(self.next_page_fn(self.assistant.get_current_page(), None))
 
         elif num == PAGE_CONNECTING:
-            print "connect"
+            print("connect")
 
             svc = self.Device.Services[self.Service[0]]
 
