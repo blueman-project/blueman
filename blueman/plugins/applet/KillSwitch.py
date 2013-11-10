@@ -19,7 +19,7 @@ class KillSwitch(AppletPlugin):
     __depends__ = ["PowerManager", "StatusIcon"]
     __icon__ = "system-shutdown"
     __options__ = {
-    "checked": {"type": bool, "default": False}
+        "checked": {"type": bool, "default": False}
     }
 
     def on_load(self, applet):
@@ -31,10 +31,10 @@ class KillSwitch(AppletPlugin):
             dprint("Using the new killswitch system")
         except OSError as e:
             dprint("Using the old killswitch system, reason:", e)
-            try:
-                self.Manager = _KillSwitch.Manager()
-            except:
+            if _KillSwitch is None:
                 raise Exception("Failed to initialize killswitch manager")
+            else:
+                self.Manager = _KillSwitch.Manager()
 
             if not self.get_option("checked"):
                 gobject.timeout_add(1000, self.check)
@@ -55,13 +55,11 @@ class KillSwitch(AppletPlugin):
         #			if self.Manager.GetGlobalState() != pm_state:
         #				self.Manager.SetGlobalState(pm_state)
 
-
     def on_switch_changed(self, manager, switch):
         if switch.type == RFKillType.BLUETOOTH:
             s = manager.GetGlobalState()
             dprint("Global state:", s, "\nswitch.soft:", switch.soft, "\nswitch.hard:", switch.hard)
             self.Applet.Plugins.PowerManager.UpdatePowerState()
-
             self.Applet.Plugins.StatusIcon.QueryVisibility()
 
     def on_switch_removed(self, manager, switch):
@@ -79,7 +77,6 @@ class KillSwitch(AppletPlugin):
             else:
                 return manager.STATE_OFF
 
-
     def check(self):
         try:
             if len(self.Manager.devices) == 0:
@@ -92,10 +89,10 @@ class KillSwitch(AppletPlugin):
     def on_power_state_change_requested(self, manager, state, cb):
         dprint(state)
 
-        def reply(*args):
+        def reply(*_):
             cb(True)
 
-        def error(*args):
+        def error(*_):
             cb(False)
 
         if not self.Manager.HardBlocked:
@@ -112,15 +109,13 @@ class KillSwitch(AppletPlugin):
 
         state = self.Manager.GetGlobalState()
         if state:
-            if isinstance(self.Manager, KillSwitchNG) and \
-                            len(self.Manager.devices) > 0 and self.Applet.Manager:
+            if isinstance(self.Manager, KillSwitchNG) and len(self.Manager.devices) > 0 and self.Applet.Manager:
                 return 2
 
-            return 1 #StatusIcon.SHOW
+            return 1  # StatusIcon.SHOW
         elif len(self.Manager.devices) > 0 and not state:
             #if killswitch removes the bluetooth adapter, dont hide the statusicon,
             #so that the user could turn bluetooth back on.
-            return 2 #StatusIcon.FORCE_SHOW
+            return 2  # StatusIcon.FORCE_SHOW
 
         return 1
-		

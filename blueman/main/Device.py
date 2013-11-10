@@ -1,14 +1,16 @@
 import gobject
+from blueman.Functions import dprint
 from blueman.main.SignalTracker import SignalTracker
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device as BluezDevice
 import os
 import weakref
-#import traceback
+
+
 class Device(gobject.GObject):
     __gsignals__ = {
-    'invalidated': (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, ()),
-    'property-changed': (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
+        'invalidated': (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, ()),
+        'property-changed': (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
     }
 
     def __init__(self, instance):
@@ -78,7 +80,6 @@ class Device(gobject.GObject):
                 name = service.GetInterfaceName().split(".")
                 name = name[len(name) - 1].lower()
                 self.__services[name] = service
-
 
     def Copy(self):
         if not self.Valid:

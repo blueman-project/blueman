@@ -1,6 +1,7 @@
-import dbus
+import dbus.proxies
 import gobject
 from blueman.main.HalManager import HalManager
+from blueman.Functions import dprint
 
 
 class WrongType(Exception):
@@ -34,7 +35,7 @@ class KillSwitch(dbus.proxies.Interface):
 
         self.hard = 0
         self.idx = self.udi
-        self.type = 2 #RfkillType.BLUETOOTH
+        self.type = 2  # RfkillType.BLUETOOTH
 
     @property
     def soft(self):
@@ -112,7 +113,6 @@ class Manager(gobject.GObject):
 
         if "reply_handler" in kwargs:
             kwargs["reply_handler"]()
-
 
     def GetGlobalState(self):
         try:

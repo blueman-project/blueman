@@ -3,7 +3,6 @@
 import gtk
 import dbus
 import dbus.glib
-import gobject
 import pango
 import os.path
 import sys
@@ -54,7 +53,7 @@ class BluemanAdapters:
         #fixme: show error dialog and exit
 
         #activate a particular tab according to command line option
-        if selected_hci_dev != None:
+        if selected_hci_dev is not None:
             if selected_hci_dev in self.tabs:
                 hci_dev_num = int(selected_hci_dev[3:])
                 self.notebook.set_current_page(hci_dev_num)
@@ -221,8 +220,8 @@ class BluemanAdapters:
 
 
 if __name__ == '__main__':
-    adapter = None
+    adapter_name = None
     if len(sys.argv) > 1:
-        adapter = sys.argv[1]
-    BluemanAdapters(adapter)
+        adapter_name = sys.argv[1]
+    BluemanAdapters(adapter_name)
 

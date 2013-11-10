@@ -4,7 +4,6 @@ from blueman.main.SignalTracker import SignalTracker
 from blueman.gui.GenericList import GenericList
 from blueman.main.FakeDevice import FakeDevice
 from blueman.main.Device import Device
-from blueman.DeviceClass import get_major_class
 
 from blueman.Lib import conn_info
 import blueman.bluez as Bluez
@@ -12,42 +11,48 @@ import gtk
 import gobject
 import os
 import re
-import dbus
 import copy
 
 
 class DeviceList(GenericList):
     __gsignals__ = {
-    #@param: device
-    'device-found': (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
-    #@param: device TreeIter
-    #note: None None is given when there ar no more rows, or when selected device is removed
-    'device-selected': (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
-    #@param: device, TreeIter, (key, value)
-    #note: there is a special property "Fake", it's not a real property,
-    #but it is used to notify when device changes state from "Fake" to a real BlueZ object
-    #the callback would be called with Fake=False
-    'device-property-changed': (
-    gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
-    #@param: adapter, (key, value)
-    'adapter-property-changed': (
-    gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
-    #@param: progress (0 to 1)
-    'discovery-progress': (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_FLOAT,)),
+        #@param: device
+        'device-found': (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+        #@param: device TreeIter
+        #note: None None is given when there ar no more rows, or when selected device is removed
+        'device-selected': (
+            gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)
+        ),
+        #@param: device, TreeIter, (key, value)
+        #note: there is a special property "Fake", it's not a real property,
+        #but it is used to notify when device changes state from "Fake" to a real BlueZ object
+        #the callback would be called with Fake=False
+        'device-property-changed': (
+            gobject.SIGNAL_RUN_LAST,
+            gobject.TYPE_NONE,
+            (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)
+        ),
+        #@param: adapter, (key, value)
+        'adapter-property-changed': (
+        gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
+        #@param: progress (0 to 1)
+        'discovery-progress': (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_FLOAT,)),
 
-    #@param: new adapter path, None if there are no more adapters
-    'adapter-changed': (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+        #@param: new adapter path, None if there are no more adapters
+        'adapter-changed': (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
 
-    #@param: adapter path
-    'adapter-added': (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
-    'adapter-removed': (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+        #@param: adapter path
+        'adapter-added': (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+        'adapter-removed': (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
     }
-
 
     def __del__(self):
         dprint("deleting mainlist")
 
-    def __init__(self, adapter=None, tabledata=[]):
+    def __init__(self, adapter=None, tabledata=None):
+        if not tabledata:
+            tabledata = []
+
         def on_adapter_removed(path):
             self.emit("adapter-removed", path)
             if path == self.__adapter_path:
@@ -59,11 +64,10 @@ class DeviceList(GenericList):
             def on_activate():
                 dprint("adapter powered", path)
 
-                if self.Adapter == None:
+                if self.Adapter is None:
                     self.SetAdapter(path)
 
                 self.emit("adapter-added", path)
-
 
             a = Bluez.Adapter(path)
             wait_for_adapter(a, on_activate)
@@ -105,7 +109,6 @@ class DeviceList(GenericList):
 
         self.signals.Handle(self.selection, "changed", self.on_selection_changed)
 
-
     def destroy(self):
         dprint("destroying")
         self.adapter_signals.DisconnectAll()
@@ -119,7 +122,6 @@ class DeviceList(GenericList):
                 device = self.get(iter, "device")["device"]
             #device.Destroy()
         GenericList.destroy(self)
-
 
     def on_selection_changed(self, selection):
         iter = self.selected()
@@ -163,7 +165,6 @@ class DeviceList(GenericList):
 
         self.emit("adapter-property-changed", self.Adapter, (key, value))
 
-
     def on_device_property_changed(self, key, value, path, *args, **kwargs):
         dprint("list: device_prop_ch", key, value, path, args, kwargs)
 
@@ -185,7 +186,6 @@ class DeviceList(GenericList):
             elif key == "Paired":
                 if value and dev.Temp:
                     dev.Temp = False
-
 
     def monitor_power_levels(self, device):
         def update(row_ref, cinfo, address):
@@ -273,18 +273,17 @@ class DeviceList(GenericList):
 
             self.device_remove_event(dev, iter)
 
-
     def SetAdapter(self, adapter=None):
         self.clear()
         if self.discovering:
             self.emit("adapter-property-changed", self.Adapter, ("Discovering", False))
             self.StopDiscovery()
 
-        if adapter != None and not re.match("hci[0-9]*", adapter):
+        if adapter is not None and not re.match("hci[0-9]*", adapter):
             adapter = adapter_path_to_name(adapter)
 
         dprint(adapter)
-        if self.Adapter != None:
+        if self.Adapter is not None:
             self.adapter_signals.DisconnectAll()
 
         try:
@@ -476,7 +475,6 @@ class DeviceList(GenericList):
             device = row["device"]
             return device
 
-
     def clear(self):
         if len(self.liststore):
             for i in self.liststore:
@@ -508,7 +506,6 @@ class DeviceList(GenericList):
         except KeyError:
             return None
 
-
     def find_device_by_path(self, path):
         try:
             row = self.path_to_row[path]
@@ -521,7 +518,6 @@ class DeviceList(GenericList):
                 return None
         except KeyError:
             return None
-
 
     def do_cache(self, iter, kwargs):
         if "device" in kwargs:

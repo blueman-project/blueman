@@ -33,7 +33,7 @@ enable_rgba_colormap()
 
 class Sender(gobject.GObject):
     __gsignals__ = {
-    'result': (gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE, (gobject.TYPE_BOOLEAN,)),
+        'result': (gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE, (gobject.TYPE_BOOLEAN,)),
     }
 
     def __init__(self, device, adapter, files):
@@ -148,23 +148,21 @@ class Sender(gobject.GObject):
         else:
             self.emit("result", False)
 
-
     def on_transfer_started(self, session, filename, path, size):
         dprint("transfer started")
 
         #first transfer
         if self.total_transferred == 0:
             self.pb.props.text = _("Sending File") + (" %(0)s/%(1)s (%(2).2f %(3)s/s) " + _("ETA:") + " %(4)s") % {
-            "1": self.num_files,
-            "0": (self.num_files - len(self.files) + 1),
-            "2": 0.0,
-            "3": "B/s",
-            "4": "∞"}
+                "1": self.num_files,
+                "0": (self.num_files - len(self.files) + 1),
+                "2": 0.0,
+                "3": "B/s",
+                "4": "∞"}
 
         self.l_file.props.label = filename
         self._last_bytes = 0
         self.transferred = 0
-
 
     def on_transfer_progress(self, session, progress):
         self.transferred = progress
@@ -182,7 +180,7 @@ class Sender(gobject.GObject):
             try:
                 x = ((self.total_bytes - self.total_transferred) / spd) + 1
                 if x > 60:
-                    x = x / 60
+                    x /= 60
                     eta = ngettext("%.0f Minute", "%.0f Minutes", round(x)) % x
                 else:
                     eta = ngettext("%.0f Second", "%.0f Seconds", round(x)) % x
@@ -190,15 +188,14 @@ class Sender(gobject.GObject):
                 eta = "∞"
 
             self.pb.props.text = _("Sending File") + (" %(0)s/%(1)s (%(2).2f %(3)s/s) " + _("ETA:") + " %(4)s") % {
-            "1": self.num_files,
-            "0": (self.num_files - len(self.files) + 1),
-            "2": size,
-            "3": units,
-            "4": eta}
+                "1": self.num_files,
+                "0": (self.num_files - len(self.files) + 1),
+                "2": size,
+                "3": units,
+                "4": eta}
             self._last_update = tm
 
         self.pb.props.fraction = float(self.total_transferred) / self.total_bytes
-
 
     def on_transfer_completed(self, session):
         del self.files[-1]
@@ -279,7 +276,6 @@ class Sender(gobject.GObject):
             d.show()
             self.error_dialog = d
 
-
     def on_session_created(self, manager, session):
         dprint()
         self.session = session
@@ -318,7 +314,7 @@ class SendTo:
         self.adapter = None
         self.files = []
 
-        if options.device == None:
+        if options.device is None:
             if not self.select_device():
                 exit()
 
@@ -327,7 +323,7 @@ class SendTo:
         else:
             m = Manager("gobject")
             try:
-                if options.source != None:
+                if options.source is not None:
                     try:
                         adapter = m.GetAdapter(options.source)
                     except:
@@ -368,7 +364,6 @@ class SendTo:
 
         sender.connect("result", on_result)
 
-
     def select_files(self):
         d = gtk.FileChooserDialog(_("Select files to send"), buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT,
                                                                       gtk.STOCK_OK, gtk.RESPONSE_ACCEPT))
@@ -383,7 +378,6 @@ class SendTo:
         else:
             d.destroy()
             return False
-
 
     def select_device(self):
         d = DeviceSelectorDialog()

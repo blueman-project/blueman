@@ -82,7 +82,7 @@ class BluemanApplet(object):
         dprint("org.bluez owner changed to", owner)
         if owner == "":
             self.manager_deinit()
-        elif self.Manager == None:
+        elif self.Manager is None:
             self.manager_init()
 
     def on_adapter_property_changed(self, key, value, path):
@@ -104,4 +104,3 @@ class BluemanApplet(object):
 
 
 BluemanApplet()
-

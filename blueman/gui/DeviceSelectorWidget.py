@@ -1,3 +1,4 @@
+from blueman.Functions import dprint
 import gtk
 import os
 from blueman.bluez.Adapter import Adapter
@@ -60,14 +61,11 @@ class DeviceSelectorWidget(gtk.VBox):
         self.List.destroy()
         dprint("Deleting widget")
 
-
     def on_discovery_progress(self, devlist, fraction):
         self.pbar.props.fraction = fraction
 
-
     def on_search_clicked(self, button):
         self.List.DiscoverDevices()
-
 
     def on_adapter_prop_changed(self, devlist, adapter, (key, value)):
         if key == "Name":
@@ -91,15 +89,13 @@ class DeviceSelectorWidget(gtk.VBox):
                 if self.List.Adapter.GetObjectPath() != adapter_path:
                     self.List.SetAdapter(os.path.basename(adapter_path))
 
-
     def on_adapter_changed(self, devlist, adapter_path):
         dprint("changed")
-        if adapter_path == None:
+        if adapter_path is None:
             self.update_adapters_list()
         else:
             if self.List.Adapter:
                 self.List.DisplayKnownDevices()
-
 
     def update_adapters_list(self):
 

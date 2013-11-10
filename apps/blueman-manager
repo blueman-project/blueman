@@ -267,14 +267,12 @@ class Blueman:
         applet.CreateDevice(adapter.GetObjectPath(), device.Address, True, gtk.get_current_event_time(),
                             reply_handler=ok, error_handler=err, timeout=120)
 
-
     def adapter_properties(self):
         adapter = self.List.Adapter
         name = os.path.basename(adapter.GetObjectPath())
         sn = startup_notification("Blueman Adapters", _("Starting Adapter Preferences"), bin_name="blueman-adapters",
                                   icon="blueman")
         spawn(["blueman-adapters", name], sn=sn)
-
 
     def toggle_trust(self, device):
         props = device.GetProperties()
@@ -289,7 +287,6 @@ class Blueman:
 
     def remove(self, device):
         self.List.Adapter.RemoveDevice(device.Device)
-
 
     def browse(self, device):
         spawn(["blueman-browse", "-d %s" % device.Address])
