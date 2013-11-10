@@ -10,9 +10,8 @@ __SIGNATURES__ = {
     'RequestPasskey': ('o', 'u'),
     'DisplayPasskey': ('ouu', ''),
     'RequestConfirmation': ('ou', ''),
-    'RequestAuthorization': ('o', ''),
     'Authorize': ('os', ''),
-    'AuthorizeService': ('os', ''),
+    'ConfirmModeChange': ('s', ''),
     'Cancel': ('', '')
 }
 
@@ -44,9 +43,6 @@ class Agent(dbus.service.Object):
         self.__obj_path = obj_path
         dbus.service.Object.__init__(self, dbus.SystemBus(), obj_path)
 
-    def get_object_path(self):
-        return self.__obj_path
-
     @AgentMethod
     def Release(self):
         dprint('Release')
@@ -68,16 +64,12 @@ class Agent(dbus.service.Object):
         dprint('RequestConfirmation (%s, %d)' % (device, passkey))
 
     @AgentMethod
-    def RequestAuthorization(self, device):
-        dprint('RequestAuthorization (%s)' % device)
-
-    @AgentMethod
     def Authorize(self, device, uuid):
         dprint('Authorize (%s, %s)' % (device, uuid))
 
     @AgentMethod
-    def AuthorizeService(self, device, uuid):
-        dprint('AuthorizeService (%s, %s)' % (device, uuid))
+    def ConfirmModeChange(self, mode):
+        dprint('ConfirmModeChange (%s)' % (mode))
 
     @AgentMethod
     def Cancel(self):

@@ -7,14 +7,13 @@ import xml.dom.minidom
 
 class Device(PropertiesBlueZInterface):
     @raise_dbus_error
-    def __init__(self, obj_path=None):
+    def __init__(self, obj_path):
         if self.__class__.get_interface_version()[0] < 5:
             interface = 'org.bluez.Device'
         else:
             interface = 'org.bluez.Device1'
         super(Device, self).__init__(interface, obj_path)
 
-    @raise_dbus_error
     def list_services(self):
         interfaces = []
         dbus_object = dbus.SystemBus().get_object('org.bluez', self.get_object_path())
@@ -29,16 +28,3 @@ class Device(PropertiesBlueZInterface):
                     methods.append(method.getAttribute('name'))
                 interfaces.append(ServiceInterface(interface_name, self.get_object_path(), methods))
         return interfaces
-
-    @raise_dbus_error
-    def pair(self, reply_handler=None, error_handler=None):
-        # BlueZ 5 only!
-        def ok():
-            if callable(reply_handler):
-                reply_handler()
-
-        def err(err):
-            if callable(error_handler):
-                error_handler(err)
-
-        self.get_interface().Pair(reply_handler=ok, error_handler=err)

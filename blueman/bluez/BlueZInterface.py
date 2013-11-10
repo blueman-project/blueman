@@ -25,9 +25,8 @@ class BlueZInterface(object):
         self.__obj_path = obj_path
         self.__interface_name = interface_name
         self.__bus = dbus.SystemBus()
-        if obj_path:
-            self.__dbus_proxy = self.__bus.get_object('org.bluez', obj_path, follow_name_owner_changes=True)
-            self.__interface = dbus.Interface(self.__dbus_proxy, interface_name)
+        self.__dbus_proxy = self.__bus.get_object('org.bluez', obj_path, follow_name_owner_changes=True)
+        self.__interface = dbus.Interface(self.__dbus_proxy, interface_name)
 
     def get_object_path(self):
         return self.__obj_path
@@ -43,3 +42,9 @@ class BlueZInterface(object):
 
     def get_interface(self):
         return self.__interface
+
+    def unhandle_signal(self, handler, signal, **kwargs):
+        self.__bus.remove_signal_receiver(
+            handler, signal, self.get_interface_name(), 'org.bluez',
+            self.get_object_path(), **kwargs
+        )

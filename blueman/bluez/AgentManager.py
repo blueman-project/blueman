@@ -7,7 +7,7 @@ class AgentManager(BlueZInterface):
     @raise_dbus_error
     def __init__(self):
         interface = 'org.bluez.AgentManager1'
-        super(AgentManager, self).__init__(interface, '/org/bluez')
+        super(AgentManager, self).__init__(interface, '/')
 
     @raise_dbus_error
     def register_agent(self, agent, capability='', default=False):

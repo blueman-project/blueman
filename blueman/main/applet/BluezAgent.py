@@ -249,7 +249,17 @@ class GlobalAgent(AdapterAgent):
         CommonAgent.__init__(self, status_icon, '/org/blueman/agent/global')
 
 
+<<<<<<< HEAD
 # noinspection PyPep8Naming
+=======
+class GlobalAgent(AdapterAgent):
+    def __init__(self, status_icon, time_func):
+        self.n = None
+        self.time_func = time_func
+        CommonAgent.__init__(self, status_icon, '/org/blueman/agent/global')
+
+
+>>>>>>> (WIP!) Replace bluez layer
 class TempAgent(CommonAgent):
     def __init__(self, status_icon, path, time):
         CommonAgent.__init__(self, status_icon, path)

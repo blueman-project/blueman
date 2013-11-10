@@ -63,7 +63,11 @@ class Networking(AppletPlugin):
         if self.Applet.Manager != None:
             adapters = self.Applet.Manager.list_adapters()
             for adapter in adapters:
+<<<<<<< HEAD
                 s = NetworkServer(adapter.get_object_path())
+=======
+                s = ServiceInterface("org.bluez.NetworkServer", adapter.get_object_path(), ["Register", "Unregister"])
+>>>>>>> (WIP!) Replace bluez layer
                 if on:
                     s.register("nap", "pan1")
                 else:
