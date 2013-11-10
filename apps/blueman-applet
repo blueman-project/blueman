@@ -67,7 +67,7 @@ class BluemanApplet(object):
         try:
 
             self.Signals.DisconnectAll()
-            self.Manager = Bluez.Manager("gobject")
+            self.Manager = Bluez.Manager()
             self.Plugins.Run("on_manager_state_changed", True)
 
             self.Signals.Handle("bluez", self.Manager, self.on_adapter_removed, "AdapterRemoved")

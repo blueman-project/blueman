@@ -185,7 +185,7 @@ class Services(ManagerPlugin):
                                             manager_menu.service_property_changed,
                                             "PropertyChanged")
 
-                sprops = service.GetProperties()
+                sprops = service.get_properties()
 
                 if not sprops["Connected"]:
 
@@ -237,7 +237,7 @@ class Services(ManagerPlugin):
                                             service,
                                             manager_menu.service_property_changed,
                                             "PropertyChanged")
-                sprops = service.GetProperties()
+                sprops = service.get_properties()
                 if sprops["Connected"]:
                     item = create_menuitem(_("Input Service"), get_x_icon("mouse", 16))
                     manager_menu.Signals.Handle("gobject",
@@ -260,7 +260,7 @@ class Services(ManagerPlugin):
 
 
             elif name == "headset":
-                sprops = service.GetProperties()
+                sprops = service.get_properties()
 
                 if sprops["Connected"]:
                     item = create_menuitem(_("Headset Service"),
@@ -284,7 +284,7 @@ class Services(ManagerPlugin):
 
 
             elif name == "audiosink":
-                sprops = service.GetProperties()
+                sprops = service.get_properties()
 
                 if sprops["Connected"]:
                     item = create_menuitem(_("Audio Sink"), get_icon("blueman-headset", 16))
@@ -309,7 +309,7 @@ class Services(ManagerPlugin):
 
 
             elif name == "audiosource":
-                sprops = service.GetProperties()
+                sprops = service.get_properties()
 
                 if not sprops["State"] == "disconnected":
                     item = create_menuitem(_("Audio Source"),

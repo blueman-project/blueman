@@ -72,7 +72,7 @@ class DBusService(AppletPlugin):
                 pass
             ok()
 
-        device.GetInterface().DiscoverServices("", reply_handler=reply, error_handler=err)
+        device.get_interface().DiscoverServices("", reply_handler=reply, error_handler=err)
 
     def QueryPlugins(self):
         return self.Applet.Plugins.GetLoaded()
@@ -142,11 +142,11 @@ class DBusService(AppletPlugin):
             if pair:
                 agent_path = "/org/blueman/agent/temp/" + address.replace(":", "")
                 agent = TempAgent(self.Applet.Plugins.StatusIcon, agent_path, time)
-                adapter.GetInterface().CreatePairedDevice(address, agent_path, "DisplayYesNo", error_handler=err,
+                adapter.get_interface().CreatePairedDevice(address, agent_path, "DisplayYesNo", error_handler=err,
                                                           reply_handler=ok, timeout=120)
 
             else:
-                adapter.GetInterface().CreateDevice(address, error_handler=err, reply_handler=ok, timeout=120)
+                adapter.create_device(address, error_handler=err, reply_handler=ok, timeout=120)
 
         else:
             err()
@@ -155,7 +155,7 @@ class DBusService(AppletPlugin):
         if self.Applet.Manager:
             adapter = Adapter(adapter_path)
 
-            adapter.GetInterface().CancelDeviceCreation(address, error_handler=err, reply_handler=ok)
+            adapter.get_interface().CancelDeviceCreation(address, error_handler=err, reply_handler=ok)
 
         else:
             err()

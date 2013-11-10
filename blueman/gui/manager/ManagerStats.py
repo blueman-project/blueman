@@ -18,7 +18,7 @@ class ManagerStats:
         blueman.List.connect("adapter-changed", self.on_adapter_changed)
 
         if blueman.List.Adapter:
-            self.hci = adapter_path_to_name(blueman.List.Adapter.GetObjectPath())
+            self.hci = adapter_path_to_name(blueman.List.Adapter.get_object_path())
         else:
             self.hci = None
 

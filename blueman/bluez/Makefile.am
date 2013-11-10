@@ -1,22 +1,21 @@
 bluemandir = $(pythondir)/blueman/bluez
-blueman_PYTHON = 		\
-	Adapter.py			\
-	Agent.py			\
-	BaseInterface.py	\
-	BlueZInterface.py	\
-	Device.py			\
-	Manager.py			\
-	ServiceInterface.py	\
-	__init__.py			\
-	errors.py			\
-	utils.py
+blueman_PYTHON =				\
+	__init__.py					\
+	Adapter.py					\
+	Agent.py					\
+	AgentManager.py				\
+	BlueZInterface.py			\
+	Device.py					\
+	errors.py					\
+	Manager.py					\
+	PropertiesBlueZInterface.py	\
+	ServiceInterface.py
 
-CLEANFILES =		\
+CLEANFILES = \
 	$(BUILT_SOURCES)
 	
 DISTCLEANFILES = \
-	$(CLEANFILES) 
+	$(CLEANFILES)
 
 clean-local:
-	rm -rf *.pyc *.pyo 
-
+	rm -rf *.pyc *.pyo

@@ -47,11 +47,11 @@ class ShowConnected(AppletPlugin):
 
     def enumerate_connections(self):
         self.num_connections = 0
-        adapters = self.Applet.Manager.ListAdapters()
+        adapters = self.Applet.Manager.list_adapters()
         for adapter in adapters:
-            devices = adapter.ListDevices()
+            devices = adapter.list_devices()
             for device in devices:
-                props = device.GetProperties()
+                props = device.get_properties()
                 if "Connected" in props:
                     if props["Connected"]:
                         self.num_connections += 1

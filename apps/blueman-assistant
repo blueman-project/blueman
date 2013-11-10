@@ -127,14 +127,14 @@ class Assistant(Agent):
         self.assistant.show()
 
         if options.device != None:
-            m = Manager("gobject")
+            m = Manager()
             try:
-                adapter = m.GetAdapter()
+                adapter = m.get_adapter()
             except:
                 print("Error: No Adapters present")
                 exit(1)
             try:
-                d = adapter.FindDevice(options.device)
+                d = adapter.find_device(options.device)
                 self.Device = Device(d)
                 self.Adapter = adapter
                 if self.Device.Paired:
@@ -275,7 +275,7 @@ class Assistant(Agent):
                 def refresh_cb(*args):
                     self.assistant.set_current_page(PAGE_CONNECT)
 
-                self.applet.RefreshServices(self.Device.GetObjectPath(), reply_handler=refresh_cb,
+                self.applet.RefreshServices(self.Device.get_object_path(), reply_handler=refresh_cb,
                                             error_handler=refresh_cb)
 
             def err(err):
@@ -285,10 +285,10 @@ class Assistant(Agent):
                 self.assistant.set_current_page(PAGE_FINISH)
 
             if self.PairType != 2:
-                self.Adapter.CreatePairedDevice(self.Device.Address, self.GetObjectPath(), "", reply_handler=ok,
+                self.Adapter.CreatePairedDevice(self.Device.Address, self.get_object_path(), "", reply_handler=ok,
                                                 error_handler=err)
             else:
-                self.Adapter.CreateDevice(self.Device.Address, reply_handler=ok, error_handler=err)
+                self.Adapter.create_device(self.Device.Address, reply_handler=ok, error_handler=err)
 
         elif num == PAGE_CONNECT:
             self.svc_vbox.foreach(lambda x, y: self.svc_vbox.remove(x), None)
@@ -372,14 +372,14 @@ class Assistant(Agent):
 
             if self.Service[0] == "network":
                 uuid = self.Service[1][0]
-                self.applet.ServiceProxy(svc.GetInterfaceName(), svc.GetObjectPath(), "Connect", [uuid],
+                self.applet.ServiceProxy(svc.get_interface_name(), svc.get_object_path(), "Connect", [uuid],
                                          reply_handler=success, error_handler=fail)
 
             elif self.Service[0] == "serial":
                 uuid = self.Service[1][0]
-                self.applet.RfcommConnect(self.Device.GetObjectPath(), uuid, reply_handler=success, error_handler=fail)
+                self.applet.RfcommConnect(self.Device.get_object_path(), uuid, reply_handler=success, error_handler=fail)
             else:
-                self.applet.ServiceProxy(svc.GetInterfaceName(), svc.GetObjectPath(), "Connect", [],
+                self.applet.ServiceProxy(svc.get_interface_name(), svc.get_object_path(), "Connect", [],
                                          reply_handler=success, error_handler=fail)
 
 

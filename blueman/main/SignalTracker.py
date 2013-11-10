@@ -1,4 +1,3 @@
-from blueman.bluez.BlueZInterface import BlueZInterface
 import dbus
 from gi.repository import GObject
 import traceback
@@ -19,6 +18,7 @@ class SignalTracker:
         if auto:
             obj = args[0]
             args = args[1:]
+            from blueman.bluez.BlueZInterface import BlueZInterface
             if isinstance(obj, BlueZInterface):
                 objtype = "bluez"
             elif isinstance(obj, GObject.GObject):
@@ -33,7 +33,7 @@ class SignalTracker:
             args = args[2:]
 
         if objtype == "bluez":
-            obj.HandleSignal(*args, **kwargs)
+            obj.handle_signal(*args, **kwargs)
         elif objtype == "gobject":
             args = obj.connect(*args)
         elif objtype == "dbus":
@@ -51,7 +51,7 @@ class SignalTracker:
             (_sigid, objtype, obj, args, kwargs) = sig
             if sigid != None and _sigid == sigid:
                 if objtype == "bluez":
-                    obj.UnHandleSignal(*args)
+                    obj.unhandle_signal(*args)
                 elif objtype == "gobject":
                     obj.disconnect(args)
                 elif objtype == "dbus":
@@ -71,7 +71,7 @@ class SignalTracker:
 
             (sigid, objtype, obj, args, kwargs) = sig
             if objtype == "bluez":
-                obj.UnHandleSignal(*args)
+                obj.unhandle_signal(*args)
             elif objtype == "gobject":
                 obj.disconnect(args)
             elif objtype == "dbus":

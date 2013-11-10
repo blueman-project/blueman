@@ -132,7 +132,7 @@ class Sender(GObject.GObject):
             d.destroy()
             exit(1)
 
-        props = self.adapter.GetProperties()
+        props = self.adapter.get_properties()
         self.manager.create_session(self.device.Address, props["Address"], error_handler=on_error)
 
     def on_cancel(self, button):
@@ -327,20 +327,20 @@ class SendTo:
             self.do_send()
 
         else:
-            m = Manager("gobject")
+            m = Manager()
             try:
                 if options.source is not None:
                     try:
-                        adapter = m.GetAdapter(options.source)
+                        adapter = m.get_adapter(options.source)
                     except:
-                        adapter = m.GetAdapter()
+                        adapter = m.get_adapter()
                 else:
-                    adapter = m.GetAdapter()
+                    adapter = m.get_adapter()
             except:
                 print("Error: No Adapters present")
                 exit()
             try:
-                d = adapter.FindDevice(options.device)
+                d = adapter.find_device(options.device)
             except:
                 info = {}
                 info["Address"] = options.device
@@ -351,7 +351,7 @@ class SendTo:
                 d = FakeDevice(info)
 
             self.device = Device(d)
-            self.adapter = adapter.GetObjectPath()
+            self.adapter = adapter.get_object_path()
             self.do_send()
 
         Gtk.main()

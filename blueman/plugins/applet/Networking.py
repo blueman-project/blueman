@@ -63,9 +63,9 @@ class Networking(AppletPlugin):
     def set_nap(self, on):
         dprint("set nap", on)
         if self.Applet.Manager != None:
-            adapters = self.Applet.Manager.ListAdapters()
+            adapters = self.Applet.Manager.list_adapters()
             for adapter in adapters:
-                s = ServiceInterface("org.bluez.NetworkServer", adapter.GetObjectPath(), ["Register", "Unregister"])
+                s = ServiceInterface("org.bluez.NetworkServer", adapter.get_object_path(), ["Register", "Unregister"])
                 if on:
                     s.Register("nap", "pan1")
                 else:

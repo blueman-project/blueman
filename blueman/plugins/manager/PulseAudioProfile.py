@@ -61,7 +61,7 @@ class PulseAudioProfile(ManagerPlugin):
     def is_connected(self, device):
         try:
             s = device.Services["audiosink"]
-            props = s.GetProperties()
+            props = s.get_properties()
             if props["Connected"]:
                 return True
         except KeyError:
@@ -69,7 +69,7 @@ class PulseAudioProfile(ManagerPlugin):
 
         try:
             s = device.Services["audiosource"]
-            props = s.GetProperties()
+            props = s.get_properties()
             if props["State"] != "disconnected":
                 return True
         except KeyError:
@@ -77,7 +77,7 @@ class PulseAudioProfile(ManagerPlugin):
 
         try:
             s = device.Services["headset"]
-            props = s.GetProperties()
+            props = s.get_properties()
             if props["State"] != "disconnected":
                 return True
         except KeyError:

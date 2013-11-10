@@ -5,5 +5,5 @@ class FakeDevice:
         self.Fake = True
         self.UUIDs = []
 
-    def GetProperties(self):
+    def get_properties(self):
         return self.info

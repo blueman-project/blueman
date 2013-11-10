@@ -49,7 +49,7 @@ class NMIntegration(AppletPlugin):
     #@dbus.service.method(dbus_interface='org.blueman.Applet', in_signature="ss", out_signature="")
     def RegisterModem(self, device_path, rfcomm_device):
         dev = Bluez.Device(device_path)
-        props = dev.GetProperties()
+        props = dev.get_properties()
 
         m = Mechanism()
 

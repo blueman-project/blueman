@@ -17,8 +17,6 @@ import copy
 
 class DeviceList(GenericList):
     __gsignals__ = {
-        #@param: device
-        'device-found': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
         #@param: device TreeIter
         #note: None None is given when there ar no more rows, or when selected device is removed
         'device-selected': (
@@ -78,16 +76,12 @@ class DeviceList(GenericList):
         self.path_to_row = {}
 
         self.monitored_devices = []
-        self.discovered_devices = []
 
         self.signals = SignalTracker()
 
-        try:
-            self.Manager = Bluez.Manager("gobject")
-            self.signals.Handle(self.Manager, on_adapter_removed, "AdapterRemoved")
-            self.signals.Handle(self.Manager, on_adapter_added, "AdapterAdded")
-        except:
-            self.Manager = None
+        self.manager = Bluez.Manager()
+        self.signals.Handle(self.manager, on_adapter_removed, "AdapterRemoved")
+        self.signals.Handle(self.manager, on_adapter_added, "AdapterAdded")
 
         self.__discovery_time = 0
         self.__adapter_path = None
@@ -131,7 +125,6 @@ class DeviceList(GenericList):
             dev = row["device"]
             self.emit("device-selected", dev, iter)
 
-
     def on_device_found(self, address, props):
         if self.discovering:
             dprint("Device discovered", address)
@@ -141,10 +134,6 @@ class DeviceList(GenericList):
             dev = FakeDevice(props)
             device = Device(dev)
 
-            if not address in self.discovered_devices:
-                self.emit("device-found", device)
-                self.discovered_devices.append(address)
-
             iter = self.find_device(dev)
             if not iter:
                 self.device_add_event(device)
@@ -153,7 +142,7 @@ class DeviceList(GenericList):
             else:
                 self.row_update_event(iter, "Alias", props["Alias"])
 
-            print "RSSI:", props["RSSI"]
+            print("RSSI:", props["RSSI"])
 
 
     def on_property_changed(self, key, value):
@@ -161,8 +150,6 @@ class DeviceList(GenericList):
         if key == "Discovering":
             if not value and self.discovering:
                 self.StopDiscovery()
-
-            self.discovered_devices = []
 
         self.emit("adapter-property-changed", self.Adapter, (key, value))
 
@@ -213,13 +200,13 @@ class DeviceList(GenericList):
                 return True
 
 
-        props = device.GetProperties()
+        props = device.get_properties()
 
         if "Connected" in props and props["Connected"] and props["Address"] not in self.monitored_devices:
             dprint("starting monitor")
             iter = self.find_device(device)
 
-            hci = os.path.basename(self.Adapter.GetObjectPath())
+            hci = os.path.basename(self.Adapter.get_object_path())
             try:
                 cinfo = conn_info(props["Address"], hci)
             except:
@@ -288,28 +275,21 @@ class DeviceList(GenericList):
             self.adapter_signals.DisconnectAll()
 
         try:
-            self.Adapter = self.Manager.GetAdapter(adapter)
+            self.Adapter = self.manager.get_adapter(adapter)
             self.adapter_signals.Handle(self.Adapter, self.on_device_found, "DeviceFound")
             self.adapter_signals.Handle(self.Adapter, self.on_property_changed, "PropertyChanged")
             self.adapter_signals.Handle(self.Adapter, self.on_device_created, "DeviceCreated")
             self.adapter_signals.Handle(self.Adapter, self.on_device_removed, "DeviceRemoved")
-            self.__adapter_path = self.Adapter.GetObjectPath()
-
+            self.__adapter_path = self.Adapter.get_object_path()
             self.emit("adapter-changed", self.__adapter_path)
         except Bluez.errors.DBusNoSuchAdapterError as e:
             dprint(e)
             #try loading default adapter
-            if len(self.Manager.ListAdapters()) > 0 and adapter != None:
+            if len(self.manager.list_adapters()) > 0 and adapter is not None:
                 self.SetAdapter()
             else:
                 self.Adapter = None
                 self.emit("adapter-changed", None)
-
-        except Bluez.errors.DBusServiceUnknownError:
-            dprint("Dbus error while trying to get adapter.")
-            self.Adapter = None
-            self.emit("adapter-changed", None)
-
 
     def update_progress(self, time, totaltime):
         if not self.discovering:
@@ -327,12 +307,11 @@ class DeviceList(GenericList):
         self.emit("discovery-progress", progress)
         return True
 
-
     def add_device(self, device, append=True):
         iter = self.find_device(device)
         #device belongs to another adapter
         if not device.Fake:
-            if not device.get_object_path().startswith(self.Adapter.GetObjectPath()):
+            if not device.get_object_path().startswith(self.Adapter.get_object_path()):
                 return
 
         if iter == None:
@@ -345,9 +324,9 @@ class DeviceList(GenericList):
             self.set(iter, device=device)
             self.row_setup_event(iter, device)
 
-            props = device.GetProperties()
+            props = device.get_properties()
             try:
-                self.set(iter, dbus_path=device.GetObjectPath())
+                self.set(iter, dbus_path=device.get_object_path())
             except:
                 pass
 
@@ -355,28 +334,27 @@ class DeviceList(GenericList):
                 self.device_signals.Handle("bluez", device,
                                            self.on_device_property_changed,
                                            "PropertyChanged",
-                                           sigid=device.GetObjectPath(),
+                                           sigid=device.get_object_path(),
                                            path_keyword="path")
                 if props["Connected"]:
                     self.monitor_power_levels(device)
-
 
         else:
             row = self.get(iter, "device")
             existing_dev = row["device"]
 
-            props = existing_dev.GetProperties()
-            props_new = device.GetProperties()
+            props = existing_dev.get_properties()
+            props_new = device.get_properties()
 
             #turn a Fake device to a Real device
             n = not "Fake" in props and not "Fake" in props_new
             if n:
                 dprint("Updating existing dev")
-                self.device_signals.Disconnect(existing_dev.GetObjectPath())
+                self.device_signals.Disconnect(existing_dev.get_object_path())
             #existing_dev.Destroy()
 
             if ("Fake" in props and not "Fake" in props_new) or n:
-                self.set(iter, device=device, dbus_path=device.GetObjectPath())
+                self.set(iter, device=device, dbus_path=device.get_object_path())
                 self.row_setup_event(iter, device)
 
                 if not n:
@@ -386,7 +364,7 @@ class DeviceList(GenericList):
                 self.device_signals.Handle("bluez", device,
                                            self.on_device_property_changed,
                                            "PropertyChanged",
-                                           sigid=device.GetObjectPath(),
+                                           sigid=device.get_object_path(),
                                            path_keyword="path")
 
                 if props_new["Connected"]:
@@ -400,10 +378,9 @@ class DeviceList(GenericList):
                 self.emit("device-property-changed", device, iter, ("Fake", True))
                 self.row_update_event(iter, "Fake", True)
 
-
     def DisplayKnownDevices(self, autoselect=False):
         self.clear()
-        devices = self.Adapter.ListDevices()
+        devices = self.Adapter.list_devices()
         for device in devices:
             self.device_add_event(Device(device))
 
@@ -414,7 +391,7 @@ class DeviceList(GenericList):
         if not self.discovering:
             self.__discovery_time = 0
             if self.Adapter is not None:
-                self.Adapter.StartDiscovery()
+                self.Adapter.start_discovery()
                 self.discovering = True
                 T = 1.0 / 15 * 1000
                 GObject.timeout_add(int(T), self.update_progress, T / 1000, time)
@@ -432,7 +409,7 @@ class DeviceList(GenericList):
     def StopDiscovery(self):
         self.discovering = False
         if self.Adapter != None:
-            self.Adapter.StopDiscovery()
+            self.Adapter.stop_discovery()
 
     def PrependDevice(self, device):
         self.add_device(device, False)
@@ -449,12 +426,12 @@ class DeviceList(GenericList):
             self.emit("device-selected", None, None)
 
         try:
-            props = device.GetProperties()
+            props = device.get_properties()
         except:
             self.device_signals.Disconnect(device.get_object_path())
         else:
             if not "Fake" in props:
-                self.device_signals.Disconnect(device.GetObjectPath())
+                self.device_signals.Disconnect(device.get_object_path())
 
         if device.Temp and not force:
             dprint("converting to fake")
@@ -548,20 +525,3 @@ class DeviceList(GenericList):
     def set(self, iter, **kwargs):
         self.do_cache(iter, kwargs)
         GenericList.set(self, iter, **kwargs)
-
-
-#	#searches for existing devices in the list
-#	def find_device(self, device):
-#   		for i in range(len(self.liststore)):
-#   			row = self.get(i, "device")
-#   			if device.Address == row["device"].Address:
-#   				return self.get_iter(i)
-#   		return None
-# 
-#   	def find_device_by_path(self, path):
-#   		rows = self.get_conditional(dbus_path=path)
-#   		if rows == []:
-#   			return None
-#   		else:
-#   			return self.get_iter(rows[0])
-

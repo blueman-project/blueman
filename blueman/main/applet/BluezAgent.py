@@ -1,21 +1,3 @@
-# Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
-# Copyright (C) 2008 Tadas Dailyda <tadas at dailyda dot com>
-#
-# Licensed under the GNU General Public License Version 3
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-# 
 import dbus
 import dbus.glib
 import dbus.service
@@ -96,7 +78,7 @@ class CommonAgent(GObject.GObject, Agent):
 
     def get_device_alias(self, device_path):
         device = Bluez.Device(device_path)
-        props = device.GetProperties()
+        props = device.get_properties()
         address = props["Address"]
         name = props["Name"]
         alias = address
@@ -173,7 +155,7 @@ class AdapterAgent(CommonAgent):
         self.n = None
         self.time_func = time_func
 
-        adapter_name = os.path.basename(adapter.GetObjectPath())
+        adapter_name = os.path.basename(adapter.get_object_path())
 
         CommonAgent.__init__(self, status_icon, "/org/blueman/agent/adapter/" + adapter_name)
 
@@ -230,7 +212,7 @@ class AdapterAgent(CommonAgent):
             #self.applet.status_icon.set_blinking(False)
             if action == "always":
                 device = Bluez.Device(n._device)
-                device.SetProperty("Trusted", True)
+                device.set("Trusted", True)
             if action == "always" or action == "accept":
                 ok()
             else:
@@ -257,6 +239,13 @@ class AdapterAgent(CommonAgent):
     @AgentMethod
     def ConfirmModeChange(self, mode, ok, err):
         dprint("Agent.ConfirmModeChange")
+
+
+class GlobalAgent(AdapterAgent):
+    def __init__(self, status_icon, time_func):
+        self.n = None
+        self.time_func = time_func
+        CommonAgent.__init__(self, status_icon, '/org/blueman/agent/global')
 
 
 class TempAgent(CommonAgent):

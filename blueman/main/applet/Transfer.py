@@ -103,7 +103,7 @@ class Transfer(OdsManager):
         info = session.server.GetServerSessionInfo(session.object_path)
         trusted = False
         try:
-            dev = self.Applet.Manager.GetAdapter().FindDevice(info["BluetoothAddress"])
+            dev = self.Applet.Manager.get_adapter().find_device(info["BluetoothAddress"])
             dev = Device(dev)
             name = dev.Alias
             trusted = dev.Trusted

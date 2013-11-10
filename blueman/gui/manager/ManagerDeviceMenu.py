@@ -73,7 +73,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         self.foreach(each, None)
 
     def set_op(self, device, message):
-        ManagerDeviceMenu.__ops__[device.GetObjectPath()] = message
+        ManagerDeviceMenu.__ops__[device.get_object_path()] = message
         for inst in ManagerDeviceMenu.__instances__:
             dprint("op: regenerating instance", inst)
             if inst.SelectedDevice == self.SelectedDevice and not (inst.is_popup and not inst.props.visible):
@@ -82,12 +82,12 @@ class ManagerDeviceMenu(Gtk.Menu):
 
     def get_op(self, device):
         try:
-            return ManagerDeviceMenu.__ops__[device.GetObjectPath()]
+            return ManagerDeviceMenu.__ops__[device.get_object_path()]
         except:
             return None
 
     def unset_op(self, device):
-        del ManagerDeviceMenu.__ops__[device.GetObjectPath()]
+        del ManagerDeviceMenu.__ops__[device.get_object_path()]
         for inst in ManagerDeviceMenu.__instances__:
             dprint("op: regenerating instance", inst)
             if inst.SelectedDevice == self.SelectedDevice and not (inst.is_popup and not inst.props.visible):
@@ -148,8 +148,8 @@ class ManagerDeviceMenu(Gtk.Menu):
 
         if service_id == "network":
             uuid = args[0]
-            appl.ServiceProxy(svc.GetInterfaceName(),
-                              svc.GetObjectPath(),
+            appl.ServiceProxy(svc.get_interface_name(),
+                              svc.get_object_path(),
                               "Connect",
                               [uuid],
                               reply_handler=success,
@@ -158,8 +158,8 @@ class ManagerDeviceMenu(Gtk.Menu):
         #prog.connect("cancelled", cancel)
 
         elif service_id == "input":
-            appl.ServiceProxy(svc.GetInterfaceName(),
-                              svc.GetObjectPath(),
+            appl.ServiceProxy(svc.get_interface_name(),
+                              svc.get_object_path(),
                               "Connect", [],
                               reply_handler=success,
                               error_handler=fail, timeout=200)
@@ -168,14 +168,14 @@ class ManagerDeviceMenu(Gtk.Menu):
         elif service_id == "serial":
             uuid = str(args[0])
 
-            appl.RfcommConnect(device.GetObjectPath(),
+            appl.RfcommConnect(device.get_object_path(),
                                uuid,
                                reply_handler=success,
                                error_handler=fail, timeout=200)
 
         else:
-            appl.ServiceProxy(svc.GetInterfaceName(),
-                              svc.GetObjectPath(),
+            appl.ServiceProxy(svc.get_interface_name(),
+                              svc.get_object_path(),
                               "Connect", [],
                               reply_handler=success,
                               error_handler=fail, timeout=200)
@@ -190,7 +190,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             except:
                 dprint("** Failed to connect to applet")
             else:
-                appl.RfcommDisconnect(device.GetObjectPath(), args[0])
+                appl.RfcommDisconnect(device.get_object_path(), args[0])
                 self.Generate()
         else:
             try:
@@ -198,8 +198,8 @@ class ManagerDeviceMenu(Gtk.Menu):
             except:
                 dprint("** Failed to connect to applet")
                 return
-            appl.ServiceProxy(svc.GetInterfaceName(),
-                              svc.GetObjectPath(), "Disconnect", [])
+            appl.ServiceProxy(svc.get_interface_name(),
+                              svc.get_object_path(), "Disconnect", [])
 
 
     def on_device_property_changed(self, List, device, iter, (key, value)):
@@ -406,7 +406,7 @@ class ManagerDeviceMenu(Gtk.Menu):
                 prog = ManagerProgressbar(self.Blueman, False, _("Refreshing"))
                 prog.start()
                 self.set_op(device, _("Refreshing Services..."))
-                appl.RefreshServices(device.GetObjectPath(), reply_handler=reply, error_handler=error)
+                appl.RefreshServices(device.get_object_path(), reply_handler=reply, error_handler=error)
 
             item = create_menuitem(_("Refresh Services"), get_icon("gtk-refresh", 16))
             self.append(item)

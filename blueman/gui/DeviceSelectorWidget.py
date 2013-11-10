@@ -88,7 +88,7 @@ class DeviceSelectorWidget(Gtk.VBox):
         if iter:
             adapter_path = cb_adapters.get_model().get_value(iter, 1)
             if self.List.Adapter:
-                if self.List.Adapter.GetObjectPath() != adapter_path:
+                if self.List.Adapter.get_object_path() != adapter_path:
                     self.List.SetAdapter(os.path.basename(adapter_path))
 
     def on_adapter_changed(self, devlist, adapter_path):
@@ -102,7 +102,7 @@ class DeviceSelectorWidget(Gtk.VBox):
     def update_adapters_list(self):
 
         self.cb_adapters.get_model().clear()
-        adapters = self.List.Manager.ListAdapters()
+        adapters = self.List.manager.list_adapters()
         num = len(adapters)
         if num == 0:
             self.cb_adapters.props.visible = False
@@ -114,14 +114,9 @@ class DeviceSelectorWidget(Gtk.VBox):
             self.List.props.sensitive = True
             self.cb_adapters.props.visible = True
             for adapter in adapters:
-                props = adapter.GetProperties()
+                props = adapter.get_properties()
                 name = props["Name"]
 
-                iter = self.cb_adapters.get_model().append([name, adapter.GetObjectPath()])
-                if adapter.GetObjectPath() == self.List.Adapter.GetObjectPath():
+                iter = self.cb_adapters.get_model().append([name, adapter.get_object_path()])
+                if adapter.get_object_path() == self.List.Adapter.get_object_path():
                     self.cb_adapters.set_active_iter(iter)
-		
-		
-		
-		
-		
