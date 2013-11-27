@@ -279,7 +279,10 @@ def create_menuitem(text, image):
 
 def check_single_instance(id, unhide_func=None):
     print "%s version %s starting" % (id, VERSION)
-    lockfile = os.path.expanduser("~/.cache/%s-%s" % (id, os.getuid()))
+    cachedir = os.path.expanduser("~/.cache/")
+    if not os.path.exists(cachedir):
+        os.mkdir(cachedir)
+    lockfile = os.path.join(cachedir, "%s-%s" % (id, os.getuid()))
 
     def handler(signum, frame):
         if unhide_func:
