@@ -1,4 +1,4 @@
-AC_PREREQ(2.61)
+AC_PREREQ(2.69)
 
 AC_INIT(blueman, 1.23)
 AC_CONFIG_HEADERS(config.h)
