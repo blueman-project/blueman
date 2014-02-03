@@ -65,17 +65,17 @@ To generate and run a configure script from source, run `./autogen.sh`.
 Development snapshots of blueman 2:
 
 * [Arch Linux](https://www.archlinux.org/packages/?name=blueman)
+* [Debian GNU/Linux](http://packages.debian.org/search?keywords=blueman)
+* [Ubuntu](http://packages.ubuntu.com/search?keywords=blueman)
 
 Older versions:
 
 * CentOS
-* [Debian GNU/Linux](http://packages.debian.org/search?keywords=blueman)
 * [Fedora](https://apps.fedoraproject.org/packages/blueman)
 * [Gentoo Linux](http://packages.gentoo.org/package/net-wireless/blueman)
 * Linux Mint
 * [Mageia](http://mageia.madb.org/package/show/name/blueman)
 * [openSUSE](http://software.opensuse.org/package/blueman?search_term=blueman)
-* [Ubuntu](http://packages.ubuntu.com/search?keywords=blueman)
 
 ## Contributing
 
