@@ -1,5 +1,5 @@
 import dbus.proxies
-import gobject
+from gi.repository import GObject
 from blueman.main.HalManager import HalManager
 from blueman.Functions import dprint
 
@@ -54,12 +54,12 @@ class KillSwitch(dbus.proxies.Interface):
         return self.__switch.GetPower()
 
 
-class Manager(gobject.GObject):
+class Manager(GObject.GObject):
     __inst = None
     __gsignals__ = {
-    'switch-changed': (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
-    'switch-added': (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
-    'switch-removed': (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+    'switch-changed': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+    'switch-added': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+    'switch-removed': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
     }
 
     def __new__(cls):
@@ -70,7 +70,7 @@ class Manager(gobject.GObject):
 
     def __init__(self):
         if not Manager.__inst:
-            gobject.GObject.__init__(self)
+            GObject.GObject.__init__(self)
             Manager.__inst = self
             self.devices = []
             self.state = True

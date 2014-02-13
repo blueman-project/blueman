@@ -1,5 +1,5 @@
 from ctypes import *
-import gobject
+from gi.repository import GObject
 import weakref
 from blueman.Functions import YELLOW, dprint
 
@@ -292,11 +292,11 @@ pa_context_errno = libpulse.pa_context_errno
 pa_context_errno.restype = c_int
 pa_context_errno.argtypes = [c_void_p]
 
-class PulseAudioUtils(gobject.GObject):
+class PulseAudioUtils(GObject.GObject):
 	__gsignals__ = {
-		'connected' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, ()),
-		'disconnected' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, ()),
-		'event': (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT)), 
+		'connected' : (GObject.SignalFlags.NO_HOOKS, None, ()),
+		'disconnected' : (GObject.SignalFlags.NO_HOOKS, None, ()),
+		'event': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT)), 
 	}
 	
 	def check_connected(self):
@@ -325,7 +325,7 @@ class PulseAudioUtils(gobject.GObject):
 		
 		if self.prev_state == PA_CONTEXT_READY and state == PA_CONTEXT_FAILED:
 			dprint("Pulseaudio probably crashed, restarting in 5s")
-			gobject.timeout_add(5000, self.Connect)
+			GObject.timeout_add(5000, self.Connect)
 			
 		self.prev_state = state
 		
@@ -538,7 +538,7 @@ class PulseAudioUtils(gobject.GObject):
 		self.simple_callback(callback, fn, card_id, profile)						
 			
 #### Module API #######	
-	#import gtk
+	#from gi.repository import Gtk
 	def ListModules(self, callback):
 
 		self.check_connected()
@@ -608,7 +608,7 @@ class PulseAudioUtils(gobject.GObject):
 			return
 			
 		PulseAudioUtils.inst = self
-		gobject.GObject.__init__(self)
+		GObject.GObject.__init__(self)
 		
 		self.event_cb = pa_context_subscribe_cb_t(self.__event_callback)
 		

@@ -23,9 +23,9 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.applet.BluezAgent import AdapterAgent
 import blueman.bluez as Bluez
 
-import gobject
+from gi.repository import GObject
 import os
-import appindicator
+from gi.repository import AppIndicator as girAppIndicator
 
 class AppIndicator(AppletPlugin):
     __description__ = _("Uses libappindicator to show a statusicon")
@@ -35,11 +35,11 @@ class AppIndicator(AppletPlugin):
     
     def on_load(self, applet):
         
-        self.indicator = appindicator.Indicator ("blueman",
-                                                       applet.Plugins.StatusIcon.get_option("icon"),
-                                                       appindicator.CATEGORY_APPLICATION_STATUS)
+        self.indicator = girAppIndicator.Indicator.new ("blueman",
+                                                        applet.Plugins.StatusIcon.get_option("icon"),
+                                                        girAppIndicator.IndicatorCategory.APPLICATION_STATUS)
         
-        self.indicator.set_status (appindicator.STATUS_ACTIVE)
+        self.indicator.set_status (girAppIndicator.IndicatorStatus.ACTIVE)
         
         self.indicator.set_menu(applet.Plugins.Menu.get_menu())
         
@@ -52,9 +52,9 @@ class AppIndicator(AppletPlugin):
 
     def set_visible(self, statusicon, visible):
         if visible:
-            self.indicator.set_status(appindicator.STATUS_ACTIVE)
+            self.indicator.set_status(girAppIndicator.IndicatorStatus.ACTIVE)
         else:
-            self.indicator.set_status(appindicator.STATUS_PASSIVE)
+            self.indicator.set_status(girAppIndicator.IndicatorStatus.PASSIVE)
         
     def on_notify(self, *args):
         self.update_icon()
@@ -67,11 +67,11 @@ class AppIndicator(AppletPlugin):
         
     #def on_status_icon_pixbuf_ready(self):
     #    print "aaaaa"
-    #    gobject.idle_add(self.update_icon)
+    #    GObject.idle_add(self.update_icon)
         
     def update_icon(self):
         
         self.indicator.set_icon(self.Applet.Plugins.StatusIcon.props.icon_name)
-        self.indicator.set_status(appindicator.STATUS_ATTENTION)
-        self.indicator.set_status(appindicator.STATUS_ACTIVE)
+        self.indicator.set_status(girAppIndicator.IndicatorStatus.ATTENTION)
+        self.indicator.set_status(girAppIndicator.IndicatorStatus.ACTIVE)
         

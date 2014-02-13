@@ -19,7 +19,7 @@
 from blueman.plugins.MechanismPlugin import MechanismPlugin
 from blueman.main.BluezConfig import BluezConfig
 import os
-import gobject
+from gi.repository import GObject
 
 class Config(MechanismPlugin):
 	def on_load(self):
@@ -50,5 +50,5 @@ class Config(MechanismPlugin):
 		self.confirm_authorization(caller, "org.blueman.bluez.config")
 		
 		os.system("killall bluetoothd")
-		gobject.timeout_add(1000, os.system, "bluetoothd")
+		GObject.timeout_add(1000, os.system, "bluetoothd")
 		

@@ -74,7 +74,7 @@ class PowerManager(AppletPlugin):
                 self.adapter_state = self.get_adapter_state()
                 self.RequestPowerState(self.adapter_state)
 
-            gobject.timeout_add(1000, timeout)
+            GObject.timeout_add(1000, timeout)
 
     def get_adapter_state(self):
         adapters = self.Applet.Manager.ListAdapters()
@@ -103,7 +103,7 @@ class PowerManager(AppletPlugin):
             self.called = 0
             self.state = state
             self.success = False
-            self.timer = gobject.timeout_add(5000, self.timeout)
+            self.timer = GObject.timeout_add(5000, self.timeout)
 
         def __call__(self, result):
             self.called += 1
@@ -117,7 +117,7 @@ class PowerManager(AppletPlugin):
             if self.called == self.num_cb:
                 dprint("callbacks done")
                 self.parent.set_adapter_state(self.state)
-                gobject.source_remove(self.timer)
+                GObject.source_remove(self.timer)
                 self.parent.request_in_progress = False
 
         def timeout(self):
@@ -165,7 +165,7 @@ class PowerManager(AppletPlugin):
 
             self.item.get_child().set_markup(_("<b>Turn Bluetooth On</b>"))
             self.item.props.tooltip_text = _("Turn on all adapters")
-            self.item.set_image(gtk.image_new_from_pixbuf(get_icon("gtk-yes", 16)))
+            self.item.set_image(Gtk.Image.new_from_pixbuf(get_icon("gtk-yes", 16)))
 
             if foff:
                 self.item.props.sensitive = False
@@ -177,7 +177,7 @@ class PowerManager(AppletPlugin):
         elif on and self.current_state != True:
             self.item.get_child().set_markup(_("<b>Turn Bluetooth Off</b>"))
             self.item.props.tooltip_text = _("Turn off all adapters")
-            self.item.set_image(gtk.image_new_from_pixbuf(get_icon("gtk-stop", 16)))
+            self.item.set_image(Gtk.Image.new_from_pixbuf(get_icon("gtk-stop", 16)))
             self.item.props.sensitive = True
 
             new_state = True

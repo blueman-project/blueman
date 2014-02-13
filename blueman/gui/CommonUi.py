@@ -23,7 +23,9 @@ from subprocess import *
 from blueman.Constants import *
 from blueman.Functions import *
 
-import gtk
+import gi
+gi.require_version("Gtk", "2.0")
+from gi.repository import Gtk
 
 
 def show_about_dialog(app_name, run=True):
@@ -36,10 +38,10 @@ def show_about_dialog(app_name, run=True):
 	def url_hook(dialog, url, black_hole):
 		uri_open(url)
 	
-	gtk.about_dialog_set_email_hook(email_hook, None)
-	gtk.about_dialog_set_url_hook(url_hook, None)
+	Gtk.about_dialog_set_email_hook(email_hook, None)
+	Gtk.about_dialog_set_url_hook(url_hook, None)
 	
-	about = gtk.AboutDialog()
+	about = Gtk.AboutDialog()
 	about.set_name(app_name)
 	about.set_version(VERSION)
 	about.set_translator_credits(_("translator-credits"))

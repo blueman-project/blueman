@@ -3,8 +3,8 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.applet.BluezAgent import AdapterAgent
 import blueman.bluez as Bluez
 
-import gobject
-import gtk
+from gi.repository import GObject
+from gi.repository import Gtk
 
 
 class AuthAgent(AppletPlugin):

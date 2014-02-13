@@ -1,36 +1,40 @@
 from blueman.Functions import dprint
-import gtk
+
+import gi
+gi.require_version("Gtk", "2.0")
+
+from gi.repository import Gtk
 import os
 from blueman.bluez.Adapter import Adapter
 from blueman.Constants import *
 from blueman.gui.DeviceSelectorList import DeviceSelectorList
 
 
-class DeviceSelectorWidget(gtk.VBox):
+class DeviceSelectorWidget(Gtk.VBox):
     def __init__(self, adapter=None):
 
-        gtk.VBox.__init__(self)
+        GObject.GObject.__init__(self)
 
         self.props.spacing = 1
         self.set_size_request(360, 340)
 
-        sw = gtk.ScrolledWindow()
+        sw = Gtk.ScrolledWindow()
         self.List = devlist = DeviceSelectorList(adapter)
         if self.List.Adapter != None:
             self.List.DisplayKnownDevices()
 
         sw.add(devlist)
-        sw.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
-        sw.set_shadow_type(gtk.SHADOW_IN)
+        sw.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
+        sw.set_shadow_type(Gtk.ShadowType.IN)
 
-        self.Builder = gtk.Builder()
+        self.Builder = Gtk.Builder()
         self.Builder.add_from_file(UI_PATH + "/device-list-widget.ui")
 
         sitem = self.Builder.get_object("search")
 
         self.cb_adapters = self.Builder.get_object("adapters")
 
-        cell = gtk.CellRendererText()
+        cell = Gtk.CellRendererText()
 
         self.cb_adapters.pack_start(cell, True)
         self.cb_adapters.connect("changed", self.on_adapter_selected)

@@ -16,9 +16,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 
-import gtk
-import gobject
-import pango
+import gi
+gi.require_version("Gtk", "2.0")
+from gi.repository import Gtk
+from gi.repository import GObject
+from gi.repository import Pango
 from blueman.gui.DeviceSelectorWidget import DeviceSelectorWidget
 from blueman.Functions import setup_icon_path, spawn
 from blueman.main.Config import Config
@@ -41,15 +43,15 @@ class NstBluetooth:
 
 		self.list.set_size_request(240, 280)
 
-		self.button = gtk.ToggleButton()
+		self.button = Gtk.ToggleButton()
 
-		box = gtk.HBox()
+		box = Gtk.HBox()
 		self.button.add(box)
 
-		self.button_image = gtk.Image()
-		self.button_label = gtk.Label()
+		self.button_image = Gtk.Image()
+		self.button_label = Gtk.Label()
 		self.button_label.props.use_markup = True
-		self.button_label.props.ellipsize = pango.ELLIPSIZE_END
+		self.button_label.props.ellipsize = Pango.EllipsizeMode.END
 
 		if self.config.props.last_device == None:
 			self.list.List.set_cursor((0,))
@@ -60,15 +62,15 @@ class NstBluetooth:
 			
 		
 		box.pack_start(self.button_image, False, True)
-		box.pack_start(gtk.VSeparator(), False, True, 4)
-		box.pack_start(self.button_label)
+		box.pack_start(Gtk.VSeparator, False, True, 4)
+		box.pack_start(self.button_label, True, True, 0)
 
 		self.button.show_all()
 
 		
 		self.button.connect("toggled", self.on_button_toggled)
 		
-		self.wd = gtk.Window(gtk.WINDOW_POPUP)
+		self.wd = Gtk.Window(Gtk.WindowType.POPUP)
 
 		self.wd.props.decorated = False
 		self.wd.props.skip_pager_hint = True
@@ -108,14 +110,14 @@ class NstBluetooth:
 		return True
 
 	def popup_grab_on_window(self, window, activate_time):
-		if gtk.gdk.pointer_grab(window, True, gtk.gdk.BUTTON_PRESS_MASK 
-								| gtk.gdk.BUTTON_RELEASE_MASK
-								| gtk.gdk.POINTER_MOTION_MASK, 
+		if Gdk.pointer_grab(window, True, Gdk.EventMask.BUTTON_PRESS_MASK 
+								| Gdk.EventMask.BUTTON_RELEASE_MASK
+								| Gdk.EventMask.POINTER_MOTION_MASK, 
 								None, None, activate_time) == 0:
-			if gtk.gdk.keyboard_grab (window, True, activate_time) == 0:
+			if Gdk.keyboard_grab (window, True, activate_time) == 0:
 				return True
 			else:
-				gtk.gdk.pointer_ungrab(activate_time)
+				Gdk.pointer_ungrab(activate_time)
 				return False
 		return False
 
@@ -123,7 +125,7 @@ class NstBluetooth:
 	def on_button_toggled(self, button):
 		
 		if button.props.active:
-			if not self.popup_grab_on_window(button.window, gtk.get_current_event_time()):
+			if not self.popup_grab_on_window(button.window, Gtk.get_current_event_time()):
 				print 'error during grab'
 				return
 
@@ -139,7 +141,7 @@ class NstBluetooth:
 			self.wd.show()
 			self.wd.grab_focus()
 			
-			self.popup_grab_on_window(self.wd.window, gtk.get_current_event_time())
+			self.popup_grab_on_window(self.wd.window, Gtk.get_current_event_time())
 			
 		else:
 			self.wd.hide()

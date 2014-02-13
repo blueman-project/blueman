@@ -23,26 +23,26 @@ from blueman.main.SignalTracker import SignalTracker
 from blueman.bluez.Device import Device as BluezDevice
 from blueman.main.Device import Device
 from blueman.Lib import rfcomm_list
-import gobject
+from gi.repository import GObject
 import weakref
 import os
 import cgi
-import gtk
-import pango
+from gi.repository import Gtk
+from gi.repository import Pango
 import dbus
 import time
 import datetime
 import gettext
 
 
-class MonitorBase(gobject.GObject):
+class MonitorBase(GObject.GObject):
     __gsignals__ = {
-    'disconnected': (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, ()),
-    'stats': (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
+    'disconnected': (GObject.SignalFlags.NO_HOOKS, None, ()),
+    'stats': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
     }
 
     def __init__(self, device, interface):
-        gobject.GObject.__init__(self)
+        GObject.GObject.__init__(self)
 
         self.interface = interface
         self.device = device
@@ -110,7 +110,7 @@ class Monitor(MonitorBase):
         MonitorBase.__init__(self, device, interface)
         self.poller = None
 
-        self.poller = gobject.timeout_add(5000, self.poll_stats)
+        self.poller = GObject.timeout_add(5000, self.poll_stats)
 
     def __del__(self):
         print("deleting monitor")
@@ -147,14 +147,14 @@ class Dialog:
             return
         self.config = None
         self.parent = parent
-        builder = gtk.Builder()
+        builder = Gtk.Builder()
         builder.add_from_file(UI_PATH + "/net-usage.ui")
         builder.set_translation_domain("blueman")
 
         self.dialog = builder.get_object("dialog")
         self.dialog.connect("response", self.on_response)
-        cr1 = gtk.CellRendererText()
-        cr1.props.ellipsize = pango.ELLIPSIZE_END
+        cr1 = Gtk.CellRendererText()
+        cr1.props.ellipsize = Pango.EllipsizeMode.END
 
         self.devices = {}
         self.signals = SignalTracker()
@@ -163,11 +163,11 @@ class Dialog:
         self.signals.Handle(parent, "monitor-removed", self.monitor_removed)
         self.signals.Handle(parent, "stats", self.on_stats)
 
-        cr2 = gtk.CellRendererText()
+        cr2 = Gtk.CellRendererText()
         cr2.props.sensitive = False
-        cr2.props.style = pango.STYLE_ITALIC
+        cr2.props.style = Pango.Style.ITALIC
 
-        self.liststore = gtk.ListStore(str, str, str, object)
+        self.liststore = Gtk.ListStore(str, str, str, object)
 
         self.e_ul = builder.get_object("e_ul")
         self.e_dl = builder.get_object("e_dl")
@@ -220,8 +220,8 @@ class Dialog:
             if self.cb_device.get_active() == -1:
                 self.cb_device.set_active(0)
         else:
-            d = gtk.MessageDialog(parent=self.dialog, flags=gtk.DIALOG_MODAL, type=gtk.MESSAGE_INFO,
-                                  buttons=gtk.BUTTONS_CLOSE, message_format=_(
+            d = Gtk.MessageDialog(parent=self.dialog, flags=Gtk.DialogFlags.MODAL, type=Gtk.MessageType.INFO,
+                                  buttons=Gtk.ButtonsType.CLOSE, message_format=_(
                     "No usage statistics are available yet. Try establishing a connection first and then check this page."))
             d.props.icon_name = "blueman"
             d.run()
@@ -281,12 +281,12 @@ class Dialog:
         self.update_time()
 
     def on_reset(self, button):
-        d = gtk.MessageDialog(parent=self.dialog, flags=gtk.DIALOG_MODAL, type=gtk.MESSAGE_QUESTION,
-                              buttons=gtk.BUTTONS_YES_NO,
+        d = Gtk.MessageDialog(parent=self.dialog, flags=Gtk.DialogFlags.MODAL, type=Gtk.MessageType.QUESTION,
+                              buttons=Gtk.ButtonsType.YES_NO,
                               message_format=_("Are you sure you want to reset the counter?"))
         res = d.run()
         d.destroy()
-        if res == gtk.RESPONSE_YES:
+        if res == Gtk.ResponseType.YES:
             self.config.props.rx = "0"
             self.config.props.tx = "0"
             self.config.props.time = int(time.time())
@@ -323,7 +323,7 @@ class Dialog:
                 return
 
 
-class NetUsage(AppletPlugin, gobject.GObject):
+class NetUsage(AppletPlugin, GObject.GObject):
     __depends__ = ["Menu"]
     __icon__ = "network-wireless"
     __description__ = _(
@@ -331,15 +331,15 @@ class NetUsage(AppletPlugin, gobject.GObject):
     __author__ = "Walmis"
     __autoload__ = False
     __gsignals__ = {
-    'monitor-added': (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
-    'monitor-removed': (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+    'monitor-added': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+    'monitor-removed': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
     #monitor, tx, rx
     'stats': (
-    gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
+    GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
     }
 
     def on_load(self, applet):
-        gobject.GObject.__init__(self)
+        GObject.GObject.__init__(self)
         self.monitors = []
         self.devices = weakref.WeakValueDictionary()
         self.signals = SignalTracker()

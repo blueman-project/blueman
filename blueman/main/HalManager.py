@@ -21,7 +21,7 @@ import dbus
 import re
 from blueman.Lib import probe_modem
 import os
-import gobject
+from gi.repository import GObject
 
 def mkname():
     i = 0
@@ -52,7 +52,7 @@ class HalManager(dbus.proxies.Interface):
 					device = dbus.Interface(obj, 'org.freedesktop.Hal.Device')
 					device.SetPropertyString("info.category", "net.80203")
 					device.AddCapability("net.80203")
-		gobject.timeout_add(1000, reg)
+		GObject.timeout_add(1000, reg)
 
 	def register(self, device_file, bd_addr, ok, err):
 
@@ -142,9 +142,9 @@ class HalManager(dbus.proxies.Interface):
 				
 					self.CommitToGdl(ref, "/org/freedesktop/Hal/devices/%s" % "rfcomm%s" % portid)
 						
-					gobject.timeout_add(1000, os.unlink, rule_file)
+					GObject.timeout_add(1000, os.unlink, rule_file)
 		
-				gobject.timeout_add(1000, check_hal, device)
+				GObject.timeout_add(1000, check_hal, device)
 		
 		dprint("Probing device %s for capabilities" % device_file)
 		probe_modem(device_file, probe_response)

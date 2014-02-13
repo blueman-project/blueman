@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 
-import gtk
+from gi.repository import Gtk
 from blueman.Constants import *
 from blueman.Functions import have, dprint, mask_ip4_address
 from blueman.Lib import get_net_interfaces, get_net_address, get_net_netmask
@@ -34,14 +34,14 @@ class Network(ServicePlugin):
 	__plugin_info__ = (_("Network"), "gtk-network")
 	def on_load(self, container):
 		
-		self.Builder = gtk.Builder()
+		self.Builder = Gtk.Builder()
 		self.Builder.set_translation_domain("blueman")
 		self.Builder.add_from_file(UI_PATH +"/services-network.ui")
 		self.widget = self.Builder.get_object("network")
 		
 		self.ignored_keys = []
 		
-		container.pack_start(self.widget)
+		container.pack_start(self.widget, True, True, 0)
 		
 		self.interfaces = []
 		for iface in get_net_interfaces():
@@ -124,7 +124,7 @@ class Network(ServicePlugin):
 				except Exception, e:
 					lines = str(e).splitlines()
 					
-					d = gtk.MessageDialog( None, buttons=gtk.BUTTONS_OK, type=gtk.MESSAGE_ERROR)
+					d = Gtk.MessageDialog( None, buttons=Gtk.ButtonsType.OK, type=Gtk.MessageType.ERROR)
 					d.props.icon_name = "gtk-dialog-error"
 					d.props.text = _("Failed to apply network settings")
 					d.props.secondary_text = lines[-1]
@@ -148,7 +148,7 @@ class Network(ServicePlugin):
 				raise Exception
 			a = inet_aton(address)
 		except:
-			e.props.secondary_icon_stock = gtk.STOCK_DIALOG_ERROR
+			e.props.secondary_icon_stock = Gtk.STOCK_DIALOG_ERROR
 			e.props.secondary_icon_tooltip_text = _("Invalid IP address")
 			raise
 			
@@ -160,12 +160,12 @@ class Network(ServicePlugin):
 			#print mask_ip4_address(a, netmask).encode("hex_codec"), masked.encode("hex_codec")
 			
 			if a == ip:
-				e.props.secondary_icon_stock = gtk.STOCK_DIALOG_ERROR
+				e.props.secondary_icon_stock = Gtk.STOCK_DIALOG_ERROR
 				e.props.secondary_icon_tooltip_text = _("IP address conflicts with interface %s which has the same address" % iface)
 				raise Exception
 			
 			elif mask_ip4_address(a, netmask) == masked:
-				e.props.secondary_icon_stock = gtk.STOCK_DIALOG_WARNING
+				e.props.secondary_icon_stock = Gtk.STOCK_DIALOG_WARNING
 				e.props.secondary_icon_tooltip_text = _("IP address overlaps with subnet of interface"
 					" %s, which has the following configuration %s/%s\nThis may cause incorrect network behavior" % (iface, inet_ntoa(ip), inet_ntoa(netmask)))
 				return

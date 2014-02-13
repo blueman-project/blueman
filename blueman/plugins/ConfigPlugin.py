@@ -17,16 +17,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 
-import gobject
+from gi.repository import GObject
 import weakref
 
-class ConfigPlugin(gobject.GObject):
+class ConfigPlugin(GObject.GObject):
 	__plugin__ = None
 	__priority__ = None
 	
 	__gsignals__ = {
 		#@param: self key value
-		'property-changed' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
+		'property-changed' : (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
 	}
 	
 	class props:
@@ -40,7 +40,7 @@ class ConfigPlugin(gobject.GObject):
 			return self.__dict__["Config"]().get(key)
 
 	def __init__(self, section=""):
-		gobject.GObject.__init__(self)
+		GObject.GObject.__init__(self)
 
 		self.props = ConfigPlugin.props(weakref.ref(self))
 		

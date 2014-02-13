@@ -1,5 +1,5 @@
-import gobject
-import gtk
+from gi.repository import GObject
+from gi.repository import Gtk
 from blueman.Sdp import *
 from blueman.Functions import *
 from blueman.main.SignalTracker import SignalTracker
@@ -19,12 +19,12 @@ def get_x_icon(icon_name, size):
     return pixbuf
 
 
-class ManagerDeviceMenu(gtk.Menu):
+class ManagerDeviceMenu(Gtk.Menu):
     __ops__ = {}
     __instances__ = []
 
     def __init__(self, blueman):
-        gtk.Menu.__init__(self)
+        GObject.GObject.__init__(self)
         self.Blueman = blueman
         self.SelectedDevice = None
 
@@ -44,7 +44,7 @@ class ManagerDeviceMenu(gtk.Menu):
     def __del__(self):
         dprint("deleting devicemenu")
 
-    #	gobject.GObject.__del__(self)
+    #	GObject.GObject.__del__(self)
 
 
     def popup(self, *args):
@@ -61,7 +61,7 @@ class ManagerDeviceMenu(gtk.Menu):
 
         self.Generate()
 
-        gtk.Menu.popup(self, *args)
+        Gtk.Menu.popup(self, *args)
 
     def clear(self):
         self.Signals.DisconnectAll()
@@ -110,7 +110,7 @@ class ManagerDeviceMenu(gtk.Menu):
             prog.message(_("Success!"))
 
             if service_id == "serial" and SERIAL_PORT_SVCLASS_ID in uuid16:
-                MessageArea.show_message(_("Serial port connected to %s") % args2[0], gtk.STOCK_DIALOG_INFO)
+                MessageArea.show_message(_("Serial port connected to %s") % args2[0], Gtk.STOCK_DIALOG_INFO)
             else:
                 MessageArea.close()
 
@@ -142,7 +142,7 @@ class ManagerDeviceMenu(gtk.Menu):
             fail()
             return
         try:
-            appl.SetTimeHint(gtk.get_current_event_time())
+            appl.SetTimeHint(Gtk.get_current_event_time())
         except:
             pass
 
@@ -271,7 +271,7 @@ class ManagerDeviceMenu(gtk.Menu):
             item.show()
             item.props.tooltip_text = _("Pair with the device")
 
-            item = gtk.SeparatorMenuItem()
+            item = Gtk.SeparatorMenuItem()
             item.show()
             self.append(item)
 
@@ -298,13 +298,13 @@ class ManagerDeviceMenu(gtk.Menu):
                 have_connectables = True
 
             if True in map(lambda x: x[0] >= 200, items) and (have_connectables or have_disconnectables):
-                item = gtk.SeparatorMenuItem()
+                item = Gtk.SeparatorMenuItem()
                 item.show()
                 items.append((199, item))
 
             if have_connectables:
-                item = gtk.MenuItem()
-                label = gtk.Label()
+                item = Gtk.MenuItem()
+                label = Gtk.Label()
                 label.set_markup(_("<b>Connect To:</b>"))
                 label.props.xalign = 0.0
 
@@ -315,8 +315,8 @@ class ManagerDeviceMenu(gtk.Menu):
                 items.append((0, item))
 
             if have_disconnectables:
-                item = gtk.MenuItem()
-                label = gtk.Label()
+                item = Gtk.MenuItem()
+                label = Gtk.Label()
                 label.set_markup(_("<b>Disconnect:</b>"))
                 label.props.xalign = 0.0
 
@@ -331,7 +331,7 @@ class ManagerDeviceMenu(gtk.Menu):
                 self.append(item)
 
             if items != []:
-                item = gtk.SeparatorMenuItem()
+                item = Gtk.SeparatorMenuItem()
                 item.show()
                 self.append(item)
 
@@ -358,7 +358,7 @@ class ManagerDeviceMenu(gtk.Menu):
                     self.Signals.Handle("gobject", browse_item, "activate", lambda x: self.Blueman.browse(device))
                     browse_item.props.sensitive = True
 
-            item = gtk.SeparatorMenuItem()
+            item = Gtk.SeparatorMenuItem()
             item.show()
             self.append(item)
 
@@ -410,7 +410,7 @@ class ManagerDeviceMenu(gtk.Menu):
             self.Signals.Handle(item, "activate", update_services)
             item.show()
 
-            item = gtk.SeparatorMenuItem()
+            item = Gtk.SeparatorMenuItem()
             item.show()
             self.append(item)
 
@@ -420,7 +420,7 @@ class ManagerDeviceMenu(gtk.Menu):
             item.show()
             item.props.tooltip_text = _("Remove this device from the known devices list")
 
-            item = gtk.SeparatorMenuItem()
+            item = Gtk.SeparatorMenuItem()
             item.show()
             self.append(item)
 

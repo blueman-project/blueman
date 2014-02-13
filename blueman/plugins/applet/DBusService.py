@@ -29,8 +29,8 @@ from blueman.main.Device import Device
 from blueman.main.applet.BluezAgent import TempAgent
 from blueman.bluez.Adapter import Adapter
 
-import gobject
-import gtk
+from gi.repository import GObject
+from gi.repository import Gtk
 import dbus
 
 
@@ -85,7 +85,7 @@ class DBusService(AppletPlugin):
         def on_timeout():
             dev.Disconnect(reply_handler=ok, error_handler=err)
 
-        gobject.timeout_add(1000, on_timeout)
+        GObject.timeout_add(1000, on_timeout)
 
     def on_device_disconnect(self, device):
         pass

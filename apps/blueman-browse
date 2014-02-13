@@ -7,8 +7,6 @@ _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if os.path.exists(os.path.join(_dirname, "CHANGELOG.md")):
     sys.path.insert(0, _dirname)
 
-import gtk
-import gobject
 from optparse import OptionParser
 import gettext
 import time
@@ -56,7 +54,7 @@ class Browse:
             spawn(args, True)
         except Exception as e:
             dprint(e)
-            d = gtk.MessageDialog(None, buttons=gtk.BUTTONS_OK, type=gtk.MESSAGE_ERROR)
+            d = Gtk.MessageDialog(None, buttons=Gtk.ButtonsType.OK, type=Gtk.MessageType.ERROR)
             d.props.text = _("Failed to launch \"%s\"") % args[0]
             d.props.secondary_text = "%s\n\n" % e + _("You can enter an alternate browser in service settings")
             d.run()
@@ -66,7 +64,7 @@ class Browse:
         d = DeviceSelectorDialog()
         resp = d.run()
         d.destroy()
-        if resp == gtk.RESPONSE_ACCEPT:
+        if resp == Gtk.ResponseType.ACCEPT:
             sel = d.GetSelection()
             if sel:
                 return sel[1]

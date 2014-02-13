@@ -19,7 +19,7 @@
 from blueman.plugins.MechanismPlugin import MechanismPlugin
 import os
 import subprocess
-import gobject
+from gi.repository import GObject
 from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler
 
 class Network(MechanismPlugin):
@@ -62,7 +62,7 @@ class Network(MechanismPlugin):
 			p = subprocess.Popen(["/usr/sbin/avahi-autoipd", "-k", "pan0"], bufsize=128)
 		
 		#reap the child
-		gobject.child_watch_add(p.pid, lambda pid, cond: 0)
+		GObject.child_watch_add(p.pid, lambda pid, cond: 0)
 	
 	def EnableNetwork(self, ip_address, netmask, dhcp_handler, caller):
 		nc = NetConf.get_default()

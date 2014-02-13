@@ -16,10 +16,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 
-
-import gtk
+import gi
+gi.require_version("Gtk", "2.0")
+from gi.repository import Gtk
 import cairo
-import gobject
+from gi.repository import GObject
 import weakref
 
 class LinearController(object):
@@ -38,13 +39,13 @@ class BezierController(LinearController):
 	def get_value(self, input):
 		return self.__b(input, self.start, self.curvature, self.end)
 
-class AnimBase(gobject.GObject):
+class AnimBase(GObject.GObject):
 	__gsignals__ = {
-		'animation-finished' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
+		'animation-finished' : (GObject.SignalFlags.RUN_LAST, None, ()),
 	}
 	
 	def __init__(self, state=1.0):
-		gobject.GObject.__init__(self)
+		GObject.GObject.__init__(self)
 		self._source = None
 		self._state = state
 		self.frozen = False
@@ -100,7 +101,7 @@ class AnimBase(gobject.GObject):
 		self._duration = duration		
 		
 		if self._source:
-			gobject.source_remove(self._source)
+			GObject.source_remove(self._source)
 		
 		try:
 			self._step_size = (end-start) / (self.fps * (duration/1000.0))
@@ -111,7 +112,7 @@ class AnimBase(gobject.GObject):
 			
 
 		self._state_changed(self._state)
-		self._source = gobject.timeout_add(int(1.0/self.fps*1000), self._do_transition)
+		self._source = GObject.timeout_add(int(1.0/self.fps*1000), self._do_transition)
 			
 		
 	def _state_changed(self, state):
@@ -139,7 +140,7 @@ class TreeRowFade(AnimBase):
 		
 		self.sig = self.tw.connect_after("expose-event", self.on_expose)
 		
-		self.row = gtk.TreeRowReference(tw.props.model, path)
+		self.row = Gtk.TreeRowReference(tw.props.model, path)
 		self.style = tw.rc_get_style()
 		self.columns = None
 
@@ -163,7 +164,7 @@ class TreeRowFade(AnimBase):
 			
 		path = self.row.get_path()
 		
-		area = gtk.gdk.Rectangle()
+		area = ()
 		
 		cr = event.window.cairo_create()
 		
@@ -214,7 +215,7 @@ class TreeRowColorFade(TreeRowFade):
 			
 		path = self.row.get_path()
 		
-		area = gtk.gdk.Rectangle()
+		area = ()
 		
 		cr = event.window.cairo_create()
 		
@@ -247,7 +248,7 @@ class CellFade(AnimBase):
 		self.frozen = False
 		self.sig = tw.connect_after("expose-event", self.on_expose)
 		
-		self.row = gtk.TreeRowReference(tw.props.model, path)
+		self.row = Gtk.TreeRowReference(tw.props.model, path)
 		self.selection = tw.get_selection()
 		self.style = tw.rc_get_style()
 		self.columns = []
@@ -273,7 +274,7 @@ class CellFade(AnimBase):
 			
 		path = self.row.get_path()
 		
-		area = gtk.gdk.Rectangle()
+		area = ()
 		
 		cr = event.window.cairo_create()
 		
@@ -294,8 +295,8 @@ class CellFade(AnimBase):
 			if not (isected.height == 0 or isected.height == 0):
 				#print isected
 				#print rect
-				pixmap = gtk.gdk.Pixmap(event.window, isected.width, isected.height)
-				gc = gtk.gdk.GC(event.window)
+				pixmap = Gdk.Pixmap(event.window, isected.width, isected.height)
+				gc = Gdk.GC(event.window)
 				pixmap.draw_drawable(gc, event.window, isected.x, isected.y, 0, 0, isected.width, isected.height)
 			
 				detail = "cell_even" if path[0] % 2 == 0 else "cell_odd"
@@ -305,7 +306,7 @@ class CellFade(AnimBase):
 				selected = self.selection.get_selected()[1] and self.tw.props.model.get_path(self.selection.get_selected()[1]) == path
 				
 				self.tw.style.paint_flat_box(event.window, 
-							     gtk.STATE_SELECTED if (selected) else gtk.STATE_NORMAL, 
+							     Gtk.StateType.SELECTED if (selected) else Gtk.StateType.NORMAL, 
 							     0, 
 							     isected, 
 							     self.tw, 

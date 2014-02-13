@@ -1,12 +1,15 @@
-import gtk
+import gi
+gi.require_version("Gtk", "2.0")
+
+from gi.repository import Gtk
 from blueman.gui.DeviceSelectorWidget import DeviceSelectorWidget
 
 
-class DeviceSelectorDialog(gtk.Dialog):
+class DeviceSelectorDialog(Gtk.Dialog):
     def __init__(self, title=_("Select Device"), parent=None, discover=True):
 
-        gtk.Dialog.__init__(self, title, parent, 0, (gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT,
-                                                     gtk.STOCK_OK, gtk.RESPONSE_ACCEPT))
+        GObject.GObject.__init__(self, title, parent, 0, (Gtk.STOCK_CANCEL, Gtk.ResponseType.REJECT,
+                                                     Gtk.STOCK_OK, Gtk.ResponseType.ACCEPT))
 
         self.set_has_separator(False)
         self.props.resizable = False
@@ -17,12 +20,12 @@ class DeviceSelectorDialog(gtk.Dialog):
         #self.selector.destroy()
         #self.selector = None
 
-        align = gtk.Alignment(0.5, 0.5, 1.0, 1.0)
+        align = Gtk.Alignment.new(0.5, 0.5, 1.0, 1.0)
         align.add(self.selector)
 
         align.set_padding(6, 6, 6, 6)
         align.show()
-        self.vbox.pack_start(align)
+        self.vbox.pack_start(align, True, True, 0)
 
 
         #(adapter, device)
@@ -36,7 +39,7 @@ class DeviceSelectorDialog(gtk.Dialog):
         self.selector.List.connect("row-activated", self.on_row_activated)
 
     def on_row_activated(self, treeview, path, view_column, *args):
-        self.response(gtk.RESPONSE_ACCEPT)
+        self.response(Gtk.ResponseType.ACCEPT)
 
     def on_adapter_changed(self, devlist, adapter):
         self.selection = None

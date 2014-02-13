@@ -17,15 +17,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 
-import gobject
+from gi.repository import GObject
 
-import gtk
+from gi.repository import Gtk
 import traceback
 
 from blueman.plugins.ConfigurablePlugin import ConfigurablePlugin
 from functools import partial
 
-ictheme = gtk.icon_theme_get_default()
+ictheme = Gtk.IconTheme.get_default()
 
 class MethodAlreadyExists(Exception):
 	pass

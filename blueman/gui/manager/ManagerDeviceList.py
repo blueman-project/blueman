@@ -25,8 +25,9 @@ from blueman.DeviceClass import get_minor_class, get_major_class
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.Sdp import *
 
-import gtk
-import pango
+from gi.repository import Gtk
+from gi.repository import Gdk
+from gi.repository import Pango
 from blueman.Constants import *
 from blueman.Functions import *
 import cgi
@@ -36,19 +37,19 @@ from blueman.gui.GtkAnimation import TreeRowColorFade, TreeRowFade, CellFade
 class ManagerDeviceList(DeviceList):
 	
 	def __init__(self, adapter=None, inst=None):
-		cr = gtk.CellRendererText()
-		cr.props.ellipsize = pango.ELLIPSIZE_END
+		cr = Gtk.CellRendererText()
+		cr.props.ellipsize = Pango.EllipsizeMode.END
 		data = [
 			#device picture
-			["device_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":0}, None],
+			["device_pb", 'GdkPixbuf', Gtk.CellRendererPixbuf(), {"pixbuf":0}, None],
 			
 			#device caption
 			["caption", str, cr, {"markup":1}, None, {"expand": True}],
 
 			
-			["rssi_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":2}, None, {"spacing": 0}],
-			["lq_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":3}, None, {"spacing": 0}],
-			["tpl_pb", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf":4}, None, {"spacing": 0}],
+			["rssi_pb", 'GdkPixbuf', Gtk.CellRendererPixbuf(), {"pixbuf":2}, None, {"spacing": 0}],
+			["lq_pb", 'GdkPixbuf', Gtk.CellRendererPixbuf(), {"pixbuf":3}, None, {"spacing": 0}],
+			["tpl_pb", 'GdkPixbuf', Gtk.CellRendererPixbuf(), {"pixbuf":4}, None, {"spacing": 0}],
 			
 			#trusted/bonded icons
 			#["tb_icons", 'PyObject', CellRendererPixbufTable(), {"pixbuffs":5}, None],
@@ -63,8 +64,8 @@ class ManagerDeviceList(DeviceList):
 			["lq", float],
 			["tpl", float],
 			["orig_icon", 'GdkPixbuf'],
-			["cell_fader", gobject.TYPE_PYOBJECT],
-			["row_fader", gobject.TYPE_PYOBJECT],
+			["cell_fader", GObject.TYPE_PYOBJECT],
+			["row_fader", GObject.TYPE_PYOBJECT],
 			["levels_visible", bool],
 			["initial_anim", bool],
 		]
@@ -85,7 +86,7 @@ class ManagerDeviceList(DeviceList):
 		self.connect("drag_data_received", self.drag_recv)
 		self.connect("drag-motion", self.drag_motion)
 
-		self.drag_dest_set(gtk.DEST_DEFAULT_ALL, [], gtk.gdk.ACTION_COPY|gtk.gdk.ACTION_DEFAULT)
+		self.drag_dest_set(Gtk.DestDefaults.ALL, [], Gdk.DragAction.COPY|Gdk.DragAction.DEFAULT)
 		self.drag_dest_add_uri_targets()
 		
 		self.set_search_equal_func(self.search_func)
@@ -93,7 +94,7 @@ class ManagerDeviceList(DeviceList):
 	def do_device_found(self, device):
 		iter = self.find_device(device)
 		if iter:
-			anim = TreeRowColorFade(self, self.props.model.get_path(iter), gtk.gdk.color_parse("blue"))
+			anim = TreeRowColorFade(self, self.props.model.get_path(iter), Gdk.color_parse("blue"))
 			anim.animate(start=0.8, end=1.0)
 		
 		
@@ -140,24 +141,24 @@ class ManagerDeviceList(DeviceList):
 							found = True
 							break
 					if found:
-						drag_context.drag_status(gtk.gdk.ACTION_COPY, timestamp)
+						drag_context.drag_status(Gdk.DragAction.COPY, timestamp)
 						self.set_cursor(path[0])
 						return True
 					else:
-						drag_context.drag_status(gtk.gdk.ACTION_DEFAULT, timestamp)
+						drag_context.drag_status(Gdk.DragAction.DEFAULT, timestamp)
 						return False
 				else:
-					drag_context.drag_status(gtk.gdk.ACTION_COPY, timestamp)
+					drag_context.drag_status(Gdk.DragAction.COPY, timestamp)
 					self.set_cursor(path[0])
 					return True
 		else:
-			drag_context.drag_status(gtk.gdk.ACTION_DEFAULT, timestamp)
+			drag_context.drag_status(Gdk.DragAction.DEFAULT, timestamp)
 			return False			
 
 	
 	def on_event_clicked(self, widget, event):
 
-		if event.type==gtk.gdk.BUTTON_PRESS and event.button==3:
+		if event.type==Gdk.EventType.BUTTON_PRESS and event.button==3:
 			path = self.get_path_at_pos(int(event.x), int(event.y))
 			if path != None:
 				row = self.get(path[0][0], "device")
@@ -215,7 +216,7 @@ class ManagerDeviceList(DeviceList):
 	def device_add_event(self, device):
 		if device.Fake:
 			self.PrependDevice(device)
-			gobject.idle_add(self.props.vadjustment.set_value , 0)
+			GObject.idle_add(self.props.vadjustment.set_value , 0)
 			return
 
 		if self.Blueman.Config.props.latest_last:

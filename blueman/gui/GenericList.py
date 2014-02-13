@@ -16,13 +16,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
-import gtk
+
+import gi
+gi.require_version("Gtk", "2.0")
+from gi.repository import Gtk
+from gi.repository import GObject
 
 
-class GenericList(gtk.TreeView):
+class GenericList(Gtk.TreeView):
 
 	def __init__(self, data):
-		gtk.TreeView.__init__(self)
+		GObject.GObject.__init__(self)
 		self.selection = self.get_selection()
 		self._load(data)
 		
@@ -40,7 +44,7 @@ class GenericList(gtk.TreeView):
 			
 		types = tuple(types)
 		
-		self.liststore = gtk.ListStore(*types)
+		self.liststore = Gtk.ListStore(*types)
 		self.set_model(self.liststore)
 		column = None
 		for i in range(len(data)):
@@ -50,9 +54,9 @@ class GenericList(gtk.TreeView):
 			
 			if len(data[i]) == 5 or len(data[i]) == 6:
 
-				column = gtk.TreeViewColumn(data[i][4])
+				column = Gtk.TreeViewColumn(data[i][4])
 				
-				column.pack_start(data[i][2])
+				column.pack_start(data[i][2], True)
 				column.set_attributes(data[i][2], **data[i][3])				
 				
 				
@@ -72,7 +76,7 @@ class GenericList(gtk.TreeView):
                 	
     
     	def delete(self, id):
-		if type(id) == gtk.TreeIter:
+		if type(id) == Gtk.TreeIter:
 			iter = id
 		else:
 			iter = self.get_iter(id)
@@ -129,7 +133,7 @@ class GenericList(gtk.TreeView):
     		
     		
     	def set(self, id, **cols):
-		if type(id) == gtk.TreeIter:
+		if type(id) == Gtk.TreeIter:
 			iter = id
 		else:
 			iter = self.get_iter(id)
@@ -147,7 +151,7 @@ class GenericList(gtk.TreeView):
 		ret = {}
 
 		if id != None:
-			if type(id) == gtk.TreeIter:
+			if type(id) == Gtk.TreeIter:
 				iter = id
 			else:
 				iter = self.get_iter(id)

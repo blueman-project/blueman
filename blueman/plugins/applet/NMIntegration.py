@@ -10,9 +10,9 @@ from blueman.main.SignalTracker import SignalTracker
 
 import blueman.bluez as Bluez
 
-import gobject
+from gi.repository import GObject
 import dbus
-import gtk
+from gi.repository import Gtk
 
 if not HAL_ENABLED:
     raise ImportError("NMIntegration (deprecated) requires hal support")
@@ -57,13 +57,13 @@ class NMIntegration(AppletPlugin):
             dprint("Registered modem")
 
         def err(excp):
-            d = gtk.MessageDialog(None, type=gtk.MESSAGE_WARNING)
+            d = Gtk.MessageDialog(None, type=Gtk.MessageType.WARNING)
             d.props.icon_name = "blueman"
             d.props.text = _("CDMA or GSM not supported")
             d.props.secondary_text = _(
                 "The device %s does not appear to support GSM/CDMA.\nThis connection will not work.") % props["Alias"]
 
-            d.add_button(gtk.STOCK_OK, gtk.RESPONSE_NO)
+            d.add_button(Gtk.STOCK_OK, Gtk.ResponseType.NO)
             resp = d.run()
             d.destroy()
 

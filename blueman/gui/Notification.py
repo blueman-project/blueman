@@ -17,12 +17,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 
-import pynotify
-import gtk
+import gi
+gi.require_version("Gtk", "2.0")
+from gi.repository import Notify
+from gi.repository import Gtk
 from blueman.Functions import dprint
 from blueman.gui.GtkAnimation import AnimBase, BezierController
 
-pynotify.init("blueman")
+Notify.init("blueman")
 
 OPACITY_START = 0.7
 
@@ -34,9 +36,9 @@ class Fade(AnimBase):
 	def state_changed(self, state):
 		self.window.props.opacity = state
 
-class NotificationDialog(gtk.MessageDialog):
+class NotificationDialog(Gtk.MessageDialog):
 	def __init__(self, summary, message, timeout=-1, actions=None, actions_cb=None, pixbuf=None, status_icon=None):
-		gtk.MessageDialog.__init__(self, parent=None, flags=0, type=gtk.MESSAGE_QUESTION, buttons=gtk.BUTTONS_NONE, message_format=None)
+		GObject.GObject.__init__(self, parent=None, flags=0, type=Gtk.MessageType.QUESTION, buttons=Gtk.ButtonsType.NONE, message_format=None)
 		
 		self.bubble = NotificationBubble(summary, message, pixbuf=pixbuf)
 		
@@ -55,12 +57,12 @@ class NotificationDialog(gtk.MessageDialog):
 				self.actions[i] = action_id
 				button = self.add_button(action_name, i)
 				if icon_name:
-					im = gtk.image_new_from_icon_name(icon_name, gtk.ICON_SIZE_BUTTON)
+					im = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
 					im.show()
 					button.props.image = im
 				i += 1
 				
-		self.actions[gtk.RESPONSE_DELETE_EVENT] = "close"
+		self.actions[Gtk.ResponseType.DELETE_EVENT] = "close"
 		
 		self.props.secondary_use_markup = True
 		self.resize(350, 50)
@@ -73,7 +75,7 @@ class NotificationDialog(gtk.MessageDialog):
 		self.props.text = summary
 		self.props.secondary_text = message
 		
-		self.props.window_position = gtk.WIN_POS_CENTER
+		self.props.window_position = Gtk.WindowPosition.CENTER
 
 		if pixbuf:
 			self.set_icon_from_pixbuf(pixbuf)
@@ -83,12 +85,12 @@ class NotificationDialog(gtk.MessageDialog):
 		
 		self.entered = False
 		def on_enter(widget, event):
-			if self.window == gtk.gdk.window_at_pointer()[0] or not self.entered:
+			if self.window == Gdk.window_at_pointer()[0] or not self.entered:
 				self.fader.animate(start=self.fader.get_state(), end=1.0, duration=500)
 				self.entered = True
 		
 		def on_leave(widget, event):
-			if not gtk.gdk.window_at_pointer():
+			if not Gdk.window_at_pointer():
 				self.entered = False
 				self.fader.animate(start=self.fader.get_state(), end=OPACITY_START, duration=500)
 		
@@ -136,14 +138,14 @@ class NotificationDialog(gtk.MessageDialog):
 		self.present()
 		
 	def set_icon_from_pixbuf(self, pixbuf):
-		im = gtk.image_new_from_pixbuf(pixbuf)
+		im = Gtk.Image.new_from_pixbuf(pixbuf)
 		self.set_image(im)
 		im.show()
 	
 
-class NotificationBubble(pynotify.Notification):
+class NotificationBubble(Notify.Notification):
 	def __init__(self, summary, message, timeout=-1, actions= None, actions_cb=None, pixbuf=None, status_icon=None):
-		pynotify.Notification.__init__(self, summary, message)
+		Notify.Notification.__init__(self, summary, message)
 
 		def on_notification_closed(n, *args):
 			self.disconnect(closed_sig)
@@ -179,10 +181,10 @@ class NotificationBubble(pynotify.Notification):
 class Notification(object):
 	@staticmethod
 	def actions_supported():
-		return "actions" in pynotify.get_server_caps()
+		return "actions" in Notify.get_server_caps()
 	
 	def __new__(cls, summary, message, timeout=-1, actions= None, actions_cb=None, pixbuf=None, status_icon=None):
-		if not "actions" in pynotify.get_server_caps():
+		if not "actions" in Notify.get_server_caps():
 			if actions != None:
 				return NotificationDialog(summary, message, timeout, actions, actions_cb, pixbuf, status_icon)
 				

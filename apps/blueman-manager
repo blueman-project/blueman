@@ -22,9 +22,11 @@
 
 import os.path
 import sys
-import gtk
 import dbus, dbus.glib
-import gobject
+import gi
+gi.require_version("Gtk", "2.0")
+from gi.repository import Gtk
+from gi.repository import GObject
 
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -54,7 +56,7 @@ enable_rgba_colormap()
 class Blueman:
     def __init__(self):
 
-        self.Builder = gtk.Builder()
+        self.Builder = Gtk.Builder()
         self.Builder.set_translation_domain("blueman")
         self.Builder.add_from_file(UI_PATH + "/manager-main.ui")
 
@@ -65,7 +67,7 @@ class Blueman:
 
         vbox = self.Builder.get_object("vbox1")
         area = MessageArea()
-        vbox.pack_start(area, False)
+        vbox.pack_start(area, False, False, 0)
         vbox.reorder_child(area, 3)
 
         def do_present(time):
@@ -82,7 +84,7 @@ class Blueman:
             (x, y) = self.window.get_position()
             self.Config.props.window_posx = x
             self.Config.props.window_posy = y
-            gtk.main_quit()
+            Gtk.main_quit()
 
         def on_property_changed(config, key, value):
             if key == "show_toolbar":
@@ -185,7 +187,7 @@ class Blueman:
                 self.window.show()
 
         dbus.SystemBus().watch_name_owner('org.bluez', on_bluez_name_owner_changed)
-        gtk.main()
+        Gtk.main()
 
     def on_adapter_changed(self, list, adapter):
         if adapter != None:

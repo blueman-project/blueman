@@ -21,8 +21,8 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.CommonUi import show_about_dialog
 from blueman.gui.applet.PluginDialog import PluginDialog
 
-import gobject
-import gtk
+from gi.repository import GObject
+from gi.repository import Gtk
 
 class StandardItems(AppletPlugin):
 	__depends__ = ["StatusIcon", "Menu"]
@@ -33,14 +33,14 @@ class StandardItems(AppletPlugin):
 	def on_load(self, applet):
 		self.Applet = applet
 		
-		applet.Plugins.Menu.Register(self, gtk.SeparatorMenuItem(), 21)
+		applet.Plugins.Menu.Register(self, Gtk.SeparatorMenuItem(), 21)
 		
 		self.new_dev = create_menuitem(_("_Setup New Device")+"...", get_icon("gtk-new", 16))
 		self.new_dev.connect("activate", self.on_setup_new)
 		
 		self.Applet.Plugins.Menu.Register(self, self.new_dev, 30)
 		
-		self.Applet.Plugins.Menu.Register(self, gtk.SeparatorMenuItem(), 31)
+		self.Applet.Plugins.Menu.Register(self, Gtk.SeparatorMenuItem(), 31)
 		
 		self.send = create_menuitem(_("Send _Files to Device")+"...", get_icon("blueman-send-file", 16))
 		self.send.connect("activate", self.on_send)
@@ -52,10 +52,10 @@ class StandardItems(AppletPlugin):
 		
 		self.Applet.Plugins.Menu.Register(self, self.browse, 50)
 		
-		self.Applet.Plugins.Menu.Register(self, gtk.SeparatorMenuItem(), 51)
+		self.Applet.Plugins.Menu.Register(self, Gtk.SeparatorMenuItem(), 51)
 		
 
-		self.devices = gtk.MenuItem(_("_Devices")+"...")
+		self.devices = Gtk.MenuItem(_("_Devices")+"...")
 		self.devices.connect("activate", self.on_devices)
 		
 		self.Applet.Plugins.Menu.Register(self, self.devices, 60)
@@ -70,9 +70,9 @@ class StandardItems(AppletPlugin):
 		
 		self.Applet.Plugins.Menu.Register(self, self.services, 80)
 		
-		self.Applet.Plugins.Menu.Register(self, gtk.SeparatorMenuItem(), 81)
+		self.Applet.Plugins.Menu.Register(self, Gtk.SeparatorMenuItem(), 81)
 		
-		about = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
+		about = Gtk.ImageMenuItem(Gtk.STOCK_ABOUT)
 		self.Applet.Plugins.Menu.Register(self, about, 90)
 		
 		self.plugins = create_menuitem(_("_Plugins"), get_icon("blueman-plugin", 16))
@@ -136,13 +136,13 @@ class StandardItems(AppletPlugin):
 	def on_about(self, menu_item):
 		about = show_about_dialog("Blueman "+_("applet"), run=False)
 		
-		button = gtk.Button(_("Plugins"))
-		button.set_image(gtk.image_new_from_icon_name("blueman-plugin", gtk.ICON_SIZE_BUTTON))
+		button = Gtk.Button(_("Plugins"))
+		button.set_image(Gtk.Image.new_from_icon_name("blueman-plugin", Gtk.IconSize.BUTTON))
 		button.show()
 		
 		button.connect("clicked", self.on_plugins)
 		
-		about.action_area.pack_start(button)
+		about.action_area.pack_start(button, True, True, 0)
 		about.action_area.reorder_child(button, 0)
 		
 		about.run()

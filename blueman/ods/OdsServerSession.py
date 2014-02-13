@@ -17,17 +17,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 
-import gobject
+from gi.repository import GObject
 from blueman.ods.OdsBase import OdsBase
 
 class OdsServerSession(OdsBase):
 	__gsignals__ = {
-		'cancelled' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, ()),
-		'disconnected' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, ()),
-		'transfer-started' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
-		'transfer-progress' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
-		'transfer-completed' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, ()),
-		'error-occurred' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
+		'cancelled' : (GObject.SignalFlags.NO_HOOKS, None, ()),
+		'disconnected' : (GObject.SignalFlags.NO_HOOKS, None, ()),
+		'transfer-started' : (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
+		'transfer-progress' : (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+		'transfer-completed' : (GObject.SignalFlags.NO_HOOKS, None, ()),
+		'error-occurred' : (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
 	}
 	
 	def __init__(self, obj_path):

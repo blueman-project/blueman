@@ -17,8 +17,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 
-import gobject
-import gtk
+import gi
+gi.require_version("Gtk", "2.0")
+
+from gi.repository import GObject
+from gi.repository import Gtk
 
 class Animation:
 	
@@ -60,11 +63,11 @@ class Animation:
 			self.start()
 	
 	def start(self):
-		self.timer = gobject.timeout_add (self.rate, self._animation)
+		self.timer = GObject.timeout_add (self.rate, self._animation)
 		
 	def stop(self):
 		if self.timer:
-			gobject.source_remove(self.timer)
+			GObject.source_remove(self.timer)
 			self.image.set_from_pixbuf(self.pixbuffs[0])
 			self.timer = None
 		

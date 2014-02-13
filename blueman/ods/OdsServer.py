@@ -16,18 +16,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
-import gobject
+from gi.repository import GObject
 from blueman.ods.OdsBase import OdsBase
 from blueman.ods.OdsServerSession import OdsServerSession
 
 class OdsServer(OdsBase):
 	__gsignals__ = {
-		'started' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, ()),
-		'stopped' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, ()),
-		'closed' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, ()),
-		'error-occured' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
-		'session-created' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
-		'session-removed' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+		'started' : (GObject.SignalFlags.NO_HOOKS, None, ()),
+		'stopped' : (GObject.SignalFlags.NO_HOOKS, None, ()),
+		'closed' : (GObject.SignalFlags.NO_HOOKS, None, ()),
+		'error-occured' : (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
+		'session-created' : (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+		'session-removed' : (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
 	}
 	
 	def __init__(self, obj_path):

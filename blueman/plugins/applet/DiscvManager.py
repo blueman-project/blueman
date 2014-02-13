@@ -4,8 +4,8 @@ import gettext
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.SignalTracker import SignalTracker
 
-import gobject
-import gtk
+from gi.repository import GObject
+from gi.repository import Gtk
 
 
 class DiscvManager(AppletPlugin):
@@ -45,7 +45,7 @@ class DiscvManager(AppletPlugin):
         del self.item
 
         if self.timeout:
-            gobject.source_remove(self.timeout)
+            GObject.source_remove(self.timeout)
 
         self.Signals.DisconnectAll()
 
@@ -90,22 +90,22 @@ class DiscvManager(AppletPlugin):
             if key == "DiscoverableTimeout":
                 if value == 0: #always visible
                     if self.timeout != None:
-                        gobject.source_remove(self.timeout)
+                        GObject.source_remove(self.timeout)
                     self.time_left = -1
                     self.timeout = None
                 else:
                     if self.time_left > -1:
                         if self.timeout != None:
-                            gobject.source_remove(self.timeout)
+                            GObject.source_remove(self.timeout)
                     self.time_left = value
 
-                    self.timeout = gobject.timeout_add(1000, self.on_update)
+                    self.timeout = GObject.timeout_add(1000, self.on_update)
                     return
 
             elif (key == "Discoverable" and not value) or (key == "Powered" and not value):
                 dprint("Stop")
                 if self.timeout != None:
-                    gobject.source_remove(self.timeout)
+                    GObject.source_remove(self.timeout)
                 self.time_left = -1
                 self.timeout = None
 

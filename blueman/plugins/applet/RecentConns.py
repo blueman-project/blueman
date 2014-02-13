@@ -1,5 +1,6 @@
 import os
-import gtk
+from gi.repository import Gtk
+from gi.repository import Gdk
 import dbus
 import gettext
 import time
@@ -7,7 +8,6 @@ import atexit
 import weakref
 import pickle
 import base64
-import gtk.gdk
 import zlib
 from blueman.Functions import *
 from blueman.main.Device import Device
@@ -37,7 +37,7 @@ def store_state():
         pass
 
 
-class RecentConns(AppletPlugin, gtk.Menu):
+class RecentConns(AppletPlugin, Gtk.Menu):
     __depends__ = ["Menu"]
     __icon__ = "document-open-recent"
     __description__ = _("Provides a menu item that contains last used connections for quick access")
@@ -61,7 +61,7 @@ class RecentConns(AppletPlugin, gtk.Menu):
     def on_load(self, applet):
         self.Applet = applet
         self.Adapters = {}
-        gtk.Menu.__init__(self)
+        GObject.GObject.__init__(self)
         if not RecentConns.atexit_registered:
             atexit.register(store_state)
             RecentConns.atexit_registered = True
@@ -70,7 +70,7 @@ class RecentConns(AppletPlugin, gtk.Menu):
                                     get_icon("document-open-recent", 16))
 
         self.Applet.Plugins.Menu.Register(self, self.Item, 52)
-        self.Applet.Plugins.Menu.Register(self, gtk.SeparatorMenuItem(), 53)
+        self.Applet.Plugins.Menu.Register(self, Gtk.SeparatorMenuItem(), 53)
 
         self.Item.set_submenu(self)
 
@@ -147,7 +147,7 @@ class RecentConns(AppletPlugin, gtk.Menu):
         def each(child):
             self.remove(child)
 
-        self.foreach(each)
+        self.foreach(each, None)
 
         RecentConns.items.sort(compare_by("time"), reverse=True)
         for i in RecentConns.items[self.get_option("max_items"):]:

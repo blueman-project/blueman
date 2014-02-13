@@ -21,7 +21,7 @@ import tty
 import termios
 import os
 import subprocess
-import gobject
+from gi.repository import GObject
 import errno
 import re
 
@@ -50,15 +50,15 @@ pppd_errors[19] = """We failed to authenticate ourselves to the peer."""
 class PPPException(Exception):
 	pass
 
-class PPPConnection(gobject.GObject):
+class PPPConnection(GObject.GObject):
 	__gsignals__ = {
 		#arg: interface name eg. ppp0
-		'connected' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
-		'error-occurred' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+		'connected' : (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+		'error-occurred' : (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
 
 	}
 	def __init__(self, port, number="*99#", apn="", user="", pwd=""):
-		gobject.GObject.__init__(self)
+		GObject.GObject.__init__(self)
 		
 		self.apn = apn
 		self.number = number

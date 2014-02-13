@@ -17,16 +17,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 
-import gtk
+from gi.repository import Gtk
 from blueman.Constants import *
 from blueman.Functions import *
 
 from blueman.gui.GenericList import GenericList
 import weakref
 
-class SettingsWidget(gtk.VBox):
+class SettingsWidget(Gtk.VBox):
 	def __init__(self, inst):
-		gtk.VBox.__init__(self)
+		GObject.GObject.__init__(self)
 		self.inst = inst
 		self.props.spacing = 2
 		
@@ -37,7 +37,7 @@ class SettingsWidget(gtk.VBox):
 		for k, v in self.inst.__class__.__options__.iteritems():
 			if len(v) > 2:
 					
-				l = gtk.Label(v["name"])
+				l = Gtk.Label(label=v["name"])
 				l.props.xalign = 0.0
 					
 				w = self.get_control_widget(k, v)
@@ -46,13 +46,13 @@ class SettingsWidget(gtk.VBox):
 				
 				self.pack_start(w, False, False)
 				
-				l = gtk.Label("<i>"+v["desc"]+"</i>")
+				l = Gtk.Label(label="<i>"+v["desc"]+"</i>")
 				l.set_line_wrap(True)
 				l.props.use_markup = True
 				l.props.xalign = 0.0
 				self.pack_start(l, False, False)
 				
-				sep = gtk.HSeparator()
+				sep = Gtk.HSeparator()
 				sep.props.height_request = 10
 				self.pack_start(sep, False, False)
 				
@@ -68,18 +68,18 @@ class SettingsWidget(gtk.VBox):
 			return params["widget"](self.inst, opt, params)
 			
 		elif params["type"] == bool:
-			c = gtk.CheckButton(params["name"])
+			c = Gtk.CheckButton(params["name"])
 			
 			c.props.active = self.inst.get_option(opt)
 			c.connect("toggled", self.handle_change, opt, params, "active")
 			return c
 			
 		elif params["type"] == int:
-			b = gtk.HBox()
-			l = gtk.Label(params["name"])
+			b = Gtk.HBox()
+			l = Gtk.Label(label=params["name"])
 			b.pack_start(l, False, False)
 			
-			r = gtk.SpinButton()
+			r = Gtk.SpinButton()
 			b.pack_start(r, False, False)
 			b.props.spacing = 6
 			
@@ -93,11 +93,11 @@ class SettingsWidget(gtk.VBox):
 			return b
 			
 		elif params["type"] == str:
-			b = gtk.HBox()
-			l = gtk.Label(params["name"])
+			b = Gtk.HBox()
+			l = Gtk.Label(label=params["name"])
 			b.pack_start(l, False, False)
 			
-			e = gtk.Entry()
+			e = Gtk.Entry()
 			b.pack_start(e, False, False)
 			b.props.spacing = 6
 			
@@ -110,13 +110,13 @@ class SettingsWidget(gtk.VBox):
 		
 		
 
-class PluginDialog(gtk.Dialog):
+class PluginDialog(Gtk.Dialog):
 	def __init__(self, applet):
-		gtk.Dialog.__init__(self, buttons=(gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE))
+		GObject.GObject.__init__(self, buttons=(Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE))
 		
 		self.applet = applet
 		
-		self.Builder = gtk.Builder()
+		self.Builder = Gtk.Builder()
 		self.Builder.set_translation_domain("blueman")
 		self.Builder.add_from_file(UI_PATH +"/applet-plugins-widget.ui")
 		
@@ -144,25 +144,25 @@ class PluginDialog(gtk.Dialog):
 		
 		ref = weakref.ref(self)
 		
-		self.vbox.pack_start(widget)
+		self.vbox.pack_start(widget, True, True, 0)
 		
-		cr = gtk.CellRendererToggle()
+		cr = Gtk.CellRendererToggle()
 		cr.connect("toggled", lambda *args: ref() and ref().on_toggled(*args))
 		
 		data = [
 			["active", bool, cr, {"active":0, "activatable":1, "visible":1}, None],
 			["activatable", bool],
-			["icon", str, gtk.CellRendererPixbuf(), {"icon-name":2}, None],
+			["icon", str, Gtk.CellRendererPixbuf(), {"icon-name":2}, None],
 			
 			#device caption
-			["desc", str, gtk.CellRendererText(), {"markup":3}, None, {"expand": True}],
+			["desc", str, Gtk.CellRendererText(), {"markup":3}, None, {"expand": True}],
 			["name", str]
 		]
 
 		
 		self.list = GenericList(data)
-		#self.sorted = gtk.TreeModelSort(self.list.liststore)
-		self.list.liststore.set_sort_column_id(3, gtk.SORT_ASCENDING)
+		#self.sorted = Gtk.TreeModelSort(self.list.liststore)
+		self.list.liststore.set_sort_column_id(3, Gtk.SortType.ASCENDING)
 		self.list.liststore.set_sort_func(3, self.list_compare_func)
 		
 		self.list.selection.connect("changed", lambda *args: ref() and ref().on_selection_changed(*args))
@@ -301,14 +301,14 @@ class PluginDialog(gtk.Dialog):
 				to_unload.append(dep)
 				
 		if to_unload != []:
-			dialog = gtk.MessageDialog(self, type=gtk.MESSAGE_QUESTION, buttons=gtk.BUTTONS_YES_NO)
+			dialog = Gtk.MessageDialog(self, type=Gtk.MessageType.QUESTION, buttons=Gtk.ButtonsType.YES_NO)
 			dialog.props.secondary_use_markup = True
 			dialog.props.icon_name = "blueman"
 			dialog.props.text = _("Dependency issue")
 			dialog.props.secondary_text = _("Plugin <b>\"%(0)s\"</b> depends on <b>%(1)s</b>. Unloading <b>%(1)s</b> will also unload <b>\"%(0)s\"</b>.\nProceed?") % {"0": ", ".join(to_unload), "1": name}
 			
 			resp = dialog.run()
-			if resp != gtk.RESPONSE_YES:
+			if resp != Gtk.ResponseType.YES:
 				dialog.destroy()
 				return
 			
@@ -321,14 +321,14 @@ class PluginDialog(gtk.Dialog):
 				to_unload.append(conf)
 		
 		if to_unload != []:
-			dialog = gtk.MessageDialog(self, type=gtk.MESSAGE_QUESTION, buttons=gtk.BUTTONS_YES_NO)
+			dialog = Gtk.MessageDialog(self, type=Gtk.MessageType.QUESTION, buttons=Gtk.ButtonsType.YES_NO)
 			dialog.props.secondary_use_markup = True
 			dialog.props.icon_name = "blueman"
 			dialog.props.text = _("Dependency issue")
 			dialog.props.secondary_text = _("Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will unload <b>%(0)s</b>.\nProceed?") % {"0": ", ".join(to_unload), "1": name}
 			
 			resp = dialog.run()
-			if resp != gtk.RESPONSE_YES:
+			if resp != Gtk.ResponseType.YES:
 				dialog.destroy()
 				return
 			

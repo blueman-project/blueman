@@ -20,7 +20,9 @@
 from blueman.Constants import *
 
 try:
-    import gtk
+    import gi
+    gi.require_version("Gtk", "2.0")
+    from gi.repository import Gtk
 except:
     pass
 import re
@@ -31,7 +33,7 @@ import sys
 from subprocess import Popen, call
 import subprocess
 import commands
-import gobject
+from gi.repository import GObject
 import traceback
 from blueman.Lib import sn_launcher
 import __builtin__
@@ -83,16 +85,16 @@ def check_bluetooth_status(message, exitfunc, *args, **kwargs):
     if "PowerManager" in applet.QueryPlugins():
         if not applet.GetBluetoothStatus():
 
-            d = gtk.MessageDialog(None, type=gtk.MESSAGE_ERROR)
+            d = Gtk.MessageDialog(None, type=Gtk.MessageType.ERROR)
             d.props.icon_name = "blueman"
             d.props.text = _("Bluetooth Turned Off")
             d.props.secondary_text = message
 
-            d.add_button(gtk.STOCK_QUIT, gtk.RESPONSE_NO)
-            d.add_button(_("Enable Bluetooth"), gtk.RESPONSE_YES)
+            d.add_button(Gtk.STOCK_QUIT, Gtk.ResponseType.NO)
+            d.add_button(_("Enable Bluetooth"), Gtk.ResponseType.YES)
             resp = d.run()
             d.destroy()
-            if resp != gtk.RESPONSE_YES:
+            if resp != Gtk.ResponseType.YES:
                 exitfunc()
             else:
                 applet.SetBluetoothStatus(True, *args, **kwargs)
@@ -101,13 +103,13 @@ def check_bluetooth_status(message, exitfunc, *args, **kwargs):
 def wait_for_adapter(bluez_adapter, callback, timeout=1000):
     def on_prop_change(key, value):
         if key == "Powered" and value:
-            gobject.source_remove(source)
+            GObject.source_remove(source)
             bluez_adapter.UnHandleSignal(on_prop_change, "PropertyChanged")
             callback()
 
     def on_timeout():
         bluez_adapter.UnHandleSignal(on_prop_change, "PropertyChanged")
-        gobject.source_remove(source)
+        GObject.source_remove(source)
         dprint(YELLOW("Warning:"),
                "Bluez didn't provide 'Powered' property in a reasonable timeout\nAssuming adapter is ready")
         callback()
@@ -117,12 +119,12 @@ def wait_for_adapter(bluez_adapter, callback, timeout=1000):
         callback()
         return
 
-    source = gobject.timeout_add(timeout, on_timeout)
+    source = GObject.timeout_add(timeout, on_timeout)
     bluez_adapter.HandleSignal(on_prop_change, "PropertyChanged")
 
 
 def startup_notification(name, desc=None, bin_name=None, icon=None):
-    dpy = gtk.gdk.display_get_default()
+    dpy = Gdk.Display.get_default()
     screen = dpy.get_default_screen().get_number()
     sn = sn_launcher(dpy, screen)
     sn.set_name(name)
@@ -135,17 +137,17 @@ def startup_notification(name, desc=None, bin_name=None, icon=None):
     if desc:
         sn.set_description(desc)
 
-    sn.initiate("", "", gtk.get_current_event_time())
+    sn.initiate("", "", Gtk.get_current_event_time())
 
     return sn
 
 
 def enable_rgba_colormap():
-    #screen = gtk.gdk.display_get_default().get_default_screen()
+    #screen = Gdk.Display.get_default().get_default_screen()
     #colormap = screen.get_rgba_colormap()
     #if colormap == None:
     #	colormap = screen.get_rgb_colormap()
-    #gtk.widget_set_default_colormap(colormap)
+    #Gtk.widget_set_default_colormap(colormap)
     pass
 
 
@@ -172,21 +174,21 @@ def spawn(command, system=False, sn=None, reap=True, *args, **kwargs):
         id = sn.get_startup_id()
         env["DESKTOP_STARTUP_ID"] = id
 
-    env["BLUEMAN_EVENT_TIME"] = str(gtk.get_current_event_time())
+    env["BLUEMAN_EVENT_TIME"] = str(Gtk.get_current_event_time())
 
     p = Popen(command, env=env, *args, **kwargs)
     if reap:
-        gobject.child_watch_add(p.pid, child_closed)
+        GObject.child_watch_add(p.pid, child_closed)
     return p
 
 
 def setup_icon_path():
-    ic = gtk.icon_theme_get_default()
+    ic = Gtk.IconTheme.get_default()
     ic.prepend_search_path(ICON_PATH)
 
 
 def get_icon(name, size=24, fallback="gtk-missing-image"):
-    ic = gtk.icon_theme_get_default()
+    ic = Gtk.IconTheme.get_default()
 
     try:
         icon = ic.load_icon(name, size, 0)
@@ -201,12 +203,12 @@ def get_icon(name, size=24, fallback="gtk-missing-image"):
     if icon.props.width > size:
         new_w = size
         new_h = int(size * ( float(icon.props.width) / icon.props.height ))
-        icon = icon.scale_simple(new_w, new_h, gtk.gdk.INTERP_BILINEAR)
+        icon = icon.scale_simple(new_w, new_h, GdkPixbuf.InterpType.BILINEAR)
 
     if icon.props.height > size:
         new_w = int(size * ( float(icon.props.height) / icon.props.width ))
         new_h = size
-        icon = icon.scale_simple(dest_width, dest_height, gtk.gdk.INTERP_BILINEAR)
+        icon = icon.scale_simple(dest_width, dest_height, GdkPixbuf.InterpType.BILINEAR)
 
     return icon
 
@@ -236,7 +238,7 @@ def e_(msg):
 def opacify_pixbuf(pixbuf, alpha):
     new = pixbuf.copy()
     new.fill(0x00000000)
-    pixbuf.composite(new, 0, 0, pixbuf.props.width, pixbuf.props.height, 0, 0, 1, 1, gtk.gdk.INTERP_BILINEAR, alpha)
+    pixbuf.composite(new, 0, 0, pixbuf.props.width, pixbuf.props.height, 0, 0, 1, 1, GdkPixbuf.InterpType.BILINEAR, alpha)
     return new
 
 #pixbuf, [(pixbuf, x, y, alpha), (pixbuf, x, y, alpha)]
@@ -245,7 +247,7 @@ def composite_icon(target, sources):
     target = target.copy()
     for source in sources:
         source[0].composite(target, source[1], source[2], source[0].get_width(), source[0].get_height(), source[1],
-                            source[2], 1, 1, gtk.gdk.INTERP_NEAREST, source[3])
+                            source[2], 1, 1, GdkPixbuf.InterpType.NEAREST, source[3])
 
     return target
 
@@ -271,8 +273,8 @@ def format_bytes(size):
 
 
 def create_menuitem(text, image):
-    item = gtk.ImageMenuItem(text)
-    item.set_image(gtk.image_new_from_pixbuf(image))
+    item = Gtk.ImageMenuItem(text)
+    item.set_image(Gtk.Image.new_from_pixbuf(image))
 
     return item
 

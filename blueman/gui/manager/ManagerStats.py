@@ -1,6 +1,6 @@
 import blueman.Lib as Lib
-import gobject
-import gtk
+from gi.repository import GObject
+from gi.repository import Gtk
 
 from blueman.gui.Animation import Animation
 from blueman.main.SpeedCalc import SpeedCalc
@@ -29,33 +29,33 @@ class ManagerStats:
 
         up = get_icon("blueman-up-inactive", 15)
         down = get_icon("blueman-down-inactive", 15)
-        self.im_upload = gtk.Image()
+        self.im_upload = Gtk.Image()
         self.im_upload.set_tooltip_text(_("Data activity indication"))
         self.im_upload.set_from_pixbuf(up)
-        self.im_download = gtk.Image()
+        self.im_download = Gtk.Image()
         self.im_download.set_tooltip_text(_("Data activity indication"))
         self.im_download.set_from_pixbuf(down)
         self.im_upload.set_alignment(1, 0.5)
         self.im_download.set_alignment(1, 0.5)
 
-        self.down_rate = gtk.Label()
+        self.down_rate = Gtk.Label()
         self.down_rate.show()
         self.down_rate.set_alignment(1, 0.5)
         self.down_rate.set_tooltip_text(_("Total data received and rate of transmission"))
 
-        self.up_rate = gtk.Label()
+        self.up_rate = Gtk.Label()
         self.up_rate.show()
         self.up_rate.set_alignment(1, 0.5)
         self.up_rate.set_tooltip_text(_("Total data sent and rate of transmission"))
 
-        self.uparrow = gtk.Image()
+        self.uparrow = Gtk.Image()
         self.uparrow.set_tooltip_text(_("Total data sent and rate of transmission"))
-        self.uparrow.set_from_stock(gtk.STOCK_GO_UP, 1)
+        self.uparrow.set_from_stock(Gtk.STOCK_GO_UP, 1)
         self.uparrow.set_alignment(1, 0.5)
 
-        self.downarrow = gtk.Image()
+        self.downarrow = Gtk.Image()
         self.downarrow.set_tooltip_text(_("Total data received and rate of transmission"))
-        self.downarrow.set_from_stock(gtk.STOCK_GO_DOWN, 1)
+        self.downarrow.set_from_stock(Gtk.STOCK_GO_DOWN, 1)
 
         self.hbox = hbox = blueman.Builder.get_object("statusbar2")
 
@@ -65,7 +65,7 @@ class ManagerStats:
         hbox.pack_start(self.downarrow, False, False)
         hbox.pack_start(self.down_rate, False, False)
 
-        hbox.pack_start(gtk.VSeparator(), False, False)
+        hbox.pack_start(Gtk.VSeparator, False, False)
 
         hbox.pack_start(self.im_upload, False, False)
         hbox.pack_start(self.im_download, False, False)
@@ -138,11 +138,11 @@ class ManagerStats:
 
     def start_update(self):
         self._update()
-        self.timer = gobject.timeout_add(1000, self._update)
+        self.timer = GObject.timeout_add(1000, self._update)
 
     def stop_update(self):
         if self.timer:
-            gobject.source_remove(self.timer)
+            GObject.source_remove(self.timer)
 
     def set_data(self, uploaded, u_name, downloaded, d_name, u_speed, us_name, d_speed, ds_name):
         self.down_rate.set_markup(

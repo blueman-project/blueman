@@ -35,7 +35,7 @@ class Networking(AppletPlugin):
 
         def err(excp):
             lines = str(excp).splitlines()
-            d = gtk.MessageDialog(None, buttons=gtk.BUTTONS_OK, type=gtk.MESSAGE_ERROR)
+            d = Gtk.MessageDialog(None, buttons=Gtk.ButtonsType.OK, type=Gtk.MessageType.ERROR)
             d.props.text = _("Failed to apply network settings")
             d.props.secondary_text = lines[-1] + "\n\n" + _(
                 "You might not be able to connect to the Bluetooth network via this machine")

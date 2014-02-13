@@ -30,8 +30,8 @@ import atexit
 
 import blueman.bluez as Bluez
 
-import gobject
-import gtk
+from gi.repository import GObject
+from gi.repository import Gtk
 
 class SerialManager(AppletPlugin):
 	__icon__ = "blueman-serial"
@@ -105,7 +105,7 @@ class SerialManager(AppletPlugin):
 			self.scripts[address][node].terminate()
 			
 		self.scripts[address][node] = process
-		gobject.child_watch_add(process.pid, self.on_script_closed, (address, node))
+		GObject.child_watch_add(process.pid, self.on_script_closed, (address, node))
 			
 	def call_script(self, address, name, sv_name, uuid16, node):
 		c = self.get_option("script")
