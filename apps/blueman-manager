@@ -107,7 +107,7 @@ class Blueman:
             if not status:
                 self.window.hide()
                 check_bluetooth_status(_("Bluetooth needs to be turned on for the device manager to function"),
-                                       lambda: gtk.main_quit())
+                                       lambda: Gtk.main_quit())
             else:
                 self.window.show()
 

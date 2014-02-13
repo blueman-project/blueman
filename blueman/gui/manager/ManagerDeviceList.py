@@ -86,8 +86,8 @@ class ManagerDeviceList(DeviceList):
 		self.connect("drag_data_received", self.drag_recv)
 		self.connect("drag-motion", self.drag_motion)
 
-		self.drag_dest_set(Gtk.DestDefaults.ALL, [], Gdk.DragAction.COPY|Gdk.DragAction.DEFAULT)
-		self.drag_dest_add_uri_targets()
+		Gtk.drag_dest_set(self, Gtk.DestDefaults.ALL, [], Gdk.DragAction.COPY|Gdk.DragAction.DEFAULT)
+		Gtk.drag_dest_add_uri_targets(self)
 		
 		self.set_search_equal_func(self.search_func)
 		
