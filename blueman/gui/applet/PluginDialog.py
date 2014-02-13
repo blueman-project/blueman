@@ -44,17 +44,17 @@ class SettingsWidget(Gtk.VBox):
 				if "decorator" in v:
 					v["decorator"](self.inst, w, k, v)
 				
-				self.pack_start(w, False, False)
+				self.pack_start(w, False, False, 0)
 				
 				l = Gtk.Label(label="<i>"+v["desc"]+"</i>")
 				l.set_line_wrap(True)
 				l.props.use_markup = True
 				l.props.xalign = 0.0
-				self.pack_start(l, False, False)
+				self.pack_start(l, False, False, 0)
 				
 				sep = Gtk.HSeparator()
 				sep.props.height_request = 10
-				self.pack_start(sep, False, False)
+				self.pack_start(sep, False, False, 0)
 				
 	def handle_change(self, widget, opt, params, prop):
 		val = params["type"](getattr(widget.props, prop))
@@ -77,10 +77,10 @@ class SettingsWidget(Gtk.VBox):
 		elif params["type"] == int:
 			b = Gtk.HBox()
 			l = Gtk.Label(label=params["name"])
-			b.pack_start(l, False, False)
+			b.pack_start(l, False, False, 0)
 			
 			r = Gtk.SpinButton()
-			b.pack_start(r, False, False)
+			b.pack_start(r, False, False, 6)
 			b.props.spacing = 6
 			
 			r.set_numeric(True)
@@ -95,10 +95,10 @@ class SettingsWidget(Gtk.VBox):
 		elif params["type"] == str:
 			b = Gtk.HBox()
 			l = Gtk.Label(label=params["name"])
-			b.pack_start(l, False, False)
+			b.pack_start(l, False, False, 0)
 			
 			e = Gtk.Entry()
-			b.pack_start(e, False, False)
+			b.pack_start(e, False, False, 6)
 			b.props.spacing = 6
 			
 			e.props.text = self.inst.get_option(opt)
@@ -112,7 +112,7 @@ class SettingsWidget(Gtk.VBox):
 
 class PluginDialog(Gtk.Dialog):
 	def __init__(self, applet):
-		GObject.GObject.__init__(self, buttons=(Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE))
+		Gtk.Dialog.__init__(self, buttons=(Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE))
 		
 		self.applet = applet
 		
@@ -183,7 +183,7 @@ class PluginDialog(Gtk.Dialog):
 		
 		self.list.set_cursor(0)
 		
-	def list_compare_func(self, treemodel, iter1, iter2):
+	def list_compare_func(self, treemodel, iter1, iter2, user_data):
 		a = self.list.get(iter1, "activatable", "name")
 		b = self.list.get(iter2, "activatable", "name")
 

@@ -38,8 +38,9 @@ def show_about_dialog(app_name, run=True):
 	def url_hook(dialog, url, black_hole):
 		uri_open(url)
 	
-	Gtk.about_dialog_set_email_hook(email_hook, None)
-	Gtk.about_dialog_set_url_hook(url_hook, None)
+	#FIXME find equivalents with introspection
+	#Gtk.about_dialog_set_email_hook(email_hook, None)
+	#Gtk.about_dialog_set_url_hook(url_hook, None)
 	
 	about = Gtk.AboutDialog()
 	about.set_name(app_name)
@@ -51,9 +52,10 @@ def show_about_dialog(app_name, run=True):
 	about.set_website(WEBSITE)
 	about.set_icon(get_icon('blueman'))
 	about.set_logo(get_icon('blueman', 48))
-	authors = ['Valmantas Palikša <walmis@balticum-tv.lt>',
-				'Tadas Dailyda <tadas@dailyda.com>']
-	about.set_authors(authors)
+	authors = 'Valmantas Palikša <walmis@balticum-tv.lt>\n'\
+				'Tadas Dailyda <tadas@dailyda.com>'
+	#FIXME this segfaults with introspection
+	#about.set_authors(authors)
 	if run:
 		about.run()
 		about.destroy()
