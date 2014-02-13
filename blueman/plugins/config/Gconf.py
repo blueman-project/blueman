@@ -20,6 +20,7 @@
 from blueman.plugins.ConfigPlugin import ConfigPlugin
 from gi.repository import GConf
 import os
+import subprocess
 
 BLUEMAN_PATH = "/apps/blueman"
 
@@ -60,6 +61,10 @@ class Gconf(ConfigPlugin):
 			name = os.path.basename(key)
 			self.emit("property-changed", name, self.get(name))		
 	
+	def _set_gconf_list(self, key, values):
+		gconf_value = '[%s]' % ','.join(values)
+		subprocess.check_output(["gconftool-2", "--set", "--type=list", "--list-type=string", key, gconf_value])
+	
 	def set(self, key, value):
 		func = None
 	
@@ -72,9 +77,7 @@ class Gconf(ConfigPlugin):
 		elif type(value) == float:
 			func = self.client.set_float
 		elif type(value) == list:
-			def x(key, val):
-				self.client.set_list(key, GConf.ValueType.STRING, val)
-			func = x
+			func = self._set_gconf_list
 		else:
 			raise AttributeError("Cant set this type in GConf")
 		

@@ -66,11 +66,11 @@ class ManagerDeviceMenu(Gtk.Menu):
     def clear(self):
         self.Signals.DisconnectAll()
 
-        def each(child):
+        def each(child, data):
             self.remove(child)
             child.destroy()
 
-        self.foreach(each)
+        self.foreach(each, None)
 
     def set_op(self, device, message):
         ManagerDeviceMenu.__ops__[device.GetObjectPath()] = message
@@ -225,7 +225,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             (x, y) = self.Blueman.List.get_pointer()
             path = self.Blueman.List.get_path_at_pos(x, y)
             if path != None:
-                device = self.Blueman.List.get(path[0][0], "device")["device"]
+                device = self.Blueman.List.get(path[0], "device")["device"]
             else:
                 return
 

@@ -78,11 +78,13 @@ class ManagerMenu:
         view_menu.append(item)
         item.show()
 
-        itemf = Gtk.RadioMenuItem(None, _("Latest Device First"))
+        group = []
+
+        itemf = Gtk.RadioMenuItem.new_with_label(group, _("Latest Device First"))
         view_menu.append(itemf)
         itemf.show()
 
-        iteml = Gtk.RadioMenuItem(itemf, _("Latest Device Last"))
+        iteml = Gtk.RadioMenuItem.new_with_label(group, _("Latest Device Last"))
         view_menu.append(iteml)
         iteml.show()
 
@@ -148,12 +150,10 @@ class ManagerMenu:
         settings.show()
         menu.append(settings)
 
-        group = None
+        group = []
         for adapter in self.adapters:
             props = adapter.GetProperties()
-            item = Gtk.RadioMenuItem(group, props["Name"])
-            if group == None:
-                group = item
+            item = Gtk.RadioMenuItem.new_with_label(group, props["Name"])
 
             item.connect("activate", self.on_adapter_selected, adapter.GetObjectPath())
             if adapter.GetObjectPath() == self.blueman.List.Adapter.GetObjectPath():

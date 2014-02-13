@@ -115,20 +115,19 @@ class Blueman:
             dprint('org.bluez owner changed to ', owner)
             if owner == '':
                 self.window.hide()
-                d = gtk.MessageDialog(self.window, type=gtk.MESSAGE_ERROR)
+                d = Gtk.MessageDialog(self.window, type=Gtk.MessageType.ERROR, buttons=Gtk.ButtonsType.CLOSE)
                 d.props.icon_name = "blueman"
                 d.props.text = _("Connection to BlueZ failed")
 
                 d.props.secondary_text = _(
                     "Bluez daemon is not running, blueman-manager cannot continue.\nThis probably means that there were no Bluetooth adapters detected or Bluetooth daemon was not started.")
 
-                d.add_button(gtk.STOCK_CLOSE, gtk.RESPONSE_NO)
                 d.run()
                 d.destroy()
                 try:
                     exit(1)
                 except:
-                    gtk.main_quit()
+                    Gtk.main_quit()
             else:
 
                 setup_icon_path()

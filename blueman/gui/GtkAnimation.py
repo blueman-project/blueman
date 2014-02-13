@@ -140,8 +140,8 @@ class TreeRowFade(AnimBase):
 		
 		self.sig = self.tw.connect_after("expose-event", self.on_expose)
 		
-		self.row = Gtk.TreeRowReference(tw.props.model, path)
-		self.style = tw.rc_get_style()
+		self.row = Gtk.TreeRowReference.new(tw.props.model, path)
+		self.style = Gtk.rc_get_style(tw)
 		self.columns = None
 
 	def unref(self):
@@ -248,9 +248,9 @@ class CellFade(AnimBase):
 		self.frozen = False
 		self.sig = tw.connect_after("expose-event", self.on_expose)
 		
-		self.row = Gtk.TreeRowReference(tw.props.model, path)
+		self.row = Gtk.TreeRowReference.new(tw.props.model, path)
 		self.selection = tw.get_selection()
-		self.style = tw.rc_get_style()
+		self.style = Gtk.rc_get_style(tw)
 		self.columns = []
 		for i in columns:
 			self.columns.append(self.tw.get_column(i))

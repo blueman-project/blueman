@@ -59,16 +59,16 @@ class ManagerStats:
 
         self.hbox = hbox = blueman.Builder.get_object("statusbar2")
 
-        hbox.pack_start(self.uparrow, True, False)
-        hbox.pack_start(self.up_rate, False, False)
+        hbox.pack_start(self.uparrow, True, False, 0)
+        hbox.pack_start(self.up_rate, False, False, 0)
 
-        hbox.pack_start(self.downarrow, False, False)
-        hbox.pack_start(self.down_rate, False, False)
+        hbox.pack_start(self.downarrow, False, False, 0)
+        hbox.pack_start(self.down_rate, False, False, 0)
 
-        hbox.pack_start(Gtk.VSeparator, False, False)
+        hbox.pack_start(Gtk.VSeparator(), False, False, 0)
 
-        hbox.pack_start(self.im_upload, False, False)
-        hbox.pack_start(self.im_download, False, False)
+        hbox.pack_start(self.im_upload, False, False, 0)
+        hbox.pack_start(self.im_download, False, False, 0)
         hbox.show_all()
         self.on_adapter_changed(blueman.List, blueman.List.GetAdapterPath())
 

@@ -75,7 +75,7 @@ class ManagerDeviceList(DeviceList):
 		self.Blueman = inst
 		
 		self.connect("query-tooltip", self.tooltip_query)		
-		self.tooltip_row = -1
+		self.tooltip_row = None
 		self.tooltip_col = None
 		
 		self.connect("button_press_event", self.on_event_clicked)
@@ -114,7 +114,7 @@ class ManagerDeviceList(DeviceList):
 		
 		path = self.get_path_at_pos(x, y)
 		if path:
-			iter = self.get_iter(path[0][0])
+			iter = self.get_iter(path[0])
 			device = self.get(iter, "device")["device"]
 			uris.insert(0, "blueman-sendto")
 			uris.insert(1, "--device=%s" % device.Address)
@@ -130,8 +130,8 @@ class ManagerDeviceList(DeviceList):
 	def drag_motion(self, widget, drag_context, x, y, timestamp):
 		path = self.get_path_at_pos(x, y)
 		if path != None:
-			if path[0][0] != self.selected():
-				iter = self.get_iter(path[0][0])
+			if path[0] != self.selected():
+				iter = self.get_iter(path[0])
 				device = self.get(iter, "device")["device"]
 				if not device.Fake:	
 					found = False
@@ -161,7 +161,7 @@ class ManagerDeviceList(DeviceList):
 		if event.type==Gdk.EventType.BUTTON_PRESS and event.button==3:
 			path = self.get_path_at_pos(int(event.x), int(event.y))
 			if path != None:
-				row = self.get(path[0][0], "device")
+				row = self.get(path[0], "device")
 			
 				if row:
 					device = row["device"]
@@ -443,15 +443,14 @@ class ManagerDeviceList(DeviceList):
 
 		path = self.get_path_at_pos(x, y)
 
-
-		if path:
-			if path[0][0] != self.tooltip_row or path[1] != self.tooltip_col:
-				self.tooltip_row = path[0][0]
+		if path is not None:
+			if path[0] != self.tooltip_row or path[1] != self.tooltip_col:
+				self.tooltip_row = path[0]
 				self.tooltip_col = path[1]
 				return False
 			
 			if path[1] == self.columns["device_pb"]:
-				iter = self.get_iter(path[0][0])
+				iter = self.get_iter(path[0])
 				
 				row = self.get(iter, "trusted", "bonded")
 				trusted = row["trusted"]
@@ -466,13 +465,13 @@ class ManagerDeviceList(DeviceList):
 					return False
 				
 					
-				self.tooltip_row = path[0][0]
+				self.tooltip_row = path[0]
 				self.tooltip_col = path[1]
 				return True
 
 			
 			if path[1] == self.columns["tpl_pb"] or path[1] == self.columns["lq_pb"] or path[1] == self.columns["rssi_pb"]:
-				iter = self.get_iter(path[0][0])
+				iter = self.get_iter(path[0])
 
 				dt = self.get(iter, "connected")["connected"]
 				#print dt
@@ -519,7 +518,7 @@ class ManagerDeviceList(DeviceList):
 					elif path[1] == self.columns["rssi_pb"]:
 						tooltip.set_markup(_("<b>Connected</b>\n<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>\nLink Quality: %(lq)u%%\nTransmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>") % {"rssi_state": rssi_state, "rssi":rssi, "lq":lq, "tpl":tpl, "tpl_state": tpl_state})
 					
-					self.tooltip_row = path[0][0]
+					self.tooltip_row = path[0]
 					self.tooltip_col = path[1]
 					return True	
 		return False

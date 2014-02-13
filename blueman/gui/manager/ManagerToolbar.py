@@ -1,5 +1,6 @@
 from blueman.Functions import dprint
 from blueman.Sdp import *
+from gi.repository import Gtk
 
 
 class ManagerToolbar:
@@ -26,11 +27,13 @@ class ManagerToolbar:
         self.b_trust.set_homogeneous(False)
 
         self.b_trust.props.label = _("Untrust")
-        size = self.b_trust.size_request()
+        size = Gtk.Requisition()
+        self.b_trust.size_request(size)
         self.b_trust.props.label = _("Trust")
-        size2 = self.b_trust.size_request()
+        size2 = Gtk.Requisition()
+        self.b_trust.size_request(size2)
 
-        self.b_trust.props.width_request = max(size[0], size2[0])
+        self.b_trust.props.width_request = max(size.width, size2.width)
 
         self.b_remove = blueman.Builder.get_object("b_remove")
         self.b_remove.connect("clicked", self.on_action, self.blueman.remove)

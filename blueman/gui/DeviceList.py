@@ -184,7 +184,7 @@ class DeviceList(GenericList):
                 if value:
                     self.monitor_power_levels(dev)
                 else:
-                    r = Gtk.TreeRowReference(self.props.model, self.props.model.get_path(iter))
+                    r = Gtk.TreeRowReference.new(self.get_model(), self.props.get_model().get_path(iter))
                     self.level_setup_event(r, dev, None)
 
             elif key == "Paired":
@@ -199,11 +199,11 @@ class DeviceList(GenericList):
                 self.monitored_devices.remove(props["Address"])
                 return False
 
-            if not self.props.model:
+            if not self.get_model():
                 self.monitored_devices.remove(props["Address"])
                 return False
 
-            iter = self.props.model.get_iter(row_ref.get_path())
+            iter = self.get_model().get_iter(row_ref.get_path())
             device = self.get(iter, "device")["device"]
             if not device.Valid or not device.Connected:
                 dprint("stopping monitor (not connected)")
@@ -228,7 +228,7 @@ class DeviceList(GenericList):
             except:
                 dprint("Failed to get power levels")
             else:
-                r = Gtk.TreeRowReference(self.props.model, self.props.model.get_path(iter))
+                r = Gtk.TreeRowReference.new(self.get_model(), self.get_model().get_path(iter))
                 self.level_setup_event(r, device, cinfo)
                 GObject.timeout_add(1000, update, r, cinfo, props["Address"])
                 self.monitored_devices.append(props["Address"])
@@ -501,7 +501,7 @@ class DeviceList(GenericList):
             row = self.address_to_row[address]
             if row.valid():
                 path = row.get_path()
-                iter = self.props.model.get_iter(path)
+                iter = self.get_model().get_iter(path)
                 return iter
             else:
                 del self.address_to_row[address]
@@ -515,7 +515,7 @@ class DeviceList(GenericList):
             row = self.path_to_row[path]
             if row.valid():
                 path = row.get_path()
-                iter = self.props.model.get_iter(path)
+                iter = self.get_model().get_iter(path)
                 return iter
             else:
                 del self.path_to_row[path]
@@ -526,14 +526,14 @@ class DeviceList(GenericList):
     def do_cache(self, iter, kwargs):
         if "device" in kwargs:
             if kwargs["device"]:
-                self.address_to_row[kwargs["device"].Address] = Gtk.TreeRowReference(self.props.model,
-                                                                                     self.props.model.get_path(iter))
+                self.address_to_row[kwargs["device"].Address] = Gtk.TreeRowReference.new(self.get_model(),
+                                                                                         self.get_model().get_path(iter))
                 dprint("Caching new device %s" % kwargs["device"].Address)
 
         if "dbus_path" in kwargs:
             if kwargs["dbus_path"] != None:
-                self.path_to_row[kwargs["dbus_path"]] = Gtk.TreeRowReference(self.props.model,
-                                                                             self.props.model.get_path(iter))
+                self.path_to_row[kwargs["dbus_path"]] = Gtk.TreeRowReference.new(self.get_model(),
+                                                                                 self.get_model().get_path(iter))
             else:
                 existing = self.get(iter, "dbus_path")["dbus_path"]
                 if existing != None:
