@@ -88,7 +88,7 @@ class ManagerDeviceList(DeviceList):
 		self.drag_dest_set(gtk.DEST_DEFAULT_ALL, [], gtk.gdk.ACTION_COPY|gtk.gdk.ACTION_DEFAULT)
 		self.drag_dest_add_uri_targets()
 		
-		self.set_search_equal_func(self.search_func, None)
+		self.set_search_equal_func(self.search_func)
 		
 	def do_device_found(self, device):
 		iter = self.find_device(device)
