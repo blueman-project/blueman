@@ -16,11 +16,11 @@ class ManagerMenu:
         self.adapter_items = []
         self.Search = None
 
-        self.item_adapter = Gtk.MenuItem(_("_Adapter"))
-        self.item_device = Gtk.MenuItem(_("_Device"))
+        self.item_adapter = Gtk.MenuItem.new_with_mnemonic(_("_Adapter"))
+        self.item_device = Gtk.MenuItem.new_with_mnemonic(_("_Device"))
 
-        self.item_view = Gtk.MenuItem(_("_View"))
-        self.item_help = Gtk.MenuItem(_("_Help"))
+        self.item_view = Gtk.MenuItem.new_with_mnemonic(_("_View"))
+        self.item_help = Gtk.MenuItem.new_with_mnemonic(_("_Help"))
 
         self.Menubar.append(self.item_adapter)
         self.Menubar.append(self.item_device)
@@ -41,7 +41,7 @@ class ManagerMenu:
         help_menu.append(item)
         item.show()
 
-        item = Gtk.ImageMenuItem("gtk-about")
+        item = Gtk.ImageMenuItem.new_from_stock("gtk-about", None)
         item.connect("activate", lambda x: show_about_dialog('Blueman ' + _('Device Manager')))
         help_menu.append(item)
         item.show()
@@ -50,7 +50,7 @@ class ManagerMenu:
         self.item_view.set_submenu(view_menu)
         view_menu.show()
 
-        item = Gtk.CheckMenuItem(_("Show Toolbar"))
+        item = Gtk.CheckMenuItem.new_with_mnemonic(_("Show Toolbar"))
         if self.blueman.Config.props.show_toolbar == None:
             item.props.active = True
         else:
@@ -62,7 +62,7 @@ class ManagerMenu:
         view_menu.append(item)
         item.show()
 
-        item = Gtk.CheckMenuItem(_("Show Statusbar"))
+        item = Gtk.CheckMenuItem.new_with_mnemonic(_("Show Statusbar"))
         if self.blueman.Config.props.show_statusbar == None:
             item.props.active = True
         else:
@@ -145,7 +145,7 @@ class ManagerMenu:
         sep.show()
         menu.append(sep)
 
-        settings = Gtk.ImageMenuItem("gtk-preferences")
+        settings = Gtk.ImageMenuItem.new_from_stock("gtk-preferences", None)
         settings.connect("activate", lambda x: self.blueman.adapter_properties())
         settings.show()
         menu.append(settings)
@@ -181,7 +181,7 @@ class ManagerMenu:
         sep.show()
         menu.append(sep)
 
-        item = Gtk.ImageMenuItem("gtk-quit")
+        item = Gtk.ImageMenuItem.new_from_stock("gtk-quit", None)
         item.connect("activate", lambda x: Gtk.main_quit())
         item.show()
         menu.append(item)

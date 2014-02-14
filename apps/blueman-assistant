@@ -30,6 +30,9 @@ from blueman.main.Device import Device
 from blueman.main.AppletService import AppletService
 from blueman.Sdp import *
 
+import gi
+gi.require_version("Gtk", "2.0")
+from gi.repository import Gtk
 
 class Assistant(Agent):
     def __init__(self):

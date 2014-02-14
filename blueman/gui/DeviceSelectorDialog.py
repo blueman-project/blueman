@@ -9,7 +9,7 @@ from blueman.gui.DeviceSelectorWidget import DeviceSelectorWidget
 class DeviceSelectorDialog(Gtk.Dialog):
     def __init__(self, title=_("Select Device"), parent=None, discover=True):
 
-        GObject.GObject.__init__(self, title, parent, 0, (Gtk.STOCK_CANCEL, Gtk.ResponseType.REJECT,
+        Gtk.Dialog.__init__(self, title, parent, 0, (Gtk.STOCK_CANCEL, Gtk.ResponseType.REJECT,
                                                      Gtk.STOCK_OK, Gtk.ResponseType.ACCEPT))
 
         self.set_has_separator(False)

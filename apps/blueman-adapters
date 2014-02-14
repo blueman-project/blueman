@@ -18,6 +18,9 @@ from blueman.main.SignalTracker import SignalTracker
 
 enable_rgba_colormap()
 
+import gi
+gi.require_version("Gtk", "2.0")
+from gi.repository import Gtk
 
 class BluemanAdapters:
     def __init__(self, selected_hci_dev):

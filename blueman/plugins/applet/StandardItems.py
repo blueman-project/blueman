@@ -55,7 +55,7 @@ class StandardItems(AppletPlugin):
 		self.Applet.Plugins.Menu.Register(self, Gtk.SeparatorMenuItem(), 51)
 		
 
-		self.devices = Gtk.MenuItem(_("_Devices")+"...")
+		self.devices = Gtk.MenuItem.new_with_mnemonic(_("_Devices")+"...")
 		self.devices.connect("activate", self.on_devices)
 		
 		self.Applet.Plugins.Menu.Register(self, self.devices, 60)
@@ -72,7 +72,7 @@ class StandardItems(AppletPlugin):
 		
 		self.Applet.Plugins.Menu.Register(self, Gtk.SeparatorMenuItem(), 81)
 		
-		about = Gtk.ImageMenuItem(Gtk.STOCK_ABOUT)
+		about = Gtk.ImageMenuItem.new_from_stock(Gtk.STOCK_ABOUT, None)
 		self.Applet.Plugins.Menu.Register(self, about, 90)
 		
 		self.plugins = create_menuitem(_("_Plugins"), get_icon("blueman-plugin", 16))

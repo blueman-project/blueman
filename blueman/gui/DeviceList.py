@@ -416,10 +416,11 @@ class DeviceList(GenericList):
     def DiscoverDevices(self, time=10.24):
         if not self.discovering:
             self.__discovery_time = 0
-            self.Adapter.StartDiscovery()
-            self.discovering = True
-            T = 1.0 / 15 * 1000
-            GObject.timeout_add(int(T), self.update_progress, T / 1000, time)
+            if self.Adapter is not None:
+                self.Adapter.StartDiscovery()
+                self.discovering = True
+                T = 1.0 / 15 * 1000
+                GObject.timeout_add(int(T), self.update_progress, T / 1000, time)
 
     def IsValidAdapter(self):
         if self.Adapter == None:
