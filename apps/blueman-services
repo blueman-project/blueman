@@ -147,7 +147,8 @@ class BluemanServices:
     def on_selection_changed(self, selection):
         iter = self.List.selected()
         if self.List.get_cursor()[0]:
-            self.Config.props.services_last_item = self.List.get_cursor()[0][0]
+            # GtkTreePath returns row when used as string
+            self.Config.props.services_last_item = int(str(self.List.get_cursor()[0]))
         row = self.List.get(iter, "id")
         id = row["id"]
 

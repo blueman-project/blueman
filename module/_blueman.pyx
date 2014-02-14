@@ -388,9 +388,9 @@ cdef class sn_launcher:
 	
 
 	def __cinit__(self, display, int screen):
-		from gi.repository import Gdk
-		if type(display) != Gdk.DisplayX11:
-			raise TypeError, "Display must be a Gdk.DisplayX11"
+		#from gi.repository import GdkX11
+		#if type(display) != GdkX11.X11Display:
+		#	raise TypeError, "Display must be a Gdk.DisplayX11"
 			
 		cdef GObject* dpy
 		cdef SnDisplay* sn_dpy

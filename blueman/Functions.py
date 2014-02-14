@@ -19,12 +19,11 @@
 
 from blueman.Constants import *
 
-try:
-    import gi
-    gi.require_version("Gtk", "2.0")
-    from gi.repository import Gtk
-except:
-    pass
+import gi
+gi.require_version("Gtk", "2.0")
+from gi.repository import Gtk
+from gi.repository import Gdk
+from gi.repository import GdkPixbuf
 import re
 import os
 import signal
@@ -125,7 +124,9 @@ def wait_for_adapter(bluez_adapter, callback, timeout=1000):
 
 def startup_notification(name, desc=None, bin_name=None, icon=None):
     dpy = Gdk.Display.get_default()
-    screen = dpy.get_default_screen().get_number()
+    #FIXME this will work with GTK3
+    #screen = dpy.get_default_screen().get_number()
+    screen = Gdk.Screen.get_default().get_number()
     sn = sn_launcher(dpy, screen)
     sn.set_name(name)
 
@@ -273,7 +274,7 @@ def format_bytes(size):
 
 
 def create_menuitem(text, image):
-    item = Gtk.ImageMenuItem(text)
+    item = Gtk.ImageMenuItem.new_with_mnemonic(text)
     item.set_image(Gtk.Image.new_from_pixbuf(image))
 
     return item

@@ -54,7 +54,7 @@ class Gconf(ConfigPlugin):
 				x.append(self.gval2pyval(item))
 			return x
 		else:
-			raise AttributeError("Cant get this type from GConf")
+			raise AttributeError("Cant get this type from GConf: %s" % str(val.type))
 	
 	def value_changed(self, client, key, value):
 		if os.path.dirname(key) == BLUEMAN_PATH + self.section:
@@ -79,7 +79,7 @@ class Gconf(ConfigPlugin):
 		elif type(value) == list:
 			func = self._set_gconf_list
 		else:
-			raise AttributeError("Cant set this type in GConf")
+			raise AttributeError("Cant set this type in GConf: %s" % str(type(value)))
 		
 		func(BLUEMAN_PATH + self.section + "/" + key, value)
 		
