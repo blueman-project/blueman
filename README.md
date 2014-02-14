@@ -81,3 +81,8 @@ Older versions:
 
 Fork, make your changes and issue a pull request. If you just want to edit a single file
 (e.g. translations in the po folder), GitHub will guide you through that process.
+
+### Translate
+
+Translations are managed with transifex.
+Go to [transifex blueman project page](https://www.transifex.com/projects/p/MATE/resource/blueman/).
