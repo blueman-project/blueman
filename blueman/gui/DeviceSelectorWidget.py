@@ -4,6 +4,7 @@ import gi
 gi.require_version("Gtk", "2.0")
 
 from gi.repository import Gtk
+from gi.repository import GObject
 import os
 from blueman.bluez.Adapter import Adapter
 from blueman.Constants import *
@@ -47,8 +48,8 @@ class DeviceSelectorWidget(Gtk.VBox):
 
         self.List.connect("discovery-progress", self.on_discovery_progress)
 
-        self.pack_start(sw, True)
-        self.pack_start(sitem, False)
+        self.pack_start(sw, True, False, 0)
+        self.pack_start(sitem, False, False, 0)
 
         sitem.show()
 

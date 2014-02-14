@@ -53,7 +53,7 @@ class Assistant(Agent):
         self.Passkey = ""
         self.Service = None
 
-        self.Builder = gtk.Builder()
+        self.Builder = Gtk.Builder()
         self.Builder.set_translation_domain("blueman")
         self.Builder.add_from_file(UI_PATH + "/assistant.ui")
         self.assistant = self.Builder.get_object("assistant")
@@ -108,11 +108,11 @@ class Assistant(Agent):
         self.dev_widget.show()
 
         if not self.dev_widget.List.IsValidAdapter():
-            d = gtk.MessageDialog(type=gtk.MESSAGE_ERROR, )
+            d = Gtk.MessageDialog(type=Gtk.MessageType.ERROR, )
             d.props.text = _("No adapters found")
             d.props.icon_name = "blueman"
             d.props.title = "Blueman Assistant"
-            d.add_button(gtk.STOCK_CLOSE, gtk.RESPONSE_CANCEL)
+            d.add_button(Gtk.STOCK_CLOSE, Gtk.ResponseType.CANCEL)
             d.run()
             exit(1)
 
@@ -147,7 +147,7 @@ class Assistant(Agent):
         else:
             self.dev_widget.List.DiscoverDevices()
 
-        gtk.main()
+        Gtk.main()
 
     def on_row_activated(self, treeview, path, view_column, *args):
         self.assistant.set_current_page(self.next_page_fn(self.assistant.get_current_page(), None))
@@ -238,7 +238,7 @@ class Assistant(Agent):
         return self.Passkey
 
     def on_close(self, assistant):
-        gtk.main_quit()
+        Gtk.main_quit()
 
     def on_service_toggled(self, rb, sv_name, *args):
         if rb.props.active:
@@ -288,28 +288,23 @@ class Assistant(Agent):
             print(self.Device.Services)
             uuids = self.Device.UUIDs
             rbs = []
-
-            def get_first_item():
-                try:
-                    return rbs[0]
-                except:
-                    return None
+            rbs_group = []
 
             for name, service in self.Device.Services.items():
                 if name == "serial":
                     for uuid in uuids:
                         uuid16 = uuid128_to_uuid16(uuid)
                         if uuid16 == DIALUP_NET_SVCLASS_ID:
-                            rbs.append(gtk.RadioButton(get_first_item(), uuid16_to_name(uuid16)))
+                            rbs.append(Gtk.RadioButton(rbs_group, uuid16_to_name(uuid16)))
                             rbs[-1].connect("toggled", self.on_service_toggled, name, uuid)
                             self.svc_vbox.pack_start(rbs[-1], False)
 
                         if uuid16 == SERIAL_PORT_SVCLASS_ID:
-                            rbs.append(gtk.RadioButton(get_first_item(), uuid16_to_name(uuid16)))
+                            rbs.append(Gtk.RadioButton(rbs_group, uuid16_to_name(uuid16)))
                             rbs[-1].connect("toggled", self.on_service_toggled, name, uuid)
                             self.svc_vbox.pack_start(rbs[-1], False)
                 elif name == "input":
-                    rbs.append(gtk.RadioButton(get_first_item(), _("Input Service")))
+                    rbs.append(Gtk.RadioButton(rbs_group, _("Input Service")))
                     rbs[-1].connect("toggled", self.on_service_toggled, name)
                     self.svc_vbox.pack_start(rbs[-1], False)
 
@@ -317,31 +312,31 @@ class Assistant(Agent):
                     for uuid in uuids:
                         uuid16 = uuid128_to_uuid16(uuid)
                         if uuid16 == GN_SVCLASS_ID:
-                            rbs.append(gtk.RadioButton(get_first_item(), _("Group Network")))
+                            rbs.append(Gtk.RadioButton(rbs_group, _("Group Network")))
                             rbs[-1].connect("toggled", self.on_service_toggled, name, uuid)
                             self.svc_vbox.pack_start(rbs[-1], False)
 
                         if uuid16 == NAP_SVCLASS_ID:
-                            rbs.append(gtk.RadioButton(get_first_item(), _("Network Access Point")))
+                            rbs.append(Gtk.RadioButton(rbs_group, _("Network Access Point")))
                             rbs[-1].connect("toggled", self.on_service_toggled, name, uuid)
                             self.svc_vbox.pack_start(rbs[-1], False)
 
                 elif name == "audiosink":
-                    rbs.append(gtk.RadioButton(get_first_item(), _("A2DP Sink (Send Audio)")))
+                    rbs.append(Gtk.RadioButton(rbs_group, _("A2DP Sink (Send Audio)")))
                     rbs[-1].connect("toggled", self.on_service_toggled, name)
                     self.svc_vbox.pack_start(rbs[-1], False)
 
                 elif name == "audiosource":
-                    rbs.append(gtk.RadioButton(get_first_item(), _("A2DP Source (Receive Audio)")))
+                    rbs.append(Gtk.RadioButton(rbs_group, _("A2DP Source (Receive Audio)")))
                     rbs[-1].connect("toggled", self.on_service_toggled, name)
                     self.svc_vbox.pack_start(rbs[-1], False)
 
                 elif name == "headset":
-                    rbs.append(gtk.RadioButton(get_first_item(), _("Headset Service")))
+                    rbs.append(Gtk.RadioButton(rbs_group, _("Headset Service")))
                     rbs[-1].connect("toggled", self.on_service_toggled, name)
                     self.svc_vbox.pack_start(rbs[-1], False)
 
-            rbs.append(gtk.RadioButton(get_first_item(), _("Don't connect")))
+            rbs.append(Gtk.RadioButton(rbs_group, _("Don't connect")))
             rbs[-1].connect("toggled", self.on_service_toggled, None)
             self.svc_vbox.pack_start(rbs[-1], False, False, 8)
             self.svc_vbox.show_all()
