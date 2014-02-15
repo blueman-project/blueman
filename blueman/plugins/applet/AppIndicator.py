@@ -19,13 +19,17 @@
 
 #from blueman.Functions import *
 
+from blueman.Constants import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.applet.BluezAgent import AdapterAgent
 import blueman.bluez as Bluez
 
 from gi.repository import GObject
 import os
-from gi.repository import AppIndicator as girAppIndicator
+if GTK_API_VERSION == "3.0":
+    from gi.repository import AppIndicator3 as girAppIndicator
+elif GTK_API_VERSION == "2.0":
+    from gi.repository import AppIndicator as girAppIndicator
 
 class AppIndicator(AppletPlugin):
     __description__ = _("Uses libappindicator to show a statusicon")

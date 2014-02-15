@@ -23,8 +23,6 @@ from subprocess import *
 from blueman.Constants import *
 from blueman.Functions import *
 
-import gi
-gi.require_version("Gtk", "2.0")
 from gi.repository import Gtk
 
 

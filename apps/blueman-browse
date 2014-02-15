@@ -11,10 +11,13 @@ from optparse import OptionParser
 import gettext
 import time
 
+from blueman.Constants import *
+import gi
+gi.require_version("Gtk", GTK_API_VERSION)
+
 from blueman.bluez.Manager import Manager
 from blueman.gui.DeviceSelectorDialog import DeviceSelectorDialog
 from blueman.Functions import *
-from blueman.Constants import *
 from blueman.main.Config import Config
 
 

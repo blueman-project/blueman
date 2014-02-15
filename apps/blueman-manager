@@ -23,8 +23,9 @@
 import os.path
 import sys
 import dbus, dbus.glib
+from blueman.Constants import *
 import gi
-gi.require_version("Gtk", "2.0")
+gi.require_version("Gtk", GTK_API_VERSION)
 from gi.repository import Gtk
 from gi.repository import GObject
 
@@ -33,7 +34,6 @@ _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if os.path.exists(os.path.join(_dirname, "CHANGELOG.md")):
     sys.path.insert(0, _dirname)
 
-from blueman.Constants import *
 from blueman.Functions import *
 from blueman.main.Device import Device
 from blueman.bluez.Device import Device as BluezDevice

@@ -8,9 +8,6 @@ from blueman.main.Device import Device
 from blueman.Lib import conn_info
 import blueman.bluez as Bluez
 
-import gi
-gi.require_version("Gtk", "2.0")
-
 from gi.repository import Gtk
 from gi.repository import GObject
 import os

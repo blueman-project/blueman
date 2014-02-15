@@ -21,6 +21,7 @@ _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if os.path.exists(os.path.join(_dirname, "CHANGELOG.md")):
     sys.path.insert(0, _dirname)
 
+from blueman.Constants import *
 from blueman.Functions import *
 from blueman.gui.DeviceSelectorWidget import DeviceSelectorWidget
 from blueman.bluez.Agent import Agent, AgentMethod
@@ -31,7 +32,7 @@ from blueman.main.AppletService import AppletService
 from blueman.Sdp import *
 
 import gi
-gi.require_version("Gtk", "2.0")
+gi.require_version("Gtk", GTK_API_VERSION)
 from gi.repository import Gtk
 
 class Assistant(Agent):
