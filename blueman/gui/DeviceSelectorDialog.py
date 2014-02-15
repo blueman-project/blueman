@@ -9,7 +9,6 @@ class DeviceSelectorDialog(Gtk.Dialog):
         Gtk.Dialog.__init__(self, title, parent, 0, (Gtk.STOCK_CANCEL, Gtk.ResponseType.REJECT,
                                                      Gtk.STOCK_OK, Gtk.ResponseType.ACCEPT))
 
-        self.set_has_separator(False)
         self.props.resizable = False
         self.props.icon_name = "blueman"
         self.selector = DeviceSelectorWidget()
