@@ -50,10 +50,10 @@ def show_about_dialog(app_name, run=True):
 	about.set_website(WEBSITE)
 	about.set_icon(get_icon('blueman'))
 	about.set_logo(get_icon('blueman', 48))
-	authors = 'Valmantas Palikša <walmis@balticum-tv.lt>\n'\
-				'Tadas Dailyda <tadas@dailyda.com>'
-	#FIXME this segfaults with introspection
-	#about.set_authors(authors)
+	authors = ['Valmantas Palikša <walmis@balticum-tv.lt>',
+				'Tadas Dailyda <tadas@dailyda.com>']
+	if GTK_API_VERSION == "3.0":
+		about.set_authors(authors)
 	if run:
 		about.run()
 		about.destroy()
