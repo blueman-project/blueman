@@ -1,3 +1,4 @@
+from blueman.Constants import *
 from blueman.Functions import dprint
 from blueman.Sdp import *
 from gi.repository import Gtk
@@ -28,10 +29,16 @@ class ManagerToolbar:
 
         self.b_trust.props.label = _("Untrust")
         size = Gtk.Requisition()
-        self.b_trust.size_request(size)
+        if GTK_API_VERSION == "3.0":
+            (size, nsize) = Gtk.Widget.get_preferred_size(self.b_trust)
+        elif GTK_API_VERSION == "2.0":
+            self.b_trust.size_request(size)
         self.b_trust.props.label = _("Trust")
         size2 = Gtk.Requisition()
-        self.b_trust.size_request(size2)
+        if GTK_API_VERSION == "3.0":
+            (size2, nsize2) = Gtk.Widget.get_preferred_size(self.b_trust)
+        elif GTK_API_VERSION == "2.0":
+            self.b_trust.size_request(size2)
 
         self.b_trust.props.width_request = max(size.width, size2.width)
 

@@ -165,7 +165,8 @@ class BluemanAdapters:
         hscale = builder.get_object("hscale")
         hscale.set_range(0, 30)
         hscale.set_increments(1, 1)
-        hscale.set_update_policy(Gtk.UpdateType.DISCONTINUOUS)
+        if GTK_API_VERSION == "2.0":
+            hscale.set_update_policy(Gtk.UpdateType.DISCONTINUOUS)
         if adapter_settings['discoverable']:
             hscale.set_value(adapter_settings['discoverable_timeout'])
             hscale.set_sensitive(adapter_settings['discoverable_timeout'] > 0)

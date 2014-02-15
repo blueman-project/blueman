@@ -86,8 +86,12 @@ class ManagerDeviceList(DeviceList):
 		self.connect("drag_data_received", self.drag_recv)
 		self.connect("drag-motion", self.drag_motion)
 
-		Gtk.drag_dest_set(self, Gtk.DestDefaults.ALL, [], Gdk.DragAction.COPY|Gdk.DragAction.DEFAULT)
-		Gtk.drag_dest_add_uri_targets(self)
+		if GTK_API_VERSION == "3.0":
+			Gtk.Widget.drag_dest_set(self, Gtk.DestDefaults.ALL, [], Gdk.DragAction.COPY|Gdk.DragAction.DEFAULT)
+			Gtk.Widget.drag_dest_add_uri_targets(self)
+		elif GTK_API_VERSION == "2.0":
+			Gtk.drag_dest_set(self, Gtk.DestDefaults.ALL, [], Gdk.DragAction.COPY|Gdk.DragAction.DEFAULT)
+			Gtk.drag_dest_add_uri_targets(self)
 		
 		self.set_search_equal_func(self.search_func, None)
 		
@@ -169,7 +173,11 @@ class ManagerDeviceList(DeviceList):
 						if self.menu == None:
 							self.menu = ManagerDeviceMenu(self.Blueman)
 					
-						self.menu.popup(None, None, None, event.button, event.time)
+						if GTK_API_VERSION == "3.0":
+							self.menu.popup(None, None, None, None, event.button, event.time)
+						elif GTK_API_VERSION == "2.0":
+							# FIXME popup is missing with Gtk2 introspection
+							self.menu.popup(None, None, None, event.button, event.time)
 	
 	
 	

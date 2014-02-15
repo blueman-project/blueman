@@ -21,6 +21,7 @@ from gi.repository import Gdk
 from gi.repository import Pango
 from gi.repository import GObject
 from blueman.gui.GtkAnimation import WidgetFade
+from blueman.Constants import *
 from blueman.Functions import get_icon
 
 class MessageArea(Gtk.EventBox):
@@ -89,8 +90,10 @@ class MessageArea(Gtk.EventBox):
 		self.b_close.connect("clicked", self.on_close)
 		self.b_more.connect("clicked", self.on_more)
 
-		
-		self.hbox.connect("expose-event", self.expose_event)
+		if GTK_API_VERSION == "3.0":
+			self.hbox.connect("draw", self.draw)
+		elif GTK_API_VERSION == "2.0":
+			self.hbox.connect("expose-event", self.expose_event)
 		self.b_close.connect("style-set", self.style_set)
 		
 	def on_more(self, button):
@@ -183,6 +186,11 @@ class MessageArea(Gtk.EventBox):
 			self.label.props.label = text
 			self.b_more.props.visible = False
 		
+	def draw(self, window, cr):
+		Gtk.paint_box(window.get_style(), cr,
+			Gtk.StateType.NORMAL, Gtk.ShadowType.IN,
+			window, "tooltip",
+			window.allocation.x, window.allocation.y, window.allocation.width, window.allocation.height)
 	def expose_event(self, window, event):
 		window.style.paint_box(window.window,
 			Gtk.StateType.NORMAL, Gtk.ShadowType.IN,
