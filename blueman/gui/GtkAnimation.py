@@ -17,7 +17,7 @@
 # 
 
 from blueman.Constants import *
-from gi.repository import Gtk
+from gi.repository import Gtk, Gdk
 from gi.repository import cairo
 from gi.repository import GObject
 import weakref
@@ -314,7 +314,8 @@ class CellFade(AnimBase):
 			rect.y = bg_rect.y
 			rect.height = bg_rect.height
 			
-			if GTK_API_VERSION == "2.0":
+			if GTK_API_VERSION == "3.0":
+				isected = rect
 				cr.rectangle(rect)
 			if GTK_API_VERSION == "2.0":
 				isected = event.area.intersect(rect)
