@@ -50,7 +50,7 @@ class Manager(PropertiesBlueZInterface):
                 wrapper = handler
             else:
                 def wrapper(object_path, interfaces):
-                    if object_path == self.get_object_path() and 'org.bluez.Adapter1' in interfaces:
+                    if 'org.bluez.Adapter1' in interfaces:
                         handler(object_path)
 
                 signal = signal.replace('Adapter', 'Interfaces')
