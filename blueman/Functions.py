@@ -129,12 +129,12 @@ def startup_notification(name, desc=None, bin_name=None, icon=None):
     sn.set_name(name)
 
     if bin_name:
-        sn.set_binary_name(bin_name)
+        sn.set_binary_name(bin_name.encode('UTF-8'))
     if icon:
-        sn.set_icon_name(icon)
+        sn.set_icon_name(icon.encode('UTF-8'))
 
     if desc:
-        sn.set_description(desc)
+        sn.set_description(desc.encode('UTF-8')
 
     sn.initiate("", "", Gtk.get_current_event_time())
 
