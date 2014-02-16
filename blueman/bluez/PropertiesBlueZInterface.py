@@ -17,7 +17,7 @@ class PropertiesBlueZInterface(BlueZInterface):
         if self.__class__.get_interface_version()[0] < 5:
             self.get_interface().SetProperty(name, value)
         else:
-            return self.__properties_interface.Set(name, value)
+            return self.__properties_interface.Set(self.get_interface_name(), name, value)
 
     @raise_dbus_error
     def get_properties(self):
