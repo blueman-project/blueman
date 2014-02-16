@@ -29,16 +29,10 @@ class ManagerToolbar:
 
         self.b_trust.props.label = _("Untrust")
         size = Gtk.Requisition()
-        if GTK_API_VERSION == "3.0":
-            (size, nsize) = Gtk.Widget.get_preferred_size(self.b_trust)
-        elif GTK_API_VERSION == "2.0":
-            self.b_trust.size_request(size)
+        (size, nsize) = Gtk.Widget.get_preferred_size(self.b_trust)
         self.b_trust.props.label = _("Trust")
         size2 = Gtk.Requisition()
-        if GTK_API_VERSION == "3.0":
-            (size2, nsize2) = Gtk.Widget.get_preferred_size(self.b_trust)
-        elif GTK_API_VERSION == "2.0":
-            self.b_trust.size_request(size2)
+        (size2, nsize2) = Gtk.Widget.get_preferred_size(self.b_trust)
 
         self.b_trust.props.width_request = max(size.width, size2.width)
 

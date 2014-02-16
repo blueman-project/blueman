@@ -90,10 +90,7 @@ class MessageArea(Gtk.EventBox):
 		self.b_close.connect("clicked", self.on_close)
 		self.b_more.connect("clicked", self.on_more)
 
-		if GTK_API_VERSION == "3.0":
-			self.hbox.connect("draw", self.draw)
-		elif GTK_API_VERSION == "2.0":
-			self.hbox.connect("expose-event", self.expose_event)
+		self.hbox.connect("draw", self.draw)
 		self.b_close.connect("style-set", self.style_set)
 		
 	def on_more(self, button):

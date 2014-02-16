@@ -32,7 +32,7 @@ from blueman.main.AppletService import AppletService
 from blueman.Sdp import *
 
 import gi
-gi.require_version("Gtk", GTK_API_VERSION)
+gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 class Assistant(Agent):

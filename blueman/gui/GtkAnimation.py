@@ -137,10 +137,7 @@ class TreeRowFade(AnimBase):
 		AnimBase.__init__(self, 1.0)
 		self.tw = tw
 		
-		if GTK_API_VERSION == "3.0":
-			self.sig = self.tw.connect_after("draw", self.on_expose)
-		elif GTK_API_VERSION == "2.0":
-			self.sig = self.tw.connect_after("expose-event", self.on_expose)
+		self.sig = self.tw.connect_after("draw", self.on_expose)
 		
 		self.row = Gtk.TreeRowReference.new(tw.props.model, path)
 		self.style = Gtk.rc_get_style(tw)
@@ -155,7 +152,7 @@ class TreeRowFade(AnimBase):
 		return self.tw.props.model.get_iter(self.row.get_path())
 		
 		
-	def on_expose(self, widget, event):
+	def on_expose(self, widget, cr):
 		if self.frozen:
 			return
 
@@ -168,11 +165,6 @@ class TreeRowFade(AnimBase):
 		
 		area = ()
 		
-		if GTK_API_VERSION == "3.0":
-			cr = event
-		elif GTK_API_VERSION == "2.0":
-			cr = event.window.cairo_create()
-		
 		color = self.style.base[0]
 
 		if not self.columns:
@@ -181,27 +173,15 @@ class TreeRowFade(AnimBase):
 			columns = self.columns
 			
 		for col in columns:
-			if GTK_API_VERSION == "2.0":
-				cr.save()
-			
 			rect = self.tw.get_background_area(path, col)
-			if GTK_API_VERSION == "3.0":
-				isected = Gdk.Rectangle
-				Gdk.cairo_get_clip_rectangle(cr, rect)
-			elif GTK_API_VERSION == "2.0":
-				isected = event.area.intersect(rect)
-			cr.rectangle(isected)
+			Gdk.cairo_get_clip_rectangle(cr, rect)
+			cr.rectangle(Gdk.Rectangle)
 			cr.clip()
 
 			cr.set_source_rgba((1.0/65535)*color.red, (1.0/65535)*color.green, (1.0/65535)*color.blue, 1.0-self.get_state())
 			cr.set_operator(cairo.OPERATOR_OVER)
 	 		cr.paint()
 			
-			if GTK_API_VERSION == "2.0":
-				cr.restore()
-
-
-		
 	def state_changed(self, state):
 		self.tw.queue_draw()
 		#print state
@@ -215,7 +195,7 @@ class TreeRowColorFade(TreeRowFade):
 	def do_animation_finished(self):
 		self.unref()
 	
-	def on_expose(self, widget, event):
+	def on_expose(self, widget, cr):
 		if self.frozen:
 			return
 
@@ -228,11 +208,6 @@ class TreeRowColorFade(TreeRowFade):
 		
 		area = ()
 		
-		if GTK_API_VERSION == "3.0":
-			cr = event
-		elif GTK_API_VERSION == "2.0":
-			cr = event.window.cairo_create()
-		
 		color = self.style.base[0]
 
 		if not self.columns:
@@ -241,23 +216,13 @@ class TreeRowColorFade(TreeRowFade):
 			columns = self.columns
 			
 		for col in columns:
-			if GTK_API_VERSION == "2.0":
-				cr.save()
-			
 			rect = self.tw.get_background_area(path, col)
-			if GTK_API_VERSION == "3.0":
-				cr.rectangle(rect)
-			elif GTK_API_VERSION == "2.0":
-				isected = event.area.intersect(rect)
-				cr.rectangle(isected)
+			cr.rectangle(rect)
 			cr.clip()
 
 			cr.set_source_rgba((1.0/65535)*self.color.red, (1.0/65535)*self.color.green, (1.0/65535)*self.color.blue, 1.0-self.get_state())
 			cr.set_operator(cairo.OPERATOR_OVER)
 	 		cr.paint()
-			
-			if GTK_API_VERSION == "2.0":
-				cr.restore()
 
 class CellFade(AnimBase):
 	def __init__(self, tw, path, columns=None):
@@ -265,11 +230,7 @@ class CellFade(AnimBase):
 		self.tw = tw
 		
 		self.frozen = False
-		if GTK_API_VERSION == "3.0":
-			self.sig = tw.connect_after("draw", self.on_expose)
-		elif GTK_API_VERSION == "2.0":
-			self.sig = tw.connect_after("expose-event", self.on_expose)
-		
+		self.sig = tw.connect_after("draw", self.on_expose)
 		self.row = Gtk.TreeRowReference.new(tw.props.model, path)
 		self.selection = tw.get_selection()
 		self.style = Gtk.rc_get_style(tw)
@@ -285,7 +246,7 @@ class CellFade(AnimBase):
 	def get_iter(self):
 		return self.tw.props.model.get_iter(self.row.get_path())
 			
-	def on_expose(self, widget, event):
+	def on_expose(self, widget, cr):
 		if self.frozen:
 			return
 
@@ -297,74 +258,38 @@ class CellFade(AnimBase):
 		path = self.row.get_path()
 		
 		area = ()
-		
-		if GTK_API_VERSION == "3.0":
-			cr = event
-		elif GTK_API_VERSION == "2.0":
-			cr = event.window.cairo_create()
-		
+
 		color = self.style.base[0]
 			
 		for col in self.columns:
-			if GTK_API_VERSION == "2.0":
-				cr.save()
-			
 			bg_rect = self.tw.get_background_area(path, col)
 			rect = self.tw.get_cell_area(path, col)
 			rect.y = bg_rect.y
 			rect.height = bg_rect.height
 			
-			if GTK_API_VERSION == "3.0":
-				isected = rect
-				cr.rectangle(rect)
-			if GTK_API_VERSION == "2.0":
-				isected = event.area.intersect(rect)
-				cr.rectangle(isected)
+			cr.rectangle(rect)
 			cr.clip()
-			#print "expose", isected
-			if not (isected.height == 0 or isected.height == 0):
-				#print isected
-				#print rect
-				if GTK_API_VERSION == "2.0":
-					pixmap = Gdk.Pixmap(event.window, isected.width, isected.height)
-					gc = Gdk.GC(event.window)
-					pixmap.draw_drawable(gc, event.window, isected.x, isected.y, 0, 0, isected.width, isected.height)
-			
+			if not (rect.height == 0 or rect.height == 0):
 				detail = "cell_even" if path[0] % 2 == 0 else "cell_odd"
 				if self.tw.props.rules_hint:
 					detail += "_ruled"
 				
 				selected = self.selection.get_selected()[1] and self.tw.props.model.get_path(self.selection.get_selected()[1]) == path
 				
-				if GTK_API_VERSION == "3.0":
-					self.tw.style.paint_flat_box(self.tw.get_style(),
-							     cr,
-							     Gtk.StateType.SELECTED if (selected) else Gtk.StateType.NORMAL,
-							     0,
-							     self.tw,
-							     detail,
-							     isected.x,
-							     isected.y,
-							     isected.width,
-							     isected.height)
-				elif GTK_API_VERSION == "2.0":
-					self.tw.style.paint_flat_box(event.window,
-							     Gtk.StateType.SELECTED if (selected) else Gtk.StateType.NORMAL,
-							     0,
-							     isected,
-							     self.tw,
-							     detail,
-							     isected.x,
-							     isected.y,
-							     isected.width,
-							     isected.height)
+				self.tw.style.paint_flat_box(self.tw.get_style(),
+						     cr,
+						     Gtk.StateType.SELECTED if (selected) else Gtk.StateType.NORMAL,
+						     0,
+						     self.tw,
+						     detail,
+						     rect.x,
+						     rect.y,
+						     rect.width,
+						     rect.height)
 			
-				cr.set_source_pixmap(pixmap, isected.x, isected.y)
+				cr.set_source_pixmap(pixmap, rect.x, rect.y)
 				cr.paint_with_alpha(self.get_state())
 			
-			if GTK_API_VERSION == "2.0":
-				cr.restore()
-		
 	def state_changed(self, state):
 		self.tw.queue_draw()
 		#print state
@@ -376,18 +301,10 @@ class WidgetFade(AnimBase):
 		self.widget = widget
 		self.color = color
 		
-		if GTK_API_VERSION == "3.0":
-			self.sig = widget.connect_after("draw", self.on_expose)
-		elif GTK_API_VERSION == "2.0":
-			self.sig = widget.connect_after("expose-event", self.on_expose)
-		
-	def on_expose(self, window, event):
-		if not self.frozen:
-			if GTK_API_VERSION == "3.0":
-				cr = event
-			elif GTK_API_VERSION == "2.0":
-				cr = event.window.cairo_create()
+		self.sig = widget.connect_after("draw", self.on_expose)
 
+	def on_expose(self, window, cr):
+		if not self.frozen:
 			rect = self.widget.allocation
 			cr.rectangle(rect)
 			cr.clip()		

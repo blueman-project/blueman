@@ -52,12 +52,9 @@ def show_about_dialog(app_name, run=True):
 	about.set_logo(get_icon('blueman', 48))
 	authors = ['Valmantas Palikša <walmis@balticum-tv.lt>',
 				'Tadas Dailyda <tadas@dailyda.com>']
-	if GTK_API_VERSION == "3.0":
-		about.set_authors(authors)
+	about.set_authors(authors)
 	if run:
 		about.run()
 		about.destroy()
 	else:
 		return about
-
-

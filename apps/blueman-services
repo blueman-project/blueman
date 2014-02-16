@@ -11,7 +11,7 @@ from blueman.gui.GenericList import GenericList
 
 from blueman.Constants import *
 import gi
-gi.require_version("Gtk", GTK_API_VERSION)
+gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 from blueman.Functions import *

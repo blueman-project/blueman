@@ -13,7 +13,7 @@ import time
 
 from blueman.Constants import *
 import gi
-gi.require_version("Gtk", GTK_API_VERSION)
+gi.require_version("Gtk", "3.0")
 
 from blueman.bluez.Manager import Manager
 from blueman.gui.DeviceSelectorDialog import DeviceSelectorDialog
