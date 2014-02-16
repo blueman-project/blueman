@@ -48,7 +48,7 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
 
         image.set_from_stock(icon, Gtk.IconSize.LARGE_TOOLBAR)
         image.show()
-        widget.pack_start(image, 0, 0)
+        widget.pack_start(image, True, 0, 0)
         entry.connect("changed", self.on_entry_changed, ic, image)
 
     __options__ = {"icon": {"type": str,
