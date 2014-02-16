@@ -40,8 +40,8 @@ class Menu(AppletPlugin):
 		self.__menu = Gtk.Menu()
 		
 	def on_popup_menu(self, status_icon, button, activate_time):
-		self.__menu.popup(None, None, Gtk.status_icon_position_menu,
-						button, activate_time, status_icon)		
+		self.__menu.popup(None, None, Gtk.StatusIcon.position_menu,
+						status_icon, button, activate_time)
 	
 	def __sort(self):
 		self.__menuitems.sort(lambda a, b: cmp(a[0], b[0]))
