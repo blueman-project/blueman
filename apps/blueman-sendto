@@ -156,12 +156,12 @@ class Sender(GObject.GObject):
 
         #first transfer
         if self.total_transferred == 0:
-            self.pb.props.text = _("Sending File") + (" %(0)s/%(1)s (%(2).2f %(3)s/s) " + _("ETA:") + " %(4)s") % {
-                "1": self.num_files,
-                "0": (self.num_files - len(self.files) + 1),
-                "2": 0.0,
-                "3": "B/s",
-                "4": "∞"}
+            self.pb.props.text = _(u"Sending File") + (u" %(0)s/%(1)s (%(2).2f %(3)s/s) " + _(u"ETA:") + u" %(4)s") % {
+                u"1": self.num_files,
+                u"0": (self.num_files - len(self.files) + 1),
+                u"2": 0.0,
+                u"3": u"B/s",
+                u"4": u"∞"}
 
         self.l_file.props.label = filename
         self._last_bytes = 0
