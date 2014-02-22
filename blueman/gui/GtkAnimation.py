@@ -140,7 +140,7 @@ class TreeRowFade(AnimBase):
 		self.sig = self.tw.connect_after("draw", self.on_expose)
 		
 		self.row = Gtk.TreeRowReference.new(tw.props.model, path)
-		self.style = Gtk.rc_get_style(tw)
+		self.stylecontext = tw.get_style_context()
 		self.columns = None
 
 	def unref(self):
@@ -165,7 +165,7 @@ class TreeRowFade(AnimBase):
 		
 		area = ()
 		
-		color = self.style.base[0]
+		color = self.stylecontext.get_background_color(0)
 
 		if not self.columns:
 			columns = self.tw.get_columns()
@@ -208,7 +208,7 @@ class TreeRowColorFade(TreeRowFade):
 		
 		area = ()
 		
-		color = self.style.base[0]
+		color = self.stylecontext.get_background_color(0)
 
 		if not self.columns:
 			columns = self.tw.get_columns()
@@ -234,6 +234,7 @@ class CellFade(AnimBase):
 		self.row = Gtk.TreeRowReference.new(tw.props.model, path)
 		self.selection = tw.get_selection()
 		self.style = Gtk.rc_get_style(tw)
+		self.stylecontext = tw.get_style_context()
 		self.columns = []
 		for i in columns:
 			self.columns.append(self.tw.get_column(i))
@@ -259,7 +260,7 @@ class CellFade(AnimBase):
 		
 		area = ()
 
-		color = self.style.base[0]
+		color = self.stylecontext.get_background_color(0)
 			
 		for col in self.columns:
 			bg_rect = self.tw.get_background_area(path, col)
