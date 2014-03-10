@@ -225,7 +225,7 @@ class Services(ManagerPlugin):
 
                     if "DhcpClient" in appl.QueryPlugins():
                         def renew(x):
-                            appl.DhcpClient(sprops["Device"])
+                            appl.DhcpClient(sprops["Interface"])
 
                         item = create_menuitem(_("Renew IP Address"), get_icon("gtk-refresh", 16))
                         manager_menu.Signals.Handle("gobject", item, "activate", renew)

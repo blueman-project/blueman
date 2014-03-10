@@ -47,7 +47,7 @@ class DhcpClient(AppletPlugin):
 		self.dhcp_acquire(interface)
 		
 	def on_network_prop_changed(self, key, value, path):
-		if key == "Device":
+		if key == "Interface":
 			if value != "":
 				self.dhcp_acquire(value)
 		

@@ -387,7 +387,7 @@ class NetUsage(AppletPlugin, gobject.GObject):
 
     def on_network_property_changed(self, key, value, path):
         dprint(key, value, path)
-        if key == "Device" and value != "":
+        if key == "Interface" and value != "":
             d = BluezDevice(path)
             d = Device(d)
             self.monitor_interface(Monitor, d, value)

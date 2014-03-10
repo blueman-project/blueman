@@ -142,7 +142,7 @@ AM_CHECK_PYMOD(gobject,,,[AC_MSG_ERROR(Could not find Python module gobject)])
 fi
 
 PKG_CHECK_MODULES(BLUEZ,
-		bluez	>= 4.21
+		bluez	>= 4.61
 		libstartup-notification-1.0 >= 0.9
 		gtk+-2.0 >= 2.12
 		pygobject-2.0 >= 2.12

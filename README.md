@@ -27,7 +27,7 @@ Blueman 2 will especially bring support for newer APIs like BlueZ 5 and NetworkM
 
 ### Generic dependencies
 
-* [BlueZ 4](http://www.bluez.org/) (>= 4.25)
+* [BlueZ 4](http://www.bluez.org/) (>= 4.61)
 * [dbus](http://www.freedesktop.org/wiki/Software/dbus/)
 * [dbus-python](http://www.freedesktop.org/wiki/Software/DBusBindings/#python)
 * [GLib 2](http://www.gtk.org/) (>= 2.32)

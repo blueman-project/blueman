@@ -40,7 +40,7 @@ class NMIntegration(AppletPlugin):
         self.Signals.DisconnectAll()
 
     def on_network_prop_changed(self, key, value, path):
-        if key == "Device":
+        if key == "Interface":
             if value != "":
                 m = Mechanism()
                 m.HalRegisterNetDev(value)
