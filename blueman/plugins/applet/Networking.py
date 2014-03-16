@@ -1,6 +1,6 @@
 from blueman.Functions import *
 from blueman.main.Config import Config
-from blueman.bluez.ServiceInterface import ServiceInterface
+from blueman.bluez.NetworkServer import NetworkServer
 from blueman.main.Mechanism import Mechanism
 from blueman.main.SignalTracker import SignalTracker
 
@@ -54,19 +54,17 @@ class Networking(AppletPlugin):
     def update_status(self):
         self.set_nap(self.Config.props.nap_enable or False)
 
-
     def on_config_changed(self, config, key, value):
         if key == "nap_enable":
             self.set_nap(value)
-
 
     def set_nap(self, on):
         dprint("set nap", on)
         if self.Applet.Manager != None:
             adapters = self.Applet.Manager.list_adapters()
             for adapter in adapters:
-                s = ServiceInterface("org.bluez.NetworkServer", adapter.get_object_path(), ["Register", "Unregister"])
+                s = NetworkServer(adapter.get_object_path())
                 if on:
-                    s.Register("nap", "pan1")
+                    s.register("nap", "pan1")
                 else:
-                    s.Unregister("nap")
+                    s.unregister("nap")
