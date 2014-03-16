@@ -9,7 +9,8 @@ blueman_PYTHON =				\
 	errors.py					\
 	Manager.py					\
 	PropertiesBlueZInterface.py	\
-	ServiceInterface.py
+	ServiceInterface.py			\
+	NetworkServer.py
 
 CLEANFILES = \
 	$(BUILT_SOURCES)
