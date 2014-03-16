@@ -43,6 +43,9 @@ class Agent(dbus.service.Object):
         self.__obj_path = obj_path
         dbus.service.Object.__init__(self, dbus.SystemBus(), obj_path)
 
+    def get_object_path(self):
+        return self.__obj_path
+
     @AgentMethod
     def Release(self):
         dprint('Release')

@@ -17,11 +17,9 @@ class AuthAgent(AppletPlugin):
         self.Applet = applet
         self.add_dbus_method(self.SetTimeHint, in_signature="u")
 
+        self.agents = []
         self.last_event_time = 0
 
-<<<<<<< HEAD
-        self.agent_manager = Bluez.AgentManager()
-=======
         self.legacy = self.Applet.Manager.get_interface_version()[0] < 5
 
         if self.legacy:
@@ -30,42 +28,29 @@ class AuthAgent(AppletPlugin):
             self.agent_manager = Bluez.AgentManager()
             self.agent = BluezAgent.GlobalAgent(self.Applet.Plugins.StatusIcon, self.get_event_time)
             self.agent_manager.register_agent(self.agent, "DisplayYesNo")
->>>>>>> (WIP!) Replace bluez layer
+        self.agent_manager = Bluez.AgentManager()
 
     def SetTimeHint(self, time):
         self.last_event_time = time
 
     def on_unload(self):
-<<<<<<< HEAD
-        for agent in self.agents:
-            if self.legacy():
-                agent.adapter.unregister_agent(agent)
-            else:
-                self.agent_manager.unregister_agent(agent)
-=======
         if self.legacy:
             for agent in self.agents:
                 agent.adapter.unregister_agent(agent)
         else:
             self.agent_manager.unregister_agent(self.agent)
->>>>>>> (WIP!) Replace bluez layer
 
     def on_manager_state_changed(self, state):
-        if not self.legacy:
-            return
-
         if state:
             adapters = self.Applet.Manager.list_adapters()
             for adapter in adapters:
                 self.register_agent(adapter)
+
         else:
             for agent in self.agents:
                 agent.Release()
 
     def on_adapter_added(self, path):
-        if not self.legacy:
-            return
-
         adapter = Bluez.Adapter(path)
         self.register_agent(adapter)
 
@@ -79,7 +64,6 @@ class AuthAgent(AppletPlugin):
     def register_agent(self, adapter):
         dprint("Registering agent")
         try:
-<<<<<<< HEAD
             if self.legacy():
                 agent = BluezAgent.AdapterAgent(self.Applet.Plugins.StatusIcon, adapter, self.get_event_time)
                 agent.signal = agent.connect("released", self.on_released)
@@ -89,12 +73,10 @@ class AuthAgent(AppletPlugin):
                 agent = BluezAgent.GlobalAgent(self.Applet.Plugins.StatusIcon, self.get_event_time)
                 self.agent_manager.register_agent(agent, "DisplayYesNo", default=True)
                 self.agents.append(agent)
-=======
             agent = BluezAgent.AdapterAgent(self.Applet.Plugins.StatusIcon, adapter, self.get_event_time)
             agent.signal = agent.connect("released", self.on_released)
             adapter.register_agent(agent, "DisplayYesNo")
             self.agents.append(agent)
->>>>>>> (WIP!) Replace bluez layer
 
         except Exception as e:
             dprint("Failed to register agent")
