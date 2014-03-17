@@ -1,41 +1,41 @@
-# Finnish translation for blueman
-# Copyright (c) 2007 Rosetta Contributors and Canonical Ltd 2007
-# This file is distributed under the same license as the blueman package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2007.
-#
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2007
 msgid ""
 msgstr ""
-"Project-Id-Version: blueman\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2010-01-29 14:44+0200\n"
-"PO-Revision-Date: 2010-02-22 13:23+0000\n"
-"Last-Translator: Jussi Aalto <Unknown>\n"
-"Language-Team: Finnish <fi@li.org>\n"
+"Project-Id-Version: MATE Desktop Environment\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-02-13 15:13+0100\n"
+"PO-Revision-Date: 2014-02-13 20:36+0000\n"
+"Last-Translator: Stefano Karapetsas <stefano@karapetsas.com>\n"
+"Language-Team: Finnish (http://www.transifex.com/projects/p/MATE/language/fi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2010-02-23 05:02+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"Language: fi\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
-msgid "<b>Friendly Name</b>"
-msgstr ""
-
-#: ../data/ui/adapters-tab.ui.h:2
 msgid "<b>Visibility Setting</b>"
 msgstr ""
+
+#: ../data/ui/adapters-tab.ui.h:2 ../apps/blueman-adapters:131
+msgid "Hidden"
+msgstr "Piilotettu"
 
 #: ../data/ui/adapters-tab.ui.h:3
 msgid "Always visible"
 msgstr "Aina näkyvissä"
 
-#: ../data/ui/adapters-tab.ui.h:4 ../apps/blueman-adapters:145
-msgid "Hidden"
-msgstr "Piilotettu"
+#: ../data/ui/adapters-tab.ui.h:4
+msgid "Temporarily visible"
+msgstr ""
 
 #: ../data/ui/adapters-tab.ui.h:5
-msgid "Temporarily visible"
+msgid "<b>Friendly Name</b>"
 msgstr ""
 
 #: ../data/ui/adapters.ui.h:1
@@ -54,750 +54,727 @@ msgstr "Parituspyyntö laitteelle:"
 msgid "Show input"
 msgstr "Näytä salasana"
 
-#. translators: toolbar item: keep it as short as possible
-#: ../data/ui/manager-main.ui.h:2
-msgid "Add"
-msgstr "Lisää"
-
-#: ../data/ui/manager-main.ui.h:3
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:274
-msgid "Add this device to known devices list"
-msgstr "Lisää tämä laite tunnettujen laitteiden listalle"
-
-#: ../data/ui/manager-main.ui.h:4
+#: ../data/ui/manager-main.ui.h:1
 msgid "Bluetooth Devices"
 msgstr "Bluetooth-laitteet"
 
-#. translators: toolbar item: keep it as short as possible
-#: ../data/ui/manager-main.ui.h:6
-msgid "Browse"
-msgstr "Selaa"
-
-#: ../data/ui/manager-main.ui.h:7
-msgid "Browse the device using obex ftp"
-msgstr "Selaa tätä laitetta käytäen obex ftp:tä"
-
-#: ../data/ui/manager-main.ui.h:8
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:386
-msgid "Create pairing with the device"
-msgstr "Parita laitteet"
-
-#: ../data/ui/manager-main.ui.h:9
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:405
-msgid "Mark/Unmark this device as trusted"
-msgstr "Merkitse tai poista laitteen luottamus"
-
-#. translators: toolbar item: keep it as short as possible
-#: ../data/ui/manager-main.ui.h:11
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:283
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:385
-msgid "Pair"
-msgstr "Parita"
-
-#. translators: toolbar item: keep it as short as possible
-#: ../data/ui/manager-main.ui.h:13
-msgid "Remove"
-msgstr "Poista"
-
-#: ../data/ui/manager-main.ui.h:14
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:442
-msgid "Remove this device from the known devices list"
-msgstr "Poista laite tunnettujen laitteiden listalta"
-
-#: ../data/ui/manager-main.ui.h:15
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:281
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:411
-msgid "Run the setup assistant for this device"
-msgstr "Suorita asetusvelho tälle laitteelle"
-
-#. translators: toolbar item: keep it as short as possible
-#: ../data/ui/manager-main.ui.h:17 ../blueman/gui/manager/ManagerMenu.py:199
-msgid "Search"
-msgstr "Etsi"
-
-#: ../data/ui/manager-main.ui.h:18
+#: ../data/ui/manager-main.ui.h:2
 msgid "Search for nearby devices"
 msgstr "Etsi lähellä olevia laitteita"
 
 #. translators: toolbar item: keep it as short as possible
-#: ../data/ui/manager-main.ui.h:20
-msgid "Send File"
-msgstr "Lähetä tiedosto"
+#: ../data/ui/manager-main.ui.h:4
+msgid "Search"
+msgstr "Etsi"
 
-#: ../data/ui/manager-main.ui.h:21
+#: ../data/ui/manager-main.ui.h:5
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:258
+msgid "Add this device to known devices list"
+msgstr "Lisää tämä laite tunnettujen laitteiden listalle"
+
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:7
+msgid "Add"
+msgstr "Lisää"
+
+#: ../data/ui/manager-main.ui.h:8
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:366
+msgid "Create pairing with the device"
+msgstr "Parita laitteet"
+
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:10
+msgid "Pair"
+msgstr "Parita"
+
+#: ../data/ui/manager-main.ui.h:11
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:384
+msgid "Mark/Unmark this device as trusted"
+msgstr "Merkitse tai poista laitteen luottamus"
+
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:13 ../blueman/gui/manager/ManagerToolbar.py:30
+#: ../blueman/gui/manager/ManagerToolbar.py:101
+msgid "Trust"
+msgstr "Aseta luottamus"
+
+#: ../data/ui/manager-main.ui.h:14
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:265
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:390
+msgid "Run the setup assistant for this device"
+msgstr "Suorita asetusvelho tälle laitteelle"
+
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:16
+msgid "Setup..."
+msgstr "Asetukset..."
+
+#: ../data/ui/manager-main.ui.h:17
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:421
+msgid "Remove this device from the known devices list"
+msgstr "Poista laite tunnettujen laitteiden listalta"
+
+#. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:19
+msgid "Remove"
+msgstr "Poista"
+
+#: ../data/ui/manager-main.ui.h:20
 msgid "Send file(s) to the device"
 msgstr "Lähetä tiedosto(ja) laitteeseen"
 
 #. translators: toolbar item: keep it as short as possible
+#: ../data/ui/manager-main.ui.h:22
+msgid "Send File"
+msgstr "Lähetä tiedosto"
+
 #: ../data/ui/manager-main.ui.h:23
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:276
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:407
-msgid "Setup..."
-msgstr "Asetukset..."
+msgid "Browse the device using obex ftp"
+msgstr "Selaa tätä laitetta käytäen obex ftp:tä"
 
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:25
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:396
-#: ../blueman/gui/manager/ManagerToolbar.py:47
-#: ../blueman/gui/manager/ManagerToolbar.py:120
-msgid "Trust"
-msgstr "Aseta luottamus"
+msgid "Browse"
+msgstr "Selaa"
 
 #: ../data/ui/services.ui.h:1
 msgid "Local Services"
 msgstr "Paikalliset palvelut"
 
-#: ../data/ui/services-network.ui.h:1
-msgid "<b>DUN Support</b>"
-msgstr "<b>DUN-tuki</b>"
-
-#: ../data/ui/services-network.ui.h:2
-msgid "<b>NAP Settings</b>"
-msgstr "<b>NAP-asetukset</b>"
-
-#: ../data/ui/services-network.ui.h:3
-msgid "<b>Network Settings</b>"
-msgstr "<b>Verkon asetukset</b>"
-
-#: ../data/ui/services-network.ui.h:4
-msgid "<b>No DHCP servers installed</b>"
-msgstr "<b>Ei asennettuja DHCP-palvelimia</b>"
-
-#: ../data/ui/services-network.ui.h:5
-msgid "<b>PAN Support</b>"
-msgstr "<b>PAB-tuki</b>"
-
-#: ../data/ui/services-network.ui.h:6 ../data/ui/services-audio.ui.h:3
-msgid "<b>Services</b>"
-msgstr "<b>Palvelut</b>"
-
-#: ../data/ui/services-network.ui.h:7
-msgid "DHCP server type:"
-msgstr "DHCP-palvelimen tyyppi:"
-
-#: ../data/ui/services-network.ui.h:8
-msgid "Enable Routing (NAT)"
-msgstr "Ota reititys (NAT) käyttöön"
-
-#: ../data/ui/services-network.ui.h:9 ../blueman/Sdp.py:118
-#: ../blueman/plugins/manager/Services.py:212 ../apps/blueman-assistant:336
+#: ../data/ui/services-network.ui.h:1 ../blueman/Sdp.py:118
+#: ../blueman/plugins/manager/Services.py:195 ../apps/blueman-assistant:321
 msgid "Group Network"
 msgstr "Ryhmäverkko"
 
-#: ../data/ui/services-network.ui.h:10
-msgid "IP Address:"
-msgstr "IP-osoite:"
-
-#: ../data/ui/services-network.ui.h:11
+#: ../data/ui/services-network.ui.h:2
 msgid "Network Access Point (NAP)"
 msgstr "Verkon tukiasema (NAP)"
 
-#: ../data/ui/services-network.ui.h:12
+#: ../data/ui/services-network.ui.h:3 ../data/ui/services-audio.ui.h:5
+msgid "<b>Services</b>"
+msgstr "<b>Palvelut</b>"
+
+#: ../data/ui/services-network.ui.h:4
+msgid "DHCP server type:"
+msgstr "DHCP-palvelimen tyyppi:"
+
+#: ../data/ui/services-network.ui.h:5
 msgid "Recommended"
 msgstr "Suositeltu"
 
+#: ../data/ui/services-network.ui.h:6
+msgid "IP Address:"
+msgstr "IP-osoite:"
+
+#: ../data/ui/services-network.ui.h:7
+msgid "Enable Routing (NAT)"
+msgstr "Ota reititys (NAT) käyttöön"
+
+#: ../data/ui/services-network.ui.h:8
+msgid "<b>NAP Settings</b>"
+msgstr "<b>NAP-asetukset</b>"
+
+#: ../data/ui/services-network.ui.h:9
+msgid "<b>No DHCP servers installed</b>"
+msgstr "<b>Ei asennettuja DHCP-palvelimia</b>"
+
+#: ../data/ui/services-network.ui.h:10
+msgid "<b>PAN Support</b>"
+msgstr "<b>PAB-tuki</b>"
+
+#: ../data/ui/services-network.ui.h:11
+msgid "<b>DUN Support</b>"
+msgstr "<b>DUN-tuki</b>"
+
+#: ../data/ui/services-network.ui.h:12
+msgid "<b>Network Settings</b>"
+msgstr "<b>Verkon asetukset</b>"
+
 #: ../data/ui/services-transfer.ui.h:1
-msgid "<b>Advanced</b>"
-msgstr "<b>Lisäasetukset</b>"
+msgid "Shared Folder:"
+msgstr "Jaettu kansio:"
 
 #: ../data/ui/services-transfer.ui.h:2
-msgid "<b>File Receiving (Object Push)</b>"
-msgstr "<b>Tiedoston vastaanotto (Object Push)</b>"
+msgid "Select Shared/Storage folder"
+msgstr "Valitse jako/säilytys-kansio"
 
 #: ../data/ui/services-transfer.ui.h:3
-msgid "<b>File Sharing (FTP)</b>"
-msgstr "<b>Tiedostonjako (FTP)</b>"
+msgid "Enabled"
+msgstr "Käytössä"
 
 #: ../data/ui/services-transfer.ui.h:4
-msgid "<b>Transfer Settings</b>"
-msgstr "<b>Siirtoasetukset</b>"
-
-#: ../data/ui/services-transfer.ui.h:5
 msgid "Accept files from trusted devices"
 msgstr "Hyväksy tiedostot luotetuilta laitteilta"
+
+#: ../data/ui/services-transfer.ui.h:5
+msgid "<b>File Receiving (Object Push)</b>"
+msgstr "<b>Tiedoston vastaanotto (Object Push)</b>"
 
 #: ../data/ui/services-transfer.ui.h:6
 msgid "Allow devices to write/delete"
 msgstr "Salli laitteiden kirjoittaa/poistaa"
 
-#: ../data/ui/services-transfer.ui.h:8
+#: ../data/ui/services-transfer.ui.h:7
+msgid "<b>File Sharing (FTP)</b>"
+msgstr "<b>Tiedostonjako (FTP)</b>"
+
+#: ../data/ui/services-transfer.ui.h:9
 #, no-c-format
 msgid ""
 "Command to start an obex ftp browser.\n"
 "<i>%d</i> is substituted with device address."
-msgstr ""
-"Komento jolla käynnistetään obex ftp -selain.\n"
-"<i>%d</i> korvataan laitteen osoitteella."
-
-#: ../data/ui/services-transfer.ui.h:10
-msgid "Enabled"
-msgstr "Käytössä"
+msgstr "Komento jolla käynnistetään obex ftp -selain.\n<i>%d</i> korvataan laitteen osoitteella."
 
 #: ../data/ui/services-transfer.ui.h:11
-msgid "Select Shared/Storage folder"
-msgstr "Valitse jako/säilytys-kansio"
+msgid "<b>Advanced</b>"
+msgstr "<b>Lisäasetukset</b>"
 
 #: ../data/ui/services-transfer.ui.h:12
-msgid "Shared Folder:"
-msgstr "Jaettu kansio:"
+msgid "<b>Transfer Settings</b>"
+msgstr "<b>Siirtoasetukset</b>"
 
 #: ../data/ui/services-audio.ui.h:1
-msgid ""
-"<b>After applying these settings Bluetooth daemon will be restarted.</b>"
-msgstr ""
-"<b>Asetusten hyväksymisen jälkeen Bluetooth daemon käynnistetään "
-"uudelleen.</b>"
-
-#: ../data/ui/services-audio.ui.h:2
-msgid "<b>Audio Settings</b>"
-msgstr "<b>Ääniasetukset</b>"
-
-#: ../data/ui/services-audio.ui.h:4
-msgid ""
-"Advanced Audio receiver <span weight='bold' "
-"color='#cc0000'>Experimental!</span>"
-msgstr ""
-"Kehittynyt äänen vastaanotto <span weight='bold' "
-"color='#cc0000'>Kokeiluasteellal!</span>"
-
-#: ../data/ui/services-audio.ui.h:5
-msgid "Allows this computer to act like a handsfree headset."
-msgstr "Sallii tietokoneen käyttäytyä kuin handsfreekuuloke."
-
-#: ../data/ui/services-audio.ui.h:6
 msgid ""
 "Allows you to receive a2dp audio from other Bluetooth devices and play it "
 "over the speakers."
 msgstr ""
 
-#: ../data/ui/services-audio.ui.h:7
+#: ../data/ui/services-audio.ui.h:2
+msgid ""
+"Advanced Audio receiver <span weight='bold' "
+"color='#cc0000'>Experimental!</span>"
+msgstr "Kehittynyt äänen vastaanotto <span weight='bold' color='#cc0000'>Kokeiluasteellal!</span>"
+
+#: ../data/ui/services-audio.ui.h:3
+msgid "Allows this computer to act like a handsfree headset."
+msgstr "Sallii tietokoneen käyttäytyä kuin handsfreekuuloke."
+
+#: ../data/ui/services-audio.ui.h:4
 msgid ""
 "Headset Emulation <span weight='bold' color='#cc0000'>Very "
 "Experimental!</span>"
-msgstr ""
-"Headset Emulointi <span weight='bold' color='#cc0000'>Erittäin "
-"kokeiluasteellal!</span>"
+msgstr "Headset Emulointi <span weight='bold' color='#cc0000'>Erittäin kokeiluasteellal!</span>"
+
+#: ../data/ui/services-audio.ui.h:6
+msgid ""
+"<b>After applying these settings Bluetooth daemon will be restarted.</b>"
+msgstr "<b>Asetusten hyväksymisen jälkeen Bluetooth daemon käynnistetään uudelleen.</b>"
+
+#: ../data/ui/services-audio.ui.h:7
+msgid "<b>Audio Settings</b>"
+msgstr "<b>Ääniasetukset</b>"
 
 #: ../data/ui/send-dialog.ui.h:1
-msgid "<b>File:</b>"
-msgstr "<b>Tiedosto:</b>"
-
-#: ../data/ui/send-dialog.ui.h:2
-msgid "<b>To:</b>"
-msgstr "<b>Kohde:</b>"
-
-#: ../data/ui/send-dialog.ui.h:3
-msgid ""
-"<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
-msgstr ""
-"<span weight=\"bold\" size=\"large\">Tiedostojen lähettäminen "
-"bluetoothilla</span>"
-
-#: ../data/ui/send-dialog.ui.h:4
 msgid "Bluetooth File Transfer"
 msgstr "Bluetooth-tiedostonsiirto"
 
+#: ../data/ui/send-dialog.ui.h:2
+msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
+msgstr "<span weight=\"bold\" size=\"large\">Tiedostojen lähettäminen bluetoothilla</span>"
+
+#: ../data/ui/send-dialog.ui.h:3
+msgid "<b>To:</b>"
+msgstr "<b>Kohde:</b>"
+
+#: ../data/ui/send-dialog.ui.h:4
+msgid "<b>File:</b>"
+msgstr "<b>Tiedosto:</b>"
+
 #: ../data/ui/assistant.ui.h:1
-msgid "<b>Congratulations, device successfully added</b>"
-msgstr "<b>Onnittelut, laite lisättiin onnistuneesti</b>"
-
-#: ../data/ui/assistant.ui.h:2
-msgid "<b>Connect to:</b>"
-msgstr "<b>Yhdistä kohteeseen:</b>"
-
-#: ../data/ui/assistant.ui.h:3
-msgid "<b>Please wait...</b>"
-msgstr "<b>Odota hetkinen...</b>"
-
-#: ../data/ui/assistant.ui.h:4
-msgid "<b>Select pairing method to use:</b>"
-msgstr "<b>Valitse käytettävä paritustapa:</b>"
-
-#: ../data/ui/assistant.ui.h:5
 msgid ""
 "<b>Welcome to the Bluetooth device setup assistant. </b>\n"
 "\n"
 "\n"
-"It will walk you through the process of configuring and connecting to your "
-"Bluetooth enabled devices."
+"It will walk you through the process of configuring and connecting to your Bluetooth enabled devices."
 msgstr ""
 
-#: ../data/ui/assistant.ui.h:9
-msgid "Proceed Without Pairing"
-msgstr "Jatka parittamatta"
+#: ../data/ui/assistant.ui.h:5
+msgid "<b>Select pairing method to use:</b>"
+msgstr "<b>Valitse käytettävä paritustapa:</b>"
 
-#: ../data/ui/assistant.ui.h:10
-msgid "Use Custom Passkey:"
-msgstr "Käytä omaa salasanaa:"
-
-#: ../data/ui/assistant.ui.h:11
+#: ../data/ui/assistant.ui.h:6
 msgid "Use Random Passkey"
 msgstr "Käytä satunnaista tunnuslukua:"
 
-#: ../data/ui/device-list-widget.ui.h:1
-msgid "Adapter selection"
-msgstr "Sovittimen valinta"
+#: ../data/ui/assistant.ui.h:7
+msgid "Use Custom Passkey:"
+msgstr "Käytä omaa salasanaa:"
 
-#: ../data/ui/device-list-widget.ui.h:2
+#: ../data/ui/assistant.ui.h:8
+msgid "Proceed Without Pairing"
+msgstr "Jatka parittamatta"
+
+#: ../data/ui/assistant.ui.h:9
+msgid "<b>Connect to:</b>"
+msgstr "<b>Yhdistä kohteeseen:</b>"
+
+#: ../data/ui/assistant.ui.h:10
+msgid "<b>Please wait...</b>"
+msgstr "<b>Odota hetkinen...</b>"
+
+#: ../data/ui/assistant.ui.h:11
+msgid "<b>Congratulations, device successfully added</b>"
+msgstr "<b>Onnittelut, laite lisättiin onnistuneesti</b>"
+
+#: ../data/ui/device-list-widget.ui.h:1
 msgid "Device search progress"
 msgstr "Laitehaun edistyminen"
 
-#: ../data/ui/device-list-widget.ui.h:3
+#: ../data/ui/device-list-widget.ui.h:2
 msgid "Search for devices"
 msgstr "Etsi laitteita"
 
+#: ../data/ui/device-list-widget.ui.h:3
+msgid "Adapter selection"
+msgstr "Sovittimen valinta"
+
 #: ../data/ui/applet-plugins-widget.ui.h:1
-msgid "<b>Author:</b>"
-msgstr "<b>Tekijä:</b>"
-
-#: ../data/ui/applet-plugins-widget.ui.h:2
-msgid "<b>Conflicts with:</b>"
-msgstr "<b>On ristiriidassa:</b>"
-
-#: ../data/ui/applet-plugins-widget.ui.h:3
-msgid "<b>Depends on:</b>"
-msgstr "<b>Riippuvudet:</b>"
-
-#: ../data/ui/applet-plugins-widget.ui.h:4
-msgid "<b>Plugin description:</b>"
-msgstr "<b>Liitännäisen kuvaus:</b>"
-
-#: ../data/ui/applet-plugins-widget.ui.h:5
 msgid "Configuration"
 msgstr ""
 
-#: ../data/ui/applet-plugins-widget.ui.h:6
+#: ../data/ui/applet-plugins-widget.ui.h:2
 msgid "Configure selected plugin's preferences"
 msgstr "Määritä valitun pluginin asetukset"
 
-#: ../data/ui/applet-plugins-widget.ui.h:7
+#: ../data/ui/applet-plugins-widget.ui.h:3
+msgid "<b>Plugin description:</b>"
+msgstr "<b>Liitännäisen kuvaus:</b>"
+
+#: ../data/ui/applet-plugins-widget.ui.h:4
 msgid "Not specified"
 msgstr "Ei määritelty"
 
-#: ../data/ui/applet-plugins-widget.ui.h:8 ../blueman/Sdp.py:257
+#: ../data/ui/applet-plugins-widget.ui.h:5
+msgid "<b>Author:</b>"
+msgstr "<b>Tekijä:</b>"
+
+#: ../data/ui/applet-plugins-widget.ui.h:6 ../blueman/Sdp.py:257
 #: ../blueman/Sdp.py:360 ../blueman/Sdp.py:365
-#: ../blueman/plugins/applet/NetUsage.py:247
-#: ../blueman/plugins/applet/NetUsage.py:248
+#: ../blueman/plugins/applet/NetUsage.py:255
+#: ../blueman/plugins/applet/NetUsage.py:256
 msgid "Unknown"
 msgstr "Tuntematon"
+
+#: ../data/ui/applet-plugins-widget.ui.h:7
+msgid "<b>Depends on:</b>"
+msgstr "<b>Riippuvudet:</b>"
+
+#: ../data/ui/applet-plugins-widget.ui.h:8
+msgid "<b>Conflicts with:</b>"
+msgstr "<b>On ristiriidassa:</b>"
 
 #: ../data/ui/gsm-settings.ui.h:1
 msgid "<b>GSM settings</b>"
 msgstr "<b>GSM-asetukset</b>"
 
 #: ../data/ui/gsm-settings.ui.h:2
-msgid "APN:"
-msgstr "APN:"
-
-#: ../data/ui/gsm-settings.ui.h:3
 msgid "Number:"
 msgstr "Numero:"
 
+#: ../data/ui/gsm-settings.ui.h:3
+msgid "APN:"
+msgstr "APN:"
+
 #: ../data/ui/net-usage.ui.h:1
+msgid "Traffic statistics"
+msgstr "Liikennöintitilastot"
+
+#: ../data/ui/net-usage.ui.h:2
 msgid "<b>Downloaded:</b>"
 msgstr "<b>Ladattu:</b>"
 
-#: ../data/ui/net-usage.ui.h:2
-msgid "<b>Log duration:</b>"
-msgstr "<b>Lokita kesto:</b>"
-
 #: ../data/ui/net-usage.ui.h:3
-msgid "<b>Log started:</b>"
-msgstr "<b>Loki aloitettu:</b>"
+msgid "<b>Uploaded:</b>"
+msgstr "<b>Lähetetty:</b>"
 
 #: ../data/ui/net-usage.ui.h:4
 msgid "<b>Total:</b>"
 msgstr "<b>Yhteensä:</b>"
 
 #: ../data/ui/net-usage.ui.h:5
-msgid "<b>Uploaded:</b>"
-msgstr "<b>Lähetetty:</b>"
+msgid "<b>Log started:</b>"
+msgstr "<b>Loki aloitettu:</b>"
 
 #: ../data/ui/net-usage.ui.h:6
-msgid "Reset"
-msgstr "Nollaa"
+msgid "<b>Log duration:</b>"
+msgstr "<b>Lokita kesto:</b>"
 
 #: ../data/ui/net-usage.ui.h:7
-msgid "Traffic statistics"
-msgstr "Liikennöintitilastot"
+msgid "Reset"
+msgstr "Nollaa"
 
 #: ../data/ui/net-usage.ui.h:8
 msgid "gtk-close"
 msgstr "gtk-close"
 
-#: ../blueman/main/applet/Transfer.py:170
+#: ../blueman/main/applet/Transfer.py:149
 msgid "Incoming file over Bluetooth"
 msgstr "Bluetoothin kautta saapuu tiedosto"
 
-#: ../blueman/main/applet/Transfer.py:171
+#: ../blueman/main/applet/Transfer.py:150
 #, python-format
 msgid "Incoming file %(0)s from %(1)s"
 msgstr "Saapuva tiedosto %(0)s lähteestä %(1)s"
 
-#: ../blueman/main/applet/Transfer.py:172
-#: ../blueman/main/applet/BluezAgent.py:240
+#: ../blueman/main/applet/Transfer.py:152
+#: ../blueman/main/applet/BluezAgent.py:246
 msgid "Accept"
 msgstr "Hyväksy"
 
-#: ../blueman/main/applet/Transfer.py:172
+#: ../blueman/main/applet/Transfer.py:152
 msgid "Reject"
 msgstr "Hylkää"
 
-#: ../blueman/main/applet/Transfer.py:180
+#: ../blueman/main/applet/Transfer.py:161
 msgid "Receiving file"
 msgstr "Vastaanotetaan tiedostoa"
 
-#: ../blueman/main/applet/Transfer.py:181
+#: ../blueman/main/applet/Transfer.py:162
 #, python-format
 msgid "Receiving file %(0)s from %(1)s"
 msgstr "Vastaanotetaan tiedostoa %(0)s kohteesta %(1)s"
 
-#: ../blueman/main/applet/Transfer.py:218
-#: ../blueman/main/applet/Transfer.py:244
+#: ../blueman/main/applet/Transfer.py:201
+#: ../blueman/main/applet/Transfer.py:231
 msgid "File received"
 msgstr "Vastaanotettiin tiedosto"
 
-#: ../blueman/main/applet/Transfer.py:219
-#: ../blueman/main/applet/Transfer.py:245
+#: ../blueman/main/applet/Transfer.py:202
+#: ../blueman/main/applet/Transfer.py:232
 #, python-format
 msgid "File %(0)s from %(1)s successfully received"
 msgstr "Tiedosto %(0)s kohteesta %(1)s vastaanotettiin onnistuneesti"
 
-#: ../blueman/main/applet/Transfer.py:232
+#: ../blueman/main/applet/Transfer.py:217
 msgid "Transfer failed"
 msgstr "Siirto epäonnistui"
 
-#: ../blueman/main/applet/Transfer.py:233
+#: ../blueman/main/applet/Transfer.py:218
 #, python-format
 msgid "Transfer of file %(0)s failed"
 msgstr "Tiedoston %(0)s siirto epäonnistui"
 
+#: ../blueman/main/applet/Transfer.py:240
 #: ../blueman/main/applet/Transfer.py:251
-#: ../blueman/main/applet/Transfer.py:261
 msgid "Files received"
 msgstr "Vastaanotettiin tiedostot"
 
-#: ../blueman/main/applet/Transfer.py:252
+#: ../blueman/main/applet/Transfer.py:241
 #, python-format
 msgid "Received %d file in the background"
 msgid_plural "Received %d files in the background"
 msgstr[0] "Vastaanotettiin %d tiedosto taustalla"
 msgstr[1] "Vastaanotettiin %d tiedostoa taustalla"
 
-#: ../blueman/main/applet/Transfer.py:262
+#: ../blueman/main/applet/Transfer.py:252
 #, python-format
 msgid "Received %d more file in the background"
 msgid_plural "Received %d more files in the background"
 msgstr[0] "Vastaanotettu %d tiedosto taustalla"
 msgstr[1] "Vastaanotettu %d tiedostoa taustalla"
 
-#: ../blueman/main/applet/BluezAgent.py:125
+#: ../blueman/main/applet/BluezAgent.py:129
 #, python-format
 msgid "Pairing request for %s"
 msgstr "Parituspyyntö laitteelta %s"
 
-#: ../blueman/main/applet/BluezAgent.py:137
-#: ../blueman/main/applet/BluezAgent.py:243
+#: ../blueman/main/applet/BluezAgent.py:141
+#: ../blueman/main/applet/BluezAgent.py:249
 msgid "Bluetooth Authentication"
 msgstr "Bluetooth-autentikointi"
 
-#: ../blueman/main/applet/BluezAgent.py:178
-#: ../blueman/main/applet/BluezAgent.py:261
+#: ../blueman/main/applet/BluezAgent.py:182
+#: ../blueman/main/applet/BluezAgent.py:269
 msgid "Enter PIN code for authentication:"
 msgstr "Syötä PIN-koodi tunnistusta varten:"
 
-#: ../blueman/main/applet/BluezAgent.py:179
-#: ../blueman/main/applet/BluezAgent.py:262
+#: ../blueman/main/applet/BluezAgent.py:183
+#: ../blueman/main/applet/BluezAgent.py:270
 msgid "Enter PIN code"
 msgstr "Syötä PIN-koodi"
 
-#: ../blueman/main/applet/BluezAgent.py:187
-#: ../blueman/main/applet/BluezAgent.py:270
+#: ../blueman/main/applet/BluezAgent.py:191
+#: ../blueman/main/applet/BluezAgent.py:278
 msgid "Enter passkey for authentication:"
 msgstr "Anna tunnusluku todennusta varten:"
 
-#: ../blueman/main/applet/BluezAgent.py:188
-#: ../blueman/main/applet/BluezAgent.py:271
+#: ../blueman/main/applet/BluezAgent.py:192
+#: ../blueman/main/applet/BluezAgent.py:279
 msgid "Enter passkey"
 msgstr "Anna tunnusluku"
 
-#: ../blueman/main/applet/BluezAgent.py:208
+#: ../blueman/main/applet/BluezAgent.py:212
 msgid "Pairing request for:"
 msgstr "Parituspyyntö kohteelle:"
 
-#: ../blueman/main/applet/BluezAgent.py:208
-#: ../blueman/main/applet/BluezAgent.py:287
+#: ../blueman/main/applet/BluezAgent.py:213
+#: ../blueman/main/applet/BluezAgent.py:295
 msgid "Confirm value for authentication:"
 msgstr "Varmista arvo todennusta varten:"
 
-#: ../blueman/main/applet/BluezAgent.py:209
+#: ../blueman/main/applet/BluezAgent.py:214
 msgid "Confirm"
 msgstr "Vahvista"
 
-#: ../blueman/main/applet/BluezAgent.py:209
-#: ../blueman/main/applet/BluezAgent.py:241
+#: ../blueman/main/applet/BluezAgent.py:214
+#: ../blueman/main/applet/BluezAgent.py:247
 msgid "Deny"
 msgstr "Kiellä"
 
-#: ../blueman/main/applet/BluezAgent.py:238
+#: ../blueman/main/applet/BluezAgent.py:244
 msgid "Authorization request for:"
 msgstr "Todentamispyyntö:"
 
-#: ../blueman/main/applet/BluezAgent.py:238
+#: ../blueman/main/applet/BluezAgent.py:244
 msgid "Service:"
 msgstr "Palvelu:"
 
-#: ../blueman/main/applet/BluezAgent.py:239
+#: ../blueman/main/applet/BluezAgent.py:245
 msgid "Always accept"
 msgstr "Hyväksy aina"
 
-#: ../blueman/main/applet/BluezAgent.py:285
+#: ../blueman/main/applet/BluezAgent.py:293
 msgid "Confirm value"
 msgstr "Vahvista arvo"
 
-#: ../blueman/main/applet/BluezAgent.py:286
+#: ../blueman/main/applet/BluezAgent.py:294
 #, python-format
 msgid "Pairing with: %s"
 msgstr "Paritetaan laitteen %s kanssa"
 
-#: ../blueman/main/PluginManager.py:78
+#: ../blueman/main/PluginManager.py:64
 msgid ""
-"<b>An error has occured while loading a plugin. Please notify the developers "
-"with the content of this message.</b>"
+"<b>An error has occured while loading a plugin. Please notify the developers"
+" with the content of this message.</b>"
 msgstr ""
 
-#: ../blueman/Functions.py:77
+#: ../blueman/Functions.py:88
 msgid "Bluetooth Turned Off"
 msgstr "Bluetooth pois päältä"
 
-#: ../blueman/Functions.py:81
+#: ../blueman/Functions.py:92
 msgid "Enable Bluetooth"
 msgstr "Ota bluetooth käyttöön"
 
-#: ../blueman/gui/manager/ManagerMenu.py:38
+#: ../blueman/gui/manager/ManagerMenu.py:19
 msgid "_Adapter"
 msgstr "_Sovitin"
 
-#: ../blueman/gui/manager/ManagerMenu.py:39
+#: ../blueman/gui/manager/ManagerMenu.py:20
 msgid "_Device"
 msgstr "_Laite"
 
-#: ../blueman/gui/manager/ManagerMenu.py:41
+#: ../blueman/gui/manager/ManagerMenu.py:22
 msgid "_View"
 msgstr "_Näytä"
 
-#: ../blueman/gui/manager/ManagerMenu.py:42
+#: ../blueman/gui/manager/ManagerMenu.py:23
 msgid "_Help"
 msgstr "_Ohje"
 
-#: ../blueman/gui/manager/ManagerMenu.py:55
-msgid "Get Help Online..."
-msgstr "Hae ohjeita verkosta..."
+#: ../blueman/gui/manager/ManagerMenu.py:35
+msgid "_Report a Problem"
+msgstr ""
 
-#: ../blueman/gui/manager/ManagerMenu.py:60
-msgid "Translate This Application..."
-msgstr "Käännä tämä ohjelma..."
-
-#: ../blueman/gui/manager/ManagerMenu.py:65
-msgid "Report a Problem"
-msgstr "Raportoi ongelmasta"
-
-#: ../blueman/gui/manager/ManagerMenu.py:75
+#: ../blueman/gui/manager/ManagerMenu.py:45
 msgid "Device Manager"
 msgstr "Laitehallinta"
 
-#: ../blueman/gui/manager/ManagerMenu.py:83
+#: ../blueman/gui/manager/ManagerMenu.py:53
 msgid "Show Toolbar"
 msgstr "Näytä työkalupalkki"
 
-#: ../blueman/gui/manager/ManagerMenu.py:95
+#: ../blueman/gui/manager/ManagerMenu.py:65
 msgid "Show Statusbar"
 msgstr "Näytä tilapalkki"
 
-#: ../blueman/gui/manager/ManagerMenu.py:111
+#: ../blueman/gui/manager/ManagerMenu.py:81
 msgid "Latest Device First"
 msgstr "Viimeisin laite ensimmäisenä"
 
-#: ../blueman/gui/manager/ManagerMenu.py:115
+#: ../blueman/gui/manager/ManagerMenu.py:85
 msgid "Latest Device Last"
 msgstr "Viimeisin laite viimeisenä"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:451
+#: ../blueman/gui/manager/ManagerMenu.py:169
+msgid "_Search"
+msgstr ""
+
+#: ../blueman/gui/manager/ManagerDeviceList.py:459
 msgid "<b>Trusted and Bonded</b>"
 msgstr "<b>Luotettu ja paritettu</b>"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:453
+#: ../blueman/gui/manager/ManagerDeviceList.py:461
 msgid "<b>Bonded</b>"
 msgstr "<b>Paritettu</b>"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:455
+#: ../blueman/gui/manager/ManagerDeviceList.py:463
 msgid "<b>Trusted</b>"
 msgstr "<b>Luotettu</b>"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:476
+#: ../blueman/gui/manager/ManagerDeviceList.py:484
 msgid "Poor"
 msgstr "Kriittinen"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:479
-#: ../blueman/gui/manager/ManagerDeviceList.py:495
+#: ../blueman/gui/manager/ManagerDeviceList.py:487
+#: ../blueman/gui/manager/ManagerDeviceList.py:503
 msgid "Sub-optimal"
 msgstr "Huono"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:482
-#: ../blueman/gui/manager/ManagerDeviceList.py:498
+#: ../blueman/gui/manager/ManagerDeviceList.py:490
+#: ../blueman/gui/manager/ManagerDeviceList.py:506
 msgid "Optimal"
 msgstr "Optimaalinen"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:485
+#: ../blueman/gui/manager/ManagerDeviceList.py:493
 msgid "Much"
 msgstr "Paljon"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:488
+#: ../blueman/gui/manager/ManagerDeviceList.py:496
 msgid "Too much"
 msgstr "Aivan liikaa"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:492
+#: ../blueman/gui/manager/ManagerDeviceList.py:500
 msgid "Low"
 msgstr "Matala"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:501
+#: ../blueman/gui/manager/ManagerDeviceList.py:509
 msgid "High"
 msgstr "Korkea"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:504
+#: ../blueman/gui/manager/ManagerDeviceList.py:512
 msgid "Very High"
 msgstr "Hyvin korkea"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:507
+#: ../blueman/gui/manager/ManagerDeviceList.py:515
 #, python-format
 msgid ""
 "<b>Connected</b>\n"
 "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>\n"
 "Link Quality: %(lq)u%%\n"
 "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
-msgstr ""
-"<b>Yhdistetty</b>\n"
-"Vastaanotetun signaalin voimakkuus: %(rssi)u%% <i>(%(rssi_state)s)</i>\n"
-"Yhteyden laatu: %(lq)u%%\n"
-"<b>Lähetysteho: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
+msgstr "<b>Yhdistetty</b>\nVastaanotetun signaalin voimakkuus: %(rssi)u%% <i>(%(rssi_state)s)</i>\nYhteyden laatu: %(lq)u%%\n<b>Lähetysteho: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:509
+#: ../blueman/gui/manager/ManagerDeviceList.py:517
 #, python-format
 msgid ""
 "<b>Connected</b>\n"
 "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>\n"
 "<b>Link Quality: %(lq)u%%</b>\n"
 "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
-msgstr ""
-"<b>Yhdistetty</b>\n"
-"Vastaanotetun signaalin voimakkuus: %(rssi)u%% <i>(%(rssi_state)s)</i>\n"
-"<b>Yhteyden laatu: %(lq)u%%</b>\n"
-"Lähetysteho: %(tpl)u%% <i>(%(tpl_state)s)</i>"
+msgstr "<b>Yhdistetty</b>\nVastaanotetun signaalin voimakkuus: %(rssi)u%% <i>(%(rssi_state)s)</i>\n<b>Yhteyden laatu: %(lq)u%%</b>\nLähetysteho: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:511
+#: ../blueman/gui/manager/ManagerDeviceList.py:519
 #, python-format
 msgid ""
 "<b>Connected</b>\n"
 "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>\n"
 "Link Quality: %(lq)u%%\n"
 "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
-msgstr ""
-"<b>Yhdistetty</b>\n"
-"<b>Vastaanotetun signaalin voimakkuus: %(rssi)u%%</b> "
-"<i>(%(rssi_state)s)</i>\n"
-"Yhteyden laatu: %(lq)u%%\n"
-"Lähetysteho: %(tpl)u%% <i>(%(tpl_state)s)</i>"
+msgstr "<b>Yhdistetty</b>\n<b>Vastaanotetun signaalin voimakkuus: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>\nYhteyden laatu: %(lq)u%%\nLähetysteho: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:124
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:416
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:110
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:395
 msgid "Success!"
 msgstr "Onnistui!"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:128
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:113
 #, python-format
 msgid "Serial port connected to %s"
 msgstr "Sarjaportti kytketty kohteeseen %s"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:135
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:120
 msgid "Failed"
 msgstr "Epäonnistui"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:139
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:124
 msgid "Connection Failed: "
 msgstr "Yhteys epäonnistui: "
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:146
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:131
 msgid "Cancelled"
 msgstr "Peruttu"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:150
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:135
 msgid "Connecting..."
 msgstr "Yhdistetään..."
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:269
-msgid "Add Device"
-msgstr "Lisää laite"
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:253
+msgid "_Add Device"
+msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:288
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:260
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:386
+msgid "_Setup..."
+msgstr ""
+
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:267
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:365
+msgid "_Pair"
+msgstr ""
+
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:272
 msgid "Pair with the device"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:294
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:357
-msgid "Send a File..."
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:278
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:340
+msgid "Send a _File..."
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:325
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:308
 msgid "<b>Connect To:</b>"
 msgstr "<b>Yhdistä Kohteeseen:</b>"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:337
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:320
 msgid "<b>Disconnect:</b>"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:362
-msgid "Browse Device..."
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:345
+msgid "_Browse Device..."
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:401
-#: ../blueman/gui/manager/ManagerToolbar.py:45
-#: ../blueman/gui/manager/ManagerToolbar.py:115
-msgid "Untrust"
-msgstr "Poista luottamus"
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:375
+msgid "_Trust"
+msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:421
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:380
+msgid "_Untrust"
+msgstr ""
+
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:400
 msgid "Fail"
 msgstr "Epäonnistui"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:424
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:403
 msgid "Refreshing"
 msgstr "Päivitetään"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:426
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:405
 msgid "Refreshing Services..."
 msgstr "Päivitetään palveluja..."
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:429
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:408
 msgid "Refresh Services"
 msgstr "Päivitä palvelut"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:438
-msgid "Remove..."
-msgstr "Poista..."
-
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:448
-msgid "Disconnect"
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:417
+msgid "_Remove..."
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:449
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:427
+msgid "_Disconnect"
+msgstr ""
+
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:428
 msgid "Forcefully disconnect the device"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:458
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:437
 msgid "Disconnecting..."
 msgstr "Katkaistaan yhteyttä..."
 
-#: ../blueman/gui/manager/ManagerProgressbar.py:32 ../apps/blueman-sendto:70
+#: ../blueman/gui/manager/ManagerProgressbar.py:32 ../apps/blueman-sendto:54
 msgid "Connecting"
 msgstr "Yhdistetään"
 
@@ -805,22 +782,27 @@ msgstr "Yhdistetään"
 msgid "Cancel Operation"
 msgstr "Peru toiminto"
 
-#: ../blueman/gui/manager/ManagerStats.py:53
-#: ../blueman/gui/manager/ManagerStats.py:56
+#: ../blueman/gui/manager/ManagerStats.py:33
+#: ../blueman/gui/manager/ManagerStats.py:36
 msgid "Data activity indication"
 msgstr "Datan aktiivisuuden ilmaisin"
 
-#: ../blueman/gui/manager/ManagerStats.py:66
-#: ../blueman/gui/manager/ManagerStats.py:79
+#: ../blueman/gui/manager/ManagerStats.py:44
+#: ../blueman/gui/manager/ManagerStats.py:57
 msgid "Total data received and rate of transmission"
 msgstr "Vastaanotettu kokonaisdata ja vastaanottonopeus"
 
-#: ../blueman/gui/manager/ManagerStats.py:71
-#: ../blueman/gui/manager/ManagerStats.py:74
+#: ../blueman/gui/manager/ManagerStats.py:49
+#: ../blueman/gui/manager/ManagerStats.py:52
 msgid "Total data sent and rate of transmission"
 msgstr "Lähetetty kokonaisdata ja lähetysnopeus"
 
-#: ../blueman/gui/DeviceSelectorDialog.py:27
+#: ../blueman/gui/manager/ManagerToolbar.py:28
+#: ../blueman/gui/manager/ManagerToolbar.py:96
+msgid "Untrust"
+msgstr "Poista luottamus"
+
+#: ../blueman/gui/DeviceSelectorDialog.py:6
 msgid "Select Device"
 msgstr "Valitse laite"
 
@@ -834,19 +816,7 @@ msgstr "Sulje"
 
 #: ../blueman/gui/CommonUi.py:45
 msgid "translator-credits"
-msgstr ""
-"Launchpad Contributions:\n"
-"  Atte Virtanen https://launchpad.net/~atte\n"
-"  Christian Hellberg https://launchpad.net/~christian-hellberg\n"
-"  Elias Julkunen https://launchpad.net/~eliasj\n"
-"  Jussi Aalto https://launchpad.net/~jtaalto\n"
-"  Jussi Laitinen https://launchpad.net/~jussilait92\n"
-"  Mika Filpus https://launchpad.net/~mfilpus\n"
-"  Pekka Niemi https://launchpad.net/~pekka-niemi\n"
-"  Sami Olmari https://launchpad.net/~olmari\n"
-"  Tuukka Tolvanen https://launchpad.net/~sp3000\n"
-"  Valmantas Palikša https://launchpad.net/~walmis\n"
-"  Ville Lindfors https://launchpad.net/~villi"
+msgstr "Launchpad Contributions:\n  Atte Virtanen https://launchpad.net/~atte\n  Christian Hellberg https://launchpad.net/~christian-hellberg\n  Elias Julkunen https://launchpad.net/~eliasj\n  Jussi Aalto https://launchpad.net/~jtaalto\n  Jussi Laitinen https://launchpad.net/~jussilait92\n  Mika Filpus https://launchpad.net/~mfilpus\n  Pekka Niemi https://launchpad.net/~pekka-niemi\n  Sami Olmari https://launchpad.net/~olmari\n  Tuukka Tolvanen https://launchpad.net/~sp3000\n  Valmantas Palikša https://launchpad.net/~walmis\n  Ville Lindfors https://launchpad.net/~villi"
 
 #: ../blueman/gui/CommonUi.py:48
 msgid "Blueman is a GTK based Bluetooth manager"
@@ -874,26 +844,16 @@ msgstr "Riippuvuusongelma"
 #: ../blueman/gui/applet/PluginDialog.py:308
 #, python-format
 msgid ""
-"Plugin <b>\"%(0)s\"</b> depends on <b>%(1)s</b>. Unloading <b>%(1)s</b> will "
-"also unload <b>\"%(0)s\"</b>.\n"
+"Plugin <b>\"%(0)s\"</b> depends on <b>%(1)s</b>. Unloading <b>%(1)s</b> will also unload <b>\"%(0)s\"</b>.\n"
 "Proceed?"
-msgstr ""
-"Liitännäinen <b>\"%(0)s\"</b> riippuu liitännäisestä <b>%(1)s</b>. "
-"Liitännäisen <b>%(1)s</b> poistaminen käytöstä vaatii myös liitännäisen "
-"<b>\"%(0)s\"</b> poistamisen käytöstä.\n"
-"Jatketaanko?"
+msgstr "Liitännäinen <b>\"%(0)s\"</b> riippuu liitännäisestä <b>%(1)s</b>. Liitännäisen <b>%(1)s</b> poistaminen käytöstä vaatii myös liitännäisen <b>\"%(0)s\"</b> poistamisen käytöstä.\nJatketaanko?"
 
 #: ../blueman/gui/applet/PluginDialog.py:328
 #, python-format
 msgid ""
-"Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will "
-"unload <b>%(0)s</b>.\n"
+"Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will unload <b>%(0)s</b>.\n"
 "Proceed?"
-msgstr ""
-"Liitännäinen <b>%(0)s</b> on ristiriidassa liitännäisen <b>%(1)s</b> kanssa. "
-"Liitännäisen <b>%(1)s</b> lataaminen aiheuttaa liitännäisen <b>%(0)s</b> "
-"poistamisen.\n"
-"Jatketaanko?"
+msgstr "Liitännäinen <b>%(0)s</b> on ristiriidassa liitännäisen <b>%(1)s</b> kanssa. Liitännäisen <b>%(1)s</b> lataaminen aiheuttaa liitännäisen <b>%(0)s</b> poistamisen.\nJatketaanko?"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:36 ../blueman/DeviceClass.py:61
@@ -985,175 +945,171 @@ msgstr "osoitinlaite"
 msgid "Dialup Networking (DUN)"
 msgstr "Puhelinverkkoyhteys (DUN)"
 
-#: ../blueman/Sdp.py:105 ../blueman/plugins/manager/Services.py:332
-#: ../blueman/plugins/manager/Services.py:340
+#: ../blueman/Sdp.py:105 ../blueman/plugins/manager/Services.py:315
+#: ../blueman/plugins/manager/Services.py:323
 msgid "Audio Source"
 msgstr "Äänilähde"
 
-#: ../blueman/Sdp.py:106 ../blueman/plugins/manager/Services.py:307
-#: ../blueman/plugins/manager/Services.py:315
+#: ../blueman/Sdp.py:106 ../blueman/plugins/manager/Services.py:290
+#: ../blueman/plugins/manager/Services.py:298
 msgid "Audio Sink"
 msgstr ""
 
-#: ../blueman/Sdp.py:117 ../blueman/plugins/manager/Services.py:223
-#: ../apps/blueman-assistant:341
+#: ../blueman/Sdp.py:117 ../blueman/plugins/manager/Services.py:206
+#: ../apps/blueman-assistant:326
 msgid "Network Access Point"
 msgstr "Verkon tukiasema"
 
-#: ../blueman/plugins/manager/PulseAudioProfile.py:119
+#: ../blueman/plugins/manager/PulseAudioProfile.py:107
 #, python-format
 msgid "Failed to change profile to %s"
 msgstr ""
 
-#: ../blueman/plugins/manager/PulseAudioProfile.py:155
+#: ../blueman/plugins/manager/PulseAudioProfile.py:143
 msgid "Audio Profile"
 msgstr ""
 
-#: ../blueman/plugins/manager/PulseAudioProfile.py:156
+#: ../blueman/plugins/manager/PulseAudioProfile.py:144
 msgid "Select audio profile for PulseAudio"
 msgstr ""
 
-#: ../blueman/plugins/manager/Services.py:122
+#: ../blueman/plugins/manager/Services.py:106
 msgid "Dialup Service"
 msgstr "Puhelinverkkoyhteyspalvelu"
 
-#: ../blueman/plugins/manager/Services.py:135
+#: ../blueman/plugins/manager/Services.py:119
 msgid "Serial Service"
 msgstr "Sarjaporttipalvelu"
 
-#: ../blueman/plugins/manager/Services.py:150
+#: ../blueman/plugins/manager/Services.py:133
 #, python-format
 msgid "Serial Port %s"
 msgstr "Sarjaportti %s"
 
-#: ../blueman/plugins/manager/Services.py:173
+#: ../blueman/plugins/manager/Services.py:157
 msgid "Dialup Settings"
 msgstr "Soittoasetukset"
 
-#: ../blueman/plugins/manager/Services.py:186
+#: ../blueman/plugins/manager/Services.py:169
 msgid "Serial Ports"
 msgstr "Sarjaportit"
 
-#: ../blueman/plugins/manager/Services.py:235
+#: ../blueman/plugins/manager/Services.py:218
 #: ../blueman/plugins/services/Network.py:34
 #: ../blueman/plugins/services/Network.py:59
 msgid "Network"
 msgstr "Verkko"
 
-#: ../blueman/plugins/manager/Services.py:247
+#: ../blueman/plugins/manager/Services.py:230
 msgid "Renew IP Address"
 msgstr "Uusi IP-osoite"
 
-#: ../blueman/plugins/manager/Services.py:259
-#: ../blueman/plugins/manager/Services.py:268 ../apps/blueman-assistant:328
+#: ../blueman/plugins/manager/Services.py:242
+#: ../blueman/plugins/manager/Services.py:251 ../apps/blueman-assistant:313
 msgid "Input Service"
 msgstr "Sisääntuleva palvelu"
 
-#: ../blueman/plugins/manager/Services.py:283
-#: ../blueman/plugins/manager/Services.py:291 ../apps/blueman-assistant:356
+#: ../blueman/plugins/manager/Services.py:266
+#: ../blueman/plugins/manager/Services.py:274 ../apps/blueman-assistant:341
 msgid "Headset Service"
 msgstr "Kuulokemikrofonipalvelu"
 
-#: ../blueman/plugins/manager/Services.py:317
+#: ../blueman/plugins/manager/Services.py:300
 msgid "Allows to send audio to remote device"
 msgstr "Antaa lähettää äänen ulkopuoliselle laitteelle"
 
-#: ../blueman/plugins/manager/Services.py:342
+#: ../blueman/plugins/manager/Services.py:325
 msgid "Allows to receive audio from remote device"
 msgstr "Antaa vastaanottaa äänen ulkopuoliselta laitteelta"
 
-#: ../blueman/plugins/applet/NetUsage.py:196
-#: ../blueman/plugins/applet/NetUsage.py:298
-#: ../blueman/plugins/applet/NetUsage.py:301
+#: ../blueman/plugins/applet/NetUsage.py:201
+#: ../blueman/plugins/applet/NetUsage.py:309
+#: ../blueman/plugins/applet/NetUsage.py:313
 msgid "Connected:"
 msgstr "Yhdistetty:"
 
-#: ../blueman/plugins/applet/NetUsage.py:212
-#: ../blueman/plugins/applet/NetUsage.py:309
+#: ../blueman/plugins/applet/NetUsage.py:217
+#: ../blueman/plugins/applet/NetUsage.py:322
 msgid "Not Connected"
 msgstr "Ei yhdistetty"
 
-#: ../blueman/plugins/applet/NetUsage.py:218
+#: ../blueman/plugins/applet/NetUsage.py:225
 msgid ""
 "No usage statistics are available yet. Try establishing a connection first "
 "and then check this page."
-msgstr ""
-"Käyttötilastoja ei ole vielä saatavilla. Yritä ensin muodostaa yhteys ja "
-"tarkista sitten tämä sivu."
+msgstr "Käyttötilastoja ei ole vielä saatavilla. Yritä ensin muodostaa yhteys ja tarkista sitten tämä sivu."
 
-#: ../blueman/plugins/applet/NetUsage.py:241
+#: ../blueman/plugins/applet/NetUsage.py:248
 msgid "day"
 msgid_plural "days"
 msgstr[0] "päivä"
 msgstr[1] "päivää"
 
-#: ../blueman/plugins/applet/NetUsage.py:242
+#: ../blueman/plugins/applet/NetUsage.py:249
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "tunti"
 msgstr[1] "tuntia"
 
-#: ../blueman/plugins/applet/NetUsage.py:243
+#: ../blueman/plugins/applet/NetUsage.py:250
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "minuutti"
 msgstr[1] "minuuttia"
 
-#: ../blueman/plugins/applet/NetUsage.py:245
+#: ../blueman/plugins/applet/NetUsage.py:252
 #, python-format
 msgid "%d %s %d %s and %d %s"
 msgstr "%d %s %d %s ja %d %s"
 
-#: ../blueman/plugins/applet/NetUsage.py:276
+#: ../blueman/plugins/applet/NetUsage.py:286
 msgid "Are you sure you want to reset the counter?"
 msgstr "Haluatko varmasti nollata laskurin?"
 
-#: ../blueman/plugins/applet/NetUsage.py:315
+#: ../blueman/plugins/applet/NetUsage.py:330
 msgid ""
 "Allows you to monitor your (mobile broadband) network traffic usage. Useful "
 "for limited data access plans. This plugin tracks every device seperately."
-msgstr ""
-"Antaa sinun valvoa (mobiililaajakaistan) verkkoliikenteen määrää. "
-"Hyödyllinen, jos tiedonsiirto on rajoitettua. Tämä liitännäinen seuraa "
-"jokaista laitetta erikseen."
+msgstr "Antaa sinun valvoa (mobiililaajakaistan) verkkoliikenteen määrää. Hyödyllinen, jos tiedonsiirto on rajoitettua. Tämä liitännäinen seuraa jokaista laitetta erikseen."
 
-#: ../blueman/plugins/applet/NetUsage.py:333
+#: ../blueman/plugins/applet/NetUsage.py:351
 msgid "Network Usage"
 msgstr "Verkon käyttö"
 
-#: ../blueman/plugins/applet/NetUsage.py:334
+#: ../blueman/plugins/applet/NetUsage.py:352
 msgid "Shows network traffic usage"
 msgstr "Näyttää verkkoliikenteen määrän"
 
-#: ../blueman/plugins/applet/StatusIcon.py:72
+#: ../blueman/plugins/applet/StatusIcon.py:56
 msgid "Icon Name"
 msgstr ""
 
-#: ../blueman/plugins/applet/StatusIcon.py:73
+#: ../blueman/plugins/applet/StatusIcon.py:57
 msgid "Custom icon to use for the notification area"
 msgstr ""
 
-#: ../blueman/plugins/applet/StatusIcon.py:90
-#: ../blueman/plugins/applet/StatusIcon.py:103
-#: ../blueman/plugins/applet/Indicator.py:106
-#: ../blueman/plugins/applet/Indicator.py:111
+#. self.connect("size-changed", self.on_status_icon_resized)
+#: ../blueman/plugins/applet/StatusIcon.py:74
+#: ../blueman/plugins/applet/StatusIcon.py:89
+#: ../blueman/plugins/applet/ShowConnected.py:79
+#: ../blueman/plugins/applet/ShowConnected.py:84
 msgid "Bluetooth Enabled"
 msgstr "Bluetooth Otettu Käyttöön"
 
-#: ../blueman/plugins/applet/StatusIcon.py:105
+#: ../blueman/plugins/applet/StatusIcon.py:91
 msgid "Bluetooth Disabled"
 msgstr "Bluetooth Poistettu Käytöstä"
 
-#: ../blueman/plugins/applet/Networking.py:31
+#: ../blueman/plugins/applet/Networking.py:14
 msgid "Manages local network services, like NAP bridges"
 msgstr ""
 
-#: ../blueman/plugins/applet/Networking.py:54
+#: ../blueman/plugins/applet/Networking.py:39
 #: ../blueman/plugins/services/Network.py:129
 msgid "Failed to apply network settings"
 msgstr "Verkkoasetuksia ei voitu toteuttaa"
 
-#: ../blueman/plugins/applet/Networking.py:55
+#: ../blueman/plugins/applet/Networking.py:41
 msgid ""
 "You might not be able to connect to the Bluetooth network via this machine"
 msgstr "Et ehkä pysty yhdistymään bluetooth-verkkoon tämän laitteen kautta"
@@ -1175,64 +1131,60 @@ msgstr "Modem Manager ei tukenut yhteyttä"
 msgid ""
 "Provides support for Dial Up Networking (DUN) with ModemManager and "
 "NetworkManager 0.8"
-msgstr ""
-"Tarjoaa tuen Puhelinverkkoyhteydelle (DUN) ModemManager:in ja NetworkManager "
-"0.8:n kanssa"
+msgstr "Tarjoaa tuen Puhelinverkkoyhteydelle (DUN) ModemManager:in ja NetworkManager 0.8:n kanssa"
 
-#: ../blueman/plugins/applet/RecentConns.py:57
+#: ../blueman/plugins/applet/RecentConns.py:43
 msgid ""
 "Provides a menu item that contains last used connections for quick access"
-msgstr ""
-"Tarjoaa valikon kohdan, joka sisältää viimeksi käytetyt yhteydet "
-"pikavalintana"
+msgstr "Tarjoaa valikon kohdan, joka sisältää viimeksi käytetyt yhteydet pikavalintana"
 
 #. the maximum number of items RecentConns menu will display
-#: ../blueman/plugins/applet/RecentConns.py:64
+#: ../blueman/plugins/applet/RecentConns.py:50
 msgid "Maximum items"
 msgstr "Enimmäismäärä kohtia"
 
-#: ../blueman/plugins/applet/RecentConns.py:65
+#: ../blueman/plugins/applet/RecentConns.py:51
 msgid "The maximum number of items recent connections menu will display."
 msgstr ""
 
-#: ../blueman/plugins/applet/RecentConns.py:83
-msgid "Recent Connections"
-msgstr "Viimeisimmät yhteydet"
+#: ../blueman/plugins/applet/RecentConns.py:69
+msgid "Recent _Connections"
+msgstr ""
 
-#: ../blueman/plugins/applet/RecentConns.py:296
+#: ../blueman/plugins/applet/RecentConns.py:289
 #, python-format
 msgid "Connecting to %s"
 msgstr "Yhdistetään kohteeseen %s"
 
-#: ../blueman/plugins/applet/RecentConns.py:302
+#: ../blueman/plugins/applet/RecentConns.py:295
 #: ../blueman/plugins/applet/PPPSupport.py:68
 msgid "Connected"
 msgstr "Yhdistetty"
 
-#: ../blueman/plugins/applet/RecentConns.py:302
+#: ../blueman/plugins/applet/RecentConns.py:295
 #, python-format
 msgid "Connected to %s"
 msgstr "Yhdistetty kohteeseen %s"
 
-#: ../blueman/plugins/applet/RecentConns.py:308
+#: ../blueman/plugins/applet/RecentConns.py:302
 msgid "Failed to connect"
 msgstr "Yhdistäminen epäonnistui"
 
-#: ../blueman/plugins/applet/RecentConns.py:326
+#: ../blueman/plugins/applet/RecentConns.py:322
 #, python-format
 msgid "Network Access (%s)"
 msgstr "Verkkoon pääsy (%s)"
 
-#: ../blueman/plugins/applet/RecentConns.py:331
+#: ../blueman/plugins/applet/RecentConns.py:327
 msgid "Service"
 msgstr "Palvelut"
 
-#: ../blueman/plugins/applet/RecentConns.py:343
+#: ../blueman/plugins/applet/RecentConns.py:339
 #, python-format
 msgid "%(service)s on %(device)s"
 msgstr "%(service)s laitteella %(device)s"
 
-#: ../blueman/plugins/applet/RecentConns.py:362
+#: ../blueman/plugins/applet/RecentConns.py:358
 msgid "Adapter for this connection is not available"
 msgstr "Sovitinta tälle yhteydelle ei ole saatavilla"
 
@@ -1240,14 +1192,13 @@ msgstr "Sovitinta tälle yhteydelle ei ole saatavilla"
 msgid ""
 "Provides support for Personal Area Networking (PAN) introduced in "
 "NetworkManager 0.8"
-msgstr ""
-"Tarjoaa tuen Likiverkolle (PAN) joka on saatavilla NetworkManager 0.8:ssa"
+msgstr "Tarjoaa tuen Likiverkolle (PAN) joka on saatavilla NetworkManager 0.8:ssa"
 
 #: ../blueman/plugins/applet/NMPANSupport.py:335
 msgid "Already connected"
 msgstr ""
 
-#: ../blueman/plugins/applet/DBusService.py:39
+#: ../blueman/plugins/applet/DBusService.py:40
 msgid "Provides DBus API for other Blueman components"
 msgstr "Tarjoaa DBus API:n muille Blueman-komponenteille"
 
@@ -1261,7 +1212,7 @@ msgstr ""
 msgid "Provides OBEX file transfer capabilities"
 msgstr "Tarjoaa OBEX-tiedostonsiirtotuen"
 
-#: ../blueman/plugins/applet/KillSwitch.py:33
+#: ../blueman/plugins/applet/KillSwitch.py:18
 msgid ""
 "Toggles a platform Bluetooth killswitch when Bluetooth power state changes. "
 "Useless with USB dongles."
@@ -1299,11 +1250,11 @@ msgstr "_Paikalliset palvelut"
 msgid "_Plugins"
 msgstr "_Liitännäiset"
 
-#: ../blueman/plugins/applet/StandardItems.py:113 ../apps/blueman-manager:237
+#: ../blueman/plugins/applet/StandardItems.py:113 ../apps/blueman-manager:240
 msgid "Starting Bluetooth Assistant"
 msgstr "Käynnistetään bluetooth-avustaja"
 
-#: ../blueman/plugins/applet/StandardItems.py:117 ../apps/blueman-manager:278
+#: ../blueman/plugins/applet/StandardItems.py:117 ../apps/blueman-manager:282
 msgid "Starting File Sender"
 msgstr "Käynnistetään tiedostonlähetystä"
 
@@ -1315,7 +1266,7 @@ msgstr "Käynnistetään tiedostonselausta"
 msgid "Starting Device Manager"
 msgstr "Käynnistetään laitehallintaa"
 
-#: ../blueman/plugins/applet/StandardItems.py:129 ../apps/blueman-manager:269
+#: ../blueman/plugins/applet/StandardItems.py:129 ../apps/blueman-manager:273
 msgid "Starting Adapter Preferences"
 msgstr "Käynnistetään sovitinasetuksia"
 
@@ -1327,52 +1278,48 @@ msgstr "Käynnistetään palveluasetuksia"
 msgid "applet"
 msgstr "sovelma"
 
-#: ../blueman/plugins/applet/AuthAgent.py:28
+#: ../blueman/plugins/applet/AuthAgent.py:11
 msgid "Provides passkey, authentication services for BlueZ daemon"
 msgstr "Tarjoaa tunnusluvun, todennuspalvelut BlueZ-taustaprosessille"
 
-#: ../blueman/plugins/applet/PulseAudio.py:139
+#: ../blueman/plugins/applet/PulseAudio.py:146
 msgid ""
 "Automatically manages Pulseaudio Bluetooth sinks/sources.\n"
 "<b>Note:</b> Requires pulseaudio 0.9.15 or higher"
 msgstr ""
 
-#: ../blueman/plugins/applet/PulseAudio.py:146
+#: ../blueman/plugins/applet/PulseAudio.py:153
 msgid "Make default sink"
 msgstr ""
 
-#: ../blueman/plugins/applet/PulseAudio.py:147
+#: ../blueman/plugins/applet/PulseAudio.py:154
 msgid "Make the a2dp audio sink the default after connection"
 msgstr ""
 
-#: ../blueman/plugins/applet/PulseAudio.py:150
+#: ../blueman/plugins/applet/PulseAudio.py:157
 msgid "Move streams"
 msgstr ""
 
-#: ../blueman/plugins/applet/PulseAudio.py:151
+#: ../blueman/plugins/applet/PulseAudio.py:158
 msgid "Move existing audio streams to bluetooth device"
 msgstr ""
 
-#: ../blueman/plugins/applet/PulseAudio.py:312
-#: ../blueman/plugins/applet/PulseAudio.py:317
+#: ../blueman/plugins/applet/PulseAudio.py:334
+#: ../blueman/plugins/applet/PulseAudio.py:339
 msgid "Bluetooth Audio"
 msgstr "Bluetooth-ääni"
 
-#: ../blueman/plugins/applet/PulseAudio.py:313
+#: ../blueman/plugins/applet/PulseAudio.py:335
 msgid ""
 "Failed to initialize PulseAudio Bluetooth module. Bluetooth audio over "
 "PulseAudio will not work."
-msgstr ""
-"PulseAudion Bluetooth-moduulin alustus epäonnistui. Bluetooth-ääni "
-"PulseAudion kautta ei toimi."
+msgstr "PulseAudion Bluetooth-moduulin alustus epäonnistui. Bluetooth-ääni PulseAudion kautta ei toimi."
 
-#: ../blueman/plugins/applet/PulseAudio.py:318
+#: ../blueman/plugins/applet/PulseAudio.py:340
 msgid ""
 "Successfully connected to a Bluetooth audio device. This device will now be "
 "available in the PulseAudio mixer"
-msgstr ""
-"Kytkentä Bluetooth-äänilaitteeseen onnistui. Laite on nyt käytettävissä "
-"PulseAudio-mixerissä."
+msgstr "Kytkentä Bluetooth-äänilaitteeseen onnistui. Laite on nyt käytettävissä PulseAudio-mixerissä."
 
 #: ../blueman/plugins/applet/ExitItem.py:24
 msgid "Adds an exit menu item to quit the applet"
@@ -1403,55 +1350,45 @@ msgstr "IP-osoitteen saaminen epäonnistui kohteessa %s"
 msgid ""
 "Trying to obtain an IP address on %s\n"
 "Please wait..."
-msgstr ""
-"Yritetään saada IP-osoite kohteessa %s\n"
-"Odota..."
+msgstr "Yritetään saada IP-osoite kohteessa %s\nOdota..."
 
-#: ../blueman/plugins/applet/NMIntegration.py:39
+#: ../blueman/plugins/applet/NMIntegration.py:22
 msgid ""
 "<b>Deprecated</b>\n"
 "Makes DUN/PAN connections available for NetworkManager 0.7"
-msgstr ""
-"<b>Vanhentunut</b>\n"
-"Tekee DUN/PAN yhteydet saataville NetworkManager 0.7:ssä"
+msgstr "<b>Vanhentunut</b>\nTekee DUN/PAN yhteydet saataville NetworkManager 0.7:ssä"
 
-#: ../blueman/plugins/applet/NMIntegration.py:79
+#: ../blueman/plugins/applet/NMIntegration.py:62
 msgid "CDMA or GSM not supported"
 msgstr "CDMA tai GSM eivät ole tuettuina"
 
-#: ../blueman/plugins/applet/NMIntegration.py:80
+#: ../blueman/plugins/applet/NMIntegration.py:64
 #, python-format
 msgid ""
 "The device %s does not appear to support GSM/CDMA.\n"
 "This connection will not work."
-msgstr ""
-"Laite %s ei ilmeisesti tue GSM/CDMA-yhteyksiä.\n"
-"Tämä yhteys ei toimi."
+msgstr "Laite %s ei ilmeisesti tue GSM/CDMA-yhteyksiä.\nTämä yhteys ei toimi."
 
-#: ../blueman/plugins/applet/Indicator.py:31
+#: ../blueman/plugins/applet/ShowConnected.py:15
 msgid ""
-"Adds an indication on the status icon when Bluetooth is active and shows the "
-"number of connections in the tooltip."
+"Adds an indication on the status icon when Bluetooth is active and shows the"
+" number of connections in the tooltip."
 msgstr ""
 
-#: ../blueman/plugins/applet/Indicator.py:35
-msgid "Show overlay icon"
-msgstr ""
-
-#: ../blueman/plugins/applet/Indicator.py:36
-msgid "Whether to show a composition over the status icon when connected"
-msgstr ""
-
-#: ../blueman/plugins/applet/Indicator.py:96
+#: ../blueman/plugins/applet/ShowConnected.py:69
 msgid "Bluetooth Active"
 msgstr "Bluetooth Aktiivinen"
 
-#: ../blueman/plugins/applet/Indicator.py:98
+#: ../blueman/plugins/applet/ShowConnected.py:71
 #, python-format
 msgid "<b>%d Active Connection</b>"
 msgid_plural "<b>%d Active Connections</b>"
 msgstr[0] "<b>%d aktiivinen yhteys</b>"
 msgstr[1] "<b>%d aktiivista yhteyttä</b>"
+
+#: ../blueman/plugins/applet/AppIndicator.py:31
+msgid "Uses libappindicator to show a statusicon"
+msgstr ""
 
 #: ../blueman/plugins/applet/Headset.py:26
 msgid "Runs a command when answer button is pressed on a headset"
@@ -1465,32 +1402,30 @@ msgstr ""
 msgid "Command to execute when answer button is pressed:"
 msgstr "Vastausnappia painettaessa suoritettava komento:"
 
-#: ../blueman/plugins/applet/DiscvManager.py:32
+#: ../blueman/plugins/applet/DiscvManager.py:16
 msgid ""
-"Provides a menu item for making the default adapter temporarily visible when "
-"it is set to hidden by default"
-msgstr ""
-"Tarjoaa valikkokohdan, jolla saa oletussovittimen väliaikaisesti näkyväksi, "
-"vaikka se on asetettu piilotetuksi."
+"Provides a menu item for making the default adapter temporarily visible when"
+" it is set to hidden by default"
+msgstr "Tarjoaa valikkokohdan, jolla saa oletussovittimen väliaikaisesti näkyväksi, vaikka se on asetettu piilotetuksi."
 
-#: ../blueman/plugins/applet/DiscvManager.py:37
+#: ../blueman/plugins/applet/DiscvManager.py:22
 msgid "Discoverable timeout"
 msgstr "Näkyvillä olon aikaraja"
 
-#: ../blueman/plugins/applet/DiscvManager.py:38
+#: ../blueman/plugins/applet/DiscvManager.py:23
 msgid "Amount of time in seconds discoverable mode will last"
 msgstr "Aika sekunneissa, jonka näkyvä tila kestää."
 
-#: ../blueman/plugins/applet/DiscvManager.py:46
-#: ../blueman/plugins/applet/DiscvManager.py:142
+#: ../blueman/plugins/applet/DiscvManager.py:31
+#: ../blueman/plugins/applet/DiscvManager.py:124
 msgid "_Make Discoverable"
 msgstr "_Tee näkyväksi"
 
-#: ../blueman/plugins/applet/DiscvManager.py:54
+#: ../blueman/plugins/applet/DiscvManager.py:39
 msgid "Make the default adapter temporarily visible"
 msgstr "Aseta oletussovitin väliaikaisesti näkyväksi"
 
-#: ../blueman/plugins/applet/DiscvManager.py:80
+#: ../blueman/plugins/applet/DiscvManager.py:65
 #, python-format
 msgid "Discoverable... %ss"
 msgstr "Havaittavissa... %ss"
@@ -1498,21 +1433,17 @@ msgstr "Havaittavissa... %ss"
 #: ../blueman/plugins/applet/Menu.py:27
 msgid ""
 "Provides a menu for the applet and an API for other plugins to manipulate it"
-msgstr ""
-"Tarjoaa valikon appletille ja API:n muille liitännäisille sen muokkaamiseen"
+msgstr "Tarjoaa valikon appletille ja API:n muille liitännäisille sen muokkaamiseen"
 
 #: ../blueman/plugins/applet/PPPSupport.py:68
 #, python-format
 msgid ""
 "Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\n"
 "Network is now available through <b>%(1)s</b>"
-msgstr ""
-"Kytkeydyttiin onnistuneesti <b>DUN</b>-palveluun kohteessa <b>%(0)s.</b>\n"
-"Verkko on nyt käytettävissä kohteen <b>%(1)s</b> kautta"
+msgstr "Kytkeydyttiin onnistuneesti <b>DUN</b>-palveluun kohteessa <b>%(0)s.</b>\nVerkko on nyt käytettävissä kohteen <b>%(1)s</b> kautta"
 
 #: ../blueman/plugins/applet/PPPSupport.py:75
-msgid ""
-"Provides basic support for connecting to the internet via DUN profile."
+msgid "Provides basic support for connecting to the internet via DUN profile."
 msgstr ""
 
 #: ../blueman/plugins/applet/SerialManager.py:39
@@ -1543,9 +1474,7 @@ msgstr "Sarjaportti yhdistetty"
 #, python-format
 msgid ""
 "Serial port service on device <b>%s</b> now will be available via <b>%s</b>"
-msgstr ""
-"Sarjaporttipalvelu laitteessa <b>%s</b> on käytettävissä kohteen <b>%s</b> "
-"kautta"
+msgstr "Sarjaporttipalvelu laitteessa <b>%s</b> on käytettävissä kohteen <b>%s</b> kautta"
 
 #: ../blueman/plugins/applet/SerialManager.py:123
 msgid "Serial port connection script failed"
@@ -1558,29 +1487,29 @@ msgid ""
 "%s"
 msgstr ""
 
-#: ../blueman/plugins/applet/PowerManager.py:30
+#: ../blueman/plugins/applet/PowerManager.py:13
 msgid "Controls Bluetooth adapter power states"
 msgstr ""
 
-#: ../blueman/plugins/applet/PowerManager.py:53
+#: ../blueman/plugins/applet/PowerManager.py:36
 msgid "<b>Bluetooth Off</b>"
 msgstr "<b>Bluetooth poissa päältä</b>"
 
-#: ../blueman/plugins/applet/PowerManager.py:54
-#: ../blueman/plugins/applet/PowerManager.py:196
+#: ../blueman/plugins/applet/PowerManager.py:37
+#: ../blueman/plugins/applet/PowerManager.py:178
 msgid "<b>Turn Bluetooth Off</b>"
 msgstr "<b>Kytke bluetooth pois päältä</b>"
 
-#: ../blueman/plugins/applet/PowerManager.py:56
-#: ../blueman/plugins/applet/PowerManager.py:197
+#: ../blueman/plugins/applet/PowerManager.py:39
+#: ../blueman/plugins/applet/PowerManager.py:179
 msgid "Turn off all adapters"
 msgstr "Kytke kaikki sovittimet pois päältä"
 
-#: ../blueman/plugins/applet/PowerManager.py:184
+#: ../blueman/plugins/applet/PowerManager.py:166
 msgid "<b>Turn Bluetooth On</b>"
 msgstr "<b>Kytke bluetooth päälle</b>"
 
-#: ../blueman/plugins/applet/PowerManager.py:185
+#: ../blueman/plugins/applet/PowerManager.py:167
 msgid "Turn on all adapters"
 msgstr ""
 
@@ -1596,15 +1525,14 @@ msgstr ""
 #: ../blueman/plugins/services/Network.py:169
 #, python-format
 msgid ""
-"IP address overlaps with subnet of interface %s, which has the following "
-"configuration %s/%s\n"
+"IP address overlaps with subnet of interface %s, which has the following configuration %s/%s\n"
 "This may cause incorrect network behavior"
 msgstr ""
 
-#: ../blueman/plugins/services/Network.py:314
 #: ../blueman/plugins/services/Network.py:317
-#: ../blueman/plugins/services/Network.py:323
-#: ../blueman/plugins/services/Network.py:329
+#: ../blueman/plugins/services/Network.py:320
+#: ../blueman/plugins/services/Network.py:326
+#: ../blueman/plugins/services/Network.py:332
 msgid "Not currently supported with this setup"
 msgstr "Ei tällä hetkellä tuettu tällä kokoonpanolla"
 
@@ -1620,7 +1548,7 @@ msgstr "Siirrot"
 msgid "Applet's transfer service plugin is disabled"
 msgstr "Appletin siirtopalveluliitännäinen on poistettu käytöstä"
 
-#: ../blueman/plugins/services/Transfer.py:135 ../apps/blueman-sendto:110
+#: ../blueman/plugins/services/Transfer.py:135 ../apps/blueman-sendto:93
 msgid "obex-data-server not available"
 msgstr "obex-data-server ei ole saatavilla"
 
@@ -1628,33 +1556,33 @@ msgstr "obex-data-server ei ole saatavilla"
 msgid "Blueman Applet"
 msgstr "Blueman-sovelma"
 
-#: ../data/blueman.desktop.in.h:2 ../data/blueman-manager.desktop.in.h:1
+#: ../data/blueman.desktop.in.h:2 ../data/blueman-manager.desktop.in.h:2
 msgid "Blueman Bluetooth Manager"
 msgstr "Blueman bluetooth-hallinta"
 
-#: ../data/blueman-manager.desktop.in.h:2
+#: ../data/blueman-manager.desktop.in.h:1
 msgid "Bluetooth Manager"
 msgstr "Bluetooth-hallinta"
 
 #: ../data/configs/org.blueman.policy.in.h:1
-msgid "Bluetooth Configuration"
-msgstr "Bluetoothin Konfigurointi"
+msgid "The Blueman Project"
+msgstr "Blueman-projekti"
 
 #: ../data/configs/org.blueman.policy.in.h:2
-msgid "Changing Bluetooth system settings requires privileges"
-msgstr ""
-
-#: ../data/configs/org.blueman.policy.in.h:3
-msgid "Configure Bluetooth Modems"
-msgstr "Muokkaa bluetooth-modeemeja"
-
-#: ../data/configs/org.blueman.policy.in.h:4
 msgid "Configure Bluetooth Network"
 msgstr "Määritä bluetooth-verkko"
 
-#: ../data/configs/org.blueman.policy.in.h:5
+#: ../data/configs/org.blueman.policy.in.h:3
 msgid "Configuring networking requires privileges"
 msgstr ""
+
+#: ../data/configs/org.blueman.policy.in.h:4
+msgid "Configure Bluetooth Modems"
+msgstr "Muokkaa bluetooth-modeemeja"
+
+#: ../data/configs/org.blueman.policy.in.h:5
+msgid "System policy prevents modifying the configuration"
+msgstr "Järjestelmän valtuutusasetus estää asetusten muuttamisen"
 
 #: ../data/configs/org.blueman.policy.in.h:6
 msgid "Launch DHCP client"
@@ -1665,285 +1593,186 @@ msgid "Launching DHCP client requires privileges"
 msgstr "DHCP-asiakkaan käynnistäminen vaatii oikeuksia"
 
 #: ../data/configs/org.blueman.policy.in.h:8
-msgid "System policy prevents modifying the configuration"
-msgstr "Järjestelmän valtuutusasetus estää asetusten muuttamisen"
+msgid "Bluetooth Configuration"
+msgstr "Bluetoothin Konfigurointi"
 
 #: ../data/configs/org.blueman.policy.in.h:9
-msgid "The Blueman Project"
-msgstr "Blueman-projekti"
+msgid "Changing Bluetooth system settings requires privileges"
+msgstr ""
 
-#: ../apps/blueman-manager:106
+#: ../apps/blueman-manager:107
 msgid "Bluetooth needs to be turned on for the device manager to function"
 msgstr "Bluetoothin pitää olla päällä, jotta laitehallinta toimisi"
 
-#: ../apps/blueman-manager:116
+#: ../apps/blueman-manager:118
 msgid "Connection to BlueZ failed"
 msgstr "Blueziin yhdistäminen epäonnistui"
 
-#: ../apps/blueman-manager:118
+#: ../apps/blueman-manager:121
 msgid ""
 "Bluez daemon is not running, blueman-manager cannot continue.\n"
-"This probably means that there were no Bluetooth adapters detected or "
-"Bluetooth daemon was not started."
+"This probably means that there were no Bluetooth adapters detected or Bluetooth daemon was not started."
 msgstr ""
 
-#: ../apps/blueman-manager:205 ../apps/blueman-assistant:276
+#: ../apps/blueman-manager:208 ../apps/blueman-assistant:257
 msgid "Adding"
 msgstr "Lisätään"
 
-#: ../apps/blueman-manager:225
+#: ../apps/blueman-manager:228
 msgid "Searching"
 msgstr "Etsitään"
 
-#: ../apps/blueman-manager:244
+#: ../apps/blueman-manager:248
 msgid "Success"
 msgstr "Onnistui"
 
-#: ../apps/blueman-manager:249
+#: ../apps/blueman-manager:253
 msgid "Failure"
 msgstr "Virhe"
 
-#: ../apps/blueman-manager:257
+#: ../apps/blueman-manager:261
 msgid "Pairing"
 msgstr "Paritus"
 
-#: ../apps/blueman-adapters:55
+#: ../apps/blueman-adapters:36
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
 msgstr "Bluetoothin pitää olla päällä, jotta sovitinhallinta toimisi"
 
-#: ../apps/blueman-adapters:143
+#: ../apps/blueman-adapters:129
 msgid "Always"
 msgstr "Aina"
 
-#: ../apps/blueman-adapters:147
+#: ../apps/blueman-adapters:133
 #, c-format
 msgid "%d Minute"
 msgid_plural "%d Minutes"
 msgstr[0] "%d minuutti"
 msgstr[1] "%d minuuttia"
 
-#: ../apps/blueman-sendto:111
+#: ../apps/blueman-sendto:94
 msgid "obex-data-server is probably not installed"
 msgstr "obex-data-server ei ole luultavasti asennettuna"
 
-#: ../apps/blueman-sendto:139
+#: ../apps/blueman-sendto:121
 msgid "Error occurred"
 msgstr "Tapahtui virhe"
 
-#: ../apps/blueman-sendto:155
+#: ../apps/blueman-sendto:137
 msgid "Cancelling"
 msgstr "Perutaan"
 
-#: ../apps/blueman-sendto:175 ../apps/blueman-sendto:209
+#: ../apps/blueman-sendto:156 ../apps/blueman-sendto:190
 msgid "Sending File"
 msgstr "Lähetetään tiedostoa"
 
-#: ../apps/blueman-sendto:175 ../apps/blueman-sendto:209
+#: ../apps/blueman-sendto:156 ../apps/blueman-sendto:190
 msgid "ETA:"
 msgstr "ETA:"
 
-#: ../apps/blueman-sendto:203
+#: ../apps/blueman-sendto:184
 #, c-format
 msgid "%.0f Minute"
 msgid_plural "%.0f Minutes"
 msgstr[0] "%.0f minuutti"
 msgstr[1] "%.0f minuuttia"
 
-#: ../apps/blueman-sendto:205
+#: ../apps/blueman-sendto:186
 #, c-format
 msgid "%.0f Second"
 msgid_plural "%.0f Seconds"
 msgstr[0] "%.0f sekunti"
 msgstr[1] "%.0f sekuntia"
 
-#: ../apps/blueman-sendto:261
+#: ../apps/blueman-sendto:242
 #, c-format
 msgid "Error occurred while sending file %s"
 msgstr "Tapahtui virhe lähetettäessä tiedostoa %s"
 
-#: ../apps/blueman-sendto:265
+#: ../apps/blueman-sendto:246
 msgid "Skip"
 msgstr "Ohita"
 
-#: ../apps/blueman-sendto:266
+#: ../apps/blueman-sendto:247
 msgid "Retry"
 msgstr "Yritä uudelleen"
 
-#: ../apps/blueman-sendto:316
+#: ../apps/blueman-sendto:297
 msgid "Send files to this device"
 msgstr "Lähetä tiedostoja tähän laitteeseen"
 
-#: ../apps/blueman-sendto:323
-msgid "Bluetooth needs to be turned on for file sending to work"
+#: ../apps/blueman-sendto:303
+msgid "Source adapter. Takes address or adapter's name eg. hci0"
 msgstr ""
-"Bluetoothin pitää olla päällä, jotta tiedostojen lähettäminen toimisi"
 
-#: ../apps/blueman-sendto:377
+#: ../apps/blueman-sendto:308
+msgid "Bluetooth needs to be turned on for file sending to work"
+msgstr "Bluetoothin pitää olla päällä, jotta tiedostojen lähettäminen toimisi"
+
+#: ../apps/blueman-sendto:368
 msgid "Select files to send"
 msgstr "Valitse lähetettävät tiedostot"
 
-#: ../apps/blueman-assistant:61
+#: ../apps/blueman-assistant:43
 msgid "Start configuration assistant for this device"
 msgstr "Käynnistä asetusavustaja tälle laitteelle"
 
-#: ../apps/blueman-assistant:65
+#: ../apps/blueman-assistant:47
 msgid "Bluetooth needs to be turned on for the Bluetooth assistant to work"
 msgstr ""
 
-#: ../apps/blueman-assistant:79
+#: ../apps/blueman-assistant:61
 msgid "Bluetooth Assistant"
 msgstr "Bluetooth-avustaja"
 
-#: ../apps/blueman-assistant:131
+#: ../apps/blueman-assistant:113
 msgid "No adapters found"
 msgstr "Sovittimia ei löydetty"
 
-#: ../apps/blueman-assistant:275
+#: ../apps/blueman-assistant:256
 msgid "<b>Adding Device...</b>"
 msgstr "<b>Lisätään laitetta...</b>"
 
-#: ../apps/blueman-assistant:281
+#: ../apps/blueman-assistant:263
 #, c-format
 msgid ""
 "<b>Pairing in progress...</b>\n"
 "\n"
 "Enter passkey <b>%s</b> on the device."
-msgstr ""
-"<b>Paritus käynnissä...</b>\n"
-"\n"
-"Anna tunnusluku <b>%s</b> laitteelle."
+msgstr "<b>Paritus käynnissä...</b>\n\nAnna tunnusluku <b>%s</b> laitteelle."
 
-#: ../apps/blueman-assistant:293
+#: ../apps/blueman-assistant:276
 msgid "<b>Failed to add device</b>"
 msgstr "<b>Laitteen lisääminen epäonnistui</b>"
 
-#: ../apps/blueman-assistant:346
+#: ../apps/blueman-assistant:331
 msgid "A2DP Sink (Send Audio)"
 msgstr "A2DP Sink (Lähetä Audiota)"
 
-#: ../apps/blueman-assistant:351
+#: ../apps/blueman-assistant:336
 msgid "A2DP Source (Receive Audio)"
 msgstr "A2DP Lähde (Vastaanota Audiota)"
 
-#: ../apps/blueman-assistant:360
+#: ../apps/blueman-assistant:345
 msgid "Don't connect"
 msgstr "Älä yhdistä"
 
-#: ../apps/blueman-assistant:375
+#: ../apps/blueman-assistant:360
 msgid "<b>Device added and connected successfuly</b>"
 msgstr "<b>Laite lisättiin ja siihen yhdistettiin onnistuneesti</b>"
 
-#: ../apps/blueman-assistant:381
+#: ../apps/blueman-assistant:366
 msgid "<b>Device added successfuly, but failed to connect</b>"
 msgstr "<b>Laite lisättiin onnistuneesti, mutta yhdistäminen epäonnistui</b>"
 
-#: ../apps/blueman-browse:47
+#: ../apps/blueman-browse:30
 msgid "Browse this device"
 msgstr "Selaa tätä laitetta"
 
-#: ../apps/blueman-browse:74
+#: ../apps/blueman-browse:60
 #, c-format
 msgid "Failed to launch \"%s\""
 msgstr "Kohteen \"%s\" suorittaminen epäonnistui"
 
-#: ../apps/blueman-browse:75
+#: ../apps/blueman-browse:61
 msgid "You can enter an alternate browser in service settings"
 msgstr "Voit asettaa vaihtoehtoisen selaimen palveluasetuksista"
-
-#~ msgid "<b>Friendly name</b>"
-#~ msgstr "<b>Lempinimi</b>"
-
-#~ msgid "Temporary visible"
-#~ msgstr "Väliaikaisesti näkyvissä"
-
-#~ msgid "<b>Visibility setting</b>"
-#~ msgstr "<b>Näkyvyysasetukset</b>"
-
-#~ msgid "Send a file..."
-#~ msgstr "Lähetä tiedosto..."
-
-#~ msgid "Disconnect Device"
-#~ msgstr "Katkaise yhteys laitteeseen"
-
-#~ msgid "Browse device..."
-#~ msgstr "Selaa laitetta..."
-
-#~ msgid ""
-#~ "<b>Welcome to the bluetooth device setup assistant. </b>\n"
-#~ "\n"
-#~ "\n"
-#~ "It will walk you through the process of configuring and connecting to your "
-#~ "bluetooth enabled devices."
-#~ msgstr ""
-#~ "<b>Tervetuloa bluetooth-laitteiden asetusvelhoon.</b>\n"
-#~ "\n"
-#~ "\n"
-#~ "Tämä velho auttaa sinua asetusten tekemisessä ja bluetooth-laitteisiin "
-#~ "yhdistämisessä."
-
-#~ msgid ""
-#~ "Monitors NetworkManager's modem connections and automatically disconnects "
-#~ "bluetooth link after the network connection is closed"
-#~ msgstr ""
-#~ "Seuraa NetworkManagerin puhelinyhteyksiä ja katkaisee automaattisesti "
-#~ "bluetooth-yhteyden verkkoyhteyden sulkemisen jälkeen"
-
-#~ msgid "Controls bluetooth adapter power states"
-#~ msgstr "Hallitsee bluetooth-sovittimen energiatiloja"
-
-#~ msgid "Bluez daemon is not running, blueman-manager cannot continue."
-#~ msgstr ""
-#~ "Bluez-taustaprosessi ei ole käynnissä, blueman-hallinta ei voi jatkaa."
-
-#~ msgid "Bluetooth needs to be turned on for the bluetooth assistant to work"
-#~ msgstr "Bluetoothin pitää olla päällä, jotta bluetooth-avustaja toimisi"
-
-#~ msgid "<b>dnsmasq</b>"
-#~ msgstr "<b>dnsmasq</b>"
-
-#~ msgid "_Setup new device"
-#~ msgstr "_Asenna uusi laite"
-
-#~ msgid ""
-#~ "Toggles a Bluetooth killswitch when Bluetooth power state changes. Some "
-#~ "laptops, mostly Dells have this feature\n"
-#~ "<b>Note</b>: This plugin stays on automatically if it detects a killswitch."
-#~ msgstr ""
-#~ "Lipaisee Bluetooth-katkaisimen Bluetooth-laitteen virtatilan muuttuessa. "
-#~ "Tämä on joissain kannettavissa, pääosin Dell-merkkisissä.\n"
-#~ "<b>Huomaa</b>: Tämä liitännäinen pysyy automaattisesti päällä, mikäli se "
-#~ "havaitsee katkaisimen."
-
-#~ msgid "_Browse files on device"
-#~ msgstr "_Selaa laitteen tiedostoja"
-
-#~ msgid "Send _files to device"
-#~ msgstr "Lähetä _tiedostot laitteeseen"
-
-#~ msgid "Blueman"
-#~ msgstr "Blueman"
-
-#~ msgid "NetworkManager"
-#~ msgstr "NetworkManager"
-
-#~ msgid "Blueman (dhclient)"
-#~ msgstr "Blueman (dhclient)"
-
-#~ msgid ""
-#~ "Allows you to receive a2dp audio from other bluetooth devices and play it "
-#~ "over the speakers."
-#~ msgstr ""
-#~ "Sallii a2dp äänen vastaanoton muista bluetooth-laitteista ja sen toistamisen "
-#~ "kaiuttimista."
-
-#~ msgid "Forcefully disconnect a device"
-#~ msgstr "Katkaise yhteys laitteeseen väkisin"
-
-#~ msgid ""
-#~ "Automatically loads pulseaudio bluetooth module after audio device is "
-#~ "connected.\n"
-#~ "<b>Note:</b> Requires pulseaudio 0.9.15 or higher"
-#~ msgstr ""
-#~ "Lataa automaattisesti pulseaudio bluetooth-modulin kun audiolaite on "
-#~ "yhdistetty.\n"
-#~ "<b>Huomautus:</b> Vaatii pulseaudio 0.9.15 tai uudemman"
