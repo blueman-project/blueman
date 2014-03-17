@@ -69,8 +69,8 @@ class ManagerProgressbar(GObject.GObject):
 		
 		self.window = blueman.Builder.get_object("window")
 
-		hbox.pack_end(eventbox, True, False)
-		hbox.pack_end(self.progressbar, False, False)
+		hbox.pack_end(eventbox, True, False, 0)
+		hbox.pack_end(self.progressbar, False, False, 0)
 
 		if ManagerProgressbar.__instances__ != []:
 			dprint("hiding", ManagerProgressbar.__instances__[-1])
@@ -93,8 +93,8 @@ class ManagerProgressbar(GObject.GObject):
 			self.Blueman.Builder.get_object("statusbar").props.visible = True
 
 		
-		if self.Blueman.Stats.hbox.size_request()[0] + self.progressbar.size_request()[0] + 16 > self.Blueman.window.get_size()[0]:
-			self.Blueman.Stats.hbox.hide_all()
+		#if self.Blueman.Stats.hbox.size_request()[0] + self.progressbar.size_request()[0] + 16 > self.Blueman.window.get_size()[0]:
+		#	self.Blueman.Stats.hbox.hide_all()
 
 		
 		self.progressbar.props.visible = True
@@ -118,7 +118,7 @@ class ManagerProgressbar(GObject.GObject):
 		if not self.finalized:
 			self.hide()
 			self.stop()
-			self.window.window.set_cursor(None)
+			Gdk.Window.set_cursor(self.window.get_window(), None)
 			self.hbox.remove(self.eventbox)
 			self.hbox.remove(self.progressbar)
 			#self.hbox.remove(self.seperator)
