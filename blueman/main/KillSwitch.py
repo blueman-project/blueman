@@ -1,4 +1,4 @@
-import dbus.proxies
+import dbus
 from gi.repository import GObject
 from blueman.main.HalManager import HalManager
 from blueman.Functions import dprint

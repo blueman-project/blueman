@@ -305,7 +305,7 @@ class DeviceList(GenericList):
                 self.Adapter = None
                 self.emit("adapter-changed", None)
 
-        except dbus.DBusServiceUnknownError:
+        except Bluez.errors.DBusServiceUnknownError:
             dprint("Dbus error while trying to get adapter.")
             self.Adapter = None
             self.emit("adapter-changed", None)
