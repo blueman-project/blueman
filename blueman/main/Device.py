@@ -1,4 +1,4 @@
-import gobject
+from gi.repository import GObject
 from blueman.Functions import dprint
 from blueman.main.SignalTracker import SignalTracker
 from blueman.bluez.Adapter import Adapter
@@ -7,14 +7,14 @@ import os
 import weakref
 
 
-class Device(gobject.GObject):
+class Device(GObject.GObject):
     __gsignals__ = {
-        'invalidated': (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, ()),
-        'property-changed': (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
+        'invalidated': (GObject.SignalFlags.NO_HOOKS, None, ()),
+        'property-changed': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
     }
 
     def __init__(self, instance):
-        gobject.GObject.__init__(self)
+        GObject.GObject.__init__(self)
 
         self.Properties = {}
         self.Fake = True

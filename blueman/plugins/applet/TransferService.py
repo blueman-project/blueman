@@ -20,8 +20,8 @@ from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.applet.Transfer import Transfer
 
-import gobject
-import gtk
+from gi.repository import GObject
+from gi.repository import Gtk
 import dbus
 
 class TransferService(AppletPlugin):

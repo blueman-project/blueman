@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 
-import gtk
+from gi.repository import Gtk
 import dbus
 from blueman.Constants import *
 from blueman.plugins.ServicePlugin import ServicePlugin
@@ -33,14 +33,14 @@ class Audio(ServicePlugin):
 	__plugin_info__ = (_("Audio"), "audio-card")
 	def on_load(self, container):
 		
-		self.Builder = gtk.Builder()
+		self.Builder = Gtk.Builder()
 		self.Builder.set_translation_domain("blueman")
 		self.Builder.add_from_file(UI_PATH +"/services-audio.ui")
 		self.widget = self.Builder.get_object("audio")
 		
 		self.ignored_keys = []
 		
-		container.pack_start(self.widget)
+		container.pack_start(self.widget, True, True, 0)
 		
 		self.cb_a2dp = self.Builder.get_object("a2dp")
 		self.cb_hsp = self.Builder.get_object("hsp")

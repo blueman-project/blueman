@@ -1,4 +1,4 @@
-import gobject
+from gi.repository import GObject
 import dbus
 from blueman.Functions import *
 
@@ -37,7 +37,7 @@ class KillSwitch(AppletPlugin):
                 self.Manager = _KillSwitch.Manager()
 
             if not self.get_option("checked"):
-                gobject.timeout_add(1000, self.check)
+                GObject.timeout_add(1000, self.check)
 
         self.signals.Handle(self.Manager, "switch-added", self.on_switch_added)
         self.signals.Handle(self.Manager, "switch-removed", self.on_switch_removed)

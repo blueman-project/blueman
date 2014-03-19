@@ -17,7 +17,7 @@
 
 from blueman.plugins.AppletPlugin import AppletPlugin
 import dbus
-import gobject
+from gi.repository import GObject
 from blueman.main.SignalTracker import SignalTracker
 from blueman.gui.Notification import Notification
 from blueman.Sdp import *
@@ -52,7 +52,7 @@ class ConnectionHandler:
 		
 	def on_connect_reply(self, rfcomm):
 		self.rfcomm_dev = rfcomm
-		self.timeout = gobject.timeout_add(10000, self.on_timeout)
+		self.timeout = GObject.timeout_add(10000, self.on_timeout)
 		
 	def on_connect_error(self, *args):
 		self.err(*args)
@@ -60,7 +60,7 @@ class ConnectionHandler:
 		
 	def cleanup(self):
 		if self.timeout:
-			gobject.source_remove(self.timeout)
+			GObject.source_remove(self.timeout)
 		self.signals.DisconnectAll()
 		
 		del self.device

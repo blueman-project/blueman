@@ -3,12 +3,15 @@
 import sys
 import os.path
 import os
-import pynotify
 import dbus
 import dbus.glib
-import gobject
-import gtk
-import gtk.gdk
+from blueman.Constants import *
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
+from gi.repository import Gdk
+from gi.repository import GObject
+from gi.repository import Notify
 import __builtin__
 
 #support running uninstalled
@@ -16,7 +19,6 @@ _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if os.path.exists(os.path.join(_dirname, "CHANGELOG.md")):
     sys.path.insert(0, _dirname)
 
-from blueman.Constants import *
 from blueman.Functions import *
 
 from blueman.main.DbusService import DbusService
@@ -35,7 +37,7 @@ from blueman.main.PluginManager import PersistentPluginManager
 class BluemanApplet(object):
     def __init__(self):
         setup_icon_path()
-        if not pynotify.init("Blueman"):
+        if not Notify.init("Blueman"):
             dprint("Error: Failed to init pynotify")
 
         check_single_instance("blueman-applet")
@@ -55,7 +57,7 @@ class BluemanApplet(object):
         self.bus.add_signal_receiver(self.on_adapter_property_changed, "PropertyChanged", "org.bluez.Adapter",
                                      "org.bluez", path_keyword="path")
 
-        gtk.main()
+        Gtk.main()
 
 
     def manager_init(self):

@@ -6,7 +6,7 @@ from blueman.gui.MessageArea import MessageArea
 from blueman.Functions import get_icon, create_menuitem
 from blueman.main.AppletService import AppletService
 
-import gtk
+from gi.repository import Gtk
 
 a = AppletService()
 if not "PulseAudio" in a.QueryPlugins():
@@ -112,11 +112,11 @@ class PulseAudioProfile(ManagerPlugin):
         info = self.devices[device.Address]
         items = []
 
-        sub = gtk.Menu()
+        sub = Gtk.Menu()
 
         if info:
             for profile in info["profiles"]:
-                i = gtk.RadioMenuItem(items[0] if len(items) else None,
+                i = Gtk.RadioMenuItem(items[0] if len(items) else None,
                                       profile["description"])
 
                 if profile["name"] == info["active_profile"]:

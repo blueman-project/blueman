@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
-import gtk
+from gi.repository import Gtk
 from blueman.plugins.AppletPlugin import AppletPlugin
 
 class ExitItem(AppletPlugin):
@@ -26,8 +26,8 @@ class ExitItem(AppletPlugin):
 	__icon__ = "gtk-quit"
 	
 	def on_load(self, applet):
-		item = gtk.ImageMenuItem(gtk.STOCK_QUIT)
-		item.connect("activate", lambda x: gtk.main_quit())
+		item = Gtk.ImageMenuItem(Gtk.STOCK_QUIT)
+		item.connect("activate", lambda x: Gtk.main_quit())
 		applet.Plugins.Menu.Register(self, item, 100)
 		
 	def on_unload(self):

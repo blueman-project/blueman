@@ -7,11 +7,14 @@ _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if os.path.exists(os.path.join(_dirname, "CHANGELOG.md")):
     sys.path.insert(0, _dirname)
 
-import gtk
 from blueman.gui.GenericList import GenericList
 
-from blueman.Functions import *
 from blueman.Constants import *
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
+
+from blueman.Functions import *
 
 import blueman.plugins.services
 from blueman.plugins.ServicePlugin import ServicePlugin
@@ -24,7 +27,7 @@ setup_icon_path()
 class BluemanServices:
     def __init__(self):
 
-        self.Builder = gtk.Builder()
+        self.Builder = Gtk.Builder()
         self.Builder.set_translation_domain("blueman")
         self.Builder.add_from_file(UI_PATH + "/services.ui")
 
@@ -35,11 +38,11 @@ class BluemanServices:
 
         check_single_instance("blueman-services", lambda time: self.Dialog.present_with_time(time))
 
-        self.Dialog.connect("delete-event", lambda x, y: gtk.main_quit())
+        self.Dialog.connect("delete-event", lambda x, y: Gtk.main_quit())
 
         data = [
-            ["picture", 'GdkPixbuf', gtk.CellRendererPixbuf(), {"pixbuf": 0}, None],
-            ["caption", str, gtk.CellRendererText(), {"markup": 1}, None, {"expand": True}],
+            ["picture", 'GdkPixbuf', Gtk.CellRendererPixbuf(), {"pixbuf": 0}, None],
+            ["caption", str, Gtk.CellRendererText(), {"markup": 1}, None, {"expand": True}],
             ["id", str],
         ]
 
@@ -62,10 +65,10 @@ class BluemanServices:
             ls.selection.select_path(0)
 
         self.Builder.get_object("b_apply").connect("clicked", self.on_apply_clicked)
-        self.Builder.get_object("b_close").connect("clicked", lambda x: gtk.main_quit())
+        self.Builder.get_object("b_close").connect("clicked", lambda x: Gtk.main_quit())
 
         self.Dialog.show()
-        gtk.main()
+        Gtk.main()
 
     def option_changed(self):
         rets = self.plugin_exec("on_query_apply_state")
@@ -148,7 +151,8 @@ class BluemanServices:
     def on_selection_changed(self, selection):
         iter = self.List.selected()
         if self.List.get_cursor()[0]:
-            self.Config.props.services_last_item = self.List.get_cursor()[0][0]
+            # GtkTreePath returns row when used as string
+            self.Config.props.services_last_item = int(str(self.List.get_cursor()[0]))
         row = self.List.get(iter, "id")
         id = row["id"]
 

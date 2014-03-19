@@ -19,8 +19,8 @@
 from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 
-import gobject
-import gtk
+from gi.repository import GObject
+from gi.repository import Gtk
 
 class Menu(AppletPlugin):
 	__depends__ = ["StatusIcon"]
@@ -37,11 +37,11 @@ class Menu(AppletPlugin):
 		self.__plugins_loaded = False
 		
 		self.__menuitems = []
-		self.__menu = gtk.Menu()
+		self.__menu = Gtk.Menu()
 		
 	def on_popup_menu(self, status_icon, button, activate_time):
-		self.__menu.popup(None, None, gtk.status_icon_position_menu,
-						button, activate_time, status_icon)		
+		self.__menu.popup(None, None, Gtk.StatusIcon.position_menu,
+						status_icon, button, activate_time)
 	
 	def __sort(self):
 		self.__menuitems.sort(lambda a, b: cmp(a[0], b[0]))

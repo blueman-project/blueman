@@ -21,8 +21,9 @@ import dbus.glib
 import dbus.service
 import os.path
 from blueman.Functions import get_icon, dprint
-import gtk
-import gobject
+from gi.repository import Gtk
+from gi.repository import GObject
+from gi.types import GObjectMeta
 import cgi
 import blueman.bluez as Bluez
 from blueman.Sdp import *
@@ -42,19 +43,19 @@ class AgentErrorCanceled(dbus.DBusException):
         dbus.DBusException.__init__(self, name="org.bluez.Error.Canceled")
 
 
-class DummyGObjectMeta(dbus.service.InterfaceType, gobject.GObjectMeta):
+class DummyGObjectMeta(dbus.service.InterfaceType, GObjectMeta):
     pass
 
 
-class CommonAgent(gobject.GObject, Agent):
+class CommonAgent(GObject.GObject, Agent):
     __metaclass__ = DummyGObjectMeta
     __gsignals__ = {
-    'released': (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, ()),
+    'released': (GObject.SignalFlags.NO_HOOKS, None, ()),
     }
 
     def __init__(self, status_icon, path):
         Agent.__init__(self, path)
-        gobject.GObject.__init__(self)
+        GObject.GObject.__init__(self)
 
         self.status_icon = status_icon
         self.dbus_path = path
@@ -66,7 +67,7 @@ class CommonAgent(gobject.GObject, Agent):
             if not new_text.isdigit():
                 editable.stop_emission("insert-text")
 
-        builder = gtk.Builder()
+        builder = Gtk.Builder()
         builder.add_from_file(UI_PATH + "/applet-passkey.ui")
         builder.set_translation_domain("blueman")
         dialog = builder.get_object("dialog")
@@ -110,12 +111,12 @@ class CommonAgent(gobject.GObject, Agent):
                 self.dialog.present()
             else:
                 if self.dialog:
-                    self.dialog.response(gtk.RESPONSE_REJECT)
+                    self.dialog.response(Gtk.ResponseType.REJECT)
                 #self.applet.status_icon.set_blinking(False)
 
 
         def passkey_dialog_cb(dialog, response_id):
-            if response_id == gtk.RESPONSE_ACCEPT:
+            if response_id == Gtk.ResponseType.ACCEPT:
                 ret = pin_entry.get_text()
                 if is_numeric:
                     ret = int(ret)
@@ -159,7 +160,7 @@ class CommonAgent(gobject.GObject, Agent):
     def Cancel(self):
         dprint("Agent.Cancel")
         if self.dialog:
-            self.dialog.response(gtk.RESPONSE_REJECT)
+            self.dialog.response(Gtk.ResponseType.REJECT)
         try:
             self.n.close()
         except:
@@ -286,7 +287,7 @@ class TempAgent(CommonAgent):
         dprint("Agent.RequestConfirmation")
         alias = self.get_device_alias(device)
 
-        dialog = gtk.MessageDialog(buttons=gtk.BUTTONS_YES_NO)
+        dialog = Gtk.MessageDialog(buttons=Gtk.ButtonsType.YES_NO)
         dialog.props.use_markup = True
         dialog.props.icon_name = "gtk-dialog-authentication"
         dialog.props.secondary_use_markup = True
@@ -294,7 +295,7 @@ class TempAgent(CommonAgent):
         dialog.props.text = _("Pairing with: %s") % alias
         dialog.props.secondary_text = _("Confirm value for authentication:") + "<b>%s</b>" % passkey
         resp = dialog.run()
-        if resp == gtk.RESPONSE_YES:
+        if resp == Gtk.ResponseType.YES:
             ok()
         else:
             err(AgentErrorRejected())

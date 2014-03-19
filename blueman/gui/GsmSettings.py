@@ -19,15 +19,16 @@
 from blueman.main.Config import Config
 from blueman.Functions import *
 from blueman.Constants import *
-import gtk
 
-class GsmSettings(gtk.Dialog):
+from gi.repository import Gtk
+
+class GsmSettings(Gtk.Dialog):
 	def __init__(self, bd_address):
-		gtk.Dialog.__init__(self)
+		GObject.GObject.__init__(self)
 		
 		self.device = bd_address
 		
-		self.Builder = gtk.Builder()
+		self.Builder = Gtk.Builder()
 		self.Builder.set_translation_domain("blueman")
 		self.Builder.add_from_file(UI_PATH +"/gsm-settings.ui")
 		
@@ -40,7 +41,7 @@ class GsmSettings(gtk.Dialog):
 		self.props.resizable = False
 		
 		a = self.get_content_area()
-		a.pack_start(vbox)
+		a.pack_start(vbox, True, True, 0)
 		vbox.show()
 		
 		self.e_apn = self.Builder.get_object("e_apn")
@@ -59,7 +60,7 @@ class GsmSettings(gtk.Dialog):
 		self.e_apn.connect("changed", self.on_changed)
 		self.e_number.connect("changed", self.on_changed)
 		
-		self.add_button(gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE)
+		self.add_button(Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE)
 		
 	def on_changed(self, e):
 		if e == self.e_apn:

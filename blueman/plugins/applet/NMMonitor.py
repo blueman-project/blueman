@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # NMMonitor: Monitors a selected device and emits a signal when it was disconnected via NetworkManager
-import gobject
+from gi.repository import GObject
 import dbus
 from blueman.Functions import *
 
@@ -92,14 +92,14 @@ if not HAL_ENABLED:
 	raise ImportError("NMMonitor (deprecated) requires hal support")
 
 
-class NMMonitor(AppletPlugin, gobject.GObject):
+class NMMonitor(AppletPlugin, GObject.GObject):
 	__gsignals__ = {
 		#args: udi
-		'disconnected' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_STRING,)),
+		'disconnected' : (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
 		#args: udi
-		'modem-removed' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_STRING,)),
+		'modem-removed' : (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
 		#args: udi, bdaddr
-		'modem-added' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_STRING, gobject.TYPE_STRING,)),
+		'modem-added' : (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING, GObject.TYPE_STRING,)),
 	}
 	
 	__icon__ = "network"
@@ -107,7 +107,7 @@ class NMMonitor(AppletPlugin, gobject.GObject):
 	__author__ = "Walmis"
 	
 	def on_load(self, applet):
-		gobject.GObject.__init__(self)
+		GObject.GObject.__init__(self)
 
 		self.bus = dbus.SystemBus()
 		obj = self.bus.get_object('org.freedesktop.Hal', '/org/freedesktop/Hal/Manager')

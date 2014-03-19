@@ -1,4 +1,4 @@
-import gobject
+from gi.repository import GObject
 import os
 import __builtin__
 import traceback
@@ -17,14 +17,14 @@ class LoadException(Exception):
 __builtin__.StopException = StopException
 
 
-class PluginManager(gobject.GObject):
+class PluginManager(GObject.GObject):
     __gsignals__ = {
-    'plugin-loaded': (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_STRING,)),
-    'plugin-unloaded': (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_STRING,)),
+    'plugin-loaded': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
+    'plugin-unloaded': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
     }
 
     def __init__(self, plugin_class, module_path, user_data):
-        gobject.GObject.__init__(self)
+        GObject.GObject.__init__(self)
         self.__plugins = {}
         self.__classes = {}
         self.__deps = {}
@@ -59,8 +59,8 @@ class PluginManager(gobject.GObject):
                 pass
             except Exception as e:
                 if user_action:
-                    d = gtk.MessageDialog(type=gtk.MESSAGE_ERROR,
-                                          buttons=gtk.BUTTONS_CLOSE)
+                    d = Gtk.MessageDialog(type=Gtk.MessageType.ERROR,
+                                          buttons=Gtk.ButtonsType.CLOSE)
                     d.set_markup(_("<b>An error has occured while loading "
                                    "a plugin. Please notify the developers "
                                    "with the content of this message.</b>"))

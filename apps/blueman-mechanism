@@ -15,10 +15,10 @@ from dbus.mainloop.glib import DBusGMainLoop
 import blueman.Functions
 import __builtin__
 
-import gobject
+from gi.repository import GObject
 import syslog
 
-loop = gobject.MainLoop()
+loop = GObject.MainLoop()
 
 from blueman.Lib import set_probe_debug
 from blueman.Constants import POLKIT
@@ -80,7 +80,7 @@ class Timer:
     def __init__(self):
         self.time = 0
         self.stopped = False
-        gobject.timeout_add(1000, self.tick)
+        GObject.timeout_add(1000, self.tick)
 
     def tick(self):
         if not self.stopped:

@@ -17,23 +17,23 @@
 # 
 import socket
 import fcntl
-import gobject
+from gi.repository import GObject
 import struct
 import subprocess
 from blueman.Lib import get_net_address
 
 
-class DhcpClient(gobject.GObject):
+class DhcpClient(GObject.GObject):
 	__gsignals__ = {
 		#arg: interface name eg. ppp0
-		'connected' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
-		'error-occurred' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+		'connected' : (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+		'error-occurred' : (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
 	}	
 	
 	quering = []
 	
 	def __init__(self, interface, timeout=30):
-		gobject.GObject.__init__(self)
+		GObject.GObject.__init__(self)
 	
 		self.interface = interface
 		self.timeout = timeout
@@ -49,8 +49,8 @@ class DhcpClient(gobject.GObject):
 		except:
 			raise Exception("dhclient binary not found")
 			
-		gobject.timeout_add(1000, self.check_dhclient)
-		gobject.timeout_add(self.timeout*1000, self.on_timeout)
+		GObject.timeout_add(1000, self.check_dhclient)
+		GObject.timeout_add(self.timeout*1000, self.on_timeout)
 
 		
 	def on_timeout(self):
@@ -67,7 +67,7 @@ class DhcpClient(gobject.GObject):
 					dprint("bound to", ip)
 					self.emit("connected", ip)	
 				
-				gobject.timeout_add(1000, complete)
+				GObject.timeout_add(1000, complete)
 				DhcpClient.quering.remove(self.interface)
 				return False
 				

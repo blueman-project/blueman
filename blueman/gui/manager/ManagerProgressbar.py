@@ -16,22 +16,22 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
-import pango
-import gobject
-import gtk
-import gtk.gdk
+from gi.repository import Pango
+from gi.repository import GObject
+from gi.repository import Gtk
+from gi.repository import Gdk
 from blueman.Functions import get_icon
 from blueman.main.SignalTracker import SignalTracker
 
-class ManagerProgressbar(gobject.GObject):
+class ManagerProgressbar(GObject.GObject):
 
 	__gsignals__ = {
-		'cancelled' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, ()),
+		'cancelled' : (GObject.SignalFlags.RUN_LAST, None, ()),
 	}
 	__instances__ = []
 	def __init__(self, blueman, cancellable=True, text=_("Connecting")):
 		def on_enter(evbox, event):
-			c = gtk.gdk.Cursor( gtk.gdk.HAND2)
+			c = Gdk.Cursor.new( Gdk.HAND2)
 			self.window.window.set_cursor(c)
 		
 		def on_leave(evbox, event):
@@ -41,20 +41,20 @@ class ManagerProgressbar(gobject.GObject):
 			self.eventbox.props.sensitive = False
 			self.emit("cancelled")
 		
-		gobject.GObject.__init__(self)
+		GObject.GObject.__init__(self)
 		self.Blueman = blueman
 		
 		self.cancellable = cancellable
 		
 		self.hbox = hbox = blueman.Builder.get_object("statusbar1")
 		
-		self.progressbar = gtk.ProgressBar()
+		self.progressbar = Gtk.ProgressBar()
 		
 		self.signals = SignalTracker()
 
-		self.button = gtk.image_new_from_pixbuf(get_icon("gtk-stop", 16))
+		self.button = Gtk.Image.new_from_pixbuf(get_icon("gtk-stop", 16))
 	
-		self.eventbox = eventbox = gtk.EventBox()
+		self.eventbox = eventbox = Gtk.EventBox()
 		eventbox.add(self.button)
 		eventbox.props.tooltip_text = _("Cancel Operation")
 		self.signals.Handle(eventbox, "enter-notify-event", on_enter)
@@ -63,14 +63,14 @@ class ManagerProgressbar(gobject.GObject):
 
 		
 		self.progressbar.set_size_request(100, 15)
-		self.progressbar.set_ellipsize(pango.ELLIPSIZE_END)
+		self.progressbar.set_ellipsize(Pango.EllipsizeMode.END)
 		self.progressbar.set_text(text)
 		self.progressbar.set_pulse_step(0.05)
 		
 		self.window = blueman.Builder.get_object("window")
 
-		hbox.pack_end(eventbox, True, False)
-		hbox.pack_end(self.progressbar, False, False)
+		hbox.pack_end(eventbox, True, False, 0)
+		hbox.pack_end(self.progressbar, False, False, 0)
 
 		if ManagerProgressbar.__instances__ != []:
 			dprint("hiding", ManagerProgressbar.__instances__[-1])
@@ -93,8 +93,8 @@ class ManagerProgressbar(gobject.GObject):
 			self.Blueman.Builder.get_object("statusbar").props.visible = True
 
 		
-		if self.Blueman.Stats.hbox.size_request()[0] + self.progressbar.size_request()[0] + 16 > self.Blueman.window.get_size()[0]:
-			self.Blueman.Stats.hbox.hide_all()
+		#if self.Blueman.Stats.hbox.size_request()[0] + self.progressbar.size_request()[0] + 16 > self.Blueman.window.get_size()[0]:
+		#	self.Blueman.Stats.hbox.hide_all()
 
 		
 		self.progressbar.props.visible = True
@@ -111,14 +111,14 @@ class ManagerProgressbar(gobject.GObject):
 		self.stop()
 		self.set_label(msg)
 		self.set_cancellable(False)
-		gobject.timeout_add(timeout, self.finalize)		
+		GObject.timeout_add(timeout, self.finalize)		
 
 		
 	def finalize(self):
 		if not self.finalized:
 			self.hide()
 			self.stop()
-			self.window.window.set_cursor(None)
+			Gdk.Window.set_cursor(self.window.get_window(), None)
 			self.hbox.remove(self.eventbox)
 			self.hbox.remove(self.progressbar)
 			#self.hbox.remove(self.seperator)
@@ -167,9 +167,9 @@ class ManagerProgressbar(gobject.GObject):
 			self.progressbar.pulse()
 			return True
 		if not self.gsource:
-			self.gsource = gobject.timeout_add(1000/24, pulse)
+			self.gsource = GObject.timeout_add(1000/24, pulse)
 	
 	def stop(self):
 		if self.gsource != None:
-			gobject.source_remove(self.gsource)
+			GObject.source_remove(self.gsource)
 		self.progressbar.set_fraction(0.0)

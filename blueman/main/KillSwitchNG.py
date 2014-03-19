@@ -20,7 +20,7 @@ import os
 import struct
 import weakref
 import errno
-import gobject
+from gi.repository import GObject
 from blueman.main.Mechanism import Mechanism
 from blueman.Functions import dprint
 import stat
@@ -54,14 +54,14 @@ class Switch:
 		self.soft = soft
 		self.hard = hard
 
-class KillSwitchNG(gobject.GObject):
+class KillSwitchNG(GObject.GObject):
 	__gsignals__ = {
-		'switch-changed' : (gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
-		'switch-added' : (gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
-		'switch-removed' : (gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+		'switch-changed' : (GObject.SignalFlags.RUN_FIRST, None, (GObject.TYPE_PYOBJECT,)),
+		'switch-added' : (GObject.SignalFlags.RUN_FIRST, None, (GObject.TYPE_PYOBJECT,)),
+		'switch-removed' : (GObject.SignalFlags.RUN_FIRST, None, (GObject.TYPE_PYOBJECT,)),
 	}
 	def __init__(self):
-		gobject.GObject.__init__(self)
+		GObject.GObject.__init__(self)
 		self.state = True
 		self.hardblocked = False
 		
@@ -88,11 +88,11 @@ class KillSwitchNG(gobject.GObject):
 		self.fd = os.open("/dev/rfkill", flags)
 
 		ref = weakref.ref(self)
-		self.iom = gobject.io_add_watch(self.fd, gobject.IO_IN | gobject.IO_ERR | gobject.IO_HUP, lambda *args: ref() and ref().io_event(*args) )
+		self.iom = GObject.io_add_watch(self.fd, GObject.IO_IN | GObject.IO_ERR | GObject.IO_HUP, lambda *args: ref() and ref().io_event(*args) )
 		
 	def __del__(self):
 		try:
-			gobject.source_remove(self.iom)
+			GObject.source_remove(self.iom)
 			os.close(self.fd)
 		except:
 			pass
@@ -108,7 +108,7 @@ class KillSwitchNG(gobject.GObject):
 		return stuff
 		
 	def io_event(self, source, condition):
-		if condition & gobject.IO_ERR or condition & gobject.IO_HUP:
+		if condition & GObject.IO_ERR or condition & GObject.IO_HUP:
 			return False
 		
 		data = os.read(self.fd, RFKILL_EVENT_SIZE_V1)

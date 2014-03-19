@@ -1,6 +1,6 @@
 from blueman.bluez.BlueZInterface import BlueZInterface
 import dbus
-import gobject
+from gi.repository import GObject
 import traceback
 
 
@@ -21,7 +21,7 @@ class SignalTracker:
             args = args[1:]
             if isinstance(obj, BlueZInterface):
                 objtype = "bluez"
-            elif isinstance(obj, gobject.GObject):
+            elif isinstance(obj, GObject.GObject):
                 objtype = "gobject"
             elif isinstance(obj, dbus.proxies.Interface):
                 objtype = "dbus"

@@ -1,9 +1,8 @@
 #!/usr/bin/python
 
-import gtk
 import dbus
 import dbus.glib
-import pango
+from gi.repository import Pango
 import os.path
 import sys
 
@@ -19,6 +18,9 @@ from blueman.main.SignalTracker import SignalTracker
 
 enable_rgba_colormap()
 
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
 
 class BluemanAdapters:
     def __init__(self, selected_hci_dev):
@@ -26,7 +28,7 @@ class BluemanAdapters:
         self.bus = dbus.SystemBus()
         self.bus.watch_name_owner('org.bluez', self.on_dbus_name_owner_change)
 
-        builder = gtk.Builder()
+        builder = Gtk.Builder()
         builder.set_translation_domain("blueman")
         builder.add_from_file(UI_PATH + "/adapters.ui")
         self.dialog = builder.get_object("dialog")
@@ -60,7 +62,7 @@ class BluemanAdapters:
             else:
                 print('Error: the selected adapter does not exist')
         self.dialog.show()
-        gtk.main()
+        Gtk.main()
 
     def on_dialog_response(self, dialog, response_id):
         for hci, settings in self.tabs.items():
@@ -68,7 +70,7 @@ class BluemanAdapters:
                 #save changes
                 adapter = settings['adapter']
                 adapter.SetProperty('Name', settings['name'])
-        gtk.main_quit()
+        Gtk.main_quit()
 
     def on_adapter_added(self, adapter_path):
         def on_property_changed(name, value):
@@ -155,7 +157,7 @@ class BluemanAdapters:
         adapter_settings['discoverable_timeout'] = props['DiscoverableTimeout'] / 60
         adapter_settings['changed'] = False
 
-        builder = gtk.Builder()
+        builder = Gtk.Builder()
         builder.set_translation_domain("blueman")
         builder.add_from_file(UI_PATH + "/adapters-tab.ui")
         adapter_settings['vbox'] = builder.get_object("vbox1")
@@ -163,7 +165,6 @@ class BluemanAdapters:
         hscale = builder.get_object("hscale")
         hscale.set_range(0, 30)
         hscale.set_increments(1, 1)
-        hscale.set_update_policy(gtk.UPDATE_DISCONTINUOUS)
         if adapter_settings['discoverable']:
             hscale.set_value(adapter_settings['discoverable_timeout'])
             hscale.set_sensitive(adapter_settings['discoverable_timeout'] > 0)
@@ -204,9 +205,9 @@ class BluemanAdapters:
         name = settings['name']
         if name == '':
             name = _('Adapter') + ' %d' % (hci_dev_num + 1)
-        label = gtk.Label(name)
+        label = Gtk.Label(label=name)
         label.set_max_width_chars(20)
-        label.set_ellipsize(pango.ELLIPSIZE_END)
+        label.set_ellipsize(Pango.EllipsizeMode.END)
         self.notebook.insert_page(settings['vbox'], label, hci_dev_num)
 
     def remove_from_notebook(self, adapter):

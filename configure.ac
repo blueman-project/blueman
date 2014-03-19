@@ -32,12 +32,12 @@ AC_SUBST([PYREXC])
 AC_MSG_CHECKING([for pyrexc executable])
 AC_MSG_RESULT([${PYREXC}])
 if test "x$PYREXC" = "x"; then
-   AC_MSG_ERROR([Fatal: pyrexc not found.
+   AC_MSG_ERROR(["Fatal: pyrexc not found.
 
 Get Pyrex from
   * your system's packages (recommended)
   * upstream at http://www.cosc.canterbury.ac.nz/greg.ewing/python/Pyrex/
-])
+"])
 fi
 
 
@@ -134,12 +134,32 @@ dnl ----------------------------
 
 if test $deps_check = 1; then
 
-PKG_CHECK_MODULES(PYGTK, pygtk-2.0 >= 2.12.0)
-PKG_CHECK_MODULES(PYNOTIFY, notify-python)
 AM_CHECK_PYMOD(dbus,,,[AC_MSG_ERROR(Could not find Python module dbus)])
-AM_CHECK_PYMOD(gobject,,,[AC_MSG_ERROR(Could not find Python module gobject)])
 
 fi
+
+
+dnl ----------------------------------------------------------------------------
+dnl GTK+ API library version
+dnl ----------------------------------------------------------------------------
+
+AC_MSG_CHECKING([Which GTK+ version to use at runtime])
+AC_ARG_WITH([gtk],
+  [AS_HELP_STRING([--with-gtk=2.0|3.0],[Which GTK+ version to use at runtime (default: 3.0)])],
+  [case "$with_gtk" in
+     2.0|3.0) ;;
+     *) AC_MSG_ERROR([invalid gtk version specified]) ;;
+   esac],
+  [with_gtk=3.0])
+AC_MSG_RESULT([$with_gtk])
+
+case "$with_gtk" in
+  2.0) GTK_API_VERSION=2.0
+       ;;
+  3.0) GTK_API_VERSION=3.0
+       ;;
+esac
+AC_SUBST(GTK_API_VERSION)
 
 PKG_CHECK_MODULES(BLUEZ,
 		bluez	>= 4.61

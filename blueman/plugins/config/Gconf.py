@@ -18,47 +18,52 @@
 # 
 
 from blueman.plugins.ConfigPlugin import ConfigPlugin
-import gconf
+from gi.repository import GConf
 import os
+import subprocess
 
 BLUEMAN_PATH = "/apps/blueman"
 
 class Gconf(ConfigPlugin):
 	__priority__ = 0
-	__plugin__ = "gconf"
+	__plugin__ = "GConf"
 	
 	def on_load(self, section):
 		self.section = section
 		if self.section != "":
 			self.section = "/" + self.section
 		
-		self.client = gconf.client_get_default ()
+		self.client = GConf.Client.get_default ()
 		
-		self.client.add_dir(BLUEMAN_PATH + self.section, gconf.CLIENT_PRELOAD_ONELEVEL)
+		self.client.add_dir(BLUEMAN_PATH + self.section, GConf.ClientPreloadType.PRELOAD_ONELEVEL)
 		self.client.connect("value_changed", self.value_changed)
 
 	# convert a GConfValue to python native value
 	def gval2pyval(self, val):
-		if val.type == gconf.VALUE_STRING:
+		if val.type == GConf.ValueType.STRING:
 			return val.get_string()
-		elif val.type == gconf.VALUE_FLOAT:
+		elif val.type == GConf.ValueType.FLOAT:
 			return val.get_float()
-		elif val.type == gconf.VALUE_INT:
+		elif val.type == GConf.ValueType.INT:
 			return val.get_int()
-		elif val.type == gconf.VALUE_BOOL:
+		elif val.type == GConf.ValueType.BOOL:
 			return val.get_bool()
-		elif val.type == gconf.VALUE_LIST:
+		elif val.type == GConf.ValueType.LIST:
 			x = []
 			for item in val.get_list():
 				x.append(self.gval2pyval(item))
 			return x
 		else:
-			raise AttributeError("Cant get this type from gconf")
+			raise AttributeError("Cant get this type from GConf: %s" % str(val.type))
 	
 	def value_changed(self, client, key, value):
 		if os.path.dirname(key) == BLUEMAN_PATH + self.section:
 			name = os.path.basename(key)
 			self.emit("property-changed", name, self.get(name))		
+	
+	def _set_gconf_list(self, key, values):
+		gconf_value = '[%s]' % ','.join(values)
+		subprocess.check_output(["gconftool-2", "--set", "--type=list", "--list-type=string", key, gconf_value])
 	
 	def set(self, key, value):
 		func = None
@@ -72,11 +77,9 @@ class Gconf(ConfigPlugin):
 		elif type(value) == float:
 			func = self.client.set_float
 		elif type(value) == list:
-			def x(key, val):
-				self.client.set_list(key, gconf.VALUE_STRING, val)
-			func = x
+			func = self._set_gconf_list
 		else:
-			raise AttributeError("Cant set this type in gconf")
+			raise AttributeError("Cant set this type in GConf: %s" % str(type(value)))
 		
 		func(BLUEMAN_PATH + self.section + "/" + key, value)
 		

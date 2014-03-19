@@ -17,13 +17,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 
-import gtk
-import gobject
+from gi.repository import Gtk
+from gi.repository import GObject
 
 
-class CellRendererPixbufTable(gtk.GenericCellRenderer):
+class CellRendererPixbufTable(Gtk.CellRenderer):
 	__gproperties__ = {
-		"pixbuffs": (gobject.TYPE_PYOBJECT, "pixbuf", "pixbuf", gobject.PARAM_READWRITE)
+		"pixbuffs": (GObject.TYPE_PYOBJECT, "pixbuf", "pixbuf", GObject.PARAM_READWRITE)
 
 	}
 
@@ -46,7 +46,7 @@ class CellRendererPixbufTable(gtk.GenericCellRenderer):
 			return
 
 
-		pix_rect = gtk.gdk.Rectangle()
+		pix_rect = ()
 		pix_rect.x, pix_rect.y, pix_rect.width, pix_rect.height = self.on_get_size(widget, cell_area)
 
 		
@@ -102,7 +102,7 @@ class CellRendererPixbufTable(gtk.GenericCellRenderer):
 					int(draw_rect.y + self.pixbuffs.size * row + y_space*row + (cell_area.height-self.pixbuffs.total_height) * self.get_property("yalign")), #dest y
 					-1,
 					-1,
-					gtk.gdk.RGB_DITHER_NONE,
+					Gdk.RGB_DITHER_NONE,
 					0,
 					0
 					)
@@ -122,4 +122,4 @@ class CellRendererPixbufTable(gtk.GenericCellRenderer):
 		
 		return x_offset, y_offset, calc_width, calc_height
 
-gobject.type_register(CellRendererPixbufTable)
+GObject.type_register(CellRendererPixbufTable)

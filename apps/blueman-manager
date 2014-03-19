@@ -22,16 +22,18 @@
 
 import os.path
 import sys
-import gtk
 import dbus, dbus.glib
-import gobject
+from blueman.Constants import *
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
+from gi.repository import GObject
 
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if os.path.exists(os.path.join(_dirname, "CHANGELOG.md")):
     sys.path.insert(0, _dirname)
 
-from blueman.Constants import *
 from blueman.Functions import *
 from blueman.main.Device import Device
 from blueman.bluez.Device import Device as BluezDevice
@@ -54,7 +56,7 @@ enable_rgba_colormap()
 class Blueman:
     def __init__(self):
 
-        self.Builder = gtk.Builder()
+        self.Builder = Gtk.Builder()
         self.Builder.set_translation_domain("blueman")
         self.Builder.add_from_file(UI_PATH + "/manager-main.ui")
 
@@ -65,7 +67,7 @@ class Blueman:
 
         vbox = self.Builder.get_object("vbox1")
         area = MessageArea()
-        vbox.pack_start(area, False)
+        vbox.pack_start(area, False, False, 0)
         vbox.reorder_child(area, 3)
 
         def do_present(time):
@@ -82,7 +84,7 @@ class Blueman:
             (x, y) = self.window.get_position()
             self.Config.props.window_posx = x
             self.Config.props.window_posy = y
-            gtk.main_quit()
+            Gtk.main_quit()
 
         def on_property_changed(config, key, value):
             if key == "show_toolbar":
@@ -105,7 +107,7 @@ class Blueman:
             if not status:
                 self.window.hide()
                 check_bluetooth_status(_("Bluetooth needs to be turned on for the device manager to function"),
-                                       lambda: gtk.main_quit())
+                                       lambda: Gtk.main_quit())
             else:
                 self.window.show()
 
@@ -113,20 +115,19 @@ class Blueman:
             dprint('org.bluez owner changed to ', owner)
             if owner == '':
                 self.window.hide()
-                d = gtk.MessageDialog(self.window, type=gtk.MESSAGE_ERROR)
+                d = Gtk.MessageDialog(self.window, type=Gtk.MessageType.ERROR, buttons=Gtk.ButtonsType.CLOSE)
                 d.props.icon_name = "blueman"
                 d.props.text = _("Connection to BlueZ failed")
 
                 d.props.secondary_text = _(
                     "Bluez daemon is not running, blueman-manager cannot continue.\nThis probably means that there were no Bluetooth adapters detected or Bluetooth daemon was not started.")
 
-                d.add_button(gtk.STOCK_CLOSE, gtk.RESPONSE_NO)
                 d.run()
                 d.destroy()
                 try:
                     exit(1)
                 except:
-                    gtk.main_quit()
+                    Gtk.main_quit()
             else:
 
                 setup_icon_path()
@@ -185,7 +186,7 @@ class Blueman:
                 self.window.show()
 
         dbus.SystemBus().watch_name_owner('org.bluez', on_bluez_name_owner_changed)
-        gtk.main()
+        Gtk.main()
 
     def on_adapter_changed(self, list, adapter):
         if adapter != None:

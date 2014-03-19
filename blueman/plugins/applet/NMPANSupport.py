@@ -15,12 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gobject
+from gi.repository import GObject
 import dbus
 from blueman.Sdp import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 from uuid import uuid1
-import gconf
+from gi.repository import GConf
 import os
 from blueman.main.SignalTracker import SignalTracker
 from blueman.main.Device import Device
@@ -112,7 +112,7 @@ class NewConnectionBuilder:
 		self.connection = self.parent.find_connection(params["bluetooth"]["bdaddr"], "panu")
 		if not self.connection:
 			parent.add_connection(params)
-			gobject.timeout_add(1000, self.signal_wait_timeout)
+			GObject.timeout_add(1000, self.signal_wait_timeout)
 		else:
 			self.init_connection()
 			
@@ -192,7 +192,7 @@ class NMPANSupport(AppletPlugin):
 		self.watch1 = self.bus.watch_name_owner("org.freedesktop.NetworkManagerUserSettings", self.on_nma_owner_changed)
 		self.watch2 = self.bus.watch_name_owner("org.freedesktop.NetworkManager", self.on_nm_owner_changed)
 		
-		self.client = gconf.client_get_default ()
+		self.client = GConf.Client.get_default ()
 		
 	def set_gconf(self, key, value):
 		func = None
@@ -207,17 +207,17 @@ class NMPANSupport(AppletPlugin):
 			func = self.client.set_float
 		elif type(value) == list:
 			def x(key, val):
-				self.client.set_list(key, gconf.VALUE_STRING, val)
+				self.client.set_list(key, gconf.ValueType.STRING, val)
 			func = x
 			
 		elif type(value) == dbus.Array:
 			if value.signature == "i":
 				def x(key, val):
-					self.client.set_list(key, gconf.VALUE_INT, val)
+					self.client.set_list(key, gconf.ValueType.INT, val)
 				func = x
 			elif value.signature == "s":
 				def x(key, val):
-					self.client.set_list(key, gconf.VALUE_STRING, val)
+					self.client.set_list(key, gconf.ValueType.STRING, val)
 				func = x
 			else:
 				raise AttributeError("Cant set this type in gconf")							

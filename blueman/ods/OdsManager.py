@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
-import gobject
+from gi.repository import GObject
 import os
 from blueman.ods.OdsBase import OdsBase
 from blueman.ods.OdsServer import OdsServer
@@ -26,10 +26,10 @@ import weakref
 
 class OdsManager(OdsBase):
 	__gsignals__ = {
-		'server-created' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,gobject.TYPE_STRING,)),
-		'server-destroyed' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
-		'session-created' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
-		'session-destroyed' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+		'server-created' : (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,GObject.TYPE_STRING,)),
+		'server-destroyed' : (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+		'session-created' : (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+		'session-destroyed' : (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
 	}
 	
 	def __del__(self):
@@ -130,7 +130,7 @@ class OdsManager(OdsBase):
 				#force close locally
 				server.DisconnectAll()
 				
-			gobject.source_remove(timeout)
+			GObject.source_remove(timeout)
 		
 		def on_closed(server):
 			dprint("server closed")
@@ -145,9 +145,9 @@ class OdsManager(OdsBase):
 				s.Stop()
 			except:
 				#ods probably died
-				gobject.idle_add(on_closed, s)
+				GObject.idle_add(on_closed, s)
 				
-			timeout = gobject.timeout_add(1000, on_stopped, s)
+			timeout = GObject.timeout_add(1000, on_stopped, s)
 		
 		except KeyError:
 			pass

@@ -24,7 +24,7 @@ from blueman.main.Mechanism import Mechanism
 from blueman.main.PPPConnection import PPPConnection
 from blueman.main.Config import Config
 
-import gobject
+from gi.repository import GObject
 
 from blueman.Sdp import *
 import os
@@ -44,7 +44,7 @@ class connection:
 			self.connect()
 		else:
 			dprint("ModemManager is running, delaying connection 5sec for it to complete probing")
-			gobject.timeout_add(5000, self.connect)
+			GObject.timeout_add(5000, self.connect)
 		
 	def connect(self):
 		c = Config("gsm_settings/" + self.device.Address)
@@ -59,7 +59,7 @@ class connection:
 	
 	def on_error(self, error):
 		self.error_handler(error)
-		gobject.timeout_add(1000, self.device.Services["serial"].Disconnect, self.port)
+		GObject.timeout_add(1000, self.device.Services["serial"].Disconnect, self.port)
 		
 	def on_connected(self, iface):
 		self.reply_handler(self.port)

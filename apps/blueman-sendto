@@ -8,13 +8,16 @@ _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if os.path.exists(os.path.join(_dirname, "CHANGELOG.md")):
     sys.path.insert(0, _dirname)
 
-import gtk
-import gobject
 import dbus.glib
 from optparse import OptionParser
 import gettext
 import urllib
 import time
+
+from blueman.Constants import *
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
 
 from blueman.bluez.Adapter import Adapter
 from blueman.main.Device import Device
@@ -31,14 +34,14 @@ from blueman.ods.OdsManager import OdsManager
 enable_rgba_colormap()
 
 
-class Sender(gobject.GObject):
+class Sender(GObject.GObject):
     __gsignals__ = {
-        'result': (gobject.SIGNAL_RUN_FIRST, gobject.TYPE_NONE, (gobject.TYPE_BOOLEAN,)),
+        'result': (GObject.SignalFlags.RUN_FIRST, None, (GObject.TYPE_BOOLEAN,)),
     }
 
     def __init__(self, device, adapter, files):
-        gobject.GObject.__init__(self)
-        self.Builder = gtk.Builder()
+        GObject.GObject.__init__(self)
+        self.Builder = Gtk.Builder()
         self.Builder.set_translation_domain("blueman")
         self.Builder.add_from_file(UI_PATH + "/send-dialog.ui")
         self.window = self.Builder.get_object("window")
@@ -88,8 +91,8 @@ class Sender(gobject.GObject):
         try:
             self.manager = OdsManager()
         except:
-            d = gtk.MessageDialog(self.window,
-                                  type=gtk.MESSAGE_ERROR, buttons=gtk.BUTTONS_OK)
+            d = Gtk.MessageDialog(self.window,
+                                  type=Gtk.MessageType.ERROR, buttons=Gtk.ButtonsType.OK)
             d.props.text = _("obex-data-server not available")
             d.props.secondary_text = _("obex-data-server is probably not installed")
             d.run()
@@ -116,8 +119,8 @@ class Sender(gobject.GObject):
 
         def on_error(msg):
             dprint("Failed to create session")
-            d = gtk.MessageDialog(self.window,
-                                  type=gtk.MESSAGE_ERROR, buttons=(gtk.BUTTONS_CLOSE))
+            d = Gtk.MessageDialog(self.window,
+                                  type=Gtk.MessageType.ERROR, buttons=(Gtk.ButtonsType.CLOSE))
             d.props.text = _("Error occurred")
             d.props.icon_name = "blueman"
             d.props.secondary_text = str(msg).split(":")[1].strip(" ")
@@ -153,12 +156,12 @@ class Sender(gobject.GObject):
 
         #first transfer
         if self.total_transferred == 0:
-            self.pb.props.text = _("Sending File") + (" %(0)s/%(1)s (%(2).2f %(3)s/s) " + _("ETA:") + " %(4)s") % {
-                "1": self.num_files,
-                "0": (self.num_files - len(self.files) + 1),
-                "2": 0.0,
-                "3": "B/s",
-                "4": "∞"}
+            self.pb.props.text = _(u"Sending File") + (u" %(0)s/%(1)s (%(2).2f %(3)s/s) " + _(u"ETA:") + u" %(4)s") % {
+                u"1": self.num_files,
+                u"0": (self.num_files - len(self.files) + 1),
+                u"2": 0.0,
+                u"3": u"B/s",
+                u"4": u"∞"}
 
         self.l_file.props.label = filename
         self._last_bytes = 0
@@ -235,26 +238,26 @@ class Sender(gobject.GObject):
         dprint("session err", name, msg)
         if not self.error_dialog:
             self.speed.reset()
-            d = gtk.MessageDialog(self.window,
-                                  type=gtk.MESSAGE_ERROR)
+            d = Gtk.MessageDialog(self.window,
+                                  type=Gtk.MessageType.ERROR)
             d.props.text = msg
             d.props.modal = True
             d.props.secondary_text = _("Error occurred while sending file %s") % os.path.basename(self.files[-1])
             d.props.icon_name = "blueman"
 
             if len(self.files) > 1:
-                d.add_button(_("Skip"), gtk.RESPONSE_NO)
-            d.add_button(_("Retry"), gtk.RESPONSE_YES)
-            d.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
+                d.add_button(_("Skip"), Gtk.ResponseType.NO)
+            d.add_button(_("Retry"), Gtk.ResponseType.YES)
+            d.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
 
 
             def on_response(dialog, resp):
                 dialog.destroy()
                 self.error_dialog = None
 
-                if resp == gtk.STOCK_CANCEL:
+                if resp == Gtk.STOCK_CANCEL:
                     self.on_cancel(None)
-                elif resp == gtk.RESPONSE_NO:
+                elif resp == Gtk.ResponseType.NO:
                     self.total_bytes -= os.path.getsize(self.files[-1])
                     self.total_transferred -= self.transferred
                     self.transferred = 0
@@ -262,7 +265,7 @@ class Sender(gobject.GObject):
                     if not self.session or not self.session.Connected:
                         self.create_session()
                     self.process_queue()
-                elif resp == gtk.RESPONSE_YES:
+                elif resp == Gtk.ResponseType.YES:
                     self.total_transferred -= self.transferred
                     self.transferred = 0
                     if not self.session or not self.session.Connected:
@@ -348,7 +351,7 @@ class SendTo:
             self.adapter = adapter.GetObjectPath()
             self.do_send()
 
-        gtk.main()
+        Gtk.main()
 
     def do_send(self):
         if len(self.args) == 0:
@@ -360,18 +363,18 @@ class SendTo:
             sender = Sender(self.device, self.adapter, self.args)
 
         def on_result(sender, res):
-            gtk.main_quit()
+            Gtk.main_quit()
 
         sender.connect("result", on_result)
 
     def select_files(self):
-        d = gtk.FileChooserDialog(_("Select files to send"), buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT,
-                                                                      gtk.STOCK_OK, gtk.RESPONSE_ACCEPT))
+        d = Gtk.FileChooserDialog(_("Select files to send"), buttons=(Gtk.STOCK_CANCEL, Gtk.ResponseType.REJECT,
+                                                                      Gtk.STOCK_OK, Gtk.ResponseType.ACCEPT))
         d.props.icon_name = "blueman-send-file"
         d.set_select_multiple(True)
         resp = d.run()
 
-        if resp == gtk.RESPONSE_ACCEPT:
+        if resp == Gtk.ResponseType.ACCEPT:
             self.files = d.get_filenames()
             d.destroy()
             return True
@@ -383,7 +386,7 @@ class SendTo:
         d = DeviceSelectorDialog()
         resp = d.run()
         d.destroy()
-        if resp == gtk.RESPONSE_ACCEPT:
+        if resp == Gtk.ResponseType.ACCEPT:
             sel = d.GetSelection()
             if sel:
                 self.device = sel[1]

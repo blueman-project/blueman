@@ -7,8 +7,9 @@ from blueman.main.Device import Device
 
 from blueman.Lib import conn_info
 import blueman.bluez as Bluez
-import gtk
-import gobject
+
+from gi.repository import Gtk
+from gi.repository import GObject
 import os
 import re
 import copy
@@ -17,33 +18,33 @@ import copy
 class DeviceList(GenericList):
     __gsignals__ = {
         #@param: device
-        'device-found': (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+        'device-found': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
         #@param: device TreeIter
         #note: None None is given when there ar no more rows, or when selected device is removed
         'device-selected': (
-            gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)
+            GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)
         ),
         #@param: device, TreeIter, (key, value)
         #note: there is a special property "Fake", it's not a real property,
         #but it is used to notify when device changes state from "Fake" to a real BlueZ object
         #the callback would be called with Fake=False
         'device-property-changed': (
-            gobject.SIGNAL_RUN_LAST,
-            gobject.TYPE_NONE,
-            (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)
+            GObject.SignalFlags.RUN_LAST,
+            None,
+            (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)
         ),
         #@param: adapter, (key, value)
         'adapter-property-changed': (
-        gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT, gobject.TYPE_PYOBJECT,)),
+        GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
         #@param: progress (0 to 1)
-        'discovery-progress': (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_FLOAT,)),
+        'discovery-progress': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_FLOAT,)),
 
         #@param: new adapter path, None if there are no more adapters
-        'adapter-changed': (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+        'adapter-changed': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
 
         #@param: adapter path
-        'adapter-added': (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
-        'adapter-removed': (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (gobject.TYPE_PYOBJECT,)),
+        'adapter-added': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
+        'adapter-removed': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
     }
 
     def __del__(self):
@@ -180,7 +181,7 @@ class DeviceList(GenericList):
                 if value:
                     self.monitor_power_levels(dev)
                 else:
-                    r = gtk.TreeRowReference(self.props.model, self.props.model.get_path(iter))
+                    r = Gtk.TreeRowReference.new(self.get_model(), self.props.get_model().get_path(iter))
                     self.level_setup_event(r, dev, None)
 
             elif key == "Paired":
@@ -195,11 +196,11 @@ class DeviceList(GenericList):
                 self.monitored_devices.remove(props["Address"])
                 return False
 
-            if not self.props.model:
+            if not self.get_model():
                 self.monitored_devices.remove(props["Address"])
                 return False
 
-            iter = self.props.model.get_iter(row_ref.get_path())
+            iter = self.get_model().get_iter(row_ref.get_path())
             device = self.get(iter, "device")["device"]
             if not device.Valid or not device.Connected:
                 dprint("stopping monitor (not connected)")
@@ -224,9 +225,9 @@ class DeviceList(GenericList):
             except:
                 dprint("Failed to get power levels")
             else:
-                r = gtk.TreeRowReference(self.props.model, self.props.model.get_path(iter))
+                r = Gtk.TreeRowReference.new(self.get_model(), self.get_model().get_path(iter))
                 self.level_setup_event(r, device, cinfo)
-                gobject.timeout_add(1000, update, r, cinfo, props["Address"])
+                GObject.timeout_add(1000, update, r, cinfo, props["Address"])
                 self.monitored_devices.append(props["Address"])
 
     ##### virtual funcs #####
@@ -412,10 +413,11 @@ class DeviceList(GenericList):
     def DiscoverDevices(self, time=10.24):
         if not self.discovering:
             self.__discovery_time = 0
-            self.Adapter.StartDiscovery()
-            self.discovering = True
-            T = 1.0 / 15 * 1000
-            gobject.timeout_add(int(T), self.update_progress, T / 1000, time)
+            if self.Adapter is not None:
+                self.Adapter.StartDiscovery()
+                self.discovering = True
+                T = 1.0 / 15 * 1000
+                GObject.timeout_add(int(T), self.update_progress, T / 1000, time)
 
     def IsValidAdapter(self):
         if self.Adapter == None:
@@ -497,7 +499,7 @@ class DeviceList(GenericList):
             row = self.address_to_row[address]
             if row.valid():
                 path = row.get_path()
-                iter = self.props.model.get_iter(path)
+                iter = self.get_model().get_iter(path)
                 return iter
             else:
                 del self.address_to_row[address]
@@ -511,7 +513,7 @@ class DeviceList(GenericList):
             row = self.path_to_row[path]
             if row.valid():
                 path = row.get_path()
-                iter = self.props.model.get_iter(path)
+                iter = self.get_model().get_iter(path)
                 return iter
             else:
                 del self.path_to_row[path]
@@ -522,14 +524,14 @@ class DeviceList(GenericList):
     def do_cache(self, iter, kwargs):
         if "device" in kwargs:
             if kwargs["device"]:
-                self.address_to_row[kwargs["device"].Address] = gtk.TreeRowReference(self.props.model,
-                                                                                     self.props.model.get_path(iter))
+                self.address_to_row[kwargs["device"].Address] = Gtk.TreeRowReference.new(self.get_model(),
+                                                                                         self.get_model().get_path(iter))
                 dprint("Caching new device %s" % kwargs["device"].Address)
 
         if "dbus_path" in kwargs:
             if kwargs["dbus_path"] != None:
-                self.path_to_row[kwargs["dbus_path"]] = gtk.TreeRowReference(self.props.model,
-                                                                             self.props.model.get_path(iter))
+                self.path_to_row[kwargs["dbus_path"]] = Gtk.TreeRowReference.new(self.get_model(),
+                                                                                 self.get_model().get_path(iter))
             else:
                 existing = self.get(iter, "dbus_path")["dbus_path"]
                 if existing != None:

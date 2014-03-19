@@ -23,7 +23,7 @@ from blueman.main.Device import Device
 from blueman.gui.Notification import Notification
 from blueman.main.PulseAudioUtils import PulseAudioUtils, EventType
 from subprocess import Popen, PIPE
-import gobject
+from gi.repository import GObject
 
 import dbus
 from blueman.main.SignalTracker import SignalTracker
@@ -92,12 +92,12 @@ class SourceRedirector:
 	def __del__(self):
 		dprint("Destroying redirector")
 		
-class Module(gobject.GObject):
+class Module(GObject.GObject):
 	__gsignals__ = {
-		'loaded' : (gobject.SIGNAL_NO_HOOKS, gobject.TYPE_NONE, ()),
+		'loaded' : (GObject.SignalFlags.NO_HOOKS, None, ()),
 	}	
 	def __init__(self):
-		gobject.GObject.__init__(self)
+		GObject.GObject.__init__(self)
 		self.refcount = 0
 		self.id = None
 		
@@ -282,7 +282,7 @@ class PulseAudio(AppletPlugin):
 		if key == "Connected" and value:
 			if not device in self.connected_sinks:
 				self.connected_sinks.append(device)
-				gobject.timeout_add(500, self.setup_pa, device, "a2dp")
+				GObject.timeout_add(500, self.setup_pa, device, "a2dp")
 		
 		elif key == "Connected" and not value:
 			if device in self.connected_sinks:

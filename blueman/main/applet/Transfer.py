@@ -5,7 +5,7 @@ from blueman.main.Device import Device
 from blueman.Functions import *
 from blueman.Lib import get_special_dir, SpecialDirType
 import os
-import gobject
+from gi.repository import GObject
 from blueman.gui.Notification import Notification
 import weakref
 
@@ -139,7 +139,7 @@ class Transfer(OdsManager):
                 if action == "accept":
                     wsession.Accept()
                     wself.allowed_devices.append(wsession.transfer["address"])
-                    gobject.timeout_add(60000, wself.allowed_devices.remove, wsession.transfer["address"])
+                    GObject.timeout_add(60000, wself.allowed_devices.remove, wsession.transfer["address"])
                 else:
                     wsession.Reject()
                 wsession.transfer["waiting"] = False

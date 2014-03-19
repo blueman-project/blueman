@@ -1,54 +1,54 @@
 from blueman.main.PluginManager import StopException
 from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
-import gtk
-import gobject
+from gi.repository import Gtk
+from gi.repository import GObject
 
 
-class StatusIcon(AppletPlugin, gtk.StatusIcon):
+class StatusIcon(AppletPlugin, Gtk.StatusIcon):
     __unloadable__ = False
     __icon__ = "blueman"
 
     def on_entry_changed(self, entry, ic, image):
 
         if ic.has_icon(self.get_option("icon")):
-            icon = gtk.STOCK_APPLY
+            icon = Gtk.STOCK_APPLY
         else:
-            icon = gtk.STOCK_CANCEL
+            icon = Gtk.STOCK_CANCEL
 
-        image.set_from_stock(icon, gtk.ICON_SIZE_LARGE_TOOLBAR)
+        image.set_from_stock(icon, Gtk.IconSize.LARGE_TOOLBAR)
 
         if self.timeout:
-            gobject.source_remove(self.timeout)
+            GObject.source_remove(self.timeout)
 
-        self.timeout = gobject.timeout_add(1000, lambda: self.IconShouldChange())
+        self.timeout = GObject.timeout_add(1000, lambda: self.IconShouldChange())
 
     def widget_decorator(self, widget, name, options):
         entry = widget.get_children()[1]
-        image = gtk.Image()
+        image = Gtk.Image()
 
-        completion = gtk.EntryCompletion()
+        completion = Gtk.EntryCompletion()
         entry.set_completion(completion)
 
-        liststore = gtk.ListStore(gobject.TYPE_STRING)
+        liststore = Gtk.ListStore(GObject.TYPE_STRING)
 
         completion.set_model(liststore)
 
         completion.set_text_column(0)
 
-        ic = gtk.icon_theme_get_default()
+        ic = Gtk.IconTheme.get_default()
         icons = ic.list_icons("Applications")
         for i in icons:
             liststore.append([i])
 
         if ic.has_icon(self.get_option("icon")):
-            icon = gtk.STOCK_APPLY
+            icon = Gtk.STOCK_APPLY
         else:
-            icon = gtk.STOCK_CANCEL
+            icon = Gtk.STOCK_CANCEL
 
-        image.set_from_stock(icon, gtk.ICON_SIZE_LARGE_TOOLBAR)
+        image.set_from_stock(icon, Gtk.IconSize.LARGE_TOOLBAR)
         image.show()
-        widget.pack_start(image, 0, 0)
+        widget.pack_start(image, True, 0, 0)
         entry.connect("changed", self.on_entry_changed, ic, image)
 
     __options__ = {"icon": {"type": str,
@@ -64,7 +64,7 @@ class StatusIcon(AppletPlugin, gtk.StatusIcon):
     FORCE_HIDE = 0
 
     def on_load(self, applet):
-        gtk.StatusIcon.__init__(self)
+        GObject.GObject.__init__(self)
         self.lines = {}
         self.pixbuf = None
         self.timeout = None
@@ -76,7 +76,7 @@ class StatusIcon(AppletPlugin, gtk.StatusIcon):
         AppletPlugin.add_method(self.on_query_status_icon_visibility)
         AppletPlugin.add_method(self.on_status_icon_query_icon)
 
-        ic = gtk.icon_theme_get_default()
+        ic = Gtk.IconTheme.get_default()
         ic.connect("changed", self.on_icon_theme_changed)
 
         self.on_status_icon_resized()
@@ -152,14 +152,14 @@ class StatusIcon(AppletPlugin, gtk.StatusIcon):
     def on_status_icon_resized(self):
         self.icon = "blueman-tray"
 
-        #p = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, True, 8, 22, 22)
+        #p = GdkPixbuf.Pixbuf(GdkPixbuf.Colorspace.RGB, True, 8, 22, 22)
         #p.fill(0)
 
 
         #self.pixbuf.copy_area(0, 0, self.pixbuf.props.width, self.pixbuf.props.height, p, 5, 0)
 
         #self.pixbuf = p
-        ic = gtk.icon_theme_get_default()
+        ic = Gtk.IconTheme.get_default()
 
         def callback(inst, ret):
             if ret != None:

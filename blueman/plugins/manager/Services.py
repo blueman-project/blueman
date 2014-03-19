@@ -1,5 +1,5 @@
 from blueman.plugins.ManagerPlugin import ManagerPlugin
-import gtk
+from gi.repository import Gtk
 
 from blueman.Sdp import *
 from blueman.Functions import *
@@ -150,7 +150,7 @@ class Services(ManagerPlugin):
                     d.destroy()
 
                 if has_dun and "PPPSupport" in appl.QueryPlugins():
-                    item = gtk.SeparatorMenuItem()
+                    item = Gtk.SeparatorMenuItem()
                     item.show()
                     serial_items.append(item)
 
@@ -163,7 +163,7 @@ class Services(ManagerPlugin):
                                                 device)
 
                 if len(serial_items) > 1:
-                    sub = gtk.Menu()
+                    sub = Gtk.Menu()
                     sub.show()
 
                     item = create_menuitem(_("Serial Ports"), get_icon("modem", 16))
