@@ -22,6 +22,7 @@
 
 import os.path
 import sys
+import signal
 import dbus, dbus.glib
 from blueman.Constants import *
 import gi
@@ -49,6 +50,9 @@ from blueman.gui.MessageArea import MessageArea
 from blueman.main.PluginManager import PluginManager
 import blueman.plugins.manager
 from blueman.plugins.ManagerPlugin import ManagerPlugin
+
+# Workaround introspection bug, gnome bug 622084
+signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 enable_rgba_colormap()
 

@@ -13,6 +13,7 @@ pages = {}
 import os
 import sys
 import random
+import signal
 import dbus.glib
 from optparse import OptionParser
 
@@ -34,6 +35,9 @@ from blueman.Sdp import *
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
+
+# Workaround introspection bug, gnome bug 622084
+signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 class Assistant(Agent):
     def __init__(self):

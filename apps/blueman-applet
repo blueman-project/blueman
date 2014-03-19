@@ -3,6 +3,7 @@
 import sys
 import os.path
 import os
+import signal
 import dbus
 import dbus.glib
 from blueman.Constants import *
@@ -33,6 +34,8 @@ from blueman.main.SignalTracker import SignalTracker
 
 from blueman.main.PluginManager import PersistentPluginManager
 
+# Workaround introspection bug, gnome bug 622084
+signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 class BluemanApplet(object):
     def __init__(self):

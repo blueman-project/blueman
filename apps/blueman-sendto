@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # coding=utf-8
 
-import os, sys
+import os, sys, signal
 
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -30,6 +30,9 @@ from blueman.main.SpeedCalc import SpeedCalc
 from blueman.main.AppletService import AppletService
 
 from blueman.ods.OdsManager import OdsManager
+
+# Workaround introspection bug, gnome bug 622084
+signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 enable_rgba_colormap()
 
