@@ -18,7 +18,7 @@
 
 from blueman.Constants import *
 from gi.repository import Gtk, Gdk
-from gi.repository import cairo
+import cairo
 from gi.repository import GObject
 import weakref
 
@@ -174,8 +174,8 @@ class TreeRowFade(AnimBase):
 			
 		for col in columns:
 			rect = self.tw.get_background_area(path, col)
-			Gdk.cairo_get_clip_rectangle(cr, rect)
-			cr.rectangle(Gdk.Rectangle)
+			Gdk.cairo_get_clip_rectangle(cr)
+			cr.rectangle(rect.x, rect.y, rect.width, rect.height)
 			cr.clip()
 
 			cr.set_source_rgba((1.0/65535)*color.red, (1.0/65535)*color.green, (1.0/65535)*color.blue, 1.0-self.get_state())
@@ -217,7 +217,7 @@ class TreeRowColorFade(TreeRowFade):
 			
 		for col in columns:
 			rect = self.tw.get_background_area(path, col)
-			cr.rectangle(rect)
+			cr.rectangle(rect.x, rect.y, rect.width, rect.height)
 			cr.clip()
 
 			cr.set_source_rgba((1.0/65535)*self.color.red, (1.0/65535)*self.color.green, (1.0/65535)*self.color.blue, 1.0-self.get_state())
@@ -268,7 +268,7 @@ class CellFade(AnimBase):
 			rect.y = bg_rect.y
 			rect.height = bg_rect.height
 			
-			cr.rectangle(rect)
+			cr.rectangle(rect.x, rect.y, rect.width, rect.height)
 			cr.clip()
 			if not (rect.height == 0 or rect.height == 0):
 				detail = "cell_even" if path[0] % 2 == 0 else "cell_odd"
@@ -276,8 +276,8 @@ class CellFade(AnimBase):
 					detail += "_ruled"
 				
 				selected = self.selection.get_selected()[1] and self.tw.props.model.get_path(self.selection.get_selected()[1]) == path
-				
-				self.tw.style.paint_flat_box(self.tw.get_style(),
+
+				Gtk.paint_flat_box(self.tw.get_style(),
 						     cr,
 						     Gtk.StateType.SELECTED if (selected) else Gtk.StateType.NORMAL,
 						     0,
@@ -287,8 +287,9 @@ class CellFade(AnimBase):
 						     rect.y,
 						     rect.width,
 						     rect.height)
-			
-				cr.set_source_pixmap(pixmap, rect.x, rect.y)
+
+				#FIXME pixmap got lost during port to gtk3
+				#cr.set_source_pixmap(pixmap, rect.x, rect.y)
 				cr.paint_with_alpha(self.get_state())
 			
 	def state_changed(self, state):
@@ -306,10 +307,9 @@ class WidgetFade(AnimBase):
 
 	def on_expose(self, window, cr):
 		if not self.frozen:
-			rect = self.widget.allocation
-			cr.rectangle(rect)
+			rect = self.widget.get_allocation()
+			cr.rectangle(rect.x, rect.y, rect.width, rect.height)
 			cr.clip()		
-		
 			cr.set_source_rgba((1.0/65535)*self.color.red, (1.0/65535)*self.color.green, (1.0/65535)*self.color.blue, 1.0-self.get_state())
 			cr.set_operator(cairo.OPERATOR_OVER)
 		 	cr.paint()		

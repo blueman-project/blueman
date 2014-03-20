@@ -181,7 +181,7 @@ class DeviceList(GenericList):
                 if value:
                     self.monitor_power_levels(dev)
                 else:
-                    r = Gtk.TreeRowReference.new(self.get_model(), self.props.get_model().get_path(iter))
+                    r = Gtk.TreeRowReference.new(self.get_model(), self.props.model.get_path(iter))
                     self.level_setup_event(r, dev, None)
 
             elif key == "Paired":

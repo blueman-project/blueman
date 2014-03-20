@@ -31,11 +31,11 @@ class ManagerProgressbar(GObject.GObject):
 	__instances__ = []
 	def __init__(self, blueman, cancellable=True, text=_("Connecting")):
 		def on_enter(evbox, event):
-			c = Gdk.Cursor.new( Gdk.HAND2)
-			self.window.window.set_cursor(c)
+			c = Gdk.Cursor.new(Gdk.CursorType.HAND2)
+			self.window.get_window().set_cursor(c)
 		
 		def on_leave(evbox, event):
-			self.window.window.set_cursor(None)
+			self.window.get_window().set_cursor(None)
 			
 		def on_clicked(evbox, event):
 			self.eventbox.props.sensitive = False
