@@ -30,10 +30,10 @@ class Menu(AppletPlugin):
         self.__menuitems.sort(lambda a, b: cmp(a[0], b[0]))
 
     def __clear(self):
-        def each(child):
+        def each(child, _):
             self.__menu.remove(child)
 
-        self.__menu.foreach(each)
+        self.__menu.foreach(each, None)
 
     def __load_items(self):
         for item in self.__menuitems:
