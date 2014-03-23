@@ -143,7 +143,7 @@ class NotificationDialog(Gtk.MessageDialog):
 
 class NotificationBubble(Notify.Notification):
 	def __init__(self, summary, message, timeout=-1, actions= None, actions_cb=None, pixbuf=None, status_icon=None):
-		Notify.Notification.__init__(self, summary, message)
+		self = Notify.Notification.new(summary, message, None)
 
 		def on_notification_closed(n, *args):
 			self.disconnect(closed_sig)
