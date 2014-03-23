@@ -144,7 +144,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
 
             return compare_two_dicts
 
-        def each(child):
+        def each(child, _):
             self.remove(child)
 
         self.foreach(each, None)
