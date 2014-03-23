@@ -191,7 +191,7 @@ class Sender(GObject.GObject):
                 else:
                     eta = ngettext("%.0f Second", "%.0f Seconds", round(x)) % x
             except ZeroDivisionError:
-                eta = "∞"
+                eta = u"∞"
 
             self.pb.props.text = _("Sending File") + (" %(0)s/%(1)s (%(2).2f %(3)s/s) " + _("ETA:") + " %(4)s") % {
                 "1": self.num_files,
