@@ -26,7 +26,7 @@ class ExitItem(AppletPlugin):
 	__icon__ = "gtk-quit"
 	
 	def on_load(self, applet):
-		item = Gtk.ImageMenuItem(Gtk.STOCK_QUIT)
+		item = Gtk.ImageMenuItem.new_from_stock(Gtk.STOCK_QUIT, None)
 		item.connect("activate", lambda x: Gtk.main_quit())
 		applet.Plugins.Menu.Register(self, item, 100)
 		
