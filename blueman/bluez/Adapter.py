@@ -37,6 +37,30 @@ class Adapter(PropertiesBlueZInterface):
             return [Device(device) for device in devices]
 
     @raise_dbus_error
+    def create_paired_device(self, address, agent_path, capability, error_handler=None, reply_handler=None, timeout=120):
+        if self.__class__.get_interface_version()[0] < 5:
+            def reply_handler_wrapper(obj_path):
+                if not callable(reply_handler):
+                    return
+                reply_handler(Device(obj_path))
+
+            def error_handler_wrapper(exception):
+                exception = parse_dbus_error(exception)
+                if not callable(error_handler):
+                    raise exception
+                error_handler(exception)
+
+            if reply_handler is None and error_handler is None:
+                obj_path = self.get_interface().CreatePairedDevice(address, agent_path, capability)
+                return Device(obj_path)
+            else:
+                self.get_interface().CreatePairedDevice(address, agent_path, capability,
+                                                        reply_handler=reply_handler_wrapper,
+                                                        error_handler=error_handler_wrapper)
+        else:
+            self.create_device(address, reply_handler=reply_handler, error_handler=error_handler)
+
+    @raise_dbus_error
     def create_device(self, address, reply_handler=None, error_handler=None):
         # BlueZ 4 only!
         def reply_handler_wrapper(path):

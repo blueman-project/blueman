@@ -128,13 +128,10 @@ class DBusService(AppletPlugin):
             if pair:
                 agent_path = "/org/blueman/agent/temp/" + address.replace(":", "")
                 agent = TempAgent(self.Applet.Plugins.StatusIcon, agent_path, time)
-<<<<<<< HEAD
-                adapter.create_paired_device(address, agent_path, "DisplayYesNo", error_handler=err,
-                                             reply_handler=ok, timeout=120)
-=======
                 adapter.get_interface().CreatePairedDevice(address, agent_path, "DisplayYesNo", error_handler=err,
                                                           reply_handler=ok, timeout=120)
->>>>>>> (WIP!) Replace bluez layer
+                adapter.create_paired_device(address, agent_path, "DisplayYesNo", error_handler=err,
+                                             reply_handler=ok, timeout=120)
 
             else:
                 adapter.create_device(address, error_handler=err, reply_handler=ok, timeout=120)

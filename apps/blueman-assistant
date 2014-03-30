@@ -287,8 +287,8 @@ class Assistant(Agent):
                     self.assistant.set_current_page(PAGE_FINISH)
 
             if self.PairType != 2:
-                self.Adapter.CreatePairedDevice(self.Device.Address, self.get_object_path(), "", reply_handler=ok,
-                                                error_handler=err)
+                self.Adapter.create_paired_device(self.Device.Address, self.get_object_path(), "", reply_handler=ok,
+                                                  error_handler=err)
             else:
                 if self.PairType != 2:
                     def ok():
