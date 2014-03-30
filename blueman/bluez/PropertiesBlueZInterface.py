@@ -36,7 +36,7 @@ class PropertiesBlueZInterface(BlueZInterface):
                     handler, 'PropertyChanged', self.get_interface_name(), self.get_object_path(), **kwargs
                 )
             else:
-                def wrapper(interface_name, changed_properties, invalidated_properties):
+                def wrapper(interface_name, changed_properties, invalidated_properties, **kwargs):
                     if interface_name == self.get_interface_name():
                         for name, value in changed_properties.items():
                             handler(name, value)
