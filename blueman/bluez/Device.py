@@ -14,6 +14,7 @@ class Device(PropertiesBlueZInterface):
             interface = 'org.bluez.Device1'
         super(Device, self).__init__(interface, obj_path)
 
+    @raise_dbus_error
     def list_services(self):
         interfaces = []
         dbus_object = dbus.SystemBus().get_object('org.bluez', self.get_object_path())
@@ -28,3 +29,7 @@ class Device(PropertiesBlueZInterface):
                     methods.append(method.getAttribute('name'))
                 interfaces.append(ServiceInterface(interface_name, self.get_object_path(), methods))
         return interfaces
+
+    @raise_dbus_error
+    def pair(self):
+        self.get_interface().Pair()
