@@ -39,7 +39,7 @@ class PropertiesBlueZInterface(BlueZInterface):
                 def wrapper(interface_name, changed_properties, invalidated_properties, **kwargs):
                     if interface_name == self.get_interface_name():
                         for name, value in changed_properties.items():
-                            handler(name, value)
+                            handler(name, value, **kwargs)
 
                 interface = 'org.freedesktop.DBus.Properties'
 
