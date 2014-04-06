@@ -5,13 +5,13 @@ from blueman.main.Mechanism import Mechanism
 from blueman.main.Config import Config
 from blueman.gui.Notification import Notification
 from blueman.Sdp import *
+from blueman.bluez.Network import Network
 
 from blueman.main.SignalTracker import SignalTracker
 
 import blueman.bluez as Bluez
 
 from gi.repository import GObject
-import dbus
 from gi.repository import Gtk
 
 if not HAL_ENABLED:
@@ -30,11 +30,7 @@ class NMIntegration(AppletPlugin):
     def on_load(self, applet):
         self.Signals = SignalTracker()
 
-        self.Signals.Handle("dbus", dbus.SystemBus(),
-                            self.on_network_prop_changed,
-                            "PropertyChanged",
-                            "org.bluez.Network",
-                            path_keyword="path")
+        self.Signals.Handle('bluez', Network(), self.on_network_prop_changed, 'PropertyChanged', path_keyword='path')
 
     def on_unload(self):
         self.Signals.DisconnectAll()

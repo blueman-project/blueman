@@ -13,6 +13,8 @@ from blueman.Functions import *
 from blueman.main.Device import Device
 from blueman.bluez.Device import Device as BluezDevice
 from blueman.bluez.Adapter import Adapter
+from blueman.bluez.Serial import Serial
+from blueman.bluez.Network import Network
 from blueman.main.SignalTracker import SignalTracker
 from blueman.gui.Notification import Notification
 import blueman.Sdp as sdp
@@ -305,7 +307,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
                 item["mitem"].props.sensitive = True
                 sn.complete()
 
-            if item["service"] == "org.bluez.Serial":
+            if item["service"] == Serial().get_interface_name():
                 self.Applet.DbusSvc.RfcommConnect(item["device"].get_object_path(), item["conn_args"][0], reply, err)
             else:
                 self.Applet.DbusSvc.ServiceProxy(item["service"], item["device"].get_object_path(), "Connect",
@@ -314,10 +316,10 @@ class RecentConns(AppletPlugin, Gtk.Menu):
     def add_item(self, item):
         device = item["device"]
 
-        if item["service"] == "org.bluez.Serial":
+        if item["service"] == Serial().get_interface_name():
             name = sdp.sdp_get_serial_name(item["address"], item["conn_args"][0])
 
-        elif item["service"] == "org.bluez.Network":
+        elif item["service"] == Network().get_interface_name():
             name = _("Network Access (%s)") % sdp.uuid16_to_name(sdp.uuid128_to_uuid16(item["conn_args"][0]))
         else:
             try:
@@ -395,4 +397,3 @@ class RecentConns(AppletPlugin, Gtk.Menu):
                 i["gsignal"] = i["device"].connect("invalidated", self.on_device_removed, i)
 
         RecentConns.items = items
-		

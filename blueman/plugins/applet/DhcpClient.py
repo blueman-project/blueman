@@ -3,7 +3,7 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Mechanism import Mechanism
 from blueman.main.SignalTracker import SignalTracker
 from blueman.Functions import *
-import dbus
+from blueman.bluez.Network import Network
 
 
 class DhcpClient(AppletPlugin):
@@ -16,11 +16,7 @@ class DhcpClient(AppletPlugin):
 
         self.add_dbus_method(self.DhcpClient, in_signature="s")
 
-        self.Signals.Handle("dbus", dbus.SystemBus(),
-                            self.on_network_prop_changed,
-                            "PropertyChanged",
-                            "org.bluez.Network",
-                            path_keyword="path")
+        self.Signals.Handle('bluez', Network(), self.on_network_prop_changed, 'PropertyChanged', path_keyword="path")
 
         self.quering = []
 

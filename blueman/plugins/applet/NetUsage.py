@@ -4,6 +4,7 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Config import Config
 from blueman.main.SignalTracker import SignalTracker
 from blueman.bluez.Device import Device as BluezDevice
+from blueman.bluez.Network import Network
 from blueman.main.Device import Device
 from blueman.Lib import rfcomm_list
 from gi.repository import GObject
@@ -328,7 +329,7 @@ class NetUsage(AppletPlugin, GObject.GObject):
         self.signals = SignalTracker()
 
         bus = self.bus = dbus.SystemBus()
-        self.signals.Handle("dbus", bus, self.on_network_property_changed, "PropertyChanged", "org.bluez.Network",
+        self.signals.Handle('bluez', Network(), self.on_network_property_changed, 'PropertyChanged',
                             path_keyword="path")
 
         item = create_menuitem(_("Network Usage"), get_icon("network-wireless", 16))
@@ -399,7 +400,3 @@ class NetUsage(AppletPlugin, GObject.GObject):
 
     def on_stats(self, monitor, tx, rx):
         self.emit("stats", monitor, tx, rx)
-		
-	
-			
-
