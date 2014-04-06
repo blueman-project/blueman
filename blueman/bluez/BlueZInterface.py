@@ -43,9 +43,3 @@ class BlueZInterface(object):
 
     def get_interface(self):
         return self.__interface
-
-    def unhandle_signal(self, handler, signal, **kwargs):
-        self.__bus.remove_signal_receiver(
-            handler, signal, self.get_interface_name(), 'org.bluez',
-            self.get_object_path(), **kwargs
-        )
