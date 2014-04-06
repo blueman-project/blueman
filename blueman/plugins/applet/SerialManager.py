@@ -33,11 +33,7 @@ class SerialManager(AppletPlugin):
 
     def on_load(self, applet):
         self.signals = SignalTracker()
-        self.signals.Handle("dbus",
-                            dbus.SystemBus(),
-                            self.on_device_property_changed,
-                            "PropertyChanged",
-                            "org.bluez.Device",
+        self.signals.Handle('bluez', Bluez.Device(), self.on_device_property_changed, 'PropertyChanged',
                             path_keyword="path")
 
         self.scripts = {}
