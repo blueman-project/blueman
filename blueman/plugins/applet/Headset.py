@@ -20,10 +20,11 @@ class Headset(AppletPlugin):
     }
 
     def on_load(self, applet):
-        BluezHeadset().handle_signal(self.on_answer_requested, 'AnswerRequested')
+        self.bus = dbus.SystemBus()
+        self.bus.add_signal_receiver(self.on_answer_requested, "AnswerRequested", "org.bluez.Headset")
 
     def on_unload(self):
-        BluezHeadset().unhandle_signal(self.on_answer_requested, 'AnswerRequested')
+        self.bus.remove_signal_receiver(self.on_answer_requested, "AnswerRequested", "org.bluez.Headset")
 
     def on_answer_requested(self):
         c = self.get_option("command")
