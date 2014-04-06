@@ -300,9 +300,9 @@ class DeviceList(GenericList):
         progress = self.__discovery_time / totaltime
         if progress >= 1.0:
             progress = 1.0
-        #if self.__discovery_time >= totaltime:
-        #self.StopDiscovery()
-        #return False
+        if self.__discovery_time >= totaltime:
+            self.StopDiscovery()
+            return False
 
         self.emit("discovery-progress", progress)
         return True
