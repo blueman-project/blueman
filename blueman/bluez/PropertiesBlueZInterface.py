@@ -7,7 +7,7 @@ import dbus
 class PropertiesBlueZInterface(BlueZInterface):
     def __init__(self, interface, obj_path):
         super(PropertiesBlueZInterface, self).__init__(interface, obj_path)
-        if self.__class__.get_interface_version()[0] >= 5:
+        if self.__class__.get_interface_version()[0] >= 5 and obj_path:
             self.__properties_interface = dbus.Interface(self.get_dbus_proxy(), 'org.freedesktop.DBus.Properties')
 
     @raise_dbus_error

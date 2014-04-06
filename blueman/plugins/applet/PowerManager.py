@@ -3,7 +3,6 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 import blueman.bluez as Bluez
 from blueman.bluez.errors import BluezDBusException
 from blueman.main.SignalTracker import SignalTracker
-import dbus
 import types
 
 
@@ -39,11 +38,7 @@ class PowerManager(AppletPlugin):
         self.item.props.tooltip_text = _("Turn off all adapters")
 
         self.signals = SignalTracker()
-        self.signals.Handle("dbus", dbus.SystemBus(),
-                            self.adapter_property_changed,
-                            "PropertyChanged",
-                            "org.bluez.Adapter",
-                            "org.bluez",
+        self.signals.Handle('bluez', Bluez.Adapter(), self.adapter_property_changed, "PropertyChanged",
                             path_keyword="path")
 
         self.signals.Handle(self.item, "activate", lambda x: self.on_bluetooth_toggled())

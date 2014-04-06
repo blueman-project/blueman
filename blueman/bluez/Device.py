@@ -7,7 +7,7 @@ import xml
 
 class Device(PropertiesBlueZInterface):
     @raise_dbus_error
-    def __init__(self, obj_path):
+    def __init__(self, obj_path=None):
         if self.__class__.get_interface_version()[0] < 5:
             interface = 'org.bluez.Device'
         else:
