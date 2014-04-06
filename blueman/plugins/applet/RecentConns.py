@@ -307,11 +307,8 @@ class RecentConns(AppletPlugin, Gtk.Menu):
                 item["mitem"].props.sensitive = True
                 sn.complete()
 
-<<<<<<< HEAD
-            if item["service"] == Serial().get_interface_name():
-=======
             if item["service"] == "org.bluez.Serial":
->>>>>>> (WIP!) Replace bluez layer
+            if item["service"] == Serial().get_interface_name():
                 self.Applet.DbusSvc.RfcommConnect(item["device"].get_object_path(), item["conn_args"][0], reply, err)
             else:
                 self.Applet.DbusSvc.ServiceProxy(item["service"], item["device"].get_object_path(), "Connect",

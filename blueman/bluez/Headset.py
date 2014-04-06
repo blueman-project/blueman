@@ -11,6 +11,7 @@ class Headset(PropertiesBlueZInterface):
             interface = 'org.bluez.Headset1'
 
         super(Headset, self).__init__(interface, obj_path)
+<<<<<<< HEAD
 
     def unhandle_signal(self, handler, signal, **kwargs):
         if signal == 'AnswerRequested':
@@ -23,3 +24,5 @@ class Headset(PropertiesBlueZInterface):
             self._handle_signal(handler, signal, self.get_interface_name(), self.get_object_path(), **kwargs)
         else:
             super(Headset, self).handle_signal(handler, signal, **kwargs)
+=======
+>>>>>>> Replace immediate references to BlueZ (4) interfaces

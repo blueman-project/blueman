@@ -323,7 +323,7 @@ class NMPANSupport(AppletPlugin):
         self.watch2.cancel()
 
     def service_connect_handler(self, interface, object_path, method, args, ok, err):
-        if interface == "org.bluez.Network" and method == "Connect":
+        if interface == Network().get_interface_name() and method == "Connect":
             uuid = args[0]
             name = uuid16_to_name(uuid128_to_uuid16(uuid))
             d = Device(object_path)
@@ -344,7 +344,7 @@ class NMPANSupport(AppletPlugin):
 
             return True
 
-        elif interface == "org.bluez.Network" and method == "Disconnect":
+        elif interface == Network().get_interface_name() and method == "Disconnect":
             d = Device(object_path)
             active_conn_path = self.find_active_connection(d.Address, "panu")
             if active_conn_path:

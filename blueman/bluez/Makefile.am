@@ -10,7 +10,12 @@ blueman_PYTHON =				\
 	Manager.py					\
 	PropertiesBlueZInterface.py	\
 	ServiceInterface.py			\
-	NetworkServer.py
+	Network.py					\
+	NetworkServer.py			\
+	Serial.py					\
+	AudioSource.py				\
+	AudioSink.py				\
+	Headset.py
 
 CLEANFILES = \
 	$(BUILT_SOURCES)

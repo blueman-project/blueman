@@ -26,9 +26,7 @@ class SourceRedirector:
         self.pa_utils = pa_utils
         self.device = Device(device_path)
         self.signals = SignalTracker()
-        self.bus = dbus.SystemBus()
-        self.signals.Handle("dbus", self.bus, self.on_source_prop_change, "PropertyChanged", "org.bluez.AudioSource",
-                            path=device_path)
+        self.signals.Handle('bluez', AudioSource(), self.on_source_prop_change, 'PropertyChanged', path=device_path)
 
         self.pacat = None
         self.parec = None
@@ -158,8 +156,6 @@ class PulseAudio(AppletPlugin):
                 applet.Plugins.SetConfig("PulseAudio", False)
                 return
 
-        self.bus = dbus.SystemBus()
-
         self.connected_sources = []
         self.connected_sinks = []
         self.connected_hs = []
@@ -174,26 +170,10 @@ class PulseAudio(AppletPlugin):
             if tuple(version) < (0, 9, 15):
                 raise Exception("PulseAudio too old, required 0.9.15 or higher")
 
-        self.signals.Handle("dbus",
-                            self.bus,
-                            self.on_sink_prop_change,
-                            "PropertyChanged",
-                            "org.bluez.AudioSink",
-                            path_keyword="device")
-
-        self.signals.Handle("dbus",
-                            self.bus,
-                            self.on_source_prop_change,
-                            "PropertyChanged",
-                            "org.bluez.AudioSource",
-                            path_keyword="device")
-
-        self.signals.Handle("dbus",
-                            self.bus,
-                            self.on_hsp_prop_change,
-                            "PropertyChanged",
-                            "org.bluez.Headset",
-                            path_keyword="device")
+        self.signals.Handle('bluez', AudioSink(), self.on_sink_prop_change, 'PropertyChanged', path_keyword='device')
+        self.signals.Handle('bluez', AudioSource(), self.on_source_prop_change, 'PropertyChanged',
+                            path_keyword='device')
+        self.signals.Handle('bluez', Headset(), self.on_hsp_prop_change, 'PropertyChanged', path_keyword='device')
 
         self.signals.Handle(self.pulse_utils, "connected", self.on_pulse_connected)
         self.signals.Handle(self.pulse_utils, "event", self.on_pulse_event)
