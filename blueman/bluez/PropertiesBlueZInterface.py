@@ -33,7 +33,7 @@ class PropertiesBlueZInterface(BlueZInterface):
         self.get_bus().add_signal_receiver(handler, signal, interface, 'org.bluez', obj_path, **kwargs)
 
     def _unhandle_signal(self, handler, signal, interface, obj_path, **kwargs):
-        self.__bus.remove_signal_receiver(
+        self.get_bus().remove_signal_receiver(
             handler, signal, self.get_interface_name(), 'org.bluez',
             self.get_object_path(), **kwargs
         )
