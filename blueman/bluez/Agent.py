@@ -1,6 +1,7 @@
 from blueman.Functions import dprint
 import inspect
 import dbus.service
+from blueman.bluez.BlueZInterface import BlueZInterface
 import errors
 
 __SIGNATURES__ = {
@@ -27,9 +28,13 @@ def AgentMethod(func):
         async_callbacks = (args[-2], args[-1])
     else:
         async_callbacks = None
-    warp = dbus.service.method('org.bluez.Agent',
-                               in_signature=signatures[0],
-                               out_signature=signatures[1],
+
+    if BlueZInterface.get_interface_version()[0] < 5:
+        interface = 'org.bluez.Agent'
+    else:
+        interface = 'org.bluez.Agent1'
+
+    warp = dbus.service.method(interface, in_signature=signatures[0], out_signature=signatures[1],
                                async_callbacks=async_callbacks)
     return warp(func)
 
