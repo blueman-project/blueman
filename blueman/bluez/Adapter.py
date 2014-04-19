@@ -58,7 +58,6 @@ class Adapter(PropertiesBlueZInterface):
                                                         reply_handler=reply_handler_wrapper,
                                                         error_handler=error_handler_wrapper)
         else:
-            self.create_device(address, reply_handler=reply_handler, error_handler=error_handler)
             self.find_device(address).pair()
 
     @raise_dbus_error
