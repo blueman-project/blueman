@@ -233,6 +233,11 @@ class AdapterAgent(CommonAgent):
                          pixbuf=get_icon("blueman", 48), status_icon=self.status_icon)
         n._device = device
 
+    @AgentMethod
+    def AuthorizeService(self, device, uuid, ok, err):
+        self.Authorize(device, uuid, ok, err)
+
+
 class GlobalAgent(AdapterAgent):
     def __init__(self, status_icon, time_func):
         self.n = None

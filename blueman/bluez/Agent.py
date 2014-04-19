@@ -11,6 +11,7 @@ __SIGNATURES__ = {
     'DisplayPasskey': ('ouu', ''),
     'RequestConfirmation': ('ou', ''),
     'Authorize': ('os', ''),
+    'AuthorizeService': ('os', ''),
     'Cancel': ('', '')
 }
 
@@ -68,6 +69,10 @@ class Agent(dbus.service.Object):
     @AgentMethod
     def Authorize(self, device, uuid):
         dprint('Authorize (%s, %s)' % (device, uuid))
+
+    @AgentMethod
+    def AuthorizeService(self, device, uuid):
+        dprint('AuthorizeService (%s, %s)' % (device, uuid))
 
     @AgentMethod
     def Cancel(self):
