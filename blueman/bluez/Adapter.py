@@ -96,6 +96,8 @@ class Adapter(PropertiesBlueZInterface):
                     if 'org.bluez.Device1' in interfaces:
                         handler(object_path)
 
+                self._handler_wrappers[handler] = wrapper
+
                 signal = {
                     'DeviceCreated': 'InterfacesAdded',
                     'DeviceRemoved': 'InterfacesRemoved'
@@ -104,6 +106,25 @@ class Adapter(PropertiesBlueZInterface):
                 self._handle_signal(wrapper, signal, 'org.freedesktop.DBus.ObjectManager', '/', **kwargs)
         else:
             super(Adapter, self).handle_signal(handler, signal, **kwargs)
+
+    @raise_dbus_error
+    def unhandle_signal(self, handler, signal, **kwargs):
+        if signal in ['DeviceCreated', 'DeviceRemoved', 'DeviceFound']:
+            if self.__class__.get_interface_version()[0] < 5:
+                self._unhandle_signal(handler, signal, self.get_interface_name(), self.get_object_path(), **kwargs)
+            else:
+                if signal == 'DeviceFound':
+                    return
+
+                signal = {
+                    'DeviceCreated': 'InterfacesAdded',
+                    'DeviceRemoved': 'InterfacesRemoved'
+                }[signal]
+
+                self._unhandle_signal(self._handler_wrappers[handler], signal, self.get_interface_name(),
+                                      self.get_object_path(), **kwargs)
+        else:
+            super(Adapter, self).unhandle_signal(handler, signal, **kwargs)
 
     @raise_dbus_error
     def start_discovery(self):
