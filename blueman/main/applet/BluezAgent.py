@@ -203,10 +203,6 @@ class AdapterAgent(CommonAgent):
                      pixbuf=get_icon("blueman", 48), status_icon=self.status_icon)
 
     @AgentMethod
-    def RequestAuthorization(self, device, ok, err):
-        self.RequestConfirmation(device, None, ok, err)
-
-    @AgentMethod
     def Authorize(self, device, uuid, ok, err):
 
         def on_auth_action(n, action):
@@ -237,11 +233,6 @@ class AdapterAgent(CommonAgent):
                          pixbuf=get_icon("blueman", 48), status_icon=self.status_icon)
         n._device = device
 
-    @AgentMethod
-    def AuthorizeService(self, device, uuid, ok, err):
-        self.Authorize(device, uuid, ok, err)
-
-
 class GlobalAgent(AdapterAgent):
     def __init__(self, status_icon, time_func):
         self.n = None
@@ -249,17 +240,6 @@ class GlobalAgent(AdapterAgent):
         CommonAgent.__init__(self, status_icon, '/org/blueman/agent/global')
 
 
-<<<<<<< HEAD
-# noinspection PyPep8Naming
-=======
-class GlobalAgent(AdapterAgent):
-    def __init__(self, status_icon, time_func):
-        self.n = None
-        self.time_func = time_func
-        CommonAgent.__init__(self, status_icon, '/org/blueman/agent/global')
-
-
->>>>>>> (WIP!) Replace bluez layer
 class TempAgent(CommonAgent):
     def __init__(self, status_icon, path, time):
         CommonAgent.__init__(self, status_icon, path)
