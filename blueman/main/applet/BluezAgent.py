@@ -200,9 +200,6 @@ class AdapterAgent(CommonAgent):
                      actions, on_confirm_action,
                      pixbuf=get_icon("blueman", 48), status_icon=self.status_icon)
 
-    #self.applet.status_icon.set_blinking(True)
-
-
     @AgentMethod
     def Authorize(self, device, uuid, ok, err):
 
@@ -233,12 +230,6 @@ class AdapterAgent(CommonAgent):
                          actions, on_auth_action,
                          pixbuf=get_icon("blueman", 48), status_icon=self.status_icon)
         n._device = device
-
-    #self.applet.status_icon.set_blinking(True)
-
-    @AgentMethod
-    def ConfirmModeChange(self, mode, ok, err):
-        dprint("Agent.ConfirmModeChange")
 
 
 class GlobalAgent(AdapterAgent):
