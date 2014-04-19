@@ -149,6 +149,7 @@ class CommonAgent(GObject.GObject, Agent):
             pass
 
 
+# noinspection PyPep8Naming
 class AdapterAgent(CommonAgent):
     def __init__(self, status_icon, adapter, time_func):
         self.adapter = adapter
@@ -192,13 +193,18 @@ class AdapterAgent(CommonAgent):
 
         dprint("Agent.RequestConfirmation")
         alias = self.get_device_alias(device)
-        notify_message = (_("Pairing request for:") + "\n%s\n" + _(
-            "Confirm value for authentication:") + " <b>%s</b>") % (alias, passkey)
+        notify_message = _("Pairing request for:") + "\n%s" % alias
+        if passkey:
+            notify_message += "\n" + _("Confirm value for authentication:") + " <b>%s</b>" % passkey
         actions = [["confirm", _("Confirm"), "gtk-yes"], ["deny", _("Deny"), "gtk-no"]]
 
         Notification("Bluetooth", notify_message, 0,
                      actions, on_confirm_action,
                      pixbuf=get_icon("blueman", 48), status_icon=self.status_icon)
+
+    @AgentMethod
+    def RequestAuthorization(self, device, ok, err):
+        self.RequestConfirmation(device, None, ok, err)
 
     @AgentMethod
     def Authorize(self, device, uuid, ok, err):
@@ -243,6 +249,7 @@ class GlobalAgent(AdapterAgent):
         CommonAgent.__init__(self, status_icon, '/org/blueman/agent/global')
 
 
+# noinspection PyPep8Naming
 class TempAgent(CommonAgent):
     def __init__(self, status_icon, path, time):
         CommonAgent.__init__(self, status_icon, path)
