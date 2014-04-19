@@ -34,6 +34,9 @@ icons_DATA =			\
 	blueman-tpl-70.png	\
 	blueman-tpl-80.png	\
 	blueman-tpl-90.png	\
-	blueman-tpl-100.png
+	blueman-tpl-100.png	\
+        bluetooth-active.png    \
+        bluetooth-disabled.png  \
+        bluetooth.png
 
 EXTRA_DIST = $(icons_DATA)
