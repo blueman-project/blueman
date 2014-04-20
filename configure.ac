@@ -139,32 +139,10 @@ AM_CHECK_PYMOD(dbus,,,[AC_MSG_ERROR(Could not find Python module dbus)])
 fi
 
 
-dnl ----------------------------------------------------------------------------
-dnl GTK+ API library version
-dnl ----------------------------------------------------------------------------
-
-AC_MSG_CHECKING([Which GTK+ version to use at runtime])
-AC_ARG_WITH([gtk],
-  [AS_HELP_STRING([--with-gtk=2.0|3.0],[Which GTK+ version to use at runtime (default: 3.0)])],
-  [case "$with_gtk" in
-     2.0|3.0) ;;
-     *) AC_MSG_ERROR([invalid gtk version specified]) ;;
-   esac],
-  [with_gtk=3.0])
-AC_MSG_RESULT([$with_gtk])
-
-case "$with_gtk" in
-  2.0) GTK_API_VERSION=2.0
-       ;;
-  3.0) GTK_API_VERSION=3.0
-       ;;
-esac
-AC_SUBST(GTK_API_VERSION)
-
 PKG_CHECK_MODULES(BLUEZ,
 		bluez	>= 4.61
 		libstartup-notification-1.0 >= 0.9
-		gtk+-2.0 >= 2.12
+		gtk+-3.0
 		pygobject-2.0 >= 2.12
 		gobject-2.0 >= 2.12
 		glib-2.0 >= 2.32

@@ -31,7 +31,7 @@ Blueman 2 will especially bring support for newer APIs like BlueZ 5 and NetworkM
 * [dbus](http://www.freedesktop.org/wiki/Software/dbus/)
 * [dbus-python](http://www.freedesktop.org/wiki/Software/DBusBindings/#python)
 * [GLib 2](http://www.gtk.org/) (>= 2.32)
-* [GTK+ 2](http://www.gtk.org/) (>= 2.16)
+* [GTK+ 3](http://www.gtk.org/)
 * [libappindicator](https://launchpad.net/libappindicator) (optional)
 * [notification-daemon](https://git.gnome.org/browse/notification-daemon) or [mate-notification-daemon](https://github.com/mate-desktop/mate-notification-daemon/)
 * [libnotify](https://git.gnome.org/browse/libnotify)
