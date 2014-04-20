@@ -143,7 +143,6 @@ PKG_CHECK_MODULES(BLUEZ,
 		bluez	>= 4.61
 		libstartup-notification-1.0 >= 0.9
 		gtk+-3.0
-		pygobject-2.0 >= 2.12
 		glib-2.0 >= 2.32
 		gthread-2.0 >= 2.32
 )
