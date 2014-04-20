@@ -143,12 +143,19 @@ PKG_CHECK_MODULES(BLUEZ,
 		bluez	>= 4.61
 		libstartup-notification-1.0 >= 0.9
 		gtk+-3.0
-		pygobject-2.0 >= 2.12
 		glib-2.0 >= 2.32
 		gthread-2.0 >= 2.32
 )
 AC_SUBST(BLUEZ_CFLAGS)
 AC_SUBST(BLUEZ_LIBS)
+
+PKG_CHECK_MODULES([PYGOBJECT],
+                  [pygobject-2.0 >= 2.12],
+                  [],
+                  [PKG_CHECK_MODULES(PYGOBJECT, pygobject-3.0)]
+)
+AC_SUBST(PYGOBJECT_CFLAGS)
+AC_SUBST(PYGOBJECT_LIBS)
 
 
 AC_OUTPUT([

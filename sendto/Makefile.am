@@ -8,8 +8,8 @@ plugin_LTLIBRARIES = libnstblueman.la
 
 libnstblueman_la_SOURCES = nautilus-bluetooth-sendto.c
 libnstblueman_la_LDFLAGS = -module -avoid-version
-libnstblueman_la_LIBADD = $(BLUEZ_LIBS) @PYTHON_LIBS@
-libnstblueman_la_CFLAGS = @PYTHON_INCLUDES@ $(BLUEZ_CFLAGS)
+libnstblueman_la_LIBADD = $(BLUEZ_LIBS) $(PYGOBJECT_LIBS) @PYTHON_LIBS@
+libnstblueman_la_CFLAGS = @PYTHON_INCLUDES@ $(BLUEZ_CFLAGS) $(PYGOBJECT_CFLAGS)
 
 endif
 
