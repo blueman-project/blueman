@@ -69,12 +69,12 @@ class NotificationDialog(Gtk.MessageDialog):
         self.entered = False
 
         def on_enter(widget, event):
-            if self.window == Gdk.Window.at_pointer()[0] or not self.entered:
+            if self.window == Gdk.window_at_pointer()[0] or not self.entered:
                 self.fader.animate(start=self.fader.get_state(), end=1.0, duration=500)
                 self.entered = True
 
         def on_leave(widget, event):
-            if not Gdk.Window.at_pointer():
+            if not Gdk.window_at_pointer():
                 self.entered = False
                 self.fader.animate(start=self.fader.get_state(), end=OPACITY_START, duration=500)
 
@@ -98,7 +98,11 @@ class NotificationDialog(Gtk.MessageDialog):
     def close(self):
         self.hide()
 
+<<<<<<< HEAD
     def set_hint_int32(*args):
+=======
+    def set_hint(*args):
+>>>>>>> Reformat blueman/gui/Notification.py
         dprint("stub")
 
     def set_timeout(*args):
@@ -127,7 +131,7 @@ class NotificationDialog(Gtk.MessageDialog):
 
 
 class NotificationBubble(Notify.Notification):
-    def __new__(cls, summary, message, timeout=-1, actions=None, actions_cb=None, pixbuf=None, status_icon=None):
+    def __init__(self, summary, message, timeout=-1, actions=None, actions_cb=None, pixbuf=None, status_icon=None):
         self = Notify.Notification.new(summary, message, None)
 
         def on_notification_closed(n, *args):
@@ -135,17 +139,17 @@ class NotificationBubble(Notify.Notification):
             if actions_cb:
                 actions_cb(n, "closed")
 
-        def on_action(n, action, *args):
+        def on_action(*args):
             self.disconnect(closed_sig)
-            actions_cb(n, action)
+            actions_cb(*args)
 
         if pixbuf:
             self.set_icon_from_pixbuf(pixbuf)
 
         if actions:
             for action in actions:
-                self.add_action(action[0], action[1], on_action, None)
-            self.add_action("default", "Default Action", on_action, None)
+                self.add_action(action[0], action[1], on_action)
+            self.add_action("default", "Default Action", on_action)
 
         closed_sig = self.connect("closed", on_notification_closed)
         if timeout != -1:
@@ -158,6 +162,12 @@ class NotificationBubble(Notify.Notification):
         self.show()
 
         return self
+
+            screen, area, orientation = status_icon.get_geometry()
+            self.set_hint("x", area.x + area.width / 2)
+            self.set_hint("y", area.y + area.height / 2)
+
+        self.show()
 
     def get_id(self):
         return self.props.id
