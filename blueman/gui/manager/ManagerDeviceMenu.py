@@ -220,7 +220,10 @@ class ManagerDeviceMenu(Gtk.Menu):
         items = []
 
         if not self.is_popup or self.props.visible:
-            device = self.Blueman.List.get(self.Blueman.List.selected(), "device")["device"]
+            selected = self.Blueman.List.selected()
+            if not selected:
+                return
+            device = self.Blueman.List.get(selected, "device")["device"]
         else:
             (x, y) = self.Blueman.List.get_pointer()
             path = self.Blueman.List.get_path_at_pos(x, y)
