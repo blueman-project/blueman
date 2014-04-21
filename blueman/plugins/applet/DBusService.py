@@ -115,6 +115,7 @@ class DBusService(AppletPlugin):
         pass
 
     def CreateDevice(self, adapter_path, address, pair, time, _ok, err):
+        # BlueZ 4 only!
         def ok(device):
             path = device.get_object_path()
             _ok(path)
@@ -136,6 +137,7 @@ class DBusService(AppletPlugin):
             err()
 
     def CancelDeviceCreation(self, adapter_path, address, ok, err):
+        # BlueZ 4 only!
         if self.Applet.Manager:
             adapter = Adapter(adapter_path)
 
