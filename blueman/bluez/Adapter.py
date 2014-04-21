@@ -56,7 +56,7 @@ class Adapter(PropertiesBlueZInterface):
             else:
                 self.get_interface().CreatePairedDevice(address, agent_path, capability,
                                                         reply_handler=reply_handler_wrapper,
-                                                        error_handler=error_handler_wrapper)
+                                                        error_handler=error_handler_wrapper, timeout=timeout)
         else:
             self.find_device(address).pair()
 
