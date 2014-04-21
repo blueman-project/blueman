@@ -116,8 +116,9 @@ class DBusService(AppletPlugin):
 
     def CreateDevice(self, adapter_path, address, pair, time, _ok, err):
         def ok(device):
-            _ok(device)
-            self.RefreshServices(device, (lambda *args: None), (lambda *args: None))
+            path = device.get_object_path()
+            _ok(path)
+            self.RefreshServices(path, (lambda *args: None), (lambda *args: None))
 
         if self.Applet.Manager:
             adapter = Adapter(adapter_path)
