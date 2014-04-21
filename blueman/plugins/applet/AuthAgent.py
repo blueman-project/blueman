@@ -63,7 +63,7 @@ class AuthAgent(AppletPlugin):
                 self.agents.append(agent)
             elif not self.agents:
                 agent = BluezAgent.GlobalAgent(self.Applet.Plugins.StatusIcon, self.get_event_time)
-                self.agent_manager.register_agent(agent, "DisplayYesNo")
+                self.agent_manager.register_agent(agent, "DisplayYesNo", default=True)
                 self.agents.append(agent)
 
         except Exception as e:
