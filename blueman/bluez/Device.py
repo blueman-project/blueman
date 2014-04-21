@@ -32,4 +32,5 @@ class Device(PropertiesBlueZInterface):
 
     @raise_dbus_error
     def pair(self):
+        # BlueZ 5 only!
         self.get_interface().Pair()

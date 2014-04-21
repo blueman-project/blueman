@@ -286,23 +286,17 @@ class Assistant(Agent):
                     self.assistant.set_page_header_image(pages[PAGE_FINISH], get_icon("gtk-no", 32))
                     self.assistant.set_current_page(PAGE_FINISH)
 
-            if self.PairType != 2:
-                self.Adapter.create_paired_device(self.Device.Address, self.get_object_path(), "", reply_handler=ok,
-                                                  error_handler=err)
+                if self.PairType != 2:
+                    self.Adapter.create_paired_device(self.Device.Address, self.get_object_path(), "", reply_handler=ok,
+                                                      error_handler=err)
+                else:
+                    self.Adapter.create_device(self.Device.Address, reply_handler=ok, error_handler=err)
             else:
                 if self.PairType != 2:
-                    def ok():
-                        self.Device = Device(device)
-                        self.assistant.set_current_page(PAGE_CONNECT)
-
-                    def err(err):
-                        print(err)
-                        pages[PAGE_FINISH].set_markup(_("<b>Failed to add device</b>"))
-                        self.assistant.set_page_header_image(pages[PAGE_FINISH], get_icon("gtk-no", 32))
-                        self.assistant.set_current_page(PAGE_FINISH)
-
                     device = self.Adapter.find_device(self.Device.Address)
-                    device.pair(reply_handler=ok, error_handler=err)
+                    device.pair()
+                    self.Device = Device(device)
+                    self.assistant.set_current_page(PAGE_CONNECT)
 
         elif num == PAGE_CONNECT:
             self.svc_vbox.foreach(lambda x, y: self.svc_vbox.remove(x), None)
