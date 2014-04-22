@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <interface>
-  <!-- interface-requires gtk+ 2.12 -->
+  <!-- interface-requires gtk+ 3.0 -->
   <!-- interface-naming-policy project-wide -->
-  <object class="GtkVBox" id="vbox1">
+  <object class="GtkBox" id="vbox1">
     <property name="visible">True</property>
     <property name="border_width">12</property>
     <property name="orientation">vertical</property>
     <property name="spacing">12</property>
     <child>
-      <object class="GtkVBox" id="vbox2">
+      <object class="GtkBox" id="vbox2">
         <property name="visible">True</property>
         <property name="orientation">vertical</property>
         <property name="spacing">6</property>
@@ -65,7 +65,8 @@
           </packing>
         </child>
         <child>
-          <object class="GtkHScale" id="hscale">
+          <object class="GtkScale" id="hscale">
+	    <property name="orientation">horizontal</property>
             <property name="visible">True</property>
             <property name="sensitive">False</property>
             <property name="can_focus">True</property>
@@ -82,7 +83,7 @@
       </packing>
     </child>
     <child>
-      <object class="GtkVBox" id="vbox3">
+      <object class="GtkBox" id="vbox3">
         <property name="visible">True</property>
         <property name="orientation">vertical</property>
         <property name="spacing">6</property>

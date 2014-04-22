@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <interface>
-  <requires lib="gtk+" version="2.14"/>
+  <requires lib="gtk+" version="3.0"/>
   <!-- interface-naming-policy project-wide -->
   <object class="GtkFrame" id="audio">
     <property name="border_width">6</property>
@@ -12,7 +12,7 @@
         <property name="top_padding">10</property>
         <property name="left_padding">12</property>
         <child>
-          <object class="GtkVBox" id="vbox1">
+          <object class="GtkBox" id="vbox1">
             <property name="visible">True</property>
             <property name="orientation">vertical</property>
             <property name="spacing">4</property>
@@ -27,7 +27,7 @@
                     <property name="top_padding">2</property>
                     <property name="left_padding">12</property>
                     <child>
-                      <object class="GtkVBox" id="vbox11">
+                      <object class="GtkBox" id="vbox11">
                         <property name="visible">True</property>
                         <property name="orientation">vertical</property>
                         <child>
@@ -92,7 +92,8 @@
                 <property name="yalign">1</property>
                 <property name="yscale">0.10000000149011612</property>
                 <child>
-                  <object class="GtkHBox" id="hbox1">
+                  <object class="GtkBox" id="hbox1">
+		    <property name="orientation">horizontal</property>
                     <property name="visible">True</property>
                     <property name="spacing">4</property>
                     <child>
@@ -130,7 +131,8 @@
       </object>
     </child>
     <child type="label">
-      <object class="GtkHBox" id="hbox4">
+      <object class="GtkBox" id="hbox4">
+        <property name="orientation">horizontal</property>
         <property name="visible">True</property>
         <property name="spacing">6</property>
         <child>
