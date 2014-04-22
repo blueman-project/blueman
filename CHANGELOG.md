@@ -13,3 +13,6 @@
 * Switch to GTK+ 3 (using introspection)
 * Fix handling of network devices (especially fixes DhcpClient plugin)
 * Update translations (too many to list them)
+* Prefer the GTK theme's bluetooth icons over the shipped ones (@Teknocrat)
+* Fix nonexistent dbus exception (Martín Ferrari)
+* Fix a rare problem when the manager device menu cannot get the current selection (@kolen / Konstantin Mochalov)
