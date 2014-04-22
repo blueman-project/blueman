@@ -30,7 +30,7 @@ from gi.repository import AppIndicator3 as girAppIndicator
 
 class AppIndicator(AppletPlugin):
     __description__ = _("Uses libappindicator to show a statusicon")
-    __icon__ = "blueman-tray"
+    __icon__ = "bluetooth"
     __author__ = "Walmis"
     __depends__ = ["StatusIcon", "Menu"]
     

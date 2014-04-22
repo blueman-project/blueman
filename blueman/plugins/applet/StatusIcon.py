@@ -7,7 +7,7 @@ from gi.repository import GObject
 
 class StatusIcon(AppletPlugin, Gtk.StatusIcon):
     __unloadable__ = False
-    __icon__ = "blueman"
+    __icon__ = "bluetooth"
 
     def on_entry_changed(self, entry, ic, image):
 
@@ -52,7 +52,7 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
         entry.connect("changed", self.on_entry_changed, ic, image)
 
     __options__ = {"icon": {"type": str,
-                            "default": "blueman-tray",
+                            "default": "bluetooth",
                             "name": _("Icon Name"),
                             "desc": _("Custom icon to use for the notification area"),
                             "decorator": widget_decorator
@@ -150,7 +150,7 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
         self.QueryVisibility()
 
     def on_status_icon_resized(self):
-        self.icon = "blueman-tray"
+        self.icon = "bluetooth"
 
         #p = GdkPixbuf.Pixbuf(GdkPixbuf.Colorspace.RGB, True, 8, 22, 22)
         #p.fill(0)
