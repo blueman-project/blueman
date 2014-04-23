@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <interface>
-  <!-- interface-requires gtk+ 2.12 -->
+  <!-- interface-requires gtk+ 3.0 -->
   <!-- interface-naming-policy project-wide -->
   <object class="GtkListStore" id="liststore">
     <columns>
@@ -10,7 +10,8 @@
       <column type="gchararray"/>
     </columns>
   </object>
-  <object class="GtkVBox" id="search">
+  <object class="GtkBox" id="search">
+    <property name="orientation">vertical</property>
     <property name="visible">True</property>
     <property name="spacing">1</property>
     <child>
@@ -25,7 +26,8 @@
       </packing>
     </child>
     <child>
-      <object class="GtkHBox" id="search2">
+      <object class="GtkBox" id="search2">
+        <property name="orientation">horizontal</property>
         <property name="visible">True</property>
         <property name="spacing">6</property>
         <child>

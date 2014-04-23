@@ -81,10 +81,12 @@ class ManagerMenu:
         group = []
 
         itemf = Gtk.RadioMenuItem.new_with_label(group, _("Latest Device First"))
+        group = itemf.get_group()
         view_menu.append(itemf)
         itemf.show()
 
         iteml = Gtk.RadioMenuItem.new_with_label(group, _("Latest Device Last"))
+        group = iteml.get_group()
         view_menu.append(iteml)
         iteml.show()
 

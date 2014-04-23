@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <interface>
-  <!-- interface-requires gtk+ 2.12 -->
+  <!-- interface-requires gtk+ 3.0 -->
   <!-- interface-naming-policy project-wide -->
   <object class="GtkWindow" id="window">
     <property name="title" translatable="yes">Bluetooth Devices</property>
     <property name="default_width">500</property>
     <property name="default_height">350</property>
     <child>
-      <object class="GtkVBox" id="vbox1">
+      <object class="GtkBox" id="vbox1">
         <property name="visible">True</property>
         <property name="orientation">vertical</property>
         <child>
@@ -154,6 +154,7 @@
         <child>
           <object class="GtkScrolledWindow" id="scrollview">
             <property name="visible">True</property>
+            <property name="expand">True</property>
             <property name="can_focus">True</property>
             <property name="hscrollbar_policy">never</property>
             <property name="vscrollbar_policy">automatic</property>
@@ -172,8 +173,9 @@
             <property name="left_padding">2</property>
             <property name="right_padding">2</property>
             <child>
-              <object class="GtkHBox" id="hbox1">
+              <object class="GtkBox" id="hbox1">
                 <property name="visible">True</property>
+		<property name="orientation">horizontal</property>
                 <child>
                   <object class="GtkAlignment" id="alignment2">
                     <property name="visible">True</property>
@@ -181,7 +183,8 @@
                     <property name="xscale">0</property>
                     <property name="left_padding">2</property>
                     <child>
-                      <object class="GtkHBox" id="statusbar1">
+                      <object class="GtkBox" id="statusbar1">
+		        <property name="orientation">horizontal</property>
                         <property name="visible">True</property>
                         <property name="spacing">2</property>
                         <child>
@@ -200,7 +203,8 @@
                     <property name="xalign">1</property>
                     <property name="xscale">0</property>
                     <child>
-                      <object class="GtkHBox" id="statusbar2">
+                      <object class="GtkBox" id="statusbar2">
+		        <property name="orientation">horizontal</property>
                         <property name="visible">True</property>
                         <property name="spacing">2</property>
                         <child>

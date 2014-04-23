@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <interface>
-  <!-- interface-requires gtk+ 2.12 -->
+  <!-- interface-requires gtk+ 3.0 -->
   <!-- interface-naming-policy project-wide -->
   <object class="GtkActionGroup" id="actiongroup1"/>
   <object class="GtkFrame" id="transfer">
@@ -13,11 +13,13 @@
         <property name="top_padding">10</property>
         <property name="left_padding">12</property>
         <child>
-          <object class="GtkVBox" id="vbox3">
+          <object class="GtkBox" id="vbox3">
+	    <property name="orientation">vertical</property>
             <property name="visible">True</property>
             <property name="spacing">12</property>
             <child>
-              <object class="GtkHBox" id="hbox2">
+              <object class="GtkBox" id="hbox2">
+	        <property name="orientation">horizontal</property>
                 <property name="visible">True</property>
                 <property name="spacing">2</property>
                 <child>
@@ -58,7 +60,8 @@
                     <property name="top_padding">2</property>
                     <property name="left_padding">12</property>
                     <child>
-                      <object class="GtkVBox" id="vbox7">
+                      <object class="GtkBox" id="vbox7">
+		        <property name="orientation">vertical</property>
                         <property name="visible">True</property>
                         <child>
                           <object class="GtkCheckButton" id="opp_enabled">
@@ -112,7 +115,8 @@
                     <property name="top_padding">4</property>
                     <property name="left_padding">12</property>
                     <child>
-                      <object class="GtkVBox" id="vbox8">
+                      <object class="GtkBox" id="vbox8">
+		        <property name="orientation">vertical</property>
                         <property name="visible">True</property>
                         <child>
                           <object class="GtkCheckButton" id="ftp_enabled">
@@ -165,7 +169,8 @@
                     <property name="top_padding">4</property>
                     <property name="left_padding">12</property>
                     <child>
-                      <object class="GtkVBox" id="vbox4">
+                      <object class="GtkBox" id="vbox4">
+		        <property name="orientation">vertical</property>
                         <property name="visible">True</property>
                         <child>
                           <object class="GtkLabel" id="label10">
@@ -214,7 +219,8 @@
       </object>
     </child>
     <child type="label">
-      <object class="GtkHBox" id="hbox4">
+      <object class="GtkBox" id="hbox4">
+        <property name="orientation">horizontal</property>
         <property name="visible">True</property>
         <property name="spacing">6</property>
         <child>

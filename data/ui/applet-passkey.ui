@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <interface>
-  <!-- interface-requires gtk+ 2.12 -->
+  <!-- interface-requires gtk+ 3.0 -->
   <!-- interface-naming-policy project-wide -->
   <object class="GtkDialog" id="dialog">
     <property name="border_width">5</property>
@@ -10,11 +10,13 @@
     <property name="type_hint">dialog</property>
     <property name="urgency_hint">True</property>
     <child internal-child="vbox">
-      <object class="GtkVBox" id="dialog-vbox1">
+      <object class="GtkBox" id="dialog-vbox1">
         <property name="visible">True</property>
         <property name="spacing">2</property>
+	<property name="orientation">vertical</property>
         <child>
-          <object class="GtkHBox" id="hbox1">
+          <object class="GtkBox" id="hbox1">
+	    <property name="orientation">horizontal</property>
             <property name="visible">True</property>
             <property name="border_width">12</property>
             <property name="spacing">20</property>
@@ -31,7 +33,8 @@
               </packing>
             </child>
             <child>
-              <object class="GtkVBox" id="vbox1">
+              <object class="GtkBox" id="vbox1">
+	        <property name="orientation">vertical</property>
                 <property name="visible">True</property>
                 <property name="spacing">4</property>
                 <child>
