@@ -33,7 +33,7 @@ Blueman 2 will especially bring support for newer APIs like BlueZ 5 and NetworkM
 * [GLib 2](http://www.gtk.org/) (>= 2.32)
 * [GTK+ 3](http://www.gtk.org/)
 * [libappindicator](https://launchpad.net/libappindicator) (optional)
-* [notification-daemon](https://git.gnome.org/browse/notification-daemon) or [mate-notification-daemon](https://github.com/mate-desktop/mate-notification-daemon/)
+* [notification-daemon](https://git.gnome.org/browse/notification-daemon) or any desktop specific replacement
 * [libnotify](https://git.gnome.org/browse/libnotify)
 * [obex-data-server](http://wiki.muiline.com/obex-data-server) (>= 0.4.3)
 * [pulseaudio](http://www.freedesktop.org/wiki/Software/PulseAudio/)
