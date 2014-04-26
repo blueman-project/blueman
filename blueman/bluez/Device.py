@@ -2,7 +2,7 @@ from PropertiesBlueZInterface import PropertiesBlueZInterface
 from ServiceInterface import ServiceInterface
 from errors import raise_dbus_error
 import dbus
-import xml
+import xml.dom.minidom
 
 
 class Device(PropertiesBlueZInterface):
