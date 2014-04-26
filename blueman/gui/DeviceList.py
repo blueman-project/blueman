@@ -417,7 +417,7 @@ class DeviceList(GenericList):
     def AppendDevice(self, device):
         self.add_device(device, True)
 
-    def RemoveDevice(self, device, iter=None, force=False):
+    def RemoveDevice(self, device, iter=None):
         dprint(device)
         if iter == None:
             iter = self.find_device(device)
@@ -433,19 +433,7 @@ class DeviceList(GenericList):
             if not "Fake" in props:
                 self.device_signals.Disconnect(device.get_object_path())
 
-        if device.Temp and not force:
-            dprint("converting to fake")
-
-            props = copy.deepcopy(props)
-            props["Fake"] = True
-            dev = FakeDevice(props)
-
-            device = Device(dev)
-            self.device_add_event(device)
-
-        else:
-            #device.Destroy()
-            self.delete(iter)
+        self.delete(iter)
 
     def GetSelectedDevice(self):
         selected = self.selected()
@@ -459,7 +447,7 @@ class DeviceList(GenericList):
             for i in self.liststore:
                 iter = i.iter
                 device = self.get(iter, "device")["device"]
-                self.RemoveDevice(device, iter, True)
+                self.RemoveDevice(device, iter)
             self.liststore.clear()
             self.emit("device-selected", None, None)
 
