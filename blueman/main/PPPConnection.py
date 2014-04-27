@@ -1,5 +1,4 @@
 from blueman.Functions import dprint
-import glib
 import tty
 import termios
 import os
@@ -79,8 +78,8 @@ class PPPConnection(GObject.GObject):
             self.pppd = subprocess.Popen(
                 ["/usr/sbin/pppd", "%s" % self.port, "115200", "defaultroute", "updetach", "usepeerdns"], bufsize=1,
                 stdout=subprocess.PIPE)
-            glib.io_add_watch(self.pppd.stdout, glib.IO_IN | glib.IO_ERR | glib.IO_HUP, self.on_pppd_stdout)
-            glib.timeout_add(1000, self.check_pppd)
+            GObject.io_add_watch(self.pppd.stdout, GObject.IO_IN | GObject.IO_ERR | GObject.IO_HUP, self.on_pppd_stdout)
+            GObject.timeout_add(1000, self.check_pppd)
 
             self.cleanup()
         else:
@@ -141,7 +140,7 @@ class PPPConnection(GObject.GObject):
         self.send_commands()
 
     def on_pppd_stdout(self, source, cond):
-        if cond & glib.IO_ERR or cond & glib.IO_HUP:
+        if cond & GObject.IO_ERR or cond & GObject.IO_HUP:
             return False
 
         line = source.readline()
@@ -176,7 +175,7 @@ class PPPConnection(GObject.GObject):
         termios.tcdrain(self.file)
 
     def on_data_ready(self, source, condition, terminators, on_done):
-        if condition & glib.IO_ERR or condition & glib.IO_HUP:
+        if condition & GObject.IO_ERR or condition & GObject.IO_HUP:
             on_done(None, PPPException("Socket error"))
             self.cleanup()
             return False
@@ -214,19 +213,19 @@ class PPPConnection(GObject.GObject):
 
     def wait_for_reply(self, callback, terminators=["OK", "ERROR"], *user_data):
         def on_timeout():
-            glib.source_remove(self.io_watch)
+            GObject.source_remove(self.io_watch)
             callback(None, PPPException("Modem initialization timed out"), *user_data)
             self.cleanup()
             return False
 
         def on_done(ret, exception):
-            glib.source_remove(self.timeout)
+            GObject.source_remove(self.timeout)
             callback(ret, exception, *user_data)
 
 
         self.buffer = ""
         self.term_found = False
 
-        self.io_watch = glib.io_add_watch(self.file, glib.IO_IN | glib.IO_ERR | glib.IO_HUP, self.on_data_ready,
+        self.io_watch = GObject.io_add_watch(self.file, GObject.IO_IN | GObject.IO_ERR | GObject.IO_HUP, self.on_data_ready,
                                           terminators, on_done)
-        self.timeout = glib.timeout_add(15000, on_timeout)
+        self.timeout = GObject.timeout_add(15000, on_timeout)
