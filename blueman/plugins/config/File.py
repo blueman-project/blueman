@@ -8,7 +8,7 @@ import dbus.service
 import dbus.glib
 import weakref
 import signal
-import glib
+from gi.repository import GObject
 import copy
 
 
@@ -122,8 +122,8 @@ class File(ConfigPlugin):
 
             if not local:
                 if File.timeout:
-                    glib.source_remove(File.timeout)
-                File.timeout = glib.timeout_add(1000, File.save)
+                    GObject.source_remove(File.timeout)
+                File.timeout = GObject.timeout_add(1000, File.save)
                 self.Monitor.ValueChanged(self.section, pickle.dumps((key, value), pickle.HIGHEST_PROTOCOL))
 
     def get(self, key):
