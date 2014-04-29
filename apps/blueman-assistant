@@ -293,10 +293,18 @@ class Assistant(Agent):
                     self.Adapter.create_device(self.Device.Address, reply_handler=ok, error_handler=err)
             else:
                 if self.PairType != 2:
+                    def ok():
+                        self.Device = Device(device)
+                        self.assistant.set_current_page(PAGE_CONNECT)
+
+                    def err(err):
+                        print(err)
+                        pages[PAGE_FINISH].set_markup(_("<b>Failed to add device</b>"))
+                        self.assistant.set_page_header_image(pages[PAGE_FINISH], get_icon("gtk-no", 32))
+                        self.assistant.set_current_page(PAGE_FINISH)
+
                     device = self.Adapter.find_device(self.Device.Address)
-                    device.pair()
-                    self.Device = Device(device)
-                    self.assistant.set_current_page(PAGE_CONNECT)
+                    device.pair(reply_handler=ok, error_handler=err)
 
         elif num == PAGE_CONNECT:
             self.svc_vbox.foreach(lambda x, y: self.svc_vbox.remove(x), None)

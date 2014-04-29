@@ -31,6 +31,14 @@ class Device(PropertiesBlueZInterface):
         return interfaces
 
     @raise_dbus_error
-    def pair(self):
+    def pair(self, reply_handler=None, error_handler=None):
         # BlueZ 5 only!
-        self.get_interface().Pair()
+        def ok():
+            if callable(reply_handler):
+                reply_handler()
+
+        def err(err):
+            if callable(error_handler):
+                error_handler(err)
+
+        self.get_interface().Pair(reply_handler=ok, error_handler=err)
