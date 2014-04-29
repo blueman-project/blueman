@@ -16,3 +16,4 @@
 * Prefer the GTK theme's bluetooth icons over the shipped ones (@Teknocrat)
 * Fix nonexistent dbus exception (Martín Ferrari)
 * Fix a rare problem when the manager device menu cannot get the current selection (@kolen / Konstantin Mochalov)
+* dhcpcd client support (@Teknocrat)
