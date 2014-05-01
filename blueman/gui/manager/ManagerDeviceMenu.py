@@ -7,6 +7,7 @@ from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.Config import Config
 from blueman.main.AppletService import AppletService
 from blueman.gui.MessageArea import MessageArea
+from blueman.bluez.BlueZInterface import BlueZInterface
 
 from blueman.Lib import rfcomm_list
 
@@ -392,26 +393,27 @@ class ManagerDeviceMenu(Gtk.Menu):
             item.show()
             item.props.tooltip_text = _("Run the setup assistant for this device")
 
-            def update_services(item):
-                def reply():
-                    self.unset_op(device)
-                    prog.message(_("Success!"))
-                    MessageArea.close()
+            if BlueZInterface.get_interface_version()[0] < 5:
+                def update_services(item):
+                    def reply():
+                        self.unset_op(device)
+                        prog.message(_("Success!"))
+                        MessageArea.close()
 
-                def error(*args):
-                    self.unset_op(device)
-                    prog.message(_("Fail"))
-                    MessageArea.show_message(e_(str(args[0])))
+                    def error(*args):
+                        self.unset_op(device)
+                        prog.message(_("Fail"))
+                        MessageArea.show_message(e_(str(args[0])))
 
-                prog = ManagerProgressbar(self.Blueman, False, _("Refreshing"))
-                prog.start()
-                self.set_op(device, _("Refreshing Services..."))
-                appl.RefreshServices(device.get_object_path(), reply_handler=reply, error_handler=error)
+                    prog = ManagerProgressbar(self.Blueman, False, _("Refreshing"))
+                    prog.start()
+                    self.set_op(device, _("Refreshing Services..."))
+                    appl.RefreshServices(device.get_object_path(), reply_handler=reply, error_handler=error)
 
-            item = create_menuitem(_("Refresh Services"), get_icon("gtk-refresh", 16))
-            self.append(item)
-            self.Signals.Handle(item, "activate", update_services)
-            item.show()
+                item = create_menuitem(_("Refresh Services"), get_icon("gtk-refresh", 16))
+                self.append(item)
+                self.Signals.Handle(item, "activate", update_services)
+                item.show()
 
             item = Gtk.SeparatorMenuItem()
             item.show()
@@ -447,5 +449,3 @@ class ManagerDeviceMenu(Gtk.Menu):
 
             else:
                 item.props.sensitive = False
-
-		

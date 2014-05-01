@@ -45,6 +45,7 @@ class DBusService(AppletPlugin):
         self.add_dbus_method(self.DisconnectDevice, in_signature="o", out_signature="", async_callbacks=("ok", "err"))
 
     def RefreshServices(self, path, ok, err):
+        # BlueZ 4 only!
         device = Device(path)
 
         def reply(svcs):
