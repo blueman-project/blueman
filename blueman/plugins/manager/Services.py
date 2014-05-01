@@ -1,3 +1,4 @@
+from blueman.bluez.BlueZInterface import BlueZInterface
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 from gi.repository import Gtk
 
@@ -26,6 +27,21 @@ class Services(ManagerPlugin):
         items = []
         uuids = device.UUIDs
         appl = AppletService()
+
+        if BlueZInterface.get_interface_version()[0] > 4:
+            manager_menu.Signals.Handle("bluez", device, manager_menu.service_property_changed, "PropertyChanged")
+
+            if device.get_properties()['Connected']:
+                item = create_menuitem(_("Disconnect"), get_x_icon("mouse", 16))
+                manager_menu.Signals.Handle("gobject", item, "activate", manager_menu.on_disconnect, device)
+                items.append((item, 100))
+            else:
+                item = create_menuitem(_("Connect"), get_icon("mouse", 16))
+                manager_menu.Signals.Handle("gobject", item, "activate", manager_menu.on_connect, device)
+                items.append((item, 1))
+
+            item.show()
+
         for name, service in device.Services.items():
             if name == "serial":
                 ports_list = rfcomm_list()
@@ -232,7 +248,7 @@ class Services(ManagerPlugin):
                         item.show()
                         items.append((item, 201))
 
-            elif name == "input":
+            elif name == "input" and BlueZInterface.get_interface_version()[0] < 5:
                 manager_menu.Signals.Handle("bluez",
                                             service,
                                             manager_menu.service_property_changed,
