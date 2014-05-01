@@ -78,8 +78,11 @@ class Device(GObject.GObject):
             self.__services = {}
             for service in services:
                 name = service.get_interface_name().split(".")
-                name = name[len(name) - 1].lower()
-                self.__services[name] = service
+                if name[0] == 'org' and name[1] == 'bluez':
+                    name = name[2].lower()
+                    if name.endswith('1'):
+                        name = name[:-1]
+                    self.__services[name] = service
 
     def Copy(self):
         if not self.Valid:
