@@ -74,6 +74,7 @@ Older versions:
 * Linux Mint
 * [Mageia](http://mageia.madb.org/package/show/name/blueman)
 * [openSUSE](http://software.opensuse.org/package/blueman?search_term=blueman)
+* OpenMandriva
 
 ## Contributing
 
