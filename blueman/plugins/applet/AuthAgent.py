@@ -20,17 +20,25 @@ class AuthAgent(AppletPlugin):
         self.agents = []
         self.last_event_time = 0
 
+        self.legacy = self.Applet.Manager.get_interface_version()[0] < 5
+
+        if self.legacy:
+            self.agents = []
+        else:
+            self.agent_manager = Bluez.AgentManager()
+            self.agent = BluezAgent.GlobalAgent(self.Applet.Plugins.StatusIcon, self.get_event_time)
+            self.agent_manager.register_agent(self.agent, "DisplayYesNo")
         self.agent_manager = Bluez.AgentManager()
 
     def SetTimeHint(self, time):
         self.last_event_time = time
 
     def on_unload(self):
-        for agent in self.agents:
-            if self.legacy():
+        if self.legacy:
+            for agent in self.agents:
                 agent.adapter.unregister_agent(agent)
-            else:
-                self.agent_manager.unregister_agent(agent)
+        else:
+            self.agent_manager.unregister_agent(self.agent)
 
     def on_manager_state_changed(self, state):
         if state:
@@ -65,6 +73,10 @@ class AuthAgent(AppletPlugin):
                 agent = BluezAgent.GlobalAgent(self.Applet.Plugins.StatusIcon, self.get_event_time)
                 self.agent_manager.register_agent(agent, "DisplayYesNo", default=True)
                 self.agents.append(agent)
+            agent = BluezAgent.AdapterAgent(self.Applet.Plugins.StatusIcon, adapter, self.get_event_time)
+            agent.signal = agent.connect("released", self.on_released)
+            adapter.register_agent(agent, "DisplayYesNo")
+            self.agents.append(agent)
 
         except Exception as e:
             dprint("Failed to register agent")

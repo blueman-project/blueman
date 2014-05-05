@@ -98,6 +98,7 @@ class NotificationDialog(Gtk.MessageDialog):
     def close(self):
         self.hide()
 
+    def set_hint(*args):
     def set_hint_int32(*args):
         dprint("stub")
 
