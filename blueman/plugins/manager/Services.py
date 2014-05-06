@@ -22,25 +22,73 @@ def get_x_icon(icon_name, size):
 
 
 class Services(ManagerPlugin):
+    connectable_uuids = [HID_SVCLASS_ID, AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID, HEADSET_SVCLASS_ID, HANDSFREE_SVCLASS_ID]
+
     def on_request_menu_items(self, manager_menu, device):
+        if BlueZInterface.get_interface_version()[0] < 5:
+            return self.on_request_menu_items_bluez4(manager_menu, device)
 
         items = []
         uuids = device.UUIDs
         appl = AppletService()
 
-        if BlueZInterface.get_interface_version()[0] > 4:
+        uuids16 = [uuid128_to_uuid16(uuid) for uuid in uuids]
+
+        if set(uuids16) & set(self.connectable_uuids):
+            # FIXME: This should only be done once!
             manager_menu.Signals.Handle("bluez", device, manager_menu.service_property_changed, "PropertyChanged")
 
             if device.get_properties()['Connected']:
+                # FIXME: More generic icon
                 item = create_menuitem(_("Disconnect"), get_x_icon("mouse", 16))
                 manager_menu.Signals.Handle("gobject", item, "activate", manager_menu.on_disconnect, device)
                 items.append((item, 100))
             else:
+                # FIXME: More generic icon
                 item = create_menuitem(_("Connect"), get_icon("mouse", 16))
                 manager_menu.Signals.Handle("gobject", item, "activate", manager_menu.on_connect, device)
                 items.append((item, 1))
 
             item.show()
+
+        for name, service in device.Services.items():
+            if name == "network":
+                manager_menu.Signals.Handle("bluez", service, manager_menu.service_property_changed, "PropertyChanged")
+                sprops = service.get_properties()
+
+                if not sprops["Connected"]:
+                    for uuid in uuids:
+                        uuid16 = uuid128_to_uuid16(uuid)
+                        if uuid16 == NAP_SVCLASS_ID or uuid16 == GN_SVCLASS_ID:
+                            label = _("Group Network") if uuid16 == GN_SVCLASS_ID else _("Network Access Point")
+                            item = create_menuitem(label, get_icon("network-wireless", 16))
+                            manager_menu.Signals.Handle("gobject", item, "activate", manager_menu.on_connect,
+                                                        device, name, uuid)
+                            item.show()
+                            items.append((item, 80))
+                else:
+                    item = create_menuitem(_("Network"), get_x_icon("network-wireless", 16))
+                    manager_menu.Signals.Handle("gobject", item, "activate", manager_menu.on_disconnect, device, name)
+                    item.show()
+                    items.append((item, 101))
+
+                    if "DhcpClient" in appl.QueryPlugins():
+                        def renew(x):
+                            appl.DhcpClient(sprops["Interface"])
+
+                        item = create_menuitem(_("Renew IP Address"), get_icon("gtk-refresh", 16))
+                        manager_menu.Signals.Handle("gobject", item, "activate", renew)
+                        item.show()
+                        items.append((item, 201))
+
+        return items
+
+    def on_request_menu_items_bluez4(self, manager_menu, device):
+        # BlueZ 4 only
+
+        items = []
+        uuids = device.UUIDs
+        appl = AppletService()
 
         for name, service in device.Services.items():
             if name == "serial":
@@ -248,7 +296,7 @@ class Services(ManagerPlugin):
                         item.show()
                         items.append((item, 201))
 
-            elif name == "input" and BlueZInterface.get_interface_version()[0] < 5:
+            elif name == "input":
                 manager_menu.Signals.Handle("bluez",
                                             service,
                                             manager_menu.service_property_changed,
