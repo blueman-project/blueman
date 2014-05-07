@@ -57,8 +57,13 @@ class PulseAudioProfile(ManagerPlugin):
                 print "add"
                 utils.GetCard(idx, get_card_cb)
 
-
     def is_connected(self, device):
+        props = device.get_properties()
+        if 'Connected' in props:
+            return props['Connected']
+
+        # BlueZ 4 only
+
         try:
             s = device.Services["audiosink"]
             props = s.get_properties()
