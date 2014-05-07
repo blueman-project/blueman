@@ -110,14 +110,14 @@ class PulseAudioProfile(ManagerPlugin):
 
     def generate_menu(self, device):
         info = self.devices[device.Address]
-        items = []
+        group = []
 
         sub = Gtk.Menu()
 
         if info:
             for profile in info["profiles"]:
-                i = Gtk.RadioMenuItem(items[0] if len(items) else None,
-                                      profile["description"])
+                i = Gtk.RadioMenuItem.new_with_label(group, profile["description"])
+                group = i.get_group()
 
                 if profile["name"] == info["active_profile"]:
                     i.set_active(True)
@@ -125,7 +125,6 @@ class PulseAudioProfile(ManagerPlugin):
                 i.connect("toggled", self.on_selection_changed,
                           device, profile["name"])
 
-                items.append(i)
                 sub.append(i)
                 i.show()
 
