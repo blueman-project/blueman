@@ -296,23 +296,22 @@ class Assistant(Agent):
             print(self.Device.Services)
             uuids = self.Device.UUIDs
             rbs = []
-            rbs_group = []
 
             for name, service in self.Device.Services.items():
                 if name == "serial":
                     for uuid in uuids:
                         uuid16 = uuid128_to_uuid16(uuid)
                         if uuid16 == DIALUP_NET_SVCLASS_ID:
-                            rbs.append(Gtk.RadioButton(rbs_group, uuid16_to_name(uuid16)))
+                            rbs.append(Gtk.RadioButton(uuid16_to_name(uuid16)))
                             rbs[-1].connect("toggled", self.on_service_toggled, name, uuid)
                             self.svc_vbox.pack_start(rbs[-1], False, False, 0)
 
                         if uuid16 == SERIAL_PORT_SVCLASS_ID:
-                            rbs.append(Gtk.RadioButton(rbs_group, uuid16_to_name(uuid16)))
+                            rbs.append(Gtk.RadioButton(uuid16_to_name(uuid16)))
                             rbs[-1].connect("toggled", self.on_service_toggled, name, uuid)
                             self.svc_vbox.pack_start(rbs[-1], False, False, 0)
                 elif name == "input":
-                    rbs.append(Gtk.RadioButton(rbs_group, _("Input Service")))
+                    rbs.append(Gtk.RadioButton(_("Input Service")))
                     rbs[-1].connect("toggled", self.on_service_toggled, name)
                     self.svc_vbox.pack_start(rbs[-1], False, False, 0)
 
@@ -320,33 +319,37 @@ class Assistant(Agent):
                     for uuid in uuids:
                         uuid16 = uuid128_to_uuid16(uuid)
                         if uuid16 == GN_SVCLASS_ID:
-                            rbs.append(Gtk.RadioButton(rbs_group, _("Group Network")))
+                            rbs.append(Gtk.RadioButton(_("Group Network")))
                             rbs[-1].connect("toggled", self.on_service_toggled, name, uuid)
                             self.svc_vbox.pack_start(rbs[-1], False, False, 0)
 
                         if uuid16 == NAP_SVCLASS_ID:
-                            rbs.append(Gtk.RadioButton(rbs_group, _("Network Access Point")))
+                            rbs.append(Gtk.RadioButton(_("Network Access Point")))
                             rbs[-1].connect("toggled", self.on_service_toggled, name, uuid)
                             self.svc_vbox.pack_start(rbs[-1], False, False, 0)
 
                 elif name == "audiosink":
-                    rbs.append(Gtk.RadioButton(rbs_group, _("A2DP Sink (Send Audio)")))
+                    rbs.append(Gtk.RadioButton(_("A2DP Sink (Send Audio)")))
                     rbs[-1].connect("toggled", self.on_service_toggled, name)
                     self.svc_vbox.pack_start(rbs[-1], False, False, 0)
 
                 elif name == "audiosource":
-                    rbs.append(Gtk.RadioButton(rbs_group, _("A2DP Source (Receive Audio)")))
+                    rbs.append(Gtk.RadioButton(_("A2DP Source (Receive Audio)")))
                     rbs[-1].connect("toggled", self.on_service_toggled, name)
                     self.svc_vbox.pack_start(rbs[-1], False, False, 0)
 
                 elif name == "headset":
-                    rbs.append(Gtk.RadioButton(rbs_group, _("Headset Service")))
+                    rbs.append(Gtk.RadioButton(_("Headset Service")))
                     rbs[-1].connect("toggled", self.on_service_toggled, name)
                     self.svc_vbox.pack_start(rbs[-1], False, False, 0)
 
-            rbs.append(Gtk.RadioButton(rbs_group, _("Don't connect")))
+                if len(rbs) > 1: rbs[-1].join_group(rbs[0])
+
+            rbs.append(Gtk.RadioButton(_("Don't connect")))
+            rbs[-1].join_group(rbs[0])
             rbs[-1].connect("toggled", self.on_service_toggled, None)
             self.svc_vbox.pack_start(rbs[-1], False, False, 8)
+
             self.svc_vbox.show_all()
 
             rbs[0].emit("toggled")

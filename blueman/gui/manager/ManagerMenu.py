@@ -156,6 +156,7 @@ class ManagerMenu:
         for adapter in self.adapters:
             props = adapter.GetProperties()
             item = Gtk.RadioMenuItem.new_with_label(group, props["Name"])
+            group = item.get_group()
 
             item.connect("activate", self.on_adapter_selected, adapter.GetObjectPath())
             if adapter.GetObjectPath() == self.blueman.List.Adapter.GetObjectPath():
