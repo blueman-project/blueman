@@ -276,19 +276,20 @@ import base64
 import zlib
 
 sdp_cache = {}
-sdp_conf = Config("sdp")
 
 def on_sdp_changed(c, key, value):
 	if value and key in sdp_cache:
 		s = pickle.loads(zlib.decompress(base64.b64decode(value)))
 		sdp_cache[key] = s
 	
-sdp_conf.connect("property-changed", on_sdp_changed)
 
 def sdp_get_cached(address):
 	if not address in sdp_cache:
+
+		sdp_conf = Config("sdp/" + address, "sdp")
+		sdp_conf.connect("property-changed", on_sdp_changed)
 		
-		d = sdp_conf.get(address)
+		d = sdp_conf.get("data")
 		if d:
 			try:
 				s = pickle.loads(zlib.decompress(base64.b64decode(d)))
@@ -368,5 +369,8 @@ def sdp_get_serial_name(address, pattern):
 					
 def sdp_save(address, records):
 	data = base64.b64encode(zlib.compress(pickle.dumps(records, pickle.HIGHEST_PROTOCOL)))
-	sdp_conf.set(address, data)
+
+	sdp_conf = Config("sdp/" + address, "sdp")
+
+	sdp_conf.set("data", data)
 
