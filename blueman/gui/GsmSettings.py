@@ -34,7 +34,7 @@ class GsmSettings(Gtk.Dialog):
 		
 		vbox = self.Builder.get_object("vbox1")
 		
-		self.config = Config("gsm_settings/" + bd_address)
+		self.config = Config("gsm_settings/" + bd_address, "gsmsettings")
 		self.props.icon_name = "network-wireless"
 		self.props.title = _("GSM Settings")
 		
@@ -46,6 +46,8 @@ class GsmSettings(Gtk.Dialog):
 		
 		self.e_apn = self.Builder.get_object("e_apn")
 		self.e_number = self.Builder.get_object("e_number")
+		
+		self.config.props.bd_address = bd_address
 		
 		if self.config.props.apn == None:
 			self.config.props.apn = ""
