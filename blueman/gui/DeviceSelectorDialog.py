@@ -42,12 +42,10 @@ class DeviceSelectorDialog(Gtk.Dialog):
         self.selection = None
 
     def on_device_selected(self, devlist, device, iter):
-        self.selection = (devlist.Adapter.GetObjectPath(), device)
+        self.selection = (devlist.Adapter.get_object_path(), device)
 
     def GetSelection(self):
         if self.selection:
             return (self.selection[0], self.selection[1].Copy())
         else:
             return None
-		
-

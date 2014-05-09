@@ -1,25 +1,5 @@
 #!/usr/bin/python
 
-# Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
-# Copyright (C) 2008 Tadas Dailyda <tadas at dailyda dot com>
-#
-# Licensed under the GNU General Public License Version 3
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-# 
-
-
 import os.path
 import sys
 import signal
@@ -29,6 +9,7 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import GObject
+from blueman.bluez.BlueZInterface import BlueZInterface
 
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -197,6 +178,7 @@ class Blueman:
             self.List.DisplayKnownDevices(autoselect=True)
 
     def add_device(self, device):
+        # BlueZ 4 only!
 
         def ok(device):
             dev = Device(device)
@@ -211,10 +193,10 @@ class Blueman:
         adapter = self.List.Adapter
 
         prog = ManagerProgressbar(self, text=_("Adding"))
-        prog.connect("cancelled", lambda x: self.List.Adapter.GetInterface().CancelDeviceCreation(device.Address))
+        prog.connect("cancelled", lambda x: self.List.Adapter.get_interface().CancelDeviceCreation(device.Address))
 
         prog.start()
-        adapter.CreateDevice(device.Address, reply_handler=ok, error_handler=err)
+        adapter.create_device(device.Address, reply_handler=ok, error_handler=err)
 
     def inquiry(self):
         def prop_changed(List, adapter, (key, value)):
@@ -247,51 +229,54 @@ class Blueman:
         spawn(["blueman-assistant", "--device=%s" % device.Address], sn=sn)
 
     def bond(self, device):
-        def ok(device):
-            dev = Device(BluezDevice(device))
-            self.List.add_device(dev)
-            prog.message(_("Success"))
-            MessageArea.close()
+        if BlueZInterface.get_interface_version()[0] < 5:
+            def ok(device):
+                dev = Device(BluezDevice(device))
+                self.List.add_device(dev)
+                prog.message(_("Success"))
+                MessageArea.close()
 
-        def err(*args):
-            dprint(args)
-            prog.message(_("Failure"))
-            MessageArea.show_message(e_(str(args[0])))
+            def err(*args):
+                dprint(args)
+                prog.message(_("Failure"))
+                MessageArea.show_message(e_(str(args[0])))
 
-        applet = AppletService()
+            applet = AppletService()
 
-        address = device.GetProperties()["Address"]
-        adapter = self.List.Adapter
+            address = device.get_properties()["Address"]
+            adapter = self.List.Adapter
 
-        prog = ManagerProgressbar(self, text=_("Pairing"))
-        prog.connect("cancelled", lambda x: applet.CancelDeviceCreation(adapter.GetObjectPath(), device.Address))
-        prog.start()
+            prog = ManagerProgressbar(self, text=_("Pairing"))
+            prog.connect("cancelled", lambda x: applet.CancelDeviceCreation(adapter.get_object_path(), device.Address))
+            prog.start()
 
-        name = adapter_path_to_name(self.List.Adapter.GetObjectPath())
+            name = adapter_path_to_name(self.List.Adapter.get_object_path())
 
-        applet.CreateDevice(adapter.GetObjectPath(), device.Address, True, Gtk.get_current_event_time(),
-                            reply_handler=ok, error_handler=err, timeout=120)
+            applet.CreateDevice(adapter.get_object_path(), device.Address, True, Gtk.get_current_event_time(),
+                                reply_handler=ok, error_handler=err, timeout=120)
+        else:
+            self.List.Adapter.find_device(device.Address).pair()
 
     def adapter_properties(self):
         adapter = self.List.Adapter
-        name = os.path.basename(adapter.GetObjectPath())
+        name = os.path.basename(adapter.get_object_path())
         sn = startup_notification("Blueman Adapters", _("Starting Adapter Preferences"), bin_name="blueman-adapters",
                                   icon="blueman")
         spawn(["blueman-adapters", name], sn=sn)
 
     def toggle_trust(self, device):
-        props = device.GetProperties()
+        props = device.get_properties()
         device.Trusted = not device.Trusted
 
     def send(self, device, File=None):
         sn = startup_notification("Blueman Sendto", _("Starting File Sender"), bin_name="blueman-sendto",
                                   icon="blueman")
         adapter = self.List.Adapter
-        props = adapter.GetProperties()
+        props = adapter.get_properties()
         spawn(["blueman-sendto", "--source=%s" % props["Address"], "--device=%s" % device.Address], sn=sn)
 
     def remove(self, device):
-        self.List.Adapter.RemoveDevice(device.Device)
+        self.List.Adapter.remove_device(device.Device)
 
     def browse(self, device):
         spawn(["blueman-browse", "-d %s" % device.Address])

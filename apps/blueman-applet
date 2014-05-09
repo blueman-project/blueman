@@ -57,8 +57,7 @@ class BluemanApplet(object):
         self.bus = dbus.SystemBus()
         self.bus.watch_name_owner("org.bluez", self.on_dbus_name_owner_change)
 
-        self.bus.add_signal_receiver(self.on_adapter_property_changed, "PropertyChanged", "org.bluez.Adapter",
-                                     "org.bluez", path_keyword="path")
+        Bluez.Adapter().handle_signal(self.on_adapter_property_changed, 'PropertyChanged', path_keyword='path')
 
         Gtk.main()
 
@@ -67,7 +66,7 @@ class BluemanApplet(object):
         try:
 
             self.Signals.DisconnectAll()
-            self.Manager = Bluez.Manager("gobject")
+            self.Manager = Bluez.Manager()
             self.Plugins.Run("on_manager_state_changed", True)
 
             self.Signals.Handle("bluez", self.Manager, self.on_adapter_removed, "AdapterRemoved")

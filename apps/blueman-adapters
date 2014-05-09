@@ -48,9 +48,9 @@ class BluemanAdapters:
 
         try:
             self.signals = SignalTracker()
-            self.manager = Bluez.Manager('gobject')
+            self.manager = Bluez.Manager()
             self.signals.Handle("bluez", self.manager, self.on_adapter_added, 'AdapterAdded')
-            adapters = self.manager.ListAdapters()
+            adapters = self.manager.list_adapters()
             for adapter in adapters:
                 self.add_to_notebook(adapter)
         except Exception as e:
@@ -74,21 +74,22 @@ class BluemanAdapters:
                 #save changes
                 adapter = settings['adapter']
                 adapter.SetProperty('Name', settings['name'])
+                adapter.set('Name', settings['name'])
         Gtk.main_quit()
 
     def on_adapter_added(self, adapter_path):
         def on_property_changed(name, value):
             if name == 'Powered' and value:
-                adapter.UnHandleSignal(on_property_changed, "PropertyChanged")
+                adapter.unhandle_signal(on_property_changed, "PropertyChanged")
                 self.add_to_notebook(adapter)
 
         adapter = Bluez.Adapter(adapter_path)
-        adapter.HandleSignal(on_property_changed, "PropertyChanged")
+        adapter.handle_signal(on_property_changed, "PropertyChanged")
 
     def on_dbus_name_owner_change(self, owner):
         print('org.bluez owner changed to '+owner)
         if owner == '':
-            self.Manager = None
+            self.manager = None
         #fixme: show error dialog and exit
 
     def build_adapter_tab(self, adapter):
@@ -105,7 +106,7 @@ class BluemanAdapters:
             if not radio.props.active:
                 return
             adapter_settings['discoverable'] = False
-            adapter.SetProperty('Discoverable', False)
+            adapter.set('Discoverable', False)
             hscale.set_sensitive(False)
             #we need to triger "format-value" signal
             hscale.set_value(1)
@@ -115,7 +116,7 @@ class BluemanAdapters:
             if not radio.props.active:
                 return
             adapter_settings['discoverable'] = True
-            adapter.SetProperty('Discoverable', True)
+            adapter.set('Discoverable', True)
             hscale.set_sensitive(False)
             #we need to triger "format-value" signal
             hscale.set_value(1)
@@ -125,7 +126,7 @@ class BluemanAdapters:
             if not radio.props.active:
                 return
             adapter_settings['discoverable'] = True
-            adapter.SetProperty('Discoverable', True)
+            adapter.set('Discoverable', True)
             hscale.set_sensitive(True)
             hscale.set_value(3)
 
@@ -144,13 +145,13 @@ class BluemanAdapters:
             if val == 0 and adapter_settings['discoverable']:
                 always_radio.props.active = True
             timeout = int(val * 60)
-            adapter.SetProperty('DiscoverableTimeout', timeout)
+            adapter.set('DiscoverableTimeout', timeout)
 
         def on_name_changed(entry):
             adapter_settings['name'] = entry.get_text()
             adapter_settings['changed'] = True
 
-        props = adapter.GetProperties()
+        props = adapter.get_properties()
         adapter_settings['adapter'] = adapter
         adapter_settings['signals'] = SignalTracker()
         adapter_settings['signals'].Handle(adapter, on_property_changed, "PropertyChanged")
@@ -195,7 +196,7 @@ class BluemanAdapters:
         return adapter_settings
 
     def add_to_notebook(self, adapter):
-        hci_dev = os.path.basename(adapter.GetObjectPath())
+        hci_dev = os.path.basename(adapter.get_object_path())
         hci_dev_num = int(hci_dev[3:])
 
         if not hci_dev in self.tabs:
@@ -215,7 +216,7 @@ class BluemanAdapters:
         self.notebook.insert_page(settings['vbox'], label, hci_dev_num)
 
     def remove_from_notebook(self, adapter):
-        hci_dev = os.path.basename(adapter.GetObjectPath())
+        hci_dev = os.path.basename(adapter.get_object_path())
         hci_dev_num = int(hci_dev[3:])
 
         self.tabs[hci_dev]['visible'] = False

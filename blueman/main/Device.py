@@ -36,17 +36,17 @@ class Device(GObject.GObject):
         self.Signals = SignalTracker()
 
         dprint("caching initial properties")
-        self.Properties = self.Device.GetProperties()
+        self.Properties = self.Device.get_properties()
 
         if not "Fake" in self.Properties:
             self.Fake = False
 
         w = weakref.ref(self)
         if not self.Fake:
-            self._obj_path = self.Device.GetObjectPath()
+            self._obj_path = self.Device.get_object_path()
             self.Signals.Handle("bluez", self.Device, lambda key, value: w() and w().property_changed(key, value),
                                 "PropertyChanged")
-            object_path = self.Device.GetObjectPath()
+            object_path = self.Device.get_object_path()
             adapter = Adapter(object_path.replace("/" + os.path.basename(object_path), ""))
             self.Signals.Handle("bluez", adapter, lambda path: w() and w().on_device_removed(path), "DeviceRemoved")
 
@@ -74,12 +74,15 @@ class Device(GObject.GObject):
         dprint("Loading services")
 
         if not self.Fake:
-            services = self.Device.ListServiceInterfaces()
+            services = self.Device.list_services()
             self.__services = {}
             for service in services:
-                name = service.GetInterfaceName().split(".")
-                name = name[len(name) - 1].lower()
-                self.__services[name] = service
+                name = service.get_interface_name().split(".")
+                if name[0] == 'org' and name[1] == 'bluez':
+                    name = name[2].lower()
+                    if name.endswith('1'):
+                        name = name[:-1]
+                    self.__services[name] = service
 
     def Copy(self):
         if not self.Valid:
@@ -101,7 +104,7 @@ class Device(GObject.GObject):
     #def __del__(self):
     #	dprint("DEBUG: deleting Device instance")
 
-    def GetProperties(self):
+    def get_properties(self):
         #print "Properties requested"
         if not self.Valid:
             raise Exception("Attempted to get properties for an invalidated device")
@@ -121,6 +124,6 @@ class Device(GObject.GObject):
             if not self.Valid:
                 raise Exception("Attempted to set properties for an invalidated device")
             dprint("Setting property", key, value)
-            self.__dict__["Device"].SetProperty(key, value)
+            self.__dict__["Device"].set(key, value)
         else:
             self.__dict__[key] = value

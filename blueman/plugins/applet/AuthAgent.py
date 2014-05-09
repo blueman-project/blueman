@@ -1,6 +1,6 @@
 from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.main.applet.BluezAgent import AdapterAgent
+import blueman.main.applet.BluezAgent as BluezAgent
 import blueman.bluez as Bluez
 
 from gi.repository import GObject
@@ -20,16 +20,21 @@ class AuthAgent(AppletPlugin):
         self.agents = []
         self.last_event_time = 0
 
+        self.agent_manager = Bluez.AgentManager()
+
     def SetTimeHint(self, time):
         self.last_event_time = time
 
     def on_unload(self):
         for agent in self.agents:
-            agent.adapter.UnregisterAgent(agent)
+            if self.legacy():
+                agent.adapter.unregister_agent(agent)
+            else:
+                self.agent_manager.unregister_agent(agent)
 
     def on_manager_state_changed(self, state):
         if state:
-            adapters = self.Applet.Manager.ListAdapters()
+            adapters = self.Applet.Manager.list_adapters()
             for adapter in adapters:
                 self.register_agent(adapter)
 
@@ -51,11 +56,19 @@ class AuthAgent(AppletPlugin):
     def register_agent(self, adapter):
         dprint("Registering agent")
         try:
-            agent = AdapterAgent(self.Applet.Plugins.StatusIcon, adapter, self.get_event_time)
-            agent.signal = agent.connect("released", self.on_released)
-            adapter.RegisterAgent(agent, "DisplayYesNo")
-            self.agents.append(agent)
+            if self.legacy():
+                agent = BluezAgent.AdapterAgent(self.Applet.Plugins.StatusIcon, adapter, self.get_event_time)
+                agent.signal = agent.connect("released", self.on_released)
+                adapter.register_agent(agent, "DisplayYesNo")
+                self.agents.append(agent)
+            elif not self.agents:
+                agent = BluezAgent.GlobalAgent(self.Applet.Plugins.StatusIcon, self.get_event_time)
+                self.agent_manager.register_agent(agent, "DisplayYesNo", default=True)
+                self.agents.append(agent)
 
         except Exception as e:
             dprint("Failed to register agent")
             dprint(e)
+
+    def legacy(self):
+        return self.Applet.Manager.get_interface_version()[0] < 5

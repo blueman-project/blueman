@@ -13,6 +13,8 @@ from blueman.Functions import *
 from blueman.main.Device import Device
 from blueman.bluez.Device import Device as BluezDevice
 from blueman.bluez.Adapter import Adapter
+from blueman.bluez.Serial import Serial
+from blueman.bluez.Network import Network
 from blueman.main.SignalTracker import SignalTracker
 from blueman.gui.Notification import Notification
 import blueman.Sdp as sdp
@@ -180,11 +182,11 @@ class RecentConns(AppletPlugin, Gtk.Menu):
                 pass
 
             self.Item.props.sensitive = True
-            adapters = self.Applet.Manager.ListAdapters()
+            adapters = self.Applet.Manager.list_adapters()
             self.Adapters = {}
             for adapter in adapters:
-                p = adapter.GetProperties()
-                self.Adapters[str(adapter.GetObjectPath())] = str(p["Address"])
+                p = adapter.get_properties()
+                self.Adapters[str(adapter.get_object_path())] = str(p["Address"])
 
             if RecentConns.items != None:
                 for i in reversed(RecentConns.items):
@@ -220,7 +222,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         a = Adapter(path)
 
         def on_activated():
-            props = a.GetProperties()
+            props = a.get_properties()
             self.Adapters[str(path)] = str(props["Address"])
             self.initialize()
 
@@ -237,14 +239,14 @@ class RecentConns(AppletPlugin, Gtk.Menu):
     def notify(self, device, service_interface, conn_args):
         dprint(device, service_interface, conn_args)
         item = {}
-        object_path = device.GetObjectPath()
+        object_path = device.get_object_path()
         try:
             adapter = Adapter(device.Adapter)
         except:
             dprint("adapter not found")
             return
 
-        props = adapter.GetProperties()
+        props = adapter.get_properties()
 
         item["adapter"] = props["Address"]
         item["address"] = device.Address
@@ -305,20 +307,19 @@ class RecentConns(AppletPlugin, Gtk.Menu):
                 item["mitem"].props.sensitive = True
                 sn.complete()
 
-            if item["service"] == "org.bluez.Serial":
-                self.Applet.DbusSvc.RfcommConnect(item["device"].GetObjectPath(), item["conn_args"][0], reply, err)
+            if item["service"] == Serial().get_interface_name():
+                self.Applet.DbusSvc.RfcommConnect(item["device"].get_object_path(), item["conn_args"][0], reply, err)
             else:
-                self.Applet.DbusSvc.ServiceProxy(item["service"], item["device"].GetObjectPath(), "Connect",
+                self.Applet.DbusSvc.ServiceProxy(item["service"], item["device"].get_object_path(), "Connect",
                                                  item["conn_args"], reply, err)
-
 
     def add_item(self, item):
         device = item["device"]
 
-        if item["service"] == "org.bluez.Serial":
+        if item["service"] == Serial().get_interface_name():
             name = sdp.sdp_get_serial_name(item["address"], item["conn_args"][0])
 
-        elif item["service"] == "org.bluez.Network":
+        elif item["service"] == Network().get_interface_name():
             name = _("Network Access (%s)") % sdp.uuid16_to_name(sdp.uuid128_to_uuid16(item["conn_args"][0]))
         else:
             try:
@@ -360,17 +361,15 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         self.prepend(mitem)
         mitem.show()
 
-
     def get_device(self, item):
         try:
-            adapter = self.Applet.Manager.GetAdapter(item["adapter"])
+            adapter = self.Applet.Manager.get_adapter(item["adapter"])
         except:
             raise AdapterNotFound
         try:
-            return Device(adapter.FindDevice(item["address"]))
+            return Device(adapter.find_device(item["address"]))
         except:
             raise DeviceNotFound
-
 
     def recover_state(self):
         dump = self.get_option("recent_connections")
@@ -398,4 +397,3 @@ class RecentConns(AppletPlugin, Gtk.Menu):
                 i["gsignal"] = i["device"].connect("invalidated", self.on_device_removed, i)
 
         RecentConns.items = items
-		

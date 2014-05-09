@@ -109,7 +109,7 @@ class ManagerMenu:
         blueman.List.connect("device-selected", self.on_device_selected)
         blueman.List.connect("adapter-changed", self.on_adapter_changed)
 
-        self.adapters = blueman.List.Manager.ListAdapters()
+        self.adapters = blueman.List.manager.list_adapters()
 
         self.on_adapter_changed(blueman.List, blueman.List.GetAdapterPath())
 
@@ -154,12 +154,12 @@ class ManagerMenu:
 
         group = []
         for adapter in self.adapters:
-            props = adapter.GetProperties()
+            props = adapter.get_properties()
             item = Gtk.RadioMenuItem.new_with_label(group, props["Name"])
             group = item.get_group()
 
-            item.connect("activate", self.on_adapter_selected, adapter.GetObjectPath())
-            if adapter.GetObjectPath() == self.blueman.List.Adapter.GetObjectPath():
+            item.connect("activate", self.on_adapter_selected, adapter.get_object_path())
+            if adapter.get_object_path() == self.blueman.List.Adapter.get_object_path():
                 item.props.active = True
 
             item.show()
@@ -191,7 +191,7 @@ class ManagerMenu:
 
     def on_adapter_selected(self, menuitem, adapter_path):
         if menuitem.props.active:
-            if adapter_path != self.blueman.List.Adapter.GetObjectPath():
+            if adapter_path != self.blueman.List.Adapter.get_object_path():
                 dprint("selected", adapter_path)
                 self.blueman.Config.props.last_adapter = adapter_path_to_name(adapter_path)
                 self.blueman.List.SetAdapter(adapter_path)
@@ -203,7 +203,7 @@ class ManagerMenu:
 
     def on_adapter_removed(self, device_list, adapter_path):
         for adapter in self.adapters:
-            if adapter.GetObjectPath() == adapter_path:
+            if adapter.get_object_path() == adapter_path:
                 self.adapters.remove(adapter)
         self.generate_adapter_menu()
 

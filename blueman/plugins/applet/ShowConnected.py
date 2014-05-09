@@ -20,10 +20,7 @@ class ShowConnected(AppletPlugin):
         self.initialized = False
 
         self.signals = SignalTracker()
-        self.signals.Handle("dbus", dbus.SystemBus(),
-                            self.on_device_property_changed,
-                            "PropertyChanged",
-                            "org.bluez.Device")
+        self.signals.Handle('bluez', bluez.Device(), self.on_device_property_changed, 'PropertyChanged')
 
     def on_unload(self):
         self.signals.DisconnectAll()
@@ -47,11 +44,11 @@ class ShowConnected(AppletPlugin):
 
     def enumerate_connections(self):
         self.num_connections = 0
-        adapters = self.Applet.Manager.ListAdapters()
+        adapters = self.Applet.Manager.list_adapters()
         for adapter in adapters:
-            devices = adapter.ListDevices()
+            devices = adapter.list_devices()
             for device in devices:
-                props = device.GetProperties()
+                props = device.get_properties()
                 if "Connected" in props:
                     if props["Connected"]:
                         self.num_connections += 1
@@ -113,4 +110,3 @@ class ShowConnected(AppletPlugin):
 
     def on_adapter_removed(self, adapter):
         self.enumerate_connections()
-		

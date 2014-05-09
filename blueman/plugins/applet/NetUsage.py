@@ -1,26 +1,10 @@
-# Copyright (C) 2009 Valmantas Paliksa <walmis at balticum-tv dot lt>
-#
-# Licensed under the GNU General Public License Version 3
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-# 
 from blueman.Functions import *
 from blueman.Constants import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Config import Config
 from blueman.main.SignalTracker import SignalTracker
 from blueman.bluez.Device import Device as BluezDevice
+from blueman.bluez.Network import Network
 from blueman.main.Device import Device
 from blueman.Lib import rfcomm_list
 from gi.repository import GObject
@@ -208,7 +192,7 @@ class Dialog:
                 if self.parent.Applet.Manager:
                     for a in self.parent.Applet.Manager.ListAdapters():
                         try:
-                            device = a.FindDevice(d)
+                            device = a.find_device(d)
                             device = Device(device)
                             name = self.get_caption(device.Alias, device.Address)
                         except:
@@ -345,7 +329,7 @@ class NetUsage(AppletPlugin, GObject.GObject):
         self.signals = SignalTracker()
 
         bus = self.bus = dbus.SystemBus()
-        self.signals.Handle("dbus", bus, self.on_network_property_changed, "PropertyChanged", "org.bluez.Network",
+        self.signals.Handle('bluez', Network(), self.on_network_property_changed, 'PropertyChanged',
                             path_keyword="path")
 
         item = create_menuitem(_("Network Usage"), get_icon("network-wireless", 16))
@@ -374,8 +358,8 @@ class NetUsage(AppletPlugin, GObject.GObject):
                 ls = rfcomm_list()
                 for dev in ls:
                     if dev["id"] == portid:
-                        adapter = self.Applet.Manager.GetAdapter(dev["src"])
-                        device = adapter.FindDevice(dev["dst"])
+                        adapter = self.Applet.Manager.get_adapter(dev["src"])
+                        device = adapter.find_device(dev["dst"])
                         device = Device(device)
 
                         self.monitor_interface(NMMonitor, device, path)
@@ -416,7 +400,3 @@ class NetUsage(AppletPlugin, GObject.GObject):
 
     def on_stats(self, monitor, tx, rx):
         self.emit("stats", monitor, tx, rx)
-		
-	
-			
-

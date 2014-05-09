@@ -7,6 +7,7 @@ from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.Config import Config
 from blueman.main.AppletService import AppletService
 from blueman.gui.MessageArea import MessageArea
+from blueman.bluez.BlueZInterface import BlueZInterface
 
 from blueman.Lib import rfcomm_list
 
@@ -73,7 +74,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         self.foreach(each, None)
 
     def set_op(self, device, message):
-        ManagerDeviceMenu.__ops__[device.GetObjectPath()] = message
+        ManagerDeviceMenu.__ops__[device.get_object_path()] = message
         for inst in ManagerDeviceMenu.__instances__:
             dprint("op: regenerating instance", inst)
             if inst.SelectedDevice == self.SelectedDevice and not (inst.is_popup and not inst.props.visible):
@@ -82,12 +83,12 @@ class ManagerDeviceMenu(Gtk.Menu):
 
     def get_op(self, device):
         try:
-            return ManagerDeviceMenu.__ops__[device.GetObjectPath()]
+            return ManagerDeviceMenu.__ops__[device.get_object_path()]
         except:
             return None
 
     def unset_op(self, device):
-        del ManagerDeviceMenu.__ops__[device.GetObjectPath()]
+        del ManagerDeviceMenu.__ops__[device.get_object_path()]
         for inst in ManagerDeviceMenu.__instances__:
             dprint("op: regenerating instance", inst)
             if inst.SelectedDevice == self.SelectedDevice and not (inst.is_popup and not inst.props.visible):
@@ -99,7 +100,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             self.Generate()
 
 
-    def on_connect(self, item, device, service_id, *args):
+    def on_connect(self, item, device, service_id=None, *args):
         def success(*args2):
             try:
                 uuid16 = sdp_get_serial_type(device.Address, args[0])
@@ -123,15 +124,6 @@ class ManagerDeviceMenu(Gtk.Menu):
             dprint("fail", args)
             MessageArea.show_message(_("Connection Failed: ") + e_(str(args[0])))
 
-        def cancel(prog, *args):
-            try:
-                svc.Disconnect(*args)
-            except:
-                pass
-            prog.message(_("Cancelled"))
-            self.unset_op(device)
-
-        svc = device.Services[service_id]
         self.set_op(device, _("Connecting..."))
         prog = ManagerProgressbar(self.Blueman, False)
 
@@ -146,51 +138,53 @@ class ManagerDeviceMenu(Gtk.Menu):
         except:
             pass
 
-        if service_id == "network":
-            uuid = args[0]
-            appl.ServiceProxy(svc.GetInterfaceName(),
-                              svc.GetObjectPath(),
-                              "Connect",
-                              [uuid],
-                              reply_handler=success,
-                              error_handler=fail, timeout=200)
-        #prog.set_cancellable(True)
-        #prog.connect("cancelled", cancel)
+        if service_id:
+            svc = device.Services[service_id]
 
-        elif service_id == "input":
-            appl.ServiceProxy(svc.GetInterfaceName(),
-                              svc.GetObjectPath(),
-                              "Connect", [],
-                              reply_handler=success,
-                              error_handler=fail, timeout=200)
-        #prog.connect("cancelled", cancel)
+            if service_id == "network":
+                uuid = args[0]
+                appl.ServiceProxy(svc.get_interface_name(),
+                                  svc.get_object_path(),
+                                  "Connect",
+                                  [uuid],
+                                  reply_handler=success,
+                                  error_handler=fail, timeout=200)
 
-        elif service_id == "serial":
-            uuid = str(args[0])
+            elif service_id == "input":
+                appl.ServiceProxy(svc.get_interface_name(),
+                                  svc.get_object_path(),
+                                  "Connect", [],
+                                  reply_handler=success,
+                                  error_handler=fail, timeout=200)
 
-            appl.RfcommConnect(device.GetObjectPath(),
-                               uuid,
-                               reply_handler=success,
-                               error_handler=fail, timeout=200)
+            elif service_id == "serial":
+                uuid = str(args[0])
 
+                appl.RfcommConnect(device.get_object_path(),
+                                   uuid,
+                                   reply_handler=success,
+                                   error_handler=fail, timeout=200)
+
+            else:
+                appl.ServiceProxy(svc.get_interface_name(),
+                                  svc.get_object_path(),
+                                  "Connect", [],
+                                  reply_handler=success,
+                                  error_handler=fail, timeout=200)
         else:
-            appl.ServiceProxy(svc.GetInterfaceName(),
-                              svc.GetObjectPath(),
-                              "Connect", [],
-                              reply_handler=success,
-                              error_handler=fail, timeout=200)
+            appl.ServiceProxy(device.get_interface_name(), device.get_object_path(), 'Connect', [],
+                              reply_handler=success, error_handler=fail, timeout=200)
 
         prog.start()
 
-    def on_disconnect(self, item, device, service_id, *args):
-        svc = device.Services[service_id]
+    def on_disconnect(self, item, device, service_id=None, *args):
         if service_id == "serial":
             try:
                 appl = AppletService()
             except:
                 dprint("** Failed to connect to applet")
             else:
-                appl.RfcommDisconnect(device.GetObjectPath(), args[0])
+                appl.RfcommDisconnect(device.get_object_path(), args[0])
                 self.Generate()
         else:
             try:
@@ -198,8 +192,12 @@ class ManagerDeviceMenu(Gtk.Menu):
             except:
                 dprint("** Failed to connect to applet")
                 return
-            appl.ServiceProxy(svc.GetInterfaceName(),
-                              svc.GetObjectPath(), "Disconnect", [])
+            if service_id:
+                connection_object = device.Services[service_id]
+            else:
+                connection_object = device
+            appl.ServiceProxy(connection_object.get_interface_name(),
+                              connection_object.get_object_path(), "Disconnect", [])
 
 
     def on_device_property_changed(self, List, device, iter, (key, value)):
@@ -392,26 +390,27 @@ class ManagerDeviceMenu(Gtk.Menu):
             item.show()
             item.props.tooltip_text = _("Run the setup assistant for this device")
 
-            def update_services(item):
-                def reply():
-                    self.unset_op(device)
-                    prog.message(_("Success!"))
-                    MessageArea.close()
+            if BlueZInterface.get_interface_version()[0] < 5:
+                def update_services(item):
+                    def reply():
+                        self.unset_op(device)
+                        prog.message(_("Success!"))
+                        MessageArea.close()
 
-                def error(*args):
-                    self.unset_op(device)
-                    prog.message(_("Fail"))
-                    MessageArea.show_message(e_(str(args[0])))
+                    def error(*args):
+                        self.unset_op(device)
+                        prog.message(_("Fail"))
+                        MessageArea.show_message(e_(str(args[0])))
 
-                prog = ManagerProgressbar(self.Blueman, False, _("Refreshing"))
-                prog.start()
-                self.set_op(device, _("Refreshing Services..."))
-                appl.RefreshServices(device.GetObjectPath(), reply_handler=reply, error_handler=error)
+                    prog = ManagerProgressbar(self.Blueman, False, _("Refreshing"))
+                    prog.start()
+                    self.set_op(device, _("Refreshing Services..."))
+                    appl.RefreshServices(device.get_object_path(), reply_handler=reply, error_handler=error)
 
-            item = create_menuitem(_("Refresh Services"), get_icon("gtk-refresh", 16))
-            self.append(item)
-            self.Signals.Handle(item, "activate", update_services)
-            item.show()
+                item = create_menuitem(_("Refresh Services"), get_icon("gtk-refresh", 16))
+                self.append(item)
+                self.Signals.Handle(item, "activate", update_services)
+                item.show()
 
             item = Gtk.SeparatorMenuItem()
             item.show()
@@ -447,5 +446,3 @@ class ManagerDeviceMenu(Gtk.Menu):
 
             else:
                 item.props.sensitive = False
-
-		

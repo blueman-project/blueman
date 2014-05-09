@@ -1,21 +1,3 @@
-# Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
-# Copyright (C) 2008 Tadas Dailyda <tadas at dailyda dot com>
-#
-# Licensed under the GNU General Public License Version 3
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-# 
 from blueman.Functions import *
 import pickle
 import base64
@@ -28,6 +10,7 @@ from blueman.bluez.Device import Device as BluezDevice
 from blueman.main.Device import Device
 from blueman.main.applet.BluezAgent import TempAgent
 from blueman.bluez.Adapter import Adapter
+from blueman.bluez.Serial import Serial
 
 from gi.repository import GObject
 from gi.repository import Gtk
@@ -62,6 +45,7 @@ class DBusService(AppletPlugin):
         self.add_dbus_method(self.DisconnectDevice, in_signature="o", out_signature="", async_callbacks=("ok", "err"))
 
     def RefreshServices(self, path, ok, err):
+        # BlueZ 4 only!
         device = Device(path)
 
         def reply(svcs):
@@ -72,7 +56,7 @@ class DBusService(AppletPlugin):
                 pass
             ok()
 
-        device.GetInterface().DiscoverServices("", reply_handler=reply, error_handler=err)
+        device.get_interface().DiscoverServices("", reply_handler=reply, error_handler=err)
 
     def QueryPlugins(self):
         return self.Applet.Plugins.GetLoaded()
@@ -132,9 +116,11 @@ class DBusService(AppletPlugin):
         pass
 
     def CreateDevice(self, adapter_path, address, pair, time, _ok, err):
+        # BlueZ 4 only!
         def ok(device):
-            _ok(device)
-            self.RefreshServices(device, (lambda *args: None), (lambda *args: None))
+            path = device.get_object_path()
+            _ok(path)
+            self.RefreshServices(path, (lambda *args: None), (lambda *args: None))
 
         if self.Applet.Manager:
             adapter = Adapter(adapter_path)
@@ -142,20 +128,21 @@ class DBusService(AppletPlugin):
             if pair:
                 agent_path = "/org/blueman/agent/temp/" + address.replace(":", "")
                 agent = TempAgent(self.Applet.Plugins.StatusIcon, agent_path, time)
-                adapter.GetInterface().CreatePairedDevice(address, agent_path, "DisplayYesNo", error_handler=err,
-                                                          reply_handler=ok, timeout=120)
+                adapter.create_paired_device(address, agent_path, "DisplayYesNo", error_handler=err,
+                                             reply_handler=ok, timeout=120)
 
             else:
-                adapter.GetInterface().CreateDevice(address, error_handler=err, reply_handler=ok, timeout=120)
+                adapter.create_device(address, error_handler=err, reply_handler=ok, timeout=120)
 
         else:
             err()
 
     def CancelDeviceCreation(self, adapter_path, address, ok, err):
+        # BlueZ 4 only!
         if self.Applet.Manager:
             adapter = Adapter(adapter_path)
 
-            adapter.GetInterface().CancelDeviceCreation(address, error_handler=err, reply_handler=ok)
+            adapter.get_interface().CancelDeviceCreation(address, error_handler=err, reply_handler=ok)
 
         else:
             err()
@@ -167,7 +154,7 @@ class DBusService(AppletPlugin):
 
         dev = Device(device)
         try:
-            self.Applet.Plugins.RecentConns.notify(dev.Copy(), "org.bluez.Serial", [uuid])
+            self.Applet.Plugins.RecentConns.notify(dev.Copy(), Serial().get_interface_name(), [uuid])
         except KeyError:
             pass
 

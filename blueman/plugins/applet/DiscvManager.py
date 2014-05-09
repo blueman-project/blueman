@@ -53,7 +53,6 @@ class DiscvManager(AppletPlugin):
         if state:
             self.init_adapter()
             self.update_menuitems()
-            self.Signals.Handle(self.Applet.Manager, self.on_default_adapter_changed, "DefaultAdapterChanged", sigid=0)
         else:
             self.Signals.Disconnect(0)
 
@@ -69,23 +68,23 @@ class DiscvManager(AppletPlugin):
 
     def on_set_discoverable(self, item):
         if self.adapter:
-            self.adapter.SetProperty("Discoverable", True)
-            self.adapter.SetProperty("DiscoverableTimeout", self.get_option("time"))
+            self.adapter.set("Discoverable", True)
+            self.adapter.set("DiscoverableTimeout", self.get_option("time"))
 
     def init_adapter(self):
         try:
-            self.adapter = self.Applet.Manager.GetAdapter()
+            self.adapter = self.Applet.Manager.get_adapter()
         except:
             self.adapter = None
 
-    def on_default_adapter_changed(self, path):
+    def on_adapter_removed(self, path):
         dprint(path)
-        if path != "":
+        if path == self.adapter.get_object_path():
             self.init_adapter()
             self.update_menuitems()
 
     def on_adapter_property_changed(self, path, key, value):
-        if self.adapter and path == self.adapter.GetObjectPath():
+        if self.adapter and path == self.adapter.get_object_path():
             dprint("prop", key, value)
             if key == "DiscoverableTimeout":
                 if value == 0: #always visible
@@ -113,7 +112,7 @@ class DiscvManager(AppletPlugin):
 
     def update_menuitems(self):
         try:
-            props = self.adapter.GetProperties()
+            props = self.adapter.get_properties()
         except Exception as e:
             dprint("warning: Adapter is None")
             self.item.props.visible = False
