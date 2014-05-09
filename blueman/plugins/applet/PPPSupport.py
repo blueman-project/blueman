@@ -47,7 +47,10 @@ class connection:
 			GObject.timeout_add(5000, self.connect)
 		
 	def connect(self):
-		c = Config("gsm_settings/" + self.device.Address)
+		c = Config("gsm_settings/" + self.device.Address, "plugins.pppsupport")
+
+		c.props.address = self.device.Address
+		
 		if c.props.apn == None:
 			c.props.apn = ""
 			
