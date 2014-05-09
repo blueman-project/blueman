@@ -30,10 +30,12 @@ class MonitorBase(GObject.GObject):
 
         self.interface = interface
         self.device = device
-        self.config = Config("plugins/NetUsage/%s" % device.Address)
+        self.config = Config("plugins/NetUsage/%s" % device.Address, "plugins.netusage")
 
         self.last_tx = 0
         self.last_rx = 0
+
+        self.config.props.address = device.Address
 
         if not self.config.props.tx:
             self.config.props.tx = "0"
