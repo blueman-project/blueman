@@ -55,6 +55,12 @@ class Blueman:
         vbox.pack_start(area, False, False, 0)
         vbox.reorder_child(area, 3)
 
+        # Add padding for resize grip or it will overlap
+        if self.window.get_has_resize_grip():
+            align3 = self.Builder.get_object("alignment3")
+            top, bottom, left, right = align3.get_padding()
+            align3.set_padding(top, bottom, left, right + 10)
+
         def do_present(time):
             if self.window.props.visible:
                 self.window.present_with_time(time)
