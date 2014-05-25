@@ -16,13 +16,16 @@ AM_GLIB_GNU_GETTEXT
 IT_PROG_INTLTOOL([0.35.0])
 
 AM_PATH_PYTHON(2.6)
-AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(Could not find Python headers)])
+if test "${PYTHON_VERSION}" \< "3.0"; then
+    PKG_CHECK_MODULES([PYTHON], [python-${PYTHON_VERSION}])
+    AC_SUBST(PYTHON_LIBS)
+    AC_SUBST(PYTHON_CFLAGS)
+else
+    AC_MSG_ERROR([Blueman does not support python 3])
+fi
 
 AC_ENABLE_SHARED(yes)
 AC_ENABLE_STATIC(no)
-
-PYTHON_LIBS=`python-config --libs`
-AC_SUBST(PYTHON_LIBS)
 
 AC_ARG_VAR([PYREXC], [Pyrex compiler])
 if test "x$PYREXC" = "x"; then
