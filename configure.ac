@@ -127,9 +127,8 @@ fi
 AC_SUBST(hal_en)
 AM_CONDITIONAL(ENABLE_HAL, test "x$hal_en" = "xyes")
 
-have_nst=yes
 AC_ARG_ENABLE(sendto,
-[  --enable-sendto=[yes/no] Enable nautilus-sendto plugin build],,have_nst=yes)
+[  --enable-sendto=[yes/no] Enable nautilus-sendto plugin build],have_nst=$enableval,have_nst=yes)
 
 AM_CONDITIONAL(HAVE_NST, test "x$have_nst" = "xyes")
 
