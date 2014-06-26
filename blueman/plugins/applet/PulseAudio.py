@@ -175,7 +175,6 @@ class PulseAudio(AppletPlugin):
                             path_keyword='device')
         self.signals.Handle('bluez', Headset(), self.on_hsp_prop_change, 'PropertyChanged', path_keyword='device')
 
-        self.signals.Handle(self.pulse_utils, "connected", self.on_pulse_connected)
         self.signals.Handle(self.pulse_utils, "event", self.on_pulse_event)
 
     def on_pulse_event(self, pa_utils, event, idx):
@@ -191,14 +190,6 @@ class PulseAudio(AppletPlugin):
 
             pa_utils.GetCard(idx, card_cb)
 
-
-    def on_pulse_connected(self, pa_utils):
-        def modules_cb(modules):
-            for k, v in modules.items():
-                if v["name"] == "module-bluetooth-discover":
-                    pa_utils.UnloadModule(k, lambda x: dprint("Unload module-bluetooth-discover result", x))
-
-        self.pulse_utils.ListModules(modules_cb)
 
     def on_unload(self):
         self.signals.DisconnectAll()
