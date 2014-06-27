@@ -17,3 +17,4 @@
 * Fix nonexistent dbus exception (Martín Ferrari)
 * Fix a rare problem when the manager device menu cannot get the current selection (@kolen / Konstantin Mochalov)
 * dhcpcd client support (@Teknocrat)
+* Fix pulseaudio device discovery (see #64 and the linked Ubuntu bugs for details and contributors)
