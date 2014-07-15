@@ -207,7 +207,7 @@ def get_icon(name, size=24, fallback="gtk-missing-image"):
     if icon.props.height > size:
         new_w = int(size * ( float(icon.props.height) / icon.props.width ))
         new_h = size
-        icon = icon.scale_simple(dest_width, dest_height, GdkPixbuf.InterpType.BILINEAR)
+        icon = icon.scale_simple(new_w, new_h, GdkPixbuf.InterpType.BILINEAR)
 
     return icon
 
