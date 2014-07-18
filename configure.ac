@@ -85,6 +85,9 @@ AC_SUBST(prefix)
 pkgdatadir="${DATADIR}/${PACKAGE}"
 AC_SUBST(pkgdatadir)
 
+icondir="${DATADIR}/icons"
+AC_SUBST(icondir)
+
 AS_AC_EXPAND(LOCALEDIR, $datarootdir/locale)
 AC_SUBST(LOCALEDIR)
 
@@ -188,12 +191,29 @@ data/icons/hicolor/16x16/Makefile
 data/icons/hicolor/16x16/actions/Makefile
 data/icons/hicolor/16x16/devices/Makefile
 data/icons/hicolor/16x16/status/Makefile
+data/icons/hicolor/22x22/Makefile
+data/icons/hicolor/22x22/status/Makefile
+data/icons/hicolor/24x24/Makefile
+data/icons/hicolor/24x24/status/Makefile
 data/icons/hicolor/32x32/Makefile
 data/icons/hicolor/32x32/actions/Makefile
+data/icons/hicolor/32x32/status/Makefile
 data/icons/hicolor/48x48/Makefile
 data/icons/hicolor/48x48/actions/Makefile
 data/icons/hicolor/48x48/devices/Makefile
 data/icons/hicolor/48x48/status/Makefile
+data/icons/hicolor/64x64/Makefile
+data/icons/hicolor/64x64/status/Makefile
+data/icons/hicolor/72x72/Makefile
+data/icons/hicolor/72x72/status/Makefile
+data/icons/hicolor/96x96/Makefile
+data/icons/hicolor/96x96/status/Makefile
+data/icons/hicolor/128x128/Makefile
+data/icons/hicolor/128x128/status/Makefile
+data/icons/hicolor/192x192/Makefile
+data/icons/hicolor/192x192/status/Makefile
+data/icons/hicolor/256x256/Makefile
+data/icons/hicolor/256x256/status/Makefile
 data/icons/hicolor/scalable/Makefile
 data/icons/hicolor/scalable/devices/Makefile
 data/icons/hicolor/scalable/actions/Makefile
