@@ -14,7 +14,7 @@ _blueman_la_SOURCES = \
 	modem-prober.c
 
 _blueman.c: _blueman.pyx
-	$(PYREXC) -o $@ $<
+	$(CYTHONEXEC) -o $@ $<
 	
 EXTRA_DIST = _blueman.pyx
 CLEANFILES = _blueman.c

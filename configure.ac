@@ -15,7 +15,7 @@ AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [The gettext package])
 AM_GLIB_GNU_GETTEXT
 IT_PROG_INTLTOOL([0.35.0])
 
-AM_PATH_PYTHON(2.6)
+AM_PATH_PYTHON([2.6])
 if test "${PYTHON_VERSION}" \< "3.0"; then
     PKG_CHECK_MODULES([PYTHON], [python-${PYTHON_VERSION}])
     AC_SUBST(PYTHON_LIBS)
@@ -27,19 +27,19 @@ fi
 AC_ENABLE_SHARED(yes)
 AC_ENABLE_STATIC(no)
 
-AC_ARG_VAR([PYREXC], [Pyrex compiler])
-if test "x$PYREXC" = "x"; then
-   AC_PATH_PROG([PYREXC],[pyrexc])
+AC_ARG_VAR([CYTHONEXEC], [Cython compiler])
+if test "x$CYTHONEXEC" = "x"; then
+   AC_PATH_PROG([CYTHONEXEC],[cython])
 fi
-AC_SUBST([PYREXC])
-AC_MSG_CHECKING([for pyrexc executable])
-AC_MSG_RESULT([${PYREXC}])
-if test "x$PYREXC" = "x"; then
-   AC_MSG_ERROR(["Fatal: pyrexc not found.
+AC_SUBST([CYTHONEXEC])
+AC_MSG_CHECKING([for cython executable])
+AC_MSG_RESULT([${CYTHONEXEC}])
+if test "x$CYTHONEXEC" = "x"; then
+   AC_MSG_ERROR(["Fatal: cython not found.
 
-Get Pyrex from
+Get Cython from
   * your system's packages (recommended)
-  * upstream at http://www.cosc.canterbury.ac.nz/greg.ewing/python/Pyrex/
+  * upstream at http://www.cython.org/
 "])
 fi
 
