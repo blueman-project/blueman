@@ -3,6 +3,12 @@ icons = hicolor_apps_16x16_blueman.png \
 	hicolor_apps_24x24_blueman.png \
 	hicolor_apps_32x32_blueman.png \
 	hicolor_apps_48x48_blueman.png \
+	hicolor_apps_64x64_blueman.png \
+	hicolor_apps_72x72_blueman.png \
+	hicolor_apps_96x96_blueman.png \
+	hicolor_apps_128x128_blueman.png \
+	hicolor_apps_192x192_blueman.png \
+	hicolor_apps_256x256_blueman.png \
 	hicolor_apps_scalable_blueman.svg
 
 EXTRA_DIST = $(icons)
