@@ -1,9 +1,9 @@
-themedir = $(pkgdatadir)/icons/hicolor
+themedir = $(icondir)/hicolor
 size = scalable
 context = status
 
 iconsdir = $(themedir)/$(size)/$(context)
 
-icons_DATA = bluetooth-active.svg bluetooth-disabled.svg bluetooth.svg
+icons_DATA = blueman-active.png blueman-disabled.png blueman.svg
 
 EXTRA_DIST = $(icons_DATA)

@@ -217,7 +217,7 @@ class PowerManager(AppletPlugin):
 
         #return pixbuf
         if not self.GetBluetoothStatus():
-            return ("bluetooth-disabled", "bluetooth-disabled")
+            return ("blueman-disabled", "blueman-disabled")
 
     def on_adapter_added(self, path):
         adapter = Bluez.Adapter(path)

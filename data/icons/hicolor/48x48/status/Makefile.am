@@ -1,4 +1,4 @@
-themedir = $(pkgdatadir)/icons/hicolor
+themedir = $(icondir)/hicolor
 size = 48x48
 context = status
 
@@ -35,8 +35,8 @@ icons_DATA =			\
 	blueman-tpl-80.png	\
 	blueman-tpl-90.png	\
 	blueman-tpl-100.png	\
-        bluetooth-active.png    \
-        bluetooth-disabled.png  \
-        bluetooth.png
+        blueman-active.png    \
+        blueman-disabled.png  \
+        blueman.png
 
 EXTRA_DIST = $(icons_DATA)
