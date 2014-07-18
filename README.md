@@ -45,7 +45,7 @@ Blueman 2 will especially bring support for newer APIs like BlueZ 5 and NetworkM
 
 * [libtool](http://www.gnu.org/software/libtool/)
 * [intltool](http://freedesktop.org/wiki/Software/intltool/)
-* [Pyrex](http://www.cosc.canterbury.ac.nz/greg.ewing/python/Pyrex/)
+* [Cython](http://www.cython.org/)
 
 ### Additional dependencies for VCS version
 
