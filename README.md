@@ -38,7 +38,7 @@ Blueman 2 will especially bring support for newer APIs like BlueZ 5 and NetworkM
 * [obex-data-server](http://wiki.muiline.com/obex-data-server) (>= 0.4.3)
 * [pulseaudio](http://www.freedesktop.org/wiki/Software/PulseAudio/)
 * [PyGObject](https://wiki.gnome.org/PyGObject)
-* [Python 2](http://www.python.org/) (>= 2.6)
+* [Python 2](http://www.python.org/) (>= 2.7)
 * [startup-notification](http://www.freedesktop.org/wiki/Software/startup-notification/)
 
 ### Additional build dependencies
