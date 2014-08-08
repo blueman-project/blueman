@@ -4,6 +4,6 @@ context = status
 
 iconsdir = $(themedir)/$(size)/$(context)
 
-icons_DATA = bluetooth-active.svg bluetooth-disabled.svg bluetooth.svg
+icons_DATA = blueman-active.svg blueman-disabled.svg blueman.svg
 
 EXTRA_DIST = $(icons_DATA)
