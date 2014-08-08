@@ -7,7 +7,7 @@ from gi.repository import GObject
 
 class StatusIcon(AppletPlugin, Gtk.StatusIcon):
     __unloadable__ = False
-    __icon__ = "bluetooth"
+    __icon__ = "blueman"
 
     def on_entry_changed(self, entry, ic, image):
 

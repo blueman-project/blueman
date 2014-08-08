@@ -10,7 +10,7 @@ import blueman.bluez as bluez
 class ShowConnected(AppletPlugin):
     __author__ = "Walmis"
     __depends__ = ["StatusIcon"]
-    __icon__ = "bluetooth-active"
+    __icon__ = "blueman-active"
     __description__ = _(
         "Adds an indication on the status icon when Bluetooth is active and shows the number of connections in the tooltip.")
 
@@ -38,7 +38,7 @@ class ShowConnected(AppletPlugin):
             #				[(x, pixbuf.props.height - x_size, 0, 255)])
             #
             #			return pixbuf
-            return ("bluetooth-active",)
+            return ("blueman-active",)
         else:
             self.active = False
 
