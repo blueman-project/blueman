@@ -12,7 +12,6 @@ if os.path.exists(os.path.join(_dirname, "CHANGELOG.md")):
 import dbus
 import dbus.service
 from dbus.mainloop.glib import DBusGMainLoop
-import blueman.Functions
 import __builtin__
 
 from gi.repository import GObject
