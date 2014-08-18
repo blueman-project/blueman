@@ -1,6 +1,6 @@
 AC_PREREQ(2.69)
 
-AC_INIT(blueman, 1.23)
+AC_INIT(blueman, 1.99)
 AC_CONFIG_HEADERS(config.h)
 AM_INIT_AUTOMAKE(foreign)
 
