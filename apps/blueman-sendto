@@ -29,7 +29,7 @@ from blueman.gui.DeviceSelectorDialog import DeviceSelectorDialog
 from blueman.main.SpeedCalc import SpeedCalc
 from blueman.main.AppletService import AppletService
 
-from blueman.ods.OdsManager import OdsManager
+from blueman.bluez import obex
 
 # Workaround introspection bug, gnome bug 622084
 signal.signal(signal.SIGINT, signal.SIG_DFL)
@@ -92,12 +92,12 @@ class Sender(GObject.GObject):
 
         self.num_files = len(self.files)
         try:
-            self.manager = OdsManager()
+            self.client = obex.Client()
         except:
             d = Gtk.MessageDialog(self.window,
                                   type=Gtk.MessageType.ERROR, buttons=Gtk.ButtonsType.OK)
-            d.props.text = _("obex-data-server not available")
-            d.props.secondary_text = _("obex-data-server is probably not installed")
+            d.props.text = _("obexd not available")
+            d.props.secondary_text = _("obexd is probably not installed")
             d.run()
             d.destroy()
             exit(1)
@@ -107,8 +107,7 @@ class Sender(GObject.GObject):
 
         self.l_file.props.label = os.path.basename(self.files[-1])
 
-        self.manager.GHandle("session-created", self.on_session_created)
-        self.manager.GHandle("session-destroyed", self.on_session_destroyed)
+        self.client.connect("session-created", self.on_session_created)
 
         print("Sending to", device.Address)
         self.l_dest.props.label = device.Alias
@@ -133,26 +132,20 @@ class Sender(GObject.GObject):
             exit(1)
 
         props = self.adapter.get_properties()
-        self.manager.create_session(self.device.Address, props["Address"], error_handler=on_error)
+        self.client.create_session(self.device.Address, props["Address"], error_handler=on_error)
 
     def on_cancel(self, button):
-        def reply(*args):
-            self.session.Disconnect()
-            self.emit("result", False)
-
         self.pb.props.text = _("Cancelling")
         if button:
             button.props.sensitive = False
 
-        if self.session:
-            if self.session.Connected:
-                self.session.Cancel(reply_handler=reply, error_handler=reply)
-            else:
-                print(self.session.object_path)
-                self.manager.CancelSessionConnect(self.session.object_path)
-                self.emit("result", False)
-        else:
+        def reply_handler(*args):
             self.emit("result", False)
+
+        if self.session:
+            self.client.remove_session(self.session, reply_handler=reply_handler)
+        else:
+            reply_handler()
 
     def on_transfer_started(self, session, filename, path, size):
         dprint("transfer started")
@@ -214,28 +207,10 @@ class Sender(GObject.GObject):
         else:
             self.emit("result", True)
 
-
     def send_file(self, file_path):
         dprint(file_path)
-        if self.session and self.session.Connected:
-            self.session.SendFile(file_path)
-
-
-    def on_session_disconnected(self, session):
         if self.session:
-            try:
-                self.session.Close()
-            except:
-                dprint("Warning: Session already closed")
-
-    def on_session_destroyed(self, manager, path):
-        if self.session.object_path == path:
-            self.session = None
-
-    def on_session_connected(self, session):
-        dprint("commence transfer")
-        self.sesion = session
-        self.process_queue()
+            self.session.send_file(file_path)
 
     def on_session_error(self, session, name, msg):
         dprint("session err", name, msg)
@@ -265,13 +240,13 @@ class Sender(GObject.GObject):
                     self.total_transferred -= self.transferred
                     self.transferred = 0
                     del self.files[-1]
-                    if not self.session or not self.session.Connected:
+                    if not self.session:
                         self.create_session()
                     self.process_queue()
                 elif resp == Gtk.ResponseType.YES:
                     self.total_transferred -= self.transferred
                     self.transferred = 0
-                    if not self.session or not self.session.Connected:
+                    if not self.session:
                         self.create_session()
 
                     self.process_queue()
@@ -285,12 +260,11 @@ class Sender(GObject.GObject):
     def on_session_created(self, manager, session):
         dprint()
         self.session = session
-        session.GHandle("connected", self.on_session_connected)
-        session.GHandle("disconnected", self.on_session_disconnected)
-        session.GHandle("error-occurred", self.on_session_error)
-        session.GHandle("transfer-started", self.on_transfer_started)
-        session.GHandle("transfer-progress", self.on_transfer_progress)
-        session.GHandle("transfer-completed", self.on_transfer_completed)
+        session.connect("error-occurred", self.on_session_error)
+        session.connect("transfer-started", self.on_transfer_started)
+        session.connect("transfer-progress", self.on_transfer_progress)
+        session.connect("transfer-completed", self.on_transfer_completed)
+        self.process_queue()
 
 
 class SendTo:

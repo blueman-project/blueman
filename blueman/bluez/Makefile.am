@@ -1,3 +1,5 @@
+SUBDIRS = obex
+
 bluemandir = $(pythondir)/blueman/bluez
 blueman_PYTHON =				\
 	__init__.py					\

@@ -1,5 +1,11 @@
 # Changelog
 
+## master
+
+### Changes
+
+* Switch to obexd for sending files
+
 ## 1.99.alpha1
 
 ### New features
