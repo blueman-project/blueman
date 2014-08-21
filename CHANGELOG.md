@@ -2,20 +2,28 @@
 
 ## master
 
+### New features
+
+* dhcpcd client support (@Teknocrat / Harvey Mittens)
+* Partial support for BlueZ 5 (see #13 for the current state)
+
+### Changes
+
+* Switch to GTK+ 3 (using introspection)
+* Update autoconf to support aarch64 (Dennis Gilmore)
+* Migrate from Pyrex to Cython (@Teknocrat / Harvey Mittens)
+
+### Bugs fixed
+
 * Fix nautilus integration
 * Fix pulseaudio version check
 * Add missing icons
 * Fix initial applet state if bluetooth is disabled
 * Fix blueman startup when .cache dir doesn't exist (@asdil12 / Dominik Heidler)
 * Fix thunar fallback (Jan Hutař)
-* Update autoconf to support aarch64 (Dennis Gilmore)
 * Do not power new adapters despite rfkill (@lkr / Leesa)
-* Switch to GTK+ 3 (using introspection)
 * Fix handling of network devices (especially fixes DhcpClient plugin)
 * Update translations (too many to list them)
-* Prefer the GTK theme's bluetooth icons over the shipped ones (@Teknocrat / Harvey Mittens)
 * Fix nonexistent dbus exception (Martín Ferrari)
 * Fix a rare problem when the manager device menu cannot get the current selection (@kolen / Konstantin Mochalov)
-* dhcpcd client support (@Teknocrat / Harvey Mittens)
 * Fix pulseaudio device discovery (see #64 and the linked Ubuntu bugs for details and contributors)
-* Migrate from Pyrex to Cython (@Teknocrat / Harvey Mittens)
