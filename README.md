@@ -71,8 +71,7 @@ To generate and run a configure script from source, run `./autogen.sh`.
 
 ## Contributing
 
-Fork, make your changes and issue a pull request. If you just want to edit a single file
-(e.g. translations in the po folder), GitHub will guide you through that process.
+Fork, make your changes, and issue a pull request. If you just want to edit a single file, GitHub will guide you through that process.
 
 ### Translate
 
