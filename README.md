@@ -69,6 +69,10 @@ To generate and run a configure script from source, run `./autogen.sh`.
 * [openSUSE](http://software.opensuse.org/package/blueman?search_term=blueman)
 * [Ubuntu](http://packages.ubuntu.com/search?keywords=blueman)
 
+## Support / Troubleshooting
+
+Feel free to [open a GitHub issue](https://github.com/blueman-project/blueman/issues/new) for anything you need help with. If you're reporting a bug, please read the [Troubleshooting page](https://github.com/blueman-project/blueman/wiki/Troubleshooting) to provide all relevant information.
+
 ## Contributing
 
 Fork, make your changes, and issue a pull request. If you just want to edit a single file, GitHub will guide you through that process.
