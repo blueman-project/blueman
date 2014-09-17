@@ -20,8 +20,8 @@
 from blueman.plugins.ConfigPlugin import ConfigPlugin
 from gi.repository import Gio, Glib
 
-BLUEMAN_PATH = "/apps/blueman"
-BASE_KEY = "apps.blueman"
+BLUEMAN_PATH = "/org/blueman"
+BASE_KEY = "org.blueman"
 
 class GSettings(ConfigPlugin):
 	__priority__ = 0

@@ -8,11 +8,11 @@ blueman_PYTHON = 	\
 
 gschemadir = /usr/share/glib-2.0/schemas/
 blueman_SCHEMA = \
-	apps.blueman.gschema.xml \
-	apps.blueman.network.gschema.xml \
-	apps.blueman.plugins.netusage.gschema.xml \
-	apps.blueman.sdp.gschema.xml \
-	apps.blueman.transfer.gschema.xml 
+	org.blueman.gschema.xml \
+	org.blueman.network.gschema.xml \
+	org.blueman.plugins.netusage.gschema.xml \
+	org.blueman.sdp.gschema.xml \
+	org.blueman.transfer.gschema.xml 
 	
 
 CLEANFILES =		\
