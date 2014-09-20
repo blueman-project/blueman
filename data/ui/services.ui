@@ -18,6 +18,7 @@
           <object class="GtkBox" id="hbox1">
 	    <property name="orientation">horizontal</property>
             <property name="visible">True</property>
+	    <property name="vexpand">True</property>
             <child>
               <object class="GtkViewport" id="viewport1">
                 <property name="width_request">120</property>
@@ -29,6 +30,7 @@
               </object>
               <packing>
                 <property name="expand">False</property>
+		<property name="fill">True</property>
                 <property name="position">0</property>
               </packing>
             </child>
