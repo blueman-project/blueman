@@ -14,6 +14,7 @@ class DeviceSelectorWidget(Gtk.VBox):
         GObject.GObject.__init__(self)
 
         self.props.spacing = 1
+        self.props.vexpand = True
         self.set_size_request(360, 340)
 
         sw = Gtk.ScrolledWindow()
@@ -45,7 +46,7 @@ class DeviceSelectorWidget(Gtk.VBox):
 
         self.List.connect("discovery-progress", self.on_discovery_progress)
 
-        self.pack_start(sw, True, False, 0)
+        self.pack_start(sw, True, True, 0)
         self.pack_start(sitem, False, False, 0)
 
         sitem.show()
