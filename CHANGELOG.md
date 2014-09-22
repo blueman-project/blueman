@@ -4,7 +4,11 @@
 
 ### Changes
 
-* Switch to obexd for sending files
+* [obex] Switch to obexd for sending files
+
+### Bugs fixed
+
+* [ui] Fix list in device setup dialog (@infirit / Sander Sweers)
 
 ## 1.99.alpha1
 
