@@ -212,6 +212,7 @@ class BluemanAdapters:
             name = _('Adapter') + ' %d' % (hci_dev_num + 1)
         label = Gtk.Label(label=name)
         label.set_max_width_chars(20)
+        label.props.hexpand = True
         label.set_ellipsize(Pango.EllipsizeMode.END)
         self.notebook.insert_page(settings['vbox'], label, hci_dev_num)
 
