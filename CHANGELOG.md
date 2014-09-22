@@ -8,7 +8,7 @@
 
 ### Bugs fixed
 
-* [ui] Fix list in device setup dialog (@infirit / Sander Sweers)
+* [ui] Make some UI elements expand again (@infirit / Sander Sweers)
 
 ## 1.99.alpha1
 
