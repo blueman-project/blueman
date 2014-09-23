@@ -27,16 +27,18 @@ class GSettings(ConfigPlugin):
 	__priority__ = 0
 	__plugin__ = "GSettings"
 	
-	def on_load(self, section, basesuffix = ""):
-		self.section = section
-		if self.section != "":
-			self.section = "/" + self.section
+	def on_load(self, schema, path = ""):
+		self.schema = schema
+		if self.schema != "":
+			self.schema = "/" + self.schema
 		
-		self.basesuffix = basesuffix
-		if self.basesuffix != ""
-			self.basesuffix = "." + self.basesuffix
+		self.path = path
+		if self.path != ""
+			self.path = "." + self.path
+		        self.settings = Gio.Settings.new_with_path(BASE_KEY + self.path, BLUEMAN_PATH + self.schema)
+                else
+                        self.settings = Gio.Settings.new(BLUEMAN_PATH + self.schema)
 
-		self.settings = Gio.Settings.NewWithPath(BASE_KEY + self.basesuffix, BLUEMAN_PATH + self.section)
 		self.settings.connect("changed", self.value_changed)
 
 	# convert a GVariant to Python native value
