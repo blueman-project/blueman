@@ -11,6 +11,7 @@
 
 * [ui] Make some UI elements expand again (@infirit / Sander Sweers)
 * Fix crash in PluginManager (Martín Ferrari)
+* Avoid crash in transfer service setup dialog
 
 ## 1.99.alpha1
 

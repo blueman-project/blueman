@@ -103,12 +103,6 @@ class Transfer(ServicePlugin):
             return True
 
     def setup_transfer(self):
-        a = AppletService()
-        status = a.TransferStatus("opp")
-        if status == -1:
-            self.widget.props.sensitive = False
-            self.widget.props.tooltip_text = _("obex-data-server not available")
-
         self.TransConf = Config("transfer")
         self.TransConf.connect("property-changed", self.on_property_changed)
         opp_enabled = self.Builder.get_object("opp_enabled")
