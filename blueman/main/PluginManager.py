@@ -112,7 +112,7 @@ class PluginManager(GObject.GObject):
                 if not self.__classes[dep].__unloadable__:
                     cls.__unloadable__ = False
 
-            if (cls.__autoload__ or cls.__name__ in c) and not (cls.__unloadable__ and "!" + cls.__name__ in c):
+            if (cls.__autoload__ or (c and cls.__name__ in c)) and not (cls.__unloadable__ and c and "!" + cls.__name__ in c):
                 try:
                     self.__load_plugin(cls)
                 except:

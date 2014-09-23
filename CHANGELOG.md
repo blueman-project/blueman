@@ -9,6 +9,7 @@
 ### Bugs fixed
 
 * [ui] Make some UI elements expand again (@infirit / Sander Sweers)
+* Fix crash in PluginManager (Martín Ferrari)
 
 ## 1.99.alpha1
 
