@@ -5,6 +5,7 @@
 ### Changes
 
 * [obex] Switch to obexd for sending files
+* [browse] Use system's default browser for obex URI if no browse command is set
 
 ### Bugs fixed
 

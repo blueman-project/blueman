@@ -122,10 +122,8 @@ class Transfer(ServicePlugin):
         ftp_enabled.props.active = self.TransConf.props.ftp_enabled
         ftp_allow_write.props.active = self.TransConf.props.ftp_allow_write
         opp_accept.props.active = self.TransConf.props.opp_accept
-        if self.TransConf.props.browse_command is None:
-            self.TransConf.props.browse_command = DEF_BROWSE_COMMAND
-
-        obex_cmd.props.text = self.TransConf.props.browse_command
+        if self.TransConf.props.browse_command:
+            obex_cmd.props.text = self.TransConf.props.browse_command
 
         if self.TransConf.props.shared_path is not None:
             shared_path.set_current_folder(self.TransConf.props.shared_path)
