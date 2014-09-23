@@ -20,6 +20,7 @@ from blueman.gui.DeviceSelectorDialog import DeviceSelectorDialog
 from blueman.Functions import *
 from blueman.main.Config import Config
 
+from gi.repository import Gtk, Gdk
 
 class Browse:
     def __init__(self):
@@ -45,21 +46,21 @@ class Browse:
             addr = options.device
         addr = addr.strip(" ")
         conf = Config("transfer")
-        if conf.props.browse_command == None:
-            conf.props.browse_command = DEF_BROWSE_COMMAND
-        if "nautilus" in DEF_BROWSE_COMMAND:
-            if not have("nautilus"):
-                conf.props.browse_command = "thunar obex://[%d]"
 
-        cmd = conf.props.browse_command.replace("%d", addr)
-        args = cmd.split(" ")
         try:
-            spawn(args, True)
+            if conf.props.browse_command:
+                spawn(conf.props.browse_command.replace("%d", addr).split(" "), True)
+            else:
+                Gtk.show_uri(None, ('obex://[%s]' % addr), Gdk.CURRENT_TIME)
         except Exception as e:
             dprint(e)
             d = Gtk.MessageDialog(None, buttons=Gtk.ButtonsType.OK, type=Gtk.MessageType.ERROR)
-            d.props.text = _("Failed to launch \"%s\"") % args[0]
-            d.props.secondary_text = "%s\n\n" % e + _("You can enter an alternate browser in service settings")
+            if conf.props.browse_command:
+                d.props.text = _("Failed to launch \"%s\"") % conf.props.browse_command.split(' ')[0]
+            else:
+                d.props.text = _("Failed to launch default file browser")
+            d.props.secondary_text = "%s\n\n" % unicode(e.message, 'UTF-8') + \
+                                     _("You can enter an alternate browser in service settings")
             d.run()
             d.destroy()
 
