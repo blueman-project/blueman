@@ -12,6 +12,7 @@
 * [ui] Make some UI elements expand again (@infirit / Sander Sweers)
 * Fix crash in PluginManager (Martín Ferrari)
 * Avoid crash in transfer service setup dialog
+* Make blueman-applet respond to SIGTERM (@Teknocrat / Harvey Mittens)
 
 ## 1.99.alpha1
 

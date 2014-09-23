@@ -36,6 +36,7 @@ from blueman.main.PluginManager import PersistentPluginManager
 
 # Workaround introspection bug, gnome bug 622084
 signal.signal(signal.SIGINT, signal.SIG_DFL)
+signal.signal(signal.SIGTERM, signal.SIG_DFL)
 
 class BluemanApplet(object):
     def __init__(self):
