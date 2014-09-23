@@ -37,6 +37,13 @@ from blueman.main.PluginManager import PersistentPluginManager
 # Workaround introspection bug, gnome bug 622084
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
+
+def sighandler(signum, frame):
+    sys.exit(0)
+
+signal.signal(signal.SIGTERM, sighandler)
+
+
 class BluemanApplet(object):
     def __init__(self):
         setup_icon_path()
