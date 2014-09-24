@@ -33,7 +33,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkFileChooserButton" id="shared_path">
+                  <object class="GtkFileChooserButton" id="shared-path">
                     <property name="visible">True</property>
                     <property name="action">select-folder</property>
                     <property name="title" translatable="yes">Select Shared/Storage folder</property>
@@ -64,7 +64,7 @@
 		        <property name="orientation">vertical</property>
                         <property name="visible">True</property>
                         <child>
-                          <object class="GtkCheckButton" id="opp_enabled">
+                          <object class="GtkCheckButton" id="opp-enabled">
                             <property name="label" translatable="yes">Enabled</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -76,7 +76,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkCheckButton" id="opp_accept">
+                          <object class="GtkCheckButton" id="opp-accept">
                             <property name="label" translatable="yes">Accept files from trusted devices</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -119,7 +119,7 @@
 		        <property name="orientation">vertical</property>
                         <property name="visible">True</property>
                         <child>
-                          <object class="GtkCheckButton" id="ftp_enabled">
+                          <object class="GtkCheckButton" id="ftp-enabled">
                             <property name="label" translatable="yes">Enabled</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -131,7 +131,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkCheckButton" id="ftp_allow_write">
+                          <object class="GtkCheckButton" id="ftp-allow-write">
                             <property name="label" translatable="yes">Allow devices to write/delete</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>

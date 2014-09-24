@@ -52,10 +52,10 @@ class Networking(AppletPlugin):
         self.update_status()
 
     def update_status(self):
-        self.set_nap(self.Config.props.nap_enable or False)
+        self.set_nap(self.Config.props.nap-enable or False)
 
     def on_config_changed(self, config, key, value):
-        if key == "nap_enable":
+        if key == "nap-enable":
             self.set_nap(value)
 
     def set_nap(self, on):

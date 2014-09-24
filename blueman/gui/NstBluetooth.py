@@ -51,10 +51,10 @@ class NstBluetooth:
 		self.button_label.props.use_markup = True
 		self.button_label.props.ellipsize = Pango.EllipsizeMode.END
 
-		if self.config.props.last_device == None:
+		if self.config.props.last-device == None:
 			self.list.List.set_cursor((0,))
 		else:
-			iter = self.list.List.find_device(self.config.props.last_device)
+			iter = self.list.List.find_device(self.config.props.last-device)
 			if iter:
 				self.list.List.set_cursor(self.list.List.get_model().get_path(iter))
 			
@@ -83,7 +83,7 @@ class NstBluetooth:
 		self.button.props.active = False
 
 	def on_device_selected(self, treeview, device, iter):
-		self.config.props.last_device = str(device.Address)
+		self.config.props.last-device = str(device.Address)
 		
 		self.button_label.props.label = "<b>%s</b> (%s)" % (device.Alias, device.Address)
 		self.button_label.props.tooltip_markup = self.button_label.props.label

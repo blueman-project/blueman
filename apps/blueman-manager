@@ -69,26 +69,26 @@ class Blueman:
 
         def on_window_delete(window, event):
             (x, y) = self.window.get_size()
-            self.Config.props.window_height = y
-            self.Config.props.window_width = x
+            self.Config.props.window-height = y
+            self.Config.props.window-width = x
 
             (x, y) = self.window.get_position()
-            self.Config.props.window_posx = x
-            self.Config.props.window_posy = y
+            self.Config.props.window-posx = x
+            self.Config.props.window-posy = y
             Gtk.main_quit()
 
         def on_property_changed(config, key, value):
-            if key == "show_toolbar":
+            if key == "show-toolbar":
                 if value:
                     self.Builder.get_object("toolbar2").props.visible = True
                 else:
                     self.Builder.get_object("toolbar2").props.visible = False
-            elif key == "show_statusbar":
+            elif key == "show-statusbar":
                 if value:
                     self.Builder.get_object("statusbar").props.visible = True
                 else:
                     self.Builder.get_object("statusbar").props.visible = False
-            elif key == "latest_last":
+            elif key == "latest-last":
                 try:
                     self.List.DisplayKnownDevices(autoselect=True)
                 except:
@@ -140,19 +140,19 @@ class Blueman:
                 self.window.connect("delete-event", on_window_delete)
                 self.window.props.icon_name = "blueman"
 
-                h = self.Config.props.window_height
-                w = self.Config.props.window_width
+                h = self.Config.props.window-height
+                w = self.Config.props.window-width
                 if w != None and h != None:
                     self.window.resize(w, h)
 
-                x = self.Config.props.window_posx
-                y = self.Config.props.window_posy
+                x = self.Config.props.window-posx
+                y = self.Config.props.window-posy
                 if x and y:
                     self.window.move(x, y)
 
                 sw = self.Builder.get_object("scrollview")
 
-                self.List = ManagerDeviceList(adapter=self.Config.props.last_adapter, inst=self)
+                self.List = ManagerDeviceList(adapter=self.Config.props.last-adapter, inst=self)
 
                 self.List.show()
                 sw.add(self.List)
@@ -168,11 +168,11 @@ class Blueman:
 
                 self.Config.connect("property-changed", on_property_changed)
 
-                if self.Config.props.show_toolbar != None:
-                    on_property_changed(self.Config, "show_toolbar", self.Config.props.show_toolbar)
+                if self.Config.props.show-toolbar != None:
+                    on_property_changed(self.Config, "show-toolbar", self.Config.props.show-toolbar)
 
-                if self.Config.props.show_statusbar != None:
-                    on_property_changed(self.Config, "show_statusbar", self.Config.props.show_statusbar)
+                if self.Config.props.show-statusbar != None:
+                    on_property_changed(self.Config, "show-statusbar", self.Config.props.show-statusbar)
 
                 self.window.show()
 

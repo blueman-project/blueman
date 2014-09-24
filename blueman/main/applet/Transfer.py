@@ -23,11 +23,11 @@ class Transfer(OdsManager):
         self.Config = Config("transfer")
 
         #check options
-        if self.Config.props.opp_enabled == None:
-            self.Config.props.opp_enabled = True
+        if self.Config.props.opp-enabled == None:
+            self.Config.props.opp-enabled = True
 
-        if self.Config.props.ftp_enabled == None:
-            self.Config.props.ftp_enabled = True
+        if self.Config.props.ftp-enabled == None:
+            self.Config.props.ftp-enabled = True
 
         self.create_server("opp")
         self.create_server("ftp")
@@ -37,33 +37,33 @@ class Transfer(OdsManager):
     def create_server(self, pattern):
 
         if pattern == "opp":
-            if self.Config.props.opp_enabled:
+            if self.Config.props.opp-enabled:
                 OdsManager.create_server(self)
         elif pattern == "ftp":
-            if self.Config.props.ftp_enabled:
+            if self.Config.props.ftp-enabled:
                 OdsManager.create_server(self, pattern="ftp", require_pairing=True)
 
 
     def start_server(self, pattern):
         server = self.get_server(pattern)
         if server != None:
-            if self.Config.props.shared_path == None:
+            if self.Config.props.shared-path == None:
                 d = get_special_dir(SpecialDirType.PUBLIC_SHARE)
                 if d == None:
-                    self.Config.props.shared_path = os.path.expanduser("~")
+                    self.Config.props.shared-path = os.path.expanduser("~")
                 else:
-                    self.Config.props.shared_path = d
+                    self.Config.props.shared-path = d
 
-            if not os.path.isdir(self.Config.props.shared_path):
-                raise Exception("Configured share directory %s does not exist" % self.Config.props.shared_path)
+            if not os.path.isdir(self.Config.props.shared-path):
+                raise Exception("Configured share directory %s does not exist" % self.Config.props.shared-path)
 
             if pattern == "opp":
-                server.Start(self.Config.props.shared_path, True, False)
+                server.Start(self.Config.props.shared-path, True, False)
             elif pattern == "ftp":
-                if self.Config.props.ftp_allow_write == None:
-                    self.Config.props.ftp_allow_write = False
+                if self.Config.props.ftp-allow-write == None:
+                    self.Config.props.ftp-allow-write = False
 
-                server.Start(self.Config.props.shared_path, self.Config.props.ftp_allow_write, True)
+                server.Start(self.Config.props.shared-path, self.Config.props.ftp-allow-write, True)
             return True
         else:
             return False
@@ -144,7 +144,7 @@ class Transfer(OdsManager):
                     wsession.Reject()
                 wsession.transfer["waiting"] = False
 
-        if info["BluetoothAddress"] not in self.allowed_devices and not (self.Config.props.opp_accept and trusted):
+        if info["BluetoothAddress"] not in self.allowed_devices and not (self.Config.props.opp-accept and trusted):
 
             n = Notification(_("Incoming file over Bluetooth"),
                              _("Incoming file %(0)s from %(1)s") % {"0": "<b>" + os.path.basename(filename) + "</b>",
@@ -244,7 +244,7 @@ class Transfer(OdsManager):
                                          "silent_transfers"],
                                      pixbuf=icon, status_icon=self.status_icon)
 
-                    self.add_open(n, "Open Location", self.Config.props.shared_path)
+                    self.add_open(n, "Open Location", self.Config.props.shared-path)
 
                 elif session.transfer["normal_transfers"] > 0 and session.transfer["silent_transfers"] > 0:
 
@@ -254,7 +254,7 @@ class Transfer(OdsManager):
                                               session.transfer["silent_transfers"]) % session.transfer[
                                          "silent_transfers"],
                                      pixbuf=icon, status_icon=self.status_icon)
-                    self.add_open(n, "Open Location", self.Config.props.shared_path)
+                    self.add_open(n, "Open Location", self.Config.props.shared-path)
 
                 del session.transfer
                 del session.server

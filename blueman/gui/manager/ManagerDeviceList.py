@@ -220,7 +220,7 @@ class ManagerDeviceList(DeviceList):
 			GObject.idle_add(self.props.vadjustment.set_value , 0)
 			return
 
-		if self.Blueman.Config.props.latest_last:
+		if self.Blueman.Config.props.latest-last:
 			self.AppendDevice(device)
 		else:
 			self.PrependDevice(device)
