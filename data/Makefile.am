@@ -8,9 +8,19 @@ appdir = $(datadir)/applications
 app_in_files = blueman-manager.desktop.in
 app_DATA = $(app_in_files:.desktop.in=.desktop)
 
+gsettings_SCHEMAS = \
+	org.blueman.gschema.xml \
+	org.blueman.network.gschema.xml \
+	org.blueman.plugins.netusage.gschema.xml \
+	org.blueman.sdp.gschema.xml \
+	org.blueman.transfer.gschema.xml
 
-EXTRA_DIST = 	$(autostart_in_files)	\
-		$(app_in_files)
+# include the appropriate makefile rules for schema handling
+@GSETTINGS_RULES@
+
+EXTRA_DIST = 	$(autostart_in_files) \
+		$(app_in_files) \
+		$(gsettings_SCHEMAS)
 
 SUBDIRS = 		\
 	configs		\
@@ -19,9 +29,10 @@ SUBDIRS = 		\
 	man
 
 CLEANFILES =		\
-	blueman-manager.desktop	\
-	blueman.desktop		\
-	$(BUILT_SOURCES)
+	blueman-manager.desktop \
+	blueman.desktop \
+	$(BUILT_SOURCES) \
+	*.gschema.valid
 	
 DISTCLEANFILES = \
 	$(CLEANFILES)
