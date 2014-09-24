@@ -48,15 +48,15 @@ class Browse:
         conf = Config("transfer")
 
         try:
-            if conf.props.browse_command:
-                spawn(conf.props.browse_command.replace("%d", addr).split(" "), True)
+            if conf.props.browse-command:
+                spawn(conf.props.browse-command.replace("%d", addr).split(" "), True)
             else:
                 Gtk.show_uri(None, ('obex://[%s]' % addr), Gdk.CURRENT_TIME)
         except Exception as e:
             dprint(e)
             d = Gtk.MessageDialog(None, buttons=Gtk.ButtonsType.OK, type=Gtk.MessageType.ERROR)
-            if conf.props.browse_command:
-                d.props.text = _("Failed to launch \"%s\"") % conf.props.browse_command.split(' ')[0]
+            if conf.props.browse-command:
+                d.props.text = _("Failed to launch \"%s\"") % conf.props.browse-command.split(' ')[0]
             else:
                 d.props.text = _("Failed to launch default file browser")
             d.props.secondary_text = "%s\n\n" % unicode(e.message, 'UTF-8') + \
