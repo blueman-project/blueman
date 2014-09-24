@@ -1,7 +1,6 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
-  <schema id="org.blueman.gsmsettings" path="">
+  <schema id="org.blueman.gsmsettings" path="/org/blueman/plugins/gsmsettings/">
       <key type="s" name="apn">
          <default>""</default>
          <summary>APN</summary>
@@ -12,11 +11,10 @@
          <summary>PhoneNumber</summary>
          <description>Phone Number</description>
       </key>
-      <key type="s" name="bd_address">
-         <default></default>
+      <key type="s" name="bd-address">
+         <default>""</default>
          <summary>Device Address</summary>
          <description>Bluetooth Device Address</description>
       </key>
-
   </schema>
 </schemalist>

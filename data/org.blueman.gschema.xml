@@ -1,49 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
   <schema id="org.blueman" path="/org/blueman/">
-      <key type="i" name="window_height">
+      <key type="i" name="window-height">
          <default>0</default>
          <summary>Height Of Window</summary>
          <description>Height of Main Window</description>
       </key>
-      <key type="i" name="window_width">
+      <key type="i" name="window-width">
          <default>250</default>
          <summary>Width Of Window</summary>
          <description>Width of Main Window</description>
       </key>
-      <key type="i" name="window_posx">
+      <key type="i" name="window-posx">
          <default>0</default>
          <summary>X Position Of Window</summary>
          <description>X Position of Main Window</description>
       </key>
-      <key type="i" name="window_posy">
+      <key type="i" name="window-posy">
          <default>0</default>
          <summary>X Position Of Window</summary>
          <description>X Position of Main Window</description>
       </key>
-      <key type="s" name="last_adapter">
+      <key type="s" name="last-adapter">
          <default>""</default>
          <summary>Last Adapter Used</summary>
          <description>Last Bluetooth Adapter Used</description>
       </key>
-	  <key type="s" name="services_last_item">
+	  <key type="s" name="services-last-item">
          <default>""</default>
          <summary>Last Item Used</summary>
          <description>Last Bluetooth Item Used</description>
       </key>
-      <key type="b" name="show_toolbar">
-         <default>1</default>
+      <key type="b" name="show-toolbar">
+         <default>true</default>
          <summary>Show ToolBar</summary>
          <description>Main Window ToolBar</description>
       </key>
-	  <key type="b" name="show_statusbar">
-         <default>1</default>
+	  <key type="b" name="show-statusbar">
+         <default>true</default>
          <summary>Show StatusBar</summary>
          <description>Main Window StatusBar</description>
       </key>
-      <!-- Not Sure How to Encode This Type -->
-      <key type="*" name="latest_last">
-         <default></default>
+      <key type="b" name="latest-last">
+         <default>true</default>
          <summary></summary>
          <description></description>
       </key>

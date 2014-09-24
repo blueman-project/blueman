@@ -1,7 +1,6 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
-  <schema id="org.blueman.plugins.netusage" path="">
+  <schema id="org.blueman.plugins.netusage" path="/org/blueman/plugins/netusage/">
       <key type="i" name="tx">
          <default>0</default>
          <summary>TX</summary>
@@ -18,7 +17,7 @@
          <description>Current TimeStamp</description>
       </key>
       <key type="s" name="address">
-         <default></default>
+         <default>""</default>
          <summary>Device Address</summary>
          <description>Bluetooth Device Address</description>
       </key>

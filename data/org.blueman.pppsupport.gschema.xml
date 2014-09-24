@@ -1,14 +1,13 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
-  <schema id="org.blueman.plugins.pppsupport" path="">
+  <schema id="org.blueman.plugins.pppsupport" path="/org/blueman/plugins/pppsupport/">
       <key type="s" name="apn">
-         <default>0</default>
+         <default>""</default>
          <summary>APN</summary>
          <description>APN</description>
       </key>
       <key type="s" name="number">
-         <default>0</default>
+         <default>""</default>
          <summary>Number</summary>
          <description>Phone Number</description>
       </key>
@@ -17,6 +16,5 @@
          <summary>Device Address</summary>
          <description>Bluetooth Device Address</description>
       </key>
-
   </schema>
 </schemalist>
