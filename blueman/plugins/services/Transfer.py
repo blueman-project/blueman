@@ -37,17 +37,17 @@ class Transfer(ServicePlugin):
 
     def on_property_changed(self, config, key, value):
 
-        if key == "opp_enabled":
+        if key == "opp-enabled":
             self.Builder.get_object(key).props.active = value
-        if key == "ftp_enabled":
+        if key == "ftp-enabled":
             self.Builder.get_object(key).props.active = value
-        if key == "ftp_allow_write":
+        if key == "ftp-allow-write":
             self.Builder.get_object(key).props.active = value
-        if key == "shared_path":
+        if key == "shared-path":
             self.Builder.get_object(key).set_current_folder(value)
-        if key == "browse_command":
+        if key == "browse-command":
             return
-        if key == "shared_path":
+        if key == "shared-path":
             self.option_changed_notify(key, False)
         else:
             self.option_changed_notify(key)
@@ -61,16 +61,16 @@ class Transfer(ServicePlugin):
                 dprint("failed to connect to applet")
             else:
                 c = self.get_options()
-                if "opp_enabled" in c:
-                    if not self.TransConf.props.opp_enabled:
+                if "opp-enabled" in c:
+                    if not self.TransConf.props.opp-enabled:
                         a.TransferControl("opp", "destroy")
 
-                if "ftp_enabled" in c:
-                    if not self.TransConf.props.ftp_enabled:
+                if "ftp-enabled" in c:
+                    if not self.TransConf.props.ftp-enabled:
                         a.TransferControl("ftp", "destroy")
 
-                if "opp_accept" in c or "shared_path" in c or "opp_enabled" in c:
-                    if self.TransConf.props.opp_enabled:
+                if "opp-accept" in c or "shared-path" in c or "opp-enabled" in c:
+                    if self.TransConf.props.opp-enabled:
                         state = a.TransferStatus("opp")
                         if state == 0:  # destroyed
                             a.TransferControl("opp", "create")
@@ -80,8 +80,8 @@ class Transfer(ServicePlugin):
                         elif state == 1:
                             a.TransferControl("opp", "start")
 
-                if "ftp_allow_write" in c or "shared_path" in c or "ftp_enabled" in c:
-                    if self.TransConf.props.ftp_enabled:
+                if "ftp-allow-write" in c or "shared-path" in c or "ftp-enabled" in c:
+                    if self.TransConf.props.ftp-enabled:
                         state = a.TransferStatus("ftp")
                         if state == 0:  # destroyed
                             a.TransferControl("ftp", "create")
@@ -105,27 +105,27 @@ class Transfer(ServicePlugin):
     def setup_transfer(self):
         self.TransConf = Config("transfer")
         self.TransConf.connect("property-changed", self.on_property_changed)
-        opp_enabled = self.Builder.get_object("opp_enabled")
-        ftp_enabled = self.Builder.get_object("ftp_enabled")
-        ftp_allow_write = self.Builder.get_object("ftp_allow_write")
-        opp_accept = self.Builder.get_object("opp_accept")
-        shared_path = self.Builder.get_object("shared_path")
+        opp-enabled = self.Builder.get_object("opp-enabled")
+        ftp-enabled = self.Builder.get_object("ftp-enabled")
+        ftp-allow-write = self.Builder.get_object("ftp-allow-write")
+        opp-accept = self.Builder.get_object("opp-accept")
+        shared-path = self.Builder.get_object("shared-path")
         obex_cmd = self.Builder.get_object("e_obex_cmd")
 
-        opp_enabled.props.active = self.TransConf.props.opp_enabled
-        ftp_enabled.props.active = self.TransConf.props.ftp_enabled
-        ftp_allow_write.props.active = self.TransConf.props.ftp_allow_write
-        opp_accept.props.active = self.TransConf.props.opp_accept
-        if self.TransConf.props.browse_command:
-            obex_cmd.props.text = self.TransConf.props.browse_command
+        opp-enabled.props.active = self.TransConf.props.opp-enabled
+        ftp-enabled.props.active = self.TransConf.props.ftp-enabled
+        ftp-allow-write.props.active = self.TransConf.props.ftp-allow-write
+        opp-accept.props.active = self.TransConf.props.opp-accept
+        if self.TransConf.props.browse-command:
+            obex_cmd.props.text = self.TransConf.props.browse-command
 
-        if self.TransConf.props.shared_path is not None:
-            shared_path.set_current_folder(self.TransConf.props.shared_path)
+        if self.TransConf.props.shared-path is not None:
+            shared-path.set_current_folder(self.TransConf.props.shared-path)
 
-        obex_cmd.connect("changed", lambda x: setattr(self.TransConf.props, "browse_command", x.props.text))
-        opp_enabled.connect("toggled", lambda x: setattr(self.TransConf.props, "opp_enabled", x.props.active))
-        ftp_enabled.connect("toggled", lambda x: setattr(self.TransConf.props, "ftp_enabled", x.props.active))
-        ftp_allow_write.connect("toggled", lambda x: setattr(self.TransConf.props, "ftp_allow_write", x.props.active))
-        opp_accept.connect("toggled", lambda x: setattr(self.TransConf.props, "opp_accept", x.props.active))
-        shared_path.connect("current-folder-changed",
-                            lambda x: setattr(self.TransConf.props, "shared_path", x.get_filename()))
+        obex_cmd.connect("changed", lambda x: setattr(self.TransConf.props, "browse-command", x.props.text))
+        opp-enabled.connect("toggled", lambda x: setattr(self.TransConf.props, "opp-enabled", x.props.active))
+        ftp-enabled.connect("toggled", lambda x: setattr(self.TransConf.props, "ftp-enabled", x.props.active))
+        ftp-allow-write.connect("toggled", lambda x: setattr(self.TransConf.props, "ftp-allow-write", x.props.active))
+        opp-accept.connect("toggled", lambda x: setattr(self.TransConf.props, "opp-accept", x.props.active))
+        shared-path.connect("current-folder-changed",
+                            lambda x: setattr(self.TransConf.props, "shared-path", x.get_filename()))

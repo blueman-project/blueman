@@ -89,7 +89,7 @@ class ManagerProgressbar(GObject.GObject):
 		self.signals.Handle("gobject", super(ManagerProgressbar, self), *args)
 		
 	def show(self):
-		if self.Blueman.Config.props.show_statusbar == False:
+		if self.Blueman.Config.props.show-statusbar == False:
 			self.Blueman.Builder.get_object("statusbar").props.visible = True
 
 		
@@ -136,7 +136,7 @@ class ManagerProgressbar(GObject.GObject):
 						break
 						
 			if ManagerProgressbar.__instances__ == []:
-				if self.Blueman.Config.props.show_statusbar == False:
+				if self.Blueman.Config.props.show-statusbar == False:
 					self.Blueman.Builder.get_object("statusbar").props.visible = False
 					
 			self.signals.DisconnectAll()

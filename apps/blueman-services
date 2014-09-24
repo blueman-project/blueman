@@ -60,7 +60,7 @@ class BluemanServices:
         self.load_plugins()
 
         try:
-            ls.selection.select_path(self.Config.props.services_last_item)
+            ls.selection.select_path(self.Config.props.services-last-item)
         except:
             ls.selection.select_path(0)
 
@@ -152,7 +152,7 @@ class BluemanServices:
         iter = self.List.selected()
         if self.List.get_cursor()[0]:
             # GtkTreePath returns row when used as string
-            self.Config.props.services_last_item = int(str(self.List.get_cursor()[0]))
+            self.Config.props.services-last-item = int(str(self.List.get_cursor()[0]))
         row = self.List.get(iter, "id")
         id = row["id"]
 

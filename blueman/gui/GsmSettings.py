@@ -23,10 +23,10 @@ from blueman.Constants import *
 from gi.repository import Gtk
 
 class GsmSettings(Gtk.Dialog):
-	def __init__(self, bd_address):
+	def __init__(self, bd-address):
 		GObject.GObject.__init__(self)
 		
-		self.device = bd_address
+		self.device = bd-address
 		
 		self.Builder = Gtk.Builder()
 		self.Builder.set_translation_domain("blueman")
@@ -34,7 +34,7 @@ class GsmSettings(Gtk.Dialog):
 		
 		vbox = self.Builder.get_object("vbox1")
 		
-		self.config = Config("gsm_settings/" + bd_address, "gsmsettings")
+		self.config = Config("gsm_settings/" + bd-address, "gsmsettings")
 		self.props.icon_name = "network-wireless"
 		self.props.title = _("GSM Settings")
 		
@@ -47,7 +47,7 @@ class GsmSettings(Gtk.Dialog):
 		self.e_apn = self.Builder.get_object("e_apn")
 		self.e_number = self.Builder.get_object("e_number")
 		
-		self.config.props.bd_address = bd_address
+		self.config.props.bd-address = bd-address
 		
 		if self.config.props.apn == None:
 			self.config.props.apn = ""
