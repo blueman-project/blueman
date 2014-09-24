@@ -10,8 +10,10 @@ app_DATA = $(app_in_files:.desktop.in=.desktop)
 
 gsettings_SCHEMAS = \
 	org.blueman.gschema.xml \
+	org.blueman.gsmsettings.gschema.xml \
+	org.blueman.netusage.gschema.xml \
 	org.blueman.network.gschema.xml \
-	org.blueman.plugins.netusage.gschema.xml \
+	org.blueman.pppsupport.gschema.xml \
 	org.blueman.sdp.gschema.xml \
 	org.blueman.transfer.gschema.xml
 
