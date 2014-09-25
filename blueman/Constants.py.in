@@ -10,6 +10,14 @@ DHCP_CONFIG_FILE = "@dhconfig@"
 POLKIT = "@polkit_val@" == "yes"
 HAL_ENABLED = "@hal_en@" == "yes"
 
+# BASE_KEYS for gsettings
+BLUEMAN_GENERAL_GSCHEMA = "org.blueman.general"
+BLUEMAN_GSMSETTINGS_GSCHEMA = "org.blueman.gsmsettings"
+BLUEMAN_NETUSAGE_GSCHEMA = "org.blueman.netusage"
+BLUEMAN_NETWORK_GSCHEMA = "org.blueman.network"
+BLUEMAN_SDP_GSCHEMA = "org.blueman.sdp"
+BLUEMAN_TRANSFER_GSCHEMA = "org.blueman.transfer"
+
 import os
 import gettext
 import __builtin__
