@@ -1,7 +1,6 @@
 from blueman.Functions import *
 from blueman.Constants import *
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.main.Config import Config
 from blueman.main.SignalTracker import SignalTracker
 from blueman.bluez.Device import Device as BluezDevice
 from blueman.bluez.Network import Network
@@ -13,6 +12,7 @@ import os
 import cgi
 from gi.repository import Gtk
 from gi.repository import Pango
+from gi.repository import Gio
 import dbus
 import time
 import datetime
@@ -30,19 +30,12 @@ class MonitorBase(GObject.GObject):
 
         self.interface = interface
         self.device = device
-        self.config = Config("plugins/NetUsage/%s" % device.Address, "plugins.netusage")
+        self.Settings = Gio.Settings.new_with_path(BLUEMAN_NETUSAGE_GSCHEMA, BLUEMAN_NETUSAGE_PATH + str(device.Address + "/"))
 
-        self.last_tx = 0
-        self.last_rx = 0
+        self.Settings["address"] = device.Address
 
-        self.config.props.address = device.Address
-
-        if not self.config.props.tx:
-            self.config.props.tx = "0"
-        if not self.config.props.rx:
-            self.config.props.rx = "0"
-        if not self.config.props.time:
-            self.config.props.time = int(time.time())
+        self.last_tx = self.Settings["tx"]
+        self.last_rx = self.Settings["rx"]
 
     #tx and rx must be cumulative absolute values
     def update_stats(self, tx, rx):
@@ -57,11 +50,11 @@ class MonitorBase(GObject.GObject):
         self.last_rx = rx
         self.last_tx = tx
         if dtx > 0:
-            self.config.props.tx = str(int(self.config.props.tx) + dtx)
+            self.Settings["tx"] = int(self.Settings["tx"]) + dtx
         if drx > 0:
-            self.config.props.rx = str(int(self.config.props.rx) + drx)
+            self.Setting["rx"] = int(self.Setting["rx"]) + drx
 
-        self.emit("stats", int(self.config.props.tx), int(self.config.props.rx))
+        self.emit("stats", int(self.Settings["tx"]), int(self.Settings["rx"]))
 
 
     def Disconnect(self):
@@ -114,7 +107,7 @@ class Monitor(MonitorBase):
             self.poller = None
             self.ppp_port = None
             self.interface = None
-            self.config = None
+            self.Settings = None
             self.Disconnect()
             return False
 
@@ -131,7 +124,7 @@ class Dialog:
             Dialog.running = True
         else:
             return
-        self.config = None
+        self.Settings = None
         self.parent = parent
         builder = Gtk.Builder()
         builder.add_from_file(UI_PATH + "/net-usage.ui")
@@ -223,7 +216,7 @@ class Dialog:
         self.dialog.destroy()
 
     def update_time(self):
-        time = self.config.props.time
+        time = self.Settings["time"]
         if time:
             self.datetime = datetime.datetime.fromtimestamp(time)
 
@@ -244,8 +237,8 @@ class Dialog:
     def on_selection_changed(self, cb):
         iter = cb.get_active_iter()
         (addr,) = self.liststore.get(iter, 0)
-        self.config = Config("plugins/NetUsage/" + addr)
-        self.update_counts(self.config.props.tx, self.config.props.rx)
+        self.Settings = Gio.Settings.new_with_path(BLUEMAN_NETUSAGE_GSCHEMA, BLUEMAN_NETUSAGE_PATH + addr + "/")
+        self.update_counts(self.Settings["tx"], self.Settings["rx"])
         self.update_time()
 
     def get_caption(self, name, address):
@@ -273,9 +266,9 @@ class Dialog:
         res = d.run()
         d.destroy()
         if res == Gtk.ResponseType.YES:
-            self.config.props.rx = "0"
-            self.config.props.tx = "0"
-            self.config.props.time = int(time.time())
+            self.Settings["rx"] = "0"
+            self.Settings["tx"] = "0"
+            self.Settings["time"] = int(time.time())
 
             self.update_counts(0, 0)
 

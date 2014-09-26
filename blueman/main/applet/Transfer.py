@@ -1,11 +1,10 @@
 from blueman.main.SpeedCalc import SpeedCalc
-from blueman.main.Config import Config
 from blueman.ods.OdsManager import OdsManager
 from blueman.main.Device import Device
 from blueman.Functions import *
 from blueman.Lib import get_special_dir, SpecialDirType
 import os
-from gi.repository import GObject
+from gi.repository import GObject, Gio
 from blueman.gui.Notification import Notification
 import weakref
 
@@ -20,14 +19,7 @@ class Transfer(OdsManager):
             self.status_icon = None
 
         self.GHandle("server-created", self.on_server_created)
-        self.Config = Config("transfer")
-
-        #check options
-        if self.Config.props.opp-enabled == None:
-            self.Config.props.opp-enabled = True
-
-        if self.Config.props.ftp-enabled == None:
-            self.Config.props.ftp-enabled = True
+        self.Settings = Gio.Settings.new(BLUEMAN_TRANSFER_GSCHEMA)
 
         self.create_server("opp")
         self.create_server("ftp")
@@ -37,33 +29,30 @@ class Transfer(OdsManager):
     def create_server(self, pattern):
 
         if pattern == "opp":
-            if self.Config.props.opp-enabled:
+            if self.Settings["opp-enabled"]:
                 OdsManager.create_server(self)
         elif pattern == "ftp":
-            if self.Config.props.ftp-enabled:
+            if self.Settings["ftp-enabled"]:
                 OdsManager.create_server(self, pattern="ftp", require_pairing=True)
 
 
     def start_server(self, pattern):
         server = self.get_server(pattern)
         if server != None:
-            if self.Config.props.shared-path == None:
+            if not self.Settings["shared-path"]:
                 d = get_special_dir(SpecialDirType.PUBLIC_SHARE)
                 if d == None:
-                    self.Config.props.shared-path = os.path.expanduser("~")
+                    self.Settings["shared-path"] = os.path.expanduser("~")
                 else:
-                    self.Config.props.shared-path = d
+                    self.Settings["shared-path"] = d
 
-            if not os.path.isdir(self.Config.props.shared-path):
-                raise Exception("Configured share directory %s does not exist" % self.Config.props.shared-path)
+            if not os.path.isdir(self.Settings["shared-path"]):
+                raise Exception("Configured share directory %s does not exist" % self.Settings["shared-path"])
 
             if pattern == "opp":
-                server.Start(self.Config.props.shared-path, True, False)
+                server.Start(self.Settings["shared-path"], True, False)
             elif pattern == "ftp":
-                if self.Config.props.ftp-allow-write == None:
-                    self.Config.props.ftp-allow-write = False
-
-                server.Start(self.Config.props.shared-path, self.Config.props.ftp-allow-write, True)
+                server.Start(self.Settings["shared-path"], self.Settings["ftp-allow-write"], True)
             return True
         else:
             return False
@@ -144,7 +133,7 @@ class Transfer(OdsManager):
                     wsession.Reject()
                 wsession.transfer["waiting"] = False
 
-        if info["BluetoothAddress"] not in self.allowed_devices and not (self.Config.props.opp-accept and trusted):
+        if info["BluetoothAddress"] not in self.allowed_devices and not (self.Settings["opp-accept"] and trusted):
 
             n = Notification(_("Incoming file over Bluetooth"),
                              _("Incoming file %(0)s from %(1)s") % {"0": "<b>" + os.path.basename(filename) + "</b>",
@@ -244,7 +233,7 @@ class Transfer(OdsManager):
                                          "silent_transfers"],
                                      pixbuf=icon, status_icon=self.status_icon)
 
-                    self.add_open(n, "Open Location", self.Config.props.shared-path)
+                    self.add_open(n, "Open Location", self.Settings["shared-path"])
 
                 elif session.transfer["normal_transfers"] > 0 and session.transfer["silent_transfers"] > 0:
 
@@ -254,7 +243,7 @@ class Transfer(OdsManager):
                                               session.transfer["silent_transfers"]) % session.transfer[
                                          "silent_transfers"],
                                      pixbuf=icon, status_icon=self.status_icon)
-                    self.add_open(n, "Open Location", self.Config.props.shared-path)
+                    self.add_open(n, "Open Location", self.Settings["shared-path"])
 
                 del session.transfer
                 del session.server

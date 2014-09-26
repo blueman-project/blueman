@@ -9,6 +9,7 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import GObject
+from gi.repository import Gio
 from blueman.bluez.BlueZInterface import BlueZInterface
 
 #support running uninstalled
@@ -24,7 +25,6 @@ from blueman.gui.manager.ManagerToolbar import ManagerToolbar
 from blueman.gui.manager.ManagerMenu import ManagerMenu
 from blueman.gui.manager.ManagerStats import ManagerStats
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
-from blueman.main.Config import Config
 
 from blueman.gui.MessageArea import MessageArea
 
@@ -36,7 +36,6 @@ from blueman.plugins.ManagerPlugin import ManagerPlugin
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 enable_rgba_colormap()
-
 
 class Blueman:
     def __init__(self):
@@ -69,30 +68,21 @@ class Blueman:
 
         def on_window_delete(window, event):
             (x, y) = self.window.get_size()
-            self.Config.props.window-height = y
-            self.Config.props.window-width = x
+            self.Settings["window-height"] = y
+            self.Settings["window-width"] = x
 
             (x, y) = self.window.get_position()
-            self.Config.props.window-posx = x
-            self.Config.props.window-posy = y
+            self.Settings["window-posx"] = x
+            self.Settings["window-posy"] = y
+
+            self.Settings.sync()
             Gtk.main_quit()
 
-        def on_property_changed(config, key, value):
-            if key == "show-toolbar":
-                if value:
-                    self.Builder.get_object("toolbar2").props.visible = True
-                else:
-                    self.Builder.get_object("toolbar2").props.visible = False
-            elif key == "show-statusbar":
-                if value:
-                    self.Builder.get_object("statusbar").props.visible = True
-                else:
-                    self.Builder.get_object("statusbar").props.visible = False
-            elif key == "latest-last":
-                try:
-                    self.List.DisplayKnownDevices(autoselect=True)
-                except:
-                    pass
+        def on_latest_last_changed():
+            try:
+                self.List.DisplayKnownDevices(autoselect=True)
+            except:
+                pass
 
         def on_bt_status_changed(status):
             if not status:
@@ -123,7 +113,7 @@ class Blueman:
 
                 setup_icon_path()
 
-                self.Config = Config()
+                self.Settings = Gio.Settings.new(BLUEMAN_GENERAL_GSCHEMA)
 
                 try:
                     self.Applet = AppletService()
@@ -140,19 +130,19 @@ class Blueman:
                 self.window.connect("delete-event", on_window_delete)
                 self.window.props.icon_name = "blueman"
 
-                h = self.Config.props.window-height
-                w = self.Config.props.window-width
+                h = self.Settings["window-height"]
+                w = self.Settings["window-width"]
                 if w != None and h != None:
                     self.window.resize(w, h)
 
-                x = self.Config.props.window-posx
-                y = self.Config.props.window-posy
+                x = self.Settings["window-posx"]
+                y = self.Settings["window-posy"]
                 if x and y:
                     self.window.move(x, y)
 
                 sw = self.Builder.get_object("scrollview")
 
-                self.List = ManagerDeviceList(adapter=self.Config.props.last-adapter, inst=self)
+                self.List = ManagerDeviceList(adapter=self.Settings["last-adapter"], inst=self)
 
                 self.List.show()
                 sw.add(self.List)
@@ -166,13 +156,13 @@ class Blueman:
 
                 self.List.connect("adapter-changed", self.on_adapter_changed)
 
-                self.Config.connect("property-changed", on_property_changed)
+                # FIXME need to look into the below, can not connect to a single object.
+                self.Settings.connect("changed::latest-last", on_latest_last_changed)
 
-                if self.Config.props.show-toolbar != None:
-                    on_property_changed(self.Config, "show-toolbar", self.Config.props.show-toolbar)
-
-                if self.Config.props.show-statusbar != None:
-                    on_property_changed(self.Config, "show-statusbar", self.Config.props.show-statusbar)
+                toolbar2 = self.Builder.get_object("toolbar2")
+                statusbar = self.Builder.get_object("statusbar")
+                self.Settings.bind("show-toolbar", toolbar2, "visible", Gio.SettingsBindFlags.DEFAULT)
+                self.Settings.bind("show-statusbar", statusbar, "visible", Gio.SettingsBindFlags.DEFAULT)
 
                 self.window.show()
 
@@ -290,6 +280,5 @@ class Blueman:
     def disconnect(self, device, *args, **kwargs):
         applet = AppletService()
         applet.DisconnectDevice(device.get_object_path(), *args, **kwargs)
-
 
 Blueman()
