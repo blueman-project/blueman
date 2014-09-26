@@ -267,7 +267,7 @@ class DeviceList(GenericList):
             self.emit("adapter-property-changed", self.Adapter, ("Discovering", False))
             self.StopDiscovery()
 
-        if adapter is not None and not re.match("hci[0-9]*", adapter):
+        if adapter and not re.match("hci[0-9]*", adapter):
             adapter = adapter_path_to_name(adapter)
 
         dprint(adapter)

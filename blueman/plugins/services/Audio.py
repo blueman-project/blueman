@@ -17,14 +17,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 
-from gi.repository import Gtk
+from gi.repository import Gtk, Gio
 import dbus
 from blueman.Constants import *
 from blueman.plugins.ServicePlugin import ServicePlugin
 
 from blueman.main.AppletService import AppletService
 from blueman.main.BluezConfig import BluezConfig
-from blueman.main.Config import Config
 from blueman.Functions import dprint
 from blueman.main.Mechanism import Mechanism
 

@@ -1,7 +1,6 @@
 from blueman.Functions import *
 import pickle
 import base64
-from blueman.main.Config import Config
 from blueman.Sdp import parse_sdp_xml, sdp_save
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.applet.BluezAgent import AdapterAgent

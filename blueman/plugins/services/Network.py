@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 
-from gi.repository import Gtk
+from gi.repository import Gtk, Gio
 from blueman.Constants import *
 from blueman.Functions import have, dprint, mask_ip4_address
 from blueman.Lib import get_net_interfaces, get_net_address, get_net_netmask
@@ -25,7 +25,6 @@ from socket import inet_ntoa, inet_aton
 from blueman.plugins.ServicePlugin import ServicePlugin
 
 from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler
-from blueman.main.Config import Config
 from blueman.main.Mechanism import Mechanism
 from blueman.main.AppletService import AppletService
 from random import randint
@@ -100,7 +99,6 @@ class Network(ServicePlugin):
 
 		if self.on_query_apply_state() == True:
 			dprint("network apply")
-			
 
 			m = Mechanism()
 			nap-enable = self.Builder.get_object("nap-enable")
@@ -118,9 +116,9 @@ class Network(ServicePlugin):
 				try:
 					m.EnableNetwork(inet_aton(net_ip.props.text), inet_aton("255.255.255.0"), stype)
 					
-					if not self.NetConf.props.nap-enable: #race condition workaround
+					if not self.Settings["nap-enable"]: #race condition workaround
 						self.ignored_keys.append("nap-enable")
-					self.NetConf.props.nap-enable = True
+					self.Settings["nap-enable"] = True
 				except Exception, e:
 					lines = str(e).splitlines()
 					
@@ -132,9 +130,9 @@ class Network(ServicePlugin):
 					d.destroy()
 					return
 			else:
-				if self.NetConf.props.nap-enable: #race condition workaround
+				if self.Settings["nap-enable"]: #race condition workaround
 					self.ignored_keys.append("nap-enable")
-				self.NetConf.props.nap-enable = False
+				self.Settings["nap-enable"] = False
 				m.DisableNetwork()
 			
 			self.clear_options()
@@ -189,13 +187,13 @@ class Network(ServicePlugin):
 
 			
 	def setup_network(self):
-		self.NetConf = Config("network")
-		self.NetConf.connect("property-changed", self.on_property_changed)
+		self.Settings = Gio.Settings.new(BLUEMAN_NETWORK_GSCHEMA)
+		self.Settings.connect("changed", self.on_property_changed)
 
 		gn-enable = self.Builder.get_object("gn-enable")
 		#latest bluez does not support GN, apparently
 		gn-enable.props.visible = False
-		
+
 		nap-enable = self.Builder.get_object("nap-enable")
 		r_dnsmasq = self.Builder.get_object("r_dnsmasq")
 		r_dhcpd = self.Builder.get_object("r_dhcpd")
@@ -208,37 +206,45 @@ class Network(ServicePlugin):
 				
 		nap_frame = self.Builder.get_object("nap_frame")
 		warning = self.Builder.get_object("warning")
-		
-		rb_blueman.props.active = self.NetConf.props.dhcp-client
-		nap-enable.props.active = self.NetConf.props.nap-enable
-		gn-enable.props.active = self.NetConf.props.gn-enable
-		
+
+		if self.Settings["pan-blueman"]:
+                    rb_blueman.props.active = True
+                else:
+                    rb_nm.props.active = True
+
+                if self.Settings["dun-blueman"]:
+                    rb_dun_blueman.props.active = True
+                else:
+                    rb_dun_nm.props.active = True
+
+		nap-enable.props.active = self.Settings["nap-enable"]
+		gn-enable.props.active = self.Settings["gn-enable"]
+
+                if not self.Settings["nap-enable"]:
+                    nap_frame.props.sensitive = False
+
 		net_ip.props.text = "10.%d.%d.1" % (randint(0, 255), randint(0, 255))
-		
-		if not self.NetConf.props.nap-enable:
-			nap_frame.props.sensitive = False
 			
-		nc = NetConf.get_default()
-		if nc.ip4_address != None:
-			net_ip.props.text = inet_ntoa(nc.ip4_address)
+		if self.Settings["ip"]:
+			net_ip.props.text = inet_ntoa(self.Settings["ip"])
 			#if not self.NetConf.props.nap-enable:
 			#	self.ignored_keys.append("nap-enable")
-			self.NetConf.props.nap-enable = True
+			self.Settings["nap-enable"] = True
 
 		
 		#if ns["masq"] != 0:
 		#	net_nat.props.active = ns["masq"]
-			
-		if nc.get_dhcp_handler() == None:
+
+		dhcp_client = self.Settings["dhcp-client"]
+		if not dhcp_client in ("dnsmasq", "dhcpd3"):
 			nap_frame.props.sensitive = False
 			nap-enable.props.active = False
-			if self.NetConf.props.nap-enable or self.NetConf.props.nap-enable == None:
+			if self.Settings["nap-enable"]:
 				self.ignored_keys.append("nap-enable")
-			self.NetConf.props.nap-enable = False
-			
+			self.Settings["nap-enable"] = False
 			
 		else:
-			if nc.get_dhcp_handler() == DnsMasqHandler:
+			if dhcp_client == "dnsmasq":
 				r_dnsmasq.props.active = True
 			else:
 				r_dhcpd.props.active = True
@@ -248,9 +254,9 @@ class Network(ServicePlugin):
 			warning.props.visible = True
 			warning.props.sensitive = True
 			nap-enable.props.sensitive = False
-			if self.NetConf.props.nap-enable or self.NetConf.props.nap-enable == None:
+			if self.Settings["nap-enable"]:
 				self.ignored_keys.append("nap-enable")
-			self.NetConf.props.nap-enable = False
+			self.Settings["nap-enable"] = False
 			
 		if not have("dnsmasq"):
 			r_dnsmasq.props.sensitive = False
@@ -264,10 +270,14 @@ class Network(ServicePlugin):
 		
 		r_dnsmasq.connect("toggled", lambda x: self.option_changed_notify("dnsmasq"))
 		
-		net_nat.connect("toggled", lambda x: self.on_property_changed(self.NetConf, "nat", x.props.active))
-		net_ip.connect("changed", lambda x: self.on_property_changed(self.NetConf, "ip", x.props.text))
-		gn-enable.connect("toggled", lambda x: setattr(self.NetConf.props, "gn-enable", x.props.active))
-		nap-enable.connect("toggled", lambda x: self.on_property_changed(self.NetConf, "nap-enable", x.props.active))
+		#net_nat.connect("toggled", lambda x: self.on_property_changed(self.NetConf, "nat", x.props.active))
+                self.Settings.bind("nat", net_nat, "active", Gio.SettingsBindFlags.DEFAULT)
+		#net_ip.connect("changed", lambda x: self.on_property_changed(self.NetConf, "ip", x.props.text))
+                self.Settings.bind("ip", net_ip, "text", Gio.SettingsBindFlags.DEFAULT)
+		#gn-enable.connect("toggled", lambda x: setattr(self.NetConf.props, "gn-enable", x.props.active))
+                self.Settings.bind("gn-enable", gn-enable, "active", Gio.SettingsBindFlags.DEFAULT)
+		#nap-enable.connect("toggled", lambda x: self.on_property_changed(self.NetConf, "nap-enable", x.props.active))
+                self.Settings.bind("nap-enable", nap-enable, "active", Gio.SettingsBindFlags.DEFAULT)
 
 		applet = AppletService()
 		

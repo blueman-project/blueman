@@ -18,6 +18,10 @@ BLUEMAN_NETWORK_GSCHEMA = "org.blueman.network"
 BLUEMAN_SDP_GSCHEMA = "org.blueman.sdp"
 BLUEMAN_TRANSFER_GSCHEMA = "org.blueman.transfer"
 
+# Dconf relocatable base paths
+BLUEMAN_GSMSETTINGS_PATH = "/org/blueman/plugins/gsmsettings/"
+BLUEMAN_NETUSAGE_PATH = "/org/blueman/plugins/netusage/"
+
 import os
 import gettext
 import __builtin__
