@@ -2,8 +2,8 @@
 <schemalist>
   <schema id="org.blueman" path="/org/blueman/network/">
       <key type="s" name="dhcp-client">
-         <default>""</default>
-         <summary></summary>
+         <default>"dnsmasq"</default>
+         <summary>Which dhcp client to use, possible value 'dnsmasq' and 'dhcpd3'</summary>
          <description></description>
       </key>
       <key type="b" name="nap-enable">
@@ -25,6 +25,16 @@
          <default>""</default>
          <summary></summary>
          <description></description>
+      </key>
+      <key type="b" name="dun-blueman">
+        <default>true</default>
+        <summary></summary>
+        <description></description>
+      </key>
+      <key type="b" name="pan-blueman">
+        <default>true</default>
+        <summary></summary>
+        <description></description>
       </key>
   </schema>
 </schemalist>

@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
   <schema id="org.blueman" path="/org/blueman/">
+      <child name="general" schema="org.blueman.general"/>
+      <child name="network" schema="org.blueman.network"/>
+      <child name="gsmsettings" schema="org.blueman.gsmsettings"/>
+      <child name="netusage" schema="org.blueman.netusage"/>
+      <child name="transfer" schema="org.blueman.transfer"/>
+  </schema>
+  <schema id="org.blueman.general" path="/org/blueman/general/">
       <key type="i" name="window-height">
          <default>0</default>
          <summary>Height Of Window</summary>
@@ -46,6 +53,20 @@
          <summary></summary>
          <description></description>
       </key>
-
+      <key type="as" name="plugin-list">
+        <default>[]</default>
+        <summary></summary>
+        <description></description>
+      </key>
+      <key type="as" name="gsm-list">
+        <default>[]</default>
+        <summary>List of gsm which have apn settings</summary>
+        <description></description>
+      </key>
+      <key type="as" name="bt-device-list">
+        <default>[]</default>
+        <summary>List of devices we have netusage data stored.</summary>
+        <description></description>
+      </key>
   </schema>
 </schemalist>
