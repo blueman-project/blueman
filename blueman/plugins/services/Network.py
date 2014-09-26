@@ -84,8 +84,8 @@ class Network(ServicePlugin):
             dprint("network apply")
 
             m = Mechanism()
-            nap-enable = self.Builder.get_object("nap-enable")
-            if nap-enable.props.active:
+            nap_enable = self.Builder.get_object("nap-enable")
+            if nap_enable.props.active:
 
                 r_dnsmasq = self.Builder.get_object("r_dnsmasq")
                 if r_dnsmasq.props.active:
@@ -173,11 +173,11 @@ class Network(ServicePlugin):
         self.Settings = Gio.Settings.new(BLUEMAN_NETWORK_GSCHEMA)
         self.Settings.connect("changed", self.on_property_changed)
 
-        gn-enable = self.Builder.get_object("gn-enable")
+        gn_enable = self.Builder.get_object("gn-enable")
         # latest bluez does not support GN, apparently
-        gn-enable.props.visible = False
+        gn_enable.props.visible = False
 
-        nap-enable = self.Builder.get_object("nap-enable")
+        nap_enable = self.Builder.get_object("nap-enable")
         r_dnsmasq = self.Builder.get_object("r_dnsmasq")
         r_dhcpd = self.Builder.get_object("r_dhcpd")
         net_ip = self.Builder.get_object("net_ip")
@@ -200,8 +200,8 @@ class Network(ServicePlugin):
         else:
             rb_dun_nm.props.active = True
 
-        nap-enable.props.active = self.Settings["nap-enable"]
-        gn-enable.props.active = self.Settings["gn-enable"]
+        nap_enable.props.active = self.Settings["nap-enable"]
+        gn_enable.props.active = self.Settings["gn-enable"]
 
         if not self.Settings["nap-enable"]:
             nap_frame.props.sensitive = False
@@ -221,7 +221,7 @@ class Network(ServicePlugin):
         dhcp_client = self.Settings["dhcp-client"]
         if not dhcp_client in ("dnsmasq", "dhcpd3"):
             nap_frame.props.sensitive = False
-            nap-enable.props.active = False
+            nap_enable.props.active = False
             if self.Settings["nap-enable"]:
                 self.ignored_keys.append("nap-enable")
             self.Settings["nap-enable"] = False
@@ -236,7 +236,7 @@ class Network(ServicePlugin):
             nap_frame.props.sensitive = False
             warning.props.visible = True
             warning.props.sensitive = True
-            nap-enable.props.sensitive = False
+            nap_enable.props.sensitive = False
             if self.Settings["nap-enable"]:
                 self.ignored_keys.append("nap-enable")
             self.Settings["nap-enable"] = False
@@ -258,9 +258,9 @@ class Network(ServicePlugin):
         #net_ip.connect("changed", lambda x: self.on_property_changed(self.NetConf, "ip", x.props.text))
         self.Settings.bind("ip", net_ip, "text", Gio.SettingsBindFlags.DEFAULT)
         #gn-enable.connect("toggled", lambda x: setattr(self.NetConf.props, "gn-enable", x.props.active))
-        self.Settings.bind("gn-enable", gn-enable, "active", Gio.SettingsBindFlags.DEFAULT)
+        self.Settings.bind("gn-enable", gn_enable, "active", Gio.SettingsBindFlags.DEFAULT)
         #nap-enable.connect("toggled", lambda x: self.on_property_changed(self.NetConf, "nap-enable", x.props.active))
-        self.Settings.bind("nap-enable", nap-enable, "active", Gio.SettingsBindFlags.DEFAULT)
+        self.Settings.bind("nap-enable", nap_enable, "active", Gio.SettingsBindFlags.DEFAULT)
 
         applet = AppletService()
 

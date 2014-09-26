@@ -15,7 +15,7 @@ class GsmSettings(Gtk.Dialog):
 
         vbox = self.Builder.get_object("vbox1")
 
-        self.Settings = Gio.Settings.new_with_path(BLUEMAN_GSMSETTINGS_GSCHEMA, BLUEMAN_GSMSETINGS_PATH + bd-address + "/")
+        self.Settings = Gio.Settings.new_with_path(BLUEMAN_GSMSETTINGS_GSCHEMA, BLUEMAN_GSMSETINGS_PATH + bd_address + "/")
         self.props.icon_name = "network-wireless"
         self.props.title = _("GSM Settings")
 
