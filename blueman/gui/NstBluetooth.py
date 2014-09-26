@@ -1,10 +1,10 @@
 from gi.repository import Gtk
 from gi.repository import GObject
 from gi.repository import Pango
+from gi.repository import Gio
 from blueman.gui.DeviceSelectorWidget import DeviceSelectorWidget
 from blueman.Functions import setup_icon_path, spawn
-from blueman.main.Config import Config
-
+from blueman.Constants import *
 
 class NstBluetooth:
     def __init__(self):
@@ -15,7 +15,7 @@ class NstBluetooth:
         self.list.List.connect("row-activated", self.on_row_activated)
         self.list.List.connect("device-selected", self.on_device_selected)
 
-        self.config = Config("transfer")
+        self.Settings = Gio.Settings.new(BLUEMAN_TRANSFER_GSCHEMA)
 
         self.device = None
 
@@ -31,12 +31,13 @@ class NstBluetooth:
         self.button_label.props.use_markup = True
         self.button_label.props.ellipsize = Pango.EllipsizeMode.END
 
-        if self.config.props.last_device == None:
+        if not self.Settings["last-device"]:
             self.list.List.set_cursor((0,))
         else:
-            iter = self.list.List.find_device(self.config.props.last_device)
+            iter = self.list.List.find_device(self.Settings["last-device"])
             if iter:
                 self.list.List.set_cursor(self.list.List.get_model().get_path(iter))
+
 
         box.pack_start(self.button_image, False, True)
         box.pack_start(Gtk.VSeparator, False, True, 4)
@@ -61,7 +62,7 @@ class NstBluetooth:
         self.button.props.active = False
 
     def on_device_selected(self, treeview, device, iter):
-        self.config.props.last_device = str(device.Address)
+        self.Settings["last-device"] = str(device.Address)
 
         self.button_label.props.label = "<b>%s</b> (%s)" % (device.Alias, device.Address)
         self.button_label.props.tooltip_markup = self.button_label.props.label

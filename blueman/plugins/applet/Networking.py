@@ -1,11 +1,12 @@
 from blueman.Functions import *
-from blueman.main.Config import Config
+from blueman.Constants import *
 from blueman.bluez.NetworkServer import NetworkServer
 from blueman.main.Mechanism import Mechanism
 from blueman.main.SignalTracker import SignalTracker
 
 from blueman.plugins.AppletPlugin import AppletPlugin
 
+from gi.repository import Gio
 import dbus
 
 
@@ -18,7 +19,7 @@ class Networking(AppletPlugin):
         self.Applet = applet
         self.Signals = SignalTracker()
 
-        self.Config = Config("network")
+        self.Settings = Gio.Settings.new(BLUEMAN_NETWORK_GSCHEMA)
         self.Signals.Handle("gobject", self.Config, "property-changed", self.on_config_changed)
 
         self.load_nap_settings()
@@ -52,7 +53,7 @@ class Networking(AppletPlugin):
         self.update_status()
 
     def update_status(self):
-        self.set_nap(self.Config.props.nap-enable or False)
+        self.set_nap(self.Settings["nap-enable"])
 
     def on_config_changed(self, config, key, value):
         if key == "nap-enable":
