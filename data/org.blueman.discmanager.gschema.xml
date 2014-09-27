@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.blueman.discmanager" path="/org/blueman/plugins/discmanager/">
+  </schema>
+  <schema id="org.blueman.discmanager">
+      <key type="i" name="time">
+         <default>60</default>
+	 <range min='60' max='600' />
+         <summary>Discoverable Timeout</summary>
+         <description>Time in Seconds Discoverable Mode will Last</description>
+      </key>
+  </schema>
+</schemalist>

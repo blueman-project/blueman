@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.blueman.recentconns" path="/org/blueman/plugins/recentconns/">
+  </schema>
+  <schema id="org.blueman.recentconns">
+      <key type="i" name="max_items">
+         <default>6</default>
+         <summary>Maximum items</summary>
+         <description>Maximum number of items recent connections menu will display</description>
+      </key>
+      <key type="s" name="recent_connections">
+	<default>""</default>
+	<summary></summary>
+	<description></description>
+  </schema>
+</schemalist>

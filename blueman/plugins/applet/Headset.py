@@ -1,9 +1,8 @@
 from blueman.Functions import *
-from blueman.main.Config import Config
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.bluez.Headset import Headset as BluezHeadset
 import dbus
-
+from gi.repository import Gio
 
 class Headset(AppletPlugin):
     __author__ = "Walmis"
@@ -19,6 +18,9 @@ class Headset(AppletPlugin):
         }
     }
 
+    def __init__(self):
+        self.Settings = Gio.Settings.new(BLUEMAN_HEADSET_GSCHEMA)
+
     def on_load(self, applet):
         BluezHeadset().handle_signal(self.on_answer_requested, 'AnswerRequested')
 
@@ -26,7 +28,7 @@ class Headset(AppletPlugin):
         BluezHeadset().unhandle_signal(self.on_answer_requested, 'AnswerRequested')
 
     def on_answer_requested(self):
-        c = self.get_option("command")
+        c = self.Settings["command"]
         if c and c != "":
             args = c.split(" ")
             try:

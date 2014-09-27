@@ -1,5 +1,5 @@
-from blueman.main.Config import Config
 from blueman.plugins.BasePlugin import BasePlugin
+from gi.repository import Gio
 
 
 class ConfigurablePlugin(BasePlugin):
@@ -16,7 +16,7 @@ class ConfigurablePlugin(BasePlugin):
     def get_option(self, name):
         if name not in self.__class__.__options__:
             raise KeyError("No such option")
-        return getattr(self.__config.props, name)
+        return self.Settings["name"]
 
     def set_option(self, name, value):
         if name not in self.__class__.__options__:
@@ -35,8 +35,10 @@ class ConfigurablePlugin(BasePlugin):
         super(ConfigurablePlugin, self).__init__(parent)
 
         if self.__options__ != {}:
-            self.__config = Config("plugins/" + self.__class__.__name__)
-
+            self.Settings = Gio.Settings.new_with_path(BLUEMAN_PLUGINS_GSCHEMA, BLUEMAN_PLUGINS_PATH + self.__class.__name + "/")
+            #I have no idea how to implement this
+            #How can i store a list of key value pairs without knowing the key names?
+            #Or value types
             for k, v in self.__options__.items():
-                if getattr(self.__config.props, k) is None:
-                    setattr(self.__config.props, k, v["default"])
+                if self.Settings[k] is None:
+                    self.Settings[k] = v["default"]
