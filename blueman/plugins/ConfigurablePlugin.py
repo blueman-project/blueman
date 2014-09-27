@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-from blueman.main.Config import Config
 from blueman.plugins.BasePlugin import BasePlugin
+from gi.repository import Gio
 
 class ConfigurablePlugin(BasePlugin):
 	
@@ -30,14 +30,14 @@ class ConfigurablePlugin(BasePlugin):
 	def get_option(self, name):
 		if not name in self.__class__.__options__:
 			raise KeyError, "No such option"
-		return getattr(self.__config.props, name)
+		return self.Settings["name"]
 		
 	def set_option(self, name, value):
 		if not name in self.__class__.__options__:
 			raise KeyError, "No such option"
 		opt = self.__class__.__options__[name]
 		if type(value) == opt["type"]:
-			setattr(self.__config.props, name, value)
+			self.Settings["name"] = value
 			self.option_changed(name, value)
 		else:
 			raise TypeError, "Wrong type, must be %s" % repr(opt["type"])
@@ -49,10 +49,11 @@ class ConfigurablePlugin(BasePlugin):
 		super(ConfigurablePlugin, self).__init__(parent)
 			
 		if self.__options__ != {}:
-			self.__config = Config("plugins/" + self.__class__.__name__)
-		 
+		        self.Settings = Gio.Settings.new_with_path(BLUEMAN_PLUGINS_GSCHEMA, BLUEMAN_PLUGINS_PATH + self.__class.__name + "/")
+                        #I have no idea how to implement this
+                        #How can i store a list of key value pairs without knowing the key names?
+                        #Or value types
 			for k, v in self.__options__.iteritems():
-				if getattr(self.__config.props, k) == None:
-					setattr(self.__config.props, k, v["default"])
-						
-					
+				if self.Settings[k] == None:
+					self.Settings[k] =  v["default"]
+

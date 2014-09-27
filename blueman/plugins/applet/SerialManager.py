@@ -1,6 +1,5 @@
 from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.main.Config import Config
 from blueman.gui.Notification import Notification
 from blueman.Sdp import *
 from blueman.Lib import rfcomm_list
@@ -12,8 +11,7 @@ import atexit
 
 import blueman.bluez as Bluez
 
-from gi.repository import GObject
-from gi.repository import Gtk
+from gi.repository import GObject, Gio, Gtk
 
 
 class SerialManager(AppletPlugin):

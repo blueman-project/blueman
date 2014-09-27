@@ -31,6 +31,10 @@ from random import randint
 
 class Network(ServicePlugin):
 	__plugin_info__ = (_("Network"), "gtk-network")
+
+        def __init__(self):
+            self.Settings = Gio.Settings.new(BLUEMAN_NETWORK_SETTINGS)
+
 	def on_load(self, container):
 		
 		self.Builder = Gtk.Builder()
@@ -172,19 +176,15 @@ class Network(ServicePlugin):
 	
 	def on_query_apply_state(self):
 		changed = False
-		opts = self.get_options()
-		if opts == []:
-			return False
-		else:
-			if "ip" in opts:
-				try:
-					self.ip_check()
-				except Exception,e:
-					print e
-					return -1
-					
-			return True
-
+		if self.Settings["ip"] 
+                    try:
+		     	self.ip_check()
+	    	    except Exception,e:
+		    	print e
+			return -1
+		    return True
+	        else:			
+                    return False
 			
 	def setup_network(self):
 		self.Settings = Gio.Settings.new(BLUEMAN_NETWORK_GSCHEMA)
