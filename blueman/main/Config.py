@@ -20,9 +20,8 @@
 from gi.repository import GObject
 import os
 from blueman.Functions import dprint
-
+from blueman.plugins.config.GSettings import GSettings 
 import blueman.plugins.config
-from blueman.plugins.ConfigPlugin import ConfigPlugin
 
 print "Loading configuration plugins"
 
@@ -44,17 +43,11 @@ def compare(a, b):
 
 class Config(object):
 	def __new__(c, section=""):
-		classes = ConfigPlugin.__subclasses__()
-		classes.sort(compare)
-		
-		for cls in classes:
-			try:
-				inst = cls(section)
-				print "Using %s config backend" % cls.__plugin__
-				return inst
-			except Exception, e:
-				print "Skipping plugin", cls.__plugin__
-				print e
-			
-			print "No suitable configuration backend found, exitting"
-			exit(1)
+		try:
+			inst = GSettings(section)
+			print "Using %s config backend" % cls.__plugin__
+			return inst
+		except Exception, e:
+			print e
+		        print "nd, exitting"
+		        exit(1)
