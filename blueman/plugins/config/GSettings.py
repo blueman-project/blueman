@@ -18,10 +18,10 @@
 # 
 
 from blueman.plugins.ConfigPlugin import ConfigPlugin
-from gi.repository import Gio, Glib
+from gi.repository import Gio, GLib
 
 BLUEMAN_PATH = "/org/blueman"
-BASE_KEY = "org.blueman"
+BASE_KEY = "org.blueman.general"
 
 class GSettings(ConfigPlugin):
 	__priority__ = 0
@@ -33,29 +33,29 @@ class GSettings(ConfigPlugin):
 			self.schema = "/" + self.schema
 		
 		self.path = path
-		if self.path != ""
+		if self.path != "":
 			self.path = "." + self.path
 		        self.settings = Gio.Settings.new_with_path(BASE_KEY + self.path, BLUEMAN_PATH + self.schema)
-                else
+                else:
                         self.settings = Gio.Settings.new(BLUEMAN_PATH + self.schema)
 
 		self.settings.connect("changed", self.value_changed)
 
 	# convert a GVariant to Python native value
 	def gval2pyval(self, val):
-		valtype = Glib.Variant.g_variant_get_type(val)
-		if Glib.Variant.g_variant_type_equal(valtype, Glib.Variant.G_VARIANT_TYPE_STRING):
-			return Glib.Variant.g_variant_get_string(val)
-		elif Glib.Variant.g_variant_type_equal(valtype, Glib.Variant.G_VARIANT_TYPE_FLOAT):
-			return Glib.Variant.g_variant_get_double(val)
-		elif Glib.Variant.g_variant_type_equal(valtype, Glib.Variant.G_VARIANT_TYPE_INT):
-			return Glib.Variant.g_variant_get_int32(val)
-		elif Glib.Variant.g_variant_type_equal(valtype, Glib.Variant.G_VARIANT_TYPE_BOOLEAN):
-			return Glib.Variant.g_variant_get_boolean(val)
-		elif Glib.Variant.g_variant_type_equal(valtype, Glib.Variant.G_VARIANT_TYPE_ARRAY):
+		valtype = GLib.Variant.g_variant_get_type(val)
+		if GLib.Variant.g_variant_type_equal(valtype, GLib.Variant.G_VARIANT_TYPE_STRING):
+			return GLib.Variant.g_variant_get_string(val)
+		elif GLib.Variant.g_variant_type_equal(valtype, GLib.Variant.G_VARIANT_TYPE_FLOAT):
+			return GLib.Variant.g_variant_get_double(val)
+		elif GLib.Variant.g_variant_type_equal(valtype, GLib.Variant.G_VARIANT_TYPE_INT):
+			return GLib.Variant.g_variant_get_int32(val)
+		elif GLib.Variant.g_variant_type_equal(valtype, GLib.Variant.G_VARIANT_TYPE_BOOLEAN):
+			return GLib.Variant.g_variant_get_boolean(val)
+		elif GLib.Variant.g_variant_type_equal(valtype, GLib.Variant.G_VARIANT_TYPE_ARRAY):
 			x = []
 			array = []
-			Glib.Variant.g_variant_get(val, 'a', array):
+		        GLib.Variant.g_variant_get(val, 'a', array)
 			for item in array:
 				x.append(self.gval2pyval(item))
 			return x
