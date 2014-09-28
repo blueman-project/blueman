@@ -9,6 +9,9 @@ from blueman.Functions import dprint
 class Transfer(ServicePlugin):
     __plugin_info__ = (_("Transfer"), "gtk-open")
 
+    def __init__(self):
+        self.Settings = Gio.Settings.new(BLUEMAN_TRANSFER_GSCHEMA)
+
     def on_load(self, container):
 
         self.Builder = Gtk.Builder()
@@ -59,17 +62,13 @@ class Transfer(ServicePlugin):
             except:
                 dprint("failed to connect to applet")
             else:
-                c = self.get_options()
-                if "opp-enabled" in c:
-                    if not self.Settings["opp-enabled"]:
+                if not self.Settings["opp-enabled"]:
                         a.TransferControl("opp", "destroy")
 
-                if "ftp-enabled" in c:
-                    if not self.Settings["ftp-enabled"]:
+                if not self.Settings["ftp-enabled"]:
                         a.TransferControl("ftp", "destroy")
-
-                if "opp-accept" in c or "shared-path" in c or "opp-enabled" in c:
-                    if self.Settings["opp-enabled"]:
+                
+                if self.Settings["opp-enabled"]:
                         state = a.TransferStatus("opp")
                         if state == 0:  # destroyed
                             a.TransferControl("opp", "create")
@@ -79,27 +78,21 @@ class Transfer(ServicePlugin):
                         elif state == 1:
                             a.TransferControl("opp", "start")
 
-                if "ftp-allow-write" in c or "shared-path" in c or "ftp-enabled" in c:
-                    if self.Settings["ftp-enabled"]:
-                        state = a.TransferStatus("ftp")
-                        if state == 0:  # destroyed
-                            a.TransferControl("ftp", "create")
-                        elif state == 2:  # running
-                            a.TransferControl("ftp", "stop")
-                            a.TransferControl("ftp", "start")
-                        elif state == 1:
-                            a.TransferControl("ftp", "start")
-
+                if self.Settings["ftp-enabled"]:
+                    state = a.TransferStatus("ftp")
+                    if state == 0:  # destroyed
+                        a.TransferControl("ftp", "create")
+                    elif state == 2:  # running
+                        a.TransferControl("ftp", "stop")
+                        a.TransferControl("ftp", "start")
+                     elif state == 1:
+                        a.TransferControl("ftp", "start")
                 self.clear_options()
 
             dprint("transfer apply")
 
     def on_query_apply_state(self):
-        opts = self.get_options()
-        if not opts:
-            return False
-        else:
-            return True
+        return True
 
     def setup_transfer(self):
         self.Settings = Gio.Settings.new(BLUEMAN_TRANSFER_GSCHEMA)
