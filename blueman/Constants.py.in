@@ -17,10 +17,18 @@ BLUEMAN_NETUSAGE_GSCHEMA = "org.blueman.netusage"
 BLUEMAN_NETWORK_GSCHEMA = "org.blueman.network"
 BLUEMAN_SDP_GSCHEMA = "org.blueman.sdp"
 BLUEMAN_TRANSFER_GSCHEMA = "org.blueman.transfer"
+BLUEMAN_PLUGINS_GSCHEMA = "org.blueman.plugins"
+BLUEMAN_HEADSET_GSCHEMA = "org.blueman.headset"
+BLUEMAN_PPPSUPPORT_GSCHEMA = "org.blueman.pppsupport"
+BLUEMAN_RECENTCONNS_GSCHEMA = "org.blueman.recentconns"
+BLUEMAN_DISCMANAGER_GSCHEMA = "org.blueman.discmanager"
+BLUEMAN_KILLSWITCH_GSCHEMA = "org.blueman.killswitch"
 
 # Dconf relocatable base paths
+BLUEMAN_PLUGINS_PATH = "/org/blueman/plugins/"
 BLUEMAN_GSMSETTINGS_PATH = "/org/blueman/plugins/gsmsettings/"
 BLUEMAN_NETUSAGE_PATH = "/org/blueman/plugins/netusage/"
+BLUEMAN_SDP_PATH = "/org/blueman/plugins/sdp/"
 
 import os
 import gettext

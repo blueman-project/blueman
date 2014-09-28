@@ -182,7 +182,6 @@ blueman/plugins/services/Makefile
 blueman/plugins/applet/Makefile
 blueman/plugins/mechanism/Makefile
 blueman/plugins/manager/Makefile
-blueman/plugins/config/Makefile
 blueman/main/Makefile
 blueman/main/applet/Makefile
 blueman/ods/Makefile
