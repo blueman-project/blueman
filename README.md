@@ -62,7 +62,7 @@ To generate and run a configure script from source, run `./autogen.sh`.
 
 ## Packaged versions
 
-* [Arch Linux](https://aur.archlinux.org/packages/blueman-bluez5-git)
+* [Arch Linux](https://aur.archlinux.org/packages/blueman/)
 * [Debian GNU/Linux](http://packages.debian.org/search?keywords=blueman)
 * [Gentoo Linux](http://packages.gentoo.org/package/net-wireless/blueman)
 * Linux Mint
