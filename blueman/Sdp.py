@@ -286,8 +286,7 @@ def on_sdp_changed(c, key, value):
 def sdp_get_cached(address):
 	if not address in sdp_cache:
 
-		#sdp_conf = Config("sdp/" + address, "sdp")
-		#sdp_conf.connect("property-changed", on_sdp_changed)
+		sdp_conf.connect("changed", on_sdp_changed)
                 self.Settings = Gio.Settings.new_with_path(BLUEMAN_SDP_GSCHEMA, BLUEMAN_SDP_PATH + address + "/") 
 		
 		d = self.Settings["data"]
@@ -370,8 +369,4 @@ def sdp_get_serial_name(address, pattern):
 					
 def sdp_save(address, records):
 	self.Settings["data"] = base64.b64encode(zlib.compress(pickle.dumps(records, pickle.HIGHEST_PROTOCOL)))
-
-	#sdp_conf = Config("sdp/" + address, "sdp")
-
-	#sdp_conf.set("data", data)
 

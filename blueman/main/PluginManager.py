@@ -228,21 +228,19 @@ class PluginManager(GObject.GObject):
                 args = ret
 
 
-try:
-    from gi.repository import Gio
-except:
-    pass
+from gi.repository import Gio
 
 
 class PersistentPluginManager(PluginManager):
     def __init__(self, *args):
         super(PersistentPluginManager, self).__init__(*args)
         
-        self.__config = Gio.Settings.new(BLUEMAN_GENERAL_GSCHEMA)
+        self.__config = Gio.Settings.new_with_path(BLUEMAN_PLUGINS_GSCHEMA,BLUEMAN_PLUGINS_PATH + self.plugin_class.__name__ + "/")
 
-        #self.__config.connect("property-changed", self.on_property_changed)
+        self.__config.connect("changed", self.on_property_changed)
 
     def Disabled(self, plugin):
+       
         plugins = self.__config["plugin-list"]
         return "!" + plugin in plugins
 

@@ -49,7 +49,6 @@ class ConfigurablePlugin(BasePlugin):
 		super(ConfigurablePlugin, self).__init__(parent)
 			
 		if self.__options__ != {}:
-			#self.__config = Config("plugins/" + self.__class__.__name__)
 		        self.Settings = Gio.Settings.new_with_path(BLUEMAN_PLUGINS_GSCHEMA, BLUEMAN_PLUGINS_PATH + self.__class.__name + "/")
                         #I have no idea how to implement this
                         #How can i store a list of key value pairs without knowing the key names?

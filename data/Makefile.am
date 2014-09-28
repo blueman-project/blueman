@@ -14,7 +14,8 @@ gsettings_SCHEMAS = \
 	org.blueman.netusage.gschema.xml \
 	org.blueman.network.gschema.xml \
 	org.blueman.sdp.gschema.xml \
-	org.blueman.transfer.gschema.xml
+	org.blueman.transfer.gschema.xml \
+	org.blueman.plugins.gschema.xml
 
 # include the appropriate makefile rules for schema handling
 @GSETTINGS_RULES@
