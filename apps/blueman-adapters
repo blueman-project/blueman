@@ -190,6 +190,9 @@ class BluemanAdapters:
         adapter_settings['signals'].Handle(temporary_radio, "toggled", on_temporary_toggle)
 
         name_entry = builder.get_object("name_entry")
+        # FIXME In Bluez5 the name property on the adapter is read only
+        # Github issue https://github.com/blueman-project/blueman/issues/104
+        name_entry.props.sensitive = False
         name_entry.set_text(adapter_settings['name'])
         adapter_settings['signals'].Handle(name_entry, "changed", on_name_changed)
 
