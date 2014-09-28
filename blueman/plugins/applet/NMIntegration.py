@@ -2,7 +2,6 @@ from blueman.Functions import *
 from blueman.Constants import HAL_ENABLED
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Mechanism import Mechanism
-from blueman.main.Config import Config
 from blueman.gui.Notification import Notification
 from blueman.Sdp import *
 from blueman.bluez.Network import Network
@@ -11,8 +10,7 @@ from blueman.main.SignalTracker import SignalTracker
 
 import blueman.bluez as Bluez
 
-from gi.repository import GObject
-from gi.repository import Gtk
+from gi.repository import GObject, Gio, Gtk
 
 if not HAL_ENABLED:
     raise ImportError("NMIntegration (deprecated) requires hal support")

@@ -270,7 +270,7 @@ def bluez_to_friendly_name(svc):
 	else:
 		raise Exception
 		
-from blueman.main.Config import Config
+from gi.repository import Gio
 import pickle
 import base64
 import zlib
@@ -286,10 +286,11 @@ def on_sdp_changed(c, key, value):
 def sdp_get_cached(address):
 	if not address in sdp_cache:
 
-		sdp_conf = Config("sdp/" + address, "sdp")
-		sdp_conf.connect("property-changed", on_sdp_changed)
+		#sdp_conf = Config("sdp/" + address, "sdp")
+		#sdp_conf.connect("property-changed", on_sdp_changed)
+                self.Settings = Gio.Settings.new_with_path(BLUEMAN_SDP_GSCHEMA, BLUEMAN_SDP_PATH + address + "/") 
 		
-		d = sdp_conf.get("data")
+		d = self.Settings["data"]
 		if d:
 			try:
 				s = pickle.loads(zlib.decompress(base64.b64decode(d)))
@@ -368,9 +369,9 @@ def sdp_get_serial_name(address, pattern):
 					return name.strip("\n\r ")
 					
 def sdp_save(address, records):
-	data = base64.b64encode(zlib.compress(pickle.dumps(records, pickle.HIGHEST_PROTOCOL)))
+	self.Settings["data"] = base64.b64encode(zlib.compress(pickle.dumps(records, pickle.HIGHEST_PROTOCOL)))
 
-	sdp_conf = Config("sdp/" + address, "sdp")
+	#sdp_conf = Config("sdp/" + address, "sdp")
 
-	sdp_conf.set("data", data)
+	#sdp_conf.set("data", data)
 

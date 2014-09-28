@@ -1,12 +1,11 @@
 from blueman.bluez.BlueZInterface import BlueZInterface
 from blueman.plugins.ManagerPlugin import ManagerPlugin
-from gi.repository import Gtk
+from gi.repository import Gtk, Gio
 
 from blueman.Sdp import *
 from blueman.Functions import *
 from blueman.main.SignalTracker import SignalTracker
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
-from blueman.main.Config import Config
 from blueman.main.AppletService import AppletService
 from blueman.gui.MessageArea import MessageArea
 

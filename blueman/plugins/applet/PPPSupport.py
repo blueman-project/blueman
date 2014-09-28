@@ -22,7 +22,6 @@ from blueman.bluez.Device import Device
 from blueman.gui.Notification import Notification
 from blueman.main.Mechanism import Mechanism
 from blueman.main.PPPConnection import PPPConnection
-from blueman.main.Config import Config
 
 from gi.repository import GObject
 
@@ -47,18 +46,18 @@ class connection:
 			GObject.timeout_add(5000, self.connect)
 		
 	def connect(self):
-		c = Config("gsm_settings/" + self.device.Address, "plugins.pppsupport")
-
-		c.props.address = self.device.Address
+		#c = Config("gsm_settings/" + self.device.Address, "plugins.pppsupport")
+                self.Settings = Gio.Settings.new_with_path(BLUEMAN_GSMSETTINGS_GSCHEMA, BLUEMAN_GSMSETTINGS_PATH + self.device.Address + "/" )
+		self.Settings["address"] = self.device.Address
 		
-		if c.props.apn == None:
-			c.props.apn = ""
+		if self.Settings["apn"] == None:
+		        self.Settings["apn"] = ""
 			
-		if c.props.number == None:
-			c.props.number = "*99#"	
+		if self.Settings["number"] == None:
+			self.Settings["number"] = "*99#"	
 		
 		m = Mechanism()
-		m.PPPConnect(self.port, c.props.number, c.props.apn, reply_handler=self.on_connected, error_handler=self.on_error, timeout=200)	
+		m.PPPConnect(self.port, self.Settings["number"], self.Settings["apn"], reply_handler=self.on_connected, error_handler=self.on_error, timeout=200)	
 	
 	def on_error(self, error):
 		self.error_handler(error)
