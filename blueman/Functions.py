@@ -44,8 +44,8 @@ import fcntl, struct, termios
 
 try:
     in_fg = os.getpgrp() == struct.unpack('h', fcntl.ioctl(0, termios.TIOCGPGRP, "  "))[0]
-except:
-    in_fg = False
+except IOError:
+    in_fg = 'DEBUG' in os.environ
 
 
 def dprint(*args):
