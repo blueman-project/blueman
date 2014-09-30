@@ -71,10 +71,7 @@ class BluemanAdapters:
     def on_dialog_response(self, dialog, response_id):
         for hci, settings in self.tabs.items():
             if settings['changed']:
-                #save changes
-                adapter = settings['adapter']
-                adapter.SetProperty('Name', settings['name'])
-                adapter.set('Name', settings['name'])
+                settings['adapter'].set_name(settings['name'])
         Gtk.main_quit()
 
     def on_adapter_added(self, adapter_path):
@@ -156,7 +153,7 @@ class BluemanAdapters:
         adapter_settings['signals'] = SignalTracker()
         adapter_settings['signals'].Handle(adapter, on_property_changed, "PropertyChanged")
         adapter_settings['address'] = props['Address']
-        adapter_settings['name'] = props['Name']
+        adapter_settings['name'] = adapter.get_name()
         adapter_settings['discoverable'] = props['Discoverable']
         #we use count timeout in minutes
         adapter_settings['discoverable_timeout'] = props['DiscoverableTimeout'] / 60
@@ -190,9 +187,6 @@ class BluemanAdapters:
         adapter_settings['signals'].Handle(temporary_radio, "toggled", on_temporary_toggle)
 
         name_entry = builder.get_object("name_entry")
-        # FIXME In Bluez5 the name property on the adapter is read only
-        # Github issue https://github.com/blueman-project/blueman/issues/104
-        name_entry.props.sensitive = False
         name_entry.set_text(adapter_settings['name'])
         adapter_settings['signals'].Handle(name_entry, "changed", on_name_changed)
 

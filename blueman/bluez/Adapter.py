@@ -145,3 +145,18 @@ class Adapter(PropertiesBlueZInterface):
     def unregister_agent(self, agent):
         # BlueZ 4 only!
         self.get_interface().UnregisterAgent(agent.get_object_path())
+
+    @raise_dbus_error
+    def get_name(self):
+        props = self.get_properties()
+        try:
+            return props['Alias']
+        except KeyError:
+            return props['Name']
+
+    @raise_dbus_error
+    def set_name(self, name):
+        try:
+            return self.set('Alias', name)
+        except dbus.exceptions.DBusException:
+            return self.set('Name', name)

@@ -131,7 +131,7 @@ class ManagerMenu:
 
     def on_adapter_property_changed(self, list, adapter, kv):
         (key, value) = kv
-        if key == "Name":
+        if key == "Name" or key == "Alias":
             self.generate_adapter_menu()
         elif key == "Discovering":
             if self.Search:
@@ -154,8 +154,7 @@ class ManagerMenu:
 
         group = []
         for adapter in self.adapters:
-            props = adapter.get_properties()
-            item = Gtk.RadioMenuItem.new_with_label(group, props["Name"])
+            item = Gtk.RadioMenuItem.new_with_label(group, adapter.get_name())
             group = item.get_group()
 
             item.connect("activate", self.on_adapter_selected, adapter.get_object_path())

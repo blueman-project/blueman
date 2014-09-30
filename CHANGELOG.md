@@ -13,6 +13,7 @@
 * Fix crash in PluginManager (Martín Ferrari)
 * Avoid crash in transfer service setup dialog
 * Make blueman-applet respond to SIGTERM (@Teknocrat / Harvey Mittens)
+* Allow setting friendly adapter name in BlueZ 5
 
 ## 1.99.alpha1
 

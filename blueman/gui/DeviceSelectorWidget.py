@@ -71,7 +71,7 @@ class DeviceSelectorWidget(Gtk.VBox):
         self.List.DiscoverDevices()
 
     def on_adapter_prop_changed(self, devlist, adapter, (key, value)):
-        if key == "Name":
+        if key == "Name" or key == "Alias":
             self.update_adapters_list()
         elif key == "Discovering":
             if not value:
@@ -115,9 +115,6 @@ class DeviceSelectorWidget(Gtk.VBox):
             self.List.props.sensitive = True
             self.cb_adapters.props.visible = True
             for adapter in adapters:
-                props = adapter.get_properties()
-                name = props["Name"]
-
-                iter = self.cb_adapters.get_model().append([name, adapter.get_object_path()])
+                iter = self.cb_adapters.get_model().append([adapter.get_name(), adapter.get_object_path()])
                 if adapter.get_object_path() == self.List.Adapter.get_object_path():
                     self.cb_adapters.set_active_iter(iter)
