@@ -25,7 +25,7 @@ if os.path.exists(os.path.join(_dirname, "CHANGELOG.md")):
 from blueman.Constants import *
 from blueman.Functions import *
 from blueman.gui.DeviceSelectorWidget import DeviceSelectorWidget
-from blueman.bluez.Agent import Agent, AgentMethod
+from blueman.main.applet.BluezAgent import TempAgent
 from blueman.bluez.Manager import Manager
 from blueman.bluez.BlueZInterface import BlueZInterface
 from blueman.main.FakeDevice import FakeDevice
@@ -40,9 +40,8 @@ from gi.repository import Gtk
 # Workaround introspection bug, gnome bug 622084
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
-class Assistant(Agent):
+class Assistant:
     def __init__(self):
-        Agent.__init__(self, "/")
         setup_icon_path()
 
         usage = "Usage: %prog [options]"
@@ -59,7 +58,6 @@ class Assistant(Agent):
         self.Device = None
         self.Adapter = None
         self.PairType = 0
-        self.Passkey = ""
         self.Service = None
 
         self.Builder = Gtk.Builder()
@@ -98,12 +96,7 @@ class Assistant(Agent):
 
         self.svc_vbox = self.Builder.get_object("svcs")
 
-        self.cust_passkey = self.Builder.get_object("e_myp")
-        self.cust_passkey.props.sensitive = False
-        self.cust_passkey.connect("changed", self.on_passkey_changed)
-
         self.Builder.get_object("r_dontp").connect("toggled", self.on_pairing_method_changed, 2)
-        self.Builder.get_object("r_myp").connect("toggled", self.on_pairing_method_changed, 1)
         self.Builder.get_object("r_randp").connect("toggled", self.on_pairing_method_changed, 0)
 
         self.dev_widget = DeviceSelectorWidget()
@@ -197,32 +190,9 @@ class Assistant(Agent):
 
         return page
 
-
-    def check_custom_passkey(self):
-        return len(self.cust_passkey.props.text) != 0
-
-    def on_passkey_changed(self, e):
-        if self.PairType == 1:
-            if self.check_custom_passkey():
-                self.Passkey = e.props.text
-                self.assistant.set_page_complete(pages[PAGE_PASSKEY], True)
-            else:
-                self.assistant.set_page_complete(pages[PAGE_PASSKEY], False)
-
-
     def on_pairing_method_changed(self, radio_button, type):
         if radio_button.props.active:
-            if type == 0:
-                self.cust_passkey.props.sensitive = False
-                self.assistant.set_page_complete(pages[PAGE_PASSKEY], True)
-            elif type == 1:
-                self.cust_passkey.props.sensitive = True
-                if not self.check_custom_passkey():
-                    self.assistant.set_page_complete(pages[PAGE_PASSKEY], False)
-            else:
-                self.cust_passkey.props.sensitive = False
-                self.assistant.set_page_complete(pages[PAGE_PASSKEY], True)
-
+            self.assistant.set_page_complete(pages[PAGE_PASSKEY], True)
             self.PairType = type
 
 
@@ -235,16 +205,6 @@ class Assistant(Agent):
             self.assistant.set_page_complete(pages[PAGE_DEVLIST], True)
             self.Device = device
             self.Adapter = list.Adapter
-
-    @AgentMethod
-    def RequestPinCode(self, device):
-        dprint("Agent.RequestPinCode")
-        return self.Passkey
-
-    @AgentMethod
-    def RequestPasskey(self, device):
-        dprint("Agent.RequestPasskey")
-        return self.Passkey
 
     def on_close(self, assistant):
         Gtk.main_quit()
@@ -264,11 +224,7 @@ class Assistant(Agent):
                 pages[PAGE_PAIRING].set_markup(_("<b>Adding Device...</b>"))
                 self.assistant.set_page_title(pages[PAGE_PAIRING], _("Adding"))
             else:
-                if self.PairType == 0:
-                    self.Passkey = "%04d" % random.randint(0, 9999)
-
-                pages[PAGE_PAIRING].set_markup(
-                    _("<b>Pairing in progress...</b>\n\nEnter passkey <b>%s</b> on the device.") % self.Passkey)
+                pages[PAGE_PAIRING].set_markup(_("<b>Pairing in progress...</b>"))
 
             if BlueZInterface.get_interface_version()[0] < 5:
                 def ok(dev):
@@ -287,7 +243,9 @@ class Assistant(Agent):
                     self.assistant.set_current_page(PAGE_FINISH)
 
                 if self.PairType != 2:
-                    self.Adapter.create_paired_device(self.Device.Address, self.get_object_path(), "", reply_handler=ok,
+                    agent_path = "/org/blueman/agent/temp/" + self.Device.Address.replace(":", "")
+                    agent = TempAgent(self.applet.Plugins.StatusIcon, agent_path, Gtk.get_current_event_time())
+                    self.Adapter.create_paired_device(self.Device.Address, agent_path, "", reply_handler=ok,
                                                       error_handler=err)
                 else:
                     self.Adapter.create_device(self.Device.Address, reply_handler=ok, error_handler=err)
