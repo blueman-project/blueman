@@ -31,6 +31,7 @@ class AuthAgent(AppletPlugin):
                 agent.adapter.unregister_agent(agent)
             else:
                 self.agent_manager.unregister_agent(agent)
+            agent.Release()
 
     def on_manager_state_changed(self, state):
         if state:
