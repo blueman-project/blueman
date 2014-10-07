@@ -326,6 +326,76 @@ out:
 	return ret;
 }
 
+int create_rfcomm_device(char *local_address, char *remote_address, int channel) {
+    int sk, dev, ret;
+    struct sockaddr_rc laddr, raddr;
+    struct rfcomm_dev_req req;
+
+    sk = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
+    if (sk < 0) {
+        ret = ERR_SOCKET_FAILED;
+        goto out;
+    }
+
+    laddr.rc_family = AF_BLUETOOTH;
+    str2ba(local_address, &laddr.rc_bdaddr);
+    laddr.rc_channel = 0;
+
+    if (bind(sk, (struct sockaddr *) &laddr, sizeof(laddr)) < 0) {
+        ret = ERR_BIND_FAILED;
+        goto out;
+    }
+
+    raddr.rc_family = AF_BLUETOOTH;
+    str2ba(remote_address, &raddr.rc_bdaddr);
+    raddr.rc_channel = channel;
+
+    if (connect(sk, (struct sockaddr *) &raddr, sizeof(raddr)) < 0) {
+        ret = ERR_CONNECT_FAILED;
+        goto out;
+    }
+
+    memset(&req, 0, sizeof(req));
+    req.flags = (1 << RFCOMM_REUSE_DLC) | (1 << RFCOMM_RELEASE_ONHUP);
+    bacpy(&req.src, &laddr.rc_bdaddr);
+    bacpy(&req.dst, &raddr.rc_bdaddr);
+    req.channel = raddr.rc_channel;
+    req.dev_id = -1;
+
+    dev = ioctl(sk, RFCOMMCREATEDEV, &req);
+    if (dev < 0) {
+        ret = ERR_CREATE_DEV_FAILED;
+    } else {
+        ret = dev;
+    }
+
+out:
+    if (sk >= 0)
+        close(sk);
+    return ret;
+}
+
+int release_rfcomm_device(int id) {
+    int sk;
+    struct rfcomm_dev_req req;
+
+    sk = socket(AF_BLUETOOTH, SOCK_RAW, BTPROTO_RFCOMM);
+    if (sk < 0)
+        return ERR_SOCKET_FAILED;
+
+    memset(&req, 0, sizeof(req));
+    req.flags = (1 << RFCOMM_HANGUP_NOW);
+    req.dev_id = id;
+
+    if (ioctl(sk, RFCOMMRELEASEDEV, &req) < 0) {
+        close(sk);
+        return ERR_RELEASE_DEV_FAILED;
+    } else {
+        close(sk);
+        return 0;
+    }
+}
+
 float get_page_timeout(int hdev)
 {
 	struct hci_request rq;

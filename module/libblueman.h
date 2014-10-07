@@ -10,6 +10,10 @@
 #define ERR_SOCKET_FAILED -9
 #define ERR_CANT_READ_PAGE_TIMEOUT -10
 #define ERR_READ_PAGE_TIMEOUT -11
+#define ERR_BIND_FAILED -12
+#define ERR_CONNECT_FAILED -13
+#define ERR_CREATE_DEV_FAILED -14
+#define ERR_RELEASE_DEV_FAILED -15
 
 struct conn_info_handles {
 	unsigned int handle;
@@ -23,6 +27,8 @@ int connection_get_lq(struct conn_info_handles *ci, uint8_t *ret_lq);
 int connection_get_tpl(struct conn_info_handles *ci, int8_t *ret_tpl, uint8_t type);
 int connection_close(struct conn_info_handles *ci);
 int get_rfcomm_list(struct rfcomm_dev_list_req **result);
+int create_rfcomm_device(char *local_address, char *remote_address, int channel);
+int release_rfcomm_device(int id);
 float get_page_timeout(int hdev);
 
 int _create_bridge(const char* name);

@@ -6,15 +6,15 @@ from blueman.main.Config import Config
 
 from gi.repository import GObject
 
-from blueman.Sdp import *
+from blueman.Sdp import uuid128_to_uuid16, DIALUP_NET_SVCLASS_ID
 import os
 
 
 class Connection:
-    def __init__(self, applet, device, port, ok, err):
+    def __init__(self, applet, service, port, ok, err):
         self.reply_handler = ok
         self.error_handler = err
-        self.device = device
+        self.service = service
         self.port = port
         self.Applet = applet
 
@@ -26,7 +26,7 @@ class Connection:
             GObject.timeout_add(5000, self.connect)
 
     def connect(self):
-        c = Config("gsm_settings/" + self.device.Address)
+        c = Config("gsm_settings/" + self.service.device.Address)
         if c.props.apn is None:
             c.props.apn = ""
 
@@ -39,14 +39,14 @@ class Connection:
 
     def on_error(self, error):
         self.error_handler(error)
-        GObject.timeout_add(1000, self.device.Services["serial"].Disconnect, self.port)
+        GObject.timeout_add(1000, self.service.disconnect, self.port)
 
     def on_connected(self, iface):
         self.reply_handler(self.port)
-        self.Applet.Plugins.Run("on_ppp_connected", self.device, self.port, iface)
+        self.Applet.Plugins.Run("on_ppp_connected", self.service.device, self.port, iface)
 
         msg = _("Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\n"
-                "Network is now available through <b>%(1)s</b>") % {"0": self.device.Alias, "1": iface}
+                "Network is now available through <b>%(1)s</b>") % {"0": self.service.device.Alias, "1": iface}
 
         Notification(_("Connected"), msg, pixbuf=get_icon("network-wireless", 48),
                      status_icon=self.Applet.Plugins.StatusIcon)
@@ -68,17 +68,15 @@ class PPPSupport(AppletPlugin):
     def on_ppp_connected(self, device, rfcomm, ppp_port):
         pass
 
-    def on_rfcomm_connected(self, device, port, uuid):
+    def on_rfcomm_connected(self, service, port):
         pass
 
-    def rfcomm_connect_handler(self, device, uuid, reply, err):
-        uuid16 = sdp_get_serial_type(device.Address, uuid)
-        if DIALUP_NET_SVCLASS_ID in uuid16:
-
+    def rfcomm_connect_handler(self, service, reply, err):
+        if DIALUP_NET_SVCLASS_ID == uuid128_to_uuid16(service.uuid):
             def local_reply(port):
-                Connection(self.Applet, device, port, reply, err)
+                Connection(self.Applet, service, port, reply, err)
 
-            device.Services["serial"].Connect(uuid, reply_handler=local_reply, error_handler=err)
+            service.connect(reply_handler=local_reply, error_handler=err)
             dprint("Connecting rfcomm device")
 
             return True

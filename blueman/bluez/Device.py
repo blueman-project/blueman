@@ -1,6 +1,5 @@
 from blueman.bluez.PropertiesBlueZInterface import PropertiesBlueZInterface
-from blueman.bluez.ServiceInterface import ServiceInterface
-from blueman.bluez.errors import raise_dbus_error
+from blueman.bluez.errors import raise_dbus_error, parse_dbus_error
 import dbus
 import xml.dom.minidom
 
@@ -15,30 +14,49 @@ class Device(PropertiesBlueZInterface):
         super(Device, self).__init__(interface, obj_path)
 
     @raise_dbus_error
-    def list_services(self):
-        interfaces = []
-        dbus_object = dbus.SystemBus().get_object('org.bluez', self.get_object_path())
-        dbus_introspect = dbus.Interface(dbus_object, 'org.freedesktop.DBus.Introspectable')
-        introspect_xml = dbus_introspect.Introspect()
-        root_node = xml.dom.minidom.parseString(introspect_xml)
-        for interface in root_node.getElementsByTagName('interface'):
-            interface_name = interface.getAttribute('name')
-            if interface_name != self.get_interface_name():
-                methods = []
-                for method in interface.getElementsByTagName('method'):
-                    methods.append(method.getAttribute('name'))
-                interfaces.append(ServiceInterface(interface_name, self.get_object_path(), methods))
-        return interfaces
-
-    @raise_dbus_error
     def pair(self, reply_handler=None, error_handler=None):
         # BlueZ 5 only!
         def ok():
             if callable(reply_handler):
                 reply_handler()
 
-        def err(err):
+        def err(e):
+            exception = parse_dbus_error(e)
             if callable(error_handler):
-                error_handler(err)
+                error_handler(exception)
+            else:
+                raise exception
 
         self.get_interface().Pair(reply_handler=ok, error_handler=err)
+
+    @raise_dbus_error
+    def connect(self, reply_handler=None, error_handler=None):
+        # BlueZ 5 only!
+        def ok():
+            if callable(reply_handler):
+                reply_handler()
+
+        def err(e):
+            exception = parse_dbus_error(e)
+            if callable(error_handler):
+                error_handler(exception)
+            else:
+                raise exception
+
+        self.get_interface().Connect(reply_handler=ok, error_handler=err)
+
+    @raise_dbus_error
+    def disconnect(self, reply_handler=None, error_handler=None):
+        # BlueZ 5 only!
+        def ok():
+            if callable(reply_handler):
+                reply_handler()
+
+        def err(e):
+            exception = parse_dbus_error(e)
+            if callable(error_handler):
+                error_handler(exception)
+            else:
+                raise exception
+
+        self.get_interface().Disconnect(reply_handler=ok, error_handler=err)

@@ -154,8 +154,6 @@ uuid_names[0x1401] = "MDPSource"
 uuid_names[0x1402] = "MDPSink"
 uuid_names[0x2112] = "AppleAgent"
 
-import xml.dom.minidom
-
 SDP_ATTR_RECORD_HANDLE = 0x0000
 SDP_ATTR_SVCLASS_ID_LIST = 0x0001
 SDP_ATTR_RECORD_STATE = 0x0002
@@ -199,186 +197,12 @@ MCAP_DATA_UUID = 0x001f
 L2CAP_UUID = 0x0100
 
 
-def parse_sdp_xml(services):
-    svc_list = []
-
-
-    def get_value(typename, val):
-        if "int" in typename:
-            return (typename, int(val, 16))
-        else:
-            return (typename, val)
-
-    def HandleRecord(record):
-        svc_list.append(HandleAttribs(record.getElementsByTagName("attribute")))
-
-
-    def HandleSequence(sequence):
-        ls = []
-        for i in sequence.childNodes:
-            if i.nodeName == "sequence":
-                r = HandleSequence(i)
-                ls.append(r)
-            else:
-                if i.nodeType != i.TEXT_NODE:
-                    ls.append(get_value(i.nodeName, i.getAttribute("value")))
-
-        return ls
-
-
-    def HandleAttribs(attribs):
-        attr_list = {}
-        for attrib in attribs:
-            id = attrib.getAttribute("id")
-            id = int(id, 16)
-
-            for i in attrib.childNodes:
-                if i.nodeName == "sequence":
-                    attr_list[id] = HandleSequence(i)
-
-                elif i.nodeType != i.TEXT_NODE:
-                    attr_list[id] = get_value(i.nodeName, i.getAttribute("value"))
-
-        return attr_list
-
-    for k, v in services.items():
-        try:
-            dom = xml.dom.minidom.parseString(v)
-            HandleRecord(dom.getElementsByTagName("record")[0])
-        except Exception as e:
-            dprint("Failed to parse xml sdp entry", e)
-            dprint(v)
-
-    return svc_list
-
-
 def uuid16_to_name(uuid16):
     try:
         return uuid_names[uuid16]
-    except:
+    except KeyError:
         return _("Unknown")
 
 
 def uuid128_to_uuid16(uuid128):
-    try:
-        return int('0x' + uuid128[4:8], 16)
-    except:
-        return 0
-
-
-def bluez_to_friendly_name(svc):
-    if svc == "audiosink":
-        return uuid_names[0x110b]
-    elif svc == "audiosource":
-        return uuid_names[0x110a]
-    else:
-        raise Exception
-
-
-from blueman.main.Config import Config
-import pickle
-import base64
-import zlib
-
-sdp_cache = {}
-sdp_conf = Config("sdp")
-
-
-def on_sdp_changed(c, key, value):
-    if value and key in sdp_cache:
-        s = pickle.loads(zlib.decompress(base64.b64decode(value)))
-        sdp_cache[key] = s
-
-
-sdp_conf.connect("property-changed", on_sdp_changed)
-
-
-def sdp_get_cached(address):
-    if not address in sdp_cache:
-
-        d = sdp_conf.get(address)
-        if d:
-            try:
-                s = pickle.loads(zlib.decompress(base64.b64decode(d)))
-            except Exception as e:
-                dprint(e)
-                raise KeyError
-
-            sdp_cache[address] = s
-            return s
-        else:
-            raise KeyError("No sdp info for %s found" % address)
-    else:
-        return sdp_cache[address]
-
-
-def sdp_get_cached_rfcomm(address):
-    local_sdp = sdp_get_cached(address)
-    ls = []
-    for svc in local_sdp:
-        channel = 0
-        name = None
-        uuids = None
-
-        for k, v in svc.items():
-            if k == SDP_ATTR_PROTO_DESC_LIST:
-                # print v
-                for i in v:
-                    try:
-                        if i[0][0] == "uuid" and int(i[0][1], 16) == RFCOMM_UUID:
-                            #print "Channel", i[1][1]
-                            channel = i[1][1]
-                    except:
-                        pass
-
-            elif k == SDP_PRIMARY_LANG_BASE:
-                name = v[1]
-                if name:
-                    name = name.strip("\n\r ")
-
-            elif k == SDP_ATTR_SVCLASS_ID_LIST:
-                def m(x):
-                    try:
-                        return int(x[1], 16)
-                    except:
-                        pass
-
-                uuids = map(m, v)
-        ls.append((name, channel, uuids))
-
-    return ls
-
-
-def sdp_get_serial_type(address, pattern):
-    pattern = str(pattern)
-    if "-" in pattern:
-        return (uuid128_to_uuid16(pattern),)
-    else:
-        s = sdp_get_cached_rfcomm(address)
-        for name, channel, uuids in s:
-            if str(channel) == pattern:
-                return tuple(uuids)
-
-
-def sdp_get_serial_name(address, pattern):
-    pattern = str(pattern)
-    if "-" in pattern:
-        return uuid16_to_name(uuid128_to_uuid16(pattern))
-    else:
-        try:
-            s = sdp_get_cached_rfcomm(address)
-        except:
-            return _("Unknown")
-
-        for name, channel, uuids in s:
-            if str(channel) == pattern:
-                if name == None:
-                    return _("Unknown")
-                else:
-                    return name.strip("\n\r ")
-
-
-def sdp_save(address, records):
-    data = base64.b64encode(zlib.compress(pickle.dumps(records, pickle.HIGHEST_PROTOCOL)))
-    sdp_conf.set(address, data)
-
+    return int('0x' + uuid128[4:8], 16)

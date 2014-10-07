@@ -1,8 +1,9 @@
 from blueman.Functions import *
 import pickle
 import base64
+from blueman.Service import Service
 from blueman.main.Config import Config
-from blueman.Sdp import parse_sdp_xml, sdp_save
+from blueman.main.PluginManager import StopException
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.applet.BluezAgent import AdapterAgent
 
@@ -10,7 +11,6 @@ from blueman.bluez.Device import Device as BluezDevice
 from blueman.main.Device import Device
 from blueman.main.applet.BluezAgent import TempAgent
 from blueman.bluez.Adapter import Adapter
-from blueman.bluez.Serial import Serial
 
 from gi.repository import GObject
 from gi.repository import Gtk
@@ -31,22 +31,8 @@ class DBusService(AppletPlugin):
         AppletPlugin.add_method(self.on_rfcomm_disconnect)
         AppletPlugin.add_method(self.rfcomm_connect_handler)
         AppletPlugin.add_method(self.service_connect_handler)
+        AppletPlugin.add_method(self.service_disconnect_handler)
         AppletPlugin.add_method(self.on_device_disconnect)
-
-    @dbus.service.method('org.blueman.Applet', in_signature="s", out_signature="", async_callbacks=("ok", "err"))
-    def RefreshServices(self, path, ok, err):
-        # BlueZ 4 only!
-        device = Device(path)
-
-        def reply(svcs):
-            try:
-                records = parse_sdp_xml(svcs)
-                sdp_save(device.Address, records)
-            except:
-                pass
-            ok()
-
-        device.get_interface().DiscoverServices("", reply_handler=reply, error_handler=err)
 
     @dbus.service.method('org.blueman.Applet', in_signature="", out_signature="as")
     def QueryPlugins(self):
@@ -74,40 +60,60 @@ class DBusService(AppletPlugin):
     def SetPluginConfig(self, plugin, value):
         self.Applet.Plugins.SetConfig(plugin, value)
 
-    def ConnectHelper(self, interface, object_path, _method, args, ok, err):
-        bus = dbus.SystemBus()
-        service = bus.get_object("org.bluez", object_path)
-        method = service.get_dbus_method(_method, interface)
+    @dbus.service.method('org.blueman.Applet', in_signature="os", async_callbacks=("ok", "err"))
+    def connect_service(self, object_path, uuid, ok, err):
+        service = Device(object_path).get_service(uuid)
 
-        method(reply_handler=ok, error_handler=err, *args)
+        try:
+            self.Applet.Plugins.RecentConns
+        except KeyError:
+            dprint("RecentConns plugin is unavailable")
+        else:
+            self.Applet.Plugins.RecentConns.notify(service)
 
+        if service.group == 'serial':
+            def reply(rfcomm):
+                self.Applet.Plugins.Run("on_rfcomm_connected", service, rfcomm)
+                ok(rfcomm)
 
-    @dbus.service.method('org.blueman.Applet', in_signature="sosas", async_callbacks=("ok", "err"))
-    def ServiceProxy(self, interface, object_path, _method, args, ok, err):
+            rets = self.Applet.Plugins.Run("rfcomm_connect_handler", service, reply, err)
+            if True in rets:
+                pass
+            else:
+                dprint("No handler registered")
+                err(dbus.DBusException(
+                    "Service not supported\nPossibly the plugin that handles this service is not loaded"))
+        else:
+            def cb(_inst, ret):
+                if ret:
+                    raise StopException
 
-        if _method == "Connect":
-            dev = Device(object_path)
-            try:
-                self.Applet.Plugins.RecentConns.notify(dev, interface, args)
-            except KeyError:
-                dprint("RecentConns plugin is unavailable")
+            if not self.Applet.Plugins.RunEx("service_connect_handler", cb, service, ok, err):
+                service.connect(reply_handler=ok, error_handler=err)
 
-        self.handled = False
+    @dbus.service.method('org.blueman.Applet', in_signature="osd", async_callbacks=("ok", "err"))
+    def disconnect_service(self, object_path, uuid, port, ok, err):
+        service = Device(object_path).get_service(uuid)
 
-        def cb(inst, ret):
-            if ret == True:
-                self.handled = True
-                #stop further execution
-                raise StopException
+        if service.group == 'serial':
+            service.disconnect(port)
 
-        self.Applet.Plugins.RunEx("service_connect_handler", cb, interface, object_path, _method, args, ok, err)
+            self.Applet.Plugins.Run("on_rfcomm_disconnect", port)
 
-        if not self.handled:
-            self.ConnectHelper(interface, object_path, _method, args, ok, err)
+            dprint("Disonnecting rfcomm device")
+        else:
 
-        del self.handled
+            def cb(_inst, ret):
+                if ret:
+                    raise StopException
 
-    def service_connect_handler(self, interface, object_path, _method, args, ok, err):
+            if not self.Applet.Plugins.RunEx("service_disconnect_handler", cb, service, ok, err):
+                service.disconnect(reply_handler=ok, error_handler=err)
+
+    def service_connect_handler(self, service, ok, err):
+        pass
+
+    def service_disconnect_handler(self, service, ok, err):
         pass
 
     @dbus.service.method('org.blueman.Applet', in_signature="ssbu", async_callbacks=("_ok", "err"))
@@ -116,7 +122,6 @@ class DBusService(AppletPlugin):
         def ok(device):
             path = device.get_object_path()
             _ok(path)
-            self.RefreshServices(path, (lambda *args: None), (lambda *args: None))
 
         if self.Applet.Manager:
             adapter = Adapter(adapter_path)
@@ -144,39 +149,10 @@ class DBusService(AppletPlugin):
         else:
             err()
 
-    @dbus.service.method('org.blueman.Applet', in_signature="ss", out_signature="s", async_callbacks=("ok", "err"))
-    def RfcommConnect(self, device, uuid, ok, err):
-        def reply(rfcomm):
-            self.Applet.Plugins.Run("on_rfcomm_connected", dev, rfcomm, uuid)
-            ok(rfcomm)
-
-        dev = Device(device)
-        try:
-            self.Applet.Plugins.RecentConns.notify(dev.Copy(), Serial().get_interface_name(), [uuid])
-        except KeyError:
-            pass
-
-        rets = self.Applet.Plugins.Run("rfcomm_connect_handler", dev, uuid, reply, err)
-        if True in rets:
-            pass
-        else:
-            dprint("No handler registered")
-            err(dbus.DBusException(
-                "Service not supported\nPossibly the plugin that handles this service is not loaded"))
-
-    def rfcomm_connect_handler(self, device, uuid, reply_handler, error_handler):
+    def rfcomm_connect_handler(self, service, reply_handler, error_handler):
         return False
 
-    @dbus.service.method('org.blueman.Applet', in_signature="ss", out_signature="")
-    def RfcommDisconnect(self, device, rfdevice):
-        dev = Device(BluezDevice(device))
-        dev.Services["serial"].Disconnect(rfdevice)
-
-        self.Applet.Plugins.Run("on_rfcomm_disconnect", rfdevice)
-
-        dprint("Disonnecting rfcomm device")
-
-    def on_rfcomm_connected(self, device, port, uuid):
+    def on_rfcomm_connected(self, device, port):
         pass
 
     def on_rfcomm_disconnect(self, port):

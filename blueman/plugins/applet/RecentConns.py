@@ -14,11 +14,8 @@ from blueman.Functions import *
 from blueman.main.Device import Device
 from blueman.bluez.Device import Device as BluezDevice
 from blueman.bluez.Adapter import Adapter
-from blueman.bluez.Serial import Serial
-from blueman.bluez.Network import Network
 from blueman.main.SignalTracker import SignalTracker
 from blueman.gui.Notification import Notification
-import blueman.Sdp as sdp
 
 from blueman.plugins.AppletPlugin import AppletPlugin
 
@@ -231,10 +228,10 @@ class RecentConns(AppletPlugin, Gtk.Menu):
 
         self.initialize()
 
-    def notify(self, device, service_interface, conn_args):
-        dprint(device, service_interface, conn_args)
+    def notify(self, service):
+        device = service.device
+        dprint(device, service, service.uuid)
         item = {}
-        object_path = device.get_object_path()
         try:
             adapter = Adapter(device.Adapter)
         except:
@@ -247,8 +244,8 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         item["address"] = device.Address
         item["alias"] = device.Alias
         item["icon"] = device.Icon
-        item["service"] = service_interface
-        item["conn_args"] = conn_args
+        item["name"] = service.name
+        item["uuid"] = service.uuid
         item["time"] = time.time()
         item["device"] = device #device object
         item["mitem"] = None #menu item object
@@ -256,8 +253,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         for i in RecentConns.items:
             if i["adapter"] == item["adapter"] and \
                             i["address"] == item["address"] and \
-                            i["service"] == item["service"] and \
-                            i["conn_args"] == item["conn_args"]:
+                            i["uuid"] == item["uuid"]:
                 i["time"] = item["time"]
                 if i["gsignal"]:
                     i["device"].disconnect(i["gsignal"])
@@ -274,55 +270,31 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         self.store_state()
 
     def on_item_activated(self, menu_item, item):
-        dprint("Connect", item["address"], item["service"])
+        dprint("Connect", item["address"], item["uuid"])
 
-        sv_name = item["service"].split(".")[-1].lower()
-        try:
-            service = item["device"].Services[sv_name]
-        except:
-            RecentConns.items.remove(item)
-        else:
-            sn = startup_notification("Bluetooth Connection",
-                                      desc=_("Connecting to %s") % item["mitem"].get_child().props.label,
-                                      icon="blueman")
+        sn = startup_notification("Bluetooth Connection",
+                                  desc=_("Connecting to %s") % item["mitem"].get_child().props.label,
+                                  icon="blueman")
 
-            item["mitem"].props.sensitive = False
+        item["mitem"].props.sensitive = False
 
-            def reply(*args):
-                Notification(_("Connected"), _("Connected to %s") % item["mitem"].get_child().props.label,
-                             pixbuf=get_icon("network-transmit-recieve", 48),
-                             status_icon=self.Applet.Plugins.StatusIcon)
-                item["mitem"].props.sensitive = True
-                sn.complete()
+        def reply(*args):
+            Notification(_("Connected"), _("Connected to %s") % item["mitem"].get_child().props.label,
+                         pixbuf=get_icon("network-transmit-recieve", 48),
+                         status_icon=self.Applet.Plugins.StatusIcon)
+            item["mitem"].props.sensitive = True
+            sn.complete()
 
-            def err(reason):
-                Notification(_("Failed to connect"), str(reason).split(": ")[-1],
-                             pixbuf=get_icon("dialog-error", 48),
-                             status_icon=self.Applet.Plugins.StatusIcon)
-                item["mitem"].props.sensitive = True
-                sn.complete()
+        def err(reason):
+            Notification(_("Failed to connect"), str(reason).split(": ")[-1],
+                         pixbuf=get_icon("dialog-error", 48),
+                         status_icon=self.Applet.Plugins.StatusIcon)
+            item["mitem"].props.sensitive = True
+            sn.complete()
 
-            if item["service"] == Serial().get_interface_name():
-                self.Applet.DbusSvc.RfcommConnect(item["device"].get_object_path(), item["conn_args"][0], reply, err)
-            else:
-                self.Applet.DbusSvc.ServiceProxy(item["service"], item["device"].get_object_path(), "Connect",
-                                                 item["conn_args"], reply, err)
+        self.Applet.DbusSvc.connect_service(item["device"].get_object_path(), item["uuid"], reply, err)
 
     def add_item(self, item):
-        device = item["device"]
-
-        if item["service"] == Serial().get_interface_name():
-            name = sdp.sdp_get_serial_name(item["address"], item["conn_args"][0])
-
-        elif item["service"] == Network().get_interface_name():
-            name = _("Network Access (%s)") % sdp.uuid16_to_name(sdp.uuid128_to_uuid16(item["conn_args"][0]))
-        else:
-            try:
-                name = sdp.bluez_to_friendly_name(item["service"].split(".")[-1].lower())
-            except:
-                name = item["service"].split(".")[-1] + " " + _("Service")
-                name = name.capitalize()
-
         if not item["mitem"]:
             mitem = create_menuitem("", get_icon(item["icon"], 16))
             item["mitem"] = mitem
@@ -332,7 +304,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
             mitem.props.sensitive = True
             mitem.props.tooltip_text = None
 
-        item["mitem"].props.label = (_("%(service)s on %(device)s") % {"service": name, "device": item["alias"]})
+        item["mitem"].props.label = (_("%(service)s on %(device)s") % {"service": item["name"], "device": item["alias"]})
 
         if item["adapter"] not in self.Adapters.values():
             if item["device"] and item["gsignal"]:
@@ -382,6 +354,8 @@ class RecentConns(AppletPlugin, Gtk.Menu):
             return
 
         for i in reversed(items):
+            if "name" not in i or "uuid" not in i:
+                items.remove(i)
             try:
                 i["device"] = self.get_device(i)
             except AdapterNotFound:

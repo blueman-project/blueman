@@ -1,0 +1,19 @@
+#!/usr/bin/env python
+
+from gi.repository import Gio
+from gi.repository import GLib
+import os
+import sys
+
+
+def on_file_changed(monitor, file, other_file, event_type):
+    if event_type == Gio.FileMonitorEvent.DELETED:
+        loop.quit()
+
+mon = Gio.File.new_for_path(sys.argv[1]).monitor_file(Gio.FileMonitorFlags.NONE)
+mon.connect('changed', on_file_changed)
+
+fd = os.open(sys.argv[1], os.O_RDONLY | os.O_NONBLOCK)
+
+loop = GLib.MainLoop()
+loop.run()

@@ -14,6 +14,8 @@
 * [nm] Add support for ModemManager 1.x to NMPANSupport
 * [plugins] Add GameControllerWakelock plugin (@bwRavencl / Matteo Hausner)
 * Add blueman-report to create commented logs for bug reports
+* [bluez] BlueZ 5 support for audio, serial, recent connections, and setup
+  assistant
 
 ### Changes
 

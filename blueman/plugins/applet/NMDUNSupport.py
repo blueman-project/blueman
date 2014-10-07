@@ -3,16 +3,15 @@ import dbus
 from gi.repository import GObject
 from blueman.main.SignalTracker import SignalTracker
 from blueman.gui.Notification import Notification
-from blueman.Sdp import *
+from blueman.Sdp import uuid128_to_uuid16, DIALUP_NET_SVCLASS_ID
 from blueman.Functions import get_icon, composite_icon, dprint
 import weakref
 
 
 class ConnectionHandler:
-    def __init__(self, parent, device, uuid, reply, err):
+    def __init__(self, parent, service, reply, err):
         self.parent = parent
-        self.device = device
-        self.uuid = uuid
+        self.service = service
         self.reply = reply
         self.err = err
         self.rfcomm_dev = None
@@ -30,9 +29,8 @@ class ConnectionHandler:
         # for some reason these handlers take a reference and don't give it back
         #so i have to workaround :(
         w = weakref.ref(self)
-        device.Services["serial"].Connect(uuid,
-                                          reply_handler=lambda *args: w() and w().on_connect_reply(*args),
-                                          error_handler=lambda *args: w() and w().on_connect_error(*args))
+        service.connect(reply_handler=lambda *args: w() and w().on_connect_reply(*args),
+                        error_handler=lambda *args: w() and w().on_connect_error(*args))
 
     def __del__(self):
         dprint("deleting")
@@ -50,7 +48,7 @@ class ConnectionHandler:
             GObject.source_remove(self.timeout)
         self.signals.DisconnectAll()
 
-        del self.device
+        del self.service
 
     def on_mm_device_added(self, path, name="org.freedesktop.ModemManager"):
         dprint(path)
@@ -71,7 +69,7 @@ class ConnectionHandler:
             icon = composite_icon(blueman, [(modem, 24, 24, 255)])
 
             Notification(_("Bluetooth Dialup"),
-                         _("DUN connection on %s will now be available in Network Manager") % self.device.Alias,
+                         _("DUN connection on %s will now be available in Network Manager") % self.service.device.Alias,
                          pixbuf=icon,
                          status_icon=self.parent.Applet.Plugins.StatusIcon)
 
@@ -102,12 +100,9 @@ class NMDUNSupport(AppletPlugin):
     def on_unload(self):
         pass
 
-    def rfcomm_connect_handler(self, device, uuid, reply, err):
-        uuid16 = sdp_get_serial_type(device.Address, uuid)
-        if DIALUP_NET_SVCLASS_ID in uuid16:
-
-            ConnectionHandler(self, device, uuid, reply, err)
-
+    def rfcomm_connect_handler(self, service, reply, err):
+        if DIALUP_NET_SVCLASS_ID == uuid128_to_uuid16(service.uuid):
+            ConnectionHandler(self, service, reply, err)
             return True
         else:
             return False

@@ -1,8 +1,13 @@
 from gi.repository import GObject
+import inspect
 from blueman.Functions import dprint
+from blueman.Sdp import uuid128_to_uuid16
 from blueman.main.SignalTracker import SignalTracker
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device as BluezDevice
+from blueman.Service import Service
+import blueman.services
+import blueman.services.meta
 import os
 import weakref
 
@@ -29,8 +34,6 @@ class Device(GObject.GObject):
         self.Device.Icon = "blueman"
         self.Device.Class = "unknown"
 
-        self.__services = {}
-
         self.Valid = True
 
         self.Signals = SignalTracker()
@@ -50,12 +53,16 @@ class Device(GObject.GObject):
             adapter = Adapter(object_path.replace("/" + os.path.basename(object_path), ""))
             self.Signals.Handle("bluez", adapter, lambda path: w() and w().on_device_removed(path), "DeviceRemoved")
 
-    @property
-    def Services(self):
-        if len(self.__services) == 0:
-            self.init_services()
+    def get_service(self, uuid):
+        for name, cls in inspect.getmembers(blueman.services, inspect.isclass):
+            if uuid128_to_uuid16(uuid) == cls.__svclass_id__:
+                return cls(self, uuid)
 
-        return self.__services
+    def get_services(self):
+        for uuid in self.UUIDs:
+            service = self.get_service(uuid)
+            if service:
+                yield service
 
     def __del__(self):
         dprint("deleting device", self.get_object_path())
@@ -70,20 +77,6 @@ class Device(GObject.GObject):
             self.emit("invalidated")
             self.Destroy()
 
-    def init_services(self):
-        dprint("Loading services")
-
-        if not self.Fake:
-            services = self.Device.list_services()
-            self.__services = {}
-            for service in services:
-                name = service.get_interface_name().split(".")
-                if name[0] == 'org' and name[1] == 'bluez':
-                    name = name[2].lower()
-                    if name.endswith('1'):
-                        name = name[:-1]
-                    self.__services[name] = service
-
     def Copy(self):
         if not self.Valid:
             raise Exception("Attempted to copy an invalidated device")
@@ -92,8 +85,6 @@ class Device(GObject.GObject):
     def property_changed(self, key, value):
         self.emit("property-changed", key, value)
         self.Properties[key] = value
-        if key == "UUIDs":
-            self.init_services()
 
     def Destroy(self):
         dprint("invalidating device", self.get_object_path())
