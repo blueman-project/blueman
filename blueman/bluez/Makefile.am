@@ -11,12 +11,8 @@ blueman_PYTHON =				\
 	errors.py					\
 	Manager.py					\
 	PropertiesBlueZInterface.py	\
-	ServiceInterface.py			\
 	Network.py					\
 	NetworkServer.py			\
-	Serial.py					\
-	AudioSource.py				\
-	AudioSink.py				\
 	Headset.py
 
 CLEANFILES = \

@@ -1,14 +1,11 @@
 from blueman.Functions import dprint
 from gi.repository import GObject
 import dbus
-from blueman.Sdp import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 from uuid import uuid1
 from gi.repository import GConf
 import os
 from blueman.main.SignalTracker import SignalTracker
-from blueman.main.Device import Device
-from blueman.bluez.Network import Network
 
 
 class NewConnectionBuilder:
@@ -281,37 +278,44 @@ class NMPANSupport(AppletPlugin):
         for watch in self.watches:
             watch.cancel()
 
-    def service_connect_handler(self, interface, object_path, method, args, ok, err):
-        if interface == Network().get_interface_name() and method == "Connect":
-            uuid = args[0]
-            name = uuid16_to_name(uuid128_to_uuid16(uuid))
-            d = Device(object_path)
+    def service_connect_handler(self, service, ok, err):
+        if service.group != 'network':
+            return
 
-            conn = self.find_active_connection(d.Address, "panu")
-            if conn:
-                err(dbus.DBusException(_("Already connected")))
-            else:
-                params = {}
-                params["bluetooth"] = {"name": "bluetooth", "bdaddr": str(d.Address), "type": "panu"}
-                params["connection"] = {"autoconnect": False, "id": str("%s on %s") % (name, d.Alias),
-                                        "uuid": str(uuid1()), "type": "bluetooth"}
-                params['ipv4'] = {'addresses': dbus.Array([], dbus.Signature("i")),
-                                  'dns': dbus.Array([], dbus.Signature("i")), "method": "auto",
-                                  "routes": dbus.Array([], dbus.Signature("i"))}
+        name = service.name
+        d = service.device
 
-                NewConnectionBuilder(self, params, ok, err)
+        conn = self.find_active_connection(d.Address, "panu")
+        if conn:
+            err(dbus.DBusException(_("Already connected")))
+        else:
+            params = {}
+            params["bluetooth"] = {"name": "bluetooth", "bdaddr": str(d.Address), "type": "panu"}
+            params["connection"] = {"autoconnect": False, "id": str("%s on %s") % (name, d.Alias),
+                                    "uuid": str(uuid1()), "type": "bluetooth"}
+            params['ipv4'] = {'addresses': dbus.Array([], dbus.Signature("i")),
+                              'dns': dbus.Array([], dbus.Signature("i")), "method": "auto",
+                              "routes": dbus.Array([], dbus.Signature("i"))}
 
-            return True
+            NewConnectionBuilder(self, params, ok, err)
 
-        elif interface == Network().get_interface_name() and method == "Disconnect":
-            d = Device(object_path)
-            active_conn_path = self.find_active_connection(d.Address, "panu")
-            if active_conn_path:
-                self.bus.call_blocking("org.freedesktop.NetworkManager",
-                                       "/org/freedesktop/NetworkManager",
-                                       "org.freedesktop.NetworkManager",
-                                       "DeactivateConnection",
-                                       "o",
-                                       [active_conn_path])
-                ok()
-                return True
+        return True
+
+    def service_disconnect_handler(self, service, ok, err):
+        if service.group != 'network':
+            return
+
+        d = service.device
+        active_conn_path = self.find_active_connection(d.Address, "panu")
+
+        if not active_conn_path:
+            return
+
+        self.bus.call_blocking("org.freedesktop.NetworkManager",
+                               "/org/freedesktop/NetworkManager",
+                               "org.freedesktop.NetworkManager",
+                               "DeactivateConnection",
+                               "o",
+                               [active_conn_path])
+        ok()
+        return True

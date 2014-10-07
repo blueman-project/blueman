@@ -82,6 +82,8 @@ cdef extern from "libblueman.h":
     cdef int connection_get_tpl(conn_info_handles *ci, char *ret_tpl, unsigned char type)
     cdef int connection_close(conn_info_handles *ci)
     cdef int get_rfcomm_list(rfcomm_dev_list_req **ret)
+    cdef int c_create_rfcomm_device "create_rfcomm_device" (char *local_address, char *remote_address, int channel)
+    cdef int c_release_rfcomm_device "release_rfcomm_device" (int id)
     cdef float get_page_timeout(int hdev)
     cdef int _create_bridge(char* name)
     cdef int _destroy_bridge(char* name)
@@ -142,7 +144,11 @@ ERR = {
     -8:"Getting rfcomm list failed",
     -9:"ERR_SOCKET_FAILED",
     -10:"ERR_CANT_READ_PAGE_TIMEOUT",
-    -11:"ERR_READ_PAGE_TIMEOUT"
+    -11:"ERR_READ_PAGE_TIMEOUT",
+    -12: "Can't bind RFCOMM socket",
+    -13: "Can't connect RFCOMM socket",
+    -14: "Can't create RFCOMM TTY",
+    -15: "Can't release RFCOMM TTY"
     }
 
 RFCOMM_STATES = [
@@ -190,6 +196,20 @@ def rfcomm_list():
     free(dl)
 
     return devs
+
+
+def create_rfcomm_device(local_address, remote_address, channel):
+    ret = c_create_rfcomm_device(local_address, remote_address, channel)
+    if ret < 0:
+        raise Exception(ERR[ret])
+    return ret
+
+
+def release_rfcomm_device(id):
+    ret = c_release_rfcomm_device(id)
+    if ret < 0:
+        raise Exception(ERR[ret])
+    return ret
 
 try: from exceptions import Exception
 except ImportError: pass

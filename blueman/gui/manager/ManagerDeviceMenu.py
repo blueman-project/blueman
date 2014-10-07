@@ -1,7 +1,7 @@
 from gi.repository import GObject
 from gi.repository import Gtk
 from operator import itemgetter
-from blueman.Sdp import *
+from blueman.Sdp import uuid128_to_uuid16, SERIAL_PORT_SVCLASS_ID, OBEX_OBJPUSH_SVCLASS_ID, OBEX_FILETRANS_SVCLASS_ID
 from blueman.Functions import *
 from blueman.main.SignalTracker import SignalTracker
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
@@ -11,6 +11,7 @@ from blueman.gui.MessageArea import MessageArea
 from blueman.bluez.BlueZInterface import BlueZInterface
 
 from blueman.Lib import rfcomm_list
+from blueman.services import SerialPort
 
 
 def get_x_icon(icon_name, size):
@@ -95,23 +96,18 @@ class ManagerDeviceMenu(Gtk.Menu):
             if inst.SelectedDevice == self.SelectedDevice and not (inst.is_popup and not inst.props.visible):
                 inst.Generate()
 
-
     def service_property_changed(self, key, value):
         if key == "Connected":
             self.Generate()
 
+    def on_connect(self, _item, service):
+        device = service.device
 
-    def on_connect(self, item, device, service_id=None, *args):
         def success(*args2):
-            try:
-                uuid16 = sdp_get_serial_type(device.Address, args[0])
-            except:
-                uuid16 = 0
-
             dprint("success", args2)
             prog.message(_("Success!"))
 
-            if service_id == "serial" and SERIAL_PORT_SVCLASS_ID in uuid16:
+            if isinstance(service, SerialPort) and SERIAL_PORT_SVCLASS_ID == uuid128_to_uuid16(service.uuid):
                 MessageArea.show_message(_("Serial port connected to %s") % args2[0], "dialog-information")
             else:
                 MessageArea.close()
@@ -139,66 +135,21 @@ class ManagerDeviceMenu(Gtk.Menu):
         except:
             pass
 
-        if service_id:
-            svc = device.Services[service_id]
-
-            if service_id == "network":
-                uuid = args[0]
-                appl.ServiceProxy(svc.get_interface_name(),
-                                  svc.get_object_path(),
-                                  "Connect",
-                                  [uuid],
-                                  reply_handler=success,
-                                  error_handler=fail, timeout=200)
-
-            elif service_id == "input":
-                appl.ServiceProxy(svc.get_interface_name(),
-                                  svc.get_object_path(),
-                                  "Connect", [],
-                                  reply_handler=success,
-                                  error_handler=fail, timeout=200)
-
-            elif service_id == "serial":
-                uuid = str(args[0])
-
-                appl.RfcommConnect(device.get_object_path(),
-                                   uuid,
-                                   reply_handler=success,
-                                   error_handler=fail, timeout=200)
-
-            else:
-                appl.ServiceProxy(svc.get_interface_name(),
-                                  svc.get_object_path(),
-                                  "Connect", [],
-                                  reply_handler=success,
-                                  error_handler=fail, timeout=200)
-        else:
-            appl.ServiceProxy(device.get_interface_name(), device.get_object_path(), 'Connect', [],
-                              reply_handler=success, error_handler=fail, timeout=200)
+        appl.connect_service(device.get_object_path(), service.uuid,
+                             reply_handler=success, error_handler=fail,
+                             timeout=200)
 
         prog.start()
 
-    def on_disconnect(self, item, device, service_id=None, *args):
-        if service_id == "serial":
-            try:
-                appl = AppletService()
-            except:
-                dprint("** Failed to connect to applet")
-            else:
-                appl.RfcommDisconnect(device.get_object_path(), args[0])
-                self.Generate()
-        else:
-            try:
-                appl = AppletService()
-            except:
-                dprint("** Failed to connect to applet")
-                return
-            if service_id:
-                connection_object = device.Services[service_id]
-            else:
-                connection_object = device
-            appl.ServiceProxy(connection_object.get_interface_name(),
-                              connection_object.get_object_path(), "Disconnect", [])
+    def on_disconnect(self, item, service, port=0):
+        try:
+            appl = AppletService()
+        except:
+            dprint("** Failed to connect to applet")
+            return
+
+        appl.disconnect_service(service.device.get_object_path(), service.uuid, port)
+        self.Generate()
 
 
     def on_device_property_changed(self, List, device, iter, key_value):
@@ -391,28 +342,6 @@ class ManagerDeviceMenu(Gtk.Menu):
             self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.setup(device))
             item.show()
             item.props.tooltip_text = _("Run the setup assistant for this device")
-
-            if BlueZInterface.get_interface_version()[0] < 5:
-                def update_services(item):
-                    def reply():
-                        self.unset_op(device)
-                        prog.message(_("Success!"))
-                        MessageArea.close()
-
-                    def error(*args):
-                        self.unset_op(device)
-                        prog.message(_("Fail"))
-                        MessageArea.show_message(e_(str(args[0])))
-
-                    prog = ManagerProgressbar(self.Blueman, False, _("Refreshing"))
-                    prog.start()
-                    self.set_op(device, _("Refreshing Services..."))
-                    appl.RefreshServices(device.get_object_path(), reply_handler=reply, error_handler=error)
-
-                item = create_menuitem(_("Refresh Services"), get_icon("view-refresh", 16))
-                self.append(item)
-                self.Signals.Handle(item, "activate", update_services)
-                item.show()
 
             item = Gtk.SeparatorMenuItem()
             item.show()

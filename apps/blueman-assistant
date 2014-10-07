@@ -31,7 +31,6 @@ from blueman.bluez.BlueZInterface import BlueZInterface
 from blueman.main.FakeDevice import FakeDevice
 from blueman.main.Device import Device
 from blueman.main.AppletService import AppletService
-from blueman.Sdp import *
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -58,7 +57,7 @@ class Assistant:
         self.Device = None
         self.Adapter = None
         self.PairType = 0
-        self.Service = None
+        self.service = None
 
         self.Builder = Gtk.Builder()
         self.Builder.set_translation_domain("blueman")
@@ -173,13 +172,13 @@ class Assistant:
             #self.assistant.set_page_complete(pages[PAGE_PASSKEY], True)
             return PAGE_PAIRING
         elif page == PAGE_PAIRING:
-            if len(self.Device.Services) == 0:
+            if len(self.Device.get_services()) == 0:
                 return PAGE_FINISH
 
             return PAGE_CONNECT
         elif page == PAGE_CONNECT:
 
-            if self.Service and self.Service[0]:
+            if self.service:
                 return PAGE_CONNECTING
             else:
                 return PAGE_FINISH
@@ -209,9 +208,9 @@ class Assistant:
     def on_close(self, assistant):
         Gtk.main_quit()
 
-    def on_service_toggled(self, rb, sv_name, *args):
+    def on_service_toggled(self, rb, service):
         if rb.props.active:
-            self.Service = (sv_name, args)
+            self.service = service
             self.assistant.set_page_complete(pages[PAGE_CONNECT], True)
 
     def on_prepare(self, assistant, page):
@@ -229,12 +228,7 @@ class Assistant:
             if BlueZInterface.get_interface_version()[0] < 5:
                 def ok(dev):
                     self.Device = Device(dev)
-
-                    def refresh_cb(*args):
-                        self.assistant.set_current_page(PAGE_CONNECT)
-
-                    self.applet.RefreshServices(self.Device.get_object_path(), reply_handler=refresh_cb,
-                                                error_handler=refresh_cb)
+                    self.assistant.set_current_page(PAGE_CONNECT)
 
                 def err(err):
                     print(err)
@@ -267,57 +261,16 @@ class Assistant:
         elif num == PAGE_CONNECT:
             self.svc_vbox.foreach(lambda x, y: self.svc_vbox.remove(x), None)
 
-            print(self.Device.Services)
-            uuids = self.Device.UUIDs
+            print(self.Device.get_services())
             rbs = []
 
-            for name, service in self.Device.Services.items():
-                if name == "serial":
-                    for uuid in uuids:
-                        uuid16 = uuid128_to_uuid16(uuid)
-                        if uuid16 == DIALUP_NET_SVCLASS_ID:
-                            rbs.append(Gtk.RadioButton(uuid16_to_name(uuid16)))
-                            rbs[-1].connect("toggled", self.on_service_toggled, name, uuid)
-                            self.svc_vbox.pack_start(rbs[-1], False, False, 0)
+            for service in self.Device.get_services():
+                rbs.append(Gtk.RadioButton(service.name))
+                rbs[-1].connect("toggled", self.on_service_toggled, service)
+                self.svc_vbox.pack_start(rbs[-1], False, False, 0)
 
-                        if uuid16 == SERIAL_PORT_SVCLASS_ID:
-                            rbs.append(Gtk.RadioButton(uuid16_to_name(uuid16)))
-                            rbs[-1].connect("toggled", self.on_service_toggled, name, uuid)
-                            self.svc_vbox.pack_start(rbs[-1], False, False, 0)
-                elif name == "input":
-                    rbs.append(Gtk.RadioButton(_("Input Service")))
-                    rbs[-1].connect("toggled", self.on_service_toggled, name)
-                    self.svc_vbox.pack_start(rbs[-1], False, False, 0)
-
-                elif name == "network":
-                    for uuid in uuids:
-                        uuid16 = uuid128_to_uuid16(uuid)
-                        if uuid16 == GN_SVCLASS_ID:
-                            rbs.append(Gtk.RadioButton(_("Group Network")))
-                            rbs[-1].connect("toggled", self.on_service_toggled, name, uuid)
-                            self.svc_vbox.pack_start(rbs[-1], False, False, 0)
-
-                        if uuid16 == NAP_SVCLASS_ID:
-                            rbs.append(Gtk.RadioButton(_("Network Access Point")))
-                            rbs[-1].connect("toggled", self.on_service_toggled, name, uuid)
-                            self.svc_vbox.pack_start(rbs[-1], False, False, 0)
-
-                elif name == "audiosink":
-                    rbs.append(Gtk.RadioButton(_("A2DP Sink (Send Audio)")))
-                    rbs[-1].connect("toggled", self.on_service_toggled, name)
-                    self.svc_vbox.pack_start(rbs[-1], False, False, 0)
-
-                elif name == "audiosource":
-                    rbs.append(Gtk.RadioButton(_("A2DP Source (Receive Audio)")))
-                    rbs[-1].connect("toggled", self.on_service_toggled, name)
-                    self.svc_vbox.pack_start(rbs[-1], False, False, 0)
-
-                elif name == "headset":
-                    rbs.append(Gtk.RadioButton(_("Headset Service")))
-                    rbs[-1].connect("toggled", self.on_service_toggled, name)
-                    self.svc_vbox.pack_start(rbs[-1], False, False, 0)
-
-                if len(rbs) > 1: rbs[-1].join_group(rbs[0])
+                if len(rbs) > 1:
+                    rbs[-1].join_group(rbs[0])
 
             rbs.append(Gtk.RadioButton(_("Don't connect")))
             rbs[-1].join_group(rbs[0])
@@ -333,8 +286,6 @@ class Assistant:
         elif num == PAGE_CONNECTING:
             print("connect")
 
-            svc = self.Device.Services[self.Service[0]]
-
             def success(*args):
                 pages[PAGE_FINISH].set_markup(_("<b>Device added and connected successfuly</b>"))
                 self.assistant.set_page_complete(pages[PAGE_CONNECTING], True)
@@ -347,17 +298,8 @@ class Assistant:
                 self.assistant.set_page_header_image(pages[PAGE_FINISH], get_icon("dialog-warning", 32))
                 self.assistant.set_current_page(PAGE_FINISH)
 
-            if self.Service[0] == "network":
-                uuid = self.Service[1][0]
-                self.applet.ServiceProxy(svc.get_interface_name(), svc.get_object_path(), "Connect", [uuid],
-                                         reply_handler=success, error_handler=fail)
-
-            elif self.Service[0] == "serial":
-                uuid = self.Service[1][0]
-                self.applet.RfcommConnect(self.Device.get_object_path(), uuid, reply_handler=success, error_handler=fail)
-            else:
-                self.applet.ServiceProxy(svc.get_interface_name(), svc.get_object_path(), "Connect", [],
-                                         reply_handler=success, error_handler=fail)
+            self.applet.connect_service(self.service.device.get_object_path(), self.service.uuid,
+                                        reply_handler=success, error_handler=fail)
 
 
 Assistant()

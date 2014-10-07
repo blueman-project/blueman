@@ -3,7 +3,8 @@ SUBDIRS =	\
 	gui		\
 	main	\
 	ods	\
-	plugins
+	plugins \
+	services
 
 bluemandir = $(pythondir)/blueman
 blueman_PYTHON = 	\
@@ -11,6 +12,7 @@ blueman_PYTHON = 	\
 	DeviceClass.py	\
 	Functions.py	\
 	Sdp.py		\
+	Service.py	\
 	Lib.py		\
 	__init__.py
 

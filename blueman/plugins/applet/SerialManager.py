@@ -2,7 +2,7 @@ from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Config import Config
 from blueman.gui.Notification import Notification
-from blueman.Sdp import *
+from blueman.Sdp import uuid128_to_uuid16, uuid16_to_name, SERIAL_PORT_SVCLASS_ID
 from blueman.Lib import rfcomm_list
 from blueman.main.SignalTracker import SignalTracker
 from blueman.main.Device import Device
@@ -48,9 +48,10 @@ class SerialManager(AppletPlugin):
             d = Device(path)
             self.terminate_all_scripts(d.Address)
 
-    def on_rfcomm_connected(self, device, port, uuid):
-        uuid16 = sdp_get_serial_type(device.Address, uuid)
-        if SERIAL_PORT_SVCLASS_ID in uuid16:
+    def on_rfcomm_connected(self, service, port):
+        device = service.device
+        uuid16 = uuid128_to_uuid16(service.uuid)
+        if SERIAL_PORT_SVCLASS_ID == uuid16:
             Notification(_("Serial port connected"),
                          _("Serial port service on device <b>%s</b> now will be available via <b>%s</b>") % (
                          device.Alias, port),
@@ -59,7 +60,7 @@ class SerialManager(AppletPlugin):
 
             self.call_script(device.Address,
                              device.Alias,
-                             sdp_get_serial_name(device.Address, uuid),
+                             uuid16_to_name(uuid16),
                              uuid16,
                              port)
 
@@ -111,12 +112,9 @@ class SerialManager(AppletPlugin):
                 dprint("Sending HUP to", v[node].pid)
                 os.killpg(v[node].pid, signal.SIGHUP)
 
-    def rfcomm_connect_handler(self, device, uuid, reply, err):
-        uuid16 = sdp_get_serial_type(device.Address, uuid)
-
-        if SERIAL_PORT_SVCLASS_ID in uuid16:
-            device.Services["serial"].Connect(uuid, reply_handler=reply, error_handler=err)
-
+    def rfcomm_connect_handler(self, service, reply, err):
+        if SERIAL_PORT_SVCLASS_ID == uuid128_to_uuid16(service.uuid):
+            service.connect(reply_handler=reply, error_handler=err)
             return True
         else:
             return False
@@ -124,24 +122,26 @@ class SerialManager(AppletPlugin):
     def on_device_disconnect(self, device):
         self.terminate_all_scripts(device.Address)
 
-        if "serial" in device.Services:
-            ports = rfcomm_list()
+        serial_services = [service for service in device.get_services() if service.group == 'serial']
 
-            def flt(dev):
-                if dev["dst"] == device.Address and dev["state"] == "connected":
-                    return dev["id"]
+        if not serial_services:
+            return
 
-            active_ports = map(flt, ports)
+        ports = rfcomm_list()
 
-            serial = device.Services["serial"]
+        def flt(dev):
+            if dev["dst"] == device.Address and dev["state"] == "connected":
+                return dev["id"]
 
-            for port in active_ports:
-                name = "/dev/rfcomm%d" % port
-                try:
-                    dprint("Disconnecting", name)
-                    serial.Disconnect(name)
-                except:
-                    dprint("Failed to disconnect", name)
+        active_ports = map(flt, ports)
+
+        for port in active_ports:
+            name = "/dev/rfcomm%d" % port
+            try:
+                dprint("Disconnecting", name)
+                serial_services[0].disconnect(name)
+            except:
+                dprint("Failed to disconnect", name)
 
 
 @atexit.register

@@ -9,6 +9,8 @@ from blueman.gui.MessageArea import MessageArea
 from blueman.Functions import get_icon, create_menuitem
 
 from gi.repository import Gtk
+from blueman.services import Audio
+
 
 class PulseAudioProfile(ManagerPlugin):
     def on_load(self, user_data):
@@ -55,36 +57,9 @@ class PulseAudioProfile(ManagerPlugin):
                 utils.GetCard(idx, get_card_cb)
 
     def is_connected(self, device):
-        props = device.get_properties()
-        if 'Connected' in props:
-            return props['Connected']
-
-        # BlueZ 4 only
-
-        try:
-            s = device.Services["audiosink"]
-            props = s.get_properties()
-            if props["Connected"]:
+        for audio_service in [service for service in device.get_services() if service.group == 'audio']:
+            if audio_service.connected:
                 return True
-        except KeyError:
-            pass
-
-        try:
-            s = device.Services["audiosource"]
-            props = s.get_properties()
-            if props["State"] != "disconnected":
-                return True
-        except KeyError:
-            pass
-
-        try:
-            s = device.Services["headset"]
-            props = s.get_properties()
-            if props["State"] != "disconnected":
-                return True
-        except KeyError:
-            pass
-
         return False
 
     def query_pa(self, device):
