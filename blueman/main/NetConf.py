@@ -27,10 +27,10 @@ class DnsMasqHandler(object):
 			end = self.netconf.ip4_address[:3] + "\xfe" #.254
 		
 			args = "--pid-file=/var/run/dnsmasq.pan1.pid --bind-interfaces --dhcp-range=%s,%s,60m --except-interface=lo --interface=pan1 %s" % (socket.inet_ntoa(start), socket.inet_ntoa(end), rtr)
-				
-			argv = ["dnsmasq"] + args.split(" ")
-			dprint(argv)
-			p = Popen(argv)
+
+			cmd = [have("dnsmasq")] + args.split(" ")
+			dprint(cmd)
+			p = Popen(cmd)
 		
 			ret = p.wait()
 		
@@ -133,8 +133,9 @@ class DhcpdHandler(object):
 			f.write(dhcp_config)
 			f.write(subnet)
 			f.close()
-		
-			p = Popen(["dhcpd3", "-pf", "/var/run/dhcp3-server/dhcpd.pan1.pid", "pan1"])
+
+			cmd = [have("dhcpd3"), "-pf", "/var/run/dhcpd3-server/dhcp.pan1.pid", "pan1"]
+			p = Popen(cmd)
 		
 			ret = p.wait()
 	

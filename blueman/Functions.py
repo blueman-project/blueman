@@ -27,9 +27,6 @@ import os
 import signal
 import atexit
 import sys
-from subprocess import Popen, call
-import subprocess
-import commands
 from gi.repository import GObject
 import traceback
 from blueman.Lib import sn_launcher
@@ -348,10 +345,14 @@ def check_single_instance(id, unhide_func=None):
 
 
 def have(t):
-    out = call(["which", t], stdout=subprocess.PIPE)
-
-    return out != 1
-
+    paths = os.environ['PATH'] + ':/sbin:/usr/sbin'
+    for path in paths.split(os.pathsep):
+        exec_path = os.path.join(path, t)
+        exists = os.path.exists(exec_path)
+        executable = os.access(exec_path, os.EX_OK)
+        if exists and executable:
+            return exec_path
+    return None
 
 def mask_ip4_address(ip, subnet):
     masked_ip = ""
