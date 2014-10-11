@@ -243,7 +243,7 @@ class Network(ServicePlugin):
 			else:
 				r_dhcpd.props.active = True
 
-		if not have("dnsmasq") and not have("dhcpd3"):
+		if not have("dnsmasq") and not have("dhcpd3") and not have("dhcpd"):
 			nap_frame.props.sensitive = False
 			warning.props.visible = True
 			warning.props.sensitive = True
@@ -257,7 +257,7 @@ class Network(ServicePlugin):
 			r_dnsmasq.props.active = False
 			r_dhcpd.props.active = True
 		
-		if not have("dhcpd3"):
+		if not have("dhcpd3") and not have("dhcpd"):
 			r_dhcpd.props.sensitive = False
 			r_dhcpd.props.active = False
 			r_dnsmasq.props.active = True

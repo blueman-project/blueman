@@ -134,14 +134,14 @@ class DhcpdHandler(object):
 			f.write(subnet)
 			f.close()
 
-			cmd = [have("dhcpd3"), "-pf", "/var/run/dhcpd3-server/dhcp.pan1.pid", "pan1"]
+			cmd = [have("dhcpd3") or have("dhcpd"), "-pf", "/var/run/dhcpd-server/dhcp.pan1.pid", "pan1"]
 			p = Popen(cmd)
 		
 			ret = p.wait()
 	
 			if ret == 0:
 				dprint("dhcpd started correctly")
-				f = open("/var/run/dhcp3-server/dhcpd.pan1.pid", "r")
+				f = open("/var/run/dhcp-server/dhcpd.pan1.pid", "r")
 				self.pid = int(f.read())
 				f.close()
 				dprint("pid", self.pid)
