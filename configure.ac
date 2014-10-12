@@ -154,6 +154,16 @@ PKG_CHECK_MODULES(BLUEZ,
 AC_SUBST(BLUEZ_CFLAGS)
 AC_SUBST(BLUEZ_LIBS)
 
+PKG_CHECK_MODULES(GNOMEICONS, gnome-icon-theme,
+		HAVE_GNOME_ICONS="yes", HAVE_GNOME_ICONS="no")
+
+PKG_CHECK_MODULES(MATEICONS, mate-icon-theme,
+		HAVE_MATE_ICONS="yes", HAVE_MATE_ICONS="no")
+
+if test "x$HAVE_GNOME_ICONS" = "xno" && test "x$HAVE_MATE_ICONS" = "xno"; then
+	AC_MSG_ERROR([Required icon themes not found.])
+fi
+
 PKG_CHECK_MODULES([PYGOBJECT],
                   [pygobject-2.0 >= 2.12],
                   [],
