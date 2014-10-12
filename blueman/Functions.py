@@ -27,6 +27,7 @@ import os
 import signal
 import atexit
 import sys
+from subprocess import Popen
 from gi.repository import GObject
 import traceback
 from blueman.Lib import sn_launcher
