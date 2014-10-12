@@ -5,6 +5,7 @@ import signal
 import errno
 import re
 from blueman.Constants import *
+from blueman.Functions import have
 from blueman.Lib import create_bridge, destroy_bridge, BridgeException
 from subprocess import call, Popen
 
