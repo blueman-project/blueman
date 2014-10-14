@@ -14,6 +14,7 @@
 * Avoid crash in transfer service setup dialog
 * Make blueman-applet respond to SIGTERM (@Teknocrat / Harvey Mittens)
 * Allow setting friendly adapter name in BlueZ 5
+* Look for both dhcpd and dhcpd3 and add sbin paths (@infirit / Sander Sweers)
 
 ## 1.99.alpha1
 
