@@ -85,7 +85,7 @@ class Transfer(ServicePlugin):
                     elif state == 2:  # running
                         a.TransferControl("ftp", "stop")
                         a.TransferControl("ftp", "start")
-                     elif state == 1:
+                    elif state == 1:
                         a.TransferControl("ftp", "start")
                 self.clear_options()
 
