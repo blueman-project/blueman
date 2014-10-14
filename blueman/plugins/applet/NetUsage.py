@@ -190,7 +190,7 @@ class Dialog:
             if not added:
                 name = d
                 if self.parent.Applet.Manager:
-                    for a in self.parent.Applet.Manager.ListAdapters():
+                    for a in self.parent.Applet.Manager.list_adapters():
                         try:
                             device = a.find_device(d)
                             device = Device(device)
