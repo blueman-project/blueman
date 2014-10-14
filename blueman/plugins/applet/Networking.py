@@ -20,7 +20,7 @@ class Networking(AppletPlugin):
         self.Signals = SignalTracker()
 
         self.Settings = Gio.Settings.new(BLUEMAN_NETWORK_GSCHEMA)
-        self.Signals.Handle("gobject", self.Config, "property-changed", self.on_config_changed)
+        self.Signals.Handle("gobject", self.Settings, "changed", self.on_config_changed)
 
         self.load_nap_settings()
 
