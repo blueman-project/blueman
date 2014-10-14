@@ -236,7 +236,7 @@ class PersistentPluginManager(PluginManager):
     def __init__(self, *args):
         super(PersistentPluginManager, self).__init__(*args)
 
-        self.__config = Gio.Settings.new_with_path(BLUEMAN_PLUGINS_GSCHEMA,BLUEMAN_PLUGINS_PATH + self.plugin_class.__name__ + "/")
+        self.__config = Gio.Settings.new(BLUEMAN_GENERAL_GSCHEMA)
 
         self.__config.connect("changed", self.on_property_changed)
 
