@@ -147,15 +147,8 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
         self.QueryVisibility()
 
     def on_status_icon_resized(self):
-        self.icon = "blueman"
+        self.icon = self.get_option("icon") or "blueman"
 
-        #p = GdkPixbuf.Pixbuf(GdkPixbuf.Colorspace.RGB, True, 8, 22, 22)
-        #p.fill(0)
-
-
-        #self.pixbuf.copy_area(0, 0, self.pixbuf.props.width, self.pixbuf.props.height, p, 5, 0)
-
-        #self.pixbuf = p
         ic = Gtk.IconTheme.get_default()
 
         def callback(inst, ret):
