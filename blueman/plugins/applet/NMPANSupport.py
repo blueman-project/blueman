@@ -92,7 +92,7 @@ class NewConnectionBuilder:
         self.signals.Handle("dbus", parent.bus, self.on_nm_device_added, "DeviceAdded",
                             "org.freedesktop.NetworkManager")
         self.signals.Handle("dbus", parent.bus, self.on_nma_new_connection, "NewConnection",
-                            "org.freedesktop.NetworkManagerSettings")
+                            self.parent.settings_interface)
 
         self.device = self.parent.find_device(params["bluetooth"]["bdaddr"])
 
@@ -137,15 +137,19 @@ class NewConnectionBuilder:
             self.signals.Handle("dbus", self.parent.bus, self.on_device_state, "StateChanged",
                                 "org.freedesktop.NetworkManager.Device", path=self.device)
 
-            self.parent.nm.ActivateConnection("org.freedesktop.NetworkManagerUserSettings", self.connection,
-                                              self.device, self.connection)
+            args = [self.connection, self.device, self.connection]
+
+            if self.parent.legacy:
+                args.insert(0, self.parent.settings_bus)
+
+            self.parent.nm.ActivateConnection(*args)
 
     def remove_connection(self):
         self.parent.remove_connection(self.connection)
 
     def on_device_state(self, state, oldstate, reason):
         dprint("state=", state, "oldstate=", oldstate, "reason=", reason)
-        if state <= NMDeviceState.DISCONNECTED and NMDeviceState.DISCONNECTED < oldstate <= NMDeviceState.ACTIVATED:
+        if state <= NMDeviceState.DISCONNECTED < oldstate <= NMDeviceState.ACTIVATED:
             if self.err_cb:
                 self.err_cb(dbus.DBusException("Connection was interrupted"))
 
@@ -178,14 +182,27 @@ class NMPANSupport(AppletPlugin):
         self.nm_signals = SignalTracker()
         self.nma_signals = SignalTracker()
 
-        self.watch1 = self.bus.watch_name_owner("org.freedesktop.NetworkManagerUserSettings", self.on_nma_owner_changed)
-        self.watch2 = self.bus.watch_name_owner("org.freedesktop.NetworkManager", self.on_nm_owner_changed)
+        self.watches = [self.bus.watch_name_owner("org.freedesktop.NetworkManager", self.on_nm_owner_changed)]
+
+        # TODO: Check API version
+        self.legacy = True
+
+        if self.legacy:
+            self.watches.append(self.bus.watch_name_owner("org.freedesktop.NetworkManagerUserSettings",
+                                                          self.on_nma_owner_changed))
+            self.settings_bus = 'org.freedesktop.NetworkManagerUserSettings'
+            self.settings_interface = 'org.freedesktop.NetworkManagerSettings'
+            self.connection_settings_interface = 'org.freedesktop.NetworkManagerSettings.Connection'
+            self.settings_path = "/org/freedesktop/NetworkManagerSettings"
+        else:
+            self.settings_bus = 'org.freedesktop.NetworkManager'
+            self.settings_interface = 'org.freedesktop.NetworkManager.Settings'
+            self.connection_settings_interface = 'org.freedesktop.NetworkManager.Settings.Connection'
+            self.settings_path = "/org/freedesktop/NetworkManager/Settings"
 
         self.client = GConf.Client.get_default()
 
     def set_gconf(self, key, value):
-        func = None
-
         if type(value) == str or type(value) == unicode:
             func = self.client.set_string
         elif type(value) == int:
@@ -248,12 +265,11 @@ class NMPANSupport(AppletPlugin):
                 self.set_gconf(key, v)
 
     def remove_connection(self, path):
-        self.bus.call_blocking("org.freedesktop.NetworkManagerUserSettings", path,
-                               "org.freedesktop.NetworkManagerSettings.Connection", "Delete", "", [])
+        self.bus.call_blocking(self.settings_bus, path, self.connection_settings_interface, "Delete", "", [])
 
-    def format_bdaddr(self, addr):
+    @staticmethod
+    def format_bdaddr(addr):
         return "%02X:%02X:%02X:%02X:%02X:%02X" % (addr[0], addr[1], addr[2], addr[3], addr[4], addr[5])
-
 
     def find_device(self, bdaddr):
         devices = self.nm.GetDevices()
@@ -271,8 +287,8 @@ class NMPANSupport(AppletPlugin):
     def find_connection(self, address, t):
         conns = self.nma.ListConnections()
         for conn in conns:
-            c = self.bus.call_blocking("org.freedesktop.NetworkManagerUserSettings", conn,
-                                       "org.freedesktop.NetworkManagerSettings.Connection", "GetSettings", "", [])
+            c = self.bus.call_blocking(self.settings_bus, conn, self.connection_settings_interface, "GetSettings", "",
+                                       [])
             try:
                 if (self.format_bdaddr(c["bluetooth"]["bdaddr"]) == address) and c["bluetooth"]["type"] == t:
                     return conn
@@ -302,9 +318,8 @@ class NMPANSupport(AppletPlugin):
         if owner == "":
             self.nma = None
         else:
-            service = self.bus.get_object("org.freedesktop.NetworkManagerUserSettings",
-                                          "/org/freedesktop/NetworkManagerSettings")
-            self.nma = dbus.proxies.Interface(service, "org.freedesktop.NetworkManagerSettings")
+            service = self.bus.get_object(self.settings_bus, self.settings_path)
+            self.nma = dbus.proxies.Interface(service, self.settings_interface)
 
     def on_nm_owner_changed(self, owner):
         if owner == "":
@@ -319,8 +334,8 @@ class NMPANSupport(AppletPlugin):
         self.nm_signals.DisconnectAll()
         self.nma_signals.DisconnectAll()
 
-        self.watch1.cancel()
-        self.watch2.cancel()
+        for watch in self.watches:
+            watch.cancel()
 
     def service_connect_handler(self, interface, object_path, method, args, ok, err):
         if interface == Network().get_interface_name() and method == "Connect":
