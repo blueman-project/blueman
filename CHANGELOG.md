@@ -17,6 +17,7 @@
 * [configure] Rename --enable-sendto to --enable-nautilus-sendto
   (@rworkman / Robby Workman)
 * Add optional xfce settings entry (@rworkman / Robby Workman)
+* [nm] Add support for ModemManager 1.x to NMPANSupport
 
 ### Bugs fixed
 
