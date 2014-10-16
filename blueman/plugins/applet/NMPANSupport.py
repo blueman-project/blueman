@@ -11,73 +11,12 @@ from blueman.main.Device import Device
 from blueman.bluez.Network import Network
 
 
-class NMDeviceState:
-    UNKNOWN = 0
-
-    #/* Initial state of all devices and the only state for devices not
-    # * managed by NetworkManager.
-    # *
-    # * Allowed next states:
-    # *   UNAVAILABLE:  the device is now managed by NetworkManager
-    # */
-    UNMANAGED = 1
-
-    #/* Indicates the device is not yet ready for use, but is managed by
-    # * NetworkManager.  For Ethernet devices, the device may not have an
-    # * active carrier.  For WiFi devices, the device may not have it's radio
-    # * enabled.
-    # *
-    # * Allowed next states:
-    # *   UNMANAGED:  the device is no longer managed by NetworkManager
-    # *   DISCONNECTED:  the device is now ready for use
-    # */
-    UNAVAILABLE = 2
-
-    #/* Indicates the device does not have an activate connection to anything.
-    # *
-    # * Allowed next states:
-    # *   UNMANAGED:  the device is no longer managed by NetworkManager
-    # *   UNAVAILABLE:  the device is no longer ready for use (rfkill, no carrier, etc)
-    # *   PREPARE:  the device has started activation
-    # */
-    DISCONNECTED = 3
-
-    #/* Indicate states in device activation.
-    # *
-    # * Allowed next states:
-    # *   UNMANAGED:  the device is no longer managed by NetworkManager
-    # *   UNAVAILABLE:  the device is no longer ready for use (rfkill, no carrier, etc)
-    # *   FAILED:  an error ocurred during activation
-    # *   NEED_AUTH:  authentication/secrets are needed
-    # *   ACTIVATED:  (IP_CONFIG only) activation was successful
-    # *   DISCONNECTED:  the device's connection is no longer valid, or NetworkManager went to sleep
-    # */
-    PREPARE = 4
-    CONFIG = 5
-    NEED_AUTH = 6
-    IP_CONFIG = 7
-
-    #/* Indicates the device is part of an active network connection.
-    # *
-    # * Allowed next states:
-    # *   UNMANAGED:  the device is no longer managed by NetworkManager
-    # *   UNAVAILABLE:  the device is no longer ready for use (rfkill, no carrier, etc)
-    # *   FAILED:  a DHCP lease was not renewed, or another error
-    # *   DISCONNECTED:  the device's connection is no longer valid, or NetworkManager went to sleep
-    # */
-    ACTIVATED = 8
-
-    #/* Indicates the device's activation failed.
-    # *
-    # * Allowed next states:
-    # *   UNMANAGED:  the device is no longer managed by NetworkManager
-    # *   UNAVAILABLE:  the device is no longer ready for use (rfkill, no carrier, etc)
-    # *   DISCONNECTED:  the device's connection is ready for activation, or NetworkManager went to sleep
-    # */
-    FAILED = 9
-
-
 class NewConnectionBuilder:
+    DEVICE_STATE_DISCONNECTED = 30
+    DEVICE_STATE_ACTIVATED = 100
+    DEVICE_STATE_DEACTIVATING = 110
+    DEVICE_STATE_FAILED = 120
+
     def __init__(self, parent, params, ok_cb, err_cb):
         self.parent = parent
         self.params = params
@@ -92,7 +31,7 @@ class NewConnectionBuilder:
         self.signals.Handle("dbus", parent.bus, self.on_nm_device_added, "DeviceAdded",
                             "org.freedesktop.NetworkManager")
         self.signals.Handle("dbus", parent.bus, self.on_nma_new_connection, "NewConnection",
-                            "org.freedesktop.NetworkManagerSettings")
+                            self.parent.settings_interface)
 
         self.device = self.parent.find_device(params["bluetooth"]["bdaddr"])
 
@@ -137,27 +76,32 @@ class NewConnectionBuilder:
             self.signals.Handle("dbus", self.parent.bus, self.on_device_state, "StateChanged",
                                 "org.freedesktop.NetworkManager.Device", path=self.device)
 
-            self.parent.nm.ActivateConnection("org.freedesktop.NetworkManagerUserSettings", self.connection,
-                                              self.device, self.connection)
+            args = [self.connection, self.device, self.connection]
+
+            if self.parent.legacy:
+                args.insert(0, self.parent.settings_bus)
+
+            self.parent.nm.ActivateConnection(*args)
 
     def remove_connection(self):
         self.parent.remove_connection(self.connection)
 
     def on_device_state(self, state, oldstate, reason):
         dprint("state=", state, "oldstate=", oldstate, "reason=", reason)
-        if state <= NMDeviceState.DISCONNECTED and NMDeviceState.DISCONNECTED < oldstate <= NMDeviceState.ACTIVATED:
+        if (state <= self.DEVICE_STATE_DISCONNECTED or state == self.DEVICE_STATE_DEACTIVATING) and \
+                                self.DEVICE_STATE_DISCONNECTED < oldstate <= self.DEVICE_STATE_ACTIVATED:
             if self.err_cb:
                 self.err_cb(dbus.DBusException("Connection was interrupted"))
 
             self.remove_connection()
             self.cleanup()
 
-        elif state == NMDeviceState.FAILED:
+        elif state == self.DEVICE_STATE_FAILED:
             self.err_cb(dbus.DBusException("Network Manager Failed to activate the connection"))
             self.remove_connection()
             self.cleanup()
 
-        elif state == NMDeviceState.ACTIVATED:
+        elif state == self.DEVICE_STATE_ACTIVATED:
             self.ok_cb()
             self.err_cb = None
             self.ok_cb = None
@@ -178,14 +122,29 @@ class NMPANSupport(AppletPlugin):
         self.nm_signals = SignalTracker()
         self.nma_signals = SignalTracker()
 
-        self.watch1 = self.bus.watch_name_owner("org.freedesktop.NetworkManagerUserSettings", self.on_nma_owner_changed)
-        self.watch2 = self.bus.watch_name_owner("org.freedesktop.NetworkManager", self.on_nm_owner_changed)
+        self.watches = [self.bus.watch_name_owner("org.freedesktop.NetworkManager", self.on_nm_owner_changed)]
+
+        self.legacy = self.bus.name_has_owner('org.freedesktop.NetworkManagerUserSettings')
+
+        if self.legacy:
+            self.watches.append(self.bus.watch_name_owner("org.freedesktop.NetworkManagerUserSettings",
+                                                          self.on_nma_owner_changed))
+            self.settings_bus = 'org.freedesktop.NetworkManagerUserSettings'
+            self.settings_interface = 'org.freedesktop.NetworkManagerSettings'
+            self.connection_settings_interface = 'org.freedesktop.NetworkManagerSettings.Connection'
+            self.settings_path = "/org/freedesktop/NetworkManagerSettings"
+            NewConnectionBuilder.DEVICE_STATE_DISCONNECTED = 3
+            NewConnectionBuilder.DEVICE_STATE_ACTIVATED = 8
+            NewConnectionBuilder.DEVICE_STATE_FAILED = 9
+        else:
+            self.settings_bus = 'org.freedesktop.NetworkManager'
+            self.settings_interface = 'org.freedesktop.NetworkManager.Settings'
+            self.connection_settings_interface = 'org.freedesktop.NetworkManager.Settings.Connection'
+            self.settings_path = "/org/freedesktop/NetworkManager/Settings"
 
         self.client = GConf.Client.get_default()
 
     def set_gconf(self, key, value):
-        func = None
-
         if type(value) == str or type(value) == unicode:
             func = self.client.set_string
         elif type(value) == int:
@@ -248,12 +207,11 @@ class NMPANSupport(AppletPlugin):
                 self.set_gconf(key, v)
 
     def remove_connection(self, path):
-        self.bus.call_blocking("org.freedesktop.NetworkManagerUserSettings", path,
-                               "org.freedesktop.NetworkManagerSettings.Connection", "Delete", "", [])
+        self.bus.call_blocking(self.settings_bus, path, self.connection_settings_interface, "Delete", "", [])
 
-    def format_bdaddr(self, addr):
+    @staticmethod
+    def format_bdaddr(addr):
         return "%02X:%02X:%02X:%02X:%02X:%02X" % (addr[0], addr[1], addr[2], addr[3], addr[4], addr[5])
-
 
     def find_device(self, bdaddr):
         devices = self.nm.GetDevices()
@@ -271,8 +229,8 @@ class NMPANSupport(AppletPlugin):
     def find_connection(self, address, t):
         conns = self.nma.ListConnections()
         for conn in conns:
-            c = self.bus.call_blocking("org.freedesktop.NetworkManagerUserSettings", conn,
-                                       "org.freedesktop.NetworkManagerSettings.Connection", "GetSettings", "", [])
+            c = self.bus.call_blocking(self.settings_bus, conn, self.connection_settings_interface, "GetSettings", "",
+                                       [])
             try:
                 if (self.format_bdaddr(c["bluetooth"]["bdaddr"]) == address) and c["bluetooth"]["type"] == t:
                     return conn
@@ -302,9 +260,8 @@ class NMPANSupport(AppletPlugin):
         if owner == "":
             self.nma = None
         else:
-            service = self.bus.get_object("org.freedesktop.NetworkManagerUserSettings",
-                                          "/org/freedesktop/NetworkManagerSettings")
-            self.nma = dbus.proxies.Interface(service, "org.freedesktop.NetworkManagerSettings")
+            service = self.bus.get_object(self.settings_bus, self.settings_path)
+            self.nma = dbus.proxies.Interface(service, self.settings_interface)
 
     def on_nm_owner_changed(self, owner):
         if owner == "":
@@ -313,14 +270,16 @@ class NMPANSupport(AppletPlugin):
         else:
             service = self.bus.get_object("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager")
             self.nm = dbus.proxies.Interface(service, "org.freedesktop.NetworkManager")
+            if not self.legacy:
+                self.on_nma_owner_changed(owner)
 
 
     def on_unload(self):
         self.nm_signals.DisconnectAll()
         self.nma_signals.DisconnectAll()
 
-        self.watch1.cancel()
-        self.watch2.cancel()
+        for watch in self.watches:
+            watch.cancel()
 
     def service_connect_handler(self, interface, object_path, method, args, ok, err):
         if interface == Network().get_interface_name() and method == "Connect":
