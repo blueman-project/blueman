@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
   <schema id="org.blueman.plugins" path="/org/blueman/plugins/">
-      <key type="as" name="plugin-list">
-        <default>[]</default>
-        <summary></summary>
+      <key type="s" name="plugin-settings">
+        <default>""</default>
+        <summary>String representation of plugin options</summary>
         <description></description>
       </key>
   </schema>
