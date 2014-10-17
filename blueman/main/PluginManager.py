@@ -236,32 +236,32 @@ class PersistentPluginManager(PluginManager):
     def __init__(self, *args):
         super(PersistentPluginManager, self).__init__(*args)
 
-        self.__config = Gio.Settings.new(BLUEMAN_GENERAL_GSCHEMA)
+        self.__Settings = Gio.Settings.new(BLUEMAN_GENERAL_GSCHEMA)
 
-        self.__config.connect("changed", self.on_property_changed)
+        self.__Settings.connect("changed", self.on_property_changed)
 
     def Disabled(self, plugin):
 
-        plugins = self.__config["plugin-list"]
+        plugins = self.__Settings["plugin-list"]
         return "!" + plugin in plugins
 
     def Enabled(self, plugin):
-        plugins = self.__config["plugin-list"]
+        plugins = self.__Settings["plugin-list"]
         return plugin in plugins
 
     def SetConfig(self, plugin, state):
-        plugins = self.__config["plugin-list"]
+        plugins = self.__Settings["plugin-list"]
         if plugin in plugins:
             plugins.remove(plugin)
         elif "!" + plugin in plugins:
             plugins.remove("!" + plugin)
 
         plugins.append(str("!" + plugin) if not state else str(plugin))
-        self.__config["plugin-list"] = plugins
+        self.__Settings["plugin-list"] = plugins
 
     @property
     def config_list(self):
-        return self.__config["plugin-list"]
+        return self.__Settings["plugin-list"]
 
     def on_property_changed(self, config, key, value):
         if key == self.plugin_class.__name__:
