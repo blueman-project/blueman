@@ -18,9 +18,6 @@ class Headset(AppletPlugin):
         }
     }
 
-    def __init__(self):
-        self.Settings = Gio.Settings.new(BLUEMAN_HEADSET_GSCHEMA)
-
     def on_load(self, applet):
         BluezHeadset().handle_signal(self.on_answer_requested, 'AnswerRequested')
 
@@ -28,7 +25,7 @@ class Headset(AppletPlugin):
         BluezHeadset().unhandle_signal(self.on_answer_requested, 'AnswerRequested')
 
     def on_answer_requested(self):
-        c = self.Settings["command"]
+        c = self.get_option("command")
         if c and c != "":
             args = c.split(" ")
             try:

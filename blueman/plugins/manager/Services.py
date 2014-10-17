@@ -1,6 +1,6 @@
 from blueman.bluez.Network import Network
 from blueman.plugins.ManagerPlugin import ManagerPlugin
-from gi.repository import Gtk, Gio
+from gi.repository import Gtk
 
 from blueman.Functions import create_menuitem, get_icon, composite_icon
 from blueman.main.AppletService import AppletService

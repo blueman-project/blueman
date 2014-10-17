@@ -11,7 +11,7 @@ import atexit
 
 import blueman.bluez as Bluez
 
-from gi.repository import GObject, Gio, Gtk
+from gi.repository import GObject, Gtk
 
 
 class SerialManager(AppletPlugin):
