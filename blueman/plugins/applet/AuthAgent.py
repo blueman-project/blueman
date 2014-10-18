@@ -9,7 +9,7 @@ from gi.repository import Gtk
 
 class AuthAgent(AppletPlugin):
     __description__ = _("Provides passkey, authentication services for BlueZ daemon")
-    __icon__ = "gtk-dialog-authentication"
+    __icon__ = "dialog-password"
     __author__ = "Walmis"
     __depends__ = ["StatusIcon"]
 

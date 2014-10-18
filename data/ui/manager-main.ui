@@ -30,7 +30,7 @@
                 <property name="tooltip_text" translatable="yes">Search for nearby devices</property>
                 <property name="is_important">True</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Search</property>
-                <property name="stock_id">gtk-find</property>
+                <property name="icon-name">edit-find</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -51,7 +51,7 @@
                 <property name="sensitive">False</property>
                 <property name="tooltip_text" translatable="yes">Add this device to known devices list</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Add</property>
-                <property name="stock_id">gtk-add</property>
+                <property name="icon-name">list-add</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -64,7 +64,7 @@
                 <property name="sensitive">False</property>
                 <property name="tooltip_text" translatable="yes">Create pairing with the device</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Pair</property>
-                <property name="stock_id">gtk-dialog-authentication</property>
+                <property name="icon-name">dialog-password</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -91,7 +91,7 @@
                 <property name="tooltip_text" translatable="yes">Run the setup assistant for this device</property>
                 <property name="is_important">True</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Setup...</property>
-                <property name="stock_id">gtk-properties</property>
+                <property name="icon-name">document-properties</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -104,7 +104,7 @@
                 <property name="sensitive">False</property>
                 <property name="tooltip_text" translatable="yes">Remove this device from the known devices list</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Remove</property>
-                <property name="stock_id">gtk-delete</property>
+                <property name="icon-name">list-remove</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -138,7 +138,7 @@
                 <property name="visible">True</property>
                 <property name="tooltip_text" translatable="yes">Browse the device using obex ftp</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Browse</property>
-                <property name="stock_id">gtk-open</property>
+                <property name="icon-name">document-open</property>
               </object>
               <packing>
                 <property name="expand">False</property>

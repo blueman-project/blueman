@@ -226,14 +226,14 @@ class Sender(GObject.GObject):
             if len(self.files) > 1:
                 d.add_button(_("Skip"), Gtk.ResponseType.NO)
             d.add_button(_("Retry"), Gtk.ResponseType.YES)
-            d.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
+            d.add_button("_Cancel", Gtk.ResponseType.CANCEL)
 
 
             def on_response(dialog, resp):
                 dialog.destroy()
                 self.error_dialog = None
 
-                if resp == Gtk.STOCK_CANCEL:
+                if resp == "_Cancel":
                     self.on_cancel(None)
                 elif resp == Gtk.ResponseType.NO:
                     self.total_bytes -= os.path.getsize(self.files[-1])
@@ -345,8 +345,8 @@ class SendTo:
         sender.connect("result", on_result)
 
     def select_files(self):
-        d = Gtk.FileChooserDialog(_("Select files to send"), buttons=(Gtk.STOCK_CANCEL, Gtk.ResponseType.REJECT,
-                                                                      Gtk.STOCK_OK, Gtk.ResponseType.ACCEPT))
+        d = Gtk.FileChooserDialog(_("Select files to send"), buttons=("_Cancel", Gtk.ResponseType.REJECT,
+                                                                      "_OK", Gtk.ResponseType.ACCEPT))
         d.props.icon_name = "blueman-send-file"
         d.set_select_multiple(True)
         resp = d.run()

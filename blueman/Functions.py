@@ -85,7 +85,7 @@ def check_bluetooth_status(message, exitfunc, *args, **kwargs):
             d.props.text = _("Bluetooth Turned Off")
             d.props.secondary_text = message
 
-            d.add_button(Gtk.STOCK_QUIT, Gtk.ResponseType.NO)
+            d.add_button("application-exit", Gtk.ResponseType.NO)
             d.add_button(_("Enable Bluetooth"), Gtk.ResponseType.YES)
             resp = d.run()
             d.destroy()
@@ -184,7 +184,7 @@ def setup_icon_path():
     ic.prepend_search_path(ICON_PATH)
 
 
-def get_icon(name, size=24, fallback="gtk-missing-image"):
+def get_icon(name, size=24, fallback="image-missing"):
     ic = Gtk.IconTheme.get_default()
 
     try:
@@ -195,7 +195,7 @@ def get_icon(name, size=24, fallback="gtk-missing-image"):
         try:
             icon = ic.load_icon(fallback, size, 0)
         except:
-            icon = ic.load_icon("gtk-missing-image", size, 0)
+            icon = ic.load_icon("image-missing", size, 0)
 
     if icon.props.width > size:
         new_w = size
@@ -269,10 +269,9 @@ def format_bytes(size):
     return (ret, suffix)
 
 
+# Effective GTK 3.10 Menu Items no Longer Support Icons/Images so we ignore images passed in here
 def create_menuitem(text, image):
-    item = Gtk.ImageMenuItem.new_with_mnemonic(text)
-    item.set_image(Gtk.Image.new_from_pixbuf(image))
-
+    item = Gtk.MenuItem.new_with_mnemonic(text)
     return item
 
 

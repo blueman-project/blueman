@@ -11,7 +11,7 @@ from gi.repository import Gtk
 class DiscvManager(AppletPlugin):
     __depends__ = ["Menu"]
     __author__ = "Walmis"
-    __icon__ = "gtk-find"
+    __icon__ = "edit-find"
     __description__ = _(
         "Provides a menu item for making the default adapter temporarily visible when it is set to hidden by default")
 
@@ -28,7 +28,7 @@ class DiscvManager(AppletPlugin):
     def on_load(self, applet):
         self.Signals = SignalTracker()
 
-        self.item = create_menuitem(_("_Make Discoverable"), get_icon("gtk-find", 16))
+        self.item = create_menuitem(_("_Make Discoverable"), get_icon("edit-find", 16))
         applet.Plugins.Menu.Register(self, self.item, 20, False)
 
         self.Applet = applet

@@ -76,7 +76,7 @@ class Services(ManagerPlugin):
                         def renew(x):
                             appl.DhcpClient(sprops["Interface"])
 
-                        item = create_menuitem(_("Renew IP Address"), get_icon("gtk-refresh", 16))
+                        item = create_menuitem(_("Renew IP Address"), get_icon("view-refresh", 16))
                         manager_menu.Signals.Handle("gobject", item, "activate", renew)
                         item.show()
                         items.append((item, 201))
@@ -219,7 +219,7 @@ class Services(ManagerPlugin):
                     serial_items.append(item)
 
                     item = create_menuitem(_("Dialup Settings"),
-                                           get_icon("gtk-preferences", 16))
+                                           get_icon("preferences-desktop", 16))
                     serial_items.append(item)
                     item.show()
                     manager_menu.Signals.Handle("gobject", item,
@@ -291,7 +291,7 @@ class Services(ManagerPlugin):
                         def renew(x):
                             appl.DhcpClient(sprops["Interface"])
 
-                        item = create_menuitem(_("Renew IP Address"), get_icon("gtk-refresh", 16))
+                        item = create_menuitem(_("Renew IP Address"), get_icon("view-refresh", 16))
                         manager_menu.Signals.Handle("gobject", item, "activate", renew)
                         item.show()
                         items.append((item, 201))

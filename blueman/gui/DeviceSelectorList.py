@@ -56,13 +56,13 @@ class DeviceSelectorList(DeviceList):
 
         elif key == "Paired":
             if value:
-                self.set(iter, bonded_icon=get_icon("gtk-dialog-authentication", 16))
+                self.set(iter, bonded_icon=get_icon("dialog-password", 16))
             else:
                 self.set(iter, bonded_icon=None)
 
         elif key == "Fake":
             if value:
-                self.set(iter, found_pb=get_icon("gtk-search", 16))
+                self.set(iter, found_pb=get_icon("search", 16))
             else:
                 self.set(iter, found_pb=None)
 
