@@ -62,13 +62,13 @@ class MessageArea(Gtk.EventBox):
 		
 		self.b_more = Gtk.Button(_("More"))
 		im = Gtk.Image()
-		im.set_from_stock(Gtk.STOCK_DIALOG_INFO, Gtk.IconSize.MENU)
+		im.set_from_icon_name("dialog-information", Gtk.IconSize.MENU)
 		im.show()
 		self.b_more.set_image(im)		
 		self.b_more.props.relief = Gtk.ReliefStyle.NONE
 		
 		im = Gtk.Image()
-		im.set_from_stock(Gtk.STOCK_CANCEL, Gtk.IconSize.MENU)
+		im.set_from_icon_name("_Cancel", Gtk.IconSize.MENU)
 		im.show()
 		self.b_close = Gtk.Button()
 		self.b_close.add(im)
@@ -148,13 +148,13 @@ class MessageArea(Gtk.EventBox):
 	def show_message(*args):
 		MessageArea._inst_._show_message(*args)
 	
-	def _show_message(self, text, icon=Gtk.STOCK_DIALOG_WARNING):
+	def _show_message(self, text, icon="dialog-warning"):
 		self.text = text
 		
 		self.label.set_tooltip_text(text)
-		self.icon.set_from_stock(icon, Gtk.IconSize.MENU)
+		self.icon.set_from_icon_name(icon, Gtk.IconSize.MENU)
 		
-		if icon == Gtk.STOCK_DIALOG_WARNING:
+		if icon == "dialog-warning":
 			self.hl_anim.color = Gdk.Color(65535,0,0)
 		else:
 			self.hl_anim.color = Gdk.Color(0,0,65535)

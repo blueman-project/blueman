@@ -196,7 +196,7 @@ class AdapterAgent(CommonAgent):
         notify_message = _("Pairing request for:") + "\n%s" % alias
         if passkey:
             notify_message += "\n" + _("Confirm value for authentication:") + " <b>%s</b>" % passkey
-        actions = [["confirm", _("Confirm"), "gtk-yes"], ["deny", _("Deny"), "gtk-no"]]
+        actions = [["confirm", _("Confirm"), "help-about"], ["deny", _("Deny"), "help-about"]]
 
         Notification("Bluetooth", notify_message, 0,
                      actions, on_confirm_action,
@@ -229,8 +229,8 @@ class AdapterAgent(CommonAgent):
         service = uuid16_to_name(uuid16)
         notify_message = (_("Authorization request for:") + "\n%s\n" + _("Service:") + " <b>%s</b>") % (alias, service)
         actions = [["always", _("Always accept"), "blueman-trust"],
-                   ["accept", _("Accept"), "gtk-yes"],
-                   ["deny", _("Deny"), "gtk-no"]]
+                   ["accept", _("Accept"), "help-about"],
+                   ["deny", _("Deny"), "help-about"]]
 
         n = Notification(_("Bluetooth Authentication"), notify_message, 0,
                          actions, on_auth_action,
@@ -280,7 +280,7 @@ class TempAgent(CommonAgent):
 
         dialog = Gtk.MessageDialog(buttons=Gtk.ButtonsType.YES_NO)
         dialog.props.use_markup = True
-        dialog.props.icon_name = "gtk-dialog-authentication"
+        dialog.props.icon_name = "dialog-password"
         dialog.props.secondary_use_markup = True
         dialog.props.title = _("Confirm value")
         dialog.props.text = _("Pairing with: %s") % alias

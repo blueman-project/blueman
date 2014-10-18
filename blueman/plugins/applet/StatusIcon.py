@@ -12,11 +12,11 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
     def on_entry_changed(self, entry, ic, image):
 
         if ic.has_icon(self.get_option("icon")):
-            icon = Gtk.STOCK_APPLY
+            icon = "_Apply"
         else:
-            icon = Gtk.STOCK_CANCEL
+            icon = "_Cancel"
 
-        image.set_from_stock(icon, Gtk.IconSize.LARGE_TOOLBAR)
+        image.set_from_icon_name(icon, Gtk.IconSize.LARGE_TOOLBAR)
 
         if self.timeout:
             GObject.source_remove(self.timeout)
@@ -42,11 +42,11 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
             liststore.append([i])
 
         if ic.has_icon(self.get_option("icon")):
-            icon = Gtk.STOCK_APPLY
+            icon = "_Apply"
         else:
-            icon = Gtk.STOCK_CANCEL
+            icon = "_Cancel"
 
-        image.set_from_stock(icon, Gtk.IconSize.LARGE_TOOLBAR)
+        image.set_from_icon_name(icon, Gtk.IconSize.LARGE_TOOLBAR)
         image.show()
         widget.pack_start(image, True, 0, 0)
         entry.connect("changed", self.on_entry_changed, ic, image)

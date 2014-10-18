@@ -8,7 +8,7 @@ from blueman.Functions import dprint
 
 
 class Transfer(ServicePlugin):
-    __plugin_info__ = (_("Transfer"), "gtk-open")
+    __plugin_info__ = (_("Transfer"), "document-open")
 
     def on_load(self, container):
 

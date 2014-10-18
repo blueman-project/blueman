@@ -80,19 +80,19 @@ class Assistant:
         self.assistant.set_page_header_image(pages[PAGE_DEVLIST], get_icon("blueman", 32))
 
         pages[PAGE_PASSKEY] = self.Builder.get_object("a_page2")
-        self.assistant.set_page_header_image(pages[PAGE_PASSKEY], get_icon("gtk-dialog-authentication", 32))
+        self.assistant.set_page_header_image(pages[PAGE_PASSKEY], get_icon("dialog-password", 32))
 
         pages[PAGE_PAIRING] = self.Builder.get_object("l_page3")
-        self.assistant.set_page_header_image(pages[PAGE_PAIRING], get_icon("gtk-dialog-authentication", 32))
+        self.assistant.set_page_header_image(pages[PAGE_PAIRING], get_icon("dialog-password", 32))
 
         pages[PAGE_CONNECT] = self.Builder.get_object("a_page4")
-        self.assistant.set_page_header_image(pages[PAGE_CONNECT], get_icon("gtk-connect", 32))
+        self.assistant.set_page_header_image(pages[PAGE_CONNECT], get_icon("network-transmit-recieve", 32))
 
         pages[PAGE_CONNECTING] = self.Builder.get_object("l_page5")
-        self.assistant.set_page_header_image(pages[PAGE_CONNECTING], get_icon("gtk-connect", 32))
+        self.assistant.set_page_header_image(pages[PAGE_CONNECTING], get_icon("network-transmit-recieve", 32))
 
         pages[PAGE_FINISH] = self.Builder.get_object("l_page6")
-        self.assistant.set_page_header_image(pages[PAGE_FINISH], get_icon("gtk-yes", 32))
+        self.assistant.set_page_header_image(pages[PAGE_FINISH], get_icon("help-about", 32))
 
         self.svc_vbox = self.Builder.get_object("svcs")
 
@@ -114,7 +114,7 @@ class Assistant:
             d.props.text = _("No adapters found")
             d.props.icon_name = "blueman"
             d.props.title = "Blueman Assistant"
-            d.add_button(Gtk.STOCK_CLOSE, Gtk.ResponseType.CANCEL)
+            d.add_button("window-close", Gtk.ResponseType.CANCEL)
             d.run()
             exit(1)
 
@@ -239,7 +239,7 @@ class Assistant:
                 def err(err):
                     print(err)
                     pages[PAGE_FINISH].set_markup(_("<b>Failed to add device</b>"))
-                    self.assistant.set_page_header_image(pages[PAGE_FINISH], get_icon("gtk-no", 32))
+                    self.assistant.set_page_header_image(pages[PAGE_FINISH], get_icon("help-about", 32))
                     self.assistant.set_current_page(PAGE_FINISH)
 
                 if self.PairType != 2:
@@ -258,7 +258,7 @@ class Assistant:
                     def err(err):
                         print(err)
                         pages[PAGE_FINISH].set_markup(_("<b>Failed to add device</b>"))
-                        self.assistant.set_page_header_image(pages[PAGE_FINISH], get_icon("gtk-no", 32))
+                        self.assistant.set_page_header_image(pages[PAGE_FINISH], get_icon("help-about", 32))
                         self.assistant.set_current_page(PAGE_FINISH)
 
                     device = self.Adapter.find_device(self.Device.Address)
@@ -338,13 +338,13 @@ class Assistant:
             def success(*args):
                 pages[PAGE_FINISH].set_markup(_("<b>Device added and connected successfuly</b>"))
                 self.assistant.set_page_complete(pages[PAGE_CONNECTING], True)
-                self.assistant.set_page_header_image(pages[PAGE_FINISH], get_icon("gtk-yes", 32))
+                self.assistant.set_page_header_image(pages[PAGE_FINISH], get_icon("help-about", 32))
                 self.assistant.set_current_page(PAGE_FINISH)
 
             def fail(*args):
                 pages[PAGE_FINISH].set_markup(_("<b>Device added successfuly, but failed to connect</b>"))
                 self.assistant.set_page_complete(pages[PAGE_CONNECTING], True)
-                self.assistant.set_page_header_image(pages[PAGE_FINISH], get_icon("gtk-dialog-warning", 32))
+                self.assistant.set_page_header_image(pages[PAGE_FINISH], get_icon("dialog-warning", 32))
                 self.assistant.set_current_page(PAGE_FINISH)
 
             if self.Service[0] == "network":

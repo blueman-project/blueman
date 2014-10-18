@@ -31,7 +31,7 @@ from blueman.main.AppletService import AppletService
 from random import randint
 
 class Network(ServicePlugin):
-	__plugin_info__ = (_("Network"), "gtk-network")
+	__plugin_info__ = (_("Network"), "network-workgroup")
 	def on_load(self, container):
 		
 		self.Builder = Gtk.Builder()
@@ -56,7 +56,7 @@ class Network(ServicePlugin):
 			self.ip_check()
 		except:
 			pass
-		return (_("Network"), "gtk-network")
+		return (_("Network"), "network-workgroup")
 		
 	def on_enter(self):
 		self.widget.props.visible = True
@@ -125,7 +125,7 @@ class Network(ServicePlugin):
 					lines = str(e).splitlines()
 					
 					d = Gtk.MessageDialog( None, buttons=Gtk.ButtonsType.OK, type=Gtk.MessageType.ERROR)
-					d.props.icon_name = "gtk-dialog-error"
+					d.props.icon_name = "dialog-error"
 					d.props.text = _("Failed to apply network settings")
 					d.props.secondary_text = lines[-1]
 					d.run()
@@ -148,7 +148,7 @@ class Network(ServicePlugin):
 				raise Exception
 			a = inet_aton(address)
 		except:
-			e.props.secondary_icon_stock = Gtk.STOCK_DIALOG_ERROR
+			e.props.secondary_icon_name = "dialog-error"
 			e.props.secondary_icon_tooltip_text = _("Invalid IP address")
 			raise
 			
@@ -160,17 +160,17 @@ class Network(ServicePlugin):
 			#print mask_ip4_address(a, netmask).encode("hex_codec"), masked.encode("hex_codec")
 			
 			if a == ip:
-				e.props.secondary_icon_stock = Gtk.STOCK_DIALOG_ERROR
+				e.props.secondary_icon_name = "dialog-error"
 				e.props.secondary_icon_tooltip_text = _("IP address conflicts with interface %s which has the same address" % iface)
 				raise Exception
 			
 			elif mask_ip4_address(a, netmask) == masked:
-				e.props.secondary_icon_stock = Gtk.STOCK_DIALOG_WARNING
+				e.props.secondary_icon_name = "dialog-warning"
 				e.props.secondary_icon_tooltip_text = _("IP address overlaps with subnet of interface"
 					" %s, which has the following configuration %s/%s\nThis may cause incorrect network behavior" % (iface, inet_ntoa(ip), inet_ntoa(netmask)))
 				return
 		
-		e.props.secondary_icon_stock = None
+		e.props.secondary_icon_name = None
 	
 	def on_query_apply_state(self):
 		changed = False

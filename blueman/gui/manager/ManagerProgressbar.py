@@ -52,7 +52,7 @@ class ManagerProgressbar(GObject.GObject):
 		
 		self.signals = SignalTracker()
 
-		self.button = Gtk.Image.new_from_pixbuf(get_icon("gtk-stop", 16))
+		self.button = Gtk.Image.new_from_pixbuf(get_icon("process-stop", 16))
 	
 		self.eventbox = eventbox = Gtk.EventBox()
 		eventbox.add(self.button)

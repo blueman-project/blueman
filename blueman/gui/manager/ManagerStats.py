@@ -50,12 +50,12 @@ class ManagerStats:
 
         self.uparrow = Gtk.Image()
         self.uparrow.set_tooltip_text(_("Total data sent and rate of transmission"))
-        self.uparrow.set_from_stock(Gtk.STOCK_GO_UP, 1)
+        self.uparrow.set_from_icon_name("go-up", 1)
         self.uparrow.set_alignment(1, 0.5)
 
         self.downarrow = Gtk.Image()
         self.downarrow.set_tooltip_text(_("Total data received and rate of transmission"))
-        self.downarrow.set_from_stock(Gtk.STOCK_GO_DOWN, 1)
+        self.downarrow.set_from_icon_name("go-down", 1)
 
         self.hbox = hbox = blueman.Builder.get_object("statusbar2")
 

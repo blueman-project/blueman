@@ -111,7 +111,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             prog.message(_("Success!"))
 
             if service_id == "serial" and SERIAL_PORT_SVCLASS_ID in uuid16:
-                MessageArea.show_message(_("Serial port connected to %s") % args2[0], Gtk.STOCK_DIALOG_INFO)
+                MessageArea.show_message(_("Serial port connected to %s") % args2[0], "dialog-information")
             else:
                 MessageArea.close()
 
@@ -237,7 +237,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         op = self.get_op(device)
 
         if op != None:
-            item = create_menuitem(op, get_icon("gtk-connect", 16))
+            item = create_menuitem(op, get_icon("network-transmit-recieve", 16))
             item.props.sensitive = False
             item.show()
             self.append(item)
@@ -251,21 +251,21 @@ class ManagerDeviceMenu(Gtk.Menu):
                     items.append((pos, item))
 
         if device.Fake:
-            item = create_menuitem(_("_Add Device"), get_icon("gtk-add", 16))
+            item = create_menuitem(_("_Add Device"), get_icon("list-add", 16))
             self.Signals.Handle("gobject", item, "activate",
                                 lambda x: self.Blueman.add_device(device))
             item.show()
             self.append(item)
             item.props.tooltip_text = _("Add this device to known devices list")
 
-            item = create_menuitem(_("_Setup..."), get_icon("gtk-properties", 16))
+            item = create_menuitem(_("_Setup..."), get_icon("document-properties", 16))
             self.append(item)
             self.Signals.Handle("gobject", item, "activate",
                                 lambda x: self.Blueman.setup(device))
             item.show()
             item.props.tooltip_text = _("Run the setup assistant for this device")
 
-            item = create_menuitem(_("_Pair"), get_icon("gtk-dialog-authentication", 16))
+            item = create_menuitem(_("_Pair"), get_icon("dialog-password", 16))
             self.Signals.Handle("gobject", item, "activate",
                                 lambda x: self.Blueman.bond(device))
             self.append(item)
@@ -276,7 +276,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             item.show()
             self.append(item)
 
-            send_item = create_menuitem(_("Send a _File..."), get_icon("gtk-copy", 16))
+            send_item = create_menuitem(_("Send a _File..."), get_icon("edit-copy", 16))
             self.Signals.Handle("gobject", send_item, "activate",
                                 lambda x: self.Blueman.send(device))
             send_item.show()
@@ -338,12 +338,12 @@ class ManagerDeviceMenu(Gtk.Menu):
 
             del items
 
-            send_item = create_menuitem(_("Send a _File..."), get_icon("gtk-copy", 16))
+            send_item = create_menuitem(_("Send a _File..."), get_icon("edit-copy", 16))
             send_item.props.sensitive = False
             self.append(send_item)
             send_item.show()
 
-            browse_item = create_menuitem(_("_Browse Device..."), get_icon("gtk-open", 16))
+            browse_item = create_menuitem(_("_Browse Device..."), get_icon("document-open", 16))
             browse_item.props.sensitive = False
             self.append(browse_item)
             browse_item.show()
@@ -363,7 +363,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             item.show()
             self.append(item)
 
-            item = create_menuitem(_("_Pair"), get_icon("gtk-dialog-authentication", 16))
+            item = create_menuitem(_("_Pair"), get_icon("dialog-password", 16))
             item.props.tooltip_text = _("Create pairing with the device")
             self.append(item)
             item.show()
@@ -384,7 +384,7 @@ class ManagerDeviceMenu(Gtk.Menu):
                 item.show()
             item.props.tooltip_text = _("Mark/Unmark this device as trusted")
 
-            item = create_menuitem(_("_Setup..."), get_icon("gtk-properties", 16))
+            item = create_menuitem(_("_Setup..."), get_icon("document-properties", 16))
             self.append(item)
             self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.setup(device))
             item.show()
@@ -407,7 +407,7 @@ class ManagerDeviceMenu(Gtk.Menu):
                     self.set_op(device, _("Refreshing Services..."))
                     appl.RefreshServices(device.get_object_path(), reply_handler=reply, error_handler=error)
 
-                item = create_menuitem(_("Refresh Services"), get_icon("gtk-refresh", 16))
+                item = create_menuitem(_("Refresh Services"), get_icon("view-refresh", 16))
                 self.append(item)
                 self.Signals.Handle(item, "activate", update_services)
                 item.show()
@@ -416,7 +416,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             item.show()
             self.append(item)
 
-            item = create_menuitem(_("_Remove..."), get_icon("gtk-delete", 16))
+            item = create_menuitem(_("_Remove..."), get_icon("edit-delete", 16))
             self.Signals.Handle(item, "activate", lambda x: self.Blueman.remove(device))
             self.append(item)
             item.show()
@@ -426,7 +426,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             item.show()
             self.append(item)
 
-            item = create_menuitem(_("_Disconnect"), get_icon("gtk-disconnect", 16))
+            item = create_menuitem(_("_Disconnect"), get_icon("network-offline", 16))
             item.props.tooltip_text = _("Forcefully disconnect the device")
 
             self.append(item)

@@ -35,7 +35,7 @@ class StandardItems(AppletPlugin):
 		
 		applet.Plugins.Menu.Register(self, Gtk.SeparatorMenuItem(), 21)
 		
-		self.new_dev = create_menuitem(_("_Setup New Device")+"...", get_icon("gtk-new", 16))
+		self.new_dev = create_menuitem(_("_Setup New Device")+"...", get_icon("document-new", 16))
 		self.new_dev.connect("activate", self.on_setup_new)
 		
 		self.Applet.Plugins.Menu.Register(self, self.new_dev, 30)
@@ -47,7 +47,7 @@ class StandardItems(AppletPlugin):
 
 		self.Applet.Plugins.Menu.Register(self, self.send, 40)
 
-		self.browse = create_menuitem(_("_Browse Files on Device")+"...", get_icon("gtk-open", 16))
+		self.browse = create_menuitem(_("_Browse Files on Device")+"...", get_icon("document-open", 16))
 		self.browse.connect("activate", self.on_browse)
 		
 		self.Applet.Plugins.Menu.Register(self, self.browse, 50)
@@ -65,14 +65,14 @@ class StandardItems(AppletPlugin):
 		
 		self.Applet.Plugins.Menu.Register(self, self.adapters, 70)
 		
-		self.services = create_menuitem(_("_Local Services")+"...", get_icon("gtk-preferences", 16))
+		self.services = create_menuitem(_("_Local Services")+"...", get_icon("preferences-desktop", 16))
 		self.services.connect("activate", self.on_local_services)
 		
 		self.Applet.Plugins.Menu.Register(self, self.services, 80)
 		
 		self.Applet.Plugins.Menu.Register(self, Gtk.SeparatorMenuItem(), 81)
 		
-		about = Gtk.ImageMenuItem.new_from_stock(Gtk.STOCK_ABOUT, None)
+		about = Gtk.MenuItem.new_with_label("Help")
 		self.Applet.Plugins.Menu.Register(self, about, 90)
 		
 		self.plugins = create_menuitem(_("_Plugins"), get_icon("blueman-plugin", 16))

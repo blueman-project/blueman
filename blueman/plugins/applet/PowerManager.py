@@ -32,7 +32,7 @@ class PowerManager(AppletPlugin):
 
         self.Applet = applet
 
-        self.item = create_menuitem(_("<b>Bluetooth Off</b>"), get_icon("gtk-stop", 16))
+        self.item = create_menuitem(_("<b>Bluetooth Off</b>"), get_icon("process-stop", 16))
         self.item.get_child().set_markup(_("<b>Turn Bluetooth Off</b>"))
 
         self.item.props.tooltip_text = _("Turn off all adapters")
@@ -160,7 +160,6 @@ class PowerManager(AppletPlugin):
 
             self.item.get_child().set_markup(_("<b>Turn Bluetooth On</b>"))
             self.item.props.tooltip_text = _("Turn on all adapters")
-            self.item.set_image(Gtk.Image.new_from_pixbuf(get_icon("gtk-yes", 16)))
 
             if foff:
                 self.item.props.sensitive = False
@@ -172,7 +171,6 @@ class PowerManager(AppletPlugin):
         elif on and self.current_state != True:
             self.item.get_child().set_markup(_("<b>Turn Bluetooth Off</b>"))
             self.item.props.tooltip_text = _("Turn off all adapters")
-            self.item.set_image(Gtk.Image.new_from_pixbuf(get_icon("gtk-stop", 16)))
             self.item.props.sensitive = True
 
             new_state = True

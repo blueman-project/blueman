@@ -160,7 +160,10 @@ PKG_CHECK_MODULES(GNOMEICONS, gnome-icon-theme,
 PKG_CHECK_MODULES(MATEICONS, mate-icon-theme,
 		HAVE_MATE_ICONS="yes", HAVE_MATE_ICONS="no")
 
-if test "x$HAVE_GNOME_ICONS" = "xno" && test "x$HAVE_MATE_ICONS" = "xno"; then
+PKG_CHECK_MODULES(FAENZAICONS, faenza-icon-theme,
+		HAVE_FAENZA_ICONS="yes", HAVE_FAENZA_ICONS="no")
+
+if test "x$HAVE_GNOME_ICONS" = "xno" && test "x$HAVE_MATE_ICONS" = "xno" && test "xHAVE_FAENZA_ICONS" = "xno"; then
 	AC_MSG_ERROR([Required icon themes not found.])
 fi
 
