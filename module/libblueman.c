@@ -301,7 +301,7 @@ get_rfcomm_list(struct rfcomm_dev_list_req **result)
 	}
 
 	dl = malloc(sizeof(*dl) + RFCOMM_MAX_DEV * sizeof(*di));
-	if(dl == NULL) {
+	if (dl == NULL) {
 		ret = ERR_CANNOT_ALLOCATE;
 		goto out;
 	}
@@ -311,6 +311,7 @@ get_rfcomm_list(struct rfcomm_dev_list_req **result)
 
 	if (ioctl(ctl, RFCOMMGETDEVLIST, (void *) dl) < 0) {
 		ret = ERR_GET_RFCOMM_LIST_FAILED;
+		free(dl);
 		goto out;
 	}
 

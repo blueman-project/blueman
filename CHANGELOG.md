@@ -16,6 +16,7 @@
 * Allow setting friendly adapter name in BlueZ 5
 * Look for both dhcpd and dhcpd3 and add sbin paths (@infirit / Sander Sweers)
 * Respect custom status icon
+* [libblueman] Fix memory leak (@monsta)
 
 ## 1.99.alpha1
 
