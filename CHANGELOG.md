@@ -17,6 +17,7 @@
 * Look for both dhcpd and dhcpd3 and add sbin paths (@infirit / Sander Sweers)
 * Respect custom status icon
 * [libblueman] Fix memory leak (@monsta)
+* [libblueman] Add missing includes (@posophe)
 
 ## 1.99.alpha1
 

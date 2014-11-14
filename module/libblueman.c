@@ -23,9 +23,12 @@
 #include <arpa/inet.h>
 #include <ctype.h>
 #include <fcntl.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/ioctl.h>
 #include <sys/socket.h>
+#include <unistd.h>
 #include <linux/sockios.h>
 #include <linux/if.h>
 #include <linux/if_bridge.h>
