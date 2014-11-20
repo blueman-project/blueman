@@ -1,5 +1,8 @@
 from blueman.plugins.ManagerPlugin import ManagerPlugin
-from blueman.main.PulseAudioUtils import PulseAudioUtils, EventType
+try:
+    from blueman.main.PulseAudioUtils import PulseAudioUtils, EventType
+except OSError as e:
+    raise ImportError(e)
 from blueman.main.SignalTracker import SignalTracker
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.gui.MessageArea import MessageArea
