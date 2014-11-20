@@ -38,7 +38,7 @@ Blueman 2 will especially bring support for newer APIs like BlueZ 5 and NetworkM
 * [libnotify](https://git.gnome.org/browse/libnotify)
 * [obexd](http://www.bluez.org/) for sending files
 * [obex-data-server](http://wiki.muiline.com/obex-data-server) (>= 0.4.3) for receiving files
-* [pulseaudio](http://www.freedesktop.org/wiki/Software/PulseAudio/)
+* [pulseaudio](http://www.freedesktop.org/wiki/Software/PulseAudio/) (optional)
 * [PyGObject](https://wiki.gnome.org/PyGObject)
 * [Python 2.7](http://www.python.org/)
 * [startup-notification](http://www.freedesktop.org/wiki/Software/startup-notification/)
