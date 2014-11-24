@@ -186,13 +186,13 @@ class ManagerDeviceList(DeviceList):
 		
 		sources = []
 		if is_bonded:
-			sources.append((get_icon("gtk-dialog-authentication", 16), 0, 0, 200))
+			sources.append((get_icon("dialog-password", 16), 0, 0, 200))
 		
 		if is_trusted:
 			sources.append((get_icon("blueman-trust", 16), 0, 32, 200))
 	
 		if is_discovered:
-			sources.append((get_icon("gtk-find", 24), 24, 0, 255))
+			sources.append((get_icon("edit-find", 24), 24, 0, 255))
 
 		return composite_icon(target, sources)
 	

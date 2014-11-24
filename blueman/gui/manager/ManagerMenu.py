@@ -32,7 +32,7 @@ class ManagerMenu:
         self.item_help.set_submenu(help_menu)
         help_menu.show()
 
-        item = create_menuitem(_("_Report a Problem"), get_icon("gtk-dialog-warning", 16))
+        item = create_menuitem(_("_Report a Problem"), get_icon("dialog-warning", 16))
         item.connect("activate", lambda x: spawn(["xdg-open", WEBSITE + '/issues'], True))
         help_menu.append(item)
         item.show()
@@ -41,7 +41,7 @@ class ManagerMenu:
         help_menu.append(item)
         item.show()
 
-        item = Gtk.ImageMenuItem.new_from_stock("gtk-about", None)
+        item = Gtk.MenuItem.new_with_label("Help")
         item.connect("activate", lambda x: show_about_dialog('Blueman ' + _('Device Manager')))
         help_menu.append(item)
         item.show()
@@ -147,7 +147,7 @@ class ManagerMenu:
         sep.show()
         menu.append(sep)
 
-        settings = Gtk.ImageMenuItem.new_from_stock("gtk-preferences", None)
+        settings = Gtk.MenuItem.new_with_label("Preferences")
         settings.connect("activate", lambda x: self.blueman.adapter_properties())
         settings.show()
         menu.append(settings)
@@ -168,7 +168,7 @@ class ManagerMenu:
         sep.show()
         menu.prepend(sep)
 
-        item = create_menuitem(_("_Search"), get_icon("gtk-find", 16))
+        item = create_menuitem(_("_Search"), get_icon("edit-find", 16))
         item.connect("activate", lambda x: self.blueman.inquiry())
         item.show()
         menu.prepend(item)
@@ -183,7 +183,7 @@ class ManagerMenu:
         sep.show()
         menu.append(sep)
 
-        item = Gtk.ImageMenuItem.new_from_stock("gtk-quit", None)
+        item = Gtk.MenuItem.new_with_label("Exit")
         item.connect("activate", lambda x: Gtk.main_quit())
         item.show()
         menu.append(item)

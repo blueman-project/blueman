@@ -295,14 +295,14 @@ class RecentConns(AppletPlugin, Gtk.Menu):
 
             def reply(*args):
                 Notification(_("Connected"), _("Connected to %s") % item["mitem"].get_child().props.label,
-                             pixbuf=get_icon("gtk-connect", 48),
+                             pixbuf=get_icon("network-transmit-recieve", 48),
                              status_icon=self.Applet.Plugins.StatusIcon)
                 item["mitem"].props.sensitive = True
                 sn.complete()
 
             def err(reason):
                 Notification(_("Failed to connect"), str(reason).split(": ")[-1],
-                             pixbuf=get_icon("gtk-dialog-error", 48),
+                             pixbuf=get_icon("dialog-error", 48),
                              status_icon=self.Applet.Plugins.StatusIcon)
                 item["mitem"].props.sensitive = True
                 sn.complete()

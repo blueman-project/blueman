@@ -53,7 +53,7 @@
                         <property name="editable">False</property>
                         <property name="invisible_char">&#x25CF;</property>
                         <property name="xalign">0.5</property>
-                        <property name="primary_icon_stock">gtk-go-down</property>
+                        <property name="primary_icon_name">go-down</property>
                       </object>
                       <packing>
                         <property name="position">1</property>
@@ -86,7 +86,7 @@
                         <property name="editable">False</property>
                         <property name="invisible_char">&#x25CF;</property>
                         <property name="xalign">0.5</property>
-                        <property name="primary_icon_stock">gtk-go-up</property>
+                        <property name="primary_icon_name">go-up</property>
                       </object>
                       <packing>
                         <property name="position">1</property>
@@ -125,7 +125,7 @@
                     <property name="invisible_char">&#x25CF;</property>
                     <property name="xalign">0.5</property>
                     <property name="caps_lock_warning">False</property>
-                    <property name="primary_icon_stock">gtk-info</property>
+                    <property name="primary_icon_name">dialog-information</property>
                   </object>
                   <packing>
                     <property name="position">1</property>
@@ -196,7 +196,7 @@
             </child>
             <child>
               <object class="GtkButton" id="b_reset">
-                <property name="label" translatable="yes">Reset</property>
+                <property name="label" translatable="yes">_Reset</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -218,11 +218,10 @@
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="button1">
-                <property name="label" translatable="yes">gtk-close</property>
+                <property name="label" translatable="yes">_Close</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -245,6 +244,6 @@
   </object>
   <object class="GtkImage" id="image2">
     <property name="visible">True</property>
-    <property name="stock">gtk-clear</property>
+    <property name="icon-name">edit-clear</property>
   </object>
 </interface>

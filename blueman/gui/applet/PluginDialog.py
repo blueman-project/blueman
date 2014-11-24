@@ -112,7 +112,7 @@ class SettingsWidget(Gtk.VBox):
 
 class PluginDialog(Gtk.Dialog):
 	def __init__(self, applet):
-		Gtk.Dialog.__init__(self, buttons=(Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE))
+		Gtk.Dialog.__init__(self, buttons=("_Close", Gtk.ResponseType.CLOSE))
 		
 		self.applet = applet
 		

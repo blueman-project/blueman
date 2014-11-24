@@ -60,7 +60,7 @@ class GsmSettings(Gtk.Dialog):
 		self.e_apn.connect("changed", self.on_changed)
 		self.e_number.connect("changed", self.on_changed)
 		
-		self.add_button(Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE)
+		self.add_button("_Close", Gtk.ResponseType.CLOSE)
 		
 	def on_changed(self, e):
 		if e == self.e_apn:

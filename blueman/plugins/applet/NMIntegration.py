@@ -59,7 +59,7 @@ class NMIntegration(AppletPlugin):
             d.props.secondary_text = _(
                 "The device %s does not appear to support GSM/CDMA.\nThis connection will not work.") % props["Alias"]
 
-            d.add_button(Gtk.STOCK_OK, Gtk.ResponseType.NO)
+            d.add_button("_OK", Gtk.ResponseType.NO)
             resp = d.run()
             d.destroy()
 
