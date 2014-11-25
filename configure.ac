@@ -88,6 +88,9 @@ AC_SUBST(pkgdatadir)
 icondir="${DATADIR}/icons"
 AC_SUBST(icondir)
 
+pixmapsdir="${DATADIR}/pixmaps"
+AC_SUBST(pixmapsdir)
+
 AS_AC_EXPAND(LOCALEDIR, $datarootdir/locale)
 AC_SUBST(LOCALEDIR)
 
@@ -233,6 +236,7 @@ data/icons/hicolor/scalable/devices/Makefile
 data/icons/hicolor/scalable/actions/Makefile
 data/icons/hicolor/scalable/status/Makefile
 data/icons/main_icon/Makefile
+data/icons/pixmaps/Makefile
 data/ui/Makefile
 data/man/Makefile
 data/configs/blueman-applet.service

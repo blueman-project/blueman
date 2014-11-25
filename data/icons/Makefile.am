@@ -1,3 +1,4 @@
 SUBDIRS	=		\
 	hicolor		\
-	main_icon
+	main_icon	\
+	pixmaps

@@ -182,6 +182,7 @@ def spawn(command, system=False, sn=None, reap=True, *args, **kwargs):
 def setup_icon_path():
     ic = Gtk.IconTheme.get_default()
     ic.prepend_search_path(ICON_PATH)
+    ic.append_search_path(PIXMAP_PATH)
 
 
 def get_icon(name, size=24, fallback="image-missing"):
