@@ -27,6 +27,7 @@ from blueman.Sdp import *
 
 from gi.repository import Gtk
 from gi.repository import Gdk
+from gi.repository import GdkPixbuf
 from gi.repository import Pango
 from blueman.Constants import *
 from blueman.Functions import *
@@ -397,13 +398,16 @@ class ManagerDeviceList(DeviceList):
 					signal = fader.connect("animation-finished", on_finished )
 					
 				if rnd(row["rssi"]) != rnd(rssi_perc):
-					self.set(iter, rssi_pb=get_icon("blueman-rssi-%s" % rnd(rssi_perc), 48))
+					icon = GdkPixbuf.Pixbuf.new_from_file(PIXMAP_PATH + "/blueman-rssi-" + str(rnd(rssi_perc)) + ".png")
+					self.set(iter, rssi_pb=icon)
 				
 				if rnd(row["lq"]) != rnd(lq_perc):
-					self.set(iter, lq_pb=get_icon("blueman-lq-%s" % rnd(lq_perc), 48))
-				
+					icon = GdkPixbuf.Pixbuf.new_from_file(PIXMAP_PATH + "/blueman-lq-" + str(rnd(lq_perc)) + ".png")
+					self.set(iter, lq_pb=icon)
+
 				if rnd(row["tpl"]) != rnd(tpl_perc):
-					self.set(iter, tpl_pb=get_icon("blueman-tpl-%s" % rnd(tpl_perc), 48))
+					icon = GdkPixbuf.Pixbuf.new_from_file(PIXMAP_PATH + "/blueman-tpl-" + str(rnd(tpl_perc)) + ".png")
+					self.set(iter, tpl_pb=icon)
 					
 					
 				self.set(iter,

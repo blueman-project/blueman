@@ -4,6 +4,7 @@ WEBSITE="https://github.com/blueman-project/blueman"
 PREFIX="@prefix@"
 BIN_DIR="@BINDIR@"
 ICON_PATH = "@icondir@"
+PIXMAP_PATH = "@prefix@/share/pixmaps/@PACKAGE@"
 UI_PATH = "@pkgdatadir@/ui"
 OBEX_BROWSE_AVAILABLE = True
 DHCP_CONFIG_FILE = "@dhconfig@"
@@ -21,4 +22,5 @@ __builtin__.ngettext = translation.ungettext
 if os.path.exists("../apps") and os.path.exists("../data"):
 	BIN_DIR = "./"
 	ICON_PATH = "../data/icons"
+	PIXMAP_PATH = "../data/icons/pixmaps"
 	UI_PATH = "../data/ui"
