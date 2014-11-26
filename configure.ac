@@ -122,17 +122,6 @@ else
 fi
 AC_SUBST(polkit_val)
 
-hal_en="no"
-AC_ARG_ENABLE(hal,
-[  --enable-hal=[yes/no] Enable/disable Hal support],,enable_hal=no)
-if test "x$enable_hal" = "xyes"; then
-        hal_en="yes"
-else
-        hal_en="no"
-fi
-AC_SUBST(hal_en)
-AM_CONDITIONAL(ENABLE_HAL, test "x$hal_en" = "xyes")
-
 AC_ARG_ENABLE(sendto,
 [  --enable-sendto=[yes/no] Enable nautilus-sendto plugin build],have_nst=$enableval,have_nst=yes)
 
@@ -252,7 +241,6 @@ echo
 
 echo Prefix : $prefix
 echo sysconfig dir : $sysconfdir
-echo "HAL support enabled (deprecated): $hal_en"
 echo Policykit-1 Enabled: $polkit_val
 echo Nautilus sendto plugin enabled: $have_nst
 echo Dhcpd 3 configuration file: $dhconfig

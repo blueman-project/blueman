@@ -9,7 +9,6 @@ UI_PATH = "@pkgdatadir@/ui"
 OBEX_BROWSE_AVAILABLE = True
 DHCP_CONFIG_FILE = "@dhconfig@"
 POLKIT = "@polkit_val@" == "yes"
-HAL_ENABLED = "@hal_en@" == "yes"
 
 import os
 import gettext
