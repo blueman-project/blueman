@@ -26,7 +26,7 @@ class ExitItem(AppletPlugin):
 	__icon__ = "application-exit"
 	
 	def on_load(self, applet):
-		item = Gtk.MenuItem.new_with_label("_Exit")
+		item = Gtk.MenuItem.new_with_label("Exit")
 		item.connect("activate", lambda x: Gtk.main_quit())
 		applet.Plugins.Menu.Register(self, item, 100)
 		
