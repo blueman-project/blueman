@@ -85,7 +85,7 @@ def check_bluetooth_status(message, exitfunc, *args, **kwargs):
             d.props.text = _("Bluetooth Turned Off")
             d.props.secondary_text = message
 
-            d.add_button("application-exit", Gtk.ResponseType.NO)
+            d.add_button("Exit", Gtk.ResponseType.NO)
             d.add_button(_("Enable Bluetooth"), Gtk.ResponseType.YES)
             resp = d.run()
             d.destroy()

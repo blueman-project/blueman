@@ -9,56 +9,6 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
     __unloadable__ = False
     __icon__ = "blueman"
 
-    def on_entry_changed(self, entry, ic, image):
-
-        if ic.has_icon(self.get_option("icon")):
-            icon = "_Apply"
-        else:
-            icon = "_Cancel"
-
-        image.set_from_icon_name(icon, Gtk.IconSize.LARGE_TOOLBAR)
-
-        if self.timeout:
-            GObject.source_remove(self.timeout)
-
-        self.timeout = GObject.timeout_add(1000, lambda: self.IconShouldChange())
-
-    def widget_decorator(self, widget, name, options):
-        entry = widget.get_children()[1]
-        image = Gtk.Image()
-
-        completion = Gtk.EntryCompletion()
-        entry.set_completion(completion)
-
-        liststore = Gtk.ListStore(GObject.TYPE_STRING)
-
-        completion.set_model(liststore)
-
-        completion.set_text_column(0)
-
-        ic = Gtk.IconTheme.get_default()
-        icons = ic.list_icons("Applications")
-        for i in icons:
-            liststore.append([i])
-
-        if ic.has_icon(self.get_option("icon")):
-            icon = "_Apply"
-        else:
-            icon = "_Cancel"
-
-        image.set_from_icon_name(icon, Gtk.IconSize.LARGE_TOOLBAR)
-        image.show()
-        widget.pack_start(image, True, 0, 0)
-        entry.connect("changed", self.on_entry_changed, ic, image)
-
-    __options__ = {"icon": {"type": str,
-                            "default": "blueman",
-                            "name": _("Icon Name"),
-                            "desc": _("Custom icon to use for the notification area"),
-                            "decorator": widget_decorator
-    }
-    }
-
     FORCE_SHOW = 2
     SHOW = 1
     FORCE_HIDE = 0
@@ -147,7 +97,7 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
         self.QueryVisibility()
 
     def on_status_icon_resized(self):
-        self.icon = self.get_option("icon") or "blueman"
+        self.icon = "blueman"
 
         ic = Gtk.IconTheme.get_default()
 
