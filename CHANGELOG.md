@@ -8,6 +8,7 @@
 * [browse] Use system's default browser for obex URI if no browse command is set
 * [pulseaudio] Make blueman-applet run if pulseaudio is not available
 * [ui] Replace / remove deprecated icon names (@Teknocrat / Harvey Mittens)
+* [ui] Drop status icon customization (@Teknocrat / Harvey Mittens)
 
 ### Bugs fixed
 
@@ -20,6 +21,7 @@
 * Respect custom status icon
 * [libblueman] Fix memory leak (@monsta)
 * [libblueman] Add missing includes (@posophe)
+* [ui] Move some icons to pixmaps directory (@rworkman / Robby Workman)
 
 ## 1.99.alpha1
 
