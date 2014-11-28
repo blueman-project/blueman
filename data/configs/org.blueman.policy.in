@@ -18,16 +18,6 @@
     </defaults>
   </action>
   
-  <action id="org.blueman.hal.manager">
-    <_description>Configure Bluetooth Modems</_description>
-    <_message>System policy prevents modifying the configuration</_message>
-
-    <defaults>
-      <allow_inactive>no</allow_inactive>
-      <allow_active>auth_admin_keep</allow_active>
-    </defaults>
-  </action>
-  
   <action id="org.blueman.dhcp.client">
     <_description>Launch DHCP client</_description>
     <_message>Launching DHCP client requires privileges</_message>
