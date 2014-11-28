@@ -9,6 +9,7 @@
 * [pulseaudio] Make blueman-applet run if pulseaudio is not available
 * [ui] Replace / remove deprecated icon names (@Teknocrat / Harvey Mittens)
 * [ui] Drop status icon customization (@Teknocrat / Harvey Mittens)
+* Drop HAL Support (@rworkman / Robby Workman)
 
 ### Bugs fixed
 
