@@ -45,11 +45,12 @@
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="b_apply">
-                <property name="label">Apply</property>
+                <property name="label">_Apply</property>
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="use_underline">True</property>
               </object>
               <packing>
                 <property name="position">0</property>
@@ -57,10 +58,11 @@
             </child>
             <child>
               <object class="GtkButton" id="b_close">
-                <property name="label">Close</property>
+                <property name="label">_Close</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="use_underline">True</property>
               </object>
               <packing>
                 <property name="position">1</property>

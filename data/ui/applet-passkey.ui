@@ -122,13 +122,14 @@
             </child>
             <child>
               <object class="GtkButton" id="accept">
-                <property name="label">OK</property>
+                <property name="label">_OK</property>
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="has_default">True</property>
                 <property name="receives_default">True</property>
+                <property name="use_underline">True</property>
               </object>
               <packing>
                 <property name="position">1</property>

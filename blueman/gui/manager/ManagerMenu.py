@@ -41,7 +41,7 @@ class ManagerMenu:
         help_menu.append(item)
         item.show()
 
-        item = Gtk.MenuItem.new_with_label("Help")
+        item = Gtk.MenuItem.new_with_mnemonic("_Help")
         item.connect("activate", lambda x: show_about_dialog('Blueman ' + _('Device Manager')))
         help_menu.append(item)
         item.show()
@@ -50,7 +50,7 @@ class ManagerMenu:
         self.item_view.set_submenu(view_menu)
         view_menu.show()
 
-        item = Gtk.CheckMenuItem.new_with_mnemonic(_("Show Toolbar"))
+        item = Gtk.CheckMenuItem.new_with_mnemonic(_("Show _Toolbar"))
         if self.blueman.Config.props.show_toolbar == None:
             item.props.active = True
         else:
@@ -62,7 +62,7 @@ class ManagerMenu:
         view_menu.append(item)
         item.show()
 
-        item = Gtk.CheckMenuItem.new_with_mnemonic(_("Show Statusbar"))
+        item = Gtk.CheckMenuItem.new_with_mnemonic(_("Show _Statusbar"))
         if self.blueman.Config.props.show_statusbar == None:
             item.props.active = True
         else:
@@ -80,12 +80,12 @@ class ManagerMenu:
 
         group = []
 
-        itemf = Gtk.RadioMenuItem.new_with_label(group, _("Latest Device First"))
+        itemf = Gtk.RadioMenuItem.new_with_mnemonic(group, _("Latest Device _First"))
         group = itemf.get_group()
         view_menu.append(itemf)
         itemf.show()
 
-        iteml = Gtk.RadioMenuItem.new_with_label(group, _("Latest Device Last"))
+        iteml = Gtk.RadioMenuItem.new_with_mnemonic(group, _("Latest Device _Last"))
         group = iteml.get_group()
         view_menu.append(iteml)
         iteml.show()
@@ -147,7 +147,7 @@ class ManagerMenu:
         sep.show()
         menu.append(sep)
 
-        settings = Gtk.MenuItem.new_with_label("Preferences")
+        settings = Gtk.MenuItem.new_with_mnemonic("_Preferences")
         settings.connect("activate", lambda x: self.blueman.adapter_properties())
         settings.show()
         menu.append(settings)
@@ -183,7 +183,7 @@ class ManagerMenu:
         sep.show()
         menu.append(sep)
 
-        item = Gtk.MenuItem.new_with_label("Exit")
+        item = Gtk.MenuItem.new_with_mnemonic("_Exit")
         item.connect("activate", lambda x: Gtk.main_quit())
         item.show()
         menu.append(item)
