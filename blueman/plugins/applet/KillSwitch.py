@@ -1,5 +1,6 @@
 from gi.repository import GObject
 import dbus
+import os
 from blueman.Functions import *
 
 from blueman.main.SignalTracker import SignalTracker
@@ -24,6 +25,9 @@ class KillSwitch(AppletPlugin):
 
     def on_load(self, applet):
         self.signals = SignalTracker()
+        rfdevpath = "/dev/rfkill"
+        if not (os.path.exists(rfdevpath) and os.access(rfdevpath, os.R_OK)):
+            raise Exception("RfKill support not loaded by Kernel")
 
         try:
             self.Manager = KillSwitchNG()
