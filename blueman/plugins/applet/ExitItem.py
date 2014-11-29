@@ -17,6 +17,7 @@
 # 
 from gi.repository import Gtk
 from blueman.plugins.AppletPlugin import AppletPlugin
+from blueman.Functions import create_menuitem, get_icon
 
 class ExitItem(AppletPlugin):
 	__depends__ = ["Menu"]
@@ -26,7 +27,7 @@ class ExitItem(AppletPlugin):
 	__icon__ = "application-exit"
 	
 	def on_load(self, applet):
-		item = Gtk.MenuItem.new_with_mnemonic("_Exit")
+		item = create_menuitem("_Exit", get_icon("application-exit", 16))
 		item.connect("activate", lambda x: Gtk.main_quit())
 		applet.Plugins.Menu.Register(self, item, 100)
 		

@@ -269,11 +269,24 @@ def format_bytes(size):
     return (ret, suffix)
 
 
-# Effective GTK 3.10 Menu Items no Longer Support Icons/Images so we ignore images passed in here
-def create_menuitem(text, image):
-    item = Gtk.MenuItem.new_with_mnemonic(text)
-    return item
+def create_menuitem_box(text, pixbuf, orientation=Gtk.Orientation.HORIZONTAL, size=6):
+    '''Create a box with icon and label, optinally set size and orientation'''
+    item_box = Gtk.Box.new(orientation, size)
+    icon = Gtk.Image.new_from_pixbuf(pixbuf)
+    label = Gtk.Label.new_with_mnemonic(text)
 
+    item_box.add(icon)
+    item_box.add(label)
+
+    return item_box
+
+def create_menuitem(text, pixbuf):
+    box = create_menuitem_box(text, pixbuf)
+    item = Gtk.MenuItem()
+    item.add(box)
+    item.show_all()
+
+    return item
 
 def check_single_instance(id, unhide_func=None):
     print "%s version %s starting" % (id, VERSION)

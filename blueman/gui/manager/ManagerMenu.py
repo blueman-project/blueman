@@ -41,7 +41,7 @@ class ManagerMenu:
         help_menu.append(item)
         item.show()
 
-        item = Gtk.MenuItem.new_with_mnemonic("_Help")
+        item = create_menuitem("_Help", get_icon("help-about"))
         item.connect("activate", lambda x: show_about_dialog('Blueman ' + _('Device Manager')))
         help_menu.append(item)
         item.show()
@@ -147,7 +147,7 @@ class ManagerMenu:
         sep.show()
         menu.append(sep)
 
-        settings = Gtk.MenuItem.new_with_mnemonic("_Preferences")
+        settings = create_menuitem("_Preferences", get_icon("preferences-system", 16))
         settings.connect("activate", lambda x: self.blueman.adapter_properties())
         settings.show()
         menu.append(settings)
@@ -183,7 +183,7 @@ class ManagerMenu:
         sep.show()
         menu.append(sep)
 
-        item = Gtk.MenuItem.new_with_mnemonic("_Exit")
+        item = create_menuitem("_Exit", get_icon("application-exit", 16))
         item.connect("activate", lambda x: Gtk.main_quit())
         item.show()
         menu.append(item)
