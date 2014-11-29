@@ -72,7 +72,7 @@ class StandardItems(AppletPlugin):
 		
 		self.Applet.Plugins.Menu.Register(self, Gtk.SeparatorMenuItem(), 81)
 		
-		about = Gtk.MenuItem.new_with_mnemonic("_Help")
+		about = create_menuitem("_Help", get_icon('help-about', 16))
 		self.Applet.Plugins.Menu.Register(self, about, 90)
 		
 		self.plugins = create_menuitem(_("_Plugins"), get_icon("blueman-plugin", 16))

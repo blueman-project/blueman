@@ -40,12 +40,12 @@ class Services(ManagerPlugin):
 
             if device.get_properties()['Connected']:
                 # FIXME: More generic icon
-                item = create_menuitem(_("Disconnect"), get_x_icon("mouse", 16))
+                item = create_menuitem(_("_Disconnect"), get_x_icon("mouse", 16))
                 manager_menu.Signals.Handle("gobject", item, "activate", manager_menu.on_disconnect, device)
                 items.append((item, 100))
             else:
                 # FIXME: More generic icon
-                item = create_menuitem(_("Connect"), get_icon("mouse", 16))
+                item = create_menuitem(_("_Connect"), get_icon("mouse", 16))
                 manager_menu.Signals.Handle("gobject", item, "activate", manager_menu.on_connect, device)
                 items.append((item, 1))
 
@@ -60,7 +60,7 @@ class Services(ManagerPlugin):
                     for uuid in uuids:
                         uuid16 = uuid128_to_uuid16(uuid)
                         if uuid16 == NAP_SVCLASS_ID or uuid16 == GN_SVCLASS_ID:
-                            label = _("Group Network") if uuid16 == GN_SVCLASS_ID else _("Network Access Point")
+                            label = _("Group Network") if uuid16 == GN_SVCLASS_ID else _("Network Access _Point")
                             item = create_menuitem(label, get_icon("network-wireless", 16))
                             manager_menu.Signals.Handle("gobject", item, "activate", manager_menu.on_connect,
                                                         device, name, uuid)

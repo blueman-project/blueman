@@ -332,7 +332,7 @@ class NetUsage(AppletPlugin, GObject.GObject):
         self.signals.Handle('bluez', Network(), self.on_network_property_changed, 'PropertyChanged',
                             path_keyword="path")
 
-        item = create_menuitem(_("Network Usage"), get_icon("network-wireless", 16))
+        item = create_menuitem(_("Network _Usage"), get_icon("network-wireless", 16))
         item.props.tooltip_text = _("Shows network traffic usage")
         self.signals.Handle(item, "activate", self.activate_ui)
         self.Applet.Plugins.Menu.Register(self, item, 84, True)
