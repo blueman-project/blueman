@@ -7,6 +7,7 @@
 * [obex] Switch to obexd for sending files
 * [browse] Use system's default browser for obex URI if no browse command is set
 * [pulseaudio] Make blueman-applet run if pulseaudio is not available
+* [ui] Re-implment menu icons
 * [ui] Replace / remove deprecated icon names (@Teknocrat / Harvey Mittens)
 * [ui] Drop status icon customization (@Teknocrat / Harvey Mittens)
 * Drop HAL Support (@rworkman / Robby Workman)
