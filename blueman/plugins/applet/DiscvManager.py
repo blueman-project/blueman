@@ -29,6 +29,7 @@ class DiscvManager(AppletPlugin):
         self.Signals = SignalTracker()
 
         self.item = create_menuitem(_("_Make Discoverable"), get_icon("edit-find", 16))
+        self.item_label = self.item.get_child().get_children()[1]
         applet.Plugins.Menu.Register(self, self.item, 20, False)
 
         self.Applet = applet
@@ -61,7 +62,7 @@ class DiscvManager(AppletPlugin):
 
     def on_update(self):
         self.time_left -= 1
-        self.item.get_child().props.label = _("Discoverable... %ss") % self.time_left
+        self.item_label.set_text_with_mnemonic(_("Discoverable... %ss") % self.time_left)
         self.item.props.sensitive = False
 
         return True
@@ -120,7 +121,7 @@ class DiscvManager(AppletPlugin):
             if (not props["Discoverable"] or props["DiscoverableTimeout"] > 0) and props["Powered"]:
 
                 self.item.props.visible = True
-                self.item.get_child().props.label = _("_Make Discoverable")
+                self.item_label.set_text_with_mnemonic(_("_Make Discoverable"))
                 self.item.props.sensitive = True
 
             else:
