@@ -2,7 +2,7 @@
 
 Blueman is a GTK+ Bluetooth Manager
 
-Blueman is designed to provide simple, yet effective means for
+Blueman is designed to provide a simple yet effective means for
 controlling BlueZ API and simplifying bluetooth tasks such as:
 
 * Connecting to 3G/EDGE/GPRS via dial-up
@@ -12,7 +12,7 @@ controlling BlueZ API and simplifying bluetooth tasks such as:
 * Sending/Receiving/Browsing files via OBEX
 * Pairing
 
-It is lightweight, easy to use, Python bases and GPL licensed.
+It is lightweight, easy to use, Python based, and GPL licensed.
 
 The original project page of Valmantas Palikša can be found [here](https://launchpad.net/blueman).
 Please use the GitHub issue tracker for bugs and questions.
@@ -69,6 +69,7 @@ To generate and run a configure script from source, run `./autogen.sh`.
 * Linux Mint
 * OpenMandriva
 * [openSUSE](http://software.opensuse.org/package/blueman?search_term=blueman)
+* [Slackware](http://packages.slackware.com/?search=blueman)
 * [Ubuntu](http://packages.ubuntu.com/search?keywords=blueman)
 
 ## Support / Troubleshooting
