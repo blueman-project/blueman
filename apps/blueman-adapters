@@ -25,6 +25,7 @@ from gi.repository import Gtk
 
 # Workaround introspection bug, gnome bug 622084
 signal.signal(signal.SIGINT, signal.SIG_DFL)
+signal.signal(signal.SIGTERM, signal.SIG_DFL)
 
 class BluemanAdapters:
     def __init__(self, selected_hci_dev):

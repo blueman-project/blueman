@@ -59,7 +59,6 @@ class Device(GObject.GObject):
 
     def __del__(self):
         dprint("deleting device", self.get_object_path())
-        self.Destroy()
 
     def get_object_path(self):
         if not self.Fake:
@@ -68,6 +67,7 @@ class Device(GObject.GObject):
     def on_device_removed(self, path):
         if path == self._obj_path:
             self.emit("invalidated")
+
             self.Destroy()
 
     def init_services(self):
@@ -97,12 +97,9 @@ class Device(GObject.GObject):
 
     def Destroy(self):
         dprint("invalidating device", self.get_object_path())
+        self.Signals.DisconnectAll()
         self.Valid = False
         #self.Device = None
-        self.Signals.DisconnectAll()
-
-    #def __del__(self):
-    #	dprint("DEBUG: deleting Device instance")
 
     def get_properties(self):
         #print "Properties requested"
