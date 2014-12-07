@@ -1,0 +1,88 @@
+	Frequently Asked Questions About Blueman
+
+ 1.	I have a problem - how do I begin the debugging process?
+
+	To retrieve useful information, the best starting point is to run 
+	"blueman-applet" from a terminal window. Since only one instance may
+	be running at a time, you will first need to stop any instances 
+	already running (use "ps x | grep [b]lueman" to find the pid and then 
+	run "kill ####" or use "killall blueman-applet").
+
+	There will be plenty of output in the terminal window, which will also
+	include messages from blueman-manager. 
+
+	See our Troubleshooting page for more information on this process:
+
+		https://github.com/blueman-project/blueman/wiki/Troubleshooting
+
+
+ 2.	The blueman applet does not show any detected bluetooth adapters - what
+	is wrong?
+
+	First, make sure that your kernel supports your bluetooth device. You 
+	can use "bluez-test-adapter" (for BlueZ-4.x) or "bluetoothctl list"
+	(for BlueZ-5.x) to see if your device is recognized. If it is not, 
+	then either your kernel doesn't support the device or some hardware
+	killswitch is preventing it from working.
+
+	To check for killswitch problems, first ensure that you have rfkill 
+	support enabled in your kernel and it is loaded (i.e. the "rfkill"
+	module is loaded or it is built into your kernel statically).
+	Check the output of "rfkill list" and ensure that the bluetooth device
+	is not listed as either "Soft blocked" or "Hard blocked" - if it is,
+	then use the appropriate rfkill command to remove a soft block, and/or
+	check for a hardware switch on your machine to remove a hard block.
+
+	To check for kernel support, use "lsusb" and/or "lspci" to find the
+	hardware ID and do a web search to determine whether it should be 
+	supported.  If you are not sure how to do tihs and/or are not sure
+	how to interpret the results, scroll to the bottom of this document
+	for information on how to open an issue with the Blueman project.
+
+
+ 3.	How do I install blueman on my operating system?
+ 
+	Consult your operating system's documentation and/or help areas;
+	blueman is probably either already installed or available already
+	in a package repository.
+
+
+ 4.	I have another question or am experiencing some other issue/bug: 
+	Now what?
+
+	For bugs in blueman, we recommend that you first attempt to resolve
+	any issues through your OS vendor's designated support areas to 
+	ensure that problems aren't caused by e.g. packaging issues or
+	OS-specific configurations.  If you've already tried that and still
+	are unable to solve your problem, visit our Troubleshooting page:
+
+		https://github.com/blueman-project/blueman/wiki/Troubleshooting
+
+	and if needed, open a new issue:
+
+		https://github.com/blueman-project/blueman/issues
+
+	Be sure to provide the blueman version you are using, the version of
+	bluez you are running, your kernel version, your operating system
+	name and version, and the desktop environment you are running.
+
+
+ 5.	How can I help with blueman development?
+
+	Visit our github project page:
+
+		https://github.com/blueman-project/blueman
+
+	You can clone the git repository, view the code, and/or submit
+	pull requests.
+
+	You will probably also want to join our mailing list:
+	
+		http://ml.mate-desktop.org/listinfo/blueman
+
+
+ 6.	What other resources are available for help with blueman?
+
+	https://wiki.archlinux.org/index.php/Blueman
+	http://wiki.ubuntuusers.de/Bluetooth/Blueman
+
