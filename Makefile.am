@@ -6,7 +6,14 @@ SUBDIRS = 		\
 	sendto		\
 	po
 
+DIST_DOCS =			\
+	CHANGELOG.md		\
+	COPYING			\
+	FAQ			\
+	README.md
+
 EXTRA_DIST = 			\
+	${DIST_DOCS}		\
 	intltool-extract.in	\
 	intltool-update.in	\
 	intltool-merge.in
@@ -27,4 +34,7 @@ MAINTAINERCLEANFILES = 	\
 	intltool-extract.in	\
 	intltool-update.in	\
 	intltool-merge.in
+
+doc_DATA = ${DIST_DOCS}
+
 
