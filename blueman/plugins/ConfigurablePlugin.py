@@ -38,7 +38,7 @@ class ConfigurablePlugin(BasePlugin):
 
                 self.Settings = Gio.Settings.new(BLUEMAN_PLUGINS_GSCHEMA)
 
-                plugin_settings = eval(self.settings['plugin-settings'])
+                plugin_settings = eval(self.Settings['plugin-settings'])
 
                 self.__config = plugin_settings.setdefault("plugins/" + self.__class__.__name__, {})
 
