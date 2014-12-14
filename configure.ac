@@ -94,6 +94,9 @@ AC_SUBST(pixmapsdir)
 AS_AC_EXPAND(LOCALEDIR, $datarootdir/locale)
 AC_SUBST(LOCALEDIR)
 
+AS_AC_EXPAND(DOCDIR, $docdir)
+AC_SUBST(DOCDIR)
+
 dnl ---------------------------------
 dnl dhcp config file location
 dnl ---------------------------------
