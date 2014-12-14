@@ -11,6 +11,7 @@
 * [ui] Replace / remove deprecated icon names (@Teknocrat / Harvey Mittens)
 * [ui] Drop status icon customization (@Teknocrat / Harvey Mittens)
 * Drop HAL Support (@rworkman / Robby Workman)
+* Add FAQ file and install doc files (@rworkman / Robby Workman)
 
 ### Bugs fixed
 
