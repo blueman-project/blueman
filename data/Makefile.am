@@ -8,10 +8,13 @@ appdir = $(datadir)/applications
 app_in_files = blueman-manager.desktop.in
 app_DATA = $(app_in_files:.desktop.in=.desktop)
 
+thunar_in_files = thunar-sendto-blueman.desktop.in
+
+if HAVE_THUNAR
 @INTLTOOL_DESKTOP_RULE@
 thunardir = $(datadir)/Thunar/sendto
-thunar_in_files = thunar-sendto-blueman.desktop.in
 thunar_DATA = $(thunar_in_files:.desktop.in=.desktop)
+endif
 
 
 EXTRA_DIST = 	$(autostart_in_files)	\
