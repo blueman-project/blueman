@@ -14,6 +14,8 @@
 * [docs] Add FAQ file and install doc files (@rworkman / Robby Workman)
 * [sendto] Add sendto integration for Thunar (@GreenLunar)
 * [sendto] Make thunar sendto integration optional (@rworkman / Robby Workman)
+* [configure] Rename --enable-sendto to --enable-nautilus-sendto
+  (@rworkman / Robby Workman)
 
 ### Bugs fixed
 
