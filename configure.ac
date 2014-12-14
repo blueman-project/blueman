@@ -125,8 +125,8 @@ else
 fi
 AC_SUBST(polkit_val)
 
-AC_ARG_ENABLE(sendto,
-[  --enable-sendto=[yes/no] Enable nautilus-sendto plugin build],have_nst=$enableval,have_nst=yes)
+AC_ARG_ENABLE(nautilus-sendto,
+[  --enable-nautilus-sendto=[yes/no] Enable nautilus-sendto plugin build],have_nst=$enableval,have_nst=yes)
 
 AM_CONDITIONAL(HAVE_NST, test "x$have_nst" = "xyes")
 
