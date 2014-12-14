@@ -12,6 +12,10 @@
 * [ui] Drop status icon customization (@Teknocrat / Harvey Mittens)
 * Drop HAL Support (@rworkman / Robby Workman)
 * Add FAQ file and install doc files (@rworkman / Robby Workman)
+* Add optional support from blueman-sendto from within Thunar, suggested
+  by GreenLunar (@rworkman / Robby Workman)
+* --enable-sendto has been renamed to --enable-nautilus-sendto, as there
+  is also an --enable-thunar-sendto configure option now
 
 ### Bugs fixed
 

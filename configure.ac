@@ -125,10 +125,15 @@ else
 fi
 AC_SUBST(polkit_val)
 
-AC_ARG_ENABLE(sendto,
-[  --enable-sendto=[yes/no] Enable nautilus-sendto plugin build],have_nst=$enableval,have_nst=yes)
+AC_ARG_ENABLE(nautilus-sendto,
+[  --enable-nautilus-sendto=[yes/no] Enable nautilus-sendto plugin build],have_nst=$enableval,have_nst=yes)
 
 AM_CONDITIONAL(HAVE_NST, test "x$have_nst" = "xyes")
+
+AC_ARG_ENABLE(thunar-sendto,
+[  --enable-thunar-sendto=[yes/no] Enable thunar-sendto installation],have_thunar=$enableval,have_thunar=yes)
+
+AM_CONDITIONAL(HAVE_THUNAR, test "x$have_thunar" = "xyes")
 
 dnl ----------------------------
 
@@ -246,5 +251,6 @@ echo Prefix : $prefix
 echo sysconfig dir : $sysconfdir
 echo Policykit-1 Enabled: $polkit_val
 echo Nautilus sendto plugin enabled: $have_nst
+echo Thunar sendto installation enabled: $have_thunar
 echo Dhcpd 3 configuration file: $dhconfig
 echo
