@@ -16,6 +16,7 @@
 * [sendto] Make thunar sendto integration optional (@rworkman / Robby Workman)
 * [configure] Rename --enable-sendto to --enable-nautilus-sendto
   (@rworkman / Robby Workman)
+* Add optional xfce settings entry (@rworkman / Robby Workman)
 
 ### Bugs fixed
 
