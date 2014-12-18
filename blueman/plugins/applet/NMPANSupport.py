@@ -165,7 +165,7 @@ class NewConnectionBuilder:
 
 class NMPANSupport(AppletPlugin):
     __depends__ = ["DBusService"]
-    __conflicts__ = ["DhcpClient", "NMIntegration"]
+    __conflicts__ = ["DhcpClient"]
     __icon__ = "network"
     __author__ = "Walmis"
     __description__ = _("Provides support for Personal Area Networking (PAN) introduced in NetworkManager 0.8")

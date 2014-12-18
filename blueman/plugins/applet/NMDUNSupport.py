@@ -82,7 +82,7 @@ class ConnectionHandler:
 
 class NMDUNSupport(AppletPlugin):
     __depends__ = ["StatusIcon", "DBusService"]
-    __conflicts__ = ["PPPSupport", "NMIntegration"]
+    __conflicts__ = ["PPPSupport"]
     __icon__ = "modem"
     __author__ = "Walmis"
     __description__ = _("Provides support for Dial Up Networking (DUN) with ModemManager and NetworkManager 0.8")
