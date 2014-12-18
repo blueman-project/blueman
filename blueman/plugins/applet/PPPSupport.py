@@ -54,7 +54,6 @@ class Connection:
 
 class PPPSupport(AppletPlugin):
     __depends__ = ["DBusService"]
-    __conflicts__ = ["NMIntegration"]
     __description__ = _("Provides basic support for connecting to the internet via DUN profile.")
     __author__ = "Walmis"
     __icon__ = "modem"
