@@ -180,6 +180,11 @@ PKG_CHECK_MODULES([PYGOBJECT],
 AC_SUBST(PYGOBJECT_CFLAGS)
 AC_SUBST(PYGOBJECT_LIBS)
 
+PKG_CHECK_MODULES(APPINDICATOR3, appindicator3-0.1,
+		HAVE_APPINDICATOR3="yes", HAVE_APPINDICATOR3="no")
+
+AM_CONDITIONAL(USE_APPINDICATOR3, test "x$HAVE_APPINDICATOR3" = "xyes")
+
 
 AC_OUTPUT([
 Makefile
@@ -259,4 +264,5 @@ echo Nautilus sendto plugin enabled: $have_nst
 echo Thunar sendto installation enabled: $have_thunar
 echo Xfce settings entry enabled: $have_xfce
 echo Dhcpd 3 configuration file: $dhconfig
+echo Install AppIndicator.py (requires libappindicator3): $USE_APPINDICATOR3
 echo

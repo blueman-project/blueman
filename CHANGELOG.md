@@ -17,6 +17,8 @@
 * [configure] Rename --enable-sendto to --enable-nautilus-sendto
   (@rworkman / Robby Workman)
 * Add optional xfce settings entry (@rworkman / Robby Workman)
+* Make installation of AppIndicator.py depend on pkg-config check for
+  appindicator3-0.1 (@rworkman / Robby Workman)
 
 ### Bugs fixed
 
