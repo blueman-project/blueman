@@ -135,10 +135,10 @@ AC_ARG_ENABLE(thunar-sendto,
 
 AM_CONDITIONAL(HAVE_THUNAR, test "x$have_thunar" = "xyes")
 
-AC_ARG_ENABLE(xfce-settings,
-[  --enable-xfce-settings=[yes/no] Enable xfce settings entry],have_xfce=$enableval,have_xfce=yes)
+AC_ARG_ENABLE(settings-integration,
+[  --enable-settings-integration=[yes/no] Enable settings manager integration with xfce and mate],have_settings=$enableval,have_settings=yes)
 
-AM_CONDITIONAL(HAVE_XFCE, test "x$have_xfce" = "xyes")
+AM_CONDITIONAL(HAVE_SETTINGS, test "x$have_settings" = "xyes")
 
 dnl ----------------------------
 
@@ -257,6 +257,6 @@ echo sysconfig dir : $sysconfdir
 echo Policykit-1 Enabled: $polkit_val
 echo Nautilus sendto plugin enabled: $have_nst
 echo Thunar sendto installation enabled: $have_thunar
-echo Xfce settings entry enabled: $have_xfce
+echo Settings menu integration enabled: $have_settings
 echo Dhcpd 3 configuration file: $dhconfig
 echo
