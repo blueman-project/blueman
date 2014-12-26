@@ -19,10 +19,13 @@ class ConnectionHandler:
         self.timeout = None
 
         self.signals = SignalTracker()
-        self.signals.Handle("dbus", self.parent.bus,
-                            self.on_mm_device_added,
-                            "DeviceAdded",
+
+        # ModemManager 0.x
+        self.signals.Handle("dbus", self.parent.bus, self.on_mm_device_added, "DeviceAdded",
                             "org.freedesktop.ModemManager")
+        # ModemManager 1.x
+        self.signals.Handle("dbus", self.parent.bus, self.on_interfaces_added, "InterfacesAdded",
+                            "org.freedesktop.DBus.ObjectManager")
 
         # for some reason these handlers take a reference and don't give it back
         #so i have to workaround :(
@@ -49,16 +52,17 @@ class ConnectionHandler:
 
         del self.device
 
-    def on_mm_device_added(self, path):
+    def on_mm_device_added(self, path, name="org.freedesktop.ModemManager"):
         dprint(path)
-        props = self.parent.bus.call_blocking("org.freedesktop.ModemManager",
-                                              path,
-                                              "org.freedesktop.DBus.Properties",
-                                              "GetAll",
-                                              "s",
-                                              ["org.freedesktop.ModemManager.Modem"])
+        interface = "%s.Modem" % name
+        props = self.parent.bus.call_blocking(name, path, "org.freedesktop.DBus.Properties", "GetAll", "s", [interface])
 
-        if self.rfcomm_dev and props["Driver"] == "bluetooth" and props["Device"] in self.rfcomm_dev:
+        try:
+            drivers = props["Drivers"]
+        except KeyError:
+            drivers = [props["Driver"]]
+
+        if self.rfcomm_dev and "bluetooth" in drivers and props["Device"] in self.rfcomm_dev:
             dprint("It's our bluetooth modem!")
 
             modem = get_icon("modem", 24)
@@ -74,6 +78,10 @@ class ConnectionHandler:
             self.reply(self.rfcomm_dev)
             self.cleanup()
 
+    def on_interfaces_added(self, object_path, interfaces):
+        if 'org.freedesktop.ModemManager1.Modem' in interfaces:
+            self.on_mm_device_added(object_path, "org.freedesktop.ModemManager1")
+
     def on_timeout(self):
         self.timeout = None
         self.err(dbus.DBusException(_("Modem Manager did not support the connection")))
@@ -85,7 +93,7 @@ class NMDUNSupport(AppletPlugin):
     __conflicts__ = ["PPPSupport"]
     __icon__ = "modem"
     __author__ = "Walmis"
-    __description__ = _("Provides support for Dial Up Networking (DUN) with ModemManager and NetworkManager 0.8")
+    __description__ = _("Provides support for Dial Up Networking (DUN) with ModemManager and NetworkManager")
     __priority__ = 1
 
     def on_load(self, applet):
