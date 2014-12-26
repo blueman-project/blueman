@@ -184,8 +184,7 @@ class NMPANSupport(AppletPlugin):
 
         self.watches = [self.bus.watch_name_owner("org.freedesktop.NetworkManager", self.on_nm_owner_changed)]
 
-        # TODO: Check API version
-        self.legacy = True
+        self.legacy = self.bus.name_has_owner('org.freedesktop.NetworkManagerUserSettings')
 
         if self.legacy:
             self.watches.append(self.bus.watch_name_owner("org.freedesktop.NetworkManagerUserSettings",
