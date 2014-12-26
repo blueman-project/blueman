@@ -328,6 +328,8 @@ class NMPANSupport(AppletPlugin):
         else:
             service = self.bus.get_object("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager")
             self.nm = dbus.proxies.Interface(service, "org.freedesktop.NetworkManager")
+            if not self.legacy:
+                self.on_nma_owner_changed(owner)
 
 
     def on_unload(self):
