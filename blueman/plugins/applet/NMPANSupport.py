@@ -11,73 +11,12 @@ from blueman.main.Device import Device
 from blueman.bluez.Network import Network
 
 
-class NMDeviceState:
-    UNKNOWN = 0
-
-    #/* Initial state of all devices and the only state for devices not
-    # * managed by NetworkManager.
-    # *
-    # * Allowed next states:
-    # *   UNAVAILABLE:  the device is now managed by NetworkManager
-    # */
-    UNMANAGED = 1
-
-    #/* Indicates the device is not yet ready for use, but is managed by
-    # * NetworkManager.  For Ethernet devices, the device may not have an
-    # * active carrier.  For WiFi devices, the device may not have it's radio
-    # * enabled.
-    # *
-    # * Allowed next states:
-    # *   UNMANAGED:  the device is no longer managed by NetworkManager
-    # *   DISCONNECTED:  the device is now ready for use
-    # */
-    UNAVAILABLE = 2
-
-    #/* Indicates the device does not have an activate connection to anything.
-    # *
-    # * Allowed next states:
-    # *   UNMANAGED:  the device is no longer managed by NetworkManager
-    # *   UNAVAILABLE:  the device is no longer ready for use (rfkill, no carrier, etc)
-    # *   PREPARE:  the device has started activation
-    # */
-    DISCONNECTED = 3
-
-    #/* Indicate states in device activation.
-    # *
-    # * Allowed next states:
-    # *   UNMANAGED:  the device is no longer managed by NetworkManager
-    # *   UNAVAILABLE:  the device is no longer ready for use (rfkill, no carrier, etc)
-    # *   FAILED:  an error ocurred during activation
-    # *   NEED_AUTH:  authentication/secrets are needed
-    # *   ACTIVATED:  (IP_CONFIG only) activation was successful
-    # *   DISCONNECTED:  the device's connection is no longer valid, or NetworkManager went to sleep
-    # */
-    PREPARE = 4
-    CONFIG = 5
-    NEED_AUTH = 6
-    IP_CONFIG = 7
-
-    #/* Indicates the device is part of an active network connection.
-    # *
-    # * Allowed next states:
-    # *   UNMANAGED:  the device is no longer managed by NetworkManager
-    # *   UNAVAILABLE:  the device is no longer ready for use (rfkill, no carrier, etc)
-    # *   FAILED:  a DHCP lease was not renewed, or another error
-    # *   DISCONNECTED:  the device's connection is no longer valid, or NetworkManager went to sleep
-    # */
-    ACTIVATED = 8
-
-    #/* Indicates the device's activation failed.
-    # *
-    # * Allowed next states:
-    # *   UNMANAGED:  the device is no longer managed by NetworkManager
-    # *   UNAVAILABLE:  the device is no longer ready for use (rfkill, no carrier, etc)
-    # *   DISCONNECTED:  the device's connection is ready for activation, or NetworkManager went to sleep
-    # */
-    FAILED = 9
-
-
 class NewConnectionBuilder:
+    DEVICE_STATE_DISCONNECTED = 30
+    DEVICE_STATE_ACTIVATED = 100
+    DEVICE_STATE_DEACTIVATING = 110
+    DEVICE_STATE_FAILED = 120
+
     def __init__(self, parent, params, ok_cb, err_cb):
         self.parent = parent
         self.params = params
@@ -149,19 +88,20 @@ class NewConnectionBuilder:
 
     def on_device_state(self, state, oldstate, reason):
         dprint("state=", state, "oldstate=", oldstate, "reason=", reason)
-        if state <= NMDeviceState.DISCONNECTED < oldstate <= NMDeviceState.ACTIVATED:
+        if (state <= self.DEVICE_STATE_DISCONNECTED or state == self.DEVICE_STATE_DEACTIVATING) and \
+                                self.DEVICE_STATE_DISCONNECTED < oldstate <= self.DEVICE_STATE_ACTIVATED:
             if self.err_cb:
                 self.err_cb(dbus.DBusException("Connection was interrupted"))
 
             self.remove_connection()
             self.cleanup()
 
-        elif state == NMDeviceState.FAILED:
+        elif state == self.DEVICE_STATE_FAILED:
             self.err_cb(dbus.DBusException("Network Manager Failed to activate the connection"))
             self.remove_connection()
             self.cleanup()
 
-        elif state == NMDeviceState.ACTIVATED:
+        elif state == self.DEVICE_STATE_ACTIVATED:
             self.ok_cb()
             self.err_cb = None
             self.ok_cb = None
@@ -193,6 +133,9 @@ class NMPANSupport(AppletPlugin):
             self.settings_interface = 'org.freedesktop.NetworkManagerSettings'
             self.connection_settings_interface = 'org.freedesktop.NetworkManagerSettings.Connection'
             self.settings_path = "/org/freedesktop/NetworkManagerSettings"
+            NewConnectionBuilder.DEVICE_STATE_DISCONNECTED = 3
+            NewConnectionBuilder.DEVICE_STATE_ACTIVATED = 8
+            NewConnectionBuilder.DEVICE_STATE_FAILED = 9
         else:
             self.settings_bus = 'org.freedesktop.NetworkManager'
             self.settings_interface = 'org.freedesktop.NetworkManager.Settings'
