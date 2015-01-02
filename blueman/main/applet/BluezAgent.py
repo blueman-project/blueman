@@ -32,10 +32,10 @@ class DummyGObjectMeta(dbus.service.InterfaceType, GObjectMeta):
 class CommonAgent(GObject.GObject, Agent):
     __metaclass__ = DummyGObjectMeta
     __gsignals__ = {
-    'released': (GObject.SignalFlags.NO_HOOKS, None, ()),
+        'released': (GObject.SignalFlags.NO_HOOKS, None, ()),
     }
 
-    def __init__(self, status_icon, path):
+    def __init__(self, status_icon, path, time_func, notifications):
         Agent.__init__(self, path)
         GObject.GObject.__init__(self)
 
@@ -43,6 +43,8 @@ class CommonAgent(GObject.GObject, Agent):
         self.dbus_path = path
         self.dialog = None
         self.n = None
+        self.time_func = time_func
+        self.notifications = notifications
 
     def build_passkey_dialog(self, device_alias, dialog_msg, is_numeric):
         def on_insert_text(editable, new_text, new_text_length, position):
@@ -85,7 +87,6 @@ class CommonAgent(GObject.GObject, Agent):
         if name:
             alias = "<b>%s</b> (%s)" % (cgi.escape(name), address)
         return alias
-
 
     def ask_passkey(self, device_path, dialog_msg, notify_msg, is_numeric, notification, ok, err):
         def on_notification_close(n, action):
@@ -148,24 +149,12 @@ class CommonAgent(GObject.GObject, Agent):
         except:
             pass
 
-
-# noinspection PyPep8Naming
-class AdapterAgent(CommonAgent):
-    def __init__(self, status_icon, adapter, time_func):
-        self.adapter = adapter
-        self.n = None
-        self.time_func = time_func
-
-        adapter_name = os.path.basename(adapter.get_object_path())
-
-        CommonAgent.__init__(self, status_icon, "/org/blueman/agent/adapter/" + adapter_name)
-
     @AgentMethod
     def RequestPinCode(self, device, ok, err):
         dprint("Agent.RequestPinCode")
         dialog_msg = _("Enter PIN code for authentication:")
         notify_msg = _("Enter PIN code")
-        self.ask_passkey(device, dialog_msg, notify_msg, False, True, ok, err)
+        self.ask_passkey(device, dialog_msg, notify_msg, False, self.notifications, ok, err)
         if self.dialog:
             self.dialog.present_with_time(self.time_func())
 
@@ -174,13 +163,20 @@ class AdapterAgent(CommonAgent):
         dprint("Agent.RequestPasskey")
         dialog_msg = _("Enter passkey for authentication:")
         notify_msg = _("Enter passkey")
-        self.ask_passkey(device, dialog_msg, notify_msg, True, True, ok, err)
+        self.ask_passkey(device, dialog_msg, notify_msg, True, self.notifications, ok, err)
         if self.dialog:
             self.dialog.present_with_time(self.time_func())
 
-    @AgentMethod
-    def DisplayPasskey(self, device, passkey, entered):
-        dprint("Agent.DisplayPasskey")
+
+# noinspection PyPep8Naming
+class AdapterAgent(CommonAgent):
+    def __init__(self, status_icon, adapter, time_func):
+        self.adapter = adapter
+        self.n = None
+
+        adapter_name = os.path.basename(adapter.get_object_path())
+
+        CommonAgent.__init__(self, status_icon, "/org/blueman/agent/adapter/" + adapter_name, time_func, True)
 
     @AgentMethod
     def RequestConfirmation(self, device, passkey, ok, err):
@@ -245,33 +241,13 @@ class AdapterAgent(CommonAgent):
 class GlobalAgent(AdapterAgent):
     def __init__(self, status_icon, time_func):
         self.n = None
-        self.time_func = time_func
-        CommonAgent.__init__(self, status_icon, '/org/blueman/agent/global')
+        CommonAgent.__init__(self, status_icon, '/org/blueman/agent/global', time_func, True)
 
 
 # noinspection PyPep8Naming
 class TempAgent(CommonAgent):
     def __init__(self, status_icon, path, time):
-        CommonAgent.__init__(self, status_icon, path)
-        self.time = time
-
-    @AgentMethod
-    def RequestPinCode(self, device, ok, err):
-        dprint("Agent.RequestPinCode")
-        dialog_msg = _("Enter PIN code for authentication:")
-        notify_msg = _("Enter PIN code")
-        self.ask_passkey(device, dialog_msg, notify_msg, False, False, ok, err)
-        if self.dialog:
-            self.dialog.present_with_time(self.time)
-
-    @AgentMethod
-    def RequestPasskey(self, device, ok, err):
-        dprint("Agent.RequestPasskey")
-        dialog_msg = _("Enter passkey for authentication:")
-        notify_msg = _("Enter passkey")
-        self.ask_passkey(device, dialog_msg, notify_msg, True, False, ok, err)
-        if self.dialog:
-            self.dialog.present_with_time(self.time)
+        CommonAgent.__init__(self, status_icon, path, lambda: time, False)
 
     @AgentMethod
     def RequestConfirmation(self, device, passkey, ok, err):
