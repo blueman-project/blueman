@@ -18,6 +18,7 @@
   (@rworkman / Robby Workman)
 * Add optional xfce settings entry (@rworkman / Robby Workman)
 * [nm] Add support for NetworkManager 0.9 / 1.0 to NMPANSupport
+* [bluez] Implement keyboard pairing support
 
 ### Bugs fixed
 
