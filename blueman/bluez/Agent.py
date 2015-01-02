@@ -53,12 +53,12 @@ class Agent(dbus.service.Object):
         dprint('Release')
 
     @AgentMethod
-    def RequestPinCode(self, device):
-        dprint('RequestPinCode (%s)' % (device))
+    def RequestPinCode(self, device, _ok, _err):
+        dprint('RequestPinCode (%s)' % device)
 
     @AgentMethod
-    def RequestPasskey(self, device):
-        dprint('RequestPasskey (%s)' % (device))
+    def RequestPasskey(self, device, _ok, _err):
+        dprint('RequestPasskey (%s)' % device)
 
     @AgentMethod
     def DisplayPasskey(self, device, passkey, entered):
