@@ -32,7 +32,7 @@ class Session(Base):
                     'Error': self.on_transfer_error
                 }
 
-                for prop, func in handlers:
+                for prop, func in handlers.items():
                     self._get_bus().add_signal_receiver(func, prop, 'org.bluez.obex.Transfer', 'org.bluez.obex.client',
                                                         transfer_path)
             else:
