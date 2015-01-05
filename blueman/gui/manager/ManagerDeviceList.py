@@ -341,7 +341,7 @@ class ManagerDeviceList(DeviceList):
 				icon = self.make_device_icon(row["orig_icon"], row["bonded"], row["trusted"], False) 
 				self.set(iter, device_pb=icon, fake=False)
 				
-		elif key == "Alias" or key == "Class":
+		elif key == "Alias":
 			device = self.get(iter, "device")["device"]
 			c = self.make_caption(value, self.get_device_class(device), device.Address)
 			self.set(iter, caption=c)
