@@ -1,3 +1,4 @@
+import os
 from Base import Base
 from gi.repository import GObject
 
@@ -24,7 +25,7 @@ class Session(Base):
         self.__interface = self._get_interface(interface_name)
 
     def send_file(self, file_path):
-        def reply_handler(transfer_path, props):
+        def reply_handler(transfer_path, props=None):
             if self.__class__.get_interface_version()[0] < 5:
                 handlers = {
                     'PropertyChanged': self.on_transfer_property_changed,
@@ -38,6 +39,9 @@ class Session(Base):
             else:
                 self._get_bus().add_signal_receiver(self.on_transfer_properties_changed, 'PropertiesChanged',
                                                     'org.freedesktop.DBus.Properties', 'org.bluez.obex', transfer_path)
+
+            if not props:
+                props = {'Filename': os.path.basename(file_path), 'Size': os.path.getsize(file_path)}
 
             self.emit('transfer-started', props['Filename'], file_path, props['Size'])
 
