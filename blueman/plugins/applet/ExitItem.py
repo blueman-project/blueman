@@ -5,7 +5,6 @@ from blueman.Functions import create_menuitem, get_icon
 
 class ExitItem(AppletPlugin):
     __depends__ = ["Menu"]
-    __autoload__ = False
     __description__ = _("Adds an exit menu item to quit the applet")
     __author__ = "Walmis"
     __icon__ = "application-exit"
