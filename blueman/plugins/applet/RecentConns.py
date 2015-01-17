@@ -1,6 +1,7 @@
 import os
 from gi.repository import Gtk
 from gi.repository import Gdk
+from operator import itemgetter
 import dbus
 import gettext
 import time
@@ -140,18 +141,12 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         if not RecentConns.items:
             self.recover_state()
 
-        def compare_by(fieldname):
-            def compare_two_dicts(a, b):
-                return cmp(a[fieldname], b[fieldname])
-
-            return compare_two_dicts
-
         def each(child, _):
             self.remove(child)
 
         self.foreach(each, None)
 
-        RecentConns.items.sort(compare_by("time"), reverse=True)
+        RecentConns.items.sort(key=itemgetter("time"), reverse=True)
         for i in RecentConns.items[self.get_option("max_items"):]:
             if i["gsignal"]:
                 i["device"].disconnect(i["gsignal"])

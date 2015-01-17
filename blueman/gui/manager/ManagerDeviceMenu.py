@@ -1,5 +1,6 @@
 from gi.repository import GObject
 from gi.repository import Gtk
+from operator import itemgetter
 from blueman.Sdp import *
 from blueman.Functions import *
 from blueman.main.SignalTracker import SignalTracker
@@ -327,7 +328,7 @@ class ManagerDeviceMenu(Gtk.Menu):
                 item.show()
                 items.append((99, item))
 
-            items.sort(lambda a, b: cmp(a[0], b[0]))
+            items.sort(key=itemgetter(0))
             for priority, item in items:
                 self.append(item)
 

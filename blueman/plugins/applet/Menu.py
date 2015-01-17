@@ -1,5 +1,6 @@
 from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
+from operator import itemgetter
 
 from gi.repository import GObject
 from gi.repository import Gtk
@@ -27,7 +28,7 @@ class Menu(AppletPlugin):
                           status_icon, button, activate_time)
 
     def __sort(self):
-        self.__menuitems.sort(lambda a, b: cmp(a[0], b[0]))
+        self.__menuitems.sort(key=itemgetter(0))
 
     def __clear(self):
         def each(child, _):

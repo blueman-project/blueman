@@ -1,4 +1,5 @@
 from gi.repository import GObject
+from operator import attrgetter
 import os
 from blueman.Functions import dprint
 
@@ -20,15 +21,10 @@ for plugin in plugins:
     except ImportError as e:
         dprint("Skipping plugin %s\n%s" % (plugin, e))
 
-
-def compare(a, b):
-    return cmp(a.__priority__, b.__priority__)
-
-
 class Config(object):
     def __new__(c, section=""):
         classes = ConfigPlugin.__subclasses__()
-        classes.sort(compare)
+        classes.sort(key=attrgetter("__priority__"))
 
         for cls in classes:
             try:
