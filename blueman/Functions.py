@@ -349,7 +349,8 @@ def check_single_instance(id, unhide_func=None):
 
     try:
         fd = os.open(lockfile, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o664)
-        os.write(fd, "%s\n%s" % (str(os.getpid()), "0"))
+        pid_str = "%s\n%s" % (str(os.getpid()), "0")
+        os.write(fd, pid_str.encode("UTF-8"))
         os.close(fd)
     except OSError:
         print("There is an instance already running")
