@@ -34,10 +34,10 @@ from blueman.Lib import sn_launcher
 try: import __builtin__ as builtins
 except ImportError: import builtins
 
-GREEN = lambda (x): "\x1b[32;01m" + x + "\x1b[39;49;00m"
-BLUE = lambda (x): "\x1b[34;01m" + x + "\x1b[39;49;00m"
-BOLD = lambda (x): "\033[1m" + x + "\033[0m"
-YELLOW = lambda (x): "\x1b[33;01m" + x + "\x1b[39;49;00m"
+GREEN = lambda x: "\x1b[32;01m" + x + "\x1b[39;49;00m"
+BLUE = lambda x: "\x1b[34;01m" + x + "\x1b[39;49;00m"
+BOLD = lambda x: "\033[1m" + x + "\033[0m"
+YELLOW = lambda x: "\x1b[33;01m" + x + "\x1b[39;49;00m"
 
 import fcntl, struct, termios
 
