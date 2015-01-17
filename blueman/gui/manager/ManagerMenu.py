@@ -212,5 +212,3 @@ class ManagerMenu:
         else:
             self.item_adapter.props.sensitive = True
             self.generate_adapter_menu()
-		
-

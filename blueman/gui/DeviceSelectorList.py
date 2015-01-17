@@ -71,9 +71,3 @@ class DeviceSelectorList(DeviceList):
 
         elif key == "Icon":
             self.set(iter, device_pb=get_icon(value, 16))
-	
-	
-	
-	
-	
-	

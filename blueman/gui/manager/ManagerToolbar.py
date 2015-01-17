@@ -141,6 +141,3 @@ class ManagerToolbar:
 
             elif key == "UUIDs":
                 self.update_send_browse(device)
-				
-		
-		
