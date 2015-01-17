@@ -1,6 +1,7 @@
 from gi.repository import GObject
 import os
-import __builtin__
+try: import __builtin__ as builtins
+except ImportError: import builtins
 import traceback
 
 from blueman.Functions import *
@@ -14,7 +15,7 @@ class LoadException(Exception):
     pass
 
 
-__builtin__.StopException = StopException
+builtins.StopException = StopException
 
 
 class PluginManager(GObject.GObject):

@@ -13,7 +13,8 @@ from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import GObject
 from gi.repository import Notify
-import __builtin__
+try: import __builtin__ as builtins
+except ImportError: import builtins
 
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))

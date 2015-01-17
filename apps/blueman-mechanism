@@ -12,7 +12,8 @@ if os.path.exists(os.path.join(_dirname, "CHANGELOG.md")):
 import dbus
 import dbus.service
 from dbus.mainloop.glib import DBusGMainLoop
-import __builtin__
+try: import __builtin__ as builtins
+except ImportError: import builtins
 
 from gi.repository import GObject
 import syslog
@@ -60,7 +61,7 @@ def prnt(*args):
     print(s)
 
 
-__builtin__.dprint = prnt
+builtins.dprint = prnt
 
 dprint("Starting blueman-mechanism")
 

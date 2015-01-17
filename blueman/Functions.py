@@ -31,7 +31,8 @@ from subprocess import Popen
 from gi.repository import GObject
 import traceback
 from blueman.Lib import sn_launcher
-import __builtin__
+try: import __builtin__ as builtins
+except ImportError: import builtins
 
 GREEN = lambda (x): "\x1b[32;01m" + x + "\x1b[39;49;00m"
 BLUE = lambda (x): "\x1b[34;01m" + x + "\x1b[39;49;00m"
@@ -66,7 +67,7 @@ def dprint(*args):
             pass
 
 
-__builtin__.dprint = dprint
+builtins.dprint = dprint
 
 from blueman.main.AppletService import AppletService
 
