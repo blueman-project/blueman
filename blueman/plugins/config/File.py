@@ -1,7 +1,7 @@
 from blueman.Functions import dprint
 from blueman.plugins.ConfigPlugin import ConfigPlugin
 from blueman.main.SignalTracker import SignalTracker
-import cPickle as pickle
+import pickle
 import os
 import atexit
 import dbus.service
