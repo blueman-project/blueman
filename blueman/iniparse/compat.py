@@ -24,13 +24,13 @@ from ConfigParser import DuplicateSectionError,    \
 from ConfigParser import Error, InterpolationError, \
                   MissingSectionHeaderError, ParsingError
 
-import ini
+from blueman.iniparse.ini import INIConfig
 
 class RawConfigParser(object):
     def __init__(self, defaults=None, dict_type=dict):
         if dict_type != dict:
             raise ValueError('Custom dict types not supported')
-        self.data = ini.INIConfig(defaults=defaults, optionxformsource=self)
+        self.data = INIConfig(defaults=defaults, optionxformsource=self)
 
     def optionxform(self, optionstr):
         return optionstr.lower()

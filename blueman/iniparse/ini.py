@@ -40,7 +40,7 @@ Example:
 import re
 from ConfigParser import DEFAULTSECT, ParsingError, MissingSectionHeaderError
 
-import config
+from blueman.iniparse.config import ConfigNamespace
 
 class LineType(object):
     line = None
@@ -303,7 +303,7 @@ def _make_xform_property(myattrname, srcattrname=None):
     return property(getfn, setfn)
 
 
-class INISection(config.ConfigNamespace):
+class INISection(ConfigNamespace):
     _lines = None
     _options = None
     _defaults = None
@@ -431,7 +431,7 @@ def lower(x):
     return x.lower()
 
 
-class INIConfig(config.ConfigNamespace):
+class INIConfig(ConfigNamespace):
     _data = None
     _sections = None
     _defaults = None
