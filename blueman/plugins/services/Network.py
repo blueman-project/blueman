@@ -29,7 +29,7 @@ class Network(ServicePlugin):
         self.interfaces = []
         for iface in get_net_interfaces():
             if iface != "lo" and iface != "pan1":
-                print iface
+                print(iface)
                 ip = inet_aton(get_net_address(iface))
                 mask = inet_aton(get_net_netmask(iface))
                 self.interfaces.append((iface, ip, mask, mask_ip4_address(ip, mask)))
@@ -163,8 +163,8 @@ class Network(ServicePlugin):
             if "ip" in opts:
                 try:
                     self.ip_check()
-                except Exception, e:
-                    print e
+                except Exception as e:
+                    print(e)
                     return -1
 
             return True

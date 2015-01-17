@@ -64,7 +64,7 @@ class Audio(ServicePlugin):
                 m.SetBluezConfig("audio.conf", "General", "Enable", ",".join(vals))
                 m.SaveBluezConfig("audio.conf")
                 m.RestartBluez()
-            except dbus.DBusException, e:
+            except dbus.DBusException as e:
                 dprint(e)
             else:
                 self.clear_options()

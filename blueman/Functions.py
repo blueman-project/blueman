@@ -57,9 +57,9 @@ def dprint(*args):
 
         fname = BOLD(co.co_name)
 
-        print "_________"
-        print "%s %s" % (fname, "(%s:%d)" % (co.co_filename, co.co_firstlineno))
-        print s
+        print("_________")
+        print("%s %s" % (fname, "(%s:%d)" % (co.co_filename, co.co_firstlineno)))
+        print(s)
         try:
             sys.stdout.flush()
         except IOError:
@@ -75,7 +75,7 @@ def check_bluetooth_status(message, exitfunc, *args, **kwargs):
     try:
         applet = AppletService()
     except:
-        print "Blueman applet needs to be running"
+        print("Blueman applet needs to be running")
         exitfunc()
     if "PowerManager" in applet.QueryPlugins():
         if not applet.GetBluetoothStatus():
@@ -289,7 +289,7 @@ def create_menuitem(text, pixbuf):
     return item
 
 def check_single_instance(id, unhide_func=None):
-    print "%s version %s starting" % (id, VERSION)
+    print("%s version %s starting" % (id, VERSION))
     cachedir = os.path.expanduser("~/.cache/")
     if not os.path.exists(cachedir):
         os.mkdir(cachedir)
@@ -331,10 +331,10 @@ def check_single_instance(id, unhide_func=None):
                 except:
                     cmdline = None
             if not isrunning or (isrunning and id not in cmdline):
-                print "Stale PID, overwriting"
+                print("Stale PID, overwriting")
                 os.remove(lockfile)
             else:
-                print "There is an instance already running"
+                print("There is an instance already running")
                 time = os.getenv("BLUEMAN_EVENT_TIME") or 0
 
                 f = file(lockfile, "w")
@@ -347,11 +347,11 @@ def check_single_instance(id, unhide_func=None):
             os.remove(lockfile)
 
     try:
-        fd = os.open(lockfile, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0664)
+        fd = os.open(lockfile, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o664)
         os.write(fd, "%s\n%s" % (str(os.getpid()), "0"))
         os.close(fd)
     except OSError:
-        print "There is an instance already running"
+        print("There is an instance already running")
         exit()
 
     atexit.register(lambda: os.remove(lockfile))

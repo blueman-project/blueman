@@ -15,6 +15,6 @@ class RfKill(MechanismPlugin):
 
     def DevRfkillChmod(self):
         try:
-            os.chmod("/dev/rfkill", 0655)
+            os.chmod("/dev/rfkill", 0o655)
         except:
             pass

@@ -56,7 +56,7 @@ class RawConfigParser(object):
         # The default section is the only one that gets the case-insensitive
         # treatment - so it is special-cased here.
         if section.lower() == "default":
-            raise ValueError, 'Invalid section name: %s' % section
+            raise ValueError('Invalid section name: %s' % section)
 
         if self.has_section(section):
             raise DuplicateSectionError(section)
@@ -146,7 +146,7 @@ class RawConfigParser(object):
     def getboolean(self, section, option):
         v = self.get(section, option)
         if v.lower() not in self._boolean_states:
-            raise ValueError, 'Not a boolean: %s' % v
+            raise ValueError('Not a boolean: %s' % v)
         return self._boolean_states[v.lower()]
 
     def has_option(self, section, option):
@@ -242,7 +242,7 @@ class ConfigParser(RawConfigParser):
             if "%(" in value:
                 try:
                     value = value % vars
-                except KeyError, e:
+                except KeyError as e:
                     raise InterpolationMissingOptionError(
                         option, section, rawval, e.args[0])
             else:

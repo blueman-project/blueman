@@ -44,14 +44,14 @@ class PulseAudioProfile(ManagerPlugin):
                 self.regenerate_with_device(card["proplist"]["device.string"])
 
         if event & EventType.CARD:
-            print "card",
+            print("card")
             if event & EventType.CHANGE:
-                print "change"
+                print("change")
                 utils.GetCard(idx, get_card_cb)
             elif event & EventType.REMOVE:
-                print "remove"
+                print("remove")
             else:
-                print "add"
+                print("add")
                 utils.GetCard(idx, get_card_cb)
 
     def is_connected(self, device):
@@ -89,7 +89,7 @@ class PulseAudioProfile(ManagerPlugin):
 
     def query_pa(self, device):
         def list_cb(cards):
-            for c in cards.itervalues():
+            for c in cards.values():
                 if c["proplist"]["device.string"] == device.Address:
                     self.devices[device.Address] = c
                     self.generate_menu(device)

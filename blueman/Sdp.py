@@ -241,11 +241,11 @@ def parse_sdp_xml(services):
 
         return attr_list
 
-    for k, v in services.iteritems():
+    for k, v in services.items():
         try:
             dom = xml.dom.minidom.parseString(v)
             HandleRecord(dom.getElementsByTagName("record")[0])
-        except Exception, e:
+        except Exception as e:
             dprint("Failed to parse xml sdp entry", e)
             dprint(v)
 
@@ -300,7 +300,7 @@ def sdp_get_cached(address):
         if d:
             try:
                 s = pickle.loads(zlib.decompress(base64.b64decode(d)))
-            except Exception, e:
+            except Exception as e:
                 dprint(e)
                 raise KeyError
 
@@ -320,7 +320,7 @@ def sdp_get_cached_rfcomm(address):
         name = None
         uuids = None
 
-        for k, v in svc.iteritems():
+        for k, v in svc.items():
             if k == SDP_ATTR_PROTO_DESC_LIST:
                 # print v
                 for i in v:

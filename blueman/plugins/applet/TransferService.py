@@ -46,7 +46,7 @@ class TransferService(AppletPlugin):
     def try_start_ods(self):
         try:
             self.sess_bus.start_service_by_name("org.openobex")
-        except dbus.DBusException, e:
+        except dbus.DBusException as e:
             dprint("Could not acquire obex-data-server", e)
 
     def on_obex_owner_changed(self, owner):

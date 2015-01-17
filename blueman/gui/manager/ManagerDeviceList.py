@@ -81,7 +81,7 @@ class ManagerDeviceList(DeviceList):
         row = self.get(iter, "caption")
         if key.lower() in row["caption"].lower():
             return False
-        print model, column, key, iter
+        print(model, column, key, iter)
         return True
 
     def drag_recv(self, widget, context, x, y, selection, target_type, time):
@@ -281,7 +281,7 @@ class ManagerDeviceList(DeviceList):
                 opacity = 255
             if opacity < 90:
                 opacity = 90
-            print "opacity", opacity
+            print("opacity", opacity)
             icon = self.make_device_icon(row["orig_icon"], is_discovered=True, opacity=opacity)
             self.set(iter, device_pb=icon)
 

@@ -228,7 +228,7 @@ class NetConf(object):
         args = ["/sbin/iptables", "-t", table, "-A", chain] + rule.split(" ")
         dprint(" ".join(args))
         ret = call(args)
-        print "Return code", ret
+        print("Return code", ret)
 
     def del_ipt_rules(self):
         for table, chain, rule in self.ipt_rules:
@@ -266,7 +266,7 @@ class NetConf(object):
 
         try:
             create_bridge("pan1")
-        except BridgeException, e:
+        except BridgeException as e:
             if e.errno != errno.EEXIST:
                 raise
 

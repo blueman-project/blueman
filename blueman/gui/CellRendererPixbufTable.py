@@ -36,7 +36,7 @@ class CellRendererPixbufTable(Gtk.CellRenderer):
         row = 0
         col = 0
 
-        for k, v in self.pixbuffs.get().iteritems():
+        for k, v in self.pixbuffs.get().items():
             # print rows
             if row == self.pixbuffs.rows:
                 y_space = 0

@@ -29,7 +29,7 @@ class OdsServer(OdsBase):
         dprint("deleting server object")
 
     def DisconnectAll(self, *args):
-        for k, v in self.sessions.iteritems():
+        for k, v in self.sessions.items():
             v.DisconnectAll()
         self.sessions = {}
         OdsBase.DisconnectAll(self, *args)

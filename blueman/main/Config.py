@@ -5,7 +5,7 @@ from blueman.Functions import dprint
 import blueman.plugins.config
 from blueman.plugins.ConfigPlugin import ConfigPlugin
 
-print "Loading configuration plugins"
+print("Loading configuration plugins")
 
 path = os.path.dirname(blueman.plugins.config.__file__)
 plugins = []
@@ -17,7 +17,7 @@ for root, dirs, files in os.walk(path):
 for plugin in plugins:
     try:
         __import__("blueman.plugins.config.%s" % plugin, None, None, [])
-    except ImportError, e:
+    except ImportError as e:
         dprint("Skipping plugin %s\n%s" % (plugin, e))
 
 
@@ -33,11 +33,11 @@ class Config(object):
         for cls in classes:
             try:
                 inst = cls(section)
-                print "Using %s config backend" % cls.__plugin__
+                print("Using %s config backend" % cls.__plugin__)
                 return inst
-            except Exception, e:
-                print "Skipping plugin", cls.__plugin__
-                print e
+            except Exception as e:
+                print("Skipping plugin", cls.__plugin__)
+                print(e)
 
-            print "No suitable configuration backend found, exitting"
+            print("No suitable configuration backend found, exitting")
             exit(1)

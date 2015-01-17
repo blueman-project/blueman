@@ -16,7 +16,7 @@ class SettingsWidget(Gtk.VBox):
         self.show_all()
 
     def construct_settings(self):
-        for k, v in self.inst.__class__.__options__.iteritems():
+        for k, v in self.inst.__class__.__options__.items():
             if len(v) > 2:
 
                 l = Gtk.Label(label=v["name"])
@@ -249,7 +249,7 @@ class PluginDialog(Gtk.Dialog):
     def populate(self):
         classes = self.applet.Plugins.GetClasses()
         loaded = self.applet.Plugins.GetLoaded()
-        for name, cls in classes.iteritems():
+        for name, cls in classes.items():
             if cls.is_configurable():
                 desc = "<span weight=\"bold\">%s</span>" % name
             else:

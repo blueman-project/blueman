@@ -16,13 +16,13 @@ Example:
     ... special = 1''')
 
     >>> cfg = INIConfig(sio)
-    >>> print cfg.foo.bar1
+    >>> print(cfg.foo.bar1)
     qualia
-    >>> print cfg['foo-ext'].special
+    >>> print(cfg['foo-ext'].special)
     1
     >>> cfg.foo.newopt = 'hi!'
 
-    >>> print cfg
+    >>> print(cfg)
     # configure foo-application
     [foo]
     bar1 = qualia
@@ -453,7 +453,7 @@ class INIConfig(config.ConfigNamespace):
         self._sections = {}
         if defaults is None: defaults = {}
         self._defaults = INISection(LineContainer(), optionxformsource=self)
-        for name, value in defaults.iteritems():
+        for name, value in defaults.items():
             self._defaults[name] = value
         if fp is not None:
             self._readfp(fp)

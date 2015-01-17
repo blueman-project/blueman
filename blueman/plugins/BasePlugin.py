@@ -24,7 +24,7 @@ class BasePlugin(object):
         self.__methods = []
 
     def __del__(self):
-        print "Deleting plugin instance", self
+        print("Deleting plugin instance", self)
 
 
     @classmethod
@@ -49,7 +49,7 @@ class BasePlugin(object):
             self.on_load(parent)
             # self.on_manager_state_changed(applet.Manager != None)
             self.__class__.__instance__ = self
-        except Exception, e:
+        except Exception as e:
             # AppletPlugin.instances.remove(self)
             self.__class__.__instance__ = None
             traceback.print_exc()

@@ -68,7 +68,7 @@ class DbusService(dbus.service.Object):
         return getattr(self, func.__name__)
 
     def remove_registration(self, name):
-        print "remove", name
+        print("remove", name)
         delattr(self.__class__, name)
         del self._dbus_class_table[self.__class__.__module__ + "." + self.__class__.__name__][self.interface][name]
 

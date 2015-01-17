@@ -405,7 +405,7 @@ class PulseAudioUtils(GObject.GObject):
         op = function(self.pa_context, *args)
         if not op:
             dprint(YELLOW("Operation failed"))
-            print function.__name__
+            print(function.__name__)
         pa_operation_unref(op)
 
 

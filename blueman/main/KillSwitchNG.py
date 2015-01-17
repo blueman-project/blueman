@@ -153,7 +153,7 @@ class KillSwitchNG(GObject.GObject):
     def update_state(self):
         self.state = True
         self.hardblocked = False
-        for s in self.switches.itervalues():
+        for s in self.switches.values():
             if s.type == RFKillType.BLUETOOTH:
                 self.hardblocked |= s.hard
                 self.state &= (s.soft == 0 and s.hard == 0)

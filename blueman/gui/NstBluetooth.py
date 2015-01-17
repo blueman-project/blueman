@@ -102,7 +102,7 @@ class NstBluetooth:
 
         if button.props.active:
             if not self.popup_grab_on_window(button.window, Gtk.get_current_event_time()):
-                print 'error during grab'
+                print('error during grab')
                 return
 
             x, y = button.window.get_origin()

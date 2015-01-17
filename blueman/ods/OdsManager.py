@@ -64,7 +64,7 @@ class OdsManager(OdsBase):
         if len(self.Servers) == 0:
             on_destroyed(None)
         else:
-            for k, v in self.Servers.iteritems():
+            for k, v in self.Servers.items():
                 self.destroy_server(k)
 
     def get_server(self, pattern):
