@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 import dbus
-import dbus.glib
+from dbus.mainloop.glib import DBusGMainLoop
 from gi.repository import Pango
 import os.path
 import sys
@@ -22,6 +22,8 @@ enable_rgba_colormap()
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
+
+DBusGMainLoop(set_as_default=True)
 
 # Workaround introspection bug, gnome bug 622084
 signal.signal(signal.SIGINT, signal.SIG_DFL)

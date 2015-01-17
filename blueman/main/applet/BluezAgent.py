@@ -1,5 +1,5 @@
 import dbus
-import dbus.glib
+from dbus.mainloop.glib import DBusGMainLoop
 import dbus.service
 import os.path
 from blueman.Functions import get_icon, dprint
@@ -14,6 +14,7 @@ from blueman.gui.Notification import Notification
 
 from blueman.bluez.Agent import Agent, AgentMethod
 
+DBusGMainLoop(set_as_default=True)
 
 class AgentErrorRejected(dbus.DBusException):
     def __init__(self):

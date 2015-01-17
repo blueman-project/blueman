@@ -8,7 +8,7 @@ _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if os.path.exists(os.path.join(_dirname, "CHANGELOG.md")):
     sys.path.insert(0, _dirname)
 
-import dbus.glib
+from dbus.mainloop.glib import DBusGMainLoop
 from optparse import OptionParser
 import gettext
 import urllib
@@ -30,6 +30,8 @@ from blueman.main.SpeedCalc import SpeedCalc
 from blueman.main.AppletService import AppletService
 
 from blueman.bluez import obex
+
+DBusGMainLoop(set_as_default=True)
 
 # Workaround introspection bug, gnome bug 622084
 signal.signal(signal.SIGINT, signal.SIG_DFL)

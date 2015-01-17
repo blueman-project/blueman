@@ -3,7 +3,8 @@
 import os.path
 import sys
 import signal
-import dbus, dbus.glib
+import dbus
+from dbus.mainloop.glib import DBusGMainLoop
 from blueman.Constants import *
 import gi
 gi.require_version("Gtk", "3.0")
@@ -31,6 +32,8 @@ from blueman.gui.MessageArea import MessageArea
 from blueman.main.PluginManager import PluginManager
 import blueman.plugins.manager
 from blueman.plugins.ManagerPlugin import ManagerPlugin
+
+DBusGMainLoop(set_as_default=True)
 
 # Workaround introspection bug, gnome bug 622084
 signal.signal(signal.SIGINT, signal.SIG_DFL)

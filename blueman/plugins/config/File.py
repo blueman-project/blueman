@@ -5,12 +5,13 @@ import pickle
 import os
 import atexit
 import dbus.service
-import dbus.glib
+from dbus.mainloop.glib import DBusGMainLoop
 import weakref
 import signal
 from gi.repository import GObject
 import copy
 
+DBusGMainLoop(set_as_default=True)
 
 def sighandler():
     print("got signal")

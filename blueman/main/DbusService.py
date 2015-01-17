@@ -1,7 +1,8 @@
 import dbus
-import dbus.glib
+from dbus.mainloop.glib import DBusGMainLoop
 import dbus.service
 
+DBusGMainLoop(set_as_default=True)
 
 class MethodAlreadyExists(Exception):
     pass
