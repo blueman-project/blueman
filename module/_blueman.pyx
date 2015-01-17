@@ -191,8 +191,10 @@ def rfcomm_list():
 
 	return devs
 	
-import exceptions
-class BridgeException(exceptions.Exception):
+try: from exceptions import Exception
+except ImportError: pass
+
+class BridgeException(Exception):
 	def __init__(self, errno):
 		self.errno = errno
 		
