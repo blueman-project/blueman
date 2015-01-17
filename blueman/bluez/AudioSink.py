@@ -1,5 +1,5 @@
-from PropertiesBlueZInterface import PropertiesBlueZInterface
-from errors import raise_dbus_error
+from blueman.bluez.PropertiesBlueZInterface import PropertiesBlueZInterface
+from blueman.bluez.errors import raise_dbus_error
 
 
 class AudioSink(PropertiesBlueZInterface):

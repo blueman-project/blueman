@@ -1,6 +1,6 @@
-from PropertiesBlueZInterface import PropertiesBlueZInterface
-from ServiceInterface import ServiceInterface
-from errors import raise_dbus_error
+from blueman.bluez.PropertiesBlueZInterface import PropertiesBlueZInterface
+from blueman.bluez.ServiceInterface import ServiceInterface
+from blueman.bluez.errors import raise_dbus_error
 import dbus
 import xml.dom.minidom
 

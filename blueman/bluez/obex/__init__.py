@@ -1,1 +1,1 @@
-from Client import Client
+from blueman.bluez.obex.Client import Client

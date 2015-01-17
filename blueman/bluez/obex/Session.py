@@ -1,4 +1,4 @@
-from Base import Base
+from blueman.bluez.obex.Base import Base
 from gi.repository import GObject
 
 

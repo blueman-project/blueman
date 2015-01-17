@@ -1,6 +1,6 @@
-from Adapter import Adapter
-from PropertiesBlueZInterface import PropertiesBlueZInterface
-from errors import raise_dbus_error, DBusNoSuchAdapterError
+from blueman.bluez.Adapter import Adapter
+from blueman.bluez.PropertiesBlueZInterface import PropertiesBlueZInterface
+from blueman.bluez.errors import raise_dbus_error, DBusNoSuchAdapterError
 from dbus.mainloop.glib import DBusGMainLoop
 
 

@@ -1,6 +1,6 @@
-from Adapter import Adapter
-from AgentManager import AgentManager
-from Device import Device
-from Manager import Manager
+from blueman.bluez.Adapter import Adapter
+from blueman.bluez.AgentManager import AgentManager
+from blueman.bluez.Device import Device
+from blueman.bluez.Manager import Manager
 
-import errors
+import blueman.bluez.errors

@@ -1,6 +1,6 @@
 from blueman.Functions import dprint
-from Session import Session
-from Base import Base
+from blueman.bluez.obex.Session import Session
+from blueman.bluez.obex.Base import Base
 from gi.repository import GObject
 
 

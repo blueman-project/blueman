@@ -2,7 +2,7 @@ from blueman.Functions import dprint
 import inspect
 import dbus.service
 from blueman.bluez.BlueZInterface import BlueZInterface
-import errors
+import blueman.bluez.errors
 
 __SIGNATURES__ = {
     'Release': ('', ''),

@@ -1,6 +1,6 @@
-from PropertiesBlueZInterface import PropertiesBlueZInterface
-from errors import raise_dbus_error, parse_dbus_error
-from Device import Device
+from blueman.bluez.PropertiesBlueZInterface import PropertiesBlueZInterface
+from blueman.bluez.errors import raise_dbus_error, parse_dbus_error
+from blueman.bluez.Device import Device
 import dbus
 
 

@@ -1,5 +1,5 @@
-from BlueZInterface import BlueZInterface
-from errors import raise_dbus_error
+from blueman.bluez.BlueZInterface import BlueZInterface
+from blueman.bluez.errors import raise_dbus_error
 import dbus
 
 
