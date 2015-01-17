@@ -7,7 +7,7 @@
 
 Example:
 
-    >>> from StringIO import StringIO
+    >>> from io import StringIO
     >>> sio = StringIO('''# configure foo-application
     ... [foo]
     ... bar1 = qualia
