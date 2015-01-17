@@ -16,8 +16,12 @@ try: import __builtin__ as builtins
 except ImportError: import builtins
 
 translation = gettext.translation("@GETTEXT_PACKAGE@", "@LOCALEDIR@", fallback=True)
-translation.install(unicode=True)
-builtins.ngettext = translation.ungettext
+try:
+    translation.install(unicode=True)
+    builtins.ngettext = translation.ungettext
+except TypeError:
+    translation.install()
+    builtins.ngettext = translation.ngettext
 
 if os.path.exists("../apps") and os.path.exists("../data"):
 	BIN_DIR = "./"
