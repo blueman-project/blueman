@@ -33,12 +33,12 @@ class DbusService(dbus.service.Object):
 
         # print name, a
         exec \
-            """def %(0)s(self, %(1)s):
-                return self.%(0)s._orig_func(%(1)s)
+"""def %(0)s(self, %(1)s):
+    return self.%(0)s._orig_func(%(1)s)
 
 
-            %(0)s._orig_func = func
-            dec = dbus.service.method(dbus_interface, in_signature, *args, **kwargs)(%(0)s)""" % {"0": func.__name__, "1": a}
+%(0)s._orig_func = func
+dec = dbus.service.method(dbus_interface, in_signature, *args, **kwargs)(%(0)s)""" % {"0": func.__name__, "1": a}
 
         setattr(self.__class__, name, dec)
         if not dbus_interface in self._dbus_class_table[self.__class__.__module__ + "." + self.__class__.__name__]:
