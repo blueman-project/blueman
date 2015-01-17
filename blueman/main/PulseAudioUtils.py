@@ -511,7 +511,7 @@ class PulseAudioUtils(GObject.GObject):
         "index": card_info[0].index,
         }
         l = []
-        for i in xrange(0, card_info[0].n_profiles):
+        for i in range(0, card_info[0].n_profiles):
             x = {
             "name": card_info[0].profiles[i].name,
             "description": card_info[0].profiles[i].description,

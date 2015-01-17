@@ -300,7 +300,7 @@ def check_single_instance(id, unhide_func=None):
             f = open(lockfile)
             f.readline()
             try:
-                event_time = long(f.readline())
+                event_time = int(f.readline())
             except:
                 event_time = 0
             f.close()
@@ -337,7 +337,7 @@ def check_single_instance(id, unhide_func=None):
                 print("There is an instance already running")
                 time = os.getenv("BLUEMAN_EVENT_TIME") or 0
 
-                f = file(lockfile, "w")
+                f = open(lockfile, "w")
                 f.write("%s\n%s" % (str(pid), str(time)))
                 f.close()
 
