@@ -92,7 +92,7 @@ class RawConfigParser(object):
         filename may also be given.
         """
         files_read = []
-        if isinstance(filenames, basestring):
+        if not isinstance(filenames, list):
             filenames = [filenames]
         for filename in filenames:
             try:
@@ -291,7 +291,7 @@ class SafeConfigParser(ConfigParser):
     _badpercent_re = re.compile(r"%[^%]|%$")
 
     def set(self, section, option, value):
-        if not isinstance(value, basestring):
+        if not hasattr(value, "encode"):
             raise TypeError("option values must be strings")
         # check for bad percent signs:
         # first, replace all "good" interpolations
