@@ -4,7 +4,10 @@ blueman_PYTHON = 		\
 	Transfer.py			\
 	__init__.py	
 
+EXTRA_DIST = BluezAgent.py.in
+
 CLEANFILES =		\
+	BluezAgent.py	\
 	$(BUILT_SOURCES)
 	
 DISTCLEANFILES = \

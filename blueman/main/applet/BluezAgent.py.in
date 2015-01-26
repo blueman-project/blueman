@@ -30,7 +30,7 @@ class DummyGObjectMeta(dbus.service.InterfaceType, GObjectMeta):
     pass
 
 
-class CommonAgent(GObject.GObject, Agent):
+class CommonAgent(GObject.GObject, Agent@BLUEZ_AGENT_META@):
     __metaclass__ = DummyGObjectMeta
     __gsignals__ = {
         'released': (GObject.SignalFlags.NO_HOOKS, None, ()),

@@ -20,6 +20,13 @@ PKG_CHECK_MODULES([PYTHON], [python-${PYTHON_VERSION}])
 AC_SUBST(PYTHON_LIBS)
 AC_SUBST(PYTHON_CFLAGS)
 
+dnl Work around for Python3 metaclass class argument
+PYTHON_MAJOR_VERSION=`echo $PYTHON_VERSION | cut -c1`
+if test [$PYTHON_MAJOR_VERSION] = [3]; then
+   BLUEZ_AGENT_META=", metaclass=DummyGObjectMeta"
+   AC_SUBST(BLUEZ_AGENT_META)
+fi
+
 AC_ENABLE_SHARED(yes)
 AC_ENABLE_STATIC(no)
 
@@ -195,6 +202,7 @@ blueman/plugins/mechanism/Makefile
 blueman/plugins/manager/Makefile
 blueman/plugins/config/Makefile
 blueman/main/Makefile
+blueman/main/applet/BluezAgent.py
 blueman/main/applet/Makefile
 blueman/ods/Makefile
 blueman/iniparse/Makefile
@@ -250,6 +258,7 @@ echo
 
 echo Prefix : $prefix
 echo sysconfig dir : $sysconfdir
+echo Python version : $PYTHON_VERSION
 echo Policykit-1 Enabled: $polkit_val
 echo Nautilus sendto plugin enabled: $have_nst
 echo Thunar sendto installation enabled: $have_thunar
