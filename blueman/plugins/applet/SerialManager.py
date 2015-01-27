@@ -71,7 +71,8 @@ class SerialManager(AppletPlugin):
         except:
             pass
 
-    def on_script_closed(self, pid, cond, (address, node)):
+    def on_script_closed(self, pid, cond, address_node):
+        address, node = address_node
         del self.scripts[address][node]
         dprint("Script with PID", pid, "closed")
 

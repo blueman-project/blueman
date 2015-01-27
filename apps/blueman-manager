@@ -208,7 +208,8 @@ class Blueman:
         adapter.create_device(device.Address, reply_handler=ok, error_handler=err)
 
     def inquiry(self):
-        def prop_changed(List, adapter, (key, value)):
+        def prop_changed(List, adapter, key_value):
+            key, value = key_value
             if key == "Discovering" and not value:
                 prog.finalize()
                 self.List.disconnect(s1)

@@ -201,8 +201,9 @@ class ManagerDeviceMenu(Gtk.Menu):
                               connection_object.get_object_path(), "Disconnect", [])
 
 
-    def on_device_property_changed(self, List, device, iter, (key, value)):
-    #		print "menu:", key, value
+    def on_device_property_changed(self, List, device, iter, key_value):
+        key, value = key_value
+        # print "menu:", key, value
         if List.compare(iter, List.selected()):
             if key == "Connected" \
                 or key == "Fake" \

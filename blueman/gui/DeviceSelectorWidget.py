@@ -70,7 +70,8 @@ class DeviceSelectorWidget(Gtk.VBox):
     def on_search_clicked(self, button):
         self.List.DiscoverDevices()
 
-    def on_adapter_prop_changed(self, devlist, adapter, (key, value)):
+    def on_adapter_prop_changed(self, devlist, adapter, key_value):
+        key, value = key_value
         if key == "Name" or key == "Alias":
             self.update_adapters_list()
         elif key == "Discovering":

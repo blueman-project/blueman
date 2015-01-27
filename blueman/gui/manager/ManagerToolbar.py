@@ -64,7 +64,8 @@ class ManagerToolbar:
             func(device)
 
 
-    def on_adapter_property_changed(self, List, adapter, (key, value)):
+    def on_adapter_property_changed(self, List, adapter, key_value):
+        key, value = key_value
         if key == "Discovering":
             if value:
                 self.b_search.props.sensitive = False
@@ -130,7 +131,8 @@ class ManagerToolbar:
             self.b_send.props.sensitive = True
 
 
-    def on_device_propery_changed(self, dev_list, device, iter, (key, value)):
+    def on_device_propery_changed(self, dev_list, device, iter, key_value):
+        key, value = key_value
         if dev_list.compare(iter, dev_list.selected()):
             if key == "Trusted" or key == "Paired":
                 self.on_device_selected(dev_list, device, iter)
