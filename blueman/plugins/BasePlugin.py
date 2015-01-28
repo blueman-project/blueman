@@ -29,7 +29,7 @@ class BasePlugin(object):
 
     @classmethod
     def add_method(cls, func):
-        func.im_self.__methods.append((cls, func.__name__))
+        func.__self__.__methods.append((cls, func.__name__))
 
         if func.__name__ in cls.__dict__:
             raise MethodAlreadyExists
