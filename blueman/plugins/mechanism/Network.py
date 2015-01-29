@@ -1,3 +1,4 @@
+import dbus.service
 from blueman.plugins.MechanismPlugin import MechanismPlugin
 import os
 import subprocess
@@ -6,17 +7,8 @@ from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler
 
 
 class Network(MechanismPlugin):
-    def on_load(self):
-        self.add_dbus_method(self.SetGN, in_signature="b", out_signature="", sender_keyword="caller")
-        self.add_dbus_method(self.NetworkSetup, in_signature="sbs", out_signature="", sender_keyword="caller")
-        self.add_dbus_method(self.DhcpClient, in_signature="s", out_signature="s", sender_keyword="caller",
-                             async_callbacks=("ok", "err"))
-
-        self.add_dbus_method(self.EnableNetwork, in_signature="ayays", out_signature="", sender_keyword="caller",
-                             byte_arrays=True)
-        self.add_dbus_method(self.DisableNetwork, in_signature="", out_signature="", sender_keyword="caller")
-        self.add_dbus_method(self.ReloadNetwork, in_signature="", out_signature="", sender_keyword="caller")
-
+    @dbus.service.method('org.blueman.Mechanism', in_signature="s", out_signature="s", sender_keyword="caller",
+                         async_callbacks=("ok", "err"))
     def DhcpClient(self, net_interface, caller, ok, err):
         self.timer.stop()
 
@@ -40,6 +32,7 @@ class Network(MechanismPlugin):
         except Exception as e:
             err(e)
 
+    @dbus.service.method('org.blueman.Mechanism', in_signature="b", out_signature="", sender_keyword="caller")
     def SetGN(self, enabled, caller):
         self.timer.reset()
         if enabled:
@@ -50,22 +43,27 @@ class Network(MechanismPlugin):
         # reap the child
         GObject.child_watch_add(p.pid, lambda pid, cond: 0)
 
+    @dbus.service.method('org.blueman.Mechanism', in_signature="ayays", out_signature="", sender_keyword="caller",
+                         byte_arrays=True)
     def EnableNetwork(self, ip_address, netmask, dhcp_handler, caller):
         nc = NetConf.get_default()
         nc.set_ipv4(ip_address, netmask)
         eval("nc.set_dhcp_handler(%s)" % dhcp_handler)
         nc.apply_settings()
 
+    @dbus.service.method('org.blueman.Mechanism', in_signature="", out_signature="", sender_keyword="caller")
     def ReloadNetwork(self, caller):
         nc = NetConf.get_default()
         nc.apply_settings()
 
+    @dbus.service.method('org.blueman.Mechanism', in_signature="", out_signature="", sender_keyword="caller")
     def DisableNetwork(self, caller):
         nc = NetConf.get_default()
         nc.remove_settings()
         nc.set_ipv4(None, None)
         nc.store()
 
+    @dbus.service.method('org.blueman.Mechanism', in_signature="sbs", out_signature="", sender_keyword="caller")
     def NetworkSetup(self, ip_address, allow_nat, server_type, caller):
         self.timer.reset()
         dprint(ip_address, allow_nat, server_type)

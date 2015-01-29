@@ -21,6 +21,7 @@
 * [bluez] Implement keyboard pairing support
 * [nm] Add support for ModemManager 1.x to NMPANSupport
 * [ui] Fix fallback for notification daemons not capable to handle actions
+* Fix compatility with Fedora's dbus-python package
 
 ### Bugs fixed
 

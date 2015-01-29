@@ -5,6 +5,7 @@ from blueman.main.applet.Transfer import Transfer
 from gi.repository import GObject
 from gi.repository import Gtk
 import dbus
+import dbus.service
 
 
 class TransferService(AppletPlugin):
@@ -14,9 +15,6 @@ class TransferService(AppletPlugin):
 
     def on_load(self, applet):
         self.Transfer = None
-
-        self.add_dbus_method(self.TransferControl, in_signature="ss", out_signature="")
-        self.add_dbus_method(self.TransferStatus, in_signature="s", out_signature="i")
 
         self.sess_bus = dbus.SessionBus()
 
@@ -59,7 +57,7 @@ class TransferService(AppletPlugin):
                 self.Transfer.DisconnectAll()
             self.Transfer = None
 
-
+    @dbus.service.method('org.blueman.Applet', in_signature="ss", out_signature="")
     def TransferControl(self, pattern, action):
         dprint(pattern, action)
         if not self.Transfer:
@@ -81,6 +79,7 @@ class TransferService(AppletPlugin):
         else:
             dprint("Got unknown action")
 
+    @dbus.service.method('org.blueman.Applet', in_signature="s", out_signature="i")
     def TransferStatus(self, pattern):
         if not self.Transfer:
             return -1
