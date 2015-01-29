@@ -1,13 +1,10 @@
 from blueman.plugins.MechanismPlugin import MechanismPlugin
 import os
 import dbus
+import dbus.service
 
 
 class Ppp(MechanismPlugin):
-    def on_load(self):
-        self.add_dbus_method(self.PPPConnect, in_signature="sss", out_signature="s", sender_keyword="caller",
-                             async_callbacks=("ok", "err"))
-
     def ppp_connected(self, ppp, port, ok, err):
         ok(port)
         self.timer.resume()
@@ -16,6 +13,8 @@ class Ppp(MechanismPlugin):
         err(dbus.DBusException(message))
         self.timer.resume()
 
+    @dbus.service.method('org.blueman.Mechanism', in_signature="sss", out_signature="s", sender_keyword="caller",
+                         async_callbacks=("ok", "err"))
     def PPPConnect(self, port, number, apn, caller, ok, err):
         self.timer.stop()
         from blueman.main.PPPConnection import PPPConnection

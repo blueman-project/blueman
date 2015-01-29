@@ -7,14 +7,7 @@ class MechanismPlugin(object):
 
         self.on_load()
 
-    def add_dbus_method(self, func, *args, **kwargs):
-        self.m.add_method(func, *args, **kwargs)
-
-    def add_dbus_signal(self, func, *args, **kwargs):
-        self.m.add_signal(func, *args, **kwargs)
-
-    def check_auth(self, id, caller):
-        self.m.confirm_authorization(id, caller)
+        self.m.add_definitions(self.__class__)
 
     def on_load(self):
         pass

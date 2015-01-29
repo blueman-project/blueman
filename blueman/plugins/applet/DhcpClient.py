@@ -1,3 +1,4 @@
+import dbus.service
 from blueman.gui.Notification import Notification
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Mechanism import Mechanism
@@ -14,8 +15,6 @@ class DhcpClient(AppletPlugin):
     def on_load(self, applet):
         self.Signals = SignalTracker()
 
-        self.add_dbus_method(self.DhcpClient, in_signature="s")
-
         self.Signals.Handle('bluez', Network(), self.on_network_prop_changed, 'PropertyChanged', path_keyword="path")
 
         self.quering = []
@@ -23,6 +22,7 @@ class DhcpClient(AppletPlugin):
     def on_unload(self):
         self.Signals.DisconnectAll()
 
+    @dbus.service.method('org.blueman.Applet', in_signature="s")
     def DhcpClient(self, interface):
         self.dhcp_acquire(interface)
 

@@ -1,3 +1,4 @@
+import dbus.service
 from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 import blueman.main.applet.BluezAgent as BluezAgent
@@ -15,13 +16,13 @@ class AuthAgent(AppletPlugin):
 
     def on_load(self, applet):
         self.Applet = applet
-        self.add_dbus_method(self.SetTimeHint, in_signature="u")
 
         self.agents = []
         self.last_event_time = 0
 
         self.agent_manager = Bluez.AgentManager()
 
+    @dbus.service.method('org.blueman.Applet', in_signature="u")
     def SetTimeHint(self, time):
         self.last_event_time = time
 

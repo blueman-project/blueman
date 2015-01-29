@@ -1,6 +1,7 @@
 from gi.repository import GObject
 
 from gi.repository import Gtk
+import inspect
 import traceback
 
 from blueman.plugins.ConfigurablePlugin import ConfigurablePlugin
@@ -26,10 +27,6 @@ class AppletPlugin(ConfigurablePlugin):
 
         self.Applet = applet
 
-        # self.__methods = []
-        self.__dbus_methods = []
-        self.__dbus_signals = []
-
         self.__overrides = []
 
     def override_method(self, object, method, override):
@@ -43,26 +40,14 @@ class AppletPlugin(ConfigurablePlugin):
 
         super(AppletPlugin, self)._unload()
 
-        for met in self.__dbus_methods:
-            self.Applet.DbusSvc.remove_registration(met)
-
-        for sig in self.__dbus_signals:
-            self.Applet.DbusSvc.remove_registration(sig)
-
+        self.Applet.DbusSvc.remove_definitions(self)
 
     def _load(self, applet):
         super(AppletPlugin, self)._load(applet)
 
+        self.Applet.DbusSvc.add_definitions(self)
+
         self.on_manager_state_changed(applet.Manager != None)
-
-
-    def add_dbus_method(self, func, *args, **kwargs):
-        self.Applet.DbusSvc.add_method(func, *args, **kwargs)
-        self.__dbus_methods.append(func.__name__)
-
-    def add_dbus_signal(self, func, *args, **kwargs):
-        self.__dbus_signals.append(func)
-        return self.Applet.DbusSvc.add_signal(func, *args, **kwargs)
 
     # virtual funcs
     def on_manager_state_changed(self, state):

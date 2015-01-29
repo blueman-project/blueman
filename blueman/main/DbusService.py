@@ -1,7 +1,6 @@
 import dbus
 import dbus.glib
 import dbus.service
-import inspect
 
 
 class MethodAlreadyExists(Exception):
@@ -9,66 +8,45 @@ class MethodAlreadyExists(Exception):
 
 
 class DbusService(dbus.service.Object):
-    def __init__(self, interface, path, bus=dbus.SessionBus):
-        self.interface = interface
-        self.path = path
-
+    def __init__(self, name, path, bus=dbus.SessionBus):
         self.bus = bus()
-        self.bus.request_name(self.interface)
+        self.bus.request_name(name)
 
-        dbus.service.Object.__init__(self, self.bus, self.path)
+        dbus.service.Object.__init__(self, self.bus, path)
 
-    def add_method(self, func, dbus_interface=None, in_signature="", *args, **kwargs):
-        if not dbus_interface:
-            dbus_interface = self.interface
+    def add_definitions(self, instance):
+        for name, func in self._definitions(instance):
+            if name in self.__class__.__dict__:
+                raise MethodAlreadyExists
 
-        name = func.__name__
+            self._add_wrapper(getattr(instance, name))
 
-        if name in self.__class__.__dict__:
-            raise MethodAlreadyExists
+        self.__class__._refresh_dbus_registration()
 
-        cnt = 0
-        a = inspect.getargspec(func)[0]
-        a = ",".join(a[1:])
+    def _add_wrapper(self, method):
+        def wrapper(*args, **kwargs):
+            return method(*args[1:], **kwargs)
 
-        # print name, a
-        exec \
-"""def %(0)s(self, %(1)s):
-    return self.%(0)s._orig_func(%(1)s)
+        wrapper.__name__ = method.__name__
 
+        for key, value in method.__dict__.items():
+            if key.startswith('_dbus_'):
+                setattr(wrapper, key, value)
 
-%(0)s._orig_func = func
-dec = dbus.service.method(dbus_interface, in_signature, *args, **kwargs)(%(0)s)""" % {"0": func.__name__, "1": a}
+        setattr(self.__class__, method.__name__, wrapper)
 
-        setattr(self.__class__, name, dec)
-        if not dbus_interface in self._dbus_class_table[self.__class__.__module__ + "." + self.__class__.__name__]:
-            self._dbus_class_table[self.__class__.__module__ + "." + self.__class__.__name__][dbus_interface] = {}
+    def remove_definitions(self, object):
+        for name, func in self._definitions(object):
+            delattr(self.__class__, name)
 
-        self._dbus_class_table[self.__class__.__module__ + "." + self.__class__.__name__][dbus_interface][name] = dec
+        self.__class__._refresh_dbus_registration()
 
-    def add_signal(self, name, dbus_interface=None, signature="", *args, **kwargs):
-        if not dbus_interface:
-            dbus_interface = self.interface
+    @classmethod
+    def _refresh_dbus_registration(cls):
+        cls.__class__.__init__(cls, cls.__name__, cls.__bases__, cls.__dict__)
 
-        if name in self.__class__.__dict__:
-            raise MethodAlreadyExists
-        a = ""
-        for i in range(len(dbus.Signature(signature))):
-            a += ", arg%d" % i
-
-        exec "def func(self%s): pass" % a
-        func.__name__ = name
-
-        dec = dbus.service.signal(dbus_interface, signature, *args, **kwargs)(func)
-        setattr(self.__class__, func.__name__, dec)
-        if not dbus_interface in self._dbus_class_table[self.__class__.__module__ + "." + self.__class__.__name__]:
-            self._dbus_class_table[self.__class__.__module__ + "." + self.__class__.__name__][dbus_interface] = {}
-        self._dbus_class_table[self.__class__.__module__ + "." + self.__class__.__name__][dbus_interface][func.__name__] = dec
-
-        return getattr(self, func.__name__)
-
-    def remove_registration(self, name):
-        print("remove", name)
-        delattr(self.__class__, name)
-        del self._dbus_class_table[self.__class__.__module__ + "." + self.__class__.__name__][self.interface][name]
-
+    @staticmethod
+    def _definitions(object):
+        for name, func in object.__class__.__dict__.items():
+            if getattr(func, '_dbus_is_method', False) or getattr(func, '_dbus_is_signal', False):
+                yield name, func
