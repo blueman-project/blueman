@@ -1,0 +1,81 @@
+#!/usr/bin/python
+
+import json
+import os
+import signal
+import subprocess
+import time
+from threading import Thread, Lock
+from blueman.Constants import VERSION
+from blueman.Functions import get_lockfile, get_pid, is_running
+
+import sys
+if sys.version_info.major == 2:
+    input = raw_input
+    import urllib2
+else:
+    import urllib.request as urllib2
+
+for program in 'adapters', 'applet', 'manager', 'services':
+    name = 'blueman-' + program
+    lockfile = get_lockfile(name)
+
+    if os.path.exists(lockfile):
+        pid = get_pid(lockfile)
+        if pid and is_running(name, pid):
+            print('Terminating ' + name)
+            os.kill(pid, signal.SIGTERM)
+
+applet = subprocess.Popen(['blueman-applet'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+log = ''
+actions = []
+lines = 0
+lock = Lock()
+
+
+def copy_output():
+    global lines, log
+    for line in iter(applet.stdout.readline, b''):
+        lock.acquire()
+        lines += 1
+        log += line.decode('UTF-8')
+        lock.release()
+
+t = Thread(target=copy_output)
+t.daemon = True
+t.start()
+
+while True:
+    action = input('Describe your next action (keep empty if done): ')
+    if not action:
+        break
+    lock.acquire()
+    lines += 1
+    log += "DEBUG ACTION: " + action + "\n"
+    lock.release()
+    actions.append((lines, action))
+    print('Perform the described action')
+    time.sleep(5)
+
+lock.acquire()
+
+data = json.dumps({'files': {'log': {'content': log}}})
+response = urllib2.urlopen('https://api.github.com/gists', data.encode('UTF-8')).read()
+url = json.loads(response.decode('UTF-8'))['html_url']
+
+print("")
+print("=====================================")
+print("")
+print("Use this data in your report:")
+print("")
+print("=====================================")
+print("")
+print("blueman: " + VERSION)
+v = subprocess.Popen(['/usr/sbin/bluetoothd', '-v'], stdout=subprocess.PIPE).stdout.read().decode('UTF-8')[:-1]
+print("BlueZ: " + v)
+print("Distribution: ")
+print("Desktop: " + os.environ.get('XDG_CURRENT_DESKTOP'))
+print("")
+for line, action in actions:
+    print(url + '#file-log-L' + str(line) + " " + action)
