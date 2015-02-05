@@ -20,6 +20,7 @@
 * [nm] Add support for NetworkManager 0.9 / 1.0 to NMPANSupport
 * [bluez] Implement keyboard pairing support
 * [nm] Add support for ModemManager 1.x to NMPANSupport
+* [ui] Fix fallback for notification daemons not capable to handle actions
 
 ### Bugs fixed
 

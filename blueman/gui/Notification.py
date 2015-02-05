@@ -20,8 +20,8 @@ class Fade(AnimBase):
 
 class NotificationDialog(Gtk.MessageDialog):
     def __init__(self, summary, message, timeout=-1, actions=None, actions_cb=None, pixbuf=None, status_icon=None):
-        GObject.GObject.__init__(self, parent=None, flags=0, type=Gtk.MessageType.QUESTION,
-                                 buttons=Gtk.ButtonsType.NONE, message_format=None)
+        Gtk.MessageDialog.__init__(self, parent=None, flags=0, type=Gtk.MessageType.QUESTION,
+                                   buttons=Gtk.ButtonsType.NONE, message_format=None)
 
         self.bubble = NotificationBubble(summary, message, pixbuf=pixbuf)
 
