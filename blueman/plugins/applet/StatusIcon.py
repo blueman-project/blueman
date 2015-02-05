@@ -7,7 +7,7 @@ from gi.repository import GObject
 
 class StatusIcon(AppletPlugin, Gtk.StatusIcon):
     __unloadable__ = False
-    __icon__ = "blueman"
+    __icon__ = "blueman-tray"
 
     FORCE_SHOW = 2
     SHOW = 1
@@ -97,7 +97,7 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
         self.QueryVisibility()
 
     def on_status_icon_resized(self):
-        self.icon = "blueman"
+        self.icon = "blueman-tray"
 
         ic = Gtk.IconTheme.get_default()
 
