@@ -11,6 +11,7 @@ icons_DATA =					\
 	blueman-up-inactive.png		\
         blueman-active.png            \
         blueman-disabled.png          \
+        blueman-tray.png              \
         blueman.png
 
 EXTRA_DIST = $(icons_DATA)
