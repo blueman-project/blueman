@@ -205,7 +205,6 @@ blueman/main/Makefile
 blueman/main/applet/BluezAgent.py
 blueman/main/applet/Makefile
 blueman/ods/Makefile
-blueman/iniparse/Makefile
 data/Makefile
 data/configs/Makefile
 data/icons/Makefile

@@ -23,6 +23,7 @@
 * [nm] Add support for ModemManager 1.x to NMPANSupport
 * Fix compatility with Fedora's dbus-python package
 * [plugins] Add GameControllerWakelock plugin (@bwRavencl / Matteo Hausner)
+* Remove settings for local audio services
 
 ### Bugs fixed
 
