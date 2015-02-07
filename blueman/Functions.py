@@ -22,6 +22,7 @@ from blueman.Constants import *
 from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import GdkPixbuf
+from gi.repository import GLib
 import re
 import os
 import signal
@@ -289,12 +290,37 @@ def create_menuitem(text, pixbuf):
 
     return item
 
-def check_single_instance(id, unhide_func=None):
-    print("%s version %s starting" % (id, VERSION))
-    cachedir = os.path.expanduser("~/.cache/")
+
+def get_lockfile(name):
+    cachedir = GLib.get_user_cache_dir()
     if not os.path.exists(cachedir):
         os.mkdir(cachedir)
-    lockfile = os.path.join(cachedir, "%s-%s" % (id, os.getuid()))
+    return os.path.join(cachedir, "%s-%s" % (name, os.getuid()))
+
+
+def get_pid(lockfile):
+    f = open(lockfile)
+    try:
+        return int(f.readline())
+    except:
+        pass
+    finally:
+        f.close()
+
+
+def is_running(name, pid):
+    if not os.path.exists("/proc/%s" % pid):
+        return False
+    f = open("/proc/%s/cmdline" % pid)
+    try:
+        return name in f.readline().replace("\0", " ")
+    finally:
+        f.close()
+
+
+def check_single_instance(name, unhide_func=None):
+    print("%s version %s starting" % (name, VERSION))
+    lockfile = get_lockfile(name)
 
     def handler(signum, frame):
         if unhide_func:
@@ -311,27 +337,9 @@ def check_single_instance(id, unhide_func=None):
     signal.signal(signal.SIGUSR1, handler)
 
     if os.path.exists(lockfile):
-        f = open(lockfile)
-        try:
-            pid = int(f.readline())
-        except:
-            pid = 0
-
-        try:
-            event_time = int(f.readline())
-        except:
-            event_time = 0
-        f.close()
-        if pid > 0:
-            isrunning = os.path.exists("/proc/%s" % pid)
-            if isrunning:
-                try:
-                    f = open("/proc/%s/cmdline" % pid)
-                    cmdline = f.readline().replace("\0", " ")
-                    f.close()
-                except:
-                    cmdline = None
-            if not isrunning or (isrunning and id not in cmdline):
+        pid = get_pid(lockfile)
+        if pid:
+            if not is_running(name, pid):
                 print("Stale PID, overwriting")
                 os.remove(lockfile)
             else:
