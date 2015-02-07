@@ -6,9 +6,15 @@ import signal
 import subprocess
 import time
 from threading import Thread, Lock
-import urllib2
 from blueman.Constants import VERSION
 from blueman.Functions import get_lockfile, get_pid, is_running
+
+import sys
+if sys.version_info.major == 2:
+    input = raw_input
+    import urllib2
+else:
+    import urllib.request as urllib2
 
 for program in 'adapters', 'applet', 'manager', 'services':
     name = 'blueman-' + program
@@ -33,7 +39,7 @@ def copy_output():
     for line in iter(applet.stdout.readline, b''):
         lock.acquire()
         lines += 1
-        log += line
+        log += line.decode('UTF-8')
         lock.release()
 
 t = Thread(target=copy_output)
@@ -41,7 +47,7 @@ t.daemon = True
 t.start()
 
 while True:
-    action = raw_input('Describe your next action (keep empty if done): ')
+    action = input('Describe your next action (keep empty if done): ')
     if not action:
         break
     lock.acquire()
@@ -55,8 +61,8 @@ while True:
 lock.acquire()
 
 data = json.dumps({'files': {'log': {'content': log}}})
-
-url = json.loads(urllib2.urlopen('https://api.github.com/gists', data).read())['html_url']
+response = urllib2.urlopen('https://api.github.com/gists', data.encode('UTF-8')).read()
+url = json.loads(response.decode('UTF-8'))['html_url']
 
 print("")
 print("=====================================")
@@ -66,7 +72,8 @@ print("")
 print("=====================================")
 print("")
 print("blueman: " + VERSION)
-print("BlueZ: " + subprocess.Popen(['/usr/sbin/bluetoothd', '-v'], stdout=subprocess.PIPE).stdout.read()[:-1])
+v = subprocess.Popen(['/usr/sbin/bluetoothd', '-v'], stdout=subprocess.PIPE).stdout.read().decode('UTF-8')[:-1]
+print("BlueZ: " + v)
 print("Distribution: ")
 print("Desktop: " + os.environ.get('XDG_CURRENT_DESKTOP'))
 print("")
