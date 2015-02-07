@@ -1,15 +1,8 @@
-from gi.repository import GObject
-import dbus
-from blueman.Functions import *
+from blueman.Functions import dprint
 
 from blueman.main.SignalTracker import SignalTracker
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.main.KillSwitchNG import KillSwitchNG, RFKillType, RFKillState
-
-try:
-    import blueman.main.KillSwitch as _KillSwitch
-except:
-    pass
+from blueman.main.KillSwitchNG import KillSwitchNG, RFKillType
 
 
 class KillSwitch(AppletPlugin):
@@ -25,35 +18,15 @@ class KillSwitch(AppletPlugin):
     def on_load(self, applet):
         self.signals = SignalTracker()
 
-        try:
-            self.Manager = KillSwitchNG()
-            self.signals.Handle(self.Manager, "switch-changed", self.on_switch_changed)
-            dprint("Using the new killswitch system")
-        except OSError as e:
-            dprint("Using the old killswitch system, reason:", e)
-            if _KillSwitch is None:
-                raise Exception("Failed to initialize killswitch manager")
-            else:
-                self.Manager = _KillSwitch.Manager()
+        self.Manager = KillSwitchNG()
 
-            if not self.get_option("checked"):
-                GObject.timeout_add(1000, self.check)
-
+        self.signals.Handle(self.Manager, "switch-changed", self.on_switch_changed)
         self.signals.Handle(self.Manager, "switch-added", self.on_switch_added)
         self.signals.Handle(self.Manager, "switch-removed", self.on_switch_removed)
 
     def on_switch_added(self, manager, switch):
         if switch.type == RFKillType.BLUETOOTH:
             dprint("killswitch registered", switch.idx)
-        #			if manager.HardBlocked:
-        #				self.Applet.Plugins.PowerManager.SetPowerChangeable(False)
-        #
-        #			if not self.Manager.GetGlobalState():
-        #				self.Applet.Plugins.PowerManager.SetBluetoothStatus(False)
-        #
-        #			pm_state = self.Applet.Plugins.PowerManager.GetBluetoothStatus()
-        #			if self.Manager.GetGlobalState() != pm_state:
-        #				self.Manager.SetGlobalState(pm_state)
 
     def on_switch_changed(self, manager, switch):
         if switch.type == RFKillType.BLUETOOTH:
@@ -76,15 +49,6 @@ class KillSwitch(AppletPlugin):
                 return manager.STATE_ON
             else:
                 return manager.STATE_OFF
-
-    def check(self):
-        try:
-            if len(self.Manager.devices) == 0:
-                self.set_option("checked", True)
-                #this machine does not support bluetooth killswitch, let's unload
-                self.Applet.Plugins.SetConfig("KillSwitch", False)
-        except:
-            pass
 
     def on_power_state_change_requested(self, manager, state, cb):
         dprint(state)
