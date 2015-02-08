@@ -1,7 +1,7 @@
 
 bluemandir = $(pythondir)/blueman/plugins/mechanism
 
-blueman_PYTHON = Config.py __init__.py Network.py Ppp.py RfKill.py
+blueman_PYTHON = __init__.py Network.py Ppp.py RfKill.py
 
 CLEANFILES =		\
 	$(BUILT_SOURCES)
