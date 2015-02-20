@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 cdef extern from "malloc.h":
 	cdef void free(void *ptr)
