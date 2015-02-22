@@ -343,6 +343,28 @@ class ManagerDeviceMenu(Gtk.Menu):
             item.show()
             item.props.tooltip_text = _("Run the setup assistant for this device")
 
+            def on_rename(_item, device):
+                def on_response(dialog, response_id):
+                    if response_id == Gtk.ResponseType.ACCEPT:
+                        device.set('Alias', alias_entry.get_text())
+                    dialog.destroy()
+
+                builder = Gtk.Builder()
+                builder.set_translation_domain("blueman")
+                builder.add_from_file(UI_PATH + "/rename-device.ui")
+                dialog = builder.get_object("dialog")
+                dialog.set_transient_for(self.Blueman.window)
+                dialog.props.icon_name = "blueman"
+                alias_entry = builder.get_object("alias_entry")
+                alias_entry.set_text(device.Alias)
+                dialog.connect("response", on_response)
+                dialog.present()
+
+            item = Gtk.MenuItem.new_with_label("Rename device...")
+            self.Signals.Handle(item, 'activate', on_rename, device)
+            self.append(item)
+            item.show()
+
             item = Gtk.SeparatorMenuItem()
             item.show()
             self.append(item)

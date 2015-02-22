@@ -30,6 +30,7 @@
   (@rworkman / Robby Workman)
 * Fix compatility with Fedora's dbus-python package
 * Remove settings for local audio services
+* Add function to rename known devices
 
 ### Bugs fixed
 
