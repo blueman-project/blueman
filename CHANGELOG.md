@@ -24,6 +24,7 @@
 * Fix compatility with Fedora's dbus-python package
 * [plugins] Add GameControllerWakelock plugin (@bwRavencl / Matteo Hausner)
 * Remove settings for local audio services
+* Add function to rename known devices
 
 ### Bugs fixed
 
