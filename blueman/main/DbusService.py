@@ -16,6 +16,8 @@ class DbusService(dbus.service.Object):
         dbus.service.Object.__init__(self, self.bus, path)
 
     def add_definitions(self, instance):
+        setattr(instance, 'locations', self.locations)
+
         for name, func in self._definitions(instance):
             if name in self.__class__.__dict__:
                 raise MethodAlreadyExists
