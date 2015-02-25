@@ -1,3 +1,4 @@
+import dbus
 from blueman.bluez.obex.Base import Base
 from gi.repository import GObject
 
@@ -24,8 +25,9 @@ class Session(Base):
         self.__interface = self._get_interface(interface_name)
 
     def send_file(self, file_path):
-        def reply_handler(transfer_path, props):
+        def reply_handler(*params):
             if self.__class__.get_interface_version()[0] < 5:
+                transfer_path, props = params[0]
                 handlers = {
                     'PropertyChanged': self.on_transfer_property_changed,
                     'Complete': self.on_transfer_completed,
@@ -36,6 +38,7 @@ class Session(Base):
                     self._get_bus().add_signal_receiver(func, prop, 'org.bluez.obex.Transfer', 'org.bluez.obex.client',
                                                         transfer_path)
             else:
+                transfer_path, props = params
                 self._get_bus().add_signal_receiver(self.on_transfer_properties_changed, 'PropertiesChanged',
                                                     'org.freedesktop.DBus.Properties', 'org.bluez.obex', transfer_path)
 

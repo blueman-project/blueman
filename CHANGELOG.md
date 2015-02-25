@@ -24,6 +24,7 @@
 * Fix compatility with Fedora's dbus-python package
 * [plugins] Add GameControllerWakelock plugin (@bwRavencl / Matteo Hausner)
 * Remove settings for local audio services
+* Add blueman-report to create commented logs for bug reports
 
 ### Bugs fixed
 
