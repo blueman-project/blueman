@@ -2,6 +2,7 @@ APPS =					\
 	blueman-adapters	\
 	blueman-applet		\
 	blueman-manager		\
+	blueman-rfcomm-watcher \
 	blueman-services	\
 	blueman-sendto		\
 	blueman-assistant	\

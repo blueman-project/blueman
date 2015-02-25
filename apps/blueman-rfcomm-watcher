@@ -1,0 +1,11 @@
+#!/usr/bin/env python
+
+from gi.repository import GLib
+import os
+import sys
+
+
+fd = os.open(sys.argv[1], os.O_RDONLY | os.O_NONBLOCK)
+
+loop = GLib.MainLoop()
+loop.run()
