@@ -15,6 +15,10 @@ class DiscvManager(AppletPlugin):
     __description__ = _(
         "Provides a menu item for making the default adapter temporarily visible when it is set to hidden by default")
 
+    __gsettings__ = {
+        "schema": "org.blueman.plugins.discvmanager",
+        "path": None
+    }
     __options__ = {
         "time": {
             "type": int,
