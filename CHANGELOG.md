@@ -41,12 +41,12 @@
 * Make blueman-applet respond to SIGTERM (@Teknocrat / Harvey Mittens)
 * Allow setting friendly adapter name in BlueZ 5
 * Look for both dhcpd and dhcpd3 and add sbin paths (@infirit / Sander Sweers)
-* Respect custom status icon
 * [libblueman] Fix memory leak (@monsta)
 * [libblueman] Add missing includes (@posophe)
 * [ui] Move some icons to pixmaps directory (@rworkman / Robby Workman)
 * [ui] Fix fallback for notification daemons not capable to handle actions
 * [ui] Fix "Shared Folder" widget in Transfer plugin.
+* [ui] Fix service disconnect icons
 
 ## 1.99.alpha1
 
