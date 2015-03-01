@@ -1,15 +1,9 @@
-from blueman.bluez.BlueZInterface import BlueZInterface
 from blueman.bluez.Network import Network
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 from gi.repository import Gtk
 
-from blueman.Sdp import *
-from blueman.Functions import *
-from blueman.main.SignalTracker import SignalTracker
-from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
-from blueman.main.Config import Config
+from blueman.Functions import create_menuitem, get_icon, composite_icon
 from blueman.main.AppletService import AppletService
-from blueman.gui.MessageArea import MessageArea
 from blueman.services import *
 
 from blueman.Lib import rfcomm_list
@@ -24,8 +18,6 @@ def get_x_icon(icon_name, size):
 
 
 class Services(ManagerPlugin):
-    connectable_uuids = [HID_SVCLASS_ID, AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID, HEADSET_SVCLASS_ID, HANDSFREE_SVCLASS_ID]
-
     def on_request_menu_items(self, manager_menu, device):
         items = []
         appl = AppletService()
