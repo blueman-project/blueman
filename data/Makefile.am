@@ -23,10 +23,16 @@ settingsdir = $(datadir)/applications
 settings_DATA = $(settings_in_files:.desktop.in=.desktop)
 endif
 
+gsettings_SCHEMAS = org.blueman.gschema.xml
+
+# include the appropriate makefile rules for schema handling
+@GSETTINGS_RULES@
+
 EXTRA_DIST = 	$(autostart_in_files)	\
 		$(app_in_files)		\
 		$(thunar_in_files)	\
-		$(settings_in_files)
+		$(settings_in_files)	\
+		$(gsettings_SCHEMAS)
 
 SUBDIRS = 		\
 	configs		\
@@ -39,7 +45,8 @@ CLEANFILES =		\
 	blueman-adapters.desktop	\
 	blueman-manager.desktop	\
 	blueman.desktop		\
-	$(BUILT_SOURCES)
+	$(BUILT_SOURCES)	\
+	*.gschema.valid
 	
 DISTCLEANFILES = \
 	$(CLEANFILES)
