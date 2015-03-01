@@ -15,5 +15,4 @@ class NetworkService(Service):
         self._service.connect(self.uuid, reply_handler=reply_handler, error_handler=error_handler)
 
     def disconnect(self, reply_handler=None, error_handler=None, *args):
-        # TODO: TypeError: disconnect() got multiple values for keyword argument 'reply_handler'
-        self._service.disconnect(self.uuid, reply_handler=reply_handler, error_handler=error_handler)
+        self._service.disconnect(reply_handler=reply_handler, error_handler=error_handler)
