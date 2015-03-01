@@ -19,6 +19,11 @@ class SerialManager(AppletPlugin):
     __icon__ = "blueman-serial"
     __description__ = _("Standard SPP profile connection handler, allows executing custom actions")
     __author__ = "walmis"
+
+    __gsettings__ = {
+        "schema": "org.blueman.plugins.serialmanager",
+        "path": None
+    }
     __options__ = {
     "script": {"type": str, "default": "",
                "name": _("Script to execute on connection"),

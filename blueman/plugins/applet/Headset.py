@@ -10,6 +10,10 @@ class Headset(AppletPlugin):
     __description__ = _("Runs a command when answer button is pressed on a headset")
     __icon__ = "blueman-headset"
 
+    __gsettings__ = {
+        "schema": "org.blueman.plugins.headset",
+        "path": None
+    }
     __options__ = {
         "command": {
             "type": str,

@@ -43,6 +43,10 @@ class RecentConns(AppletPlugin, Gtk.Menu):
     __description__ = _("Provides a menu item that contains last used connections for quick access")
     __author__ = "Walmis"
 
+    __gsettings__ = {
+        "schema": "org.blueman.plugins.recentconns",
+        "path": None
+    }
     __options__ = {
     "max_items": {"type": int,
                   "default": 6,
