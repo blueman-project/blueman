@@ -128,5 +128,4 @@ class Transfer(ServicePlugin):
         opp_accept.connect("toggled", lambda x: self.TransConf.set_boolean("opp-accept", x.props.active))
         obex_cmd.connect("changed", lambda x: self.TransConf.set_string("browse-command", x.props.text))
 
-        shared_path.connect("current-folder-changed",
-                            lambda x: self.TransConf.set_string("shared-path", x.get_filename()))
+        shared_path.connect("file-set", lambda x: self.TransConf.set_string("shared-path", x.get_filename()))
