@@ -239,55 +239,50 @@ class PersistentPluginManager(PluginManager):
     def __init__(self, *args):
         super(PersistentPluginManager, self).__init__(*args)
 
-        self.__config = Config()
+        self.__config = Config("org.blueman.general")
 
-        if getattr(self.__config.props, self.plugin_class.__name__) == None:
-            setattr(self.__config.props, self.plugin_class.__name__, [])
-
-        self.__config.connect("property-changed", self.on_property_changed)
+        self.__config.connect("changed::plugin-list", self.on_property_changed)
 
     def Disabled(self, plugin):
-        plugins = getattr(self.__config.props, self.plugin_class.__name__)
+        plugins = self.__config["plugin-list"]
         return "!" + plugin in plugins
 
     def Enabled(self, plugin):
-        plugins = getattr(self.__config.props, self.plugin_class.__name__)
+        plugins = self.__config["plugin-list"]
         return plugin in plugins
 
     def SetConfig(self, plugin, state):
-        plugins = self.__config.get(self.plugin_class.__name__)
+        plugins = self.__config["plugin-list"]
         if plugin in plugins:
             plugins.remove(plugin)
         elif "!" + plugin in plugins:
             plugins.remove("!" + plugin)
 
         plugins.append(str("!" + plugin) if not state else str(plugin))
-        self.__config.set(self.plugin_class.__name__, plugins)
+        self.__config["plugin-list"] = plugins
 
     @property
     def config_list(self):
-        return self.__config.get(self.plugin_class.__name__)
+        return self.__config["plugin-list"]
 
-    def on_property_changed(self, config, key, value):
-        if key == self.plugin_class.__name__:
-            if type(value) == list:
-                for item in value:
-                    disable = item[0] == "!"
-                    if disable:
-                        item = item[1:]
+    def on_property_changed(self, config, key):
+        for item in config[key]:
+            disable = item.startswith("!")
+            if disable:
+                item = item.lstrip("!")
 
+            try:
+                cls = self.GetClasses()[item]
+                if not cls.__unloadable__ and disable:
+                    print(YELLOW("warning:"), item, "is not unloadable")
+                elif item in self.GetLoaded() and disable:
+                    self.Unload(item)
+                elif item not in self.GetLoaded() and not disable:
                     try:
-                        cls = self.GetClasses()[item]
-                        if not cls.__unloadable__ and disable:
-                            print(YELLOW("warning:"), item, "is not unloadable")
-                        elif item in self.GetLoaded() and disable:
-                            self.Unload(item)
-                        elif item not in self.GetLoaded() and not disable:
-                            try:
-                                self.Load(item, user_action=True)
-                            except:
-                                self.SetConfig(item, False)
+                        self.Load(item, user_action=True)
+                    except:
+                        self.SetConfig(item, False)
 
-                    except KeyError:
-                        print(YELLOW("warning:"), "Plugin %s not found" % item)
-                        continue
+            except KeyError:
+                print(YELLOW("warning:"), "Plugin %s not found" % item)
+                continue
