@@ -49,6 +49,9 @@ class Tee(object):
                 syslog.syslog(self.buffer)
             self.buffer = ""
 
+    def flush(self):
+        pass
+
 
 syslog.openlog("blueman-mechanism", 0, syslog.LOG_DAEMON)
 a = Tee()
