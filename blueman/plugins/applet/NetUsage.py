@@ -30,17 +30,11 @@ class MonitorBase(GObject.GObject):
 
         self.interface = interface
         self.device = device
-        self.config = Config("plugins/NetUsage/%s" % device.Address)
+        self.general_config = Config("org.blueman.general")
+        self.config = Config("org.blueman.plugins.netusage", "/org/blueman/plugins/netusages/%s/" % device.Address)
 
         self.last_tx = 0
         self.last_rx = 0
-
-        if not self.config.props.tx:
-            self.config.props.tx = "0"
-        if not self.config.props.rx:
-            self.config.props.rx = "0"
-        if not self.config.props.time:
-            self.config.props.time = int(time.time())
 
     #tx and rx must be cumulative absolute values
     def update_stats(self, tx, rx):
@@ -55,12 +49,14 @@ class MonitorBase(GObject.GObject):
         self.last_rx = rx
         self.last_tx = tx
         if dtx > 0:
-            self.config.props.tx = str(int(self.config.props.tx) + dtx)
+            self.config["tx"] += dtx
         if drx > 0:
-            self.config.props.rx = str(int(self.config.props.rx) + drx)
+            self.config["rx"] += drx
 
-        self.emit("stats", int(self.config.props.tx), int(self.config.props.rx))
+        self.emit("stats", self.config["tx"], self.config["rx"])
 
+        if not self.device in general_config["netusage-dev-list"]:
+            self.general_config["netusage-dev-list"] += [self.device]
 
     def Disconnect(self):
         self.emit("disconnected")
@@ -173,12 +169,10 @@ class Dialog:
         self.cb_device.pack_start(cr2, False)
         self.cb_device.add_attribute(cr2, 'markup', 2)
 
-        c = Config("plugins/NetUsage")
-        devs = c.list_dirs()
+        general_config = Config("org.blueman.general")
 
         added = False
-        for d in devs:
-            d = os.path.basename(d)
+        for d in general_config["netusage-dev-list"]:
             for m in parent.monitors:
                 if d == m.device.Address:
                     iter = self.liststore.append(
@@ -221,7 +215,7 @@ class Dialog:
         self.dialog.destroy()
 
     def update_time(self):
-        time = self.config.props.time
+        time = self.config["time"]
         if time:
             self.datetime = datetime.datetime.fromtimestamp(time)
 
@@ -242,8 +236,8 @@ class Dialog:
     def on_selection_changed(self, cb):
         iter = cb.get_active_iter()
         (addr,) = self.liststore.get(iter, 0)
-        self.config = Config("plugins/NetUsage/" + addr)
-        self.update_counts(self.config.props.tx, self.config.props.rx)
+        self.config = Config("org.blueman.plugins.netusage", "/org/blueman/plugins/netusages/%s/" % addr)
+        self.update_counts(self.config["tx"], self.config["rx"])
         self.update_time()
 
     def get_caption(self, name, address):
@@ -271,9 +265,9 @@ class Dialog:
         res = d.run()
         d.destroy()
         if res == Gtk.ResponseType.YES:
-            self.config.props.rx = "0"
-            self.config.props.tx = "0"
-            self.config.props.time = int(time.time())
+            self.config["rx"] = 0
+            self.config["tx"] = 0
+            self.config["time"] = int(time.time())
 
             self.update_counts(0, 0)
 
