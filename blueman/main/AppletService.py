@@ -1,6 +1,8 @@
 import dbus
+from dbus.mainloop.glib import DBusGMainLoop
 from blueman.main.SignalTracker import SignalTracker
 
+DBusGMainLoop(set_as_default=True)
 
 class AppletService(dbus.proxies.Interface, SignalTracker):
     __inst__ = None
