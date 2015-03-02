@@ -1,4 +1,4 @@
-from gi.repository import GObject
+from gi.repository import GObject, Gio
 from operator import attrgetter
 import os
 from blueman.Functions import dprint
@@ -21,7 +21,7 @@ for plugin in plugins:
     except ImportError as e:
         dprint("Skipping plugin %s\n%s" % (plugin, e))
 
-class Config(object):
+class OldConfig(object):
     def __new__(c, section=""):
         classes = ConfigPlugin.__subclasses__()
         classes.sort(key=attrgetter("__priority__"))
@@ -37,3 +37,10 @@ class Config(object):
 
             print("No suitable configuration backend found, exitting")
             exit(1)
+
+class Config(Gio.Settings):
+    def __init__(self, schema, path=None):
+        Gio.Settings.__init__(self, schema, path)
+
+    def bind_to_widget(self, key, widget, prop, flags=Gio.SettingsBindFlags.DEFAULT):
+        self.bind(key, widget, prop, flags)
