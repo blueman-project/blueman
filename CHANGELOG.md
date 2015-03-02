@@ -2,6 +2,19 @@
 
 ## master
 
+### New features
+
+* [docs] Add FAQ file and install doc files (@rworkman / Robby Workman)
+* [sendto] Add sendto integration for Thunar (@GreenLunar)
+* [sendto] Make thunar sendto integration optional (@rworkman / Robby Workman)
+* Add optional settings manager integration with Xfce and MATE
+  (@rworkman / Robby Workman)
+* [nm] Add support for NetworkManager 0.9 / 1.0 to NMPANSupport
+* [bluez] Implement keyboard pairing support
+* [nm] Add support for ModemManager 1.x to NMPANSupport
+* [plugins] Add GameControllerWakelock plugin (@bwRavencl / Matteo Hausner)
+* Add blueman-report to create commented logs for bug reports
+
 ### Changes
 
 * [obex] Switch to obexd for sending files
@@ -11,20 +24,10 @@
 * [ui] Replace / remove deprecated icon names (@Teknocrat / Harvey Mittens)
 * [ui] Drop status icon customization (@Teknocrat / Harvey Mittens)
 * Drop HAL Support (@rworkman / Robby Workman)
-* [docs] Add FAQ file and install doc files (@rworkman / Robby Workman)
-* [sendto] Add sendto integration for Thunar (@GreenLunar)
-* [sendto] Make thunar sendto integration optional (@rworkman / Robby Workman)
 * [configure] Rename --enable-sendto to --enable-nautilus-sendto
   (@rworkman / Robby Workman)
-* Add optional settings manager integration with Xfce and MATE
-  (@rworkman / Robby Workman)
-* [nm] Add support for NetworkManager 0.9 / 1.0 to NMPANSupport
-* [bluez] Implement keyboard pairing support
-* [nm] Add support for ModemManager 1.x to NMPANSupport
 * Fix compatility with Fedora's dbus-python package
-* [plugins] Add GameControllerWakelock plugin (@bwRavencl / Matteo Hausner)
 * Remove settings for local audio services
-* Add blueman-report to create commented logs for bug reports
 
 ### Bugs fixed
 
