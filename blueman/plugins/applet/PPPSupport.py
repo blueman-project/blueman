@@ -26,15 +26,10 @@ class Connection:
             GObject.timeout_add(5000, self.connect)
 
     def connect(self):
-        c = Config("gsm_settings/" + self.service.device.Address)
-        if c.props.apn is None:
-            c.props.apn = ""
-
-        if c.props.number is None:
-            c.props.number = "*99#"
+        c = Config("org.blueman.gsmsettings", "/org/blueman/gsmsettings/%s/" % self.service.device.Address)
 
         m = Mechanism()
-        m.PPPConnect(self.port, c.props.number, c.props.apn, reply_handler=self.on_connected,
+        m.PPPConnect(self.port, c["number"], c["apn"], reply_handler=self.on_connected,
                      error_handler=self.on_error, timeout=200)
 
     def on_error(self, error):
