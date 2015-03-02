@@ -48,14 +48,14 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         "path": None
     }
     __options__ = {
-    "max_items": {"type": int,
+    "max-items": {"type": int,
                   "default": 6,
                   #the maximum number of items RecentConns menu will display
                   "name": _("Maximum items"),
                   "desc": _("The maximum number of items recent connections menu will display."),
                   "range": (6, 20)
     },
-    "recent_connections": {"type": str, "default": ""}
+    "recent-connections": {"type": str, "default": ""}
     }
 
     items = None
@@ -99,7 +99,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
                                  pickle.HIGHEST_PROTOCOL),
                     9))
 
-            self.set_option("recent_connections", dump)
+            self.set_option("recent-connections", dump)
         except:
             dprint(YELLOW("Failed to store recent connections"))
 
@@ -148,11 +148,11 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         self.foreach(each, None)
 
         RecentConns.items.sort(key=itemgetter("time"), reverse=True)
-        for i in RecentConns.items[self.get_option("max_items"):]:
+        for i in RecentConns.items[self.get_option("max-items"):]:
             if i["gsignal"]:
                 i["device"].disconnect(i["gsignal"])
 
-        RecentConns.items = RecentConns.items[0:self.get_option("max_items")]
+        RecentConns.items = RecentConns.items[0:self.get_option("max-items")]
         RecentConns.items.reverse()
 
         if len(RecentConns.items) == 0:
@@ -162,7 +162,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
 
         count = 0
         for item in RecentConns.items:
-            if count < self.get_option("max_items"):
+            if count < self.get_option("max-items"):
                 self.add_item(item)
                 count += 1
 
@@ -343,7 +343,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
             raise DeviceNotFound
 
     def recover_state(self):
-        dump = self.get_option("recent_connections")
+        dump = self.get_option("recent-connections")
         try:
             (version, items) = pickle.loads(zlib.decompress(base64.b64decode(dump)))
         except:
