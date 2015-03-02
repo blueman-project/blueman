@@ -1,9 +1,7 @@
-from blueman.main.Config import Config
 from blueman.Functions import *
 from blueman.Constants import *
 
-from gi.repository import Gtk
-
+from gi.repository import Gtk, Gio
 
 class GsmSettings(Gtk.Dialog):
     def __init__(self, bd_address):
@@ -17,7 +15,7 @@ class GsmSettings(Gtk.Dialog):
 
         vbox = self.Builder.get_object("vbox1")
 
-        self.config = Config("gsm_settings/" + bd_address)
+        self.Settings = Gio.Settings.new_with_path(BLUEMAN_GSMSETTINGS_GSCHEMA, BLUEMAN_GSMSETINGS_PATH + bd_address + "/")
         self.props.icon_name = "network-wireless"
         self.props.title = _("GSM Settings")
 
@@ -30,14 +28,10 @@ class GsmSettings(Gtk.Dialog):
         self.e_apn = self.Builder.get_object("e_apn")
         self.e_number = self.Builder.get_object("e_number")
 
-        if self.config.props.apn == None:
-            self.config.props.apn = ""
+        self.Settings["bd-address"] = bd_address
 
-        if self.config.props.number == None:
-            self.config.props.number = "*99#"
-
-        self.e_apn.props.text = self.config.props.apn
-        self.e_number.props.text = self.config.props.number
+        self.e_apn.props.text = self.Settings["apn"]
+        self.e_number.props.text = self.Settings["number"]
 
         self.e_apn.connect("changed", self.on_changed)
         self.e_number.connect("changed", self.on_changed)
@@ -46,6 +40,6 @@ class GsmSettings(Gtk.Dialog):
 
     def on_changed(self, e):
         if e == self.e_apn:
-            self.config.props.apn = e.props.text
+            self.Settings["apn"] = e.props.text
         elif e == self.e_number:
-            self.config.props.number = e.props.text
+            self.Settings["number"] = e.props.text

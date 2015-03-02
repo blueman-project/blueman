@@ -1,7 +1,6 @@
 SUBDIRS =	\
 	services	\
 	applet		\
-	config		\
 	mechanism	\
 	manager
 

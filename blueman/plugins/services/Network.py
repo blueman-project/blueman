@@ -1,4 +1,4 @@
-from gi.repository import Gtk
+from gi.repository import Gtk, Gio
 from blueman.Constants import *
 from blueman.Functions import have, dprint, mask_ip4_address
 from blueman.Lib import get_net_interfaces, get_net_address, get_net_netmask
@@ -6,7 +6,6 @@ from socket import inet_ntoa, inet_aton
 from blueman.plugins.ServicePlugin import ServicePlugin
 
 from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler
-from blueman.main.Config import Config
 from blueman.main.Mechanism import Mechanism
 from blueman.main.AppletService import AppletService
 from random import randint
@@ -14,6 +13,9 @@ from random import randint
 
 class Network(ServicePlugin):
     __plugin_info__ = (_("Network"), "network-workgroup")
+
+    def __init__(self):
+        self.Settings = Gio.Settings.new(BLUEMAN_NETWORK_SETTINGS)
 
     def on_load(self, container):
 
@@ -52,7 +54,7 @@ class Network(ServicePlugin):
         if key in self.ignored_keys:
             self.ignored_keys.remove(key)
             return
-        if key == "rb_blueman" or key == "dhcp_client":
+        if key == "rb_blueman" or key == "dhcp-client":
             if value:
                 self.Builder.get_object("rb_blueman").props.active = True
             else:
@@ -61,12 +63,12 @@ class Network(ServicePlugin):
         if key == "rb_nm":
             return
 
-        if key == "gn_enable":
+        if key == "gn-enable":
             self.Builder.get_object(key).props.active = value
             return
 
-        if key == "nap_enable":
-            dprint("nap_enable", value)
+        if key == "nap-enable":
+            dprint("nap-enable", value)
             self.Builder.get_object(key).props.active = value
             nap_frame = self.Builder.get_object("nap_frame")
             if value:
@@ -85,7 +87,7 @@ class Network(ServicePlugin):
             dprint("network apply")
 
             m = Mechanism()
-            nap_enable = self.Builder.get_object("nap_enable")
+            nap_enable = self.Builder.get_object("nap-enable")
             if nap_enable.props.active:
 
                 r_dnsmasq = self.Builder.get_object("r_dnsmasq")
@@ -100,9 +102,9 @@ class Network(ServicePlugin):
                 try:
                     m.EnableNetwork(inet_aton(net_ip.props.text), inet_aton("255.255.255.0"), stype)
 
-                    if not self.NetConf.props.nap_enable:  # race condition workaround
-                        self.ignored_keys.append("nap_enable")
-                    self.NetConf.props.nap_enable = True
+                    if not self.Settings["nap-enable"]: # race condition workaround
+                        self.ignored_keys.append("nap-enable")
+                    self.Settings["nap-enable"] = True
                 except Exception as e:
                     lines = str(e).splitlines()
 
@@ -114,9 +116,9 @@ class Network(ServicePlugin):
                     d.destroy()
                     return
             else:
-                if self.NetConf.props.nap_enable:  # race condition workaround
-                    self.ignored_keys.append("nap_enable")
-                self.NetConf.props.nap_enable = False
+                if self.Settings["nap-enable"]:  # race condition workaround
+                    self.ignored_keys.append("nap-enable")
+                self.Settings["nap-enable"] = False
                 m.DisableNetwork()
 
             self.clear_options()
@@ -156,29 +158,26 @@ class Network(ServicePlugin):
 
     def on_query_apply_state(self):
         changed = False
-        opts = self.get_options()
-        if opts == []:
-            return False
-        else:
-            if "ip" in opts:
-                try:
-                    self.ip_check()
-                except Exception as e:
-                    print(e)
-                    return -1
-
+        if self.Settings["ip"]:
+            try:
+                self.ip_check()
+            except Exception as e:
+                print(e)
+                return -1
             return True
+        else:
+            return False
 
 
     def setup_network(self):
-        self.NetConf = Config("network")
-        self.NetConf.connect("property-changed", self.on_property_changed)
+        self.Settings = Gio.Settings.new(BLUEMAN_NETWORK_GSCHEMA)
+        self.Settings.connect("changed", self.on_property_changed)
 
-        gn_enable = self.Builder.get_object("gn_enable")
+        gn_enable = self.Builder.get_object("gn-enable")
         # latest bluez does not support GN, apparently
         gn_enable.props.visible = False
 
-        nap_enable = self.Builder.get_object("nap_enable")
+        nap_enable = self.Builder.get_object("nap-enable")
         r_dnsmasq = self.Builder.get_object("r_dnsmasq")
         r_dhcpd = self.Builder.get_object("r_dhcpd")
         net_ip = self.Builder.get_object("net_ip")
@@ -191,36 +190,44 @@ class Network(ServicePlugin):
         nap_frame = self.Builder.get_object("nap_frame")
         warning = self.Builder.get_object("warning")
 
-        rb_blueman.props.active = self.NetConf.props.dhcp_client
-        nap_enable.props.active = self.NetConf.props.nap_enable
-        gn_enable.props.active = self.NetConf.props.gn_enable
+        if self.Settings["pan-blueman"]:
+            rb_blueman.props.active = True
+        else:
+            rb_nm.props.active = True
+
+        if self.Settings["dun-blueman"]:
+            rb_dun_blueman.props.active = True
+        else:
+            rb_dun_nm.props.active = True
+
+        nap_enable.props.active = self.Settings["nap-enable"]
+        gn_enable.props.active = self.Settings["gn-enable"]
+
+        if not self.Settings["nap-enable"]:
+            nap_frame.props.sensitive = False
 
         net_ip.props.text = "10.%d.%d.1" % (randint(0, 255), randint(0, 255))
 
-        if not self.NetConf.props.nap_enable:
-            nap_frame.props.sensitive = False
-
-        nc = NetConf.get_default()
-        if nc.ip4_address != None:
-            net_ip.props.text = inet_ntoa(nc.ip4_address)
-            #if not self.NetConf.props.nap_enable:
-            #	self.ignored_keys.append("nap_enable")
-            self.NetConf.props.nap_enable = True
+        if self.Settings["ip"]:
+            net_ip.props.text = inet_ntoa(self.Settings["ip"])
+            #if not self.NetConf.props.nap-enable:
+            #	self.ignored_keys.append("nap-enable")
+            self.Settings["nap-enable"] = True
 
 
         #if ns["masq"] != 0:
         #	net_nat.props.active = ns["masq"]
 
-        if nc.get_dhcp_handler() == None:
+        dhcp_client = self.Settings["dhcp-client"]
+        if not dhcp_client in ("dnsmasq", "dhcpd3"):
             nap_frame.props.sensitive = False
             nap_enable.props.active = False
-            if self.NetConf.props.nap_enable or self.NetConf.props.nap_enable == None:
-                self.ignored_keys.append("nap_enable")
-            self.NetConf.props.nap_enable = False
-
+            if self.Settings["nap-enable"]:
+                self.ignored_keys.append("nap-enable")
+            self.Settings["nap-enable"] = False
 
         else:
-            if nc.get_dhcp_handler() == DnsMasqHandler:
+            if dhcp_client == "dnsmasq":
                 r_dnsmasq.props.active = True
             else:
                 r_dhcpd.props.active = True
@@ -230,9 +237,9 @@ class Network(ServicePlugin):
             warning.props.visible = True
             warning.props.sensitive = True
             nap_enable.props.sensitive = False
-            if self.NetConf.props.nap_enable or self.NetConf.props.nap_enable == None:
-                self.ignored_keys.append("nap_enable")
-            self.NetConf.props.nap_enable = False
+            if self.Settings["nap-enable"]:
+                self.ignored_keys.append("nap-enable")
+            self.Settings["nap-enable"] = False
 
         if not have("dnsmasq"):
             r_dnsmasq.props.sensitive = False
@@ -246,10 +253,14 @@ class Network(ServicePlugin):
 
         r_dnsmasq.connect("toggled", lambda x: self.option_changed_notify("dnsmasq"))
 
-        net_nat.connect("toggled", lambda x: self.on_property_changed(self.NetConf, "nat", x.props.active))
-        net_ip.connect("changed", lambda x: self.on_property_changed(self.NetConf, "ip", x.props.text))
-        gn_enable.connect("toggled", lambda x: setattr(self.NetConf.props, "gn_enable", x.props.active))
-        nap_enable.connect("toggled", lambda x: self.on_property_changed(self.NetConf, "nap_enable", x.props.active))
+        #net_nat.connect("toggled", lambda x: self.on_property_changed(self.NetConf, "nat", x.props.active))
+        self.Settings.bind("nat", net_nat, "active", Gio.SettingsBindFlags.DEFAULT)
+        #net_ip.connect("changed", lambda x: self.on_property_changed(self.NetConf, "ip", x.props.text))
+        self.Settings.bind("ip", net_ip, "text", Gio.SettingsBindFlags.DEFAULT)
+        #gn-enable.connect("toggled", lambda x: setattr(self.NetConf.props, "gn-enable", x.props.active))
+        self.Settings.bind("gn-enable", gn_enable, "active", Gio.SettingsBindFlags.DEFAULT)
+        #nap-enable.connect("toggled", lambda x: self.on_property_changed(self.NetConf, "nap-enable", x.props.active))
+        self.Settings.bind("nap-enable", nap_enable, "active", Gio.SettingsBindFlags.DEFAULT)
 
         applet = AppletService()
 

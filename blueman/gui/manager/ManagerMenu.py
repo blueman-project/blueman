@@ -1,4 +1,4 @@
-from gi.repository import Gtk
+from gi.repository import Gtk, Gio
 import blueman.bluez as Bluez
 from blueman.Functions import *
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
@@ -51,26 +51,14 @@ class ManagerMenu:
         view_menu.show()
 
         item = Gtk.CheckMenuItem.new_with_mnemonic(_("Show _Toolbar"))
-        if self.blueman.Config.props.show_toolbar == None:
-            item.props.active = True
-        else:
-            if not self.blueman.Config.props.show_toolbar:
-                item.props.active = False
-            else:
-                item.props.active = True
-        item.connect("activate", lambda x: setattr(self.blueman.Config.props, "show_toolbar", x.props.active))
+        #item.connect("activate", lambda x: setattr(self.blueman.Config.props, "show-toolbar", x.props.active))
+        self.blueman.Settings.bind("show-toolbar", item, "active", Gio.SettingsBindFlags.DEFAULT)
         view_menu.append(item)
         item.show()
 
         item = Gtk.CheckMenuItem.new_with_mnemonic(_("Show _Statusbar"))
-        if self.blueman.Config.props.show_statusbar == None:
-            item.props.active = True
-        else:
-            if not self.blueman.Config.props.show_statusbar:
-                item.props.active = False
-            else:
-                item.props.active = True
-        item.connect("activate", lambda x: setattr(self.blueman.Config.props, "show_statusbar", x.props.active))
+        #item.connect("activate", lambda x: setattr(self.blueman.Config.props, "show-statusbar", x.props.active))
+        self.blueman.Settings.bind("show-statusbar", item, "active", Gio.SettingsBindFlags.DEFAULT)
         view_menu.append(item)
         item.show()
 
@@ -90,12 +78,8 @@ class ManagerMenu:
         view_menu.append(iteml)
         iteml.show()
 
-        if self.blueman.Config.props.latest_last:
-            iteml.props.active = True
-        else:
-            itemf.props.active = True
-        itemf.connect("activate", lambda x: setattr(self.blueman.Config.props, "latest_last", not x.props.active))
-        iteml.connect("activate", lambda x: setattr(self.blueman.Config.props, "latest_last", x.props.active))
+        itemf.connect("activate", lambda x: setattr(self.blueman.Settings, "latest-last", not x.props.active))
+        iteml.connect("activate", lambda x: setattr(self.blueman.Settings, "latest-last", x.props.active))
 
         self.item_adapter.show()
         self.item_view.show()
@@ -192,7 +176,7 @@ class ManagerMenu:
         if menuitem.props.active:
             if adapter_path != self.blueman.List.Adapter.get_object_path():
                 dprint("selected", adapter_path)
-                self.blueman.Config.props.last_adapter = adapter_path_to_name(adapter_path)
+                self.blueman.Settings["last-adapter"] = adapter_path_to_name(adapter_path)
                 self.blueman.List.SetAdapter(adapter_path)
 
 

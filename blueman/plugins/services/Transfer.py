@@ -1,14 +1,16 @@
-from gi.repository import Gtk
+from gi.repository import Gtk, Gio
 from blueman.Constants import *
 from blueman.plugins.ServicePlugin import ServicePlugin
 
 from blueman.main.AppletService import AppletService
-from blueman.main.Config import Config
 from blueman.Functions import dprint
 
 
 class Transfer(ServicePlugin):
     __plugin_info__ = (_("Transfer"), "document-open")
+
+    def __init__(self):
+        self.Settings = Gio.Settings.new(BLUEMAN_TRANSFER_GSCHEMA)
 
     def on_load(self, container):
 
@@ -37,17 +39,17 @@ class Transfer(ServicePlugin):
 
     def on_property_changed(self, config, key, value):
 
-        if key == "opp_enabled":
+        if key == "opp-enabled":
             self.Builder.get_object(key).props.active = value
-        if key == "ftp_enabled":
+        if key == "ftp-enabled":
             self.Builder.get_object(key).props.active = value
-        if key == "ftp_allow_write":
+        if key == "ftp-allow-write":
             self.Builder.get_object(key).props.active = value
-        if key == "shared_path":
+        if key == "shared-path":
             self.Builder.get_object(key).set_current_folder(value)
-        if key == "browse_command":
+        if key == "browse-command":
             return
-        if key == "shared_path":
+        if key == "shared-path":
             self.option_changed_notify(key, False)
         else:
             self.option_changed_notify(key)
@@ -60,17 +62,13 @@ class Transfer(ServicePlugin):
             except:
                 dprint("failed to connect to applet")
             else:
-                c = self.get_options()
-                if "opp_enabled" in c:
-                    if not self.TransConf.props.opp_enabled:
+                if not self.Settings["opp-enabled"]:
                         a.TransferControl("opp", "destroy")
 
-                if "ftp_enabled" in c:
-                    if not self.TransConf.props.ftp_enabled:
+                if not self.Settings["ftp-enabled"]:
                         a.TransferControl("ftp", "destroy")
 
-                if "opp_accept" in c or "shared_path" in c or "opp_enabled" in c:
-                    if self.TransConf.props.opp_enabled:
+                if self.Settings["opp-enabled"]:
                         state = a.TransferStatus("opp")
                         if state == 0:  # destroyed
                             a.TransferControl("opp", "create")
@@ -80,52 +78,46 @@ class Transfer(ServicePlugin):
                         elif state == 1:
                             a.TransferControl("opp", "start")
 
-                if "ftp_allow_write" in c or "shared_path" in c or "ftp_enabled" in c:
-                    if self.TransConf.props.ftp_enabled:
-                        state = a.TransferStatus("ftp")
-                        if state == 0:  # destroyed
-                            a.TransferControl("ftp", "create")
-                        elif state == 2:  # running
-                            a.TransferControl("ftp", "stop")
-                            a.TransferControl("ftp", "start")
-                        elif state == 1:
-                            a.TransferControl("ftp", "start")
-
+                if self.Settings["ftp-enabled"]:
+                    state = a.TransferStatus("ftp")
+                    if state == 0:  # destroyed
+                        a.TransferControl("ftp", "create")
+                    elif state == 2:  # running
+                        a.TransferControl("ftp", "stop")
+                        a.TransferControl("ftp", "start")
+                    elif state == 1:
+                        a.TransferControl("ftp", "start")
                 self.clear_options()
 
             dprint("transfer apply")
 
     def on_query_apply_state(self):
-        opts = self.get_options()
-        if not opts:
-            return False
-        else:
-            return True
+        return True
 
     def setup_transfer(self):
-        self.TransConf = Config("transfer")
-        self.TransConf.connect("property-changed", self.on_property_changed)
-        opp_enabled = self.Builder.get_object("opp_enabled")
-        ftp_enabled = self.Builder.get_object("ftp_enabled")
-        ftp_allow_write = self.Builder.get_object("ftp_allow_write")
-        opp_accept = self.Builder.get_object("opp_accept")
-        shared_path = self.Builder.get_object("shared_path")
+        self.Settings = Gio.Settings.new(BLUEMAN_TRANSFER_GSCHEMA)
+        self.Settings.connect("changed", self.on_property_changed)
+        opp_enabled = self.Builder.get_object("opp-enabled")
+        ftp_enabled = self.Builder.get_object("ftp-enabled")
+        ftp_allow_write = self.Builder.get_object("ftp-allow-write")
+        opp_accept = self.Builder.get_object("opp-accept")
+        shared_path = self.Builder.get_object("shared-path")
         obex_cmd = self.Builder.get_object("e_obex_cmd")
 
-        opp_enabled.props.active = self.TransConf.props.opp_enabled
-        ftp_enabled.props.active = self.TransConf.props.ftp_enabled
-        ftp_allow_write.props.active = self.TransConf.props.ftp_allow_write
-        opp_accept.props.active = self.TransConf.props.opp_accept
-        if self.TransConf.props.browse_command:
-            obex_cmd.props.text = self.TransConf.props.browse_command
+        opp_enabled.props.active = self.Settings["opp-enabled"]
+        ftp_enabled.props.active = self.Settings["ftp-enabled"]
+        ftp_allow_write.props.active = self.Settings["ftp-allow-write"]
+        opp_accept.props.active = self.Settings["opp-accept"]
+        if self.Settings["browse-command"]:
+            obex_cmd.props.text = self.Settings["browse-command"]
 
-        if self.TransConf.props.shared_path is not None:
-            shared_path.set_current_folder(self.TransConf.props.shared_path)
+        if not self.Settings["shared-path"]:
+            shared-path.set_current_folder(self.Settings["shared-path"])
 
-        obex_cmd.connect("changed", lambda x: setattr(self.TransConf.props, "browse_command", x.props.text))
-        opp_enabled.connect("toggled", lambda x: setattr(self.TransConf.props, "opp_enabled", x.props.active))
-        ftp_enabled.connect("toggled", lambda x: setattr(self.TransConf.props, "ftp_enabled", x.props.active))
-        ftp_allow_write.connect("toggled", lambda x: setattr(self.TransConf.props, "ftp_allow_write", x.props.active))
-        opp_accept.connect("toggled", lambda x: setattr(self.TransConf.props, "opp_accept", x.props.active))
+        obex_cmd.connect("changed", lambda x: setattr(self.Settings, "browse-command", x.props.text))
+        opp_enabled.connect("toggled", lambda x: setattr(self.Settings, "opp-enabled", x.props.active))
+        ftp_enabled.connect("toggled", lambda x: setattr(self.Settings, "ftp-enabled", x.props.active))
+        ftp_allow_write.connect("toggled", lambda x: setattr(self.Settings, "ftp-allow-write", x.props.active))
+        opp_accept.connect("toggled", lambda x: setattr(self.Settings, "opp-accept", x.props.active))
         shared_path.connect("current-folder-changed",
-                            lambda x: setattr(self.TransConf.props, "shared_path", x.get_filename()))
+                            lambda x: setattr(self.Settings, "shared-path", x.get_filename()))

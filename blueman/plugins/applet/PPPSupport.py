@@ -2,9 +2,8 @@ from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.Notification import Notification
 from blueman.main.Mechanism import Mechanism
-from blueman.main.Config import Config
 
-from gi.repository import GObject
+from gi.repository import GObject, Gio
 
 from blueman.Sdp import uuid128_to_uuid16, DIALUP_NET_SVCLASS_ID
 import os
@@ -26,15 +25,11 @@ class Connection:
             GObject.timeout_add(5000, self.connect)
 
     def connect(self):
-        c = Config("gsm_settings/" + self.service.device.Address)
-        if c.props.apn is None:
-            c.props.apn = ""
-
-        if c.props.number is None:
-            c.props.number = "*99#"
+        self.Settings = Gio.Settings.new_with_path(BLUEMAN_GSMSETTINGS_GSCHEMA, BLUEMAN_GSMSETTINGS_PATH + self.service.device.Address + "/" )
+        self.Settings["address"] = self.service.device.Address
 
         m = Mechanism()
-        m.PPPConnect(self.port, c.props.number, c.props.apn, reply_handler=self.on_connected,
+        m.PPPConnect(self.port, self.Settings['number'], self.Settings['apn'], reply_handler=self.on_connected,
                      error_handler=self.on_error, timeout=200)
 
     def on_error(self, error):

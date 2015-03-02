@@ -15,6 +15,7 @@ AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [The gettext package])
 AM_GLIB_GNU_GETTEXT
 IT_PROG_INTLTOOL([0.35.0])
 
+m4_define_default([_AM_PYTHON_INTERPRETER_LIST],[python2 python2.7 python2.6])
 AM_PATH_PYTHON([2.7])
 PKG_CHECK_MODULES([PYTHON], [python-${PYTHON_VERSION}])
 AC_SUBST(PYTHON_LIBS)
@@ -183,6 +184,8 @@ PKG_CHECK_MODULES([PYGOBJECT],
 AC_SUBST(PYGOBJECT_CFLAGS)
 AC_SUBST(PYGOBJECT_LIBS)
 
+# GSettings related settings
+GLIB_GSETTINGS
 
 AC_OUTPUT([
 Makefile
@@ -200,7 +203,6 @@ blueman/plugins/services/Makefile
 blueman/plugins/applet/Makefile
 blueman/plugins/mechanism/Makefile
 blueman/plugins/manager/Makefile
-blueman/plugins/config/Makefile
 blueman/main/Makefile
 blueman/main/applet/BluezAgent.py
 blueman/main/applet/Makefile

@@ -1,9 +1,8 @@
 from blueman.Functions import *
-from blueman.main.Config import Config
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.bluez.Headset import Headset as BluezHeadset
 import dbus
-
+from gi.repository import Gio
 
 class Headset(AppletPlugin):
     __author__ = "Walmis"

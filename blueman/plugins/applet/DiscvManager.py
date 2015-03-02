@@ -25,6 +25,9 @@ class DiscvManager(AppletPlugin):
         }
     }
 
+    def __init__(self):
+        self.Settings = Gio.Settings.new(BLUEMAN_GENERAL_GSCHEMA)
+
     def on_load(self, applet):
         self.Signals = SignalTracker()
 
@@ -70,7 +73,7 @@ class DiscvManager(AppletPlugin):
     def on_set_discoverable(self, item):
         if self.adapter:
             self.adapter.set("Discoverable", True)
-            self.adapter.set("DiscoverableTimeout", self.get_option("time"))
+            self.adapter.set("DiscoverableTimeout", self.Settings["discover-timeout"])
 
     def init_adapter(self):
         try:

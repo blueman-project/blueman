@@ -1,6 +1,5 @@
 import os
-from gi.repository import Gtk
-from gi.repository import Gdk
+from gi.repository import Gtk, Gdk
 from operator import itemgetter
 import dbus
 import gettext
@@ -57,6 +56,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
     items = None
     inst = None
     atexit_registered = False
+
 
     def on_load(self, applet):
         self.Applet = applet
