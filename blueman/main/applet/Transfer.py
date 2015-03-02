@@ -20,14 +20,7 @@ class Transfer(OdsManager):
             self.status_icon = None
 
         self.GHandle("server-created", self.on_server_created)
-        self.Config = Config("transfer")
-
-        #check options
-        if self.Config.props.opp_enabled == None:
-            self.Config.props.opp_enabled = True
-
-        if self.Config.props.ftp_enabled == None:
-            self.Config.props.ftp_enabled = True
+        self.Config = Config("org.blueman.transfer")
 
         self.create_server("opp")
         self.create_server("ftp")
@@ -37,33 +30,30 @@ class Transfer(OdsManager):
     def create_server(self, pattern):
 
         if pattern == "opp":
-            if self.Config.props.opp_enabled:
+            if self.Config["opp-enabled"]:
                 OdsManager.create_server(self)
         elif pattern == "ftp":
-            if self.Config.props.ftp_enabled:
+            if self.Config["ftp-enabled"]:
                 OdsManager.create_server(self, pattern="ftp", require_pairing=True)
 
 
     def start_server(self, pattern):
         server = self.get_server(pattern)
         if server != None:
-            if self.Config.props.shared_path == None:
+            if not self.Config["shared-path"]:
                 d = get_special_dir(SpecialDirType.PUBLIC_SHARE)
                 if d == None:
-                    self.Config.props.shared_path = os.path.expanduser("~")
+                    self.Config["shared-path"] = os.path.expanduser("~")
                 else:
-                    self.Config.props.shared_path = d
+                    self.Config["shared-path"] = d
 
-            if not os.path.isdir(self.Config.props.shared_path):
-                raise Exception("Configured share directory %s does not exist" % self.Config.props.shared_path)
+            if not os.path.isdir(self.Config["shared-path"]):
+                raise Exception("Configured share directory %s does not exist" % self.Config["shared-path"])
 
             if pattern == "opp":
-                server.Start(self.Config.props.shared_path, True, False)
+                server.Start(self.Config["shared-path"], True, False)
             elif pattern == "ftp":
-                if self.Config.props.ftp_allow_write == None:
-                    self.Config.props.ftp_allow_write = False
-
-                server.Start(self.Config.props.shared_path, self.Config.props.ftp_allow_write, True)
+                server.Start(self.Config["shared-path"], self.Config["ftp-allow-write"], True)
             return True
         else:
             return False
@@ -144,7 +134,7 @@ class Transfer(OdsManager):
                     wsession.Reject()
                 wsession.transfer["waiting"] = False
 
-        if info["BluetoothAddress"] not in self.allowed_devices and not (self.Config.props.opp_accept and trusted):
+        if info["BluetoothAddress"] not in self.allowed_devices and not (self.Config["opp-accept"] and trusted):
 
             n = Notification(_("Incoming file over Bluetooth"),
                              _("Incoming file %(0)s from %(1)s") % {"0": "<b>" + os.path.basename(filename) + "</b>",
@@ -244,7 +234,7 @@ class Transfer(OdsManager):
                                          "silent_transfers"],
                                      pixbuf=icon, status_icon=self.status_icon)
 
-                    self.add_open(n, "Open Location", self.Config.props.shared_path)
+                    self.add_open(n, "Open Location", self.Config["shared-path"])
 
                 elif session.transfer["normal_transfers"] > 0 and session.transfer["silent_transfers"] > 0:
 
@@ -254,7 +244,7 @@ class Transfer(OdsManager):
                                               session.transfer["silent_transfers"]) % session.transfer[
                                          "silent_transfers"],
                                      pixbuf=icon, status_icon=self.status_icon)
-                    self.add_open(n, "Open Location", self.Config.props.shared_path)
+                    self.add_open(n, "Open Location", self.Config["shared-path"])
 
                 del session.transfer
                 del session.server
