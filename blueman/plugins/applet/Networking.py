@@ -18,8 +18,8 @@ class Networking(AppletPlugin):
         self.Applet = applet
         self.Signals = SignalTracker()
 
-        self.Config = Config("network")
-        self.Signals.Handle("gobject", self.Config, "property-changed", self.on_config_changed)
+        self.Config = Config("org.blueman.network")
+        self.Signals.Handle("gobject", self.Config, "changed", self.on_config_changed)
 
         self.load_nap_settings()
 
@@ -52,10 +52,10 @@ class Networking(AppletPlugin):
         self.update_status()
 
     def update_status(self):
-        self.set_nap(self.Config.props.nap_enable or False)
+        self.set_nap(self.Config["nap-enable"])
 
     def on_config_changed(self, config, key, value):
-        if key == "nap_enable":
+        if key == "nap-enable":
             self.set_nap(value)
 
     def set_nap(self, on):
