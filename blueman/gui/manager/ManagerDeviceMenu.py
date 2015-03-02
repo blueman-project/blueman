@@ -5,7 +5,6 @@ from blueman.Sdp import uuid128_to_uuid16, SERIAL_PORT_SVCLASS_ID, OBEX_OBJPUSH_
 from blueman.Functions import *
 from blueman.main.SignalTracker import SignalTracker
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
-from blueman.main.Config import Config
 from blueman.main.AppletService import AppletService
 from blueman.gui.MessageArea import MessageArea
 from blueman.bluez.BlueZInterface import BlueZInterface

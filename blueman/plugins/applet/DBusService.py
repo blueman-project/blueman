@@ -2,7 +2,6 @@ from blueman.Functions import *
 import pickle
 import base64
 from blueman.Service import Service
-from blueman.main.Config import Config
 from blueman.main.PluginManager import StopException
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.applet.BluezAgent import AdapterAgent

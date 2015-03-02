@@ -1,6 +1,5 @@
 from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.main.Config import Config
 from blueman.gui.Notification import Notification
 from blueman.Sdp import uuid128_to_uuid16, uuid16_to_name, SERIAL_PORT_SVCLASS_ID
 from blueman.Lib import rfcomm_list
