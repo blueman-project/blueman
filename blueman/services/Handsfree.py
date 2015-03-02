@@ -6,3 +6,4 @@ class Handsfree(Service):
     __group__ = 'audio'
     __svclass_id__ = HANDSFREE_SVCLASS_ID
     __icon__ = "blueman-handsfree"
+    __priority__ = 10
