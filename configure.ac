@@ -118,15 +118,15 @@ AC_ARG_WITH(no_runtime_deps_check,
 deps_check=0
 )
 
-polkit_val="yes"
-AC_ARG_ENABLE(polkit,
-[  --enable-polkit=[yes/no] Enable policykit support],,enable_polkit=yes)
-if test "x$enable_polkit" = "xyes"; then
-        polkit_val="yes"
-else
-        polkit_val="no"
-fi
-AC_SUBST(polkit_val)
+AC_ARG_ENABLE([polkit],
+  [  --enable-polkit=[yes/no] Enable policykit support],
+  ,[enable_polkit=$enableval],[enable_polkit=yes])
+
+AS_IF([test "x$enable_polkit" = "xyes"],
+  [PKG_CHECK_MODULES([POLKIT], [polkit-agent-1], [have_polkit=yes], [have_polkit=no])],
+  [have_polkit=no])
+
+AM_CONDITIONAL([HAVE_POLKIT], [test "x$have_polkit" = "xyes"])
 
 AC_ARG_ENABLE(nautilus-sendto,
 [  --enable-nautilus-sendto=[yes/no] Enable nautilus-sendto plugin build],have_nst=$enableval,have_nst=yes)
@@ -260,7 +260,7 @@ echo
 echo Prefix : $prefix
 echo sysconfig dir : $sysconfdir
 echo Python version : $PYTHON_VERSION
-echo Policykit-1 Enabled: $polkit_val
+echo Policykit-1 Enabled: $have_polkit
 echo Nautilus sendto plugin enabled: $have_nst
 echo Thunar sendto installation enabled: $have_thunar
 echo Settings menu integration enabled: $have_settings

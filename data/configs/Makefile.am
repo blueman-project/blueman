@@ -7,11 +7,12 @@ dbus_services_DATA = org.blueman.Mechanism.service
 dbus_sessdir = $(datadir)/dbus-1/services
 dbus_sess_DATA = blueman-applet.service
 
+if HAVE_POLKIT
 @INTLTOOL_POLICY_RULE@ 
 policykitdir = $(datadir)/polkit-1/actions
 policykit_in_files = org.blueman.policy.in
 policykit_DATA = $(policykit_in_files:.policy.in=.policy)
-
+endif
 
 EXTRA_DIST = org.blueman.Mechanism.conf		\
 	blueman-applet.service.in		\
