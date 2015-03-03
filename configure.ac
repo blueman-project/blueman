@@ -104,23 +104,20 @@ dnl ---------------------------------
 dnl dhcp config file location
 dnl ---------------------------------
 
-dhconfig='/etc/dhcp3/dhcpd.conf'
-AC_ARG_WITH(dhcp_config,
-[  --with-dhcp-config=PATH           set dhcp3 server configuration path],
-dhconfig="$with_dhcp_config"
-)
-AC_SUBST(dhconfig)
+AC_ARG_WITH([dhcp_config],
+  AS_HELP_STRING([--with-dhcp-config=PATH], [Set dhcp3 server configuration path]),
+  [dhconfig="$withval"], [dhconfig='/etc/dhcp3/dhcpd.conf'])
+AC_SUBST([dhconfig])
 
 dnl ---------------------------------
-deps_check=1
-AC_ARG_WITH(no_runtime_deps_check,
-[  --with-no-runtime-deps-check disable runtime dependency check (for package maintainers)],
-deps_check=0
-)
+
+AC_ARG_ENABLE([runtime_deps_check],
+  AS_HELP_STRING([--disable-runtime-deps-check], [Disable runtime dependency check (for package maintainers)]),
+  [enable_runtime_deps_check=$enableval], [enable_runtime_deps_check=yes])
 
 AC_ARG_ENABLE([polkit],
-  [  --enable-polkit=[yes/no] Enable policykit support],
-  ,[enable_polkit=$enableval],[enable_polkit=yes])
+  AS_HELP_STRING([--enable-polkit], [Enable policykit support]),
+  [enable_polkit=$enableval],[enable_polkit=yes])
 
 AS_IF([test "x$enable_polkit" = "xyes"],
   [PKG_CHECK_MODULES([POLKIT], [polkit-agent-1], [have_polkit=yes], [have_polkit=no])],
@@ -128,48 +125,48 @@ AS_IF([test "x$enable_polkit" = "xyes"],
 
 AM_CONDITIONAL([HAVE_POLKIT], [test "x$have_polkit" = "xyes"])
 
-AC_ARG_ENABLE(nautilus-sendto,
-[  --enable-nautilus-sendto=[yes/no] Enable nautilus-sendto plugin build],have_nst=$enableval,have_nst=yes)
+AC_ARG_ENABLE([nautilus-sendto],
+  AS_HELP_STRING([--enable-nautilus-sendto], [Enable nautilus-sendto plugin build]),
+  [have_nst=$enableval], [have_nst=yes])
 
-AM_CONDITIONAL(HAVE_NST, test "x$have_nst" = "xyes")
+AM_CONDITIONAL([HAVE_NST], [test "x$have_nst" = "xyes"])
 
-AC_ARG_ENABLE(thunar-sendto,
-[  --enable-thunar-sendto=[yes/no] Enable thunar-sendto installation],have_thunar=$enableval,have_thunar=yes)
+AC_ARG_ENABLE([thunar-sendto],
+  AS_HELP_STRING([--enable-thunar-sendto], [Enable thunar-sendto installation]),
+  [have_thunar=$enableval], [have_thunar=yes])
 
-AM_CONDITIONAL(HAVE_THUNAR, test "x$have_thunar" = "xyes")
+AM_CONDITIONAL([HAVE_THUNAR], [test "x$have_thunar" = "xyes"])
 
 AC_ARG_ENABLE(settings-integration,
-[  --enable-settings-integration=[yes/no] Enable settings manager integration with xfce and mate],have_settings=$enableval,have_settings=yes)
+  AS_HELP_STRING([--enable-settings-integration], [Enable settings manager integration with xfce and mate]),
+  [have_settings=$enableval], [have_settings=yes])
 
-AM_CONDITIONAL(HAVE_SETTINGS, test "x$have_settings" = "xyes")
+AM_CONDITIONAL([HAVE_SETTINGS], [test "x$have_settings" = "xyes"])
 
 dnl ----------------------------
 
-if test $deps_check = 1; then
-
-AM_CHECK_PYMOD(dbus,,,[AC_MSG_ERROR(Could not find Python module dbus)])
-
+if test "x$enable_runtime_deps_check" = "xyes"; then
+AM_CHECK_PYMOD([dbus],,,[AC_MSG_ERROR(Could not find Python module dbus)])
 fi
 
+PKG_CHECK_MODULES([BLUEZ],
+		  [bluez >= 4.61
+		  libstartup-notification-1.0 >= 0.9
+		  gtk+-3.0
+		  glib-2.0 >= 2.32
+		  gthread-2.0 >= 2.32])
 
-PKG_CHECK_MODULES(BLUEZ,
-		bluez	>= 4.61
-		libstartup-notification-1.0 >= 0.9
-		gtk+-3.0
-		glib-2.0 >= 2.32
-		gthread-2.0 >= 2.32
-)
-AC_SUBST(BLUEZ_CFLAGS)
-AC_SUBST(BLUEZ_LIBS)
+AC_SUBST([BLUEZ_CFLAGS])
+AC_SUBST([BLUEZ_LIBS])
 
-PKG_CHECK_MODULES(GNOMEICONS, gnome-icon-theme,
-		HAVE_GNOME_ICONS="yes", HAVE_GNOME_ICONS="no")
+PKG_CHECK_MODULES([GNOMEICONS],[gnome-icon-theme],
+                  [HAVE_GNOME_ICONS="yes"], [HAVE_GNOME_ICONS="no"])
 
-PKG_CHECK_MODULES(MATEICONS, mate-icon-theme,
-		HAVE_MATE_ICONS="yes", HAVE_MATE_ICONS="no")
+PKG_CHECK_MODULES([MATEICONS],[mate-icon-theme],
+		  [HAVE_MATE_ICONS="yes"], [HAVE_MATE_ICONS="no"])
 
-PKG_CHECK_MODULES(FAENZAICONS, faenza-icon-theme,
-		HAVE_FAENZA_ICONS="yes", HAVE_FAENZA_ICONS="no")
+PKG_CHECK_MODULES([FAENZAICONS], [faenza-icon-theme],
+		  [HAVE_FAENZA_ICONS="yes"], [HAVE_FAENZA_ICONS="no"])
 
 if test "x$HAVE_GNOME_ICONS" = "xno" && test "x$HAVE_MATE_ICONS" = "xno" && test "xHAVE_FAENZA_ICONS" = "xno"; then
 	AC_MSG_ERROR([Required icon themes not found.])
@@ -178,10 +175,10 @@ fi
 PKG_CHECK_MODULES([PYGOBJECT],
                   [pygobject-2.0 >= 2.12],
                   [],
-                  [PKG_CHECK_MODULES(PYGOBJECT, pygobject-3.0)]
+                  [PKG_CHECK_MODULES([PYGOBJECT], [pygobject-3.0])]
 )
-AC_SUBST(PYGOBJECT_CFLAGS)
-AC_SUBST(PYGOBJECT_LIBS)
+AC_SUBST([PYGOBJECT_CFLAGS])
+AC_SUBST([PYGOBJECT_LIBS])
 
 
 AC_OUTPUT([
