@@ -16,6 +16,7 @@
 * Add blueman-report to create commented logs for bug reports
 * [bluez] BlueZ 5 support for audio, serial, recent connections, and setup
   assistant
+* Use Gsettings for configuration storage and remove the config plugin system.
 
 ### Changes
 
@@ -45,6 +46,7 @@
 * [libblueman] Add missing includes (@posophe)
 * [ui] Move some icons to pixmaps directory (@rworkman / Robby Workman)
 * [ui] Fix fallback for notification daemons not capable to handle actions
+* [ui] Fix "Shared Folder" widget in Transfer plugin.
 
 ## 1.99.alpha1
 
