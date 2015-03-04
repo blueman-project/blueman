@@ -53,8 +53,20 @@ class Manager(PropertiesBlueZInterface):
                     if 'org.bluez.Adapter1' in interfaces:
                         handler(object_path)
 
+                self._handler_wrappers[handler] = wrapper
+
                 signal = signal.replace('Adapter', 'Interfaces')
 
             self._handle_signal(wrapper, signal, self.get_interface_name(), self.get_object_path(), **kwargs)
         else:
             super(Manager, self).handle_signal(handler, signal, **kwargs)
+
+    def unhandle_signal(self, handler, signal, **kwargs):
+        if signal == 'AdapterAdded' or signal == 'AdapterRemoved':
+            if self.__class__.get_interface_version()[0] > 4:
+                handler = self._handler_wrappers[handler]
+                signal = signal.replace('Adapter', 'Interfaces')
+
+            self._unhandle_signal(handler, signal, self.get_interface_name(), self.get_object_path(), **kwargs)
+        else:
+            super(Manager, self).unhandle_signal(handler, signal, **kwargs)
