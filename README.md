@@ -17,12 +17,6 @@ It is lightweight, easy to use, Python based, and GPL licensed.
 The original project page of Valmantas Palikša can be found [here](https://launchpad.net/blueman).
 Please use the GitHub issue tracker for bugs and questions.
 
-## Roadmap
-
-The latest stable version is 1.23 released in Oct. 2011.
-
-Blueman 2 will especially bring support for newer APIs like BlueZ 5 and NetworkManager 0.9 and fix a number of issues.
-
 ## Dependencies
 
 ### Generic dependencies
