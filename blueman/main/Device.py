@@ -19,8 +19,8 @@ import weakref
 
 class Device(GObject.GObject):
     __gsignals__ = {
-        'invalidated': (GObject.SignalFlags.NO_HOOKS, None, ()),
-        'property-changed': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
+        str('invalidated'): (GObject.SignalFlags.NO_HOOKS, None, ()),
+        str('property-changed'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
     }
 
     def __init__(self, instance):

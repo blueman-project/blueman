@@ -46,7 +46,7 @@ enable_rgba_colormap()
 
 class Sender(GObject.GObject):
     __gsignals__ = {
-        'result': (GObject.SignalFlags.RUN_FIRST, None, (GObject.TYPE_BOOLEAN,)),
+        str('result'): (GObject.SignalFlags.RUN_FIRST, None, (GObject.TYPE_BOOLEAN,)),
     }
 
     def __init__(self, device, adapter, files):

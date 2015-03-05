@@ -25,8 +25,8 @@ builtins.StopException = StopException
 
 class PluginManager(GObject.GObject):
     __gsignals__ = {
-    'plugin-loaded': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
-    'plugin-unloaded': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
+    str('plugin-loaded'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
+    str('plugin-unloaded'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
     }
 
     def __init__(self, plugin_class, module_path, user_data):

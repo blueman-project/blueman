@@ -9,13 +9,13 @@ from blueman.ods.OdsBase import OdsBase
 
 class OdsSession(OdsBase):
     __gsignals__ = {
-        'connected': (GObject.SignalFlags.RUN_FIRST, None, ()),
-        'cancelled': (GObject.SignalFlags.NO_HOOKS, None, ()),
-        'disconnected': (GObject.SignalFlags.NO_HOOKS, None, ()),
-        'transfer-started': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
-        'transfer-progress': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-        'transfer-completed': (GObject.SignalFlags.NO_HOOKS, None, ()),
-        'error-occurred': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
+        str('connected'): (GObject.SignalFlags.RUN_FIRST, None, ()),
+        str('cancelled'): (GObject.SignalFlags.NO_HOOKS, None, ()),
+        str('disconnected'): (GObject.SignalFlags.NO_HOOKS, None, ()),
+        str('transfer-started'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
+        str('transfer-progress'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+        str('transfer-completed'): (GObject.SignalFlags.NO_HOOKS, None, ()),
+        str('error-occurred'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
     }
 
     def __init__(self, obj_path):

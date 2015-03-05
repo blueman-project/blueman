@@ -13,7 +13,7 @@ from blueman.main.SignalTracker import SignalTracker
 
 class ManagerProgressbar(GObject.GObject):
     __gsignals__ = {
-    'cancelled': (GObject.SignalFlags.RUN_LAST, None, ()),
+    str('cancelled'): (GObject.SignalFlags.RUN_LAST, None, ()),
     }
     __instances__ = []
 

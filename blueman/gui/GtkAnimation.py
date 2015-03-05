@@ -30,7 +30,7 @@ class BezierController(LinearController):
 
 class AnimBase(GObject.GObject):
     __gsignals__ = {
-    'animation-finished': (GObject.SignalFlags.RUN_LAST, None, ()),
+    str('animation-finished'): (GObject.SignalFlags.RUN_LAST, None, ()),
     }
 
     def __init__(self, state=1.0):

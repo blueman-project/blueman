@@ -10,12 +10,12 @@ from blueman.ods.OdsServerSession import OdsServerSession
 
 class OdsServer(OdsBase):
     __gsignals__ = {
-    'started': (GObject.SignalFlags.NO_HOOKS, None, ()),
-    'stopped': (GObject.SignalFlags.NO_HOOKS, None, ()),
-    'closed': (GObject.SignalFlags.NO_HOOKS, None, ()),
-    'error-occured': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
-    'session-created': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-    'session-removed': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+    str('started'): (GObject.SignalFlags.NO_HOOKS, None, ()),
+    str('stopped'): (GObject.SignalFlags.NO_HOOKS, None, ()),
+    str('closed'): (GObject.SignalFlags.NO_HOOKS, None, ()),
+    str('error-occured'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
+    str('session-created'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+    str('session-removed'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
     }
 
     def __init__(self, obj_path):

@@ -39,7 +39,7 @@ _GObjectAgent = _GDbusObjectType('_GObjectAgent', (Agent, GObject.GObject), {})
 
 class CommonAgent(_GObjectAgent):
     __gsignals__ = {
-        'released': (GObject.SignalFlags.NO_HOOKS, None, ()),
+        str('released'): (GObject.SignalFlags.NO_HOOKS, None, ()),
     }
 
     def __init__(self, status_icon, path, time_func, notifications):

@@ -26,8 +26,8 @@ import gettext
 
 class MonitorBase(GObject.GObject):
     __gsignals__ = {
-    'disconnected': (GObject.SignalFlags.NO_HOOKS, None, ()),
-    'stats': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
+    str('disconnected'): (GObject.SignalFlags.NO_HOOKS, None, ()),
+    str('stats'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
     }
 
     def __init__(self, device, interface):
@@ -314,10 +314,10 @@ class NetUsage(AppletPlugin, GObject.GObject):
     __author__ = "Walmis"
     __autoload__ = False
     __gsignals__ = {
-    'monitor-added': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-    'monitor-removed': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+    str('monitor-added'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+    str('monitor-removed'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
     #monitor, tx, rx
-    'stats': (
+    str('stats'): (
     GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
     }
 

@@ -10,10 +10,10 @@ from gi.repository import GObject
 
 class Session(Base):
     __gsignals__ = {
-        'transfer-started': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
-        'transfer-progress': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-        'transfer-completed': (GObject.SignalFlags.NO_HOOKS, None, ()),
-        'error-occurred': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,))
+        str('transfer-started'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
+        str('transfer-progress'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+        str('transfer-completed'): (GObject.SignalFlags.NO_HOOKS, None, ()),
+        str('error-occurred'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,))
     }
 
     def __init__(self, object_path):

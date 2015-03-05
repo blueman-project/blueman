@@ -10,7 +10,7 @@ from gi.repository import GObject
 
 
 class Client(Base):
-    __gsignals__ = {'session-created': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,))}
+    __gsignals__ = {str('session-created'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,))}
 
     def __init__(self):
         if self.__class__.get_interface_version()[0] < 5:

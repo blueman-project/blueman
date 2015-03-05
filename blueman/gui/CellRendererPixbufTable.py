@@ -9,7 +9,7 @@ from gi.repository import GObject
 
 class CellRendererPixbufTable(Gtk.CellRenderer):
     __gproperties__ = {
-    "pixbuffs": (GObject.TYPE_PYOBJECT, "pixbuf", "pixbuf", GObject.PARAM_READWRITE)
+    str("pixbuffs"): (GObject.TYPE_PYOBJECT, "pixbuf", "pixbuf", GObject.PARAM_READWRITE)
 
     }
 

@@ -24,30 +24,30 @@ class DeviceList(GenericList):
     __gsignals__ = {
         #@param: device TreeIter
         #note: None None is given when there ar no more rows, or when selected device is removed
-        'device-selected': (
+        str('device-selected'): (
             GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)
         ),
         #@param: device, TreeIter, (key, value)
         #note: there is a special property "Fake", it's not a real property,
         #but it is used to notify when device changes state from "Fake" to a real BlueZ object
         #the callback would be called with Fake=False
-        'device-property-changed': (
+        str('device-property-changed'): (
             GObject.SignalFlags.RUN_LAST,
             None,
             (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)
         ),
         #@param: adapter, (key, value)
-        'adapter-property-changed': (
+        str('adapter-property-changed'): (
         GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
         #@param: progress (0 to 1)
-        'discovery-progress': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_FLOAT,)),
+        str('discovery-progress'): (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_FLOAT,)),
 
         #@param: new adapter path, None if there are no more adapters
-        'adapter-changed': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
+        str('adapter-changed'): (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
 
         #@param: adapter path
-        'adapter-added': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
-        'adapter-removed': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
+        str('adapter-added'): (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
+        str('adapter-removed'): (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
     }
 
     def __del__(self):

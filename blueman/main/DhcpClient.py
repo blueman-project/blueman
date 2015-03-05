@@ -14,8 +14,8 @@ from blueman.Lib import get_net_address
 class DhcpClient(GObject.GObject):
     __gsignals__ = {
         # arg: interface name eg. ppp0
-        'connected': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-        'error-occurred': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+        str('connected'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+        str('error-occurred'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
     }
 
     quering = []
