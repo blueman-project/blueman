@@ -176,8 +176,8 @@ def spawn(command, system=False, sn=None, reap=True, *args, **kwargs):
     env = os.environ
 
     if sn:
-        id = sn.get_startup_id()
-        env["DESKTOP_STARTUP_ID"] = id
+        su_id = sn.get_startup_id()
+        env["DESKTOP_STARTUP_ID"] = su_id
 
     env["BLUEMAN_EVENT_TIME"] = str(Gtk.get_current_event_time())
 
