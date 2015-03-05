@@ -18,6 +18,7 @@ from blueman.Constants import *
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
+from gi.repository import GdkPixbuf
 
 from blueman.Functions import *
 
@@ -46,7 +47,7 @@ class BluemanServices:
         self.Dialog.connect("delete-event", lambda x, y: Gtk.main_quit())
 
         data = [
-            ["picture", 'GdkPixbuf', Gtk.CellRendererPixbuf(), {"pixbuf": 0}, None],
+            ["picture", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 0}, None],
             ["caption", str, Gtk.CellRendererText(), {"markup": 1}, None, {"expand": True}],
             ["id", str],
         ]

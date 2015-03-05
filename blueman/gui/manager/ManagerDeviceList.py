@@ -27,14 +27,14 @@ class ManagerDeviceList(DeviceList):
         cr.props.ellipsize = Pango.EllipsizeMode.END
         data = [
             # device picture
-            ["device_pb", 'GdkPixbuf', Gtk.CellRendererPixbuf(), {"pixbuf": 0}, None],
+            ["device_pb", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 0}, None],
             # device caption
             ["caption", str, cr, {"markup": 1}, None, {"expand": True}],
 
 
-            ["rssi_pb", 'GdkPixbuf', Gtk.CellRendererPixbuf(), {"pixbuf": 2}, None, {"spacing": 0}],
-            ["lq_pb", 'GdkPixbuf', Gtk.CellRendererPixbuf(), {"pixbuf": 3}, None, {"spacing": 0}],
-            ["tpl_pb", 'GdkPixbuf', Gtk.CellRendererPixbuf(), {"pixbuf": 4}, None, {"spacing": 0}],
+            ["rssi_pb", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 2}, None, {"spacing": 0}],
+            ["lq_pb", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 3}, None, {"spacing": 0}],
+            ["tpl_pb", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 4}, None, {"spacing": 0}],
             # trusted/bonded icons
             # ["tb_icons", 'PyObject', CellRendererPixbufTable(), {"pixbuffs":5}, None],
 
@@ -47,7 +47,7 @@ class ManagerDeviceList(DeviceList):
             ["rssi", float],
             ["lq", float],
             ["tpl", float],
-            ["orig_icon", 'GdkPixbuf'],
+            ["orig_icon", GdkPixbuf.Pixbuf],
             ["cell_fader", GObject.TYPE_PYOBJECT],
             ["row_fader", GObject.TYPE_PYOBJECT],
             ["levels_visible", bool],
