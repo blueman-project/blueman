@@ -2,7 +2,6 @@ APPS =					\
 	blueman-adapters	\
 	blueman-applet		\
 	blueman-manager		\
-	blueman-rfcomm-watcher \
 	blueman-services	\
 	blueman-sendto		\
 	blueman-assistant	\
@@ -15,5 +14,8 @@ apps_SCRIPTS = $(APPS)
 polkitdir = $(libexecdir)
 polkit_SCRIPTS = 	\
 	blueman-mechanism
+
+helpersdir = $(libexecdir)
+helpers_SCRIPTS = blueman-rfcomm-watcher
 	
-EXTRA_DIST = $(APPS) blueman-mechanism
+EXTRA_DIST = $(APPS) blueman-mechanism blueman-rfcomm-watcher

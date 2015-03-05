@@ -196,6 +196,7 @@ blueman/plugins/Makefile
 blueman/plugins/services/Makefile
 blueman/plugins/applet/Makefile
 blueman/plugins/mechanism/Makefile
+blueman/plugins/mechanism/Rfcomm.py
 blueman/plugins/manager/Makefile
 blueman/plugins/config/Makefile
 blueman/main/Makefile
