@@ -1,3 +1,5 @@
+from blueman.Functions import dprint
+from dbus import DBusException
 from blueman.Service import Service
 from blueman.bluez.Network import Network
 
@@ -9,7 +11,11 @@ class NetworkService(Service):
 
     @property
     def connected(self):
-        return self._service.get_properties()['Connected']
+        try:
+            return self._service.get_properties()['Connected']
+        except DBusException as e:
+            dprint('Could not get properties of network service: %s' % e)
+            return False
 
     def connect(self, reply_handler=None, error_handler=None):
         self._service.connect(self.uuid, reply_handler=reply_handler, error_handler=error_handler)
