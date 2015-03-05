@@ -13,7 +13,7 @@ class SignalTracker:
         self._signals = []
 
     def Handle(self, *args, **kwargs):
-        auto = not type(args[0]) == str
+        auto = not (hasattr(args[0], "upper") and hasattr(args[0], "format"))
         if "sigid" in kwargs:
             sigid = kwargs["sigid"]
             del kwargs["sigid"]
