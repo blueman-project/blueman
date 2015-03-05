@@ -200,7 +200,6 @@ blueman/plugins/applet/Makefile
 blueman/plugins/mechanism/Makefile
 blueman/plugins/mechanism/Rfcomm.py
 blueman/plugins/manager/Makefile
-blueman/plugins/config/Makefile
 blueman/main/Makefile
 blueman/main/applet/BluezAgent.py
 blueman/main/applet/Makefile
