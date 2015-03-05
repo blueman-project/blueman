@@ -30,10 +30,10 @@ class Device(GObject.GObject):
         self.Fake = True
         self.Temp = False
 
-        if isinstance(instance, str) or isinstance(instance, unicode):
-            self.Device = BluezDevice(instance)
-        else:
+        if isinstance(instance, BluezDevice):
             self.Device = instance
+        else:
+            self.Device = BluezDevice(instance)
 
         #set fallback icon, fixes lp:#327718
         self.Device.Icon = "blueman"
