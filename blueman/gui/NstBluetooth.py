@@ -1,3 +1,8 @@
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
+from __future__ import unicode_literals
+
 from gi.repository import Gtk, GObject, Pango
 from blueman.gui.DeviceSelectorWidget import DeviceSelectorWidget
 from blueman.Functions import setup_icon_path, spawn

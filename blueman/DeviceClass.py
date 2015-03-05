@@ -1,3 +1,8 @@
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
+from __future__ import unicode_literals
+
 service_cls = [
     "positioning",
     "networking",
@@ -163,7 +168,6 @@ toy_minor_cls = [
     "controller",
     "game"
 ]
-
 
 def get_major_class(klass):
     index = (klass >> 8) & 0x1F

@@ -1,4 +1,8 @@
 #!/usr/bin/env python
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
+from __future__ import unicode_literals
 
 cdef extern from "malloc.h":
     cdef void free(void *ptr)

@@ -1,3 +1,8 @@
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
+from __future__ import unicode_literals
+
 SDP_SERVER_SVCLASS_ID = 0x1000
 BROWSE_GRP_DESC_SVCLASS_ID = 0x1001
 PUBLIC_BROWSE_GROUP = 0x1002
@@ -195,7 +200,6 @@ UDI_UUID = 0x001d
 MCAP_CTRL_UUID = 0x001e
 MCAP_DATA_UUID = 0x001f
 L2CAP_UUID = 0x0100
-
 
 def uuid16_to_name(uuid16):
     try:
