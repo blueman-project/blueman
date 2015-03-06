@@ -47,6 +47,7 @@
 * [ui] Fix fallback for notification daemons not capable to handle actions
 * [ui] Fix "Shared Folder" widget in Transfer plugin.
 * [ui] Fix service disconnect icons
+* Do not translate polkit vendor (@pwithnall / Philip Withnall)
 
 ## 1.99.alpha1
 
