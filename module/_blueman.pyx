@@ -98,23 +98,27 @@ cdef extern from "linux/sockios.h":
     cdef int SIOCGIFADDR
     cdef int SIOCGIFNETMASK
 
-def get_net_address(iface):
+def get_net_address(py_iface):
+    py_bytes_iface = py_iface.encode('UTF-8')
+    cdef char* iface = py_bytes_iface
     cdef char* addr
     if iface != None:
         addr = c_get_net_address(iface, SIOCGIFADDR)
         if addr == NULL:
             return None
         else:
-            return addr
+            return addr.decode("UTF-8")
 
-def get_net_netmask(iface):
+def get_net_netmask(py_iface):
+    py_bytes_iface = py_iface.encode("UTF-8")
+    cdef char* iface = py_bytes_iface
     cdef char* addr
     if iface != None:
         addr = c_get_net_address(iface, SIOCGIFNETMASK)
         if addr == NULL:
             return None
         else:
-            return addr
+            return addr.decode("UTF-8")
 
 def get_net_interfaces():
     cdef char** ifaces
@@ -130,7 +134,7 @@ def get_net_interfaces():
         if ifaces[i] == NULL:
             break
         else:
-            ret.append(ifaces[i])
+            ret.append(ifaces[i].decode("UTF-8"))
             free(ifaces[i])
         i = i + 1
 
@@ -227,12 +231,18 @@ class BridgeException(Exception):
 
 
 
-def create_bridge(name="pan1"):
+def create_bridge(py_name="pan1"):
+    py_bytes_name = py_name.encode("UTF-8")
+    cdef char* name = py_bytes_name
+
     err = _create_bridge(name)
     if err < 0:
         raise BridgeException(-err)
 
-def destroy_bridge(name="pan1"):
+def destroy_bridge(py_name="pan1"):
+    py_bytes_name = py_name.encode("UTF-8")
+    cdef char* name = py_bytes_name
+
     err = _destroy_bridge(name)
     if err < 0:
         raise BridgeException(-err)
@@ -437,7 +447,13 @@ cdef class sn_launcher:
         sn_launcher_context_unref(self.ctx)
 
 
-    def initiate(self, char* launcher_name, char* launchee_name, Time timestamp):
+    def initiate(self, py_launcher_name, py_launchee_name, Time timestamp):
+        py_bytes_launcher_name = py_launcher_name.encode("UTF-8")
+        cdef char* launcher_name = py_bytes_launcher_name
+        py_bytes_launchee_name = py_launchee_name.encode("UTF-8")
+        cdef char* launchee_name = py_bytes_launchee_name
+
+
         sn_launcher_context_ref(self.ctx)
         sn_launcher_context_initiate(self.ctx, launcher_name, launchee_name, timestamp)
         sn_launcher_context_unref(self.ctx)
@@ -454,7 +470,7 @@ cdef class sn_launcher:
         ret = sn_launcher_context_get_startup_id(self.ctx)
         sn_launcher_context_unref(self.ctx)
         if ret != NULL:
-            return ret
+            return ret.decode("UTF-8")
         else:
             return None
 
@@ -469,12 +485,17 @@ cdef class sn_launcher:
         sn_launcher_context_setup_child_process(self.ctx)
         sn_launcher_context_unref(self.ctx)
 
-    def set_name(self, char* name):
+    def set_name(self, py_name):
+        py_bytes_name = py_name.encode("UTF-8")
+        cdef char* name = py_bytes_name
+
         sn_launcher_context_ref(self.ctx)
         sn_launcher_context_set_name(self.ctx, name)
         sn_launcher_context_unref(self.ctx)
 
-    def set_description(self, char* descr):
+    def set_description(self, py_descr):
+        py_bytes_descr = py_descr.encode("UTF-8")
+        cdef char* descr = py_bytes_descr
         sn_launcher_context_ref(self.ctx)
         sn_launcher_context_set_description(self.ctx, descr)
         sn_launcher_context_unref(self.ctx)
@@ -484,23 +505,36 @@ cdef class sn_launcher:
         sn_launcher_context_set_workspace(self.ctx, workspace)
         sn_launcher_context_unref(self.ctx)
 
-    def set_wmclass(self, char* klass):
+    def set_wmclass(self, py_klass):
+        py_bytes_klass = py_klass.encode("UTF-8")
+        cdef char* klass = py_bytes_klass
+
         sn_launcher_context_ref(self.ctx)
         sn_launcher_context_set_wmclass(self.ctx, klass)
         sn_launcher_context_unref(self.ctx)
 
-    def set_binary_name(self, char* name):
+    def set_binary_name(self, py_name):
+        py_bytes_name = py_name.encode("UTF-8")
+        cdef char* name = py_bytes_name
+
         sn_launcher_context_ref(self.ctx)
 
         sn_launcher_context_set_binary_name(self.ctx, name)
         sn_launcher_context_unref(self.ctx)
 
-    def set_icon_name(self, char* name):
+    def set_icon_name(self, py_name):
+        py_bytes_name = py_name.encode("UTF-8")
+        cdef char* name = py_bytes_name
         sn_launcher_context_ref(self.ctx)
         sn_launcher_context_set_icon_name(self.ctx, name)
         sn_launcher_context_unref(self.ctx)
 
-    def set_extra_property(self, char* key, char* value):
+    def set_extra_property(self, py_key, py_value):
+        py_bytes_key = py_key.encode("UTF-8")
+        cdef char* key = py_bytes_key
+        py_bytes_value = py_value.encode("UTF-8")
+        cdef char* value = py_bytes_value
+
         sn_launcher_context_ref(self.ctx)
         sn_launcher_context_set_extra_property(self.ctx, key, value)
         sn_launcher_context_unref(self.ctx)
