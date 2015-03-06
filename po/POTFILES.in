@@ -2,10 +2,10 @@
 [type: gettext/glade]data/ui/adapters.ui
 [type: gettext/glade]data/ui/applet-passkey.ui
 [type: gettext/glade]data/ui/manager-main.ui
+[type: gettext/glade]data/ui/rename-device.ui
 [type: gettext/glade]data/ui/services.ui
 [type: gettext/glade]data/ui/services-network.ui
 [type: gettext/glade]data/ui/services-transfer.ui
-[type: gettext/glade]data/ui/services-audio.ui
 [type: gettext/glade]data/ui/send-dialog.ui
 [type: gettext/glade]data/ui/assistant.ui
 [type: gettext/glade]data/ui/device-list-widget.ui
@@ -13,7 +13,6 @@
 [type: gettext/glade]data/ui/gsm-settings.ui
 [type: gettext/glade]data/ui/net-usage.ui
 blueman/Lib.py
-blueman/main/KillSwitchNG.py
 blueman/main/NetConf.py
 blueman/main/PulseAudioUtils.py
 blueman/main/SignalTracker.py
@@ -26,10 +25,9 @@ blueman/main/__init__.py
 blueman/main/AppletService.py
 blueman/main/DhcpClient.py
 blueman/main/SpeedCalc.py
-blueman/main/BluezConfig.py
 blueman/main/applet/__init__.py
 blueman/main/applet/Transfer.py
-blueman/main/applet/BluezAgent.py
+blueman/main/applet/BluezAgent.py.in
 blueman/main/PluginManager.py
 blueman/main/DbusService.py
 blueman/Functions.py
@@ -69,20 +67,13 @@ blueman/Constants.py.in
 blueman/bluez/Adapter.py
 blueman/bluez/errors.py
 blueman/bluez/BlueZInterface.py
-blueman/bluez/utils.py
 blueman/bluez/Device.py
-blueman/bluez/ServiceInterface.py
-blueman/bluez/BaseInterface.py
 blueman/bluez/Manager.py
 blueman/bluez/__init__.py
 blueman/bluez/Agent.py
-blueman/plugins/config/Gconf.py
-blueman/plugins/config/__init__.py
-blueman/plugins/config/File.py
 blueman/plugins/mechanism/RfKill.py
 blueman/plugins/mechanism/Network.py
 blueman/plugins/mechanism/Ppp.py
-blueman/plugins/mechanism/Config.py
 blueman/plugins/mechanism/__init__.py
 blueman/plugins/manager/PulseAudioProfile.py
 blueman/plugins/manager/__init__.py
@@ -91,7 +82,6 @@ blueman/plugins/ConfigurablePlugin.py
 blueman/plugins/ManagerPlugin.py
 blueman/plugins/BasePlugin.py
 blueman/plugins/ServicePlugin.py
-blueman/plugins/ConfigPlugin.py
 blueman/plugins/AppletPlugin.py
 blueman/plugins/__init__.py
 blueman/plugins/applet/NetUsage.py
@@ -106,7 +96,6 @@ blueman/plugins/applet/KillSwitch.py
 blueman/plugins/applet/StandardItems.py
 blueman/plugins/applet/AuthAgent.py
 blueman/plugins/applet/__init__.py
-blueman/plugins/applet/PulseAudio.py
 blueman/plugins/applet/ExitItem.py
 blueman/plugins/applet/DhcpClient.py
 blueman/plugins/applet/ShowConnected.py
@@ -117,19 +106,19 @@ blueman/plugins/applet/Menu.py
 blueman/plugins/applet/PPPSupport.py
 blueman/plugins/applet/SerialManager.py
 blueman/plugins/applet/PowerManager.py
+blueman/plugins/applet/GameControllerWakelock.py
 blueman/plugins/MechanismPlugin.py
+blueman/services/AudioSink.py
+blueman/services/AudioSource.py
 blueman/plugins/services/Network.py
 blueman/plugins/services/__init__.py
-blueman/plugins/services/Audio.py
 blueman/plugins/services/Transfer.py
-blueman/iniparse/config.py
-blueman/iniparse/compat.py
-blueman/iniparse/ini.py
-blueman/iniparse/__init__.py
 
 
+data/blueman-adapters.desktop.in
 data/blueman.desktop.in
 data/blueman-manager.desktop.in
+data/thunar-sendto-blueman.desktop.in
 data/configs/org.blueman.policy.in
 
 apps/blueman-manager
