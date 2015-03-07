@@ -14,6 +14,7 @@ from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler
 from blueman.main.Config import Config
 from blueman.main.Mechanism import Mechanism
 from blueman.main.AppletService import AppletService
+from blueman.gui.Dialogs import NetworkErrorDialog
 from random import randint
 
 
@@ -71,12 +72,8 @@ class Network(ServicePlugin):
                 try:
                     m.EnableNetwork(inet_aton(net_ip.props.text), inet_aton("255.255.255.0"), stype)
                 except Exception as e:
-                    lines = str(e).splitlines()
+                    d = NetworkErrorDialog(e)
 
-                    d = Gtk.MessageDialog(None, buttons=Gtk.ButtonsType.OK, type=Gtk.MessageType.ERROR)
-                    d.props.icon_name = "dialog-error"
-                    d.props.text = _("Failed to apply network settings")
-                    d.props.secondary_text = lines[-1]
                     d.run()
                     d.destroy()
                     return

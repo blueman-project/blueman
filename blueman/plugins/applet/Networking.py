@@ -10,6 +10,7 @@ from blueman.main.Mechanism import Mechanism
 from blueman.main.SignalTracker import SignalTracker
 
 from blueman.plugins.AppletPlugin import AppletPlugin
+from blueman.gui.Dialogs import NetworkErrorDialog
 
 import dbus
 
@@ -39,11 +40,9 @@ class Networking(AppletPlugin):
             pass
 
         def err(excp):
-            lines = str(excp).splitlines()
-            d = Gtk.MessageDialog(None, buttons=Gtk.ButtonsType.OK, type=Gtk.MessageType.ERROR)
-            d.props.text = _("Failed to apply network settings")
-            d.props.secondary_text = lines[-1] + "\n\n" + _(
-                "You might not be able to connect to the Bluetooth network via this machine")
+            d = NetworkErrorDialog(excp, "You might not be able to connect to the Bluetooth network via this machine")
+            d.expander.props.margin_left = 9
+
             d.run()
             d.destroy()
 
