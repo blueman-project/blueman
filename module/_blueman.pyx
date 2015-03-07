@@ -572,25 +572,3 @@ def probe_modem(node, callback):
 
 def set_probe_debug(enable):
     c_set_probe_debug(int(enable))
-
-cdef extern from "glib.h":
-    cdef char* g_get_user_special_dir(int directory)
-
-class SpecialDirType:
-    DESKTOP = 0
-    DOCUMENTS = 1
-    DOWNLOAD = 2
-    MUSIC = 3
-    PICTURES = 4
-    PUBLIC_SHARE = 5
-    TEMPLATES = 6
-    VIDEOS = 7
-
-
-def get_special_dir(t):
-    cdef char* d
-    d = g_get_user_special_dir(t)
-    if d == NULL:
-        return None
-    else:
-        return d

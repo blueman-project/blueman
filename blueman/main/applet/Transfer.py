@@ -8,9 +8,8 @@ from blueman.main.Config import Config
 from blueman.ods.OdsManager import OdsManager
 from blueman.main.Device import Device
 from blueman.Functions import *
-from blueman.Lib import get_special_dir, SpecialDirType
 import os
-from gi.repository import GObject
+from gi.repository import GObject, GLib
 from blueman.gui.Notification import Notification
 import weakref
 
@@ -46,7 +45,7 @@ class Transfer(OdsManager):
         server = self.get_server(pattern)
         if server != None:
             if not self.Config["shared-path"]:
-                d = get_special_dir(SpecialDirType.PUBLIC_SHARE)
+                d = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_PUBLIC_SHARE)
                 if d == None:
                     self.Config["shared-path"] = os.path.expanduser("~")
                 else:
