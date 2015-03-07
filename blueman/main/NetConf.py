@@ -335,6 +335,6 @@ class NetConf(object):
     def store(self):
         if not os.path.exists("/var/lib/blueman"):
             os.mkdir("/var/lib/blueman")
-        f = open("/var/lib/blueman/network.state", "w")
-        pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
+        f = open("/var/lib/blueman/network.state", "wb")
+        pickle.dump(self, f, 2)
         f.close()

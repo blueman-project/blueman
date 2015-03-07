@@ -100,9 +100,8 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         try:
             dump = base64.b64encode(
                 zlib.compress(
-                    pickle.dumps((REGISTRY_VERSION, items),
-                                 pickle.HIGHEST_PROTOCOL),
-                    9))
+                    pickle.dumps((REGISTRY_VERSION, items), 2 ),
+                    9)).decode()
 
             self.set_option("recent-connections", dump)
         except:
