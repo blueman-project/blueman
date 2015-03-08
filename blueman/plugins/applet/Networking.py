@@ -54,9 +54,9 @@ class Networking(AppletPlugin):
     def update_status(self):
         self.set_nap(self.Config["nap-enable"])
 
-    def on_config_changed(self, config, key, value):
+    def on_config_changed(self, config, key):
         if key == "nap-enable":
-            self.set_nap(value)
+            self.set_nap(config[key])
 
     def set_nap(self, on):
         dprint("set nap", on)

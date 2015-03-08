@@ -45,21 +45,6 @@ class Network(ServicePlugin):
     def on_leave(self):
         self.widget.props.visible = False
 
-    def on_property_changed(self, netconf, key, value):
-        if key == "rb_blueman" or key == "dhcp-client":
-            if value:
-                self.Builder.get_object("rb_blueman").props.active = True
-            else:
-                self.Builder.get_object("rb_nm").props.active = True
-            return
-        if key == "rb_nm":
-            return
-
-        if key == "ip":
-            self.option_changed_notify(key, False)
-        else:
-            self.option_changed_notify(key)
-
     def on_apply(self):
 
         if self.on_query_apply_state() == True:
@@ -146,7 +131,6 @@ class Network(ServicePlugin):
 
     def setup_network(self):
         self.Config = Config("org.blueman.network")
-        self.Config.connect("changed", self.on_property_changed, None)
 
         gn_enable = self.Builder.get_object("gn-enable")
         # latest bluez does not support GN, apparently
@@ -205,7 +189,7 @@ class Network(ServicePlugin):
             r_dnsmasq.props.active = True
 
         r_dnsmasq.connect("toggled", lambda x: self.option_changed_notify("dnsmasq"))
-        net_ip.connect("changed", lambda x: self.on_property_changed(self.Config, "ip", x.props.text))
+        net_ip.connect("changed", lambda x: self.option_changed_notify("ip", False))
 
         self.Config.bind_to_widget("nat", net_nat, "active")
         self.Config.bind_to_widget("gn-enable", gn_enable, "active")
