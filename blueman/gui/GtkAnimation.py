@@ -161,8 +161,7 @@ class TreeRowFade(AnimBase):
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.clip()
 
-            cr.set_source_rgba((1.0 / 65535) * color.red, (1.0 / 65535) * color.green, (1.0 / 65535) * color.blue,
-                               1.0 - self.get_state())
+            cr.set_source_rgba(color.red, color.green, color.blue, 1.0 - self.get_state())
             cr.set_operator(cairo.OPERATOR_OVER)
             cr.paint()
 
@@ -206,8 +205,7 @@ class TreeRowColorFade(TreeRowFade):
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.clip()
 
-            cr.set_source_rgba((1.0 / 65535) * self.color.red, (1.0 / 65535) * self.color.green,
-                               (1.0 / 65535) * self.color.blue, 1.0 - self.get_state())
+            cr.set_source_rgba(self.color.red, self.color.green, self.color.blue, 1.0 - self.get_state())
             cr.set_operator(cairo.OPERATOR_OVER)
             cr.paint()
 
@@ -301,8 +299,7 @@ class WidgetFade(AnimBase):
             rect = self.widget.get_allocation()
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
             cr.clip()
-            cr.set_source_rgba((1.0 / 65535) * self.color.red, (1.0 / 65535) * self.color.green,
-                               (1.0 / 65535) * self.color.blue, 1.0 - self.get_state())
+            cr.set_source_rgba(self.color.red, self.color.green, self.color.blue, self.color.alpha - self.get_state())
             cr.set_operator(cairo.OPERATOR_OVER)
             cr.paint()
 

@@ -73,7 +73,7 @@ class ManagerDeviceList(DeviceList):
     def do_device_found(self, device):
         iter = self.find_device(device)
         if iter:
-            anim = TreeRowColorFade(self, self.props.model.get_path(iter), Gdk.color_parse("blue"))
+            anim = TreeRowColorFade(self, self.props.model.get_path(iter), Gdk.RGBA(0,0,1,1))
             anim.animate(start=0.8, end=1.0)
 
 
