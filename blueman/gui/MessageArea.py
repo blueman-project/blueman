@@ -26,7 +26,7 @@ class MessageArea(Gtk.EventBox):
 
         self.set_app_paintable(True)
 
-        self.anim = WidgetFade(self.hbox, self.hbox.get_style().lookup_color("base_color")[1])
+        self.anim = WidgetFade(self.hbox, self.hbox.get_style_context().get_background_color(Gtk.StateFlags.NORMAL))
         self.hl_anim = WidgetFade(self.hbox, Gdk.RGBA(1,0,0,1))
 
         self.setting_style = False
@@ -106,7 +106,7 @@ class MessageArea(Gtk.EventBox):
             wg.set_style(style)
 
         _set_style(self)
-        self.anim.color = self.hbox.get_style_context().get_background_color(0)
+        self.anim.color = self.hbox.get_style_context().get_background_color(Gtk.StateFlags.NORMAL)
         self.queue_draw()
 
         self.setting_style = False
