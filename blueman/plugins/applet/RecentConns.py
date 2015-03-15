@@ -308,7 +308,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
             mitem.props.sensitive = True
             mitem.props.tooltip_text = None
 
-        item["mitem"].props.label = (_("%(service)s on %(device)s") % {"service": item["name"], "device": item["alias"]})
+        item["mitem"].get_child().get_children()[1].set_markup_with_mnemonic( _("%(service)s on %(device)s") % {"service": name, "device": item["alias"]})
 
         if item["adapter"] not in self.Adapters.values():
             if item["device"] and item["gsignal"]:
