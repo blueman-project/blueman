@@ -9,7 +9,7 @@ from blueman.gui.MessageArea import MessageArea
 from blueman.Functions import get_icon, create_menuitem
 
 from gi.repository import Gtk
-from blueman.services import Audio
+from blueman.services import AudioSink, AudioSource, Headset, Handsfree
 
 
 class PulseAudioProfile(ManagerPlugin):
