@@ -1,8 +1,8 @@
 AC_PREREQ(2.69)
 
-AC_INIT(blueman, 1.99.alpha2)
+AC_INIT([blueman], [1.99.alpha2], [https://github.com/blueman-project/blueman/issues])
 AC_CONFIG_HEADERS(config.h)
-AM_INIT_AUTOMAKE(foreign)
+AM_INIT_AUTOMAKE([foreign dist-xz])
 
 AM_MAINTAINER_MODE
 AC_PROG_CC
