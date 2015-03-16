@@ -37,7 +37,7 @@ class StandardItems(AppletPlugin):
 
         self.Applet.Plugins.Menu.Register(self, Gtk.SeparatorMenuItem(), 51)
 
-        self.devices = Gtk.MenuItem.new_with_mnemonic(_("_Devices") + "...")
+        self.devices = create_menuitem(_("_Devices") + "...", get_icon("blueman", 16))
         self.devices.connect("activate", self.on_devices)
 
         self.Applet.Plugins.Menu.Register(self, self.devices, 60)
