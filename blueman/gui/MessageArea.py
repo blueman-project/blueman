@@ -50,7 +50,7 @@ class MessageArea(Gtk.EventBox):
         self.b_more.props.relief = Gtk.ReliefStyle.NONE
 
         im = Gtk.Image()
-        im.set_from_icon_name("_Cancel", Gtk.IconSize.MENU)
+        im.set_from_icon_name("window-close", Gtk.IconSize.MENU)
         im.show()
         self.b_close = Gtk.Button()
         self.b_close.add(im)
