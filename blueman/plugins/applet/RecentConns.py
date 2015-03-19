@@ -277,13 +277,13 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         dprint("Connect", item["address"], item["uuid"])
 
         sn = startup_notification("Bluetooth Connection",
-                                  desc=_("Connecting to %s") % item["mitem"].get_child().props.label,
+                                  desc=_("Connecting to %s") % item["mitem"].get_child().get_children()[1],
                                   icon="blueman")
 
         item["mitem"].props.sensitive = False
 
         def reply(*args):
-            Notification(_("Connected"), _("Connected to %s") % item["mitem"].get_child().props.label,
+            Notification(_("Connected"), _("Connected to %s") % item["mitem"].get_child().get_children()[1],
                          pixbuf=get_icon("network-transmit-recieve", 48),
                          status_icon=self.Applet.Plugins.StatusIcon)
             item["mitem"].props.sensitive = True
