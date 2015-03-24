@@ -6,6 +6,10 @@
 
 * [ui] Button to reset device alias
 
+### Bugs fixed
+
+* [assistant] Fix crash (@duganchen)
+
 ## 1.99.alpha2
 
 ### New features

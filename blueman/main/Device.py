@@ -59,10 +59,8 @@ class Device(GObject.GObject):
                 return cls(self, uuid)
 
     def get_services(self):
-        for uuid in self.UUIDs:
-            service = self.get_service(uuid)
-            if service:
-                yield service
+        services = (self.get_service(uuid) for uuid in self.UUIDs)
+        return [service for service in services if service]
 
     def __del__(self):
         dprint("deleting device", self.get_object_path())
