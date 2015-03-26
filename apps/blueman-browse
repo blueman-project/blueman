@@ -59,7 +59,7 @@ class Browse:
                 d.props.text = _("Failed to launch \"%s\"") % conf["browse-command"].split(' ')[0]
             else:
                 d.props.text = _("Failed to launch default file browser")
-            d.props.secondary_text = "%s\n\n" % unicode(e.message, 'UTF-8') + \
+            d.props.secondary_text = "%s\n\n" % e.message + \
                                      _("You can enter an alternate browser in service settings")
             d.run()
             d.destroy()
