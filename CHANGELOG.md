@@ -1,5 +1,11 @@
 # Changelog
 
+## master
+
+### Changes
+
+* [ui] Button to reset device alias
+
 ## 1.99.alpha2
 
 ### New features
