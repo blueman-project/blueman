@@ -346,6 +346,8 @@ class ManagerDeviceMenu(Gtk.Menu):
                 def on_response(dialog, response_id):
                     if response_id == Gtk.ResponseType.ACCEPT:
                         device.set('Alias', alias_entry.get_text())
+                    elif response_id == 1:
+                        device.set('Alias', '')
                     dialog.destroy()
 
                 builder = Gtk.Builder()
