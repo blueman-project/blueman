@@ -52,8 +52,8 @@ class Tee(object):
     def flush(self):
         pass
 
-
-syslog.openlog("blueman-mechanism", 0, syslog.LOG_DAEMON)
+# Python 2, call str() to convert to a byte string.
+syslog.openlog(str("blueman-mechanism"), 0, syslog.LOG_DAEMON)
 a = Tee()
 
 
