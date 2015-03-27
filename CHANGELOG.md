@@ -12,6 +12,8 @@
 * [bluez] Agent capability KeyboardDisplay (@kemnade-uni / Andreas Kemnade)
 * New configuration option to disable the use of a notification daemon
 * [sendto] Removed nautilus-sendto plugin (deprecated and broken)
+* [nm] Use API instead of GConf to create new connections
+* [nm] Enable IPv6 on created connections
 
 ### Bugs fixed
 

@@ -8,8 +8,6 @@ from gi.repository import GObject
 import dbus
 from blueman.plugins.AppletPlugin import AppletPlugin
 from uuid import uuid1
-from gi.repository import GConf
-import os
 from blueman.main.SignalTracker import SignalTracker
 
 
@@ -19,9 +17,8 @@ class NewConnectionBuilder:
     DEVICE_STATE_DEACTIVATING = 110
     DEVICE_STATE_FAILED = 120
 
-    def __init__(self, parent, params, ok_cb, err_cb):
+    def __init__(self, parent, service, ok_cb, err_cb):
         self.parent = parent
-        self.params = params
         self.ok_cb = ok_cb
         self.err_cb = err_cb
 
@@ -35,11 +32,20 @@ class NewConnectionBuilder:
         self.signals.Handle("dbus", parent.bus, self.on_nma_new_connection, "NewConnection",
                             self.parent.settings_interface)
 
-        self.device = self.parent.find_device(params["bluetooth"]["bdaddr"])
+        self.device = self.parent.find_device(service.device.Address)
 
-        self.connection = self.parent.find_connection(params["bluetooth"]["bdaddr"], "panu")
+        self.connection = self.parent.find_connection(service.device.Address, "panu")
         if not self.connection:
-            parent.add_connection(params)
+            # This is for compatibility with network-manager < 0.9.8.6. Newer versions that support BlueZ 5 add a
+            # default connection automatically
+            addr_bytes = bytearray.fromhex(str.replace(str(service.device.Address), ':', ' '))
+            parent.nma.AddConnection({
+                'connection':   {'id': '%s on %s' % (service.name, service.device.Alias), 'uuid': str(uuid1()),
+                                 'autoconnect': False, 'type': 'bluetooth'},
+                'bluetooth':    {'bdaddr': dbus.ByteArray(addr_bytes), 'type': 'panu'},
+                'ipv4':         {'method': 'auto'},
+                'ipv6':         {'method': 'auto'}
+            })
             GObject.timeout_add(1000, self.signal_wait_timeout)
         else:
             self.init_connection()
@@ -144,70 +150,6 @@ class NMPANSupport(AppletPlugin):
             self.connection_settings_interface = 'org.freedesktop.NetworkManager.Settings.Connection'
             self.settings_path = "/org/freedesktop/NetworkManager/Settings"
 
-        self.client = GConf.Client.get_default()
-
-    def set_gconf(self, key, value):
-        if type(value) == str or type(value) == unicode:
-            func = self.client.set_string
-        elif type(value) == int:
-            func = self.client.set_int
-        elif type(value) == bool:
-            func = self.client.set_bool
-        elif type(value) == float:
-            func = self.client.set_float
-        elif type(value) == list:
-            def x(key, val):
-                self.client.set_list(key, gconf.ValueType.STRING, val)
-
-            func = x
-
-        elif type(value) == dbus.Array:
-            if value.signature == "i":
-                def x(key, val):
-                    self.client.set_list(key, gconf.ValueType.INT, val)
-
-                func = x
-            elif value.signature == "s":
-                def x(key, val):
-                    self.client.set_list(key, gconf.ValueType.STRING, val)
-
-                func = x
-            else:
-                raise AttributeError("Cant set this type in gconf")
-
-        else:
-            raise AttributeError("Cant set %s in gconf" % type(value))
-
-        func(key, value)
-
-    def find_free_gconf_slot(self):
-        dirs = list(self.client.all_dirs("/system/networking/connections"))
-        dirs.sort()
-
-        i = 1
-        for d in dirs:
-            try:
-                d = int(os.path.basename(d))
-            except:
-                continue
-            if d != i:
-                return i
-
-            i += 1
-
-        return i
-
-    def add_connection(self, params):
-        slot = self.find_free_gconf_slot()
-
-        base_path = "/system/networking/connections/%d" % slot
-
-        for group, settings in params.items():
-            path = base_path + "/%s" % group
-            for k, v in settings.items():
-                key = path + "/%s" % k
-                self.set_gconf(key, v)
-
     def remove_connection(self, path):
         self.bus.call_blocking(self.settings_bus, path, self.connection_settings_interface, "Delete", "", [])
 
@@ -287,22 +229,10 @@ class NMPANSupport(AppletPlugin):
         if service.group != 'network':
             return
 
-        name = service.name
-        d = service.device
-
-        conn = self.find_active_connection(d.Address, "panu")
-        if conn:
+        if self.find_active_connection(service.device.Address, "panu"):
             err(dbus.DBusException(_("Already connected")))
         else:
-            params = {}
-            params["bluetooth"] = {"name": "bluetooth", "bdaddr": str(d.Address), "type": "panu"}
-            params["connection"] = {"autoconnect": False, "id": str("%s on %s") % (name, d.Alias),
-                                    "uuid": str(uuid1()), "type": "bluetooth"}
-            params['ipv4'] = {'addresses': dbus.Array([], dbus.Signature("i")),
-                              'dns': dbus.Array([], dbus.Signature("i")), "method": "auto",
-                              "routes": dbus.Array([], dbus.Signature("i"))}
-
-            NewConnectionBuilder(self, params, ok, err)
+            NewConnectionBuilder(self, service, ok, err)
 
         return True
 
