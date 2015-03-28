@@ -125,8 +125,8 @@ AS_IF([test "x$enable_polkit" = "xyes"],
 
 AM_CONDITIONAL([HAVE_POLKIT], [test "x$have_polkit" = "xyes"])
 
-AC_ARG_ENABLE([nautilus-sendto],
-  AS_HELP_STRING([--enable-nautilus-sendto], [Enable nautilus-sendto plugin build]),
+AC_ARG_ENABLE([caja-sendto],
+  AS_HELP_STRING([--enable-caja-sendto], [Enable caja-sendto plugin build]),
   [have_nst=$enableval], [have_nst=yes])
 
 AM_CONDITIONAL([HAVE_NST], [test "x$have_nst" = "xyes"])
@@ -260,7 +260,7 @@ echo Prefix : $prefix
 echo sysconfig dir : $sysconfdir
 echo Python version : $PYTHON_VERSION
 echo Policykit-1 Enabled: $have_polkit
-echo Nautilus sendto plugin enabled: $have_nst
+echo Caja sendto plugin enabled: $have_nst
 echo Thunar sendto installation enabled: $have_thunar
 echo Settings menu integration enabled: $have_settings
 echo Dhcpd 3 configuration file: $dhconfig

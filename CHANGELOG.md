@@ -5,6 +5,7 @@
 ### Changes
 
 * [ui] Button to reset device alias
+* [sendto] Rename nautilus-sendto to caja-sendto
 
 ### Bugs fixed
 
