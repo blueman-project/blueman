@@ -127,9 +127,16 @@ AM_CONDITIONAL([HAVE_POLKIT], [test "x$have_polkit" = "xyes"])
 
 AC_ARG_ENABLE([caja-sendto],
   AS_HELP_STRING([--enable-caja-sendto], [Enable caja-sendto plugin build]),
-  [have_nst=$enableval], [have_nst=yes])
+  [enable_cst=$enableval], [enable_cst=yes])
 
-AM_CONDITIONAL([HAVE_NST], [test "x$have_nst" = "xyes"])
+AS_IF([test "x$enable_cst" = "xyes"],
+  [PKG_CHECK_MODULES([CAJA_SENDTO], [caja-sendto], [have_cst=yes], [have_cst=no])],
+  [have_cst=no])
+
+AC_SUBST([CAJA_SENDTO_CFLAGS])
+AC_SUBST([CAJA_SENDTO_LIBS])
+
+AM_CONDITIONAL([HAVE_CST], [test "x$have_cst" = "xyes"])
 
 AC_ARG_ENABLE([thunar-sendto],
   AS_HELP_STRING([--enable-thunar-sendto], [Enable thunar-sendto installation]),
@@ -260,7 +267,7 @@ echo Prefix : $prefix
 echo sysconfig dir : $sysconfdir
 echo Python version : $PYTHON_VERSION
 echo Policykit-1 Enabled: $have_polkit
-echo Caja sendto plugin enabled: $have_nst
+echo Caja sendto plugin enabled: $have_cst
 echo Thunar sendto installation enabled: $have_thunar
 echo Settings menu integration enabled: $have_settings
 echo Dhcpd 3 configuration file: $dhconfig
