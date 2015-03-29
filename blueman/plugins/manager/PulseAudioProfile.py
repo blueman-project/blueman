@@ -9,7 +9,6 @@ from blueman.gui.MessageArea import MessageArea
 from blueman.Functions import get_icon, create_menuitem
 
 from gi.repository import Gtk
-from blueman.services import Audio
 
 
 class PulseAudioProfile(ManagerPlugin):

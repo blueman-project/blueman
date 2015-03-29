@@ -8,7 +8,8 @@
 
 ### Bugs fixed
 
-* [assistant] Fix crash (@duganchen)
+* [assistant] Crash (@duganchen)
+* [pulseaudio] Support for audio profiles
 
 ## 1.99.alpha2
 
