@@ -61,11 +61,11 @@ class AuthAgent(AppletPlugin):
             if self.legacy():
                 agent = BluezAgent.AdapterAgent(self.Applet.Plugins.StatusIcon, adapter, self.get_event_time)
                 agent.signal = agent.connect("released", self.on_released)
-                adapter.register_agent(agent, "DisplayYesNo")
+                adapter.register_agent(agent, "KeyboardDisplay")
                 self.agents.append(agent)
             elif not self.agents:
                 agent = BluezAgent.GlobalAgent(self.Applet.Plugins.StatusIcon, self.get_event_time)
-                self.agent_manager.register_agent(agent, "DisplayYesNo", default=True)
+                self.agent_manager.register_agent(agent, "KeyboardDisplay", default=True)
                 self.agents.append(agent)
 
         except Exception as e:

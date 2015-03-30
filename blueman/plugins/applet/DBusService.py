@@ -128,7 +128,7 @@ class DBusService(AppletPlugin):
             if pair:
                 agent_path = "/org/blueman/agent/temp/" + address.replace(":", "")
                 agent = TempAgent(self.Applet.Plugins.StatusIcon, agent_path, time)
-                adapter.create_paired_device(address, agent_path, "DisplayYesNo", error_handler=err,
+                adapter.create_paired_device(address, agent_path, "KeyboardDisplay", error_handler=err,
                                              reply_handler=ok, timeout=120)
 
             else:

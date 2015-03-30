@@ -5,6 +5,7 @@
 ### Changes
 
 * [ui] Button to reset device alias
+* [bluez] Agent capability KeyboardDisplay (@kemnade-uni / Andreas Kemnade)
 
 ### Bugs fixed
 
