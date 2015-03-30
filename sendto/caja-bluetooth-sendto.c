@@ -27,7 +27,7 @@
 #include <gtk/gtk.h>
 
 
-#include <nautilus-sendto-plugin.h>
+#include <caja-sendto/caja-sendto-plugin.h>
 
 PyObject* self = NULL;
 PyObject* module = NULL;
@@ -147,7 +147,7 @@ NstPluginInfo plugin_info = {
 	"blueman",
 	"Bluetooth (OBEX Push)",
 	GETTEXT_PACKAGE,
-	NAUTILUS_CAPS_NONE,
+	CAJA_CAPS_NONE,
 	init,
 	get_contacts_widget,
 	validate_destination,
