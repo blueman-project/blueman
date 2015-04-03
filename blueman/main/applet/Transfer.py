@@ -46,8 +46,10 @@ class Transfer(OdsManager):
                     self.Config["shared-path"] = os.path.expanduser("~")
                 else:
                     self.Config["shared-path"] = d
-
-            if not os.path.isdir(self.Config["shared-path"]):
+                    
+            if not os.path.exists(self.Config["shared-path"]):
+                os.makedirs(self.Config["shared-path"])
+            elif not os.path.isdir(self.Config["shared-path"]):
                 raise Exception("Configured share directory %s does not exist" % self.Config["shared-path"])
 
             if pattern == "opp":
