@@ -8,7 +8,7 @@ from blueman.plugins.MechanismPlugin import MechanismPlugin
 import os
 import subprocess
 from gi.repository import GObject
-from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler
+from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler, UdhcpdHandler
 
 
 class Network(MechanismPlugin):

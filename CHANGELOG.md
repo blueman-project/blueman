@@ -11,6 +11,7 @@
 * Set widget names so they can be used to style blueman.
 * Replace deprecated use of Gtk.VBox and Gtk.HBox.
 * Replace deprecated GtkTable with GtkGrid and also use it replace GtkBoxes used to layout.
+* [dhcp] udhcpd (busybox) support
 
 ### Bugs fixed
 
