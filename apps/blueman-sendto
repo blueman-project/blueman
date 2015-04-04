@@ -25,6 +25,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 from blueman.bluez.Adapter import Adapter
+from blueman.bluez.obex.ObjectPush import ObjectPush
 from blueman.main.Device import Device
 from blueman.main.FakeDevice import FakeDevice
 from blueman.bluez.Manager import Manager
@@ -69,7 +70,8 @@ class Sender(GObject.GObject):
         self.device = device
         self.adapter = Adapter(adapter)
         self.files = files
-        self.session = None
+        self.object_push = None
+        self.transfer = None
 
         self.total_bytes = 0
         self.total_transferred = 0
@@ -114,7 +116,9 @@ class Sender(GObject.GObject):
 
         self.l_file.props.label = os.path.basename(self.files[-1])
 
-        self.client.connect("session-created", self.on_session_created)
+        self.client.connect('session-created', self.on_session_created)
+        self.client.connect('session-failed', self.on_session_failed)
+        self.client.connect('session-removed', self.on_session_removed)
 
         print("Sending to", device.Address)
         self.l_dest.props.label = device.Alias
@@ -125,39 +129,20 @@ class Sender(GObject.GObject):
 
     def create_session(self):
         dprint("Creating session")
-
-        def on_error(msg):
-            dprint("Failed to create session")
-            d = Gtk.MessageDialog(self.window,
-                                  type=Gtk.MessageType.ERROR, buttons=(Gtk.ButtonsType.CLOSE))
-            d.props.text = _("Error occurred")
-            d.props.icon_name = "blueman"
-            d.props.secondary_text = str(msg).split(":")[1].strip(" ")
-
-            resp = d.run()
-            d.destroy()
-            exit(1)
-
         props = self.adapter.get_properties()
-        self.client.create_session(self.device.Address, props["Address"], error_handler=on_error)
+        self.client.create_session(self.device.Address, props["Address"])
 
     def on_cancel(self, button):
         self.pb.props.text = _("Cancelling")
         if button:
             button.props.sensitive = False
 
-        def reply_handler(*args):
+        if self.object_push:
+            self.client.remove_session(self.object_push.get_session_path())
+        else:
             self.emit("result", False)
 
-        if self.session:
-            self.client.remove_session(self.session, reply_handler=reply_handler)
-        else:
-            reply_handler()
-
-    def on_transfer_started(self, session, filename, path, size):
-        dprint("transfer started")
-
-        #first transfer
+    def on_transfer_started(self, _object_push, transfer_path, filename):
         if self.total_transferred == 0:
             self.pb.props.text = _("Sending File") + (" %(0)s/%(1)s (%(2).2f %(3)s/s) " + _("ETA:") + " %(4)s") % {
                 "1": self.num_files,
@@ -170,7 +155,15 @@ class Sender(GObject.GObject):
         self._last_bytes = 0
         self.transferred = 0
 
-    def on_transfer_progress(self, session, progress):
+        self.transfer = obex.Transfer(transfer_path)
+        self.transfer.connect("error", self.on_transfer_error)
+        self.transfer.connect("progress", self.on_transfer_progress)
+        self.transfer.connect("completed", self.on_transfer_completed)
+
+    def on_transfer_failed(self, _object_push, error):
+        self.on_transfer_error(None, None, str(error))
+
+    def on_transfer_progress(self, _transfer, progress):
         self.transferred = progress
         if self._last_bytes == 0:
             self.total_transferred += progress
@@ -203,8 +196,9 @@ class Sender(GObject.GObject):
 
         self.pb.props.fraction = float(self.total_transferred) / self.total_bytes
 
-    def on_transfer_completed(self, session):
+    def on_transfer_completed(self, _transfer):
         del self.files[-1]
+        self.transfer = None
 
         self.process_queue()
 
@@ -216,11 +210,10 @@ class Sender(GObject.GObject):
 
     def send_file(self, file_path):
         dprint(file_path)
-        if self.session:
-            self.session.send_file(file_path)
+        if self.object_push:
+            self.object_push.send_file(file_path)
 
-    def on_session_error(self, session, name, msg):
-        dprint("session err", name, msg)
+    def on_transfer_error(self, _transfer, msg):
         if not self.error_dialog:
             self.speed.reset()
             d = Gtk.MessageDialog(self.window,
@@ -247,13 +240,13 @@ class Sender(GObject.GObject):
                     self.total_transferred -= self.transferred
                     self.transferred = 0
                     del self.files[-1]
-                    if not self.session:
+                    if not self.object_push:
                         self.create_session()
                     self.process_queue()
                 elif resp == Gtk.ResponseType.YES:
                     self.total_transferred -= self.transferred
                     self.transferred = 0
-                    if not self.session:
+                    if not self.object_push:
                         self.create_session()
 
                     self.process_queue()
@@ -264,14 +257,25 @@ class Sender(GObject.GObject):
             d.show()
             self.error_dialog = d
 
-    def on_session_created(self, manager, session):
-        dprint()
-        self.session = session
-        session.connect("error-occurred", self.on_session_error)
-        session.connect("transfer-started", self.on_transfer_started)
-        session.connect("transfer-progress", self.on_transfer_progress)
-        session.connect("transfer-completed", self.on_transfer_completed)
+    def on_session_created(self, _client, session_path):
+        self.object_push = ObjectPush(session_path)
+        self.object_push.connect("transfer-started", self.on_transfer_started)
+        self.object_push.connect("transfer-failed", self.on_transfer_failed)
         self.process_queue()
+
+    def on_session_failed(self, _client, msg):
+        d = Gtk.MessageDialog(self.window,
+                              type=Gtk.MessageType.ERROR, buttons=(Gtk.ButtonsType.CLOSE))
+        d.props.text = _("Error occurred")
+        d.props.icon_name = "blueman"
+        d.props.secondary_text = str(msg).split(":")[1].strip(" ")
+
+        d.run()
+        d.destroy()
+        exit(1)
+
+    def on_session_removed(self, _client):
+        self.emit("result", False)
 
 
 class SendTo:

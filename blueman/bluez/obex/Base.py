@@ -34,14 +34,27 @@ class Base(GObject):
 
         return Base.interface_version
 
-    def __init__(self, obj_path, bus_name='org.bluez.obex'):
-        self.__bus = dbus.SessionBus()
+    def __init__(self, interface_name, obj_path, legacy_client_bus=False):
         self.__signals = SignalTracker()
-        self.__dbus_proxy = self.__bus.get_object(bus_name, obj_path)
+        self.__obj_path = obj_path
+        self.__interface_name = interface_name
+        self.__bus = dbus.SessionBus()
+        self.__bus_name = 'org.bluez.obex.client' if legacy_client_bus else 'org.bluez.obex'
+        self.__dbus_proxy = self.__bus.get_object(self.__bus_name, obj_path, follow_name_owner_changes=True)
+        self.__interface = dbus.Interface(self.__dbus_proxy, interface_name)
         super(Base, self).__init__()
 
-    def _get_interface(self, interface):
-        return dbus.Interface(self.__dbus_proxy, interface)
+    def __del__(self):
+        self.__signals.DisconnectAll()
 
-    def _get_bus(self):
-        return self.__bus
+    def _handle_signal(self, handler, signal):
+        self.__signals.Handle('dbus', self.__bus, handler, signal, self.__interface_name, self.__bus_name,
+                              self.__obj_path)
+
+    @property
+    def _interface(self):
+        return self.__interface
+
+    @property
+    def _object_path(self):
+        return self.__obj_path
