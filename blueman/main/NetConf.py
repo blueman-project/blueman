@@ -10,8 +10,9 @@ import signal
 import errno
 import re
 from socket import inet_aton, inet_ntoa
+from tempfile import mkstemp
 from blueman.Constants import *
-from blueman.Functions import have, mask_ip4_address
+from blueman.Functions import have, mask_ip4_address, dprint
 from blueman.Lib import create_bridge, destroy_bridge, BridgeException
 from subprocess import call, Popen
 
@@ -23,6 +24,20 @@ def calc_ip_range(ip):
     end_range[3] = 254
 
     return bytes(start_range), bytes(end_range)
+
+def get_dns_servers():
+    f = open("/etc/resolv.conf", "r")
+    dns_servers = ""
+    for line in f:
+        server = re.search("^nameserver (.*)", line)
+        if server:
+            dns_servers += "%s, " % server.groups(1)[0]
+
+    dns_servers = dns_servers.strip(", ")
+
+    f.close()
+
+    return dns_servers
 
 class DnsMasqHandler(object):
     def __init__(self, netconf):
@@ -81,7 +96,7 @@ class DhcpdHandler(object):
                 insection = True
 
             if line == "#### END BLUEMAN AUTOMAGIC SUBNET ####\n":
-                insection == False
+                insection = False
 
             if not insection:
                 dhcp_config += line
@@ -92,23 +107,8 @@ class DhcpdHandler(object):
 
         return (dhcp_config, existing_subnet)
 
-    def get_dns_servers(self):
-        f = open("/etc/resolv.conf", "r")
-        dns_servers = ""
-        for line in f:
-            server = re.search("^nameserver (.*)", line)
-            if server:
-                server = server.groups(1)[0]
-                dns_servers += "%s, " % server;
-
-        dns_servers = dns_servers.strip(", ")
-
-        f.close()
-
-        return dns_servers
-
     def _generate_subnet_config(self):
-        dns = self.get_dns_servers()
+        dns = get_dns_servers()
 
         masked_ip = mask_ip4_address(self.netconf.ip4_address, self.netconf.ip4_mask)
 
@@ -169,6 +169,60 @@ class DhcpdHandler(object):
         f.write(dhcp_config)
         f.close()
 
+        if self.netconf.locked("dhcp"):
+            os.kill(self.pid, signal.SIGTERM)
+            self.netconf.unlock("dhcp")
+
+
+class UdhcpdHandler(object):
+    def __init__(self, netconf):
+        self.pid = None
+        self.netconf = netconf
+
+    def _generate_config(self):
+        dns = get_dns_servers()
+
+        masked_ip = mask_ip4_address(self.netconf.ip4_address, self.netconf.ip4_mask)
+
+        start, end = calc_ip_range(self.netconf.ip4_address)
+
+        return """start %(start)s
+end %(end)s
+interface pan1
+pidfile /var/run/udhcpd.pan1.pid
+option subnet %(ip_mask)s
+option dns %(dns)s
+option router %(rtr)s
+""" % {"ip_mask": inet_ntoa(masked_ip),
+       "dns": dns,
+       "rtr": inet_ntoa(self.netconf.ip4_address),
+       "start": inet_ntoa(start),
+       "end": inet_ntoa(end)
+       }
+
+    def do_apply(self):
+        if not self.netconf.locked("dhcp") or self.netconf.ip4_changed:
+            if self.netconf.ip4_changed:
+                self.do_remove()
+
+            config_file, config_path = mkstemp()
+            os.write(config_file, self._generate_config().encode('UTF-8'))
+            os.close(config_file)
+
+            dprint("Running udhcpd with config file %s" % config_path)
+            if Popen([have("udhcpd"), "-f", "-S", config_path]).wait() == 0:
+                dprint("udhcpd started correctly")
+                f = open("/var/run/udhcpd.pan1.pid", "r")
+                self.pid = int(f.read())
+                f.close()
+                dprint("pid", self.pid)
+                self.netconf.lock("dhcp")
+            else:
+                raise Exception("udhcpd failed to start. Check the system log for errors")
+
+            os.remove(config_path)
+
+    def do_remove(self):
         if self.netconf.locked("dhcp"):
             os.kill(self.pid, signal.SIGTERM)
             self.netconf.unlock("dhcp")
