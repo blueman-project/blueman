@@ -6,6 +6,8 @@
 
 * [ui] Button to reset device alias
 * [bluez] Agent capability KeyboardDisplay (@kemnade-uni / Andreas Kemnade)
+* [nm] Use API instead of GConf to create new connections
+* [nm] Enable IPv6 on created connections
 
 ### Bugs fixed
 
