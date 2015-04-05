@@ -24,13 +24,13 @@ class Base(GObject):
                 lookup_object('org.bluez.obex', '/org/bluez/obex')
                 dprint('Detected BlueZ integrated OBEX')
                 Base.interface_version = [5]
-            except DBusServiceUnknownError:
+            except DBusServiceUnknownError as e:
                 try:
                     lookup_object('org.bluez.obex.client', '/')
                     dprint('Detected standalone OBEX')
                     Base.interface_version = [4]
                 except DBusServiceUnknownError:
-                    raise Exception("Could not find any compatible version of BlueZ's OBEX service")
+                    raise e
 
         return Base.interface_version
 
