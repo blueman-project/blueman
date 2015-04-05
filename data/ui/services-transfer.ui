@@ -25,7 +25,7 @@
                 <child>
                   <object class="GtkLabel" id="label1">
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">Shared Folder:</property>
+                    <property name="label" translatable="yes">Incoming Folder:</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -36,7 +36,7 @@
                   <object class="GtkFileChooserButton" id="shared-path">
                     <property name="visible">True</property>
                     <property name="action">select-folder</property>
-                    <property name="title" translatable="yes">Select Shared/Storage folder</property>
+                    <property name="title" translatable="yes">Select folder for incoming file transfers</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -64,18 +64,6 @@
 		        <property name="orientation">vertical</property>
                         <property name="visible">True</property>
                         <child>
-                          <object class="GtkCheckButton" id="opp-enabled">
-                            <property name="label" translatable="yes">Enabled</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">False</property>
-                            <property name="draw_indicator">True</property>
-                          </object>
-                          <packing>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
                           <object class="GtkCheckButton" id="opp-accept">
                             <property name="label" translatable="yes">Accept files from trusted devices</property>
                             <property name="visible">True</property>
@@ -84,7 +72,7 @@
                             <property name="draw_indicator">True</property>
                           </object>
                           <packing>
-                            <property name="position">1</property>
+                            <property name="position">0</property>
                           </packing>
                         </child>
                       </object>
@@ -102,61 +90,6 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="position">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkFrame" id="frame4">
-                <property name="visible">True</property>
-                <property name="label_xalign">0</property>
-                <property name="shadow_type">none</property>
-                <child>
-                  <object class="GtkAlignment" id="alignment8">
-                    <property name="visible">True</property>
-                    <property name="top_padding">4</property>
-                    <property name="left_padding">12</property>
-                    <child>
-                      <object class="GtkBox" id="vbox8">
-		        <property name="orientation">vertical</property>
-                        <property name="visible">True</property>
-                        <child>
-                          <object class="GtkCheckButton" id="ftp-enabled">
-                            <property name="label" translatable="yes">Enabled</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">False</property>
-                            <property name="draw_indicator">True</property>
-                          </object>
-                          <packing>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkCheckButton" id="ftp-allow-write">
-                            <property name="label" translatable="yes">Allow devices to write/delete</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">False</property>
-                            <property name="draw_indicator">True</property>
-                          </object>
-                          <packing>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-                <child type="label">
-                  <object class="GtkLabel" id="label4">
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">&lt;b&gt;File Sharing (FTP)&lt;/b&gt;</property>
-                    <property name="use_markup">True</property>
-                  </object>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="position">2</property>
               </packing>
             </child>
             <child>

@@ -8,9 +8,9 @@ from __future__ import unicode_literals
 
 import os, sys, signal
 
-#support running uninstalled
-from blueman.bluez.errors import DBusServiceUnknownError
+from blueman.bluez.obex.Base import ObexdNotFoundError
 
+#support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if os.path.exists(os.path.join(_dirname, "CHANGELOG.md")):
     sys.path.insert(0, _dirname)
@@ -104,7 +104,7 @@ class Sender(GObject.GObject):
         self.num_files = len(self.files)
         try:
             self.client = obex.Client()
-        except DBusServiceUnknownError:
+        except ObexdNotFoundError:
             d = Gtk.MessageDialog(self.window,
                                   type=Gtk.MessageType.ERROR, buttons=Gtk.ButtonsType.OK)
             d.props.text = _("obexd not available")

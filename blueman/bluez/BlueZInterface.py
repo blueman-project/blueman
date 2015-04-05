@@ -13,8 +13,8 @@ class BlueZInterface(object):
     @staticmethod
     def get_interface_version():
         if not BlueZInterface.interface_version:
-            object = dbus.SystemBus().get_object('org.bluez', '/')
-            introspection = dbus.Interface(object, 'org.freedesktop.DBus.Introspectable').Introspect()
+            obj = dbus.SystemBus().get_object('org.bluez', '/')
+            introspection = dbus.Interface(obj, 'org.freedesktop.DBus.Introspectable').Introspect()
             if 'org.freedesktop.DBus.ObjectManager' in introspection:
                 dprint('Detected BlueZ 5')
                 BlueZInterface.interface_version = [5]

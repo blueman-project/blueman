@@ -17,7 +17,8 @@
 * [nm] Enable IPv6 on created connections
 * Use GAppInfo to launch applications
 * [bluez] Auto power on adapters; can be disabled in PowerManager settings
-* Remove Gtk+, GLib and Gio as build time dependancies.
+* Remove Gtk+, GLib and Gio as build time dependencies
+* [obex] Migrate receiving files from obex-data-server to obexd
 
 ### Bugs fixed
 
