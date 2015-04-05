@@ -2,7 +2,6 @@ SUBDIRS =	\
 	bluez	\
 	gui		\
 	main	\
-	ods	\
 	plugins \
 	services
 

@@ -150,21 +150,6 @@
     </key>
   </schema>
   <schema id="org.blueman.transfer" path="/org/blueman/transfer/">
-    <key type="b" name="opp-enabled">
-      <default>false</default>
-      <summary>OPP Enabled</summary>
-      <description></description>
-    </key>
-    <key type="b" name="ftp-enabled">
-      <default>false</default>
-      <summary>FTP Enabled</summary>
-      <description></description>
-    </key>
-    <key type="b" name="ftp-allow-write">
-      <default>false</default>
-      <summary>FTP Allow Writing</summary>
-      <description></description>
-    </key>
     <key type="b" name="opp-accept">
       <default>false</default>
       <summary>OPP Accept Connections</summary>
@@ -172,8 +157,8 @@
     </key>
     <key type="s" name="shared-path">
       <default>""</default>
-      <summary>Path to OBEX Shared Files</summary>
-      <description>Shared Files Local Path</description>
+      <summary>Path for incoming file transfers</summary>
+      <description></description>
     </key>
     <key type="s" name="browse-command">
       <default>""</default>
