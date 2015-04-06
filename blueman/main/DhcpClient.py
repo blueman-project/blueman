@@ -3,11 +3,9 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-import socket
-import fcntl
 from gi.repository import GObject
-import struct
 import subprocess
+from blueman.Functions import dprint, have
 from blueman.Lib import get_net_address
 
 
@@ -18,102 +16,57 @@ class DhcpClient(GObject.GObject):
         str('error-occurred'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
     }
 
+    COMMANDS = [["dhclient", "-e", "IF_METRIC=100", "-1"], ["dhcpcd", "-m", "100"], ["udhcpc", "-t", "20", "-n", "-i"]]
+
     quering = []
 
     def __init__(self, interface, timeout=30):
         GObject.GObject.__init__(self)
 
-        self.interface = interface
-        self.timeout = timeout
+        self._interface = interface
+        self._timeout = timeout
 
-        self.DHCP_CLIENT = False
-        try:
-            self.dhclient = subprocess.Popen(["dhclient", "--version"])
-            self.dhclient.terminate()
-            self.DHCP_CLIENT = "DHCLIENT"
-        except OSError:
-            try:
-                self.dhcpcd = subprocess.Popen(["dhcpcd", "--version"])
-                self.dhcpcd.terminate()
-                self.DHCP_CLIENT = "DHCPCD"
-            except OSError:
-                self.DHCP_CLIENT = "NONE"
+        self._command = None
+        for command in self.COMMANDS:
+            path = have(command[0])
+            if path:
+                self._command = [path] + command[1:] + [self._interface]
+                break
+        self._client = None
 
-    def Connect(self):
-        if self.DHCP_CLIENT == "NONE":
-            raise Exception("no DHCP client found, please install dhcpcd or dhclient")
+    def run(self):
+        if not self._command:
+            raise Exception("No DHCP client found, please install dhclient, dhcpcd, or udhcpc")
 
-        if self.interface in DhcpClient.quering:
+        if self._interface in DhcpClient.quering:
             raise Exception("DHCP already running on this interface")
         else:
-            DhcpClient.quering.append(self.interface)
+            DhcpClient.quering.append(self._interface)
 
-        if self.DHCP_CLIENT == "DHCLIENT":
-            try:
-                self.dhclient = subprocess.Popen(["dhclient", "-e", "IF_METRIC=100", "-1", self.interface])
-            except:
-                # Should never happen now...
-                raise Exception("dhclient binary not found")
-            GObject.timeout_add(1000, self.check_dhclient)
-        elif self.DHCP_CLIENT == "DHCPCD":
-            try:
-                self.dhcpcd = subprocess.Popen(["dhcpcd", "-m", "100", self.interface])
-            except:
-                # Should never happen now...
-                raise Exception("dhcpcd binary not found")
-            GObject.timeout_add(1000, self.check_dhcpcd)
+        self._client = subprocess.Popen(self._command)
+        GObject.timeout_add(1000, self._check_client)
+        GObject.timeout_add(self._timeout * 1000, self._on_timeout)
 
-        GObject.timeout_add(self.timeout * 1000, self.on_timeout)
+    def _on_timeout(self):
+        if not self._client.poll():
+            dprint("Timeout reached, terminating DHCP client")
+            self._client.terminate()
 
+    def _check_client(self):
+        status = self._client.poll()
+        if status == 0:
+            def complete():
+                ip = get_net_address(self._interface)
+                dprint("bound to", ip)
+                self.emit("connected", ip)
 
-    def on_timeout(self):
-        if self.DHCP_CLIENT == "DHCLIENT":
-            if self.dhclient.poll() == None:
-                dprint("Timeout reached, terminating dhclient")
-                self.dhclient.terminate()
-        elif self.DHCP_CLIENT == "DHCPCD":
-            if self.dhcpcd.poll() == None:
-                dprint("Timeout reached, terminating dhcpcd")
-                self.dhcpcd.terminate()
-
-    def check_dhclient(self):
-        status = self.dhclient.poll()
-        if status != None:
-            if status == 0:
-                def complete():
-                    ip = get_net_address(self.interface)
-                    dprint("bound to", ip)
-                    self.emit("connected", ip)
-
-                GObject.timeout_add(1000, complete)
-                DhcpClient.quering.remove(self.interface)
-                return False
-
-            else:
-                dprint("dhcp client failed with status code", status)
-                self.emit("error-occurred", status)
-                DhcpClient.quering.remove(self.interface)
-                return False
-
-        return True
-
-    def check_dhcpcd(self):
-        status = self.dhcpcd.poll()
-        if status != None:
-            if status == 0:
-                def complete():
-                    ip = get_net_address(self.interface)
-                    dprint("bound to", ip)
-                    self.emit("connected", ip)
-
-                GObject.timeout_add(1000, complete)
-                DhcpClient.quering.remove(self.interface)
-                return False
-
-            else:
-                dprint("dhcpcd failed with status code", status)
-                self.emit("error-occurred", status)
-                DhcpClient.quering.remove(self.interface)
-                return False
-
-        return True
+            GObject.timeout_add(1000, complete)
+            DhcpClient.quering.remove(self._interface)
+            return False
+        elif status:
+            dprint("dhcp client failed with status code", status)
+            self.emit("error-occurred", status)
+            DhcpClient.quering.remove(self._interface)
+            return False
+        else:
+            return True

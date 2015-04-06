@@ -33,7 +33,7 @@ class Network(MechanismPlugin):
         dh.connect("error-occurred", dh_error, ok, err)
         dh.connect("connected", dh_connected, ok, err)
         try:
-            dh.Connect()
+            dh.run()
         except Exception as e:
             err(e)
 
