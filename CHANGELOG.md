@@ -5,6 +5,7 @@
 ### New features
 
 * Support for Python 3.3.
+* [dhcp] udhcpc (busybox) support
 
 ### Changes
 
