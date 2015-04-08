@@ -47,7 +47,6 @@ class Device(PropertiesBlueZInterface):
 
     @raise_dbus_error
     def disconnect(self, reply_handler=None, error_handler=None):
-        # BlueZ 5 only!
         def ok():
             if callable(reply_handler):
                 reply_handler()

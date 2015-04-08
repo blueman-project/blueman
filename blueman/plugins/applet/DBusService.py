@@ -44,7 +44,7 @@ class DBusService(AppletPlugin):
         self.Applet.Plugins.Run("on_device_disconnect", dev)
 
         def on_timeout():
-            dev.Disconnect(reply_handler=ok, error_handler=err)
+            dev.Device.disconnect(reply_handler=ok, error_handler=err)
 
         GObject.timeout_add(1000, on_timeout)
 

@@ -11,6 +11,7 @@
 
 * [assistant] Crash (@duganchen)
 * [pulseaudio] Support for audio profiles
+* Generic disconnect method did not work
 
 ## 1.99.alpha2
 
