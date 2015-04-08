@@ -55,6 +55,11 @@
       <summary>List of devices we have netusage data stored.</summary>
       <description></description>
     </key>
+    <key type="b" name="notification-daemon">
+      <default>true</default>
+      <summary>Use notification daemon</summary>
+      <description>If this is set to false blueman always uses its internal fallback notification dialog and does not invoke a notification daemon. Otherwise the fallback dialog will only be used if actions need to be displayed and the notification daemon does not report to support them.</description>
+    </key>
   </schema>
   <schema id="org.blueman.gsmsettings" path="/org/blueman/gsmsettings/">
   </schema>

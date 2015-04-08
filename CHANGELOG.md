@@ -6,6 +6,7 @@
 
 * [ui] Button to reset device alias
 * [bluez] Agent capability KeyboardDisplay (@kemnade-uni / Andreas Kemnade)
+* New configuration option to disable the use of a notification daemon
 
 ### Bugs fixed
 

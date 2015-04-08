@@ -1,3 +1,4 @@
+from blueman.main.Config import Config
 from gi.repository import Notify
 from gi.repository import Gtk
 from gi.repository import Gdk
@@ -18,12 +19,10 @@ class Fade(AnimBase):
         self.window.props.opacity = state
 
 
-class NotificationDialog(Gtk.MessageDialog):
+class _NotificationDialog(Gtk.MessageDialog):
     def __init__(self, summary, message, timeout=-1, actions=None, actions_cb=None, pixbuf=None, status_icon=None):
         Gtk.MessageDialog.__init__(self, parent=None, flags=0, type=Gtk.MessageType.QUESTION,
                                    buttons=Gtk.ButtonsType.NONE, message_format=None)
-
-        self.bubble = NotificationBubble(summary, message, pixbuf=pixbuf)
 
         i = 100
         self.actions = {}
@@ -69,7 +68,7 @@ class NotificationDialog(Gtk.MessageDialog):
         self.entered = False
 
         def on_enter(widget, event):
-            if self.window == Gdk.Window.at_pointer()[0] or not self.entered:
+            if self.get_window() == Gdk.Window.at_pointer()[0] or not self.entered:
                 self.fader.animate(start=self.fader.get_state(), end=1.0, duration=500)
                 self.entered = True
 
@@ -84,11 +83,6 @@ class NotificationDialog(Gtk.MessageDialog):
         self.set_opacity(OPACITY_START)
         self.present()
         self.set_opacity(OPACITY_START)
-
-
-    def get_id(self):
-        if self.bubble:
-            return self.bubble.props.id
 
     def dialog_response(self, dialog, response):
         if self.callback:
@@ -126,7 +120,7 @@ class NotificationDialog(Gtk.MessageDialog):
         im.show()
 
 
-class NotificationBubble(Notify.Notification):
+class _NotificationBubble(Notify.Notification):
     def __new__(cls, summary, message, timeout=-1, actions=None, actions_cb=None, pixbuf=None, status_icon=None):
         self = Notify.Notification.new(summary, message, None)
 
@@ -159,9 +153,6 @@ class NotificationBubble(Notify.Notification):
 
         return self
 
-    def get_id(self):
-        return self.props.id
-
 
 class Notification(object):
     @staticmethod
@@ -169,8 +160,11 @@ class Notification(object):
         return "actions" in Notify.get_server_caps()
 
     def __new__(cls, summary, message, timeout=-1, actions=None, actions_cb=None, pixbuf=None, status_icon=None):
-        if not "actions" in Notify.get_server_caps():
-            if actions is not None:
-                return NotificationDialog(summary, message, timeout, actions, actions_cb, pixbuf, status_icon)
+        if not Config('org.blueman.general')['notification-daemon'] or (actions and not cls.actions_supported()):
+            # Use fallback as user does not want to use a notification daemon or we have to show actions and the
+            # notification daemon does not provide them
+            klass = _NotificationDialog
+        else:
+            klass = _NotificationBubble
 
-        return NotificationBubble(summary, message, timeout, actions, actions_cb, pixbuf, status_icon)
+        return klass(summary, message, timeout, actions, actions_cb, pixbuf, status_icon)

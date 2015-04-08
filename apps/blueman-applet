@@ -45,7 +45,7 @@ class BluemanApplet(object):
     def __init__(self):
         setup_icon_path()
         if not Notify.init("Blueman"):
-            dprint("Error: Failed to init pynotify")
+            dprint("Error: Failed to initialize libnotify")
 
         check_single_instance("blueman-applet")
 
