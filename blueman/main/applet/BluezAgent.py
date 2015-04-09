@@ -26,12 +26,13 @@ class AgentErrorCanceled(dbus.DBusException):
         dbus.DBusException.__init__(self, name="org.bluez.Error.Canceled")
 
 
-class DummyGObjectMeta(dbus.service.InterfaceType, GObjectMeta):
+class _GDbusObjectType(dbus.service.InterfaceType, GObjectMeta):
     pass
 
+_GObjectAgent = _GDbusObjectType('_GObjectAgent', (Agent, GObject.GObject), {})
 
-class CommonAgent(GObject.GObject, Agent@BLUEZ_AGENT_META@):
-    __metaclass__ = DummyGObjectMeta
+
+class CommonAgent(_GObjectAgent):
     __gsignals__ = {
         'released': (GObject.SignalFlags.NO_HOOKS, None, ()),
     }
