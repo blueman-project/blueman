@@ -5,7 +5,6 @@ blueman_PYTHON = 		\
 	__init__.py	
 
 CLEANFILES =		\
-	BluezAgent.py	\
 	$(BUILT_SOURCES)
 	
 DISTCLEANFILES = \
