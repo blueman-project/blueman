@@ -15,6 +15,7 @@
 * [sendto] Removed nautilus-sendto plugin (deprecated and broken)
 * [nm] Use API instead of GConf to create new connections
 * [nm] Enable IPv6 on created connections
+* [bluez] Auto power on adapters; can be disabled in PowerManager settings
 
 ### Bugs fixed
 
