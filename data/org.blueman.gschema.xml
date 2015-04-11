@@ -130,6 +130,13 @@
       <description></description>
     </key>
   </schema>
+  <schema id="org.blueman.plugins.powermanager" path="/org/blueman/plugins/powermanager/">
+    <key type="b" name="auto-power-on">
+        <default>true</default>
+        <summary>Automatically power on adapters</summary>
+        <description></description>
+    </key>
+  </schema>
   <schema id="org.blueman.plugins.recentconns" path="/org/blueman/plugins/recentconns/">
     <key type="i" name="max-items">
       <default>6</default>
