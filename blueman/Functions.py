@@ -384,8 +384,9 @@ def have(t):
     return None
 
 def mask_ip4_address(ip, subnet):
-    masked_ip = ""
-    for i in range(4):
-        masked_ip += chr(ord(ip[i]) & ord(subnet[i]))
+    masked_ip = bytearray()
 
-    return masked_ip
+    for x, y in zip(bytearray(ip), bytearray(subnet)):
+        masked_ip.append(x & y)
+
+    return bytes(masked_ip)

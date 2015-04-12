@@ -5,16 +5,24 @@ from __future__ import unicode_literals
 from io import open
 
 import pickle
-import socket
 import os
 import signal
 import errno
 import re
+from socket import inet_aton, inet_ntoa
 from blueman.Constants import *
-from blueman.Functions import have
+from blueman.Functions import have, mask_ip4_address
 from blueman.Lib import create_bridge, destroy_bridge, BridgeException
 from subprocess import call, Popen
 
+def calc_ip_range(ip):
+    '''Calculate the ip range for dhcp config'''
+    start_range = bytearray(ip)
+    end_range = bytearray(ip)
+    start_range[3] += 1
+    end_range[3] = 254
+
+    return bytes(start_range), bytes(end_range)
 
 class DnsMasqHandler(object):
     def __init__(self, netconf):
@@ -27,14 +35,13 @@ class DnsMasqHandler(object):
                 self.do_remove()
 
             if 1:
-                rtr = "--dhcp-option=option:router,%s" % socket.inet_ntoa(self.netconf.ip4_address)
+                rtr = "--dhcp-option=option:router,%s" % inet_ntoa(self.netconf.ip4_address)
             else:
                 rtr = "--dhcp-option=3 --dhcp-option=6"  # no route and no dns
 
-            start = self.netconf.ip4_address[:3] + chr(ord(self.netconf.ip4_address[3]) + 1)
-            end = self.netconf.ip4_address[:3] + "\xfe"  # .254
+            start, end = calc_ip_range(self.netconf.ip4_address)
 
-            args = "--pid-file=/var/run/dnsmasq.pan1.pid --bind-interfaces --dhcp-range=%s,%s,60m --except-interface=lo --interface=pan1 %s" % (socket.inet_ntoa(start), socket.inet_ntoa(end), rtr)
+            args = "--pid-file=/var/run/dnsmasq.pan1.pid --bind-interfaces --dhcp-range=%s,%s,60m --except-interface=lo --interface=pan1 %s" % (inet_ntoa(start), inet_ntoa(end), rtr)
 
             cmd = [have("dnsmasq")] + args.split(" ")
             dprint(cmd)
@@ -103,12 +110,9 @@ class DhcpdHandler(object):
     def _generate_subnet_config(self):
         dns = self.get_dns_servers()
 
-        masked_ip = ""
-        for i in range(4):
-            masked_ip += chr(ord(self.netconf.ip4_address[i]) & ord(self.netconf.ip4_mask[i]))
+        masked_ip = mask_ip4_address(self.netconf.ip4_address, self.netconf.ip4_mask)
 
-        start = self.netconf.ip4_address[:3] + chr(ord(self.netconf.ip4_address[3]) + 1)
-        end = self.netconf.ip4_address[:3] + "\xfe"  # .254
+        start, end = calc_ip_range(self.netconf.ip4_address)
 
         subnet = "#### BLUEMAN AUTOMAGIC SUBNET ####\n"
         subnet += "# Everything inside this section is destroyed after config change\n"
@@ -117,12 +121,12 @@ class DhcpdHandler(object):
                 option subnet-mask %(netmask)s;
                 option routers %(rtr)s;
                 range %(start)s %(end)s;
-                }\n""" % {"ip_mask": socket.inet_ntoa(masked_ip),
-                          "netmask": socket.inet_ntoa(self.netconf.ip4_mask),
+                }\n""" % {"ip_mask": inet_ntoa(masked_ip),
+                          "netmask": inet_ntoa(self.netconf.ip4_mask),
                           "dns": dns,
-                          "rtr": socket.inet_ntoa(self.netconf.ip4_address),
-                          "start": socket.inet_ntoa(start),
-                          "end": socket.inet_ntoa(end)
+                          "rtr": inet_ntoa(self.netconf.ip4_address),
+                          "start": inet_ntoa(start),
+                          "end": inet_ntoa(end)
         }
         subnet += "#### END BLUEMAN AUTOMAGIC SUBNET ####\n"
 
@@ -276,8 +280,8 @@ class NetConf(object):
             if e.errno != errno.EEXIST:
                 raise
 
-        ip_str = socket.inet_ntoa(self.ip4_address)
-        mask_str = socket.inet_ntoa(self.ip4_mask)
+        ip_str = inet_ntoa(self.ip4_address)
+        mask_str = inet_ntoa(self.ip4_mask)
 
         if self.ip4_changed or not self.locked("ifconfig"):
             self.enable_ip4_forwarding()

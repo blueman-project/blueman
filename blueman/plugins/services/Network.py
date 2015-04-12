@@ -7,7 +7,7 @@ from gi.repository import Gtk
 from blueman.Constants import *
 from blueman.Functions import have, dprint, mask_ip4_address
 from blueman.Lib import get_net_interfaces, get_net_address, get_net_netmask
-from socket import inet_ntoa, inet_aton
+from socket import inet_aton
 from blueman.plugins.ServicePlugin import ServicePlugin
 
 from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler
@@ -95,7 +95,7 @@ class Network(ServicePlugin):
             e.props.secondary_icon_tooltip_text = _("Invalid IP address")
             raise
 
-        a_netmask = "\xff\xff\xff\0"
+        a_netmask = inet_aton("255.255.255.0")
 
         a_masked = mask_ip4_address(a, a_netmask)
 
@@ -153,14 +153,14 @@ class Network(ServicePlugin):
 
         rb_blueman.props.active = self.Config["dhcp-client"]
 
-        net_ip.props.text = "10.%d.%d.1" % (randint(0, 255), randint(0, 255))
-
         if not self.Config["nap-enable"]:
             nap_frame.props.sensitive = False
 
         nc = NetConf.get_default()
         if nc.ip4_address != None:
             net_ip.props.text = inet_ntoa(nc.ip4_address)
+        else:
+            net_ip.props.text = "10.%d.%d.1" % (randint(0, 255), randint(0, 255))
 
         #if ns["masq"] != 0:
         #	net_nat.props.active = ns["masq"]
