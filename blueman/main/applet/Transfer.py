@@ -52,6 +52,15 @@ class Transfer(OdsManager):
                     self.Config["shared-path"] = d
 
             if not os.path.isdir(self.Config["shared-path"]):
+                d = Gtk.MessageDialog(None, buttons=Gtk.ButtonsType.OK, type=Gtk.MessageType.ERROR)
+                text = _("Configured share directory does not exist")
+                secondary_text = _("Please make sure that directory \"<b>%s</b>\" exists or configure it with blueman-services")
+                d.props.text = text
+                d.format_secondary_markup(secondary_text % self.Config["shared-path"])
+
+                d.run()
+                d.destroy()
+
                 raise Exception("Configured share directory %s does not exist" % self.Config["shared-path"])
 
             if pattern == "opp":
