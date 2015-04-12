@@ -34,7 +34,7 @@ class AgentErrorCanceled(dbus.DBusException):
 class _GDbusObjectType(dbus.service.InterfaceType, GObjectMeta):
     pass
 
-_GObjectAgent = _GDbusObjectType('_GObjectAgent', (Agent, GObject.GObject), {})
+_GObjectAgent = _GDbusObjectType(str('_GObjectAgent'), (Agent, GObject.GObject), {})
 
 
 class CommonAgent(_GObjectAgent):
