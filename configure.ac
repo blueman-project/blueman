@@ -118,6 +118,8 @@ AS_IF([test "x$enable_polkit" = "xyes"],
 
 AM_CONDITIONAL([HAVE_POLKIT], [test "x$have_polkit" = "xyes"])
 
+AC_SUBST([have_polkit])
+
 AC_ARG_ENABLE([nautilus-sendto],
   AS_HELP_STRING([--enable-nautilus-sendto], [Enable nautilus-sendto plugin build]),
   [have_nst=$enableval], [have_nst=yes])

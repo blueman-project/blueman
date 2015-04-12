@@ -8,7 +8,7 @@ PIXMAP_PATH = "@prefix@/share/pixmaps/@PACKAGE@"
 UI_PATH = "@pkgdatadir@/ui"
 OBEX_BROWSE_AVAILABLE = True
 DHCP_CONFIG_FILE = "@dhconfig@"
-POLKIT = "@polkit_val@" == "yes"
+POLKIT = "@have_polkit@" == "yes"
 
 import os
 import gettext
