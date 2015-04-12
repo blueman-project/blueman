@@ -2,11 +2,16 @@
 
 ## master
 
+### New features
+
+* Support for Python 3.3.
+
 ### Changes
 
 * [ui] Button to reset device alias
 * [bluez] Agent capability KeyboardDisplay (@kemnade-uni / Andreas Kemnade)
 * New configuration option to disable the use of a notification daemon
+* [sendto] Removed nautilus-sendto plugin (deprecated and broken)
 
 ### Bugs fixed
 
@@ -31,7 +36,6 @@
 * [bluez] BlueZ 5 support for audio, serial, recent connections, and setup
   assistant
 * Use Gsettings for configuration storage and remove the config plugin system.
-* Add support for Python 3.3.
 
 ### Changes
 

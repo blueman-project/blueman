@@ -3,7 +3,6 @@ SUBDIRS = 		\
 	blueman		\
 	data		\
 	module		\
-	sendto		\
 	po
 
 DIST_DOCS =			\
