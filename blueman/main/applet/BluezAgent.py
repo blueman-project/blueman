@@ -208,7 +208,7 @@ class AdapterAgent(CommonAgent):
         notify_message = _("Pairing request for:") + "\n%s" % alias
         if passkey:
             notify_message += "\n" + _("Confirm value for authentication:") + " <b>%s</b>" % passkey
-        actions = [["confirm", _("Confirm"), "help-about"], ["deny", _("Deny"), "help-about"]]
+        actions = [["confirm", _("Confirm")], ["deny", _("Deny")]]
 
         Notification("Bluetooth", notify_message, 0,
                      actions, on_confirm_action,
@@ -240,9 +240,9 @@ class AdapterAgent(CommonAgent):
         uuid16 = uuid128_to_uuid16(uuid)
         service = uuid16_to_name(uuid16)
         notify_message = (_("Authorization request for:") + "\n%s\n" + _("Service:") + " <b>%s</b>") % (alias, service)
-        actions = [["always", _("Always accept"), "blueman-trust"],
-                   ["accept", _("Accept"), "help-about"],
-                   ["deny", _("Deny"), "help-about"]]
+        actions = [["always", _("Always accept")],
+                   ["accept", _("Accept")],
+                   ["deny", _("Deny")]]
 
         n = Notification(_("Bluetooth Authentication"), notify_message, 0,
                          actions, on_auth_action,
