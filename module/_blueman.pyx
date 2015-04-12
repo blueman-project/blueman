@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from __future__ import print_function
 from __future__ import division
-#Comment out this import for cython version < 0.17 (wheezy)
+#Comment out this import for cython version < 0.17
 #We do not import any module here so no real loss.
 #from __future__ import absolute_import
 from __future__ import unicode_literals
