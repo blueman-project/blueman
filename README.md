@@ -34,7 +34,7 @@ Please use the GitHub issue tracker for bugs and questions.
 * [obex-data-server](http://wiki.muiline.com/obex-data-server) (>= 0.4.3) for receiving files
 * [pulseaudio](http://www.freedesktop.org/wiki/Software/PulseAudio/) (optional)
 * [PyGObject](https://wiki.gnome.org/PyGObject)
-* [Python 2.7](http://www.python.org/)
+* [Python](http://www.python.org/) (2.7 or >= 3.2)
 * [startup-notification](http://www.freedesktop.org/wiki/Software/startup-notification/)
 
 ### Additional build dependencies
