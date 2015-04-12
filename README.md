@@ -57,14 +57,7 @@ To generate and run a configure script from source, run `./autogen.sh`.
 
 ## Packaged versions
 
-* [Arch Linux](https://aur.archlinux.org/packages/blueman/)
-* [Debian GNU/Linux](http://packages.debian.org/search?keywords=blueman)
-* [Gentoo Linux](http://packages.gentoo.org/package/net-wireless/blueman)
-* [Linux Mint](http://community.linuxmint.com/software/view/blueman)
-* OpenMandriva
-* [openSUSE](http://software.opensuse.org/package/blueman?search_term=blueman)
-* [Slackware](http://packages.slackware.com/?search=blueman)
-* [Ubuntu](http://packages.ubuntu.com/search?keywords=blueman)
+See the [Wiki page for information about packaged versions of blueman](https://github.com/blueman-project/blueman/wiki/Packaged-versions).
 
 ## Support / Troubleshooting
 
