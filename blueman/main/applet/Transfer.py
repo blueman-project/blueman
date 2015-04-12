@@ -139,7 +139,7 @@ class Transfer(OdsManager):
             n = Notification(_("Incoming file over Bluetooth"),
                              _("Incoming file %(0)s from %(1)s") % {"0": "<b>" + os.path.basename(filename) + "</b>",
                                                                     "1": "<b>" + name + "</b>"},
-                             30000, [["accept", _("Accept"), "help-about"], ["reject", _("Reject"), "help-about"]], access_cb,
+                             30000, [["accept", _("Accept")], ["reject", _("Reject")]], access_cb,
                              icon, self.status_icon)
 
             if total_bytes > 350000:

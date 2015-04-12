@@ -31,17 +31,9 @@ class _NotificationDialog(Gtk.MessageDialog):
             for a in actions:
                 action_id = a[0]
                 action_name = a[1]
-                if len(a) == 3:
-                    icon_name = a[2]
-                else:
-                    icon_name = None
 
                 self.actions[i] = action_id
-                button = self.add_button(action_name, i)
-                if icon_name:
-                    im = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
-                    im.show()
-                    button.props.image = im
+                self.add_button(action_name, i)
                 i += 1
 
         self.actions[Gtk.ResponseType.DELETE_EVENT] = "close"
