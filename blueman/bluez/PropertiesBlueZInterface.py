@@ -5,7 +5,6 @@ from __future__ import unicode_literals
 
 from blueman.bluez.BlueZInterface import BlueZInterface
 from blueman.bluez.errors import raise_dbus_error
-import types
 import dbus
 
 
@@ -20,7 +19,7 @@ class PropertiesBlueZInterface(BlueZInterface):
 
     @raise_dbus_error
     def set(self, name, value):
-        if type(value) is types.IntType:
+        if type(value) is int:
             value = dbus.UInt32(value)
         if self.__class__.get_interface_version()[0] < 5:
             self.get_interface().SetProperty(name, value)
