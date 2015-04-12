@@ -27,7 +27,11 @@ class ConfigurablePlugin(BasePlugin):
         if key not in self.__class__.__options__:
             raise KeyError("No such option")
         opt = self.__class__.__options__[key]
-        if type(value) == opt["type"]:
+
+        # Workaround the unicode_literals in python2.
+        is_string = hasattr(value, "format") and hasattr(value, "encode")
+
+        if type(value) == opt["type"] or is_string:
             self.__config[key] = value
             self.option_changed(key, value)
         else:
