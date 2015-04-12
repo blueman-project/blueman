@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 from __future__ import print_function
 from __future__ import division
-from __future__ import absolute_import
+#Comment out this import for cython version < 0.17 (wheezy)
+#We do not import any module here so no real loss.
+#from __future__ import absolute_import
 from __future__ import unicode_literals
 
 cdef extern from "malloc.h":
