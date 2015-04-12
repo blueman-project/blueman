@@ -31,6 +31,7 @@
 * [bluez] BlueZ 5 support for audio, serial, recent connections, and setup
   assistant
 * Use Gsettings for configuration storage and remove the config plugin system.
+* Add support for Python 3.3.
 
 ### Changes
 
