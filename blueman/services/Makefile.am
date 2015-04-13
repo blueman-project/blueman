@@ -7,7 +7,7 @@ blueman_PYTHON =     		\
 	AudioSource.py		    \
 	DialupNetwork.py    	\
 	GroupNetwork.py		    \
-	Handsfree.py	    	\
+	HandsfreeGateway.py	    \
 	Headset.py      		\
 	Input.py          		\
 	NetworkAccessPoint.py   \

@@ -7,7 +7,7 @@ from blueman.services.AudioSink import AudioSink
 from blueman.services.AudioSource import AudioSource
 from blueman.services.DialupNetwork import DialupNetwork
 from blueman.services.GroupNetwork import GroupNetwork
-from blueman.services.Handsfree import Handsfree
+from blueman.services.HandsfreeGateway import HandsfreeGateway
 from blueman.services.Headset import Headset
 from blueman.services.Input import Input
 from blueman.services.NetworkAccessPoint import NetworkAccessPoint

@@ -24,6 +24,7 @@
 * [assistant] Crash (@duganchen)
 * [pulseaudio] Support for audio profiles
 * Generic disconnect method did not work
+* [bluez] Handsfree service crashed with BlueZ 4
 
 ## 1.99.alpha2
 
