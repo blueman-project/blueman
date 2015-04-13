@@ -30,7 +30,7 @@ class Device(GObject.GObject):
         self.Fake = True
         self.Temp = False
 
-        if isinstance(instance, str) or isinstance(instance, unicode):
+        if hasattr(instance, "format") and hasattr(instance, "upper"):
             self.Device = BluezDevice(instance)
         else:
             self.Device = instance
