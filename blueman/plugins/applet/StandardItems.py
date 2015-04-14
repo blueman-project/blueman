@@ -3,7 +3,7 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-from blueman.Functions import *
+from blueman.Functions import launch, create_menuitem, get_icon
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.CommonUi import show_about_dialog
 from blueman.gui.applet.PluginDialog import PluginDialog
@@ -96,34 +96,22 @@ class StandardItems(AppletPlugin):
 
 
     def on_setup_new(self, menu_item):
-        sn = startup_notification("Bluetooth Assistant", _("Starting Bluetooth Assistant"),
-                                  bin_name="blueman-assistant", icon="blueman")
-        spawn("blueman-assistant", sn=sn)
+        launch("blueman-assistant", None, False, "blueman", _("Bluetooth Assistant"))
 
     def on_send(self, menu_item):
-        sn = startup_notification("Blueman Sendto", _("Starting File Sender"), bin_name="blueman-sendto",
-                                  icon="blueman")
-        spawn("blueman-sendto", sn=sn)
+        launch("blueman-sendto", None, False, "blueman", _("File Sender"))
 
     def on_browse(self, menu_item):
-        sn = startup_notification("Blueman Browse", _("Starting File Browser"), bin_name="blueman-browse",
-                                  icon="blueman")
-        spawn("blueman-browse", sn=sn)
+        launch("blueman-browse", None, False, "blueman", _("File Browser"))
 
     def on_devices(self, menu_item):
-        sn = startup_notification("Blueman Manager", _("Starting Device Manager"), bin_name="blueman-manger",
-                                  icon="blueman")
-        spawn("blueman-manager", sn=sn)
+        launch("blueman-manager", None, False, "blueman", _("Device Manager"))
 
     def on_adapters(self, menu_item):
-        sn = startup_notification("Blueman Adapters", _("Starting Adapter Preferences"), bin_name="blueman-adapters",
-                                  icon="blueman")
-        spawn("blueman-adapters", sn=sn)
+        launch("blueman-adapters", None, False, "blueman", _("Adapter Preferences"))
 
     def on_local_services(self, menu_item):
-        sn = startup_notification("Blueman Services", _("Starting Service Preferences"), bin_name="blueman-services",
-                                  icon="blueman")
-        spawn("blueman-services", sn=sn)
+        launch("blueman-services", None, False, "blueman", _("Service Preferences"))
 
     def on_about(self, menu_item):
         about = show_about_dialog("Blueman " + _("applet"), run=False)

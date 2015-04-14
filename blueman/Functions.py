@@ -29,6 +29,7 @@ from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import GdkPixbuf
 from gi.repository import GLib
+from gi.repository import Gio
 import re
 import os
 import signal
@@ -155,6 +156,39 @@ def enable_rgba_colormap():
     #Gtk.widget_set_default_colormap(colormap)
     pass
 
+
+def launch(cmd, paths=None, system=False, icon_name=None, name="blueman"):
+    '''Launch a gui app with starup notification'''
+    display = Gdk.Display.get_default()
+    timestamp = Gtk.get_current_event_time()
+    context = display.get_app_launch_context()
+    context.set_timestamp(timestamp)
+    flags = Gio.AppInfoCreateFlags.SUPPORTS_STARTUP_NOTIFICATION
+
+    env = os.environ
+    env["BLUEMAN_EVENT_TIME"] = str(timestamp)
+
+    if not system:
+        cmd = os.path.join(BIN_DIR, cmd)
+    else:
+        cmd = os.path.expanduser(cmd)
+
+    if paths:
+        files = [Gio.File.new_for_commandline_arg(p) for p in paths]
+    else:
+        files = None
+
+    if icon_name:
+        icon = Gio.Icon.new_for_string(icon_name)
+        context.set_icon(icon)
+
+    appinfo = Gio.AppInfo.create_from_commandline(cmd, name, flags)
+    launched = appinfo.launch(files, context)
+
+    if not launched:
+        dprint("Command: %s failed" % cmd)
+
+    return launched
 
 def spawn(command, system=False, sn=None, reap=True, *args, **kwargs):
     def child_closed(pid, cond):

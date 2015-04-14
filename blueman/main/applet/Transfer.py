@@ -184,7 +184,7 @@ class Transfer(OdsManager):
 
             def on_open(*args):
                 print("open")
-                spawn(["xdg-open", path], True)
+                launch("xdg-open", [path], True)
 
             n.add_action("open", name, on_open, None)
             n.show()

@@ -38,7 +38,7 @@ class ManagerMenu:
         help_menu.show()
 
         item = create_menuitem(_("_Report a Problem"), get_icon("dialog-warning", 16))
-        item.connect("activate", lambda x: spawn(["xdg-open", WEBSITE + '/issues'], True))
+        item.connect("activate", lambda x: launch("xdg-open %s/issues" % WEBSITE, None, True))
         help_menu.append(item)
         item.show()
 

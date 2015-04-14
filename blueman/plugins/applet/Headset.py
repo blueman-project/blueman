@@ -38,7 +38,4 @@ class Headset(AppletPlugin):
         c = self.get_option("command")
         if c and c != "":
             args = c.split(" ")
-            try:
-                spawn(args, True)
-            except:
-                dprint("Cannot launch command")
+            launch(args, None, True)
