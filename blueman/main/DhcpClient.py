@@ -4,6 +4,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 from gi.repository import GObject
+import socket
 import subprocess
 from blueman.Functions import dprint, have
 from blueman.Lib import get_net_address
@@ -16,7 +17,11 @@ class DhcpClient(GObject.GObject):
         str('error-occurred'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
     }
 
-    COMMANDS = [["dhclient", "-e", "IF_METRIC=100", "-1"], ["dhcpcd", "-m", "100"], ["udhcpc", "-t", "20", "-n", "-i"]]
+    COMMANDS = [
+        ["dhclient", "-e", "IF_METRIC=100", "-1"],
+        ["dhcpcd", "-m", "100"],
+        ["udhcpc", "-t", "20", "-x", "hostname", socket.gethostname(), "-n", "-i"]
+    ]
 
     quering = []
 
