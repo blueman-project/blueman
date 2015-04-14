@@ -9,6 +9,9 @@ AC_PROG_CC
 AC_PROG_LIBTOOL
 PKG_PROG_PKG_CONFIG
 
+# Cython needs strict aliasing turned off.
+CFLAGS="$CFLAGS -fno-strict-aliasing"
+
 GETTEXT_PACKAGE="blueman"
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [The gettext package])
