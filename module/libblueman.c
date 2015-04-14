@@ -127,7 +127,7 @@ int _create_bridge(const char* name) {
         args[4] = 0;
         
         memcpy(ifr.ifr_name, name, IFNAMSIZ);
-        ((unsigned long *)(&ifr.ifr_data))[0] = (unsigned long)args;
+        ifr.ifr_data = (char *) &args;
         
 	ioctl(sock, SIOCDEVPRIVATE, &ifr);
 	
