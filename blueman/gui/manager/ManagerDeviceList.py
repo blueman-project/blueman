@@ -91,8 +91,7 @@ class ManagerDeviceList(DeviceList):
 
     def drag_recv(self, widget, context, x, y, selection, target_type, time):
 
-        uris = selection.get_uris()
-        uris = list(uris)
+        uris = list(selection.get_uris())
 
         context.finish(True, False, time)
 
@@ -100,10 +99,9 @@ class ManagerDeviceList(DeviceList):
         if path:
             iter = self.get_iter(path[0])
             device = self.get(iter, "device")["device"]
-            uris.insert(0, "blueman-sendto")
-            uris.insert(1, "--device=%s" % device.Address)
+            command = "blueman-sendto --device=%s" % device.Address
 
-            spawn(uris)
+            launch(command, uris, False, "blueman", _("File Sender"))
             context.finish(True, False, time)
         else:
             context.finish(False, False, time)

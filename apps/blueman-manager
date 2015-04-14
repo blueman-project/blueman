@@ -216,9 +216,8 @@ class Blueman:
         s2 = self.List.connect("adapter-property-changed", prop_changed)
 
     def setup(self, device):
-        sn = startup_notification("Bluetooth Assistant", _("Starting Bluetooth Assistant"),
-                                  bin_name="blueman-assistant", icon="blueman")
-        spawn(["blueman-assistant", "--device=%s" % device.Address], sn=sn)
+        command = "blueman-assistant --device=%s" % device.Address
+        launch(command, None, False, "blueman", _("Bluetooth Assistant"))
 
     def bond(self, device):
         if BlueZInterface.get_interface_version()[0] < 5:
@@ -252,26 +251,24 @@ class Blueman:
     def adapter_properties(self):
         adapter = self.List.Adapter
         name = os.path.basename(adapter.get_object_path())
-        sn = startup_notification("Blueman Adapters", _("Starting Adapter Preferences"), bin_name="blueman-adapters",
-                                  icon="blueman")
-        spawn(["blueman-adapters", name], sn=sn)
+        launch("blueman-adapters", None, False, "blueman", _("Adapter Preferences"))
 
     def toggle_trust(self, device):
         props = device.get_properties()
         device.Trusted = not device.Trusted
 
     def send(self, device, File=None):
-        sn = startup_notification("Blueman Sendto", _("Starting File Sender"), bin_name="blueman-sendto",
-                                  icon="blueman")
         adapter = self.List.Adapter
         props = adapter.get_properties()
-        spawn(["blueman-sendto", "--source=%s" % props["Address"], "--device=%s" % device.Address], sn=sn)
+
+        command = "blueman-sendto --source=%s --device=%s" % (props["Address"], device.Address)
+        launch(command, None, False, "blueman", _("File Sender"))
 
     def remove(self, device):
         self.List.Adapter.remove_device(device.Device)
 
     def browse(self, device):
-        spawn(["blueman-browse", "-d %s" % device.Address])
+        launch("blueman-browse -d %s" % device.Address)
 
     def disconnect(self, device, *args, **kwargs):
         applet = AppletService()

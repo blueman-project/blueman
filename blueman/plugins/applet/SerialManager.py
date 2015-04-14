@@ -10,7 +10,7 @@ from blueman.Sdp import uuid128_to_uuid16, uuid16_to_name, SERIAL_PORT_SVCLASS_I
 from blueman.Lib import rfcomm_list
 from blueman.main.SignalTracker import SignalTracker
 from blueman.main.Device import Device
-from subprocess import PIPE
+from subprocess import Popen, PIPE
 import dbus
 import atexit
 
@@ -103,7 +103,7 @@ class SerialManager(AppletPlugin):
             try:
                 args += [address, name, sv_name, ",".join(map(lambda x: hex(x), uuid16)), node]
                 dprint(args)
-                p = spawn(args, True, reap=False, preexec_fn=lambda: os.setpgid(0, 0))
+                p = Popen(args, preexec_fn=lambda: os.setpgid(0, 0))
 
                 self.manage_script(address, node, p)
 

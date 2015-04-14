@@ -54,7 +54,7 @@ class Browse:
 
         try:
             if conf["browse-command"]:
-                spawn(conf["browse-command"].replace("%d", addr).split(" "), True)
+                launch(conf["browse-command"].replace("%d", addr), system=True, name="blueman")
             else:
                 Gtk.show_uri(None, ('obex://[%s]' % addr), Gdk.CURRENT_TIME)
         except Exception as e:
