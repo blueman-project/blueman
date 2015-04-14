@@ -15,9 +15,9 @@ def show_about_dialog(app_name, run=True):
     about.set_name(app_name)
     about.set_version(VERSION)
     about.set_translator_credits(_("translator-credits"))
-    about.set_copyright('Copyright \xc2\xa9 2008 Valmantas Palikša\n'
-                        'Copyright \xc2\xa9 2008 Tadas Dailyda\n'
-                        'Copyright \xc2\xa9 2008 - %s blueman project' % datetime.now().year
+    about.set_copyright('Copyright © 2008 Valmantas Palikša\n'
+                        'Copyright © 2008 Tadas Dailyda\n'
+                        'Copyright © 2008 - %s blueman project' % datetime.now().year
                         )
     about.set_comments(_('Blueman is a GTK based Bluetooth manager'))
     about.set_website(WEBSITE)
