@@ -287,8 +287,9 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         item["mitem"].props.sensitive = False
 
         def reply(*args):
-            Notification(_("Connected"), _("Connected to %s") % item["mitem"].get_child().get_children()[1],
-                         pixbuf=get_icon("network-transmit-recieve", 48),
+            label_text = item["mitem"].get_child().get_children()[1].get_text()
+            Notification(_("Connected"), _("Connected to %s") % label_text,
+                         pixbuf=get_icon(item["icon"], 48),
                          status_icon=self.Applet.Plugins.StatusIcon)
             item["mitem"].props.sensitive = True
             sn.complete()
