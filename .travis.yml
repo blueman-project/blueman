@@ -2,7 +2,6 @@ script:
   - ./autogen.sh
   - make
   - make check
-  - cd po && intltool-update -m && [ ! -f missing ]
 
 env:
   - PYTHON=python2.7
