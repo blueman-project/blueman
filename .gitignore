@@ -1,48 +1,62 @@
-configure
-depcomp
-config.guess
-config.sub
-ltmain.sh
-libtool
-py-compile
+# aclocal
+/aclocal.m4
+/autom4te.cache
+
+# autoheader
+/config.h.in
+
+# libtoolize
+/ltmain.sh
+/m4
+
+# intltoolize
+/intltool-extract.in
+/intltool-merge.in
+/intltool-update.in
+/po/Makefile.in.in
+
+# automake
 Makefile.in
-config.log
-config.h
-intltool-merge
-intltool-extract
+/compile
+/config.guess
+/config.sub
+/depcomp
+/install-sh
+/missing
+/py-compile
+
+# autoconf
+/configure
+
+# ./configure
 Makefile
-intltool-extract.in
-svn-prop.tmp
-intltool-update
-config.status
-intltool-update.in
-stamp-h1
-config.h.in
-autom4te.cache
-intltool-merge.in
-missing
-aclocal.m4
-install-sh
-.deps
-Constants.py
+/config.h
+/config.log
+/config.status
+/libtool
+/stamp-h1
+/blueman/Constants.py
 /blueman/plugins/mechanism/Rfcomm.py
-_blueman.c
-po/Makefile.in.in
-po/.intltool-merge-cache
-po/POTFILES
-po/stamp-it
-data/configs/blueman-applet.service
-data/configs/org.blueman.Mechanism.service
-data/configs/org.blueman.policy
-*.gmo
-*.lo
-.libs
-*.la
-data/blueman.desktop
-data/blueman-manager.desktop
-data/blueman-adapters.desktop
-data/thunar-sendto-blueman.desktop
-*.pyc
-compile
-*.o
-*.gschema.valid
+/data/configs/blueman-applet.service
+/data/configs/org.blueman.Mechanism.service
+/module/.deps
+/po/POTFILES
+/po/stamp-it
+
+# make
+/data/blueman-adapters.desktop
+/data/blueman-manager.desktop
+/data/blueman.desktop
+/data/thunar-sendto-blueman.desktop
+/data/org.blueman.gschema.valid
+/data/configs/org.blueman.policy
+/module/.libs
+/module/_blueman.c
+/module/_blueman.la
+/module/_blueman_la-*.lo
+/module/_blueman_la-*.o
+/po/*.gmo
+/po/.intltool-merge-cache
+
+# Local execution
+/blueman/**/*.pyc
