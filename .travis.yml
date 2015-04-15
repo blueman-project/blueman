@@ -1,7 +1,7 @@
 script:
   - ./autogen.sh
-  - make check
   - make
+  - make check
   - cd po && intltool-update -m && [ ! -f missing ]
 
 env:
