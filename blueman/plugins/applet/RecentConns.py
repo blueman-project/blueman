@@ -280,10 +280,6 @@ class RecentConns(AppletPlugin, Gtk.Menu):
     def on_item_activated(self, menu_item, item):
         dprint("Connect", item["address"], item["uuid"])
 
-        sn = startup_notification("Bluetooth Connection",
-                                  desc=_("Connecting to %s") % item["mitem"].get_child().get_children()[1],
-                                  icon="blueman")
-
         item["mitem"].props.sensitive = False
 
         def reply(*args):
@@ -292,14 +288,12 @@ class RecentConns(AppletPlugin, Gtk.Menu):
                          pixbuf=get_icon(item["icon"], 48),
                          status_icon=self.Applet.Plugins.StatusIcon)
             item["mitem"].props.sensitive = True
-            sn.complete()
 
         def err(reason):
             Notification(_("Failed to connect"), str(reason).split(": ")[-1],
                          pixbuf=get_icon("dialog-error", 48),
                          status_icon=self.Applet.Plugins.StatusIcon)
             item["mitem"].props.sensitive = True
-            sn.complete()
 
         self.Applet.DbusSvc.connect_service(item["device"].get_object_path(), item["uuid"], reply, err)
 

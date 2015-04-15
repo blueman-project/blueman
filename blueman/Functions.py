@@ -38,7 +38,6 @@ import sys
 from subprocess import Popen
 from gi.repository import GObject
 import traceback
-from blueman.Lib import sn_launcher
 try: import __builtin__ as builtins
 except ImportError: import builtins
 
@@ -127,27 +126,6 @@ def wait_for_adapter(bluez_adapter, callback, timeout=1000):
     bluez_adapter.handle_signal(on_prop_change, "PropertyChanged")
 
 
-def startup_notification(name, desc=None, bin_name=None, icon=None):
-    dpy = Gdk.Display.get_default()
-    #FIXME this will work with GTK3
-    #screen = dpy.get_default_screen().get_number()
-    screen = Gdk.Screen.get_default().get_number()
-    sn = sn_launcher(dpy, screen)
-    sn.set_name(name)
-
-    if bin_name:
-        sn.set_binary_name(bin_name)
-    if icon:
-        sn.set_icon_name(icon)
-
-    if desc:
-        sn.set_description(desc)
-
-    sn.initiate("", "", Gtk.get_current_event_time())
-
-    return sn
-
-
 def enable_rgba_colormap():
     #screen = Gdk.Display.get_default().get_default_screen()
     #colormap = screen.get_rgba_colormap()
@@ -189,37 +167,6 @@ def launch(cmd, paths=None, system=False, icon_name=None, name="blueman"):
         dprint("Command: %s failed" % cmd)
 
     return launched
-
-def spawn(command, system=False, sn=None, reap=True, *args, **kwargs):
-    def child_closed(pid, cond):
-        dprint(command, "closed")
-        if sn:
-            sn.complete()
-
-    if not system:
-        if type(command) == list:
-            command[0] = os.path.join(BIN_DIR, command[0])
-        else:
-            command = os.path.join(BIN_DIR, command)
-    else:
-        if type(command) == list:
-            command[0] = os.path.expanduser(command[0])
-        else:
-            command = os.path.expanduser(command)
-
-    env = os.environ
-
-    if sn:
-        su_id = sn.get_startup_id()
-        env["DESKTOP_STARTUP_ID"] = su_id
-
-    env["BLUEMAN_EVENT_TIME"] = str(Gtk.get_current_event_time())
-
-    p = Popen(command, env=env, *args, **kwargs)
-    if reap:
-        GObject.child_watch_add(p.pid, child_closed)
-    return p
-
 
 def setup_icon_path():
     ic = Gtk.IconTheme.get_default()
