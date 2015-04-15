@@ -7,9 +7,7 @@ import dbus.service
 from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 import blueman.bluez as Bluez
-from blueman.bluez.errors import BluezDBusException
 from blueman.main.SignalTracker import SignalTracker
-import types
 
 
 class PowerManager(AppletPlugin):
@@ -18,6 +16,20 @@ class PowerManager(AppletPlugin):
     __description__ = _("Controls Bluetooth adapter power states")
     __author__ = "Walmis"
     __icon__ = "gnome-power-manager"
+
+    __gsettings__ = {
+        "schema": "org.blueman.plugins.powermanager",
+        "path": None
+    }
+
+    __options__ = {
+        "auto-power-on": {
+            "type": bool,
+            "default": True,
+            "name": _("Auto power-on"),
+            "desc": _("Automatically power on adapters")
+        }
+    }
 
     def on_load(self, applet):
         AppletPlugin.add_method(self.on_power_state_query)
@@ -41,7 +53,6 @@ class PowerManager(AppletPlugin):
 
         self.adapter_state = True
         self.current_state = True
-        self.power_changeable = True
 
         self.request_in_progress = False
 
@@ -61,7 +72,10 @@ class PowerManager(AppletPlugin):
         if state:
             def timeout():
                 self.adapter_state = self.get_adapter_state()
-                self.RequestPowerState(self.adapter_state)
+                if self.get_option("auto-power-on"):
+                    self.RequestPowerState(True, force=True)
+                else:
+                    self.RequestPowerState(self.adapter_state)
 
             GObject.timeout_add(1000, timeout)
 
@@ -114,8 +128,8 @@ class PowerManager(AppletPlugin):
             self.parent.UpdatePowerState()
             self.parent.request_in_progress = False
 
-    def RequestPowerState(self, state):
-        if self.current_state != state:
+    def RequestPowerState(self, state, force=False):
+        if self.current_state != state or force:
             if not self.request_in_progress:
                 self.request_in_progress = True
                 dprint("Requesting", state)
@@ -208,17 +222,8 @@ class PowerManager(AppletPlugin):
         self.RequestPowerState(not self.CurrentState)
 
     def on_status_icon_query_icon(self):
-        #opacity = 255 if self.GetBluetoothStatus() else 100
-        #pixbuf = opacify_pixbuf(pixbuf, opacity)
-
-        #if opacity < 255:
-        #	x_size = int(pixbuf.props.height)
-        #	x = get_icon("blueman-x", x_size)
-        #	pixbuf = composite_icon(pixbuf, [(x, pixbuf.props.height - x_size, pixbuf.props.height - x_size, 255)])
-
-        #return pixbuf
         if not self.GetBluetoothStatus():
-            return ("blueman-disabled", "blueman-disabled")
+            return "blueman-disabled", "blueman-disabled"
 
     def on_adapter_added(self, path):
         adapter = Bluez.Adapter(path)
