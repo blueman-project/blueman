@@ -25,6 +25,7 @@ Please use the GitHub issue tracker for bugs and questions.
 * [dbus](http://www.freedesktop.org/wiki/Software/dbus/)
 * [dbus-python](http://www.freedesktop.org/wiki/Software/DBusBindings/#python)
 * [GLib 2](http://www.gtk.org/) (>= 2.32)
+* [Gio 2](http://www.gtk.org/) (>= 2.32)
 * [GTK+ 3](http://www.gtk.org/)
 * [gnome-icon-theme](https://git.gnome.org/browse/adwaita-icon-theme/) or [mate-icon-theme](https://github.com/mate-desktop/mate-icon-theme)
 * [libappindicator](https://launchpad.net/libappindicator) (optional)
@@ -35,7 +36,6 @@ Please use the GitHub issue tracker for bugs and questions.
 * [pulseaudio](http://www.freedesktop.org/wiki/Software/PulseAudio/) (optional)
 * [PyGObject](https://wiki.gnome.org/PyGObject)
 * [Python](http://www.python.org/) (2.7 or >= 3.2)
-* [startup-notification](http://www.freedesktop.org/wiki/Software/startup-notification/)
 
 ### Additional build dependencies
 
