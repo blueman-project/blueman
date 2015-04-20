@@ -363,10 +363,10 @@ class PulseAudioUtils(GObject.GObject):
 
     def __get_proplist(self, proplist):
         if proplist:
-            pla = pa_proplist_to_string_sep(proplist, "|")
+            pla = pa_proplist_to_string_sep(proplist, b"|")
             pl = cast(pla, c_char_p)
 
-            ls = pl.value.split("|")
+            ls = [prop.decode("UTF-8") for prop in pl.value.split(b"|")]
             del pl
             pa_xfree(pla)
         else:
@@ -374,7 +374,7 @@ class PulseAudioUtils(GObject.GObject):
 
         proplist = {}
         for item in ls:
-            spl = map(lambda x: x.strip(" \""), item.split("="))
+            spl = [x.strip(" \"") for x in item.split("=")]
             if len(spl) == 2:
                 proplist[spl[0]] = spl[1]
 
@@ -427,11 +427,11 @@ class PulseAudioUtils(GObject.GObject):
             props = self.__get_proplist(entry_info[0].proplist)
 
             data[entry_info[0].index] = {
-            "name": entry_info[0].name,
+            "name": entry_info[0].name.decode("UTF-8"),
             "proplist": props,
-            "description": entry_info[0].description,
+            "description": entry_info[0].description.decode("UTF-8"),
             "owner_module": entry_info[0].owner_module,
-            "driver": entry_info[0].driver
+            "driver": entry_info[0].driver.decode("UTF-8")
             }
             if end:
                 callback(data)
@@ -453,11 +453,11 @@ class PulseAudioUtils(GObject.GObject):
             props = self.__get_proplist(entry_info[0].proplist)
 
             data[entry_info[0].index] = {
-            "name": entry_info[0].name,
+            "name": entry_info[0].name.decode("UTF-8"),
             "proplist": props,
-            "description": entry_info[0].description,
+            "description": entry_info[0].description.decode("UTF-8"),
             "owner_module": entry_info[0].owner_module,
-            "driver": entry_info[0].driver
+            "driver": entry_info[0].driver.decode("UTF-8")
             }
 
             if end:
@@ -483,11 +483,11 @@ class PulseAudioUtils(GObject.GObject):
             props = self.__get_proplist(entry_info[0].proplist)
 
             data[entry_info[0].index] = {
-            "name": entry_info[0].name,
+            "name": entry_info[0].name.decode("UTF-8"),
             "proplist": props,
             "owner_module": entry_info[0].owner_module,
             "sink": entry_info[0].sink,
-            "driver": entry_info[0].driver
+            "driver": entry_info[0].driver.decode("UTF-8")
             }
 
         self.__init_list_callback(pa_context_get_sink_input_info_list,
@@ -509,17 +509,17 @@ class PulseAudioUtils(GObject.GObject):
     def __card_info(self, card_info):
         props = self.__get_proplist(card_info[0].proplist)
         stuff = {
-        "name": card_info[0].name,
+        "name": card_info[0].name.decode("UTF-8"),
         "proplist": props,
         "owner_module": card_info[0].owner_module,
-        "driver": card_info[0].driver,
+        "driver": card_info[0].driver.decode("UTF-8"),
         "index": card_info[0].index,
         }
         l = []
         for i in range(0, card_info[0].n_profiles):
             x = {
-            "name": card_info[0].profiles[i].name,
-            "description": card_info[0].profiles[i].description,
+            "name": card_info[0].profiles[i].name.decode("UTF-8"),
+            "description": card_info[0].profiles[i].description.decode("UTF-8"),
             "n_sinks": card_info[0].profiles[i].n_sinks,
             "n_sources": card_info[0].profiles[i].n_sources,
             "priority": card_info[0].profiles[i].priority,
@@ -527,7 +527,7 @@ class PulseAudioUtils(GObject.GObject):
             l.append(x)
 
         stuff["profiles"] = l
-        stuff["active_profile"] = card_info[0].active_profile[0].name
+        stuff["active_profile"] = card_info[0].active_profile[0].name.decode("UTF-8")
 
         return stuff
 
@@ -557,7 +557,7 @@ class PulseAudioUtils(GObject.GObject):
 
             callback(self.__card_info(entry_info))
 
-        if type(card) == str:
+        if hasattr(card, "format") and hasattr(card, "upper"):
             fn = pa_context_get_card_info_by_name
         else:
             fn = pa_context_get_card_info_by_index
@@ -566,7 +566,9 @@ class PulseAudioUtils(GObject.GObject):
                                   pa_card_info_cb_t, handler, card)
 
     def SetCardProfile(self, card, profile, callback):
-        if type(card) == str:
+        profile = profile.encode("UTF-8")
+        if hasattr(card, "format") and hasattr(card, "upper"):
+            card = card.encode("UTF-8")
             fn = pa_context_set_card_profile_by_name
         else:
             fn = pa_context_set_card_profile_by_index
@@ -587,8 +589,8 @@ class PulseAudioUtils(GObject.GObject):
 
             props = self.__get_proplist(entry_info[0].proplist)
             data[entry_info[0].index] = {
-            "name": entry_info[0].name,
-            "argument": entry_info[0].argument,
+            "name": entry_info[0].name.decode("UTF-8"),
+            "argument": entry_info[0].argument.decode("UTF-8"),
             "n_used": entry_info[0].n_used,
             "proplist": props
             }
@@ -616,7 +618,7 @@ class PulseAudioUtils(GObject.GObject):
     #####################
 
     def GetVersion(self):
-        v = pa_get_library_version()
+        v = pa_get_library_version().decode("UTF-8")
         try:
             a = v.split("-")[0].split(".")
             a = map(lambda x: int(x), a)
@@ -665,7 +667,7 @@ class PulseAudioUtils(GObject.GObject):
             if self.pa_context:
                 pa_context_unref(self.pa_context)
 
-            self.pa_context = pa_context_new(self.pa_mainloop_api, "Blueman")
+            self.pa_context = pa_context_new(self.pa_mainloop_api, b"Blueman")
             if not self.pa_context:
                 raise NullError("PA Context returned NULL")
 
