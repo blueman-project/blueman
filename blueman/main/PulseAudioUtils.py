@@ -548,7 +548,7 @@ class PulseAudioUtils(GObject.GObject):
         self.__init_list_callback(pa_context_get_card_info_list,
                                   pa_card_info_cb_t, handler)
 
-    def GetCard(self, id, callback):
+    def GetCard(self, card, callback):
         self.check_connected()
 
         def handler(entry_info, end):
@@ -557,21 +557,21 @@ class PulseAudioUtils(GObject.GObject):
 
             callback(self.__card_info(entry_info))
 
-        if type(id) == str:
+        if type(card) == str:
             fn = pa_context_get_card_info_by_name
         else:
             fn = pa_context_get_card_info_by_index
 
         self.__init_list_callback(fn,
-                                  pa_card_info_cb_t, handler, id)
+                                  pa_card_info_cb_t, handler, card)
 
-    def SetCardProfile(self, card_id, profile, callback):
-        if type(card_id) == str:
+    def SetCardProfile(self, card, profile, callback):
+        if type(card) == str:
             fn = pa_context_set_card_profile_by_name
         else:
             fn = pa_context_set_card_profile_by_index
 
-        self.simple_callback(callback, fn, card_id, profile)
+        self.simple_callback(callback, fn, card, profile)
 
     #### Module API #######
     #from gi.repository import Gtk
