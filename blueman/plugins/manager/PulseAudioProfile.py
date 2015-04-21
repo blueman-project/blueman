@@ -45,7 +45,11 @@ class PulseAudioProfile(ManagerPlugin):
         dprint(event, idx)
 
         def get_card_cb(card):
-            if card["driver"] == "module-bluetooth-device.c":
+            drivers = ("module-bluetooth-device.c",
+                       "module-bluez4-device.c",
+                       "module-bluez5-device.c")
+
+            if card["driver"] in drivers:
                 self.devices[card["proplist"]["device.string"]] = card
                 self.regenerate_with_device(card["proplist"]["device.string"])
 
