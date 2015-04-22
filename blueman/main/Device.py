@@ -64,6 +64,8 @@ class Device(GObject.GObject):
                 return cls(self, uuid)
 
     def get_services(self):
+        if self.Fake:
+            return []
         services = (self.get_service(uuid) for uuid in self.UUIDs)
         return [service for service in services if service]
 
