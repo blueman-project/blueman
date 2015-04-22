@@ -156,11 +156,7 @@ if test "x$HAVE_GNOME_ICONS" = "xno" && test "x$HAVE_MATE_ICONS" = "xno" && test
 	AC_MSG_ERROR([Required icon themes not found.])
 fi
 
-PKG_CHECK_MODULES([PYGOBJECT],
-                  [pygobject-2.0 >= 2.12],
-                  [],
-                  [PKG_CHECK_MODULES([PYGOBJECT], [pygobject-3.0])]
-)
+PKG_CHECK_MODULES([PYGOBJECT],[pygobject-3.0])
 AC_SUBST([PYGOBJECT_CFLAGS])
 AC_SUBST([PYGOBJECT_LIBS])
 
