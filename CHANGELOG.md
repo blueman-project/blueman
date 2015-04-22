@@ -17,6 +17,7 @@
 * [nm] Enable IPv6 on created connections
 * Use GAppInfo to launch applications
 * [bluez] Auto power on adapters; can be disabled in PowerManager settings
+* Remove Gtk+, GLib and Gio as build time dependancies.
 
 ### Bugs fixed
 

@@ -138,12 +138,7 @@ if test "x$enable_runtime_deps_check" = "xyes"; then
 AM_CHECK_PYMOD([dbus],,,[AC_MSG_ERROR(Could not find Python module dbus)])
 fi
 
-PKG_CHECK_MODULES([BLUEZ],
-		  [bluez >= 4.61
-		  gtk+-3.0
-		  glib-2.0 >= 2.32
-		  gio-2.0 >= 2.32
-		  gthread-2.0 >= 2.32])
+PKG_CHECK_MODULES([BLUEZ], [bluez >= 4.61 gthread-2.0 >= 2.32])
 
 AC_SUBST([BLUEZ_CFLAGS])
 AC_SUBST([BLUEZ_LIBS])
