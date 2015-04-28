@@ -15,13 +15,32 @@ AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [The gettext package])
 AM_GLIB_GNU_GETTEXT
 IT_PROG_INTLTOOL([0.35.0])
 
+AC_ENABLE_SHARED(yes)
+AC_ENABLE_STATIC(no)
+
 AM_PATH_PYTHON([2.7])
+PYTHON_MAJOR_VERSION="$(echo ${PYTHON_VERSION} | cut -d . -f 1)"
+PYTHON_MINOR_VERSION="$(echo ${PYTHON_VERSION} | cut -d . -f 2)"
+
+if [test ${PYTHON_MAJOR_VERSION} -eq 3] && [test ${PYTHON_MINOR_VERSION} -lt 2];then
+	AC_MSG_ERROR([Unsupported Python 3 version found (>=3.2 required)])
+fi
+
 PKG_CHECK_MODULES([PYTHON], [python-${PYTHON_VERSION}])
 AC_SUBST(PYTHON_LIBS)
 AC_SUBST(PYTHON_CFLAGS)
 
-AC_ENABLE_SHARED(yes)
-AC_ENABLE_STATIC(no)
+AC_ARG_ENABLE([runtime_deps_check],
+  AS_HELP_STRING([--disable-runtime-deps-check], [Disable runtime dependency check (for package maintainers)]),
+  [enable_runtime_deps_check=$enableval], [enable_runtime_deps_check=yes])
+
+if test "x$enable_runtime_deps_check" = "xyes"; then
+AM_CHECK_PYMOD([dbus],,,[AC_MSG_ERROR(Could not find Python module dbus)])
+fi
+
+PKG_CHECK_MODULES([PYGOBJECT],[pygobject-3.0])
+AC_SUBST([PYGOBJECT_CFLAGS])
+AC_SUBST([PYGOBJECT_LIBS])
 
 AC_ARG_VAR([CYTHONEXEC], [Cython compiler])
 if test "x$CYTHONEXEC" = "x"; then
@@ -104,9 +123,6 @@ AC_SUBST([dhconfig])
 
 dnl ---------------------------------
 
-AC_ARG_ENABLE([runtime_deps_check],
-  AS_HELP_STRING([--disable-runtime-deps-check], [Disable runtime dependency check (for package maintainers)]),
-  [enable_runtime_deps_check=$enableval], [enable_runtime_deps_check=yes])
 
 AC_ARG_ENABLE([polkit],
   AS_HELP_STRING([--enable-polkit], [Enable policykit support]),
@@ -134,10 +150,6 @@ AM_CONDITIONAL([HAVE_SETTINGS], [test "x$have_settings" = "xyes"])
 
 dnl ----------------------------
 
-if test "x$enable_runtime_deps_check" = "xyes"; then
-AM_CHECK_PYMOD([dbus],,,[AC_MSG_ERROR(Could not find Python module dbus)])
-fi
-
 PKG_CHECK_MODULES([BLUEZ], [bluez >= 4.61 gthread-2.0 >= 2.32])
 
 AC_SUBST([BLUEZ_CFLAGS])
@@ -155,10 +167,6 @@ PKG_CHECK_MODULES([FAENZAICONS], [faenza-icon-theme],
 if test "x$HAVE_GNOME_ICONS" = "xno" && test "x$HAVE_MATE_ICONS" = "xno" && test "xHAVE_FAENZA_ICONS" = "xno"; then
 	AC_MSG_ERROR([Required icon themes not found.])
 fi
-
-PKG_CHECK_MODULES([PYGOBJECT],[pygobject-3.0])
-AC_SUBST([PYGOBJECT_CFLAGS])
-AC_SUBST([PYGOBJECT_LIBS])
 
 # GSettings related settings
 GLIB_GSETTINGS
