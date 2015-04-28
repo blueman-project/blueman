@@ -6,6 +6,7 @@
 
 * Support for Python 3.3.
 * [dhcp] udhcpc (busybox) support
+* [dhcp] udhcpd (busybox) support
 
 ### Changes
 
@@ -24,6 +25,7 @@
 * [assistant] Crash (@duganchen)
 * [pulseaudio] Support for audio profiles
 * Generic disconnect method did not work
+* Content of dhcpd configuration file after blueman section was removed
 
 ## 1.99.alpha2
 

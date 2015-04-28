@@ -10,7 +10,7 @@ from blueman.Lib import get_net_interfaces, get_net_address, get_net_netmask
 from socket import inet_aton
 from blueman.plugins.ServicePlugin import ServicePlugin
 
-from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler
+from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler, UdhcpdHandler
 from blueman.main.Config import Config
 from blueman.main.Mechanism import Mechanism
 from blueman.main.AppletService import AppletService
@@ -60,11 +60,12 @@ class Network(ServicePlugin):
             nap_enable = self.Builder.get_object("nap-enable")
             if nap_enable.props.active:
 
-                r_dnsmasq = self.Builder.get_object("r_dnsmasq")
-                if r_dnsmasq.props.active:
-                    stype = "DnsMasqHandler"
-                else:
+                if self.Builder.get_object("r_dhcpd").props.active:
                     stype = "DhcpdHandler"
+                elif self.Builder.get_object("r_dnsmasq").props.active:
+                    stype = "DnsMasqHandler"
+                elif self.Builder.get_object("r_udhcpd").props.active:
+                    stype = "UdhcpdHandler"
 
                 net_ip = self.Builder.get_object("net_ip")
                 net_nat = self.Builder.get_object("net_nat")
@@ -141,6 +142,7 @@ class Network(ServicePlugin):
         nap_enable = self.Builder.get_object("nap-enable")
         r_dnsmasq = self.Builder.get_object("r_dnsmasq")
         r_dhcpd = self.Builder.get_object("r_dhcpd")
+        r_udhcpd = self.Builder.get_object("r_udhcpd")
         net_ip = self.Builder.get_object("net_ip")
         net_nat = self.Builder.get_object("net_nat")
         rb_nm = self.Builder.get_object("rb_nm")
@@ -162,19 +164,17 @@ class Network(ServicePlugin):
         else:
             net_ip.props.text = "10.%d.%d.1" % (randint(0, 255), randint(0, 255))
 
-        #if ns["masq"] != 0:
-        #	net_nat.props.active = ns["masq"]
-
         if nc.get_dhcp_handler() == None:
             nap_frame.props.sensitive = False
             nap_enable.props.active = False
-        else:
-            if nc.get_dhcp_handler() == DnsMasqHandler:
-                r_dnsmasq.props.active = True
-            else:
-                r_dhcpd.props.active = True
+        if nc.get_dhcp_handler() == DnsMasqHandler:
+            r_dnsmasq.props.active = True
+        elif nc.get_dhcp_handler() == DhcpdHandler:
+            r_dhcpd.props.active = True
+        elif nc.get_dhcp_handler() == UdhcpdHandler:
+            r_udhcpd.props.active = True
 
-        if not have("dnsmasq") and not have("dhcpd3") and not have("dhcpd"):
+        if not have("dnsmasq") and not have("dhcpd3") and not have("dhcpd") and not have("udhcpd"):
             nap_frame.props.sensitive = False
             warning.props.visible = True
             warning.props.sensitive = True
@@ -183,14 +183,17 @@ class Network(ServicePlugin):
         if not have("dnsmasq"):
             r_dnsmasq.props.sensitive = False
             r_dnsmasq.props.active = False
-            r_dhcpd.props.active = True
 
         if not have("dhcpd3") and not have("dhcpd"):
             r_dhcpd.props.sensitive = False
             r_dhcpd.props.active = False
-            r_dnsmasq.props.active = True
+
+        if not have("udhcpd"):
+            r_udhcpd.props.sensitive = False
+            r_udhcpd.props.active = False
 
         r_dnsmasq.connect("toggled", lambda x: self.option_changed_notify("dnsmasq"))
+        r_udhcpd.connect("toggled", lambda x: self.option_changed_notify("udhcpd"))
         net_ip.connect("changed", lambda x: self.option_changed_notify("ip", False))
 
         self.Config.bind_to_widget("nat", net_nat, "active")
