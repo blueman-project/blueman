@@ -14,7 +14,7 @@
 * [obexd](http://www.bluez.org/) (>= 0.47) for sending files
 * [obex-data-server](http://wiki.muiline.com/obex-data-server) (>= 0.4.3) for receiving files
 * [pulseaudio](http://www.freedesktop.org/wiki/Software/PulseAudio/) (optional)
-* [PyGObject](https://wiki.gnome.org/PyGObject)
+* [PyGObject 3](https://wiki.gnome.org/PyGObject)
 * [Python](http://www.python.org/) (2.7 or >= 3.2)
 
 ## Additional build dependencies
