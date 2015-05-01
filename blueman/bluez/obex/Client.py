@@ -4,38 +4,42 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 from blueman.Functions import dprint
-from blueman.bluez.obex.Session import Session
 from blueman.bluez.obex.Base import Base
 from gi.repository import GObject
 
 
 class Client(Base):
-    __gsignals__ = {str('session-created'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,))}
+    __gsignals__ = {
+        str('session-created'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+        str('session-failed'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+        str('session-removed'): (GObject.SignalFlags.NO_HOOKS, None, ()),
+    }
 
     def __init__(self):
         if self.__class__.get_interface_version()[0] < 5:
-            super(Client, self).__init__('/', 'org.bluez.obex.client')
-            self.__client_interface = self._get_interface('org.bluez.obex.Client')
+            super(Client, self).__init__('org.bluez.obex.Client', '/', True)
         else:
-            super(Client, self).__init__('/org/bluez/obex', 'org.bluez.obex')
-            self.__client_interface = self._get_interface('org.bluez.obex.Client1')
+            super(Client, self).__init__('org.bluez.obex.Client1', '/org/bluez/obex')
 
-    def create_session(self, dest_addr, source_addr="00:00:00:00:00:00", pattern="opp", error_handler=None):
-        def reply(session_path):
-            self.emit("session-created", Session(session_path))
+    def create_session(self, dest_addr, source_addr="00:00:00:00:00:00", pattern="opp"):
+        def on_session_created(session_path):
+            dprint(dest_addr, source_addr, pattern, session_path)
+            self.emit("session-created", session_path)
 
-        def err(*args):
-            dprint("session err", args)
+        def on_session_failed(error):
+            dprint(dest_addr, source_addr, pattern, error)
+            self.emit("session-failed", error)
 
-        if not error_handler:
-            error_handler = err
+        self._interface.CreateSession(dest_addr, {"Source": source_addr, "Target": pattern},
+                                      reply_handler=on_session_created, error_handler=on_session_failed)
 
-        self.__client_interface.CreateSession(dest_addr, {"Source": source_addr, "Target": pattern},
-                                              reply_handler=reply, error_handler=error_handler)
+    def remove_session(self, session_path):
+        def on_session_removed():
+            dprint(session_path)
+            self.emit('session-removed')
 
-    def remove_session(self, session, reply_handler=None, error_handler=None):
-        if not error_handler:
-            def error_handler(*args):
-                dprint("session err", args)
-        self.__client_interface.RemoveSession(session.get_object_path(),
-                                              reply_handler=reply_handler, error_handler=error_handler)
+        def on_session_remove_failed(error):
+            dprint(session_path, error)
+
+        self._interface.RemoveSession(session_path, reply_handler=on_session_removed,
+                                      error_handler=on_session_remove_failed)
