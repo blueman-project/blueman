@@ -60,8 +60,8 @@ class MonitorBase(GObject.GObject):
 
         self.emit("stats", self.config["tx"], self.config["rx"])
 
-        if not self.device in self.general_config["netusage-dev-list"]:
-            self.general_config["netusage-dev-list"] += [self.device]
+        if not self.device.Address in self.general_config["netusage-dev-list"]:
+            self.general_config["netusage-dev-list"] += [self.device.Address]
 
     def Disconnect(self):
         self.emit("disconnected")
