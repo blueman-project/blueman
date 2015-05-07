@@ -25,6 +25,8 @@ To install a packaged release of blueman, run `./configure && make && make insta
 
 To generate and run a configure script from source, run `./autogen.sh`.
 
+If you are packaging it for your distribution please make sure to pass `--disable-schemas-compile` and run `glib-compile-schemas /datadir/glib-2.0/schemas` as part of your (un)install phase.
+
 ## Packaged versions
 
 See the [Wiki page for information about packaged versions of blueman](https://github.com/blueman-project/blueman/wiki/Packaged-versions).
