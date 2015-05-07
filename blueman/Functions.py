@@ -49,7 +49,7 @@ YELLOW = lambda x: "\x1b[33;01m" + x + "\x1b[39;49;00m"
 import fcntl, struct, termios
 
 try:
-    in_fg = os.getpgrp() == struct.unpack('h', fcntl.ioctl(0, termios.TIOCGPGRP, "  "))[0]
+    in_fg = os.getpgrp() == struct.unpack(str('h'), fcntl.ioctl(0, termios.TIOCGPGRP, "  "))[0]
 except IOError:
     in_fg = 'DEBUG' in os.environ
 
