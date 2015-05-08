@@ -78,7 +78,7 @@ class KillSwitch(AppletPlugin):
             dprint("Bad rfkill event size")
             return True
 
-        (idx, type, op, soft, hard) = struct.unpack("IBBBB", data)
+        (idx, type, op, soft, hard) = struct.unpack(str("IBBBB"), data)
 
         if type != RFKILL_TYPE_BLUETOOTH:
             return True
