@@ -214,8 +214,8 @@ class DeviceList(GenericList):
             hci = os.path.basename(self.Adapter.get_object_path())
             try:
                 cinfo = conn_info(props["Address"], hci)
-            except:
-                dprint("Failed to get power levels")
+            except Exception as e:
+                dprint("Failed to get power levels\n%s" % e)
             else:
                 r = Gtk.TreeRowReference.new(self.get_model(), self.get_model().get_path(iter))
                 self.level_setup_event(r, device, cinfo)
