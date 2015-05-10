@@ -35,6 +35,7 @@ import os
 import signal
 import atexit
 import sys
+from ctypes import cdll, byref, create_string_buffer
 from subprocess import Popen
 from gi.repository import GObject
 import traceback
@@ -371,3 +372,19 @@ def mask_ip4_address(ip, subnet):
         masked_ip.append(x & y)
 
     return bytes(masked_ip)
+
+def set_proc_title(name=None):
+    '''Set the process title'''
+
+    if not name:
+        name = os.path.basename(sys.argv[0])
+
+    libc = cdll.LoadLibrary('libc.so.6')
+    buff = create_string_buffer(len(name)+1)
+    buff.value = name.encode("UTF-8")
+    ret = libc.prctl(15, byref(buff), 0, 0, 0)
+
+    if ret != 0:
+        dprint("Failed to set process title")
+
+    return ret

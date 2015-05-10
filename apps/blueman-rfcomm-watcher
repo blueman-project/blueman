@@ -10,6 +10,7 @@ from gi.repository import GLib
 import os
 import sys
 
+from blueman.Functions import set_proc_title
 
 def on_file_changed(monitor, file, other_file, event_type):
     if event_type == Gio.FileMonitorEvent.DELETED:
@@ -20,5 +21,6 @@ mon.connect('changed', on_file_changed)
 
 fd = os.open(sys.argv[1], os.O_RDONLY | os.O_NONBLOCK)
 
+set_proc_title()
 loop = GLib.MainLoop()
 loop.run()

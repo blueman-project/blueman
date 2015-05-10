@@ -28,6 +28,7 @@ loop = GObject.MainLoop()
 
 from blueman.Lib import set_probe_debug
 from blueman.Constants import POLKIT
+from blueman.Functions import set_proc_title
 
 import blueman.plugins.mechanism
 from blueman.plugins.MechanismPlugin import MechanismPlugin
@@ -161,6 +162,7 @@ class conf_service(DbusService):
             raise dbus.DBusException("Not authorized")
 
 
+set_proc_title()
 conf_service()
 loop.run()
 

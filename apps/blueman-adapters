@@ -19,7 +19,7 @@ if os.path.exists(os.path.join(_dirname, "CHANGELOG.md")):
 
 import blueman.bluez as Bluez
 from blueman.Constants import *
-from blueman.Functions import setup_icon_path, enable_rgba_colormap, check_single_instance, check_bluetooth_status
+from blueman.Functions import *
 from blueman.main.SignalTracker import SignalTracker
 
 enable_rgba_colormap()
@@ -231,6 +231,7 @@ class BluemanAdapters:
 
 
 if __name__ == '__main__':
+    set_proc_title()
     adapter_name = None
     if len(sys.argv) > 1:
         adapter_name = sys.argv[1]
