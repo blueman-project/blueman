@@ -26,7 +26,7 @@ class GameControllerWakelock(AppletPlugin):
     def on_unload(self):
         if self.wake_lock:
             self.wake_lock = 1
-            self.suspend_screensaver("resume")
+            self.xdg_screensaver("resume")
         self.signals.DisconnectAll()
 
     def on_device_property_changed(self, key, value, path):

@@ -7,7 +7,7 @@ from gi.repository import Gtk
 from blueman.Constants import *
 from blueman.Functions import have, dprint, mask_ip4_address
 from blueman.Lib import get_net_interfaces, get_net_address, get_net_netmask
-from socket import inet_aton
+from socket import inet_aton, inet_ntoa
 from blueman.plugins.ServicePlugin import ServicePlugin
 
 from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler

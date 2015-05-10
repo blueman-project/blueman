@@ -27,7 +27,7 @@ class ObjectPush(Base):
             self.emit('transfer-started', transfer_path, props['Filename'])
 
         def on_transfer_error(error):
-            dprint(self.__session_path, file_path, error)
+            dprint(file_path, error)
             self.emit('transfer-failed', error)
 
         self._interface.SendFile(file_path, reply_handler=on_transfer_started, error_handler=on_transfer_error)

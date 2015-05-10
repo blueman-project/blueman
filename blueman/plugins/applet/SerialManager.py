@@ -40,6 +40,8 @@ class SerialManager(AppletPlugin):
                          "Upon device disconnection the script will be sent a HUP signal</span>")},
     }
 
+    scripts = {}
+
     def on_load(self, applet):
         self.signals = SignalTracker()
         self.signals.Handle('bluez', Bluez.Device(), self.on_device_property_changed, 'PropertyChanged',

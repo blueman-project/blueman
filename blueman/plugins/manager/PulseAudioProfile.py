@@ -8,7 +8,7 @@ from blueman.main.PulseAudioUtils import PulseAudioUtils, EventType
 from blueman.main.SignalTracker import SignalTracker
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.gui.MessageArea import MessageArea
-from blueman.Functions import get_icon, create_menuitem
+from blueman.Functions import get_icon, create_menuitem, dprint
 
 from gi.repository import Gtk
 

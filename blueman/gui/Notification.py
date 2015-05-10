@@ -89,19 +89,19 @@ class _NotificationDialog(Gtk.MessageDialog):
     def close(self):
         self.hide()
 
-    def set_hint_int32(*args):
+    def set_hint_int32(self, *args):
         dprint("stub")
 
-    def set_timeout(*args):
+    def set_timeout(self, *args):
         dprint("stub")
 
-    def add_action(*args):
+    def add_action(self, *args):
         dprint("stub")
 
-    def clear_actions(*args):
+    def clear_actions(self, *args):
         dprint("stub")
 
-    def set_urgency(*args):
+    def set_urgency(self, *args):
         dprint("stub")
 
     def update(self, summary, message):
@@ -165,3 +165,7 @@ class Notification(object):
             klass = _NotificationBubble
 
         return klass(summary, message, timeout, actions, actions_cb, pixbuf, status_icon)
+
+    # stub to satisfy pylint
+    def close(self):
+        pass

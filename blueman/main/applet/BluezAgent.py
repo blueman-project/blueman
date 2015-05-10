@@ -37,7 +37,7 @@ class _GDbusObjectType(dbus.service.InterfaceType, GObjectMeta):
 _GObjectAgent = _GDbusObjectType(str('_GObjectAgent'), (Agent, GObject.GObject), {})
 
 
-class CommonAgent(_GObjectAgent):
+class CommonAgent(_GObjectAgent, Agent, GObject.GObject):
     __gsignals__ = {
         str('released'): (GObject.SignalFlags.NO_HOOKS, None, ()),
     }

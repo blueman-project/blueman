@@ -4,8 +4,6 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 from blueman.gui.DeviceList import DeviceList
-from blueman.gui.PixbufTable import PixbufTable
-from blueman.gui.CellRendererPixbufTable import CellRendererPixbufTable
 from blueman.DeviceClass import get_minor_class, get_major_class
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.Sdp import *

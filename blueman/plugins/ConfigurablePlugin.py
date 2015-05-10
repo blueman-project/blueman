@@ -8,6 +8,8 @@ from blueman.plugins.BasePlugin import BasePlugin
 
 
 class ConfigurablePlugin(BasePlugin):
+    __gsettings__ = None
+
     def on_unload(self):
         pass
 

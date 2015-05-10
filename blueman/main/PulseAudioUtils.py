@@ -693,7 +693,4 @@ class PulseAudioUtils(GObject.GObject):
 
         del self.ctx_cb
 
-        self.pa_m.pa_glib_mainloop_free(self.pa_mainloop)
-        del self.pa_mainloop
-
         del self.pa_mainloop_api
