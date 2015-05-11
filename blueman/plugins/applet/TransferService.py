@@ -4,6 +4,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 from gi.repository import GObject, GLib, Gtk
+from datetime import datetime
 import os
 import shutil
 from blueman.bluez import obex
@@ -202,9 +203,17 @@ class TransferService(AppletPlugin):
             # This is probably not an incoming transfer we authorized
             return
 
-        filename = os.path.basename(attributes['path'])
+        src = attributes['path']
+        dest_dir = self._config["shared-path"]
+        filename = os.path.basename(src)
 
-        shutil.move(attributes['path'], self._config["shared-path"] + '/' + filename)
+        if os.path.exists(os.path.join(dest_dir, filename)):
+            now = datetime.now()
+            filename = "%s_%s" % (now.strftime("%Y%m%d%H%M%S"), filename)
+            dprint("Destination file exists, renaming to: %s" % filename)
+
+        dest = os.path.join(dest_dir, filename)
+        shutil.move(src, dest)
 
         try:
             status_icon = self._applet.Plugins.StatusIcon
@@ -217,7 +226,7 @@ class TransferService(AppletPlugin):
                                  "0": "<b>" + filename + "</b>",
                                  "1": "<b>" + attributes['name'] + "</b>"},
                              pixbuf=get_icon("blueman", 48), status_icon=status_icon)
-            self._add_open(n, "Open", self._config["shared-path"] + '/' + filename)
+            self._add_open(n, "Open", dest)
         elif not success:
             Notification(_("Transfer failed"),
                          _("Transfer of file %(0)s failed") % {
