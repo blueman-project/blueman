@@ -10,27 +10,26 @@ import dbus
 from gi.repository.GObject import GObject
 
 
+class ObexdNotFoundError(Exception):
+    pass
+
+
 class Base(GObject):
     interface_version = None
 
     @staticmethod
     def get_interface_version():
         if not Base.interface_version:
-            @raise_dbus_error
-            def lookup_object(bus_name, object_path):
-                dbus.SessionBus().get_object(bus_name, object_path)
-
-            try:
-                lookup_object('org.bluez.obex', '/org/bluez/obex')
-                dprint('Detected BlueZ integrated OBEX')
+            obj = dbus.SessionBus().get_object('org.bluez.obex', '/')
+            introspection = dbus.Interface(obj, 'org.freedesktop.DBus.Introspectable').Introspect()
+            if 'org.freedesktop.DBus.ObjectManager' in introspection:
+                dprint('Detected BlueZ integrated obexd')
                 Base.interface_version = [5]
-            except DBusServiceUnknownError as e:
-                try:
-                    lookup_object('org.bluez.obex.client', '/')
-                    dprint('Detected standalone OBEX')
-                    Base.interface_version = [4]
-                except DBusServiceUnknownError:
-                    raise e
+            elif 'org.bluez.obex.Manager' in introspection:
+                dprint('Detected standalone obexd')
+                Base.interface_version = [4]
+            else:
+                raise ObexdNotFoundError('Could not find any compatible version of obexd')
 
         return Base.interface_version
 
@@ -56,5 +55,5 @@ class Base(GObject):
         return self.__interface
 
     @property
-    def _object_path(self):
+    def object_path(self):
         return self.__obj_path

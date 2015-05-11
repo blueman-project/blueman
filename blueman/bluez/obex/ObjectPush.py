@@ -23,7 +23,7 @@ class ObjectPush(Base):
     def send_file(self, file_path):
         def on_transfer_started(*params):
             transfer_path, props = params[0] if self.__class__.get_interface_version()[0] < 5 else params
-            dprint(self._object_path, file_path, transfer_path)
+            dprint(self.object_path, file_path, transfer_path)
             self.emit('transfer-started', transfer_path, props['Filename'])
 
         def on_transfer_error(error):
@@ -33,4 +33,4 @@ class ObjectPush(Base):
         self._interface.SendFile(file_path, reply_handler=on_transfer_started, error_handler=on_transfer_error)
 
     def get_session_path(self):
-        return self._object_path
+        return self.object_path
