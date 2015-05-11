@@ -254,7 +254,12 @@ cdef class conn_info:
     cdef conn_info_handles ci
     cdef int hci
 
-    def __init__(self, addr, hci_name="hci0"):
+    def __init__(self, py_addr, py_hci_name="hci0"):
+        py_bytes_addr = py_addr.encode("UTF-8")
+        cdef char* addr = py_bytes_addr
+
+        py_bytes_hci_name = py_hci_name.encode("UTF-8")
+        cdef char* hci_name = py_bytes_hci_name
 
 
         self.hci = int(hci_name[3:])
@@ -289,7 +294,10 @@ cdef class conn_info:
 
         return tpl
 
-def page_timeout(hci_name="hci0"):
+def page_timeout(py_hci_name="hci0"):
+    py_bytes_hci_name = py_hci_name.encode("UTF-8")
+    cdef char* hci_name = py_bytes_hci_name
+
     dev_id = int(hci_name[3:])
     ret = get_page_timeout(dev_id)
     if ret < 0:
@@ -297,7 +305,10 @@ def page_timeout(hci_name="hci0"):
     else:
         return ret
 
-def device_info(hci_name="hci0"):
+def device_info(py_hci_name="hci0"):
+    py_bytes_hci_name = py_hci_name.encode("UTF-8")
+    cdef char* hci_name = py_bytes_hci_name
+
     cdef hci_dev_info di
     cdef int ret
 
@@ -324,8 +335,8 @@ def device_info(hci_name="hci0"):
     ("byte_tx",di.stat.byte_tx)]
 
     z = [("dev_id", di.dev_id),
-    ("name", di.name),
-    ("bdaddr",addr),
+    ("name", di.name.decode("UTF-8")),
+    ("bdaddr",addr.decode("UTF-8")),
     ("flags",di.flags),
     ("type",di.type),
     ("features",feats),
