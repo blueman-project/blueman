@@ -153,6 +153,10 @@ class DBusService(AppletPlugin):
         else:
             err()
 
+    @dbus.service.method('org.blueman.Applet')
+    def open_plugin_dialog(self):
+        self.Applet.Plugins.StandardItems.on_plugins(None)
+
     def rfcomm_connect_handler(self, service, reply_handler, error_handler):
         return False
 

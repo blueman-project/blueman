@@ -19,6 +19,7 @@
 * [bluez] Auto power on adapters; can be disabled in PowerManager settings
 * Remove Gtk+, GLib and Gio as build time dependencies
 * [obex] Migrate receiving files from obex-data-server to obexd
+* [ui] Plugins and local services items in manager's View menu
 
 ### Bugs fixed
 

@@ -84,6 +84,21 @@ class ManagerMenu:
         itemf.connect("activate", lambda x: self.blueman.Config.set_boolean("latest-last", not x.props.active))
         iteml.connect("activate", lambda x: self.blueman.Config.set_boolean("latest-last", x.props.active))
 
+        item = Gtk.SeparatorMenuItem()
+        view_menu.append(item)
+        item.show()
+
+        item = create_menuitem(_("Plugins"), get_icon('blueman-plugin', 16))
+        item.connect('activate', lambda *args: self.blueman.Applet.open_plugin_dialog())
+        view_menu.append(item)
+        item.show()
+
+        item = create_menuitem(_("_Local Services") + "...", get_icon("preferences-desktop", 16))
+        item.connect('activate',
+                     lambda *args: launch("blueman-services", None, False, "blueman", _("Service Preferences")))
+        view_menu.append(item)
+        item.show()
+
         self.item_adapter.show()
         self.item_view.show()
         self.item_help.show()
