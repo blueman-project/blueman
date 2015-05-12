@@ -1,26 +1,33 @@
 # Dependencies
 
-## Generic dependencies
+## Runtime dependencies
 
-* [BlueZ 4](http://www.bluez.org/) (>= 4.61)
+* [BlueZ](http://www.bluez.org/) (>= 4.61)
 * [dbus](http://www.freedesktop.org/wiki/Software/dbus/)
 * [dbus-python](http://www.freedesktop.org/wiki/Software/DBusBindings/#python)
-* [GLib 2, Gio 2](http://www.gtk.org/) (>= 2.32)
-* [GTK+ 3](http://www.gtk.org/) [1]
+* [GdkPixbuf](http://www.gtk.org/) (GI bindings)
+* [GLib 2, Gio 2](http://www.gtk.org/) (>= 2.32) (GI bindings)
+* [GTK+ 3](http://www.gtk.org/) [1] (GI bindings)
 * [gnome-icon-theme](https://git.gnome.org/browse/adwaita-icon-theme/) or [mate-icon-theme](https://github.com/mate-desktop/mate-icon-theme)
-* [libappindicator](https://launchpad.net/libappindicator) (optional)
+* [libappindicator](https://launchpad.net/libappindicator) (optional) (GI bindings)
 * [notification-daemon](https://git.gnome.org/browse/notification-daemon) or any desktop specific replacement
-* [libnotify](https://git.gnome.org/browse/libnotify)
+* [libnotify](https://git.gnome.org/browse/libnotify) (GI bindings)
 * [obexd](http://www.bluez.org/) (>= 0.47)
+* [Pango](http://www.gtk.org/) (GI bindings)
 * [pulseaudio](http://www.freedesktop.org/wiki/Software/PulseAudio/) (optional)
 * [PyGObject 3](https://wiki.gnome.org/PyGObject)
 * [Python](http://www.python.org/) (2.7 or >= 3.2)
 
-## Additional build dependencies
+## Build dependencies
 
-* [libtool](http://www.gnu.org/software/libtool/)
-* [intltool](http://freedesktop.org/wiki/Software/intltool/)
+* [BlueZ](http://www.bluez.org/) (>= 4.61)
 * [Cython](http://www.cython.org/)
+* [dbus-python](http://www.freedesktop.org/wiki/Software/DBusBindings/#python)
+* [GLib 2](http://www.gtk.org/) (>= 2.32)
+* [intltool](http://freedesktop.org/wiki/Software/intltool/)
+* [libtool](http://www.gnu.org/software/libtool/)
+* [PyGObject 3](https://wiki.gnome.org/PyGObject)
+* [Python](http://www.python.org/) (2.7 or >= 3.2)
 
 ## Additional dependencies for VCS version
 
