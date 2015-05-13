@@ -8,11 +8,8 @@ from gi.repository import GObject
 import weakref
 from blueman.Functions import YELLOW, dprint
 
-try:
-    libpulse = CDLL("libpulse.so.0")
-    libpulse_glib = CDLL("libpulse-mainloop-glib.so.0")
-except OSError as e:
-    raise ImportError("%s" % e)
+libpulse = CDLL("libpulse.so.0")
+libpulse_glib = CDLL("libpulse-mainloop-glib.so.0")
 
 pa_glib_mainloop_new = libpulse_glib.pa_glib_mainloop_new
 pa_glib_mainloop_new.argtypes = [c_void_p]
