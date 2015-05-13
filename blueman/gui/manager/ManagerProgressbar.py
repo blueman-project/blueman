@@ -7,7 +7,7 @@ from gi.repository import Pango
 from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import Gdk
-from blueman.Functions import get_icon
+from blueman.Functions import get_icon, dprint
 from blueman.main.SignalTracker import SignalTracker
 
 

@@ -11,7 +11,7 @@ from blueman.Functions import create_menuitem, get_icon, composite_icon
 from blueman.main.AppletService import AppletService
 from blueman.services import *
 
-from blueman.Lib import rfcomm_list
+from _blueman import rfcomm_list
 
 
 def get_x_icon(icon_name, size):

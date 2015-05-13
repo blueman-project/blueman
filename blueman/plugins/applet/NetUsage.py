@@ -11,7 +11,7 @@ from blueman.main.SignalTracker import SignalTracker
 from blueman.bluez.Device import Device as BluezDevice
 from blueman.bluez.Network import Network
 from blueman.main.Device import Device
-from blueman.Lib import rfcomm_list
+from _blueman import rfcomm_list
 from gi.repository import GObject
 import weakref
 import os

@@ -7,7 +7,7 @@ from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.Notification import Notification
 from blueman.Sdp import uuid128_to_uuid16, uuid16_to_name, SERIAL_PORT_SVCLASS_ID
-from blueman.Lib import rfcomm_list
+from _blueman import rfcomm_list
 from blueman.main.SignalTracker import SignalTracker
 from blueman.main.Device import Device
 from subprocess import Popen, PIPE
@@ -39,6 +39,8 @@ class SerialManager(AppletPlugin):
                          "uuid16s are returned as a comma seperated list\n\n"
                          "Upon device disconnection the script will be sent a HUP signal</span>")},
     }
+
+    scripts = {}
 
     def on_load(self, applet):
         self.signals = SignalTracker()

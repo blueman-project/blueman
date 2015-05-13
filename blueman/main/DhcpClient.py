@@ -7,7 +7,7 @@ from gi.repository import GObject
 import socket
 import subprocess
 from blueman.Functions import dprint, have
-from blueman.Lib import get_net_address
+from _blueman import get_net_address
 
 
 class DhcpClient(GObject.GObject):

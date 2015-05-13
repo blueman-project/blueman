@@ -17,8 +17,9 @@ class _GDbusObjectType(dbus.service.InterfaceType, GObjectMeta):
 
 _GDBusObject = _GDbusObjectType(str('_GDBusObject'), (dbus.service.Object, GObject.GObject), {})
 
+
 # noinspection PyPep8Naming
-class Agent(_GDBusObject):
+class Agent(_GDBusObject, dbus.service.Object, GObject.GObject):
     __gsignals__ = {
         str('release'): (GObject.SignalFlags.NO_HOOKS, None, ()),
         str('authorize'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,

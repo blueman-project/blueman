@@ -137,7 +137,7 @@ class DBusService(AppletPlugin):
                                              reply_handler=ok, timeout=120)
 
             else:
-                adapter.create_device(address, error_handler=err, reply_handler=ok, timeout=120)
+                adapter.create_device(address, error_handler=err, reply_handler=ok)
 
         else:
             err()
