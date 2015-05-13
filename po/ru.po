@@ -12,14 +12,14 @@ msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-04-30 19:38+0200\n"
-"PO-Revision-Date: 2015-04-30 17:40+0000\n"
-"Last-Translator: infirit <infirit@gmail.com>\n"
+"PO-Revision-Date: 2015-05-10 17:20+0000\n"
+"Last-Translator: AlexL <loginov.alex.valer@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/projects/p/MATE/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ru\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Visibility Setting</b>"
@@ -379,14 +379,14 @@ msgstr "_Закрыть"
 
 #: ../blueman/main/applet/Transfer.py:56
 msgid "Configured share directory does not exist"
-msgstr ""
+msgstr "Не существует сконфигурированная общая директория"
 
 #: ../blueman/main/applet/Transfer.py:57
 #, python-format
 msgid ""
 "Please make sure that directory \"<b>%s</b>\" exists or configure it with "
 "blueman-services"
-msgstr ""
+msgstr "Пожалуйста, убедитесь, что директория \"<b>%s</b>\" существует или сконфигурируйте её через blueman-services"
 
 #: ../blueman/main/applet/Transfer.py:152
 msgid "Incoming file over Bluetooth"
@@ -447,6 +447,7 @@ msgid_plural "Received %d files in the background"
 msgstr[0] "Получен %d файл в фоне"
 msgstr[1] "Получено %d файла в фоне"
 msgstr[2] "Получено %d файлов в фоне"
+msgstr[3] "Получено %d файлов в фоне"
 
 #: ../blueman/main/applet/Transfer.py:255
 #, python-format
@@ -455,6 +456,7 @@ msgid_plural "Received %d more files in the background"
 msgstr[0] "Получен ещё %d файл в фоне"
 msgstr[1] "Получены ещё %d файла в фоне"
 msgstr[2] "Получено ещё %d файлов в фоне"
+msgstr[3] "Получено ещё %d файлов в фоне"
 
 #: ../blueman/main/applet/BluezAgent.py:120
 #, python-format
@@ -591,7 +593,7 @@ msgstr "П_оиск"
 #: ../blueman/gui/manager/ManagerDeviceList.py:104
 #: ../blueman/plugins/applet/StandardItems.py:102 ../apps/blueman-manager:265
 msgid "File Sender"
-msgstr ""
+msgstr "Отправитель файлов"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:439
 msgid "<b>Trusted and Bonded</b>"
@@ -982,6 +984,7 @@ msgid_plural "days"
 msgstr[0] "день"
 msgstr[1] "дня"
 msgstr[2] "дней"
+msgstr[3] "дней"
 
 #: ../blueman/plugins/applet/NetUsage.py:232
 msgid "hour"
@@ -989,6 +992,7 @@ msgid_plural "hours"
 msgstr[0] "час"
 msgstr[1] "часа"
 msgstr[2] "часов"
+msgstr[3] "часов"
 
 #: ../blueman/plugins/applet/NetUsage.py:233
 msgid "minute"
@@ -996,6 +1000,7 @@ msgid_plural "minutes"
 msgstr[0] "минута"
 msgstr[1] "минуты"
 msgstr[2] "минут"
+msgstr[3] "минут"
 
 #: ../blueman/plugins/applet/NetUsage.py:235
 #, python-format
@@ -1160,15 +1165,15 @@ msgstr "Помощник настройки bluetooth"
 
 #: ../blueman/plugins/applet/StandardItems.py:105
 msgid "File Browser"
-msgstr ""
+msgstr "Обозреватель файлов"
 
 #: ../blueman/plugins/applet/StandardItems.py:111 ../apps/blueman-manager:254
 msgid "Adapter Preferences"
-msgstr ""
+msgstr "Настройки адаптеров"
 
 #: ../blueman/plugins/applet/StandardItems.py:114
 msgid "Service Preferences"
-msgstr ""
+msgstr "Настройки служб"
 
 #: ../blueman/plugins/applet/StandardItems.py:117
 msgid "applet"
@@ -1226,6 +1231,7 @@ msgid_plural "<b>%d Active Connections</b>"
 msgstr[0] "<b>%d Активное соединение</b>"
 msgstr[1] "<b>%d Активных соединения</b>"
 msgstr[2] "<b>%d Активных соединений</b>"
+msgstr[3] "<b>%d Активных соединений</b>"
 
 #: ../blueman/plugins/applet/AppIndicator.py:12
 msgid "Uses libappindicator to show a statusicon"
@@ -1334,11 +1340,11 @@ msgstr "Контролировать состояние питания Bluetooth
 
 #: ../blueman/plugins/applet/PowerManager.py:29
 msgid "Auto power-on"
-msgstr ""
+msgstr "Автовключение"
 
 #: ../blueman/plugins/applet/PowerManager.py:30
 msgid "Automatically power on adapters"
-msgstr ""
+msgstr "Автоматическое включение адаптеров"
 
 #: ../blueman/plugins/applet/PowerManager.py:42
 msgid "<b>Bluetooth _Off</b>"
@@ -1502,6 +1508,7 @@ msgid_plural "%d Minutes"
 msgstr[0] "%d минута"
 msgstr[1] "%d минуты"
 msgstr[2] "%d минут"
+msgstr[3] "%d минут"
 
 #: ../apps/blueman-sendto:106
 msgid "obexd not available"
@@ -1534,6 +1541,7 @@ msgid_plural "%.0f Minutes"
 msgstr[0] "%.0f минута"
 msgstr[1] "%.0f минуты"
 msgstr[2] "%.0f минут"
+msgstr[3] "%.0f минут"
 
 #: ../apps/blueman-sendto:192
 #, c-format
@@ -1542,6 +1550,7 @@ msgid_plural "%.0f Seconds"
 msgstr[0] "%.0f секунда"
 msgstr[1] "%.0f секунды"
 msgstr[2] "%.0f секунд"
+msgstr[3] "%.0f секунд"
 
 #: ../apps/blueman-sendto:230
 #, c-format
