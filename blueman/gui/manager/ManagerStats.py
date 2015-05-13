@@ -3,7 +3,7 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-import blueman.Lib as Lib
+from _blueman import device_info
 from gi.repository import GObject
 from gi.repository import Gtk
 
@@ -120,7 +120,7 @@ class ManagerStats:
         #if self.hbox.parent.parent.parent.props.visible:
 
         if self.hci != None:
-            devinfo = Lib.device_info(self.hci)
+            devinfo = device_info(self.hci)
             _tx = devinfo["stat"]["byte_tx"]
             _rx = devinfo["stat"]["byte_rx"]
 

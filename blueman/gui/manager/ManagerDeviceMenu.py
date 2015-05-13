@@ -14,7 +14,7 @@ from blueman.main.AppletService import AppletService
 from blueman.gui.MessageArea import MessageArea
 from blueman.bluez.BlueZInterface import BlueZInterface
 
-from blueman.Lib import rfcomm_list
+from _blueman import rfcomm_list
 from blueman.services import SerialPort
 
 

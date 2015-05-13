@@ -26,7 +26,7 @@ import syslog
 
 loop = GObject.MainLoop()
 
-from blueman.Lib import set_probe_debug
+from _blueman import set_probe_debug
 from blueman.Constants import POLKIT
 from blueman.Functions import set_proc_title
 

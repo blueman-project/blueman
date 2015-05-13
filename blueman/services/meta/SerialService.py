@@ -4,7 +4,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 from blueman.bluez.Adapter import Adapter
-from blueman.Lib import rfcomm_list, release_rfcomm_device, create_rfcomm_device
+from _blueman import rfcomm_list, release_rfcomm_device, create_rfcomm_device
 from blueman.Service import Service
 from blueman.main.Mechanism import Mechanism
 

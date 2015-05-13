@@ -10,7 +10,7 @@ from blueman.gui.GenericList import GenericList
 from blueman.main.FakeDevice import FakeDevice
 from blueman.main.Device import Device
 
-from blueman.Lib import conn_info
+from _blueman import conn_info
 import blueman.bluez as Bluez
 
 from gi.repository import Gtk

@@ -7,7 +7,7 @@ from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.Notification import Notification
 from blueman.Sdp import uuid128_to_uuid16, uuid16_to_name, SERIAL_PORT_SVCLASS_ID
-from blueman.Lib import rfcomm_list
+from _blueman import rfcomm_list
 from blueman.main.SignalTracker import SignalTracker
 from blueman.main.Device import Device
 from subprocess import Popen, PIPE
