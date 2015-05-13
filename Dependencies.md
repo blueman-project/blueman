@@ -3,6 +3,7 @@
 ## Runtime dependencies
 
 * [BlueZ](http://www.bluez.org/) (>= 4.61)
+* [cairo](http://cairographics.org/) (GI bindings)
 * [dbus](http://www.freedesktop.org/wiki/Software/dbus/)
 * [dbus-python](http://www.freedesktop.org/wiki/Software/DBusBindings/#python)
 * [GdkPixbuf](http://www.gtk.org/) (GI bindings)
