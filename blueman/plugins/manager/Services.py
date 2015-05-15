@@ -6,8 +6,8 @@ from __future__ import unicode_literals
 from blueman.bluez.Network import Network
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 from gi.repository import Gtk
-
-from blueman.Functions import create_menuitem, get_icon, composite_icon
+import traceback
+from blueman.Functions import create_menuitem, get_icon, composite_icon, dprint
 from blueman.main.AppletService import AppletService
 from blueman.services import *
 
@@ -56,7 +56,12 @@ class Services(ManagerPlugin):
             if isinstance(service, Input):
                 manager_menu.Signals.Handle("bluez", device, manager_menu.service_property_changed, "PropertyChanged")
 
-            add_menu_item(manager_menu, service)
+            try:
+                add_menu_item(manager_menu, service)
+            except Exception as e:
+                dprint("Failed to load service %s" % service.name)
+                traceback.print_exc()
+                continue
 
             if service.group == 'serial':
                 for dev in rfcomm_list():
