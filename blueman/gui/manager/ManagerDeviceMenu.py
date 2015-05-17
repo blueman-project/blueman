@@ -12,7 +12,7 @@ from blueman.main.SignalTracker import SignalTracker
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.AppletService import AppletService
 from blueman.gui.MessageArea import MessageArea
-from blueman.bluez.BlueZInterface import BlueZInterface
+from blueman.bluez.Base import Base
 
 from _blueman import rfcomm_list
 from blueman.services import SerialPort

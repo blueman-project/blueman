@@ -3,13 +3,13 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-from blueman.bluez.PropertiesBlueZInterface import PropertiesBlueZInterface
+from blueman.bluez.PropertiesBase import PropertiesBase
 from blueman.bluez.errors import raise_dbus_error
 from blueman.bluez.Device import Device
 import dbus
 
 
-class Adapter(PropertiesBlueZInterface):
+class Adapter(PropertiesBase):
     @raise_dbus_error
     def __init__(self, obj_path=None):
         interface = 'org.bluez.Adapter1'
