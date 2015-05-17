@@ -3,12 +3,12 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-from blueman.bluez.BlueZInterface import BlueZInterface
+from blueman.bluez.Base import Base
 from blueman.bluez.errors import raise_dbus_error
 import dbus
 
 
-class AgentManager(BlueZInterface):
+class AgentManager(Base):
     @raise_dbus_error
     def __init__(self):
         interface = 'org.bluez.AgentManager1'

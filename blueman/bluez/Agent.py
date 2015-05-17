@@ -6,7 +6,6 @@ from __future__ import unicode_literals
 from blueman.Functions import dprint
 import inspect
 import dbus.service
-from blueman.bluez.BlueZInterface import BlueZInterface
 import blueman.bluez.errors as errors
 
 __SIGNATURES__ = {

@@ -6,11 +6,11 @@ blueman_PYTHON =				\
 	Adapter.py					\
 	Agent.py					\
 	AgentManager.py				\
-	BlueZInterface.py			\
+	Base.py						\
 	Device.py					\
 	errors.py					\
 	Manager.py					\
-	PropertiesBlueZInterface.py	\
+	PropertiesBase.py				\
 	Network.py					\
 	NetworkServer.py			\
 	Headset.py

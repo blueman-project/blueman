@@ -14,8 +14,6 @@ from blueman.Constants import *
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-from gi.repository import GObject
-from blueman.bluez.BlueZInterface import BlueZInterface
 
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -23,8 +21,6 @@ if os.path.exists(os.path.join(_dirname, "CHANGELOG.md")):
     sys.path.insert(0, _dirname)
 
 from blueman.Functions import *
-from blueman.main.Device import Device
-from blueman.bluez.Device import Device as BluezDevice
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 from blueman.gui.manager.ManagerToolbar import ManagerToolbar
 from blueman.gui.manager.ManagerMenu import ManagerMenu

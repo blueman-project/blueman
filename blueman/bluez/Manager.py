@@ -4,12 +4,12 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 from blueman.bluez.Adapter import Adapter
-from blueman.bluez.PropertiesBlueZInterface import PropertiesBlueZInterface
+from blueman.bluez.PropertiesBase import PropertiesBase
 from blueman.bluez.errors import raise_dbus_error, DBusNoSuchAdapterError
 from dbus.mainloop.glib import DBusGMainLoop
 
 
-class Manager(PropertiesBlueZInterface):
+class Manager(PropertiesBase):
     @raise_dbus_error
     def __init__(self):
         DBusGMainLoop(set_as_default=True)

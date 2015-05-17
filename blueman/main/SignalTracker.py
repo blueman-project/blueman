@@ -23,8 +23,8 @@ class SignalTracker:
         if auto:
             obj = args[0]
             args = args[1:]
-            from blueman.bluez.BlueZInterface import BlueZInterface
-            if isinstance(obj, BlueZInterface):
+            from blueman.bluez.Base import Base
+            if isinstance(obj, Base):
                 objtype = "bluez"
             elif isinstance(obj, GObject.GObject):
                 objtype = "gobject"

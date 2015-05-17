@@ -3,14 +3,14 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-from blueman.bluez.BlueZInterface import BlueZInterface
+from blueman.bluez.Base import Base
 from blueman.bluez.errors import raise_dbus_error
 import dbus
 
 
-class PropertiesBlueZInterface(BlueZInterface):
+class PropertiesBase(Base):
     def __init__(self, interface, obj_path):
-        super(PropertiesBlueZInterface, self).__init__(interface, obj_path)
+        super(PropertiesBase, self).__init__(interface, obj_path)
 
         self._handler_wrappers = {}
 

@@ -3,11 +3,11 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-from blueman.bluez.PropertiesBlueZInterface import PropertiesBlueZInterface
+from blueman.bluez.PropertiesBase import PropertiesBase
 from blueman.bluez.errors import raise_dbus_error, parse_dbus_error
 
 
-class Device(PropertiesBlueZInterface):
+class Device(PropertiesBase):
     @raise_dbus_error
     def __init__(self, obj_path=None):
         super(Device, self).__init__('org.bluez.Device1', obj_path)
