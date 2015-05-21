@@ -7,13 +7,10 @@ from gi.repository import GObject
 import inspect
 from blueman.Functions import dprint
 from blueman.Sdp import uuid128_to_uuid16
-from blueman.main.SignalTracker import SignalTracker
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device as BluezDevice
-from blueman.Service import Service
 import blueman.services
 import blueman.services.meta
-import os
 import weakref
 
 

@@ -8,7 +8,6 @@ from gi.repository import GObject
 import dbus
 from blueman.plugins.AppletPlugin import AppletPlugin
 from uuid import uuid1
-from blueman.main.SignalTracker import SignalTracker
 
 
 class NewConnectionBuilder:
@@ -22,15 +21,11 @@ class NewConnectionBuilder:
         self.ok_cb = ok_cb
         self.err_cb = err_cb
 
-        self.signals = SignalTracker()
-
         self.device = None
         self.connection = None
 
-        self.signals.Handle("dbus", parent.bus, self.on_nm_device_added, "DeviceAdded",
-                            "org.freedesktop.NetworkManager")
-        self.signals.Handle("dbus", parent.bus, self.on_nma_new_connection, "NewConnection",
-                            self.parent.settings_interface)
+        parent.bus.add_signal_receiver(self.on_nm_device_added, "DeviceAdded", "org.freedesktop.NetworkManager")
+        parent.bus.add_signal_receiver(self.on_nma_new_connection, "NewConnection", self.parent.settings_interface)
 
         self.device = self.parent.find_device(service.device.Address)
 
@@ -51,7 +46,11 @@ class NewConnectionBuilder:
             self.init_connection()
 
     def cleanup(self):
-        self.signals.DisconnectAll()
+        self.parent.bus.remove_signal_receiver(self.on_nm_device_added, "DeviceAdded", "org.freedesktop.NetworkManager")
+        self.parent.bus.remove_signal_receiver(self.on_nma_new_connection, "NewConnection",
+                                               self.parent.settings_interface)
+        self.parent.bus.remove_signal_receiver(self.on_device_state, "StateChanged",
+                                               "org.freedesktop.NetworkManager.Device", path=self.device)
 
     def signal_wait_timeout(self):
         if not self.device or not self.connection:
@@ -81,8 +80,8 @@ class NewConnectionBuilder:
                 self.remove_connection()
             self.cleanup()
         else:
-            self.signals.Handle("dbus", self.parent.bus, self.on_device_state, "StateChanged",
-                                "org.freedesktop.NetworkManager.Device", path=self.device)
+            self.parent.bus.add_signal_receiver(self.on_device_state, "StateChanged",
+                                                "org.freedesktop.NetworkManager.Device", path=self.device)
 
             args = [self.connection, self.device, self.connection]
 
@@ -127,8 +126,6 @@ class NMPANSupport(AppletPlugin):
         self.bus = dbus.SystemBus()
         self.nma = None
         self.nm = None
-        self.nm_signals = SignalTracker()
-        self.nma_signals = SignalTracker()
 
         self.watches = [self.bus.watch_name_owner("org.freedesktop.NetworkManager", self.on_nm_owner_changed)]
 
@@ -210,7 +207,6 @@ class NMPANSupport(AppletPlugin):
     def on_nm_owner_changed(self, owner):
         if owner == "":
             self.nm = None
-            self.nm_signals.DisconnectAll()
         else:
             service = self.bus.get_object("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager")
             self.nm = dbus.proxies.Interface(service, "org.freedesktop.NetworkManager")
@@ -219,9 +215,6 @@ class NMPANSupport(AppletPlugin):
 
 
     def on_unload(self):
-        self.nm_signals.DisconnectAll()
-        self.nma_signals.DisconnectAll()
-
         for watch in self.watches:
             watch.cancel()
 

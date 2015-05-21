@@ -8,7 +8,6 @@ from blueman.Sdp import uuid128_to_uuid16, SERIAL_PORT_SVCLASS_ID, OBEX_OBJPUSH_
 from blueman.Functions import *
 from blueman.bluez.Network import Network
 from blueman.bluez.Device import Device
-from blueman.main.SignalTracker import SignalTracker
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.AppletService import AppletService
 from blueman.gui.MessageArea import MessageArea
@@ -35,12 +34,9 @@ class ManagerDeviceMenu(Gtk.Menu):
 
         self.is_popup = False
 
-        #object, args,
-        self.Signals = SignalTracker()
-        self.MainSignals = SignalTracker()
-
-        self.MainSignals.Handle("gobject", self.Blueman.List, "device-property-changed",
-                                self.on_device_property_changed)
+        self._device_property_changed_signal = self.Blueman.List.connect("device-property-changed",
+                                                                         self.on_device_property_changed)
+        self._selection_done_signal = None
 
         ManagerDeviceMenu.__instances__.append(self)
 
@@ -55,28 +51,26 @@ class ManagerDeviceMenu(Gtk.Menu):
     def __del__(self):
         dprint("deleting devicemenu")
 
-    #	GObject.GObject.__del__(self)
-
-
     def popup(self, *args):
         self.is_popup = True
 
-        self.MainSignals.DisconnectAll()
-        self.MainSignals.Handle("gobject", self.Blueman.List, "device-property-changed",
-                                self.on_device_property_changed)
+        if not self._device_property_changed_signal:
+            self._device_property_changed_signal = self.Blueman.List.connect("device-property-changed",
+                                                                             self.on_device_property_changed)
 
-        def disconnectall(x):
-            self.MainSignals.DisconnectAll()
 
-        self.MainSignals.Handle("gobject", self, "selection-done", disconnectall)
+        if not self._selection_done_signal:
+            def disconnectall(x):
+                self.disconnect(self._device_property_changed_signal)
+                self.disconnect(self._selection_done_signal)
+
+            self._selection_done_signal = self.connect("selection-done", disconnectall)
 
         self.Generate()
 
         Gtk.Menu.popup(self, *args)
 
     def clear(self):
-        self.Signals.DisconnectAll()
-
         def each(child, data):
             self.remove(child)
             child.destroy()
@@ -275,11 +269,11 @@ class ManagerDeviceMenu(Gtk.Menu):
         for uuid in uuids:
             uuid16 = uuid128_to_uuid16(uuid)
             if uuid16 == OBEX_OBJPUSH_SVCLASS_ID:
-                self.Signals.Handle("gobject", send_item, "activate", lambda x: self.Blueman.send(device))
+                send_item.connect("activate", lambda x: self.Blueman.send(device))
                 send_item.props.sensitive = True
 
             if uuid16 == OBEX_FILETRANS_SVCLASS_ID:
-                self.Signals.Handle("gobject", browse_item, "activate", lambda x: self.Blueman.browse(device))
+                browse_item.connect("activate", lambda x: self.Blueman.browse(device))
                 browse_item.props.sensitive = True
 
         item = Gtk.SeparatorMenuItem()
@@ -291,25 +285,25 @@ class ManagerDeviceMenu(Gtk.Menu):
         self.append(item)
         item.show()
         if not device.Paired:
-            self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.bond(device))
+            item.connect("activate", lambda x: self.Blueman.bond(device))
         else:
             item.props.sensitive = False
 
         if not device.Trusted:
             item = create_menuitem(_("_Trust"), get_icon("blueman-trust", 16))
-            self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.toggle_trust(device))
+            item.connect("activate", lambda x: self.Blueman.toggle_trust(device))
             self.append(item)
             item.show()
         else:
             item = create_menuitem(_("_Untrust"), get_icon("blueman-untrust", 16))
             self.append(item)
-            self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.toggle_trust(device))
+            item.connect("activate", lambda x: self.Blueman.toggle_trust(device))
             item.show()
         item.props.tooltip_text = _("Mark/Unmark this device as trusted")
 
         item = create_menuitem(_("_Setup..."), get_icon("document-properties", 16))
         self.append(item)
-        self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.setup(device))
+        item.connect("activate", lambda x: self.Blueman.setup(device))
         item.show()
         item.props.tooltip_text = _("Run the setup assistant for this device")
 
@@ -333,7 +327,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             dialog.present()
 
         item = Gtk.MenuItem.new_with_label("Rename device...")
-        self.Signals.Handle(item, 'activate', on_rename, device)
+        item.connect('activate', on_rename, device)
         self.append(item)
         item.show()
 
@@ -342,7 +336,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         self.append(item)
 
         item = create_menuitem(_("_Remove..."), get_icon("edit-delete", 16))
-        self.Signals.Handle(item, "activate", lambda x: self.Blueman.remove(device))
+        item.connect("activate", lambda x: self.Blueman.remove(device))
         self.append(item)
         item.show()
         item.props.tooltip_text = _("Remove this device from the known devices list")
@@ -360,14 +354,14 @@ class ManagerDeviceMenu(Gtk.Menu):
         def on_disconnect(item):
             def finished(*args):
                 self.unset_op(device)
-
+                
             self.set_op(device, _("Disconnecting..."))
             self.Blueman.disconnect(device,
                                     reply_handler=finished,
                                     error_handler=finished)
 
         if device.Connected:
-            self.Signals.Handle(item, "activate", on_disconnect)
+            item.connect("activate", on_disconnect)
 
         else:
             item.props.sensitive = False

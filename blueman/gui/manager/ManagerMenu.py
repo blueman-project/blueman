@@ -3,12 +3,8 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-from gi.repository import Gtk, Gio
-import blueman.bluez as Bluez
-from blueman.Functions import *
+import blueman.bluez as bluez
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
-from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
-from blueman.Functions import adapter_path_to_name
 from blueman.gui.CommonUi import *
 
 
@@ -199,7 +195,7 @@ class ManagerMenu:
 
 
     def on_adapter_added(self, device_list, adapter_path):
-        self.adapters.append(Bluez.Adapter(adapter_path))
+        self.adapters.append(bluez.Adapter(adapter_path))
         self.generate_adapter_menu()
 
     def on_adapter_removed(self, device_list, adapter_path):

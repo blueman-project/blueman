@@ -7,12 +7,9 @@ from blueman.Functions import *
 from blueman.main.Config import Config
 from blueman.bluez.NetworkServer import NetworkServer
 from blueman.main.Mechanism import Mechanism
-from blueman.main.SignalTracker import SignalTracker
 
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.Dialogs import NetworkErrorDialog
-
-import dbus
 
 
 class Networking(AppletPlugin):
@@ -20,12 +17,13 @@ class Networking(AppletPlugin):
     __description__ = _("Manages local network services, like NAP bridges")
     __author__ = "Walmis"
 
+    _signal = None
+
     def on_load(self, applet):
         self.Applet = applet
-        self.Signals = SignalTracker()
 
         self.Config = Config("org.blueman.network")
-        self.Signals.Handle("gobject", self.Config, "changed", self.on_config_changed)
+        self.Config.connect("changed", self.on_config_changed)
 
         self.load_nap_settings()
 
@@ -50,7 +48,7 @@ class Networking(AppletPlugin):
         m.ReloadNetwork(reply_handler=reply, error_handler=err)
 
     def on_unload(self):
-        self.Signals.DisconnectAll()
+        del self.Config
 
     def on_adapter_added(self, path):
         self.update_status()

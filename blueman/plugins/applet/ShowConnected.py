@@ -8,7 +8,6 @@ import dbus
 from gi.repository import Gtk
 from gi.repository import GObject
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.main.SignalTracker import SignalTracker
 import blueman.bluez as bluez
 
 

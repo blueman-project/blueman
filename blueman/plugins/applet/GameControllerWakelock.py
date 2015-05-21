@@ -5,11 +5,10 @@ from __future__ import unicode_literals
 
 import blueman.bluez as bluez
 from blueman.Functions import *
-from blueman.main.SignalTracker import SignalTracker
-from blueman.main.Device import Device
 from blueman.plugins.AppletPlugin import AppletPlugin
 from gi.repository import Gdk, GdkX11
 import subprocess
+
 
 class GameControllerWakelock(AppletPlugin):
     __description__ = _("Temporarily suspends the screensaver when a bluetooth game controller is connected.")
