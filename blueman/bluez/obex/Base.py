@@ -3,14 +3,13 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-from blueman.main.SignalTracker import SignalTracker
 import dbus
 from gi.repository.GObject import GObject
 
 
 class Base(GObject):
     def __init__(self, interface_name, obj_path):
-        self.__signals = SignalTracker()
+        self.__signals = []
         self.__obj_path = obj_path
         self.__interface_name = interface_name
         self.__bus = dbus.SessionBus()
@@ -19,11 +18,13 @@ class Base(GObject):
         super(Base, self).__init__()
 
     def __del__(self):
-        self.__signals.DisconnectAll()
+        for args in self.__signals:
+            self.__bus.remove_signal_receiver(*args)
 
     def _handle_signal(self, handler, signal):
-        self.__signals.Handle('dbus', self.__bus, handler, signal, self.__interface_name, 'org.bluez.obex',
-                              self.__obj_path)
+        args = (handler, signal, self.__interface_name, 'org.bluez.obex', self.__obj_path)
+        self.__bus.add_signal_receiver(*args)
+        self.__signals.append(args)
 
     @property
     def _interface(self):

@@ -28,13 +28,16 @@ class Headset(AppletPlugin):
         }
     }
 
+    _any_headset = None
+
     def on_load(self, applet):
-        BluezHeadset().handle_signal(self.on_answer_requested, 'AnswerRequested')
+        self._any_headset = BluezHeadset()
+        self._any_headset.connect_signal('answer-requested', self._on_answer_requested)
 
     def on_unload(self):
-        BluezHeadset().unhandle_signal(self.on_answer_requested, 'AnswerRequested')
+        del self._any_headset
 
-    def on_answer_requested(self):
+    def _on_answer_requested(self, _headset):
         c = self.get_option("command")
         if c and c != "":
             args = c.split(" ")

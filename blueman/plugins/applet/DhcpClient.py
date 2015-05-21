@@ -8,7 +8,6 @@ from blueman.bluez.Network import Network
 from blueman.gui.Notification import Notification
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Mechanism import Mechanism
-from blueman.main.SignalTracker import SignalTracker
 from blueman.Functions import *
 
 
@@ -17,21 +16,22 @@ class DhcpClient(AppletPlugin):
     __icon__ = "network"
     __author__ = "Walmis"
 
-    def on_load(self, applet):
-        self.Signals = SignalTracker()
+    _any_network = None
 
-        self.Signals.Handle('bluez', Network(), self.on_network_prop_changed, 'PropertyChanged', path_keyword="path")
+    def on_load(self, applet):
+        self._any_network = Network()
+        self._any_network.connect_signal('property-changed', self._on_network_prop_changed)
 
         self.quering = []
 
     def on_unload(self):
-        self.Signals.DisconnectAll()
+        del self._any_network
 
     @dbus.service.method('org.blueman.Applet', in_signature="s")
     def DhcpClient(self, interface):
         self.dhcp_acquire(interface)
 
-    def on_network_prop_changed(self, key, value, path):
+    def _on_network_prop_changed(self, _network, key, value):
         if key == "Interface":
             if value != "":
                 self.dhcp_acquire(value)

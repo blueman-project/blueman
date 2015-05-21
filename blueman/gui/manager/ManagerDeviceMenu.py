@@ -3,18 +3,16 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-from gi.repository import GObject
-from gi.repository import Gtk
 from operator import itemgetter
 from blueman.Sdp import uuid128_to_uuid16, SERIAL_PORT_SVCLASS_ID, OBEX_OBJPUSH_SVCLASS_ID, OBEX_FILETRANS_SVCLASS_ID
 from blueman.Functions import *
+from blueman.bluez.Network import Network
+from blueman.bluez.Device import Device
 from blueman.main.SignalTracker import SignalTracker
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.AppletService import AppletService
 from blueman.gui.MessageArea import MessageArea
-from blueman.bluez.Base import Base
 
-from _blueman import rfcomm_list
 from blueman.services import SerialPort
 
 
@@ -45,6 +43,12 @@ class ManagerDeviceMenu(Gtk.Menu):
                                 self.on_device_property_changed)
 
         ManagerDeviceMenu.__instances__.append(self)
+
+        self._any_network = Network()
+        self._any_network.connect_signal('property-changed', self._on_service_property_changed)
+
+        self._any_device = Device()
+        self._any_device.connect_signal('property-changed', self._on_service_property_changed)
 
         self.Generate()
 
@@ -100,7 +104,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             if inst.SelectedDevice == self.SelectedDevice and not (inst.is_popup and not inst.props.visible):
                 inst.Generate()
 
-    def service_property_changed(self, key, value):
+    def _on_service_property_changed(self, _service, key, value):
         if key == "Connected":
             self.Generate()
 

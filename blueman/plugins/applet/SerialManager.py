@@ -42,22 +42,22 @@ class SerialManager(AppletPlugin):
 
     scripts = {}
 
+    _any_device = None
+
     def on_load(self, applet):
-        self.signals = SignalTracker()
-        self.signals.Handle('bluez', Bluez.Device(), self.on_device_property_changed, 'PropertyChanged',
-                            path_keyword="path")
+        self._any_device = Bluez.Device()
+        self._any_device.connect_signal('property-changed', self._on_device_property_changed)
 
         self.scripts = {}
 
     def on_unload(self):
-        self.signals.DisconnectAll()
+        del self._any_device
         for k in self.scripts.keys():
             self.terminate_all_scripts(k)
 
-    def on_device_property_changed(self, key, value, path):
+    def _on_device_property_changed(self, device, key, value):
         if key == "Connected" and not value:
-            d = Device(path)
-            self.terminate_all_scripts(d.Address)
+            self.terminate_all_scripts(device.Address)
 
     def on_rfcomm_connected(self, service, port):
         device = service.device

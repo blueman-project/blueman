@@ -3,12 +3,18 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
+from gi.repository import GObject
+from blueman.Functions import dprint
 from blueman.bluez.Base import Base
 from blueman.bluez.errors import raise_dbus_error
 import dbus
 
 
 class PropertiesBase(Base):
+    __gsignals__ = {
+        str('property-changed'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT))
+    }
+
     def __init__(self, interface, obj_path):
         super(PropertiesBase, self).__init__(interface, obj_path)
 
@@ -16,6 +22,15 @@ class PropertiesBase(Base):
 
         if obj_path:
             self.__properties_interface = dbus.Interface(self.get_dbus_proxy(), 'org.freedesktop.DBus.Properties')
+
+    def _on_property_changed(self, key, value):
+        dprint(self.get_object_path(), key, value)
+        self.emit('property-changed', key, value)
+
+    def _on_properties_changed(self, interface_name, changed_properties, _invalidated_properties):
+        if interface_name == self.get_interface_name():
+            for name, value in changed_properties.items():
+                self._on_property_changed(name, value)
 
     @raise_dbus_error
     def set(self, name, value):
@@ -26,34 +41,4 @@ class PropertiesBase(Base):
     @raise_dbus_error
     def get_properties(self):
         return self.__properties_interface.GetAll(self.get_interface_name())
-
-    def _handle_signal(self, handler, signal, interface, obj_path, **kwargs):
-        self.get_bus().add_signal_receiver(handler, signal, interface, 'org.bluez', obj_path, **kwargs)
-
-    def _unhandle_signal(self, handler, signal, interface, obj_path, **kwargs):
-        self.get_bus().remove_signal_receiver(
-            handler, signal, self.get_interface_name(), 'org.bluez',
-            self.get_object_path(), **kwargs
-        )
-
-    def handle_signal(self, handler, signal, **kwargs):
-        if signal == 'PropertyChanged':
-            def wrapper(interface_name, changed_properties, invalidated_properties, **kwargs):
-                if interface_name == self.get_interface_name():
-                    for name, value in changed_properties.items():
-                        handler(name, value, **kwargs)
-
-            self._handler_wrappers[handler] = wrapper
-
-            interface = 'org.freedesktop.DBus.Properties'
-
-            self._handle_signal(wrapper, 'PropertiesChanged', interface, self.get_object_path(), **kwargs)
-        else:
-            raise Exception('Unknown signal: %s' % signal)
-
-    def unhandle_signal(self, handler, signal, **kwargs):
-        if signal == 'PropertyChanged':
-            self._unhandle_signal(self._handler_wrappers[handler], 'PropertiesChanged',
-                                  'org.freedesktop.DBus.Properties', self.get_object_path(), **kwargs)
-        else:
-            raise Exception('Unknown signal: %s' % signal)
+    
