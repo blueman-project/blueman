@@ -5,7 +5,6 @@ from __future__ import unicode_literals
 
 import dbus
 from gi.repository import GObject
-import traceback
 
 
 class SignalTracker:
@@ -23,10 +22,7 @@ class SignalTracker:
         if auto:
             obj = args[0]
             args = args[1:]
-            from blueman.bluez.Base import Base
-            if isinstance(obj, Base):
-                objtype = "bluez"
-            elif isinstance(obj, GObject.GObject):
+            if isinstance(obj, GObject.GObject):
                 objtype = "gobject"
             elif isinstance(obj, dbus.proxies.Interface):
                 objtype = "dbus"
@@ -37,17 +33,10 @@ class SignalTracker:
             obj = args[1]
             args = args[2:]
 
-        if objtype == "bluez":
-            obj.handle_signal(*args, **kwargs)
-        elif objtype == "gobject":
+        if objtype == "gobject":
             args = obj.connect(*args)
         elif objtype == "dbus":
-            if isinstance(obj, dbus.Bus):
-                obj.add_signal_receiver(*args, **kwargs)
-            else:
-                print("Deprecated use of dbus signaltracker")
-                traceback.print_stack()
-                obj.bus.add_signal_receiver(*args, **kwargs)
+            obj.add_signal_receiver(*args, **kwargs)
 
         self._signals.append((sigid, objtype, obj, args, kwargs))
 
@@ -55,9 +44,7 @@ class SignalTracker:
         for sig in self._signals:
             (_sigid, objtype, obj, args, kwargs) = sig
             if sigid != None and _sigid == sigid:
-                if objtype == "bluez":
-                    obj.unhandle_signal(*args)
-                elif objtype == "gobject":
+                if objtype == "gobject":
                     obj.disconnect(args)
                 elif objtype == "dbus":
                     if isinstance(obj, dbus.Bus):
@@ -70,14 +57,11 @@ class SignalTracker:
 
                 self._signals.remove(sig)
 
-
     def DisconnectAll(self):
         for sig in self._signals:
 
             (sigid, objtype, obj, args, kwargs) = sig
-            if objtype == "bluez":
-                obj.unhandle_signal(*args)
-            elif objtype == "gobject":
+            if objtype == "gobject":
                 obj.disconnect(args)
             elif objtype == "dbus":
                 if isinstance(obj, dbus.Bus):

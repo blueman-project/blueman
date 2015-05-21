@@ -66,7 +66,8 @@ class BluemanApplet(object):
         self.bus = dbus.SystemBus()
         self.bus.watch_name_owner("org.bluez", self.on_dbus_name_owner_change)
 
-        Bluez.Adapter().handle_signal(self.on_adapter_property_changed, 'PropertyChanged', path_keyword='path')
+        self._any_adapter = Bluez.Adapter()
+        self._any_adapter.connect_signal('property-changed', self._on_adapter_property_changed)
 
         Gtk.main()
 
@@ -78,8 +79,8 @@ class BluemanApplet(object):
             self.Manager = Bluez.Manager()
             self.Plugins.Run("on_manager_state_changed", True)
 
-            self.Signals.Handle("bluez", self.Manager, self.on_adapter_removed, "AdapterRemoved")
-            self.Signals.Handle("bluez", self.Manager, self.on_adapter_added, "AdapterAdded")
+            self.Manager.connect_signal('adapter-added', self.on_adapter_added)
+            self.Manager.connect_signal('adapter-removed', self.on_adapter_added)
 
         except dbus.exceptions.DBusException as e:
             dprint(e)
@@ -98,10 +99,10 @@ class BluemanApplet(object):
         elif self.Manager is None:
             self.manager_init()
 
-    def on_adapter_property_changed(self, key, value, path):
-        self.Plugins.Run("on_adapter_property_changed", path, key, value)
+    def _on_adapter_property_changed(self, adapter, key, value):
+        self.Plugins.Run("on_adapter_property_changed", adapter.get_object_path(), key, value)
 
-    def on_adapter_added(self, path):
+    def on_adapter_added(self, _manager, path):
         dprint("Adapter added ", path)
 
         def on_activate():
@@ -111,7 +112,7 @@ class BluemanApplet(object):
         adapter = Bluez.Adapter(path)
         wait_for_adapter(adapter, on_activate)
 
-    def on_adapter_removed(self, path):
+    def on_adapter_removed(self, _manager, path):
         dprint("Adapter removed ", path)
         self.Plugins.Run("on_adapter_removed", path)
 

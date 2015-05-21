@@ -19,16 +19,18 @@ class ShowConnected(AppletPlugin):
     __description__ = _(
         "Adds an indication on the status icon when Bluetooth is active and shows the number of connections in the tooltip.")
 
+    _any_device = None
+
     def on_load(self, applet):
         self.num_connections = 0
         self.active = False
         self.initialized = False
 
-        self.signals = SignalTracker()
-        self.signals.Handle('bluez', bluez.Device(), self.on_device_property_changed, 'PropertyChanged')
+        self._any_device = bluez.Device()
+        self._any_device.connect_signal('property-changed', self._on_device_property_changed)
 
     def on_unload(self):
-        self.signals.DisconnectAll()
+        del self._any_device
         self.Applet.Plugins.StatusIcon.SetTextLine(1, None)
         self.num_connections = 0
         self.Applet.Plugins.StatusIcon.IconShouldChange()
@@ -97,15 +99,14 @@ class ShowConnected(AppletPlugin):
             self.num_connections = 0
             self.update_statusicon()
 
-    def on_device_property_changed(self, key, value):
+    def _on_device_property_changed(self, _device, key, value):
         if key == "Connected":
             if value:
                 self.num_connections += 1
             else:
                 self.num_connections -= 1
 
-            if (self.num_connections > 0 and not self.active) or \
-                    (self.num_connections == 0 and self.active):
+            if (self.num_connections > 0 and not self.active) or (self.num_connections == 0 and self.active):
                 self.Applet.Plugins.StatusIcon.IconShouldChange()
 
             self.update_statusicon()

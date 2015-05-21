@@ -33,13 +33,13 @@ class Services(ManagerPlugin):
         def add_menu_item(manager_menu, service):
             if service.connected:
                 item = create_menuitem(service.name, get_x_icon(service.icon, 16))
-                manager_menu.Signals.Handle("gobject", item, "activate", manager_menu.on_disconnect, service)
+                item.connect("activate", manager_menu.on_disconnect, service)
                 items.append((item, service.priority + 100))
             else:
                 item = create_menuitem(service.name, get_icon(service.icon, 16))
                 if service.description:
                     item.props.tooltip_text = service.description
-                manager_menu.Signals.Handle("gobject", item, "activate", manager_menu.on_connect, service)
+                item.connect("activate", manager_menu.on_connect, service)
                 if service.group == 'serial':
                     serial_items.append(item)
                     if isinstance(service, DialupNetwork):
@@ -49,13 +49,6 @@ class Services(ManagerPlugin):
             item.show()
 
         for service in device.get_services():
-            if service.group == 'network':
-                manager_menu.Signals.Handle("bluez", Network(device.get_object_path()),
-                                            manager_menu.service_property_changed, "PropertyChanged")
-
-            if isinstance(service, Input):
-                manager_menu.Signals.Handle("bluez", device, manager_menu.service_property_changed, "PropertyChanged")
-
             try:
                 add_menu_item(manager_menu, service)
             except Exception as e:
@@ -69,7 +62,7 @@ class Services(ManagerPlugin):
                         devname = _("Serial Port %s") % "rfcomm%d" % dev["id"]
 
                         item = create_menuitem(devname, get_x_icon("modem", 16))
-                        manager_menu.Signals.Handle("gobject", item, "activate", manager_menu.on_disconnect, service, dev["id"])
+                        item.connect("activate", manager_menu.on_disconnect, service, dev["id"])
                         items.append((item, 120))
                         item.show()
 
@@ -79,7 +72,7 @@ class Services(ManagerPlugin):
                         appl.DhcpClient(Network(device.get_object_path()).get_properties()["Interface"])
 
                     item = create_menuitem(_("Renew IP Address"), get_icon("view-refresh", 16))
-                    manager_menu.Signals.Handle("gobject", item, "activate", renew)
+                    item.connect("activate", renew)
                     item.show()
                     items.append((item, 201))
 
@@ -98,7 +91,7 @@ class Services(ManagerPlugin):
             item = create_menuitem(_("Dialup Settings"), get_icon("gtk-preferences", 16))
             serial_items.append(item)
             item.show()
-            manager_menu.Signals.Handle("gobject", item, "activate", open_settings, device)
+            item.connect("activate", open_settings, device)
 
         if len(serial_items) > 1:
             sub = Gtk.Menu()

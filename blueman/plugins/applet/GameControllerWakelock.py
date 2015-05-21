@@ -16,22 +16,24 @@ class GameControllerWakelock(AppletPlugin):
     __author__ = "bwRavencl"
     __icon__ = "input-gaming"
 
+    _any_device = None
+
     def on_load(self, applet):
         self.wake_lock = 0
         self.root_window_id = "0x%x" % Gdk.Screen.get_default().get_root_window().get_xid()
 
-        self.signals = SignalTracker()
-        self.signals.Handle("bluez", bluez.Device(), self.on_device_property_changed, "PropertyChanged", path_keyword="path")
+        self._any_device = bluez.Device()
+        self._any_device.connect_signal('property-changed', self._on_device_property_changed)
 
     def on_unload(self):
         if self.wake_lock:
             self.wake_lock = 1
             self.xdg_screensaver("resume")
-        self.signals.DisconnectAll()
+        del self._any_device
 
-    def on_device_property_changed(self, key, value, path):
+    def _on_device_property_changed(self, device, key, value):
         if key == "Connected":
-            klass = Device(path).get_properties()["Class"] & 0x1fff
+            klass = device.get_properties()["Class"] & 0x1fff
 
             if klass == 0x504 or klass == 0x508:
                 if value:

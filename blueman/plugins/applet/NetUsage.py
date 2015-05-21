@@ -321,6 +321,8 @@ class NetUsage(AppletPlugin, GObject.GObject):
     GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
     }
 
+    _any_network = None
+
     def on_load(self, applet):
         GObject.GObject.__init__(self)
         self.monitors = []
@@ -328,8 +330,9 @@ class NetUsage(AppletPlugin, GObject.GObject):
         self.signals = SignalTracker()
 
         bus = self.bus = dbus.SystemBus()
-        self.signals.Handle('bluez', Network(), self.on_network_property_changed, 'PropertyChanged',
-                            path_keyword="path")
+
+        self._any_network = Network()
+        self._any_network.connect_signal('property-changed', self._on_network_property_changed)
 
         item = create_menuitem(_("Network _Usage"), get_icon("network-wireless", 16))
         item.props.tooltip_text = _("Shows network traffic usage")
@@ -367,11 +370,9 @@ class NetUsage(AppletPlugin, GObject.GObject):
             else:
                 self.nm_paths[path] = False
 
-
-    def on_network_property_changed(self, key, value, path):
-        dprint(key, value, path)
+    def _on_network_property_changed(self, network, key, value):
         if key == "Interface" and value != "":
-            d = BluezDevice(path)
+            d = BluezDevice(network.get_object_path())
             d = Device(d)
             self.monitor_interface(Monitor, d, value)
 
@@ -380,6 +381,7 @@ class NetUsage(AppletPlugin, GObject.GObject):
 
     def on_unload(self):
         self.signals.DisconnectAll()
+        del self._any_network
         self.Applet.Plugins.Menu.Unregister(self)
 
     def monitor_interface(self, montype, *args):
