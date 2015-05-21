@@ -4,13 +4,8 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 from blueman.Functions import *
-import gettext
-
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.main.SignalTracker import SignalTracker
-
 from gi.repository import GObject
-from gi.repository import Gtk
 
 
 class DiscvManager(AppletPlugin):
@@ -35,8 +30,6 @@ class DiscvManager(AppletPlugin):
     }
 
     def on_load(self, applet):
-        self.Signals = SignalTracker()
-
         self.item = create_menuitem(_("_Make Discoverable"), get_icon("edit-find", 16))
         self.item_label = self.item.get_child().get_children()[1]
         applet.Plugins.Menu.Register(self, self.item, 20, False)
@@ -45,7 +38,7 @@ class DiscvManager(AppletPlugin):
         self.adapter = None
         self.time_left = -1
 
-        self.Signals.Handle(self.item, "activate", self.on_set_discoverable)
+        self.item.connect("activate", self.on_set_discoverable)
         self.item.props.tooltip_text = _("Make the default adapter temporarily visible")
 
         self.timeout = None
@@ -57,15 +50,11 @@ class DiscvManager(AppletPlugin):
         if self.timeout:
             GObject.source_remove(self.timeout)
 
-        self.Signals.DisconnectAll()
-
     def on_manager_state_changed(self, state):
         if state:
             self.init_adapter()
             self.update_menuitems()
         else:
-            self.Signals.Disconnect(0)
-
             self.adapter = None
             self.update_menuitems()
 

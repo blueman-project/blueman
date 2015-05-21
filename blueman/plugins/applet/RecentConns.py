@@ -3,23 +3,15 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-import os
-from gi.repository import Gtk
-from gi.repository import Gdk
 from operator import itemgetter
-import dbus
-import gettext
 import time
-import atexit
 import weakref
 import pickle
 import base64
 import zlib
 from blueman.Functions import *
 from blueman.main.Device import Device
-from blueman.bluez.Device import Device as BluezDevice
 from blueman.bluez.Adapter import Adapter
-from blueman.main.SignalTracker import SignalTracker
 from blueman.gui.Notification import Notification
 
 from blueman.plugins.AppletPlugin import AppletPlugin

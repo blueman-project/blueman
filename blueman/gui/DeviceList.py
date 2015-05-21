@@ -5,7 +5,6 @@ from __future__ import unicode_literals
 
 from blueman.Functions import wait_for_adapter, adapter_path_to_name, dprint
 
-from blueman.main.SignalTracker import SignalTracker
 from blueman.gui.GenericList import GenericList
 from blueman.main.Device import Device
 
@@ -307,7 +306,7 @@ class DeviceList(GenericList):
             existing_dev.disconnect_signal('property-changed')
             self.set(iter, device=device, dbus_path=device.get_object_path())
             self.row_setup_event(iter, device)
-
+            
             device.connect_signal('property-changed', self._on_device_property_changed)
 
             if props_new["Connected"]:

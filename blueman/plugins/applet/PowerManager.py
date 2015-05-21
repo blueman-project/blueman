@@ -7,7 +7,6 @@ import dbus.service
 from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 import blueman.bluez as Bluez
-from blueman.main.SignalTracker import SignalTracker
 
 
 class PowerManager(AppletPlugin):
@@ -45,11 +44,10 @@ class PowerManager(AppletPlugin):
 
         self.item.props.tooltip_text = _("Turn off all adapters")
 
-        self.signals = SignalTracker()
         self._any_adapter = Bluez.Adapter()
         self._any_adapter.connect_signal('property-changed', self._on_adapter_property_changed)
 
-        self.signals.Handle(self.item, "activate", lambda x: self.on_bluetooth_toggled())
+        self.item.connect("activate", lambda x: self.on_bluetooth_toggled())
 
         self.Applet.Plugins.Menu.Register(self, self.item, 0)
 
@@ -63,7 +61,6 @@ class PowerManager(AppletPlugin):
         self.STATE_OFF_FORCED = 0
 
     def on_unload(self):
-        self.signals.DisconnectAll()
         del self._any_adapter
         self.Applet.Plugins.Menu.Unregister(self)
 

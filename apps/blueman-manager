@@ -122,7 +122,8 @@ class Blueman:
                         on_bt_status_changed(False)
                 except:
                     pass
-                self.Applet.Handle("BluetoothStatusChanged", on_bt_status_changed)
+                self.Applet.bus.add_signal_receiver(on_bt_status_changed, "BluetoothStatusChanged",
+                                                    self.Applet.dbus_interface, path=self.Applet.object_path)
 
                 self.window.connect("delete-event", on_window_delete)
                 self.window.props.icon_name = "blueman"

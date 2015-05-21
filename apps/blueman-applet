@@ -14,9 +14,6 @@ from dbus.mainloop.glib import DBusGMainLoop
 from blueman.Constants import *
 import gi
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
-from gi.repository import Gdk
-from gi.repository import GObject
 from gi.repository import Notify
 try: import __builtin__ as builtins
 except ImportError: import builtins
@@ -38,8 +35,6 @@ from blueman.plugins.BasePlugin import BasePlugin
 
 import blueman.bluez as Bluez
 
-from blueman.main.SignalTracker import SignalTracker
-
 from blueman.main.PluginManager import PersistentPluginManager
 
 # Workaround introspection bug, gnome bug 622084
@@ -56,7 +51,6 @@ class BluemanApplet(object):
 
         self.Manager = None
         self.DbusSvc = DbusService("org.blueman.Applet", "/")
-        self.Signals = SignalTracker()
 
         self.Plugins = PersistentPluginManager(AppletPlugin, blueman.plugins.applet, self)
         self.Plugins.Load()
@@ -71,11 +65,8 @@ class BluemanApplet(object):
 
         Gtk.main()
 
-
     def manager_init(self):
         try:
-
-            self.Signals.DisconnectAll()
             self.Manager = Bluez.Manager()
             self.Plugins.Run("on_manager_state_changed", True)
 
@@ -88,7 +79,6 @@ class BluemanApplet(object):
             dprint("Bluez DBus API not available. Listening for DBus name ownership changes")
 
     def manager_deinit(self):
-        self.Signals.DisconnectAll()
         self.Manager = None
         self.Plugins.Run("on_manager_state_changed", False)
 
