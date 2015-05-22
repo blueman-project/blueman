@@ -25,7 +25,7 @@ class Device(PropertiesBase):
             else:
                 raise exception
 
-        self.get_interface().Pair(reply_handler=ok, error_handler=err)
+        self._interface.Pair(reply_handler=ok, error_handler=err)
 
     @raise_dbus_error
     def connect(self, reply_handler=None, error_handler=None):
@@ -40,7 +40,7 @@ class Device(PropertiesBase):
             else:
                 raise exception
 
-        self.get_interface().Connect(reply_handler=ok, error_handler=err)
+        self._interface.Connect(reply_handler=ok, error_handler=err)
 
     @raise_dbus_error
     def disconnect(self, reply_handler=None, error_handler=None):
@@ -55,4 +55,4 @@ class Device(PropertiesBase):
             else:
                 raise exception
 
-        self.get_interface().Disconnect(reply_handler=ok, error_handler=err)
+        self._interface.Disconnect(reply_handler=ok, error_handler=err)

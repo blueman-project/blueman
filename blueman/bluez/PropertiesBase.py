@@ -21,14 +21,14 @@ class PropertiesBase(Base):
         self._handler_wrappers = {}
 
         if obj_path:
-            self.__properties_interface = dbus.Interface(self.get_dbus_proxy(), 'org.freedesktop.DBus.Properties')
+            self.__properties_interface = dbus.Interface(self._dbus_proxy, 'org.freedesktop.DBus.Properties')
 
     def _on_property_changed(self, key, value):
         dprint(self.get_object_path(), key, value)
         self.emit('property-changed', key, value)
 
     def _on_properties_changed(self, interface_name, changed_properties, _invalidated_properties):
-        if interface_name == self.get_interface_name():
+        if interface_name == self._interface_name:
             for name, value in changed_properties.items():
                 self._on_property_changed(name, value)
 
@@ -36,9 +36,8 @@ class PropertiesBase(Base):
     def set(self, name, value):
         if type(value) is int:
             value = dbus.UInt32(value)
-        return self.__properties_interface.Set(self.get_interface_name(), name, value)
+        return self.__properties_interface.Set(self._interface_name, name, value)
 
     @raise_dbus_error
     def get_properties(self):
-        return self.__properties_interface.GetAll(self.get_interface_name())
-    
+        return self.__properties_interface.GetAll(self._interface_name)

@@ -14,8 +14,8 @@ class NetworkServer(PropertiesBase):
 
     @raise_dbus_error
     def register(self, uuid, bridge):
-        self.get_interface().Register(uuid, bridge)
+        self._interface.Register(uuid, bridge)
 
     @raise_dbus_error
     def unregister(self, uuid):
-        self.get_interface().Unregister(uuid)
+        self._interface.Unregister(uuid)
