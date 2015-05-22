@@ -64,15 +64,15 @@ class Adapter(PropertiesBase):
 
     @raise_dbus_error
     def start_discovery(self):
-        self.get_interface().StartDiscovery()
+        self._interface.StartDiscovery()
 
     @raise_dbus_error
     def stop_discovery(self):
-        self.get_interface().StopDiscovery()
+        self._interface.StopDiscovery()
 
     @raise_dbus_error
     def remove_device(self, device):
-        self.get_interface().RemoveDevice(device.get_object_path())
+        self._interface.RemoveDevice(device.get_object_path())
 
     @raise_dbus_error
     def get_name(self):

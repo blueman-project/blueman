@@ -33,14 +33,14 @@ class Base(GObject):
     def get_object_path(self):
         return self.__obj_path
 
-    def get_interface_name(self):
+    @property
+    def _interface_name(self):
         return self.__interface_name
 
-    def get_bus(self):
-        return self.__bus
-
-    def get_dbus_proxy(self):
+    @property
+    def _dbus_proxy(self):
         return self.__dbus_proxy
 
-    def get_interface(self):
+    @property
+    def _interface(self):
         return self.__interface

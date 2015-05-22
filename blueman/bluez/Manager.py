@@ -43,7 +43,7 @@ class Manager(PropertiesBase):
 
     @raise_dbus_error
     def list_adapters(self):
-        objects = self.get_interface().GetManagedObjects()
+        objects = self._interface.GetManagedObjects()
         adapters = []
         for path, interfaces in objects.items():
             if 'org.bluez.Adapter1' in interfaces:

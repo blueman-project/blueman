@@ -17,10 +17,10 @@ class AgentManager(Base):
     @raise_dbus_error
     def register_agent(self, agent, capability='', default=False):
         path = agent.get_object_path()
-        self.get_interface().RegisterAgent(path, capability)
+        self._interface.RegisterAgent(path, capability)
         if default:
-            self.get_interface().RequestDefaultAgent(path)
+            self._interface.RequestDefaultAgent(path)
 
     @raise_dbus_error
     def unregister_agent(self, agent):
-        self.get_interface().UnregisterAgent(agent.get_object_path())
+        self._interface.UnregisterAgent(agent.get_object_path())

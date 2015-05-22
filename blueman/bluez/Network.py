@@ -14,8 +14,8 @@ class Network(PropertiesBase):
 
     @raise_dbus_error
     def connect(self, uuid, reply_handler=None, error_handler=None):
-        self.get_interface().Connect(uuid, reply_handler=reply_handler, error_handler=error_handler)
+        self._interface.Connect(uuid, reply_handler=reply_handler, error_handler=error_handler)
 
     @raise_dbus_error
     def disconnect(self, reply_handler=None, error_handler=None):
-        self.get_interface().Disconnect(reply_handler=reply_handler, error_handler=error_handler)
+        self._interface.Disconnect(reply_handler=reply_handler, error_handler=error_handler)
