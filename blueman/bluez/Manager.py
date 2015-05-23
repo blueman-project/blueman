@@ -7,7 +7,7 @@ from blueman.Functions import dprint
 
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.PropertiesBase import PropertiesBase
-from blueman.bluez.errors import raise_dbus_error, DBusNoSuchAdapterError
+from blueman.bluez.errors import DBusNoSuchAdapterError
 from dbus.mainloop.glib import DBusGMainLoop
 
 
@@ -19,7 +19,6 @@ class Manager(PropertiesBase):
         str('device-removed'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
     }
 
-    @raise_dbus_error
     def __init__(self):
         DBusGMainLoop(set_as_default=True)
 
@@ -51,16 +50,14 @@ class Manager(PropertiesBase):
             dprint(object_path)
             self.emit('device-removed', object_path)
 
-    @raise_dbus_error
     def list_adapters(self):
-        objects = self._interface.GetManagedObjects()
+        objects = self._call('GetManagedObjects')
         adapters = []
         for path, interfaces in objects.items():
             if 'org.bluez.Adapter1' in interfaces:
                 adapters.append(path)
         return [Adapter(adapter) for adapter in adapters]
 
-    @raise_dbus_error
     def get_adapter(self, pattern=None):
         adapters = self.list_adapters()
         if pattern is None:

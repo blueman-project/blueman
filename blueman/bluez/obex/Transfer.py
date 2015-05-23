@@ -21,7 +21,7 @@ class Transfer(Base):
 
     def __getattr__(self, name):
         if name in ('filename', 'name', 'session', 'size'):
-            return self._interface.Get('org.bluez.obex.Transfer1', name.capitalize())
+            return self._call('Get', 'org.bluez.obex.Transfer1', name.capitalize())
 
     def _on_properties_changed(self, interface_name, changed_properties, _invalidated_properties):
         if interface_name != 'org.bluez.obex.Transfer1':

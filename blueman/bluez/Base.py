@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 
 import dbus
 from gi.repository.GObject import GObject
+from blueman.bluez.errors import parse_dbus_error
 
 
 class Base(GObject):
@@ -27,6 +28,17 @@ class Base(GObject):
         for args in self.__signals:
             self.__bus.remove_signal_receiver(*args)
 
+    def _call(self, method, *args, **kwargs):
+        if 'interface' in kwargs:
+            interface = kwargs['interface']
+            del kwargs['interface']
+        else:
+            interface = self.__interface
+        try:
+            return getattr(interface, method)(*args, **kwargs)
+        except dbus.DBusException as exception:
+            raise parse_dbus_error(exception)
+
     def _handle_signal(self, handler, signal, interface_name=None, object_path=None, path_keyword=None):
         args = (handler, signal, interface_name or self.__interface_name, self.__bus_name,
                 object_path or self.__obj_path)
@@ -43,7 +55,3 @@ class Base(GObject):
     @property
     def _dbus_proxy(self):
         return self.__dbus_proxy
-
-    @property
-    def _interface(self):
-        return self.__interface

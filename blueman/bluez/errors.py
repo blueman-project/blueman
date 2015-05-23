@@ -138,17 +138,3 @@ def parse_dbus_error(exception):
         return __DICT_ERROR__[aux_splt[0]](aux_splt[1])
     except KeyError:
         return exception
-
-
-def raise_dbus_error(func):
-    def warp(*args, **kwargs):
-        try:
-            return func(*args, **kwargs)
-        except dbus.DBusException as exception:
-            raise parse_dbus_error(exception)
-    return warp
-
-
-def raise_type_error(instance, cls):
-    if not isinstance(instance, cls):
-        raise TypeError('Expecting an instance of ' + cls.__name__ + ', not ' + type(instance).__name__)

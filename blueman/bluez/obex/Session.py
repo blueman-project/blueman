@@ -7,8 +7,8 @@ class Session(Base):
 
     @property
     def address(self):
-        return self._interface.Get('org.bluez.obex.Session1', 'Destination')
+        return self._call('Get', 'org.bluez.obex.Session1', 'Destination')
 
     @property
     def root(self):
-        return self._interface.Get('org.bluez.obex.Session1', 'Root')
+        return self._call('Get', 'org.bluez.obex.Session1', 'Root')

@@ -18,7 +18,7 @@ class AgentManager(Base):
         def on_register_failed(error):
             dprint(agent_path, error)
 
-        self._interface.RegisterAgent(agent_path, reply_handler=on_registered, error_handler=on_register_failed)
+        self._call('RegisterAgent', agent_path, reply_handler=on_registered, error_handler=on_register_failed)
 
     def unregister_agent(self, agent_path):
         def on_unregistered():
@@ -27,4 +27,4 @@ class AgentManager(Base):
         def on_unregister_failed(error):
             dprint(agent_path, error)
 
-        self._interface.UnregisterAgent(agent_path, reply_handler=on_unregistered, error_handler=on_unregister_failed)
+        self._call('UnregisterAgent', agent_path, reply_handler=on_unregistered, error_handler=on_unregister_failed)

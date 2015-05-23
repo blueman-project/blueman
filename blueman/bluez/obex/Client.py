@@ -37,8 +37,8 @@ class Client(Base):
             dprint(dest_addr, source_addr, pattern, error)
             self.emit("session-failed", error)
 
-        self._interface.CreateSession(dest_addr, {"Source": source_addr, "Target": pattern},
-                                      reply_handler=on_session_created, error_handler=on_session_failed)
+        self._call('CreateSession', dest_addr, {"Source": source_addr, "Target": pattern},
+                   reply_handler=on_session_created, error_handler=on_session_failed)
 
     def remove_session(self, session_path):
         def on_session_removed():
@@ -48,5 +48,5 @@ class Client(Base):
         def on_session_remove_failed(error):
             dprint(session_path, error)
 
-        self._interface.RemoveSession(session_path, reply_handler=on_session_removed,
-                                      error_handler=on_session_remove_failed)
+        self._call('RemoveSession', session_path, reply_handler=on_session_removed,
+                   error_handler=on_session_remove_failed)

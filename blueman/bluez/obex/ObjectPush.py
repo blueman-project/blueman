@@ -26,7 +26,7 @@ class ObjectPush(Base):
             dprint(file_path, error)
             self.emit('transfer-failed', error)
 
-        self._interface.SendFile(file_path, reply_handler=on_transfer_started, error_handler=on_transfer_error)
+        self._call('SendFile', file_path, reply_handler=on_transfer_started, error_handler=on_transfer_error)
 
     def get_session_path(self):
         return self.get_object_path()
