@@ -2,7 +2,7 @@
 
 ## Runtime dependencies
 
-* [BlueZ](http://www.bluez.org/) (>= 4.61)
+* [BlueZ 5](http://www.bluez.org/)
 * [dbus](http://www.freedesktop.org/wiki/Software/dbus/)
 * [dbus-python](http://www.freedesktop.org/wiki/Software/DBusBindings/#python)
 * [GdkPixbuf](http://www.gtk.org/) (GI bindings)
@@ -12,7 +12,7 @@
 * [libappindicator](https://launchpad.net/libappindicator) (optional) (GI bindings)
 * [notification-daemon](https://git.gnome.org/browse/notification-daemon) or any desktop specific replacement
 * [libnotify](https://git.gnome.org/browse/libnotify) (GI bindings)
-* [obexd](http://www.bluez.org/) (>= 0.47)
+* [obexd 5](http://www.bluez.org/)
 * [Pango](http://www.gtk.org/) (GI bindings)
 * [pulseaudio](http://www.freedesktop.org/wiki/Software/PulseAudio/) (optional)
 * [pycairo](http://cairographics.org/pycairo/)
@@ -21,7 +21,7 @@
 
 ## Build dependencies
 
-* [BlueZ](http://www.bluez.org/) (>= 4.61)
+* [BlueZ 5](http://www.bluez.org/)
 * [Cython](http://www.cython.org/)
 * [dbus-python](http://www.freedesktop.org/wiki/Software/DBusBindings/#python)
 * [GLib 2](http://www.gtk.org/) (>= 2.32)

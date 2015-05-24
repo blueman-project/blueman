@@ -10,12 +10,7 @@ from blueman.bluez.errors import raise_dbus_error
 class Network(PropertiesBlueZInterface):
     @raise_dbus_error
     def __init__(self, obj_path=None):
-        if self.__class__.get_interface_version()[0] < 5:
-            interface = 'org.bluez.Network'
-        else:
-            interface = 'org.bluez.Network1'
-
-        super(Network, self).__init__(interface, obj_path)
+        super(Network, self).__init__('org.bluez.Network1', obj_path)
 
     @raise_dbus_error
     def connect(self, uuid, reply_handler=None, error_handler=None):

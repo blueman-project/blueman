@@ -150,7 +150,7 @@ AM_CONDITIONAL([HAVE_SETTINGS], [test "x$have_settings" = "xyes"])
 
 dnl ----------------------------
 
-PKG_CHECK_MODULES([BLUEZ], [bluez >= 4.61 gthread-2.0 >= 2.32])
+PKG_CHECK_MODULES([BLUEZ], [bluez >= 5.0 gthread-2.0 >= 2.32])
 
 AC_SUBST([BLUEZ_CFLAGS])
 AC_SUBST([BLUEZ_LIBS])

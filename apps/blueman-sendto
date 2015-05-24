@@ -7,9 +7,6 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 import os, sys, signal
-
-from blueman.bluez.obex.Base import ObexdNotFoundError
-
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if os.path.exists(os.path.join(_dirname, "CHANGELOG.md")):
@@ -24,18 +21,15 @@ import time
 from blueman.Constants import *
 import gi
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
 
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.obex.ObjectPush import ObjectPush
 from blueman.main.Device import Device
-from blueman.main.FakeDevice import FakeDevice
 from blueman.bluez.Manager import Manager
 from blueman.Functions import *
 from blueman.Constants import *
 from blueman.gui.DeviceSelectorDialog import DeviceSelectorDialog
 from blueman.main.SpeedCalc import SpeedCalc
-from blueman.main.AppletService import AppletService
 
 from blueman.bluez import obex
 
@@ -104,7 +98,7 @@ class Sender(GObject.GObject):
         self.num_files = len(self.files)
         try:
             self.client = obex.Client()
-        except ObexdNotFoundError:
+        except obex.ObexdNotFoundError:
             d = Gtk.MessageDialog(self.window,
                                   type=Gtk.MessageType.ERROR, buttons=Gtk.ButtonsType.OK)
             d.props.text = _("obexd not available")
@@ -326,16 +320,7 @@ class SendTo:
             except:
                 print("Error: No Adapters present")
                 exit()
-            try:
-                d = adapter.find_device(options.device)
-            except:
-                info = {}
-                info["Address"] = options.device
-                info["Name"] = info["Address"].replace(":", "-")
-                info["Alias"] = info["Name"]
-                info["Fake"] = True
-
-                d = FakeDevice(info)
+            d = adapter.find_device(options.device)
 
             self.device = Device(d)
             self.adapter = adapter.get_object_path()

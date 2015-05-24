@@ -4,20 +4,12 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 from blueman.Functions import *
-import pickle
-import base64
-from blueman.Service import Service
 from blueman.main.PluginManager import StopException
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.main.applet.BluezAgent import AdapterAgent
 
-from blueman.bluez.Device import Device as BluezDevice
 from blueman.main.Device import Device
-from blueman.main.applet.BluezAgent import TempAgent
-from blueman.bluez.Adapter import Adapter
 
 from gi.repository import GObject
-from gi.repository import Gtk
 import dbus
 import dbus.service
 
@@ -119,39 +111,6 @@ class DBusService(AppletPlugin):
 
     def service_disconnect_handler(self, service, ok, err):
         pass
-
-    @dbus.service.method('org.blueman.Applet', in_signature="ssbu", async_callbacks=("_ok", "err"))
-    def CreateDevice(self, adapter_path, address, pair, time, _ok, err):
-        # BlueZ 4 only!
-        def ok(device):
-            path = device.get_object_path()
-            _ok(path)
-
-        if self.Applet.Manager:
-            adapter = Adapter(adapter_path)
-
-            if pair:
-                agent_path = "/org/blueman/agent/temp/" + address.replace(":", "")
-                agent = TempAgent(self.Applet.Plugins.StatusIcon, agent_path, time)
-                adapter.create_paired_device(address, agent_path, "KeyboardDisplay", error_handler=err,
-                                             reply_handler=ok, timeout=120)
-
-            else:
-                adapter.create_device(address, error_handler=err, reply_handler=ok)
-
-        else:
-            err()
-
-    @dbus.service.method('org.blueman.Applet', in_signature="ss", async_callbacks=("ok", "err"))
-    def CancelDeviceCreation(self, adapter_path, address, ok, err):
-        # BlueZ 4 only!
-        if self.Applet.Manager:
-            adapter = Adapter(adapter_path)
-
-            adapter.get_interface().CancelDeviceCreation(address, error_handler=err, reply_handler=ok)
-
-        else:
-            err()
 
     @dbus.service.method('org.blueman.Applet')
     def open_plugin_dialog(self):

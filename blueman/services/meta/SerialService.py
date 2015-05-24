@@ -11,7 +11,7 @@ from blueman.main.Mechanism import Mechanism
 
 class SerialService(Service):
     def __init__(self, device, uuid):
-        super(SerialService, self).__init__(device, uuid, False)
+        super(SerialService, self).__init__(device, uuid)
 
     def serial_port_id(self, channel):
         for dev in rfcomm_list():

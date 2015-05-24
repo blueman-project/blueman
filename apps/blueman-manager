@@ -168,27 +168,6 @@ class Blueman:
         if adapter != None:
             self.List.DisplayKnownDevices(autoselect=True)
 
-    def add_device(self, device):
-        # BlueZ 4 only!
-
-        def ok(device):
-            dev = Device(device)
-            self.List.add_device(dev)
-            prog.finalize()
-            MessageArea.close()
-
-        def err(*args):
-            prog.finalize()
-            MessageArea.show_message(e_(str(args[0])))
-
-        adapter = self.List.Adapter
-
-        prog = ManagerProgressbar(self, text=_("Adding"))
-        prog.connect("cancelled", lambda x: self.List.Adapter.get_interface().CancelDeviceCreation(device.Address))
-
-        prog.start()
-        adapter.create_device(device.Address, reply_handler=ok, error_handler=err)
-
     def inquiry(self):
         def prop_changed(List, adapter, key_value):
             key, value = key_value
@@ -220,33 +199,7 @@ class Blueman:
         launch(command, None, False, "blueman", _("Bluetooth Assistant"))
 
     def bond(self, device):
-        if BlueZInterface.get_interface_version()[0] < 5:
-            def ok(device):
-                dev = Device(BluezDevice(device))
-                self.List.add_device(dev)
-                prog.message(_("Success"))
-                MessageArea.close()
-
-            def err(*args):
-                dprint(args)
-                prog.message(_("Failure"))
-                MessageArea.show_message(e_(str(args[0])))
-
-            applet = AppletService()
-
-            address = device.get_properties()["Address"]
-            adapter = self.List.Adapter
-
-            prog = ManagerProgressbar(self, text=_("Pairing"))
-            prog.connect("cancelled", lambda x: applet.CancelDeviceCreation(adapter.get_object_path(), device.Address))
-            prog.start()
-
-            name = adapter_path_to_name(self.List.Adapter.get_object_path())
-
-            applet.CreateDevice(adapter.get_object_path(), device.Address, True, Gtk.get_current_event_time(),
-                                reply_handler=ok, error_handler=err, timeout=120)
-        else:
-            self.List.Adapter.find_device(device.Address).pair()
+        self.List.Adapter.find_device(device.Address).pair()
 
     def adapter_properties(self):
         adapter = self.List.Adapter

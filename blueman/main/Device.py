@@ -27,7 +27,6 @@ class Device(GObject.GObject):
         GObject.GObject.__init__(self)
 
         self.Properties = {}
-        self.Fake = True
         self.Temp = False
 
         if hasattr(instance, "format") and hasattr(instance, "upper"):
@@ -46,17 +45,13 @@ class Device(GObject.GObject):
         dprint("caching initial properties")
         self.Properties = self.Device.get_properties()
 
-        if not "Fake" in self.Properties:
-            self.Fake = False
-
         w = weakref.ref(self)
-        if not self.Fake:
-            self._obj_path = self.Device.get_object_path()
-            self.Signals.Handle("bluez", self.Device, lambda key, value: w() and w().property_changed(key, value),
-                                "PropertyChanged")
-            object_path = self.Device.get_object_path()
-            adapter = Adapter(object_path.replace("/" + os.path.basename(object_path), ""))
-            self.Signals.Handle("bluez", adapter, lambda path: w() and w().on_device_removed(path), "DeviceRemoved")
+        self._obj_path = self.Device.get_object_path()
+        self.Signals.Handle("bluez", self.Device, lambda key, value: w() and w().property_changed(key, value),
+                            "PropertyChanged")
+        object_path = self.Device.get_object_path()
+        adapter = Adapter(object_path.replace("/" + os.path.basename(object_path), ""))
+        self.Signals.Handle("bluez", adapter, lambda path: w() and w().on_device_removed(path), "DeviceRemoved")
 
     def get_service(self, uuid):
         for name, cls in inspect.getmembers(blueman.services, inspect.isclass):
@@ -64,8 +59,6 @@ class Device(GObject.GObject):
                 return cls(self, uuid)
 
     def get_services(self):
-        if self.Fake:
-            return []
         services = (self.get_service(uuid) for uuid in self.UUIDs)
         return [service for service in services if service]
 
@@ -74,8 +67,7 @@ class Device(GObject.GObject):
         self.Destroy()
 
     def get_object_path(self):
-        if not self.Fake:
-            return self._obj_path
+        return self._obj_path
 
     def on_device_removed(self, path):
         if path == self._obj_path:
