@@ -12,10 +12,3 @@ class HandsfreeGateway(Service):
     __svclass_id__ = HANDSFREE_SVCLASS_ID
     __icon__ = "blueman-handsfree"
     __priority__ = 10
-
-    @property
-    def connected(self):
-        if self._legacy_interface:
-            return self._legacy_interface.GetProperties()['State'] != 'disconnected'
-        else:
-            return super(HandsfreeGateway, self).connected

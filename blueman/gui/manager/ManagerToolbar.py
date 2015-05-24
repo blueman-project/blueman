@@ -44,9 +44,6 @@ class ManagerToolbar:
         self.b_remove = blueman.Builder.get_object("b_remove")
         self.b_remove.connect("clicked", self.on_action, self.blueman.remove)
 
-        self.b_add = blueman.Builder.get_object("b_add")
-        self.b_add.connect("clicked", self.on_action, self.blueman.add_device)
-
         self.b_setup = blueman.Builder.get_object("b_setup")
         self.b_setup.connect("clicked", self.on_action, self.blueman.setup)
         self.b_setup.set_homogeneous(False)
@@ -91,7 +88,6 @@ class ManagerToolbar:
             self.b_remove.props.sensitive = False
             self.b_trust.props.sensitive = False
             self.b_setup.props.sensitive = False
-            self.b_add.props.sensitive = False
         else:
             row = dev_list.get(iter, "bonded", "trusted", "fake")
             self.b_setup.props.sensitive = True
@@ -112,19 +108,17 @@ class ManagerToolbar:
 
             if row["fake"]:
                 self.b_remove.props.sensitive = False
-                self.b_add.props.sensitive = True
                 self.b_trust.props.sensitive = False
                 self.b_bond.props.sensitive = True
             else:
                 self.b_remove.props.sensitive = True
-                self.b_add.props.sensitive = False
 
         self.update_send_browse(device)
 
     def update_send_browse(self, device):
         self.b_send.props.sensitive = False
         self.b_browse.props.sensitive = False
-        if device != None and not device.Fake:
+        if device:
             for uuid in device.UUIDs:
                 uuid16 = uuid128_to_uuid16(uuid)
                 if uuid16 == OBEX_OBJPUSH_SVCLASS_ID:
@@ -132,19 +126,12 @@ class ManagerToolbar:
 
                 if uuid16 == OBEX_FILETRANS_SVCLASS_ID:
                     self.b_browse.props.sensitive = True
-        if device and device.Fake:
-            self.b_send.props.sensitive = True
-
 
     def on_device_propery_changed(self, dev_list, device, iter, key_value):
         key, value = key_value
         if dev_list.compare(iter, dev_list.selected()):
             if key == "Trusted" or key == "Paired":
                 self.on_device_selected(dev_list, device, iter)
-
-            elif key == "Fake":
-                self.on_device_selected(dev_list, device, iter)
-                self.update_send_browse(device)
 
             elif key == "UUIDs":
                 self.update_send_browse(device)

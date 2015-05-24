@@ -5,22 +5,15 @@ from __future__ import unicode_literals
 
 from blueman.bluez.PropertiesBlueZInterface import PropertiesBlueZInterface
 from blueman.bluez.errors import raise_dbus_error, parse_dbus_error
-import dbus
-import xml.dom.minidom
 
 
 class Device(PropertiesBlueZInterface):
     @raise_dbus_error
     def __init__(self, obj_path=None):
-        if self.__class__.get_interface_version()[0] < 5:
-            interface = 'org.bluez.Device'
-        else:
-            interface = 'org.bluez.Device1'
-        super(Device, self).__init__(interface, obj_path)
+        super(Device, self).__init__('org.bluez.Device1', obj_path)
 
     @raise_dbus_error
     def pair(self, reply_handler=None, error_handler=None):
-        # BlueZ 5 only!
         def ok():
             if callable(reply_handler):
                 reply_handler()
@@ -36,7 +29,6 @@ class Device(PropertiesBlueZInterface):
 
     @raise_dbus_error
     def connect(self, reply_handler=None, error_handler=None):
-        # BlueZ 5 only!
         def ok():
             if callable(reply_handler):
                 reply_handler()

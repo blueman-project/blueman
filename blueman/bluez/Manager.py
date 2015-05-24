@@ -14,24 +14,16 @@ class Manager(PropertiesBlueZInterface):
     def __init__(self):
         DBusGMainLoop(set_as_default=True)
 
-        if self.__class__.get_interface_version()[0] < 5:
-            interface = 'org.bluez.Manager'
-        else:
-            interface = 'org.freedesktop.DBus.ObjectManager'
-        super(Manager, self).__init__(interface, '/')
+        super(Manager, self).__init__('org.freedesktop.DBus.ObjectManager', '/')
 
     @raise_dbus_error
     def list_adapters(self):
-        if self.__class__.get_interface_version()[0] < 5:
-            adapters = self.get_interface().ListAdapters()
-            return [Adapter(adapter) for adapter in adapters]
-        else:
-            objects = self.get_interface().GetManagedObjects()
-            adapters = []
-            for path, interfaces in objects.items():
-                if 'org.bluez.Adapter1' in interfaces:
-                    adapters.append(path)
-            return [Adapter(adapter) for adapter in adapters]
+        objects = self.get_interface().GetManagedObjects()
+        adapters = []
+        for path, interfaces in objects.items():
+            if 'org.bluez.Adapter1' in interfaces:
+                adapters.append(path)
+        return [Adapter(adapter) for adapter in adapters]
 
     @raise_dbus_error
     def get_adapter(self, pattern=None):
@@ -51,16 +43,13 @@ class Manager(PropertiesBlueZInterface):
 
     def handle_signal(self, handler, signal, **kwargs):
         if signal == 'AdapterAdded' or signal == 'AdapterRemoved':
-            if self.__class__.get_interface_version()[0] < 5:
-                wrapper = handler
-            else:
-                def wrapper(object_path, interfaces):
-                    if 'org.bluez.Adapter1' in interfaces:
-                        handler(object_path)
+            def wrapper(object_path, interfaces):
+                if 'org.bluez.Adapter1' in interfaces:
+                    handler(object_path)
 
-                self._handler_wrappers[handler] = wrapper
+            self._handler_wrappers[handler] = wrapper
 
-                signal = signal.replace('Adapter', 'Interfaces')
+            signal = signal.replace('Adapter', 'Interfaces')
 
             self._handle_signal(wrapper, signal, self.get_interface_name(), self.get_object_path(), **kwargs)
         else:
@@ -68,9 +57,8 @@ class Manager(PropertiesBlueZInterface):
 
     def unhandle_signal(self, handler, signal, **kwargs):
         if signal == 'AdapterAdded' or signal == 'AdapterRemoved':
-            if self.__class__.get_interface_version()[0] > 4:
-                handler = self._handler_wrappers[handler]
-                signal = signal.replace('Adapter', 'Interfaces')
+            handler = self._handler_wrappers[handler]
+            signal = signal.replace('Adapter', 'Interfaces')
 
             self._unhandle_signal(handler, signal, self.get_interface_name(), self.get_object_path(), **kwargs)
         else:
