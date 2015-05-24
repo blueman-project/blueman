@@ -28,7 +28,7 @@ class Transfer(Base):
             return
 
         for name, value in changed_properties.items():
-            dprint(self.object_path, name, value)
+            dprint(self.get_object_path(), name, value)
             if name == 'Transferred':
                 self.emit('progress', value)
             elif name == 'Status':

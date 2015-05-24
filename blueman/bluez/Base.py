@@ -11,14 +11,16 @@ class Base(GObject):
     connect_signal = GObject.connect
     disconnect_signal = GObject.disconnect
 
+    __bus = dbus.SystemBus()
+    __bus_name = 'org.bluez'
+
     def __init__(self, interface_name, obj_path):
         self.__signals = []
         self.__obj_path = obj_path
         self.__interface_name = interface_name
-        self.__bus = dbus.SystemBus()
         super(Base, self).__init__()
         if obj_path:
-            self.__dbus_proxy = self.__bus.get_object('org.bluez', obj_path, follow_name_owner_changes=True)
+            self.__dbus_proxy = self.__bus.get_object(self.__bus_name, obj_path, follow_name_owner_changes=True)
             self.__interface = dbus.Interface(self.__dbus_proxy, interface_name)
 
     def __del__(self):
@@ -26,7 +28,8 @@ class Base(GObject):
             self.__bus.remove_signal_receiver(*args)
 
     def _handle_signal(self, handler, signal, interface_name=None, object_path=None):
-        args = (handler, signal, interface_name or self.__interface_name, 'org.bluez', object_path or self.__obj_path)
+        args = (handler, signal, interface_name or self.__interface_name, self.__bus_name,
+                object_path or self.__obj_path)
         self.__bus.add_signal_receiver(*args)
         self.__signals.append(args)
 
