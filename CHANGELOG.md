@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0
+
+No relevant changes
+
 ## 2.0.rc1
 
 ### New features
