@@ -7,7 +7,7 @@
 * [dbus-python](http://www.freedesktop.org/wiki/Software/DBusBindings/#python)
 * [GdkPixbuf](http://www.gtk.org/) (GI bindings)
 * [GLib 2, Gio 2](http://www.gtk.org/) (>= 2.32) (GI bindings)
-* [GTK+ 3](http://www.gtk.org/) [1] (GI bindings)
+* [GTK+ 3](http://www.gtk.org/) (GI bindings) [1]
 * [gnome-icon-theme](https://git.gnome.org/browse/adwaita-icon-theme/) or [mate-icon-theme](https://github.com/mate-desktop/mate-icon-theme)
 * [libappindicator](https://launchpad.net/libappindicator) (optional) (GI bindings)
 * [notification-daemon](https://git.gnome.org/browse/notification-daemon) or any desktop specific replacement
