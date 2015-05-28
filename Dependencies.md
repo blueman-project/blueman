@@ -14,7 +14,7 @@
 * [libnotify](https://git.gnome.org/browse/libnotify) (GI bindings)
 * [obexd](http://www.bluez.org/) (>= 0.47)
 * [Pango](http://www.gtk.org/) (GI bindings)
-* [pulseaudio](http://www.freedesktop.org/wiki/Software/PulseAudio/) (optional)
+* [pulseaudio-module-bluetooth](http://www.freedesktop.org/wiki/Software/PulseAudio/) (optional)
 * [pycairo](http://cairographics.org/pycairo/)
 * [PyGObject 3](https://wiki.gnome.org/PyGObject)
 * [Python](http://www.python.org/) (2.7 or >= 3.2)
