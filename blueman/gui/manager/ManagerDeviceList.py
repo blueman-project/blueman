@@ -106,31 +106,25 @@ class ManagerDeviceList(DeviceList):
 
         return True
 
-
     def drag_motion(self, widget, drag_context, x, y, timestamp):
         path = self.get_path_at_pos(x, y)
         if path != None:
             if path[0] != self.selected():
                 iter = self.get_iter(path[0])
                 device = self.get(iter, "device")["device"]
-                if not device.Fake:
-                    found = False
-                    for uuid in device.UUIDs:
-                        uuid16 = uuid128_to_uuid16(uuid)
-                        if uuid16 == OBEX_OBJPUSH_SVCLASS_ID:
-                            found = True
-                            break
-                    if found:
-                        drag_context.drag_status(Gdk.DragAction.COPY, timestamp)
-                        self.set_cursor(path[0])
-                        return True
-                    else:
-                        drag_context.drag_status(Gdk.DragAction.DEFAULT, timestamp)
-                        return False
-                else:
+                found = False
+                for uuid in device.UUIDs:
+                    uuid16 = uuid128_to_uuid16(uuid)
+                    if uuid16 == OBEX_OBJPUSH_SVCLASS_ID:
+                        found = True
+                        break
+                if found:
                     drag_context.drag_status(Gdk.DragAction.COPY, timestamp)
                     self.set_cursor(path[0])
                     return True
+                else:
+                    drag_context.drag_status(Gdk.DragAction.DEFAULT, timestamp)
+                    return False
         else:
             drag_context.drag_status(Gdk.DragAction.DEFAULT, timestamp)
             return False
@@ -191,11 +185,6 @@ class ManagerDeviceList(DeviceList):
             row_fader.animate(start=row_fader.get_state(), end=0.0, duration=400)
 
     def device_add_event(self, device):
-        if device.Fake:
-            self.PrependDevice(device)
-            GObject.idle_add(self.props.vadjustment.set_value, 0)
-            return
-
         if self.Blueman.Config["latest-last"]:
             self.AppendDevice(device)
         else:
@@ -246,8 +235,6 @@ class ManagerDeviceList(DeviceList):
 
         # caption = "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" % {"0":name, "1":klass.capitalize(), "2":address}
         self.set(iter, caption=caption, orig_icon=icon)
-
-        self.row_update_event(iter, "Fake", device.Fake)
 
         try:
             self.row_update_event(iter, "Trusted", device.Trusted)
@@ -304,15 +291,6 @@ class ManagerDeviceList(DeviceList):
             else:
                 icon = self.make_device_icon(row["orig_icon"], False, row["trusted"], False)
                 self.set(iter, device_pb=icon, bonded=False)
-
-        elif key == "Fake":
-            row = self.get(iter, "bonded", "trusted", "orig_icon")
-            if value:
-                icon = self.make_device_icon(row["orig_icon"], False, False, True)
-                self.set(iter, device_pb=icon, fake=True)
-            else:
-                icon = self.make_device_icon(row["orig_icon"], row["bonded"], row["trusted"], False)
-                self.set(iter, device_pb=icon, fake=False)
 
         elif key == "Alias":
             device = self.get(iter, "device")["device"]

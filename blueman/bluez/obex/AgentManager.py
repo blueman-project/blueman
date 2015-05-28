@@ -9,10 +9,7 @@ from blueman.bluez.obex.Base import Base
 
 class AgentManager(Base):
     def __init__(self):
-        if self.__class__.get_interface_version()[0] < 5:
-            super(AgentManager, self).__init__('org.bluez.obex.Manager', '/')
-        else:
-            super(AgentManager, self).__init__('org.bluez.obex.AgentManager1', '/org/bluez/obex')
+        super(AgentManager, self).__init__('org.bluez.obex.AgentManager1', '/org/bluez/obex')
 
     def register_agent(self, agent_path):
         def on_registered():

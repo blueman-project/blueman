@@ -1,5 +1,11 @@
 # Changelog
 
+## master
+
+### Changes
+
+* Drop support for BlueZ 4
+
 ## 2.0
 
 No relevant changes
