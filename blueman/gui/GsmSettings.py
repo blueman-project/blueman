@@ -22,7 +22,7 @@ class GsmSettings(Gtk.Dialog):
 
         vbox = self.Builder.get_object("vbox1")
 
-        self.config = Config("org.blueman.gsmsetting", "/org/blueman/gsmsettings/%s/" % bd_address)
+        self.config = Config("org.blueman.gsmsettings", "/org/blueman/gsmsettings/%s/" % bd_address)
         self.props.icon_name = "network-wireless"
         self.props.title = _("GSM Settings")
 
