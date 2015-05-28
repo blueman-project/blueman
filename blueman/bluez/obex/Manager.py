@@ -17,42 +17,30 @@ class Manager(Base):
     }
 
     def __init__(self):
-        if self.__class__.get_interface_version()[0] < 5:
-            super(Manager, self).__init__('org.bluez.obex.Manager', '/')
-            handlers = {
-                'SessionRemoved': self._on_session_removed,
-                'TransferStarted': self._on_transfer_started,
-                'TransferCompleted': self._on_transfer_completed
-            }
+        super(Manager, self).__init__('org.freedesktop.DBus.ObjectManager', '/')
 
-            for signal, handler in handlers.items():
-                self._handle_signal(handler, signal, )
+        self._transfers = {}
 
-        else:
-            super(Manager, self).__init__('org.freedesktop.DBus.ObjectManager', '/')
+        def on_interfaces_added(object_path, interfaces):
+            if 'org.bluez.obex.Transfer1' in interfaces:
+                def on_tranfer_completed(_transfer):
+                    self._on_transfer_completed(object_path, True)
 
-            self._transfers = {}
+                def on_tranfer_error(_transfer):
+                    self._on_transfer_completed(object_path, False)
 
-            def on_interfaces_added(object_path, interfaces):
-                if 'org.bluez.obex.Transfer1' in interfaces:
-                    def on_tranfer_completed(_transfer):
-                        self._on_transfer_completed(object_path, True)
+                self._transfers[object_path] = Transfer(object_path)
+                self._transfers[object_path].connect('completed', on_tranfer_completed)
+                self._transfers[object_path].connect('error', on_tranfer_error)
+                self._on_transfer_started(object_path)
 
-                    def on_tranfer_error(_transfer):
-                        self._on_transfer_completed(object_path, False)
+        self._handle_signal(on_interfaces_added, 'InterfacesAdded')
 
-                    self._transfers[object_path] = Transfer(object_path)
-                    self._transfers[object_path].connect('completed', on_tranfer_completed)
-                    self._transfers[object_path].connect('error', on_tranfer_error)
-                    self._on_transfer_started(object_path)
+        def on_interfaces_removed(object_path, interfaces):
+            if 'org.bluez.obex.Session1' in interfaces:
+                self._on_session_removed(object_path)
 
-            self._handle_signal(on_interfaces_added, 'InterfacesAdded')
-
-            def on_interfaces_removed(object_path, interfaces):
-                if 'org.bluez.obex.Session1' in interfaces:
-                    self._on_session_removed(object_path)
-
-            self._handle_signal(on_interfaces_removed, 'InterfacesRemoved')
+        self._handle_signal(on_interfaces_removed, 'InterfacesRemoved')
 
     def _on_session_removed(self, session_path):
         dprint(session_path)

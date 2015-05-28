@@ -14,8 +14,6 @@ from blueman.Constants import *
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-from gi.repository import GObject
-from blueman.bluez.BlueZInterface import BlueZInterface
 
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -23,8 +21,6 @@ if os.path.exists(os.path.join(_dirname, "CHANGELOG.md")):
     sys.path.insert(0, _dirname)
 
 from blueman.Functions import *
-from blueman.main.Device import Device
-from blueman.bluez.Device import Device as BluezDevice
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 from blueman.gui.manager.ManagerToolbar import ManagerToolbar
 from blueman.gui.manager.ManagerMenu import ManagerMenu
@@ -126,7 +122,8 @@ class Blueman:
                         on_bt_status_changed(False)
                 except:
                     pass
-                self.Applet.Handle("BluetoothStatusChanged", on_bt_status_changed)
+                self.Applet.bus.add_signal_receiver(on_bt_status_changed, "BluetoothStatusChanged",
+                                                    self.Applet.dbus_interface, path=self.Applet.object_path)
 
                 self.window.connect("delete-event", on_window_delete)
                 self.window.props.icon_name = "blueman"
@@ -168,27 +165,6 @@ class Blueman:
         if adapter != None:
             self.List.DisplayKnownDevices(autoselect=True)
 
-    def add_device(self, device):
-        # BlueZ 4 only!
-
-        def ok(device):
-            dev = Device(device)
-            self.List.add_device(dev)
-            prog.finalize()
-            MessageArea.close()
-
-        def err(*args):
-            prog.finalize()
-            MessageArea.show_message(e_(str(args[0])))
-
-        adapter = self.List.Adapter
-
-        prog = ManagerProgressbar(self, text=_("Adding"))
-        prog.connect("cancelled", lambda x: self.List.Adapter.get_interface().CancelDeviceCreation(device.Address))
-
-        prog.start()
-        adapter.create_device(device.Address, reply_handler=ok, error_handler=err)
-
     def inquiry(self):
         def prop_changed(List, adapter, key_value):
             key, value = key_value
@@ -220,33 +196,7 @@ class Blueman:
         launch(command, None, False, "blueman", _("Bluetooth Assistant"))
 
     def bond(self, device):
-        if BlueZInterface.get_interface_version()[0] < 5:
-            def ok(device):
-                dev = Device(BluezDevice(device))
-                self.List.add_device(dev)
-                prog.message(_("Success"))
-                MessageArea.close()
-
-            def err(*args):
-                dprint(args)
-                prog.message(_("Failure"))
-                MessageArea.show_message(e_(str(args[0])))
-
-            applet = AppletService()
-
-            address = device.get_properties()["Address"]
-            adapter = self.List.Adapter
-
-            prog = ManagerProgressbar(self, text=_("Pairing"))
-            prog.connect("cancelled", lambda x: applet.CancelDeviceCreation(adapter.get_object_path(), device.Address))
-            prog.start()
-
-            name = adapter_path_to_name(self.List.Adapter.get_object_path())
-
-            applet.CreateDevice(adapter.get_object_path(), device.Address, True, Gtk.get_current_event_time(),
-                                reply_handler=ok, error_handler=err, timeout=120)
-        else:
-            self.List.Adapter.find_device(device.Address).pair()
+        self.List.Adapter.find_device(device.Address).pair()
 
     def adapter_properties(self):
         adapter = self.List.Adapter

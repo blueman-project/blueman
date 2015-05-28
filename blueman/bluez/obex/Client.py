@@ -3,9 +3,14 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
+import dbus
 from blueman.Functions import dprint
 from blueman.bluez.obex.Base import Base
 from gi.repository import GObject
+
+
+class ObexdNotFoundError(Exception):
+    pass
 
 
 class Client(Base):
@@ -16,10 +21,12 @@ class Client(Base):
     }
 
     def __init__(self):
-        if self.__class__.get_interface_version()[0] < 5:
-            super(Client, self).__init__('org.bluez.obex.Client', '/', True)
-        else:
-            super(Client, self).__init__('org.bluez.obex.Client1', '/org/bluez/obex')
+        obj = dbus.SessionBus().get_object('org.bluez.obex', '/')
+        introspection = dbus.Interface(obj, 'org.freedesktop.DBus.Introspectable').Introspect()
+        if 'org.freedesktop.DBus.ObjectManager' not in introspection:
+            raise ObexdNotFoundError('Could not find any compatible version of obexd')
+
+        super(Client, self).__init__('org.bluez.obex.Client1', '/org/bluez/obex')
 
     def create_session(self, dest_addr, source_addr="00:00:00:00:00:00", pattern="opp"):
         def on_session_created(session_path):

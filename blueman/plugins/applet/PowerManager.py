@@ -7,7 +7,6 @@ import dbus.service
 from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 import blueman.bluez as Bluez
-from blueman.main.SignalTracker import SignalTracker
 
 
 class PowerManager(AppletPlugin):
@@ -31,6 +30,8 @@ class PowerManager(AppletPlugin):
         }
     }
 
+    _any_signal = None
+
     def on_load(self, applet):
         AppletPlugin.add_method(self.on_power_state_query)
         AppletPlugin.add_method(self.on_power_state_change_requested)
@@ -43,11 +44,10 @@ class PowerManager(AppletPlugin):
 
         self.item.props.tooltip_text = _("Turn off all adapters")
 
-        self.signals = SignalTracker()
-        self.signals.Handle('bluez', Bluez.Adapter(), self.adapter_property_changed, "PropertyChanged",
-                            path_keyword="path")
+        self._any_adapter = Bluez.Adapter()
+        self._any_adapter.connect_signal('property-changed', self._on_adapter_property_changed)
 
-        self.signals.Handle(self.item, "activate", lambda x: self.on_bluetooth_toggled())
+        self.item.connect("activate", lambda x: self.on_bluetooth_toggled())
 
         self.Applet.Plugins.Menu.Register(self, self.item, 0)
 
@@ -61,7 +61,7 @@ class PowerManager(AppletPlugin):
         self.STATE_OFF_FORCED = 0
 
     def on_unload(self):
-        self.signals.DisconnectAll()
+        del self._any_adapter
         self.Applet.Plugins.Menu.Unregister(self)
 
     @property
@@ -210,7 +210,7 @@ class PowerManager(AppletPlugin):
     def GetBluetoothStatus(self):
         return self.CurrentState
 
-    def adapter_property_changed(self, key, value, path):
+    def _on_adapter_property_changed(self, _adapter, key, value):
         if key == "Powered":
             if value and not self.CurrentState:
                 dprint("adapter powered on while in off state, turning bluetooth on")

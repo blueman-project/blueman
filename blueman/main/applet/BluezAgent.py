@@ -6,7 +6,6 @@ from __future__ import unicode_literals
 import dbus
 from dbus.mainloop.glib import DBusGMainLoop
 import dbus.service
-import os.path
 from blueman.Functions import get_icon, dprint
 from gi.repository import Gtk
 from gi.repository import GObject
@@ -20,6 +19,7 @@ from blueman.gui.Notification import Notification
 from blueman.bluez.Agent import Agent, AgentMethod
 
 DBusGMainLoop(set_as_default=True)
+
 
 class AgentErrorRejected(dbus.DBusException):
     def __init__(self):
@@ -37,21 +37,25 @@ class _GDbusObjectType(dbus.service.InterfaceType, GObjectMeta):
 _GObjectAgent = _GDbusObjectType(str('_GObjectAgent'), (Agent, GObject.GObject), {})
 
 
-class CommonAgent(_GObjectAgent, Agent, GObject.GObject):
+class BluezAgent(_GObjectAgent, Agent, GObject.GObject):
     __gsignals__ = {
         str('released'): (GObject.SignalFlags.NO_HOOKS, None, ()),
     }
 
-    def __init__(self, status_icon, path, time_func, notifications):
-        Agent.__init__(self, path)
+    def __init__(self, status_icon, time_func):
+        Agent.__init__(self, '/org/blueman/agent/bluez_agent')
         GObject.GObject.__init__(self)
 
         self.status_icon = status_icon
-        self.dbus_path = path
         self.dialog = None
         self.n = None
         self.time_func = time_func
-        self.notifications = notifications
+
+        Bluez.AgentManager().register_agent(self, "KeyboardDisplay", default=True)
+
+    def __del__(self):
+        dprint()
+        Bluez.AgentManager().unregister_agent(self)
 
     def build_passkey_dialog(self, device_alias, dialog_msg, is_numeric):
         def on_insert_text(editable, new_text, new_text_length, position):
@@ -136,9 +140,6 @@ class CommonAgent(_GObjectAgent, Agent, GObject.GObject):
         self.dialog.connect("response", passkey_dialog_cb)
         self.dialog.present()
 
-    def __del__(self):
-        dprint("Agent on path", self.dbus_path, "deleted")
-
     @AgentMethod
     def Release(self):
         dprint("Agent.Release")
@@ -161,7 +162,7 @@ class CommonAgent(_GObjectAgent, Agent, GObject.GObject):
         dprint("Agent.RequestPinCode")
         dialog_msg = _("Enter PIN code for authentication:")
         notify_msg = _("Enter PIN code")
-        self.ask_passkey(device, dialog_msg, notify_msg, False, self.notifications, ok, err)
+        self.ask_passkey(device, dialog_msg, notify_msg, False, True, ok, err)
         if self.dialog:
             self.dialog.present_with_time(self.time_func())
 
@@ -170,7 +171,7 @@ class CommonAgent(_GObjectAgent, Agent, GObject.GObject):
         dprint("Agent.RequestPasskey")
         dialog_msg = _("Enter passkey for authentication:")
         notify_msg = _("Enter passkey")
-        self.ask_passkey(device, dialog_msg, notify_msg, True, self.notifications, ok, err)
+        self.ask_passkey(device, dialog_msg, notify_msg, True, True, ok, err)
         if self.dialog:
             self.dialog.present_with_time(self.time_func())
 
@@ -187,17 +188,6 @@ class CommonAgent(_GObjectAgent, Agent, GObject.GObject):
         notify_message = _("Pairing PIN code for") + " %s: %s" % (self.get_device_alias(device), pin_code)
         self.n = Notification("Bluetooth", notify_message, 0,
                               pixbuf=get_icon("blueman", 48), status_icon=self.status_icon)
-
-
-# noinspection PyPep8Naming
-class AdapterAgent(CommonAgent):
-    def __init__(self, status_icon, adapter, time_func):
-        self.adapter = adapter
-        self.n = None
-
-        adapter_name = os.path.basename(adapter.get_object_path())
-
-        CommonAgent.__init__(self, status_icon, "/org/blueman/agent/adapter/" + adapter_name, time_func, True)
 
     @AgentMethod
     def RequestConfirmation(self, device, passkey, ok, err):
@@ -257,35 +247,3 @@ class AdapterAgent(CommonAgent):
     @AgentMethod
     def AuthorizeService(self, device, uuid, ok, err):
         self.Authorize(device, uuid, ok, err)
-
-
-class GlobalAgent(AdapterAgent):
-    def __init__(self, status_icon, time_func):
-        self.n = None
-        CommonAgent.__init__(self, status_icon, '/org/blueman/agent/global', time_func, True)
-
-
-# noinspection PyPep8Naming
-class TempAgent(CommonAgent):
-    def __init__(self, status_icon, path, time):
-        CommonAgent.__init__(self, status_icon, path, lambda: time, False)
-
-    @AgentMethod
-    def RequestConfirmation(self, device, passkey, ok, err):
-        dprint("Agent.RequestConfirmation")
-        alias = self.get_device_alias(device)
-
-        dialog = Gtk.MessageDialog(buttons=Gtk.ButtonsType.YES_NO)
-        dialog.props.use_markup = True
-        dialog.props.icon_name = "dialog-password"
-        dialog.props.secondary_use_markup = True
-        dialog.props.title = _("Confirm value")
-        dialog.props.text = _("Pairing with: %s") % alias
-        dialog.props.secondary_text = _("Confirm value for authentication:") + "<b>%s</b>" % passkey
-        resp = dialog.run()
-        if resp == Gtk.ResponseType.YES:
-            ok()
-        else:
-            err(AgentErrorRejected())
-
-        dialog.destroy()

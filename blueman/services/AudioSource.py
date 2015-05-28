@@ -13,10 +13,3 @@ class AudioSource(Service):
     __description__ = _("Allows to receive audio from remote device")
     __icon__ = "blueman-headset"
     __priority__ = 21
-
-    @property
-    def connected(self):
-        if self._legacy_interface:
-            return self._legacy_interface.GetProperties()['State'] != 'disconnected'
-        else:
-            return super(AudioSource, self).connected

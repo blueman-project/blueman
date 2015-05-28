@@ -7,13 +7,10 @@ from gi.repository import GObject
 import inspect
 from blueman.Functions import dprint
 from blueman.Sdp import uuid128_to_uuid16
-from blueman.main.SignalTracker import SignalTracker
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device as BluezDevice
-from blueman.Service import Service
 import blueman.services
 import blueman.services.meta
-import os
 import weakref
 
 
@@ -27,7 +24,6 @@ class Device(GObject.GObject):
         GObject.GObject.__init__(self)
 
         self.Properties = {}
-        self.Fake = True
         self.Temp = False
 
         if hasattr(instance, "format") and hasattr(instance, "upper"):
@@ -41,22 +37,16 @@ class Device(GObject.GObject):
 
         self.Valid = True
 
-        self.Signals = SignalTracker()
-
         dprint("caching initial properties")
         self.Properties = self.Device.get_properties()
 
-        if not "Fake" in self.Properties:
-            self.Fake = False
-
         w = weakref.ref(self)
-        if not self.Fake:
-            self._obj_path = self.Device.get_object_path()
-            self.Signals.Handle("bluez", self.Device, lambda key, value: w() and w().property_changed(key, value),
-                                "PropertyChanged")
-            object_path = self.Device.get_object_path()
-            adapter = Adapter(object_path.replace("/" + os.path.basename(object_path), ""))
-            self.Signals.Handle("bluez", adapter, lambda path: w() and w().on_device_removed(path), "DeviceRemoved")
+        self._obj_path = self.Device.get_object_path()
+        self.Device.connect_signal('property-changed',
+                                   lambda _device, key, value: w() and w().property_changed(key, value))
+        self._any_adapter = Adapter()
+        self._any_adapter.connect_signal('device-removed',
+                                         lambda _adapter, path: w() and w().on_device_removed(path))
 
     def get_service(self, uuid):
         for name, cls in inspect.getmembers(blueman.services, inspect.isclass):
@@ -64,8 +54,6 @@ class Device(GObject.GObject):
                 return cls(self, uuid)
 
     def get_services(self):
-        if self.Fake:
-            return []
         services = (self.get_service(uuid) for uuid in self.UUIDs)
         return [service for service in services if service]
 
@@ -74,8 +62,7 @@ class Device(GObject.GObject):
         self.Destroy()
 
     def get_object_path(self):
-        if not self.Fake:
-            return self._obj_path
+        return self._obj_path
 
     def on_device_removed(self, path):
         if path == self._obj_path:
@@ -95,7 +82,6 @@ class Device(GObject.GObject):
         dprint("invalidating device", self.get_object_path())
         self.Valid = False
         #self.Device = None
-        self.Signals.DisconnectAll()
 
     #def __del__(self):
     #	dprint("DEBUG: deleting Device instance")

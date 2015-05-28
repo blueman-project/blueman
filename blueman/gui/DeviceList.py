@@ -5,9 +5,7 @@ from __future__ import unicode_literals
 
 from blueman.Functions import wait_for_adapter, adapter_path_to_name, dprint
 
-from blueman.main.SignalTracker import SignalTracker
 from blueman.gui.GenericList import GenericList
-from blueman.main.FakeDevice import FakeDevice
 from blueman.main.Device import Device
 
 from _blueman import conn_info
@@ -17,7 +15,6 @@ from gi.repository import Gtk
 from gi.repository import GObject
 import os
 import re
-import copy
 
 
 class DeviceList(GenericList):
@@ -28,9 +25,6 @@ class DeviceList(GenericList):
             GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)
         ),
         #@param: device, TreeIter, (key, value)
-        #note: there is a special property "Fake", it's not a real property,
-        #but it is used to notify when device changes state from "Fake" to a real BlueZ object
-        #the callback would be called with Fake=False
         str('device-property-changed'): (
             GObject.SignalFlags.RUN_LAST,
             None,
@@ -57,14 +51,14 @@ class DeviceList(GenericList):
         if not tabledata:
             tabledata = []
 
-        def on_adapter_removed(path):
+        def on_adapter_removed(_manager, path):
             self.emit("adapter-removed", path)
             if path == self.__adapter_path:
                 self.clear()
                 self.Adapter = None
                 self.SetAdapter()
 
-        def on_adapter_added(path):
+        def on_adapter_added(_manager, path):
             def on_activate():
                 dprint("adapter powered", path)
 
@@ -82,11 +76,9 @@ class DeviceList(GenericList):
 
         self.monitored_devices = []
 
-        self.signals = SignalTracker()
-
         self.manager = Bluez.Manager()
-        self.signals.Handle(self.manager, on_adapter_removed, "AdapterRemoved")
-        self.signals.Handle(self.manager, on_adapter_added, "AdapterAdded")
+        self.manager.connect_signal('adapter-removed', on_adapter_removed)
+        self.manager.connect_signal('adapter-added', on_adapter_added)
 
         self.__discovery_time = 0
         self.__adapter_path = None
@@ -102,19 +94,13 @@ class DeviceList(GenericList):
         ]
 
         GenericList.__init__(self, data)
-        self.adapter_signals = SignalTracker()
-        self.device_signals = SignalTracker()
 
         self.SetAdapter(adapter)
 
-        self.signals.Handle(self.selection, "changed", self.on_selection_changed)
+        self.selection.connect('changed', self.on_selection_changed)
 
     def destroy(self):
         dprint("destroying")
-        self.adapter_signals.DisconnectAll()
-        self.device_signals.DisconnectAll()
-        self.signals.DisconnectAll()
-        self.device_signals = None
         #self.clear()
         if len(self.liststore):
             for i in self.liststore:
@@ -130,38 +116,15 @@ class DeviceList(GenericList):
             dev = row["device"]
             self.emit("device-selected", dev, iter)
 
-    def on_device_found(self, address, props):
-        if self.discovering:
-            dprint("Device discovered", address)
-
-            props["Address"] = address
-            props["Fake"] = True
-            dev = FakeDevice(props)
-            device = Device(dev)
-
-            iter = self.find_device(dev)
-            if not iter:
-                self.device_add_event(device)
-                iter = self.find_device(device)
-                self.row_update_event(iter, "RSSI", props["RSSI"])
-            else:
-                self.row_update_event(iter, "Alias", props["Alias"])
-
-            print("RSSI:", props["RSSI"])
-
-
-    def on_property_changed(self, key, value):
-        dprint("adapter propery changed", key, value)
+    def _on_property_changed(self, _adapter, key, value):
         if key == "Discovering":
             if not value and self.discovering:
                 self.StopDiscovery()
 
         self.emit("adapter-property-changed", self.Adapter, (key, value))
 
-    def on_device_property_changed(self, key, value, path, *args, **kwargs):
-        dprint("list: device_prop_ch", key, value, path, args, kwargs)
-
-        iter = self.find_device_by_path(path)
+    def _on_device_property_changed(self, device, key, value):
+        iter = self.find_device_by_path(device.get_object_path())
 
         if iter != None:
             dev = self.get(iter, "device")["device"]
@@ -248,8 +211,7 @@ class DeviceList(GenericList):
 
     #########################
 
-    def on_device_created(self, path):
-        dprint("created", path)
+    def _on_device_created(self, _adapter, path):
         iter = self.find_device_by_path(path)
         if iter == None:
             dev = Bluez.Device(path)
@@ -257,8 +219,7 @@ class DeviceList(GenericList):
             dev.Temp = True
             self.device_add_event(dev)
 
-
-    def on_device_removed(self, path):
+    def _on_device_removed(self, _adapter, path):
         iter = self.find_device_by_path(path)
         if iter:
             row = self.get(iter, "device")
@@ -276,15 +237,12 @@ class DeviceList(GenericList):
             adapter = adapter_path_to_name(adapter)
 
         dprint(adapter)
-        if self.Adapter is not None:
-            self.adapter_signals.DisconnectAll()
 
         try:
             self.Adapter = self.manager.get_adapter(adapter)
-            self.adapter_signals.Handle(self.Adapter, self.on_device_found, "DeviceFound")
-            self.adapter_signals.Handle(self.Adapter, self.on_property_changed, "PropertyChanged")
-            self.adapter_signals.Handle(self.Adapter, self.on_device_created, "DeviceCreated")
-            self.adapter_signals.Handle(self.Adapter, self.on_device_removed, "DeviceRemoved")
+            self.Adapter.connect_signal('property-changed', self._on_property_changed)
+            self.Adapter.connect_signal('device-created', self._on_device_created)
+            self.Adapter.connect_signal('device-removed', self._on_device_removed)
             self.__adapter_path = self.Adapter.get_object_path()
             self.emit("adapter-changed", self.__adapter_path)
         except Bluez.errors.DBusNoSuchAdapterError as e:
@@ -315,9 +273,8 @@ class DeviceList(GenericList):
     def add_device(self, device, append=True):
         iter = self.find_device(device)
         #device belongs to another adapter
-        if not device.Fake:
-            if not device.get_object_path().startswith(self.Adapter.get_object_path()):
-                return
+        if not device.get_object_path().startswith(self.Adapter.get_object_path()):
+            return
 
         if iter == None:
             dprint("adding new device")
@@ -335,14 +292,9 @@ class DeviceList(GenericList):
             except:
                 pass
 
-            if not "Fake" in props:
-                self.device_signals.Handle("bluez", device,
-                                           self.on_device_property_changed,
-                                           "PropertyChanged",
-                                           sigid=device.get_object_path(),
-                                           path_keyword="path")
-                if props["Connected"]:
-                    self.monitor_power_levels(device)
+            device.connect_signal('property-changed', self._on_device_property_changed)
+            if props["Connected"]:
+                self.monitor_power_levels(device)
 
         else:
             row = self.get(iter, "device")
@@ -351,37 +303,14 @@ class DeviceList(GenericList):
             props = existing_dev.get_properties()
             props_new = device.get_properties()
 
-            #turn a Fake device to a Real device
-            n = not "Fake" in props and not "Fake" in props_new
-            if n:
-                dprint("Updating existing dev")
-                self.device_signals.Disconnect(existing_dev.get_object_path())
-            #existing_dev.Destroy()
+            existing_dev.disconnect_signal('property-changed')
+            self.set(iter, device=device, dbus_path=device.get_object_path())
+            self.row_setup_event(iter, device)
+            
+            device.connect_signal('property-changed', self._on_device_property_changed)
 
-            if ("Fake" in props and not "Fake" in props_new) or n:
-                self.set(iter, device=device, dbus_path=device.get_object_path())
-                self.row_setup_event(iter, device)
-
-                if not n:
-                    self.emit("device-property-changed", device, iter, ("Fake", False))
-                    self.row_update_event(iter, "Fake", False)
-
-                self.device_signals.Handle("bluez", device,
-                                           self.on_device_property_changed,
-                                           "PropertyChanged",
-                                           sigid=device.get_object_path(),
-                                           path_keyword="path")
-
-                if props_new["Connected"]:
-                    self.monitor_power_levels(device)
-
-            #turn a Real device to a Fake device
-            elif not "Fake" in props and "Fake" in props_new:
-                dprint("converting: real to discovered")
-                self.set(iter, device=device, dbus_path=None)
-                self.row_setup_event(iter, device)
-                self.emit("device-property-changed", device, iter, ("Fake", True))
-                self.row_update_event(iter, "Fake", True)
+            if props_new["Connected"]:
+                self.monitor_power_levels(device)
 
     def DisplayKnownDevices(self, autoselect=False):
         self.clear()
@@ -431,12 +360,10 @@ class DeviceList(GenericList):
             self.emit("device-selected", None, None)
 
         try:
-            props = device.get_properties()
-        except:
-            self.device_signals.Disconnect(device.get_object_path())
-        else:
-            if not "Fake" in props:
-                self.device_signals.Disconnect(device.get_object_path())
+            device.get_properties()
+        finally:
+            # FIXME: Wrong argument
+            device.disconnect_signal('property-changed')
 
         self.delete(iter)
 

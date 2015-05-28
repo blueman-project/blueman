@@ -3,18 +3,15 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-from gi.repository import GObject
-from gi.repository import Gtk
 from operator import itemgetter
 from blueman.Sdp import uuid128_to_uuid16, SERIAL_PORT_SVCLASS_ID, OBEX_OBJPUSH_SVCLASS_ID, OBEX_FILETRANS_SVCLASS_ID
 from blueman.Functions import *
-from blueman.main.SignalTracker import SignalTracker
+from blueman.bluez.Network import Network
+from blueman.bluez.Device import Device
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.AppletService import AppletService
 from blueman.gui.MessageArea import MessageArea
-from blueman.bluez.BlueZInterface import BlueZInterface
 
-from _blueman import rfcomm_list
 from blueman.services import SerialPort
 
 
@@ -37,42 +34,43 @@ class ManagerDeviceMenu(Gtk.Menu):
 
         self.is_popup = False
 
-        #object, args,
-        self.Signals = SignalTracker()
-        self.MainSignals = SignalTracker()
-
-        self.MainSignals.Handle("gobject", self.Blueman.List, "device-property-changed",
-                                self.on_device_property_changed)
+        self._device_property_changed_signal = self.Blueman.List.connect("device-property-changed",
+                                                                         self.on_device_property_changed)
+        self._selection_done_signal = None
 
         ManagerDeviceMenu.__instances__.append(self)
+
+        self._any_network = Network()
+        self._any_network.connect_signal('property-changed', self._on_service_property_changed)
+
+        self._any_device = Device()
+        self._any_device.connect_signal('property-changed', self._on_service_property_changed)
 
         self.Generate()
 
     def __del__(self):
         dprint("deleting devicemenu")
 
-    #	GObject.GObject.__del__(self)
-
-
     def popup(self, *args):
         self.is_popup = True
 
-        self.MainSignals.DisconnectAll()
-        self.MainSignals.Handle("gobject", self.Blueman.List, "device-property-changed",
-                                self.on_device_property_changed)
+        if not self._device_property_changed_signal:
+            self._device_property_changed_signal = self.Blueman.List.connect("device-property-changed",
+                                                                             self.on_device_property_changed)
 
-        def disconnectall(x):
-            self.MainSignals.DisconnectAll()
 
-        self.MainSignals.Handle("gobject", self, "selection-done", disconnectall)
+        if not self._selection_done_signal:
+            def disconnectall(x):
+                self.disconnect(self._device_property_changed_signal)
+                self.disconnect(self._selection_done_signal)
+
+            self._selection_done_signal = self.connect("selection-done", disconnectall)
 
         self.Generate()
 
         Gtk.Menu.popup(self, *args)
 
     def clear(self):
-        self.Signals.DisconnectAll()
-
         def each(child, data):
             self.remove(child)
             child.destroy()
@@ -100,7 +98,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             if inst.SelectedDevice == self.SelectedDevice and not (inst.is_popup and not inst.props.visible):
                 inst.Generate()
 
-    def service_property_changed(self, key, value):
+    def _on_service_property_changed(self, _service, key, value):
         if key == "Connected":
             self.Generate()
 
@@ -161,7 +159,6 @@ class ManagerDeviceMenu(Gtk.Menu):
         # print "menu:", key, value
         if List.compare(iter, List.selected()):
             if key == "Connected" \
-                or key == "Fake" \
                 or key == "UUIDs" \
                 or key == "Trusted" \
                 or key == "Paired":
@@ -207,201 +204,164 @@ class ManagerDeviceMenu(Gtk.Menu):
                 for (item, pos) in ret:
                     items.append((pos, item))
 
-        if device.Fake:
-            item = create_menuitem(_("_Add Device"), get_icon("list-add", 16))
-            self.Signals.Handle("gobject", item, "activate",
-                                lambda x: self.Blueman.add_device(device))
-            item.show()
-            self.append(item)
-            item.props.tooltip_text = _("Add this device to known devices list")
+        dprint(device.Alias)
 
-            item = create_menuitem(_("_Setup..."), get_icon("document-properties", 16))
-            self.append(item)
-            self.Signals.Handle("gobject", item, "activate",
-                                lambda x: self.Blueman.setup(device))
-            item.show()
-            item.props.tooltip_text = _("Run the setup assistant for this device")
+        have_disconnectables = False
+        have_connectables = False
 
-            item = create_menuitem(_("_Pair"), get_icon("dialog-password", 16))
-            self.Signals.Handle("gobject", item, "activate",
-                                lambda x: self.Blueman.bond(device))
-            self.append(item)
-            item.show()
-            item.props.tooltip_text = _("Pair with the device")
+        if True in map(lambda x: x[0] >= 100 and x[0] < 200, items):
+            have_disconnectables = True
 
+        if True in map(lambda x: x[0] < 100, items):
+            have_connectables = True
+
+        if True in map(lambda x: x[0] >= 200, items) and (have_connectables or have_disconnectables):
+            item = Gtk.SeparatorMenuItem()
+            item.show()
+            items.append((199, item))
+
+        if have_connectables:
+            item = Gtk.MenuItem()
+            label = Gtk.Label()
+            label.set_markup(_("<b>Connect To:</b>"))
+            label.props.xalign = 0.0
+
+            label.show()
+            item.add(label)
+            item.props.sensitive = False
+            item.show()
+            items.append((0, item))
+
+        if have_disconnectables:
+            item = Gtk.MenuItem()
+            label = Gtk.Label()
+            label.set_markup(_("<b>Disconnect:</b>"))
+            label.props.xalign = 0.0
+
+            label.show()
+            item.add(label)
+            item.props.sensitive = False
+            item.show()
+            items.append((99, item))
+
+        items.sort(key=itemgetter(0))
+        for priority, item in items:
+            self.append(item)
+
+        if items != []:
             item = Gtk.SeparatorMenuItem()
             item.show()
             self.append(item)
 
-            send_item = create_menuitem(_("Send a _File..."), get_icon("edit-copy", 16))
-            self.Signals.Handle("gobject", send_item, "activate",
-                                lambda x: self.Blueman.send(device))
-            send_item.show()
-            self.append(send_item)
+        del items
 
+        send_item = create_menuitem(_("Send a _File..."), get_icon("edit-copy", 16))
+        send_item.props.sensitive = False
+        self.append(send_item)
+        send_item.show()
 
+        browse_item = create_menuitem(_("_Browse Device..."), get_icon("document-open", 16))
+        browse_item.props.sensitive = False
+        self.append(browse_item)
+        browse_item.show()
+
+        uuids = device.UUIDs
+        for uuid in uuids:
+            uuid16 = uuid128_to_uuid16(uuid)
+            if uuid16 == OBEX_OBJPUSH_SVCLASS_ID:
+                send_item.connect("activate", lambda x: self.Blueman.send(device))
+                send_item.props.sensitive = True
+
+            if uuid16 == OBEX_FILETRANS_SVCLASS_ID:
+                browse_item.connect("activate", lambda x: self.Blueman.browse(device))
+                browse_item.props.sensitive = True
+
+        item = Gtk.SeparatorMenuItem()
+        item.show()
+        self.append(item)
+
+        item = create_menuitem(_("_Pair"), get_icon("dialog-password", 16))
+        item.props.tooltip_text = _("Create pairing with the device")
+        self.append(item)
+        item.show()
+        if not device.Paired:
+            item.connect("activate", lambda x: self.Blueman.bond(device))
+        else:
+            item.props.sensitive = False
+
+        if not device.Trusted:
+            item = create_menuitem(_("_Trust"), get_icon("blueman-trust", 16))
+            item.connect("activate", lambda x: self.Blueman.toggle_trust(device))
+            self.append(item)
+            item.show()
+        else:
+            item = create_menuitem(_("_Untrust"), get_icon("blueman-untrust", 16))
+            self.append(item)
+            item.connect("activate", lambda x: self.Blueman.toggle_trust(device))
+            item.show()
+        item.props.tooltip_text = _("Mark/Unmark this device as trusted")
+
+        item = create_menuitem(_("_Setup..."), get_icon("document-properties", 16))
+        self.append(item)
+        item.connect("activate", lambda x: self.Blueman.setup(device))
+        item.show()
+        item.props.tooltip_text = _("Run the setup assistant for this device")
+
+        def on_rename(_item, device):
+            def on_response(dialog, response_id):
+                if response_id == Gtk.ResponseType.ACCEPT:
+                    device.set('Alias', alias_entry.get_text())
+                elif response_id == 1:
+                    device.set('Alias', '')
+                dialog.destroy()
+
+            builder = Gtk.Builder()
+            builder.set_translation_domain("blueman")
+            builder.add_from_file(UI_PATH + "/rename-device.ui")
+            dialog = builder.get_object("dialog")
+            dialog.set_transient_for(self.Blueman.window)
+            dialog.props.icon_name = "blueman"
+            alias_entry = builder.get_object("alias_entry")
+            alias_entry.set_text(device.Alias)
+            dialog.connect("response", on_response)
+            dialog.present()
+
+        item = Gtk.MenuItem.new_with_label("Rename device...")
+        item.connect('activate', on_rename, device)
+        self.append(item)
+        item.show()
+
+        item = Gtk.SeparatorMenuItem()
+        item.show()
+        self.append(item)
+
+        item = create_menuitem(_("_Remove..."), get_icon("edit-delete", 16))
+        item.connect("activate", lambda x: self.Blueman.remove(device))
+        self.append(item)
+        item.show()
+        item.props.tooltip_text = _("Remove this device from the known devices list")
+
+        item = Gtk.SeparatorMenuItem()
+        item.show()
+        self.append(item)
+
+        item = create_menuitem(_("_Disconnect"), get_icon("network-offline", 16))
+        item.props.tooltip_text = _("Forcefully disconnect the device")
+
+        self.append(item)
+        item.show()
+
+        def on_disconnect(item):
+            def finished(*args):
+                self.unset_op(device)
+                
+            self.set_op(device, _("Disconnecting..."))
+            self.Blueman.disconnect(device,
+                                    reply_handler=finished,
+                                    error_handler=finished)
+
+        if device.Connected:
+            item.connect("activate", on_disconnect)
 
         else:
-            dprint(device.Alias)
-
-            item = None
-
-            have_disconnectables = False
-            have_connectables = False
-
-            if True in map(lambda x: x[0] >= 100 and x[0] < 200, items):
-                have_disconnectables = True
-
-            if True in map(lambda x: x[0] < 100, items):
-                have_connectables = True
-
-            if True in map(lambda x: x[0] >= 200, items) and (have_connectables or have_disconnectables):
-                item = Gtk.SeparatorMenuItem()
-                item.show()
-                items.append((199, item))
-
-            if have_connectables:
-                item = Gtk.MenuItem()
-                label = Gtk.Label()
-                label.set_markup(_("<b>Connect To:</b>"))
-                label.props.xalign = 0.0
-
-                label.show()
-                item.add(label)
-                item.props.sensitive = False
-                item.show()
-                items.append((0, item))
-
-            if have_disconnectables:
-                item = Gtk.MenuItem()
-                label = Gtk.Label()
-                label.set_markup(_("<b>Disconnect:</b>"))
-                label.props.xalign = 0.0
-
-                label.show()
-                item.add(label)
-                item.props.sensitive = False
-                item.show()
-                items.append((99, item))
-
-            items.sort(key=itemgetter(0))
-            for priority, item in items:
-                self.append(item)
-
-            if items != []:
-                item = Gtk.SeparatorMenuItem()
-                item.show()
-                self.append(item)
-
-            del items
-
-            send_item = create_menuitem(_("Send a _File..."), get_icon("edit-copy", 16))
-            send_item.props.sensitive = False
-            self.append(send_item)
-            send_item.show()
-
-            browse_item = create_menuitem(_("_Browse Device..."), get_icon("document-open", 16))
-            browse_item.props.sensitive = False
-            self.append(browse_item)
-            browse_item.show()
-
-            uuids = device.UUIDs
-            for uuid in uuids:
-                uuid16 = uuid128_to_uuid16(uuid)
-                if uuid16 == OBEX_OBJPUSH_SVCLASS_ID:
-                    self.Signals.Handle("gobject", send_item, "activate", lambda x: self.Blueman.send(device))
-                    send_item.props.sensitive = True
-
-                if uuid16 == OBEX_FILETRANS_SVCLASS_ID:
-                    self.Signals.Handle("gobject", browse_item, "activate", lambda x: self.Blueman.browse(device))
-                    browse_item.props.sensitive = True
-
-            item = Gtk.SeparatorMenuItem()
-            item.show()
-            self.append(item)
-
-            item = create_menuitem(_("_Pair"), get_icon("dialog-password", 16))
-            item.props.tooltip_text = _("Create pairing with the device")
-            self.append(item)
-            item.show()
-            if not device.Paired:
-                self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.bond(device))
-            else:
-                item.props.sensitive = False
-
-            if not device.Trusted:
-                item = create_menuitem(_("_Trust"), get_icon("blueman-trust", 16))
-                self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.toggle_trust(device))
-                self.append(item)
-                item.show()
-            else:
-                item = create_menuitem(_("_Untrust"), get_icon("blueman-untrust", 16))
-                self.append(item)
-                self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.toggle_trust(device))
-                item.show()
-            item.props.tooltip_text = _("Mark/Unmark this device as trusted")
-
-            item = create_menuitem(_("_Setup..."), get_icon("document-properties", 16))
-            self.append(item)
-            self.Signals.Handle("gobject", item, "activate", lambda x: self.Blueman.setup(device))
-            item.show()
-            item.props.tooltip_text = _("Run the setup assistant for this device")
-
-            def on_rename(_item, device):
-                def on_response(dialog, response_id):
-                    if response_id == Gtk.ResponseType.ACCEPT:
-                        device.set('Alias', alias_entry.get_text())
-                    elif response_id == 1:
-                        device.set('Alias', '')
-                    dialog.destroy()
-
-                builder = Gtk.Builder()
-                builder.set_translation_domain("blueman")
-                builder.add_from_file(UI_PATH + "/rename-device.ui")
-                dialog = builder.get_object("dialog")
-                dialog.set_transient_for(self.Blueman.window)
-                dialog.props.icon_name = "blueman"
-                alias_entry = builder.get_object("alias_entry")
-                alias_entry.set_text(device.Alias)
-                dialog.connect("response", on_response)
-                dialog.present()
-
-            item = Gtk.MenuItem.new_with_label("Rename device...")
-            self.Signals.Handle(item, 'activate', on_rename, device)
-            self.append(item)
-            item.show()
-
-            item = Gtk.SeparatorMenuItem()
-            item.show()
-            self.append(item)
-
-            item = create_menuitem(_("_Remove..."), get_icon("edit-delete", 16))
-            self.Signals.Handle(item, "activate", lambda x: self.Blueman.remove(device))
-            self.append(item)
-            item.show()
-            item.props.tooltip_text = _("Remove this device from the known devices list")
-
-            item = Gtk.SeparatorMenuItem()
-            item.show()
-            self.append(item)
-
-            item = create_menuitem(_("_Disconnect"), get_icon("network-offline", 16))
-            item.props.tooltip_text = _("Forcefully disconnect the device")
-
-            self.append(item)
-            item.show()
-
-            def on_disconnect(item):
-                def finished(*args):
-                    self.unset_op(device)
-
-                self.set_op(device, _("Disconnecting..."))
-                self.Blueman.disconnect(device,
-                                        reply_handler=finished,
-                                        error_handler=finished)
-
-            if device.Connected:
-                self.Signals.Handle(item, "activate", on_disconnect)
-
-            else:
-                item.props.sensitive = False
+            item.props.sensitive = False

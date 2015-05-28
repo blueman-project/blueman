@@ -2,36 +2,53 @@ from __future__ import print_function
 from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
+from gi.repository import GObject
+from blueman.Functions import dprint
 
 from blueman.bluez.Adapter import Adapter
-from blueman.bluez.PropertiesBlueZInterface import PropertiesBlueZInterface
+from blueman.bluez.PropertiesBase import PropertiesBase
 from blueman.bluez.errors import raise_dbus_error, DBusNoSuchAdapterError
 from dbus.mainloop.glib import DBusGMainLoop
 
 
-class Manager(PropertiesBlueZInterface):
+class Manager(PropertiesBase):
+    __gsignals__ = {
+        str('adapter-added'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+        str('adapter-removed'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,))
+    }
+
     @raise_dbus_error
     def __init__(self):
         DBusGMainLoop(set_as_default=True)
 
-        if self.__class__.get_interface_version()[0] < 5:
-            interface = 'org.bluez.Manager'
-        else:
-            interface = 'org.freedesktop.DBus.ObjectManager'
-        super(Manager, self).__init__(interface, '/')
+        super(Manager, self).__init__('org.freedesktop.DBus.ObjectManager', '/')
+        self._handle_signal(self._on_interfaces_added, 'InterfacesAdded')
+            self._handle_signal(self._on_interfaces_removed, 'InterfacesRemoved')
+
+    def _on_adapter_added(self, adapter_path):
+        dprint(adapter_path)
+        self.emit('adapter-added', adapter_path)
+
+    def _on_adapter_removed(self, adapter_path):
+        dprint(adapter_path)
+        self.emit('adapter-removed', adapter_path)
+
+    def _on_interfaces_added(self, object_path, interfaces):
+        if 'org.bluez.Adapter1' in interfaces:
+            self.emit('adapter-added', object_path)
+
+    def _on_interfaces_removed(self, object_path, interfaces):
+        if 'org.bluez.Adapter1' in interfaces:
+            self.emit('adapter-removed', object_path)
 
     @raise_dbus_error
     def list_adapters(self):
-        if self.__class__.get_interface_version()[0] < 5:
-            adapters = self.get_interface().ListAdapters()
-            return [Adapter(adapter) for adapter in adapters]
-        else:
-            objects = self.get_interface().GetManagedObjects()
-            adapters = []
-            for path, interfaces in objects.items():
-                if 'org.bluez.Adapter1' in interfaces:
-                    adapters.append(path)
-            return [Adapter(adapter) for adapter in adapters]
+        objects = self._interface.GetManagedObjects()
+        adapters = []
+        for path, interfaces in objects.items():
+            if 'org.bluez.Adapter1' in interfaces:
+                adapters.append(path)
+        return [Adapter(adapter) for adapter in adapters]
 
     @raise_dbus_error
     def get_adapter(self, pattern=None):
@@ -48,30 +65,3 @@ class Manager(PropertiesBlueZInterface):
         # If the given - or any - adapter does not exist, raise the NoSuchAdapter
         # error BlueZ 4's DefaultAdapter and FindAdapter methods trigger
         raise DBusNoSuchAdapterError('No such adapter')
-
-    def handle_signal(self, handler, signal, **kwargs):
-        if signal == 'AdapterAdded' or signal == 'AdapterRemoved':
-            if self.__class__.get_interface_version()[0] < 5:
-                wrapper = handler
-            else:
-                def wrapper(object_path, interfaces):
-                    if 'org.bluez.Adapter1' in interfaces:
-                        handler(object_path)
-
-                self._handler_wrappers[handler] = wrapper
-
-                signal = signal.replace('Adapter', 'Interfaces')
-
-            self._handle_signal(wrapper, signal, self.get_interface_name(), self.get_object_path(), **kwargs)
-        else:
-            super(Manager, self).handle_signal(handler, signal, **kwargs)
-
-    def unhandle_signal(self, handler, signal, **kwargs):
-        if signal == 'AdapterAdded' or signal == 'AdapterRemoved':
-            if self.__class__.get_interface_version()[0] > 4:
-                handler = self._handler_wrappers[handler]
-                signal = signal.replace('Adapter', 'Interfaces')
-
-            self._unhandle_signal(handler, signal, self.get_interface_name(), self.get_object_path(), **kwargs)
-        else:
-            super(Manager, self).unhandle_signal(handler, signal, **kwargs)

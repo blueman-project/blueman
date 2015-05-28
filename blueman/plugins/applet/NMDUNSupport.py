@@ -6,7 +6,6 @@ from __future__ import unicode_literals
 from blueman.plugins.AppletPlugin import AppletPlugin
 import dbus
 from gi.repository import GObject
-from blueman.main.SignalTracker import SignalTracker
 from blueman.gui.Notification import Notification
 from blueman.Sdp import uuid128_to_uuid16, DIALUP_NET_SVCLASS_ID
 from blueman.Functions import get_icon, composite_icon, dprint
@@ -22,14 +21,11 @@ class ConnectionHandler:
         self.rfcomm_dev = None
         self.timeout = None
 
-        self.signals = SignalTracker()
-
         # ModemManager 0.x
-        self.signals.Handle("dbus", self.parent.bus, self.on_mm_device_added, "DeviceAdded",
-                            "org.freedesktop.ModemManager")
+        self.parent.bus.add_signal_receiver(self.on_mm_device_added, "DeviceAdded", "org.freedesktop.ModemManager")
         # ModemManager 1.x
-        self.signals.Handle("dbus", self.parent.bus, self.on_interfaces_added, "InterfacesAdded",
-                            "org.freedesktop.DBus.ObjectManager")
+        self.parent.bus.add_signal_receiver(self.on_interfaces_added, "InterfacesAdded",
+                                            "org.freedesktop.DBus.ObjectManager")
 
         # for some reason these handlers take a reference and don't give it back
         #so i have to workaround :(
@@ -51,7 +47,9 @@ class ConnectionHandler:
     def cleanup(self):
         if self.timeout:
             GObject.source_remove(self.timeout)
-        self.signals.DisconnectAll()
+        self.parent.bus.remove_signal_receiver(self.on_mm_device_added, "DeviceAdded", "org.freedesktop.ModemManager")
+        self.parent.bus.remove_signal_receiver(self.on_interfaces_added, "InterfacesAdded",
+                                               "org.freedesktop.DBus.ObjectManager")
 
         del self.service
 

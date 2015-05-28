@@ -15,15 +15,11 @@ class ObjectPush(Base):
     }
 
     def __init__(self, session_path):
-        if self.__class__.get_interface_version()[0] < 5:
-            super(ObjectPush, self).__init__('org.bluez.obex.ObjectPush', session_path, True)
-        else:
-            super(ObjectPush, self).__init__('org.bluez.obex.ObjectPush1', session_path)
+        super(ObjectPush, self).__init__('org.bluez.obex.ObjectPush1', session_path)
 
     def send_file(self, file_path):
-        def on_transfer_started(*params):
-            transfer_path, props = params[0] if self.__class__.get_interface_version()[0] < 5 else params
-            dprint(self.object_path, file_path, transfer_path)
+        def on_transfer_started(transfer_path, props):
+            dprint(self.get_object_path(), file_path, transfer_path)
             self.emit('transfer-started', transfer_path, props['Filename'])
 
         def on_transfer_error(error):
@@ -33,4 +29,4 @@ class ObjectPush(Base):
         self._interface.SendFile(file_path, reply_handler=on_transfer_started, error_handler=on_transfer_error)
 
     def get_session_path(self):
-        return self.object_path
+        return self.get_object_path()

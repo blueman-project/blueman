@@ -7,14 +7,12 @@ from blueman.Functions import *
 from blueman.Constants import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Config import Config
-from blueman.main.SignalTracker import SignalTracker
 from blueman.bluez.Device import Device as BluezDevice
 from blueman.bluez.Network import Network
 from blueman.main.Device import Device
 from _blueman import rfcomm_list
 from gi.repository import GObject
 import weakref
-import os
 import cgi
 from gi.repository import Gtk
 from gi.repository import Pango
@@ -71,22 +69,20 @@ class NMMonitor(MonitorBase):
     def __init__(self, device, nm_dev_path):
         MonitorBase.__init__(self, device, "NM")
         dprint("created nm monitor for path", nm_dev_path)
-        self.signals = SignalTracker()
-        self.signals.Handle("dbus",
-                            dbus.SystemBus(),
-                            self.on_ppp_stats,
-                            "PppStats",
-                            "org.freedesktop.NetworkManager.Device.Serial",
-                            path=nm_dev_path)
+        self.__bus = dbus.SystemBus()
+        self.__nm_dev_path = nm_dev_path
+        self.__bus.add_signal_receiver(self.on_ppp_stats, "PppStats", "org.freedesktop.NetworkManager.Device.Serial",
+                                       path=nm_dev_path)
 
-        self.signals.Handle(device, "property-changed", self.on_device_property_changed)
+        device.connect("property-changed", self.on_device_property_changed)
 
     def on_ppp_stats(self, rx, tx):
         self.update_stats(tx, rx)
 
     def on_device_property_changed(self, device, key, value):
         if key == "Connected" and not value:
-            self.signals.DisconnectAll()
+            self.__bus.remove_signal_receiver(self.on_ppp_stats, "PppStats",
+                                              "org.freedesktop.NetworkManager.Device.Serial", path=self.__nm_dev_path)
             self.Disconnect()
 
 
@@ -142,11 +138,12 @@ class Dialog:
         cr1.props.ellipsize = Pango.EllipsizeMode.END
 
         self.devices = {}
-        self.signals = SignalTracker()
 
-        self.signals.Handle(parent, "monitor-added", self.monitor_added)
-        self.signals.Handle(parent, "monitor-removed", self.monitor_removed)
-        self.signals.Handle(parent, "stats", self.on_stats)
+        self._signals = [
+            parent.connect("monitor-added", self.monitor_added),
+            parent.connect("monitor-removed", self.monitor_removed),
+            parent.connect("stats", self.on_stats)
+        ]
 
         cr2 = Gtk.CellRendererText()
         cr2.props.sensitive = False
@@ -215,7 +212,9 @@ class Dialog:
         self.dialog.show()
 
     def on_response(self, dialog, response):
-        self.signals.DisconnectAll()
+        for sig in self._signals:
+            self.parent.disconnect(sig)
+        self._signals = []
         Dialog.running = False
         self.dialog.destroy()
 
@@ -321,23 +320,25 @@ class NetUsage(AppletPlugin, GObject.GObject):
     GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
     }
 
+    _any_network = None
+
     def on_load(self, applet):
         GObject.GObject.__init__(self)
         self.monitors = []
         self.devices = weakref.WeakValueDictionary()
-        self.signals = SignalTracker()
 
-        bus = self.bus = dbus.SystemBus()
-        self.signals.Handle('bluez', Network(), self.on_network_property_changed, 'PropertyChanged',
-                            path_keyword="path")
+        self.bus = dbus.SystemBus()
+
+        self._any_network = Network()
+        self._any_network.connect_signal('property-changed', self._on_network_property_changed)
 
         item = create_menuitem(_("Network _Usage"), get_icon("network-wireless", 16))
         item.props.tooltip_text = _("Shows network traffic usage")
-        self.signals.Handle(item, "activate", self.activate_ui)
+        item.connect("activate", self.activate_ui)
         self.Applet.Plugins.Menu.Register(self, item, 84, True)
 
-        self.signals.Handle("dbus", bus, self.on_nm_ppp_stats, "PppStats",
-                            "org.freedesktop.NetworkManager.Device.Serial", path_keyword="path")
+        self.bus.add_signal_receiver(self.on_nm_ppp_stats, "PppStats", "org.freedesktop.NetworkManager.Device.Serial",
+                                     path_keyword="path")
         self.nm_paths = {}
 
     def on_nm_ppp_stats(self, down, up, path):
@@ -367,11 +368,9 @@ class NetUsage(AppletPlugin, GObject.GObject):
             else:
                 self.nm_paths[path] = False
 
-
-    def on_network_property_changed(self, key, value, path):
-        dprint(key, value, path)
+    def _on_network_property_changed(self, network, key, value):
         if key == "Interface" and value != "":
-            d = BluezDevice(path)
+            d = BluezDevice(network.get_object_path())
             d = Device(d)
             self.monitor_interface(Monitor, d, value)
 
@@ -379,14 +378,16 @@ class NetUsage(AppletPlugin, GObject.GObject):
         Dialog(self)
 
     def on_unload(self):
-        self.signals.DisconnectAll()
+        self.bus.remove_signal_receiver(self.on_nm_ppp_stats, "PppStats",
+                                        "org.freedesktop.NetworkManager.Device.Serial", path_keyword="path")
+        del self._any_network
         self.Applet.Plugins.Menu.Unregister(self)
 
     def monitor_interface(self, montype, *args):
         m = montype(*args)
         self.monitors.append(m)
-        self.signals.Handle(m, "stats", self.on_stats, sigid=m)
-        self.signals.Handle(m, "disconnected", self.on_monitor_disconnected, sigid=m)
+        m.connect("stats", self.on_stats)
+        m.connect("disconnected", self.on_monitor_disconnected)
         self.emit("monitor-added", m)
 
     def on_ppp_connected(self, device, rfcomm, ppp_port):
@@ -394,7 +395,6 @@ class NetUsage(AppletPlugin, GObject.GObject):
 
     def on_monitor_disconnected(self, monitor):
         self.monitors.remove(monitor)
-        self.signals.Disconnect(monitor)
         self.emit("monitor-removed", monitor)
 
     def on_stats(self, monitor, tx, rx):

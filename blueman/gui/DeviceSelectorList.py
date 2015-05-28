@@ -38,18 +38,13 @@ class DeviceSelectorList(DeviceList):
         self.props.headers_visible = False
 
     def row_setup_event(self, iter, device):
-        if not device.Fake:
-            self.row_update_event(iter, "Trusted", device.Trusted)
-            self.row_update_event(iter, "Paired", device.Paired)
-        self.row_update_event(iter, "Fake", device.Fake)
+        self.row_update_event(iter, "Trusted", device.Trusted)
+        self.row_update_event(iter, "Paired", device.Paired)
         self.row_update_event(iter, "Alias", device.Alias)
         self.row_update_event(iter, "Icon", device.Icon)
 
     def device_add_event(self, device):
-        if device.Fake:
-            self.PrependDevice(device)
-        else:
-            self.AppendDevice(device)
+        self.AppendDevice(device)
 
     def row_update_event(self, iter, key, value):
         if key == "Trusted":
@@ -64,12 +59,6 @@ class DeviceSelectorList(DeviceList):
                 self.set(iter, bonded_icon=get_icon("dialog-password", 16))
             else:
                 self.set(iter, bonded_icon=None)
-
-        elif key == "Fake":
-            if value:
-                self.set(iter, found_pb=get_icon("search", 16))
-            else:
-                self.set(iter, found_pb=None)
 
         elif key == "Alias":
             self.set(iter, caption=cgi.escape(value))

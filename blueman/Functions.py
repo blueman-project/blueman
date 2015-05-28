@@ -105,14 +105,14 @@ def check_bluetooth_status(message, exitfunc, *args, **kwargs):
 
 
 def wait_for_adapter(bluez_adapter, callback, timeout=1000):
-    def on_prop_change(key, value):
+    def on_prop_changed(adapter, key, value):
         if key == "Powered" and value:
             GObject.source_remove(source)
-            bluez_adapter.unhandle_signal(on_prop_change, "PropertyChanged")
+            adapter.disconnect_signal(sig)
             callback()
 
     def on_timeout():
-        bluez_adapter.unhandle_signal(on_prop_change, "PropertyChanged")
+        bluez_adapter.disconnect_signal(sig)
         GObject.source_remove(source)
         dprint(YELLOW("Warning:"),
                "Bluez didn't provide 'Powered' property in a reasonable timeout\nAssuming adapter is ready")
@@ -124,7 +124,7 @@ def wait_for_adapter(bluez_adapter, callback, timeout=1000):
         return
 
     source = GObject.timeout_add(timeout, on_timeout)
-    bluez_adapter.handle_signal(on_prop_change, "PropertyChanged")
+    sig = bluez_adapter.connect_signal('property-changed', on_prop_changed)
 
 
 def enable_rgba_colormap():

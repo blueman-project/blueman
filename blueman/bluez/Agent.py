@@ -6,7 +6,6 @@ from __future__ import unicode_literals
 from blueman.Functions import dprint
 import inspect
 import dbus.service
-from blueman.bluez.BlueZInterface import BlueZInterface
 import blueman.bluez.errors as errors
 
 __SIGNATURES__ = {
@@ -35,12 +34,7 @@ def AgentMethod(func):
     else:
         async_callbacks = None
 
-    if BlueZInterface.get_interface_version()[0] < 5:
-        interface = 'org.bluez.Agent'
-    else:
-        interface = 'org.bluez.Agent1'
-
-    warp = dbus.service.method(interface, in_signature=signatures[0], out_signature=signatures[1],
+    warp = dbus.service.method('org.bluez.Agent1', in_signature=signatures[0], out_signature=signatures[1],
                                async_callbacks=async_callbacks)
     return warp(func)
 

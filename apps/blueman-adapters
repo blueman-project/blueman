@@ -20,7 +20,6 @@ if os.path.exists(os.path.join(_dirname, "CHANGELOG.md")):
 import blueman.bluez as Bluez
 from blueman.Constants import *
 from blueman.Functions import *
-from blueman.main.SignalTracker import SignalTracker
 
 enable_rgba_colormap()
 
@@ -54,9 +53,8 @@ class BluemanAdapters:
         self.tabs = {}
 
         try:
-            self.signals = SignalTracker()
             self.manager = Bluez.Manager()
-            self.signals.Handle("bluez", self.manager, self.on_adapter_added, 'AdapterAdded')
+            self.manager.connect_signal('adapter-added', self.on_adapter_added)
             adapters = self.manager.list_adapters()
             for adapter in adapters:
                 self.add_to_notebook(adapter)
@@ -81,14 +79,14 @@ class BluemanAdapters:
                 settings['adapter'].set_name(settings['name'])
         Gtk.main_quit()
 
-    def on_adapter_added(self, adapter_path):
-        def on_property_changed(name, value):
+    def on_adapter_added(self, _manager, adapter_path):
+        def on_property_changed(_adapter, name, value):
             if name == 'Powered' and value:
-                adapter.unhandle_signal(on_property_changed, "PropertyChanged")
+                adapter.disconnect_signal(sig)
                 self.add_to_notebook(adapter)
 
         adapter = Bluez.Adapter(adapter_path)
-        adapter.handle_signal(on_property_changed, "PropertyChanged")
+        sig = adapter.connect_signal('property-changed', on_property_changed)
 
     def on_dbus_name_owner_change(self, owner):
         print('org.bluez owner changed to '+owner)
@@ -99,7 +97,7 @@ class BluemanAdapters:
     def build_adapter_tab(self, adapter):
         adapter_settings = {}
 
-        def on_property_changed(name, value):
+        def on_property_changed(_adapter, name, value):
             if name == 'Powered':
                 if not value:
                     self.remove_from_notebook(adapter)
@@ -157,8 +155,8 @@ class BluemanAdapters:
 
         props = adapter.get_properties()
         adapter_settings['adapter'] = adapter
-        adapter_settings['signals'] = SignalTracker()
-        adapter_settings['signals'].Handle(adapter, on_property_changed, "PropertyChanged")
+        adapter_settings['signals'] = []
+        adapter_settings['adapter'].connect_signal('property-changed', on_property_changed)
         adapter_settings['address'] = props['Address']
         adapter_settings['name'] = adapter.get_name()
         adapter_settings['discoverable'] = props['Discoverable']
@@ -177,25 +175,25 @@ class BluemanAdapters:
         if adapter_settings['discoverable']:
             hscale.set_value(adapter_settings['discoverable_timeout'])
             hscale.set_sensitive(adapter_settings['discoverable_timeout'] > 0)
-        adapter_settings['signals'].Handle(hscale, "format-value", on_scale_format_value)
-        adapter_settings['signals'].Handle(hscale, "value-changed", on_scale_value_changed)
+        adapter_settings['signals'].append((hscale, hscale.connect("format-value", on_scale_format_value)))
+        adapter_settings['signals'].append((hscale, hscale.connect("value-changed", on_scale_value_changed)))
 
         hidden_radio = builder.get_object("hidden1")
         if not adapter_settings['discoverable']:
             hidden_radio.set_active(True)
-        adapter_settings['signals'].Handle(hidden_radio, "toggled", on_hidden_toggle)
+        adapter_settings['signals'].append((hidden_radio, hidden_radio.connect("toggled", on_hidden_toggle)))
         always_radio = builder.get_object("always")
         if adapter_settings['discoverable'] and adapter_settings['discoverable_timeout'] == 0:
             always_radio.set_active(True)
-        adapter_settings['signals'].Handle(always_radio, "toggled", on_always_toggle)
+        adapter_settings['signals'].append((always_radio, always_radio.connect("toggled", on_always_toggle)))
         temporary_radio = builder.get_object("temporary")
         if adapter_settings['discoverable'] and adapter_settings['discoverable_timeout'] > 0:
             temporary_radio.set_active(True)
-        adapter_settings['signals'].Handle(temporary_radio, "toggled", on_temporary_toggle)
+        adapter_settings['signals'].append((temporary_radio, temporary_radio.connect("toggled", on_temporary_toggle)))
 
         name_entry = builder.get_object("name_entry")
         name_entry.set_text(adapter_settings['name'])
-        adapter_settings['signals'].Handle(name_entry, "changed", on_name_changed)
+        adapter_settings['signals'].append((name_entry, name_entry.connect("changed", on_name_changed)))
 
         return adapter_settings
 
