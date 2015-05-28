@@ -5,6 +5,7 @@
 ### Changes
 
 * Drop support for BlueZ 4
+* Drop browse feature
 
 ## 2.0
 

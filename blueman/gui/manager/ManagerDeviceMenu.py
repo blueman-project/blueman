@@ -260,21 +260,12 @@ class ManagerDeviceMenu(Gtk.Menu):
         self.append(send_item)
         send_item.show()
 
-        browse_item = create_menuitem(_("_Browse Device..."), get_icon("document-open", 16))
-        browse_item.props.sensitive = False
-        self.append(browse_item)
-        browse_item.show()
-
         uuids = device.UUIDs
         for uuid in uuids:
             uuid16 = uuid128_to_uuid16(uuid)
             if uuid16 == OBEX_OBJPUSH_SVCLASS_ID:
                 send_item.connect("activate", lambda x: self.Blueman.send(device))
                 send_item.props.sensitive = True
-
-            if uuid16 == OBEX_FILETRANS_SVCLASS_ID:
-                browse_item.connect("activate", lambda x: self.Blueman.browse(device))
-                browse_item.props.sensitive = True
 
         item = Gtk.SeparatorMenuItem()
         item.show()

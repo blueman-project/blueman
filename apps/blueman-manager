@@ -217,9 +217,6 @@ class Blueman:
     def remove(self, device):
         self.List.Adapter.remove_device(device.Device)
 
-    def browse(self, device):
-        launch("blueman-browse -d %s" % device.Address)
-
     def disconnect(self, device, *args, **kwargs):
         applet = AppletService()
         applet.DisconnectDevice(device.get_object_path(), *args, **kwargs)

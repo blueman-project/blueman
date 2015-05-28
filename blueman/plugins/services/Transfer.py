@@ -46,8 +46,6 @@ class Transfer(ServicePlugin):
         if key == "shared-path":
             self.Builder.get_object(key).set_current_folder(value)
             self.option_changed_notify(key, False)
-        elif key != "browse-command":
-            self.option_changed_notify(key)
 
     def on_apply(self):
         if self.on_query_apply_state():
@@ -66,16 +64,12 @@ class Transfer(ServicePlugin):
         self._config.connect("changed", self.on_property_changed)
 
         opp_accept = self.Builder.get_object("opp-accept")
-        obex_cmd = self.Builder.get_object("e-obex-cmd")
         shared_path = self.Builder.get_object("shared-path")
 
         opp_accept.props.active = self._config["opp-accept"]
-        if self._config["browse-command"]:
-            obex_cmd.props.text = self._config["browse-command"]
         if self._config["shared-path"]:
             shared_path.set_current_folder(self._config["shared-path"])
 
         opp_accept.connect("toggled", lambda x: self._config.set_boolean("opp-accept", x.props.active))
-        obex_cmd.connect("changed", lambda x: self._config.set_string("browse-command", x.props.text))
 
         shared_path.connect("file-set", lambda x: self._config.set_string("shared-path", x.get_filename()))
