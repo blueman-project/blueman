@@ -56,11 +56,6 @@ class ManagerToolbar:
         self.b_send.connect("clicked", self.on_action, self.blueman.send)
         self.b_send.set_homogeneous(False)
 
-        self.b_browse = blueman.Builder.get_object("b_browse")
-        self.b_browse.props.sensitive = False
-        self.b_browse.connect("clicked", self.on_action, self.blueman.browse)
-        #self.b_browse.set_homogeneous(False)
-
         self.on_adapter_changed(blueman.List, blueman.List.GetAdapterPath())
 
     def on_action(self, button, func):
@@ -81,7 +76,7 @@ class ManagerToolbar:
         dprint("toolbar adapter", adapter_path)
         if adapter_path == None:
             self.b_search.props.sensitive = False
-            self.update_send_browse(None)
+            self.update_send(None)
         else:
             self.b_search.props.sensitive = True
 
@@ -119,19 +114,15 @@ class ManagerToolbar:
                 self.b_remove.props.sensitive = True
                 self.b_add.props.sensitive = False
 
-        self.update_send_browse(device)
+        self.update_send(device)
 
-    def update_send_browse(self, device):
+    def update_send(self, device):
         self.b_send.props.sensitive = False
-        self.b_browse.props.sensitive = False
         if device != None and not device.Fake:
             for uuid in device.UUIDs:
                 uuid16 = uuid128_to_uuid16(uuid)
                 if uuid16 == OBEX_OBJPUSH_SVCLASS_ID:
                     self.b_send.props.sensitive = True
-
-                if uuid16 == OBEX_FILETRANS_SVCLASS_ID:
-                    self.b_browse.props.sensitive = True
         if device and device.Fake:
             self.b_send.props.sensitive = True
 
@@ -144,7 +135,7 @@ class ManagerToolbar:
 
             elif key == "Fake":
                 self.on_device_selected(dev_list, device, iter)
-                self.update_send_browse(device)
+                self.update_send(device)
 
             elif key == "UUIDs":
-                self.update_send_browse(device)
+                self.update_send(device)

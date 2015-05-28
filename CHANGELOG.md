@@ -1,5 +1,11 @@
 # Changelog
 
+## master
+
+### Changes
+
+* Drop browse feature
+
 ## 2.0
 
 No relevant changes

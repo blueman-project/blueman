@@ -35,11 +35,6 @@ class StandardItems(AppletPlugin):
 
         self.Applet.Plugins.Menu.Register(self, self.send, 40)
 
-        self.browse = create_menuitem(_("_Browse Files on Device") + "...", get_icon("document-open", 16))
-        self.browse.connect("activate", self.on_browse)
-
-        self.Applet.Plugins.Menu.Register(self, self.browse, 50)
-
         self.Applet.Plugins.Menu.Register(self, Gtk.SeparatorMenuItem(), 51)
 
         self.devices = create_menuitem(_("_Devices") + "...", get_icon("blueman", 16))
@@ -84,7 +79,6 @@ class StandardItems(AppletPlugin):
         sensitive = sensitive and self.Applet.Manager and power
         self.new_dev.props.sensitive = sensitive
         self.send.props.sensitive = sensitive
-        self.browse.props.sensitive = sensitive
         self.devices.props.sensitive = sensitive
         self.adapters.props.sensitive = sensitive
 
@@ -94,15 +88,11 @@ class StandardItems(AppletPlugin):
     def on_power_state_changed(self, manager, state):
         self.change_sensitivity(state)
 
-
     def on_setup_new(self, menu_item):
         launch("blueman-assistant", None, False, "blueman", _("Bluetooth Assistant"))
 
     def on_send(self, menu_item):
         launch("blueman-sendto", None, False, "blueman", _("File Sender"))
-
-    def on_browse(self, menu_item):
-        launch("blueman-browse", None, False, "blueman", _("File Browser"))
 
     def on_devices(self, menu_item):
         launch("blueman-manager", None, False, "blueman", _("Device Manager"))
