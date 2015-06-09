@@ -208,7 +208,11 @@ def rfcomm_list():
     return devs
 
 
-def create_rfcomm_device(local_address, remote_address, channel):
+def create_rfcomm_device(py_local_address, py_remote_address, channel):
+    py_bytes_local_address = py_local_address.encode('UTF-8')
+    py_bytes_remote_address = py_remote_address.encode('UTF-8')
+    cdef char* local_address = py_bytes_local_address
+    cdef char* remote_address = py_bytes_remote_address
     ret = c_create_rfcomm_device(local_address, remote_address, channel)
     if ret < 0:
         raise Exception(ERR[ret])

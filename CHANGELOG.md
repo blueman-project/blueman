@@ -7,6 +7,10 @@
 * Drop support for BlueZ 4
 * Drop browse feature
 
+### Bugs fixed
+
+* Codepoint issues when connecting to serial service
+
 ## 2.0
 
 No relevant changes
