@@ -1,5 +1,11 @@
 # Changelog
 
+## 2-0-stable (unreleased)
+
+### Bugs fixed
+
+* Codepoint issues when connecting to serial service
+
 ## 2.0
 
 No relevant changes
