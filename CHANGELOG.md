@@ -6,6 +6,7 @@
 
 * Drop support for BlueZ 4
 * Drop browse feature
+* Add title to status icon
 
 ### Bugs fixed
 

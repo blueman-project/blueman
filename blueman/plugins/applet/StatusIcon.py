@@ -24,6 +24,8 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
         self.pixbuf = None
         self.timeout = None
 
+        self.set_title('blueman')
+
         #self.connect("size-changed", self.on_status_icon_resized)
 
         self.SetTextLine(0, _("Bluetooth Enabled"))
