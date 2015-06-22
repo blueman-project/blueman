@@ -72,7 +72,7 @@ class ManagerProgressbar(GObject.GObject):
         ManagerProgressbar.__instances__.append(self)
 
     def connect(self, *args):
-        self._signals.append(self.connect(*args))
+        self._signals.append(super(ManagerProgressbar, self).connect(*args))
 
     def show(self):
         if not self.Blueman.Config["show-statusbar"]:
