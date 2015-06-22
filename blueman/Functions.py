@@ -35,6 +35,7 @@ import os
 import signal
 import atexit
 import sys
+import errno
 from ctypes import cdll, byref, create_string_buffer
 from subprocess import Popen
 from gi.repository import GObject
@@ -282,7 +283,11 @@ def create_menuitem(text, pixbuf):
 def get_lockfile(name):
     cachedir = GLib.get_user_cache_dir()
     if not os.path.exists(cachedir):
-        os.mkdir(cachedir)
+        try:
+            os.mkdir(cachedir)
+        except OSError as e:
+            if e.errno != errno.EEXIST:
+                raise
     return os.path.join(cachedir, "%s-%s" % (name, os.getuid()))
 
 
