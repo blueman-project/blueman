@@ -292,7 +292,11 @@ def get_lockfile(name):
 
 
 def get_pid(lockfile):
-    f = open(lockfile)
+    try:
+	f = open(lockfile)
+    except:
+	return False
+    
     try:
         return int(f.readline())
     except:
