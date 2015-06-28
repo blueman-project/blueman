@@ -96,12 +96,10 @@ class StandardItems(AppletPlugin):
 
     def on_devices(self, menu_item):
         lockfile = get_lockfile('blueman-manager')
-        if os.path.exists(lockfile):
-            pid = get_pid(lockfile)
-            if pid:
-                if is_running('blueman-manager', pid):
-                    os.kill(pid, signal.SIGTERM)
-                    return
+        pid = get_pid(lockfile)
+        if lockfile and pid and is_running('blueman-manager', pid):
+            os.kill(pid, signal.SIGTERM)
+            return
         launch("blueman-manager", None, False, "blueman",_("Device Manager"))
 
     def on_adapters(self, menu_item):
