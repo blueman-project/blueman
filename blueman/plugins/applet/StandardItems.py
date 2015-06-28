@@ -3,7 +3,7 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-from blueman.Functions import launch, create_menuitem, get_icon
+from blueman.Functions import launch, create_menuitem, get_icon, get_lockfile, get_pid, is_running, os, signal
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.CommonUi import show_about_dialog
 from blueman.gui.applet.PluginDialog import PluginDialog
@@ -95,7 +95,12 @@ class StandardItems(AppletPlugin):
         launch("blueman-sendto", None, False, "blueman", _("File Sender"))
 
     def on_devices(self, menu_item):
-        launch("blueman-manager", None, False, "blueman", _("Device Manager"))
+        lockfile = get_lockfile('blueman-manager')
+        pid = get_pid(lockfile)
+        if lockfile and pid and is_running('blueman-manager', pid):
+            os.kill(pid, signal.SIGTERM)
+            return
+        launch("blueman-manager", None, False, "blueman",_("Device Manager"))
 
     def on_adapters(self, menu_item):
         launch("blueman-adapters", None, False, "blueman", _("Adapter Preferences"))
