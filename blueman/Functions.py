@@ -292,24 +292,18 @@ def get_lockfile(name):
 
 
 def get_pid(lockfile):
-    f = open(lockfile)
     try:
-        return int(f.readline())
-    except:
+        with open(lockfile, "r") as f:
+            return int(f.readline())
+    except ValueError:
         pass
-    finally:
-        f.close()
-
 
 def is_running(name, pid):
     if not os.path.exists("/proc/%s" % pid):
         return False
-    f = open("/proc/%s/cmdline" % pid)
-    try:
-        return name in f.readline().replace("\0", " ")
-    finally:
-        f.close()
 
+    with open("/proc/%s/cmdline" % pid, "r") as f:
+        return name in f.readline().replace("\0", " ")
 
 def check_single_instance(name, unhide_func=None):
     print("%s version %s starting" % (name, VERSION))
@@ -317,13 +311,13 @@ def check_single_instance(name, unhide_func=None):
 
     def handler(signum, frame):
         if unhide_func:
-            f = open(lockfile)
-            f.readline()
             try:
-                event_time = int(f.readline())
-            except:
+                with open(lockfile, "r") as f:
+                    f.readline()
+                    event_time = int(f.readline())
+            except ValueError:
                 event_time = 0
-            f.close()
+
             unhide_func(event_time)
 
 
@@ -339,9 +333,8 @@ def check_single_instance(name, unhide_func=None):
                 print("There is an instance already running")
                 time = os.getenv("BLUEMAN_EVENT_TIME") or 0
 
-                f = open(lockfile, "w")
-                f.write("%s\n%s" % (str(pid), str(time)))
-                f.close()
+                with open(lockfile, "w") as f:
+                    f.write("%s\n%s" % (str(pid), str(time)))
 
                 os.kill(pid, signal.SIGUSR1)
                 exit()
