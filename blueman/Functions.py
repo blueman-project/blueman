@@ -295,7 +295,7 @@ def get_pid(lockfile):
     try:
         with open(lockfile, "r") as f:
             return int(f.readline())
-    except ValueError:
+    except (ValueError, IOError):
         pass
 
 def is_running(name, pid):
