@@ -14,7 +14,9 @@ from dbus.mainloop.glib import DBusGMainLoop
 class Manager(PropertiesBase):
     __gsignals__ = {
         str('adapter-added'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-        str('adapter-removed'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,))
+        str('adapter-removed'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+        str('device-created'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+        str('device-removed'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
     }
 
     @raise_dbus_error
@@ -35,11 +37,19 @@ class Manager(PropertiesBase):
 
     def _on_interfaces_added(self, object_path, interfaces):
         if 'org.bluez.Adapter1' in interfaces:
+            dprint(object_path)
             self.emit('adapter-added', object_path)
+        elif 'org.bluez.Device1' in interfaces:
+            dprint(object_path)
+            self.emit('device-created', object_path)
 
     def _on_interfaces_removed(self, object_path, interfaces):
         if 'org.bluez.Adapter1' in interfaces:
+            dprint(object_path)
             self.emit('adapter-removed', object_path)
+        elif 'org.bluez.Device1' in interfaces:
+            dprint(object_path)
+            self.emit('device-removed', object_path)
 
     @raise_dbus_error
     def list_adapters(self):

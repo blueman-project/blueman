@@ -12,39 +12,11 @@ import dbus
 
 
 class Adapter(PropertiesBase):
-    __gsignals__ = {
-        str('device-created'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-        str('device-removed'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-        str('device-found'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-    }
-
     @raise_dbus_error
     def __init__(self, obj_path=None):
         super(Adapter, self).__init__('org.bluez.Adapter1', obj_path)
         proxy = dbus.SystemBus().get_object('org.bluez', '/', follow_name_owner_changes=True)
         self.manager_interface = dbus.Interface(proxy, 'org.freedesktop.DBus.ObjectManager')
-
-    def _on_device_created(self, device_path):
-        dprint(device_path)
-        self.emit('device-created', device_path)
-
-    def _on_device_removed(self, device_path):
-        dprint(device_path)
-        self.emit('device-removed', device_path)
-
-    def _on_device_found(self, address, props):
-        dprint(address, props)
-        self.emit('device-found', address, props)
-
-    def _on_interfaces_added(self, object_path, interfaces):
-        if 'org.bluez.Device1' in interfaces:
-            dprint(object_path)
-            self.emit('device-created', object_path)
-
-    def _on_interfaces_removed(self, object_path, interfaces):
-        if 'org.bluez.Device1' in interfaces:
-            dprint(object_path)
-            self.emit('device-removed', object_path)
 
     @raise_dbus_error
     def find_device(self, address):

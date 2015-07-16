@@ -7,7 +7,7 @@ from gi.repository import GObject
 import inspect
 from blueman.Functions import dprint
 from blueman.Sdp import uuid128_to_uuid16
-from blueman.bluez.Adapter import Adapter
+from blueman.bluez import Manager
 from blueman.bluez.Device import Device as BluezDevice
 import blueman.services
 import blueman.services.meta
@@ -44,9 +44,8 @@ class Device(GObject.GObject):
         self._obj_path = self.Device.get_object_path()
         self.Device.connect_signal('property-changed',
                                    lambda _device, key, value: w() and w().property_changed(key, value))
-        self._any_adapter = Adapter()
-        self._any_adapter.connect_signal('device-removed',
-                                         lambda _adapter, path: w() and w().on_device_removed(path))
+        self._manager = Manager()
+        self._manager.connect_signal('device-removed', lambda _adapter, path: w() and w().on_device_removed(path))
 
     def get_service(self, uuid):
         for name, cls in inspect.getmembers(blueman.services, inspect.isclass):

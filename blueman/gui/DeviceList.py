@@ -219,7 +219,7 @@ class DeviceList(GenericList):
             dev.Temp = True
             self.device_add_event(dev)
 
-    def _on_device_removed(self, _adapter, path):
+    def _on_device_removed(self, _manager, path):
         iter = self.find_device_by_path(path)
         if iter:
             row = self.get(iter, "device")
@@ -241,8 +241,8 @@ class DeviceList(GenericList):
         try:
             self.Adapter = self.manager.get_adapter(adapter)
             self.Adapter.connect_signal('property-changed', self._on_property_changed)
-            self.Adapter.connect_signal('device-created', self._on_device_created)
-            self.Adapter.connect_signal('device-removed', self._on_device_removed)
+            self.manager.connect_signal('device-created', self._on_device_created)
+            self.manager.connect_signal('device-removed', self._on_device_removed)
             self.__adapter_path = self.Adapter.get_object_path()
             self.emit("adapter-changed", self.__adapter_path)
         except Bluez.errors.DBusNoSuchAdapterError as e:
@@ -358,12 +358,6 @@ class DeviceList(GenericList):
 
         if not device.Temp and self.compare(self.selected(), iter):
             self.emit("device-selected", None, None)
-
-        try:
-            device.get_properties()
-        finally:
-            # FIXME: Wrong argument
-            device.disconnect_signal('property-changed')
 
         self.delete(iter)
 
