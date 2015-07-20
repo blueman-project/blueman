@@ -168,6 +168,22 @@ if test "x$HAVE_GNOME_ICONS" = "xno" && test "x$HAVE_MATE_ICONS" = "xno" && test
 	AC_MSG_ERROR([Required icon themes not found.])
 fi
 
+dnl ----------------------------
+
+AC_ARG_ENABLE([pulseaudio],
+  AS_HELP_STRING([--disable-pulseaudio], [Disable PulseAudio support]),
+  [use_pulseaudio=$enableval], [use_pulseaudio=yes])
+
+AM_CONDITIONAL([HAVE_PULSEAUDIO], [test "x$use_pulseaudio" = "xyes"])
+
+dnl ----------------------------
+
+AC_ARG_ENABLE([appindicator],
+  AS_HELP_STRING([--disable-appindicator], [Disable Libappindicator support]),
+  [use_appindicator=$enableval], [use_appindicator=yes])
+
+AM_CONDITIONAL([HAVE_APPINDICATOR], [test "x$use_appindicator" = "xyes"])
+
 # GSettings related settings
 GLIB_GSETTINGS
 
@@ -241,11 +257,13 @@ echo
 echo $PACKAGE $VERSION
 echo
 
-echo Prefix : $prefix
-echo sysconfig dir : $sysconfdir
-echo Python version : $PYTHON_VERSION
+echo Prefix: $prefix
+echo System configuration directory: $sysconfdir
+echo Python version: $PYTHON_VERSION
 echo Policykit-1 Enabled: $have_polkit
 echo Thunar sendto installation enabled: $have_thunar
 echo Settings menu integration enabled: $have_settings
 echo Dhcpd 3 configuration file: $dhconfig
+echo PulseAudio support: $use_pulseaudio
+echo AppIndicator support: $use_appindicator
 echo

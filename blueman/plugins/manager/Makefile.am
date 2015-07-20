@@ -2,12 +2,16 @@ SUBDIRS =
 
 
 bluemandir = $(pythondir)/blueman/plugins/manager
-blueman_PYTHON = 	\
-	PulseAudioProfile.py	\
-	Services.py				\
+
+blueman_PYTHON = \
+	Services.py \
 	__init__.py
 
-CLEANFILES =		\
+if HAVE_PULSEAUDIO
+blueman_PYTHON += PulseAudioProfile.py
+endif
+
+CLEANFILES = \
 	$(BUILT_SOURCES)
 	
 DISTCLEANFILES = \
