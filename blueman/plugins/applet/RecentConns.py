@@ -143,7 +143,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
 
     def initialize(self):
         dprint("rebuilding menu")
-        if not RecentConns.items:
+        if RecentConns.items is None:
             self.recover_state()
 
         def each(child, _):
