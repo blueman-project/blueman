@@ -11,6 +11,7 @@
 ### Bugs fixed
 
 * Codepoint issues when connecting to serial service
+* Infinite loop if RecentConns has only invalid items
 
 ## 2.0
 
