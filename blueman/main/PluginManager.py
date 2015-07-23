@@ -148,7 +148,7 @@ class PluginManager(GObject.GObject):
             if cfl in self.__classes:
                 if self.__classes[cfl].__priority__ > cls.__priority__ and not self.Disabled(cfl) and not self.Enabled(
                         cls.__name__):
-                    dprint("Not loading %s because it's conflict has higher priority" % cls.__name__)
+                    dprint("Not loading %s because its conflict has higher priority" % cls.__name__)
                     return
 
             if cfl in self.__loaded:
