@@ -10,6 +10,7 @@ from blueman.gui.CommonUi import *
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
+from gi.repository import GLib
 
 class ManagerMenu:
     def __init__(self, blueman):
@@ -124,7 +125,7 @@ class ManagerMenu:
                 self.device_menu = ManagerDeviceMenu(self.blueman)
                 self.item_device.set_submenu(self.device_menu)
             else:
-                GObject.idle_add(self.device_menu.Generate, priority=GObject.PRIORITY_LOW)
+                GLib.idle_add(self.device_menu.Generate, priority=GLib.PRIORITY_LOW)
 
         else:
             self.item_device.props.sensitive = False

@@ -9,7 +9,7 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 
 from blueman.main.Device import Device
 
-from gi.repository import GObject
+from gi.repository import GLib
 import dbus
 import dbus.service
 
@@ -43,7 +43,7 @@ class DBusService(AppletPlugin):
         def on_timeout():
             dev.Device.disconnect(reply_handler=ok, error_handler=err)
 
-        GObject.timeout_add(1000, on_timeout)
+        GLib.timeout_add(1000, on_timeout)
 
     def on_device_disconnect(self, device):
         pass

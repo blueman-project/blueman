@@ -10,6 +10,7 @@ from gi.repository import Pango
 from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import Gdk
+from gi.repository import GLib
 from blueman.Functions import get_icon, dprint
 
 
@@ -100,7 +101,7 @@ class ManagerProgressbar(GObject.GObject):
         self.stop()
         self.set_label(msg)
         self.set_cancellable(False)
-        GObject.timeout_add(timeout, self.finalize)
+        GLib.timeout_add(timeout, self.finalize)
 
 
     def finalize(self):
@@ -159,9 +160,9 @@ class ManagerProgressbar(GObject.GObject):
             return True
 
         if not self.gsource:
-            self.gsource = GObject.timeout_add(1000 / 24, pulse)
+            self.gsource = GLib.timeout_add(1000 / 24, pulse)
 
     def stop(self):
         if self.gsource != None:
-            GObject.source_remove(self.gsource)
+            GLib.source_remove(self.gsource)
         self.progressbar.set_fraction(0.0)

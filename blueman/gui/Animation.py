@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 import gi
 gi.require_version("Gtk", "3.0")
-from gi.repository import GObject
+from gi.repository import GLib
 from gi.repository import Gtk
 
 
@@ -45,11 +45,11 @@ class Animation:
             self.start()
 
     def start(self):
-        self.timer = GObject.timeout_add(self.rate, self._animation)
+        self.timer = GLib.timeout_add(self.rate, self._animation)
 
     def stop(self):
         if self.timer:
-            GObject.source_remove(self.timer)
+            GLib.source_remove(self.timer)
             self.image.set_from_pixbuf(self.pixbuffs[0])
             self.timer = None
 

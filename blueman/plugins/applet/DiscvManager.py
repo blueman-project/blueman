@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
-from gi.repository import GObject
+from gi.repository import GLib
 
 
 class DiscvManager(AppletPlugin):
@@ -48,7 +48,7 @@ class DiscvManager(AppletPlugin):
         del self.item
 
         if self.timeout:
-            GObject.source_remove(self.timeout)
+            GLib.source_remove(self.timeout)
 
     def on_manager_state_changed(self, state):
         if state:
@@ -88,22 +88,22 @@ class DiscvManager(AppletPlugin):
             if key == "DiscoverableTimeout":
                 if value == 0: #always visible
                     if self.timeout != None:
-                        GObject.source_remove(self.timeout)
+                        GLib.source_remove(self.timeout)
                     self.time_left = -1
                     self.timeout = None
                 else:
                     if self.time_left > -1:
                         if self.timeout != None:
-                            GObject.source_remove(self.timeout)
+                            GLib.source_remove(self.timeout)
                     self.time_left = value
 
-                    self.timeout = GObject.timeout_add(1000, self.on_update)
+                    self.timeout = GLib.timeout_add(1000, self.on_update)
                     return
 
             elif (key == "Discoverable" and not value) or (key == "Powered" and not value):
                 dprint("Stop")
                 if self.timeout != None:
-                    GObject.source_remove(self.timeout)
+                    GLib.source_remove(self.timeout)
                 self.time_left = -1
                 self.timeout = None
 

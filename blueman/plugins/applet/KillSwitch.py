@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 import os
 import weakref
-from gi.repository import GObject
+from gi.repository import GLib
 import struct
 
 from blueman.Functions import dprint
@@ -58,19 +58,19 @@ class KillSwitch(AppletPlugin):
             self._fd = os.open('/dev/rfkill', os.O_RDONLY | os.O_NONBLOCK)
 
             ref = weakref.ref(self)
-            self._iom = GObject.io_add_watch(self._fd, GObject.IO_IN | GObject.IO_ERR | GObject.IO_HUP,
+            self._iom = GLib.io_add_watch(self._fd, GLib.IO_IN | GLib.IO_ERR | GLib.IO_HUP,
                                              lambda *args: ref() and ref().io_event(*args))
         except OSError:
             dprint('Warning: Could not open /dev/rfkill to monitor switches')
 
     def on_unload(self):
         if self._iom:
-            GObject.source_remove(self._iom)
+            GLib.source_remove(self._iom)
         if self._fd:
             os.close(self._fd)
 
     def io_event(self, _, condition):
-        if condition & GObject.IO_ERR or condition & GObject.IO_HUP:
+        if condition & GLib.IO_ERR or condition & GLib.IO_HUP:
             return False
 
         data = os.read(self._fd, RFKILL_EVENT_SIZE_V1)

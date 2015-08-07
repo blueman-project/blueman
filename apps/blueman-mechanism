@@ -21,10 +21,10 @@ from dbus.mainloop.glib import DBusGMainLoop
 try: import __builtin__ as builtins
 except ImportError: import builtins
 
-from gi.repository import GObject
+from gi.repository import GLib
 import syslog
 
-loop = GObject.MainLoop()
+loop = GLib.MainLoop()
 
 from _blueman import set_probe_debug
 from blueman.Constants import POLKIT
@@ -90,7 +90,7 @@ class Timer:
     def __init__(self):
         self.time = 0
         self.stopped = False
-        GObject.timeout_add(1000, self.tick)
+        GLib.timeout_add(1000, self.tick)
 
     def tick(self):
         if not self.stopped:

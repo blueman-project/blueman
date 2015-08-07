@@ -15,6 +15,7 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import GObject
+from gi.repository import GLib
 import os
 import re
 
@@ -184,7 +185,7 @@ class DeviceList(GenericList):
             else:
                 r = Gtk.TreeRowReference.new(self.get_model(), self.get_model().get_path(iter))
                 self.level_setup_event(r, device, cinfo)
-                GObject.timeout_add(1000, update, r, cinfo, props["Address"])
+                GLib.timeout_add(1000, update, r, cinfo, props["Address"])
                 self.monitored_devices.append(props["Address"])
 
     ##### virtual funcs #####
@@ -330,7 +331,7 @@ class DeviceList(GenericList):
                 self.Adapter.start_discovery()
                 self.discovering = True
                 T = 1.0 / 15 * 1000
-                GObject.timeout_add(int(T), self.update_progress, T / 1000, time)
+                GLib.timeout_add(int(T), self.update_progress, T / 1000, time)
 
     def IsValidAdapter(self):
         if self.Adapter == None:

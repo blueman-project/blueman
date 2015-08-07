@@ -12,6 +12,7 @@ from blueman.bluez.Network import Network
 from blueman.main.Device import Device
 from _blueman import rfcomm_list
 from gi.repository import GObject
+from gi.repository import GLib
 import weakref
 import cgi
 
@@ -94,7 +95,7 @@ class Monitor(MonitorBase):
         MonitorBase.__init__(self, device, interface)
         self.poller = None
 
-        self.poller = GObject.timeout_add(5000, self.poll_stats)
+        self.poller = GLib.timeout_add(5000, self.poll_stats)
 
     def __del__(self):
         print("deleting monitor")

@@ -8,6 +8,7 @@ from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 import blueman.bluez as Bluez
 
+from gi.repository import GLib
 
 class PowerManager(AppletPlugin):
     __depends__ = ["StatusIcon", "Menu"]
@@ -77,7 +78,7 @@ class PowerManager(AppletPlugin):
                 else:
                     self.RequestPowerState(self.adapter_state)
 
-            GObject.timeout_add(1000, timeout)
+            GLib.timeout_add(1000, timeout)
 
     def get_adapter_state(self):
         adapters = self.Applet.Manager.list_adapters()
@@ -106,7 +107,7 @@ class PowerManager(AppletPlugin):
             self.called = 0
             self.state = state
             self.success = False
-            self.timer = GObject.timeout_add(5000, self.timeout)
+            self.timer = GLib.timeout_add(5000, self.timeout)
 
         def __call__(self, result):
             self.called += 1
@@ -120,7 +121,7 @@ class PowerManager(AppletPlugin):
             if self.called == self.num_cb:
                 dprint("callbacks done")
                 self.parent.set_adapter_state(self.state)
-                GObject.source_remove(self.timer)
+                GLib.source_remove(self.timer)
                 self.parent.request_in_progress = False
 
         def timeout(self):

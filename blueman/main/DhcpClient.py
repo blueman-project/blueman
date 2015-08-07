@@ -4,6 +4,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 from gi.repository import GObject
+from gi.repository import GLib
 import socket
 import subprocess
 from blueman.Functions import dprint, have
@@ -49,8 +50,8 @@ class DhcpClient(GObject.GObject):
             DhcpClient.quering.append(self._interface)
 
         self._client = subprocess.Popen(self._command)
-        GObject.timeout_add(1000, self._check_client)
-        GObject.timeout_add(self._timeout * 1000, self._on_timeout)
+        GLib.timeout_add(1000, self._check_client)
+        GLib.timeout_add(self._timeout * 1000, self._on_timeout)
 
     def _on_timeout(self):
         if not self._client.poll():
@@ -65,7 +66,7 @@ class DhcpClient(GObject.GObject):
                 dprint("bound to", ip)
                 self.emit("connected", ip)
 
-            GObject.timeout_add(1000, complete)
+            GLib.timeout_add(1000, complete)
             DhcpClient.quering.remove(self._interface)
             return False
         elif status:

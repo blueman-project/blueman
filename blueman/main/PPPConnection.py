@@ -10,6 +10,7 @@ import termios
 import os
 import subprocess
 from gi.repository import GObject
+from gi.repository import GLib
 import errno
 import re
 
@@ -84,8 +85,8 @@ class PPPConnection(GObject.GObject):
             self.pppd = subprocess.Popen(
                 ["/usr/sbin/pppd", "%s" % self.port, "115200", "defaultroute", "updetach", "usepeerdns"], bufsize=1,
                 stdout=subprocess.PIPE)
-            GObject.io_add_watch(self.pppd.stdout, GObject.IO_IN | GObject.IO_ERR | GObject.IO_HUP, self.on_pppd_stdout)
-            GObject.timeout_add(1000, self.check_pppd)
+            GLib.io_add_watch(self.pppd.stdout, GLib.IO_IN | GLib.IO_ERR | GLib.IO_HUP, self.on_pppd_stdout)
+            GLib.timeout_add(1000, self.check_pppd)
 
             self.cleanup()
         else:
@@ -146,7 +147,7 @@ class PPPConnection(GObject.GObject):
         self.send_commands()
 
     def on_pppd_stdout(self, source, cond):
-        if cond & GObject.IO_ERR or cond & GObject.IO_HUP:
+        if cond & GLib.IO_ERR or cond & GLib.IO_HUP:
             return False
 
         line = source.readline()
@@ -181,7 +182,7 @@ class PPPConnection(GObject.GObject):
         termios.tcdrain(self.file)
 
     def on_data_ready(self, source, condition, terminators, on_done):
-        if condition & GObject.IO_ERR or condition & GObject.IO_HUP:
+        if condition & GLib.IO_ERR or condition & GLib.IO_HUP:
             on_done(None, PPPException("Socket error"))
             self.cleanup()
             return False
@@ -219,19 +220,19 @@ class PPPConnection(GObject.GObject):
 
     def wait_for_reply(self, callback, terminators=["OK", "ERROR"], *user_data):
         def on_timeout():
-            GObject.source_remove(self.io_watch)
+            GLib.source_remove(self.io_watch)
             callback(None, PPPException("Modem initialization timed out"), *user_data)
             self.cleanup()
             return False
 
         def on_done(ret, exception):
-            GObject.source_remove(self.timeout)
+            GLib.source_remove(self.timeout)
             callback(ret, exception, *user_data)
 
 
         self.buffer = ""
         self.term_found = False
 
-        self.io_watch = GObject.io_add_watch(self.file, GObject.IO_IN | GObject.IO_ERR | GObject.IO_HUP, self.on_data_ready,
+        self.io_watch = GLib.io_add_watch(self.file, GLib.IO_IN | GLib.IO_ERR | GLib.IO_HUP, self.on_data_ready,
                                           terminators, on_done)
-        self.timeout = GObject.timeout_add(15000, on_timeout)
+        self.timeout = GLib.timeout_add(15000, on_timeout)

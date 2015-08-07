@@ -9,7 +9,7 @@ import dbus
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-from gi.repository import GObject
+from gi.repository import GLib
 from blueman.plugins.AppletPlugin import AppletPlugin
 import blueman.bluez as bluez
 
@@ -92,10 +92,10 @@ class ShowConnected(AppletPlugin):
     def on_manager_state_changed(self, state):
         if state:
             if not self.initialized:
-                GObject.timeout_add(0, self.enumerate_connections)
+                GLib.timeout_add(0, self.enumerate_connections)
                 self.initialized = True
             else:
-                GObject.timeout_add(1000,
+                GLib.timeout_add(1000,
                                     self.enumerate_connections)
         else:
             self.num_connections = 0

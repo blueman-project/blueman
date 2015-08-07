@@ -4,7 +4,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 from blueman.Functions import dprint
-from gi.repository import GObject
+from gi.repository import GLib
 import dbus
 from blueman.plugins.AppletPlugin import AppletPlugin
 from uuid import uuid1
@@ -41,7 +41,7 @@ class NewConnectionBuilder:
                 'ipv4':         {'method': 'auto'},
                 'ipv6':         {'method': 'auto'}
             })
-            GObject.timeout_add(1000, self.signal_wait_timeout)
+            GLib.timeout_add(1000, self.signal_wait_timeout)
         else:
             self.init_connection()
 

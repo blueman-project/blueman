@@ -41,7 +41,7 @@ import sys
 import errno
 from ctypes import cdll, byref, create_string_buffer
 from subprocess import Popen
-from gi.repository import GObject
+from gi.repository import GLib
 import traceback
 try: import __builtin__ as builtins
 except ImportError: import builtins
@@ -111,13 +111,13 @@ def check_bluetooth_status(message, exitfunc, *args, **kwargs):
 def wait_for_adapter(bluez_adapter, callback, timeout=1000):
     def on_prop_changed(adapter, key, value):
         if key == "Powered" and value:
-            GObject.source_remove(source)
+            GLib.source_remove(source)
             adapter.disconnect_signal(sig)
             callback()
 
     def on_timeout():
         bluez_adapter.disconnect_signal(sig)
-        GObject.source_remove(source)
+        GLib.source_remove(source)
         dprint(YELLOW("Warning:"),
                "Bluez didn't provide 'Powered' property in a reasonable timeout\nAssuming adapter is ready")
         callback()
@@ -127,7 +127,7 @@ def wait_for_adapter(bluez_adapter, callback, timeout=1000):
         callback()
         return
 
-    source = GObject.timeout_add(timeout, on_timeout)
+    source = GLib.timeout_add(timeout, on_timeout)
     sig = bluez_adapter.connect_signal('property-changed', on_prop_changed)
 
 

@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 import gi
 gi.require_version("Gtk", "3.0")
-from gi.repository import GObject, GLib, Gtk
+from gi.repository import GLib, Gtk
 from datetime import datetime
 import os
 import shutil
@@ -56,7 +56,7 @@ class _Agent:
             }
             self._agent.reply(self.transfers[self._pending_transfer['transfer_path']]['path'])
             self._allowed_devices.append(self._pending_transfer['address'])
-            GObject.timeout_add(60000, self._allowed_devices.remove, self._pending_transfer['address'])
+            GLib.timeout_add(60000, self._allowed_devices.remove, self._pending_transfer['address'])
         else:
             self._agent.reply(obex.Error.Rejected)
 

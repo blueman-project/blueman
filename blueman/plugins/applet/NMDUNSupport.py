@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 from blueman.plugins.AppletPlugin import AppletPlugin
 import dbus
-from gi.repository import GObject
+from gi.repository import GLib
 from blueman.gui.Notification import Notification
 from blueman.Sdp import uuid128_to_uuid16, DIALUP_NET_SVCLASS_ID
 from blueman.Functions import get_icon, composite_icon, dprint
@@ -38,7 +38,7 @@ class ConnectionHandler:
 
     def on_connect_reply(self, rfcomm):
         self.rfcomm_dev = rfcomm
-        self.timeout = GObject.timeout_add(10000, self.on_timeout)
+        self.timeout = GLib.timeout_add(10000, self.on_timeout)
 
     def on_connect_error(self, *args):
         self.err(*args)
@@ -46,7 +46,7 @@ class ConnectionHandler:
 
     def cleanup(self):
         if self.timeout:
-            GObject.source_remove(self.timeout)
+            GLib.source_remove(self.timeout)
         self.parent.bus.remove_signal_receiver(self.on_mm_device_added, "DeviceAdded", "org.freedesktop.ModemManager")
         self.parent.bus.remove_signal_receiver(self.on_interfaces_added, "InterfacesAdded",
                                                "org.freedesktop.DBus.ObjectManager")

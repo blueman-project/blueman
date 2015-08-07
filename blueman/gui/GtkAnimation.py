@@ -12,6 +12,7 @@ from gi.repository import Gtk, Gdk
 
 import cairo
 from gi.repository import GObject
+from gi.repository import GLib
 import weakref
 
 
@@ -95,7 +96,7 @@ class AnimBase(GObject.GObject):
         self._duration = duration
 
         if self._source:
-            GObject.source_remove(self._source)
+            GLib.source_remove(self._source)
 
         try:
             self._step_size = (end - start) / (self.fps * (duration / 1000.0))
@@ -105,7 +106,7 @@ class AnimBase(GObject.GObject):
             return
 
         self._state_changed(self._state)
-        self._source = GObject.timeout_add(int(1.0 / self.fps * 1000), self._do_transition)
+        self._source = GLib.timeout_add(int(1.0 / self.fps * 1000), self._do_transition)
 
 
     def _state_changed(self, state):

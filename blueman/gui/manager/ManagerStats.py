@@ -4,7 +4,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 from _blueman import device_info
-from gi.repository import GObject
+from gi.repository import GLib
 from gi.repository import Gtk
 
 from blueman.gui.Animation import Animation
@@ -143,11 +143,11 @@ class ManagerStats:
 
     def start_update(self):
         self._update()
-        self.timer = GObject.timeout_add(1000, self._update)
+        self.timer = GLib.timeout_add(1000, self._update)
 
     def stop_update(self):
         if self.timer:
-            GObject.source_remove(self.timer)
+            GLib.source_remove(self.timer)
 
     def set_data(self, uploaded, u_name, downloaded, d_name, u_speed, us_name, d_speed, ds_name):
         self.down_rate.set_markup(

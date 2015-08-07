@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 
 from ctypes import *
 from gi.repository import GObject
+from gi.repository import GLib
 import weakref
 from blueman.Functions import YELLOW, dprint
 
@@ -360,7 +361,7 @@ class PulseAudioUtils(GObject.GObject):
 
         if self.prev_state == PA_CONTEXT_READY and state == PA_CONTEXT_FAILED:
             dprint("Pulseaudio probably crashed, restarting in 5s")
-            GObject.timeout_add(5000, self.Connect)
+            GLib.timeout_add(5000, self.Connect)
 
         self.prev_state = state
 
