@@ -7,6 +7,9 @@ import blueman.bluez as bluez
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.gui.CommonUi import *
 
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
 
 class ManagerMenu:
     def __init__(self, blueman):

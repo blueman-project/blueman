@@ -5,6 +5,9 @@ from __future__ import unicode_literals
 
 from blueman.bluez.Network import Network
 from blueman.plugins.ManagerPlugin import ManagerPlugin
+
+import gi
+gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 import traceback
 from blueman.Functions import create_menuitem, get_icon, composite_icon, dprint

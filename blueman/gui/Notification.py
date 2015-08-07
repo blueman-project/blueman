@@ -4,6 +4,11 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 from blueman.main.Config import Config
+
+import gi
+gi.require_version("Gtk", "3.0")
+gi.require_version("Gdk", "3.0")
+gi.require_version('Notify', '0.7')
 from gi.repository import Notify
 from gi.repository import Gtk
 from gi.repository import Gdk

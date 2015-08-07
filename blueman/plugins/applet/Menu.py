@@ -7,6 +7,8 @@ from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 from operator import itemgetter
 
+import gi
+gi.require_version("Gtk", "3.0")
 from gi.repository import GObject
 from gi.repository import Gtk
 

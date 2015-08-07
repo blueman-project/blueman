@@ -6,6 +6,9 @@ from __future__ import unicode_literals
 import blueman.bluez as bluez
 from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
+import gi
+gi.require_version('GdkX11', '3.0')
+gi.require_version('Gdk', '3.0')
 from gi.repository import Gdk, GdkX11
 import subprocess
 

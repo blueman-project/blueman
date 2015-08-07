@@ -14,6 +14,9 @@ from _blueman import rfcomm_list
 from gi.repository import GObject
 import weakref
 import cgi
+
+import gi
+gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import Pango
 import dbus

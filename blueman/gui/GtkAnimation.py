@@ -4,7 +4,12 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 from blueman.Constants import *
+
+import gi
+gi.require_version("Gtk", "3.0")
+gi.require_version("Gdk", "3.0")
 from gi.repository import Gtk, Gdk
+
 import cairo
 from gi.repository import GObject
 import weakref

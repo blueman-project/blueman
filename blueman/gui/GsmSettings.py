@@ -7,6 +7,8 @@ from blueman.main.Config import Config
 from blueman.Functions import *
 from blueman.Constants import *
 
+import gi
+gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 
