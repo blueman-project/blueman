@@ -5,6 +5,8 @@ from __future__ import unicode_literals
 
 from blueman.Functions import dprint
 
+import gi
+gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import GObject
 import os

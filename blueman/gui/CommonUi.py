@@ -7,6 +7,8 @@ from __future__ import unicode_literals
 from blueman.Functions import *
 from datetime import datetime
 
+import gi
+gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 

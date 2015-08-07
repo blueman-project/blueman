@@ -8,6 +8,9 @@ from dbus.mainloop.glib import DBusGMainLoop
 import dbus.service
 import os.path
 from blueman.Functions import get_icon, dprint
+
+import gi
+gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import GObject
 from gi.types import GObjectMeta

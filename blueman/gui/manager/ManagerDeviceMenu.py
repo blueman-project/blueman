@@ -17,6 +17,9 @@ from blueman.bluez.BlueZInterface import BlueZInterface
 from _blueman import rfcomm_list
 from blueman.services import SerialPort
 
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
 
 def get_x_icon(icon_name, size):
     ic = get_icon(icon_name, size)

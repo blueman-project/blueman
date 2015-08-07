@@ -8,6 +8,8 @@ from blueman.DeviceClass import get_minor_class, get_major_class
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.Sdp import *
 
+import gi
+gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import GdkPixbuf

@@ -11,6 +11,9 @@ from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.Functions import adapter_path_to_name
 from blueman.gui.CommonUi import *
 
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
 
 class ManagerMenu:
     def __init__(self, blueman):

@@ -16,6 +16,9 @@ from gi.repository import GObject
 import weakref
 import os
 import cgi
+
+import gi
+gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import Pango
 import dbus

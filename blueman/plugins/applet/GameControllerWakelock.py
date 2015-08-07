@@ -8,6 +8,9 @@ from blueman.Functions import *
 from blueman.main.SignalTracker import SignalTracker
 from blueman.main.Device import Device
 from blueman.plugins.AppletPlugin import AppletPlugin
+import gi
+gi.require_version('GdkX11', '3.0')
+gi.require_version('Gdk', '3.0')
 from gi.repository import Gdk, GdkX11
 
 class GameControllerWakelock(AppletPlugin):

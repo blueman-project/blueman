@@ -10,6 +10,8 @@ from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.gui.MessageArea import MessageArea
 from blueman.Functions import get_icon, create_menuitem, dprint
 
+import gi
+gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 
