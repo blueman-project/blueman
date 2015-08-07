@@ -17,6 +17,7 @@ from blueman.services import SerialPort
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
+from gi.repository import GObject
 
 def get_x_icon(icon_name, size):
     ic = get_icon(icon_name, size)

@@ -6,6 +6,7 @@ from __future__ import unicode_literals
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
+from gi.repository import GObject
 from blueman.Constants import *
 from blueman.Functions import *
 

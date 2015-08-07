@@ -16,6 +16,8 @@ from blueman.gui.Notification import Notification
 
 from blueman.plugins.AppletPlugin import AppletPlugin
 
+from gi.repository import GObject
+
 REGISTRY_VERSION = 0
 
 
