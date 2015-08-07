@@ -7,6 +7,7 @@ from blueman.main.Config import Config
 from gi.repository import Notify
 from gi.repository import Gtk
 from gi.repository import Gdk
+from gi.repository import GLib
 from blueman.Functions import dprint
 from blueman.gui.GtkAnimation import AnimBase
 
@@ -143,8 +144,10 @@ class _NotificationBubble(Notify.Notification):
             self.set_timeout(timeout)
         if status_icon:
             _, screen, area, orientation = status_icon.get_geometry()
-            self.set_hint_int32("x", area.x + area.width / 2)
-            self.set_hint_int32("y", area.y + area.height / 2)
+            hint_x = GLib.Variant('i', area.x + area.width / 2)
+            hint_y = GLib.Variant('i', area.y + area.height / 2)
+            self.set_hint("x", hint_x)
+            self.set_hint("y", hint_y)
 
         self.show()
 
