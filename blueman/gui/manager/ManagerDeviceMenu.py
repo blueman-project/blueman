@@ -3,6 +3,7 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
+from locale import bind_textdomain_codeset
 from operator import itemgetter
 from blueman.Sdp import uuid128_to_uuid16, SERIAL_PORT_SVCLASS_ID, OBEX_OBJPUSH_SVCLASS_ID, OBEX_FILETRANS_SVCLASS_ID
 from blueman.Functions import *
@@ -312,6 +313,7 @@ class ManagerDeviceMenu(Gtk.Menu):
 
             builder = Gtk.Builder()
             builder.set_translation_domain("blueman")
+            bind_textdomain_codeset("blueman", "UTF-8")
             builder.add_from_file(UI_PATH + "/rename-device.ui")
             dialog = builder.get_object("dialog")
             dialog.set_transient_for(self.Blueman.window)

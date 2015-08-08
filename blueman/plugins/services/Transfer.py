@@ -3,6 +3,8 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
+from locale import bind_textdomain_codeset
+
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
@@ -21,6 +23,7 @@ class Transfer(ServicePlugin):
 
         self.Builder = Gtk.Builder()
         self.Builder.set_translation_domain("blueman")
+        bind_textdomain_codeset("blueman", "UTF-8")
         self.Builder.add_from_file(UI_PATH + "/services-transfer.ui")
         self.widget = self.Builder.get_object("transfer")
 

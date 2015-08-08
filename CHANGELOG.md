@@ -14,6 +14,7 @@
 * Infinite loop if RecentConns has only invalid items
 * Unblock rfkill in Python 3
 * Do not load RfKill plugins when device is not available.
+* Always set codeset for gettext to utf8 (@mgorny / Michał Górny)
 
 ## 2.0
 

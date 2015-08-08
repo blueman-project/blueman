@@ -11,6 +11,7 @@ from gi.repository import Pango
 import os.path
 import sys
 import signal
+from locale import bind_textdomain_codeset
 
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -40,6 +41,7 @@ class BluemanAdapters:
 
         builder = Gtk.Builder()
         builder.set_translation_domain("blueman")
+        bind_textdomain_codeset("blueman", "UTF-8")
         builder.add_from_file(UI_PATH + "/adapters.ui")
         self.dialog = builder.get_object("dialog")
 
