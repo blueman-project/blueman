@@ -6,6 +6,7 @@ from __future__ import unicode_literals
 import dbus
 from dbus.mainloop.glib import DBusGMainLoop
 import dbus.service
+from locale import bind_textdomain_codeset
 from blueman.Functions import get_icon, dprint
 
 import gi
@@ -68,6 +69,7 @@ class BluezAgent(_GObjectAgent, Agent, GObject.GObject):
         builder = Gtk.Builder()
         builder.add_from_file(UI_PATH + "/applet-passkey.ui")
         builder.set_translation_domain("blueman")
+        bind_textdomain_codeset("blueman", "UTF-8")
         dialog = builder.get_object("dialog")
 
         dialog.props.icon_name = "blueman"
