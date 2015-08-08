@@ -1,8 +1,9 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.18.3 -->
 <interface>
   <requires lib="gtk+" version="3.0"/>
-  <!-- interface-naming-policy project-wide -->
   <object class="GtkAssistant" id="assistant">
+    <property name="can_focus">False</property>
     <property name="border_width">6</property>
     <property name="icon_name">blueman</property>
     <property name="type_hint">dialog</property>
@@ -18,6 +19,7 @@
     <child>
       <object class="GtkLabel" id="l_page0">
         <property name="visible">True</property>
+        <property name="can_focus">False</property>
         <property name="xpad">12</property>
         <property name="label" translatable="yes">&lt;b&gt;Welcome to the Bluetooth device setup assistant. &lt;/b&gt;
 
@@ -34,6 +36,7 @@ It will walk you through the process of configuring and connecting to your Bluet
     <child>
       <object class="GtkAlignment" id="a_page1">
         <property name="visible">True</property>
+        <property name="can_focus">False</property>
         <child>
           <placeholder/>
         </child>
@@ -45,22 +48,27 @@ It will walk you through the process of configuring and connecting to your Bluet
     <child>
       <object class="GtkAlignment" id="a_page2">
         <property name="visible">True</property>
+        <property name="can_focus">False</property>
         <property name="yscale">0</property>
         <property name="left_padding">12</property>
         <property name="right_padding">12</property>
         <child>
           <object class="GtkBox" id="vbox1">
             <property name="visible">True</property>
+            <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
             <property name="spacing">10</property>
             <child>
               <object class="GtkLabel" id="label3">
                 <property name="visible">True</property>
-                <property name="xalign">0</property>
+                <property name="can_focus">False</property>
                 <property name="label" translatable="yes">&lt;b&gt;Select pairing method to use:&lt;/b&gt;</property>
                 <property name="use_markup">True</property>
+                <property name="xalign">0</property>
               </object>
               <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
                 <property name="position">0</property>
               </packing>
             </child>
@@ -70,11 +78,13 @@ It will walk you through the process of configuring and connecting to your Bluet
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
+                <property name="xalign">0.5</property>
                 <property name="active">True</property>
                 <property name="draw_indicator">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
+                <property name="fill">True</property>
                 <property name="position">1</property>
               </packing>
             </child>
@@ -84,11 +94,13 @@ It will walk you through the process of configuring and connecting to your Bluet
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
+                <property name="xalign">0.5</property>
                 <property name="draw_indicator">True</property>
                 <property name="group">r_randp</property>
               </object>
               <packing>
                 <property name="expand">False</property>
+                <property name="fill">True</property>
                 <property name="position">3</property>
               </packing>
             </child>
@@ -102,6 +114,7 @@ It will walk you through the process of configuring and connecting to your Bluet
     <child>
       <object class="GtkLabel" id="l_page3">
         <property name="visible">True</property>
+        <property name="can_focus">False</property>
         <property name="label">&lt;b&gt;Pairing in progress...&lt;/b&gt;
 
 Enter passkey &lt;b&gt;0000&lt;/b&gt; on the device.</property>
@@ -115,36 +128,42 @@ Enter passkey &lt;b&gt;0000&lt;/b&gt; on the device.</property>
     <child>
       <object class="GtkAlignment" id="a_page4">
         <property name="visible">True</property>
+        <property name="can_focus">False</property>
         <property name="yscale">0</property>
         <property name="left_padding">12</property>
         <property name="right_padding">12</property>
         <child>
           <object class="GtkBox" id="vbox3">
             <property name="visible">True</property>
+            <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
             <property name="spacing">6</property>
             <child>
               <object class="GtkLabel" id="label2">
                 <property name="visible">True</property>
-                <property name="xalign">0</property>
+                <property name="can_focus">False</property>
                 <property name="label" translatable="yes">&lt;b&gt;Connect to:&lt;/b&gt;</property>
                 <property name="use_markup">True</property>
+                <property name="xalign">0</property>
               </object>
               <packing>
                 <property name="expand">False</property>
+                <property name="fill">True</property>
                 <property name="position">0</property>
               </packing>
             </child>
             <child>
               <object class="GtkBox" id="svcs">
-	        <property name="orientation">vertical</property>
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="orientation">vertical</property>
                 <child>
                   <placeholder/>
                 </child>
               </object>
               <packing>
                 <property name="expand">False</property>
+                <property name="fill">True</property>
                 <property name="position">1</property>
               </packing>
             </child>
@@ -158,6 +177,7 @@ Enter passkey &lt;b&gt;0000&lt;/b&gt; on the device.</property>
     <child>
       <object class="GtkLabel" id="l_page5">
         <property name="visible">True</property>
+        <property name="can_focus">False</property>
         <property name="label" translatable="yes">&lt;b&gt;Please wait...&lt;/b&gt;</property>
         <property name="use_markup">True</property>
       </object>
@@ -169,6 +189,7 @@ Enter passkey &lt;b&gt;0000&lt;/b&gt; on the device.</property>
     <child>
       <object class="GtkLabel" id="l_page6">
         <property name="visible">True</property>
+        <property name="can_focus">False</property>
         <property name="label" translatable="yes">&lt;b&gt;Congratulations, device successfully added&lt;/b&gt;</property>
         <property name="use_markup">True</property>
         <property name="wrap">True</property>
@@ -178,6 +199,11 @@ Enter passkey &lt;b&gt;0000&lt;/b&gt; on the device.</property>
         <property name="page_type">summary</property>
         <property name="title">Finished</property>
       </packing>
+    </child>
+    <child internal-child="action_area">
+      <object class="GtkBox" id="assistant-action_area2">
+        <property name="can_focus">False</property>
+      </object>
     </child>
   </object>
 </interface>
