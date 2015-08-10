@@ -14,7 +14,6 @@
 * Infinite loop if RecentConns has only invalid items
 * Unblock rfkill in Python 3
 * Do not load RfKill plugins when device is not available.
-* Release auth agent
 
 ## 2.0
 
