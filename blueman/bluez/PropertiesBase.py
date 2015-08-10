@@ -22,7 +22,8 @@ class PropertiesBase(Base):
 
         if obj_path:
             self.__properties_interface = dbus.Interface(self._dbus_proxy, 'org.freedesktop.DBus.Properties')
-            self._handle_signal(self._on_properties_changed, 'PropertiesChanged', 'org.freedesktop.DBus.Properties')
+
+        self._handle_signal(self._on_properties_changed, 'PropertiesChanged', 'org.freedesktop.DBus.Properties')
 
     def _on_property_changed(self, key, value):
         dprint(self.get_object_path(), key, value)
