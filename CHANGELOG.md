@@ -13,6 +13,7 @@
 * Codepoint issues when connecting to serial service
 * Infinite loop if RecentConns has only invalid items
 * Unblock rfkill in Python 3
+* Do not load RfKill plugins when device is not available.
 
 ## 2.0
 
