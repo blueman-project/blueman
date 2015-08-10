@@ -24,6 +24,8 @@ RFKILL_OP_CHANGE_ALL = 3
 
 RFKILL_EVENT_SIZE_V1 = 8
 
+if not os.path.exists('/dev/rfkill'):
+    raise ImportError('Hardware kill switch not found')
 
 class Switch:
     def __init__(self, idx, type, soft, hard):
@@ -54,14 +56,11 @@ class KillSwitch(AppletPlugin):
     _hardblocked = False
 
     def on_load(self, applet):
-        try:
-            self._fd = os.open('/dev/rfkill', os.O_RDONLY | os.O_NONBLOCK)
+        self._fd = os.open('/dev/rfkill', os.O_RDONLY | os.O_NONBLOCK)
 
-            ref = weakref.ref(self)
-            self._iom = GLib.io_add_watch(self._fd, GLib.IO_IN | GLib.IO_ERR | GLib.IO_HUP,
-                                             lambda *args: ref() and ref().io_event(*args))
-        except OSError:
-            dprint('Warning: Could not open /dev/rfkill to monitor switches')
+        ref = weakref.ref(self)
+        self._iom = GLib.io_add_watch(self._fd, GLib.IO_IN | GLib.IO_ERR | GLib.IO_HUP,
+                                      lambda *args: ref() and ref().io_event(*args))
 
     def on_unload(self):
         if self._iom:
