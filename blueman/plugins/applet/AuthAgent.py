@@ -25,10 +25,15 @@ class AuthAgent(AppletPlugin):
         self._last_event_time = time
 
     def on_unload(self):
-        del self._agent
+        self._remove_agent()
 
     def on_manager_state_changed(self, state):
         if state:
             self._agent = BluezAgent(self.Applet.Plugins.StatusIcon, self._last_event_time)
         else:
+            self._remove_agent()
+
+    def _remove_agent(self):
+        if self._agent:
+            self._agent.Release()
             del self._agent
