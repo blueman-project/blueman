@@ -43,7 +43,6 @@ class MessageArea(Gtk.EventBox):
         self.hbox.set_border_width(2)
 
         self.icon = Gtk.Image()
-        self.icon.props.xpad = 4
         self.label = Gtk.Label()
         self.label.props.xalign = 0
         self.label.set_ellipsize(Pango.EllipsizeMode.END)
@@ -65,7 +64,7 @@ class MessageArea(Gtk.EventBox):
         self.b_close.props.relief = Gtk.ReliefStyle.NONE
         self.b_close.props.tooltip_text = _("Close")
 
-        self.hbox.pack_start(self.icon, False, False, 0)
+        self.hbox.pack_start(self.icon, False, False, 4)
         self.hbox.pack_start(self.label, True, False, 0)
         self.hbox.pack_start(self.b_more, False, False, 0)
         self.hbox.pack_start(self.b_close, False, False, 0)

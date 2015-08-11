@@ -11,7 +11,8 @@
       <object class="GtkLabel" id="l_page0">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="xpad">12</property>
+        <property name="margin_left">45</property>
+        <property name="margin_right">45</property>
         <property name="label" translatable="yes">&lt;b&gt;Welcome to the Bluetooth device setup assistant. &lt;/b&gt;
 
 
@@ -52,7 +53,6 @@ It will walk you through the process of configuring and connecting to your Bluet
             <property name="can_focus">False</property>
             <property name="label" translatable="yes">&lt;b&gt;Select pairing method to use:&lt;/b&gt;</property>
             <property name="use_markup">True</property>
-            <property name="xalign">0</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -66,7 +66,7 @@ It will walk you through the process of configuring and connecting to your Bluet
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">False</property>
-            <property name="xalign">0</property>
+            <property name="halign">start</property>
             <property name="active">True</property>
             <property name="draw_indicator">True</property>
           </object>
@@ -82,7 +82,7 @@ It will walk you through the process of configuring and connecting to your Bluet
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">False</property>
-            <property name="xalign">0</property>
+            <property name="halign">start</property>
             <property name="draw_indicator">True</property>
             <property name="group">r_randp</property>
           </object>
@@ -124,9 +124,9 @@ Enter passkey &lt;b&gt;0000&lt;/b&gt; on the device.</property>
           <object class="GtkLabel" id="connect_to_label">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="halign">start</property>
             <property name="label" translatable="yes">&lt;b&gt;Connect to:&lt;/b&gt;</property>
             <property name="use_markup">True</property>
-            <property name="xalign">0</property>
           </object>
           <packing>
             <property name="expand">False</property>
