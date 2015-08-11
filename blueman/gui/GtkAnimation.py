@@ -269,8 +269,6 @@ class CellFade(AnimBase):
             cr.clip()
             if not (rect.height == 0 or rect.height == 0):
                 detail = "cell_even" if path[0] % 2 == 0 else "cell_odd"
-                if self.tw.props.rules_hint:
-                    detail += "_ruled"
 
                 selected = self.selection.get_selected()[1] and self.tw.props.model.get_path(
                     self.selection.get_selected()[1]) == path
