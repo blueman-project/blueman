@@ -257,7 +257,8 @@ class CellFade(AnimBase):
 
         area = ()
 
-        color = self.stylecontext.get_background_color(0)
+        # Set transparent background
+        cr.set_source_rgba(0, 0, 0, 0)
 
         for col in self.columns:
             bg_rect = self.tw.get_background_area(path, col)
