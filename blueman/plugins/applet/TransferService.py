@@ -207,6 +207,10 @@ class TransferService(AppletPlugin):
 
         src = attributes['path']
         dest_dir = self._config["shared-path"]
+        # We get bytes from pygobject under python 2.7
+        if hasattr(dest_dir, 'upper') and hasattr(dest_dir, 'decode'):
+    	    dest_dir = dest_dir.decode('UTF-8')
+    	
         filename = os.path.basename(src)
 
         if os.path.exists(os.path.join(dest_dir, filename)):
