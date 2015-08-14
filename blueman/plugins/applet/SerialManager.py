@@ -6,6 +6,7 @@ from __future__ import unicode_literals
 from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.Notification import Notification
+from blueman.main.Device import Device
 from blueman.Sdp import uuid128_to_uuid16, uuid16_to_name, SERIAL_PORT_SVCLASS_ID
 from _blueman import rfcomm_list
 from subprocess import Popen
@@ -44,7 +45,7 @@ class SerialManager(AppletPlugin):
     _any_device = None
 
     def on_load(self, applet):
-        self._any_device = Bluez.Device()
+        self._any_device = Device()
         self._any_device.connect_signal('property-changed', self._on_device_property_changed)
 
         self.scripts = {}
