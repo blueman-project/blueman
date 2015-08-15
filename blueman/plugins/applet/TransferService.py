@@ -213,12 +213,12 @@ class TransferService(AppletPlugin):
         if hasattr(dest_dir, "upper",) and hasattr(dest_dir, "decode"):
             dest_dir = dest_dir.decode("UTF-8")
 
-        if os.path.exists(os.path.join(dest_dir, filename)):
+        dest = os.path.join(dest_dir, filename)
+        if os.path.exists(dest):
             now = datetime.now()
             filename = "%s_%s" % (now.strftime("%Y%m%d%H%M%S"), filename)
             dprint("Destination file exists, renaming to: %s" % filename)
 
-        dest = os.path.join(dest_dir, filename)
         shutil.move(src, dest)
 
         try:
