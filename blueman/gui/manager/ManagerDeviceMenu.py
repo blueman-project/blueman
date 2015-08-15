@@ -103,7 +103,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             if inst.SelectedDevice == self.SelectedDevice and not (inst.is_popup and not inst.props.visible):
                 inst.Generate()
 
-    def _on_service_property_changed(self, _service, key, value):
+    def _on_service_property_changed(self, _service, key, _value, _path):
         if key == "Connected":
             self.Generate()
 

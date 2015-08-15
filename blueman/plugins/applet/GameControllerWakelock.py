@@ -33,9 +33,9 @@ class GameControllerWakelock(AppletPlugin):
             self.xdg_screensaver("resume")
         del self._any_device
 
-    def _on_device_property_changed(self, device, key, value):
+    def _on_device_property_changed(self, _device, key, value, path):
         if key == "Connected":
-            klass = device.get_properties()["Class"] & 0x1fff
+            klass = bluez.Device(path).get_properties()["Class"] & 0x1fff
 
             if klass == 0x504 or klass == 0x508:
                 if value:

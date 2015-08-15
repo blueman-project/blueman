@@ -90,8 +90,8 @@ class BluemanApplet(object):
         elif self.Manager is None:
             self.manager_init()
 
-    def _on_adapter_property_changed(self, adapter, key, value):
-        self.Plugins.Run("on_adapter_property_changed", adapter.get_object_path(), key, value)
+    def _on_adapter_property_changed(self, _adapter, key, value, path):
+        self.Plugins.Run("on_adapter_property_changed", path, key, value)
 
     def on_adapter_added(self, _manager, path):
         dprint("Adapter added ", path)

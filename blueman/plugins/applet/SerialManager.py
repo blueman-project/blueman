@@ -8,6 +8,7 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.Notification import Notification
 from blueman.Sdp import uuid128_to_uuid16, uuid16_to_name, SERIAL_PORT_SVCLASS_ID
 from _blueman import rfcomm_list
+from blueman.main.Device import Device
 from subprocess import Popen
 import atexit
 
@@ -54,9 +55,9 @@ class SerialManager(AppletPlugin):
         for k in self.scripts.keys():
             self.terminate_all_scripts(k)
 
-    def _on_device_property_changed(self, device, key, value):
+    def _on_device_property_changed(self, _device, key, value, path):
         if key == "Connected" and not value:
-            self.terminate_all_scripts(device.Address)
+            self.terminate_all_scripts(Device(path).Address)
 
     def on_rfcomm_connected(self, service, port):
         device = service.device

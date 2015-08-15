@@ -373,9 +373,9 @@ class NetUsage(AppletPlugin, GObject.GObject):
             else:
                 self.nm_paths[path] = False
 
-    def _on_network_property_changed(self, network, key, value):
+    def _on_network_property_changed(self, _network, key, value, path):
         if key == "Interface" and value != "":
-            d = BluezDevice(network.get_object_path())
+            d = BluezDevice(path)
             d = Device(d)
             self.monitor_interface(Monitor, d, value)
 

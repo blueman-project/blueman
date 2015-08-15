@@ -82,7 +82,7 @@ class BluemanAdapters:
         Gtk.main_quit()
 
     def on_adapter_added(self, _manager, adapter_path):
-        def on_property_changed(_adapter, name, value):
+        def on_property_changed(_adapter, name, value, _path):
             if name == 'Powered' and value:
                 adapter.disconnect_signal(sig)
                 self.add_to_notebook(adapter)
@@ -99,7 +99,7 @@ class BluemanAdapters:
     def build_adapter_tab(self, adapter):
         adapter_settings = {}
 
-        def on_property_changed(_adapter, name, value):
+        def on_property_changed(_adapter, name, value, _path):
             if name == 'Powered':
                 if not value:
                     self.remove_from_notebook(adapter)

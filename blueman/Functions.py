@@ -109,7 +109,7 @@ def check_bluetooth_status(message, exitfunc, *args, **kwargs):
 
 
 def wait_for_adapter(bluez_adapter, callback, timeout=1000):
-    def on_prop_changed(adapter, key, value):
+    def on_prop_changed(adapter, key, value, _path):
         if key == "Powered" and value:
             GLib.source_remove(source)
             adapter.disconnect_signal(sig)

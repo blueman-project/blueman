@@ -119,15 +119,15 @@ class DeviceList(GenericList):
             dev = row["device"]
             self.emit("device-selected", dev, iter)
 
-    def _on_property_changed(self, _adapter, key, value):
+    def _on_property_changed(self, _adapter, key, value, _path):
         if key == "Discovering":
             if not value and self.discovering:
                 self.StopDiscovery()
 
         self.emit("adapter-property-changed", self.Adapter, (key, value))
 
-    def _on_device_property_changed(self, device, key, value):
-        iter = self.find_device_by_path(device.get_object_path())
+    def _on_device_property_changed(self, _device, key, value, path):
+        iter = self.find_device_by_path(path)
 
         if iter != None:
             dev = self.get(iter, "device")["device"]
