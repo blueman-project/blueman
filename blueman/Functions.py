@@ -65,7 +65,7 @@ def dprint(*args):
 
         s = ""
         for a in args:
-            s += (str(a) + " ")
+            s += ("%s " % a)
         co = sys._getframe(1).f_code
 
         fname = BOLD(co.co_name)
