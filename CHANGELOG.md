@@ -7,6 +7,7 @@
 * Drop support for BlueZ 4
 * Drop browse feature
 * Add title to status icon
+* Add systemd service units (@smcv / Simon McVittie)
 
 ### Bugs fixed
 

@@ -1,0 +1,7 @@
+[Unit]
+Description=Bluetooth management mechanism
+
+[Service]
+Type=dbus
+BusName=org.blueman.Mechanism
+ExecStart=@LIBEXECDIR@/blueman-mechanism
