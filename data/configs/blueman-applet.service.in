@@ -1,0 +1,7 @@
+[Unit]
+Description=Bluetooth management applet
+
+[Service]
+Type=dbus
+BusName=org.blueman.Applet
+ExecStart=@BINDIR@/blueman-applet
