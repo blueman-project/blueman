@@ -9,7 +9,6 @@ from blueman.main.SignalTracker import SignalTracker
 from blueman.main.Device import Device
 from blueman.plugins.AppletPlugin import AppletPlugin
 from gi.repository import Gdk, GdkX11
-import subprocess
 
 class GameControllerWakelock(AppletPlugin):
     __description__ = _("Temporarily suspends the screensaver when a bluetooth game controller is connected.")
@@ -50,14 +49,13 @@ class GameControllerWakelock(AppletPlugin):
              self.wake_lock += 1
              pass
 
-        command = ["xdg-screensaver", action, self.root_window_id]
+        command = "xdg-screensaver %s %s" %(action, self.root_window_id)
 
         try:
-            process = subprocess.Popen(command, stderr=subprocess.PIPE)
-            _, stderr = process.communicate()
+            ret = launch(command, sn=False)
 
-            if process.returncode != 0:
-                dprint(" ".join(command) + " failed with: " + stderr)
+            if not ret:
+                dprint("%s failed")
                 pass
 
             if action == "suspend":
