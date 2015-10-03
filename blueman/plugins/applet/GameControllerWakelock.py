@@ -10,7 +10,6 @@ import gi
 gi.require_version('GdkX11', '3.0')
 gi.require_version('Gdk', '3.0')
 from gi.repository import Gdk, GdkX11
-import subprocess
 
 
 class GameControllerWakelock(AppletPlugin):
@@ -54,14 +53,13 @@ class GameControllerWakelock(AppletPlugin):
              self.wake_lock += 1
              pass
 
-        command = ["xdg-screensaver", action, self.root_window_id]
+        command = "xdg-screensaver %s %s" %(action, self.root_window_id)
 
         try:
-            process = subprocess.Popen(command, stderr=subprocess.PIPE)
-            _, stderr = process.communicate()
+            ret = launch(command, sn=False)
 
-            if process.returncode != 0:
-                dprint(" ".join(command) + " failed with: " + stderr)
+            if not ret:
+                dprint("%s failed")
                 pass
 
             if action == "suspend":
