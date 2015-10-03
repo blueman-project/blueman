@@ -43,28 +43,24 @@ class GameControllerWakelock(AppletPlugin):
                     self.xdg_screensaver("resume")
 
     def xdg_screensaver(self, action):
-        if action == "resume":
-            if self.wake_lock == 0:
-                pass
-            elif self.wake_lock > 1:
-                self.wake_lock -= 1
-                pass
-        elif action == "suspend" and self.wake_lock >= 1:
-             self.wake_lock += 1
-             pass
-
         command = "xdg-screensaver %s %s" %(action, self.root_window_id)
 
-        try:
-            ret = launch(command, sn=False)
-
-            if not ret:
-                dprint("%s failed")
-                pass
-
-            if action == "suspend":
-                self.wake_lock += 1
-            elif action == "resume":
+        if action == "resume":
+            if self.wake_lock <= 0:
                 self.wake_lock = 0
-        except:
-            dprint(traceback.format_exc())
+            elif self.wake_lock > 1:
+                self.wake_lock -= 1
+            else:
+                ret = launch(command, sn=False)
+                if ret: self.wake_lock -= 1
+                else: dprint("%s failed")
+
+        elif action == "suspend":
+            if self.wake_lock >= 1:
+                self.wake_lock += 1
+            else:
+                ret = launch(command, sn=False)
+                if ret: self.wake_lock += 1
+                else: dprint("%s failed")
+
+        dprint("Number of locks: %s" % self.wake_lock)
