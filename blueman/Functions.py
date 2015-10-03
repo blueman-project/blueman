@@ -136,13 +136,14 @@ def enable_rgba_colormap():
     pass
 
 
-def launch(cmd, paths=None, system=False, icon_name=None, name="blueman"):
+def launch(cmd, paths=None, system=False, icon_name=None, sn=True, name="blueman"):
     '''Launch a gui app with starup notification'''
     display = Gdk.Display.get_default()
     timestamp = Gtk.get_current_event_time()
     context = display.get_app_launch_context()
     context.set_timestamp(timestamp)
-    flags = Gio.AppInfoCreateFlags.SUPPORTS_STARTUP_NOTIFICATION
+    if sn: flags = Gio.AppInfoCreateFlags.SUPPORTS_STARTUP_NOTIFICATION
+    else: flags = Gio.AppInfoCreateFlags.NONE
 
     env = os.environ
     env["BLUEMAN_EVENT_TIME"] = str(timestamp)
