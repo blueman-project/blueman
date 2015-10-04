@@ -111,7 +111,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         device = service.device
 
         def success(*args2):
-            dprint("success", args2)
+            dprint("success", " ".join(args2))
             prog.message(_("Success!"))
 
             if isinstance(service, SerialPort) and SERIAL_PORT_SVCLASS_ID == uuid128_to_uuid16(service.uuid):
