@@ -8,6 +8,9 @@
 * Infinite loop if RecentConns has only invalid items
 * Unblock rfkill in Python 3
 * Valid adapter may not be found
+* Handle when rfkill subsystem is not available gracefully
+* RfKill: open /dev/rfkill r+b to avoid creating
+* Resolve codepoint issues in several places
 
 ## 2.0
 
