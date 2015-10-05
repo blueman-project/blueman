@@ -7,6 +7,7 @@
 * Codepoint issues when connecting to serial service
 * Infinite loop if RecentConns has only invalid items
 * Unblock rfkill in Python 3
+* Valid adapter may not be found
 
 ## 2.0
 

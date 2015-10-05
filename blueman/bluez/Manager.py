@@ -42,7 +42,7 @@ class Manager(PropertiesBlueZInterface):
         else:
             for adapter in adapters:
                 path = adapter.get_object_path()
-                if path == pattern or path == '/org/bluez/'+pattern or adapter.get_properties()['Address'] == pattern:
+                if path.endswith(pattern) or adapter.get_properties()['Address'] == pattern:
                     return adapter
 
         # If the given - or any - adapter does not exist, raise the NoSuchAdapter
