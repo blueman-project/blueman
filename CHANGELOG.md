@@ -13,6 +13,7 @@
 * Codepoint issues when connecting to serial service
 * Infinite loop if RecentConns has only invalid items
 * Unblock rfkill in Python 3
+* Valid adapter may not be found
 * Do not load RfKill plugins when device is not available.
 * Always set codeset for gettext to utf8 (@mgorny / Michał Górny)
 
