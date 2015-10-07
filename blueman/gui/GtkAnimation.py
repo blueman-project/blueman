@@ -157,9 +157,7 @@ class TreeRowFade(AnimBase):
 
         path = self.row.get_path()
 
-        area = ()
-
-        color = self.stylecontext.get_background_color(0)
+        color = self.stylecontext.get_background_color(Gtk.StateFlags.NORMAL)
 
         if not self.columns:
             columns = self.tw.get_columns()
@@ -168,13 +166,13 @@ class TreeRowFade(AnimBase):
 
         for col in columns:
             rect = self.tw.get_background_area(path, col)
-            Gdk.cairo_get_clip_rectangle(cr)
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
-            cr.clip()
 
-            cr.set_source_rgba(color.red, color.green, color.blue, 1.0 - self.get_state())
-            cr.set_operator(cairo.OPERATOR_OVER)
-            cr.paint()
+        cr.clip()
+
+        cr.set_source_rgba(color.red, color.green, color.blue, 1.0 - self.get_state())
+        cr.set_operator(cairo.OPERATOR_OVER)
+        cr.paint()
 
     def state_changed(self, state):
         self.tw.queue_draw()
@@ -202,9 +200,7 @@ class TreeRowColorFade(TreeRowFade):
 
         path = self.row.get_path()
 
-        area = ()
-
-        color = self.stylecontext.get_background_color(0)
+        color = self.stylecontext.get_background_color(Gtk.StateFlags.NORMAL)
 
         if not self.columns:
             columns = self.tw.get_columns()
@@ -214,11 +210,12 @@ class TreeRowColorFade(TreeRowFade):
         for col in columns:
             rect = self.tw.get_background_area(path, col)
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
-            cr.clip()
 
-            cr.set_source_rgba(self.color.red, self.color.green, self.color.blue, 1.0 - self.get_state())
-            cr.set_operator(cairo.OPERATOR_OVER)
-            cr.paint()
+        cr.clip()
+
+        cr.set_source_rgba(self.color.red, self.color.green, self.color.blue, 1.0 - self.get_state())
+        cr.set_operator(cairo.OPERATOR_OVER)
+        cr.paint()
 
 
 class CellFade(AnimBase):
