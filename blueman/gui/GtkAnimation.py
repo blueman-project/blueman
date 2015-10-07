@@ -135,7 +135,7 @@ class TreeRowFade(AnimBase):
 
         self.row = Gtk.TreeRowReference.new(tw.props.model, path)
         self.stylecontext = tw.get_style_context()
-        self.columns = None
+        self.columns = columns
 
     def unref(self):
         if self.sig != None:
@@ -160,11 +160,9 @@ class TreeRowFade(AnimBase):
         color = self.stylecontext.get_background_color(Gtk.StateFlags.NORMAL)
 
         if not self.columns:
-            columns = self.tw.get_columns()
-        else:
-            columns = self.columns
+            self.columns = self.tw.get_columns()
 
-        for col in columns:
+        for col in self.columns:
             rect = self.tw.get_background_area(path, col)
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
 
@@ -200,14 +198,10 @@ class TreeRowColorFade(TreeRowFade):
 
         path = self.row.get_path()
 
-        color = self.stylecontext.get_background_color(Gtk.StateFlags.NORMAL)
-
         if not self.columns:
-            columns = self.tw.get_columns()
-        else:
-            columns = self.columns
+            self.columns = self.tw.get_columns()
 
-        for col in columns:
+        for col in self.columns:
             rect = self.tw.get_background_area(path, col)
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
 
