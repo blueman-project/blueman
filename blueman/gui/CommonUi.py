@@ -21,7 +21,7 @@ def show_about_dialog(app_name, run=True):
                         'Copyright © 2008 Tadas Dailyda\n'
                         'Copyright © 2008 - %s blueman project' % datetime.now().year
                         )
-    about.set_comments(_('Blueman is a GTK based Bluetooth manager'))
+    about.set_comments(_('Blueman is a GTK+ Bluetooth manager'))
     about.set_website(WEBSITE)
     about.set_icon(get_icon('blueman'))
     about.set_logo(get_icon('blueman', 48))
