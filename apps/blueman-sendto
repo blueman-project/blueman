@@ -301,11 +301,15 @@ class SendTo:
         check_bluetooth_status(_("Bluetooth needs to be turned on for file sending to work"), lambda: exit())
 
         self.options = options
-        self.args = args
+
+        self.files = []
+        if not args:
+            self.files = self.select_files()
+        else:
+            self.files = [os.path.abspath(f) for f in args]
 
         self.device = None
         self.adapter = None
-        self.files = []
 
         if options.device is None:
             if not self.select_device():
@@ -344,13 +348,11 @@ class SendTo:
         Gtk.main()
 
     def do_send(self):
-        if len(self.args) == 0:
-            if not self.select_files():
-                exit()
-            else:
-                sender = Sender(self.device, self.adapter, self.files)
-        else:
-            sender = Sender(self.device, self.adapter, self.args)
+        if not self.files:
+            dprint("No files to send")
+            exit()
+
+        sender = Sender(self.device, self.adapter, self.files)
 
         def on_result(sender, res):
             Gtk.main_quit()
@@ -365,12 +367,12 @@ class SendTo:
         resp = d.run()
 
         if resp == Gtk.ResponseType.ACCEPT:
-            self.files = d.get_filenames()
+            files = d.get_filenames()
             d.destroy()
-            return True
+            return files
         else:
             d.destroy()
-            return False
+            return []
 
     def select_device(self):
         d = DeviceSelectorDialog()
