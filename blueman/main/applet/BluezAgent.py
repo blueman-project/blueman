@@ -98,7 +98,7 @@ class BluezAgent(_GObjectAgent, Agent, GObject.GObject):
         device = Bluez.Device(device_path)
         props = device.get_properties()
         address = props["Address"]
-        name = props["Name"]
+        name = props.get('Name', address)
         alias = address
         if name:
             alias = "<b>%s</b> (%s)" % (cgi.escape(name), address)
