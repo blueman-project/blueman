@@ -18,6 +18,7 @@
 * Do not load RfKill plugins when device is not available.
 * Always set codeset for gettext to utf8 (@mgorny / Michał Górny)
 * Support legacy devices without a Name property
+* (Covered) Crash in agent's passkey / pin code methods
 
 ## 2.0
 
