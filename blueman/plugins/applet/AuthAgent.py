@@ -29,7 +29,7 @@ class AuthAgent(AppletPlugin):
 
     def on_manager_state_changed(self, state):
         if state:
-            self._agent = BluezAgent(self.Applet.Plugins.StatusIcon, self._last_event_time)
+            self._agent = BluezAgent(self.Applet.Plugins.StatusIcon, lambda: self._last_event_time)
         else:
             self._remove_agent()
 
