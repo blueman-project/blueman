@@ -366,7 +366,6 @@ class SendTo:
     def select_device(self):
         d = DeviceSelectorDialog()
         resp = d.run()
-        d.destroy()
         if resp == Gtk.ResponseType.ACCEPT:
             sel = d.GetSelection()
             if sel:
