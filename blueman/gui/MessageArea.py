@@ -25,7 +25,7 @@ class MessageArea(Gtk.EventBox):
         return MessageArea._inst_
 
     def __init__(self):
-        GObject.GObject.__init__(self)
+        Gtk.EventBox.__init__(self)
 
         self.hbox = Gtk.HBox()
         self.hbox.show()

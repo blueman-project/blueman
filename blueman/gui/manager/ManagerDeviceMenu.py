@@ -33,7 +33,7 @@ class ManagerDeviceMenu(Gtk.Menu):
     __instances__ = []
 
     def __init__(self, blueman):
-        GObject.GObject.__init__(self)
+        Gtk.Menu.__init__(self)
         self.Blueman = blueman
         self.SelectedDevice = None
 

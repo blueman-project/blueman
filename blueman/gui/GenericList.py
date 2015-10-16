@@ -12,7 +12,7 @@ from gi.repository import GObject
 # noinspection PyAttributeOutsideInit
 class GenericList(Gtk.TreeView):
     def __init__(self, data):
-        GObject.GObject.__init__(self)
+        Gtk.TreeView.__init__(self)
         self.selection = self.get_selection()
         self._load(data)
 

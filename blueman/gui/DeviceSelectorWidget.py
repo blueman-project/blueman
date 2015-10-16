@@ -18,7 +18,7 @@ from blueman.gui.DeviceSelectorList import DeviceSelectorList
 class DeviceSelectorWidget(Gtk.VBox):
     def __init__(self, adapter=None):
 
-        GObject.GObject.__init__(self)
+        Gtk.VBox.__init__(self)
 
         self.props.spacing = 1
         self.props.vexpand = True

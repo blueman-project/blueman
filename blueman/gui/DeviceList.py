@@ -51,6 +51,8 @@ class DeviceList(GenericList):
         dprint("deleting mainlist")
 
     def __init__(self, adapter=None, tabledata=None):
+        Gtk.TreeView.__init__(self)
+
         if not tabledata:
             tabledata = []
 

@@ -18,7 +18,7 @@ import weakref
 
 class SettingsWidget(Gtk.VBox):
     def __init__(self, inst):
-        GObject.GObject.__init__(self)
+        Gtk.VBox.__init__(self)
         self.inst = inst
         self.props.spacing = 2
 
