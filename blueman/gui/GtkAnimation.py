@@ -221,8 +221,6 @@ class CellFade(AnimBase):
         self.sig = tw.connect_after("draw", self.on_expose)
         self.row = Gtk.TreeRowReference.new(tw.props.model, path)
         self.selection = tw.get_selection()
-        self.style = Gtk.rc_get_style(tw)
-        self.stylecontext = tw.get_style_context()
         self.columns = []
         for i in columns:
             self.columns.append(self.tw.get_column(i))
@@ -246,11 +244,8 @@ class CellFade(AnimBase):
 
         path = self.row.get_path()
 
-        area = ()
-
-        # Set transparent background
-        cr.set_source_rgba(0, 0, 0, 0)
-
+        # FIXME Use Gtk.render_background to render background.
+        # However it does not use the correct colors/gradient.
         for col in self.columns:
             bg_rect = self.tw.get_background_area(path, col)
             rect = self.tw.get_cell_area(path, col)
@@ -258,27 +253,21 @@ class CellFade(AnimBase):
             rect.height = bg_rect.height
 
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
-            cr.clip()
-            if not (rect.height == 0 or rect.height == 0):
-                detail = "cell_even" if path[0] % 2 == 0 else "cell_odd"
 
-                selected = self.selection.get_selected()[1] and self.tw.props.model.get_path(
-                    self.selection.get_selected()[1]) == path
+        cr.clip()
 
-                Gtk.paint_flat_box(self.tw.get_style(),
-                                   cr,
-                                   Gtk.StateType.SELECTED if (selected) else Gtk.StateType.NORMAL,
-                                   0,
-                                   self.tw,
-                                   detail,
-                                   rect.x,
-                                   rect.y,
-                                   rect.width,
-                                   rect.height)
+        selected = self.selection.get_selected()[1] and \
+            self.tw.props.model.get_path(self.selection.get_selected()[1]) == path
 
-                # FIXME pixmap got lost during port to gtk3
-                #cr.set_source_pixmap(pixmap, rect.x, rect.y)
-                cr.paint_with_alpha(self.get_state())
+        stylecontext = self.tw.get_style_context()
+
+        if selected:
+            bg_color = stylecontext.get_background_color(Gtk.StateFlags.SELECTED)
+        else:
+            bg_color = stylecontext.get_background_color(Gtk.StateFlags.NORMAL)
+
+        cr.set_source_rgb(bg_color.red, bg_color.green, bg_color.blue)
+        cr.paint_with_alpha(1.0 - self.get_state())
 
     def state_changed(self, state):
         self.tw.queue_draw()
