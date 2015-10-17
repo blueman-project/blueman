@@ -65,6 +65,7 @@ class Assistant:
         self.Builder.add_from_file(UI_PATH + "/assistant.ui")
         self.assistant = self.Builder.get_object("assistant")
         self.assistant.set_title(_("Bluetooth Assistant"))
+        self.assistant.set_name("BluemanAssistant")
 
         self.applet = AppletService()
 

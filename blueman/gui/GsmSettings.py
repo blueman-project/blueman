@@ -18,6 +18,7 @@ class GsmSettings(Gtk.Dialog):
     def __init__(self, bd_address):
         Gtk.Dialog.__init__(self)
 
+        self.set_name("GsmSettings")
         self.device = bd_address
 
         self.Builder = Gtk.Builder()

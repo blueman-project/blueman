@@ -35,6 +35,7 @@ class _NotificationDialog(Gtk.MessageDialog):
         Gtk.MessageDialog.__init__(self, parent=None, flags=0, type=Gtk.MessageType.QUESTION,
                                    buttons=Gtk.ButtonsType.NONE, message_format=None)
 
+        self.set_name("NotificationDialog")
         i = 100
         self.actions = {}
         self.callback = actions_cb

@@ -11,6 +11,7 @@ class NetworkErrorDialog(Gtk.MessageDialog):
     def __init__(self, excp, secondary_markup=None):
         Gtk.MessageDialog.__init__(self, buttons=Gtk.ButtonsType.OK, type=Gtk.MessageType.ERROR)
 
+        self.set_name("NetworkErrorDialog")
         self.props.icon_name = "dialog.error"
         self.set_markup("<b>Failed to apply network settings</b>")
 

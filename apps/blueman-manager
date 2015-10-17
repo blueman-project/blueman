@@ -52,6 +52,7 @@ class Blueman:
         self.Builder.add_from_file(UI_PATH + "/manager-main.ui")
 
         self.window = self.Builder.get_object("window")
+        self.window.set_name("BluemanManager")
 
         self.Plugins = PluginManager(ManagerPlugin, blueman.plugins.manager, None)
         self.Plugins.Load()

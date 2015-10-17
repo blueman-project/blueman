@@ -20,6 +20,7 @@ class DeviceSelectorWidget(Gtk.VBox):
 
         Gtk.VBox.__init__(self)
 
+        self.set_name("DeviceSelectorWidget")
         self.props.spacing = 1
         self.props.vexpand = True
         self.set_size_request(360, 340)

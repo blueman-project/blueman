@@ -16,6 +16,7 @@ class DeviceSelectorDialog(Gtk.Dialog):
         Gtk.Dialog.__init__(self, title, parent, 0, ("_Cancel", Gtk.ResponseType.REJECT,
                                                      "_OK", Gtk.ResponseType.ACCEPT))
 
+        self.set_name("DeviceSelectorDialog")
         self.props.resizable = False
         self.props.icon_name = "blueman"
         self.selector = DeviceSelectorWidget()

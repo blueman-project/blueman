@@ -56,6 +56,7 @@ class Sender(GObject.GObject):
         bind_textdomain_codeset("blueman", "UTF-8")
         self.Builder.add_from_file(UI_PATH + "/send-dialog.ui")
         self.window = self.Builder.get_object("window")
+        self.window.set_name("BluemanSendTo")
 
         self.l_dest = self.Builder.get_object("l_dest")
         self.l_file = self.Builder.get_object("l_file")

@@ -33,6 +33,7 @@ class ManagerProgressbar(GObject.GObject):
             self.emit("cancelled")
 
         GObject.GObject.__init__(self)
+        self.set_name("ManagerProgressbar")
         self.Blueman = blueman
 
         self.cancellable = cancellable

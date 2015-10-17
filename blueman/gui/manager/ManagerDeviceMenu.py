@@ -34,6 +34,7 @@ class ManagerDeviceMenu(Gtk.Menu):
 
     def __init__(self, blueman):
         Gtk.Menu.__init__(self)
+        self.set_name("ManagerDeviceMenu")
         self.Blueman = blueman
         self.SelectedDevice = None
 

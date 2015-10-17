@@ -19,6 +19,7 @@ import weakref
 class SettingsWidget(Gtk.VBox):
     def __init__(self, inst):
         Gtk.VBox.__init__(self)
+        self.set_name("SettingsWidget")
         self.inst = inst
         self.props.spacing = 2
 
@@ -103,6 +104,7 @@ class PluginDialog(Gtk.Dialog):
     def __init__(self, applet):
         Gtk.Dialog.__init__(self, buttons=("_Close", Gtk.ResponseType.CLOSE))
 
+        self.set_name("PluginDialog")
         self.applet = applet
 
         self.Builder = Gtk.Builder()

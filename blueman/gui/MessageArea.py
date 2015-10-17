@@ -27,6 +27,7 @@ class MessageArea(Gtk.EventBox):
     def __init__(self):
         Gtk.EventBox.__init__(self)
 
+        self.set_name("MessageArea")
         self.hbox = Gtk.HBox()
         self.hbox.show()
 

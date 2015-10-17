@@ -55,6 +55,7 @@ class ManagerDeviceList(DeviceList):
             ["initial_anim", bool],
         ]
         DeviceList.__init__(self, adapter, data)
+        self.set_name("ManagerDeviceList")
         self.set_headers_visible(False)
         self.props.has_tooltip = True
         self.Blueman = inst

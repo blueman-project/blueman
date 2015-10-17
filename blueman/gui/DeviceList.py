@@ -52,6 +52,7 @@ class DeviceList(GenericList):
 
     def __init__(self, adapter=None, tabledata=None):
         Gtk.TreeView.__init__(self)
+        self.set_name("DeviceList")
 
         if not tabledata:
             tabledata = []
