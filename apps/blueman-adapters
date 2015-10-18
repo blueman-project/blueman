@@ -170,7 +170,7 @@ class BluemanAdapters:
         builder = Gtk.Builder()
         builder.set_translation_domain("blueman")
         builder.add_from_file(UI_PATH + "/adapters-tab.ui")
-        adapter_settings['vbox'] = builder.get_object("vbox1")
+        adapter_settings['grid'] = builder.get_object("grid")
 
         hscale = builder.get_object("hscale")
         hscale.set_range(0, 30)
@@ -181,7 +181,7 @@ class BluemanAdapters:
         adapter_settings['signals'].append((hscale, hscale.connect("format-value", on_scale_format_value)))
         adapter_settings['signals'].append((hscale, hscale.connect("value-changed", on_scale_value_changed)))
 
-        hidden_radio = builder.get_object("hidden1")
+        hidden_radio = builder.get_object("hidden")
         if not adapter_settings['discoverable']:
             hidden_radio.set_active(True)
         adapter_settings['signals'].append((hidden_radio, hidden_radio.connect("toggled", on_hidden_toggle)))
@@ -219,7 +219,7 @@ class BluemanAdapters:
         label.set_max_width_chars(20)
         label.props.hexpand = True
         label.set_ellipsize(Pango.EllipsizeMode.END)
-        self.notebook.insert_page(settings['vbox'], label, hci_dev_num)
+        self.notebook.insert_page(settings['grid'], label, hci_dev_num)
 
     def remove_from_notebook(self, adapter):
         hci_dev = os.path.basename(adapter.get_object_path())
