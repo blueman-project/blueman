@@ -37,7 +37,7 @@ class ManagerProgressbar(GObject.GObject):
 
         self.cancellable = cancellable
 
-        self.hbox = hbox = blueman.Builder.get_object("statusbar1")
+        self.hbox = hbox = blueman.Builder.get_object("status_data")
 
         self.progressbar = Gtk.ProgressBar()
         self.progressbar.set_name("ManagerProgressbar")

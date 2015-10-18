@@ -57,10 +57,9 @@ class Blueman:
         self.Plugins = PluginManager(ManagerPlugin, blueman.plugins.manager, None)
         self.Plugins.Load()
 
-        vbox = self.Builder.get_object("vbox1")
+        grid = self.Builder.get_object("grid")
         area = MessageArea()
-        vbox.pack_start(area, False, False, 0)
-        vbox.reorder_child(area, 3)
+        grid.attach(area, 0, 3, 1, 1)
 
         # Add margin for resize grip or it will overlap
         if self.window.get_has_resize_grip():
@@ -153,10 +152,10 @@ class Blueman:
 
                 self.Config.connect("changed::latest-last", on_latest_last_changed)
 
-                toolbar2 = self.Builder.get_object("toolbar2")
+                toolbar = self.Builder.get_object("toolbar")
                 statusbar = self.Builder.get_object("statusbar")
 
-                self.Config.bind_to_widget("show-toolbar", toolbar2, "visible")
+                self.Config.bind_to_widget("show-toolbar", toolbar, "visible")
                 self.Config.bind_to_widget("show-statusbar", statusbar, "visible")
 
                 self.window.show()

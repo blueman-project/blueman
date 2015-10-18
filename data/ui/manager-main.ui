@@ -8,23 +8,22 @@
     <property name="default_width">500</property>
     <property name="default_height">350</property>
     <child>
-      <object class="GtkBox" id="vbox1">
+      <object class="GtkGrid" id="grid">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="orientation">vertical</property>
+        <property name="column_homogeneous">True</property>
         <child>
           <object class="GtkMenuBar" id="menu">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
           </object>
           <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">0</property>
           </packing>
         </child>
         <child>
-          <object class="GtkToolbar" id="toolbar2">
+          <object class="GtkToolbar" id="toolbar">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
@@ -43,7 +42,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkSeparatorToolItem" id="toolbutton8">
+              <object class="GtkSeparatorToolItem" id="sep1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
               </object>
@@ -110,7 +109,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkSeparatorToolItem" id="toolbutton1">
+              <object class="GtkSeparatorToolItem" id="sep2">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
               </object>
@@ -135,25 +134,23 @@
             </child>
           </object>
           <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">1</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">1</property>
           </packing>
         </child>
         <child>
           <object class="GtkScrolledWindow" id="scrollview">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <property name="hscrollbar_policy">never</property>
+            <property name="vexpand">True</property>
             <property name="shadow_type">in</property>
             <child>
               <placeholder/>
             </child>
           </object>
           <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
-            <property name="position">2</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">2</property>
           </packing>
         </child>
         <child>
@@ -162,7 +159,7 @@
             <property name="can_focus">False</property>
             <property name="homogeneous">True</property>
             <child>
-              <object class="GtkBox" id="statusbar1">
+              <object class="GtkBox" id="status_data">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="halign">start</property>
@@ -180,7 +177,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkBox" id="statusbar2">
+              <object class="GtkBox" id="status_activity">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="halign">end</property>
@@ -199,10 +196,12 @@
             </child>
           </object>
           <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">3</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">4</property>
           </packing>
+        </child>
+        <child>
+          <placeholder/>
         </child>
       </object>
     </child>

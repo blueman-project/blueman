@@ -62,7 +62,7 @@ class ManagerStats:
         self.downarrow.set_tooltip_text(_("Total data received and rate of transmission"))
         self.downarrow.set_from_icon_name("go-down", 1)
 
-        self.hbox = hbox = blueman.Builder.get_object("statusbar2")
+        self.hbox = hbox = blueman.Builder.get_object("status_activity")
 
         hbox.pack_start(self.uparrow, True, False, 0)
         hbox.pack_start(self.up_rate, False, False, 0)
