@@ -33,6 +33,7 @@ class ManagerProgressbar(GObject.GObject):
             self.emit("cancelled")
 
         GObject.GObject.__init__(self)
+        self.set_name("ManagerProgressbar")
         self.Blueman = blueman
 
         self.cancellable = cancellable
@@ -58,7 +59,6 @@ class ManagerProgressbar(GObject.GObject):
         self.progressbar.set_pulse_step(0.05)
 
         self.window = blueman.Builder.get_object("window")
-        self.window.set_name("ManagerProgressbar")
 
         hbox.pack_end(eventbox, True, False, 0)
         hbox.pack_end(self.progressbar, False, False, 0)
