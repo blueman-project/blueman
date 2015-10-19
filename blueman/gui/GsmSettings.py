@@ -26,7 +26,7 @@ class GsmSettings(Gtk.Dialog):
         bind_textdomain_codeset("blueman", "UTF-8")
         self.Builder.add_from_file(UI_PATH + "/gsm-settings.ui")
 
-        vbox = self.Builder.get_object("vbox1")
+        gsm_grid = self.Builder.get_object("gsm_grid")
 
         self.config = Config("org.blueman.gsmsetting", "/org/blueman/gsmsettings/%s/" % bd_address)
         self.props.icon_name = "network-wireless"
@@ -35,8 +35,8 @@ class GsmSettings(Gtk.Dialog):
         self.props.resizable = False
 
         a = self.get_content_area()
-        a.pack_start(vbox, True, True, 0)
-        vbox.show()
+        a.pack_start(gsm_grid, True, True, 0)
+        gsm_frid.show()
 
         self.e_apn = self.Builder.get_object("e_apn")
         self.e_number = self.Builder.get_object("e_number")
