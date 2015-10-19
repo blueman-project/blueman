@@ -28,7 +28,7 @@ class MessageArea(Gtk.EventBox):
         Gtk.EventBox.__init__(self)
 
         self.set_name("MessageArea")
-        self.hbox = Gtk.HBox()
+        self.hbox = Gtk.Box(Gtk.Orientation.HORIZONTAL)
         self.hbox.show()
 
         self.text = ""

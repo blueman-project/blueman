@@ -16,9 +16,9 @@ from blueman.gui.GenericList import GenericList
 import weakref
 
 
-class SettingsWidget(Gtk.VBox):
-    def __init__(self, inst):
-        Gtk.VBox.__init__(self)
+class SettingsWidget(Gtk.Box):
+    def __init__(self, inst, orientation=Gtk.Orientation.VERTICAL):
+        Gtk.Box.__init__(self, orientation=orientation)
         self.set_name("SettingsWidget")
         self.inst = inst
         self.props.spacing = 2
@@ -68,7 +68,7 @@ class SettingsWidget(Gtk.VBox):
             return c
 
         elif params["type"] == int:
-            b = Gtk.HBox()
+            b = Gtk.Box(Gtk.Orientation.HORIZONTAL)
             l = Gtk.Label(label=params["name"])
             b.pack_start(l, False, False, 0)
 
@@ -86,7 +86,7 @@ class SettingsWidget(Gtk.VBox):
             return b
 
         elif params["type"] == str:
-            b = Gtk.HBox()
+            b = Gtk.Box(Gtk.Orientation.HORIZONTAL)
             l = Gtk.Label(label=params["name"])
             b.pack_start(l, False, False, 0)
 

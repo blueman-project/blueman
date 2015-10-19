@@ -15,10 +15,10 @@ from blueman.Constants import *
 from blueman.gui.DeviceSelectorList import DeviceSelectorList
 
 
-class DeviceSelectorWidget(Gtk.VBox):
-    def __init__(self, adapter=None):
+class DeviceSelectorWidget(Gtk.Box):
+    def __init__(self, adapter=None, orientation=Gtk.Orientation.VERTICAL):
 
-        Gtk.VBox.__init__(self)
+        Gtk.Box.__init__(self, orientation=orientation)
 
         self.set_name("DeviceSelectorWidget")
         self.props.spacing = 1
