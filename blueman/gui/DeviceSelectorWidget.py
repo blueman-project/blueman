@@ -37,7 +37,7 @@ class DeviceSelectorWidget(Gtk.Box):
         self.Builder = Gtk.Builder()
         self.Builder.add_from_file(UI_PATH + "/device-list-widget.ui")
 
-        sitem = self.Builder.get_object("search")
+        sgrid = self.Builder.get_object("search_grid")
 
         self.cb_adapters = self.Builder.get_object("adapters")
 
@@ -50,14 +50,14 @@ class DeviceSelectorWidget(Gtk.Box):
         button = self.Builder.get_object("b_search")
         button.connect("clicked", self.on_search_clicked)
 
-        self.pbar = self.Builder.get_object("progressbar1")
+        self.pbar = self.Builder.get_object("progressbar")
 
         self.List.connect("discovery-progress", self.on_discovery_progress)
 
         self.pack_start(sw, True, True, 0)
-        self.pack_start(sitem, False, False, 0)
+        self.pack_start(sgrid, False, False, 0)
 
-        sitem.show()
+        sgrid.show()
 
         sw.show_all()
 
