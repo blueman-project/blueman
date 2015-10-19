@@ -119,7 +119,7 @@ class PluginDialog(Gtk.Dialog):
         self.description.props.wrap = True
 
         self.icon = self.Builder.get_object("icon")
-        self.author = self.Builder.get_object("author")
+        self.author_txt = self.Builder.get_object("author_txt")
         self.depends_hdr = self.Builder.get_object("depends_hdr")
         self.depends_txt = self.Builder.get_object("depends_txt")
         self.conflicts_hdr = self.Builder.get_object("conflicts_hdr")
@@ -127,7 +127,7 @@ class PluginDialog(Gtk.Dialog):
         self.plugin_name = self.Builder.get_object("name")
 
         self.main_container = self.Builder.get_object("main_container")
-        self.content_vbox = self.Builder.get_object("content_vbox")
+        self.content_grid = self.Builder.get_object("content")
 
         self.b_prefs = self.Builder.get_object("b_prefs")
         self.b_prefs.connect("toggled", self.on_prefs_toggled)
@@ -203,7 +203,7 @@ class PluginDialog(Gtk.Dialog):
         cls = self.applet.Plugins.GetClasses()[name]
         self.plugin_name.props.label = "<b>" + name + "</b>"
         self.icon.props.icon_name = cls.__icon__
-        self.author.props.label = cls.__author__ or _("Unspecified")
+        self.author_txt.props.label = cls.__author__ or _("Unspecified")
         self.description.props.label = cls.__description__ or _("Unspecified")
 
         if cls.__depends__ != []:
@@ -257,7 +257,7 @@ class PluginDialog(Gtk.Dialog):
             self.main_container.remove(c)
             if isinstance(c, SettingsWidget):
                 c.destroy()
-            self.main_container.add(self.content_vbox)
+            self.main_container.add(self.content_grid)
 
     def populate(self):
         classes = self.applet.Plugins.GetClasses()
