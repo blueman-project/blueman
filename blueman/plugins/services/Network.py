@@ -30,7 +30,7 @@ class Network(ServicePlugin):
         self.Builder.set_translation_domain("blueman")
         bind_textdomain_codeset("blueman", "UTF-8")
         self.Builder.add_from_file(UI_PATH + "/services-network.ui")
-        self.widget = self.Builder.get_object("network")
+        self.widget = self.Builder.get_object("network_frame")
 
         container.pack_start(self.widget, True, True, 0)
 
