@@ -8,6 +8,9 @@
 * Drop browse feature
 * Add title to status icon
 * Add systemd service units (@smcv / Simon McVittie)
+* Set widget names so they can be used to style blueman.
+* Replace deprecated use of Gtk.VBox and Gtk.HBox.
+* Replace deprecated GtkTable with GtkGrid and also use it replace GtkBoxes used to layout.
 
 ### Bugs fixed
 
@@ -19,6 +22,9 @@
 * Always set codeset for gettext to utf8 (@mgorny / Michał Górny)
 * Support legacy devices without a Name property
 * (Covered) Crash in agent's passkey / pin code methods
+* Fix fading in GtkAnimation TreeRow(Color)Fade and CellFade classes.
+* Do not explixitely destoy DeviceSelectorDialog blueman-sendto.
+* gui: Call the sub-classed widgets init function instead of GObject's
 
 ## 2.0
 
