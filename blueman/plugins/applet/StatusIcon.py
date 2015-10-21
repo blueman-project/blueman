@@ -22,7 +22,7 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
     FORCE_HIDE = 0
 
     def on_load(self, applet):
-        GObject.GObject.__init__(self)
+        Gtk.StatusIcon.__init__(self)
         self.lines = {}
         self.pixbuf = None
         self.timeout = None

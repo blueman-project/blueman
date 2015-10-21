@@ -64,7 +64,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
     def on_load(self, applet):
         self.Applet = applet
         self.Adapters = {}
-        GObject.GObject.__init__(self)
+        Gtk.Menu.__init__(self)
         if not RecentConns.atexit_registered:
             atexit.register(store_state)
             RecentConns.atexit_registered = True
