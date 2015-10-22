@@ -43,39 +43,40 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 enable_rgba_colormap()
 
 
-class Blueman:
+class Blueman(Gtk.Window):
     def __init__(self):
+        Gtk.Window.__init__(self, title=_("Bluetooth Devices"))
 
         self.Builder = Gtk.Builder()
         self.Builder.set_translation_domain("blueman")
         bind_textdomain_codeset("blueman", "UTF-8")
         self.Builder.add_from_file(UI_PATH + "/manager-main.ui")
 
-        self.window = self.Builder.get_object("window")
-        self.window.set_name("BluemanManager")
+        grid = self.Builder.get_object("grid")
+        self.add(grid)
+        self.set_name("BluemanManager")
 
         self.Plugins = PluginManager(ManagerPlugin, blueman.plugins.manager, None)
         self.Plugins.Load()
 
-        grid = self.Builder.get_object("grid")
         area = MessageArea()
         grid.attach(area, 0, 3, 1, 1)
 
         # Add margin for resize grip or it will overlap
-        if self.window.get_has_resize_grip():
+        if self.get_has_resize_grip():
             statusbar = self.Builder.get_object("statusbar")
             margin_right = statusbar.get_margin_right()
             statusbar.set_margin_right (margin_right +  10)
 
         def do_present(time):
-            if self.window.props.visible:
-                self.window.present_with_time(time)
+            if self.props.visible:
+                self.present_with_time(time)
 
         check_single_instance("blueman-manager", do_present)
 
         def on_window_delete(window, event):
-            w, h = self.window.get_size()
-            x, y = self.window.get_position()
+            w, h = self.get_size()
+            x, y = self.get_position()
             self.Config["window-properties"] = [w, h, x, y]
             Gtk.main_quit()
 
@@ -85,17 +86,17 @@ class Blueman:
 
         def on_bt_status_changed(status):
             if not status:
-                self.window.hide()
+                self.hide()
                 check_bluetooth_status(_("Bluetooth needs to be turned on for the device manager to function"),
                                        lambda: Gtk.main_quit())
             else:
-                self.window.show()
+                self.show()
 
         def on_bluez_name_owner_changed(owner):
             dprint('org.bluez owner changed to ', owner)
             if owner == '':
-                self.window.hide()
-                d = Gtk.MessageDialog(self.window, type=Gtk.MessageType.ERROR, buttons=Gtk.ButtonsType.CLOSE)
+                self.hide()
+                d = Gtk.MessageDialog(self, type=Gtk.MessageType.ERROR, buttons=Gtk.ButtonsType.CLOSE)
                 d.props.icon_name = "blueman"
                 d.props.text = _("Connection to BlueZ failed")
 
@@ -127,12 +128,12 @@ class Blueman:
                 self.Applet.bus.add_signal_receiver(on_bt_status_changed, "BluetoothStatusChanged",
                                                     self.Applet.dbus_interface, path=self.Applet.object_path)
 
-                self.window.connect("delete-event", on_window_delete)
-                self.window.props.icon_name = "blueman"
+                self.connect("delete-event", on_window_delete)
+                self.props.icon_name = "blueman"
 
                 w, h, x, y = self.Config["window-properties"]
-                if w and h: self.window.resize(w, h)
-                if x and y: self.window.move(x, y)
+                if w and h: self.resize(w, h)
+                if x and y: self.move(x, y)
 
                 sw = self.Builder.get_object("scrollview")
 
@@ -158,10 +159,9 @@ class Blueman:
                 self.Config.bind_to_widget("show-toolbar", toolbar, "visible")
                 self.Config.bind_to_widget("show-statusbar", statusbar, "visible")
 
-                self.window.show()
+                self.show()
 
         dbus.SystemBus().watch_name_owner('org.bluez', on_bluez_name_owner_changed)
-        Gtk.main()
 
     def on_adapter_changed(self, list, adapter):
         if adapter != None:
@@ -223,6 +223,7 @@ class Blueman:
         applet = AppletService()
         applet.DisconnectDevice(device.get_object_path(), *args, **kwargs)
 
-
-set_proc_title()
-Blueman()
+if __name__ == '__main__':
+    manager = Blueman()
+    set_proc_title()
+    Gtk.main()

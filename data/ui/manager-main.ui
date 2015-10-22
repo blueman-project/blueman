@@ -2,208 +2,200 @@
 <!-- Generated with glade 3.18.3 -->
 <interface>
   <requires lib="gtk+" version="3.0"/>
-  <object class="GtkWindow" id="window">
+  <object class="GtkGrid" id="grid">
+    <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="title" translatable="yes">Bluetooth Devices</property>
-    <property name="default_width">500</property>
-    <property name="default_height">350</property>
+    <property name="column_homogeneous">True</property>
     <child>
-      <object class="GtkGrid" id="grid">
+      <object class="GtkMenuBar" id="menu">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="column_homogeneous">True</property>
+      </object>
+      <packing>
+        <property name="left_attach">0</property>
+        <property name="top_attach">0</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkToolbar" id="toolbar">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
         <child>
-          <object class="GtkMenuBar" id="menu">
+          <object class="GtkToolButton" id="b_search">
+            <property name="visible">True</property>
+            <property name="sensitive">False</property>
+            <property name="can_focus">False</property>
+            <property name="tooltip_text" translatable="yes">Search for nearby devices</property>
+            <property name="is_important">True</property>
+            <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Search</property>
+            <property name="icon_name">edit-find</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="homogeneous">True</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSeparatorToolItem" id="sep1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
           </object>
           <packing>
-            <property name="left_attach">0</property>
-            <property name="top_attach">0</property>
+            <property name="expand">False</property>
+            <property name="homogeneous">False</property>
           </packing>
         </child>
         <child>
-          <object class="GtkToolbar" id="toolbar">
+          <object class="GtkToolButton" id="b_bond">
             <property name="visible">True</property>
+            <property name="sensitive">False</property>
             <property name="can_focus">False</property>
-            <child>
-              <object class="GtkToolButton" id="b_search">
-                <property name="visible">True</property>
-                <property name="sensitive">False</property>
-                <property name="can_focus">False</property>
-                <property name="tooltip_text" translatable="yes">Search for nearby devices</property>
-                <property name="is_important">True</property>
-                <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Search</property>
-                <property name="icon_name">edit-find</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="homogeneous">True</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkSeparatorToolItem" id="sep1">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="homogeneous">False</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkToolButton" id="b_bond">
-                <property name="visible">True</property>
-                <property name="sensitive">False</property>
-                <property name="can_focus">False</property>
-                <property name="tooltip_text" translatable="yes">Create pairing with the device</property>
-                <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Pair</property>
-                <property name="icon_name">dialog-password</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="homogeneous">True</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkToolButton" id="b_trust">
-                <property name="visible">True</property>
-                <property name="sensitive">False</property>
-                <property name="can_focus">False</property>
-                <property name="tooltip_text" translatable="yes">Mark/Unmark this device as trusted</property>
-                <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Trust</property>
-                <property name="icon_name">blueman-trust</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="homogeneous">True</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkToolButton" id="b_setup">
-                <property name="visible">True</property>
-                <property name="sensitive">False</property>
-                <property name="can_focus">False</property>
-                <property name="tooltip_text" translatable="yes">Run the setup assistant for this device</property>
-                <property name="is_important">True</property>
-                <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Setup...</property>
-                <property name="icon_name">document-properties</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="homogeneous">True</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkToolButton" id="b_remove">
-                <property name="visible">True</property>
-                <property name="sensitive">False</property>
-                <property name="can_focus">False</property>
-                <property name="tooltip_text" translatable="yes">Remove this device from the known devices list</property>
-                <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Remove</property>
-                <property name="icon_name">list-remove</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="homogeneous">True</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkSeparatorToolItem" id="sep2">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="homogeneous">True</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkToolButton" id="b_send">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="tooltip_text" translatable="yes">Send file(s) to the device</property>
-                <property name="is_important">True</property>
-                <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Send File</property>
-                <property name="icon_name">blueman-send-file</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="homogeneous">True</property>
-              </packing>
-            </child>
+            <property name="tooltip_text" translatable="yes">Create pairing with the device</property>
+            <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Pair</property>
+            <property name="icon_name">dialog-password</property>
           </object>
           <packing>
-            <property name="left_attach">0</property>
-            <property name="top_attach">1</property>
+            <property name="expand">False</property>
+            <property name="homogeneous">True</property>
           </packing>
         </child>
         <child>
-          <object class="GtkScrolledWindow" id="scrollview">
+          <object class="GtkToolButton" id="b_trust">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="vexpand">True</property>
-            <property name="shadow_type">in</property>
+            <property name="sensitive">False</property>
+            <property name="can_focus">False</property>
+            <property name="tooltip_text" translatable="yes">Mark/Unmark this device as trusted</property>
+            <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Trust</property>
+            <property name="icon_name">blueman-trust</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="homogeneous">True</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkToolButton" id="b_setup">
+            <property name="visible">True</property>
+            <property name="sensitive">False</property>
+            <property name="can_focus">False</property>
+            <property name="tooltip_text" translatable="yes">Run the setup assistant for this device</property>
+            <property name="is_important">True</property>
+            <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Setup...</property>
+            <property name="icon_name">document-properties</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="homogeneous">True</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkToolButton" id="b_remove">
+            <property name="visible">True</property>
+            <property name="sensitive">False</property>
+            <property name="can_focus">False</property>
+            <property name="tooltip_text" translatable="yes">Remove this device from the known devices list</property>
+            <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Remove</property>
+            <property name="icon_name">list-remove</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="homogeneous">True</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSeparatorToolItem" id="sep2">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="homogeneous">True</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkToolButton" id="b_send">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="tooltip_text" translatable="yes">Send file(s) to the device</property>
+            <property name="is_important">True</property>
+            <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Send File</property>
+            <property name="icon_name">blueman-send-file</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="homogeneous">True</property>
+          </packing>
+        </child>
+      </object>
+      <packing>
+        <property name="left_attach">0</property>
+        <property name="top_attach">1</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkScrolledWindow" id="scrollview">
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="vexpand">True</property>
+        <property name="shadow_type">in</property>
+        <child>
+          <placeholder/>
+        </child>
+      </object>
+      <packing>
+        <property name="left_attach">0</property>
+        <property name="top_attach">2</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkBox" id="statusbar">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="homogeneous">True</property>
+        <child>
+          <object class="GtkBox" id="status_data">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="halign">start</property>
+            <property name="valign">center</property>
+            <property name="margin_left">2</property>
+            <property name="spacing">2</property>
             <child>
               <placeholder/>
             </child>
           </object>
           <packing>
-            <property name="left_attach">0</property>
-            <property name="top_attach">2</property>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
           </packing>
         </child>
         <child>
-          <object class="GtkBox" id="statusbar">
+          <object class="GtkBox" id="status_activity">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="homogeneous">True</property>
+            <property name="halign">end</property>
+            <property name="valign">center</property>
+            <property name="margin_right">2</property>
+            <property name="spacing">2</property>
             <child>
-              <object class="GtkBox" id="status_data">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="halign">start</property>
-                <property name="valign">center</property>
-                <property name="margin_left">2</property>
-                <property name="spacing">2</property>
-                <child>
-                  <placeholder/>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkBox" id="status_activity">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="halign">end</property>
-                <property name="valign">center</property>
-                <property name="margin_right">2</property>
-                <property name="spacing">2</property>
-                <child>
-                  <placeholder/>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">2</property>
-              </packing>
+              <placeholder/>
             </child>
           </object>
           <packing>
-            <property name="left_attach">0</property>
-            <property name="top_attach">4</property>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">2</property>
           </packing>
         </child>
-        <child>
-          <placeholder/>
-        </child>
       </object>
+      <packing>
+        <property name="left_attach">0</property>
+        <property name="top_attach">4</property>
+      </packing>
+    </child>
+    <child>
+      <placeholder/>
     </child>
   </object>
 </interface>
