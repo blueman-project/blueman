@@ -9,6 +9,7 @@
 * Exception at exit (#391)
 * Clarify wording of tray applet's option to turn off bluetooth
 * Do not block manager with plugin dialog (#383)
+* blueman-adapters: Set hidden in the ui when timeout is reached
 
 ## 2.0.1
 
