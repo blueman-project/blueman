@@ -110,22 +110,18 @@ class BluemanAdapters:
         def on_hidden_toggle(radio):
             if not radio.props.active:
                 return
+            adapter.set('DiscoverableTimeout', 0)
             adapter_settings['discoverable'] = False
             adapter.set('Discoverable', False)
             hscale.set_sensitive(False)
-            #we need to triger "format-value" signal
-            hscale.set_value(1)
-            hscale.set_value(0)
 
         def on_always_toggle(radio):
             if not radio.props.active:
                 return
+            adapter.set('DiscoverableTimeout', 0)
             adapter_settings['discoverable'] = True
             adapter.set('Discoverable', True)
             hscale.set_sensitive(False)
-            #we need to triger "format-value" signal
-            hscale.set_value(1)
-            hscale.set_value(0)
 
         def on_temporary_toggle(radio):
             if not radio.props.active:
@@ -158,7 +154,6 @@ class BluemanAdapters:
 
         props = adapter.get_properties()
         adapter_settings['adapter'] = adapter
-        adapter_settings['signals'] = []
         adapter_settings['adapter'].connect_signal('property-changed', on_property_changed)
         adapter_settings['address'] = props['Address']
         adapter_settings['name'] = adapter.get_name()
@@ -173,30 +168,30 @@ class BluemanAdapters:
         adapter_settings['grid'] = builder.get_object("grid")
 
         hscale = builder.get_object("hscale")
+        hscale.connect("format-value", on_scale_format_value)
+        hscale.connect("value-changed", on_scale_value_changed)
         hscale.set_range(0, 30)
         hscale.set_increments(1, 1)
         if adapter_settings['discoverable']:
             hscale.set_value(adapter_settings['discoverable_timeout'])
             hscale.set_sensitive(adapter_settings['discoverable_timeout'] > 0)
-        adapter_settings['signals'].append((hscale, hscale.connect("format-value", on_scale_format_value)))
-        adapter_settings['signals'].append((hscale, hscale.connect("value-changed", on_scale_value_changed)))
 
         hidden_radio = builder.get_object("hidden")
+        hidden_radio.connect("toggled", on_hidden_toggle)
         if not adapter_settings['discoverable']:
             hidden_radio.set_active(True)
-        adapter_settings['signals'].append((hidden_radio, hidden_radio.connect("toggled", on_hidden_toggle)))
         always_radio = builder.get_object("always")
+        always_radio.connect("toggled", on_always_toggle)
         if adapter_settings['discoverable'] and adapter_settings['discoverable_timeout'] == 0:
             always_radio.set_active(True)
-        adapter_settings['signals'].append((always_radio, always_radio.connect("toggled", on_always_toggle)))
         temporary_radio = builder.get_object("temporary")
+        temporary_radio.connect("toggled", on_temporary_toggle)
         if adapter_settings['discoverable'] and adapter_settings['discoverable_timeout'] > 0:
             temporary_radio.set_active(True)
-        adapter_settings['signals'].append((temporary_radio, temporary_radio.connect("toggled", on_temporary_toggle)))
 
         name_entry = builder.get_object("name_entry")
+        name_entry.connect("changed", on_name_changed)
         name_entry.set_text(adapter_settings['name'])
-        adapter_settings['signals'].append((name_entry, name_entry.connect("changed", on_name_changed)))
 
         return adapter_settings
 
