@@ -106,6 +106,9 @@ class BluemanAdapters:
                     self.remove_from_notebook(adapter)
                 else:
                     self.add_to_notebook(adapter)
+            elif name == "Discoverable":
+                if value == 0:
+                    hidden_radio.set_active(True)
 
         def on_hidden_toggle(radio):
             if not radio.props.active:
