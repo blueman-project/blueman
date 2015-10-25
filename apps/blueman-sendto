@@ -22,6 +22,7 @@ from locale import bind_textdomain_codeset
 from blueman.Constants import *
 import gi
 gi.require_version("Gtk", "3.0")
+from gi.repository import Gdk
 from gi.repository import Gtk
 from gi.repository import GObject
 
@@ -44,28 +45,38 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 enable_rgba_colormap()
 
 
-class Sender(GObject.GObject):
+class Sender(Gtk.Dialog):
     __gsignals__ = {
         str('result'): (GObject.SignalFlags.RUN_FIRST, None, (GObject.TYPE_BOOLEAN,)),
     }
 
     def __init__(self, device, adapter, files):
-        GObject.GObject.__init__(self)
+        Gtk.Dialog.__init__(self, title=_("Bluetooth File Transfer"))
+        self.set_name("BluemanSendTo")
+        self.set_position(Gtk.WindowPosition.CENTER)
+        self.set_type_hint(Gdk.WindowTypeHint.DIALOG)
+        self.props.border_width = 5
+        self.props.icon_name = "blueman"
+        self.props.width_request = 400
+
+        self.b_cancel = self.add_button("_Stop", Gtk.ResponseType.CLOSE)
+        self.b_cancel.props.receives_default = True
+        self.b_cancel.props.use_underline = True
+        self.b_cancel.connect("clicked", self.on_cancel)
+
         self.Builder = Gtk.Builder()
         self.Builder.set_translation_domain("blueman")
         bind_textdomain_codeset("blueman", "UTF-8")
         self.Builder.add_from_file(UI_PATH + "/send-dialog.ui")
-        self.window = self.Builder.get_object("window")
-        self.window.set_name("BluemanSendTo")
+
+        grid = self.Builder.get_object("sendto")
+        content_area = self.get_content_area()
+        content_area.add(grid)
 
         self.l_dest = self.Builder.get_object("l_dest")
         self.l_file = self.Builder.get_object("l_file")
 
         self.pb = self.Builder.get_object("pb")
-
-        self.b_cancel = self.Builder.get_object("b_cancel")
-        self.b_cancel.connect("clicked", self.on_cancel)
-
         self.pb.props.text = _("Connecting")
 
         self.device = device
@@ -104,8 +115,7 @@ class Sender(GObject.GObject):
         try:
             self.client = obex.Client()
         except obex.ObexdNotFoundError:
-            d = Gtk.MessageDialog(self.window,
-                                  type=Gtk.MessageType.ERROR, buttons=Gtk.ButtonsType.OK)
+            d = Gtk.MessageDialog(self, type=Gtk.MessageType.ERROR, buttons=Gtk.ButtonsType.OK)
             d.props.text = _("obexd not available")
             d.props.secondary_text = _("obexd is probably not installed")
             d.run()
@@ -126,7 +136,7 @@ class Sender(GObject.GObject):
 
         self.create_session()
 
-        self.window.show()
+        self.show()
 
     def create_session(self):
         dprint("Creating session")
@@ -217,8 +227,7 @@ class Sender(GObject.GObject):
     def on_transfer_error(self, _transfer, msg):
         if not self.error_dialog:
             self.speed.reset()
-            d = Gtk.MessageDialog(self.window,
-                                  type=Gtk.MessageType.ERROR)
+            d = Gtk.MessageDialog(self, type=Gtk.MessageType.ERROR)
             d.props.text = msg
             d.props.modal = True
             d.props.secondary_text = _("Error occurred while sending file %s") % os.path.basename(self.files[-1])
@@ -265,8 +274,7 @@ class Sender(GObject.GObject):
         self.process_queue()
 
     def on_session_failed(self, _client, msg):
-        d = Gtk.MessageDialog(self.window,
-                              type=Gtk.MessageType.ERROR, buttons=(Gtk.ButtonsType.CLOSE))
+        d = Gtk.MessageDialog(self, type=Gtk.MessageType.ERROR, buttons=(Gtk.ButtonsType.CLOSE))
         d.props.text = _("Error occurred")
         d.props.icon_name = "blueman"
         d.props.secondary_text = str(msg).split(":")[1].strip(" ")
