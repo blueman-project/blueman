@@ -31,23 +31,41 @@ enable_rgba_colormap()
 setup_icon_path()
 
 
-class BluemanServices:
+class BluemanServices(Gtk.Dialog):
     def __init__(self):
+        Gtk.Dialog.__init__(self, title=_("Local Services"))
+        self.resize(520, 420)
+        self.set_name("BluemanServices")
+        self.set_position(Gtk.WindowPosition.CENTER)
+        self.props.border_width = 5
+        self.props.icon_name = "blueman"
 
-        self.Builder = Gtk.Builder()
-        self.Builder.set_translation_domain("blueman")
-        bind_textdomain_codeset("blueman", "UTF-8")
-        self.Builder.add_from_file(UI_PATH + "/services.ui")
+        self.b_apply = self.add_button("_Apply", Gtk.ResponseType.APPLY)
+        self.b_apply.props.receives_default = True
+        self.b_apply.props.sensitive = True
+        self.b_apply.props.use_underline = True
+
+        self.b_close = self.add_button("_Close", Gtk.ResponseType.CLOSE)
+        self.b_close.props.use_underline = True
+
+        self.content_area = self.get_content_area()
+
+        self.box = Gtk.Box(Gtk.Orientation.HORIZONTAL)
+        self.box.props.vexpand = True
+        self.box.props.visible = True
+
+        self.viewport = Gtk.Viewport()
+        self.viewport.props.visible = True
+        self.viewport.props.width_request = 120
+
+        self.box.add(self.viewport)
+        self.content_area.add(self.box)
+
+        self.connect("delete-event", Gtk.main_quit)
 
         self.Config = Config("org.blueman.general")
 
-        self.Dialog = self.Builder.get_object("dialog")
-        self.Dialog.set_name("BluemanServices")
-        self.Dialog.resize(520, 420)
-
         check_single_instance("blueman-services", lambda time: self.Dialog.present_with_time(time))
-
-        self.Dialog.connect("delete-event", lambda x, y: Gtk.main_quit())
 
         data = [
             ["picture", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 0}, None],
@@ -61,10 +79,8 @@ class BluemanServices:
         ls.selection.connect("changed", self.on_selection_changed)
         self.List = ls
 
-        self.Builder.get_object("viewport1").add(ls)
+        self.viewport.add(ls)
         ls.show()
-
-        self.container = self.Builder.get_object("hbox1")
 
         self.load_plugins()
 
@@ -73,11 +89,10 @@ class BluemanServices:
         except:
             ls.selection.select_path(0)
 
-        self.Builder.get_object("b_apply").connect("clicked", self.on_apply_clicked)
-        self.Builder.get_object("b_close").connect("clicked", lambda x: Gtk.main_quit())
+        self.b_apply.connect("clicked", self.on_apply_clicked)
+        self.b_close.connect("clicked", Gtk.main_quit)
 
-        self.Dialog.show()
-        Gtk.main()
+        self.show()
 
     def option_changed(self):
         rets = self.plugin_exec("on_query_apply_state")
@@ -88,8 +103,7 @@ class BluemanServices:
                 break
             show_apply = show_apply or ret
 
-        b_apply = self.Builder.get_object("b_apply")
-        b_apply.props.sensitive = show_apply
+        self.b_apply.props.sensitive = show_apply
 
     def load_plugins(self):
         path = os.path.dirname(blueman.plugins.services.__file__)
@@ -149,7 +163,7 @@ class BluemanServices:
         for inst in ServicePlugin.instances:
             if inst.__class__.__name__ == pageid:
                 if not inst._is_loaded:
-                    inst.on_load(self.container)
+                    inst.on_load(self.box)
                     inst._is_loaded = True
 
                 inst._on_enter()
@@ -167,6 +181,7 @@ class BluemanServices:
 
         self.set_page(id)
 
-
-set_proc_title()
-BluemanServices()
+if __name__ == '__main__':
+    services = BluemanServices()
+    set_proc_title()
+    Gtk.main()
