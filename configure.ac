@@ -184,6 +184,15 @@ AC_ARG_ENABLE([appindicator],
 
 AM_CONDITIONAL([HAVE_APPINDICATOR], [test "x$use_appindicator" = "xyes"])
 
+AC_ARG_WITH([systemdunitdir],
+  AS_HELP_STRING([--with-systemdunitdir=PATH],
+    [Directory for systemd unit files]
+    [[default=${prefix}/lib/systemd]]),
+  [systemd_unit_dir="$withval"],
+  [systemd_unit_dir='${prefix}/lib/systemd'])
+AC_SUBST([systemd_unit_dir])
+AM_CONDITIONAL([SYSTEMD_UNIT_DIR], [test "x$systemd_unit_dir" != "xno"])
+
 # GSettings related settings
 GLIB_GSETTINGS
 
@@ -268,4 +277,5 @@ echo Settings menu integration enabled: $have_settings
 echo Dhcpd 3 configuration file: $dhconfig
 echo PulseAudio support: $use_pulseaudio
 echo AppIndicator support: $use_appindicator
+echo Systemd unit dir: ${systemd_unit_dir}
 echo
