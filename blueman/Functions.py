@@ -131,15 +131,6 @@ def wait_for_adapter(bluez_adapter, callback, timeout=1000):
     sig = bluez_adapter.connect_signal('property-changed', on_prop_changed)
 
 
-def enable_rgba_colormap():
-    #screen = Gdk.Display.get_default().get_default_screen()
-    #colormap = screen.get_rgba_colormap()
-    #if colormap == None:
-    #	colormap = screen.get_rgb_colormap()
-    #Gtk.widget_set_default_colormap(colormap)
-    pass
-
-
 def launch(cmd, paths=None, system=False, icon_name=None, sn=True, name="blueman"):
     '''Launch a gui app with starup notification'''
     display = Gdk.Display.get_default()
