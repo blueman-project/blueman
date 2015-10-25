@@ -8,6 +8,7 @@
 * Drop browse feature
 * Add title to status icon
 * Add systemd service units (@smcv / Simon McVittie)
+* Add `--disable-systemd` option to configure (@yars068 / Yaroslav Shmelev)
 * Set widget names so they can be used to style blueman.
 * Replace deprecated use of Gtk.VBox and Gtk.HBox.
 * Replace deprecated GtkTable with GtkGrid and also use it replace GtkBoxes used to layout.
