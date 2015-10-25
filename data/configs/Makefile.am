@@ -7,11 +7,13 @@ dbus_services_DATA = org.blueman.Mechanism.service
 dbus_sessdir = $(datadir)/dbus-1/services
 dbus_sess_DATA = org.blueman.Applet.service
 
-systemd_systemdir = $(prefix)/lib/systemd/system
+if HAVE_SYSTEMD
+systemd_systemdir = $(systemd_system_dir)
 systemd_system_DATA = blueman-mechanism.service
 
-systemd_userdir = $(prefix)/lib/systemd/user
+systemd_userdir = $(systemd_user_dir)
 systemd_user_DATA = blueman-applet.service
+endif
 
 if HAVE_POLKIT
 @INTLTOOL_POLICY_RULE@ 
@@ -21,21 +23,29 @@ policykit_DATA = $(policykit_in_files:.policy.in=.policy)
 endif
 
 EXTRA_DIST = \
-	blueman-applet.service.in		\
-	blueman-mechanism.service.in		\
 	org.blueman.Mechanism.conf		\
 	org.blueman.Applet.service.in		\
 	org.blueman.Mechanism.service.in	\
 	org.blueman.policy.in
 
-CLEANFILES =		\
-	blueman-applet.service		\
-	blueman-mechanism.service	\
+if HAVE_SYSTEMD
+EXTRA_DIST += \
+	blueman-applet.service.in		\
+	blueman-mechanism.service.in
+endif
+
+CLEANFILES = \
 	org.blueman.Mechanism.service	\
 	org.blueman.policy		\
 	org.blueman.Applet.service		\
 	$(BUILT_SOURCES)
-	
+
+if HAVE_SYSTEMD
+CLEANFILES += \
+	blueman-applet.service		\
+	blueman-mechanism.service
+endif
+
 DISTCLEANFILES = \
 	$(CLEANFILES)
 

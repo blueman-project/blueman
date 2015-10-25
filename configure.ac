@@ -184,6 +184,36 @@ AC_ARG_ENABLE([appindicator],
 
 AM_CONDITIONAL([HAVE_APPINDICATOR], [test "x$use_appindicator" = "xyes"])
 
+dnl ----------------------------
+
+AC_ARG_ENABLE([systemd],
+  AS_HELP_STRING([--disable-systemd], [Disable systemd support]),
+  [use_systemd=$enableval], [use_systemd=yes])
+
+if test "x$use_systemd" = "xyes"; then
+  PKG_CHECK_MODULES([SYSTEMD], [systemd >= 220])
+  AC_ARG_WITH([systemdsystemunitdir=PATH],
+    AS_HELP_STRING([--with-systemdsystemunitdir=PATH],
+      [Directory for systemd system units]
+      [[default=${prefix}/lib/systemd/system]]),
+    [systemd_system_dir="$withval"],
+    [systemd_system_dir='${prefix}/lib/systemd/system'])
+  AC_SUBST([systemd_system_dir])
+  
+  AC_ARG_WITH([systemduserunitdir],
+    AS_HELP_STRING([--with-systemduserunitdir=PATH],
+      [Directory for systemd user units]
+      [[default=${prefix}/lib/systemd/user]]),
+    [systemd_user_dir="$withval"],
+    [systemd_user_dir='${prefix}/lib/systemd/user'])
+  AC_SUBST([systemd_user_dir])
+    
+  AC_SUBST([SYSTEMD_CFLAGS])
+  AC_SUBST([SYSTEMD_LIBS])
+fi
+ 
+AM_CONDITIONAL([HAVE_SYSTEMD], [test "x$use_systemd" = "xyes"])
+
 # GSettings related settings
 GLIB_GSETTINGS
 
@@ -256,7 +286,7 @@ po/Makefile.in
 
 
 echo
-echo $PACKAGE $VERSION
+echo === Configuration summary for $PACKAGE $VERSION ===
 echo
 
 echo Prefix: $prefix
@@ -268,4 +298,9 @@ echo Settings menu integration enabled: $have_settings
 echo Dhcpd 3 configuration file: $dhconfig
 echo PulseAudio support: $use_pulseaudio
 echo AppIndicator support: $use_appindicator
+echo systemd support: $use_systemd
+if test "x$use_systemd" = "xyes" ; then
+  echo systemd system-wide units directory: $systemd_system_dir
+  echo systemd user-wide units directory: $systemd_user_dir
+fi
 echo
