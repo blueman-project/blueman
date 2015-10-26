@@ -85,14 +85,21 @@ class BluemanAdapters(Gtk.Dialog):
                 settings['adapter'].set_name(settings['name'])
         Gtk.main_quit()
 
-    def on_adapter_added(self, _manager, adapter_path):
-        def on_property_changed(_adapter, name, value, _path):
-            if name == 'Powered' and value:
-                adapter.disconnect_signal(sig)
-                self.add_to_notebook(adapter)
+    def on_property_changed(self, adapter, name, value, path):
+        hci_dev = os.path.basename(path)
 
+        if name == 'Powered':
+            if not value:
+                self.remove_from_notebook(adapter)
+            else:
+                self.add_to_notebook(adapter)
+        elif name == "Discoverable":
+            if value == 0:
+                self.tabs[hci_dev]["hidden_radio"].set_active(True)
+
+    def on_adapter_added(self, _manager, adapter_path):
         adapter = Bluez.Adapter(adapter_path)
-        sig = adapter.connect_signal('property-changed', on_property_changed)
+        self.add_to_notebook(adapter)
 
     def on_dbus_name_owner_change(self, owner):
         print('org.bluez owner changed to '+owner)
@@ -102,16 +109,6 @@ class BluemanAdapters(Gtk.Dialog):
 
     def build_adapter_tab(self, adapter):
         adapter_settings = {}
-
-        def on_property_changed(_adapter, name, value, _path):
-            if name == 'Powered':
-                if not value:
-                    self.remove_from_notebook(adapter)
-                else:
-                    self.add_to_notebook(adapter)
-            elif name == "Discoverable":
-                if value == 0:
-                    hidden_radio.set_active(True)
 
         def on_hidden_toggle(radio):
             if not radio.props.active:
@@ -160,7 +157,7 @@ class BluemanAdapters(Gtk.Dialog):
 
         props = adapter.get_properties()
         adapter_settings['adapter'] = adapter
-        adapter_settings['adapter'].connect_signal('property-changed', on_property_changed)
+        adapter_settings['adapter'].connect_signal('property-changed', self.on_property_changed)
         adapter_settings['address'] = props['Address']
         adapter_settings['name'] = adapter.get_name()
         adapter_settings['discoverable'] = props['Discoverable']
