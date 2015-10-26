@@ -62,6 +62,7 @@ class BluemanAdapters(Gtk.Dialog):
         try:
             self.manager = Bluez.Manager()
             self.manager.connect_signal('adapter-added', self.on_adapter_added)
+            self.manager.connect_signal('adapter-removed', self.on_adapter_removed)
             adapters = self.manager.list_adapters()
             for adapter in adapters:
                 self.add_to_notebook(adapter)
@@ -86,20 +87,18 @@ class BluemanAdapters(Gtk.Dialog):
         Gtk.main_quit()
 
     def on_property_changed(self, adapter, name, value, path):
-        hci_dev = os.path.basename(path)
-
-        if name == 'Powered':
-            if not value:
-                self.remove_from_notebook(adapter)
-            else:
-                self.add_to_notebook(adapter)
-        elif name == "Discoverable":
-            if value == 0:
-                self.tabs[hci_dev]["hidden_radio"].set_active(True)
+        if name == "Discoverable" and value == 0:
+            hci_dev = os.path.basename(path)
+            self.tabs[hci_dev]["hidden_radio"].set_active(True)
 
     def on_adapter_added(self, _manager, adapter_path):
         adapter = Bluez.Adapter(adapter_path)
         self.add_to_notebook(adapter)
+
+    def on_adapter_removed(self, _manager, adapter_path):
+        hci_dev = os.path.basename(adapter_path)
+        adapter = self.tabs[hci_dev]["adapter"]
+        self.remove_from_notebook(adapter)
 
     def on_dbus_name_owner_change(self, owner):
         print('org.bluez owner changed to '+owner)
