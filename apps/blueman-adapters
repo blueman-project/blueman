@@ -200,6 +200,9 @@ class BluemanAdapters(Gtk.Dialog):
         temporary_radio.connect("toggled", on_temporary_toggle)
         name_entry.connect("changed", on_name_changed)
 
+        adapter_settings["hidden_radio"] = hidden_radio
+        adapter_settings["always_radio"] = always_radio
+        adapter_settings["temparary_radio"] = temporary_radio
         return adapter_settings
 
     def add_to_notebook(self, adapter):
