@@ -37,6 +37,10 @@ class PropertiesBase(Base):
                 self._on_property_changed(name, value, path)
 
     @raise_dbus_error
+    def get(self, name):
+        return self.__properties_interface.Get(self._interface_name, name)
+
+    @raise_dbus_error
     def set(self, name, value):
         if type(value) is int:
             value = dbus.UInt32(value)
@@ -45,3 +49,12 @@ class PropertiesBase(Base):
     @raise_dbus_error
     def get_properties(self):
         return self.__properties_interface.GetAll(self._interface_name)
+
+    def __getitem__(self, key):
+        return self.get(key)
+
+    def __setitem__(self, key, value):
+        self.set(key, value)
+
+    def __contains__(self, key):
+        return key in self.get_properties()
