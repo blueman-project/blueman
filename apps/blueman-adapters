@@ -50,6 +50,7 @@ class BluemanAdapters(Gtk.Dialog):
         self.notebook = Gtk.Notebook()
         self.content_area.add(self.notebook)
         self.tabs = {}
+        self._adapters = {}
 
         setup_icon_path()
         self.bus = dbus.SystemBus()
@@ -61,15 +62,18 @@ class BluemanAdapters(Gtk.Dialog):
 
         try:
             self.manager = Bluez.Manager()
-            self.manager.connect_signal('adapter-added', self.on_adapter_added)
-            self.manager.connect_signal('adapter-removed', self.on_adapter_removed)
-            adapters = self.manager.list_adapters()
-            for adapter in adapters:
-                self.add_to_notebook(adapter)
         except Exception as e:
             print(e)
             self.manager = None
         #fixme: show error dialog and exit
+
+        self.manager.connect_signal('adapter-added', self.on_adapter_added)
+        self.manager.connect_signal('adapter-removed', self.on_adapter_removed)
+        for adapter in self.manager.list_adapters():
+            path = adapter.get_object_path()
+            hci_dev = os.path.basename(path)
+            self._adapters[hci_dev] = adapter
+            self.on_adapter_added(self.manager, path)
 
         #activate a particular tab according to command line option
         if selected_hci_dev is not None:
@@ -91,13 +95,16 @@ class BluemanAdapters(Gtk.Dialog):
             self.tabs[hci_dev]["label"].set_text(value)
 
     def on_adapter_added(self, _manager, adapter_path):
-        adapter = Bluez.Adapter(adapter_path)
-        self.add_to_notebook(adapter)
+        hci_dev = os.path.basename(adapter_path)
+        if not hci_dev in self._adapters:
+            self._adapters[hci_dev] = Bluez.Adapter(adapter_path)
+
+        self._adapters[hci_dev].connect_signal("property-changed", self.on_property_changed)
+        self.add_to_notebook(self._adapters[hci_dev])
 
     def on_adapter_removed(self, _manager, adapter_path):
         hci_dev = os.path.basename(adapter_path)
-        adapter = self.tabs[hci_dev]["adapter"]
-        self.remove_from_notebook(adapter)
+        self.remove_from_notebook(self._adapters[hci_dev])
 
     def on_dbus_name_owner_change(self, owner):
         print('org.bluez owner changed to '+owner)
@@ -149,8 +156,6 @@ class BluemanAdapters(Gtk.Dialog):
 
         ui = {}
 
-        adapter.connect_signal('property-changed', self.on_property_changed)
-
         builder = Gtk.Builder()
         builder.set_translation_domain("blueman")
         builder.add_from_file(UI_PATH + "/adapters-tab.ui")
@@ -182,7 +187,6 @@ class BluemanAdapters(Gtk.Dialog):
         temporary_radio.connect("toggled", on_temporary_toggle)
         name_entry.connect("changed", on_name_changed)
 
-        ui['adapter'] = adapter
         ui['grid'] = builder.get_object("grid")
         ui["hidden_radio"] = hidden_radio
         ui["always_radio"] = always_radio
