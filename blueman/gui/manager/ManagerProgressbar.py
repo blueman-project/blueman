@@ -23,10 +23,10 @@ class ManagerProgressbar(GObject.GObject):
     def __init__(self, blueman, cancellable=True, text=_("Connecting")):
         def on_enter(evbox, event):
             c = Gdk.Cursor.new(Gdk.CursorType.HAND2)
-            self.window.get_window().set_cursor(c)
+            self.Blueman.get_window().set_cursor(c)
 
         def on_leave(evbox, event):
-            self.window.get_window().set_cursor(None)
+            self.Blueman.get_window().set_cursor(None)
 
         def on_clicked(evbox, event):
             self.eventbox.props.sensitive = False
@@ -58,8 +58,6 @@ class ManagerProgressbar(GObject.GObject):
         self.progressbar.set_text(text)
         self.progressbar.set_pulse_step(0.05)
 
-        self.window = blueman.Builder.get_object("window")
-
         hbox.pack_end(eventbox, True, False, 0)
         hbox.pack_end(self.progressbar, False, False, 0)
 
@@ -84,7 +82,7 @@ class ManagerProgressbar(GObject.GObject):
             self.Blueman.Builder.get_object("statusbar").props.visible = True
 
 
-        # if self.Blueman.Stats.hbox.size_request()[0] + self.progressbar.size_request()[0] + 16 > self.Blueman.window.get_size()[0]:
+        # if self.Blueman.Stats.hbox.size_request()[0] + self.progressbar.size_request()[0] + 16 > self.Blueman.get_size()[0]:
         #	self.Blueman.Stats.hbox.hide_all()
 
 
@@ -109,7 +107,7 @@ class ManagerProgressbar(GObject.GObject):
         if not self.finalized:
             self.hide()
             self.stop()
-            Gdk.Window.set_cursor(self.window.get_window(), None)
+            self.Blueman.get_window().set_cursor(None)
             self.hbox.remove(self.eventbox)
             self.hbox.remove(self.progressbar)
             # self.hbox.remove(self.seperator)
