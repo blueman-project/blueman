@@ -25,6 +25,7 @@
 * Fix fading in GtkAnimation TreeRow(Color)Fade and CellFade classes.
 * Do not explixitely destoy DeviceSelectorDialog blueman-sendto.
 * gui: Call the sub-classed widgets init function instead of GObject's
+* Do not block manager with plugin dialog
 
 ## 2.0
 
