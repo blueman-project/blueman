@@ -11,7 +11,7 @@ if SYSTEMD_UNIT_DIR
 systemd_systemdir = $(systemd_unit_dir)/system
 systemd_system_DATA = blueman-mechanism.service
 
-systemd_userdir = $(sytemd_unit_dir)/user
+systemd_userdir = $(systemd_unit_dir)/user
 systemd_user_DATA = blueman-applet.service
 endif
 
