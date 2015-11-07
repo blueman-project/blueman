@@ -21,6 +21,17 @@ class ManagerProgressbar(GObject.GObject):
     __instances__ = []
 
     def __init__(self, blueman, cancellable=True, text=_("Connecting")):
+        def on_enter(evbox, event):
+            c = Gdk.Cursor.new(Gdk.CursorType.HAND2)
+            self.Blueman.get_window().set_cursor(c)
+
+        def on_leave(evbox, event):
+            self.Blueman.get_window().set_cursor(None)
+
+        def on_clicked(evbox, event):
+            self.eventbox.props.sensitive = False
+            self.emit("cancelled")
+
         GObject.GObject.__init__(self)
         self.Blueman = blueman
 
@@ -38,9 +49,9 @@ class ManagerProgressbar(GObject.GObject):
         self.eventbox = eventbox = Gtk.EventBox()
         eventbox.add(self.button)
         eventbox.props.tooltip_text = _("Cancel Operation")
-        eventbox.connect("enter-notify-event", self._on_enter)
-        eventbox.connect("leave-notify-event", self._on_leave)
-        eventbox.connect("button-press-event", self._on_clicked)
+        eventbox.connect("enter-notify-event", on_enter)
+        eventbox.connect("leave-notify-event", on_leave)
+        eventbox.connect("button-press-event", on_clicked)
 
         self.progressbar.set_size_request(100, 15)
         self.progressbar.set_ellipsize(Pango.EllipsizeMode.END)
@@ -62,17 +73,6 @@ class ManagerProgressbar(GObject.GObject):
         self.finalized = False
 
         ManagerProgressbar.__instances__.append(self)
-
-    def _on_enter(self.evbox, event):
-        c = Gdk.Cursor.new(Gdk.CursorType.HAND2)
-        self.Blueman.get_window().set_cursor(c)
-
-    def _on_leave(self.evbox, event):
-        self.Blueman.get_window().set_cursor(None)
-
-    def _on_clicked(self, evbox, event):
-        self.eventbox.props.sensitive = False
-        self.emit("cancelled")
 
     def connect(self, *args):
         self._signals.append(super(ManagerProgressbar, self).connect(*args))
