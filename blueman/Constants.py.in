@@ -28,7 +28,7 @@ except TypeError:
     translation.install()
     builtins.ngettext = translation.ngettext
 
-if os.path.exists("../apps") and os.path.exists("../data"):
+if 'BLUEMAN_SOURCE' in os.environ:
 	BIN_DIR = "./"
 	ICON_PATH = "../data/icons"
 	PIXMAP_PATH = "../data/icons/pixmaps"

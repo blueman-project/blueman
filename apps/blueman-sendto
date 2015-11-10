@@ -9,7 +9,7 @@ from __future__ import unicode_literals
 import os, sys, signal
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-if os.path.exists(os.path.join(_dirname, "CHANGELOG.md")):
+if 'BLUEMAN_SOURCE' in os.environ:
     sys.path.insert(0, _dirname)
 
 from dbus.mainloop.glib import DBusGMainLoop
