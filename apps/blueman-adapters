@@ -9,13 +9,14 @@ import dbus
 from dbus.mainloop.glib import DBusGMainLoop
 from gi.repository import Pango
 import os.path
+import os
 import sys
 import signal
 from locale import bind_textdomain_codeset
 
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-if os.path.exists(os.path.join(_dirname, "CHANGELOG.md")):
+if 'BLUEMAN_SOURCE' in os.environ:
     sys.path.insert(0, _dirname)
 
 import blueman.bluez as Bluez
