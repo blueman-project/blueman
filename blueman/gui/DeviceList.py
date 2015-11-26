@@ -159,7 +159,7 @@ class DeviceList(GenericList):
         self.emit("adapter-property-changed", self.Adapter, (key, value))
 
     def on_device_property_changed(self, key, value, path, *args, **kwargs):
-        dprint("list: device_prop_ch", key, value, path, args, kwargs)
+        dprint("list: device_prop_ch", key, value, path)
 
         iter = self.find_device_by_path(path)
 

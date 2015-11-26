@@ -1,5 +1,11 @@
 # Changelog
 
+## 2-0-stable (unreleased)
+
+### Bugs fixed
+
+* Exception on device property change
+
 ## 2.0.1
 
 ### Bugs fixed
