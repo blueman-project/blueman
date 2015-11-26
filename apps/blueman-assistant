@@ -56,7 +56,7 @@ class Assistant:
 
         self.Device = None
         self.Adapter = None
-        self.PairType = 0
+        self.pair = True
         self.service = None
 
         self.Builder = Gtk.Builder()
@@ -97,8 +97,8 @@ class Assistant:
 
         self.svc_vbox = self.Builder.get_object("svcs")
 
-        self.Builder.get_object("r_dontp").connect("toggled", self.on_pairing_method_changed, 2)
-        self.Builder.get_object("r_randp").connect("toggled", self.on_pairing_method_changed, 0)
+        self.Builder.get_object("r_dontp").connect("toggled", self.on_pairing_method_changed, False)
+        self.Builder.get_object("r_pair").connect("toggled", self.on_pairing_method_changed, True)
 
         self.dev_widget = DeviceSelectorWidget()
         self.dev_widget.List.connect("device-selected", self.on_device_selected)
@@ -158,7 +158,7 @@ class Assistant:
             else:
                 return PAGE_PASSKEY
         elif page == PAGE_PASSKEY:
-            if self.Device and not self.Device.Paired and self.PairType == 2:
+            if self.Device and not self.Device.Paired and not self.pair:
                 return PAGE_CONNECT
             #self.assistant.set_page_complete(pages[PAGE_PASSKEY], True)
             return PAGE_PAIRING
@@ -180,10 +180,10 @@ class Assistant:
 
         return page
 
-    def on_pairing_method_changed(self, radio_button, type):
+    def on_pairing_method_changed(self, radio_button, pair):
         if radio_button.props.active:
             self.assistant.set_page_complete(pages[PAGE_PASSKEY], True)
-            self.PairType = type
+            self.pair = pair
 
 
     def on_device_selected(self, list, device, iter):
@@ -212,7 +212,7 @@ class Assistant:
         elif num == PAGE_PAIRING:
             pages[PAGE_PAIRING].set_markup(_("<b>Pairing in progress...</b>"))
 
-            if self.PairType != 2:
+            if self.pair:
                 def ok():
                     self.Device = Device(device)
                     self.assistant.set_current_page(PAGE_CONNECT)
