@@ -172,6 +172,7 @@ class Network(ServicePlugin):
         if nc.get_dhcp_handler() == None:
             nap_frame.props.sensitive = False
             nap_enable.props.active = False
+            r_dnsmasq.props.active = True
         else:
             if nc.get_dhcp_handler() == DnsMasqHandler:
                 r_dnsmasq.props.active = True
