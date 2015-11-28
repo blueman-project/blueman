@@ -193,7 +193,7 @@ class NetConf(object):
             NetConf.default_inst = obj
             f.close()
             return obj
-        except:
+        except IOError:
             n = cls()
             try:
                 n.store()
