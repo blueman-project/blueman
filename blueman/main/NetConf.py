@@ -186,7 +186,7 @@ class NetConf(object):
             return NetConf.default_inst
 
         try:
-            f = open("/var/lib/blueman/network.state", "r")
+            f = open("/var/lib/blueman/network.state", "rb")
             obj = pickle.load(f)
             if obj.version != class_id:
                 raise Exception
