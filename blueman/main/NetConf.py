@@ -11,7 +11,7 @@ import errno
 import re
 from socket import inet_aton, inet_ntoa
 from blueman.Constants import *
-from blueman.Functions import have, mask_ip4_address, dprint
+from blueman.Functions import have, mask_ip4_address, dprint, is_running
 from _blueman import create_bridge, destroy_bridge, BridgeException
 from subprocess import call, Popen
 
@@ -23,6 +23,15 @@ def calc_ip_range(ip):
     end_range[3] = 254
 
     return bytes(start_range), bytes(end_range)
+
+def read_pid_file(fname):
+    try:
+        with open(fname, "r") as f:
+            pid = int(f.read())
+    except (IOError, ValueError):
+        pid = None
+
+    return pid
 
 class DnsMasqHandler(object):
     def __init__(self, netconf):
@@ -62,9 +71,19 @@ class DnsMasqHandler(object):
 
     def do_remove(self):
         if self.netconf.locked("dhcp"):
-            os.kill(self.pid, signal.SIGTERM)
-            self.netconf.unlock("dhcp")
+            if not self.pid:
+                pid = read_pid_file("/var/run/dnsmasq.pan1.pid")
+            else:
+                pid = self.pid
 
+            running = is_running("dnsmasq", pid) if pid else False
+
+            if running:
+                os.kill(pid, signal.SIGTERM)
+                self.netconf.unlock("dhcp")
+            else:
+                dprint("Stale dhcp lockfile found")
+                self.netconf.unlock("dhcp")
 
 class DhcpdHandler(object):
     def __init__(self, netconf):
@@ -170,9 +189,19 @@ class DhcpdHandler(object):
         f.close()
 
         if self.netconf.locked("dhcp"):
-            os.kill(self.pid, signal.SIGTERM)
-            self.netconf.unlock("dhcp")
+            if not self.pid:
+                pid = read_pid_file("/var/run/dhcpd-server/dhcp.pan1.pid")
+            else:
+                pid = self.pid
 
+            running = is_running("dnsmasq", pid) if pid else False
+
+            if running:
+                os.kill(pid, signal.SIGTERM)
+                self.netconf.unlock("dhcp")
+            else:
+                dprint("Stale dhcp lockfile found")
+                self.netconf.unlock("dhcp")
 
 class_id = 10
 
