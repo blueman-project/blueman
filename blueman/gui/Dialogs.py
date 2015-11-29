@@ -8,8 +8,8 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 class NetworkErrorDialog(Gtk.MessageDialog):
-    def __init__(self, excp, secondary_markup=None):
-        Gtk.MessageDialog.__init__(self, buttons=Gtk.ButtonsType.OK, type=Gtk.MessageType.ERROR)
+    def __init__(self, excp, secondary_markup=None, parent=None):
+        Gtk.MessageDialog.__init__(self, parent=parent, buttons=Gtk.ButtonsType.OK, type=Gtk.MessageType.ERROR)
 
         self.set_name("NetworkErrorDialog")
         self.props.icon_name = "dialog.error"
