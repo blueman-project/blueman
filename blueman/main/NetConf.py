@@ -81,7 +81,7 @@ class DhcpdHandler(object):
                 insection = True
 
             if line == "#### END BLUEMAN AUTOMAGIC SUBNET ####\n":
-                insection == False
+                insection = False
 
             if not insection:
                 dhcp_config += line

@@ -17,6 +17,7 @@
 * Handle when rfkill subsystem is not available gracefully
 * RfKill: open /dev/rfkill r+b to avoid creating
 * Resolve codepoint issues in several places
+* Stop dhcpd handler removing all content of the config file
 
 ## 2.0
 
