@@ -27,6 +27,7 @@
 * gui: Call the sub-classed widgets init function instead of GObject's
 * Do not block manager with plugin dialog
 * Exception in Tee class at exit
+* Stop dhcpd handler removing all content of the config file
 
 ## 2.0
 
