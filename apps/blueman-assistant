@@ -61,7 +61,7 @@ class Assistant:
 
         self.Device = None
         self.Adapter = None
-        self.PairType = 0
+        self.pair = True
         self.service = None
 
         self.Builder = Gtk.Builder()
@@ -100,8 +100,8 @@ class Assistant:
 
         self.svc_vbox = self.Builder.get_object("svcs")
 
-        self.Builder.get_object("r_dontp").connect("toggled", self.on_pairing_method_changed, 2)
-        self.Builder.get_object("r_randp").connect("toggled", self.on_pairing_method_changed, 0)
+        self.Builder.get_object("r_dontp").connect("toggled", self.on_pairing_method_changed, False)
+        self.Builder.get_object("r_randp").connect("toggled", self.on_pairing_method_changed, True)
 
         self.dev_widget = DeviceSelectorWidget()
         self.dev_widget.List.connect("device-selected", self.on_device_selected)
@@ -172,7 +172,7 @@ class Assistant:
             else:
                 return PAGE_PASSKEY
         elif page == PAGE_PASSKEY:
-            if self.Device and not self.Device.Fake and not self.Device.Paired and self.PairType == 2:
+            if self.Device and not self.Device.Fake and not self.Device.Paired and not self.pair:
                 return PAGE_CONNECT
             #self.assistant.set_page_complete(pages[PAGE_PASSKEY], True)
             return PAGE_PAIRING
@@ -194,10 +194,10 @@ class Assistant:
 
         return page
 
-    def on_pairing_method_changed(self, radio_button, type):
+    def on_pairing_method_changed(self, radio_button, pair):
         if radio_button.props.active:
             self.assistant.set_page_complete(pages[PAGE_PASSKEY], True)
-            self.PairType = type
+            self.pair = pair
 
 
     def on_device_selected(self, list, device, iter):
@@ -224,7 +224,7 @@ class Assistant:
             self.assistant.set_page_complete(pages[PAGE_PASSKEY], True)
 
         elif num == PAGE_PAIRING:
-            if self.Device.Fake and self.PairType == 2:
+            if self.Device.Fake and not self.pair:
                 pages[PAGE_PAIRING].set_markup(_("<b>Adding Device...</b>"))
                 self.assistant.set_page_title(pages[PAGE_PAIRING], _("Adding"))
             else:
@@ -241,7 +241,7 @@ class Assistant:
                     self.assistant.set_page_header_image(pages[PAGE_FINISH], get_icon("help-about", 32))
                     self.assistant.set_current_page(PAGE_FINISH)
 
-                if self.PairType != 2:
+                if self.pair:
                     agent_path = "/org/blueman/agent/temp/" + self.Device.Address.replace(":", "")
                     agent = TempAgent(self.applet.Plugins.StatusIcon, agent_path, Gtk.get_current_event_time())
                     self.Adapter.create_paired_device(self.Device.Address, agent_path, "", reply_handler=ok,
@@ -249,7 +249,7 @@ class Assistant:
                 else:
                     self.Adapter.create_device(self.Device.Address, reply_handler=ok, error_handler=err)
             else:
-                if self.PairType != 2:
+                if self.pair:
                     def ok():
                         self.Device = Device(device)
                         self.assistant.set_current_page(PAGE_CONNECT)

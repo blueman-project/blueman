@@ -5,6 +5,7 @@
 ### Bugs fixed
 
 * Exception on device property change
+* Backport fix for #345 - rename random pass pairing button
 
 ## 2.0.1
 
