@@ -8,6 +8,7 @@
 * Backport fix for #345 - rename random pass pairing button
 * Exception at exit (#391)
 * Clarify wording of tray applet's option to turn off bluetooth
+* Do not block manager with plugin dialog (#383)
 
 ## 2.0.1
 
