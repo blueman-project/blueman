@@ -45,8 +45,9 @@ class Tee(object):
         self.buffer = ""
 
     def __del__(self):
-        sys.stdout = self.stdout
-        sys.stderr = self.stderr
+        if self:
+            sys.stdout = self.stdout
+            sys.stderr = self.stderr
 
     def write(self, data):
         self.buffer += data
