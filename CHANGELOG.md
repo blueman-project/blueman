@@ -11,6 +11,8 @@
 * Do not block manager with plugin dialog (#383)
 * blueman-adapters: Set hidden in the ui when timeout is reached
 * Functions: Catch specific error in get_icon function
+* Stop Game Controller plugin from blocking
+* Use absolute filename provided to blueman-sendto on the cmd line
 
 ## 2.0.1
 
