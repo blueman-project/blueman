@@ -5,6 +5,12 @@
 ### Bugs fixed
 
 * Exception on device property change
+* Backport fix for #345 - rename random pass pairing button
+* Exception at exit (#391)
+* Clarify wording of tray applet's option to turn off bluetooth
+* Do not block manager with plugin dialog (#383)
+* blueman-adapters: Set hidden in the ui when timeout is reached
+* Functions: Catch specific error in get_icon function
 
 ## 2.0.1
 

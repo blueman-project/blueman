@@ -89,7 +89,7 @@ class ManagerMenu:
         item.show()
 
         item = create_menuitem(_("Plugins"), get_icon('blueman-plugin', 16))
-        item.connect('activate', lambda *args: self.blueman.Applet.open_plugin_dialog())
+        item.connect('activate', lambda *args: self.blueman.Applet.open_plugin_dialog(ignore_reply=True))
         view_menu.append(item)
         item.show()
 

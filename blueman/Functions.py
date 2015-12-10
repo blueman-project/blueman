@@ -179,12 +179,12 @@ def get_icon(name, size=24, fallback="image-missing"):
 
     try:
         icon = ic.load_icon(name, size, 0)
-    except:
+    except GLib.Error:
         if not fallback:
             raise
         try:
             icon = ic.load_icon(fallback, size, 0)
-        except:
+        except GLib.Error:
             icon = ic.load_icon("image-missing", size, 0)
 
     if icon.props.width > size:

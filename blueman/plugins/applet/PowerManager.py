@@ -39,7 +39,7 @@ class PowerManager(AppletPlugin):
         self.Applet = applet
 
         self.item = create_menuitem("Should be overwritten", get_icon("blueman-disabled", 16))
-        self.item.get_child().get_children()[1].set_markup_with_mnemonic(_("<b>Bluetooth _Off</b>"))
+        self.item.get_child().get_children()[1].set_markup_with_mnemonic(_("<b>Turn Bluetooth _Off</b>"))
 
         self.item.props.tooltip_text = _("Turn off all adapters")
 
