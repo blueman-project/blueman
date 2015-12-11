@@ -177,4 +177,4 @@ class Notification(object):
 
     # stub to satisfy pylint
     def close(self):
-        pass
+        klass.close()
