@@ -159,7 +159,7 @@ class BluezAgent(_GObjectAgent, Agent, GObject.GObject):
             self.dialog.response(Gtk.ResponseType.REJECT)
         try:
             self.n.close()
-        except:
+        except AttributeError:
             pass
 
     @AgentMethod
