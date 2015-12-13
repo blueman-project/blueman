@@ -101,7 +101,7 @@ class Assistant:
         self.svc_vbox = self.Builder.get_object("svcs")
 
         self.Builder.get_object("r_dontp").connect("toggled", self.on_pairing_method_changed, False)
-        self.Builder.get_object("r_randp").connect("toggled", self.on_pairing_method_changed, True)
+        self.Builder.get_object("r_pair").connect("toggled", self.on_pairing_method_changed, True)
 
         self.dev_widget = DeviceSelectorWidget()
         self.dev_widget.List.connect("device-selected", self.on_device_selected)
