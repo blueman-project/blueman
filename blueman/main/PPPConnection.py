@@ -131,7 +131,7 @@ class PPPConnection(GObject.GObject):
         attrs[0] &= ~(termios.IGNCR | termios.ICRNL | termios.IUCLC | termios.INPCK | termios.IXON | termios.IXANY |
                       termios.IGNPAR)
         attrs[1] &= ~(termios.OPOST | termios.OLCUC | termios.OCRNL | termios.ONLCR | termios.ONLRET)
-        attrs[3] &= ~(termios.ICANON | termios.XCASE | termios.ECHO | termios.ECHOE | termios.ECHONL)
+        attrs[3] &= ~(termios.ICANON | getattr(termios, 'XCASE', 4) | termios.ECHO | termios.ECHOE | termios.ECHONL)
         attrs[3] &= ~(termios.ECHO | termios.ECHOE)
         attrs[6][termios.VMIN] = 1
         attrs[6][termios.VTIME] = 0

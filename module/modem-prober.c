@@ -34,6 +34,10 @@
 
 #include "modem-prober.h"
 
+#ifndef XCASE
+#define XCASE 0000004
+#endif
+
 #if PY_MAJOR_VERSION >= 3
 #define PyString_FromString PyUnicode_FromString
 #endif
