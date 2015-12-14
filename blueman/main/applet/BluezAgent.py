@@ -53,6 +53,7 @@ class BluezAgent(_GObjectAgent, Agent, GObject.GObject):
         self.status_icon = status_icon
         self.dialog = None
         self.n = None
+        self.signal_id = None
         self.time_func = time_func
 
         Bluez.AgentManager().register_agent(self, "KeyboardDisplay", default=True)
@@ -145,6 +146,12 @@ class BluezAgent(_GObjectAgent, Agent, GObject.GObject):
         self.dialog.connect("response", passkey_dialog_cb)
         self.dialog.present()
 
+    # Workaround BlueZ not calling the Cancel method, see #164
+    def _on_device_property_changed(self, device, key, value, path):
+        if (key == "Paired" and value) or (key == "Connected" and not value):
+            device.disconnect_signal(self.signal_id)
+            self.Cancel()
+
     @AgentMethod
     def Release(self):
         dprint("Agent.Release")
@@ -183,6 +190,9 @@ class BluezAgent(_GObjectAgent, Agent, GObject.GObject):
     @AgentMethod
     def DisplayPasskey(self, device, passkey, entered):
         dprint('DisplayPasskey (%s, %d)' % (device, passkey))
+        dev = Bluez.Device(device)
+        self.signal_id = dev.connect_signal("property-changed", self._on_device_property_changed)
+
         notify_message = _("Pairing passkey for") + " %s: %s" % (self.get_device_alias(device), passkey)
         self.n = Notification("Bluetooth", notify_message, 0,
                               pixbuf=get_icon("blueman", 48), status_icon=self.status_icon)
@@ -190,6 +200,9 @@ class BluezAgent(_GObjectAgent, Agent, GObject.GObject):
     @AgentMethod
     def DisplayPinCode(self, device, pin_code):
         dprint('DisplayPinCode (%s, %s)' % (device, pin_code))
+        dev = Bluez.Device(device)
+        self.signal_id = dev.connect_signal("property-changed", self._on_device_property_changed)
+
         notify_message = _("Pairing PIN code for") + " %s: %s" % (self.get_device_alias(device), pin_code)
         self.n = Notification("Bluetooth", notify_message, 0,
                               pixbuf=get_icon("blueman", 48), status_icon=self.status_icon)
