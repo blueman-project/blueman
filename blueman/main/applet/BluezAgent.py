@@ -7,6 +7,7 @@ import dbus
 from dbus.mainloop.glib import DBusGMainLoop
 import dbus.service
 from locale import bind_textdomain_codeset
+from xml.etree import ElementTree
 from blueman.Functions import get_icon, dprint
 
 import gi
@@ -169,12 +170,27 @@ class BluezAgent(_GObjectAgent, Agent, GObject.GObject):
         except AttributeError:
             pass
 
+    def _lookup_default_pin(self, device_path):
+        device_props = Bluez.Device(device_path).get_properties()
+        if not self._db:
+            self._db = ElementTree.parse('data/pin-code-database.xml')
+        # TODO: Determine type, see https://github.com/GNOME/gnome-bluetooth/blob/b71dcf6907f8ac9519cda404198ed6c54cb8f637/lib/bluetooth-utils.c#L144
+        attributes = {'oui': device_props['Address'][0:9], 'name': device_props['Name']}
+        entry = self._db.find('//device' + ''.join(['[not @%s or @%s="%s"]' % a for a in attributes]))
+        if entry:
+            return entry.get('pin')
+
     @AgentMethod
     def RequestPinCode(self, device, ok, err):
         dprint("Agent.RequestPinCode")
-        dialog_msg = _("Enter PIN code for authentication:")
-        notify_msg = _("Enter PIN code")
-        self.ask_passkey(device, dialog_msg, notify_msg, False, True, ok, err)
+
+        default_pin = self._lookup_default_pin(device)
+        if default_pin:
+            dprint('Found PIN %s in database' % default_pin)
+            ok(default_pin)
+            return
+
+        self.ask_passkey(device, _("Enter PIN code for authentication:"), _("Enter PIN code"), False, True, ok, err)
         if self.dialog:
             self.dialog.present_with_time(self.time_func())
 
