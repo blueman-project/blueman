@@ -12,7 +12,7 @@ from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler, UdhcpdHa
 
 DHCPDHANDLERS = {"DnsMasqHandler": DnsMasqHandler,
                  "DhcpdHandler": DhcpdHandler,
-                 "UdhcpdHandle": UdhcpdHandler}
+                 "UdhcpdHandler": UdhcpdHandler}
 
 class Network(MechanismPlugin):
     @dbus.service.method('org.blueman.Mechanism', in_signature="s", out_signature="s", sender_keyword="caller",
