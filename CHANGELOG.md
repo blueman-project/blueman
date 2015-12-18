@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.3
+
+Fix privilege escalation
+
 ## 2.0.2
 
 ### Bugs fixed
