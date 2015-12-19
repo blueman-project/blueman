@@ -164,6 +164,7 @@ class Network(ServicePlugin):
         nc = NetConf.get_default()
         if nc.ip4_address != None:
             net_ip.props.text = inet_ntoa(nc.ip4_address)
+            nap_enable.props.active = True
         else:
             net_ip.props.text = "10.%d.%d.1" % (randint(0, 255), randint(0, 255))
 
@@ -199,12 +200,16 @@ class Network(ServicePlugin):
             r_dnsmasq.props.active = True
 
         r_dnsmasq.connect("toggled", lambda x: self.option_changed_notify("dnsmasq"))
+        net_nat.connect("toggled", lambda x: self.option_changed_notify("nat"))
         net_ip.connect("changed", lambda x: self.option_changed_notify("ip", False))
+        gn_enable.connect("toggled", lambda x: self.option_changed_notify("gn_enable"))
+        nap_enable.connect("toggled", lambda x: self.option_changed_notify("nap_enable"))
 
         self.Config.bind_to_widget("nat", net_nat, "active", Gio.SettingsBindFlags.GET)
         self.Config.bind_to_widget("gn-enable", gn_enable, "active", Gio.SettingsBindFlags.GET)
-        self.Config.bind_to_widget("nap-enable", nap_frame, "sensitive", Gio.SettingsBindFlags.GET)
         self.Config.bind_to_widget("nap-enable", nap_enable, "active", Gio.SettingsBindFlags.GET)
+
+        nap_enable.bind_property("active", nap_frame, "sensitive", 0)
 
         applet = AppletService()
 
