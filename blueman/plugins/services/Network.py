@@ -72,7 +72,6 @@ class Network(ServicePlugin):
                     stype = "UdhcpdHandler"
 
                 net_ip = self.Builder.get_object("net_ip")
-                net_nat = self.Builder.get_object("net_nat")
 
                 try:
                     m.EnableNetwork(inet_aton(net_ip.props.text), inet_aton("255.255.255.0"), stype)
@@ -152,7 +151,6 @@ class Network(ServicePlugin):
         r_dhcpd = self.Builder.get_object("r_dhcpd")
         r_udhcpd = self.Builder.get_object("r_udhcpd")
         net_ip = self.Builder.get_object("net_ip")
-        net_nat = self.Builder.get_object("net_nat")
         rb_nm = self.Builder.get_object("rb_nm")
         rb_blueman = self.Builder.get_object("rb_blueman")
         rb_dun_nm = self.Builder.get_object("rb_dun_nm")
@@ -208,12 +206,10 @@ class Network(ServicePlugin):
         r_dnsmasq.connect("toggled", lambda x: self.option_changed_notify("dnsmasq"))
         r_udhcpd.connect("toggled", lambda x: self.option_changed_notify("udhcpd"))
 
-        net_nat.connect("toggled", lambda x: self.option_changed_notify("nat"))
         net_ip.connect("changed", lambda x: self.option_changed_notify("ip", False))
         gn_enable.connect("toggled", lambda x: self.option_changed_notify("gn_enable"))
         nap_enable.connect("toggled", lambda x: self.option_changed_notify("nap_enable"))
 
-        self.Config.bind_to_widget("nat", net_nat, "active", Gio.SettingsBindFlags.GET)
         self.Config.bind_to_widget("gn-enable", gn_enable, "active", Gio.SettingsBindFlags.GET)
         self.Config.bind_to_widget("nap-enable", nap_enable, "active", Gio.SettingsBindFlags.GET)
 
