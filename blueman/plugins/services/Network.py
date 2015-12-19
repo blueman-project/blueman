@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 import gi
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+from gi.repository import Gio, Gtk
 from blueman.Constants import *
 from blueman.Functions import have, dprint, mask_ip4_address
 from _blueman import get_net_interfaces, get_net_address, get_net_netmask
@@ -76,6 +76,8 @@ class Network(ServicePlugin):
 
                 try:
                     m.EnableNetwork(inet_aton(net_ip.props.text), inet_aton("255.255.255.0"), stype)
+
+                    self.Config["nap-enable"] = True
                 except Exception as e:
                     d = NetworkErrorDialog(e, parent=self.widget.get_toplevel())
 
@@ -83,6 +85,7 @@ class Network(ServicePlugin):
                     d.destroy()
                     return
             else:
+                self.Config["nap-enable"] = False
                 m.DisableNetwork()
 
             self.clear_options()
@@ -172,6 +175,7 @@ class Network(ServicePlugin):
             nap_frame.props.sensitive = False
             nap_enable.props.active = False
             r_dnsmasq.props.active = True
+            self.Config["nap-enable"] = False
 
         if nc.get_dhcp_handler() == DnsMasqHandler:
             r_dnsmasq.props.active = True
@@ -185,6 +189,7 @@ class Network(ServicePlugin):
             warning.props.visible = True
             warning.props.sensitive = True
             nap_enable.props.sensitive = False
+            self.Config["nap-enable"] = False
 
         if not have("dnsmasq"):
             r_dnsmasq.props.sensitive = False
@@ -202,10 +207,10 @@ class Network(ServicePlugin):
         r_udhcpd.connect("toggled", lambda x: self.option_changed_notify("udhcpd"))
         net_ip.connect("changed", lambda x: self.option_changed_notify("ip", False))
 
-        self.Config.bind_to_widget("nat", net_nat, "active")
-        self.Config.bind_to_widget("gn-enable", gn_enable, "active")
-        self.Config.bind_to_widget("nap-enable", nap_frame, "sensitive")
-        self.Config.bind_to_widget("nap-enable", nap_enable, "active")
+        self.Config.bind_to_widget("nat", net_nat, "active", Gio.SettingsBindFlags.GET)
+        self.Config.bind_to_widget("gn-enable", gn_enable, "active", Gio.SettingsBindFlags.GET)
+        self.Config.bind_to_widget("nap-enable", nap_frame, "sensitive", Gio.SettingsBindFlags.GET)
+        self.Config.bind_to_widget("nap-enable", nap_enable, "active", Gio.SettingsBindFlags.GET)
 
         applet = AppletService()
 
