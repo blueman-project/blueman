@@ -142,10 +142,6 @@ class Network(ServicePlugin):
     def setup_network(self):
         self.Config = Config("org.blueman.network")
 
-        gn_enable = self.Builder.get_object("gn-enable")
-        # latest bluez does not support GN, apparently
-        gn_enable.props.visible = False
-
         nap_enable = self.Builder.get_object("nap-enable")
         r_dnsmasq = self.Builder.get_object("r_dnsmasq")
         r_dhcpd = self.Builder.get_object("r_dhcpd")
@@ -207,10 +203,8 @@ class Network(ServicePlugin):
         r_udhcpd.connect("toggled", lambda x: self.option_changed_notify("udhcpd"))
 
         net_ip.connect("changed", lambda x: self.option_changed_notify("ip", False))
-        gn_enable.connect("toggled", lambda x: self.option_changed_notify("gn_enable"))
         nap_enable.connect("toggled", lambda x: self.option_changed_notify("nap_enable"))
 
-        self.Config.bind_to_widget("gn-enable", gn_enable, "active", Gio.SettingsBindFlags.GET)
         self.Config.bind_to_widget("nap-enable", nap_enable, "active", Gio.SettingsBindFlags.GET)
 
         nap_enable.bind_property("active", nap_frame, "sensitive", 0)

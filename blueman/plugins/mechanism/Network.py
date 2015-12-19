@@ -40,17 +40,6 @@ class Network(MechanismPlugin):
         except Exception as e:
             err(e)
 
-    @dbus.service.method('org.blueman.Mechanism', in_signature="b", out_signature="", sender_keyword="caller")
-    def SetGN(self, enabled, caller):
-        self.timer.reset()
-        if enabled:
-            p = subprocess.Popen(["/usr/sbin/avahi-autoipd", "-D", "pan0"], env=os.environ, bufsize=128)
-        else:
-            p = subprocess.Popen(["/usr/sbin/avahi-autoipd", "-k", "pan0"], bufsize=128)
-
-        # reap the child
-        GObject.child_watch_add(p.pid, lambda pid, cond: 0)
-
     @dbus.service.method('org.blueman.Mechanism', in_signature="ayays", out_signature="", sender_keyword="caller",
                          byte_arrays=True)
     def EnableNetwork(self, ip_address, netmask, dhcp_handler, caller):
