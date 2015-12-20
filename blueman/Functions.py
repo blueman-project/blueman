@@ -381,3 +381,31 @@ def set_proc_title(name=None):
         dprint("Failed to set process title")
 
     return ret
+
+def bt_class_to_string(bt_class):
+    n1 =  (bt_class & 0x1f00) >> 8
+    if n1 == 0x03:
+        return "network"
+    elif n1 == 0x04:
+        n2 = (bt_class & 0xfc) >> 2
+        if n2 in (0x01, 0x02):
+            return "headset"
+        elif n2 == 0x06:
+            return "headphone"
+        else:
+            return "audio"
+    elif n1 == 0x05:
+        n2 = (bt_class & 0xc0) >> 6
+        if n2 == 0x01:
+            return "keyboard"
+        elif n2 == 0x02:
+            n3 = (bt_class & 0x1e) >> 2
+            if n3 == 0x05:
+                return "tablet"
+            else:
+                return "mouse"
+    elif n1 == 0x06:
+        if bt_class & 0x80:
+            return "printer"
+    else:
+        return None
