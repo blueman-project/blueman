@@ -16,10 +16,12 @@ from gi.repository import Gtk
 from gi.repository import GObject
 from gi.types import GObjectMeta
 import cgi
+import random
 import blueman.bluez as Bluez
 from blueman.Sdp import *
 from blueman.Constants import *
 from blueman.gui.Notification import Notification
+from blueman.Functions import bt_class_to_string
 
 from blueman.bluez.Agent import Agent, AgentMethod
 
@@ -172,13 +174,21 @@ class BluezAgent(_GObjectAgent, Agent, GObject.GObject):
 
     def _lookup_default_pin(self, device_path):
         device_props = Bluez.Device(device_path).get_properties()
+        device_type = bt_class_to_string(device_props["Class"])
         if not self._db:
             self._db = ElementTree.parse('data/pin-code-database.xml')
-        # TODO: Determine type, see https://github.com/GNOME/gnome-bluetooth/blob/b71dcf6907f8ac9519cda404198ed6c54cb8f637/lib/bluetooth-utils.c#L144
-        attributes = {'oui': device_props['Address'][0:9], 'name': device_props['Name']}
+        attributes = {'oui': device_props['Address'][0:9], 'name': device_props['Name'], "type": device_type}
         entry = self._db.find('//device' + ''.join(['[not @%s or @%s="%s"]' % a for a in attributes]))
-        if entry:
-            return entry.get('pin')
+
+        if not entry:
+            return None
+        else:
+            pin = entry.get('pin')
+            if "max:" in pin:
+                lenght = int(pin[-1])
+                return "".join(random.sample('123456789', lenght))
+            else:
+                return pin
 
     @AgentMethod
     def RequestPinCode(self, device, ok, err):
