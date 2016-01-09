@@ -16,6 +16,7 @@ from gi.repository import Gtk
 from gi.repository import GObject
 from gi.types import GObjectMeta
 import cgi
+import random
 import blueman.bluez as Bluez
 from blueman.Sdp import *
 from blueman.Constants import *
@@ -177,8 +178,16 @@ class BluezAgent(_GObjectAgent, Agent, GObject.GObject):
         # TODO: Determine type, see https://github.com/GNOME/gnome-bluetooth/blob/b71dcf6907f8ac9519cda404198ed6c54cb8f637/lib/bluetooth-utils.c#L144
         attributes = {'oui': device_props['Address'][0:9], 'name': device_props['Name']}
         entry = self._db.find('//device' + ''.join(['[not @%s or @%s="%s"]' % a for a in attributes]))
-        if entry:
-            return entry.get('pin')
+
+        if not entry:
+            return None
+        else:
+            pin = entry.get('pin')
+            if "max:" in pin:
+                lenght = int(pin[-1])
+                return "".join(random.sample('123456789', lenght))
+            else:
+                return pin
 
     @AgentMethod
     def RequestPinCode(self, device, ok, err):
