@@ -8,6 +8,7 @@ from blueman.main.PluginManager import StopException
 from blueman.plugins.AppletPlugin import AppletPlugin
 
 from blueman.main.Device import Device
+from blueman.bluez.Device import Device as BluezDevice
 
 from gi.repository import GLib
 import dbus
@@ -36,7 +37,7 @@ class DBusService(AppletPlugin):
 
     @dbus.service.method('org.blueman.Applet', in_signature="o", out_signature="", async_callbacks=("ok", "err"))
     def DisconnectDevice(self, obj_path, ok, err):
-        dev = Device(obj_path)
+        dev = Device(BluezDevice(obj_path))
 
         self.Applet.Plugins.Run("on_device_disconnect", dev)
 
@@ -58,7 +59,7 @@ class DBusService(AppletPlugin):
 
     @dbus.service.method('org.blueman.Applet', in_signature="os", async_callbacks=("ok", "err"))
     def connect_service(self, object_path, uuid, ok, err):
-        service = Device(object_path).get_service(uuid)
+        service = Device(BluezDevice(object_path)).get_service(uuid)
 
         try:
             self.Applet.Plugins.RecentConns
@@ -89,7 +90,7 @@ class DBusService(AppletPlugin):
 
     @dbus.service.method('org.blueman.Applet', in_signature="osd", async_callbacks=("ok", "err"))
     def disconnect_service(self, object_path, uuid, port, ok, err):
-        service = Device(object_path).get_service(uuid)
+        service = Device(BluezDevice(object_path)).get_service(uuid)
 
         if service.group == 'serial':
             service.disconnect(port)
