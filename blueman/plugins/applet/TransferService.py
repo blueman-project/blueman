@@ -12,7 +12,6 @@ import shutil
 from blueman.bluez import obex
 from blueman.Functions import dprint, get_icon, launch
 from blueman.gui.Notification import Notification
-from blueman.main.Device import Device
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Config import Config
 
@@ -76,9 +75,9 @@ class _Agent:
             size = transfer.size
 
         try:
-            device = Device(self._applet.Manager.get_adapter().find_device(address))
-            name = device.Alias
-            trusted = device.Trusted
+            device = self._applet.Manager.get_adapter().find_device(address)
+            name = device["Alias"]
+            trusted = device["Trusted"]
         except Exception as e:
             dprint(e)
             name = address
