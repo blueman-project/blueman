@@ -7,9 +7,8 @@ from blueman.Functions import *
 from blueman.Constants import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Config import Config
-from blueman.bluez.Device import Device as BluezDevice
+from blueman.bluez.Device import Device
 from blueman.bluez.Network import Network
-from blueman.main.Device import Device
 from _blueman import rfcomm_list
 from gi.repository import GObject
 from gi.repository import GLib
@@ -38,7 +37,7 @@ class MonitorBase(GObject.GObject):
         self.interface = interface
         self.device = device
         self.general_config = Config("org.blueman.general")
-        self.config = Config("org.blueman.plugins.netusage", "/org/blueman/plugins/netusages/%s/" % device.Address)
+        self.config = Config("org.blueman.plugins.netusage", "/org/blueman/plugins/netusages/%s/" % device["Address"])
 
         self.last_tx = 0
         self.last_rx = 0
@@ -62,8 +61,8 @@ class MonitorBase(GObject.GObject):
 
         self.emit("stats", self.config["tx"], self.config["rx"])
 
-        if not self.device.Address in self.general_config["netusage-dev-list"]:
-            self.general_config["netusage-dev-list"] += [self.device.Address]
+        if not self.device["Address"] in self.general_config["netusage-dev-list"]:
+            self.general_config["netusage-dev-list"] += [self.device["Address"]]
 
     def Disconnect(self):
         self.emit("disconnected")
@@ -181,9 +180,9 @@ class Dialog:
         added = False
         for d in general_config["netusage-dev-list"]:
             for m in parent.monitors:
-                if d == m.device.Address:
+                if d == m.device["Address"]:
                     iter = self.liststore.append(
-                        [d, self.get_caption(m.device.Alias, m.device.Address), _("Connected:") + " " + m.interface, m])
+                        [d, self.get_caption(m.device["Alias"], m.device["Address"]), _("Connected:") + " " + m.interface, m])
                     if self.cb_device.get_active() == -1:
                         self.cb_device.set_active_iter(iter)
                     added = True
@@ -194,8 +193,7 @@ class Dialog:
                     for a in self.parent.Applet.Manager.list_adapters():
                         try:
                             device = a.find_device(d)
-                            device = Device(device)
-                            name = self.get_caption(device.Alias, device.Address)
+                            name = self.get_caption(device["Alias"], device["Address"])
                         except:
                             pass
 
@@ -291,12 +289,12 @@ class Dialog:
             iter = row.iter
             (val,) = self.liststore.get(iter, 0)
 
-            if val == monitor.device.Address:
-                self.liststore.set(iter, 1, self.get_caption(monitor.device.Alias, monitor.device.Address), 2,
+            if val == monitor.device["Address"]:
+                self.liststore.set(iter, 1, self.get_caption(monitor.device["Alias"], monitor.device["Address"]), 2,
                                    _("Connected:") + " " + monitor.interface, 3, monitor)
                 return
 
-        self.liststore.append([monitor.device.Address, self.get_caption(monitor.device.Alias, monitor.device.Address),
+        self.liststore.append([monitor.device["Address"], self.get_caption(monitor.device["Alias"], monitor.device["Address"]),
                                _("Connected:") + " " + monitor.interface, monitor])
 
     def monitor_removed(self, parent, monitor):
@@ -304,8 +302,8 @@ class Dialog:
             iter = row.iter
             (val,) = self.liststore.get(iter, 0)
 
-            if val == monitor.device.Address:
-                self.liststore.set(iter, 1, self.get_caption(monitor.device.Alias, monitor.device.Address), 2,
+            if val == monitor.device["Address"]:
+                self.liststore.set(iter, 1, self.get_caption(monitor.device["Alias"], monitor.device["Address"]), 2,
                                    _("Not Connected"), 3, None)
                 return
 
@@ -365,7 +363,6 @@ class NetUsage(AppletPlugin, GObject.GObject):
                     if dev["id"] == portid:
                         adapter = self.Applet.Manager.get_adapter(dev["src"])
                         device = adapter.find_device(dev["dst"])
-                        device = Device(device)
 
                         self.monitor_interface(NMMonitor, device, path)
 
@@ -375,8 +372,7 @@ class NetUsage(AppletPlugin, GObject.GObject):
 
     def _on_network_property_changed(self, _network, key, value, path):
         if key == "Interface" and value != "":
-            d = BluezDevice(path)
-            d = Device(d)
+            d = Device(path)
             self.monitor_interface(Monitor, d, value)
 
     def activate_ui(self, item):
