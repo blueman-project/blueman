@@ -8,7 +8,6 @@ import inspect
 from blueman.Functions import dprint
 from blueman.Sdp import uuid128_to_uuid16
 from blueman.bluez import Manager
-from blueman.bluez.Device import Device as BluezDevice
 import blueman.services
 import blueman.services.meta
 import weakref
@@ -26,10 +25,7 @@ class Device(GObject.GObject):
         self.Properties = {}
         self.Temp = False
 
-        if hasattr(instance, "format") and hasattr(instance, "upper"):
-            self.Device = BluezDevice(instance)
-        else:
-            self.Device = instance
+        self.Device = instance
 
         #set fallback icon, fixes lp:#327718
         self.Device.Icon = "blueman"
