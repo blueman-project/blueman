@@ -8,6 +8,19 @@ from blueman.bluez.errors import raise_dbus_error, parse_dbus_error
 
 
 class Device(PropertiesBase):
+    __gproperties__ = {
+        str('Alias'): (GObject.TYPE_STRING,
+                       'BlueZ Device Alias',
+                       None,
+                       None,
+                       GObject.PARAM_READWRITE)
+
+    def do_get_property(self, prop):
+        return self.get(prop.name)
+
+    def do_set_property(self, prop, value):
+        return self.set(prop.name, value)
+
     @raise_dbus_error
     def __init__(self, obj_path=None):
         super(Device, self).__init__('org.bluez.Device1', obj_path)
