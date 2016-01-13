@@ -156,8 +156,9 @@ class SerialManager(AppletPlugin):
             try:
                 dprint("Disconnecting", name)
                 serial_services[0].disconnect(port)
-            except:
+            except Exception as e:
                 dprint("Failed to disconnect", name)
+                dprint(e)
 
 
 @atexit.register
