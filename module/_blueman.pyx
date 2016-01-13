@@ -199,8 +199,8 @@ def rfcomm_list():
                 "channel": dl.dev_info[i].channel,
                 "flags": dl.dev_info[i].flags,
                 "state": RFCOMM_STATES[dl.dev_info[i].state],
-                "src": src,
-                "dst": dst
+                "src": src.decode("UTF-8"),
+                "dst": dst.decode("UTF-8")
             })
 
     free(dl)
