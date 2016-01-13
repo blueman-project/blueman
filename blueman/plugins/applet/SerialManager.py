@@ -147,6 +147,9 @@ class SerialManager(AppletPlugin):
         active_ports = map(flt, ports)
 
         for port in active_ports:
+            if not port:
+                continue
+
             name = "/dev/rfcomm%d" % port
             try:
                 dprint("Disconnecting", name)
