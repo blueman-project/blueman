@@ -51,7 +51,6 @@ class DeviceList(GenericList):
         dprint("deleting mainlist")
 
     def __init__(self, adapter=None, tabledata=None):
-        Gtk.TreeView.__init__(self)
         self.set_name("DeviceList")
 
         if not tabledata:
@@ -99,7 +98,7 @@ class DeviceList(GenericList):
             ["dbus_path", str]
         ]
 
-        GenericList.__init__(self, data)
+        super(DeviceList, self).__init__(data)
 
         self.SetAdapter(adapter)
 

@@ -18,7 +18,7 @@ import weakref
 
 class SettingsWidget(Gtk.Box):
     def __init__(self, inst, orientation=Gtk.Orientation.VERTICAL):
-        Gtk.Box.__init__(self, orientation=orientation)
+        super(SettingsWidget, self).__init__(orientation=orientation)
         self.set_name("SettingsWidget")
         self.inst = inst
         self.props.spacing = 2
@@ -102,7 +102,7 @@ class SettingsWidget(Gtk.Box):
 
 class PluginDialog(Gtk.Dialog):
     def __init__(self, applet):
-        Gtk.Dialog.__init__(self, buttons=("_Close", Gtk.ResponseType.CLOSE))
+        super(PluginDialog, self).__init__(buttons=("_Close", Gtk.ResponseType.CLOSE))
 
         self.set_name("PluginDialog")
         self.applet = applet

@@ -25,7 +25,7 @@ class MessageArea(Gtk.EventBox):
         return MessageArea._inst_
 
     def __init__(self):
-        Gtk.EventBox.__init__(self)
+        super(MessageArea, self).__init__()
 
         self.set_name("MessageArea")
         self.hbox = Gtk.Box(Gtk.Orientation.HORIZONTAL)

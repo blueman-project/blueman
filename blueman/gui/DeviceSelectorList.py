@@ -36,7 +36,7 @@ class DeviceSelectorList(DeviceList):
             #fake determines whether device is "discovered" or a real bluez device
         ]
 
-        DeviceList.__init__(self, adapter, data)
+        super(DeviceSelectorList, self).__init__(adapter, data)
         self.props.headers_visible = False
 
     def row_setup_event(self, iter, device):

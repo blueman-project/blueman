@@ -54,7 +54,7 @@ class ManagerDeviceList(DeviceList):
             ["levels_visible", bool],
             ["initial_anim", bool],
         ]
-        DeviceList.__init__(self, adapter, data)
+        super(ManagerDeviceList, self).__init__(adapter, data)
         self.set_name("ManagerDeviceList")
         self.set_headers_visible(False)
         self.props.has_tooltip = True

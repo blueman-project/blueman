@@ -13,8 +13,8 @@ from blueman.gui.DeviceSelectorWidget import DeviceSelectorWidget
 class DeviceSelectorDialog(Gtk.Dialog):
     def __init__(self, title=_("Select Device"), parent=None, discover=True):
 
-        Gtk.Dialog.__init__(self, title, parent, 0, ("_Cancel", Gtk.ResponseType.REJECT,
-                                                     "_OK", Gtk.ResponseType.ACCEPT))
+        super(DeviceSelectorDialog, self).__init__(title, parent, 0,
+            ("_Cancel", Gtk.ResponseType.REJECT, "_OK", Gtk.ResponseType.ACCEPT))
 
         self.set_name("DeviceSelectorDialog")
         self.props.resizable = False

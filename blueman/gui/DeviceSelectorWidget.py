@@ -18,7 +18,7 @@ from blueman.gui.DeviceSelectorList import DeviceSelectorList
 class DeviceSelectorWidget(Gtk.Box):
     def __init__(self, adapter=None, orientation=Gtk.Orientation.VERTICAL):
 
-        Gtk.Box.__init__(self, orientation=orientation)
+        super(DeviceSelectorWidget, self).__init__(orientation=orientation)
 
         self.set_name("DeviceSelectorWidget")
         self.props.spacing = 1

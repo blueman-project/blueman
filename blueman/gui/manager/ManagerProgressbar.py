@@ -21,7 +21,7 @@ class ManagerProgressbar(GObject.GObject):
     __instances__ = []
 
     def __init__(self, blueman, cancellable=True, text=_("Connecting")):
-        GObject.GObject.__init__(self)
+        super(ManagerProgressBar, self).__init__()
         self.Blueman = blueman
 
         self.cancellable = cancellable
