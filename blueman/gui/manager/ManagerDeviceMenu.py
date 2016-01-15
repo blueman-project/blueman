@@ -317,7 +317,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             bind_textdomain_codeset("blueman", "UTF-8")
             builder.add_from_file(UI_PATH + "/rename-device.ui")
             dialog = builder.get_object("dialog")
-            dialog.set_transient_for(self.Blueman.window)
+            dialog.set_transient_for(self.Blueman)
             dialog.props.icon_name = "blueman"
             alias_entry = builder.get_object("alias_entry")
             alias_entry.set_text(device.Alias)
