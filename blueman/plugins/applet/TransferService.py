@@ -60,7 +60,7 @@ class _Agent:
         else:
             self._agent.reply(obex.Error.Rejected)
 
-    def _on_authorize(self, _agent, transfer_path, address=None, filename=None, size=None):
+    def _on_authorize(self, _agent, transfer_path):
         transfer = obex.Transfer(transfer_path)
         session = obex.Session(transfer.session)
         root = session.root

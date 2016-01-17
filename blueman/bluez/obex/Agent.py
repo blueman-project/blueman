@@ -22,8 +22,7 @@ _GDBusObject = _GDbusObjectType(str('_GDBusObject'), (dbus.service.Object, GObje
 class Agent(_GDBusObject, dbus.service.Object, GObject.GObject):
     __gsignals__ = {
         str('release'): (GObject.SignalFlags.NO_HOOKS, None, ()),
-        str('authorize'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,
-                                                                GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT)),
+        str('authorize'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
         str('cancel'): (GObject.SignalFlags.NO_HOOKS, None, ()),
     }
 
@@ -44,21 +43,9 @@ class Agent(_GDBusObject, dbus.service.Object, GObject.GObject):
         dprint(self._agent_path, transfer_path)
         self._reply_handler = reply_handler
         self._error_handler = error_handler
-        self.emit('authorize', transfer_path, None, None, None)
+        self.emit('authorize', transfer_path)
 
     @dbus.service.method('org.bluez.obex.Agent1')
-    def Cancel(self):
-        dprint(self._agent_path)
-        self.emit('cancel')
-
-    @dbus.service.method('org.bluez.obex.Agent', async_callbacks=('reply_handler', 'error_handler'))
-    def Authorize(self, transfer_path, bt_address, name, _type, length, _time, reply_handler, error_handler):
-        dprint(self._agent_path, transfer_path, bt_address, name, length)
-        self._reply_handler = reply_handler
-        self._error_handler = error_handler
-        self.emit('authorize', transfer_path, bt_address, name, length)
-
-    @dbus.service.method('org.bluez.obex.Agent')
     def Cancel(self):
         dprint(self._agent_path)
         self.emit('cancel')
