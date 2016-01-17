@@ -30,7 +30,7 @@ class PluginManager(GObject.GObject):
     }
 
     def __init__(self, plugin_class, module_path, user_data):
-        GObject.GObject.__init__(self)
+        super(PluginManager, self).__init__()
         self.__plugins = {}
         self.__classes = {}
         self.__deps = {}

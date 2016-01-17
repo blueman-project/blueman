@@ -33,7 +33,7 @@ class MonitorBase(GObject.GObject):
     }
 
     def __init__(self, device, interface):
-        GObject.GObject.__init__(self)
+        super(MonitorBase, self).__init__()
 
         self.interface = interface
         self.device = device
@@ -71,7 +71,7 @@ class MonitorBase(GObject.GObject):
 
 class NMMonitor(MonitorBase):
     def __init__(self, device, nm_dev_path):
-        MonitorBase.__init__(self, device, "NM")
+        super(NMMonitor, self).__init__(device, "NM")
         dprint("created nm monitor for path", nm_dev_path)
         self.__bus = dbus.SystemBus()
         self.__nm_dev_path = nm_dev_path
@@ -92,7 +92,7 @@ class NMMonitor(MonitorBase):
 
 class Monitor(MonitorBase):
     def __init__(self, device, interface):
-        MonitorBase.__init__(self, device, interface)
+        super(Monitor, self).__init__(device, interface)
         self.poller = None
 
         self.poller = GLib.timeout_add(5000, self.poll_stats)

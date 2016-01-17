@@ -21,7 +21,7 @@ class Device(GObject.GObject):
     }
 
     def __init__(self, instance):
-        GObject.GObject.__init__(self)
+        super(Device, self).__init__()
 
         self.Properties = {}
         self.Temp = False

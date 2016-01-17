@@ -47,7 +47,7 @@ class PPPConnection(GObject.GObject):
     }
 
     def __init__(self, port, number="*99#", apn="", user="", pwd=""):
-        GObject.GObject.__init__(self)
+        super(PPPConnection, self).__init__()
 
         self.apn = apn
         self.number = number

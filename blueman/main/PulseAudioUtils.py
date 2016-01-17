@@ -648,7 +648,7 @@ class PulseAudioUtils(GObject.GObject):
             return
 
         PulseAudioUtils.inst = self
-        GObject.GObject.__init__(self)
+        super(PulseAudioUtils, self).__init__()
 
         self.event_cb = pa_context_subscribe_cb_t(self.__event_callback)
 
