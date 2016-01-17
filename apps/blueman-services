@@ -32,7 +32,7 @@ setup_icon_path()
 
 class BluemanServices(Gtk.Dialog):
     def __init__(self):
-        Gtk.Dialog.__init__(self, title=_("Local Services"))
+        super(BluemanServices, self).__init__(title=_("Local Services"))
         self.resize(520, 420)
         self.set_name("BluemanServices")
         self.set_position(Gtk.WindowPosition.CENTER)

@@ -34,7 +34,7 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 class BluemanAdapters(Gtk.Dialog):
     def __init__(self, selected_hci_dev):
-        Gtk.Dialog.__init__(self, title=_("Bluetooth Adapters"))
+        super(BluemanAdapters, self).__init__(title=_("Bluetooth Adapters"))
         # Setup dialog
         self.set_border_width(5)
         self.set_resizable(False)

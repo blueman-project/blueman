@@ -49,7 +49,7 @@ class Sender(Gtk.Dialog):
     }
 
     def __init__(self, device, adapter, files):
-        Gtk.Dialog.__init__(self, title=_("Bluetooth File Transfer"))
+        super(Sender, self).__init__(title=_("Bluetooth File Transfer"))
         self.set_name("BluemanSendTo")
         self.set_position(Gtk.WindowPosition.CENTER)
         self.set_type_hint(Gdk.WindowTypeHint.DIALOG)
