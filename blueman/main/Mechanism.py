@@ -22,5 +22,4 @@ class Mechanism(dbus.proxies.Interface):
         self.bus = dbus.SystemBus()
 
         service = self.bus.get_object("org.blueman.Mechanism", "/", follow_name_owner_changes=True)
-        dbus.proxies.Interface.__init__(self, service, "org.blueman.Mechanism")
-
+        super(Mechanism, self).__init__(service, "org.blueman.Mechanism")

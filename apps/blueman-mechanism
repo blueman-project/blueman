@@ -115,7 +115,7 @@ class Timer:
 
 class conf_service(DbusService):
     def __init__(self):
-        DbusService.__init__(self, "org.blueman.Mechanism", "/", dbus.SystemBus)
+        super(conf_service, self).__init__("org.blueman.Mechanism", "/", dbus.SystemBus)
         self.timer = Timer()
 
         if POLKIT:

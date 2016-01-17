@@ -22,4 +22,4 @@ class AppletService(dbus.proxies.Interface):
         self.bus = dbus.SessionBus()
 
         service = self.bus.get_object("org.blueman.Applet", "/", follow_name_owner_changes=True)
-        dbus.proxies.Interface.__init__(self, service, "org.blueman.Applet")
+        super(AppletService, self).__init__(service, "org.blueman.Applet")

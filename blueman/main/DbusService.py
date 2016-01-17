@@ -18,7 +18,7 @@ class DbusService(dbus.service.Object):
         self.bus = bus()
         self.bus.request_name(name)
 
-        dbus.service.Object.__init__(self, self.bus, path)
+        super(DbusService, self).__init__(self.bus, path)
 
     def add_definitions(self, instance):
         setattr(instance, 'locations', self.locations)

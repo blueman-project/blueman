@@ -27,12 +27,12 @@ DBusGMainLoop(set_as_default=True)
 
 class AgentErrorRejected(dbus.DBusException):
     def __init__(self):
-        dbus.DBusException.__init__(self, name="org.bluez.Error.Rejected")
+        super(AgentErrorRejected, self).__init__(name="org.bluez.Error.Rejected")
 
 
 class AgentErrorCanceled(dbus.DBusException):
     def __init__(self):
-        dbus.DBusException.__init__(self, name="org.bluez.Error.Canceled")
+        super(AgentErrorCanceled, self).__init__(name="org.bluez.Error.Canceled")
 
 
 class _GDbusObjectType(dbus.service.InterfaceType, GObjectMeta):
