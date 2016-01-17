@@ -155,7 +155,7 @@ class SerialManager(AppletPlugin):
             name = "/dev/rfcomm%d" % port
             try:
                 dprint("Disconnecting", name)
-                serial_services[0].disconnect(name)
+                serial_services[0].disconnect(port)
             except:
                 dprint("Failed to disconnect", name)
 
