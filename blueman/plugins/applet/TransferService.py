@@ -61,19 +61,12 @@ class _Agent:
             self._agent.reply(obex.Error.Rejected)
 
     def _on_authorize(self, _agent, transfer_path, address=None, filename=None, size=None):
-        if address and filename and size:
-            # stand-alone obexd
-            # FIXME: /tmp is only the default. Can we get the actual root
-            # directory from stand-alone obexd?
-            root = '/tmp'
-        else:
-            # BlueZ 5 integrated obexd
-            transfer = obex.Transfer(transfer_path)
-            session = obex.Session(transfer.session)
-            root = session.root
-            address = session.address
-            filename = transfer.name
-            size = transfer.size
+        transfer = obex.Transfer(transfer_path)
+        session = obex.Session(transfer.session)
+        root = session.root
+        address = session.address
+        filename = transfer.name
+        size = transfer.size
 
         try:
             device = Device(self._applet.Manager.get_adapter().find_device(address))
