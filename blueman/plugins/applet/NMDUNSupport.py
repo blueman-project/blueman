@@ -72,7 +72,7 @@ class ConnectionHandler:
             icon = composite_icon(blueman, [(modem, 24, 24, 255)])
 
             Notification(_("Bluetooth Dialup"),
-                         _("DUN connection on %s will now be available in Network Manager") % self.service.device.Alias,
+                         _("DUN connection on %s will now be available in Network Manager") % self.service.device['Alias'],
                          pixbuf=icon,
                          status_icon=self.parent.Applet.Plugins.StatusIcon)
 

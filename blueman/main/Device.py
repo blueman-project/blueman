@@ -15,7 +15,6 @@ import weakref
 
 class Device(GObject.GObject):
     __gsignals__ = {
-        str('invalidated'): (GObject.SignalFlags.NO_HOOKS, None, ()),
         str('property-changed'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
     }
 
@@ -61,7 +60,6 @@ class Device(GObject.GObject):
 
     def on_device_removed(self, path):
         if path == self._obj_path:
-            self.emit("invalidated")
             self.Destroy()
 
     def Copy(self):
