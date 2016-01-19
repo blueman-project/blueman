@@ -7,6 +7,7 @@ from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.Notification import Notification
 from blueman.Sdp import uuid128_to_uuid16, uuid16_to_name, SERIAL_PORT_SVCLASS_ID
+from blueman.services.Functions import get_services
 from _blueman import rfcomm_list
 from subprocess import Popen
 import atexit
@@ -64,12 +65,12 @@ class SerialManager(AppletPlugin):
         if SERIAL_PORT_SVCLASS_ID == uuid16:
             Notification(_("Serial port connected"),
                          _("Serial port service on device <b>%s</b> now will be available via <b>%s</b>") % (
-                         device.Alias, port),
+                         device['Alias'], port),
                          pixbuf=get_icon("blueman-serial", 48),
                          status_icon=self.Applet.Plugins.StatusIcon)
 
-            self.call_script(device.Address,
-                             device.Alias,
+            self.call_script(device['Address'],
+                             device['Alias'],
                              uuid16_to_name(uuid16),
                              uuid16,
                              port)
@@ -130,9 +131,9 @@ class SerialManager(AppletPlugin):
             return False
 
     def on_device_disconnect(self, device):
-        self.terminate_all_scripts(device.Address)
+        self.terminate_all_scripts(device['Address'])
 
-        serial_services = [service for service in device.get_services() if service.group == 'serial']
+        serial_services = [service for service in get_services(device) if service.group == 'serial']
 
         if not serial_services:
             return
@@ -140,7 +141,7 @@ class SerialManager(AppletPlugin):
         ports = rfcomm_list()
 
         def flt(dev):
-            if dev["dst"] == device.Address and dev["state"] == "connected":
+            if dev["dst"] == device['Address'] and dev["state"] == "connected":
                 return dev["id"]
 
         active_ports = map(flt, ports)

@@ -47,10 +47,10 @@ class Service(object):
 
     @property
     def connected(self):
-        return self.__device.Device.get_properties()['Connected']
+        return self.__device['Connected']
 
     def connect(self, reply_handler=None, error_handler=None):
-        self.__device.Device.connect(reply_handler=reply_handler, error_handler=error_handler)
+        self.__device.connect(reply_handler=reply_handler, error_handler=error_handler)
 
     def disconnect(self, reply_handler=None, error_handler=None, *args):
-        self.__device.Device.disconnect(reply_handler=reply_handler, error_handler=error_handler)
+        self.__device.disconnect(reply_handler=reply_handler, error_handler=error_handler)
