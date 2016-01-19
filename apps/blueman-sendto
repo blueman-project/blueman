@@ -29,7 +29,6 @@ from gi.repository import GObject
 
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.obex.ObjectPush import ObjectPush
-from blueman.main.Device import Device
 from blueman.bluez.Manager import Manager
 from blueman.Functions import *
 from blueman.Constants import *
@@ -130,8 +129,8 @@ class Sender(Gtk.Dialog):
         self.client.connect('session-failed', self.on_session_failed)
         self.client.connect('session-removed', self.on_session_removed)
 
-        print("Sending to", device.Address)
-        self.l_dest.props.label = device.Alias
+        print("Sending to", device['Address'])
+        self.l_dest.props.label = device['Alias']
 
         self.create_session()
 
@@ -140,7 +139,7 @@ class Sender(Gtk.Dialog):
     def create_session(self):
         dprint("Creating session")
         props = self.adapter.get_properties()
-        self.client.create_session(self.device.Address, props["Address"])
+        self.client.create_session(self.device['Address'], props["Address"])
 
     def on_cancel(self, button):
         self.pb.props.text = _("Cancelling")
@@ -338,7 +337,7 @@ class SendTo:
                 exit()
             d = adapter.find_device(options.device)
 
-            self.device = Device(d)
+            self.device = d
             self.adapter = adapter.get_object_path()
             self.do_send()
 
