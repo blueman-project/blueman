@@ -12,3 +12,4 @@ from blueman.services.Headset import Headset
 from blueman.services.Input import Input
 from blueman.services.NetworkAccessPoint import NetworkAccessPoint
 from blueman.services.SerialPort import SerialPort
+from blueman.services.Functions import *
