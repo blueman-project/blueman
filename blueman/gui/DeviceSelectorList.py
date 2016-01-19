@@ -40,10 +40,10 @@ class DeviceSelectorList(DeviceList):
         self.props.headers_visible = False
 
     def row_setup_event(self, iter, device):
-        self.row_update_event(iter, "Trusted", device.Trusted)
-        self.row_update_event(iter, "Paired", device.Paired)
-        self.row_update_event(iter, "Alias", device.Alias)
-        self.row_update_event(iter, "Icon", device.Icon)
+        self.row_update_event(iter, "Trusted", device['Trusted'])
+        self.row_update_event(iter, "Paired", device['Paired'])
+        self.row_update_event(iter, "Alias", device['Alias'])
+        self.row_update_event(iter, "Icon", device['Icon'])
 
     def device_add_event(self, device):
         self.AppendDevice(device)

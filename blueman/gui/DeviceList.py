@@ -6,7 +6,6 @@ from __future__ import unicode_literals
 from blueman.Functions import wait_for_adapter, adapter_path_to_name, dprint
 
 from blueman.gui.GenericList import GenericList
-from blueman.main.Device import Device
 
 from _blueman import conn_info
 import blueman.bluez as Bluez
@@ -162,7 +161,7 @@ class DeviceList(GenericList):
 
             iter = self.get_model().get_iter(row_ref.get_path())
             device = self.get(iter, "device")["device"]
-            if not device.Valid or not device.Connected:
+            if not device['Connected']:
                 dprint("stopping monitor (not connected)")
                 cinfo.deinit()
                 self.level_setup_event(row_ref, device, None)
@@ -220,7 +219,6 @@ class DeviceList(GenericList):
         iter = self.find_device_by_path(path)
         if iter == None:
             dev = Bluez.Device(path)
-            dev = Device(dev)
             dev.Temp = True
             self.device_add_event(dev)
 
@@ -321,7 +319,7 @@ class DeviceList(GenericList):
         self.clear()
         devices = self.Adapter.list_devices()
         for device in devices:
-            self.device_add_event(Device(device))
+            self.device_add_event(device)
 
         if autoselect:
             self.selection.select_path(0)
@@ -389,7 +387,7 @@ class DeviceList(GenericList):
         if type(device) == str:
             address = device
         else:
-            address = device.Address
+            address = device['Address']
 
         try:
             row = self.address_to_row[address]
@@ -420,9 +418,9 @@ class DeviceList(GenericList):
     def do_cache(self, iter, kwargs):
         if "device" in kwargs:
             if kwargs["device"]:
-                self.address_to_row[kwargs["device"].Address] = Gtk.TreeRowReference.new(self.get_model(),
+                self.address_to_row[kwargs["device"]['Address']] = Gtk.TreeRowReference.new(self.get_model(),
                                                                                          self.get_model().get_path(iter))
-                dprint("Caching new device %s" % kwargs["device"].Address)
+                dprint("Caching new device %s" % kwargs["device"]['Address'])
 
         if "dbus_path" in kwargs:
             if kwargs["dbus_path"] != None:

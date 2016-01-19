@@ -54,6 +54,6 @@ class DeviceSelectorDialog(Gtk.Dialog):
 
     def GetSelection(self):
         if self.selection:
-            return (self.selection[0], self.selection[1].Copy())
+            return (self.selection[0], self.selection[1])
         else:
             return None
