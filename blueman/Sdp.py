@@ -3,6 +3,15 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
+import gettext
+from blueman.Constants import GETTEXT_PACKAGE, LOCALEDIR
+
+translation = gettext.translation(GETTEXT_PACKAGE, LOCALEDIR, fallback=True)
+try:
+    translation.install(unicode=True)
+except TypeError:
+    translation.install()
+
 SDP_SERVER_SVCLASS_ID = 0x1000
 BROWSE_GRP_DESC_SVCLASS_ID = 0x1001
 PUBLIC_BROWSE_GROUP = 0x1002
