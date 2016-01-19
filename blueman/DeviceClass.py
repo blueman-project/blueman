@@ -179,7 +179,7 @@ def get_major_class(klass):
 
 
 def get_minor_class(klass, i18n=False):
-    if klass == "unknown":
+    if not klass:
         if i18n:
             return _("unknown")
         else:
