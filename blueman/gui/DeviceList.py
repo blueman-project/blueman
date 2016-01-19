@@ -143,10 +143,6 @@ class DeviceList(GenericList):
                     r = Gtk.TreeRowReference.new(self.get_model(), self.props.model.get_path(iter))
                     self.level_setup_event(r, dev, None)
 
-            elif key == "Paired":
-                if value and dev.Temp:
-                    dev.Temp = False
-
     def monitor_power_levels(self, device):
         def update(row_ref, cinfo, address):
             if not row_ref.valid():
@@ -219,7 +215,6 @@ class DeviceList(GenericList):
         iter = self.find_device_by_path(path)
         if iter == None:
             dev = Bluez.Device(path)
-            dev.Temp = True
             self.device_add_event(dev)
 
     def _on_device_removed(self, _manager, path):
@@ -359,7 +354,7 @@ class DeviceList(GenericList):
         if iter == None:
             iter = self.find_device(device)
 
-        if not device.Temp and self.compare(self.selected(), iter):
+        if self.compare(self.selected(), iter):
             self.emit("device-selected", None, None)
 
         self.delete(iter)
