@@ -8,19 +8,21 @@ PACKAGE="@PACKAGE@"
 WEBSITE="https://github.com/blueman-project/blueman"
 PREFIX="@prefix@"
 BIN_DIR="@BINDIR@"
+LOCALEDIR="@LOCALEDIR@"
 ICON_PATH = "@icondir@"
 PIXMAP_PATH = "@prefix@/share/pixmaps/@PACKAGE@"
 UI_PATH = "@pkgdatadir@/ui"
 OBEX_BROWSE_AVAILABLE = True
 DHCP_CONFIG_FILE = "@dhconfig@"
 POLKIT = "@have_polkit@" == "yes"
+GETTEXT_PACKAGE = "@GETTEXT_PACKAGE@"
 
 import os
 import gettext
 try: import __builtin__ as builtins
 except ImportError: import builtins
 
-translation = gettext.translation("@GETTEXT_PACKAGE@", "@LOCALEDIR@", fallback=True)
+translation = gettext.translation(GETTEXT_PACKAGE, LOCALEDIR, fallback=True)
 try:
     translation.install(unicode=True)
     builtins.ngettext = translation.ungettext
