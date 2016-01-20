@@ -10,7 +10,7 @@ import pickle
 import base64
 import zlib
 from blueman.Functions import *
-from blueman.main.Device import Device
+from blueman.bluez.Manager import Manager
 from blueman.bluez.Adapter import Adapter
 from blueman.gui.Notification import Notification
 
@@ -80,6 +80,10 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         self.deferred = False
         RecentConns.inst = weakref.proxy(self)
 
+        self._manager = Manager()
+        self._manager_signal = self._manager.connect_signal(
+            'device-removed', self.on_device_removed)
+
     def store_state(self):
         items = []
 
@@ -88,7 +92,6 @@ class RecentConns(AppletPlugin, Gtk.Menu):
                 x = i.copy()
                 x["device"] = None
                 x["mitem"] = None
-                x["gsignal"] = 0
                 items.append(x)
 
         try:
@@ -123,14 +126,10 @@ class RecentConns(AppletPlugin, Gtk.Menu):
 
 
     def on_unload(self):
+        self._manager.disconnect(self._manager_signal)
+
         self.destroy()
         self.Applet.Plugins.Menu.Unregister(self)
-        if RecentConns.items:
-            for i in reversed(RecentConns.items):
-                if i["device"]:
-                    if i["gsignal"]:
-                        i["device"].disconnect(i["gsignal"])
-                        i["gsignal"] = None
 
         RecentConns.items = []
         self.destroy()
@@ -146,9 +145,6 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         self.foreach(each, None)
 
         RecentConns.items.sort(key=itemgetter("time"), reverse=True)
-        for i in RecentConns.items[self.get_option("max-items"):]:
-            if i["gsignal"]:
-                i["device"].disconnect(i["gsignal"])
 
         RecentConns.items = RecentConns.items[0:self.get_option("max-items")]
         RecentConns.items.reverse()
@@ -185,15 +181,8 @@ class RecentConns(AppletPlugin, Gtk.Menu):
             if RecentConns.items != None:
                 for i in reversed(RecentConns.items):
 
-                    if i["device"]:
-                        if i["gsignal"]:
-                            i["device"].disconnect(i["gsignal"])
-                            i["gsignal"] = 0
-                        #i["device"].Destroy()
-
                     try:
-                        i["device"] = self.get_device(i)
-                        i["gsignal"] = i["device"].connect("invalidated", self.on_device_removed, i)
+                        i["device"] = self.get_device_path(i)
                     except:
                         pass
 
@@ -207,10 +196,11 @@ class RecentConns(AppletPlugin, Gtk.Menu):
 
         self.change_sensitivity(state)
 
-    def on_device_removed(self, device, item):
-        device.disconnect(item["gsignal"])
-        RecentConns.items.remove(item)
-        self.initialize()
+    def on_device_removed(self, _manager, path):
+        for item in reversed(RecentConns.items):
+            if item['device'] == path:
+                RecentConns.items.remove(item)
+                self.initialize()
 
     def on_adapter_added(self, path):
         a = Adapter(path)
@@ -235,7 +225,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         dprint(device, service, service.uuid)
         item = {}
         try:
-            adapter = Adapter(device.Adapter)
+            adapter = Adapter(device['Adapter'])
         except:
             dprint("adapter not found")
             return
@@ -243,13 +233,16 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         props = adapter.get_properties()
 
         item["adapter"] = props["Address"]
-        item["address"] = device.Address
-        item["alias"] = device.Alias
-        item["icon"] = device.Icon
+        item["address"] = device['Address']
+        item["alias"] = device['Alias']
+        try:
+            item["icon"] = device['Icon']
+        except KeyError:
+            item["icon"] = 'blueman'
         item["name"] = service.name
         item["uuid"] = service.uuid
         item["time"] = time.time()
-        item["device"] = device #device object
+        item["device"] = device.get_object_path()
         item["mitem"] = None #menu item object
 
         for i in RecentConns.items:
@@ -257,15 +250,11 @@ class RecentConns(AppletPlugin, Gtk.Menu):
                             i["address"] == item["address"] and \
                             i["uuid"] == item["uuid"]:
                 i["time"] = item["time"]
-                if i["gsignal"]:
-                    i["device"].disconnect(i["gsignal"])
 
                 i["device"] = item["device"]
-                i["gsignal"] = item["device"].connect("invalidated", self.on_device_removed, i)
                 self.initialize()
                 return
 
-        item["gsignal"] = item["device"].connect("invalidated", self.on_device_removed, item)
         RecentConns.items.append(item)
         self.initialize()
 
@@ -289,7 +278,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
                          status_icon=self.Applet.Plugins.StatusIcon)
             item["mitem"].props.sensitive = True
 
-        self.Applet.DbusSvc.connect_service(item["device"].get_object_path(), item["uuid"], reply, err)
+        self.Applet.DbusSvc.connect_service(item["device"], item["uuid"], reply, err)
 
     def add_item(self, item):
         if not item["mitem"]:
@@ -307,15 +296,10 @@ class RecentConns(AppletPlugin, Gtk.Menu):
 
 
         if item["adapter"] not in self.Adapters.values():
-            if item["device"] and item["gsignal"]:
-                item["device"].disconnect(item["gsignal"])
-
             item["device"] = None
         elif not item["device"] and item["adapter"] in self.Adapters.values():
             try:
-                dev = self.get_device(item)
-                item["device"] = dev
-                item["gsignal"] = item["device"].connect("invalidated", self.on_device_removed, item)
+                item["device"] = self.get_device_path(item)
 
             except:
                 RecentConns.items.remove(item)
@@ -328,13 +312,13 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         self.prepend(mitem)
         mitem.show()
 
-    def get_device(self, item):
+    def get_device_path(self, item):
         try:
             adapter = self.Applet.Manager.get_adapter(item["adapter"])
         except:
             raise AdapterNotFound
         try:
-            return Device(adapter.find_device(item["address"]))
+            return adapter.find_device(item["address"]).get_object_path()
         except:
             raise DeviceNotFound
 
@@ -357,12 +341,10 @@ class RecentConns(AppletPlugin, Gtk.Menu):
             if "name" not in i or "uuid" not in i:
                 items.remove(i)
             try:
-                i["device"] = self.get_device(i)
+                i["device"] = self.get_device_path(i)
             except AdapterNotFound:
                 i["device"] = None
             except DeviceNotFound:
                 items.remove(i)
-            else:
-                i["gsignal"] = i["device"].connect("invalidated", self.on_device_removed, i)
 
         RecentConns.items = items

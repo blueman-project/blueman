@@ -27,15 +27,15 @@ class NewConnectionBuilder:
         parent.bus.add_signal_receiver(self.on_nm_device_added, "DeviceAdded", "org.freedesktop.NetworkManager")
         parent.bus.add_signal_receiver(self.on_nma_new_connection, "NewConnection", self.parent.settings_interface)
 
-        self.device = self.parent.find_device(service.device.Address)
+        self.device = self.parent.find_device(service.device['Address'])
 
-        self.connection = self.parent.find_connection(service.device.Address, "panu")
+        self.connection = self.parent.find_connection(service.device['Address'], "panu")
         if not self.connection:
             # This is for compatibility with network-manager < 0.9.8.6. Newer versions that support BlueZ 5 add a
             # default connection automatically
-            addr_bytes = bytearray.fromhex(str.replace(str(service.device.Address), ':', ' '))
+            addr_bytes = bytearray.fromhex(str.replace(str(service.device['Address']), ':', ' '))
             parent.nma.AddConnection({
-                'connection':   {'id': '%s on %s' % (service.name, service.device.Alias), 'uuid': str(uuid1()),
+                'connection':   {'id': '%s on %s' % (service.name, service.device['Alias']), 'uuid': str(uuid1()),
                                  'autoconnect': False, 'type': 'bluetooth'},
                 'bluetooth':    {'bdaddr': dbus.ByteArray(addr_bytes), 'type': 'panu'},
                 'ipv4':         {'method': 'auto'},
@@ -222,7 +222,7 @@ class NMPANSupport(AppletPlugin):
         if service.group != 'network':
             return
 
-        if self.find_active_connection(service.device.Address, "panu"):
+        if self.find_active_connection(service.device['Address'], "panu"):
             err(dbus.DBusException(_("Already connected")))
         else:
             NewConnectionBuilder(self, service, ok, err)
@@ -234,7 +234,7 @@ class NMPANSupport(AppletPlugin):
             return
 
         d = service.device
-        active_conn_path = self.find_active_connection(d.Address, "panu")
+        active_conn_path = self.find_active_connection(d['Address'], "panu")
 
         if not active_conn_path:
             return

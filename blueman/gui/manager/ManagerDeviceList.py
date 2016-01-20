@@ -101,7 +101,7 @@ class ManagerDeviceList(DeviceList):
         if path:
             iter = self.get_iter(path[0])
             device = self.get(iter, "device")["device"]
-            command = "blueman-sendto --device=%s" % device.Address
+            command = "blueman-sendto --device=%s" % device['Address']
 
             launch(command, uris, False, "blueman", _("File Sender"))
             context.finish(True, False, time)
@@ -117,7 +117,7 @@ class ManagerDeviceList(DeviceList):
                 iter = self.get_iter(path[0])
                 device = self.get(iter, "device")["device"]
                 found = False
-                for uuid in device.UUIDs:
+                for uuid in device['UUIDs']:
                     uuid16 = uuid128_to_uuid16(uuid)
                     if uuid16 == OBEX_OBJPUSH_SVCLASS_ID:
                         found = True
@@ -172,21 +172,18 @@ class ManagerDeviceList(DeviceList):
 
 
     def device_remove_event(self, device, iter):
-        if device.Temp:
+        row_fader = self.get(iter, "row_fader")["row_fader"]
+
+        def on_finished(fader):
+
+            fader.disconnect(signal)
+            fader.freeze()
             DeviceList.device_remove_event(self, device, iter)
-        else:
-            row_fader = self.get(iter, "row_fader")["row_fader"]
 
-            def on_finished(fader):
-
-                fader.disconnect(signal)
-                fader.freeze()
-                DeviceList.device_remove_event(self, device, iter)
-
-            signal = row_fader.connect("animation-finished", on_finished)
-            row_fader.thaw()
-            self.emit("device-selected", None, None)
-            row_fader.animate(start=row_fader.get_state(), end=0.0, duration=400)
+        signal = row_fader.connect("animation-finished", on_finished)
+        row_fader.thaw()
+        self.emit("device-selected", None, None)
+        row_fader.animate(start=row_fader.get_state(), end=0.0, duration=400)
 
     def device_add_event(self, device):
         if self.Blueman.Config["latest-last"]:
@@ -198,11 +195,11 @@ class ManagerDeviceList(DeviceList):
         return "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" % {"0": cgi.escape(name), "1": klass.capitalize(), "2": address}
 
     def get_device_class(self, device):
-        klass = get_minor_class(device.Class)
+        klass = get_minor_class(device['Class'])
         if klass != "uncategorized":
-            return get_minor_class(device.Class, True)
+            return get_minor_class(device['Class'], True)
         else:
-            return get_major_class(device.Class)
+            return get_major_class(device['Class'])
 
     def row_setup_event(self, iter, device):
         if not self.get(iter, "initial_anim")["initial_anim"]:
@@ -223,17 +220,17 @@ class ManagerDeviceList(DeviceList):
 
             self.set(iter, initial_anim=True)
 
-        klass = get_minor_class(device.Class)
+        klass = get_minor_class(device['Class'])
         if klass != "uncategorized":
             icon = self.get_device_icon(klass)
             # get translated version
-            klass = get_minor_class(device.Class, True)
+            klass = get_minor_class(device['Class'], True)
         else:
-            icon = get_icon(device.Icon, 48, "blueman")
-            klass = get_major_class(device.Class)
+            icon = get_icon(device['Icon'], 48, "blueman")
+            klass = get_major_class(device['Class'])
 
-        name = device.Alias
-        address = device.Address
+        name = device['Alias']
+        address = device['Address']
 
         caption = self.make_caption(name, klass, address)
 
@@ -241,11 +238,11 @@ class ManagerDeviceList(DeviceList):
         self.set(iter, caption=caption, orig_icon=icon)
 
         try:
-            self.row_update_event(iter, "Trusted", device.Trusted)
+            self.row_update_event(iter, "Trusted", device['Trusted'])
         except:
             pass
         try:
-            self.row_update_event(iter, "Paired", device.Paired)
+            self.row_update_event(iter, "Paired", device['Paired'])
         except:
             pass
 
@@ -298,7 +295,7 @@ class ManagerDeviceList(DeviceList):
 
         elif key == "Alias":
             device = self.get(iter, "device")["device"]
-            c = self.make_caption(value, self.get_device_class(device), device.Address)
+            c = self.make_caption(value, self.get_device_class(device), device['Address'])
             self.set(iter, caption=c)
 
 

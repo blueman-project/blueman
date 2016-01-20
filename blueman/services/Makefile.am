@@ -6,6 +6,7 @@ blueman_PYTHON =     		\
 	AudioSink.py	    	\
 	AudioSource.py		    \
 	DialupNetwork.py    	\
+	Functions.py		\
 	GroupNetwork.py		    \
 	HandsfreeGateway.py	    \
 	Headset.py      		\

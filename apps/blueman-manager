@@ -193,11 +193,11 @@ class Blueman(Gtk.Window):
         s2 = self.List.connect("adapter-property-changed", prop_changed)
 
     def setup(self, device):
-        command = "blueman-assistant --device=%s" % device.Address
+        command = "blueman-assistant --device=%s" % device['Address']
         launch(command, None, False, "blueman", _("Bluetooth Assistant"))
 
     def bond(self, device):
-        self.List.Adapter.find_device(device.Address).pair()
+        self.List.Adapter.find_device(device['Address']).pair()
 
     def adapter_properties(self):
         adapter = self.List.Adapter
@@ -206,17 +206,17 @@ class Blueman(Gtk.Window):
 
     def toggle_trust(self, device):
         props = device.get_properties()
-        device.Trusted = not device.Trusted
+        device['Trusted'] = not device['Trusted']
 
     def send(self, device, File=None):
         adapter = self.List.Adapter
         props = adapter.get_properties()
 
-        command = "blueman-sendto --source=%s --device=%s" % (props["Address"], device.Address)
+        command = "blueman-sendto --source=%s --device=%s" % (props["Address"], device['Address'])
         launch(command, None, False, "blueman", _("File Sender"))
 
     def remove(self, device):
-        self.List.Adapter.remove_device(device.Device)
+        self.List.Adapter.remove_device(device)
 
     def disconnect(self, device, *args, **kwargs):
         applet = AppletService()

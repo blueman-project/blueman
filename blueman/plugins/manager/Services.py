@@ -51,7 +51,7 @@ class Services(ManagerPlugin):
                     items.append((item, service.priority))
             item.show()
 
-        for service in device.get_services():
+        for service in get_services(device):
             try:
                 add_menu_item(manager_menu, service)
             except Exception as e:
@@ -61,7 +61,7 @@ class Services(ManagerPlugin):
 
             if service.group == 'serial':
                 for dev in rfcomm_list():
-                    if dev["dst"] == device.Address and dev["state"] == "connected":
+                    if dev["dst"] == device['Address'] and dev["state"] == "connected":
                         devname = _("Serial Port %s") % "rfcomm%d" % dev["id"]
 
                         item = create_menuitem(devname, get_x_icon("modem", 16))
@@ -83,7 +83,7 @@ class Services(ManagerPlugin):
             def open_settings(i, device):
                 from blueman.gui.GsmSettings import GsmSettings
 
-                d = GsmSettings(device.Address)
+                d = GsmSettings(device['Address'])
                 d.run()
                 d.destroy()
 

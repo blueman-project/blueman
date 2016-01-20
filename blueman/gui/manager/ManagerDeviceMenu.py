@@ -190,8 +190,6 @@ class ManagerDeviceMenu(Gtk.Menu):
             else:
                 return
 
-        if not device.Valid:
-            return
         self.SelectedDevice = device
 
         op = self.get_op(device)
@@ -210,7 +208,7 @@ class ManagerDeviceMenu(Gtk.Menu):
                 for (item, pos) in ret:
                     items.append((pos, item))
 
-        dprint(device.Alias)
+        dprint(device['Alias'])
 
         have_disconnectables = False
         have_connectables = False
@@ -266,8 +264,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         self.append(send_item)
         send_item.show()
 
-        uuids = device.UUIDs
-        for uuid in uuids:
+        for uuid in device['UUIDs']:
             uuid16 = uuid128_to_uuid16(uuid)
             if uuid16 == OBEX_OBJPUSH_SVCLASS_ID:
                 send_item.connect("activate", lambda x: self.Blueman.send(device))
@@ -281,12 +278,12 @@ class ManagerDeviceMenu(Gtk.Menu):
         item.props.tooltip_text = _("Create pairing with the device")
         self.append(item)
         item.show()
-        if not device.Paired:
+        if not device['Paired']:
             item.connect("activate", lambda x: self.Blueman.bond(device))
         else:
             item.props.sensitive = False
 
-        if not device.Trusted:
+        if not device['Trusted']:
             item = create_menuitem(_("_Trust"), get_icon("blueman-trust", 16))
             item.connect("activate", lambda x: self.Blueman.toggle_trust(device))
             self.append(item)
@@ -320,7 +317,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             dialog.set_transient_for(self.Blueman)
             dialog.props.icon_name = "blueman"
             alias_entry = builder.get_object("alias_entry")
-            alias_entry.set_text(device.Alias)
+            alias_entry.set_text(device['Alias'])
             dialog.connect("response", on_response)
             dialog.present()
 
@@ -358,7 +355,7 @@ class ManagerDeviceMenu(Gtk.Menu):
                                     reply_handler=finished,
                                     error_handler=finished)
 
-        if device.Connected:
+        if device['Connected']:
             item.connect("activate", on_disconnect)
 
         else:

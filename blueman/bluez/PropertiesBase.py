@@ -38,7 +38,15 @@ class PropertiesBase(Base):
 
     @raise_dbus_error
     def get(self, name):
-        return self.__properties_interface.Get(self._interface_name, name)
+        fallback = {'Icon': 'blueman', 'Class': None}
+        try:
+            prop = self.__properties_interface.Get(self._interface_name, name)
+        except dbus.exceptions.DBusException as e:
+            if name in fallback:
+                prop = fallback[name]
+            else:
+                raise e
+        return prop
 
     @raise_dbus_error
     def set(self, name, value):

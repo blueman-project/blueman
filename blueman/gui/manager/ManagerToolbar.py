@@ -116,7 +116,7 @@ class ManagerToolbar:
     def update_send(self, device):
         self.b_send.props.sensitive = False
         if device:
-            for uuid in device.UUIDs:
+            for uuid in device['UUIDs']:
                 uuid16 = uuid128_to_uuid16(uuid)
                 if uuid16 == OBEX_OBJPUSH_SVCLASS_ID:
                     self.b_send.props.sensitive = True

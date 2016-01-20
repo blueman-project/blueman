@@ -31,7 +31,7 @@ class Connection:
             GObject.timeout_add(5000, self.connect)
 
     def connect(self):
-        c = Config("org.blueman.gsmsettings", "/org/blueman/gsmsettings/%s/" % self.service.device.Address)
+        c = Config("org.blueman.gsmsettings", "/org/blueman/gsmsettings/%s/" % self.service.device['Address'])
 
         m = Mechanism()
         m.PPPConnect(self.port, c["number"], c["apn"], reply_handler=self.on_connected,
@@ -46,7 +46,7 @@ class Connection:
         self.Applet.Plugins.Run("on_ppp_connected", self.service.device, self.port, iface)
 
         msg = _("Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\n"
-                "Network is now available through <b>%(1)s</b>") % {"0": self.service.device.Alias, "1": iface}
+                "Network is now available through <b>%(1)s</b>") % {"0": self.service.device['Alias'], "1": iface}
 
         Notification(_("Connected"), msg, pixbuf=get_icon("network-wireless", 48),
                      status_icon=self.Applet.Plugins.StatusIcon)

@@ -15,7 +15,7 @@ class SerialService(Service):
 
     def serial_port_id(self, channel):
         for dev in rfcomm_list():
-            if dev["dst"] == self.device.Address and dev["state"] == "connected" and dev["channel"] == channel:
+            if dev["dst"] == self.device['Address'] and dev["state"] == "connected" and dev["channel"] == channel:
                 return dev["id"]
 
     @property
