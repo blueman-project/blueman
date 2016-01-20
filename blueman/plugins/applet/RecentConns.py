@@ -182,7 +182,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
                 for i in reversed(RecentConns.items):
 
                     try:
-                        i["device"] = self.get_device(i)
+                        i["device"] = self.get_device_path(i)
                     except:
                         pass
 
@@ -198,7 +198,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
 
     def on_device_removed(self, _manager, path):
         for item in reversed(RecentConns.items):
-            if item['device'].get_object_path() == path:
+            if item['device'] == path:
                 RecentConns.items.remove(item)
                 self.initialize()
 
@@ -242,7 +242,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         item["name"] = service.name
         item["uuid"] = service.uuid
         item["time"] = time.time()
-        item["device"] = device #device object
+        item["device"] = device.get_object_path()
         item["mitem"] = None #menu item object
 
         for i in RecentConns.items:
@@ -278,7 +278,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
                          status_icon=self.Applet.Plugins.StatusIcon)
             item["mitem"].props.sensitive = True
 
-        self.Applet.DbusSvc.connect_service(item["device"].get_object_path(), item["uuid"], reply, err)
+        self.Applet.DbusSvc.connect_service(item["device"], item["uuid"], reply, err)
 
     def add_item(self, item):
         if not item["mitem"]:
@@ -299,8 +299,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
             item["device"] = None
         elif not item["device"] and item["adapter"] in self.Adapters.values():
             try:
-                dev = self.get_device(item)
-                item["device"] = dev
+                item["device"] = self.get_device_path(item)
 
             except:
                 RecentConns.items.remove(item)
@@ -313,13 +312,13 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         self.prepend(mitem)
         mitem.show()
 
-    def get_device(self, item):
+    def get_device_path(self, item):
         try:
             adapter = self.Applet.Manager.get_adapter(item["adapter"])
         except:
             raise AdapterNotFound
         try:
-            return adapter.find_device(item["address"])
+            return adapter.find_device(item["address"]).get_object_path()
         except:
             raise DeviceNotFound
 
@@ -342,7 +341,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
             if "name" not in i or "uuid" not in i:
                 items.remove(i)
             try:
-                i["device"] = self.get_device(i)
+                i["device"] = self.get_device_path(i)
             except AdapterNotFound:
                 i["device"] = None
             except DeviceNotFound:
