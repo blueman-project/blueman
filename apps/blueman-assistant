@@ -162,7 +162,7 @@ class Assistant:
             #self.assistant.set_page_complete(pages[PAGE_PASSKEY], True)
             return PAGE_PAIRING
         elif page == PAGE_PAIRING:
-            if len(self.Device.get_services()) == 0:
+            if len(get_services(self.Device)) == 0:
                 return PAGE_FINISH
 
             return PAGE_CONNECT
