@@ -61,9 +61,6 @@ class BluemanApplet(object):
         self.bus = dbus.SystemBus()
         self.bus.watch_name_owner("org.bluez", self.on_dbus_name_owner_change)
 
-        self._any_adapter = Bluez.Adapter()
-        self._any_adapter.connect_signal('property-changed', self._on_adapter_property_changed)
-
         Gtk.main()
 
     def manager_init(self):
@@ -89,9 +86,6 @@ class BluemanApplet(object):
             self.manager_deinit()
         elif self.Manager is None:
             self.manager_init()
-
-    def _on_adapter_property_changed(self, _adapter, key, value, path):
-        self.Plugins.Run("on_adapter_property_changed", path, key, value)
 
     def on_adapter_added(self, _manager, path):
         dprint("Adapter added ", path)
