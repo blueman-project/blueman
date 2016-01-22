@@ -3,6 +3,7 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
+from blueman.bluez.errors import DBusNoSuchAdapterError
 from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 from gi.repository import GLib
@@ -73,7 +74,7 @@ class DiscvManager(AppletPlugin):
     def init_adapter(self):
         try:
             self.adapter = self.Applet.Manager.get_adapter()
-        except:
+        except DBusNoSuchAdapterError:
             self.adapter = None
 
     def on_adapter_removed(self, path):
@@ -112,7 +113,7 @@ class DiscvManager(AppletPlugin):
     def update_menuitems(self):
         try:
             props = self.adapter.get_properties()
-        except Exception as e:
+        except AttributeError as e:
             dprint("warning: Adapter is None")
             self.item.props.visible = False
         else:
