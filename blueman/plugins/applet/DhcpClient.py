@@ -5,7 +5,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 import dbus.service
-from blueman.bluez.Network import Network
+from blueman.bluez.Network import AnyNetwork
 from blueman.gui.Notification import Notification
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Mechanism import Mechanism
@@ -20,7 +20,7 @@ class DhcpClient(AppletPlugin):
     _any_network = None
 
     def on_load(self, applet):
-        self._any_network = Network()
+        self._any_network = AnyNetwork()
         self._any_network.connect_signal('property-changed', self._on_network_prop_changed)
 
         self.quering = []

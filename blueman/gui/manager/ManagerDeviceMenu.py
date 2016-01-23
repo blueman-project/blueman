@@ -8,8 +8,8 @@ from locale import bind_textdomain_codeset
 from operator import itemgetter
 from blueman.Sdp import uuid128_to_uuid16, SERIAL_PORT_SVCLASS_ID, OBEX_OBJPUSH_SVCLASS_ID, OBEX_FILETRANS_SVCLASS_ID
 from blueman.Functions import *
-from blueman.bluez.Network import Network
-from blueman.bluez.Device import Device
+from blueman.bluez.Network import AnyNetwork
+from blueman.bluez.Device import AnyDevice
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.AppletService import AppletService
 from blueman.gui.MessageArea import MessageArea
@@ -48,10 +48,10 @@ class ManagerDeviceMenu(Gtk.Menu):
 
         ManagerDeviceMenu.__instances__.append(self)
 
-        self._any_network = Network()
+        self._any_network = AnyNetwork()
         self._any_network.connect_signal('property-changed', self._on_service_property_changed)
 
-        self._any_device = Device()
+        self._any_device = AnyDevice()
         self._any_device.connect_signal('property-changed', self._on_service_property_changed)
 
         self.Generate()

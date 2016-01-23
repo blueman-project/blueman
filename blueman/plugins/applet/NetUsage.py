@@ -9,7 +9,7 @@ from blueman.Constants import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Config import Config
 from blueman.bluez.Device import Device
-from blueman.bluez.Network import Network
+from blueman.bluez.Network import AnyNetwork
 from _blueman import rfcomm_list
 from gi.repository import GObject
 from gi.repository import GLib
@@ -334,7 +334,7 @@ class NetUsage(AppletPlugin, GObject.GObject):
 
         self.bus = dbus.SystemBus()
 
-        self._any_network = Network()
+        self._any_network = AnyNetwork()
         self._any_network.connect_signal('property-changed', self._on_network_property_changed)
 
         item = create_menuitem(_("Network _Usage"), get_icon("network-wireless", 16))
