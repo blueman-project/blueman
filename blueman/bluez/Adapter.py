@@ -8,8 +8,8 @@ from gi.repository import GObject
 from blueman.Functions import dprint
 from blueman.bluez.PropertiesBase import PropertiesBase
 from blueman.bluez.Device import Device
+from blueman.bluez.AnyBase import AnyBase
 import dbus
-
 
 class Adapter(PropertiesBase):
     _interface_name = 'org.bluez.Adapter1'
@@ -56,3 +56,7 @@ class Adapter(PropertiesBase):
             return self.set('Alias', name)
         except dbus.exceptions.DBusException:
             return self.set('Name', name)
+
+class AnyAdapter(AnyBase):
+    def __init__(self):
+        super(AnyAdapter, self).__init__('org.bluez.Adapter1')

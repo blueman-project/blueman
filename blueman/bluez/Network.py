@@ -5,6 +5,8 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 from blueman.bluez.PropertiesBase import PropertiesBase
+from blueman.bluez.AnyBase import AnyBase
+from gi.repository import GLib
 
 
 class Network(PropertiesBase):
@@ -18,3 +20,7 @@ class Network(PropertiesBase):
 
     def disconnect(self, reply_handler=None, error_handler=None):
         self._call('Disconnect', reply_handler=reply_handler, error_handler=error_handler)
+
+class AnyNetwork(AnyBase):
+    def __init__(self):
+        super(AnyNetwork, self).__init__('org.bluez.Network1')

@@ -5,6 +5,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 from blueman.bluez.PropertiesBase import PropertiesBase
+from blueman.bluez.AnyBase import AnyBase
 
 
 class Device(PropertiesBase):
@@ -21,3 +22,8 @@ class Device(PropertiesBase):
 
     def disconnect(self, reply_handler=None, error_handler=None):
         self._call('Disconnect', reply_handler=reply_handler, error_handler=error_handler)
+
+
+class AnyDevice(AnyBase):
+    def __init__(self):
+        super(AnyDevice, self).__init__('org.bluez.Device1')
