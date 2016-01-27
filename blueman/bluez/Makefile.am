@@ -12,8 +12,7 @@ blueman_PYTHON =				\
 	Manager.py					\
 	PropertiesBase.py				\
 	Network.py					\
-	NetworkServer.py			\
-	Headset.py
+	NetworkServer.py
 
 CLEANFILES = \
 	$(BUILT_SOURCES)

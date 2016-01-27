@@ -9,7 +9,6 @@ blueman_PYTHON =     		\
 	Functions.py		\
 	GroupNetwork.py		    \
 	HandsfreeGateway.py	    \
-	Headset.py      		\
 	Input.py          		\
 	NetworkAccessPoint.py   \
 	SerialPort.py
