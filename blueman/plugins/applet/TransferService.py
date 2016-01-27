@@ -36,9 +36,10 @@ class _Agent:
         self._pending_transfer = None
         self.transfers = {}
 
+    def register(self):
         obex.AgentManager().register_agent(self._agent_path)
 
-    def __del__(self):
+    def unregister(self):
         obex.AgentManager().unregister_agent(self._agent_path)
 
     def _on_release(self, _agent):
@@ -155,18 +156,28 @@ class TransferService(AppletPlugin):
         if self._watch:
             self._watch.cancel()
 
-        self._agent = None
+        self._unregister_agent()
+
+    def _register_agent(self):
+        if not self.__class__._agent:
+            self.__class__._agent = _Agent(self._applet)
+        self._agent.register()
+
+    @classmethod
+    def _unregister_agent(cls):
+        if cls._agent:
+            cls._agent.unregister()
 
     def on_manager_state_changed(self, state):
         if not state:
-            self._agent = None
+            self._unregister_agent()
 
     def _on_obex_owner_changed(self, owner):
         dprint("obex owner changed:", owner)
         if owner == "":
-            self._agent = None
+            self._unregister_agent()
         else:
-            self._agent = _Agent(self._applet)
+            self._register_agent()
 
     def _on_transfer_started(self, _manager, transfer_path):
         if transfer_path not in self._agent.transfers:
