@@ -72,7 +72,7 @@ class BluemanApplet(object):
             self.Plugins.Run("on_manager_state_changed", True)
 
             self.Manager.connect_signal('adapter-added', self.on_adapter_added)
-            self.Manager.connect_signal('adapter-removed', self.on_adapter_added)
+            self.Manager.connect_signal('adapter-removed', self.on_adapter_removed)
 
         except dbus.exceptions.DBusException as e:
             dprint(e)
