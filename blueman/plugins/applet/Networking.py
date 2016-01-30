@@ -20,6 +20,8 @@ class Networking(AppletPlugin):
     _signal = None
 
     def on_load(self, applet):
+        self._registered = {}
+
         self.Applet = applet
 
         self.Config = Config("org.blueman.network")
@@ -65,8 +67,14 @@ class Networking(AppletPlugin):
         if self.Applet.Manager != None:
             adapters = self.Applet.Manager.list_adapters()
             for adapter in adapters:
-                s = NetworkServer(adapter.get_object_path())
-                if on:
+                object_path = adapter.get_object_path()
+
+                registered = self._registered.setdefault(object_path, False)
+
+                s = NetworkServer(get_object_path)
+                if on and not registered:
                     s.register("nap", "pan1")
-                else:
+                    self._registered[object_path] = True
+                elif not on and registered:
                     s.unregister("nap")
+                    self._registerd[object_path] = False
