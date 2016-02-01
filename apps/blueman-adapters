@@ -7,7 +7,6 @@ from __future__ import unicode_literals
 
 import dbus
 from dbus.mainloop.glib import DBusGMainLoop
-from gi.repository import Pango
 import os.path
 import os
 import sys
@@ -25,7 +24,9 @@ from blueman.Functions import *
 
 import gi
 gi.require_version("Gtk", "3.0")
+gi.require_version("Pango", "1.0")
 from gi.repository import Gtk
+from gi.repository import Pango
 
 DBusGMainLoop(set_as_default=True)
 
