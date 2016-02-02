@@ -71,7 +71,7 @@ class Networking(AppletPlugin):
 
                 registered = self._registered.setdefault(object_path, False)
 
-                s = NetworkServer(get_object_path)
+                s = NetworkServer(object_path)
                 if on and not registered:
                     s.register("nap", "pan1")
                     self._registered[object_path] = True
