@@ -76,3 +76,8 @@ class Manager(GObject.GObject):
 
         dprint(transfer_path, success)
         self.emit('transfer-completed', transfer_path, success)
+
+    @classmethod
+    def watch_name_owner(cls, appeared_handler, vanished_handler):
+        Gio.bus_watch_name(Gio.BusType.SYSTEM, cls.__bus_name, Gio.BusNameWatcherFlags.AUTO_START,
+                           appeared_handler, vanished_handler)

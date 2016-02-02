@@ -6,8 +6,6 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-import dbus
-from dbus.mainloop.glib import DBusGMainLoop
 import os.path
 import os
 import sys
@@ -28,8 +26,6 @@ gi.require_version("Gtk", "3.0")
 gi.require_version("Pango", "1.0")
 from gi.repository import Gtk
 from gi.repository import Pango
-
-DBusGMainLoop(set_as_default=True)
 
 # Workaround introspection bug, gnome bug 622084
 signal.signal(signal.SIGINT, signal.SIG_DFL)
@@ -57,8 +53,7 @@ class BluemanAdapters(Gtk.Dialog):
         self._adapters = {}
 
         setup_icon_path()
-        self.bus = dbus.SystemBus()
-        self.bus.watch_name_owner('org.bluez', self.on_dbus_name_owner_change)
+        Bluez.Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
 
         check_single_instance("blueman-adapters", lambda time: self.present_with_time(time))
 
@@ -110,11 +105,13 @@ class BluemanAdapters(Gtk.Dialog):
         hci_dev = os.path.basename(adapter_path)
         self.remove_from_notebook(self._adapters[hci_dev])
 
-    def on_dbus_name_owner_change(self, owner):
-        print('org.bluez owner changed to '+owner)
-        if owner == '':
-            self.manager = None
-        #fixme: show error dialog and exit
+    def _on_dbus_name_appeared(self, _connection, _name, owner):
+        dprint(owner)
+
+    def _on_dbus_name_vanished(self, _connection, _name, _owner):
+        dprint()
+        self.manager = None
+        # FIXME: show error dialog and exit
 
     def build_adapter_tab(self, adapter):
         def on_hidden_toggle(radio):

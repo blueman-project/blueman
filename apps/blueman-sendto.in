@@ -12,7 +12,6 @@ _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if 'BLUEMAN_SOURCE' in os.environ:
     sys.path.insert(0, _dirname)
 
-from dbus.mainloop.glib import DBusGMainLoop
 from optparse import OptionParser
 import gettext
 import urllib
@@ -37,8 +36,6 @@ from blueman.gui.DeviceSelectorDialog import DeviceSelectorDialog
 from blueman.main.SpeedCalc import SpeedCalc
 
 from blueman.bluez import obex
-
-DBusGMainLoop(set_as_default=True)
 
 # Workaround introspection bug, gnome bug 622084
 signal.signal(signal.SIGINT, signal.SIG_DFL)

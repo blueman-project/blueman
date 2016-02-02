@@ -131,7 +131,7 @@ __DICT_ERROR__ = {'org.bluez.Error.Failed': DBusFailedError,
 def parse_dbus_error(exception):
     global __DICT_ERROR__
 
-    gerror, dbus_error, message = exception.message.split(':')
+    gerror, dbus_error, message = exception.message.split(':', 2)
     try:
         return __DICT_ERROR__[dbus_error](message)
     except KeyError:

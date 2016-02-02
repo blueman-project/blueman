@@ -10,8 +10,6 @@ import os.path
 import os
 import sys
 import signal
-import dbus
-from dbus.mainloop.glib import DBusGMainLoop
 from blueman.Constants import *
 import gi
 gi.require_version("Gtk", "3.0")
@@ -30,6 +28,7 @@ from blueman.gui.manager.ManagerMenu import ManagerMenu
 from blueman.gui.manager.ManagerStats import ManagerStats
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.Config import Config
+import blueman.bluez as bluez
 
 from blueman.gui.MessageArea import MessageArea
 from blueman.gui.Notification import Notification
@@ -37,8 +36,6 @@ from blueman.gui.Notification import Notification
 from blueman.main.PluginManager import PluginManager
 import blueman.plugins.manager
 from blueman.plugins.ManagerPlugin import ManagerPlugin
-
-DBusGMainLoop(set_as_default=True)
 
 # Workaround introspection bug, gnome bug 622084
 signal.signal(signal.SIGINT, signal.SIG_DFL)
@@ -89,77 +86,77 @@ class Blueman(Gtk.Window):
             else:
                 self.show()
 
-        def on_bluez_name_owner_changed(owner):
-            dprint('org.bluez owner changed to ', owner)
-            if owner == '':
-                self.hide()
-                d = Gtk.MessageDialog(self, type=Gtk.MessageType.ERROR, buttons=Gtk.ButtonsType.CLOSE)
-                d.props.icon_name = "blueman"
-                d.props.text = _("Connection to BlueZ failed")
+        def on_dbus_name_vanished(_connection, _name, _owner):
+            dprint()
+            self.hide()
+            d = Gtk.MessageDialog(self, type=Gtk.MessageType.ERROR, buttons=Gtk.ButtonsType.CLOSE)
+            d.props.icon_name = "blueman"
+            d.props.text = _("Connection to BlueZ failed")
 
-                d.props.secondary_text = _(
-                    "Bluez daemon is not running, blueman-manager cannot continue.\nThis probably means that there were no Bluetooth adapters detected or Bluetooth daemon was not started.")
+            d.props.secondary_text = _(
+                "Bluez daemon is not running, blueman-manager cannot continue.\nThis probably means that there were no Bluetooth adapters detected or Bluetooth daemon was not started.")
 
-                d.run()
-                d.destroy()
-                try:
-                    exit(1)
-                except:
-                    Gtk.main_quit()
-            else:
+            d.run()
+            d.destroy()
+            try:
+                exit(1)
+            except:
+                Gtk.main_quit()
 
-                setup_icon_path()
+        def on_dbus_name_appeared(_connection, _name, owner):
+            dprint(owner)
+            setup_icon_path()
 
-                self.Config = Config("org.blueman.general")
+            self.Config = Config("org.blueman.general")
 
-                try:
-                    self.Applet = AppletService()
-                except:
-                    print("Blueman applet needs to be running")
-                    exit()
-                try:
-                    if not self.Applet.GetBluetoothStatus():
-                        on_bt_status_changed(False)
-                except:
-                    pass
-                self.Applet.bus.add_signal_receiver(on_bt_status_changed, "BluetoothStatusChanged",
-                                                    self.Applet.dbus_interface, path=self.Applet.object_path)
+            try:
+                self.Applet = AppletService()
+            except:
+                print("Blueman applet needs to be running")
+                exit()
+            try:
+                if not self.Applet.GetBluetoothStatus():
+                    on_bt_status_changed(False)
+            except:
+                pass
+            self.Applet.bus.add_signal_receiver(on_bt_status_changed, "BluetoothStatusChanged",
+                                                self.Applet.dbus_interface, path=self.Applet.object_path)
 
-                self.connect("delete-event", on_window_delete)
-                self.props.icon_name = "blueman"
+            self.connect("delete-event", on_window_delete)
+            self.props.icon_name = "blueman"
 
-                w, h, x, y = self.Config["window-properties"]
-                if w and h: self.resize(w, h)
-                if x and y: self.move(x, y)
+            w, h, x, y = self.Config["window-properties"]
+            if w and h: self.resize(w, h)
+            if x and y: self.move(x, y)
 
-                sw = self.Builder.get_object("scrollview")
-                # Disable overlay scrolling
-                if Gtk.get_minor_version() >= 16:
-                    sw.props.overlay_scrolling = False
+            sw = self.Builder.get_object("scrollview")
+            # Disable overlay scrolling
+            if Gtk.get_minor_version() >= 16:
+                sw.props.overlay_scrolling = False
 
-                self.List = ManagerDeviceList(adapter=self.Config["last-adapter"], inst=self)
+            self.List = ManagerDeviceList(adapter=self.Config["last-adapter"], inst=self)
 
-                self.List.show()
-                sw.add(self.List)
+            self.List.show()
+            sw.add(self.List)
 
-                self.Toolbar = ManagerToolbar(self)
-                self.Menu = ManagerMenu(self)
-                self.Stats = ManagerStats(self)
+            self.Toolbar = ManagerToolbar(self)
+            self.Menu = ManagerMenu(self)
+            self.Stats = ManagerStats(self)
 
-                if self.List.IsValidAdapter():
-                    self.List.DisplayKnownDevices(autoselect=True)
+            if self.List.IsValidAdapter():
+                self.List.DisplayKnownDevices(autoselect=True)
 
-                self.List.connect("adapter-changed", self.on_adapter_changed)
+            self.List.connect("adapter-changed", self.on_adapter_changed)
 
-                toolbar = self.Builder.get_object("toolbar")
-                statusbar = self.Builder.get_object("statusbar")
+            toolbar = self.Builder.get_object("toolbar")
+            statusbar = self.Builder.get_object("statusbar")
 
-                self.Config.bind_to_widget("show-toolbar", toolbar, "visible")
-                self.Config.bind_to_widget("show-statusbar", statusbar, "visible")
+            self.Config.bind_to_widget("show-toolbar", toolbar, "visible")
+            self.Config.bind_to_widget("show-statusbar", statusbar, "visible")
 
-                self.show()
+            self.show()
 
-        dbus.SystemBus().watch_name_owner('org.bluez', on_bluez_name_owner_changed)
+        bluez.Manager.watch_name_owner(on_dbus_name_appeared, on_dbus_name_vanished)
 
     def on_adapter_changed(self, lst, adapter):
         if adapter is not None:

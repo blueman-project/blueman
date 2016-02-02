@@ -10,8 +10,6 @@ import sys
 import os.path
 import os
 import signal
-import dbus
-from dbus.mainloop.glib import DBusGMainLoop
 from blueman.Constants import *
 import gi
 gi.require_version("Gtk", "3.0")
@@ -19,8 +17,6 @@ gi.require_version('Notify', '0.7')
 from gi.repository import Notify
 try: import __builtin__ as builtins
 except ImportError: import builtins
-
-DBusGMainLoop(set_as_default=True)
 
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -62,8 +58,7 @@ class BluemanApplet(object):
 
         self.Plugins.Run("on_plugins_loaded")
 
-        self.bus = dbus.SystemBus()
-        self.bus.watch_name_owner("org.bluez", self.on_dbus_name_owner_change)
+        Bluez.Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
 
         self._any_adapter = Bluez.AnyAdapter()
         self._any_adapter.connect_signal('property-changed', self._on_adapter_property_changed)
@@ -96,12 +91,17 @@ class BluemanApplet(object):
         self.Manager = None
         self.Plugins.Run("on_manager_state_changed", False)
 
-    def on_dbus_name_owner_change(self, owner):
-        dprint("org.bluez owner changed to", owner)
-        if owner == "":
-            self.manager_deinit()
-        elif self.Manager is None:
+    def _on_dbus_name_appeared(self, _connection, _name, owner):
+        dprint(owner)
+        if self.Manager is None:
             self.manager_init()
+
+    def _on_dbus_name_vanished(self, _connection, _name, _owner):
+        dprint()
+        self.manager_deinit()
+
+    def _on_adapter_property_changed(self, adapter, key, value):
+        self.Plugins.Run("on_adapter_property_changed", adapter.get_object_path(), key, value)
 
     def _on_adapter_property_changed(self, _adapter, key, value, path):
         self.Plugins.Run("on_adapter_property_changed", path, key, value)

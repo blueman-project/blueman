@@ -91,3 +91,8 @@ class Manager(GObject.GObject):
         # If the given - or any - adapter does not exist, raise the NoSuchAdapter
         # error BlueZ 4's DefaultAdapter and FindAdapter methods trigger
         raise DBusNoSuchAdapterError('No such adapter')
+
+    @classmethod
+    def watch_name_owner(cls, appeared_handler, vanished_handler):
+        Gio.bus_watch_name(Gio.BusType.SYSTEM, cls.__bus_name, Gio.BusNameWatcherFlags.AUTO_START,
+                           appeared_handler, vanished_handler)
