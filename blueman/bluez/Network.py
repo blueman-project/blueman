@@ -16,7 +16,8 @@ class Network(PropertiesBase):
         super(Network, self)._init(interface_name=self._interface_name, obj_path=obj_path)
 
     def connect(self, uuid, reply_handler=None, error_handler=None):
-        self._call('Connect', uuid, reply_handler=reply_handler, error_handler=error_handler)
+        param = GLib.Variant('(s)', (uuid,))
+        self._call('Connect', param, reply_handler=reply_handler, error_handler=error_handler)
 
     def disconnect(self, reply_handler=None, error_handler=None):
         self._call('Disconnect', reply_handler=reply_handler, error_handler=error_handler)

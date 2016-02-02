@@ -12,4 +12,4 @@ from blueman.services.HandsfreeGateway import HandsfreeGateway
 from blueman.services.Input import Input
 from blueman.services.NetworkAccessPoint import NetworkAccessPoint
 from blueman.services.SerialPort import SerialPort
-from blueman.services.Functions import *
+from blueman.services.Functions import get_service, get_services

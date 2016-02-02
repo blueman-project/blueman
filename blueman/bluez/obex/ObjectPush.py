@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 
 from blueman.Functions import dprint
 from blueman.bluez.obex.Base import Base
-from gi.repository import GObject
+from gi.repository import GObject, GLib
 
 
 class ObjectPush(Base):
@@ -29,7 +29,8 @@ class ObjectPush(Base):
             dprint(file_path, error)
             self.emit('transfer-failed', error)
 
-        self._call('SendFile', file_path, reply_handler=on_transfer_started, error_handler=on_transfer_error)
+        param = GLib.Variant('(s)', (file_path,))
+        self._call('SendFile', param, reply_handler=on_transfer_started, error_handler=on_transfer_error)
 
     def get_session_path(self):
         return self.get_object_path()

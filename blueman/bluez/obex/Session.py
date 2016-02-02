@@ -1,5 +1,6 @@
 # coding=utf-8
 from blueman.bluez.obex.Base import Base
+from gi.repository import GLib
 
 
 class Session(Base):
@@ -10,8 +11,10 @@ class Session(Base):
 
     @property
     def address(self):
-        return self._call('Get', 'org.bluez.obex.Session1', 'Destination')
+        param = GLib.Variant('(ss)', ('org.bluez.obex.Session1', 'Destination'))
+        return self._call('Get', param)
 
     @property
     def root(self):
-        return self._call('Get', 'org.bluez.obex.Session1', 'Root')
+        param = GLib.Variant('(ss)', ('org.bluez.obex.Session1', 'Root'))
+        return self._call('Get', param)

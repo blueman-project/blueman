@@ -4,8 +4,6 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-import dbus
-
 
 class BluezDBusException(Exception):
     def __init__(self, reason):
@@ -107,35 +105,34 @@ class BluezUnavailableAgentMethodError(BluezDBusException):
     pass
 
 
-__DICT_ERROR__ = {'org.bluez.Error.Failed:': DBusFailedError,
-                  'org.bluez.Error.InvalidArguments:': DBusInvalidArgumentsError,
-                  'org.bluez.Error.NotAuthorized:': DBusNotAuthorizedError,
-                  'org.bluez.Error.OutOfMemory:': DBusOutOfMemoryError,
-                  'org.bluez.Error.NoSuchAdapter:': DBusNoSuchAdapterError,
-                  'org.bluez.Error.NotReady:': DBusNotReadyError,
-                  'org.bluez.Error.NotAvailable:': DBusNotAvailableError,
-                  'org.bluez.Error.NotConnected:': DBusNotConnectedError,
-                  'org.bluez.serial.Error.ConnectionAttemptFailed:': DBusConnectionAttemptFailedError,
-                  'org.bluez.Error.AlreadyExists:': DBusAlreadyExistsError,
-                  'org.bluez.Error.DoesNotExist:': DBusDoesNotExistError,
-                  'org.bluez.Error.InProgress:': DBusInProgressError,
-                  'org.bluez.Error.NoReply:': DBusNoReplyError,
-                  'org.bluez.Error.NotSupported:': DBusNotSupportedError,
-                  'org.bluez.Error.AuthenticationFailed:': DBusAuthenticationFailedError,
-                  'org.bluez.Error.AuthenticationTimeout:': DBusAuthenticationTimeoutError,
-                  'org.bluez.Error.AuthenticationRejected:': DBusAuthenticationRejectedError,
-                  'org.bluez.Error.AuthenticationCanceled:': DBusAuthenticationCanceledError,
-                  'org.bluez.serial.Error.NotSupported:': DBusNotSupportedError,
-                  'org.bluez.Error.UnsupportedMajorClass:': DBusUnsupportedMajorClassError,
-                  'org.freedesktop.DBus.Error.ServiceUnknown:': DBusServiceUnknownError}
+__DICT_ERROR__ = {'org.bluez.Error.Failed': DBusFailedError,
+                  'org.bluez.Error.InvalidArguments': DBusInvalidArgumentsError,
+                  'org.bluez.Error.NotAuthorized': DBusNotAuthorizedError,
+                  'org.bluez.Error.OutOfMemory': DBusOutOfMemoryError,
+                  'org.bluez.Error.NoSuchAdapter': DBusNoSuchAdapterError,
+                  'org.bluez.Error.NotReady': DBusNotReadyError,
+                  'org.bluez.Error.NotAvailable': DBusNotAvailableError,
+                  'org.bluez.Error.NotConnected': DBusNotConnectedError,
+                  'org.bluez.serial.Error.ConnectionAttemptFailed': DBusConnectionAttemptFailedError,
+                  'org.bluez.Error.AlreadyExists': DBusAlreadyExistsError,
+                  'org.bluez.Error.DoesNotExist': DBusDoesNotExistError,
+                  'org.bluez.Error.InProgress': DBusInProgressError,
+                  'org.bluez.Error.NoReply': DBusNoReplyError,
+                  'org.bluez.Error.NotSupported': DBusNotSupportedError,
+                  'org.bluez.Error.AuthenticationFailed': DBusAuthenticationFailedError,
+                  'org.bluez.Error.AuthenticationTimeout': DBusAuthenticationTimeoutError,
+                  'org.bluez.Error.AuthenticationRejected': DBusAuthenticationRejectedError,
+                  'org.bluez.Error.AuthenticationCanceled': DBusAuthenticationCanceledError,
+                  'org.bluez.serial.Error.NotSupported': DBusNotSupportedError,
+                  'org.bluez.Error.UnsupportedMajorClass': DBusUnsupportedMajorClassError,
+                  'org.freedesktop.DBus.Error.ServiceUnknown': DBusServiceUnknownError}
 
 
 def parse_dbus_error(exception):
     global __DICT_ERROR__
 
-    aux = "%s" % exception
-    aux_splt = aux.split(None, 1)
+    gerror, dbus_error, message = exception.message.split(':')
     try:
-        return __DICT_ERROR__[aux_splt[0]](aux_splt[1])
+        return __DICT_ERROR__[dbus_error](message)
     except KeyError:
-        return exception
+        return BluezDBusException(dbus_error + message)

@@ -4,8 +4,8 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-import dbus
 from gi.repository.GObject import GObject
+from gi.repository import Gio, GLib
 from blueman.bluez.errors import parse_dbus_error
 
 
@@ -13,7 +13,7 @@ class Base(GObject):
     connect_signal = GObject.connect
     disconnect_signal = GObject.disconnect
 
-    __bus = dbus.SystemBus()
+    __bus = Gio.bus_get_sync(Gio.BusType.SYSTEM)
     __bus_name = 'org.bluez'
 
     def __new__(cls, *args, **kwargs):
@@ -54,35 +54,45 @@ class Base(GObject):
     def __init__(self, *args, **kwargs):
         pass
 
-    def _init(self, interface_name, obj_path):
+    def _init(self, interface_name, obj_path, properties_interface=False):
         self.__signals = []
         self.__obj_path = obj_path
         self.__interface_name = interface_name
         super(Base, self).__init__()
-        if obj_path:
-            self.__dbus_proxy = self.__bus.get_object(self.__bus_name, obj_path, follow_name_owner_changes=True)
-            self.__interface = dbus.Interface(self.__dbus_proxy, interface_name)
+
+        self.__dbus_proxy = Gio.DBusProxy.new_sync(self.__bus,
+            Gio.DBusProxyFlags.NONE, None, self.__bus_name,
+            self.__obj_path, self.__interface_name)
+
+        if properties_interface:
+            self.__dbus_properties_proxy = Gio.DBusProxy.new_sync(self.__bus,
+                Gio.DBusProxyFlags.NONE, None, self.__bus_name,
+                self.__obj_path, 'org.freedesktop.DBus.Properties')
 
     def __del__(self):
-        for args in self.__signals:
-            self.__bus.remove_signal_receiver(*args)
+        for sig in self.__signals:
+            self.__dbus_proxy.disconnect(sig)
 
-    def _call(self, method, *args, **kwargs):
+    def _call(self, method, param=None, properties=False, *args, **kwargs):
+        def callback(proxy, result, reply_handler, error_handler):
+            try:
+                result = proxy.call_finish(result).unpack()
+                reply_handler(*result)
+            except GLib.Error as e:
+                error_handler(parse_dbus_error(e))
+
         def ok(*args, **kwargs):
             if callable(reply_handler):
                 reply_handler(*args, **kwargs)
 
         def err(e):
-            exception = parse_dbus_error(e)
             if callable(error_handler):
-                error_handler(exception)
+                error_handler(e)
             else:
                 raise exception
 
-        if 'interface' in kwargs:
-            interface = kwargs.pop('interface')
-        else:
-            interface = self.__interface
+        if properties: dbus_proxy = self.__dbus_properties_proxy
+        else: dbus_proxy = self.__dbus_proxy
 
         if 'reply_handler' in kwargs:
             reply_handler = kwargs.pop('reply_handler')
@@ -94,22 +104,19 @@ class Base(GObject):
         else:
             error_handler = None
 
-        # Make sure we have an error handler if we do async calls
-        if reply_handler: assert(error_handler is not None)
+        if reply_handler or error_handler:
+            # Make sure we have an error handler if we do async calls
+            assert(error_handler != None)
 
-        try:
-            if reply_handler or error_handler:
-                return getattr(interface, method)(reply_handler=ok, error_handler=err, *args, **kwargs)
-            else:
-                return getattr(interface, method)(*args, **kwargs)
-        except dbus.DBusException as exception:
-            raise parse_dbus_error(exception)
-
-    def _handle_signal(self, handler, signal, interface_name=None, object_path=None, path_keyword=None):
-        args = (handler, signal, interface_name or self.__interface_name, self.__bus_name,
-                object_path or self.__obj_path)
-        self.__bus.add_signal_receiver(*args, path_keyword=path_keyword)
-        self.__signals.append(args)
+            dbus_proxy.call(method, param, Gio.DBusCallFlags.NONE, -1, None,
+                callback, ok, err)
+        else:
+            try:
+                result = dbus_proxy.call_sync(method, param, Gio.DBusCallFlags.NONE, -1, None)
+                if result:
+                    return result.unpack()
+            except GLib.Error as e:
+                raise parse_dbus_error(e)
 
     def get_object_path(self):
         return self.__obj_path

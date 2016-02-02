@@ -5,7 +5,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 from blueman.bluez.PropertiesBase import PropertiesBase
-
+from gi.repository import GLib
 
 class NetworkServer(PropertiesBase):
     _interface_name = 'org.bluez.NetworkServer1'
@@ -14,7 +14,9 @@ class NetworkServer(PropertiesBase):
         super(NetworkServer, self)._init(interface_name=self._interface_name, obj_path=obj_path)
 
     def register(self, uuid, bridge):
-        self._call('Register', uuid, bridge)
+        param = GLib.Variant('(ss)', (uuid, bridge))
+        self._call('Register', param)
 
     def unregister(self, uuid):
-        self._call('Unregister', uuid)
+        param = GLib.Variant('(s)', (uuid,))
+        self._call('Unregister', param)

@@ -83,7 +83,8 @@ class BluemanApplet(object):
             self._signals.append(self.Manager.connect_signal('device-created', self.on_device_created))
             self._signals.append(self.Manager.connect_signal('device-removed', self.on_device_removed))
 
-        except dbus.exceptions.DBusException as e:
+        # FIXME catch specific error(s)
+        except Exception as e:
             dprint(e)
             self.manager_deinit()
             dprint("Bluez DBus API not available. Listening for DBus name ownership changes")

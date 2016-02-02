@@ -4,10 +4,10 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-import dbus
 from blueman.bluez.Base import Base as BlueZBase
+from gi.repository import Gio
 
 
 class Base(BlueZBase):
-    __bus = dbus.SessionBus()
+    __bus = Gio.bus_get_sync(Gio.BusType.SESSION)
     __bus_name = 'org.bluez.obex'

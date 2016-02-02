@@ -4,11 +4,10 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-from gi.repository import GObject
+from gi.repository import GObject, Gio, GLib
 from blueman.Functions import dprint
 from blueman.bluez.Base import Base
-import dbus
-
+import sys
 
 class PropertiesBase(Base):
     __gsignals__ = {
@@ -18,47 +17,55 @@ class PropertiesBase(Base):
 
     _interface_name = 'org.bluez.NetworkServer1'
 
+    if sys.version_info.major < 3:
+        __variant_map = {str: 's', unicode: 's', int: 'u', bool: 'b'}
+    else:
+        __variant_map = {str: 's', int: 'u', bool: 'b'}
+
     def _init(self, interface_name, obj_path):
-        super(PropertiesBase, self)._init(interface_name=self._interface_name, obj_path=obj_path)
+        super(PropertiesBase, self)._init(interface_name=self._interface_name,
+                                          obj_path=obj_path,
+                                          properties_interface=True)
+        self.__signals = []
 
         self.__fallback = {'Icon': 'blueman', 'Class': None}
-        self._handler_wrappers = {}
 
-        if obj_path:
-            self.__properties_interface = dbus.Interface(self._dbus_proxy, 'org.freedesktop.DBus.Properties')
+        sig = self._dbus_proxy.connect("g-properties-changed", self._on_properties_changed)
+        self.__signals.append(sig)
 
-        self._handle_signal(self._on_properties_changed, 'PropertiesChanged', 'org.freedesktop.DBus.Properties',
-                            path_keyword='path')
-
-    def _on_properties_changed(self, interface_name, changed_properties, _invalidated_properties, path):
-        if interface_name == self._interface_name:
-            for name, value in changed_properties.items():
-                dprint(path, name, value)
-                self.emit('property-changed', name, value, path)
+    def _on_properties_changed(self, proxy, changed_properties, _invalidated_properties):
+        for key, value in changed_properties.unpack().items():
+            path = proxy.get_object_path()
+            dprint(path, key, value)
+            self.emit("property-changed", key, value, path)
 
     def get(self, name):
+        param = GLib.Variant('(ss)', (self._interface_name, name))
         try:
-            prop = self.__properties_interface.Get(self._interface_name, name)
-        except dbus.exceptions.DBusException as e:
+            prop = self._call('Get', param, True)[0]
+        # FIXME catch specific error GLib.Error which fails here for unknown reason
+        except Exception as e:
             if name in self.__fallback:
                 prop = self.__fallback[name]
             else:
                 raise e
+
         return prop
 
     def set(self, name, value):
-        if type(value) is int:
-            value = dbus.UInt32(value)
-        return self._call('Set', self._interface_name, name, value, interface=self.__properties_interface)
+        v = GLib.Variant(self.__variant_map[type(value)], value)
+        param = GLib.Variant('(ssv)', (self._interface_name, name, v))
+        self._call('Set', param, True)
 
     def get_properties(self):
-        props = self._call('GetAll', self._interface_name, interface=self.__properties_interface)
-        if props:
+        param = GLib.Variant('(s)', (self._interface_name,))
+        result = self._call('GetAll', param, True)
+        if result:
             for k, v in self.__fallback.items():
-                if k in props: continue
-                else: props[k] = v
+                if k in result[0]: continue
+                else: result[0][k] = v
 
-        return props
+            return result[0]
 
     def __getitem__(self, key):
         return self.get(key)

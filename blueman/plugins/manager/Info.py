@@ -1,8 +1,8 @@
-import dbus
 from gi.repository import Gtk
 
 from blueman.Functions import create_menuitem, get_icon
 from blueman.Sdp import uuid128_to_uuid16, uuid16_to_name
+from blueman.bluez.errors import BluezDBusException
 
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 
@@ -59,7 +59,7 @@ def show_info(device, parent):
                 store.append((prop[0], prop[1](device.get(prop[0]))))
             else:
                 store.append((prop, device.get(prop)))
-        except dbus.exceptions.DBusException:
+        except BluezDBusException:
             pass
     dialog.run()
     dialog.destroy()
