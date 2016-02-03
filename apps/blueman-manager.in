@@ -86,8 +86,8 @@ class Blueman(Gtk.Window):
             else:
                 self.show()
 
-        def on_dbus_name_vanished(_connection, _name, _owner):
-            dprint()
+        def on_dbus_name_vanished(_connection, _name):
+            dprint(name)
             self.hide()
             d = Gtk.MessageDialog(self, type=Gtk.MessageType.ERROR, buttons=Gtk.ButtonsType.CLOSE)
             d.props.icon_name = "blueman"
@@ -103,8 +103,8 @@ class Blueman(Gtk.Window):
             except:
                 Gtk.main_quit()
 
-        def on_dbus_name_appeared(_connection, _name, owner):
-            dprint(owner)
+        def on_dbus_name_appeared(_connection, name, owner):
+            dprint(name, owner)
             setup_icon_path()
 
             self.Config = Config("org.blueman.general")

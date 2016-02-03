@@ -91,13 +91,13 @@ class BluemanApplet(object):
         self.Manager = None
         self.Plugins.Run("on_manager_state_changed", False)
 
-    def _on_dbus_name_appeared(self, _connection, _name, owner):
-        dprint(owner)
+    def _on_dbus_name_appeared(self, _connection, name, owner):
+        dprint(name, owner)
         if self.Manager is None:
             self.manager_init()
 
-    def _on_dbus_name_vanished(self, _connection, _name, _owner):
-        dprint()
+    def _on_dbus_name_vanished(self, _connection, name):
+        dprint(name)
         self.manager_deinit()
 
     def _on_adapter_property_changed(self, adapter, key, value):

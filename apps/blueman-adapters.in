@@ -105,11 +105,11 @@ class BluemanAdapters(Gtk.Dialog):
         hci_dev = os.path.basename(adapter_path)
         self.remove_from_notebook(self._adapters[hci_dev])
 
-    def _on_dbus_name_appeared(self, _connection, _name, owner):
-        dprint(owner)
+    def _on_dbus_name_appeared(self, _connection, name, owner):
+        dprint(name, owner)
 
-    def _on_dbus_name_vanished(self, _connection, _name, _owner):
-        dprint()
+    def _on_dbus_name_vanished(self, _connection, _name):
+        dprint(name)
         self.manager = None
         # FIXME: show error dialog and exit
 
