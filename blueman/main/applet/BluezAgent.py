@@ -35,20 +35,9 @@ class AgentErrorCanceled(dbus.DBusException):
         super(AgentErrorCanceled, self).__init__(name="org.bluez.Error.Canceled")
 
 
-class _GDbusObjectType(dbus.service.InterfaceType, GObjectMeta):
-    pass
-
-_GObjectAgent = _GDbusObjectType(str('_GObjectAgent'), (Agent, GObject.GObject), {})
-
-
-class BluezAgent(_GObjectAgent, Agent, GObject.GObject):
-    __gsignals__ = {
-        str('released'): (GObject.SignalFlags.NO_HOOKS, None, ()),
-    }
-
+class BluezAgent(Agent):
     def __init__(self, status_icon, time_func):
-        Agent.__init__(self, '/org/blueman/agent/bluez_agent')
-        GObject.GObject.__init__(self)
+        super(BluezAgent, self).__init__('/org/blueman/agent/bluez_agent')
 
         self.status_icon = status_icon
         self.dialog = None
