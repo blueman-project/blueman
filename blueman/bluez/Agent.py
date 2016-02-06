@@ -5,85 +5,66 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 from blueman.Functions import dprint
-import inspect
-import dbus.service
-import blueman.bluez.errors as errors
+from gi.repository import Gio, GLib
 
-__SIGNATURES__ = {
-    'Release': ('', ''),
-    'RequestPinCode': ('o', 's'),
-    'RequestPasskey': ('o', 'u'),
-    'DisplayPasskey': ('ouu', ''),
-    'DisplayPinCode': ('os', ''),
-    'RequestConfirmation': ('ou', ''),
-    'RequestAuthorization': ('o', ''),
-    'Authorize': ('os', ''),
-    'AuthorizeService': ('os', ''),
-    'Cancel': ('', '')
-}
+introspection_xml = \
+'''
+<node name='/'>
+  <interface name='org.bluez.Agent1'>
+    <method name='Release'/>
+    <method name='RequestPinCode'>
+      <arg type='o' name='device' direction='in'/>
+      <arg type='s' name='pincode' direction='out'/>
+    </method>
+    <method name='RequestPasskey'>
+      <arg type='o' name='device' direction='in'/>
+      <arg type='u' name='passkey' direction='out'/>
+    </method>
+    <method name='DisplayPasskey'>
+      <arg type='o' name='device' direction='in'/>
+      <arg type='u' name='passkey' direction='in'/>
+      <arg type='y' name='entered' direction='in'/>
+    </method>
+    <method name='DisplayPinCode'>
+      <arg type='o' name='device' direction='in'/>
+      <arg type='s' name='pincode' direction='in'/>
+    </method>
+    <method name='RequestConfirmation'>
+      <arg type='o' name='device' direction='in'/>
+      <arg type='u' name='passkey' direction='in'/>
+    </method>
+    <method name='RequestAuthorization'>
+      <arg type='o' name='device' direction='in'/>
+    </method>
+    <method name='AuthorizeService'>
+      <arg type='o' name='device' direction='in'/>
+      <arg type='s' name='uuid' direction='in'/>
+    </method>
+    <method name='Cancel'/>
+  </interface>
+</node>
+'''
 
+class Agent(object):
+    __bus = Gio.bus_get_sync(Gio.BusType.SYSTEM)
 
-def AgentMethod(func):
-    global __SIGNATURES__
-    try:
-        signatures = __SIGNATURES__[func.__name__]
-    except KeyError:
-        raise errors.BluezUnavailableAgentMethodError('method name ' + func.__name__ + ' unavailable for agent')
-    args = inspect.getargspec(func)[0]
-    if len(args) - len(signatures[0]) == 3:
-        async_callbacks = (args[-2], args[-1])
-    else:
-        async_callbacks = None
+    def __init__(self, agent_path, handle_method_call):
+        node_info = Gio.DBusNodeInfo.new_for_xml(introspection_xml)
 
-    warp = dbus.service.method('org.bluez.Agent1', in_signature=signatures[0], out_signature=signatures[1],
-                               async_callbacks=async_callbacks)
-    return warp(func)
+        regid = self.__bus.register_object(
+            agent_path,
+            node_info.interfaces[0],
+            handle_method_call,
+            None,
+            None)
 
+        if regid:
+            self.__regid = regid
+        else:
+            raise GLib.Error('Failed to register object with path: %s', agent_path)
 
-class Agent(dbus.service.Object):
-    def __init__(self, obj_path):
-        self.__obj_path = obj_path
-        dbus.service.Object.__init__(self, dbus.SystemBus(), obj_path)
+    def __del__(self):
+        self._unregister_object()
 
-    def get_object_path(self):
-        return self.__obj_path
-
-    @AgentMethod
-    def Release(self):
-        dprint('Release')
-
-    @AgentMethod
-    def RequestPinCode(self, device, _ok, _err):
-        dprint('RequestPinCode (%s)' % device)
-
-    @AgentMethod
-    def RequestPasskey(self, device, _ok, _err):
-        dprint('RequestPasskey (%s)' % device)
-
-    @AgentMethod
-    def DisplayPasskey(self, device, passkey, entered):
-        dprint('DisplayPasskey (%s, %d)' % (device, passkey))
-
-    @AgentMethod
-    def DisplayPinCode(self, device, pin_code):
-        dprint('DisplayPinCode (%s, %s)' % (device, pin_code))
-
-    @AgentMethod
-    def RequestConfirmation(self, device, passkey):
-        dprint('RequestConfirmation (%s, %d)' % (device, passkey))
-
-    @AgentMethod
-    def RequestAuthorization(self, device):
-        dprint('RequestAuthorization (%s)' % device)
-
-    @AgentMethod
-    def Authorize(self, device, uuid):
-        dprint('Authorize (%s, %s)' % (device, uuid))
-
-    @AgentMethod
-    def AuthorizeService(self, device, uuid):
-        dprint('AuthorizeService (%s, %s)' % (device, uuid))
-
-    @AgentMethod
-    def Cancel(self):
-        dprint('Cancel')
+    def _unregister_object(self):
+        self.__bus.unregister_object(self.__regid)

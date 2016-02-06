@@ -36,5 +36,5 @@ class AuthAgent(AppletPlugin):
 
     def _remove_agent(self):
         if self._agent:
-            self._agent.Release()
+            self._agent._on_release()
             del self._agent
