@@ -15,12 +15,11 @@ class AgentManager(Base):
         super(AgentManager, self).__init__(interface, '/org/bluez')
 
     @raise_dbus_error
-    def register_agent(self, agent, capability='', default=False):
-        path = agent.get_object_path()
-        self._interface.RegisterAgent(path, capability)
+    def register_agent(self, agent_path, capability='', default=False):
+        self._interface.RegisterAgent(agent_path, capability)
         if default:
-            self._interface.RequestDefaultAgent(path)
+            self._interface.RequestDefaultAgent(agent_path)
 
     @raise_dbus_error
-    def unregister_agent(self, agent):
-        self._interface.UnregisterAgent(agent.get_object_path())
+    def unregister_agent(self, agent_path):
+        self._interface.UnregisterAgent(agent_path)

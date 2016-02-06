@@ -36,8 +36,10 @@ class AgentErrorCanceled(dbus.DBusException):
 
 
 class BluezAgent(Agent):
+    __agent_path = '/org/blueman/agent/bluez_agent'
+
     def __init__(self, status_icon, time_func):
-        super(BluezAgent, self).__init__('/org/blueman/agent/bluez_agent')
+        super(BluezAgent, self).__init__(self.__agent_path)
 
         self.status_icon = status_icon
         self.dialog = None
@@ -45,11 +47,11 @@ class BluezAgent(Agent):
         self.signal_id = None
         self.time_func = time_func
 
-        Bluez.AgentManager().register_agent(self, "KeyboardDisplay", default=True)
+        Bluez.AgentManager().register_agent(self.__agent_path, "KeyboardDisplay", default=True)
 
     def __del__(self):
         dprint()
-        Bluez.AgentManager().unregister_agent(self)
+        Bluez.AgentManager().unregister_agent(self.__agent_path)
 
     def build_passkey_dialog(self, device_alias, dialog_msg, is_numeric):
         def on_insert_text(editable, new_text, new_text_length, position):
