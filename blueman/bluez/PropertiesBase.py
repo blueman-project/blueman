@@ -19,6 +19,7 @@ class PropertiesBase(Base):
     def __init__(self, interface, obj_path):
         super(PropertiesBase, self).__init__(interface, obj_path)
 
+        self.__fallback = {'Icon': 'blueman', 'Class': None}
         self._handler_wrappers = {}
 
         if obj_path:
@@ -35,12 +36,11 @@ class PropertiesBase(Base):
 
     @raise_dbus_error
     def get(self, name):
-        fallback = {'Icon': 'blueman', 'Class': None}
         try:
             prop = self.__properties_interface.Get(self._interface_name, name)
         except dbus.exceptions.DBusException as e:
-            if name in fallback:
-                prop = fallback[name]
+            if name in self.__fallback:
+                prop = self.__fallback[name]
             else:
                 raise e
         return prop
@@ -53,7 +53,13 @@ class PropertiesBase(Base):
 
     @raise_dbus_error
     def get_properties(self):
-        return self.__properties_interface.GetAll(self._interface_name)
+        props = self.__properties_interface.GetAll(self._interface_name)
+        if props:
+            for k, v in self.__fallback.items():
+                if k in props: continue
+                else: props[k] = v
+
+        return props
 
     def __getitem__(self, key):
         return self.get(key)
