@@ -215,9 +215,8 @@ class AdapterAgent(CommonAgent):
             notify_message += "\n" + _("Confirm value for authentication:") + " <b>%s</b>" % passkey
         actions = [["confirm", _("Confirm")], ["deny", _("Deny")]]
 
-        Notification("Bluetooth", notify_message, 0,
-                     actions, on_confirm_action,
-                     pixbuf=get_icon("blueman", 48), status_icon=self.status_icon)
+        self.n = Notification("Bluetooth", notify_message, 0, actions, on_confirm_action,
+                              pixbuf=get_icon("blueman", 48), status_icon=self.status_icon)
 
     @AgentMethod
     def RequestAuthorization(self, device, ok, err):
