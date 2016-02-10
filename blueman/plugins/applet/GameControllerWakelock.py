@@ -26,16 +26,13 @@ class GameControllerWakelock(AppletPlugin):
         self.wake_lock = 0
         self.root_window_id = "0x%x" % Gdk.Screen.get_default().get_root_window().get_xid()
 
-        self._any_device = bluez.Device()
-        self._any_device.connect_signal('property-changed', self._on_device_property_changed)
-
     def on_unload(self):
         if self.wake_lock:
             self.wake_lock = 1
             self.xdg_screensaver("resume")
         del self._any_device
 
-    def _on_device_property_changed(self, _device, key, value, path):
+    def on_device_property_changed(self, path, key, value):
         if key == "Connected":
             klass = bluez.Device(path).get_properties()["Class"] & 0x1fff
 

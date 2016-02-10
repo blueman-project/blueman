@@ -28,9 +28,6 @@ class ShowConnected(AppletPlugin):
         self.active = False
         self.initialized = False
 
-        self._any_device = bluez.Device()
-        self._any_device.connect_signal('property-changed', self._on_device_property_changed)
-
     def on_unload(self):
         del self._any_device
         self.Applet.Plugins.StatusIcon.SetTextLine(1, None)
@@ -101,7 +98,7 @@ class ShowConnected(AppletPlugin):
             self.num_connections = 0
             self.update_statusicon()
 
-    def _on_device_property_changed(self, _device, key, value, _path):
+    def on_device_property_changed(self, _path, key, value):
         if key == "Connected":
             if value:
                 self.num_connections += 1

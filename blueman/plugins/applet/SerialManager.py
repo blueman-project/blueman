@@ -45,17 +45,13 @@ class SerialManager(AppletPlugin):
     _any_device = None
 
     def on_load(self, applet):
-        self._any_device = Bluez.Device()
-        self._any_device.connect_signal('property-changed', self._on_device_property_changed)
-
         self.scripts = {}
 
     def on_unload(self):
-        del self._any_device
         for k in self.scripts.keys():
             self.terminate_all_scripts(k)
 
-    def _on_device_property_changed(self, _device, key, value, path):
+    def on_device_property_changed(self, path, key, value):
         if key == "Connected" and not value:
             self.terminate_all_scripts(Bluez.Device(path)["Address"])
 
