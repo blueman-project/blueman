@@ -31,6 +31,7 @@ from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.Config import Config
 
 from blueman.gui.MessageArea import MessageArea
+from blueman.gui.Notification import Notification
 
 from blueman.main.PluginManager import PluginManager
 import blueman.plugins.manager
@@ -197,7 +198,12 @@ class Blueman(Gtk.Window):
         launch(command, None, False, "blueman", _("Bluetooth Assistant"))
 
     def bond(self, device):
-        self.List.Adapter.find_device(device['Address']).pair()
+        def error_handler(e):
+            dprint(e)
+            message = 'Pairing failed for:\n%s (%s)' % (device['Alias'], device['Address'])
+            Notification('Bluetooth', message, pixbuf=get_icon("blueman", 48))
+
+        device.pair(error_handler=error_handler)
 
     def adapter_properties(self):
         adapter = self.List.Adapter
