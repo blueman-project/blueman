@@ -66,6 +66,9 @@ class BluemanApplet(object):
         self._any_adapter = Bluez.Adapter()
         self._any_adapter.connect_signal('property-changed', self._on_adapter_property_changed)
 
+        self._any_device = Bluez.Device()
+        self._any_device.connect_signal('property-changed', self._on_device_property_changed)
+
         Gtk.main()
 
     def manager_init(self):
@@ -99,6 +102,9 @@ class BluemanApplet(object):
 
     def _on_adapter_property_changed(self, _adapter, key, value, path):
         self.Plugins.Run("on_adapter_property_changed", path, key, value)
+
+    def _on_device_property_changed(self, _device, key, value, path):
+        self.Plugins.Run("on_device_property_changed", path, key, value)
 
     def on_adapter_added(self, _manager, path):
         dprint("Adapter added ", path)

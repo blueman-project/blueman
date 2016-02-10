@@ -76,6 +76,9 @@ class AppletPlugin(ConfigurablePlugin):
     def on_adapter_property_changed(self, path, key, value):
         pass
 
+    def on_device_property_changed(self, path, key, value):
+        pass
+
     #notify when all plugins finished loading
     def on_plugins_loaded(self):
         pass
