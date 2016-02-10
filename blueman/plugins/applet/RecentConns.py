@@ -122,8 +122,6 @@ class RecentConns(AppletPlugin, Gtk.Menu):
 
 
     def on_unload(self):
-        self._manager.disconnect(self._manager_signal)
-
         self.destroy()
         self.Applet.Plugins.Menu.Unregister(self)
 
