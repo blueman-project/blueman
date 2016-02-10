@@ -31,8 +31,6 @@ class PowerManager(AppletPlugin):
         }
     }
 
-    _any_signal = None
-
     def on_load(self, applet):
         AppletPlugin.add_method(self.on_power_state_query)
         AppletPlugin.add_method(self.on_power_state_change_requested)
@@ -44,9 +42,6 @@ class PowerManager(AppletPlugin):
         self.item.get_child().get_children()[1].set_markup_with_mnemonic(_("<b>Turn Bluetooth _Off</b>"))
 
         self.item.props.tooltip_text = _("Turn off all adapters")
-
-        self._any_adapter = Bluez.Adapter()
-        self._any_adapter.connect_signal('property-changed', self._on_adapter_property_changed)
 
         self.item.connect("activate", lambda x: self.on_bluetooth_toggled())
 
@@ -211,7 +206,7 @@ class PowerManager(AppletPlugin):
     def GetBluetoothStatus(self):
         return self.CurrentState
 
-    def _on_adapter_property_changed(self, _adapter, key, value, _path):
+    def on_adapter_property_changed(self, _path, key, value):
         if key == "Powered":
             if value and not self.CurrentState:
                 dprint("adapter powered on while in off state, turning bluetooth on")
