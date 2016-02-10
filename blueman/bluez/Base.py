@@ -29,13 +29,40 @@ class Base(GObject):
             self.__bus.remove_signal_receiver(*args)
 
     def _call(self, method, *args, **kwargs):
+        def ok():
+            if callable(reply_handler):
+                reply_handler()
+
+        def err(e):
+            exception = parse_dbus_error(e)
+            if callable(error_handler):
+                error_handler(exception)
+            else:
+                raise exception
+
         if 'interface' in kwargs:
-            interface = kwargs['interface']
-            del kwargs['interface']
+            interface = kwargs.pop('interface')
         else:
             interface = self.__interface
+
+        if 'reply_handler' in kwargs:
+            reply_handler = kwargs.pop('reply_handler')
+        else:
+            reply_handler = None
+
+        if 'error_handler' in kwargs:
+            error_handler = kwargs.pop('error_handler')
+        else:
+            error_handler = None
+
+        # Make sure we have an error handler if we do async calls
+        if reply_handler: assert(error_handler != None)
+
         try:
-            return getattr(interface, method)(*args, **kwargs)
+            if reply_handler or error_handler:
+                return getattr(interface, method)(reply_handler=ok, error_handler=err, *args, **kwargs)
+            else:
+                return getattr(interface, method)(*args, **kwargs)
         except dbus.DBusException as exception:
             raise parse_dbus_error(exception)
 
