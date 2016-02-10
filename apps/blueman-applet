@@ -75,6 +75,8 @@ class BluemanApplet(object):
 
             self._signals.append(self.Manager.connect_signal('adapter-added', self.on_adapter_added))
             self._signals.append(self.Manager.connect_signal('adapter-removed', self.on_adapter_removed))
+            self._signals.append(self.Manager.connect_signal('device-created', self.on_device_created))
+            self._signals.append(self.Manager.connect_signal('device-removed', self.on_device_removed))
 
         except dbus.exceptions.DBusException as e:
             dprint(e)
@@ -112,6 +114,14 @@ class BluemanApplet(object):
         dprint("Adapter removed ", path)
         self.Plugins.Run("on_adapter_removed", path)
 
+
+    def on_device_created(self, _manager, path):
+        dprint("Device created ", path)
+        self.Plugins.Run("on_device_created", path)
+
+    def on_device_removed(self, _manager, path):
+        dprint("Device removed ", path)
+        self.Plugins.Run("on_device_removed", path)
 
 set_proc_title()
 BluemanApplet()

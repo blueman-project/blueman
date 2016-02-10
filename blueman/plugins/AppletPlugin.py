@@ -67,6 +67,12 @@ class AppletPlugin(ConfigurablePlugin):
     def on_adapter_removed(self, adapter):
         pass
 
+    def on_device_created(self, device):
+        pass
+
+    def on_device_removed(self, device):
+        pass
+
     def on_adapter_property_changed(self, path, key, value):
         pass
 
