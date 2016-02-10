@@ -80,10 +80,6 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         self.deferred = False
         RecentConns.inst = weakref.proxy(self)
 
-        self._manager = Manager()
-        self._manager_signal = self._manager.connect_signal(
-            'device-removed', self.on_device_removed)
-
     def store_state(self):
         items = []
 
@@ -196,7 +192,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
 
         self.change_sensitivity(state)
 
-    def on_device_removed(self, _manager, path):
+    def on_device_removed(self, path):
         for item in reversed(RecentConns.items):
             if item['device'] == path:
                 RecentConns.items.remove(item)
