@@ -3,6 +3,7 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
+from blueman.bluez.errors import DBusNoSuchAdapterError
 from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 from gi.repository import GLib
@@ -30,6 +31,8 @@ class DiscvManager(AppletPlugin):
     }
 
     def on_load(self, applet):
+        self.__signal = None
+
         self.item = create_menuitem(_("_Make Discoverable"), get_icon("edit-find", 16))
         self.item_label = self.item.get_child().get_children()[1]
         applet.Plugins.Menu.Register(self, self.item, 20, False)
@@ -47,6 +50,8 @@ class DiscvManager(AppletPlugin):
         self.Applet.Plugins.Menu.Unregister(self)
         del self.item
 
+        self.deinit_adapter()
+
         if self.timeout:
             GLib.source_remove(self.timeout)
 
@@ -55,7 +60,7 @@ class DiscvManager(AppletPlugin):
             self.init_adapter()
             self.update_menuitems()
         else:
-            self.adapter = None
+            self.deinit_adapter()
             self.update_menuitems()
 
     def on_update(self):
@@ -73,16 +78,23 @@ class DiscvManager(AppletPlugin):
     def init_adapter(self):
         try:
             self.adapter = self.Applet.Manager.get_adapter()
-        except:
-            self.adapter = None
+            sig = self.adapter.connect_signal("property-changed", self._on_adapter_property_changed)
+            self.__signal = sig
+        except DBusNoSuchAdapterError:
+            self.deinit_adapter()
+
+    def deinit_adapter(self):
+        if self.__signal:
+            self.adapter.disconnect_signal(self.__signal)
+        self.adapter = None
 
     def on_adapter_removed(self, path):
         dprint(path)
         if path == self.adapter.get_object_path():
-            self.init_adapter()
+            self.deinit_adapter()
             self.update_menuitems()
 
-    def on_adapter_property_changed(self, path, key, value):
+    def _on_adapter_property_changed(self, adapter, key, value, path):
         if self.adapter and path == self.adapter.get_object_path():
             dprint("prop", key, value)
             if key == "DiscoverableTimeout":
@@ -112,7 +124,7 @@ class DiscvManager(AppletPlugin):
     def update_menuitems(self):
         try:
             props = self.adapter.get_properties()
-        except Exception as e:
+        except AttributeError as e:
             dprint("warning: Adapter is None")
             self.item.props.visible = False
         else:
