@@ -50,6 +50,8 @@ class BluemanApplet(object):
 
         check_single_instance("blueman-applet")
 
+        self._signals = []
+
         self.Manager = None
         self.DbusSvc = DbusService("org.blueman.Applet", "/")
 
@@ -71,8 +73,8 @@ class BluemanApplet(object):
             self.Manager = Bluez.Manager()
             self.Plugins.Run("on_manager_state_changed", True)
 
-            self.Manager.connect_signal('adapter-added', self.on_adapter_added)
-            self.Manager.connect_signal('adapter-removed', self.on_adapter_removed)
+            self._signals.append(self.Manager.connect_signal('adapter-added', self.on_adapter_added))
+            self._signals.append(self.Manager.connect_signal('adapter-removed', self.on_adapter_removed))
 
         except dbus.exceptions.DBusException as e:
             dprint(e)
@@ -80,6 +82,9 @@ class BluemanApplet(object):
             dprint("Bluez DBus API not available. Listening for DBus name ownership changes")
 
     def manager_deinit(self):
+        for sig in self._signals:
+            self.Manager.disconnect_signal(sig)
+
         self.Manager = None
         self.Plugins.Run("on_manager_state_changed", False)
 
