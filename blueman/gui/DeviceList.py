@@ -114,7 +114,7 @@ class DeviceList(GenericList):
         GenericList.destroy(self)
 
     def on_selection_changed(self, selection):
-        iter = self.selected()
+        _model, iter = selection.get_selected()
         if iter:
             row = self.get(iter, "device")
             dev = row["device"]
