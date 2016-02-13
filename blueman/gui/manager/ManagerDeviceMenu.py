@@ -212,7 +212,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         have_disconnectables = False
         have_connectables = False
 
-        if True in map(lambda x: x[0] >= 100 and x[0] < 200, items):
+        if True in map(lambda x: 100 <= x[0] < 200, items):
             have_disconnectables = True
 
         if True in map(lambda x: x[0] < 100, items):

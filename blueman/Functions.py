@@ -246,10 +246,10 @@ def format_bytes(size):
     if size < 1024:
         ret = size
         suffix = "B"
-    elif size > 1024 and size < (1024 * 1024):
+    elif 1024 < size < (1024 * 1024):
         ret = size / 1024
         suffix = "KB"
-    elif size > (1024 * 1024) and size < (1024 * 1024 * 1024):
+    elif (1024 * 1024) < size < (1024 * 1024 * 1024):
         ret = size / (1024 * 1024)
         suffix = "MB"
     else:

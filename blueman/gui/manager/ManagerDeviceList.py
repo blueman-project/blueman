@@ -429,10 +429,10 @@ class ManagerDeviceList(DeviceList):
                     if rssi < 30:
                         rssi_state = _("Poor")
 
-                    if rssi < 40 and rssi > 30:
+                    if 40 > rssi > 30:
                         rssi_state = _("Sub-optimal")
 
-                    elif rssi > 40 and rssi < 60:
+                    elif 40 < rssi < 60:
                         rssi_state = _("Optimal")
 
                     elif rssi > 60:
@@ -444,7 +444,7 @@ class ManagerDeviceList(DeviceList):
                     if tpl < 30:
                         tpl_state = _("Low")
 
-                    if tpl < 40 and tpl > 30:
+                    if 40 > tpl > 30:
                         tpl_state = _("Sub-optimal")
 
                     elif tpl > 40 and rssi < 60:
