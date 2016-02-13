@@ -170,7 +170,7 @@ class Sender(Gtk.Dialog):
         self.transfer.connect("completed", self.on_transfer_completed)
 
     def on_transfer_failed(self, _object_push, error):
-        self.on_transfer_error(None, None, str(error))
+        self.on_transfer_error(None, str(error))
 
     def on_transfer_progress(self, _transfer, progress):
         self.transferred = progress
