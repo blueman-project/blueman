@@ -12,9 +12,9 @@ DBusGMainLoop(set_as_default=True)
 class AppletService(dbus.proxies.Interface):
     __inst__ = None
 
-    def __new__(c):
+    def __new__(cls):
         if not AppletService.__inst__:
-            AppletService.__inst__ = object.__new__(c)
+            AppletService.__inst__ = object.__new__(cls)
 
         return AppletService.__inst__
 

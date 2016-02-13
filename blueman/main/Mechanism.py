@@ -11,9 +11,9 @@ import dbus
 class Mechanism(dbus.proxies.Interface):
     __inst__ = None
 
-    def __new__(c):
+    def __new__(cls):
         if not Mechanism.__inst__:
-            Mechanism.__inst__ = object.__new__(c)
+            Mechanism.__inst__ = object.__new__(cls)
 
         return Mechanism.__inst__
 
