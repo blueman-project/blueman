@@ -13,6 +13,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import GLib
 
+
 class ManagerMenu:
     def __init__(self, blueman):
         self.blueman = blueman
@@ -131,7 +132,6 @@ class ManagerMenu:
         else:
             self.item_device.props.sensitive = False
 
-
     def on_adapter_property_changed(self, list, adapter, kv):
         (key, value) = kv
         if key == "Name" or key == "Alias":
@@ -197,7 +197,6 @@ class ManagerMenu:
                 dprint("selected", adapter_path)
                 self.blueman.Config["last-adapter"] = adapter_path_to_name(adapter_path)
                 self.blueman.List.SetAdapter(adapter_path)
-
 
     def on_adapter_added(self, device_list, adapter_path):
         self.adapters.append(bluez.Adapter(adapter_path))

@@ -33,7 +33,6 @@ class DeviceSelectorDialog(Gtk.Dialog):
         align.show()
         self.vbox.pack_start(align, True, True, 0)
 
-
         #(adapter, device)
         self.selection = None
 

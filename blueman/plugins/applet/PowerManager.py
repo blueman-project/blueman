@@ -11,6 +11,7 @@ import blueman.bluez as Bluez
 
 from gi.repository import GLib
 
+
 class PowerManager(AppletPlugin):
     __depends__ = ["StatusIcon", "Menu"]
     __unloadable__ = True
@@ -95,7 +96,6 @@ class PowerManager(AppletPlugin):
         except Exception as e:
             dprint("Exception occurred", e)
 
-
     class Callback(object):
         def __init__(self, parent, state):
             self.parent = parent
@@ -150,7 +150,6 @@ class PowerManager(AppletPlugin):
 
     def on_power_state_changed(self, manager, state):
         pass
-
 
     #queries other plugins to determine the current power state
     def UpdatePowerState(self):

@@ -56,7 +56,6 @@ class DeviceSelectorList(DeviceList):
             else:
                 self.set(iter, trusted_icon=None)
 
-
         elif key == "Paired":
             if value:
                 self.set(iter, bonded_icon=get_icon("dialog-password", 16))

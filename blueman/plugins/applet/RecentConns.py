@@ -53,8 +53,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
                   #the maximum number of items RecentConns menu will display
                   "name": _("Maximum items"),
                   "desc": _("The maximum number of items recent connections menu will display."),
-                  "range": (6, 20)
-    },
+                  "range": (6, 20)},
     "recent-connections": {"type": str, "default": ""}
     }
 
@@ -94,7 +93,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         try:
             dump = base64.b64encode(
                 zlib.compress(
-                    pickle.dumps((REGISTRY_VERSION, items), 2 ),
+                    pickle.dumps((REGISTRY_VERSION, items), 2),
                     9)).decode()
 
             self.set_option("recent-connections", dump)
@@ -120,7 +119,6 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         if state and self.deferred:
             self.deferred = False
             self.on_manager_state_changed(state)
-
 
     def on_unload(self):
         self.destroy()
@@ -288,7 +286,6 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         item_label_markup = _("%(service)s on %(device)s") % {"service": item["name"], "device": item["alias"]}
         item_label = item["mitem"].get_child().get_children()[1]
         item_label.set_markup_with_mnemonic(item_label_markup)
-
 
         if item["adapter"] not in self.Adapters.values():
             item["device"] = None

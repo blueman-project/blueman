@@ -37,7 +37,7 @@ class MessageArea(Gtk.EventBox):
         self.set_app_paintable(True)
 
         self.anim = WidgetFade(self.hbox, self.hbox.get_style_context().get_background_color(Gtk.StateFlags.NORMAL))
-        self.hl_anim = WidgetFade(self.hbox, Gdk.RGBA(1,0,0,1))
+        self.hl_anim = WidgetFade(self.hbox, Gdk.RGBA(1, 0, 0, 1))
 
         self.setting_style = False
 
@@ -120,7 +120,6 @@ class MessageArea(Gtk.EventBox):
 
         self.setting_style = False
 
-
     def on_close(self, button):
         def on_finished(anim):
             anim.disconnect(sig)
@@ -146,9 +145,9 @@ class MessageArea(Gtk.EventBox):
         self.icon.set_from_icon_name(icon, Gtk.IconSize.MENU)
 
         if icon == "dialog-warning":
-            self.hl_anim.color = Gdk.RGBA(1,0,0,1)
+            self.hl_anim.color = Gdk.RGBA(1, 0, 0, 1)
         else:
-            self.hl_anim.color = Gdk.RGBA(0,0,1,1)
+            self.hl_anim.color = Gdk.RGBA(0, 0, 1, 1)
 
         def on_finished(anim):
             anim.disconnect(sig)

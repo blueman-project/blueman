@@ -40,6 +40,7 @@ from gi.repository import Gtk
 # Workaround introspection bug, gnome bug 622084
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
+
 class Assistant:
     def __init__(self):
         setup_icon_path()
@@ -144,7 +145,6 @@ class Assistant:
     def on_row_activated(self, treeview, path, view_column, *args):
         self.assistant.set_current_page(self.next_page_fn(self.assistant.get_current_page(), None))
 
-
     def next_page_fn(self, page, data):
         if page == PAGE_INTRO:
             return PAGE_DEVLIST
@@ -184,7 +184,6 @@ class Assistant:
         if radio_button.props.active:
             self.assistant.set_page_complete(pages[PAGE_PASSKEY], True)
             self.pair = pair
-
 
     def on_device_selected(self, list, device, iter):
         if not device:

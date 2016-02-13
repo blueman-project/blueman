@@ -70,7 +70,6 @@ class StandardItems(AppletPlugin):
         def on_activate(status_icon):
             self.on_devices(None)
 
-
         self.Applet.Plugins.StatusIcon.connect("activate", on_activate)
 
     def change_sensitivity(self, sensitive):
@@ -103,7 +102,7 @@ class StandardItems(AppletPlugin):
         if lockfile and pid and is_running('blueman-manager', pid):
             os.kill(pid, signal.SIGTERM)
         else:
-            launch("blueman-manager", None, False, "blueman",_("Device Manager"))
+            launch("blueman-manager", None, False, "blueman", _("Device Manager"))
 
     def on_adapters(self, menu_item):
         launch("blueman-adapters", None, False, "blueman", _("Adapter Preferences"))

@@ -43,6 +43,7 @@ from blueman.main.PluginManager import PersistentPluginManager
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 signal.signal(signal.SIGTERM, signal.SIG_DFL)
 
+
 class BluemanApplet(object):
     def __init__(self):
         setup_icon_path()
@@ -120,7 +121,6 @@ class BluemanApplet(object):
     def on_adapter_removed(self, _manager, path):
         dprint("Adapter removed ", path)
         self.Plugins.Run("on_adapter_removed", path)
-
 
     def on_device_created(self, _manager, path):
         dprint("Device created ", path)

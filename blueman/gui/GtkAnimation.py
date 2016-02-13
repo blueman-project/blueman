@@ -109,7 +109,6 @@ class AnimBase(GObject.GObject):
         self._state_changed(self._state)
         self._source = GLib.timeout_add(int(1.0 / self.fps * 1000), self._do_transition)
 
-
     def _state_changed(self, state):
         self.state_changed(self.controller.get_value(state))
 
@@ -145,7 +144,6 @@ class TreeRowFade(AnimBase):
 
     def get_iter(self):
         return self.tw.props.model.get_iter(self.row.get_path())
-
 
     def on_expose(self, widget, cr):
         if self.frozen:
@@ -293,7 +291,6 @@ class WidgetFade(AnimBase):
             cr.set_source_rgba(self.color.red, self.color.green, self.color.blue, self.color.alpha - self.get_state())
             cr.set_operator(cairo.OPERATOR_OVER)
             cr.paint()
-
 
     def state_changed(self, state):
         self.widget.queue_draw()

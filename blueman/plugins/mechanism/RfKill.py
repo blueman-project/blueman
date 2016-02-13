@@ -13,6 +13,7 @@ from blueman.plugins.applet.KillSwitch import RFKILL_TYPE_BLUETOOTH, RFKILL_OP_C
 if not os.path.exists('/dev/rfkill'):
     raise ImportError("Hardware kill switch not found")
 
+
 class RfKill(MechanismPlugin):
     @dbus.service.method('org.blueman.Mechanism', in_signature="b", out_signature="")
     def SetRfkillState(self, state):

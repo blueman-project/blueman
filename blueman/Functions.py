@@ -166,6 +166,7 @@ def launch(cmd, paths=None, system=False, icon_name=None, sn=True, name="blueman
 
     return launched
 
+
 def setup_icon_path():
     ic = Gtk.IconTheme.get_default()
     ic.prepend_search_path(ICON_PATH)
@@ -186,11 +187,11 @@ def get_icon(name, size=24, fallback="image-missing"):
 
     if icon.props.width > size:
         new_w = size
-        new_h = int(size * ( float(icon.props.width) / icon.props.height ))
+        new_h = int(size * (float(icon.props.width) / icon.props.height))
         icon = icon.scale_simple(new_w, new_h, GdkPixbuf.InterpType.BILINEAR)
 
     if icon.props.height > size:
-        new_w = int(size * ( float(icon.props.height) / icon.props.width ))
+        new_w = int(size * (float(icon.props.height) / icon.props.width))
         new_h = size
         icon = icon.scale_simple(new_w, new_h, GdkPixbuf.InterpType.BILINEAR)
 
@@ -206,6 +207,7 @@ def get_notification_icon(icon, main_icon="blueman"):
 
 def adapter_path_to_name(path):
     return re.search(".*(hci[0-9]*)", path).groups(0)[0]
+
 
 #format error
 def e_(msg):
@@ -224,6 +226,7 @@ def opacify_pixbuf(pixbuf, alpha):
     new.fill(0x00000000)
     pixbuf.composite(new, 0, 0, pixbuf.props.width, pixbuf.props.height, 0, 0, 1, 1, GdkPixbuf.InterpType.BILINEAR, alpha)
     return new
+
 
 #pixbuf, [(pixbuf, x, y, alpha), (pixbuf, x, y, alpha)]
 
@@ -267,6 +270,7 @@ def create_menuitem_box(text, pixbuf, orientation=Gtk.Orientation.HORIZONTAL, si
 
     return item_box
 
+
 def create_menuitem(text, pixbuf):
     box = create_menuitem_box(text, pixbuf)
     item = Gtk.MenuItem()
@@ -294,12 +298,14 @@ def get_pid(lockfile):
     except (ValueError, IOError):
         pass
 
+
 def is_running(name, pid):
     if not os.path.exists("/proc/%s" % pid):
         return False
 
     with open("/proc/%s/cmdline" % pid, "r") as f:
         return name in f.readline().replace("\0", " ")
+
 
 def check_single_instance(name, unhide_func=None):
     print("%s version %s starting" % (name, VERSION))
@@ -315,7 +321,6 @@ def check_single_instance(name, unhide_func=None):
                 event_time = 0
 
             unhide_func(event_time)
-
 
     signal.signal(signal.SIGUSR1, handler)
 
@@ -359,6 +364,7 @@ def have(t):
             return exec_path
     return None
 
+
 def mask_ip4_address(ip, subnet):
     masked_ip = bytearray()
 
@@ -366,6 +372,7 @@ def mask_ip4_address(ip, subnet):
         masked_ip.append(x & y)
 
     return bytes(masked_ip)
+
 
 def set_proc_title(name=None):
     '''Set the process title'''

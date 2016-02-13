@@ -64,7 +64,6 @@ class ManagerToolbar:
         if device is not None:
             func(device)
 
-
     def on_adapter_property_changed(self, List, adapter, key_value):
         key, value = key_value
         if key == "Discovering":

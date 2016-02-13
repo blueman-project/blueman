@@ -170,6 +170,7 @@ toy_minor_cls = [
     "game"
 ]
 
+
 def get_major_class(klass):
     index = (klass >> 8) & 0x1F
 

@@ -34,6 +34,7 @@ DBusGMainLoop(set_as_default=True)
 # Workaround introspection bug, gnome bug 622084
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
+
 class BluemanAdapters(Gtk.Dialog):
     def __init__(self, selected_hci_dev):
         super(BluemanAdapters, self).__init__(title=_("Bluetooth Adapters"))

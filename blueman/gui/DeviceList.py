@@ -168,7 +168,6 @@ class DeviceList(GenericList):
                 self.level_setup_event(row_ref, device, cinfo)
                 return True
 
-
         props = device.get_properties()
 
         if "Connected" in props and props["Connected"] and props["Address"] not in self.monitored_devices:
@@ -208,7 +207,6 @@ class DeviceList(GenericList):
 
     def device_remove_event(self, device, iter):
         self.RemoveDevice(device, iter)
-
 
     #########################
 

@@ -32,7 +32,6 @@ class BasePlugin(object):
     def __del__(self):
         print("Deleting plugin instance", self)
 
-
     @classmethod
     def add_method(cls, func):
         func.__self__.__methods.append((cls, func.__name__))

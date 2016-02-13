@@ -28,6 +28,7 @@ RFKILL_EVENT_SIZE_V1 = 8
 if not os.path.exists('/dev/rfkill'):
     raise ImportError('Hardware kill switch not found')
 
+
 class Switch:
     def __init__(self, idx, type, soft, hard):
         self.idx = idx

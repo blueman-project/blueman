@@ -131,10 +131,8 @@ class BluemanServices(Gtk.Dialog):
                 (name, icon) = cls.__plugin_info__
                 self.setup_list_item(inst, name, icon)
 
-
     def setup_list_item(self, inst, name, icon):
         self.List.append(picture=get_icon(icon, 32), caption=name, id=inst.__class__.__name__)
-
 
     #executes a function on all plugin instances
     def plugin_exec(self, function, *args, **kwargs):
@@ -146,11 +144,9 @@ class BluemanServices(Gtk.Dialog):
 
         return rets
 
-
     def on_apply_clicked(self, button):
         self.plugin_exec("on_apply")
         self.option_changed()
-
 
     def set_page(self, pageid):
         dprint("Set page", pageid)
@@ -169,7 +165,6 @@ class BluemanServices(Gtk.Dialog):
                 inst._on_enter()
             else:
                 inst._on_leave()
-
 
     def on_selection_changed(self, selection):
         iter = self.List.selected()

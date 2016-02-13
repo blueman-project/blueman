@@ -13,6 +13,7 @@ import sys
 
 from blueman.Functions import set_proc_title
 
+
 def on_file_changed(monitor, file, other_file, event_type):
     if event_type == Gio.FileMonitorEvent.DELETED:
         loop.quit()

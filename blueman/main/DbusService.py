@@ -10,6 +10,7 @@ import dbus.service
 
 DBusGMainLoop(set_as_default=True)
 
+
 class MethodAlreadyExists(Exception):
     pass
 

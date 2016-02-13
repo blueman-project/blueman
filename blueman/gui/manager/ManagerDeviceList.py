@@ -81,9 +81,8 @@ class ManagerDeviceList(DeviceList):
     def do_device_found(self, device):
         iter = self.find_device(device)
         if iter:
-            anim = TreeRowColorFade(self, self.props.model.get_path(iter), Gdk.RGBA(0,0,1,1))
+            anim = TreeRowColorFade(self, self.props.model.get_path(iter), Gdk.RGBA(0, 0, 1, 1))
             anim.animate(start=0.8, end=1.0)
-
 
     def search_func(self, model, column, key, iter):
         row = self.get(iter, "caption")
@@ -134,7 +133,6 @@ class ManagerDeviceList(DeviceList):
             drag_context.drag_status(Gdk.DragAction.DEFAULT, timestamp)
             return False
 
-
     def on_event_clicked(self, widget, event):
 
         if event.type == Gdk.EventType.BUTTON_PRESS and event.button == 3:
@@ -150,10 +148,8 @@ class ManagerDeviceList(DeviceList):
 
                         self.menu.popup(None, None, None, None, event.button, event.time)
 
-
     def get_device_icon(self, klass):
         return get_icon("blueman-" + klass.replace(" ", "-").lower(), 48, "blueman")
-
 
     def make_device_icon(self, target, is_bonded=False, is_trusted=False, is_discovered=False, opacity=255):
         if opacity != 255:
@@ -170,7 +166,6 @@ class ManagerDeviceList(DeviceList):
             sources.append((get_icon("edit-find", 24), 24, 0, 255))
 
         return composite_icon(target, sources)
-
 
     def device_remove_event(self, device, iter):
         row_fader = self.get(iter, "row_fader")["row_fader"]
@@ -247,7 +242,6 @@ class ManagerDeviceList(DeviceList):
         except:
             pass
 
-
     def row_update_event(self, iter, key, value):
         dprint("row update event", key, value)
 
@@ -284,7 +278,6 @@ class ManagerDeviceList(DeviceList):
                 icon = self.make_device_icon(row["orig_icon"], row["bonded"], False, False)
                 self.set(iter, device_pb=icon, trusted=False)
 
-
         elif key == "Paired":
             row = self.get(iter, "trusted", "orig_icon")
             if value:
@@ -298,7 +291,6 @@ class ManagerDeviceList(DeviceList):
             device = self.get(iter, "device")["device"]
             c = self.make_caption(value, self.get_device_class(device), device['Address'])
             self.set(iter, caption=c)
-
 
     def level_setup_event(self, row_ref, device, cinfo):
         def rnd(value):
@@ -389,10 +381,8 @@ class ManagerDeviceList(DeviceList):
 
                     signal = fader.connect("animation-finished", on_finished)
 
-
         else:
             dprint("invisible")
-
 
     def tooltip_query(self, tw, x, y, kb, tooltip):
 

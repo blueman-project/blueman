@@ -18,7 +18,6 @@ class Mechanism(dbus.proxies.Interface):
 
         return Mechanism.__inst__
 
-
     def __init__(self):
         self.bus = dbus.SystemBus()
 

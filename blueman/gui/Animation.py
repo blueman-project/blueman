@@ -29,7 +29,6 @@ class Animation:
                 if i != 0 and i != ln - 1:
                     self.pixbuffs.append(self.pixbuffs[ln - 1 - i])
 
-
     def status(self):
         if self.timer:
             return True

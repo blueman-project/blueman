@@ -82,10 +82,8 @@ class ManagerProgressbar(GObject.GObject):
         if not self.Blueman.Config["show-statusbar"]:
             self.Blueman.Builder.get_object("statusbar").props.visible = True
 
-
         # if self.Blueman.Stats.hbox.size_request()[0] + self.progressbar.size_request()[0] + 16 > self.Blueman.get_size()[0]:
         #	self.Blueman.Stats.hbox.hide_all()
-
 
         self.progressbar.props.visible = True
         self.eventbox.props.visible = True
@@ -102,7 +100,6 @@ class ManagerProgressbar(GObject.GObject):
         self.set_label(msg)
         self.set_cancellable(False)
         GLib.timeout_add(timeout, self.finalize)
-
 
     def finalize(self):
         if not self.finalized:
@@ -132,7 +129,6 @@ class ManagerProgressbar(GObject.GObject):
             for sig in self._signals:
                 self.disconnect(sig)
             self._signals = []
-
 
     def set_cancellable(self, b, hide=False):
         if b:

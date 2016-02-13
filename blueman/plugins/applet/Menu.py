@@ -57,7 +57,6 @@ class Menu(AppletPlugin):
             self.__clear()
             self.__load_items()
 
-
     def Unregister(self, owner):
         for i in reversed(self.__menuitems):
             priority, item, show, orig_owner = i

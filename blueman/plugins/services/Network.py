@@ -91,7 +91,6 @@ class Network(ServicePlugin):
 
             self.clear_options()
 
-
     def ip_check(self):
         e = self.Builder.get_object("net_ip")
         address = e.props.text
@@ -138,7 +137,6 @@ class Network(ServicePlugin):
                     return -1
 
             return True
-
 
     def setup_network(self):
         self.Config = Config("org.blueman.network")
@@ -231,7 +229,6 @@ class Network(ServicePlugin):
             elif rb.props.active and x == "blueman":
                 applet.SetPluginConfig("NMPANSupport", False)
                 applet.SetPluginConfig("DhcpClient", True)
-
 
         if "PPPSupport" in active_plugins:
             rb_dun_blueman.props.active = True

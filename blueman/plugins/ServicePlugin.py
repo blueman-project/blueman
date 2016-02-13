@@ -4,6 +4,7 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
+
 class ServicePlugin(object):
     instances = []
     __plugin_info__ = None
@@ -27,7 +28,6 @@ class ServicePlugin(object):
             self.on_leave()
             self.__is_exposed = False
 
-
     # call when option has changed.
     def option_changed_notify(self, option_id, state=True):
 
@@ -44,7 +44,6 @@ class ServicePlugin(object):
 
     def clear_options(self):
         self._options = []
-
 
     #virtual functions
     #in: container hbox

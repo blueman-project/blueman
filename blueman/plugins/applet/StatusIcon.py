@@ -85,7 +85,6 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
 
         self.update_tooltip()
 
-
     def update_tooltip(self):
         s = ""
         keys = list(self.lines.keys())

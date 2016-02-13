@@ -214,7 +214,6 @@ class NMPANSupport(AppletPlugin):
             if not self.legacy:
                 self.on_nma_owner_changed(owner)
 
-
     def on_unload(self):
         for watch in self.watches:
             watch.cancel()

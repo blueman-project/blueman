@@ -230,7 +230,6 @@ class PPPConnection(GObject.GObject):
             GLib.source_remove(self.timeout)
             callback(ret, exception, *user_data)
 
-
         self.buffer = ""
         self.term_found = False
 

@@ -106,7 +106,6 @@ class BluezAgent(Agent):
                     self.dialog.response(Gtk.ResponseType.REJECT)
                 #self.applet.status_icon.set_blinking(False)
 
-
         def passkey_dialog_cb(dialog, response_id):
             if response_id == Gtk.ResponseType.ACCEPT:
                 ret = pin_entry.get_text()

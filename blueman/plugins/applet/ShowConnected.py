@@ -35,7 +35,6 @@ class ShowConnected(AppletPlugin):
         self.num_connections = 0
         self.Applet.Plugins.StatusIcon.IconShouldChange()
 
-
     def on_status_icon_query_icon(self):
         if self.num_connections > 0:
             self.active = True

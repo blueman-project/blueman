@@ -418,7 +418,6 @@ class PulseAudioUtils(GObject.GObject):
             print(function.__name__)
         pa_operation_unref(op)
 
-
     def ListSources(self, callback):
         self.check_connected()
 
@@ -441,10 +440,8 @@ class PulseAudioUtils(GObject.GObject):
             if end:
                 callback(data)
 
-
         self.__init_list_callback(pa_context_get_source_info_list,
                                   pa_source_info_cb_t, handler)
-
 
     def ListSinks(self, callback, id=None):
         self.check_connected()
@@ -617,7 +614,6 @@ class PulseAudioUtils(GObject.GObject):
             else:
                 callback(res)
 
-
         self.simple_callback(handler, pa_context_load_module, name, args)
 
     #####################
@@ -638,7 +634,6 @@ class PulseAudioUtils(GObject.GObject):
             return PulseAudioUtils.inst
         else:
             return super(PulseAudioUtils, cls).__new__(cls)
-
 
     def __event_callback(self, context, event_type, idx, userdata):
         dprint(event_type, idx)
@@ -666,7 +661,6 @@ class PulseAudioUtils(GObject.GObject):
 
         self.Connect()
 
-
     def Connect(self):
         if not self.connected:
             if self.pa_context:
@@ -684,7 +678,6 @@ class PulseAudioUtils(GObject.GObject):
             pa_context_set_subscribe_callback(self.pa_context,
                                               self.event_cb,
                                               None)
-
 
     def __del__(self):
         dprint("Destroying PulseAudioUtils instance")

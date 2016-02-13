@@ -56,7 +56,6 @@ class SettingsWidget(Gtk.Box):
 
         self.inst.set_option(opt, val)
 
-
     def get_control_widget(self, opt, params):
         if "widget" in params:
             return params["widget"](self.inst, opt, params)
@@ -191,7 +190,6 @@ class PluginDialog(Gtk.Dialog):
                 return -1
             elif not a["activatable"] and b["activatable"]:
                 return 1
-
 
     def on_response(self, dialog, resp):
         self.applet.Plugins.disconnect(self.sig_a)

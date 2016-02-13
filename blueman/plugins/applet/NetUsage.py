@@ -26,6 +26,7 @@ import datetime
 import gettext
 from locale import bind_textdomain_codeset
 
+
 class MonitorBase(GObject.GObject):
     __gsignals__ = {
     str('disconnected'): (GObject.SignalFlags.NO_HOOKS, None, ()),

@@ -116,7 +116,6 @@ class ManagerStats:
         else:
             blinker.set_rate(1)
 
-
     def _update(self):
         #if self.hbox.parent.parent.parent.props.visible:
 
@@ -140,7 +139,6 @@ class ManagerStats:
             self.set_data(tx, s_tx, rx, s_rx, u_speed, s_u_speed, d_speed, s_d_speed)
 
         return 1
-
 
     def start_update(self):
         self._update()

@@ -201,7 +201,6 @@ class PluginManager(GObject.GObject):
         else:
             raise Exception("Plugin %s is not unloadable" % name)
 
-
     def get_plugins(self):
         return self.__plugins
 

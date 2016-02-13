@@ -17,15 +17,15 @@ class AppIndicator(AppletPlugin):
     
     def on_load(self, applet):
         
-        self.indicator = girAppIndicator.Indicator.new ("blueman",
-                                                        self.Applet.Plugins.StatusIcon.props.icon_name,
-                                                        girAppIndicator.IndicatorCategory.APPLICATION_STATUS)
+        self.indicator = girAppIndicator.Indicator.new("blueman",
+                                                       self.Applet.Plugins.StatusIcon.props.icon_name,
+                                                       girAppIndicator.IndicatorCategory.APPLICATION_STATUS)
         
         self.indicator.set_status(girAppIndicator.IndicatorStatus.ACTIVE)
         
         self.indicator.set_menu(applet.Plugins.Menu.get_menu())
         
-        self.s =  self.Applet.Plugins.StatusIcon.connect("notify::icon-name", self.on_notify)
+        self.s = self.Applet.Plugins.StatusIcon.connect("notify::icon-name", self.on_notify)
 
         self.override_method(self.Applet.Plugins.StatusIcon, "set_visible", self.set_visible)
         

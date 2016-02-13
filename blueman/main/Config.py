@@ -6,6 +6,7 @@ from __future__ import unicode_literals
 
 from gi.repository import Gio
 
+
 class Config(Gio.Settings):
     def __init__(self, schema_id, path=None):
         # Add backwards compat with pygobject < 3.11.2

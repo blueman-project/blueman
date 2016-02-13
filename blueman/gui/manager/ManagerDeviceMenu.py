@@ -21,6 +21,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import GObject
 
+
 def get_x_icon(icon_name, size):
     ic = get_icon(icon_name, size)
     x = get_icon("blueman-x", size)
@@ -65,7 +66,6 @@ class ManagerDeviceMenu(Gtk.Menu):
             self._device_property_changed_signal = self.Blueman.List.connect("device-property-changed",
                                                                              self.on_device_property_changed)
 
-
         if not self._selection_done_signal:
             def disconnectall(x):
                 self.disconnect(self._device_property_changed_signal)
@@ -90,7 +90,6 @@ class ManagerDeviceMenu(Gtk.Menu):
             dprint("op: regenerating instance", inst)
             if inst.SelectedDevice == self.SelectedDevice and not (inst.is_popup and not inst.props.visible):
                 inst.Generate()
-
 
     def get_op(self, device):
         try:
@@ -159,7 +158,6 @@ class ManagerDeviceMenu(Gtk.Menu):
 
         appl.disconnect_service(service.device.get_object_path(), service.uuid, port)
         self.Generate()
-
 
     def on_device_property_changed(self, List, device, iter, key_value):
         key, value = key_value

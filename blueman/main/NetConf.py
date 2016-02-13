@@ -18,6 +18,7 @@ from blueman.Functions import have, mask_ip4_address, dprint, is_running
 from _blueman import create_bridge, destroy_bridge, BridgeException
 from subprocess import call, Popen
 
+
 def calc_ip_range(ip):
     '''Calculate the ip range for dhcp config'''
     start_range = bytearray(ip)
@@ -27,6 +28,7 @@ def calc_ip_range(ip):
 
     return bytes(start_range), bytes(end_range)
 
+
 def read_pid_file(fname):
     try:
         with open(fname, "r") as f:
@@ -35,6 +37,7 @@ def read_pid_file(fname):
         pid = None
 
     return pid
+
 
 def get_dns_servers():
     f = open("/etc/resolv.conf", "r")
@@ -49,6 +52,7 @@ def get_dns_servers():
     f.close()
 
     return dns_servers
+
 
 class DnsMasqHandler(object):
     def __init__(self, netconf):
@@ -85,7 +89,6 @@ class DnsMasqHandler(object):
             else:
                 raise Exception("dnsmasq failed to start. Check the system log for errors")
 
-
     def do_remove(self):
         if self.netconf.locked("dhcp"):
             if not self.pid:
@@ -101,6 +104,7 @@ class DnsMasqHandler(object):
             else:
                 dprint("Stale dhcp lockfile found")
                 self.netconf.unlock("dhcp")
+
 
 class DhcpdHandler(object):
     def __init__(self, netconf):
@@ -147,8 +151,7 @@ class DhcpdHandler(object):
                           "dns": dns,
                           "rtr": inet_ntoa(self.netconf.ip4_address),
                           "start": inet_ntoa(start),
-                          "end": inet_ntoa(end)
-        }
+                          "end": inet_ntoa(end)}
         subnet += "#### END BLUEMAN AUTOMAGIC SUBNET ####\n"
 
         return subnet
@@ -183,7 +186,6 @@ class DhcpdHandler(object):
             else:
                 raise Exception("dhcpd failed to start. Check the system log for errors")
 
-
     def do_remove(self):
         dhcp_config, existing_subnet = self._read_dhcp_config()
         f = open(DHCP_CONFIG_FILE, "w")
@@ -204,6 +206,7 @@ class DhcpdHandler(object):
             else:
                 dprint("Stale dhcp lockfile found")
                 self.netconf.unlock("dhcp")
+
 
 class UdhcpdHandler(object):
     def __init__(self, netconf):
@@ -314,7 +317,6 @@ class NetConf(object):
         self.ip4_address = None
         self.ip4_mask = None
         self.ip4_changed = False
-
 
     def set_ipv4(self, ip, netmask):
         if self.ip4_address != ip or self.ip4_mask != netmask:

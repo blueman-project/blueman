@@ -67,7 +67,7 @@ class Blueman(Gtk.Window):
         if self.get_has_resize_grip():
             statusbar = self.Builder.get_object("statusbar")
             margin_right = statusbar.get_margin_right()
-            statusbar.set_margin_right (margin_right +  10)
+            statusbar.set_margin_right(margin_right + 10)
 
         def do_present(time):
             if self.props.visible:
