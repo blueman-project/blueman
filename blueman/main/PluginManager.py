@@ -94,19 +94,19 @@ class PluginManager(GObject.GObject):
 
         for cls in self.plugin_class.__subclasses__():
             self.__classes[cls.__name__] = cls
-            if not cls.__name__ in self.__deps:
+            if cls.__name__ not in self.__deps:
                 self.__deps[cls.__name__] = []
 
-            if not cls.__name__ in self.__cfls:
+            if cls.__name__ not in self.__cfls:
                 self.__cfls[cls.__name__] = []
 
             for c in cls.__depends__:
-                if not c in self.__deps:
+                if c not in self.__deps:
                     self.__deps[c] = []
                 self.__deps[c].append(cls.__name__)
 
             for c in cls.__conflicts__:
-                if not c in self.__cfls:
+                if c not in self.__cfls:
                     self.__cfls[c] = []
                 self.__cfls[c].append(cls.__name__)
                 if c not in self.__cfls[cls.__name__]:
@@ -136,8 +136,8 @@ class PluginManager(GObject.GObject):
             return
 
         for dep in cls.__depends__:
-            if not dep in self.__loaded:
-                if not dep in self.__classes:
+            if dep not in self.__loaded:
+                if dep not in self.__classes:
                     raise Exception("Could not satisfy dependency %s -> %s" % (cls.__name__, dep))
                 try:
                     self.__load_plugin(self.__classes[dep])

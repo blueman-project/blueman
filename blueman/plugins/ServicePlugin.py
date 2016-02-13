@@ -31,7 +31,7 @@ class ServicePlugin(object):
     # call when option has changed.
     def option_changed_notify(self, option_id, state=True):
 
-        if not option_id in self._options:
+        if option_id not in self._options:
             self._options.append(option_id)
         else:
             if state:

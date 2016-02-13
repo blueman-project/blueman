@@ -56,7 +56,7 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
     def QueryVisibility(self):
 
         rets = self.Applet.Plugins.Run("on_query_status_icon_visibility")
-        if not StatusIcon.FORCE_HIDE in rets:
+        if StatusIcon.FORCE_HIDE not in rets:
             if StatusIcon.FORCE_SHOW in rets:
                 self.set_visible(True)
             else:

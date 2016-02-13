@@ -175,7 +175,7 @@ class PowerManager(AppletPlugin):
 
             new_state = False
 
-        elif on and self.current_state != True:
+        elif on and not self.current_state:
 
             label.set_markup_with_mnemonic(_("<b>Turn Bluetooth _Off</b>"))
             icon.set_from_pixbuf(get_icon("blueman-disabled", 16))

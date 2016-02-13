@@ -347,7 +347,7 @@ class NetUsage(AppletPlugin, GObject.GObject):
         self.nm_paths = {}
 
     def on_nm_ppp_stats(self, down, up, path):
-        if not path in self.nm_paths:
+        if path not in self.nm_paths:
             props = self.bus.call_blocking("org.freedesktop.NetworkManager",
                                            path,
                                            "org.freedesktop.DBus.Properties",

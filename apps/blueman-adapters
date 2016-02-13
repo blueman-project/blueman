@@ -201,7 +201,7 @@ class BluemanAdapters(Gtk.Dialog):
         hci_dev = os.path.basename(adapter.get_object_path())
         hci_dev_num = int(hci_dev[3:])
 
-        if not hci_dev in self.tabs:
+        if hci_dev not in self.tabs:
             self.tabs[hci_dev] = self.build_adapter_tab(adapter)
         else:
             if self.tabs[hci_dev]['visible']:
