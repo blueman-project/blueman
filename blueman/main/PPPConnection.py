@@ -218,7 +218,7 @@ class PPPConnection(GObject.GObject):
 
         return True
 
-    def wait_for_reply(self, callback, terminators=["OK", "ERROR"], *user_data):
+    def wait_for_reply(self, callback, terminators=("OK", "ERROR"), *user_data):
         def on_timeout():
             GLib.source_remove(self.io_watch)
             callback(None, PPPException("Modem initialization timed out"), *user_data)
