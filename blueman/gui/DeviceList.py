@@ -130,7 +130,7 @@ class DeviceList(GenericList):
     def _on_device_property_changed(self, _device, key, value, path):
         iter = self.find_device_by_path(path)
 
-        if iter != None:
+        if iter is not None:
             dev = self.get(iter, "device")["device"]
             self.row_update_event(iter, key, value)
 
@@ -213,7 +213,7 @@ class DeviceList(GenericList):
 
     def _on_device_created(self, _adapter, path):
         iter = self.find_device_by_path(path)
-        if iter == None:
+        if iter is None:
             dev = Bluez.Device(path)
             self.device_add_event(dev)
 
@@ -274,7 +274,7 @@ class DeviceList(GenericList):
         if not device.get_object_path().startswith(self.Adapter.get_object_path()):
             return
 
-        if iter == None:
+        if iter is None:
             dprint("adding new device")
             if append:
                 iter = self.liststore.append()
@@ -329,7 +329,7 @@ class DeviceList(GenericList):
                 GLib.timeout_add(int(T), self.update_progress, T / 1000, time)
 
     def IsValidAdapter(self):
-        if self.Adapter == None:
+        if self.Adapter is None:
             return False
         else:
             return True
@@ -340,7 +340,7 @@ class DeviceList(GenericList):
 
     def StopDiscovery(self):
         self.discovering = False
-        if self.Adapter != None:
+        if self.Adapter is not None:
             self.Adapter.stop_discovery()
 
     def PrependDevice(self, device):
@@ -351,7 +351,7 @@ class DeviceList(GenericList):
 
     def RemoveDevice(self, device, iter=None):
         dprint(device)
-        if iter == None:
+        if iter is None:
             iter = self.find_device(device)
 
         if self.compare(self.selected(), iter):
@@ -361,7 +361,7 @@ class DeviceList(GenericList):
 
     def GetSelectedDevice(self):
         selected = self.selected()
-        if selected != None:
+        if selected is not None:
             row = self.get(selected, "device")
             device = row["device"]
             return device
@@ -418,12 +418,12 @@ class DeviceList(GenericList):
                 dprint("Caching new device %s" % kwargs["device"]['Address'])
 
         if "dbus_path" in kwargs:
-            if kwargs["dbus_path"] != None:
+            if kwargs["dbus_path"] is not None:
                 self.path_to_row[kwargs["dbus_path"]] = Gtk.TreeRowReference.new(self.get_model(),
                                                                                  self.get_model().get_path(iter))
             else:
                 existing = self.get(iter, "dbus_path")["dbus_path"]
-                if existing != None:
+                if existing is not None:
                     del self.path_to_row[existing]
 
     def append(self, **columns):

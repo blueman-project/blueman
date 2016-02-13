@@ -230,7 +230,7 @@ class PluginManager(GObject.GObject):
                 traceback.print_exc()
                 return
 
-            if ret != None:
+            if ret is not None:
                 args = ret
 
 

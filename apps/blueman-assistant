@@ -121,7 +121,7 @@ class Assistant:
 
         self.assistant.show()
 
-        if options.device != None:
+        if options.device is not None:
             m = Manager()
             try:
                 adapter = m.get_adapter()

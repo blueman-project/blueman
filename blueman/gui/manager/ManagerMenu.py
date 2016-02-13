@@ -121,7 +121,7 @@ class ManagerMenu:
         if iter and device:
             self.item_device.props.sensitive = True
 
-            if self.device_menu == None:
+            if self.device_menu is None:
                 self.device_menu = ManagerDeviceMenu(self.blueman)
                 self.item_device.set_submenu(self.device_menu)
             else:
@@ -177,7 +177,7 @@ class ManagerMenu:
         self.Search = item
 
         m = self.item_adapter.get_submenu()
-        if m != None:
+        if m is not None:
             m.deactivate()
         self.item_adapter.set_submenu(menu)
 
@@ -209,7 +209,7 @@ class ManagerMenu:
         self.generate_adapter_menu()
 
     def on_adapter_changed(self, List, path):
-        if path == None:
+        if path is None:
             self.item_adapter.props.sensitive = False
         else:
             self.item_adapter.props.sensitive = True

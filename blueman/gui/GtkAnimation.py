@@ -123,7 +123,7 @@ class AnimBase(GObject.GObject):
         self._state_changed(state)
 
     def is_animating(self):
-        return self._source != None
+        return self._source is not None
 
 
 class TreeRowFade(AnimBase):
@@ -138,7 +138,7 @@ class TreeRowFade(AnimBase):
         self.columns = columns
 
     def unref(self):
-        if self.sig != None:
+        if self.sig is not None:
             self.tw.disconnect(self.sig)
             self.sig = None
 
@@ -226,7 +226,7 @@ class CellFade(AnimBase):
             self.columns.append(self.tw.get_column(i))
 
     def unref(self):
-        if self.sig != None:
+        if self.sig is not None:
             self.tw.disconnect(self.sig)
             self.sig = None
 

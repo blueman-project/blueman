@@ -112,7 +112,7 @@ class ManagerDeviceList(DeviceList):
 
     def drag_motion(self, widget, drag_context, x, y, timestamp):
         path = self.get_path_at_pos(x, y)
-        if path != None:
+        if path is not None:
             if path[0] != self.selected():
                 iter = self.get_iter(path[0])
                 device = self.get(iter, "device")["device"]
@@ -138,13 +138,13 @@ class ManagerDeviceList(DeviceList):
 
         if event.type == Gdk.EventType.BUTTON_PRESS and event.button == 3:
             path = self.get_path_at_pos(int(event.x), int(event.y))
-            if path != None:
+            if path is not None:
                 row = self.get(path[0], "device")
 
                 if row:
                     device = row["device"]
-                    if self.Blueman != None:
-                        if self.menu == None:
+                    if self.Blueman is not None:
+                        if self.menu is None:
                             self.menu = ManagerDeviceMenu(self.Blueman)
 
                         self.menu.popup(None, None, None, None, event.button, event.time)
@@ -308,7 +308,7 @@ class ManagerDeviceList(DeviceList):
 
         iter = self.get_iter(row_ref.get_path())
         if True:
-            if cinfo != None:
+            if cinfo is not None:
                 try:
                     rssi = float(cinfo.get_rssi())
                 except:

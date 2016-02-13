@@ -27,7 +27,7 @@ class DeviceSelectorWidget(Gtk.Box):
 
         sw = Gtk.ScrolledWindow()
         self.List = devlist = DeviceSelectorList(adapter)
-        if self.List.Adapter != None:
+        if self.List.Adapter is not None:
             self.List.DisplayKnownDevices()
 
         sw.add(devlist)

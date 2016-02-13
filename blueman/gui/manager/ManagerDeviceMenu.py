@@ -185,7 +185,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         else:
             (x, y) = self.Blueman.List.get_pointer()
             path = self.Blueman.List.get_path_at_pos(x, y)
-            if path != None:
+            if path is not None:
                 device = self.Blueman.List.get(path[0], "device")["device"]
             else:
                 return
@@ -194,7 +194,7 @@ class ManagerDeviceMenu(Gtk.Menu):
 
         op = self.get_op(device)
 
-        if op != None:
+        if op is not None:
             item = create_menuitem(op, get_icon("network-transmit-recieve", 16))
             item.props.sensitive = False
             item.show()

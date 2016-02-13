@@ -109,7 +109,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         sensitive = sensitive and \
                     self.Applet.Manager and \
                     power and \
-                    RecentConns.items != None and \
+                    RecentConns.items is not None and \
                     (len(RecentConns.items) > 0)
 
         self.Item.props.sensitive = sensitive
@@ -172,7 +172,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
                 p = adapter.get_properties()
                 self.Adapters[str(adapter.get_object_path())] = str(p["Address"])
 
-            if RecentConns.items != None:
+            if RecentConns.items is not None:
                 for i in reversed(RecentConns.items):
 
                     try:
@@ -324,10 +324,10 @@ class RecentConns(AppletPlugin, Gtk.Menu):
             items = None
             version = None
 
-        if version == None or version != REGISTRY_VERSION:
+        if version is None or version != REGISTRY_VERSION:
             items = None
 
-        if items == None:
+        if items is None:
             RecentConns.items = []
             return
 

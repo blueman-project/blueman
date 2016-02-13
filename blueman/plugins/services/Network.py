@@ -161,13 +161,13 @@ class Network(ServicePlugin):
             nap_frame.props.sensitive = False
 
         nc = NetConf.get_default()
-        if nc.ip4_address != None:
+        if nc.ip4_address is not None:
             net_ip.props.text = inet_ntoa(nc.ip4_address)
             nap_enable.props.active = True
         else:
             net_ip.props.text = "10.%d.%d.1" % (randint(0, 255), randint(0, 255))
 
-        if nc.get_dhcp_handler() == None:
+        if nc.get_dhcp_handler() is None:
             nap_frame.props.sensitive = False
             nap_enable.props.active = False
             r_dnsmasq.props.active = True

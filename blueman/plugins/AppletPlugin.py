@@ -55,7 +55,7 @@ class AppletPlugin(ConfigurablePlugin):
 
         self.Applet.DbusSvc.add_definitions(self)
 
-        self.on_manager_state_changed(applet.Manager != None)
+        self.on_manager_state_changed(applet.Manager is not None)
 
     # virtual funcs
     def on_manager_state_changed(self, state):

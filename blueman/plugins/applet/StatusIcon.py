@@ -112,7 +112,7 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
         ic = Gtk.IconTheme.get_default()
 
         def callback(inst, ret):
-            if ret != None:
+            if ret is not None:
                 for i in ret:
                     if ic.has_icon(i):
                         self.icon = i

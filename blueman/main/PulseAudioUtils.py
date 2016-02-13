@@ -467,7 +467,7 @@ class PulseAudioUtils(GObject.GObject):
             if end:
                 callback(data)
 
-        if id != None:
+        if id is not None:
             self.__init_list_callback(pa_context_get_sink_info_list,
                                       pa_sink_info_cb_t, handler, id)
         else:
@@ -644,7 +644,7 @@ class PulseAudioUtils(GObject.GObject):
         self.emit("event", event_type, idx)
 
     def __init__(self):
-        if PulseAudioUtils.inst != None:
+        if PulseAudioUtils.inst is not None:
             return
 
         PulseAudioUtils.inst = self

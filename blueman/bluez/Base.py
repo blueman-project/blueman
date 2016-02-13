@@ -56,7 +56,7 @@ class Base(GObject):
             error_handler = None
 
         # Make sure we have an error handler if we do async calls
-        if reply_handler: assert(error_handler != None)
+        if reply_handler: assert(error_handler is not None)
 
         try:
             if reply_handler or error_handler:

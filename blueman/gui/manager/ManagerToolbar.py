@@ -60,7 +60,7 @@ class ManagerToolbar:
 
     def on_action(self, button, func):
         device = self.blueman.List.GetSelectedDevice()
-        if device != None:
+        if device is not None:
             func(device)
 
 
@@ -74,14 +74,14 @@ class ManagerToolbar:
 
     def on_adapter_changed(self, list, adapter_path):
         dprint("toolbar adapter", adapter_path)
-        if adapter_path == None:
+        if adapter_path is None:
             self.b_search.props.sensitive = False
             self.update_send(None)
         else:
             self.b_search.props.sensitive = True
 
     def on_device_selected(self, dev_list, device, iter):
-        if device == None or iter == None:
+        if device is None or iter is None:
             self.b_bond.props.sensitive = False
             self.b_remove.props.sensitive = False
             self.b_trust.props.sensitive = False

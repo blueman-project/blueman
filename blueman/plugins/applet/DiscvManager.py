@@ -87,13 +87,13 @@ class DiscvManager(AppletPlugin):
             dprint("prop", key, value)
             if key == "DiscoverableTimeout":
                 if value == 0: #always visible
-                    if self.timeout != None:
+                    if self.timeout is not None:
                         GLib.source_remove(self.timeout)
                     self.time_left = -1
                     self.timeout = None
                 else:
                     if self.time_left > -1:
-                        if self.timeout != None:
+                        if self.timeout is not None:
                             GLib.source_remove(self.timeout)
                     self.time_left = value
 
@@ -102,7 +102,7 @@ class DiscvManager(AppletPlugin):
 
             elif (key == "Discoverable" and not value) or (key == "Powered" and not value):
                 dprint("Stop")
-                if self.timeout != None:
+                if self.timeout is not None:
                     GLib.source_remove(self.timeout)
                 self.time_left = -1
                 self.timeout = None

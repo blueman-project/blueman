@@ -157,7 +157,7 @@ class BluemanServices(Gtk.Dialog):
         if len(ServicePlugin.instances) == 0:
             return
         #set the first item
-        if pageid == None:
+        if pageid is None:
             pageid = ServicePlugin.instances[0].__class__.__name__
         for inst in ServicePlugin.instances:
             if inst.__class__.__name__ == pageid:

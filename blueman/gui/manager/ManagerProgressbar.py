@@ -151,7 +151,7 @@ class ManagerProgressbar(GObject.GObject):
             self.progressbar.set_fraction(frac)
 
     def started(self):
-        return self.gsource != None
+        return self.gsource is not None
 
     def start(self):
         def pulse():
@@ -162,6 +162,6 @@ class ManagerProgressbar(GObject.GObject):
             self.gsource = GLib.timeout_add(1000 / 24, pulse)
 
     def stop(self):
-        if self.gsource != None:
+        if self.gsource is not None:
             GLib.source_remove(self.gsource)
         self.progressbar.set_fraction(0.0)

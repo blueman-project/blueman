@@ -86,7 +86,7 @@ class ManagerStats:
         self.start_update()
 
     def on_adapter_changed(self, List, adapter_path):
-        if adapter_path != None:
+        if adapter_path is not None:
             self.hci = adapter_path_to_name(adapter_path)
             self.hbox.props.sensitive = True
         else:
@@ -119,7 +119,7 @@ class ManagerStats:
     def _update(self):
         #if self.hbox.parent.parent.parent.props.visible:
 
-        if self.hci != None:
+        if self.hci is not None:
             devinfo = device_info(self.hci)
             _tx = devinfo["stat"]["byte_tx"]
             _rx = devinfo["stat"]["byte_rx"]

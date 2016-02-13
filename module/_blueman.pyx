@@ -104,7 +104,7 @@ def get_net_address(py_iface):
     py_bytes_iface = py_iface.encode('UTF-8')
     cdef char* iface = py_bytes_iface
     cdef char* addr
-    if iface != None:
+    if iface is not None:
         addr = c_get_net_address(iface, SIOCGIFADDR)
         if addr == NULL:
             return None
@@ -115,7 +115,7 @@ def get_net_netmask(py_iface):
     py_bytes_iface = py_iface.encode("UTF-8")
     cdef char* iface = py_bytes_iface
     cdef char* addr
-    if iface != None:
+    if iface is not None:
         addr = c_get_net_address(iface, SIOCGIFNETMASK)
         if addr == NULL:
             return None
@@ -369,7 +369,7 @@ def probe_modem(node, callback):
     if not callable(callback):
         raise TypeError, "callback must be callable"
 
-    if node != None:
+    if node is not None:
         c_probe_modem(node, callback)
     else:
         raise TypeError, "device node must not be None"
