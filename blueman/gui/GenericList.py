@@ -49,20 +49,20 @@ class GenericList(Gtk.TreeView):
                 self.append_column(column)
 
     def selected(self):
-        (model, iter) = self.selection.get_selected()
+        (model, tree_iter) = self.selection.get_selected()
 
-        return iter
+        return tree_iter
 
-    def delete(self, id):
+    def delete(self, iterid):
         if type(id) == Gtk.TreeIter:
-            iter = id
+            tree_iter = iterid
         else:
-            iter = self.get_iter(id)
+            tree_iter = self.get_iter(id)
 
-        if iter is None:
+        if tree_iter is None:
             return False
-        if self.liststore.iter_is_valid(iter):
-            self.liststore.remove(iter)
+        if self.liststore.iter_is_valid(tree_iter):
+            self.liststore.remove(tree_iter)
             return True
         else:
             return False
@@ -104,34 +104,34 @@ class GenericList(Gtk.TreeView):
 
         return ret
 
-    def set(self, id, **cols):
-        if type(id) == Gtk.TreeIter:
-            iter = id
+    def set(self, iterid, **cols):
+        if type(iterid) == Gtk.TreeIter:
+            tree_iter = iterid
         else:
-            iter = self.get_iter(id)
+            tree_iter = self.get_iter(iterid)
 
-        if iter is not None:
+        if tree_iter is not None:
             for k, v in cols.items():
-                self.liststore.set(iter, self.ids[k], v)
+                self.liststore.set(tree_iter, self.ids[k], v)
             return True
         else:
             return False
 
-    def get(self, id, *items):
+    def get(self, iterid, *items):
         ret = {}
 
-        if id is not None:
-            if type(id) == Gtk.TreeIter:
-                iter = id
+        if iterid is not None:
+            if type(iterid) == Gtk.TreeIter:
+                tree_iter = iterid
             else:
-                iter = self.get_iter(id)
+                tree_iter = self.get_iter(iterid)
             if len(items) == 0:
                 for k, v in self.ids.items():
-                    ret[k] = self.liststore.get(iter, v)[0]
+                    ret[k] = self.liststore.get(tree_iter, v)[0]
             else:
                 for i in range(len(items)):
                     if items[i] in self.ids:
-                        ret[items[i]] = self.liststore.get(iter, self.ids[items[i]])[0]
+                        ret[items[i]] = self.liststore.get(tree_iter, self.ids[items[i]])[0]
         else:
             return False
 

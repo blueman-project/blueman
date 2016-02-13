@@ -74,12 +74,12 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
     def set_visible(self, visible):
         self.props.visible = visible
 
-    def SetTextLine(self, id, text):
+    def SetTextLine(self, lineid, text):
         if text:
-            self.lines[id] = text
+            self.lines[lineid] = text
         else:
             try:
-                del self.lines[id]
+                del self.lines[lineid]
             except:
                 pass
 

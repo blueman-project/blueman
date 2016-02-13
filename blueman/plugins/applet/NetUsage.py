@@ -183,10 +183,10 @@ class Dialog:
         for d in general_config["netusage-dev-list"]:
             for m in parent.monitors:
                 if d == m.device["Address"]:
-                    iter = self.liststore.append(
+                    titer = self.liststore.append(
                         [d, self.get_caption(m.device["Alias"], m.device["Address"]), _("Connected:") + " " + m.interface, m])
                     if self.cb_device.get_active() == -1:
-                        self.cb_device.set_active_iter(iter)
+                        self.cb_device.set_active_iter(titer)
                     added = True
                     break
             if not added:
@@ -243,8 +243,8 @@ class Dialog:
             self.l_duration.props.label = _("Unknown")
 
     def on_selection_changed(self, cb):
-        iter = cb.get_active_iter()
-        (addr,) = self.liststore.get(iter, 0)
+        titer = cb.get_active_iter()
+        (addr,) = self.liststore.get(titer, 0)
         self.config = Config("org.blueman.plugins.netusage", "/org/blueman/plugins/netusages/%s/" % addr)
         self.update_counts(self.config["tx"], self.config["rx"])
         self.update_time()
@@ -281,18 +281,18 @@ class Dialog:
             self.update_counts(0, 0)
 
     def on_stats(self, parent, monitor, tx, rx):
-        iter = self.cb_device.get_active_iter()
-        (mon,) = self.liststore.get(iter, 3)
+        titer = self.cb_device.get_active_iter()
+        (mon,) = self.liststore.get(titer, 3)
         if mon == monitor:
             self.update_counts(tx, rx)
 
     def monitor_added(self, parent, monitor):
         for row in self.liststore:
-            iter = row.iter
-            (val,) = self.liststore.get(iter, 0)
+            titer = row.iter
+            (val,) = self.liststore.get(titer, 0)
 
             if val == monitor.device["Address"]:
-                self.liststore.set(iter, 1, self.get_caption(monitor.device["Alias"], monitor.device["Address"]), 2,
+                self.liststore.set(titer, 1, self.get_caption(monitor.device["Alias"], monitor.device["Address"]), 2,
                                    _("Connected:") + " " + monitor.interface, 3, monitor)
                 return
 
@@ -301,11 +301,11 @@ class Dialog:
 
     def monitor_removed(self, parent, monitor):
         for row in self.liststore:
-            iter = row.iter
-            (val,) = self.liststore.get(iter, 0)
+            titer = row.iter
+            (val,) = self.liststore.get(titer, 0)
 
             if val == monitor.device["Address"]:
-                self.liststore.set(iter, 1, self.get_caption(monitor.device["Alias"], monitor.device["Address"]), 2,
+                self.liststore.set(titer, 1, self.get_caption(monitor.device["Alias"], monitor.device["Address"]), 2,
                                    _("Not Connected"), 3, None)
                 return
 

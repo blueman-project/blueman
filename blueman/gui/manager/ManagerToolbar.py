@@ -72,7 +72,7 @@ class ManagerToolbar:
             else:
                 self.b_search.props.sensitive = True
 
-    def on_adapter_changed(self, list, adapter_path):
+    def on_adapter_changed(self, lst, adapter_path):
         dprint("toolbar adapter", adapter_path)
         if adapter_path is None:
             self.b_search.props.sensitive = False
@@ -80,14 +80,14 @@ class ManagerToolbar:
         else:
             self.b_search.props.sensitive = True
 
-    def on_device_selected(self, dev_list, device, iter):
-        if device is None or iter is None:
+    def on_device_selected(self, dev_list, device, tree_iter):
+        if device is None or tree_iter is None:
             self.b_bond.props.sensitive = False
             self.b_remove.props.sensitive = False
             self.b_trust.props.sensitive = False
             self.b_setup.props.sensitive = False
         else:
-            row = dev_list.get(iter, "bonded", "trusted", "fake")
+            row = dev_list.get(tree_iter, "bonded", "trusted", "fake")
             self.b_setup.props.sensitive = True
             if row["bonded"]:
                 self.b_bond.props.sensitive = False
@@ -121,11 +121,11 @@ class ManagerToolbar:
                 if uuid16 == OBEX_OBJPUSH_SVCLASS_ID:
                     self.b_send.props.sensitive = True
 
-    def on_device_propery_changed(self, dev_list, device, iter, key_value):
+    def on_device_propery_changed(self, dev_list, device, tree_iter, key_value):
         key, value = key_value
-        if dev_list.compare(iter, dev_list.selected()):
+        if dev_list.compare(tree_iter, dev_list.selected()):
             if key == "Trusted" or key == "Paired":
-                self.on_device_selected(dev_list, device, iter)
+                self.on_device_selected(dev_list, device, tree_iter)
 
             elif key == "UUIDs":
                 self.update_send(device)

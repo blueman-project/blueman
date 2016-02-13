@@ -45,8 +45,8 @@ class DbusService(dbus.service.Object):
 
         setattr(self.__class__, method.__name__, wrapper)
 
-    def remove_definitions(self, object):
-        for name, func in self._definitions(object):
+    def remove_definitions(self, obj):
+        for name, func in self._definitions(obj):
             delattr(self.__class__, name)
 
         self.__class__._refresh_dbus_registration()
@@ -56,7 +56,7 @@ class DbusService(dbus.service.Object):
         cls.__class__.__init__(cls, cls.__name__, cls.__bases__, cls.__dict__)
 
     @staticmethod
-    def _definitions(object):
-        for name, func in object.__class__.__dict__.items():
+    def _definitions(obj):
+        for name, func in obj.__class__.__dict__.items():
             if getattr(func, '_dbus_is_method', False) or getattr(func, '_dbus_is_signal', False):
                 yield name, func

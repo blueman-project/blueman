@@ -40,30 +40,30 @@ class DeviceSelectorList(DeviceList):
         super(DeviceSelectorList, self).__init__(adapter, data)
         self.props.headers_visible = False
 
-    def row_setup_event(self, iter, device):
-        self.row_update_event(iter, "Trusted", device['Trusted'])
-        self.row_update_event(iter, "Paired", device['Paired'])
-        self.row_update_event(iter, "Alias", device['Alias'])
-        self.row_update_event(iter, "Icon", device['Icon'])
+    def row_setup_event(self, tree_iter, device):
+        self.row_update_event(tree_iter, "Trusted", device['Trusted'])
+        self.row_update_event(tree_iter, "Paired", device['Paired'])
+        self.row_update_event(tree_iter, "Alias", device['Alias'])
+        self.row_update_event(tree_iter, "Icon", device['Icon'])
 
     def device_add_event(self, device):
         self.AppendDevice(device)
 
-    def row_update_event(self, iter, key, value):
+    def row_update_event(self, tree_iter, key, value):
         if key == "Trusted":
             if value:
-                self.set(iter, trusted_icon=get_icon("blueman-trust", 16))
+                self.set(tree_iter, trusted_icon=get_icon("blueman-trust", 16))
             else:
-                self.set(iter, trusted_icon=None)
+                self.set(tree_iter, trusted_icon=None)
 
         elif key == "Paired":
             if value:
-                self.set(iter, bonded_icon=get_icon("dialog-password", 16))
+                self.set(tree_iter, bonded_icon=get_icon("dialog-password", 16))
             else:
-                self.set(iter, bonded_icon=None)
+                self.set(tree_iter, bonded_icon=None)
 
         elif key == "Alias":
-            self.set(iter, caption=cgi.escape(value))
+            self.set(tree_iter, caption=cgi.escape(value))
 
         elif key == "Icon":
-            self.set(iter, device_pb=get_icon(value, 16))
+            self.set(tree_iter, device_pb=get_icon(value, 16))

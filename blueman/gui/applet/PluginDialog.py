@@ -196,9 +196,9 @@ class PluginDialog(Gtk.Dialog):
         self.applet.Plugins.disconnect(self.sig_b)
 
     def on_selection_changed(self, selection):
-        model, iter = selection.get_selected()
+        model, tree_iter = selection.get_selected()
 
-        name = self.list.get(iter, "name")["name"]
+        name = self.list.get(tree_iter, "name")["name"]
         cls = self.applet.Plugins.GetClasses()[name]
         self.plugin_name.props.label = "<b>" + name + "</b>"
         self.icon.props.icon_name = cls.__icon__
@@ -229,8 +229,8 @@ class PluginDialog(Gtk.Dialog):
         self.update_config_widget(cls)
 
     def on_prefs_toggled(self, button):
-        model, iter = self.list.selection.get_selected()
-        name = self.list.get(iter, "name")["name"]
+        model, tree_iter = self.list.selection.get_selected()
+        name = self.list.get(tree_iter, "name")["name"]
         cls = self.applet.Plugins.GetClasses()[name]
 
         self.update_config_widget(cls)

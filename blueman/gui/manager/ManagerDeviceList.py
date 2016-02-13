@@ -79,16 +79,16 @@ class ManagerDeviceList(DeviceList):
         self.set_search_equal_func(self.search_func, None)
 
     def do_device_found(self, device):
-        iter = self.find_device(device)
-        if iter:
-            anim = TreeRowColorFade(self, self.props.model.get_path(iter), Gdk.RGBA(0, 0, 1, 1))
+        tree_iter = self.find_device(device)
+        if tree_iter:
+            anim = TreeRowColorFade(self, self.props.model.get_path(tree_iter), Gdk.RGBA(0, 0, 1, 1))
             anim.animate(start=0.8, end=1.0)
 
-    def search_func(self, model, column, key, iter):
-        row = self.get(iter, "caption")
+    def search_func(self, model, column, key, tree_iter):
+        row = self.get(tree_iter, "caption")
         if key.lower() in row["caption"].lower():
             return False
-        print(model, column, key, iter)
+        print(model, column, key, tree_iter)
         return True
 
     def drag_recv(self, widget, context, x, y, selection, target_type, time):
@@ -99,8 +99,8 @@ class ManagerDeviceList(DeviceList):
 
         path = self.get_path_at_pos(x, y)
         if path:
-            iter = self.get_iter(path[0])
-            device = self.get(iter, "device")["device"]
+            tree_iter = self.get_iter(path[0])
+            device = self.get(tree_iter, "device")["device"]
             command = "blueman-sendto --device=%s" % device['Address']
 
             launch(command, uris, False, "blueman", _("File Sender"))
@@ -114,8 +114,8 @@ class ManagerDeviceList(DeviceList):
         path = self.get_path_at_pos(x, y)
         if path is not None:
             if path[0] != self.selected():
-                iter = self.get_iter(path[0])
-                device = self.get(iter, "device")["device"]
+                tree_iter = self.get_iter(path[0])
+                device = self.get(tree_iter, "device")["device"]
                 found = False
                 for uuid in device['UUIDs']:
                     uuid16 = uuid128_to_uuid16(uuid)
@@ -167,14 +167,14 @@ class ManagerDeviceList(DeviceList):
 
         return composite_icon(target, sources)
 
-    def device_remove_event(self, device, iter):
-        row_fader = self.get(iter, "row_fader")["row_fader"]
+    def device_remove_event(self, device, tree_iter):
+        row_fader = self.get(tree_iter, "row_fader")["row_fader"]
 
         def on_finished(fader):
 
             fader.disconnect(signal)
             fader.freeze()
-            DeviceList.device_remove_event(self, device, iter)
+            DeviceList.device_remove_event(self, device, tree_iter)
 
         signal = row_fader.connect("animation-finished", on_finished)
         row_fader.thaw()
@@ -197,12 +197,12 @@ class ManagerDeviceList(DeviceList):
         else:
             return get_major_class(device['Class'])
 
-    def row_setup_event(self, iter, device):
-        if not self.get(iter, "initial_anim")["initial_anim"]:
-            cell_fader = CellFade(self, self.props.model.get_path(iter), [2, 3, 4])
-            row_fader = TreeRowFade(self, self.props.model.get_path(iter))
+    def row_setup_event(self, tree_iter, device):
+        if not self.get(tree_iter, "initial_anim")["initial_anim"]:
+            cell_fader = CellFade(self, self.props.model.get_path(tree_iter), [2, 3, 4])
+            row_fader = TreeRowFade(self, self.props.model.get_path(tree_iter))
 
-            self.set(iter, row_fader=row_fader, cell_fader=cell_fader, levels_visible=False)
+            self.set(tree_iter, row_fader=row_fader, cell_fader=cell_fader, levels_visible=False)
 
             cell_fader.freeze()
 
@@ -214,7 +214,7 @@ class ManagerDeviceList(DeviceList):
             row_fader.set_state(0.0)
             row_fader.animate(start=0.0, end=1.0, duration=500)
 
-            self.set(iter, initial_anim=True)
+            self.set(tree_iter, initial_anim=True)
 
         klass = get_minor_class(device['Class'])
         if klass != "uncategorized":
@@ -231,23 +231,23 @@ class ManagerDeviceList(DeviceList):
         caption = self.make_caption(name, klass, address)
 
         # caption = "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" % {"0":name, "1":klass.capitalize(), "2":address}
-        self.set(iter, caption=caption, orig_icon=icon)
+        self.set(tree_iter, caption=caption, orig_icon=icon)
 
         try:
-            self.row_update_event(iter, "Trusted", device['Trusted'])
+            self.row_update_event(tree_iter, "Trusted", device['Trusted'])
         except:
             pass
         try:
-            self.row_update_event(iter, "Paired", device['Paired'])
+            self.row_update_event(tree_iter, "Paired", device['Paired'])
         except:
             pass
 
-    def row_update_event(self, iter, key, value):
+    def row_update_event(self, tree_iter, key, value):
         dprint("row update event", key, value)
 
         # this property is only emitted when device is fake
         if key == "RSSI":
-            row = self.get(iter, "orig_icon")
+            row = self.get(tree_iter, "orig_icon")
 
             #minimum opacity 90
             #maximum opacity 255
@@ -267,30 +267,30 @@ class ManagerDeviceList(DeviceList):
                 opacity = 90
             print("opacity", opacity)
             icon = self.make_device_icon(row["orig_icon"], is_discovered=True, opacity=opacity)
-            self.set(iter, device_pb=icon)
+            self.set(tree_iter, device_pb=icon)
 
         elif key == "Trusted":
-            row = self.get(iter, "bonded", "orig_icon")
+            row = self.get(tree_iter, "bonded", "orig_icon")
             if value:
                 icon = self.make_device_icon(row["orig_icon"], row["bonded"], True, False)
-                self.set(iter, device_pb=icon, trusted=True)
+                self.set(tree_iter, device_pb=icon, trusted=True)
             else:
                 icon = self.make_device_icon(row["orig_icon"], row["bonded"], False, False)
-                self.set(iter, device_pb=icon, trusted=False)
+                self.set(tree_iter, device_pb=icon, trusted=False)
 
         elif key == "Paired":
-            row = self.get(iter, "trusted", "orig_icon")
+            row = self.get(tree_iter, "trusted", "orig_icon")
             if value:
                 icon = self.make_device_icon(row["orig_icon"], True, row["trusted"], False)
-                self.set(iter, device_pb=icon, bonded=True)
+                self.set(tree_iter, device_pb=icon, bonded=True)
             else:
                 icon = self.make_device_icon(row["orig_icon"], False, row["trusted"], False)
-                self.set(iter, device_pb=icon, bonded=False)
+                self.set(tree_iter, device_pb=icon, bonded=False)
 
         elif key == "Alias":
-            device = self.get(iter, "device")["device"]
+            device = self.get(tree_iter, "device")["device"]
             c = self.make_caption(value, self.get_device_class(device), device['Address'])
-            self.set(iter, caption=c)
+            self.set(tree_iter, caption=c)
 
     def level_setup_event(self, row_ref, device, cinfo):
         def rnd(value):
@@ -299,7 +299,7 @@ class ManagerDeviceList(DeviceList):
         if not row_ref.valid():
             return
 
-        iter = self.get_iter(row_ref.get_path())
+        tree_iter = self.get_iter(row_ref.get_path())
         if True:
             if cinfo is not None:
                 try:
@@ -327,10 +327,10 @@ class ManagerDeviceList(DeviceList):
                 if tpl_perc < 10:
                     tpl_perc = 10
 
-                row = self.get(iter, "levels_visible", "cell_fader", "rssi", "lq", "tpl")
+                row = self.get(tree_iter, "levels_visible", "cell_fader", "rssi", "lq", "tpl")
                 if not row["levels_visible"]:
                     dprint("animating up")
-                    self.set(iter, levels_visible=True)
+                    self.set(tree_iter, levels_visible=True)
                     fader = row["cell_fader"]
                     fader.thaw()
                     fader.set_state(0.0)
@@ -344,27 +344,27 @@ class ManagerDeviceList(DeviceList):
 
                 if rnd(row["rssi"]) != rnd(rssi_perc):
                     icon = GdkPixbuf.Pixbuf.new_from_file(PIXMAP_PATH + "/blueman-rssi-" + str(rnd(rssi_perc)) + ".png")
-                    self.set(iter, rssi_pb=icon)
+                    self.set(tree_iter, rssi_pb=icon)
 
                 if rnd(row["lq"]) != rnd(lq_perc):
                     icon = GdkPixbuf.Pixbuf.new_from_file(PIXMAP_PATH + "/blueman-lq-" + str(rnd(lq_perc)) + ".png")
-                    self.set(iter, lq_pb=icon)
+                    self.set(tree_iter, lq_pb=icon)
 
                 if rnd(row["tpl"]) != rnd(tpl_perc):
                     icon = GdkPixbuf.Pixbuf.new_from_file(PIXMAP_PATH + "/blueman-tpl-" + str(rnd(tpl_perc)) + ".png")
-                    self.set(iter, tpl_pb=icon)
+                    self.set(tree_iter, tpl_pb=icon)
 
-                self.set(iter,
+                self.set(tree_iter,
                          rssi=rssi_perc,
                          lq=lq_perc,
                          tpl=tpl_perc,
                          connected=True)
             else:
 
-                row = self.get(iter, "levels_visible", "cell_fader")
+                row = self.get(tree_iter, "levels_visible", "cell_fader")
                 if row["levels_visible"]:
                     dprint("animating down")
-                    self.set(iter, levels_visible=False,
+                    self.set(tree_iter, levels_visible=False,
                              rssi=-1,
                              lq=-1,
                              tpl=-1)
@@ -377,7 +377,7 @@ class ManagerDeviceList(DeviceList):
                         fader.disconnect(signal)
                         fader.freeze()
                         if row_ref.valid():
-                            self.set(iter, rssi_pb=None, lq_pb=None, tpl_pb=None, connected=False)
+                            self.set(tree_iter, rssi_pb=None, lq_pb=None, tpl_pb=None, connected=False)
 
                     signal = fader.connect("animation-finished", on_finished)
 
@@ -398,9 +398,9 @@ class ManagerDeviceList(DeviceList):
                 return False
 
             if path[1] == self.columns["device_pb"]:
-                iter = self.get_iter(path[0])
+                tree_iter = self.get_iter(path[0])
 
-                row = self.get(iter, "trusted", "bonded")
+                row = self.get(tree_iter, "trusted", "bonded")
                 trusted = row["trusted"]
                 bonded = row["bonded"]
                 if trusted and bonded:
@@ -417,14 +417,14 @@ class ManagerDeviceList(DeviceList):
                 return True
 
             if path[1] == self.columns["tpl_pb"] or path[1] == self.columns["lq_pb"] or path[1] == self.columns["rssi_pb"]:
-                iter = self.get_iter(path[0])
+                tree_iter = self.get_iter(path[0])
 
-                dt = self.get(iter, "connected")["connected"]
+                dt = self.get(tree_iter, "connected")["connected"]
                 #print dt
                 if dt:
-                    rssi = self.get(iter, "rssi")["rssi"]
-                    lq = self.get(iter, "lq")["lq"]
-                    tpl = self.get(iter, "tpl")["tpl"]
+                    rssi = self.get(tree_iter, "rssi")["rssi"]
+                    lq = self.get(tree_iter, "lq")["lq"]
+                    tpl = self.get(tree_iter, "tpl")["tpl"]
 
                     if rssi < 30:
                         rssi_state = _("Poor")

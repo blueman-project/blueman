@@ -49,7 +49,7 @@ class DeviceSelectorDialog(Gtk.Dialog):
     def on_adapter_changed(self, devlist, adapter):
         self.selection = None
 
-    def on_device_selected(self, devlist, device, iter):
+    def on_device_selected(self, devlist, device, tree_iter):
         self.selection = (devlist.Adapter.get_object_path(), device)
 
     def GetSelection(self):

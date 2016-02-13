@@ -185,15 +185,15 @@ class Assistant:
             self.assistant.set_page_complete(pages[PAGE_PASSKEY], True)
             self.pair = pair
 
-    def on_device_selected(self, list, device, iter):
+    def on_device_selected(self, lst, device, tree_iter):
         if not device:
             self.assistant.set_page_complete(pages[PAGE_DEVLIST], False)
             self.Device = None
-            self.Adapter = list.Adapter
+            self.Adapter = lst.Adapter
         else:
             self.assistant.set_page_complete(pages[PAGE_DEVLIST], True)
             self.Device = device
-            self.Adapter = list.Adapter
+            self.Adapter = lst.Adapter
 
     def on_close(self, assistant):
         Gtk.main_quit()

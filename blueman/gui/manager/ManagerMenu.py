@@ -119,8 +119,8 @@ class ManagerMenu:
 
         self.device_menu = None
 
-    def on_device_selected(self, List, device, iter):
-        if iter and device:
+    def on_device_selected(self, List, device, tree_iter):
+        if tree_iter and device:
             self.item_device.props.sensitive = True
 
             if self.device_menu is None:
@@ -132,7 +132,7 @@ class ManagerMenu:
         else:
             self.item_device.props.sensitive = False
 
-    def on_adapter_property_changed(self, list, adapter, kv):
+    def on_adapter_property_changed(self, lst, adapter, kv):
         (key, value) = kv
         if key == "Name" or key == "Alias":
             self.generate_adapter_menu()

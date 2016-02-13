@@ -95,9 +95,9 @@ class DeviceSelectorWidget(Gtk.Box):
 
     def on_adapter_selected(self, cb_adapters):
         dprint("selected")
-        iter = cb_adapters.get_active_iter()
-        if iter:
-            adapter_path = cb_adapters.get_model().get_value(iter, 1)
+        tree_iter = cb_adapters.get_active_iter()
+        if tree_iter:
+            adapter_path = cb_adapters.get_model().get_value(tree_iter, 1)
             if self.List.Adapter:
                 if self.List.Adapter.get_object_path() != adapter_path:
                     self.List.SetAdapter(os.path.basename(adapter_path))
@@ -125,6 +125,6 @@ class DeviceSelectorWidget(Gtk.Box):
             self.List.props.sensitive = True
             self.cb_adapters.props.visible = True
             for adapter in adapters:
-                iter = self.cb_adapters.get_model().append([adapter.get_name(), adapter.get_object_path()])
+                tree_iter = self.cb_adapters.get_model().append([adapter.get_name(), adapter.get_object_path()])
                 if adapter.get_object_path() == self.List.Adapter.get_object_path():
-                    self.cb_adapters.set_active_iter(iter)
+                    self.cb_adapters.set_active_iter(tree_iter)

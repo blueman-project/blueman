@@ -443,7 +443,7 @@ class PulseAudioUtils(GObject.GObject):
         self.__init_list_callback(pa_context_get_source_info_list,
                                   pa_source_info_cb_t, handler)
 
-    def ListSinks(self, callback, id=None):
+    def ListSinks(self, callback, card_id=None):
         self.check_connected()
 
         data = {}
@@ -465,9 +465,9 @@ class PulseAudioUtils(GObject.GObject):
             if end:
                 callback(data)
 
-        if id is not None:
+        if card_id is not None:
             self.__init_list_callback(pa_context_get_sink_info_list,
-                                      pa_sink_info_cb_t, handler, id)
+                                      pa_sink_info_cb_t, handler, card_id)
         else:
             self.__init_list_callback(pa_context_get_sink_info_list,
                                       pa_sink_info_cb_t, handler)

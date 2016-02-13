@@ -106,9 +106,9 @@ class PPPConnection(GObject.GObject):
 
             self.send_commands(item_id + 1)
 
-    def send_commands(self, id=0):
+    def send_commands(self, i=0):
         try:
-            item = self.commands[id]
+            item = self.commands[i]
         except IndexError:
             return
 
@@ -119,7 +119,7 @@ class PPPConnection(GObject.GObject):
             terminators = ["OK", "ERROR"]
 
         self.send_command(command)
-        self.wait_for_reply(self.__cmd_response_cb, terminators, id)
+        self.wait_for_reply(self.__cmd_response_cb, terminators, i)
 
     def Connect(self):
 

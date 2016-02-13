@@ -179,12 +179,12 @@ class NMPANSupport(AppletPlugin):
             except:
                 pass
 
-    def find_active_connection(self, address, type):
+    def find_active_connection(self, address, conntype):
         props = self.bus.call_blocking("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager",
                                        "org.freedesktop.DBus.Properties", "GetAll", "s",
                                        ["org.freedesktop.NetworkManager"])
 
-        nma_connection = self.find_connection(address, type)
+        nma_connection = self.find_connection(address, conntype)
         if nma_connection:
             active_conns = props["ActiveConnections"]
             for conn in active_conns:

@@ -167,14 +167,14 @@ class BluemanServices(Gtk.Dialog):
                 inst._on_leave()
 
     def on_selection_changed(self, selection):
-        iter = self.List.selected()
+        tree_iter = self.List.selected()
         if self.List.get_cursor()[0]:
             # GtkTreePath returns row when used as string
             self.Config["services-last-item"] = int(str(self.List.get_cursor()[0]))
-        row = self.List.get(iter, "id")
-        id = row["id"]
+        row = self.List.get(tree_iter, "id")
+        rowid = row["id"]
 
-        self.set_page(id)
+        self.set_page(rowid)
 
 if __name__ == '__main__':
     services = BluemanServices()

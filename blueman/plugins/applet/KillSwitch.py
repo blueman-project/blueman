@@ -30,9 +30,9 @@ if not os.path.exists('/dev/rfkill'):
 
 
 class Switch:
-    def __init__(self, idx, type, soft, hard):
+    def __init__(self, idx, switch_type, soft, hard):
         self.idx = idx
-        self.type = type
+        self.type = switch_type
         self.soft = soft
         self.hard = hard
 
@@ -79,19 +79,19 @@ class KillSwitch(AppletPlugin):
             dprint("Bad rfkill event size")
             return True
 
-        (idx, type, op, soft, hard) = struct.unpack(str("IBBBB"), data)
+        (idx, switch_type, op, soft, hard) = struct.unpack(str("IBBBB"), data)
 
         if type != RFKILL_TYPE_BLUETOOTH:
             return True
 
         if op == RFKILL_OP_ADD:
-            self._switches[idx] = Switch(idx, type, soft, hard)
+            self._switches[idx] = Switch(idx, switch_type, soft, hard)
             dprint("killswitch registered", idx)
         elif op == RFKILL_OP_DEL:
             del self._switches[idx]
             dprint("killswitch removed", idx)
         elif op == RFKILL_OP_CHANGE and (self._switches[idx].soft != soft or self._switches[idx].hard != hard):
-            self._switches[idx] = Switch(idx, type, soft, hard)
+            self._switches[idx] = Switch(idx, switch_type, soft, hard)
             dprint("killswitch changed", idx)
         else:
             return True

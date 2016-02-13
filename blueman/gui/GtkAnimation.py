@@ -18,8 +18,8 @@ import weakref
 
 
 class LinearController(object):
-    def get_value(self, input):
-        return input
+    def get_value(self, inpt):
+        return inpt
 
 
 class BezierController(LinearController):
@@ -31,8 +31,8 @@ class BezierController(LinearController):
     def __b(self, t, p1, p2, p3):
         return (1 - t) ** 2 * p1 + 2 * (1 - t) * t * p2 + t ** 2 * p3
 
-    def get_value(self, input):
-        return self.__b(input, self.start, self.curvature, self.end)
+    def get_value(self, inpt):
+        return self.__b(inpt, self.start, self.curvature, self.end)
 
 
 class AnimBase(GObject.GObject):

@@ -164,7 +164,7 @@ class Blueman(Gtk.Window):
 
         dbus.SystemBus().watch_name_owner('org.bluez', on_bluez_name_owner_changed)
 
-    def on_adapter_changed(self, list, adapter):
+    def on_adapter_changed(self, lst, adapter):
         if adapter is not None:
             self.List.DisplayKnownDevices(autoselect=True)
 
@@ -176,7 +176,7 @@ class Blueman(Gtk.Window):
                 self.List.disconnect(s1)
                 self.List.disconnect(s2)
 
-        def on_progress(list, frac):
+        def on_progress(lst, frac):
             if abs(1.0 - frac) <= 0.00001:
                 if not prog.started():
                     prog.start()

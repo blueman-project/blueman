@@ -38,14 +38,14 @@ class AppletPlugin(ConfigurablePlugin):
 
         self.__overrides = []
 
-    def override_method(self, object, method, override):
-        orig = object.__getattribute__(method)
-        object.__setattr__(method, partial(override, object))
-        self.__overrides.append((object, method, orig))
+    def override_method(self, obj, method, override):
+        orig = obj.__getattribute__(method)
+        obj.__setattr__(method, partial(override, obj))
+        self.__overrides.append((obj, method, orig))
 
     def _unload(self):
-        for (object, method, orig) in self.__overrides:
-            object.__setattr__(method, orig)
+        for (obj, method, orig) in self.__overrides:
+            obj.__setattr__(method, orig)
 
         super(AppletPlugin, self)._unload()
 

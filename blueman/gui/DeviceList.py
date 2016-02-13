@@ -109,17 +109,17 @@ class DeviceList(GenericList):
         #self.clear()
         if len(self.liststore):
             for i in self.liststore:
-                iter = i.iter
-                device = self.get(iter, "device")["device"]
+                tree_iter = i.iter
+                device = self.get(tree_iter, "device")["device"]
             #device.Destroy()
         GenericList.destroy(self)
 
     def on_selection_changed(self, selection):
-        _model, iter = selection.get_selected()
-        if iter:
-            row = self.get(iter, "device")
+        _model, tree_iter = selection.get_selected()
+        if tree_iter:
+            row = self.get(tree_iter, "device")
             dev = row["device"]
-            self.emit("device-selected", dev, iter)
+            self.emit("device-selected", dev, tree_iter)
 
     def _on_property_changed(self, _adapter, key, value, _path):
         if key == "Discovering":
@@ -129,19 +129,19 @@ class DeviceList(GenericList):
         self.emit("adapter-property-changed", self.Adapter, (key, value))
 
     def _on_device_property_changed(self, _device, key, value, path):
-        iter = self.find_device_by_path(path)
+        tree_iter = self.find_device_by_path(path)
 
-        if iter is not None:
-            dev = self.get(iter, "device")["device"]
-            self.row_update_event(iter, key, value)
+        if tree_iter is not None:
+            dev = self.get(tree_iter, "device")["device"]
+            self.row_update_event(tree_iter, key, value)
 
-            self.emit("device-property-changed", dev, iter, (key, value))
+            self.emit("device-property-changed", dev, tree_iter, (key, value))
 
             if key == "Connected":
                 if value:
                     self.monitor_power_levels(dev)
                 else:
-                    r = Gtk.TreeRowReference.new(self.get_model(), self.props.model.get_path(iter))
+                    r = Gtk.TreeRowReference.new(self.get_model(), self.props.model.get_path(tree_iter))
                     self.level_setup_event(r, dev, None)
 
     def monitor_power_levels(self, device):
@@ -156,8 +156,8 @@ class DeviceList(GenericList):
                 self.monitored_devices.remove(props["Address"])
                 return False
 
-            iter = self.get_model().get_iter(row_ref.get_path())
-            device = self.get(iter, "device")["device"]
+            tree_iter = self.get_model().get_iter(row_ref.get_path())
+            device = self.get(tree_iter, "device")["device"]
             if not device['Connected']:
                 dprint("stopping monitor (not connected)")
                 cinfo.deinit()
@@ -172,7 +172,7 @@ class DeviceList(GenericList):
 
         if "Connected" in props and props["Connected"] and props["Address"] not in self.monitored_devices:
             dprint("starting monitor")
-            iter = self.find_device(device)
+            tree_iter = self.find_device(device)
 
             hci = os.path.basename(self.Adapter.get_object_path())
             try:
@@ -180,7 +180,7 @@ class DeviceList(GenericList):
             except Exception as e:
                 dprint("Failed to get power levels\n%s" % e)
             else:
-                r = Gtk.TreeRowReference.new(self.get_model(), self.get_model().get_path(iter))
+                r = Gtk.TreeRowReference.new(self.get_model(), self.get_model().get_path(tree_iter))
                 self.level_setup_event(r, device, cinfo)
                 GLib.timeout_add(1000, update, r, cinfo, props["Address"])
                 self.monitored_devices.append(props["Address"])
@@ -189,15 +189,15 @@ class DeviceList(GenericList):
 
     #called when power levels need updating
     #if cinfo is None then info icons need to be removed
-    def level_setup_event(self, iter, device, cinfo):
+    def level_setup_event(self, tree_iter, device, cinfo):
         pass
 
     #called when row needs to be initialized
-    def row_setup_event(self, iter, device):
+    def row_setup_event(self, tree_iter, device):
         pass
 
     #called when a property for a device changes
-    def row_update_event(self, iter, key, value):
+    def row_update_event(self, tree_iter, key, value):
         pass
 
     #called when device needs to be added to the list
@@ -205,24 +205,24 @@ class DeviceList(GenericList):
     def device_add_event(self, device):
         self.AppendDevice(device)
 
-    def device_remove_event(self, device, iter):
-        self.RemoveDevice(device, iter)
+    def device_remove_event(self, device, tree_iter):
+        self.RemoveDevice(device, tree_iter)
 
     #########################
 
     def _on_device_created(self, _adapter, path):
-        iter = self.find_device_by_path(path)
-        if iter is None:
+        tree_iter = self.find_device_by_path(path)
+        if tree_iter is None:
             dev = Bluez.Device(path)
             self.device_add_event(dev)
 
     def _on_device_removed(self, _manager, path):
-        iter = self.find_device_by_path(path)
-        if iter:
-            row = self.get(iter, "device")
+        tree_iter = self.find_device_by_path(path)
+        if tree_iter:
+            row = self.get(tree_iter, "device")
             dev = row["device"]
 
-            self.device_remove_event(dev, iter)
+            self.device_remove_event(dev, tree_iter)
 
     def SetAdapter(self, adapter=None):
         self.clear()
@@ -268,24 +268,24 @@ class DeviceList(GenericList):
         return True
 
     def add_device(self, device, append=True):
-        iter = self.find_device(device)
+        tree_iter = self.find_device(device)
         #device belongs to another adapter
         if not device.get_object_path().startswith(self.Adapter.get_object_path()):
             return
 
-        if iter is None:
+        if tree_iter is None:
             dprint("adding new device")
             if append:
-                iter = self.liststore.append()
+                tree_iter = self.liststore.append()
             else:
-                iter = self.liststore.prepend()
+                tree_iter = self.liststore.prepend()
 
-            self.set(iter, device=device)
-            self.row_setup_event(iter, device)
+            self.set(tree_iter, device=device)
+            self.row_setup_event(tree_iter, device)
 
             props = device.get_properties()
             try:
-                self.set(iter, dbus_path=device.get_object_path())
+                self.set(tree_iter, dbus_path=device.get_object_path())
             except:
                 pass
 
@@ -294,15 +294,15 @@ class DeviceList(GenericList):
                 self.monitor_power_levels(device)
 
         else:
-            row = self.get(iter, "device")
+            row = self.get(tree_iter, "device")
             existing_dev = row["device"]
 
             props = existing_dev.get_properties()
             props_new = device.get_properties()
 
             existing_dev.disconnect_signal('property-changed')
-            self.set(iter, device=device, dbus_path=device.get_object_path())
-            self.row_setup_event(iter, device)
+            self.set(tree_iter, device=device, dbus_path=device.get_object_path())
+            self.row_setup_event(tree_iter, device)
             
             device.connect_signal('property-changed', self._on_device_property_changed)
 
@@ -348,15 +348,15 @@ class DeviceList(GenericList):
     def AppendDevice(self, device):
         self.add_device(device, True)
 
-    def RemoveDevice(self, device, iter=None):
+    def RemoveDevice(self, device, tree_iter=None):
         dprint(device)
-        if iter is None:
-            iter = self.find_device(device)
+        if tree_iter is None:
+            tree_iter = self.find_device(device)
 
-        if self.compare(self.selected(), iter):
+        if self.compare(self.selected(), tree_iter):
             self.emit("device-selected", None, None)
 
-        self.delete(iter)
+        self.delete(tree_iter)
 
     def GetSelectedDevice(self):
         selected = self.selected()
@@ -368,9 +368,9 @@ class DeviceList(GenericList):
     def clear(self):
         if len(self.liststore):
             for i in self.liststore:
-                iter = i.iter
-                device = self.get(iter, "device")["device"]
-                self.RemoveDevice(device, iter)
+                tree_iter = i.iter
+                device = self.get(tree_iter, "device")["device"]
+                self.RemoveDevice(device, tree_iter)
             self.liststore.clear()
             self.emit("device-selected", None, None)
 
@@ -387,8 +387,8 @@ class DeviceList(GenericList):
             row = self.address_to_row[address]
             if row.valid():
                 path = row.get_path()
-                iter = self.get_model().get_iter(path)
-                return iter
+                tree_iter = self.get_model().get_iter(path)
+                return tree_iter
             else:
                 del self.address_to_row[address]
                 return None
@@ -401,38 +401,38 @@ class DeviceList(GenericList):
             row = self.path_to_row[path]
             if row.valid():
                 path = row.get_path()
-                iter = self.get_model().get_iter(path)
-                return iter
+                tree_iter = self.get_model().get_iter(path)
+                return tree_iter
             else:
                 del self.path_to_row[path]
                 return None
         except KeyError:
             return None
 
-    def do_cache(self, iter, kwargs):
+    def do_cache(self, tree_iter, kwargs):
         if "device" in kwargs:
             if kwargs["device"]:
                 self.address_to_row[kwargs["device"]['Address']] = Gtk.TreeRowReference.new(self.get_model(),
-                                                                                         self.get_model().get_path(iter))
+                                                                                            self.get_model().get_path(tree_iter))
                 dprint("Caching new device %s" % kwargs["device"]['Address'])
 
         if "dbus_path" in kwargs:
             if kwargs["dbus_path"] is not None:
                 self.path_to_row[kwargs["dbus_path"]] = Gtk.TreeRowReference.new(self.get_model(),
-                                                                                 self.get_model().get_path(iter))
+                                                                                 self.get_model().get_path(tree_iter))
             else:
-                existing = self.get(iter, "dbus_path")["dbus_path"]
+                existing = self.get(tree_iter, "dbus_path")["dbus_path"]
                 if existing is not None:
                     del self.path_to_row[existing]
 
     def append(self, **columns):
-        iter = GenericList.append(self, **columns)
-        self.do_cache(iter, columns)
+        tree_iter = GenericList.append(self, **columns)
+        self.do_cache(tree_iter, columns)
 
     def prepend(self, **columns):
-        iter = GenericList.prepend(self, **columns)
-        self.do_cache(iter, columns)
+        tree_iter = GenericList.prepend(self, **columns)
+        self.do_cache(tree_iter, columns)
 
-    def set(self, iter, **kwargs):
-        self.do_cache(iter, kwargs)
-        GenericList.set(self, iter, **kwargs)
+    def set(self, tree_iter, **kwargs):
+        self.do_cache(tree_iter, kwargs)
+        GenericList.set(self, tree_iter, **kwargs)
