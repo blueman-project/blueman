@@ -51,7 +51,7 @@ class ManagerProgressbar(GObject.GObject):
         hbox.pack_end(eventbox, True, False, 0)
         hbox.pack_end(self.progressbar, False, False, 0)
 
-        if ManagerProgressbar.__instances__ != []:
+        if ManagerProgressbar.__instances__:
             dprint("hiding", ManagerProgressbar.__instances__[-1])
             ManagerProgressbar.__instances__[-1].hide()
 
@@ -122,7 +122,7 @@ class ManagerProgressbar(GObject.GObject):
                         inst.show()
                         break
 
-            if ManagerProgressbar.__instances__ == []:
+            if not ManagerProgressbar.__instances__:
                 if not self.Blueman.Config["show-statusbar"]:
                     self.Blueman.Builder.get_object("statusbar").props.visible = False
 

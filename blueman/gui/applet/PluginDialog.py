@@ -205,7 +205,7 @@ class PluginDialog(Gtk.Dialog):
         self.author_txt.props.label = cls.__author__ or _("Unspecified")
         self.description.props.label = cls.__description__ or _("Unspecified")
 
-        if cls.__depends__ != []:
+        if cls.__depends__:
             self.depends_hdr.props.visible = True
             self.depends_txt.props.visible = True
             self.depends_txt.props.label = ", ".join(cls.__depends__)
@@ -213,7 +213,7 @@ class PluginDialog(Gtk.Dialog):
             self.depends_hdr.props.visible = False
             self.depends_txt.props.visible = False
 
-        if cls.__conflicts__ != []:
+        if cls.__conflicts__:
             self.conflicts_hdr.props.visible = True
             self.conflicts_txt.props.visible = True
             self.conflicts_txt.props.label = ", ".join(cls.__conflicts__)
@@ -290,7 +290,7 @@ class PluginDialog(Gtk.Dialog):
             if dep in loaded:
                 to_unload.append(dep)
 
-        if to_unload != []:
+        if to_unload:
             dialog = Gtk.MessageDialog(self, type=Gtk.MessageType.QUESTION, buttons=Gtk.ButtonsType.YES_NO)
             dialog.props.secondary_use_markup = True
             dialog.props.icon_name = "blueman"
@@ -312,7 +312,7 @@ class PluginDialog(Gtk.Dialog):
             if conf in loaded:
                 to_unload.append(conf)
 
-        if to_unload != []:
+        if to_unload:
             dialog = Gtk.MessageDialog(self, type=Gtk.MessageType.QUESTION, buttons=Gtk.ButtonsType.YES_NO)
             dialog.props.secondary_use_markup = True
             dialog.props.icon_name = "blueman"

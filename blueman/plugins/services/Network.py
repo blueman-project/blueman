@@ -58,7 +58,7 @@ class Network(ServicePlugin):
 
     def on_apply(self):
 
-        if self.on_query_apply_state() == True:
+        if self.on_query_apply_state():
             dprint("network apply")
 
             m = Mechanism()
@@ -126,7 +126,7 @@ class Network(ServicePlugin):
     def on_query_apply_state(self):
         changed = False
         opts = self.get_options()
-        if opts == []:
+        if not opts:
             return False
         else:
             if "ip" in opts:

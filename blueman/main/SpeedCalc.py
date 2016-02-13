@@ -15,7 +15,7 @@ class SpeedCalc:
         self.reference = 0
 
     def calc(self, amount):
-        if self.log == []:
+        if not self.log:
             self.reference = amount
         amount -= self.reference
         curtime = round(time.time(), 2)

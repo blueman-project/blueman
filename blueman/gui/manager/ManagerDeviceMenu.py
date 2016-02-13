@@ -251,7 +251,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         for priority, item in items:
             self.append(item)
 
-        if items != []:
+        if items:
             item = Gtk.SeparatorMenuItem()
             item.show()
             self.append(item)
