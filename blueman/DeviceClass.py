@@ -188,7 +188,7 @@ def get_minor_class(klass, i18n=False):
     i = (klass >> 8) & 0x1F
 
     if i == 1:
-        minor_index = (klass >> 2) & 0x3F;
+        minor_index = (klass >> 2) & 0x3F
         if minor_index < len(computer_minor_cls):
             if i18n:
                 return computer_minor_cls_i18n[minor_index]
@@ -197,52 +197,52 @@ def get_minor_class(klass, i18n=False):
         else:
             return ""
     elif i == 2:
-        minor_index = (klass >> 2) & 0x3F;
+        minor_index = (klass >> 2) & 0x3F
         if (minor_index < len(phone_minor_cls)):
             if i18n:
                 return phone_minor_cls_i18n[minor_index]
             else:
                 return phone_minor_cls[minor_index]
-        return "";
+        return ""
     elif i == 3:
-        minor_index = (klass >> 5) & 0x07;
+        minor_index = (klass >> 5) & 0x07
         if (minor_index < len(access_point_minor_cls)):
             return access_point_minor_cls[minor_index]
         else:
-            return "";
+            return ""
     elif i == 4:
-        minor_index = (klass >> 2) & 0x3F;
+        minor_index = (klass >> 2) & 0x3F
         if (minor_index < len(audio_video_minor_cls)):
             if i18n:
-                return audio_video_minor_cls_i18n[minor_index];
+                return audio_video_minor_cls_i18n[minor_index]
             else:
-                return audio_video_minor_cls[minor_index];
+                return audio_video_minor_cls[minor_index]
         else:
-            return "";
+            return ""
     elif i == 5:
-        minor_index = (klass >> 6) & 0x03;
+        minor_index = (klass >> 6) & 0x03
         if (minor_index < len(peripheral_minor_cls)):
             if i18n:
-                return peripheral_minor_cls_i18n[minor_index];
+                return peripheral_minor_cls_i18n[minor_index]
             else:
-                return peripheral_minor_cls[minor_index];
+                return peripheral_minor_cls[minor_index]
         else:
-            return "";
+            return ""
     elif i == 6:
         return "imaging"
 
     elif i == 7:
-        minor_index = (klass >> 2) & 0x3F;
+        minor_index = (klass >> 2) & 0x3F
         if (minor_index < len(wearable_minor_cls)):
-            return wearable_minor_cls[minor_index];
+            return wearable_minor_cls[minor_index]
         else:
-            return "";
+            return ""
     elif i == 8:
-        minor_index = (klass >> 2) & 0x3F;
+        minor_index = (klass >> 2) & 0x3F
         if (minor_index < len(toy_minor_cls)):
-            return toy_minor_cls[minor_index];
+            return toy_minor_cls[minor_index]
         else:
-            return "";
+            return ""
 
     if i18n:
         return _("unknown")
