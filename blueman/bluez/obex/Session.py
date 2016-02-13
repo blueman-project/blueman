@@ -1,3 +1,4 @@
+# coding=utf-8
 from blueman.bluez.obex.Base import Base
 
 
