@@ -433,5 +433,5 @@ class DeviceList(GenericList):
         self.do_cache(tree_iter, columns)
 
     def set(self, tree_iter, **kwargs):
-        self.do_cache(tree_iter, kwargs)
         GenericList.set(self, tree_iter, **kwargs)
+        self.do_cache(tree_iter, kwargs)
