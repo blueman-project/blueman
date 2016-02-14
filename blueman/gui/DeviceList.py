@@ -274,46 +274,28 @@ class DeviceList(GenericList):
         return True
 
     def add_device(self, device, append=True):
-        tree_iter = self.find_device(device)
         #device belongs to another adapter
         if not device['Adapter'] == self.Adapter.get_object_path():
             return
 
-        if tree_iter is None:
-            dprint("adding new device")
-            if append:
-                tree_iter = self.liststore.append()
-            else:
-                tree_iter = self.liststore.prepend()
-
-            self.set(tree_iter, device=device)
-            self.row_setup_event(tree_iter, device)
-
-            props = device.get_properties()
-            try:
-                self.set(tree_iter, dbus_path=device.get_object_path())
-            except:
-                pass
-
-            device.connect_signal('property-changed', self._on_device_property_changed)
-            if props["Connected"]:
-                self.monitor_power_levels(device)
-
+        dprint("adding new device")
+        if append:
+            tree_iter = self.liststore.append()
         else:
-            row = self.get(tree_iter, "device")
-            existing_dev = row["device"]
+            tree_iter = self.liststore.prepend()
 
-            props = existing_dev.get_properties()
-            props_new = device.get_properties()
+        self.set(tree_iter, device=device)
+        self.row_setup_event(tree_iter, device)
 
-            existing_dev.disconnect_signal('property-changed')
-            self.set(tree_iter, device=device, dbus_path=device.get_object_path())
-            self.row_setup_event(tree_iter, device)
-            
-            device.connect_signal('property-changed', self._on_device_property_changed)
+        props = device.get_properties()
+        try:
+            self.set(tree_iter, dbus_path=device.get_object_path())
+        except:
+            pass
 
-            if props_new["Connected"]:
-                self.monitor_power_levels(device)
+        device.connect_signal('property-changed', self._on_device_property_changed)
+        if props["Connected"]:
+            self.monitor_power_levels(device)
 
     def DisplayKnownDevices(self, autoselect=False):
         self.clear()
