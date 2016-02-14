@@ -205,7 +205,14 @@ class DeviceList(GenericList):
         self.add_device(device, append=True)
 
     def device_remove_event(self, device, tree_iter):
-        self.RemoveDevice(device, tree_iter)
+        dprint(device)
+        if tree_iter is None:
+            tree_iter = self.find_device(device)
+
+        if self.compare(self.selected(), tree_iter):
+            self.emit("device-selected", None, None)
+
+        self.delete(tree_iter)
 
     #########################
 
@@ -341,16 +348,6 @@ class DeviceList(GenericList):
         if self.Adapter is not None:
             self.Adapter.stop_discovery()
 
-    def RemoveDevice(self, device, tree_iter=None):
-        dprint(device)
-        if tree_iter is None:
-            tree_iter = self.find_device(device)
-
-        if self.compare(self.selected(), tree_iter):
-            self.emit("device-selected", None, None)
-
-        self.delete(tree_iter)
-
     def GetSelectedDevice(self):
         selected = self.selected()
         if selected is not None:
@@ -363,7 +360,7 @@ class DeviceList(GenericList):
             for i in self.liststore:
                 tree_iter = i.iter
                 device = self.get(tree_iter, "device")["device"]
-                self.RemoveDevice(device, tree_iter)
+                self.device_remove_event(device, tree_iter)
             self.liststore.clear()
             self.emit("device-selected", None, None)
 
