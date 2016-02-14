@@ -104,16 +104,6 @@ class DeviceList(GenericList):
 
         self.selection.connect('changed', self.on_selection_changed)
 
-    def destroy(self):
-        dprint("destroying")
-        #self.clear()
-        if len(self.liststore):
-            for i in self.liststore:
-                tree_iter = i.iter
-                device = self.get(tree_iter, "device")["device"]
-            #device.Destroy()
-        GenericList.destroy(self)
-
     def on_selection_changed(self, selection):
         _model, tree_iter = selection.get_selected()
         if tree_iter:
