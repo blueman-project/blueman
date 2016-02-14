@@ -76,7 +76,6 @@ class DeviceList(GenericList):
             wait_for_adapter(a, on_activate)
 
         #cache for fast lookup in the list
-        self.address_to_row = {}
         self.path_to_row = {}
 
         self.monitored_devices = []
@@ -374,23 +373,18 @@ class DeviceList(GenericList):
             self.liststore.clear()
             self.emit("device-selected", None, None)
 
-        self.address_to_row = {}
         self.path_to_row = {}
 
     def find_device(self, device):
-        if type(device) == str:
-            address = device
-        else:
-            address = device['Address']
-
+        object_path = device.get_object_path()
         try:
-            row = self.address_to_row[address]
+            row = self.path_to_row[object_path]
             if row.valid():
                 path = row.get_path()
                 tree_iter = self.get_model().get_iter(path)
                 return tree_iter
             else:
-                del self.address_to_row[address]
+                del self.path_to_row[object_path]
                 return None
 
         except KeyError:
@@ -410,20 +404,25 @@ class DeviceList(GenericList):
             return None
 
     def do_cache(self, tree_iter, kwargs):
+        object_path = None
+
         if "device" in kwargs:
             if kwargs["device"]:
-                self.address_to_row[kwargs["device"]['Address']] = Gtk.TreeRowReference.new(self.get_model(),
-                                                                                            self.get_model().get_path(tree_iter))
-                dprint("Caching new device %s" % kwargs["device"]['Address'])
+                object_path = kwargs['device'].get_object_path()
 
-        if "dbus_path" in kwargs:
-            if kwargs["dbus_path"] is not None:
-                self.path_to_row[kwargs["dbus_path"]] = Gtk.TreeRowReference.new(self.get_model(),
-                                                                                 self.get_model().get_path(tree_iter))
+        elif "dbus_path" in kwargs:
+            if kwargs["dbus_path"]:
+                object_path = kwargs['dbus_path']
             else:
                 existing = self.get(tree_iter, "dbus_path")["dbus_path"]
                 if existing is not None:
                     del self.path_to_row[existing]
+
+        if object_path:
+            dprint("Caching new device %s" % object_path)
+            self.path_to_row[object_path] = Gtk.TreeRowReference.new(self.get_model(),
+                                                                     self.get_model().get_path(tree_iter))
+
 
     def append(self, **columns):
         tree_iter = GenericList.append(self, **columns)
