@@ -46,9 +46,6 @@ class DeviceSelectorList(DeviceList):
         self.row_update_event(tree_iter, "Alias", device['Alias'])
         self.row_update_event(tree_iter, "Icon", device['Icon'])
 
-    def device_add_event(self, device):
-        self.AppendDevice(device)
-
     def row_update_event(self, tree_iter, key, value):
         if key == "Trusted":
             if value:
