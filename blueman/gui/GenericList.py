@@ -54,10 +54,10 @@ class GenericList(Gtk.TreeView):
         return tree_iter
 
     def delete(self, iterid):
-        if type(id) == Gtk.TreeIter:
+        if type(iterid) == Gtk.TreeIter:
             tree_iter = iterid
         else:
-            tree_iter = self.get_iter(id)
+            tree_iter = self.get_iter(iterid)
 
         if tree_iter is None:
             return False
