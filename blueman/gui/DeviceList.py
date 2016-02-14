@@ -269,7 +269,7 @@ class DeviceList(GenericList):
     def add_device(self, device, append=True):
         tree_iter = self.find_device(device)
         #device belongs to another adapter
-        if not device.get_object_path().startswith(self.Adapter.get_object_path()):
+        if not device['Adapter'] == self.Adapter.get_object_path():
             return
 
         if tree_iter is None:
