@@ -202,7 +202,7 @@ class DeviceList(GenericList):
     #called when device needs to be added to the list
     #default action: append
     def device_add_event(self, device):
-        self.AppendDevice(device)
+        self.add_device(device, append=True)
 
     def device_remove_event(self, device, tree_iter):
         self.RemoveDevice(device, tree_iter)
@@ -340,12 +340,6 @@ class DeviceList(GenericList):
         self.discovering = False
         if self.Adapter is not None:
             self.Adapter.stop_discovery()
-
-    def PrependDevice(self, device):
-        self.add_device(device, False)
-
-    def AppendDevice(self, device):
-        self.add_device(device, True)
 
     def RemoveDevice(self, device, tree_iter=None):
         dprint(device)
