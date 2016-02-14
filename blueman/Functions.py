@@ -41,7 +41,6 @@ import atexit
 import sys
 import errno
 from ctypes import cdll, byref, create_string_buffer
-from subprocess import Popen
 from gi.repository import GLib
 import traceback
 try: import __builtin__ as builtins
