@@ -287,14 +287,13 @@ class DeviceList(GenericList):
         self.set(tree_iter, device=device)
         self.row_setup_event(tree_iter, device)
 
-        props = device.get_properties()
         try:
             self.set(tree_iter, dbus_path=device.get_object_path())
         except:
             pass
 
         device.connect_signal('property-changed', self._on_device_property_changed)
-        if props["Connected"]:
+        if device["Connected"]:
             self.monitor_power_levels(device)
 
     def DisplayKnownDevices(self, autoselect=False):
