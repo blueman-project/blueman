@@ -86,6 +86,7 @@ class DeviceList(GenericList):
 
         self.__discovery_time = 0
         self.__adapter_path = None
+        self.__signals = {}
         self.Adapter = None
         self.discovering = False
 
@@ -212,6 +213,9 @@ class DeviceList(GenericList):
         if self.compare(self.selected(), tree_iter):
             self.emit("device-selected", None, None)
 
+        sig = self.__signals.pop(device.get_object_path())
+        device.disconnect_signal(sig)
+
         self.delete(tree_iter)
 
     #########################
@@ -287,12 +291,15 @@ class DeviceList(GenericList):
         self.set(tree_iter, device=device)
         self.row_setup_event(tree_iter, device)
 
+        object_path = device.get_object_path()
         try:
-            self.set(tree_iter, dbus_path=device.get_object_path())
+            self.set(tree_iter, dbus_path=object_path)
         except:
             pass
 
-        device.connect_signal('property-changed', self._on_device_property_changed)
+        sig = device.connect_signal('property-changed', self._on_device_property_changed)
+        self.__signals[object_path] = sig
+
         if device["Connected"]:
             self.monitor_power_levels(device)
 
