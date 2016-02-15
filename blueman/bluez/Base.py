@@ -30,9 +30,9 @@ class Base(GObject):
             self.__bus.remove_signal_receiver(*args)
 
     def _call(self, method, *args, **kwargs):
-        def ok():
+        def ok(*args, **kwargs):
             if callable(reply_handler):
-                reply_handler()
+                reply_handler(*args, **kwargs)
 
         def err(e):
             exception = parse_dbus_error(e)
