@@ -38,7 +38,7 @@ class Manager(Base):
                     def on_tranfer_completed(_transfer):
                         self._on_transfer_completed(object_path, True)
 
-                    def on_tranfer_error(_transfer):
+                    def on_tranfer_error(_transfer, _msg):
                         self._on_transfer_completed(object_path, False)
 
                     self._transfers[object_path] = Transfer(object_path)
