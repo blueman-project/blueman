@@ -22,6 +22,7 @@ from blueman.Sdp import *
 import cgi
 
 from blueman.gui.GtkAnimation import TreeRowColorFade, TreeRowFade, CellFade
+from blueman.main.Config import Config
 
 
 class ManagerDeviceList(DeviceList):
@@ -64,6 +65,12 @@ class ManagerDeviceList(DeviceList):
         self.props.has_tooltip = True
         self.Blueman = inst
 
+        self.Config = Config("org.blueman.general")
+        self.Config.connect('changed', self._on_settings_changed)
+        # Set the correct sorting
+        self._on_settings_changed(self.Config, "sort-by")
+        self._on_settings_changed(self.Config, "sort-type")
+
         self.connect("query-tooltip", self.tooltip_query)
         self.tooltip_row = None
         self.tooltip_col = None
@@ -80,6 +87,21 @@ class ManagerDeviceList(DeviceList):
         Gtk.Widget.drag_dest_add_uri_targets(self)
 
         self.set_search_equal_func(self.search_func, None)
+
+    def _on_settings_changed(self, settings, key):
+        if key in ('sort-by', 'sort-order'):
+            sort_by = settings['sort-by']
+            sort_order = settings['sort-order']
+
+            if sort_order == 'ascending':
+                sort_type = Gtk.SortType.ASCENDING
+            else:
+                sort_type = Gtk.SortType.DESCENDING
+
+            column_id = self.ids.setdefault(sort_by, None)
+
+            if column_id:
+                self.liststore.set_sort_column_id(column_id, sort_type)
 
     def do_device_found(self, device):
         tree_iter = self.find_device(device)

@@ -40,6 +40,23 @@
       <summary>Sort the device list by last usage</summary>
       <description>This sorts the devicelist in manager by last used or the reversed</description>
     </key>
+    <key type="s" name="sort-by">
+      <choices>
+        <choice value="timestamp"/>
+        <choice value="alias"/>
+      </choices>
+      <default>"timestamp"</default>
+      <summary>Sort device list</summary>
+      <description>Sort the device list by column, possible values are timestamp and alias</description>
+    </key>
+    <key type="s" name="sort-order">
+      <choices>
+        <choice value="ascending"/>
+        <choice value="descending"/>
+      </choices>
+      <default>"ascending"</default>
+      <summary>Sort ascending or descending</summary>
+    </key>
     <key type="as" name="plugin-list">
       <default>[]</default>
       <summary>List of enabled/disabled plugins</summary>
