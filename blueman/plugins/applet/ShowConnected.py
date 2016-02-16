@@ -22,15 +22,12 @@ class ShowConnected(AppletPlugin):
     __description__ = _(
         "Adds an indication on the status icon when Bluetooth is active and shows the number of connections in the tooltip.")
 
-    _any_device = None
-
     def on_load(self, applet):
         self.num_connections = 0
         self.active = False
         self.initialized = False
 
     def on_unload(self):
-        del self._any_device
         self.Applet.Plugins.StatusIcon.SetTextLine(1, None)
         self.num_connections = 0
         self.Applet.Plugins.StatusIcon.IconShouldChange()
