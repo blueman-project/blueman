@@ -6,6 +6,7 @@ from __future__ import unicode_literals
 
 from blueman.Sdp import uuid128_to_uuid16
 import blueman.services
+import dbus
 import inspect
 
 
@@ -16,5 +17,9 @@ def get_service(device, uuid):
 
 
 def get_services(device):
-    services = (get_service(device, uuid) for uuid in device['UUIDs'])
-    return [service for service in services if service]
+    try:
+        services = (get_service(device, uuid) for uuid in device['UUIDs'])
+        return [service for service in services if service]
+    except dbus.exceptions.DBusException as e:
+        dprint(e)
+        return []
