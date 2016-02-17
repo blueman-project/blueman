@@ -94,7 +94,36 @@ class ManagerMenu:
         view_menu.append(item_services)
         item_services.show()
 
+        adapter_menu = Gtk.Menu()
+        self.item_adapter.set_submenu(adapter_menu)
 
+        search_item = create_menuitem(_("_Search"), get_icon("edit-find", 16))
+        search_item.connect("activate", lambda x: self.blueman.inquiry())
+        search_item.show()
+        adapter_menu.prepend(search_item)
+        self.Search = search_item
+
+        sep = Gtk.SeparatorMenuItem()
+        sep.show()
+        adapter_menu.append(sep)
+
+        sep = Gtk.SeparatorMenuItem()
+        sep.show()
+        adapter_menu.append(sep)
+
+        adapter_settings = create_menuitem("_Preferences", get_icon("preferences-system", 16))
+        adapter_settings.connect("activate", lambda x: self.blueman.adapter_properties())
+        adapter_settings.show()
+        adapter_menu.append(adapter_settings)
+
+        sep = Gtk.SeparatorMenuItem()
+        sep.show()
+        adapter_menu.append(sep)
+
+        exit_item = create_menuitem("_Exit", get_icon("application-exit", 16))
+        exit_item.connect("activate", lambda x: Gtk.main_quit())
+        exit_item.show()
+        adapter_menu.append(exit_item)
 
         self.item_adapter.show()
         self.item_view.show()
@@ -139,52 +168,30 @@ class ManagerMenu:
                     self.Search.props.sensitive = True
 
     def generate_adapter_menu(self):
-        menu = Gtk.Menu()
-
-        sep = Gtk.SeparatorMenuItem()
-        sep.show()
-        menu.append(sep)
-
-        settings = create_menuitem("_Preferences", get_icon("preferences-system", 16))
-        settings.connect("activate", lambda x: self.blueman.adapter_properties())
-        settings.show()
-        menu.append(settings)
-
+        menu = self.item_adapter.get_submenu()
+        insert_after = 2
         group = []
+
+        # Remove and disconnect the existing adapter menu items
+        for item, sig in self.adapter_items:
+            item.disconnect(sig)
+            menu.remove(item)
+
+        self.adapter_items = []
+
         for adapter in self.adapters:
             item = Gtk.RadioMenuItem.new_with_label(group, adapter.get_name())
+            item.show()
             group = item.get_group()
 
-            item.connect("activate", self.on_adapter_selected, adapter.get_object_path())
+            sig = item.connect("activate", self.on_adapter_selected, adapter.get_object_path())
             if adapter.get_object_path() == self.blueman.List.Adapter.get_object_path():
                 item.props.active = True
 
-            item.show()
-            menu.prepend(item)
+            menu.insert(item, insert_after)
+            self.adapter_items.append((item, sig))
 
-        sep = Gtk.SeparatorMenuItem()
-        sep.show()
-        menu.prepend(sep)
-
-        item = create_menuitem(_("_Search"), get_icon("edit-find", 16))
-        item.connect("activate", lambda x: self.blueman.inquiry())
-        item.show()
-        menu.prepend(item)
-        self.Search = item
-
-        m = self.item_adapter.get_submenu()
-        if m is not None:
-            m.deactivate()
-        self.item_adapter.set_submenu(menu)
-
-        sep = Gtk.SeparatorMenuItem()
-        sep.show()
-        menu.append(sep)
-
-        item = create_menuitem("_Exit", get_icon("application-exit", 16))
-        item.connect("activate", lambda x: Gtk.main_quit())
-        item.show()
-        menu.append(item)
+            insert_after += 1
 
     def on_adapter_selected(self, menuitem, adapter_path):
         if menuitem.props.active:
