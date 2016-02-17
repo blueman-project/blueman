@@ -32,67 +32,69 @@ class ManagerMenu:
         self.item_help.set_submenu(help_menu)
         help_menu.show()
 
-        item = create_menuitem(_("_Report a Problem"), get_icon("dialog-warning", 16))
-        item.connect("activate", lambda x: launch("xdg-open %s/issues" % WEBSITE, None, True))
-        help_menu.append(item)
-        item.show()
+        report_item = create_menuitem(_("_Report a Problem"), get_icon("dialog-warning", 16))
+        report_item.show()
+        help_menu.append(report_item)
+        report_item.connect("activate", lambda x: launch("xdg-open %s/issues" % WEBSITE, None, True))
 
-        item = Gtk.SeparatorMenuItem()
-        help_menu.append(item)
-        item.show()
+        sep = Gtk.SeparatorMenuItem()
+        sep.show()
+        help_menu.append(sep)
 
-        item = create_menuitem("_Help", get_icon("help-about"))
-        item.connect("activate", lambda x: show_about_dialog('Blueman ' + _('Device Manager')))
-        help_menu.append(item)
-        item.show()
+        help_item = create_menuitem("_Help", get_icon("help-about"))
+        help_item.show()
+        help_menu.append(help_item)
+        help_item.connect("activate", lambda x: show_about_dialog('Blueman ' + _('Device Manager')))
 
         view_menu = Gtk.Menu()
         self.item_view.set_submenu(view_menu)
         view_menu.show()
 
-        item = Gtk.CheckMenuItem.new_with_mnemonic(_("Show _Toolbar"))
-        self.blueman.Config.bind_to_widget("show-toolbar", item, "active")
-        view_menu.append(item)
-        item.show()
+        item_toolbar = Gtk.CheckMenuItem.new_with_mnemonic(_("Show _Toolbar"))
+        item_toolbar.show()
+        view_menu.append(item_toolbar)
+        self.blueman.Config.bind_to_widget("show-toolbar", item_toolbar, "active")
 
-        item = Gtk.CheckMenuItem.new_with_mnemonic(_("Show _Statusbar"))
-        self.blueman.Config.bind_to_widget("show-statusbar", item, "active")
-        view_menu.append(item)
-        item.show()
+        item_statusbar = Gtk.CheckMenuItem.new_with_mnemonic(_("Show _Statusbar"))
+        item_statusbar.show()
+        view_menu.append(item_statusbar)
+        self.blueman.Config.bind_to_widget("show-statusbar", item_statusbar, "active")
 
-        item = Gtk.SeparatorMenuItem()
-        view_menu.append(item)
-        item.show()
+        item_services = Gtk.SeparatorMenuItem()
+        view_menu.append(item_services)
+        item_services.show()
 
         group = []
 
         itemf = Gtk.RadioMenuItem.new_with_mnemonic(group, _("Latest Device _First"))
+        itemf.show()
         group = itemf.get_group()
         view_menu.append(itemf)
-        itemf.show()
 
         iteml = Gtk.RadioMenuItem.new_with_mnemonic(group, _("Latest Device _Last"))
+        iteml.show()
         group = iteml.get_group()
         view_menu.append(iteml)
-        iteml.show()
 
         itemf.connect("activate", lambda x: self.blueman.Config.set_boolean("latest-last", not x.props.active))
         iteml.connect("activate", lambda x: self.blueman.Config.set_boolean("latest-last", x.props.active))
 
-        item = Gtk.SeparatorMenuItem()
-        view_menu.append(item)
-        item.show()
+        sep = Gtk.SeparatorMenuItem()
+        sep.show()
+        view_menu.append(sep)
 
-        item = create_menuitem(_("Plugins"), get_icon('blueman-plugin', 16))
-        item.connect('activate', lambda *args: self.blueman.Applet.open_plugin_dialog(ignore_reply=True))
-        view_menu.append(item)
-        item.show()
+        item_plugins = create_menuitem(_("Plugins"), get_icon('blueman-plugin', 16))
+        item_plugins.show()
+        view_menu.append(item_plugins)
+        item_plugins.connect('activate', lambda *args: self.blueman.Applet.open_plugin_dialog(ignore_reply=True))
 
-        item = create_menuitem(_("_Local Services") + "...", get_icon("preferences-desktop", 16))
-        item.connect('activate',
-                     lambda *args: launch("blueman-services", None, False, "blueman", _("Service Preferences")))
-        view_menu.append(item)
-        item.show()
+        item_services = create_menuitem(_("_Local Services") + "...", get_icon("preferences-desktop", 16))
+        item_services.connect('activate',
+                              lambda *args: launch("blueman-services", None, False, "blueman", _("Service Preferences")))
+        view_menu.append(item_services)
+        item_services.show()
+
+
 
         self.item_adapter.show()
         self.item_view.show()
