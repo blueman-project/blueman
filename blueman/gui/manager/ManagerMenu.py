@@ -18,21 +18,14 @@ class ManagerMenu:
     def __init__(self, blueman):
         self.blueman = blueman
 
-        self.Menubar = blueman.Builder.get_object("menu")
-
         self.adapter_items = []
         self.Search = None
 
-        self.item_adapter = Gtk.MenuItem.new_with_mnemonic(_("_Adapter"))
-        self.item_device = Gtk.MenuItem.new_with_mnemonic(_("_Device"))
+        self.item_adapter = self.blueman.Builder.get_object("item_adapter")
+        self.item_device = self.blueman.Builder.get_object("item_device")
 
-        self.item_view = Gtk.MenuItem.new_with_mnemonic(_("_View"))
-        self.item_help = Gtk.MenuItem.new_with_mnemonic(_("_Help"))
-
-        self.Menubar.append(self.item_adapter)
-        self.Menubar.append(self.item_device)
-        self.Menubar.append(self.item_view)
-        self.Menubar.append(self.item_help)
+        self.item_view = self.blueman.Builder.get_object("item_view")
+        self.item_help = self.blueman.Builder.get_object("item_help")
 
         help_menu = Gtk.Menu()
 
