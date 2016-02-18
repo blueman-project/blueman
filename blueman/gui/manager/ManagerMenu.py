@@ -18,7 +18,9 @@ class ManagerMenu:
     def __init__(self, blueman):
         self.blueman = blueman
 
-        self.adapter_items = []
+        self.adapter_items = {}
+        self._adapters_group = []
+        self._insert_adapter_item_pos = 2
         self.Search = None
 
         self.item_adapter = self.blueman.Builder.get_object("item_adapter")
@@ -143,6 +145,34 @@ class ManagerMenu:
 
         self.device_menu = None
 
+    def _add_adapter_menu_item(self, adapter_path):
+        adapter = bluez.Adapter(adapter_path)
+        menu = self.item_adapter.get_submenu()
+        object_path = adapter.get_object_path()
+
+        item = Gtk.RadioMenuItem.new_with_label(self._adapters_group, adapter['Alias'])
+        item.show()
+        self._adapters_group = item.get_group()
+
+        sig = item.connect("activate", self.on_adapter_selected, object_path)
+
+        menu.insert(item, self._insert_adapter_item_pos)
+        self._insert_adapter_item_pos += 1
+
+        self.adapter_items[object_path] = (item, sig)
+
+        if adapter_path == self.blueman.List.Adapter.get_object_path():
+            item.props.active = True
+
+    def _remove_adapter_menu_item(self, adapter_path):
+        item, sig = self.adapter_items.pop(adapter_path)
+        menu = self.item_adapter.get_submenu()
+
+        item.disconnect(sig)
+        menu.remove(item)
+        self._insert_adapter_item_pos -= 1
+
+
     def on_device_selected(self, List, device, tree_iter):
         if tree_iter and device:
             self.item_device.props.sensitive = True
@@ -157,9 +187,11 @@ class ManagerMenu:
             self.item_device.props.sensitive = False
 
     def on_adapter_property_changed(self, lst, adapter, kv):
+        adapter_path = adapter.get_object_path()
         (key, value) = kv
         if key == "Name" or key == "Alias":
-            self.generate_adapter_menu()
+            item = self.adapter_items[adapter_path][0]
+            item.set_label(value)
         elif key == "Discovering":
             if self.Search:
                 if value:
@@ -169,29 +201,17 @@ class ManagerMenu:
 
     def generate_adapter_menu(self):
         menu = self.item_adapter.get_submenu()
-        insert_after = 2
-        group = []
 
         # Remove and disconnect the existing adapter menu items
-        for item, sig in self.adapter_items:
-            item.disconnect(sig)
-            menu.remove(item)
+        for adapter in self.adapters:
+            adapter_path = adapter.get_object_path()
 
-        self.adapter_items = []
+            if adapter_path in self.adapter_items:
+                self._remove_adapter_menu_item(adapter_path)
 
         for adapter in self.adapters:
-            item = Gtk.RadioMenuItem.new_with_label(group, adapter.get_name())
-            item.show()
-            group = item.get_group()
-
-            sig = item.connect("activate", self.on_adapter_selected, adapter.get_object_path())
-            if adapter.get_object_path() == self.blueman.List.Adapter.get_object_path():
-                item.props.active = True
-
-            menu.insert(item, insert_after)
-            self.adapter_items.append((item, sig))
-
-            insert_after += 1
+            adapter_path = adapter.get_object_path()
+            self._add_adapter_menu_item(adapter_path)
 
     def on_adapter_selected(self, menuitem, adapter_path):
         if menuitem.props.active:
@@ -202,13 +222,13 @@ class ManagerMenu:
 
     def on_adapter_added(self, device_list, adapter_path):
         self.adapters.append(bluez.Adapter(adapter_path))
-        self.generate_adapter_menu()
+        self._add_adapter_menu_item(adapter_path)
 
     def on_adapter_removed(self, device_list, adapter_path):
         for adapter in self.adapters:
             if adapter.get_object_path() == adapter_path:
                 self.adapters.remove(adapter)
-        self.generate_adapter_menu()
+        self._remove_adapter_menu_item(adapter_path)
 
     def on_adapter_changed(self, List, path):
         if path is None:
