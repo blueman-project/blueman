@@ -138,7 +138,6 @@ class ManagerMenu:
         self._manager.connect_signal("adapter-removed", self.on_adapter_removed)
 
         blueman.List.connect("device-selected", self.on_device_selected)
-        blueman.List.connect("adapter-changed", self.on_adapter_changed)
 
         for adapter in self._manager.list_adapters():
             self.on_adapter_added(None, adapter.get_object_path())
@@ -206,6 +205,9 @@ class ManagerMenu:
         if adapter_path == self.blueman.List.Adapter.get_object_path():
             item.props.active = True
 
+        if len(self.adapter_items) > 0:
+            self.item_adapter.props.sensitive = True
+
     def on_adapter_removed(self, _manager, adapter_path):
         item, item_sig, adapter, adapter_sig = self.adapter_items.pop(adapter_path)
         menu = self.item_adapter.get_submenu()
@@ -216,9 +218,5 @@ class ManagerMenu:
         menu.remove(item)
         self._insert_adapter_item_pos -= 1
 
-    def on_adapter_changed(self, List, path):
-        if path is None:
+        if len(self.adapter_items) == 0:
             self.item_adapter.props.sensitive = False
-        else:
-            self.item_adapter.props.sensitive = True
-            self.generate_adapter_menu()
