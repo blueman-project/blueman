@@ -133,13 +133,12 @@ class ManagerMenu:
         self.item_device.show()
         self.item_device.props.sensitive = False
 
-        blueman.List.connect("adapter-added", self.on_adapter_added)
-        blueman.List.connect("adapter-removed", self.on_adapter_removed)
-        blueman.List.connect("adapter-property-changed", self.on_adapter_property_changed)
+        self._manager = bluez.Manager()
+        self._manager.connect_signal("adapter-added", self.on_adapter_added)
+        self._manager.connect_signal("adapter-removed", self.on_adapter_removed)
+
         blueman.List.connect("device-selected", self.on_device_selected)
         blueman.List.connect("adapter-changed", self.on_adapter_changed)
-
-        self.adapters = blueman.List.manager.list_adapters()
 
         self.on_adapter_changed(blueman.List, blueman.List.GetAdapterPath())
 
@@ -154,24 +153,26 @@ class ManagerMenu:
         item.show()
         self._adapters_group = item.get_group()
 
-        sig = item.connect("activate", self.on_adapter_selected, object_path)
+        item_sig = item.connect("activate", self.on_adapter_selected, object_path)
+        adapter_sig = adapter.connect_signal("property-changed", self.on_adapter_property_changed)
 
         menu.insert(item, self._insert_adapter_item_pos)
         self._insert_adapter_item_pos += 1
 
-        self.adapter_items[object_path] = (item, sig)
+        self.adapter_items[object_path] = (item, item_sig, adapter, adapter_sig)
 
         if adapter_path == self.blueman.List.Adapter.get_object_path():
             item.props.active = True
 
     def _remove_adapter_menu_item(self, adapter_path):
-        item, sig = self.adapter_items.pop(adapter_path)
+        item, item_sig, adapter, adapter_sig = self.adapter_items.pop(adapter_path)
         menu = self.item_adapter.get_submenu()
 
-        item.disconnect(sig)
+        item.disconnect(item_sig)
+        adapter.disconnect_signal(adapter_sig)
+
         menu.remove(item)
         self._insert_adapter_item_pos -= 1
-
 
     def on_device_selected(self, List, device, tree_iter):
         if tree_iter and device:
@@ -186,13 +187,11 @@ class ManagerMenu:
         else:
             self.item_device.props.sensitive = False
 
-    def on_adapter_property_changed(self, lst, adapter, kv):
-        adapter_path = adapter.get_object_path()
-        (key, value) = kv
-        if key == "Name" or key == "Alias":
-            item = self.adapter_items[adapter_path][0]
+    def on_adapter_property_changed(self, _adapter, name, value, path):
+        if name == "Name" or name == "Alias":
+            item = self.adapter_items[path][0]
             item.set_label(value)
-        elif key == "Discovering":
+        elif name == "Discovering":
             if self.Search:
                 if value:
                     self.Search.props.sensitive = False
@@ -203,15 +202,11 @@ class ManagerMenu:
         menu = self.item_adapter.get_submenu()
 
         # Remove and disconnect the existing adapter menu items
-        for adapter in self.adapters:
-            adapter_path = adapter.get_object_path()
-
-            if adapter_path in self.adapter_items:
+        for adapter_path in self.adapter_items.keys():
                 self._remove_adapter_menu_item(adapter_path)
 
-        for adapter in self.adapters:
-            adapter_path = adapter.get_object_path()
-            self._add_adapter_menu_item(adapter_path)
+        for adapter in self._manager.list_adapters():
+            self._add_adapter_menu_item(adapter.get_object_path())
 
     def on_adapter_selected(self, menuitem, adapter_path):
         if menuitem.props.active:
@@ -220,14 +215,10 @@ class ManagerMenu:
                 self.blueman.Config["last-adapter"] = adapter_path_to_name(adapter_path)
                 self.blueman.List.SetAdapter(adapter_path)
 
-    def on_adapter_added(self, device_list, adapter_path):
-        self.adapters.append(bluez.Adapter(adapter_path))
+    def on_adapter_added(self, _manager, adapter_path):
         self._add_adapter_menu_item(adapter_path)
 
-    def on_adapter_removed(self, device_list, adapter_path):
-        for adapter in self.adapters:
-            if adapter.get_object_path() == adapter_path:
-                self.adapters.remove(adapter)
+    def on_adapter_removed(self, _manager, adapter_path):
         self._remove_adapter_menu_item(adapter_path)
 
     def on_adapter_changed(self, List, path):
