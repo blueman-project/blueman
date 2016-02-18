@@ -51,8 +51,6 @@ class DeviceList(GenericList):
         dprint("deleting mainlist")
 
     def __init__(self, adapter=None, tabledata=None):
-        self.set_name("DeviceList")
-
         if not tabledata:
             tabledata = []
 
@@ -99,6 +97,7 @@ class DeviceList(GenericList):
         ]
 
         super(DeviceList, self).__init__(data)
+        self.set_name("DeviceList")
 
         self.SetAdapter(adapter)
 
