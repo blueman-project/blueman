@@ -98,6 +98,7 @@ class ManagerMenu:
 
         adapter_menu = Gtk.Menu()
         self.item_adapter.set_submenu(adapter_menu)
+        self.item_adapter.props.sensitive = False
 
         search_item = create_menuitem(_("_Search"), get_icon("edit-find", 16))
         search_item.connect("activate", lambda x: self.blueman.inquiry())
