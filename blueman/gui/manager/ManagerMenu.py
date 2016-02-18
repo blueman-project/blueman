@@ -168,16 +168,6 @@ class ManagerMenu:
                 else:
                     self.Search.props.sensitive = True
 
-    def generate_adapter_menu(self):
-        menu = self.item_adapter.get_submenu()
-
-        # Remove and disconnect the existing adapter menu items
-        for adapter_path in list(self.adapter_items.keys()):
-            self.on_adapter_removed(None, adapter_path)
-
-        for adapter in self._manager.list_adapters():
-            self.on_adapter_added(None, adapter.get_object_path())
-
     def on_adapter_selected(self, menuitem, adapter_path):
         if menuitem.props.active:
             if adapter_path != self.blueman.List.Adapter.get_object_path():
