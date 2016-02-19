@@ -41,6 +41,7 @@ class Adapter(PropertiesBase):
     def remove_device(self, device):
         self._call('RemoveDevice', device.get_object_path())
 
+    # FIXME in BlueZ 5.31 getting and setting Alias appears to never fail
     def get_name(self):
         props = self.get_properties()
         try:
