@@ -181,7 +181,7 @@ class ManagerMenu:
         menu = self.item_adapter.get_submenu()
         object_path = adapter.get_object_path()
 
-        item = Gtk.RadioMenuItem.new_with_label(self._adapters_group, adapter['Alias'])
+        item = Gtk.RadioMenuItem.new_with_label(self._adapters_group, adapter.get_name())
         item.show()
         self._adapters_group = item.get_group()
 
