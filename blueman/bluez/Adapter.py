@@ -38,7 +38,8 @@ class Adapter(PropertiesBlueZInterface):
             devices = []
             for path, interfaces in objects.items():
                 if 'org.bluez.Device1' in interfaces:
-                    devices.append(path)
+                    if path.startswith(self.get_object_path()):
+                        devices.append(path)
             return [Device(device) for device in devices]
 
     @raise_dbus_error
