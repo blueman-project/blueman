@@ -28,7 +28,8 @@ class Adapter(PropertiesBase):
         devices = []
         for path, interfaces in objects.items():
             if 'org.bluez.Device1' in interfaces:
-                devices.append(path)
+                if path.startswith(self.get_object_path()):
+                    devices.append(path)
         return [Device(device) for device in devices]
 
     def start_discovery(self):
