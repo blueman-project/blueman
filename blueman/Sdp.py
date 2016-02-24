@@ -80,6 +80,8 @@ VIDEO_DISTRIBUTION_SVCLASS_ID = 0x1305
 HDP_SVCLASS_ID = 0x1400
 HDP_SOURCE_SVCLASS_ID = 0x1401
 HDP_SINK_SVCLASS_ID = 0x1402
+GENERIC_ACCESS_SVCLASS_ID = 0x1800
+GENERIC_ATTRIB_SVCLASS_ID = 0x1801
 APPLE_AGENT_SVCLASS_ID = 0x2112
 
 uuid_names = {}
@@ -184,6 +186,8 @@ uuid_names[0x1305] = "Video Distribution"
 uuid_names[0x1400] = "HDP"
 uuid_names[0x1401] = "HDP Source"
 uuid_names[0x1402] = "HDP Sink"
+uuid_names[0x1800] = "Generic Access Profile"
+uuid_names[0x1801] = "Generic Attribute Profile"
 uuid_names[0x2112] = "AppleAgent"
 
 SDP_ATTR_RECORD_HANDLE = 0x0000
