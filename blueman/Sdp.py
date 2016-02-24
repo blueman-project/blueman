@@ -13,6 +13,9 @@ try:
 except TypeError:
     translation.install()
 
+# https://www.bluetooth.com/specifications/assigned-numbers/service-discovery
+# http://git.kernel.org/cgit/bluetooth/bluez.git/tree/lib/sdp.h
+
 SDP_SERVER_SVCLASS_ID = 0x1000
 BROWSE_GRP_DESC_SVCLASS_ID = 0x1001
 PUBLIC_BROWSE_GROUP = 0x1002
