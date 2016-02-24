@@ -77,9 +77,9 @@ UPNP_L2CAP_SVCLASS_ID = 0x1302
 VIDEO_SOURCE_SVCLASS_ID = 0x1303
 VIDEO_SINK_SVCLASS_ID = 0x1304
 VIDEO_DISTRIBUTION_SVCLASS_ID = 0x1305
-MDP_SVCLASS_ID = 0x1400
-MDP_SOURCE_SVCLASS_ID = 0x1401
-MDP_SINK_SVCLASS_ID = 0x1402
+HDP_SVCLASS_ID = 0x1400
+HDP_SOURCE_SVCLASS_ID = 0x1401
+HDP_SINK_SVCLASS_ID = 0x1402
 APPLE_AGENT_SVCLASS_ID = 0x2112
 
 uuid_names = {}
@@ -181,9 +181,9 @@ uuid_names[0x1204] = "Generic Telephony"
 uuid_names[0x1303] = "Video Source"
 uuid_names[0x1304] = "Video Sink"
 uuid_names[0x1305] = "Video Distribution"
-uuid_names[0x1400] = "MDP"
-uuid_names[0x1401] = "MDPSource"
-uuid_names[0x1402] = "MDPSink"
+uuid_names[0x1400] = "HDP"
+uuid_names[0x1401] = "HDP Source"
+uuid_names[0x1402] = "HDP Sink"
 uuid_names[0x2112] = "AppleAgent"
 
 SDP_ATTR_RECORD_HANDLE = 0x0000
