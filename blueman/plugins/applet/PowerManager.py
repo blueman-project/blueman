@@ -59,7 +59,6 @@ class PowerManager(AppletPlugin):
         self.STATE_OFF_FORCED = 0
 
     def on_unload(self):
-        del self._any_adapter
         self.Applet.Plugins.Menu.Unregister(self)
 
     @property

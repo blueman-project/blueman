@@ -43,8 +43,6 @@ class SerialManager(AppletPlugin):
 
     scripts = {}
 
-    _any_device = None
-
     def on_load(self, applet):
         self.scripts = {}
 

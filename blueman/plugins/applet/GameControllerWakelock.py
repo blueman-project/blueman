@@ -21,8 +21,6 @@ class GameControllerWakelock(AppletPlugin):
     __author__ = "bwRavencl"
     __icon__ = "input-gaming"
 
-    _any_device = None
-
     def on_load(self, applet):
         self.wake_lock = 0
         self.root_window_id = "0x%x" % Gdk.Screen.get_default().get_root_window().get_xid()
@@ -31,7 +29,6 @@ class GameControllerWakelock(AppletPlugin):
         if self.wake_lock:
             self.wake_lock = 1
             self.xdg_screensaver("resume")
-        del self._any_device
 
     def on_device_property_changed(self, path, key, value):
         if key == "Connected":
