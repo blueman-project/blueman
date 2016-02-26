@@ -21,20 +21,33 @@ class Base(GObject):
         if instances is None:
             cls.__instances__ = instances = {}
 
-        if args:
-            path = args[0]
-        elif kwargs:
-            path = kwargs.get('obj_path')
-        else:
-            path = None
+        # ** Below argument parsing has to be kept in sync with _init **
+        path = None
+        interface_name = None
 
-        if cls._interface_name in  instances:
-            if path in instances[cls._interface_name]:
-                return instances[cls._interface_name][path]
+        if kwargs:
+            interface_name = kwargs.get('interface_name')
+            path = kwargs.get('obj_path')
+
+        if args:
+            for arg in args:
+                if args is None:
+                    continue
+                elif '/' in arg:
+                    path = arg
+                elif '.' in arg:
+                    interface_name = arg
+
+        if not interface_name:
+            interface_name = cls._interface_name
+
+        if interface_name in instances:
+            if path in instances[interface_name]:
+                return instances[interface_name][path]
 
         instance = super(Base, cls).__new__(cls)
         instance._init(*args, **kwargs)
-        cls.__instances__[cls._interface_name] = {path: instance}
+        cls.__instances__[interface_name] = {path: instance}
 
         return instance
 
