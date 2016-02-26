@@ -17,8 +17,10 @@ class Manager(Base):
         str('transfer-completed'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT)),
     }
 
-    def __init__(self):
-        super(Manager, self).__init__('org.freedesktop.DBus.ObjectManager', '/')
+    _interface_name = 'org.freedesktop.DBus.ObjectManager'
+
+    def _init(self):
+        super(Manager, self)._init(interface_name=self._interface_name, obj_path='/')
 
         self._transfers = {}
 

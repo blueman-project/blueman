@@ -12,8 +12,10 @@ import dbus
 
 
 class Adapter(PropertiesBase):
-    def __init__(self, obj_path=None):
-        super(Adapter, self).__init__('org.bluez.Adapter1', obj_path)
+    _interface_name = 'org.bluez.Adapter1'
+
+    def _init(self, obj_path=None):
+        super(Adapter, self)._init(interface_name=self._interface_name, obj_path=obj_path)
         proxy = dbus.SystemBus().get_object('org.bluez', '/', follow_name_owner_changes=True)
         self.manager_interface = dbus.Interface(proxy, 'org.freedesktop.DBus.ObjectManager')
 

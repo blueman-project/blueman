@@ -8,8 +8,10 @@ from blueman.bluez.PropertiesBase import PropertiesBase
 
 
 class Network(PropertiesBase):
-    def __init__(self, obj_path=None):
-        super(Network, self).__init__('org.bluez.Network1', obj_path)
+    _interface_name = 'org.bluez.Network1'
+
+    def _init(self, obj_path=None):
+        super(Network, self)._init(interface_name=self._interface_name, obj_path=obj_path)
 
     def connect(self, uuid, reply_handler=None, error_handler=None):
         self._call('Connect', uuid, reply_handler=reply_handler, error_handler=error_handler)

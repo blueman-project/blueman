@@ -3,8 +3,10 @@ from blueman.bluez.obex.Base import Base
 
 
 class Session(Base):
-    def __init__(self, session_path):
-        super(Session, self).__init__('org.freedesktop.DBus.Properties', session_path)
+    _interface_name = 'org.freedesktop.DBus.Properties'
+
+    def _init(self, session_path):
+        super(Session, self)._init(interface_name=self._interface_name, obj_path=session_path)
 
     @property
     def address(self):

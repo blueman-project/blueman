@@ -8,9 +8,10 @@ from blueman.bluez.Base import Base
 
 
 class AgentManager(Base):
-    def __init__(self):
-        interface = 'org.bluez.AgentManager1'
-        super(AgentManager, self).__init__(interface, '/org/bluez')
+    _interface_name = 'org.bluez.AgentManager1'
+
+    def _init(self):
+        super(AgentManager, self)._init(interface_name=self._interface_name, obj_path='/org/bluez')
 
     def register_agent(self, agent_path, capability='', default=False):
         self._call('RegisterAgent', agent_path, capability)

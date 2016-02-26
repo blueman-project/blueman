@@ -21,13 +21,15 @@ class Client(Base):
         str('session-removed'): (GObject.SignalFlags.NO_HOOKS, None, ()),
     }
 
-    def __init__(self):
+    _interface_name = 'org.bluez.obex.Client1'
+
+    def _init(self):
         obj = dbus.SessionBus().get_object('org.bluez.obex', '/')
         introspection = dbus.Interface(obj, 'org.freedesktop.DBus.Introspectable').Introspect()
         if 'org.freedesktop.DBus.ObjectManager' not in introspection:
             raise ObexdNotFoundError('Could not find any compatible version of obexd')
 
-        super(Client, self).__init__('org.bluez.obex.Client1', '/org/bluez/obex')
+        super(Client, self)._init(interface_name=self._interface_name, obj_path='/org/bluez/obex')
 
     def create_session(self, dest_addr, source_addr="00:00:00:00:00:00", pattern="opp"):
         def on_session_created(session_path):

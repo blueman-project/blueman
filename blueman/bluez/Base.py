@@ -16,7 +16,32 @@ class Base(GObject):
     __bus = dbus.SystemBus()
     __bus_name = 'org.bluez'
 
-    def __init__(self, interface_name, obj_path):
+    def __new__(cls, *args, **kwargs):
+        instances = cls.__dict__.get("__instances__")
+        if instances is None:
+            cls.__instances__ = instances = {}
+
+        if args:
+            path = args[0]
+        elif kwargs:
+            path = kwargs.get('obj_path')
+        else:
+            path = None
+
+        if cls._interface_name in  instances:
+            if path in instances[cls._interface_name]:
+                return instances[cls._interface_name][path]
+
+        instance = super(Base, cls).__new__(cls)
+        instance._init(*args, **kwargs)
+        cls.__instances__[cls._interface_name] = {path: instance}
+
+        return instance
+
+    def __init__(self, *args, **kwargs):
+        pass
+
+    def _init(self, interface_name, obj_path):
         self.__signals = []
         self.__obj_path = obj_path
         self.__interface_name = interface_name

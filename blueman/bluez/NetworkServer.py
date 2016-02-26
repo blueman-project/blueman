@@ -8,8 +8,10 @@ from blueman.bluez.PropertiesBase import PropertiesBase
 
 
 class NetworkServer(PropertiesBase):
-    def __init__(self, obj_path):
-        super(NetworkServer, self).__init__('org.bluez.NetworkServer1', obj_path)
+    _interface_name = 'org.bluez.NetworkServer1'
+
+    def _init(self, obj_path):
+        super(NetworkServer, self)._init(interface_name=self._interface_name, obj_path=obj_path)
 
     def register(self, uuid, bridge):
         self._call('Register', uuid, bridge)

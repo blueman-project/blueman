@@ -16,8 +16,10 @@ class Transfer(Base):
         str('error'): (GObject.SignalFlags.NO_HOOKS, None, ())
     }
 
-    def __init__(self, transfer_path):
-        super(Transfer, self).__init__('org.freedesktop.DBus.Properties', transfer_path)
+    _interface_name = 'org.freedesktop.DBus.Properties'
+
+    def _init(self, transfer_path):
+        super(Transfer, self)._init(interface_name=self._interface_name, obj_path=transfer_path)
         self._handle_signal(self._on_properties_changed, 'PropertiesChanged')
 
     def __getattr__(self, name):

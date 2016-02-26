@@ -16,8 +16,10 @@ class PropertiesBase(Base):
                                   (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT))
     }
 
-    def __init__(self, interface, obj_path):
-        super(PropertiesBase, self).__init__(interface, obj_path)
+    _interface_name = 'org.bluez.NetworkServer1'
+
+    def _init(self, interface_name, obj_path):
+        super(PropertiesBase, self)._init(interface_name=self._interface_name, obj_path=obj_path)
 
         self.__fallback = {'Icon': 'blueman', 'Class': None}
         self._handler_wrappers = {}
