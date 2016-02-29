@@ -26,6 +26,7 @@ gi.require_version("Gdk", "3.0")
 from gi.repository import Gdk
 from gi.repository import Gtk
 from gi.repository import GObject
+from gi.repository import GLib
 
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.obex.ObjectPush import ObjectPush
@@ -137,6 +138,15 @@ class Sender(Gtk.Dialog):
         self.show()
 
     def create_session(self):
+        def check():
+            if self.adapter.get_properties()['Discovering']:
+                return True
+            else:
+                self._do_create_session()
+                return False
+        GLib.timeout_add(1000, check)
+
+    def _do_create_session(self):
         dprint("Creating session")
         props = self.adapter.get_properties()
         self.client.create_session(self.device['Address'], props["Address"])

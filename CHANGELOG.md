@@ -12,6 +12,7 @@
 * Replace deprecated use of Gtk.VBox and Gtk.HBox.
 * Replace deprecated GtkTable with GtkGrid and also use it replace GtkBoxes used to layout.
 * [dhcp] udhcpd (busybox) support
+* [sendto] Do not try to send a file during a discovery
 
 ### Bugs fixed
 
