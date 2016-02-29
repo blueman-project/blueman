@@ -2,6 +2,10 @@
 
 ## 2-0-stable (unreleased)
 
+### Changes
+
+* Do not try to send a file during a discovery
+
 ### Bugs fixed
 
 * Listing rfcomm devices was broken
