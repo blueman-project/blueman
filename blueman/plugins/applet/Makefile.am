@@ -3,6 +3,7 @@ bluemandir = $(pythondir)/blueman/plugins/applet
 blueman_PYTHON = \
     __init__.py \
     AuthAgent.py \
+    AVRemote.py \
     DBusService.py \
     DhcpClient.py \
     DiscvManager.py \

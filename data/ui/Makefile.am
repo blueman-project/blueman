@@ -4,6 +4,7 @@ ui_DATA =				\
 	adapters-tab.ui		\
 	applet-passkey.ui	\
 	manager-main.ui		\
+	media-player.ui		\
 	device-list-widget.ui	\
 	services-network.ui \
 	services-transfer.ui	\

@@ -5,6 +5,7 @@ blueman_PYTHON =     		\
 	__init__.py 	   		\
 	AudioSink.py	    	\
 	AudioSource.py		    \
+	AVRemote.py             \
 	DialupNetwork.py    	\
 	Functions.py		\
 	GroupNetwork.py		    \

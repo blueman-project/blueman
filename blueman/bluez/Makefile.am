@@ -6,6 +6,7 @@ blueman_PYTHON =				\
 	Adapter.py					\
 	Agent.py					\
 	AgentManager.py				\
+	AVRemote.py					\
 	Base.py						\
 	Device.py					\
 	errors.py					\
