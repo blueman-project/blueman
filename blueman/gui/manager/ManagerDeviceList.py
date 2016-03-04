@@ -41,6 +41,7 @@ class ManagerDeviceList(DeviceList):
             # trusted/bonded icons
             # ["tb_icons", 'PyObject', CellRendererPixbufTable(), {"pixbuffs":5}, None],
 
+            ["alias", str], # used for quick access instead of device.GetProperties
             ["connected", bool], # used for quick access instead of device.GetProperties
             ["bonded", bool], # used for quick access instead of device.GetProperties
             ["trusted", bool], # used for quick access instead of device.GetProperties
@@ -235,7 +236,7 @@ class ManagerDeviceList(DeviceList):
         caption = self.make_caption(name, klass, address)
 
         # caption = "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" % {"0":name, "1":klass.capitalize(), "2":address}
-        self.set(tree_iter, caption=caption, orig_icon=icon)
+        self.set(tree_iter, caption=caption, orig_icon=icon, alias=name)
 
         try:
             self.row_update_event(tree_iter, "Trusted", device['Trusted'])
@@ -294,7 +295,7 @@ class ManagerDeviceList(DeviceList):
         elif key == "Alias":
             device = self.get(tree_iter, "device")["device"]
             c = self.make_caption(value, self.get_device_class(device), device['Address'])
-            self.set(tree_iter, caption=c)
+            self.set(tree_iter, caption=c, alias=value)
 
         elif key == "UUIDs":
             device = self.get(tree_iter, "device")["device"]
