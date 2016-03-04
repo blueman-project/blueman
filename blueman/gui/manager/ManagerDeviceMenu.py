@@ -263,11 +263,10 @@ class ManagerDeviceMenu(Gtk.Menu):
         self.append(send_item)
         send_item.show()
 
-        for uuid in device['UUIDs']:
-            uuid16 = uuid128_to_uuid16(uuid)
-            if uuid16 == OBEX_OBJPUSH_SVCLASS_ID:
-                send_item.connect("activate", lambda x: self.Blueman.send(device))
-                send_item.props.sensitive = True
+        has_objpush = self.Blueman.List.get(selected, "objpush")["objpush"]
+        if has_objpush:
+            send_item.connect("activate", lambda x: self.Blueman.send(device))
+            send_item.props.sensitive = True
 
         item = Gtk.SeparatorMenuItem()
         item.show()

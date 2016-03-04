@@ -6,7 +6,6 @@ from __future__ import unicode_literals
 
 from blueman.Constants import *
 from blueman.Functions import dprint
-from blueman.Sdp import *
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -76,7 +75,7 @@ class ManagerToolbar:
         dprint("toolbar adapter", adapter_path)
         if adapter_path is None:
             self.b_search.props.sensitive = False
-            self.update_send(None)
+            self.b_send.props.sensitive = False
         else:
             self.b_search.props.sensitive = True
 
@@ -87,7 +86,7 @@ class ManagerToolbar:
             self.b_trust.props.sensitive = False
             self.b_setup.props.sensitive = False
         else:
-            row = dev_list.get(tree_iter, "bonded", "trusted", "fake")
+            row = dev_list.get(tree_iter, "bonded", "trusted", "fake", "objpush")
             self.b_setup.props.sensitive = True
             if row["bonded"]:
                 self.b_bond.props.sensitive = False
@@ -111,21 +110,13 @@ class ManagerToolbar:
             else:
                 self.b_remove.props.sensitive = True
 
-        self.update_send(device)
-
-    def update_send(self, device):
-        self.b_send.props.sensitive = False
-        if device:
-            for uuid in device['UUIDs']:
-                uuid16 = uuid128_to_uuid16(uuid)
-                if uuid16 == OBEX_OBJPUSH_SVCLASS_ID:
-                    self.b_send.props.sensitive = True
+            if row["objpush"]:
+                self.b_send.props.sensitive = True
+            else:
+                self.b_send.props.sensitive = False
 
     def on_device_propery_changed(self, dev_list, device, tree_iter, key_value):
         key, value = key_value
         if dev_list.compare(tree_iter, dev_list.selected()):
-            if key == "Trusted" or key == "Paired":
+            if key == "Trusted" or key == "Paired" or key == "UUIDs":
                 self.on_device_selected(dev_list, device, tree_iter)
-
-            elif key == "UUIDs":
-                self.update_send(device)

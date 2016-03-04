@@ -18,6 +18,7 @@ from gi.repository import GObject
 from gi.repository import Pango
 from blueman.Constants import *
 from blueman.Functions import *
+from blueman.Sdp import *
 import cgi
 
 from blueman.gui.GtkAnimation import TreeRowColorFade, TreeRowFade, CellFade
@@ -45,6 +46,7 @@ class ManagerDeviceList(DeviceList):
             ["trusted", bool], # used for quick access instead of device.GetProperties
             ["fake", bool], # used for quick access instead of device.GetProperties,
             # fake determines whether device is "discovered" or a real bluez device
+            ["objpush", bool], # used to set Send File button
 
             ["rssi", float],
             ["lq", float],
@@ -202,7 +204,9 @@ class ManagerDeviceList(DeviceList):
             cell_fader = CellFade(self, self.props.model.get_path(tree_iter), [2, 3, 4])
             row_fader = TreeRowFade(self, self.props.model.get_path(tree_iter))
 
-            self.set(tree_iter, row_fader=row_fader, cell_fader=cell_fader, levels_visible=False)
+            has_objpush = self._has_objpush(device)
+
+            self.set(tree_iter, row_fader=row_fader, cell_fader=cell_fader, levels_visible=False, objpush=has_objpush)
 
             cell_fader.freeze()
 
@@ -291,6 +295,11 @@ class ManagerDeviceList(DeviceList):
             device = self.get(tree_iter, "device")["device"]
             c = self.make_caption(value, self.get_device_class(device), device['Address'])
             self.set(tree_iter, caption=c)
+
+        elif key == "UUIDs":
+            device = self.get(tree_iter, "device")["device"]
+            has_objpush = self._has_objpush(device)
+            self.set(tree_iter, objpush=has_objpush)
 
     def level_setup_event(self, row_ref, device, cinfo):
         def rnd(value):
@@ -466,4 +475,14 @@ class ManagerDeviceList(DeviceList):
                     self.tooltip_row = path[0]
                     self.tooltip_col = path[1]
                     return True
+        return False
+
+    def _has_objpush(self, device):
+        if device is None:
+            return False
+
+        for uuid in device["UUIDs"]:
+            uuid16 = uuid128_to_uuid16(uuid)
+            if uuid16 == OBEX_OBJPUSH_SVCLASS_ID:
+                return True
         return False
