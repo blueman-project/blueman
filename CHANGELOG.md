@@ -9,6 +9,7 @@
 * Close confirmation dialog on cancelation
 * Handle transfer errors correctly
 * Show devices of the current adapter only
+* Local network service did not work
 
 ## 2.0.3
 

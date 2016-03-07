@@ -11,7 +11,7 @@ from gi.repository import GObject
 from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler
 
 DHCPDHANDLERS = {"DnsMasqHandler": DnsMasqHandler,
-                 "DhcpdHandler": DhcpdHandler},
+                 "DhcpdHandler": DhcpdHandler}
 
 class Network(MechanismPlugin):
     @dbus.service.method('org.blueman.Mechanism', in_signature="s", out_signature="s", sender_keyword="caller",
