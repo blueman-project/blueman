@@ -1,5 +1,15 @@
 # Changelog
 
+## 2-0-stable (unreleased)
+
+### Bugs fixed
+
+* Listing rfcomm devices was broken
+* Serial devices where not properly disconnected
+* Close confirmation dialog on cancelation
+* Handle transfer errors correctly
+* Show devices of the current adapter only
+
 ## 2.0.3
 
 Fix privilege escalation
