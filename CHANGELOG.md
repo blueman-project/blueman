@@ -10,6 +10,9 @@
 * Handle transfer errors correctly
 * Show devices of the current adapter only
 * Local network service did not work
+* PyGI warnings
+* Call custom scripts for serial services
+* Disconnect serial services on device disconnect
 
 ## 2.0.3
 
