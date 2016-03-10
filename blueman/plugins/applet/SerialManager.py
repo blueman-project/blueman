@@ -98,7 +98,7 @@ class SerialManager(AppletPlugin):
         if c and c != "":
             args = c.split(" ")
             try:
-                args += [address, name, sv_name, ",".join(map(lambda x: hex(x), uuid16)), node]
+                args += [address, name, sv_name, "%s" % hex(uuid16), node]
                 dprint(args)
                 p = Popen(args, preexec_fn=lambda: os.setpgid(0, 0))
 
@@ -148,8 +148,9 @@ class SerialManager(AppletPlugin):
             try:
                 dprint("Disconnecting", name)
                 serial_services[0].disconnect(port)
-            except:
+            except Exception as e:
                 dprint("Failed to disconnect", name)
+                dprint(e)
 
 
 @atexit.register
