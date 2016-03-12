@@ -6,12 +6,11 @@ from __future__ import unicode_literals
 
 import os
 import weakref
-from gi.repository import GLib
+from gi.repository import GLib, Gio
 import struct
 import logging
 
 from blueman.main.Mechanism import Mechanism
-
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.plugins.applet.StatusIcon import StatusIcon
 
@@ -58,6 +57,10 @@ class KillSwitch(AppletPlugin):
     _hardblocked = False
 
     def on_load(self, applet):
+        self._connman_proxy = None
+        self._connman_watch_id = Gio.bus_watch_name(Gio.BusType.SYSTEM, "net.connman", Gio.BusNameWatcherFlags.NONE,
+                                                    self._on_connman_appeared, self._on_connman_vanished)
+
         self._fd = os.open('/dev/rfkill', os.O_RDONLY | os.O_NONBLOCK)
 
         ref = weakref.ref(self)
@@ -65,10 +68,27 @@ class KillSwitch(AppletPlugin):
                                       lambda *args: ref() and ref().io_event(*args))
 
     def on_unload(self):
+        Gio.bus_unwatch_name(self._connman_watch_id)
+        self._connman_proxy = None
         if self._iom:
             GLib.source_remove(self._iom)
         if self._fd:
             os.close(self._fd)
+
+    def _on_connman_appeared(self, connection, name, owner):
+        logging.info("%s appeared" % name)
+        self._connman_proxy = Gio.DBusProxy.new_for_bus_sync(
+            Gio.BusType.SYSTEM,
+            Gio.DBusProxyFlags.DO_NOT_AUTO_START,
+            None,
+            'net.connman',
+            '/net/connman/technology/bluetooth',
+            'net.connman.Technology',
+            None)
+
+    def _on_connman_vanished(self, connection, name):
+        logging.info("%s vanished" % name)
+        self._connman_proxy = None
 
     def io_event(self, _, condition):
         if condition & GLib.IO_ERR or condition & GLib.IO_HUP:
@@ -126,7 +146,13 @@ class KillSwitch(AppletPlugin):
         def error(*_):
             cb(False)
 
-        Mechanism().SetRfkillState(str('(b)'), state, result_handler=reply, error_handler=error)
+        if self._connman_proxy:
+            logging.debug("Using connman to set state: %s" % state)
+            self._connman_proxy.SetProperty(str('(sv)'), 'Powered', GLib.Variant.new_boolean(state),
+                                            result_handler=reply, error_handler=error)
+        else:
+            logging.debug("Using mechanism to set state: %s" % state)
+            Mechanism().SetRfkillState(str('(b)'), state, result_handler=reply, error_handler=error)
 
     def on_query_status_icon_visibility(self):
         # Force status icon to show if bluetooth is soft-blocked
