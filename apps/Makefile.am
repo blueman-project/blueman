@@ -16,5 +16,9 @@ polkit_SCRIPTS = 	\
 
 helpersdir = $(libexecdir)
 helpers_SCRIPTS = blueman-rfcomm-watcher
+
+ALL_APPS = $(APPS) $(polkit_SCRIPTS) $(helpers_SCRIPTS)
 	
-EXTRA_DIST = $(APPS) blueman-mechanism blueman-rfcomm-watcher
+EXTRA_DIST = $(ALL_APPS) $(addsuffix .in, $(ALL_APPS))
+
+CLEANFILES = $(ALL_APPS)

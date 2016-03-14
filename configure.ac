@@ -21,6 +21,7 @@ AC_ENABLE_STATIC(no)
 AM_PATH_PYTHON([2.7])
 PYTHON_MAJOR_VERSION="$(echo ${PYTHON_VERSION} | cut -d . -f 1)"
 PYTHON_MINOR_VERSION="$(echo ${PYTHON_VERSION} | cut -d . -f 2)"
+AC_SUBST(PYTHON_MAJOR_VERSION)
 
 if [test ${PYTHON_MAJOR_VERSION} -eq 3] && [test ${PYTHON_MINOR_VERSION} -lt 2];then
 	AC_MSG_ERROR([Unsupported Python 3 version found (>=3.2 required)])
@@ -198,6 +199,15 @@ GLIB_GSETTINGS
 
 AC_OUTPUT([
 Makefile
+apps/blueman-adapters
+apps/blueman-applet
+apps/blueman-assistant
+apps/blueman-manager
+apps/blueman-mechanism
+apps/blueman-report
+apps/blueman-rfcomm-watcher
+apps/blueman-sendto
+apps/blueman-services
 apps/Makefile
 blueman/Makefile
 blueman/Constants.py
@@ -259,6 +269,7 @@ data/configs/blueman-applet.service
 data/configs/blueman-mechanism.service
 data/configs/org.blueman.Applet.service
 data/configs/org.blueman.Mechanism.service
+module/_blueman.pyx
 module/Makefile
 po/Makefile.in
 ])
