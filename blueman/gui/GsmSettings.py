@@ -37,7 +37,7 @@ class GsmSettings(Gtk.Dialog):
 
         a = self.get_content_area()
         a.pack_start(gsm_grid, True, True, 0)
-        gsm_frid.show()
+        gsm_grid.show()
 
         self.e_apn = self.Builder.get_object("e_apn")
         self.e_number = self.Builder.get_object("e_number")
