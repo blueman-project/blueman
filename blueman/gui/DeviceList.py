@@ -16,6 +16,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import GObject
 from gi.repository import GLib
+from datetime import datetime
 import os
 import re
 
@@ -93,7 +94,8 @@ class DeviceList(GenericList):
 
         data = data + [
             ["device", object],
-            ["dbus_path", str]
+            ["dbus_path", str],
+            ["timestamp", float]
         ]
 
         super(DeviceList, self).__init__(data)
@@ -281,8 +283,9 @@ class DeviceList(GenericList):
         self.row_setup_event(tree_iter, device)
 
         object_path = device.get_object_path()
+        timestamp = datetime.strftime(datetime.now(), '%Y%m%d%H%M%S%f')
         try:
-            self.set(tree_iter, dbus_path=object_path)
+            self.set(tree_iter, dbus_path=object_path, timestamp=float(timestamp))
         except:
             pass
 
