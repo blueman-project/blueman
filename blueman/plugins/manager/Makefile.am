@@ -4,7 +4,8 @@ SUBDIRS =
 bluemandir = $(pythondir)/blueman/plugins/manager
 
 blueman_PYTHON = \
-	Services.py \
+	Info.py		\
+	Services.py	\
 	__init__.py
 
 if HAVE_PULSEAUDIO

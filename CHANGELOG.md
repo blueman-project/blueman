@@ -1,6 +1,10 @@
 # Changelog
 
-## master
+## master (unreleased)
+
+### New features
+
+* Information dialog on device's services
 
 ### Changes
 
