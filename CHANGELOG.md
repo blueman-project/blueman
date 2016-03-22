@@ -1,6 +1,6 @@
 # Changelog
 
-## 2-0-stable (unreleased)
+## 2.0.4
 
 ### Changes
 
