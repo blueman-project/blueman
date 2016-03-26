@@ -207,10 +207,7 @@ class ManagerDeviceList(DeviceList):
         row_fader.animate(start=row_fader.get_state(), end=0.0, duration=400)
 
     def device_add_event(self, device):
-        if self.Blueman.Config["latest-last"]:
-            self.add_device(device, append=True)
-        else:
-            self.add_device(device, append=False)
+        self.add_device(device)
 
     def make_caption(self, name, klass, address):
         return "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" % {"0": cgi.escape(name), "1": klass.capitalize(), "2": address}

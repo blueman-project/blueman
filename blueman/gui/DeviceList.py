@@ -192,9 +192,8 @@ class DeviceList(GenericList):
         pass
 
     #called when device needs to be added to the list
-    #default action: append
     def device_add_event(self, device):
-        self.add_device(device, append=True)
+        self.add_device(device)
 
     def device_remove_event(self, device, tree_iter):
         dprint(device)
@@ -268,16 +267,13 @@ class DeviceList(GenericList):
         self.emit("discovery-progress", progress)
         return True
 
-    def add_device(self, device, append=True):
+    def add_device(self, device):
         #device belongs to another adapter
         if not device['Adapter'] == self.Adapter.get_object_path():
             return
 
         dprint("adding new device")
-        if append:
-            tree_iter = self.liststore.append()
-        else:
-            tree_iter = self.liststore.prepend()
+        tree_iter = self.liststore.append()
 
         self.set(tree_iter, device=device)
         self.row_setup_event(tree_iter, device)

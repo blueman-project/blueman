@@ -105,21 +105,6 @@ class ManagerMenu:
         else:
             self._sort_type_item.props.active = True
 
-        group = []
-
-        itemf = Gtk.RadioMenuItem.new_with_mnemonic(group, _("Latest Device _First"))
-        itemf.show()
-        group = itemf.get_group()
-        view_menu.append(itemf)
-
-        iteml = Gtk.RadioMenuItem.new_with_mnemonic(group, _("Latest Device _Last"))
-        iteml.show()
-        group = iteml.get_group()
-        view_menu.append(iteml)
-
-        itemf.connect("activate", lambda x: self.blueman.Config.set_boolean("latest-last", not x.props.active))
-        iteml.connect("activate", lambda x: self.blueman.Config.set_boolean("latest-last", x.props.active))
-
         sep = Gtk.SeparatorMenuItem()
         sep.show()
         view_menu.append(sep)
