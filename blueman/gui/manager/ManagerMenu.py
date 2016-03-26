@@ -5,6 +5,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 import blueman.bluez as bluez
+from blueman.main.Config import Config
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.gui.CommonUi import *
 
@@ -17,6 +18,7 @@ from gi.repository import GLib
 class ManagerMenu:
     def __init__(self, blueman):
         self.blueman = blueman
+        self.Config = Config("org.blueman.general")
 
         self.adapter_items = {}
         self._adapters_group = []
@@ -65,6 +67,43 @@ class ManagerMenu:
         item_services = Gtk.SeparatorMenuItem()
         view_menu.append(item_services)
         item_services.show()
+
+        sorting_group = []
+        item_sort = Gtk.MenuItem.new_with_mnemonic(_("S_ort By"))
+        view_menu.append(item_sort)
+        item_sort.show()
+
+        sorting_menu = Gtk.Menu()
+        item_sort.set_submenu(sorting_menu)
+
+        self._sort_alias_item = Gtk.RadioMenuItem.new_with_mnemonic(sorting_group, _("_Name"))
+        self._sort_alias_item.show()
+        sorting_group = self._sort_alias_item.get_group()
+        sorting_menu.append(self._sort_alias_item)
+
+        self._sort_timestamp_item = Gtk.RadioMenuItem.new_with_mnemonic(sorting_group, _("_Added"))
+        self._sort_timestamp_item.show()
+        sorting_group = self._sort_timestamp_item.get_group()
+        sorting_menu.append(self._sort_timestamp_item)
+
+        sort_config = self.Config['sort-by']
+        if sort_config == "alias":
+            self._sort_alias_item.props.active = True
+        else:
+            self._sort_timestamp_item.props.active = True
+
+        sort_sep = Gtk.SeparatorMenuItem()
+        sort_sep.show()
+        sorting_menu.append(sort_sep)
+
+        self._sort_type_item = Gtk.CheckMenuItem.new_with_mnemonic(_("_Descending"))
+        self._sort_type_item.show()
+        sorting_menu.append(self._sort_type_item)
+
+        if self.Config['sort-order'] == "ascending":
+            self._sort_type_item.props.active = False
+        else:
+            self._sort_type_item.props.active = True
 
         group = []
 
@@ -144,6 +183,40 @@ class ManagerMenu:
             self.on_adapter_added(None, adapter.get_object_path())
 
         self.device_menu = None
+
+        self.Config.connect("changed", self._on_settings_changed)
+        self._sort_alias_item.connect("activate", self._on_sorting_changed, "alias")
+        self._sort_timestamp_item.connect("activate", self._on_sorting_changed, "timestamp")
+        self._sort_type_item.connect("activate", self._on_sorting_changed, "sort-type")
+
+    def _on_sorting_changed(self, btn, sort_opt):
+        if sort_opt == 'alias' and btn.props.active:
+            self.Config['sort-by'] = "alias"
+        elif sort_opt == "timestamp" and btn.props.active:
+            self.Config['sort-by'] = "timestamp"
+        elif sort_opt == 'sort-type':
+            # FIXME bind widget to gsetting
+            if btn.props.active:
+                self.Config["sort-order"] = "descending"
+            else:
+                self.Config["sort-order"] = "ascending"
+
+    def _on_settings_changed(self, settings, key):
+        value = settings[key]
+        if key == 'sort-by':
+            if value == "alias":
+                if not self._sort_alias_item.props.active:
+                    self._sort_alias_item.props.active = True
+            elif value == "timestamp":
+                if not self._sort_timestamp_item.props.active:
+                    self._sort_timestamp_item.props.active = True
+        elif key == "sort-type":
+            if value == "ascending":
+                if not self._sort_type_item.props.active:
+                    self._sort_type_item.props.active = True
+            else:
+                if not self._sort_type_item.props.active:
+                    self._sort_type_item.props.active = False
 
     def on_device_selected(self, List, device, tree_iter):
         if tree_iter and device:
