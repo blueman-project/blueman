@@ -106,6 +106,9 @@ def check_bluetooth_status(message, exitfunc, *args, **kwargs):
                 exitfunc()
             else:
                 applet.SetBluetoothStatus(True, *args, **kwargs)
+                if not applet.GetBluetoothStatus():
+                    print('Failed to enable bluetooth')
+                    exitfunc()
 
 
 def wait_for_adapter(bluez_adapter, callback, timeout=1000):
