@@ -27,6 +27,15 @@
     </defaults>
   </action>
 
+  <action id="org.blueman.pppd.pppconnect">
+    <_description>Launch PPP daemon</_description>
+    <_message>Launching PPP daemon requires privileges</_message>
+    <defaults>
+      <allow_inactive>no</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+  </action>
+
   <action id="org.blueman.rfkill.setstate">
     <_description>Set RfKill State</_description>
     <_message>Setting RfKill State requires privileges</_message>

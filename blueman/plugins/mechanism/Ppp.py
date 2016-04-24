@@ -22,6 +22,7 @@ class Ppp(MechanismPlugin):
     @dbus.service.method('org.blueman.Mechanism', in_signature="sss", out_signature="s", sender_keyword="caller",
                          async_callbacks=("ok", "err"))
     def PPPConnect(self, port, number, apn, caller, ok, err):
+        self.confirm_authorization(caller, "org.blueman.pppd.pppconnect")
         self.timer.stop()
         from blueman.main.PPPConnection import PPPConnection
 
