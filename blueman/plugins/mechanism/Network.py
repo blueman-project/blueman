@@ -53,6 +53,7 @@ class Network(MechanismPlugin):
     @dbus.service.method('org.blueman.Mechanism', in_signature="ayays", out_signature="", sender_keyword="caller",
                          byte_arrays=True)
     def EnableNetwork(self, ip_address, netmask, dhcp_handler, caller):
+        self.confirm_authorization(caller, "org.blueman.network.setup")
         nc = NetConf.get_default()
         nc.set_ipv4(ip_address, netmask)
         nc.set_dhcp_handler(DHCPDHANDLERS[dhcp_handler])
@@ -60,11 +61,13 @@ class Network(MechanismPlugin):
 
     @dbus.service.method('org.blueman.Mechanism', in_signature="", out_signature="", sender_keyword="caller")
     def ReloadNetwork(self, caller):
+        self.confirm_authorization(caller, "org.blueman.network.setup")
         nc = NetConf.get_default()
         nc.apply_settings()
 
     @dbus.service.method('org.blueman.Mechanism', in_signature="", out_signature="", sender_keyword="caller")
     def DisableNetwork(self, caller):
+        self.confirm_authorization(caller, "org.blueman.network.setup")
         nc = NetConf.get_default()
         nc.remove_settings()
         nc.set_ipv4(None, None)
