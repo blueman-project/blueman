@@ -137,6 +137,9 @@ class Blueman(Gtk.Window):
                 if x and y: self.move(x, y)
 
                 sw = self.Builder.get_object("scrollview")
+                # Disable overlay scrolling
+                if Gtk.get_minor_version() >= 16:
+                    sw.props.overlay_scrolling = False
 
                 self.List = ManagerDeviceList(adapter=self.Config["last-adapter"], inst=self)
 

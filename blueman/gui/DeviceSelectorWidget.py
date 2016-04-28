@@ -27,6 +27,10 @@ class DeviceSelectorWidget(Gtk.Box):
         self.set_size_request(360, 340)
 
         sw = Gtk.ScrolledWindow()
+        # Disable overlay scrolling
+        if Gtk.get_minor_version() >= 16:
+            sw.props.overlay_scrolling = False
+
         self.List = devlist = DeviceSelectorList(adapter)
         if self.List.Adapter is not None:
             self.List.DisplayKnownDevices()

@@ -163,7 +163,15 @@ class PluginDialog(Gtk.Dialog):
         self.props.border_width = 6
         self.resize(490, 380)
 
-        self.Builder.get_object("viewport").add(self.list)
+        viewport = self.Builder.get_object("viewport")
+        viewport.add(self.list)
+
+        sw = self.Builder.get_object("main_scrolled_window")
+
+        # Disable overlay scrolling
+        if Gtk.get_minor_version() >= 16:
+            viewport.props.overlay_scrolling = False
+            sw.props.overlay_scrolling = False
 
         self.populate()
 
