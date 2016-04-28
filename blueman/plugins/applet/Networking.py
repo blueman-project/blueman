@@ -78,4 +78,4 @@ class Networking(AppletPlugin):
                     self._registered[object_path] = True
                 elif not on and registered:
                     s.unregister("nap")
-                    self._registerd[object_path] = False
+                    self._registered[object_path] = False
