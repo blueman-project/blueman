@@ -21,7 +21,7 @@ Please use the GitHub issue tracker for bugs and questions.
 
 See [Dependencies.md](Dependencies.md) for a list of build and runtime dependencies.
 
-To install a packaged release of blueman, run `./configure && make && make install`.
+To install a packaged release of blueman, run `./configure && make && sudo make install`.
 
 To generate and run a configure script from source, run `./autogen.sh`.
 
