@@ -3,5 +3,6 @@ Description=Bluetooth management mechanism
 
 [Service]
 Type=dbus
+KillMode=process
 BusName=org.blueman.Mechanism
 ExecStart=@LIBEXECDIR@/blueman-mechanism
