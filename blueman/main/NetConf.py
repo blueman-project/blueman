@@ -299,7 +299,7 @@ class NetConf(object):
             NetConf.default_inst = obj
             f.close()
             return obj
-        except IOError:
+        except (IOError, UnicodeDecodeError):
             n = cls()
             try:
                 n.store()
