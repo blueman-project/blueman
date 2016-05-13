@@ -167,10 +167,18 @@ class Notification(object):
     def actions_supported():
         return "actions" in Notify.get_server_caps()
 
+    @staticmethod
+    def body_supported():
+        return "body" in Notify.get_server_caps()
+
     def __new__(cls, summary, message, timeout=-1, actions=None, actions_cb=None, pixbuf=None, status_icon=None):
-        if not Config('org.blueman.general')['notification-daemon'] or (actions and not cls.actions_supported()):
-            # Use fallback as user does not want to use a notification daemon or we have to show actions and the
-            # notification daemon does not provide them
+        forced_fallback = not Config('org.blueman.general')['notification-daemon']
+
+        if forced_fallback or not cls.body_supported() or (actions and not cls.actions_supported()):
+            # Use fallback in the case:
+            # * user does not want to use a notification daemon
+            # * the notification daemon is not available
+            # * we have to show actions and the notification daemon does not provide them
             klass = _NotificationDialog
         else:
             klass = _NotificationBubble
