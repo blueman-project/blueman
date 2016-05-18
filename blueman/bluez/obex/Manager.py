@@ -79,5 +79,5 @@ class Manager(GObject.GObject):
 
     @classmethod
     def watch_name_owner(cls, appeared_handler, vanished_handler):
-        Gio.bus_watch_name(Gio.BusType.SYSTEM, cls.__bus_name, Gio.BusNameWatcherFlags.AUTO_START,
+        Gio.bus_watch_name(Gio.BusType.SESSION, cls.__bus_name, Gio.BusNameWatcherFlags.AUTO_START,
                            appeared_handler, vanished_handler)
