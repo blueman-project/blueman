@@ -46,7 +46,8 @@ introspection_xml = \
 '''
 
 class Agent(object):
-    __bus = Gio.bus_get_sync(Gio.BusType.SYSTEM)
+    __bus_type = Gio.BusType.SYSTEM
+    __bus = Gio.bus_get_sync(__bus_type)
 
     def __init__(self, agent_path, handle_method_call):
         node_info = Gio.DBusNodeInfo.new_for_xml(introspection_xml)
@@ -61,7 +62,7 @@ class Agent(object):
         if regid:
             self.__regid = regid
         else:
-            raise GLib.Error('Failed to register object with path: %s', agent_path)
+            raise GLib.Error('Failed to register object with path: %s' % agent_path)
 
     def __del__(self):
         self._unregister_object()
