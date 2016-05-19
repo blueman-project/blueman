@@ -7,40 +7,17 @@ from gi.repository import GObject, Gio
 from blueman.Functions import dprint
 
 from blueman.bluez.Adapter import Adapter
+from blueman.bluez.ManagerBase import ManagerBase
 from blueman.bluez.errors import DBusNoSuchAdapterError
 
 
-class Manager(GObject.GObject):
+class Manager(ManagerBase):
     __gsignals__ = {
         str('adapter-added'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
         str('adapter-removed'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
         str('device-created'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
         str('device-removed'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
     }
-
-    connect_signal = GObject.GObject.connect
-    disconnect_signal = GObject.GObject.disconnect
-
-    __bus_name = 'org.bluez'
-    _instance = None
-
-    def __new__(cls, *args, **kwargs):
-        if not cls._instance:
-            cls._instance = super(Manager, cls).__new__(cls)
-            cls._instance._init(*args, **kwargs)
-        return cls._instance
-
-    def __init__(self, *args, **kwargs):
-        pass
-
-    def _init(self):
-        super(Manager, self).__init__()
-        self._object_manager = Gio.DBusObjectManagerClient.new_for_bus_sync(
-            Gio.BusType.SYSTEM, Gio.DBusObjectManagerClientFlags.NONE,
-            self.__bus_name, '/', None, None, None)
-
-        self._object_manager.connect("object-added", self._on_object_added)
-        self._object_manager.connect("object-removed", self._on_object_removed)
 
     def _on_object_added(self, object_manager, dbus_object):
         device_proxy = dbus_object.get_interface('org.bluez.Device1')
@@ -91,8 +68,3 @@ class Manager(GObject.GObject):
         # If the given - or any - adapter does not exist, raise the NoSuchAdapter
         # error BlueZ 4's DefaultAdapter and FindAdapter methods trigger
         raise DBusNoSuchAdapterError('No such adapter')
-
-    @classmethod
-    def watch_name_owner(cls, appeared_handler, vanished_handler):
-        Gio.bus_watch_name(Gio.BusType.SYSTEM, cls.__bus_name, Gio.BusNameWatcherFlags.AUTO_START,
-                           appeared_handler, vanished_handler)

@@ -6,46 +6,24 @@ from __future__ import unicode_literals
 
 from blueman.Functions import dprint
 from blueman.bluez.obex.Transfer import Transfer
+from blueman.bluez.ManagerBase import ManagerBase
 from gi.repository import GObject, Gio
 
 
-class Manager(GObject.GObject):
+class Manager(ManagerBase):
     __gsignals__ = {
         str('session-removed'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
         str('transfer-started'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
         str('transfer-completed'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT)),
     }
 
-    connect_signal = GObject.GObject.connect
-    disconnect_signal = GObject.GObject.disconnect
-
     __bus_name = 'org.bluez.obex'
-    _instance = None
-
-    def __new__(cls, *args, **kwargs):
-        if not cls._instance:
-            cls._instance = super(Manager, cls).__new__(cls)
-            cls._instance._init(*args, **kwargs)
-        return cls._instance
-
-    def __init__(self, *args, **kwargs):
-        pass
+    __bus_type = Gio.BusType.SESSION
 
     def _init(self):
-        super(Manager, self).__init__()
+        super(Manager, self)._init()
         self.__transfers = {}
         self.__signals = []
-
-        self._object_manager = Gio.DBusObjectManagerClient.new_for_bus_sync(
-            Gio.BusType.SYSTEM, Gio.DBusObjectManagerClientFlags.NONE,
-            self.__bus_name, '/', None, None, None)
-
-        self.__signals.append(self._object_manager.connect('object-added', self._on_object_added))
-        self.__signals.append(self._object_manager.connect('object-removed', self._on_object_removed))
-
-    def __del__(self):
-        for sig in self.__signals:
-            self._object_manager.disconnect(sig)
 
     def _on_object_added(self, object_manager, dbus_object):
         transfer_proxy = dbus_object.get_interface('org.bluez.obex.Transfer1')
@@ -76,8 +54,3 @@ class Manager(GObject.GObject):
 
         dprint(transfer_path, success)
         self.emit('transfer-completed', transfer_path, success)
-
-    @classmethod
-    def watch_name_owner(cls, appeared_handler, vanished_handler):
-        Gio.bus_watch_name(Gio.BusType.SESSION, cls.__bus_name, Gio.BusNameWatcherFlags.AUTO_START,
-                           appeared_handler, vanished_handler)
