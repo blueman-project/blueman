@@ -7,6 +7,8 @@ from __future__ import unicode_literals
 from gi.repository import GObject, Gio, GLib
 from blueman.Functions import dprint
 from blueman.bluez.Base import Base
+from blueman.bluez.errors import BluezDBusException
+
 import sys
 
 class PropertiesBase(Base):
@@ -40,17 +42,14 @@ class PropertiesBase(Base):
             self.emit("property-changed", key, value, path)
 
     def get(self, name):
-        param = GLib.Variant('(ss)', (self._interface_name, name))
-        try:
-            prop = self._call('Get', param, True)[0]
-        # FIXME catch specific error GLib.Error which fails here for unknown reason
-        except Exception as e:
-            if name in self.__fallback:
-                prop = self.__fallback[name]
-            else:
-                raise e
+        prop = self._dbus_proxy.get_cached_property(name)
 
-        return prop
+        if prop is not None:
+            return prop.unpack()
+        elif not prop and name in self.__fallback:
+            return self.__fallback[name]
+        else:
+            raise BluezDBusException("No such property '%s'" % name)
 
     def set(self, name, value):
         v = GLib.Variant(self.__variant_map[type(value)], value)
@@ -58,14 +57,17 @@ class PropertiesBase(Base):
         self._call('Set', param, True)
 
     def get_properties(self):
-        param = GLib.Variant('(s)', (self._interface_name,))
-        result = self._call('GetAll', param, True)
+        prop_names = self._dbus_proxy.get_cached_property_names()
+        result = {}
+        for name in prop_names:
+            result[name] = self._dbus_proxy.get_cached_property(name).unpack()
+
         if result:
             for k, v in self.__fallback.items():
-                if k in result[0]: continue
-                else: result[0][k] = v
+                if k in result: continue
+                else: result[k] = v
 
-            return result[0]
+            return result
 
     def __getitem__(self, key):
         return self.get(key)
