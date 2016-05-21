@@ -17,6 +17,19 @@
 * Replace deprecated GtkTable with GtkGrid and also use it replace GtkBoxes used to layout.
 * [dhcp] udhcpd (busybox) support
 * [sendto] Do not try to send a file during a discovery
+* Migrate the BlueZ classes from dbus-python to GDBus
+* Limit who can run blueman's mechanism with polkit
+* Use GtkListStore builtin sorting functionality
+* Turn the BlueZ classes into singletons
+* Update Sdp class id's
+* Rework Adapter menu in ManagerMenu
+* Rework and cleanup DeviceList class
+* Drop headset service and plugin
+* Merge the two property changed functions in PropertiesBase
+* Remove main.Device
+* Fix building with musl libc
+* Add generic device-added/removed functions for plugins
+
 
 ### Bugs fixed
 
@@ -34,6 +47,11 @@
 * Do not block manager with plugin dialog
 * Exception in Tee class at exit
 * Stop dhcpd handler removing all content of the config file
+* Set killmode in mechanism service so systemd does not kill DHCP handlers
+* Only return devices belonging to adapter
+* Fix SerialManager plugin
+* Close Notification when pait is successful
+
 
 ## 2.0
 
