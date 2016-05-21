@@ -200,7 +200,7 @@ def get_minor_class(klass, i18n=False):
             return ""
     elif i == 2:
         minor_index = (klass >> 2) & 0x3F
-        if (minor_index < len(phone_minor_cls)):
+        if minor_index < len(phone_minor_cls):
             if i18n:
                 return phone_minor_cls_i18n[minor_index]
             else:
@@ -208,13 +208,13 @@ def get_minor_class(klass, i18n=False):
         return ""
     elif i == 3:
         minor_index = (klass >> 5) & 0x07
-        if (minor_index < len(access_point_minor_cls)):
+        if minor_index < len(access_point_minor_cls):
             return access_point_minor_cls[minor_index]
         else:
             return ""
     elif i == 4:
         minor_index = (klass >> 2) & 0x3F
-        if (minor_index < len(audio_video_minor_cls)):
+        if minor_index < len(audio_video_minor_cls):
             if i18n:
                 return audio_video_minor_cls_i18n[minor_index]
             else:
@@ -223,7 +223,7 @@ def get_minor_class(klass, i18n=False):
             return ""
     elif i == 5:
         minor_index = (klass >> 6) & 0x03
-        if (minor_index < len(peripheral_minor_cls)):
+        if minor_index < len(peripheral_minor_cls):
             if i18n:
                 return peripheral_minor_cls_i18n[minor_index]
             else:
@@ -235,13 +235,13 @@ def get_minor_class(klass, i18n=False):
 
     elif i == 7:
         minor_index = (klass >> 2) & 0x3F
-        if (minor_index < len(wearable_minor_cls)):
+        if minor_index < len(wearable_minor_cls):
             return wearable_minor_cls[minor_index]
         else:
             return ""
     elif i == 8:
         minor_index = (klass >> 2) & 0x3F
-        if (minor_index < len(toy_minor_cls)):
+        if minor_index < len(toy_minor_cls):
             return toy_minor_cls[minor_index]
         else:
             return ""
