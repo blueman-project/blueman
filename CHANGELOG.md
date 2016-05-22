@@ -47,10 +47,9 @@
 * Do not block manager with plugin dialog
 * Exception in Tee class at exit
 * Stop dhcpd handler removing all content of the config file
-* Set killmode in mechanism service so systemd does not kill DHCP handlers
 * Only return devices belonging to adapter
 * Fix SerialManager plugin
-* Close Notification when pait is successful
+* Close Notification when pair is successful
 
 
 ## 2.0
