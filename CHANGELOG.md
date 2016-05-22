@@ -52,6 +52,8 @@
 * Bluez managers, Subclass from GDBusObjectManagerClient
 * Notification: Use dbus for notifications and drop the libnotify dep
 * Port NMPanSupport applet plugin to GDBus
+* Open rfcomm device as unprivileged user if he has read and write access
+
 
 ### Bugs fixed
 
@@ -73,6 +75,7 @@
 * Fix SerialManager plugin
 * Close Notification when pair is successful
 * Properly unregister NAP when unloading Networking plugin
+* PPPSupport: Wait for ModemManager to complete probing and release the device
 
 
 ## 2.0
