@@ -23,6 +23,7 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 from io import open
+from time import sleep
 
 from blueman.Constants import *
 
@@ -34,6 +35,7 @@ from gi.repository import Gdk
 from gi.repository import GdkPixbuf
 from gi.repository import GLib
 from gi.repository import Gio
+from gi.repository import GObject
 import re
 import os
 import signal
@@ -399,3 +401,14 @@ def create_parser(parser=None, syslog=True, loglevel=True):
         parser.add_argument("--syslog", dest="syslog", action="store_true")
 
     return parser
+
+def open_rfcomm(file, mode):
+    try:
+        return os.open(file, mode | os.O_EXCL | os.O_NONBLOCK | os.O_NOCTTY)
+    except OSError as err:
+        if err.errno == errno.EBUSY:
+            logging.warning('%s is busy, delaying 2 seconds' % file)
+            sleep(2)
+            return open_rfcomm(file, mode)
+        else:
+            raise

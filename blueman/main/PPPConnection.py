@@ -3,9 +3,9 @@ from __future__ import print_function
 from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
-from io import open
 
 import logging
+from blueman.Functions import open_rfcomm
 import tty
 import termios
 import os
@@ -123,7 +123,7 @@ class PPPConnection(GObject.GObject):
 
     def Connect(self):
 
-        self.file = os.open(self.port, os.O_RDWR | os.O_EXCL | os.O_NONBLOCK | os.O_NOCTTY)
+        self.file = open_rfcomm(self.port, os.O_RDWR)
 
         tty.setraw(self.file)
 
