@@ -28,7 +28,7 @@ class Client(Base):
             'org.freedesktop.DBus.Introspectable')
 
         introspection = proxy.call_sync('Introspect', None, Gio.DBusCallFlags.NONE,
-            -1, None).unpack()[0]
+                                        GLib.MAXINT, None).unpack()[0]
 
         if 'org.freedesktop.DBus.ObjectManager' not in introspection:
             raise ObexdNotFoundError('Could not find any compatible version of obexd')
