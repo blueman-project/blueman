@@ -108,11 +108,12 @@ class Base(GObject):
             # Make sure we have an error handler if we do async calls
             assert(error_handler != None)
 
-            dbus_proxy.call(method, param, Gio.DBusCallFlags.NONE, -1, None,
+            dbus_proxy.call(method, param, Gio.DBusCallFlags.NONE, GLib.MAXINT, None,
                 callback, ok, err)
         else:
             try:
-                result = dbus_proxy.call_sync(method, param, Gio.DBusCallFlags.NONE, -1, None)
+                result = dbus_proxy.call_sync(method, param, Gio.DBusCallFlags.NONE,
+                                              GLib.MAXINT, None)
                 if result:
                     return result.unpack()
             except GLib.Error as e:
