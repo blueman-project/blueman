@@ -8,7 +8,7 @@ from blueman.Functions import dprint
 from gi.repository import GLib
 import dbus
 from blueman.plugins.AppletPlugin import AppletPlugin
-from uuid import uuid1
+from uuid import uuid4
 
 
 class NewConnectionBuilder:
@@ -36,7 +36,7 @@ class NewConnectionBuilder:
             # However users may have removed the connection and we error out
             addr_bytes = bytearray.fromhex(str.replace(str(service.device['Address']), ':', ' '))
             parent.nma.AddConnection({
-                'connection':   {'id': '%s on %s' % (service.name, service.device['Alias']), 'uuid': str(uuid1()),
+                'connection':   {'id': '%s on %s' % (service.name, service.device['Alias']), 'uuid': str(uuid4()),
                                  'autoconnect': False, 'type': 'bluetooth'},
                 'bluetooth':    {'bdaddr': dbus.ByteArray(addr_bytes), 'type': 'panu'},
                 'ipv4':         {'method': 'auto'},
