@@ -22,9 +22,6 @@ class ConnectionHandler:
         self.rfcomm_dev = None
         self.timeout = None
 
-        # ModemManager 0.x
-        self.parent.bus.add_signal_receiver(self.on_mm_device_added, "DeviceAdded", "org.freedesktop.ModemManager")
-        # ModemManager 1.x
         self.parent.bus.add_signal_receiver(self.on_interfaces_added, "InterfacesAdded",
                                             "org.freedesktop.DBus.ObjectManager")
 
@@ -48,7 +45,6 @@ class ConnectionHandler:
     def cleanup(self):
         if self.timeout:
             GLib.source_remove(self.timeout)
-        self.parent.bus.remove_signal_receiver(self.on_mm_device_added, "DeviceAdded", "org.freedesktop.ModemManager")
         self.parent.bus.remove_signal_receiver(self.on_interfaces_added, "InterfacesAdded",
                                                "org.freedesktop.DBus.ObjectManager")
 

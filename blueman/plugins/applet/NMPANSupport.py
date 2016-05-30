@@ -32,8 +32,8 @@ class NewConnectionBuilder:
 
         self.connection = self.parent.find_connection(service.device['Address'], "panu")
         if not self.connection:
-            # This is for compatibility with network-manager < 0.9.8.6. Newer versions that support BlueZ 5 add a
-            # default connection automatically
+            # Newer versions that support BlueZ 5 add a default connection automatically
+            # However users may have removed the connection and we error out
             addr_bytes = bytearray.fromhex(str.replace(str(service.device['Address']), ':', ' '))
             parent.nma.AddConnection({
                 'connection':   {'id': '%s on %s' % (service.name, service.device['Alias']), 'uuid': str(uuid1()),
@@ -77,8 +77,6 @@ class NewConnectionBuilder:
         dprint("activating", self.connection, self.device)
         if not self.device or not self.connection:
             self.err_cb(dbus.DBusException("Network Manager did not support the connection"))
-            if self.connection:
-                self.remove_connection()
             self.cleanup()
         else:
             self.parent.bus.add_signal_receiver(self.on_device_state, "StateChanged",
@@ -86,13 +84,7 @@ class NewConnectionBuilder:
 
             args = [self.connection, self.device, self.connection]
 
-            if self.parent.legacy:
-                args.insert(0, self.parent.settings_bus)
-
             self.parent.nm.ActivateConnection(*args)
-
-    def remove_connection(self):
-        self.parent.remove_connection(self.connection)
 
     def on_device_state(self, state, oldstate, reason):
         dprint("state=", state, "oldstate=", oldstate, "reason=", reason)
@@ -101,12 +93,10 @@ class NewConnectionBuilder:
             if self.err_cb:
                 self.err_cb(dbus.DBusException("Connection was interrupted"))
 
-            self.remove_connection()
             self.cleanup()
 
         elif state == self.DEVICE_STATE_FAILED:
             self.err_cb(dbus.DBusException("Network Manager Failed to activate the connection"))
-            self.remove_connection()
             self.cleanup()
 
         elif state == self.DEVICE_STATE_ACTIVATED:
@@ -130,26 +120,10 @@ class NMPANSupport(AppletPlugin):
 
         self.watches = [self.bus.watch_name_owner("org.freedesktop.NetworkManager", self.on_nm_owner_changed)]
 
-        self.legacy = self.bus.name_has_owner('org.freedesktop.NetworkManagerUserSettings')
-
-        if self.legacy:
-            self.watches.append(self.bus.watch_name_owner("org.freedesktop.NetworkManagerUserSettings",
-                                                          self.on_nma_owner_changed))
-            self.settings_bus = 'org.freedesktop.NetworkManagerUserSettings'
-            self.settings_interface = 'org.freedesktop.NetworkManagerSettings'
-            self.connection_settings_interface = 'org.freedesktop.NetworkManagerSettings.Connection'
-            self.settings_path = "/org/freedesktop/NetworkManagerSettings"
-            NewConnectionBuilder.DEVICE_STATE_DISCONNECTED = 3
-            NewConnectionBuilder.DEVICE_STATE_ACTIVATED = 8
-            NewConnectionBuilder.DEVICE_STATE_FAILED = 9
-        else:
-            self.settings_bus = 'org.freedesktop.NetworkManager'
-            self.settings_interface = 'org.freedesktop.NetworkManager.Settings'
-            self.connection_settings_interface = 'org.freedesktop.NetworkManager.Settings.Connection'
-            self.settings_path = "/org/freedesktop/NetworkManager/Settings"
-
-    def remove_connection(self, path):
-        self.bus.call_blocking(self.settings_bus, path, self.connection_settings_interface, "Delete", "", [])
+        self.settings_bus = 'org.freedesktop.NetworkManager'
+        self.settings_interface = 'org.freedesktop.NetworkManager.Settings'
+        self.connection_settings_interface = 'org.freedesktop.NetworkManager.Settings.Connection'
+        self.settings_path = "/org/freedesktop/NetworkManager/Settings"
 
     @staticmethod
     def format_bdaddr(addr):
@@ -211,8 +185,7 @@ class NMPANSupport(AppletPlugin):
         else:
             service = self.bus.get_object("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager")
             self.nm = dbus.proxies.Interface(service, "org.freedesktop.NetworkManager")
-            if not self.legacy:
-                self.on_nma_owner_changed(owner)
+            self.on_nma_owner_changed(owner)
 
     def on_unload(self):
         for watch in self.watches:
