@@ -29,6 +29,7 @@
 * Remove main.Device
 * Fix building with musl libc
 * Add generic device-added/removed functions for plugins
+* Drop legacy NetworkManager and ModemManager support
 
 
 ### Bugs fixed
