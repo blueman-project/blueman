@@ -37,7 +37,7 @@ class Manager(GObject.GObject):
         self.__signals = []
 
         self._object_manager = Gio.DBusObjectManagerClient.new_for_bus_sync(
-            Gio.BusType.SYSTEM, Gio.DBusObjectManagerClientFlags.NONE,
+            Gio.BusType.SESSION, Gio.DBusObjectManagerClientFlags.NONE,
             self.__bus_name, '/', None, None, None)
 
         self.__signals.append(self._object_manager.connect('object-added', self._on_object_added))
