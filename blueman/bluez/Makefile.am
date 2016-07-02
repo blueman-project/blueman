@@ -11,7 +11,6 @@ blueman_PYTHON =				\
 	Device.py					\
 	errors.py					\
 	Manager.py					\
-	ManagerBase.py					\
 	PropertiesBase.py				\
 	Network.py					\
 	NetworkServer.py
