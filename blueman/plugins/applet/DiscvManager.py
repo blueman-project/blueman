@@ -79,7 +79,10 @@ class DiscvManager(AppletPlugin):
 
     def on_adapter_removed(self, path):
         dprint(path)
-        if path == self.adapter.get_object_path():
+        if self.adapter is None:
+            # FIXME we appear to call this more than once on adapter removal
+            dprint("Warning: adapter is None")
+        elif path == self.adapter.get_object_path():
             self.init_adapter()
             self.update_menuitems()
 
