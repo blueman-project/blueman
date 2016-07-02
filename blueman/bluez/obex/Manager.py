@@ -55,7 +55,7 @@ class Manager(GObject.GObject):
             transfer = Transfer(transfer_path)
             completed_sig = transfer.connect_signal('completed', self._on_transfer_completed, True)
             error_sig = transfer.connect_signal('error', self._on_transfer_completed, False)
-            self.__signals[transfer_path] = (completed_sig, error_sig)
+            self.__transfers[transfer_path] = (completed_sig, error_sig)
 
             dprint(transfer_path)
             self.emit('transfer-started', transfer_path)
