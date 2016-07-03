@@ -4,23 +4,27 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-import dbus
-from dbus.mainloop.glib import DBusGMainLoop
+from gi.repository import Gio
 
-DBusGMainLoop(set_as_default=True)
+class AppletService(Gio.DBusProxy):
+    _instance = None
 
-
-class AppletService(dbus.proxies.Interface):
-    __inst__ = None
-
-    def __new__(cls):
-        if not AppletService.__inst__:
-            AppletService.__inst__ = object.__new__(cls)
-
-        return AppletService.__inst__
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = super(AppletService, cls).__new__(cls)
+            cls._instance._init(*args, **kwargs)
+        return AppletService._instance
 
     def __init__(self):
-        self.bus = dbus.SessionBus()
+        pass
 
-        service = self.bus.get_object("org.blueman.Applet", "/", follow_name_owner_changes=True)
-        super(AppletService, self).__init__(service, "org.blueman.Applet")
+    def _init(self, *args, **kwargs):
+        super(AppletService, self).__init__(
+            g_name='org.blueman.Applet',
+            g_interface_name='org.blueman.Applet',
+            g_object_path='/',
+            g_bus_type=Gio.BusType.SESSION,
+            g_flags=Gio.DBusProxyFlags.NONE,
+            *args, **kwargs)
+
+        self.init()
