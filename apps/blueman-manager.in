@@ -43,7 +43,7 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 class Blueman(Gtk.Window):
     def __init__(self):
-        Gtk.Window.__init__(self, title=_("Bluetooth Devices"))
+        super(Blueman, self).__init__(self, title=_("Bluetooth Devices"))
 
         self._applet_sig = None
 
