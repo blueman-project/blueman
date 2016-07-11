@@ -37,18 +37,18 @@ class Networking(AppletPlugin):
     def load_nap_settings(self):
         dprint("Loading NAP settings")
 
-        def reply():
+        def reply(*_):
             pass
 
-        def err(excp):
-            d = NetworkErrorDialog(excp, "You might not be able to connect to the Bluetooth network via this machine")
+        def err(_obj, result, _user_data):
+            d = NetworkErrorDialog(result, "You might not be able to connect to the Bluetooth network via this machine")
             d.expander.props.margin_left = 9
 
             d.run()
             d.destroy()
 
         m = Mechanism()
-        m.ReloadNetwork(reply_handler=reply, error_handler=err)
+        m.ReloadNetwork(result_handler=reply, error_handler=err)
 
     def on_unload(self):
         for adapter_path in self._registered:

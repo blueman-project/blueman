@@ -126,7 +126,7 @@ class KillSwitch(AppletPlugin):
         def error(*_):
             cb(False)
 
-        Mechanism().SetRfkillState(state, reply_handler=reply, error_handler=error)
+        Mechanism().SetRfkillState('(b)', state, result_handler=reply, error_handler=error)
 
     def on_query_status_icon_visibility(self):
         # Force status icon to show if bluetooth is soft-blocked
