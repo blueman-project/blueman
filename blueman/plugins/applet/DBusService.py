@@ -37,7 +37,7 @@ class DBusService(AppletPlugin):
 
     @dbus.service.method('org.blueman.Applet', in_signature="o", out_signature="", async_callbacks=("ok", "err"))
     def DisconnectDevice(self, obj_path, ok, err):
-        dev = Device(BluezDevice(obj_path))
+        dev = Device(obj_path)
 
         self.Applet.Plugins.Run("on_device_disconnect", dev)
 
