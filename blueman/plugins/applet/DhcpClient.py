@@ -45,6 +45,7 @@ class DhcpClient(AppletPlugin):
 
         if device != "":
             def reply(_obj, result, _user_data):
+                dprint(result)
                 Notification(_("Bluetooth Network"),
                              _("Interface %(0)s bound to IP address %(1)s") % {"0": device, "1": result},
                              pixbuf=get_icon("network-workgroup", 48),
