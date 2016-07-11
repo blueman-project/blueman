@@ -215,20 +215,20 @@ class Network(ServicePlugin):
 
         def dun_support_toggled(rb, x):
             if rb.props.active and x == "nm":
-                applet.SetPluginConfig("PPPSupport", False)
-                applet.SetPluginConfig("NMDUNSupport", True)
+                applet.SetPluginConfig('(sb)', "PPPSupport", False)
+                applet.SetPluginConfig('(sb)', "NMDUNSupport", True)
             elif rb.props.active and x == "blueman":
-                applet.SetPluginConfig("NMDUNSupport", False)
-                applet.SetPluginConfig("PPPSupport", True)
+                applet.SetPluginConfig('(sb)', "NMDUNSupport", False)
+                applet.SetPluginConfig('(sb)', "PPPSupport", True)
 
         def pan_support_toggled(rb, x):
             if rb.props.active and x == "nm":
-                applet.SetPluginConfig("DhcpClient", False)
-                applet.SetPluginConfig("NMPANSupport", True)
+                applet.SetPluginConfig('(sb)', "DhcpClient", False)
+                applet.SetPluginConfig('(sb)', "NMPANSupport", True)
 
             elif rb.props.active and x == "blueman":
-                applet.SetPluginConfig("NMPANSupport", False)
-                applet.SetPluginConfig("DhcpClient", True)
+                applet.SetPluginConfig('(sb)', "NMPANSupport", False)
+                applet.SetPluginConfig('(sb)', "DhcpClient", True)
 
         if "PPPSupport" in active_plugins:
             rb_dun_blueman.props.active = True

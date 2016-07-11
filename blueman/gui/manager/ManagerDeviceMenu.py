@@ -19,6 +19,7 @@ from blueman.services import SerialPort
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
+from gi.repository import GLib
 from gi.repository import GObject
 
 
@@ -111,23 +112,23 @@ class ManagerDeviceMenu(Gtk.Menu):
     def on_connect(self, _item, service):
         device = service.device
 
-        def success(*args2):
-            dprint("success", " ".join(args2))
+        def success(obj, result, _user_data):
+            dprint("success")
             prog.message(_("Success!"))
 
             if isinstance(service, SerialPort) and SERIAL_PORT_SVCLASS_ID == uuid128_to_uuid16(service.uuid):
-                MessageArea.show_message(_("Serial port connected to %s") % args2[0], "dialog-information")
+                MessageArea.show_message(_("Serial port connected to %s") % result, "dialog-information")
             else:
                 MessageArea.close()
 
             self.unset_op(device)
 
-        def fail(*args):
+        def fail(obj, result, _user_data):
             prog.message(_("Failed"))
 
             self.unset_op(device)
-            dprint("fail", args)
-            MessageArea.show_message(_("Connection Failed: ") + e_(str(args[0])))
+            dprint("fail", result)
+            MessageArea.show_message(_("Connection Failed: ") + e_(result))
 
         self.set_op(device, _("Connecting..."))
         prog = ManagerProgressbar(self.Blueman, False)
@@ -139,13 +140,13 @@ class ManagerDeviceMenu(Gtk.Menu):
             fail()
             return
         try:
-            appl.SetTimeHint(Gtk.get_current_event_time())
+            appl.SetTimeHint('(u)', Gtk.get_current_event_time())
         except:
             pass
 
-        appl.connect_service(device.get_object_path(), service.uuid,
-                             reply_handler=success, error_handler=fail,
-                             timeout=200)
+        appl.connect_service('(ss)', device.get_object_path(), service.uuid,
+                             result_handler=success, error_handler=fail,
+                             timeout=GLib.MAXINT)
 
         prog.start()
 
@@ -156,7 +157,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             dprint("** Failed to connect to applet")
             return
 
-        appl.disconnect_service(service.device.get_object_path(), service.uuid, port)
+        appl.disconnect_service('(ssd)', service.device.get_object_path(), service.uuid, port)
         self.Generate()
 
     def on_device_property_changed(self, List, device, tree_iter, key_value):
@@ -349,7 +350,7 @@ class ManagerDeviceMenu(Gtk.Menu):
                 
             self.set_op(self.SelectedDevice, _("Disconnecting..."))
             self.Blueman.disconnect(self.SelectedDevice,
-                                    reply_handler=finished,
+                                    result_handler=finished,
                                     error_handler=finished)
 
         if row['connected']:
