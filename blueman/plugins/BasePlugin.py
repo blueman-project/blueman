@@ -34,6 +34,7 @@ class BasePlugin(object):
 
     @classmethod
     def add_method(cls, func):
+        """Add a new method that can be used by other plugins to listen for changes, query state, etc"""
         func.__self__.__methods.append((cls, func.__name__))
 
         if func.__name__ in cls.__dict__:
@@ -62,7 +63,9 @@ class BasePlugin(object):
 
     # virtual methods
     def on_load(self, applet):
+        """Do what is neccessary for the plugin to work like add watches or create ui elements"""
         pass
 
     def on_unload(self):
+        """Tear down any watches and ui elements created in on_load"""
         raise NotImplementedError

@@ -39,6 +39,7 @@ class AppletPlugin(ConfigurablePlugin):
         self.__overrides = []
 
     def override_method(self, obj, method, override):
+        """Replace a method on an object with another which will be called instead"""
         orig = obj.__getattribute__(method)
         obj.__setattr__(method, partial(override, obj))
         self.__overrides.append((obj, method, orig))
@@ -60,24 +61,31 @@ class AppletPlugin(ConfigurablePlugin):
 
     # virtual funcs
     def on_manager_state_changed(self, state):
+        """Run when the dbus service appears and disappears. Should only be used to setup, register agents etc"""
         pass
 
     def on_adapter_added(self, adapter):
+        """Run when a new adapter is added to the system"""
         pass
 
     def on_adapter_removed(self, adapter):
+        """Run when an adapter is removed from the system"""
         pass
 
     def on_device_created(self, device):
+        """Run when a new device is found"""
         pass
 
     def on_device_removed(self, device):
+        """Run when a device is removed"""
         pass
 
     def on_adapter_property_changed(self, path, key, value):
+        """Run when a property changes of any adapters. Make sure to distinguish your actions by path"""
         pass
 
     def on_device_property_changed(self, path, key, value):
+        """Run when a property changes of any devices. Make sure to distinguish your actions by path"""
         pass
 
     #notify when all plugins finished loading
