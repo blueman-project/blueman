@@ -32,10 +32,14 @@ class BluezAgent(Agent):
         self.signal_id = None
         self.time_func = time_func
 
+    def register_agent(self):
+        dprint()
+        self._register_object()
         Bluez.AgentManager().register_agent(self.__agent_path, "KeyboardDisplay", default=True)
 
-    def __del__(self):
+    def unregister_agent(self):
         dprint()
+        self._unregister_object()
         Bluez.AgentManager().unregister_agent(self.__agent_path)
 
     def _handle_method_call(self, connection, sender, agent_path, interface_name, method_name, parameters, invocation):

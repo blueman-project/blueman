@@ -49,22 +49,24 @@ class Agent(object):
     __bus = Gio.bus_get_sync(Gio.BusType.SYSTEM)
 
     def __init__(self, agent_path, handle_method_call):
-        node_info = Gio.DBusNodeInfo.new_for_xml(introspection_xml)
+        self.__agent_path = agent_path
+        self.__handle_method_call = handle_method_call
+        self.__node_info = Gio.DBusNodeInfo.new_for_xml(introspection_xml)
+        self.__regid = None
 
+    def _register_object(self):
         regid = self.__bus.register_object(
-            agent_path,
-            node_info.interfaces[0],
-            handle_method_call,
+            self.__agent_path,
+            self.__node_info.interfaces[0],
+            self.__handle_method_call,
             None,
             None)
 
         if regid:
             self.__regid = regid
         else:
-            raise GLib.Error('Failed to register object with path: %s', agent_path)
-
-    def __del__(self):
-        self._unregister_object()
+            raise GLib.Error('Failed to register object with path: %s', self.__agent_path)
 
     def _unregister_object(self):
         self.__bus.unregister_object(self.__regid)
+        self.__regid = None
