@@ -4,13 +4,9 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-from gi.repository import GObject
-
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-import inspect
-import traceback
 
 from blueman.plugins.ConfigurablePlugin import ConfigurablePlugin
 from functools import partial
