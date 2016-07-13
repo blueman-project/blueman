@@ -55,7 +55,7 @@ class BasePlugin(object):
             self.on_load(parent)
             # self.on_manager_state_changed(applet.Manager != None)
             self.__class__.__instance__ = self
-        except Exception as e:
+        except Exception:
             # AppletPlugin.instances.remove(self)
             self.__class__.__instance__ = None
             traceback.print_exc()
