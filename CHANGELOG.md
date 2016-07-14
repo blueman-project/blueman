@@ -30,6 +30,7 @@
 * Fix building with musl libc
 * Add generic device-added/removed functions for plugins
 * Drop legacy NetworkManager and ModemManager support
+* Port AppletService proxy to GDBus
 
 
 ### Bugs fixed
@@ -51,6 +52,7 @@
 * Only return devices belonging to adapter
 * Fix SerialManager plugin
 * Close Notification when pair is successful
+* Properly unregister NAP when unloading Networking plugin
 
 
 ## 2.0
