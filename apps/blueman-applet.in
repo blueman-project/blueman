@@ -50,6 +50,7 @@ class BluemanApplet(object):
 
         self._signals = []
 
+        self.plugin_run_state_changed = False
         self.Manager = None
         self.DbusSvc = DbusService("org.blueman.Applet", "/")
 
@@ -71,7 +72,10 @@ class BluemanApplet(object):
     def manager_init(self):
         try:
             self.Manager = Bluez.Manager()
-            self.Plugins.Run("on_manager_state_changed", True)
+            self.manager_state = True
+            self.plugin_run_state_changed = True
+        
+            self.Plugins.Run("on_manager_state_changed", self.manager_state)
 
             self._signals.append(self.Manager.connect_signal('adapter-added', self.on_adapter_added))
             self._signals.append(self.Manager.connect_signal('adapter-removed', self.on_adapter_removed))
@@ -89,7 +93,9 @@ class BluemanApplet(object):
             self.Manager.disconnect_signal(sig)
 
         self.Manager = None
-        self.Plugins.Run("on_manager_state_changed", False)
+        self.manager_state = False
+        self.plugin_run_state_changed = True
+        self.Plugins.Run("on_manager_state_changed", self.manager_state)
 
     def _on_dbus_name_appeared(self, _connection, name, owner):
         dprint(name, owner)

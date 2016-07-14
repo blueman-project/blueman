@@ -53,7 +53,9 @@ class AppletPlugin(ConfigurablePlugin):
 
         self.Applet.DbusSvc.add_definitions(self)
 
-        self.on_manager_state_changed(applet.Manager is not None)
+        # The applet will run on_manager_state_changed once at startup so until it has we don't.
+        if applet.plugin_run_state_changed:
+            self.on_manager_state_changed(applet.manager_state)
 
     # virtual funcs
     def on_manager_state_changed(self, state):
