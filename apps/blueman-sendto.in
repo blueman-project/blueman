@@ -281,7 +281,7 @@ class Sender(Gtk.Dialog):
         d = Gtk.MessageDialog(self, type=Gtk.MessageType.ERROR, buttons=(Gtk.ButtonsType.CLOSE))
         d.props.text = _("Error occurred")
         d.props.icon_name = "blueman"
-        d.props.secondary_text = str(msg).split(":")[1].strip(" ")
+        d.props.secondary_text = msg.reason.split(maxsplit=1)[1]
 
         d.run()
         d.destroy()
