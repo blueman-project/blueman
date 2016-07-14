@@ -51,7 +51,13 @@ class BluemanApplet(object):
         self._signals = []
 
         self.plugin_run_state_changed = False
-        self.Manager = None
+
+        self.Manager = Bluez.Manager()
+        self._signals.append(self.Manager.connect_signal('adapter-added', self.on_adapter_added))
+        self._signals.append(self.Manager.connect_signal('adapter-removed', self.on_adapter_removed))
+        self._signals.append(self.Manager.connect_signal('device-created', self.on_device_created))
+        self._signals.append(self.Manager.connect_signal('device-removed', self.on_device_removed))
+
         self.DbusSvc = DbusService("org.blueman.Applet", "/")
 
         self.Plugins = PersistentPluginManager(AppletPlugin, blueman.plugins.applet, self)
@@ -59,7 +65,7 @@ class BluemanApplet(object):
 
         self.Plugins.Run("on_plugins_loaded")
 
-        Bluez.Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
+        self.Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
 
         self._any_adapter = Bluez.AnyAdapter()
         self._any_adapter.connect_signal('property-changed', self._on_adapter_property_changed)
@@ -69,42 +75,17 @@ class BluemanApplet(object):
 
         Gtk.main()
 
-    def manager_init(self):
-        try:
-            self.Manager = Bluez.Manager()
-            self.manager_state = True
-            self.plugin_run_state_changed = True
-        
-            self.Plugins.Run("on_manager_state_changed", self.manager_state)
-
-            self._signals.append(self.Manager.connect_signal('adapter-added', self.on_adapter_added))
-            self._signals.append(self.Manager.connect_signal('adapter-removed', self.on_adapter_removed))
-            self._signals.append(self.Manager.connect_signal('device-created', self.on_device_created))
-            self._signals.append(self.Manager.connect_signal('device-removed', self.on_device_removed))
-
-        # FIXME catch specific error(s)
-        except Exception as e:
-            dprint(e)
-            self.manager_deinit()
-            dprint("Bluez DBus API not available. Listening for DBus name ownership changes")
-
-    def manager_deinit(self):
-        for sig in self._signals:
-            self.Manager.disconnect_signal(sig)
-
-        self.Manager = None
-        self.manager_state = False
+    def _on_dbus_name_appeared(self, _connection, name, owner):
+        dprint(name, owner)
+        self.manager_state = True
         self.plugin_run_state_changed = True
         self.Plugins.Run("on_manager_state_changed", self.manager_state)
 
-    def _on_dbus_name_appeared(self, _connection, name, owner):
-        dprint(name, owner)
-        if self.Manager is None:
-            self.manager_init()
-
     def _on_dbus_name_vanished(self, _connection, name):
         dprint(name)
-        self.manager_deinit()
+        self.manager_state = False
+        self.plugin_run_state_changed = True
+        self.Plugins.Run("on_manager_state_changed", self.manager_state)
 
     def _on_adapter_property_changed(self, adapter, key, value):
         self.Plugins.Run("on_adapter_property_changed", adapter.get_object_path(), key, value)
