@@ -51,7 +51,13 @@ class Networking(AppletPlugin):
         m.ReloadNetwork(reply_handler=reply, error_handler=err)
 
     def on_unload(self):
+        for adapter_path in self._registered:
+            s = NetworkServer(adapter_path)
+            s.unregister("nap")
+
+        self._registered = {}
         del self.Config
+
 
     def on_adapter_added(self, path):
         self.update_status()
