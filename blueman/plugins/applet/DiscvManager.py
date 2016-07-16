@@ -114,17 +114,12 @@ class DiscvManager(AppletPlugin):
             self.update_menuitems()
 
     def update_menuitems(self):
-        try:
-            props = self.adapter.get_properties()
-        except Exception as e:
+        if self.adapter is None:
             dprint("warning: Adapter is None")
             self.item.props.visible = False
+        elif (not self.adapter["Discoverable"] or self.adapter["DiscoverableTimeout"] > 0) and self.adapter["Powered"]:
+            self.item.props.visible = True
+            self.item_label.set_text_with_mnemonic(_("_Make Discoverable"))
+            self.item.props.sensitive = True
         else:
-            if (not props["Discoverable"] or props["DiscoverableTimeout"] > 0) and props["Powered"]:
-
-                self.item.props.visible = True
-                self.item_label.set_text_with_mnemonic(_("_Make Discoverable"))
-                self.item.props.sensitive = True
-
-            else:
-                self.item.props.visible = False
+            self.item.props.visible = False
