@@ -216,11 +216,8 @@ def e_(msg):
     if isinstance(msg, Exception):
         return str(msg) + "\n" + traceback.format_exc()
     else:
-        msg = str(msg)
-
-        s = msg.split(": ")
-        del s[0]
-        return ": ".join(s)
+        s = msg.strip().split(": ")[-1]
+        return s
 
 
 def opacify_pixbuf(pixbuf, alpha):
