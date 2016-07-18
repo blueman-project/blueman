@@ -128,7 +128,7 @@ class ManagerDeviceMenu(Gtk.Menu):
 
             self.unset_op(device)
             dprint("fail", result)
-            MessageArea.show_message(_("Connection Failed: ") + e_(result))
+            MessageArea.show_message(_("Connection Failed: ") + e_(str(result.message)))
 
         self.set_op(device, _("Connecting..."))
         prog = ManagerProgressbar(self.Blueman, False)
