@@ -13,6 +13,7 @@ blueman_PYTHON = \
 	SpeedCalc.py \
 	DbusService.py \
 	PluginManager.py \
+	DBusServiceObject.py \
 	Adapter.py \
 	Applet.py \
 	Manager.py \
