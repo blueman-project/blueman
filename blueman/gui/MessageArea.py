@@ -86,6 +86,7 @@ class MessageArea(Gtk.EventBox):
 
     def on_more(self, button):
         d = Gtk.MessageDialog(parent=None, flags=0, type=Gtk.MessageType.INFO, buttons=Gtk.ButtonsType.CLOSE)
+        d.set_transient_for(self.get_toplevel())
 
         d.props.text = '\n'.join((self.text, self.bt))
 
