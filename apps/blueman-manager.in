@@ -193,7 +193,7 @@ class Blueman(Gtk.Window):
             self.List.DiscoverDevices()
         except Exception as e:
             prog.finalize()
-            MessageArea.show_message(e_(e))
+            MessageArea.show_message(*e_(e))
 
         s1 = self.List.connect("discovery-progress", on_progress)
         s2 = self.List.connect("adapter-property-changed", prop_changed)

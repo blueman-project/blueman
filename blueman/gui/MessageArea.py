@@ -87,7 +87,7 @@ class MessageArea(Gtk.EventBox):
     def on_more(self, button):
         d = Gtk.MessageDialog(parent=None, flags=0, type=Gtk.MessageType.INFO, buttons=Gtk.ButtonsType.CLOSE)
 
-        d.props.text = self.text
+        d.props.text = '\n'.join((self.text, self.bt))
 
         d.run()
         d.destroy()
@@ -138,8 +138,9 @@ class MessageArea(Gtk.EventBox):
     def show_message(*args):
         MessageArea._inst_._show_message(*args)
 
-    def _show_message(self, text, icon="dialog-warning"):
+    def _show_message(self, text, bt=None, icon="dialog-warning"):
         self.text = text
+        self.bt = bt
 
         self.label.set_tooltip_text(text)
         self.icon.set_from_icon_name(icon, Gtk.IconSize.MENU)
@@ -165,12 +166,11 @@ class MessageArea(Gtk.EventBox):
             self.hl_anim.thaw()
             self.hl_anim.animate(start=0.7, end=1.0, duration=1000)
 
-        lines = text.split("\n")
-        if len(lines) > 1:
-            self.label.props.label = lines[0] + "..."
+        if self.bt:
+            self.label.props.label = self.text + "..."
             self.b_more.props.visible = True
         else:
-            self.label.props.label = text
+            self.label.props.label = self.text
             self.b_more.props.visible = False
 
     def draw(self, window, cr):

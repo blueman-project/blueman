@@ -214,11 +214,10 @@ def adapter_path_to_name(path):
 #format error
 def e_(msg):
     if isinstance(msg, Exception):
-        return str(msg) + "\n" + traceback.format_exc()
+        return (str(msg), traceback.format_exc())
     else:
         s = msg.strip().split(": ")[-1]
-        return s
-
+        return (s, None)
 
 def opacify_pixbuf(pixbuf, alpha):
     new = pixbuf.copy()
