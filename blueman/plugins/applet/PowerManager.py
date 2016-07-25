@@ -4,7 +4,7 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-import dbus.service
+from blueman.main.DBusServiceObject import *
 from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 import blueman.bluez as Bluez
@@ -193,15 +193,15 @@ class PowerManager(AppletPlugin):
             self.Applet.Plugins.Run("on_power_state_changed", self, new_state)
             self.Applet.Plugins.StatusIcon.IconShouldChange()
 
-    @dbus.service.signal('org.blueman.Applet', signature="b")
+    @dbus_signal('org.blueman.Applet', signature="b")
     def BluetoothStatusChanged(self, status):
         pass
 
-    @dbus.service.method('org.blueman.Applet', in_signature="b", out_signature="")
+    @dbus_method('org.blueman.Applet', in_signature="b")
     def SetBluetoothStatus(self, status):
         self.RequestPowerState(status)
 
-    @dbus.service.method('org.blueman.Applet', in_signature="", out_signature="b")
+    @dbus_method('org.blueman.Applet', out_signature="b")
     def GetBluetoothStatus(self):
         return self.CurrentState
 

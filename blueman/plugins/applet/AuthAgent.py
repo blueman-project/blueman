@@ -4,7 +4,7 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-import dbus.service
+from blueman.main.DBusServiceObject import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.applet.BluezAgent import BluezAgent
 
@@ -21,7 +21,7 @@ class AuthAgent(AppletPlugin):
     def on_load(self, applet):
         self.Applet = applet
 
-    @dbus.service.method('org.blueman.Applet', in_signature="u")
+    @dbus_method('org.blueman.Applet', in_signature="u")
     def SetTimeHint(self, time):
         self._last_event_time = time
 

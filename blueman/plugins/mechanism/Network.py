@@ -4,11 +4,12 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-import dbus.service
+from blueman.main.DBusServiceObject import *
 from blueman.plugins.MechanismPlugin import MechanismPlugin
 import os
 import subprocess
 from gi.repository import GObject
+from gi.repository import GLib
 from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler, UdhcpdHandler
 
 DHCPDHANDLERS = {"DnsMasqHandler": DnsMasqHandler,
@@ -17,33 +18,28 @@ DHCPDHANDLERS = {"DnsMasqHandler": DnsMasqHandler,
 
 
 class Network(MechanismPlugin):
-    @dbus.service.method('org.blueman.Mechanism', in_signature="s", out_signature="s", sender_keyword="caller",
-                         async_callbacks=("ok", "err"))
-    def DhcpClient(self, net_interface, caller, ok, err):
+    @dbus_method('org.blueman.Mechanism', in_signature="s", out_signature="s", sender="caller")
+    def DhcpClient(self, net_interface, caller):
         self.timer.stop()
 
         self.confirm_authorization(caller, "org.blueman.dhcp.client")
 
         from blueman.main.DhcpClient import DhcpClient
 
-        def dh_error(dh, message, ok, err):
-            err(message)
+        def dh_error(dh, message):
+            raise GLib.Error(message)
             resume = self.timer.resume()
 
-        def dh_connected(dh, ip, ok, err):
-            ok(ip)
+        def dh_connected(dh, ip):
+            return ip
             self.timer.resume()
 
         dh = DhcpClient(net_interface)
-        dh.connect("error-occurred", dh_error, ok, err)
-        dh.connect("connected", dh_connected, ok, err)
-        try:
-            dh.run()
-        except Exception as e:
-            err(e)
+        dh.connect("error-occurred", dh_error)
+        dh.connect("connected", dh_connected)
+        dh.run()
 
-    @dbus.service.method('org.blueman.Mechanism', in_signature="ayays", out_signature="", sender_keyword="caller",
-                         byte_arrays=True)
+    @dbus_method('org.blueman.Mechanism', in_signature="ayays", out_signature="", sender="caller")
     def EnableNetwork(self, ip_address, netmask, dhcp_handler, caller):
         self.confirm_authorization(caller, "org.blueman.network.setup")
         nc = NetConf.get_default()
@@ -51,13 +47,13 @@ class Network(MechanismPlugin):
         nc.set_dhcp_handler(DHCPDHANDLERS[dhcp_handler])
         nc.apply_settings()
 
-    @dbus.service.method('org.blueman.Mechanism', in_signature="", out_signature="", sender_keyword="caller")
+    @dbus_method('org.blueman.Mechanism', in_signature="", out_signature="", sender="caller")
     def ReloadNetwork(self, caller):
         self.confirm_authorization(caller, "org.blueman.network.setup")
         nc = NetConf.get_default()
         nc.apply_settings()
 
-    @dbus.service.method('org.blueman.Mechanism', in_signature="", out_signature="", sender_keyword="caller")
+    @dbus_method('org.blueman.Mechanism', in_signature="", out_signature="", sender="caller")
     def DisableNetwork(self, caller):
         self.confirm_authorization(caller, "org.blueman.network.setup")
         nc = NetConf.get_default()

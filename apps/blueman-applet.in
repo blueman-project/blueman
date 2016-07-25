@@ -10,6 +10,7 @@ import sys
 import signal
 from blueman.Constants import *
 
+
 # support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if 'BLUEMAN_SOURCE' in os.environ:

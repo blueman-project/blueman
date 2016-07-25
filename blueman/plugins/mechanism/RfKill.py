@@ -4,7 +4,7 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-import dbus.service
+from blueman.main.DBusServiceObject import *
 import os
 import struct
 from blueman.plugins.MechanismPlugin import MechanismPlugin
@@ -15,7 +15,7 @@ if not os.path.exists('/dev/rfkill'):
 
 
 class RfKill(MechanismPlugin):
-    @dbus.service.method('org.blueman.Mechanism', in_signature="b", out_signature="", sender_keyword="caller")
+    @dbus_method('org.blueman.Mechanism', in_signature="b", out_signature="", sender="caller")
     def SetRfkillState(self, state, caller):
         self.confirm_authorization(caller, "org.blueman.rfkill.setstate")
         f = open('/dev/rfkill', 'r+b', buffering=0)

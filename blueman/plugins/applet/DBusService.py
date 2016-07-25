@@ -11,9 +11,7 @@ from blueman.bluez.Device import Device
 from blueman.services.Functions import get_service
 
 from gi.repository import GLib
-import dbus
-import dbus.service
-
+from blueman.main.DBusServiceObject import *
 
 class DBusService(AppletPlugin):
     __depends__ = ["StatusIcon"]
@@ -31,15 +29,20 @@ class DBusService(AppletPlugin):
         AppletPlugin.add_method(self.service_disconnect_handler)
         AppletPlugin.add_method(self.on_device_disconnect)
 
-    @dbus.service.method('org.blueman.Applet', in_signature="", out_signature="as")
+    @dbus_method('org.blueman.Applet', in_signature="", out_signature="as")
     def QueryPlugins(self):
         return self.Applet.Plugins.GetLoaded()
 
-    @dbus.service.method('org.blueman.Applet', in_signature="o", out_signature="", async_callbacks=("ok", "err"))
-    def DisconnectDevice(self, obj_path, ok, err):
+    @dbus_method('org.blueman.Applet', in_signature="o", out_signature="")
+    def DisconnectDevice(self, obj_path):
         dev = Device(obj_path)
 
         self.Applet.Plugins.Run("on_device_disconnect", dev)
+
+        def ok(*args):
+            return args
+        def err(error):
+            raise error
 
         def on_timeout():
             dev.disconnect(reply_handler=ok, error_handler=err)
@@ -49,16 +52,16 @@ class DBusService(AppletPlugin):
     def on_device_disconnect(self, device):
         pass
 
-    @dbus.service.method('org.blueman.Applet', in_signature="", out_signature="as")
+    @dbus_method('org.blueman.Applet', in_signature="", out_signature="as")
     def QueryAvailablePlugins(self):
         return self.Applet.Plugins.GetClasses().keys()
 
-    @dbus.service.method('org.blueman.Applet', in_signature="sb", out_signature="")
+    @dbus_method('org.blueman.Applet', in_signature="sb", out_signature="")
     def SetPluginConfig(self, plugin, value):
         self.Applet.Plugins.SetConfig(plugin, value)
 
-    @dbus.service.method('org.blueman.Applet', in_signature="os", async_callbacks=("ok", "err"))
-    def connect_service(self, object_path, uuid, ok, err):
+    @dbus_method('org.blueman.Applet', in_signature="os", out_signature="")
+    def connect_service(self, object_path, uuid):
         service = get_service(Device(object_path), uuid)
 
         try:
@@ -71,25 +74,33 @@ class DBusService(AppletPlugin):
         if service.group == 'serial':
             def reply(rfcomm):
                 self.Applet.Plugins.Run("on_rfcomm_connected", service, rfcomm)
-                ok(rfcomm)
+                return rfcomm
 
-            rets = self.Applet.Plugins.Run("rfcomm_connect_handler", service, reply, err)
+            def error(error):
+                raise error
+
+            rets = self.Applet.Plugins.Run("rfcomm_connect_handler", service, reply, error)
             if True in rets:
                 pass
             else:
                 dprint("No handler registered")
-                err(dbus.DBusException(
+                error(GLib.Error(
                     "Service not supported\nPossibly the plugin that handles this service is not loaded"))
         else:
             def cb(_inst, ret):
                 if ret:
                     raise StopException
 
-            if not self.Applet.Plugins.RunEx("service_connect_handler", cb, service, ok, err):
-                service.connect(reply_handler=ok, error_handler=err)
+            def reply(*args):
+                return args
+            def error(error):
+                raise error
 
-    @dbus.service.method('org.blueman.Applet', in_signature="osd", async_callbacks=("ok", "err"))
-    def disconnect_service(self, object_path, uuid, port, ok, err):
+            if not self.Applet.Plugins.RunEx("service_connect_handler", cb, service, reply, error):
+                service.connect(reply_handler=reply, error_handler=error)
+
+    @dbus_method('org.blueman.Applet', in_signature="osd", out_signature="")
+    def disconnect_service(self, object_path, uuid, port):
         service = get_service(Device(object_path), uuid)
 
         if service.group == 'serial':
@@ -104,8 +115,13 @@ class DBusService(AppletPlugin):
                 if ret:
                     raise StopException
 
-            if not self.Applet.Plugins.RunEx("service_disconnect_handler", cb, service, ok, err):
-                service.disconnect(reply_handler=ok, error_handler=err)
+            def reply():
+                return
+            def error(error):
+                raise error
+
+            if not self.Applet.Plugins.RunEx("service_disconnect_handler", cb, service, reply, error):
+                service.disconnect(reply_handler=reply, error_handler=error)
 
     def service_connect_handler(self, service, ok, err):
         pass
@@ -113,7 +129,7 @@ class DBusService(AppletPlugin):
     def service_disconnect_handler(self, service, ok, err):
         pass
 
-    @dbus.service.method('org.blueman.Applet')
+    @dbus_method('org.blueman.Applet')
     def open_plugin_dialog(self):
         self.Applet.Plugins.StandardItems.on_plugins(None)
 

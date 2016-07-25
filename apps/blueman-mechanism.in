@@ -16,9 +16,6 @@ if 'BLUEMAN_SOURCE' in os.environ:
     sys.path.insert(0, _dirname)
     timeout = 9999
 
-import dbus
-import dbus.service
-from dbus.mainloop.glib import DBusGMainLoop
 try: import __builtin__ as builtins
 except ImportError: import builtins
 
@@ -35,7 +32,7 @@ import blueman.plugins.mechanism
 from blueman.plugins.MechanismPlugin import MechanismPlugin
 
 from blueman.main.DbusService import DbusService
-
+from blueman.main.DBusServiceObject import *
 
 class Tee(object):
     def __init__(self):
@@ -77,8 +74,6 @@ builtins.dprint = prnt
 
 dprint("Starting blueman-mechanism")
 
-DBusGMainLoop(set_as_default=True)
-
 if "--debug" in sys.argv:
     dprint("Enabled verbose output")
     set_probe_debug(True)
@@ -116,8 +111,10 @@ class Timer:
 
 class conf_service(DbusService):
     def __init__(self):
-        super(conf_service, self).__init__("org.blueman.Mechanism", "/", dbus.SystemBus)
+        self._dbus_conn = Gio.bus_get_sync(Gio.BusType.SYSTEM, None)
         self.timer = Timer()
+
+        super(conf_service, self).__init__("org.blueman.Mechanism", "/", connection=self._dbus_conn)
 
         if POLKIT:
             try:
@@ -158,7 +155,7 @@ class conf_service(DbusService):
             return
         else:
             if not self.pk:
-                raise dbus.DBusException(
+                raise GLib.Error(
                     "Blueman was built with PolicyKit-1 support, but it's not available on the system")
 
         v_subject = GLib.Variant('s', subject)
@@ -168,10 +165,11 @@ class conf_service(DbusService):
         dprint(str(res))
         (is_authorized, is_challenge, details) = res
         if not is_authorized:
-            raise dbus.DBusException("Not authorized")
+            raise GLib.Error("Not authorized")
 
 
 set_proc_title()
-conf_service()
+service = conf_service()
+service.connect_bus()
 loop.run()
 
