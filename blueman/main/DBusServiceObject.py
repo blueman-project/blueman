@@ -40,11 +40,12 @@ class DBusArgInfo:
         self.signature = signature
 
 class DBusMethodInfo:
-    def __init__(self, name="", interface=None, in_args=[], out_args=[], annotations=[]):
+    def __init__(self, name="", interface=None, in_args=[], out_args=[], sender="", annotations=[]):
         self.name = name
         self.interface = interface
         self.in_args = in_args
         self.out_args = out_args
+        self.sender = sender
         self.annotations = annotations
 
     def generate_xml(self):
@@ -119,10 +120,12 @@ class DBusNodeInfo:
             node.append(interface.generate_xml())
         return node
 
-def _create_arginfo_list(func, signature):
+def _create_arginfo_list(func, signature, sender=None):
     arg_names = inspect.getargspec(func).args
     signature_list = GLib.Variant.split_signature('(%s)' %signature) if signature else []
     arg_names.pop(0) # eat "self" argument
+    if sender and sender in arg_names:
+        arg_names.remove(sender)
 
     if len(signature_list) != len(arg_names):
         raise TypeError('Specified signature %s for method %s does not match length of arguments'
@@ -133,14 +136,15 @@ def _create_arginfo_list(func, signature):
         args.append(DBusArgInfo(name=arg_name, signature=arg_signature))
     return args
 
-def dbus_method(interface, in_signature=None, out_signature=None):
+def dbus_method(interface, in_signature=None, out_signature=None, sender=None):
     def decorator(func):
-        in_args = _create_arginfo_list(func, in_signature)
+        in_args = _create_arginfo_list(func, in_signature, sender)
         out_args = [DBusArgInfo(name='return', signature=out_signature),] if out_signature else []
         func._dbus_info = DBusMethodInfo(name=func.__name__,
-                                                interface=interface,
-                                                in_args=in_args,
-                                                out_args=out_args)
+                                         interface=interface,
+                                         in_args=in_args,
+                                         out_args=out_args,
+                                         sender=sender)
         return func
 
     return decorator
@@ -314,6 +318,9 @@ class DBusServiceObject(GObject.Object):
     def __dbus_method_call(self, conn, sender, object_path, iface_name, method_name,
                            parameters, invocation):
 
+        args = parameters.unpack()
+        kwargs = {}
+
         try:
             method = getattr(self, method_name)
             info = method._dbus_info
@@ -323,8 +330,11 @@ class DBusServiceObject(GObject.Object):
                     'No such interface or method: %s.%s' % (iface_name, method_name))
             return
 
+        if info.sender:
+            kwargs[info.sender] = sender
+
         try:
-            ret = method(*parameters.unpack())
+            ret = method(*args, **kwargs)
             if ret is None and not info.out_args:
                 return # No return value
             invocation.return_value(GLib.Variant('(%s)' %info.out_args[0].signature, (ret,)))
