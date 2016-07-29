@@ -266,7 +266,7 @@ class Assistant:
                 self.assistant.set_page_header_image(pages[PAGE_FINISH], get_icon("dialog-warning", 32))
                 self.assistant.set_current_page(PAGE_FINISH)
 
-            self.applet.connect_service("(os)", self.service.device.get_object_path(), self.service.uuid,
+            self.applet.connect_service(str("(os)"), self.service.device.get_object_path(), self.service.uuid,
                                         result_handler=success, error_handler=fail)
 
 

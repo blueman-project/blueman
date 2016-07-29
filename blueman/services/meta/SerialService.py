@@ -28,7 +28,7 @@ class SerialService(Service):
         try:
             # TODO: Channel?
             port_id = create_rfcomm_device(Adapter(props['Adapter']).get_properties()['Address'], props['Address'], 1)
-            Mechanism().open_rfcomm('(d)', port_id)
+            Mechanism().open_rfcomm(str('(d)'), port_id)
             if reply_handler:
                 reply_handler('/dev/rfcomm%d' % port_id)
         except Exception as e:

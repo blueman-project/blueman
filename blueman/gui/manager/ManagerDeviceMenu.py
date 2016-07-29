@@ -140,11 +140,11 @@ class ManagerDeviceMenu(Gtk.Menu):
             fail()
             return
         try:
-            appl.SetTimeHint('(u)', Gtk.get_current_event_time())
+            appl.SetTimeHint(str('(u)'), Gtk.get_current_event_time())
         except:
             pass
 
-        appl.connect_service('(ss)', device.get_object_path(), service.uuid,
+        appl.connect_service(str('(ss)'), device.get_object_path(), service.uuid,
                              result_handler=success, error_handler=fail,
                              timeout=GLib.MAXINT)
 
@@ -157,7 +157,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             dprint("** Failed to connect to applet")
             return
 
-        appl.disconnect_service('(ssd)', service.device.get_object_path(), service.uuid, port)
+        appl.disconnect_service(str('(ssd)'), service.device.get_object_path(), service.uuid, port)
         self.Generate()
 
     def on_device_property_changed(self, List, device, tree_iter, key_value):

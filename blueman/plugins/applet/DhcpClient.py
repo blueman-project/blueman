@@ -66,4 +66,4 @@ class DhcpClient(AppletPlugin):
                          status_icon=self.Applet.Plugins.StatusIcon)
 
             m = Mechanism()
-            m.DhcpClient('(s)', device, result_handler=reply, error_handler=err, timeout=120)
+            m.DhcpClient(str('(s)'), device, result_handler=reply, error_handler=err, timeout=120)

@@ -75,7 +75,7 @@ class Network(ServicePlugin):
                 net_ip = self.Builder.get_object("net_ip")
 
                 try:
-                    m.EnableNetwork('(ayays)', inet_aton(net_ip.props.text), inet_aton("255.255.255.0"), stype)
+                    m.EnableNetwork(str('(ayays)'), inet_aton(net_ip.props.text), inet_aton("255.255.255.0"), stype)
 
                     if not self.Config["nap-enable"]:
                         self.Config["nap-enable"] = True
@@ -215,20 +215,20 @@ class Network(ServicePlugin):
 
         def dun_support_toggled(rb, x):
             if rb.props.active and x == "nm":
-                applet.SetPluginConfig('(sb)', "PPPSupport", False)
-                applet.SetPluginConfig('(sb)', "NMDUNSupport", True)
+                applet.SetPluginConfig(str('(sb)'), "PPPSupport", False)
+                applet.SetPluginConfig(str('(sb)'), "NMDUNSupport", True)
             elif rb.props.active and x == "blueman":
-                applet.SetPluginConfig('(sb)', "NMDUNSupport", False)
-                applet.SetPluginConfig('(sb)', "PPPSupport", True)
+                applet.SetPluginConfig(str('(sb)'), "NMDUNSupport", False)
+                applet.SetPluginConfig(str('(sb)'), "PPPSupport", True)
 
         def pan_support_toggled(rb, x):
             if rb.props.active and x == "nm":
-                applet.SetPluginConfig('(sb)', "DhcpClient", False)
-                applet.SetPluginConfig('(sb)', "NMPANSupport", True)
+                applet.SetPluginConfig(str('(sb)'), "DhcpClient", False)
+                applet.SetPluginConfig(str('(sb)'), "NMPANSupport", True)
 
             elif rb.props.active and x == "blueman":
-                applet.SetPluginConfig('(sb)', "NMPANSupport", False)
-                applet.SetPluginConfig('(sb)', "DhcpClient", True)
+                applet.SetPluginConfig(str('(sb)'), "NMPANSupport", False)
+                applet.SetPluginConfig(str('(sb)'), "DhcpClient", True)
 
         if "PPPSupport" in active_plugins:
             rb_dun_blueman.props.active = True
