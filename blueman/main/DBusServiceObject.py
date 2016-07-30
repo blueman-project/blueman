@@ -277,7 +277,7 @@ class DBusServiceObject(GObject.Object):
                                    flags=GObject.ParamFlags.READWRITE|GObject.ParamFlags.CONSTRUCT_ONLY)
 
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+        super(DBusServiceObject, self).__init__(**kwargs)
         self.__dbus_info = DBusNodeInfo(path=self.object_path)
         self.__dbus_regids = []
 
@@ -326,7 +326,7 @@ class DBusServiceObject(GObject.Object):
             self.__dbus_export()
 
     def __dbus_export(self):
-        xml = ElementTree.tostring(self.__dbus_info.generate_xml(), encoding='unicode')
+        xml = ElementTree.tostring(self.__dbus_info.generate_xml(), encoding='UTF-8').decode()
         node_info = Gio.DBusNodeInfo.new_for_xml(xml)
         logging.debug('--- XML: ---\n%s\n-------' %node_info.generate_xml(0).str)
 
