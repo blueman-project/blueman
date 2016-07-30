@@ -8,6 +8,9 @@ from blueman.Functions import get_icon, composite_icon
 import weakref
 import logging
 
+from dbus.mainloop.glib import DBusGMainLoop
+DBusGMainLoop(set_as_default=True)
+
 
 class ConnectionHandler:
     def __init__(self, parent, service, reply, err):
