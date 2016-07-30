@@ -22,6 +22,7 @@ from dbus.mainloop.glib import DBusGMainLoop
 try: import __builtin__ as builtins
 except ImportError: import builtins
 
+import gi
 from gi.repository import GLib
 import syslog
 
@@ -35,6 +36,13 @@ import blueman.plugins.mechanism
 from blueman.plugins.MechanismPlugin import MechanismPlugin
 
 from blueman.main.DbusService import DbusService
+
+try:
+    gi.require_version('Polkit', '1.0')
+    from gi.repository import Polkit
+except ImportError:
+    if POLKIT: raise
+    else: pass
 
 
 class Tee(object):
@@ -121,8 +129,7 @@ class conf_service(DbusService):
 
         if POLKIT:
             try:
-                o = self.bus.get_object("org.freedesktop.PolicyKit1", "/org/freedesktop/PolicyKit1/Authority", True)
-                self.pk = dbus.proxies.Interface(o, "org.freedesktop.PolicyKit1.Authority")
+                self.pk = Polkit.Authority.get_sync()
             except:
                 self.pk = None
         else:
@@ -155,11 +162,15 @@ class conf_service(DbusService):
                 raise dbus.DBusException(
                     "Blueman was built with PolicyKit-1 support, but it's not available on the system")
 
-        res = self.pk.CheckAuthorization(("system-bus-name", {"name": busname}),
-                                         action_id, dbus.Dictionary({}, dbus.Signature("ss")), 0x1, "")
+        subject = Polkit.SystemBusName.new(busname)
+        res = self.pk.check_authorization_sync(subject,
+                                               action_id,
+                                               None,
+                                               Polkit.CheckAuthorizationFlags.ALLOW_USER_INTERACTION,
+                                               None)
 
-        dprint(res)
-        (is_authorized, is_challenge, details) = res
+        is_authorized = res.get_is_authorized()
+        dprint(is_authorized)
         if not is_authorized:
             raise dbus.DBusException("Not authorized")
 
