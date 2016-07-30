@@ -9,6 +9,9 @@ from gi.repository import Gio, GLib
 from blueman.plugins.AppletPlugin import AppletPlugin
 from uuid import uuid4
 
+from dbus.mainloop.glib import DBusGMainLoop
+DBusGMainLoop(set_as_default=True)
+
 
 class NewConnectionBuilder:
     DEVICE_STATE_DISCONNECTED = 30

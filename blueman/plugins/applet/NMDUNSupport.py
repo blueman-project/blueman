@@ -12,6 +12,9 @@ from blueman.Sdp import uuid128_to_uuid16, DIALUP_NET_SVCLASS_ID
 from blueman.Functions import get_icon, composite_icon, dprint
 import weakref
 
+from dbus.mainloop.glib import DBusGMainLoop
+DBusGMainLoop(set_as_default=True)
+
 
 class ConnectionHandler:
     def __init__(self, parent, service, reply, err):
