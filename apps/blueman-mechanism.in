@@ -22,7 +22,7 @@ from dbus.mainloop.glib import DBusGMainLoop
 try: import __builtin__ as builtins
 except ImportError: import builtins
 
-from gi.repository import GLib
+from gi.repository import Gio, GLib
 import syslog
 
 loop = GLib.MainLoop()
@@ -121,8 +121,13 @@ class conf_service(DbusService):
 
         if POLKIT:
             try:
-                o = self.bus.get_object("org.freedesktop.PolicyKit1", "/org/freedesktop/PolicyKit1/Authority", True)
-                self.pk = dbus.proxies.Interface(o, "org.freedesktop.PolicyKit1.Authority")
+                self.pk = Gio.DBusProxy.new_for_bus_sync(
+                    Gio.BusType.SYSTEM,
+                    Gio.DBusProxyFlags.NONE,
+                    None,
+                    'org.freedesktop.PolicyKit1',
+                    '/org/freedesktop/PolicyKit1/Authority',
+                    'org.freedesktop.PolicyKit1.Authority')
             except:
                 self.pk = None
         else:
@@ -146,7 +151,7 @@ class conf_service(DbusService):
             dprint("loading", cls.__name__)
             cls(self)
 
-    def confirm_authorization(self, busname, action_id):
+    def confirm_authorization(self, subject, action_id):
         self.timer.reset()
         if not POLKIT:
             return
@@ -155,10 +160,11 @@ class conf_service(DbusService):
                 raise dbus.DBusException(
                     "Blueman was built with PolicyKit-1 support, but it's not available on the system")
 
-        res = self.pk.CheckAuthorization(("system-bus-name", {"name": busname}),
-                                         action_id, dbus.Dictionary({}, dbus.Signature("ss")), 0x1, "")
+        v_subject = GLib.Variant('s', subject)
+        res = self.pk.CheckAuthorization(str('((sa{sv})sa{ss}us)'),("system-bus-name", {"name": v_subject}),
+                                         action_id, {}, 1, "")
 
-        dprint(res)
+        dprint(str(res))
         (is_authorized, is_challenge, details) = res
         if not is_authorized:
             raise dbus.DBusException("Not authorized")
