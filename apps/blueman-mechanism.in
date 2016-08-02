@@ -128,7 +128,8 @@ class conf_service(DbusService):
                     'org.freedesktop.PolicyKit1',
                     '/org/freedesktop/PolicyKit1/Authority',
                     'org.freedesktop.PolicyKit1.Authority')
-            except:
+            except Exception as e:
+                dprint(e)
                 self.pk = None
         else:
             self.pk = None
