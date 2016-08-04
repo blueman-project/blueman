@@ -5,8 +5,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 from blueman.Functions import dprint
-from gi.repository import GLib
-import dbus
+from gi.repository import Gio, GLib
 from blueman.plugins.AppletPlugin import AppletPlugin
 from uuid import uuid4
 
@@ -25,8 +24,24 @@ class NewConnectionBuilder:
         self.device = None
         self.connection = None
 
-        parent.bus.add_signal_receiver(self.on_nm_device_added, "DeviceAdded", "org.freedesktop.NetworkManager")
-        parent.bus.add_signal_receiver(self.on_nma_new_connection, "NewConnection", self.parent.settings_interface)
+        self.signal_subs = []
+
+        nm_sub = parent._bus.signal_subscribe(self.parent.nm_manager_name,
+                                              self.parent.nm_manager_interface,
+                                              'DeviceAdded',
+                                              None,
+                                              None,
+                                              Gio.DBusSignalFlags.NONE,
+                                              self.on_nm_device_added)
+        self.signal_subs.append(nm_sub)
+        nms_sub = parent._bus.signal_subscribe(self.parent.nm_manager_name,
+                                               self.parent.nm_settings_interface,
+                                               'NewConnection',
+                                               None,
+                                               None,
+                                               Gio.DBusSignalFlags.NONE,
+                                               self.on_nma_new_connection)
+        self.signal_subs.append(nms_sub)
 
         self.device = self.parent.find_device(service.device['Address'])
 
@@ -34,41 +49,42 @@ class NewConnectionBuilder:
         if not self.connection:
             # Newer versions that support BlueZ 5 add a default connection automatically
             # However users may have removed the connection and we error out
-            addr_bytes = bytearray.fromhex(str.replace(str(service.device['Address']), ':', ' '))
-            parent.nma.AddConnection({
-                'connection':   {'id': '%s Network' % service.device['Alias'], 'uuid': str(uuid4()),
-                                 'autoconnect': False, 'type': 'bluetooth'},
-                'bluetooth':    {'bdaddr': dbus.ByteArray(addr_bytes), 'type': 'panu'},
-                'ipv4':         {'method': 'auto'},
-                'ipv6':         {'method': 'auto'}
+            addr_bytes = bytearray.fromhex(service.device['Address'].replace(':', ' '))
+            parent.nm_settings.AddConnection('(a{sa{sv}})', {
+                'connection': {'id': GLib.Variant.new_string('%s Network' % service.device['Alias']),
+                               'uuid': GLib.Variant.new_string(str(uuid4())),
+                               'autoconnect': GLib.Variant.new_boolean(False),
+                               'type': GLib.Variant.new_string('bluetooth')},
+                'bluetooth': {'bdaddr': GLib.Variant.new_bytestring_array(addr_bytes),
+                              'type': GLib.Variant.new_string('panu')},
+                'ipv4': {'method': GLib.Variant.new_string('auto')},
+                'ipv6': {'method': GLib.Variant.new_string('auto')}
             })
             GLib.timeout_add(1000, self.signal_wait_timeout)
         else:
             self.init_connection()
 
     def cleanup(self):
-        self.parent.bus.remove_signal_receiver(self.on_nm_device_added, "DeviceAdded", "org.freedesktop.NetworkManager")
-        self.parent.bus.remove_signal_receiver(self.on_nma_new_connection, "NewConnection",
-                                               self.parent.settings_interface)
-        self.parent.bus.remove_signal_receiver(self.on_device_state, "StateChanged",
-                                               "org.freedesktop.NetworkManager.Device", path=self.device)
+        for sub in self.signal_subs:
+            self.parent._bus.signal_unsubscribe(sub)
+        self.signal_subs = []
 
     def signal_wait_timeout(self):
         if not self.device or not self.connection:
-            self.err_cb(dbus.DBusException("Network Manager did not support the connection"))
+            self.err_cb(GLib.Error("Network Manager did not support the connection"))
             if self.connection:
                 self.remove_connection()
             self.cleanup()
 
-    def on_nm_device_added(self, path):
-        dprint(path)
-        self.device = path
+    def on_nm_device_added(self, connection, sender_name, object_path, interface_name, signal_name, param):
+        dprint(object_path)
+        self.device = object_path
         if self.device and self.connection:
             self.init_connection()
 
-    def on_nma_new_connection(self, path):
-        dprint(path)
-        self.connection = path
+    def on_nma_new_connection(self, connection, sender_name, object_path, interface_name, signal_name, param):
+        dprint(object_path)
+        self.connection = object_path
         if self.device and self.connection:
             self.init_connection()
 
@@ -76,27 +92,34 @@ class NewConnectionBuilder:
         self.cleanup()
         dprint("activating", self.connection, self.device)
         if not self.device or not self.connection:
-            self.err_cb(dbus.DBusException("Network Manager did not support the connection"))
+            self.err_cb(GLib.Error("Network Manager did not support the connection"))
             self.cleanup()
         else:
-            self.parent.bus.add_signal_receiver(self.on_device_state, "StateChanged",
-                                                "org.freedesktop.NetworkManager.Device", path=self.device)
+            sub = self.parent._bus.signal_subscribe(self.parent.nm_manager_name,
+                                                    'org.freedesktop.NetworkManager.Device',
+                                                    'StateChanged',
+                                                    self.device,
+                                                    None,
+                                                    Gio.DBusSignalFlags.NONE,
+                                                    self.on_device_state)
 
+            self.signal_subs.append(sub)
             args = [self.connection, self.device, self.connection]
 
-            self.parent.nm.ActivateConnection(*args)
+            self.parent.nm_manager.ActivateConnection(str('(ooo)'), *args)
 
-    def on_device_state(self, state, oldstate, reason):
+    def on_device_state(self, connection, sender_name, object_path, interface_name, signal_name, param):
+        state, oldstate, reason = param.unpack()
         dprint("state=", state, "oldstate=", oldstate, "reason=", reason)
         if (state <= self.DEVICE_STATE_DISCONNECTED or state == self.DEVICE_STATE_DEACTIVATING) and \
                                 self.DEVICE_STATE_DISCONNECTED < oldstate <= self.DEVICE_STATE_ACTIVATED:
             if self.err_cb:
-                self.err_cb(dbus.DBusException("Connection was interrupted"))
+                self.err_cb(GLib.Error("Connection was interrupted"))
 
             self.cleanup()
 
         elif state == self.DEVICE_STATE_FAILED:
-            self.err_cb(dbus.DBusException("Network Manager Failed to activate the connection"))
+            self.err_cb(GLib.Error("Network Manager Failed to activate the connection"))
             self.cleanup()
 
         elif state == self.DEVICE_STATE_ACTIVATED:
@@ -114,39 +137,82 @@ class NMPANSupport(AppletPlugin):
     __priority__ = 2
 
     def on_load(self, applet):
-        self.bus = dbus.SystemBus()
-        self.nma = None
-        self.nm = None
+        self.nm_manager = None
+        self.nm_settings = None
+        self.watch_id = None
 
-        self.watches = [self.bus.watch_name_owner("org.freedesktop.NetworkManager", self.on_nm_owner_changed)]
-
-        self.settings_bus = 'org.freedesktop.NetworkManager'
-        self.settings_interface = 'org.freedesktop.NetworkManager.Settings'
+        self.nm_manager_name = self.nm_manager_interface = 'org.freedesktop.NetworkManager'
+        self.nm_manager_path = '/org/freedesktop/NetworkManager'
+        self.nm_settings_interface = 'org.freedesktop.NetworkManager.Settings'
         self.connection_settings_interface = 'org.freedesktop.NetworkManager.Settings.Connection'
-        self.settings_path = "/org/freedesktop/NetworkManager/Settings"
+        self.nm_settings_path = "/org/freedesktop/NetworkManager/Settings"
+
+        Gio.bus_get(Gio.BusType.SYSTEM, None, self.on_dbus_connection_finnish)
+
+    def on_dbus_connection_finnish(self, cancellable, result):
+        self._bus = Gio.bus_get_finish(result)
+        watch = Gio.bus_watch_name(Gio.BusType.SYSTEM,
+                                   self.nm_manager_name,
+                                   Gio.BusNameWatcherFlags.NONE,
+                                   self.on_name_appeared, self.on_name_vanished)
+        self.watch_id = watch
+
+    def on_name_appeared(self, connection, name, owner):
+        Gio.DBusProxy.new(connection,
+                          Gio.DBusProxyFlags.NONE,
+                          None,
+                          self.nm_manager_name,
+                          self.nm_manager_path,
+                          self.nm_manager_interface,
+                          None,
+                          self.on_proxy_finnish,
+                          'nm-manager')
+
+        Gio.DBusProxy.new(connection,
+                          Gio.DBusProxyFlags.NONE,
+                          None,
+                          self.nm_manager_name,
+                          self.nm_settings_path,
+                          self.nm_settings_interface,
+                          None,
+                          self.on_proxy_finnish,
+                          'nm-settings')
+
+    def on_name_vanished(self, connection, name):
+        self.nm_manager = None
+        self.nm_settings = None
+
+    def on_proxy_finnish(self, proxy, result, nm_name):
+        nm_proxy = proxy.new_finish(result)
+        if nm_name == 'nm-manager':
+            self.nm_manager = nm_proxy
+        elif nm_name == 'nm-settings':
+            self.nm_settings = nm_proxy
 
     @staticmethod
     def format_bdaddr(addr):
         return "%02X:%02X:%02X:%02X:%02X:%02X" % (addr[0], addr[1], addr[2], addr[3], addr[4], addr[5])
 
     def find_device(self, bdaddr):
-        devices = self.nm.GetDevices()
+        devices = self.nm_manager.GetDevices()
         for dev in devices:
             try:
-                d = self.bus.call_blocking("org.freedesktop.NetworkManager", dev, "org.freedesktop.DBus.Properties",
-                                           "GetAll", "s", ["org.freedesktop.NetworkManager.Device.Bluetooth"])
+                d = self._bus.call_sync(self.nm_manager_name, dev, "org.freedesktop.DBus.Properties", "GetAll",
+                                        GLib.Variant("(s)", ("org.freedesktop.NetworkManager.Device.Bluetooth",)),
+                                        None, Gio.DBusCallFlags.NONE, GLib.MAXINT, None).unpack()[0]
+
                 if d["HwAddress"] == bdaddr:
                     dprint(d["HwAddress"])
                     return dev
 
-            except dbus.DBusException:
+            except GLib.Error:
                 pass
 
     def find_connection(self, address, t):
-        conns = self.nma.ListConnections()
+        conns = self.nm_settings.ListConnections()
         for conn in conns:
-            c = self.bus.call_blocking(self.settings_bus, conn, self.connection_settings_interface, "GetSettings", "",
-                                       [])
+            c = self._bus.call_sync(self.nm_manager_name, conn, self.connection_settings_interface, "GetSettings",
+                                    None, None, Gio.DBusCallFlags.NONE, GLib.MAXINT, None).unpack()[0]
             try:
                 if (self.format_bdaddr(c["bluetooth"]["bdaddr"]) == address) and c["bluetooth"]["type"] == t:
                     return conn
@@ -154,49 +220,32 @@ class NMPANSupport(AppletPlugin):
                 pass
 
     def find_active_connection(self, address, conntype):
-        props = self.bus.call_blocking("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager",
-                                       "org.freedesktop.DBus.Properties", "GetAll", "s",
-                                       ["org.freedesktop.NetworkManager"])
+        props = self._bus.call_sync(self.nm_manager_name, self.nm_manager_path,
+                                    "org.freedesktop.DBus.Properties", "GetAll",
+                                    GLib.Variant("(s)", ("org.freedesktop.NetworkManager",)), None,
+                                    Gio.DBusCallFlags.NONE, GLib.MAXINT, None).unpack()[0]
 
         nma_connection = self.find_connection(address, conntype)
         if nma_connection:
             active_conns = props["ActiveConnections"]
             for conn in active_conns:
-                conn_props = self.bus.call_blocking("org.freedesktop.NetworkManager",
-                                                    conn,
-                                                    "org.freedesktop.DBus.Properties",
-                                                    "GetAll",
-                                                    "s",
-                                                    ["org.freedesktop.NetworkManager.Connection.Active"])
+                conn_props = self._bus.call_sync(self.nm_manager_name, conn,
+                                                 "org.freedesktop.DBus.Properties", "GetAll",
+                                                 GLib.Variant("(s)", ("org.freedesktop.NetworkManager.Connection.Active",)),
+                                                 None, Gio.DBusCallFlags.NONE, GLib.MAXINT, None).unpack()[0]
 
                 if conn_props["Connection"] == nma_connection:
                     return conn
 
-    def on_nma_owner_changed(self, owner):
-        if owner == "":
-            self.nma = None
-        else:
-            service = self.bus.get_object(self.settings_bus, self.settings_path)
-            self.nma = dbus.proxies.Interface(service, self.settings_interface)
-
-    def on_nm_owner_changed(self, owner):
-        if owner == "":
-            self.nm = None
-        else:
-            service = self.bus.get_object("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager")
-            self.nm = dbus.proxies.Interface(service, "org.freedesktop.NetworkManager")
-            self.on_nma_owner_changed(owner)
-
     def on_unload(self):
-        for watch in self.watches:
-            watch.cancel()
+        Gio.bus_unwatch_name(self.watch_id)
 
     def service_connect_handler(self, service, ok, err):
         if service.group != 'network':
             return
 
         if self.find_active_connection(service.device['Address'], "panu"):
-            err(dbus.DBusException(_("Already connected")))
+            err(GLib.Error(_("Already connected")))
         else:
             NewConnectionBuilder(self, service, ok, err)
 
@@ -212,11 +261,6 @@ class NMPANSupport(AppletPlugin):
         if not active_conn_path:
             return
 
-        self.bus.call_blocking("org.freedesktop.NetworkManager",
-                               "/org/freedesktop/NetworkManager",
-                               "org.freedesktop.NetworkManager",
-                               "DeactivateConnection",
-                               "o",
-                               [active_conn_path])
+        self.nm_manager.DeactivateConnection(str('(o)'), active_conn_path)
         ok()
         return True
