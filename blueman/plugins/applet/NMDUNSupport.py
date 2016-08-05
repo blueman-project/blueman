@@ -70,7 +70,7 @@ class ConnectionHandler:
 
             Notification(_("Bluetooth Dialup"),
                          _("DUN connection on %s will now be available in Network Manager") % self.service.device['Alias'],
-                         image_data=icon, status_icon=self.parent.Applet.Plugins.StatusIcon)
+                         image_data=icon, pos_hint=self.parent.Applet.Plugins.StatusIcon.geometry)
 
             self.reply(self.rfcomm_dev)
             self.cleanup()

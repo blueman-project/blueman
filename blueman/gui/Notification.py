@@ -33,7 +33,7 @@ class Fade(AnimBase):
 
 class _NotificationDialog(Gtk.MessageDialog):
     def __init__(self, summary, message, timeout=-1, actions=None, actions_cb=None,
-                 icon_name=None, image_data=None, status_icon=None):
+                 icon_name=None, image_data=None, pos_hint=None):
         super(_NotificationDialog, self).__init__(parent=None, flags=0,
             type=Gtk.MessageType.QUESTION, buttons=Gtk.ButtonsType.NONE,
             message_format=None)
@@ -131,7 +131,7 @@ class _NotificationDialog(Gtk.MessageDialog):
 
 class _NotificationBubble(Notify.Notification):
     def __new__(cls, summary, message, timeout=-1, actions=None, actions_cb=None,
-                icon_name=None, image_data=None, status_icon=None):
+                icon_name=None, image_data=None, pos_hint=None):
         self = Notify.Notification.new(summary, message, None)
 
         def on_notification_closed(n, *args):
@@ -156,10 +156,10 @@ class _NotificationBubble(Notify.Notification):
         closed_sig = self.connect("closed", on_notification_closed)
         if timeout != -1:
             self.set_timeout(timeout)
-        if status_icon:
-            _, screen, area, orientation = status_icon.get_geometry()
-            hint_x = GLib.Variant('i', area.x + area.width / 2)
-            hint_y = GLib.Variant('i', area.y + area.height / 2)
+        if pos_hint:
+            x, y, width, height = pos_hint
+            hint_x = GLib.Variant('i', x + width / 2)
+            hint_y = GLib.Variant('i', y + height / 2)
             self.set_hint("x", hint_x)
             self.set_hint("y", hint_y)
 
@@ -178,7 +178,7 @@ class Notification(object):
         return "body" in Notify.get_server_caps()
 
     def __new__(cls, summary, message, timeout=-1, actions=None, actions_cb=None,
-                icon_name=None, image_date=None, status_icon=None):
+                icon_name=None, image_date=None, pos_hint=None):
         forced_fallback = not Config('org.blueman.general')['notification-daemon']
 
         if forced_fallback or not cls.body_supported() or (actions and not cls.actions_supported()):
@@ -190,7 +190,7 @@ class Notification(object):
         else:
             klass = _NotificationBubble
 
-        return klass(summary, message, timeout, actions, actions_cb, icon_name, image_date, status_icon)
+        return klass(summary, message, timeout, actions, actions_cb, icon_name, image_date, pos_hint)
 
     # stub to satisfy pylint
     def close(self):

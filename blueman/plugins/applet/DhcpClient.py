@@ -48,19 +48,19 @@ class DhcpClient(AppletPlugin):
                 dprint(result)
                 Notification(_("Bluetooth Network"),
                              _("Interface %(0)s bound to IP address %(1)s") % {"0": device, "1": result},
-                             icon_name="network-workgroup", status_icon=self.Applet.Plugins.StatusIcon)
+                             icon_name="network-workgroup", pos_hint=self.Applet.Plugins.StatusIcon.geometry)
 
                 self.quering.remove(device)
 
             def err(_obj, result, _user_data):
                 dprint(result)
                 Notification(_("Bluetooth Network"), _("Failed to obtain an IP address on %s") % (device),
-                             icon_name="network-workgroup", status_icon=self.Applet.Plugins.StatusIcon)
+                             icon_name="network-workgroup", pos_hint=self.Applet.Plugins.StatusIcon.geometry)
 
                 self.quering.remove(device)
 
             Notification(_("Bluetooth Network"), _("Trying to obtain an IP address on %s\nPlease wait..." % device),
-                         icon_name="network-workgroup", status_icon=self.Applet.Plugins.StatusIcon)
+                         icon_name="network-workgroup", pos_hint=self.Applet.Plugins.StatusIcon.geometry)
 
             m = Mechanism()
             m.DhcpClient(str('(s)'), device, result_handler=reply, error_handler=err, timeout=120)
