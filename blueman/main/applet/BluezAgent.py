@@ -12,7 +12,6 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import GLib
-from gi.repository import Gio
 
 if sys.version_info.major == 2:
     from cgi import escape
