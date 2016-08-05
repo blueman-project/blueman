@@ -261,14 +261,12 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         def reply(*args):
             label_text = item["mitem"].get_child().get_children()[1].get_text()
             Notification(_("Connected"), _("Connected to %s") % label_text,
-                         pixbuf=get_icon(item["icon"], 48),
-                         status_icon=self.Applet.Plugins.StatusIcon)
+                         icon_name=item["icon"], status_icon=self.Applet.Plugins.StatusIcon)
             item["mitem"].props.sensitive = True
 
         def err(reason):
             Notification(_("Failed to connect"), str(reason).split(": ")[-1],
-                         pixbuf=get_icon("dialog-error", 48),
-                         status_icon=self.Applet.Plugins.StatusIcon)
+                         icon_name="dialog-error", status_icon=self.Applet.Plugins.StatusIcon)
             item["mitem"].props.sensitive = True
 
         self.Applet.DbusSvc.connect_service(item["device"], item["uuid"], reply, err)

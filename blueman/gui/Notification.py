@@ -14,7 +14,7 @@ from gi.repository import Notify
 from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import GLib
-from blueman.Functions import dprint
+from blueman.Functions import dprint, get_icon
 from blueman.gui.GtkAnimation import AnimBase
 
 Notify.init("blueman")
@@ -32,7 +32,8 @@ class Fade(AnimBase):
 
 
 class _NotificationDialog(Gtk.MessageDialog):
-    def __init__(self, summary, message, timeout=-1, actions=None, actions_cb=None, pixbuf=None, status_icon=None):
+    def __init__(self, summary, message, timeout=-1, actions=None, actions_cb=None,
+                 icon_name=None, image_data=None, status_icon=None):
         super(_NotificationDialog, self).__init__(parent=None, flags=0,
             type=Gtk.MessageType.QUESTION, buttons=Gtk.ButtonsType.NONE,
             message_format=None)
@@ -65,8 +66,10 @@ class _NotificationDialog(Gtk.MessageDialog):
 
         self.props.window_position = Gtk.WindowPosition.CENTER
 
-        if pixbuf:
-            self.set_icon_from_pixbuf(pixbuf)
+        if icon_name:
+            self.set_icon_from_pixbuf(get_icon(icon_name, 48))
+        elif image_data:
+            self.set_icon_from_pixbuf(image_data)
 
         self.connect("response", self.dialog_response)
         self.props.icon_name = "blueman"
@@ -127,7 +130,8 @@ class _NotificationDialog(Gtk.MessageDialog):
 
 
 class _NotificationBubble(Notify.Notification):
-    def __new__(cls, summary, message, timeout=-1, actions=None, actions_cb=None, pixbuf=None, status_icon=None):
+    def __new__(cls, summary, message, timeout=-1, actions=None, actions_cb=None,
+                icon_name=None, image_data=None, status_icon=None):
         self = Notify.Notification.new(summary, message, None)
 
         def on_notification_closed(n, *args):
@@ -139,8 +143,10 @@ class _NotificationBubble(Notify.Notification):
             self.disconnect(closed_sig)
             actions_cb(n, action)
 
-        if pixbuf:
-            self.set_icon_from_pixbuf(pixbuf)
+        if icon_name:
+            self.set_icon_from_pixbuf(get_icon(icon_name, 48))
+        elif image_data:
+            self.set_icon_from_pixbuf(image_data)
 
         if actions:
             for action in actions:
@@ -171,7 +177,8 @@ class Notification(object):
     def body_supported():
         return "body" in Notify.get_server_caps()
 
-    def __new__(cls, summary, message, timeout=-1, actions=None, actions_cb=None, pixbuf=None, status_icon=None):
+    def __new__(cls, summary, message, timeout=-1, actions=None, actions_cb=None,
+                icon_name=None, image_date=None, status_icon=None):
         forced_fallback = not Config('org.blueman.general')['notification-daemon']
 
         if forced_fallback or not cls.body_supported() or (actions and not cls.actions_supported()):
@@ -183,7 +190,7 @@ class Notification(object):
         else:
             klass = _NotificationBubble
 
-        return klass(summary, message, timeout, actions, actions_cb, pixbuf, status_icon)
+        return klass(summary, message, timeout, actions, actions_cb, icon_name, image_date, status_icon)
 
     # stub to satisfy pylint
     def close(self):

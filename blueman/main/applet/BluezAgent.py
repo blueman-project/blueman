@@ -217,7 +217,7 @@ class BluezAgent(Agent):
             invocation.return_dbus_error('org.bluez.Error.Canceled', 'Canceled')
 
         if notification:
-            Notification(_("Bluetooth Authentication"), notify_message, pixbuf=get_icon("blueman", 48),
+            Notification(_("Bluetooth Authentication"), notify_message, icon_name="blueman",
                          status_icon=self.status_icon)
         #self.applet.status_icon.set_blinking(True)
 
@@ -276,8 +276,7 @@ class BluezAgent(Agent):
         self.signal_id = dev.connect_signal("property-changed", self._on_device_property_changed)
 
         notify_message = _("Pairing passkey for") + " %s: %s" % (self.get_device_alias(device), passkey)
-        self.n = Notification("Bluetooth", notify_message, 0,
-                              pixbuf=get_icon("blueman", 48), status_icon=self.status_icon)
+        self.n = Notification("Bluetooth", notify_message, 0, icon_name="blueman", status_icon=self.status_icon)
 
     def _on_display_pin_code(self, parameters, invocation):
         device, pin_code = parameters.unpack()
@@ -286,8 +285,7 @@ class BluezAgent(Agent):
         self.signal_id = dev.connect_signal("property-changed", self._on_device_property_changed)
 
         notify_message = _("Pairing PIN code for") + " %s: %s" % (self.get_device_alias(device), pin_code)
-        self.n = Notification("Bluetooth", notify_message, 0,
-                              pixbuf=get_icon("blueman", 48), status_icon=self.status_icon)
+        self.n = Notification("Bluetooth", notify_message, 0, icon_name="blueman", status_icon=self.status_icon)
 
     def _on_request_confirmation(self, parameters, invocation):
         def on_confirm_action(n, action):
@@ -310,8 +308,8 @@ class BluezAgent(Agent):
             notify_message += "\n" + _("Confirm value for authentication:") + " <b>%s</b>" % passkey
         actions = [["confirm", _("Confirm")], ["deny", _("Deny")]]
 
-        self.n = Notification("Bluetooth", notify_message, 0, actions, on_confirm_action,
-                              pixbuf=get_icon("blueman", 48), status_icon=self.status_icon)
+        self.n = Notification("Bluetooth", notify_message, 0, actions, on_confirm_action, icon_name="blueman",
+                              status_icon=self.status_icon)
 
     def _on_request_authorization(self, parameters, invocation):
         self._on_request_confirmation(parameters, invocation)
@@ -342,7 +340,6 @@ class BluezAgent(Agent):
                    ["accept", _("Accept")],
                    ["deny", _("Deny")]]
 
-        n = Notification(_("Bluetooth Authentication"), notify_message, 0,
-                         actions, on_auth_action,
-                         pixbuf=get_icon("blueman", 48), status_icon=self.status_icon)
+        n = Notification(_("Bluetooth Authentication"), notify_message, 0, actions, on_auth_action,
+                         icon_name="blueman", status_icon=self.status_icon)
         n._device = device

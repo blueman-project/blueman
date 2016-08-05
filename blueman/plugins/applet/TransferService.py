@@ -102,13 +102,13 @@ class Agent(obex.Agent):
                 _("Incoming file %(0)s from %(1)s") % {"0": "<b>" + filename + "</b>",
                                                        "1": "<b>" + name + "</b>"},
                 30000, [["accept", _("Accept"), "help-about"], ["reject", _("Reject"), "help-about"]], on_action,
-                pixbuf=get_icon("blueman", 48), status_icon=status_icon)
+                icon_name="blueman", status_icon=status_icon)
         # Device is trusted or was already allowed, larger file -> display a notification, but auto-accept
         elif size > 350000:
             self._notification = Notification(_("Receiving file"),
                 _("Receiving file %(0)s from %(1)s") % {"0": "<b>" + filename + "</b>",
                                                         "1": "<b>" + name + "</b>"},
-                pixbuf=get_icon("blueman", 48), status_icon=status_icon)
+                icon_name="blueman", status_icon=status_icon)
             on_action(self._notification, 'accept')
         # Device is trusted or was already allowed. very small file -> auto-accept and transfer silently
         else:
@@ -246,14 +246,14 @@ class TransferService(AppletPlugin):
                              _("File %(0)s from %(1)s successfully received") % {
                                  "0": "<b>" + filename + "</b>",
                                  "1": "<b>" + attributes['name'] + "</b>"},
-                             pixbuf=get_icon("blueman", 48), status_icon=status_icon)
+                             icon_name="blueman", status_icon=status_icon)
             self._add_open(n, "Open", dest)
         elif not success:
             Notification(_("Transfer failed"),
                          _("Transfer of file %(0)s failed") % {
                              "0": "<b>" + filename + "</b>",
                              "1": "<b>" + attributes['name'] + "</b>"},
-                         pixbuf=get_icon("blueman", 48), status_icon=status_icon)
+                         icon_name="blueman", status_icon=status_icon)
 
             if attributes['size'] > 350000:
                 self._normal_transfers -= 1
@@ -275,7 +275,7 @@ class TransferService(AppletPlugin):
             n = Notification(_("Files received"),
                              ngettext("Received %d file in the background", "Received %d files in the background",
                                       self._silent_transfers) % self._silent_transfers,
-                             pixbuf=get_icon("blueman", 48), status_icon=status_icon)
+                             icon_name="blueman", status_icon=status_icon)
 
             self._add_open(n, "Open Location", self._config["shared-path"])
         else:
@@ -283,5 +283,5 @@ class TransferService(AppletPlugin):
                              ngettext("Received %d more file in the background",
                                       "Received %d more files in the background",
                                       self._silent_transfers) % self._silent_transfers,
-                             pixbuf=get_icon("blueman", 48), status_icon=status_icon)
+                             icon_name="blueman", status_icon=status_icon)
             self._add_open(n, "Open Location", self._config["shared-path"])

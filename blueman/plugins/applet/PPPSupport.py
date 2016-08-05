@@ -49,8 +49,7 @@ class Connection:
         msg = _("Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\n"
                 "Network is now available through <b>%(1)s</b>") % {"0": self.service.device['Alias'], "1": result}
 
-        Notification(_("Connected"), msg, pixbuf=get_icon("network-wireless", 48),
-                     status_icon=self.Applet.Plugins.StatusIcon)
+        Notification(_("Connected"), msg, icon_name="network-wireless", status_icon=self.Applet.Plugins.StatusIcon)
 
 
 class PPPSupport(AppletPlugin):
