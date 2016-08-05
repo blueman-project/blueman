@@ -4,6 +4,7 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
+import sys
 from locale import bind_textdomain_codeset
 from blueman.Functions import get_icon, dprint
 
@@ -12,7 +13,12 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import GLib
 from gi.repository import Gio
-import cgi
+
+if sys.version_info.major == 2:
+    from cgi import escape
+else:
+    from html import escape
+
 import blueman.bluez as Bluez
 from blueman.Sdp import *
 from blueman.Constants import *
@@ -105,7 +111,7 @@ class BluezAgent(Agent):
         name = props.get('Name', address)
         alias = address
         if name:
-            alias = "<b>%s</b> (%s)" % (cgi.escape(name), address)
+            alias = "<b>%s</b> (%s)" % (escape(name), address)
         return alias
 
     def ask_passkey(self, dialog_msg, notify_msg, is_numeric, notification, parameters, invocation):
