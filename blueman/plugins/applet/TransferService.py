@@ -117,7 +117,6 @@ class Agent(obex.Agent):
     def _on_cancel(self, parameters, invocation):
         self._notification.close()
         invocation.return_dbus_error('org.bluez.obex.Error.Canceled', 'Canceled')
-        agent.reply(obex.Error.Canceled)
 
 
 class TransferService(AppletPlugin):
