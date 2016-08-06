@@ -4,7 +4,7 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-import sys
+import os, sys
 from locale import bind_textdomain_codeset
 from blueman.Functions import get_icon, dprint
 
@@ -18,12 +18,57 @@ if sys.version_info.major == 2:
 else:
     from html import escape
 
+import random
+from xml.etree import ElementTree
 import blueman.bluez as Bluez
 from blueman.Sdp import *
 from blueman.Constants import *
 from blueman.gui.Notification import Notification
 
 from blueman.bluez.Agent import Agent
+
+
+def bt_class_to_string(bt_class):
+    n1 =  (bt_class & 0x1f00) >> 8
+    if n1 == 0x03:
+        return "network"
+    elif n1 == 0x04:
+        n2 = (bt_class & 0xfc) >> 2
+        if n2 in (0x01, 0x02):
+            return "headset"
+        elif n2 == 0x06:
+            return "headphone"
+        else:
+            return "audio"
+    elif n1 == 0x05:
+        n2 = (bt_class & 0xc0) >> 6
+        if n2 == 0x00:
+            n3 = (bt_class & 0x1e) >> 2
+            if n3 in [0x01, 0x02]:
+                return "joypad"
+        elif n2 == 0x01:
+            return "keyboard"
+        elif n2 == 0x02:
+            n3 = (bt_class & 0x1e) >> 2
+            if n3 == 0x05:
+                return "tablet"
+            else:
+                return "mouse"
+    elif n1 == 0x06:
+        if bt_class & 0x80:
+            return "printer"
+    else:
+        return None
+
+PIN_SEARCHES = [
+    "./device[@oui='{oui}'][@type='{type}'][@name='{name}']",
+    "./device[@oui='{oui}'][@type='{type}']",
+    "./device[@oui='{oui}'][@name='{name}']",
+    "./device[@type='{type}'][@name='{name}']",
+    "./device[@oui='{oui}']",
+    "./device[@name='{name}']",
+    "./device[@type='{type}']",
+    ]
 
 class BluezAgent(Agent):
     __agent_path = '/org/bluez/agent/blueman'
@@ -36,6 +81,7 @@ class BluezAgent(Agent):
         self.n = None
         self.signal_id = None
         self.time_func = time_func
+        self._db = None
 
     def register_agent(self):
         dprint()
@@ -113,6 +159,29 @@ class BluezAgent(Agent):
             alias = "<b>%s</b> (%s)" % (escape(name), address)
         return alias
 
+    def _lookup_default_pin(self, device_path):
+        if not self._db:
+            self._db = ElementTree.parse(os.path.join(PKGDATA_DIR, 'pin-code-database.xml'))
+
+        device = Bluez.Device(device_path)
+        lookup_dict = {}
+        lookup_dict['name'] = device['Name']
+        lookup_dict['type'] = bt_class_to_string(device['Class'])
+        lookup_dict['oui'] = device['Address'][:9]
+
+        pin = None
+        for s in PIN_SEARCHES:
+            search = s.format(**lookup_dict)
+            entry = self._db.find(search)
+            if entry is not None:
+                pin = entry.get('pin')
+                break
+
+        if pin is not None:
+            if 'max:' in pin:
+                pin = "".join(random.sample('123456789', int(pin[-1])))
+        return pin
+
     def ask_passkey(self, dialog_msg, notify_msg, is_numeric, notification, parameters, invocation):
         device_path = parameters.unpack()[0]
 
@@ -180,6 +249,14 @@ class BluezAgent(Agent):
         dprint("Agent.RequestPinCode")
         dialog_msg = _("Enter PIN code for authentication:")
         notify_msg = _("Enter PIN code")
+
+        object_path = parameters.unpack()[0]
+        default_pin = self._lookup_default_pin(object_path)
+        if default_pin is not None:
+            dprint('Sending default pin: ', default_pin)
+            invocation.return_value(GLib.Variant('(s)', (default_pin,)))
+            return
+
         self.ask_passkey(dialog_msg, notify_msg, False, True, parameters, invocation)
         if self.dialog:
             self.dialog.present_with_time(self.time_func())
