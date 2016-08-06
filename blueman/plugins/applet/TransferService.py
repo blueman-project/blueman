@@ -51,7 +51,7 @@ class Agent(obex.Agent):
         raise Exception(self.__agent_path + " was released unexpectedly")
 
     def _on_authorize(self, parameters, invocation):
-        def on_action(_notification, action):
+        def on_action(action):
             dprint(action)
 
             if action == "accept":
@@ -103,17 +103,19 @@ class Agent(obex.Agent):
                                                        "1": "<b>" + name + "</b>"},
                 30000, [["accept", _("Accept"), "help-about"], ["reject", _("Reject"), "help-about"]], on_action,
                 icon_name="blueman", pos_hint=status_icon.geometry)
+            self._notification.show()
         # Device is trusted or was already allowed, larger file -> display a notification, but auto-accept
         elif size > 350000:
             self._notification = Notification(_("Receiving file"),
                 _("Receiving file %(0)s from %(1)s") % {"0": "<b>" + filename + "</b>",
                                                         "1": "<b>" + name + "</b>"},
                 icon_name="blueman", pos_hint=status_icon.geometry)
-            on_action(self._notification, 'accept')
+            on_action('accept')
+            self._notification.show()
         # Device is trusted or was already allowed. very small file -> auto-accept and transfer silently
         else:
             self._notification = None
-            on_action(self._notification, "accept")
+            on_action("accept")
 
     def _on_cancel(self, parameters, invocation):
         self._notification.close()
@@ -203,15 +205,14 @@ class TransferService(AppletPlugin):
 
     @staticmethod
     def _add_open(n, name, path):
-        if Notification.actions_supported():
+        if n.actions_supported:
             print("adding action")
 
             def on_open(*_args):
                 print("open")
                 launch("xdg-open", [path], True)
 
-            n.add_action("open", name, on_open, None)
-            n.show()
+            n.add_action("open", name, on_open)
 
     def _on_transfer_completed(self, _manager, transfer_path, success):
         try:
@@ -248,6 +249,7 @@ class TransferService(AppletPlugin):
                                  "1": "<b>" + attributes['name'] + "</b>"},
                              icon_name="blueman", pos_hint=status_icon.geometry)
             self._add_open(n, "Open", dest)
+            n.show()
         elif not success:
             Notification(_("Transfer failed"),
                          _("Transfer of file %(0)s failed") % {
@@ -278,6 +280,7 @@ class TransferService(AppletPlugin):
                              icon_name="blueman", pos_hint=status_icon.geometry)
 
             self._add_open(n, "Open Location", self._config["shared-path"])
+            n.show()
         else:
             n = Notification(_("Files received"),
                              ngettext("Received %d more file in the background",
@@ -285,3 +288,4 @@ class TransferService(AppletPlugin):
                                       self._silent_transfers) % self._silent_transfers,
                              icon_name="blueman", pos_hint=status_icon.geometry)
             self._add_open(n, "Open Location", self._config["shared-path"])
+            n.show()

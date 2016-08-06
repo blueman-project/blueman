@@ -9,15 +9,12 @@ from blueman.main.Config import Config
 import gi
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
-gi.require_version('Notify', '0.7')
-from gi.repository import Notify
 from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import GLib
+from gi.repository import Gio
 from blueman.Functions import dprint, get_icon
 from blueman.gui.GtkAnimation import AnimBase
-
-Notify.init("blueman")
 
 OPACITY_START = 0.7
 
@@ -40,6 +37,7 @@ class _NotificationDialog(Gtk.MessageDialog):
 
         self.set_name("NotificationDialog")
         i = 100
+        self.actions_supported = True
         self.actions = {}
         self.callback = actions_cb
         if actions:
@@ -89,14 +87,15 @@ class _NotificationDialog(Gtk.MessageDialog):
         self.connect("enter-notify-event", on_enter)
         self.connect("leave-notify-event", on_leave)
 
-        self.set_opacity(OPACITY_START)
-        self.present()
-        self.set_opacity(OPACITY_START)
-
     def dialog_response(self, dialog, response):
         if self.callback:
             self.callback(self, self.actions[response])
         self.hide()
+
+    def show(self):
+        self.set_opacity(OPACITY_START)
+        self.present()
+        self.set_opacity(OPACITY_START)
 
     def close(self):
         self.hide()
@@ -129,59 +128,162 @@ class _NotificationDialog(Gtk.MessageDialog):
         im.show()
 
 
-class _NotificationBubble(Notify.Notification):
-    def __new__(cls, summary, message, timeout=-1, actions=None, actions_cb=None,
-                icon_name=None, image_data=None, pos_hint=None):
-        self = Notify.Notification.new(summary, message, None)
+class _NotificationBubble(Gio.DBusProxy):
+    def __init__(self, summary, message, timeout=-1, actions=None, actions_cb=None,
+                 icon_name=None, image_data=None, pos_hint=None):
+        super(_NotificationBubble, self).__init__(
+            g_name='org.freedesktop.Notifications',
+            g_interface_name='org.freedesktop.Notifications',
+            g_object_path='/org/freedesktop/Notifications',
+            g_bus_type=Gio.BusType.SESSION,
+            g_flags=Gio.DBusProxyFlags.NONE)
 
-        def on_notification_closed(n, *args):
-            self.disconnect(closed_sig)
-            if actions_cb:
-                actions_cb(n, "closed")
+        self.init()
 
-        def on_action(n, action, *args):
-            self.disconnect(closed_sig)
-            actions_cb(n, action)
+        self._app_name = 'blueman'
+        self._app_icon = ''
+        self._actions = []
+        self._callbacks = {}
+        self._hints = {}
+
+        # hint : (variant format, spec version)
+        self._supported_hints = {
+            'action-icons': ('b', 1.2),
+            'category': ('s', 0),
+            'desktop-entry': ('s', 0),
+            'image-data': ('(iiibiiay)', 1.2),
+            'image_data': ('(iiibiiay)', 1.1),
+            'image-path': ('s', 1.2),
+            'image_path': ('s', 1.1),
+            'icon_data': ('(iiibiiay)', 0),
+            'resident': ('b', 1.2),
+            'sound-file': ('s', 0),
+            'sound-name': ('s', 0),
+            'suppress-sound': ('b', 0),
+            'transient': ('b', 1.2),
+            'x': ('i', 0),
+            'y': ('i', 0),
+            'urgency': ('y', 0)}
+
+        self._body = message
+        self._summary = summary
+        self._timeout = timeout
+        self._return_id = None
 
         if icon_name:
-            self.set_icon_from_pixbuf(get_icon(icon_name, 48))
+            self._app_icon = icon_name
         elif image_data:
-            self.set_icon_from_pixbuf(image_data)
+            w = image_data.props.width
+            h = image_data.props.height
+            stride = image_data.props.rowstride
+            alpha = image_data.props.has_alpha
+            bits = image_data.props.bits_per_sample
+            channel = image_data.props.n_channels
+            data = image_data.get_pixels()
+            supported_spec = float(self.server_information[-1])
+            if supported_spec < 1.1:
+                key = 'icon_data'
+            elif supported_spec < 1.2:
+                key = 'image_data'
+            elif supported_spec >= 1.2:
+                key = 'image-data'
+            else:
+                raise ValueError('Not supported by server')
+
+            self.set_hint(key, (w, h, stride, alpha, bits, channel, data))
 
         if actions:
             for action in actions:
-                self.add_action(action[0], action[1], on_action, None)
-            self.add_action("default", "Default Action", on_action, None)
+                self.add_action(action[0], action[1], actions_cb)
 
-        closed_sig = self.connect("closed", on_notification_closed)
-        if timeout != -1:
-            self.set_timeout(timeout)
         if pos_hint:
             x, y, width, height = pos_hint
-            hint_x = GLib.Variant('i', x + width / 2)
-            hint_y = GLib.Variant('i', y + height / 2)
-            self.set_hint("x", hint_x)
-            self.set_hint("y", hint_y)
+            self.set_hint('x', x + width / 2)
+            self.set_hint('y', y + height / 2)
 
-        self.show()
+        self._capabilities = self.GetCapabilities()
 
-        return self
+    @property
+    def server_information(self):
+        info = self.GetServerInformation()
+        return info
+
+    @property
+    def actions_supported(self):
+        return 'actions' in self._capabilities
+
+    def set_hint(self, key, val):
+        if key not in self._supported_hints:
+            raise ValueError('Unsupported hint')
+        fmt, spec_version = self._supported_hints[key]
+        if spec_version > float(self.server_information[-1]):
+            raise ValueError('Not supported by server')
+
+        param = GLib.Variant(fmt, val)
+        self._hints[key] = param
+
+    def remove_hint(self, key):
+        del (self._hints[key])
+
+    def clear_hints(self):
+        self._hints = {}
+
+    def add_action(self, action_id, label, callback=None):
+        self._actions.extend([action_id, label])
+        if callback:
+            self._callbacks[action_id] = callback
+
+    def clear_actions(self):
+        self._actions = []
+        self._callbacks = {}
+
+    def do_g_signal(self, sender_name, signal_name, params):
+        notif_id, signal_val = params.unpack()
+        if notif_id != self._return_id:
+            return
+
+        print(signal_val)
+
+        if signal_name == 'NotificationClosed':
+            if signal_val == 1:
+                dprint('The notification expired.')
+            elif signal_val == 2:
+                dprint('The notification was dismissed by the user.')
+            elif signal_val == 3:
+                dprint('The notification was closed by a call to CloseNotification.')
+            elif signal_val == 4:
+                dprint('Undefined/reserved reasons.')
+        elif signal_name == 'ActionInvoked':
+            if signal_val in self._callbacks:
+                self._callbacks[signal_val](signal_val)
+
+    def show(self):
+        replace_id = self._return_id if self._return_id else 0
+        return_id = self.Notify(str('(susssasa{sv}i)'), self._app_name, replace_id, self._app_icon,
+                                self._summary, self._body, self._actions, self._hints,
+                                self._timeout)
+        self._return_id = return_id
+
+    def close(self):
+        param = GLib.Variant('(u)', (self._return_id,))
+        self.call_sync('CloseNotification', param, Gio.DBusProxyFlags.NONE, -1, None)
+        self._return_id = None
 
 
 class Notification(object):
-    @staticmethod
-    def actions_supported():
-        return "actions" in Notify.get_server_caps()
-
-    @staticmethod
-    def body_supported():
-        return "body" in Notify.get_server_caps()
-
     def __new__(cls, summary, message, timeout=-1, actions=None, actions_cb=None,
                 icon_name=None, image_date=None, pos_hint=None):
-        forced_fallback = not Config('org.blueman.general')['notification-daemon']
 
-        if forced_fallback or not cls.body_supported() or (actions and not cls.actions_supported()):
+        forced_fallback = not Config('org.blueman.general')['notification-daemon']
+        try:
+            bus = Gio.bus_get_sync(Gio.BusType.SESSION)
+            caps = bus.call_sync('org.freedesktop.Notifications', '/org/freedesktop/Notifications',
+                                 'org.freedesktop.Notifications', 'GetCapabilities', None, None,
+                                 Gio.DBusCallFlags.NONE, -1, None).unpack()[0]
+        except:
+            caps = []
+
+        if forced_fallback or 'body' not in caps or (actions and 'actions' not in caps):
             # Use fallback in the case:
             # * user does not want to use a notification daemon
             # * the notification daemon is not available

@@ -206,7 +206,7 @@ class Blueman(Gtk.Window):
         def error_handler(e):
             dprint(e)
             message = 'Pairing failed for:\n%s (%s)' % (device['Alias'], device['Address'])
-            Notification('Bluetooth', message, icon_name="blueman")
+            Notification('Bluetooth', message, icon_name="blueman").show()
 
         device.pair(error_handler=error_handler)
 

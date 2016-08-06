@@ -277,6 +277,7 @@ class BluezAgent(Agent):
 
         notify_message = _("Pairing passkey for") + " %s: %s" % (self.get_device_alias(device), passkey)
         self.n = Notification("Bluetooth", notify_message, 0, icon_name="blueman", pos_hint=self.status_icon.geometry)
+        self.n.show()
 
     def _on_display_pin_code(self, parameters, invocation):
         device, pin_code = parameters.unpack()
@@ -286,9 +287,10 @@ class BluezAgent(Agent):
 
         notify_message = _("Pairing PIN code for") + " %s: %s" % (self.get_device_alias(device), pin_code)
         self.n = Notification("Bluetooth", notify_message, 0, icon_name="blueman", pos_hint=self.status_icon.geometry)
+        self.n.show()
 
     def _on_request_confirmation(self, parameters, invocation):
-        def on_confirm_action(n, action):
+        def on_confirm_action(action):
             if action == "confirm":
                 invocation.return_value(GLib.Variant('()', ()))
             else:
@@ -310,6 +312,7 @@ class BluezAgent(Agent):
 
         self.n = Notification("Bluetooth", notify_message, 0, actions, on_confirm_action, icon_name="blueman",
                               pos_hint=self.status_icon.geometry)
+        self.n.show()
 
     def _on_request_authorization(self, parameters, invocation):
         self._on_request_confirmation(parameters, invocation)
@@ -342,4 +345,5 @@ class BluezAgent(Agent):
 
         n = Notification(_("Bluetooth Authentication"), notify_message, 0, actions, on_auth_action,
                          icon_name="blueman", pos_hint=self.status_icon.geometry)
+        n.show()
         n._device = device
