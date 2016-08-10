@@ -9,5 +9,5 @@ from gi.repository import Gio
 
 
 class Base(BlueZBase):
-    __bus = Gio.bus_get_sync(Gio.BusType.SESSION)
-    __bus_name = 'org.bluez.obex'
+    __bus_type =Gio.BusType.SESSION
+    __name = 'org.bluez.obex'

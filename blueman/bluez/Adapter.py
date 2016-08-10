@@ -6,11 +6,11 @@ from __future__ import unicode_literals
 
 from gi.repository import GObject, Gio, GLib
 from blueman.Functions import dprint
-from blueman.bluez.PropertiesBase import PropertiesBase
+from blueman.bluez.Base import Base
 from blueman.bluez.Device import Device
 from blueman.bluez.AnyBase import AnyBase
 
-class Adapter(PropertiesBase):
+class Adapter(Base):
     _interface_name = 'org.bluez.Adapter1'
 
     def _init(self, obj_path=None):

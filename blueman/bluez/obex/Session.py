@@ -4,17 +4,15 @@ from gi.repository import GLib
 
 
 class Session(Base):
-    _interface_name = 'org.freedesktop.DBus.Properties'
+    _interface_name = 'org.bluez.obex.Session1'
 
     def _init(self, session_path):
         super(Session, self)._init(interface_name=self._interface_name, obj_path=session_path)
 
     @property
     def address(self):
-        param = GLib.Variant('(ss)', ('org.bluez.obex.Session1', 'Destination'))
-        return self._call('Get', param)
+        return self.get('Destination')
 
     @property
     def root(self):
-        param = GLib.Variant('(ss)', ('org.bluez.obex.Session1', 'Root'))
-        return self._call('Get', param)
+        return self.get('Root')

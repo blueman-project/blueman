@@ -73,8 +73,8 @@ class Agent(obex.Agent):
 
         transfer = obex.Transfer(transfer_path)
         session = obex.Session(transfer.session)
-        root = session.root[0]
-        address = session.address[0]
+        root = session.root
+        address = session.address
         filename = transfer.name
         size = transfer.size
 

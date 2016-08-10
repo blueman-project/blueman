@@ -4,12 +4,12 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-from blueman.bluez.PropertiesBase import PropertiesBase
+from blueman.bluez.Base import Base
 from blueman.bluez.AnyBase import AnyBase
 from gi.repository import GLib
 
 
-class Network(PropertiesBase):
+class Network(Base):
     _interface_name = 'org.bluez.Network1'
 
     def _init(self, obj_path=None):

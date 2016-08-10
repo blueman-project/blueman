@@ -4,11 +4,11 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-from blueman.bluez.PropertiesBase import PropertiesBase
+from blueman.bluez.Base import Base
 from blueman.bluez.AnyBase import AnyBase
 
 
-class Device(PropertiesBase):
+class Device(Base):
     _interface_name = 'org.bluez.Device1'
 
     def _init(self, obj_path=None):
