@@ -171,7 +171,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             err(None, GLib.Error('Applet DBus Service not available'), None)
             return
 
-        self._appl.disconnect_service(str('(ssd)'), service.device.get_object_path(), service.uuid, port,
+        self._appl.disconnect_service(str('(osd)'), service.device.get_object_path(), service.uuid, port,
                                       result_handler=ok, error_handler=err)
 
     def on_device_property_changed(self, List, device, tree_iter, key_value):
