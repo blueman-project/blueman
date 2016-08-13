@@ -55,6 +55,13 @@ class ManagerDeviceMenu(Gtk.Menu):
         self._any_device = AnyDevice()
         self._any_device.connect_signal('property-changed', self._on_service_property_changed)
 
+        try:
+            self._appl = AppletService()
+        except Exception as e:
+            dprint("** Failed to connect to applet")
+            dprint(e)
+            self._appl = None
+
         self.Generate()
 
     def __del__(self):
@@ -134,20 +141,18 @@ class ManagerDeviceMenu(Gtk.Menu):
         self.set_op(device, _("Connecting..."))
         prog = ManagerProgressbar(self.Blueman, False)
 
-        try:
-            appl = AppletService()
-        except:
-            dprint("** Failed to connect to applet")
-            fail()
+        if self._appl is None:
+            fail(None, GLib.Error('Applet DBus Service not available'), None)
             return
+
         try:
-            appl.SetTimeHint(str('(u)'), Gtk.get_current_event_time())
+            self._appl.SetTimeHint(str('(u)'), Gtk.get_current_event_time())
         except:
             pass
 
-        appl.connect_service(str('(ss)'), device.get_object_path(), service.uuid,
-                             result_handler=success, error_handler=fail,
-                             timeout=GLib.MAXINT)
+        self._appl.connect_service(str('(ss)'), device.get_object_path(), service.uuid,
+                                   result_handler=success, error_handler=fail,
+                                   timeout=GLib.MAXINT)
 
         prog.start()
 
@@ -155,20 +160,19 @@ class ManagerDeviceMenu(Gtk.Menu):
         def ok(obj, result, user_date):
             dprint("disconnect success")
             self.Generate()
+
         def err(obj, result, user_date):
-            dprint("failed disconnect", result)
+            dprint("disconnect failed", result)
             msg, tb = e_(result.message)
             MessageArea.show_message(_("Disconnection Failed: ") + msg, tb)
             self.Generate()
 
-        try:
-            appl = AppletService()
-        except:
-            dprint("** Failed to connect to applet")
+        if self._appl is None:
+            err(None, GLib.Error('Applet DBus Service not available'), None)
             return
 
-        appl.disconnect_service(str('(ssd)'), service.device.get_object_path(), service.uuid, port,
-                                result_handler=ok, error_handler=err)
+        self._appl.disconnect_service(str('(ssd)'), service.device.get_object_path(), service.uuid, port,
+                                      result_handler=ok, error_handler=err)
 
     def on_device_property_changed(self, List, device, tree_iter, key_value):
         key, value = key_value
