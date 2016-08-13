@@ -84,48 +84,18 @@ class Base(Gio.DBusProxy):
             dprint(path, key, value)
             self.emit("property-changed", key, value, path)
 
-    def _call(self, method, param=None, *args, **kwargs):
-        def callback(proxy, result, reply_handler, error_handler):
+    def _call(self, method, param=None, reply_handler=None, error_handler=None):
+        def callback(proxy, result, reply, error):
             try:
-                result = proxy.call_finish(result).unpack()
-                reply_handler(*result)
+                value = proxy.call_finish(result).unpack()
+                if reply: reply(*value)
+                else: return value
             except GLib.Error as e:
-                error_handler(parse_dbus_error(e))
+                if error: error(parse_dbus_error(e))
+                else: raise parse_dbus_error(e)
 
-        def ok(*args, **kwargs):
-            if callable(reply_handler):
-                reply_handler(*args, **kwargs)
-
-        def err(e):
-            if callable(error_handler):
-                error_handler(e)
-            else:
-                raise e
-
-        if 'reply_handler' in kwargs:
-            reply_handler = kwargs.pop('reply_handler')
-        else:
-            reply_handler = None
-
-        if 'error_handler' in kwargs:
-            error_handler = kwargs.pop('error_handler')
-        else:
-            error_handler = None
-
-        if reply_handler or error_handler:
-            # Make sure we have an error handler if we do async calls
-            assert(error_handler != None)
-
-            self.call(method, param, Gio.DBusCallFlags.NONE, GLib.MAXINT, None,
-                      callback, ok, err)
-        else:
-            try:
-                result = self.call_sync(method, param, Gio.DBusCallFlags.NONE,
-                                        GLib.MAXINT, None)
-                if result:
-                    return result.unpack()
-            except GLib.Error as e:
-                raise parse_dbus_error(e)
+        self.call(method, param, Gio.DBusCallFlags.NONE, GLib.MAXINT, None,
+                  callback, reply_handler, error_handler)
 
     def get(self, name):
         try:
