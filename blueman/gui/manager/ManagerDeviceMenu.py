@@ -152,14 +152,23 @@ class ManagerDeviceMenu(Gtk.Menu):
         prog.start()
 
     def on_disconnect(self, item, service, port=0):
+        def ok(obj, result, user_date):
+            dprint("disconnect success")
+            self.Generate()
+        def err(obj, result, user_date):
+            dprint("failed disconnect", result)
+            msg, tb = e_(result.message)
+            MessageArea.show_message(_("Disconnection Failed: ") + msg, tb)
+            self.Generate()
+
         try:
             appl = AppletService()
         except:
             dprint("** Failed to connect to applet")
             return
 
-        appl.disconnect_service(str('(ssd)'), service.device.get_object_path(), service.uuid, port)
-        self.Generate()
+        appl.disconnect_service(str('(ssd)'), service.device.get_object_path(), service.uuid, port,
+                                result_handler=ok, error_handler=err)
 
     def on_device_property_changed(self, List, device, tree_iter, key_value):
         key, value = key_value
