@@ -183,8 +183,6 @@ class ManagerDeviceMenu(Gtk.Menu):
     def Generate(self):
         self.clear()
 
-        appl = AppletService()
-
         items = []
 
         if not self.is_popup or self.props.visible:
