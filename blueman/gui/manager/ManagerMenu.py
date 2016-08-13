@@ -112,7 +112,7 @@ class ManagerMenu:
         item_plugins = create_menuitem(_("Plugins"), get_icon('blueman-plugin', 16))
         item_plugins.show()
         view_menu.append(item_plugins)
-        item_plugins.connect('activate', lambda *args: self.blueman.Applet.open_plugin_dialog(ignore_reply=True))
+        item_plugins.connect('activate', self._on_plugin_dialog_activate)
 
         item_services = create_menuitem(_("_Local Services") + "...", get_icon("preferences-desktop", 16))
         item_services.connect('activate',
@@ -269,3 +269,8 @@ class ManagerMenu:
 
         if len(self.adapter_items) == 0:
             self.item_adapter.props.sensitive = False
+
+    def _on_plugin_dialog_activate(self, *args):
+        def cb(*args):
+            pass
+        self.blueman.Applet.open_plugin_dialog(result_handler=cb)
