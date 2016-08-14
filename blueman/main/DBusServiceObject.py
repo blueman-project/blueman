@@ -255,10 +255,11 @@ class DBusServiceObject(GObject.Object):
                 attr = getattr(self, id)
             try:
                 info = attr._dbus_info
+                interface = self.__dbus_info.interfaces.setdefault(
+                    info.interface, DBusInterfaceInfo(name=info.interface))
             except AttributeError:
                 continue
-            interface = self.__dbus_info.interfaces.setdefault(info.interface,
-                                                              DBusInterfaceInfo(name=info.interface))
+
             if isinstance(info, DBusMethodInfo):
                 interface.methods.append(info)
             elif isinstance(info, DBusPropertyInfo):
