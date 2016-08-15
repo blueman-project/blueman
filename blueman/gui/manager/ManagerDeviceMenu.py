@@ -150,7 +150,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         except:
             pass
 
-        self._appl.connect_service(str('(ss)'), device.get_object_path(), service.uuid,
+        self._appl.connect_service(str('(os)'), device.get_object_path(), service.uuid,
                                    result_handler=success, error_handler=fail,
                                    timeout=GLib.MAXINT)
 
