@@ -281,6 +281,12 @@ class DBusServiceObject(GObject.Object):
         self.__dbus_info = DBusNodeInfo(path=self.object_path)
         self.__dbus_regids = []
 
+        self.__read_dbus_info()
+
+        if self.connection:
+            self.__dbus_export()
+
+    def __read_dbus_info(self):
         for id in dir(self):
             # don't use getattr(self, id) as default to avoid calling
             # __get__ of properties (which may not have been initialized)
@@ -295,16 +301,26 @@ class DBusServiceObject(GObject.Object):
                 continue
 
             if isinstance(info, DBusMethodInfo):
-                interface.methods.append(info)
+                if info in interface.methods:
+                    interface.methods[interface.methods.index(info)] = info
+                else:
+                    interface.methods.append(info)
             elif isinstance(info, DBusPropertyInfo):
                 # the name of properties is determined by its attribute name
                 info.name = info.name or id
+                if info in interface.properties:
+                    interface.properties[interface.properties.index(info)] = info
                 interface.properties.append(info)
             elif isinstance(info, DBusSignalInfo):
-                interface.signals.append(info)
+                if info in interface.signals:
+                    interface.signals[interface.signals.index(info)] = info
+                else:
+                    interface.signals.append(info)
 
-        if self.connection:
-            self.__dbus_export()
+    def _refresh(self):
+        self.__dbus_unexport()
+        self.__read_dbus_info()
+        self.__dbus_export()
 
     def __del__(self):
         if self.connection:

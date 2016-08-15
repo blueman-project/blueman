@@ -39,6 +39,7 @@ class DbusService(DBusServiceObject):
 
             self._add_wrapper(getattr(instance, name))
 
+        self._refresh()
         self.__class__._refresh_dbus_registration()
 
     def _add_wrapper(self, method):
@@ -57,6 +58,7 @@ class DbusService(DBusServiceObject):
         for name, func in self._definitions(obj):
             delattr(self.__class__, name)
 
+        self._refresh()
         self.__class__._refresh_dbus_registration()
 
     @classmethod
