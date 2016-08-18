@@ -54,11 +54,7 @@ class Services(ManagerPlugin):
             item.show()
 
         for service in get_services(device):
-            try:
-                add_menu_item(manager_menu, service)
-            except Exception:
-                logging.error("Failed to load service %s" % service.name, exc_info=True)
-                continue
+            add_menu_item(manager_menu, service)
 
             if service.group == 'serial':
                 for dev in rfcomm_list():

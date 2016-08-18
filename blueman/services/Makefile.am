@@ -3,13 +3,9 @@ SUBDIRS = meta
 bluemandir = $(pythondir)/blueman/services
 blueman_PYTHON =     		\
 	__init__.py 	   		\
-	AudioSink.py	    	\
-	AudioSource.py		    \
 	DialupNetwork.py    	\
 	Functions.py		\
 	GroupNetwork.py		    \
-	HandsfreeGateway.py	    \
-	Input.py          		\
 	NetworkAccessPoint.py   \
 	SerialPort.py
 

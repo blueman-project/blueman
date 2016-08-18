@@ -7,7 +7,6 @@ from __future__ import unicode_literals
 import logging
 from locale import bind_textdomain_codeset
 from operator import itemgetter
-from blueman.Sdp import SERIAL_PORT_SVCLASS_ID, OBEX_OBJPUSH_SVCLASS_ID, OBEX_FILETRANS_SVCLASS_ID
 from blueman.Functions import get_icon, composite_icon, create_menuitem, e_
 from blueman.bluez.Network import AnyNetwork
 from blueman.bluez.Device import AnyDevice
@@ -17,11 +16,21 @@ from blueman.gui.MessageArea import MessageArea
 
 from blueman.services import SerialPort
 
+from blueman.Sdp import (
+    ServiceUUID,
+    AUDIO_SOURCE_SVCLASS_ID,
+    AUDIO_SINK_SVCLASS_ID,
+    GENERIC_ACCESS_SVCLASS_ID,
+    HANDSFREE_AGW_SVCLASS_ID,
+    HANDSFREE_SVCLASS_ID,
+    HEADSET_SVCLASS_ID,
+    HID_SVCLASS_ID,
+    SERIAL_PORT_SVCLASS_ID)
+
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import GLib
-from gi.repository import GObject
 
 
 def get_x_icon(icon_name, size):
@@ -178,8 +187,41 @@ class ManagerDeviceMenu(Gtk.Menu):
         key, value = key_value
         # print "menu:", key, value
         if List.compare(tree_iter, List.selected()):
-            if key in ("Connected", "UUIDs", "Trusted",  "Paired"):
+            if key in ("Connected", "UUIDs", "Trusted", "Paired"):
                 self.Generate()
+
+    def _generic_connect(self, item, device, connect):
+        def fail(obj, result, user_date):
+            logging.info("fail", result)
+            prog.message(_("Failed"))
+            self.unset_op(device)
+            msg, tb = e_(result.message)
+            MessageArea.show_message(_("Connection Failed: ") + msg)
+
+        def success(obj, result, user_data):
+            logging.info("success")
+            prog.message(_("Success!"))
+            MessageArea.close()
+            self.unset_op(device)
+
+        if connect:
+            self.set_op(self.SelectedDevice, _("Connecting..."))
+            self._appl.connect_service(str("(os)"),
+                                       device.get_object_path(),
+                                       '00000000-0000-0000-0000-000000000000',
+                                       result_handler=success, error_handler=fail,
+                                       timeout=GLib.MAXINT)
+        else:
+            self.set_op(self.SelectedDevice, _("Disconnecting..."))
+            self._appl.disconnect_service(str("(osd)"),
+                                          device.get_object_path(),
+                                          '00000000-0000-0000-0000-000000000000',
+                                          0,
+                                          result_handler=success, error_handler=fail,
+                                          timeout=GLib.MAXINT)
+
+        prog = ManagerProgressbar(self.Blueman, False)
+        prog.start()
 
     def Generate(self):
         self.clear()
@@ -209,6 +251,36 @@ class ManagerDeviceMenu(Gtk.Menu):
             item.show()
             self.append(item)
             return
+
+        # Generic (dis)connect
+        # LE devices do not appear to expose certain properties like uuids until connect to at least once.
+        # show generic connect for these as we will not show any way to connect otherwise.
+        device_uuids = self.SelectedDevice['UUIDs']
+        show_generic_connect = not device_uuids
+        for uuid in device_uuids:
+            service_uuid = ServiceUUID(uuid)
+            if service_uuid.short_uuid in (
+                    AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID, HANDSFREE_AGW_SVCLASS_ID, HANDSFREE_SVCLASS_ID,
+                    HEADSET_SVCLASS_ID, HID_SVCLASS_ID, '0x1812'
+            ):
+                show_generic_connect = True
+                break
+            elif not service_uuid.reserved:
+                show_generic_connect = uuid == '03b80e5a-ede8-4b33-a751-6ce34ec4c700'
+                break
+
+        if not row["connected"] and show_generic_connect:
+            connect_item = create_menuitem(_("_Connect"), get_icon("blueman", 16))
+            connect_item.connect("activate", self._generic_connect, self.SelectedDevice, True)
+            connect_item.props.tooltip_text = _("Connects auto connect profiles A2DP source, A2DP sink, and HID")
+            connect_item.show()
+            self.append(connect_item)
+        elif show_generic_connect:
+            connect_item = create_menuitem(_("_Disconnect"), get_icon("network-offline", 16))
+            connect_item.props.tooltip_text = _("Forcefully disconnect the device")
+            connect_item.connect("activate", self._generic_connect, self.SelectedDevice, False)
+            connect_item.show()
+            self.append(connect_item)
 
         rets = self.Blueman.Plugins.Run("on_request_menu_items", self, self.SelectedDevice)
 
@@ -342,28 +414,3 @@ class ManagerDeviceMenu(Gtk.Menu):
         self.append(item)
         item.show()
         item.props.tooltip_text = _("Remove this device from the known devices list")
-
-        item = Gtk.SeparatorMenuItem()
-        item.show()
-        self.append(item)
-
-        item = create_menuitem(_("_Disconnect"), get_icon("network-offline", 16))
-        item.props.tooltip_text = _("Forcefully disconnect the device")
-
-        self.append(item)
-        item.show()
-
-        def on_disconnect(item):
-            def finished(*args):
-                self.unset_op(self.SelectedDevice)
-                
-            self.set_op(self.SelectedDevice, _("Disconnecting..."))
-            self.Blueman.disconnect(self.SelectedDevice,
-                                    result_handler=finished,
-                                    error_handler=finished)
-
-        if row['connected']:
-            item.connect("activate", on_disconnect)
-
-        else:
-            item.props.sensitive = False
