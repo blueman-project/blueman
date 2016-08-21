@@ -110,7 +110,7 @@ class Base(Gio.DBusProxy):
             if name in self.__fallback:
                 return self.__fallback[name]
             else:
-                raise e
+                raise parse_dbus_error(e)
 
     def set(self, name, value):
         v = GLib.Variant(self.__variant_map[type(value)], value)
