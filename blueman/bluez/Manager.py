@@ -8,7 +8,6 @@ from blueman.Functions import dprint
 
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device
-from blueman.bluez.errors import DBusNoSuchAdapterError
 
 
 class Manager(GObject.GObject):
@@ -88,10 +87,6 @@ class Manager(GObject.GObject):
                 path = adapter.get_object_path()
                 if path.endswith(pattern) or adapter.get_properties()['Address'] == pattern:
                     return adapter
-
-        # If the given - or any - adapter does not exist, raise the NoSuchAdapter
-        # error BlueZ 4's DefaultAdapter and FindAdapter methods trigger
-        raise DBusNoSuchAdapterError('No such adapter')
 
     def get_devices(self, adapter_path='/'):
         paths = []
