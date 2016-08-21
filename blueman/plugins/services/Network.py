@@ -154,8 +154,6 @@ class Network(ServicePlugin):
         nap_frame = self.Builder.get_object("nap_frame")
         warning = self.Builder.get_object("warning")
 
-        rb_blueman.props.active = self.Config["dhcp-client"]
-
         if not self.Config["nap-enable"]:
             nap_frame.props.sensitive = False
 
