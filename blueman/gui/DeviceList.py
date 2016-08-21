@@ -293,7 +293,7 @@ class DeviceList(GenericList):
 
     def DisplayKnownDevices(self, autoselect=False):
         self.clear()
-        devices = self.Adapter.list_devices()
+        devices = self.manager.get_devices(self.Adapter.get_object_path())
         for device in devices:
             self.device_add_event(device)
 

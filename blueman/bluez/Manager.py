@@ -7,6 +7,7 @@ from gi.repository import GObject, Gio
 from blueman.Functions import dprint
 
 from blueman.bluez.Adapter import Adapter
+from blueman.bluez.Device import Device
 from blueman.bluez.errors import DBusNoSuchAdapterError
 
 
@@ -91,6 +92,23 @@ class Manager(GObject.GObject):
         # If the given - or any - adapter does not exist, raise the NoSuchAdapter
         # error BlueZ 4's DefaultAdapter and FindAdapter methods trigger
         raise DBusNoSuchAdapterError('No such adapter')
+
+    def get_devices(self, adapter_path='/'):
+        paths = []
+        for obj_proxy in self.get_objects():
+            proxy = obj_proxy.get_interface('org.bluez.Device1')
+
+            if proxy:
+                object_path = proxy.get_object_path()
+                if object_path.startswith(adapter_path):
+                    paths.append(object_path)
+
+        return [Device(path) for path in paths]
+
+    def find_device(self, address, adapter_path='/'):
+        for device in self.get_devices(adapter_path):
+            if device['Address'] == address:
+                return device
 
     @classmethod
     def watch_name_owner(cls, appeared_handler, vanished_handler):

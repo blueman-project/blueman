@@ -46,14 +46,11 @@ class ShowConnected(AppletPlugin):
 
     def enumerate_connections(self):
         self.num_connections = 0
-        adapters = self.Applet.Manager.get_adapters()
-        for adapter in adapters:
-            devices = adapter.list_devices()
-            for device in devices:
-                props = device.get_properties()
-                if "Connected" in props:
-                    if props["Connected"]:
-                        self.num_connections += 1
+        for device in self.Applet.Manager.get_devices():
+            props = device.get_properties()
+            if "Connected" in props:
+                if props["Connected"]:
+                    self.num_connections += 1
 
         dprint("Found %d existing connections" % self.num_connections)
         if (self.num_connections > 0 and not self.active) or \
