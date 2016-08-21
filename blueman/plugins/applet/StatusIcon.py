@@ -65,7 +65,7 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
                     return
 
                 try:
-                    self.set_visible(self.Applet.Manager.list_adapters())
+                    self.set_visible(self.Applet.Manager.get_adapters())
                 except:
                     self.set_visible(False)
         else:

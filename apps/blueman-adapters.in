@@ -68,7 +68,7 @@ class BluemanAdapters(Gtk.Dialog):
 
         self.manager.connect_signal('adapter-added', self.on_adapter_added)
         self.manager.connect_signal('adapter-removed', self.on_adapter_removed)
-        for adapter in self.manager.list_adapters():
+        for adapter in self.manager.get_adapters():
             path = adapter.get_object_path()
             hci_dev = os.path.basename(path)
             self._adapters[hci_dev] = adapter

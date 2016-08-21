@@ -164,7 +164,7 @@ class ManagerMenu:
 
         blueman.List.connect("device-selected", self.on_device_selected)
 
-        for adapter in self._manager.list_adapters():
+        for adapter in self._manager.get_adapters():
             self.on_adapter_added(None, adapter.get_object_path())
 
         self.device_menu = None

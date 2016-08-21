@@ -68,7 +68,7 @@ class Manager(GObject.GObject):
             dprint(object_path)
             self.emit('device-removed', object_path)
 
-    def list_adapters(self):
+    def get_adapters(self):
         paths = []
         for obj_proxy in self._object_manager.get_objects():
             proxy = obj_proxy.get_interface('org.bluez.Adapter1')
@@ -78,7 +78,7 @@ class Manager(GObject.GObject):
         return [Adapter(path) for path in paths]
 
     def get_adapter(self, pattern=None):
-        adapters = self.list_adapters()
+        adapters = self.get_adapters()
         if pattern is None:
             if len(adapters):
                 return adapters[0]

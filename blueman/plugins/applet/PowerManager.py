@@ -77,7 +77,7 @@ class PowerManager(AppletPlugin):
             GLib.timeout_add(1000, timeout)
 
     def get_adapter_state(self):
-        adapters = self.Applet.Manager.list_adapters()
+        adapters = self.Applet.Manager.get_adapters()
         for adapter in adapters:
             props = adapter.get_properties()
             if not props["Powered"]:
@@ -87,7 +87,7 @@ class PowerManager(AppletPlugin):
     def set_adapter_state(self, state):
         try:
             dprint(state)
-            adapters = self.Applet.Manager.list_adapters()
+            adapters = self.Applet.Manager.get_adapters()
             for adapter in adapters:
                 adapter.set("Powered", state)
 

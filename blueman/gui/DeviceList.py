@@ -245,7 +245,7 @@ class DeviceList(GenericList):
         except Bluez.errors.DBusNoSuchAdapterError as e:
             dprint(e)
             #try loading default adapter
-            if len(self.manager.list_adapters()) > 0 and adapter is not None:
+            if len(self.manager.get_adapters()) > 0 and adapter is not None:
                 self.SetAdapter()
             else:
                 self.Adapter = None

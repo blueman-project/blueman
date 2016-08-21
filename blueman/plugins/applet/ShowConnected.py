@@ -46,7 +46,7 @@ class ShowConnected(AppletPlugin):
 
     def enumerate_connections(self):
         self.num_connections = 0
-        adapters = self.Applet.Manager.list_adapters()
+        adapters = self.Applet.Manager.get_adapters()
         for adapter in adapters:
             devices = adapter.list_devices()
             for device in devices:

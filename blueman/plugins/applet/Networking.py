@@ -72,7 +72,7 @@ class Networking(AppletPlugin):
     def set_nap(self, on):
         dprint("set nap", on)
         if self.Applet.manager_state:
-            adapters = self.Applet.Manager.list_adapters()
+            adapters = self.Applet.Manager.get_adapters()
             for adapter in adapters:
                 object_path = adapter.get_object_path()
 

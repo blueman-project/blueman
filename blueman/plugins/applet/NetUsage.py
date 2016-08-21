@@ -192,7 +192,7 @@ class Dialog:
             if not added:
                 name = d
                 if self.parent.Applet.Manager:
-                    for a in self.parent.Applet.Manager.list_adapters():
+                    for a in self.parent.Applet.Manager.get_adapters():
                         try:
                             device = a.find_device(d)
                             name = self.get_caption(device["Alias"], device["Address"])

@@ -117,7 +117,7 @@ class DeviceSelectorWidget(Gtk.Box):
     def update_adapters_list(self):
 
         self.cb_adapters.get_model().clear()
-        adapters = self.List.manager.list_adapters()
+        adapters = self.List.manager.get_adapters()
         num = len(adapters)
         if num == 0:
             self.cb_adapters.props.visible = False

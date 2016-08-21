@@ -165,7 +165,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
                 pass
 
             self.Item.props.sensitive = True
-            adapters = self.Applet.Manager.list_adapters()
+            adapters = self.Applet.Manager.get_adapters()
             self.Adapters = {}
             for adapter in adapters:
                 p = adapter.get_properties()
