@@ -194,7 +194,7 @@ class Dialog:
                 if self.parent.Applet.Manager:
                     for a in self.parent.Applet.Manager.get_adapters():
                         try:
-                            device = a.find_device(d)
+                            device = self.parent.Applet.Manager.find_device(d, a.get_object_path())
                             name = self.get_caption(device["Alias"], device["Address"])
                         except:
                             pass
@@ -364,7 +364,7 @@ class NetUsage(AppletPlugin, GObject.GObject):
                 for dev in ls:
                     if dev["id"] == portid:
                         adapter = self.Applet.Manager.get_adapter(dev["src"])
-                        device = adapter.find_device(dev["dst"])
+                        device = self.Applet.Manager.find_device(dev["dst"], adapter.get_object_path())
 
                         self.monitor_interface(NMMonitor, device, path)
 

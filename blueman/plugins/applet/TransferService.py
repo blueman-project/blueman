@@ -79,7 +79,8 @@ class Agent(obex.Agent):
         size = transfer.size
 
         try:
-            device = self._applet.Manager.get_adapter().find_device(address)
+            adapter = self._applet.Manager.get_adapter()
+            device = self._applet.Manager.find_device(address, adapter.get_object_path())
             name = device["Alias"]
             trusted = device["Trusted"]
         except Exception as e:

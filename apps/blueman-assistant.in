@@ -56,6 +56,7 @@ class Assistant:
 
         self.options = options
 
+        self.Manager = None
         self.Device = None
         self.Adapter = None
         self.pair = True
@@ -124,14 +125,13 @@ class Assistant:
         self.assistant.show()
 
         if options.device is not None:
-            m = Manager()
+            self.Manager = Manager()
             try:
-                adapter = m.get_adapter()
+                self.Adapter = self.Manager.get_adapter()
             except:
                 print("Error: No Adapters present")
                 exit(1)
-            self.Device = adapter.find_device(options.device)
-            self.Adapter = adapter
+            self.Device = self.Manager.find_device(options.device, self.Adapter.get_object_path())
             if self.Device['Paired']:
                 self.assistant.set_current_page(PAGE_CONNECT)
             else:
@@ -222,7 +222,7 @@ class Assistant:
                     self.assistant.set_page_header_image(pages[PAGE_FINISH], get_icon("help-about", 32))
                     self.assistant.set_current_page(PAGE_FINISH)
 
-                device = self.Adapter.find_device(self.Device['Address'])
+                device = self.Manager.find_device(self.Device['Address'], self.Adapter.get_object_path())
                 device.pair(reply_handler=ok, error_handler=err)
 
         elif num == PAGE_CONNECT:
