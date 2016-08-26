@@ -5,6 +5,8 @@
 ### New features
 
 * Information dialog on device's services
+* Compose vNotes
+* --delete option for blueman-sendto
 
 ### Changes
 

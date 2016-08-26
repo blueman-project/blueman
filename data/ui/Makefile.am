@@ -12,6 +12,7 @@ ui_DATA =				\
 	applet-plugins-widget.ui \
 	gsm-settings.ui		\
 	net-usage.ui		\
+	note.ui				\
 	rename-device.ui
 
 EXTRA_DIST = $(ui_DATA)
