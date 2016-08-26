@@ -5,6 +5,7 @@
 ### New features
 
 * Information dialog on device's services
+* Compose vNotes
 
 ### Changes
 
