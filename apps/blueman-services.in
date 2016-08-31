@@ -8,175 +8,21 @@ from __future__ import unicode_literals
 
 import os
 import sys
-from locale import bind_textdomain_codeset
-#support running uninstalled
+# support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if 'BLUEMAN_SOURCE' in os.environ:
     sys.path.insert(0, _dirname)
 
-from blueman.gui.GenericList import GenericList
-
-from blueman.Constants import *
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-from gi.repository import GdkPixbuf
 
-from blueman.Functions import *
+from blueman.Functions import set_proc_title, setup_icon_path
+from blueman.main.Services import BluemanServices
 
-import blueman.plugins.services
-from blueman.plugins.ServicePlugin import ServicePlugin
-from blueman.main.Config import Config
-
-setup_icon_path()
-
-
-class BluemanServices(Gtk.Dialog):
-    def __init__(self):
-        super(BluemanServices, self).__init__(title=_("Local Services"))
-        self.resize(520, 420)
-        self.set_name("BluemanServices")
-        self.set_position(Gtk.WindowPosition.CENTER)
-        self.props.border_width = 5
-        self.props.icon_name = "blueman"
-
-        self.b_apply = self.add_button("_Apply", Gtk.ResponseType.APPLY)
-        self.b_apply.props.receives_default = True
-        self.b_apply.props.sensitive = True
-        self.b_apply.props.use_underline = True
-
-        self.b_close = self.add_button("_Close", Gtk.ResponseType.CLOSE)
-        self.b_close.props.use_underline = True
-
-        self.content_area = self.get_content_area()
-
-        self.box = Gtk.Box(Gtk.Orientation.HORIZONTAL)
-        self.box.props.vexpand = True
-        self.box.props.visible = True
-
-        self.viewport = Gtk.Viewport()
-        self.viewport.props.visible = True
-        self.viewport.props.width_request = 120
-
-        self.box.add(self.viewport)
-        self.content_area.add(self.box)
-
-        self.connect("delete-event", Gtk.main_quit)
-
-        self.Config = Config("org.blueman.general")
-
-        check_single_instance("blueman-services", lambda time: self.Dialog.present_with_time(time))
-
-        data = [
-            ["picture", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 0}, None],
-            ["caption", str, Gtk.CellRendererText(), {"markup": 1}, None, {"expand": True}],
-            ["id", str],
-        ]
-
-        ls = GenericList(data)
-        ls.props.headers_visible = False
-
-        ls.selection.connect("changed", self.on_selection_changed)
-        self.List = ls
-
-        self.viewport.add(ls)
-        ls.show()
-
-        self.load_plugins()
-
-        try:
-            ls.selection.select_path(self.Config["services-last-item"])
-        except:
-            ls.selection.select_path(0)
-
-        self.b_apply.connect("clicked", self.on_apply_clicked)
-        self.b_close.connect("clicked", Gtk.main_quit)
-
-        self.show()
-
-    def option_changed(self):
-        rets = self.plugin_exec("on_query_apply_state")
-        show_apply = False
-        for ret in rets:
-            if ret == -1:
-                show_apply = False
-                break
-            show_apply = show_apply or ret
-
-        self.b_apply.props.sensitive = show_apply
-
-    def load_plugins(self):
-        path = os.path.dirname(blueman.plugins.services.__file__)
-        plugins = []
-        for root, dirs, files in os.walk(path):
-            for f in files:
-                if f.endswith(".py") and not (f.endswith(".pyc") or f.endswith("_.py")):
-                    plugins.append(f[0:-3])
-        plugins.sort()
-        dprint(plugins)
-        for plugin in plugins:
-            try:
-                __import__("blueman.plugins.services.%s" % plugin, None, None, [])
-            except ImportError as e:
-                dprint("Unable to load %s plugin\n%s" % (plugin, e))
-
-        for cls in ServicePlugin.__subclasses__():
-            try:
-                inst = cls(self)
-            except:
-                continue
-            if not cls.__plugin_info__:
-                dprint("Invalid plugin info in %s" % (plugin))
-            else:
-                (name, icon) = cls.__plugin_info__
-                self.setup_list_item(inst, name, icon)
-
-    def setup_list_item(self, inst, name, icon):
-        self.List.append(picture=get_icon(icon, 32), caption=name, id=inst.__class__.__name__)
-
-    #executes a function on all plugin instances
-    def plugin_exec(self, function, *args, **kwargs):
-        rets = []
-        for inst in ServicePlugin.instances:
-            if inst._is_loaded:
-                ret = getattr(inst, function)(*args, **kwargs)
-                rets.append(ret)
-
-        return rets
-
-    def on_apply_clicked(self, button):
-        self.plugin_exec("on_apply")
-        self.option_changed()
-
-    def set_page(self, pageid):
-        dprint("Set page", pageid)
-
-        if len(ServicePlugin.instances) == 0:
-            return
-        #set the first item
-        if pageid is None:
-            pageid = ServicePlugin.instances[0].__class__.__name__
-        for inst in ServicePlugin.instances:
-            if inst.__class__.__name__ == pageid:
-                if not inst._is_loaded:
-                    inst.on_load(self.box)
-                    inst._is_loaded = True
-
-                inst._on_enter()
-            else:
-                inst._on_leave()
-
-    def on_selection_changed(self, selection):
-        tree_iter = self.List.selected()
-        if self.List.get_cursor()[0]:
-            # GtkTreePath returns row when used as string
-            self.Config["services-last-item"] = int(str(self.List.get_cursor()[0]))
-        row = self.List.get(tree_iter, "id")
-        rowid = row["id"]
-
-        self.set_page(rowid)
 
 if __name__ == '__main__':
+    setup_icon_path()
     services = BluemanServices()
     set_proc_title()
     Gtk.main()

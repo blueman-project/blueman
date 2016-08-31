@@ -7,116 +7,21 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 import sys
-import os.path
-import os
 import signal
 from blueman.Constants import *
-import gi
-gi.require_version("Gtk", "3.0")
-gi.require_version('Notify', '0.7')
-from gi.repository import Notify
-try: import __builtin__ as builtins
-except ImportError: import builtins
 
-#support running uninstalled
+# support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if 'BLUEMAN_SOURCE' in os.environ:
     sys.path.insert(0, _dirname)
 
-from blueman.Functions import *
-
-from blueman.main.DbusService import DbusService
-
-import blueman.plugins.applet
-from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.plugins.BasePlugin import BasePlugin
-
-import blueman.bluez as Bluez
-
-from blueman.main.PluginManager import PersistentPluginManager
+from blueman.Functions import  set_proc_title
+from blueman.main.Applet import BluemanApplet
 
 # Workaround introspection bug, gnome bug 622084
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 signal.signal(signal.SIGTERM, signal.SIG_DFL)
 
-
-class BluemanApplet(object):
-    def __init__(self):
-        setup_icon_path()
-        if not Notify.init("Blueman"):
-            dprint("Error: Failed to initialize libnotify")
-
-        check_single_instance("blueman-applet")
-
-        self._signals = []
-
-        self.plugin_run_state_changed = False
-
-        self.Manager = Bluez.Manager()
-        self._signals.append(self.Manager.connect_signal('adapter-added', self.on_adapter_added))
-        self._signals.append(self.Manager.connect_signal('adapter-removed', self.on_adapter_removed))
-        self._signals.append(self.Manager.connect_signal('device-created', self.on_device_created))
-        self._signals.append(self.Manager.connect_signal('device-removed', self.on_device_removed))
-
-        self.DbusSvc = DbusService("org.blueman.Applet", "/")
-
-        self.Plugins = PersistentPluginManager(AppletPlugin, blueman.plugins.applet, self)
-        self.Plugins.Load()
-
-        self.Plugins.Run("on_plugins_loaded")
-
-        self.Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
-
-        self._any_adapter = Bluez.AnyAdapter()
-        self._any_adapter.connect_signal('property-changed', self._on_adapter_property_changed)
-
-        self._any_device = Bluez.AnyDevice()
-        self._any_device.connect_signal('property-changed', self._on_device_property_changed)
-
-        Gtk.main()
-
-    def _on_dbus_name_appeared(self, _connection, name, owner):
-        dprint(name, owner)
-        self.manager_state = True
-        self.plugin_run_state_changed = True
-        self.Plugins.Run("on_manager_state_changed", self.manager_state)
-
-    def _on_dbus_name_vanished(self, _connection, name):
-        dprint(name)
-        self.manager_state = False
-        self.plugin_run_state_changed = True
-        self.Plugins.Run("on_manager_state_changed", self.manager_state)
-
-    def _on_adapter_property_changed(self, adapter, key, value):
-        self.Plugins.Run("on_adapter_property_changed", adapter.get_object_path(), key, value)
-
-    def _on_adapter_property_changed(self, _adapter, key, value, path):
-        self.Plugins.Run("on_adapter_property_changed", path, key, value)
-
-    def _on_device_property_changed(self, _device, key, value, path):
-        self.Plugins.Run("on_device_property_changed", path, key, value)
-
-    def on_adapter_added(self, _manager, path):
-        dprint("Adapter added ", path)
-
-        def on_activate():
-            dprint("Adapter activated")
-            self.Plugins.Run("on_adapter_added", path)
-
-        adapter = Bluez.Adapter(path)
-        wait_for_adapter(adapter, on_activate)
-
-    def on_adapter_removed(self, _manager, path):
-        dprint("Adapter removed ", path)
-        self.Plugins.Run("on_adapter_removed", path)
-
-    def on_device_created(self, _manager, path):
-        dprint("Device created ", path)
-        self.Plugins.Run("on_device_created", path)
-
-    def on_device_removed(self, _manager, path):
-        dprint("Device removed ", path)
-        self.Plugins.Run("on_device_removed", path)
-
-set_proc_title()
-BluemanApplet()
+if __name__ == '__main__':
+    set_proc_title()
+    BluemanApplet()
