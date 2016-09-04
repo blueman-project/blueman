@@ -149,7 +149,7 @@ class SerialManager(AppletPlugin):
         active_ports = map(flt, ports)
 
         for port in active_ports:
-            if not port:
+            if port is None:
                 continue
 
             name = "/dev/rfcomm%d" % port
