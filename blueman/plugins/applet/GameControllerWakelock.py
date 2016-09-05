@@ -33,7 +33,11 @@ class GameControllerWakelock(AppletPlugin):
 
     def on_device_property_changed(self, key, value, path):
         if key == "Connected":
-            klass = Device(path).get_properties()["Class"] & 0x1fff
+            props = Device(path).get_properties()
+            if not "Class" in props:
+                return
+
+            klass = props["Class"] & 0x1fff
 
             if klass == 0x504 or klass == 0x508:
                 if value:
