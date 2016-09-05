@@ -71,7 +71,7 @@ class Base(Gio.DBusProxy):
 
         self.init()
         self.__interface_name = interface_name
-        self.__fallback = {'Icon': 'blueman', 'Class': None}
+        self.__fallback = {'Icon': 'blueman', 'Class': 0}
 
         if sys.version_info.major < 3:
             self.__variant_map = {str: 's', unicode: 's', int: 'u', bool: 'b'}
