@@ -31,6 +31,12 @@
 * Add generic device-added/removed functions for plugins
 * Drop legacy NetworkManager and ModemManager support
 * Port AppletService proxy to GDBus
+* Port Polkit client code to GDBus
+* [ManagerDeviceMenu] Make disconnecting and opening plugin dialog asynchronous operations
+* Implement default pin (RequestPinCode) database for BluezAgent
+* Bluez, Subclass from Gio.DBusProxy and properly handle properties
+* Bluez managers, Subclass from GDBusObjectManagerClient
+* Notification: Use dbus for notifications and drop the libnotify dep
 
 
 ### Bugs fixed
