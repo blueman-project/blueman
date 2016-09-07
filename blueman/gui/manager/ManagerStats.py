@@ -107,16 +107,17 @@ class ManagerStats:
         if speed > 0 and not blinker.status():
             blinker.start()
 
-        if speed > (30 * 1024) and blinker.status():
-            blinker.set_rate(20)
-        elif speed > (20 * 1024) and blinker.status():
-            blinker.set_rate(15)
-        elif speed > (10 * 1024) and blinker.status():
+        if speed > 40 * 1024 and blinker.status():
             blinker.set_rate(10)
+        elif speed > (30 * 1024) and blinker.status():
+            blinker.set_rate(8)
+        elif speed > (20 * 1024) and blinker.status():
+            blinker.set_rate(6)
+        elif speed > (10 * 1024) and blinker.status():
+            blinker.set_rate(4)
         elif speed > 1024 and blinker.status():
-            blinker.set_rate(5)
+            blinker.set_rate(2)
         elif speed == 0 and blinker.status():
-
             blinker.stop()
         else:
             blinker.set_rate(1)
