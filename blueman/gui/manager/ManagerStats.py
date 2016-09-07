@@ -41,23 +41,28 @@ class ManagerStats:
         self.im_download = Gtk.Image()
         self.im_download.set_tooltip_text(_("Data activity indication"))
         self.im_download.set_from_pixbuf(down)
-        self.im_upload.set_alignment(1, 0.5)
-        self.im_download.set_alignment(1, 0.5)
+        self.im_upload.props.halign = Gtk.Align.END
+        self.im_upload.props.valign = Gtk.Align.CENTER
+        self.im_download.props.halign = Gtk.Align.END
+        self.im_download.props.valign = Gtk.Align.CENTER
 
         self.down_rate = Gtk.Label()
         self.down_rate.show()
-        self.down_rate.set_alignment(1, 0.5)
+        self.down_rate.props.halign = Gtk.Align.END
+        self.down_rate.props.valign = Gtk.Align.CENTER
         self.down_rate.set_tooltip_text(_("Total data received and rate of transmission"))
 
         self.up_rate = Gtk.Label()
         self.up_rate.show()
-        self.up_rate.set_alignment(1, 0.5)
+        self.up_rate.props.halign = Gtk.Align.END
+        self.up_rate.props.valign = Gtk.Align.CENTER
         self.up_rate.set_tooltip_text(_("Total data sent and rate of transmission"))
 
         self.uparrow = Gtk.Image()
         self.uparrow.set_tooltip_text(_("Total data sent and rate of transmission"))
         self.uparrow.set_from_icon_name("go-up", 1)
-        self.uparrow.set_alignment(1, 0.5)
+        self.uparrow.props.halign = Gtk.Align.END
+        self.uparrow.props.valign = Gtk.Align.CENTER
 
         self.downarrow = Gtk.Image()
         self.downarrow.set_tooltip_text(_("Total data received and rate of transmission"))
