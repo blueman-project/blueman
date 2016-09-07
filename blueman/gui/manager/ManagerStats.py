@@ -76,7 +76,7 @@ class ManagerStats:
         hbox.pack_start(self.downarrow, False, False, 0)
         hbox.pack_start(self.down_rate, False, False, 0)
 
-        hbox.pack_start(Gtk.VSeparator(), False, False, 0)
+        hbox.pack_start(Gtk.Separator(orientation=Gtk.Orientation.VERTICAL), False, False, 0)
 
         hbox.pack_start(self.im_upload, False, False, 0)
         hbox.pack_start(self.im_download, False, False, 0)

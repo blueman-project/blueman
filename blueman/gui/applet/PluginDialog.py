@@ -46,7 +46,7 @@ class SettingsWidget(Gtk.Box):
                 l.props.xalign = 0.0
                 self.pack_start(l, False, False, 0)
 
-                sep = Gtk.HSeparator()
+                sep = Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL)
                 sep.props.height_request = 10
                 self.pack_start(sep, False, False, 0)
 
