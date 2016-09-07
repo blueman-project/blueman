@@ -39,5 +39,5 @@ class SerialService(Service):
         return True
 
     def disconnect(self, *args):
-        Mechanism().close_rfcomm('(d)', args[0])
+        Mechanism().close_rfcomm(str('(d)'), args[0])
         release_rfcomm_device(args[0])
