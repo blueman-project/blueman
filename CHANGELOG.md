@@ -37,7 +37,7 @@
 * Bluez, Subclass from Gio.DBusProxy and properly handle properties
 * Bluez managers, Subclass from GDBusObjectManagerClient
 * Notification: Use dbus for notifications and drop the libnotify dep
-
+* Port NMPanSupport applet plugin to GDBus
 
 ### Bugs fixed
 
