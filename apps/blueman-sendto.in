@@ -39,11 +39,13 @@ class SendTo:
                           action="store", help=_("Send files to this device"), metavar="ADDRESS")
 
         parser.add_option("", "--dest", dest="device",
-                          action="store", help="Same as --device", metavar="ADDRESS")
+                          action="store", help=_("Same as --device"), metavar="ADDRESS")
 
         parser.add_option("-s", "--source", dest="source",
                           action="store", help=_("Source adapter. Takes address or adapter's name eg. hci0"),
                           metavar="PATTERN")
+
+        parser.add_option("-u", "--delete", dest="delete", action="store_true", help=_("Delete files on exit"))
 
         (options, args) = parser.parse_args()
 
@@ -59,6 +61,12 @@ class SendTo:
 
         self.device = None
         self.adapter = None
+
+        if options.delete:
+            def delete_files():
+                for file in self.files:
+                    os.unlink(file)
+            atexit.register(delete_files)
 
         if options.device is None:
             if not self.select_device():

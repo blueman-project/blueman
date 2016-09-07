@@ -1,5 +1,4 @@
 import datetime
-import os
 from gettext import bind_textdomain_codeset
 from tempfile import NamedTemporaryFile
 
@@ -27,12 +26,10 @@ def send_note_cb(dialog, response_id, device_address, text_view):
             'X-IRMC-LUID:000001000000 \n'
             'END:VNOTE \n' % (' '.join(text.splitlines()), date, date))
 
-    tempfile = NamedTemporaryFile(delete=False)
+    tempfile = NamedTemporaryFile(suffix='.vnt', prefix='note', delete=False)
     tempfile.write(data.encode('utf-8'))
     tempfile.close()
-    launch('blueman-sendto --device=%s' % device_address, tempfile.name, False, 'blueman')
-    os.unlink(tempfile.name)
-
+    launch('blueman-sendto --delete --device=%s' % device_address, [tempfile.name], False, 'blueman')
 
 def send_note(device, parent):
     builder = Gtk.Builder()
