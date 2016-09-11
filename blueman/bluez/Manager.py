@@ -40,7 +40,7 @@ class Manager(Gio.DBusObjectManagerClient):
             name=self.__bus_name,
             object_path='/',
             **kwargs)
-        self.init()
+        self._init()
 
     def do_object_added(self, dbus_object):
         device_proxy = dbus_object.get_interface('org.bluez.Device1')
