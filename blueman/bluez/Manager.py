@@ -90,7 +90,7 @@ class Manager(GObject.GObject):
 
     def get_devices(self, adapter_path='/'):
         paths = []
-        for obj_proxy in self.get_objects():
+        for obj_proxy in self._object_manager.get_objects():
             proxy = obj_proxy.get_interface('org.bluez.Device1')
 
             if proxy:
