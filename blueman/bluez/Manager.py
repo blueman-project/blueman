@@ -10,7 +10,7 @@ from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device
 
 
-class Manager(Gio.DBusObjectManagerClient):
+class Manager(GObject.GObject):
     __gsignals__ = {
         str('adapter-added'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
         str('adapter-removed'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
@@ -33,16 +33,16 @@ class Manager(Gio.DBusObjectManagerClient):
     def __init__(self, *args, **kwargs):
         pass
 
-    def _init(self, **kwargs):
-        super(Manager, self).__init__(
-            bus_type=Gio.BusType.SYSTEM,
-            flags=Gio.DBusObjectManagerClientFlags.NONE,
-            name=self.__bus_name,
-            object_path='/',
-            **kwargs)
-        self._init()
+    def _init(self):
+        super(Manager, self).__init__()
+        self._object_manager = Gio.DBusObjectManagerClient.new_for_bus_sync(
+            Gio.BusType.SYSTEM, Gio.DBusObjectManagerClientFlags.NONE,
+            self.__bus_name, '/', None, None, None)
 
-    def do_object_added(self, dbus_object):
+        self._object_manager.connect("object-added", self._on_object_added)
+        self._object_manager.connect("object-removed", self._on_object_removed)
+
+    def _on_object_added(self, object_manager, dbus_object):
         device_proxy = dbus_object.get_interface('org.bluez.Device1')
         adapter_proxy = dbus_object.get_interface('org.bluez.Adapter1')
 
@@ -55,7 +55,7 @@ class Manager(Gio.DBusObjectManagerClient):
             dprint(object_path)
             self.emit('device-created', object_path)
 
-    def do_object_removed(self, dbus_object):
+    def _on_object_removed(self, object_manager, dbus_object):
         device_proxy = dbus_object.get_interface('org.bluez.Device1')
         adapter_proxy = dbus_object.get_interface('org.bluez.Adapter1')
 
@@ -70,7 +70,7 @@ class Manager(Gio.DBusObjectManagerClient):
 
     def get_adapters(self):
         paths = []
-        for obj_proxy in self.get_objects():
+        for obj_proxy in self._object_manager.get_objects():
             proxy = obj_proxy.get_interface('org.bluez.Adapter1')
 
             if proxy: paths.append(proxy.get_object_path())
