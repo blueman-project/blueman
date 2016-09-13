@@ -28,6 +28,7 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
                 <property name="use_underline">True</property>
+                <property name="can_default">True</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -63,6 +64,7 @@
           <object class="GtkEntry" id="note">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
+            <property name="activates_default">True</property>
           </object>
           <packing>
             <property name="expand">False</property>
