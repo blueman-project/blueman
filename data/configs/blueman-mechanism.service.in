@@ -6,3 +6,6 @@ Type=dbus
 KillMode=process
 BusName=org.blueman.Mechanism
 ExecStart=@LIBEXECDIR@/blueman-mechanism
+
+[Install]
+WantedBy=multi-user.target
