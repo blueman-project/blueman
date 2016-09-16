@@ -1,6 +1,6 @@
 # Changelog
 
-## master (unreleased)
+## 2.1.alpha1
 
 ### New features
 
