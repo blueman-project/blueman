@@ -211,6 +211,7 @@ class PowerManager(AppletPlugin):
                 dprint("adapter powered on while in off state, turning bluetooth on")
                 self.RequestPowerState(True)
 
+            self.adapter_state = self.get_adapter_state()
             self.UpdatePowerState()
 
     def on_bluetooth_toggled(self):
