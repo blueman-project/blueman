@@ -69,10 +69,7 @@ class PowerManager(AppletPlugin):
         if state:
             def timeout():
                 self.adapter_state = self.get_adapter_state()
-                if self.get_option("auto-power-on"):
-                    self.RequestPowerState(True, force=True)
-                else:
-                    self.RequestPowerState(self.adapter_state)
+                self.RequestPowerState(self.adapter_state)
 
             GLib.timeout_add(1000, timeout)
 
@@ -225,10 +222,10 @@ class PowerManager(AppletPlugin):
         adapter = Bluez.Adapter(path)
 
         def on_ready():
-            if not self.adapter_state:
-                adapter.set("Powered", False)
+            if self.get_option("auto-power-on"):
+                self.RequestPowerState(True, True)
             else:
-                adapter.set("Powered", True)
+                adapter.set("Powered", self.adapter_state)
 
         wait_for_adapter(adapter, on_ready)
 
