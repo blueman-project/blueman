@@ -7,8 +7,11 @@ from __future__ import unicode_literals
 from blueman.plugins.AppletPlugin import AppletPlugin
 
 import gi
-gi.require_version('AppIndicator3', '0.1')
-from gi.repository import AppIndicator3 as girAppIndicator
+try:
+    gi.require_version('AppIndicator3', '0.1')
+    from gi.repository import AppIndicator3 as girAppIndicator
+except ValueError:
+    raise ImportError
 
 
 class AppIndicator(AppletPlugin):
