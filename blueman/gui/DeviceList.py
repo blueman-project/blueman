@@ -237,6 +237,10 @@ class DeviceList(GenericList):
 
         try:
             self.Adapter = self.manager.get_adapter(adapter)
+            # The patern may be incorrect (ie removed adapter), see #590
+            if self.Adapter is None:
+                self.Adapter = self.manager.get_adapter()
+
             self.Adapter.connect_signal('property-changed', self._on_property_changed)
             self.manager.connect_signal('device-created', self._on_device_created)
             self.manager.connect_signal('device-removed', self._on_device_removed)
