@@ -81,7 +81,7 @@ class KillSwitch(AppletPlugin):
 
         (idx, switch_type, op, soft, hard) = struct.unpack(str("IBBBB"), data)
 
-        if type != RFKILL_TYPE_BLUETOOTH:
+        if switch_type != RFKILL_TYPE_BLUETOOTH:
             return True
 
         if op == RFKILL_OP_ADD:

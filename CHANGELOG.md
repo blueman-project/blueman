@@ -1,5 +1,11 @@
 # Changelog
 
+## master
+
+### Bugs fixed
+
+* Icon disappeared when switching off bluetooth
+
 ## 2.1.alpha1
 
 ### New features
