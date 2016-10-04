@@ -3,7 +3,8 @@ SUBDIRS = 		\
 	blueman		\
 	data		\
 	module		\
-	po
+	po		\
+	sendto
 
 DIST_DOCS =			\
 	CHANGELOG.md		\

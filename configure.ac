@@ -137,6 +137,36 @@ AM_CONDITIONAL([HAVE_POLKIT], [test "x$have_polkit" = "xyes"])
 
 AC_SUBST([have_polkit])
 
+AC_ARG_ENABLE([caja-sendto],
+  AS_HELP_STRING([--enable-caja-sendto], [Enable caja-sendto installation]),
+  [enable_caja=$enableval], [enable_caja=yes])
+
+AS_IF([test "x$enable_caja" = "xyes"],
+  [PKG_CHECK_EXISTS([caja-python], [have_caja_python=yes], [have_caja_python=no])],
+  [have_caja_python=no])
+
+AM_CONDITIONAL([HAVE_CAJA_PYTHON], [test "x$have_caja_python" = "xyes"])
+
+AC_ARG_ENABLE([nemo-sendto],
+  AS_HELP_STRING([--enable-nemo-sendto], [Enable nemo-sendto installation]),
+  [enable_nemo=$enableval], [enable_nemo=yes])
+
+AS_IF([test "x$enable_nemo" = "xyes"],
+  [PKG_CHECK_EXISTS([nemo-python], [have_nemo_python=yes], [have_nemo_python=no])],
+  [have_nemo_python=no])
+
+AM_CONDITIONAL([HAVE_NEMO_PYTHON], [test "x$have_nemo_python" = "xyes"])
+
+AC_ARG_ENABLE([nautilus-sendto],
+  AS_HELP_STRING([--enable-nautilus-sendto], [Enable nautilus-sendto installation]),
+  [enable_nautilus=$enableval], [enable_nautilus=yes])
+
+AS_IF([test "x$enable_nautilus" = "xyes"],
+  [PKG_CHECK_EXISTS([nautilus-python], [have_nautilus_python=yes], [have_nautilus_python=no])],
+  [have_nautilus_python=no])
+
+AM_CONDITIONAL([HAVE_NAUTILUS_PYTHON], [test "x$have_nautilus_python" = "xyes"])
+
 AC_ARG_ENABLE([thunar-sendto],
   AS_HELP_STRING([--enable-thunar-sendto], [Enable thunar-sendto installation]),
   [have_thunar=$enableval], [have_thunar=yes])
@@ -272,6 +302,7 @@ data/configs/org.blueman.Mechanism.service
 module/_blueman.pyx
 module/Makefile
 po/Makefile.in
+sendto/Makefile
 ])
 
 
@@ -284,6 +315,9 @@ echo System configuration directory: $sysconfdir
 echo Python version: $PYTHON_VERSION
 echo Policykit-1 Enabled: $have_polkit
 echo Thunar sendto installation enabled: $have_thunar
+echo Caja sendto: $have_caja_python
+echo Nemo sendto: $have_nemo_python
+echo Nautilus sendto: $have_nautilus_python
 echo Settings menu integration enabled: $have_settings
 echo Dhcpd 3 configuration file: $dhconfig
 echo PulseAudio support: $use_pulseaudio
