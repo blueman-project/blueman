@@ -16,7 +16,7 @@ import blueman.bluez as Bluez
 
 
 class BluemanAdapters(Gtk.Dialog):
-    def __init__(self, selected_hci_dev):
+    def __init__(self, selected_hci_dev, socket_id):
         super(BluemanAdapters, self).__init__(title=_("Bluetooth Adapters"))
         # Setup dialog
         self.set_border_width(5)
@@ -30,9 +30,15 @@ class BluemanAdapters(Gtk.Dialog):
         close_button.props.receives_default = True
         close_button.props.use_underline = True
 
-        self.content_area = self.get_content_area()
         self.notebook = Gtk.Notebook()
-        self.content_area.add(self.notebook)
+        if socket_id:
+            plug = Gtk.Plug.new(socket_id)
+            plug.connect('delete-event', lambda _plug, _event: Gtk.main_quit())
+            plug.add(self.notebook)
+            plug.show()
+        else:
+            self.get_content_area().add(self.notebook)
+            self.show()
         self.tabs = {}
         self._adapters = {}
 
@@ -65,7 +71,7 @@ class BluemanAdapters(Gtk.Dialog):
                 self.notebook.set_current_page(hci_dev_num)
             else:
                 print('Error: the selected adapter does not exist')
-        self.show_all()
+        self.notebook.show_all()
 
     def on_dialog_response(self, dialog, response_id):
         Gtk.main_quit()

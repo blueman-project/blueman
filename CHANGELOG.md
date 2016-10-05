@@ -2,6 +2,10 @@
 
 ## master
 
+### New features
+
+* blueman-adapters is now (Xfce-)pluggable
+
 ### Bugs fixed
 
 * Icon disappeared when switching off bluetooth

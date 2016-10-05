@@ -29,8 +29,12 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 if __name__ == '__main__':
     set_proc_title()
     adapter_name = None
+    socket_id = None
     if len(sys.argv) > 1:
-        adapter_name = sys.argv[1]
-    blueman_adapters = BluemanAdapters(adapter_name)
+        if sys.argv[1].startswith('--socket-id='):
+            socket_id = int(sys.argv[1][12:])
+        else:
+            adapter_name = sys.argv[1]
+    blueman_adapters = BluemanAdapters(adapter_name, socket_id)
     Gtk.main()
 
