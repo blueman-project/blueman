@@ -10,8 +10,7 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 
 import gi
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
-from gi.repository import GObject
+from gi.repository import Gtk, GLib
 
 
 class StatusIcon(AppletPlugin, Gtk.StatusIcon):
@@ -22,11 +21,11 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
     SHOW = 1
     FORCE_HIDE = 0
 
+    visibility_timeout = None
+
     def on_load(self, applet):
         Gtk.StatusIcon.__init__(self)
         self.lines = {}
-        self.pixbuf = None
-        self.timeout = None
 
         self.set_title('blueman')
 
@@ -53,13 +52,12 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
     def on_power_state_changed(self, manager, state):
         if state:
             self.SetTextLine(0, _("Bluetooth Enabled"))
+            self.QueryVisibility(delay_hiding=True)
         else:
             self.SetTextLine(0, _("Bluetooth Disabled"))
+            self.QueryVisibility()
 
-        self.QueryVisibility()
-
-    def QueryVisibility(self):
-
+    def QueryVisibility(self, delay_hiding=False):
         rets = self.Applet.Plugins.Run("on_query_status_icon_visibility")
         if StatusIcon.FORCE_HIDE not in rets:
             if StatusIcon.FORCE_SHOW in rets:
@@ -70,11 +68,21 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
                     return
 
                 try:
-                    self.set_visible(self.Applet.Manager.get_adapters())
+                    if self.Applet.Manager.get_adapters():
+                        self.set_visible(True)
+                    elif not self.visibility_timeout:
+                        if delay_hiding:
+                            self.visibility_timeout = GLib.timeout_add(1000, self.on_visibility_timeout)
+                        else:
+                            self.set_visible(False)
                 except:
                     self.set_visible(False)
         else:
             self.set_visible(False)
+
+    def on_visibility_timeout(self):
+        GLib.source_remove(self.visibility_timeout)
+        self.QueryVisibility()
 
     def set_visible(self, visible):
         self.props.visible = visible

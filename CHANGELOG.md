@@ -10,6 +10,7 @@
 
 * Icon disappeared when switching off bluetooth
 * Revert "bluez manager: Subclass from GDBusObjectManagerClient"
+* Icon briefly vanished when turning on bluetooth
 
 ## 2.1.alpha1
 
