@@ -104,7 +104,7 @@ class KillSwitch(AppletPlugin):
 
         logging.info("State: %s" % self._enabled)
 
-        self.Applet.Plugins.StatusIcon.QueryVisibility()
+        self.Applet.Plugins.StatusIcon.QueryVisibility(delay_hiding=not self._hardblocked)
         self.Applet.Plugins.PowerManager.UpdatePowerState()
 
         return True
