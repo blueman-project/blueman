@@ -24,7 +24,7 @@ class Connection:
         self.port = port
         self.Applet = applet
 
-        out, err = subprocess.Popen(['pgrep', 'modem-manager'], stdout=subprocess.PIPE).communicate()
+        out, err = subprocess.Popen(['pgrep', 'ModemManager'], stdout=subprocess.PIPE).communicate()
 
         if out.decode("UTF-8") != '':
             self.connect()
