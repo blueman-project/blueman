@@ -124,7 +124,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             prog.message(_("Success!"))
 
             if isinstance(service, SerialPort) and SERIAL_PORT_SVCLASS_ID == uuid128_to_uuid16(service.uuid):
-                MessageArea.show_message(_("Serial port connected to %s") % result, "dialog-information")
+                MessageArea.show_message(_("Serial port connected to %s") % result, None, "dialog-information")
             else:
                 MessageArea.close()
 
