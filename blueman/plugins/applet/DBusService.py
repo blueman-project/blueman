@@ -51,7 +51,7 @@ class DBusService(AppletPlugin):
 
     @dbus.service.method('org.blueman.Applet', in_signature="", out_signature="as")
     def QueryAvailablePlugins(self):
-        return self.Applet.Plugins.GetClasses()
+        return self.Applet.Plugins.GetClasses().keys()
 
     @dbus.service.method('org.blueman.Applet', in_signature="sb", out_signature="")
     def SetPluginConfig(self, plugin, value):
