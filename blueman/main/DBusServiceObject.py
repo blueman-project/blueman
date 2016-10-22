@@ -380,8 +380,9 @@ class DBusServiceObject(GObject.Object):
             return
 
         if ret is None and not info.out_args:
-            return  # No return value
-        invocation.return_value(GLib.Variant('(%s)' % info.out_args[0].signature, (ret,)))
+            invocation.return_value(None)
+        else:
+            invocation.return_value(GLib.Variant('(%s)' % info.out_args[0].signature, (ret,)))
 
     def __dbus_get_property(self, conn, sender, object_path, iface_name, prop_name):
         try:
