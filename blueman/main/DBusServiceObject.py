@@ -325,8 +325,9 @@ class DBusServiceObject(GObject.Object):
         try:
             ret = method(*parameters.unpack())
             if ret is None and not info.out_args:
-                return # No return value
-            invocation.return_value(GLib.Variant('(%s)' %info.out_args[0].signature, (ret,)))
+                invocation.return_value(None)
+            else:
+                invocation.return_value(GLib.Variant('(%s)' %info.out_args[0].signature, (ret,)))
         except Exception as e:
             invocation.return_error_literal(Gio.dbus_error_quark(),
                     Gio.DBusError.IO_ERROR,
