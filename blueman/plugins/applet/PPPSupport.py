@@ -25,7 +25,7 @@ class Connection:
         self.port = port
         self.Applet = applet
 
-        res = os.popen("ps x -o pid,args | grep modem-manager").read()
+        res = os.popen("ps x -o pid,args | grep ModemManager").read()
         if not res:
             self.connect()
         else:
