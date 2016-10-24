@@ -1,5 +1,18 @@
 # Changelog
 
+
+## 2.0.5
+
+### Bugs fixed
+
+* PPPSupport: Correrct binary name for ModemManager
+* PPPSupport: Exclude grep process from process list
+* GameControllerWakeLock: Check for Class property before using it
+* SerialManager: Properly check for None
+* NetConf: Treat UnicodeDecodeError as if there was no file
+* Notification: Also check if notification daemon supports body
+* Correct bold tag in portugese translation (thanks @andreyluiz)
+
 ## 2.0.4
 
 ### Changes
