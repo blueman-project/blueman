@@ -48,7 +48,7 @@ class Notes(ManagerPlugin):
         pass
 
     def on_request_menu_items(self, manager_menu, device):
-        item = create_menuitem(_("Send note"), get_icon("info", 16))
+        item = create_menuitem(_("Send _note"), get_icon("info", 16))
         item.props.tooltip_text = _("Send a text note")
         item.connect('activate', lambda x: send_note(device, manager_menu.get_toplevel()))
         return [(item, 500)]

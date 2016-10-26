@@ -109,7 +109,7 @@ class ManagerMenu:
         sep.show()
         view_menu.append(sep)
 
-        item_plugins = create_menuitem(_("Plugins"), get_icon('blueman-plugin', 16))
+        item_plugins = create_menuitem(_("_Plugins"), get_icon('blueman-plugin', 16))
         item_plugins.show()
         view_menu.append(item_plugins)
         item_plugins.connect('activate', self._on_plugin_dialog_activate)
