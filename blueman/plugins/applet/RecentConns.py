@@ -225,10 +225,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         item["adapter"] = props["Address"]
         item["address"] = device['Address']
         item["alias"] = device['Alias']
-        try:
-            item["icon"] = device['Icon']
-        except KeyError:
-            item["icon"] = 'blueman'
+        item["icon"] = device['Icon']
         item["name"] = service.name
         item["uuid"] = service.uuid
         item["time"] = time.time()
