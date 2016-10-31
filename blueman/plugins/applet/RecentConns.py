@@ -165,8 +165,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
             adapters = self.Applet.Manager.get_adapters()
             self.Adapters = {}
             for adapter in adapters:
-                p = adapter.get_properties()
-                self.Adapters[str(adapter.get_object_path())] = str(p["Address"])
+                self.Adapters[str(adapter.get_object_path())] = str(adapter["Address"])
 
             if RecentConns.items is not None:
                 for i in reversed(RecentConns.items):
@@ -196,8 +195,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         a = Adapter(path)
 
         def on_activated():
-            props = a.get_properties()
-            self.Adapters[str(path)] = str(props["Address"])
+            self.Adapters[str(path)] = str(a["Address"])
             self.initialize()
 
         wait_for_adapter(a, on_activated)
@@ -220,9 +218,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
             dprint("adapter not found")
             return
 
-        props = adapter.get_properties()
-
-        item["adapter"] = props["Address"]
+        item["adapter"] = adapter["Address"]
         item["address"] = device['Address']
         item["alias"] = device['Alias']
         item["icon"] = device['Icon']
