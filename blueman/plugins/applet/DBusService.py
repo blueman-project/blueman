@@ -66,7 +66,7 @@ class DBusService(AppletPlugin):
         except KeyError:
             dprint("RecentConns plugin is unavailable")
         else:
-            self.Applet.Plugins.RecentConns.notify(service)
+            self.Applet.Plugins.RecentConns.notify(object_path, uuid)
 
         if service.group == 'serial':
             def reply(rfcomm):

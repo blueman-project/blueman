@@ -12,7 +12,9 @@ import base64
 import zlib
 from blueman.Functions import *
 from blueman.bluez.Adapter import Adapter
+from blueman.bluez.Device import Device
 from blueman.gui.Notification import Notification
+from blueman.Sdp import uuid128_to_uuid16, uuid16_to_name
 
 from blueman.plugins.AppletPlugin import AppletPlugin
 
@@ -208,9 +210,9 @@ class RecentConns(AppletPlugin, Gtk.Menu):
 
         self.initialize()
 
-    def notify(self, service):
-        device = service.device
-        dprint(device, service, service.uuid)
+    def notify(self, object_path, uuid):
+        device = Device(object_path)
+        dprint(device, uuid)
         item = {}
         try:
             adapter = Adapter(device['Adapter'])
@@ -222,10 +224,10 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         item["address"] = device['Address']
         item["alias"] = device['Alias']
         item["icon"] = device['Icon']
-        item["name"] = service.name
-        item["uuid"] = service.uuid
+        item["name"] = uuid16_to_name(uuid128_to_uuid16(uuid))
+        item["uuid"] = uuid
         item["time"] = time.time()
-        item["device"] = device.get_object_path()
+        item["device"] = object_path
         item["mitem"] = None #menu item object
 
         for i in RecentConns.items:
