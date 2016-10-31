@@ -11,13 +11,10 @@ import pickle
 import base64
 import zlib
 from blueman.Functions import *
-from blueman.bluez.Manager import Manager
 from blueman.bluez.Adapter import Adapter
 from blueman.gui.Notification import Notification
 
 from blueman.plugins.AppletPlugin import AppletPlugin
-
-from gi.repository import GObject
 
 REGISTRY_VERSION = 0
 
