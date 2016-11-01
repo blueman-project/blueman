@@ -134,6 +134,7 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
 
         self.Applet.Plugins.RunEx("on_status_icon_query_icon", callback)
         self.props.icon_name = self.icon
+        self.QueryVisibility()
 
         return True
 
