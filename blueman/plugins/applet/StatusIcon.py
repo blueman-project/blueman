@@ -82,6 +82,7 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
 
     def on_visibility_timeout(self):
         GLib.source_remove(self.visibility_timeout)
+        self.visibility_timeout = None
         self.QueryVisibility()
 
     def set_visible(self, visible):
