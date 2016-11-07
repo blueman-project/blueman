@@ -173,7 +173,7 @@ class TransferService(AppletPlugin):
 
     def _register_agent(self):
         if not self.__class__._agent:
-            self.__class__._agent = Agent(self._applet)
+            self.__class__._agent = Agent(self.Applet)
         self._agent.register()
 
     @classmethod
@@ -238,7 +238,7 @@ class TransferService(AppletPlugin):
         shutil.move(src, dest)
 
         try:
-            status_icon = self._applet.Plugins.StatusIcon
+            status_icon = self.Applet.Plugins.StatusIcon
         except:
             status_icon = None
 
@@ -269,7 +269,7 @@ class TransferService(AppletPlugin):
             return
 
         try:
-            status_icon = self._applet.Plugins.StatusIcon
+            status_icon = self.Applet.Plugins.StatusIcon
         except:
             status_icon = None
 

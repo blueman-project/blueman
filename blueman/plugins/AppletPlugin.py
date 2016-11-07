@@ -30,7 +30,6 @@ class AppletPlugin(ConfigurablePlugin):
         self.__opts = {}
 
         self.Applet = applet
-        self._applet = applet
 
         self.__overrides = []
 
