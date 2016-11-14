@@ -13,16 +13,12 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 
 import gi
 gi.require_version("Gtk", "3.0")
-gi.require_version('Notify', '0.7')
-from gi.repository import Notify
 try: import __builtin__ as builtins
 except ImportError: import builtins
 
 class BluemanApplet(object):
     def __init__(self):
         setup_icon_path()
-        if not Notify.init("Blueman"):
-            dprint("Error: Failed to initialize libnotify")
 
         check_single_instance("blueman-applet")
 
