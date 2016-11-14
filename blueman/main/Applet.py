@@ -24,15 +24,13 @@ class BluemanApplet(object):
 
         check_single_instance("blueman-applet")
 
-        self._signals = []
-
         self.plugin_run_state_changed = False
 
         self.Manager = Bluez.Manager()
-        self._signals.append(self.Manager.connect_signal('adapter-added', self.on_adapter_added))
-        self._signals.append(self.Manager.connect_signal('adapter-removed', self.on_adapter_removed))
-        self._signals.append(self.Manager.connect_signal('device-created', self.on_device_created))
-        self._signals.append(self.Manager.connect_signal('device-removed', self.on_device_removed))
+        self.Manager.connect_signal('adapter-added', self.on_adapter_added)
+        self.Manager.connect_signal('adapter-removed', self.on_adapter_removed)
+        self.Manager.connect_signal('device-created', self.on_device_created)
+        self.Manager.connect_signal('device-removed', self.on_device_removed)
 
         self.DbusSvc = DbusService("org.blueman.Applet", "/")
 
