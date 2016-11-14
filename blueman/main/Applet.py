@@ -11,10 +11,14 @@ from blueman.main.PluginManager import PersistentPluginManager
 from blueman.main.DbusService import DbusService
 from blueman.plugins.AppletPlugin import AppletPlugin
 
+import sys
 import gi
 gi.require_version("Gtk", "3.0")
-try: import __builtin__ as builtins
-except ImportError: import builtins
+
+if sys.version_info.major < 3:
+    import __builtin__ as builtins
+else:
+    import builtins
 
 class BluemanApplet(object):
     def __init__(self):
