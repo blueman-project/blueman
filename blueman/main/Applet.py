@@ -12,8 +12,6 @@ from blueman.main.DbusService import DbusService
 from blueman.plugins.AppletPlugin import AppletPlugin
 
 import sys
-import gi
-gi.require_version("Gtk", "3.0")
 
 if sys.version_info.major < 3:
     import __builtin__ as builtins
