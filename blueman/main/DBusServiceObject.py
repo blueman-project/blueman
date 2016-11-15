@@ -39,11 +39,12 @@ class DBusArgInfo:
         self.signature = signature
 
 class DBusMethodInfo:
-    def __init__(self, name="", interface=None, in_args=[], out_args=[], annotations=[]):
+    def __init__(self, name="", interface=None, in_args=[], out_args=[], invocation=None, annotations=[]):
         self.name = name
         self.interface = interface
         self.in_args = in_args
         self.out_args = out_args
+        self.invocation = invocation
         self.annotations = annotations
 
     def generate_xml(self):
@@ -118,10 +119,52 @@ class DBusNodeInfo:
             node.append(interface.generate_xml())
         return node
 
-def _create_arginfo_list(func, signature):
+class DBusMethodInvocation(object):
+    def __init__(self, invocation, signature):
+        self._invocation = invocation
+        self._signature = signature
+
+    def return_error(self, error):
+        if isinstance(error, GLib.Error):
+            message = error.message
+        else:
+            message = str(error)
+        self._invocation.return_error_literal(
+            Gio.dbus_error_quark(),
+            Gio.DBusError.FAILED,
+            message
+        )
+
+    def return_value(self, value=None):
+        if value is None or self._signature is None:
+            self._invocation.return_value(None)
+            return
+
+        try:
+            param = GLib.Variant('(%s)' % self._signature, (value,))
+            self._invocation.return_value(param)
+        except Exception as e:
+            self.return_error(e)
+
+    @property
+    def invocation(self):
+        return self._invocation
+
+    @property
+    def sender(self):
+        return self._invocation.get_sender()
+
+    @property
+    def path(self):
+        return self._invocation.get_object_path()
+
+def _create_arginfo_list(func, signature, invocation_keyword=None):
     arg_names = inspect.getargspec(func).args
     signature_list = GLib.Variant.split_signature('(%s)' %signature) if signature else []
     arg_names.pop(0) # eat "self" argument
+
+    if invocation_keyword and invocation_keyword in arg_names:
+        arg_names.remove(invocation_keyword)
 
     if len(signature_list) != len(arg_names):
         raise TypeError('Specified signature %s for method %s does not match length of arguments'
@@ -132,14 +175,15 @@ def _create_arginfo_list(func, signature):
         args.append(DBusArgInfo(name=arg_name, signature=arg_signature))
     return args
 
-def dbus_method(interface, in_signature=None, out_signature=None):
+def dbus_method(interface, in_signature=None, out_signature=None, invocation_keyword=None):
     def decorator(func):
-        in_args = _create_arginfo_list(func, in_signature)
+        in_args = _create_arginfo_list(func, in_signature, invocation_keyword)
         out_args = [DBusArgInfo(name='return', signature=out_signature),] if out_signature else []
         func._dbus_info = DBusMethodInfo(name=func.__name__,
-                                                interface=interface,
-                                                in_args=in_args,
-                                                out_args=out_args)
+                                         interface=interface,
+                                         in_args=in_args,
+                                         out_args=out_args,
+                                         invocation=invocation_keyword)
         return func
 
     return decorator
@@ -322,8 +366,22 @@ class DBusServiceObject(GObject.Object):
                     'No such interface or method: %s.%s' % (iface_name, method_name))
             return
 
+        kwargs = {}
+        if info.invocation:
+            if len(info.out_args) > 0:
+                signature = info.out_args[0].signature
+            else:
+                signature = None
+
+            method_invocation = DBusMethodInvocation(invocation, signature)
+            kwargs[info.invocation] = method_invocation
+
         try:
-            ret = method(*parameters.unpack())
+            ret = method(*parameters.unpack(), **kwargs)
+            if info.invocation:
+                # Consumer responsible to handle reply
+                return
+
             if ret is None and not info.out_args:
                 invocation.return_value(None)
             else:
