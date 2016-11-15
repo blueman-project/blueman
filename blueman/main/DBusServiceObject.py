@@ -355,6 +355,11 @@ class DBusServiceObject(GObject.Object):
         self.regids = []
         self.__dbus_info = DBusNodeInfo(path=self.object_path)
 
+    def _refresh_dbus_registration(self):
+        # Used when plugins are (un)loaded
+        self.__dbus_unexport()
+        self.__dbus_export()
+
     def __dbus_method_call(self, conn, sender, object_path, iface_name, method_name,
                            parameters, invocation):
 
