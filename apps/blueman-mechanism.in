@@ -13,10 +13,6 @@ if 'BLUEMAN_SOURCE' in os.environ:
     timeout = 9999
     os.environ["GSETTINGS_SCHEMA_DIR"] = os.path.join(_dirname, "data")
 
-import dbus
-import dbus.service
-from dbus.mainloop.glib import DBusGMainLoop
-
 from gi.repository import Gio, GLib
 
 loop = GLib.MainLoop()
@@ -79,8 +75,6 @@ sys.stderr = sl
 
 logging.info("Starting blueman-mechanism")
 
-DBusGMainLoop(set_as_default=True)
-
 os.environ["PATH"] = "/usr/bin:/bin:/usr/sbin:/sbin"
 
 dhcp_pids = []
@@ -114,8 +108,10 @@ class Timer:
 
 class conf_service(DbusService):
     def __init__(self):
-        super(conf_service, self).__init__("org.blueman.Mechanism", "/", dbus.SystemBus)
+        self._dbus_conn = Gio.bus_get_sync(Gio.BusType.SYSTEM, None)
         self.timer = Timer()
+
+        super(conf_service, self).__init__("org.blueman.Mechanism", "/", connection=self._dbus_conn)
 
         if POLKIT:
             try:
@@ -156,7 +152,7 @@ class conf_service(DbusService):
             return
         else:
             if not self.pk:
-                raise dbus.DBusException(
+                raise GLib.Error(
                     "Blueman was built with PolicyKit-1 support, but it's not available on the system")
 
         v_subject = GLib.Variant('s', subject)
@@ -166,9 +162,10 @@ class conf_service(DbusService):
         logging.debug(str(res))
         (is_authorized, is_challenge, details) = res
         if not is_authorized:
-            raise dbus.DBusException("Not authorized")
+            raise GLib.Error("Not authorized")
 
 
 set_proc_title()
-conf_service()
+service = conf_service()
+service.connect_bus()
 loop.run()

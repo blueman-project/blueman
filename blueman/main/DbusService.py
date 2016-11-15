@@ -1,25 +1,35 @@
 # coding=utf-8
-import dbus
-from dbus.mainloop.glib import DBusGMainLoop
-import dbus.service
-
-DBusGMainLoop(set_as_default=True)
+from blueman.main.DBusServiceObject import DBusServiceObject, DBusMethodInfo, DBusSignalInfo
+from gi.repository import Gio
+import logging
 
 
 class MethodAlreadyExists(Exception):
     pass
 
 
-class DbusService(dbus.service.Object):
-    def __init__(self, name, path, bus=dbus.SessionBus):
-        self.bus = bus()
-        self.bus.request_name(name)
+class DbusService(DBusServiceObject):
+    def __init__(self, bus_name, path, **kwargs):
+        super(DbusService, self).__init__(object_path=path, **kwargs)
+        self.__bus_name = bus_name
+        self._bus_id = None
 
-        super(DbusService, self).__init__(self.bus, path)
+    def _on_name_acquired(self, conn, name):
+        logging.debug('Got bus name: %s' % name)
+
+    def connect_bus(self):
+        self._bus_id = Gio.bus_own_name_on_connection(self.connection, self.__bus_name,
+                                                      Gio.BusNameOwnerFlags.NONE,
+                                                      self._on_name_acquired,
+                                                      None)
+
+    def disconnect_bus(self):
+        if self._bus_id:
+            Gio.bus_unown_name(self.bus_id)
+
+        self._bus_id = None
 
     def add_definitions(self, instance):
-        setattr(instance, 'locations', list(self.locations))
-
         for name, func in self._definitions(instance):
             if name in self.__class__.__dict__:
                 raise MethodAlreadyExists
@@ -35,7 +45,7 @@ class DbusService(dbus.service.Object):
         wrapper.__name__ = method.__name__
 
         for key, value in method.__dict__.items():
-            if key.startswith('_dbus_'):
+            if key == '_dbus_info':
                 setattr(wrapper, key, value)
 
         setattr(self.__class__, method.__name__, wrapper)
@@ -49,5 +59,6 @@ class DbusService(dbus.service.Object):
     @staticmethod
     def _definitions(obj):
         for name, func in obj.__class__.__dict__.items():
-            if getattr(func, '_dbus_is_method', False) or getattr(func, '_dbus_is_signal', False):
+            dbus_info = getattr(func, "_dbus_info", None)
+            if isinstance(dbus_info, DBusMethodInfo) or isinstance(dbus_info, DBusSignalInfo):
                 yield name, func

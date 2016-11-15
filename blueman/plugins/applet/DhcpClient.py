@@ -1,6 +1,6 @@
 # coding=utf-8
-import dbus.service
 import logging
+from blueman.main.DBusServiceObject import *
 from blueman.bluez.Network import AnyNetwork
 from blueman.gui.Notification import Notification
 from blueman.plugins.AppletPlugin import AppletPlugin
@@ -23,7 +23,7 @@ class DhcpClient(AppletPlugin):
     def on_unload(self):
         del self._any_network
 
-    @dbus.service.method('org.blueman.Applet', in_signature="s")
+    @dbus_method('org.blueman.Applet', in_signature="s")
     def DhcpClient(self, interface):
         self.dhcp_acquire(interface)
 

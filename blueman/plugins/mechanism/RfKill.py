@@ -1,5 +1,5 @@
 # coding=utf-8
-import dbus.service
+from blueman.main.DBusServiceObject import *
 import os
 import struct
 from blueman.plugins.MechanismPlugin import MechanismPlugin
@@ -10,9 +10,10 @@ if not os.path.exists('/dev/rfkill'):
 
 
 class RfKill(MechanismPlugin):
-    @dbus.service.method('org.blueman.Mechanism', in_signature="b", out_signature="", sender_keyword="caller")
-    def SetRfkillState(self, state, caller):
-        self.confirm_authorization(caller, "org.blueman.rfkill.setstate")
+    @dbus_method('org.blueman.Mechanism', in_signature="b", out_signature="", invocation_keyword="invocation")
+    def SetRfkillState(self, state, invocation):
+        self.confirm_authorization(invocation.sender, "org.blueman.rfkill.setstate")
         f = open('/dev/rfkill', 'r+b', buffering=0)
         f.write(struct.pack("IBBBB", 0, RFKILL_TYPE_BLUETOOTH, RFKILL_OP_CHANGE_ALL, (0 if state else 1), 0))
         f.close()
+        invocation.return_value(None)
