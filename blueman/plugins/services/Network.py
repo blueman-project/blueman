@@ -71,7 +71,7 @@ class Network(ServicePlugin):
                 net_ip = self.Builder.get_object("net_ip")
 
                 try:
-                    m.EnableNetwork('(ayays)', inet_aton(net_ip.props.text), inet_aton("255.255.255.0"), stype)
+                    m.EnableNetwork('(sss)', net_ip.props.text, "255.255.255.0", stype)
 
                     if not self.Config["nap-enable"]:
                         self.Config["nap-enable"] = True

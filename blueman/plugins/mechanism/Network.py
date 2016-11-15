@@ -2,6 +2,7 @@
 from blueman.main.DBusServiceObject import *
 from blueman.plugins.MechanismPlugin import MechanismPlugin
 from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler, UdhcpdHandler
+from socket import inet_aton
 
 DHCPDHANDLERS = {"DnsMasqHandler": DnsMasqHandler,
                  "DhcpdHandler": DhcpdHandler,
@@ -30,11 +31,11 @@ class Network(MechanismPlugin):
         dh.connect("connected", dh_connected, invocation.return_value)
         dh.run()
 
-    @dbus_method('org.blueman.Mechanism', in_signature="ayays", out_signature="", invocation_keyword="invocation")
+    @dbus_method('org.blueman.Mechanism', in_signature="sss", out_signature="", invocation_keyword="invocation")
     def EnableNetwork(self, ip_address, netmask, dhcp_handler, invocation):
         self.confirm_authorization(invocation.sender, "org.blueman.network.setup")
         nc = NetConf.get_default()
-        nc.set_ipv4(ip_address, netmask)
+        nc.set_ipv4(inet_aton(ip_address), inet_aton(netmask))
         nc.set_dhcp_handler(DHCPDHANDLERS[dhcp_handler])
         nc.apply_settings()
         invocation.return_value(None)
