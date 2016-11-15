@@ -290,28 +290,6 @@ class DBusServiceObject(GObject.Object):
         self.__dbus_info = DBusNodeInfo(path=self.object_path)
         self.__dbus_regids = []
 
-        for id in dir(self):
-            # don't use getattr(self, id) as default to avoid calling
-            # __get__ of properties (which may not have been initialized)
-            attr = getattr(type(self), id, None)
-            if attr is None:
-                attr = getattr(self, id)
-            try:
-                info = attr._dbus_info
-                interface = self.__dbus_info.interfaces.setdefault(
-                    info.interface, DBusInterfaceInfo(name=info.interface))
-            except AttributeError:
-                continue
-
-            if isinstance(info, DBusMethodInfo):
-                interface.methods.append(info)
-            elif isinstance(info, DBusPropertyInfo):
-                # the name of properties is determined by its attribute name
-                info.name = info.name or id
-                interface.properties.append(info)
-            elif isinstance(info, DBusSignalInfo):
-                interface.signals.append(info)
-
         if self.connection:
             self.__dbus_export()
 
@@ -335,6 +313,28 @@ class DBusServiceObject(GObject.Object):
             self.__dbus_export()
 
     def __dbus_export(self):
+        for id in dir(self):
+            # don't use getattr(self, id) as default to avoid calling
+            # __get__ of properties (which may not have been initialized)
+            attr = getattr(type(self), id, None)
+            if attr is None:
+                attr = getattr(self, id)
+            try:
+                info = attr._dbus_info
+                interface = self.__dbus_info.interfaces.setdefault(
+                    info.interface, DBusInterfaceInfo(name=info.interface))
+            except AttributeError:
+                continue
+
+            if isinstance(info, DBusMethodInfo):
+                interface.methods.append(info)
+            elif isinstance(info, DBusPropertyInfo):
+                # the name of properties is determined by its attribute name
+                info.name = info.name or id
+                interface.properties.append(info)
+            elif isinstance(info, DBusSignalInfo):
+                interface.signals.append(info)
+
         xml = ElementTree.tostring(self.__dbus_info.generate_xml(), encoding='unicode')
         node_info = Gio.DBusNodeInfo.new_for_xml(xml)
         logging.debug('--- XML: ---\n%s\n-------' %node_info.generate_xml(0).str)
