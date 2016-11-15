@@ -18,7 +18,6 @@
 
 import inspect
 import logging
-import subprocess
 from xml.etree import ElementTree
 from gi.repository import (
     GLib,
