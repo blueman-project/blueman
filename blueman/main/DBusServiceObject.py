@@ -353,6 +353,7 @@ class DBusServiceObject(GObject.Object):
         for reg_id in self.__dbus_regids:
             self.connection.unregister_object(reg_id)
         self.regids = []
+        self.__dbus_info = DBusNodeInfo(path=self.object_path)
 
     def __dbus_method_call(self, conn, sender, object_path, iface_name, method_name,
                            parameters, invocation):
