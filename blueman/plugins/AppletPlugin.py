@@ -51,6 +51,14 @@ class AppletPlugin(ConfigurablePlugin):
         if applet.plugin_run_state_changed:
             self.on_manager_state_changed(applet.manager_state)
 
+    @property
+    def object_path(self):
+        return self.Applet.DbusSvc.object_path
+
+    @property
+    def connection(self):
+        return self.Applet.DbusSvc.connection
+
     # virtual funcs
     def on_manager_state_changed(self, state):
         """Run when the dbus service appears and disappears. Should only be used to setup, register agents etc"""
