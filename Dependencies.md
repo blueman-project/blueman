@@ -10,8 +10,7 @@
 * [GTK+ 3](http://www.gtk.org/) (GI bindings) [1]
 * [gnome-icon-theme](https://git.gnome.org/browse/adwaita-icon-theme/) or [mate-icon-theme](https://github.com/mate-desktop/mate-icon-theme)
 * [libappindicator](https://launchpad.net/libappindicator) (optional) (GI bindings)
-* [notification-daemon](https://git.gnome.org/browse/notification-daemon) or any desktop specific replacement
-* [libnotify](https://git.gnome.org/browse/libnotify) (GI bindings)
+* [notification-daemon](https://developer.gnome.org/notification-spec/) that provides dbus name org.freedesktop.Notifications
 * [obexd 5](http://www.bluez.org/)
 * [Pango](http://www.gtk.org/) (GI bindings)
 * [pulseaudio](http://www.freedesktop.org/wiki/Software/PulseAudio/) (optional; its bluetooth module is required to actually use audio devices)
