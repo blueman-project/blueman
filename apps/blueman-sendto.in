@@ -23,6 +23,7 @@ import argparse
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if 'BLUEMAN_SOURCE' in os.environ:
     sys.path.insert(0, _dirname)
+    os.environ["GSETTINGS_SCHEMA_DIR"] = "../data"
 
 # Workaround introspection bug, gnome bug 622084
 signal.signal(signal.SIGINT, signal.SIG_DFL)

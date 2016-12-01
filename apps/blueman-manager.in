@@ -19,6 +19,7 @@ from gi.repository import Gtk
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if 'BLUEMAN_SOURCE' in os.environ:
     sys.path.insert(0, _dirname)
+    os.environ["GSETTINGS_SCHEMA_DIR"] = "../data"
 
 from blueman.Functions import set_proc_title
 
