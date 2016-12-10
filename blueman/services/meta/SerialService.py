@@ -24,10 +24,9 @@ class SerialService(Service):
         return False
 
     def connect(self, reply_handler=None, error_handler=None):
-        props = self.device.get_properties()
         try:
             # TODO: Channel?
-            port_id = create_rfcomm_device(Adapter(props['Adapter']).get_properties()['Address'], props['Address'], 1)
+            port_id = create_rfcomm_device(Adapter(self.device["Adapter"])['Address'], self.device["Address"], 1)
             Mechanism().open_rfcomm(str('(d)'), port_id)
             if reply_handler:
                 reply_handler('/dev/rfcomm%d' % port_id)

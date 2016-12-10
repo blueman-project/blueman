@@ -86,7 +86,7 @@ class Manager(Gio.DBusObjectManagerClient):
         else:
             for adapter in adapters:
                 path = adapter.get_object_path()
-                if path.endswith(pattern) or adapter.get_properties()['Address'] == pattern:
+                if path.endswith(pattern) or adapter['Address'] == pattern:
                     return adapter
             raise ValueError("No adapters found with pattern: %s" % pattern)
 

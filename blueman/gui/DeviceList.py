@@ -152,7 +152,7 @@ class DeviceList(GenericList):
                 dprint("stopping monitor (not connected)")
                 cinfo.deinit()
                 self.level_setup_event(row_ref, device, None)
-                self.monitored_devices.remove(bt_address)
+                self.monitored_devices.remove(address)
                 return False
             else:
                 self.level_setup_event(row_ref, device, cinfo)
