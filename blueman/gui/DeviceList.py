@@ -140,41 +140,39 @@ class DeviceList(GenericList):
             if not row_ref.valid():
                 dprint("stopping monitor (row does not exist)")
                 cinfo.deinit()
-                self.monitored_devices.remove(props["Address"])
+                self.monitored_devices.remove(address)
                 return False
 
             if not self.get_model():
-                self.monitored_devices.remove(props["Address"])
+                self.monitored_devices.remove(address)
                 return False
 
             tree_iter = self.get_model().get_iter(row_ref.get_path())
-            device = self.get(tree_iter, "device")["device"]
             if not device['Connected']:
                 dprint("stopping monitor (not connected)")
                 cinfo.deinit()
                 self.level_setup_event(row_ref, device, None)
-                self.monitored_devices.remove(props["Address"])
+                self.monitored_devices.remove(bt_address)
                 return False
             else:
                 self.level_setup_event(row_ref, device, cinfo)
                 return True
 
-        props = device.get_properties()
-
-        if "Connected" in props and props["Connected"] and props["Address"] not in self.monitored_devices:
+        bt_address = device["Address"]
+        if device["Connected"] and bt_address not in self.monitored_devices:
             dprint("starting monitor")
             tree_iter = self.find_device(device)
 
             hci = os.path.basename(self.Adapter.get_object_path())
             try:
-                cinfo = conn_info(props["Address"], hci)
+                cinfo = conn_info(bt_address, hci)
             except Exception as e:
                 dprint("Failed to get power levels\n%s" % e)
             else:
                 r = Gtk.TreeRowReference.new(self.get_model(), self.get_model().get_path(tree_iter))
                 self.level_setup_event(r, device, cinfo)
-                GLib.timeout_add(1000, update, r, cinfo, props["Address"])
-                self.monitored_devices.append(props["Address"])
+                GLib.timeout_add(1000, update, r, cinfo, bt_address)
+                self.monitored_devices.append(bt_address)
 
     ##### virtual funcs #####
 
