@@ -23,6 +23,7 @@ import cgi
 
 from blueman.gui.GtkAnimation import TreeRowColorFade, TreeRowFade, CellFade
 from blueman.main.Config import Config
+from _blueman import ConnInfoReadError
 
 
 class ManagerDeviceList(DeviceList):
@@ -333,16 +334,16 @@ class ManagerDeviceList(DeviceList):
             if cinfo is not None:
                 try:
                     rssi = float(cinfo.get_rssi())
-                except:
+                except ConnInfoReadError:
                     rssi = 0
                 try:
                     lq = float(cinfo.get_lq())
-                except:
+                except ConnInfoReadError:
                     lq = 0
 
                 try:
                     tpl = float(cinfo.get_tpl())
-                except:
+                except ConnInfoReadError:
                     tpl = 0
 
                 rssi_perc = 50 + (rssi / 127 / 2 * 100)
