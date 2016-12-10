@@ -255,6 +255,9 @@ def destroy_bridge(py_name="pan1"):
         raise BridgeException(-err)
 
 
+class ConnInfoReadError(Exception):
+    pass
+
 cdef class conn_info:
     cdef conn_info_handles ci
     cdef int hci
@@ -270,7 +273,7 @@ cdef class conn_info:
         self.hci = int(hci_name[3:])
         res = connection_init(self.hci, addr, &self.ci)
         if res < 0:
-            raise Exception, ERR[res]
+            raise ConnInfoReadError(ERR[res])
 
     def deinit(self):
         connection_close(&self.ci)
@@ -279,7 +282,7 @@ cdef class conn_info:
         cdef char rssi
         res = connection_get_rssi(&self.ci, &rssi)
         if res < 0:
-            raise Exception, ERR[res]
+            raise ConnInfoReadError(ERR[res])
 
         return rssi
 
@@ -287,7 +290,7 @@ cdef class conn_info:
         cdef unsigned char lq
         res = connection_get_lq(&self.ci, &lq)
         if res < 0:
-            raise Exception, ERR[res]
+            raise ConnInfoReadError(ERR[res])
 
         return lq
 
@@ -295,7 +298,7 @@ cdef class conn_info:
         cdef char tpl
         res = connection_get_tpl(&self.ci, &tpl, tp)
         if res < 0:
-            raise Exception, ERR[res]
+            raise ConnInfoReadError(ERR[res])
 
         return tpl
 
