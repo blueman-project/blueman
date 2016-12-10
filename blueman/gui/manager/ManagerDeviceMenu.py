@@ -102,7 +102,7 @@ class ManagerDeviceMenu(Gtk.Menu):
     def get_op(self, device):
         try:
             return ManagerDeviceMenu.__ops__[device.get_object_path()]
-        except:
+        except KeyError:
             return None
 
     def unset_op(self, device):
