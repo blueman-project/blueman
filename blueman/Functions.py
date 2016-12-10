@@ -125,8 +125,7 @@ def wait_for_adapter(bluez_adapter, callback, timeout=1000):
                "Bluez didn't provide 'Powered' property in a reasonable timeout\nAssuming adapter is ready")
         callback()
 
-    props = bluez_adapter.get_properties()
-    if props["Address"] != "00:00:00:00:00:00":
+    if bluez_adapter["Address"] != "00:00:00:00:00:00":
         callback()
         return
 

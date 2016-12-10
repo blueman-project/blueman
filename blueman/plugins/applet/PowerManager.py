@@ -79,8 +79,7 @@ class PowerManager(AppletPlugin):
     def get_adapter_state(self):
         adapters = self.Applet.Manager.get_adapters()
         for adapter in adapters:
-            props = adapter.get_properties()
-            if not props["Powered"]:
+            if not adapter["Powered"]:
                 return False
         return bool(adapters)
 

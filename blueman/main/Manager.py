@@ -202,14 +202,12 @@ class Blueman(Gtk.Window):
         launch("blueman-adapters", None, False, "blueman", _("Adapter Preferences"))
 
     def toggle_trust(self, device):
-        props = device.get_properties()
         device['Trusted'] = not device['Trusted']
 
     def send(self, device, File=None):
         adapter = self.List.Adapter
-        props = adapter.get_properties()
 
-        command = "blueman-sendto --source=%s --device=%s" % (props["Address"], device['Address'])
+        command = "blueman-sendto --source=%s --device=%s" % (adapter["Address"], device['Address'])
         launch(command, None, False, "blueman", _("File Sender"))
 
     def remove(self, device):

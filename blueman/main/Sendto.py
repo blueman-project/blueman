@@ -121,7 +121,7 @@ class Sender(Gtk.Dialog):
 
     def create_session(self):
         def check():
-            if self.adapter.get_properties()['Discovering']:
+            if self.adapter['Discovering']:
                 return True
             else:
                 self._do_create_session()
@@ -130,8 +130,7 @@ class Sender(Gtk.Dialog):
 
     def _do_create_session(self):
         dprint("Creating session")
-        props = self.adapter.get_properties()
-        self.client.create_session(self.device['Address'], props["Address"])
+        self.client.create_session(self.device['Address'], self.adapter["Address"])
 
     def on_cancel(self, button):
         self.pb.props.text = _("Cancelling")

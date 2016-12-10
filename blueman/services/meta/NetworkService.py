@@ -18,7 +18,7 @@ class NetworkService(Service):
     @property
     def connected(self):
         try:
-            return self._service.get_properties()['Connected']
+            return self._service['Connected']
         except BluezDBusException as e:
             dprint('Could not get properties of network service: %s' % e)
             return False
