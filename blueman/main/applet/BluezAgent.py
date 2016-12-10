@@ -149,15 +149,9 @@ class BluezAgent(Agent):
 
         return (dialog, pin_entry)
 
-    def get_device_alias(self, device_path):
+    def get_device_string(self, device_path):
         device = Bluez.Device(device_path)
-        props = device.get_properties()
-        address = props["Address"]
-        name = props.get('Name', address)
-        alias = address
-        if name:
-            alias = "<b>%s</b> (%s)" % (escape(name), address)
-        return alias
+        return "<b>%s</b> (%s)" % (escape(device["Alias"]), device["Address"])
 
     def _lookup_default_pin(self, device_path):
         if not self._db:
@@ -204,14 +198,14 @@ class BluezAgent(Agent):
             dialog.destroy()
             self.dialog = None
 
-        alias = self.get_device_alias(device_path)
-        notify_message = _("Pairing request for %s") % (alias)
+        dev_str = self.get_device_string(device_path)
+        notify_message = _("Pairing request for %s") % dev_str
 
         if self.dialog:
             dprint("Agent: Another dialog still active, cancelling")
             invocation.return_dbus_error('org.bluez.Error.Canceled', 'Canceled')
 
-        self.dialog, pin_entry = self.build_passkey_dialog(alias, dialog_msg, is_numeric)
+        self.dialog, pin_entry = self.build_passkey_dialog(dev_str, dialog_msg, is_numeric)
         if not self.dialog:
             dprint("Agent: Failed to build dialog")
             invocation.return_dbus_error('org.bluez.Error.Canceled', 'Canceled')
@@ -275,7 +269,7 @@ class BluezAgent(Agent):
         dev = Bluez.Device(device)
         self.signal_id = dev.connect_signal("property-changed", self._on_device_property_changed)
 
-        notify_message = _("Pairing passkey for") + " %s: %s" % (self.get_device_alias(device), passkey)
+        notify_message = _("Pairing passkey for") + " %s: %s" % (self.get_device_string(device), passkey)
         self.n = Notification("Bluetooth", notify_message, 0, icon_name="blueman", pos_hint=self.status_icon.geometry)
         self.n.show()
 
@@ -285,7 +279,7 @@ class BluezAgent(Agent):
         dev = Bluez.Device(device)
         self.signal_id = dev.connect_signal("property-changed", self._on_device_property_changed)
 
-        notify_message = _("Pairing PIN code for") + " %s: %s" % (self.get_device_alias(device), pin_code)
+        notify_message = _("Pairing PIN code for") + " %s: %s" % (self.get_device_string(device), pin_code)
         self.n = Notification("Bluetooth", notify_message, 0, icon_name="blueman", pos_hint=self.status_icon.geometry)
         self.n.show()
 
@@ -304,8 +298,7 @@ class BluezAgent(Agent):
             device_path, passkey = params
 
         dprint("Agent.RequestConfirmation")
-        alias = self.get_device_alias(device_path)
-        notify_message = _("Pairing request for:") + "\n%s" % alias
+        notify_message = _("Pairing request for:") + "\n%s" % self.get_device_string(device_path)
         if passkey:
             notify_message += "\n" + _("Confirm value for authentication:") + " <b>%s</b>" % passkey
         actions = [["confirm", _("Confirm")], ["deny", _("Deny")]]
@@ -335,10 +328,10 @@ class BluezAgent(Agent):
         device, uuid = parameters.unpack()
 
         dprint("Agent.Authorize")
-        alias = self.get_device_alias(device)
+        dev_str = self.get_device_string(device)
         uuid16 = uuid128_to_uuid16(uuid)
         service = uuid16_to_name(uuid16)
-        notify_message = (_("Authorization request for:") + "\n%s\n" + _("Service:") + " <b>%s</b>") % (alias, service)
+        notify_message = (_("Authorization request for:") + "\n%s\n" + _("Service:") + " <b>%s</b>") % (dev_str, service)
         actions = [["always", _("Always accept")],
                    ["accept", _("Accept")],
                    ["deny", _("Deny")]]
