@@ -143,7 +143,7 @@ class GenericList(Gtk.TreeView):
 
         try:
             return self.liststore.get_iter(path)
-        except:
+        except ValueError:
             return None
 
     def clear(self):
