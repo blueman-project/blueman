@@ -419,7 +419,7 @@ class NetConf(object):
 
         try:
             destroy_bridge("pan1")
-        except:
+        except BridgeException:
             pass
         self.unlock("ifconfig")
 
@@ -434,7 +434,7 @@ class NetConf(object):
     def unlock(self, key):
         try:
             os.unlink("/var/run/blueman-%s" % key)
-        except:
+        except OSError:
             pass
 
     def locked(self, key):
