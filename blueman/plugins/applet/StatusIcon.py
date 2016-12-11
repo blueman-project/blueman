@@ -67,16 +67,13 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
                     self.set_visible(False)
                     return
 
-                try:
-                    if self.Applet.Manager.get_adapters():
-                        self.set_visible(True)
-                    elif not self.visibility_timeout:
-                        if delay_hiding:
-                            self.visibility_timeout = GLib.timeout_add(1000, self.on_visibility_timeout)
-                        else:
-                            self.set_visible(False)
-                except:
-                    self.set_visible(False)
+                if self.Applet.Manager.get_adapters():
+                    self.set_visible(True)
+                elif not self.visibility_timeout:
+                    if delay_hiding:
+                        self.visibility_timeout = GLib.timeout_add(1000, self.on_visibility_timeout)
+                    else:
+                        self.set_visible(False)
         else:
             self.set_visible(False)
 
@@ -92,10 +89,7 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
         if text:
             self.lines[lineid] = text
         else:
-            try:
-                del self.lines[lineid]
-            except:
-                pass
+            self.lines.pop(lineid, None)
 
         self.update_tooltip()
 
