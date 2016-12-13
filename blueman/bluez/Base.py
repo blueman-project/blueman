@@ -66,7 +66,8 @@ class Base(Gio.DBusProxy):
             g_interface_name=interface_name,
             g_object_path=obj_path,
             g_bus_type=self.__bus_type,
-            g_flags=Gio.DBusProxyFlags.NONE,
+            # FIXME See issue 620
+            g_flags=Gio.DBusProxyFlags.GET_INVALIDATED_PROPERTIES,
             *args, **kwargs)
 
         self.init()
