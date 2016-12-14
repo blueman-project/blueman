@@ -26,6 +26,9 @@ import datetime
 import gettext
 from locale import bind_textdomain_codeset
 
+from dbus.mainloop.glib import DBusGMainLoop
+DBusGMainLoop(set_as_default=True)
+
 
 class MonitorBase(GObject.GObject):
     __gsignals__ = {
