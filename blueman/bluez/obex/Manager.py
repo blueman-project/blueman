@@ -9,7 +9,7 @@ from blueman.bluez.obex.Transfer import Transfer
 from gi.repository import GObject, Gio
 
 
-class Manager(GObject.GObject):
+class Manager(Gio.DBusObjectManagerClient):
     __gsignals__ = {
         str('session-removed'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
         str('transfer-started'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
@@ -32,22 +32,16 @@ class Manager(GObject.GObject):
         pass
 
     def _init(self):
-        super(Manager, self).__init__()
+        super(Manager, self).__init__(
+            bus_type=Gio.BusType.SESSION,
+            flags=Gio.DBusObjectManagerClientFlags.NONE,
+            name=self.__bus_name,
+            object_path='/')
+
+        self.init()
         self.__transfers = {}
-        self.__signals = []
 
-        self._object_manager = Gio.DBusObjectManagerClient.new_for_bus_sync(
-            Gio.BusType.SESSION, Gio.DBusObjectManagerClientFlags.NONE,
-            self.__bus_name, '/', None, None, None)
-
-        self.__signals.append(self._object_manager.connect('object-added', self._on_object_added))
-        self.__signals.append(self._object_manager.connect('object-removed', self._on_object_removed))
-
-    def __del__(self):
-        for sig in self.__signals:
-            self._object_manager.disconnect(sig)
-
-    def _on_object_added(self, object_manager, dbus_object):
+    def do_object_added(self, dbus_object):
         transfer_proxy = dbus_object.get_interface('org.bluez.obex.Transfer1')
 
         if transfer_proxy:
@@ -60,7 +54,7 @@ class Manager(GObject.GObject):
             dprint(transfer_path)
             self.emit('transfer-started', transfer_path)
 
-    def _on_object_removed(self, object_manager, dbus_object):
+    def do_object_removed(self, dbus_object):
         session_proxy = dbus_object.get_interface('org.bluez.obex.Session1')
 
         if session_proxy:
