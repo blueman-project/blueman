@@ -1,6 +1,6 @@
 from gi.repository import Gtk
 
-from blueman.Functions import create_menuitem, get_icon
+from blueman.Functions import create_menuitem, get_icon, dprint
 from blueman.Sdp import uuid128_to_uuid16, uuid16_to_name
 from blueman.bluez.errors import BluezDBusException
 
@@ -36,13 +36,14 @@ def show_info(device, parent):
 
     def format_uuids(uuids):
         return "\n".join([uuid + ' ' + uuid16_to_name(uuid128_to_uuid16(uuid)) for uuid in uuids])
-    properties = [
-        'Address',
-        'Name',
-        'Alias',
+
+    properties = (
+        ('Address', None),
+        ('Name', None),
+        ('Alias', None),
         ('Class', lambda x: x and "0x{:06x}".format(x)),
         ('Appearance', lambda x: "0x{:04x}".format(x)),
-        'Icon',
+        ('Icon', None),
         ('Paired', format_boolean),
         ('Trusted', format_boolean),
         ('Blocked', format_boolean),
@@ -50,16 +51,17 @@ def show_info(device, parent):
         ('RSSI', format_rssi),
         ('Connected', format_boolean),
         ('UUIDs', format_uuids),
-        'Modalias',
-        'Adapter'
-    ]
-    for prop in properties:
+        ('Modalias', None),
+        ('Adapter', None)
+    )
+    for name, func in properties:
         try:
-            if isinstance(prop, tuple):
-                store.append((prop[0], prop[1](device.get(prop[0]))))
+            if func is None:
+                store.append((name, device.get(name)))
             else:
-                store.append((prop, device.get(prop)))
+                store.append((name, func(device.get(name))))
         except BluezDBusException:
+            dprint("Could not get property %s" % name)
             pass
     dialog.run()
     dialog.destroy()
