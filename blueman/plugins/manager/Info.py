@@ -63,6 +63,10 @@ def show_info(device, parent):
         except BluezDBusException:
             dprint("Could not get property %s" % name)
             pass
+        except ValueError:
+            dprint("Could not add property %s" % name)
+            pass
+
     dialog.run()
     dialog.destroy()
 
