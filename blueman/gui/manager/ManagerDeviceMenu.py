@@ -178,10 +178,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         key, value = key_value
         # print "menu:", key, value
         if List.compare(tree_iter, List.selected()):
-            if key == "Connected" \
-                or key == "UUIDs" \
-                or key == "Trusted" \
-                or key == "Paired":
+            if key in ("Connected", "UUIDs", "Trusted",  "Paired"):
                 self.Generate()
 
     def Generate(self):
