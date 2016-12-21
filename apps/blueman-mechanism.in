@@ -8,6 +8,7 @@ from __future__ import unicode_literals
 
 import sys
 import os
+import argparse
 
 timeout = 30
 #support running uninstalled
@@ -79,7 +80,11 @@ dprint("Starting blueman-mechanism")
 
 DBusGMainLoop(set_as_default=True)
 
-if "--debug" in sys.argv:
+parser = argparse.ArgumentParser()
+parser.add_argument("--debug", action="store_true")
+args = parser.parse_args()
+
+if args.debug:
     dprint("Enabled verbose output")
     set_probe_debug(True)
 
