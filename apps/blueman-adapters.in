@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 import os
 import sys
 import signal
+import argparse
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -19,7 +20,7 @@ _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if 'BLUEMAN_SOURCE' in os.environ:
     sys.path.insert(0, _dirname)
 
-from blueman.Functions import *
+from blueman.Functions import set_proc_title
 from blueman.main.Adapter import BluemanAdapters
 
 # Workaround introspection bug, gnome bug 622084
@@ -27,14 +28,13 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 
 if __name__ == '__main__':
-    set_proc_title()
-    adapter_name = None
-    socket_id = None
-    if len(sys.argv) > 1:
-        if sys.argv[1].startswith('--socket-id='):
-            socket_id = int(sys.argv[1][12:])
-        else:
-            adapter_name = sys.argv[1]
-    blueman_adapters = BluemanAdapters(adapter_name, socket_id)
-    Gtk.main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--socket-id", dest="socket_id", action="store", type=int, metavar="ID")
+    parser.add_argument("adapter", nargs="*", metavar="ADAPTER NAME")
+    args = parser.parse_args()
 
+    set_proc_title()
+
+    adapter_name = args.adapter[0] if args.adapter else None
+    blueman_adapters = BluemanAdapters(adapter_name, args.socket_id)
+    Gtk.main()

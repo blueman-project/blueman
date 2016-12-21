@@ -19,7 +19,7 @@ pages = {}
 import os
 import sys
 import signal
-from optparse import OptionParser
+import argparse
 from locale import bind_textdomain_codeset
 
 #support running uninstalled
@@ -27,7 +27,13 @@ _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if 'BLUEMAN_SOURCE' in os.environ:
     sys.path.insert(0, _dirname)
 
-from blueman.Functions import *
+from blueman.Functions import (
+    setup_icon_path,
+    set_proc_title,
+    check_bluetooth_status,
+    get_icon
+)
+from blueman.Constants import *
 from blueman.gui.DeviceSelectorWidget import DeviceSelectorWidget
 from blueman.bluez.Manager import Manager
 from blueman.main.AppletService import AppletService
@@ -42,19 +48,10 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 
 class Assistant:
-    def __init__(self):
+    def __init__(self, parsed_args):
         setup_icon_path()
 
-        usage = "Usage: %prog [options]"
-        parser = OptionParser(usage)
-        parser.add_option("-d", "--device", dest="device",
-                          action="store", help=_("Start configuration assistant for this device"), metavar="ADDRESS")
-
-        (options, args) = parser.parse_args()
-
         check_bluetooth_status(_("Bluetooth needs to be turned on for the Bluetooth assistant to work"), lambda: exit())
-
-        self.options = options
 
         self.Manager = None
         self.Device = None
@@ -124,14 +121,14 @@ class Assistant:
 
         self.assistant.show()
 
-        if options.device is not None:
+        if parsed_args.device is not None:
             self.Manager = Manager()
             try:
                 self.Adapter = self.Manager.get_adapter()
             except:
                 print("Error: No Adapters present")
                 exit(1)
-            self.Device = self.Manager.find_device(options.device, self.Adapter.get_object_path())
+            self.Device = self.Manager.find_device(parsed_args.device, self.Adapter.get_object_path())
             if self.Device['Paired']:
                 self.assistant.set_current_page(PAGE_CONNECT)
             else:
@@ -270,5 +267,12 @@ class Assistant:
                                         result_handler=success, error_handler=fail)
 
 
-set_proc_title()
-Assistant()
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-d", "--device", dest="device",
+                        action="store", help=_("Start configuration assistant for this device"), metavar="ADDRESS")
+
+    args = parser.parse_args()
+
+    set_proc_title()
+    Assistant(args)
