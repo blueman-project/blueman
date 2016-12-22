@@ -118,7 +118,7 @@ class DBusService(AppletPlugin):
 
     @dbus.service.method('org.blueman.Applet')
     def open_plugin_dialog(self):
-        self.Applet.Plugins.StandardItems.on_plugins(None)
+        self.Applet.Plugins.StandardItems.on_plugins()
 
     def rfcomm_connect_handler(self, service, reply_handler, error_handler):
         return False

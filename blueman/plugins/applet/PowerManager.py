@@ -36,13 +36,9 @@ class PowerManager(AppletPlugin):
 
         self.Applet = applet
 
-        self.item = create_menuitem("<b>Turn Bluetooth _Off</b>", "blueman-disabled")
-
-        self.item.props.tooltip_text = _("Turn off all adapters")
-
-        self.item.connect("activate", lambda x: self.on_bluetooth_toggled())
-
-        self.Applet.Plugins.Menu.Register(self, self.item, 0)
+        self.item = self.Applet.Plugins.Menu.add(self, 0, text=_("<b>Turn Bluetooth _Off</b>"), markup=True,
+                                                 icon_name="blueman-disabled", tooltip=_("Turn off all adapters"),
+                                                 callback=self.on_bluetooth_toggled)
 
         self.adapter_state = True
         self.current_state = True
@@ -54,7 +50,7 @@ class PowerManager(AppletPlugin):
         self.STATE_OFF_FORCED = 0
 
     def on_unload(self):
-        self.Applet.Plugins.Menu.Unregister(self)
+        self.Applet.Plugins.Menu.unregister(self)
 
     @property
     def CurrentState(self):
@@ -155,23 +151,19 @@ class PowerManager(AppletPlugin):
         new_state = True
         if foff or off:
 
-            self.item.get_child().set_markup_with_mnemonic(_("<b>Turn Bluetooth _On</b>"))
-            self.item.get_image().props.icon_name = "blueman"
-            self.item.props.tooltip_text = _("Turn on all adapters")
-
-            if foff:
-                self.item.props.sensitive = False
-            else:
-                self.item.props.sensitive = True
+            self.item.set_text(_("<b>Turn Bluetooth _On</b>"), markup=True)
+            self.item.set_icon_name("blueman")
+            self.item.set_tooltip(_("Turn on all adapters"))
+            self.item.set_sensitive(not foff)
 
             new_state = False
 
         elif on and not self.current_state:
 
-            self.item.get_child().set_markup_with_mnemonic(_("<b>Turn Bluetooth _Off</b>"))
-            self.item.get_image().props.icon_name = "blueman-disabled"
-            self.item.props.tooltip_text = _("Turn off all adapters")
-            self.item.props.sensitive = True
+            self.item.set_text(_("<b>Turn Bluetooth _Off</b>"), markup=True)
+            self.item.set_icon_name("blueman-disabled")
+            self.item.set_tooltip(_("Turn off all adapters"))
+            self.item.set_sensitive(True)
 
             new_state = True
 

@@ -332,10 +332,8 @@ class NetUsage(AppletPlugin, GObject.GObject):
         self._any_network = AnyNetwork()
         self._any_network.connect_signal('property-changed', self._on_network_property_changed)
 
-        item = create_menuitem(_("Network _Usage"), "network-wireless")
-        item.props.tooltip_text = _("Shows network traffic usage")
-        item.connect("activate", self.activate_ui)
-        self.Applet.Plugins.Menu.Register(self, item, 84, True)
+        self.Applet.Plugins.Menu.add(self, 84, text=_("Network _Usage"), icon_name="network-wireless",
+                                     tooltip=_("Shows network traffic usage"), callback=self.activate_ui)
 
         self.bus.add_signal_receiver(self.on_nm_ppp_stats, "PppStats", "org.freedesktop.NetworkManager.Device.Serial",
                                      path_keyword="path")
@@ -372,14 +370,14 @@ class NetUsage(AppletPlugin, GObject.GObject):
             d = Device(path)
             self.monitor_interface(Monitor, d, value)
 
-    def activate_ui(self, item):
+    def activate_ui(self):
         Dialog(self)
 
     def on_unload(self):
         self.bus.remove_signal_receiver(self.on_nm_ppp_stats, "PppStats",
                                         "org.freedesktop.NetworkManager.Device.Serial", path_keyword="path")
         del self._any_network
-        self.Applet.Plugins.Menu.Unregister(self)
+        self.Applet.Plugins.Menu.unregister(self)
 
     def monitor_interface(self, montype, *args):
         m = montype(*args)

@@ -27,20 +27,18 @@ class DiscvManager(AppletPlugin):
     }
 
     def on_load(self, applet):
-        self.item = create_menuitem(_("_Make Discoverable"), "edit-find")
-        applet.Plugins.Menu.Register(self, self.item, 20, False)
+        self.item = applet.Plugins.Menu.add(self, 20, text=_("_Make Discoverable"), icon_name="edit-find",
+                                            tooltip=_("Make the default adapter temporarily visible"),
+                                            callback=self.on_set_discoverable, visible=False)
 
         self.Applet = applet
         self.adapter = None
         self.time_left = -1
 
-        self.item.connect("activate", self.on_set_discoverable)
-        self.item.props.tooltip_text = _("Make the default adapter temporarily visible")
-
         self.timeout = None
 
     def on_unload(self):
-        self.Applet.Plugins.Menu.Unregister(self)
+        self.Applet.Plugins.Menu.unregister(self)
         del self.item
 
         if self.timeout:
@@ -56,12 +54,12 @@ class DiscvManager(AppletPlugin):
 
     def on_update(self):
         self.time_left -= 1
-        self.item.set_label(_("Discoverable... %ss") % self.time_left)
-        self.item.props.sensitive = False
+        self.item.set_text(_("Discoverable... %ss") % self.time_left)
+        self.item.set_sensitive(False)
 
         return True
 
-    def on_set_discoverable(self, item):
+    def on_set_discoverable(self):
         if self.adapter:
             self.adapter.set("Discoverable", True)
             self.adapter.set("DiscoverableTimeout", self.get_option("time"))
@@ -111,10 +109,10 @@ class DiscvManager(AppletPlugin):
     def update_menuitems(self):
         if self.adapter is None:
             logging.warning("warning: Adapter is None")
-            self.item.props.visible = False
+            self.item.set_visible(False)
         elif (not self.adapter["Discoverable"] or self.adapter["DiscoverableTimeout"] > 0) and self.adapter["Powered"]:
-            self.item.props.visible = True
-            self.item.set_label(_("_Make Discoverable"))
-            self.item.props.sensitive = True
+            self.item.set_visible(True)
+            self.item.set_text("_Make Discoverable")
+            self.item.set_sensitive(True)
         else:
-            self.item.props.visible = False
+            self.item.set_visible(False)
