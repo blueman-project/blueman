@@ -11,6 +11,10 @@ import signal
 from blueman.Constants import *
 from blueman.main.Manager import Blueman
 
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
+
 # support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if 'BLUEMAN_SOURCE' in os.environ:
