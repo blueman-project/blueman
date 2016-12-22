@@ -3,7 +3,6 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.Functions import create_menuitem
 
 
 class ExitItem(AppletPlugin):
@@ -13,9 +12,7 @@ class ExitItem(AppletPlugin):
     __icon__ = "application-exit"
 
     def on_load(self, applet):
-        item = create_menuitem("_Exit", "application-exit")
-        item.connect("activate", lambda x: Gtk.main_quit())
-        applet.Plugins.Menu.Register(self, item, 100)
+        applet.Plugins.Menu.add(self, 100, text="_Exit", icon_name='application-exit', callback=Gtk.main_quit)
 
     def on_unload(self):
-        self.Applet.Plugins.Menu.Unregister(self)
+        self.Applet.Plugins.Menu.unregister(self)

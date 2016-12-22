@@ -49,15 +49,11 @@ class RecentConns(AppletPlugin):
         self.Applet = applet
         self.Adapters = {}
         self.items = None
+        self.__menuitems = []
 
-        self.Item = create_menuitem(_("Recent _Connections") + "...",
-                                    "document-open-recent")
-
-        self.Applet.Plugins.Menu.Register(self, self.Item, 52)
-        self.Applet.Plugins.Menu.Register(self, Gtk.SeparatorMenuItem(), 53)
-
-        self.menu = Gtk.Menu()
-        self.Item.set_submenu(self.menu)
+        self.item = self.Applet.Plugins.Menu.add(self, 52, text=_("Recent _Connections") + "...",
+                                                 icon_name="document-open-recent", submenu_function=self.get_menu)
+        self.Applet.Plugins.Menu.add(self, 53)
 
         self.deferred = False
 
@@ -85,7 +81,7 @@ class RecentConns(AppletPlugin):
                     self.items is not None and \
                     (len(self.items) > 0)
 
-        self.Item.props.sensitive = sensitive
+        self.item.set_sensitive(sensitive)
 
     def on_power_state_changed(self, manager, state):
         self.change_sensitivity(state)
@@ -94,21 +90,17 @@ class RecentConns(AppletPlugin):
             self.on_manager_state_changed(state)
 
     def on_unload(self):
-        self.menu.destroy()
-        self.Applet.Plugins.Menu.Unregister(self.menu)
+        self.Applet.Plugins.Menu.unregister(self)
 
-        self.items = []
-        self.menu.destroy()
+        RecentConns.items = []
 
     def initialize(self):
         logging.info("rebuilding menu")
         if self.items is None:
             self.recover_state()
 
-        def each(child, _):
-            self.menu.remove(child)
-
-        self.menu.foreach(each, None)
+        self.__menuitems = []
+        self.Applet.Plugins.Menu.on_menu_changed()
 
         self.items.sort(key=itemgetter("time"), reverse=True)
 
@@ -132,12 +124,12 @@ class RecentConns(AppletPlugin):
             try:
                 if not self.Applet.Plugins.PowerManager.GetBluetoothStatus():
                     self.deferred = True
-                    self.Item.props.sensitive = False
+                    self.item.set_sensitive(False)
                     return
             except:
                 pass
 
-            self.Item.props.sensitive = True
+            self.item.set_sensitive(True)
             adapters = self.Applet.Manager.get_adapters()
             self.Adapters = {}
             for adapter in adapters:
@@ -156,7 +148,7 @@ class RecentConns(AppletPlugin):
 
             self.initialize()
         else:
-            self.Item.props.sensitive = False
+            self.item.set_sensitive(False)
             return
 
         self.change_sensitivity(state)
@@ -219,36 +211,37 @@ class RecentConns(AppletPlugin):
 
         self.store_state()
 
-    def on_item_activated(self, menu_item, item):
+    def on_item_activated(self, item):
         logging.info("Connect %s %s" % (item["address"], item["uuid"]))
 
-        menu_item.props.sensitive = False
+        item["mitem"]["sensitive"] = False
+        self.Applet.Plugins.Menu.on_menu_changed()
 
         def reply(*args):
-            label_text = menu_item.get_child().get_children()[1].get_text()
-            Notification(_("Connected"), _("Connected to %s") % label_text,
+            Notification(_("Connected"), _("Connected to %s") % item["mitem"]["text"],
                          icon_name=item["icon"]).show()
-            menu_item.props.sensitive = True
+            item["mitem"]["sensitive"] = True
+            self.Applet.Plugins.Menu.on_menu_changed()
 
         def err(reason):
             Notification(_("Failed to connect"), str(reason).split(": ")[-1],
                          icon_name="dialog-error").show()
-            menu_item.props.sensitive = True
+            item["mitem"]["sensitive"] = True
+            self.Applet.Plugins.Menu.on_menu_changed()
 
         self.Applet.DbusSvc.connect_service(item["device"], item["uuid"], reply, err)
 
     def add_item(self, item):
         if not item["mitem"]:
-            mitem = create_menuitem("", item["icon"])
+            mitem = {"icon_name": item["icon"], "callback": lambda itm=item: self.on_item_activated(itm)}
             item["mitem"] = mitem
-            mitem.connect("activate", self.on_item_activated, item)
         else:
             mitem = item["mitem"]
-            mitem.props.sensitive = True
-            mitem.props.tooltip_text = None
+            mitem['sensitive'] = True
+            mitem['tooltip'] = None
 
-        item_label_markup = _("%(service)s on %(device)s") % {"service": item["name"], "device": item["alias"]}
-        item["mitem"].set_label(item_label_markup)
+        item["mitem"]["text"] = _("%(service)s on %(device)s") % {"service": item["name"], "device": item["alias"]}
+        item["mitem"]["markup"] = True
 
         if item["adapter"] not in self.Adapters.values():
             item["device"] = None
@@ -261,11 +254,14 @@ class RecentConns(AppletPlugin):
                 self.initialize()
 
         if not item["device"]:
-            mitem.props.sensitive = False
-            mitem.props.tooltip_text = _("Adapter for this connection is not available")
+            mitem["sensitive"] = False
+            mitem["tooltip"] = _("Adapter for this connection is not available")
 
-        self.menu.prepend(mitem)
-        mitem.show()
+        self.__menuitems.append(mitem)
+        self.Applet.Plugins.Menu.on_menu_changed()
+
+    def get_menu(self):
+        return self.__menuitems
 
     def get_device_path(self, item):
         try:
