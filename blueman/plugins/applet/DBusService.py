@@ -13,6 +13,7 @@ from blueman.services.Functions import get_service
 from gi.repository import GLib
 import dbus
 import dbus.service
+import logging
 
 
 class DBusService(AppletPlugin):
@@ -64,7 +65,7 @@ class DBusService(AppletPlugin):
         try:
             self.Applet.Plugins.RecentConns
         except KeyError:
-            dprint("RecentConns plugin is unavailable")
+            logging.watning("RecentConns plugin is unavailable")
         else:
             self.Applet.Plugins.RecentConns.notify(object_path, uuid)
 
@@ -77,7 +78,7 @@ class DBusService(AppletPlugin):
             if True in rets:
                 pass
             else:
-                dprint("No handler registered")
+                logging.info("No handler registered")
                 err(dbus.DBusException(
                     "Service not supported\nPossibly the plugin that handles this service is not loaded"))
         else:
@@ -97,7 +98,7 @@ class DBusService(AppletPlugin):
 
             self.Applet.Plugins.Run("on_rfcomm_disconnect", port)
 
-            dprint("Disonnecting rfcomm device")
+            logging.info("Disonnecting rfcomm device")
         else:
 
             def cb(_inst, ret):

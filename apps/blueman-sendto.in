@@ -7,8 +7,8 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 import os, sys, signal
-import argparse
 import atexit
+import logging
 
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -22,10 +22,16 @@ gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
 from gi.repository import Gtk
 
-from blueman.Functions import setup_icon_path, check_bluetooth_status, dprint, set_proc_title
+from blueman.Functions import setup_icon_path, check_bluetooth_status, set_proc_title, create_parser, create_logger
 from blueman.main.Sendto import Sender
 from blueman.bluez.Manager import Manager
 from blueman.gui.DeviceSelectorDialog import DeviceSelectorDialog
+
+#support running uninstalled
+_dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if 'BLUEMAN_SOURCE' in os.environ:
+    sys.path.insert(0, _dirname)
+    os.environ["GSETTINGS_SCHEMA_DIR"] = "../data"
 
 # Workaround introspection bug, gnome bug 622084
 signal.signal(signal.SIGINT, signal.SIG_DFL)
@@ -68,7 +74,7 @@ class SendTo:
                 else:
                     adapter = m.get_adapter()
             except:
-                print("Error: No Adapters present")
+                logging.error("Error: No Adapters present")
                 exit()
             d = m.find_device(parsed_args.device, adapter.get_object_path())
             if d is None:
@@ -80,7 +86,7 @@ class SendTo:
 
     def do_send(self):
         if not self.files:
-            dprint("No files to send")
+            logging.warning("No files to send")
             exit()
 
         sender = Sender(self.device, self.adapter, self.files)
@@ -120,7 +126,7 @@ class SendTo:
             return False
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
+    parser = create_parser(syslog=True)
     parser.add_argument("-d", "--device", "--dest", dest="device", action="store",
                         help=_("Send files to this device"), metavar="ADDRESS")
     parser.add_argument("-s", "--source", dest="source", action="store",
@@ -130,6 +136,21 @@ if __name__ == '__main__':
                         help=_("Files to be send to the bluetooth device"))
 
     args = parser.parse_args()
+
+    if args.LEVEL.upper() == "DEBUG":
+        log_level = logging.DEBUG
+    elif args.LEVEL.upper() == "INFO":
+        log_level = logging.INFO
+    elif args.LEVEL.upper() == "WARNING":
+        log_level = logging.WARNING
+    elif args.LEVEL.upper() == "ERROR":
+        log_level = logging.ERROR
+    elif args.LEVEL.upper() == "CRITICAL":
+        log_level = logging.CRITICAL
+    else:
+        log_level = logging.WARNING
+
+    create_logger(log_level, "blueman-sendto", syslog=args.syslog)
 
     set_proc_title()
     SendTo(args)

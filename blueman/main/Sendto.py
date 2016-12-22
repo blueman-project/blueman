@@ -6,6 +6,7 @@ from __future__ import unicode_literals
 
 import urllib
 import time
+import logging
 from locale import bind_textdomain_codeset
 
 import gi
@@ -112,7 +113,7 @@ class Sender(Gtk.Dialog):
         self.client.connect('session-failed', self.on_session_failed)
         self.client.connect('session-removed', self.on_session_removed)
 
-        print("Sending to", device['Address'])
+        logging.info("Sending to %s" % device['Address'])
         self.l_dest.props.label = device['Alias']
 
         self.create_session()
@@ -129,7 +130,7 @@ class Sender(Gtk.Dialog):
         GLib.timeout_add(1000, check)
 
     def _do_create_session(self):
-        dprint("Creating session")
+        logging.info("Creating session")
         self.client.create_session(self.device['Address'], self.adapter["Address"])
 
     def on_cancel(self, button):
@@ -209,7 +210,7 @@ class Sender(Gtk.Dialog):
             self.emit("result", True)
 
     def send_file(self, file_path):
-        dprint(file_path)
+        logging.info(file_path)
         if self.object_push:
             self.object_push.send_file(file_path)
 

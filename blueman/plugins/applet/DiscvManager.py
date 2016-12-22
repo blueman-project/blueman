@@ -7,6 +7,7 @@ from __future__ import unicode_literals
 from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 from gi.repository import GLib
+import logging
 
 
 class DiscvManager(AppletPlugin):
@@ -78,17 +79,17 @@ class DiscvManager(AppletPlugin):
             self.adapter = None
 
     def on_adapter_removed(self, path):
-        dprint(path)
+        logging.info(path)
         if self.adapter is None:
             # FIXME we appear to call this more than once on adapter removal
-            dprint("Warning: adapter is None")
+            logging.warning("Warning: adapter is None")
         elif path == self.adapter.get_object_path():
             self.init_adapter()
             self.update_menuitems()
 
     def on_adapter_property_changed(self, path, key, value):
         if self.adapter and path == self.adapter.get_object_path():
-            dprint("prop", key, value)
+            logging.debug("prop %s %s" % (key, value))
             if key == "DiscoverableTimeout":
                 if value == 0: #always visible
                     if self.timeout is not None:
@@ -105,7 +106,7 @@ class DiscvManager(AppletPlugin):
                     return
 
             elif (key == "Discoverable" and not value) or (key == "Powered" and not value):
-                dprint("Stop")
+                logging.info("Stop")
                 if self.timeout is not None:
                     GLib.source_remove(self.timeout)
                 self.time_left = -1
@@ -115,7 +116,7 @@ class DiscvManager(AppletPlugin):
 
     def update_menuitems(self):
         if self.adapter is None:
-            dprint("warning: Adapter is None")
+            logging.warning("warning: Adapter is None")
             self.item.props.visible = False
         elif (not self.adapter["Discoverable"] or self.adapter["DiscoverableTimeout"] > 0) and self.adapter["Powered"]:
             self.item.props.visible = True

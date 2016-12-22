@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 
 from gi.repository import Gio, GLib, GObject
 from blueman.bluez.errors import parse_dbus_error, BluezDBusException
-from blueman.Functions import dprint
+import logging
 import sys
 
 
@@ -82,7 +82,7 @@ class Base(Gio.DBusProxy):
     def do_g_properties_changed(self, changed_properties, _invalidated_properties):
         changed = changed_properties.unpack()
         object_path = self.get_object_path()
-        dprint(object_path, changed)
+        logging.debug("%s %s" % (object_path, changed))
         for key, value in changed.items():
             self.emit("property-changed", key, value, object_path)
 

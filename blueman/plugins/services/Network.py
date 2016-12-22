@@ -8,7 +8,7 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gio, Gtk
 from blueman.Constants import *
-from blueman.Functions import have, dprint, mask_ip4_address
+from blueman.Functions import have, mask_ip4_address
 from _blueman import get_net_interfaces, get_net_address, get_net_netmask
 from socket import inet_aton, inet_ntoa
 from blueman.plugins.ServicePlugin import ServicePlugin
@@ -20,6 +20,7 @@ from blueman.main.AppletService import AppletService
 from blueman.gui.Dialogs import NetworkErrorDialog
 from random import randint
 from locale import bind_textdomain_codeset
+import logging
 
 
 class Network(ServicePlugin):
@@ -38,7 +39,7 @@ class Network(ServicePlugin):
         self.interfaces = []
         for iface in get_net_interfaces():
             if iface != "lo" and iface != "pan1":
-                print(iface)
+                logging.info(iface)
                 ip = inet_aton(get_net_address(iface))
                 mask = inet_aton(get_net_netmask(iface))
                 self.interfaces.append((iface, ip, mask, mask_ip4_address(ip, mask)))
@@ -59,7 +60,7 @@ class Network(ServicePlugin):
     def on_apply(self):
 
         if self.on_query_apply_state():
-            dprint("network apply")
+            logging.info("network apply")
 
             m = Mechanism()
             nap_enable = self.Builder.get_object("nap-enable")
@@ -133,7 +134,7 @@ class Network(ServicePlugin):
                 try:
                     self.ip_check()
                 except Exception as e:
-                    print(e)
+                    logging.exception(e)
                     return -1
 
             return True

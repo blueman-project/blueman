@@ -12,6 +12,7 @@ from blueman.services.Functions import get_services
 from _blueman import rfcomm_list
 from subprocess import Popen
 import atexit
+import logging
 
 import blueman.bluez as Bluez
 
@@ -73,7 +74,7 @@ class SerialManager(AppletPlugin):
     def terminate_all_scripts(self, address):
         try:
             for p in self.scripts[address].values():
-                dprint("Sending HUP to", p.pid)
+                logging.info("Sending HUP to %s" % p.pid)
                 os.killpg(p.pid, signal.SIGHUP)
         except:
             pass
@@ -81,7 +82,7 @@ class SerialManager(AppletPlugin):
     def on_script_closed(self, pid, cond, address_node):
         address, node = address_node
         del self.scripts[address][node]
-        dprint("Script with PID", pid, "closed")
+        logging.info("Script with PID %s closed" % pid)
 
     def manage_script(self, address, node, process):
         if not address in self.scripts:
@@ -99,7 +100,7 @@ class SerialManager(AppletPlugin):
             args = c.split(" ")
             try:
                 args += [address, name, sv_name, "%s" % hex(uuid16), node]
-                dprint(args)
+                logging.debug(" ".join(args))
                 p = Popen(args, preexec_fn=lambda: os.setpgid(0, 0))
 
                 self.manage_script(address, node, p)
@@ -114,7 +115,7 @@ class SerialManager(AppletPlugin):
     def on_rfcomm_disconnect(self, node):
         for k, v in self.scripts.items():
             if node in v:
-                dprint("Sending HUP to", v[node].pid)
+                logging.info("Sending HUP to %s" % v[node].pid)
                 os.killpg(v[node].pid, signal.SIGHUP)
 
     def rfcomm_connect_handler(self, service, reply, err):
@@ -146,11 +147,10 @@ class SerialManager(AppletPlugin):
 
             name = "/dev/rfcomm%d" % port
             try:
-                dprint("Disconnecting", name)
+                logging.info("Disconnecting %s" % name)
                 serial_services[0].disconnect(port)
             except Exception as e:
-                dprint("Failed to disconnect", name)
-                dprint(e)
+                logging.error("Failed to disconnect %s" % name, exc_info=True)
 
 
 @atexit.register

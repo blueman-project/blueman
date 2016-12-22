@@ -4,7 +4,7 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-from blueman.Functions import dprint
+import logging
 from blueman.bluez.obex.Transfer import Transfer
 from gi.repository import GObject, Gio
 
@@ -51,7 +51,7 @@ class Manager(Gio.DBusObjectManagerClient):
             error_sig = transfer.connect_signal('error', self._on_transfer_completed, False)
             self.__transfers[transfer_path] = (transfer, (completed_sig, error_sig))
 
-            dprint(transfer_path)
+            logging.info(transfer_path)
             self.emit('transfer-started', transfer_path)
 
     def do_object_removed(self, dbus_object):
@@ -60,20 +60,20 @@ class Manager(Gio.DBusObjectManagerClient):
         object_path = dbus_object.get_object_path()
 
         if transfer_proxy and object_path in self.__transfers:
-            dprint(object_path)
+            logging.info(object_path)
             transfer, signals = self.__transfers.pop(object_path)
 
             for sig in signals:
                 transfer.disconnect_signal(sig)
 
         if session_proxy:
-            dprint(object_path)
+            logging.info(object_path)
             self.emit('session-removed', object_path)
 
     def _on_transfer_completed(self, transfer, success):
         transfer_path = transfer.get_object_path()
 
-        dprint(transfer_path, success)
+        logging.info("%s %s" % (transfer_path, success))
         self.emit('transfer-completed', transfer_path, success)
 
     @classmethod

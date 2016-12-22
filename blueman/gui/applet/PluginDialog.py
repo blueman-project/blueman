@@ -15,6 +15,7 @@ from blueman.Functions import *
 
 from blueman.gui.GenericList import GenericList
 import weakref
+import logging
 
 
 class SettingsWidget(Gtk.Box):
@@ -52,7 +53,7 @@ class SettingsWidget(Gtk.Box):
 
     def handle_change(self, widget, opt, params, prop):
         val = params["type"](getattr(widget.props, prop))
-        dprint("changed", opt, val)
+        logging.debug("changed %s %s" % (opt, val))
 
         self.inst.set_option(opt, val)
 

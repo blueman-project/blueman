@@ -1,6 +1,7 @@
 from gi.repository import Gtk
 
-from blueman.Functions import create_menuitem, get_icon, dprint
+import logging
+from blueman.Functions import create_menuitem, get_icon
 from blueman.Sdp import uuid128_to_uuid16, uuid16_to_name
 from blueman.bluez.errors import BluezDBusException
 
@@ -61,10 +62,10 @@ def show_info(device, parent):
             else:
                 store.append((name, func(device.get(name))))
         except BluezDBusException:
-            dprint("Could not get property %s" % name)
+            logging.info("Could not get property %s" % name)
             pass
         except ValueError:
-            dprint("Could not add property %s" % name)
+            logging.info("Could not add property %s" % name)
             pass
 
     dialog.run()

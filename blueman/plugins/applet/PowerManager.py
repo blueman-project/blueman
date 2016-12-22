@@ -5,6 +5,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 import dbus.service
+import logging
 from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 import blueman.bluez as Bluez
@@ -85,14 +86,14 @@ class PowerManager(AppletPlugin):
 
     def set_adapter_state(self, state):
         try:
-            dprint(state)
+            logging.info(state)
             adapters = self.Applet.Manager.get_adapters()
             for adapter in adapters:
                 adapter.set("Powered", state)
 
             self.adapter_state = state
         except Exception as e:
-            dprint("Exception occurred", e)
+            logging.error("Exception occurred", exc_info=True)
 
     class Callback(object):
         def __init__(self, parent, state):
@@ -113,13 +114,13 @@ class PowerManager(AppletPlugin):
 
         def check(self):
             if self.called == self.num_cb:
-                dprint("callbacks done")
+                logging.info("callbacks done")
                 self.parent.set_adapter_state(self.state)
                 GLib.source_remove(self.timer)
                 self.parent.request_in_progress = False
 
         def timeout(self):
-            dprint("Timeout reached while setting power state")
+            logging.info("Timeout reached while setting power state")
             self.parent.UpdatePowerState()
             self.parent.request_in_progress = False
 
@@ -127,7 +128,7 @@ class PowerManager(AppletPlugin):
         if self.current_state != state or force:
             if not self.request_in_progress:
                 self.request_in_progress = True
-                dprint("Requesting", state)
+                logging.info("Requesting %s" % state)
                 cb = PowerManager.Callback(self, state)
 
                 rets = self.Applet.Plugins.Run("on_power_state_change_requested", self, state, cb)
@@ -135,7 +136,7 @@ class PowerManager(AppletPlugin):
                 cb.check()
                 self.UpdatePowerState()
             else:
-                dprint("Another request in progress")
+                logging.info("Another request in progress")
 
     def on_power_state_change_requested(self, pm, state, cb):
         cb(None)
@@ -182,10 +183,11 @@ class PowerManager(AppletPlugin):
 
             new_state = True
 
-        dprint("off", off, "\nfoff", foff, "\non", on, "\ncurrent state", self.current_state, "\nnew state", new_state)
+        logging.info("off %s | foff %s | on %s | current state %s | new state %s" %
+                     (off, foff, on, self.current_state, new_state))
 
         if self.current_state != new_state:
-            dprint("Signalling", new_state)
+            logging.info("Signalling %s" % new_state)
             self.current_state = new_state
 
             self.BluetoothStatusChanged(new_state)
@@ -207,7 +209,7 @@ class PowerManager(AppletPlugin):
     def on_adapter_property_changed(self, _path, key, value):
         if key == "Powered":
             if value and not self.CurrentState:
-                dprint("adapter powered on while in off state, turning bluetooth on")
+                logging.warning("adapter powered on while in off state, turning bluetooth on")
                 self.RequestPowerState(True)
 
             self.UpdatePowerState()

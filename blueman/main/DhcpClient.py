@@ -8,7 +8,8 @@ from gi.repository import GObject
 from gi.repository import GLib
 import socket
 import subprocess
-from blueman.Functions import dprint, have
+import logging
+from blueman.Functions import have
 from _blueman import get_net_address
 
 
@@ -56,7 +57,7 @@ class DhcpClient(GObject.GObject):
 
     def _on_timeout(self):
         if not self._client.poll():
-            dprint("Timeout reached, terminating DHCP client")
+            logging.warning("Timeout reached, terminating DHCP client")
             self._client.terminate()
 
     def _check_client(self):
@@ -64,14 +65,14 @@ class DhcpClient(GObject.GObject):
         if status == 0:
             def complete():
                 ip = get_net_address(self._interface)
-                dprint("bound to", ip)
+                logging.info("bound to %s" % ip)
                 self.emit("connected", ip)
 
             GLib.timeout_add(1000, complete)
             DhcpClient.quering.remove(self._interface)
             return False
         elif status:
-            dprint("dhcp client failed with status code", status)
+            logging.error("dhcp client failed with status code %s" % status)
             self.emit("error-occurred", status)
             DhcpClient.quering.remove(self._interface)
             return False

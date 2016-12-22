@@ -4,10 +4,11 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
+import logging
 from locale import bind_textdomain_codeset
 from operator import itemgetter
 from blueman.Sdp import uuid128_to_uuid16, SERIAL_PORT_SVCLASS_ID, OBEX_OBJPUSH_SVCLASS_ID, OBEX_FILETRANS_SVCLASS_ID
-from blueman.Functions import *
+from blueman.Functions import get_icon, composite_icon, create_menuitem, e_
 from blueman.bluez.Network import AnyNetwork
 from blueman.bluez.Device import AnyDevice
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
@@ -57,15 +58,14 @@ class ManagerDeviceMenu(Gtk.Menu):
 
         try:
             self._appl = AppletService()
-        except Exception as e:
-            dprint("** Failed to connect to applet")
-            dprint(e)
+        except Exception:
+            logging.error("** Failed to connect to applet", exc_info=True)
             self._appl = None
 
         self.Generate()
 
     def __del__(self):
-        dprint("deleting devicemenu")
+        logging.debug("deleting devicemenu")
 
     def popup(self, *args):
         self.is_popup = True
@@ -95,7 +95,7 @@ class ManagerDeviceMenu(Gtk.Menu):
     def set_op(self, device, message):
         ManagerDeviceMenu.__ops__[device.get_object_path()] = message
         for inst in ManagerDeviceMenu.__instances__:
-            dprint("op: regenerating instance", inst)
+            logging.info("op: regenerating instance %s" % inst)
             if inst.SelectedDevice == self.SelectedDevice and not (inst.is_popup and not inst.props.visible):
                 inst.Generate()
 
@@ -108,7 +108,7 @@ class ManagerDeviceMenu(Gtk.Menu):
     def unset_op(self, device):
         del ManagerDeviceMenu.__ops__[device.get_object_path()]
         for inst in ManagerDeviceMenu.__instances__:
-            dprint("op: regenerating instance", inst)
+            logging.info("op: regenerating instance %s" % inst)
             if inst.SelectedDevice == self.SelectedDevice and not (inst.is_popup and not inst.props.visible):
                 inst.Generate()
 
@@ -120,7 +120,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         device = service.device
 
         def success(obj, result, _user_data):
-            dprint("success")
+            logging.info("success")
             prog.message(_("Success!"))
 
             if isinstance(service, SerialPort) and SERIAL_PORT_SVCLASS_ID == uuid128_to_uuid16(service.uuid):
@@ -134,7 +134,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             prog.message(_("Failed"))
 
             self.unset_op(device)
-            dprint("fail", result)
+            logging.warning("fail %s" % result)
             msg, tb = e_(result.message)
             MessageArea.show_message(_("Connection Failed: ") + msg, tb)
 
@@ -147,8 +147,8 @@ class ManagerDeviceMenu(Gtk.Menu):
 
         try:
             self._appl.SetTimeHint(str('(u)'), Gtk.get_current_event_time())
-        except:
-            pass
+        except Exception as e:
+            logging.exception(e)
 
         self._appl.connect_service(str('(os)'), device.get_object_path(), service.uuid,
                                    result_handler=success, error_handler=fail,
@@ -158,11 +158,11 @@ class ManagerDeviceMenu(Gtk.Menu):
 
     def on_disconnect(self, item, service, port=0):
         def ok(obj, result, user_date):
-            dprint("disconnect success")
+            logging.info("disconnect success")
             self.Generate()
 
         def err(obj, result, user_date):
-            dprint("disconnect failed", result)
+            logging.warning("disconnect failed %s" % result)
             msg, tb = e_(result.message)
             MessageArea.show_message(_("Disconnection Failed: ") + msg, tb)
             self.Generate()
@@ -220,7 +220,7 @@ class ManagerDeviceMenu(Gtk.Menu):
                 for (item, pos) in ret:
                     items.append((pos, item))
 
-        dprint(row["alias"])
+        logging.debug(row["alias"])
 
         have_disconnectables = False
         have_connectables = False

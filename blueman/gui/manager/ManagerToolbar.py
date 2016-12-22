@@ -5,7 +5,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 from blueman.Constants import *
-from blueman.Functions import dprint
+import logging
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -72,7 +72,7 @@ class ManagerToolbar:
                 self.b_search.props.sensitive = True
 
     def on_adapter_changed(self, lst, adapter_path):
-        dprint("toolbar adapter", adapter_path)
+        logging.debug("toolbar adapter %s" % adapter_path)
         if adapter_path is None:
             self.b_search.props.sensitive = False
             self.b_send.props.sensitive = False

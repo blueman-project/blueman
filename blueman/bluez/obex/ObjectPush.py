@@ -4,7 +4,7 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-from blueman.Functions import dprint
+import logging
 from blueman.bluez.obex.Base import Base
 from gi.repository import GObject, GLib
 
@@ -22,11 +22,11 @@ class ObjectPush(Base):
 
     def send_file(self, file_path):
         def on_transfer_started(transfer_path, props):
-            dprint(self.get_object_path(), file_path, transfer_path)
+            logging.info(" ".join((self.get_object_path(), file_path, transfer_path)))
             self.emit('transfer-started', transfer_path, props['Filename'])
 
         def on_transfer_error(error):
-            dprint(file_path, error)
+            logging.error("%s %s" % (file_path, error))
             self.emit('transfer-failed', error)
 
         param = GLib.Variant('(s)', (file_path,))

@@ -40,6 +40,9 @@ import signal
 import atexit
 import sys
 import errno
+import logging
+import logging.handlers
+import argparse
 from ctypes import cdll, byref, create_string_buffer
 from gi.repository import GLib
 import traceback
@@ -121,8 +124,7 @@ def wait_for_adapter(bluez_adapter, callback, timeout=1000):
     def on_timeout():
         bluez_adapter.disconnect_signal(sig)
         GLib.source_remove(source)
-        dprint(YELLOW("Warning:"),
-               "Bluez didn't provide 'Powered' property in a reasonable timeout\nAssuming adapter is ready")
+        logging.warning("Warning: Bluez didn't provide 'Powered' property in a reasonable timeout\nAssuming adapter is ready")
         callback()
 
     if bluez_adapter["Address"] != "00:00:00:00:00:00":
@@ -163,7 +165,7 @@ def launch(cmd, paths=None, system=False, icon_name=None, sn=True, name="blueman
     launched = appinfo.launch(files, context)
 
     if not launched:
-        dprint("Command: %s failed" % cmd)
+        logging.error("Command: %s failed" % cmd)
 
     return launched
 
@@ -383,6 +385,39 @@ def set_proc_title(name=None):
     ret = libc.prctl(15, byref(buff), 0, 0, 0)
 
     if ret != 0:
-        dprint("Failed to set process title")
+        logging.error("Failed to set process title")
 
     return ret
+
+logger_format = '%(name)s %(asctime)s %(levelname)-8s %(module)s:%(lineno)s %(funcName)-10s: %(message)s'
+syslog_logger_format = '%(name)s %(levelname)s %(module)s:%(lineno)s %(funcName)s: %(message)s'
+logger_date_fmt = '%H.%M.%S'
+
+def create_logger(log_level, name, log_format=None, date_fmt=None, syslog=False):
+    if log_format is None: log_format = logger_format
+    if date_fmt is None: date_fmt = logger_date_fmt
+    logging.basicConfig(level=log_level, format=log_format, datefmt=date_fmt)
+
+    logger = logging.getLogger(None)  # Root logger
+    logger.name = name
+
+    if syslog:
+        syslog_handler = logging.handlers.SysLogHandler(address="/dev/log")
+        syslog_formatter = logging.Formatter(syslog_logger_format)
+        syslog_handler.setFormatter(syslog_formatter)
+        logger.addHandler(syslog_handler)
+
+    return logger
+
+
+def create_parser(parser=None, syslog=True, loglevel=True):
+    if parser is None:
+        parser = argparse.ArgumentParser()
+
+    if loglevel:
+        parser.add_argument("--loglevel", dest="LEVEL", default="warning")
+
+    if syslog:
+        parser.add_argument("--syslog", dest="syslog", action="store_true")
+
+    return parser

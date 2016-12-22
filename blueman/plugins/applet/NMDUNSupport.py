@@ -9,8 +9,9 @@ import dbus
 from gi.repository import GLib
 from blueman.gui.Notification import Notification
 from blueman.Sdp import uuid128_to_uuid16, DIALUP_NET_SVCLASS_ID
-from blueman.Functions import get_icon, composite_icon, dprint
+from blueman.Functions import get_icon, composite_icon
 import weakref
+import logging
 
 
 class ConnectionHandler:
@@ -32,7 +33,7 @@ class ConnectionHandler:
                         error_handler=lambda *args: w() and w().on_connect_error(*args))
 
     def __del__(self):
-        dprint("deleting")
+        logging.info("deleting")
 
     def on_connect_reply(self, rfcomm):
         self.rfcomm_dev = rfcomm
@@ -51,7 +52,7 @@ class ConnectionHandler:
         del self.service
 
     def on_mm_device_added(self, path, name="org.freedesktop.ModemManager"):
-        dprint(path)
+        logging.info(path)
         interface = "%s.Modem" % name
         props = self.parent.bus.call_blocking(name, path, "org.freedesktop.DBus.Properties", "GetAll", "s", [interface])
 
@@ -61,7 +62,7 @@ class ConnectionHandler:
             drivers = [props["Driver"]]
 
         if self.rfcomm_dev and "bluetooth" in drivers and props["Device"] in self.rfcomm_dev:
-            dprint("It's our bluetooth modem!")
+            logging.info("It's our bluetooth modem!")
 
             modem = get_icon("modem", 24)
             blueman = get_icon("blueman", 48)

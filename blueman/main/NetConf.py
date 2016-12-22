@@ -13,8 +13,9 @@ import re
 from socket import inet_aton, inet_ntoa
 from tempfile import mkstemp
 from time import sleep
+import logging
 from blueman.Constants import *
-from blueman.Functions import have, mask_ip4_address, dprint, is_running
+from blueman.Functions import have, mask_ip4_address, is_running
 from _blueman import create_bridge, destroy_bridge, BridgeException
 from subprocess import call, Popen
 
@@ -74,17 +75,17 @@ class DnsMasqHandler(object):
             args = "--pid-file=/var/run/dnsmasq.pan1.pid --bind-interfaces --dhcp-range=%s,%s,60m --except-interface=lo --interface=pan1 %s" % (inet_ntoa(start), inet_ntoa(end), rtr)
 
             cmd = [have("dnsmasq")] + args.split(" ")
-            dprint(cmd)
+            logging.info(cmd)
             p = Popen(cmd)
 
             ret = p.wait()
 
             if ret == 0:
-                dprint("Dnsmasq started correctly")
+                logging.info("Dnsmasq started correctly")
                 f = open("/var/run/dnsmasq.pan1.pid", "r")
                 self.pid = int(f.read())
                 f.close()
-                dprint("pid", self.pid)
+                logging.info("pid %s" % self.pid)
                 self.netconf.lock("dhcp")
             else:
                 raise Exception("dnsmasq failed to start. Check the system log for errors")
@@ -102,7 +103,7 @@ class DnsMasqHandler(object):
                 os.kill(pid, signal.SIGTERM)
                 self.netconf.unlock("dhcp")
             else:
-                dprint("Stale dhcp lockfile found")
+                logging.info("Stale dhcp lockfile found")
                 self.netconf.unlock("dhcp")
 
 
@@ -177,11 +178,11 @@ class DhcpdHandler(object):
             ret = p.wait()
 
             if ret == 0:
-                dprint("dhcpd started correctly")
+                logging.info("dhcpd started correctly")
                 f = open("/var/run/dhcp-server/dhcpd.pan1.pid", "r")
                 self.pid = int(f.read())
                 f.close()
-                dprint("pid", self.pid)
+                logging.info("pid %s" % self.pid)
                 self.netconf.lock("dhcp")
             else:
                 raise Exception("dhcpd failed to start. Check the system log for errors")
@@ -204,7 +205,7 @@ class DhcpdHandler(object):
                 os.kill(pid, signal.SIGTERM)
                 self.netconf.unlock("dhcp")
             else:
-                dprint("Stale dhcp lockfile found")
+                logging.info("Stale dhcp lockfile found")
                 self.netconf.unlock("dhcp")
 
 
@@ -243,7 +244,7 @@ option router %(rtr)s
             os.write(config_file, self._generate_config().encode('UTF-8'))
             os.close(config_file)
 
-            dprint("Running udhcpd with config file %s" % config_path)
+            logging.info("Running udhcpd with config file %s" % config_path)
             cmd = [have("udhcpd"), "-S", config_path]
             p = Popen(cmd)
             p.wait()
@@ -254,9 +255,9 @@ option router %(rtr)s
             pid = read_pid_file("/var/run/udhcpd.pan1.pid")
 
             if p.pid and is_running("udhcpd", pid):
-                dprint("udhcpd started correctly")
+                logging.info("udhcpd started correctly")
                 self.pid = pid
-                dprint("pid", self.pid)
+                logging.info("pid %s" % self.pid)
                 self.netconf.lock("dhcp")
             else:
                 raise Exception("udhcpd failed to start. Check the system log for errors")
@@ -276,7 +277,7 @@ option router %(rtr)s
                 os.kill(pid, signal.SIGTERM)
                 self.netconf.unlock("dhcp")
             else:
-                dprint("Stale dhcp lockfile found")
+                logging.info("Stale dhcp lockfile found")
                 self.netconf.unlock("dhcp")
 
 
@@ -309,7 +310,7 @@ class NetConf(object):
             return n
 
     def __init__(self):
-        dprint()
+        logging.info("init")
         self.version = class_id
         self.dhcp_handler = None
         self.ipt_rules = []
@@ -341,9 +342,9 @@ class NetConf(object):
     def add_ipt_rule(self, table, chain, rule):
         self.ipt_rules.append((table, chain, rule))
         args = ["/sbin/iptables", "-t", table, "-A", chain] + rule.split(" ")
-        dprint(" ".join(args))
+        logging.debug(" ".join(args))
         ret = call(args)
-        print("Return code", ret)
+        logging.info("Return code %s" % ret)
 
     def del_ipt_rules(self):
         for table, chain, rule in self.ipt_rules:
@@ -412,7 +413,7 @@ class NetConf(object):
         self.store()
 
     def remove_settings(self):
-        dprint(self)
+        logging.info(self)
 
         if self.dhcp_handler:
             self.dhcp_handler.do_remove()

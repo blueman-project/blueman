@@ -4,10 +4,10 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-from blueman.Functions import dprint
 from gi.repository import Gio, GLib
 from blueman.plugins.AppletPlugin import AppletPlugin
 from uuid import uuid4
+import logging
 
 
 class NewConnectionBuilder:
@@ -77,20 +77,20 @@ class NewConnectionBuilder:
             self.cleanup()
 
     def on_nm_device_added(self, connection, sender_name, object_path, interface_name, signal_name, param):
-        dprint(object_path)
+        logging.info(object_path)
         self.device = object_path
         if self.device and self.connection:
             self.init_connection()
 
     def on_nma_new_connection(self, connection, sender_name, object_path, interface_name, signal_name, param):
-        dprint(object_path)
+        logging.info(object_path)
         self.connection = object_path
         if self.device and self.connection:
             self.init_connection()
 
     def init_connection(self):
         self.cleanup()
-        dprint("activating", self.connection, self.device)
+        logging.info("activating %s %s" % (self.connection, self.device))
         if not self.device or not self.connection:
             self.err_cb(GLib.Error("Network Manager did not support the connection"))
             self.cleanup()
@@ -110,7 +110,7 @@ class NewConnectionBuilder:
 
     def on_device_state(self, connection, sender_name, object_path, interface_name, signal_name, param):
         state, oldstate, reason = param.unpack()
-        dprint("state=", state, "oldstate=", oldstate, "reason=", reason)
+        logging.info("state=%s oldstate=%s reason=%s" % (state, oldstate, reason))
         if (state <= self.DEVICE_STATE_DISCONNECTED or state == self.DEVICE_STATE_DEACTIVATING) and \
                                 self.DEVICE_STATE_DISCONNECTED < oldstate <= self.DEVICE_STATE_ACTIVATED:
             if self.err_cb:
@@ -202,7 +202,7 @@ class NMPANSupport(AppletPlugin):
                                         None, Gio.DBusCallFlags.NONE, GLib.MAXINT, None).unpack()[0]
 
                 if d["HwAddress"] == bdaddr:
-                    dprint(d["HwAddress"])
+                    logging.info(d["HwAddress"])
                     return dev
 
             except GLib.Error:

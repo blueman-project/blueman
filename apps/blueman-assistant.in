@@ -19,7 +19,7 @@ pages = {}
 import os
 import sys
 import signal
-import argparse
+import logging
 from locale import bind_textdomain_codeset
 
 #support running uninstalled
@@ -33,7 +33,9 @@ from blueman.Functions import (
     setup_icon_path,
     set_proc_title,
     check_bluetooth_status,
-    get_icon
+    get_icon,
+    create_logger,
+    create_parser
 )
 from blueman.Constants import UI_PATH
 from blueman.gui.DeviceSelectorWidget import DeviceSelectorWidget
@@ -128,7 +130,7 @@ class Assistant:
             try:
                 self.Adapter = self.Manager.get_adapter()
             except:
-                print("Error: No Adapters present")
+                logging.error("Error: No Adapters present")
                 exit(1)
             self.Device = self.Manager.find_device(parsed_args.device, self.Adapter.get_object_path())
             if self.Device['Paired']:
@@ -216,7 +218,7 @@ class Assistant:
                     self.assistant.set_current_page(PAGE_CONNECT)
 
                 def err(err):
-                    print(err)
+                    logging.error(err)
                     pages[PAGE_FINISH].set_markup(_("<b>Failed to add device</b>"))
                     self.assistant.set_page_header_image(pages[PAGE_FINISH], get_icon("help-about", 32))
                     self.assistant.set_current_page(PAGE_FINISH)
@@ -228,7 +230,7 @@ class Assistant:
             self.svc_vbox.foreach(lambda x, y: self.svc_vbox.remove(x), None)
 
             services = get_services(self.Device)
-            print(services)
+            logging.info(services)
             rbs = []
 
             for service in services:
@@ -251,7 +253,7 @@ class Assistant:
                 self.assistant.set_current_page(self.next_page_fn(self.assistant.get_current_page(), None))
 
         elif num == PAGE_CONNECTING:
-            print("connect")
+            logging.info("connect")
 
             def success(*args):
                 pages[PAGE_FINISH].set_markup(_("<b>Device added and connected successfuly</b>"))
@@ -270,11 +272,26 @@ class Assistant:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
+    parser = create_parser()
     parser.add_argument("-d", "--device", dest="device",
                         action="store", help=_("Start configuration assistant for this device"), metavar="ADDRESS")
 
     args = parser.parse_args()
+
+    if args.LEVEL.upper() == "DEBUG":
+        log_level = logging.DEBUG
+    elif args.LEVEL.upper() == "INFO":
+        log_level = logging.INFO
+    elif args.LEVEL.upper() == "WARNING":
+        log_level = logging.WARNING
+    elif args.LEVEL.upper() == "ERROR":
+        log_level = logging.ERROR
+    elif args.LEVEL.upper() == "CRITICAL":
+        log_level = logging.CRITICAL
+    else:
+        log_level = logging.WARNING
+
+    create_logger(log_level, "blueman-assistant", syslog=args.syslog)
 
     set_proc_title()
     Assistant(args)

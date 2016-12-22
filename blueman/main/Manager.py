@@ -6,6 +6,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 import os.path
+import logging
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
@@ -82,7 +83,7 @@ class Blueman(Gtk.Window):
                 bt_status_changed(status)
 
         def on_dbus_name_vanished(_connection, name):
-            dprint(name)
+            logging.info(name)
             self.Applet.disconnect(self._applet_sig)
             self._applet_sig = None
 
@@ -102,7 +103,7 @@ class Blueman(Gtk.Window):
                 Gtk.main_quit()
 
         def on_dbus_name_appeared(_connection, name, owner):
-            dprint(name, owner)
+            logging.info("%s %s" % (name, owner))
             setup_icon_path()
 
             try:
@@ -190,7 +191,7 @@ class Blueman(Gtk.Window):
 
     def bond(self, device):
         def error_handler(e):
-            dprint(e)
+            logging.exception(e)
             message = 'Pairing failed for:\n%s (%s)' % (device['Alias'], device['Address'])
             Notification('Bluetooth', message, icon_name="blueman").show()
 

@@ -11,8 +11,9 @@ from datetime import datetime
 import os
 import sys
 import shutil
+import logging
 from blueman.bluez import obex
-from blueman.Functions import dprint, get_icon, launch
+from blueman.Functions import get_icon, launch
 from blueman.gui.Notification import Notification
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Config import Config
@@ -38,14 +39,15 @@ class Agent(obex.Agent):
         self.transfers = {}
 
     def _handle_method_call(self, connection, sender, agent_path, interface_name, method_name, parameters, invocation):
+        log_msg = "%s %s" % (method_name, agent_path)
         if method_name == 'Release':
-            dprint(agent_path)
+            logging.info(log_msg)
             self._on_release()
         elif method_name == 'AuthorizePush':
-            dprint(agent_path)
+            logging.info(log_msg)
             self._on_authorize(parameters, invocation)
         elif method_name == 'Cancel':
-            dprint(agent_path)
+            logging.info(log_msg)
             self._on_cancel(parameters, invocation)
 
     def register(self):
@@ -59,7 +61,7 @@ class Agent(obex.Agent):
 
     def _on_authorize(self, parameters, invocation):
         def on_action(action):
-            dprint(action)
+            logging.info("Action %s" % action)
 
             if action == "accept":
                 self.transfers[self._pending_transfer['transfer_path']] = {
@@ -91,7 +93,7 @@ class Agent(obex.Agent):
             name = device["Alias"]
             trusted = device["Trusted"]
         except Exception as e:
-            dprint(e)
+            logging.exception(e)
             name = address
             trusted = False
 
@@ -102,7 +104,7 @@ class Agent(obex.Agent):
         try:
             notif_kwargs["pos_hint"] = self._applet.Plugins.StatusIcon.geometry
         except AttributeError:
-            dprint("Failed to get StatusIcon")
+            logging.error("Failed to get StatusIcon")
 
         # This device was neither allowed nor is it trusted -> ask for confirmation
         if address not in self._allowed_devices and not (self._config['opp-accept'] and trusted):
@@ -155,7 +157,7 @@ class TransferService(AppletPlugin):
                 self._config["shared-path"] = d
 
         if not os.path.isdir(self._config["shared-path"]):
-            dprint("Configured share directory %s does not exist" % self._config["shared-path"])
+            logging.info("Configured share directory %s does not exist" % self._config["shared-path"])
 
             dlg = Gtk.MessageDialog(None, buttons=Gtk.ButtonsType.OK, type=Gtk.MessageType.ERROR)
             text = _("Configured directory for incoming files does not exist")
@@ -194,11 +196,11 @@ class TransferService(AppletPlugin):
             self._unregister_agent()
 
     def _on_dbus_name_appeared(self, _connection, name, owner):
-        dprint(name, owner)
+        logging.info("%s %s" % (name, owner))
         self._register_agent()
 
     def _on_dbus_name_vanished(self, _connection, name):
-        dprint(name)
+        logging.info(name)
         self._unregister_agent()
 
     def _on_transfer_started(self, _manager, transfer_path):
@@ -214,10 +216,10 @@ class TransferService(AppletPlugin):
     @staticmethod
     def _add_open(n, name, path):
         if n.actions_supported:
-            print("adding action")
+            logging.info("adding action")
 
             def on_open(*_args):
-                print("open")
+                logging.info("open")
                 launch("xdg-open", [path], True)
 
             n.add_action("open", name, on_open)
@@ -228,7 +230,7 @@ class TransferService(AppletPlugin):
         try:
             kwargs["pos_hint"] = self.Applet.Plugins.StatusIcon.geometry
         except AttributeError:
-            dprint("Warning: No statusicon found")
+            logging.error("No statusicon found")
 
         return kwargs
 
@@ -236,7 +238,7 @@ class TransferService(AppletPlugin):
         try:
             attributes = self._agent.transfers[transfer_path]
         except KeyError:
-            # This is probably not an incoming transfer we authorized
+            logging.info("This is probably not an incoming transfer we authorized")
             return
 
         src = attributes['path']
@@ -251,12 +253,12 @@ class TransferService(AppletPlugin):
         if os.path.exists(dest):
             now = datetime.now()
             filename = "%s_%s" % (now.strftime("%Y%m%d%H%M%S"), filename)
-            dprint("Destination file exists, renaming to: %s" % filename)
+            logging.info("Destination file exists, renaming to: %s" % filename)
 
         try:
             shutil.move(src, dest)
-        except Exception as e:
-            dprint("Failed to move files", e)
+        except Exception:
+            logging.error("Failed to move files", exc_info=True)
             success = False
 
         if success:

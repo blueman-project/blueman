@@ -14,6 +14,7 @@ from gi.repository import GObject
 
 from blueman.Sdp import uuid128_to_uuid16, DIALUP_NET_SVCLASS_ID
 import os
+import logging
 
 
 class Connection:
@@ -28,7 +29,7 @@ class Connection:
         if not res:
             self.connect()
         else:
-            dprint("ModemManager is running, delaying connection 5sec for it to complete probing")
+            logging.info("ModemManager is running, delaying connection 5sec for it to complete probing")
             GObject.timeout_add(5000, self.connect)
 
     def connect(self):
@@ -77,7 +78,7 @@ class PPPSupport(AppletPlugin):
                 Connection(self.Applet, service, port, reply, err)
 
             service.connect(reply_handler=local_reply, error_handler=err)
-            dprint("Connecting rfcomm device")
+            logging.info("Connecting rfcomm device")
 
             return True
         else:

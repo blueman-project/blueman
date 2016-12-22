@@ -8,7 +8,7 @@ from ctypes import *
 from gi.repository import GObject
 from gi.repository import GLib
 import weakref
-from blueman.Functions import YELLOW, dprint
+import logging
 
 try:
     libpulse = CDLL("libpulse.so.0")
@@ -346,13 +346,13 @@ class PulseAudioUtils(GObject.GObject):
             return
 
         state = pa_context_get_state(pa_context)
-        dprint(state)
+        logging.info(state)
         if state == PA_CONTEXT_READY:
             self.connected = True
             self.emit("connected")
             MASK = 0x0200 | 0x0010  # from enum pa_subscription_mask
 
-            self.simple_callback(lambda x: dprint(x),
+            self.simple_callback(lambda x: logging.info(x),
                                  pa_context_subscribe,
                                  MASK)
         else:
@@ -361,7 +361,7 @@ class PulseAudioUtils(GObject.GObject):
                 self.connected = False
 
         if self.prev_state == PA_CONTEXT_READY and state == PA_CONTEXT_FAILED:
-            dprint("Pulseaudio probably crashed, restarting in 5s")
+            logging.info("Pulseaudio probably crashed, restarting in 5s")
             GLib.timeout_add(5000, self.Connect)
 
         self.prev_state = state
@@ -414,8 +414,8 @@ class PulseAudioUtils(GObject.GObject):
         args += (cb, py_object(cb))
         op = function(self.pa_context, *args)
         if not op:
-            dprint(YELLOW("Operation failed"))
-            print(function.__name__)
+            logging.info("Operation failed")
+            logging.error(function.__name__)
         pa_operation_unref(op)
 
     def ListSources(self, callback):
@@ -636,7 +636,7 @@ class PulseAudioUtils(GObject.GObject):
             return super(PulseAudioUtils, cls).__new__(cls)
 
     def __event_callback(self, context, event_type, idx, userdata):
-        dprint(event_type, idx)
+        logging.info("%s %s" % (event_type, idx))
         self.emit("event", event_type, idx)
 
     def __init__(self):
@@ -680,7 +680,7 @@ class PulseAudioUtils(GObject.GObject):
                                               None)
 
     def __del__(self):
-        dprint("Destroying PulseAudioUtils instance")
+        logging.info("Destroying PulseAudioUtils instance")
 
         pa_context_disconnect(self.pa_context)
         pa_context_unref(self.pa_context)

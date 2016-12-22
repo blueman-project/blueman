@@ -13,8 +13,9 @@ from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import GLib
 from gi.repository import Gio
-from blueman.Functions import dprint, get_icon
+from blueman.Functions import get_icon
 from blueman.gui.GtkAnimation import AnimBase
+import logging
 
 OPACITY_START = 0.7
 
@@ -101,19 +102,19 @@ class _NotificationDialog(Gtk.MessageDialog):
         self.hide()
 
     def set_hint_int32(self, *args):
-        dprint("stub")
+        logging.warning("stub")
 
     def set_timeout(self, *args):
-        dprint("stub")
+        logging.warning("stub")
 
     def add_action(self, *args):
-        dprint("stub")
+        logging.warning("stub")
 
     def clear_actions(self, *args):
-        dprint("stub")
+        logging.warning("stub")
 
     def set_urgency(self, *args):
-        dprint("stub")
+        logging.warn("stub")
 
     def update(self, summary, message):
         self.props.title = summary
@@ -242,17 +243,17 @@ class _NotificationBubble(Gio.DBusProxy):
         if notif_id != self._return_id:
             return
 
-        print(signal_val)
+        logging.info(signal_val)
 
         if signal_name == 'NotificationClosed':
             if signal_val == 1:
-                dprint('The notification expired.')
+                logging.debug('The notification expired.')
             elif signal_val == 2:
-                dprint('The notification was dismissed by the user.')
+                logging.debug('The notification was dismissed by the user.')
             elif signal_val == 3:
-                dprint('The notification was closed by a call to CloseNotification.')
+                logging.debug('The notification was closed by a call to CloseNotification.')
             elif signal_val == 4:
-                dprint('Undefined/reserved reasons.')
+                logging.debug('Undefined/reserved reasons.')
         elif signal_name == 'ActionInvoked':
             if signal_val in self._callbacks:
                 self._callbacks[signal_val](signal_val)

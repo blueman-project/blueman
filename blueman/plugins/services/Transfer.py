@@ -5,6 +5,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 from locale import bind_textdomain_codeset
+import logging
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -14,7 +15,6 @@ from blueman.plugins.ServicePlugin import ServicePlugin
 
 from blueman.main.AppletService import AppletService
 from blueman.main.Config import Config
-from blueman.Functions import dprint
 
 
 class Transfer(ServicePlugin):
@@ -56,7 +56,7 @@ class Transfer(ServicePlugin):
     def on_apply(self):
         if self.on_query_apply_state():
             self.clear_options()
-            dprint("transfer apply")
+            logging.info("transfer apply")
 
     def on_query_apply_state(self):
         opts = self.get_options()

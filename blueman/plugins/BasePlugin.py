@@ -4,7 +4,7 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-import traceback
+import logging
 
 
 class MethodAlreadyExists(Exception):
@@ -30,7 +30,7 @@ class BasePlugin(object):
         self.__methods = []
 
     def __del__(self):
-        print("Deleting plugin instance", self)
+        logging.debug("Deleting plugin instance %s" % self)
 
     @classmethod
     def add_method(cls, func):
@@ -55,10 +55,10 @@ class BasePlugin(object):
             self.on_load(parent)
             # self.on_manager_state_changed(applet.Manager != None)
             self.__class__.__instance__ = self
-        except Exception:
+        except Exception as e:
             # AppletPlugin.instances.remove(self)
             self.__class__.__instance__ = None
-            traceback.print_exc()
+            logging.exception(e)
             raise
 
     # virtual methods

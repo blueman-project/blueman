@@ -4,7 +4,6 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-from blueman.Functions import dprint
 from gi.repository import Gio, GLib
 
 introspection_xml = \

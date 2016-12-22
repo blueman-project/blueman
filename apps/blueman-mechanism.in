@@ -8,7 +8,7 @@ from __future__ import unicode_literals
 
 import sys
 import os
-import argparse
+import logging
 
 timeout = 30
 #support running uninstalled
@@ -29,13 +29,12 @@ else:
     import builtins
 
 from gi.repository import Gio, GLib
-import syslog
 
 loop = GLib.MainLoop()
 
 from _blueman import set_probe_debug
 from blueman.Constants import POLKIT
-from blueman.Functions import set_proc_title, dprint
+from blueman.Functions import set_proc_title, create_logger, create_parser
 
 import blueman.plugins.mechanism
 from blueman.plugins.MechanismPlugin import MechanismPlugin
@@ -43,55 +42,52 @@ from blueman.plugins.MechanismPlugin import MechanismPlugin
 from blueman.main.DbusService import DbusService
 
 
-class Tee(object):
-    def __init__(self):
-        self.stdout = sys.stdout
-        self.stderr = sys.stderr
-        sys.stdout = self
-        sys.stderr = self
-        self.buffer = ""
+class StreamToLogger(object):
+    """
+    Fake file-like stream object that redirects writes to a logger instance.
+    """
+    def __init__(self, logger, log_level=logging.INFO):
+        self.logger = logger
+        self.log_level = log_level
+        self.linebuf = ''
 
-    def __del__(self):
-        if self:
-            sys.stdout = self.stdout
-            sys.stderr = self.stderr
-
-    def write(self, data):
-        self.buffer += data
-        if self.buffer.endswith("\n"):
-            self.stdout.write(self.buffer)
-            if self.buffer != "\n":
-                syslog.syslog(self.buffer)
-            self.buffer = ""
-
-    def flush(self):
-        pass
-
-# Python 2, call str() to convert to a byte string.
-syslog.openlog(str("blueman-mechanism"), 0, syslog.LOG_DAEMON)
-a = Tee()
+    def write(self, buf):
+        for line in buf.rstrip().splitlines():
+            self.logger.log(self.log_level, line.rstrip())
 
 
-def prnt(*args):
-    s = ""
-    for a in args:
-        s += (str(a) + " ")
-    print(s)
-
-
-builtins.dprint = prnt
-
-dprint("Starting blueman-mechanism")
-
-DBusGMainLoop(set_as_default=True)
-
-parser = argparse.ArgumentParser()
-parser.add_argument("--debug", action="store_true")
+parser = create_parser(syslog=False)
+parser.add_argument("-d", "--debug", dest="debug", action="store_true")
 args = parser.parse_args()
 
+if args.LEVEL.upper() == "DEBUG":
+    log_level = logging.DEBUG
+elif args.LEVEL.upper() == "INFO":
+    log_level = logging.INFO
+elif args.LEVEL.upper() == "WARNING":
+    log_level = logging.WARNING
+elif args.LEVEL.upper() == "ERROR":
+    log_level = logging.ERROR
+elif args.LEVEL.upper() == "CRITICAL":
+    log_level = logging.CRITICAL
+else:
+    log_level = logging.WARNING
+
+logger = create_logger(log_level, "blueman-mechanism", syslog=True)
+
 if args.debug:
-    dprint("Enabled verbose output")
+    logging.info("Enabled verbose output")
     set_probe_debug(True)
+
+sl = StreamToLogger(logger, logging.INFO)
+sys.stdout = sl
+
+sl = StreamToLogger(logger, logging.ERROR)
+sys.stderr = sl
+
+logging.info("Starting blueman-mechanism")
+
+DBusGMainLoop(set_as_default=True)
 
 os.environ["PATH"] = "/usr/bin:/bin:/usr/sbin:/sbin"
 
@@ -108,7 +104,7 @@ class Timer:
         if not self.stopped:
             self.time += 1
             if self.time == timeout:
-                dprint("Exiting")
+                logging.info("Exiting")
                 loop.quit()
 
         return True
@@ -139,7 +135,7 @@ class conf_service(DbusService):
                     '/org/freedesktop/PolicyKit1/Authority',
                     'org.freedesktop.PolicyKit1.Authority')
             except Exception as e:
-                dprint(e)
+                logging.exception(e)
                 self.pk = None
         else:
             self.pk = None
@@ -155,11 +151,11 @@ class conf_service(DbusService):
             try:
                 __import__("blueman.plugins.mechanism.%s" % plugin, None, None, [])
             except ImportError as e:
-                dprint("Skipping plugin %s: %s" % (plugin, e))
+                logging.error("Skipping plugin %s" % plugin, exc_info=True)
 
         classes = MechanismPlugin.__subclasses__()
         for cls in classes:
-            dprint("loading", cls.__name__)
+            logging.info("loading %s" % cls.__name__)
             cls(self)
 
     def confirm_authorization(self, subject, action_id):
@@ -175,7 +171,7 @@ class conf_service(DbusService):
         res = self.pk.CheckAuthorization(str('((sa{sv})sa{ss}us)'),("system-bus-name", {"name": v_subject}),
                                          action_id, {}, 1, "")
 
-        dprint(str(res))
+        logging.debug(str(res))
         (is_authorized, is_challenge, details) = res
         if not is_authorized:
             raise dbus.DBusException("Not authorized")
@@ -184,4 +180,3 @@ class conf_service(DbusService):
 set_proc_title()
 conf_service()
 loop.run()
-

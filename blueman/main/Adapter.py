@@ -10,6 +10,7 @@ gi.require_version("Gtk", "3.0")
 gi.require_version("Pango", "1.0")
 from gi.repository import Gtk
 from gi.repository import Pango
+import logging
 
 from blueman.Functions import *
 import blueman.bluez as Bluez
@@ -52,7 +53,7 @@ class BluemanAdapters(Gtk.Dialog):
         try:
             self.manager = Bluez.Manager()
         except Exception as e:
-            print(e)
+            logging.exception(e)
             self.manager = None
         #fixme: show error dialog and exit
 
@@ -70,7 +71,7 @@ class BluemanAdapters(Gtk.Dialog):
                 hci_dev_num = int(selected_hci_dev[3:])
                 self.notebook.set_current_page(hci_dev_num)
             else:
-                print('Error: the selected adapter does not exist')
+                logging.error('Error: the selected adapter does not exist')
         self.notebook.show_all()
 
     def on_dialog_response(self, dialog, response_id):
@@ -96,10 +97,10 @@ class BluemanAdapters(Gtk.Dialog):
         self.remove_from_notebook(self._adapters[hci_dev])
 
     def _on_dbus_name_appeared(self, _connection, name, owner):
-        dprint(name, owner)
+        logging.info("%s %s" % (name, owner))
 
     def _on_dbus_name_vanished(self, _connection, name):
-        dprint(name)
+        logging.info(name)
         self.manager = None
         # FIXME: show error dialog and exit
 
@@ -136,7 +137,7 @@ class BluemanAdapters(Gtk.Dialog):
 
         def on_scale_value_changed(scale):
             val = scale.get_value()
-            print('value: '+str(val))
+            logging.info('value: %s' % val)
             if val == 0 and adapter['Discoverable']:
                 always_radio.props.active = True
             timeout = int(val * 60)

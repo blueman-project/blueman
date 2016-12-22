@@ -8,6 +8,7 @@ from blueman.gui.GenericList import GenericList
 
 from blueman.Constants import *
 from blueman.Functions import *
+import logging
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
@@ -100,12 +101,12 @@ class BluemanServices(Gtk.Dialog):
                 if f.endswith(".py") and not (f.endswith(".pyc") or f.endswith("_.py")):
                     plugins.append(f[0:-3])
         plugins.sort()
-        dprint(plugins)
+        logging.info(plugins)
         for plugin in plugins:
             try:
                 __import__("blueman.plugins.services.%s" % plugin, None, None, [])
             except ImportError as e:
-                dprint("Unable to load %s plugin\n%s" % (plugin, e))
+                logging.error("Unable to load %s plugin" % plugin, exc_info=True)
 
         for cls in ServicePlugin.__subclasses__():
             try:
@@ -113,7 +114,7 @@ class BluemanServices(Gtk.Dialog):
             except:
                 continue
             if not cls.__plugin_info__:
-                dprint("Invalid plugin info in %s" % (plugin))
+                logging.warning("Invalid plugin info in %s" % plugin)
             else:
                 (name, icon) = cls.__plugin_info__
                 self.setup_list_item(inst, name, icon)
@@ -136,7 +137,7 @@ class BluemanServices(Gtk.Dialog):
         self.option_changed()
 
     def set_page(self, pageid):
-        dprint("Set page", pageid)
+        logging.info("Set page %s" % pageid)
 
         if len(ServicePlugin.instances) == 0:
             return

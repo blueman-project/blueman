@@ -11,6 +11,7 @@ from blueman.main.Mechanism import Mechanism
 
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.Dialogs import NetworkErrorDialog
+import logging
 
 
 class Networking(AppletPlugin):
@@ -35,7 +36,7 @@ class Networking(AppletPlugin):
             self.update_status()
 
     def load_nap_settings(self):
-        dprint("Loading NAP settings")
+        logging.info("Loading NAP settings")
 
         def reply(*_):
             pass
@@ -70,7 +71,7 @@ class Networking(AppletPlugin):
             self.set_nap(config[key])
 
     def set_nap(self, on):
-        dprint("set nap", on)
+        logging.info("set nap %s" % on)
         if self.Applet.manager_state:
             adapters = self.Applet.Manager.get_adapters()
             for adapter in adapters:

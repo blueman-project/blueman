@@ -5,8 +5,9 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 import os, sys
+import logging
 from locale import bind_textdomain_codeset
-from blueman.Functions import get_icon, dprint
+from blueman.Functions import get_icon
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -84,12 +85,12 @@ class BluezAgent(Agent):
         self._db = None
 
     def register_agent(self):
-        dprint()
+        logging.info("Register Agent")
         self._register_object()
         Bluez.AgentManager().register_agent(self.__agent_path, "KeyboardDisplay", default=True)
 
     def unregister_agent(self):
-        dprint()
+        logging.info("Unregister Agent")
         self._unregister_object()
         Bluez.AgentManager().unregister_agent(self.__agent_path)
 
@@ -114,7 +115,7 @@ class BluezAgent(Agent):
         elif method_name == 'Cancel':
             self._on_cancel()
         else:
-            dprint('Warning, unhandled method: %s' % method_name)
+            logging.warning('Unhandled method: %s' % method_name)
 
     def build_passkey_dialog(self, device_alias, dialog_msg, is_numeric):
         def on_insert_text(editable, new_text, new_text_length, position):
@@ -202,12 +203,12 @@ class BluezAgent(Agent):
         notify_message = _("Pairing request for %s") % dev_str
 
         if self.dialog:
-            dprint("Agent: Another dialog still active, cancelling")
+            logging.info("Agent: Another dialog still active, cancelling")
             invocation.return_dbus_error('org.bluez.Error.Canceled', 'Canceled')
 
         self.dialog, pin_entry = self.build_passkey_dialog(dev_str, dialog_msg, is_numeric)
         if not self.dialog:
-            dprint("Agent: Failed to build dialog")
+            logging.error("Agent: Failed to build dialog")
             invocation.return_dbus_error('org.bluez.Error.Canceled', 'Canceled')
 
         if notification:
@@ -225,12 +226,12 @@ class BluezAgent(Agent):
             self._on_cancel()
 
     def _on_release(self):
-        dprint("Agent.Release")
+        logging.info("Agent.Release")
         self._on_cancel()
         self._unregister_object()
 
     def _on_cancel(self):
-        dprint("Agent.Cancel")
+        logging.info("Agent.Cancel")
         if self.dialog:
             self.dialog.response(Gtk.ResponseType.REJECT)
         try:
@@ -240,14 +241,14 @@ class BluezAgent(Agent):
 
 
     def _on_request_pin_code(self, parameters, invocation):
-        dprint("Agent.RequestPinCode")
+        logging.info("Agent.RequestPinCode")
         dialog_msg = _("Enter PIN code for authentication:")
         notify_msg = _("Enter PIN code")
 
         object_path = parameters.unpack()[0]
         default_pin = self._lookup_default_pin(object_path)
         if default_pin is not None:
-            dprint('Sending default pin: ', default_pin)
+            logging.info('Sending default pin: %s' % default_pin)
             invocation.return_value(GLib.Variant('(s)', (default_pin,)))
             return
 
@@ -256,7 +257,7 @@ class BluezAgent(Agent):
             self.dialog.present_with_time(self.time_func())
 
     def _on_request_passkey(self, parameters, invocation):
-        dprint("Agent.RequestPasskey")
+        logging.info("Agent.RequestPasskey")
         dialog_msg = _("Enter passkey for authentication:")
         notify_msg = _("Enter passkey")
         self.ask_passkey(dialog_msg, notify_msg, True, True, parameters, invocation)
@@ -265,7 +266,7 @@ class BluezAgent(Agent):
 
     def _on_display_passkey(self, parameters, invocation):
         device, passkey, entered = parameters.unpack()
-        dprint('DisplayPasskey (%s, %d)' % (device, passkey))
+        logging.info('DisplayPasskey (%s, %d)' % (device, passkey))
         dev = Bluez.Device(device)
         self.signal_id = dev.connect_signal("property-changed", self._on_device_property_changed)
 
@@ -275,7 +276,7 @@ class BluezAgent(Agent):
 
     def _on_display_pin_code(self, parameters, invocation):
         device, pin_code = parameters.unpack()
-        dprint('DisplayPinCode (%s, %s)' % (device, pin_code))
+        logging.info('DisplayPinCode (%s, %s)' % (device, pin_code))
         dev = Bluez.Device(device)
         self.signal_id = dev.connect_signal("property-changed", self._on_device_property_changed)
 
@@ -299,8 +300,9 @@ class BluezAgent(Agent):
         else:
             device_path, passkey = params
 
-        dprint("Agent.RequestConfirmation")
+        logging.info("Agent.RequestConfirmation")
         notify_message = _("Pairing request for:") + "\n%s" % self.get_device_string(device_path)
+
         if passkey:
             notify_message += "\n" + _("Confirm value for authentication:") + " <b>%s</b>" % passkey
         actions = [["confirm", _("Confirm")], ["deny", _("Deny")]]
@@ -314,7 +316,7 @@ class BluezAgent(Agent):
 
     def _on_authorize_service(self, parameters, invocation):
         def on_auth_action(n, action):
-            dprint(action)
+            logging.info(action)
 
             #self.applet.status_icon.set_blinking(False)
             if action == "always":
@@ -329,7 +331,7 @@ class BluezAgent(Agent):
 
         device, uuid = parameters.unpack()
 
-        dprint("Agent.Authorize")
+        logging.info("Agent.Authorize")
         dev_str = self.get_device_string(device)
         uuid16 = uuid128_to_uuid16(uuid)
         service = uuid16_to_name(uuid16)

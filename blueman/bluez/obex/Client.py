@@ -4,7 +4,7 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-from blueman.Functions import dprint
+import logging
 from blueman.bluez.obex.Base import Base
 from gi.repository import GObject, GLib, Gio
 
@@ -37,11 +37,11 @@ class Client(Base):
 
     def create_session(self, dest_addr, source_addr="00:00:00:00:00:00", pattern="opp"):
         def on_session_created(session_path):
-            dprint(dest_addr, source_addr, pattern, session_path)
+            logging.info("%s %s %s %s" % (dest_addr, source_addr, pattern, session_path))
             self.emit("session-created", session_path)
 
         def on_session_failed(error):
-            dprint(dest_addr, source_addr, pattern, error)
+            logging.error("%s %s %s %s" % (dest_addr, source_addr, pattern, error))
             self.emit("session-failed", error)
 
         v_source_addr = GLib.Variant('s', source_addr)
@@ -51,11 +51,11 @@ class Client(Base):
 
     def remove_session(self, session_path):
         def on_session_removed():
-            dprint(session_path)
+            logging.info(session_path)
             self.emit('session-removed')
 
         def on_session_remove_failed(error):
-            dprint(session_path, error)
+            logging.error("%s %s" % (session_path, error))
 
         param = GLib.Variant('(o)', (session_path,))
         self._call('RemoveSession', param, reply_handler=on_session_removed,

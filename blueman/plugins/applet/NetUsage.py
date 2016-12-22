@@ -24,6 +24,7 @@ import dbus
 import time
 import datetime
 import gettext
+import logging
 from locale import bind_textdomain_codeset
 
 
@@ -73,7 +74,7 @@ class MonitorBase(GObject.GObject):
 class NMMonitor(MonitorBase):
     def __init__(self, device, nm_dev_path):
         super(NMMonitor, self).__init__(device, "NM")
-        dprint("created nm monitor for path", nm_dev_path)
+        logging.info("created nm monitor for path %s" % nm_dev_path)
         self.__bus = dbus.SystemBus()
         self.__nm_dev_path = nm_dev_path
         self.__bus.add_signal_receiver(self.on_ppp_stats, "PppStats", "org.freedesktop.NetworkManager.Device.Serial",
@@ -99,7 +100,7 @@ class Monitor(MonitorBase):
         self.poller = GLib.timeout_add(5000, self.poll_stats)
 
     def __del__(self):
-        print("deleting monitor")
+        logging.debug("deleting monitor")
 
     def poll_stats(self):
         try:

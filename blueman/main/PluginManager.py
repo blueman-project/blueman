@@ -8,7 +8,7 @@ from gi.repository import GObject
 import os
 try: import __builtin__ as builtins
 except ImportError: import builtins
-import traceback
+import logging
 
 from blueman.Functions import *
 
@@ -85,12 +85,12 @@ class PluginManager(GObject.GObject):
                 if f.endswith(".py") and not (f.endswith(".pyc") or f.endswith("_.py")):
                     plugins.append(f[0:-3])
 
-        dprint(plugins)
+        logging.info(plugins)
         for plugin in plugins:
             try:
                 __import__(self.module_path.__name__ + ".%s" % plugin, None, None, [])
             except ImportError as e:
-                dprint("Unable to load plugin module %s\n%s" % (plugin, e))
+                logging.error("Unable to load plugin module %s" % plugin, exc_info=True)
 
         for cls in self.plugin_class.__subclasses__():
             self.__classes[cls.__name__] = cls
@@ -142,14 +142,14 @@ class PluginManager(GObject.GObject):
                 try:
                     self.__load_plugin(self.__classes[dep])
                 except Exception as e:
-                    dprint(e)
+                    logging.exception(e)
                     raise
 
         for cfl in self.__cfls[cls.__name__]:
             if cfl in self.__classes:
                 if self.__classes[cfl].__priority__ > cls.__priority__ and not self.Disabled(cfl) and not self.Enabled(
                         cls.__name__):
-                    dprint("Not loading %s because its conflict has higher priority" % cls.__name__)
+                    logging.warning("Not loading %s because its conflict has higher priority" % cls.__name__)
                     return
 
             if cfl in self.__loaded:
@@ -158,12 +158,12 @@ class PluginManager(GObject.GObject):
                 else:
                     raise LoadException("Not loading conflicting plugin %s due to lower priority" % cls.__name__)
 
-        dprint("loading", cls)
+        logging.info("loading %s" % cls)
         inst = cls(self.user_data)
         try:
             inst._load(self.user_data)
         except Exception as e:
-            dprint("Failed to load %s\n%s" % (cls.__name__, e))
+            logging.error("Failed to load %s" % cls.__name__, exc_info=True)
             if not cls.__unloadable__:
                 os._exit(1)
 
@@ -187,12 +187,12 @@ class PluginManager(GObject.GObject):
                 self.Unload(d)
 
             if name in self.__loaded:
-                dprint("Unloading %s" % name)
+                logging.info("Unloading %s" % name)
                 try:
                     inst = self.__plugins[name]
                     inst._unload()
                 except NotImplementedError:
-                    print("Plugin cannot be unloaded")
+                    logging.warning("Plugin cannot be unloaded")
                 else:
                     self.__loaded.remove(name)
                     del self.__plugins[name]
@@ -212,8 +212,7 @@ class PluginManager(GObject.GObject):
                 ret = getattr(inst, function)(*args, **kwargs)
                 rets.append(ret)
             except Exception as e:
-                dprint("Function", function, "on", inst.__class__.__name__, "Failed")
-                traceback.print_exc()
+                logging.error("Function %s on %s failed" % (function, inst.__class__.__name__), exc_info=True)
 
         return rets
 
@@ -226,8 +225,7 @@ class PluginManager(GObject.GObject):
             except StopException:
                 return ret
             except Exception as e:
-                dprint("Function", function, "on", inst.__class__.__name__, "Failed")
-                traceback.print_exc()
+                logging.error("Function %s on %s failed" % (function, inst.__class__.__name__), exc_info=True)
                 return
 
             if ret is not None:
@@ -279,15 +277,16 @@ class PersistentPluginManager(PluginManager):
             try:
                 cls = self.GetClasses()[item]
                 if not cls.__unloadable__ and disable:
-                    print(YELLOW("warning:"), item, "is not unloadable")
+                    logging.warning("warning: %s is not unloadable" % item)
                 elif item in self.GetLoaded() and disable:
                     self.Unload(item)
                 elif item not in self.GetLoaded() and not disable:
                     try:
                         self.Load(item, user_action=True)
-                    except:
+                    except Exception as e:
+                        logging.exception(e)
                         self.SetConfig(item, False)
 
             except KeyError:
-                print(YELLOW("warning:"), "Plugin %s not found" % item)
+                logging.warning("warning: Plugin %s not found" % item)
                 continue

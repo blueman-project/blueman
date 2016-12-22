@@ -5,6 +5,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 from blueman.Functions import *
+import logging
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -50,7 +51,7 @@ class ShowConnected(AppletPlugin):
             if device["Connected"]:
                 self.num_connections += 1
 
-        dprint("Found %d existing connections" % self.num_connections)
+        logging.info("Found %d existing connections" % self.num_connections)
         if (self.num_connections > 0 and not self.active) or \
                 (self.num_connections == 0 and self.active):
             self.Applet.Plugins.StatusIcon.IconShouldChange()

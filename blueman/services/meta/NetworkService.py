@@ -4,7 +4,7 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-from blueman.Functions import dprint
+import logging
 from blueman.bluez.errors import BluezDBusException
 from blueman.Service import Service
 from blueman.bluez.Network import Network
@@ -19,8 +19,8 @@ class NetworkService(Service):
     def connected(self):
         try:
             return self._service['Connected']
-        except BluezDBusException as e:
-            dprint('Could not get properties of network service: %s' % e)
+        except BluezDBusException:
+            logging.warning('Could not get properties of network service', exc_info=True)
             return False
 
     def connect(self, reply_handler=None, error_handler=None):

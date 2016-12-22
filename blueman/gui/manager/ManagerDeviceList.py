@@ -17,9 +17,10 @@ from gi.repository import GdkPixbuf
 from gi.repository import GObject
 from gi.repository import Pango
 from blueman.Constants import *
-from blueman.Functions import *
+from blueman.Functions import get_icon, launch, opacify_pixbuf, composite_icon
 from blueman.Sdp import *
 import cgi
+import logging
 
 from blueman.gui.GtkAnimation import TreeRowColorFade, TreeRowFade, CellFade
 from blueman.main.Config import Config
@@ -114,7 +115,7 @@ class ManagerDeviceList(DeviceList):
         row = self.get(tree_iter, "caption")
         if key.lower() in row["caption"].lower():
             return False
-        print(model, column, key, tree_iter)
+        logging.info("%s %s %s %s" % (model, column, key, tree_iter))
         return True
 
     def drag_recv(self, widget, context, x, y, selection, target_type, time):
@@ -260,15 +261,15 @@ class ManagerDeviceList(DeviceList):
 
         try:
             self.row_update_event(tree_iter, "Trusted", device['Trusted'])
-        except:
-            pass
+        except Exception as e:
+            logging.exception(e)
         try:
             self.row_update_event(tree_iter, "Paired", device['Paired'])
-        except:
-            pass
+        except Exception as e:
+            logging.exception(e)
 
     def row_update_event(self, tree_iter, key, value):
-        dprint("row update event", key, value)
+        logging.info("row update event %s %s" % (key, value))
 
         # this property is only emitted when device is fake
         if key == "RSSI":
@@ -290,7 +291,7 @@ class ManagerDeviceList(DeviceList):
                 opacity = 255
             if opacity < 90:
                 opacity = 90
-            print("opacity", opacity)
+            logging.info("opacity %s" % opacity)
             icon = self.make_device_icon(row["orig_icon"], is_discovered=True, opacity=opacity)
             self.set(tree_iter, device_pb=icon)
 
@@ -359,7 +360,7 @@ class ManagerDeviceList(DeviceList):
 
                 row = self.get(tree_iter, "levels_visible", "cell_fader", "rssi", "lq", "tpl")
                 if not row["levels_visible"]:
-                    dprint("animating up")
+                    logging.info("animating up")
                     self.set(tree_iter, levels_visible=True)
                     fader = row["cell_fader"]
                     fader.thaw()
@@ -393,7 +394,7 @@ class ManagerDeviceList(DeviceList):
 
                 row = self.get(tree_iter, "levels_visible", "cell_fader")
                 if row["levels_visible"]:
-                    dprint("animating down")
+                    logging.info("animating down")
                     self.set(tree_iter, levels_visible=False,
                              rssi=-1,
                              lq=-1,
@@ -412,7 +413,7 @@ class ManagerDeviceList(DeviceList):
                     signal = fader.connect("animation-finished", on_finished)
 
         else:
-            dprint("invisible")
+            logging.info("invisible")
 
     def tooltip_query(self, tw, x, y, kb, tooltip):
 

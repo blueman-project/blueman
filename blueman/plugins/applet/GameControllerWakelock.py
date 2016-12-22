@@ -11,6 +11,7 @@ import gi
 gi.require_version('GdkX11', '3.0')
 gi.require_version('Gdk', '3.0')
 from gi.repository import Gdk, GdkX11
+import logging
 
 if not isinstance(Gdk.Screen.get_default(), GdkX11.X11Screen):
     raise ImportError('This is not an X11 screen')
@@ -51,7 +52,7 @@ class GameControllerWakelock(AppletPlugin):
             else:
                 ret = launch(command, sn=False)
                 if ret: self.wake_lock -= 1
-                else: dprint("%s failed")
+                else: logging.error("%s failed" % action)
 
         elif action == "suspend":
             if self.wake_lock >= 1:
@@ -59,6 +60,6 @@ class GameControllerWakelock(AppletPlugin):
             else:
                 ret = launch(command, sn=False)
                 if ret: self.wake_lock += 1
-                else: dprint("%s failed")
+                else: logging.error("%s failed" % action)
 
-        dprint("Number of locks: %s" % self.wake_lock)
+        logging.info("Number of locks: %s" % self.wake_lock)

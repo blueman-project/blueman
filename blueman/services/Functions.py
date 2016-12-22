@@ -8,6 +8,7 @@ from blueman.Sdp import uuid128_to_uuid16
 from blueman.bluez.errors import BluezDBusException
 import blueman.services
 import inspect
+import logging
 
 
 def get_service(device, uuid):
@@ -21,5 +22,5 @@ def get_services(device):
         services = (get_service(device, uuid) for uuid in device['UUIDs'])
         return [service for service in services if service]
     except BluezDBusException as e:
-        dprint(e)
+        logging.exception(e)
         return []

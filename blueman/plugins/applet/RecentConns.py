@@ -10,6 +10,7 @@ import weakref
 import pickle
 import base64
 import zlib
+import logging
 from blueman.Functions import *
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device
@@ -97,7 +98,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
 
             self.set_option("recent-connections", dump)
         except:
-            dprint(YELLOW("Failed to store recent connections"))
+            logging.warning("Failed to store recent connections", exc_info=True)
 
     def change_sensitivity(self, sensitive):
         try:
@@ -127,7 +128,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         self.destroy()
 
     def initialize(self):
-        dprint("rebuilding menu")
+        logging.info("rebuilding menu")
         if RecentConns.items is None:
             self.recover_state()
 
@@ -206,18 +207,18 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         try:
             del self.Adapters[str(path)]
         except:
-            dprint("Adapter not found in list")
+            logging.warning("Adapter not found in list")
 
         self.initialize()
 
     def notify(self, object_path, uuid):
         device = Device(object_path)
-        dprint(device, uuid)
+        logging.info("%s %s" % (device, uuid))
         item = {}
         try:
             adapter = Adapter(device['Adapter'])
         except:
-            dprint("adapter not found")
+            logging.warning("adapter not found")
             return
 
         item["adapter"] = adapter["Address"]
@@ -246,7 +247,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         self.store_state()
 
     def on_item_activated(self, menu_item, item):
-        dprint("Connect", item["address"], item["uuid"])
+        logging.info("Connect %s %s" % (item["address"], item["uuid"]))
 
         item["mitem"].props.sensitive = False
 

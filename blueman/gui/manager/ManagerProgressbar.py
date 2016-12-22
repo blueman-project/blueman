@@ -12,7 +12,8 @@ from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import GLib
-from blueman.Functions import get_icon, dprint
+from blueman.Functions import get_icon
+import logging
 
 
 class ManagerProgressbar(GObject.GObject):
@@ -52,7 +53,7 @@ class ManagerProgressbar(GObject.GObject):
         hbox.pack_end(self.progressbar, False, False, 0)
 
         if ManagerProgressbar.__instances__:
-            dprint("hiding", ManagerProgressbar.__instances__[-1])
+            logging.info("hiding %s" % ManagerProgressbar.__instances__[-1])
             ManagerProgressbar.__instances__[-1].hide()
 
         self.show()

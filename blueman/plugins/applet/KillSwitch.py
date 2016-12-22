@@ -8,8 +8,8 @@ import os
 import weakref
 from gi.repository import GLib
 import struct
+import logging
 
-from blueman.Functions import dprint
 from blueman.main.Mechanism import Mechanism
 
 from blueman.plugins.AppletPlugin import AppletPlugin
@@ -76,7 +76,7 @@ class KillSwitch(AppletPlugin):
 
         data = os.read(self._fd, RFKILL_EVENT_SIZE_V1)
         if len(data) != RFKILL_EVENT_SIZE_V1:
-            dprint("Bad rfkill event size")
+            logging.warning("Bad rfkill event size")
             return True
 
         (idx, switch_type, op, soft, hard) = struct.unpack(str("IBBBB"), data)
@@ -86,13 +86,13 @@ class KillSwitch(AppletPlugin):
 
         if op == RFKILL_OP_ADD:
             self._switches[idx] = Switch(idx, switch_type, soft, hard)
-            dprint("killswitch registered", idx)
+            logging.info("killswitch registered %s" % idx)
         elif op == RFKILL_OP_DEL:
             del self._switches[idx]
-            dprint("killswitch removed", idx)
+            logging.info("killswitch removed %s" % idx)
         elif op == RFKILL_OP_CHANGE and (self._switches[idx].soft != soft or self._switches[idx].hard != hard):
             self._switches[idx] = Switch(idx, switch_type, soft, hard)
-            dprint("killswitch changed", idx)
+            logging.info("killswitch changed %s" % idx)
         else:
             return True
 
@@ -102,7 +102,7 @@ class KillSwitch(AppletPlugin):
             self._hardblocked |= s.hard
             self._enabled &= (s.soft == 0 and s.hard == 0)
 
-        dprint("State:", self._enabled)
+        logging.info("State: %s" % self._enabled)
 
         self.Applet.Plugins.StatusIcon.QueryVisibility()
         self.Applet.Plugins.PowerManager.UpdatePowerState()
@@ -118,7 +118,7 @@ class KillSwitch(AppletPlugin):
             return manager.STATE_OFF
 
     def on_power_state_change_requested(self, _, state, cb):
-        dprint(state)
+        logging.info(state)
 
         def reply(*_):
             cb(True)

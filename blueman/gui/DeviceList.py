@@ -4,7 +4,7 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-from blueman.Functions import wait_for_adapter, adapter_path_to_name, dprint
+from blueman.Functions import wait_for_adapter, adapter_path_to_name
 
 from blueman.gui.GenericList import GenericList
 
@@ -19,6 +19,7 @@ from gi.repository import GLib
 from datetime import datetime
 import os
 import re
+import logging
 
 
 class DeviceList(GenericList):
@@ -49,7 +50,7 @@ class DeviceList(GenericList):
     }
 
     def __del__(self):
-        dprint("deleting mainlist")
+        logging.debug("deleting mainlist")
 
     def __init__(self, adapter=None, tabledata=None):
         if not tabledata:
@@ -64,7 +65,7 @@ class DeviceList(GenericList):
 
         def on_adapter_added(_manager, path):
             def on_activate():
-                dprint("adapter powered", path)
+                logging.info("adapter powered %s" % path)
 
                 if self.Adapter is None:
                     self.SetAdapter(path)
@@ -138,7 +139,7 @@ class DeviceList(GenericList):
     def monitor_power_levels(self, device):
         def update(row_ref, cinfo, address):
             if not row_ref.valid():
-                dprint("stopping monitor (row does not exist)")
+                logging.warning("stopping monitor (row does not exist)")
                 cinfo.deinit()
                 self.monitored_devices.remove(address)
                 return False
@@ -148,7 +149,7 @@ class DeviceList(GenericList):
                 return False
 
             if not device['Connected']:
-                dprint("stopping monitor (not connected)")
+                logging.info("stopping monitor (not connected)")
                 cinfo.deinit()
                 self.level_setup_event(row_ref, device, None)
                 self.monitored_devices.remove(address)
@@ -159,14 +160,14 @@ class DeviceList(GenericList):
 
         bt_address = device["Address"]
         if device["Connected"] and bt_address not in self.monitored_devices:
-            dprint("starting monitor")
+            logging.info("starting monitor")
             tree_iter = self.find_device(device)
 
             hci = os.path.basename(self.Adapter.get_object_path())
             try:
                 cinfo = conn_info(bt_address, hci)
-            except Exception as e:
-                dprint("Failed to get power levels\n%s" % e)
+            except Exception:
+                logging.warning("Failed to get power levels", exc_info=True)
             else:
                 r = Gtk.TreeRowReference.new(self.get_model(), self.get_model().get_path(tree_iter))
                 self.level_setup_event(r, device, cinfo)
@@ -193,7 +194,7 @@ class DeviceList(GenericList):
         self.add_device(device)
 
     def device_remove_event(self, device, tree_iter):
-        dprint(device)
+        logging.debug(device)
         if tree_iter is None:
             tree_iter = self.find_device(device)
 
@@ -230,7 +231,7 @@ class DeviceList(GenericList):
         if adapter is not None and adapter != "" and not re.match("hci[0-9]*", adapter):
             adapter = adapter_path_to_name(adapter)
 
-        dprint(adapter)
+        logging.debug(adapter)
 
         try:
             self.Adapter = self.manager.get_adapter(adapter)
@@ -244,7 +245,7 @@ class DeviceList(GenericList):
             self.__adapter_path = self.Adapter.get_object_path()
             self.emit("adapter-changed", self.__adapter_path)
         except Bluez.errors.DBusNoSuchAdapterError as e:
-            dprint(e)
+            logging.exception(e)
             #try loading default adapter
             if len(self.manager.get_adapters()) > 0 and adapter is not None:
                 self.SetAdapter()
@@ -273,7 +274,7 @@ class DeviceList(GenericList):
         if not device['Adapter'] == self.Adapter.get_object_path():
             return
 
-        dprint("adding new device")
+        logging.info("adding new device")
         tree_iter = self.liststore.append()
 
         self.set(tree_iter, device=device)
@@ -387,7 +388,7 @@ class DeviceList(GenericList):
                     del self.path_to_row[existing]
 
         if object_path:
-            dprint("Caching new device %s" % object_path)
+            logging.info("Caching new device %s" % object_path)
             self.path_to_row[object_path] = Gtk.TreeRowReference.new(self.get_model(),
                                                                      self.get_model().get_path(tree_iter))
 

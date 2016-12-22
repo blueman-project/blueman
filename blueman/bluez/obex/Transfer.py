@@ -4,7 +4,7 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-from blueman.Functions import dprint
+import logging
 from blueman.bluez.obex.Base import Base
 from gi.repository import GObject, GLib
 
@@ -28,7 +28,7 @@ class Transfer(Base):
 
     def do_g_properties_changed(self, changed_properties, _invalidated_properties):
         for name, value in changed_properties.unpack().items():
-            dprint(self.get_object_path(), name, value)
+            logging.debug("%s %s %s" % (self.get_object_path(), name, value))
             if name == 'Transferred':
                 self.emit('progress', value)
             elif name == 'Status':

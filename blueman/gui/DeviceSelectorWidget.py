@@ -4,13 +4,12 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-from blueman.Functions import dprint
-
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import GObject
 import os
+import logging
 from blueman.bluez.Adapter import Adapter
 from blueman.Constants import *
 from blueman.gui.DeviceSelectorList import DeviceSelectorList
@@ -75,7 +74,7 @@ class DeviceSelectorWidget(Gtk.Box):
 
     def __del__(self):
         self.List.destroy()
-        dprint("Deleting widget")
+        logging.debug("Deleting widget")
 
     def on_discovery_progress(self, devlist, fraction):
         self.pbar.props.fraction = fraction
@@ -98,7 +97,7 @@ class DeviceSelectorWidget(Gtk.Box):
         self.update_adapters_list()
 
     def on_adapter_selected(self, cb_adapters):
-        dprint("selected")
+        logging.info("selected")
         tree_iter = cb_adapters.get_active_iter()
         if tree_iter:
             adapter_path = cb_adapters.get_model().get_value(tree_iter, 1)
@@ -107,7 +106,7 @@ class DeviceSelectorWidget(Gtk.Box):
                     self.List.SetAdapter(os.path.basename(adapter_path))
 
     def on_adapter_changed(self, devlist, adapter_path):
-        dprint("changed")
+        logging.info("changed")
         if adapter_path is None:
             self.update_adapters_list()
         else:

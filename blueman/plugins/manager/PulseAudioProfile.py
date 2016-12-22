@@ -8,11 +8,12 @@ from blueman.plugins.ManagerPlugin import ManagerPlugin
 from blueman.main.PulseAudioUtils import PulseAudioUtils, EventType
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.gui.MessageArea import MessageArea
-from blueman.Functions import get_icon, create_menuitem, dprint
+from blueman.Functions import get_icon, create_menuitem
 from blueman.services.Functions import get_services
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
+import logging
 
 
 class PulseAudioProfile(ManagerPlugin):
@@ -27,7 +28,7 @@ class PulseAudioProfile(ManagerPlugin):
         pa.connect("connected", self.on_pa_ready)
 
     def on_pa_ready(self, utils):
-        dprint("connected")
+        logging.info("connected")
         for dev in self.deferred:
             self.regenerate_with_device(dev['Address'])
 
@@ -40,7 +41,7 @@ class PulseAudioProfile(ManagerPlugin):
                 inst.Generate()
 
     def on_pa_event(self, utils, event, idx):
-        dprint(event, idx)
+        logging.debug("%s %s" % (event, idx))
 
         def get_card_cb(card):
             drivers = ("module-bluetooth-device.c",
@@ -52,14 +53,14 @@ class PulseAudioProfile(ManagerPlugin):
                 self.regenerate_with_device(card["proplist"]["device.string"])
 
         if event & EventType.CARD:
-            print("card")
+            logging.info("card")
             if event & EventType.CHANGE:
-                print("change")
+                logging.info("change")
                 utils.GetCard(idx, get_card_cb)
             elif event & EventType.REMOVE:
-                print("remove")
+                logging.info("remove")
             else:
-                print("add")
+                logging.info("add")
                 utils.GetCard(idx, get_card_cb)
 
     def is_connected(self, device):

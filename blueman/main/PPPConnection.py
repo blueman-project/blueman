@@ -5,7 +5,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 from io import open
 
-from blueman.Functions import dprint
+import logging
 import tty
 import termios
 import os
@@ -82,7 +82,7 @@ class PPPConnection(GObject.GObject):
 
     def connect_callback(self, response):
         if "CONNECT" in response:
-            dprint("Starting pppd")
+            logging.info("Starting pppd")
             self.pppd = subprocess.Popen(
                 ["/usr/sbin/pppd", "%s" % self.port, "115200", "defaultroute", "updetach", "usepeerdns"], bufsize=1,
                 stdout=subprocess.PIPE)
@@ -156,7 +156,7 @@ class PPPConnection(GObject.GObject):
         if m:
             self.interface = m.groups(1)[0]
 
-        print(line)
+        logging.info(line)
 
         return True
 
@@ -173,12 +173,12 @@ class PPPConnection(GObject.GObject):
 
                 self.emit("error-occurred", msg)
 
-            print("pppd exited with status %d" % status)
+            logging.warning("pppd exited with status %d" % status)
             return False
         return True
 
     def send_command(self, command):
-        dprint("-->", command)
+        logging.info("--> %s" % command)
         os.write(self.file, "%s\r\n" % command)
         termios.tcdrain(self.file)
 
@@ -191,11 +191,11 @@ class PPPConnection(GObject.GObject):
             self.buffer += os.read(self.file, 1)
         except OSError as e:
             if e.errno == errno.EAGAIN:
-                dprint("Got EAGAIN")
+                logging.error("Got EAGAIN")
                 return True
             else:
                 on_done(None, PPPException("Socket error"))
-                dprint(e)
+                logging.exception(e)
                 self.cleanup()
                 return False
 
@@ -212,7 +212,7 @@ class PPPConnection(GObject.GObject):
         if found:
             lines = filter(lambda x: x != "", lines)
             lines = map(lambda x: x.strip("\r\n"), lines)
-            dprint("<-- ", lines)
+            logging.info("<-- %s" % lines)
 
             on_done(lines, None)
             return False

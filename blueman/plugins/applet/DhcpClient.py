@@ -5,6 +5,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 import dbus.service
+import logging
 from blueman.bluez.Network import AnyNetwork
 from blueman.gui.Notification import Notification
 from blueman.plugins.AppletPlugin import AppletPlugin
@@ -45,7 +46,7 @@ class DhcpClient(AppletPlugin):
 
         if device != "":
             def reply(_obj, result, _user_data):
-                dprint(result)
+                logging.info(result)
                 Notification(_("Bluetooth Network"),
                              _("Interface %(0)s bound to IP address %(1)s") % {"0": device, "1": result},
                              icon_name="network-workgroup", pos_hint=self.Applet.Plugins.StatusIcon.geometry).show()
@@ -53,7 +54,7 @@ class DhcpClient(AppletPlugin):
                 self.quering.remove(device)
 
             def err(_obj, result, _user_data):
-                dprint(result)
+                logging.warning(result)
                 Notification(_("Bluetooth Network"), _("Failed to obtain an IP address on %s") % (device),
                              icon_name="network-workgroup", pos_hint=self.Applet.Plugins.StatusIcon.geometry).show()
 

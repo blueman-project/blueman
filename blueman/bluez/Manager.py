@@ -4,7 +4,7 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 from gi.repository import GObject, Gio
-from blueman.Functions import dprint
+import logging
 
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device
@@ -47,11 +47,11 @@ class Manager(Gio.DBusObjectManagerClient):
 
         if adapter_proxy:
             object_path = adapter_proxy.get_object_path()
-            dprint(object_path)
+            logging.debug(object_path)
             self.emit('adapter-added', object_path)
         elif device_proxy:
             object_path = device_proxy.get_object_path()
-            dprint(object_path)
+            logging.debug(object_path)
             self.emit('device-created', object_path)
 
     def do_object_removed(self, dbus_object):
@@ -60,11 +60,11 @@ class Manager(Gio.DBusObjectManagerClient):
 
         if adapter_proxy:
             object_path = adapter_proxy.get_object_path()
-            dprint(object_path)
+            logging.debug(object_path)
             self.emit('adapter-removed', object_path)
         elif device_proxy:
             object_path = device_proxy.get_object_path()
-            dprint(object_path)
+            logging.debug(object_path)
             self.emit('device-removed', object_path)
 
     def get_adapters(self):
