@@ -25,7 +25,7 @@ class Fade(AnimBase):
 
 class _NotificationDialog(Gtk.MessageDialog):
     def __init__(self, summary, message, timeout=-1, actions=None, actions_cb=None,
-                 icon_name=None, image_data=None, pos_hint=None):
+                 icon_name=None, image_data=None):
         super(_NotificationDialog, self).__init__(parent=None, flags=0,
             type=Gtk.MessageType.QUESTION, buttons=Gtk.ButtonsType.NONE,
             message_format=None)
@@ -129,7 +129,7 @@ class _NotificationDialog(Gtk.MessageDialog):
 
 class _NotificationBubble(Gio.DBusProxy):
     def __init__(self, summary, message, timeout=-1, actions=None, actions_cb=None,
-                 icon_name=None, image_data=None, pos_hint=None):
+                 icon_name=None, image_data=None):
         super(_NotificationBubble, self).__init__(
             g_name='org.freedesktop.Notifications',
             g_interface_name='org.freedesktop.Notifications',
@@ -194,11 +194,6 @@ class _NotificationBubble(Gio.DBusProxy):
         if actions:
             for action in actions:
                 self.add_action(action[0], action[1], actions_cb)
-
-        if pos_hint:
-            x, y, width, height = pos_hint
-            self.set_hint('x', x + width / 2)
-            self.set_hint('y', y + height / 2)
 
         self._capabilities = self.GetCapabilities()
 
@@ -271,7 +266,7 @@ class _NotificationBubble(Gio.DBusProxy):
 
 class Notification(object):
     def __new__(cls, summary, message, timeout=-1, actions=None, actions_cb=None,
-                icon_name=None, image_date=None, pos_hint=None):
+                icon_name=None, image_date=None):
 
         forced_fallback = not Config('org.blueman.general')['notification-daemon']
         try:
@@ -291,7 +286,7 @@ class Notification(object):
         else:
             klass = _NotificationBubble
 
-        return klass(summary, message, timeout, actions, actions_cb, icon_name, image_date, pos_hint)
+        return klass(summary, message, timeout, actions, actions_cb, icon_name, image_date)
 
     # stub to satisfy pylint
     def close(self):

@@ -34,10 +34,6 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
 
         self.on_status_icon_resized()
 
-    @property
-    def geometry(self):
-        _, screen, area, orientation = self.get_geometry()
-        return (area.x, area.y, area.width, area.height)
 
     def on_icon_theme_changed(self, icon_theme):
         self.IconShouldChange()

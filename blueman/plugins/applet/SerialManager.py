@@ -52,8 +52,7 @@ class SerialManager(AppletPlugin):
             Notification(_("Serial port connected"),
                          _("Serial port service on device <b>%s</b> now will be available via <b>%s</b>") % (
                          device['Alias'], port),
-                         icon_name="blueman-serial",
-                         pos_hint=self.Applet.Plugins.StatusIcon.geometry).show()
+                         icon_name="blueman-serial").show()
 
             self.call_script(device['Address'],
                              device['Alias'],
@@ -99,8 +98,7 @@ class SerialManager(AppletPlugin):
                 Notification(_("Serial port connection script failed"),
                              _("There was a problem launching script %s\n"
                                "%s") % (c, str(e)),
-                             icon_name="blueman-serial",
-                             pos_hint=self.Applet.Plugins.StatusIcon.geometry).show()
+                             icon_name="blueman-serial").show()
 
     def on_rfcomm_disconnect(self, node):
         for k, v in self.scripts.items():
