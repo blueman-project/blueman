@@ -227,12 +227,12 @@ class RecentConns(AppletPlugin):
         def reply(*args):
             label_text = menu_item.get_child().get_children()[1].get_text()
             Notification(_("Connected"), _("Connected to %s") % label_text,
-                         icon_name=item["icon"], pos_hint=self.Applet.Plugins.StatusIcon.geometry).show()
+                         icon_name=item["icon"]).show()
             menu_item.props.sensitive = True
 
         def err(reason):
             Notification(_("Failed to connect"), str(reason).split(": ")[-1],
-                         icon_name="dialog-error", pos_hint=self.Applet.Plugins.StatusIcon.geometry).show()
+                         icon_name="dialog-error").show()
             menu_item.props.sensitive = True
 
         self.Applet.DbusSvc.connect_service(item["device"], item["uuid"], reply, err)

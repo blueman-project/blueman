@@ -27,7 +27,7 @@ class AuthAgent(AppletPlugin):
 
     def on_manager_state_changed(self, state):
         if state:
-            self._agent = BluezAgent(self.Applet.Plugins.StatusIcon, lambda: self._last_event_time)
+            self._agent = BluezAgent(lambda: self._last_event_time)
             self._agent.register_agent()
         else:
             # At this point bluez already called Release on the agent
