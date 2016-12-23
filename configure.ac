@@ -238,6 +238,7 @@ apps/blueman-report
 apps/blueman-rfcomm-watcher
 apps/blueman-sendto
 apps/blueman-services
+apps/blueman-tray
 apps/Makefile
 blueman/Makefile
 blueman/Constants.py
@@ -253,6 +254,7 @@ blueman/plugins/mechanism/Makefile
 blueman/plugins/manager/Makefile
 blueman/main/Makefile
 blueman/main/applet/Makefile
+blueman/main/indicators/Makefile
 blueman/services/Makefile
 blueman/services/meta/Makefile
 data/Makefile

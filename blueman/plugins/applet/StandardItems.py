@@ -45,7 +45,7 @@ class StandardItems(AppletPlugin):
 
         self.Applet.Plugins.Menu.add(self, 85, text=_("_Plugins"), icon_name="blueman-plugin", callback=self.on_plugins)
 
-        self.Applet.Plugins.StatusIcon.connect("activate", lambda status_icon: self.on_devices(None))
+        self.Applet.Plugins.StatusIcon.connect("activate", lambda _status_icon: self.on_devices())
 
     def change_sensitivity(self, sensitive):
         try:
