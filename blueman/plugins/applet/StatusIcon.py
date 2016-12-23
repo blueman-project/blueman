@@ -1,44 +1,41 @@
 # coding=utf-8
 
+import dbus.service
+from gi.repository import GObject, GLib
+
+from blueman.Functions import launch
 from blueman.main.PluginManager import StopException
 from blueman.plugins.AppletPlugin import AppletPlugin
 
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, GLib
 
+class StatusIcon(AppletPlugin, GObject.GObject):
+    __gsignals__ = {str('activate'): (GObject.SignalFlags.NO_HOOKS, None, ())}
 
-class StatusIcon(AppletPlugin, Gtk.StatusIcon):
     __unloadable__ = False
     __icon__ = "blueman-tray"
+    __depends__ = ['Menu']
 
     FORCE_SHOW = 2
     SHOW = 1
     FORCE_HIDE = 0
 
+    visible = None
+
     visibility_timeout = None
 
     def on_load(self, applet):
-        Gtk.StatusIcon.__init__(self)
-        self.lines = {}
+        GObject.GObject.__init__(self)
+        self.lines = {0: _("Bluetooth Enabled")}
 
-        self.set_title('blueman')
-
-        self.SetTextLine(0, _("Bluetooth Enabled"))
-
+        AppletPlugin.add_method(self.on_query_status_icon_implementation)
         AppletPlugin.add_method(self.on_query_status_icon_visibility)
         AppletPlugin.add_method(self.on_status_icon_query_icon)
 
-        ic = Gtk.IconTheme.get_default()
-        ic.connect("changed", self.on_icon_theme_changed)
+        self.QueryVisibility(emit=False)
 
-        self.on_status_icon_resized()
+        launch('blueman-tray', icon_name='blueman')
 
-
-    def on_icon_theme_changed(self, icon_theme):
-        self.IconShouldChange()
-
-    def on_power_state_changed(self, manager, state):
+    def on_power_state_changed(self, _manager, state):
         if state:
             self.SetTextLine(0, _("Bluetooth Enabled"))
             self.QueryVisibility(delay_hiding=True)
@@ -46,33 +43,43 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
             self.SetTextLine(0, _("Bluetooth Disabled"))
             self.QueryVisibility()
 
-    def QueryVisibility(self, delay_hiding=False):
+    def QueryVisibility(self, delay_hiding=False, emit=True):
         rets = self.Applet.Plugins.Run("on_query_status_icon_visibility")
         if StatusIcon.FORCE_HIDE not in rets:
             if StatusIcon.FORCE_SHOW in rets:
-                self.set_visible(True)
+                self.set_visible(True, emit)
             else:
                 if not self.Applet.Manager:
-                    self.set_visible(False)
+                    self.set_visible(False, emit)
                     return
 
                 if self.Applet.Manager.get_adapters():
-                    self.set_visible(True)
+                    self.set_visible(True, emit)
                 elif not self.visibility_timeout:
                     if delay_hiding:
                         self.visibility_timeout = GLib.timeout_add(1000, self.on_visibility_timeout)
                     else:
-                        self.set_visible(False)
+                        self.set_visible(False, emit)
         else:
-            self.set_visible(False)
+            self.set_visible(False, emit)
 
     def on_visibility_timeout(self):
         GLib.source_remove(self.visibility_timeout)
         self.visibility_timeout = None
         self.QueryVisibility()
 
-    def set_visible(self, visible):
-        self.props.visible = visible
+    @dbus.service.method('org.blueman.Applet', in_signature="", out_signature="b")
+    def GetVisibility(self):
+        return self.visible
+
+    def set_visible(self, visible, emit):
+        self.visible = visible
+        if emit:
+            self.VisibilityChanged(visible)
+
+    @dbus.service.signal('org.blueman.Applet', signature='b')
+    def VisibilityChanged(self, visible):
+        pass
 
     def SetTextLine(self, lineid, text):
         if text:
@@ -80,16 +87,23 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
         else:
             self.lines.pop(lineid, None)
 
-        self.update_text()
+        self.TextChanged(self.GetText())
 
-    def update_text(self):
-        self.update_tooltip("\n".join([self.lines[key] for key in sorted(self.lines)]))
+    @dbus.service.signal('org.blueman.Applet', signature='s')
+    def TextChanged(self, text):
+        pass
 
-    def update_tooltip(self, text):
-        self.props.tooltip_markup = text
+    @dbus.service.method('org.blueman.Applet', in_signature="", out_signature="s")
+    def GetText(self):
+        return '\n'.join([self.lines[key] for key in sorted(self.lines)])
 
     def IconShouldChange(self):
-        self.on_status_icon_resized()
+        self.IconNameChanged(self.GetIconName())
+        self.QueryVisibility()
+
+    @dbus.service.signal('org.blueman.Applet', signature='s')
+    def IconNameChanged(self, icon_name):
+        pass
 
     def on_adapter_added(self, path):
         self.QueryVisibility()
@@ -100,23 +114,27 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
     def on_manager_state_changed(self, state):
         self.QueryVisibility()
 
-    def on_status_icon_resized(self):
-        self.icon = "blueman-tray"
+    @dbus.service.method('org.blueman.Applet', in_signature="", out_signature="s")
+    def GetStatusIconImplementation(self):
+        implementations = self.Applet.Plugins.Run("on_query_status_icon_implementation")
+        return next((implementation for implementation in implementations if implementation), 'GtkStatusIcon')
 
-        ic = Gtk.IconTheme.get_default()
+    @dbus.service.method('org.blueman.Applet', in_signature="", out_signature="s")
+    def GetIconName(self):
+        icon = "blueman-tray"
 
         def callback(inst, ret):
             if ret is not None:
                 for i in ret:
-                    if ic.has_icon(i):
-                        self.icon = i
-                        raise StopException
+                    nonlocal icon
+                    icon = i
+                    raise StopException
 
         self.Applet.Plugins.RunEx("on_status_icon_query_icon", callback)
-        self.props.icon_name = self.icon
-        self.QueryVisibility()
+        return icon
 
-        return True
+    def on_query_status_icon_implementation(self):
+        return None
 
     def on_query_status_icon_visibility(self):
         return StatusIcon.SHOW
@@ -124,3 +142,6 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
     def on_status_icon_query_icon(self):
         return None
 
+    @dbus.service.method('org.blueman.Applet', in_signature="")
+    def Activate(self):
+        self.emit('activate')

@@ -2,37 +2,9 @@
 
 import dbus
 import dbus.service
-from blueman.Functions import create_menuitem
 
 from blueman.plugins.AppletPlugin import AppletPlugin
 from operator import attrgetter
-
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
-
-
-def build_menu(items, activate):
-    menu = Gtk.Menu()
-    for index, item in enumerate(items):
-        if 'text' in item and 'icon_name' in item:
-            gtk_item = create_menuitem(item['text'], item['icon_name'])
-            label = gtk_item.get_child().get_children()[1]
-            if item['markup']:
-                label.set_markup_with_mnemonic(item['text'])
-            else:
-                label.set_text_with_mnemonic(item['text'])
-            gtk_item.connect('activate', lambda _, idx=index: activate(idx))
-            if 'submenu' in item:
-                gtk_item.set_submenu(item['submenu'])
-            if 'tooltip' in item:
-                gtk_item.props.tooltip_text = item['tooltip']
-            gtk_item.props.sensitive = item['sensitive']
-        else:
-            gtk_item = Gtk.SeparatorMenuItem()
-        gtk_item.show()
-        menu.append(gtk_item)
-    return menu
 
 
 class MenuItem(object):
@@ -114,7 +86,6 @@ class MenuItem(object):
 
 
 class Menu(AppletPlugin):
-    __depends__ = ["StatusIcon"]
     __description__ = _("Provides a menu for the applet and an API for other plugins to manipulate it")
     __icon__ = "menu-editor"
     __author__ = "Walmis"
@@ -149,9 +120,6 @@ class Menu(AppletPlugin):
     def on_plugins_loaded(self):
         self.__plugins_loaded = True
         self.__sort()
-
-    def get_menu(self):
-        return build_menu(self.GetMenu(), self.ActivateMenuItem)
 
     def on_menu_changed(self):
         self.MenuChanged(self.GetMenu())

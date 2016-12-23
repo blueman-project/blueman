@@ -1,4 +1,4 @@
-SUBDIRS = applet
+SUBDIRS = applet indicators
 
 bluemandir = $(pythondir)/blueman/main
 
@@ -17,7 +17,8 @@ blueman_PYTHON = \
 	Applet.py \
 	Manager.py \
 	Sendto.py \
-	Services.py
+	Services.py \
+	Tray.py
 
 if HAVE_PULSEAUDIO
 blueman_PYTHON += PulseAudioUtils.py
