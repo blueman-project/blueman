@@ -7,6 +7,7 @@ blueman_PYTHON = \
 	PPPConnection.py \
 	Config.py \
 	DhcpClient.py \
+	FileProcessor.py \
 	__init__.py \
 	Mechanism.py \
 	NetConf.py \

@@ -17,6 +17,7 @@ from blueman.Functions import get_icon, launch
 from blueman.gui.Notification import Notification
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Config import Config
+from blueman.main.FileProcessor import FileProcessor
 
 if sys.version_info.major == 2:
     from cgi import escape
@@ -286,6 +287,55 @@ class TransferService(AppletPlugin):
                 self._silent_transfers -= 1
 
         del self._agent.transfers[transfer_path]
+
+        if success:
+            command_to_run = self._config["process-command"]
+            # No need to decode bytes into UTF-8.
+            # That functionality is covered in the FileProcessor.
+
+            if command_to_run:
+                try:
+                    processor = FileProcessor(command_to_run, filename, dest)
+                    # The handler _on_process_ended will take care of notifying
+                    # the user about success or particular errors during the
+                    # execution of the command that the user configured.
+                    processor.connect(
+                        "started",
+                        lambda _, fn: logging.info(
+                            "Now processing %s with command %s" % (
+                                fn, processor.get_command_line_as_utf8()
+                            )
+                        )
+                    )
+                    processor.connect("ended", self._on_process_ended)
+                    processor.connect("failed", self._on_process_ended)
+                    processor.start()
+                except Exception as e:
+                    if isinstance(e, ValueError):
+                        # Oops.  There is a configuration error.  We must inform the user.
+                        e = ("The command configured to run after receiving a file "
+                             "has a syntax error and cannot be executed as is.")
+                    n = Notification(_("Cannot process received file"),
+                                _("Processing of file %(0)s failed: %(1)s") % {
+                                    "0": "<b>" + escape(filename) + "</b>",
+                                    "1": "<b>" + escape(str(e)) + "</b>"},
+                                **self._notify_kwargs)
+                    n.show()
+                    logging.error("Failed to move files", exc_info=True)
+
+    def _on_process_ended(self, unused_processor, filename, exception):
+        if exception is None:
+            n = Notification(_("File processed"),
+                             _("File %(0)s successfully processed") % {
+                                 "0": "<b>" + escape(filename) + "</b>",},
+                             **self._notify_kwargs)
+        else:
+            n = Notification(_("Processing failed"),
+                         _("Processing of file %(0)s failed: %(1)s") % {
+                             "0": "<b>" + escape(filename) + "</b>",
+                             "1": "<b>" + escape(str(exception)) + "</b>"},
+                         **self._notify_kwargs)
+        n.show()
 
     def _on_session_removed(self, _manager, _session_path):
         if self._silent_transfers == 0:

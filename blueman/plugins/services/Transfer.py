@@ -53,6 +53,10 @@ class Transfer(ServicePlugin):
             self.Builder.get_object(key).set_current_folder(value)
             self.option_changed_notify(key, False)
 
+        if key == "process-command":
+            self.Builder.get_object(key).set_text(value)
+            self.option_changed_notify(key, False)
+
     def on_apply(self):
         if self.on_query_apply_state():
             self.clear_options()
@@ -71,11 +75,15 @@ class Transfer(ServicePlugin):
 
         opp_accept = self.Builder.get_object("opp-accept")
         shared_path = self.Builder.get_object("shared-path")
+        process_command = self.Builder.get_object("process-command")
 
         opp_accept.props.active = self._config["opp-accept"]
         if self._config["shared-path"]:
             shared_path.set_current_folder(self._config["shared-path"])
+        process_command.set_text(self._config["process-command"])
 
         opp_accept.connect("toggled", lambda x: self._config.set_boolean("opp-accept", x.props.active))
 
         shared_path.connect("file-set", lambda x: self._config.set_string("shared-path", x.get_filename()))
+
+        process_command.connect("changed", lambda x: self._config.set_string("process-command", x.get_text().strip()))

@@ -69,6 +69,68 @@
             <property name="width">2</property>
           </packing>
         </child>
+        <child>
+          <object class="GtkLabel" id="process_label">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="halign">start</property>
+            <property name="label" translatable="yes">&lt;b&gt;File Processing&lt;/b&gt;</property>
+            <property name="use_markup">True</property>
+          </object>
+          <packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">3</property>
+            <property name="width">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="process_title_label">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="halign">start</property>
+            <property name="xalign">0.0</property>
+            <property name="margin_left">12</property>
+            <property name="label" translatable="yes">Command to run after file is received:</property>
+          </object>
+          <packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">4</property>
+            <property name="width">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkEntry" id="process-command">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="halign">fill</property>
+            <property name="margin_left">12</property>
+            <property name="text"></property>
+          </object>
+          <packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">5</property>
+            <property name="width">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="process_label_post">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">&lt;small&gt;Command runs with full path to the file as first parameter.  If the command has spaces, it will be assumed to be a shell command line and will be parsed accordingly, after adding the full path to the end.  Thus, quote paths that have spaces or other special characters.
+
+&lt;b&gt;Warning:&lt;/b&gt; It is a security risk to use this feature and accept files from untrusted devices.&lt;/small&gt;</property>
+            <property name="halign">start</property>
+            <property name="xalign">0.0</property>
+            <property name="margin_left">12</property>
+            <property name="use_markup">True</property>
+            <property name="wrap">True</property>
+          </object>
+          <packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">6</property>
+            <property name="width">2</property>
+          </packing>
+        </child>
       </object>
     </child>
     <child type="label">
