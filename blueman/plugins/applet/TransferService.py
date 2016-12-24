@@ -107,16 +107,16 @@ class Agent(obex.Agent):
         # This device was neither allowed nor is it trusted -> ask for confirmation
         if address not in self._allowed_devices and not (self._config['opp-accept'] and trusted):
             self._notification = Notification(_("Incoming file over Bluetooth"),
-                _("Incoming file %(0)s from %(1)s") % {"0": "<b>" + filename + "</b>",
-                                                       "1": "<b>" + name + "</b>"},
+                _("Incoming file %(0)s from %(1)s") % {"0": "<b>" + escape(filename) + "</b>",
+                                                       "1": "<b>" + escape(name) + "</b>"},
                 30000, [["accept", _("Accept"), "help-about"], ["reject", _("Reject"), "help-about"]], on_action,
                 **notif_kwargs)
             self._notification.show()
         # Device is trusted or was already allowed, larger file -> display a notification, but auto-accept
         elif size > 350000:
             self._notification = Notification(_("Receiving file"),
-                _("Receiving file %(0)s from %(1)s") % {"0": "<b>" + filename + "</b>",
-                                                        "1": "<b>" + name + "</b>"},
+                _("Receiving file %(0)s from %(1)s") % {"0": "<b>" + escape(filename) + "</b>",
+                                                        "1": "<b>" + escape(name) + "</b>"},
                 **notif_kwargs)
             on_action('accept')
             self._notification.show()
