@@ -49,24 +49,29 @@ class Manager(Gio.DBusObjectManagerClient):
             transfer = Transfer(transfer_path)
             completed_sig = transfer.connect_signal('completed', self._on_transfer_completed, True)
             error_sig = transfer.connect_signal('error', self._on_transfer_completed, False)
-            self.__transfers[transfer_path] = (completed_sig, error_sig)
+            self.__transfers[transfer_path] = (transfer, (completed_sig, error_sig))
 
             dprint(transfer_path)
             self.emit('transfer-started', transfer_path)
 
     def do_object_removed(self, dbus_object):
         session_proxy = dbus_object.get_interface('org.bluez.obex.Session1')
+        transfer_proxy = dbus_object.get_interface('org.bluez.obex.Transfer1')
+        object_path = dbus_object.get_object_path()
+
+        if transfer_proxy and object_path in self.__transfers:
+            dprint(object_path)
+            transfer, signals = self.__transfers.pop(object_path)
+
+            for sig in signals:
+                transfer.disconnect_signal(sig)
 
         if session_proxy:
-            session_path = session_proxy.get_object_path()
-            dprint(session_path)
-            self.emit('session-removed', session_path)
+            dprint(object_path)
+            self.emit('session-removed', object_path)
 
     def _on_transfer_completed(self, transfer, success):
         transfer_path = transfer.get_object_path()
-        signals = self.__transfers.pop(transfer_path)
-        for sig in signals:
-            transfer.disconnect_signal(sig)
 
         dprint(transfer_path, success)
         self.emit('transfer-completed', transfer_path, success)
