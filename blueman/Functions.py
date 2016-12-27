@@ -62,28 +62,6 @@ except IOError:
     in_fg = 'DEBUG' in os.environ
 
 
-def dprint(*args):
-    #dont print if in the background
-    if in_fg:
-
-        s = ""
-        for a in args:
-            s += ("%s " % a)
-        co = sys._getframe(1).f_code
-
-        fname = BOLD(co.co_name)
-
-        print("_________")
-        print("%s %s" % (fname, "(%s:%d)" % (co.co_filename, co.co_firstlineno)))
-        print(s)
-        try:
-            sys.stdout.flush()
-        except IOError:
-            pass
-
-
-builtins.dprint = dprint
-
 from blueman.main.AppletService import AppletService
 
 
