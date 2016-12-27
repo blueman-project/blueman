@@ -9,12 +9,19 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import GLib, Gtk, Gio
 from datetime import datetime
 import os
+import sys
 import shutil
 from blueman.bluez import obex
 from blueman.Functions import dprint, get_icon, launch
 from blueman.gui.Notification import Notification
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Config import Config
+
+if sys.version_info.major == 2:
+    from cgi import escape
+else:
+    from html import escape
+
 
 class Agent(obex.Agent):
     __agent_path = '/org/bluez/obex/agent/blueman'
@@ -245,16 +252,16 @@ class TransferService(AppletPlugin):
         if success:
             n = Notification(_("File received"),
                              _("File %(0)s from %(1)s successfully received") % {
-                                 "0": "<b>" + filename + "</b>",
-                                 "1": "<b>" + attributes['name'] + "</b>"},
+                                 "0": "<b>" + escape(filename) + "</b>",
+                                 "1": "<b>" + escape(attributes['name']) + "</b>"},
                              icon_name="blueman", pos_hint=status_icon.geometry)
             self._add_open(n, "Open", dest)
             n.show()
         elif not success:
             Notification(_("Transfer failed"),
                          _("Transfer of file %(0)s failed") % {
-                             "0": "<b>" + filename + "</b>",
-                             "1": "<b>" + attributes['name'] + "</b>"},
+                             "0": "<b>" + escape(filename) + "</b>",
+                             "1": "<b>" + escape(attributes['name']) + "</b>"},
                          icon_name="blueman", pos_hint=status_icon.geometry)
 
             if attributes['size'] > 350000:
