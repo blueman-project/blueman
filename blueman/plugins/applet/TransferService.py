@@ -252,7 +252,11 @@ class TransferService(AppletPlugin):
             filename = "%s_%s" % (now.strftime("%Y%m%d%H%M%S"), filename)
             dprint("Destination file exists, renaming to: %s" % filename)
 
-        shutil.move(src, dest)
+        try:
+            shutil.move(src, dest)
+        except Exception as e:
+            dprint("Failed to move files", e)
+            success = False
 
         if success:
             n = Notification(_("File received"),
