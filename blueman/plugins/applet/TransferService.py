@@ -98,10 +98,11 @@ class Agent(obex.Agent):
         self._pending_transfer = {'transfer_path': transfer_path, 'address': address, 'root': root,
                                   'filename': filename, 'size': size, 'name': name}
 
+        notif_kwargs = {"icon_name": "blueman"}
         try:
-            status_icon = self._applet.Plugins.StatusIcon
-        except:
-            status_icon = None
+            notif_kwargs["pos_hint"] = self._applet.Plugins.StatusIcon.geometry
+        except AttributeError:
+            dprint("Failed to get StatusIcon")
 
         # This device was neither allowed nor is it trusted -> ask for confirmation
         if address not in self._allowed_devices and not (self._config['opp-accept'] and trusted):
@@ -109,14 +110,14 @@ class Agent(obex.Agent):
                 _("Incoming file %(0)s from %(1)s") % {"0": "<b>" + filename + "</b>",
                                                        "1": "<b>" + name + "</b>"},
                 30000, [["accept", _("Accept"), "help-about"], ["reject", _("Reject"), "help-about"]], on_action,
-                icon_name="blueman", pos_hint=status_icon.geometry)
+                **notif_kwargs)
             self._notification.show()
         # Device is trusted or was already allowed, larger file -> display a notification, but auto-accept
         elif size > 350000:
             self._notification = Notification(_("Receiving file"),
                 _("Receiving file %(0)s from %(1)s") % {"0": "<b>" + filename + "</b>",
                                                         "1": "<b>" + name + "</b>"},
-                icon_name="blueman", pos_hint=status_icon.geometry)
+                **notif_kwargs)
             on_action('accept')
             self._notification.show()
         # Device is trusted or was already allowed. very small file -> auto-accept and transfer silently
