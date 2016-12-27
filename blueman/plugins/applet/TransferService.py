@@ -221,6 +221,16 @@ class TransferService(AppletPlugin):
 
             n.add_action("open", name, on_open)
 
+    @property
+    def _notify_kwargs(self):
+        kwargs = {"icon_name": "blueman"}
+        try:
+            kwargs["pos_hint"] = self.Applet.Plugins.StatusIcon.geometry
+        except AttributeError:
+            dprint("Warning: No statusicon found")
+
+        return kwargs
+
     def _on_transfer_completed(self, _manager, transfer_path, success):
         try:
             attributes = self._agent.transfers[transfer_path]
@@ -244,17 +254,12 @@ class TransferService(AppletPlugin):
 
         shutil.move(src, dest)
 
-        try:
-            status_icon = self.Applet.Plugins.StatusIcon
-        except:
-            status_icon = None
-
         if success:
             n = Notification(_("File received"),
                              _("File %(0)s from %(1)s successfully received") % {
                                  "0": "<b>" + escape(filename) + "</b>",
                                  "1": "<b>" + escape(attributes['name']) + "</b>"},
-                             icon_name="blueman", pos_hint=status_icon.geometry)
+                             **self._notify_kwargs)
             self._add_open(n, "Open", dest)
             n.show()
         elif not success:
@@ -262,7 +267,7 @@ class TransferService(AppletPlugin):
                          _("Transfer of file %(0)s failed") % {
                              "0": "<b>" + escape(filename) + "</b>",
                              "1": "<b>" + escape(attributes['name']) + "</b>"},
-                         icon_name="blueman", pos_hint=status_icon.geometry)
+                         **self._notify_kwargs)
 
             if attributes['size'] > 350000:
                 self._normal_transfers -= 1
@@ -275,16 +280,11 @@ class TransferService(AppletPlugin):
         if self._silent_transfers == 0:
             return
 
-        try:
-            status_icon = self.Applet.Plugins.StatusIcon
-        except:
-            status_icon = None
-
         if self._normal_transfers == 0:
             n = Notification(_("Files received"),
                              ngettext("Received %d file in the background", "Received %d files in the background",
                                       self._silent_transfers) % self._silent_transfers,
-                             icon_name="blueman", pos_hint=status_icon.geometry)
+                             **self._notify_kwargs)
 
             self._add_open(n, "Open Location", self._config["shared-path"])
             n.show()
@@ -293,6 +293,6 @@ class TransferService(AppletPlugin):
                              ngettext("Received %d more file in the background",
                                       "Received %d more files in the background",
                                       self._silent_transfers) % self._silent_transfers,
-                             icon_name="blueman", pos_hint=status_icon.geometry)
+                             **self._notify_kwargs)
             self._add_open(n, "Open Location", self._config["shared-path"])
             n.show()
