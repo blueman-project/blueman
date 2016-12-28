@@ -81,11 +81,14 @@ class Manager(Gio.DBusObjectManagerClient):
         if pattern is None:
             if len(adapters):
                 return adapters[0]
+            else:
+                raise ValueError("No adapter(s) found")
         else:
             for adapter in adapters:
                 path = adapter.get_object_path()
                 if path.endswith(pattern) or adapter.get_properties()['Address'] == pattern:
                     return adapter
+            raise ValueError("No adapters found with pattern: %s" % pattern)
 
     def get_devices(self, adapter_path='/'):
         paths = []
