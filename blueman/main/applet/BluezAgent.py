@@ -289,6 +289,8 @@ class BluezAgent(Agent):
         self.n = Notification("Bluetooth", notify_message, 0, icon_name="blueman", pos_hint=self.status_icon.geometry)
         self.n.show()
 
+        invocation.return_value(None)
+
     def _on_request_confirmation(self, parameters, invocation):
         def on_confirm_action(action):
             if action == "confirm":
