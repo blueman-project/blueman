@@ -268,12 +268,12 @@ class TransferService(AppletPlugin):
             self._add_open(n, "Open", dest)
             n.show()
         elif not success:
-            Notification(_("Transfer failed"),
+            n = Notification(_("Transfer failed"),
                          _("Transfer of file %(0)s failed") % {
                              "0": "<b>" + escape(filename) + "</b>",
                              "1": "<b>" + escape(attributes['name']) + "</b>"},
                          **self._notify_kwargs)
-
+            n.show()
             if attributes['size'] > 350000:
                 self._normal_transfers -= 1
             else:
