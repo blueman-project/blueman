@@ -80,10 +80,11 @@ class Base(Gio.DBusProxy):
             self.__variant_map = {str: 's', int: 'u', bool: 'b'}
 
     def do_g_properties_changed(self, changed_properties, _invalidated_properties):
-        for key, value in changed_properties.unpack().items():
-            path = self.get_object_path()
-            dprint(path, key, value)
-            self.emit("property-changed", key, value, path)
+        changed = changed_properties.unpack()
+        object_path = self.get_object_path()
+        dprint(object_path, changed)
+        for key, value in changed.items():
+            self.emit("property-changed", key, value, object_path)
 
     def _call(self, method, param=None, reply_handler=None, error_handler=None):
         def callback(proxy, result, reply, error):
