@@ -35,10 +35,10 @@ class SendTo:
 
         check_bluetooth_status(_("Bluetooth needs to be turned on for file sending to work"), lambda: exit())
 
-        if not parsed_args.files[0]:
+        if not parsed_args.files:
             self.files = self.select_files()
         else:
-            self.files = [os.path.abspath(f) for f in parsed_args.files[0]]
+            self.files = [os.path.abspath(f) for f in parsed_args.files]
 
         self.device = None
         self.adapter = None
@@ -124,7 +124,7 @@ if __name__ == '__main__':
     parser.add_argument("-s", "--source", dest="source", action="store",
                         help=_("Source adapter. Takes address or adapter's name eg. hci0"), metavar="PATTERN")
     parser.add_argument("-u", "--delete", dest="delete", action="store_true", help=_("Delete files on exit"))
-    parser.add_argument("files", nargs="*", action="append", metavar="FILE",
+    parser.add_argument("files", nargs="*", metavar="FILE",
                         help=_("Files to be send to the bluetooth device"))
 
     args = parser.parse_args()

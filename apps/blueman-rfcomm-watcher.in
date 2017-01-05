@@ -20,7 +20,7 @@ def on_file_changed(monitor, file, other_file, event_type):
         loop.quit()
 
 parser = argparse.ArgumentParser()
-parser.add_argument("path", dest="path", nargs="+", action="store")
+parser.add_argument("path", action="store")
 args = parser.parse_args()
 
 mon = Gio.File.new_for_path(args.path).monitor_file(Gio.FileMonitorFlags.NONE)

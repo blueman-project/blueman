@@ -31,11 +31,10 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--socket-id", dest="socket_id", action="store", type=int, metavar="ID")
-    parser.add_argument("adapter", nargs="*", metavar="ADAPTER NAME")
+    parser.add_argument("adapter", nargs="?", metavar="ADAPTER NAME")
     args = parser.parse_args()
 
     set_proc_title()
 
-    adapter_name = args.adapter[0] if args.adapter else None
-    blueman_adapters = BluemanAdapters(adapter_name, args.socket_id)
+    blueman_adapters = BluemanAdapters(args.adapter, args.socket_id)
     Gtk.main()
