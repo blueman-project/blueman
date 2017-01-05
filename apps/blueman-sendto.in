@@ -69,6 +69,8 @@ class SendTo:
                 print("Error: No Adapters present")
                 exit()
             d = m.find_device(parsed_args.device, adapter.get_object_path())
+            if d is None:
+                exit("Unknown bluetooth device")
 
             self.device = d
             self.adapter = adapter.get_object_path()
