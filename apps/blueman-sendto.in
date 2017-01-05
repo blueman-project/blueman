@@ -117,10 +117,8 @@ class SendTo:
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("-d", "--device", dest="device", action="store",
+    parser.add_argument("-d", "--device", "--dest", dest="device", action="store",
                         help=_("Send files to this device"), metavar="ADDRESS")
-    parser.add_argument("--dest", dest="device", action="store",
-                        help=_("Same as --device"), metavar="ADDRESS")
     parser.add_argument("-s", "--source", dest="source", action="store",
                         help=_("Source adapter. Takes address or adapter's name eg. hci0"), metavar="PATTERN")
     parser.add_argument("-u", "--delete", dest="delete", action="store_true", help=_("Delete files on exit"))
