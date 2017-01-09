@@ -254,6 +254,7 @@ class TransferService(AppletPlugin):
             now = datetime.now()
             filename = "%s_%s" % (now.strftime("%Y%m%d%H%M%S"), filename)
             logging.info("Destination file exists, renaming to: %s" % filename)
+            dest = os.path.join(dest_dir, filename)
 
         try:
             shutil.move(src, dest)
