@@ -256,9 +256,10 @@ class TransferService(AppletPlugin):
             logging.info("Destination file exists, renaming to: %s" % filename)
             dest = os.path.join(dest_dir, filename)
 
+        e = None
         try:
             shutil.move(src, dest)
-        except Exception:
+        except Exception as e:
             logging.error("Failed to move files", exc_info=True)
             success = False
 
@@ -271,10 +272,12 @@ class TransferService(AppletPlugin):
             self._add_open(n, "Open", dest)
             n.show()
         elif not success:
+            strerror = ": " + escape(str(e)) if e is not None else ""
             n = Notification(_("Transfer failed"),
-                         _("Transfer of file %(0)s failed") % {
+                         _("Transfer of file %(0)s from %(1)s failed%(2)s") % {
                              "0": "<b>" + escape(filename) + "</b>",
-                             "1": "<b>" + escape(attributes['name']) + "</b>"},
+                             "1": "<b>" + escape(attributes['name']) + "</b>",
+                             "2": strerror},
                          **self._notify_kwargs)
             n.show()
             if attributes['size'] > 350000:
