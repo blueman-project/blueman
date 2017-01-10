@@ -195,7 +195,13 @@ PKG_CHECK_MODULES([MATEICONS],[mate-icon-theme],
 PKG_CHECK_MODULES([FAENZAICONS], [faenza-icon-theme],
 		  [HAVE_FAENZA_ICONS="yes"], [HAVE_FAENZA_ICONS="no"])
 
-if test "x$HAVE_GNOME_ICONS" = "xno" && test "x$HAVE_MATE_ICONS" = "xno" && test "xHAVE_FAENZA_ICONS" = "xno"; then
+PKG_CHECK_MODULES([ADWAITAICONS],[adwaita-icon-theme],
+                  [HAVE_ADWAITA_THEME="yes"], [HAVE_ADWAITA_THEME="no"])
+
+if test "x$HAVE_GNOME_ICONS" = "xno" &&
+   test "x$HAVE_MATE_ICONS" = "xno" &&
+   test "xHAVE_FAENZA_ICONS" = "xno" &&
+   test "xHAVE_ADWAITA_ICONS" = "xno"; then
 	AC_MSG_ERROR([Required icon themes not found.])
 fi
 
