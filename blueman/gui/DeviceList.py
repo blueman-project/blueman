@@ -147,7 +147,6 @@ class DeviceList(GenericList):
                 self.monitored_devices.remove(address)
                 return False
 
-            tree_iter = self.get_model().get_iter(row_ref.get_path())
             if not device['Connected']:
                 dprint("stopping monitor (not connected)")
                 cinfo.deinit()
