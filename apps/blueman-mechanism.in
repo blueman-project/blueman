@@ -21,8 +21,11 @@ if 'BLUEMAN_SOURCE' in os.environ:
 import dbus
 import dbus.service
 from dbus.mainloop.glib import DBusGMainLoop
-try: import __builtin__ as builtins
-except ImportError: import builtins
+
+if sys.version_info.major == 2:
+    import __builtin__ as builtins
+else:
+    import builtins
 
 from gi.repository import Gio, GLib
 import syslog

@@ -6,13 +6,13 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
+import atexit
 import gi
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
 from gi.repository import Gtk
 
-from blueman.Functions import *
-from blueman.Constants import *
+from blueman.Functions import setup_icon_path, check_bluetooth_status, dprint, set_proc_title
 from blueman.main.Sendto import Sender
 from blueman.bluez.Manager import Manager
 from blueman.gui.DeviceSelectorDialog import DeviceSelectorDialog
