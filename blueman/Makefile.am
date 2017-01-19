@@ -25,5 +25,5 @@ EXTRA_DIST =	\
 	Constants.py.in
 	
 clean-local:
-	rm -rf *.pyc *.pyo 
+	find . \( -name \*.pyc -o -name \*.pyo -o -name __pycache__ \) -prune -exec rm -rf {} +
 
