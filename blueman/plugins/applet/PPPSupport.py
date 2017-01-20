@@ -13,7 +13,7 @@ from blueman.main.Config import Config
 from gi.repository import GObject
 
 from blueman.Sdp import uuid128_to_uuid16, DIALUP_NET_SVCLASS_ID
-import os
+import subprocess
 
 
 class Connection:
@@ -24,8 +24,9 @@ class Connection:
         self.port = port
         self.Applet = applet
 
-        res = os.popen("ps x -o pid,args | grep modem-manager").read()
-        if not res:
+        out, err = subprocess.Popen(['pgrep', 'ModemManager'], stdout=subprocess.PIPE).communicate()
+
+        if out.decode("UTF-8") != '':
             self.connect()
         else:
             dprint("ModemManager is running, delaying connection 5sec for it to complete probing")
