@@ -18,12 +18,9 @@ from blueman.gui.DeviceSelectorList import DeviceSelectorList
 class DeviceSelectorWidget(Gtk.Box):
     def __init__(self, adapter=None, orientation=Gtk.Orientation.VERTICAL):
 
-        super(DeviceSelectorWidget, self).__init__(orientation=orientation)
-
-        self.set_name("DeviceSelectorWidget")
-        self.props.spacing = 1
-        self.props.vexpand = True
-        self.set_size_request(360, 340)
+        super(DeviceSelectorWidget, self).__init__(orientation=orientation, spacing=1, vexpand=True,
+                                                   width_request=360, height_request=340,
+                                                   name="DeviceSelectorWidget")
 
         sw = Gtk.ScrolledWindow()
         # Disable overlay scrolling
