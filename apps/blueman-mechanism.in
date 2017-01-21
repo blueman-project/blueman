@@ -55,6 +55,9 @@ class StreamToLogger(object):
         for line in buf.rstrip().splitlines():
             self.logger.log(self.log_level, line.rstrip())
 
+    def flush(self):
+        pass
+
 
 parser = create_parser(syslog=False)
 parser.add_argument("-d", "--debug", dest="debug", action="store_true")
