@@ -9,7 +9,6 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 import os
 import logging
-from blueman.Constants import *
 from blueman.gui.DeviceSelectorList import DeviceSelectorList
 
 
@@ -20,45 +19,43 @@ class DeviceSelectorWidget(Gtk.Box):
                                                    width_request=360, height_request=340,
                                                    name="DeviceSelectorWidget")
 
-        sw = Gtk.ScrolledWindow()
-        # Disable overlay scrolling
-        if Gtk.get_minor_version() >= 16:
-            sw.props.overlay_scrolling = False
-
         self.List = devlist = DeviceSelectorList(adapter)
         if self.List.Adapter is not None:
             self.List.DisplayKnownDevices()
 
+        sw = Gtk.ScrolledWindow(hscrollbar_policy=Gtk.PolicyType.NEVER,
+                                vscrollbar_policy=Gtk.PolicyType.AUTOMATIC,
+                                shadow_type=Gtk.ShadowType.IN)
         sw.add(devlist)
-        sw.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
-        sw.set_shadow_type(Gtk.ShadowType.IN)
+        self.pack_start(sw, True, True, 0)
 
-        self.Builder = Gtk.Builder()
-        self.Builder.add_from_file(UI_PATH + "/device-list-widget.ui")
+        # Disable overlay scrolling
+        if Gtk.get_minor_version() >= 16:
+            sw.props.overlay_scrolling = False
 
-        sgrid = self.Builder.get_object("search_grid")
+        self.pbar = Gtk.ProgressBar(orientation=Gtk.Orientation.HORIZONTAL)
+        self.add(self.pbar)
 
-        self.cb_adapters = self.Builder.get_object("adapters")
+        search_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6, height_request=8)
+        self.add(search_box)
 
+        search_btn = Gtk.Button.new_from_icon_name("edit-find", Gtk.IconSize.BUTTON)
+        search_btn.set_tooltip_text(_("Search for devices"))
+        search_box.add(search_btn)
+
+        model = Gtk.ListStore(str, str)
         cell = Gtk.CellRendererText()
-
+        self.cb_adapters = Gtk.ComboBox(model=model, visible=True)
+        self.cb_adapters.set_tooltip_text(_("Adapter selection"))
         self.cb_adapters.pack_start(cell, True)
-        self.cb_adapters.connect("changed", self.on_adapter_selected)
         self.cb_adapters.add_attribute(cell, 'text', 0)
+        search_box.add(self.cb_adapters)
 
-        button = self.Builder.get_object("b_search")
-        button.connect("clicked", self.on_search_clicked)
+        self.cb_adapters.connect("changed", self.on_adapter_selected)
 
-        self.pbar = self.Builder.get_object("progressbar")
+        search_btn.connect("clicked", self.on_search_clicked)
 
         self.List.connect("discovery-progress", self.on_discovery_progress)
-
-        self.pack_start(sw, True, True, 0)
-        self.pack_start(sgrid, False, False, 0)
-
-        sgrid.show()
-
-        sw.show_all()
 
         self.List.connect("adapter-changed", self.on_adapter_changed)
         self.List.connect("adapter-added", self.on_adapter_added)
@@ -66,6 +63,7 @@ class DeviceSelectorWidget(Gtk.Box):
         self.List.connect("adapter-property-changed", self.on_adapter_prop_changed)
 
         self.update_adapters_list()
+        self.show_all()
 
     def __del__(self):
         self.List.destroy()
