@@ -19,14 +19,14 @@ class DeviceSelectorWidget(Gtk.Box):
                                                    width_request=360, height_request=340,
                                                    name="DeviceSelectorWidget")
 
-        self.List = devlist = DeviceSelectorList(adapter)
+        self.List = DeviceSelectorList(adapter)
         if self.List.Adapter is not None:
             self.List.DisplayKnownDevices()
 
         sw = Gtk.ScrolledWindow(hscrollbar_policy=Gtk.PolicyType.NEVER,
                                 vscrollbar_policy=Gtk.PolicyType.AUTOMATIC,
                                 shadow_type=Gtk.ShadowType.IN)
-        sw.add(devlist)
+        sw.add(self.List)
         self.pack_start(sw, True, True, 0)
 
         # Disable overlay scrolling

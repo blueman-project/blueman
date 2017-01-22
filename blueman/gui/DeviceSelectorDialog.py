@@ -17,18 +17,16 @@ class DeviceSelectorDialog(Gtk.Dialog):
             icon_name="blueman", resizable=False, name="DeviceSelectorDialog"
 
         )
+
+        self.vbox.props.halign = Gtk.Align.CENTER
+        self.vbox.props.valign = Gtk.Align.CENTER
+        self.vbox.props.hexpand = True
+        self.vbox.props.vexpand = True
+        self.vbox.props.margin = 6
+
         self.selector = DeviceSelectorWidget()
         self.selector.show()
-
-        #self.selector.destroy()
-        #self.selector = None
-
-        align = Gtk.Alignment.new(0.5, 0.5, 1.0, 1.0)
-        align.add(self.selector)
-
-        align.set_padding(6, 6, 6, 6)
-        align.show()
-        self.vbox.pack_start(align, True, True, 0)
+        self.vbox.pack_start(self.selector, True, True, 0)
 
         #(adapter, device)
         self.selection = None
