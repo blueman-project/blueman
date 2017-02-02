@@ -32,7 +32,8 @@ except TypeError:
     builtins.ngettext = translation.ngettext
 
 if 'BLUEMAN_SOURCE' in os.environ:
-    BIN_DIR = "./"
-    ICON_PATH = "../data/icons"
-    PIXMAP_PATH = "../data/icons/pixmaps"
-    UI_PATH = "../data/ui"
+    _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    BIN_DIR = os.path.join(_dirname, 'apps')
+    ICON_PATH = os.path.join(_dirname, 'data', 'icons')
+    PIXMAP_PATH = os.path.join(_dirname, 'data', 'icons', 'pixmaps')
+    UI_PATH = os.path.join(_dirname, 'data', 'ui')
