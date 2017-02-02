@@ -10,8 +10,6 @@ import sys
 import os
 import signal
 import logging
-from blueman.main.Manager import Blueman
-from blueman.Functions import set_proc_title, create_parser, create_logger
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -22,6 +20,9 @@ _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if 'BLUEMAN_SOURCE' in os.environ:
     sys.path.insert(0, _dirname)
     os.environ["GSETTINGS_SCHEMA_DIR"] = "../data"
+
+from blueman.main.Manager import Blueman
+from blueman.Functions import set_proc_title, create_parser, create_logger
 
 # Workaround introspection bug, gnome bug 622084
 signal.signal(signal.SIGINT, signal.SIG_DFL)
