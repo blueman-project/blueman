@@ -17,7 +17,6 @@ if 'BLUEMAN_SOURCE' in os.environ:
     sys.path.insert(0, _dirname)
     timeout = 9999
     os.environ["GSETTINGS_SCHEMA_DIR"] = "../data"
-    os.environ["PYTHONPATH"] = "../blueman"
 
 import dbus
 import dbus.service
