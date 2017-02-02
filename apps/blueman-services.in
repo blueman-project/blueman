@@ -13,7 +13,7 @@ import logging
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if 'BLUEMAN_SOURCE' in os.environ:
     sys.path.insert(0, _dirname)
-    os.environ["GSETTINGS_SCHEMA_DIR"] = "../data"
+    os.environ["GSETTINGS_SCHEMA_DIR"] = os.path.join(_dirname, "data")
 
 import gi
 gi.require_version("Gtk", "3.0")
