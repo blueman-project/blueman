@@ -9,6 +9,7 @@
 ### Bugs fixed
 
 * Icon disappeared when switching off bluetooth
+* Revert "bluez manager: Subclass from GDBusObjectManagerClient"
 
 ## 2.1.alpha1
 

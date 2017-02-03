@@ -9,7 +9,7 @@ from blueman.bluez.obex.Transfer import Transfer
 from gi.repository import GObject, Gio
 
 
-class Manager(Gio.DBusObjectManagerClient):
+class Manager(GObject.GObject):
     __gsignals__ = {
         str('session-removed'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
         str('transfer-started'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
@@ -32,16 +32,22 @@ class Manager(Gio.DBusObjectManagerClient):
         pass
 
     def _init(self):
-        super(Manager, self).__init__(
-            bus_type=Gio.BusType.SESSION,
-            flags=Gio.DBusObjectManagerClientFlags.NONE,
-            name=self.__bus_name,
-            object_path='/')
-
-        self.init()
+        super(Manager, self).__init__()
         self.__transfers = {}
+        self.__signals = []
 
-    def do_object_added(self, dbus_object):
+        self._object_manager = Gio.DBusObjectManagerClient.new_for_bus_sync(
+            Gio.BusType.SESSION, Gio.DBusObjectManagerClientFlags.NONE,
+            self.__bus_name, '/', None, None, None)
+
+        self.__signals.append(self._object_manager.connect('object-added', self._on_object_added))
+        self.__signals.append(self._object_manager.connect('object-removed', self._on_object_removed))
+
+    def __del__(self):
+        for sig in self.__signals:
+            self._object_manager.disconnect(sig)
+
+    def _on_object_added(self, object_manager, dbus_object):
         transfer_proxy = dbus_object.get_interface('org.bluez.obex.Transfer1')
 
         if transfer_proxy:
@@ -54,7 +60,7 @@ class Manager(Gio.DBusObjectManagerClient):
             logging.info(transfer_path)
             self.emit('transfer-started', transfer_path)
 
-    def do_object_removed(self, dbus_object):
+    def _on_object_removed(self, object_manager, dbus_object):
         session_proxy = dbus_object.get_interface('org.bluez.obex.Session1')
         transfer_proxy = dbus_object.get_interface('org.bluez.obex.Transfer1')
         object_path = dbus_object.get_object_path()
