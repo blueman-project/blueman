@@ -4,18 +4,22 @@
 # 
 # Translators:
 # alibacha19 <alibacha19@gmail.com>, 2015
-# elachecheanis <elachecheanis@gmail.com>, 2014
-# elachecheanis <elachecheanis@gmail.com>, 2014
+# El Acheche ANIS <elachecheanis@gmail.com>, 2014
+# El Acheche ANIS <elachecheanis@gmail.com>, 2014
+# Geek SUKY <Nihad.zeitouni@gmail.com>, 2016
+# Hayder Majid <cteehayder@gmail.com>, 2016
 # مهدي السطيفي <chinoune.mehdi@gmail.com>, 2014
+# Mubarak Qahtani <abu-q76@hotmail.com>, 2016
 # مهدي السطيفي <chinoune.mehdi@gmail.com>, 2014-2015
+# وجدي أبو سلطان, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-30 19:38+0200\n"
-"PO-Revision-Date: 2015-04-30 17:40+0000\n"
-"Last-Translator: infirit <infirit@gmail.com>\n"
-"Language-Team: Arabic (http://www.transifex.com/projects/p/MATE/language/ar/)\n"
+"POT-Creation-Date: 2015-05-14 08:59+0200\n"
+"PO-Revision-Date: 2016-12-19 11:48+0000\n"
+"Last-Translator: Geek SUKY <Nihad.zeitouni@gmail.com>\n"
+"Language-Team: Arabic (http://www.transifex.com/mate/MATE/language/ar/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -175,7 +179,7 @@ msgstr "عنوان IP:"
 
 #: ../data/ui/services-network.ui.h:7
 msgid "Enable Routing (NAT)"
-msgstr ""
+msgstr "تمكين التوجيه(NAT)"
 
 #: ../data/ui/services-network.ui.h:8
 msgid "<b>NAP Settings</b>"
@@ -183,7 +187,7 @@ msgstr "<b>إعدادات نقطة الإتصال</b>"
 
 #: ../data/ui/services-network.ui.h:9
 msgid "<b>No DHCP servers installed</b>"
-msgstr ""
+msgstr "<b>لا توجد خدمة DHCP مثبته </b>"
 
 #: ../data/ui/services-network.ui.h:10
 msgid "<b>PAN Support</b>"
@@ -198,51 +202,39 @@ msgid "<b>Network Settings</b>"
 msgstr "<b>إعدادات الشبكة</b>"
 
 #: ../data/ui/services-transfer.ui.h:1
-msgid "Shared Folder:"
-msgstr "مجلد مُشترك:"
+msgid "Incoming Folder:"
+msgstr "مجلد الوارد:"
 
 #: ../data/ui/services-transfer.ui.h:2
-msgid "Select Shared/Storage folder"
-msgstr "اختر مجلد مُشترك\\مجلد تخزين"
+msgid "Select folder for incoming file transfers"
+msgstr "حدد مجلد لنقل الملفات الواردة"
 
 #: ../data/ui/services-transfer.ui.h:3
-msgid "Enabled"
-msgstr "مفعّل"
-
-#: ../data/ui/services-transfer.ui.h:4
 msgid "Accept files from trusted devices"
 msgstr "قبول الملفات من الأجهزة الموثوقة"
 
-#: ../data/ui/services-transfer.ui.h:5
+#: ../data/ui/services-transfer.ui.h:4
 msgid "<b>File Receiving (Object Push)</b>"
 msgstr "<b>استقبال الملف (Object Push)</b>"
 
 #: ../data/ui/services-transfer.ui.h:6
-msgid "Allow devices to write/delete"
-msgstr "اسمح للأجهزة بالكتابة\\الحذف"
-
-#: ../data/ui/services-transfer.ui.h:7
-msgid "<b>File Sharing (FTP)</b>"
-msgstr "<b>مشاركة الملفات (FTP)</b>"
-
-#: ../data/ui/services-transfer.ui.h:9
 #, no-c-format
 msgid ""
 "Command to start an obex ftp browser.\n"
 "<i>%d</i> is substituted with device address."
 msgstr "أمر تشغيل متصفح obex ftp.\n<i>%d</i> يُستبدل بعنوان الجهاز."
 
-#: ../data/ui/services-transfer.ui.h:11
+#: ../data/ui/services-transfer.ui.h:8
 msgid "<b>Advanced</b>"
 msgstr "<b>متقدّمة</b>"
 
-#: ../data/ui/services-transfer.ui.h:12
+#: ../data/ui/services-transfer.ui.h:9
 msgid "<b>Transfer Settings</b>"
 msgstr "<b>إعدادات النقل</b>"
 
 #: ../data/ui/send-dialog.ui.h:1
 msgid "Bluetooth File Transfer"
-msgstr ""
+msgstr "نقل الملفات بواسطة Bluetooth"
 
 #: ../data/ui/send-dialog.ui.h:2
 msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
@@ -266,7 +258,7 @@ msgstr "<b>مرحبا بك في مساعد ضبط جهاز البلوتوث. </b
 
 #: ../data/ui/assistant.ui.h:5
 msgid "<b>Select pairing method to use:</b>"
-msgstr "<b>اختر طريقة اﻹقتران المستخدمة:</b>"
+msgstr "<b>اختر طريقة اﻹقتران لاستخدامها:</b>"
 
 #: ../data/ui/assistant.ui.h:6
 msgid "Use Random Passkey"
@@ -274,7 +266,7 @@ msgstr "استخدم مفتاح مرور عشوائي"
 
 #: ../data/ui/assistant.ui.h:7
 msgid "Proceed Without Pairing"
-msgstr "أكمل دون إقتران"
+msgstr "أكمل بلا إقتران"
 
 #: ../data/ui/assistant.ui.h:8
 msgid "<b>Connect to:</b>"
@@ -286,11 +278,11 @@ msgstr "<b>رجاء انتظر...</b>"
 
 #: ../data/ui/assistant.ui.h:10
 msgid "<b>Congratulations, device successfully added</b>"
-msgstr "<b>مبارك عليك، أُضيف الجهاز بنجاح</b>"
+msgstr "<b>مبارك عليك، تمت اضافة الجهاز بنجاح</b>"
 
 #: ../data/ui/device-list-widget.ui.h:1
 msgid "Device search progress"
-msgstr ""
+msgstr "تقدم البحث عن الأجهزة"
 
 #: ../data/ui/device-list-widget.ui.h:2
 msgid "Search for devices"
@@ -344,7 +336,7 @@ msgstr "الرقم:"
 
 #: ../data/ui/gsm-settings.ui.h:3
 msgid "APN:"
-msgstr ""
+msgstr "نقطة الدخول ANP :"
 
 #: ../data/ui/net-usage.ui.h:1
 msgid "Traffic statistics"
@@ -377,91 +369,6 @@ msgstr "_تصفير"
 #: ../data/ui/net-usage.ui.h:8
 msgid "_Close"
 msgstr "_إغلاق"
-
-#: ../blueman/main/applet/Transfer.py:56
-msgid "Configured share directory does not exist"
-msgstr ""
-
-#: ../blueman/main/applet/Transfer.py:57
-#, python-format
-msgid ""
-"Please make sure that directory \"<b>%s</b>\" exists or configure it with "
-"blueman-services"
-msgstr ""
-
-#: ../blueman/main/applet/Transfer.py:152
-msgid "Incoming file over Bluetooth"
-msgstr "استقبال ملفات عبر بلوتوث"
-
-#: ../blueman/main/applet/Transfer.py:153
-#, python-format
-msgid "Incoming file %(0)s from %(1)s"
-msgstr "الملف %(0)s قادم من %(1)s"
-
-#: ../blueman/main/applet/Transfer.py:155
-#: ../blueman/main/applet/BluezAgent.py:249
-msgid "Accept"
-msgstr "قبول"
-
-#: ../blueman/main/applet/Transfer.py:155
-msgid "Reject"
-msgstr "رفض"
-
-#: ../blueman/main/applet/Transfer.py:164
-msgid "Receiving file"
-msgstr "استقبال ملف"
-
-#: ../blueman/main/applet/Transfer.py:165
-#, python-format
-msgid "Receiving file %(0)s from %(1)s"
-msgstr "استقبال الملف %(0)s من %(1)s"
-
-#: ../blueman/main/applet/Transfer.py:204
-#: ../blueman/main/applet/Transfer.py:234
-msgid "File received"
-msgstr "أُستقبِل الملف"
-
-#: ../blueman/main/applet/Transfer.py:205
-#: ../blueman/main/applet/Transfer.py:235
-#, python-format
-msgid "File %(0)s from %(1)s successfully received"
-msgstr "الملف %(0)s من %(1)s أُستقبِل بنجاح"
-
-#: ../blueman/main/applet/Transfer.py:220
-msgid "Transfer failed"
-msgstr "فشل النقل"
-
-#: ../blueman/main/applet/Transfer.py:221
-#, python-format
-msgid "Transfer of file %(0)s failed"
-msgstr "فشل نقل الملف %(0)s"
-
-#: ../blueman/main/applet/Transfer.py:243
-#: ../blueman/main/applet/Transfer.py:254
-msgid "Files received"
-msgstr "أُستقبِلت الملفات"
-
-#: ../blueman/main/applet/Transfer.py:244
-#, python-format
-msgid "Received %d file in the background"
-msgid_plural "Received %d files in the background"
-msgstr[0] "استقبال %d ملف في الخلفية"
-msgstr[1] "استقبال %d ملف في الخلفية"
-msgstr[2] "استقبال ملفين (%d) في الخلفية"
-msgstr[3] "استقبال %d ملفات في الخلفية"
-msgstr[4] "استقبال %d ملفا في الخلفية"
-msgstr[5] "استقبال %d ملف في الخلفية"
-
-#: ../blueman/main/applet/Transfer.py:255
-#, python-format
-msgid "Received %d more file in the background"
-msgid_plural "Received %d more files in the background"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
 
 #: ../blueman/main/applet/BluezAgent.py:120
 #, python-format
@@ -527,6 +434,11 @@ msgstr "الخدمة:"
 msgid "Always accept"
 msgstr "القبول دائما"
 
+#: ../blueman/main/applet/BluezAgent.py:249
+#: ../blueman/plugins/applet/TransferService.py:98
+msgid "Accept"
+msgstr "قبول"
+
 #: ../blueman/main/applet/BluezAgent.py:282
 msgid "Confirm value"
 msgstr "أكّد القيمة"
@@ -542,11 +454,11 @@ msgid ""
 " with the content of this message.</b>"
 msgstr "<b>حدث خطأ أثناء تحميل إضافة. رجاء نبّه المطوّرين مع مضمون هذه الرسالة.</b>"
 
-#: ../blueman/Functions.py:93
+#: ../blueman/Functions.py:94
 msgid "Bluetooth Turned Off"
 msgstr "البلوتوث معطّل"
 
-#: ../blueman/Functions.py:97
+#: ../blueman/Functions.py:98
 msgid "Enable Bluetooth"
 msgstr "تفعيل البلوتوث"
 
@@ -591,62 +503,78 @@ msgstr "الأجهزة الأخيرة _أولا"
 msgid "Latest Device _Last"
 msgstr "الأجهزة الأخيرة أخيرا"
 
-#: ../blueman/gui/manager/ManagerMenu.py:158
+#: ../blueman/gui/manager/ManagerMenu.py:91
+#: ../blueman/gui/applet/PluginDialog.py:107
+#: ../blueman/plugins/applet/StandardItems.py:119
+msgid "Plugins"
+msgstr "إضافات"
+
+#: ../blueman/gui/manager/ManagerMenu.py:96
+#: ../blueman/plugins/applet/StandardItems.py:55
+msgid "_Local Services"
+msgstr "_خدمات محلية"
+
+#: ../blueman/gui/manager/ManagerMenu.py:98
+#: ../blueman/plugins/applet/StandardItems.py:114
+msgid "Service Preferences"
+msgstr "تفضيلات الخدمة"
+
+#: ../blueman/gui/manager/ManagerMenu.py:173
 msgid "_Search"
 msgstr "_بحث"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:104
+#: ../blueman/gui/manager/ManagerDeviceList.py:102
 #: ../blueman/plugins/applet/StandardItems.py:102 ../apps/blueman-manager:265
 msgid "File Sender"
-msgstr ""
+msgstr "مرسل الملفات"
+
+#: ../blueman/gui/manager/ManagerDeviceList.py:437
+msgid "<b>Trusted and Bonded</b>"
+msgstr "<b>موثوق و مستبعد</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:439
-msgid "<b>Trusted and Bonded</b>"
-msgstr ""
+msgid "<b>Bonded</b>"
+msgstr "<b>مستبعد</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:441
-msgid "<b>Bonded</b>"
-msgstr ""
-
-#: ../blueman/gui/manager/ManagerDeviceList.py:443
 msgid "<b>Trusted</b>"
 msgstr "<b>موثوق</b>"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:462
+#: ../blueman/gui/manager/ManagerDeviceList.py:460
 msgid "Poor"
 msgstr "فقير"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:465
-#: ../blueman/gui/manager/ManagerDeviceList.py:480
+#: ../blueman/gui/manager/ManagerDeviceList.py:463
+#: ../blueman/gui/manager/ManagerDeviceList.py:478
 msgid "Sub-optimal"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:468
-#: ../blueman/gui/manager/ManagerDeviceList.py:483
+#: ../blueman/gui/manager/ManagerDeviceList.py:466
+#: ../blueman/gui/manager/ManagerDeviceList.py:481
 msgid "Optimal"
-msgstr ""
+msgstr "الأمثل"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:471
+#: ../blueman/gui/manager/ManagerDeviceList.py:469
 msgid "Much"
 msgstr "كثير"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:474
+#: ../blueman/gui/manager/ManagerDeviceList.py:472
 msgid "Too much"
 msgstr "كثير جدا"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:477
+#: ../blueman/gui/manager/ManagerDeviceList.py:475
 msgid "Low"
 msgstr "منخفض"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:486
+#: ../blueman/gui/manager/ManagerDeviceList.py:484
 msgid "High"
 msgstr "عال"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:489
+#: ../blueman/gui/manager/ManagerDeviceList.py:487
 msgid "Very High"
 msgstr "عال جدا"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:492
+#: ../blueman/gui/manager/ManagerDeviceList.py:490
 #, python-format
 msgid ""
 "<b>Connected</b>\n"
@@ -655,7 +583,7 @@ msgid ""
 "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr "<b>متصّل</b>\nشدّة الإشارة المُستقبلة: %(rssi)u%% <i>(%(rssi_state)s)</i>\nجودة الربط: %(lq)u%%\n<b>مستوى قوة النقل: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:494
+#: ../blueman/gui/manager/ManagerDeviceList.py:492
 #, python-format
 msgid ""
 "<b>Connected</b>\n"
@@ -664,7 +592,7 @@ msgid ""
 "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr "<b>متصّل</b>\nشدّة الإشارة المُستقبلة: %(rssi)u%% <i>(%(rssi_state)s)</i>\n<b>جودة الربط:</b> %(lq)u%%\n<مستوى قوة النقل: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:496
+#: ../blueman/gui/manager/ManagerDeviceList.py:494
 #, python-format
 msgid ""
 "<b>Connected</b>\n"
@@ -680,7 +608,7 @@ msgstr "نجاح"
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:115
 #, python-format
 msgid "Serial port connected to %s"
-msgstr ""
+msgstr "المنفذ التسلسلي متصل بـ %s"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:122
 msgid "Failed"
@@ -735,7 +663,7 @@ msgstr "_وثوق"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:338
 msgid "_Untrust"
-msgstr ""
+msgstr "_غير-موثوق"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:378
 msgid "_Remove..."
@@ -753,7 +681,7 @@ msgstr "قطع اتصال الجهاز بالقوة"
 msgid "Disconnecting..."
 msgstr "_قطع الإتصال..."
 
-#: ../blueman/gui/manager/ManagerProgressbar.py:20 ../apps/blueman-sendto:67
+#: ../blueman/gui/manager/ManagerProgressbar.py:20 ../apps/blueman-sendto:70
 msgid "Connecting"
 msgstr "إتصال"
 
@@ -769,7 +697,7 @@ msgstr ""
 #: ../blueman/gui/manager/ManagerStats.py:49
 #: ../blueman/gui/manager/ManagerStats.py:62
 msgid "Total data received and rate of transmission"
-msgstr ""
+msgstr "اجمالي البيانات المُستقبلة ومعدل التراسل"
 
 #: ../blueman/gui/manager/ManagerStats.py:54
 #: ../blueman/gui/manager/ManagerStats.py:57
@@ -779,7 +707,7 @@ msgstr ""
 #: ../blueman/gui/manager/ManagerToolbar.py:35
 #: ../blueman/gui/manager/ManagerToolbar.py:106
 msgid "Untrust"
-msgstr ""
+msgstr "غير موثوق"
 
 #: ../blueman/gui/DeviceSelectorDialog.py:12
 msgid "Select Device"
@@ -804,11 +732,6 @@ msgstr "بلومان هو مدير بلوتوث مبني على GTK"
 #: ../blueman/gui/GsmSettings.py:27
 msgid "GSM Settings"
 msgstr "إعدادات GSM"
-
-#: ../blueman/gui/applet/PluginDialog.py:107
-#: ../blueman/plugins/applet/StandardItems.py:119
-msgid "Plugins"
-msgstr "إضافات"
 
 #: ../blueman/gui/applet/PluginDialog.py:198
 #: ../blueman/gui/applet/PluginDialog.py:199
@@ -936,16 +859,16 @@ msgstr ""
 msgid "Network Access Point"
 msgstr "نقطة إتصال شبكية"
 
-#: ../blueman/plugins/manager/PulseAudioProfile.py:92
+#: ../blueman/plugins/manager/PulseAudioProfile.py:89
 #, python-format
 msgid "Failed to change profile to %s"
-msgstr ""
+msgstr "تعذر تحويل الملف الشخصي إلى %s"
 
-#: ../blueman/plugins/manager/PulseAudioProfile.py:127
+#: ../blueman/plugins/manager/PulseAudioProfile.py:124
 msgid "Audio Profile"
-msgstr ""
+msgstr "نمط الصوت"
 
-#: ../blueman/plugins/manager/PulseAudioProfile.py:128
+#: ../blueman/plugins/manager/PulseAudioProfile.py:125
 msgid "Select audio profile for PulseAudio"
 msgstr ""
 
@@ -1126,9 +1049,87 @@ msgstr "متصّل من قبل"
 msgid "Provides DBus API for other Blueman components"
 msgstr ""
 
-#: ../blueman/plugins/applet/TransferService.py:18
+#: ../blueman/plugins/applet/TransferService.py:95
+msgid "Incoming file over Bluetooth"
+msgstr "استقبال ملفات عبر بلوتوث"
+
+#: ../blueman/plugins/applet/TransferService.py:96
+#, python-format
+msgid "Incoming file %(0)s from %(1)s"
+msgstr "الملف %(0)s قادم من %(1)s"
+
+#: ../blueman/plugins/applet/TransferService.py:98
+msgid "Reject"
+msgstr "رفض"
+
+#: ../blueman/plugins/applet/TransferService.py:102
+msgid "Receiving file"
+msgstr "استقبال ملف"
+
+#: ../blueman/plugins/applet/TransferService.py:103
+#, python-format
+msgid "Receiving file %(0)s from %(1)s"
+msgstr "استقبال الملف %(0)s من %(1)s"
+
+#: ../blueman/plugins/applet/TransferService.py:119
 msgid "Provides OBEX file transfer capabilities"
 msgstr ""
+
+#: ../blueman/plugins/applet/TransferService.py:145
+msgid "Configured directory for incoming files does not exist"
+msgstr ""
+
+#: ../blueman/plugins/applet/TransferService.py:146
+#, python-format
+msgid ""
+"Please make sure that directory \"<b>%s</b>\" exists or configure it with "
+"blueman-services"
+msgstr ""
+
+#: ../blueman/plugins/applet/TransferService.py:224
+msgid "File received"
+msgstr "أُستقبِل الملف"
+
+#: ../blueman/plugins/applet/TransferService.py:225
+#, python-format
+msgid "File %(0)s from %(1)s successfully received"
+msgstr "الملف %(0)s من %(1)s أُستقبِل بنجاح"
+
+#: ../blueman/plugins/applet/TransferService.py:231
+msgid "Transfer failed"
+msgstr "فشل النقل"
+
+#: ../blueman/plugins/applet/TransferService.py:232
+#, python-format
+msgid "Transfer of file %(0)s failed"
+msgstr "فشل نقل الملف %(0)s"
+
+#: ../blueman/plugins/applet/TransferService.py:254
+#: ../blueman/plugins/applet/TransferService.py:261
+msgid "Files received"
+msgstr "أُستقبِلت الملفات"
+
+#: ../blueman/plugins/applet/TransferService.py:255
+#, python-format
+msgid "Received %d file in the background"
+msgid_plural "Received %d files in the background"
+msgstr[0] "استقبال %d ملف في الخلفية"
+msgstr[1] "استقبال %d ملف في الخلفية"
+msgstr[2] "استقبال ملفين (%d) في الخلفية"
+msgstr[3] "استقبال %d ملفات في الخلفية"
+msgstr[4] "استقبال %d ملفا في الخلفية"
+msgstr[5] "استقبال %d ملف في الخلفية"
+
+#: ../blueman/plugins/applet/TransferService.py:262
+#, python-format
+msgid "Received %d more file in the background"
+msgid_plural "Received %d more files in the background"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
 
 #: ../blueman/plugins/applet/KillSwitch.py:38
 msgid ""
@@ -1161,10 +1162,6 @@ msgstr "_الأجهزة"
 msgid "Adap_ters"
 msgstr "_المحوّلات"
 
-#: ../blueman/plugins/applet/StandardItems.py:55
-msgid "_Local Services"
-msgstr "_خدمات محلية"
-
 #: ../blueman/plugins/applet/StandardItems.py:65
 msgid "_Plugins"
 msgstr "_إضافات"
@@ -1176,14 +1173,10 @@ msgstr "مساعد البلوتوث"
 
 #: ../blueman/plugins/applet/StandardItems.py:105
 msgid "File Browser"
-msgstr ""
+msgstr "متصفح الملفات"
 
 #: ../blueman/plugins/applet/StandardItems.py:111 ../apps/blueman-manager:254
 msgid "Adapter Preferences"
-msgstr ""
-
-#: ../blueman/plugins/applet/StandardItems.py:114
-msgid "Service Preferences"
 msgstr ""
 
 #: ../blueman/plugins/applet/StandardItems.py:117
@@ -1233,7 +1226,7 @@ msgstr ""
 
 #: ../blueman/plugins/applet/ShowConnected.py:71
 msgid "Bluetooth Active"
-msgstr ""
+msgstr "البلوتوث نَشِط"
 
 #: ../blueman/plugins/applet/ShowConnected.py:73
 #, python-format
@@ -1288,7 +1281,7 @@ msgstr ""
 #: ../blueman/plugins/applet/DiscvManager.py:74
 #, python-format
 msgid "Discoverable... %ss"
-msgstr ""
+msgstr "قابل للإكتشاف...%ss "
 
 #: ../blueman/plugins/applet/Menu.py:16
 msgid ""
@@ -1313,7 +1306,7 @@ msgstr ""
 
 #: ../blueman/plugins/applet/SerialManager.py:34
 msgid "Script to execute on connection"
-msgstr ""
+msgstr "الاوامر النصية المراد تنفيذها عند الاتصال"
 
 #: ../blueman/plugins/applet/SerialManager.py:35
 msgid ""
@@ -1326,21 +1319,21 @@ msgid ""
 "Upon device disconnection the script will be sent a HUP signal</span>"
 msgstr ""
 
-#: ../blueman/plugins/applet/SerialManager.py:64
+#: ../blueman/plugins/applet/SerialManager.py:66
 msgid "Serial port connected"
 msgstr ""
 
-#: ../blueman/plugins/applet/SerialManager.py:65
+#: ../blueman/plugins/applet/SerialManager.py:67
 #, python-format
 msgid ""
 "Serial port service on device <b>%s</b> now will be available via <b>%s</b>"
 msgstr ""
 
-#: ../blueman/plugins/applet/SerialManager.py:112
+#: ../blueman/plugins/applet/SerialManager.py:114
 msgid "Serial port connection script failed"
 msgstr ""
 
-#: ../blueman/plugins/applet/SerialManager.py:113
+#: ../blueman/plugins/applet/SerialManager.py:115
 #, python-format
 msgid ""
 "There was a problem launching script %s\n"
@@ -1374,7 +1367,7 @@ msgstr "<b>_تشغيل بلوتوث</b>"
 
 #: ../blueman/plugins/applet/PowerManager.py:173
 msgid "Turn on all adapters"
-msgstr ""
+msgstr "تشغيل كل المحوّلات"
 
 #: ../blueman/plugins/applet/PowerManager.py:184
 msgid "<b>Turn Bluetooth _Off</b>"
@@ -1434,7 +1427,7 @@ msgstr "ضبط خصائص محوّل البلوتوث"
 
 #: ../data/blueman.desktop.in.h:1
 msgid "Blueman Applet"
-msgstr ""
+msgstr "بريمج بلومان"
 
 #: ../data/blueman.desktop.in.h:2 ../data/blueman-manager.desktop.in.h:2
 msgid "Blueman Bluetooth Manager"
@@ -1525,31 +1518,27 @@ msgstr[3] "%d دقائق"
 msgstr[4] "%d دقيقة"
 msgstr[5] "%d دقيقة"
 
-#: ../apps/blueman-sendto:106
+#: ../apps/blueman-sendto:110
 msgid "obexd not available"
 msgstr "obexd غير متوفر"
 
-#: ../apps/blueman-sendto:107
+#: ../apps/blueman-sendto:111
 msgid "obexd is probably not installed"
 msgstr "obexd على الأرجح غير مثبت"
 
-#: ../apps/blueman-sendto:133
-msgid "Error occurred"
-msgstr "حدث خطأ"
-
-#: ../apps/blueman-sendto:145
+#: ../apps/blueman-sendto:138
 msgid "Cancelling"
 msgstr "إلغاء"
 
-#: ../apps/blueman-sendto:162 ../apps/blueman-sendto:196
+#: ../apps/blueman-sendto:149 ../apps/blueman-sendto:191
 msgid "Sending File"
 msgstr "إرسال ملف"
 
-#: ../apps/blueman-sendto:162 ../apps/blueman-sendto:196
+#: ../apps/blueman-sendto:149 ../apps/blueman-sendto:191
 msgid "ETA:"
-msgstr ""
+msgstr "الوقت المتوقع للإتمام:"
 
-#: ../apps/blueman-sendto:190
+#: ../apps/blueman-sendto:185
 #, c-format
 msgid "%.0f Minute"
 msgid_plural "%.0f Minutes"
@@ -1560,7 +1549,7 @@ msgstr[3] "%.0f دقائق"
 msgstr[4] "%.0f دقيقة"
 msgstr[5] "%.0f دقيقة"
 
-#: ../apps/blueman-sendto:192
+#: ../apps/blueman-sendto:187
 #, c-format
 msgid "%.0f Second"
 msgid_plural "%.0f Seconds"
@@ -1571,32 +1560,36 @@ msgstr[3] "%.0f ثوانٍ"
 msgstr[4] "%.0f ثانية"
 msgstr[5] "%.0f ثانية"
 
-#: ../apps/blueman-sendto:230
+#: ../apps/blueman-sendto:225
 #, c-format
 msgid "Error occurred while sending file %s"
 msgstr "حدث خطأ أثناء إرسال الملف %s"
 
-#: ../apps/blueman-sendto:234
+#: ../apps/blueman-sendto:229
 msgid "Skip"
 msgstr "تخطي"
 
-#: ../apps/blueman-sendto:235
+#: ../apps/blueman-sendto:230
 msgid "Retry"
 msgstr "أعد المحاولة"
 
-#: ../apps/blueman-sendto:284
+#: ../apps/blueman-sendto:271
+msgid "Error occurred"
+msgstr "حدث خطأ"
+
+#: ../apps/blueman-sendto:290
 msgid "Send files to this device"
 msgstr "إرسال ملفات إلى هذا الجهاز"
 
-#: ../apps/blueman-sendto:290
+#: ../apps/blueman-sendto:296
 msgid "Source adapter. Takes address or adapter's name eg. hci0"
 msgstr ""
 
-#: ../apps/blueman-sendto:295
+#: ../apps/blueman-sendto:301
 msgid "Bluetooth needs to be turned on for file sending to work"
 msgstr "يجب تشغيل البلوتوث لإرسال الملفات"
 
-#: ../apps/blueman-sendto:355
+#: ../apps/blueman-sendto:361
 msgid "Select files to send"
 msgstr "إختر الملفات التي ترسلها"
 
@@ -1643,12 +1636,12 @@ msgstr "تصفّح هذا الجهاز"
 #: ../apps/blueman-browse:64
 #, c-format
 msgid "Failed to launch \"%s\""
-msgstr ""
+msgstr "تعذّر بدء %s "
 
 #: ../apps/blueman-browse:66
 msgid "Failed to launch default file browser"
-msgstr ""
+msgstr "تعذّر تشغيل متصفح الملفات الإفتراضي"
 
 #: ../apps/blueman-browse:68
 msgid "You can enter an alternate browser in service settings"
-msgstr ""
+msgstr "بإمكانك ادخال متصفح بديل في إعدادات الخدمة"

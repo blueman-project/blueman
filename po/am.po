@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# samson <sambelet@yahoo.com>, 2014-2015
+# samson <sambelet@yahoo.com>, 2014-2015,2017
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-30 19:38+0200\n"
-"PO-Revision-Date: 2015-05-03 01:05+0000\n"
+"POT-Creation-Date: 2015-05-14 08:59+0200\n"
+"PO-Revision-Date: 2017-02-03 22:44+0000\n"
 "Last-Translator: samson <sambelet@yahoo.com>\n"
-"Language-Team: Amharic (http://www.transifex.com/projects/p/MATE/language/am/)\n"
+"Language-Team: Amharic (http://www.transifex.com/mate/MATE/language/am/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Visibility Setting</b>"
-msgstr ""
+msgstr "<b>መመልከቻ ማሰናጃ</b>"
 
 #: ../data/ui/adapters-tab.ui.h:2 ../apps/blueman-adapters:142
 msgid "Hidden"
@@ -36,7 +36,7 @@ msgstr "ለጊዜው የሚታይ"
 
 #: ../data/ui/adapters-tab.ui.h:5
 msgid "<b>Friendly Name</b>"
-msgstr ""
+msgstr "<b>ቀላል ስም</b>"
 
 #: ../data/ui/adapters.ui.h:1 ../data/blueman-adapters.desktop.in.h:1
 msgid "Bluetooth Adapters"
@@ -90,7 +90,7 @@ msgstr "ማጣመሪያ"
 #: ../data/ui/manager-main.ui.h:11
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:342
 msgid "Mark/Unmark this device as trusted"
-msgstr ""
+msgstr "ይህ አካል ይታመን እንደሆን ምልክት ማድረጊያ/ምልክቱን ማጥፊያ"
 
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:13 ../blueman/gui/manager/ManagerToolbar.py:38
@@ -102,7 +102,7 @@ msgstr "የሚታመን"
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:223
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:348
 msgid "Run the setup assistant for this device"
-msgstr ""
+msgstr "ለዚህ አካል የ ማሰጃ ረዳት ያስኪዱ"
 
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:16
@@ -112,7 +112,7 @@ msgstr "ማሰናጃ..."
 #: ../data/ui/manager-main.ui.h:17
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:382
 msgid "Remove this device from the known devices list"
-msgstr ""
+msgstr "ይህን አካል ከሚታወቁ አካሎች ዝርዝር ውስጥ ማስወገጃ"
 
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:19
@@ -130,7 +130,7 @@ msgstr "ፋይል መላኪያ"
 
 #: ../data/ui/manager-main.ui.h:23
 msgid "Browse the device using obex ftp"
-msgstr ""
+msgstr "ይህን አካል መቃኛ obex ftp በ መጠቀም"
 
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:25
@@ -151,7 +151,7 @@ msgstr "የቡድን ኔትዎርክ"
 
 #: ../data/ui/services-network.ui.h:2
 msgid "Network Access Point (NAP)"
-msgstr ""
+msgstr "ኔትዎርክ መድረሻ ነጥብ (NAP)"
 
 #: ../data/ui/services-network.ui.h:3
 msgid "<b>Services</b>"
@@ -159,7 +159,7 @@ msgstr "<b>ግልጋሎቶች</b>"
 
 #: ../data/ui/services-network.ui.h:4
 msgid "DHCP server type:"
-msgstr ""
+msgstr "DHCP ሰርቨር አይነት:"
 
 #: ../data/ui/services-network.ui.h:5
 msgid "Recommended"
@@ -167,7 +167,7 @@ msgstr "የሚመከሩት"
 
 #: ../data/ui/services-network.ui.h:6
 msgid "IP Address:"
-msgstr ""
+msgstr "IP አድራሻ"
 
 #: ../data/ui/services-network.ui.h:7
 msgid "Enable Routing (NAT)"
@@ -194,47 +194,35 @@ msgid "<b>Network Settings</b>"
 msgstr "<b>ኔትዎርክ ማሰናጃ</b>"
 
 #: ../data/ui/services-transfer.ui.h:1
-msgid "Shared Folder:"
-msgstr "የሚጋሩት ፎልደር:"
+msgid "Incoming Folder:"
+msgstr "ወደ ውስጥ የሚመጣ ፎልደር:"
 
 #: ../data/ui/services-transfer.ui.h:2
-msgid "Select Shared/Storage folder"
-msgstr ""
+msgid "Select folder for incoming file transfers"
+msgstr "ፎልደር ይምረጡ ለሚመጣው ፋይል ማስተላለፊያ"
 
 #: ../data/ui/services-transfer.ui.h:3
-msgid "Enabled"
-msgstr "ተችሏል "
-
-#: ../data/ui/services-transfer.ui.h:4
 msgid "Accept files from trusted devices"
 msgstr "ከሚታመኑ አካሎች ፋይሎች መቀበያ"
 
-#: ../data/ui/services-transfer.ui.h:5
+#: ../data/ui/services-transfer.ui.h:4
 msgid "<b>File Receiving (Object Push)</b>"
-msgstr ""
+msgstr "<b>ፋይል መቀበያ (እቃ መግፊያ)</b>"
 
 #: ../data/ui/services-transfer.ui.h:6
-msgid "Allow devices to write/delete"
-msgstr ""
-
-#: ../data/ui/services-transfer.ui.h:7
-msgid "<b>File Sharing (FTP)</b>"
-msgstr ""
-
-#: ../data/ui/services-transfer.ui.h:9
 #, no-c-format
 msgid ""
 "Command to start an obex ftp browser.\n"
 "<i>%d</i> is substituted with device address."
 msgstr ""
 
-#: ../data/ui/services-transfer.ui.h:11
+#: ../data/ui/services-transfer.ui.h:8
 msgid "<b>Advanced</b>"
 msgstr ""
 
-#: ../data/ui/services-transfer.ui.h:12
+#: ../data/ui/services-transfer.ui.h:9
 msgid "<b>Transfer Settings</b>"
-msgstr ""
+msgstr "<b>ማስተላለፊያ ማሰናጃ</b>"
 
 #: ../data/ui/send-dialog.ui.h:1
 msgid "Bluetooth File Transfer"
@@ -242,7 +230,7 @@ msgstr "የ ብሉቱዝ ፋይል ማስተላለፊያ"
 
 #: ../data/ui/send-dialog.ui.h:2
 msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
-msgstr ""
+msgstr "<span weight=\"bold\" size=\"large\">ፋይሎችን መላኪያ በ ብሉቱዝ</span>"
 
 #: ../data/ui/send-dialog.ui.h:3
 msgid "<b>To:</b>"
@@ -258,19 +246,19 @@ msgid ""
 "\n"
 "\n"
 "It will walk you through the process of configuring and connecting to your Bluetooth enabled devices."
-msgstr ""
+msgstr "<b>እንኳን ደህና መጡ ወደ ብሉቱዝ አካል ማሰናጃ እረዳት </b>\n\n\nእረዳቱ እርስዎን ይረዳዎታል እንዴት እንደሚሰናዱ እና እንደሚገናኙ ከ ብሉቱዝ አካሎች ጋር"
 
 #: ../data/ui/assistant.ui.h:5
 msgid "<b>Select pairing method to use:</b>"
-msgstr ""
+msgstr "<b>ለመጠቀም ማጣመሪያ ዘዴ ይምረጡ:</b>"
 
 #: ../data/ui/assistant.ui.h:6
 msgid "Use Random Passkey"
-msgstr ""
+msgstr "በደፈናው የ ማለፊያ ሀረግ ይጠቀሙ"
 
 #: ../data/ui/assistant.ui.h:7
 msgid "Proceed Without Pairing"
-msgstr ""
+msgstr "ሳያጣምሩ ማስኬጃ"
 
 #: ../data/ui/assistant.ui.h:8
 msgid "<b>Connect to:</b>"
@@ -282,11 +270,11 @@ msgstr "<b>እባክዎን ይቆዩ...</b>"
 
 #: ../data/ui/assistant.ui.h:10
 msgid "<b>Congratulations, device successfully added</b>"
-msgstr ""
+msgstr "<b>እንኳን ደስ አሎት አካሉ ተሳክቶ ተጨምሯል</b>"
 
 #: ../data/ui/device-list-widget.ui.h:1
 msgid "Device search progress"
-msgstr ""
+msgstr "የ አካል ፍለጋ ሂደት"
 
 #: ../data/ui/device-list-widget.ui.h:2
 msgid "Search for devices"
@@ -294,15 +282,15 @@ msgstr "አካሎች መፈለጊያ"
 
 #: ../data/ui/device-list-widget.ui.h:3
 msgid "Adapter selection"
-msgstr ""
+msgstr "የ አዳፕተር ምርጫ"
 
 #: ../data/ui/applet-plugins-widget.ui.h:1
 msgid "Configuration"
-msgstr ""
+msgstr "ማሰናጃ"
 
 #: ../data/ui/applet-plugins-widget.ui.h:2
 msgid "Configure selected plugin's preferences"
-msgstr ""
+msgstr "የ ተመረጠውን ተሰኪ ማሰናጃ ምርጫ"
 
 #: ../data/ui/applet-plugins-widget.ui.h:3
 msgid "<b>Plugin description:</b>"
@@ -324,15 +312,15 @@ msgstr "ያልታወቀ"
 
 #: ../data/ui/applet-plugins-widget.ui.h:7
 msgid "<b>Depends on:</b>"
-msgstr ""
+msgstr "<b>እንደ ሁኔታው:</b>"
 
 #: ../data/ui/applet-plugins-widget.ui.h:8
 msgid "<b>Conflicts with:</b>"
-msgstr ""
+msgstr "<b>ይጋጫል ከ:</b>"
 
 #: ../data/ui/gsm-settings.ui.h:1
 msgid "<b>GSM settings</b>"
-msgstr ""
+msgstr "<b>GSM ማሰናጃ</b>"
 
 #: ../data/ui/gsm-settings.ui.h:2
 msgid "Number:"
@@ -344,7 +332,7 @@ msgstr "APN:"
 
 #: ../data/ui/net-usage.ui.h:1
 msgid "Traffic statistics"
-msgstr ""
+msgstr "Traffic statistics"
 
 #: ../data/ui/net-usage.ui.h:2
 msgid "<b>Downloaded:</b>"
@@ -360,11 +348,11 @@ msgstr "<b>ጠቅላላ:</b>"
 
 #: ../data/ui/net-usage.ui.h:5
 msgid "<b>Log started:</b>"
-msgstr ""
+msgstr "<b>መግባት ተጀምሯል:</b>"
 
 #: ../data/ui/net-usage.ui.h:6
 msgid "<b>Log duration:</b>"
-msgstr ""
+msgstr "<b>ለ መግቢያ የሚፈጀው ጊዜ:</b>"
 
 #: ../data/ui/net-usage.ui.h:7
 msgid "_Reset"
@@ -374,112 +362,35 @@ msgstr "_እንደ ነበር መመለሻ"
 msgid "_Close"
 msgstr "_መዝጊያ"
 
-#: ../blueman/main/applet/Transfer.py:56
-msgid "Configured share directory does not exist"
-msgstr ""
-
-#: ../blueman/main/applet/Transfer.py:57
-#, python-format
-msgid ""
-"Please make sure that directory \"<b>%s</b>\" exists or configure it with "
-"blueman-services"
-msgstr ""
-
-#: ../blueman/main/applet/Transfer.py:152
-msgid "Incoming file over Bluetooth"
-msgstr "በ ብሉቱዝ የሚመጣ ፋይል "
-
-#: ../blueman/main/applet/Transfer.py:153
-#, python-format
-msgid "Incoming file %(0)s from %(1)s"
-msgstr "የሚመጣ ፋይል  %(0)s ከ %(1)s"
-
-#: ../blueman/main/applet/Transfer.py:155
-#: ../blueman/main/applet/BluezAgent.py:249
-msgid "Accept"
-msgstr "ተቀብያለሁ"
-
-#: ../blueman/main/applet/Transfer.py:155
-msgid "Reject"
-msgstr "አልቀበለም"
-
-#: ../blueman/main/applet/Transfer.py:164
-msgid "Receiving file"
-msgstr "ፋይል በመቀበል ላይ "
-
-#: ../blueman/main/applet/Transfer.py:165
-#, python-format
-msgid "Receiving file %(0)s from %(1)s"
-msgstr "ፋይል በመቀበል ላይ %(0)s ከ %(1)s"
-
-#: ../blueman/main/applet/Transfer.py:204
-#: ../blueman/main/applet/Transfer.py:234
-msgid "File received"
-msgstr "ፋይል ተቀብለዋል"
-
-#: ../blueman/main/applet/Transfer.py:205
-#: ../blueman/main/applet/Transfer.py:235
-#, python-format
-msgid "File %(0)s from %(1)s successfully received"
-msgstr "ፋይል %(0)s ከ %(1)s ተሳክቶ ተቀብለዋል"
-
-#: ../blueman/main/applet/Transfer.py:220
-msgid "Transfer failed"
-msgstr "ማስተላለፍ አልተቻለም"
-
-#: ../blueman/main/applet/Transfer.py:221
-#, python-format
-msgid "Transfer of file %(0)s failed"
-msgstr "ፋይል ማስተላለፍ %(0)s አልተቻለም"
-
-#: ../blueman/main/applet/Transfer.py:243
-#: ../blueman/main/applet/Transfer.py:254
-msgid "Files received"
-msgstr "የተቀበሉዋቸው ፋይሎች"
-
-#: ../blueman/main/applet/Transfer.py:244
-#, python-format
-msgid "Received %d file in the background"
-msgid_plural "Received %d files in the background"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../blueman/main/applet/Transfer.py:255
-#, python-format
-msgid "Received %d more file in the background"
-msgid_plural "Received %d more files in the background"
-msgstr[0] ""
-msgstr[1] ""
-
 #: ../blueman/main/applet/BluezAgent.py:120
 #, python-format
 msgid "Pairing request for %s"
-msgstr ""
+msgstr "የማጣመር ጥያቄ ለ %s"
 
 #: ../blueman/main/applet/BluezAgent.py:132
 #: ../blueman/main/applet/BluezAgent.py:252
 msgid "Bluetooth Authentication"
-msgstr ""
+msgstr "የ ብሉቱዝ ማረጋገጫ"
 
 #: ../blueman/main/applet/BluezAgent.py:162
 msgid "Enter PIN code for authentication:"
-msgstr ""
+msgstr "የ ፒን ኮድ ያስገቡ ለ ማረጋገጫ:"
 
 #: ../blueman/main/applet/BluezAgent.py:163
 msgid "Enter PIN code"
-msgstr ""
+msgstr "የ ፒን ኮድ ያስገቡ"
 
 #: ../blueman/main/applet/BluezAgent.py:171
 msgid "Enter passkey for authentication:"
-msgstr ""
+msgstr "የማለፊያ ቁልፍ ያስገቡ ለ ማረጋገጫ:"
 
 #: ../blueman/main/applet/BluezAgent.py:172
 msgid "Enter passkey"
-msgstr ""
+msgstr "የማለፊያ ቁልፍ ያስገቡ"
 
 #: ../blueman/main/applet/BluezAgent.py:180
 msgid "Pairing passkey for"
-msgstr ""
+msgstr "የማጣመሪያ ማለፊያ ቁልፍ ለ"
 
 #: ../blueman/main/applet/BluezAgent.py:187
 msgid "Pairing PIN code for"
@@ -515,9 +426,14 @@ msgstr "ግልጋሎት:"
 msgid "Always accept"
 msgstr "ሁል ጊዜ ተቀበል"
 
+#: ../blueman/main/applet/BluezAgent.py:249
+#: ../blueman/plugins/applet/TransferService.py:98
+msgid "Accept"
+msgstr "ተቀብያለሁ"
+
 #: ../blueman/main/applet/BluezAgent.py:282
 msgid "Confirm value"
-msgstr ""
+msgstr "ማረጋገጫ ዋጋ"
 
 #: ../blueman/main/applet/BluezAgent.py:283
 #, python-format
@@ -528,19 +444,19 @@ msgstr "ማጣመሪያ ከ: %s"
 msgid ""
 "<b>An error has occured while loading a plugin. Please notify the developers"
 " with the content of this message.</b>"
-msgstr ""
+msgstr "<b>ተሰኪ በ መጫን ላይ እንዳለ ስህተት ተፈጥሯል: እባክዎን ይህን ችግር ለ አበልፃጊዎች ያሳውቁ: ከዚህ መልእክት ይዞታ ጋር</b>"
 
-#: ../blueman/Functions.py:93
+#: ../blueman/Functions.py:94
 msgid "Bluetooth Turned Off"
 msgstr "ብሉቱዝ ጠፍቷል"
 
-#: ../blueman/Functions.py:97
+#: ../blueman/Functions.py:98
 msgid "Enable Bluetooth"
 msgstr "ብሉቱዝ ማስቻያ"
 
 #: ../blueman/gui/manager/ManagerMenu.py:24
 msgid "_Adapter"
-msgstr ""
+msgstr "_አዳፕተር"
 
 #: ../blueman/gui/manager/ManagerMenu.py:25
 msgid "_Device"
@@ -565,76 +481,92 @@ msgstr "የ አካሎች አስተዳዳሪ"
 
 #: ../blueman/gui/manager/ManagerMenu.py:58
 msgid "Show _Toolbar"
-msgstr ""
+msgstr "_እቃ መደርደሪያ ማሳያ"
 
 #: ../blueman/gui/manager/ManagerMenu.py:63
 msgid "Show _Statusbar"
-msgstr ""
+msgstr "የ _ሁኔታ መደርደሪያ ማሳያ"
 
 #: ../blueman/gui/manager/ManagerMenu.py:74
 msgid "Latest Device _First"
-msgstr ""
+msgstr "ዘመናዊ አካሎች _መጀመሪያ"
 
 #: ../blueman/gui/manager/ManagerMenu.py:79
 msgid "Latest Device _Last"
-msgstr ""
+msgstr "ዘመናዊ አካሎች _መጨረሻ"
 
-#: ../blueman/gui/manager/ManagerMenu.py:158
+#: ../blueman/gui/manager/ManagerMenu.py:91
+#: ../blueman/gui/applet/PluginDialog.py:107
+#: ../blueman/plugins/applet/StandardItems.py:119
+msgid "Plugins"
+msgstr "ተሰኪዎች"
+
+#: ../blueman/gui/manager/ManagerMenu.py:96
+#: ../blueman/plugins/applet/StandardItems.py:55
+msgid "_Local Services"
+msgstr "የ _አካባቢ ግልጋሎቶች "
+
+#: ../blueman/gui/manager/ManagerMenu.py:98
+#: ../blueman/plugins/applet/StandardItems.py:114
+msgid "Service Preferences"
+msgstr "የ ግልጋሎት ምርጫዎች "
+
+#: ../blueman/gui/manager/ManagerMenu.py:173
 msgid "_Search"
 msgstr "_መፈለጊያ"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:104
+#: ../blueman/gui/manager/ManagerDeviceList.py:102
 #: ../blueman/plugins/applet/StandardItems.py:102 ../apps/blueman-manager:265
 msgid "File Sender"
 msgstr "ፋይል መላኪያ"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:439
+#: ../blueman/gui/manager/ManagerDeviceList.py:437
 msgid "<b>Trusted and Bonded</b>"
-msgstr ""
+msgstr "<b>የሚታመን እና Bonded</b>"
+
+#: ../blueman/gui/manager/ManagerDeviceList.py:439
+msgid "<b>Bonded</b>"
+msgstr "<b>Bonded</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:441
-msgid "<b>Bonded</b>"
-msgstr ""
-
-#: ../blueman/gui/manager/ManagerDeviceList.py:443
 msgid "<b>Trusted</b>"
 msgstr "<b>የሚታመን</b>"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:462
+#: ../blueman/gui/manager/ManagerDeviceList.py:460
 msgid "Poor"
-msgstr ""
+msgstr "ደካማ"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:465
-#: ../blueman/gui/manager/ManagerDeviceList.py:480
+#: ../blueman/gui/manager/ManagerDeviceList.py:463
+#: ../blueman/gui/manager/ManagerDeviceList.py:478
 msgid "Sub-optimal"
 msgstr "ንዑስ-አጥጋቢ"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:468
-#: ../blueman/gui/manager/ManagerDeviceList.py:483
+#: ../blueman/gui/manager/ManagerDeviceList.py:466
+#: ../blueman/gui/manager/ManagerDeviceList.py:481
 msgid "Optimal"
 msgstr "አጥጋቢ"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:471
+#: ../blueman/gui/manager/ManagerDeviceList.py:469
 msgid "Much"
-msgstr ""
+msgstr "ብዙ"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:474
+#: ../blueman/gui/manager/ManagerDeviceList.py:472
 msgid "Too much"
-msgstr ""
+msgstr "በጣም ብዙ"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:477
+#: ../blueman/gui/manager/ManagerDeviceList.py:475
 msgid "Low"
 msgstr "ዝቅተኛ"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:486
+#: ../blueman/gui/manager/ManagerDeviceList.py:484
 msgid "High"
 msgstr "ከፍተኛ"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:489
+#: ../blueman/gui/manager/ManagerDeviceList.py:487
 msgid "Very High"
 msgstr "በጣም ከፍተኛ"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:492
+#: ../blueman/gui/manager/ManagerDeviceList.py:490
 #, python-format
 msgid ""
 "<b>Connected</b>\n"
@@ -643,7 +575,7 @@ msgid ""
 "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:494
+#: ../blueman/gui/manager/ManagerDeviceList.py:492
 #, python-format
 msgid ""
 "<b>Connected</b>\n"
@@ -652,7 +584,7 @@ msgid ""
 "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:496
+#: ../blueman/gui/manager/ManagerDeviceList.py:494
 #, python-format
 msgid ""
 "<b>Connected</b>\n"
@@ -735,13 +667,13 @@ msgstr "_መለያያ"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:389
 msgid "Forcefully disconnect the device"
-msgstr ""
+msgstr "አካሉን በ ሀይል ይለያዩ"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:398
 msgid "Disconnecting..."
 msgstr "በ መለያየት ላይ..."
 
-#: ../blueman/gui/manager/ManagerProgressbar.py:20 ../apps/blueman-sendto:67
+#: ../blueman/gui/manager/ManagerProgressbar.py:20 ../apps/blueman-sendto:70
 msgid "Connecting"
 msgstr "በመገናኘት ላይ"
 
@@ -752,22 +684,22 @@ msgstr "ተግባሩን መሰረዣ"
 #: ../blueman/gui/manager/ManagerStats.py:38
 #: ../blueman/gui/manager/ManagerStats.py:41
 msgid "Data activity indication"
-msgstr ""
+msgstr "የ ዳታ እንቅስቃሴ ማሳያ"
 
 #: ../blueman/gui/manager/ManagerStats.py:49
 #: ../blueman/gui/manager/ManagerStats.py:62
 msgid "Total data received and rate of transmission"
-msgstr ""
+msgstr "ጠቅላላ የ ተቀበሉት ዳታ እና የ ማስተላለፊያ መጠን"
 
 #: ../blueman/gui/manager/ManagerStats.py:54
 #: ../blueman/gui/manager/ManagerStats.py:57
 msgid "Total data sent and rate of transmission"
-msgstr ""
+msgstr "ጠቅላላ የ ተላከው ዳታ እና የ ማስተላለፊያ መጠን"
 
 #: ../blueman/gui/manager/ManagerToolbar.py:35
 #: ../blueman/gui/manager/ManagerToolbar.py:106
 msgid "Untrust"
-msgstr ""
+msgstr "የማይታመን"
 
 #: ../blueman/gui/DeviceSelectorDialog.py:12
 msgid "Select Device"
@@ -791,22 +723,17 @@ msgstr ""
 
 #: ../blueman/gui/GsmSettings.py:27
 msgid "GSM Settings"
-msgstr ""
-
-#: ../blueman/gui/applet/PluginDialog.py:107
-#: ../blueman/plugins/applet/StandardItems.py:119
-msgid "Plugins"
-msgstr "ተሰኪዎች"
+msgstr "GSM ማሰናጃ"
 
 #: ../blueman/gui/applet/PluginDialog.py:198
 #: ../blueman/gui/applet/PluginDialog.py:199
 msgid "Unspecified"
-msgstr ""
+msgstr "ያልተወሰነ"
 
 #: ../blueman/gui/applet/PluginDialog.py:290
 #: ../blueman/gui/applet/PluginDialog.py:312
 msgid "Dependency issue"
-msgstr ""
+msgstr "የ ጥገኝነት ችግር"
 
 #: ../blueman/gui/applet/PluginDialog.py:292
 #, python-format
@@ -850,12 +777,12 @@ msgstr "በ እጅ የሚያዝ"
 #. translators: device class
 #: ../blueman/DeviceClass.py:51
 msgid "palm"
-msgstr ""
+msgstr "ፓልም"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:67
 msgid "cellular"
-msgstr ""
+msgstr "ሴሉላር"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:69
@@ -865,27 +792,27 @@ msgstr "ሽቦ አልባ"
 #. translators: device class
 #: ../blueman/DeviceClass.py:71
 msgid "smart phone"
-msgstr ""
+msgstr "ስማርት ስልክ"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:73
 msgid "modem"
-msgstr ""
+msgstr "ሞደም "
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:75
 msgid "isdn"
-msgstr ""
+msgstr "isdn"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:112
 msgid "headset"
-msgstr ""
+msgstr "በ ጆሮ ማድመጫ"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:114
 msgid "handsfree"
-msgstr ""
+msgstr "ከ እጅ ነፃ"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:116 ../blueman/DeviceClass.py:184
@@ -906,11 +833,11 @@ msgstr "የ ፊደል ገበታ"
 #. translators: device class
 #: ../blueman/DeviceClass.py:145
 msgid "pointing"
-msgstr ""
+msgstr "መጠቆሚያ"
 
 #: ../blueman/Sdp.py:103
 msgid "Dialup Networking (DUN)"
-msgstr ""
+msgstr "Dialup Networking (DUN)"
 
 #: ../blueman/Sdp.py:110
 msgid "Audio Source"
@@ -922,20 +849,20 @@ msgstr ""
 
 #: ../blueman/Sdp.py:122
 msgid "Network Access Point"
-msgstr ""
+msgstr "ኔትዎርክ መድረሻ ነጥብ"
 
-#: ../blueman/plugins/manager/PulseAudioProfile.py:92
+#: ../blueman/plugins/manager/PulseAudioProfile.py:89
 #, python-format
 msgid "Failed to change profile to %s"
-msgstr ""
+msgstr "ገጽታውን መቀየር አልተቻለም %s"
 
-#: ../blueman/plugins/manager/PulseAudioProfile.py:127
+#: ../blueman/plugins/manager/PulseAudioProfile.py:124
 msgid "Audio Profile"
-msgstr ""
+msgstr "የ ድምፅ ገጽታ"
 
-#: ../blueman/plugins/manager/PulseAudioProfile.py:128
+#: ../blueman/plugins/manager/PulseAudioProfile.py:125
 msgid "Select audio profile for PulseAudio"
-msgstr ""
+msgstr "የ ድምፅ ገጽታ ይምረጡ ለ PulseAudio"
 
 #: ../blueman/plugins/manager/Services.py:64
 #, python-format
@@ -944,15 +871,15 @@ msgstr ""
 
 #: ../blueman/plugins/manager/Services.py:76
 msgid "Renew IP Address"
-msgstr ""
+msgstr "የ IP አድራሻ እንደገና ማደሻ"
 
 #: ../blueman/plugins/manager/Services.py:93
 msgid "Dialup Settings"
-msgstr ""
+msgstr "መደወያ ማሰናጃ"
 
 #: ../blueman/plugins/manager/Services.py:102
 msgid "Serial Ports"
-msgstr ""
+msgstr "Serial Ports"
 
 #: ../blueman/plugins/applet/NetUsage.py:184
 #: ../blueman/plugins/applet/NetUsage.py:292
@@ -963,40 +890,40 @@ msgstr "ተገናኝቷል:"
 #: ../blueman/plugins/applet/NetUsage.py:200
 #: ../blueman/plugins/applet/NetUsage.py:305
 msgid "Not Connected"
-msgstr ""
+msgstr "አልተገናኘም"
 
 #: ../blueman/plugins/applet/NetUsage.py:208
 msgid ""
 "No usage statistics are available yet. Try establishing a connection first "
 "and then check this page."
-msgstr ""
+msgstr "ምንም የ አጠቃቀም ዳታ ዝግጁ አይደለም: በ መጀመሪያ ለ መገናኘት ይሞክሩ እና ከዛ ይህን ገጽ ይመርምሩ"
 
 #: ../blueman/plugins/applet/NetUsage.py:231
 msgid "day"
 msgid_plural "days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ቀን"
+msgstr[1] "ቀኖች"
 
 #: ../blueman/plugins/applet/NetUsage.py:232
 msgid "hour"
 msgid_plural "hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ሰአት"
+msgstr[1] "ሰአቶች "
 
 #: ../blueman/plugins/applet/NetUsage.py:233
 msgid "minute"
 msgid_plural "minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ደቂቃዎች "
+msgstr[1] "ደቂቃዎች"
 
 #: ../blueman/plugins/applet/NetUsage.py:235
 #, python-format
 msgid "%d %s %d %s and %d %s"
-msgstr ""
+msgstr "%d %s %d %s እና %d %s"
 
 #: ../blueman/plugins/applet/NetUsage.py:269
 msgid "Are you sure you want to reset the counter?"
-msgstr ""
+msgstr "በ እርግጥ መቁጠሪያውን እንደ ነበር መመለስ ይፈልጋሉ? "
 
 #: ../blueman/plugins/applet/NetUsage.py:313
 msgid ""
@@ -1006,11 +933,11 @@ msgstr ""
 
 #: ../blueman/plugins/applet/NetUsage.py:334
 msgid "Network _Usage"
-msgstr ""
+msgstr "የ ኔትዎርክ _አጠቃቀም"
 
 #: ../blueman/plugins/applet/NetUsage.py:335
 msgid "Shows network traffic usage"
-msgstr ""
+msgstr "የ ኔትዎርክ ትራፊክ አጠቃቀም ማሳያ "
 
 #. self.connect("size-changed", self.on_status_icon_resized)
 #: ../blueman/plugins/applet/StatusIcon.py:29
@@ -1018,11 +945,11 @@ msgstr ""
 #: ../blueman/plugins/applet/ShowConnected.py:81
 #: ../blueman/plugins/applet/ShowConnected.py:86
 msgid "Bluetooth Enabled"
-msgstr ""
+msgstr "ብሉቱዝ ተችሏል"
 
 #: ../blueman/plugins/applet/StatusIcon.py:46
 msgid "Bluetooth Disabled"
-msgstr ""
+msgstr "ብሉቱዝ ተሰናክሏል"
 
 #: ../blueman/plugins/applet/Networking.py:20
 msgid "Manages local network services, like NAP bridges"
@@ -1030,7 +957,7 @@ msgstr ""
 
 #: ../blueman/plugins/applet/NMDUNSupport.py:76
 msgid "Bluetooth Dialup"
-msgstr ""
+msgstr "ብሉቱዝ Dialup"
 
 #: ../blueman/plugins/applet/NMDUNSupport.py:77
 #, python-format
@@ -1055,7 +982,7 @@ msgstr ""
 #. the maximum number of items RecentConns menu will display
 #: ../blueman/plugins/applet/RecentConns.py:59
 msgid "Maximum items"
-msgstr ""
+msgstr "ከፍተኛው እቃዎች"
 
 #: ../blueman/plugins/applet/RecentConns.py:60
 msgid "The maximum number of items recent connections menu will display."
@@ -1063,26 +990,26 @@ msgstr ""
 
 #: ../blueman/plugins/applet/RecentConns.py:78
 msgid "Recent _Connections"
-msgstr ""
+msgstr "የቅርብ ጊዜ _ግንኙነቶች"
 
 #: ../blueman/plugins/applet/RecentConns.py:287
 #: ../blueman/plugins/applet/PPPSupport.py:51
 msgid "Connected"
-msgstr ""
+msgstr "ተገናኝቷል"
 
 #: ../blueman/plugins/applet/RecentConns.py:287
 #, python-format
 msgid "Connected to %s"
-msgstr ""
+msgstr "ተገናኝቷል ወደ %s"
 
 #: ../blueman/plugins/applet/RecentConns.py:293
 msgid "Failed to connect"
-msgstr ""
+msgstr "መገናኘት አልተቻለም"
 
 #: ../blueman/plugins/applet/RecentConns.py:310
 #, python-format
 msgid "%(service)s on %(device)s"
-msgstr ""
+msgstr "%(service)s on %(device)s"
 
 #: ../blueman/plugins/applet/RecentConns.py:332
 msgid "Adapter for this connection is not available"
@@ -1096,15 +1023,85 @@ msgstr ""
 
 #: ../blueman/plugins/applet/NMPANSupport.py:233
 msgid "Already connected"
-msgstr ""
+msgstr "ቀደም ብሎ ተገናኝቷል"
 
 #: ../blueman/plugins/applet/DBusService.py:28
 msgid "Provides DBus API for other Blueman components"
 msgstr ""
 
-#: ../blueman/plugins/applet/TransferService.py:18
+#: ../blueman/plugins/applet/TransferService.py:95
+msgid "Incoming file over Bluetooth"
+msgstr "በ ብሉቱዝ የሚመጣ ፋይል "
+
+#: ../blueman/plugins/applet/TransferService.py:96
+#, python-format
+msgid "Incoming file %(0)s from %(1)s"
+msgstr "የሚመጣ ፋይል  %(0)s ከ %(1)s"
+
+#: ../blueman/plugins/applet/TransferService.py:98
+msgid "Reject"
+msgstr "አልቀበለም"
+
+#: ../blueman/plugins/applet/TransferService.py:102
+msgid "Receiving file"
+msgstr "ፋይል በመቀበል ላይ "
+
+#: ../blueman/plugins/applet/TransferService.py:103
+#, python-format
+msgid "Receiving file %(0)s from %(1)s"
+msgstr "ፋይል በመቀበል ላይ %(0)s ከ %(1)s"
+
+#: ../blueman/plugins/applet/TransferService.py:119
 msgid "Provides OBEX file transfer capabilities"
 msgstr ""
+
+#: ../blueman/plugins/applet/TransferService.py:145
+msgid "Configured directory for incoming files does not exist"
+msgstr ""
+
+#: ../blueman/plugins/applet/TransferService.py:146
+#, python-format
+msgid ""
+"Please make sure that directory \"<b>%s</b>\" exists or configure it with "
+"blueman-services"
+msgstr ""
+
+#: ../blueman/plugins/applet/TransferService.py:224
+msgid "File received"
+msgstr "ፋይል ተቀብለዋል"
+
+#: ../blueman/plugins/applet/TransferService.py:225
+#, python-format
+msgid "File %(0)s from %(1)s successfully received"
+msgstr "ፋይል %(0)s ከ %(1)s ተሳክቶ ተቀብለዋል"
+
+#: ../blueman/plugins/applet/TransferService.py:231
+msgid "Transfer failed"
+msgstr "ማስተላለፍ አልተቻለም"
+
+#: ../blueman/plugins/applet/TransferService.py:232
+#, python-format
+msgid "Transfer of file %(0)s failed"
+msgstr "ፋይል ማስተላለፍ %(0)s አልተቻለም"
+
+#: ../blueman/plugins/applet/TransferService.py:254
+#: ../blueman/plugins/applet/TransferService.py:261
+msgid "Files received"
+msgstr "የተቀበሉዋቸው ፋይሎች"
+
+#: ../blueman/plugins/applet/TransferService.py:255
+#, python-format
+msgid "Received %d file in the background"
+msgid_plural "Received %d files in the background"
+msgstr[0] "ተቀብለዋል %d ፋይሎች ከ በስተ ጀርባ"
+msgstr[1] "ተቀብለዋል %d ፋይሎች ከ በስተ ጀርባ "
+
+#: ../blueman/plugins/applet/TransferService.py:262
+#, python-format
+msgid "Received %d more file in the background"
+msgid_plural "Received %d more files in the background"
+msgstr[0] "ተቀብለዋል %d ተጨማሪ ፋይሎች ከ በስተ ጀርባ"
+msgstr[1] "ተቀብለዋል %d ተጨማሪ ፋይሎች ከ በስተ ጀርባ "
 
 #: ../blueman/plugins/applet/KillSwitch.py:38
 msgid ""
@@ -1119,47 +1116,39 @@ msgstr ""
 
 #: ../blueman/plugins/applet/StandardItems.py:26
 msgid "_Setup New Device"
-msgstr ""
+msgstr "አዲስ አካል _ማሰናጃ"
 
 #: ../blueman/plugins/applet/StandardItems.py:33
 msgid "Send _Files to Device"
-msgstr ""
+msgstr "_ፋይሎች ወደ አካሉ መላኪያ"
 
 #: ../blueman/plugins/applet/StandardItems.py:38
 msgid "_Browse Files on Device"
-msgstr ""
+msgstr "ፋይሎች በ አካሉ ላይ _መቃኛ"
 
 #: ../blueman/plugins/applet/StandardItems.py:45
 msgid "_Devices"
-msgstr ""
+msgstr "_አካሎች"
 
 #: ../blueman/plugins/applet/StandardItems.py:50
 msgid "Adap_ters"
-msgstr ""
-
-#: ../blueman/plugins/applet/StandardItems.py:55
-msgid "_Local Services"
-msgstr ""
+msgstr "አዳፕ_ተሮች"
 
 #: ../blueman/plugins/applet/StandardItems.py:65
 msgid "_Plugins"
-msgstr ""
+msgstr "_ተሰኪዎች"
 
 #: ../blueman/plugins/applet/StandardItems.py:99 ../apps/blueman-manager:220
 #: ../apps/blueman-assistant:71
 msgid "Bluetooth Assistant"
-msgstr ""
+msgstr "የ ብሉቱዝ እረዳት"
 
 #: ../blueman/plugins/applet/StandardItems.py:105
 msgid "File Browser"
-msgstr ""
+msgstr "ፋይል መቃኛ"
 
 #: ../blueman/plugins/applet/StandardItems.py:111 ../apps/blueman-manager:254
 msgid "Adapter Preferences"
-msgstr ""
-
-#: ../blueman/plugins/applet/StandardItems.py:114
-msgid "Service Preferences"
 msgstr ""
 
 #: ../blueman/plugins/applet/StandardItems.py:117
@@ -1182,7 +1171,7 @@ msgstr ""
 #: ../blueman/plugins/applet/DhcpClient.py:56
 #: ../blueman/plugins/applet/DhcpClient.py:62
 msgid "Bluetooth Network"
-msgstr ""
+msgstr "የ ብሉቱዝ ኔትዎርክ"
 
 #: ../blueman/plugins/applet/DhcpClient.py:48
 #, python-format
@@ -1199,7 +1188,7 @@ msgstr ""
 msgid ""
 "Trying to obtain an IP address on %s\n"
 "Please wait..."
-msgstr ""
+msgstr "ለ ማግኘት በ መሞከር ላይ የ IP address on %s\nእባክዎን ይቆዩ..."
 
 #: ../blueman/plugins/applet/ShowConnected.py:20
 msgid ""
@@ -1209,14 +1198,14 @@ msgstr ""
 
 #: ../blueman/plugins/applet/ShowConnected.py:71
 msgid "Bluetooth Active"
-msgstr ""
+msgstr "ብሉቱዝ ንቁ ነው"
 
 #: ../blueman/plugins/applet/ShowConnected.py:73
 #, python-format
 msgid "<b>%d Active Connection</b>"
 msgid_plural "<b>%d Active Connections</b>"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "<b>%d ንቁ ግንኙነቶች</b> "
+msgstr[1] "<b>%d ንቁ ግንኙነቶች</b>"
 
 #: ../blueman/plugins/applet/AppIndicator.py:12
 msgid "Uses libappindicator to show a statusicon"
@@ -1228,7 +1217,7 @@ msgstr ""
 
 #: ../blueman/plugins/applet/Headset.py:26
 msgid "Command"
-msgstr ""
+msgstr "ትእዛዝ"
 
 #: ../blueman/plugins/applet/Headset.py:27
 msgid "Command to execute when answer button is pressed:"
@@ -1255,12 +1244,12 @@ msgstr ""
 
 #: ../blueman/plugins/applet/DiscvManager.py:49
 msgid "Make the default adapter temporarily visible"
-msgstr ""
+msgstr "ነባር አዳፕተር ለ ጊዜው እንዲታይ ማድረጊያ"
 
 #: ../blueman/plugins/applet/DiscvManager.py:74
 #, python-format
 msgid "Discoverable... %ss"
-msgstr ""
+msgstr "ሊገኝ የሚችል... %ss"
 
 #: ../blueman/plugins/applet/Menu.py:16
 msgid ""
@@ -1298,21 +1287,21 @@ msgid ""
 "Upon device disconnection the script will be sent a HUP signal</span>"
 msgstr ""
 
-#: ../blueman/plugins/applet/SerialManager.py:64
+#: ../blueman/plugins/applet/SerialManager.py:66
 msgid "Serial port connected"
 msgstr ""
 
-#: ../blueman/plugins/applet/SerialManager.py:65
+#: ../blueman/plugins/applet/SerialManager.py:67
 #, python-format
 msgid ""
 "Serial port service on device <b>%s</b> now will be available via <b>%s</b>"
 msgstr ""
 
-#: ../blueman/plugins/applet/SerialManager.py:112
+#: ../blueman/plugins/applet/SerialManager.py:114
 msgid "Serial port connection script failed"
 msgstr ""
 
-#: ../blueman/plugins/applet/SerialManager.py:113
+#: ../blueman/plugins/applet/SerialManager.py:115
 #, python-format
 msgid ""
 "There was a problem launching script %s\n"
@@ -1325,32 +1314,32 @@ msgstr ""
 
 #: ../blueman/plugins/applet/PowerManager.py:29
 msgid "Auto power-on"
-msgstr ""
+msgstr "በራሱ ሀይል ማብሪያ"
 
 #: ../blueman/plugins/applet/PowerManager.py:30
 msgid "Automatically power on adapters"
-msgstr ""
+msgstr "ራሱ በራሱ ሀይል ማብሪያ አዳፕተርስ"
 
 #: ../blueman/plugins/applet/PowerManager.py:42
 msgid "<b>Bluetooth _Off</b>"
-msgstr ""
+msgstr "<b>ብሉቱዝ _ማጥፊያ</b>"
 
 #: ../blueman/plugins/applet/PowerManager.py:44
 #: ../blueman/plugins/applet/PowerManager.py:186
 msgid "Turn off all adapters"
-msgstr ""
+msgstr "ሁሉንም አዳፕተሮች ማጥፊያ"
 
 #: ../blueman/plugins/applet/PowerManager.py:171
 msgid "<b>Turn Bluetooth _On</b>"
-msgstr ""
+msgstr "<b>ብሉቱዝ _ማብሪያ</b>"
 
 #: ../blueman/plugins/applet/PowerManager.py:173
 msgid "Turn on all adapters"
-msgstr ""
+msgstr "ሁሉንም አዳፕተሮች ማብሪያ"
 
 #: ../blueman/plugins/applet/PowerManager.py:184
 msgid "<b>Turn Bluetooth _Off</b>"
-msgstr ""
+msgstr "<b>ብሉቱዝ _ማጥፊያ</b>"
 
 #: ../blueman/plugins/applet/GameControllerWakelock.py:15
 msgid ""
@@ -1360,20 +1349,20 @@ msgstr ""
 
 #: ../blueman/services/AudioSink.py:13
 msgid "Allows to send audio to remote device"
-msgstr ""
+msgstr "ድምፅ በርቀት ወዳለው አካል መላክ ማስቻያ"
 
 #: ../blueman/services/AudioSource.py:13
 msgid "Allows to receive audio from remote device"
-msgstr ""
+msgstr "ድምፅ በርቀት ካለው አካል መቀበል ማስቻያ"
 
 #: ../blueman/plugins/services/Network.py:22
 #: ../blueman/plugins/services/Network.py:46
 msgid "Network"
-msgstr ""
+msgstr "ኔትዎርክ:"
 
 #: ../blueman/plugins/services/Network.py:95
 msgid "Invalid IP address"
-msgstr ""
+msgstr "ዋጋ የሌለው አድራሻ:"
 
 #: ../blueman/plugins/services/Network.py:107
 #, python-format
@@ -1394,7 +1383,7 @@ msgstr ""
 
 #: ../blueman/plugins/services/Transfer.py:16
 msgid "Transfer"
-msgstr ""
+msgstr "ማስተላለፊያ"
 
 #: ../blueman/plugins/services/Transfer.py:33
 msgid "Applet's transfer service plugin is disabled"
@@ -1414,15 +1403,15 @@ msgstr ""
 
 #: ../data/blueman-manager.desktop.in.h:1
 msgid "Bluetooth Manager"
-msgstr ""
+msgstr "የ ብሉቱዝ አስተዳዳሪ"
 
 #: ../data/thunar-sendto-blueman.desktop.in.h:1
 msgid "Bluetooth Device"
-msgstr ""
+msgstr "የ ብሉቱዝ አካል"
 
 #: ../data/configs/org.blueman.policy.in.h:1
 msgid "Configure Bluetooth Network"
-msgstr ""
+msgstr "የ ብሉቱዝ ኔትዎርክ ማሰናጃ"
 
 #: ../data/configs/org.blueman.policy.in.h:2
 msgid "Configuring networking requires privileges"
@@ -1438,7 +1427,7 @@ msgstr ""
 
 #: ../data/configs/org.blueman.policy.in.h:5
 msgid "Bluetooth Configuration"
-msgstr ""
+msgstr "የ ብሉቱዝ ማሰናጃ"
 
 #: ../data/configs/org.blueman.policy.in.h:6
 msgid "Changing Bluetooth system settings requires privileges"
@@ -1460,23 +1449,23 @@ msgstr ""
 
 #: ../apps/blueman-manager:186 ../apps/blueman-assistant:229
 msgid "Adding"
-msgstr ""
+msgstr "በመጨመር ላይ"
 
 #: ../apps/blueman-manager:207
 msgid "Searching"
-msgstr ""
+msgstr "በመፈለግ ላይ"
 
 #: ../apps/blueman-manager:227
 msgid "Success"
-msgstr ""
+msgstr "ተሳክቷል "
 
 #: ../apps/blueman-manager:232
 msgid "Failure"
-msgstr ""
+msgstr "ወድቋል"
 
 #: ../apps/blueman-manager:240
 msgid "Pairing"
-msgstr ""
+msgstr "በማጣመር ላይ"
 
 #: ../apps/blueman-adapters:49
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
@@ -1484,81 +1473,81 @@ msgstr ""
 
 #: ../apps/blueman-adapters:140
 msgid "Always"
-msgstr ""
+msgstr "ሁልጊዜ "
 
 #: ../apps/blueman-adapters:144
 #, c-format
 msgid "%d Minute"
 msgid_plural "%d Minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d ደቂቃ"
+msgstr[1] "%d ደቂቆች "
 
-#: ../apps/blueman-sendto:106
+#: ../apps/blueman-sendto:110
 msgid "obexd not available"
 msgstr ""
 
-#: ../apps/blueman-sendto:107
+#: ../apps/blueman-sendto:111
 msgid "obexd is probably not installed"
 msgstr ""
 
-#: ../apps/blueman-sendto:133
-msgid "Error occurred"
-msgstr ""
-
-#: ../apps/blueman-sendto:145
+#: ../apps/blueman-sendto:138
 msgid "Cancelling"
-msgstr ""
+msgstr "በመሰረዝ ላይ"
 
-#: ../apps/blueman-sendto:162 ../apps/blueman-sendto:196
+#: ../apps/blueman-sendto:149 ../apps/blueman-sendto:191
 msgid "Sending File"
-msgstr ""
+msgstr "ፋይል በመላክ ላይ "
 
-#: ../apps/blueman-sendto:162 ../apps/blueman-sendto:196
+#: ../apps/blueman-sendto:149 ../apps/blueman-sendto:191
 msgid "ETA:"
-msgstr ""
+msgstr "ETA:"
 
-#: ../apps/blueman-sendto:190
+#: ../apps/blueman-sendto:185
 #, c-format
 msgid "%.0f Minute"
 msgid_plural "%.0f Minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%.0f ደቂቃዎች"
+msgstr[1] "%.0f ደቂቃዎች"
 
-#: ../apps/blueman-sendto:192
+#: ../apps/blueman-sendto:187
 #, c-format
 msgid "%.0f Second"
 msgid_plural "%.0f Seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%.0f ሰከንዶች"
+msgstr[1] "%.0f ሰከንዶች "
 
-#: ../apps/blueman-sendto:230
+#: ../apps/blueman-sendto:225
 #, c-format
 msgid "Error occurred while sending file %s"
 msgstr ""
 
-#: ../apps/blueman-sendto:234
+#: ../apps/blueman-sendto:229
 msgid "Skip"
-msgstr ""
+msgstr "መዝለያ"
 
-#: ../apps/blueman-sendto:235
+#: ../apps/blueman-sendto:230
 msgid "Retry"
-msgstr ""
+msgstr "እንደገና መሞከሪያ"
 
-#: ../apps/blueman-sendto:284
-msgid "Send files to this device"
-msgstr ""
+#: ../apps/blueman-sendto:271
+msgid "Error occurred"
+msgstr "ስህተት ተፈጥሯል"
 
 #: ../apps/blueman-sendto:290
+msgid "Send files to this device"
+msgstr "ወደ ሌላ አካል ፋይል መላኪያ"
+
+#: ../apps/blueman-sendto:296
 msgid "Source adapter. Takes address or adapter's name eg. hci0"
 msgstr ""
 
-#: ../apps/blueman-sendto:295
+#: ../apps/blueman-sendto:301
 msgid "Bluetooth needs to be turned on for file sending to work"
 msgstr ""
 
-#: ../apps/blueman-sendto:355
+#: ../apps/blueman-sendto:361
 msgid "Select files to send"
-msgstr ""
+msgstr "የሚላኩ ፋይሎች ይምረጡ"
 
 #: ../apps/blueman-assistant:54
 msgid "Start configuration assistant for this device"
@@ -1570,44 +1559,44 @@ msgstr ""
 
 #: ../apps/blueman-assistant:118
 msgid "No adapters found"
-msgstr ""
+msgstr "ምንም አዳፕተር አልተገኘም"
 
 #: ../apps/blueman-assistant:228
 msgid "<b>Adding Device...</b>"
-msgstr ""
+msgstr "<b>አካሎች በመጨመር ላይ...</b>"
 
 #: ../apps/blueman-assistant:231
 msgid "<b>Pairing in progress...</b>"
-msgstr ""
+msgstr "<b>ማጣመር በ ሂደት ላይ...</b>"
 
 #: ../apps/blueman-assistant:240 ../apps/blueman-assistant:259
 msgid "<b>Failed to add device</b>"
-msgstr ""
+msgstr "<b>አካል መጨመር አልተቻለም</b>"
 
 #: ../apps/blueman-assistant:280
 msgid "Don't connect"
-msgstr ""
+msgstr "አትገናኝ"
 
 #: ../apps/blueman-assistant:295
 msgid "<b>Device added and connected successfuly</b>"
-msgstr ""
+msgstr "<b>አካሉ ተጨምሯል እና ተሳክቶ ተገናኝቷል</b>"
 
 #: ../apps/blueman-assistant:301
 msgid "<b>Device added successfuly, but failed to connect</b>"
-msgstr ""
+msgstr "<b>አካሉ ተጨምሯል ነገር ግን መገናኘት አልቻለም</b>"
 
 #: ../apps/blueman-browse:37
 msgid "Browse this device"
-msgstr ""
+msgstr "ይህን አካል መቃኛ"
 
 #: ../apps/blueman-browse:64
 #, c-format
 msgid "Failed to launch \"%s\""
-msgstr ""
+msgstr "ማስጀመር አልተቻለም %s:"
 
 #: ../apps/blueman-browse:66
 msgid "Failed to launch default file browser"
-msgstr ""
+msgstr "ነባር የ ፋይል መቃኛ ማስጀመር አልተቻለም"
 
 #: ../apps/blueman-browse:68
 msgid "You can enter an alternate browser in service settings"
