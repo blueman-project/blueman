@@ -16,6 +16,7 @@ from gi.repository import Gdk
 from gi.repository import GdkPixbuf
 from gi.repository import GObject
 from gi.repository import Pango
+from gi.repository import GLib
 from blueman.Constants import *
 from blueman.Functions import get_icon, launch, opacify_pixbuf, composite_icon
 from blueman.Sdp import *
@@ -175,8 +176,13 @@ class ManagerDeviceList(DeviceList):
 
                         self.menu.popup(None, None, None, None, event.button, event.time)
 
-    def get_device_icon(self, klass):
-        return get_icon("blueman-" + klass.replace(" ", "-").lower(), 48, "blueman")
+    def get_device_icon(self, klass, dev_icon_prop=None):
+        if dev_icon_prop is None:
+            dev_icon_prop = "blueman"
+        try:
+            return get_icon("blueman-" + klass.replace(" ", "-").lower(), 48, fallback=None)
+        except GLib.Error:
+            return get_icon(dev_icon_prop, 48, "blueman")
 
     def make_device_icon(self, target, is_bonded=False, is_trusted=False, is_discovered=False, opacity=255):
         if opacity != 255:
@@ -244,7 +250,7 @@ class ManagerDeviceList(DeviceList):
 
         klass = get_minor_class(device['Class'])
         if klass != "uncategorized":
-            icon = self.get_device_icon(klass)
+            icon = self.get_device_icon(klass, device["Icon"])
             # get translated version
             klass = get_minor_class(device['Class'], True)
         else:
