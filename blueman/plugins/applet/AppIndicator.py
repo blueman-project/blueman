@@ -23,7 +23,7 @@ class AppIndicator(AppletPlugin):
     def on_load(self, applet):
         
         self.indicator = girAppIndicator.Indicator.new("blueman",
-                                                       self.Applet.Plugins.StatusIcon.props.icon_name,
+                                                       applet.Plugins.StatusIcon.get_option("icon"),
                                                        girAppIndicator.IndicatorCategory.APPLICATION_STATUS)
         
         self.indicator.set_status(girAppIndicator.IndicatorStatus.ACTIVE)
