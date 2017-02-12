@@ -47,8 +47,8 @@ class Network(ServicePlugin):
         self.setup_network()
         try:
             self.ip_check()
-        except:
-            pass
+        except Exception as e:
+            logging.exception(e)
         return (_("Network"), "network-workgroup")
 
     def on_enter(self):
