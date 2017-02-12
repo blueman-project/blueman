@@ -128,7 +128,7 @@ class Assistant:
             self.Manager = Manager()
             try:
                 self.Adapter = self.Manager.get_adapter()
-            except:
+            except ValueError:
                 logging.error("Error: No Adapters present")
                 exit(1)
             self.Device = self.Manager.find_device(parsed_args.device, self.Adapter.get_object_path())

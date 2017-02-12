@@ -298,7 +298,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
     def get_device_path(self, item):
         try:
             adapter = self.Applet.Manager.get_adapter(item["adapter"])
-        except:
+        except ValueError:
             raise AdapterNotFound
         try:
             device = self.Applet.Manager.find_device(item["address"], adapter.get_object_path())

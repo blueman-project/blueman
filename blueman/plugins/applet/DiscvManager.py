@@ -75,7 +75,7 @@ class DiscvManager(AppletPlugin):
     def init_adapter(self):
         try:
             self.adapter = self.Applet.Manager.get_adapter()
-        except:
+        except ValueError:
             self.adapter = None
 
     def on_adapter_removed(self, path):

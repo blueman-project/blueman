@@ -68,11 +68,11 @@ class SendTo:
                 if parsed_args.source is not None:
                     try:
                         adapter = m.get_adapter(parsed_args.source)
-                    except:
+                    except ValueError:
                         adapter = m.get_adapter()
                 else:
                     adapter = m.get_adapter()
-            except:
+            except ValueError:
                 logging.error("Error: No Adapters present")
                 exit()
             d = m.find_device(parsed_args.device, adapter.get_object_path())
