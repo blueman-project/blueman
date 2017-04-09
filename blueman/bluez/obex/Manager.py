@@ -37,7 +37,7 @@ class Manager(GObject.GObject):
         self.__signals = []
 
         self._object_manager = Gio.DBusObjectManagerClient.new_for_bus_sync(
-            Gio.BusType.SESSION, Gio.DBusObjectManagerClientFlags.NONE,
+            Gio.BusType.SESSION, Gio.DBusObjectManagerClientFlags.DO_NOT_AUTO_START,
             self.__bus_name, '/', None, None, None)
 
         self.__signals.append(self._object_manager.connect('object-added', self._on_object_added))
@@ -84,5 +84,5 @@ class Manager(GObject.GObject):
 
     @classmethod
     def watch_name_owner(cls, appeared_handler, vanished_handler):
-        Gio.bus_watch_name(Gio.BusType.SESSION, cls.__bus_name, Gio.BusNameWatcherFlags.AUTO_START,
+        Gio.bus_watch_name(Gio.BusType.SESSION, cls.__bus_name, Gio.BusNameWatcherFlags.NONE,
                            appeared_handler, vanished_handler)
