@@ -10,7 +10,7 @@ from blueman.gui.Notification import Notification
 from blueman.main.Mechanism import Mechanism
 from blueman.main.Config import Config
 
-from gi.repository import GObject
+from gi.repository import GLib
 
 from blueman.Sdp import uuid128_to_uuid16, DIALUP_NET_SVCLASS_ID
 import os
@@ -30,7 +30,7 @@ class Connection:
             self.connect()
         else:
             logging.info("ModemManager is running, delaying connection 5sec for it to complete probing")
-            GObject.timeout_add(5000, self.connect)
+            GLib.timeout_add(5000, self.connect)
 
     def connect(self):
         c = Config("org.blueman.gsmsettings", "/org/blueman/gsmsettings/%s/" % self.service.device['Address'])
@@ -41,7 +41,7 @@ class Connection:
 
     def on_error(self, _obj, result, _user_data):
         self.error_handler(result)
-        GObject.timeout_add(1000, self.service.disconnect, self.port)
+        GLib.timeout_add(1000, self.service.disconnect, self.port)
 
     def on_connected(self, _obj, result, _user_data):
         self.reply_handler(self.port)
