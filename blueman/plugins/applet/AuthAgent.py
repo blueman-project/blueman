@@ -15,10 +15,9 @@ class AuthAgent(AppletPlugin):
     __author__ = "Walmis"
     __depends__ = ["StatusIcon"]
 
-    _agent = None
-    _last_event_time = 0
-
     def on_load(self, applet):
+        self._agent = None
+        self._last_event_time = 0
         self.Applet = applet
 
     @dbus.service.method('org.blueman.Applet', in_signature="u")
