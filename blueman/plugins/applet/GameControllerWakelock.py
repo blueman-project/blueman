@@ -16,6 +16,9 @@ import logging
 if not isinstance(Gdk.Screen.get_default(), GdkX11.X11Screen):
     raise ImportError('This is not an X11 screen')
 
+if not isinstance(Gdk.Screen.get_default(), GdkX11.X11Screen):
+    raise ImportError('This is not an X11 screen')
+
 
 class GameControllerWakelock(AppletPlugin):
     __description__ = _("Temporarily suspends the screensaver when a bluetooth game controller is connected.")
