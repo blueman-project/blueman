@@ -52,6 +52,7 @@ class PowerManager(AppletPlugin):
 
         self.adapter_state = True
         self.current_state = True
+        self.user_power_override = False
 
         self.request_in_progress = False
 
@@ -70,10 +71,7 @@ class PowerManager(AppletPlugin):
         if state:
             def timeout():
                 self.adapter_state = self.get_adapter_state()
-                if self.get_option("auto-power-on"):
-                    self.RequestPowerState(True, force=True)
-                else:
-                    self.RequestPowerState(self.adapter_state)
+                self.RequestPowerState(self.adapter_state)
 
             GLib.timeout_add(1000, timeout)
 
@@ -215,6 +213,7 @@ class PowerManager(AppletPlugin):
             self.UpdatePowerState()
 
     def on_bluetooth_toggled(self):
+        self.user_power_override = True
         self.RequestPowerState(not self.CurrentState)
 
     def on_status_icon_query_icon(self):
@@ -225,10 +224,10 @@ class PowerManager(AppletPlugin):
         adapter = Bluez.Adapter(path)
 
         def on_ready():
-            if not self.adapter_state:
-                adapter.set("Powered", False)
+            if self.get_option("auto-power-on") and not self.user_power_override:
+                self.RequestPowerState(True, True)
             else:
-                adapter.set("Powered", True)
+                adapter.set("Powered", self.adapter_state)
 
         wait_for_adapter(adapter, on_ready)
 
