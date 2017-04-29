@@ -9,14 +9,10 @@ from blueman.plugins.ManagerPlugin import ManagerPlugin
 
 
 def show_info(device, parent):
-    dialog = Gtk.Dialog()
+    dialog = Gtk.Dialog(icon_name="blueman", title="blueman")
     dialog.set_transient_for(parent)
-    dialog.set_icon_name('blueman')
-    dialog.set_title('blueman')
     store = Gtk.ListStore(str, str)
-    view = Gtk.TreeView()
-    view.set_headers_visible(False)
-    view.set_model(store)
+    view = Gtk.TreeView(model=store, headers_visible=False)
     for i in range(2):
         column = Gtk.TreeViewColumn()
         cell = Gtk.CellRendererText()
