@@ -9,6 +9,18 @@ from blueman.plugins.ManagerPlugin import ManagerPlugin
 
 
 def show_info(device, parent):
+    def format_boolean(x):
+        return _('yes') if x else _('no')
+
+    def format_rssi(rssi):
+        if rssi in [0x99, 0x7f]:
+            'invalid (0x{:02x})'.format(rssi)
+        else:
+            '{} dBm (0x{:02x})'.format(rssi, rssi)
+
+    def format_uuids(uuids):
+        return "\n".join([uuid + ' ' + uuid16_to_name(uuid128_to_uuid16(uuid)) for uuid in uuids])
+
     dialog = Gtk.Dialog(icon_name="blueman", title="blueman")
     dialog.set_transient_for(parent)
     store = Gtk.ListStore(str, str)
@@ -21,18 +33,6 @@ def show_info(device, parent):
         view.append_column(column)
     dialog.get_content_area().pack_start(view, True, False, 0)
     view.show_all()
-
-    def format_boolean(x):
-        return _('yes') if x else _('no')
-
-    def format_rssi(rssi):
-        if rssi in [0x99, 0x7f]:
-            'invalid (0x{:02x})'.format(rssi)
-        else:
-            '{} dBm (0x{:02x})'.format(rssi, rssi)
-
-    def format_uuids(uuids):
-        return "\n".join([uuid + ' ' + uuid16_to_name(uuid128_to_uuid16(uuid)) for uuid in uuids])
 
     properties = (
         ('Address', None),
