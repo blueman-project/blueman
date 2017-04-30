@@ -4,7 +4,7 @@ from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-from blueman.Sdp import uuid128_to_uuid16, uuid16_to_name
+from blueman.Sdp import ServiceUUID
 
 
 class Service(object):
@@ -20,7 +20,7 @@ class Service(object):
 
     @property
     def name(self):
-        return uuid16_to_name(uuid128_to_uuid16(self.__uuid))
+        return ServiceUUID(self.__uuid).name
 
     @property
     def device(self):
@@ -29,6 +29,9 @@ class Service(object):
     @property
     def uuid(self):
         return self.__uuid
+
+    def short_uuid(self):
+        return ServiceUUID(self.__uuid).short_uuid
 
     @property
     def description(self):

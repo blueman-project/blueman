@@ -4,7 +4,7 @@ from __future__ import print_function
 from __future__ import division
 from __future__ import unicode_literals
 
-from blueman.Sdp import uuid128_to_uuid16
+from blueman.Sdp import ServiceUUID
 from blueman.bluez.errors import BluezDBusException
 import blueman.services
 import inspect
@@ -13,7 +13,7 @@ import logging
 
 def get_service(device, uuid):
     for name, cls in inspect.getmembers(blueman.services, inspect.isclass):
-        if uuid128_to_uuid16(uuid) == cls.__svclass_id__:
+        if ServiceUUID(uuid).short_uuid == cls.__svclass_id__:
             return cls(device, uuid)
 
 

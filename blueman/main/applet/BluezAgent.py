@@ -22,7 +22,7 @@ else:
 import random
 from xml.etree import ElementTree
 import blueman.bluez as Bluez
-from blueman.Sdp import *
+from blueman.Sdp import ServiceUUID
 from blueman.Constants import *
 from blueman.gui.Notification import Notification
 
@@ -333,8 +333,7 @@ class BluezAgent(Agent):
 
         logging.info("Agent.Authorize")
         dev_str = self.get_device_string(device)
-        uuid16 = uuid128_to_uuid16(uuid)
-        service = uuid16_to_name(uuid16)
+        service = ServiceUUID(uuid).name
         notify_message = (_("Authorization request for:") + "\n%s\n" + _("Service:") + " <b>%s</b>") % (dev_str, service)
         actions = [["always", _("Always accept")],
                    ["accept", _("Accept")],

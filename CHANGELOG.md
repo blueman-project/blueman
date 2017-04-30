@@ -7,6 +7,10 @@
 * blueman-adapters is now (Xfce-)pluggable
 * Allow users to copy data from the Info manager plugin
 
+### Changes
+
+* Show "Proprietary" instead of "Unknown" for services with non-reserverd UUIDs
+
 ### Bugs fixed
 
 * Icon disappeared when switching off bluetooth

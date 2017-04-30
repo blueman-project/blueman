@@ -2,7 +2,7 @@ from gi.repository import Gtk, Gdk
 
 import logging
 from blueman.Functions import create_menuitem, get_icon
-from blueman.Sdp import uuid128_to_uuid16, uuid16_to_name
+from blueman.Sdp import ServiceUUID
 from blueman.bluez.errors import BluezDBusException
 
 from blueman.plugins.ManagerPlugin import ManagerPlugin
@@ -19,7 +19,7 @@ def show_info(device, parent):
             '{} dBm (0x{:02x})'.format(rssi, rssi)
 
     def format_uuids(uuids):
-        return "\n".join([uuid + ' ' + uuid16_to_name(uuid128_to_uuid16(uuid)) for uuid in uuids])
+        return "\n".join([uuid + ' ' + ServiceUUID(uuid).name for uuid in uuids])
 
     def on_accel_activated(group, dialog, key, flags):
         if key != 99:

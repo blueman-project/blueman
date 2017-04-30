@@ -7,7 +7,7 @@ from __future__ import unicode_literals
 from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.Notification import Notification
-from blueman.Sdp import uuid128_to_uuid16, uuid16_to_name, SERIAL_PORT_SVCLASS_ID
+from blueman.Sdp import SERIAL_PORT_SVCLASS_ID
 from blueman.services.Functions import get_services
 from _blueman import rfcomm_list
 from subprocess import Popen
@@ -57,8 +57,7 @@ class SerialManager(AppletPlugin):
 
     def on_rfcomm_connected(self, service, port):
         device = service.device
-        uuid16 = uuid128_to_uuid16(service.uuid)
-        if SERIAL_PORT_SVCLASS_ID == uuid16:
+        if SERIAL_PORT_SVCLASS_ID == service.short_uuid:
             Notification(_("Serial port connected"),
                          _("Serial port service on device <b>%s</b> now will be available via <b>%s</b>") % (
                          device['Alias'], port),
@@ -67,8 +66,8 @@ class SerialManager(AppletPlugin):
 
             self.call_script(device['Address'],
                              device['Alias'],
-                             uuid16_to_name(uuid16),
-                             uuid16,
+                             service.name,
+                             service.short_uuid,
                              port)
 
     def terminate_all_scripts(self, address):
@@ -119,7 +118,7 @@ class SerialManager(AppletPlugin):
                 os.killpg(v[node].pid, signal.SIGHUP)
 
     def rfcomm_connect_handler(self, service, reply, err):
-        if SERIAL_PORT_SVCLASS_ID == uuid128_to_uuid16(service.uuid):
+        if SERIAL_PORT_SVCLASS_ID == service.short_uuid:
             service.connect(reply_handler=reply, error_handler=err)
             return True
         else:

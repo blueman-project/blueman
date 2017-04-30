@@ -5,6 +5,8 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 import gettext
+from uuid import UUID
+
 from blueman.Constants import GETTEXT_PACKAGE, LOCALEDIR
 
 translation = gettext.translation(GETTEXT_PACKAGE, LOCALEDIR, fallback=True)
@@ -305,12 +307,23 @@ MCAP_DATA_UUID = 0x001f
 L2CAP_UUID = 0x0100
 
 
-def uuid16_to_name(uuid16):
-    try:
-        return uuid_names[uuid16]
-    except KeyError:
-        return _("Unknown")
+class ServiceUUID(UUID):
+    @property
+    def short_uuid(self):
+        if self.reserved:
+            return self.int >> 96 & 0xFFFF
 
+    @property
+    def name(self):
+        if self.reserved:
+            try:
+                return uuid_names[self.short_uuid]
+            except KeyError:
+                return _("Unknown")
+        else:
+            return _('Proprietary')
 
-def uuid128_to_uuid16(uuid128):
-    return int('0x' + uuid128[4:8], 16)
+    @property
+    def reserved(self):
+        return self.int & UUID('FFFF0000-0000-FFFF-FFFF-FFFFFFFFFFFF').int == \
+               UUID('00000000-0000-1000-8000-00805F9B34FB').int

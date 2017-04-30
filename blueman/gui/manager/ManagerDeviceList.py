@@ -7,7 +7,6 @@ from __future__ import unicode_literals
 from blueman.gui.DeviceList import DeviceList
 from blueman.DeviceClass import get_minor_class, get_major_class
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
-from blueman.Sdp import *
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -19,7 +18,7 @@ from gi.repository import Pango
 from gi.repository import GLib
 from blueman.Constants import *
 from blueman.Functions import get_icon, launch, opacify_pixbuf, composite_icon
-from blueman.Sdp import *
+from blueman.Sdp import ServiceUUID, OBEX_OBJPUSH_SVCLASS_ID
 import cgi
 import logging
 
@@ -146,8 +145,7 @@ class ManagerDeviceList(DeviceList):
                 device = self.get(tree_iter, "device")["device"]
                 found = False
                 for uuid in device['UUIDs']:
-                    uuid16 = uuid128_to_uuid16(uuid)
-                    if uuid16 == OBEX_OBJPUSH_SVCLASS_ID:
+                    if ServiceUUID(uuid).short_uuid == OBEX_OBJPUSH_SVCLASS_ID:
                         found = True
                         break
                 if found:
@@ -510,7 +508,6 @@ class ManagerDeviceList(DeviceList):
             return False
 
         for uuid in device["UUIDs"]:
-            uuid16 = uuid128_to_uuid16(uuid)
-            if uuid16 == OBEX_OBJPUSH_SVCLASS_ID:
+            if ServiceUUID(uuid).short_uuid == OBEX_OBJPUSH_SVCLASS_ID:
                 return True
         return False
