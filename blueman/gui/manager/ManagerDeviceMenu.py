@@ -7,7 +7,7 @@ from __future__ import unicode_literals
 import logging
 from locale import bind_textdomain_codeset
 from operator import itemgetter
-from blueman.Sdp import uuid128_to_uuid16, SERIAL_PORT_SVCLASS_ID, OBEX_OBJPUSH_SVCLASS_ID, OBEX_FILETRANS_SVCLASS_ID
+from blueman.Sdp import SERIAL_PORT_SVCLASS_ID, OBEX_OBJPUSH_SVCLASS_ID, OBEX_FILETRANS_SVCLASS_ID
 from blueman.Functions import get_icon, composite_icon, create_menuitem, e_
 from blueman.bluez.Network import AnyNetwork
 from blueman.bluez.Device import AnyDevice
@@ -123,7 +123,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             logging.info("success")
             prog.message(_("Success!"))
 
-            if isinstance(service, SerialPort) and SERIAL_PORT_SVCLASS_ID == uuid128_to_uuid16(service.uuid):
+            if isinstance(service, SerialPort) and SERIAL_PORT_SVCLASS_ID == service.short_uuid:
                 MessageArea.show_message(_("Serial port connected to %s") % result, None, "dialog-information")
             else:
                 MessageArea.close()

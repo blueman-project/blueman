@@ -6,6 +6,10 @@
 
 * blueman-adapters is now (Xfce-)pluggable
 
+### Changes
+
+* Show "Proprietary" instead of "Unknown" for services with non-reserverd UUIDs
+
 ### Bugs fixed
 
 * Icon disappeared when switching off bluetooth

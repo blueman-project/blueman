@@ -15,7 +15,7 @@ from blueman.Functions import *
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device
 from blueman.gui.Notification import Notification
-from blueman.Sdp import uuid128_to_uuid16, uuid16_to_name
+from blueman.Sdp import ServiceUUID
 
 from blueman.plugins.AppletPlugin import AppletPlugin
 
@@ -225,7 +225,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         item["address"] = device['Address']
         item["alias"] = device['Alias']
         item["icon"] = device['Icon']
-        item["name"] = uuid16_to_name(uuid128_to_uuid16(uuid))
+        item["name"] = ServiceUUID(uuid).name
         item["uuid"] = uuid
         item["time"] = time.time()
         item["device"] = object_path

@@ -12,7 +12,7 @@ from blueman.main.Config import Config
 
 from gi.repository import GObject
 
-from blueman.Sdp import uuid128_to_uuid16, DIALUP_NET_SVCLASS_ID
+from blueman.Sdp import DIALUP_NET_SVCLASS_ID
 import os
 import logging
 
@@ -73,7 +73,7 @@ class PPPSupport(AppletPlugin):
         pass
 
     def rfcomm_connect_handler(self, service, reply, err):
-        if DIALUP_NET_SVCLASS_ID == uuid128_to_uuid16(service.uuid):
+        if DIALUP_NET_SVCLASS_ID == service.short_uuid:
             def local_reply(port):
                 Connection(self.Applet, service, port, reply, err)
 
