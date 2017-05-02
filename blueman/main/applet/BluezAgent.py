@@ -315,7 +315,7 @@ class BluezAgent(Agent):
         self._on_request_confirmation(parameters, invocation)
 
     def _on_authorize_service(self, parameters, invocation):
-        def on_auth_action(n, action):
+        def on_auth_action(action):
             logging.info(action)
 
             #self.applet.status_icon.set_blinking(False)

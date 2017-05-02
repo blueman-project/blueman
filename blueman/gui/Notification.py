@@ -90,7 +90,7 @@ class _NotificationDialog(Gtk.MessageDialog):
 
     def dialog_response(self, dialog, response):
         if self.callback:
-            self.callback(self, self.actions[response])
+            self.callback(self.actions[response])
         self.hide()
 
     def show(self):
