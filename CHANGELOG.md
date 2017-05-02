@@ -5,6 +5,7 @@
 ### New features
 
 * blueman-adapters is now (Xfce-)pluggable
+* Allow users to copy data from the Info manager plugin
 
 ### Bugs fixed
 
