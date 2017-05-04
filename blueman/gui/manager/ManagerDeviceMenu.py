@@ -7,6 +7,7 @@ from __future__ import unicode_literals
 import logging
 from locale import bind_textdomain_codeset
 from operator import itemgetter
+from blueman.Constants import UI_PATH
 from blueman.Functions import get_icon, composite_icon, create_menuitem, e_
 from blueman.bluez.Network import AnyNetwork
 from blueman.bluez.Device import AnyDevice
