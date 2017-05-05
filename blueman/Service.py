@@ -30,6 +30,7 @@ class Service(object):
     def uuid(self):
         return self.__uuid
 
+    @property
     def short_uuid(self):
         return ServiceUUID(self.__uuid).short_uuid
 
