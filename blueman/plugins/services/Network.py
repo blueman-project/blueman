@@ -171,29 +171,35 @@ class Network(ServicePlugin):
             r_dnsmasq.props.active = True
             self.Config["nap-enable"] = False
 
-        if nc.get_dhcp_handler() == DnsMasqHandler:
-            r_dnsmasq.props.active = True
-        elif nc.get_dhcp_handler() == DhcpdHandler:
-            r_dhcpd.props.active = True
-        elif nc.get_dhcp_handler() == UdhcpdHandler:
-            r_udhcpd.props.active = True
+        have_dhcpd = have("dhcpd3") or have("dhcpd")
+        have_dnsmasq = have("dnsmasq")
+        have_udhcpd = have("udhcpd")
 
-        if not have("dnsmasq") and not have("dhcpd3") and not have("dhcpd") and not have("udhcpd"):
+        if nc.get_dhcp_handler() == DnsMasqHandler and have_dnsmasq:
+            r_dnsmasq.props.active = True
+        elif nc.get_dhcp_handler() == DhcpdHandler and have_dhcpd:
+            r_dhcpd.props.active = True
+        elif nc.get_dhcp_handler() == UdhcpdHandler and have_udhcpd:
+            r_udhcpd.props.active = True
+        else:
+            r_dnsmasq.props.active = True
+
+        if not have_dnsmasq and not have_dhcpd and not have_udhcpd:
             nap_frame.props.sensitive = False
             warning.props.visible = True
             warning.props.sensitive = True
             nap_enable.props.sensitive = False
             self.Config["nap-enable"] = False
 
-        if not have("dnsmasq"):
+        if not have_dnsmasq:
             r_dnsmasq.props.sensitive = False
             r_dnsmasq.props.active = False
 
-        if not have("dhcpd3") and not have("dhcpd"):
+        if not have_dhcpd:
             r_dhcpd.props.sensitive = False
             r_dhcpd.props.active = False
 
-        if not have("udhcpd"):
+        if not have_udhcpd:
             r_udhcpd.props.sensitive = False
             r_udhcpd.props.active = False
 
