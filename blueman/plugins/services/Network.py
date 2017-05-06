@@ -198,6 +198,7 @@ class Network(ServicePlugin):
             r_udhcpd.props.active = False
 
         r_dnsmasq.connect("toggled", lambda x: self.option_changed_notify("dnsmasq"))
+        r_dhcpd.connect("toggled", lambda x: self.option_changed_notify("dhcpd"))
         r_udhcpd.connect("toggled", lambda x: self.option_changed_notify("udhcpd"))
 
         net_ip.connect("changed", lambda x: self.option_changed_notify("ip", False))
