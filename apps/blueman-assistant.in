@@ -56,7 +56,7 @@ class Assistant:
 
         check_bluetooth_status(_("Bluetooth needs to be turned on for the Bluetooth assistant to work"), lambda: exit())
 
-        self.Manager = None
+        self.Manager = Manager()
         self.Device = None
         self.Adapter = None
         self.pair = True
@@ -125,7 +125,6 @@ class Assistant:
         self.assistant.show()
 
         if parsed_args.device is not None:
-            self.Manager = Manager()
             try:
                 self.Adapter = self.Manager.get_adapter()
             except ValueError:
