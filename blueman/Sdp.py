@@ -323,6 +323,8 @@ class ServiceUUID(UUID):
                 return uuid_names[self.short_uuid]
             except KeyError:
                 return _("Unknown")
+        elif self.int == 0:
+            return _('Auto connect profiles')
         else:
             return _('Proprietary')
 
