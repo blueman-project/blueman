@@ -262,7 +262,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             service_uuid = ServiceUUID(uuid)
             if service_uuid.short_uuid in (
                     AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID, HANDSFREE_AGW_SVCLASS_ID, HANDSFREE_SVCLASS_ID,
-                    HEADSET_SVCLASS_ID, HID_SVCLASS_ID, '0x1812'
+                    HEADSET_SVCLASS_ID, HID_SVCLASS_ID, 0x1812
             ):
                 show_generic_connect = True
                 break
