@@ -10,8 +10,8 @@ from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.gui.MessageArea import MessageArea
 
 from blueman.Functions import get_icon, create_menuitem
-from blueman.Sdp import AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID
-from blueman.Sdp import uuid128_to_uuid16
+from blueman.Sdp import AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID, ServiceUUID
+
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
@@ -114,7 +114,7 @@ class PulseAudioProfile(ManagerPlugin):
     def on_request_menu_items(self, manager_menu, device):
         audio_source = False
         for uuid in device['UUIDs']:
-            if uuid128_to_uuid16(uuid) in (AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID):
+            if ServiceUUID(uuid).short_uuid in (AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID):
                 audio_source = True
                 break
 
