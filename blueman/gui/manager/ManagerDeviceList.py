@@ -271,6 +271,10 @@ class ManagerDeviceList(DeviceList):
             self.row_update_event(tree_iter, "Paired", device['Paired'])
         except Exception as e:
             logging.exception(e)
+        try:
+            self.row_update_event(tree_iter, "Connected", device["Connected"])
+        except Exception as e:
+            logging.exception(e)
 
     def row_update_event(self, tree_iter, key, value):
         logging.info("row update event %s %s" % (key, value))
@@ -326,6 +330,9 @@ class ManagerDeviceList(DeviceList):
             device = self.get(tree_iter, "device")["device"]
             has_objpush = self._has_objpush(device)
             self.set(tree_iter, objpush=has_objpush)
+
+        elif key == "Connected":
+            self.set(tree_iter, connected=value)
 
     def level_setup_event(self, row_ref, device, cinfo):
         def rnd(value):
@@ -392,8 +399,7 @@ class ManagerDeviceList(DeviceList):
                 self.set(tree_iter,
                          rssi=rssi_perc,
                          lq=lq_perc,
-                         tpl=tpl_perc,
-                         connected=True)
+                         tpl=tpl_perc)
             else:
 
                 row = self.get(tree_iter, "levels_visible", "cell_fader")
@@ -412,7 +418,7 @@ class ManagerDeviceList(DeviceList):
                         fader.disconnect(signal)
                         fader.freeze()
                         if row_ref.valid():
-                            self.set(tree_iter, rssi_pb=None, lq_pb=None, tpl_pb=None, connected=False)
+                            self.set(tree_iter, rssi_pb=None, lq_pb=None, tpl_pb=None)
 
                     signal = fader.connect("animation-finished", on_finished)
 
