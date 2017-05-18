@@ -11,7 +11,7 @@ from blueman.gui.applet.PluginDialog import PluginDialog
 
 import gi
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+from gi.repository import Gtk, GLib
 
 
 class StandardItems(AppletPlugin):
@@ -125,6 +125,8 @@ class StandardItems(AppletPlugin):
         about.destroy()
 
     def on_plugins(self, button):
-        dialog = PluginDialog(self.Applet)
-        dialog.run()
-        dialog.destroy()
+        def open_dialog():
+            dialog = PluginDialog(self.Applet)
+            dialog.run()
+            dialog.destroy()
+        GLib.idle_add(open_dialog)
