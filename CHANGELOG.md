@@ -6,16 +6,23 @@
 
 * blueman-adapters is now (Xfce-)pluggable
 * Allow users to copy data from the Info manager plugin
+* Add connman support to KillSwitch plugin
 
 ### Changes
 
 * Show "Proprietary" instead of "Unknown" for services with non-reserverd UUIDs
+* Generic connect and disconnect
+* blueman-services: rework dhcpd handler radio buttons
+* Implement a ServiceUUID class
+* invoke _NotificationDialog.callback with 1 argument (@dakkar)
 
 ### Bugs fixed
 
 * Icon disappeared when switching off bluetooth
 * Revert "bluez manager: Subclass from GDBusObjectManagerClient"
 * Icon briefly vanished when turning on bluetooth
+* Fix DBus signal emission
+* blueman-services: Fix radio button group
 
 ## 2.1.alpha1
 
