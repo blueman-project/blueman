@@ -54,7 +54,7 @@ class DhcpClient(AppletPlugin):
 
                 self.quering.remove(device)
 
-            Notification(_("Bluetooth Network"), _("Trying to obtain an IP address on %s\nPlease wait..." % device),
+            Notification(_("Bluetooth Network"), _("Trying to obtain an IP address on %s\nPlease wait…" % device),
                          icon_name="network-workgroup").show()
 
             m = Mechanism()

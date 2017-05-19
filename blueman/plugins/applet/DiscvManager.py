@@ -54,7 +54,7 @@ class DiscvManager(AppletPlugin):
 
     def on_update(self):
         self.time_left -= 1
-        self.item.set_text(_("Discoverable... %ss") % self.time_left)
+        self.item.set_text(_("Discoverable… %ss") % self.time_left)
         self.item.set_sensitive(False)
 
         return True
