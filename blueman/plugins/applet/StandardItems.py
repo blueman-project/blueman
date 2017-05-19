@@ -20,23 +20,23 @@ class StandardItems(AppletPlugin):
 
         applet.Plugins.Menu.add(self, 21)
 
-        self.new_dev = self.Applet.Plugins.Menu.add(self, 30, text=_("_Set Up New Device") + "...",
+        self.new_dev = self.Applet.Plugins.Menu.add(self, 30, text=_("_Set Up New Device") + "…",
                                                     icon_name="document-new", callback=self.on_setup_new)
 
         self.Applet.Plugins.Menu.add(self, 31)
 
-        self.send = self.Applet.Plugins.Menu.add(self, 40, text=_("Send _Files to Device") + "...",
+        self.send = self.Applet.Plugins.Menu.add(self, 40, text=_("Send _Files to Device") + "…",
                                                  icon_name="blueman-send-file", callback=self.on_send)
 
         self.Applet.Plugins.Menu.add(self, 51)
 
-        self.devices = self.Applet.Plugins.Menu.add(self, 60, text=_("_Devices") + "...", icon_name="blueman",
+        self.devices = self.Applet.Plugins.Menu.add(self, 60, text=_("_Devices") + "…", icon_name="blueman",
                                                     callback=self.on_devices)
 
-        self.adapters = self.Applet.Plugins.Menu.add(self, 70, text=_("Adap_ters") + "...", icon_name="blueman-device",
+        self.adapters = self.Applet.Plugins.Menu.add(self, 70, text=_("Adap_ters") + "…", icon_name="blueman-device",
                                                      callback=self.on_adapters)
 
-        self.Applet.Plugins.Menu.add(self, 80, text=_("_Local Services") + "...", icon_name="preferences-desktop",
+        self.Applet.Plugins.Menu.add(self, 80, text=_("_Local Services") + "…", icon_name="preferences-desktop",
                                      callback=self.on_local_services)
 
         self.Applet.Plugins.Menu.add(self, 81)
