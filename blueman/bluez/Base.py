@@ -1,13 +1,7 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 from gi.repository import Gio, GLib, GObject
 from blueman.bluez.errors import parse_dbus_error, BluezDBusException
 import logging
-import sys
 
 
 class Base(Gio.DBusProxy):
@@ -75,10 +69,7 @@ class Base(Gio.DBusProxy):
         self.__interface_name = interface_name
         self.__fallback = {'Icon': 'blueman', 'Class': 0}
 
-        if sys.version_info.major < 3:
-            self.__variant_map = {str: 's', unicode: 's', int: 'u', bool: 'b'}
-        else:
-            self.__variant_map = {str: 's', int: 'u', bool: 'b'}
+        self.__variant_map = {str: 's', int: 'u', bool: 'b'}
 
     def do_g_properties_changed(self, changed_properties, _invalidated_properties):
         changed = changed_properties.unpack()

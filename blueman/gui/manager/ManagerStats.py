@@ -1,9 +1,4 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 from _blueman import device_info
 from gi.repository import GLib
 from gi.repository import Gtk

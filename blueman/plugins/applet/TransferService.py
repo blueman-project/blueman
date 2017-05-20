@@ -1,15 +1,9 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import GLib, Gtk, Gio
 from datetime import datetime
 import os
-import sys
 import shutil
 import logging
 from blueman.bluez import obex
@@ -18,10 +12,7 @@ from blueman.gui.Notification import Notification
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Config import Config
 
-if sys.version_info.major == 2:
-    from cgi import escape
-else:
-    from html import escape
+from html import escape
 
 
 class Agent(obex.Agent):
