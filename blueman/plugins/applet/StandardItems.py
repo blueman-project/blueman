@@ -1,9 +1,4 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 from blueman.Functions import launch, create_menuitem, get_icon, get_lockfile, get_pid, is_running, os, signal
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.CommonUi import show_about_dialog

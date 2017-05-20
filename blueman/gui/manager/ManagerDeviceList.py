@@ -1,9 +1,4 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 from blueman.gui.DeviceList import DeviceList
 from blueman.DeviceClass import get_minor_class, get_major_class
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu

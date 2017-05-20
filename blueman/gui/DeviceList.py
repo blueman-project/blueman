@@ -1,9 +1,4 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 from blueman.Functions import wait_for_adapter, adapter_path_to_name
 
 from blueman.gui.GenericList import GenericList

@@ -1,10 +1,5 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
-import os, sys
+import os.path
 import logging
 from locale import bind_textdomain_codeset
 from blueman.Functions import get_icon
@@ -14,10 +9,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import GLib
 
-if sys.version_info.major == 2:
-    from cgi import escape
-else:
-    from html import escape
+from html import escape
 
 import random
 from xml.etree import ElementTree

@@ -1,10 +1,5 @@
-#!/usr/bin/env python@PYTHON_MAJOR_VERSION@
+#!/usr/bin/env python3
 # coding=utf-8
-
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
 
 import json
 import os
@@ -16,11 +11,7 @@ from blueman.Constants import VERSION
 from blueman.Functions import get_lockfile, get_pid, is_running
 
 import sys
-if sys.version_info.major == 2:
-    input = raw_input
-    import urllib2
-else:
-    import urllib.request as urllib2
+import urllib.request as urllib2
 
 for program in 'adapters', 'applet', 'manager', 'services':
     name = 'blueman-' + program

@@ -15,6 +15,7 @@
 * blueman-services: rework dhcpd handler radio buttons
 * Implement a ServiceUUID class
 * invoke _NotificationDialog.callback with 1 argument (@dakkar)
+* Drop support for Python 2.7
 
 ### Bugs fixed
 
