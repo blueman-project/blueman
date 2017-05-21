@@ -554,7 +554,7 @@ class PulseAudioUtils(GObject.GObject):
 
             callback(self.__card_info(entry_info))
 
-        if hasattr(card, "format") and hasattr(card, "upper"):
+        if type(card) is str:
             fn = pa_context_get_card_info_by_name
         else:
             fn = pa_context_get_card_info_by_index
@@ -564,7 +564,7 @@ class PulseAudioUtils(GObject.GObject):
 
     def SetCardProfile(self, card, profile, callback):
         profile = profile.encode("UTF-8")
-        if hasattr(card, "format") and hasattr(card, "upper"):
+        if type(card) is str:
             card = card.encode("UTF-8")
             fn = pa_context_set_card_profile_by_name
         else:
