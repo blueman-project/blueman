@@ -6,10 +6,10 @@ Blueman is designed to provide a simple yet effective means for
 controlling BlueZ API and simplifying bluetooth tasks such as:
 
 * Connecting to 3G/EDGE/GPRS via dial-up
-* Connecting to/Creating bluetooth networks
+* Connecting to / Creating bluetooth networks
 * Connecting to input devices
 * Connecting to audio devices
-* Sending/Receiving/Browsing files via OBEX
+* Sending / Receiving files via OBEX
 * Pairing
 
 It is lightweight, easy to use, Python based, and GPL licensed.
