@@ -220,8 +220,6 @@ def release_rfcomm_device(id):
         raise Exception(ERR[ret])
     return ret
 
-try: from exceptions import Exception
-except ImportError: pass
 
 class BridgeException(Exception):
     def __init__(self, errno):
