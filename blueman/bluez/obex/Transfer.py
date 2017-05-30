@@ -6,9 +6,9 @@ from gi.repository import GObject, GLib
 
 class Transfer(Base):
     __gsignals__ = {
-        str('progress'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-        str('completed'): (GObject.SignalFlags.NO_HOOKS, None, ()),
-        str('error'): (GObject.SignalFlags.NO_HOOKS, None, ())
+        'progress': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+        'completed': (GObject.SignalFlags.NO_HOOKS, None, ()),
+        'error': (GObject.SignalFlags.NO_HOOKS, None, ())
     }
 
     _interface_name = 'org.bluez.obex.Transfer1'

@@ -143,11 +143,11 @@ class KillSwitch(AppletPlugin):
 
         if self._connman_proxy:
             logging.debug("Using connman to set state: %s" % state)
-            self._connman_proxy.SetProperty(str('(sv)'), 'Powered', GLib.Variant.new_boolean(state),
+            self._connman_proxy.SetProperty('(sv)', 'Powered', GLib.Variant.new_boolean(state),
                                             result_handler=reply, error_handler=error)
         else:
             logging.debug("Using mechanism to set state: %s" % state)
-            Mechanism().SetRfkillState(str('(b)'), state, result_handler=reply, error_handler=error)
+            Mechanism().SetRfkillState('(b)', state, result_handler=reply, error_handler=error)
 
     def on_query_status_icon_visibility(self):
         # Force status icon to show if bluetooth is soft-blocked

@@ -84,7 +84,7 @@ def check_bluetooth_status(message, exitfunc, *args, **kwargs):
             if resp != Gtk.ResponseType.YES:
                 exitfunc()
             else:
-                applet.SetBluetoothStatus(str('(b)'), True, **kwargs)
+                applet.SetBluetoothStatus('(b)', True, **kwargs)
                 if not applet.GetBluetoothStatus():
                     print('Failed to enable bluetooth')
                     exitfunc()

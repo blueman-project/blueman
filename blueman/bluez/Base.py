@@ -12,8 +12,8 @@ class Base(Gio.DBusProxy):
     __bus_type = Gio.BusType.SYSTEM
 
     __gsignals__ = {
-        str('property-changed'): (GObject.SignalFlags.NO_HOOKS, None,
-                                  (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT))
+        'property-changed': (GObject.SignalFlags.NO_HOOKS, None,
+                             (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT))
     }
 
     def __new__(cls, *args, **kwargs):

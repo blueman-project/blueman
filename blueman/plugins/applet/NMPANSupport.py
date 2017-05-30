@@ -101,7 +101,7 @@ class NewConnectionBuilder:
             self.signal_subs.append(sub)
             args = [self.connection, self.device, self.connection]
 
-            self.parent.nm_manager.ActivateConnection(str('(ooo)'), *args)
+            self.parent.nm_manager.ActivateConnection('(ooo)', *args)
 
     def on_device_state(self, connection, sender_name, object_path, interface_name, signal_name, param):
         state, oldstate, reason = param.unpack()
@@ -256,6 +256,6 @@ class NMPANSupport(AppletPlugin):
         if not active_conn_path:
             return
 
-        self.nm_manager.DeactivateConnection(str('(o)'), active_conn_path)
+        self.nm_manager.DeactivateConnection('(o)', active_conn_path)
         ok()
         return True

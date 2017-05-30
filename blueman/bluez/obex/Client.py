@@ -10,9 +10,9 @@ class ObexdNotFoundError(Exception):
 
 class Client(Base):
     __gsignals__ = {
-        str('session-created'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-        str('session-failed'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-        str('session-removed'): (GObject.SignalFlags.NO_HOOKS, None, ()),
+        'session-created': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+        'session-failed': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+        'session-removed': (GObject.SignalFlags.NO_HOOKS, None, ()),
     }
 
     _interface_name = 'org.bluez.obex.Client1'

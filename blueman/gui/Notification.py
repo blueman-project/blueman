@@ -255,7 +255,7 @@ class _NotificationBubble(Gio.DBusProxy):
 
     def show(self):
         replace_id = self._return_id if self._return_id else 0
-        return_id = self.Notify(str('(susssasa{sv}i)'), self._app_name, replace_id, self._app_icon,
+        return_id = self.Notify('(susssasa{sv}i)', self._app_name, replace_id, self._app_icon,
                                 self._summary, self._body, self._actions, self._hints,
                                 self._timeout)
         self._return_id = return_id

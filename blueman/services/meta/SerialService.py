@@ -40,7 +40,7 @@ class SerialService(Service):
 
         logging.info('User was granted access to %s' % path)
         logging.info('Replacing root watcher')
-        Mechanism().close_rfcomm(str('(d)'), port)
+        Mechanism().close_rfcomm('(d)', port)
         subprocess.Popen([RFCOMM_WATCHER_PATH, path])
         monitor.disconnect(self.file_changed_handler)
 
@@ -50,7 +50,7 @@ class SerialService(Service):
             port_id = create_rfcomm_device(Adapter(self.device["Adapter"])['Address'], self.device["Address"], 1)
             filename = '/dev/rfcomm%d' % port_id
             logging.info('Starting rfcomm watcher as root')
-            Mechanism().open_rfcomm(str('(d)'), port_id)
+            Mechanism().open_rfcomm('(d)', port_id)
             mon = Gio.File.new_for_path(filename).monitor_file(Gio.FileMonitorFlags.NONE)
             self.file_changed_handler = mon.connect('changed', self.on_file_changed, port_id)
             self.try_replace_root_watcher(mon, filename, port_id)
@@ -65,5 +65,5 @@ class SerialService(Service):
         return True
 
     def disconnect(self, *args):
-        Mechanism().close_rfcomm(str('(d)'), args[0])
+        Mechanism().close_rfcomm('(d)', args[0])
         release_rfcomm_device(args[0])

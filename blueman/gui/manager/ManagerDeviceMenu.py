@@ -151,11 +151,11 @@ class ManagerDeviceMenu(Gtk.Menu):
             return
 
         try:
-            self._appl.SetTimeHint(str('(u)'), Gtk.get_current_event_time())
+            self._appl.SetTimeHint('(u)', Gtk.get_current_event_time())
         except Exception as e:
             logging.exception(e)
 
-        self._appl.connect_service(str('(os)'), device.get_object_path(), service.uuid,
+        self._appl.connect_service('(os)', device.get_object_path(), service.uuid,
                                    result_handler=success, error_handler=fail,
                                    timeout=GLib.MAXINT)
 
@@ -176,7 +176,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             err(None, GLib.Error('Applet DBus Service not available'), None)
             return
 
-        self._appl.disconnect_service(str('(osd)'), service.device.get_object_path(), service.uuid, port,
+        self._appl.disconnect_service('(osd)', service.device.get_object_path(), service.uuid, port,
                                       result_handler=ok, error_handler=err)
 
     def on_device_property_changed(self, List, device, tree_iter, key_value):
@@ -202,14 +202,14 @@ class ManagerDeviceMenu(Gtk.Menu):
 
         if connect:
             self.set_op(self.SelectedDevice, _("Connecting..."))
-            self._appl.connect_service(str("(os)"),
+            self._appl.connect_service("(os)",
                                        device.get_object_path(),
                                        '00000000-0000-0000-0000-000000000000',
                                        result_handler=success, error_handler=fail,
                                        timeout=GLib.MAXINT)
         else:
             self.set_op(self.SelectedDevice, _("Disconnecting..."))
-            self._appl.disconnect_service(str("(osd)"),
+            self._appl.disconnect_service("(osd)",
                                           device.get_object_path(),
                                           '00000000-0000-0000-0000-000000000000',
                                           0,

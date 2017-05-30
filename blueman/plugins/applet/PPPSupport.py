@@ -31,7 +31,7 @@ class Connection:
         c = Config("org.blueman.gsmsettings", "/org/blueman/gsmsettings/%s/" % self.service.device['Address'])
 
         m = Mechanism()
-        m.PPPConnect(str('(sss)'), self.port, c["number"], c["apn"], result_handler=self.on_connected,
+        m.PPPConnect('(sss)', self.port, c["number"], c["apn"], result_handler=self.on_connected,
                      error_handler=self.on_error, timeout=200)
 
     def on_error(self, _obj, result, _user_data):

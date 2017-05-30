@@ -211,4 +211,4 @@ class Blueman(Gtk.Window):
 
     def disconnect(self, device, **kwargs):
         applet = AppletService()
-        applet.DisconnectDevice(str('(s)'), device.get_object_path(), **kwargs)
+        applet.DisconnectDevice('(s)', device.get_object_path(), **kwargs)
