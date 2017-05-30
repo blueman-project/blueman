@@ -44,8 +44,7 @@ import argparse
 from ctypes import cdll, byref, create_string_buffer
 from gi.repository import GLib
 import traceback
-try: import __builtin__ as builtins
-except ImportError: import builtins
+import builtins
 
 GREEN = lambda x: "\x1b[32;01m" + x + "\x1b[39;49;00m"
 BLUE = lambda x: "\x1b[34;01m" + x + "\x1b[39;49;00m"

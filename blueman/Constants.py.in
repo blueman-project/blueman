@@ -16,8 +16,7 @@ RFCOMM_WATCHER_PATH = "@LIBEXECDIR@/blueman-rfcomm-watcher"
 
 import os
 import gettext
-try: import __builtin__ as builtins
-except ImportError: import builtins
+import builtins
 
 translation = gettext.translation(GETTEXT_PACKAGE, LOCALEDIR, fallback=True)
 try:

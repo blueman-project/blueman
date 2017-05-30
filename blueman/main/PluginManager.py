@@ -1,8 +1,7 @@
 # coding=utf-8
 from gi.repository import GObject
 import os
-try: import __builtin__ as builtins
-except ImportError: import builtins
+import builtins
 import logging
 
 from blueman.Functions import *
