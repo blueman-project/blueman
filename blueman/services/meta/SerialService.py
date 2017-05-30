@@ -46,8 +46,11 @@ class SerialService(Service):
 
     def connect(self, reply_handler=None, error_handler=None):
         try:
-            # TODO: Channel?
-            port_id = create_rfcomm_device(Adapter(self.device["Adapter"])['Address'], self.device["Address"], 1)
+            channel = 1
+            for dev in rfcomm_list():
+                if dev["dst"] == self.device['Address']:
+                    channel = dev["channel"]
+            port_id = create_rfcomm_device(Adapter(self.device["Adapter"])['Address'], self.device["Address"], channel)
             filename = '/dev/rfcomm%d' % port_id
             logging.info('Starting rfcomm watcher as root')
             Mechanism().open_rfcomm(str('(d)'), port_id)
