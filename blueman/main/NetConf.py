@@ -1,6 +1,4 @@
 # coding=utf-8
-from io import open
-
 import pickle
 import os
 import signal

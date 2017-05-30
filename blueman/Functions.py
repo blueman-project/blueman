@@ -18,7 +18,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 
-from io import open
 from time import sleep
 
 from blueman.Constants import *
