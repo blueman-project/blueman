@@ -19,12 +19,8 @@ import gettext
 import builtins
 
 translation = gettext.translation(GETTEXT_PACKAGE, LOCALEDIR, fallback=True)
-try:
-    translation.install(unicode=True)
-    builtins.ngettext = translation.ungettext
-except TypeError:
-    translation.install()
-    builtins.ngettext = translation.ngettext
+translation.install()
+builtins.ngettext = translation.ngettext
 
 if 'BLUEMAN_SOURCE' in os.environ:
     _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
