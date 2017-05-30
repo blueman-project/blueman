@@ -8,7 +8,6 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 
 import logging
 
-import builtins
 
 class BluemanApplet(object):
     def __init__(self):
