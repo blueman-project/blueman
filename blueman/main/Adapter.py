@@ -201,12 +201,11 @@ class BluemanAdapters(Gtk.Dialog):
             #might need to update settings at this point
         ui = self.tabs[hci_dev]
         ui['visible'] = True
+
         name = adapter["Alias"]
-        label = Gtk.Label(label=name)
+        label = Gtk.Label(label=name, ellipsize=Pango.EllipsizeMode.END,
+                          halign=Gtk.Align.CENTER, width_request=110)
         ui['label'] = label
-        label.set_max_width_chars(20)
-        label.props.hexpand = True
-        label.set_ellipsize(Pango.EllipsizeMode.END)
         self.notebook.insert_page(ui['grid'], label, hci_dev_num)
 
     def remove_from_notebook(self, adapter):
