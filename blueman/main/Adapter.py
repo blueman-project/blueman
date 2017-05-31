@@ -101,26 +101,24 @@ class BluemanAdapters(Gtk.Dialog):
         # FIXME: show error dialog and exit
 
     def build_adapter_tab(self, adapter):
-        def on_hidden_toggle(radio):
+        def on_toggle(radio, radio_id):
             if not radio.props.active:
                 return
-            adapter['DiscoverableTimeout'] = 0
-            adapter['Discoverable'] = False
-            hscale.set_sensitive(False)
 
-        def on_always_toggle(radio):
-            if not radio.props.active:
-                return
-            adapter['DiscoverableTimeout'] = 0
-            adapter['Discoverable'] = True
-            hscale.set_sensitive(False)
+            if radio_id == "hidden":
+                adapter['DiscoverableTimeout'] = 0
+                adapter['Discoverable'] = False
+                hscale.set_sensitive(False)
 
-        def on_temporary_toggle(radio):
-            if not radio.props.active:
-                return
-            adapter['Discoverable'] = True
-            hscale.set_sensitive(True)
-            hscale.set_value(3)
+            if radio_id == "always":
+                adapter['DiscoverableTimeout'] = 0
+                adapter['Discoverable'] = True
+                hscale.set_sensitive(False)
+
+            if radio_id == "temporary":
+                adapter['Discoverable'] = True
+                hscale.set_sensitive(True)
+                hscale.set_value(3)
 
         def on_scale_format_value(scale, value):
             if value == 0:
@@ -170,9 +168,9 @@ class BluemanAdapters(Gtk.Dialog):
         name_entry = builder.get_object("name_entry")
         name_entry.set_text(adapter.get_name())
 
-        hidden_radio.connect("toggled", on_hidden_toggle)
-        always_radio.connect("toggled", on_always_toggle)
-        temporary_radio.connect("toggled", on_temporary_toggle)
+        hidden_radio.connect("toggled", on_toggle, "hidden")
+        always_radio.connect("toggled", on_toggle, "always")
+        temporary_radio.connect("toggled", on_toggle, "temporary")
         name_entry.connect("changed", on_name_changed)
 
         ui['grid'] = builder.get_object("grid")
