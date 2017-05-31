@@ -142,19 +142,25 @@ class BluemanAdapters(Gtk.Dialog):
 
         ui = {}
 
-        builder = Gtk.Builder()
-        builder.set_translation_domain("blueman")
-        builder.add_from_file(UI_PATH + "/adapters-tab.ui")
+        grid = Gtk.Grid(row_spacing=2, margin=12, orientation=Gtk.Orientation.VERTICAL)
 
-        hscale = builder.get_object("hscale")
+        visibility_label = Gtk.Label("<b>Visibility Settings</b>", halign=Gtk.Align.START,
+                                     use_markup=True)
+        grid.add(visibility_label)
+
+        hidden_radio = Gtk.RadioButton.new_with_label(None, "Hidden")
+        grid.add(hidden_radio)
+        always_radio = Gtk.RadioButton.new_with_label_from_widget(hidden_radio, "Always visible")
+        grid.add(always_radio)
+        temporary_radio = Gtk.RadioButton.new_with_label_from_widget(hidden_radio, "Temporary")
+        grid.add(temporary_radio)
+
+        hscale = Gtk.Scale(orientation=Gtk.Orientation.HORIZONTAL, digits=0)
+        grid.add(hscale)
         hscale.connect("format-value", on_scale_format_value)
         hscale.connect("value-changed", on_scale_value_changed)
         hscale.set_range(0, 30)
         hscale.set_increments(1, 1)
-
-        hidden_radio = builder.get_object("hidden")
-        always_radio = builder.get_object("always")
-        temporary_radio = builder.get_object("temporary")
 
         if adapter['Discoverable'] and adapter['DiscoverableTimeout'] > 0:
             temporary_radio.set_active(True)
@@ -165,7 +171,11 @@ class BluemanAdapters(Gtk.Dialog):
         else:
             hidden_radio.set_active(True)
 
-        name_entry = builder.get_object("name_entry")
+        label_friendly = Gtk.Label("<b>Friendly name</b>", halign=Gtk.Align.START,
+                                   use_markup=True)
+        grid.add(label_friendly)
+        name_entry = Gtk.Entry(max_length=248, width_request=280)
+        grid.add(name_entry)
         name_entry.set_text(adapter.get_name())
 
         hidden_radio.connect("toggled", on_toggle, "hidden")
@@ -173,7 +183,7 @@ class BluemanAdapters(Gtk.Dialog):
         temporary_radio.connect("toggled", on_toggle, "temporary")
         name_entry.connect("changed", on_name_changed)
 
-        ui['grid'] = builder.get_object("grid")
+        ui['grid'] = grid
         ui["hidden_radio"] = hidden_radio
         ui["always_radio"] = always_radio
         ui["temparary_radio"] = temporary_radio

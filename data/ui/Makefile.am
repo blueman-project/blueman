@@ -1,7 +1,6 @@
 uidir = $(pkgdatadir)/ui
 
 ui_DATA =				\
-	adapters-tab.ui		\
 	applet-passkey.ui	\
 	manager-main.ui		\
 	services-network.ui \
