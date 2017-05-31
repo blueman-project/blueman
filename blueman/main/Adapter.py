@@ -13,13 +13,14 @@ import blueman.bluez as Bluez
 
 class BluemanAdapters(Gtk.Dialog):
     def __init__(self, selected_hci_dev, socket_id):
-        super(BluemanAdapters, self).__init__(title=_("Bluetooth Adapters"))
-        # Setup dialog
-        self.set_border_width(5)
-        self.set_resizable(False)
-        self.props.icon_name = "blueman-device"
-        self.props.window_position = Gtk.WindowPosition.CENTER
-        self.set_name("BluemanAdapters")
+        super(BluemanAdapters, self).__init__(
+            title=_("Bluetooth Adapters"),
+            border_width=5,
+            icon_name="blueman-device",
+            window_position=Gtk.WindowPosition.CENTER,
+            name="BluemanAdapters"
+        )
+
         self.connect("response", self.on_dialog_response)
 
         close_button = self.add_button("_Close", Gtk.ResponseType.CLOSE)
