@@ -193,9 +193,7 @@ class BluemanAdapters(Gtk.Dialog):
             #might need to update settings at this point
         ui = self.tabs[hci_dev]
         ui['visible'] = True
-        name = adapter.get_name()
-        if name == '':
-            name = _('Adapter') + ' %d' % (hci_dev_num + 1)
+        name = adapter["Alias"]
         label = Gtk.Label(label=name)
         ui['label'] = label
         label.set_max_width_chars(20)
