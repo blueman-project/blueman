@@ -18,7 +18,8 @@ class BluemanAdapters(Gtk.Dialog):
             border_width=5,
             icon_name="blueman-device",
             window_position=Gtk.WindowPosition.CENTER,
-            name="BluemanAdapters"
+            name="BluemanAdapters",
+            width_request=290
         )
 
         self.connect("response", self.on_dialog_response)
@@ -155,7 +156,7 @@ class BluemanAdapters(Gtk.Dialog):
         temporary_radio = Gtk.RadioButton.new_with_label_from_widget(hidden_radio, "Temporary")
         grid.add(temporary_radio)
 
-        hscale = Gtk.Scale(orientation=Gtk.Orientation.HORIZONTAL, digits=0)
+        hscale = Gtk.Scale(orientation=Gtk.Orientation.HORIZONTAL, digits=0, hexpand=True)
         grid.add(hscale)
         hscale.connect("format-value", on_scale_format_value)
         hscale.connect("value-changed", on_scale_value_changed)
@@ -174,7 +175,7 @@ class BluemanAdapters(Gtk.Dialog):
         label_friendly = Gtk.Label("<b>Friendly name</b>", halign=Gtk.Align.START,
                                    use_markup=True)
         grid.add(label_friendly)
-        name_entry = Gtk.Entry(max_length=248, width_request=280)
+        name_entry = Gtk.Entry(max_length=248, hexpand=True)
         grid.add(name_entry)
         name_entry.set_text(adapter.get_name())
 
