@@ -156,7 +156,7 @@ class BluemanAdapters(Gtk.Dialog):
         temporary_radio = Gtk.RadioButton.new_with_label_from_widget(hidden_radio, "Temporary")
         grid.add(temporary_radio)
 
-        hscale = Gtk.Scale(orientation=Gtk.Orientation.HORIZONTAL, digits=0, hexpand=True)
+        hscale = Gtk.Scale(orientation=Gtk.Orientation.HORIZONTAL, digits=0, hexpand=True, sensitive=False)
         grid.add(hscale)
         hscale.connect("format-value", on_scale_format_value)
         hscale.connect("value-changed", on_scale_value_changed)
