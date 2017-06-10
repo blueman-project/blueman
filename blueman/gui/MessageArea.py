@@ -5,10 +5,7 @@ gi.require_version("Gdk", "3.0")
 from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import Pango
-from gi.repository import GObject
 from blueman.gui.GtkAnimation import WidgetFade
-from blueman.Constants import *
-from blueman.Functions import get_icon
 
 
 class MessageArea(Gtk.EventBox):

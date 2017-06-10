@@ -1,13 +1,8 @@
 # coding=utf-8
 from blueman.Functions import *
 import logging
-
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
 from gi.repository import GLib
 from blueman.plugins.AppletPlugin import AppletPlugin
-import blueman.bluez as bluez
 
 
 class ShowConnected(AppletPlugin):

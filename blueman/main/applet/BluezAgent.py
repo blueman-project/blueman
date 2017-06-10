@@ -2,7 +2,6 @@
 import os.path
 import logging
 from locale import bind_textdomain_codeset
-from blueman.Functions import get_icon
 
 import gi
 gi.require_version("Gtk", "3.0")

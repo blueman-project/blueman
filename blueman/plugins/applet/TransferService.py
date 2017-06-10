@@ -7,7 +7,7 @@ import os
 import shutil
 import logging
 from blueman.bluez import obex
-from blueman.Functions import get_icon, launch
+from blueman.Functions import launch
 from blueman.gui.Notification import Notification
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Config import Config
