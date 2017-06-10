@@ -39,6 +39,7 @@ class BluemanAdapters(Gtk.Dialog):
             self.show()
         self.tabs = {}
         self._adapters = {}
+        self._last_visible_mode = None
 
         setup_icon_path()
         Bluez.Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
@@ -107,11 +108,13 @@ class BluemanAdapters(Gtk.Dialog):
                 return
 
             if radio_id == "hidden":
+                self._last_visible_mode = "hidden"
                 adapter['DiscoverableTimeout'] = 0
                 adapter['Discoverable'] = False
                 hscale.set_sensitive(False)
 
             if radio_id == "always":
+                self._last_visible_mode = "always"
                 adapter['DiscoverableTimeout'] = 0
                 adapter['Discoverable'] = True
                 hscale.set_sensitive(False)
@@ -134,7 +137,10 @@ class BluemanAdapters(Gtk.Dialog):
             val = scale.get_value()
             logging.info('value: %s' % val)
             if val == 0 and adapter['Discoverable']:
-                always_radio.props.active = True
+                if self._last_visible_mode == "always":
+                    always_radio.props.active = True
+                elif self._last_visible_mode == "hidden":
+                    hidden_radio.props.active = True
             timeout = int(val * 60)
             adapter['DiscoverableTimeout'] = timeout
 
@@ -169,8 +175,10 @@ class BluemanAdapters(Gtk.Dialog):
             hscale.set_sensitive(True)
         elif adapter['Discoverable'] and adapter['DiscoverableTimeout'] == 0:
             always_radio.set_active(True)
+            self._last_visible_mode = "always"
         else:
             hidden_radio.set_active(True)
+            self._last_visible_mode = "hidden"
 
         label_friendly = Gtk.Label("<b>Friendly name</b>", halign=Gtk.Align.START,
                                    use_markup=True)
