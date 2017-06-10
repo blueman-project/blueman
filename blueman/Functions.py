@@ -232,10 +232,13 @@ def format_bytes(size):
     return (ret, suffix)
 
 
-def create_menuitem_box(text, pixbuf, orientation=Gtk.Orientation.HORIZONTAL, size=6):
-    '''Create a box with icon and label, optinally set size and orientation'''
+def create_menuitem_box(text, icon_name, pixbuf, orientation=Gtk.Orientation.HORIZONTAL, size=6):
+    '''Create a box with icon and label, optionally set size and orientation'''
     item_box = Gtk.Box.new(orientation, size)
-    icon = Gtk.Image.new_from_pixbuf(pixbuf)
+    if icon_name:
+        icon = Gtk.Image(icon_name=icon_name, icon_size=Gtk.IconSize.MENU)
+    else:
+        icon = Gtk.Image(pixbuf=pixbuf)
     label = Gtk.Label.new_with_mnemonic(text)
 
     item_box.add(icon)
@@ -244,8 +247,8 @@ def create_menuitem_box(text, pixbuf, orientation=Gtk.Orientation.HORIZONTAL, si
     return item_box
 
 
-def create_menuitem(text, pixbuf):
-    box = create_menuitem_box(text, pixbuf)
+def create_menuitem(text, icon_name=None, pixbuf=None):
+    box = create_menuitem_box(text, icon_name, pixbuf)
     item = Gtk.MenuItem()
     item.add(box)
     item.show_all()
