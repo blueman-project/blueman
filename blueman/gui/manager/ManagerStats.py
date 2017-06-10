@@ -28,40 +28,28 @@ class ManagerStats:
         self.up_speed = SpeedCalc()
         self.down_speed = SpeedCalc()
 
-        self.im_upload = Gtk.Image(icon_name="blueman-up-inactive", icon_size=Gtk.IconSize.MENU)
-        self.im_upload.set_tooltip_text(_("Data activity indication"))
-        self.im_download = Gtk.Image(icon_name="blueman-down-inactive", icon_size=Gtk.IconSize.MENU)
-        self.im_download.set_tooltip_text(_("Data activity indication"))
-        self.im_upload.props.halign = Gtk.Align.END
-        self.im_upload.props.valign = Gtk.Align.CENTER
-        self.im_download.props.halign = Gtk.Align.END
-        self.im_download.props.valign = Gtk.Align.CENTER
-
-        self.down_rate = Gtk.Label()
+        self.im_upload = Gtk.Image(icon_name="blueman-up-inactive", icon_size=Gtk.IconSize.MENU,
+                                   halign=Gtk.Align.END, valign=Gtk.Align.CENTER,
+                                   tooltip_text=_("Data activity indication"))
+        self.im_download = Gtk.Image(icon_name="blueman-down-inactive", icon_size=Gtk.IconSize.MENU,
+                                     halign=Gtk.Align.END, valign=Gtk.Align.CENTER,
+                                     tooltip_text=_("Data activity indication"))
+        self.down_rate = Gtk.Label(halign=Gtk.Align.END, valign=Gtk.Align.CENTER,
+                                   tooltip_text=_("Total data received and rate of transmission"))
         self.down_rate.show()
-        self.down_rate.props.halign = Gtk.Align.END
-        self.down_rate.props.valign = Gtk.Align.CENTER
-        self.down_rate.set_tooltip_text(_("Total data received and rate of transmission"))
 
-        self.up_rate = Gtk.Label()
+        self.up_rate = Gtk.Label(halign=Gtk.Align.END, valign=Gtk.Align.CENTER,
+                                 tooltip_text=_("Total data sent and rate of transmission"))
         self.up_rate.show()
-        self.up_rate.props.halign = Gtk.Align.END
-        self.up_rate.props.valign = Gtk.Align.CENTER
-        self.up_rate.set_tooltip_text(_("Total data sent and rate of transmission"))
 
-        self.uparrow = Gtk.Image()
-        self.uparrow.set_tooltip_text(_("Total data sent and rate of transmission"))
-        self.uparrow.set_from_icon_name("go-up", 1)
-        self.uparrow.props.halign = Gtk.Align.END
-        self.uparrow.props.valign = Gtk.Align.CENTER
-
-        self.downarrow = Gtk.Image()
-        self.downarrow.set_tooltip_text(_("Total data received and rate of transmission"))
-        self.downarrow.set_from_icon_name("go-down", 1)
+        self.uparrow = Gtk.Image(icon_name="go-up", icon_size=1, halign=Gtk.Align.END, valign=Gtk.Align.CENTER,
+                                 tooltip_text=_("Total data sent and rate of transmission"))
+        self.downarrow = Gtk.Image(icon_name="go-down", icon_size=1, halign=Gtk.Align.END, valign=Gtk.Align.CENTER,
+                                   tooltip_text=_("Total data received and rate of transmission"))
 
         self.hbox = hbox = blueman.Builder.get_object("status_activity")
 
-        hbox.pack_start(self.uparrow, True, False, 0)
+        hbox.pack_start(self.uparrow, False, False, 0)
         hbox.pack_start(self.up_rate, False, False, 0)
 
         hbox.pack_start(self.downarrow, False, False, 0)
