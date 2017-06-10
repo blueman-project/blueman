@@ -2,7 +2,7 @@
 from blueman.gui.GenericList import GenericList
 
 from blueman.Constants import *
-from blueman.Functions import *
+from blueman.Functions import check_single_instance, get_icon
 import logging
 import gi
 gi.require_version("Gtk", "3.0")
