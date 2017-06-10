@@ -266,6 +266,7 @@ data/icons/hicolor/16x16/status/Makefile
 data/icons/hicolor/22x22/Makefile
 data/icons/hicolor/22x22/status/Makefile
 data/icons/hicolor/24x24/Makefile
+data/icons/hicolor/24x24/actions/Makefile
 data/icons/hicolor/24x24/status/Makefile
 data/icons/hicolor/32x32/Makefile
 data/icons/hicolor/32x32/actions/Makefile
