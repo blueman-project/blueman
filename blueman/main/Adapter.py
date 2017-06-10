@@ -13,13 +13,15 @@ import blueman.bluez as Bluez
 
 class BluemanAdapters(Gtk.Dialog):
     def __init__(self, selected_hci_dev, socket_id):
-        super(BluemanAdapters, self).__init__(title=_("Bluetooth Adapters"))
-        # Setup dialog
-        self.set_border_width(5)
-        self.set_resizable(False)
-        self.props.icon_name = "blueman-device"
-        self.props.window_position = Gtk.WindowPosition.CENTER
-        self.set_name("BluemanAdapters")
+        super(BluemanAdapters, self).__init__(
+            title=_("Bluetooth Adapters"),
+            border_width=5,
+            icon_name="blueman-device",
+            window_position=Gtk.WindowPosition.CENTER,
+            name="BluemanAdapters",
+            width_request=290
+        )
+
         self.connect("response", self.on_dialog_response)
 
         close_button = self.add_button("_Close", Gtk.ResponseType.CLOSE)
@@ -37,6 +39,7 @@ class BluemanAdapters(Gtk.Dialog):
             self.show()
         self.tabs = {}
         self._adapters = {}
+        self._last_visible_mode = None
 
         setup_icon_path()
         Bluez.Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
@@ -100,26 +103,27 @@ class BluemanAdapters(Gtk.Dialog):
         # FIXME: show error dialog and exit
 
     def build_adapter_tab(self, adapter):
-        def on_hidden_toggle(radio):
+        def on_toggle(radio, radio_id):
+            # FIXME properly set the scale to zero and have the format-value updated
             if not radio.props.active:
                 return
-            adapter['DiscoverableTimeout'] = 0
-            adapter['Discoverable'] = False
-            hscale.set_sensitive(False)
 
-        def on_always_toggle(radio):
-            if not radio.props.active:
-                return
-            adapter['DiscoverableTimeout'] = 0
-            adapter['Discoverable'] = True
-            hscale.set_sensitive(False)
+            if radio_id == "hidden":
+                self._last_visible_mode = "hidden"
+                adapter['DiscoverableTimeout'] = 0
+                adapter['Discoverable'] = False
+                hscale.set_sensitive(False)
 
-        def on_temporary_toggle(radio):
-            if not radio.props.active:
-                return
-            adapter['Discoverable'] = True
-            hscale.set_sensitive(True)
-            hscale.set_value(3)
+            if radio_id == "always":
+                self._last_visible_mode = "always"
+                adapter['DiscoverableTimeout'] = 0
+                adapter['Discoverable'] = True
+                hscale.set_sensitive(False)
+
+            if radio_id == "temporary":
+                adapter['Discoverable'] = True
+                hscale.set_sensitive(True)
+                hscale.set_value(3)
 
         def on_scale_format_value(scale, value):
             if value == 0:
@@ -134,7 +138,10 @@ class BluemanAdapters(Gtk.Dialog):
             val = scale.get_value()
             logging.info('value: %s' % val)
             if val == 0 and adapter['Discoverable']:
-                always_radio.props.active = True
+                if self._last_visible_mode == "always":
+                    always_radio.props.active = True
+                elif self._last_visible_mode == "hidden":
+                    hidden_radio.props.active = True
             timeout = int(val * 60)
             adapter['DiscoverableTimeout'] = timeout
 
@@ -143,19 +150,25 @@ class BluemanAdapters(Gtk.Dialog):
 
         ui = {}
 
-        builder = Gtk.Builder()
-        builder.set_translation_domain("blueman")
-        builder.add_from_file(UI_PATH + "/adapters-tab.ui")
+        grid = Gtk.Grid(row_spacing=2, margin=12, orientation=Gtk.Orientation.VERTICAL)
 
-        hscale = builder.get_object("hscale")
+        visibility_label = Gtk.Label("<b>Visibility Settings</b>", halign=Gtk.Align.START,
+                                     use_markup=True)
+        grid.add(visibility_label)
+
+        hidden_radio = Gtk.RadioButton.new_with_label(None, "Hidden")
+        grid.add(hidden_radio)
+        always_radio = Gtk.RadioButton.new_with_label_from_widget(hidden_radio, "Always visible")
+        grid.add(always_radio)
+        temporary_radio = Gtk.RadioButton.new_with_label_from_widget(hidden_radio, "Temporary")
+        grid.add(temporary_radio)
+
+        hscale = Gtk.Scale(orientation=Gtk.Orientation.HORIZONTAL, digits=0, hexpand=True, sensitive=False)
+        grid.add(hscale)
         hscale.connect("format-value", on_scale_format_value)
         hscale.connect("value-changed", on_scale_value_changed)
         hscale.set_range(0, 30)
         hscale.set_increments(1, 1)
-
-        hidden_radio = builder.get_object("hidden")
-        always_radio = builder.get_object("always")
-        temporary_radio = builder.get_object("temporary")
 
         if adapter['Discoverable'] and adapter['DiscoverableTimeout'] > 0:
             temporary_radio.set_active(True)
@@ -163,18 +176,24 @@ class BluemanAdapters(Gtk.Dialog):
             hscale.set_sensitive(True)
         elif adapter['Discoverable'] and adapter['DiscoverableTimeout'] == 0:
             always_radio.set_active(True)
+            self._last_visible_mode = "always"
         else:
             hidden_radio.set_active(True)
+            self._last_visible_mode = "hidden"
 
-        name_entry = builder.get_object("name_entry")
+        label_friendly = Gtk.Label("<b>Friendly name</b>", halign=Gtk.Align.START,
+                                   use_markup=True)
+        grid.add(label_friendly)
+        name_entry = Gtk.Entry(max_length=248, hexpand=True)
+        grid.add(name_entry)
         name_entry.set_text(adapter.get_name())
 
-        hidden_radio.connect("toggled", on_hidden_toggle)
-        always_radio.connect("toggled", on_always_toggle)
-        temporary_radio.connect("toggled", on_temporary_toggle)
+        hidden_radio.connect("toggled", on_toggle, "hidden")
+        always_radio.connect("toggled", on_toggle, "always")
+        temporary_radio.connect("toggled", on_toggle, "temporary")
         name_entry.connect("changed", on_name_changed)
 
-        ui['grid'] = builder.get_object("grid")
+        ui['grid'] = grid
         ui["hidden_radio"] = hidden_radio
         ui["always_radio"] = always_radio
         ui["temparary_radio"] = temporary_radio
@@ -192,14 +211,11 @@ class BluemanAdapters(Gtk.Dialog):
             #might need to update settings at this point
         ui = self.tabs[hci_dev]
         ui['visible'] = True
-        name = adapter.get_name()
-        if name == '':
-            name = _('Adapter') + ' %d' % (hci_dev_num + 1)
-        label = Gtk.Label(label=name)
+
+        name = adapter["Alias"]
+        label = Gtk.Label(label=name, ellipsize=Pango.EllipsizeMode.END,
+                          halign=Gtk.Align.CENTER, width_request=110)
         ui['label'] = label
-        label.set_max_width_chars(20)
-        label.props.hexpand = True
-        label.set_ellipsize(Pango.EllipsizeMode.END)
         self.notebook.insert_page(ui['grid'], label, hci_dev_num)
 
     def remove_from_notebook(self, adapter):
