@@ -104,6 +104,7 @@ class BluemanAdapters(Gtk.Dialog):
 
     def build_adapter_tab(self, adapter):
         def on_toggle(radio, radio_id):
+            # FIXME properly set the scale to zero and have the format-value updated
             if not radio.props.active:
                 return
 
