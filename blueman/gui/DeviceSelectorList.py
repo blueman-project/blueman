@@ -4,7 +4,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import GdkPixbuf
 from gi.repository import Pango
-import cgi
+from html import escape
 from blueman.Functions import *
 from blueman.gui.DeviceList import DeviceList
 
@@ -55,7 +55,7 @@ class DeviceSelectorList(DeviceList):
                 self.set(tree_iter, bonded_icon=None)
 
         elif key == "Alias":
-            self.set(tree_iter, caption=cgi.escape(value))
+            self.set(tree_iter, caption=escape(value))
 
         elif key == "Icon":
             self.set(tree_iter, device_pb=get_icon(value, 16))

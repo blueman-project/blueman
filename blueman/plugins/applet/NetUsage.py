@@ -9,7 +9,7 @@ from _blueman import rfcomm_list
 from gi.repository import GObject
 from gi.repository import GLib
 import weakref
-import cgi
+from html import escape
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -246,7 +246,7 @@ class Dialog:
         self.update_time()
 
     def get_caption(self, name, address):
-        return "%s\n<small>%s</small>" % (cgi.escape(name), address)
+        return "%s\n<small>%s</small>" % (escape(name), address)
 
     def update_counts(self, tx, rx):
         tx = int(tx)
