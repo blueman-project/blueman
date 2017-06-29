@@ -194,8 +194,8 @@ PKG_CHECK_MODULES([ADWAITAICONS],[adwaita-icon-theme],
 
 if test "x$HAVE_GNOME_ICONS" = "xno" &&
    test "x$HAVE_MATE_ICONS" = "xno" &&
-   test "xHAVE_FAENZA_ICONS" = "xno" &&
-   test "xHAVE_ADWAITA_ICONS" = "xno"; then
+   test "x$HAVE_FAENZA_ICONS" = "xno" &&
+   test "x$HAVE_ADWAITA_ICONS" = "xno"; then
 	AC_MSG_ERROR([Required icon themes not found.])
 fi
 
