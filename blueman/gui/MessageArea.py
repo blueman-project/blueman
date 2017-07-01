@@ -32,14 +32,14 @@ class MessageArea(Gtk.EventBox):
 
         self.setting_style = False
 
-        self.icon = Gtk.Image(icon_size=Gtk.IconSize.MENU, visible=True)
+        self.icon = Gtk.Image(pixel_size=16, visible=True)
         self.label = Gtk.Label(xalign=0, ellipsize=Pango.EllipsizeMode.END, single_line_mode=True,
                                selectable=True, visible=True)
 
-        im = Gtk.Image(icon_name="dialog-information", icon_size=Gtk.IconSize.MENU, visible=True)
+        im = Gtk.Image(icon_name="dialog-information", pixel_size=16, visible=True)
         self.b_more = Gtk.Button(label=_("More"), relief=Gtk.ReliefStyle.NONE, visible=True, image=im)
 
-        im = Gtk.Image(icon_name="window-close", icon_size=Gtk.IconSize.MENU, visible=True)
+        im = Gtk.Image(icon_name="window-close", pixel_size=16, visible=True)
         self.b_close = Gtk.Button(label=_("Close"), relief=Gtk.ReliefStyle.NONE, tooltip_text=_("Close"),
                                   visible=True, image=im)
 

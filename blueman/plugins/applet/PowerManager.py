@@ -159,7 +159,7 @@ class PowerManager(AppletPlugin):
         if foff or off:
 
             label.set_markup_with_mnemonic(_("<b>Turn Bluetooth _On</b>"))
-            icon.set_from_icon_name("blueman", Gtk.IconSize.MENU)
+            icon.props.icon_name = "blueman"
             self.item.props.tooltip_text = _("Turn on all adapters")
 
             if foff:
@@ -172,7 +172,7 @@ class PowerManager(AppletPlugin):
         elif on and not self.current_state:
 
             label.set_markup_with_mnemonic(_("<b>Turn Bluetooth _Off</b>"))
-            icon.set_from_pixbuf("blueman-disabled", Gtk.IconSize.MENU)
+            icon.props.icon_name = "blueman-disabled"
             self.item.props.tooltip_text = _("Turn off all adapters")
             self.item.props.sensitive = True
 

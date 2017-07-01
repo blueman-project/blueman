@@ -89,13 +89,15 @@ class ManagerToolbar:
                 self.b_bond.props.sensitive = True
 
             if row["trusted"]:
+                image = Gtk.Image(icon_name="blueman-untrust", pixel_size=24, visible=True)
+                self.b_trust.props.icon_widget = image
                 self.b_trust.props.sensitive = True
-                self.b_trust.props.icon_name = "blueman-untrust"
                 self.b_trust.props.label = _("Untrust")
 
             else:
+                image = Gtk.Image(icon_name="blueman-trust", pixel_size=24, visible=True)
+                self.b_trust.props.icon_widget = image
                 self.b_trust.props.sensitive = True
-                self.b_trust.props.icon_name = "blueman-trust"
                 self.b_trust.props.label = _("Trust")
 
             if row["fake"]:

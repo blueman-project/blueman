@@ -28,10 +28,10 @@ class ManagerStats:
         self.up_speed = SpeedCalc()
         self.down_speed = SpeedCalc()
 
-        self.im_upload = Gtk.Image(icon_name="blueman-up-inactive", icon_size=Gtk.IconSize.MENU,
+        self.im_upload = Gtk.Image(icon_name="blueman-up-inactive", pixel_size=16,
                                    halign=Gtk.Align.END, valign=Gtk.Align.CENTER,
                                    tooltip_text=_("Data activity indication"))
-        self.im_download = Gtk.Image(icon_name="blueman-down-inactive", icon_size=Gtk.IconSize.MENU,
+        self.im_download = Gtk.Image(icon_name="blueman-down-inactive", pixel_size=16,
                                      halign=Gtk.Align.END, valign=Gtk.Align.CENTER,
                                      tooltip_text=_("Data activity indication"))
         self.down_rate = Gtk.Label(halign=Gtk.Align.END, valign=Gtk.Align.CENTER,
@@ -42,9 +42,9 @@ class ManagerStats:
                                  tooltip_text=_("Total data sent and rate of transmission"))
         self.up_rate.show()
 
-        self.uparrow = Gtk.Image(icon_name="go-up", icon_size=1, halign=Gtk.Align.END, valign=Gtk.Align.CENTER,
+        self.uparrow = Gtk.Image(icon_name="go-up", pixel_size=16, halign=Gtk.Align.END, valign=Gtk.Align.CENTER,
                                  tooltip_text=_("Total data sent and rate of transmission"))
-        self.downarrow = Gtk.Image(icon_name="go-down", icon_size=1, halign=Gtk.Align.END, valign=Gtk.Align.CENTER,
+        self.downarrow = Gtk.Image(icon_name="go-down", pixel_size=16, halign=Gtk.Align.END, valign=Gtk.Align.CENTER,
                                    tooltip_text=_("Total data received and rate of transmission"))
 
         self.hbox = hbox = blueman.Builder.get_object("status_activity")

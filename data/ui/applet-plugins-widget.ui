@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 -->
+<!-- Generated with glade 3.20.0 -->
 <interface>
   <requires lib="gtk+" version="3.0"/>
   <object class="GtkImage" id="config_im">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
+    <property name="pixel_size">16</property>
     <property name="icon_name">preferences-desktop</property>
   </object>
   <object class="GtkGrid" id="all">
@@ -38,6 +39,7 @@
           <object class="GtkImage" id="icon">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="pixel_size">24</property>
             <property name="icon_name">blueman</property>
             <property name="icon_size">3</property>
           </object>
