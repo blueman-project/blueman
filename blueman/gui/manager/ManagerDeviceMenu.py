@@ -29,14 +29,6 @@ from gi.repository import Gtk
 from gi.repository import GLib
 
 
-def get_x_icon(icon_name, size):
-    ic = get_icon(icon_name, size)
-    x = get_icon("blueman-x", size)
-    pixbuf = composite_icon(ic, [(x, 0, 0, 255)])
-
-    return pixbuf
-
-
 class ManagerDeviceMenu(Gtk.Menu):
     __ops__ = {}
     __instances__ = []
