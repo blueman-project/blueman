@@ -28,14 +28,10 @@ class ManagerStats:
         self.up_speed = SpeedCalc()
         self.down_speed = SpeedCalc()
 
-        up = get_icon("blueman-up-inactive", 15)
-        down = get_icon("blueman-down-inactive", 15)
-        self.im_upload = Gtk.Image()
+        self.im_upload = Gtk.Image(icon_name="blueman-up-inactive", icon_size=Gtk.IconSize.MENU)
         self.im_upload.set_tooltip_text(_("Data activity indication"))
-        self.im_upload.set_from_pixbuf(up)
-        self.im_download = Gtk.Image()
+        self.im_download = Gtk.Image(icon_name="blueman-down-inactive", icon_size=Gtk.IconSize.MENU)
         self.im_download.set_tooltip_text(_("Data activity indication"))
-        self.im_download.set_from_pixbuf(down)
         self.im_upload.props.halign = Gtk.Align.END
         self.im_upload.props.valign = Gtk.Align.CENTER
         self.im_download.props.halign = Gtk.Align.END

@@ -1,7 +1,7 @@
 from gi.repository import Gtk, Gdk
 
 import logging
-from blueman.Functions import create_menuitem, get_icon
+from blueman.Functions import create_menuitem
 from blueman.Sdp import ServiceUUID
 from blueman.bluez.errors import BluezDBusException
 
@@ -105,7 +105,7 @@ class Info(ManagerPlugin):
         pass
 
     def on_request_menu_items(self, manager_menu, device):
-        item = create_menuitem(_("_Info"), get_icon("info", 16))
+        item = create_menuitem(_("_Info"), "info")
         item.props.tooltip_text = _("Show device information")
         item.connect('activate', lambda x: show_info(device, manager_menu.get_toplevel()))
         return [(item, 400)]

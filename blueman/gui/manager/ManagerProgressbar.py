@@ -7,7 +7,6 @@ from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import GLib
-from blueman.Functions import get_icon
 import logging
 
 
@@ -30,7 +29,7 @@ class ManagerProgressbar(GObject.GObject):
 
         self._signals = []
 
-        self.button = Gtk.Image.new_from_pixbuf(get_icon("process-stop", 16))
+        self.button = Gtk.Image(icon_name="process-stop", icon_size=Gtk.IconSize.MENU)
 
         self.eventbox = eventbox = Gtk.EventBox()
         eventbox.add(self.button)

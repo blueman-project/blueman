@@ -4,7 +4,7 @@ from blueman.main.PulseAudioUtils import PulseAudioUtils, EventType
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.gui.MessageArea import MessageArea
 
-from blueman.Functions import get_icon, create_menuitem
+from blueman.Functions import create_menuitem
 from blueman.Sdp import AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID, ServiceUUID
 
 import gi
@@ -120,7 +120,7 @@ class PulseAudioProfile(ManagerPlugin):
                 self.deferred.append(device)
                 return
 
-            self.item = create_menuitem(_("Audio Profile"), get_icon("audio-card", 16))
+            self.item = create_menuitem(_("Audio Profile"), "audio-card")
             self.item.props.tooltip_text = _("Select audio profile for PulseAudio")
 
             if not device['Address'] in self.devices:

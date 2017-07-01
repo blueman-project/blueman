@@ -65,7 +65,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
             RecentConns.atexit_registered = True
 
         self.Item = create_menuitem(_("Recent _Connections") + "...",
-                                    get_icon("document-open-recent", 16))
+                                    "document-open-recent")
 
         self.Applet.Plugins.Menu.Register(self, self.Item, 52)
         self.Applet.Plugins.Menu.Register(self, Gtk.SeparatorMenuItem(), 53)
@@ -261,7 +261,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
 
     def add_item(self, item):
         if not item["mitem"]:
-            mitem = create_menuitem("", get_icon(item["icon"], 16))
+            mitem = create_menuitem("", item["icon"])
             item["mitem"] = mitem
             mitem.connect("activate", self.on_item_activated, item)
         else:

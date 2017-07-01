@@ -333,7 +333,7 @@ class NetUsage(AppletPlugin, GObject.GObject):
         self._any_network = AnyNetwork()
         self._any_network.connect_signal('property-changed', self._on_network_property_changed)
 
-        item = create_menuitem(_("Network _Usage"), get_icon("network-wireless", 16))
+        item = create_menuitem(_("Network _Usage"), "network-wireless")
         item.props.tooltip_text = _("Shows network traffic usage")
         item.connect("activate", self.activate_ui)
         self.Applet.Plugins.Menu.Register(self, item, 84, True)

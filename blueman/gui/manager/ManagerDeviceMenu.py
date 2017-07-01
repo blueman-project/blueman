@@ -3,7 +3,7 @@ import logging
 from locale import bind_textdomain_codeset
 from operator import itemgetter
 from blueman.Constants import UI_PATH
-from blueman.Functions import get_icon, composite_icon, create_menuitem, e_
+from blueman.Functions import create_menuitem, e_
 from blueman.bluez.Network import AnyNetwork
 from blueman.bluez.Device import AnyDevice
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
@@ -234,7 +234,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         op = self.get_op(self.SelectedDevice)
 
         if op is not None:
-            item = create_menuitem(op, get_icon("network-transmit-recieve", 16))
+            item = create_menuitem(op, "network-transmit-recieve")
             item.props.sensitive = False
             item.show()
             self.append(item)
@@ -258,13 +258,13 @@ class ManagerDeviceMenu(Gtk.Menu):
                 break
 
         if not row["connected"] and show_generic_connect:
-            connect_item = create_menuitem(_("_Connect"), get_icon("blueman", 16))
+            connect_item = create_menuitem(_("_Connect"), "blueman")
             connect_item.connect("activate", self._generic_connect, self.SelectedDevice, True)
             connect_item.props.tooltip_text = _("Connects auto connect profiles A2DP source, A2DP sink, and HID")
             connect_item.show()
             self.append(connect_item)
         elif show_generic_connect:
-            connect_item = create_menuitem(_("_Disconnect"), get_icon("network-offline", 16))
+            connect_item = create_menuitem(_("_Disconnect"), "network-offline")
             connect_item.props.tooltip_text = _("Forcefully disconnect the device")
             connect_item.connect("activate", self._generic_connect, self.SelectedDevice, False)
             connect_item.show()
@@ -328,7 +328,7 @@ class ManagerDeviceMenu(Gtk.Menu):
 
         del items
 
-        send_item = create_menuitem(_("Send a _File..."), get_icon("edit-copy", 16))
+        send_item = create_menuitem(_("Send a _File..."), "edit-copy")
         send_item.props.sensitive = False
         self.append(send_item)
         send_item.show()
@@ -341,7 +341,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         item.show()
         self.append(item)
 
-        item = create_menuitem(_("_Pair"), get_icon("dialog-password", 16))
+        item = create_menuitem(_("_Pair"), "dialog-password")
         item.props.tooltip_text = _("Create pairing with the device")
         self.append(item)
         item.show()
@@ -351,18 +351,18 @@ class ManagerDeviceMenu(Gtk.Menu):
             item.props.sensitive = False
 
         if not row["trusted"]:
-            item = create_menuitem(_("_Trust"), get_icon("blueman-trust", 16))
+            item = create_menuitem(_("_Trust"), "blueman-trust")
             item.connect("activate", lambda x: self.Blueman.toggle_trust(self.SelectedDevice))
             self.append(item)
             item.show()
         else:
-            item = create_menuitem(_("_Untrust"), get_icon("blueman-untrust", 16))
+            item = create_menuitem(_("_Untrust"), "blueman-untrust")
             self.append(item)
             item.connect("activate", lambda x: self.Blueman.toggle_trust(self.SelectedDevice))
             item.show()
         item.props.tooltip_text = _("Mark/Unmark this device as trusted")
 
-        item = create_menuitem(_("_Setup..."), get_icon("document-properties", 16))
+        item = create_menuitem(_("_Setup..."), "document-properties")
         self.append(item)
         item.connect("activate", lambda x: self.Blueman.setup(self.SelectedDevice))
         item.show()
@@ -397,7 +397,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         item.show()
         self.append(item)
 
-        item = create_menuitem(_("_Remove..."), get_icon("edit-delete", 16))
+        item = create_menuitem(_("_Remove..."), "edit-delete")
         item.connect("activate", lambda x: self.Blueman.remove(self.SelectedDevice))
         self.append(item)
         item.show()

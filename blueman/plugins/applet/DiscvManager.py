@@ -27,7 +27,7 @@ class DiscvManager(AppletPlugin):
     }
 
     def on_load(self, applet):
-        self.item = create_menuitem(_("_Make Discoverable"), get_icon("edit-find", 16))
+        self.item = create_menuitem(_("_Make Discoverable"), "edit-find")
         self.item_label = self.item.get_child().get_children()[1]
         applet.Plugins.Menu.Register(self, self.item, 20, False)
 

@@ -32,11 +32,11 @@ class Services(ManagerPlugin):
 
         def add_menu_item(manager_menu, service):
             if service.connected:
-                item = create_menuitem(service.name, get_x_icon(service.icon, 16))
+                item = create_menuitem(service.name, pixbuf=get_x_icon(service.icon, 16))
                 item.connect("activate", manager_menu.on_disconnect, service)
                 items.append((item, service.priority + 100))
             else:
-                item = create_menuitem(service.name, get_icon(service.icon, 16))
+                item = create_menuitem(service.name, service.icon)
                 if service.description:
                     item.props.tooltip_text = service.description
                 item.connect("activate", manager_menu.on_connect, service)
@@ -56,7 +56,7 @@ class Services(ManagerPlugin):
                     if dev["dst"] == device['Address'] and dev["state"] == "connected":
                         devname = _("Serial Port %s") % "rfcomm%d" % dev["id"]
 
-                        item = create_menuitem(devname, get_x_icon("modem", 16))
+                        item = create_menuitem(devname, pixbuf=get_x_icon("modem", 16))
                         item.connect("activate", manager_menu.on_disconnect, service, dev["id"])
                         items.append((item, 120))
                         item.show()
@@ -66,7 +66,7 @@ class Services(ManagerPlugin):
                     def renew(x):
                         appl.DhcpClient('(s)', Network(device.get_object_path())["Interface"])
 
-                    item = create_menuitem(_("Renew IP Address"), get_icon("view-refresh", 16))
+                    item = create_menuitem(_("Renew IP Address"), "view-refresh")
                     item.connect("activate", renew)
                     item.show()
                     items.append((item, 201))
@@ -83,7 +83,7 @@ class Services(ManagerPlugin):
             item.show()
             serial_items.append(item)
 
-            item = create_menuitem(_("Dialup Settings"), get_icon("gtk-preferences", 16))
+            item = create_menuitem(_("Dialup Settings"), "gtk-preferences")
             serial_items.append(item)
             item.show()
             item.connect("activate", open_settings, device)
@@ -92,7 +92,7 @@ class Services(ManagerPlugin):
             sub = Gtk.Menu()
             sub.show()
 
-            item = create_menuitem(_("Serial Ports"), get_icon("modem", 16))
+            item = create_menuitem(_("Serial Ports"), "modem")
             item.set_submenu(sub)
             item.show()
             items.append((item, 90))
