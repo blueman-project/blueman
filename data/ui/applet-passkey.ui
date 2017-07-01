@@ -72,8 +72,7 @@
               <object class="GtkImage" id="pairing_image">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xalign">0</property>
-                <property name="yalign">0</property>
+                <property name="halign">start</property>
                 <property name="pixel_size">48</property>
                 <property name="icon_name">dialog-password</property>
                 <property name="icon_size">6</property>
@@ -87,9 +86,9 @@
               <object class="GtkLabel" id="pairing_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="halign">start</property>
+                <property name="valign">start</property>
                 <property name="label" translatable="yes">Pairing request for device:</property>
-                <property name="xalign">0</property>
-                <property name="yalign">0</property>
               </object>
               <packing>
                 <property name="left_attach">1</property>
@@ -101,11 +100,11 @@
                 <property name="width_request">280</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="halign">start</property>
+                <property name="valign">start</property>
                 <property name="use_markup">True</property>
                 <property name="wrap">True</property>
                 <property name="selectable">True</property>
-                <property name="xalign">0</property>
-                <property name="yalign">0</property>
               </object>
               <packing>
                 <property name="left_attach">1</property>
@@ -116,8 +115,9 @@
               <object class="GtkLabel" id="message">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xalign">0</property>
-                <property name="yalign">0</property>
+                <property name="halign">start</property>
+                <property name="valign">start</property>
+                <property name="label" translatable="yes">This should be overwritten</property>
               </object>
               <packing>
                 <property name="left_attach">1</property>
@@ -141,7 +141,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
-                <property name="xalign">0.5</property>
+                <property name="halign">start</property>
                 <property name="draw_indicator">True</property>
               </object>
               <packing>

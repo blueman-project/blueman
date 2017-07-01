@@ -53,9 +53,9 @@
           <object class="GtkLabel" id="name">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="xpad">11</property>
+            <property name="halign">start</property>
+            <property name="margin_left">11</property>
             <property name="use_markup">True</property>
-            <property name="xalign">0</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -107,10 +107,10 @@
                   <object class="GtkLabel" id="label2">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">start</property>
                     <property name="label" translatable="yes">&lt;b&gt;Plugin description:&lt;/b&gt;</property>
                     <property name="use_markup">True</property>
-                    <property name="xalign">0</property>
-                    <property name="yalign">0</property>
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
@@ -122,12 +122,12 @@
                     <property name="width_request">360</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">start</property>
                     <property name="label" translatable="yes">Not specified</property>
                     <property name="use_markup">True</property>
                     <property name="wrap">True</property>
                     <property name="selectable">True</property>
-                    <property name="xalign">0</property>
-                    <property name="yalign">0</property>
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
@@ -138,11 +138,11 @@
                   <object class="GtkLabel" id="author_hdr">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">start</property>
                     <property name="label" translatable="yes">&lt;b&gt;Author:&lt;/b&gt;</property>
                     <property name="use_markup">True</property>
                     <property name="wrap">True</property>
-                    <property name="xalign">0</property>
-                    <property name="yalign">0</property>
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
@@ -153,10 +153,10 @@
                   <object class="GtkLabel" id="author_txt">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">start</property>
                     <property name="label" translatable="yes">Unknown</property>
                     <property name="use_markup">True</property>
-                    <property name="xalign">0</property>
-                    <property name="yalign">0</property>
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
@@ -166,10 +166,10 @@
                 <child>
                   <object class="GtkLabel" id="depends_hdr">
                     <property name="can_focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">start</property>
                     <property name="label" translatable="yes">&lt;b&gt;Depends on:&lt;/b&gt;</property>
                     <property name="use_markup">True</property>
-                    <property name="xalign">0</property>
-                    <property name="yalign">0</property>
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
@@ -180,10 +180,10 @@
                   <object class="GtkLabel" id="depends_txt">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">start</property>
                     <property name="use_markup">True</property>
                     <property name="wrap">True</property>
-                    <property name="xalign">0</property>
-                    <property name="yalign">0</property>
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
@@ -194,10 +194,10 @@
                   <object class="GtkLabel" id="conflicts_hdr">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">start</property>
                     <property name="label" translatable="yes">&lt;b&gt;Conflicts with:&lt;/b&gt;</property>
                     <property name="use_markup">True</property>
-                    <property name="xalign">0</property>
-                    <property name="yalign">0</property>
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
@@ -208,8 +208,8 @@
                   <object class="GtkLabel" id="conflicts_txt">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
-                    <property name="yalign">0</property>
+                    <property name="halign">start</property>
+                    <property name="valign">start</property>
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
