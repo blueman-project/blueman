@@ -220,12 +220,12 @@ class ManagerDeviceMenu(Gtk.Menu):
             selected = self.Blueman.List.selected()
             if not selected:
                 return
-            row = self.Blueman.List.get(selected, "alias", "bonded", "connected", "trusted", "objpush", "device")
+            row = self.Blueman.List.get(selected, "alias", "paired", "connected", "trusted", "objpush", "device")
         else:
             (x, y) = self.Blueman.List.get_pointer()
             path = self.Blueman.List.get_path_at_pos(x, y)
             if path is not None:
-                row = self.Blueman.List.get(path[0], "alias", "bonded", "connected", "trusted", "objpush", "device")
+                row = self.Blueman.List.get(path[0], "alias", "paired", "connected", "trusted", "objpush", "device")
             else:
                 return
 
@@ -345,7 +345,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         item.props.tooltip_text = _("Create pairing with the device")
         self.append(item)
         item.show()
-        if not row["bonded"]:
+        if not row["paired"]:
             item.connect("activate", lambda x: self.Blueman.bond(self.SelectedDevice))
         else:
             item.props.sensitive = False

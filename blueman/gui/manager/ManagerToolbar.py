@@ -81,10 +81,10 @@ class ManagerToolbar:
             self.b_trust.props.sensitive = False
             self.b_setup.props.sensitive = False
         else:
-            row = dev_list.get(tree_iter, "bonded", "trusted", "objpush")
+            row = dev_list.get(tree_iter, "paired", "trusted", "objpush")
             self.b_setup.props.sensitive = True
             self.b_remove.props.sensitive = True
-            if row["bonded"]:
+            if row["paired"]:
                 self.b_bond.props.sensitive = False
             else:
                 self.b_bond.props.sensitive = True

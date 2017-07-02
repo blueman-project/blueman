@@ -22,11 +22,11 @@ class DeviceSelectorList(DeviceList):
             #device caption
             ["caption", str, cr, {"markup": 2}, None, {"expand": True}],
 
-            ["bonded_icon", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 3}, None],
+            ["paired_icon", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 3}, None],
             ["trusted_icon", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 4}, None]
 
             #["connected", bool], #used for quick access instead of device.GetProperties
-            #["bonded", bool], #used for quick access instead of device.GetProperties
+            #["paired", bool], #used for quick access instead of device.GetProperties
             #["trusted", bool], #used for quick access instead of device.GetProperties
         ]
 
@@ -48,9 +48,9 @@ class DeviceSelectorList(DeviceList):
 
         elif key == "Paired":
             if value:
-                self.set(tree_iter, bonded_icon=get_icon("dialog-password", 16))
+                self.set(tree_iter, paired_icon=get_icon("dialog-password", 16))
             else:
-                self.set(tree_iter, bonded_icon=None)
+                self.set(tree_iter, paired_icon=None)
 
         elif key == "Alias":
             self.set(tree_iter, caption=escape(value))

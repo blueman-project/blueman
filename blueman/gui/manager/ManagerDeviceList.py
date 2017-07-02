@@ -36,12 +36,12 @@ class ManagerDeviceList(DeviceList):
             ["rssi_pb", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 2}, None, {"spacing": 0}],
             ["lq_pb", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 3}, None, {"spacing": 0}],
             ["tpl_pb", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 4}, None, {"spacing": 0}],
-            # trusted/bonded icons
+            # trusted/paired icons
             # ["tb_icons", 'PyObject', CellRendererPixbufTable(), {"pixbuffs":5}, None],
 
             ["alias", str], # used for quick access instead of device.GetProperties
             ["connected", bool], # used for quick access instead of device.GetProperties
-            ["bonded", bool], # used for quick access instead of device.GetProperties
+            ["paired", bool], # used for quick access instead of device.GetProperties
             ["trusted", bool], # used for quick access instead of device.GetProperties
             ["objpush", bool], # used to set Send File button
 
@@ -175,9 +175,9 @@ class ManagerDeviceList(DeviceList):
         except GLib.Error:
             return get_icon(dev_icon_prop, 48, "blueman")
 
-    def make_device_icon(self, target, is_bonded=False, is_trusted=False):
+    def make_device_icon(self, target, is_paired=False, is_trusted=False):
         sources = []
-        if is_bonded:
+        if is_paired:
             sources.append((get_icon("dialog-password", 16), 0, 0, 200))
 
         if is_trusted:
@@ -267,22 +267,22 @@ class ManagerDeviceList(DeviceList):
         logging.info("%s %s" % (key, value))
 
         if key == "Trusted":
-            row = self.get(tree_iter, "bonded", "orig_icon")
+            row = self.get(tree_iter, "paired", "orig_icon")
             if value:
-                icon = self.make_device_icon(row["orig_icon"], row["bonded"], True, False)
+                icon = self.make_device_icon(row["orig_icon"], row["paired"], True)
                 self.set(tree_iter, device_pb=icon, trusted=True)
             else:
-                icon = self.make_device_icon(row["orig_icon"], row["bonded"], False, False)
+                icon = self.make_device_icon(row["orig_icon"], row["paired"], False)
                 self.set(tree_iter, device_pb=icon, trusted=False)
 
         elif key == "Paired":
             row = self.get(tree_iter, "trusted", "orig_icon")
             if value:
-                icon = self.make_device_icon(row["orig_icon"], True, row["trusted"], False)
-                self.set(tree_iter, device_pb=icon, bonded=True)
+                icon = self.make_device_icon(row["orig_icon"], True, row["trusted"])
+                self.set(tree_iter, device_pb=icon, paired=True)
             else:
-                icon = self.make_device_icon(row["orig_icon"], False, row["trusted"], False)
-                self.set(tree_iter, device_pb=icon, bonded=False)
+                icon = self.make_device_icon(row["orig_icon"], False, row["trusted"])
+                self.set(tree_iter, device_pb=icon, paired=False)
 
         elif key == "Alias":
             device = self.get(tree_iter, "device")["device"]
@@ -404,13 +404,13 @@ class ManagerDeviceList(DeviceList):
             if path[1] == self.columns["device_pb"]:
                 tree_iter = self.get_iter(path[0])
 
-                row = self.get(tree_iter, "trusted", "bonded")
+                row = self.get(tree_iter, "trusted", "paired")
                 trusted = row["trusted"]
-                bonded = row["bonded"]
-                if trusted and bonded:
-                    tooltip.set_markup(_("<b>Trusted and Bonded</b>"))
-                elif bonded:
-                    tooltip.set_markup(_("<b>Bonded</b>"))
+                paired = row["paired"]
+                if trusted and paired:
+                    tooltip.set_markup(_("<b>Trusted and Paired</b>"))
+                elif paired:
+                    tooltip.set_markup(_("<b>Paired</b>"))
                 elif trusted:
                     tooltip.set_markup(_("<b>Trusted</b>"))
                 else:
