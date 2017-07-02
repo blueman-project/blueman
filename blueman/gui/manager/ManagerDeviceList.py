@@ -270,7 +270,7 @@ class ManagerDeviceList(DeviceList):
             logging.exception(e)
 
     def row_update_event(self, tree_iter, key, value):
-        logging.info("row update event %s %s" % (key, value))
+        logging.info("%s %s" % (key, value))
 
         # this property is only emitted when device is fake
         if key == "RSSI":
