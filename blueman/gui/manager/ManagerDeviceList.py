@@ -10,9 +10,8 @@ from gi.repository import Gdk
 from gi.repository import GdkPixbuf
 from gi.repository import GObject
 from gi.repository import Pango
-from gi.repository import GLib
 from blueman.Constants import *
-from blueman.Functions import get_icon, launch, composite_icon
+from blueman.Functions import launch, composite_icon
 from blueman.Sdp import ServiceUUID, OBEX_OBJPUSH_SVCLASS_ID
 import cgi
 import logging
@@ -82,6 +81,9 @@ class ManagerDeviceList(DeviceList):
         Gtk.Widget.drag_dest_add_uri_targets(self)
 
         self.set_search_equal_func(self.search_func, None)
+
+        self.icon_theme = Gtk.IconTheme.get_default()
+        self.icon_theme.prepend_search_path(ICON_PATH)
 
     def _on_settings_changed(self, settings, key):
         if key in ('sort-by', 'sort-order'):
@@ -167,21 +169,33 @@ class ManagerDeviceList(DeviceList):
 
                         self.menu.popup(None, None, None, None, event.button, event.time)
 
-    def get_device_icon(self, klass, dev_icon_prop=None):
-        if dev_icon_prop is None:
-            dev_icon_prop = "blueman"
-        try:
-            return get_icon("blueman-" + klass.replace(" ", "-").lower(), 48, fallback=None)
-        except GLib.Error:
-            return get_icon(dev_icon_prop, 48, "blueman")
+    def get_icon_info(self, icon_names, size=48, fallback=True):
+        logging.debug("Looking up icon(s) %s" % icon_names)
+        icon_name = None
+
+        for name in icon_names:
+            if self.icon_theme.has_icon(name):
+                icon_name = name
+                break
+
+        if icon_name is None and not fallback:
+            return None
+        elif icon_name is None and fallback:
+            icon_name = "image-missing"
+
+        icon_info = self.icon_theme.lookup_icon(icon_name, size, Gtk.IconLookupFlags.FORCE_SIZE)
+
+        return icon_info
 
     def make_device_icon(self, target, is_paired=False, is_trusted=False):
         sources = []
         if is_paired:
-            sources.append((get_icon("dialog-password", 16), 0, 0, 200))
+            icon_info = self.get_icon_info(["dialog-password"], 16, False)
+            sources.append((icon_info.load_icon(), 0, 0, 200))
 
         if is_trusted:
-            sources.append((get_icon("blueman-trust", 16), 0, 32, 200))
+            icon_info = self.get_icon_info(["blueman-trust"], 16, False)
+            sources.append((icon_info.load_icon(), 0, 32, 200))
 
         return composite_icon(target, sources)
 
@@ -235,11 +249,15 @@ class ManagerDeviceList(DeviceList):
 
         klass = get_minor_class(device['Class'])
         if klass != "uncategorized":
-            icon = self.get_device_icon(klass, device["Icon"])
+            icon_names = ["blueman-" + klass.replace(" ", "-").lower(), device["Icon"], "blueman"]
+            icon_info = self.get_icon_info(icon_names, 48, False)
+            icon = icon_info.load_icon()
             # get translated version
             klass = get_minor_class(device['Class'], True)
         else:
-            icon = get_icon(device['Icon'], 48, "blueman")
+            icon_names = [device["Icon"], "blueman"]
+            icon_info = self.get_icon_info(icon_names, 48, False)
+            icon = icon_info.load_icon()
             klass = get_major_class(device['Class'])
 
         name = device['Alias']

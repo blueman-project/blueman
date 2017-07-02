@@ -5,7 +5,6 @@ from gi.repository import Gtk
 from gi.repository import GdkPixbuf
 from gi.repository import Pango
 from html import escape
-from blueman.Functions import *
 from blueman.gui.DeviceList import DeviceList
 
 
@@ -35,13 +34,15 @@ class DeviceSelectorList(DeviceList):
     def row_update_event(self, tree_iter, key, value):
         if key == "Trusted":
             if value:
-                self.set(tree_iter, trusted_icon=get_icon("blueman-trust", 16))
+                icon = self.icon_theme.load_icon("blueman-trust", 16, Gtk.IconLookupFlags.FORCE_SIZE)
+                self.set(tree_iter, trusted_icon=icon)
             else:
                 self.set(tree_iter, trusted_icon=None)
 
         elif key == "Paired":
             if value:
-                self.set(tree_iter, paired_icon=get_icon("dialog-password", 16))
+                icon = self.icon_theme.load_icon("dialog-password", 16, Gtk.IconLookupFlags.FORCE_SIZE)
+                self.set(tree_iter, paired_icon=icon)
             else:
                 self.set(tree_iter, paired_icon=None)
 
@@ -49,4 +50,5 @@ class DeviceSelectorList(DeviceList):
             self.set(tree_iter, caption=escape(value))
 
         elif key == "Icon":
-            self.set(tree_iter, device_pb=get_icon(value, 16))
+            icon = self.icon_theme.load_icon(value, 16, Gtk.IconLookupFlags.FORCE_SIZE)
+            self.set(tree_iter, device_pb=icon)
