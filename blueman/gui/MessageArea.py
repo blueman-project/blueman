@@ -21,8 +21,7 @@ class MessageArea(Gtk.EventBox):
         super(MessageArea, self).__init__()
 
         self.set_name("MessageArea")
-        self.hbox = Gtk.Box(Gtk.Orientation.HORIZONTAL)
-        self.hbox.show()
+        self.hbox = Gtk.Box(spacing=4, border_width=2, orientation=Gtk.Orientation.HORIZONTAL, visible=True)
 
         self.text = ""
 
@@ -33,30 +32,16 @@ class MessageArea(Gtk.EventBox):
 
         self.setting_style = False
 
-        self.hbox.props.spacing = 4
-        self.hbox.set_border_width(2)
+        self.icon = Gtk.Image(icon_size=Gtk.IconSize.MENU, visible=True)
+        self.label = Gtk.Label(xalign=0, ellipsize=Pango.EllipsizeMode.END, single_line_mode=True,
+                               selectable=True, visible=True)
 
-        self.icon = Gtk.Image()
-        self.label = Gtk.Label()
-        self.label.props.xalign = 0
-        self.label.set_ellipsize(Pango.EllipsizeMode.END)
-        self.label.set_single_line_mode(True)
-        self.label.set_selectable(True)
+        im = Gtk.Image(icon_name="dialog-information", icon_size=Gtk.IconSize.MENU, visible=True)
+        self.b_more = Gtk.Button(label=_("More"), relief=Gtk.ReliefStyle.NONE, visible=True, image=im)
 
-        self.b_more = Gtk.Button(_("More"))
-        im = Gtk.Image()
-        im.set_from_icon_name("dialog-information", Gtk.IconSize.MENU)
-        im.show()
-        self.b_more.set_image(im)
-        self.b_more.props.relief = Gtk.ReliefStyle.NONE
-
-        im = Gtk.Image()
-        im.set_from_icon_name("window-close", Gtk.IconSize.MENU)
-        im.show()
-        self.b_close = Gtk.Button()
-        self.b_close.add(im)
-        self.b_close.props.relief = Gtk.ReliefStyle.NONE
-        self.b_close.props.tooltip_text = _("Close")
+        im = Gtk.Image(icon_name="window-close", icon_size=Gtk.IconSize.MENU, visible=True)
+        self.b_close = Gtk.Button(label=_("Close"), relief=Gtk.ReliefStyle.NONE, tooltip_text=_("Close"),
+                                  visible=True, image=im)
 
         self.hbox.pack_start(self.icon, False, False, 4)
         self.hbox.pack_start(self.label, True, False, 0)
@@ -65,11 +50,6 @@ class MessageArea(Gtk.EventBox):
 
         self.add(self.hbox)
 
-        self.icon.show()
-        self.b_close.show()
-        self.label.show()
-        self.b_more.show()
-
         self.b_close.connect("clicked", self.on_close)
         self.b_more.connect("clicked", self.on_more)
 
@@ -77,11 +57,8 @@ class MessageArea(Gtk.EventBox):
         self.b_close.connect("style-set", self.style_set)
 
     def on_more(self, button):
-        d = Gtk.MessageDialog(parent=None, flags=0, type=Gtk.MessageType.INFO, buttons=Gtk.ButtonsType.CLOSE)
-        d.set_transient_for(self.get_toplevel())
-
-        d.props.text = '\n'.join((self.text, self.bt))
-
+        d = Gtk.MessageDialog(parent=self.get_toplevel(), flags=0, type=Gtk.MessageType.INFO,
+                              buttons=Gtk.ButtonsType.CLOSE, text='\n'.join((self.text, self.bt)))
         d.run()
         d.destroy()
 
@@ -90,8 +67,7 @@ class MessageArea(Gtk.EventBox):
             return
 
         # This is a hack needed to use the tooltip background color
-        window = Gtk.Window(Gtk.WindowType.POPUP)
-        window.set_name("gtk-tooltip")
+        window = Gtk.Window(type=Gtk.WindowType.POPUP, name="gtk-tooltip")
         window.ensure_style()
         style = window.get_style()
         window.destroy()
@@ -135,8 +111,8 @@ class MessageArea(Gtk.EventBox):
         self.text = text
         self.bt = bt
 
-        self.label.set_tooltip_text(text)
-        self.icon.set_from_icon_name(icon, Gtk.IconSize.MENU)
+        self.label.props.tooltip_text = text
+        self.icon.props.icon_name = icon
 
         if icon == "dialog-warning":
             self.hl_anim.color = Gdk.RGBA(1, 0, 0, 1)
