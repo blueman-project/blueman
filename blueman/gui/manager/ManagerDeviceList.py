@@ -10,7 +10,6 @@ from gi.repository import Gdk
 from gi.repository import GdkPixbuf
 from gi.repository import GObject
 from gi.repository import Pango
-from gi.repository import GLib
 from blueman.Constants import *
 from blueman.Functions import get_icon, launch, composite_icon
 from blueman.Sdp import ServiceUUID, OBEX_OBJPUSH_SVCLASS_ID
