@@ -63,6 +63,7 @@ class MessageArea(Gtk.EventBox):
         d.destroy()
 
     def style_set(self, widget, prev_style):
+        # FIXME needs porting to GtkStyleContext
         if self.setting_style:
             return
 
