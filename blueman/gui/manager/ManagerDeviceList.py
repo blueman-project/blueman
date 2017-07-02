@@ -10,7 +10,7 @@ from gi.repository import Gdk
 from gi.repository import GdkPixbuf
 from gi.repository import GObject
 from gi.repository import Pango
-from blueman.Constants import *
+from blueman.Constants import PIXMAP_PATH
 from blueman.Functions import launch, composite_icon
 from blueman.Sdp import ServiceUUID, OBEX_OBJPUSH_SVCLASS_ID
 import cgi
@@ -82,9 +82,6 @@ class ManagerDeviceList(DeviceList):
 
         self.set_search_equal_func(self.search_func, None)
 
-        self.icon_theme = Gtk.IconTheme.get_default()
-        self.icon_theme.prepend_search_path(ICON_PATH)
-
     def _on_settings_changed(self, settings, key):
         if key in ('sort-by', 'sort-order'):
             sort_by = settings['sort-by']
@@ -99,6 +96,11 @@ class ManagerDeviceList(DeviceList):
 
             if column_id:
                 self.liststore.set_sort_column_id(column_id, sort_type)
+
+    def on_icon_theme_changed(self, widget):
+        for row in self.liststore:
+            device = self.get(row.iter, "device")["device"]
+            self.row_setup_event(row.iter, device)
 
     def do_device_found(self, device):
         tree_iter = self.find_device(device)

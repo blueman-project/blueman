@@ -1,7 +1,7 @@
 # coding=utf-8
 from blueman.Functions import wait_for_adapter, adapter_path_to_name
-
 from blueman.gui.GenericList import GenericList
+from blueman.Constants import ICON_PATH
 
 from _blueman import conn_info
 import blueman.bluez as Bluez
@@ -103,6 +103,11 @@ class DeviceList(GenericList):
 
         self.selection.connect('changed', self.on_selection_changed)
 
+        self.icon_theme = Gtk.IconTheme.get_default()
+        self.icon_theme.prepend_search_path(ICON_PATH)
+        # handle icon theme changes
+        self.icon_theme.connect("changed", self.on_icon_theme_changed)
+
     def on_selection_changed(self, selection):
         _model, tree_iter = selection.get_selected()
         if tree_iter:
@@ -132,6 +137,10 @@ class DeviceList(GenericList):
                 else:
                     r = Gtk.TreeRowReference.new(self.get_model(), self.props.model.get_path(tree_iter))
                     self.level_setup_event(r, dev, None)
+
+    # Override when subclassing
+    def on_icon_theme_changed(self, widget):
+        logging.warning("Icons may not be updated with icon theme changes")
 
     def monitor_power_levels(self, device):
         def update(row_ref, cinfo, address):

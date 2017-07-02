@@ -25,6 +25,11 @@ class DeviceSelectorList(DeviceList):
 
         super(DeviceSelectorList, self).__init__(adapter, data, headers_visible=False)
 
+    def on_icon_theme_changed(self, widget):
+        for row in self.liststore:
+            device = self.get(row.iter, "device")["device"]
+            self.row_setup_event(row.iter, device)
+
     def row_setup_event(self, tree_iter, device):
         self.row_update_event(tree_iter, "Trusted", device['Trusted'])
         self.row_update_event(tree_iter, "Paired", device['Paired'])
