@@ -12,7 +12,7 @@ from gi.repository import GObject
 from gi.repository import Pango
 from gi.repository import GLib
 from blueman.Constants import *
-from blueman.Functions import get_icon, launch, opacify_pixbuf, composite_icon
+from blueman.Functions import get_icon, launch, composite_icon
 from blueman.Sdp import ServiceUUID, OBEX_OBJPUSH_SVCLASS_ID
 import cgi
 import logging
@@ -175,19 +175,13 @@ class ManagerDeviceList(DeviceList):
         except GLib.Error:
             return get_icon(dev_icon_prop, 48, "blueman")
 
-    def make_device_icon(self, target, is_bonded=False, is_trusted=False, is_discovered=False, opacity=255):
-        if opacity != 255:
-            target = opacify_pixbuf(target, opacity)
-
+    def make_device_icon(self, target, is_bonded=False, is_trusted=False):
         sources = []
         if is_bonded:
             sources.append((get_icon("dialog-password", 16), 0, 0, 200))
 
         if is_trusted:
             sources.append((get_icon("blueman-trust", 16), 0, 32, 200))
-
-        if is_discovered:
-            sources.append((get_icon("edit-find", 24), 24, 0, 255))
 
         return composite_icon(target, sources)
 
@@ -272,31 +266,7 @@ class ManagerDeviceList(DeviceList):
     def row_update_event(self, tree_iter, key, value):
         logging.info("%s %s" % (key, value))
 
-        # this property is only emitted when device is fake
-        if key == "RSSI":
-            row = self.get(tree_iter, "orig_icon")
-
-            #minimum opacity 90
-            #maximum opacity 255
-            #rssi at minimum opacity -100
-            #rssi at maximum opacity -45
-            # y = kx + b
-            #solve linear system
-            #{ 90 = k * -100 + b
-            #{ 255 = k * -45 + b
-            # k = 3
-            # b = 390
-            #and we have a formula for opacity based on rssi :)
-            opacity = int(3 * value + 390)
-            if opacity > 255:
-                opacity = 255
-            if opacity < 90:
-                opacity = 90
-            logging.info("opacity %s" % opacity)
-            icon = self.make_device_icon(row["orig_icon"], is_discovered=True, opacity=opacity)
-            self.set(tree_iter, device_pb=icon)
-
-        elif key == "Trusted":
+        if key == "Trusted":
             row = self.get(tree_iter, "bonded", "orig_icon")
             if value:
                 icon = self.make_device_icon(row["orig_icon"], row["bonded"], True, False)
