@@ -79,9 +79,11 @@ class DeviceList(GenericList):
         self.manager.connect_signal('adapter-removed', on_adapter_removed)
         self.manager.connect_signal('adapter-added', on_adapter_added)
 
+        any_device = Bluez.AnyDevice()
+        any_device.connect_signal("property-changed", self._on_device_property_changed)
+
         self.__discovery_time = 0
         self.__adapter_path = None
-        self.__signals = {}
         self.Adapter = None
         self.discovering = False
 
@@ -196,9 +198,6 @@ class DeviceList(GenericList):
         if self.compare(self.selected(), tree_iter):
             self.emit("device-selected", None, None)
 
-        sig = self.__signals.pop(device.get_object_path())
-        device.disconnect_signal(sig)
-
         self.delete(tree_iter)
 
     #########################
@@ -281,9 +280,6 @@ class DeviceList(GenericList):
             self.set(tree_iter, dbus_path=object_path, timestamp=float(timestamp))
         except:
             pass
-
-        sig = device.connect_signal('property-changed', self._on_device_property_changed)
-        self.__signals[object_path] = sig
 
         if device["Connected"]:
             self.monitor_power_levels(device)
