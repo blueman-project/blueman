@@ -46,7 +46,7 @@ class ManagerDeviceList(DeviceList):
             {"id": "rssi", "type": float},
             {"id": "lq", "type": float},
             {"id": "tpl", "type": float},
-            {"id": "orig_icon", "type": GdkPixbuf.Pixbuf},
+            {"id": "icon_info", "type": Gtk.IconInfo},
             {"id": "cell_fader", "type": GObject.TYPE_PYOBJECT},
             {"id": "row_fader", "type": GObject.TYPE_PYOBJECT},
             {"id": "levels_visible", "type": bool},
@@ -187,7 +187,8 @@ class ManagerDeviceList(DeviceList):
 
         return icon_info
 
-    def make_device_icon(self, target, is_paired=False, is_trusted=False):
+    def make_device_icon(self, icon_info, is_paired=False, is_trusted=False):
+        target = icon_info.load_icon()
         sources = []
         if is_paired:
             icon_info = self.get_icon_info(["dialog-password"], 16, False)
@@ -251,13 +252,11 @@ class ManagerDeviceList(DeviceList):
         if klass != "uncategorized":
             icon_names = ["blueman-" + klass.replace(" ", "-").lower(), device["Icon"], "blueman"]
             icon_info = self.get_icon_info(icon_names, 48, False)
-            icon = icon_info.load_icon()
             # get translated version
             klass = get_minor_class(device['Class'], True)
         else:
             icon_names = [device["Icon"], "blueman"]
             icon_info = self.get_icon_info(icon_names, 48, False)
-            icon = icon_info.load_icon()
             klass = get_major_class(device['Class'])
 
         name = device['Alias']
@@ -265,7 +264,7 @@ class ManagerDeviceList(DeviceList):
 
         caption = self.make_caption(name, klass, address)
 
-        self.set(tree_iter, caption=caption, orig_icon=icon, alias=name)
+        self.set(tree_iter, caption=caption, icon_info=icon_info, alias=name)
 
         try:
             self.row_update_event(tree_iter, "Trusted", device['Trusted'])
@@ -284,21 +283,21 @@ class ManagerDeviceList(DeviceList):
         logging.info("%s %s" % (key, value))
 
         if key == "Trusted":
-            row = self.get(tree_iter, "paired", "orig_icon")
+            row = self.get(tree_iter, "paired", "icon_info")
             if value:
-                icon = self.make_device_icon(row["orig_icon"], row["paired"], True)
+                icon = self.make_device_icon(row["icon_info"], row["paired"], True)
                 self.set(tree_iter, device_pb=icon, trusted=True)
             else:
-                icon = self.make_device_icon(row["orig_icon"], row["paired"], False)
+                icon = self.make_device_icon(row["icon_info"], row["paired"], False)
                 self.set(tree_iter, device_pb=icon, trusted=False)
 
         elif key == "Paired":
-            row = self.get(tree_iter, "trusted", "orig_icon")
+            row = self.get(tree_iter, "trusted", "icon_info")
             if value:
-                icon = self.make_device_icon(row["orig_icon"], True, row["trusted"])
+                icon = self.make_device_icon(row["icon_info"], True, row["trusted"])
                 self.set(tree_iter, device_pb=icon, paired=True)
             else:
-                icon = self.make_device_icon(row["orig_icon"], False, row["trusted"])
+                icon = self.make_device_icon(row["icon_info"], False, row["trusted"])
                 self.set(tree_iter, device_pb=icon, paired=False)
 
         elif key == "Alias":
