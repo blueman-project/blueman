@@ -28,8 +28,6 @@ class DeviceSelectorList(DeviceList):
             #["connected", bool], #used for quick access instead of device.GetProperties
             #["bonded", bool], #used for quick access instead of device.GetProperties
             #["trusted", bool], #used for quick access instead of device.GetProperties
-            #["fake", bool], #used for quick access instead of device.GetProperties,
-            #fake determines whether device is "discovered" or a real bluez device
         ]
 
         super(DeviceSelectorList, self).__init__(adapter, data)

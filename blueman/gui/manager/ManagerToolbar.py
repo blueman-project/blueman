@@ -81,8 +81,9 @@ class ManagerToolbar:
             self.b_trust.props.sensitive = False
             self.b_setup.props.sensitive = False
         else:
-            row = dev_list.get(tree_iter, "bonded", "trusted", "fake", "objpush")
+            row = dev_list.get(tree_iter, "bonded", "trusted", "objpush")
             self.b_setup.props.sensitive = True
+            self.b_remove.props.sensitive = True
             if row["bonded"]:
                 self.b_bond.props.sensitive = False
             else:
@@ -99,13 +100,6 @@ class ManagerToolbar:
                 self.b_trust.props.icon_widget = image
                 self.b_trust.props.sensitive = True
                 self.b_trust.props.label = _("Trust")
-
-            if row["fake"]:
-                self.b_remove.props.sensitive = False
-                self.b_trust.props.sensitive = False
-                self.b_bond.props.sensitive = True
-            else:
-                self.b_remove.props.sensitive = True
 
             if row["objpush"]:
                 self.b_send.props.sensitive = True
