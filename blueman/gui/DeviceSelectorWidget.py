@@ -34,8 +34,8 @@ class DeviceSelectorWidget(Gtk.Box):
         search_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6, height_request=8)
         self.add(search_box)
 
-        search_btn = Gtk.Button.new_from_icon_name("edit-find", Gtk.IconSize.BUTTON)
-        search_btn.set_tooltip_text(_("Search for devices"))
+        im_search = Gtk.Image(icon_name="edit-find", pixel_size=16)
+        search_btn = Gtk.Button(image=im_search, tooltip_text=_("Search for devices"))
         search_box.add(search_btn)
 
         model = Gtk.ListStore(str, str)
