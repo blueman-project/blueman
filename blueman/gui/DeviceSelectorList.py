@@ -15,19 +15,13 @@ class DeviceSelectorList(DeviceList):
         cr.props.ellipsize = Pango.EllipsizeMode.END
         data = [
             #device picture
-            ["found_pb", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 0}, None,
-             {"spacing": 0, "sizing": Gtk.TreeViewColumnSizing.AUTOSIZE}],
-            ["device_pb", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 1}, None],
+            ["device_pb", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 0}, None],
 
             #device caption
-            ["caption", str, cr, {"markup": 2}, None, {"expand": True}],
+            ["caption", str, cr, {"markup": 1}, None, {"expand": True}],
 
-            ["paired_icon", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 3}, None],
-            ["trusted_icon", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 4}, None]
-
-            #["connected", bool], #used for quick access instead of device.GetProperties
-            #["paired", bool], #used for quick access instead of device.GetProperties
-            #["trusted", bool], #used for quick access instead of device.GetProperties
+            ["paired_icon", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 2}, None],
+            ["trusted_icon", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 3}, None]
         ]
 
         super(DeviceSelectorList, self).__init__(adapter, data, headers_visible=False)
