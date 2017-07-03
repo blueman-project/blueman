@@ -30,8 +30,7 @@ class DeviceSelectorList(DeviceList):
             #["trusted", bool], #used for quick access instead of device.GetProperties
         ]
 
-        super(DeviceSelectorList, self).__init__(adapter, data)
-        self.props.headers_visible = False
+        super(DeviceSelectorList, self).__init__(adapter, data, headers_visible=False)
 
     def row_setup_event(self, tree_iter, device):
         self.row_update_event(tree_iter, "Trusted", device['Trusted'])
