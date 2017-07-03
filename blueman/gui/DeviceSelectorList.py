@@ -2,7 +2,6 @@
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-from gi.repository import GdkPixbuf
 from gi.repository import Pango
 from html import escape
 from blueman.gui.DeviceList import DeviceList
@@ -10,19 +9,18 @@ from blueman.gui.DeviceList import DeviceList
 
 class DeviceSelectorList(DeviceList):
     def __init__(self, adapter=None):
-        cr = Gtk.CellRendererText()
-        cr.props.ellipsize = Pango.EllipsizeMode.END
         tabledata = [
             #device picture
-            {"id": "device_pb", "type": GdkPixbuf.Pixbuf, "renderer": Gtk.CellRendererPixbuf(),
-             "render_attrs": {"pixbuf": 0}},
+            {"id": "device_icon", "type": str, "renderer": Gtk.CellRendererPixbuf(stock_size=Gtk.IconSize.MENU),
+             "render_attrs": {"icon_name": 0}},
             #device caption
-            {"id": "caption", "type": str, "renderer": cr, "render_attrs": {"markup": 1},
+            {"id": "caption", "type": str, "renderer": Gtk.CellRendererText(ellipsize=Pango.EllipsizeMode.END),
+             "render_attrs": {"markup": 1},
              "view_props": {"expand": True}},
-            {"id": "paired_icon", "type": GdkPixbuf.Pixbuf, "renderer": Gtk.CellRendererPixbuf(),
-             "render_attrs": {"pixbuf": 2}},
-            {"id": "trusted_icon", "type": GdkPixbuf.Pixbuf, "renderer": Gtk.CellRendererPixbuf(),
-             "render_attrs": {"pixbuf": 3}}
+            {"id": "paired_icon", "type": str, "renderer": Gtk.CellRendererPixbuf(stock_size=Gtk.IconSize.MENU),
+             "render_attrs": {"icon_name": 2}},
+            {"id": "trusted_icon", "type": str, "renderer": Gtk.CellRendererPixbuf(stock_size=Gtk.IconSize.MENU),
+             "render_attrs": {"icon_name": 3}}
         ]
 
         super(DeviceSelectorList, self).__init__(adapter, tabledata, headers_visible=False)
@@ -41,15 +39,13 @@ class DeviceSelectorList(DeviceList):
     def row_update_event(self, tree_iter, key, value):
         if key == "Trusted":
             if value:
-                icon = self.icon_theme.load_icon("blueman-trust", 16, Gtk.IconLookupFlags.FORCE_SIZE)
-                self.set(tree_iter, trusted_icon=icon)
+                self.set(tree_iter, trusted_icon="blueman-trust")
             else:
                 self.set(tree_iter, trusted_icon=None)
 
         elif key == "Paired":
             if value:
-                icon = self.icon_theme.load_icon("dialog-password", 16, Gtk.IconLookupFlags.FORCE_SIZE)
-                self.set(tree_iter, paired_icon=icon)
+                self.set(tree_iter, paired_icon="dialog-password")
             else:
                 self.set(tree_iter, paired_icon=None)
 
@@ -57,5 +53,4 @@ class DeviceSelectorList(DeviceList):
             self.set(tree_iter, caption=escape(value))
 
         elif key == "Icon":
-            icon = self.icon_theme.load_icon(value, 16, Gtk.IconLookupFlags.FORCE_SIZE)
-            self.set(tree_iter, device_pb=icon)
+            self.set(tree_iter, device_icon=value)

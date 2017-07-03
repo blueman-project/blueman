@@ -1,13 +1,12 @@
 # coding=utf-8
 from blueman.gui.GenericList import GenericList
 
-from blueman.Functions import check_single_instance, get_icon
+from blueman.Functions import check_single_instance
 import os
 import logging
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-from gi.repository import GdkPixbuf
 
 import blueman.plugins.services
 from blueman.plugins.ServicePlugin import ServicePlugin
@@ -51,8 +50,8 @@ class BluemanServices(Gtk.Dialog):
         check_single_instance("blueman-services", lambda time: self.Dialog.present_with_time(time))
 
         data = [
-            {"id": "picture", "type": GdkPixbuf.Pixbuf, "renderer": Gtk.CellRendererPixbuf(),
-             "render_attrs": {"pixbuf": 0}},
+            {"id": "icon_name", "type": str, "renderer": Gtk.CellRendererPixbuf(stock_size=Gtk.IconSize.DND),
+             "render_attrs": {"icon_name": 0}},
             {"id": "caption", "type": str, "renderer": Gtk.CellRendererText(), "render_attrs": {"markup": 1},
              "view_props": {"expand": True}},
             {"id": "id", "type": str},
@@ -117,7 +116,7 @@ class BluemanServices(Gtk.Dialog):
                 self.setup_list_item(inst, name, icon)
 
     def setup_list_item(self, inst, name, icon):
-        self.List.append(picture=get_icon(icon, 32), caption=name, id=inst.__class__.__name__)
+        self.List.append(icon_name=icon, caption=name, id=inst.__class__.__name__)
 
     #executes a function on all plugin instances
     def plugin_exec(self, func, *args, **kwargs):
