@@ -25,12 +25,6 @@ class ShowConnected(AppletPlugin):
     def on_status_icon_query_icon(self):
         if self.num_connections > 0:
             self.active = True
-            #			x_size = int(pixbuf.props.height)
-            #			x = get_icon("blueman-txrx", x_size)
-            #			pixbuf = composite_icon(pixbuf,
-            #				[(x, pixbuf.props.height - x_size, 0, 255)])
-            #
-            #			return pixbuf
             return ("blueman-active",)
         else:
             self.active = False
