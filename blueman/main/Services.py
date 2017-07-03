@@ -1,8 +1,8 @@
 # coding=utf-8
 from blueman.gui.GenericList import GenericList
 
-from blueman.Constants import *
 from blueman.Functions import check_single_instance, get_icon
+import os
 import logging
 import gi
 gi.require_version("Gtk", "3.0")
