@@ -47,7 +47,7 @@ class DeviceList(GenericList):
     def __del__(self):
         logging.debug("deleting mainlist")
 
-    def __init__(self, adapter=None, tabledata=None):
+    def __init__(self, adapter=None, tabledata=None, **kwargs):
         if not tabledata:
             tabledata = []
 
@@ -96,7 +96,7 @@ class DeviceList(GenericList):
             ["timestamp", float]
         ]
 
-        super(DeviceList, self).__init__(data)
+        super(DeviceList, self).__init__(data, **kwargs)
         self.set_name("DeviceList")
 
         self.SetAdapter(adapter)
