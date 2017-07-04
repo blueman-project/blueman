@@ -8,8 +8,9 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 
-def show_about_dialog(app_name, run=True):
+def show_about_dialog(app_name, run=True, parent=None):
     about = Gtk.AboutDialog()
+    about.set_transient_for(parent)
     about.set_name(app_name)
     about.set_version(VERSION)
     about.set_translator_credits(_("translator-credits"))
