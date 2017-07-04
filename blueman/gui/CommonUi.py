@@ -2,6 +2,7 @@
 from blueman.Functions import *
 from blueman.Constants import *
 from datetime import datetime
+from blueman.Constants import WEBSITE, VERSION
 
 import gi
 gi.require_version("Gtk", "3.0")
