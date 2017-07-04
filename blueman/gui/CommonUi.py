@@ -1,5 +1,4 @@
 # coding=utf-8
-from blueman.Functions import *
 from datetime import datetime
 from blueman.Constants import WEBSITE, VERSION
 
@@ -21,8 +20,8 @@ def show_about_dialog(app_name, run=True, parent=None):
     about.set_comments(_('Blueman is a GTK+ Bluetooth manager'))
     about.set_website(WEBSITE)
     about.set_website_label(WEBSITE)
-    about.set_icon(get_icon('blueman'))
-    about.set_logo(get_icon('blueman', 48))
+    about.set_icon_name('blueman')
+    about.set_logo_icon_name('blueman')
     about.set_authors(['Valmantas Palikša <walmis@balticum-tv.lt>',
                        'Tadas Dailyda <tadas@dailyda.com>',
                        '%s/graphs/contributors' % WEBSITE
