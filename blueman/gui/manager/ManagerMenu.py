@@ -2,7 +2,10 @@
 import blueman.bluez as bluez
 from blueman.main.Config import Config
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
-from blueman.gui.CommonUi import *
+from blueman.gui.CommonUi import show_about_dialog
+from blueman.Constants import WEBSITE
+from blueman.Functions import create_menuitem, launch, adapter_path_to_name
+import logging
 
 import gi
 gi.require_version("Gtk", "3.0")
