@@ -1,6 +1,6 @@
 # coding=utf-8
 from blueman.gui.DeviceList import DeviceList
-from blueman.DeviceClass import get_minor_class, get_major_class
+from blueman.DeviceClass import get_minor_class, get_major_class, gatt_appearance_to_name
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 
 import gi
@@ -260,22 +260,25 @@ class ManagerDeviceList(DeviceList):
             self.set(tree_iter, initial_anim=True)
 
         klass = get_minor_class(device['Class'])
-        if klass != "uncategorized":
+        # Bluetooth >= 4 devices use Appearance property
+        appearance = device["Appearance"]
+        if klass != "uncategorized" and klass != "unknown":
             icon_names = ["blueman-" + klass.replace(" ", "-").lower(), device["Icon"], "blueman"]
             icon_info = self.get_icon_info(icon_names, 48, False)
             # get translated version
-            klass = get_minor_class(device['Class'], True)
+            description = get_minor_class(device['Class'], True).capitalize()
+        elif klass == "unknown" and appearance:
+            icon_names = [device["Icon"], "blueman"]
+            icon_info = self.get_icon_info(icon_names, 48, False)
+            description = gatt_appearance_to_name(appearance)
         else:
             icon_names = [device["Icon"], "blueman"]
             icon_info = self.get_icon_info(icon_names, 48, False)
-            klass = get_major_class(device['Class'])
+            description = get_major_class(device['Class']).capitalize()
 
-        name = device['Alias']
-        address = device['Address']
+        caption = self.make_caption(device['Alias'], description, device['Address'])
 
-        caption = self.make_caption(name, klass, address)
-
-        self.set(tree_iter, caption=caption, icon_info=icon_info, alias=name)
+        self.set(tree_iter, caption=caption, icon_info=icon_info, alias=device['Alias'])
 
         try:
             self.row_update_event(tree_iter, "Trusted", device['Trusted'])
