@@ -6,7 +6,9 @@ gi.require_version("Pango", "1.0")
 from gi.repository import Gtk
 from gi.repository import Pango
 import logging
+import gettext
 
+from blueman.Constants import UI_PATH
 from blueman.Functions import *
 import blueman.bluez as Bluez
 

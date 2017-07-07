@@ -2,7 +2,10 @@
 import urllib
 import time
 import logging
+import re
+import urllib
 from locale import bind_textdomain_codeset
+from gettext import ngettext
 
 import gi
 gi.require_version("Gtk", "3.0")

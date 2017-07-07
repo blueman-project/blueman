@@ -1,5 +1,6 @@
 # coding=utf-8
 from blueman.Functions import *
+from blueman.Constants import *
 from datetime import datetime
 
 import gi

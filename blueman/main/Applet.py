@@ -5,8 +5,11 @@ import blueman.plugins.applet
 from blueman.main.PluginManager import PersistentPluginManager
 from blueman.main.DbusService import DbusService
 from blueman.plugins.AppletPlugin import AppletPlugin
-
 import logging
+
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
 
 
 class BluemanApplet(object):

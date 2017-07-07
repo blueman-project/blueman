@@ -6,13 +6,18 @@ import pickle
 import base64
 import zlib
 import logging
+import atexit
 from blueman.Functions import *
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device
 from blueman.gui.Notification import Notification
 from blueman.Sdp import ServiceUUID
-
 from blueman.plugins.AppletPlugin import AppletPlugin
+
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
+
 
 REGISTRY_VERSION = 0
 

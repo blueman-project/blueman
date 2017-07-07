@@ -8,12 +8,14 @@ from gi.repository import Gtk
 from locale import bind_textdomain_codeset
 
 from blueman.Functions import *
+from blueman.Constants import UI_PATH
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 from blueman.gui.manager.ManagerToolbar import ManagerToolbar
 from blueman.gui.manager.ManagerMenu import ManagerMenu
 from blueman.gui.manager.ManagerStats import ManagerStats
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.Config import Config
+from blueman.main.AppletService import AppletService
 import blueman.bluez as bluez
 
 from blueman.gui.MessageArea import MessageArea
