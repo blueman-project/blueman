@@ -10,7 +10,6 @@ from threading import Thread, Lock
 from blueman.Constants import VERSION
 from blueman.Functions import get_lockfile, get_pid, is_running
 
-import sys
 import urllib.request as urllib2
 
 for program in 'adapters', 'applet', 'manager', 'services':

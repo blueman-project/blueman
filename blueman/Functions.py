@@ -36,7 +36,6 @@ from gi.repository import Gdk
 from gi.repository import GdkPixbuf
 from gi.repository import GLib
 from gi.repository import Gio
-from gi.repository import GObject
 import re
 import os
 import signal
@@ -47,9 +46,7 @@ import logging
 import logging.handlers
 import argparse
 from ctypes import cdll, byref, create_string_buffer
-from gi.repository import GLib
 import traceback
-import builtins
 
 GREEN = lambda x: "\x1b[32;01m" + x + "\x1b[39;49;00m"
 BLUE = lambda x: "\x1b[34;01m" + x + "\x1b[39;49;00m"
