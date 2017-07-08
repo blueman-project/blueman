@@ -11,10 +11,11 @@ from gi.repository import GdkPixbuf
 from gi.repository import GObject
 from gi.repository import Pango
 from blueman.Constants import PIXMAP_PATH
-from blueman.Functions import launch, composite_icon
+from blueman.Functions import launch
 from blueman.Sdp import ServiceUUID, OBEX_OBJPUSH_SVCLASS_ID
 import html
 import logging
+import cairo
 
 from blueman.gui.GtkAnimation import TreeRowColorFade, TreeRowFade, CellFade
 from blueman.main.Config import Config
@@ -27,8 +28,8 @@ class ManagerDeviceList(DeviceList):
         cr.props.ellipsize = Pango.EllipsizeMode.END
         tabledata = [
             # device picture
-            {"id": "device_pb", "type": GdkPixbuf.Pixbuf, "renderer": Gtk.CellRendererPixbuf(),
-             "render_attrs": {"pixbuf": 0}},
+            {"id": "device_surface", "type": str, "renderer": Gtk.CellRendererPixbuf(),
+             "render_attrs": {}, "celldata_func": self._set_device_cell_data},
             # device caption
             {"id": "caption", "type": str, "renderer": cr,
              "render_attrs": {"markup": 1}, "view_props": {"expand": True}},
@@ -183,22 +184,37 @@ class ManagerDeviceList(DeviceList):
         elif icon_name is None and fallback:
             icon_name = "image-missing"
 
-        icon_info = self.icon_theme.lookup_icon(icon_name, size, Gtk.IconLookupFlags.FORCE_SIZE)
+        icon_info = self.icon_theme.lookup_icon_for_scale(icon_name, size, self.get_scale_factor(),
+                                                          Gtk.IconLookupFlags.FORCE_SIZE)
 
         return icon_info
 
     def make_device_icon(self, icon_info, is_paired=False, is_trusted=False):
-        target = icon_info.load_icon()
-        sources = []
+        window = self.get_window()
+        scale = self.get_scale_factor()
+        target = icon_info.load_surface(window)
+        ctx = cairo.Context(target)
+
         if is_paired:
             icon_info = self.get_icon_info(["dialog-password"], 16, False)
-            sources.append((icon_info.load_icon(), 0, 0, 200))
+            paired_surface = icon_info.load_surface(window)
+            ctx.set_source_surface(paired_surface, 1 / scale, 1 / scale)
+            ctx.paint_with_alpha(0.8)
 
         if is_trusted:
             icon_info = self.get_icon_info(["blueman-trust"], 16, False)
-            sources.append((icon_info.load_icon(), 0, 32, 200))
+            trusted_surface = icon_info.load_surface(window)
+            trusted_surface.set_device_scale(scale, scale)
+            height = target.get_height()
+            mini_height = trusted_surface.get_height()
+            y = height / scale - mini_height / scale - 1 / scale
+            width = trusted_surface.get_width()
+            x = width / scale - width / scale - 1 / scale
 
-        return composite_icon(target, sources)
+            ctx.set_source_surface(trusted_surface, x, y)
+            ctx.paint_with_alpha(0.8)
+
+        return target
 
     def device_remove_event(self, device, tree_iter):
         row_fader = self.get(tree_iter, "row_fader")["row_fader"]
@@ -283,22 +299,16 @@ class ManagerDeviceList(DeviceList):
         logging.info("%s %s" % (key, value))
 
         if key == "Trusted":
-            row = self.get(tree_iter, "paired", "icon_info")
             if value:
-                icon = self.make_device_icon(row["icon_info"], row["paired"], True)
-                self.set(tree_iter, device_pb=icon, trusted=True)
+                self.set(tree_iter, trusted=True)
             else:
-                icon = self.make_device_icon(row["icon_info"], row["paired"], False)
-                self.set(tree_iter, device_pb=icon, trusted=False)
+                self.set(tree_iter, trusted=False)
 
         elif key == "Paired":
-            row = self.get(tree_iter, "trusted", "icon_info")
             if value:
-                icon = self.make_device_icon(row["icon_info"], True, row["trusted"])
-                self.set(tree_iter, device_pb=icon, paired=True)
+                self.set(tree_iter, paired=True)
             else:
-                icon = self.make_device_icon(row["icon_info"], False, row["trusted"])
-                self.set(tree_iter, device_pb=icon, paired=False)
+                self.set(tree_iter, paired=False)
 
         elif key == "Alias":
             device = self.get(tree_iter, "device")["device"]
@@ -413,7 +423,7 @@ class ManagerDeviceList(DeviceList):
                 self.tooltip_col = path[1]
                 return False
 
-            if path[1] == self.columns["device_pb"]:
+            if path[1] == self.columns["device_surface"]:
                 tree_iter = self.get_iter(path[0])
 
                 row = self.get(tree_iter, "trusted", "paired")
@@ -491,3 +501,8 @@ class ManagerDeviceList(DeviceList):
             if ServiceUUID(uuid).short_uuid == OBEX_OBJPUSH_SVCLASS_ID:
                 return True
         return False
+
+    def _set_device_cell_data(self, col, cell, model, iter, data):
+        row = self.get(iter, "icon_info", "trusted", "paired")
+        surface = self.make_device_icon(row["icon_info"], row["paired"], row["trusted"])
+        cell.set_property("surface", surface)
