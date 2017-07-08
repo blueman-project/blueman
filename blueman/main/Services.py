@@ -51,9 +51,11 @@ class BluemanServices(Gtk.Dialog):
         check_single_instance("blueman-services", lambda time: self.Dialog.present_with_time(time))
 
         data = [
-            ["picture", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 0}],
-            ["caption", str, Gtk.CellRendererText(), {"markup": 1}, {"expand": True}],
-            ["id", str],
+            {"id": "picture", "type": GdkPixbuf.Pixbuf, "renderer": Gtk.CellRendererPixbuf(),
+             "render_attrs": {"pixbuf": 0}},
+            {"id": "caption", "type": str, "renderer": Gtk.CellRendererText(), "render_attrs": {"markup": 1},
+             "view_props": {"expand": True}},
+            {"id": "id", "type": str},
         ]
 
         ls = GenericList(data)

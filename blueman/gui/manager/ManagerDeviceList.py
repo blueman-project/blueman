@@ -27,31 +27,30 @@ class ManagerDeviceList(DeviceList):
         cr.props.ellipsize = Pango.EllipsizeMode.END
         tabledata = [
             # device picture
-            ["device_pb", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 0}],
+            {"id": "device_pb", "type": GdkPixbuf.Pixbuf, "renderer": Gtk.CellRendererPixbuf(),
+             "render_attrs": {"pixbuf": 0}},
             # device caption
-            ["caption", str, cr, {"markup": 1}, {"expand": True}],
-
-
-            ["rssi_pb", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 2}, {"spacing": 0}],
-            ["lq_pb", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 3}, {"spacing": 0}],
-            ["tpl_pb", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 4}, {"spacing": 0}],
-            # trusted/paired icons
-            # ["tb_icons", 'PyObject', CellRendererPixbufTable(), {"pixbuffs":5}, None],
-
-            ["alias", str], # used for quick access instead of device.GetProperties
-            ["connected", bool], # used for quick access instead of device.GetProperties
-            ["paired", bool], # used for quick access instead of device.GetProperties
-            ["trusted", bool], # used for quick access instead of device.GetProperties
-            ["objpush", bool], # used to set Send File button
-
-            ["rssi", float],
-            ["lq", float],
-            ["tpl", float],
-            ["orig_icon", GdkPixbuf.Pixbuf],
-            ["cell_fader", GObject.TYPE_PYOBJECT],
-            ["row_fader", GObject.TYPE_PYOBJECT],
-            ["levels_visible", bool],
-            ["initial_anim", bool],
+            {"id": "caption", "type": str, "renderer": cr,
+             "render_attrs": {"markup": 1}, "view_props": {"expand": True}},
+            {"id": "rssi_pb", "type": GdkPixbuf.Pixbuf, "renderer": Gtk.CellRendererPixbuf(),
+             "render_attrs": {"pixbuf": 2}, "view_props": {"spacing": 0}},
+            {"id": "lq_pb", "type": GdkPixbuf.Pixbuf, "renderer": Gtk.CellRendererPixbuf(),
+             "render_attrs": {"pixbuf": 3}, "view_props": {"spacing": 0}},
+            {"id": "tpl_pb", "type": GdkPixbuf.Pixbuf, "renderer": Gtk.CellRendererPixbuf(),
+             "render_attrs": {"pixbuf": 4}, "view_props": {"spacing": 0}},
+            {"id": "alias", "type": str},  # used for quick access instead of device.GetProperties
+            {"id": "connected", "type": bool},  # used for quick access instead of device.GetProperties
+            {"id": "paired", "type": bool},  # used for quick access instead of device.GetProperties
+            {"id": "trusted", "type": bool},  # used for quick access instead of device.GetProperties
+            {"id": "objpush", "type": bool},  # used to set Send File button
+            {"id": "rssi", "type": float},
+            {"id": "lq", "type": float},
+            {"id": "tpl", "type": float},
+            {"id": "orig_icon", "type": GdkPixbuf.Pixbuf},
+            {"id": "cell_fader", "type": GObject.TYPE_PYOBJECT},
+            {"id": "row_fader", "type": GObject.TYPE_PYOBJECT},
+            {"id": "levels_visible", "type": bool},
+            {"id": "initial_anim", "type": bool},
         ]
         super(ManagerDeviceList, self).__init__(adapter, tabledata)
         self.set_name("ManagerDeviceList")

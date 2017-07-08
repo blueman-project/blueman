@@ -138,12 +138,13 @@ class PluginDialog(Gtk.Dialog):
         cr.connect("toggled", lambda *args: ref() and ref().on_toggled(*args))
 
         data = [
-            ["active", bool, cr, {"active": 0, "activatable": 1, "visible": 1}],
-            ["activatable", bool],
-            ["icon", str, Gtk.CellRendererPixbuf(), {"icon-name": 2}],
+            {"id": "active", "type": bool, "renderer": cr, "render_attrs": {"active": 0, "activatable": 1, "visible": 1}},
+            {"id": "activatable", "type": bool},
+            {"id": "icon", "type": str, "renderer": Gtk.CellRendererPixbuf(), "render_attrs": {"icon-name": 2}},
             # device caption
-            ["desc", str, Gtk.CellRendererText(), {"markup": 3}, {"expand": True}],
-            ["name", str]
+            {"id": "desc", "type": str, "renderer": Gtk.CellRendererText(), "render_attrs": {"markup": 3},
+             "view_props": {"expand": True}},
+            {"id": "name", "type": str},
         ]
 
         self.list = GenericList(data)

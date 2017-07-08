@@ -88,9 +88,9 @@ class DeviceList(GenericList):
         self.discovering = False
 
         data = tabledata + [
-            ["device", object],
-            ["dbus_path", str],
-            ["timestamp", float]
+            {"id": "device", "type": object},
+            {"id": "dbus_path", "type": str},
+            {"id": "timestamp", "type": float}
         ]
 
         super(DeviceList, self).__init__(data, **kwargs)
