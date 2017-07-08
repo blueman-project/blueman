@@ -29,15 +29,15 @@ class GenericList(Gtk.TreeView):
 
             self.ids[data[i][0]] = i
 
-            if len(data[i]) == 5 or len(data[i]) == 6:
+            if len(data[i]) == 4 or len(data[i]) == 5:
 
-                column = Gtk.TreeViewColumn(data[i][4])
+                column = Gtk.TreeViewColumn()
 
                 column.pack_start(data[i][2], True)
                 column.set_attributes(data[i][2], **data[i][3])
 
-                if len(data[i]) == 6:
-                    column.set_properties(**data[i][5])
+                if len(data[i]) == 5:
+                    column.set_properties(**data[i][4])
 
                 self.columns[data[i][0]] = column
                 self.append_column(column)

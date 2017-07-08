@@ -138,11 +138,11 @@ class PluginDialog(Gtk.Dialog):
         cr.connect("toggled", lambda *args: ref() and ref().on_toggled(*args))
 
         data = [
-            ["active", bool, cr, {"active": 0, "activatable": 1, "visible": 1}, None],
+            ["active", bool, cr, {"active": 0, "activatable": 1, "visible": 1}],
             ["activatable", bool],
-            ["icon", str, Gtk.CellRendererPixbuf(), {"icon-name": 2}, None],
+            ["icon", str, Gtk.CellRendererPixbuf(), {"icon-name": 2}],
             # device caption
-            ["desc", str, Gtk.CellRendererText(), {"markup": 3}, None, {"expand": True}],
+            ["desc", str, Gtk.CellRendererText(), {"markup": 3}, {"expand": True}],
             ["name", str]
         ]
 

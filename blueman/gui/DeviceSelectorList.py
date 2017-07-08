@@ -14,13 +14,13 @@ class DeviceSelectorList(DeviceList):
         cr.props.ellipsize = Pango.EllipsizeMode.END
         data = [
             #device picture
-            ["device_pb", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 0}, None],
+            ["device_pb", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 0}],
 
             #device caption
-            ["caption", str, cr, {"markup": 1}, None, {"expand": True}],
+            ["caption", str, cr, {"markup": 1}, {"expand": True}],
 
-            ["paired_icon", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 2}, None],
-            ["trusted_icon", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 3}, None]
+            ["paired_icon", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 2}],
+            ["trusted_icon", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 3}]
         ]
 
         super(DeviceSelectorList, self).__init__(adapter, data, headers_visible=False)
