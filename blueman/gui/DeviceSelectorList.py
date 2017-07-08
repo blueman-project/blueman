@@ -12,7 +12,7 @@ class DeviceSelectorList(DeviceList):
     def __init__(self, adapter=None):
         cr = Gtk.CellRendererText()
         cr.props.ellipsize = Pango.EllipsizeMode.END
-        data = [
+        tabledata = [
             #device picture
             ["device_pb", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 0}],
 
@@ -23,7 +23,7 @@ class DeviceSelectorList(DeviceList):
             ["trusted_icon", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 3}]
         ]
 
-        super(DeviceSelectorList, self).__init__(adapter, data, headers_visible=False)
+        super(DeviceSelectorList, self).__init__(adapter, tabledata, headers_visible=False)
 
     def on_icon_theme_changed(self, widget):
         for row in self.liststore:

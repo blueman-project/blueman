@@ -87,10 +87,7 @@ class DeviceList(GenericList):
         self.Adapter = None
         self.discovering = False
 
-        data = []
-        data = data + tabledata
-
-        data = data + [
+        data = tabledata + [
             ["device", object],
             ["dbus_path", str],
             ["timestamp", float]

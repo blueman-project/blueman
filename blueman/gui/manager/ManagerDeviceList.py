@@ -25,7 +25,7 @@ class ManagerDeviceList(DeviceList):
     def __init__(self, adapter=None, inst=None):
         cr = Gtk.CellRendererText()
         cr.props.ellipsize = Pango.EllipsizeMode.END
-        data = [
+        tabledata = [
             # device picture
             ["device_pb", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 0}],
             # device caption
@@ -53,7 +53,7 @@ class ManagerDeviceList(DeviceList):
             ["levels_visible", bool],
             ["initial_anim", bool],
         ]
-        super(ManagerDeviceList, self).__init__(adapter, data)
+        super(ManagerDeviceList, self).__init__(adapter, tabledata)
         self.set_name("ManagerDeviceList")
         self.set_headers_visible(False)
         self.props.has_tooltip = True
