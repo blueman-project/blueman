@@ -34,6 +34,9 @@ class GenericList(Gtk.TreeView):
             if "view_props" in row:
                 column.set_properties(**row["view_props"])
 
+            if "celldata_func" in row:
+                column.set_cell_data_func(row["renderer"], row["celldata_func"])
+
             self.columns[row["id"]] = column
             self.append_column(column)
 
