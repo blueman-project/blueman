@@ -42,7 +42,7 @@ class Blueman(Gtk.Window):
         self.add(grid)
         self.set_name("BluemanManager")
 
-        self.Plugins = PluginManager(ManagerPlugin, blueman.plugins.manager, None)
+        self.Plugins = PluginManager(ManagerPlugin, blueman.plugins.manager, self)
         self.Plugins.Load()
 
         area = MessageArea()
