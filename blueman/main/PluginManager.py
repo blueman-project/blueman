@@ -1,10 +1,11 @@
 # coding=utf-8
-from gi.repository import GObject
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk, GObject
 import os
 import builtins
 import logging
-
-from blueman.Functions import *
+import traceback
 
 
 class StopException(Exception):
