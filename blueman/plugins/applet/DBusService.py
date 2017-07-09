@@ -58,7 +58,7 @@ class DBusService(AppletPlugin):
         try:
             self.Applet.Plugins.RecentConns
         except KeyError:
-            logging.watning("RecentConns plugin is unavailable")
+            logging.warning("RecentConns plugin is unavailable")
         else:
             self.Applet.Plugins.RecentConns.notify(object_path, uuid)
 
