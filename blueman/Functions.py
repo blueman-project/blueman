@@ -227,12 +227,17 @@ def format_bytes(size):
     return (ret, suffix)
 
 
-def create_menuitem(text, icon_name=None, pixbuf=None):
+def create_menuitem(text, icon_name=None, pixbuf=None, surface=None):
     image = Gtk.Image(pixel_size=16)
     if icon_name:
         image.set_from_icon_name(icon_name, Gtk.IconSize.MENU)
+    elif surface:
+        image.set_from_surface(surface)
     elif pixbuf:
         image.set_from_pixbuf(pixbuf)
+    else:
+        raise ValueError("At least provide one of, icon name, surface or pixbuf")
+
     item = Gtk.ImageMenuItem(label=text, image=image, use_underline=True)
     child = item.get_child()
     child.set_use_markup(True)
