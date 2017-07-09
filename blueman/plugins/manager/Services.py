@@ -1,28 +1,37 @@
 # coding=utf-8
+import cairo
 from blueman.bluez.Network import Network
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-from blueman.Functions import create_menuitem, get_icon, composite_icon
+from blueman.Functions import create_menuitem
 from blueman.main.AppletService import AppletService
 from blueman.services import *
-
 from _blueman import rfcomm_list
-
-
-def get_x_icon(icon_name, size):
-    ic = get_icon(icon_name, size)
-    x = get_icon("blueman-x", size)
-    pixbuf = composite_icon(ic, [(x, 0, 0, 255)])
-
-    return pixbuf
 
 
 class Services(ManagerPlugin):
     def on_load(self, manager):
         self.manager = manager
+        self.icon_theme = Gtk.IconTheme.get_default()
+
+    def _make_x_icon(self, icon_name, size):
+        scale = self.manager.get_scale_factor()
+        window = self.manager.get_window()
+
+        target = self.icon_theme.load_surface(icon_name, size, scale, window, Gtk.IconLookupFlags.FORCE_SIZE)
+        bmx = self.icon_theme.load_surface("blueman-x", size, scale, window, Gtk.IconLookupFlags.FORCE_SIZE)
+
+        x = target.get_width() - bmx.get_width()
+        y = target.get_height() - bmx.get_height()
+        context = cairo.Context(target)
+        context.set_source_surface(bmx, x, y)
+        context.paint()
+
+        return target
+
     def on_request_menu_items(self, manager_menu, device):
         items = []
         appl = AppletService()
@@ -32,7 +41,8 @@ class Services(ManagerPlugin):
 
         def add_menu_item(manager_menu, service):
             if service.connected:
-                item = create_menuitem(service.name, pixbuf=get_x_icon(service.icon, 16))
+                surface = self._make_x_icon(service.icon, 16)
+                item = create_menuitem(service.name, surface=surface)
                 item.connect("activate", manager_menu.on_disconnect, service)
                 items.append((item, service.priority + 100))
             else:
@@ -56,7 +66,8 @@ class Services(ManagerPlugin):
                     if dev["dst"] == device['Address'] and dev["state"] == "connected":
                         devname = _("Serial Port %s") % "rfcomm%d" % dev["id"]
 
-                        item = create_menuitem(devname, pixbuf=get_x_icon("modem", 16))
+                        surface = self._make_x_icon("modem", 16)
+                        item = create_menuitem(service.name, surface=surface)
                         item.connect("activate", manager_menu.on_disconnect, service, dev["id"])
                         items.append((item, 120))
                         item.show()
