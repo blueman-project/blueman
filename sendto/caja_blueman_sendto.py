@@ -1,6 +1,7 @@
 from gi.repository import Caja, GObject, Gio
 
 
+# noinspection PyMissingConstructor
 class BluemanSendtoExtension(GObject.GObject, Caja.MenuProvider):
     def __init__(self):
         pass
