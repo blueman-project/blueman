@@ -306,6 +306,9 @@ L2CAP_UUID = 0x0100
 
 
 class ServiceUUID(UUID):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
     @property
     def short_uuid(self):
         if self.reserved:
