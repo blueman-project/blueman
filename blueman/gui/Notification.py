@@ -8,7 +8,6 @@ from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import GLib
 from gi.repository import Gio
-from blueman.Functions import get_icon
 from blueman.gui.GtkAnimation import AnimBase
 import logging
 
@@ -61,7 +60,7 @@ class _NotificationDialog(Gtk.MessageDialog):
         self.props.window_position = Gtk.WindowPosition.CENTER
 
         if icon_name:
-            self.set_icon_from_pixbuf(get_icon(icon_name, 48))
+            self.set_icon_from_icon_name(icon_name, 48)
         elif image_data:
             self.set_icon_from_pixbuf(image_data)
 
@@ -123,6 +122,10 @@ class _NotificationDialog(Gtk.MessageDialog):
         self.set_image(im)
         im.show()
 
+    def set_icon_from_icon_name(self, icon_name, size):
+        im = Gtk.Image(icon_name=icon_name, pixel_size=size)
+        self.set_image(im)
+        im.show()
 
 class _NotificationBubble(Gio.DBusProxy):
     def __init__(self, summary, message, timeout=-1, actions=None, actions_cb=None,
