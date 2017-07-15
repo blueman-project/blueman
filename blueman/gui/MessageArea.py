@@ -96,3 +96,6 @@ class MessageArea(Gtk.InfoBar):
             self.label.props.label = self.text
             self.b_more.props.visible = False
 
+        # Queue a resize to workaround negative height problem, see issue #369
+        # TODO revisit this in later Gtk versions to see if the problem persists
+        self.queue_resize()
