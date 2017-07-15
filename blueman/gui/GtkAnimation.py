@@ -277,9 +277,6 @@ class WidgetFade(AnimBase):
 
     def on_draw(self, widget, cr):
         if not self.frozen:
-            rect = self.widget.get_allocation()
-            cr.rectangle(rect.x, rect.y, rect.width, rect.height)
-            cr.clip()
             cr.set_source_rgba(self.color.red, self.color.green, self.color.blue, self.color.alpha - self.get_state())
             cr.set_operator(cairo.OPERATOR_OVER)
             cr.paint()
