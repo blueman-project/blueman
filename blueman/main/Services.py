@@ -24,7 +24,7 @@ class BluemanServices(Gtk.Dialog):
 
         self.b_apply = self.add_button("_Apply", Gtk.ResponseType.APPLY)
         self.b_apply.props.receives_default = True
-        self.b_apply.props.sensitive = True
+        self.b_apply.props.sensitive = False
         self.b_apply.props.use_underline = True
 
         self.b_close = self.add_button("_Close", Gtk.ResponseType.CLOSE)
