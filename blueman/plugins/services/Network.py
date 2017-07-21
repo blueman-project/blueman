@@ -233,6 +233,9 @@ class Network(ServicePlugin):
             rb_dun_nm.props.sensitive = False
             rb_dun_nm.props.tooltip_text = _("Not currently supported with this setup")
 
+        if "DhcpClient" in active_plugins:
+            rb_blueman.props.active = True
+
         if "NMPANSupport" in avail_plugins:
             rb_nm.props.sensitive = True
         else:
