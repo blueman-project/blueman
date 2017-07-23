@@ -12,7 +12,7 @@ import logging
 
 class ManagerProgressbar(GObject.GObject):
     __gsignals__ = {
-    str('cancelled'): (GObject.SignalFlags.RUN_LAST, None, ()),
+        str('cancelled'): (GObject.SignalFlags.RUN_LAST, None, ()),
     }
     __instances__ = []
 

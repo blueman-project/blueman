@@ -59,7 +59,7 @@ class pa_module_info(Structure):
                 ("argument", c_char_p),
                 ("n_used", c_int),
                 ("proplist", c_void_p),
-    ]
+                ]
 
 
 class pa_sample_spec(Structure):
@@ -326,9 +326,9 @@ pa_context_errno.argtypes = [c_void_p]
 
 class PulseAudioUtils(GObject.GObject):
     __gsignals__ = {
-    str('connected'): (GObject.SignalFlags.NO_HOOKS, None, ()),
-    str('disconnected'): (GObject.SignalFlags.NO_HOOKS, None, ()),
-    str('event'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT)),
+        str('connected'): (GObject.SignalFlags.NO_HOOKS, None, ()),
+        str('disconnected'): (GObject.SignalFlags.NO_HOOKS, None, ()),
+        str('event'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT)),
     }
 
     def check_connected(self):
@@ -426,11 +426,11 @@ class PulseAudioUtils(GObject.GObject):
             props = self.__get_proplist(entry_info[0].proplist)
 
             data[entry_info[0].index] = {
-            "name": entry_info[0].name.decode("UTF-8"),
-            "proplist": props,
-            "description": entry_info[0].description.decode("UTF-8"),
-            "owner_module": entry_info[0].owner_module,
-            "driver": entry_info[0].driver.decode("UTF-8")
+                "name": entry_info[0].name.decode("UTF-8"),
+                "proplist": props,
+                "description": entry_info[0].description.decode("UTF-8"),
+                "owner_module": entry_info[0].owner_module,
+                "driver": entry_info[0].driver.decode("UTF-8")
             }
             if end:
                 callback(data)
@@ -450,11 +450,11 @@ class PulseAudioUtils(GObject.GObject):
             props = self.__get_proplist(entry_info[0].proplist)
 
             data[entry_info[0].index] = {
-            "name": entry_info[0].name.decode("UTF-8"),
-            "proplist": props,
-            "description": entry_info[0].description.decode("UTF-8"),
-            "owner_module": entry_info[0].owner_module,
-            "driver": entry_info[0].driver.decode("UTF-8")
+                "name": entry_info[0].name.decode("UTF-8"),
+                "proplist": props,
+                "description": entry_info[0].description.decode("UTF-8"),
+                "owner_module": entry_info[0].owner_module,
+                "driver": entry_info[0].driver.decode("UTF-8")
             }
 
             if end:
@@ -480,11 +480,11 @@ class PulseAudioUtils(GObject.GObject):
             props = self.__get_proplist(entry_info[0].proplist)
 
             data[entry_info[0].index] = {
-            "name": entry_info[0].name.decode("UTF-8"),
-            "proplist": props,
-            "owner_module": entry_info[0].owner_module,
-            "sink": entry_info[0].sink,
-            "driver": entry_info[0].driver.decode("UTF-8")
+                "name": entry_info[0].name.decode("UTF-8"),
+                "proplist": props,
+                "owner_module": entry_info[0].owner_module,
+                "sink": entry_info[0].sink,
+                "driver": entry_info[0].driver.decode("UTF-8")
             }
 
         self.__init_list_callback(pa_context_get_sink_input_info_list,
@@ -506,20 +506,20 @@ class PulseAudioUtils(GObject.GObject):
     def __card_info(self, card_info):
         props = self.__get_proplist(card_info[0].proplist)
         stuff = {
-        "name": card_info[0].name.decode("UTF-8"),
-        "proplist": props,
-        "owner_module": card_info[0].owner_module,
-        "driver": card_info[0].driver.decode("UTF-8"),
-        "index": card_info[0].index,
+            "name": card_info[0].name.decode("UTF-8"),
+            "proplist": props,
+            "owner_module": card_info[0].owner_module,
+            "driver": card_info[0].driver.decode("UTF-8"),
+            "index": card_info[0].index,
         }
         l = []
         for i in range(0, card_info[0].n_profiles):
             x = {
-            "name": card_info[0].profiles[i].name.decode("UTF-8"),
-            "description": card_info[0].profiles[i].description.decode("UTF-8"),
-            "n_sinks": card_info[0].profiles[i].n_sinks,
-            "n_sources": card_info[0].profiles[i].n_sources,
-            "priority": card_info[0].profiles[i].priority,
+                "name": card_info[0].profiles[i].name.decode("UTF-8"),
+                "description": card_info[0].profiles[i].description.decode("UTF-8"),
+                "n_sinks": card_info[0].profiles[i].n_sinks,
+                "n_sources": card_info[0].profiles[i].n_sources,
+                "priority": card_info[0].profiles[i].priority,
             }
             l.append(x)
 
@@ -585,10 +585,10 @@ class PulseAudioUtils(GObject.GObject):
 
             props = self.__get_proplist(entry_info[0].proplist)
             data[entry_info[0].index] = {
-            "name": entry_info[0].name.decode("UTF-8"),
-            "argument": entry_info[0].argument.decode("UTF-8"),
-            "n_used": entry_info[0].n_used,
-            "proplist": props
+                "name": entry_info[0].name.decode("UTF-8"),
+                "argument": entry_info[0].argument.decode("UTF-8"),
+                "n_used": entry_info[0].n_used,
+                "proplist": props
             }
 
         self.__init_list_callback(pa_context_get_module_info_list,

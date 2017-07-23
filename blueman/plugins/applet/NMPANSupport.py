@@ -105,7 +105,7 @@ class NewConnectionBuilder:
         state, oldstate, reason = param.unpack()
         logging.info("state=%s oldstate=%s reason=%s" % (state, oldstate, reason))
         if (state <= self.DEVICE_STATE_DISCONNECTED or state == self.DEVICE_STATE_DEACTIVATING) and \
-                                self.DEVICE_STATE_DISCONNECTED < oldstate <= self.DEVICE_STATE_ACTIVATED:
+                self.DEVICE_STATE_DISCONNECTED < oldstate <= self.DEVICE_STATE_ACTIVATED:
             if self.err_cb:
                 self.err_cb(GLib.Error("Connection was interrupted"))
 

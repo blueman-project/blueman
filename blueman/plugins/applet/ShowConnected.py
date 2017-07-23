@@ -68,8 +68,7 @@ class ShowConnected(AppletPlugin):
                 GLib.timeout_add(0, self.enumerate_connections)
                 self.initialized = True
             else:
-                GLib.timeout_add(1000,
-                                    self.enumerate_connections)
+                GLib.timeout_add(1000, self.enumerate_connections)
         else:
             self.num_connections = 0
             self.update_statusicon()

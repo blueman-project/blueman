@@ -25,8 +25,8 @@ from locale import bind_textdomain_codeset
 
 class MonitorBase(GObject.GObject):
     __gsignals__ = {
-    str('disconnected'): (GObject.SignalFlags.NO_HOOKS, None, ()),
-    str('stats'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
+        str('disconnected'): (GObject.SignalFlags.NO_HOOKS, None, ()),
+        str('stats'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
     }
 
     def __init__(self, device, interface):
@@ -233,7 +233,7 @@ class Dialog:
             m = gettext.ngettext("minute", "minutes", delta.seconds % 3600 / 60)
 
             self.l_duration.props.label = _("%d %s %d %s and %d %s") % (
-            delta.days, d, delta.seconds / 3600, h, delta.seconds % 3600 / 60, m)
+                delta.days, d, delta.seconds / 3600, h, delta.seconds % 3600 / 60, m)
         else:
             self.l_started.props.label = _("Unknown")
             self.l_duration.props.label = _("Unknown")
@@ -314,11 +314,10 @@ class NetUsage(AppletPlugin, GObject.GObject):
     __author__ = "Walmis"
     __autoload__ = False
     __gsignals__ = {
-    str('monitor-added'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-    str('monitor-removed'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-    #monitor, tx, rx
-    str('stats'): (
-    GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
+        str('monitor-added'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+        str('monitor-removed'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+        str('stats'): (
+            GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
     }
 
     _any_network = None

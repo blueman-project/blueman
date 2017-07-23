@@ -32,7 +32,7 @@ class DeviceList(GenericList):
         ),
         #@param: adapter, (key, value)
         str('adapter-property-changed'): (
-        GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
+            GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
         #@param: progress (0 to 1)
         str('discovery-progress'): (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_FLOAT,)),
 
