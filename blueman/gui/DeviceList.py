@@ -389,7 +389,6 @@ class DeviceList(GenericList):
             self.path_to_row[object_path] = Gtk.TreeRowReference.new(self.get_model(),
                                                                      self.get_model().get_path(tree_iter))
 
-
     def append(self, **columns):
         tree_iter = GenericList.append(self, **columns)
         self.do_cache(tree_iter, columns)
