@@ -80,10 +80,10 @@ class RecentConns(AppletPlugin):
             power = True
 
         sensitive = sensitive and \
-                    self.Applet.Manager and \
-                    power and \
-                    self.items is not None and \
-                    (len(self.items) > 0)
+            self.Applet.Manager and \
+            power and \
+            self.items is not None and \
+            (len(self.items) > 0)
 
         self.Item.props.sensitive = sensitive
 

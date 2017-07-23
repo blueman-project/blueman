@@ -52,6 +52,7 @@ def bt_class_to_string(bt_class):
     else:
         return None
 
+
 PIN_SEARCHES = [
     "./device[@oui='{oui}'][@type='{type}'][@name='{name}']",
     "./device[@oui='{oui}'][@type='{type}']",
@@ -60,7 +61,8 @@ PIN_SEARCHES = [
     "./device[@oui='{oui}']",
     "./device[@name='{name}']",
     "./device[@type='{type}']",
-    ]
+]
+
 
 class BluezAgent(Agent):
     __agent_path = '/org/bluez/agent/blueman'
