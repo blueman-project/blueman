@@ -62,8 +62,7 @@ class ManagerStats:
         hbox.show_all()
         self.on_adapter_changed(blueman.List, blueman.List.GetAdapterPath())
 
-        self.up_blinker = Animation(self.im_upload, ["blueman-up-inactive","blueman-up-active"])
-        #self.down_blinker = Animation(self.im_download, ["/down_inactive.png", "/down_active.png"])
+        self.up_blinker = Animation(self.im_upload, ["blueman-up-inactive", "blueman-up-active"])
         self.down_blinker = Animation(self.im_download, ["blueman-down-inactive", "blueman-down-active"])
 
         self.start_update()
@@ -100,8 +99,6 @@ class ManagerStats:
             blinker.set_rate(1)
 
     def _update(self):
-        #if self.hbox.parent.parent.parent.props.visible:
-
         if self.hci is not None:
             devinfo = device_info(self.hci)
             _tx = devinfo["stat"]["byte_tx"]

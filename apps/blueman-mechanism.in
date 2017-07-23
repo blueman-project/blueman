@@ -142,7 +142,7 @@ class conf_service(DbusService):
         for plugin in plugins:
             try:
                 __import__("blueman.plugins.mechanism.%s" % plugin, None, None, [])
-            except ImportError as e:
+            except ImportError:
                 logging.error("Skipping plugin %s" % plugin, exc_info=True)
 
         classes = MechanismPlugin.__subclasses__()

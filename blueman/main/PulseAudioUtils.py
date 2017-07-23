@@ -573,7 +573,6 @@ class PulseAudioUtils(GObject.GObject):
         self.simple_callback(callback, fn, card, profile)
 
     #### Module API #######
-    #from gi.repository import Gtk
     def ListModules(self, callback):
 
         self.check_connected()

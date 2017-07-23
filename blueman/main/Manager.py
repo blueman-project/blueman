@@ -1,7 +1,6 @@
 # coding=utf-8
 
 import logging
-import os
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
@@ -195,8 +194,6 @@ class Blueman(Gtk.Window):
         device.pair(error_handler=error_handler)
 
     def adapter_properties(self):
-        adapter = self.List.Adapter
-        name = os.path.basename(adapter.get_object_path())
         launch("blueman-adapters", None, False, "blueman", _("Adapter Preferences"))
 
     def toggle_trust(self, device):

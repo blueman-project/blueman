@@ -335,4 +335,4 @@ class PluginDialog(Gtk.Dialog):
                 self.applet.Plugins.SetConfig(p, False)
 
         loaded = name in self.applet.Plugins.GetLoaded()
-        cls = self.applet.Plugins.SetConfig(name, not loaded)
+        self.applet.Plugins.SetConfig(name, not loaded)

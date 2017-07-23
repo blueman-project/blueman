@@ -216,9 +216,7 @@ def composite_icon(target, sources):
 
 
 def format_bytes(size):
-    ret = 0.0
     size = float(size)
-    suffix = ""
     if size < 1024:
         ret = size
         suffix = "B"

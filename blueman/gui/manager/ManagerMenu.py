@@ -82,7 +82,6 @@ class ManagerMenu:
 
         self._sort_timestamp_item = Gtk.RadioMenuItem.new_with_mnemonic(sorting_group, _("_Added"))
         self._sort_timestamp_item.show()
-        sorting_group = self._sort_timestamp_item.get_group()
         sorting_menu.append(self._sort_timestamp_item)
 
         sort_config = self.Config['sort-by']

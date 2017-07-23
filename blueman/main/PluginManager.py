@@ -57,9 +57,9 @@ class PluginManager(GObject.GObject):
         if name:
             try:
                 self.__load_plugin(self.__classes[name])
-            except LoadException as e:
+            except LoadException:
                 pass
-            except Exception as e:
+            except Exception:
                 if user_action:
                     d = Gtk.MessageDialog(type=Gtk.MessageType.ERROR,
                                           buttons=Gtk.ButtonsType.CLOSE)
@@ -84,7 +84,7 @@ class PluginManager(GObject.GObject):
         for plugin in plugins:
             try:
                 __import__(self.module_path.__name__ + ".%s" % plugin, None, None, [])
-            except ImportError as e:
+            except ImportError:
                 logging.error("Unable to load plugin module %s" % plugin, exc_info=True)
 
         for cls in self.plugin_class.__subclasses__():
@@ -157,7 +157,7 @@ class PluginManager(GObject.GObject):
         inst = cls(self.user_data)
         try:
             inst._load(self.user_data)
-        except Exception as e:
+        except Exception:
             logging.error("Failed to load %s" % cls.__name__, exc_info=True)
             if not cls.__unloadable__:
                 os._exit(1)
@@ -206,7 +206,7 @@ class PluginManager(GObject.GObject):
             try:
                 ret = getattr(inst, function)(*args, **kwargs)
                 rets.append(ret)
-            except Exception as e:
+            except Exception:
                 logging.error("Function %s on %s failed" % (function, inst.__class__.__name__), exc_info=True)
 
         return rets
@@ -219,7 +219,7 @@ class PluginManager(GObject.GObject):
                 ret = callback(inst, ret)
             except StopException:
                 return ret
-            except Exception as e:
+            except Exception:
                 logging.error("Function %s on %s failed" % (function, inst.__class__.__name__), exc_info=True)
                 return
 
