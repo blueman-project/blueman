@@ -14,6 +14,9 @@ import logging
 
 
 class PulseAudioProfile(ManagerPlugin):
+    def on_unload(self):
+        pass
+
     def on_load(self, user_data):
         self.devices = {}
         self.item = None

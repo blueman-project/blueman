@@ -21,6 +21,9 @@ def get_x_icon(icon_name, size):
 
 
 class Services(ManagerPlugin):
+    def on_unload(self):
+        pass
+
     def on_request_menu_items(self, manager_menu, device):
         items = []
         appl = AppletService()
