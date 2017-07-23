@@ -358,7 +358,7 @@ def set_proc_title(name=None):
         name = os.path.basename(sys.argv[0])
 
     libc = cdll.LoadLibrary('libc.so.6')
-    buff = create_string_buffer(len(name)+1)
+    buff = create_string_buffer(len(name) + 1)
     buff.value = name.encode("UTF-8")
     ret = libc.prctl(15, byref(buff), 0, 0, 0)
 

@@ -160,7 +160,7 @@ class conf_service(DbusService):
                     "Blueman was built with PolicyKit-1 support, but it's not available on the system")
 
         v_subject = GLib.Variant('s', subject)
-        res = self.pk.CheckAuthorization('((sa{sv})sa{ss}us)',("system-bus-name", {"name": v_subject}),
+        res = self.pk.CheckAuthorization('((sa{sv})sa{ss}us)', ("system-bus-name", {"name": v_subject}),
                                          action_id, {}, 1, "")
 
         logging.debug(str(res))
