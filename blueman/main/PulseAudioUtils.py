@@ -388,15 +388,15 @@ class PulseAudioUtils(GObject.GObject):
             info["handler"](None, True)
             pythonapi.Py_DecRef(py_object(info))
 
-    def __init_list_callback(self, function, cb_type, handler, *args):
+    def __init_list_callback(self, func, cb_type, handler, *args):
         info = {"cb_info": cb_type(self.__list_callback), "handler": handler}
         pythonapi.Py_IncRef(py_object(info))
 
         args += (info["cb_info"], py_object(info))
-        op = function(self.pa_context, *args)
+        op = func(self.pa_context, *args)
         pa_operation_unref(op)
 
-    def simple_callback(self, handler, function, *args):
+    def simple_callback(self, handler, func, *args):
 
         def wrapper(context, res, data):
             if handler:
@@ -407,10 +407,10 @@ class PulseAudioUtils(GObject.GObject):
         pythonapi.Py_IncRef(py_object(cb))
 
         args += (cb, py_object(cb))
-        op = function(self.pa_context, *args)
+        op = func(self.pa_context, *args)
         if not op:
             logging.info("Operation failed")
-            logging.error(function.__name__)
+            logging.error(func.__name__)
         pa_operation_unref(op)
 
     def ListSources(self, callback):

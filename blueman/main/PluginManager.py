@@ -200,27 +200,27 @@ class PluginManager(GObject.GObject):
         return self.__plugins
 
     #executes a function on all plugin instances
-    def Run(self, function, *args, **kwargs):
+    def Run(self, func, *args, **kwargs):
         rets = []
         for inst in self.__plugins.values():
             try:
-                ret = getattr(inst, function)(*args, **kwargs)
+                ret = getattr(inst, func)(*args, **kwargs)
                 rets.append(ret)
             except Exception as e:
-                logging.error("Function %s on %s failed" % (function, inst.__class__.__name__), exc_info=True)
+                logging.error("Function %s on %s failed" % (func, inst.__class__.__name__), exc_info=True)
 
         return rets
 
     #executes a function on all plugin instances, runs a callback after each plugin returns something
-    def RunEx(self, function, callback, *args, **kwargs):
+    def RunEx(self, func, callback, *args, **kwargs):
         for inst in self.__plugins.values():
-            ret = getattr(inst, function)(*args, **kwargs)
+            ret = getattr(inst, func)(*args, **kwargs)
             try:
                 ret = callback(inst, ret)
             except StopException:
                 return ret
             except Exception as e:
-                logging.error("Function %s on %s failed" % (function, inst.__class__.__name__), exc_info=True)
+                logging.error("Function %s on %s failed" % (func, inst.__class__.__name__), exc_info=True)
                 return
 
             if ret is not None:
