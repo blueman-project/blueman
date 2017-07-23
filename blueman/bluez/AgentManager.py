@@ -2,6 +2,7 @@
 from blueman.bluez.Base import Base
 from gi.repository import GLib
 
+
 class AgentManager(Base):
     _interface_name = 'org.bluez.AgentManager1'
 

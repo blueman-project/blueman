@@ -3,6 +3,7 @@ from gi.repository import GLib
 from blueman.bluez.Base import Base
 from blueman.bluez.AnyBase import AnyBase
 
+
 class Adapter(Base):
     _interface_name = 'org.bluez.Adapter1'
 
@@ -31,6 +32,7 @@ class Adapter(Base):
             return self.set('Alias', name)
         except GLib.Error:
             return self.set('Name', name)
+
 
 class AnyAdapter(AnyBase):
     def __init__(self):

@@ -39,6 +39,7 @@ introspection_xml = \
     </node>
     '''
 
+
 class Agent(object):
     __bus = Gio.bus_get_sync(Gio.BusType.SYSTEM)
 

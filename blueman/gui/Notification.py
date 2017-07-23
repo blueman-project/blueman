@@ -126,6 +126,7 @@ class _NotificationDialog(Gtk.MessageDialog):
         self.set_image(im)
         im.show()
 
+
 class _NotificationBubble(Gio.DBusProxy):
     def __init__(self, summary, message, timeout=-1, actions=None, actions_cb=None,
                  icon_name=None, image_data=None, pos_hint=None):

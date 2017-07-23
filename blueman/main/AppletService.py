@@ -1,6 +1,7 @@
 # coding=utf-8
 from gi.repository import Gio
 
+
 class AppletService(Gio.DBusProxy):
     _instance = None
 

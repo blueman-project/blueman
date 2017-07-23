@@ -24,6 +24,7 @@ from blueman.main.PluginManager import PluginManager
 import blueman.plugins.manager
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 
+
 class Blueman(Gtk.Window):
     def __init__(self):
         super(Blueman, self).__init__(title=_("Bluetooth Devices"))

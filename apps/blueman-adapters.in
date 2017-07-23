@@ -22,7 +22,6 @@ from blueman.main.Adapter import BluemanAdapters
 # Workaround introspection bug, gnome bug 622084
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
-
 if __name__ == '__main__':
     parser = parser = create_parser()
     parser.add_argument("--socket-id", dest="socket_id", action="store", type=int, metavar="ID")
