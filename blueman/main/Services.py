@@ -102,7 +102,7 @@ class BluemanServices(Gtk.Dialog):
         for plugin in plugins:
             try:
                 __import__("blueman.plugins.services.%s" % plugin, None, None, [])
-            except ImportError as e:
+            except ImportError:
                 logging.error("Unable to load %s plugin" % plugin, exc_info=True)
 
         for cls in ServicePlugin.__subclasses__():

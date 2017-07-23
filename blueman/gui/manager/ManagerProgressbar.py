@@ -77,9 +77,6 @@ class ManagerProgressbar(GObject.GObject):
         if not self.Blueman.Config["show-statusbar"]:
             self.Blueman.Builder.get_object("statusbar").props.visible = True
 
-        # if self.Blueman.Stats.hbox.size_request()[0] + self.progressbar.size_request()[0] + 16 > self.Blueman.get_size()[0]:
-        #	self.Blueman.Stats.hbox.hide_all()
-
         self.progressbar.props.visible = True
         self.eventbox.props.visible = True
         self.button.props.visible = True

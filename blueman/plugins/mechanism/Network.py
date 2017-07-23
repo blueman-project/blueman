@@ -20,7 +20,7 @@ class Network(MechanismPlugin):
 
         def dh_error(dh, message, ok, err):
             err(message)
-            resume = self.timer.resume()
+            self.timer.resume()
 
         def dh_connected(dh, ip, ok, err):
             ok(ip)

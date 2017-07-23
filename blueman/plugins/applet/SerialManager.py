@@ -139,7 +139,7 @@ class SerialManager(AppletPlugin):
             try:
                 logging.info("Disconnecting %s" % name)
                 serial_services[0].disconnect(port)
-            except Exception as e:
+            except Exception:
                 logging.error("Failed to disconnect %s" % name, exc_info=True)
 
 

@@ -87,7 +87,7 @@ class PowerManager(AppletPlugin):
                 adapter.set("Powered", state)
 
             self.adapter_state = state
-        except Exception as e:
+        except Exception:
             logging.error("Exception occurred", exc_info=True)
 
     class Callback(object):

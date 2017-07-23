@@ -47,12 +47,6 @@ import logging.handlers
 import argparse
 from ctypes import cdll, byref, create_string_buffer
 import traceback
-
-GREEN = lambda x: "\x1b[32;01m" + x + "\x1b[39;49;00m"
-BLUE = lambda x: "\x1b[34;01m" + x + "\x1b[39;49;00m"
-BOLD = lambda x: "\033[1m" + x + "\033[0m"
-YELLOW = lambda x: "\x1b[33;01m" + x + "\x1b[39;49;00m"
-
 import fcntl, struct, termios
 
 try:
@@ -216,9 +210,7 @@ def composite_icon(target, sources):
 
 
 def format_bytes(size):
-    ret = 0.0
     size = float(size)
-    suffix = ""
     if size < 1024:
         ret = size
         suffix = "B"

@@ -64,7 +64,6 @@ class ManagerStats:
 
         self.up_blinker = Animation(self.im_upload,
                                     [get_icon("blueman-up-inactive", 15), get_icon("blueman-up-active", 15)])
-        #self.down_blinker = Animation(self.im_download, ["/down_inactive.png", "/down_active.png"])
         self.down_blinker = Animation(self.im_download,
                                       [get_icon("blueman-down-inactive", 16), get_icon("blueman-down-active", 16)])
 
@@ -102,8 +101,6 @@ class ManagerStats:
             blinker.set_rate(1)
 
     def _update(self):
-        #if self.hbox.parent.parent.parent.props.visible:
-
         if self.hci is not None:
             devinfo = device_info(self.hci)
             _tx = devinfo["stat"]["byte_tx"]
