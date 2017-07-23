@@ -46,15 +46,19 @@ class GameControllerWakelock(AppletPlugin):
                 self.wake_lock -= 1
             else:
                 ret = launch(command, sn=False)
-                if ret: self.wake_lock -= 1
-                else: logging.error("%s failed" % action)
+                if ret:
+                    self.wake_lock -= 1
+                else:
+                    logging.error("%s failed" % action)
 
         elif action == "suspend":
             if self.wake_lock >= 1:
                 self.wake_lock += 1
             else:
                 ret = launch(command, sn=False)
-                if ret: self.wake_lock += 1
-                else: logging.error("%s failed" % action)
+                if ret:
+                    self.wake_lock += 1
+                else:
+                    logging.error("%s failed" % action)
 
         logging.info("Number of locks: %s" % self.wake_lock)

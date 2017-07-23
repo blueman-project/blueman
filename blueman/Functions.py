@@ -110,8 +110,10 @@ def launch(cmd, paths=None, system=False, icon_name=None, sn=True, name="blueman
     timestamp = Gtk.get_current_event_time()
     context = display.get_app_launch_context()
     context.set_timestamp(timestamp)
-    if sn: flags = Gio.AppInfoCreateFlags.SUPPORTS_STARTUP_NOTIFICATION
-    else: flags = Gio.AppInfoCreateFlags.NONE
+    if sn:
+        flags = Gio.AppInfoCreateFlags.SUPPORTS_STARTUP_NOTIFICATION
+    else:
+        flags = Gio.AppInfoCreateFlags.NONE
 
     env = os.environ
     env["BLUEMAN_EVENT_TIME"] = str(timestamp)
@@ -370,8 +372,10 @@ logger_date_fmt = '%H.%M.%S'
 
 
 def create_logger(log_level, name, log_format=None, date_fmt=None, syslog=False):
-    if log_format is None: log_format = logger_format
-    if date_fmt is None: date_fmt = logger_date_fmt
+    if log_format is None:
+        log_format = logger_format
+    if date_fmt is None:
+        date_fmt = logger_date_fmt
     logging.basicConfig(level=log_level, format=log_format, datefmt=date_fmt)
 
     logger = logging.getLogger(None)  # Root logger
