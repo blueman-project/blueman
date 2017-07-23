@@ -150,10 +150,11 @@ class BluezAgent(Agent):
             self._db = ElementTree.parse(os.path.join(PKGDATA_DIR, 'pin-code-database.xml'))
 
         device = Bluez.Device(device_path)
-        lookup_dict = {}
-        lookup_dict['name'] = device['Name']
-        lookup_dict['type'] = bt_class_to_string(device['Class'])
-        lookup_dict['oui'] = device['Address'][:9]
+        lookup_dict = {
+            'name': device['Name'],
+            'type': bt_class_to_string(device['Class']),
+            'oui': device['Address'][:9]
+        }
 
         pin = None
         for s in PIN_SEARCHES:
