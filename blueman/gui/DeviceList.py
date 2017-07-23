@@ -18,22 +18,22 @@ import logging
 
 class DeviceList(GenericList):
     __gsignals__ = {
-        #@param: device TreeIter
-        #note: None None is given when there ar no more rows, or when selected device is removed
+        # @param: device TreeIter
+        # note: None None is given when there ar no more rows, or when selected device is removed
         'device-selected': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
-        #@param: device, TreeIter, (key, value)
+        # @param: device, TreeIter, (key, value)
         'device-property-changed': (GObject.SignalFlags.RUN_LAST, None,
                                     (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
-        #@param: adapter, (key, value)
+        # @param: adapter, (key, value)
         'adapter-property-changed': (GObject.SignalFlags.RUN_LAST, None,
                                      (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
-        #@param: progress (0 to 1)
+        # @param: progress (0 to 1)
         'discovery-progress': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_FLOAT,)),
 
-        #@param: new adapter path, None if there are no more adapters
+        # @param: new adapter path, None if there are no more adapters
         'adapter-changed': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
 
-        #@param: adapter path
+        # @param: adapter path
         'adapter-added': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
         'adapter-removed': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
     }
@@ -64,7 +64,7 @@ class DeviceList(GenericList):
             a = Bluez.Adapter(path)
             wait_for_adapter(a, on_activate)
 
-        #cache for fast lookup in the list
+        # cache for fast lookup in the list
         self.path_to_row = {}
 
         self.monitored_devices = []
@@ -176,22 +176,22 @@ class DeviceList(GenericList):
                 GLib.timeout_add(1000, update, r, cinfo, bt_address)
                 self.monitored_devices.append(bt_address)
 
-    ##### virtual funcs #####
+    # ##### virtual funcs #####
 
-    #called when power levels need updating
-    #if cinfo is None then info icons need to be removed
+    # called when power levels need updating
+    # if cinfo is None then info icons need to be removed
     def level_setup_event(self, tree_iter, device, cinfo):
         pass
 
-    #called when row needs to be initialized
+    # called when row needs to be initialized
     def row_setup_event(self, tree_iter, device):
         pass
 
-    #called when a property for a device changes
+    # called when a property for a device changes
     def row_update_event(self, tree_iter, key, value):
         pass
 
-    #called when device needs to be added to the list
+    # called when device needs to be added to the list
     def device_add_event(self, device):
         self.add_device(device)
 
@@ -244,7 +244,7 @@ class DeviceList(GenericList):
             self.emit("adapter-changed", self.__adapter_path)
         except Bluez.errors.DBusNoSuchAdapterError as e:
             logging.exception(e)
-            #try loading default adapter
+            # try loading default adapter
             if len(self.manager.get_adapters()) > 0 and adapter is not None:
                 self.SetAdapter()
             else:
@@ -268,7 +268,7 @@ class DeviceList(GenericList):
         return True
 
     def add_device(self, device):
-        #device belongs to another adapter
+        # device belongs to another adapter
         if not device['Adapter'] == self.Adapter.get_object_path():
             return
 

@@ -40,26 +40,26 @@ class ServicePlugin(object):
     def clear_options(self):
         self._options = []
 
-    #virtual functions
-    #in: container hbox
-    #out: (menu entry name, menu icon name)
+    # virtual functions
+    # in: container hbox
+    # out: (menu entry name, menu icon name)
     def on_load(self, container):
         pass
 
     def on_unload(self):
         pass
 
-    #return true if apply button should be sensitive or false if not. -1 to force disabled
+    # return true if apply button should be sensitive or false if not. -1 to force disabled
     def on_query_apply_state(self):
         pass
 
     def on_apply(self):
         pass
 
-    #called when current plugin's page is selected. The plugin's widget should be shown
+    # called when current plugin's page is selected. The plugin's widget should be shown
     def on_enter(self):
         pass
 
-    #called when current plugin's page is changed to another. The plugin's widget should be hidden.
+    # called when current plugin's page is changed to another. The plugin's widget should be hidden.
     def on_leave(self):
         pass

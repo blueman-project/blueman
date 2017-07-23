@@ -6,7 +6,7 @@ import os
 import logging
 
 timeout = 30
-#support running uninstalled
+# support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if 'BLUEMAN_SOURCE' in os.environ:
     sys.path = [_dirname, os.path.join(_dirname, 'module', '.libs')] + sys.path

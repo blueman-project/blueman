@@ -57,8 +57,8 @@ class ShowConnected(AppletPlugin):
                     self.parent.Plugins.StatusIcon.SetTextLine(0,
                                                                _("Bluetooth Enabled"))
             except:
-                #bluetooth should be always enabled if powermanager is
-                #not loaded
+                # bluetooth should be always enabled if powermanager is
+                # not loaded
                 self.parent.Plugins.StatusIcon.SetTextLine(0,
                                                            _("Bluetooth Enabled"))
 

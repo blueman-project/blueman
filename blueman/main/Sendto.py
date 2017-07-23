@@ -75,7 +75,7 @@ class Sender(Gtk.Dialog):
         self.error_dialog = None
         self.cancelling = False
 
-        #bytes transferred on a current transfer
+        # bytes transferred on a current transfer
         self.transferred = 0
 
         self.speed = SpeedCalc(6)
