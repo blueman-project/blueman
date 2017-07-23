@@ -21,7 +21,7 @@ from blueman.bluez.Agent import Agent
 
 
 def bt_class_to_string(bt_class):
-    n1 =  (bt_class & 0x1f00) >> 8
+    n1 = (bt_class & 0x1f00) >> 8
     if n1 == 0x03:
         return "network"
     elif n1 == 0x04:

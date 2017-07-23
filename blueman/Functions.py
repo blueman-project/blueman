@@ -16,13 +16,12 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-# 
+#
 
 __all__ = ["check_bluetooth_status", "wait_for_adapter", "launch", "setup_icon_path", "get_icon",
            "get_notification_icon", "adapter_path_to_name", "e_", "opacify_pixbuf", "composite_icon",
            "format_bytes", "create_menuitem", "get_lockfile", "get_pid", "is_running", "check_single_instance", "kill",
            "have", "mask_ip4_address", "set_proc_title", "create_logger", "create_parser", "open_rfcomm"]
-
 
 from time import sleep
 
@@ -355,7 +354,7 @@ def set_proc_title(name=None):
         name = os.path.basename(sys.argv[0])
 
     libc = cdll.LoadLibrary('libc.so.6')
-    buff = create_string_buffer(len(name)+1)
+    buff = create_string_buffer(len(name) + 1)
     buff.value = name.encode("UTF-8")
     ret = libc.prctl(15, byref(buff), 0, 0, 0)
 

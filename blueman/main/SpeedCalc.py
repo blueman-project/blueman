@@ -35,4 +35,3 @@ class SpeedCalc:
 
     def reset(self):
         self.log = []
-

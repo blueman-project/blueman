@@ -37,7 +37,7 @@ class GameControllerWakelock(AppletPlugin):
                     self.xdg_screensaver("resume")
 
     def xdg_screensaver(self, action):
-        command = "xdg-screensaver %s %s" %(action, self.root_window_id)
+        command = "xdg-screensaver %s %s" % (action, self.root_window_id)
 
         if action == "resume":
             if self.wake_lock <= 0:
