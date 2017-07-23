@@ -203,6 +203,16 @@ class DhcpdHandler(object):
                 self.netconf.unlock("dhcp")
 
 
+UDHCP_CONF_TEMPLATE = """start %(start)s
+end %(end)s
+interface pan1
+pidfile /var/run/udhcpd.pan1.pid
+option subnet %(ip_mask)s
+option dns %(dns)s
+option router %(rtr)s
+"""
+
+
 class UdhcpdHandler(object):
     def __init__(self, netconf):
         self.pid = None
@@ -215,19 +225,11 @@ class UdhcpdHandler(object):
 
         start, end = calc_ip_range(self.netconf.ip4_address)
 
-        return """start %(start)s
-end %(end)s
-interface pan1
-pidfile /var/run/udhcpd.pan1.pid
-option subnet %(ip_mask)s
-option dns %(dns)s
-option router %(rtr)s
-""" % {"ip_mask": inet_ntoa(masked_ip),
-       "dns": dns,
-       "rtr": inet_ntoa(self.netconf.ip4_address),
-       "start": inet_ntoa(start),
-       "end": inet_ntoa(end)
-       }
+        return UDHCP_CONF_TEMPLATE % {"ip_mask": inet_ntoa(masked_ip),
+                                      "dns": dns,
+                                      "rtr": inet_ntoa(self.netconf.ip4_address),
+                                      "start": inet_ntoa(start),
+                                      "end": inet_ntoa(end)}
 
     def do_apply(self):
         if not self.netconf.locked("dhcp") or self.netconf.ip4_changed:
