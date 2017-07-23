@@ -120,11 +120,11 @@ class BluemanServices(Gtk.Dialog):
         self.List.append(picture=get_icon(icon, 32), caption=name, id=inst.__class__.__name__)
 
     #executes a function on all plugin instances
-    def plugin_exec(self, function, *args, **kwargs):
+    def plugin_exec(self, func, *args, **kwargs):
         rets = []
         for inst in ServicePlugin.instances:
             if inst._is_loaded:
-                ret = getattr(inst, function)(*args, **kwargs)
+                ret = getattr(inst, func)(*args, **kwargs)
                 rets.append(ret)
 
         return rets
