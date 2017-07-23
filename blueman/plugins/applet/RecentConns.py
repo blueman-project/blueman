@@ -75,10 +75,10 @@ class RecentConns(AppletPlugin):
             power = True
 
         sensitive = sensitive and \
-                    self.parent.Manager and \
-                    power and \
-                    self.items is not None and \
-                    (len(self.items) > 0)
+            self.parent.Manager and \
+            power and \
+            self.items is not None and \
+            (len(self.items) > 0)
 
         self.item.set_sensitive(sensitive)
 
@@ -198,8 +198,8 @@ class RecentConns(AppletPlugin):
 
         for i in self.items:
             if i["adapter"] == item["adapter"] and \
-                            i["address"] == item["address"] and \
-                            i["uuid"] == item["uuid"]:
+                    i["address"] == item["address"] and \
+                    i["uuid"] == item["uuid"]:
                 i["time"] = item["time"]
 
                 i["device"] = item["device"]
