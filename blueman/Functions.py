@@ -53,7 +53,6 @@ try:
 except IOError:
     in_fg = 'DEBUG' in os.environ
 
-
 from blueman.main.AppletService import AppletService
 
 
@@ -189,6 +188,7 @@ def e_(msg):
     else:
         s = msg.strip().split(": ")[-1]
         return (s, None)
+
 
 def opacify_pixbuf(pixbuf, alpha):
     new = pixbuf.copy()
@@ -355,9 +355,11 @@ def set_proc_title(name=None):
 
     return ret
 
+
 logger_format = '%(name)s %(asctime)s %(levelname)-8s %(module)s:%(lineno)s %(funcName)-10s: %(message)s'
 syslog_logger_format = '%(name)s %(levelname)s %(module)s:%(lineno)s %(funcName)s: %(message)s'
 logger_date_fmt = '%H.%M.%S'
+
 
 def create_logger(log_level, name, log_format=None, date_fmt=None, syslog=False):
     if log_format is None: log_format = logger_format
@@ -387,6 +389,7 @@ def create_parser(parser=None, syslog=True, loglevel=True):
         parser.add_argument("--syslog", dest="syslog", action="store_true")
 
     return parser
+
 
 def open_rfcomm(file, mode):
     try:

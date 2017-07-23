@@ -1,5 +1,6 @@
 # coding=utf-8
 
+
 class ServicePlugin(object):
     instances = []
     __plugin_info__ = None

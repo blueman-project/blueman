@@ -17,6 +17,7 @@ class Network(Base):
     def disconnect(self, reply_handler=None, error_handler=None):
         self._call('Disconnect', reply_handler=reply_handler, error_handler=error_handler)
 
+
 class AnyNetwork(AnyBase):
     def __init__(self):
         super(AnyNetwork, self).__init__('org.bluez.Network1')
