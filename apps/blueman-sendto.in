@@ -5,7 +5,7 @@ import os, sys, signal
 import atexit
 import logging
 
-#support running uninstalled
+# support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if 'BLUEMAN_SOURCE' in os.environ:
     sys.path.insert(0, _dirname)
@@ -21,7 +21,7 @@ from blueman.main.Sendto import Sender
 from blueman.bluez.Manager import Manager
 from blueman.gui.DeviceSelectorDialog import DeviceSelectorDialog
 
-#support running uninstalled
+# support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if 'BLUEMAN_SOURCE' in os.environ:
     sys.path.insert(0, _dirname)

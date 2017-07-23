@@ -105,12 +105,12 @@ class ManagerProgressbar(GObject.GObject):
 
             if ManagerProgressbar.__instances__[-1] == self:
                 ManagerProgressbar.__instances__.pop()
-                #remove all finalized instances
+                # remove all finalized instances
                 for inst in reversed(ManagerProgressbar.__instances__):
                     if inst.finalized:
                         ManagerProgressbar.__instances__.pop()
                     else:
-                        #show last active progress bar
+                        # show last active progress bar
                         inst.show()
                         break
 

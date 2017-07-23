@@ -34,7 +34,7 @@ class PulseAudioProfile(ManagerPlugin):
 
         self.deferred = []
 
-    #updates all menu instances with the following device address
+    # updates all menu instances with the following device address
     def regenerate_with_device(self, device_addr):
         for inst in ManagerDeviceMenu.__instances__:
             if inst.SelectedDevice['Address'] == device_addr and not inst.is_popup:

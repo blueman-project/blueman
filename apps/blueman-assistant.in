@@ -17,7 +17,7 @@ import signal
 import logging
 from locale import bind_textdomain_codeset
 
-#support running uninstalled
+# support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if 'BLUEMAN_SOURCE' in os.environ:
     sys.path.insert(0, _dirname)

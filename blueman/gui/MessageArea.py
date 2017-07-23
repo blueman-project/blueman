@@ -75,7 +75,7 @@ class MessageArea(Gtk.EventBox):
 
         self.setting_style = True
 
-        #recursively set style
+        # recursively set style
         def _set_style(wg):
             if isinstance(wg, Gtk.Container):
                 for w in wg:

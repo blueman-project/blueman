@@ -50,7 +50,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
     __options__ = {
         "max-items": {"type": int,
                       "default": 6,
-                      #the maximum number of items RecentConns menu will display
+                      # the maximum number of items RecentConns menu will display
                       "name": _("Maximum items"),
                       "desc": _("The maximum number of items recent connections menu will display."),
                       "range": (6, 20)},
@@ -229,7 +229,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         item["uuid"] = uuid
         item["time"] = time.time()
         item["device"] = object_path
-        item["mitem"] = None #menu item object
+        item["mitem"] = None  # menu item object
 
         for i in RecentConns.items:
             if i["adapter"] == item["adapter"] and \

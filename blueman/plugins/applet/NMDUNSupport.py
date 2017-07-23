@@ -22,7 +22,7 @@ class ConnectionHandler:
                                             "org.freedesktop.DBus.ObjectManager")
 
         # for some reason these handlers take a reference and don't give it back
-        #so i have to workaround :(
+        # so i have to workaround :(
         w = weakref.ref(self)
         service.connect(reply_handler=lambda *args: w() and w().on_connect_reply(*args),
                         error_handler=lambda *args: w() and w().on_connect_error(*args))

@@ -40,7 +40,7 @@ class MonitorBase(GObject.GObject):
         self.last_tx = 0
         self.last_rx = 0
 
-    #tx and rx must be cumulative absolute values
+    # tx and rx must be cumulative absolute values
     def update_stats(self, tx, rx):
         dtx = tx - self.last_tx
         drx = rx - self.last_rx
