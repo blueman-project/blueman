@@ -222,7 +222,6 @@ class BluezAgent(Agent):
         except AttributeError:
             pass
 
-
     def _on_request_pin_code(self, parameters, invocation):
         logging.info("Agent.RequestPinCode")
         dialog_msg = _("Enter PIN code for authentication:")
