@@ -245,4 +245,3 @@ def get_minor_class(klass, i18n=False):
         return _("unknown")
     else:
         return "unknown"
-

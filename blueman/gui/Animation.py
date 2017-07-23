@@ -56,4 +56,3 @@ class Animation:
                 self.current = 0
 
         return 1
-

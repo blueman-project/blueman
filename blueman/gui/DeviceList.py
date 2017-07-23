@@ -15,7 +15,6 @@ import os
 import re
 import logging
 
-
 class DeviceList(GenericList):
     __gsignals__ = {
         # @param: device TreeIter

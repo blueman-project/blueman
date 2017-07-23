@@ -223,4 +223,3 @@ class PowerManager(AppletPlugin):
                 adapter.set("Powered", True)
 
         wait_for_adapter(adapter, on_ready)
-

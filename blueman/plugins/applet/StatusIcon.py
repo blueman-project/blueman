@@ -130,4 +130,3 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
 
     def on_status_icon_query_icon(self):
         return None
-
