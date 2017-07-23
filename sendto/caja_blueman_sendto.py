@@ -32,7 +32,6 @@ class BluemanSendtoExtension(GObject.GObject, Caja.MenuProvider):
             if not launched:
                 print("*** Failed to launch program ***")
 
-
     def get_file_items(self, window, files):
         if len(files) == 0:
             return
