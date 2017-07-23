@@ -81,6 +81,6 @@ class AppletPlugin(BasePlugin):
         """Run when a property changes of any devices. Make sure to distinguish your actions by path"""
         pass
 
-    #notify when all plugins finished loading
+    # notify when all plugins finished loading
     def on_plugins_loaded(self):
         pass

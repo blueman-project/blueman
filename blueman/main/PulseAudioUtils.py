@@ -583,8 +583,7 @@ class PulseAudioUtils(GObject.GObject, metaclass=PulseAudioUtilsMeta):
 
         self.simple_callback(callback, fn, card, profile)
 
-    #### Module API #######
-    #from gi.repository import Gtk
+    # #### Module API ####
     def ListModules(self, callback):
 
         self.check_connected()

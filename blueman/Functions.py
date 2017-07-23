@@ -183,7 +183,7 @@ def adapter_path_to_name(path):
     return re.search(".*(hci[0-9]*)", path).groups(0)[0]
 
 
-#format error
+# format error
 def e_(msg):
     if isinstance(msg, Exception):
         return (str(msg), traceback.format_exc())
@@ -198,7 +198,7 @@ def opacify_pixbuf(pixbuf, alpha):
     return new
 
 
-#pixbuf, [(pixbuf, x, y, alpha), (pixbuf, x, y, alpha)]
+# pixbuf, [(pixbuf, x, y, alpha), (pixbuf, x, y, alpha)]
 
 def composite_icon(target, sources):
     target = target.copy()

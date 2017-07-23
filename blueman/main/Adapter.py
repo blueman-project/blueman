@@ -52,7 +52,7 @@ class BluemanAdapters(Gtk.Dialog):
         except Exception as e:
             logging.exception(e)
             self.manager = None
-        #fixme: show error dialog and exit
+        # fixme: show error dialog and exit
 
         self.manager.connect_signal('adapter-added', self.on_adapter_added)
         self.manager.connect_signal('adapter-removed', self.on_adapter_removed)
@@ -62,7 +62,7 @@ class BluemanAdapters(Gtk.Dialog):
             self._adapters[hci_dev] = adapter
             self.on_adapter_added(self.manager, path)
 
-        #activate a particular tab according to command line option
+        # activate a particular tab according to command line option
         if selected_hci_dev is not None:
             if selected_hci_dev in self.tabs:
                 hci_dev_num = int(selected_hci_dev[3:])
@@ -191,7 +191,7 @@ class BluemanAdapters(Gtk.Dialog):
         else:
             if self.tabs[hci_dev]['visible']:
                 return
-            #might need to update settings at this point
+                # might need to update settings at this point
         ui = self.tabs[hci_dev]
         ui['visible'] = True
         name = adapter.get_name()
@@ -211,4 +211,4 @@ class BluemanAdapters(Gtk.Dialog):
         self.tabs[hci_dev]['visible'] = False
         self.notebook.remove_page(hci_dev_num)
 
-    #leave actual tab contents intact in case adapter becomes present once again
+        # leave actual tab contents intact in case adapter becomes present once again
