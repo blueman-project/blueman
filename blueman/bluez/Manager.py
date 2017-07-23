@@ -70,7 +70,8 @@ class Manager(GObject.GObject):
         for obj_proxy in self._object_manager.get_objects():
             proxy = obj_proxy.get_interface('org.bluez.Adapter1')
 
-            if proxy: paths.append(proxy.get_object_path())
+            if proxy:
+                paths.append(proxy.get_object_path())
 
         return [Adapter(path) for path in paths]
 

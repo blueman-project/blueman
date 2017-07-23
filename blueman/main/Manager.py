@@ -122,8 +122,10 @@ class Blueman(Gtk.Window):
             self.props.icon_name = "blueman"
 
             w, h, x, y = self.Config["window-properties"]
-            if w and h: self.resize(w, h)
-            if x and y: self.move(x, y)
+            if w and h:
+                self.resize(w, h)
+            if x and y:
+                self.move(x, y)
 
             sw = self.Builder.get_object("scrollview")
             # Disable overlay scrolling

@@ -82,11 +82,15 @@ class Base(Gio.DBusProxy):
         def callback(proxy, result, reply, error):
             try:
                 value = proxy.call_finish(result).unpack()
-                if reply: reply(*value)
-                else: return value
+                if reply:
+                    reply(*value)
+                else:
+                    return value
             except GLib.Error as e:
-                if error: error(parse_dbus_error(e))
-                else: raise parse_dbus_error(e)
+                if error:
+                    error(parse_dbus_error(e))
+                else:
+                    raise parse_dbus_error(e)
 
         self.call(method, param, Gio.DBusCallFlags.NONE, GLib.MAXINT, None,
                   callback, reply_handler, error_handler)
