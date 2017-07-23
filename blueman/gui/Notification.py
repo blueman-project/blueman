@@ -108,7 +108,7 @@ class _NotificationDialog(Gtk.MessageDialog):
         logging.warning("stub")
 
     def set_urgency(self, *args):
-        logging.warn("stub")
+        logging.warning("stub")
 
     def update(self, summary, message):
         self.props.title = summary
