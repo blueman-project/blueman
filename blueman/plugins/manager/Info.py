@@ -26,7 +26,7 @@ def show_info(device, parent):
             logging.warning("Ignoring key %s" % key)
             return
 
-        store, paths =  view_selection.get_selected_rows()
+        store, paths = view_selection.get_selected_rows()
 
         text = []
         for path in paths:
