@@ -23,7 +23,7 @@ class MenuItem(object):
         self._sensitive = sensitive
 
         assert text and icon_name and (callback or submenu_function) or \
-               not any([text, icon_name, tooltip, callback, submenu_function])
+            not any([text, icon_name, tooltip, callback, submenu_function])
 
     @property
     def owner(self):
