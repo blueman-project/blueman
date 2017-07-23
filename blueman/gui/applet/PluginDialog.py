@@ -40,10 +40,6 @@ class SettingsWidget(Gtk.Box):
                 label.props.xalign = 0.0
                 self.pack_start(label, False, False, 0)
 
-                sep = Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL)
-                sep.props.height_request = 10
-                self.pack_start(sep, False, False, 0)
-
     def handle_change(self, widget, opt, params, prop):
         val = params["type"](getattr(widget.props, prop))
         logging.debug("changed %s %s" % (opt, val))
