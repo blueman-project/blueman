@@ -13,7 +13,7 @@ from gi.repository import Pango
 from blueman.Constants import PIXMAP_PATH
 from blueman.Functions import launch, composite_icon
 from blueman.Sdp import ServiceUUID, OBEX_OBJPUSH_SVCLASS_ID
-import cgi
+from html import escape
 import logging
 
 from blueman.gui.GtkAnimation import TreeRowColorFade, TreeRowFade, CellFade
@@ -218,7 +218,7 @@ class ManagerDeviceList(DeviceList):
         self.add_device(device)
 
     def make_caption(self, name, klass, address):
-        return "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" % {"0": cgi.escape(name), "1": klass.capitalize(), "2": address}
+        return "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" % {"0": escape(name), "1": klass.capitalize(), "2": address}
 
     def get_device_class(self, device):
         klass = get_minor_class(device['Class'])
