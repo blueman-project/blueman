@@ -67,8 +67,6 @@ class NewConnectionBuilder:
     def signal_wait_timeout(self):
         if not self.device or not self.connection:
             self.err_cb(GLib.Error("Network Manager did not support the connection"))
-            if self.connection:
-                self.remove_connection()
             self.cleanup()
 
     def on_nm_device_added(self, connection, sender_name, object_path, interface_name, signal_name, param):
