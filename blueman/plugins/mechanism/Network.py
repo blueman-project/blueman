@@ -1,9 +1,6 @@
 # coding=utf-8
 import dbus.service
 from blueman.plugins.MechanismPlugin import MechanismPlugin
-import os
-import subprocess
-from gi.repository import GObject
 from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler, UdhcpdHandler
 
 DHCPDHANDLERS = {"DnsMasqHandler": DnsMasqHandler,

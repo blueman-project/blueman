@@ -1,5 +1,4 @@
 # coding=utf-8
-from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.Notification import Notification
 from blueman.main.Mechanism import Mechanism

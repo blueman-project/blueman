@@ -3,6 +3,7 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import GLib, Gtk, Gio
 from datetime import datetime
+from gettext import ngettext
 import os
 import shutil
 import logging

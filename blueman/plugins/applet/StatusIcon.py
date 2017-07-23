@@ -1,7 +1,6 @@
 # coding=utf-8
 
 from blueman.main.PluginManager import StopException
-from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 
 import gi

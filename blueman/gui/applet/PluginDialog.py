@@ -4,9 +4,7 @@ from locale import bind_textdomain_codeset
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-from gi.repository import GObject
 from blueman.Constants import *
-from blueman.Functions import *
 
 from blueman.gui.GenericList import GenericList
 import weakref

@@ -1,10 +1,9 @@
 # coding=utf-8
 import pickle
-import os
 import signal
 import errno
 import re
-from socket import inet_aton, inet_ntoa
+from socket import inet_ntoa
 from tempfile import mkstemp
 from time import sleep
 import logging

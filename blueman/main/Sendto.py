@@ -1,9 +1,8 @@
 # coding=utf-8
-import urllib
 import time
 import logging
 import re
-import urllib
+import urllib.parse
 from locale import bind_textdomain_codeset
 from gettext import ngettext
 
@@ -83,7 +82,7 @@ class Sender(Gtk.Dialog):
             f = self.files[i]
             match = re.match("file://(.*)", f)
             if match:
-                f = self.files[i] = urllib.unquote(match.groups(1)[0])
+                f = self.files[i] = urllib.parse.unquote(match.groups(1)[0])
 
             if os.path.exists(f) and not os.path.isdir(f):
                 f = os.path.abspath(f)

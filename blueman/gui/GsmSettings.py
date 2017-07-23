@@ -2,7 +2,6 @@
 from locale import bind_textdomain_codeset
 
 from blueman.main.Config import Config
-from blueman.Functions import *
 from blueman.Constants import *
 
 import gi

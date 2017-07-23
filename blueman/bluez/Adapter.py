@@ -1,5 +1,5 @@
 # coding=utf-8
-from gi.repository import GObject, Gio, GLib
+from gi.repository import GLib
 from blueman.bluez.Base import Base
 from blueman.bluez.AnyBase import AnyBase
 

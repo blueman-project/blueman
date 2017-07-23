@@ -1,5 +1,4 @@
 # coding=utf-8
-from blueman.Functions import *
 from blueman.main.PluginManager import StopException
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.bluez.Device import Device

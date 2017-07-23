@@ -1,6 +1,6 @@
 # coding=utf-8
 from gi.repository import Gio, GLib, GObject
-from blueman.bluez.errors import parse_dbus_error, BluezDBusException
+from blueman.bluez.errors import parse_dbus_error
 import logging
 
 

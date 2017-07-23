@@ -1,5 +1,4 @@
 # coding=utf-8
-from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.Notification import Notification
 from blueman.Sdp import SERIAL_PORT_SVCLASS_ID
@@ -8,13 +7,10 @@ from _blueman import rfcomm_list
 from subprocess import Popen
 import atexit
 import logging
-
+import os
+import signal
 import blueman.bluez as Bluez
-
-import gi
-gi.require_version("Gtk", "3.0")
 from gi.repository import GObject
-from gi.repository import Gtk
 
 
 class SerialManager(AppletPlugin):

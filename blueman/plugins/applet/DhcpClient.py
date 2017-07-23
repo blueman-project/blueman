@@ -5,7 +5,6 @@ from blueman.bluez.Network import AnyNetwork
 from blueman.gui.Notification import Notification
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Mechanism import Mechanism
-from blueman.Functions import *
 
 
 class DhcpClient(AppletPlugin):

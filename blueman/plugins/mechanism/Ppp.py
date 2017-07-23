@@ -1,6 +1,5 @@
 # coding=utf-8
 from blueman.plugins.MechanismPlugin import MechanismPlugin
-import os
 import dbus
 import dbus.service
 

@@ -1,7 +1,7 @@
 # coding=utf-8
 import logging
 from blueman.bluez.obex.Base import Base
-from gi.repository import GObject, GLib
+from gi.repository import GObject
 
 
 class Transfer(Base):

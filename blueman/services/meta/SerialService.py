@@ -1,7 +1,6 @@
 # coding=utf-8
 import logging
 import os
-import signal
 import subprocess
 
 from gi.repository import Gio

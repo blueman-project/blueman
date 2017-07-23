@@ -1,5 +1,4 @@
 # coding=utf-8
-from blueman.Functions import *
 from blueman.main.Config import Config
 from blueman.bluez.NetworkServer import NetworkServer
 from blueman.main.Mechanism import Mechanism

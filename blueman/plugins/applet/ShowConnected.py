@@ -1,8 +1,8 @@
 # coding=utf-8
-from blueman.Functions import *
 import logging
 from gi.repository import GLib
 from blueman.plugins.AppletPlugin import AppletPlugin
+from gettext import ngettext
 
 
 class ShowConnected(AppletPlugin):
