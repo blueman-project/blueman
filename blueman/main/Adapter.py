@@ -83,7 +83,7 @@ class BluemanAdapters(Gtk.Dialog):
 
     def on_adapter_added(self, _manager, adapter_path):
         hci_dev = os.path.basename(adapter_path)
-        if not hci_dev in self._adapters:
+        if hci_dev not in self._adapters:
             self._adapters[hci_dev] = Bluez.Adapter(adapter_path)
 
         self._adapters[hci_dev].connect_signal("property-changed", self.on_property_changed)

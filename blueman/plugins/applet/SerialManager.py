@@ -75,7 +75,7 @@ class SerialManager(AppletPlugin):
         logging.info("Script with PID %s closed" % pid)
 
     def manage_script(self, address, node, process):
-        if not address in self.scripts:
+        if address not in self.scripts:
             self.scripts[address] = {}
 
         if node in self.scripts[address]:
