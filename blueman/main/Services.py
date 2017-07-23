@@ -118,7 +118,7 @@ class BluemanServices(Gtk.Dialog):
     def setup_list_item(self, inst, name, icon):
         self.List.append(icon_name=icon, caption=name, id=inst.__class__.__name__)
 
-    #executes a function on all plugin instances
+    # executes a function on all plugin instances
     def plugin_exec(self, func, *args, **kwargs):
         rets = []
         for inst in ServicePlugin.instances:
@@ -137,7 +137,7 @@ class BluemanServices(Gtk.Dialog):
 
         if len(ServicePlugin.instances) == 0:
             return
-        #set the first item
+        # set the first item
         if pageid is None:
             pageid = ServicePlugin.instances[0].__class__.__name__
         for inst in ServicePlugin.instances:

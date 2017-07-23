@@ -202,7 +202,7 @@ class RecentConns(AppletPlugin):
         item["uuid"] = uuid
         item["time"] = time.time()
         item["device"] = object_path
-        item["mitem"] = None #menu item object
+        item["mitem"] = None  # menu item object
 
         for i in self.items:
             if i["adapter"] == item["adapter"] and \

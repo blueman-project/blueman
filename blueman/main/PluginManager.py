@@ -112,7 +112,7 @@ class PluginManager(GObject.GObject):
         c = self.config_list
         for name, cls in self.__classes.items():
             for dep in self.__deps[name]:
-                #plugins that are required by not unloadable plugins are not unloadable too
+                # plugins that are required by not unloadable plugins are not unloadable too
                 if not self.__classes[dep].__unloadable__:
                     cls.__unloadable__ = False
 
@@ -164,7 +164,7 @@ class PluginManager(GObject.GObject):
             if not cls.__unloadable__:
                 os._exit(1)
 
-            raise #NOTE TO SELF: might cause bugs
+            raise  # NOTE TO SELF: might cause bugs
 
         else:
             self.__plugins[cls.__name__] = inst
@@ -201,7 +201,7 @@ class PluginManager(GObject.GObject):
     def get_plugins(self):
         return self.__plugins
 
-    #executes a function on all plugin instances
+    # executes a function on all plugin instances
     def Run(self, func, *args, **kwargs):
         rets = []
         for inst in self.__plugins.values():
@@ -213,7 +213,7 @@ class PluginManager(GObject.GObject):
 
         return rets
 
-    #executes a function on all plugin instances, runs a callback after each plugin returns something
+    # executes a function on all plugin instances, runs a callback after each plugin returns something
     def RunEx(self, func, callback, *args, **kwargs):
         for inst in self.__plugins.values():
             ret = getattr(inst, func)(*args, **kwargs)
