@@ -31,6 +31,7 @@ def send_note_cb(dialog, response_id, device_address, text_view):
     tempfile.close()
     launch('blueman-sendto --delete --device=%s' % device_address, [tempfile.name], False, 'blueman')
 
+
 def send_note(device, parent):
     builder = Gtk.Builder()
     builder.set_translation_domain('blueman')

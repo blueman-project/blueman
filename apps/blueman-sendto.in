@@ -125,6 +125,7 @@ class SendTo:
         else:
             return False
 
+
 if __name__ == '__main__':
     parser = create_parser(syslog=True)
     parser.add_argument("-d", "--device", "--dest", dest="device", action="store",

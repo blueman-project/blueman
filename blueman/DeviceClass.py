@@ -222,6 +222,7 @@ gatt_appearance = {
     5188: "Location and Navigation Pod"
 }
 
+
 def get_major_class(klass):
     index = (klass >> 8) & 0x1F
 

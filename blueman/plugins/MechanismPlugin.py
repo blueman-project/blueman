@@ -1,5 +1,6 @@
 # coding=utf-8
 
+
 class MechanismPlugin(object):
     def __init__(self, parent):
         self.parent = parent
