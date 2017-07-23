@@ -172,14 +172,6 @@ class BluezAgent(Agent):
     def ask_passkey(self, dialog_msg, notify_msg, is_numeric, notification, parameters, invocation):
         device_path = parameters.unpack()[0]
 
-        def on_notification_close(n, action):
-            if action != "closed":
-                self.dialog.present()
-            else:
-                if self.dialog:
-                    self.dialog.response(Gtk.ResponseType.REJECT)
-                #self.applet.status_icon.set_blinking(False)
-
         def passkey_dialog_cb(dialog, response_id):
             if response_id == Gtk.ResponseType.ACCEPT:
                 ret = pin_entry.get_text()
@@ -206,7 +198,6 @@ class BluezAgent(Agent):
         if notification:
             Notification(_("Bluetooth Authentication"), notify_message, icon_name="blueman",
                          pos_hint=self.status_icon.geometry)
-        #self.applet.status_icon.set_blinking(True)
 
         self.dialog.connect("response", passkey_dialog_cb)
         self.dialog.present()
@@ -310,7 +301,6 @@ class BluezAgent(Agent):
         def on_auth_action(action):
             logging.info(action)
 
-            #self.applet.status_icon.set_blinking(False)
             if action == "always":
                 device = Bluez.Device(n._device)
                 device.set("Trusted", True)
