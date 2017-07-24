@@ -12,7 +12,7 @@ from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler, UdhcpdHa
 from blueman.main.Config import Config
 from blueman.main.Mechanism import Mechanism
 from blueman.main.AppletService import AppletService
-from blueman.gui.Dialogs import NetworkErrorDialog
+from blueman.gui.CommonUi import ErrorDialog
 from random import randint
 from locale import bind_textdomain_codeset
 import logging
@@ -76,7 +76,7 @@ class Network(ServicePlugin):
                     if not self.Config["nap-enable"]:
                         self.Config["nap-enable"] = True
                 except Exception as e:
-                    d = NetworkErrorDialog(e, parent=self.widget.get_toplevel())
+                    d = ErrorDialog("<b>Failed to apply network settings</b>", e, parent=self.widget.get_toplevel())
 
                     d.run()
                     d.destroy()

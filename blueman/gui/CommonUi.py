@@ -7,6 +7,30 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 
+class ErrorDialog(Gtk.MessageDialog):
+    def __init__(self, markup, secondary_markup=None, excp=None, icon_name="dialog.error",
+                 buttons=Gtk.ButtonsType.CLOSE, **kwargs):
+        super(ErrorDialog, self).__init__(name="ErrorDialog", icon_name=icon_name, buttons=buttons,
+                                          type=Gtk.MessageType.ERROR, **kwargs)
+
+        self.set_markup(markup)
+
+        if secondary_markup:
+            self.format_secondary_markup(secondary_markup)
+
+        if excp:
+            message_box = self.get_message_area()
+
+            label_expander = Gtk.Label(label="<b>Exception</b>", use_markup=True, visible=True)
+
+            excp_label = Gtk.Label(str(excp), selectable=True, visible=True)
+
+            expander = Gtk.Expander(label_widget=label_expander, visible=True)
+            expander.add(excp_label)
+
+            message_box.pack_start(expander, False, False, 10)
+
+
 def show_about_dialog(app_name, run=True, parent=None):
     about = Gtk.AboutDialog()
     about.set_transient_for(parent)

@@ -4,7 +4,7 @@ from blueman.bluez.NetworkServer import NetworkServer
 from blueman.main.Mechanism import Mechanism
 
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.gui.Dialogs import NetworkErrorDialog
+from blueman.gui.CommonUi import ErrorDialog
 import logging
 
 
@@ -36,8 +36,9 @@ class Networking(AppletPlugin):
             pass
 
         def err(_obj, result, _user_data):
-            d = NetworkErrorDialog(result, "You might not be able to connect to the Bluetooth network via this machine")
-            d.expander.props.margin_left = 9
+            d = ErrorDialog("<b>Failed to apply network settings</b>", result,
+                            "You might not be able to connect to the Bluetooth network via this machine",
+                            margin_left=9)
 
             d.run()
             d.destroy()
