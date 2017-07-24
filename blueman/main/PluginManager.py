@@ -66,7 +66,8 @@ class PluginManager(GObject.GObject):
                 if user_action:
                     d = ErrorDialog(_("<b>An error has occured while loading "
                                       "a plugin. Please notify the developers "
-                                      "with the content of this message.</b>"),
+                                      "with the content of this message to our </b>\n"
+                                      "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"),
                                     excp=traceback.format_exc())
                     d.run()
                     d.destroy()
