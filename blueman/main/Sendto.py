@@ -20,6 +20,7 @@ from blueman.bluez.obex.ObjectPush import ObjectPush
 from blueman.Functions import *
 from blueman.Constants import *
 from blueman.main.SpeedCalc import SpeedCalc
+from blueman.gui.CommonUi import ErrorDialog
 
 from blueman.bluez import obex
 
@@ -94,9 +95,7 @@ class Sender(Gtk.Dialog):
         try:
             self.client = obex.Client()
         except obex.ObexdNotFoundError:
-            d = Gtk.MessageDialog(self, type=Gtk.MessageType.ERROR, buttons=Gtk.ButtonsType.OK)
-            d.props.text = _("obexd not available")
-            d.props.secondary_text = _("obexd is probably not installed")
+            d = ErrorDialog(_("obexd not available"), _("obexd is probably not installed"))
             d.run()
             d.destroy()
             exit(1)
@@ -209,11 +208,8 @@ class Sender(Gtk.Dialog):
     def on_transfer_error(self, _transfer, msg=None):
         if not self.error_dialog:
             self.speed.reset()
-            d = Gtk.MessageDialog(self, type=Gtk.MessageType.ERROR)
-            d.props.text = msg
-            d.props.modal = True
-            d.props.secondary_text = _("Error occurred while sending file %s") % os.path.basename(self.files[-1])
-            d.props.icon_name = "blueman"
+            d = ErrorDialog(msg, _("Error occurred while sending file %s") % os.path.basename(self.files[-1]),
+                            modal=True, icon_name="blueman", buttons=None)
 
             if len(self.files) > 1:
                 d.add_button(_("Skip"), Gtk.ResponseType.NO)
@@ -255,10 +251,7 @@ class Sender(Gtk.Dialog):
         self.process_queue()
 
     def on_session_failed(self, _client, msg):
-        d = Gtk.MessageDialog(self, type=Gtk.MessageType.ERROR, buttons=(Gtk.ButtonsType.CLOSE))
-        d.props.text = _("Error occurred")
-        d.props.icon_name = "blueman"
-        d.props.secondary_text = msg.reason.split(None, 1)[1]
+        d = ErrorDialog(_("Error occurred"), msg.reason.split(None, 1)[1], icon_name="blueman")
 
         d.run()
         d.destroy()

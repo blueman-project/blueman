@@ -18,6 +18,7 @@ from blueman.main.Config import Config
 from blueman.main.AppletService import AppletService
 import blueman.bluez as bluez
 
+from blueman.gui.CommonUi import ErrorDialog
 from blueman.gui.MessageArea import MessageArea
 from blueman.gui.Notification import Notification
 
@@ -86,13 +87,12 @@ class Blueman(Gtk.Window):
                 self._applet_sig = None
 
             self.hide()
-            d = Gtk.MessageDialog(self, type=Gtk.MessageType.ERROR, buttons=Gtk.ButtonsType.CLOSE)
-            d.props.icon_name = "blueman"
-            d.props.text = _("Connection to BlueZ failed")
-
-            d.props.secondary_text = _(
-                "Bluez daemon is not running, blueman-manager cannot continue.\nThis probably means that there were no Bluetooth adapters detected or Bluetooth daemon was not started.")
-
+            d = ErrorDialog(
+                _("Connection to BlueZ failed"),
+                _("Bluez daemon is not running, blueman-manager cannot continue.\n"
+                  "This probably means that there were no Bluetooth adapters detected "
+                  "or Bluetooth daemon was not started."),
+                icon_name="blueman")
             d.run()
             d.destroy()
             try:

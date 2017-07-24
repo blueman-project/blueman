@@ -8,6 +8,7 @@ import logging
 import traceback
 
 from blueman.main.Config import Config
+from blueman.gui.CommonUi import ErrorDialog
 
 
 class StopException(Exception):
@@ -63,12 +64,10 @@ class PluginManager(GObject.GObject):
                 pass
             except Exception:
                 if user_action:
-                    d = Gtk.MessageDialog(type=Gtk.MessageType.ERROR,
-                                          buttons=Gtk.ButtonsType.CLOSE)
-                    d.set_markup(_("<b>An error has occured while loading "
-                                   "a plugin. Please notify the developers "
-                                   "with the content of this message.</b>"))
-                    d.props.secondary_text = traceback.format_exc()
+                    d = ErrorDialog(_("<b>An error has occured while loading "
+                                      "a plugin. Please notify the developers "
+                                      "with the content of this message.</b>"),
+                                    excp=traceback.format_exc())
                     d.run()
                     d.destroy()
                     raise

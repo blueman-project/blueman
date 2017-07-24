@@ -36,8 +36,9 @@ class Networking(AppletPlugin):
             pass
 
         def err(_obj, result, _user_data):
-            d = ErrorDialog("<b>Failed to apply network settings</b>", result,
+            d = ErrorDialog("<b>Failed to apply network settings</b>",
                             "You might not be able to connect to the Bluetooth network via this machine",
+                            result,
                             margin_left=9)
 
             d.run()

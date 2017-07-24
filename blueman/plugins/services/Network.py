@@ -76,7 +76,7 @@ class Network(ServicePlugin):
                     if not self.Config["nap-enable"]:
                         self.Config["nap-enable"] = True
                 except Exception as e:
-                    d = ErrorDialog("<b>Failed to apply network settings</b>", e, parent=self.widget.get_toplevel())
+                    d = ErrorDialog("<b>Failed to apply network settings</b>", excp=e, parent=self.widget.get_toplevel())
 
                     d.run()
                     d.destroy()

@@ -9,6 +9,7 @@ import shutil
 import logging
 from blueman.bluez import obex
 from blueman.Functions import launch
+from blueman.gui.CommonUi import ErrorDialog
 from blueman.gui.Notification import Notification
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Config import Config
@@ -151,11 +152,9 @@ class TransferService(AppletPlugin):
         if not os.path.isdir(self._config["shared-path"]):
             logging.info("Configured share directory %s does not exist" % self._config["shared-path"])
 
-            dlg = Gtk.MessageDialog(None, buttons=Gtk.ButtonsType.OK, type=Gtk.MessageType.ERROR)
             text = _("Configured directory for incoming files does not exist")
             secondary_text = _("Please make sure that directory \"<b>%s</b>\" exists or configure it with blueman-services")
-            dlg.props.text = text
-            dlg.format_secondary_markup(secondary_text % self._config["shared-path"])
+            dlg = ErrorDialog(text, secondary_text % self._config["shared-path"])
 
             dlg.run()
             dlg.destroy()

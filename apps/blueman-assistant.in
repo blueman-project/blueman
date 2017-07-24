@@ -35,6 +35,7 @@ from blueman.gui.DeviceSelectorWidget import DeviceSelectorWidget
 from blueman.bluez.Manager import Manager
 from blueman.main.AppletService import AppletService
 from blueman.services.Functions import get_services
+from blueman.gui.CommonUi import ErrorDialog
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -96,11 +97,7 @@ class Assistant:
         self.dev_widget.show()
 
         if not self.dev_widget.List.IsValidAdapter():
-            d = Gtk.MessageDialog(type=Gtk.MessageType.ERROR, )
-            d.props.text = _("No adapters found")
-            d.props.icon_name = "blueman"
-            d.props.title = "Blueman Assistant"
-            d.add_button("window-close", Gtk.ResponseType.CANCEL)
+            d = ErrorDialog(_("No adapters found"), icon_name="blueman", title="Blueman Assistant")
             d.run()
             exit(1)
 
