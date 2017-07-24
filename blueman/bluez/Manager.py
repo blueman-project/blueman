@@ -4,6 +4,7 @@ import logging
 
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device
+from blueman.bluez.errors import DBusNoSuchAdapterError
 
 
 class Manager(GObject.GObject):
@@ -79,13 +80,13 @@ class Manager(GObject.GObject):
             if len(adapters):
                 return adapters[0]
             else:
-                raise ValueError("No adapter(s) found")
+                raise DBusNoSuchAdapterError("No adapter(s) found")
         else:
             for adapter in adapters:
                 path = adapter.get_object_path()
                 if path.endswith(pattern) or adapter['Address'] == pattern:
                     return adapter
-            raise ValueError("No adapters found with pattern: %s" % pattern)
+            raise DBusNoSuchAdapterError("No adapters found with pattern: %s" % pattern)
 
     def get_devices(self, adapter_path='/'):
         paths = []
