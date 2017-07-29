@@ -200,6 +200,7 @@ class Network(ServicePlugin):
             r_dnsmasq.props.active = True
 
         r_dnsmasq.connect("toggled", lambda x: self.option_changed_notify("dnsmasq"))
+        r_dhcpd.connect("toggled", lambda x: self.option_changed_notify("dhcpd"))
         net_nat.connect("toggled", lambda x: self.option_changed_notify("nat"))
         net_ip.connect("changed", lambda x: self.option_changed_notify("ip", False))
         gn_enable.connect("toggled", lambda x: self.option_changed_notify("gn_enable"))
