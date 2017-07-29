@@ -73,7 +73,8 @@ class Network(ServicePlugin):
 
                 try:
                     m.EnableNetwork(inet_aton(net_ip.props.text), inet_aton("255.255.255.0"), stype)
-                    self.Config["nap-enable"] = True
+                    if not self.Config["nap-enable"]:
+                        self.Config["nap-enable"] = True
                 except Exception as e:
                     d = NetworkErrorDialog(e)
 
