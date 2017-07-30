@@ -56,6 +56,7 @@ class Services(ManagerPlugin):
                         self.has_dun = True
                 else:
                     items.append((item, service.priority))
+            item.props.sensitive = service.available
             item.show()
 
         for service in get_services(device):

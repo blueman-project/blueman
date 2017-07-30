@@ -23,6 +23,11 @@ class SerialService(Service):
                 return dev["id"]
 
     @property
+    def available(self):
+        # It will ask to pair anyway so not make it available
+        return self.device["Paired"]
+
+    @property
     def connected(self):
         return False
 
