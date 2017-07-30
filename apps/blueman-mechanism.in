@@ -50,6 +50,7 @@ class StreamToLogger(object):
 
 parser = create_parser(syslog=False)
 parser.add_argument("-d", "--debug", dest="debug", action="store_true")
+parser.add_argument("-s", "--stop-timer", dest="stoptimer", action="store_true")
 args = parser.parse_args()
 
 if args.LEVEL.upper() == "DEBUG":
@@ -116,6 +117,8 @@ class conf_service(DbusService):
     def __init__(self):
         super(conf_service, self).__init__("org.blueman.Mechanism", "/", dbus.SystemBus)
         self.timer = Timer()
+        if args.stoptimer:
+            self.timer.stop()
 
         if POLKIT:
             try:
