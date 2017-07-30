@@ -79,7 +79,7 @@ class ManagerDeviceMenu(Gtk.Menu):
 
         self.Generate()
 
-        Gtk.Menu.popup(self, *args)
+        super().popup(*args)
 
     def clear(self):
         def each(child, data):
