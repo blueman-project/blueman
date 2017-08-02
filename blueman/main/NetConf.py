@@ -3,11 +3,12 @@ import pickle
 import signal
 import errno
 import re
+import os
 from socket import inet_ntoa
 from tempfile import mkstemp
 from time import sleep
 import logging
-from blueman.Constants import *
+from blueman.Constants import DHCP_CONFIG_FILE
 from blueman.Functions import have, mask_ip4_address, is_running
 from _blueman import create_bridge, destroy_bridge, BridgeException
 from subprocess import call, Popen
