@@ -16,6 +16,7 @@ from blueman.Sdp import ServiceUUID, OBEX_OBJPUSH_SVCLASS_ID
 import html
 import logging
 import cairo
+import os.path
 
 from blueman.gui.GtkAnimation import TreeRowColorFade, TreeRowFade, CellFade
 from blueman.main.Config import Config
@@ -324,9 +325,6 @@ class ManagerDeviceList(DeviceList):
             self.set(tree_iter, connected=value)
 
     def level_setup_event(self, row_ref, device, cinfo):
-        def rnd(value):
-            return int(round(value, -1))
-
         if not row_ref.valid():
             return
 
@@ -373,16 +371,19 @@ class ManagerDeviceList(DeviceList):
 
                     signal = fader.connect("animation-finished", on_finished)
 
-                if rnd(row["rssi"]) != rnd(rssi_perc):
-                    icon = GdkPixbuf.Pixbuf.new_from_file(PIXMAP_PATH + "/blueman-rssi-" + str(rnd(rssi_perc)) + ".png")
+                if round(row["rssi"], -1) != round(rssi_perc, -1):
+                    icon_name = "blueman-rssi-%d.png" % round(rssi_perc, -1)
+                    icon = GdkPixbuf.Pixbuf.new_from_file(os.path.join(PIXMAP_PATH, icon_name))
                     self.set(tree_iter, rssi_pb=icon)
 
-                if rnd(row["lq"]) != rnd(lq_perc):
-                    icon = GdkPixbuf.Pixbuf.new_from_file(PIXMAP_PATH + "/blueman-lq-" + str(rnd(lq_perc)) + ".png")
+                if round(row["lq"], -1) != round(lq_perc, -1):
+                    icon_name = "blueman-lq-%d.png" % round(lq_perc, -1)
+                    icon = GdkPixbuf.Pixbuf.new_from_file(os.path.join(PIXMAP_PATH, icon_name))
                     self.set(tree_iter, lq_pb=icon)
 
-                if rnd(row["tpl"]) != rnd(tpl_perc):
-                    icon = GdkPixbuf.Pixbuf.new_from_file(PIXMAP_PATH + "/blueman-tpl-" + str(rnd(tpl_perc)) + ".png")
+                if round(row["tpl"], -1) != round(tpl_perc, -1):
+                    icon_name = "blueman-tpl-%d.png" % round(tpl_perc, -1)
+                    icon = GdkPixbuf.Pixbuf.new_from_file(os.path.join(PIXMAP_PATH, icon_name))
                     self.set(tree_iter, tpl_pb=icon)
 
                 self.set(tree_iter,
