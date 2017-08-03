@@ -30,7 +30,7 @@ class ManagerDeviceList(DeviceList):
         tabledata = [
             # device picture
             {"id": "device_surface", "type": str, "renderer": Gtk.CellRendererPixbuf(),
-             "render_attrs": {}, "celldata_func": self._set_device_cell_data},
+             "render_attrs": {}, "celldata_func": (self._set_device_cell_data, None)},
             # device caption
             {"id": "caption", "type": str, "renderer": cr,
              "render_attrs": {"markup": 1}, "view_props": {"expand": True}},
