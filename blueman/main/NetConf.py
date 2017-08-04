@@ -15,7 +15,7 @@ from subprocess import call, Popen
 
 
 def calc_ip_range(ip):
-    '''Calculate the ip range for dhcp config'''
+    """Calculate the ip range for dhcp config"""
     start_range = bytearray(ip)
     end_range = bytearray(ip)
     start_range[3] += 1
