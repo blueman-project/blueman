@@ -174,7 +174,8 @@ class PPPConnection(GObject.GObject):
 
     def send_command(self, command):
         logging.info("--> %s" % command)
-        os.write(self.file, "%s\r\n" % command)
+        out = "%s\r\n" % command
+        os.write(self.file, out.encode("UTF-8"))
         termios.tcdrain(self.file)
 
     def on_data_ready(self, source, condition, terminators, on_done):
