@@ -1,10 +1,12 @@
 # coding=utf-8
+import os
+import logging
+
+from blueman.gui.DeviceSelectorList import DeviceSelectorList
+
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-import os
-import logging
-from blueman.gui.DeviceSelectorList import DeviceSelectorList
 
 
 class DeviceSelectorWidget(Gtk.Box):

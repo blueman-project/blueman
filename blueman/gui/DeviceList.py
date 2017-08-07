@@ -1,19 +1,22 @@
 # coding=utf-8
+from datetime import datetime
+import os
+import re
+import logging
+
 from blueman.Functions import wait_for_adapter, adapter_path_to_name
 from blueman.gui.GenericList import GenericList
 from blueman.Constants import ICON_PATH
 from _blueman import conn_info, ConnInfoReadError
 import blueman.bluez as Bluez
 
+from gi.repository import GObject
+from gi.repository import GLib
+
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-from gi.repository import GObject
-from gi.repository import GLib
-from datetime import datetime
-import os
-import re
-import logging
+
 
 class DeviceList(GenericList):
     __gsignals__ = {

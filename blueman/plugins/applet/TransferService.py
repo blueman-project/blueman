@@ -1,12 +1,11 @@
 # coding=utf-8
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import GLib, Gtk, Gio
 from datetime import datetime
 from gettext import ngettext
 import os
 import shutil
 import logging
+from html import escape
+
 from blueman.bluez import obex
 from blueman.Functions import launch
 from blueman.gui.CommonUi import ErrorDialog
@@ -14,7 +13,9 @@ from blueman.gui.Notification import Notification
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Config import Config
 
-from html import escape
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import GLib, Gtk, Gio
 
 
 class Agent(obex.Agent):

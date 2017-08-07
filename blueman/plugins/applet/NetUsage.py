@@ -1,4 +1,13 @@
 # coding=utf-8
+import weakref
+from html import escape
+import dbus
+import time
+import datetime
+import gettext
+import logging
+from locale import bind_textdomain_codeset
+
 from blueman.Functions import *
 from blueman.Constants import *
 from blueman.plugins.AppletPlugin import AppletPlugin
@@ -8,19 +17,11 @@ from blueman.bluez.Network import AnyNetwork
 from _blueman import rfcomm_list
 from gi.repository import GObject
 from gi.repository import GLib
-import weakref
-from html import escape
 
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import Pango
-import dbus
-import time
-import datetime
-import gettext
-import logging
-from locale import bind_textdomain_codeset
 
 
 class MonitorBase(GObject.GObject):

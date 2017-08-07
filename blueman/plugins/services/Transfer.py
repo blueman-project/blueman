@@ -2,14 +2,14 @@
 from locale import bind_textdomain_codeset
 import logging
 
+from blueman.Constants import *
+from blueman.plugins.ServicePlugin import ServicePlugin
+from blueman.main.AppletService import AppletService
+from blueman.main.Config import Config
+
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-from blueman.Constants import *
-from blueman.plugins.ServicePlugin import ServicePlugin
-
-from blueman.main.AppletService import AppletService
-from blueman.main.Config import Config
 
 
 class Transfer(ServicePlugin):

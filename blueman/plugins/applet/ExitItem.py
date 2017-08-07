@@ -1,9 +1,10 @@
 # coding=utf-8
+from blueman.plugins.AppletPlugin import AppletPlugin
+from blueman.Functions import create_menuitem
+
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.Functions import create_menuitem
 
 
 class ExitItem(AppletPlugin):

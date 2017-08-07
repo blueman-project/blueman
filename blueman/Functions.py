@@ -17,24 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
-__all__ = ["check_bluetooth_status", "wait_for_adapter", "launch", "setup_icon_path", "get_icon",
-           "get_notification_icon", "adapter_path_to_name", "e_", "opacify_pixbuf", "composite_icon",
-           "format_bytes", "create_menuitem", "get_lockfile", "get_pid", "is_running", "check_single_instance",
-           "have", "mask_ip4_address", "set_proc_title", "create_logger", "create_parser", "open_rfcomm"]
-
 from time import sleep
-
-from blueman.Constants import *
-
-import gi
-gi.require_version("Gtk", "3.0")
-gi.require_version("Gdk", "3.0")
-from gi.repository import Gtk
-from gi.repository import Gdk
-from gi.repository import GdkPixbuf
-from gi.repository import GLib
-from gi.repository import Gio
 import re
 import os
 import signal
@@ -46,7 +29,9 @@ import logging.handlers
 import argparse
 from ctypes import cdll, byref, create_string_buffer
 import traceback
-import fcntl, struct, termios
+import fcntl
+import struct
+import termios
 
 try:
     in_fg = os.getpgrp() == struct.unpack(str('h'), fcntl.ioctl(0, termios.TIOCGPGRP, "  "))[0]
@@ -54,6 +39,21 @@ except IOError:
     in_fg = 'DEBUG' in os.environ
 
 from blueman.main.AppletService import AppletService
+from blueman.Constants import *
+
+import gi
+gi.require_version("Gtk", "3.0")
+gi.require_version("Gdk", "3.0")
+from gi.repository import Gtk
+from gi.repository import Gdk
+from gi.repository import GdkPixbuf
+from gi.repository import GLib
+from gi.repository import Gio
+
+__all__ = ["check_bluetooth_status", "wait_for_adapter", "launch", "setup_icon_path", "get_icon",
+           "get_notification_icon", "adapter_path_to_name", "e_", "opacify_pixbuf", "composite_icon",
+           "format_bytes", "create_menuitem", "get_lockfile", "get_pid", "is_running", "check_single_instance",
+           "have", "mask_ip4_address", "set_proc_title", "create_logger", "create_parser", "open_rfcomm"]
 
 
 def check_bluetooth_status(message, exitfunc, *args, **kwargs):

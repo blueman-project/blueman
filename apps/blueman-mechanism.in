@@ -1,17 +1,8 @@
 #!/usr/bin/env python3
 # coding=utf-8
-
 import sys
 import os
 import logging
-
-timeout = 30
-# support running uninstalled
-_dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-if 'BLUEMAN_SOURCE' in os.environ:
-    sys.path.insert(0, _dirname)
-    timeout = 9999
-    os.environ["GSETTINGS_SCHEMA_DIR"] = os.path.join(_dirname, "data")
 
 import dbus
 import dbus.service
@@ -19,7 +10,12 @@ from dbus.mainloop.glib import DBusGMainLoop
 
 from gi.repository import Gio, GLib
 
-loop = GLib.MainLoop()
+# support running uninstalled
+_dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if 'BLUEMAN_SOURCE' in os.environ:
+    sys.path.insert(0, _dirname)
+    timeout = 9999
+    os.environ["GSETTINGS_SCHEMA_DIR"] = os.path.join(_dirname, "data")
 
 from _blueman import set_probe_debug
 from blueman.Constants import POLKIT
@@ -29,6 +25,10 @@ import blueman.plugins.mechanism
 from blueman.plugins.MechanismPlugin import MechanismPlugin
 
 from blueman.main.DbusService import DbusService
+
+timeout = 30
+
+loop = GLib.MainLoop()
 
 
 class StreamToLogger(object):

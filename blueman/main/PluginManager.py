@@ -1,7 +1,4 @@
 # coding=utf-8
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, GObject
 import os
 import builtins
 import logging
@@ -9,6 +6,10 @@ import traceback
 
 from blueman.main.Config import Config
 from blueman.gui.CommonUi import ErrorDialog
+
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk, GObject
 
 
 class StopException(Exception):
