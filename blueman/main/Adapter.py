@@ -1,16 +1,17 @@
 # coding=utf-8
 import os.path
-import gi
-gi.require_version("Gtk", "3.0")
-gi.require_version("Pango", "1.0")
-from gi.repository import Gtk
-from gi.repository import Pango
 import logging
 import gettext
 
 from blueman.Constants import UI_PATH
 from blueman.Functions import *
 import blueman.bluez as Bluez
+
+import gi
+gi.require_version("Gtk", "3.0")
+gi.require_version("Pango", "1.0")
+from gi.repository import Gtk
+from gi.repository import Pango
 
 
 class BluemanAdapters(Gtk.Dialog):

@@ -9,9 +9,7 @@ from blueman.bluez.Device import AnyDevice
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.AppletService import AppletService
 from blueman.gui.MessageArea import MessageArea
-
 from blueman.services import SerialPort
-
 from blueman.Sdp import (
     ServiceUUID,
     AUDIO_SOURCE_SVCLASS_ID,

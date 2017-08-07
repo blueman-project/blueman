@@ -1,12 +1,14 @@
 # coding=utf-8
+import logging
+
 import blueman.bluez as bluez
-from blueman.Functions import *
+from blueman.Functions import launch
 from blueman.plugins.AppletPlugin import AppletPlugin
+
 import gi
 gi.require_version('GdkX11', '3.0')
 gi.require_version('Gdk', '3.0')
 from gi.repository import Gdk, GdkX11
-import logging
 
 if not isinstance(Gdk.Screen.get_default(), GdkX11.X11Screen):
     raise ImportError('This is not an X11 screen')

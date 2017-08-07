@@ -1,21 +1,22 @@
 # coding=utf-8
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gio, Gtk
+from random import randint
+from locale import bind_textdomain_codeset
+import logging
+from socket import inet_aton, inet_ntoa
+
 from blueman.Constants import *
 from blueman.Functions import have, mask_ip4_address
 from _blueman import get_net_interfaces, get_net_address, get_net_netmask
-from socket import inet_aton, inet_ntoa
 from blueman.plugins.ServicePlugin import ServicePlugin
-
 from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler, UdhcpdHandler
 from blueman.main.Config import Config
 from blueman.main.Mechanism import Mechanism
 from blueman.main.AppletService import AppletService
 from blueman.gui.CommonUi import ErrorDialog
-from random import randint
-from locale import bind_textdomain_codeset
-import logging
+
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gio, Gtk
 
 
 class Network(ServicePlugin):

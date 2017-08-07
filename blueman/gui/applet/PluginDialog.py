@@ -1,14 +1,14 @@
 # coding=utf-8
+import weakref
+import logging
 from locale import bind_textdomain_codeset
+
+from blueman.Constants import *
+from blueman.gui.GenericList import GenericList
 
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-from blueman.Constants import *
-
-from blueman.gui.GenericList import GenericList
-import weakref
-import logging
 
 
 class SettingsWidget(Gtk.Box):

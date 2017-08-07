@@ -11,19 +11,18 @@ import gi
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
 
-from gi.repository import Gdk
-from gi.repository import Gtk
-from gi.repository import GObject
-from gi.repository import GLib
-
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.obex.ObjectPush import ObjectPush
 from blueman.Functions import *
 from blueman.Constants import *
 from blueman.main.SpeedCalc import SpeedCalc
 from blueman.gui.CommonUi import ErrorDialog
-
 from blueman.bluez import obex
+
+import gi
+gi.require_version("Gtk", "3.0")
+gi.require_version("Gdk", "3.0")
+from gi.repository import Gdk, Gtk, GObject, GLib
 
 
 class Sender(Gtk.Dialog):

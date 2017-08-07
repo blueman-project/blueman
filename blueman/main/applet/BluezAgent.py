@@ -2,22 +2,21 @@
 import os.path
 import logging
 from locale import bind_textdomain_codeset
-
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
-from gi.repository import GLib
-
 from html import escape
-
 import random
 from xml.etree import ElementTree
+
 import blueman.bluez as Bluez
 from blueman.Sdp import ServiceUUID
 from blueman.Constants import *
 from blueman.gui.Notification import Notification
-
 from blueman.bluez.Agent import Agent
+
+from gi.repository import GLib
+
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
 
 
 def bt_class_to_string(bt_class):
