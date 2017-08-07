@@ -1,7 +1,18 @@
 # coding=utf-8
+import html
+import logging
+import cairo
+import os
+
 from blueman.gui.DeviceList import DeviceList
 from blueman.DeviceClass import get_minor_class, get_major_class, gatt_appearance_to_name
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
+from blueman.Constants import PIXMAP_PATH
+from blueman.Functions import launch
+from blueman.Sdp import ServiceUUID, OBEX_OBJPUSH_SVCLASS_ID
+from blueman.gui.GtkAnimation import TreeRowColorFade, TreeRowFade, CellFade
+from blueman.main.Config import Config
+from _blueman import ConnInfoReadError
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -10,17 +21,6 @@ from gi.repository import Gdk
 from gi.repository import GdkPixbuf
 from gi.repository import GObject
 from gi.repository import Pango
-from blueman.Constants import PIXMAP_PATH
-from blueman.Functions import launch
-from blueman.Sdp import ServiceUUID, OBEX_OBJPUSH_SVCLASS_ID
-import html
-import logging
-import cairo
-import os.path
-
-from blueman.gui.GtkAnimation import TreeRowColorFade, TreeRowFade, CellFade
-from blueman.main.Config import Config
-from _blueman import ConnInfoReadError
 
 
 class ManagerDeviceList(DeviceList):

@@ -1,12 +1,8 @@
 # coding=utf-8
-
 import logging
-import os
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
 from locale import bind_textdomain_codeset
 
+import blueman.bluez as bluez
 from blueman.Functions import *
 from blueman.Constants import UI_PATH
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
@@ -16,15 +12,16 @@ from blueman.gui.manager.ManagerStats import ManagerStats
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.Config import Config
 from blueman.main.AppletService import AppletService
-import blueman.bluez as bluez
-
 from blueman.gui.CommonUi import ErrorDialog
 from blueman.gui.MessageArea import MessageArea
 from blueman.gui.Notification import Notification
-
 from blueman.main.PluginManager import PluginManager
 import blueman.plugins.manager
 from blueman.plugins.ManagerPlugin import ManagerPlugin
+
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
 
 
 class Blueman(Gtk.Window):

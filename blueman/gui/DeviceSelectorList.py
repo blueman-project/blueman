@@ -1,10 +1,11 @@
 # coding=utf-8
+from html import escape
+from blueman.gui.DeviceList import DeviceList
+from gi.repository import Pango
+
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-from gi.repository import Pango
-from html import escape
-from blueman.gui.DeviceList import DeviceList
 
 
 class DeviceSelectorList(DeviceList):

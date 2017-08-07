@@ -1,16 +1,16 @@
 # coding=utf-8
+import logging
+
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 from blueman.main.PulseAudioUtils import PulseAudioUtils, EventType
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.gui.MessageArea import MessageArea
-
 from blueman.Functions import create_menuitem
 from blueman.Sdp import AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID, ServiceUUID
 
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-import logging
 
 
 class PulseAudioProfile(ManagerPlugin):
