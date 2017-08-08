@@ -37,7 +37,7 @@ def store_state():
         pass
 
 
-class RecentConns(AppletPlugin, Gtk.Menu):
+class RecentConns(AppletPlugin):
     __depends__ = ["Menu"]
     __icon__ = "document-open-recent"
     __description__ = _("Provides a menu item that contains last used connections for quick access")
@@ -57,6 +57,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
     "recent-connections": {"type": str, "default": ""}
     }
 
+    menu = None
     items = None
     inst = None
     atexit_registered = False
@@ -64,7 +65,6 @@ class RecentConns(AppletPlugin, Gtk.Menu):
     def on_load(self, applet):
         self.Applet = applet
         self.Adapters = {}
-        Gtk.Menu.__init__(self)
         if not RecentConns.atexit_registered:
             atexit.register(store_state)
             RecentConns.atexit_registered = True
@@ -75,7 +75,8 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         self.Applet.Plugins.Menu.Register(self, self.Item, 52)
         self.Applet.Plugins.Menu.Register(self, Gtk.SeparatorMenuItem(), 53)
 
-        self.Item.set_submenu(self)
+        self.menu = Gtk.Menu()
+        self.Item.set_submenu(self.menu)
 
         self.deferred = False
         RecentConns.inst = weakref.proxy(self)
@@ -121,11 +122,11 @@ class RecentConns(AppletPlugin, Gtk.Menu):
             self.on_manager_state_changed(state)
 
     def on_unload(self):
-        self.destroy()
-        self.Applet.Plugins.Menu.Unregister(self)
+        self.menu.destroy()
+        self.Applet.Plugins.Menu.Unregister(self.menu)
 
         RecentConns.items = []
-        self.destroy()
+        self.menu.destroy()
 
     def initialize(self):
         logging.info("rebuilding menu")
@@ -133,9 +134,9 @@ class RecentConns(AppletPlugin, Gtk.Menu):
             self.recover_state()
 
         def each(child, _):
-            self.remove(child)
+            self.menu.remove(child)
 
-        self.foreach(each, None)
+        self.menu.foreach(each, None)
 
         RecentConns.items.sort(key=itemgetter("time"), reverse=True)
 
@@ -292,7 +293,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
             mitem.props.sensitive = False
             mitem.props.tooltip_text = _("Adapter for this connection is not available")
 
-        self.prepend(mitem)
+        self.menu.prepend(mitem)
         mitem.show()
 
     def get_device_path(self, item):
