@@ -1,12 +1,10 @@
 # coding=utf-8
 from operator import itemgetter
 import time
-import weakref
 import pickle
 import base64
 import zlib
 import logging
-import atexit
 from blueman.Functions import *
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device
@@ -30,13 +28,6 @@ class DeviceNotFound(Exception):
     pass
 
 
-def store_state():
-    try:
-        RecentConns.inst.store_state()
-    except ReferenceError:
-        pass
-
-
 class RecentConns(AppletPlugin):
     __depends__ = ["Menu"]
     __icon__ = "document-open-recent"
@@ -57,17 +48,10 @@ class RecentConns(AppletPlugin):
     "recent-connections": {"type": str, "default": ""}
     }
 
-    menu = None
-    items = None
-    inst = None
-    atexit_registered = False
-
     def on_load(self, applet):
         self.Applet = applet
         self.Adapters = {}
-        if not RecentConns.atexit_registered:
-            atexit.register(store_state)
-            RecentConns.atexit_registered = True
+        self.items = None
 
         self.Item = create_menuitem(_("Recent _Connections") + "...",
                                     "document-open-recent")
@@ -79,13 +63,12 @@ class RecentConns(AppletPlugin):
         self.Item.set_submenu(self.menu)
 
         self.deferred = False
-        RecentConns.inst = weakref.proxy(self)
 
     def store_state(self):
         items = []
 
-        if RecentConns.items:
-            for i in RecentConns.items:
+        if self.items:
+            for i in self.items:
                 x = i.copy()
                 x["device"] = None
                 x["mitem"] = None
@@ -110,8 +93,8 @@ class RecentConns(AppletPlugin):
         sensitive = sensitive and \
                     self.Applet.Manager and \
                     power and \
-                    RecentConns.items is not None and \
-                    (len(RecentConns.items) > 0)
+                    self.items is not None and \
+                    (len(self.items) > 0)
 
         self.Item.props.sensitive = sensitive
 
@@ -125,12 +108,12 @@ class RecentConns(AppletPlugin):
         self.menu.destroy()
         self.Applet.Plugins.Menu.Unregister(self.menu)
 
-        RecentConns.items = []
+        self.items = []
         self.menu.destroy()
 
     def initialize(self):
         logging.info("rebuilding menu")
-        if RecentConns.items is None:
+        if self.items is None:
             self.recover_state()
 
         def each(child, _):
@@ -138,18 +121,18 @@ class RecentConns(AppletPlugin):
 
         self.menu.foreach(each, None)
 
-        RecentConns.items.sort(key=itemgetter("time"), reverse=True)
+        self.items.sort(key=itemgetter("time"), reverse=True)
 
-        RecentConns.items = RecentConns.items[0:self.get_option("max-items")]
-        RecentConns.items.reverse()
+        self.items = self.items[0:self.get_option("max-items")]
+        self.items.reverse()
 
-        if len(RecentConns.items) == 0:
+        if len(self.items) == 0:
             self.change_sensitivity(False)
         else:
             self.change_sensitivity(True)
 
         count = 0
-        for item in RecentConns.items:
+        for item in self.items:
             if count < self.get_option("max-items"):
                 self.add_item(item)
                 count += 1
@@ -171,8 +154,8 @@ class RecentConns(AppletPlugin):
             for adapter in adapters:
                 self.Adapters[str(adapter.get_object_path())] = str(adapter["Address"])
 
-            if RecentConns.items is not None:
-                for i in reversed(RecentConns.items):
+            if self.items is not None:
+                for i in reversed(self.items):
 
                     try:
                         i["device"] = self.get_device_path(i)
@@ -190,9 +173,9 @@ class RecentConns(AppletPlugin):
         self.change_sensitivity(state)
 
     def on_device_removed(self, path):
-        for item in reversed(RecentConns.items):
+        for item in reversed(self.items):
             if item['device'] == path:
-                RecentConns.items.remove(item)
+                self.items.remove(item)
                 self.initialize()
 
     def on_adapter_added(self, path):
@@ -232,7 +215,7 @@ class RecentConns(AppletPlugin):
         item["device"] = object_path
         item["mitem"] = None #menu item object
 
-        for i in RecentConns.items:
+        for i in self.items:
             if i["adapter"] == item["adapter"] and \
                             i["address"] == item["address"] and \
                             i["uuid"] == item["uuid"]:
@@ -242,7 +225,7 @@ class RecentConns(AppletPlugin):
                 self.initialize()
                 return
 
-        RecentConns.items.append(item)
+        self.items.append(item)
         self.initialize()
 
         self.store_state()
@@ -286,7 +269,7 @@ class RecentConns(AppletPlugin):
                 item["device"] = self.get_device_path(item)
 
             except:
-                RecentConns.items.remove(item)
+                self.items.remove(item)
                 self.initialize()
 
         if not item["device"]:
@@ -319,7 +302,7 @@ class RecentConns(AppletPlugin):
             items = None
 
         if items is None:
-            RecentConns.items = []
+            self.items = []
             return
 
         for i in reversed(items):
@@ -332,4 +315,4 @@ class RecentConns(AppletPlugin):
             except DeviceNotFound:
                 items.remove(i)
 
-        RecentConns.items = items
+        self.items = items
