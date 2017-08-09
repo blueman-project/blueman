@@ -1,9 +1,6 @@
 # coding=utf-8
 from operator import itemgetter
 import time
-import pickle
-import base64
-import zlib
 import logging
 from blueman.Functions import *
 from blueman.bluez.Adapter import Adapter
@@ -39,13 +36,13 @@ class RecentConns(AppletPlugin):
         "path": None
     }
     __options__ = {
-    "max-items": {"type": int,
-                  "default": 6,
-                  #the maximum number of items RecentConns menu will display
-                  "name": _("Maximum items"),
-                  "desc": _("The maximum number of items recent connections menu will display."),
-                  "range": (6, 20)},
-    "recent-connections": {"type": str, "default": ""}
+        "max-items": {"type": int,
+                      "default": 6,
+                      # the maximum number of items RecentConns menu will display
+                      "name": _("Maximum items"),
+                      "desc": _("The maximum number of items recent connections menu will display."),
+                      "range": (6, 20)},
+        "recent-connections": {"type": list, "default": "[]"}
     }
 
     def on_load(self, applet):
@@ -65,24 +62,16 @@ class RecentConns(AppletPlugin):
         self.deferred = False
 
     def store_state(self):
-        items = []
+        to_store = []
+        for item in self.items:
+            x = item.copy()
+            x["time"] = str(x["time"])
+            x["uuid"] = str(x["uuid"])
+            x["device"] = ''
+            x["mitem"] = ''
+            to_store.append(x)
 
-        if self.items:
-            for i in self.items:
-                x = i.copy()
-                x["device"] = None
-                x["mitem"] = None
-                items.append(x)
-
-        try:
-            dump = base64.b64encode(
-                zlib.compress(
-                    pickle.dumps((REGISTRY_VERSION, items), 2),
-                    9)).decode()
-
-            self.set_option("recent-connections", dump)
-        except:
-            logging.warning("Failed to store recent connections", exc_info=True)
+        self.set_option("recent-connections", to_store)
 
     def change_sensitivity(self, sensitive):
         try:
@@ -291,17 +280,9 @@ class RecentConns(AppletPlugin):
             raise DeviceNotFound
 
     def recover_state(self):
-        dump = self.get_option("recent-connections")
-        try:
-            (version, items) = pickle.loads(zlib.decompress(base64.b64decode(dump)))
-        except:
-            items = None
-            version = None
+        items = self.get_option("recent-connections")
 
-        if version is None or version != REGISTRY_VERSION:
-            items = None
-
-        if items is None:
+        if not items:
             self.items = []
             return
 
@@ -314,5 +295,7 @@ class RecentConns(AppletPlugin):
                 i["device"] = None
             except DeviceNotFound:
                 items.remove(i)
+
+            i["time"] = float(i["time"])
 
         self.items = items

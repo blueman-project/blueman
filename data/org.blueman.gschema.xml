@@ -140,10 +140,10 @@
       <summary>Maximum items</summary>
       <description>Maximum number of items recent connections menu will display</description>
     </key>
-    <key type="s" name="recent-connections">
-      <default>""</default>
+    <key type="aa{ss}" name="recent-connections">
+      <default>[]</default>
       <summary>Recent connected devices data</summary>
-      <description>A base64 encoded zlib compressed string</description>
+      <description>A list of recently connected devices stored as a dictionary</description>
     </key>
   </schema>
   <schema id="org.blueman.transfer" path="/org/blueman/transfer/">
