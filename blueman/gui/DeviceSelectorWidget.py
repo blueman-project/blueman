@@ -17,6 +17,7 @@ class DeviceSelectorWidget(Gtk.Box):
         self.List = DeviceSelectorList(adapter)
         if self.List.Adapter is not None:
             self.List.DisplayKnownDevices()
+            self.List.Adapter.start_discovery()
 
         sw = Gtk.ScrolledWindow(hscrollbar_policy=Gtk.PolicyType.NEVER,
                                 vscrollbar_policy=Gtk.PolicyType.AUTOMATIC,
@@ -28,29 +29,22 @@ class DeviceSelectorWidget(Gtk.Box):
         if Gtk.get_minor_version() >= 16:
             sw.props.overlay_scrolling = False
 
-        self.pbar = Gtk.ProgressBar(orientation=Gtk.Orientation.HORIZONTAL)
-        self.add(self.pbar)
-
-        search_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6, height_request=8)
-        self.add(search_box)
-
-        im_search = Gtk.Image(icon_name="edit-find", pixel_size=16)
-        search_btn = Gtk.Button(image=im_search, tooltip_text=_("Search for devices"))
-        search_box.add(search_btn)
-
         model = Gtk.ListStore(str, str)
         cell = Gtk.CellRendererText()
         self.cb_adapters = Gtk.ComboBox(model=model, visible=True)
         self.cb_adapters.set_tooltip_text(_("Adapter selection"))
         self.cb_adapters.pack_start(cell, True)
         self.cb_adapters.add_attribute(cell, 'text', 0)
-        search_box.add(self.cb_adapters)
+
+        spinner_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6, height_request=8)
+        self.spinner = Gtk.Spinner(halign=Gtk.Align.START, hexpand=True, has_tooltip=True,
+                                   tooltip_text="Discovering…", margin=6)
+
+        spinner_box.add(self.cb_adapters)
+        spinner_box.add(self.spinner)
+        self.add(spinner_box)
 
         self.cb_adapters.connect("changed", self.on_adapter_selected)
-
-        search_btn.connect("clicked", self.on_search_clicked)
-
-        self.List.connect("discovery-progress", self.on_discovery_progress)
 
         self.List.connect("adapter-changed", self.on_adapter_changed)
         self.List.connect("adapter-added", self.on_adapter_added)
@@ -64,19 +58,15 @@ class DeviceSelectorWidget(Gtk.Box):
         self.List.destroy()
         logging.debug("Deleting widget")
 
-    def on_discovery_progress(self, devlist, fraction):
-        self.pbar.props.fraction = fraction
-
-    def on_search_clicked(self, button):
-        self.List.DiscoverDevices()
-
     def on_adapter_prop_changed(self, devlist, adapter, key_value):
         key, value = key_value
         if key == "Name" or key == "Alias":
             self.update_adapters_list()
         elif key == "Discovering":
             if not value:
-                self.pbar.props.fraction = 0
+                self.spinner.stop()
+            else:
+                self.spinner.start()
 
     def on_adapter_added(self, devlist, adapter_path):
         self.update_adapters_list()
@@ -91,7 +81,11 @@ class DeviceSelectorWidget(Gtk.Box):
             adapter_path = cb_adapters.get_model().get_value(tree_iter, 1)
             if self.List.Adapter:
                 if self.List.Adapter.get_object_path() != adapter_path:
+                    # Stop discovering on previous adapter
+                    self.List.Adapter.stop_discovery()
                     self.List.SetAdapter(os.path.basename(adapter_path))
+                    # Start discovery on selected adapter
+                    self.List.Adapter.start_discovery()
 
     def on_adapter_changed(self, devlist, adapter_path):
         logging.info("changed")
