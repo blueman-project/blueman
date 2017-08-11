@@ -92,146 +92,147 @@ GENERIC_ACCESS_SVCLASS_ID = 0x1800
 GENERIC_ATTRIB_SVCLASS_ID = 0x1801
 APPLE_AGENT_SVCLASS_ID = 0x2112
 
-uuid_names = {}
-# 0x0000 is for our generic connect
-uuid_names[0x0000] = "Generic Connect"
-uuid_names[0x0001] = "SDP"
-uuid_names[0x0002] = "UDP"
-uuid_names[0x0003] = "RFCOMM"
-uuid_names[0x0004] = "TCP"
-uuid_names[0x0005] = "TCS-BIN"
-uuid_names[0x0006] = "TCS-AT"
-uuid_names[0x0007] = "ATT"
-uuid_names[0x0008] = "OBEX"
-uuid_names[0x0009] = "IP"
-uuid_names[0x000a] = "FTP"
-uuid_names[0x000c] = "HTTP"
-uuid_names[0x000e] = "WSP"
-uuid_names[0x000f] = "BNEP"
-uuid_names[0x0010] = "UPnP/ESDP"
-uuid_names[0x0011] = "HIDP"
-uuid_names[0x0012] = "Hardcopy Control Channel"
-uuid_names[0x0014] = "Hardcopy Data Channel"
-uuid_names[0x0016] = "Hardcopy Notification"
-uuid_names[0x0017] = "AVCTP"
-uuid_names[0x0019] = "AVDTP"
-uuid_names[0x001b] = "CMTP"
-uuid_names[0x001d] = "UDI_C-Plane"
-uuid_names[0x001e] = "Multi-Channel Adaptation Protocol (MCAP)"
-uuid_names[0x001f] = "Multi-Channel Adaptation Protocol (MCAP)"
-uuid_names[0x0100] = "L2CAP"
-uuid_names[0x1000] = "ServiceDiscoveryServerServiceClassID"
-uuid_names[0x1001] = "BrowseGroupDescriptorServiceClassID"
-uuid_names[0x1002] = "Public Browse Group"
-uuid_names[0x1101] = "Serial Port"
-uuid_names[0x1102] = "LAN Access Using PPP"
-uuid_names[0x1103] = _("Dialup Networking (DUN)")
-uuid_names[0x1104] = "IrMC Sync"
-uuid_names[0x1105] = "OBEX Object Push"
-uuid_names[0x1106] = "OBEX File Transfer"
-uuid_names[0x1107] = "IrMC Sync Command"
-uuid_names[0x1108] = "Headset"
-uuid_names[0x1109] = "Cordless Telephony"
-uuid_names[0x110a] = _("Audio Source")
-uuid_names[0x110b] = _("Audio Sink")
-uuid_names[0x110c] = "Remote Control Target"
-uuid_names[0x110d] = "Advanced Audio"
-uuid_names[0x110e] = "Remote Control"
-uuid_names[0x110f] = "Video Conferencing"
-uuid_names[0x1110] = "Intercom"
-uuid_names[0x1111] = "Fax"
-uuid_names[0x1112] = "Headset Audio Gateway"
-uuid_names[0x1113] = "WAP"
-uuid_names[0x1114] = "WAP Client"
-uuid_names[0x1115] = "PANU"
-uuid_names[0x1116] = _("Network Access Point")
-uuid_names[0x1117] = _("Group Network")
-uuid_names[0x1118] = "DirectPrinting (BPP)"
-uuid_names[0x1119] = "ReferencePrinting (BPP)"
-uuid_names[0x111a] = "Imaging (BIP)"
-uuid_names[0x111b] = "ImagingResponder (BIP)"
-uuid_names[0x111c] = "ImagingAutomaticArchive (BIP)"
-uuid_names[0x111d] = "ImagingReferencedObjects (BIP)"
-uuid_names[0x111e] = "Handsfree"
-uuid_names[0x111f] = "Handsfree Audio Gateway"
-uuid_names[0x1120] = "DirectPrintingReferenceObjectsService (BPP)"
-uuid_names[0x1121] = "ReflectedUI (BPP)"
-uuid_names[0x1122] = "Basic Printing (BPP)"
-uuid_names[0x1123] = "Printing Status (BPP)"
-uuid_names[0x1124] = "Human Interface Device Service (HID)"
-uuid_names[0x1125] = "HardcopyCableReplacement (HCR)"
-uuid_names[0x1126] = "HCR_Print (HCR)"
-uuid_names[0x1127] = "HCR_Scan (HCR)"
-uuid_names[0x1128] = "Common ISDN Access (CIP)"
-uuid_names[0x1129] = "VideoConferencingGW (VCP)"
-uuid_names[0x112a] = "UDI-MT"
-uuid_names[0x112b] = "UDI-TA"
-uuid_names[0x112c] = "Audio/Video"
-uuid_names[0x112d] = "SIM Access (SAP)"
-uuid_names[0x112e] = "Phonebook Access (PBAP) - PCE"
-uuid_names[0x112f] = "Phonebook Access (PBAP) - PSE"
-uuid_names[0x1130] = "Phonebook Access (PBAP)"
-uuid_names[0x1131] = "Headset"
-uuid_names[0x1132] = "Message Access Server"
-uuid_names[0x1133] = "Message Notification Server"
-uuid_names[0x1134] = "Message Access Profile (MAP)"
-uuid_names[0x1135] = "GNSS"
-uuid_names[0x1136] = "GNSS Server"
-uuid_names[0x1137] = "3D Display"
-uuid_names[0x1138] = "3D Glasses"
-uuid_names[0x1139] = "3D Synchronization (3DSP)"
-uuid_names[0x113a] = "Multi-Profile Specification (MPS) Profile"
-uuid_names[0x113b] = "Multi-Profile Specification (MPS) Service"
-uuid_names[0x113c] = "Calendar, Task, and Notes (CTN) Access Service"
-uuid_names[0x113d] = "Calendar, Task, and Notes (CTN) Notification Service"
-uuid_names[0x113e] = "Calendar, Task, and Notes (CTN) Profile"
-uuid_names[0x1200] = "PnP Information"
-uuid_names[0x1201] = "Generic Networking"
-uuid_names[0x1202] = "Generic FileTransfer"
-uuid_names[0x1203] = "Generic Audio"
-uuid_names[0x1204] = "Generic Telephony"
-uuid_names[0x1303] = "Video Source"
-uuid_names[0x1304] = "Video Sink"
-uuid_names[0x1305] = "Video Distribution"
-uuid_names[0x1400] = "HDP"
-uuid_names[0x1401] = "HDP Source"
-uuid_names[0x1402] = "HDP Sink"
-uuid_names[0x1800] = "Generic Access"
-uuid_names[0x1801] = "Generic Attribute"
-uuid_names[0x1802] = "Immediate Alert"
-uuid_names[0x1803] = "Link Loss"
-uuid_names[0x1804] = "Tx Power"
-uuid_names[0x1805] = "Current Time Service"
-uuid_names[0x1806] = "Reference Time Update Service"
-uuid_names[0x1807] = "Next DST Change Service"
-uuid_names[0x1808] = "Glucose"
-uuid_names[0x1809] = "Health Thermometer"
-uuid_names[0x180A] = "Device Information"
-uuid_names[0x180D] = "Heart Rate"
-uuid_names[0x180E] = "Phone Alert Status Service"
-uuid_names[0x180F] = "Battery Service"
-uuid_names[0x1810] = "Blood Pressure"
-uuid_names[0x1811] = "Alert Notification Service"
-uuid_names[0x1812] = "Human Interface Device"
-uuid_names[0x1813] = "Scan Parameters"
-uuid_names[0x1814] = "Running Speed and Cadence"
-uuid_names[0x1815] = "Automation IO"
-uuid_names[0x1816] = "Cycling Speed and Cadence"
-uuid_names[0x1818] = "Cycling Power"
-uuid_names[0x1819] = "Location and Navigation"
-uuid_names[0x181A] = "Environmental Sensing"
-uuid_names[0x181B] = "Body Composition"
-uuid_names[0x181C] = "User Data"
-uuid_names[0x181D] = "Weight Scale"
-uuid_names[0x181E] = "Bond Management"
-uuid_names[0x181F] = "Continuous Glucose Monitoring"
-uuid_names[0x1820] = "Internet Protocol Support"
-uuid_names[0x1821] = "Indoor Positioning"
-uuid_names[0x1822] = "Pulse Oximeter"
-uuid_names[0x1823] = "HTTP Proxy"
-uuid_names[0x1824] = "Transport Discovery"
-uuid_names[0x1825] = "Object Transfer"
-uuid_names[0x2112] = "AppleAgent"
+uuid_names = {
+    # 0x0000 is for our generic connect
+    0x0000: "Generic Connect",
+    0x0001: "SDP",
+    0x0002: "UDP",
+    0x0003: "RFCOMM",
+    0x0004: "TCP",
+    0x0005: "TCS-BIN",
+    0x0006: "TCS-AT",
+    0x0007: "ATT",
+    0x0008: "OBEX",
+    0x0009: "IP",
+    0x000a: "FTP",
+    0x000c: "HTTP",
+    0x000e: "WSP",
+    0x000f: "BNEP",
+    0x0010: "UPnP/ESDP",
+    0x0011: "HIDP",
+    0x0012: "Hardcopy Control Channel",
+    0x0014: "Hardcopy Data Channel",
+    0x0016: "Hardcopy Notification",
+    0x0017: "AVCTP",
+    0x0019: "AVDTP",
+    0x001b: "CMTP",
+    0x001d: "UDI_C-Plane",
+    0x001e: "Multi-Channel Adaptation Protocol (MCAP)",
+    0x001f: "Multi-Channel Adaptation Protocol (MCAP)",
+    0x0100: "L2CAP",
+    0x1000: "ServiceDiscoveryServerServiceClassID",
+    0x1001: "BrowseGroupDescriptorServiceClassID",
+    0x1002: "Public Browse Group",
+    0x1101: "Serial Port",
+    0x1102: "LAN Access Using PPP",
+    0x1103: _("Dialup Networking (DUN)"),
+    0x1104: "IrMC Sync",
+    0x1105: "OBEX Object Push",
+    0x1106: "OBEX File Transfer",
+    0x1107: "IrMC Sync Command",
+    0x1108: "Headset",
+    0x1109: "Cordless Telephony",
+    0x110a: _("Audio Source"),
+    0x110b: _("Audio Sink"),
+    0x110c: "Remote Control Target",
+    0x110d: "Advanced Audio",
+    0x110e: "Remote Control",
+    0x110f: "Video Conferencing",
+    0x1110: "Intercom",
+    0x1111: "Fax",
+    0x1112: "Headset Audio Gateway",
+    0x1113: "WAP",
+    0x1114: "WAP Client",
+    0x1115: "PANU",
+    0x1116: _("Network Access Point"),
+    0x1117: _("Group Network"),
+    0x1118: "DirectPrinting (BPP)",
+    0x1119: "ReferencePrinting (BPP)",
+    0x111a: "Imaging (BIP)",
+    0x111b: "ImagingResponder (BIP)",
+    0x111c: "ImagingAutomaticArchive (BIP)",
+    0x111d: "ImagingReferencedObjects (BIP)",
+    0x111e: "Handsfree",
+    0x111f: "Handsfree Audio Gateway",
+    0x1120: "DirectPrintingReferenceObjectsService (BPP)",
+    0x1121: "ReflectedUI (BPP)",
+    0x1122: "Basic Printing (BPP)",
+    0x1123: "Printing Status (BPP)",
+    0x1124: "Human Interface Device Service (HID)",
+    0x1125: "HardcopyCableReplacement (HCR)",
+    0x1126: "HCR_Print (HCR)",
+    0x1127: "HCR_Scan (HCR)",
+    0x1128: "Common ISDN Access (CIP)",
+    0x1129: "VideoConferencingGW (VCP)",
+    0x112a: "UDI-MT",
+    0x112b: "UDI-TA",
+    0x112c: "Audio/Video",
+    0x112d: "SIM Access (SAP)",
+    0x112e: "Phonebook Access (PBAP) - PCE",
+    0x112f: "Phonebook Access (PBAP) - PSE",
+    0x1130: "Phonebook Access (PBAP)",
+    0x1131: "Headset",
+    0x1132: "Message Access Server",
+    0x1133: "Message Notification Server",
+    0x1134: "Message Access Profile (MAP)",
+    0x1135: "GNSS",
+    0x1136: "GNSS Server",
+    0x1137: "3D Display",
+    0x1138: "3D Glasses",
+    0x1139: "3D Synchronization (3DSP)",
+    0x113a: "Multi-Profile Specification (MPS) Profile",
+    0x113b: "Multi-Profile Specification (MPS) Service",
+    0x113c: "Calendar, Task, and Notes (CTN) Access Service",
+    0x113d: "Calendar, Task, and Notes (CTN) Notification Service",
+    0x113e: "Calendar, Task, and Notes (CTN) Profile",
+    0x1200: "PnP Information",
+    0x1201: "Generic Networking",
+    0x1202: "Generic FileTransfer",
+    0x1203: "Generic Audio",
+    0x1204: "Generic Telephony",
+    0x1303: "Video Source",
+    0x1304: "Video Sink",
+    0x1305: "Video Distribution",
+    0x1400: "HDP",
+    0x1401: "HDP Source",
+    0x1402: "HDP Sink",
+    0x1800: "Generic Access",
+    0x1801: "Generic Attribute",
+    0x1802: "Immediate Alert",
+    0x1803: "Link Loss",
+    0x1804: "Tx Power",
+    0x1805: "Current Time Service",
+    0x1806: "Reference Time Update Service",
+    0x1807: "Next DST Change Service",
+    0x1808: "Glucose",
+    0x1809: "Health Thermometer",
+    0x180A: "Device Information",
+    0x180D: "Heart Rate",
+    0x180E: "Phone Alert Status Service",
+    0x180F: "Battery Service",
+    0x1810: "Blood Pressure",
+    0x1811: "Alert Notification Service",
+    0x1812: "Human Interface Device",
+    0x1813: "Scan Parameters",
+    0x1814: "Running Speed and Cadence",
+    0x1815: "Automation IO",
+    0x1816: "Cycling Speed and Cadence",
+    0x1818: "Cycling Power",
+    0x1819: "Location and Navigation",
+    0x181A: "Environmental Sensing",
+    0x181B: "Body Composition",
+    0x181C: "User Data",
+    0x181D: "Weight Scale",
+    0x181E: "Bond Management",
+    0x181F: "Continuous Glucose Monitoring",
+    0x1820: "Internet Protocol Support",
+    0x1821: "Indoor Positioning",
+    0x1822: "Pulse Oximeter",
+    0x1823: "HTTP Proxy",
+    0x1824: "Transport Discovery",
+    0x1825: "Object Transfer",
+    0x2112: "AppleAgent"
+}
 
 SDP_ATTR_RECORD_HANDLE = 0x0000
 SDP_ATTR_SVCLASS_ID_LIST = 0x0001

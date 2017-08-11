@@ -57,8 +57,8 @@ class ShowConnected(AppletPlugin):
                     self.Applet.Plugins.StatusIcon.SetTextLine(0,
                                                                _("Bluetooth Enabled"))
             except:
-                #bluetooth should be always enabled if powermanager is
-                #not loaded
+                # bluetooth should be always enabled if powermanager is
+                # not loaded
                 self.Applet.Plugins.StatusIcon.SetTextLine(0,
                                                            _("Bluetooth Enabled"))
 
@@ -68,8 +68,7 @@ class ShowConnected(AppletPlugin):
                 GLib.timeout_add(0, self.enumerate_connections)
                 self.initialized = True
             else:
-                GLib.timeout_add(1000,
-                                    self.enumerate_connections)
+                GLib.timeout_add(1000, self.enumerate_connections)
         else:
             self.num_connections = 0
             self.update_statusicon()

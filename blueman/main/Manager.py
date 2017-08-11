@@ -1,7 +1,6 @@
 # coding=utf-8
 
 import logging
-import os
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
@@ -24,6 +23,7 @@ from blueman.gui.Notification import Notification
 from blueman.main.PluginManager import PluginManager
 import blueman.plugins.manager
 from blueman.plugins.ManagerPlugin import ManagerPlugin
+
 
 class Blueman(Gtk.Window):
     def __init__(self):
@@ -120,8 +120,10 @@ class Blueman(Gtk.Window):
             self.props.icon_name = "blueman"
 
             w, h, x, y = self.Config["window-properties"]
-            if w and h: self.resize(w, h)
-            if x and y: self.move(x, y)
+            if w and h:
+                self.resize(w, h)
+            if x and y:
+                self.move(x, y)
 
             sw = self.Builder.get_object("scrollview")
             # Disable overlay scrolling
@@ -195,8 +197,6 @@ class Blueman(Gtk.Window):
         device.pair(error_handler=error_handler)
 
     def adapter_properties(self):
-        adapter = self.List.Adapter
-        name = os.path.basename(adapter.get_object_path())
         launch("blueman-adapters", None, False, "blueman", _("Adapter Preferences"))
 
     def toggle_trust(self, device):

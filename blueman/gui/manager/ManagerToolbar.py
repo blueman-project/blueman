@@ -14,10 +14,6 @@ class ManagerToolbar:
         self.blueman.List.connect("adapter-changed", self.on_adapter_changed)
         self.blueman.List.connect("adapter-property-changed", self.on_adapter_property_changed)
 
-        #toolbar = blueman.Builder.get_object("toolbar2")
-        #for c in toolbar.get_children():
-        #	c.set_expand(True)
-
         self.b_search = blueman.Builder.get_object("b_search")
         self.b_search.connect("clicked", lambda button: blueman.inquiry())
 
@@ -29,10 +25,8 @@ class ManagerToolbar:
         self.b_trust.set_homogeneous(False)
 
         self.b_trust.props.label = _("Untrust")
-        size = Gtk.Requisition()
         (size, nsize) = Gtk.Widget.get_preferred_size(self.b_trust)
         self.b_trust.props.label = _("Trust")
-        size2 = Gtk.Requisition()
         (size2, nsize2) = Gtk.Widget.get_preferred_size(self.b_trust)
 
         self.b_trust.props.width_request = max(size.width, size2.width)

@@ -86,7 +86,7 @@ class DiscvManager(AppletPlugin):
         if self.adapter and path == self.adapter.get_object_path():
             logging.debug("prop %s %s" % (key, value))
             if key == "DiscoverableTimeout":
-                if value == 0: #always visible
+                if value == 0:  # always visible
                     if self.timeout is not None:
                         GLib.source_remove(self.timeout)
                     self.time_left = -1

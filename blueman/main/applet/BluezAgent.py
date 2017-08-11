@@ -21,7 +21,7 @@ from blueman.bluez.Agent import Agent
 
 
 def bt_class_to_string(bt_class):
-    n1 =  (bt_class & 0x1f00) >> 8
+    n1 = (bt_class & 0x1f00) >> 8
     if n1 == 0x03:
         return "network"
     elif n1 == 0x04:
@@ -52,6 +52,7 @@ def bt_class_to_string(bt_class):
     else:
         return None
 
+
 PIN_SEARCHES = [
     "./device[@oui='{oui}'][@type='{type}'][@name='{name}']",
     "./device[@oui='{oui}'][@type='{type}']",
@@ -60,7 +61,8 @@ PIN_SEARCHES = [
     "./device[@oui='{oui}']",
     "./device[@name='{name}']",
     "./device[@type='{type}']",
-    ]
+]
+
 
 class BluezAgent(Agent):
     __agent_path = '/org/bluez/agent/blueman'
@@ -150,10 +152,11 @@ class BluezAgent(Agent):
             self._db = ElementTree.parse(os.path.join(PKGDATA_DIR, 'pin-code-database.xml'))
 
         device = Bluez.Device(device_path)
-        lookup_dict = {}
-        lookup_dict['name'] = device['Name']
-        lookup_dict['type'] = bt_class_to_string(device['Class'])
-        lookup_dict['oui'] = device['Address'][:9]
+        lookup_dict = {
+            'name': device['Name'],
+            'type': bt_class_to_string(device['Class']),
+            'oui': device['Address'][:9]
+        }
 
         pin = None
         for s in PIN_SEARCHES:
@@ -170,14 +173,6 @@ class BluezAgent(Agent):
 
     def ask_passkey(self, dialog_msg, notify_msg, is_numeric, notification, parameters, invocation):
         device_path = parameters.unpack()[0]
-
-        def on_notification_close(n, action):
-            if action != "closed":
-                self.dialog.present()
-            else:
-                if self.dialog:
-                    self.dialog.response(Gtk.ResponseType.REJECT)
-                #self.applet.status_icon.set_blinking(False)
 
         def passkey_dialog_cb(dialog, response_id):
             if response_id == Gtk.ResponseType.ACCEPT:
@@ -205,7 +200,6 @@ class BluezAgent(Agent):
         if notification:
             Notification(_("Bluetooth Authentication"), notify_message, icon_name="blueman",
                          pos_hint=self.status_icon.geometry)
-        #self.applet.status_icon.set_blinking(True)
 
         self.dialog.connect("response", passkey_dialog_cb)
         self.dialog.present()
@@ -229,7 +223,6 @@ class BluezAgent(Agent):
             self.n.close()
         except AttributeError:
             pass
-
 
     def _on_request_pin_code(self, parameters, invocation):
         logging.info("Agent.RequestPinCode")
@@ -309,7 +302,6 @@ class BluezAgent(Agent):
         def on_auth_action(action):
             logging.info(action)
 
-            #self.applet.status_icon.set_blinking(False)
             if action == "always":
                 device = Bluez.Device(n._device)
                 device.set("Trusted", True)

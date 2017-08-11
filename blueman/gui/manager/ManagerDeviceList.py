@@ -13,7 +13,7 @@ from gi.repository import Pango
 from blueman.Constants import PIXMAP_PATH
 from blueman.Functions import launch, composite_icon
 from blueman.Sdp import ServiceUUID, OBEX_OBJPUSH_SVCLASS_ID
-import cgi
+from html import escape
 import logging
 
 from blueman.gui.GtkAnimation import TreeRowColorFade, TreeRowFade, CellFade
@@ -163,7 +163,6 @@ class ManagerDeviceList(DeviceList):
                 row = self.get(path[0], "device")
 
                 if row:
-                    device = row["device"]
                     if self.Blueman is not None:
                         if self.menu is None:
                             self.menu = ManagerDeviceMenu(self.Blueman)
@@ -218,7 +217,7 @@ class ManagerDeviceList(DeviceList):
         self.add_device(device)
 
     def make_caption(self, name, klass, address):
-        return "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" % {"0": cgi.escape(name), "1": klass.capitalize(), "2": address}
+        return "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" % {"0": escape(name), "1": klass.capitalize(), "2": address}
 
     def get_device_class(self, device):
         klass = get_minor_class(device['Class'])
@@ -408,10 +407,6 @@ class ManagerDeviceList(DeviceList):
             logging.info("invisible")
 
     def tooltip_query(self, tw, x, y, kb, tooltip):
-
-        # print args
-        #args[4].set_text("test"+str(args[1]))
-
         path = self.get_path_at_pos(x, y)
 
         if path is not None:
@@ -443,7 +438,6 @@ class ManagerDeviceList(DeviceList):
                 tree_iter = self.get_iter(path[0])
 
                 dt = self.get(tree_iter, "connected")["connected"]
-                #print dt
                 if dt:
                     rssi = self.get(tree_iter, "rssi")["rssi"]
                     lq = self.get(tree_iter, "lq")["lq"]

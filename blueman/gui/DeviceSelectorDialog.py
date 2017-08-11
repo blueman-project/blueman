@@ -23,7 +23,6 @@ class DeviceSelectorDialog(Gtk.Dialog):
         self.selector.show()
         self.vbox.pack_start(self.selector, True, True, 0)
 
-        #(adapter, device)
         self.selection = None
 
         self.selector.List.connect("device-selected", self.on_device_selected)

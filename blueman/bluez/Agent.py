@@ -2,42 +2,43 @@
 from gi.repository import Gio, GLib
 
 introspection_xml = \
-'''
-<node name='/'>
-  <interface name='org.bluez.Agent1'>
-    <method name='Release'/>
-    <method name='RequestPinCode'>
-      <arg type='o' name='device' direction='in'/>
-      <arg type='s' name='pincode' direction='out'/>
-    </method>
-    <method name='RequestPasskey'>
-      <arg type='o' name='device' direction='in'/>
-      <arg type='u' name='passkey' direction='out'/>
-    </method>
-    <method name='DisplayPasskey'>
-      <arg type='o' name='device' direction='in'/>
-      <arg type='u' name='passkey' direction='in'/>
-      <arg type='y' name='entered' direction='in'/>
-    </method>
-    <method name='DisplayPinCode'>
-      <arg type='o' name='device' direction='in'/>
-      <arg type='s' name='pincode' direction='in'/>
-    </method>
-    <method name='RequestConfirmation'>
-      <arg type='o' name='device' direction='in'/>
-      <arg type='u' name='passkey' direction='in'/>
-    </method>
-    <method name='RequestAuthorization'>
-      <arg type='o' name='device' direction='in'/>
-    </method>
-    <method name='AuthorizeService'>
-      <arg type='o' name='device' direction='in'/>
-      <arg type='s' name='uuid' direction='in'/>
-    </method>
-    <method name='Cancel'/>
-  </interface>
-</node>
-'''
+    '''
+    <node name='/'>
+      <interface name='org.bluez.Agent1'>
+        <method name='Release'/>
+        <method name='RequestPinCode'>
+          <arg type='o' name='device' direction='in'/>
+          <arg type='s' name='pincode' direction='out'/>
+        </method>
+        <method name='RequestPasskey'>
+          <arg type='o' name='device' direction='in'/>
+          <arg type='u' name='passkey' direction='out'/>
+        </method>
+        <method name='DisplayPasskey'>
+          <arg type='o' name='device' direction='in'/>
+          <arg type='u' name='passkey' direction='in'/>
+          <arg type='y' name='entered' direction='in'/>
+        </method>
+        <method name='DisplayPinCode'>
+          <arg type='o' name='device' direction='in'/>
+          <arg type='s' name='pincode' direction='in'/>
+        </method>
+        <method name='RequestConfirmation'>
+          <arg type='o' name='device' direction='in'/>
+          <arg type='u' name='passkey' direction='in'/>
+        </method>
+        <method name='RequestAuthorization'>
+          <arg type='o' name='device' direction='in'/>
+        </method>
+        <method name='AuthorizeService'>
+          <arg type='o' name='device' direction='in'/>
+          <arg type='s' name='uuid' direction='in'/>
+        </method>
+        <method name='Cancel'/>
+      </interface>
+    </node>
+    '''
+
 
 class Agent(object):
     __bus = Gio.bus_get_sync(Gio.BusType.SYSTEM)

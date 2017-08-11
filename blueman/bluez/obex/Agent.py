@@ -2,18 +2,19 @@
 from gi.repository import Gio, GLib
 
 introspection_xml = \
-'''
-<node name='/org/blueman/obex_agent'>
-  <interface name='org.bluez.obex.Agent1'>
-    <method name='Release'/>
-    <method name='Cancel'/>
-    <method name ='AuthorizePush'>
-      <arg type='o' name='transfer' direction='in'/>
-      <arg type='s' name='path' direction='out'/>
-    </method>
-  </interface>
-</node>
-'''
+    '''
+    <node name='/org/blueman/obex_agent'>
+      <interface name='org.bluez.obex.Agent1'>
+        <method name='Release'/>
+        <method name='Cancel'/>
+        <method name ='AuthorizePush'>
+          <arg type='o' name='transfer' direction='in'/>
+          <arg type='s' name='path' direction='out'/>
+        </method>
+      </interface>
+    </node>
+    '''
+
 
 class Agent(object):
     __bus = Gio.bus_get_sync(Gio.BusType.SESSION)

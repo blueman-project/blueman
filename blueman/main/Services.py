@@ -25,7 +25,7 @@ class BluemanServices(Gtk.Dialog):
 
         self.b_apply = self.add_button("_Apply", Gtk.ResponseType.APPLY)
         self.b_apply.props.receives_default = True
-        self.b_apply.props.sensitive = True
+        self.b_apply.props.sensitive = False
         self.b_apply.props.use_underline = True
 
         self.b_close = self.add_button("_Close", Gtk.ResponseType.CLOSE)
@@ -102,7 +102,7 @@ class BluemanServices(Gtk.Dialog):
         for plugin in plugins:
             try:
                 __import__("blueman.plugins.services.%s" % plugin, None, None, [])
-            except ImportError as e:
+            except ImportError:
                 logging.error("Unable to load %s plugin" % plugin, exc_info=True)
 
         for cls in ServicePlugin.__subclasses__():
@@ -119,12 +119,12 @@ class BluemanServices(Gtk.Dialog):
     def setup_list_item(self, inst, name, icon):
         self.List.append(picture=get_icon(icon, 32), caption=name, id=inst.__class__.__name__)
 
-    #executes a function on all plugin instances
-    def plugin_exec(self, function, *args, **kwargs):
+    # executes a function on all plugin instances
+    def plugin_exec(self, func, *args, **kwargs):
         rets = []
         for inst in ServicePlugin.instances:
             if inst._is_loaded:
-                ret = getattr(inst, function)(*args, **kwargs)
+                ret = getattr(inst, func)(*args, **kwargs)
                 rets.append(ret)
 
         return rets
@@ -138,7 +138,7 @@ class BluemanServices(Gtk.Dialog):
 
         if len(ServicePlugin.instances) == 0:
             return
-        #set the first item
+        # set the first item
         if pageid is None:
             pageid = ServicePlugin.instances[0].__class__.__name__
         for inst in ServicePlugin.instances:

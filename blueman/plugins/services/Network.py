@@ -99,13 +99,7 @@ class Network(ServicePlugin):
             e.props.secondary_icon_tooltip_text = _("Invalid IP address")
             raise
 
-        a_netmask = inet_aton("255.255.255.0")
-
-        a_masked = mask_ip4_address(a, a_netmask)
-
         for iface, ip, netmask, masked in self.interfaces:
-            # print mask_ip4_address(a, netmask).encode("hex_codec"), masked.encode("hex_codec")
-
             if a == ip:
                 e.props.secondary_icon_name = "dialog-error"
                 e.props.secondary_icon_tooltip_text = _("IP address conflicts with interface %s which has the same address" % iface)
@@ -120,7 +114,6 @@ class Network(ServicePlugin):
         e.props.secondary_icon_name = None
 
     def on_query_apply_state(self):
-        changed = False
         opts = self.get_options()
         if not opts:
             return False
@@ -239,6 +232,9 @@ class Network(ServicePlugin):
         else:
             rb_dun_nm.props.sensitive = False
             rb_dun_nm.props.tooltip_text = _("Not currently supported with this setup")
+
+        if "DhcpClient" in active_plugins:
+            rb_blueman.props.active = True
 
         if "NMPANSupport" in avail_plugins:
             rb_nm.props.sensitive = True

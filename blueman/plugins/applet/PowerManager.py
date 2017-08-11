@@ -87,7 +87,7 @@ class PowerManager(AppletPlugin):
                 adapter.set("Powered", state)
 
             self.adapter_state = state
-        except Exception as e:
+        except Exception:
             logging.error("Exception occurred", exc_info=True)
 
     class Callback(object):
@@ -145,7 +145,7 @@ class PowerManager(AppletPlugin):
     def on_power_state_changed(self, manager, state):
         pass
 
-    #queries other plugins to determine the current power state
+    # queries other plugins to determine the current power state
     def UpdatePowerState(self):
         rets = self.Applet.Plugins.Run("on_power_state_query", self)
 

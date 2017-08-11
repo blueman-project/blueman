@@ -5,7 +5,7 @@ from gi.repository import Gtk
 
 from blueman.gui.Animation import Animation
 from blueman.main.SpeedCalc import SpeedCalc
-from blueman.Functions import get_icon, adapter_path_to_name
+from blueman.Functions import adapter_path_to_name
 from blueman.Functions import format_bytes
 
 import gettext
@@ -62,11 +62,8 @@ class ManagerStats:
         hbox.show_all()
         self.on_adapter_changed(blueman.List, blueman.List.GetAdapterPath())
 
-        self.up_blinker = Animation(self.im_upload,
-                                    [get_icon("blueman-up-inactive", 15), get_icon("blueman-up-active", 15)])
-        #self.down_blinker = Animation(self.im_download, ["/down_inactive.png", "/down_active.png"])
-        self.down_blinker = Animation(self.im_download,
-                                      [get_icon("blueman-down-inactive", 16), get_icon("blueman-down-active", 16)])
+        self.up_blinker = Animation(self.im_upload, ["blueman-up-inactive", "blueman-up-active"])
+        self.down_blinker = Animation(self.im_download, ["blueman-down-inactive", "blueman-down-active"])
 
         self.start_update()
 
@@ -102,8 +99,6 @@ class ManagerStats:
             blinker.set_rate(1)
 
     def _update(self):
-        #if self.hbox.parent.parent.parent.props.visible:
-
         if self.hci is not None:
             devinfo = device_info(self.hci)
             _tx = devinfo["stat"]["byte_tx"]

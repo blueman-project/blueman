@@ -23,14 +23,14 @@ class SerialManager(AppletPlugin):
         "path": None
     }
     __options__ = {
-    "script": {"type": str, "default": "",
-               "name": _("Script to execute on connection"),
-               "desc": _("<span size=\"small\">The following arguments will be passed:\n"
-                         "Address, Name, service name, uuid16s, rfcomm node\n"
-                         "For example:\n"
-                         "AA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0\n"
-                         "uuid16s are returned as a comma seperated list\n\n"
-                         "Upon device disconnection the script will be sent a HUP signal</span>")},
+        "script": {"type": str, "default": "",
+                   "name": _("Script to execute on connection"),
+                   "desc": _("<span size=\"small\">The following arguments will be passed:\n"
+                             "Address, Name, service name, uuid16s, rfcomm node\n"
+                             "For example:\n"
+                             "AA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0\n"
+                             "uuid16s are returned as a comma seperated list\n\n"
+                             "Upon device disconnection the script will be sent a HUP signal</span>")},
     }
 
     scripts = {}
@@ -139,7 +139,7 @@ class SerialManager(AppletPlugin):
             try:
                 logging.info("Disconnecting %s" % name)
                 serial_services[0].disconnect(port)
-            except Exception as e:
+            except Exception:
                 logging.error("Failed to disconnect %s" % name, exc_info=True)
 
 

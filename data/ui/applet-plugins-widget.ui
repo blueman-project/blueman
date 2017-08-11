@@ -54,7 +54,8 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="halign">start</property>
-            <property name="margin_left">11</property>
+            <property name="margin_left">5</property>
+            <property name="margin_right">5</property>
             <property name="use_markup">True</property>
           </object>
           <packing>
@@ -70,6 +71,8 @@
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="tooltip_text" translatable="yes">Configure selected plugin's preferences</property>
+            <property name="halign">end</property>
+            <property name="hexpand">True</property>
             <property name="image">config_im</property>
           </object>
           <packing>

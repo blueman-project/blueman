@@ -13,10 +13,10 @@ class DeviceSelectorList(DeviceList):
         cr = Gtk.CellRendererText()
         cr.props.ellipsize = Pango.EllipsizeMode.END
         tabledata = [
-            #device picture
+            # device picture
             {"id": "device_pb", "type": GdkPixbuf.Pixbuf, "renderer": Gtk.CellRendererPixbuf(),
              "render_attrs": {"pixbuf": 0}},
-            #device caption
+            # device caption
             {"id": "caption", "type": str, "renderer": cr, "render_attrs": {"markup": 1},
              "view_props": {"expand": True}},
             {"id": "paired_icon", "type": GdkPixbuf.Pixbuf, "renderer": Gtk.CellRendererPixbuf(),

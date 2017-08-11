@@ -12,7 +12,7 @@ import logging
 
 class ManagerProgressbar(GObject.GObject):
     __gsignals__ = {
-    str('cancelled'): (GObject.SignalFlags.RUN_LAST, None, ()),
+        str('cancelled'): (GObject.SignalFlags.RUN_LAST, None, ()),
     }
     __instances__ = []
 
@@ -77,9 +77,6 @@ class ManagerProgressbar(GObject.GObject):
         if not self.Blueman.Config["show-statusbar"]:
             self.Blueman.Builder.get_object("statusbar").props.visible = True
 
-        # if self.Blueman.Stats.hbox.size_request()[0] + self.progressbar.size_request()[0] + 16 > self.Blueman.get_size()[0]:
-        #	self.Blueman.Stats.hbox.hide_all()
-
         self.progressbar.props.visible = True
         self.eventbox.props.visible = True
         self.button.props.visible = True
@@ -108,12 +105,12 @@ class ManagerProgressbar(GObject.GObject):
 
             if ManagerProgressbar.__instances__[-1] == self:
                 ManagerProgressbar.__instances__.pop()
-                #remove all finalized instances
+                # remove all finalized instances
                 for inst in reversed(ManagerProgressbar.__instances__):
                     if inst.finalized:
                         ManagerProgressbar.__instances__.pop()
                     else:
-                        #show last active progress bar
+                        # show last active progress bar
                         inst.show()
                         break
 

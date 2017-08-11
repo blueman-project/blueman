@@ -21,8 +21,8 @@ builtins.StopException = StopException
 
 class PluginManager(GObject.GObject):
     __gsignals__ = {
-    str('plugin-loaded'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
-    str('plugin-unloaded'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
+        str('plugin-loaded'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
+        str('plugin-unloaded'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
     }
 
     def __init__(self, plugin_class, module_path, user_data):
@@ -57,9 +57,9 @@ class PluginManager(GObject.GObject):
         if name:
             try:
                 self.__load_plugin(self.__classes[name])
-            except LoadException as e:
+            except LoadException:
                 pass
-            except Exception as e:
+            except Exception:
                 if user_action:
                     d = Gtk.MessageDialog(type=Gtk.MessageType.ERROR,
                                           buttons=Gtk.ButtonsType.CLOSE)
@@ -84,7 +84,7 @@ class PluginManager(GObject.GObject):
         for plugin in plugins:
             try:
                 __import__(self.module_path.__name__ + ".%s" % plugin, None, None, [])
-            except ImportError as e:
+            except ImportError:
                 logging.error("Unable to load plugin module %s" % plugin, exc_info=True)
 
         for cls in self.plugin_class.__subclasses__():
@@ -110,7 +110,7 @@ class PluginManager(GObject.GObject):
         c = self.config_list
         for name, cls in self.__classes.items():
             for dep in self.__deps[name]:
-                #plugins that are required by not unloadable plugins are not unloadable too
+                # plugins that are required by not unloadable plugins are not unloadable too
                 if not self.__classes[dep].__unloadable__:
                     cls.__unloadable__ = False
 
@@ -157,12 +157,12 @@ class PluginManager(GObject.GObject):
         inst = cls(self.user_data)
         try:
             inst._load(self.user_data)
-        except Exception as e:
+        except Exception:
             logging.error("Failed to load %s" % cls.__name__, exc_info=True)
             if not cls.__unloadable__:
                 os._exit(1)
 
-            raise #NOTE TO SELF: might cause bugs
+            raise  # NOTE TO SELF: might cause bugs
 
         else:
             self.__plugins[cls.__name__] = inst
@@ -199,28 +199,28 @@ class PluginManager(GObject.GObject):
     def get_plugins(self):
         return self.__plugins
 
-    #executes a function on all plugin instances
-    def Run(self, function, *args, **kwargs):
+    # executes a function on all plugin instances
+    def Run(self, func, *args, **kwargs):
         rets = []
         for inst in self.__plugins.values():
             try:
-                ret = getattr(inst, function)(*args, **kwargs)
+                ret = getattr(inst, func)(*args, **kwargs)
                 rets.append(ret)
-            except Exception as e:
-                logging.error("Function %s on %s failed" % (function, inst.__class__.__name__), exc_info=True)
+            except Exception:
+                logging.error("Function %s on %s failed" % (func, inst.__class__.__name__), exc_info=True)
 
         return rets
 
-    #executes a function on all plugin instances, runs a callback after each plugin returns something
-    def RunEx(self, function, callback, *args, **kwargs):
+    # executes a function on all plugin instances, runs a callback after each plugin returns something
+    def RunEx(self, func, callback, *args, **kwargs):
         for inst in self.__plugins.values():
-            ret = getattr(inst, function)(*args, **kwargs)
+            ret = getattr(inst, func)(*args, **kwargs)
             try:
                 ret = callback(inst, ret)
             except StopException:
                 return ret
-            except Exception as e:
-                logging.error("Function %s on %s failed" % (function, inst.__class__.__name__), exc_info=True)
+            except Exception:
+                logging.error("Function %s on %s failed" % (func, inst.__class__.__name__), exc_info=True)
                 return
 
             if ret is not None:

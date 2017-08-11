@@ -48,13 +48,13 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         "path": None
     }
     __options__ = {
-    "max-items": {"type": int,
-                  "default": 6,
-                  #the maximum number of items RecentConns menu will display
-                  "name": _("Maximum items"),
-                  "desc": _("The maximum number of items recent connections menu will display."),
-                  "range": (6, 20)},
-    "recent-connections": {"type": str, "default": ""}
+        "max-items": {"type": int,
+                      "default": 6,
+                      # the maximum number of items RecentConns menu will display
+                      "name": _("Maximum items"),
+                      "desc": _("The maximum number of items recent connections menu will display."),
+                      "range": (6, 20)},
+        "recent-connections": {"type": str, "default": ""}
     }
 
     items = None
@@ -107,10 +107,10 @@ class RecentConns(AppletPlugin, Gtk.Menu):
             power = True
 
         sensitive = sensitive and \
-                    self.Applet.Manager and \
-                    power and \
-                    RecentConns.items is not None and \
-                    (len(RecentConns.items) > 0)
+            self.Applet.Manager and \
+            power and \
+            RecentConns.items is not None and \
+            (len(RecentConns.items) > 0)
 
         self.Item.props.sensitive = sensitive
 
@@ -229,7 +229,7 @@ class RecentConns(AppletPlugin, Gtk.Menu):
         item["uuid"] = uuid
         item["time"] = time.time()
         item["device"] = object_path
-        item["mitem"] = None #menu item object
+        item["mitem"] = None  # menu item object
 
         for i in RecentConns.items:
             if i["adapter"] == item["adapter"] and \

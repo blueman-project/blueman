@@ -61,9 +61,9 @@ class Base(Gio.DBusProxy):
             g_object_path=obj_path,
             g_bus_type=self.__bus_type,
             # FIXME See issue 620
-            g_flags=Gio.DBusProxyFlags.GET_INVALIDATED_PROPERTIES |
-                    Gio.DBusProxyFlags.DO_NOT_AUTO_START,
-            *args, **kwargs)
+            g_flags=Gio.DBusProxyFlags.GET_INVALIDATED_PROPERTIES | Gio.DBusProxyFlags.DO_NOT_AUTO_START,
+            *args,
+            **kwargs)
 
         self.init()
         self.__interface_name = interface_name
@@ -82,11 +82,15 @@ class Base(Gio.DBusProxy):
         def callback(proxy, result, reply, error):
             try:
                 value = proxy.call_finish(result).unpack()
-                if reply: reply(*value)
-                else: return value
+                if reply:
+                    reply(*value)
+                else:
+                    return value
             except GLib.Error as e:
-                if error: error(parse_dbus_error(e))
-                else: raise parse_dbus_error(e)
+                if error:
+                    error(parse_dbus_error(e))
+                else:
+                    raise parse_dbus_error(e)
 
         self.call(method, param, Gio.DBusCallFlags.NONE, GLib.MAXINT, None,
                   callback, reply_handler, error_handler)

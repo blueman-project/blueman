@@ -60,7 +60,6 @@ try:
 except IOError:
     in_fg = 'DEBUG' in os.environ
 
-
 from blueman.main.AppletService import AppletService
 
 
@@ -113,7 +112,7 @@ def wait_for_adapter(bluez_adapter, callback, timeout=1000):
 
 
 def launch(cmd, paths=None, system=False, icon_name=None, sn=True, name="blueman"):
-    '''Launch a gui app with starup notification'''
+    """Launch a gui app with starup notification"""
     display = Gdk.Display.get_default()
     timestamp = Gtk.get_current_event_time()
     context = display.get_app_launch_context()
@@ -189,13 +188,14 @@ def adapter_path_to_name(path):
     return re.search(".*(hci[0-9]*)", path).groups(0)[0]
 
 
-#format error
+# format error
 def e_(msg):
     if isinstance(msg, Exception):
         return (str(msg), traceback.format_exc())
     else:
         s = msg.strip().split(": ")[-1]
         return (s, None)
+
 
 def opacify_pixbuf(pixbuf, alpha):
     new = pixbuf.copy()
@@ -204,7 +204,7 @@ def opacify_pixbuf(pixbuf, alpha):
     return new
 
 
-#pixbuf, [(pixbuf, x, y, alpha), (pixbuf, x, y, alpha)]
+# pixbuf, [(pixbuf, x, y, alpha), (pixbuf, x, y, alpha)]
 
 def composite_icon(target, sources):
     target = target.copy()
@@ -216,9 +216,7 @@ def composite_icon(target, sources):
 
 
 def format_bytes(size):
-    ret = 0.0
     size = float(size)
-    suffix = ""
     if size < 1024:
         ret = size
         suffix = "B"
@@ -236,7 +234,7 @@ def format_bytes(size):
 
 
 def create_menuitem_box(text, icon_name, pixbuf, orientation=Gtk.Orientation.HORIZONTAL, pixel_size=16, size=6):
-    '''Create a box with icon and label, optionally set size and orientation'''
+    """Create a box with icon and label, optionally set size and orientation"""
     item_box = Gtk.Box.new(orientation, size)
     if icon_name:
         icon = Gtk.Image(icon_name=icon_name, pixel_size=pixel_size)
@@ -354,13 +352,13 @@ def mask_ip4_address(ip, subnet):
 
 
 def set_proc_title(name=None):
-    '''Set the process title'''
+    """Set the process title"""
 
     if not name:
         name = os.path.basename(sys.argv[0])
 
     libc = cdll.LoadLibrary('libc.so.6')
-    buff = create_string_buffer(len(name)+1)
+    buff = create_string_buffer(len(name) + 1)
     buff.value = name.encode("UTF-8")
     ret = libc.prctl(15, byref(buff), 0, 0, 0)
 
@@ -369,9 +367,11 @@ def set_proc_title(name=None):
 
     return ret
 
+
 logger_format = '%(name)s %(asctime)s %(levelname)-8s %(module)s:%(lineno)s %(funcName)-10s: %(message)s'
 syslog_logger_format = '%(name)s %(levelname)s %(module)s:%(lineno)s %(funcName)s: %(message)s'
 logger_date_fmt = '%H.%M.%S'
+
 
 def create_logger(log_level, name, log_format=None, date_fmt=None, syslog=False):
     if log_format is None: log_format = logger_format
@@ -401,6 +401,7 @@ def create_parser(parser=None, syslog=True, loglevel=True):
         parser.add_argument("--syslog", dest="syslog", action="store_true")
 
     return parser
+
 
 def open_rfcomm(file, mode):
     try:

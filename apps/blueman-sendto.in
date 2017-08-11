@@ -5,7 +5,7 @@ import os, sys, signal
 import atexit
 import logging
 
-#support running uninstalled
+# support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if 'BLUEMAN_SOURCE' in os.environ:
     sys.path.insert(0, _dirname)
@@ -22,7 +22,7 @@ from blueman.bluez.Manager import Manager
 from blueman.bluez.errors import DBusNoSuchAdapterError
 from blueman.gui.DeviceSelectorDialog import DeviceSelectorDialog
 
-#support running uninstalled
+# support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if 'BLUEMAN_SOURCE' in os.environ:
     sys.path.insert(0, _dirname)
@@ -119,6 +119,7 @@ class SendTo:
                 return False
         else:
             return False
+
 
 if __name__ == '__main__':
     parser = create_parser(syslog=True)

@@ -6,7 +6,7 @@ import os
 import logging
 
 timeout = 30
-#support running uninstalled
+# support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if 'BLUEMAN_SOURCE' in os.environ:
     sys.path.insert(0, _dirname)
@@ -142,7 +142,7 @@ class conf_service(DbusService):
         for plugin in plugins:
             try:
                 __import__("blueman.plugins.mechanism.%s" % plugin, None, None, [])
-            except ImportError as e:
+            except ImportError:
                 logging.error("Skipping plugin %s" % plugin, exc_info=True)
 
         classes = MechanismPlugin.__subclasses__()
@@ -160,7 +160,7 @@ class conf_service(DbusService):
                     "Blueman was built with PolicyKit-1 support, but it's not available on the system")
 
         v_subject = GLib.Variant('s', subject)
-        res = self.pk.CheckAuthorization('((sa{sv})sa{ss}us)',("system-bus-name", {"name": v_subject}),
+        res = self.pk.CheckAuthorization('((sa{sv})sa{ss}us)', ("system-bus-name", {"name": v_subject}),
                                          action_id, {}, 1, "")
 
         logging.debug(str(res))
