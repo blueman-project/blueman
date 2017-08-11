@@ -8,7 +8,7 @@ from blueman.gui.DeviceList import DeviceList
 
 
 class DeviceSelectorList(DeviceList):
-    def __init__(self, adapter=None):
+    def __init__(self, adapter_name=None):
         tabledata = [
             #device picture
             {"id": "device_icon", "type": str, "renderer": Gtk.CellRendererPixbuf(stock_size=Gtk.IconSize.MENU),
@@ -23,7 +23,7 @@ class DeviceSelectorList(DeviceList):
              "render_attrs": {"icon_name": 3}}
         ]
 
-        super(DeviceSelectorList, self).__init__(adapter, tabledata, headers_visible=False)
+        super(DeviceSelectorList, self).__init__(adapter_name, tabledata, headers_visible=False)
 
     def on_icon_theme_changed(self, widget):
         for row in self.liststore:

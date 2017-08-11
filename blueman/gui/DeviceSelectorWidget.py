@@ -8,13 +8,13 @@ from blueman.gui.DeviceSelectorList import DeviceSelectorList
 
 
 class DeviceSelectorWidget(Gtk.Box):
-    def __init__(self, adapter=None, orientation=Gtk.Orientation.VERTICAL):
+    def __init__(self, adapter_name=None, orientation=Gtk.Orientation.VERTICAL):
 
         super(DeviceSelectorWidget, self).__init__(orientation=orientation, spacing=1, vexpand=True,
                                                    width_request=360, height_request=340,
                                                    name="DeviceSelectorWidget")
 
-        self.List = DeviceSelectorList(adapter)
+        self.List = DeviceSelectorList(adapter_name)
         if self.List.Adapter is not None:
             self.List.DisplayKnownDevices()
             self.List.Adapter.start_discovery()

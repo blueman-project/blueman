@@ -46,7 +46,7 @@ class DeviceList(GenericList):
     def __del__(self):
         logging.debug("deleting mainlist")
 
-    def __init__(self, adapter=None, tabledata=None, **kwargs):
+    def __init__(self, adapter_name=None, tabledata=None, **kwargs):
         if not tabledata:
             tabledata = []
 
@@ -95,7 +95,7 @@ class DeviceList(GenericList):
         super(DeviceList, self).__init__(data, **kwargs)
         self.set_name("DeviceList")
 
-        self.SetAdapter(adapter)
+        self.SetAdapter(adapter_name)
         self._any_adapter = Bluez.AnyAdapter()
         self._any_adapter.connect_signal("property-changed", self._on_property_changed)
 
