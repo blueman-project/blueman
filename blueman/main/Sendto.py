@@ -29,7 +29,7 @@ class Sender(Gtk.Dialog):
         str('result'): (GObject.SignalFlags.RUN_FIRST, None, (GObject.TYPE_BOOLEAN,)),
     }
 
-    def __init__(self, device, adapter, files):
+    def __init__(self, device, adapter_path, files):
         super(Sender, self).__init__(title=_("Bluetooth File Transfer"))
         self.set_name("BluemanSendTo")
         self.set_position(Gtk.WindowPosition.CENTER)
@@ -59,7 +59,7 @@ class Sender(Gtk.Dialog):
         self.pb.props.text = _("Connecting")
 
         self.device = device
-        self.adapter = Adapter(adapter)
+        self.adapter = Adapter(adapter_path)
         self.files = files
         self.object_push = None
         self.transfer = None
