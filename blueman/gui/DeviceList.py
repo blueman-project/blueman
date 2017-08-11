@@ -96,6 +96,8 @@ class DeviceList(GenericList):
         self.set_name("DeviceList")
 
         self.SetAdapter(adapter)
+        self._any_adapter = Bluez.AnyAdapter()
+        self._any_adapter.connect_signal("property-changed", self._on_property_changed)
 
         self.selection.connect('changed', self.on_selection_changed)
 
@@ -111,7 +113,10 @@ class DeviceList(GenericList):
             dev = row["device"]
             self.emit("device-selected", dev, tree_iter)
 
-    def _on_property_changed(self, _adapter, key, value, _path):
+    def _on_property_changed(self, _adapter, key, value, path):
+        if self.Adapter.get_object_path() != path:
+            return
+
         if key == "Discovering":
             if not value and self.discovering:
                 self.StopDiscovery()
@@ -238,7 +243,6 @@ class DeviceList(GenericList):
             if self.Adapter is None:
                 self.Adapter = self.manager.get_adapter()
 
-            self.Adapter.connect_signal('property-changed', self._on_property_changed)
             self.manager.connect_signal('device-created', self._on_device_created)
             self.manager.connect_signal('device-removed', self._on_device_removed)
             self.__adapter_path = self.Adapter.get_object_path()
