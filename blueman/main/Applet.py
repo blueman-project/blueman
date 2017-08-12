@@ -29,9 +29,9 @@ class BluemanApplet(object):
         self.DbusSvc = DbusService("org.blueman.Applet", "/")
 
         self.Plugins = PersistentPluginManager(AppletPlugin, blueman.plugins.applet, self)
-        self.Plugins.Load()
+        self.Plugins.load_plugin()
 
-        self.Plugins.Run("on_plugins_loaded")
+        self.Plugins.run("on_plugins_loaded")
 
         self.Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
 
@@ -47,38 +47,38 @@ class BluemanApplet(object):
         logging.info("%s %s" % (name, owner))
         self.manager_state = True
         self.plugin_run_state_changed = True
-        self.Plugins.Run("on_manager_state_changed", self.manager_state)
+        self.Plugins.run("on_manager_state_changed", self.manager_state)
 
     def _on_dbus_name_vanished(self, _connection, name):
         logging.info(name)
         self.manager_state = False
         self.plugin_run_state_changed = True
-        self.Plugins.Run("on_manager_state_changed", self.manager_state)
+        self.Plugins.run("on_manager_state_changed", self.manager_state)
 
     def _on_adapter_property_changed(self, _adapter, key, value, path):
-        self.Plugins.Run("on_adapter_property_changed", path, key, value)
+        self.Plugins.run("on_adapter_property_changed", path, key, value)
 
     def _on_device_property_changed(self, _device, key, value, path):
-        self.Plugins.Run("on_device_property_changed", path, key, value)
+        self.Plugins.run("on_device_property_changed", path, key, value)
 
     def on_adapter_added(self, _manager, path):
         logging.info("Adapter added %s" % path)
 
         def on_activate():
             logging.info("Adapter activated")
-            self.Plugins.Run("on_adapter_added", path)
+            self.Plugins.run("on_adapter_added", path)
 
         adapter = Bluez.Adapter(path)
         wait_for_adapter(adapter, on_activate)
 
     def on_adapter_removed(self, _manager, path):
         logging.info("Adapter removed %s" % path)
-        self.Plugins.Run("on_adapter_removed", path)
+        self.Plugins.run("on_adapter_removed", path)
 
     def on_device_created(self, _manager, path):
         logging.info("Device created %s" % path)
-        self.Plugins.Run("on_device_created", path)
+        self.Plugins.run("on_device_created", path)
 
     def on_device_removed(self, _manager, path):
         logging.info("Device removed %s" % path)
-        self.Plugins.Run("on_device_removed", path)
+        self.Plugins.run("on_device_removed", path)

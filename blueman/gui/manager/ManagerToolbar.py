@@ -43,10 +43,10 @@ class ManagerToolbar:
         self.b_send.connect("clicked", self.on_action, self.blueman.send)
         self.b_send.set_homogeneous(False)
 
-        self.on_adapter_changed(blueman.List, blueman.List.GetAdapterPath())
+        self.on_adapter_changed(blueman.List, blueman.List.get_adapter_path())
 
     def on_action(self, button, func):
-        device = self.blueman.List.GetSelectedDevice()
+        device = self.blueman.List.get_selected_device()
         if device is not None:
             func(device)
 

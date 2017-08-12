@@ -210,7 +210,7 @@ class ManagerMenu:
                 self.device_menu = ManagerDeviceMenu(self.blueman)
                 self.item_device.set_submenu(self.device_menu)
             else:
-                GLib.idle_add(self.device_menu.Generate, priority=GLib.PRIORITY_LOW)
+                GLib.idle_add(self.device_menu.generate, priority=GLib.PRIORITY_LOW)
 
         else:
             self.item_device.props.sensitive = False
@@ -231,7 +231,7 @@ class ManagerMenu:
             if adapter_path != self.blueman.List.Adapter.get_object_path():
                 logging.info("selected", adapter_path)
                 self.blueman.Config["last-adapter"] = adapter_path_to_name(adapter_path)
-                self.blueman.List.SetAdapter(adapter_path)
+                self.blueman.List.set_adapter(adapter_path)
 
     def on_adapter_added(self, _manager, adapter_path):
         adapter = bluez.Adapter(adapter_path)

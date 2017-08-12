@@ -63,7 +63,7 @@ def check_bluetooth_status(message, exitfunc, *args, **kwargs):
         print("Blueman applet needs to be running")
         exitfunc()
     if "PowerManager" in applet.QueryPlugins():
-        if not applet.GetBluetoothStatus():
+        if not applet.get_bluetooth_status():
 
             d = Gtk.MessageDialog(None, type=Gtk.MessageType.ERROR)
             d.props.icon_name = "blueman"
@@ -78,7 +78,7 @@ def check_bluetooth_status(message, exitfunc, *args, **kwargs):
                 exitfunc()
             else:
                 applet.SetBluetoothStatus('(b)', True, **kwargs)
-                if not applet.GetBluetoothStatus():
+                if not applet.get_bluetooth_status():
                     print('Failed to enable bluetooth')
                     exitfunc()
 

@@ -48,7 +48,7 @@ class StandardItems(AppletPlugin):
 
     def change_sensitivity(self, sensitive):
         try:
-            power = self.parent.Plugins.PowerManager.GetBluetoothStatus()
+            power = self.parent.Plugins.PowerManager.get_bluetooth_status()
         except:
             power = True
 

@@ -27,13 +27,13 @@ class DBusService(AppletPlugin):
 
     @dbus.service.method('org.blueman.Applet', in_signature="", out_signature="as")
     def QueryPlugins(self):
-        return self.parent.Plugins.GetLoaded()
+        return self.parent.Plugins.get_loaded()
 
     @dbus.service.method('org.blueman.Applet', in_signature="o", out_signature="", async_callbacks=("ok", "err"))
     def DisconnectDevice(self, obj_path, ok, err):
         dev = Device(obj_path)
 
-        self.parent.Plugins.Run("on_device_disconnect", dev)
+        self.parent.Plugins.run("on_device_disconnect", dev)
 
         def on_timeout():
             dev.disconnect(reply_handler=ok, error_handler=err)
@@ -45,7 +45,7 @@ class DBusService(AppletPlugin):
 
     @dbus.service.method('org.blueman.Applet', in_signature="", out_signature="as")
     def QueryAvailablePlugins(self):
-        return list(self.parent.Plugins.GetClasses())
+        return list(self.parent.Plugins.get_classes())
 
     @dbus.service.method('org.blueman.Applet', in_signature="sb", out_signature="")
     def SetPluginConfig(self, plugin, value):
@@ -68,10 +68,10 @@ class DBusService(AppletPlugin):
 
             if service.group == 'serial':
                 def reply(rfcomm):
-                    self.parent.Plugins.Run("on_rfcomm_connected", service, rfcomm)
+                    self.parent.Plugins.run("on_rfcomm_connected", service, rfcomm)
                     ok(rfcomm)
 
-                rets = self.parent.Plugins.Run("rfcomm_connect_handler", service, reply, err)
+                rets = self.parent.Plugins.run("rfcomm_connect_handler", service, reply, err)
                 if True in rets:
                     pass
                 else:
@@ -83,7 +83,7 @@ class DBusService(AppletPlugin):
                     if ret:
                         raise StopException
 
-                if not self.parent.Plugins.RunEx("service_connect_handler", cb, service, ok, err):
+                if not self.parent.Plugins.run_ex("service_connect_handler", cb, service, ok, err):
                     service.connect(reply_handler=ok, error_handler=err)
 
     @dbus.service.method('org.blueman.Applet', in_signature="osd", async_callbacks=("ok", "err"))
@@ -97,7 +97,7 @@ class DBusService(AppletPlugin):
             if service.group == 'serial':
                 service.disconnect(port)
 
-                self.parent.Plugins.Run("on_rfcomm_disconnect", port)
+                self.parent.Plugins.run("on_rfcomm_disconnect", port)
 
                 logging.info("Disonnecting rfcomm device")
             else:
@@ -106,7 +106,7 @@ class DBusService(AppletPlugin):
                     if ret:
                         raise StopException
 
-                if not self.parent.Plugins.RunEx("service_disconnect_handler", cb, service, ok, err):
+                if not self.parent.Plugins.run_ex("service_disconnect_handler", cb, service, ok, err):
                     service.disconnect(reply_handler=ok, error_handler=err)
 
     def service_connect_handler(self, service, ok, err):

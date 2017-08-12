@@ -199,7 +199,7 @@ class PluginDialog(Gtk.Dialog):
         model, tree_iter = selection.get_selected()
 
         name = self.list.get(tree_iter, "name")["name"]
-        cls = self.applet.Plugins.GetClasses()[name]
+        cls = self.applet.Plugins.get_classes()[name]
         self.plugin_name.props.label = "<b>" + name + "</b>"
         self.icon.props.icon_name = cls.__icon__
         self.author_txt.props.label = cls.__author__ or _("Unspecified")
@@ -221,7 +221,7 @@ class PluginDialog(Gtk.Dialog):
             self.conflicts_hdr.props.visible = False
             self.conflicts_txt.props.visible = False
 
-        if cls.is_configurable() and name in self.applet.Plugins.GetLoaded():
+        if cls.is_configurable() and name in self.applet.Plugins.get_loaded():
             self.b_prefs.props.sensitive = True
         else:
             self.b_prefs.props.sensitive = False
@@ -231,7 +231,7 @@ class PluginDialog(Gtk.Dialog):
     def on_prefs_toggled(self, button):
         model, tree_iter = self.list.selection.get_selected()
         name = self.list.get(tree_iter, "name")["name"]
-        cls = self.applet.Plugins.GetClasses()[name]
+        cls = self.applet.Plugins.get_classes()[name]
 
         self.update_config_widget(cls)
 
@@ -259,8 +259,8 @@ class PluginDialog(Gtk.Dialog):
             self.main_container.add(self.content_grid)
 
     def populate(self):
-        classes = self.applet.Plugins.GetClasses()
-        loaded = self.applet.Plugins.GetLoaded()
+        classes = self.applet.Plugins.get_classes()
+        loaded = self.applet.Plugins.get_loaded()
         for name, cls in classes.items():
             if cls.is_configurable():
                 desc = "<span weight=\"bold\">%s</span>" % name
@@ -273,7 +273,7 @@ class PluginDialog(Gtk.Dialog):
         row = self.list.get_conditional(name=name)
         self.list.set(row[0], active=loaded)
 
-        cls = self.applet.Plugins.GetClasses()[name]
+        cls = self.applet.Plugins.get_classes()[name]
         if not loaded:
             self.update_config_widget(cls)
             self.b_prefs.props.sensitive = False
@@ -283,8 +283,8 @@ class PluginDialog(Gtk.Dialog):
     def on_toggled(self, cellrenderer, path):
         name = self.list.get(path, "name")["name"]
 
-        deps = self.applet.Plugins.GetDependencies()[name]
-        loaded = self.applet.Plugins.GetLoaded()
+        deps = self.applet.Plugins.get_dependencies()[name]
+        loaded = self.applet.Plugins.get_loaded()
         to_unload = []
         for dep in deps:
             if dep in loaded:
@@ -306,7 +306,7 @@ class PluginDialog(Gtk.Dialog):
 
             dialog.destroy()
 
-        conflicts = self.applet.Plugins.GetConflicts()[name]
+        conflicts = self.applet.Plugins.get_conflicts()[name]
         to_unload = []
         for conf in conflicts:
             if conf in loaded:
@@ -329,7 +329,7 @@ class PluginDialog(Gtk.Dialog):
             dialog.destroy()
 
             for p in to_unload:
-                self.applet.Plugins.SetConfig(p, False)
+                self.applet.Plugins.set_config(p, False)
 
-        loaded = name in self.applet.Plugins.GetLoaded()
-        self.applet.Plugins.SetConfig(name, not loaded)
+        loaded = name in self.applet.Plugins.get_loaded()
+        self.applet.Plugins.set_config(name, not loaded)

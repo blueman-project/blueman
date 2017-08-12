@@ -56,7 +56,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             logging.error("** Failed to connect to applet", exc_info=True)
             self._appl = None
 
-        self.Generate()
+        self.generate()
 
     def __del__(self):
         logging.debug("deleting devicemenu")
@@ -75,7 +75,7 @@ class ManagerDeviceMenu(Gtk.Menu):
 
             self._selection_done_signal = self.connect("selection-done", disconnectall)
 
-        self.Generate()
+        self.generate()
 
         super().popup(*args)
 
@@ -91,7 +91,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         for inst in ManagerDeviceMenu.__instances__:
             logging.info("op: regenerating instance %s" % inst)
             if inst.SelectedDevice == self.SelectedDevice and not (inst.is_popup and not inst.props.visible):
-                inst.Generate()
+                inst.generate()
 
     def get_op(self, device):
         try:
@@ -104,11 +104,11 @@ class ManagerDeviceMenu(Gtk.Menu):
         for inst in ManagerDeviceMenu.__instances__:
             logging.info("op: regenerating instance %s" % inst)
             if inst.SelectedDevice == self.SelectedDevice and not (inst.is_popup and not inst.props.visible):
-                inst.Generate()
+                inst.generate()
 
     def _on_service_property_changed(self, _service, key, _value, _path):
         if key == "Connected":
-            self.Generate()
+            self.generate()
 
     def on_connect(self, _item, service):
         device = service.device
@@ -153,13 +153,13 @@ class ManagerDeviceMenu(Gtk.Menu):
     def on_disconnect(self, item, service, port=0):
         def ok(obj, result, user_date):
             logging.info("disconnect success")
-            self.Generate()
+            self.generate()
 
         def err(obj, result, user_date):
             logging.warning("disconnect failed %s" % result)
             msg, tb = e_(result.message)
             MessageArea.show_message(_("Disconnection Failed: ") + msg, tb)
-            self.Generate()
+            self.generate()
 
         if self._appl is None:
             err(None, GLib.Error('Applet DBus Service not available'), None)
@@ -173,7 +173,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         # print "menu:", key, value
         if List.compare(tree_iter, List.selected()):
             if key in ("Connected", "UUIDs", "Trusted", "Paired"):
-                self.Generate()
+                self.generate()
 
     def _generic_connect(self, item, device, connect):
         def fail(obj, result, user_date):
@@ -208,7 +208,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         prog = ManagerProgressbar(self.Blueman, False)
         prog.start()
 
-    def Generate(self):
+    def generate(self):
         self.clear()
 
         items = []
@@ -267,7 +267,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             connect_item.show()
             self.append(connect_item)
 
-        rets = self.Blueman.Plugins.Run("on_request_menu_items", self, self.SelectedDevice)
+        rets = self.Blueman.Plugins.run("on_request_menu_items", self, self.SelectedDevice)
 
         for ret in rets:
             if ret:
