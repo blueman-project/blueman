@@ -85,6 +85,7 @@ class Blueman(Gtk.Window):
                 self._applet_sig = None
 
             self.hide()
+
             d = ErrorDialog(
                 _("Connection to BlueZ failed"),
                 _("Bluez daemon is not running, blueman-manager cannot continue.\n"

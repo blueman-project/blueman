@@ -66,7 +66,8 @@ class DnsMasqHandler(object):
 
             start, end = calc_ip_range(self.netconf.ip4_address)
 
-            args = "--pid-file=/var/run/dnsmasq.pan1.pid --bind-interfaces --dhcp-range=%s,%s,60m --except-interface=lo --interface=pan1 %s" % (inet_ntoa(start), inet_ntoa(end), rtr)
+            args = "--pid-file=/var/run/dnsmasq.pan1.pid --bind-interfaces --dhcp-range=%s,%s,60m " \
+                   "--except-interface=lo --interface=pan1 %s" % (inet_ntoa(start), inet_ntoa(end), rtr)
 
             cmd = [have("dnsmasq")] + args.split(" ")
             logging.info(cmd)

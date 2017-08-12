@@ -9,8 +9,8 @@ class ShowConnected(AppletPlugin):
     __author__ = "Walmis"
     __depends__ = ["StatusIcon"]
     __icon__ = "blueman-active"
-    __description__ = _(
-        "Adds an indication on the status icon when Bluetooth is active and shows the number of connections in the tooltip.")
+    __description__ = _("Adds an indication on the status icon when Bluetooth is active and shows the number of "
+                        "connections in the tooltip.")
 
     def on_load(self, applet):
         self.num_connections = 0

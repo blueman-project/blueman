@@ -117,7 +117,8 @@ class PluginManager(GObject.GObject):
                 if not self.__classes[dep].__unloadable__:
                     cls.__unloadable__ = False
 
-            if (cls.__autoload__ or (c and cls.__name__ in c)) and not (cls.__unloadable__ and c and "!" + cls.__name__ in c):
+            if (cls.__autoload__ or (c and cls.__name__ in c)) \
+                    and not (cls.__unloadable__ and c and "!" + cls.__name__ in c):
                 try:
                     self.__load_plugin(cls)
                 except:
@@ -145,8 +146,8 @@ class PluginManager(GObject.GObject):
 
         for cfl in self.__cfls[cls.__name__]:
             if cfl in self.__classes:
-                if self.__classes[cfl].__priority__ > cls.__priority__ and not self.Disabled(cfl) and not self.Enabled(
-                        cls.__name__):
+                if self.__classes[cfl].__priority__ > cls.__priority__ and not self.Disabled(cfl) \
+                        and not self.Enabled(cls.__name__):
                     logging.warning("Not loading %s because its conflict has higher priority" % cls.__name__)
                     return
 
