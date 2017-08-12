@@ -113,7 +113,7 @@ def wait_for_adapter(bluez_adapter, callback, timeout=1000):
 
 
 def launch(cmd, paths=None, system=False, icon_name=None, sn=True, name="blueman"):
-    '''Launch a gui app with starup notification'''
+    """Launch a gui app with starup notification"""
     display = Gdk.Display.get_default()
     timestamp = Gtk.get_current_event_time()
     context = display.get_app_launch_context()
@@ -236,7 +236,7 @@ def format_bytes(size):
 
 
 def create_menuitem_box(text, icon_name, pixbuf, orientation=Gtk.Orientation.HORIZONTAL, pixel_size=16, size=6):
-    '''Create a box with icon and label, optionally set size and orientation'''
+    """Create a box with icon and label, optionally set size and orientation"""
     item_box = Gtk.Box.new(orientation, size)
     if icon_name:
         icon = Gtk.Image(icon_name=icon_name, pixel_size=pixel_size)
@@ -354,7 +354,7 @@ def mask_ip4_address(ip, subnet):
 
 
 def set_proc_title(name=None):
-    '''Set the process title'''
+    """Set the process title"""
 
     if not name:
         name = os.path.basename(sys.argv[0])
