@@ -512,7 +512,7 @@ class PulseAudioUtils(GObject.GObject):
         "driver": card_info[0].driver.decode("UTF-8"),
         "index": card_info[0].index,
         }
-        l = []
+        profiles = []
         for i in range(0, card_info[0].n_profiles):
             x = {
             "name": card_info[0].profiles[i].name.decode("UTF-8"),
@@ -521,9 +521,9 @@ class PulseAudioUtils(GObject.GObject):
             "n_sources": card_info[0].profiles[i].n_sources,
             "priority": card_info[0].profiles[i].priority,
             }
-            l.append(x)
+            profiles.append(x)
 
-        stuff["profiles"] = l
+        stuff["profiles"] = profiles
         stuff["active_profile"] = card_info[0].active_profile[0].name.decode("UTF-8")
 
         return stuff

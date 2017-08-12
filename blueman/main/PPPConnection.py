@@ -196,12 +196,12 @@ class PPPConnection(GObject.GObject):
 
         lines = self.buffer.split("\r\n")
         found = False
-        for l in lines:
-            if l == "":
+        for line in lines:
+            if line == "":
                 pass
             else:
                 for t in terminators:
-                    if t in l:
+                    if t in line:
                         found = True
 
         if found:

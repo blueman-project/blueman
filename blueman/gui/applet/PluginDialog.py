@@ -25,8 +25,8 @@ class SettingsWidget(Gtk.Box):
         for k, v in self.inst.__class__.__options__.items():
             if len(v) > 2:
 
-                l = Gtk.Label(label=v["name"])
-                l.props.xalign = 0.0
+                label = Gtk.Label(label=v["name"])
+                label.props.xalign = 0.0
 
                 w = self.get_control_widget(k, v)
                 if "decorator" in v:
@@ -34,11 +34,11 @@ class SettingsWidget(Gtk.Box):
 
                 self.pack_start(w, False, False, 0)
 
-                l = Gtk.Label(label="<i >" + v["desc"] + "</i>")
-                l.set_line_wrap(True)
-                l.props.use_markup = True
-                l.props.xalign = 0.0
-                self.pack_start(l, False, False, 0)
+                label = Gtk.Label(label="<i >" + v["desc"] + "</i>")
+                label.set_line_wrap(True)
+                label.props.use_markup = True
+                label.props.xalign = 0.0
+                self.pack_start(label, False, False, 0)
 
                 sep = Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL)
                 sep.props.height_request = 10
@@ -63,8 +63,8 @@ class SettingsWidget(Gtk.Box):
 
         elif params["type"] == int:
             b = Gtk.Box(Gtk.Orientation.HORIZONTAL)
-            l = Gtk.Label(label=params["name"])
-            b.pack_start(l, False, False, 0)
+            label = Gtk.Label(label=params["name"])
+            b.pack_start(label, False, False, 0)
 
             r = Gtk.SpinButton()
             b.pack_start(r, False, False, 6)
@@ -81,8 +81,8 @@ class SettingsWidget(Gtk.Box):
 
         elif params["type"] == str:
             b = Gtk.Box(Gtk.Orientation.HORIZONTAL)
-            l = Gtk.Label(label=params["name"])
-            b.pack_start(l, False, False, 0)
+            label = Gtk.Label(label=params["name"])
+            b.pack_start(label, False, False, 0)
 
             e = Gtk.Entry()
             b.pack_start(e, False, False, 6)
