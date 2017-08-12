@@ -8,7 +8,7 @@ from blueman.Functions import wait_for_adapter, adapter_path_to_name
 from blueman.gui.GenericList import GenericList
 from blueman.Constants import ICON_PATH
 from _blueman import conn_info, ConnInfoReadError
-import blueman.bluez as Bluez
+import blueman.bluez as bluez
 
 from gi.repository import GObject
 from gi.repository import GLib
@@ -63,7 +63,7 @@ class DeviceList(GenericList):
 
                 self.emit("adapter-added", path)
 
-            a = Bluez.Adapter(path)
+            a = bluez.Adapter(path)
             wait_for_adapter(a, on_activate)
 
         # cache for fast lookup in the list
@@ -71,11 +71,11 @@ class DeviceList(GenericList):
 
         self.monitored_devices = []
 
-        self.manager = Bluez.Manager()
+        self.manager = bluez.Manager()
         self.manager.connect_signal('adapter-removed', on_adapter_removed)
         self.manager.connect_signal('adapter-added', on_adapter_added)
 
-        any_device = Bluez.AnyDevice()
+        any_device = bluez.AnyDevice()
         any_device.connect_signal("property-changed", self._on_device_property_changed)
 
         self.__discovery_time = 0
@@ -93,7 +93,7 @@ class DeviceList(GenericList):
         self.set_name("DeviceList")
 
         self.set_adapter(adapter_name)
-        self._any_adapter = Bluez.AnyAdapter()
+        self._any_adapter = bluez.AnyAdapter()
         self._any_adapter.connect_signal("property-changed", self._on_property_changed)
 
         self.selection.connect('changed', self.on_selection_changed)
@@ -212,7 +212,7 @@ class DeviceList(GenericList):
     def _on_device_created(self, _adapter, path):
         tree_iter = self.find_device_by_path(path)
         if tree_iter is None:
-            dev = Bluez.Device(path)
+            dev = bluez.Device(path)
             self.device_add_event(dev)
 
     def _on_device_removed(self, _manager, path):
@@ -244,7 +244,7 @@ class DeviceList(GenericList):
             self.manager.connect_signal('device-removed', self._on_device_removed)
             self.__adapter_path = self.Adapter.get_object_path()
             self.emit("adapter-changed", self.__adapter_path)
-        except Bluez.errors.DBusNoSuchAdapterError as e:
+        except bluez.errors.DBusNoSuchAdapterError as e:
             logging.exception(e)
             # try loading default adapter
             if len(self.manager.get_adapters()) > 0 and adapter is not None:

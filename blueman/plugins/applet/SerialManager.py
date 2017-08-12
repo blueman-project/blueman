@@ -9,7 +9,7 @@ import atexit
 import logging
 import os
 import signal
-import blueman.bluez as Bluez
+import blueman.bluez as bluez
 from gi.repository import GObject
 
 
@@ -44,7 +44,7 @@ class SerialManager(AppletPlugin):
 
     def on_device_property_changed(self, path, key, value):
         if key == "Connected" and not value:
-            self.terminate_all_scripts(Bluez.Device(path)["Address"])
+            self.terminate_all_scripts(bluez.Device(path)["Address"])
 
     def on_rfcomm_connected(self, service, port):
         device = service.device
