@@ -302,8 +302,8 @@ class DeviceList(GenericList):
             if self.Adapter is not None:
                 self.Adapter.start_discovery()
                 self.discovering = True
-                T = 1.0 / 15 * 1000
-                GLib.timeout_add(int(T), self.update_progress, T / 1000, time)
+                t = 1.0 / 15 * 1000
+                GLib.timeout_add(int(t), self.update_progress, t / 1000, time)
 
     def is_valid_adapter(self):
         if self.Adapter is None:

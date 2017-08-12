@@ -159,7 +159,7 @@ class Blueman(Gtk.Window):
             self.List.display_known_devices(autoselect=True)
 
     def inquiry(self):
-        def prop_changed(List, adapter, key_value):
+        def prop_changed(lst, adapter, key_value):
             key, value = key_value
             if key == "Discovering" and not value:
                 prog.finalize()
@@ -202,7 +202,7 @@ class Blueman(Gtk.Window):
     def toggle_trust(self, device):
         device['Trusted'] = not device['Trusted']
 
-    def send(self, device, File=None):
+    def send(self, device, f=None):
         adapter = self.List.Adapter
 
         command = "blueman-sendto --source=%s --device=%s" % (adapter["Address"], device['Address'])

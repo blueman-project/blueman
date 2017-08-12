@@ -67,7 +67,7 @@ class ManagerStats:
 
         self.start_update()
 
-    def on_adapter_changed(self, List, adapter_path):
+    def on_adapter_changed(self, lst, adapter_path):
         if adapter_path is not None:
             self.hci = adapter_path_to_name(adapter_path)
             self.hbox.props.sensitive = True

@@ -168,10 +168,10 @@ class ManagerDeviceMenu(Gtk.Menu):
         self._appl.disconnect_service('(osd)', service.device.get_object_path(), service.uuid, port,
                                       result_handler=ok, error_handler=err)
 
-    def on_device_property_changed(self, List, device, tree_iter, key_value):
+    def on_device_property_changed(self, lst, device, tree_iter, key_value):
         key, value = key_value
         # print "menu:", key, value
-        if List.compare(tree_iter, List.selected()):
+        if lst.compare(tree_iter, lst.selected()):
             if key in ("Connected", "UUIDs", "Trusted", "Paired"):
                 self.generate()
 
