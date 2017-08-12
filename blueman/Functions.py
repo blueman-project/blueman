@@ -50,6 +50,7 @@ from gi.repository import GdkPixbuf
 from gi.repository import GLib
 from gi.repository import Gio
 
+
 __all__ = ["check_bluetooth_status", "wait_for_adapter", "launch", "setup_icon_path", "get_icon",
            "get_notification_icon", "adapter_path_to_name", "e_", "opacify_pixbuf", "composite_icon",
            "format_bytes", "create_menuitem", "get_lockfile", "get_pid", "is_running", "check_single_instance", "kill",
