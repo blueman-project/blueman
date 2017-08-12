@@ -453,32 +453,24 @@ class ManagerDeviceList(DeviceList):
 
                     if rssi < 30:
                         rssi_state = _("Poor")
-
-                    if 40 > rssi > 30:
+                    elif rssi < 40:
                         rssi_state = _("Sub-optimal")
-
-                    elif 40 < rssi < 60:
+                    elif rssi < 60:
                         rssi_state = _("Optimal")
-
-                    elif rssi > 60:
+                    elif rssi < 70:
                         rssi_state = _("Much")
-
-                    elif rssi > 70:
+                    else:
                         rssi_state = _("Too much")
 
                     if tpl < 30:
                         tpl_state = _("Low")
-
-                    if 40 > tpl > 30:
+                    elif tpl < 40:
                         tpl_state = _("Sub-optimal")
-
-                    elif tpl > 40 and rssi < 60:
+                    elif tpl < 60:
                         tpl_state = _("Optimal")
-
-                    elif tpl > 60:
+                    elif tpl < 70:
                         tpl_state = _("High")
-
-                    elif tpl > 70:
+                    else:
                         tpl_state = _("Very High")
 
                     if path[1] == self.columns["tpl_pb"]:
