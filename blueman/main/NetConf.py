@@ -124,7 +124,7 @@ class DhcpdHandler(object):
 
         f.close()
 
-        return (dhcp_config, existing_subnet)
+        return dhcp_config, existing_subnet
 
     def _generate_subnet_config(self):
         dns = get_dns_servers()
@@ -318,7 +318,7 @@ class NetConf(object):
         self.ip4_mask = netmask
 
     def get_ipv4(self):
-        return (self.ip4_address, self.ip4_mask)
+        return self.ip4_address, self.ip4_mask
 
     def enable_ip4_forwarding(self):
         f = open("/proc/sys/net/ipv4/ip_forward", "w")

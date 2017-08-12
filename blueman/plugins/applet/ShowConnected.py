@@ -25,7 +25,7 @@ class ShowConnected(AppletPlugin):
     def on_status_icon_query_icon(self):
         if self.num_connections > 0:
             self.active = True
-            return ("blueman-active",)
+            return "blueman-active",
         else:
             self.active = False
 
