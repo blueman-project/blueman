@@ -182,7 +182,8 @@ class Dialog:
             for m in plugin.monitors:
                 if d == m.device["Address"]:
                     titer = self.liststore.append(
-                        [d, self.get_caption(m.device["Alias"], m.device["Address"]), _("Connected:") + " " + m.interface, m])
+                        [d, self.get_caption(m.device["Alias"], m.device["Address"]),
+                         _("Connected:") + " " + m.interface, m])
                     if self.cb_device.get_active() == -1:
                         self.cb_device.set_active_iter(titer)
                     added = True
@@ -202,9 +203,10 @@ class Dialog:
             if self.cb_device.get_active() == -1:
                 self.cb_device.set_active(0)
         else:
+            msg = _("No usage statistics are available yet. Try establishing a connection first and "
+                    "then check this page.")
             d = Gtk.MessageDialog(parent=self.dialog, flags=Gtk.DialogFlags.MODAL, type=Gtk.MessageType.INFO,
-                                  buttons=Gtk.ButtonsType.CLOSE, message_format=_(
-                    "No usage statistics are available yet. Try establishing a connection first and then check this page."))
+                                  buttons=Gtk.ButtonsType.CLOSE, message_format=msg)
             d.props.icon_name = "blueman"
             d.run()
             d.destroy()
@@ -293,8 +295,10 @@ class Dialog:
                                    _("Connected:") + " " + monitor.interface, 3, monitor)
                 return
 
-        self.liststore.append([monitor.device["Address"], self.get_caption(monitor.device["Alias"], monitor.device["Address"]),
-                               _("Connected:") + " " + monitor.interface, monitor])
+        self.liststore.append(
+            [monitor.device["Address"], self.get_caption(monitor.device["Alias"], monitor.device["Address"]),
+             _("Connected:") + " " + monitor.interface, monitor]
+        )
 
     def monitor_removed(self, parent, monitor):
         for row in self.liststore:
@@ -310,8 +314,8 @@ class Dialog:
 class NetUsage(AppletPlugin, GObject.GObject):
     __depends__ = ["Menu"]
     __icon__ = "network-wireless"
-    __description__ = _(
-        "Allows you to monitor your (mobile broadband) network traffic usage. Useful for limited data access plans. This plugin tracks every device seperately.")
+    __description__ = _("Allows you to monitor your (mobile broadband) network traffic usage. Useful for limited "
+                        "data access plans. This plugin tracks every device seperately.")
     __author__ = "Walmis"
     __autoload__ = False
     __gsignals__ = {

@@ -33,7 +33,9 @@ class Switch:
 
 class KillSwitch(AppletPlugin):
     __author__ = "Walmis"
-    __description__ = _("Toggles a platform Bluetooth killswitch when Bluetooth power state changes (Useless with USB dongles) and makes sure a status icon is shown if there is a bluetooth killswitch but no adapter.")
+    __description__ = _("Toggles a platform Bluetooth killswitch when Bluetooth power state changes "
+                        "(Useless with USB dongles) and makes sure a status icon is shown if there is a bluetooth "
+                        "killswitch but no adapter.")
     __depends__ = ["PowerManager", "StatusIcon"]
     __icon__ = "system-shutdown"
 

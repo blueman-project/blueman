@@ -93,7 +93,8 @@ def wait_for_adapter(bluez_adapter, callback, timeout=1000):
     def on_timeout():
         bluez_adapter.disconnect_signal(sig)
         GLib.source_remove(source)
-        logging.warning("Warning: Bluez didn't provide 'Powered' property in a reasonable timeout\nAssuming adapter is ready")
+        logging.warning("Warning: Bluez didn't provide 'Powered' property in a reasonable timeout\n"
+                        "Assuming adapter is ready")
         callback()
 
     if bluez_adapter["Address"] != "00:00:00:00:00:00":
@@ -195,7 +196,8 @@ def e_(msg):
 def opacify_pixbuf(pixbuf, alpha):
     new = pixbuf.copy()
     new.fill(0x00000000)
-    pixbuf.composite(new, 0, 0, pixbuf.props.width, pixbuf.props.height, 0, 0, 1, 1, GdkPixbuf.InterpType.BILINEAR, alpha)
+    pixbuf.composite(new, 0, 0, pixbuf.props.width, pixbuf.props.height, 0, 0, 1, 1,
+                     GdkPixbuf.InterpType.BILINEAR, alpha)
     return new
 
 
