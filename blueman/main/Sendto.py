@@ -258,7 +258,6 @@ class Sender(Gtk.Dialog):
 
     def on_session_failed(self, _client, msg):
         d = ErrorDialog(_("Error occurred"), msg.reason.split(None, 1)[1], icon_name="blueman")
-
         d.run()
         d.destroy()
         exit(1)

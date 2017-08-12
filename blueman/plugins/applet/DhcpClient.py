@@ -49,7 +49,7 @@ class DhcpClient(AppletPlugin):
 
             def err(_obj, result, _user_data):
                 logging.warning(result)
-                Notification(_("Bluetooth Network"), _("Failed to obtain an IP address on %s") % (device),
+                Notification(_("Bluetooth Network"), _("Failed to obtain an IP address on %s") % device,
                              icon_name="network-workgroup").show()
 
                 self.quering.remove(device)

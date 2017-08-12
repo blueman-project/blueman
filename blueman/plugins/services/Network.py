@@ -45,7 +45,7 @@ class Network(ServicePlugin):
             self.ip_check()
         except Exception as e:
             logging.exception(e)
-        return (_("Network"), "network-workgroup")
+        return _("Network"), "network-workgroup"
 
     def on_enter(self):
         self.widget.props.visible = True
