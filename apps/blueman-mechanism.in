@@ -16,6 +16,8 @@ if 'BLUEMAN_SOURCE' in os.environ:
     sys.path = [_dirname, os.path.join(_dirname, 'module', '.libs')] + sys.path
     timeout = 9999
     os.environ["GSETTINGS_SCHEMA_DIR"] = os.path.join(_dirname, "data")
+else:
+    timeout = 30
 
 from _blueman import set_probe_debug
 from blueman.Constants import POLKIT
@@ -25,8 +27,6 @@ import blueman.plugins.mechanism
 from blueman.plugins.MechanismPlugin import MechanismPlugin
 
 from blueman.main.DbusService import DbusService
-
-timeout = 30
 
 loop = GLib.MainLoop()
 
