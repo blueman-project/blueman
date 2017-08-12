@@ -54,7 +54,7 @@ class PANotConnected(Exception):
     pass
 
 
-class pa_module_info(Structure):
+class PaModuleInfo(Structure):
     _fields_ = [("index", c_uint),
                 ("name", c_char_p),
                 ("argument", c_char_p),
@@ -63,49 +63,49 @@ class pa_module_info(Structure):
                 ]
 
 
-class pa_sample_spec(Structure):
+class PaSampleSpec(Structure):
     pass
 
 
-pa_sample_spec._fields_ = [
+PaSampleSpec._fields_ = [
     ('format', c_int),
     ('rate', c_uint32),
     ('channels', c_uint8),
 ]
 
 
-class pa_channel_map(Structure):
+class PaChannelMap(Structure):
     pass
 
 
-pa_channel_map._fields_ = [
+PaChannelMap._fields_ = [
     ('channels', c_uint8),
     ('map', c_int * 32),
 ]
 
 
-class pa_cvolume(Structure):
+class PaCvolume(Structure):
     pass
 
 
-pa_cvolume._fields_ = [
+PaCvolume._fields_ = [
     ('channels', c_uint8),
     ('values', c_uint32 * 32),
 ]
 
 
-class pa_source_info(Structure):
+class PaSourceInfo(Structure):
     pass
 
 
-pa_source_info._fields_ = [
+PaSourceInfo._fields_ = [
     ('name', c_char_p),
     ('index', c_uint32),
     ('description', c_char_p),
-    ('sample_spec', pa_sample_spec),
-    ('channel_map', pa_channel_map),
+    ('sample_spec', PaSampleSpec),
+    ('channel_map', PaChannelMap),
     ('owner_module', c_uint32),
-    ('volume', pa_cvolume),
+    ('volume', PaCvolume),
     ('mute', c_int),
     ('monitor_of_sink', c_uint32),
     ('monitor_of_sink_name', c_char_p),
@@ -124,18 +124,18 @@ pa_source_info._fields_ = [
 ]
 
 
-class pa_sink_info(Structure):
+class PaSinkInfo(Structure):
     pass
 
 
-pa_sink_info._fields_ = [
+PaSinkInfo._fields_ = [
     ('name', c_char_p),
     ('index', c_uint32),
     ('description', c_char_p),
-    ('sample_spec', pa_sample_spec),
-    ('channel_map', pa_channel_map),
+    ('sample_spec', PaSampleSpec),
+    ('channel_map', PaChannelMap),
     ('owner_module', c_uint32),
-    ('volume', pa_cvolume),
+    ('volume', PaCvolume),
     ('mute', c_int),
     ('monitor_of_sink', c_uint32),
     ('monitor_of_sink_name', c_char_p),
@@ -154,19 +154,19 @@ pa_sink_info._fields_ = [
 ]
 
 
-class pa_sink_input_info(Structure):
+class PaSinkInputInfo(Structure):
     pass
 
 
-pa_sink_input_info._fields_ = [
+PaSinkInputInfo._fields_ = [
     ('index', c_uint32),
     ('name', c_char_p),
     ('owner_module', c_uint32),
     ('client', c_uint32),
     ('sink', c_uint32),
-    ('sample_spec', pa_sample_spec),
-    ('channel_map', pa_channel_map),
-    ('volume', pa_cvolume),
+    ('sample_spec', PaSampleSpec),
+    ('channel_map', PaChannelMap),
+    ('volume', PaCvolume),
     ('buffer_usec', c_uint64),
     ('sink_usec', c_uint64),
     ('resample_method', c_char_p),
@@ -176,11 +176,11 @@ pa_sink_input_info._fields_ = [
 ]
 
 
-class pa_card_profile_info(Structure):
+class PaCardProfileInfo(Structure):
     pass
 
 
-pa_card_profile_info._fields_ = [
+PaCardProfileInfo._fields_ = [
     ('name', c_char_p),
     ('description', c_char_p),
     ('n_sinks', c_uint32),
@@ -189,18 +189,18 @@ pa_card_profile_info._fields_ = [
 ]
 
 
-class pa_card_info(Structure):
+class PaCardInfo(Structure):
     pass
 
 
-pa_card_info._fields_ = [
+PaCardInfo._fields_ = [
     ('index', c_uint32),
     ('name', c_char_p),
     ('owner_module', c_uint32),
     ('driver', c_char_p),
     ('n_profiles', c_uint32),
-    ('profiles', POINTER(pa_card_profile_info)),
-    ('active_profile', POINTER(pa_card_profile_info)),
+    ('profiles', POINTER(PaCardProfileInfo)),
+    ('active_profile', POINTER(PaCardProfileInfo)),
     ('proplist', c_void_p),
 ]
 pa_context_notify_cb_t = CFUNCTYPE(None, c_void_p, py_object)
@@ -208,13 +208,13 @@ pa_context_notify_cb_t = CFUNCTYPE(None, c_void_p, py_object)
 pa_context_index_cb_t = CFUNCTYPE(None, c_void_p, c_int, py_object)
 pa_context_success_cb_t = pa_context_index_cb_t
 
-pa_module_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(pa_module_info), c_int, py_object)
-pa_source_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(pa_source_info), c_int, py_object)
-pa_sink_input_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(pa_sink_input_info), c_int, py_object)
-pa_card_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(pa_card_info), c_int, py_object)
+pa_module_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(PaModuleInfo), c_int, py_object)
+pa_source_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(PaSourceInfo), c_int, py_object)
+pa_sink_input_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(PaSinkInputInfo), c_int, py_object)
+pa_card_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(PaCardInfo), c_int, py_object)
 pa_context_subscribe_cb_t = CFUNCTYPE(None, c_void_p, c_uint32, c_uint32, c_void_p)
 
-pa_sink_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(pa_sink_info), c_int, py_object)
+pa_sink_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(PaSinkInfo), c_int, py_object)
 
 pa_context_get_module_info_list = libpulse.pa_context_get_module_info_list
 pa_context_get_module_info_list.restype = c_void_p

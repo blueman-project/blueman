@@ -113,9 +113,9 @@ class Timer:
         self.reset()
 
 
-class conf_service(DbusService):
+class ConfService(DbusService):
     def __init__(self):
-        super(conf_service, self).__init__("org.blueman.Mechanism", "/", dbus.SystemBus)
+        super(ConfService, self).__init__("org.blueman.Mechanism", "/", dbus.SystemBus)
         self.timer = Timer()
         if args.stoptimer:
             self.timer.stop()
@@ -173,5 +173,5 @@ class conf_service(DbusService):
 
 
 set_proc_title()
-conf_service()
+ConfService()
 loop.run()
