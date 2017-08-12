@@ -313,7 +313,8 @@ class BluezAgent(Agent):
         logging.info("Agent.Authorize")
         dev_str = self.get_device_string(device)
         service = ServiceUUID(uuid).name
-        notify_message = (_("Authorization request for:") + "\n%s\n" + _("Service:") + " <b>%s</b>") % (dev_str, service)
+        notify_message = \
+            (_("Authorization request for:") + "\n%s\n" + _("Service:") + " <b>%s</b>") % (dev_str, service)
         actions = [["always", _("Always accept")],
                    ["accept", _("Accept")],
                    ["deny", _("Deny")]]

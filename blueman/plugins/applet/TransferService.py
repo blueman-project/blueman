@@ -159,9 +159,9 @@ class TransferService(AppletPlugin):
             logging.info("Configured share directory %s does not exist" % self._config["shared-path"])
 
             text = _("Configured directory for incoming files does not exist")
-            secondary_text = _("Please make sure that directory \"<b>%s</b>\" exists or configure it with blueman-services")
+            secondary_text = _("Please make sure that directory \"<b>%s</b>\" exists or "
+                               "configure it with blueman-services")
             dlg = ErrorDialog(text, secondary_text % self._config["shared-path"])
-
             dlg.run()
             dlg.destroy()
 

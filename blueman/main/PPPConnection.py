@@ -11,24 +11,27 @@ import errno
 import re
 
 pppd_errors = {
-    1: """An immediately fatal error of some kind  occurred, such as an essential system call failing, or running out of virtual memory.""",
-    2: """An  error  was detected in processing the options given, such as two mutually exclusive options being used.""",
-    3: """Pppd is not setuid-root and the invoking user is not root.""",
-    4: """The kernel does not support PPP, for example, the  PPP kernel driver is not included or cannot be loaded.""",
-    5: """Pppd terminated because it was sent a SIGINT, SIGTERM or SIGHUP signal.""",
-    6: """The serial port could not be locked.""", 7: """The serial port could not be opened.""",
-    8: """The connect script failed (returned a non-zero exit status).""",
-    9: """The command specified as the argument to the  pty  option  could not be run.""",
-    10: """The PPP negotiation failed, that is, it didn't reach the point where at least one network protocol (e.g. IP) was running.""",
-    11: """The peer system failed (or refused) to authenticate itself.""",
-    12: """The link was established successfully and terminated because  it was idle.""",
-    13: """The link was established successfully and terminated because the connect time limit was reached.""",
-    14: """Callback was negotiated  and  an  incoming  call  should  arrive shortly.""",
-    15: """The link was terminated because the peer is not responding to echo requests.""",
-    16: """The link was terminated by the modem hanging up.""",
-    17: """The PPP negotiation failed because serial loopback was detected.""",
-    18: """The init script failed (returned a non-zero exit status).""",
-    19: """We failed to authenticate ourselves to the peer."""
+    1: "An immediately fatal error of some kind  occurred, such as an essential system call failing, "
+       "or running out of virtual memory.",
+    2: "An  error  was detected in processing the options given, such as two mutually exclusive options being used.",
+    3: "Pppd is not setuid-root and the invoking user is not root.",
+    4: "The kernel does not support PPP, for example, the  PPP kernel driver is not included or cannot be loaded.",
+    5: "Pppd terminated because it was sent a SIGINT, SIGTERM or SIGHUP signal.",
+    6: "The serial port could not be locked.",
+    7: "The serial port could not be opened.",
+    8: "The connect script failed (returned a non-zero exit status).",
+    9: "The command specified as the argument to the  pty  option  could not be run.",
+    10: "The PPP negotiation failed, that is, it didn't reach the point where at least one network protocol "
+        "(e.g. IP) was running.",
+    11: "The peer system failed (or refused) to authenticate itself.",
+    12: "The link was established successfully and terminated because  it was idle.",
+    13: "The link was established successfully and terminated because the connect time limit was reached.",
+    14: "Callback was negotiated  and  an  incoming  call  should  arrive shortly.",
+    15: "The link was terminated because the peer is not responding to echo requests.",
+    16: "The link was terminated by the modem hanging up.",
+    17: "The PPP negotiation failed because serial loopback was detected.",
+    18: "The init script failed (returned a non-zero exit status).",
+    19: "We failed to authenticate ourselves to the peer."
 }
 
 

@@ -132,7 +132,8 @@ class PluginDialog(Gtk.Dialog):
         cr.connect("toggled", lambda *args: ref() and ref().on_toggled(*args))
 
         data = [
-            {"id": "active", "type": bool, "renderer": cr, "render_attrs": {"active": 0, "activatable": 1, "visible": 1}},
+            {"id": "active", "type": bool, "renderer": cr, "render_attrs": {"active": 0, "activatable": 1,
+                                                                            "visible": 1}},
             {"id": "activatable", "type": bool},
             {"id": "icon", "type": str, "renderer": Gtk.CellRendererPixbuf(), "render_attrs": {"icon-name": 2}},
             # device caption
@@ -294,9 +295,9 @@ class PluginDialog(Gtk.Dialog):
             dialog.props.secondary_use_markup = True
             dialog.props.icon_name = "blueman"
             dialog.props.text = _("Dependency issue")
-            dialog.props.secondary_text = _(
-                "Plugin <b>\"%(0)s\"</b> depends on <b>%(1)s</b>. Unloading <b>%(1)s</b> will also unload <b>\"%(0)s\"</b>.\nProceed?") % {
-                                          "0": ", ".join(to_unload), "1": name}
+            dialog.props.secondary_text = \
+                _("Plugin <b>\"%(0)s\"</b> depends on <b>%(1)s</b>. Unloading <b>%(1)s</b> will also unload <b>"
+                  "\"%(0)s\"</b>.\nProceed?") % {"0": ", ".join(to_unload), "1": name}
 
             resp = dialog.run()
             if resp != Gtk.ResponseType.YES:
@@ -316,9 +317,9 @@ class PluginDialog(Gtk.Dialog):
             dialog.props.secondary_use_markup = True
             dialog.props.icon_name = "blueman"
             dialog.props.text = _("Dependency issue")
-            dialog.props.secondary_text = _(
-                "Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will unload <b>%(0)s</b>.\nProceed?") % {
-                                          "0": ", ".join(to_unload), "1": name}
+            dialog.props.secondary_text = \
+                _("Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will unload <b>%(0)s</b>."
+                  "\nProceed?") % {"0": ", ".join(to_unload), "1": name}
 
             resp = dialog.run()
             if resp != Gtk.ResponseType.YES:
