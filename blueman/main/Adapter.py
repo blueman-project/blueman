@@ -5,7 +5,7 @@ import gettext
 
 from blueman.Constants import UI_PATH
 from blueman.Functions import *
-import blueman.bluez as Bluez
+import blueman.bluez as bluez
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -42,14 +42,14 @@ class BluemanAdapters(Gtk.Dialog):
         self._adapters = {}
 
         setup_icon_path()
-        Bluez.Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
+        bluez.Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
 
         check_single_instance("blueman-adapters", lambda time: self.present_with_time(time))
 
         check_bluetooth_status(_("Bluetooth needs to be turned on for the adapter manager to work"), lambda: exit())
 
         try:
-            self.manager = Bluez.Manager()
+            self.manager = bluez.Manager()
         except Exception as e:
             logging.exception(e)
             self.manager = None
@@ -85,7 +85,7 @@ class BluemanAdapters(Gtk.Dialog):
     def on_adapter_added(self, _manager, adapter_path):
         hci_dev = os.path.basename(adapter_path)
         if hci_dev not in self._adapters:
-            self._adapters[hci_dev] = Bluez.Adapter(adapter_path)
+            self._adapters[hci_dev] = bluez.Adapter(adapter_path)
 
         self._adapters[hci_dev].connect_signal("property-changed", self.on_property_changed)
         self.add_to_notebook(self._adapters[hci_dev])
