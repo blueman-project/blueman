@@ -266,7 +266,7 @@ class PluginDialog(Gtk.Dialog):
                 desc = "<span weight=\"bold\">%s</span>" % name
             else:
                 desc = name
-            self.list.append(active=(name in loaded), icon=cls.__icon__, activatable=(cls.__unloadable__), name=name,
+            self.list.append(active=(name in loaded), icon=cls.__icon__, activatable=cls.__unloadable__, name=name,
                              desc=desc)
 
     def plugin_state_changed(self, plugins, name, loaded):

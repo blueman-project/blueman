@@ -126,7 +126,7 @@ class BluezAgent(Agent):
         msg.set_text(dialog_msg)
         pin_entry = builder.get_object("pin_entry")
         show_input = builder.get_object("show_input_check")
-        if (is_numeric):
+        if is_numeric:
             pin_entry.set_max_length(6)
             pin_entry.set_width_chars(6)
             pin_entry.connect("insert-text", on_insert_text)
@@ -139,7 +139,7 @@ class BluezAgent(Agent):
         accept_button = builder.get_object("accept")
         pin_entry.connect("changed", lambda x: accept_button.set_sensitive(x.get_text() != ''))
 
-        return (dialog, pin_entry)
+        return dialog, pin_entry
 
     def get_device_string(self, device_path):
         device = bluez.Device(device_path)

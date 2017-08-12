@@ -131,7 +131,7 @@ class BluemanAdapters(Gtk.Dialog):
                 else:
                     return _("Hidden")
             else:
-                return gettext.ngettext("%d Minute", "%d Minutes", value) % (value)
+                return gettext.ngettext("%d Minute", "%d Minutes", value) % value
 
         def on_scale_value_changed(scale):
             val = scale.get_value()

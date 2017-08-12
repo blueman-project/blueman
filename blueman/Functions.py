@@ -187,10 +187,10 @@ def adapter_path_to_name(path):
 # format error
 def e_(msg):
     if isinstance(msg, Exception):
-        return (str(msg), traceback.format_exc())
+        return str(msg), traceback.format_exc()
     else:
         s = msg.strip().split(": ")[-1]
-        return (s, None)
+        return s, None
 
 
 def opacify_pixbuf(pixbuf, alpha):
@@ -227,7 +227,7 @@ def format_bytes(size):
         ret = size / (1024 * 1024 * 1024)
         suffix = "GB"
 
-    return (ret, suffix)
+    return ret, suffix
 
 
 def create_menuitem(text, icon_name=None, pixbuf=None, surface=None):
