@@ -3,7 +3,7 @@ import dbus.service
 import logging
 from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
-import blueman.bluez as Bluez
+import blueman.bluez as bluez
 
 from gi.repository import GLib
 
@@ -204,7 +204,7 @@ class PowerManager(AppletPlugin):
             return "blueman-disabled", "blueman-disabled"
 
     def on_adapter_added(self, path):
-        adapter = Bluez.Adapter(path)
+        adapter = bluez.Adapter(path)
 
         def on_ready():
             if not self.adapter_state:

@@ -1,6 +1,6 @@
 # coding=utf-8
 from blueman.Functions import *
-import blueman.bluez as Bluez
+import blueman.bluez as bluez
 import blueman.plugins.applet
 from blueman.main.PluginManager import PersistentPluginManager
 from blueman.main.DbusService import DbusService
@@ -20,7 +20,7 @@ class BluemanApplet(object):
 
         self.plugin_run_state_changed = False
 
-        self.Manager = Bluez.Manager()
+        self.Manager = bluez.Manager()
         self.Manager.connect_signal('adapter-added', self.on_adapter_added)
         self.Manager.connect_signal('adapter-removed', self.on_adapter_removed)
         self.Manager.connect_signal('device-created', self.on_device_created)
@@ -35,10 +35,10 @@ class BluemanApplet(object):
 
         self.Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
 
-        self._any_adapter = Bluez.AnyAdapter()
+        self._any_adapter = bluez.AnyAdapter()
         self._any_adapter.connect_signal('property-changed', self._on_adapter_property_changed)
 
-        self._any_device = Bluez.AnyDevice()
+        self._any_device = bluez.AnyDevice()
         self._any_device.connect_signal('property-changed', self._on_device_property_changed)
 
         Gtk.main()
@@ -68,7 +68,7 @@ class BluemanApplet(object):
             logging.info("Adapter activated")
             self.Plugins.run("on_adapter_added", path)
 
-        adapter = Bluez.Adapter(path)
+        adapter = bluez.Adapter(path)
         wait_for_adapter(adapter, on_activate)
 
     def on_adapter_removed(self, _manager, path):
