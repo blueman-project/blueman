@@ -116,7 +116,7 @@ class SendTo:
         d = DeviceSelectorDialog(discover=False, adapter_name=adapter_name)
         resp = d.run()
         if resp == Gtk.ResponseType.ACCEPT:
-            sel = d.GetSelection()
+            sel = d.get_selection()
             if sel:
                 self.device = sel[1]
                 self.adapter_path = sel[0]

@@ -28,7 +28,7 @@ class DiscvManager(AppletPlugin):
 
     def on_load(self, applet):
         self.item = create_menuitem(_("_Make Discoverable"), "edit-find")
-        applet.Plugins.Menu.Register(self, self.item, 20, False)
+        applet.Plugins.Menu.register(self, self.item, 20, False)
 
         self.Applet = applet
         self.adapter = None
@@ -40,7 +40,7 @@ class DiscvManager(AppletPlugin):
         self.timeout = None
 
     def on_unload(self):
-        self.Applet.Plugins.Menu.Unregister(self)
+        self.Applet.Plugins.Menu.unregister(self)
         del self.item
 
         if self.timeout:

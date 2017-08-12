@@ -42,7 +42,7 @@ class AppIndicator(AppletPlugin):
 
     def on_unload(self):
         del self.indicator
-        self.Applet.Plugins.StatusIcon.QueryVisibility()
+        self.Applet.Plugins.StatusIcon.query_visibility()
         self.Applet.Plugins.StatusIcon.disconnect(self.s)
 
     def update_icon(self):

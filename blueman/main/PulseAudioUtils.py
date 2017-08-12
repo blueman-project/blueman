@@ -357,7 +357,7 @@ class PulseAudioUtils(GObject.GObject):
 
         if self.prev_state == PA_CONTEXT_READY and state == PA_CONTEXT_FAILED:
             logging.info("Pulseaudio probably crashed, restarting in 5s")
-            GLib.timeout_add(5000, self.Connect)
+            GLib.timeout_add(5000, self.connect_rfcomm)
 
         self.prev_state = state
 
@@ -413,7 +413,7 @@ class PulseAudioUtils(GObject.GObject):
             logging.error(func.__name__)
         pa_operation_unref(op)
 
-    def ListSources(self, callback):
+    def list_sources(self, callback):
         self.check_connected()
 
         data = {}
@@ -438,7 +438,7 @@ class PulseAudioUtils(GObject.GObject):
         self.__init_list_callback(pa_context_get_source_info_list,
                                   pa_source_info_cb_t, handler)
 
-    def ListSinks(self, callback, card_id=None):
+    def list_sinks(self, callback, card_id=None):
         self.check_connected()
 
         data = {}
@@ -467,7 +467,7 @@ class PulseAudioUtils(GObject.GObject):
             self.__init_list_callback(pa_context_get_sink_info_list,
                                       pa_sink_info_cb_t, handler)
 
-    def ListSinkInputs(self, callback):
+    def list_sink_inputs(self, callback):
         self.check_connected()
 
         data = {}
@@ -490,14 +490,14 @@ class PulseAudioUtils(GObject.GObject):
         self.__init_list_callback(pa_context_get_sink_input_info_list,
                                   pa_sink_input_info_cb_t, handler)
 
-    def MoveSinkInput(self, input_id, sink_id, callback):
+    def move_sink_input(self, input_id, sink_id, callback):
         self.check_connected()
 
         self.simple_callback(callback,
                              pa_context_move_sink_input_by_index,
                              int(input_id), int(sink_id))
 
-    def SetDefaultSink(self, name, callback):
+    def set_default_sink(self, name, callback):
         self.check_connected()
 
         self.simple_callback(callback, pa_context_set_default_sink, name)
@@ -528,7 +528,7 @@ class PulseAudioUtils(GObject.GObject):
 
         return stuff
 
-    def ListCards(self, callback):
+    def list_cards(self, callback):
         self.check_connected()
 
         data = {}
@@ -545,7 +545,7 @@ class PulseAudioUtils(GObject.GObject):
         self.__init_list_callback(pa_context_get_card_info_list,
                                   pa_card_info_cb_t, handler)
 
-    def GetCard(self, card, callback):
+    def get_card(self, card, callback):
         self.check_connected()
 
         def handler(entry_info, end):
@@ -562,7 +562,7 @@ class PulseAudioUtils(GObject.GObject):
         self.__init_list_callback(fn,
                                   pa_card_info_cb_t, handler, card)
 
-    def SetCardProfile(self, card, profile, callback):
+    def set_card_profile(self, card, profile, callback):
         profile = profile.encode("UTF-8")
         if type(card) is str:
             card = card.encode("UTF-8")
@@ -573,7 +573,7 @@ class PulseAudioUtils(GObject.GObject):
         self.simple_callback(callback, fn, card, profile)
 
     # #### Module API ####
-    def ListModules(self, callback):
+    def list_module(self, callback):
 
         self.check_connected()
         data = {}
@@ -594,12 +594,12 @@ class PulseAudioUtils(GObject.GObject):
         self.__init_list_callback(pa_context_get_module_info_list,
                                   pa_module_info_cb_t, handler)
 
-    def UnloadModule(self, index, callback):
+    def unload_module(self, index, callback):
         self.check_connected()
 
         self.simple_callback(callback, pa_context_unload_module, index)
 
-    def LoadModule(self, name, args, callback):
+    def load_module(self, name, args, callback):
         self.check_connected()
 
         def handler(res):
@@ -612,7 +612,7 @@ class PulseAudioUtils(GObject.GObject):
 
     #####################
 
-    def GetVersion(self):
+    def get_version(self):
         v = pa_get_library_version().decode("UTF-8")
         try:
             a = v.split("-")[0].split(".")
@@ -653,9 +653,9 @@ class PulseAudioUtils(GObject.GObject):
 
         self.prev_state = 0
 
-        self.Connect()
+        self.connect_pulseaudio()
 
-    def Connect(self):
+    def connect_pulseaudio(self):
         if not self.connected:
             if self.pa_context:
                 pa_context_unref(self.pa_context)

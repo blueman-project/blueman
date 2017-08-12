@@ -18,7 +18,7 @@ class DeviceSelectorWidget(Gtk.Box):
 
         self.List = DeviceSelectorList(adapter_name)
         if self.List.Adapter is not None:
-            self.List.DisplayKnownDevices()
+            self.List.display_known_devices()
             self.List.Adapter.start_discovery()
 
         sw = Gtk.ScrolledWindow(hscrollbar_policy=Gtk.PolicyType.NEVER,
@@ -85,7 +85,7 @@ class DeviceSelectorWidget(Gtk.Box):
                 if self.List.Adapter.get_object_path() != adapter_path:
                     # Stop discovering on previous adapter
                     self.List.Adapter.stop_discovery()
-                    self.List.SetAdapter(os.path.basename(adapter_path))
+                    self.List.set_adapter(os.path.basename(adapter_path))
                     # Start discovery on selected adapter
                     self.List.Adapter.start_discovery()
 
@@ -95,7 +95,7 @@ class DeviceSelectorWidget(Gtk.Box):
             self.update_adapters_list()
         else:
             if self.List.Adapter:
-                self.List.DisplayKnownDevices()
+                self.List.display_known_devices()
 
     def update_adapters_list(self):
 

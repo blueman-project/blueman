@@ -53,8 +53,8 @@ class RecentConns(AppletPlugin):
         self.Item = create_menuitem(_("Recent _Connections") + "...",
                                     "document-open-recent")
 
-        self.Applet.Plugins.Menu.Register(self, self.Item, 52)
-        self.Applet.Plugins.Menu.Register(self, Gtk.SeparatorMenuItem(), 53)
+        self.Applet.Plugins.Menu.register(self, self.Item, 52)
+        self.Applet.Plugins.Menu.register(self, Gtk.SeparatorMenuItem(), 53)
 
         self.menu = Gtk.Menu()
         self.Item.set_submenu(self.menu)
@@ -95,7 +95,7 @@ class RecentConns(AppletPlugin):
 
     def on_unload(self):
         self.menu.destroy()
-        self.Applet.Plugins.Menu.Unregister(self.menu)
+        self.Applet.Plugins.Menu.unregister(self.menu)
 
         self.items = []
         self.menu.destroy()

@@ -18,46 +18,46 @@ class StandardItems(AppletPlugin):
     def on_load(self, applet):
         self.Applet = applet
 
-        applet.Plugins.Menu.Register(self, Gtk.SeparatorMenuItem(), 21)
+        applet.Plugins.Menu.register(self, Gtk.SeparatorMenuItem(), 21)
 
         self.new_dev = create_menuitem(_("_Set Up New Device") + "...", "document-new")
         self.new_dev.connect("activate", self.on_setup_new)
 
-        self.Applet.Plugins.Menu.Register(self, self.new_dev, 30)
+        self.Applet.Plugins.Menu.register(self, self.new_dev, 30)
 
-        self.Applet.Plugins.Menu.Register(self, Gtk.SeparatorMenuItem(), 31)
+        self.Applet.Plugins.Menu.register(self, Gtk.SeparatorMenuItem(), 31)
 
         self.send = create_menuitem(_("Send _Files to Device") + "...", "blueman-send-file")
         self.send.connect("activate", self.on_send)
 
-        self.Applet.Plugins.Menu.Register(self, self.send, 40)
+        self.Applet.Plugins.Menu.register(self, self.send, 40)
 
-        self.Applet.Plugins.Menu.Register(self, Gtk.SeparatorMenuItem(), 51)
+        self.Applet.Plugins.Menu.register(self, Gtk.SeparatorMenuItem(), 51)
 
         self.devices = create_menuitem(_("_Devices") + "...", "blueman")
         self.devices.connect("activate", self.on_devices)
 
-        self.Applet.Plugins.Menu.Register(self, self.devices, 60)
+        self.Applet.Plugins.Menu.register(self, self.devices, 60)
 
         self.adapters = create_menuitem(_("Adap_ters") + "...", "blueman-device")
         self.adapters.connect("activate", self.on_adapters)
 
-        self.Applet.Plugins.Menu.Register(self, self.adapters, 70)
+        self.Applet.Plugins.Menu.register(self, self.adapters, 70)
 
         self.services = create_menuitem(_("_Local Services") + "...", "preferences-desktop")
         self.services.connect("activate", self.on_local_services)
 
-        self.Applet.Plugins.Menu.Register(self, self.services, 80)
+        self.Applet.Plugins.Menu.register(self, self.services, 80)
 
-        self.Applet.Plugins.Menu.Register(self, Gtk.SeparatorMenuItem(), 81)
+        self.Applet.Plugins.Menu.register(self, Gtk.SeparatorMenuItem(), 81)
 
         about = create_menuitem("_Help", 'help-about')
-        self.Applet.Plugins.Menu.Register(self, about, 90)
+        self.Applet.Plugins.Menu.register(self, about, 90)
 
         self.plugins = create_menuitem(_("_Plugins"), "blueman-plugin")
         self.plugins.connect("activate", self.on_plugins)
 
-        self.Applet.Plugins.Menu.Register(self, self.plugins, 85)
+        self.Applet.Plugins.Menu.register(self, self.plugins, 85)
 
         about.connect("activate", self.on_about)
 

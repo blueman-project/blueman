@@ -24,7 +24,7 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
 
         self.set_title('blueman')
 
-        self.SetTextLine(0, _("Bluetooth Enabled"))
+        self.set_text_line(0, _("Bluetooth Enabled"))
 
         AppletPlugin.add_method(self.on_query_status_icon_visibility)
         AppletPlugin.add_method(self.on_status_icon_query_icon)
@@ -40,18 +40,18 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
         return (area.x, area.y, area.width, area.height)
 
     def on_icon_theme_changed(self, icon_theme):
-        self.IconShouldChange()
+        self.icon_should_change()
 
     def on_power_state_changed(self, manager, state):
         if state:
-            self.SetTextLine(0, _("Bluetooth Enabled"))
-            self.QueryVisibility(delay_hiding=True)
+            self.set_text_line(0, _("Bluetooth Enabled"))
+            self.query_visibility(delay_hiding=True)
         else:
-            self.SetTextLine(0, _("Bluetooth Disabled"))
-            self.QueryVisibility()
+            self.set_text_line(0, _("Bluetooth Disabled"))
+            self.query_visibility()
 
-    def QueryVisibility(self, delay_hiding=False):
-        rets = self.Applet.Plugins.Run("on_query_status_icon_visibility")
+    def query_visibility(self, delay_hiding=False):
+        rets = self.Applet.Plugins.run("on_query_status_icon_visibility")
         if StatusIcon.FORCE_HIDE not in rets:
             if StatusIcon.FORCE_SHOW in rets:
                 self.set_visible(True)
@@ -73,12 +73,12 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
     def on_visibility_timeout(self):
         GLib.source_remove(self.visibility_timeout)
         self.visibility_timeout = None
-        self.QueryVisibility()
+        self.query_visibility()
 
     def set_visible(self, visible):
         self.props.visible = visible
 
-    def SetTextLine(self, lineid, text):
+    def set_text_line(self, lineid, text):
         if text:
             self.lines[lineid] = text
         else:
@@ -95,17 +95,17 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
 
         self.props.tooltip_markup = s[:-1]
 
-    def IconShouldChange(self):
+    def icon_should_change(self):
         self.on_status_icon_resized()
 
     def on_adapter_added(self, path):
-        self.QueryVisibility()
+        self.query_visibility()
 
     def on_adapter_removed(self, path):
-        self.QueryVisibility()
+        self.query_visibility()
 
     def on_manager_state_changed(self, state):
-        self.QueryVisibility()
+        self.query_visibility()
 
     def on_status_icon_resized(self):
         self.icon = "blueman-tray"
@@ -119,9 +119,9 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
                         self.icon = i
                         raise StopException
 
-        self.Applet.Plugins.RunEx("on_status_icon_query_icon", callback)
+        self.Applet.Plugins.run_ex("on_status_icon_query_icon", callback)
         self.props.icon_name = self.icon
-        self.QueryVisibility()
+        self.query_visibility()
 
         return True
 

@@ -119,7 +119,7 @@ class PPPConnection(GObject.GObject):
         self.send_command(command)
         self.wait_for_reply(self.__cmd_response_cb, terminators, i)
 
-    def Connect(self):
+    def connect_rfcomm(self):
 
         self.file = open_rfcomm(self.port, os.O_RDWR)
 

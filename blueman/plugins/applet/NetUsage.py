@@ -63,7 +63,7 @@ class MonitorBase(GObject.GObject):
         if not self.device["Address"] in self.general_config["netusage-dev-list"]:
             self.general_config["netusage-dev-list"] += [self.device["Address"]]
 
-    def Disconnect(self):
+    def disconnect_monitor(self):
         self.emit("disconnected")
 
 
@@ -85,7 +85,7 @@ class NMMonitor(MonitorBase):
         if key == "Connected" and not value:
             self.__bus.remove_signal_receiver(self.on_ppp_stats, "PppStats",
                                               "org.freedesktop.NetworkManager.Device.Serial", path=self.__nm_dev_path)
-            self.Disconnect()
+            self.disconnect_monitor()
 
 
 class Monitor(MonitorBase):
@@ -112,7 +112,7 @@ class Monitor(MonitorBase):
             self.ppp_port = None
             self.interface = None
             self.config = None
-            self.Disconnect()
+            self.disconnect_monitor()
             return False
 
         self.update_stats(tx, rx)
@@ -340,7 +340,7 @@ class NetUsage(AppletPlugin, GObject.GObject):
         item = create_menuitem(_("Network _Usage"), "network-wireless")
         item.props.tooltip_text = _("Shows network traffic usage")
         item.connect("activate", self.activate_ui)
-        self.Applet.Plugins.Menu.Register(self, item, 84, True)
+        self.Applet.Plugins.Menu.register(self, item, 84, True)
 
         self.bus.add_signal_receiver(self.on_nm_ppp_stats, "PppStats", "org.freedesktop.NetworkManager.Device.Serial",
                                      path_keyword="path")
@@ -384,7 +384,7 @@ class NetUsage(AppletPlugin, GObject.GObject):
         self.bus.remove_signal_receiver(self.on_nm_ppp_stats, "PppStats",
                                         "org.freedesktop.NetworkManager.Device.Serial", path_keyword="path")
         del self._any_network
-        self.Applet.Plugins.Menu.Unregister(self)
+        self.Applet.Plugins.Menu.unregister(self)
 
     def monitor_interface(self, montype, *args):
         m = montype(*args)
