@@ -24,4 +24,4 @@ class Ppp(MechanismPlugin):
         ppp.connect("error-occurred", self.ppp_error, ok, err)
         ppp.connect("connected", self.ppp_connected, ok, err)
 
-        ppp.Connect()
+        ppp.connect_rfcomm()

@@ -29,7 +29,7 @@ class DeviceSelectorDialog(Gtk.Dialog):
         self.selector.List.connect("device-selected", self.on_device_selected)
         self.selector.List.connect("adapter-changed", self.on_adapter_changed)
         if discover:
-            self.selector.List.DiscoverDevices()
+            self.selector.List.discover_devices()
 
         self.selector.List.connect("row-activated", self.on_row_activated)
 
@@ -42,7 +42,7 @@ class DeviceSelectorDialog(Gtk.Dialog):
     def on_device_selected(self, devlist, device, tree_iter):
         self.selection = (devlist.Adapter.get_object_path(), device)
 
-    def GetSelection(self):
+    def get_selection(self):
         if self.selection:
             return (self.selection[0], self.selection[1])
         else:

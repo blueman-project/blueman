@@ -63,7 +63,7 @@ class MonitorBase(GObject.GObject):
         if not self.device["Address"] in self.general_config["netusage-dev-list"]:
             self.general_config["netusage-dev-list"] += [self.device["Address"]]
 
-    def Disconnect(self):
+    def disconnect_monitor(self):
         self.emit("disconnected")
 
 
@@ -85,7 +85,7 @@ class NMMonitor(MonitorBase):
         if key == "Connected" and not value:
             self.__bus.remove_signal_receiver(self.on_ppp_stats, "PppStats",
                                               "org.freedesktop.NetworkManager.Device.Serial", path=self.__nm_dev_path)
-            self.Disconnect()
+            self.disconnect_monitor()
 
 
 class Monitor(MonitorBase):
@@ -113,7 +113,7 @@ class Monitor(MonitorBase):
             self.ppp_port = None
             self.interface = None
             self.config = None
-            self.Disconnect()
+            self.disconnect_monitor()
             return False
 
         self.update_stats(tx, rx)

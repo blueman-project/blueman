@@ -42,7 +42,7 @@ class Blueman(Gtk.Window):
         self.set_name("BluemanManager")
 
         self.Plugins = PluginManager(ManagerPlugin, blueman.plugins.manager, self)
-        self.Plugins.Load()
+        self.Plugins.load_plugin()
 
         area = MessageArea()
         grid.attach(area, 0, 3, 1, 1)
@@ -109,7 +109,7 @@ class Blueman(Gtk.Window):
                 print("Blueman applet needs to be running")
                 exit()
             try:
-                if not self.Applet.GetBluetoothStatus():
+                if not self.Applet.get_bluetooth_status():
                     bt_status_changed(False)
             except:
                 pass
@@ -139,8 +139,8 @@ class Blueman(Gtk.Window):
             self.Menu = ManagerMenu(self)
             self.Stats = ManagerStats(self)
 
-            if self.List.IsValidAdapter():
-                self.List.DisplayKnownDevices(autoselect=True)
+            if self.List.is_valid_adapter():
+                self.List.display_known_devices(autoselect=True)
 
             self.List.connect("adapter-changed", self.on_adapter_changed)
 
@@ -156,7 +156,7 @@ class Blueman(Gtk.Window):
 
     def on_adapter_changed(self, lst, adapter):
         if adapter is not None:
-            self.List.DisplayKnownDevices(autoselect=True)
+            self.List.display_known_devices(autoselect=True)
 
     def inquiry(self):
         def prop_changed(List, adapter, key_value):
@@ -174,9 +174,9 @@ class Blueman(Gtk.Window):
                 prog.fraction(frac)
 
         prog = ManagerProgressbar(self, text=_("Searching"))
-        prog.connect("cancelled", lambda x: self.List.StopDiscovery())
+        prog.connect("cancelled", lambda x: self.List.stop_discovery())
         try:
-            self.List.DiscoverDevices()
+            self.List.discover_devices()
         except Exception as e:
             prog.finalize()
             MessageArea.show_message(*e_(e))

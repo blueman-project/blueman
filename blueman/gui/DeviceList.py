@@ -52,14 +52,14 @@ class DeviceList(GenericList):
             if path == self.__adapter_path:
                 self.clear()
                 self.Adapter = None
-                self.SetAdapter()
+                self.set_adapter()
 
         def on_adapter_added(_manager, path):
             def on_activate():
                 logging.info("adapter powered %s" % path)
 
                 if self.Adapter is None:
-                    self.SetAdapter(path)
+                    self.set_adapter(path)
 
                 self.emit("adapter-added", path)
 
@@ -92,7 +92,7 @@ class DeviceList(GenericList):
         super(DeviceList, self).__init__(data, **kwargs)
         self.set_name("DeviceList")
 
-        self.SetAdapter(adapter_name)
+        self.set_adapter(adapter_name)
         self._any_adapter = Bluez.AnyAdapter()
         self._any_adapter.connect_signal("property-changed", self._on_property_changed)
 
@@ -116,7 +116,7 @@ class DeviceList(GenericList):
 
         if key == "Discovering":
             if not value and self.discovering:
-                self.StopDiscovery()
+                self.stop_discovery()
 
         self.emit("adapter-property-changed", self.Adapter, (key, value))
 
@@ -223,11 +223,11 @@ class DeviceList(GenericList):
 
             self.device_remove_event(dev, tree_iter)
 
-    def SetAdapter(self, adapter=None):
+    def set_adapter(self, adapter=None):
         self.clear()
         if self.discovering:
             self.emit("adapter-property-changed", self.Adapter, ("Discovering", False))
-            self.StopDiscovery()
+            self.stop_discovery()
 
         if adapter is not None and adapter != "" and not re.match("hci[0-9]*", adapter):
             adapter = adapter_path_to_name(adapter)
@@ -248,7 +248,7 @@ class DeviceList(GenericList):
             logging.exception(e)
             # try loading default adapter
             if len(self.manager.get_adapters()) > 0 and adapter is not None:
-                self.SetAdapter()
+                self.set_adapter()
             else:
                 self.Adapter = None
                 self.emit("adapter-changed", None)
@@ -263,7 +263,7 @@ class DeviceList(GenericList):
         if progress >= 1.0:
             progress = 1.0
         if self.__discovery_time >= totaltime:
-            self.StopDiscovery()
+            self.stop_discovery()
             return False
 
         self.emit("discovery-progress", progress)
@@ -287,7 +287,7 @@ class DeviceList(GenericList):
         if device["Connected"]:
             self.monitor_power_levels(device)
 
-    def DisplayKnownDevices(self, autoselect=False):
+    def display_known_devices(self, autoselect=False):
         self.clear()
         devices = self.manager.get_devices(self.Adapter.get_object_path())
         for device in devices:
@@ -296,7 +296,7 @@ class DeviceList(GenericList):
         if autoselect:
             self.selection.select_path(0)
 
-    def DiscoverDevices(self, time=10.24):
+    def discover_devices(self, time=10.24):
         if not self.discovering:
             self.__discovery_time = 0
             if self.Adapter is not None:
@@ -305,22 +305,22 @@ class DeviceList(GenericList):
                 T = 1.0 / 15 * 1000
                 GLib.timeout_add(int(T), self.update_progress, T / 1000, time)
 
-    def IsValidAdapter(self):
+    def is_valid_adapter(self):
         if self.Adapter is None:
             return False
         else:
             return True
 
-    def GetAdapterPath(self):
-        if self.IsValidAdapter():
+    def get_adapter_path(self):
+        if self.is_valid_adapter():
             return self.__adapter_path
 
-    def StopDiscovery(self):
+    def stop_discovery(self):
         self.discovering = False
         if self.Adapter is not None:
             self.Adapter.stop_discovery()
 
-    def GetSelectedDevice(self):
+    def get_selected_device(self):
         selected = self.selected()
         if selected is not None:
             row = self.get(selected, "device")
