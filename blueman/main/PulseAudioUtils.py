@@ -345,11 +345,11 @@ class PulseAudioUtils(GObject.GObject):
         if state == PA_CONTEXT_READY:
             self.connected = True
             self.emit("connected")
-            MASK = 0x0200 | 0x0010  # from enum pa_subscription_mask
+            mask = 0x0200 | 0x0010  # from enum pa_subscription_mask
 
             self.simple_callback(lambda x: logging.info(x),
                                  pa_context_subscribe,
-                                 MASK)
+                                 mask)
         else:
             if self.connected:
                 self.emit("disconnected")

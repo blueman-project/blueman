@@ -202,7 +202,7 @@ class ManagerMenu:
                 if not self._sort_type_item.props.active:
                     self._sort_type_item.props.active = False
 
-    def on_device_selected(self, List, device, tree_iter):
+    def on_device_selected(self, lst, device, tree_iter):
         if tree_iter and device:
             self.item_device.props.sensitive = True
 
