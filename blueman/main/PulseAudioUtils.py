@@ -674,6 +674,7 @@ class PulseAudioUtils(GObject.GObject):
                                               None)
 
     def __del__(self):
+        # FIXME __del__ is not guaranteed to be called by cpython
         logging.info("Destroying PulseAudioUtils instance")
 
         pa_context_disconnect(self.pa_context)
