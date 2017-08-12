@@ -442,33 +442,27 @@ class ManagerDeviceList(DeviceList):
                     lq = self.get(tree_iter, "lq")["lq"]
                     tpl = self.get(tree_iter, "tpl")["tpl"]
 
+                    rssi_state = _("Unknown")
                     if rssi < 30:
                         rssi_state = _("Poor")
-
-                    if 40 > rssi > 30:
+                    elif 40 > rssi >= 30:
                         rssi_state = _("Sub-optimal")
-
-                    elif 40 < rssi < 60:
+                    elif 60 > rssi >= 40:
                         rssi_state = _("Optimal")
-
-                    elif rssi > 60:
+                    elif rssi >= 60:
                         rssi_state = _("Much")
-
                     elif rssi > 70:
                         rssi_state = _("Too much")
 
+                    tpl_state = _("Unknown")
                     if tpl < 30:
                         tpl_state = _("Low")
-
-                    if 40 > tpl > 30:
+                    elif 40 > tpl >= 30:
                         tpl_state = _("Sub-optimal")
-
-                    elif tpl > 40 and rssi < 60:
+                    elif 60 > tpl >= 40:
                         tpl_state = _("Optimal")
-
-                    elif tpl > 60:
+                    elif tpl >= 60:
                         tpl_state = _("High")
-
                     elif tpl > 70:
                         tpl_state = _("Very High")
 
