@@ -81,8 +81,9 @@ class Blueman(Gtk.Window):
 
         def on_dbus_name_vanished(_connection, name):
             logging.info(name)
-            self.Applet.disconnect(self._applet_sig)
-            self._applet_sig = None
+            if self._applet_sig is not None:
+                self.Applet.disconnect(self._applet_sig)
+                self._applet_sig = None
 
             self.hide()
             d = Gtk.MessageDialog(self, type=Gtk.MessageType.ERROR, buttons=Gtk.ButtonsType.CLOSE)
