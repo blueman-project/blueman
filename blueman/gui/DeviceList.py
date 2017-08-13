@@ -2,8 +2,7 @@
 from blueman.Functions import wait_for_adapter, adapter_path_to_name
 from blueman.gui.GenericList import GenericList
 from blueman.Constants import ICON_PATH
-
-from _blueman import conn_info
+from _blueman import conn_info, ConnInfoReadError
 import blueman.bluez as Bluez
 
 import gi
@@ -169,7 +168,7 @@ class DeviceList(GenericList):
             hci = os.path.basename(self.Adapter.get_object_path())
             try:
                 cinfo = conn_info(bt_address, hci)
-            except Exception:
+            except ConnInfoReadError:
                 logging.warning("Failed to get power levels", exc_info=True)
             else:
                 r = Gtk.TreeRowReference.new(self.get_model(), self.get_model().get_path(tree_iter))
