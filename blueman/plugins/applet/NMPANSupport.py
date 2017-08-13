@@ -206,11 +206,11 @@ class NMPANSupport(AppletPlugin):
         for conn in conns:
             c = self._bus.call_sync(self.nm_manager_name, conn, self.connection_settings_interface, "GetSettings",
                                     None, None, Gio.DBusCallFlags.NONE, GLib.MAXINT, None).unpack()[0]
-            try:
-                if (self.format_bdaddr(c["bluetooth"]["bdaddr"]) == address) and c["bluetooth"]["type"] == t:
-                    return conn
-            except:
-                pass
+            if "bluetooth" not in c:
+                continue
+
+            if (self.format_bdaddr(c["bluetooth"]["bdaddr"]) == address) and c["bluetooth"]["type"] == t:
+                return conn
 
     def find_active_connection(self, address, conntype):
         props = self._bus.call_sync(self.nm_manager_name, self.nm_manager_path,
