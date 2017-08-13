@@ -7,6 +7,8 @@ import builtins
 import logging
 import traceback
 
+from blueman.main.Config import Config
+
 
 class StopException(Exception):
     pass
@@ -225,12 +227,6 @@ class PluginManager(GObject.GObject):
 
             if ret is not None:
                 args = ret
-
-
-try:
-    from blueman.main.Config import Config
-except:
-    pass
 
 
 class PersistentPluginManager(PluginManager):
