@@ -276,7 +276,7 @@ class Notification(object):
             caps = bus.call_sync('org.freedesktop.Notifications', '/org/freedesktop/Notifications',
                                  'org.freedesktop.Notifications', 'GetCapabilities', None, None,
                                  Gio.DBusCallFlags.NONE, -1, None).unpack()[0]
-        except:
+        except GLib.Error:
             caps = []
 
         if forced_fallback or 'body' not in caps or (actions and 'actions' not in caps):
