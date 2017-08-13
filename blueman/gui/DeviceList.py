@@ -281,10 +281,7 @@ class DeviceList(GenericList):
 
         object_path = device.get_object_path()
         timestamp = datetime.strftime(datetime.now(), '%Y%m%d%H%M%S%f')
-        try:
-            self.set(tree_iter, dbus_path=object_path, timestamp=float(timestamp))
-        except:
-            pass
+        self.set(tree_iter, dbus_path=object_path, timestamp=float(timestamp))
 
         if device["Connected"]:
             self.monitor_power_levels(device)
