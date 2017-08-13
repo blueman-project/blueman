@@ -188,12 +188,11 @@ class Dialog:
             if not added:
                 name = d
                 if self.parent.Applet.Manager:
-                    for a in self.parent.Applet.Manager.get_adapters():
-                        try:
-                            device = self.parent.Applet.Manager.find_device(d, a.get_object_path())
-                            name = self.get_caption(device["Alias"], device["Address"])
-                        except:
-                            pass
+                    device = self.parent.Applet.Manager.find_device(d)
+                    if device is None:
+                        pass
+                    else:
+                        name = self.get_caption(device["Alias"], device["Address"])
 
                 self.liststore.append([d, name, _("Not Connected"), None])
             added = False
