@@ -173,7 +173,7 @@ class PluginManager(GObject.GObject):
     def __getattr__(self, key):
         try:
             return self.__plugins[key]
-        except:
+        except KeyError:
             return self.__dict__[key]
 
     def Unload(self, name):
