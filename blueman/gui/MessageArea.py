@@ -8,6 +8,22 @@ from gi.repository import Pango
 from blueman.gui.GtkAnimation import WidgetFade
 
 
+CSS = b'''
+#MessageArea.error {
+  background: #BF2121;
+  color: #D6D6D6;
+  border-color: #BF2121;
+}
+
+#MessageArea button {
+  background-image: none;
+  background: none;
+  background-color: #BF2121;
+  color: #BF2121;
+}
+'''
+
+
 class MessageArea(Gtk.InfoBar):
     _inst_ = None
 
@@ -22,9 +38,14 @@ class MessageArea(Gtk.InfoBar):
 
         self.set_name("MessageArea")
 
+        self.style_context = self.get_style_context()
+        cssprovider = Gtk.CssProvider()
+        cssprovider.load_from_data(CSS)
+        self.style_context.add_provider(cssprovider, Gtk.STYLE_PROVIDER_PRIORITY_USER)
+
         self.text = ""
 
-        self.anim = WidgetFade(self, self.get_style_context().get_background_color(Gtk.StateFlags.NORMAL))
+        self.anim = WidgetFade(self, self.style_context.get_background_color(Gtk.StateFlags.NORMAL))
         self.hl_anim = WidgetFade(self, Gdk.RGBA(1, 0, 0, 1))
 
         self.bt = None
