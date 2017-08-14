@@ -16,7 +16,7 @@
 * [pulseaudio](http://www.freedesktop.org/wiki/Software/PulseAudio/) (optional; its bluetooth module is required to actually use audio devices)
 * [pycairo](http://cairographics.org/pycairo/)
 * [PyGObject 3](https://wiki.gnome.org/PyGObject)
-* [Python](http://www.python.org/) (2.7 or >= 3.2)
+* [Python](http://www.python.org/) (>= 3.2)
 
 ## Build dependencies
 
@@ -27,7 +27,7 @@
 * [intltool](http://freedesktop.org/wiki/Software/intltool/)
 * [libtool](http://www.gnu.org/software/libtool/)
 * [PyGObject 3](https://wiki.gnome.org/PyGObject)
-* [Python](http://www.python.org/) (2.7 or >= 3.2)
+* [Python](http://www.python.org/) (>= 3.2)
 
 ## Additional dependencies for VCS version
 
