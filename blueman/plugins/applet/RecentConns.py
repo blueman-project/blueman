@@ -248,8 +248,7 @@ class RecentConns(AppletPlugin):
             mitem.props.tooltip_text = None
 
         item_label_markup = _("%(service)s on %(device)s") % {"service": item["name"], "device": item["alias"]}
-        item_label = item["mitem"].get_child().get_children()[1]
-        item_label.set_markup_with_mnemonic(item_label_markup)
+        item["mitem"].set_label(item_label_markup)
 
         if item["adapter"] not in self.Adapters.values():
             item["device"] = None

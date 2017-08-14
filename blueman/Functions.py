@@ -227,25 +227,15 @@ def format_bytes(size):
     return (ret, suffix)
 
 
-def create_menuitem_box(text, icon_name, pixbuf, orientation=Gtk.Orientation.HORIZONTAL, pixel_size=16, size=6):
-    """Create a box with icon and label, optionally set size and orientation"""
-    item_box = Gtk.Box.new(orientation, size)
-    if icon_name:
-        icon = Gtk.Image(icon_name=icon_name, pixel_size=pixel_size)
-    else:
-        icon = Gtk.Image(pixbuf=pixbuf)
-    label = Gtk.Label.new_with_mnemonic(text)
-
-    item_box.add(icon)
-    item_box.add(label)
-
-    return item_box
-
-
 def create_menuitem(text, icon_name=None, pixbuf=None):
-    box = create_menuitem_box(text, icon_name, pixbuf)
-    item = Gtk.MenuItem()
-    item.add(box)
+    image = Gtk.Image(pixel_size=16)
+    if icon_name:
+        image.set_from_icon_name(icon_name, Gtk.IconSize.MENU)
+    elif pixbuf:
+        image.set_from_pixbuf(pixbuf)
+    item = Gtk.ImageMenuItem(label=text, image=image, use_underline=True)
+    child = item.get_child()
+    child.set_use_markup(True)
     item.show_all()
 
     return item

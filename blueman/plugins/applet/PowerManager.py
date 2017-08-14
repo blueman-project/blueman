@@ -36,8 +36,7 @@ class PowerManager(AppletPlugin):
 
         self.Applet = applet
 
-        self.item = create_menuitem("Should be overwritten", "blueman-disabled")
-        self.item.get_child().get_children()[1].set_markup_with_mnemonic(_("<b>Turn Bluetooth _Off</b>"))
+        self.item = create_menuitem("<b>Turn Bluetooth _Off</b>", "blueman-disabled")
 
         self.item.props.tooltip_text = _("Turn off all adapters")
 
@@ -153,13 +152,11 @@ class PowerManager(AppletPlugin):
         foff = self.STATE_OFF_FORCED in rets
         on = self.STATE_ON in rets
 
-        icon, label = self.item.get_child().get_children()
-
         new_state = True
         if foff or off:
 
-            label.set_markup_with_mnemonic(_("<b>Turn Bluetooth _On</b>"))
-            icon.props.icon_name = "blueman"
+            self.item.set_label(_("<b>Turn Bluetooth _On</b>"))
+            self.item.get_image().props.icon_name = "blueman"
             self.item.props.tooltip_text = _("Turn on all adapters")
 
             if foff:
@@ -171,8 +168,8 @@ class PowerManager(AppletPlugin):
 
         elif on and not self.current_state:
 
-            label.set_markup_with_mnemonic(_("<b>Turn Bluetooth _Off</b>"))
-            icon.props.icon_name = "blueman-disabled"
+            self.item.set_label(_("<b>Turn Bluetooth _Off</b>"))
+            self.item.get_image().props.icon_name = "blueman-disabled"
             self.item.props.tooltip_text = _("Turn off all adapters")
             self.item.props.sensitive = True
 
