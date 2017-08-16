@@ -205,7 +205,6 @@ class ManagerDeviceList(DeviceList):
         if is_trusted:
             icon_info = self.get_icon_info(["blueman-trust"], 16, False)
             trusted_surface = icon_info.load_surface(window)
-            trusted_surface.set_device_scale(scale, scale)
             height = target.get_height()
             mini_height = trusted_surface.get_height()
             y = height / scale - mini_height / scale - 1 / scale
