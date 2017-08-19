@@ -326,9 +326,9 @@ pa_context_errno.argtypes = [c_void_p]
 
 class PulseAudioUtils(GObject.GObject):
     __gsignals__ = {
-    str('connected'): (GObject.SignalFlags.NO_HOOKS, None, ()),
-    str('disconnected'): (GObject.SignalFlags.NO_HOOKS, None, ()),
-    str('event'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT)),
+        'connected': (GObject.SignalFlags.NO_HOOKS, None, ()),
+        'disconnected': (GObject.SignalFlags.NO_HOOKS, None, ()),
+        'event': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT)),
     }
 
     def check_connected(self):

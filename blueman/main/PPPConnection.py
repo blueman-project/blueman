@@ -38,8 +38,8 @@ class PPPException(Exception):
 
 class PPPConnection(GObject.GObject):
     __gsignals__ = {  # arg: interface name eg. ppp0
-        str('connected'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-        str('error-occurred'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,))
+        'connected': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+        'error-occurred': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,))
     }
 
     def __init__(self, port, number="*99#", apn="", user="", pwd=""):

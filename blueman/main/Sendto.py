@@ -26,7 +26,7 @@ from blueman.bluez import obex
 
 class Sender(Gtk.Dialog):
     __gsignals__ = {
-        str('result'): (GObject.SignalFlags.RUN_FIRST, None, (GObject.TYPE_BOOLEAN,)),
+        'result': (GObject.SignalFlags.RUN_FIRST, None, (GObject.TYPE_BOOLEAN,)),
     }
 
     def __init__(self, device, adapter_path, files):

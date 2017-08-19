@@ -4,10 +4,8 @@ from gi.repository import Gio
 
 class AnyBase(GObject.GObject):
     __gsignals__ = {
-        str('property-changed'): (GObject.SignalFlags.NO_HOOKS, None,
-                                  (GObject.TYPE_PYOBJECT,
-                                   GObject.TYPE_PYOBJECT,
-                                   GObject.TYPE_PYOBJECT))
+        'property-changed': (GObject.SignalFlags.NO_HOOKS, None,
+                             (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT))
     }
 
     connect_signal = GObject.GObject.connect

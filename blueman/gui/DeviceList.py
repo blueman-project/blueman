@@ -20,27 +20,22 @@ class DeviceList(GenericList):
     __gsignals__ = {
         #@param: device TreeIter
         #note: None None is given when there ar no more rows, or when selected device is removed
-        str('device-selected'): (
-            GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)
-        ),
+        'device-selected': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
         #@param: device, TreeIter, (key, value)
-        str('device-property-changed'): (
-            GObject.SignalFlags.RUN_LAST,
-            None,
-            (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)
-        ),
+        'device-property-changed': (GObject.SignalFlags.RUN_LAST, None,
+                                    (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
         #@param: adapter, (key, value)
-        str('adapter-property-changed'): (
-        GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
+        'adapter-property-changed': (GObject.SignalFlags.RUN_LAST, None,
+                                     (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
         #@param: progress (0 to 1)
-        str('discovery-progress'): (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_FLOAT,)),
+        'discovery-progress': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_FLOAT,)),
 
         #@param: new adapter path, None if there are no more adapters
-        str('adapter-changed'): (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
+        'adapter-changed': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
 
         #@param: adapter path
-        str('adapter-added'): (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
-        str('adapter-removed'): (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
+        'adapter-added': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
+        'adapter-removed': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
     }
 
     def __del__(self):
