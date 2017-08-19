@@ -155,7 +155,7 @@ class PowerManager(AppletPlugin):
         new_state = True
         if foff or off:
 
-            self.item.set_label(_("<b>Turn Bluetooth _On</b>"))
+            self.item.get_child().set_markup_with_mnemonic(_("<b>Turn Bluetooth _On</b>"))
             self.item.get_image().props.icon_name = "blueman"
             self.item.props.tooltip_text = _("Turn on all adapters")
 
@@ -168,7 +168,7 @@ class PowerManager(AppletPlugin):
 
         elif on and not self.current_state:
 
-            self.item.set_label(_("<b>Turn Bluetooth _Off</b>"))
+            self.item.get_child().set_markup_with_mnemonic(_("<b>Turn Bluetooth _Off</b>"))
             self.item.get_image().props.icon_name = "blueman-disabled"
             self.item.props.tooltip_text = _("Turn off all adapters")
             self.item.props.sensitive = True
