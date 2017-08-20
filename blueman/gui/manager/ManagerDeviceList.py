@@ -329,91 +329,87 @@ class ManagerDeviceList(DeviceList):
             return
 
         tree_iter = self.get_iter(row_ref.get_path())
-        if True:
-            if cinfo is not None:
-                try:
-                    rssi = float(cinfo.get_rssi())
-                except ConnInfoReadError:
-                    rssi = 0
-                try:
-                    lq = float(cinfo.get_lq())
-                except ConnInfoReadError:
-                    lq = 0
+        if cinfo is not None:
+            try:
+                rssi = float(cinfo.get_rssi())
+            except ConnInfoReadError:
+                rssi = 0
+            try:
+                lq = float(cinfo.get_lq())
+            except ConnInfoReadError:
+                lq = 0
 
-                try:
-                    tpl = float(cinfo.get_tpl())
-                except ConnInfoReadError:
-                    tpl = 0
+            try:
+                tpl = float(cinfo.get_tpl())
+            except ConnInfoReadError:
+                tpl = 0
 
-                rssi_perc = 50 + (rssi / 127 / 2 * 100)
-                tpl_perc = 50 + (tpl / 127 / 2 * 100)
-                lq_perc = lq / 255 * 100
+            rssi_perc = 50 + (rssi / 127 / 2 * 100)
+            tpl_perc = 50 + (tpl / 127 / 2 * 100)
+            lq_perc = lq / 255 * 100
 
-                if lq_perc < 10:
-                    lq_perc = 10
-                if rssi_perc < 10:
-                    rssi_perc = 10
-                if tpl_perc < 10:
-                    tpl_perc = 10
+            if lq_perc < 10:
+                lq_perc = 10
+            if rssi_perc < 10:
+                rssi_perc = 10
+            if tpl_perc < 10:
+                tpl_perc = 10
 
-                row = self.get(tree_iter, "levels_visible", "cell_fader", "rssi", "lq", "tpl")
-                if not row["levels_visible"]:
-                    logging.info("animating up")
-                    self.set(tree_iter, levels_visible=True)
-                    fader = row["cell_fader"]
-                    fader.thaw()
-                    fader.set_state(0.0)
-                    fader.animate(start=0.0, end=1.0, duration=400)
+            row = self.get(tree_iter, "levels_visible", "cell_fader", "rssi", "lq", "tpl")
+            if not row["levels_visible"]:
+                logging.info("animating up")
+                self.set(tree_iter, levels_visible=True)
+                fader = row["cell_fader"]
+                fader.thaw()
+                fader.set_state(0.0)
+                fader.animate(start=0.0, end=1.0, duration=400)
 
-                    def on_finished(fader):
-                        fader.freeze()
-                        fader.disconnect(signal)
+                def on_finished(fader):
+                    fader.freeze()
+                    fader.disconnect(signal)
 
-                    signal = fader.connect("animation-finished", on_finished)
+                signal = fader.connect("animation-finished", on_finished)
 
-                if round(row["rssi"], -1) != round(rssi_perc, -1):
-                    icon_name = "blueman-rssi-%d.png" % round(rssi_perc, -1)
-                    icon = GdkPixbuf.Pixbuf.new_from_file(os.path.join(PIXMAP_PATH, icon_name))
-                    self.set(tree_iter, rssi_pb=icon)
+            if round(row["rssi"], -1) != round(rssi_perc, -1):
+                icon_name = "blueman-rssi-%d.png" % round(rssi_perc, -1)
+                icon = GdkPixbuf.Pixbuf.new_from_file(os.path.join(PIXMAP_PATH, icon_name))
+                self.set(tree_iter, rssi_pb=icon)
 
-                if round(row["lq"], -1) != round(lq_perc, -1):
-                    icon_name = "blueman-lq-%d.png" % round(lq_perc, -1)
-                    icon = GdkPixbuf.Pixbuf.new_from_file(os.path.join(PIXMAP_PATH, icon_name))
-                    self.set(tree_iter, lq_pb=icon)
+            if round(row["lq"], -1) != round(lq_perc, -1):
+                icon_name = "blueman-lq-%d.png" % round(lq_perc, -1)
+                icon = GdkPixbuf.Pixbuf.new_from_file(os.path.join(PIXMAP_PATH, icon_name))
+                self.set(tree_iter, lq_pb=icon)
 
-                if round(row["tpl"], -1) != round(tpl_perc, -1):
-                    icon_name = "blueman-tpl-%d.png" % round(tpl_perc, -1)
-                    icon = GdkPixbuf.Pixbuf.new_from_file(os.path.join(PIXMAP_PATH, icon_name))
-                    self.set(tree_iter, tpl_pb=icon)
+            if round(row["tpl"], -1) != round(tpl_perc, -1):
+                icon_name = "blueman-tpl-%d.png" % round(tpl_perc, -1)
+                icon = GdkPixbuf.Pixbuf.new_from_file(os.path.join(PIXMAP_PATH, icon_name))
+                self.set(tree_iter, tpl_pb=icon)
 
-                self.set(tree_iter,
-                         rssi=rssi_perc,
-                         lq=lq_perc,
-                         tpl=tpl_perc)
-            else:
-
-                row = self.get(tree_iter, "levels_visible", "cell_fader")
-                if row["levels_visible"]:
-                    logging.info("animating down")
-                    self.set(tree_iter, levels_visible=False,
-                             rssi=-1,
-                             lq=-1,
-                             tpl=-1)
-                    fader = row["cell_fader"]
-                    fader.thaw()
-                    fader.set_state(1.0)
-                    fader.animate(start=fader.get_state(), end=0.0, duration=400)
-
-                    def on_finished(fader):
-                        fader.disconnect(signal)
-                        fader.freeze()
-                        if row_ref.valid():
-                            self.set(tree_iter, rssi_pb=None, lq_pb=None, tpl_pb=None)
-
-                    signal = fader.connect("animation-finished", on_finished)
-
+            self.set(tree_iter,
+                     rssi=rssi_perc,
+                     lq=lq_perc,
+                     tpl=tpl_perc)
         else:
-            logging.info("invisible")
+
+            row = self.get(tree_iter, "levels_visible", "cell_fader")
+            if row["levels_visible"]:
+                logging.info("animating down")
+                self.set(tree_iter, levels_visible=False,
+                         rssi=-1,
+                         lq=-1,
+                         tpl=-1)
+                fader = row["cell_fader"]
+                fader.thaw()
+                fader.set_state(1.0)
+                fader.animate(start=fader.get_state(), end=0.0, duration=400)
+
+                def on_finished(fader):
+                    fader.disconnect(signal)
+                    fader.freeze()
+                    if row_ref.valid():
+                        self.set(tree_iter, rssi_pb=None, lq_pb=None, tpl_pb=None)
+
+                signal = fader.connect("animation-finished", on_finished)
 
     def tooltip_query(self, tw, x, y, kb, tooltip):
         path = self.get_path_at_pos(x, y)
