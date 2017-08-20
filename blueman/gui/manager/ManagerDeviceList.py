@@ -172,7 +172,8 @@ class ManagerDeviceList(DeviceList):
                         self.menu.popup(None, None, None, None, event.button, event.time)
 
     def get_icon_info(self, icon_names, size=48, fallback=True):
-        logging.debug("Looking up icon(s) %s" % icon_names)
+        # Stop logging see issue #753
+        # logging.debug("Looking up icon(s) %s" % icon_names)
         icon_name = None
 
         for name in icon_names:
