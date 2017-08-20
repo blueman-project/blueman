@@ -329,6 +329,7 @@ class ManagerDeviceList(DeviceList):
             return
 
         tree_iter = self.get_iter(row_ref.get_path())
+        row = self.get(tree_iter, "levels_visible", "cell_fader", "rssi", "lq", "tpl")
         if cinfo is not None:
             try:
                 rssi = float(cinfo.get_rssi())
@@ -355,7 +356,6 @@ class ManagerDeviceList(DeviceList):
             if tpl_perc < 10:
                 tpl_perc = 10
 
-            row = self.get(tree_iter, "levels_visible", "cell_fader", "rssi", "lq", "tpl")
             if not row["levels_visible"]:
                 logging.info("animating up")
                 self.set(tree_iter, levels_visible=True)
@@ -391,7 +391,6 @@ class ManagerDeviceList(DeviceList):
                      tpl=tpl_perc)
         else:
 
-            row = self.get(tree_iter, "levels_visible", "cell_fader")
             if row["levels_visible"]:
                 logging.info("animating down")
                 self.set(tree_iter, levels_visible=False,
