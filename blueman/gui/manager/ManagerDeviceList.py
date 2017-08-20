@@ -370,25 +370,25 @@ class ManagerDeviceList(DeviceList):
 
                 signal = fader.connect("animation-finished", on_finished)
 
+            to_store = {}
             if round(row["rssi"], -1) != round(rssi_perc, -1):
                 icon_name = "blueman-rssi-%d.png" % round(rssi_perc, -1)
                 icon = GdkPixbuf.Pixbuf.new_from_file(os.path.join(PIXMAP_PATH, icon_name))
-                self.set(tree_iter, rssi_pb=icon)
+                to_store.update({"rssi": rssi_perc, "rssi_pb": icon})
 
             if round(row["lq"], -1) != round(lq_perc, -1):
                 icon_name = "blueman-lq-%d.png" % round(lq_perc, -1)
                 icon = GdkPixbuf.Pixbuf.new_from_file(os.path.join(PIXMAP_PATH, icon_name))
-                self.set(tree_iter, lq_pb=icon)
+                to_store.update({"lq": lq_perc, "lq_pb": icon})
 
             if round(row["tpl"], -1) != round(tpl_perc, -1):
                 icon_name = "blueman-tpl-%d.png" % round(tpl_perc, -1)
                 icon = GdkPixbuf.Pixbuf.new_from_file(os.path.join(PIXMAP_PATH, icon_name))
-                self.set(tree_iter, tpl_pb=icon)
+                to_store.update({"tpl": tpl_perc, "tpl_pb": icon})
 
-            self.set(tree_iter,
-                     rssi=rssi_perc,
-                     lq=lq_perc,
-                     tpl=tpl_perc)
+            if to_store:
+                self.set(tree_iter, **to_store)
+
         else:
 
             if row["levels_visible"]:
