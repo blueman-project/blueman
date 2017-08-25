@@ -76,9 +76,7 @@ class DnsMasqHandler(object):
             else:
                 pid = self.pid
 
-            running = is_running("dnsmasq", pid) if pid else False
-
-            if running:
+            if pid and is_running("dnsmasq", pid):
                 os.kill(pid, signal.SIGTERM)
                 self.netconf.unlock("dhcp")
             else:
@@ -194,9 +192,7 @@ class DhcpdHandler(object):
             else:
                 pid = self.pid
 
-            running = is_running("dnsmasq", pid) if pid else False
-
-            if running:
+            if pid and (is_running("dhcpd3", pid) or is_running("dhcpd", pid)):
                 os.kill(pid, signal.SIGTERM)
                 self.netconf.unlock("dhcp")
             else:
