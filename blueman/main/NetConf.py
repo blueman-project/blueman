@@ -164,14 +164,14 @@ class DhcpdHandler(object):
             f.write(subnet)
             f.close()
 
-            cmd = [have("dhcpd3") or have("dhcpd"), "-pf", "/var/run/dhcpd-server/dhcp.pan1.pid", "pan1"]
+            cmd = [have("dhcpd3") or have("dhcpd"), "-pf", "/var/run/dhcpd.pan1.pid", "pan1"]
             p = Popen(cmd)
 
             ret = p.wait()
 
             if ret == 0:
                 logging.info("dhcpd started correctly")
-                f = open("/var/run/dhcp-server/dhcpd.pan1.pid", "r")
+                f = open("/var/run/dhcpd.pan1.pid", "r")
                 self.pid = int(f.read())
                 f.close()
                 logging.info("pid %s" % self.pid)
@@ -187,7 +187,7 @@ class DhcpdHandler(object):
 
         if self.netconf.locked("dhcp"):
             if not self.pid:
-                pid = read_pid_file("/var/run/dhcpd-server/dhcp.pan1.pid")
+                pid = read_pid_file("/var/run/dhcpd.pan1.pid")
             else:
                 pid = self.pid
 
