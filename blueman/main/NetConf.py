@@ -110,19 +110,16 @@ class DhcpdHandler(object):
         return (dhcp_config, existing_subnet)
 
     def get_dns_servers(self):
-        f = open("/etc/resolv.conf", "r")
-        dns_servers = ""
-        for line in f:
-            server = re.search("^nameserver (.*)", line)
-            if server:
-                server = server.groups(1)[0]
-                dns_servers += "%s, " % server;
+        dns_servers = []
+        with open("/etc/resolv.conf", "r") as f:
+            for line in f:
+                match = re.search("^nameserver (.*)", line)
+                if match:
+                    server = match.group(1)
+                    if ":" not in server:  # Exclude ipv6
+                        dns_servers.append(server)
 
-        dns_servers = dns_servers.strip(", ")
-
-        f.close()
-
-        return dns_servers
+        return ", ".join(dns_servers)
 
     def _generate_subnet_config(self):
         dns = self.get_dns_servers()
