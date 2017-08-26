@@ -136,25 +136,21 @@ class ManagerDeviceList(DeviceList):
         return True
 
     def drag_motion(self, widget, drag_context, x, y, timestamp):
-        path = self.get_path_at_pos(x, y)
-        if path is not None:
-            if path[0] != self.selected():
-                tree_iter = self.get_iter(path[0])
-                device = self.get(tree_iter, "device")["device"]
-                found = False
-                for uuid in device['UUIDs']:
-                    if ServiceUUID(uuid).short_uuid == OBEX_OBJPUSH_SVCLASS_ID:
-                        found = True
-                        break
-                if found:
-                    drag_context.drag_status(Gdk.DragAction.COPY, timestamp)
-                    self.set_cursor(path[0])
+        result = self.get_path_at_pos(x, y)
+        if result is not None:
+            path = result[0]
+            if not self.selection.path_is_selected(path):
+                tree_iter = self.get_iter(path)
+                has_obj_push = self._has_objpush(self.get(tree_iter, "device")["device"])
+                if has_obj_push:
+                    Gdk.drag_status(drag_context, Gdk.DragAction.COPY, timestamp)
+                    self.set_cursor(path)
                     return True
                 else:
-                    drag_context.drag_status(Gdk.DragAction.DEFAULT, timestamp)
+                    Gdk.drag_status(drag_context, Gdk.DragAction.DEFAULT, timestamp)
                     return False
         else:
-            drag_context.drag_status(Gdk.DragAction.DEFAULT, timestamp)
+            Gdk.drag_status(drag_context, Gdk.DragAction.DEFAULT, timestamp)
             return False
 
     def on_event_clicked(self, widget, event):
