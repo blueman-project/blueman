@@ -205,7 +205,7 @@ class Sender(Gtk.Dialog):
         if self.object_push:
             self.object_push.send_file(file_path)
 
-    def on_transfer_error(self, _transfer, msg=None):
+    def on_transfer_error(self, _transfer, msg=""):
         if not self.error_dialog:
             self.speed.reset()
             d = ErrorDialog(msg, _("Error occurred while sending file %s") % os.path.basename(self.files[-1]),
