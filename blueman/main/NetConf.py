@@ -305,13 +305,13 @@ class NetConf(object):
         ip_str = inet_ntoa(self.ip4_address)
         mask_str = inet_ntoa(self.ip4_mask)
 
-        if self.ip4_changed or not self.locked("ifconfig"):
+        if self.ip4_changed or not self.locked("netconfig"):
             self.enable_ip4_forwarding()
 
             ret = call(["ifconfig", "pan1", ip_str, "netmask", mask_str, "up"])
             if ret != 0:
                 raise Exception("Failed to setup interface pan1")
-            self.lock("ifconfig")
+            self.lock("netconfig")
 
         if self.ip4_changed or not self.locked("iptables"):
             self.del_ipt_rules()
@@ -338,7 +338,7 @@ class NetConf(object):
             destroy_bridge("pan1")
         except:
             pass
-        self.unlock("ifconfig")
+        self.unlock("netconfig")
 
         self.del_ipt_rules()
 
