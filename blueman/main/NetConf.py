@@ -384,9 +384,18 @@ class NetConf(object):
         if self.ip4_changed or not self.locked("netconfig"):
             self.enable_ip4_forwarding()
 
-            ret = call(["ifconfig", "pan1", ip_str, "netmask", mask_str, "up"])
-            if ret != 0:
-                raise NetworkSetupError("Failed to setup interface pan1")
+            if have("ip"):
+                ret = call(["ip", "link", "set", "pan1", "up"])
+                if ret != 0:
+                    raise NetworkSetupError("Failed to bring up interface pan1")
+                ret = call(["ip", "address", "add", "/".join((ip_str, mask_str)), "dev", "pan1"])
+                if ret != 0:
+                    raise NetworkSetupError("Failed to add ip address %s with netmask %s" % (ip_str, mask_str))
+            else:
+                ret = call(["ifconfig", "pan1", ip_str, "netmask", mask_str, "up"])
+                if ret != 0:
+                    raise NetworkSetupError("Failed to add ip address %s with netmask %s" % (ip_str, mask_str))
+
             self.lock("netconfig")
 
         if self.ip4_changed or not self.locked("iptables"):
