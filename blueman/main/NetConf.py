@@ -14,6 +14,10 @@ from _blueman import create_bridge, destroy_bridge, BridgeException
 from subprocess import call, Popen
 
 
+class NetworkSetupError(Exception):
+    pass
+
+
 def calc_ip_range(ip):
     """Calculate the ip range for dhcp config"""
     start_range = bytearray(ip)
@@ -82,7 +86,7 @@ class DnsMasqHandler(object):
                 logging.info("pid %s" % self.pid)
                 self.netconf.lock("dhcp")
             else:
-                raise Exception("dnsmasq failed to start. Check the system log for errors")
+                raise NetworkSetupError("dnsmasq failed to start. Check the system log for errors")
 
     def do_remove(self):
         if self.netconf.locked("dhcp"):
@@ -177,7 +181,7 @@ class DhcpdHandler(object):
                 logging.info("pid %s" % self.pid)
                 self.netconf.lock("dhcp")
             else:
-                raise Exception("dhcpd failed to start. Check the system log for errors")
+                raise NetworkSetupError("dhcpd failed to start. Check the system log for errors")
 
     def do_remove(self):
         dhcp_config, existing_subnet = self._read_dhcp_config()
@@ -250,7 +254,7 @@ option router %(rtr)s
                 logging.info("pid %s" % self.pid)
                 self.netconf.lock("dhcp")
             else:
-                raise Exception("udhcpd failed to start. Check the system log for errors")
+                raise NetworkSetupError("udhcpd failed to start. Check the system log for errors")
 
             os.remove(config_path)
 
@@ -382,7 +386,7 @@ class NetConf(object):
 
             ret = call(["ifconfig", "pan1", ip_str, "netmask", mask_str, "up"])
             if ret != 0:
-                raise Exception("Failed to setup interface pan1")
+                raise NetworkSetupError("Failed to setup interface pan1")
             self.lock("netconfig")
 
         if self.ip4_changed or not self.locked("iptables"):
