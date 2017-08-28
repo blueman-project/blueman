@@ -147,9 +147,15 @@ class _NotificationBubble(Notify.Notification):
         if timeout != -1:
             self.set_timeout(timeout)
         if status_icon:
-            _, screen, area, orientation = status_icon.get_geometry()
-            self.set_hint_int32("x", area.x + area.width / 2)
-            self.set_hint_int32("y", area.y + area.height / 2)
+            ignored, screen, area, orientation = status_icon.get_geometry()
+            screen_width = screen.get_width()
+            screen_height = screen.get_height()
+            # Workaround a problem where we get garbage x and y values
+            if (area.x > 0 and area.y > 0) and (area.x <= screen_width and area.y <= screen_height):
+                self.set_hint_int32("x", area.x + area.width / 2)
+                self.set_hint_int32("y", area.y + area.height / 2)
+            else:
+                dprint("Got bad x %s or y %s value" % (area.x, area.y))
 
         self.show()
 
