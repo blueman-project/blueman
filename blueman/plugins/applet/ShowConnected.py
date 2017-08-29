@@ -9,8 +9,8 @@ class ShowConnected(AppletPlugin):
     __author__ = "Walmis"
     __depends__ = ["StatusIcon"]
     __icon__ = "blueman-active"
-    __description__ = _(
-        "Adds an indication on the status icon when Bluetooth is active and shows the number of connections in the tooltip.")
+    __description__ = _("Adds an indication on the status icon when Bluetooth is active and shows the number of "
+                        "connections in the tooltip.")
 
     def on_load(self, applet):
         self.num_connections = 0
@@ -18,14 +18,14 @@ class ShowConnected(AppletPlugin):
         self.initialized = False
 
     def on_unload(self):
-        self.Applet.Plugins.StatusIcon.SetTextLine(1, None)
+        self.Applet.Plugins.StatusIcon.set_text_line(1, None)
         self.num_connections = 0
-        self.Applet.Plugins.StatusIcon.IconShouldChange()
+        self.Applet.Plugins.StatusIcon.icon_should_change()
 
     def on_status_icon_query_icon(self):
         if self.num_connections > 0:
             self.active = True
-            return ("blueman-active",)
+            return "blueman-active",
         else:
             self.active = False
 
@@ -38,29 +38,25 @@ class ShowConnected(AppletPlugin):
         logging.info("Found %d existing connections" % self.num_connections)
         if (self.num_connections > 0 and not self.active) or \
                 (self.num_connections == 0 and self.active):
-            self.Applet.Plugins.StatusIcon.IconShouldChange()
+            self.Applet.Plugins.StatusIcon.icon_should_change()
 
         self.update_statusicon()
 
     def update_statusicon(self):
         if self.num_connections > 0:
-            self.Applet.Plugins.StatusIcon.SetTextLine(0,
-                                                       _("Bluetooth Active"))
-            self.Applet.Plugins.StatusIcon.SetTextLine(1,
-                                                       ngettext("<b>%d Active Connection</b>",
-                                                                "<b>%d Active Connections</b>",
-                                                                self.num_connections) % self.num_connections)
+            self.Applet.Plugins.StatusIcon.set_text_line(0, _("Bluetooth Active"))
+            self.Applet.Plugins.StatusIcon.set_text_line(1, ngettext("<b>%d Active Connection</b>",
+                                                                     "<b>%d Active Connections</b>",
+                                                                     self.num_connections) % self.num_connections)
         else:
-            self.Applet.Plugins.StatusIcon.SetTextLine(1, None)
+            self.Applet.Plugins.StatusIcon.set_text_line(1, None)
             try:
                 if self.Applet.Plugins.PowerManager.GetBluetoothStatus():
-                    self.Applet.Plugins.StatusIcon.SetTextLine(0,
-                                                               _("Bluetooth Enabled"))
+                    self.Applet.Plugins.StatusIcon.set_text_line(0, _("Bluetooth Enabled"))
             except:
-                #bluetooth should be always enabled if powermanager is
-                #not loaded
-                self.Applet.Plugins.StatusIcon.SetTextLine(0,
-                                                           _("Bluetooth Enabled"))
+                # bluetooth should be always enabled if powermanager is
+                # not loaded
+                self.Applet.Plugins.StatusIcon.set_text_line(0, _("Bluetooth Enabled"))
 
     def on_manager_state_changed(self, state):
         if state:
@@ -68,8 +64,7 @@ class ShowConnected(AppletPlugin):
                 GLib.timeout_add(0, self.enumerate_connections)
                 self.initialized = True
             else:
-                GLib.timeout_add(1000,
-                                    self.enumerate_connections)
+                GLib.timeout_add(1000, self.enumerate_connections)
         else:
             self.num_connections = 0
             self.update_statusicon()
@@ -82,7 +77,7 @@ class ShowConnected(AppletPlugin):
                 self.num_connections -= 1
 
             if (self.num_connections > 0 and not self.active) or (self.num_connections == 0 and self.active):
-                self.Applet.Plugins.StatusIcon.IconShouldChange()
+                self.Applet.Plugins.StatusIcon.icon_should_change()
 
             self.update_statusicon()
 

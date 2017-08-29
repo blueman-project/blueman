@@ -53,8 +53,8 @@ class RecentConns(AppletPlugin):
         self.Item = create_menuitem(_("Recent _Connections") + "...",
                                     "document-open-recent")
 
-        self.Applet.Plugins.Menu.Register(self, self.Item, 52)
-        self.Applet.Plugins.Menu.Register(self, Gtk.SeparatorMenuItem(), 53)
+        self.Applet.Plugins.Menu.register(self, self.Item, 52)
+        self.Applet.Plugins.Menu.register(self, Gtk.SeparatorMenuItem(), 53)
 
         self.menu = Gtk.Menu()
         self.Item.set_submenu(self.menu)
@@ -80,10 +80,10 @@ class RecentConns(AppletPlugin):
             power = True
 
         sensitive = sensitive and \
-                    self.Applet.Manager and \
-                    power and \
-                    self.items is not None and \
-                    (len(self.items) > 0)
+            self.Applet.Manager and \
+            power and \
+            self.items is not None and \
+            (len(self.items) > 0)
 
         self.Item.props.sensitive = sensitive
 
@@ -95,7 +95,7 @@ class RecentConns(AppletPlugin):
 
     def on_unload(self):
         self.menu.destroy()
-        self.Applet.Plugins.Menu.Unregister(self.menu)
+        self.Applet.Plugins.Menu.unregister(self.menu)
 
         self.items = []
         self.menu.destroy()
@@ -202,7 +202,7 @@ class RecentConns(AppletPlugin):
         item["uuid"] = uuid
         item["time"] = time.time()
         item["device"] = object_path
-        item["mitem"] = None #menu item object
+        item["mitem"] = None  # menu item object
 
         for i in self.items:
             if i["adapter"] == item["adapter"] and \

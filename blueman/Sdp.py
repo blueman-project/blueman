@@ -330,4 +330,4 @@ class ServiceUUID(UUID):
     @property
     def reserved(self):
         return self.int & UUID('FFFF0000-0000-FFFF-FFFF-FFFFFFFFFFFF').int == \
-               UUID('00000000-0000-1000-8000-00805F9B34FB').int
+            UUID('00000000-0000-1000-8000-00805F9B34FB').int

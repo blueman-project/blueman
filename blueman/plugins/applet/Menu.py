@@ -44,14 +44,14 @@ class Menu(AppletPlugin):
             if item[2]:
                 item[1].show()
 
-    def Register(self, owner, item, priority, show=True):
+    def register(self, owner, item, priority, show=True):
         self.__menuitems.append((priority, item, show, owner))
         if self.__plugins_loaded:
             self.__sort()
             self.__clear()
             self.__load_items()
 
-    def Unregister(self, owner):
+    def unregister(self, owner):
         for i in reversed(self.__menuitems):
             priority, item, show, orig_owner = i
             if orig_owner == owner:

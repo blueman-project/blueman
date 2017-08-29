@@ -55,7 +55,6 @@ class Networking(AppletPlugin):
         self._registered = {}
         del self.Config
 
-
     def on_adapter_added(self, path):
         self.update_status()
 

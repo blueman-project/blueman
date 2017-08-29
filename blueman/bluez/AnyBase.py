@@ -25,8 +25,8 @@ class AnyBase(GObject.GObject):
                       _signal_name, param):
             self._on_properties_changed(object_path, *param.unpack())
 
-        sig = self.__bus.signal_subscribe(self.__bus_name, self.__bus_interface_name,
-            'PropertiesChanged', None, None, Gio.DBusSignalFlags.NONE, on_signal)
+        sig = self.__bus.signal_subscribe(self.__bus_name, self.__bus_interface_name, 'PropertiesChanged', None, None,
+                                          Gio.DBusSignalFlags.NONE, on_signal)
 
         self.__signals.append(sig)
 

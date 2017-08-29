@@ -39,12 +39,13 @@ class Connection:
 
     def on_connected(self, _obj, result, _user_data):
         self.reply_handler(self.port)
-        self.Applet.Plugins.Run("on_ppp_connected", self.service.device, self.port, result)
+        self.Applet.Plugins.run("on_ppp_connected", self.service.device, self.port, result)
 
         msg = _("Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\n"
                 "Network is now available through <b>%(1)s</b>") % {"0": self.service.device['Alias'], "1": result}
 
-        Notification(_("Connected"), msg, icon_name="network-wireless", pos_hint=self.Applet.Plugins.StatusIcon.geometry).show()
+        Notification(_("Connected"), msg, icon_name="network-wireless",
+                     pos_hint=self.Applet.Plugins.StatusIcon.geometry).show()
 
 
 class PPPSupport(AppletPlugin):

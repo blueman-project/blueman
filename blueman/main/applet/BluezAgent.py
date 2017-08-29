@@ -2,26 +2,25 @@
 import os.path
 import logging
 from locale import bind_textdomain_codeset
+from html import escape
+import random
+from xml.etree import ElementTree
+
+import blueman.bluez as bluez
+from blueman.Sdp import ServiceUUID
+from blueman.Constants import *
+from blueman.gui.Notification import Notification
+from blueman.bluez.Agent import Agent
+
+from gi.repository import GLib
 
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-from gi.repository import GLib
-
-from html import escape
-
-import random
-from xml.etree import ElementTree
-import blueman.bluez as Bluez
-from blueman.Sdp import ServiceUUID
-from blueman.Constants import *
-from blueman.gui.Notification import Notification
-
-from blueman.bluez.Agent import Agent
 
 
 def bt_class_to_string(bt_class):
-    n1 =  (bt_class & 0x1f00) >> 8
+    n1 = (bt_class & 0x1f00) >> 8
     if n1 == 0x03:
         return "network"
     elif n1 == 0x04:
@@ -52,6 +51,7 @@ def bt_class_to_string(bt_class):
     else:
         return None
 
+
 PIN_SEARCHES = [
     "./device[@oui='{oui}'][@type='{type}'][@name='{name}']",
     "./device[@oui='{oui}'][@type='{type}']",
@@ -60,7 +60,8 @@ PIN_SEARCHES = [
     "./device[@oui='{oui}']",
     "./device[@name='{name}']",
     "./device[@type='{type}']",
-    ]
+]
+
 
 class BluezAgent(Agent):
     __agent_path = '/org/bluez/agent/blueman'
@@ -78,12 +79,12 @@ class BluezAgent(Agent):
     def register_agent(self):
         logging.info("Register Agent")
         self._register_object()
-        Bluez.AgentManager().register_agent(self.__agent_path, "KeyboardDisplay", default=True)
+        bluez.AgentManager().register_agent(self.__agent_path, "KeyboardDisplay", default=True)
 
     def unregister_agent(self):
         logging.info("Unregister Agent")
         self._unregister_object()
-        Bluez.AgentManager().unregister_agent(self.__agent_path)
+        bluez.AgentManager().unregister_agent(self.__agent_path)
 
     def _handle_method_call(self, connection, sender, agent_path, interface_name, method_name, parameters, invocation):
 
@@ -126,7 +127,7 @@ class BluezAgent(Agent):
         msg.set_text(dialog_msg)
         pin_entry = builder.get_object("pin_entry")
         show_input = builder.get_object("show_input_check")
-        if (is_numeric):
+        if is_numeric:
             pin_entry.set_max_length(6)
             pin_entry.set_width_chars(6)
             pin_entry.connect("insert-text", on_insert_text)
@@ -139,17 +140,17 @@ class BluezAgent(Agent):
         accept_button = builder.get_object("accept")
         pin_entry.connect("changed", lambda x: accept_button.set_sensitive(x.get_text() != ''))
 
-        return (dialog, pin_entry)
+        return dialog, pin_entry
 
     def get_device_string(self, device_path):
-        device = Bluez.Device(device_path)
+        device = bluez.Device(device_path)
         return "<b>%s</b> (%s)" % (escape(device["Alias"]), device["Address"])
 
     def _lookup_default_pin(self, device_path):
         if not self._db:
             self._db = ElementTree.parse(os.path.join(PKGDATA_DIR, 'pin-code-database.xml'))
 
-        device = Bluez.Device(device_path)
+        device = bluez.Device(device_path)
         lookup_dict = {
             'name': device['Name'],
             'type': bt_class_to_string(device['Class']),
@@ -222,7 +223,6 @@ class BluezAgent(Agent):
         except AttributeError:
             pass
 
-
     def _on_request_pin_code(self, parameters, invocation):
         logging.info("Agent.RequestPinCode")
         dialog_msg = _("Enter PIN code for authentication:")
@@ -250,7 +250,7 @@ class BluezAgent(Agent):
     def _on_display_passkey(self, parameters, invocation):
         device, passkey, entered = parameters.unpack()
         logging.info('DisplayPasskey (%s, %d)' % (device, passkey))
-        dev = Bluez.Device(device)
+        dev = bluez.Device(device)
         self.signal_id = dev.connect_signal("property-changed", self._on_device_property_changed)
 
         notify_message = _("Pairing passkey for") + " %s: %s" % (self.get_device_string(device), passkey)
@@ -260,7 +260,7 @@ class BluezAgent(Agent):
     def _on_display_pin_code(self, parameters, invocation):
         device, pin_code = parameters.unpack()
         logging.info('DisplayPinCode (%s, %s)' % (device, pin_code))
-        dev = Bluez.Device(device)
+        dev = bluez.Device(device)
         self.signal_id = dev.connect_signal("property-changed", self._on_device_property_changed)
 
         notify_message = _("Pairing PIN code for") + " %s: %s" % (self.get_device_string(device), pin_code)
@@ -302,7 +302,7 @@ class BluezAgent(Agent):
             logging.info(action)
 
             if action == "always":
-                device = Bluez.Device(n._device)
+                device = bluez.Device(n._device)
                 device.set("Trusted", True)
             if action == "always" or action == "accept":
                 invocation.return_value(GLib.Variant('()', ()))
@@ -316,7 +316,8 @@ class BluezAgent(Agent):
         logging.info("Agent.Authorize")
         dev_str = self.get_device_string(device)
         service = ServiceUUID(uuid).name
-        notify_message = (_("Authorization request for:") + "\n%s\n" + _("Service:") + " <b>%s</b>") % (dev_str, service)
+        notify_message = \
+            (_("Authorization request for:") + "\n%s\n" + _("Service:") + " <b>%s</b>") % (dev_str, service)
         actions = [["always", _("Always accept")],
                    ["accept", _("Accept")],
                    ["deny", _("Deny")]]

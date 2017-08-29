@@ -1,10 +1,10 @@
 # coding=utf-8
+from blueman.plugins.ConfigurablePlugin import ConfigurablePlugin
+from functools import partial
+
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-
-from blueman.plugins.ConfigurablePlugin import ConfigurablePlugin
-from functools import partial
 
 ictheme = Gtk.IconTheme.get_default()
 
@@ -80,6 +80,6 @@ class AppletPlugin(ConfigurablePlugin):
         """Run when a property changes of any devices. Make sure to distinguish your actions by path"""
         pass
 
-    #notify when all plugins finished loading
+    # notify when all plugins finished loading
     def on_plugins_loaded(self):
         pass

@@ -70,7 +70,8 @@ class DnsMasqHandler(object):
 
             start, end = calc_ip_range(self.netconf.ip4_address)
 
-            args = "--pid-file=/var/run/dnsmasq.pan1.pid --bind-interfaces --dhcp-range=%s,%s,60m --except-interface=lo --interface=pan1 %s" % (inet_ntoa(start), inet_ntoa(end), rtr)
+            args = "--pid-file=/var/run/dnsmasq.pan1.pid --bind-interfaces --dhcp-range=%s,%s,60m " \
+                   "--except-interface=lo --interface=pan1 %s" % (inet_ntoa(start), inet_ntoa(end), rtr)
 
             cmd = [have("dnsmasq")] + args.split(" ")
             logging.info(cmd)
@@ -127,7 +128,7 @@ class DhcpdHandler(object):
 
         f.close()
 
-        return (dhcp_config, existing_subnet)
+        return dhcp_config, existing_subnet
 
     def _generate_subnet_config(self):
         dns = get_dns_servers()
@@ -203,6 +204,16 @@ class DhcpdHandler(object):
                 self.netconf.unlock("dhcp")
 
 
+UDHCP_CONF_TEMPLATE = """start %(start)s
+end %(end)s
+interface pan1
+pidfile /var/run/udhcpd.pan1.pid
+option subnet %(ip_mask)s
+option dns %(dns)s
+option router %(rtr)s
+"""
+
+
 class UdhcpdHandler(object):
     def __init__(self, netconf):
         self.pid = None
@@ -215,19 +226,11 @@ class UdhcpdHandler(object):
 
         start, end = calc_ip_range(self.netconf.ip4_address)
 
-        return """start %(start)s
-end %(end)s
-interface pan1
-pidfile /var/run/udhcpd.pan1.pid
-option subnet %(ip_mask)s
-option dns %(dns)s
-option router %(rtr)s
-""" % {"ip_mask": inet_ntoa(masked_ip),
-       "dns": dns,
-       "rtr": inet_ntoa(self.netconf.ip4_address),
-       "start": inet_ntoa(start),
-       "end": inet_ntoa(end)
-       }
+        return UDHCP_CONF_TEMPLATE % {"ip_mask": inet_ntoa(masked_ip),
+                                      "dns": dns,
+                                      "rtr": inet_ntoa(self.netconf.ip4_address),
+                                      "start": inet_ntoa(start),
+                                      "end": inet_ntoa(end)}
 
     def do_apply(self):
         if not self.netconf.locked("dhcp") or self.netconf.ip4_changed:
@@ -319,7 +322,7 @@ class NetConf(object):
         self.ip4_mask = netmask
 
     def get_ipv4(self):
-        return (self.ip4_address, self.ip4_mask)
+        return self.ip4_address, self.ip4_mask
 
     def enable_ip4_forwarding(self):
         f = open("/proc/sys/net/ipv4/ip_forward", "w")

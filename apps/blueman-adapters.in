@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 # coding=utf-8
-
 import os
 import sys
 import signal
@@ -10,7 +9,7 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
-#support running uninstalled
+# support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if 'BLUEMAN_SOURCE' in os.environ:
     sys.path.insert(0, _dirname)
@@ -21,7 +20,6 @@ from blueman.main.Adapter import BluemanAdapters
 
 # Workaround introspection bug, gnome bug 622084
 signal.signal(signal.SIGINT, signal.SIG_DFL)
-
 
 if __name__ == '__main__':
     parser = parser = create_parser()

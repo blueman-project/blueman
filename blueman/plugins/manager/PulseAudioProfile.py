@@ -1,16 +1,16 @@
 # coding=utf-8
+import logging
+
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 from blueman.main.PulseAudioUtils import PulseAudioUtils, EventType
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.gui.MessageArea import MessageArea
-
 from blueman.Functions import create_menuitem
 from blueman.Sdp import AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID, ServiceUUID
 
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-import logging
 
 
 class PulseAudioProfile(ManagerPlugin):
@@ -31,11 +31,11 @@ class PulseAudioProfile(ManagerPlugin):
 
         self.deferred = []
 
-    #updates all menu instances with the following device address
+    # updates all menu instances with the following device address
     def regenerate_with_device(self, device_addr):
         for inst in ManagerDeviceMenu.__instances__:
             if inst.SelectedDevice['Address'] == device_addr and not inst.is_popup:
-                inst.Generate()
+                inst.generate()
 
     def on_pa_event(self, utils, event, idx):
         logging.debug("%s %s" % (event, idx))
@@ -53,12 +53,12 @@ class PulseAudioProfile(ManagerPlugin):
             logging.info("card")
             if event & EventType.CHANGE:
                 logging.info("change")
-                utils.GetCard(idx, get_card_cb)
+                utils.get_card(idx, get_card_cb)
             elif event & EventType.REMOVE:
                 logging.info("remove")
             else:
                 logging.info("add")
-                utils.GetCard(idx, get_card_cb)
+                utils.get_card(idx, get_card_cb)
 
     def query_pa(self, device):
         def list_cb(cards):
@@ -69,7 +69,7 @@ class PulseAudioProfile(ManagerPlugin):
                     return
 
         pa = PulseAudioUtils()
-        pa.ListCards(list_cb)
+        pa.list_cards(list_cb)
 
     def on_selection_changed(self, item, device, profile):
         if item.get_active():
@@ -81,7 +81,7 @@ class PulseAudioProfile(ManagerPlugin):
                 if not res:
                     MessageArea.show_message(_("Failed to change profile to %s" % profile))
 
-            pa.SetCardProfile(c["index"], profile, on_result)
+            pa.set_card_profile(c["index"], profile, on_result)
 
     def generate_menu(self, device):
         info = self.devices[device['Address']]

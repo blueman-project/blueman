@@ -1,7 +1,18 @@
 # coding=utf-8
+import html
+import logging
+import cairo
+import os
+
 from blueman.gui.DeviceList import DeviceList
 from blueman.DeviceClass import get_minor_class, get_major_class
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
+from blueman.Constants import PIXMAP_PATH
+from blueman.Functions import launch
+from blueman.Sdp import ServiceUUID, OBEX_OBJPUSH_SVCLASS_ID
+from blueman.gui.GtkAnimation import TreeRowColorFade, TreeRowFade, CellFade
+from blueman.main.Config import Config
+from _blueman import ConnInfoReadError
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -10,17 +21,6 @@ from gi.repository import Gdk
 from gi.repository import GdkPixbuf
 from gi.repository import GObject
 from gi.repository import Pango
-from blueman.Constants import PIXMAP_PATH
-from blueman.Functions import launch
-from blueman.Sdp import ServiceUUID, OBEX_OBJPUSH_SVCLASS_ID
-import html
-import logging
-import cairo
-import os.path
-
-from blueman.gui.GtkAnimation import TreeRowColorFade, TreeRowFade, CellFade
-from blueman.main.Config import Config
-from _blueman import ConnInfoReadError
 
 
 class ManagerDeviceList(DeviceList):
@@ -229,7 +229,8 @@ class ManagerDeviceList(DeviceList):
         self.add_device(device)
 
     def make_caption(self, name, klass, address):
-        return "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" % {"0": html.escape(name), "1": klass.capitalize(), "2": address}
+        return "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" \
+               % {"0": html.escape(name), "1": klass.capitalize(), "2": address}
 
     def get_device_class(self, device):
         klass = get_minor_class(device['Class'])
@@ -432,7 +433,9 @@ class ManagerDeviceList(DeviceList):
                 self.tooltip_col = path[1]
                 return True
 
-            if path[1] == self.columns["tpl_pb"] or path[1] == self.columns["lq_pb"] or path[1] == self.columns["rssi_pb"]:
+            if path[1] == self.columns["tpl_pb"] \
+                    or path[1] == self.columns["lq_pb"] \
+                    or path[1] == self.columns["rssi_pb"]:
                 tree_iter = self.get_iter(path[0])
 
                 dt = self.get(tree_iter, "connected")["connected"]
@@ -463,13 +466,22 @@ class ManagerDeviceList(DeviceList):
                     else:
                         tpl_state = _("Very High")
 
+                    tooltip_template = None
                     if path[1] == self.columns["tpl_pb"]:
-                        tooltip.set_markup(_("<b>Connected</b>\nReceived Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>\nLink Quality: %(lq)u%%\n<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>") % {"rssi_state": rssi_state, "rssi": rssi, "lq": lq, "tpl": tpl, "tpl_state": tpl_state})
+                        tooltip_template = \
+                            "<b>Connected</b>\nReceived Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>\n" \
+                            "Link Quality: %(lq)u%%\n<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
                     elif path[1] == self.columns["lq_pb"]:
-                        tooltip.set_markup(_("<b>Connected</b>\nReceived Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>\n<b>Link Quality: %(lq)u%%</b>\nTransmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>") % {"rssi_state": rssi_state, "rssi": rssi, "lq": lq, "tpl": tpl, "tpl_state": tpl_state})
+                        tooltip_template = \
+                            "<b>Connected</b>\nReceived Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>\n" \
+                            "<b>Link Quality: %(lq)u%%</b>\nTransmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
                     elif path[1] == self.columns["rssi_pb"]:
-                        tooltip.set_markup(_("<b>Connected</b>\n<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>\nLink Quality: %(lq)u%%\nTransmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>") % {"rssi_state": rssi_state, "rssi": rssi, "lq": lq, "tpl": tpl, "tpl_state": tpl_state})
+                        tooltip_template = \
+                            "<b>Connected</b>\n<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>\n" \
+                            "Link Quality: %(lq)u%%\nTransmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
+                    state_dict = {"rssi_state": rssi_state, "rssi": rssi, "lq": lq, "tpl": tpl, "tpl_state": tpl_state}
+                    tooltip.set_markup(tooltip_template % state_dict)
                     self.tooltip_row = path[0]
                     self.tooltip_col = path[1]
                     return True

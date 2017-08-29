@@ -105,7 +105,7 @@ class NewConnectionBuilder:
         state, oldstate, reason = param.unpack()
         logging.info("state=%s oldstate=%s reason=%s" % (state, oldstate, reason))
         if (state <= self.DEVICE_STATE_DISCONNECTED or state == self.DEVICE_STATE_DEACTIVATING) and \
-                                self.DEVICE_STATE_DISCONNECTED < oldstate <= self.DEVICE_STATE_ACTIVATED:
+                self.DEVICE_STATE_DISCONNECTED < oldstate <= self.DEVICE_STATE_ACTIVATED:
             if self.err_cb:
                 self.err_cb(GLib.Error("Connection was interrupted"))
 
@@ -222,10 +222,12 @@ class NMPANSupport(AppletPlugin):
         if nma_connection:
             active_conns = props["ActiveConnections"]
             for conn in active_conns:
-                conn_props = self._bus.call_sync(self.nm_manager_name, conn,
-                                                 "org.freedesktop.DBus.Properties", "GetAll",
-                                                 GLib.Variant("(s)", ("org.freedesktop.NetworkManager.Connection.Active",)),
-                                                 None, Gio.DBusCallFlags.NONE, GLib.MAXINT, None).unpack()[0]
+                conn_props = self._bus.call_sync(
+                    self.nm_manager_name, conn,
+                    "org.freedesktop.DBus.Properties", "GetAll",
+                    GLib.Variant("(s)", ("org.freedesktop.NetworkManager.Connection.Active",)),
+                    None, Gio.DBusCallFlags.NONE, GLib.MAXINT, None
+                ).unpack()[0]
 
                 if conn_props["Connection"] == nma_connection:
                     return conn

@@ -1,12 +1,8 @@
 # coding=utf-8
-
 import logging
-import os
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
 from locale import bind_textdomain_codeset
 
+import blueman.bluez as bluez
 from blueman.Functions import *
 from blueman.Constants import UI_PATH
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
@@ -16,15 +12,17 @@ from blueman.gui.manager.ManagerStats import ManagerStats
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.Config import Config
 from blueman.main.AppletService import AppletService
-import blueman.bluez as bluez
-
 from blueman.gui.CommonUi import ErrorDialog
 from blueman.gui.MessageArea import MessageArea
 from blueman.gui.Notification import Notification
-
 from blueman.main.PluginManager import PluginManager
 import blueman.plugins.manager
 from blueman.plugins.ManagerPlugin import ManagerPlugin
+
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
+
 
 class Blueman(Gtk.Window):
     def __init__(self):
@@ -44,7 +42,7 @@ class Blueman(Gtk.Window):
         self.set_name("BluemanManager")
 
         self.Plugins = PluginManager(ManagerPlugin, blueman.plugins.manager, self)
-        self.Plugins.Load()
+        self.Plugins.load_plugin()
 
         area = MessageArea()
         grid.attach(area, 0, 3, 1, 1)
@@ -87,6 +85,7 @@ class Blueman(Gtk.Window):
                 self._applet_sig = None
 
             self.hide()
+
             d = ErrorDialog(
                 _("Connection to BlueZ failed"),
                 _("Bluez daemon is not running, blueman-manager cannot continue.\n"
@@ -121,8 +120,10 @@ class Blueman(Gtk.Window):
             self.props.icon_name = "blueman"
 
             w, h, x, y = self.Config["window-properties"]
-            if w and h: self.resize(w, h)
-            if x and y: self.move(x, y)
+            if w and h:
+                self.resize(w, h)
+            if x and y:
+                self.move(x, y)
 
             sw = self.Builder.get_object("scrollview")
             # Disable overlay scrolling
@@ -138,8 +139,8 @@ class Blueman(Gtk.Window):
             self.Menu = ManagerMenu(self)
             self.Stats = ManagerStats(self)
 
-            if self.List.IsValidAdapter():
-                self.List.DisplayKnownDevices(autoselect=True)
+            if self.List.is_valid_adapter():
+                self.List.display_known_devices(autoselect=True)
 
             self.List.connect("adapter-changed", self.on_adapter_changed)
 
@@ -155,10 +156,10 @@ class Blueman(Gtk.Window):
 
     def on_adapter_changed(self, lst, adapter):
         if adapter is not None:
-            self.List.DisplayKnownDevices(autoselect=True)
+            self.List.display_known_devices(autoselect=True)
 
     def inquiry(self):
-        def prop_changed(List, adapter, key_value):
+        def prop_changed(lst, adapter, key_value):
             key, value = key_value
             if key == "Discovering" and not value:
                 prog.finalize()
@@ -173,9 +174,9 @@ class Blueman(Gtk.Window):
                 prog.fraction(frac)
 
         prog = ManagerProgressbar(self, text=_("Searching"))
-        prog.connect("cancelled", lambda x: self.List.StopDiscovery())
+        prog.connect("cancelled", lambda x: self.List.stop_discovery())
         try:
-            self.List.DiscoverDevices()
+            self.List.discover_devices()
         except Exception as e:
             prog.finalize()
             MessageArea.show_message(*e_(e))
@@ -201,7 +202,7 @@ class Blueman(Gtk.Window):
     def toggle_trust(self, device):
         device['Trusted'] = not device['Trusted']
 
-    def send(self, device, File=None):
+    def send(self, device, f=None):
         adapter = self.List.Adapter
 
         command = "blueman-sendto --source=%s --device=%s" % (adapter["Address"], device['Address'])

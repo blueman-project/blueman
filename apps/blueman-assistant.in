@@ -1,23 +1,16 @@
 #!/usr/bin/env python3
 # coding=utf-8
-
-PAGE_INTRO = 0
-PAGE_DEVLIST = 1
-PAGE_PASSKEY = 2
-PAGE_PAIRING = 3
-PAGE_CONNECT = 4
-PAGE_CONNECTING = 5
-PAGE_FINISH = 6
-
-pages = {}
-
 import os
 import sys
 import signal
 import logging
 from locale import bind_textdomain_codeset
 
-#support running uninstalled
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
+
+# support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if 'BLUEMAN_SOURCE' in os.environ:
     sys.path.insert(0, _dirname)
@@ -30,6 +23,7 @@ from blueman.Functions import (
     create_logger,
     create_parser
 )
+
 from blueman.Constants import UI_PATH
 from blueman.gui.DeviceSelectorWidget import DeviceSelectorWidget
 from blueman.bluez.Manager import Manager
@@ -37,12 +31,18 @@ from blueman.main.AppletService import AppletService
 from blueman.services.Functions import get_services
 from blueman.gui.CommonUi import ErrorDialog
 
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
-
 # Workaround introspection bug, gnome bug 622084
 signal.signal(signal.SIGINT, signal.SIG_DFL)
+
+PAGE_INTRO = 0
+PAGE_DEVLIST = 1
+PAGE_PASSKEY = 2
+PAGE_PAIRING = 3
+PAGE_CONNECT = 4
+PAGE_CONNECTING = 5
+PAGE_FINISH = 6
+
+pages = {}
 
 
 class Assistant:
@@ -96,7 +96,7 @@ class Assistant:
 
         self.dev_widget.show()
 
-        if not self.dev_widget.List.IsValidAdapter():
+        if not self.dev_widget.List.is_valid_adapter():
             d = ErrorDialog(_("No adapters found"), icon_name="blueman", title="Blueman Assistant")
             d.run()
             exit(1)
@@ -116,7 +116,7 @@ class Assistant:
                 self.assistant.set_current_page(PAGE_PASSKEY)
 
         else:
-            self.dev_widget.List.DiscoverDevices()
+            self.dev_widget.List.discover_devices()
 
         Gtk.main()
 

@@ -1,21 +1,22 @@
 # coding=utf-8
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gio, Gtk
+from random import randint
+from locale import bind_textdomain_codeset
+import logging
+from socket import inet_aton, inet_ntoa
+
 from blueman.Constants import *
 from blueman.Functions import have, mask_ip4_address
 from _blueman import get_net_interfaces, get_net_address, get_net_netmask
-from socket import inet_aton, inet_ntoa
 from blueman.plugins.ServicePlugin import ServicePlugin
-
 from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler, UdhcpdHandler
 from blueman.main.Config import Config
 from blueman.main.Mechanism import Mechanism
 from blueman.main.AppletService import AppletService
 from blueman.gui.CommonUi import ErrorDialog
-from random import randint
-from locale import bind_textdomain_codeset
-import logging
+
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gio, Gtk
 
 
 class Network(ServicePlugin):
@@ -44,7 +45,7 @@ class Network(ServicePlugin):
             self.ip_check()
         except Exception as e:
             logging.exception(e)
-        return (_("Network"), "network-workgroup")
+        return _("Network"), "network-workgroup"
 
     def on_enter(self):
         self.widget.props.visible = True
@@ -101,14 +102,17 @@ class Network(ServicePlugin):
 
         for iface, ip, netmask, masked in self.interfaces:
             if a == ip:
+                tooltip_text = _("IP address conflicts with interface %s which has the same address" % iface)
                 e.props.secondary_icon_name = "dialog-error"
-                e.props.secondary_icon_tooltip_text = _("IP address conflicts with interface %s which has the same address" % iface)
+                e.props.secondary_icon_tooltip_text = tooltip_text
                 raise Exception
 
             elif mask_ip4_address(a, netmask) == masked:
+                tooltip_text = _(
+                    "IP address overlaps with subnet of interface %s, which has the following configuration  %s/%s\n"
+                    "This may cause incorrect network behavior" % (iface, inet_ntoa(ip), inet_ntoa(netmask)))
                 e.props.secondary_icon_name = "dialog-warning"
-                e.props.secondary_icon_tooltip_text = _("IP address overlaps with subnet of interface"
-                                                        " %s, which has the following configuration %s/%s\nThis may cause incorrect network behavior" % (iface, inet_ntoa(ip), inet_ntoa(netmask)))
+                e.props.secondary_icon_tooltip_text = tooltip_text
                 return
 
         e.props.secondary_icon_name = None

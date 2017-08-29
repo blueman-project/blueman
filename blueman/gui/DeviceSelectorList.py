@@ -1,19 +1,20 @@
 # coding=utf-8
+from html import escape
+from blueman.gui.DeviceList import DeviceList
+from gi.repository import Pango
+
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-from gi.repository import Pango
-from html import escape
-from blueman.gui.DeviceList import DeviceList
 
 
 class DeviceSelectorList(DeviceList):
     def __init__(self, adapter_name=None):
         tabledata = [
-            #device picture
+            # device picture
             {"id": "device_icon", "type": str, "renderer": Gtk.CellRendererPixbuf(stock_size=Gtk.IconSize.MENU),
              "render_attrs": {"icon_name": 0}},
-            #device caption
+            # device caption
             {"id": "caption", "type": str, "renderer": Gtk.CellRendererText(ellipsize=Pango.EllipsizeMode.END),
              "render_attrs": {"markup": 1},
              "view_props": {"expand": True}},

@@ -1,5 +1,6 @@
 # coding=utf-8
 
+
 class BluezDBusException(Exception):
     def __init__(self, reason):
         self.reason = reason

@@ -1,11 +1,12 @@
 # coding=utf-8
+import logging
+
 import blueman.bluez as bluez
 from blueman.main.Config import Config
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.gui.CommonUi import show_about_dialog
 from blueman.Constants import WEBSITE
 from blueman.Functions import create_menuitem, launch, adapter_path_to_name
-import logging
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -113,8 +114,8 @@ class ManagerMenu:
         item_plugins.connect('activate', self._on_plugin_dialog_activate)
 
         item_services = create_menuitem(_("_Local Services") + "...", "preferences-desktop")
-        item_services.connect('activate',
-                              lambda *args: launch("blueman-services", None, False, "blueman", _("Service Preferences")))
+        item_services.connect('activate', lambda *args: launch("blueman-services", None, False, "blueman",
+                                                               _("Service Preferences")))
         view_menu.append(item_services)
         item_services.show()
 
@@ -201,7 +202,7 @@ class ManagerMenu:
                 if not self._sort_type_item.props.active:
                     self._sort_type_item.props.active = False
 
-    def on_device_selected(self, List, device, tree_iter):
+    def on_device_selected(self, lst, device, tree_iter):
         if tree_iter and device:
             self.item_device.props.sensitive = True
 
@@ -209,7 +210,7 @@ class ManagerMenu:
                 self.device_menu = ManagerDeviceMenu(self.blueman)
                 self.item_device.set_submenu(self.device_menu)
             else:
-                GLib.idle_add(self.device_menu.Generate, priority=GLib.PRIORITY_LOW)
+                GLib.idle_add(self.device_menu.generate, priority=GLib.PRIORITY_LOW)
 
         else:
             self.item_device.props.sensitive = False
@@ -230,7 +231,7 @@ class ManagerMenu:
             if adapter_path != self.blueman.List.Adapter.get_object_path():
                 logging.info("selected", adapter_path)
                 self.blueman.Config["last-adapter"] = adapter_path_to_name(adapter_path)
-                self.blueman.List.SetAdapter(adapter_path)
+                self.blueman.List.set_adapter(adapter_path)
 
     def on_adapter_added(self, _manager, adapter_path):
         adapter = bluez.Adapter(adapter_path)

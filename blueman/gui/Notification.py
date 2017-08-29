@@ -26,9 +26,8 @@ class Fade(AnimBase):
 class _NotificationDialog(Gtk.MessageDialog):
     def __init__(self, summary, message, timeout=-1, actions=None, actions_cb=None,
                  icon_name=None, image_data=None, pos_hint=None):
-        super(_NotificationDialog, self).__init__(parent=None, flags=0,
-            type=Gtk.MessageType.QUESTION, buttons=Gtk.ButtonsType.NONE,
-            message_format=None)
+        super(_NotificationDialog, self).__init__(parent=None, flags=0, type=Gtk.MessageType.QUESTION,
+                                                  buttons=Gtk.ButtonsType.NONE, message_format=None)
 
         self.set_name("NotificationDialog")
         i = 100
@@ -126,6 +125,7 @@ class _NotificationDialog(Gtk.MessageDialog):
         im = Gtk.Image(icon_name=icon_name, pixel_size=size)
         self.set_image(im)
         im.show()
+
 
 class _NotificationBubble(Gio.DBusProxy):
     def __init__(self, summary, message, timeout=-1, actions=None, actions_cb=None,

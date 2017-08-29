@@ -1,16 +1,17 @@
 # coding=utf-8
 import os.path
-import gi
-gi.require_version("Gtk", "3.0")
-gi.require_version("Pango", "1.0")
-from gi.repository import Gtk
-from gi.repository import Pango
 import logging
 import gettext
 
 from blueman.Constants import UI_PATH
 from blueman.Functions import *
-import blueman.bluez as Bluez
+import blueman.bluez as bluez
+
+import gi
+gi.require_version("Gtk", "3.0")
+gi.require_version("Pango", "1.0")
+from gi.repository import Gtk
+from gi.repository import Pango
 
 
 class BluemanAdapters(Gtk.Dialog):
@@ -41,18 +42,18 @@ class BluemanAdapters(Gtk.Dialog):
         self._adapters = {}
 
         setup_icon_path()
-        Bluez.Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
+        bluez.Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
 
         check_single_instance("blueman-adapters", lambda time: self.present_with_time(time))
 
         check_bluetooth_status(_("Bluetooth needs to be turned on for the adapter manager to work"), lambda: exit())
 
         try:
-            self.manager = Bluez.Manager()
+            self.manager = bluez.Manager()
         except Exception as e:
             logging.exception(e)
             self.manager = None
-        #fixme: show error dialog and exit
+        # fixme: show error dialog and exit
 
         self.manager.connect_signal('adapter-added', self.on_adapter_added)
         self.manager.connect_signal('adapter-removed', self.on_adapter_removed)
@@ -62,7 +63,7 @@ class BluemanAdapters(Gtk.Dialog):
             self._adapters[hci_dev] = adapter
             self.on_adapter_added(self.manager, path)
 
-        #activate a particular tab according to command line option
+        # activate a particular tab according to command line option
         if selected_hci_dev is not None:
             if selected_hci_dev in self.tabs:
                 hci_dev_num = int(selected_hci_dev[3:])
@@ -84,7 +85,7 @@ class BluemanAdapters(Gtk.Dialog):
     def on_adapter_added(self, _manager, adapter_path):
         hci_dev = os.path.basename(adapter_path)
         if hci_dev not in self._adapters:
-            self._adapters[hci_dev] = Bluez.Adapter(adapter_path)
+            self._adapters[hci_dev] = bluez.Adapter(adapter_path)
 
         self._adapters[hci_dev].connect_signal("property-changed", self.on_property_changed)
         self.add_to_notebook(self._adapters[hci_dev])
@@ -130,7 +131,7 @@ class BluemanAdapters(Gtk.Dialog):
                 else:
                     return _("Hidden")
             else:
-                return gettext.ngettext("%d Minute", "%d Minutes", value) % (value)
+                return gettext.ngettext("%d Minute", "%d Minutes", value) % value
 
         def on_scale_value_changed(scale):
             val = scale.get_value()
@@ -191,7 +192,7 @@ class BluemanAdapters(Gtk.Dialog):
         else:
             if self.tabs[hci_dev]['visible']:
                 return
-            #might need to update settings at this point
+                # might need to update settings at this point
         ui = self.tabs[hci_dev]
         ui['visible'] = True
         name = adapter.get_name()
@@ -211,4 +212,4 @@ class BluemanAdapters(Gtk.Dialog):
         self.tabs[hci_dev]['visible'] = False
         self.notebook.remove_page(hci_dev_num)
 
-    #leave actual tab contents intact in case adapter becomes present once again
+        # leave actual tab contents intact in case adapter becomes present once again

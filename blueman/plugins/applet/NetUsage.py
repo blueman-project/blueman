@@ -1,4 +1,13 @@
 # coding=utf-8
+import weakref
+from html import escape
+import dbus
+import time
+import datetime
+import gettext
+import logging
+from locale import bind_textdomain_codeset
+
 from blueman.Functions import *
 from blueman.Constants import *
 from blueman.plugins.AppletPlugin import AppletPlugin
@@ -8,19 +17,11 @@ from blueman.bluez.Network import AnyNetwork
 from _blueman import rfcomm_list
 from gi.repository import GObject
 from gi.repository import GLib
-import weakref
-from html import escape
 
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import Pango
-import dbus
-import time
-import datetime
-import gettext
-import logging
-from locale import bind_textdomain_codeset
 
 
 class MonitorBase(GObject.GObject):
@@ -40,7 +41,7 @@ class MonitorBase(GObject.GObject):
         self.last_tx = 0
         self.last_rx = 0
 
-    #tx and rx must be cumulative absolute values
+    # tx and rx must be cumulative absolute values
     def update_stats(self, tx, rx):
         dtx = tx - self.last_tx
         drx = rx - self.last_rx
@@ -62,7 +63,7 @@ class MonitorBase(GObject.GObject):
         if not self.device["Address"] in self.general_config["netusage-dev-list"]:
             self.general_config["netusage-dev-list"] += [self.device["Address"]]
 
-    def Disconnect(self):
+    def disconnect_monitor(self):
         self.emit("disconnected")
 
 
@@ -84,7 +85,7 @@ class NMMonitor(MonitorBase):
         if key == "Connected" and not value:
             self.__bus.remove_signal_receiver(self.on_ppp_stats, "PppStats",
                                               "org.freedesktop.NetworkManager.Device.Serial", path=self.__nm_dev_path)
-            self.Disconnect()
+            self.disconnect_monitor()
 
 
 class Monitor(MonitorBase):
@@ -111,7 +112,7 @@ class Monitor(MonitorBase):
             self.ppp_port = None
             self.interface = None
             self.config = None
-            self.Disconnect()
+            self.disconnect_monitor()
             return False
 
         self.update_stats(tx, rx)
@@ -180,7 +181,8 @@ class Dialog:
             for m in parent.monitors:
                 if d == m.device["Address"]:
                     titer = self.liststore.append(
-                        [d, self.get_caption(m.device["Alias"], m.device["Address"]), _("Connected:") + " " + m.interface, m])
+                        [d, self.get_caption(m.device["Alias"], m.device["Address"]),
+                         _("Connected:") + " " + m.interface, m])
                     if self.cb_device.get_active() == -1:
                         self.cb_device.set_active_iter(titer)
                     added = True
@@ -200,9 +202,10 @@ class Dialog:
             if self.cb_device.get_active() == -1:
                 self.cb_device.set_active(0)
         else:
+            msg = _("No usage statistics are available yet. Try establishing a connection first and "
+                    "then check this page.")
             d = Gtk.MessageDialog(parent=self.dialog, flags=Gtk.DialogFlags.MODAL, type=Gtk.MessageType.INFO,
-                                  buttons=Gtk.ButtonsType.CLOSE, message_format=_(
-                    "No usage statistics are available yet. Try establishing a connection first and then check this page."))
+                                  buttons=Gtk.ButtonsType.CLOSE, message_format=msg)
             d.props.icon_name = "blueman"
             d.run()
             d.destroy()
@@ -232,7 +235,7 @@ class Dialog:
             m = gettext.ngettext("minute", "minutes", delta.seconds % 3600 / 60)
 
             self.l_duration.props.label = _("%d %s %d %s and %d %s") % (
-            delta.days, d, delta.seconds / 3600, h, delta.seconds % 3600 / 60, m)
+                delta.days, d, delta.seconds / 3600, h, delta.seconds % 3600 / 60, m)
         else:
             self.l_started.props.label = _("Unknown")
             self.l_duration.props.label = _("Unknown")
@@ -291,8 +294,10 @@ class Dialog:
                                    _("Connected:") + " " + monitor.interface, 3, monitor)
                 return
 
-        self.liststore.append([monitor.device["Address"], self.get_caption(monitor.device["Alias"], monitor.device["Address"]),
-                               _("Connected:") + " " + monitor.interface, monitor])
+        self.liststore.append(
+            [monitor.device["Address"], self.get_caption(monitor.device["Alias"], monitor.device["Address"]),
+             _("Connected:") + " " + monitor.interface, monitor]
+        )
 
     def monitor_removed(self, parent, monitor):
         for row in self.liststore:
@@ -308,14 +313,14 @@ class Dialog:
 class NetUsage(AppletPlugin, GObject.GObject):
     __depends__ = ["Menu"]
     __icon__ = "network-wireless"
-    __description__ = _(
-        "Allows you to monitor your (mobile broadband) network traffic usage. Useful for limited data access plans. This plugin tracks every device seperately.")
+    __description__ = _("Allows you to monitor your (mobile broadband) network traffic usage. Useful for limited "
+                        "data access plans. This plugin tracks every device seperately.")
     __author__ = "Walmis"
     __autoload__ = False
     __gsignals__ = {
         'monitor-added': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
         'monitor-removed': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-        #monitor, tx, rx
+        # monitor, tx, rx
         'stats': (GObject.SignalFlags.NO_HOOKS, None,
                   (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
     }
@@ -335,7 +340,7 @@ class NetUsage(AppletPlugin, GObject.GObject):
         item = create_menuitem(_("Network _Usage"), "network-wireless")
         item.props.tooltip_text = _("Shows network traffic usage")
         item.connect("activate", self.activate_ui)
-        self.Applet.Plugins.Menu.Register(self, item, 84, True)
+        self.Applet.Plugins.Menu.register(self, item, 84, True)
 
         self.bus.add_signal_receiver(self.on_nm_ppp_stats, "PppStats", "org.freedesktop.NetworkManager.Device.Serial",
                                      path_keyword="path")
@@ -379,7 +384,7 @@ class NetUsage(AppletPlugin, GObject.GObject):
         self.bus.remove_signal_receiver(self.on_nm_ppp_stats, "PppStats",
                                         "org.freedesktop.NetworkManager.Device.Serial", path_keyword="path")
         del self._any_network
-        self.Applet.Plugins.Menu.Unregister(self)
+        self.Applet.Plugins.Menu.unregister(self)
 
     def monitor_interface(self, montype, *args):
         m = montype(*args)

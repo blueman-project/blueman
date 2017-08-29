@@ -1,4 +1,6 @@
 # coding=utf-8
+import logging
+
 import gi
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
@@ -7,7 +9,6 @@ from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import GLib
-import logging
 
 
 class ManagerProgressbar(GObject.GObject):
@@ -105,12 +106,12 @@ class ManagerProgressbar(GObject.GObject):
 
             if ManagerProgressbar.__instances__[-1] == self:
                 ManagerProgressbar.__instances__.pop()
-                #remove all finalized instances
+                # remove all finalized instances
                 for inst in reversed(ManagerProgressbar.__instances__):
                     if inst.finalized:
                         ManagerProgressbar.__instances__.pop()
                     else:
-                        #show last active progress bar
+                        # show last active progress bar
                         inst.show()
                         break
 

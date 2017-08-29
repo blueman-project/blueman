@@ -28,7 +28,7 @@ class DiscvManager(AppletPlugin):
 
     def on_load(self, applet):
         self.item = create_menuitem(_("_Make Discoverable"), "edit-find")
-        applet.Plugins.Menu.Register(self, self.item, 20, False)
+        applet.Plugins.Menu.register(self, self.item, 20, False)
 
         self.Applet = applet
         self.adapter = None
@@ -40,7 +40,7 @@ class DiscvManager(AppletPlugin):
         self.timeout = None
 
     def on_unload(self):
-        self.Applet.Plugins.Menu.Unregister(self)
+        self.Applet.Plugins.Menu.unregister(self)
         del self.item
 
         if self.timeout:
@@ -85,7 +85,7 @@ class DiscvManager(AppletPlugin):
         if self.adapter and path == self.adapter.get_object_path():
             logging.debug("prop %s %s" % (key, value))
             if key == "DiscoverableTimeout":
-                if value == 0: #always visible
+                if value == 0:  # always visible
                     if self.timeout is not None:
                         GLib.source_remove(self.timeout)
                     self.time_left = -1

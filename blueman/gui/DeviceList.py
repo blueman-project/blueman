@@ -1,39 +1,41 @@
 # coding=utf-8
-from blueman.Functions import wait_for_adapter, adapter_path_to_name
-from blueman.gui.GenericList import GenericList
-from blueman.Constants import ICON_PATH
-from _blueman import conn_info, ConnInfoReadError
-import blueman.bluez as Bluez
-
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
-from gi.repository import GObject
-from gi.repository import GLib
 from datetime import datetime
 import os
 import re
 import logging
 
+from blueman.Functions import wait_for_adapter, adapter_path_to_name
+from blueman.gui.GenericList import GenericList
+from blueman.Constants import ICON_PATH
+from _blueman import conn_info, ConnInfoReadError
+import blueman.bluez as bluez
+
+from gi.repository import GObject
+from gi.repository import GLib
+
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
+
 
 class DeviceList(GenericList):
     __gsignals__ = {
-        #@param: device TreeIter
-        #note: None None is given when there ar no more rows, or when selected device is removed
+        # @param: device TreeIter
+        # note: None None is given when there ar no more rows, or when selected device is removed
         'device-selected': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
-        #@param: device, TreeIter, (key, value)
+        # @param: device, TreeIter, (key, value)
         'device-property-changed': (GObject.SignalFlags.RUN_LAST, None,
                                     (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
-        #@param: adapter, (key, value)
+        # @param: adapter, (key, value)
         'adapter-property-changed': (GObject.SignalFlags.RUN_LAST, None,
                                      (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
-        #@param: progress (0 to 1)
+        # @param: progress (0 to 1)
         'discovery-progress': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_FLOAT,)),
 
-        #@param: new adapter path, None if there are no more adapters
+        # @param: new adapter path, None if there are no more adapters
         'adapter-changed': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
 
-        #@param: adapter path
+        # @param: adapter path
         'adapter-added': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
         'adapter-removed': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
     }
@@ -50,30 +52,30 @@ class DeviceList(GenericList):
             if path == self.__adapter_path:
                 self.clear()
                 self.Adapter = None
-                self.SetAdapter()
+                self.set_adapter()
 
         def on_adapter_added(_manager, path):
             def on_activate():
                 logging.info("adapter powered %s" % path)
 
                 if self.Adapter is None:
-                    self.SetAdapter(path)
+                    self.set_adapter(path)
 
                 self.emit("adapter-added", path)
 
-            a = Bluez.Adapter(path)
+            a = bluez.Adapter(path)
             wait_for_adapter(a, on_activate)
 
-        #cache for fast lookup in the list
+        # cache for fast lookup in the list
         self.path_to_row = {}
 
         self.monitored_devices = []
 
-        self.manager = Bluez.Manager()
+        self.manager = bluez.Manager()
         self.manager.connect_signal('adapter-removed', on_adapter_removed)
         self.manager.connect_signal('adapter-added', on_adapter_added)
 
-        any_device = Bluez.AnyDevice()
+        any_device = bluez.AnyDevice()
         any_device.connect_signal("property-changed", self._on_device_property_changed)
 
         self.__discovery_time = 0
@@ -90,8 +92,8 @@ class DeviceList(GenericList):
         super(DeviceList, self).__init__(data, **kwargs)
         self.set_name("DeviceList")
 
-        self.SetAdapter(adapter_name)
-        self._any_adapter = Bluez.AnyAdapter()
+        self.set_adapter(adapter_name)
+        self._any_adapter = bluez.AnyAdapter()
         self._any_adapter.connect_signal("property-changed", self._on_property_changed)
 
         self.selection.connect('changed', self.on_selection_changed)
@@ -114,7 +116,7 @@ class DeviceList(GenericList):
 
         if key == "Discovering":
             if not value and self.discovering:
-                self.StopDiscovery()
+                self.stop_discovery()
 
         self.emit("adapter-property-changed", self.Adapter, (key, value))
 
@@ -176,22 +178,22 @@ class DeviceList(GenericList):
                 GLib.timeout_add(1000, update, r, cinfo, bt_address)
                 self.monitored_devices.append(bt_address)
 
-    ##### virtual funcs #####
+    # ##### virtual funcs #####
 
-    #called when power levels need updating
-    #if cinfo is None then info icons need to be removed
+    # called when power levels need updating
+    # if cinfo is None then info icons need to be removed
     def level_setup_event(self, tree_iter, device, cinfo):
         pass
 
-    #called when row needs to be initialized
+    # called when row needs to be initialized
     def row_setup_event(self, tree_iter, device):
         pass
 
-    #called when a property for a device changes
+    # called when a property for a device changes
     def row_update_event(self, tree_iter, key, value):
         pass
 
-    #called when device needs to be added to the list
+    # called when device needs to be added to the list
     def device_add_event(self, device):
         self.add_device(device)
 
@@ -210,7 +212,7 @@ class DeviceList(GenericList):
     def _on_device_created(self, _adapter, path):
         tree_iter = self.find_device_by_path(path)
         if tree_iter is None:
-            dev = Bluez.Device(path)
+            dev = bluez.Device(path)
             self.device_add_event(dev)
 
     def _on_device_removed(self, _manager, path):
@@ -221,11 +223,11 @@ class DeviceList(GenericList):
 
             self.device_remove_event(dev, tree_iter)
 
-    def SetAdapter(self, adapter=None):
+    def set_adapter(self, adapter=None):
         self.clear()
         if self.discovering:
             self.emit("adapter-property-changed", self.Adapter, ("Discovering", False))
-            self.StopDiscovery()
+            self.stop_discovery()
 
         if adapter is not None and adapter != "" and not re.match("hci[0-9]*", adapter):
             adapter = adapter_path_to_name(adapter)
@@ -242,11 +244,11 @@ class DeviceList(GenericList):
             self.manager.connect_signal('device-removed', self._on_device_removed)
             self.__adapter_path = self.Adapter.get_object_path()
             self.emit("adapter-changed", self.__adapter_path)
-        except Bluez.errors.DBusNoSuchAdapterError as e:
+        except bluez.errors.DBusNoSuchAdapterError as e:
             logging.exception(e)
-            #try loading default adapter
+            # try loading default adapter
             if len(self.manager.get_adapters()) > 0 and adapter is not None:
-                self.SetAdapter()
+                self.set_adapter()
             else:
                 self.Adapter = None
                 self.emit("adapter-changed", None)
@@ -261,14 +263,14 @@ class DeviceList(GenericList):
         if progress >= 1.0:
             progress = 1.0
         if self.__discovery_time >= totaltime:
-            self.StopDiscovery()
+            self.stop_discovery()
             return False
 
         self.emit("discovery-progress", progress)
         return True
 
     def add_device(self, device):
-        #device belongs to another adapter
+        # device belongs to another adapter
         if not device['Adapter'] == self.Adapter.get_object_path():
             return
 
@@ -285,7 +287,7 @@ class DeviceList(GenericList):
         if device["Connected"]:
             self.monitor_power_levels(device)
 
-    def DisplayKnownDevices(self, autoselect=False):
+    def display_known_devices(self, autoselect=False):
         self.clear()
         devices = self.manager.get_devices(self.Adapter.get_object_path())
         for device in devices:
@@ -294,31 +296,31 @@ class DeviceList(GenericList):
         if autoselect:
             self.selection.select_path(0)
 
-    def DiscoverDevices(self, time=10.24):
+    def discover_devices(self, time=10.24):
         if not self.discovering:
             self.__discovery_time = 0
             if self.Adapter is not None:
                 self.Adapter.start_discovery()
                 self.discovering = True
-                T = 1.0 / 15 * 1000
-                GLib.timeout_add(int(T), self.update_progress, T / 1000, time)
+                t = 1.0 / 15 * 1000
+                GLib.timeout_add(int(t), self.update_progress, t / 1000, time)
 
-    def IsValidAdapter(self):
+    def is_valid_adapter(self):
         if self.Adapter is None:
             return False
         else:
             return True
 
-    def GetAdapterPath(self):
-        if self.IsValidAdapter():
+    def get_adapter_path(self):
+        if self.is_valid_adapter():
             return self.__adapter_path
 
-    def StopDiscovery(self):
+    def stop_discovery(self):
         self.discovering = False
         if self.Adapter is not None:
             self.Adapter.stop_discovery()
 
-    def GetSelectedDevice(self):
+    def get_selected_device(self):
         selected = self.selected()
         if selected is not None:
             row = self.get(selected, "device")
@@ -383,7 +385,6 @@ class DeviceList(GenericList):
             logging.info("Caching new device %s" % object_path)
             self.path_to_row[object_path] = Gtk.TreeRowReference.new(self.get_model(),
                                                                      self.get_model().get_path(tree_iter))
-
 
     def append(self, **columns):
         tree_iter = GenericList.append(self, **columns)

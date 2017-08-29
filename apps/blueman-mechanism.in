@@ -1,17 +1,8 @@
 #!/usr/bin/env python3
 # coding=utf-8
-
 import sys
 import os
 import logging
-
-timeout = 30
-#support running uninstalled
-_dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-if 'BLUEMAN_SOURCE' in os.environ:
-    sys.path.insert(0, _dirname)
-    timeout = 9999
-    os.environ["GSETTINGS_SCHEMA_DIR"] = os.path.join(_dirname, "data")
 
 import dbus
 import dbus.service
@@ -19,7 +10,14 @@ from dbus.mainloop.glib import DBusGMainLoop
 
 from gi.repository import Gio, GLib
 
-loop = GLib.MainLoop()
+# support running uninstalled
+_dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if 'BLUEMAN_SOURCE' in os.environ:
+    sys.path.insert(0, _dirname)
+    timeout = 9999
+    os.environ["GSETTINGS_SCHEMA_DIR"] = os.path.join(_dirname, "data")
+else:
+    timeout = 30
 
 from _blueman import set_probe_debug
 from blueman.Constants import POLKIT
@@ -29,6 +27,8 @@ import blueman.plugins.mechanism
 from blueman.plugins.MechanismPlugin import MechanismPlugin
 
 from blueman.main.DbusService import DbusService
+
+loop = GLib.MainLoop()
 
 
 class StreamToLogger(object):
@@ -113,9 +113,9 @@ class Timer:
         self.reset()
 
 
-class conf_service(DbusService):
+class ConfService(DbusService):
     def __init__(self):
-        super(conf_service, self).__init__("org.blueman.Mechanism", "/", dbus.SystemBus)
+        super(ConfService, self).__init__("org.blueman.Mechanism", "/", dbus.SystemBus)
         self.timer = Timer()
         if args.stoptimer:
             self.timer.stop()
@@ -163,7 +163,7 @@ class conf_service(DbusService):
                     "Blueman was built with PolicyKit-1 support, but it's not available on the system")
 
         v_subject = GLib.Variant('s', subject)
-        res = self.pk.CheckAuthorization('((sa{sv})sa{ss}us)',("system-bus-name", {"name": v_subject}),
+        res = self.pk.CheckAuthorization('((sa{sv})sa{ss}us)', ("system-bus-name", {"name": v_subject}),
                                          action_id, {}, 1, "")
 
         logging.debug(str(res))
@@ -173,5 +173,5 @@ class conf_service(DbusService):
 
 
 set_proc_title()
-conf_service()
+ConfService()
 loop.run()

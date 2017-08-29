@@ -1,12 +1,14 @@
 # coding=utf-8
+import logging
+
 import blueman.bluez as bluez
-from blueman.Functions import *
+from blueman.Functions import launch
 from blueman.plugins.AppletPlugin import AppletPlugin
+
 import gi
 gi.require_version('GdkX11', '3.0')
 gi.require_version('Gdk', '3.0')
 from gi.repository import Gdk, GdkX11
-import logging
 
 if not isinstance(Gdk.Screen.get_default(), GdkX11.X11Screen):
     raise ImportError('This is not an X11 screen')
@@ -37,7 +39,7 @@ class GameControllerWakelock(AppletPlugin):
                     self.xdg_screensaver("resume")
 
     def xdg_screensaver(self, action):
-        command = "xdg-screensaver %s %s" %(action, self.root_window_id)
+        command = "xdg-screensaver %s %s" % (action, self.root_window_id)
 
         if action == "resume":
             if self.wake_lock <= 0:
@@ -46,15 +48,19 @@ class GameControllerWakelock(AppletPlugin):
                 self.wake_lock -= 1
             else:
                 ret = launch(command, sn=False)
-                if ret: self.wake_lock -= 1
-                else: logging.error("%s failed" % action)
+                if ret:
+                    self.wake_lock -= 1
+                else:
+                    logging.error("%s failed" % action)
 
         elif action == "suspend":
             if self.wake_lock >= 1:
                 self.wake_lock += 1
             else:
                 ret = launch(command, sn=False)
-                if ret: self.wake_lock += 1
-                else: logging.error("%s failed" % action)
+                if ret:
+                    self.wake_lock += 1
+                else:
+                    logging.error("%s failed" % action)
 
         logging.info("Number of locks: %s" % self.wake_lock)

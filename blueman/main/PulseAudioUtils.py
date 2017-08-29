@@ -53,58 +53,58 @@ class PANotConnected(Exception):
     pass
 
 
-class pa_module_info(Structure):
+class PaModuleInfo(Structure):
     _fields_ = [("index", c_uint),
                 ("name", c_char_p),
                 ("argument", c_char_p),
                 ("n_used", c_int),
                 ("proplist", c_void_p),
-    ]
+                ]
 
 
-class pa_sample_spec(Structure):
+class PaSampleSpec(Structure):
     pass
 
 
-pa_sample_spec._fields_ = [
+PaSampleSpec._fields_ = [
     ('format', c_int),
     ('rate', c_uint32),
     ('channels', c_uint8),
 ]
 
 
-class pa_channel_map(Structure):
+class PaChannelMap(Structure):
     pass
 
 
-pa_channel_map._fields_ = [
+PaChannelMap._fields_ = [
     ('channels', c_uint8),
     ('map', c_int * 32),
 ]
 
 
-class pa_cvolume(Structure):
+class PaCvolume(Structure):
     pass
 
 
-pa_cvolume._fields_ = [
+PaCvolume._fields_ = [
     ('channels', c_uint8),
     ('values', c_uint32 * 32),
 ]
 
 
-class pa_source_info(Structure):
+class PaSourceInfo(Structure):
     pass
 
 
-pa_source_info._fields_ = [
+PaSourceInfo._fields_ = [
     ('name', c_char_p),
     ('index', c_uint32),
     ('description', c_char_p),
-    ('sample_spec', pa_sample_spec),
-    ('channel_map', pa_channel_map),
+    ('sample_spec', PaSampleSpec),
+    ('channel_map', PaChannelMap),
     ('owner_module', c_uint32),
-    ('volume', pa_cvolume),
+    ('volume', PaCvolume),
     ('mute', c_int),
     ('monitor_of_sink', c_uint32),
     ('monitor_of_sink_name', c_char_p),
@@ -123,18 +123,18 @@ pa_source_info._fields_ = [
 ]
 
 
-class pa_sink_info(Structure):
+class PaSinkInfo(Structure):
     pass
 
 
-pa_sink_info._fields_ = [
+PaSinkInfo._fields_ = [
     ('name', c_char_p),
     ('index', c_uint32),
     ('description', c_char_p),
-    ('sample_spec', pa_sample_spec),
-    ('channel_map', pa_channel_map),
+    ('sample_spec', PaSampleSpec),
+    ('channel_map', PaChannelMap),
     ('owner_module', c_uint32),
-    ('volume', pa_cvolume),
+    ('volume', PaCvolume),
     ('mute', c_int),
     ('monitor_of_sink', c_uint32),
     ('monitor_of_sink_name', c_char_p),
@@ -153,19 +153,19 @@ pa_sink_info._fields_ = [
 ]
 
 
-class pa_sink_input_info(Structure):
+class PaSinkInputInfo(Structure):
     pass
 
 
-pa_sink_input_info._fields_ = [
+PaSinkInputInfo._fields_ = [
     ('index', c_uint32),
     ('name', c_char_p),
     ('owner_module', c_uint32),
     ('client', c_uint32),
     ('sink', c_uint32),
-    ('sample_spec', pa_sample_spec),
-    ('channel_map', pa_channel_map),
-    ('volume', pa_cvolume),
+    ('sample_spec', PaSampleSpec),
+    ('channel_map', PaChannelMap),
+    ('volume', PaCvolume),
     ('buffer_usec', c_uint64),
     ('sink_usec', c_uint64),
     ('resample_method', c_char_p),
@@ -175,11 +175,11 @@ pa_sink_input_info._fields_ = [
 ]
 
 
-class pa_card_profile_info(Structure):
+class PaCardProfileInfo(Structure):
     pass
 
 
-pa_card_profile_info._fields_ = [
+PaCardProfileInfo._fields_ = [
     ('name', c_char_p),
     ('description', c_char_p),
     ('n_sinks', c_uint32),
@@ -188,18 +188,18 @@ pa_card_profile_info._fields_ = [
 ]
 
 
-class pa_card_info(Structure):
+class PaCardInfo(Structure):
     pass
 
 
-pa_card_info._fields_ = [
+PaCardInfo._fields_ = [
     ('index', c_uint32),
     ('name', c_char_p),
     ('owner_module', c_uint32),
     ('driver', c_char_p),
     ('n_profiles', c_uint32),
-    ('profiles', POINTER(pa_card_profile_info)),
-    ('active_profile', POINTER(pa_card_profile_info)),
+    ('profiles', POINTER(PaCardProfileInfo)),
+    ('active_profile', POINTER(PaCardProfileInfo)),
     ('proplist', c_void_p),
 ]
 pa_context_notify_cb_t = CFUNCTYPE(None, c_void_p, py_object)
@@ -207,13 +207,13 @@ pa_context_notify_cb_t = CFUNCTYPE(None, c_void_p, py_object)
 pa_context_index_cb_t = CFUNCTYPE(None, c_void_p, c_int, py_object)
 pa_context_success_cb_t = pa_context_index_cb_t
 
-pa_module_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(pa_module_info), c_int, py_object)
-pa_source_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(pa_source_info), c_int, py_object)
-pa_sink_input_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(pa_sink_input_info), c_int, py_object)
-pa_card_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(pa_card_info), c_int, py_object)
+pa_module_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(PaModuleInfo), c_int, py_object)
+pa_source_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(PaSourceInfo), c_int, py_object)
+pa_sink_input_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(PaSinkInputInfo), c_int, py_object)
+pa_card_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(PaCardInfo), c_int, py_object)
 pa_context_subscribe_cb_t = CFUNCTYPE(None, c_void_p, c_uint32, c_uint32, c_void_p)
 
-pa_sink_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(pa_sink_info), c_int, py_object)
+pa_sink_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(PaSinkInfo), c_int, py_object)
 
 pa_context_get_module_info_list = libpulse.pa_context_get_module_info_list
 pa_context_get_module_info_list.restype = c_void_p
@@ -345,11 +345,11 @@ class PulseAudioUtils(GObject.GObject):
         if state == PA_CONTEXT_READY:
             self.connected = True
             self.emit("connected")
-            MASK = 0x0200 | 0x0010  # from enum pa_subscription_mask
+            mask = 0x0200 | 0x0010  # from enum pa_subscription_mask
 
             self.simple_callback(lambda x: logging.info(x),
                                  pa_context_subscribe,
-                                 MASK)
+                                 mask)
         else:
             if self.connected:
                 self.emit("disconnected")
@@ -357,7 +357,7 @@ class PulseAudioUtils(GObject.GObject):
 
         if self.prev_state == PA_CONTEXT_READY and state == PA_CONTEXT_FAILED:
             logging.info("Pulseaudio probably crashed, restarting in 5s")
-            GLib.timeout_add(5000, self.Connect)
+            GLib.timeout_add(5000, self.connect_rfcomm)
 
         self.prev_state = state
 
@@ -413,7 +413,7 @@ class PulseAudioUtils(GObject.GObject):
             logging.error(func.__name__)
         pa_operation_unref(op)
 
-    def ListSources(self, callback):
+    def list_sources(self, callback):
         self.check_connected()
 
         data = {}
@@ -426,11 +426,11 @@ class PulseAudioUtils(GObject.GObject):
             props = self.__get_proplist(entry_info[0].proplist)
 
             data[entry_info[0].index] = {
-            "name": entry_info[0].name.decode("UTF-8"),
-            "proplist": props,
-            "description": entry_info[0].description.decode("UTF-8"),
-            "owner_module": entry_info[0].owner_module,
-            "driver": entry_info[0].driver.decode("UTF-8")
+                "name": entry_info[0].name.decode("UTF-8"),
+                "proplist": props,
+                "description": entry_info[0].description.decode("UTF-8"),
+                "owner_module": entry_info[0].owner_module,
+                "driver": entry_info[0].driver.decode("UTF-8")
             }
             if end:
                 callback(data)
@@ -438,7 +438,7 @@ class PulseAudioUtils(GObject.GObject):
         self.__init_list_callback(pa_context_get_source_info_list,
                                   pa_source_info_cb_t, handler)
 
-    def ListSinks(self, callback, card_id=None):
+    def list_sinks(self, callback, card_id=None):
         self.check_connected()
 
         data = {}
@@ -450,11 +450,11 @@ class PulseAudioUtils(GObject.GObject):
             props = self.__get_proplist(entry_info[0].proplist)
 
             data[entry_info[0].index] = {
-            "name": entry_info[0].name.decode("UTF-8"),
-            "proplist": props,
-            "description": entry_info[0].description.decode("UTF-8"),
-            "owner_module": entry_info[0].owner_module,
-            "driver": entry_info[0].driver.decode("UTF-8")
+                "name": entry_info[0].name.decode("UTF-8"),
+                "proplist": props,
+                "description": entry_info[0].description.decode("UTF-8"),
+                "owner_module": entry_info[0].owner_module,
+                "driver": entry_info[0].driver.decode("UTF-8")
             }
 
             if end:
@@ -467,7 +467,7 @@ class PulseAudioUtils(GObject.GObject):
             self.__init_list_callback(pa_context_get_sink_info_list,
                                       pa_sink_info_cb_t, handler)
 
-    def ListSinkInputs(self, callback):
+    def list_sink_inputs(self, callback):
         self.check_connected()
 
         data = {}
@@ -480,24 +480,24 @@ class PulseAudioUtils(GObject.GObject):
             props = self.__get_proplist(entry_info[0].proplist)
 
             data[entry_info[0].index] = {
-            "name": entry_info[0].name.decode("UTF-8"),
-            "proplist": props,
-            "owner_module": entry_info[0].owner_module,
-            "sink": entry_info[0].sink,
-            "driver": entry_info[0].driver.decode("UTF-8")
+                "name": entry_info[0].name.decode("UTF-8"),
+                "proplist": props,
+                "owner_module": entry_info[0].owner_module,
+                "sink": entry_info[0].sink,
+                "driver": entry_info[0].driver.decode("UTF-8")
             }
 
         self.__init_list_callback(pa_context_get_sink_input_info_list,
                                   pa_sink_input_info_cb_t, handler)
 
-    def MoveSinkInput(self, input_id, sink_id, callback):
+    def move_sink_input(self, input_id, sink_id, callback):
         self.check_connected()
 
         self.simple_callback(callback,
                              pa_context_move_sink_input_by_index,
                              int(input_id), int(sink_id))
 
-    def SetDefaultSink(self, name, callback):
+    def set_default_sink(self, name, callback):
         self.check_connected()
 
         self.simple_callback(callback, pa_context_set_default_sink, name)
@@ -506,20 +506,20 @@ class PulseAudioUtils(GObject.GObject):
     def __card_info(self, card_info):
         props = self.__get_proplist(card_info[0].proplist)
         stuff = {
-        "name": card_info[0].name.decode("UTF-8"),
-        "proplist": props,
-        "owner_module": card_info[0].owner_module,
-        "driver": card_info[0].driver.decode("UTF-8"),
-        "index": card_info[0].index,
+            "name": card_info[0].name.decode("UTF-8"),
+            "proplist": props,
+            "owner_module": card_info[0].owner_module,
+            "driver": card_info[0].driver.decode("UTF-8"),
+            "index": card_info[0].index,
         }
         profiles = []
         for i in range(0, card_info[0].n_profiles):
             x = {
-            "name": card_info[0].profiles[i].name.decode("UTF-8"),
-            "description": card_info[0].profiles[i].description.decode("UTF-8"),
-            "n_sinks": card_info[0].profiles[i].n_sinks,
-            "n_sources": card_info[0].profiles[i].n_sources,
-            "priority": card_info[0].profiles[i].priority,
+                "name": card_info[0].profiles[i].name.decode("UTF-8"),
+                "description": card_info[0].profiles[i].description.decode("UTF-8"),
+                "n_sinks": card_info[0].profiles[i].n_sinks,
+                "n_sources": card_info[0].profiles[i].n_sources,
+                "priority": card_info[0].profiles[i].priority,
             }
             profiles.append(x)
 
@@ -528,7 +528,7 @@ class PulseAudioUtils(GObject.GObject):
 
         return stuff
 
-    def ListCards(self, callback):
+    def list_cards(self, callback):
         self.check_connected()
 
         data = {}
@@ -545,7 +545,7 @@ class PulseAudioUtils(GObject.GObject):
         self.__init_list_callback(pa_context_get_card_info_list,
                                   pa_card_info_cb_t, handler)
 
-    def GetCard(self, card, callback):
+    def get_card(self, card, callback):
         self.check_connected()
 
         def handler(entry_info, end):
@@ -562,7 +562,7 @@ class PulseAudioUtils(GObject.GObject):
         self.__init_list_callback(fn,
                                   pa_card_info_cb_t, handler, card)
 
-    def SetCardProfile(self, card, profile, callback):
+    def set_card_profile(self, card, profile, callback):
         profile = profile.encode("UTF-8")
         if type(card) is str:
             card = card.encode("UTF-8")
@@ -572,9 +572,8 @@ class PulseAudioUtils(GObject.GObject):
 
         self.simple_callback(callback, fn, card, profile)
 
-    #### Module API #######
-    #from gi.repository import Gtk
-    def ListModules(self, callback):
+    # #### Module API ####
+    def list_module(self, callback):
 
         self.check_connected()
         data = {}
@@ -586,21 +585,21 @@ class PulseAudioUtils(GObject.GObject):
 
             props = self.__get_proplist(entry_info[0].proplist)
             data[entry_info[0].index] = {
-            "name": entry_info[0].name.decode("UTF-8"),
-            "argument": entry_info[0].argument.decode("UTF-8"),
-            "n_used": entry_info[0].n_used,
-            "proplist": props
+                "name": entry_info[0].name.decode("UTF-8"),
+                "argument": entry_info[0].argument.decode("UTF-8"),
+                "n_used": entry_info[0].n_used,
+                "proplist": props
             }
 
         self.__init_list_callback(pa_context_get_module_info_list,
                                   pa_module_info_cb_t, handler)
 
-    def UnloadModule(self, index, callback):
+    def unload_module(self, index, callback):
         self.check_connected()
 
         self.simple_callback(callback, pa_context_unload_module, index)
 
-    def LoadModule(self, name, args, callback):
+    def load_module(self, name, args, callback):
         self.check_connected()
 
         def handler(res):
@@ -613,7 +612,7 @@ class PulseAudioUtils(GObject.GObject):
 
     #####################
 
-    def GetVersion(self):
+    def get_version(self):
         v = pa_get_library_version().decode("UTF-8")
         try:
             a = v.split("-")[0].split(".")
@@ -654,9 +653,9 @@ class PulseAudioUtils(GObject.GObject):
 
         self.prev_state = 0
 
-        self.Connect()
+        self.connect_pulseaudio()
 
-    def Connect(self):
+    def connect_pulseaudio(self):
         if not self.connected:
             if self.pa_context:
                 pa_context_unref(self.pa_context)
@@ -675,6 +674,7 @@ class PulseAudioUtils(GObject.GObject):
                                               None)
 
     def __del__(self):
+        # FIXME __del__ is not guaranteed to be called by cpython
         logging.info("Destroying PulseAudioUtils instance")
 
         pa_context_disconnect(self.pa_context)

@@ -16,26 +16,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-# 
-
-__all__ = ["check_bluetooth_status", "wait_for_adapter", "launch", "setup_icon_path", "get_icon",
-           "get_notification_icon", "adapter_path_to_name", "e_", "opacify_pixbuf", "composite_icon",
-           "format_bytes", "create_menuitem", "get_lockfile", "get_pid", "is_running", "check_single_instance",
-           "have", "mask_ip4_address", "set_proc_title", "create_logger", "create_parser", "open_rfcomm"]
-
-
+#
 from time import sleep
-
-from blueman.Constants import *
-
-import gi
-gi.require_version("Gtk", "3.0")
-gi.require_version("Gdk", "3.0")
-from gi.repository import Gtk
-from gi.repository import Gdk
-from gi.repository import GdkPixbuf
-from gi.repository import GLib
-from gi.repository import Gio
 import re
 import os
 import signal
@@ -47,15 +29,31 @@ import logging.handlers
 import argparse
 from ctypes import cdll, byref, create_string_buffer
 import traceback
-import fcntl, struct, termios
+import fcntl
+import struct
+import termios
 
 try:
     in_fg = os.getpgrp() == struct.unpack(str('h'), fcntl.ioctl(0, termios.TIOCGPGRP, "  "))[0]
 except IOError:
     in_fg = 'DEBUG' in os.environ
 
-
 from blueman.main.AppletService import AppletService
+from blueman.Constants import *
+
+import gi
+gi.require_version("Gtk", "3.0")
+gi.require_version("Gdk", "3.0")
+from gi.repository import Gtk
+from gi.repository import Gdk
+from gi.repository import GdkPixbuf
+from gi.repository import GLib
+from gi.repository import Gio
+
+__all__ = ["check_bluetooth_status", "wait_for_adapter", "launch", "setup_icon_path", "get_icon",
+           "get_notification_icon", "adapter_path_to_name", "e_", "opacify_pixbuf", "composite_icon",
+           "format_bytes", "create_menuitem", "get_lockfile", "get_pid", "is_running", "check_single_instance",
+           "have", "mask_ip4_address", "set_proc_title", "create_logger", "create_parser", "open_rfcomm"]
 
 
 def check_bluetooth_status(message, exitfunc, *args, **kwargs):
@@ -95,7 +93,8 @@ def wait_for_adapter(bluez_adapter, callback, timeout=1000):
     def on_timeout():
         bluez_adapter.disconnect_signal(sig)
         GLib.source_remove(source)
-        logging.warning("Warning: Bluez didn't provide 'Powered' property in a reasonable timeout\nAssuming adapter is ready")
+        logging.warning("Warning: Bluez didn't provide 'Powered' property in a reasonable timeout\n"
+                        "Assuming adapter is ready")
         callback()
 
     if bluez_adapter["Address"] != "00:00:00:00:00:00":
@@ -112,8 +111,10 @@ def launch(cmd, paths=None, system=False, icon_name=None, sn=True, name="blueman
     timestamp = Gtk.get_current_event_time()
     context = display.get_app_launch_context()
     context.set_timestamp(timestamp)
-    if sn: flags = Gio.AppInfoCreateFlags.SUPPORTS_STARTUP_NOTIFICATION
-    else: flags = Gio.AppInfoCreateFlags.NONE
+    if sn:
+        flags = Gio.AppInfoCreateFlags.SUPPORTS_STARTUP_NOTIFICATION
+    else:
+        flags = Gio.AppInfoCreateFlags.NONE
 
     env = os.environ
     env["BLUEMAN_EVENT_TIME"] = str(timestamp)
@@ -183,22 +184,24 @@ def adapter_path_to_name(path):
     return re.search(".*(hci[0-9]*)", path).groups(0)[0]
 
 
-#format error
+# format error
 def e_(msg):
     if isinstance(msg, Exception):
-        return (str(msg), traceback.format_exc())
+        return str(msg), traceback.format_exc()
     else:
         s = msg.strip().split(": ")[-1]
-        return (s, None)
+        return s, None
+
 
 def opacify_pixbuf(pixbuf, alpha):
     new = pixbuf.copy()
     new.fill(0x00000000)
-    pixbuf.composite(new, 0, 0, pixbuf.props.width, pixbuf.props.height, 0, 0, 1, 1, GdkPixbuf.InterpType.BILINEAR, alpha)
+    pixbuf.composite(new, 0, 0, pixbuf.props.width, pixbuf.props.height, 0, 0, 1, 1,
+                     GdkPixbuf.InterpType.BILINEAR, alpha)
     return new
 
 
-#pixbuf, [(pixbuf, x, y, alpha), (pixbuf, x, y, alpha)]
+# pixbuf, [(pixbuf, x, y, alpha), (pixbuf, x, y, alpha)]
 
 def composite_icon(target, sources):
     target = target.copy()
@@ -224,7 +227,7 @@ def format_bytes(size):
         ret = size / (1024 * 1024 * 1024)
         suffix = "GB"
 
-    return (ret, suffix)
+    return ret, suffix
 
 
 def create_menuitem(text, icon_name=None, pixbuf=None, surface=None):
@@ -347,7 +350,7 @@ def set_proc_title(name=None):
         name = os.path.basename(sys.argv[0])
 
     libc = cdll.LoadLibrary('libc.so.6')
-    buff = create_string_buffer(len(name)+1)
+    buff = create_string_buffer(len(name) + 1)
     buff.value = name.encode("UTF-8")
     ret = libc.prctl(15, byref(buff), 0, 0, 0)
 
@@ -356,13 +359,17 @@ def set_proc_title(name=None):
 
     return ret
 
+
 logger_format = '%(name)s %(asctime)s %(levelname)-8s %(module)s:%(lineno)s %(funcName)-10s: %(message)s'
 syslog_logger_format = '%(name)s %(levelname)s %(module)s:%(lineno)s %(funcName)s: %(message)s'
 logger_date_fmt = '%H.%M.%S'
 
+
 def create_logger(log_level, name, log_format=None, date_fmt=None, syslog=False):
-    if log_format is None: log_format = logger_format
-    if date_fmt is None: date_fmt = logger_date_fmt
+    if log_format is None:
+        log_format = logger_format
+    if date_fmt is None:
+        date_fmt = logger_date_fmt
     logging.basicConfig(level=log_level, format=log_format, datefmt=date_fmt)
 
     logger = logging.getLogger(None)  # Root logger
@@ -388,6 +395,7 @@ def create_parser(parser=None, syslog=True, loglevel=True):
         parser.add_argument("--syslog", dest="syslog", action="store_true")
 
     return parser
+
 
 def open_rfcomm(file, mode):
     try:
