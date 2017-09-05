@@ -27,16 +27,6 @@ class BasePlugin(object):
     def __del__(self):
         logging.debug("Deleting plugin instance %s" % self)
 
-    @classmethod
-    def add_method(cls, func):
-        """Add a new method that can be used by other plugins to listen for changes, query state, etc"""
-        func.__self__.__methods.append((cls, func.__name__))
-
-        if func.__name__ in cls.__dict__:
-            raise MethodAlreadyExists
-        else:
-            setattr(cls, func.__name__, func)
-
     def _unload(self):
         self.on_unload()
 

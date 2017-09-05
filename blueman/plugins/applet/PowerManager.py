@@ -30,10 +30,6 @@ class PowerManager(AppletPlugin):
     }
 
     def on_load(self, applet):
-        AppletPlugin.add_method(self.on_power_state_query)
-        AppletPlugin.add_method(self.on_power_state_change_requested)
-        AppletPlugin.add_method(self.on_power_state_changed)
-
         self.Applet = applet
 
         self.item = create_menuitem("<b>Turn Bluetooth _Off</b>", "blueman-disabled")

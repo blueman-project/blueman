@@ -19,13 +19,6 @@ class DBusService(AppletPlugin):
     def on_load(self, applet):
         self.Applet = applet
 
-        AppletPlugin.add_method(self.on_rfcomm_connected)
-        AppletPlugin.add_method(self.on_rfcomm_disconnect)
-        AppletPlugin.add_method(self.rfcomm_connect_handler)
-        AppletPlugin.add_method(self.service_connect_handler)
-        AppletPlugin.add_method(self.service_disconnect_handler)
-        AppletPlugin.add_method(self.on_device_disconnect)
-
     @dbus.service.method('org.blueman.Applet', in_signature="", out_signature="as")
     def QueryPlugins(self):
         return self.Applet.Plugins.GetLoaded()
