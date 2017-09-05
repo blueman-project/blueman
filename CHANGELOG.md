@@ -12,6 +12,11 @@
 * NetConf: Treat UnicodeDecodeError as if there was no file
 * Notification: Also check if notification daemon supports body
 * Correct bold tag in portugese translation (thanks @andreyluiz)
+* Properly check for None in SerialManager
+* GameControllerWakeLock: Check for Class property first
+* Fix bugs in NetworkService ui
+* NetConf: fix writing PID file for dhcpd(3)
+* Notification: Make sure x and y hint are in screen geometry
 
 ## 2.0.4
 
