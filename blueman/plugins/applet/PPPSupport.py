@@ -55,7 +55,7 @@ class PPPSupport(AppletPlugin):
     __priority__ = 0
 
     def on_load(self, applet):
-        AppletPlugin.add_method(self.on_ppp_connected)
+        pass
 
     def on_unload(self):
         pass
