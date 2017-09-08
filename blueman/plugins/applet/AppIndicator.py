@@ -28,9 +28,13 @@ class AppIndicator(AppletPlugin):
         self.s = self.Applet.Plugins.StatusIcon.connect("notify::icon-name", self.on_notify)
 
         self.override_method(self.Applet.Plugins.StatusIcon, "set_visible", self.set_visible)
+        self.override_method(self.Applet.Plugins.StatusIcon, "update_tooltip", self.update_title)
         
         self.Applet.Plugins.StatusIcon.props.visible = False
         self.Applet.Plugins.StatusIcon.update_text()
+
+    def update_title(self, _, text):
+        self.indicator.set_title(text)
 
     def set_visible(self, _, visible):
         if visible:
