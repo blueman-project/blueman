@@ -84,16 +84,13 @@ class StatusIcon(AppletPlugin, Gtk.StatusIcon):
         else:
             self.lines.pop(lineid, None)
 
-        self.update_tooltip()
+        self.update_text()
 
-    def update_tooltip(self):
-        s = ""
-        keys = list(self.lines.keys())
-        keys.sort()
-        for k in keys:
-            s += self.lines[k] + "\n"
+    def update_text(self):
+        self.update_tooltip("\n".join([self.lines[key] for key in sorted(self.lines)]))
 
-        self.props.tooltip_markup = s[:-1]
+    def update_tooltip(self, text):
+        self.props.tooltip_markup = text
 
     def IconShouldChange(self):
         self.on_status_icon_resized()

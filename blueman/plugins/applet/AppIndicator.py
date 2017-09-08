@@ -30,6 +30,7 @@ class AppIndicator(AppletPlugin):
         self.override_method(self.Applet.Plugins.StatusIcon, "set_visible", self.set_visible)
         
         self.Applet.Plugins.StatusIcon.props.visible = False
+        self.Applet.Plugins.StatusIcon.update_text()
 
     def set_visible(self, _, visible):
         if visible:
@@ -44,6 +45,7 @@ class AppIndicator(AppletPlugin):
         del self.indicator
         self.Applet.Plugins.StatusIcon.QueryVisibility()
         self.Applet.Plugins.StatusIcon.disconnect(self.s)
+        self.Applet.Plugins.StatusIcon.update_text()
         
     def update_icon(self):
         self.indicator.set_icon(self.Applet.Plugins.StatusIcon.props.icon_name)
