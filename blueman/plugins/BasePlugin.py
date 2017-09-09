@@ -1,5 +1,6 @@
 # coding=utf-8
 import logging
+from blueman.main.Config import Config
 
 
 class MethodAlreadyExists(Exception):
@@ -19,13 +20,28 @@ class BasePlugin(object):
 
     __instance__ = None
 
+    __gsettings__ = None
+
+    __options__ = {}
+
     def __init__(self, parent):
         self.__parent__ = parent
 
         self.__methods = []
 
+        if self.__options__:
+            self.__config = Config(
+                self.__class__.__gsettings__.get("schema"),
+                self.__class__.__gsettings__.get("path")
+            )
+
     def __del__(self):
         logging.debug("Deleting plugin instance %s" % self)
+
+    @classmethod
+    def is_configurable(cls):
+        res = map(lambda x: (len(x) > 2), cls.__options__.values())
+        return True in res
 
     @classmethod
     def add_method(cls, func):
@@ -64,3 +80,22 @@ class BasePlugin(object):
     def on_unload(self):
         """Tear down any watches and ui elements created in on_load"""
         raise NotImplementedError
+
+    def get_option(self, key):
+        if key not in self.__class__.__options__:
+            raise KeyError("No such option")
+        return self.__config[key]
+
+    def set_option(self, key, value):
+        if key not in self.__class__.__options__:
+            raise KeyError("No such option")
+        opt = self.__class__.__options__[key]
+
+        if type(value) == opt["type"]:
+            self.__config[key] = value
+            self.option_changed(key, value)
+        else:
+            raise TypeError("Wrong type, must be %s" % repr(opt["type"]))
+
+    def option_changed(self, key, value):
+        pass

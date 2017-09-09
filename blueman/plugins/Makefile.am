@@ -12,7 +12,6 @@ blueman_PYTHON = 	\
 	MechanismPlugin.py	\
 	ManagerPlugin.py	\
 	BasePlugin.py		\
-	ConfigurablePlugin.py \
 	__init__.py
 
 CLEANFILES =		\
