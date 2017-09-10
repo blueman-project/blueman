@@ -63,14 +63,10 @@ class DnsMasqHandler(object):
             if self.netconf.ip4_changed:
                 self.do_remove()
 
-            if 1:
-                rtr = "--dhcp-option=option:router,%s" % inet_ntoa(self.netconf.ip4_address)
-            else:
-                rtr = "--dhcp-option=3 --dhcp-option=6"  # no route and no dns
-
             start, end = calc_ip_range(self.netconf.ip4_address)
-
-            args = "--pid-file=/var/run/dnsmasq.pan1.pid --bind-interfaces --dhcp-range=%s,%s,60m --except-interface=lo --interface=pan1 %s" % (inet_ntoa(start), inet_ntoa(end), rtr)
+            args = "--pid-file=/var/run/dnsmasq.pan1.pid --bind-interfaces --dhcp-range=%s,%s,60m" \
+                " --except-interface=lo --interface=pan1 --dhcp-option=option:router,%s" % \
+                (inet_ntoa(start), inet_ntoa(end), inet_ntoa(self.netconf.ip4_address))
 
             cmd = [have("dnsmasq")] + args.split(" ")
             logging.info(cmd)
