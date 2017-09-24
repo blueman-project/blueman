@@ -144,6 +144,9 @@ def get_net_interfaces():
     free(ifaces)
     return ret
 
+class RFCOMMError(Exception):
+    pass
+
 ERR = {
     -1:"Can't allocate memory",
     -2:"HCI device open failed",
@@ -223,14 +226,14 @@ def create_rfcomm_device(py_local_address, py_remote_address, channel):
     cdef char* remote_address = py_bytes_remote_address
     ret = c_create_rfcomm_device(local_address, remote_address, channel)
     if ret < 0:
-        raise Exception(ERR[ret])
+        raise RFCOMMError(ERR[ret])
     return ret
 
 
 def release_rfcomm_device(id):
     ret = c_release_rfcomm_device(id)
     if ret < 0:
-        raise Exception(ERR[ret])
+        raise RFCOMMError(ERR[ret])
     return ret
 
 try: from exceptions import Exception

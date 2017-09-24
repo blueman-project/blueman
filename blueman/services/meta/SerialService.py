@@ -4,7 +4,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 from blueman.bluez.Adapter import Adapter
-from _blueman import rfcomm_list, release_rfcomm_device, create_rfcomm_device
+from _blueman import rfcomm_list, release_rfcomm_device, create_rfcomm_device, RFCOMMError
 from blueman.Service import Service
 from blueman.main.Mechanism import Mechanism
 
@@ -30,7 +30,7 @@ class SerialService(Service):
             Mechanism().open_rfcomm(port_id)
             if reply_handler:
                 reply_handler('/dev/rfcomm%d' % port_id)
-        except Exception as e:
+        except RFCOMMError as e:
             if error_handler:
                 error_handler(e)
             else:
