@@ -4,7 +4,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 from blueman.bluez.Adapter import Adapter
-from _blueman import rfcomm_list, release_rfcomm_device, create_rfcomm_device, RFCOMMError
+from _blueman import rfcomm_list, release_rfcomm_device, create_rfcomm_device, get_rfcomm_channel, RFCOMMError
 from blueman.Service import Service
 from blueman.main.Mechanism import Mechanism
 
@@ -24,10 +24,19 @@ class SerialService(Service):
 
     def connect(self, reply_handler=None, error_handler=None):
         props = self.device.get_properties()
+        channel = get_rfcomm_channel(self.device['Address'])
+        if channel == 0:
+            error = RFCOMMError("Failed to get rfcomm channel")
+            if error_handler:
+                error_handler(error)
+                return True
+            else:
+                raise error
+
         try:
-            # TODO: Channel?
-            port_id = create_rfcomm_device(Adapter(props['Adapter']).get_properties()['Address'], props['Address'], 1)
+            port_id = create_rfcomm_device(Adapter(props['Adapter']).get_properties()['Address'], props['Address'], channel)
             Mechanism().open_rfcomm(port_id)
+
             if reply_handler:
                 reply_handler('/dev/rfcomm%d' % port_id)
         except RFCOMMError as e:
