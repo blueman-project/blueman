@@ -6,7 +6,7 @@ import subprocess
 from gi.repository import Gio
 
 from blueman.bluez.Adapter import Adapter
-from _blueman import rfcomm_list, release_rfcomm_device, create_rfcomm_device, RFCOMMError
+from _blueman import rfcomm_list, release_rfcomm_device, create_rfcomm_device, get_rfcomm_channel, RFCOMMError
 from blueman.Service import Service
 from blueman.main.Mechanism import Mechanism
 from blueman.Constants import RFCOMM_WATCHER_PATH
@@ -49,9 +49,17 @@ class SerialService(Service):
         monitor.disconnect(self.file_changed_handler)
 
     def connect(self, reply_handler=None, error_handler=None):
+        channel = get_rfcomm_channel(self.device['Address'])
+        if channel == 0:
+            error = RFCOMMError("Failed to get rfcomm channel")
+            if error_handler:
+                error_handler(error)
+                return True
+            else:
+                raise error
+
         try:
-            # TODO: Channel?
-            port_id = create_rfcomm_device(Adapter(self.device["Adapter"])['Address'], self.device["Address"], 1)
+            port_id = create_rfcomm_device(Adapter(self.device["Adapter"])['Address'], self.device["Address"], channel)
             filename = '/dev/rfcomm%d' % port_id
             logging.info('Starting rfcomm watcher as root')
             Mechanism().open_rfcomm('(d)', port_id)
