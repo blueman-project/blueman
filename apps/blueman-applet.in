@@ -9,7 +9,7 @@ import logging
 # support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if 'BLUEMAN_SOURCE' in os.environ:
-    sys.path.insert(0, _dirname)
+    sys.path = [_dirname, os.path.join(_dirname, 'module', '.libs')] + sys.path
     os.environ["GSETTINGS_SCHEMA_DIR"] = os.path.join(_dirname, "data")
 
 from blueman.Functions import create_logger, create_parser, set_proc_title

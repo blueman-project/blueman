@@ -8,7 +8,7 @@ import logging
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if 'BLUEMAN_SOURCE' in os.environ:
-    sys.path.insert(0, _dirname)
+    sys.path = [_dirname, os.path.join(_dirname, 'module', '.libs')] + sys.path
     os.environ["GSETTINGS_SCHEMA_DIR"] = os.path.join(_dirname, "data")
 
 import gi
@@ -22,12 +22,6 @@ from blueman.main.Sendto import Sender
 from blueman.bluez.Manager import Manager
 from blueman.bluez.errors import DBusNoSuchAdapterError
 from blueman.gui.DeviceSelectorDialog import DeviceSelectorDialog
-
-#support running uninstalled
-_dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-if 'BLUEMAN_SOURCE' in os.environ:
-    sys.path.insert(0, _dirname)
-    os.environ["GSETTINGS_SCHEMA_DIR"] = os.path.join(_dirname, "data")
 
 # Workaround introspection bug, gnome bug 622084
 signal.signal(signal.SIGINT, signal.SIG_DFL)
