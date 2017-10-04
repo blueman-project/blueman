@@ -17,7 +17,7 @@ class Connection:
         self.error_handler = err
         self.service = service
         self.port = port
-        self.Applet = applet
+        self.parent = applet
 
         res = os.popen("ps x -o pid,args | grep [M]odemManager").read()
         if not res:
@@ -39,7 +39,7 @@ class Connection:
 
     def on_connected(self, _obj, result, _user_data):
         self.reply_handler(self.port)
-        self.Applet.Plugins.Run("on_ppp_connected", self.service.device, self.port, result)
+        self.parent.Plugins.Run("on_ppp_connected", self.service.device, self.port, result)
 
         msg = _("Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\n"
                 "Network is now available through <b>%(1)s</b>") % {"0": self.service.device['Alias'], "1": result}
@@ -54,7 +54,7 @@ class PPPSupport(AppletPlugin):
     __icon__ = "modem"
     __priority__ = 0
 
-    def on_load(self, applet):
+    def on_load(self):
         AppletPlugin.add_method(self.on_ppp_connected)
 
     def on_unload(self):
@@ -69,7 +69,7 @@ class PPPSupport(AppletPlugin):
     def rfcomm_connect_handler(self, service, reply, err):
         if DIALUP_NET_SVCLASS_ID == service.short_uuid:
             def local_reply(port):
-                Connection(self.Applet, service, port, reply, err)
+                Connection(self.parent, service, port, reply, err)
 
             service.connect(reply_handler=local_reply, error_handler=err)
             logging.info("Connecting rfcomm device")

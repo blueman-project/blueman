@@ -29,17 +29,14 @@ class PowerManager(AppletPlugin):
         }
     }
 
-    def on_load(self, applet):
+    def on_load(self):
         AppletPlugin.add_method(self.on_power_state_query)
         AppletPlugin.add_method(self.on_power_state_change_requested)
         AppletPlugin.add_method(self.on_power_state_changed)
 
-        self.Applet = applet
-
-        self.item = self.Applet.Plugins.Menu.add(self, 0, text=_("<b>Turn Bluetooth _Off</b>"), markup=True,
+        self.item = self.parent.Plugins.Menu.add(self, 0, text=_("<b>Turn Bluetooth _Off</b>"), markup=True,
                                                  icon_name="blueman-disabled", tooltip=_("Turn off all adapters"),
                                                  callback=self.on_bluetooth_toggled)
-
         self.adapter_state = True
         self.current_state = True
 
@@ -50,7 +47,7 @@ class PowerManager(AppletPlugin):
         self.STATE_OFF_FORCED = 0
 
     def on_unload(self):
-        self.Applet.Plugins.Menu.unregister(self)
+        self.parent.Plugins.Menu.unregister(self)
 
     @property
     def CurrentState(self):
@@ -68,7 +65,7 @@ class PowerManager(AppletPlugin):
             GLib.timeout_add(1000, timeout)
 
     def get_adapter_state(self):
-        adapters = self.Applet.Manager.get_adapters()
+        adapters = self.parent.Manager.get_adapters()
         for adapter in adapters:
             if not adapter["Powered"]:
                 return False
@@ -77,7 +74,7 @@ class PowerManager(AppletPlugin):
     def set_adapter_state(self, state):
         try:
             logging.info(state)
-            adapters = self.Applet.Manager.get_adapters()
+            adapters = self.parent.Manager.get_adapters()
             for adapter in adapters:
                 adapter.set("Powered", state)
 
@@ -121,7 +118,7 @@ class PowerManager(AppletPlugin):
                 logging.info("Requesting %s" % state)
                 cb = PowerManager.Callback(self, state)
 
-                rets = self.Applet.Plugins.Run("on_power_state_change_requested", self, state, cb)
+                rets = self.parent.Plugins.Run("on_power_state_change_requested", self, state, cb)
                 cb.num_cb = len(rets)
                 cb.check()
                 self.UpdatePowerState()
@@ -142,7 +139,7 @@ class PowerManager(AppletPlugin):
 
     #queries other plugins to determine the current power state
     def UpdatePowerState(self):
-        rets = self.Applet.Plugins.Run("on_power_state_query", self)
+        rets = self.parent.Plugins.Run("on_power_state_query", self)
 
         off = True in map(lambda x: x < self.STATE_ON, rets)
         foff = self.STATE_OFF_FORCED in rets
@@ -175,8 +172,8 @@ class PowerManager(AppletPlugin):
             self.current_state = new_state
 
             self.BluetoothStatusChanged(new_state)
-            self.Applet.Plugins.Run("on_power_state_changed", self, new_state)
-            self.Applet.Plugins.StatusIcon.IconShouldChange()
+            self.parent.Plugins.Run("on_power_state_changed", self, new_state)
+            self.parent.Plugins.StatusIcon.IconShouldChange()
 
     @dbus.service.signal('org.blueman.Applet', signature="b")
     def BluetoothStatusChanged(self, status):

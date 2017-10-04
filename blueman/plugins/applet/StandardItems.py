@@ -15,45 +15,44 @@ class StandardItems(AppletPlugin):
     __description__ = _("Adds standard menu items to the status icon menu")
     __author__ = "walmis"
 
-    def on_load(self, applet):
-        self.Applet = applet
+    def on_load(self):
 
-        applet.Plugins.Menu.add(self, 21)
+        self.parent.Plugins.Menu.add(self, 21)
 
-        self.new_dev = self.Applet.Plugins.Menu.add(self, 30, text=_("_Set Up New Device") + "…",
+        self.new_dev = self.parent.Plugins.Menu.add(self, 30, text=_("_Set Up New Device") + "…",
                                                     icon_name="document-new", callback=self.on_setup_new)
 
-        self.Applet.Plugins.Menu.add(self, 31)
+        self.parent.Plugins.Menu.add(self, 31)
 
-        self.send = self.Applet.Plugins.Menu.add(self, 40, text=_("Send _Files to Device") + "…",
+        self.send = self.parent.Plugins.Menu.add(self, 40, text=_("Send _Files to Device") + "…",
                                                  icon_name="blueman-send-file", callback=self.on_send)
 
-        self.Applet.Plugins.Menu.add(self, 51)
+        self.parent.Plugins.Menu.add(self, 51)
 
-        self.devices = self.Applet.Plugins.Menu.add(self, 60, text=_("_Devices") + "…", icon_name="blueman",
+        self.devices = self.parent.Plugins.Menu.add(self, 60, text=_("_Devices") + "…", icon_name="blueman",
                                                     callback=self.on_devices)
 
-        self.adapters = self.Applet.Plugins.Menu.add(self, 70, text=_("Adap_ters") + "…", icon_name="blueman-device",
+        self.adapters = self.parent.Plugins.Menu.add(self, 70, text=_("Adap_ters") + "…", icon_name="blueman-device",
                                                      callback=self.on_adapters)
 
-        self.Applet.Plugins.Menu.add(self, 80, text=_("_Local Services") + "…", icon_name="preferences-desktop",
+        self.parent.Plugins.Menu.add(self, 80, text=_("_Local Services") + "…", icon_name="preferences-desktop",
                                      callback=self.on_local_services)
 
-        self.Applet.Plugins.Menu.add(self, 81)
+        self.parent.Plugins.Menu.add(self, 81)
 
-        self.Applet.Plugins.Menu.add(self, 90, text="_Help", icon_name='help-about', callback=self.on_about)
+        self.parent.Plugins.Menu.add(self, 90, text="_Help", icon_name='help-about', callback=self.on_about)
 
-        self.Applet.Plugins.Menu.add(self, 85, text=_("_Plugins"), icon_name="blueman-plugin", callback=self.on_plugins)
+        self.parent.Plugins.Menu.add(self, 85, text=_("_Plugins"), icon_name="blueman-plugin", callback=self.on_plugins)
 
-        self.Applet.Plugins.StatusIcon.connect("activate", lambda _status_icon: self.on_devices())
+        self.parent.Plugins.StatusIcon.connect("activate", lambda _status_icon: self.on_devices())
 
     def change_sensitivity(self, sensitive):
         try:
-            power = self.Applet.Plugins.PowerManager.GetBluetoothStatus()
+            power = self.parent.Plugins.PowerManager.GetBluetoothStatus()
         except:
             power = True
 
-        sensitive = sensitive and self.Applet.Manager and power
+        sensitive = sensitive and self.parent.Manager and power
         self.new_dev.set_sensitive(sensitive)
         self.send.set_sensitive(sensitive)
         self.devices.set_sensitive(sensitive)
@@ -99,7 +98,7 @@ class StandardItems(AppletPlugin):
 
     def on_plugins(self):
         def open_dialog():
-            dialog = PluginDialog(self.Applet)
+            dialog = PluginDialog(self.parent)
             dialog.run()
             dialog.destroy()
         GLib.idle_add(open_dialog)

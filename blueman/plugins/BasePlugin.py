@@ -25,7 +25,7 @@ class BasePlugin(object):
     __options__ = {}
 
     def __init__(self, parent):
-        self.__parent__ = parent
+        self.parent = parent
 
         self.__methods = []
 
@@ -61,9 +61,9 @@ class BasePlugin(object):
 
         self.__class__.__instance__ = None
 
-    def _load(self, parent):
+    def _load(self):
         try:
-            self.on_load(parent)
+            self.on_load()
             # self.on_manager_state_changed(applet.Manager != None)
             self.__class__.__instance__ = self
         except Exception as e:
@@ -73,7 +73,7 @@ class BasePlugin(object):
             raise
 
     # virtual methods
-    def on_load(self, applet):
+    def on_load(self):
         """Do what is neccessary for the plugin to work like add watches or create ui elements"""
         pass
 

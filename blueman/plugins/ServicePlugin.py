@@ -4,11 +4,11 @@ class ServicePlugin(object):
     instances = []
     __plugin_info__ = None
 
-    def __init__(self, services_inst):
+    def __init__(self, parent):
         ServicePlugin.instances.append(self)
         self._options = []
         self._orig_state = {}
-        self.__services_inst = services_inst
+        self.parent = parent
 
         self.__is_exposed = False
         self._is_loaded = False
@@ -32,7 +32,7 @@ class ServicePlugin(object):
             if state:
                 self._options.remove(option_id)
 
-        self.__services_inst.option_changed()
+        self.parent.option_changed()
 
     def get_options(self):
         return self._options

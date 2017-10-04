@@ -322,7 +322,7 @@ class NetUsage(AppletPlugin, GObject.GObject):
 
     _any_network = None
 
-    def on_load(self, applet):
+    def on_load(self):
         GObject.GObject.__init__(self)
         self.monitors = []
         self.devices = weakref.WeakValueDictionary()
@@ -332,7 +332,7 @@ class NetUsage(AppletPlugin, GObject.GObject):
         self._any_network = AnyNetwork()
         self._any_network.connect_signal('property-changed', self._on_network_property_changed)
 
-        self.Applet.Plugins.Menu.add(self, 84, text=_("Network _Usage"), icon_name="network-wireless",
+        self.parent.Plugins.Menu.add(self, 84, text=_("Network _Usage"), icon_name="network-wireless",
                                      tooltip=_("Shows network traffic usage"), callback=self.activate_ui)
 
         self.bus.add_signal_receiver(self.on_nm_ppp_stats, "PppStats", "org.freedesktop.NetworkManager.Device.Serial",
@@ -356,8 +356,8 @@ class NetUsage(AppletPlugin, GObject.GObject):
                 ls = rfcomm_list()
                 for dev in ls:
                     if dev["id"] == portid:
-                        adapter = self.Applet.Manager.get_adapter(dev["src"])
-                        device = self.Applet.Manager.find_device(dev["dst"], adapter.get_object_path())
+                        adapter = self.parent.Manager.get_adapter(dev["src"])
+                        device = self.parent.Manager.find_device(dev["dst"], adapter.get_object_path())
 
                         self.monitor_interface(NMMonitor, device, path)
 
@@ -377,7 +377,7 @@ class NetUsage(AppletPlugin, GObject.GObject):
         self.bus.remove_signal_receiver(self.on_nm_ppp_stats, "PppStats",
                                         "org.freedesktop.NetworkManager.Device.Serial", path_keyword="path")
         del self._any_network
-        self.Applet.Plugins.Menu.unregister(self)
+        self.parent.Plugins.Menu.unregister(self)
 
     def monitor_interface(self, montype, *args):
         m = montype(*args)

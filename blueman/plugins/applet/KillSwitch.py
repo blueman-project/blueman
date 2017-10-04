@@ -51,7 +51,7 @@ class KillSwitch(AppletPlugin):
     _enabled = True
     _hardblocked = False
 
-    def on_load(self, applet):
+    def on_load(self):
         self._connman_proxy = None
         self._connman_watch_id = Gio.bus_watch_name(Gio.BusType.SYSTEM, "net.connman", Gio.BusNameWatcherFlags.NONE,
                                                     self._on_connman_appeared, self._on_connman_vanished)
@@ -119,8 +119,8 @@ class KillSwitch(AppletPlugin):
 
         logging.info("State: %s" % self._enabled)
 
-        self.Applet.Plugins.StatusIcon.QueryVisibility(delay_hiding=not self._hardblocked)
-        self.Applet.Plugins.PowerManager.UpdatePowerState()
+        self.parent.Plugins.StatusIcon.QueryVisibility(delay_hiding=not self._hardblocked)
+        self.parent.Plugins.PowerManager.UpdatePowerState()
 
         return True
 

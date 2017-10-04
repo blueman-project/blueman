@@ -16,15 +16,13 @@ class MethodAlreadyExists(Exception):
 class AppletPlugin(BasePlugin):
     __icon__ = "blueman-plugin"
 
-    def __init__(self, applet):
-        super(AppletPlugin, self).__init__(applet)
+    def __init__(self, parent):
+        super(AppletPlugin, self).__init__(parent)
 
         if not ictheme.has_icon(self.__class__.__icon__):
             self.__class__.__icon__ = "blueman-plugin"
 
         self.__opts = {}
-
-        self.Applet = applet
 
         self.__overrides = []
 
@@ -43,16 +41,16 @@ class AppletPlugin(BasePlugin):
 
         super(AppletPlugin, self)._unload()
 
-        self.Applet.DbusSvc.remove_definitions(self)
+        self.parent.DbusSvc.remove_definitions(self)
 
-    def _load(self, applet):
-        super(AppletPlugin, self)._load(applet)
+    def _load(self):
+        super(AppletPlugin, self)._load()
 
-        self.Applet.DbusSvc.add_definitions(self)
+        self.parent.DbusSvc.add_definitions(self)
 
         # The applet will run on_manager_state_changed once at startup so until it has we don't.
-        if applet.plugin_run_state_changed:
-            self.on_manager_state_changed(applet.manager_state)
+        if self.parent.plugin_run_state_changed:
+            self.on_manager_state_changed(self.parent.manager_state)
 
     # virtual funcs
     def on_manager_state_changed(self, state):

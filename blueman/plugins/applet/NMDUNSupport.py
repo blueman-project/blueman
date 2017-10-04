@@ -89,7 +89,7 @@ class NMDUNSupport(AppletPlugin):
     __description__ = _("Provides support for Dial Up Networking (DUN) with ModemManager and NetworkManager")
     __priority__ = 1
 
-    def on_load(self, applet):
+    def on_load(self):
         self.bus = dbus.SystemBus()
 
     def on_unload(self):

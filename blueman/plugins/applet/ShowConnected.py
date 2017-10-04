@@ -12,15 +12,15 @@ class ShowConnected(AppletPlugin):
     __description__ = _(
         "Adds an indication on the status icon when Bluetooth is active and shows the number of connections in the tooltip.")
 
-    def on_load(self, applet):
+    def on_load(self):
         self.num_connections = 0
         self.active = False
         self.initialized = False
 
     def on_unload(self):
-        self.Applet.Plugins.StatusIcon.SetTextLine(1, None)
+        self.parent.Plugins.StatusIcon.SetTextLine(1, None)
         self.num_connections = 0
-        self.Applet.Plugins.StatusIcon.IconShouldChange()
+        self.parent.Plugins.StatusIcon.IconShouldChange()
 
     def on_status_icon_query_icon(self):
         if self.num_connections > 0:
@@ -31,35 +31,35 @@ class ShowConnected(AppletPlugin):
 
     def enumerate_connections(self):
         self.num_connections = 0
-        for device in self.Applet.Manager.get_devices():
+        for device in self.parent.Manager.get_devices():
             if device["Connected"]:
                 self.num_connections += 1
 
         logging.info("Found %d existing connections" % self.num_connections)
         if (self.num_connections > 0 and not self.active) or \
                 (self.num_connections == 0 and self.active):
-            self.Applet.Plugins.StatusIcon.IconShouldChange()
+            self.parent.Plugins.StatusIcon.IconShouldChange()
 
         self.update_statusicon()
 
     def update_statusicon(self):
         if self.num_connections > 0:
-            self.Applet.Plugins.StatusIcon.SetTextLine(0,
+            self.parent.Plugins.StatusIcon.SetTextLine(0,
                                                        _("Bluetooth Active"))
-            self.Applet.Plugins.StatusIcon.SetTextLine(1,
+            self.parent.Plugins.StatusIcon.SetTextLine(1,
                                                        ngettext("<b>%d Active Connection</b>",
                                                                 "<b>%d Active Connections</b>",
                                                                 self.num_connections) % self.num_connections)
         else:
-            self.Applet.Plugins.StatusIcon.SetTextLine(1, None)
+            self.parent.Plugins.StatusIcon.SetTextLine(1, None)
             try:
-                if self.Applet.Plugins.PowerManager.GetBluetoothStatus():
-                    self.Applet.Plugins.StatusIcon.SetTextLine(0,
+                if self.parent.Plugins.PowerManager.GetBluetoothStatus():
+                    self.parent.Plugins.StatusIcon.SetTextLine(0,
                                                                _("Bluetooth Enabled"))
             except:
                 #bluetooth should be always enabled if powermanager is
                 #not loaded
-                self.Applet.Plugins.StatusIcon.SetTextLine(0,
+                self.parent.Plugins.StatusIcon.SetTextLine(0,
                                                            _("Bluetooth Enabled"))
 
     def on_manager_state_changed(self, state):
@@ -82,7 +82,7 @@ class ShowConnected(AppletPlugin):
                 self.num_connections -= 1
 
             if (self.num_connections > 0 and not self.active) or (self.num_connections == 0 and self.active):
-                self.Applet.Plugins.StatusIcon.IconShouldChange()
+                self.parent.Plugins.StatusIcon.IconShouldChange()
 
             self.update_statusicon()
 

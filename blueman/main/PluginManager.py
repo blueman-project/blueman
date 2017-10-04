@@ -28,14 +28,14 @@ class PluginManager(GObject.GObject):
         'plugin-unloaded': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
     }
 
-    def __init__(self, plugin_class, module_path, user_data):
+    def __init__(self, plugin_class, module_path, parent):
         super(PluginManager, self).__init__()
         self.__plugins = {}
         self.__classes = {}
         self.__deps = {}
         self.__cfls = {}
         self.__loaded = []
-        self.user_data = user_data
+        self.parent = parent
 
         self.module_path = module_path
         self.plugin_class = plugin_class
@@ -156,9 +156,9 @@ class PluginManager(GObject.GObject):
                     raise LoadException("Not loading conflicting plugin %s due to lower priority" % cls.__name__)
 
         logging.info("loading %s" % cls)
-        inst = cls(self.user_data)
+        inst = cls(self.parent)
         try:
-            inst._load(self.user_data)
+            inst._load()
         except Exception:
             logging.error("Failed to load %s" % cls.__name__, exc_info=True)
             if not cls.__unloadable__:

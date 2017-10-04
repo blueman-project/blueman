@@ -26,19 +26,17 @@ class DiscvManager(AppletPlugin):
         }
     }
 
-    def on_load(self, applet):
-        self.item = applet.Plugins.Menu.add(self, 20, text=_("_Make Discoverable"), icon_name="edit-find",
-                                            tooltip=_("Make the default adapter temporarily visible"),
-                                            callback=self.on_set_discoverable, visible=False)
-
-        self.Applet = applet
+    def on_load(self):
+        self.item = self.parent.Plugins.Menu.add(self, 20, text=_("_Make Discoverable"), icon_name="edit-find",
+                                                 tooltip=_("Make the default adapter temporarily visible"),
+                                                 callback=self.on_set_discoverable, visible=False)
         self.adapter = None
         self.time_left = -1
 
         self.timeout = None
 
     def on_unload(self):
-        self.Applet.Plugins.Menu.unregister(self)
+        self.parent.Plugins.Menu.unregister(self)
         del self.item
 
         if self.timeout:
@@ -66,7 +64,7 @@ class DiscvManager(AppletPlugin):
 
     def init_adapter(self):
         try:
-            self.adapter = self.Applet.Manager.get_adapter()
+            self.adapter = self.parent.Manager.get_adapter()
         except ValueError:
             self.adapter = None
 

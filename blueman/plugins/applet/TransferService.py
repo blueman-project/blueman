@@ -139,7 +139,7 @@ class TransferService(AppletPlugin):
     _agent = None
     _watch = None
 
-    def on_load(self, applet):
+    def on_load(self):
         self._config = Config("org.blueman.transfer")
 
         if not self._config["shared-path"]:
@@ -174,7 +174,7 @@ class TransferService(AppletPlugin):
 
     def _register_agent(self):
         if not self._agent:
-            self._agent = Agent(self.Applet)
+            self._agent = Agent(self.parent)
         self._agent.register()
 
     def _unregister_agent(self):
@@ -216,7 +216,7 @@ class TransferService(AppletPlugin):
     def _notify_kwargs(self):
         kwargs = {"icon_name": "blueman"}
         try:
-            kwargs["pos_hint"] = self.Applet.Plugins.StatusIcon.geometry
+            kwargs["pos_hint"] = self.parent.Plugins.StatusIcon.geometry
         except AttributeError:
             logging.error("No statusicon found")
 

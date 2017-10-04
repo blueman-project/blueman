@@ -15,10 +15,8 @@ class Networking(AppletPlugin):
 
     _signal = None
 
-    def on_load(self, applet):
+    def on_load(self):
         self._registered = {}
-
-        self.Applet = applet
 
         self.Config = Config("org.blueman.network")
         self.Config.connect("changed", self.on_config_changed)
@@ -68,8 +66,8 @@ class Networking(AppletPlugin):
 
     def set_nap(self, on):
         logging.info("set nap %s" % on)
-        if self.Applet.manager_state:
-            adapters = self.Applet.Manager.get_adapters()
+        if self.parent.manager_state:
+            adapters = self.parent.Manager.get_adapters()
             for adapter in adapters:
                 object_path = adapter.get_object_path()
 

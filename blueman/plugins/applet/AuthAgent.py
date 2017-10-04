@@ -13,9 +13,6 @@ class AuthAgent(AppletPlugin):
     _agent = None
     _last_event_time = 0
 
-    def on_load(self, applet):
-        self.Applet = applet
-
     @dbus.service.method('org.blueman.Applet', in_signature="u")
     def SetTimeHint(self, time):
         self._last_event_time = time

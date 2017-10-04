@@ -35,7 +35,7 @@ class SerialManager(AppletPlugin):
 
     scripts = {}
 
-    def on_load(self, applet):
+    def on_load(self):
         self.scripts = {}
 
     def on_unload(self):

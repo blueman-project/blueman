@@ -14,7 +14,7 @@ class DhcpClient(AppletPlugin):
 
     _any_network = None
 
-    def on_load(self, applet):
+    def on_load(self):
         self._any_network = AnyNetwork()
         self._any_network.connect_signal('property-changed', self._on_network_prop_changed)
 

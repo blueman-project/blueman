@@ -17,7 +17,7 @@ class GameControllerWakelock(AppletPlugin):
     __author__ = "bwRavencl"
     __icon__ = "input-gaming"
 
-    def on_load(self, applet):
+    def on_load(self):
         self.wake_lock = 0
         self.root_window_id = "0x%x" % Gdk.Screen.get_default().get_root_window().get_xid()
 

@@ -45,15 +45,14 @@ class RecentConns(AppletPlugin):
         "recent-connections": {"type": list, "default": "[]"}
     }
 
-    def on_load(self, applet):
-        self.Applet = applet
+    def on_load(self):
         self.Adapters = {}
         self.items = None
         self.__menuitems = []
 
-        self.item = self.Applet.Plugins.Menu.add(self, 52, text=_("Recent _Connections") + "…",
+        self.item = self.parent.Plugins.Menu.add(self, 52, text=_("Recent _Connections") + "…",
                                                  icon_name="document-open-recent", submenu_function=self.get_menu)
-        self.Applet.Plugins.Menu.add(self, 53)
+        self.parent.Plugins.Menu.add(self, 53)
 
         self.deferred = False
 
@@ -71,12 +70,12 @@ class RecentConns(AppletPlugin):
 
     def change_sensitivity(self, sensitive):
         try:
-            power = self.Applet.Plugins.PowerManager.GetBluetoothStatus()
+            power = self.parent.Plugins.PowerManager.GetBluetoothStatus()
         except:
             power = True
 
         sensitive = sensitive and \
-                    self.Applet.Manager and \
+                    self.parent.Manager and \
                     power and \
                     self.items is not None and \
                     (len(self.items) > 0)
@@ -90,7 +89,7 @@ class RecentConns(AppletPlugin):
             self.on_manager_state_changed(state)
 
     def on_unload(self):
-        self.Applet.Plugins.Menu.unregister(self)
+        self.parent.Plugins.Menu.unregister(self)
 
         RecentConns.items = []
 
@@ -100,7 +99,7 @@ class RecentConns(AppletPlugin):
             self.recover_state()
 
         self.__menuitems = []
-        self.Applet.Plugins.Menu.on_menu_changed()
+        self.parent.Plugins.Menu.on_menu_changed()
 
         self.items.sort(key=itemgetter("time"), reverse=True)
 
@@ -122,7 +121,7 @@ class RecentConns(AppletPlugin):
 
         if state:
             try:
-                if not self.Applet.Plugins.PowerManager.GetBluetoothStatus():
+                if not self.parent.Plugins.PowerManager.GetBluetoothStatus():
                     self.deferred = True
                     self.item.set_sensitive(False)
                     return
@@ -130,7 +129,8 @@ class RecentConns(AppletPlugin):
                 pass
 
             self.item.set_sensitive(True)
-            adapters = self.Applet.Manager.get_adapters()
+            adapters = self.parent.Manager.get_adapters()
+
             self.Adapters = {}
             for adapter in adapters:
                 self.Adapters[str(adapter.get_object_path())] = str(adapter["Address"])
@@ -215,21 +215,21 @@ class RecentConns(AppletPlugin):
         logging.info("Connect %s %s" % (item["address"], item["uuid"]))
 
         item["mitem"]["sensitive"] = False
-        self.Applet.Plugins.Menu.on_menu_changed()
+        self.parent.Plugins.Menu.on_menu_changed()
 
         def reply(*args):
             Notification(_("Connected"), _("Connected to %s") % item["mitem"]["text"],
                          icon_name=item["icon"]).show()
             item["mitem"]["sensitive"] = True
-            self.Applet.Plugins.Menu.on_menu_changed()
+            self.parent.Plugins.Menu.on_menu_changed()
 
         def err(reason):
             Notification(_("Failed to connect"), str(reason).split(": ")[-1],
                          icon_name="dialog-error").show()
             item["mitem"]["sensitive"] = True
-            self.Applet.Plugins.Menu.on_menu_changed()
+            self.parent.Plugins.Menu.on_menu_changed()
 
-        self.Applet.DbusSvc.connect_service(item["device"], item["uuid"], reply, err)
+        self.parent.DbusSvc.connect_service(item["device"], item["uuid"], reply, err)
 
     def add_item(self, item):
         if not item["mitem"]:
@@ -258,18 +258,18 @@ class RecentConns(AppletPlugin):
             mitem["tooltip"] = _("Adapter for this connection is not available")
 
         self.__menuitems.append(mitem)
-        self.Applet.Plugins.Menu.on_menu_changed()
+        self.parent.Plugins.Menu.on_menu_changed()
 
     def get_menu(self):
         return self.__menuitems
 
     def get_device_path(self, item):
         try:
-            adapter = self.Applet.Manager.get_adapter(item["adapter"])
+            adapter = self.parent.Manager.get_adapter(item["adapter"])
         except ValueError:
             raise AdapterNotFound
         try:
-            device = self.Applet.Manager.find_device(item["address"], adapter.get_object_path())
+            device = self.parent.Manager.find_device(item["address"], adapter.get_object_path())
             return device.get_object_path()
         except:
             raise DeviceNotFound

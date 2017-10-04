@@ -91,9 +91,7 @@ class Menu(AppletPlugin):
     __author__ = "Walmis"
     __unloadable__ = False
 
-    def on_load(self, applet):
-        self.Applet = applet
-
+    def on_load(self):
         self.__plugins_loaded = False
 
         self.__menuitems = []

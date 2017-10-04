@@ -129,7 +129,7 @@ class NMPANSupport(AppletPlugin):
     __description__ = _("Provides support for Personal Area Networking (PAN) introduced in NetworkManager 0.8")
     __priority__ = 2
 
-    def on_load(self, applet):
+    def on_load(self):
         self.nm_manager = None
         self.nm_settings = None
         self.watch_id = None
