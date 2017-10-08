@@ -26,8 +26,9 @@ class AnyBase(GObject.GObject):
             if iface_name == self.__interface_name:
                 self._on_properties_changed(object_path, changed, invalidated)
 
-        self.__signal = self.__bus.signal_subscribe(self.__bus_name, self.__bus_interface_name,
-            'PropertiesChanged', None, None, Gio.DBusSignalFlags.NONE, on_signal)
+        self.__signal = self.__bus.signal_subscribe(
+            self.__bus_name, self.__bus_interface_name, 'PropertiesChanged', None, None,
+            Gio.DBusSignalFlags.NONE, on_signal)
 
     def _on_properties_changed(self, object_path, changed_properties, invalidated):
         for name, value in changed_properties.items():

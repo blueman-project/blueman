@@ -1,8 +1,7 @@
 # coding=utf-8
 from gi.repository import Gio, GLib
 
-introspection_xml = \
-'''
+introspection_xml = '''
 <node name='/org/blueman/obex_agent'>
   <interface name='org.bluez.obex.Agent1'>
     <method name='Release'/>
@@ -14,6 +13,7 @@ introspection_xml = \
   </interface>
 </node>
 '''
+
 
 class Agent(object):
     __bus = Gio.bus_get_sync(Gio.BusType.SESSION)
