@@ -1,5 +1,6 @@
 # coding=utf-8
 import logging
+import weakref
 from blueman.main.Config import Config
 
 
@@ -35,7 +36,10 @@ class BasePlugin(object):
                 self.__class__.__gsettings__.get("path")
             )
 
-    def __del__(self):
+        weakref.finalize(self, self._on_plugin_delete)
+
+    def _on_plugin_delete(self):
+        self.on_delete()
         logging.debug("Deleting plugin instance %s" % self)
 
     @classmethod
@@ -80,6 +84,10 @@ class BasePlugin(object):
     def on_unload(self):
         """Tear down any watches and ui elements created in on_load"""
         raise NotImplementedError
+
+    def on_delete(self):
+        """Do cleanup that needs to happen when plugin is deleted"""
+        pass
 
     def get_option(self, key):
         if key not in self.__class__.__options__:
