@@ -5,7 +5,6 @@ from blueman.Sdp import SERIAL_PORT_SVCLASS_ID
 from blueman.services.Functions import get_services
 from _blueman import rfcomm_list
 from subprocess import Popen
-import atexit
 import logging
 import os
 import signal
@@ -39,8 +38,13 @@ class SerialManager(AppletPlugin):
         self.scripts = {}
 
     def on_unload(self):
-        for k in self.scripts.keys():
-            self.terminate_all_scripts(k)
+        for bdaddr in self.scripts.keys():
+            self.terminate_all_scripts(bdaddr)
+
+    def on_delete(self):
+        logging.debug("Terminating any running scripts")
+        for bdaddr in self.scripts:
+            self.terminate_all_scripts(bdaddr)
 
     def on_device_property_changed(self, path, key, value):
         if key == "Connected" and not value:
@@ -139,12 +143,3 @@ class SerialManager(AppletPlugin):
                 serial_services[0].disconnect(port)
             except Exception:
                 logging.error("Failed to disconnect %s" % name, exc_info=True)
-
-
-@atexit.register
-def exit_cleanup():
-    if SerialManager.__instance__:
-        self = SerialManager.__instance__
-
-        for k in self.scripts.keys():
-            self.terminate_all_scripts(k)
