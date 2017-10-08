@@ -173,18 +173,18 @@ class TransferService(AppletPlugin):
         self._unregister_agent()
 
     def _register_agent(self):
-        if not self.__class__._agent:
-            self.__class__._agent = Agent(self.Applet)
+        if not self._agent:
+            self._agent = Agent(self.Applet)
         self._agent.register()
-
-    @classmethod
-    def _unregister_agent(cls):
-        if cls._agent:
-            cls._agent.unregister()
 
     def on_manager_state_changed(self, state):
         if not state:
             self._unregister_agent()
+    def _unregister_agent(self):
+        if self._agent:
+            self._agent.unregister()
+            self._agent.close()
+            self._agent = None
 
     def _on_dbus_name_appeared(self, _connection, name, owner):
         logging.info("%s %s" % (name, owner))

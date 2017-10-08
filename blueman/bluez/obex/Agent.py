@@ -33,8 +33,6 @@ class Agent(object):
         else:
             raise GLib.Error('Failed to register object with path: %s', agent_path)
 
-    def __del__(self):
-        self._unregister_object()
-
-    def _unregister_object(self):
+    def close(self):
         self.__bus.unregister_object(self.__regid)
+        self.__regid = None
