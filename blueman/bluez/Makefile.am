@@ -9,7 +9,6 @@ blueman_PYTHON =				\
 	AnyBase.py					\
 	Base.py						\
 	Device.py					\
-	errors.py					\
 	Manager.py					\
 	Network.py					\
 	NetworkServer.py
