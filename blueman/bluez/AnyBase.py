@@ -19,21 +19,19 @@ class AnyBase(GObject.GObject):
         super(AnyBase, self).__init__()
 
         self.__interface_name = interface_name
-        self.__signals = []
+        self.__signal = None
 
-        def on_signal(_connection, _sender_name, object_path, _interface_name,
-                      _signal_name, param):
-            self._on_properties_changed(object_path, *param.unpack())
+        def on_signal(_connection, _sender_name, object_path, _interface_name, _signal_name, param):
+            iface_name, changed, invalidated = param.unpack()
+            if iface_name == self.__interface_name:
+                self._on_properties_changed(object_path, changed, invalidated)
 
-        sig = self.__bus.signal_subscribe(self.__bus_name, self.__bus_interface_name,
+        self.__signal = self.__bus.signal_subscribe(self.__bus_name, self.__bus_interface_name,
             'PropertiesChanged', None, None, Gio.DBusSignalFlags.NONE, on_signal)
 
-        self.__signals.append(sig)
-
-    def _on_properties_changed(self, object_path, interface_name, changed_properties, invalidated):
-        if self.__interface_name == interface_name:
-            for name, value in changed_properties.items():
-                self.emit('property-changed', name, value, object_path)
+    def _on_properties_changed(self, object_path, changed_properties, invalidated):
+        for name, value in changed_properties.items():
+            self.emit('property-changed', name, value, object_path)
 
     def close(self):
         if self.__signal:
