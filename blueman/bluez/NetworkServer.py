@@ -6,8 +6,8 @@ from gi.repository import GLib
 class NetworkServer(Base):
     _interface_name = 'org.bluez.NetworkServer1'
 
-    def _init(self, obj_path):
-        super(NetworkServer, self)._init(interface_name=self._interface_name, obj_path=obj_path)
+    def __init__(self, obj_path):
+        super().__init__(interface_name=self._interface_name, obj_path=obj_path)
 
     def register(self, uuid, bridge):
         param = GLib.Variant('(ss)', (uuid, bridge))

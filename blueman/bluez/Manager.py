@@ -1,5 +1,6 @@
 # coding=utf-8
 from gi.repository import GObject, Gio
+from gi.types import GObjectMeta
 import logging
 
 from blueman.bluez.Adapter import Adapter
@@ -7,7 +8,17 @@ from blueman.bluez.Device import Device
 from blueman.bluez.errors import DBusNoSuchAdapterError
 
 
-class Manager(GObject.GObject):
+class ManagerMeta(GObjectMeta):
+    _instance = None
+
+    def __call__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = super().__call__(*args, **kwargs)
+
+        return cls._instance
+
+
+class Manager(GObject.GObject, metaclass=ManagerMeta):
     __gsignals__ = {
         'adapter-added': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
         'adapter-removed': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
@@ -19,19 +30,9 @@ class Manager(GObject.GObject):
     disconnect_signal = GObject.GObject.disconnect
 
     __bus_name = 'org.bluez'
-    _instance = None
 
-    def __new__(cls, *args, **kwargs):
-        if not cls._instance:
-            cls._instance = super(Manager, cls).__new__(cls)
-            cls._instance._init(*args, **kwargs)
-        return cls._instance
-
-    def __init__(self, *args, **kwargs):
-        pass
-
-    def _init(self):
-        super(Manager, self).__init__()
+    def __init__(self):
+        super().__init__()
         self._object_manager = Gio.DBusObjectManagerClient.new_for_bus_sync(
             Gio.BusType.SYSTEM, Gio.DBusObjectManagerClientFlags.DO_NOT_AUTO_START,
             self.__bus_name, '/', None, None, None)

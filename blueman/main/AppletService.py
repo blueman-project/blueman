@@ -1,20 +1,20 @@
 # coding=utf-8
 from gi.repository import Gio
+from gi.types import GObjectMeta
 
-class AppletService(Gio.DBusProxy):
+
+class ApplerServiceMeta(GObjectMeta):
     _instance = None
 
-    def __new__(cls, *args, **kwargs):
+    def __call__(cls, *args, **kwargs):
         if not cls._instance:
-            cls._instance = super(AppletService, cls).__new__(cls)
-            cls._instance._init(*args, **kwargs)
-        return AppletService._instance
+            cls._instance = super().__call__(*args, **kwargs)
+        return cls._instance
 
-    def __init__(self):
-        pass
 
-    def _init(self, *args, **kwargs):
-        super(AppletService, self).__init__(
+class AppletService(Gio.DBusProxy):
+    def __init__(self, *args, **kwargs):
+        super().__init__(
             g_name='org.blueman.Applet',
             g_interface_name='org.blueman.Applet',
             g_object_path='/',

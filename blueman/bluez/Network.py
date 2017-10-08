@@ -7,8 +7,8 @@ from gi.repository import GLib
 class Network(Base):
     _interface_name = 'org.bluez.Network1'
 
-    def _init(self, obj_path=None):
-        super(Network, self)._init(interface_name=self._interface_name, obj_path=obj_path)
+    def __init__(self, obj_path=None):
+        super().__init__(interface_name=self._interface_name, obj_path=obj_path)
 
     def connect(self, uuid, reply_handler=None, error_handler=None):
         param = GLib.Variant('(s)', (uuid,))

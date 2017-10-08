@@ -2,9 +2,20 @@
 import logging
 from blueman.bluez.obex.Transfer import Transfer
 from gi.repository import GObject, Gio
+from gi.types import GObjectMeta
 
 
-class Manager(GObject.GObject):
+class ManagerMeta(GObjectMeta):
+    _instance = None
+
+    def __call__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = super().__call__(*args, **kwargs)
+
+        return cls._instance
+
+
+class Manager(GObject.GObject, metaclass=ManagerMeta):
     __gsignals__ = {
         'session-removed': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
         'transfer-started': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
@@ -15,19 +26,9 @@ class Manager(GObject.GObject):
     disconnect_signal = GObject.GObject.disconnect
 
     __bus_name = 'org.bluez.obex'
-    _instance = None
 
-    def __new__(cls, *args, **kwargs):
-        if not cls._instance:
-            cls._instance = super(Manager, cls).__new__(cls)
-            cls._instance._init(*args, **kwargs)
-        return cls._instance
-
-    def __init__(self, *args, **kwargs):
-        pass
-
-    def _init(self):
-        super(Manager, self).__init__()
+    def __init__(self):
+        super().__init__()
         self.__transfers = {}
         self.__signals = []
 

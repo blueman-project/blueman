@@ -12,8 +12,8 @@ class ObjectPush(Base):
 
     _interface_name = 'org.bluez.obex.ObjectPush1'
 
-    def _init(self, session_path):
-        super(ObjectPush, self)._init(interface_name=self._interface_name, obj_path=session_path)
+    def __init__(self, session_path):
+        super().__init__(interface_name=self._interface_name, obj_path=session_path)
 
     def send_file(self, file_path):
         def on_transfer_started(transfer_path, props):

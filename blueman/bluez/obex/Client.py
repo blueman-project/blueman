@@ -17,7 +17,7 @@ class Client(Base):
 
     _interface_name = 'org.bluez.obex.Client1'
 
-    def _init(self):
+    def __init__(self):
         proxy = Gio.DBusProxy.new_for_bus_sync(
             Gio.BusType.SESSION, Gio.DBusProxyFlags.NONE, None, 'org.bluez.obex', '/',
             'org.freedesktop.DBus.Introspectable')
@@ -28,7 +28,7 @@ class Client(Base):
         if 'org.freedesktop.DBus.ObjectManager' not in introspection:
             raise ObexdNotFoundError('Could not find any compatible version of obexd')
 
-        super(Client, self)._init(interface_name=self._interface_name, obj_path='/org/bluez/obex')
+        super().__init__(interface_name=self._interface_name, obj_path='/org/bluez/obex')
 
     def create_session(self, dest_addr, source_addr="00:00:00:00:00:00", pattern="opp"):
         def on_session_created(session_path):
