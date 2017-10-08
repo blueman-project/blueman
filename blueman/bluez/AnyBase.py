@@ -35,6 +35,8 @@ class AnyBase(GObject.GObject):
             for name, value in changed_properties.items():
                 self.emit('property-changed', name, value, object_path)
 
-    def __del__(self):
-        for signal in self.__signals:
-            self.__bus.signal_unsubscribe(signal)
+    def close(self):
+        if self.__signal:
+            self.__bus.signal_unsubscribe(self.__signal)
+            self.__signal = None
+        self.__bus = None
