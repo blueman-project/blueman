@@ -20,4 +20,4 @@ class Network(Base):
 
 class AnyNetwork(AnyBase):
     def __init__(self):
-        super(AnyNetwork, self).__init__('org.bluez.Network1')
+        super().__init__('org.bluez.Network1')

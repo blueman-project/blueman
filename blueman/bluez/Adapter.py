@@ -36,4 +36,4 @@ class Adapter(Base):
 
 class AnyAdapter(AnyBase):
     def __init__(self):
-        super(AnyAdapter, self).__init__('org.bluez.Adapter1')
+        super().__init__('org.bluez.Adapter1')
