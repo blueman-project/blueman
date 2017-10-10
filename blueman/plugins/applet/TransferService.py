@@ -177,9 +177,6 @@ class TransferService(AppletPlugin):
             self._agent = Agent(self.Applet)
         self._agent.register()
 
-    def on_manager_state_changed(self, state):
-        if not state:
-            self._unregister_agent()
     def _unregister_agent(self):
         if self._agent:
             self._agent.unregister()
@@ -190,9 +187,9 @@ class TransferService(AppletPlugin):
         logging.info("%s %s" % (name, owner))
         self._register_agent()
 
-    def _on_dbus_name_vanished(self, _connection, name):
-        logging.info(name)
-        self._unregister_agent()
+    @staticmethod
+    def _on_dbus_name_vanished(_connection, name):
+        logging.info("%s not running or was stopped" % name)
 
     def _on_transfer_started(self, _manager, transfer_path):
         if transfer_path not in self._agent.transfers:
