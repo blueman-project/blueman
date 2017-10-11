@@ -4,7 +4,6 @@ blueman_PYTHON = 	\
 	AgentManager.py	\
 	Base.py		\
 	Client.py	\
-	Error.py	\
 	Manager.py	\
 	ObjectPush.py	\
 	Session.py	\
