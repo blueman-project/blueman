@@ -35,11 +35,14 @@ class ManagerDeviceList(DeviceList):
             {"id": "caption", "type": str, "renderer": cr,
              "render_attrs": {"markup": 1}, "view_props": {"expand": True}},
             {"id": "rssi_pb", "type": GdkPixbuf.Pixbuf, "renderer": Gtk.CellRendererPixbuf(),
-             "render_attrs": {"pixbuf": 2}, "view_props": {"spacing": 0}},
+             "render_attrs": {}, "view_props": {"spacing": 0},
+             "celldata_func": (self._set_device_cell_data, "rssi")},
             {"id": "lq_pb", "type": GdkPixbuf.Pixbuf, "renderer": Gtk.CellRendererPixbuf(),
-             "render_attrs": {"pixbuf": 3}, "view_props": {"spacing": 0}},
+             "render_attrs": {}, "view_props": {"spacing": 0},
+             "celldata_func": (self._set_device_cell_data, "lq")},
             {"id": "tpl_pb", "type": GdkPixbuf.Pixbuf, "renderer": Gtk.CellRendererPixbuf(),
-             "render_attrs": {"pixbuf": 4}, "view_props": {"spacing": 0}},
+             "render_attrs": {}, "view_props": {"spacing": 0},
+             "celldata_func": (self._set_device_cell_data, "tpl")},
             {"id": "alias", "type": str},  # used for quick access instead of device.GetProperties
             {"id": "connected", "type": bool},  # used for quick access instead of device.GetProperties
             {"id": "paired", "type": bool},  # used for quick access instead of device.GetProperties
@@ -488,6 +491,17 @@ class ManagerDeviceList(DeviceList):
         return False
 
     def _set_device_cell_data(self, col, cell, model, iter, data):
-        row = self.get(iter, "icon_info", "trusted", "paired")
-        surface = self.make_device_icon(row["icon_info"], row["paired"], row["trusted"])
-        cell.set_property("surface", surface)
+        if data is None:
+            row = self.get(iter, "icon_info", "trusted", "paired")
+            surface = self.make_device_icon(row["icon_info"], row["paired"], row["trusted"])
+            cell.set_property("surface", surface)
+        elif data in ("rssi", "lq", "tpl"):
+            window = self.get_window()
+            scale = self.get_scale_factor()
+            pb = self.get(iter, data + "_pb")[data + "_pb"]
+            # FIXME we need bigger and higher quality images for signal bars
+            if pb:
+                surface = Gdk.cairo_surface_create_from_pixbuf(pb, scale, window)
+                cell.set_property("surface", surface)
+            else:
+                cell.set_property("surface", None)
