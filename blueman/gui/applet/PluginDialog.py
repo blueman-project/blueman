@@ -13,10 +13,12 @@ from gi.repository import Gtk
 
 class SettingsWidget(Gtk.Box):
     def __init__(self, inst, orientation=Gtk.Orientation.VERTICAL):
-        super(SettingsWidget, self).__init__(orientation=orientation)
-        self.set_name("SettingsWidget")
+        super().__init__(
+            name="SettingsWidget",
+            orientation=orientation,
+            spacing=2
+        )
         self.inst = inst
-        self.props.spacing = 2
 
         self.construct_settings()
         self.show_all()
@@ -34,10 +36,7 @@ class SettingsWidget(Gtk.Box):
 
                 self.pack_start(w, False, False, 0)
 
-                label = Gtk.Label(label="<i >" + v["desc"] + "</i>")
-                label.set_line_wrap(True)
-                label.props.use_markup = True
-                label.props.xalign = 0.0
+                label = Gtk.Label(label="<i >" + v["desc"] + "</i>", wrap=True, use_markup=True, xalign=0.0)
                 self.pack_start(label, False, False, 0)
 
     def handle_change(self, widget, opt, params, prop):
@@ -58,15 +57,13 @@ class SettingsWidget(Gtk.Box):
             return c
 
         elif params["type"] == int:
-            b = Gtk.Box(Gtk.Orientation.HORIZONTAL)
+            b = Gtk.Box(Gtk.Orientation.HORIZONTAL, spacing=6)
             label = Gtk.Label(label=params["name"])
             b.pack_start(label, False, False, 0)
 
-            r = Gtk.SpinButton()
+            r = Gtk.SpinButton(numeric=True)
             b.pack_start(r, False, False, 6)
-            b.props.spacing = 6
 
-            r.set_numeric(True)
             r.set_increments(1, 3)
             r.set_range(params["range"][0], params["range"][1])
 
@@ -76,13 +73,12 @@ class SettingsWidget(Gtk.Box):
             return b
 
         elif params["type"] == str:
-            b = Gtk.Box(Gtk.Orientation.HORIZONTAL)
+            b = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
             label = Gtk.Label(label=params["name"])
             b.pack_start(label, False, False, 0)
 
             e = Gtk.Entry()
             b.pack_start(e, False, False, 6)
-            b.props.spacing = 6
 
             e.props.text = self.inst.get_option(opt)
             e.connect("changed", self.handle_change, opt, params, "text")
@@ -92,21 +88,24 @@ class SettingsWidget(Gtk.Box):
 
 class PluginDialog(Gtk.Dialog):
     def __init__(self, applet):
-        super(PluginDialog, self).__init__(buttons=("_Close", Gtk.ResponseType.CLOSE))
+        super().__init__(
+            buttons=("_Close", Gtk.ResponseType.CLOSE),
+            title=_("Plugins"),
+            icon_name="blueman",
+            name="PluginDialog",
+            border_width=6,
+            default_width=490,
+            default_height=380,
+            resizable=False
+        )
 
-        self.set_name("PluginDialog")
         self.applet = applet
 
-        self.Builder = Gtk.Builder()
-        self.Builder.set_translation_domain("blueman")
+        self.Builder = Gtk.Builder(translation_domain="blueman")
         bind_textdomain_codeset("blueman", "UTF-8")
         self.Builder.add_from_file(UI_PATH + "/applet-plugins-widget.ui")
 
-        self.set_title(_("Plugins"))
-        self.props.icon_name = "blueman"
-
         self.description = self.Builder.get_object("description")
-        self.description.props.wrap = True
 
         self.icon = self.Builder.get_object("icon")
         self.author_txt = self.Builder.get_object("author_txt")
@@ -142,28 +141,20 @@ class PluginDialog(Gtk.Dialog):
             {"id": "name", "type": str},
         ]
 
-        self.list = GenericList(data)
-        # self.sorted = Gtk.TreeModelSort(self.list.liststore)
+        self.list = GenericList(data, headers_visible=False, visible=True)
         self.list.liststore.set_sort_column_id(3, Gtk.SortType.ASCENDING)
         self.list.liststore.set_sort_func(3, self.list_compare_func)
 
         self.list.selection.connect("changed", lambda *args: ref() and ref().on_selection_changed(*args))
 
-        self.list.props.headers_visible = False
-        self.list.show()
-
-        self.props.border_width = 6
-        self.resize(490, 380)
-
-        viewport = self.Builder.get_object("viewport")
-        viewport.add(self.list)
-
-        sw = self.Builder.get_object("main_scrolled_window")
+        plugin_list = self.Builder.get_object("plugin_list")
+        plugin_info = self.Builder.get_object("main_scrolled_window")
+        plugin_list.add(self.list)
 
         # Disable overlay scrolling
         if Gtk.get_minor_version() >= 16:
-            viewport.props.overlay_scrolling = False
-            sw.props.overlay_scrolling = False
+            plugin_list.props.overlay_scrolling = False
+            plugin_info.props.overlay_scrolling = False
 
         self.populate()
 
