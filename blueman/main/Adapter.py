@@ -14,30 +14,29 @@ from gi.repository import Gtk
 from gi.repository import Pango
 
 
-class BluemanAdapters(Gtk.Dialog):
+class BluemanAdapters(Gtk.Window):
     def __init__(self, selected_hci_dev, socket_id):
-        super(BluemanAdapters, self).__init__(title=_("Bluetooth Adapters"))
-        # Setup dialog
-        self.set_border_width(5)
-        self.set_resizable(False)
-        self.props.icon_name = "blueman-device"
-        self.props.window_position = Gtk.WindowPosition.CENTER
-        self.set_name("BluemanAdapters")
-        self.connect("response", self.on_dialog_response)
+        super().__init__(
+            title=_("Bluetooth Adapters"),
+            border_width=5,
+            resizable=False,
+            icon_name="blueman-device",
+            name="BluemanAdapters"
+        )
+        self.connect("delete-event", self._on_close)
 
-        close_button = self.add_button("_Close", Gtk.ResponseType.CLOSE)
-        close_button.props.receives_default = True
-        close_button.props.use_underline = True
+        self.notebook = Gtk.Notebook(visible=True)
 
-        self.notebook = Gtk.Notebook()
         if socket_id:
             plug = Gtk.Plug.new(socket_id)
-            plug.connect('delete-event', lambda _plug, _event: Gtk.main_quit())
-            plug.add(self.notebook)
             plug.show()
+            plug.connect('delete-event', self._on_close)
+            plug.add(self.notebook)
         else:
-            self.get_content_area().add(self.notebook)
+            self.add(self.notebook)
+            self.connect("delete-event", self._on_close)
             self.show()
+
         self.tabs = {}
         self._adapters = {}
 
@@ -72,7 +71,7 @@ class BluemanAdapters(Gtk.Dialog):
                 logging.error('Error: the selected adapter does not exist')
         self.notebook.show_all()
 
-    def on_dialog_response(self, dialog, response_id):
+    def _on_close(self, *args, **kwargs):
         Gtk.main_quit()
 
     def on_property_changed(self, adapter, name, value, path):
