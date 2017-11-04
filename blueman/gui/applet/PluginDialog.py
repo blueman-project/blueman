@@ -86,17 +86,17 @@ class SettingsWidget(Gtk.Box):
             return b
 
 
-class PluginDialog(Gtk.Dialog):
+class PluginDialog(Gtk.Window):
     def __init__(self, applet):
         super().__init__(
-            buttons=("_Close", Gtk.ResponseType.CLOSE),
             title=_("Plugins"),
             icon_name="blueman",
             name="PluginDialog",
             border_width=6,
             default_width=490,
             default_height=380,
-            resizable=False
+            resizable=False,
+            visible=False
         )
 
         self.applet = applet
@@ -121,11 +121,9 @@ class PluginDialog(Gtk.Dialog):
         self.b_prefs = self.Builder.get_object("b_prefs")
         self.b_prefs.connect("toggled", self.on_prefs_toggled)
 
-        widget = self.Builder.get_object("all")
-
         ref = weakref.ref(self)
 
-        self.vbox.pack_start(widget, True, True, 0)
+        self.add(self.Builder.get_object("all"))
 
         cr = Gtk.CellRendererToggle()
         cr.connect("toggled", lambda *args: ref() and ref().on_toggled(*args))
@@ -160,7 +158,7 @@ class PluginDialog(Gtk.Dialog):
 
         self.sig_a = self.applet.Plugins.connect("plugin-loaded", self.plugin_state_changed, True)
         self.sig_b = self.applet.Plugins.connect("plugin-unloaded", self.plugin_state_changed, False)
-        self.connect("response", self.on_response)
+        self.connect("delete-event", self._on_close)
 
         self.list.set_cursor(0)
 
@@ -182,7 +180,7 @@ class PluginDialog(Gtk.Dialog):
             elif not a["activatable"] and b["activatable"]:
                 return 1
 
-    def on_response(self, dialog, resp):
+    def _on_close(self, *args, **kwargs):
         self.applet.Plugins.disconnect(self.sig_a)
         self.applet.Plugins.disconnect(self.sig_b)
 

@@ -6,7 +6,7 @@ from blueman.gui.applet.PluginDialog import PluginDialog
 
 import gi
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, GLib
+from gi.repository import Gtk
 
 
 class StandardItems(AppletPlugin):
@@ -16,6 +16,7 @@ class StandardItems(AppletPlugin):
     __author__ = "walmis"
 
     def on_load(self):
+        self._plugin_window = None
 
         self.parent.Plugins.Menu.add(self, 21)
 
@@ -97,8 +98,13 @@ class StandardItems(AppletPlugin):
         about.destroy()
 
     def on_plugins(self):
-        def open_dialog():
-            dialog = PluginDialog(self.parent)
-            dialog.run()
-            dialog.destroy()
-        GLib.idle_add(open_dialog)
+        def on_close(win, event):
+            win.destroy()
+            self._plugin_window = None
+
+        if self._plugin_window:
+            self._plugin_window.present()
+        else:
+            self._plugin_window = PluginDialog(self.parent)
+            self._plugin_window.connect("delete-event", on_close)
+            self._plugin_window.show()
