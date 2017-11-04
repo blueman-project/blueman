@@ -15,12 +15,15 @@ from gi.repository import Gtk
 
 class BluemanServices(Gtk.Dialog):
     def __init__(self):
-        super(BluemanServices, self).__init__(title=_("Local Services"))
-        self.resize(520, 420)
-        self.set_name("BluemanServices")
-        self.set_position(Gtk.WindowPosition.CENTER)
-        self.props.border_width = 5
-        self.props.icon_name = "blueman"
+        super().__init__(
+            title=_("Local Services"),
+            name="BluemanServices",
+            icon_name="blueman",
+            default_width=520,
+            default_height=420,
+            border_width=5
+
+        )
 
         self.b_apply = self.add_button("_Apply", Gtk.ResponseType.APPLY)
         self.b_apply.props.receives_default = True
@@ -32,13 +35,9 @@ class BluemanServices(Gtk.Dialog):
 
         self.content_area = self.get_content_area()
 
-        self.box = Gtk.Box(Gtk.Orientation.HORIZONTAL)
-        self.box.props.vexpand = True
-        self.box.props.visible = True
+        self.box = Gtk.Box(Gtk.Orientation.HORIZONTAL, vexpand=True, visible=True)
 
-        self.viewport = Gtk.Viewport()
-        self.viewport.props.visible = True
-        self.viewport.props.width_request = 120
+        self.viewport = Gtk.Viewport(visible=True, width_request=120)
 
         self.box.add(self.viewport)
         self.content_area.add(self.box)
@@ -57,14 +56,11 @@ class BluemanServices(Gtk.Dialog):
             {"id": "id", "type": str},
         ]
 
-        ls = GenericList(data)
-        ls.props.headers_visible = False
+        self.List = ls = GenericList(data, headers_visible=False, visible=True)
 
         ls.selection.connect("changed", self.on_selection_changed)
-        self.List = ls
 
         self.viewport.add(ls)
-        ls.show()
 
         self.load_plugins()
 
