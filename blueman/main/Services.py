@@ -13,40 +13,38 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 
-class BluemanServices(Gtk.Dialog):
+class BluemanServices(Gtk.Window):
     def __init__(self):
         super().__init__(
             title=_("Local Services"),
             name="BluemanServices",
             icon_name="blueman",
-            default_width=520,
-            default_height=420,
             border_width=5
 
         )
 
-        self.b_apply = self.add_button("_Apply", Gtk.ResponseType.APPLY)
-        self.b_apply.props.receives_default = True
-        self.b_apply.props.sensitive = False
-        self.b_apply.props.use_underline = True
-
-        self.b_close = self.add_button("_Close", Gtk.ResponseType.CLOSE)
-        self.b_close.props.use_underline = True
-
-        self.content_area = self.get_content_area()
+        grid = Gtk.Grid(orientation=Gtk.Orientation.VERTICAL, visible=True, row_spacing=10)
+        self.add(grid)
 
         self.box = Gtk.Box(Gtk.Orientation.HORIZONTAL, vexpand=True, visible=True)
+        grid.add(self.box)
+
+        button_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, halign=Gtk.Align.END, visible=True)
+        grid.add(button_box)
+
+        self.b_apply = Gtk.Button("_Apply", receives_default=True, use_underline=True, sensitive=False, visible=True,
+                                  width_request=80)
+        button_box.add(self.b_apply)
 
         self.viewport = Gtk.Viewport(visible=True, width_request=120)
 
         self.box.add(self.viewport)
-        self.content_area.add(self.box)
 
         self.connect("delete-event", Gtk.main_quit)
 
         self.Config = Config("org.blueman.general")
 
-        check_single_instance("blueman-services", lambda time: self.Dialog.present_with_time(time))
+        check_single_instance("blueman-services", lambda time: self.present_with_time(time))
 
         data = [
             {"id": "icon_name", "type": str, "renderer": Gtk.CellRendererPixbuf(stock_size=Gtk.IconSize.DND),
@@ -67,7 +65,6 @@ class BluemanServices(Gtk.Dialog):
         ls.selection.select_path(self.Config["services-last-item"])
 
         self.b_apply.connect("clicked", self.on_apply_clicked)
-        self.b_close.connect("clicked", Gtk.main_quit)
 
         self.show()
 
