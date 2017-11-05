@@ -13,8 +13,8 @@ gi.require_version("Gdk", "3.0")
 
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.obex.ObjectPush import ObjectPush
-from blueman.Functions import *
-from blueman.Constants import *
+from blueman.Functions import format_bytes
+from blueman.Constants import UI_PATH
 from blueman.main.SpeedCalc import SpeedCalc
 from blueman.gui.CommonUi import ErrorDialog
 from blueman.bluez import obex
@@ -31,21 +31,22 @@ class Sender(Gtk.Dialog):
     }
 
     def __init__(self, device, adapter_path, files):
-        super(Sender, self).__init__(title=_("Bluetooth File Transfer"))
-        self.set_name("BluemanSendTo")
-        self.set_position(Gtk.WindowPosition.CENTER)
-        self.set_type_hint(Gdk.WindowTypeHint.DIALOG)
-        self.props.border_width = 5
-        self.props.icon_name = "blueman"
-        self.props.width_request = 400
+        super().__init__(
+            title=_("Bluetooth File Transfer"),
+            name="BluemanSendTo",
+            icon_name="blueman",
+            border_width=5,
+            default_width=400,
+            window_position=Gtk.WindowPosition.CENTER,
+            type_hint=Gdk.WindowTypeHint.DIALOG
+        )
 
         self.b_cancel = self.add_button("_Stop", Gtk.ResponseType.CLOSE)
         self.b_cancel.props.receives_default = True
         self.b_cancel.props.use_underline = True
         self.b_cancel.connect("clicked", self.on_cancel)
 
-        self.Builder = Gtk.Builder()
-        self.Builder.set_translation_domain("blueman")
+        self.Builder = Gtk.Builder(translation_domain="blueman")
         bind_textdomain_codeset("blueman", "UTF-8")
         self.Builder.add_from_file(UI_PATH + "/send-dialog.ui")
 
