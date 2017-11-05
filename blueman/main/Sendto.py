@@ -98,7 +98,7 @@ class Sender(Gtk.Dialog):
             if 'StartServiceByName' in e.message:
                 logging.debug(e.message)
                 d = ErrorDialog(_("obexd not available"), _("Failed to autostart obex service. Make sure the obex "
-                                                            "daemon is running"))
+                                                            "daemon is running"), parent=self.get_toplevel())
                 d.run()
                 d.destroy()
                 exit(1)
@@ -215,7 +215,7 @@ class Sender(Gtk.Dialog):
         if not self.error_dialog:
             self.speed.reset()
             d = ErrorDialog(msg, _("Error occurred while sending file %s") % os.path.basename(self.files[-1]),
-                            modal=True, icon_name="blueman")
+                            modal=True, icon_name="blueman", parent=self.get_toplevel())
 
             if len(self.files) > 1:
                 d.add_button(_("Skip"), Gtk.ResponseType.NO)
@@ -257,7 +257,9 @@ class Sender(Gtk.Dialog):
         self.process_queue()
 
     def on_session_failed(self, _client, msg):
-        d = ErrorDialog(_("Error occurred"), msg.reason.split(None, 1)[1], icon_name="blueman")
+        d = ErrorDialog(_("Error occurred"), msg.reason.split(None, 1)[1], icon_name="blueman",
+                        parent=self.get_toplevel())
+
         d.run()
         d.destroy()
         exit(1)
