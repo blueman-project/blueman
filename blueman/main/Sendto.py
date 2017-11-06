@@ -1,9 +1,7 @@
 # coding=utf-8
 import time
 import logging
-import re
 import os
-import urllib.parse
 from locale import bind_textdomain_codeset
 from gettext import ngettext
 
@@ -22,7 +20,7 @@ from blueman.bluez import obex
 import gi
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
-from gi.repository import Gdk, Gtk, GObject, GLib
+from gi.repository import Gdk, Gtk, GObject, GLib, Gio
 
 
 class Sender(Gtk.Dialog):
@@ -62,7 +60,8 @@ class Sender(Gtk.Dialog):
 
         self.device = device
         self.adapter = Adapter(adapter_path)
-        self.files = files
+        self.files = []
+        self.num_files = 0
         self.object_push = None
         self.transfer = None
 
@@ -80,19 +79,26 @@ class Sender(Gtk.Dialog):
 
         self.speed = SpeedCalc(6)
 
-        for i in range(len(self.files) - 1, -1, -1):
-            f = self.files[i]
-            match = re.match("file://(.*)", f)
-            if match:
-                f = self.files[i] = urllib.parse.unquote(match.groups(1)[0])
+        for file_name in files:
+            parsed_file = Gio.File.parse_name(file_name)
 
-            if os.path.exists(f) and not os.path.isdir(f):
-                f = os.path.abspath(f)
-                self.total_bytes += os.path.getsize(f)
-            else:
-                self.files.remove(f)
+            if not parsed_file.query_exists():
+                logging.info("Skipping non existing file %s" % parsed_file.get_path())
+                continue
 
-        self.num_files = len(self.files)
+            file_info = parsed_file.query_info("standard::*", Gio.FileQueryInfoFlags.NONE)
+
+            if file_info.get_file_type() == Gio.FileType.DIRECTORY:
+                logging.info("Skipping directory %s" % parsed_file.get_path())
+                continue
+
+            self.files.append(parsed_file)
+            self.num_files += 1
+            self.total_bytes += file_info.get_size()
+
+        if len(self.files) == 0:
+            exit(1)
+
         try:
             self.client = obex.Client()
         except GLib.Error as e:
@@ -107,10 +113,7 @@ class Sender(Gtk.Dialog):
                 # Fail on anything else
                 raise
 
-        if self.num_files == 0:
-            exit(1)
-
-        self.l_file.props.label = os.path.basename(self.files[-1])
+        self.l_file.props.label = self.files[-1].get_basename()
 
         self.client.connect('session-created', self.on_session_created)
         self.client.connect('session-failed', self.on_session_failed)
@@ -203,7 +206,7 @@ class Sender(Gtk.Dialog):
 
     def process_queue(self):
         if len(self.files) > 0:
-            self.send_file(self.files[-1])
+            self.send_file(self.files[-1].get_path())
         else:
             self.emit("result", True)
 
