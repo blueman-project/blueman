@@ -8,10 +8,13 @@ from gi.repository import Gtk
 
 class DeviceSelectorDialog(Gtk.Dialog):
     def __init__(self, title=_("Select Device"), parent=None, discover=True, adapter_name=None):
-        super(DeviceSelectorDialog, self).__init__(
-            title, parent, 0, ("_Cancel", Gtk.ResponseType.REJECT, "_OK", Gtk.ResponseType.ACCEPT),
-            icon_name="blueman", resizable=False, name="DeviceSelectorDialog"
-
+        super().__init__(
+            title=title,
+            name="DeviceSelectorDialog",
+            parent=parent,
+            buttons=("_Cancel", Gtk.ResponseType.REJECT, "_OK", Gtk.ResponseType.ACCEPT),
+            icon_name="blueman",
+            resizable=False,
         )
 
         self.vbox.props.halign = Gtk.Align.CENTER
@@ -20,8 +23,7 @@ class DeviceSelectorDialog(Gtk.Dialog):
         self.vbox.props.vexpand = True
         self.vbox.props.margin = 6
 
-        self.selector = DeviceSelectorWidget(adapter_name=adapter_name)
-        self.selector.show()
+        self.selector = DeviceSelectorWidget(adapter_name=adapter_name, visible=True)
         self.vbox.pack_start(self.selector, True, True, 0)
 
         self.selection = None
