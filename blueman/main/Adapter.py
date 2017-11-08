@@ -3,7 +3,6 @@ import os.path
 import logging
 import gettext
 
-from blueman.Constants import UI_PATH
 from blueman.Functions import *
 import blueman.bluez as bluez
 
@@ -12,6 +11,135 @@ gi.require_version("Gtk", "3.0")
 gi.require_version("Pango", "1.0")
 from gi.repository import Gtk
 from gi.repository import Pango
+
+
+class AdapterGrid(Gtk.Grid):
+    def __init__(self, adapter, **kwargs):
+        super().__init__(
+            orientation=Gtk.Orientation.VERTICAL,
+            row_spacing=2,
+            margin=12,
+            visible=True,
+            **kwargs
+        )
+
+        # Maps names to position in grid, used in self.get_child_widget
+        self.widget_map = {}
+
+        self.adapter = adapter
+
+        visibility_label = Gtk.Label(label=_("<b>Visibility Setting</b>"), use_markup=True, visible=True,
+                                     halign=Gtk.Align.START)
+        self.add(visibility_label)
+        self.widget_map["visibility_label"] = (0, 0)
+
+        radio_hidden = Gtk.RadioButton(label=_("Hidden"), draw_indicator=True, visible=True, halign=Gtk.Align.START,
+                                       can_focus=True)
+        self.add(radio_hidden)
+        self.widget_map["radio_hidden"] = (1, 0)
+        radio_always = Gtk.RadioButton(label=_("Always visible"), group=radio_hidden, draw_indicator=True, visible=True,
+                                       halign=Gtk.Align.START, can_focus=True)
+        self.add(radio_always)
+        self.widget_map["radio_always"] = (2, 0)
+        radio_temporary = Gtk.RadioButton(label=_("Temporary visible"), group=radio_hidden, draw_indicator=True,
+                                          visible=True, halign=Gtk.Align.START, can_focus=True)
+        self.add(radio_temporary)
+        self.widget_map["radio_temporary"] = (3, 0)
+
+        hscale = Gtk.Scale(orientation=Gtk.Orientation.HORIZONTAL, value_pos=Gtk.PositionType.BOTTOM, digits=0,
+                           sensitive=False, visible=True)
+        hscale.set_range(0, 30)
+        hscale.set_increments(1, 1)
+        self.add(hscale)
+        self.widget_map["hscale"] = (4, 0)
+
+        friendly_label = Gtk.Label(label=_("<b>Friendly Name</b>"), use_markup=True, visible=True,
+                                   halign=Gtk.Align.START)
+        self.add(friendly_label)
+        self.widget_map["friendly_label"] = (5, 0)
+
+        name_entry = Gtk.Entry(max_length=248, can_focus=True, visible=True, width_request=280)
+        self.add(name_entry)
+        self.widget_map["name_entry"] = (6, 0)
+
+        if adapter['Discoverable'] and adapter['DiscoverableTimeout'] > 0:
+            radio_temporary.set_active(True)
+            hscale.set_value(adapter['DiscoverableTimeout'])
+            hscale.set_sensitive(True)
+        elif adapter['Discoverable'] and adapter['DiscoverableTimeout'] == 0:
+            radio_always.set_active(True)
+        else:
+            radio_hidden.set_active(True)
+
+        name_entry.set_text(adapter.get_name())
+
+        hscale.connect("format-value", self._on_scale_format_value)
+        hscale.connect("value-changed", self._on_scale_value_changed)
+        radio_hidden.connect("toggled", self._on_radio_toggle, "hidden")
+        radio_always.connect("toggled", self._on_radio_toggle, "always")
+        radio_temporary.connect("toggled", self._on_radio_toggle, "temporary")
+        name_entry.connect("changed", self._on_name_changed)
+
+    def get_child_widget(self, name):
+        top, left = self.widget_map[name]
+        return self.get_child_at(left, top)
+
+    def set_visibility(self, state):
+        if state == "hidden":
+            hidden = self.get_child_widget("radio_hidden")
+            hidden.set_active(True)
+        elif state == "always":
+            always = self.get_child_widget("radio_always")
+            always.set_active(True)
+        elif state == "temporary":
+            temporary = self.get_child_widget("radio_temporary")
+            temporary.set_active(True)
+
+    def set_alias_entry(self, text):
+        friendly = self.get_child_widget("friendly_label")
+        friendly.set_text(text)
+
+        entry = self.get_child_widget("name_entry")
+        entry.set_text(text)
+
+    def _on_radio_toggle(self, radio, name):
+        if not radio.props.active:
+            return
+
+        hscale = self.get_child_widget("hscale")
+        if name == "hidden":
+            self.adapter['DiscoverableTimeout'] = 0
+            self.adapter['Discoverable'] = False
+            hscale.set_sensitive(False)
+        elif name == "always":
+            self.adapter['DiscoverableTimeout'] = 0
+            self.adapter['Discoverable'] = True
+            hscale.set_sensitive(False)
+        elif name == "temporary":
+            self.adapter['Discoverable'] = True
+            hscale.set_sensitive(True)
+            hscale.set_value(3)
+
+    def _on_scale_format_value(self, scale, value):
+        # FIXME inconsistant or not working at all
+        if value == 0:
+            if self.adapter['Discoverable']:
+                return _("Always")
+            else:
+                return _("Hidden")
+        else:
+            return gettext.ngettext("%d Minute", "%d Minutes", value) % value
+
+    def _on_scale_value_changed(self, scale):
+        val = scale.get_value()
+        logging.info('value: %s' % val)
+        if val == 0 and self.adapter['Discoverable']:
+            self.get_child_widget("radio_always").props.active = True
+        timeout = int(val * 60)
+        self.adapter['DiscoverableTimeout'] = timeout
+
+    def _on_name_changed(self, entry):
+        self.adapter['Alias'] = entry.get_text()
 
 
 class BluemanAdapters(Gtk.Window):
@@ -76,10 +204,15 @@ class BluemanAdapters(Gtk.Window):
 
     def on_property_changed(self, adapter, name, value, path):
         hci_dev = os.path.basename(path)
-        if name == "Discoverable" and value == 0:
-            self.tabs[hci_dev]["hidden_radio"].set_active(True)
+        if name == "Discoverable" and value:
+            if adapter["DiscoverableTimeout"] == 0:
+                self.tabs[hci_dev]["grid"].set_visibility("always")
+            else:
+                self.tabs[hci_dev]["grid"].set_visibility("temporary")
+        elif name == "Discoverable" and not value:
+            self.tabs[hci_dev]["grid"].set_visibility("hidden")
         elif name == "Alias":
-            self.tabs[hci_dev]["label"].set_text(value)
+            self.tabs[hci_dev]["grid"].set_alias_entry(value)
 
     def on_adapter_added(self, _manager, adapter_path):
         hci_dev = os.path.basename(adapter_path)
@@ -101,114 +234,23 @@ class BluemanAdapters(Gtk.Window):
         self.manager = None
         # FIXME: show error dialog and exit
 
-    def build_adapter_tab(self, adapter):
-        def on_hidden_toggle(radio):
-            if not radio.props.active:
-                return
-            adapter['DiscoverableTimeout'] = 0
-            adapter['Discoverable'] = False
-            hscale.set_sensitive(False)
-
-        def on_always_toggle(radio):
-            if not radio.props.active:
-                return
-            adapter['DiscoverableTimeout'] = 0
-            adapter['Discoverable'] = True
-            hscale.set_sensitive(False)
-
-        def on_temporary_toggle(radio):
-            if not radio.props.active:
-                return
-            adapter['Discoverable'] = True
-            hscale.set_sensitive(True)
-            hscale.set_value(3)
-
-        def on_scale_format_value(scale, value):
-            if value == 0:
-                if adapter['Discoverable']:
-                    return _("Always")
-                else:
-                    return _("Hidden")
-            else:
-                return gettext.ngettext("%d Minute", "%d Minutes", value) % value
-
-        def on_scale_value_changed(scale):
-            val = scale.get_value()
-            logging.info('value: %s' % val)
-            if val == 0 and adapter['Discoverable']:
-                always_radio.props.active = True
-            timeout = int(val * 60)
-            adapter['DiscoverableTimeout'] = timeout
-
-        def on_name_changed(entry):
-            adapter['Alias'] = entry.get_text()
-
-        ui = {}
-
-        builder = Gtk.Builder()
-        builder.set_translation_domain("blueman")
-        builder.add_from_file(UI_PATH + "/adapters-tab.ui")
-
-        hscale = builder.get_object("hscale")
-        hscale.connect("format-value", on_scale_format_value)
-        hscale.connect("value-changed", on_scale_value_changed)
-        hscale.set_range(0, 30)
-        hscale.set_increments(1, 1)
-
-        hidden_radio = builder.get_object("hidden")
-        always_radio = builder.get_object("always")
-        temporary_radio = builder.get_object("temporary")
-
-        if adapter['Discoverable'] and adapter['DiscoverableTimeout'] > 0:
-            temporary_radio.set_active(True)
-            hscale.set_value(adapter['DiscoverableTimeout'])
-            hscale.set_sensitive(True)
-        elif adapter['Discoverable'] and adapter['DiscoverableTimeout'] == 0:
-            always_radio.set_active(True)
-        else:
-            hidden_radio.set_active(True)
-
-        name_entry = builder.get_object("name_entry")
-        name_entry.set_text(adapter.get_name())
-
-        hidden_radio.connect("toggled", on_hidden_toggle)
-        always_radio.connect("toggled", on_always_toggle)
-        temporary_radio.connect("toggled", on_temporary_toggle)
-        name_entry.connect("changed", on_name_changed)
-
-        ui['grid'] = builder.get_object("grid")
-        ui["hidden_radio"] = hidden_radio
-        ui["always_radio"] = always_radio
-        ui["temparary_radio"] = temporary_radio
-        return ui
-
     def add_to_notebook(self, adapter):
         hci_dev = os.path.basename(adapter.get_object_path())
         hci_dev_num = int(hci_dev[3:])
 
         if hci_dev not in self.tabs:
-            self.tabs[hci_dev] = self.build_adapter_tab(adapter)
-        else:
-            if self.tabs[hci_dev]['visible']:
-                return
-                # might need to update settings at this point
-        ui = self.tabs[hci_dev]
-        ui['visible'] = True
+            self.tabs[hci_dev] = {"grid": AdapterGrid(adapter)}
+
         name = adapter.get_name()
         if name == '':
             name = _('Adapter') + ' %d' % (hci_dev_num + 1)
-        label = Gtk.Label(label=name)
-        ui['label'] = label
-        label.set_max_width_chars(20)
-        label.props.hexpand = True
-        label.set_ellipsize(Pango.EllipsizeMode.END)
-        self.notebook.insert_page(ui['grid'], label, hci_dev_num)
+        label = Gtk.Label(label=name, max_width_chars=20, hexpand=True, ellipsize=Pango.EllipsizeMode.END)
+        self.tabs[hci_dev]['label'] = label
+
+        self.notebook.insert_page(self.tabs[hci_dev]['grid'], label, hci_dev_num)
 
     def remove_from_notebook(self, adapter):
         hci_dev = os.path.basename(adapter.get_object_path())
         hci_dev_num = int(hci_dev[3:])
 
-        self.tabs[hci_dev]['visible'] = False
         self.notebook.remove_page(hci_dev_num)
-
-        # leave actual tab contents intact in case adapter becomes present once again
