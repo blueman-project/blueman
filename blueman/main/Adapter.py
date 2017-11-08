@@ -151,6 +151,7 @@ class BluemanAdapters(Gtk.Window):
             icon_name="blueman-device",
             name="BluemanAdapters"
         )
+
         self.connect("delete-event", self._on_close)
 
         self.notebook = Gtk.Notebook(visible=True)
