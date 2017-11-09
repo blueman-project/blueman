@@ -176,13 +176,7 @@ class BluemanAdapters(Gtk.Window):
 
         check_bluetooth_status(_("Bluetooth needs to be turned on for the adapter manager to work"), lambda: exit())
 
-        try:
-            self.manager = bluez.Manager()
-        except Exception as e:
-            logging.exception(e)
-            self.manager = None
-        # fixme: show error dialog and exit
-
+        self.manager = bluez.Manager()
         self.manager.connect_signal('adapter-added', self.on_adapter_added)
         self.manager.connect_signal('adapter-removed', self.on_adapter_removed)
         for adapter in self.manager.get_adapters():
