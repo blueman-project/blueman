@@ -1,5 +1,8 @@
 # coding=utf-8
 import logging
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
 from locale import bind_textdomain_codeset
 
 import blueman.bluez as bluez
@@ -19,27 +22,24 @@ from blueman.main.PluginManager import PluginManager
 import blueman.plugins.manager
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
-
 
 class Blueman(Gtk.Window):
     def __init__(self):
-        super(Blueman, self).__init__(title=_("Bluetooth Devices"))
+        super().__init__(
+            name="BluemanManager",
+            title=_("Bluetooth Devices"),
+        )
 
         self._applet_sig = None
 
         self.Config = Config("org.blueman.general")
 
-        self.Builder = Gtk.Builder()
-        self.Builder.set_translation_domain("blueman")
+        self.Builder = Gtk.Builder(translation_domain="blueman")
         bind_textdomain_codeset("blueman", "UTF-8")
         self.Builder.add_from_file(UI_PATH + "/manager-main.ui")
 
         grid = self.Builder.get_object("grid")
         self.add(grid)
-        self.set_name("BluemanManager")
 
         self.Plugins = PluginManager(ManagerPlugin, blueman.plugins.manager, self)
         self.Plugins.load_plugin()
@@ -200,7 +200,7 @@ class Blueman(Gtk.Window):
     def toggle_trust(self, device):
         device['Trusted'] = not device['Trusted']
 
-    def send(self, device, f=None):
+    def send(self, device):
         adapter = self.List.Adapter
 
         command = "blueman-sendto --source=%s --device=%s" % (adapter["Address"], device['Address'])
