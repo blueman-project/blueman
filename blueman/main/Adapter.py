@@ -142,29 +142,29 @@ class AdapterGrid(Gtk.Grid):
         self.adapter['Alias'] = entry.get_text()
 
 
-class BluemanAdapters(Gtk.Window):
-    def __init__(self, selected_hci_dev, socket_id):
+class BluemanAdaptersWindow(Gtk.ApplicationWindow):
+    def __init__(self, app, **kwargs):
         super().__init__(
+            application=app,
             title=_("Bluetooth Adapters"),
             border_width=5,
             resizable=False,
             icon_name="blueman-device",
-            name="BluemanAdapters"
+            name="BluemanAdapters",
+            **kwargs
         )
 
-        self.connect("delete-event", self._on_close)
+
+class BluemanAdapters(Gtk.Application):
+    def __init__(self, selected_hci_dev, socket_id, **kwargs):
+        super().__init__(application_id="org.blueman.Adapters", **kwargs)
+
+        self.socket_id = socket_id
+        self.selected_hci_dev = selected_hci_dev
 
         self.notebook = Gtk.Notebook(visible=True)
 
-        if socket_id:
-            plug = Gtk.Plug.new(socket_id)
-            plug.show()
-            plug.connect('delete-event', self._on_close)
-            plug.add(self.notebook)
-        else:
-            self.add(self.notebook)
-            self.connect("delete-event", self._on_close)
-            self.show()
+        self.window = None
 
         self.tabs = {}
         self._adapters = {}
@@ -172,17 +172,14 @@ class BluemanAdapters(Gtk.Window):
         setup_icon_path()
         bluez.Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
 
-        check_single_instance("blueman-adapters", lambda time: self.present_with_time(time))
-
         check_bluetooth_status(_("Bluetooth needs to be turned on for the adapter manager to work"), lambda: exit())
 
         self.manager = bluez.Manager()
         self.manager.connect_signal('adapter-added', self.on_adapter_added)
         self.manager.connect_signal('adapter-removed', self.on_adapter_removed)
+
         for adapter in self.manager.get_adapters():
             path = adapter.get_object_path()
-            hci_dev = os.path.basename(path)
-            self._adapters[hci_dev] = adapter
             self.on_adapter_added(self.manager, path)
 
         # activate a particular tab according to command line option
@@ -192,10 +189,22 @@ class BluemanAdapters(Gtk.Window):
                 self.notebook.set_current_page(hci_dev_num)
             else:
                 logging.error('Error: the selected adapter does not exist')
-        self.notebook.show_all()
 
-    def _on_close(self, *args, **kwargs):
-        Gtk.main_quit()
+    def do_activate(self):
+        def app_release(plug, event):
+            self.release()
+
+        if self.socket_id:
+            self.hold()
+            plug = Gtk.Plug.new(self.socket_id)
+            plug.show()
+            plug.connect('delete-event', app_release)
+            plug.add(self.notebook)
+        else:
+            if not self.window:
+                self.window = BluemanAdaptersWindow(app=self)
+                self.window.add(self.notebook)
+            self.window.present_with_time(Gtk.get_current_event_time())
 
     def on_property_changed(self, adapter, name, value, path):
         hci_dev = os.path.basename(path)

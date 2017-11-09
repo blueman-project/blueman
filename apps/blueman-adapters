@@ -44,5 +44,5 @@ if __name__ == '__main__':
 
     set_proc_title()
 
-    blueman_adapters = BluemanAdapters(args.adapter, args.socket_id)
-    Gtk.main()
+    app = blueman_adapters = BluemanAdapters(args.adapter, args.socket_id)
+    app.run()
