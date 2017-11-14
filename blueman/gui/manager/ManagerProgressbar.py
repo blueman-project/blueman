@@ -98,7 +98,7 @@ class ManagerProgressbar(GObject.GObject):
         if not self.finalized:
             self.hide()
             self.stop()
-            self.Blueman.get_window().set_cursor(None)
+            self.Blueman.window.get_window().set_cursor(None)
             self.hbox.remove(self.eventbox)
             self.hbox.remove(self.progressbar)
             # self.hbox.remove(self.seperator)
