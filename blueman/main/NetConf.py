@@ -314,7 +314,7 @@ class NetConf(object):
             self.enable_ip4_forwarding()
 
             if have("ip"):
-                ret = call(["ip", "link", "set", "pan1", "up"])
+                ret = call(["ip", "link", "set", "dev", "pan1", "up"])
                 if ret != 0:
                     raise NetworkSetupError("Failed to bring up interface pan1")
                 ret = call(["ip", "address", "add", "/".join((ip_str, mask_str)), "dev", "pan1"])
