@@ -37,8 +37,6 @@ If you're reporting a bug, please read the [Troubleshooting page](https://github
 
 Feel free to [open a GitHub issue](https://github.com/blueman-project/blueman/issues/new) for anything you need help with.
 
-You can also ask questions or join discussions at [the blueman mailing list](http://ml.mate-desktop.org/listinfo/blueman).
-
 ## Contributing
 
 Fork, make your changes, and issue a pull request. If you just want to edit a single file, GitHub will guide you through that process.
