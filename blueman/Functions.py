@@ -20,7 +20,7 @@
 
 __all__ = ["check_bluetooth_status", "wait_for_adapter", "launch", "setup_icon_path", "get_icon",
            "get_notification_icon", "adapter_path_to_name", "e_", "opacify_pixbuf", "composite_icon",
-           "format_bytes", "create_menuitem", "get_lockfile", "get_pid", "is_running", "check_single_instance",
+           "format_bytes", "create_menuitem", "get_lockfile", "get_pid", "is_running", "check_single_instance", "kill",
            "have", "mask_ip4_address", "set_proc_title", "create_logger", "create_parser", "open_rfcomm"]
 
 
@@ -318,6 +318,14 @@ def check_single_instance(name, unhide_func=None):
         exit()
 
     atexit.register(lambda: os.remove(lockfile))
+
+
+def kill(pid, name):
+    if pid and is_running(name, pid):
+        print('Terminating ' + name)
+        os.kill(pid, signal.SIGTERM)
+        return True
+    return False
 
 
 def have(t):

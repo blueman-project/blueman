@@ -1,6 +1,5 @@
 # coding=utf-8
 import pickle
-import signal
 import errno
 import re
 import os
@@ -9,7 +8,7 @@ from tempfile import mkstemp
 from time import sleep
 import logging
 from blueman.Constants import DHCP_CONFIG_FILE
-from blueman.Functions import have, mask_ip4_address, is_running
+from blueman.Functions import have, mask_ip4_address, is_running, kill
 from _blueman import create_bridge, destroy_bridge, BridgeException
 from subprocess import call, Popen, PIPE
 
@@ -93,12 +92,9 @@ class DnsMasqHandler(object):
             else:
                 pid = self.pid
 
-            if pid and is_running("dnsmasq", pid):
-                os.kill(pid, signal.SIGTERM)
-                self.netconf.unlock("dhcp")
-            else:
+            if not kill(pid, 'dnsmasq'):
                 logging.info("Stale dhcp lockfile found")
-                self.netconf.unlock("dhcp")
+            self.netconf.unlock("dhcp")
 
 
 class DhcpdHandler(object):
@@ -195,12 +191,9 @@ class DhcpdHandler(object):
             else:
                 pid = self.pid
 
-            if pid and (is_running("dhcpd3", pid) or is_running("dhcpd", pid)):
-                os.kill(pid, signal.SIGTERM)
-                self.netconf.unlock("dhcp")
-            else:
+            if not kill(pid, 'dhcpd3') and not kill(pid, 'dhcpd'):
                 logging.info("Stale dhcp lockfile found")
-                self.netconf.unlock("dhcp")
+            self.netconf.unlock("dhcp")
 
 
 class UdhcpdHandler(object):
@@ -267,12 +260,9 @@ option router %(rtr)s
             else:
                 pid = self.pid
 
-            if pid and is_running("udhcpd", pid):
-                os.kill(pid, signal.SIGTERM)
-                self.netconf.unlock("dhcp")
-            else:
+            if not kill(pid, 'udhcpd'):
                 logging.info("Stale dhcp lockfile found")
-                self.netconf.unlock("dhcp")
+            self.netconf.unlock("dhcp")
 
 
 class_id = 10
