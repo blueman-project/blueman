@@ -3,7 +3,7 @@
 import dbus.service
 from gi.repository import GObject, GLib
 
-from blueman.Functions import launch
+from blueman.Functions import launch, kill, get_pid, get_lockfile
 from blueman.main.PluginManager import StopException
 from blueman.plugins.AppletPlugin import AppletPlugin
 
@@ -23,6 +23,8 @@ class StatusIcon(AppletPlugin, GObject.GObject):
 
     visibility_timeout = None
 
+    _implementation = None
+
     def on_load(self, applet):
         GObject.GObject.__init__(self)
         self.lines = {0: _("Bluetooth Enabled")}
@@ -34,6 +36,9 @@ class StatusIcon(AppletPlugin, GObject.GObject):
         self.QueryVisibility(emit=False)
 
         launch('blueman-tray', icon_name='blueman')
+
+        self.Applet.Plugins.connect('plugin-loaded', self._on_plugins_changed)
+        self.Applet.Plugins.connect('plugin-unloaded', self._on_plugins_changed)
 
     def on_power_state_changed(self, _manager, state):
         if state:
@@ -113,6 +118,13 @@ class StatusIcon(AppletPlugin, GObject.GObject):
 
     def on_manager_state_changed(self, state):
         self.QueryVisibility()
+
+    def _on_plugins_changed(self, _plugins, _name):
+        implementation = self.GetStatusIconImplementation()
+        if not self._implementation or self._implementation != implementation:
+            self._implementation = implementation
+            kill(get_pid(get_lockfile('blueman-tray')), 'blueman-tray')
+            launch('blueman-tray', icon_name='blueman')
 
     @dbus.service.method('org.blueman.Applet', in_signature="", out_signature="s")
     def GetStatusIconImplementation(self):
