@@ -3,12 +3,11 @@
 
 import json
 import os
-import signal
 import subprocess
 import time
 from threading import Thread, Lock
 from blueman.Constants import VERSION
-from blueman.Functions import get_lockfile, get_pid, is_running
+from blueman.Functions import get_lockfile, get_pid, kill
 
 import urllib.request as urllib2
 
@@ -18,9 +17,7 @@ for program in 'adapters', 'applet', 'manager', 'services':
 
     if os.path.exists(lockfile):
         pid = get_pid(lockfile)
-        if pid and is_running(name, pid):
-            print('Terminating ' + name)
-            os.kill(pid, signal.SIGTERM)
+        kill(pid, name)
 
 applet = subprocess.Popen(['blueman-applet'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
