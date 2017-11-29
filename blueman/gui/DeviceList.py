@@ -1,14 +1,8 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 from blueman.Functions import wait_for_adapter, adapter_path_to_name
-
 from blueman.gui.GenericList import GenericList
-
-from _blueman import conn_info
+from blueman.Constants import ICON_PATH
+from _blueman import conn_info, ConnInfoReadError
 import blueman.bluez as Bluez
 
 import gi
@@ -26,33 +20,28 @@ class DeviceList(GenericList):
     __gsignals__ = {
         #@param: device TreeIter
         #note: None None is given when there ar no more rows, or when selected device is removed
-        str('device-selected'): (
-            GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)
-        ),
+        'device-selected': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
         #@param: device, TreeIter, (key, value)
-        str('device-property-changed'): (
-            GObject.SignalFlags.RUN_LAST,
-            None,
-            (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)
-        ),
+        'device-property-changed': (GObject.SignalFlags.RUN_LAST, None,
+                                    (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
         #@param: adapter, (key, value)
-        str('adapter-property-changed'): (
-        GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
+        'adapter-property-changed': (GObject.SignalFlags.RUN_LAST, None,
+                                     (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
         #@param: progress (0 to 1)
-        str('discovery-progress'): (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_FLOAT,)),
+        'discovery-progress': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_FLOAT,)),
 
         #@param: new adapter path, None if there are no more adapters
-        str('adapter-changed'): (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
+        'adapter-changed': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
 
         #@param: adapter path
-        str('adapter-added'): (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
-        str('adapter-removed'): (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
+        'adapter-added': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
+        'adapter-removed': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
     }
 
     def __del__(self):
         logging.debug("deleting mainlist")
 
-    def __init__(self, adapter=None, tabledata=None):
+    def __init__(self, adapter_name=None, tabledata=None, **kwargs):
         if not tabledata:
             tabledata = []
 
@@ -84,27 +73,33 @@ class DeviceList(GenericList):
         self.manager.connect_signal('adapter-removed', on_adapter_removed)
         self.manager.connect_signal('adapter-added', on_adapter_added)
 
+        any_device = Bluez.AnyDevice()
+        any_device.connect_signal("property-changed", self._on_device_property_changed)
+
         self.__discovery_time = 0
         self.__adapter_path = None
-        self.__signals = {}
         self.Adapter = None
         self.discovering = False
 
-        data = []
-        data = data + tabledata
-
-        data = data + [
-            ["device", object],
-            ["dbus_path", str],
-            ["timestamp", float]
+        data = tabledata + [
+            {"id": "device", "type": object},
+            {"id": "dbus_path", "type": str},
+            {"id": "timestamp", "type": float}
         ]
 
-        super(DeviceList, self).__init__(data)
+        super(DeviceList, self).__init__(data, **kwargs)
         self.set_name("DeviceList")
 
-        self.SetAdapter(adapter)
+        self.SetAdapter(adapter_name)
+        self._any_adapter = Bluez.AnyAdapter()
+        self._any_adapter.connect_signal("property-changed", self._on_property_changed)
 
         self.selection.connect('changed', self.on_selection_changed)
+
+        self.icon_theme = Gtk.IconTheme.get_default()
+        self.icon_theme.prepend_search_path(ICON_PATH)
+        # handle icon theme changes
+        self.icon_theme.connect("changed", self.on_icon_theme_changed)
 
     def on_selection_changed(self, selection):
         _model, tree_iter = selection.get_selected()
@@ -113,7 +108,10 @@ class DeviceList(GenericList):
             dev = row["device"]
             self.emit("device-selected", dev, tree_iter)
 
-    def _on_property_changed(self, _adapter, key, value, _path):
+    def _on_property_changed(self, _adapter, key, value, path):
+        if self.Adapter.get_object_path() != path:
+            return
+
         if key == "Discovering":
             if not value and self.discovering:
                 self.StopDiscovery()
@@ -135,6 +133,10 @@ class DeviceList(GenericList):
                 else:
                     r = Gtk.TreeRowReference.new(self.get_model(), self.props.model.get_path(tree_iter))
                     self.level_setup_event(r, dev, None)
+
+    # Override when subclassing
+    def on_icon_theme_changed(self, widget):
+        logging.warning("Icons may not be updated with icon theme changes")
 
     def monitor_power_levels(self, device):
         def update(row_ref, cinfo, address):
@@ -166,7 +168,7 @@ class DeviceList(GenericList):
             hci = os.path.basename(self.Adapter.get_object_path())
             try:
                 cinfo = conn_info(bt_address, hci)
-            except Exception:
+            except ConnInfoReadError:
                 logging.warning("Failed to get power levels", exc_info=True)
             else:
                 r = Gtk.TreeRowReference.new(self.get_model(), self.get_model().get_path(tree_iter))
@@ -200,9 +202,6 @@ class DeviceList(GenericList):
 
         if self.compare(self.selected(), tree_iter):
             self.emit("device-selected", None, None)
-
-        sig = self.__signals.pop(device.get_object_path())
-        device.disconnect_signal(sig)
 
         self.delete(tree_iter)
 
@@ -239,7 +238,6 @@ class DeviceList(GenericList):
             if self.Adapter is None:
                 self.Adapter = self.manager.get_adapter()
 
-            self.Adapter.connect_signal('property-changed', self._on_property_changed)
             self.manager.connect_signal('device-created', self._on_device_created)
             self.manager.connect_signal('device-removed', self._on_device_removed)
             self.__adapter_path = self.Adapter.get_object_path()
@@ -282,13 +280,7 @@ class DeviceList(GenericList):
 
         object_path = device.get_object_path()
         timestamp = datetime.strftime(datetime.now(), '%Y%m%d%H%M%S%f')
-        try:
-            self.set(tree_iter, dbus_path=object_path, timestamp=float(timestamp))
-        except:
-            pass
-
-        sig = device.connect_signal('property-changed', self._on_device_property_changed)
-        self.__signals[object_path] = sig
+        self.set(tree_iter, dbus_path=object_path, timestamp=float(timestamp))
 
         if device["Connected"]:
             self.monitor_power_levels(device)

@@ -1,26 +1,24 @@
 # coding=utf-8
 
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
-import os.path
 import logging
+import os
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from locale import bind_textdomain_codeset
 
 from blueman.Functions import *
+from blueman.Constants import UI_PATH
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 from blueman.gui.manager.ManagerToolbar import ManagerToolbar
 from blueman.gui.manager.ManagerMenu import ManagerMenu
 from blueman.gui.manager.ManagerStats import ManagerStats
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.Config import Config
+from blueman.main.AppletService import AppletService
 import blueman.bluez as bluez
 
+from blueman.gui.CommonUi import ErrorDialog
 from blueman.gui.MessageArea import MessageArea
 from blueman.gui.Notification import Notification
 
@@ -45,7 +43,7 @@ class Blueman(Gtk.Window):
         self.add(grid)
         self.set_name("BluemanManager")
 
-        self.Plugins = PluginManager(ManagerPlugin, blueman.plugins.manager, None)
+        self.Plugins = PluginManager(ManagerPlugin, blueman.plugins.manager, self)
         self.Plugins.Load()
 
         area = MessageArea()
@@ -84,17 +82,17 @@ class Blueman(Gtk.Window):
 
         def on_dbus_name_vanished(_connection, name):
             logging.info(name)
-            self.Applet.disconnect(self._applet_sig)
-            self._applet_sig = None
+            if self._applet_sig is not None:
+                self.Applet.disconnect(self._applet_sig)
+                self._applet_sig = None
 
             self.hide()
-            d = Gtk.MessageDialog(self, type=Gtk.MessageType.ERROR, buttons=Gtk.ButtonsType.CLOSE)
-            d.props.icon_name = "blueman"
-            d.props.text = _("Connection to BlueZ failed")
-
-            d.props.secondary_text = _(
-                "Bluez daemon is not running, blueman-manager cannot continue.\nThis probably means that there were no Bluetooth adapters detected or Bluetooth daemon was not started.")
-
+            d = ErrorDialog(
+                _("Connection to BlueZ failed"),
+                _("Bluez daemon is not running, blueman-manager cannot continue.\n"
+                  "This probably means that there were no Bluetooth adapters detected "
+                  "or Bluetooth daemon was not started."),
+                icon_name="blueman")
             d.run()
             d.destroy()
             try:
@@ -198,8 +196,6 @@ class Blueman(Gtk.Window):
         device.pair(error_handler=error_handler)
 
     def adapter_properties(self):
-        adapter = self.List.Adapter
-        name = os.path.basename(adapter.get_object_path())
         launch("blueman-adapters", None, False, "blueman", _("Adapter Preferences"))
 
     def toggle_trust(self, device):
@@ -216,4 +212,4 @@ class Blueman(Gtk.Window):
 
     def disconnect(self, device, **kwargs):
         applet = AppletService()
-        applet.DisconnectDevice(str('(s)'), device.get_object_path(), **kwargs)
+        applet.DisconnectDevice('(s)', device.get_object_path(), **kwargs)

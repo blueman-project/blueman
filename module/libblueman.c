@@ -38,6 +38,8 @@
 #include <bluetooth/hci.h>
 #include <bluetooth/hci_lib.h>
 #include <bluetooth/rfcomm.h>
+#include <bluetooth/sdp.h>
+#include <bluetooth/sdp_lib.h>
 #include <errno.h>
 
 #include "libblueman.h"
@@ -288,6 +290,86 @@ int connection_close(struct conn_info_handles *ci)
 {
 	hci_close_dev(ci->dd);
 	return 1;
+}
+
+int
+get_rfcomm_channel(char* btd_addr) {
+    bdaddr_t target;
+    sdp_session_t *session = 0;
+    uuid_t service_uuid;
+    uint16_t service_class = 0x1101;
+    int err;
+    int port_num = 0;
+    sdp_list_t *response_list = NULL, *search_list, *attrid_list;
+
+    str2ba(btd_addr, &target);
+    sdp_uuid16_create(&service_uuid, service_class);
+
+    session = sdp_connect(BDADDR_ANY, &target, SDP_RETRY_IF_BUSY);
+
+    if (!session) {
+        printf("Failed to connect to sdp\n");
+        return port_num;
+    }
+
+    search_list = sdp_list_append(NULL, &service_uuid);
+
+    uint32_t range = 0x0000ffff;
+    attrid_list = sdp_list_append(NULL, &range);
+
+    err = sdp_service_search_attr_req(session, search_list, SDP_ATTR_REQ_RANGE, attrid_list, &response_list);
+
+    if (err) {
+        printf("Faild to search attributes\n");
+        sdp_list_free(response_list, 0);
+        sdp_list_free(search_list, 0);
+        sdp_list_free(attrid_list, 0);
+        return port_num;
+    }
+    // go through each of the service records
+    sdp_list_t *r = response_list;
+    for (; r; r = r->next) {
+        sdp_record_t *rec = (sdp_record_t*) r->data;
+        sdp_list_t *proto_list;
+
+        // get a list of the protocol sequences
+        if(sdp_get_access_protos(rec, &proto_list) == 0) {
+            sdp_list_t *p = proto_list;
+
+            // go through each protocol sequence
+            for(; p ; p = p->next) {
+                sdp_list_t *pds = (sdp_list_t*)p->data;
+
+                // go through each protocol list of the protocol sequence
+                for(; pds ; pds = pds->next) {
+
+                    // check the protocol attributes
+                    sdp_data_t *d = (sdp_data_t*)pds->data;
+                    int proto = 0;
+                    for(; d; d = d->next) {
+                        switch(d->dtd) {
+                        case SDP_UUID16:
+                        case SDP_UUID32:
+                        case SDP_UUID128:
+                            proto = sdp_uuid_to_proto(&d->val.uuid);
+                            break;
+                        case SDP_UINT8:
+                            if(proto == RFCOMM_UUID) {
+                                port_num = d->val.int8;
+                                printf("rfcomm channel: %d\n", port_num);
+                            }
+                            break;
+                        }
+                    }
+                }
+                sdp_list_free((sdp_list_t*)p->data, 0);
+            }
+            sdp_list_free(proto_list, 0);
+        }
+        sdp_record_free(rec);
+    }
+    sdp_close(session);
+    return port_num;
 }
 
 int

@@ -1,13 +1,7 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 from locale import bind_textdomain_codeset
 
 from blueman.main.Config import Config
-from blueman.Functions import *
 from blueman.Constants import *
 
 import gi

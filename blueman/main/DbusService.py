@@ -1,9 +1,4 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 import dbus
 from dbus.mainloop.glib import DBusGMainLoop
 import dbus.service
@@ -23,7 +18,7 @@ class DbusService(dbus.service.Object):
         super(DbusService, self).__init__(self.bus, path)
 
     def add_definitions(self, instance):
-        setattr(instance, 'locations', self.locations)
+        setattr(instance, 'locations', list(self.locations))
 
         for name, func in self._definitions(instance):
             if name in self.__class__.__dict__:

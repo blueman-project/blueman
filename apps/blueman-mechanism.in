@@ -1,10 +1,5 @@
-#!/usr/bin/env python@PYTHON_MAJOR_VERSION@
+#!/usr/bin/env python3
 # coding=utf-8
-
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
 
 import sys
 import os
@@ -14,18 +9,13 @@ timeout = 30
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if 'BLUEMAN_SOURCE' in os.environ:
-    sys.path.insert(0, _dirname)
+    sys.path = [_dirname, os.path.join(_dirname, 'module', '.libs')] + sys.path
     timeout = 9999
     os.environ["GSETTINGS_SCHEMA_DIR"] = os.path.join(_dirname, "data")
 
 import dbus
 import dbus.service
 from dbus.mainloop.glib import DBusGMainLoop
-
-if sys.version_info.major == 2:
-    import __builtin__ as builtins
-else:
-    import builtins
 
 from gi.repository import Gio, GLib
 
@@ -60,6 +50,7 @@ class StreamToLogger(object):
 
 parser = create_parser(syslog=False)
 parser.add_argument("-d", "--debug", dest="debug", action="store_true")
+parser.add_argument("-s", "--stop-timer", dest="stoptimer", action="store_true")
 args = parser.parse_args()
 
 if args.LEVEL.upper() == "DEBUG":
@@ -126,6 +117,8 @@ class conf_service(DbusService):
     def __init__(self):
         super(conf_service, self).__init__("org.blueman.Mechanism", "/", dbus.SystemBus)
         self.timer = Timer()
+        if args.stoptimer:
+            self.timer.stop()
 
         if POLKIT:
             try:
@@ -152,7 +145,7 @@ class conf_service(DbusService):
         for plugin in plugins:
             try:
                 __import__("blueman.plugins.mechanism.%s" % plugin, None, None, [])
-            except ImportError as e:
+            except ImportError:
                 logging.error("Skipping plugin %s" % plugin, exc_info=True)
 
         classes = MechanismPlugin.__subclasses__()
@@ -170,7 +163,7 @@ class conf_service(DbusService):
                     "Blueman was built with PolicyKit-1 support, but it's not available on the system")
 
         v_subject = GLib.Variant('s', subject)
-        res = self.pk.CheckAuthorization(str('((sa{sv})sa{ss}us)'),("system-bus-name", {"name": v_subject}),
+        res = self.pk.CheckAuthorization('((sa{sv})sa{ss}us)',("system-bus-name", {"name": v_subject}),
                                          action_id, {}, 1, "")
 
         logging.debug(str(res))

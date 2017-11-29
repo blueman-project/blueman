@@ -1,18 +1,8 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
-from blueman.Functions import *
 import logging
-
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
 from gi.repository import GLib
 from blueman.plugins.AppletPlugin import AppletPlugin
-import blueman.bluez as bluez
+from gettext import ngettext
 
 
 class ShowConnected(AppletPlugin):
@@ -35,12 +25,6 @@ class ShowConnected(AppletPlugin):
     def on_status_icon_query_icon(self):
         if self.num_connections > 0:
             self.active = True
-            #			x_size = int(pixbuf.props.height)
-            #			x = get_icon("blueman-txrx", x_size)
-            #			pixbuf = composite_icon(pixbuf,
-            #				[(x, pixbuf.props.height - x_size, 0, 255)])
-            #
-            #			return pixbuf
             return ("blueman-active",)
         else:
             self.active = False

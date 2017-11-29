@@ -1,11 +1,6 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-from io import open
-
 import logging
+from blueman.Functions import open_rfcomm
 import tty
 import termios
 import os
@@ -43,8 +38,8 @@ class PPPException(Exception):
 
 class PPPConnection(GObject.GObject):
     __gsignals__ = {  # arg: interface name eg. ppp0
-        str('connected'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-        str('error-occurred'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,))
+        'connected': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+        'error-occurred': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,))
     }
 
     def __init__(self, port, number="*99#", apn="", user="", pwd=""):
@@ -123,7 +118,7 @@ class PPPConnection(GObject.GObject):
 
     def Connect(self):
 
-        self.file = os.open(self.port, os.O_RDWR | os.O_EXCL | os.O_NONBLOCK | os.O_NOCTTY)
+        self.file = open_rfcomm(self.port, os.O_RDWR)
 
         tty.setraw(self.file)
 
@@ -179,7 +174,8 @@ class PPPConnection(GObject.GObject):
 
     def send_command(self, command):
         logging.info("--> %s" % command)
-        os.write(self.file, "%s\r\n" % command)
+        out = "%s\r\n" % command
+        os.write(self.file, out.encode("UTF-8"))
         termios.tcdrain(self.file)
 
     def on_data_ready(self, source, condition, terminators, on_done):
@@ -201,12 +197,12 @@ class PPPConnection(GObject.GObject):
 
         lines = self.buffer.split("\r\n")
         found = False
-        for l in lines:
-            if l == "":
+        for line in lines:
+            if line == "":
                 pass
             else:
                 for t in terminators:
-                    if t in l:
+                    if t in line:
                         found = True
 
         if found:

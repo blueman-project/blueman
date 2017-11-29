@@ -1,2 +1,3 @@
 SUBDIRS = 	\
+	actions	\
 	status

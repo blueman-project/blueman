@@ -1,9 +1,4 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 from ctypes import *
 from gi.repository import GObject
 from gi.repository import GLib
@@ -331,9 +326,9 @@ pa_context_errno.argtypes = [c_void_p]
 
 class PulseAudioUtils(GObject.GObject):
     __gsignals__ = {
-    str('connected'): (GObject.SignalFlags.NO_HOOKS, None, ()),
-    str('disconnected'): (GObject.SignalFlags.NO_HOOKS, None, ()),
-    str('event'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT)),
+        'connected': (GObject.SignalFlags.NO_HOOKS, None, ()),
+        'disconnected': (GObject.SignalFlags.NO_HOOKS, None, ()),
+        'event': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT)),
     }
 
     def check_connected(self):
@@ -393,15 +388,15 @@ class PulseAudioUtils(GObject.GObject):
             info["handler"](None, True)
             pythonapi.Py_DecRef(py_object(info))
 
-    def __init_list_callback(self, function, cb_type, handler, *args):
+    def __init_list_callback(self, func, cb_type, handler, *args):
         info = {"cb_info": cb_type(self.__list_callback), "handler": handler}
         pythonapi.Py_IncRef(py_object(info))
 
         args += (info["cb_info"], py_object(info))
-        op = function(self.pa_context, *args)
+        op = func(self.pa_context, *args)
         pa_operation_unref(op)
 
-    def simple_callback(self, handler, function, *args):
+    def simple_callback(self, handler, func, *args):
 
         def wrapper(context, res, data):
             if handler:
@@ -412,10 +407,10 @@ class PulseAudioUtils(GObject.GObject):
         pythonapi.Py_IncRef(py_object(cb))
 
         args += (cb, py_object(cb))
-        op = function(self.pa_context, *args)
+        op = func(self.pa_context, *args)
         if not op:
             logging.info("Operation failed")
-            logging.error(function.__name__)
+            logging.error(func.__name__)
         pa_operation_unref(op)
 
     def ListSources(self, callback):
@@ -517,7 +512,7 @@ class PulseAudioUtils(GObject.GObject):
         "driver": card_info[0].driver.decode("UTF-8"),
         "index": card_info[0].index,
         }
-        l = []
+        profiles = []
         for i in range(0, card_info[0].n_profiles):
             x = {
             "name": card_info[0].profiles[i].name.decode("UTF-8"),
@@ -526,9 +521,9 @@ class PulseAudioUtils(GObject.GObject):
             "n_sources": card_info[0].profiles[i].n_sources,
             "priority": card_info[0].profiles[i].priority,
             }
-            l.append(x)
+            profiles.append(x)
 
-        stuff["profiles"] = l
+        stuff["profiles"] = profiles
         stuff["active_profile"] = card_info[0].active_profile[0].name.decode("UTF-8")
 
         return stuff
@@ -559,7 +554,7 @@ class PulseAudioUtils(GObject.GObject):
 
             callback(self.__card_info(entry_info))
 
-        if hasattr(card, "format") and hasattr(card, "upper"):
+        if type(card) is str:
             fn = pa_context_get_card_info_by_name
         else:
             fn = pa_context_get_card_info_by_index
@@ -569,7 +564,7 @@ class PulseAudioUtils(GObject.GObject):
 
     def SetCardProfile(self, card, profile, callback):
         profile = profile.encode("UTF-8")
-        if hasattr(card, "format") and hasattr(card, "upper"):
+        if type(card) is str:
             card = card.encode("UTF-8")
             fn = pa_context_set_card_profile_by_name
         else:

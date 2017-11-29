@@ -1,9 +1,4 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 import gi
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
@@ -12,13 +7,12 @@ from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import GLib
-from blueman.Functions import get_icon
 import logging
 
 
 class ManagerProgressbar(GObject.GObject):
     __gsignals__ = {
-    str('cancelled'): (GObject.SignalFlags.RUN_LAST, None, ()),
+        'cancelled': (GObject.SignalFlags.RUN_LAST, None, ()),
     }
     __instances__ = []
 
@@ -35,7 +29,7 @@ class ManagerProgressbar(GObject.GObject):
 
         self._signals = []
 
-        self.button = Gtk.Image.new_from_pixbuf(get_icon("process-stop", 16))
+        self.button = Gtk.Image(icon_name="process-stop", pixel_size=16)
 
         self.eventbox = eventbox = Gtk.EventBox()
         eventbox.add(self.button)
@@ -82,9 +76,6 @@ class ManagerProgressbar(GObject.GObject):
     def show(self):
         if not self.Blueman.Config["show-statusbar"]:
             self.Blueman.Builder.get_object("statusbar").props.visible = True
-
-        # if self.Blueman.Stats.hbox.size_request()[0] + self.progressbar.size_request()[0] + 16 > self.Blueman.get_size()[0]:
-        #	self.Blueman.Stats.hbox.hide_all()
 
         self.progressbar.props.visible = True
         self.eventbox.props.visible = True

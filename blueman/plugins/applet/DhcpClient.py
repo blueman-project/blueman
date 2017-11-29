@@ -1,16 +1,10 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 import dbus.service
 import logging
 from blueman.bluez.Network import AnyNetwork
 from blueman.gui.Notification import Notification
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Mechanism import Mechanism
-from blueman.Functions import *
 
 
 class DhcpClient(AppletPlugin):
@@ -49,19 +43,19 @@ class DhcpClient(AppletPlugin):
                 logging.info(result)
                 Notification(_("Bluetooth Network"),
                              _("Interface %(0)s bound to IP address %(1)s") % {"0": device, "1": result},
-                             icon_name="network-workgroup", pos_hint=self.Applet.Plugins.StatusIcon.geometry).show()
+                             icon_name="network-workgroup").show()
 
                 self.quering.remove(device)
 
             def err(_obj, result, _user_data):
                 logging.warning(result)
                 Notification(_("Bluetooth Network"), _("Failed to obtain an IP address on %s") % (device),
-                             icon_name="network-workgroup", pos_hint=self.Applet.Plugins.StatusIcon.geometry).show()
+                             icon_name="network-workgroup").show()
 
                 self.quering.remove(device)
 
-            Notification(_("Bluetooth Network"), _("Trying to obtain an IP address on %s\nPlease wait..." % device),
-                         icon_name="network-workgroup", pos_hint=self.Applet.Plugins.StatusIcon.geometry).show()
+            Notification(_("Bluetooth Network"), _("Trying to obtain an IP address on %s\nPlease wait…" % device),
+                         icon_name="network-workgroup").show()
 
             m = Mechanism()
-            m.DhcpClient(str('(s)'), device, result_handler=reply, error_handler=err, timeout=120)
+            m.DhcpClient('(s)', device, result_handler=reply, error_handler=err, timeout=120)

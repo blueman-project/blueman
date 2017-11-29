@@ -1,9 +1,4 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 from gi.repository import GLib
@@ -32,21 +27,18 @@ class DiscvManager(AppletPlugin):
     }
 
     def on_load(self, applet):
-        self.item = create_menuitem(_("_Make Discoverable"), get_icon("edit-find", 16))
-        self.item_label = self.item.get_child().get_children()[1]
-        applet.Plugins.Menu.Register(self, self.item, 20, False)
+        self.item = applet.Plugins.Menu.add(self, 20, text=_("_Make Discoverable"), icon_name="edit-find",
+                                            tooltip=_("Make the default adapter temporarily visible"),
+                                            callback=self.on_set_discoverable, visible=False)
 
         self.Applet = applet
         self.adapter = None
         self.time_left = -1
 
-        self.item.connect("activate", self.on_set_discoverable)
-        self.item.props.tooltip_text = _("Make the default adapter temporarily visible")
-
         self.timeout = None
 
     def on_unload(self):
-        self.Applet.Plugins.Menu.Unregister(self)
+        self.Applet.Plugins.Menu.unregister(self)
         del self.item
 
         if self.timeout:
@@ -62,12 +54,12 @@ class DiscvManager(AppletPlugin):
 
     def on_update(self):
         self.time_left -= 1
-        self.item_label.set_text_with_mnemonic(_("Discoverable... %ss") % self.time_left)
-        self.item.props.sensitive = False
+        self.item.set_text(_("Discoverable… %ss") % self.time_left)
+        self.item.set_sensitive(False)
 
         return True
 
-    def on_set_discoverable(self, item):
+    def on_set_discoverable(self):
         if self.adapter:
             self.adapter.set("Discoverable", True)
             self.adapter.set("DiscoverableTimeout", self.get_option("time"))
@@ -75,7 +67,7 @@ class DiscvManager(AppletPlugin):
     def init_adapter(self):
         try:
             self.adapter = self.Applet.Manager.get_adapter()
-        except:
+        except ValueError:
             self.adapter = None
 
     def on_adapter_removed(self, path):
@@ -117,10 +109,10 @@ class DiscvManager(AppletPlugin):
     def update_menuitems(self):
         if self.adapter is None:
             logging.warning("warning: Adapter is None")
-            self.item.props.visible = False
+            self.item.set_visible(False)
         elif (not self.adapter["Discoverable"] or self.adapter["DiscoverableTimeout"] > 0) and self.adapter["Powered"]:
-            self.item.props.visible = True
-            self.item_label.set_text_with_mnemonic(_("_Make Discoverable"))
-            self.item.props.sensitive = True
+            self.item.set_visible(True)
+            self.item.set_text("_Make Discoverable")
+            self.item.set_sensitive(True)
         else:
-            self.item.props.visible = False
+            self.item.set_visible(False)

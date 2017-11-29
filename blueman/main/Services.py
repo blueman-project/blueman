@@ -1,18 +1,12 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 from blueman.gui.GenericList import GenericList
 
-from blueman.Constants import *
-from blueman.Functions import *
+from blueman.Functions import check_single_instance
+import os
 import logging
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-from gi.repository import GdkPixbuf
 
 import blueman.plugins.services
 from blueman.plugins.ServicePlugin import ServicePlugin
@@ -30,7 +24,7 @@ class BluemanServices(Gtk.Dialog):
 
         self.b_apply = self.add_button("_Apply", Gtk.ResponseType.APPLY)
         self.b_apply.props.receives_default = True
-        self.b_apply.props.sensitive = True
+        self.b_apply.props.sensitive = False
         self.b_apply.props.use_underline = True
 
         self.b_close = self.add_button("_Close", Gtk.ResponseType.CLOSE)
@@ -56,9 +50,11 @@ class BluemanServices(Gtk.Dialog):
         check_single_instance("blueman-services", lambda time: self.Dialog.present_with_time(time))
 
         data = [
-            ["picture", GdkPixbuf.Pixbuf, Gtk.CellRendererPixbuf(), {"pixbuf": 0}, None],
-            ["caption", str, Gtk.CellRendererText(), {"markup": 1}, None, {"expand": True}],
-            ["id", str],
+            {"id": "icon_name", "type": str, "renderer": Gtk.CellRendererPixbuf(stock_size=Gtk.IconSize.DND),
+             "render_attrs": {"icon_name": 0}},
+            {"id": "caption", "type": str, "renderer": Gtk.CellRendererText(), "render_attrs": {"markup": 1},
+             "view_props": {"expand": True}},
+            {"id": "id", "type": str},
         ]
 
         ls = GenericList(data)
@@ -105,7 +101,7 @@ class BluemanServices(Gtk.Dialog):
         for plugin in plugins:
             try:
                 __import__("blueman.plugins.services.%s" % plugin, None, None, [])
-            except ImportError as e:
+            except ImportError:
                 logging.error("Unable to load %s plugin" % plugin, exc_info=True)
 
         for cls in ServicePlugin.__subclasses__():
@@ -120,14 +116,14 @@ class BluemanServices(Gtk.Dialog):
                 self.setup_list_item(inst, name, icon)
 
     def setup_list_item(self, inst, name, icon):
-        self.List.append(picture=get_icon(icon, 32), caption=name, id=inst.__class__.__name__)
+        self.List.append(icon_name=icon, caption=name, id=inst.__class__.__name__)
 
     #executes a function on all plugin instances
-    def plugin_exec(self, function, *args, **kwargs):
+    def plugin_exec(self, func, *args, **kwargs):
         rets = []
         for inst in ServicePlugin.instances:
             if inst._is_loaded:
-                ret = getattr(inst, function)(*args, **kwargs)
+                ret = getattr(inst, func)(*args, **kwargs)
                 rets.append(ret)
 
         return rets

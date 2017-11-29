@@ -19,14 +19,7 @@ IT_PROG_INTLTOOL([0.35.0])
 AC_ENABLE_SHARED(yes)
 AC_ENABLE_STATIC(no)
 
-AM_PATH_PYTHON([2.7])
-PYTHON_MAJOR_VERSION="$(echo ${PYTHON_VERSION} | cut -d . -f 1)"
-PYTHON_MINOR_VERSION="$(echo ${PYTHON_VERSION} | cut -d . -f 2)"
-AC_SUBST(PYTHON_MAJOR_VERSION)
-
-if [test ${PYTHON_MAJOR_VERSION} -eq 3] && [test ${PYTHON_MINOR_VERSION} -lt 2];then
-	AC_MSG_ERROR([Unsupported Python 3 version found (>=3.2 required)])
-fi
+AM_PATH_PYTHON([3.2])
 
 PKG_CHECK_MODULES([PYTHON], [python-${PYTHON_VERSION}])
 AC_SUBST(PYTHON_LIBS)
@@ -201,8 +194,8 @@ PKG_CHECK_MODULES([ADWAITAICONS],[adwaita-icon-theme],
 
 if test "x$HAVE_GNOME_ICONS" = "xno" &&
    test "x$HAVE_MATE_ICONS" = "xno" &&
-   test "xHAVE_FAENZA_ICONS" = "xno" &&
-   test "xHAVE_ADWAITA_ICONS" = "xno"; then
+   test "x$HAVE_FAENZA_ICONS" = "xno" &&
+   test "x$HAVE_ADWAITA_ICONS" = "xno"; then
 	AC_MSG_ERROR([Required icon themes not found.])
 fi
 
@@ -245,6 +238,7 @@ apps/blueman-report
 apps/blueman-rfcomm-watcher
 apps/blueman-sendto
 apps/blueman-services
+apps/blueman-tray
 apps/Makefile
 blueman/Makefile
 blueman/Constants.py
@@ -257,10 +251,10 @@ blueman/plugins/Makefile
 blueman/plugins/services/Makefile
 blueman/plugins/applet/Makefile
 blueman/plugins/mechanism/Makefile
-blueman/plugins/mechanism/Rfcomm.py
 blueman/plugins/manager/Makefile
 blueman/main/Makefile
 blueman/main/applet/Makefile
+blueman/main/indicators/Makefile
 blueman/services/Makefile
 blueman/services/meta/Makefile
 data/Makefile
@@ -274,6 +268,7 @@ data/icons/hicolor/16x16/status/Makefile
 data/icons/hicolor/22x22/Makefile
 data/icons/hicolor/22x22/status/Makefile
 data/icons/hicolor/24x24/Makefile
+data/icons/hicolor/24x24/actions/Makefile
 data/icons/hicolor/24x24/status/Makefile
 data/icons/hicolor/32x32/Makefile
 data/icons/hicolor/32x32/actions/Makefile

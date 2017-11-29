@@ -1,33 +1,16 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 from gi.repository import Gio, GLib, GObject
-from blueman.bluez.errors import parse_dbus_error, BluezDBusException
+from gi.types import GObjectMeta
+from blueman.bluez.errors import parse_dbus_error
 import logging
-import sys
 
 
-class Base(Gio.DBusProxy):
-    connect_signal = GObject.GObject.connect
-    disconnect_signal = GObject.GObject.disconnect
-
-    __name = 'org.bluez'
-    __bus_type = Gio.BusType.SYSTEM
-
-    __gsignals__ = {
-        str('property-changed'): (GObject.SignalFlags.NO_HOOKS, None,
-                                  (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT))
-    }
-
-    def __new__(cls, *args, **kwargs):
+class BaseMeta(GObjectMeta):
+    def __call__(cls, *args, **kwargs):
         instances = cls.__dict__.get("__instances__")
         if instances is None:
             cls.__instances__ = instances = {}
 
-        # ** Below argument parsing has to be kept in sync with _init **
         path = None
         interface_name = None
 
@@ -51,33 +34,39 @@ class Base(Gio.DBusProxy):
             if path in instances[interface_name]:
                 return instances[interface_name][path]
 
-        instance = super(Base, cls).__new__(cls)
-        instance._init(*args, **kwargs)
+        instance = super().__call__(*args, **kwargs)
         cls.__instances__[interface_name] = {path: instance}
 
         return instance
 
-    def __init__(self, *args, **kwargs):
-        pass
 
-    def _init(self, interface_name, obj_path, *args, **kwargs):
+class Base(Gio.DBusProxy, metaclass=BaseMeta):
+    connect_signal = GObject.GObject.connect
+    disconnect_signal = GObject.GObject.disconnect
+
+    __name = 'org.bluez'
+    __bus_type = Gio.BusType.SYSTEM
+
+    __gsignals__ = {
+        'property-changed': (GObject.SignalFlags.NO_HOOKS, None,
+                             (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT))
+    }
+
+    def __init__(self, interface_name, obj_path, *args, **kwargs):
         super(Base, self).__init__(
             g_name=self.__name,
             g_interface_name=interface_name,
             g_object_path=obj_path,
             g_bus_type=self.__bus_type,
             # FIXME See issue 620
-            g_flags=Gio.DBusProxyFlags.GET_INVALIDATED_PROPERTIES,
+            g_flags=Gio.DBusProxyFlags.GET_INVALIDATED_PROPERTIES | Gio.DBusProxyFlags.DO_NOT_AUTO_START,
             *args, **kwargs)
 
         self.init()
         self.__interface_name = interface_name
-        self.__fallback = {'Icon': 'blueman', 'Class': 0}
+        self.__fallback = {'Icon': 'blueman', 'Class': 0, 'Appearance': 0}
 
-        if sys.version_info.major < 3:
-            self.__variant_map = {str: 's', unicode: 's', int: 'u', bool: 'b'}
-        else:
-            self.__variant_map = {str: 's', int: 'u', bool: 'b'}
+        self.__variant_map = {str: 's', int: 'u', bool: 'b'}
 
     def do_g_properties_changed(self, changed_properties, _invalidated_properties):
         changed = changed_properties.unpack()
@@ -90,11 +79,15 @@ class Base(Gio.DBusProxy):
         def callback(proxy, result, reply, error):
             try:
                 value = proxy.call_finish(result).unpack()
-                if reply: reply(*value)
-                else: return value
+                if reply:
+                    reply(*value)
+                else:
+                    return value
             except GLib.Error as e:
-                if error: error(parse_dbus_error(e))
-                else: raise parse_dbus_error(e)
+                if error:
+                    error(parse_dbus_error(e))
+                else:
+                    raise parse_dbus_error(e)
 
         self.call(method, param, Gio.DBusCallFlags.NONE, GLib.MAXINT, None,
                   callback, reply_handler, error_handler)

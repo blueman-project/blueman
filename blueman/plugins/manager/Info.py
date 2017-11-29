@@ -1,31 +1,14 @@
-from gi.repository import Gtk
+from gi.repository import Gtk, Gdk
 
 import logging
-from blueman.Functions import create_menuitem, get_icon
-from blueman.Sdp import uuid128_to_uuid16, uuid16_to_name
+from blueman.Functions import create_menuitem
+from blueman.Sdp import ServiceUUID
 from blueman.bluez.errors import BluezDBusException
 
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 
 
 def show_info(device, parent):
-    dialog = Gtk.Dialog()
-    dialog.set_transient_for(parent)
-    dialog.set_icon_name('blueman')
-    dialog.set_title('blueman')
-    store = Gtk.ListStore(str, str)
-    view = Gtk.TreeView()
-    view.set_headers_visible(False)
-    view.set_model(store)
-    for i in range(2):
-        column = Gtk.TreeViewColumn()
-        cell = Gtk.CellRendererText()
-        column.pack_start(cell, True)
-        column.add_attribute(cell, 'text', i)
-        view.append_column(column)
-    dialog.get_content_area().pack_start(view, True, False, 0)
-    view.show_all()
-
     def format_boolean(x):
         return _('yes') if x else _('no')
 
@@ -36,7 +19,52 @@ def show_info(device, parent):
             '{} dBm (0x{:02x})'.format(rssi, rssi)
 
     def format_uuids(uuids):
-        return "\n".join([uuid + ' ' + uuid16_to_name(uuid128_to_uuid16(uuid)) for uuid in uuids])
+        return "\n".join([uuid + ' ' + ServiceUUID(uuid).name for uuid in uuids])
+
+    def on_accel_activated(group, dialog, key, flags):
+        if key != 99:
+            logging.warning("Ignoring key %s" % key)
+            return
+
+        store, paths =  view_selection.get_selected_rows()
+
+        text = []
+        for path in paths:
+            row = store[path]
+            text.append(row[-1])
+
+        logging.info("\n".join(text))
+        clipboard.set_text("\n".join(text), -1)
+
+    clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
+    dialog = Gtk.Dialog(icon_name="blueman", title="blueman")
+    dialog.set_transient_for(parent)
+    dialog_content_area = dialog.get_content_area()
+
+    label = Gtk.Label()
+    label.set_markup("<big>Select row(s) and use <i>Control + C</i> to copy</big>")
+    label.show()
+    dialog_content_area.pack_start(label, True, False, 0)
+
+    accelgroup = Gtk.AccelGroup()
+    dialog.add_accel_group(accelgroup)
+
+    key, mod = Gtk.accelerator_parse("<Control>C")
+    accelgroup.connect(key, mod, Gtk.AccelFlags.MASK, on_accel_activated)
+
+    store = Gtk.ListStore(str, str)
+    view = Gtk.TreeView(model=store, headers_visible=False)
+    view_selection = view.get_selection()
+    view_selection.set_mode(Gtk.SelectionMode.MULTIPLE)
+
+    for i in range(2):
+        column = Gtk.TreeViewColumn()
+        cell = Gtk.CellRendererText()
+        column.pack_start(cell, True)
+        column.add_attribute(cell, 'text', i)
+        view.append_column(column)
+    dialog_content_area.pack_start(view, True, False, 0)
+    view.show_all()
 
     properties = (
         ('Address', None),
@@ -77,7 +105,7 @@ class Info(ManagerPlugin):
         pass
 
     def on_request_menu_items(self, manager_menu, device):
-        item = create_menuitem(_("_Info"), get_icon("info", 16))
+        item = create_menuitem(_("_Info"), "info")
         item.props.tooltip_text = _("Show device information")
         item.connect('activate', lambda x: show_info(device, manager_menu.get_toplevel()))
         return [(item, 400)]

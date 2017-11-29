@@ -5,12 +5,25 @@
 ### New features
 
 * blueman-adapters is now (Xfce-)pluggable
+* Allow users to copy data from the Info manager plugin
+* Add connman support to KillSwitch plugin
+
+### Changes
+
+* Show "Proprietary" instead of "Unknown" for services with non-reserverd UUIDs
+* Generic connect and disconnect
+* blueman-services: rework dhcpd handler radio buttons
+* Implement a ServiceUUID class
+* invoke _NotificationDialog.callback with 1 argument (@dakkar)
+* Drop support for Python 2.7
 
 ### Bugs fixed
 
 * Icon disappeared when switching off bluetooth
 * Revert "bluez manager: Subclass from GDBusObjectManagerClient"
 * Icon briefly vanished when turning on bluetooth
+* Fix DBus signal emission
+* blueman-services: Fix radio button group
 
 ## 2.1.alpha1
 
@@ -52,6 +65,8 @@
 * Bluez managers, Subclass from GDBusObjectManagerClient
 * Notification: Use dbus for notifications and drop the libnotify dep
 * Port NMPanSupport applet plugin to GDBus
+* Open rfcomm device as unprivileged user if he has read and write access
+
 
 ### Bugs fixed
 
@@ -73,6 +88,7 @@
 * Fix SerialManager plugin
 * Close Notification when pair is successful
 * Properly unregister NAP when unloading Networking plugin
+* PPPSupport: Wait for ModemManager to complete probing and release the device
 
 
 ## 2.0

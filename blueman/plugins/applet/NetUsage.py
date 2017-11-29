@@ -1,9 +1,4 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 from blueman.Functions import *
 from blueman.Constants import *
 from blueman.plugins.AppletPlugin import AppletPlugin
@@ -14,7 +9,7 @@ from _blueman import rfcomm_list
 from gi.repository import GObject
 from gi.repository import GLib
 import weakref
-import cgi
+from html import escape
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -30,8 +25,8 @@ from locale import bind_textdomain_codeset
 
 class MonitorBase(GObject.GObject):
     __gsignals__ = {
-    str('disconnected'): (GObject.SignalFlags.NO_HOOKS, None, ()),
-    str('stats'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
+        'disconnected': (GObject.SignalFlags.NO_HOOKS, None, ()),
+        'stats': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
     }
 
     def __init__(self, device, interface):
@@ -193,12 +188,11 @@ class Dialog:
             if not added:
                 name = d
                 if self.parent.Applet.Manager:
-                    for a in self.parent.Applet.Manager.get_adapters():
-                        try:
-                            device = self.parent.Applet.Manager.find_device(d, a.get_object_path())
-                            name = self.get_caption(device["Alias"], device["Address"])
-                        except:
-                            pass
+                    device = self.parent.Applet.Manager.find_device(d)
+                    if device is None:
+                        pass
+                    else:
+                        name = self.get_caption(device["Alias"], device["Address"])
 
                 self.liststore.append([d, name, _("Not Connected"), None])
             added = False
@@ -251,7 +245,7 @@ class Dialog:
         self.update_time()
 
     def get_caption(self, name, address):
-        return "%s\n<small>%s</small>" % (cgi.escape(name), address)
+        return "%s\n<small>%s</small>" % (escape(name), address)
 
     def update_counts(self, tx, rx):
         tx = int(tx)
@@ -319,11 +313,11 @@ class NetUsage(AppletPlugin, GObject.GObject):
     __author__ = "Walmis"
     __autoload__ = False
     __gsignals__ = {
-    str('monitor-added'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-    str('monitor-removed'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-    #monitor, tx, rx
-    str('stats'): (
-    GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
+        'monitor-added': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+        'monitor-removed': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+        #monitor, tx, rx
+        'stats': (GObject.SignalFlags.NO_HOOKS, None,
+                  (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
     }
 
     _any_network = None
@@ -338,10 +332,8 @@ class NetUsage(AppletPlugin, GObject.GObject):
         self._any_network = AnyNetwork()
         self._any_network.connect_signal('property-changed', self._on_network_property_changed)
 
-        item = create_menuitem(_("Network _Usage"), get_icon("network-wireless", 16))
-        item.props.tooltip_text = _("Shows network traffic usage")
-        item.connect("activate", self.activate_ui)
-        self.Applet.Plugins.Menu.Register(self, item, 84, True)
+        self.Applet.Plugins.Menu.add(self, 84, text=_("Network _Usage"), icon_name="network-wireless",
+                                     tooltip=_("Shows network traffic usage"), callback=self.activate_ui)
 
         self.bus.add_signal_receiver(self.on_nm_ppp_stats, "PppStats", "org.freedesktop.NetworkManager.Device.Serial",
                                      path_keyword="path")
@@ -378,14 +370,14 @@ class NetUsage(AppletPlugin, GObject.GObject):
             d = Device(path)
             self.monitor_interface(Monitor, d, value)
 
-    def activate_ui(self, item):
+    def activate_ui(self):
         Dialog(self)
 
     def on_unload(self):
         self.bus.remove_signal_receiver(self.on_nm_ppp_stats, "PppStats",
                                         "org.freedesktop.NetworkManager.Device.Serial", path_keyword="path")
         del self._any_network
-        self.Applet.Plugins.Menu.Unregister(self)
+        self.Applet.Plugins.Menu.unregister(self)
 
     def monitor_interface(self, montype, *args):
         m = montype(*args)

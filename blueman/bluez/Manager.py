@@ -1,42 +1,40 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
 from gi.repository import GObject, Gio
+from gi.types import GObjectMeta
 import logging
 
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device
+from blueman.bluez.errors import DBusNoSuchAdapterError
 
 
-class Manager(GObject.GObject):
+class ManagerMeta(GObjectMeta):
+    _instance = None
+
+    def __call__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = super().__call__(*args, **kwargs)
+
+        return cls._instance
+
+
+class Manager(GObject.GObject, metaclass=ManagerMeta):
     __gsignals__ = {
-        str('adapter-added'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-        str('adapter-removed'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-        str('device-created'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-        str('device-removed'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+        'adapter-added': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+        'adapter-removed': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+        'device-created': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+        'device-removed': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
     }
 
     connect_signal = GObject.GObject.connect
     disconnect_signal = GObject.GObject.disconnect
 
     __bus_name = 'org.bluez'
-    _instance = None
 
-    def __new__(cls, *args, **kwargs):
-        if not cls._instance:
-            cls._instance = super(Manager, cls).__new__(cls)
-            cls._instance._init(*args, **kwargs)
-        return cls._instance
-
-    def __init__(self, *args, **kwargs):
-        pass
-
-    def _init(self):
-        super(Manager, self).__init__()
+    def __init__(self):
+        super().__init__()
         self._object_manager = Gio.DBusObjectManagerClient.new_for_bus_sync(
-            Gio.BusType.SYSTEM, Gio.DBusObjectManagerClientFlags.NONE,
+            Gio.BusType.SYSTEM, Gio.DBusObjectManagerClientFlags.DO_NOT_AUTO_START,
             self.__bus_name, '/', None, None, None)
 
         self._object_manager.connect("object-added", self._on_object_added)
@@ -73,7 +71,8 @@ class Manager(GObject.GObject):
         for obj_proxy in self._object_manager.get_objects():
             proxy = obj_proxy.get_interface('org.bluez.Adapter1')
 
-            if proxy: paths.append(proxy.get_object_path())
+            if proxy:
+                paths.append(proxy.get_object_path())
 
         return [Adapter(path) for path in paths]
 
@@ -83,13 +82,13 @@ class Manager(GObject.GObject):
             if len(adapters):
                 return adapters[0]
             else:
-                raise ValueError("No adapter(s) found")
+                raise DBusNoSuchAdapterError("No adapter(s) found")
         else:
             for adapter in adapters:
                 path = adapter.get_object_path()
                 if path.endswith(pattern) or adapter['Address'] == pattern:
                     return adapter
-            raise ValueError("No adapters found with pattern: %s" % pattern)
+            raise DBusNoSuchAdapterError("No adapters found with pattern: %s" % pattern)
 
     def get_devices(self, adapter_path='/'):
         paths = []
@@ -110,5 +109,5 @@ class Manager(GObject.GObject):
 
     @classmethod
     def watch_name_owner(cls, appeared_handler, vanished_handler):
-        Gio.bus_watch_name(Gio.BusType.SYSTEM, cls.__bus_name, Gio.BusNameWatcherFlags.AUTO_START,
+        Gio.bus_watch_name(Gio.BusType.SYSTEM, cls.__bus_name, Gio.BusNameWatcherFlags.NONE,
                            appeared_handler, vanished_handler)

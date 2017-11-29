@@ -1,14 +1,8 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.Functions import create_menuitem, get_icon
 
 
 class ExitItem(AppletPlugin):
@@ -18,9 +12,7 @@ class ExitItem(AppletPlugin):
     __icon__ = "application-exit"
 
     def on_load(self, applet):
-        item = create_menuitem("_Exit", get_icon("application-exit", 16))
-        item.connect("activate", lambda x: Gtk.main_quit())
-        applet.Plugins.Menu.Register(self, item, 100)
+        applet.Plugins.Menu.add(self, 100, text="_Exit", icon_name='application-exit', callback=Gtk.main_quit)
 
     def on_unload(self):
-        self.Applet.Plugins.Menu.Unregister(self)
+        self.Applet.Plugins.Menu.unregister(self)

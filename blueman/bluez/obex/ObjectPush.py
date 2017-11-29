@@ -1,9 +1,4 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 import logging
 from blueman.bluez.obex.Base import Base
 from gi.repository import GObject, GLib
@@ -11,14 +6,14 @@ from gi.repository import GObject, GLib
 
 class ObjectPush(Base):
     __gsignals__ = {
-        str('transfer-started'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
-        str('transfer-failed'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+        'transfer-started': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
+        'transfer-failed': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
     }
 
     _interface_name = 'org.bluez.obex.ObjectPush1'
 
-    def _init(self, session_path):
-        super(ObjectPush, self)._init(interface_name=self._interface_name, obj_path=session_path)
+    def __init__(self, session_path):
+        super().__init__(interface_name=self._interface_name, obj_path=session_path)
 
     def send_file(self, file_path):
         def on_transfer_started(transfer_path, props):

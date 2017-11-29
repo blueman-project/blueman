@@ -1,13 +1,7 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 from gi.repository import Gio, GLib
 
-introspection_xml = \
-'''
+introspection_xml = '''
 <node name='/'>
   <interface name='org.bluez.Agent1'>
     <method name='Release'/>
@@ -43,6 +37,7 @@ introspection_xml = \
   </interface>
 </node>
 '''
+
 
 class Agent(object):
     __bus = Gio.bus_get_sync(Gio.BusType.SYSTEM)

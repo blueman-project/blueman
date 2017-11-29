@@ -2,7 +2,7 @@ import datetime
 from gettext import bind_textdomain_codeset
 from tempfile import NamedTemporaryFile
 
-from blueman.Functions import create_menuitem, get_icon, launch, UI_PATH
+from blueman.Functions import create_menuitem, launch, UI_PATH
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 
 import gi
@@ -48,7 +48,7 @@ class Notes(ManagerPlugin):
         pass
 
     def on_request_menu_items(self, manager_menu, device):
-        item = create_menuitem(_("Send _note"), get_icon("info", 16))
+        item = create_menuitem(_("Send _note"), "info")
         item.props.tooltip_text = _("Send a text note")
         item.connect('activate', lambda x: send_note(device, manager_menu.get_toplevel()))
         return [(item, 500)]

@@ -1,23 +1,16 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 from blueman.Functions import *
 import blueman.bluez as Bluez
 import blueman.plugins.applet
 from blueman.main.PluginManager import PersistentPluginManager
 from blueman.main.DbusService import DbusService
 from blueman.plugins.AppletPlugin import AppletPlugin
-
-import sys
 import logging
 
-if sys.version_info.major < 3:
-    import __builtin__ as builtins
-else:
-    import builtins
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
+
 
 class BluemanApplet(object):
     def __init__(self):

@@ -1,13 +1,7 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 from gi.repository import Gio, GLib
 
-introspection_xml = \
-'''
+introspection_xml = '''
 <node name='/org/blueman/obex_agent'>
   <interface name='org.bluez.obex.Agent1'>
     <method name='Release'/>
@@ -19,6 +13,7 @@ introspection_xml = \
   </interface>
 </node>
 '''
+
 
 class Agent(object):
     __bus = Gio.bus_get_sync(Gio.BusType.SESSION)
@@ -38,8 +33,6 @@ class Agent(object):
         else:
             raise GLib.Error('Failed to register object with path: %s', agent_path)
 
-    def __del__(self):
-        self._unregister_object()
-
-    def _unregister_object(self):
+    def close(self):
         self.__bus.unregister_object(self.__regid)
+        self.__regid = None

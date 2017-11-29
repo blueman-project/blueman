@@ -1,43 +1,39 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 import logging
 from blueman.bluez.obex.Transfer import Transfer
 from gi.repository import GObject, Gio
+from gi.types import GObjectMeta
 
 
-class Manager(GObject.GObject):
+class ManagerMeta(GObjectMeta):
+    _instance = None
+
+    def __call__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = super().__call__(*args, **kwargs)
+
+        return cls._instance
+
+
+class Manager(GObject.GObject, metaclass=ManagerMeta):
     __gsignals__ = {
-        str('session-removed'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-        str('transfer-started'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-        str('transfer-completed'): (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT)),
+        'session-removed': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+        'transfer-started': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+        'transfer-completed': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT)),
     }
 
     connect_signal = GObject.GObject.connect
     disconnect_signal = GObject.GObject.disconnect
 
     __bus_name = 'org.bluez.obex'
-    _instance = None
 
-    def __new__(cls, *args, **kwargs):
-        if not cls._instance:
-            cls._instance = super(Manager, cls).__new__(cls)
-            cls._instance._init(*args, **kwargs)
-        return cls._instance
-
-    def __init__(self, *args, **kwargs):
-        pass
-
-    def _init(self):
-        super(Manager, self).__init__()
+    def __init__(self):
+        super().__init__()
         self.__transfers = {}
         self.__signals = []
 
         self._object_manager = Gio.DBusObjectManagerClient.new_for_bus_sync(
-            Gio.BusType.SESSION, Gio.DBusObjectManagerClientFlags.NONE,
+            Gio.BusType.SESSION, Gio.DBusObjectManagerClientFlags.DO_NOT_AUTO_START,
             self.__bus_name, '/', None, None, None)
 
         self.__signals.append(self._object_manager.connect('object-added', self._on_object_added))
@@ -84,5 +80,5 @@ class Manager(GObject.GObject):
 
     @classmethod
     def watch_name_owner(cls, appeared_handler, vanished_handler):
-        Gio.bus_watch_name(Gio.BusType.SESSION, cls.__bus_name, Gio.BusNameWatcherFlags.AUTO_START,
+        Gio.bus_watch_name(Gio.BusType.SESSION, cls.__bus_name, Gio.BusNameWatcherFlags.NONE,
                            appeared_handler, vanished_handler)

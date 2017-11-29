@@ -38,10 +38,6 @@
 #define XCASE 0000004
 #endif
 
-#if PY_MAJOR_VERSION >= 3
-#define PyString_FromString PyUnicode_FromString
-#endif
-
 static gboolean verbose = FALSE;
 
 void set_probe_debug(gboolean debug) {
@@ -414,31 +410,31 @@ static gboolean on_finished(gpointer data) {
 			PyObject* name;
 			PyObject* caps = PyList_New(0);
 			if (info->caps & MODEM_CAP_GSM) {
-				name = PyString_FromString("GSM-07.07");
+				name = PyUnicode_FromString("GSM-07.07");
 				PyList_Append(caps, name);
 				Py_XDECREF(name);
 			
-				name = PyString_FromString("GSM-07.05");
+				name = PyUnicode_FromString("GSM-07.05");
 				PyList_Append(caps, name);
 				Py_XDECREF(name);
 			}
 			if (info->caps & MODEM_CAP_IS707_A) {
-				name = PyString_FromString("IS-707-A");
+				name = PyUnicode_FromString("IS-707-A");
 				PyList_Append(caps, name);
 				Py_XDECREF(name);
 			}
 			if (info->caps & MODEM_CAP_IS707_P) {
-				name = PyString_FromString("IS-707-P");
+				name = PyUnicode_FromString("IS-707-P");
 				PyList_Append(caps, name);
 				Py_XDECREF(name);
 			}
 			if (info->caps & MODEM_CAP_IS856) {
-				name = PyString_FromString("IS-856");
+				name = PyUnicode_FromString("IS-856");
 				PyList_Append(caps, name);
 				Py_XDECREF(name);
 			}	
 			if (info->caps & MODEM_CAP_IS856_A) {
-				name = PyString_FromString("IS-856-A");
+				name = PyUnicode_FromString("IS-856-A");
 				PyList_Append(caps, name);
 				Py_XDECREF(name);
 			}	

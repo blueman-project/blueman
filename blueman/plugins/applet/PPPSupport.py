@@ -1,18 +1,12 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
-from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.Notification import Notification
 from blueman.main.Mechanism import Mechanism
 from blueman.main.Config import Config
 
-from gi.repository import GObject
+from gi.repository import GLib
 
-from blueman.Sdp import uuid128_to_uuid16, DIALUP_NET_SVCLASS_ID
+from blueman.Sdp import DIALUP_NET_SVCLASS_ID
 import os
 import logging
 
@@ -25,23 +19,23 @@ class Connection:
         self.port = port
         self.Applet = applet
 
-        res = os.popen("ps x -o pid,args | grep modem-manager").read()
+        res = os.popen("ps x -o pid,args | grep [M]odemManager").read()
         if not res:
             self.connect()
         else:
             logging.info("ModemManager is running, delaying connection 5sec for it to complete probing")
-            GObject.timeout_add(5000, self.connect)
+            GLib.timeout_add(5000, self.connect)
 
     def connect(self):
         c = Config("org.blueman.gsmsettings", "/org/blueman/gsmsettings/%s/" % self.service.device['Address'])
 
         m = Mechanism()
-        m.PPPConnect(str('(sss)'), self.port, c["number"], c["apn"], result_handler=self.on_connected,
+        m.PPPConnect('(sss)', self.port, c["number"], c["apn"], result_handler=self.on_connected,
                      error_handler=self.on_error, timeout=200)
 
     def on_error(self, _obj, result, _user_data):
         self.error_handler(result)
-        GObject.timeout_add(1000, self.service.disconnect, self.port)
+        GLib.timeout_add(1000, self.service.disconnect, self.port)
 
     def on_connected(self, _obj, result, _user_data):
         self.reply_handler(self.port)
@@ -50,7 +44,7 @@ class Connection:
         msg = _("Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\n"
                 "Network is now available through <b>%(1)s</b>") % {"0": self.service.device['Alias'], "1": result}
 
-        Notification(_("Connected"), msg, icon_name="network-wireless", pos_hint=self.Applet.Plugins.StatusIcon.geometry).show()
+        Notification(_("Connected"), msg, icon_name="network-wireless").show()
 
 
 class PPPSupport(AppletPlugin):
@@ -73,7 +67,7 @@ class PPPSupport(AppletPlugin):
         pass
 
     def rfcomm_connect_handler(self, service, reply, err):
-        if DIALUP_NET_SVCLASS_ID == uuid128_to_uuid16(service.uuid):
+        if DIALUP_NET_SVCLASS_ID == service.short_uuid:
             def local_reply(port):
                 Connection(self.Applet, service, port, reply, err)
 

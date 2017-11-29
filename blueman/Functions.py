@@ -18,11 +18,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
 
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-from io import open
+__all__ = ["check_bluetooth_status", "wait_for_adapter", "launch", "setup_icon_path", "get_icon",
+           "get_notification_icon", "adapter_path_to_name", "e_", "opacify_pixbuf", "composite_icon",
+           "format_bytes", "create_menuitem", "get_lockfile", "get_pid", "is_running", "check_single_instance",
+           "have", "mask_ip4_address", "set_proc_title", "create_logger", "create_parser", "open_rfcomm"]
+
+
+from time import sleep
 
 from blueman.Constants import *
 
@@ -44,16 +46,7 @@ import logging
 import logging.handlers
 import argparse
 from ctypes import cdll, byref, create_string_buffer
-from gi.repository import GLib
 import traceback
-try: import __builtin__ as builtins
-except ImportError: import builtins
-
-GREEN = lambda x: "\x1b[32;01m" + x + "\x1b[39;49;00m"
-BLUE = lambda x: "\x1b[34;01m" + x + "\x1b[39;49;00m"
-BOLD = lambda x: "\033[1m" + x + "\033[0m"
-YELLOW = lambda x: "\x1b[33;01m" + x + "\x1b[39;49;00m"
-
 import fcntl, struct, termios
 
 try:
@@ -86,7 +79,7 @@ def check_bluetooth_status(message, exitfunc, *args, **kwargs):
             if resp != Gtk.ResponseType.YES:
                 exitfunc()
             else:
-                applet.SetBluetoothStatus(str('(b)'), True, **kwargs)
+                applet.SetBluetoothStatus('(b)', True, **kwargs)
                 if not applet.GetBluetoothStatus():
                     print('Failed to enable bluetooth')
                     exitfunc()
@@ -114,7 +107,7 @@ def wait_for_adapter(bluez_adapter, callback, timeout=1000):
 
 
 def launch(cmd, paths=None, system=False, icon_name=None, sn=True, name="blueman"):
-    '''Launch a gui app with starup notification'''
+    """Launch a gui app with starup notification"""
     display = Gdk.Display.get_default()
     timestamp = Gtk.get_current_event_time()
     context = display.get_app_launch_context()
@@ -217,9 +210,7 @@ def composite_icon(target, sources):
 
 
 def format_bytes(size):
-    ret = 0.0
     size = float(size)
-    suffix = ""
     if size < 1024:
         ret = size
         suffix = "B"
@@ -236,22 +227,20 @@ def format_bytes(size):
     return (ret, suffix)
 
 
-def create_menuitem_box(text, pixbuf, orientation=Gtk.Orientation.HORIZONTAL, size=6):
-    '''Create a box with icon and label, optinally set size and orientation'''
-    item_box = Gtk.Box.new(orientation, size)
-    icon = Gtk.Image.new_from_pixbuf(pixbuf)
-    label = Gtk.Label.new_with_mnemonic(text)
+def create_menuitem(text, icon_name=None, pixbuf=None, surface=None):
+    image = Gtk.Image(pixel_size=16)
+    if icon_name:
+        image.set_from_icon_name(icon_name, Gtk.IconSize.MENU)
+    elif surface:
+        image.set_from_surface(surface)
+    elif pixbuf:
+        image.set_from_pixbuf(pixbuf)
+    else:
+        raise ValueError("At least provide one of, icon name, surface or pixbuf")
 
-    item_box.add(icon)
-    item_box.add(label)
-
-    return item_box
-
-
-def create_menuitem(text, pixbuf):
-    box = create_menuitem_box(text, pixbuf)
-    item = Gtk.MenuItem()
-    item.add(box)
+    item = Gtk.ImageMenuItem(label=text, image=image, use_underline=True)
+    child = item.get_child()
+    child.set_use_markup(True)
     item.show_all()
 
     return item
@@ -352,7 +341,7 @@ def mask_ip4_address(ip, subnet):
 
 
 def set_proc_title(name=None):
-    '''Set the process title'''
+    """Set the process title"""
 
     if not name:
         name = os.path.basename(sys.argv[0])
@@ -399,3 +388,14 @@ def create_parser(parser=None, syslog=True, loglevel=True):
         parser.add_argument("--syslog", dest="syslog", action="store_true")
 
     return parser
+
+def open_rfcomm(file, mode):
+    try:
+        return os.open(file, mode | os.O_EXCL | os.O_NONBLOCK | os.O_NOCTTY)
+    except OSError as err:
+        if err.errno == errno.EBUSY:
+            logging.warning('%s is busy, delaying 2 seconds' % file)
+            sleep(2)
+            return open_rfcomm(file, mode)
+        else:
+            raise

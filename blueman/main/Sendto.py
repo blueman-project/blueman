@@ -1,13 +1,11 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
-import urllib
 import time
 import logging
+import re
+import os
+import urllib.parse
 from locale import bind_textdomain_codeset
+from gettext import ngettext
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -16,23 +14,23 @@ gi.require_version("Gdk", "3.0")
 from gi.repository import Gdk
 from gi.repository import Gtk
 from gi.repository import GObject
-from gi.repository import GLib
 
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.obex.ObjectPush import ObjectPush
 from blueman.Functions import *
 from blueman.Constants import *
 from blueman.main.SpeedCalc import SpeedCalc
+from blueman.gui.CommonUi import ErrorDialog
 
 from blueman.bluez import obex
 
 
 class Sender(Gtk.Dialog):
     __gsignals__ = {
-        str('result'): (GObject.SignalFlags.RUN_FIRST, None, (GObject.TYPE_BOOLEAN,)),
+        'result': (GObject.SignalFlags.RUN_FIRST, None, (GObject.TYPE_BOOLEAN,)),
     }
 
-    def __init__(self, device, adapter, files):
+    def __init__(self, device, adapter_path, files):
         super(Sender, self).__init__(title=_("Bluetooth File Transfer"))
         self.set_name("BluemanSendTo")
         self.set_position(Gtk.WindowPosition.CENTER)
@@ -62,7 +60,7 @@ class Sender(Gtk.Dialog):
         self.pb.props.text = _("Connecting")
 
         self.device = device
-        self.adapter = Adapter(adapter)
+        self.adapter = Adapter(adapter_path)
         self.files = files
         self.object_push = None
         self.transfer = None
@@ -85,7 +83,7 @@ class Sender(Gtk.Dialog):
             f = self.files[i]
             match = re.match("file://(.*)", f)
             if match:
-                f = self.files[i] = urllib.unquote(match.groups(1)[0])
+                f = self.files[i] = urllib.parse.unquote(match.groups(1)[0])
 
             if os.path.exists(f) and not os.path.isdir(f):
                 f = os.path.abspath(f)
@@ -97,9 +95,7 @@ class Sender(Gtk.Dialog):
         try:
             self.client = obex.Client()
         except obex.ObexdNotFoundError:
-            d = Gtk.MessageDialog(self, type=Gtk.MessageType.ERROR, buttons=Gtk.ButtonsType.OK)
-            d.props.text = _("obexd not available")
-            d.props.secondary_text = _("obexd is probably not installed")
+            d = ErrorDialog(_("obexd not available"), _("obexd is probably not installed"))
             d.run()
             d.destroy()
             exit(1)
@@ -116,21 +112,16 @@ class Sender(Gtk.Dialog):
         logging.info("Sending to %s" % device['Address'])
         self.l_dest.props.label = device['Alias']
 
+        # Stop discovery if discovering and let adapter settle for a second
+        if self.adapter["Discovering"]:
+            self.adapter.stop_discovery()
+            time.sleep(1)
+
         self.create_session()
 
         self.show()
 
     def create_session(self):
-        def check():
-            if self.adapter['Discovering']:
-                return True
-            else:
-                self._do_create_session()
-                return False
-        GLib.timeout_add(1000, check)
-
-    def _do_create_session(self):
-        logging.info("Creating session")
         self.client.create_session(self.device['Address'], self.adapter["Address"])
 
     def on_cancel(self, button):
@@ -214,14 +205,11 @@ class Sender(Gtk.Dialog):
         if self.object_push:
             self.object_push.send_file(file_path)
 
-    def on_transfer_error(self, _transfer, msg=None):
+    def on_transfer_error(self, _transfer, msg=""):
         if not self.error_dialog:
             self.speed.reset()
-            d = Gtk.MessageDialog(self, type=Gtk.MessageType.ERROR)
-            d.props.text = msg
-            d.props.modal = True
-            d.props.secondary_text = _("Error occurred while sending file %s") % os.path.basename(self.files[-1])
-            d.props.icon_name = "blueman"
+            d = ErrorDialog(msg, _("Error occurred while sending file %s") % os.path.basename(self.files[-1]),
+                            modal=True, icon_name="blueman", buttons=None)
 
             if len(self.files) > 1:
                 d.add_button(_("Skip"), Gtk.ResponseType.NO)
@@ -263,10 +251,7 @@ class Sender(Gtk.Dialog):
         self.process_queue()
 
     def on_session_failed(self, _client, msg):
-        d = Gtk.MessageDialog(self, type=Gtk.MessageType.ERROR, buttons=(Gtk.ButtonsType.CLOSE))
-        d.props.text = _("Error occurred")
-        d.props.icon_name = "blueman"
-        d.props.secondary_text = msg.reason.split(None, 1)[1]
+        d = ErrorDialog(_("Error occurred"), msg.reason.split(None, 1)[1], icon_name="blueman")
 
         d.run()
         d.destroy()

@@ -1,9 +1,4 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 from blueman.bluez.Base import Base
 from blueman.bluez.AnyBase import AnyBase
 
@@ -11,8 +6,8 @@ from blueman.bluez.AnyBase import AnyBase
 class Device(Base):
     _interface_name = 'org.bluez.Device1'
 
-    def _init(self, obj_path=None):
-        super(Device, self)._init(interface_name=self._interface_name, obj_path=obj_path)
+    def __init__(self, obj_path=None):
+        super().__init__(interface_name=self._interface_name, obj_path=obj_path)
 
     def pair(self, reply_handler=None, error_handler=None):
         self._call('Pair', reply_handler=reply_handler, error_handler=error_handler)

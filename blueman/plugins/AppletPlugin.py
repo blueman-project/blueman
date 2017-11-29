@@ -1,14 +1,9 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
-from blueman.plugins.ConfigurablePlugin import ConfigurablePlugin
+from blueman.plugins.BasePlugin import BasePlugin
 from functools import partial
 
 ictheme = Gtk.IconTheme.get_default()
@@ -18,7 +13,7 @@ class MethodAlreadyExists(Exception):
     pass
 
 
-class AppletPlugin(ConfigurablePlugin):
+class AppletPlugin(BasePlugin):
     __icon__ = "blueman-plugin"
 
     def __init__(self, applet):
@@ -32,6 +27,9 @@ class AppletPlugin(ConfigurablePlugin):
         self.Applet = applet
 
         self.__overrides = []
+
+    def on_unload(self):
+        pass
 
     def override_method(self, obj, method, override):
         """Replace a method on an object with another which will be called instead"""

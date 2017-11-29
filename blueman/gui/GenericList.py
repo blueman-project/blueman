@@ -1,19 +1,13 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-from gi.repository import GObject
 
 
 # noinspection PyAttributeOutsideInit
 class GenericList(Gtk.TreeView):
-    def __init__(self, data):
-        super(GenericList, self).__init__()
+    def __init__(self, data, **kwargs):
+        super(GenericList, self).__init__(**kwargs)
         self.set_name("GenericList")
         self.selection = self.get_selection()
         self._load(data)
@@ -22,31 +16,30 @@ class GenericList(Gtk.TreeView):
         self.ids = {}
         self.columns = {}
 
-        types = []
-        for i in range(len(data)):
-            types.append(data[i][1])
-
-        types = tuple(types)
+        types = [row["type"] for row in data]
 
         self.liststore = Gtk.ListStore(*types)
         self.set_model(self.liststore)
 
-        for i in range(len(data)):
+        for i, row in enumerate(data):
+            self.ids[row["id"]] = i
 
-            self.ids[data[i][0]] = i
+            if "renderer" not in row:
+                continue
 
-            if len(data[i]) == 5 or len(data[i]) == 6:
+            column = Gtk.TreeViewColumn()
+            column.pack_start(row["renderer"], True)
+            column.set_attributes(row["renderer"], **row["render_attrs"])
 
-                column = Gtk.TreeViewColumn(data[i][4])
+            if "view_props" in row:
+                column.set_properties(**row["view_props"])
 
-                column.pack_start(data[i][2], True)
-                column.set_attributes(data[i][2], **data[i][3])
+            if "celldata_func" in row:
+                func, user_data = row["celldata_func"]
+                column.set_cell_data_func(row["renderer"], func, user_data)
 
-                if len(data[i]) == 6:
-                    column.set_properties(**data[i][5])
-
-                self.columns[data[i][0]] = column
-                self.append_column(column)
+            self.columns[row["id"]] = column
+            self.append_column(column)
 
     def selected(self):
         (model, tree_iter) = self.selection.get_selected()

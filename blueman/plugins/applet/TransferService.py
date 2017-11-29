@@ -1,27 +1,20 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import GLib, Gtk, Gio
 from datetime import datetime
+from gettext import ngettext
 import os
-import sys
 import shutil
 import logging
 from blueman.bluez import obex
-from blueman.Functions import get_icon, launch
+from blueman.Functions import launch
+from blueman.gui.CommonUi import ErrorDialog
 from blueman.gui.Notification import Notification
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Config import Config
 
-if sys.version_info.major == 2:
-    from cgi import escape
-else:
-    from html import escape
+from html import escape
 
 
 class Agent(obex.Agent):
@@ -159,11 +152,9 @@ class TransferService(AppletPlugin):
         if not os.path.isdir(self._config["shared-path"]):
             logging.info("Configured share directory %s does not exist" % self._config["shared-path"])
 
-            dlg = Gtk.MessageDialog(None, buttons=Gtk.ButtonsType.OK, type=Gtk.MessageType.ERROR)
             text = _("Configured directory for incoming files does not exist")
             secondary_text = _("Please make sure that directory \"<b>%s</b>\" exists or configure it with blueman-services")
-            dlg.props.text = text
-            dlg.format_secondary_markup(secondary_text % self._config["shared-path"])
+            dlg = ErrorDialog(text, secondary_text % self._config["shared-path"])
 
             dlg.run()
             dlg.destroy()
@@ -182,26 +173,23 @@ class TransferService(AppletPlugin):
         self._unregister_agent()
 
     def _register_agent(self):
-        if not self.__class__._agent:
-            self.__class__._agent = Agent(self.Applet)
+        if not self._agent:
+            self._agent = Agent(self.Applet)
         self._agent.register()
 
-    @classmethod
-    def _unregister_agent(cls):
-        if cls._agent:
-            cls._agent.unregister()
-
-    def on_manager_state_changed(self, state):
-        if not state:
-            self._unregister_agent()
+    def _unregister_agent(self):
+        if self._agent:
+            self._agent.unregister()
+            self._agent.close()
+            self._agent = None
 
     def _on_dbus_name_appeared(self, _connection, name, owner):
         logging.info("%s %s" % (name, owner))
         self._register_agent()
 
-    def _on_dbus_name_vanished(self, _connection, name):
-        logging.info(name)
-        self._unregister_agent()
+    @staticmethod
+    def _on_dbus_name_vanished(_connection, name):
+        logging.info("%s not running or was stopped" % name)
 
     def _on_transfer_started(self, _manager, transfer_path):
         if transfer_path not in self._agent.transfers:
@@ -245,10 +233,6 @@ class TransferService(AppletPlugin):
         dest_dir = self._config["shared-path"]
         filename = os.path.basename(src)
 
-        # We get bytes from pygobject under python 2.7
-        if hasattr(dest_dir, "upper",) and hasattr(dest_dir, "decode"):
-            dest_dir = dest_dir.decode("UTF-8")
-
         dest = os.path.join(dest_dir, filename)
         if os.path.exists(dest):
             now = datetime.now()
@@ -257,7 +241,7 @@ class TransferService(AppletPlugin):
 
         try:
             shutil.move(src, dest)
-        except Exception:
+        except (OSError, PermissionError) as e:
             logging.error("Failed to move files", exc_info=True)
             success = False
 

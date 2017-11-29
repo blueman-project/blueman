@@ -1,16 +1,10 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
-from blueman.Functions import *
 from blueman.main.Config import Config
 from blueman.bluez.NetworkServer import NetworkServer
 from blueman.main.Mechanism import Mechanism
 
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.gui.Dialogs import NetworkErrorDialog
+from blueman.gui.CommonUi import ErrorDialog
 import logging
 
 
@@ -42,8 +36,10 @@ class Networking(AppletPlugin):
             pass
 
         def err(_obj, result, _user_data):
-            d = NetworkErrorDialog(result, "You might not be able to connect to the Bluetooth network via this machine")
-            d.expander.props.margin_left = 9
+            d = ErrorDialog("<b>Failed to apply network settings</b>",
+                            "You might not be able to connect to the Bluetooth network via this machine",
+                            result,
+                            margin_left=9)
 
             d.run()
             d.destroy()

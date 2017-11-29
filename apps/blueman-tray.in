@@ -1,0 +1,46 @@
+#!/usr/bin/env python3
+# coding=utf-8
+
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
+from __future__ import unicode_literals
+
+import logging
+import os
+import sys
+import signal
+
+# support running uninstalled
+_dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if 'BLUEMAN_SOURCE' in os.environ:
+    sys.path.insert(0, _dirname)
+
+from blueman.Functions import set_proc_title, create_parser, create_logger
+from blueman.main.Tray import BluemanTray
+
+# Workaround introspection bug, gnome bug 622084
+signal.signal(signal.SIGINT, signal.SIG_DFL)
+signal.signal(signal.SIGTERM, signal.SIG_DFL)
+
+if __name__ == '__main__':
+    parser = create_parser()
+    args = parser.parse_args()
+
+    if args.LEVEL.upper() == "DEBUG":
+        log_level = logging.DEBUG
+    elif args.LEVEL.upper() == "INFO":
+        log_level = logging.INFO
+    elif args.LEVEL.upper() == "WARNING":
+        log_level = logging.WARNING
+    elif args.LEVEL.upper() == "ERROR":
+        log_level = logging.ERROR
+    elif args.LEVEL.upper() == "CRITICAL":
+        log_level = logging.CRITICAL
+    else:
+        log_level = logging.WARNING
+
+    create_logger(log_level, "blueman-tray", syslog=args.syslog)
+
+    set_proc_title()
+    BluemanTray()

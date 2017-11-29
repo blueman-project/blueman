@@ -1,9 +1,4 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
@@ -11,7 +6,7 @@ from blueman.gui.DeviceSelectorWidget import DeviceSelectorWidget
 
 
 class DeviceSelectorDialog(Gtk.Dialog):
-    def __init__(self, title=_("Select Device"), parent=None, discover=True):
+    def __init__(self, title=_("Select Device"), parent=None, discover=True, adapter_name=None):
         super(DeviceSelectorDialog, self).__init__(
             title, parent, 0, ("_Cancel", Gtk.ResponseType.REJECT, "_OK", Gtk.ResponseType.ACCEPT),
             icon_name="blueman", resizable=False, name="DeviceSelectorDialog"
@@ -24,11 +19,10 @@ class DeviceSelectorDialog(Gtk.Dialog):
         self.vbox.props.vexpand = True
         self.vbox.props.margin = 6
 
-        self.selector = DeviceSelectorWidget()
+        self.selector = DeviceSelectorWidget(adapter_name=adapter_name)
         self.selector.show()
         self.vbox.pack_start(self.selector, True, True, 0)
 
-        #(adapter, device)
         self.selection = None
 
         self.selector.List.connect("device-selected", self.on_device_selected)

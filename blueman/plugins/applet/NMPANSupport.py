@@ -1,9 +1,4 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 from gi.repository import Gio, GLib
 from blueman.plugins.AppletPlugin import AppletPlugin
 from uuid import uuid4
@@ -72,8 +67,6 @@ class NewConnectionBuilder:
     def signal_wait_timeout(self):
         if not self.device or not self.connection:
             self.err_cb(GLib.Error("Network Manager did not support the connection"))
-            if self.connection:
-                self.remove_connection()
             self.cleanup()
 
     def on_nm_device_added(self, connection, sender_name, object_path, interface_name, signal_name, param):
@@ -106,7 +99,7 @@ class NewConnectionBuilder:
             self.signal_subs.append(sub)
             args = [self.connection, self.device, self.connection]
 
-            self.parent.nm_manager.ActivateConnection(str('(ooo)'), *args)
+            self.parent.nm_manager.ActivateConnection('(ooo)', *args)
 
     def on_device_state(self, connection, sender_name, object_path, interface_name, signal_name, param):
         state, oldstate, reason = param.unpack()
@@ -213,11 +206,11 @@ class NMPANSupport(AppletPlugin):
         for conn in conns:
             c = self._bus.call_sync(self.nm_manager_name, conn, self.connection_settings_interface, "GetSettings",
                                     None, None, Gio.DBusCallFlags.NONE, GLib.MAXINT, None).unpack()[0]
-            try:
-                if (self.format_bdaddr(c["bluetooth"]["bdaddr"]) == address) and c["bluetooth"]["type"] == t:
-                    return conn
-            except:
-                pass
+            if "bluetooth" not in c:
+                continue
+
+            if (self.format_bdaddr(c["bluetooth"]["bdaddr"]) == address) and c["bluetooth"]["type"] == t:
+                return conn
 
     def find_active_connection(self, address, conntype):
         props = self._bus.call_sync(self.nm_manager_name, self.nm_manager_path,
@@ -261,6 +254,6 @@ class NMPANSupport(AppletPlugin):
         if not active_conn_path:
             return
 
-        self.nm_manager.DeactivateConnection(str('(o)'), active_conn_path)
+        self.nm_manager.DeactivateConnection('(o)', active_conn_path)
         ok()
         return True

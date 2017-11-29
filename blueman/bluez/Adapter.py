@@ -1,18 +1,14 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
-from gi.repository import GObject, Gio, GLib
+from gi.repository import GLib
 from blueman.bluez.Base import Base
 from blueman.bluez.AnyBase import AnyBase
+
 
 class Adapter(Base):
     _interface_name = 'org.bluez.Adapter1'
 
-    def _init(self, obj_path=None):
-        super(Adapter, self)._init(self._interface_name, obj_path=obj_path)
+    def __init__(self, obj_path=None):
+        super().__init__(self._interface_name, obj_path=obj_path)
 
     def start_discovery(self):
         self._call('StartDiscovery')
@@ -37,6 +33,7 @@ class Adapter(Base):
         except GLib.Error:
             return self.set('Name', name)
 
+
 class AnyAdapter(AnyBase):
     def __init__(self):
-        super(AnyAdapter, self).__init__('org.bluez.Adapter1')
+        super().__init__('org.bluez.Adapter1')

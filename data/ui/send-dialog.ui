@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 -->
+<!-- Generated with glade 3.20.0 -->
 <interface>
   <requires lib="gtk+" version="3.0"/>
   <object class="GtkGrid" id="sendto">
@@ -28,10 +28,10 @@
           <object class="GtkLabel" id="l_top">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="halign">start</property>
             <property name="label" translatable="yes">&lt;span weight="bold" size="large"&gt;Sending files via Bluetooth&lt;/span&gt;</property>
             <property name="use_markup">True</property>
             <property name="ellipsize">end</property>
-            <property name="xalign">0.0099999997764825821</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -64,9 +64,9 @@
           <object class="GtkLabel" id="l_dest_hdr">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="halign">end</property>
             <property name="label" translatable="yes">&lt;b&gt;To:&lt;/b&gt;</property>
             <property name="use_markup">True</property>
-            <property name="xalign">1</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -78,8 +78,8 @@
           <object class="GtkLabel" id="l_dest">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="halign">start</property>
             <property name="ellipsize">end</property>
-            <property name="xalign">0</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -102,9 +102,9 @@
           <object class="GtkLabel" id="l_file_hdr">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="halign">end</property>
             <property name="label" translatable="yes">&lt;b&gt;File:&lt;/b&gt;</property>
             <property name="use_markup">True</property>
-            <property name="xalign">1</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -116,8 +116,8 @@
           <object class="GtkLabel" id="l_file">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="halign">start</property>
             <property name="ellipsize">middle</property>
-            <property name="xalign">0</property>
           </object>
           <packing>
             <property name="expand">False</property>

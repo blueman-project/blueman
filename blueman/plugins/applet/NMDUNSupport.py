@@ -1,14 +1,9 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 from blueman.plugins.AppletPlugin import AppletPlugin
 import dbus
 from gi.repository import GLib
 from blueman.gui.Notification import Notification
-from blueman.Sdp import uuid128_to_uuid16, DIALUP_NET_SVCLASS_ID
+from blueman.Sdp import DIALUP_NET_SVCLASS_ID
 from blueman.Functions import get_icon, composite_icon
 import weakref
 import logging
@@ -71,7 +66,7 @@ class ConnectionHandler:
 
             Notification(_("Bluetooth Dialup"),
                          _("DUN connection on %s will now be available in Network Manager") % self.service.device['Alias'],
-                         image_data=icon, pos_hint=self.parent.Applet.Plugins.StatusIcon.geometry).show()
+                         image_data=icon).show()
 
             self.reply(self.rfcomm_dev)
             self.cleanup()
@@ -101,7 +96,7 @@ class NMDUNSupport(AppletPlugin):
         pass
 
     def rfcomm_connect_handler(self, service, reply, err):
-        if DIALUP_NET_SVCLASS_ID == uuid128_to_uuid16(service.uuid):
+        if DIALUP_NET_SVCLASS_ID == service.short_uuid:
             ConnectionHandler(self, service, reply, err)
             return True
         else:

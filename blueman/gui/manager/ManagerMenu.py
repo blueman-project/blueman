@@ -1,13 +1,11 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 import blueman.bluez as bluez
 from blueman.main.Config import Config
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
-from blueman.gui.CommonUi import *
+from blueman.gui.CommonUi import show_about_dialog
+from blueman.Constants import WEBSITE
+from blueman.Functions import create_menuitem, launch, adapter_path_to_name
+import logging
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -36,7 +34,7 @@ class ManagerMenu:
         self.item_help.set_submenu(help_menu)
         help_menu.show()
 
-        report_item = create_menuitem(_("_Report a Problem"), get_icon("dialog-warning", 16))
+        report_item = create_menuitem(_("_Report a Problem"), "dialog-warning")
         report_item.show()
         help_menu.append(report_item)
         report_item.connect("activate", lambda x: launch("xdg-open %s/issues" % WEBSITE, None, True))
@@ -45,10 +43,11 @@ class ManagerMenu:
         sep.show()
         help_menu.append(sep)
 
-        help_item = create_menuitem("_Help", get_icon("help-about"))
+        help_item = create_menuitem("_Help", "help-about")
         help_item.show()
         help_menu.append(help_item)
-        help_item.connect("activate", lambda x: show_about_dialog('Blueman ' + _('Device Manager')))
+        help_item.connect("activate", lambda x: show_about_dialog('Blueman ' + _('Device Manager'),
+                                                                  parent=self.blueman.get_toplevel()))
 
         view_menu = Gtk.Menu()
         self.item_view.set_submenu(view_menu)
@@ -83,7 +82,6 @@ class ManagerMenu:
 
         self._sort_timestamp_item = Gtk.RadioMenuItem.new_with_mnemonic(sorting_group, _("_Added"))
         self._sort_timestamp_item.show()
-        sorting_group = self._sort_timestamp_item.get_group()
         sorting_menu.append(self._sort_timestamp_item)
 
         sort_config = self.Config['sort-by']
@@ -109,12 +107,12 @@ class ManagerMenu:
         sep.show()
         view_menu.append(sep)
 
-        item_plugins = create_menuitem(_("_Plugins"), get_icon('blueman-plugin', 16))
+        item_plugins = create_menuitem(_("_Plugins"), 'blueman-plugin')
         item_plugins.show()
         view_menu.append(item_plugins)
         item_plugins.connect('activate', self._on_plugin_dialog_activate)
 
-        item_services = create_menuitem(_("_Local Services") + "...", get_icon("preferences-desktop", 16))
+        item_services = create_menuitem(_("_Local Services") + "...", "preferences-desktop")
         item_services.connect('activate',
                               lambda *args: launch("blueman-services", None, False, "blueman", _("Service Preferences")))
         view_menu.append(item_services)
@@ -124,7 +122,7 @@ class ManagerMenu:
         self.item_adapter.set_submenu(adapter_menu)
         self.item_adapter.props.sensitive = False
 
-        search_item = create_menuitem(_("_Search"), get_icon("edit-find", 16))
+        search_item = create_menuitem(_("_Search"), "edit-find")
         search_item.connect("activate", lambda x: self.blueman.inquiry())
         search_item.show()
         adapter_menu.prepend(search_item)
@@ -138,7 +136,7 @@ class ManagerMenu:
         sep.show()
         adapter_menu.append(sep)
 
-        adapter_settings = create_menuitem("_Preferences", get_icon("preferences-system", 16))
+        adapter_settings = create_menuitem("_Preferences", "preferences-system")
         adapter_settings.connect("activate", lambda x: self.blueman.adapter_properties())
         adapter_settings.show()
         adapter_menu.append(adapter_settings)
@@ -147,7 +145,7 @@ class ManagerMenu:
         sep.show()
         adapter_menu.append(sep)
 
-        exit_item = create_menuitem("_Exit", get_icon("application-exit", 16))
+        exit_item = create_menuitem("_Exit", "application-exit")
         exit_item.connect("activate", lambda x: Gtk.main_quit())
         exit_item.show()
         adapter_menu.append(exit_item)

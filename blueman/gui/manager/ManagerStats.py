@@ -1,16 +1,11 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 from _blueman import device_info
 from gi.repository import GLib
 from gi.repository import Gtk
 
 from blueman.gui.Animation import Animation
 from blueman.main.SpeedCalc import SpeedCalc
-from blueman.Functions import get_icon, adapter_path_to_name
+from blueman.Functions import adapter_path_to_name
 from blueman.Functions import format_bytes
 
 import gettext
@@ -33,44 +28,28 @@ class ManagerStats:
         self.up_speed = SpeedCalc()
         self.down_speed = SpeedCalc()
 
-        up = get_icon("blueman-up-inactive", 15)
-        down = get_icon("blueman-down-inactive", 15)
-        self.im_upload = Gtk.Image()
-        self.im_upload.set_tooltip_text(_("Data activity indication"))
-        self.im_upload.set_from_pixbuf(up)
-        self.im_download = Gtk.Image()
-        self.im_download.set_tooltip_text(_("Data activity indication"))
-        self.im_download.set_from_pixbuf(down)
-        self.im_upload.props.halign = Gtk.Align.END
-        self.im_upload.props.valign = Gtk.Align.CENTER
-        self.im_download.props.halign = Gtk.Align.END
-        self.im_download.props.valign = Gtk.Align.CENTER
-
-        self.down_rate = Gtk.Label()
+        self.im_upload = Gtk.Image(icon_name="blueman-up-inactive", pixel_size=16,
+                                   halign=Gtk.Align.END, valign=Gtk.Align.CENTER,
+                                   tooltip_text=_("Data activity indication"))
+        self.im_download = Gtk.Image(icon_name="blueman-down-inactive", pixel_size=16,
+                                     halign=Gtk.Align.END, valign=Gtk.Align.CENTER,
+                                     tooltip_text=_("Data activity indication"))
+        self.down_rate = Gtk.Label(halign=Gtk.Align.END, valign=Gtk.Align.CENTER,
+                                   tooltip_text=_("Total data received and rate of transmission"))
         self.down_rate.show()
-        self.down_rate.props.halign = Gtk.Align.END
-        self.down_rate.props.valign = Gtk.Align.CENTER
-        self.down_rate.set_tooltip_text(_("Total data received and rate of transmission"))
 
-        self.up_rate = Gtk.Label()
+        self.up_rate = Gtk.Label(halign=Gtk.Align.END, valign=Gtk.Align.CENTER,
+                                 tooltip_text=_("Total data sent and rate of transmission"))
         self.up_rate.show()
-        self.up_rate.props.halign = Gtk.Align.END
-        self.up_rate.props.valign = Gtk.Align.CENTER
-        self.up_rate.set_tooltip_text(_("Total data sent and rate of transmission"))
 
-        self.uparrow = Gtk.Image()
-        self.uparrow.set_tooltip_text(_("Total data sent and rate of transmission"))
-        self.uparrow.set_from_icon_name("go-up", 1)
-        self.uparrow.props.halign = Gtk.Align.END
-        self.uparrow.props.valign = Gtk.Align.CENTER
-
-        self.downarrow = Gtk.Image()
-        self.downarrow.set_tooltip_text(_("Total data received and rate of transmission"))
-        self.downarrow.set_from_icon_name("go-down", 1)
+        self.uparrow = Gtk.Image(icon_name="go-up", pixel_size=16, halign=Gtk.Align.END, valign=Gtk.Align.CENTER,
+                                 tooltip_text=_("Total data sent and rate of transmission"))
+        self.downarrow = Gtk.Image(icon_name="go-down", pixel_size=16, halign=Gtk.Align.END, valign=Gtk.Align.CENTER,
+                                   tooltip_text=_("Total data received and rate of transmission"))
 
         self.hbox = hbox = blueman.Builder.get_object("status_activity")
 
-        hbox.pack_start(self.uparrow, True, False, 0)
+        hbox.pack_start(self.uparrow, False, False, 0)
         hbox.pack_start(self.up_rate, False, False, 0)
 
         hbox.pack_start(self.downarrow, False, False, 0)
@@ -83,11 +62,8 @@ class ManagerStats:
         hbox.show_all()
         self.on_adapter_changed(blueman.List, blueman.List.GetAdapterPath())
 
-        self.up_blinker = Animation(self.im_upload,
-                                    [get_icon("blueman-up-inactive", 15), get_icon("blueman-up-active", 15)])
-        #self.down_blinker = Animation(self.im_download, ["/down_inactive.png", "/down_active.png"])
-        self.down_blinker = Animation(self.im_download,
-                                      [get_icon("blueman-down-inactive", 16), get_icon("blueman-down-active", 16)])
+        self.up_blinker = Animation(self.im_upload, ["blueman-up-inactive","blueman-up-active"])
+        self.down_blinker = Animation(self.im_download, ["blueman-down-inactive", "blueman-down-active"])
 
         self.start_update()
 
@@ -123,8 +99,6 @@ class ManagerStats:
             blinker.set_rate(1)
 
     def _update(self):
-        #if self.hbox.parent.parent.parent.props.visible:
-
         if self.hci is not None:
             devinfo = device_info(self.hci)
             _tx = devinfo["stat"]["byte_tx"]

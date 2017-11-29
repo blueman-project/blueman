@@ -1,27 +1,25 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-from io import open
-
 import pickle
-import os
 import signal
 import errno
 import re
-from socket import inet_aton, inet_ntoa
+import os
+from socket import inet_ntoa
 from tempfile import mkstemp
 from time import sleep
 import logging
-from blueman.Constants import *
+from blueman.Constants import DHCP_CONFIG_FILE
 from blueman.Functions import have, mask_ip4_address, is_running
 from _blueman import create_bridge, destroy_bridge, BridgeException
-from subprocess import call, Popen
+from subprocess import call, Popen, PIPE
+
+
+class NetworkSetupError(Exception):
+    pass
 
 
 def calc_ip_range(ip):
-    '''Calculate the ip range for dhcp config'''
+    """Calculate the ip range for dhcp config"""
     start_range = bytearray(ip)
     end_range = bytearray(ip)
     start_range[3] += 1
@@ -65,22 +63,18 @@ class DnsMasqHandler(object):
             if self.netconf.ip4_changed:
                 self.do_remove()
 
-            if 1:
-                rtr = "--dhcp-option=option:router,%s" % inet_ntoa(self.netconf.ip4_address)
-            else:
-                rtr = "--dhcp-option=3 --dhcp-option=6"  # no route and no dns
-
             start, end = calc_ip_range(self.netconf.ip4_address)
+            cmd = [have("dnsmasq"), "--pid-file=/var/run/dnsmasq.pan1.pid", "--except-interface=lo",
+                   "--interface=pan1", "--bind-interfaces",
+                   "--dhcp-range=%s,%s,60m" % (inet_ntoa(start), inet_ntoa(end)),
+                   "--dhcp-option=option:router,%s" % inet_ntoa(self.netconf.ip4_address)]
 
-            args = "--pid-file=/var/run/dnsmasq.pan1.pid --bind-interfaces --dhcp-range=%s,%s,60m --except-interface=lo --interface=pan1 %s" % (inet_ntoa(start), inet_ntoa(end), rtr)
-
-            cmd = [have("dnsmasq")] + args.split(" ")
             logging.info(cmd)
-            p = Popen(cmd)
+            p = Popen(cmd, stderr=PIPE)
 
-            ret = p.wait()
+            error = p.communicate()[1]
 
-            if ret == 0:
+            if not error:
                 logging.info("Dnsmasq started correctly")
                 f = open("/var/run/dnsmasq.pan1.pid", "r")
                 self.pid = int(f.read())
@@ -88,7 +82,9 @@ class DnsMasqHandler(object):
                 logging.info("pid %s" % self.pid)
                 self.netconf.lock("dhcp")
             else:
-                raise Exception("dnsmasq failed to start. Check the system log for errors")
+                error_msg = error.decode("UTF-8").strip()
+                logging.info(error_msg)
+                raise NetworkSetupError("dnsmasq failed to start: %s" % error_msg)
 
     def do_remove(self):
         if self.netconf.locked("dhcp"):
@@ -97,9 +93,7 @@ class DnsMasqHandler(object):
             else:
                 pid = self.pid
 
-            running = is_running("dnsmasq", pid) if pid else False
-
-            if running:
+            if pid and is_running("dnsmasq", pid):
                 os.kill(pid, signal.SIGTERM)
                 self.netconf.unlock("dhcp")
             else:
@@ -172,20 +166,22 @@ class DhcpdHandler(object):
             f.write(subnet)
             f.close()
 
-            cmd = [have("dhcpd3") or have("dhcpd"), "-pf", "/var/run/dhcpd-server/dhcp.pan1.pid", "pan1"]
-            p = Popen(cmd)
+            cmd = [have("dhcpd3") or have("dhcpd"), "-pf", "/var/run/dhcpd.pan1.pid", "pan1"]
+            p = Popen(cmd, stderr=PIPE)
 
-            ret = p.wait()
+            error = p.communicate()[1]
 
-            if ret == 0:
+            if not error:
                 logging.info("dhcpd started correctly")
-                f = open("/var/run/dhcp-server/dhcpd.pan1.pid", "r")
+                f = open("/var/run/dhcpd.pan1.pid", "r")
                 self.pid = int(f.read())
                 f.close()
                 logging.info("pid %s" % self.pid)
                 self.netconf.lock("dhcp")
             else:
-                raise Exception("dhcpd failed to start. Check the system log for errors")
+                error_msg = error.decode("UTF-8").strip()
+                logging.info(error_msg)
+                raise NetworkSetupError("dhcpd failed to start: %s " % error_msg)
 
     def do_remove(self):
         dhcp_config, existing_subnet = self._read_dhcp_config()
@@ -195,13 +191,11 @@ class DhcpdHandler(object):
 
         if self.netconf.locked("dhcp"):
             if not self.pid:
-                pid = read_pid_file("/var/run/dhcpd-server/dhcp.pan1.pid")
+                pid = read_pid_file("/var/run/dhcpd.pan1.pid")
             else:
                 pid = self.pid
 
-            running = is_running("dnsmasq", pid) if pid else False
-
-            if running:
+            if pid and (is_running("dhcpd3", pid) or is_running("dhcpd", pid)):
                 os.kill(pid, signal.SIGTERM)
                 self.netconf.unlock("dhcp")
             else:
@@ -246,8 +240,8 @@ option router %(rtr)s
 
             logging.info("Running udhcpd with config file %s" % config_path)
             cmd = [have("udhcpd"), "-S", config_path]
-            p = Popen(cmd)
-            p.wait()
+            p = Popen(cmd, stderr=PIPE)
+            error = p.communicate()[1]
 
             # udhcpd takes time to create pid file
             sleep(0.1)
@@ -260,7 +254,9 @@ option router %(rtr)s
                 logging.info("pid %s" % self.pid)
                 self.netconf.lock("dhcp")
             else:
-                raise Exception("udhcpd failed to start. Check the system log for errors")
+                error_msg = error.decode("UTF-8").strip()
+                logging.info(error_msg)
+                raise NetworkSetupError("udhcpd failed to start: %s" % error_msg)
 
             os.remove(config_path)
 
@@ -271,9 +267,7 @@ option router %(rtr)s
             else:
                 pid = self.pid
 
-            running = is_running("udhcpd", pid) if pid else False
-
-            if running:
+            if pid and is_running("udhcpd", pid):
                 os.kill(pid, signal.SIGTERM)
                 self.netconf.unlock("dhcp")
             else:
@@ -389,13 +383,22 @@ class NetConf(object):
         ip_str = inet_ntoa(self.ip4_address)
         mask_str = inet_ntoa(self.ip4_mask)
 
-        if self.ip4_changed or not self.locked("ifconfig"):
+        if self.ip4_changed or not self.locked("netconfig"):
             self.enable_ip4_forwarding()
 
-            ret = call(["ifconfig", "pan1", ip_str, "netmask", mask_str, "up"])
-            if ret != 0:
-                raise Exception("Failed to setup interface pan1")
-            self.lock("ifconfig")
+            if have("ip"):
+                ret = call(["ip", "link", "set", "dev", "pan1", "up"])
+                if ret != 0:
+                    raise NetworkSetupError("Failed to bring up interface pan1")
+                ret = call(["ip", "address", "add", "/".join((ip_str, mask_str)), "dev", "pan1"])
+                if ret != 0:
+                    raise NetworkSetupError("Failed to add ip address %s with netmask %s" % (ip_str, mask_str))
+            else:
+                ret = call(["ifconfig", "pan1", ip_str, "netmask", mask_str, "up"])
+                if ret != 0:
+                    raise NetworkSetupError("Failed to add ip address %s with netmask %s" % (ip_str, mask_str))
+
+            self.lock("netconfig")
 
         if self.ip4_changed or not self.locked("iptables"):
             self.del_ipt_rules()
@@ -422,7 +425,7 @@ class NetConf(object):
             destroy_bridge("pan1")
         except BridgeException:
             pass
-        self.unlock("ifconfig")
+        self.unlock("netconfig")
 
         self.del_ipt_rules()
 

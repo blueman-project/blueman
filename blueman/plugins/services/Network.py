@@ -1,9 +1,4 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gio, Gtk
@@ -17,7 +12,7 @@ from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler, UdhcpdHa
 from blueman.main.Config import Config
 from blueman.main.Mechanism import Mechanism
 from blueman.main.AppletService import AppletService
-from blueman.gui.Dialogs import NetworkErrorDialog
+from blueman.gui.CommonUi import ErrorDialog
 from random import randint
 from locale import bind_textdomain_codeset
 import logging
@@ -47,8 +42,8 @@ class Network(ServicePlugin):
         self.setup_network()
         try:
             self.ip_check()
-        except:
-            pass
+        except Exception as e:
+            logging.exception(e)
         return (_("Network"), "network-workgroup")
 
     def on_enter(self):
@@ -76,12 +71,12 @@ class Network(ServicePlugin):
                 net_ip = self.Builder.get_object("net_ip")
 
                 try:
-                    m.EnableNetwork(str('(ayays)'), inet_aton(net_ip.props.text), inet_aton("255.255.255.0"), stype)
+                    m.EnableNetwork('(ayays)', inet_aton(net_ip.props.text), inet_aton("255.255.255.0"), stype)
 
                     if not self.Config["nap-enable"]:
                         self.Config["nap-enable"] = True
                 except Exception as e:
-                    d = NetworkErrorDialog(e, parent=self.widget.get_toplevel())
+                    d = ErrorDialog("<b>Failed to apply network settings</b>", excp=e, parent=self.widget.get_toplevel())
 
                     d.run()
                     d.destroy()
@@ -104,13 +99,7 @@ class Network(ServicePlugin):
             e.props.secondary_icon_tooltip_text = _("Invalid IP address")
             raise
 
-        a_netmask = inet_aton("255.255.255.0")
-
-        a_masked = mask_ip4_address(a, a_netmask)
-
         for iface, ip, netmask, masked in self.interfaces:
-            # print mask_ip4_address(a, netmask).encode("hex_codec"), masked.encode("hex_codec")
-
             if a == ip:
                 e.props.secondary_icon_name = "dialog-error"
                 e.props.secondary_icon_tooltip_text = _("IP address conflicts with interface %s which has the same address" % iface)
@@ -125,7 +114,6 @@ class Network(ServicePlugin):
         e.props.secondary_icon_name = None
 
     def on_query_apply_state(self):
-        changed = False
         opts = self.get_options()
         if not opts:
             return False
@@ -171,33 +159,40 @@ class Network(ServicePlugin):
             r_dnsmasq.props.active = True
             self.Config["nap-enable"] = False
 
-        if nc.get_dhcp_handler() == DnsMasqHandler:
-            r_dnsmasq.props.active = True
-        elif nc.get_dhcp_handler() == DhcpdHandler:
-            r_dhcpd.props.active = True
-        elif nc.get_dhcp_handler() == UdhcpdHandler:
-            r_udhcpd.props.active = True
+        have_dhcpd = have("dhcpd3") or have("dhcpd")
+        have_dnsmasq = have("dnsmasq")
+        have_udhcpd = have("udhcpd")
 
-        if not have("dnsmasq") and not have("dhcpd3") and not have("dhcpd") and not have("udhcpd"):
+        if nc.get_dhcp_handler() == DnsMasqHandler and have_dnsmasq:
+            r_dnsmasq.props.active = True
+        elif nc.get_dhcp_handler() == DhcpdHandler and have_dhcpd:
+            r_dhcpd.props.active = True
+        elif nc.get_dhcp_handler() == UdhcpdHandler and have_udhcpd:
+            r_udhcpd.props.active = True
+        else:
+            r_dnsmasq.props.active = True
+
+        if not have_dnsmasq and not have_dhcpd and not have_udhcpd:
             nap_frame.props.sensitive = False
             warning.props.visible = True
             warning.props.sensitive = True
             nap_enable.props.sensitive = False
             self.Config["nap-enable"] = False
 
-        if not have("dnsmasq"):
+        if not have_dnsmasq:
             r_dnsmasq.props.sensitive = False
             r_dnsmasq.props.active = False
 
-        if not have("dhcpd3") and not have("dhcpd"):
+        if not have_dhcpd:
             r_dhcpd.props.sensitive = False
             r_dhcpd.props.active = False
 
-        if not have("udhcpd"):
+        if not have_udhcpd:
             r_udhcpd.props.sensitive = False
             r_udhcpd.props.active = False
 
         r_dnsmasq.connect("toggled", lambda x: self.option_changed_notify("dnsmasq"))
+        r_dhcpd.connect("toggled", lambda x: self.option_changed_notify("dhcpd"))
         r_udhcpd.connect("toggled", lambda x: self.option_changed_notify("udhcpd"))
 
         net_ip.connect("changed", lambda x: self.option_changed_notify("ip", False))
@@ -214,20 +209,20 @@ class Network(ServicePlugin):
 
         def dun_support_toggled(rb, x):
             if rb.props.active and x == "nm":
-                applet.SetPluginConfig(str('(sb)'), "PPPSupport", False)
-                applet.SetPluginConfig(str('(sb)'), "NMDUNSupport", True)
+                applet.SetPluginConfig('(sb)', "PPPSupport", False)
+                applet.SetPluginConfig('(sb)', "NMDUNSupport", True)
             elif rb.props.active and x == "blueman":
-                applet.SetPluginConfig(str('(sb)'), "NMDUNSupport", False)
-                applet.SetPluginConfig(str('(sb)'), "PPPSupport", True)
+                applet.SetPluginConfig('(sb)', "NMDUNSupport", False)
+                applet.SetPluginConfig('(sb)', "PPPSupport", True)
 
         def pan_support_toggled(rb, x):
             if rb.props.active and x == "nm":
-                applet.SetPluginConfig(str('(sb)'), "DhcpClient", False)
-                applet.SetPluginConfig(str('(sb)'), "NMPANSupport", True)
+                applet.SetPluginConfig('(sb)', "DhcpClient", False)
+                applet.SetPluginConfig('(sb)', "NMPANSupport", True)
 
             elif rb.props.active and x == "blueman":
-                applet.SetPluginConfig(str('(sb)'), "NMPANSupport", False)
-                applet.SetPluginConfig(str('(sb)'), "DhcpClient", True)
+                applet.SetPluginConfig('(sb)', "NMPANSupport", False)
+                applet.SetPluginConfig('(sb)', "DhcpClient", True)
 
         if "PPPSupport" in active_plugins:
             rb_dun_blueman.props.active = True
@@ -237,6 +232,9 @@ class Network(ServicePlugin):
         else:
             rb_dun_nm.props.sensitive = False
             rb_dun_nm.props.tooltip_text = _("Not currently supported with this setup")
+
+        if "DhcpClient" in active_plugins:
+            rb_blueman.props.active = True
 
         if "NMPANSupport" in avail_plugins:
             rb_nm.props.sensitive = True

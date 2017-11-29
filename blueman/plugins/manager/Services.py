@@ -1,33 +1,37 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
+import cairo
 from blueman.bluez.Network import Network
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-import traceback
-import logging
-from blueman.Functions import create_menuitem, get_icon, composite_icon
+from blueman.Functions import create_menuitem
 from blueman.main.AppletService import AppletService
 from blueman.services import *
-
 from _blueman import rfcomm_list
 
 
-def get_x_icon(icon_name, size):
-    ic = get_icon(icon_name, size)
-    x = get_icon("blueman-x", size)
-    pixbuf = composite_icon(ic, [(x, 0, 0, 255)])
-
-    return pixbuf
-
-
 class Services(ManagerPlugin):
+    def on_load(self, manager):
+        self.manager = manager
+        self.icon_theme = Gtk.IconTheme.get_default()
+
+    def _make_x_icon(self, icon_name, size):
+        scale = self.manager.get_scale_factor()
+        window = self.manager.get_window()
+
+        target = self.icon_theme.load_surface(icon_name, size, scale, window, Gtk.IconLookupFlags.FORCE_SIZE)
+        bmx = self.icon_theme.load_surface("blueman-x", size, scale, window, Gtk.IconLookupFlags.FORCE_SIZE)
+
+        x = target.get_width() - bmx.get_width()
+        y = target.get_height() - bmx.get_height()
+        context = cairo.Context(target)
+        context.set_source_surface(bmx, x, y)
+        context.paint()
+
+        return target
+
     def on_request_menu_items(self, manager_menu, device):
         items = []
         appl = AppletService()
@@ -37,11 +41,12 @@ class Services(ManagerPlugin):
 
         def add_menu_item(manager_menu, service):
             if service.connected:
-                item = create_menuitem(service.name, get_x_icon(service.icon, 16))
+                surface = self._make_x_icon(service.icon, 16)
+                item = create_menuitem(service.name, surface=surface)
                 item.connect("activate", manager_menu.on_disconnect, service)
                 items.append((item, service.priority + 100))
             else:
-                item = create_menuitem(service.name, get_icon(service.icon, 16))
+                item = create_menuitem(service.name, service.icon)
                 if service.description:
                     item.props.tooltip_text = service.description
                 item.connect("activate", manager_menu.on_connect, service)
@@ -51,21 +56,19 @@ class Services(ManagerPlugin):
                         self.has_dun = True
                 else:
                     items.append((item, service.priority))
+            item.props.sensitive = service.available
             item.show()
 
         for service in get_services(device):
-            try:
-                add_menu_item(manager_menu, service)
-            except Exception:
-                logging.error("Failed to load service %s" % service.name, exc_info=True)
-                continue
+            add_menu_item(manager_menu, service)
 
             if service.group == 'serial':
                 for dev in rfcomm_list():
                     if dev["dst"] == device['Address'] and dev["state"] == "connected":
                         devname = _("Serial Port %s") % "rfcomm%d" % dev["id"]
 
-                        item = create_menuitem(devname, get_x_icon("modem", 16))
+                        surface = self._make_x_icon("modem", 16)
+                        item = create_menuitem(service.name, surface=surface)
                         item.connect("activate", manager_menu.on_disconnect, service, dev["id"])
                         items.append((item, 120))
                         item.show()
@@ -73,9 +76,9 @@ class Services(ManagerPlugin):
             if service.group == 'network' and service.connected:
                 if "DhcpClient" in appl.QueryPlugins():
                     def renew(x):
-                        appl.DhcpClient(str('(s)'), Network(device.get_object_path())["Interface"])
+                        appl.DhcpClient('(s)', Network(device.get_object_path())["Interface"])
 
-                    item = create_menuitem(_("Renew IP Address"), get_icon("view-refresh", 16))
+                    item = create_menuitem(_("Renew IP Address"), "view-refresh")
                     item.connect("activate", renew)
                     item.show()
                     items.append((item, 201))
@@ -92,7 +95,7 @@ class Services(ManagerPlugin):
             item.show()
             serial_items.append(item)
 
-            item = create_menuitem(_("Dialup Settings"), get_icon("gtk-preferences", 16))
+            item = create_menuitem(_("Dialup Settings"), "gtk-preferences")
             serial_items.append(item)
             item.show()
             item.connect("activate", open_settings, device)
@@ -101,7 +104,7 @@ class Services(ManagerPlugin):
             sub = Gtk.Menu()
             sub.show()
 
-            item = create_menuitem(_("Serial Ports"), get_icon("modem", 16))
+            item = create_menuitem(_("Serial Ports"), "modem")
             item.set_submenu(sub)
             item.show()
             items.append((item, 90))

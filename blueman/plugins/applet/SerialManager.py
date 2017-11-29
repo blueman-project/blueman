@@ -1,25 +1,16 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
-from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.Notification import Notification
-from blueman.Sdp import uuid128_to_uuid16, uuid16_to_name, SERIAL_PORT_SVCLASS_ID
+from blueman.Sdp import SERIAL_PORT_SVCLASS_ID
 from blueman.services.Functions import get_services
 from _blueman import rfcomm_list
 from subprocess import Popen
 import atexit
 import logging
-
+import os
+import signal
 import blueman.bluez as Bluez
-
-import gi
-gi.require_version("Gtk", "3.0")
 from gi.repository import GObject
-from gi.repository import Gtk
 
 
 class SerialManager(AppletPlugin):
@@ -57,18 +48,16 @@ class SerialManager(AppletPlugin):
 
     def on_rfcomm_connected(self, service, port):
         device = service.device
-        uuid16 = uuid128_to_uuid16(service.uuid)
-        if SERIAL_PORT_SVCLASS_ID == uuid16:
+        if SERIAL_PORT_SVCLASS_ID == service.short_uuid:
             Notification(_("Serial port connected"),
                          _("Serial port service on device <b>%s</b> now will be available via <b>%s</b>") % (
                          device['Alias'], port),
-                         icon_name="blueman-serial",
-                         pos_hint=self.Applet.Plugins.StatusIcon.geometry).show()
+                         icon_name="blueman-serial").show()
 
             self.call_script(device['Address'],
                              device['Alias'],
-                             uuid16_to_name(uuid16),
-                             uuid16,
+                             service.name,
+                             service.short_uuid,
                              port)
 
     def terminate_all_scripts(self, address):
@@ -85,7 +74,7 @@ class SerialManager(AppletPlugin):
         logging.info("Script with PID %s closed" % pid)
 
     def manage_script(self, address, node, process):
-        if not address in self.scripts:
+        if address not in self.scripts:
             self.scripts[address] = {}
 
         if node in self.scripts[address]:
@@ -109,8 +98,7 @@ class SerialManager(AppletPlugin):
                 Notification(_("Serial port connection script failed"),
                              _("There was a problem launching script %s\n"
                                "%s") % (c, str(e)),
-                             icon_name="blueman-serial",
-                             pos_hint=self.Applet.Plugins.StatusIcon.geometry).show()
+                             icon_name="blueman-serial").show()
 
     def on_rfcomm_disconnect(self, node):
         for k, v in self.scripts.items():
@@ -119,7 +107,7 @@ class SerialManager(AppletPlugin):
                 os.killpg(v[node].pid, signal.SIGHUP)
 
     def rfcomm_connect_handler(self, service, reply, err):
-        if SERIAL_PORT_SVCLASS_ID == uuid128_to_uuid16(service.uuid):
+        if SERIAL_PORT_SVCLASS_ID == service.short_uuid:
             service.connect(reply_handler=reply, error_handler=err)
             return True
         else:
@@ -149,7 +137,7 @@ class SerialManager(AppletPlugin):
             try:
                 logging.info("Disconnecting %s" % name)
                 serial_services[0].disconnect(port)
-            except Exception as e:
+            except Exception:
                 logging.error("Failed to disconnect %s" % name, exc_info=True)
 
 

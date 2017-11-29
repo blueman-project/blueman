@@ -1,10 +1,5 @@
-#!/usr/bin/env python@PYTHON_MAJOR_VERSION@
+#!/usr/bin/env python3
 # coding=utf-8
-
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
 
 import os, sys, signal
 import atexit
@@ -13,7 +8,7 @@ import logging
 #support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if 'BLUEMAN_SOURCE' in os.environ:
-    sys.path.insert(0, _dirname)
+    sys.path = [_dirname, os.path.join(_dirname, 'module', '.libs')] + sys.path
     os.environ["GSETTINGS_SCHEMA_DIR"] = os.path.join(_dirname, "data")
 
 import gi
@@ -22,15 +17,11 @@ gi.require_version("Gdk", "3.0")
 from gi.repository import Gtk
 
 from blueman.Functions import setup_icon_path, check_bluetooth_status, set_proc_title, create_parser, create_logger
+from blueman.main.Config import Config
 from blueman.main.Sendto import Sender
 from blueman.bluez.Manager import Manager
+from blueman.bluez.errors import DBusNoSuchAdapterError
 from blueman.gui.DeviceSelectorDialog import DeviceSelectorDialog
-
-#support running uninstalled
-_dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-if 'BLUEMAN_SOURCE' in os.environ:
-    sys.path.insert(0, _dirname)
-    os.environ["GSETTINGS_SCHEMA_DIR"] = os.path.join(_dirname, "data")
 
 # Workaround introspection bug, gnome bug 622084
 signal.signal(signal.SIGINT, signal.SIG_DFL)
@@ -48,7 +39,29 @@ class SendTo:
             self.files = [os.path.abspath(f) for f in parsed_args.files]
 
         self.device = None
-        self.adapter = None
+        manager = Manager()
+        adapter = None
+        adapters = manager.get_adapters()
+        last_adapter_name = Config("org.blueman.general")["last-adapter"]
+
+        if len(adapters) == 0:
+            logging.error("Error: No Adapters present")
+            exit()
+
+        if parsed_args.source is not None:
+            try:
+                adapter = manager.get_adapter(parsed_args.source)
+            except DBusNoSuchAdapterError:
+                logging.error("Unknown adapter, trying first available")
+                pass
+
+        if adapter is None:
+            try:
+                adapter = manager.get_adapter(last_adapter_name)
+            except DBusNoSuchAdapterError:
+                adapter = manager.get_adapter()
+
+        self.adapter_path = adapter.get_object_path()
 
         if parsed_args.delete:
             def delete_files():
@@ -63,24 +76,11 @@ class SendTo:
             self.do_send()
 
         else:
-            m = Manager()
-            try:
-                if parsed_args.source is not None:
-                    try:
-                        adapter = m.get_adapter(parsed_args.source)
-                    except:
-                        adapter = m.get_adapter()
-                else:
-                    adapter = m.get_adapter()
-            except:
-                logging.error("Error: No Adapters present")
-                exit()
-            d = m.find_device(parsed_args.device, adapter.get_object_path())
+            d = manager.find_device(parsed_args.device, self.adapter_path)
             if d is None:
                 exit("Unknown bluetooth device")
 
             self.device = d
-            self.adapter = adapter.get_object_path()
             self.do_send()
 
     def do_send(self):
@@ -88,7 +88,7 @@ class SendTo:
             logging.warning("No files to send")
             exit()
 
-        sender = Sender(self.device, self.adapter, self.files)
+        sender = Sender(self.device, self.adapter_path, self.files)
 
         def on_result(sender, res):
             Gtk.main_quit()
@@ -111,13 +111,14 @@ class SendTo:
             return []
 
     def select_device(self):
-        d = DeviceSelectorDialog()
+        adapter_name = os.path.split(self.adapter_path)[-1]
+        d = DeviceSelectorDialog(discover=False, adapter_name=adapter_name)
         resp = d.run()
         if resp == Gtk.ResponseType.ACCEPT:
             sel = d.GetSelection()
             if sel:
                 self.device = sel[1]
-                self.adapter = sel[0]
+                self.adapter_path = sel[0]
                 return True
             else:
                 return False

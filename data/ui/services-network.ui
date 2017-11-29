@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 -->
+<!-- Generated with glade 3.20.0 -->
 <interface>
   <requires lib="gtk+" version="3.0"/>
-  <object class="GtkActionGroup" id="actiongroup1"/>
   <object class="GtkFrame" id="network_frame">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -97,8 +96,9 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
-                    <property name="xalign">0.5</property>
+                    <property name="halign">center</property>
                     <property name="draw_indicator">True</property>
+                    <property name="group">r_dnsmasq</property>
                   </object>
                   <packing>
                     <property name="left_attach">2</property>
@@ -111,7 +111,7 @@
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="tooltip_text" translatable="yes">Recommended</property>
-                    <property name="xalign">0.5</property>
+                    <property name="halign">center</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">r_dhcpd</property>
@@ -162,6 +162,7 @@
                       <object class="GtkImage" id="no_dhcp_image">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="pixel_size">16</property>
                         <property name="icon_name">dialog-warning</property>
                         <property name="icon_size">1</property>
                       </object>
@@ -198,7 +199,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
-                    <property name="xalign">0.5</property>
+                    <property name="halign">center</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">r_dhcpd</property>
                   </object>
@@ -291,6 +292,7 @@
           <object class="GtkSeparator" id="vseparator1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="halign">center</property>
             <property name="orientation">vertical</property>
           </object>
           <packing>

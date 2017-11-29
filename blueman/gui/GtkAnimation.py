@@ -1,20 +1,12 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
-from blueman.Constants import *
-
 import gi
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
-from gi.repository import Gtk, Gdk
+from gi.repository import Gtk
 
 import cairo
 from gi.repository import GObject
 from gi.repository import GLib
-import weakref
 
 
 class LinearController(object):
@@ -37,7 +29,7 @@ class BezierController(LinearController):
 
 class AnimBase(GObject.GObject):
     __gsignals__ = {
-    str('animation-finished'): (GObject.SignalFlags.RUN_LAST, None, ()),
+        'animation-finished': (GObject.SignalFlags.RUN_LAST, None, ()),
     }
 
     def __init__(self, state=1.0):
@@ -131,7 +123,7 @@ class TreeRowFade(AnimBase):
         super(TreeRowFade, self).__init__(1.0)
         self.tw = tw
 
-        self.sig = self.tw.connect_after("draw", self.on_expose)
+        self.sig = self.tw.connect_after("draw", self.on_draw)
 
         self.row = Gtk.TreeRowReference.new(tw.props.model, path)
         self.stylecontext = tw.get_style_context()
@@ -145,7 +137,7 @@ class TreeRowFade(AnimBase):
     def get_iter(self):
         return self.tw.props.model.get_iter(self.row.get_path())
 
-    def on_expose(self, widget, cr):
+    def on_draw(self, widget, cr):
         if self.frozen:
             return
 
@@ -186,7 +178,7 @@ class TreeRowColorFade(TreeRowFade):
     def do_animation_finished(self):
         self.unref()
 
-    def on_expose(self, widget, cr):
+    def on_draw(self, widget, cr):
         if self.frozen:
             return
 
@@ -217,7 +209,7 @@ class CellFade(AnimBase):
         self.tw = tw
 
         self.frozen = False
-        self.sig = tw.connect_after("draw", self.on_expose)
+        self.sig = tw.connect_after("draw", self.on_draw)
         self.row = Gtk.TreeRowReference.new(tw.props.model, path)
         self.selection = tw.get_selection()
         self.columns = []
@@ -232,7 +224,7 @@ class CellFade(AnimBase):
     def get_iter(self):
         return self.tw.props.model.get_iter(self.row.get_path())
 
-    def on_expose(self, widget, cr):
+    def on_draw(self, widget, cr):
         if self.frozen:
             return
 
@@ -281,13 +273,10 @@ class WidgetFade(AnimBase):
         self.widget = widget
         self.color = color
 
-        self.sig = widget.connect_after("draw", self.on_expose)
+        self.sig = widget.connect_after("draw", self.on_draw)
 
-    def on_expose(self, window, cr):
+    def on_draw(self, widget, cr):
         if not self.frozen:
-            rect = self.widget.get_allocation()
-            cr.rectangle(rect.x, rect.y, rect.width, rect.height)
-            cr.clip()
             cr.set_source_rgba(self.color.red, self.color.green, self.color.blue, self.color.alpha - self.get_state())
             cr.set_operator(cairo.OPERATOR_OVER)
             cr.paint()

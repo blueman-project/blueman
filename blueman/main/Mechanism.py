@@ -1,26 +1,20 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 from gi.repository import Gio
+from gi.types import GObjectMeta
 
 
-class Mechanism(Gio.DBusProxy):
+class MechanismMeta(GObjectMeta):
     _instance = None
 
-    def __new__(cls, *args, **kwargs):
+    def __call__(cls, *args, **kwargs):
         if not cls._instance:
-            cls._instance = super(Mechanism, cls).__new__(cls)
-            cls._instance._init(*args, **kwargs)
-        return Mechanism._instance
+            cls._instance = super().__call__(*args, **kwargs)
+        return cls._instance
 
-    def __init__(self):
-        pass
 
-    def _init(self, *args, **kwargs):
-        super(Mechanism, self).__init__(
+class Mechanism(Gio.DBusProxy, metaclass=MechanismMeta):
+    def __init__(self, *args, **kwargs):
+        super().__init__(
             g_name='org.blueman.Mechanism',
             g_interface_name='org.blueman.Mechanism',
             g_object_path='/',

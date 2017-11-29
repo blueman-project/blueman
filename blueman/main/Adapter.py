@@ -1,9 +1,4 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 import os.path
 import gi
 gi.require_version("Gtk", "3.0")
@@ -11,7 +6,9 @@ gi.require_version("Pango", "1.0")
 from gi.repository import Gtk
 from gi.repository import Pango
 import logging
+import gettext
 
+from blueman.Constants import UI_PATH
 from blueman.Functions import *
 import blueman.bluez as Bluez
 
@@ -86,7 +83,7 @@ class BluemanAdapters(Gtk.Dialog):
 
     def on_adapter_added(self, _manager, adapter_path):
         hci_dev = os.path.basename(adapter_path)
-        if not hci_dev in self._adapters:
+        if hci_dev not in self._adapters:
             self._adapters[hci_dev] = Bluez.Adapter(adapter_path)
 
         self._adapters[hci_dev].connect_signal("property-changed", self.on_property_changed)

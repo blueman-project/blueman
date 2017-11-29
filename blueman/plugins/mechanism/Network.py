@@ -1,14 +1,6 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 import dbus.service
 from blueman.plugins.MechanismPlugin import MechanismPlugin
-import os
-import subprocess
-from gi.repository import GObject
 from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler, UdhcpdHandler
 
 DHCPDHANDLERS = {"DnsMasqHandler": DnsMasqHandler,
@@ -28,7 +20,7 @@ class Network(MechanismPlugin):
 
         def dh_error(dh, message, ok, err):
             err(message)
-            resume = self.timer.resume()
+            self.timer.resume()
 
         def dh_connected(dh, ip, ok, err):
             ok(ip)

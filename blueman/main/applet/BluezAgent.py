@@ -1,28 +1,19 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
-import os, sys
+import os.path
 import logging
 from locale import bind_textdomain_codeset
-from blueman.Functions import get_icon
 
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import GLib
 
-if sys.version_info.major == 2:
-    from cgi import escape
-else:
-    from html import escape
+from html import escape
 
 import random
 from xml.etree import ElementTree
 import blueman.bluez as Bluez
-from blueman.Sdp import *
+from blueman.Sdp import ServiceUUID
 from blueman.Constants import *
 from blueman.gui.Notification import Notification
 
@@ -74,10 +65,9 @@ PIN_SEARCHES = [
 class BluezAgent(Agent):
     __agent_path = '/org/bluez/agent/blueman'
 
-    def __init__(self, status_icon, time_func):
+    def __init__(self, time_func):
         super(BluezAgent, self).__init__(self.__agent_path, self._handle_method_call)
 
-        self.status_icon = status_icon
         self.dialog = None
         self.n = None
         self.signal_id = None
@@ -159,10 +149,11 @@ class BluezAgent(Agent):
             self._db = ElementTree.parse(os.path.join(PKGDATA_DIR, 'pin-code-database.xml'))
 
         device = Bluez.Device(device_path)
-        lookup_dict = {}
-        lookup_dict['name'] = device['Name']
-        lookup_dict['type'] = bt_class_to_string(device['Class'])
-        lookup_dict['oui'] = device['Address'][:9]
+        lookup_dict = {
+            'name': device['Name'],
+            'type': bt_class_to_string(device['Class']),
+            'oui': device['Address'][:9]
+        }
 
         pin = None
         for s in PIN_SEARCHES:
@@ -179,14 +170,6 @@ class BluezAgent(Agent):
 
     def ask_passkey(self, dialog_msg, notify_msg, is_numeric, notification, parameters, invocation):
         device_path = parameters.unpack()[0]
-
-        def on_notification_close(n, action):
-            if action != "closed":
-                self.dialog.present()
-            else:
-                if self.dialog:
-                    self.dialog.response(Gtk.ResponseType.REJECT)
-                #self.applet.status_icon.set_blinking(False)
 
         def passkey_dialog_cb(dialog, response_id):
             if response_id == Gtk.ResponseType.ACCEPT:
@@ -212,9 +195,7 @@ class BluezAgent(Agent):
             invocation.return_dbus_error('org.bluez.Error.Canceled', 'Canceled')
 
         if notification:
-            Notification(_("Bluetooth Authentication"), notify_message, icon_name="blueman",
-                         pos_hint=self.status_icon.geometry)
-        #self.applet.status_icon.set_blinking(True)
+            Notification(_("Bluetooth Authentication"), notify_message, icon_name="blueman")
 
         self.dialog.connect("response", passkey_dialog_cb)
         self.dialog.present()
@@ -271,7 +252,7 @@ class BluezAgent(Agent):
         self.signal_id = dev.connect_signal("property-changed", self._on_device_property_changed)
 
         notify_message = _("Pairing passkey for") + " %s: %s" % (self.get_device_string(device), passkey)
-        self.n = Notification("Bluetooth", notify_message, 0, icon_name="blueman", pos_hint=self.status_icon.geometry)
+        self.n = Notification("Bluetooth", notify_message, 0, icon_name="blueman")
         self.n.show()
 
     def _on_display_pin_code(self, parameters, invocation):
@@ -281,7 +262,7 @@ class BluezAgent(Agent):
         self.signal_id = dev.connect_signal("property-changed", self._on_device_property_changed)
 
         notify_message = _("Pairing PIN code for") + " %s: %s" % (self.get_device_string(device), pin_code)
-        self.n = Notification("Bluetooth", notify_message, 0, icon_name="blueman", pos_hint=self.status_icon.geometry)
+        self.n = Notification("Bluetooth", notify_message, 0, icon_name="blueman")
         self.n.show()
 
         invocation.return_value(None)
@@ -307,18 +288,16 @@ class BluezAgent(Agent):
             notify_message += "\n" + _("Confirm value for authentication:") + " <b>%s</b>" % passkey
         actions = [["confirm", _("Confirm")], ["deny", _("Deny")]]
 
-        self.n = Notification("Bluetooth", notify_message, 0, actions, on_confirm_action, icon_name="blueman",
-                              pos_hint=self.status_icon.geometry)
+        self.n = Notification("Bluetooth", notify_message, 0, actions, on_confirm_action, icon_name="blueman")
         self.n.show()
 
     def _on_request_authorization(self, parameters, invocation):
         self._on_request_confirmation(parameters, invocation)
 
     def _on_authorize_service(self, parameters, invocation):
-        def on_auth_action(n, action):
+        def on_auth_action(action):
             logging.info(action)
 
-            #self.applet.status_icon.set_blinking(False)
             if action == "always":
                 device = Bluez.Device(n._device)
                 device.set("Trusted", True)
@@ -333,14 +312,12 @@ class BluezAgent(Agent):
 
         logging.info("Agent.Authorize")
         dev_str = self.get_device_string(device)
-        uuid16 = uuid128_to_uuid16(uuid)
-        service = uuid16_to_name(uuid16)
+        service = ServiceUUID(uuid).name
         notify_message = (_("Authorization request for:") + "\n%s\n" + _("Service:") + " <b>%s</b>") % (dev_str, service)
         actions = [["always", _("Always accept")],
                    ["accept", _("Accept")],
                    ["deny", _("Deny")]]
 
-        n = Notification(_("Bluetooth Authentication"), notify_message, 0, actions, on_auth_action,
-                         icon_name="blueman", pos_hint=self.status_icon.geometry)
+        n = Notification(_("Bluetooth Authentication"), notify_message, 0, actions, on_auth_action, icon_name="blueman")
         n.show()
         n._device = device

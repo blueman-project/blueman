@@ -1,13 +1,9 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 import dbus.service
 import os
 import subprocess
 import signal
+from blueman.Constants import RFCOMM_WATCHER_PATH
 from blueman.plugins.MechanismPlugin import MechanismPlugin
 
 
@@ -16,7 +12,7 @@ class Rfcomm(MechanismPlugin):
 
     @dbus.service.method('org.blueman.Mechanism', in_signature="d")
     def open_rfcomm(self, port_id):
-        subprocess.Popen(['@LIBEXECDIR@/blueman-rfcomm-watcher', '/dev/rfcomm%d' % port_id])
+        subprocess.Popen([RFCOMM_WATCHER_PATH, '/dev/rfcomm%d' % port_id])
 
     @dbus.service.method('org.blueman.Mechanism', in_signature="d")
     def close_rfcomm(self, port_id):

@@ -1,15 +1,12 @@
 # coding=utf-8
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 from blueman.main.PulseAudioUtils import PulseAudioUtils, EventType
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.gui.MessageArea import MessageArea
-from blueman.Functions import get_icon, create_menuitem
-from blueman.services.Functions import get_services
+
+from blueman.Functions import create_menuitem
+from blueman.Sdp import AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID, ServiceUUID
+
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
@@ -63,12 +60,6 @@ class PulseAudioProfile(ManagerPlugin):
                 logging.info("add")
                 utils.GetCard(idx, get_card_cb)
 
-    def is_connected(self, device):
-        for audio_service in [service for service in get_services(device) if service.group == 'audio']:
-            if audio_service.connected:
-                return True
-        return False
-
     def query_pa(self, device):
         def list_cb(cards):
             for c in cards.values():
@@ -116,14 +107,20 @@ class PulseAudioProfile(ManagerPlugin):
             self.item.show()
 
     def on_request_menu_items(self, manager_menu, device):
+        audio_source = False
+        for uuid in device['UUIDs']:
+            if ServiceUUID(uuid).short_uuid in (AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID):
+                audio_source = True
+                break
 
-        if self.is_connected(device):
+        if device['Connected'] and audio_source:
+
             pa = PulseAudioUtils()
             if not pa.connected:
                 self.deferred.append(device)
                 return
 
-            self.item = create_menuitem(_("Audio Profile"), get_icon("audio-card", 16))
+            self.item = create_menuitem(_("Audio Profile"), "audio-card")
             self.item.props.tooltip_text = _("Select audio profile for PulseAudio")
 
             if not device['Address'] in self.devices:
