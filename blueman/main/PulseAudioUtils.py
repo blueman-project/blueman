@@ -2,6 +2,7 @@
 from ctypes import *
 from gi.repository import GObject
 from gi.repository import GLib
+from gi.types import GObjectMeta
 import weakref
 import logging
 
@@ -324,7 +325,17 @@ pa_context_errno.restype = c_int
 pa_context_errno.argtypes = [c_void_p]
 
 
-class PulseAudioUtils(GObject.GObject):
+class PulseAudioUtilsMeta(GObjectMeta):
+    _instance = None
+
+    def __call__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = super().__call__(*args, **kwargs)
+
+        return cls._instance
+
+
+class PulseAudioUtils(GObject.GObject, metaclass=PulseAudioUtilsMeta):
     __gsignals__ = {
         'connected': (GObject.SignalFlags.NO_HOOKS, None, ()),
         'disconnected': (GObject.SignalFlags.NO_HOOKS, None, ()),
@@ -622,23 +633,11 @@ class PulseAudioUtils(GObject.GObject):
             a = (0, 0, 0)
         return a
 
-    inst = None
-
-    def __new__(cls):
-        if cls.inst:
-            return PulseAudioUtils.inst
-        else:
-            return super(PulseAudioUtils, cls).__new__(cls)
-
     def __event_callback(self, context, event_type, idx, userdata):
         logging.info("%s %s" % (event_type, idx))
         self.emit("event", event_type, idx)
 
     def __init__(self):
-        if PulseAudioUtils.inst is not None:
-            return
-
-        PulseAudioUtils.inst = self
         super(PulseAudioUtils, self).__init__()
 
         self.event_cb = pa_context_subscribe_cb_t(self.__event_callback)
