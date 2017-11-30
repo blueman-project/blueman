@@ -655,6 +655,8 @@ class PulseAudioUtils(GObject.GObject, metaclass=PulseAudioUtilsMeta):
 
         self.Connect()
 
+        weakref.finalize(self, self._on_delete)
+
     def Connect(self):
         if not self.connected:
             if self.pa_context:
@@ -673,7 +675,7 @@ class PulseAudioUtils(GObject.GObject, metaclass=PulseAudioUtilsMeta):
                                               self.event_cb,
                                               None)
 
-    def __del__(self):
+    def _on_delete(self):
         logging.info("Destroying PulseAudioUtils instance")
 
         pa_context_disconnect(self.pa_context)
