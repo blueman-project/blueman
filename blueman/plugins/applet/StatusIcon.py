@@ -122,7 +122,7 @@ class StatusIcon(AppletPlugin, GObject.GObject):
         if not self._implementation or self._implementation != implementation:
             self._implementation = implementation
             kill(get_pid(get_lockfile('blueman-tray')), 'blueman-tray')
-            launch('blueman-tray', icon_name='blueman')
+            launch('blueman-tray', icon_name='blueman', sn=False)
 
     @dbus.service.method('org.blueman.Applet', in_signature="", out_signature="s")
     def GetStatusIconImplementation(self):
