@@ -35,8 +35,6 @@ class StatusIcon(AppletPlugin, GObject.GObject):
 
         self.QueryVisibility(emit=False)
 
-        launch('blueman-tray', icon_name='blueman')
-
         self.parent.Plugins.connect('plugin-loaded', self._on_plugins_changed)
         self.parent.Plugins.connect('plugin-unloaded', self._on_plugins_changed)
 
