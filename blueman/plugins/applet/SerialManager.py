@@ -9,7 +9,7 @@ import logging
 import os
 import signal
 import blueman.bluez as Bluez
-from gi.repository import GObject
+from gi.repository import GLib
 
 
 class SerialManager(AppletPlugin):
@@ -85,7 +85,7 @@ class SerialManager(AppletPlugin):
             self.scripts[address][node].terminate()
 
         self.scripts[address][node] = process
-        GObject.child_watch_add(process.pid, self.on_script_closed, (address, node))
+        GLib.child_watch_add(process.pid, self.on_script_closed, (address, node))
 
     def call_script(self, address, name, sv_name, uuid16, node):
         c = self.get_option("script")
