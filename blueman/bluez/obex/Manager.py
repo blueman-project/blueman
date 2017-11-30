@@ -1,5 +1,6 @@
 # coding=utf-8
 import logging
+import weakref
 from blueman.bluez.obex.Transfer import Transfer
 from gi.repository import GObject, Gio
 from gi.types import GObjectMeta
@@ -39,7 +40,9 @@ class Manager(GObject.GObject, metaclass=ManagerMeta):
         self.__signals.append(self._object_manager.connect('object-added', self._on_object_added))
         self.__signals.append(self._object_manager.connect('object-removed', self._on_object_removed))
 
-    def __del__(self):
+        weakref.finalize(self, self._on_delete)
+
+    def _on_delete(self):
         for sig in self.__signals:
             self._object_manager.disconnect(sig)
 
