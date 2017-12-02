@@ -136,6 +136,7 @@ class TransferService(AppletPlugin):
     _normal_transfers = 0
 
     _manager = None
+    _signals = []
     _agent = None
     _watch = None
 
@@ -159,11 +160,6 @@ class TransferService(AppletPlugin):
             dlg.run()
             dlg.destroy()
 
-        self._manager = obex.Manager()
-        self._manager.connect("transfer-started", self._on_transfer_started)
-        self._manager.connect("transfer-completed", self._on_transfer_completed)
-        self._manager.connect('session-removed', self._on_session_removed)
-
         self._watch = obex.Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
 
     def on_unload(self):
@@ -185,11 +181,23 @@ class TransferService(AppletPlugin):
 
     def _on_dbus_name_appeared(self, _connection, name, owner):
         logging.info("%s %s" % (name, owner))
+
+        self._manager = obex.Manager()
+        self._signals.append(self._manager.connect("transfer-started", self._on_transfer_started))
+        self._signals.append(self._manager.connect("transfer-completed", self._on_transfer_completed))
+        self._signals.append(self._manager.connect('session-removed', self._on_session_removed))
+
         self._register_agent()
 
-    @staticmethod
-    def _on_dbus_name_vanished(_connection, name):
+    def _on_dbus_name_vanished(self, _connection, name):
         logging.info("%s not running or was stopped" % name)
+
+        for signal in self._signals:
+            self._manager.disconnect(signal)
+        self._manager = None
+        if self._agent:
+            self._agent.close()
+            self._agent = None
 
     def _on_transfer_started(self, _manager, transfer_path):
         if transfer_path not in self._agent.transfers:
