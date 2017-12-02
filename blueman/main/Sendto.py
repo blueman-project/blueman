@@ -14,6 +14,7 @@ gi.require_version("Gdk", "3.0")
 from gi.repository import Gdk
 from gi.repository import Gtk
 from gi.repository import GObject
+from gi.repository import GLib
 
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.obex.ObjectPush import ObjectPush
@@ -99,6 +100,17 @@ class Sender(Gtk.Dialog):
             d.run()
             d.destroy()
             exit(1)
+        except GLib.Error as e:
+            if 'StartServiceByName' in e.message:
+                logging.debug(e.message)
+                d = ErrorDialog(_("obexd not available"), _("Failed to autostart obex service. Make sure the obex "
+                                                            "daemon is running"))
+                d.run()
+                d.destroy()
+                exit(1)
+            else:
+                # Fail on anything else
+                raise
 
         if self.num_files == 0:
             exit(1)
