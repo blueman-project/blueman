@@ -101,15 +101,17 @@ class PowerManager(AppletPlugin):
 
         def check(self):
             if self.called == self.num_cb:
+                GLib.source_remove(self.timer)
                 logging.info("callbacks done")
                 self.parent.set_adapter_state(self.state)
-                GLib.source_remove(self.timer)
+                self.parent.UpdatePowerState()
                 self.parent.request_in_progress = False
 
         def timeout(self):
             logging.info("Timeout reached while setting power state")
             self.parent.UpdatePowerState()
             self.parent.request_in_progress = False
+            return False
 
     def RequestPowerState(self, state, force=False):
         if self.current_state != state or force:
@@ -121,7 +123,6 @@ class PowerManager(AppletPlugin):
                 rets = self.parent.Plugins.Run("on_power_state_change_requested", self, state, cb)
                 cb.num_cb = len(rets)
                 cb.check()
-                self.UpdatePowerState()
             else:
                 logging.info("Another request in progress")
 
