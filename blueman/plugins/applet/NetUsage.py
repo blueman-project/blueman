@@ -91,6 +91,7 @@ class Monitor(MonitorBase):
     def __init__(self, device, interface):
         super(Monitor, self).__init__(device, interface)
         self.poller = None
+        self.ppp_port = None
 
         self.poller = GLib.timeout_add(5000, self.poll_stats)
 
@@ -122,13 +123,13 @@ class Monitor(MonitorBase):
 class Dialog:
     running = False
 
-    def __init__(self, parent):
+    def __init__(self, plugin):
         if not Dialog.running:
             Dialog.running = True
         else:
             return
         self.config = None
-        self.parent = parent
+        self.plugin = plugin
         builder = Gtk.Builder()
         builder.add_from_file(UI_PATH + "/net-usage.ui")
         builder.set_translation_domain("blueman")
@@ -142,9 +143,9 @@ class Dialog:
         self.devices = {}
 
         self._signals = [
-            parent.connect("monitor-added", self.monitor_added),
-            parent.connect("monitor-removed", self.monitor_removed),
-            parent.connect("stats", self.on_stats)
+            plugin.connect("monitor-added", self.monitor_added),
+            plugin.connect("monitor-removed", self.monitor_removed),
+            plugin.connect("stats", self.on_stats)
         ]
 
         cr2 = Gtk.CellRendererText()
@@ -177,7 +178,7 @@ class Dialog:
 
         added = False
         for d in general_config["netusage-dev-list"]:
-            for m in parent.monitors:
+            for m in plugin.monitors:
                 if d == m.device["Address"]:
                     titer = self.liststore.append(
                         [d, self.get_caption(m.device["Alias"], m.device["Address"]), _("Connected:") + " " + m.interface, m])
@@ -187,8 +188,8 @@ class Dialog:
                     break
             if not added:
                 name = d
-                if self.parent.Applet.Manager:
-                    device = self.parent.Applet.Manager.find_device(d)
+                if self.plugin.parent.Manager:
+                    device = self.plugin.parent.Manager.find_device(d)
                     if device is None:
                         pass
                     else:
@@ -213,7 +214,7 @@ class Dialog:
 
     def on_response(self, dialog, response):
         for sig in self._signals:
-            self.parent.disconnect(sig)
+            self.plugin.disconnect(sig)
         self._signals = []
         Dialog.running = False
         self.dialog.destroy()
