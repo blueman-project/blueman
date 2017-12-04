@@ -51,7 +51,7 @@ from gi.repository import GLib
 from gi.repository import Gio
 
 
-__all__ = ["check_bluetooth_status", "wait_for_adapter", "launch", "setup_icon_path", "get_icon",
+__all__ = ["check_bluetooth_status", "launch", "setup_icon_path", "get_icon",
            "get_notification_icon", "adapter_path_to_name", "e_", "opacify_pixbuf", "composite_icon",
            "format_bytes", "create_menuitem", "get_lockfile", "get_pid", "is_running", "check_single_instance", "kill",
            "have", "mask_ip4_address", "set_proc_title", "create_logger", "create_parser", "open_rfcomm"]
@@ -82,28 +82,6 @@ def check_bluetooth_status(message, exitfunc, *args, **kwargs):
                 if not applet.get_bluetooth_status():
                     print('Failed to enable bluetooth')
                     exitfunc()
-
-
-def wait_for_adapter(bluez_adapter, callback, timeout=1000):
-    def on_prop_changed(adapter, key, value, _path):
-        if key == "Powered" and value:
-            GLib.source_remove(source)
-            adapter.disconnect_signal(sig)
-            callback()
-
-    def on_timeout():
-        bluez_adapter.disconnect_signal(sig)
-        GLib.source_remove(source)
-        logging.warning("Warning: Bluez didn't provide 'Powered' property in a reasonable timeout\n"
-                        "Assuming adapter is ready")
-        callback()
-
-    if bluez_adapter["Address"] != "00:00:00:00:00:00":
-        callback()
-        return
-
-    source = GLib.timeout_add(timeout, on_timeout)
-    sig = bluez_adapter.connect_signal('property-changed', on_prop_changed)
 
 
 def launch(cmd, paths=None, system=False, icon_name=None, sn=True, name="blueman"):

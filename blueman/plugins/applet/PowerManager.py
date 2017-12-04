@@ -205,11 +205,4 @@ class PowerManager(AppletPlugin):
 
     def on_adapter_added(self, path):
         adapter = bluez.Adapter(path)
-
-        def on_ready():
-            if not self.adapter_state:
-                adapter.set("Powered", False)
-            else:
-                adapter.set("Powered", True)
-
-        wait_for_adapter(adapter, on_ready)
+        adapter.set("Powered", self.adapter_state)

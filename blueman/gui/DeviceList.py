@@ -4,7 +4,7 @@ import os
 import re
 import logging
 
-from blueman.Functions import wait_for_adapter, adapter_path_to_name
+from blueman.Functions import adapter_path_to_name
 from blueman.gui.GenericList import GenericList
 from blueman.Constants import ICON_PATH
 from _blueman import conn_info, ConnInfoReadError
@@ -55,16 +55,10 @@ class DeviceList(GenericList):
                 self.set_adapter()
 
         def on_adapter_added(_manager, path):
-            def on_activate():
-                logging.info("adapter powered %s" % path)
+            if self.Adapter is None:
+                self.set_adapter(path)
 
-                if self.Adapter is None:
-                    self.set_adapter(path)
-
-                self.emit("adapter-added", path)
-
-            a = bluez.Adapter(path)
-            wait_for_adapter(a, on_activate)
+            self.emit("adapter-added", path)
 
         # cache for fast lookup in the list
         self.path_to_row = {}

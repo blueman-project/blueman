@@ -161,12 +161,8 @@ class RecentConns(AppletPlugin):
 
     def on_adapter_added(self, path):
         a = Adapter(path)
-
-        def on_activated():
-            self.Adapters[str(path)] = str(a["Address"])
-            self.initialize()
-
-        wait_for_adapter(a, on_activated)
+        self.Adapters[path] = a["Address"]
+        self.initialize()
 
     def on_adapter_removed(self, path):
         try:

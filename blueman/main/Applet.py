@@ -63,13 +63,7 @@ class BluemanApplet(object):
 
     def on_adapter_added(self, _manager, path):
         logging.info("Adapter added %s" % path)
-
-        def on_activate():
-            logging.info("Adapter activated")
-            self.Plugins.run("on_adapter_added", path)
-
-        adapter = bluez.Adapter(path)
-        wait_for_adapter(adapter, on_activate)
+        self.Plugins.run("on_adapter_added", path)
 
     def on_adapter_removed(self, _manager, path):
         logging.info("Adapter removed %s" % path)
