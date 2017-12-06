@@ -7,6 +7,11 @@
 * blueman-adapters is now (Xfce-)pluggable
 * Allow users to copy data from the Info manager plugin
 * Add connman support to KillSwitch plugin
+* Implement a new standalone tray app
+* Add support for HiDPI in the UI
+* Add command line option to blueman-mechanism to stop timer
+* Add support for, and prefer, the ip command to configure network devices
+* Implement new plugin virtual on_delete function using weakref.finalize
 
 ### Changes
 
@@ -16,6 +21,17 @@
 * Implement a ServiceUUID class
 * invoke _NotificationDialog.callback with 1 argument (@dakkar)
 * Drop support for Python 2.7
+* RecentConns: Store items in a gsettings array of dict
+* Migrate from EventBox to InfoBar
+* Reintroduce GtkImageMenuItem
+* Sendto: Replace progressbar with spinner and always discover
+* Add a generic ErrorDialog combining various dialogs classes
+* ManagerDeviceMenu: set certain setvice insensitive when not paired
+* ManagerDeviceList: Only update signal levels if they changed
+* Drop unused obex.Errors
+* Use GObjectMeta to handle singleton in out BlueZ classes
+* Various UI cleanups
+* Remove various python2/3 compatibility workarounds
 
 ### Bugs fixed
 
@@ -24,6 +40,15 @@
 * Icon briefly vanished when turning on bluetooth
 * Fix DBus signal emission
 * blueman-services: Fix radio button group
+* Fix InfoBar animation
+* Fix Drag&Drop in blueman-manager
+* Use Appearance device property for bluetooth LE devices
+* AppIndicator: Properly set title on indicator
+* Implement function to retrieve rfcomm channel (serial devices)
+* TransferService: Do not unregister when dbus name disappears
+* Fix Obexd autostart in our BlueZ classes
+* Properly update ui when unblocking adapter with rfkill
+
 
 ## 2.1.alpha1
 
