@@ -4,10 +4,6 @@ from blueman.bluez.obex.Base import Base
 from gi.repository import GObject, GLib, Gio
 
 
-class ObexdNotFoundError(Exception):
-    pass
-
-
 class Client(Base):
     __gsignals__ = {
         'session-created': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
@@ -18,16 +14,6 @@ class Client(Base):
     _interface_name = 'org.bluez.obex.Client1'
 
     def __init__(self):
-        proxy = Gio.DBusProxy.new_for_bus_sync(
-            Gio.BusType.SESSION, Gio.DBusProxyFlags.NONE, None, 'org.bluez.obex', '/',
-            'org.freedesktop.DBus.Introspectable')
-
-        introspection = proxy.call_sync('Introspect', None, Gio.DBusCallFlags.NONE,
-                                        GLib.MAXINT, None).unpack()[0]
-
-        if 'org.freedesktop.DBus.ObjectManager' not in introspection:
-            raise ObexdNotFoundError('Could not find any compatible version of obexd')
-
         super().__init__(interface_name=self._interface_name, obj_path='/org/bluez/obex')
 
     def create_session(self, dest_addr, source_addr="00:00:00:00:00:00", pattern="opp"):

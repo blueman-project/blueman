@@ -95,11 +95,6 @@ class Sender(Gtk.Dialog):
         self.num_files = len(self.files)
         try:
             self.client = obex.Client()
-        except obex.ObexdNotFoundError:
-            d = ErrorDialog(_("obexd not available"), _("obexd is probably not installed"))
-            d.run()
-            d.destroy()
-            exit(1)
         except GLib.Error as e:
             if 'StartServiceByName' in e.message:
                 logging.debug(e.message)
