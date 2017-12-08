@@ -3,7 +3,7 @@ from gi.repository import Gio
 from gi.types import GObjectMeta
 
 
-class ApplerServiceMeta(GObjectMeta):
+class AppletServiceMeta(GObjectMeta):
     _instance = None
 
     def __call__(cls, *args, **kwargs):
@@ -12,7 +12,7 @@ class ApplerServiceMeta(GObjectMeta):
         return cls._instance
 
 
-class AppletService(Gio.DBusProxy):
+class AppletService(Gio.DBusProxy, metaclass=AppletServiceMeta):
     def __init__(self, *args, **kwargs):
         super().__init__(
             g_name='org.blueman.Applet',
