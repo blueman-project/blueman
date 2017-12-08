@@ -3,7 +3,7 @@
 import dbus.service
 from gi.repository import GObject, GLib
 
-from blueman.Functions import launch, kill, get_pid, get_lockfile
+from blueman.main.DBusProxies import TrayService
 from blueman.main.PluginManager import StopException
 from blueman.plugins.AppletPlugin import AppletPlugin
 
@@ -26,6 +26,7 @@ class StatusIcon(AppletPlugin, GObject.GObject):
     visibility_timeout = None
 
     _implementation = None
+    _tray = None
 
     def on_load(self):
         GObject.GObject.__init__(self)
@@ -36,9 +37,6 @@ class StatusIcon(AppletPlugin, GObject.GObject):
         AppletPlugin.add_method(self.on_status_icon_query_icon)
 
         self.query_visibility(emit=False)
-
-        self.parent.Plugins.connect('plugin-loaded', self._on_plugins_changed)
-        self.parent.Plugins.connect('plugin-unloaded', self._on_plugins_changed)
 
     def on_power_state_changed(self, _manager, state):
         if state:
@@ -118,13 +116,21 @@ class StatusIcon(AppletPlugin, GObject.GObject):
 
     def on_manager_state_changed(self, state):
         self.query_visibility()
+        if state:
+            self.parent.Plugins.connect('plugin-loaded', self._on_plugins_changed)
+            self.parent.Plugins.connect('plugin-unloaded', self._on_plugins_changed)
+            self._on_plugins_changed(None, None)
+        else:
+            self.parent.Plugins.disconnect_by_func(self._on_plugins_changed)
 
     def _on_plugins_changed(self, _plugins, _name):
         implementation = self.GetStatusIconImplementation()
-        if not self._implementation or self._implementation != implementation:
+        if not self._implementation:
             self._implementation = implementation
-            kill(get_pid(get_lockfile('blueman-tray')), 'blueman-tray')
-            launch('blueman-tray', icon_name='blueman', sn=False)
+            self._tray = TrayService()
+        elif self._implementation != implementation:
+            self._implementation = implementation
+            self._tray.restart()
 
     @dbus.service.method('org.blueman.Applet', in_signature="", out_signature="s")
     def GetStatusIconImplementation(self):
