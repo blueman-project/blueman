@@ -37,4 +37,6 @@ if __name__ == '__main__':
     create_logger(log_level, "blueman-tray", syslog=args.syslog)
 
     set_proc_title()
-    BluemanTray()
+
+    app = BluemanTray()
+    app.run()
