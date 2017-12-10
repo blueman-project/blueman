@@ -7,7 +7,7 @@ from blueman.Functions import create_menuitem, e_
 from blueman.bluez.Network import AnyNetwork
 from blueman.bluez.Device import AnyDevice
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
-from blueman.main.AppletService import AppletService
+from blueman.main.DBusProxies import AppletService
 from blueman.gui.MessageArea import MessageArea
 from blueman.services import SerialPort
 from blueman.Sdp import (

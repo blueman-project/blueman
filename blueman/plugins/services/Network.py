@@ -10,8 +10,8 @@ from _blueman import get_net_interfaces, get_net_address, get_net_netmask
 from blueman.plugins.ServicePlugin import ServicePlugin
 from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler, UdhcpdHandler
 from blueman.main.Config import Config
-from blueman.main.Mechanism import Mechanism
-from blueman.main.AppletService import AppletService
+from blueman.main.DBusProxies import Mechanism
+from blueman.main.DBusProxies import AppletService
 from blueman.gui.CommonUi import ErrorDialog
 
 import gi

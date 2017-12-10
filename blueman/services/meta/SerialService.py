@@ -8,7 +8,7 @@ from gi.repository import Gio
 from blueman.bluez.Adapter import Adapter
 from _blueman import rfcomm_list, release_rfcomm_device, create_rfcomm_device, get_rfcomm_channel, RFCOMMError
 from blueman.Service import Service
-from blueman.main.Mechanism import Mechanism
+from blueman.main.DBusProxies import Mechanism
 from blueman.Constants import RFCOMM_WATCHER_PATH
 
 

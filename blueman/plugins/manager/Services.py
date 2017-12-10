@@ -3,7 +3,7 @@ import cairo
 from blueman.bluez.Network import Network
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 from blueman.Functions import create_menuitem
-from blueman.main.AppletService import AppletService
+from blueman.main.DBusProxies import AppletService
 from blueman.services import *
 from _blueman import rfcomm_list
 

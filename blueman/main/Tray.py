@@ -1,9 +1,8 @@
 from importlib import import_module
-
 import logging
 
 from blueman.Functions import check_single_instance
-from blueman.main.AppletService import AppletService
+from blueman.main.DBusProxies import AppletService
 
 import gi
 gi.require_version('Gtk', '3.0')

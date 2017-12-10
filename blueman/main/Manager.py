@@ -11,7 +11,7 @@ from blueman.gui.manager.ManagerMenu import ManagerMenu
 from blueman.gui.manager.ManagerStats import ManagerStats
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.Config import Config
-from blueman.main.AppletService import AppletService
+from blueman.main.DBusProxies import AppletService
 from blueman.gui.CommonUi import ErrorDialog
 from blueman.gui.MessageArea import MessageArea
 from blueman.gui.Notification import Notification

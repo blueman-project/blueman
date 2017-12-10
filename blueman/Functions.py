@@ -38,7 +38,7 @@ try:
 except IOError:
     in_fg = 'DEBUG' in os.environ
 
-from blueman.main.AppletService import AppletService
+from blueman.main.DBusProxies import AppletService
 from blueman.Constants import *
 
 import gi

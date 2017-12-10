@@ -1,7 +1,7 @@
 # coding=utf-8
 from blueman.main.Config import Config
 from blueman.bluez.NetworkServer import NetworkServer
-from blueman.main.Mechanism import Mechanism
+from blueman.main.DBusProxies import Mechanism
 
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.CommonUi import ErrorDialog

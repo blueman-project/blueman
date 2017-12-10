@@ -1,7 +1,7 @@
 # coding=utf-8
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.Notification import Notification
-from blueman.main.Mechanism import Mechanism
+from blueman.main.DBusProxies import Mechanism
 from blueman.main.Config import Config
 
 from gi.repository import GLib

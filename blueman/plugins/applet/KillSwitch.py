@@ -5,7 +5,7 @@ from gi.repository import GLib, Gio
 import struct
 import logging
 
-from blueman.main.Mechanism import Mechanism
+from blueman.main.DBusProxies import Mechanism
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.plugins.applet.StatusIcon import StatusIcon
 
