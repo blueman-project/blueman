@@ -5,7 +5,7 @@ dbus_servicesdir = $(datadir)/dbus-1/system-services
 dbus_services_DATA = org.blueman.Mechanism.service
 
 dbus_sessdir = $(datadir)/dbus-1/services
-dbus_sess_DATA = org.blueman.Applet.service
+dbus_sess_DATA = org.blueman.Applet.service org.blueman.Tray.service
 
 if SYSTEMD_UNIT_DIR
 systemd_systemdir = $(systemd_unit_dir)/system
