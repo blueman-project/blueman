@@ -8,7 +8,7 @@ from gi.repository import Gtk
 from blueman.Constants import *
 from blueman.plugins.ServicePlugin import ServicePlugin
 
-from blueman.main.AppletService import AppletService
+from blueman.main.DBusProxies import AppletService
 from blueman.main.Config import Config
 
 

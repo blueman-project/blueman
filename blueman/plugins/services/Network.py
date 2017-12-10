@@ -10,8 +10,8 @@ from blueman.plugins.ServicePlugin import ServicePlugin
 
 from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler, UdhcpdHandler
 from blueman.main.Config import Config
-from blueman.main.Mechanism import Mechanism
-from blueman.main.AppletService import AppletService
+from blueman.main.DBusProxies import Mechanism
+from blueman.main.DBusProxies import AppletService
 from blueman.gui.CommonUi import ErrorDialog
 from random import randint
 from locale import bind_textdomain_codeset

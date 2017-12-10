@@ -1,7 +1,7 @@
 # coding=utf-8
 import logging
 from importlib import import_module
-from blueman.main.AppletService import AppletService
+from blueman.main.DBusProxies import AppletService
 from gi.repository import Gio
 
 
