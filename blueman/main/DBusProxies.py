@@ -1,5 +1,5 @@
 # coding=utf-8
-from gi.repository import Gio
+from gi.repository import Gio, GLib
 from gi.types import GObjectMeta
 
 
@@ -41,3 +41,17 @@ class AppletService(ProxyBase):
     def __init__(self, *args, **kwargs):
         super().__init__(name='org.blueman.Applet', interface_name='org.blueman.Applet',
                          *args, **kwargs)
+
+
+class TrayApplication(ProxyBase):
+    def __init__(self, *args, **kwargs):
+        super().__init__(name='org.blueman.Tray', interface_name='org.freedesktop.Application',
+                         object_path='/org/blueman/Tray', *args, **kwargs)
+
+    def quit(self):
+        param = GLib.Variant('(sava{sv})', ('quit', [], {}))
+        self.call_sync('ActivateAction', param, Gio.DBusCallFlags.NONE, -1)
+
+    def activate(self):
+        param = GLib.Variant('(a{sv})', ({},))
+        self.call_sync('Activate', param, Gio.DBusCallFlags.NONE, -1)
