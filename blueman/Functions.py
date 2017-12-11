@@ -55,7 +55,7 @@ except IOError:
     in_fg = 'DEBUG' in os.environ
 
 
-from blueman.main.AppletService import AppletService
+from blueman.main.DBusProxies import AppletService
 
 
 def check_bluetooth_status(message, exitfunc, *args, **kwargs):

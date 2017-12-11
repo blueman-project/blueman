@@ -3,7 +3,7 @@
 import dbus.service
 from gi.repository import GObject, GLib
 
-from blueman.Functions import launch, kill, get_pid, get_lockfile
+from blueman.main.DBusProxies import TrayApplication
 from blueman.main.PluginManager import StopException
 from blueman.plugins.AppletPlugin import AppletPlugin
 
@@ -25,6 +25,10 @@ class StatusIcon(AppletPlugin, GObject.GObject):
 
     _implementation = None
 
+    _tray = None
+
+    _plugin_manager_connected = False
+
     def on_load(self):
         GObject.GObject.__init__(self)
         self.lines = {0: _("Bluetooth Enabled")}
@@ -34,9 +38,6 @@ class StatusIcon(AppletPlugin, GObject.GObject):
         AppletPlugin.add_method(self.on_status_icon_query_icon)
 
         self.QueryVisibility(emit=False)
-
-        self.parent.Plugins.connect('plugin-loaded', self._on_plugins_changed)
-        self.parent.Plugins.connect('plugin-unloaded', self._on_plugins_changed)
 
     def on_power_state_changed(self, _manager, state):
         if state:
@@ -116,13 +117,22 @@ class StatusIcon(AppletPlugin, GObject.GObject):
 
     def on_manager_state_changed(self, state):
         self.QueryVisibility()
+        if not self._tray:
+            self._tray = TrayApplication()
+
+        if not self._plugin_manager_connected:
+            self.parent.Plugins.connect('plugin-loaded', self._on_plugins_changed)
+            self.parent.Plugins.connect('plugin-unloaded', self._on_plugins_changed)
 
     def _on_plugins_changed(self, _plugins, _name):
+        if not self._tray:
+            self._tray = TrayApplication()
+
         implementation = self.GetStatusIconImplementation()
         if not self._implementation or self._implementation != implementation:
             self._implementation = implementation
-            kill(get_pid(get_lockfile('blueman-tray')), 'blueman-tray')
-            launch('blueman-tray', icon_name='blueman', sn=False)
+            self._tray.quit()
+            self._tray.activate()
 
     @dbus.service.method('org.blueman.Applet', in_signature="", out_signature="s")
     def GetStatusIconImplementation(self):

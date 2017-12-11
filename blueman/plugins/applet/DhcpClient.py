@@ -4,7 +4,7 @@ import logging
 from blueman.bluez.Network import AnyNetwork
 from blueman.gui.Notification import Notification
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.main.Mechanism import Mechanism
+from blueman.main.DBusProxies import Mechanism
 
 
 class DhcpClient(AppletPlugin):

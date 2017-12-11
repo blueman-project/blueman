@@ -301,6 +301,7 @@ data/configs/blueman-applet.service
 data/configs/blueman-mechanism.service
 data/configs/org.blueman.Applet.service
 data/configs/org.blueman.Mechanism.service
+data/configs/org.blueman.Tray.service
 module/_blueman.pyx
 module/Makefile
 po/Makefile.in

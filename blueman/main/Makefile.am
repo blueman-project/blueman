@@ -3,12 +3,10 @@ SUBDIRS = applet indicators
 bluemandir = $(pythondir)/blueman/main
 
 blueman_PYTHON = \
-	AppletService.py \
 	PPPConnection.py \
 	Config.py \
 	DhcpClient.py \
 	__init__.py \
-	Mechanism.py \
 	NetConf.py \
 	SpeedCalc.py \
 	DbusService.py \
@@ -18,7 +16,8 @@ blueman_PYTHON = \
 	Manager.py \
 	Sendto.py \
 	Services.py \
-	Tray.py
+	Tray.py \
+	DBusProxies.py
 
 if HAVE_PULSEAUDIO
 blueman_PYTHON += PulseAudioUtils.py
