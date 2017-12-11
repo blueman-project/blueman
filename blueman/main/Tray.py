@@ -18,6 +18,10 @@ class BluemanTray(Gio.Application):
         quit_action.connect("activate", self._on_quit)
         self.add_action(quit_action)
 
+        start_action = Gio.SimpleAction.new("start", None)
+        start_action.connect("activate", self._on_start)
+        self.add_action(start_action)
+
     def do_activate(self):
         if self.indicator:
             logging.info("Already an instance running")
@@ -31,6 +35,9 @@ class BluemanTray(Gio.Application):
     def _on_quit(self, *args):
         logging.info("Shutting down")
         self.release()
+
+    def _on_start(self, *args):
+        return
 
     def _on_name_appeared(self, connection, name, owner):
         logging.debug("%s appeared, showing indicator" % name)
