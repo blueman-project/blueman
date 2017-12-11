@@ -25,6 +25,8 @@ class StatusIcon(AppletPlugin, GObject.GObject):
 
     _implementation = None
 
+    _plugin_manager_connected = False
+
     def on_load(self):
         GObject.GObject.__init__(self)
         self.lines = {0: _("Bluetooth Enabled")}
@@ -34,9 +36,6 @@ class StatusIcon(AppletPlugin, GObject.GObject):
         AppletPlugin.add_method(self.on_status_icon_query_icon)
 
         self.QueryVisibility(emit=False)
-
-        self.parent.Plugins.connect('plugin-loaded', self._on_plugins_changed)
-        self.parent.Plugins.connect('plugin-unloaded', self._on_plugins_changed)
 
     def on_power_state_changed(self, _manager, state):
         if state:
@@ -116,6 +115,12 @@ class StatusIcon(AppletPlugin, GObject.GObject):
 
     def on_manager_state_changed(self, state):
         self.QueryVisibility()
+        if not self._tray:
+            self._tray = TrayApplication()
+
+        if not self._plugin_manager_connected:
+            self.parent.Plugins.connect('plugin-loaded', self._on_plugins_changed)
+            self.parent.Plugins.connect('plugin-unloaded', self._on_plugins_changed)
 
     def _on_plugins_changed(self, _plugins, _name):
         implementation = self.GetStatusIconImplementation()
