@@ -36,6 +36,7 @@ CLEANFILES =		\
 	org.blueman.Mechanism.service	\
 	org.blueman.policy		\
 	org.blueman.Applet.service		\
+	org.blueman.Tray.service    \
 	$(BUILT_SOURCES)
 	
 DISTCLEANFILES = \
