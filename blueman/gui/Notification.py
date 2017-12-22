@@ -266,7 +266,7 @@ class _NotificationBubble(Gio.DBusProxy):
 
 class Notification(object):
     def __new__(cls, summary, message, timeout=-1, actions=None, actions_cb=None,
-                icon_name=None, image_date=None):
+                icon_name=None, image_data=None):
 
         forced_fallback = not Config('org.blueman.general')['notification-daemon']
         try:
@@ -286,7 +286,7 @@ class Notification(object):
         else:
             klass = _NotificationBubble
 
-        return klass(summary, message, timeout, actions, actions_cb, icon_name, image_date)
+        return klass(summary, message, timeout, actions, actions_cb, icon_name, image_data)
 
     # stub to satisfy pylint
     def close(self):
