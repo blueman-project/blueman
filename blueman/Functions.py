@@ -38,7 +38,7 @@ try:
 except IOError:
     in_fg = 'DEBUG' in os.environ
 
-from blueman.main.DBusProxies import AppletService
+from blueman.main.DBusProxies import AppletService, DBusProxyFailed
 from blueman.Constants import *
 
 import gi
@@ -60,7 +60,8 @@ __all__ = ["check_bluetooth_status", "launch", "setup_icon_path", "get_icon",
 def check_bluetooth_status(message, exitfunc, *args, **kwargs):
     try:
         applet = AppletService()
-    except:
+    except DBusProxyFailed as e:
+        logging.exception(e)
         print("Blueman applet needs to be running")
         exitfunc()
     if "PowerManager" in applet.QueryPlugins():

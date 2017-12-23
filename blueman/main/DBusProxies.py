@@ -1,6 +1,10 @@
 # coding=utf-8
-from gi.repository import Gio
+from gi.repository import Gio, GLib
 from gi.types import GObjectMeta
+
+
+class DBusProxyFailed(Exception):
+    pass
 
 
 class ProxyBaseMeta(GObjectMeta):
@@ -28,7 +32,10 @@ class ProxyBase(Gio.DBusProxy, metaclass=ProxyBaseMeta):
             *args, **kwargs
         )
 
-        self.init()
+        try:
+            self.init()
+        except GLib.Error as e:
+            raise DBusProxyFailed(e.message)
 
 
 class Mechanism(ProxyBase):

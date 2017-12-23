@@ -7,7 +7,7 @@ from blueman.Functions import create_menuitem, e_
 from blueman.bluez.Network import AnyNetwork
 from blueman.bluez.Device import AnyDevice
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
-from blueman.main.DBusProxies import AppletService
+from blueman.main.DBusProxies import AppletService, DBusProxyFailed
 from blueman.gui.MessageArea import MessageArea
 from blueman.services import SerialPort
 from blueman.Sdp import (
@@ -52,7 +52,7 @@ class ManagerDeviceMenu(Gtk.Menu):
 
         try:
             self._appl = AppletService()
-        except Exception:
+        except DBusProxyFailed:
             logging.error("** Failed to connect to applet", exc_info=True)
             self._appl = None
 
