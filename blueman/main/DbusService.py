@@ -1,5 +1,4 @@
 # coding=utf-8
-import dbus
 from dbus.mainloop.glib import DBusGMainLoop
 import dbus.service
 

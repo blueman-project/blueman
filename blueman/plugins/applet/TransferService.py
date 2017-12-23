@@ -13,9 +13,7 @@ from blueman.gui.Notification import Notification
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Config import Config
 
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import GLib, Gtk, Gio
+from gi.repository import GLib, Gio
 
 
 class Agent(obex.Agent):

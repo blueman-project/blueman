@@ -8,9 +8,7 @@ import importlib
 from blueman.main.Config import Config
 from blueman.gui.CommonUi import ErrorDialog
 
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, GObject
+from gi.repository import GObject
 
 
 class StopException(Exception):

@@ -1,5 +1,4 @@
 # coding=utf-8
-from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 from gi.repository import GLib
 import logging

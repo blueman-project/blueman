@@ -9,10 +9,6 @@ from blueman.gui.Notification import Notification
 from blueman.Sdp import ServiceUUID
 from blueman.plugins.AppletPlugin import AppletPlugin
 
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
-
 
 REGISTRY_VERSION = 0
 
