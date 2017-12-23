@@ -3,6 +3,7 @@ import os
 import builtins
 import logging
 import traceback
+import importlib
 
 from blueman.main.Config import Config
 from blueman.gui.CommonUi import ErrorDialog
@@ -86,7 +87,7 @@ class PluginManager(GObject.GObject):
         logging.info(plugins)
         for plugin in plugins:
             try:
-                __import__(self.module_path.__name__ + ".%s" % plugin, None, None, [])
+                importlib.import_module(self.module_path.__name__ + ".%s" % plugin)
             except ImportError:
                 logging.error("Unable to load plugin module %s" % plugin, exc_info=True)
 

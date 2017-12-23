@@ -3,6 +3,7 @@
 import sys
 import os
 import logging
+import importlib
 
 import dbus
 import dbus.service
@@ -144,7 +145,7 @@ class ConfService(DbusService):
 
         for plugin in plugins:
             try:
-                __import__("blueman.plugins.mechanism.%s" % plugin, None, None, [])
+                importlib.import_module("blueman.plugins.mechanism.%s" % plugin)
             except ImportError:
                 logging.error("Skipping plugin %s" % plugin, exc_info=True)
 

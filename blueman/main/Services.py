@@ -1,6 +1,7 @@
 # coding=utf-8
 import os
 import logging
+import importlib
 from blueman.gui.GenericList import GenericList
 from blueman.Functions import check_single_instance
 import blueman.plugins.services
@@ -99,7 +100,7 @@ class BluemanServices(Gtk.Dialog):
         logging.info(plugins)
         for plugin in plugins:
             try:
-                __import__("blueman.plugins.services.%s" % plugin, None, None, [])
+                importlib.import_module("blueman.plugins.services.%s" % plugin)
             except ImportError:
                 logging.error("Unable to load %s plugin" % plugin, exc_info=True)
 
