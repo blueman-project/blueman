@@ -2,6 +2,7 @@
 from random import randint
 from locale import bind_textdomain_codeset
 import logging
+import ipaddress
 from socket import inet_aton, inet_ntoa
 
 from blueman.Constants import *
@@ -43,7 +44,7 @@ class Network(ServicePlugin):
         self.setup_network()
         try:
             self.ip_check()
-        except Exception as e:
+        except (ValueError, ipaddress.AddressValueError) as e:
             logging.exception(e)
         return _("Network"), "network-workgroup"
 
@@ -90,47 +91,46 @@ class Network(ServicePlugin):
             self.clear_options()
 
     def ip_check(self):
-        e = self.Builder.get_object("net_ip")
-        address = e.props.text
+        entry = self.Builder.get_object("net_ip")
         try:
-            if address.count(".") != 3:
-                raise Exception
-            a = inet_aton(address)
-        except:
-            e.props.secondary_icon_name = "dialog-error"
-            e.props.secondary_icon_tooltip_text = _("Invalid IP address")
+            ipaddr = ipaddress.IPv4Address(entry.props.text)
+            a = inet_aton(str(ipaddr))
+        except ipaddress.AddressValueError:
+            entry.props.secondary_icon_name = "dialog-error"
+            entry.props.secondary_icon_tooltip_text = _("Invalid IP address")
             raise
 
         for iface, ip, netmask, masked in self.interfaces:
             if a == ip:
-                tooltip_text = _("IP address conflicts with interface %s which has the same address" % iface)
-                e.props.secondary_icon_name = "dialog-error"
-                e.props.secondary_icon_tooltip_text = tooltip_text
-                raise Exception
+                error_message = _("IP address conflicts with interface %s which has the same address" % iface)
+                tooltip_text = error_message
+                entry.props.secondary_icon_name = "dialog-error"
+                entry.props.secondary_icon_tooltip_text = tooltip_text
+                raise ValueError(error_message)
 
             elif mask_ip4_address(a, netmask) == masked:
                 tooltip_text = _(
                     "IP address overlaps with subnet of interface %s, which has the following configuration  %s/%s\n"
                     "This may cause incorrect network behavior" % (iface, inet_ntoa(ip), inet_ntoa(netmask)))
-                e.props.secondary_icon_name = "dialog-warning"
-                e.props.secondary_icon_tooltip_text = tooltip_text
+                entry.props.secondary_icon_name = "dialog-warning"
+                entry.props.secondary_icon_tooltip_text = tooltip_text
                 return
 
-        e.props.secondary_icon_name = None
+        entry.props.secondary_icon_name = None
 
     def on_query_apply_state(self):
         opts = self.get_options()
         if not opts:
             return False
-        else:
-            if "ip" in opts:
-                try:
-                    self.ip_check()
-                except Exception as e:
-                    logging.exception(e)
-                    return -1
 
-            return True
+        if "ip" in opts:
+            try:
+                self.ip_check()
+            except (ValueError, ipaddress.AddressValueError) as e:
+                logging.exception(e)
+                return -1
+
+        return True
 
     def setup_network(self):
         self.Config = Config("org.blueman.network")
