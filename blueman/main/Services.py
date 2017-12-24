@@ -105,9 +105,10 @@ class BluemanServices(Gtk.Dialog):
             try:
                 inst = cls(self)
             except:
+                logging.error("Failed to create instance of %s" % cls)
                 continue
             if not cls.__plugin_info__:
-                logging.warning("Invalid plugin info in %s" % plugin)
+                logging.warning("Invalid plugin info in %s" % cls)
             else:
                 (name, icon) = cls.__plugin_info__
                 self.setup_list_item(inst, name, icon)
