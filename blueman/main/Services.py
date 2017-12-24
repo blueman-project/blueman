@@ -102,10 +102,11 @@ class BluemanServices(Gtk.Dialog):
                 logging.error("Unable to load %s plugin" % plugin, exc_info=True)
 
         for cls in ServicePlugin.__subclasses__():
+            # FIXME this should not fail, if it does its a bug in the plugin
             try:
                 inst = cls(self)
             except:
-                logging.error("Failed to create instance of %s" % cls)
+                logging.error("Failed to create instance of %s" % cls, exc_info=True)
                 continue
             if not cls.__plugin_info__:
                 logging.warning("Invalid plugin info in %s" % cls)
