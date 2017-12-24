@@ -94,10 +94,9 @@ class Blueman(Gtk.Window):
                 icon_name="blueman")
             d.run()
             d.destroy()
-            try:
-                exit(1)
-            except:
-                Gtk.main_quit()
+
+            # FIXME ui can handle BlueZ start/stop but we should inform user
+            Gtk.main_quit()
 
         def on_dbus_name_appeared(_connection, name, owner):
             logging.info("%s %s" % (name, owner))
