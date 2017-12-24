@@ -68,10 +68,7 @@ class BluemanServices(Gtk.Dialog):
 
         self.load_plugins()
 
-        try:
-            ls.selection.select_path(self.Config["services-last-item"])
-        except:
-            ls.selection.select_path(0)
+        ls.selection.select_path(self.Config["services-last-item"])
 
         self.b_apply.connect("clicked", self.on_apply_clicked)
         self.b_close.connect("clicked", Gtk.main_quit)
