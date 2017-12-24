@@ -65,12 +65,12 @@ class SerialManager(AppletPlugin):
                              port)
 
     def terminate_all_scripts(self, address):
-        try:
-            for p in self.scripts[address].values():
-                logging.info("Sending HUP to %s" % p.pid)
+        for p in self.scripts[address].values():
+            logging.info("Sending HUP to %s" % p.pid)
+            try:
                 os.killpg(p.pid, signal.SIGHUP)
-        except:
-            pass
+            except ProcessLookupError:
+                logging.debug("No process found for pid %s" % p.pid)
 
     def on_script_closed(self, pid, cond, address_node):
         address, node = address_node
