@@ -3,8 +3,8 @@ from operator import itemgetter
 import time
 import logging
 from blueman.Functions import *
-from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device
+from blueman.bluez.Manager import DBusNoSuchAdapterError
 from blueman.gui.Notification import Notification
 from blueman.Sdp import ServiceUUID
 from blueman.plugins.AppletPlugin import AppletPlugin
@@ -133,9 +133,8 @@ class RecentConns(AppletPlugin):
 
                     try:
                         i["device"] = self.get_device_path(i)
-                    except:
+                    except (AdapterNotFound, DeviceNotFound):
                         pass
-
             else:
                 self.recover_state()
 
@@ -153,14 +152,14 @@ class RecentConns(AppletPlugin):
                 self.initialize()
 
     def on_adapter_added(self, path):
-        a = Adapter(path)
+        a = self.parent.Manager.get_adapter(path)
         self.Adapters[path] = a["Address"]
         self.initialize()
 
     def on_adapter_removed(self, path):
-        try:
+        if str(path) in self.Adapters:
             del self.Adapters[str(path)]
-        except:
+        else:
             logging.warning("Adapter not found in list")
 
         self.initialize()
@@ -170,8 +169,8 @@ class RecentConns(AppletPlugin):
         logging.info("%s %s" % (device, uuid))
         item = {}
         try:
-            adapter = Adapter(device['Adapter'])
-        except:
+            adapter = self.parent.Manager.get_adapter(device['Adapter'])
+        except DBusNoSuchAdapterError:
             logging.warning("adapter not found")
             return
 
@@ -238,7 +237,7 @@ class RecentConns(AppletPlugin):
             try:
                 item["device"] = self.get_device_path(item)
 
-            except:
+            except (AdapterNotFound, DeviceNotFound):
                 self.items.remove(item)
                 self.initialize()
 
@@ -257,11 +256,12 @@ class RecentConns(AppletPlugin):
             adapter = self.parent.Manager.get_adapter(item["adapter"])
         except ValueError:
             raise AdapterNotFound
-        try:
-            device = self.parent.Manager.find_device(item["address"], adapter.get_object_path())
-            return device.get_object_path()
-        except:
+
+        device = self.parent.Manager.find_device(item["address"], adapter.get_object_path())
+        if device is None:
             raise DeviceNotFound
+        else:
+            return device.get_object_path()
 
     def recover_state(self):
         items = self.get_option("recent-connections")
