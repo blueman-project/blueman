@@ -108,11 +108,10 @@ class Blueman(Gtk.Window):
             except DBusProxyFailed:
                 print("Blueman applet needs to be running")
                 exit()
-            try:
+
+            if 'PowerManager' in self.Applet.QueryPlugins():
                 if not self.Applet.get_bluetooth_status():
                     bt_status_changed(False)
-            except:
-                pass
 
             self._applet_sig = self.Applet.connect('g-signal', on_applet_signal)
 

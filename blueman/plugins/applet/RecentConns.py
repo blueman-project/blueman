@@ -65,9 +65,9 @@ class RecentConns(AppletPlugin):
         self.set_option("recent-connections", to_store)
 
     def change_sensitivity(self, sensitive):
-        try:
+        if 'PowerManager' in self.parent.Plugins.get_loaded():
             power = self.parent.Plugins.PowerManager.get_bluetooth_status()
-        except:
+        else:
             power = True
 
         sensitive = sensitive and \
@@ -114,15 +114,12 @@ class RecentConns(AppletPlugin):
                 count += 1
 
     def on_manager_state_changed(self, state):
-
         if state:
-            try:
+            if 'PowerManager' in self.parent.Plugins.get_loaded():
                 if not self.parent.Plugins.PowerManager.get_bluetooth_status():
                     self.deferred = True
                     self.item.set_sensitive(False)
                     return
-            except:
-                pass
 
             self.item.set_sensitive(True)
             adapters = self.parent.Manager.get_adapters()

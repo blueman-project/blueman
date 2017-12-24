@@ -47,9 +47,9 @@ class StandardItems(AppletPlugin):
         self.parent.Plugins.StatusIcon.connect("activate", lambda _status_icon: self.on_devices())
 
     def change_sensitivity(self, sensitive):
-        try:
+        if 'PowerManager' in self.parent.Plugins.get_loaded():
             power = self.parent.Plugins.PowerManager.get_bluetooth_status()
-        except:
+        else:
             power = True
 
         sensitive = sensitive and self.parent.Manager and power
