@@ -623,15 +623,6 @@ class PulseAudioUtils(GObject.GObject, metaclass=PulseAudioUtilsMeta):
 
     #####################
 
-    def get_version(self):
-        v = pa_get_library_version().decode("UTF-8")
-        try:
-            a = v.split("-")[0].split(".")
-            a = map(lambda x: int(x), a)
-        except:
-            a = (0, 0, 0)
-        return a
-
     def __event_callback(self, context, event_type, idx, userdata):
         logging.info("%s %s" % (event_type, idx))
         self.emit("event", event_type, idx)
