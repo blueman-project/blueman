@@ -65,6 +65,10 @@ class SerialManager(AppletPlugin):
                              port)
 
     def terminate_all_scripts(self, address):
+        if address not in self.scripts:
+            # Script already terminated or failed to start
+            return
+
         for p in self.scripts[address].values():
             logging.info("Sending HUP to %s" % p.pid)
             try:
