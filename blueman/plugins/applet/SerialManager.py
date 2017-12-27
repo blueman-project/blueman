@@ -103,6 +103,7 @@ class SerialManager(AppletPlugin):
                 self.manage_script(address, node, p)
 
             except Exception as e:
+                logging.debug(str(e))
                 Notification(_("Serial port connection script failed"),
                              _("There was a problem launching script %s\n"
                                "%s") % (c, str(e)),
