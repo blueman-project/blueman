@@ -138,5 +138,5 @@ class SerialManager(AppletPlugin):
             try:
                 logging.info("Disconnecting %s" % name)
                 serial_services[0].disconnect(port)
-            except Exception:
+            except GLib.Error:
                 logging.error("Failed to disconnect %s" % name, exc_info=True)
