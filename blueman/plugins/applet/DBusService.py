@@ -110,7 +110,7 @@ class DBusService(AppletPlugin):
     def rfcomm_connect_handler(self, service, reply_handler, error_handler):
         return False
 
-    def on_rfcomm_connected(self, device, port):
+    def on_rfcomm_connected(self, service, port):
         pass
 
     def on_rfcomm_disconnect(self, port):
