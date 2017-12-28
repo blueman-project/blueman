@@ -83,7 +83,7 @@ class DBusService(AppletPlugin):
             service = get_service(Device(object_path), uuid)
 
             if service.group == 'serial':
-                service.disconnect(port)
+                service.disconnect(port, reply_handler=ok, error_handler=err)
 
                 self.parent.Plugins.run("on_rfcomm_disconnect", port)
 
