@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 from blueman.bluez.Adapter import Adapter
 from blueman.Sdp import uuid128_to_uuid16
-from _blueman import rfcomm_list, release_rfcomm_device, create_rfcomm_device, get_rfcomm_channel, RFCOMMError
+from _blueman import rfcomm_list, create_rfcomm_device, get_rfcomm_channel, RFCOMMError
 from blueman.Service import Service
 from blueman.main.Mechanism import Mechanism
 
@@ -50,4 +50,3 @@ class SerialService(Service):
 
     def disconnect(self, *args):
         Mechanism().close_rfcomm(args[0])
-        release_rfcomm_device(args[0])
