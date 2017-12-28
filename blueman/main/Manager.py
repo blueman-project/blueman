@@ -208,7 +208,3 @@ class Blueman(Gtk.Window):
 
     def remove(self, device):
         self.List.Adapter.remove_device(device)
-
-    def disconnect(self, device, **kwargs):
-        applet = AppletService()
-        applet.DisconnectDevice('(s)', device.get_object_path(), **kwargs)

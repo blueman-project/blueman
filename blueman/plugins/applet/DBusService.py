@@ -23,22 +23,10 @@ class DBusService(AppletPlugin):
         AppletPlugin.add_method(self.rfcomm_connect_handler)
         AppletPlugin.add_method(self.service_connect_handler)
         AppletPlugin.add_method(self.service_disconnect_handler)
-        AppletPlugin.add_method(self.on_device_disconnect)
 
     @dbus.service.method('org.blueman.Applet', in_signature="", out_signature="as")
     def QueryPlugins(self):
         return self.parent.Plugins.get_loaded()
-
-    @dbus.service.method('org.blueman.Applet', in_signature="o", out_signature="", async_callbacks=("ok", "err"))
-    def DisconnectDevice(self, obj_path, ok, err):
-        dev = Device(obj_path)
-
-        self.parent.Plugins.run("on_device_disconnect", dev)
-
-        def on_timeout():
-            dev.disconnect(reply_handler=ok, error_handler=err)
-
-        GLib.timeout_add(1000, on_timeout)
 
     def on_device_disconnect(self, device):
         pass
