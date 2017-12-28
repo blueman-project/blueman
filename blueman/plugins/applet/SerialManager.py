@@ -109,11 +109,13 @@ class SerialManager(AppletPlugin):
                                "%s") % (c, str(e)),
                              icon_name="blueman-serial").show()
 
-    def on_rfcomm_disconnect(self, node):
-        for k, v in self.scripts.items():
-            if node in v:
-                logging.info("Sending HUP to %s" % v[node].pid)
-                os.killpg(v[node].pid, signal.SIGHUP)
+    def on_rfcomm_disconnect(self, port):
+        node = '/dev/rfcomm%i' % port
+        for bdaddr, scripts in self.scripts.items():
+            process = scripts.get(node)
+            if process:
+                logging.info("Sending HUP to %s" % process.pid)
+                os.killpg(process.pid, signal.SIGHUP)
 
     def rfcomm_connect_handler(self, service, reply, err):
         if SERIAL_PORT_SVCLASS_ID == service.short_uuid:
