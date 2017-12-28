@@ -6,7 +6,7 @@ import subprocess
 from gi.repository import Gio, GLib
 
 from blueman.bluez.Adapter import Adapter
-from _blueman import rfcomm_list, release_rfcomm_device, create_rfcomm_device, get_rfcomm_channel, RFCOMMError
+from _blueman import rfcomm_list, create_rfcomm_device, get_rfcomm_channel, RFCOMMError
 from blueman.Service import Service
 from blueman.main.DBusProxies import Mechanism
 from blueman.Constants import RFCOMM_WATCHER_PATH
@@ -79,7 +79,6 @@ class SerialService(Service):
     def disconnect(self, port_id, reply_handler=None, error_handler=None):
         try:
             Mechanism().close_rfcomm('(d)', port_id)
-            release_rfcomm_device(port_id)
         except GLib.Error as e:
             if error_handler:
                 error_handler(e.message)
