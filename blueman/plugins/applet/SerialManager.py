@@ -130,18 +130,10 @@ class SerialManager(AppletPlugin):
         if not serial_services:
             return
 
-        ports = rfcomm_list()
-
-        def flt(dev):
-            if dev["dst"] == device['Address'] and dev["state"] == "connected":
-                return dev["id"]
-
-        active_ports = map(flt, ports)
+        active_ports = [rfcomm['id'] for rfcomm in rfcomm_list() if
+                        rfcomm['state'] == 'connected' and rfcomm['dst'] == device['Address']]
 
         for port in active_ports:
-            if port is None:
-                continue
-
             name = "/dev/rfcomm%d" % port
             try:
                 logging.info("Disconnecting %s" % name)
