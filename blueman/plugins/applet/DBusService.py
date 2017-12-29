@@ -87,7 +87,7 @@ class DBusService(AppletPlugin):
 
                 self.parent.Plugins.run("on_rfcomm_disconnect", port)
 
-                logging.info("Disonnecting rfcomm device")
+                logging.info("Disconnecting rfcomm device")
             else:
 
                 def cb(_inst, ret):
