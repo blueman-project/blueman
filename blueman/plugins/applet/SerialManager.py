@@ -48,7 +48,9 @@ class SerialManager(AppletPlugin):
 
     def on_device_property_changed(self, path, key, value):
         if key == "Connected" and not value:
-            self.terminate_all_scripts(bluez.Device(path)["Address"])
+            device = bluez.Device(path)
+            self.terminate_all_scripts(device["Address"])
+            self.on_device_disconnect(device)
 
     def on_rfcomm_connected(self, service, port):
         device = service.device
@@ -125,15 +127,12 @@ class SerialManager(AppletPlugin):
             return False
 
     def on_device_disconnect(self, device):
-        self.terminate_all_scripts(device['Address'])
-
         serial_services = [service for service in get_services(device) if service.group == 'serial']
 
         if not serial_services:
             return
 
-        active_ports = [rfcomm['id'] for rfcomm in rfcomm_list() if
-                        rfcomm['state'] == 'connected' and rfcomm['dst'] == device['Address']]
+        active_ports = [rfcomm['id'] for rfcomm in rfcomm_list() if rfcomm['dst'] == device['Address']]
 
         for port in active_ports:
             name = "/dev/rfcomm%d" % port
