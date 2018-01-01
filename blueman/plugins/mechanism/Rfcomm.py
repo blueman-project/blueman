@@ -20,5 +20,6 @@ class Rfcomm(MechanismPlugin):
 
         out, err = subprocess.Popen(['ps', '-e', 'o', 'pid,args'], stdout=subprocess.PIPE).communicate()
         for line in out.decode("UTF-8").splitlines():
-            if command in line:
-                os.kill(int(line.split(None, 1)[0]), signal.SIGTERM)
+            pid, cmdline = line.split(maxsplit=1)
+            if command in cmdline:
+                os.kill(int(pid), signal.SIGTERM)
