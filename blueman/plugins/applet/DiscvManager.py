@@ -1,4 +1,5 @@
 # coding=utf-8
+from blueman.bluez.errors import DBusNoSuchAdapterError
 from blueman.plugins.AppletPlugin import AppletPlugin
 from gi.repository import GLib
 import logging
@@ -64,7 +65,7 @@ class DiscvManager(AppletPlugin):
     def init_adapter(self):
         try:
             self.adapter = self.parent.Manager.get_adapter()
-        except ValueError:
+        except DBusNoSuchAdapterError:
             self.adapter = None
 
     def on_adapter_removed(self, path):
