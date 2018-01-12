@@ -102,7 +102,9 @@ class Base(Gio.DBusProxy, metaclass=BaseMeta):
                 None)
             return prop.unpack()[0]
         except GLib.Error as e:
-            if name in self.__fallback:
+            if name in self.get_cached_property_names():
+                return self.get_cached_property(name).unpack()
+            elif name in self.__fallback:
                 return self.__fallback[name]
             else:
                 raise parse_dbus_error(e)
