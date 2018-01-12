@@ -499,7 +499,7 @@ class ManagerDeviceList(DeviceList):
                 return True
         return False
 
-    def _set_device_cell_data(self, col, cell, model, iter, data):
-        row = self.get(iter, "icon_info", "trusted", "paired")
+    def _set_device_cell_data(self, col, cell, model, tree_iter, data):
+        row = self.get(tree_iter, "icon_info", "trusted", "paired")
         surface = self.make_device_icon(row["icon_info"], row["paired"], row["trusted"])
         cell.set_property("surface", surface)
