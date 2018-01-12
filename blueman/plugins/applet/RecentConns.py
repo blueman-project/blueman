@@ -2,7 +2,6 @@
 from operator import itemgetter
 import time
 import logging
-from blueman.Functions import *
 from blueman.bluez.Device import Device
 from blueman.bluez.Manager import DBusNoSuchAdapterError
 from blueman.gui.Notification import Notification

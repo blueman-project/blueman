@@ -4,7 +4,6 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.bluez.Device import Device
 from blueman.services.Functions import get_service
 
-from gi.repository import GLib
 import dbus
 import dbus.service
 import logging
