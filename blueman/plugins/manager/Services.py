@@ -67,7 +67,7 @@ class Services(ManagerPlugin):
                         devname = _("Serial Port %s") % "rfcomm%d" % dev["id"]
 
                         surface = self._make_x_icon("modem", 16)
-                        item = create_menuitem(service.name, surface=surface)
+                        item = create_menuitem(devname, surface=surface)
                         item.connect("activate", manager_menu.on_disconnect, service, dev["id"])
                         items.append((item, 120))
                         item.show()
