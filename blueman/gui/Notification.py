@@ -287,7 +287,3 @@ class Notification(object):
             klass = _NotificationBubble
 
         return klass(summary, message, timeout, actions, actions_cb, icon_name, image_data)
-
-    # stub to satisfy pylint
-    def close(self):
-        klass.close()
