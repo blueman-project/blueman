@@ -1,11 +1,22 @@
+language: python
+
+python:
+  - "3.4"
+  - "3.6"
+  - "3.7-dev"
+
 script:
   - ./autogen.sh
   - make
   - make check
+  - ${PYTHON} -m flake8
 
 env:
   - PYTHON=python2.7
   - PYTHON=python3.2
+
+install:
+ - python -m pip install flake8
 
 before_install:
   - sudo apt-get update -qq
