@@ -105,7 +105,7 @@ class BluemanServices(Gtk.Dialog):
             # FIXME this should not fail, if it does its a bug in the plugin
             try:
                 inst = cls(self)
-            except:
+            except:  # noqa: E722
                 logging.error("Failed to create instance of %s" % cls, exc_info=True)
                 continue
             if not cls.__plugin_info__:

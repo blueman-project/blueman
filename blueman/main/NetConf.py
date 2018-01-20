@@ -290,7 +290,8 @@ class NetConf(object):
             n = cls()
             try:
                 n.store()
-            except:
+            # FIXME find out what could go wrong and drop bare exception
+            except:  # noqa: E722
                 return n
             NetConf.default_inst = n
             return n
