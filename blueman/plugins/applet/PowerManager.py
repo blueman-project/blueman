@@ -1,7 +1,6 @@
 # coding=utf-8
 import dbus.service
 import logging
-from blueman.Functions import *
 from blueman.plugins.AppletPlugin import AppletPlugin
 import blueman.bluez as bluez
 
