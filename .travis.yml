@@ -1,11 +1,16 @@
+language: python
+
+virtualenv:
+  system_site_packages: true
+
+python:
+  - "2.7"
+  - "3.4"
+
 script:
   - ./autogen.sh
   - make
   - make check
-
-env:
-  - PYTHON=python2.7
-  - PYTHON=python3.2
 
 before_install:
   - sudo apt-get update -qq
