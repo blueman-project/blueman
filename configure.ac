@@ -4,7 +4,7 @@ AC_INIT([blueman], [2.0.5], [https://github.com/blueman-project/blueman/issues])
 AC_CONFIG_HEADERS(config.h)
 AM_INIT_AUTOMAKE([foreign dist-xz])
 
-AM_MAINTAINER_MODE
+AM_MAINTAINER_MODE([enable])
 AC_PROG_CC
 AC_PROG_LIBTOOL
 PKG_PROG_PKG_CONFIG
