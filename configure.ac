@@ -26,6 +26,10 @@ if [test ${PYTHON_MAJOR_VERSION} -eq 3] && [test ${PYTHON_MINOR_VERSION} -lt 2];
 	AC_MSG_ERROR([Unsupported Python 3 version found (>=3.2 required)])
 fi
 
+PKG_CHECK_MODULES([PYTHON], [python-${PYTHON_VERSION}])
+AC_SUBST(PYTHON_LIBS)
+AC_SUBST(PYTHON_CFLAGS)
+
 AC_ARG_ENABLE([runtime_deps_check],
   AS_HELP_STRING([--disable-runtime-deps-check], [Disable runtime dependency check (for package maintainers)]),
   [enable_runtime_deps_check=$enableval], [enable_runtime_deps_check=yes])
@@ -34,7 +38,7 @@ if test "x$enable_runtime_deps_check" = "xyes"; then
 AM_CHECK_PYMOD([dbus],,,[AC_MSG_ERROR(Could not find Python module dbus)])
 fi
 
-PKG_CHECK_MODULES([PYGOBJECT],[pygobject-3.0 python-${PYTHON_VERSION}])
+PKG_CHECK_MODULES([PYGOBJECT],[pygobject-3.0])
 AC_SUBST([PYGOBJECT_CFLAGS])
 AC_SUBST([PYGOBJECT_LIBS])
 
