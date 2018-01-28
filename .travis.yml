@@ -1,26 +1,45 @@
-language: python
-
 cache: pip
 
-virtualenv:
-  system_site_packages: true
+matrix:
+  include:
+    - language: python
 
-python: "3.4"
+      virtualenv:
+        system_site_packages: true
 
-before_install:
-  - sudo add-apt-repository ppa:vidplace7/bluez5-backports -y
-  - sudo apt-get update -qq
-  - sudo apt-get install --no-install-recommends libbluetooth-dev
-  - sudo apt-get install -qq --no-install-recommends automake autoconf libglib2.0-dev libtool libgtk-3-dev libstartup-notification0-dev python-gi-dev intltool python3-dev cython python3-dbus dh-autoreconf
+      python: "3.4"
 
-  # Travis environment is poluated
-  - unset PYTHON_CFLAGS
+      before_install:
+        - sudo add-apt-repository ppa:vidplace7/bluez5-backports -y
+        - sudo apt-get update -qq
+        - sudo apt-get install --no-install-recommends libbluetooth-dev
+        - sudo apt-get install -qq --no-install-recommends automake autoconf libglib2.0-dev libtool libgtk-3-dev libstartup-notification0-dev python-gi-dev intltool python3-dev cython python3-dbus dh-autoreconf
 
-install:
-  - python -m pip install flake8
+        # Travis environment is poluated
+        - unset PYTHON_CFLAGS
 
-script:
-  - ./autogen.sh
-  - make
-  - make check
-  - python -m flake8
+      script:
+        - ./autogen.sh
+        - make
+        - make check
+
+    - language: python
+      python: "3.6"
+      install:
+        - python -m pip install flake8
+      script:
+        - python -m flake8
+
+    - language: python
+      python: "3.4"
+      install:
+        - python -m pip install flake8
+      script:
+        - python -m flake8
+
+    - language: python
+      python: "3.7-dev"
+      install:
+        - python -m pip install flake8
+      script:
+        - python -m flake8
