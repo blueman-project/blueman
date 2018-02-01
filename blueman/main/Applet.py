@@ -19,6 +19,7 @@ class BluemanApplet(object):
         check_single_instance("blueman-applet")
 
         self.plugin_run_state_changed = False
+        self.manager_state = False
 
         self.Manager = bluez.Manager()
         self.Manager.connect_signal('adapter-added', self.on_adapter_added)
