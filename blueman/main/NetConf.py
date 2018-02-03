@@ -234,7 +234,11 @@ class UdhcpdHandler(object):
             os.close(config_file)
 
             logging.info("Running udhcpd with config file %s" % config_path)
-            cmd = [have("udhcpd"), "-S", config_path]
+            udhcpd_bin = have("udhcpd")
+            if udhcpd_bin is None:
+                udhcpd_bin = [have("busybox"), "udhcpd"] if have("busybox") else None
+
+            cmd = udhcpd_bin + ["-S", config_path]
             p = Popen(cmd, stderr=PIPE)
             error = p.communicate()[1]
 
