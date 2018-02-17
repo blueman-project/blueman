@@ -1,4 +1,4 @@
-APPS =					\
+APPS =				\
 	blueman-adapters	\
 	blueman-applet		\
 	blueman-manager		\
@@ -18,8 +18,4 @@ polkit_SCRIPTS = 	\
 helpersdir = $(libexecdir)
 helpers_SCRIPTS = blueman-rfcomm-watcher
 
-ALL_APPS = $(APPS) $(polkit_SCRIPTS) $(helpers_SCRIPTS)
-	
-EXTRA_DIST = $(ALL_APPS) $(addsuffix .in, $(ALL_APPS))
-
-CLEANFILES = $(ALL_APPS)
+EXTRA_DIST = $(APPS) $(polkit_SCRIPTS) $(helpers_SCRIPTS)

@@ -255,16 +255,6 @@ GLIB_GSETTINGS
 
 AC_OUTPUT([
 Makefile
-apps/blueman-adapters
-apps/blueman-applet
-apps/blueman-assistant
-apps/blueman-manager
-apps/blueman-mechanism
-apps/blueman-report
-apps/blueman-rfcomm-watcher
-apps/blueman-sendto
-apps/blueman-services
-apps/blueman-tray
 apps/Makefile
 blueman/Makefile
 blueman/Constants.py
@@ -327,7 +317,6 @@ data/configs/blueman-applet.service
 data/configs/blueman-mechanism.service
 data/configs/org.blueman.Applet.service
 data/configs/org.blueman.Mechanism.service
-module/_blueman.pyx
 module/Makefile
 po/Makefile.in
 sendto/Makefile
