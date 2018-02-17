@@ -27,7 +27,7 @@ from blueman.Functions import (
 from blueman.Constants import UI_PATH
 from blueman.gui.DeviceSelectorWidget import DeviceSelectorWidget
 from blueman.bluez.Manager import Manager
-from blueman.main.AppletService import AppletService
+from blueman.main.DBusProxies import AppletService
 from blueman.services.Functions import get_services
 from blueman.gui.CommonUi import ErrorDialog
 
