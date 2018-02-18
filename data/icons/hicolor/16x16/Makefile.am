@@ -1,4 +1,5 @@
 SUBDIRS = 	\
 	actions	\
 	devices	\
-	status
+	status  \
+	apps

@@ -1,3 +1,4 @@
 SUBDIRS = 	\
 	actions \
-	status
+	status  \
+	apps
