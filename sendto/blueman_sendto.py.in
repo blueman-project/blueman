@@ -1,8 +1,8 @@
-from gi.repository import Caja, GObject, Gio
+from gi.repository import @FILEMANAGER@, GObject, Gio
 
 
 # noinspection PyMissingConstructor
-class BluemanSendtoExtension(GObject.GObject, Caja.MenuProvider):
+class BluemanSendtoExtension(GObject.GObject, @FILEMANAGER@.MenuProvider):
     def __init__(self):
         pass
 
@@ -41,7 +41,7 @@ class BluemanSendtoExtension(GObject.GObject, Caja.MenuProvider):
             if f.is_directory():
                 return
 
-        item = Caja.MenuItem(
+        item = @FILEMANAGER@.MenuItem(
             name='BluemanSendto::blueman_send_files',
             label='Send files over bluetooth',
             tip='Sends files over bluetooth with blueman',
