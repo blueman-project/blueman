@@ -196,7 +196,7 @@ class BluezAgent(Agent):
             invocation.return_dbus_error('org.bluez.Error.Canceled', 'Canceled')
 
         if notification:
-            Notification(_("Bluetooth Authentication"), notify_message, icon_name="blueman")
+            Notification(_("Bluetooth Authentication"), notify_message, icon_name="blueman").show()
 
         self.dialog.connect("response", passkey_dialog_cb)
         self.dialog.present()
