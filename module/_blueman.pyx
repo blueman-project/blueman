@@ -78,9 +78,9 @@ cdef extern from "libblueman.h":
 
 
     cdef int connection_init(int dev_id, char *addr, conn_info_handles *ci)
-    cdef int connection_get_rssi(conn_info_handles *ci, char *ret_rssi)
+    cdef int connection_get_rssi(conn_info_handles *ci, signed char *ret_rssi)
     cdef int connection_get_lq(conn_info_handles *ci, unsigned char *ret_lq)
-    cdef int connection_get_tpl(conn_info_handles *ci, char *ret_tpl, unsigned char type)
+    cdef int connection_get_tpl(conn_info_handles *ci, signed char *ret_tpl, unsigned char type)
     cdef int connection_close(conn_info_handles *ci)
     cdef int c_get_rfcomm_channel "get_rfcomm_channel" (char* btd_addr)
     cdef int get_rfcomm_list(rfcomm_dev_list_req **ret)
@@ -282,7 +282,7 @@ cdef class conn_info:
         connection_close(&self.ci)
 
     def get_rssi(self):
-        cdef char rssi
+        cdef signed char rssi
         res = connection_get_rssi(&self.ci, &rssi)
         if res < 0:
             raise ConnInfoReadError(ERR[res])
@@ -298,7 +298,7 @@ cdef class conn_info:
         return lq
 
     def get_tpl(self, tp=0):
-        cdef char tpl
+        cdef signed char tpl
         res = connection_get_tpl(&self.ci, &tpl, tp)
         if res < 0:
             raise ConnInfoReadError(ERR[res])
