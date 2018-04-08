@@ -231,7 +231,34 @@ uuid_names = {
     0x1823: "HTTP Proxy",
     0x1824: "Transport Discovery",
     0x1825: "Object Transfer",
-    0x2112: "AppleAgent"
+    0x2112: "AppleAgent",
+    0x2800: "Primary Service",
+    0x2801: "Secondary Service",
+    0x2802: "Include",
+    0x2803: "Characteristic Declaration",
+    0x2A00: "Device Name",
+    0x2A01: "Appearance",
+    0x2A02: "Peripheral Privacy Flag",
+    0x2A03: "Reconnection Address",
+    0x2A04: "Peripheral Preferred Connection Parameters",
+    0x2A05: "Service Changed",
+    0x2A23: "System ID",
+    0x2A24: "Model Number String",
+    0x2A25: "Serial Number String",
+    0x2A26: "Firmware Revision String",
+    0x2A27: "Hardware Revision String",
+    0x2A28: "Software Revision String",
+    0x2A29: "Manufacturer Name String",
+    0x2A50: "PnP ID",
+    0x2900: "Characteristic Extended Properties",
+    0x2901: "Characteristic User Description",
+    0x2902: "Client Characteristic Configuration",
+    0x2903: "Server Characteristic Configuration",
+    0x2904: "Characteristic Presentation Format",
+    0x2905: "Characteristic Aggregate Format",
+    0x2906: "Valid Range",
+    0x2907: "External Report Reference",
+    0x2908: "Report Reference",
 }
 
 SDP_ATTR_RECORD_HANDLE = 0x0000
@@ -304,6 +331,39 @@ UDI_UUID = 0x001d
 MCAP_CTRL_UUID = 0x001e
 MCAP_DATA_UUID = 0x001f
 L2CAP_UUID = 0x0100
+
+# GATT UUIDs section
+GATT_PRIM_SVC_UUID = 0x2800
+GATT_SND_SVC_UUID = 0x2801
+GATT_INCLUDE_UUID = 0x2802
+GATT_CHARAC_UUID = 0x2803
+
+# GATT Characteristic Types
+GATT_CHARAC_DEVICE_NAME = 0x2A00
+GATT_CHARAC_APPEARANCE = 0x2A01
+GATT_CHARAC_PERIPHERAL_PRIV_FLAG = 0x2A02
+GATT_CHARAC_RECONNECTION_ADDRESS = 0x2A03
+GATT_CHARAC_PERIPHERAL_PREF_CONN = 0x2A04
+GATT_CHARAC_SERVICE_CHANGED = 0x2A05
+GATT_CHARAC_SYSTEM_ID = 0x2A23
+GATT_CHARAC_MODEL_NUMBER_STRING = 0x2A24
+GATT_CHARAC_SERIAL_NUMBER_STRING = 0x2A25
+GATT_CHARAC_FIRMWARE_REVISION_STRING = 0x2A26
+GATT_CHARAC_HARDWARE_REVISION_STRING = 0x2A27
+GATT_CHARAC_SOFTWARE_REVISION_STRING = 0x2A28
+GATT_CHARAC_MANUFACTURER_NAME_STRING = 0x2A29
+GATT_CHARAC_PNP_ID = 0x2A50
+
+# GATT Characteristic Descriptors
+GATT_CHARAC_EXT_PROPER_UUID = 0x2900
+GATT_CHARAC_USER_DESC_UUID = 0x2901
+GATT_CLIENT_CHARAC_CFG_UUID = 0x2902
+GATT_SERVER_CHARAC_CFG_UUID = 0x2903
+GATT_CHARAC_FMT_UUID = 0x2904
+GATT_CHARAC_AGREG_FMT_UUID = 0x2905
+GATT_CHARAC_VALID_RANGE_UUID = 0x2906
+GATT_EXTERNAL_REPORT_REFERENCE = 0x2907
+GATT_REPORT_REFERENCE = 0x2908
 
 
 class ServiceUUID(UUID):
