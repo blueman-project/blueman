@@ -30,12 +30,13 @@ matrix:
       script:
         - python -m flake8
 
-    - language: python
-      python: "3.4"
-      install:
-        - python -m pip install flake8
-      script:
-        - python -m flake8
+# Python 3.4 fails at download for virtualenv so drop this for now.
+#    - language: python
+#      python: "3.4"
+#      install:
+#        - python -m pip install flake8
+#      script:
+#        - python -m flake8
 
     - language: python
       python: "3.7-dev"
