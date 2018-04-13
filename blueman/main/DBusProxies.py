@@ -48,3 +48,16 @@ class AppletService(ProxyBase):
     def __init__(self, *args, **kwargs):
         super().__init__(name='org.blueman.Applet', interface_name='org.blueman.Applet',
                          *args, **kwargs)
+
+
+class TrayService(ProxyBase):
+    def __init__(self, *args, **kwargs):
+        super().__init__(name='org.blueman.Tray', interface_name='org.freedesktop.Application',
+                         object_path='/org/blueman/Tray', *args, **kwargs)
+
+    def _proxy_call_finish(self, proxy, res):
+        proxy.call_finish(res)
+
+    def restart(self):
+        param = GLib.Variant('(sava{sv})', ('Restart', [], {}))
+        self.call('ActivateAction', param, Gio.DBusProxyFlags.NONE, -1, None, self._proxy_call_finish)
