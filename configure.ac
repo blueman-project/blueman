@@ -46,6 +46,10 @@ AC_ARG_ENABLE([runtime_deps_check],
 
 if test "x$enable_runtime_deps_check" = "xyes"; then
 AM_CHECK_PYMOD([dbus],,,[AC_MSG_ERROR(Could not find Python module dbus)])
+AC_CHECK_PROGS([NETWORKTOOLS],[ifconfig ip],[no])
+if test "x$NETWORKTOOLS" = "xno"; then
+AC_MSG_ERROR([ifconfig or ip not found, install net-tools or iproute2])
+fi
 fi
 
 PKG_CHECK_MODULES([PYGOBJECT],[pygobject-3.0])
