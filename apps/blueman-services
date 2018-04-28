@@ -4,10 +4,7 @@
 import os
 import sys
 import logging
-
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+import signal
 
 # support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -17,6 +14,11 @@ if 'BLUEMAN_SOURCE' in os.environ:
 
 from blueman.Functions import set_proc_title, setup_icon_path, create_logger, create_parser
 from blueman.main.Services import BluemanServices
+
+# Workaround introspection bug, gnome bug 622084
+signal.signal(signal.SIGINT, signal.SIG_DFL)
+signal.signal(signal.SIGTERM, signal.SIG_DFL)
+
 
 if __name__ == '__main__':
     parser = create_parser()
@@ -38,6 +40,6 @@ if __name__ == '__main__':
     create_logger(log_level, "blueman-services", syslog=args.syslog)
 
     setup_icon_path()
-    services = BluemanServices()
     set_proc_title()
-    Gtk.main()
+    app = BluemanServices()
+    app.run()

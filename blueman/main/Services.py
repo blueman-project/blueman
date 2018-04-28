@@ -3,7 +3,6 @@ import os
 import logging
 import importlib
 from blueman.gui.GenericList import GenericList
-from blueman.Functions import check_single_instance
 import blueman.plugins.services
 from blueman.plugins.ServicePlugin import ServicePlugin
 from blueman.main.Config import Config
@@ -13,18 +12,35 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 
-class BluemanServices(Gtk.Window):
-    def __init__(self):
-        super().__init__(
-            title=_("Local Services"),
-            name="BluemanServices",
-            icon_name="blueman",
-            border_width=5
+class ServicesWindow(Gtk.ApplicationWindow):
+    def __init__(self, app, **kwargs):
+        super().__init__(application=app,
+                         title=_("Local Services"),
+                         icon_name="blueman",
+                         border_width=5,
+                         visible=True,
+                         **kwargs)
 
-        )
+
+class BluemanServices(Gtk.Application):
+    def __init__(self):
+        super().__init__(application_id="org.blueman.Services")
+        self.window = None
+        self.box = None
+        self.b_apply = None
+        self.viewport = None
+        self.Config = None
+        self.List = None
+
+    def do_activate(self):
+        if self.window:
+            self.window.present_with_time(Gtk.get_current_event_time())
+            return
+        else:
+            self.window = ServicesWindow(app=self)
 
         grid = Gtk.Grid(orientation=Gtk.Orientation.VERTICAL, visible=True, row_spacing=10)
-        self.add(grid)
+        self.window.add(grid)
 
         self.box = Gtk.Box(Gtk.Orientation.HORIZONTAL, vexpand=True, visible=True)
         grid.add(self.box)
@@ -40,11 +56,7 @@ class BluemanServices(Gtk.Window):
 
         self.box.add(self.viewport)
 
-        self.connect("delete-event", Gtk.main_quit)
-
         self.Config = Config("org.blueman.general")
-
-        check_single_instance("blueman-services", lambda time: self.present_with_time(time))
 
         data = [
             {"id": "icon_name", "type": str, "renderer": Gtk.CellRendererPixbuf(stock_size=Gtk.IconSize.DND),
@@ -65,8 +77,6 @@ class BluemanServices(Gtk.Window):
         ls.selection.select_path(self.Config["services-last-item"])
 
         self.b_apply.connect("clicked", self.on_apply_clicked)
-
-        self.show()
 
     def option_changed(self):
         rets = self.plugin_exec("on_query_apply_state")
