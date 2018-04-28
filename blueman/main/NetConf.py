@@ -320,10 +320,13 @@ class NetConf(object):
                 ret = call(["ip", "address", "add", "/".join((ip_str, mask_str)), "dev", "pan1"])
                 if ret != 0:
                     raise NetworkSetupError("Failed to add ip address %s with netmask %s" % (ip_str, mask_str))
-            else:
+            elif have('ifconfig'):
                 ret = call(["ifconfig", "pan1", ip_str, "netmask", mask_str, "up"])
                 if ret != 0:
                     raise NetworkSetupError("Failed to add ip address %s with netmask %s" % (ip_str, mask_str))
+            else:
+                raise NetworkSetupError(
+                    "Neither ifconfig or ip commands are found. Please install net-tools or iproute2")
 
             self.lock("netconfig")
 
