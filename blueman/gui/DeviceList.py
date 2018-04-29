@@ -230,22 +230,21 @@ class DeviceList(GenericList):
 
         logging.debug(adapter)
 
+        # The pattern may be incorrect (ie removed adapter), see #590
         try:
             self.Adapter = self.manager.get_adapter(adapter)
-            # The patern may be incorrect (ie removed adapter), see #590
-            if self.Adapter is None:
-                self.Adapter = self.manager.get_adapter()
+        except bluez.errors.DBusNoSuchAdapterError as e:
+            logging.info('Adapter pattern not valid, trying default adapter.')
 
+        try:
+            self.Adapter = self.manager.get_adapter()
             self.__adapter_path = self.Adapter.get_object_path()
-            self.emit("adapter-changed", self.__adapter_path)
         except bluez.errors.DBusNoSuchAdapterError as e:
             logging.exception(e)
-            # try loading default adapter
-            if len(self.manager.get_adapters()) > 0 and adapter is not None:
-                self.set_adapter()
-            else:
-                self.Adapter = None
-                self.emit("adapter-changed", None)
+            self.Adapter = None
+            self.__adapter_path = None
+        finally:
+            self.emit("adapter-changed", None)
 
     def update_progress(self, time, totaltime):
         if not self.discovering:

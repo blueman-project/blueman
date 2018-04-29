@@ -253,7 +253,7 @@ class RecentConns(AppletPlugin):
     def get_device_path(self, item):
         try:
             adapter = self.parent.Manager.get_adapter(item["adapter"])
-        except ValueError:
+        except DBusNoSuchAdapterError:
             raise AdapterNotFound
 
         device = self.parent.Manager.find_device(item["address"], adapter.get_object_path())
