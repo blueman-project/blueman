@@ -60,6 +60,20 @@ class DeviceList(GenericList):
 
             self.emit("adapter-added", path)
 
+        def on_device_created(_adapter, path):
+            tree_iter = self.find_device_by_path(path)
+            if tree_iter is None:
+                dev = bluez.Device(path)
+                self.device_add_event(dev)
+
+        def on_device_removed(_manager, path):
+            tree_iter = self.find_device_by_path(path)
+            if tree_iter:
+                row = self.get(tree_iter, "device")
+                dev = row["device"]
+
+                self.device_remove_event(dev, tree_iter)
+
         # cache for fast lookup in the list
         self.path_to_row = {}
 
@@ -68,6 +82,8 @@ class DeviceList(GenericList):
         self.manager = bluez.Manager()
         self.manager.connect_signal('adapter-removed', on_adapter_removed)
         self.manager.connect_signal('adapter-added', on_adapter_added)
+        self.manager.connect_signal('device-created', on_device_created)
+        self.manager.connect_signal('device-removed', on_device_removed)
 
         any_device = bluez.AnyDevice()
         any_device.connect_signal("property-changed", self._on_device_property_changed)
@@ -203,20 +219,6 @@ class DeviceList(GenericList):
 
     #########################
 
-    def _on_device_created(self, _adapter, path):
-        tree_iter = self.find_device_by_path(path)
-        if tree_iter is None:
-            dev = bluez.Device(path)
-            self.device_add_event(dev)
-
-    def _on_device_removed(self, _manager, path):
-        tree_iter = self.find_device_by_path(path)
-        if tree_iter:
-            row = self.get(tree_iter, "device")
-            dev = row["device"]
-
-            self.device_remove_event(dev, tree_iter)
-
     def set_adapter(self, adapter=None):
         self.clear()
         if self.discovering:
@@ -234,8 +236,6 @@ class DeviceList(GenericList):
             if self.Adapter is None:
                 self.Adapter = self.manager.get_adapter()
 
-            self.manager.connect_signal('device-created', self._on_device_created)
-            self.manager.connect_signal('device-removed', self._on_device_removed)
             self.__adapter_path = self.Adapter.get_object_path()
             self.emit("adapter-changed", self.__adapter_path)
         except bluez.errors.DBusNoSuchAdapterError as e:
