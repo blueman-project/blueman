@@ -38,3 +38,8 @@ MAINTAINERCLEANFILES = 	\
 doc_DATA = ${DIST_DOCS}
 
 ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
+
+# distcheck fails trying to install to the live filesystem
+AM_DISTCHECK_CONFIGURE_FLAGS = \
+    --with-systemdsystemunitdir='$$(prefix)/lib/systemd/system' \
+    --with-systemduserunitdir='$$(prefix)/lib/systemd/user'
