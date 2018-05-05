@@ -8,12 +8,12 @@ dbus_sessdir = $(datadir)/dbus-1/services
 dbus_sess_DATA = org.blueman.Applet.service
 
 if SYSTEMD_SYSTEM_UNIT_DIR
-systemd_systemdir = $(systemd_system_unit_dir)
+systemd_systemdir = $(prefix)$(systemd_system_unit_dir)
 systemd_system_DATA = blueman-mechanism.service
 endif
 
 if SYSTEMD_USER_UNIT_DIR
-systemd_userdir = $(systemd_user_unit_dir)
+systemd_userdir = $(prefix)$(systemd_user_unit_dir)
 systemd_user_DATA = blueman-applet.service
 endif
 

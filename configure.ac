@@ -237,20 +237,20 @@ AM_CONDITIONAL([HAVE_APPINDICATOR], [test "x$use_appindicator" = "xyes"])
 AC_ARG_WITH([systemdsystemunitdir],
   AS_HELP_STRING([--with-systemdsystemunitdir=PATH],
     [Directory for systemd system unit files]
-    [[default=${prefix}/lib/systemd/system]]),
+    [[default=/usr/lib/systemd/system]]),
   [systemd_system_unit_dir="$withval"],
   [PKG_CHECK_VAR([systemd_system_unit_dir], [systemd], [systemdsystemunitdir],
-   [], [systemd_system_unit_dir='${prefix}/lib/systemd/system'])])
+   [], [systemd_system_unit_dir='/usr/lib/systemd/system'])])
 AC_SUBST([systemd_system_unit_dir])
 AM_CONDITIONAL([SYSTEMD_SYSTEM_UNIT_DIR], [test "x$systemd_system_unit_dir" != "xno"])
 
 AC_ARG_WITH([systemduserunitdir],
   AS_HELP_STRING([--with-systemduserunitdir=PATH],
     [Directory for systemd user unit files]
-    [[default=${prefix}/lib/systemd/user]]),
+    [[default=/usr/lib/systemd/user]]),
   [systemd_user_unit_dir="$withval"],
   [PKG_CHECK_VAR([systemd_user_unit_dir], [systemd], [systemduserunitdir],
-   [], [systemd_user_unit_dir='${prefix}/lib/systemd/user'])])
+   [], [systemd_user_unit_dir='/usr/lib/systemd/user'])])
 AC_SUBST([systemd_user_unit_dir])
 AM_CONDITIONAL([SYSTEMD_USER_UNIT_DIR], [test "x$systemd_user_unit_dir" != "xno"])
 
