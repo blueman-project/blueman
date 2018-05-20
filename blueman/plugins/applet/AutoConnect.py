@@ -14,7 +14,10 @@ class AutoConnect(AppletPlugin):
         "services": {"type": list, "default": "[]"}
     }
 
-    def on_load(self):
+    def on_manager_state_changed(self, state):
+        if not state:
+            return
+
         for address, uuid in self.get_option('services'):
             device = self.parent.Manager.find_device(address)
             if device is None:
