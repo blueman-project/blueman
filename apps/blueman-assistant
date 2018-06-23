@@ -231,12 +231,12 @@ class Assistant:
             logging.info("connect")
 
             def success(*args):
-                pages[PAGE_FINISH].set_markup(_("<b>Device added and connected successfuly</b>"))
+                pages[PAGE_FINISH].set_markup(_("<b>Device added and connected successfully</b>"))
                 self.assistant.set_page_complete(pages[PAGE_CONNECTING], True)
                 self.assistant.set_current_page(PAGE_FINISH)
 
             def fail(*args):
-                pages[PAGE_FINISH].set_markup(_("<b>Device added successfuly, but failed to connect</b>"))
+                pages[PAGE_FINISH].set_markup(_("<b>Device added successfully, but failed to connect</b>"))
                 self.assistant.set_page_complete(pages[PAGE_CONNECTING], True)
                 self.assistant.set_current_page(PAGE_FINISH)
 
