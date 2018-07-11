@@ -1,0 +1,45 @@
+# Python CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-python/ for more details
+#
+#
+version: 2
+jobs:
+  python3:
+    docker:
+      - image: debian:unstable
+
+    environment:
+      PYTHON: "python3"
+
+    steps:
+      - checkout
+      - run: apt-get update
+      - run: apt-get install -y -qq --no-install-recommends sudo automake autoconf libglib2.0-dev libtool intltool python3-dev python-gi python-gi-dev cython python3-dbus dh-autoreconf libbluetooth-dev gtk-update-icon-cache
+      - run: ./autogen.sh
+      - run: make
+      - run: make distcheck
+      - run: sudo make install
+
+  python2:
+    docker:
+      - image: debian:unstable
+
+    environment:
+      PYTHON: "python2"
+
+    steps:
+      - checkout
+      - run: apt-get update
+      - run: apt-get install -y -qq --no-install-recommends sudo automake autoconf libglib2.0-dev libtool intltool python-dev python-gi python-gi-dev cython python-dbus dh-autoreconf libbluetooth-dev gtk-update-icon-cache
+      - run: ./autogen.sh
+      - run: make
+      - run: make distcheck
+      - run: sudo make install
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - python3
+      - python2
