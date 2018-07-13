@@ -461,7 +461,8 @@ static gpointer do_probe(gpointer data) {
 	char* device = info->device;
 
 	struct termios orig, attrs;
-	int fd, caps;
+	int fd = -1;
+	int caps;
 	
 	if (device == NULL) {
 		goto error;
