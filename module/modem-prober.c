@@ -65,9 +65,9 @@ static struct modem_caps modem_caps[] = {
 	{NULL}
 };
 
-#define verbose(fmt, args...) \
+#define verbose(fmt, ...) \
 if (verbose) { \
-	g_print ("%s(): " fmt "\n", G_STRFUNC, ##args); \
+	g_print ("%s(): " fmt "\n", G_STRFUNC, ##__VA_ARGS__); \
 }
 
 static gboolean
@@ -361,7 +361,7 @@ static int modem_probe_caps(int fd, glong timeout_ms)
 		g_free (reply);
 		reply = NULL;
 
-		verbose ("GCAP failed, trying ATI...");
+		verbose ("GCAP failed, trying ATI...%s", "");
 		if (modem_send_command (fd, "ATI\r\n")) {
 			idx = modem_wait_reply (fd, 3, ati_responses, terminators, &term_idx, &reply);
 			if (0 == term_idx && 0 == idx) {
