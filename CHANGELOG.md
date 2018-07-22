@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.0.6
+
+**This release adds authorisation checks for the commands blueman runs as root**
+
+We added the following policykit authorisation checks
+* org.blueman.network.setup
+* org.blueman.pppd.pppconnect
+* org.blueman.rfkill.setstate
+
+See https://github.com/blueman-project/blueman/wiki/PolicyKit
 
 ## 2.0.5
 
