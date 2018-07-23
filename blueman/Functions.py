@@ -54,7 +54,7 @@ from gi.repository import Gio
 __all__ = ["check_bluetooth_status", "launch", "setup_icon_path", "get_icon",
            "get_notification_icon", "adapter_path_to_name", "e_", "opacify_pixbuf", "composite_icon",
            "format_bytes", "create_menuitem", "get_lockfile", "get_pid", "is_running", "check_single_instance", "kill",
-           "have", "mask_ip4_address", "set_proc_title", "create_logger", "create_parser", "open_rfcomm"]
+           "have", "set_proc_title", "create_logger", "create_parser", "open_rfcomm"]
 
 
 def check_bluetooth_status(message, exitfunc, *args, **kwargs):
@@ -320,15 +320,6 @@ def have(t):
         if exists and executable:
             return exec_path
     return None
-
-
-def mask_ip4_address(ip, subnet):
-    masked_ip = bytearray()
-
-    for x, y in zip(bytearray(ip), bytearray(subnet)):
-        masked_ip.append(x & y)
-
-    return bytes(masked_ip)
 
 
 def set_proc_title(name=None):

@@ -3,10 +3,9 @@ from random import randint
 from locale import bind_textdomain_codeset
 import logging
 import ipaddress
-from socket import inet_aton, inet_ntoa
 
 from blueman.Constants import *
-from blueman.Functions import have, mask_ip4_address
+from blueman.Functions import have
 from _blueman import get_net_interfaces, get_net_address, get_net_netmask
 from blueman.plugins.ServicePlugin import ServicePlugin
 from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler, UdhcpdHandler
@@ -37,9 +36,8 @@ class Network(ServicePlugin):
         for iface in get_net_interfaces():
             if iface != "lo" and iface != "pan1":
                 logging.info(iface)
-                ip = inet_aton(get_net_address(iface))
-                mask = inet_aton(get_net_netmask(iface))
-                self.interfaces.append((iface, ip, mask, mask_ip4_address(ip, mask)))
+                ipiface = ipaddress.ip_interface('/'.join((get_net_address(iface), get_net_netmask(iface))))
+                self.interfaces.append((iface, ipiface))
 
         self.setup_network()
         try:
@@ -73,7 +71,7 @@ class Network(ServicePlugin):
                 net_ip = self.Builder.get_object("net_ip")
 
                 try:
-                    m.EnableNetwork('(ayays)', inet_aton(net_ip.props.text), inet_aton("255.255.255.0"), stype)
+                    m.EnableNetwork('(sss)', net_ip.props.text, "255.255.255.0", stype)
 
                     if not self.Config["nap-enable"]:
                         self.Config["nap-enable"] = True
@@ -93,25 +91,24 @@ class Network(ServicePlugin):
     def ip_check(self):
         entry = self.Builder.get_object("net_ip")
         try:
-            ipaddr = ipaddress.IPv4Address(entry.props.text)
-            a = inet_aton(str(ipaddr))
-        except ipaddress.AddressValueError:
+            nap_ipiface = ipaddress.ip_interface('/'.join((entry.props.text, '255.255.255.0')))
+        except (ValueError, ipaddress.AddressValueError):
             entry.props.secondary_icon_name = "dialog-error"
             entry.props.secondary_icon_tooltip_text = _("Invalid IP address")
             raise
 
-        for iface, ip, netmask, masked in self.interfaces:
-            if a == ip:
+        for iface, ipiface in self.interfaces:
+            if nap_ipiface.ip == ipiface.ip:
                 error_message = _("IP address conflicts with interface %s which has the same address" % iface)
                 tooltip_text = error_message
                 entry.props.secondary_icon_name = "dialog-error"
                 entry.props.secondary_icon_tooltip_text = tooltip_text
                 raise ValueError(error_message)
 
-            elif mask_ip4_address(a, netmask) == masked:
+            elif nap_ipiface.network == ipiface.network:
                 tooltip_text = _(
                     "IP address overlaps with subnet of interface %s, which has the following configuration  %s/%s\n"
-                    "This may cause incorrect network behavior" % (iface, inet_ntoa(ip), inet_ntoa(netmask)))
+                    "This may cause incorrect network behavior" % (iface, ipiface.ip, ipiface.netmask))
                 entry.props.secondary_icon_name = "dialog-warning"
                 entry.props.secondary_icon_tooltip_text = tooltip_text
                 return
@@ -153,7 +150,8 @@ class Network(ServicePlugin):
 
         nc = NetConf.get_default()
         if nc.ip4_address is not None:
-            net_ip.props.text = inet_ntoa(nc.ip4_address)
+            # previously we stored a bytearray, ipaddress module reads both
+            net_ip.props.text = str(ipaddress.ip_address(nc.ip4_address))
             nap_enable.props.active = True
         else:
             net_ip.props.text = "10.%d.%d.1" % (randint(0, 255), randint(0, 255))

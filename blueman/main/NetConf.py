@@ -3,28 +3,18 @@ import pickle
 import errno
 import re
 import os
-from socket import inet_ntoa
+import ipaddress
 from tempfile import mkstemp
 from time import sleep
 import logging
 from blueman.Constants import DHCP_CONFIG_FILE
-from blueman.Functions import have, mask_ip4_address, is_running, kill
+from blueman.Functions import have, is_running, kill
 from _blueman import create_bridge, destroy_bridge, BridgeException
 from subprocess import call, Popen, PIPE
 
 
 class NetworkSetupError(Exception):
     pass
-
-
-def calc_ip_range(ip):
-    """Calculate the ip range for dhcp config"""
-    start_range = bytearray(ip)
-    end_range = bytearray(ip)
-    start_range[3] += 1
-    end_range[3] = 254
-
-    return bytes(start_range), bytes(end_range)
 
 
 def read_pid_file(fname):
@@ -62,11 +52,11 @@ class DnsMasqHandler(object):
             if self.netconf.ip4_changed:
                 self.do_remove()
 
-            start, end = calc_ip_range(self.netconf.ip4_address)
+            ipiface = ipaddress.ip_interface('/'.join((self.netconf.ip4_address, '255.255.255.0')))
             cmd = [have("dnsmasq"), "--pid-file=/var/run/dnsmasq.pan1.pid", "--except-interface=lo",
                    "--interface=pan1", "--bind-interfaces",
-                   "--dhcp-range=%s,%s,60m" % (inet_ntoa(start), inet_ntoa(end)),
-                   "--dhcp-option=option:router,%s" % inet_ntoa(self.netconf.ip4_address)]
+                   "--dhcp-range=%s,%s,60m" % (ipiface.network[2], ipiface.network[-2]),
+                   "--dhcp-option=option:router,%s" % self.netconf.ip4_address]
 
             logging.info(cmd)
             p = Popen(cmd, stderr=PIPE)
@@ -126,9 +116,7 @@ class DhcpdHandler(object):
     def _generate_subnet_config(self):
         dns = get_dns_servers()
 
-        masked_ip = mask_ip4_address(self.netconf.ip4_address, self.netconf.ip4_mask)
-
-        start, end = calc_ip_range(self.netconf.ip4_address)
+        ipiface = ipaddress.ip_interface('/'.join((self.netconf.ip4_address, self.netconf.ip4_mask)))
 
         subnet = "#### BLUEMAN AUTOMAGIC SUBNET ####\n"
         subnet += "# Everything inside this section is destroyed after config change\n"
@@ -137,12 +125,12 @@ class DhcpdHandler(object):
                 option subnet-mask %(netmask)s;
                 option routers %(rtr)s;
                 range %(start)s %(end)s;
-                }\n""" % {"ip_mask": inet_ntoa(masked_ip),
-                          "netmask": inet_ntoa(self.netconf.ip4_mask),
+                }\n""" % {"ip_mask": ipiface.network.network_address,
+                          "netmask": ipiface.netmask,
                           "dns": dns,
-                          "rtr": inet_ntoa(self.netconf.ip4_address),
-                          "start": inet_ntoa(start),
-                          "end": inet_ntoa(end)}
+                          "rtr": ipiface.ip,
+                          "start": ipiface.network[2],
+                          "end": ipiface.network[-2]}
         subnet += "#### END BLUEMAN AUTOMAGIC SUBNET ####\n"
 
         return subnet
@@ -214,15 +202,13 @@ class UdhcpdHandler(object):
     def _generate_config(self):
         dns = get_dns_servers()
 
-        masked_ip = mask_ip4_address(self.netconf.ip4_address, self.netconf.ip4_mask)
+        ipiface = ipaddress.ip_interface('/'.join((self.netconf.ip4_address, self.netconf.ip4_mask)))
 
-        start, end = calc_ip_range(self.netconf.ip4_address)
-
-        return UDHCP_CONF_TEMPLATE % {"ip_mask": inet_ntoa(masked_ip),
+        return UDHCP_CONF_TEMPLATE % {"ip_mask": ipiface.network.network_address,
                                       "dns": dns,
-                                      "rtr": inet_ntoa(self.netconf.ip4_address),
-                                      "start": inet_ntoa(start),
-                                      "end": inet_ntoa(end)}
+                                      "rtr": ipiface.ip,
+                                      "start": ipiface.network[2],
+                                      "end": ipiface.network[-2]}
 
     def do_apply(self):
         if not self.netconf.locked("dhcp") or self.netconf.ip4_changed:
@@ -283,6 +269,12 @@ class NetConf(object):
             obj = pickle.load(f)
             if obj.version != class_id:
                 raise Exception
+
+            # Convert old 32bit packed ip's to strings
+            if not isinstance(obj.ip4_address, str) and obj.ip4_address is not None:
+                obj.ip4_address = str(ipaddress.ip_address(obj.ip4_address))
+                obj.ip4_mask = '255.255.255.0'
+
             NetConf.default_inst = obj
             f.close()
             return obj
@@ -373,9 +365,6 @@ class NetConf(object):
             if e.errno != errno.EEXIST:
                 raise
 
-        ip_str = inet_ntoa(self.ip4_address)
-        mask_str = inet_ntoa(self.ip4_mask)
-
         if self.ip4_changed or not self.locked("netconfig"):
             self.enable_ip4_forwarding()
 
@@ -383,13 +372,15 @@ class NetConf(object):
                 ret = call(["ip", "link", "set", "dev", "pan1", "up"])
                 if ret != 0:
                     raise NetworkSetupError("Failed to bring up interface pan1")
-                ret = call(["ip", "address", "add", "/".join((ip_str, mask_str)), "dev", "pan1"])
+                ret = call(["ip", "address", "add", "/".join((self.ip4_address, self.ip4_mask)), "dev", "pan1"])
                 if ret != 0:
-                    raise NetworkSetupError("Failed to add ip address %s with netmask %s" % (ip_str, mask_str))
+                    raise NetworkSetupError("Failed to add ip address %s with netmask %s" % (self.ip4_address,
+                                                                                             self.ip4_mask))
             elif have('ifconfig'):
-                ret = call(["ifconfig", "pan1", ip_str, "netmask", mask_str, "up"])
+                ret = call(["ifconfig", "pan1", self.ip4_address, "netmask", self.ip4_mask, "up"])
                 if ret != 0:
-                    raise NetworkSetupError("Failed to add ip address %s with netmask %s" % (ip_str, mask_str))
+                    raise NetworkSetupError("Failed to add ip address %s with netmask %s" % (self.ip4_address,
+                                                                                             self.ip4_mask))
             else:
                 raise NetworkSetupError(
                     "Neither ifconfig or ip commands are found. Please install net-tools or iproute2")
@@ -399,7 +390,7 @@ class NetConf(object):
         if self.ip4_changed or not self.locked("iptables"):
             self.del_ipt_rules()
 
-            self.add_ipt_rule("nat", "POSTROUTING", "-s %s/%s -j MASQUERADE" % (ip_str, mask_str))
+            self.add_ipt_rule("nat", "POSTROUTING", "-s %s/%s -j MASQUERADE" % (self.ip4_address, self.ip4_mask))
             self.add_ipt_rule("filter", "FORWARD", "-i pan1 -j ACCEPT")
             self.add_ipt_rule("filter", "FORWARD", "-o pan1 -j ACCEPT")
             self.add_ipt_rule("filter", "FORWARD", "-i pan1 -j ACCEPT")

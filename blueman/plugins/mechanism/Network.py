@@ -34,7 +34,7 @@ class Network(MechanismPlugin):
         except Exception as e:
             err(e)
 
-    @dbus.service.method('org.blueman.Mechanism', in_signature="ayays", out_signature="", sender_keyword="caller",
+    @dbus.service.method('org.blueman.Mechanism', in_signature="sss", out_signature="", sender_keyword="caller",
                          byte_arrays=True)
     def EnableNetwork(self, ip_address, netmask, dhcp_handler, caller):
         self.confirm_authorization(caller, "org.blueman.network.setup")
