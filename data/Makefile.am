@@ -51,7 +51,8 @@ EXTRA_DIST = 	$(autostart_in_files)	\
 		$(thunar_in_files)	\
 		$(settings_in_files)	\
 		$(gsettings_SCHEMAS)    \
-		pin-code-database.xml
+		pin-code-database.xml	\
+		meson.build
 
 SUBDIRS = 		\
 	configs		\

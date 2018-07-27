@@ -16,5 +16,5 @@ _blueman_la_SOURCES = \
 _blueman.c: _blueman.pyx
 	$(CYTHONEXEC) -o $@ $<
 	
-EXTRA_DIST = _blueman.pyx
+EXTRA_DIST = _blueman.pyx meson.build
 CLEANFILES = _blueman.c
