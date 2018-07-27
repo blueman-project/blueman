@@ -115,6 +115,82 @@
 * Properly unregister NAP when unloading Networking plugin
 * PPPSupport: Wait for ModemManager to complete probing and release the device
 
+## 2.0.6
+
+**This release adds authorisation checks for the commands blueman runs as root**
+
+We added the following policykit authorisation checks
+* org.blueman.network.setup
+* org.blueman.pppd.pppconnect
+* org.blueman.rfkill.setstate
+
+See https://github.com/blueman-project/blueman/wiki/PolicyKit
+
+## 2.0.5
+
+### Bugs fixed
+
+* PPPSupport: Correrct binary name for ModemManager
+* PPPSupport: Exclude grep process from process list
+* GameControllerWakeLock: Check for Class property before using it
+* SerialManager: Properly check for None
+* NetConf: Treat UnicodeDecodeError as if there was no file
+* Notification: Also check if notification daemon supports body
+* Correct bold tag in portugese translation (thanks @andreyluiz)
+* Properly check for None in SerialManager
+* GameControllerWakeLock: Check for Class property first
+* Fix bugs in NetworkService ui
+* NetConf: fix writing PID file for dhcpd(3)
+* Notification: Make sure x and y hint are in screen geometry
+
+## 2.0.4
+
+### Changes
+
+* Do not try to send a file during a discovery
+
+### Bugs fixed
+
+* Listing rfcomm devices was broken
+* Serial devices where not properly disconnected
+* Close confirmation dialog on cancelation
+* Handle transfer errors correctly
+* Show devices of the current adapter only
+* Local network service did not work
+* PyGI warnings
+* Call custom scripts for serial services
+* Disconnect serial services on device disconnect
+
+## 2.0.3
+
+Fix privilege escalation
+
+## 2.0.2
+
+### Bugs fixed
+
+* Exception on device property change
+* Backport fix for #345 - rename random pass pairing button
+* Exception at exit (#391)
+* Clarify wording of tray applet's option to turn off bluetooth
+* Do not block manager with plugin dialog (#383)
+* blueman-adapters: Set hidden in the ui when timeout is reached
+* Functions: Catch specific error in get_icon function
+* Stop Game Controller plugin from blocking
+* Use absolute filename provided to blueman-sendto on the cmd line
+
+## 2.0.1
+
+### Bugs fixed
+
+* Codepoint issues when connecting to serial service
+* Infinite loop if RecentConns has only invalid items
+* Unblock rfkill in Python 3
+* Valid adapter may not be found
+* Handle when rfkill subsystem is not available gracefully
+* RfKill: open /dev/rfkill r+b to avoid creating
+* Resolve codepoint issues in several places
+* Stop dhcpd handler removing all content of the config file
 
 ## 2.0
 
