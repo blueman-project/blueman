@@ -133,6 +133,19 @@
       <summary></summary>
       <description></description>
     </key>
+    <key type="s" name="ipaddress">
+      <default>"10.231.10.0"</default>
+      <description>The pan1 bridge ip number</description>
+    </key>
+    <key type="s" name="dhcphandler">
+      <choices>
+        <choice value="DnsMasqHandler" />
+        <choice value="DhcpdHandler" />
+        <choice value="UdhcpdHandler" />
+      </choices>
+      <default>"DnsMasqHandler"</default>
+      <description>The dhcpd server for pan1 bridge</description>
+    </key>
   </schema>
   <schema id="org.blueman.plugins.autoconnect" path="/org/blueman/plugins/autoconnect/">
     <key type="a(ss)" name="services">

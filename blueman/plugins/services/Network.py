@@ -23,8 +23,10 @@ if TYPE_CHECKING:
 
 class Network(ServicePlugin):
     __plugin_info__ = (_("Network"), "network-workgroup")
+    Config = None
 
     def on_load(self, container: Gtk.Box) -> None:
+        self.Config = Config("org.blueman.network")
 
         self._builder = Builder("services-network.ui")
         self.widget = self._builder.get_widget("network_frame", Gtk.Widget)
@@ -74,6 +76,8 @@ class Network(ServicePlugin):
 
                     if not self.Config["nap-enable"]:
                         self.Config["nap-enable"] = True
+                    self.Config['ipaddress'] = net_ip.props.text
+                    self.Config['dhcphandler'] = stype
                 except Exception as e:
                     parent = self.widget.get_toplevel()
                     assert isinstance(parent, Gtk.Container)
@@ -130,8 +134,6 @@ class Network(ServicePlugin):
         return True
 
     def setup_network(self) -> None:
-        self.Config = Config("org.blueman.network")
-
         nap_enable = self._builder.get_widget("nap-enable", Gtk.CheckButton)
         r_dnsmasq = self._builder.get_widget("r_dnsmasq", Gtk.RadioButton)
         r_dhcpd = self._builder.get_widget("r_dhcpd", Gtk.RadioButton)
