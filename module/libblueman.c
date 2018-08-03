@@ -292,11 +292,10 @@ int connection_close(struct conn_info_handles *ci)
 }
 
 int
-get_rfcomm_channel(char* btd_addr) {
+get_rfcomm_channel(uint16_t service_class, char* btd_addr) {
     bdaddr_t target;
     sdp_session_t *session = 0;
     uuid_t service_uuid;
-    uint16_t service_class = 0x1101;
     int err;
     int port_num = 0;
     sdp_list_t *response_list = NULL, *search_list, *attrid_list;
