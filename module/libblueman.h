@@ -26,7 +26,7 @@ int connection_get_rssi(struct conn_info_handles *ci, int8_t *ret_rssi);
 int connection_get_lq(struct conn_info_handles *ci, uint8_t *ret_lq);
 int connection_get_tpl(struct conn_info_handles *ci, int8_t *ret_tpl, uint8_t type);
 int connection_close(struct conn_info_handles *ci);
-int get_rfcomm_channel(char* btd_addr);
+int get_rfcomm_channel(uint16_t uuid, char* btd_addr);
 int get_rfcomm_list(struct rfcomm_dev_list_req **result);
 int create_rfcomm_device(char *local_address, char *remote_address, int channel);
 int release_rfcomm_device(int id);

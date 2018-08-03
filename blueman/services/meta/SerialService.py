@@ -49,7 +49,7 @@ class SerialService(Service):
         monitor.disconnect(self.file_changed_handler)
 
     def connect(self, reply_handler=None, error_handler=None):
-        channel = get_rfcomm_channel(self.device['Address'])
+        channel = get_rfcomm_channel(self.short_uuid, self.device['Address'])
         if channel == 0:
             error = RFCOMMError("Failed to get rfcomm channel")
             if error_handler:

@@ -1,5 +1,11 @@
 # Changelog
 
+## master
+
+### Bugs fixed
+
+* RFCOMM channel detection for DUN service failed
+
 ## 2.1.alpha2
 
 ### New features

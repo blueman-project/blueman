@@ -82,7 +82,7 @@ cdef extern from "libblueman.h":
     cdef int connection_get_lq(conn_info_handles *ci, unsigned char *ret_lq)
     cdef int connection_get_tpl(conn_info_handles *ci, signed char *ret_tpl, unsigned char type)
     cdef int connection_close(conn_info_handles *ci)
-    cdef int c_get_rfcomm_channel "get_rfcomm_channel" (char* btd_addr)
+    cdef int c_get_rfcomm_channel "get_rfcomm_channel" (unsigned short service_class, char* btd_addr)
     cdef int get_rfcomm_list(rfcomm_dev_list_req **ret)
     cdef int c_create_rfcomm_device "create_rfcomm_device" (char *local_address, char *remote_address, int channel)
     cdef int c_release_rfcomm_device "release_rfcomm_device" (int id)
@@ -177,12 +177,12 @@ RFCOMM_RELEASE_ONHUP =    1
 RFCOMM_HANGUP_NOW =    2
 RFCOMM_TTY_ATTACHED =    3
 
-def get_rfcomm_channel(py_bdaddr):
+def get_rfcomm_channel(uuid, py_bdaddr):
     py_bytes = py_bdaddr.encode('UTF-8')
     cdef char* bdaddr = py_bytes
 
     if bdaddr is not None:
-        return c_get_rfcomm_channel(bdaddr)
+        return c_get_rfcomm_channel(uuid, bdaddr)
 
 def rfcomm_list():
     cdef rfcomm_dev_list_req *dl
