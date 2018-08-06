@@ -27,7 +27,7 @@ class Connection:
             GLib.timeout_add(5000, self.connect)
 
     def connect(self):
-        c = Config("org.blueman.gsmsettings", "/org/blueman/gsmsettings/%s/" % self.service.device['Address'])
+        c = Config("org.blueman.gsmsetting", "/org/blueman/gsmsettings/%s/" % self.service.device['Address'])
 
         m = Mechanism()
         m.PPPConnect('(sss)', self.port, c["number"], c["apn"], result_handler=self.on_connected,
