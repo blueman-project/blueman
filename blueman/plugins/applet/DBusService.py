@@ -36,7 +36,7 @@ class DBusService(AppletPlugin):
 
     @dbus.service.method('org.blueman.Applet', in_signature="sb", out_signature="")
     def SetPluginConfig(self, plugin, value):
-        self.parent.Plugins.SetConfig(plugin, value)
+        self.parent.Plugins.set_config(plugin, value)
 
     @dbus.service.method('org.blueman.Applet', in_signature="os", async_callbacks=("ok", "err"))
     def connect_service(self, object_path, uuid, ok, err):
