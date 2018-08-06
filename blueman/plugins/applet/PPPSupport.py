@@ -34,8 +34,9 @@ class Connection:
                      error_handler=self.on_error, timeout=200)
 
     def on_error(self, _obj, result, _user_data):
+        # FIXME confusingly self.port is the full rfcomm device path but the service expects the number only
         self.error_handler(result)
-        GLib.timeout_add(1000, self.service.disconnect, self.port)
+        GLib.timeout_add(1000, self.service.disconnect, int(self.port[-1]))
 
     def on_connected(self, _obj, result, _user_data):
         self.reply_handler(self.port)
