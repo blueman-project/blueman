@@ -39,7 +39,7 @@ class Connection:
 
     def on_error(self, error):
         self.error_handler(error)
-        GObject.timeout_add(1000, self.service.disconnect, self.port)
+        GObject.timeout_add(1000, self.service.disconnect, int(self.port[-1]))
 
     def on_connected(self, iface):
         self.reply_handler(self.port)
