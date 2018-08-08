@@ -251,8 +251,9 @@ class ManagerDeviceMenu(Gtk.Menu):
                 show_generic_connect = True
                 break
             elif not service_uuid.reserved:
-                show_generic_connect = uuid == '03b80e5a-ede8-4b33-a751-6ce34ec4c700'
-                break
+                if uuid == '03b80e5a-ede8-4b33-a751-6ce34ec4c700':
+                    show_generic_connect = True
+                    break
 
         if not row["connected"] and show_generic_connect:
             connect_item = create_menuitem(_("_Connect"), "blueman")
