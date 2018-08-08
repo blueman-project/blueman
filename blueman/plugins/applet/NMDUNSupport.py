@@ -33,7 +33,7 @@ class ConnectionHandler:
 
     def on_connect_reply(self, rfcomm):
         self.rfcomm_dev = rfcomm
-        self.timeout = GLib.timeout_add(10000, self.on_timeout)
+        self.timeout = GLib.timeout_add(20000, self.on_timeout)
 
     def on_connect_error(self, *args):
         self.err(*args)
