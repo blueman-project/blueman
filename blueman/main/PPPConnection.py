@@ -149,7 +149,7 @@ class PPPConnection(GObject.GObject):
         if cond & GObject.IO_ERR or cond & GObject.IO_HUP:
             return False
 
-        line = source.readline()
+        line = source.readline().decode('utf-8')
         m = re.match("Using interface (ppp[0-9]*)", line)
         if m:
             self.interface = m.groups(1)[0]
@@ -186,7 +186,7 @@ class PPPConnection(GObject.GObject):
             self.cleanup()
             return False
         try:
-            self.buffer += os.read(self.file, 1)
+            self.buffer += os.read(self.file, 1).decode('utf-8')
         except OSError as e:
             if e.errno == errno.EAGAIN:
                 dprint("Got EAGAIN")
