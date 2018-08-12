@@ -23,8 +23,9 @@ class Connection:
         if not res:
             self.connect()
         else:
-            logging.info("ModemManager is running, delaying connection 5sec for it to complete probing")
-            GLib.timeout_add(5000, self.connect)
+            timeout = 10
+            logging.info("ModemManager is running, delaying connection %ssec for it to complete probing" % timeout)
+            GLib.timeout_add_seconds(timeout, self.connect)
 
     def connect(self):
         c = Config("org.blueman.gsmsetting", "/org/blueman/gsmsettings/%s/" % self.service.device['Address'])
