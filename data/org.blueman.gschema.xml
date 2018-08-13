@@ -86,6 +86,16 @@
       <summary>PhoneNumber</summary>
       <description>Phone Number</description>
     </key>
+    <key type="s" name="nmdunuuid">
+      <default>""</default>
+      <summary>NM DUN Connection uuid</summary>
+      <description>The uuid of the NM DUN Connection which may not exist anymore</description>
+    </key>
+    <key type="s" name="nmpanuuid">
+      <default>""</default>
+      <summary>NM PANU Connection uuid</summary>
+      <description>The uuid of the NM PANU Connection which may not exist anymore</description>
+    </key>
   </schema>
   <schema id="org.blueman.plugins.killswitch" path="/org/blueman/plugins/killswitch/">
     <key type="b" name="checked">
