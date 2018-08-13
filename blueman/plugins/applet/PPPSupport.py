@@ -19,7 +19,7 @@ class Connection:
         self.port = port
         self.parent = applet
 
-        res = os.popen("ps x -o pid,args | grep [M]odemManager").read()
+        res = os.popen("ps ax -o pid,args | grep [M]odemManager").read()
         if not res:
             self.connect()
         else:
