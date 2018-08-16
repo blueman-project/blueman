@@ -19,7 +19,7 @@ class NMConnectionBase(object):
                 NMConnectionError('Invalid connection type %s, should be panu or dun' % self.conntype)
             )
         self.device = service.device
-        self.bdaddr = self.device['Address']
+        self.bdaddr = self.device.get_properties()['Address']
         self.error_handler = error_handler
         self.reply_handler = reply_handler
         self.connection = None
@@ -168,7 +168,7 @@ class NMPANConnection(NMConnectionBase):
     def connection_uuid(self):
         # PANU connections are automatically created so attempt to find it
         # It appears the Name property is used not Alias!
-        conn = self.client.get_connection_by_id('%s Network' % self.device['Name'])
+        conn = self.client.get_connection_by_id('%s Network' % self.device.get_properties()['Name'])
         if conn is not None:
             conn_settings = conn.get_setting_connection()
             return conn_settings.get_uuid()
@@ -177,7 +177,7 @@ class NMPANConnection(NMConnectionBase):
 
     def create_connection(self):
         conn = NM.SimpleConnection()
-        conn_id = '%s Network' % self.device['Name']
+        conn_id = '%s Network' % self.device.get_properties()['Name']
         conn_uuid = str(uuid.uuid4())
 
         conn_sett = NM.SettingConnection(type='bluetooth', id=conn_id, uuid=conn_uuid, autoconnect=False)
@@ -204,7 +204,7 @@ class NMDUNConnection(NMConnectionBase):
             return
 
         conn = NM.SimpleConnection()
-        conn_id = 'blueman dun for %s' % self.device['Alias']
+        conn_id = 'blueman dun for %s' % self.device.get_properties()['Alias']
         conn_uuid = str(uuid.uuid4())
 
         conn_sett = NM.SettingConnection(type='bluetooth', id=conn_id, uuid=conn_uuid, autoconnect=False)

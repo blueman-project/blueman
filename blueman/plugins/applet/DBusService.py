@@ -66,6 +66,10 @@ class DBusService(AppletPlugin):
 
     @dbus.service.method('org.blueman.Applet', in_signature="os", async_callbacks=("ok", "err"))
     def connect_service(self, object_path, uuid, ok, err):
+        def cb(_inst, ret):
+            if ret:
+                raise StopException
+
         service = Device(object_path).get_service(uuid)
 
         try:
@@ -75,7 +79,9 @@ class DBusService(AppletPlugin):
         else:
             self.Applet.Plugins.RecentConns.notify(service)
 
-        if service.group == 'serial':
+        if service.group == 'serial' and 'NMDUNSupport' in self.QueryPlugins():
+            self.Applet.Plugins.RunEx("service_connect_handler", cb, service, ok, err)
+        elif service.group == 'serial' and 'PPPSupport' in self.QueryPlugins():
             def reply(rfcomm):
                 self.Applet.Plugins.Run("on_rfcomm_connected", service, rfcomm)
                 ok(rfcomm)
@@ -88,29 +94,27 @@ class DBusService(AppletPlugin):
                 err(dbus.DBusException(
                     "Service not supported\nPossibly the plugin that handles this service is not loaded"))
         else:
-            def cb(_inst, ret):
-                if ret:
-                    raise StopException
 
             if not self.Applet.Plugins.RunEx("service_connect_handler", cb, service, ok, err):
                 service.connect(reply_handler=ok, error_handler=err)
 
     @dbus.service.method('org.blueman.Applet', in_signature="osd", async_callbacks=("ok", "err"))
     def disconnect_service(self, object_path, uuid, port, ok, err):
+        def cb(_inst, ret):
+            if ret:
+                raise StopException
+
         service = Device(object_path).get_service(uuid)
 
-        if service.group == 'serial':
+        if service.group == 'serial' and 'NMDUNSupport' in self.QueryPlugins():
+            self.Applet.Plugins.RunEx("service_disconnect_handler", cb, service, ok, err)
+        elif service.group == 'serial' and 'PPPSupport' in self.QueryPlugins():
             service.disconnect(port)
 
             self.Applet.Plugins.Run("on_rfcomm_disconnect", port)
 
             dprint("Disonnecting rfcomm device")
         else:
-
-            def cb(_inst, ret):
-                if ret:
-                    raise StopException
-
             if not self.Applet.Plugins.RunEx("service_disconnect_handler", cb, service, ok, err):
                 service.disconnect(reply_handler=ok, error_handler=err)
 
