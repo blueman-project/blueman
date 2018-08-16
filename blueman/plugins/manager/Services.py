@@ -82,7 +82,7 @@ class Services(ManagerPlugin):
                     item.show()
                     items.append((item, 201))
 
-        if self.has_dun and "PPPSupport" in appl.QueryPlugins():
+        if self.has_dun and ('PPPSupport' in appl.QueryPlugins() or 'NMDUNSupport' in appl.QueryPlugins()):
             def open_settings(i, device):
                 from blueman.gui.GsmSettings import GsmSettings
 

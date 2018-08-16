@@ -51,9 +51,15 @@ class DBusService(AppletPlugin):
             device = Device(object_path)
             device.connect(reply_handler=ok, error_handler=err)
         else:
+            def cb(_inst, ret):
+                if ret:
+                    raise StopException
+
             service = get_service(Device(object_path), uuid)
 
-            if service.group == 'serial':
+            if service.group == 'serial' and 'NMDUNSupport' in self.QueryPlugins():
+                self.parent.Plugins.run_ex("service_connect_handler", cb, service, ok, err)
+            elif service.group == 'serial' and 'PPPSupport' in self.QueryPlugins():
                 def reply(rfcomm):
                     self.parent.Plugins.run("on_rfcomm_connected", service, rfcomm)
                     ok(rfcomm)
@@ -66,10 +72,6 @@ class DBusService(AppletPlugin):
                     err(dbus.DBusException(
                         "Service not supported\nPossibly the plugin that handles this service is not loaded"))
             else:
-                def cb(_inst, ret):
-                    if ret:
-                        raise StopException
-
                 if not self.parent.Plugins.run_ex("service_connect_handler", cb, service, ok, err):
                     service.connect(reply_handler=ok, error_handler=err)
 
@@ -79,20 +81,21 @@ class DBusService(AppletPlugin):
             device = Device(object_path)
             device.disconnect(reply_handler=ok, error_handler=err)
         else:
+            def cb(_inst, ret):
+                if ret:
+                    raise StopException
+
             service = get_service(Device(object_path), uuid)
 
-            if service.group == 'serial':
+            if service.group == 'serial' and 'NMDUNSupport' in self.QueryPlugins():
+                self.parent.Plugins.run_ex("service_disconnect_handler", cb, service, ok, err)
+            elif service.group == 'serial' and 'PPPSupport' in self.QueryPlugins():
                 service.disconnect(port, reply_handler=ok, error_handler=err)
 
                 self.parent.Plugins.run("on_rfcomm_disconnect", port)
 
                 logging.info("Disconnecting rfcomm device")
             else:
-
-                def cb(_inst, ret):
-                    if ret:
-                        raise StopException
-
                 if not self.parent.Plugins.run_ex("service_disconnect_handler", cb, service, ok, err):
                     service.disconnect(reply_handler=ok, error_handler=err)
 
