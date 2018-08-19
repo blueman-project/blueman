@@ -29,7 +29,7 @@ class Networking(AppletPlugin):
 
     def on_manager_state_changed(self, state: bool) -> None:
         if state:
-            self.update_status()
+            self.set_nap(self.Config["nap-enable"])
 
     def reload_network(self):
         def reply(_obj: Mechanism, _result: None, _user_data: None) -> None:
@@ -65,9 +65,6 @@ class Networking(AppletPlugin):
             self.show_error_dialog(e)
 
     def on_adapter_added(self, path: str) -> None:
-        self.update_status()
-
-    def update_status(self) -> None:
         self.set_nap(self.Config["nap-enable"])
 
     def load_nap_settings(self):
