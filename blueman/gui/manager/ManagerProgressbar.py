@@ -55,7 +55,7 @@ class ManagerProgressbar(GObject.GObject):
         if not self.cancellable:
             self.eventbox.props.sensitive = False
 
-        self.gsource = None
+        self.pulsing = False
         self.finalized = False
 
         ManagerProgressbar.__instances__.append(self)
@@ -146,12 +146,12 @@ class ManagerProgressbar(GObject.GObject):
     def start(self):
         def pulse():
             self.progressbar.pulse()
-            return True
+            return self.pulsing
 
-        if not self.gsource:
-            self.gsource = GLib.timeout_add(1000 / 24, pulse)
+        if not self.pulsing:
+            self.pulsing = True
+            GLib.timeout_add(1000 / 24, pulse)
 
     def stop(self):
-        if self.gsource is not None:
-            GLib.source_remove(self.gsource)
+        self.pulsing = False
         self.progressbar.set_fraction(0.0)
