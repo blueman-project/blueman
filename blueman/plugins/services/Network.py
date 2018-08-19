@@ -9,7 +9,6 @@ from blueman.main.Builder import Builder
 from blueman.plugins.ServicePlugin import ServicePlugin
 from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler, UdhcpdHandler
 from blueman.main.Config import Config
-from blueman.main.DBusProxies import Mechanism
 from blueman.main.DBusProxies import AppletService
 from blueman.gui.CommonUi import ErrorDialog
 
@@ -58,7 +57,6 @@ class Network(ServicePlugin):
         if self.on_query_apply_state():
             logging.info("network apply")
 
-            m = Mechanism()
             nap_enable = self._builder.get_widget("nap-enable", Gtk.CheckButton)
             if nap_enable.props.active:
 
@@ -72,8 +70,6 @@ class Network(ServicePlugin):
                 net_ip = self._builder.get_widget("net_ip", Gtk.Entry)
 
                 try:
-                    m.EnableNetwork('(sss)', net_ip.props.text, "255.255.255.0", stype)
-
                     if not self.Config["nap-enable"]:
                         self.Config["nap-enable"] = True
                     self.Config['ipaddress'] = net_ip.props.text
@@ -88,7 +84,6 @@ class Network(ServicePlugin):
                     return
             else:
                 self.Config["nap-enable"] = False
-                m.DisableNetwork()
 
             self.clear_options()
 
