@@ -70,8 +70,10 @@ class ManagerDeviceMenu(Gtk.Menu):
 
         if not self._selection_done_signal:
             def disconnectall(x):
-                self.disconnect(self._device_property_changed_signal)
-                self.disconnect(self._selection_done_signal)
+                if self.handler_is_connected(self._device_property_changed_signal):
+                    self.disconnect(self._device_property_changed_signal)
+                if self.handler_is_connected(self._selection_done_signal):
+                    self.disconnect(self._selection_done_signal)
 
             self._selection_done_signal = self.connect("selection-done", disconnectall)
 
