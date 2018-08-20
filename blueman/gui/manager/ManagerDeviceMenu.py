@@ -229,7 +229,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         op = self.get_op(self.SelectedDevice)
 
         if op is not None:
-            item = create_menuitem(op, "network-transmit-recieve")
+            item = create_menuitem(op, "network-transmit-receive")
             item.props.sensitive = False
             item.show()
             self.append(item)
