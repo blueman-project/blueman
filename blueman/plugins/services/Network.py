@@ -165,6 +165,8 @@ class Network(ServicePlugin):
         have_dhcpd = have("dhcpd3") or have("dhcpd")
         have_dnsmasq = have("dnsmasq")
         have_udhcpd = have("udhcpd")
+        if have_udhcpd is None:
+            have_udhcpd = have("busybox")
 
         if nc.get_dhcp_handler() == DnsMasqHandler and have_dnsmasq:
             r_dnsmasq.props.active = True
