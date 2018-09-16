@@ -32,7 +32,7 @@ class Connection:
 
         m = Mechanism()
         m.PPPConnect('(sss)', self.port, c["number"], c["apn"], result_handler=self.on_connected,
-                     error_handler=self.on_error, timeout=200)
+                     error_handler=self.on_error)
 
     def on_error(self, _obj, result, _user_data):
         logging.info('Failed %s' % result)
