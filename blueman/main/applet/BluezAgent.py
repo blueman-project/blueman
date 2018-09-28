@@ -66,13 +66,12 @@ PIN_SEARCHES = [
 class BluezAgent(Agent):
     __agent_path = '/org/bluez/agent/blueman'
 
-    def __init__(self, time_func):
+    def __init__(self):
         super(BluezAgent, self).__init__(self.__agent_path, self._handle_method_call)
 
         self.dialog = None
         self.n = None
         self.signal_id = None
-        self.time_func = time_func
         self._db = None
 
     def register_agent(self):
@@ -235,7 +234,7 @@ class BluezAgent(Agent):
 
         self.ask_passkey(dialog_msg, notify_msg, False, True, parameters, invocation)
         if self.dialog:
-            self.dialog.present_with_time(self.time_func())
+            self.dialog.present()
 
     def _on_request_passkey(self, parameters, invocation):
         logging.info("Agent.RequestPasskey")
@@ -243,7 +242,7 @@ class BluezAgent(Agent):
         notify_msg = _("Enter passkey")
         self.ask_passkey(dialog_msg, notify_msg, True, True, parameters, invocation)
         if self.dialog:
-            self.dialog.present_with_time(self.time_func())
+            self.dialog.present()
 
     def _on_display_passkey(self, parameters, invocation):
         device, passkey, entered = parameters.unpack()

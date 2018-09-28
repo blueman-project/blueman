@@ -139,11 +139,6 @@ class ManagerDeviceMenu(Gtk.Menu):
             fail(None, GLib.Error('Applet DBus Service not available'), None)
             return
 
-        try:
-            self._appl.SetTimeHint('(u)', Gtk.get_current_event_time())
-        except Exception as e:
-            logging.exception(e)
-
         self._appl.connect_service('(os)', device.get_object_path(), service.uuid,
                                    result_handler=success, error_handler=fail,
                                    timeout=GLib.MAXINT)
