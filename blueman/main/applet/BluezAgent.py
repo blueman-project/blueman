@@ -254,6 +254,8 @@ class BluezAgent(Agent):
         self.n = Notification("Bluetooth", notify_message, 0, icon_name="blueman")
         self.n.show()
 
+        invocation.return_value(None)
+
     def _on_display_pin_code(self, parameters, invocation):
         device, pin_code = parameters.unpack()
         logging.info('DisplayPinCode (%s, %s)' % (device, pin_code))
