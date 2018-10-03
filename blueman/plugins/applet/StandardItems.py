@@ -85,7 +85,7 @@ class StandardItems(AppletPlugin):
     def on_about(self):
         about = show_about_dialog("Blueman " + _("applet"), run=False)
 
-        im = Gtk.Image(icon_name="blueman-plugins", pixel_size=16)
+        im = Gtk.Image(icon_name="blueman-plugin", pixel_size=16)
         button = Gtk.Button(label=_("Plugins"), visible=True, image=im)
 
         button.connect("clicked", lambda _button: self.on_plugins())
