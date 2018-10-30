@@ -177,7 +177,8 @@ class PPPConnection(GObject.GObject):
 
     def send_command(self, command):
         dprint("-->", command)
-        os.write(self.file, "%s\r\n" % command)
+        command = b'%s\r\n' % command.encode('utf-8')
+        os.write(self.file, command)
         termios.tcdrain(self.file)
 
     def on_data_ready(self, source, condition, terminators, on_done):
