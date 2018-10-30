@@ -22,6 +22,6 @@ class Rfcomm(MechanismPlugin):
         command = 'blueman-rfcomm-watcher /dev/rfcomm%d' % port_id
 
         out, err = subprocess.Popen(['ps', '-e', 'o', 'pid,args'], stdout=subprocess.PIPE).communicate()
-        for line in out.splitlines():
+        for line in out.decode('utf-8').splitlines():
             if command in line:
                 os.kill(int(line.split(None, 1)[0]), signal.SIGTERM)
