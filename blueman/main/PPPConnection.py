@@ -210,7 +210,7 @@ class PPPConnection(GObject.GObject):
 
         if found:
             lines = filter(lambda x: x != "", lines)
-            lines = map(lambda x: x.strip("\r\n"), lines)
+            lines = list(map(lambda x: x.strip("\r\n"), lines))
             dprint("<-- ", lines)
 
             on_done(lines, None)
