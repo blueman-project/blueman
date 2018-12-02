@@ -31,7 +31,7 @@ def get_dns_servers():
     f = open("/etc/resolv.conf", "r")
     dns_servers = ""
     for line in f:
-        server = re.search("^nameserver ((?:[0-9]{1,3}\.){3}[0-9]{1,3}$)", line)
+        server = re.search(r"^nameserver ((?:[0-9]{1,3}\.){3}[0-9]{1,3}$)", line)
         if server:
             dns_servers += "%s, " % server.groups(1)[0]
 

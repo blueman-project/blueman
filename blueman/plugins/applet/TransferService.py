@@ -252,7 +252,7 @@ class TransferService(AppletPlugin):
 
         try:
             shutil.move(src, dest)
-        except (OSError, PermissionError) as e:
+        except (OSError, PermissionError):
             logging.error("Failed to move files", exc_info=True)
             success = False
 
