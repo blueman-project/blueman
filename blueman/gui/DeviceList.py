@@ -233,7 +233,7 @@ class DeviceList(GenericList):
         # The pattern may be incorrect (ie removed adapter), see #590
         try:
             self.Adapter = self.manager.get_adapter(adapter)
-        except bluez.errors.DBusNoSuchAdapterError as e:
+        except bluez.errors.DBusNoSuchAdapterError:
             logging.info('Adapter pattern not valid, trying default adapter.')
 
         try:
