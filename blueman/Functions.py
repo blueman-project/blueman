@@ -161,7 +161,12 @@ def get_notification_icon(icon, main_icon="blueman"):
 
 
 def adapter_path_to_name(path):
-    return re.search(".*(hci[0-9]*)", path).groups(0)[0]
+    if path is None or path == '':
+        return
+
+    match = re.search(r".*(hci[0-9]*)", path)
+    if match:
+        return match.group(1)
 
 
 # format error

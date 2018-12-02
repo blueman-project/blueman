@@ -18,10 +18,7 @@ class ManagerStats:
 
         blueman.List.connect("adapter-changed", self.on_adapter_changed)
 
-        if blueman.List.Adapter:
-            self.hci = adapter_path_to_name(blueman.List.Adapter.get_object_path())
-        else:
-            self.hci = None
+        self.hci = adapter_path_to_name(blueman.List.Adapter.get_object_path())
 
         self.time = None
 
@@ -68,12 +65,11 @@ class ManagerStats:
         self.start_update()
 
     def on_adapter_changed(self, lst, adapter_path):
-        if adapter_path is not None:
-            self.hci = adapter_path_to_name(adapter_path)
-            self.hbox.props.sensitive = True
-        else:
-            self.hci = None
+        self.hci = adapter_path_to_name(adapter_path)
+        if self.hci is None:
             self.hbox.props.sensitive = False
+        else:
+            self.hbox.props.sensitive = True
 
         self.up_speed.reset()
         self.down_speed.reset()

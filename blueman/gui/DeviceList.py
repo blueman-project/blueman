@@ -1,7 +1,6 @@
 # coding=utf-8
 from datetime import datetime
 import os
-import re
 import logging
 
 from blueman.Functions import adapter_path_to_name
@@ -225,8 +224,7 @@ class DeviceList(GenericList):
             self.emit("adapter-property-changed", self.Adapter, ("Discovering", False))
             self.stop_discovery()
 
-        if adapter is not None and adapter != "" and not re.match("hci[0-9]*", adapter):
-            adapter = adapter_path_to_name(adapter)
+        adapter = adapter_path_to_name(adapter)
 
         logging.debug(adapter)
 
