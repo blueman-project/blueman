@@ -45,8 +45,13 @@ class Network(MechanismPlugin):
 
     @dbus.service.method('org.blueman.Mechanism', in_signature="", out_signature="", sender_keyword="caller")
     def ReloadNetwork(self, caller):
-        self.confirm_authorization(caller, "org.blueman.network.setup")
         nc = NetConf.get_default()
+        if nc.ip4_address is None or nc.ip4_mask is None:
+            nc.ip4_changed = False
+            nc.store()
+            return
+
+        self.confirm_authorization(caller, "org.blueman.network.setup")
         nc.apply_settings()
 
     @dbus.service.method('org.blueman.Mechanism', in_signature="", out_signature="", sender_keyword="caller")
