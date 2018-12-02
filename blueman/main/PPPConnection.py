@@ -150,7 +150,7 @@ class PPPConnection(GObject.GObject):
             return False
 
         line = source.readline().decode('utf-8')
-        m = re.match("Using interface (ppp[0-9]*)", line)
+        m = re.match(r'Using interface (ppp[0-9]*)', line)
         if m:
             self.interface = m.groups(1)[0]
 
