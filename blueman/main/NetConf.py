@@ -92,24 +92,29 @@ class DhcpdHandler(object):
         self.pid = None
         self.netconf = netconf
 
-    def _read_dhcp_config(self):
-        f = open(DHCP_CONFIG_FILE, "r")
-        insection = False
-        dhcp_config = ""
-        existing_subnet = ""
-        for line in f:
-            if line == "#### BLUEMAN AUTOMAGIC SUBNET ####\n":
-                insection = True
+    @staticmethod
+    def _read_dhcp_config():
+        dhcp_config = ''
+        existing_subnet = ''
+        start = end = False
 
-            if line == "#### END BLUEMAN AUTOMAGIC SUBNET ####\n":
-                insection = False
+        with open(DHCP_CONFIG_FILE, 'r') as f:
+            for line in f:
+                if line == '#### BLUEMAN AUTOMAGIC SUBNET ####\n':
+                    start = True
+                elif line == '#### END BLUEMAN AUTOMAGIC SUBNET ####\n':
+                    if not start:
+                        # Because of bug end string got left upon removal
+                        continue
+                    end = True
 
-            if not insection:
-                dhcp_config += line
-            else:
-                existing_subnet += line
-
-        f.close()
+                if start and not end:
+                    existing_subnet += line
+                elif start and end:
+                    existing_subnet += line
+                    start = end = False
+                else:
+                    dhcp_config += line
 
         return dhcp_config, existing_subnet
 
