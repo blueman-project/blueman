@@ -161,7 +161,7 @@ class DhcpdHandler(object):
 
             error = p.communicate()[1]
 
-            if not error:
+            if p.returncode == 0:
                 logging.info("dhcpd started correctly")
                 f = open("/var/run/dhcpd.pan1.pid", "r")
                 self.pid = int(f.read())
