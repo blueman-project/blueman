@@ -87,6 +87,17 @@ class DnsMasqHandler(object):
             self.netconf.unlock("dhcp")
 
 
+DHCPDSUBNET = '''#### BLUEMAN AUTOMAGIC SUBNET ####
+# Everything inside this section is destroyed after config change
+subnet %(ip_mask)s netmask %(netmask)s {
+  option domain-name-servers %(dns)s;
+  option subnet-mask %(netmask)s;
+  option routers %(rtr)s;
+  range %(start)s %(end)s;
+}
+#### END BLUEMAN AUTOMAGIC SUBNET ####'''
+
+
 class DhcpdHandler(object):
     def __init__(self, netconf):
         self.pid = None
@@ -123,22 +134,12 @@ class DhcpdHandler(object):
 
         ipiface = ipaddress.ip_interface('/'.join((self.netconf.ip4_address, self.netconf.ip4_mask)))
 
-        subnet = "#### BLUEMAN AUTOMAGIC SUBNET ####\n"
-        subnet += "# Everything inside this section is destroyed after config change\n"
-        subnet += """subnet %(ip_mask)s netmask %(netmask)s {
-                option domain-name-servers %(dns)s;
-                option subnet-mask %(netmask)s;
-                option routers %(rtr)s;
-                range %(start)s %(end)s;
-                }\n""" % {"ip_mask": ipiface.network.network_address,
-                          "netmask": ipiface.netmask,
-                          "dns": dns,
-                          "rtr": ipiface.ip,
-                          "start": ipiface.network[2],
-                          "end": ipiface.network[-2]}
-        subnet += "#### END BLUEMAN AUTOMAGIC SUBNET ####\n"
-
-        return subnet
+        return DHCPDSUBNET % {"ip_mask": ipiface.network.network_address,
+                              "netmask": ipiface.netmask,
+                              "dns": dns,
+                              "rtr": ipiface.ip,
+                              "start": ipiface.network[2],
+                              "end": ipiface.network[-2]}
 
     def do_apply(self):
         if not self.netconf.locked("dhcp") or self.netconf.ip4_changed:
