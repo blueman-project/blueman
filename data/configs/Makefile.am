@@ -9,9 +9,12 @@ dbus_sess_DATA = blueman-applet.service
 
 if HAVE_POLKIT
 @INTLTOOL_POLICY_RULE@ 
-policykitdir = $(datadir)/polkit-1/actions
-policykit_in_files = org.blueman.policy.in
-policykit_DATA = $(policykit_in_files:.policy.in=.policy)
+policykitactionsdir = $(datadir)/polkit-1/actions
+policykitactions_in_files = org.blueman.policy.in
+policykitactions_DATA = $(policykitactions_in_files:.policy.in=.policy)
+
+policykitrulesdir = $(datadir)/polkit-1/rules.d
+policykitrules_DATA = blueman.rules
 endif
 
 EXTRA_DIST = org.blueman.Mechanism.conf		\
