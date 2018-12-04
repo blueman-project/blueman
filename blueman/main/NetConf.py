@@ -53,7 +53,7 @@ class DnsMasqHandler(object):
                 self.do_remove()
 
             ipiface = ipaddress.ip_interface('/'.join((self.netconf.ip4_address, '255.255.255.0')))
-            cmd = [have("dnsmasq"), "--port 0", "--pid-file=/var/run/dnsmasq.pan1.pid", "--except-interface=lo",
+            cmd = [have("dnsmasq"), "--port=0", "--pid-file=/var/run/dnsmasq.pan1.pid", "--except-interface=lo",
                    "--interface=pan1", "--bind-interfaces",
                    "--dhcp-range=%s,%s,60m" % (ipiface.network[2], ipiface.network[-2]),
                    "--dhcp-option=option:router,%s" % self.netconf.ip4_address]
