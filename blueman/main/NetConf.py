@@ -307,7 +307,8 @@ class NetConf(object):
     def get_ipv4(self):
         return self.ip4_address, self.ip4_mask
 
-    def enable_ip4_forwarding(self):
+    @staticmethod
+    def enable_ip4_forwarding():
         with open("/proc/sys/net/ipv4/ip_forward", "w") as f:
             f.write("1")
 
@@ -409,17 +410,20 @@ class NetConf(object):
 
         self.store()
 
-    def lock(self, key):
+    @staticmethod
+    def lock(key):
         with open("/var/run/blueman-%s" % key, "w"):
             pass
 
-    def unlock(self, key):
+    @staticmethod
+    def unlock(key):
         try:
             os.unlink("/var/run/blueman-%s" % key)
         except OSError:
             pass
 
-    def locked(self, key):
+    @staticmethod
+    def locked(key):
         return os.path.exists("/var/run/blueman-%s" % key)
 
     # save the instance of this class, requires root
