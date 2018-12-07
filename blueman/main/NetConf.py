@@ -28,16 +28,14 @@ def read_pid_file(fname):
 
 
 def get_dns_servers():
-    f = open("/etc/resolv.conf", "r")
-    dns_servers = ""
-    for line in f:
-        server = re.search(r"^nameserver ((?:[0-9]{1,3}\.){3}[0-9]{1,3}$)", line)
-        if server:
-            dns_servers += "%s, " % server.groups(1)[0]
+    dns_servers = ''
+    with open("/etc/resolv.conf", "r") as f:
+        for line in f:
+            match = re.search(r"^nameserver ((?:[0-9]{1,3}\.){3}[0-9]{1,3}$)", line)
+            if match:
+                dns_servers += "%s, " % match.group(1)
 
-    dns_servers = dns_servers.strip(", ")
-
-    f.close()
+        dns_servers = dns_servers.strip(", ")
 
     return dns_servers
 
@@ -65,9 +63,8 @@ class DnsMasqHandler(object):
 
             if not error:
                 logging.info("Dnsmasq started correctly")
-                f = open("/var/run/dnsmasq.pan1.pid", "r")
-                self.pid = int(f.read())
-                f.close()
+                with open("/var/run/dnsmasq.pan1.pid", "r") as f:
+                    self.pid = int(f.read())
                 logging.info("pid %s" % self.pid)
                 self.netconf.lock("dhcp")
             else:
@@ -151,10 +148,9 @@ class DhcpdHandler(object):
             subnet = self._generate_subnet_config()
 
             # if subnet != self.existing_subnet:
-            f = open(DHCP_CONFIG_FILE, "w")
-            f.write(dhcp_config)
-            f.write(subnet)
-            f.close()
+            with open(DHCP_CONFIG_FILE, "w") as f:
+                f.write(dhcp_config)
+                f.write(subnet)
 
             cmd = [have("dhcpd3") or have("dhcpd"), "-pf", "/var/run/dhcpd.pan1.pid", "pan1"]
             p = Popen(cmd, stderr=PIPE)
@@ -163,9 +159,8 @@ class DhcpdHandler(object):
 
             if p.returncode == 0:
                 logging.info("dhcpd started correctly")
-                f = open("/var/run/dhcpd.pan1.pid", "r")
-                self.pid = int(f.read())
-                f.close()
+                with open("/var/run/dhcpd.pan1.pid", "r") as f:
+                    self.pid = int(f.read())
                 logging.info("pid %s" % self.pid)
                 self.netconf.lock("dhcp")
             else:
@@ -175,9 +170,8 @@ class DhcpdHandler(object):
 
     def do_remove(self):
         dhcp_config, existing_subnet = self._read_dhcp_config()
-        f = open(DHCP_CONFIG_FILE, "w")
-        f.write(dhcp_config)
-        f.close()
+        with open(DHCP_CONFIG_FILE, "w") as f:
+            f.write(dhcp_config)
 
         if self.netconf.locked("dhcp"):
             if not self.pid:
@@ -271,19 +265,18 @@ class NetConf(object):
             return NetConf.default_inst
 
         try:
-            f = open("/var/lib/blueman/network.state", "rb")
-            obj = pickle.load(f)
-            if obj.version != class_id:
-                raise Exception
+            with open("/var/lib/blueman/network.state", "rb") as f:
+                obj = pickle.load(f)
+                if obj.version != class_id:
+                    raise Exception
 
-            # Convert old 32bit packed ip's to strings
-            if not isinstance(obj.ip4_address, str) and obj.ip4_address is not None:
-                obj.ip4_address = str(ipaddress.ip_address(obj.ip4_address))
-                obj.ip4_mask = '255.255.255.0'
+                # Convert old 32bit packed ip's to strings
+                if not isinstance(obj.ip4_address, str) and obj.ip4_address is not None:
+                    obj.ip4_address = str(ipaddress.ip_address(obj.ip4_address))
+                    obj.ip4_mask = '255.255.255.0'
 
-            NetConf.default_inst = obj
-            f.close()
-            return obj
+                NetConf.default_inst = obj
+                return obj
         except (IOError, UnicodeDecodeError):
             n = cls()
             try:
@@ -315,14 +308,12 @@ class NetConf(object):
         return self.ip4_address, self.ip4_mask
 
     def enable_ip4_forwarding(self):
-        f = open("/proc/sys/net/ipv4/ip_forward", "w")
-        f.write("1")
-        f.close()
+        with open("/proc/sys/net/ipv4/ip_forward", "w") as f:
+            f.write("1")
 
         for d in os.listdir("/proc/sys/net/ipv4/conf"):
-            f = open("/proc/sys/net/ipv4/conf/%s/forwarding" % d, "w")
-            f.write("1")
-            f.close()
+            with open("/proc/sys/net/ipv4/conf/%s/forwarding" % d, "w") as f:
+                f.write("1")
 
     def add_ipt_rule(self, table, chain, rule):
         self.ipt_rules.append((table, chain, rule))
@@ -419,8 +410,8 @@ class NetConf(object):
         self.store()
 
     def lock(self, key):
-        f = open("/var/run/blueman-%s" % key, "w")
-        f.close()
+        with open("/var/run/blueman-%s" % key, "w"):
+            pass
 
     def unlock(self, key):
         try:
@@ -435,6 +426,5 @@ class NetConf(object):
     def store(self):
         if not os.path.exists("/var/lib/blueman"):
             os.mkdir("/var/lib/blueman")
-        f = open("/var/lib/blueman/network.state", "wb")
-        pickle.dump(self, f, 2)
-        f.close()
+        with open("/var/lib/blueman/network.state", "wb") as f:
+            pickle.dump(self, f, 2)
