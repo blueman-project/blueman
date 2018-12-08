@@ -101,13 +101,11 @@ class Monitor(MonitorBase):
 
     def poll_stats(self):
         try:
-            f = open("/sys/class/net/%s/statistics/tx_bytes" % self.interface, "r")
-            tx = int(f.readline())
-            f.close()
+            with open("/sys/class/net/%s/statistics/tx_bytes" % self.interface, "r") as f:
+                tx = int(f.readline())
 
-            f = open("/sys/class/net/%s/statistics/rx_bytes" % self.interface, "r")
-            rx = int(f.readline())
-            f.close()
+            with open("/sys/class/net/%s/statistics/rx_bytes" % self.interface, "r") as f:
+                rx = int(f.readline())
         except IOError:
             self.poller = None
             self.ppp_port = None
