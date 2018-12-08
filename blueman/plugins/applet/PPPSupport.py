@@ -7,7 +7,7 @@ from blueman.main.Config import Config
 from gi.repository import GLib
 
 from blueman.Sdp import DIALUP_NET_SVCLASS_ID
-import os
+import subprocess
 import logging
 
 
@@ -19,13 +19,13 @@ class Connection:
         self.port = port
         self.parent = applet
 
-        res = os.popen("ps ax -o pid,args | grep [M]odemManager").read()
-        if not res:
-            self.connect()
-        else:
+        stdout, stderr = subprocess.Popen(['ps', 'ax', '-o', 'pid,args'], stdout=subprocess.PIPE).communicate()
+        if b'ModemManager' in stdout:
             timeout = 10
             logging.info("ModemManager is running, delaying connection %ssec for it to complete probing" % timeout)
             GLib.timeout_add_seconds(timeout, self.connect)
+        else:
+            self.connect()
 
     def connect(self):
         c = Config("org.blueman.gsmsetting", "/org/blueman/gsmsettings/%s/" % self.service.device['Address'])
