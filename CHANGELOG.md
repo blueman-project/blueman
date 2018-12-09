@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.7
+
+This release fixes DUN support and adds a default polkit rules file that allows users in group wheel to perform administrative actions. Note that the administrative group might have a different name (e.g. sudo in the Debian family) and there might be additional groups that are appropriate for the actions (e.g. netdev in the Debian family), so it still makes sense for distributions to adapt the configuration.
+
 ## 2.0.6
 
 **This release adds authorisation checks for the commands blueman runs as root**
