@@ -112,6 +112,7 @@ class DBusService(AppletPlugin):
             service.disconnect(port)
 
             self.Applet.Plugins.Run("on_rfcomm_disconnect", port)
+            ok()
 
             dprint("Disonnecting rfcomm device")
         else:
