@@ -33,7 +33,8 @@ EXTRA_DIST = \
 	org.blueman.Mechanism.conf		\
 	org.blueman.Applet.service.in		\
 	org.blueman.Mechanism.service.in	\
-	org.blueman.policy.in
+	org.blueman.policy.in			\
+	blueman.rules
 
 CLEANFILES =		\
 	blueman-applet.service		\
