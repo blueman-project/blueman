@@ -1,7 +1,12 @@
 import gi
 import logging
 import uuid
-gi.require_version('NM', '1.0')
+
+try:
+    gi.require_version('NM', '1.0')
+except ValueError:
+    raise ImportError('NM python bindings not found.')
+
 from gi.repository import GLib, NM
 from blueman.main.Config import Config
 
