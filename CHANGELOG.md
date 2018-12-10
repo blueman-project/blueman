@@ -2,7 +2,15 @@
 
 ## 2.0.7
 
-This release fixes DUN support and adds a default polkit rules file that allows users in group wheel to perform administrative actions. Note that the administrative group might have a different name (e.g. sudo in the Debian family) and there might be additional groups that are appropriate for the actions (e.g. netdev in the Debian family), so it still makes sense for distributions to adapt the configuration.
+### Changes
+
+This release fixes DUN support in blueman through NetworkManager and bluemans own implementation with pppd. It has been broken due to lack of hardware as DUN is usually not available on newer devices. We now have an old phone and an Android app to get thing working but we would love to get some feedback if bluemans DUN support works for you or not.
+
+We also added default polkit rules file that allows users in group wheel to perform administrative actions. Note that the administrative group might have a different name (e.g. sudo in the Debian family) and there might be additional groups that are appropriate for the actions (e.g. netdev in the Debian family), so it still makes sense for distributions to adapt the configuration.
+
+### Bugs fixed
+* Fix icon name in the device menu
+* Several commits backported from master for various RFCOMM and Serial related bugs.
 
 ## 2.0.6
 
