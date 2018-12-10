@@ -20,7 +20,8 @@ endif
 EXTRA_DIST = org.blueman.Mechanism.conf		\
 	blueman-applet.service.in		\
 	org.blueman.Mechanism.service.in	\
-	org.blueman.policy.in
+	org.blueman.policy.in			\
+	blueman.rules
 
 CLEANFILES =		\
 	org.blueman.Mechanism.service	\
