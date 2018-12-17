@@ -1,4 +1,6 @@
 # coding=utf-8
+import logging
+
 service_cls = [
     "positioning",
     "networking",
@@ -165,61 +167,67 @@ toy_minor_cls = [
     "game"
 ]
 
-
-gatt_appearance = {
-    0: "Unknown",
-    64: "Generic Phone",
-    128: "Generic Computer",
-    192: "Generic Watch",
-    193: "Watch: Sports Watch",
-    256: "Generic Clock",
-    320: "Generic Display",
-    384: "Generic Remote Control",
-    448: "Generic Eye-glasses",
-    512: "Generic Tag",
-    576: "Generic Keyring",
-    640: "Generic Media Player",
-    704: "Generic Barcode Scanner",
-    768: "Generic Thermometer",
-    769: "Thermometer: Ear",
-    832: "Generic Heart rate Sensor",
-    833: "Heart Rate Sensor: Heart Rate Belt",
-    896: "Generic Blood Pressure",
-    897: "Blood Pressure: Arm",
-    898: "Blood Pressure: Wrist",
-    960: "Human Interface Device (HID)",
-    961: "Keyboard",
-    962: "Mouse",
-    963: "Joystick",
-    964: "Gamepad",
-    965: "Digitizer Tablet",
-    966: "Card Reader",
-    967: "Digital Pen",
-    968: "Barcode Scanner",
-    1024: "Generic Glucose Meter",
-    1088: "Generic: Running Walking Sensor",
-    1089: "Running Walking Sensor: In-Shoe",
-    1090: "Running Walking Sensor: On-Shoe",
-    1091: "Running Walking Sensor: On-Hip",
-    1152: "Generic: Cycling",
-    1153: "Cycling: Cycling Computer",
-    1154: "Cycling: Speed Sensor",
-    1155: "Cycling: Cadence Sensor",
-    1156: "Cycling: Power Sensor",
-    1157: "Cycling: Speed and Cadence Sensor",
-    3136: "Generic: Pulse Oximeter",
-    3137: "Fingertip",
-    3138: "Wrist Worn",
-    3200: "Generic: Weight Scale",
-    3264: "Generic Personal Mobility Device",
-    3265: "Powered Wheelchair",
-    3266: "Mobility Scooter",
-    3328: "Generic Continuous Glucose Monitor",
-    5184: "Generic: Outdoor Sports Activity",
-    5185: "Location Display Device",
-    5186: "Location and Navigation Display Device",
-    5187: "Location Pod",
-    5188: "Location and Navigation Pod"
+gatt_appearance_categories = {
+    0: ('Unknown', {0: 'Unknown'}),
+    1: ('Phone', {0: 'Generic Phone'}),
+    2: ('Computer', {0: 'Generic Computer'}),
+    3: ('Watch', {0: 'Generic Watch',
+                  1: 'Watch: Sports Watch'}),
+    4: ('Clock', {0: 'Generic Clock'}),
+    5: ('Display', {0: 'Generic Display'}),
+    6: ('Remote Control', {0: 'Generic Remote Control'}),
+    7: ('Eye-glasses', {0: 'Generic Eye-glasses'}),
+    8: ('Tag', {0: 'Generic Tag'}),
+    9: ('Keyring', {0: 'Generic Keyring'}),
+    10: ('Media Player', {0: 'Generic Media Player'}),
+    11: ('Barcode Scanner', {0: 'Generic Barcode Scanner'}),
+    12: ('Thermometer', {0: 'Generic Thermometer',
+                         1: 'Thermometer: Ear'}),
+    13: ('Heart rate Sensor', {0: 'Generic Heart rate Sensor',
+                               1: 'Heart Rate Sensor: Heart Rate Belt'}),
+    14: ('Blood Pressure', {0: 'Generic Blood Pressure',
+                            1: 'Blood Pressure: Arm',
+                            2: 'Blood Pressure: Wrist'}),
+    15: ('Human Interface Device (HID)', {0: 'Human Interface Device (HID)',
+                                          1: 'Keyboard',
+                                          2: 'Mouse',
+                                          3: 'Joystick',
+                                          4: 'Gamepad',
+                                          5: 'Digitizer Tablet',
+                                          6: 'Card Reader',
+                                          7: 'Digital Pen',
+                                          8: 'Barcode Scanner'}),
+    16: ('Glucose Meter', {0: 'Generic Glucose Meter'}),
+    17: ('Running Walking Sensor', {0: 'Generic: Running Walking Sensor',
+                                    1: 'Running Walking Sensor: In-Shoe',
+                                    2: 'Running Walking Sensor: On-Shoe',
+                                    3: 'Running Walking Sensor: On-Hip'}),
+    18: ('Cycling', {0: 'Generic: Cycling',
+                     1: 'Cycling: Cycling Computer',
+                     2: 'Cycling: Speed Sensor',
+                     3: 'Cycling: Cadence Sensor',
+                     4: 'Cycling: Power Sensor',
+                     5: 'Cycling: Speed and Cadence Sensor'}),
+    # 19 - 48 reserved
+    49: ('Pulse Oximeter', {0: 'Generic: Pulse Oximeter',
+                            1: 'Fingertip',
+                            2: 'Wrist Worn'}),
+    50: ('Weight Scale', {0: 'Generic: Weight Scale'}),
+    51: ('Personal Mobility Device', {0: 'Generic Personal Mobility Device',
+                                      1: 'Powered Wheelchair',
+                                      2: 'Mobility Scooter'}),
+    52: ('Continuous Glucose Monitor', {0: 'Generic Continuous Glucose Monitor'}),
+    53: ('Insulin Pump', {0: 'Generic Insulin Pump',
+                          1: 'Insulin Pump, durable pump',
+                          4: 'Insulin Pump, patch pump',
+                          8: 'Insulin Pen'}),
+    54: ('Medication Delivery', {0: 'Generic Medication Delivery'}),
+    # 55 - 80 reserved
+    81: ('Outdoor Sports Activity', {0: 'Generic: Outdoor Sports Activity',
+                                     1: 'Location Display Device',
+                                     2: 'Location and Navigation Display Device',
+                                     3: 'Location Pod',
+                                     4: 'Location and Navigation Pod'})
 }
 
 
@@ -304,5 +312,22 @@ def get_minor_class(klass, i18n=False):
         return "unknown"
 
 
+# First 10 bits is the category, the following 6 bits sub category
 def gatt_appearance_to_name(appearance):
-    return gatt_appearance[appearance]
+    cat = appearance >> 0x6
+    subcat = appearance & 0x3f
+
+    if (19 <= cat <= 48) or (55 <= cat <= 80):
+        # These ranges are reserved
+        logging.debug('Reserved category found: %s' % appearance)
+        return gatt_appearance_categories[0][0]
+    elif cat > 81:
+        logging.warning('Invalid catagory found: %s' % appearance)
+        return gatt_appearance_categories[0][0]
+
+    cat_name, subcats = gatt_appearance_categories[cat]
+
+    if subcat not in subcats:
+        return cat_name
+    else:
+        return subcats[subcat]
