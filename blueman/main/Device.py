@@ -38,6 +38,7 @@ class Device(GObject.GObject):
         #set fallback icon, fixes lp:#327718
         self.Device.Icon = "blueman"
         self.Device.Class = "unknown"
+        self.Device.Appearance = 0
 
         self.Valid = True
 

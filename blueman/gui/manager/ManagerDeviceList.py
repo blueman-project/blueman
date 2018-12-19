@@ -4,7 +4,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 from blueman.gui.DeviceList import DeviceList
-from blueman.DeviceClass import get_minor_class, get_major_class
+from blueman.DeviceClass import get_minor_class, get_major_class, gatt_appearance_to_name
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.Sdp import *
 
@@ -233,18 +233,24 @@ class ManagerDeviceList(DeviceList):
             self.set(iter, initial_anim=True)
 
         klass = get_minor_class(device.Class)
-        if klass != "uncategorized":
+        # Bluetooth >= 4 devices use Appearance property
+        appearance = device.Appearance
+        if klass != "uncategorized" and klass != "unknown":
             icon = self.get_device_icon(klass)
             # get translated version
             klass = get_minor_class(device.Class, True)
+            description = get_minor_class(device.Class, True).capitalize()
+        elif klass == "unknown" and appearance:
+            icon = self.get_device_icon(device.Icon)
+            description = gatt_appearance_to_name(appearance)
         else:
             icon = get_icon(device.Icon, 48, "blueman")
-            klass = get_major_class(device.Class)
+            description = get_major_class(device.Class).capitalize()
 
         name = device.Alias
         address = device.Address
 
-        caption = self.make_caption(name, klass, address)
+        caption = self.make_caption(name, description, address)
 
         # caption = "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" % {"0":name, "1":klass.capitalize(), "2":address}
         self.set(iter, caption=caption, orig_icon=icon)

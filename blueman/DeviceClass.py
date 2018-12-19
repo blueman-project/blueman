@@ -2,6 +2,7 @@ from __future__ import print_function
 from __future__ import division
 from __future__ import absolute_import
 from __future__ import unicode_literals
+from blueman.Functions import dprint
 
 service_cls = [
     "positioning",
@@ -169,6 +170,71 @@ toy_minor_cls = [
     "game"
 ]
 
+
+gatt_appearance_categories = {
+    0: ('Unknown', {0: 'Unknown'}),
+    1: ('Phone', {0: 'Generic Phone'}),
+    2: ('Computer', {0: 'Generic Computer'}),
+    3: ('Watch', {0: 'Generic Watch',
+                  1: 'Watch: Sports Watch'}),
+    4: ('Clock', {0: 'Generic Clock'}),
+    5: ('Display', {0: 'Generic Display'}),
+    6: ('Remote Control', {0: 'Generic Remote Control'}),
+    7: ('Eye-glasses', {0: 'Generic Eye-glasses'}),
+    8: ('Tag', {0: 'Generic Tag'}),
+    9: ('Keyring', {0: 'Generic Keyring'}),
+    10: ('Media Player', {0: 'Generic Media Player'}),
+    11: ('Barcode Scanner', {0: 'Generic Barcode Scanner'}),
+    12: ('Thermometer', {0: 'Generic Thermometer',
+                         1: 'Thermometer: Ear'}),
+    13: ('Heart rate Sensor', {0: 'Generic Heart rate Sensor',
+                               1: 'Heart Rate Sensor: Heart Rate Belt'}),
+    14: ('Blood Pressure', {0: 'Generic Blood Pressure',
+                            1: 'Blood Pressure: Arm',
+                            2: 'Blood Pressure: Wrist'}),
+    15: ('Human Interface Device (HID)', {0: 'Human Interface Device (HID)',
+                                          1: 'Keyboard',
+                                          2: 'Mouse',
+                                          3: 'Joystick',
+                                          4: 'Gamepad',
+                                          5: 'Digitizer Tablet',
+                                          6: 'Card Reader',
+                                          7: 'Digital Pen',
+                                          8: 'Barcode Scanner'}),
+    16: ('Glucose Meter', {0: 'Generic Glucose Meter'}),
+    17: ('Running Walking Sensor', {0: 'Generic: Running Walking Sensor',
+                                    1: 'Running Walking Sensor: In-Shoe',
+                                    2: 'Running Walking Sensor: On-Shoe',
+                                    3: 'Running Walking Sensor: On-Hip'}),
+    18: ('Cycling', {0: 'Generic: Cycling',
+                     1: 'Cycling: Cycling Computer',
+                     2: 'Cycling: Speed Sensor',
+                     3: 'Cycling: Cadence Sensor',
+                     4: 'Cycling: Power Sensor',
+                     5: 'Cycling: Speed and Cadence Sensor'}),
+    # 19 - 48 reserved
+    49: ('Pulse Oximeter', {0: 'Generic: Pulse Oximeter',
+                            1: 'Fingertip',
+                            2: 'Wrist Worn'}),
+    50: ('Weight Scale', {0: 'Generic: Weight Scale'}),
+    51: ('Personal Mobility Device', {0: 'Generic Personal Mobility Device',
+                                      1: 'Powered Wheelchair',
+                                      2: 'Mobility Scooter'}),
+    52: ('Continuous Glucose Monitor', {0: 'Generic Continuous Glucose Monitor'}),
+    53: ('Insulin Pump', {0: 'Generic Insulin Pump',
+                          1: 'Insulin Pump, durable pump',
+                          4: 'Insulin Pump, patch pump',
+                          8: 'Insulin Pen'}),
+    54: ('Medication Delivery', {0: 'Generic Medication Delivery'}),
+    # 55 - 80 reserved
+    81: ('Outdoor Sports Activity', {0: 'Generic: Outdoor Sports Activity',
+                                     1: 'Location Display Device',
+                                     2: 'Location and Navigation Display Device',
+                                     3: 'Location Pod',
+                                     4: 'Location and Navigation Pod'})
+}
+
+
 def get_major_class(klass):
     index = (klass >> 8) & 0x1F
 
@@ -249,3 +315,23 @@ def get_minor_class(klass, i18n=False):
     else:
         return "unknown"
 
+
+# First 10 bits is the category, the following 6 bits sub category
+def gatt_appearance_to_name(appearance):
+    cat = appearance >> 0x6
+    subcat = appearance & 0x3f
+
+    if (19 <= cat <= 48) or (55 <= cat <= 80):
+        # These ranges are reserved
+        dprint('Reserved category found: %s' % appearance)
+        return gatt_appearance_categories[0][0]
+    elif cat > 81:
+        dprint('Invalid catagory found: %s' % appearance)
+        return gatt_appearance_categories[0][0]
+
+    cat_name, subcats = gatt_appearance_categories[cat]
+
+    if subcat not in subcats:
+        return cat_name
+    else:
+        return subcats[subcat]
