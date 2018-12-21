@@ -154,8 +154,13 @@ class ManagerDeviceList(DeviceList):
                         self.menu.popup(None, None, None, None, event.button, event.time)
 
 
-    def get_device_icon(self, klass):
-        return get_icon("blueman-" + klass.replace(" ", "-").lower(), 48, "blueman")
+    def get_device_icon(self, klass, iconname):
+        if klass != "unknown":
+            return get_icon("blueman-" + klass.replace(" ", "-").lower(), 48, "blueman")
+        else:
+            return get_icon(iconname, 48, "blueman")
+
+
 
 
     def make_device_icon(self, target, is_bonded=False, is_trusted=False, is_discovered=False, opacity=255):
@@ -236,12 +241,12 @@ class ManagerDeviceList(DeviceList):
         # Bluetooth >= 4 devices use Appearance property
         appearance = device.Appearance
         if klass != "uncategorized" and klass != "unknown":
-            icon = self.get_device_icon(klass)
+            icon = self.get_device_icon(klass, device.Icon)
             # get translated version
             klass = get_minor_class(device.Class, True)
             description = get_minor_class(device.Class, True).capitalize()
         elif klass == "unknown" and appearance:
-            icon = self.get_device_icon(device.Icon)
+            icon = self.get_device_icon(klass, device.Icon)
             description = gatt_appearance_to_name(appearance)
         else:
             icon = get_icon(device.Icon, 48, "blueman")
