@@ -18,6 +18,7 @@
 * [PyGObject 3](https://wiki.gnome.org/PyGObject)
 * [Python](http://www.python.org/) (>= 3.2)
 * [net-tools](http://net-tools.sourceforge.net/) for blueman 2.0 and net-tools __or__ [iproute2](https://wiki.linuxfoundation.org/networking/iproute2) for blueman 2.1
+* [libnm](https://wiki.gnome.org/Projects/NetworkManager) For managing DUN and PANU connection (GI bindings)
 
 ## Build dependencies
 
