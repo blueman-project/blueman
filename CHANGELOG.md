@@ -2,9 +2,31 @@
 
 ## master
 
+## 2.1.alpha3
+
+### Changes
+
+* Added default polkit rules file that allows users in group wheel to perform administrative actions
+* Use context managers for opening files
+* Replace deprecated os.popen with subprocess
+* Reimplement NetworkManager integration for DUN and PANU connection with libnm
+* Disable DNS on dnsmasq
+* Avoid authorization check
+* Use GtkWindow for instead of a GtkDialog when there is no parent
+* Stop using and remove TimeHint
+* Bump NetConf class_id because of backwards incompatible changes. This will reset your network configuration
+
 ### Bugs fixed
 
 * RFCOMM channel detection for DUN service failed
+* Fix DUN support though blueman and NetworkManager. We love to get feedback if this works for people
+* Use correct name network-transmit-receive for icon (ManagerDeviceMenu)
+* For a few GLib warning related to signals in ManagerDeviceMenu
+* Fix Generic connect not showing in certain situations
+* Many fixes in PPPSupport and PPPConnection
+* Wait for Modemmanager longer to finnish probing a bluetooth modem
+* Fix iconname typo in ErrorDialog
+* Use returncode to check if DhcpdHandler started correctly
 
 ## 2.1.alpha2
 
