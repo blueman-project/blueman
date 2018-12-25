@@ -1,7 +1,5 @@
 # Changelog
 
-## master
-
 ## 2.1.alpha3
 
 ### Changes
