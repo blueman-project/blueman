@@ -253,7 +253,7 @@ class UdhcpdHandler(object):
             self.netconf.unlock("dhcp")
 
 
-class_id = 11
+class_id = 10
 
 
 class NetConf(object):
