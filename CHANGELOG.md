@@ -12,7 +12,6 @@
 * Avoid authorization check
 * Use GtkWindow for instead of a GtkDialog when there is no parent
 * Stop using and remove TimeHint
-* Bump NetConf class_id because of backwards incompatible changes. This will reset your network configuration
 
 ### Bugs fixed
 
