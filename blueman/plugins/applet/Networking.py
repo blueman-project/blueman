@@ -25,29 +25,11 @@ class Networking(AppletPlugin):
         self.Config.connect("changed", self.on_config_changed)
         self._mechanism = Mechanism()
 
-        self.load_nap_settings()
+        self.set_nap(self.Config['nap-enable'])
 
     def on_manager_state_changed(self, state: bool) -> None:
         if state:
             self.set_nap(self.Config["nap-enable"])
-
-    def reload_network(self):
-        def reply(_obj: Mechanism, _result: None, _user_data: None) -> None:
-            pass
-
-        def err(_obj: Mechanism, result: GLib.Error, _user_data: None) -> None:
-            self.show_error_dialog(result)
-
-        m = Mechanism()
-        m.ReloadNetwork(result_handler=reply, error_handler=err)
-
-    def on_unload(self) -> None:
-        for adapter_path in self._registered:
-            s = NetworkServer(obj_path=adapter_path)
-            s.unregister("nap")
-
-        self._registered = {}
-        del self.Config
 
     def enable_network(self):
         try:
@@ -66,11 +48,6 @@ class Networking(AppletPlugin):
 
     def on_adapter_added(self, path: str) -> None:
         self.set_nap(self.Config["nap-enable"])
-
-    def load_nap_settings(self):
-        logging.info("Loading NAP settings")
-
-        self.reload_network()
 
     def on_config_changed(self, config: Config, key: str) -> None:
         if key in ('nap-enable', 'ipaddress', 'dhcphandler'):
