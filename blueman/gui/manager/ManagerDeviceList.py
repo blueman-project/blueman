@@ -250,7 +250,7 @@ class ManagerDeviceList(DeviceList):
             description = gatt_appearance_to_name(appearance)
         else:
             icon = get_icon(device.Icon, 48, "blueman")
-            description = get_major_class(device.Class).capitalize()
+            description = klass.capitalize()
 
         name = device.Alias
         address = device.Address
