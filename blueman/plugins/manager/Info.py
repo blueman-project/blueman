@@ -105,7 +105,7 @@ class Info(ManagerPlugin):
         pass
 
     def on_request_menu_items(self, manager_menu, device):
-        item = create_menuitem(_("_Info"), "info")
+        item = create_menuitem(_("_Info"), "dialog-information")
         item.props.tooltip_text = _("Show device information")
         item.connect('activate', lambda x: show_info(device, manager_menu.get_toplevel()))
         return [(item, 400)]

@@ -94,7 +94,7 @@ class Services(ManagerPlugin):
             item.show()
             serial_items.append(item)
 
-            item = create_menuitem(_("Dialup Settings"), "gtk-preferences")
+            item = create_menuitem(_("Dialup Settings"), "preferences-other")
             serial_items.append(item)
             item.show()
             item.connect("activate", open_settings, device)
