@@ -6,7 +6,7 @@ from blueman.main.NetworkManager import NMPANConnection
 class NMPANSupport(AppletPlugin):
     __depends__ = ["DBusService"]
     __conflicts__ = ["DhcpClient"]
-    __icon__ = "network"
+    __icon__ = "network-workgroup"
     __author__ = "infirit"
     __description__ = _("Provides support for Personal Area Networking (PAN) introduced in NetworkManager 0.8")
     __priority__ = 2
