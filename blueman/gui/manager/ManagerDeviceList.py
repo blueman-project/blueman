@@ -243,7 +243,6 @@ class ManagerDeviceList(DeviceList):
         if klass != "uncategorized" and klass != "unknown":
             icon = self.get_device_icon(klass, device.Icon)
             # get translated version
-            klass = get_minor_class(device.Class, True)
             description = get_minor_class(device.Class, True).capitalize()
         elif klass == "unknown" and appearance:
             icon = self.get_device_icon(klass, device.Icon)
