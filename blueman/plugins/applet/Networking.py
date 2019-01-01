@@ -9,7 +9,7 @@ import logging
 
 
 class Networking(AppletPlugin):
-    __icon__ = "network"
+    __icon__ = "network-workgroup"
     __description__ = _("Manages local network services, like NAP bridges")
     __author__ = "Walmis"
 
