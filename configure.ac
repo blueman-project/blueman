@@ -299,7 +299,6 @@ data/icons/hicolor/32x32/status/Makefile
 data/icons/hicolor/32x32/apps/Makefile
 data/icons/hicolor/48x48/Makefile
 data/icons/hicolor/48x48/actions/Makefile
-data/icons/hicolor/48x48/devices/Makefile
 data/icons/hicolor/48x48/status/Makefile
 data/icons/hicolor/48x48/apps/Makefile
 data/icons/hicolor/64x64/Makefile

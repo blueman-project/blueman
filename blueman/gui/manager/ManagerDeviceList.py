@@ -167,14 +167,7 @@ class ManagerDeviceList(DeviceList):
 
                         self.menu.popup(None, None, None, None, event.button, event.time)
 
-    def get_icon_info(self, icon_names, size=48, fallback=True):
-        icon_name = None
-
-        for name in icon_names:
-            if self.icon_theme.has_icon(name):
-                icon_name = name
-                break
-
+    def get_icon_info(self, icon_name, size=48, fallback=True):
         if icon_name is None and not fallback:
             return None
         elif icon_name is None and fallback:
@@ -192,13 +185,13 @@ class ManagerDeviceList(DeviceList):
         ctx = cairo.Context(target)
 
         if is_paired:
-            icon_info = self.get_icon_info(["dialog-password"], 16, False)
+            icon_info = self.get_icon_info("dialog-password", 16, False)
             paired_surface = icon_info.load_surface(window)
             ctx.set_source_surface(paired_surface, 1 / scale, 1 / scale)
             ctx.paint_with_alpha(0.8)
 
         if is_trusted:
-            icon_info = self.get_icon_info(["blueman-trust"], 16, False)
+            icon_info = self.get_icon_info("blueman-trust", 16, False)
             trusted_surface = icon_info.load_surface(window)
             height = target.get_height()
             mini_height = trusted_surface.get_height()
@@ -264,19 +257,14 @@ class ManagerDeviceList(DeviceList):
         # Bluetooth >= 4 devices use Appearance property
         appearance = device["Appearance"]
         if klass != "uncategorized" and klass != "unknown":
-            icon_names = ["blueman-" + klass.replace(" ", "-").lower(), device["Icon"], "blueman"]
-            icon_info = self.get_icon_info(icon_names, 48, False)
             # get translated version
             description = get_minor_class(device['Class'], True).capitalize()
         elif klass == "unknown" and appearance:
-            icon_names = [device["Icon"], "blueman"]
-            icon_info = self.get_icon_info(icon_names, 48, False)
             description = gatt_appearance_to_name(appearance)
         else:
-            icon_names = [device["Icon"], "blueman"]
-            icon_info = self.get_icon_info(icon_names, 48, False)
             description = get_major_class(device['Class']).capitalize()
 
+        icon_info = self.get_icon_info(device["Icon"], 48, False)
         caption = self.make_caption(device['Alias'], description, device['Address'])
 
         self.set(tree_iter, caption=caption, icon_info=icon_info, alias=device['Alias'])
