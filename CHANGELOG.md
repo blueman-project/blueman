@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.8
+
+### Bugs fixed
+* Fix name resolution of unknown device classes
+
 ## 2.0.7
 
 ### Changes
