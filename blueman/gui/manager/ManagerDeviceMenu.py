@@ -38,9 +38,8 @@ class ManagerDeviceMenu(Gtk.Menu):
 
         self.is_popup = False
 
-        self._device_property_changed_signal = None
-        self._selection_done_signal = None
-
+        self._device_property_changed_signal = self.Blueman.List.connect("device-property-changed",
+                                                                         self.on_device_property_changed)
         ManagerDeviceMenu.__instances__.append(self)
 
         self._any_network = AnyNetwork()
@@ -62,22 +61,6 @@ class ManagerDeviceMenu(Gtk.Menu):
 
     def popup(self, *args):
         self.is_popup = True
-
-        if self._device_property_changed_signal is None:
-            self._device_property_changed_signal = self.Blueman.List.connect("device-property-changed",
-                                                                             self.on_device_property_changed)
-
-        if self._selection_done_signal is None:
-            def disconnectall(x):
-                if self.handler_is_connected(self._device_property_changed_signal):
-                    self.disconnect(self._device_property_changed_signal)
-                    self._device_property_changed_signal = None
-                if self.handler_is_connected(self._selection_done_signal):
-                    self.disconnect(self._selection_done_signal)
-                    self._selection_done_signal = None
-
-            self._selection_done_signal = self.connect("selection-done", disconnectall)
-
         self.generate()
 
         super().popup(*args)
