@@ -68,6 +68,7 @@ def show_info(device, parent):
 
     properties = (
         ('Address', None),
+        ('AddressType', None),
         ('Name', None),
         ('Alias', None),
         ('Class', lambda x: x and "0x{:06x}".format(x)),
@@ -81,7 +82,10 @@ def show_info(device, parent):
         ('Connected', format_boolean),
         ('UUIDs', format_uuids),
         ('Modalias', None),
-        ('Adapter', None)
+        ('Adapter', None),
+        ('ManufacturerData', None),
+        ('ServiceData', None),
+        ('AdvertisingData', None)
     )
     for name, func in properties:
         try:
