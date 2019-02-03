@@ -83,11 +83,11 @@ class ManagerDeviceMenu(Gtk.Menu):
         super().popup(*args)
 
     def clear(self):
-        def each(child, data):
+        def remove_and_destroy(child):
             self.remove(child)
             child.destroy()
 
-        self.foreach(each, None)
+        self.foreach(remove_and_destroy)
 
     def set_op(self, device, message):
         ManagerDeviceMenu.__ops__[device.get_object_path()] = message
