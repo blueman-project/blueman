@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # coding=utf-8
+import logging
 
 cdef extern from "malloc.h":
     cdef void free(void *ptr)
@@ -264,8 +265,11 @@ class ConnInfoReadError(Exception):
 cdef class conn_info:
     cdef conn_info_handles ci
     cdef int hci
+    cdef char* addr
+    cdef public bint failed
 
     def __init__(self, py_addr, py_hci_name="hci0"):
+        self.failed = False
         py_bytes_addr = py_addr.encode("UTF-8")
         cdef char* addr = py_bytes_addr
 
@@ -274,11 +278,17 @@ cdef class conn_info:
 
 
         self.hci = int(hci_name[3:])
-        res = connection_init(self.hci, addr, &self.ci)
+        self.addr = addr
+
+    def init(self):
+        res = connection_init(self.hci, self.addr, & self.ci)
         if res < 0:
+            self.failed = True
             raise ConnInfoReadError(ERR[res])
 
     def deinit(self):
+        if self.failed:
+            return
         connection_close(&self.ci)
 
     def get_rssi(self):

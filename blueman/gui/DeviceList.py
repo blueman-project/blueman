@@ -177,15 +177,16 @@ class DeviceList(GenericList):
             tree_iter = self.find_device(device)
 
             hci = os.path.basename(self.Adapter.get_object_path())
+            cinfo = conn_info(bt_address, hci)
             try:
-                cinfo = conn_info(bt_address, hci)
+                cinfo.init()
             except ConnInfoReadError:
-                logging.warning("Failed to get power levels", exc_info=True)
-            else:
-                r = Gtk.TreeRowReference.new(self.get_model(), self.get_model().get_path(tree_iter))
-                self.level_setup_event(r, device, cinfo)
-                GLib.timeout_add(1000, update, r, cinfo, bt_address)
-                self.monitored_devices.append(bt_address)
+                logging.warning("Failed to get power levels, probably a LE device.")
+
+            r = Gtk.TreeRowReference.new(self.get_model(), self.get_model().get_path(tree_iter))
+            self.level_setup_event(r, device, cinfo)
+            GLib.timeout_add(1000, update, r, cinfo, bt_address)
+            self.monitored_devices.append(bt_address)
 
     # ##### virtual funcs #####
 

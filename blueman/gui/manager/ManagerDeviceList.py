@@ -317,30 +317,35 @@ class ManagerDeviceList(DeviceList):
         tree_iter = self.get_iter(row_ref.get_path())
         row = self.get(tree_iter, "levels_visible", "cell_fader", "rssi", "lq", "tpl")
         if cinfo is not None:
-            try:
-                rssi = float(cinfo.get_rssi())
-            except ConnInfoReadError:
-                rssi = 0
-            try:
-                lq = float(cinfo.get_lq())
-            except ConnInfoReadError:
-                lq = 0
+            # cinfo init may fail for bluetooth devices version 4 and up
+            # FIXME Workaround is horrible and we should show something better
+            if cinfo.failed:
+                rssi_perc = tpl_perc = lq_perc = 100
+            else:
+                try:
+                    rssi = float(cinfo.get_rssi())
+                except ConnInfoReadError:
+                    rssi = 0
+                try:
+                    lq = float(cinfo.get_lq())
+                except ConnInfoReadError:
+                    lq = 0
 
-            try:
-                tpl = float(cinfo.get_tpl())
-            except ConnInfoReadError:
-                tpl = 0
+                try:
+                    tpl = float(cinfo.get_tpl())
+                except ConnInfoReadError:
+                    tpl = 0
 
-            rssi_perc = 50 + (rssi / 127 / 2 * 100)
-            tpl_perc = 50 + (tpl / 127 / 2 * 100)
-            lq_perc = lq / 255 * 100
+                rssi_perc = 50 + (rssi / 127 / 2 * 100)
+                tpl_perc = 50 + (tpl / 127 / 2 * 100)
+                lq_perc = lq / 255 * 100
 
-            if lq_perc < 10:
-                lq_perc = 10
-            if rssi_perc < 10:
-                rssi_perc = 10
-            if tpl_perc < 10:
-                tpl_perc = 10
+                if lq_perc < 10:
+                    lq_perc = 10
+                if rssi_perc < 10:
+                    rssi_perc = 10
+                if tpl_perc < 10:
+                    tpl_perc = 10
 
             if not row["levels_visible"]:
                 logging.info("animating up")
