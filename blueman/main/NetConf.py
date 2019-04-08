@@ -4,6 +4,7 @@ import errno
 import re
 import os
 import ipaddress
+from pickle import UnpicklingError
 from tempfile import mkstemp
 from time import sleep
 import logging
@@ -277,7 +278,7 @@ class NetConf(object):
 
                 NetConf.default_inst = obj
                 return obj
-        except (IOError, UnicodeDecodeError):
+        except (IOError, UnicodeDecodeError, UnpicklingError):
             n = cls()
             try:
                 n.store()
