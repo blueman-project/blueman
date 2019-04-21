@@ -8,6 +8,7 @@ from html import escape
 
 from blueman.bluez import obex
 from blueman.Functions import launch
+from blueman.bluez.obex.Agent import ObexErrorRejected, ObexErrorCanceled
 from blueman.gui.CommonUi import ErrorDialog
 from blueman.gui.Notification import Notification
 from blueman.plugins.AppletPlugin import AppletPlugin
@@ -20,7 +21,7 @@ class Agent(obex.Agent):
     __agent_path = '/org/bluez/obex/agent/blueman'
 
     def __init__(self, applet):
-        super(Agent, self).__init__(self.__agent_path, self._handle_method_call)
+        super(Agent, self).__init__(self.__agent_path)
 
         self._applet = applet
         self._config = Config("org.blueman.transfer")
@@ -30,28 +31,16 @@ class Agent(obex.Agent):
         self._pending_transfer = None
         self.transfers = {}
 
-    def _handle_method_call(self, connection, sender, agent_path, interface_name, method_name, parameters, invocation):
-        log_msg = "%s %s" % (method_name, agent_path)
-        if method_name == 'Release':
-            logging.info(log_msg)
-            self._on_release()
-        elif method_name == 'AuthorizePush':
-            logging.info(log_msg)
-            self._on_authorize(parameters, invocation)
-        elif method_name == 'Cancel':
-            logging.info(log_msg)
-            self._on_cancel(parameters, invocation)
-
-    def register(self):
+    def register_at_manager(self):
         obex.AgentManager().register_agent(self.__agent_path)
 
-    def unregister(self):
+    def unregister_from_manager(self):
         obex.AgentManager().unregister_agent(self.__agent_path)
 
-    def _on_release(self):
+    def _release(self):
         raise Exception(self.__agent_path + " was released unexpectedly")
 
-    def _on_authorize(self, parameters, invocation):
+    def _authorize_push(self, transfer_path, ok, err):
         def on_action(action):
             logging.info("Action %s" % action)
 
@@ -62,15 +51,12 @@ class Agent(obex.Agent):
                     'name': self._pending_transfer['name']
                 }
 
-                param = GLib.Variant('(s)', (self.transfers[self._pending_transfer['transfer_path']]['path'],))
-                invocation.return_value(param)
+                ok(self.transfers[self._pending_transfer['transfer_path']]['path'])
 
                 self._allowed_devices.append(self._pending_transfer['address'])
                 GLib.timeout_add(60000, self._allowed_devices.remove, self._pending_transfer['address'])
             else:
-                invocation.return_dbus_error('org.bluez.obex.Error.Rejected', 'Rejected')
-
-        transfer_path = parameters.unpack()[0]
+                err(ObexErrorRejected("Rejected"))
 
         transfer = obex.Transfer(transfer_path)
         session = obex.Session(transfer.session)
@@ -123,9 +109,9 @@ class Agent(obex.Agent):
             self._notification = None
             on_action("accept")
 
-    def _on_cancel(self, parameters, invocation):
+    def _cancel(self):
         self._notification.close()
-        invocation.return_dbus_error('org.bluez.obex.Error.Canceled', 'Canceled')
+        raise ObexErrorCanceled("Canceled")
 
 
 class TransferService(AppletPlugin):
@@ -174,12 +160,12 @@ class TransferService(AppletPlugin):
     def _register_agent(self):
         if not self._agent:
             self._agent = Agent(self.parent)
-        self._agent.register()
+        self._agent.register_at_manager()
 
     def _unregister_agent(self):
         if self._agent:
+            self._agent.unregister_from_manager()
             self._agent.unregister()
-            self._agent.close()
             self._agent = None
 
     def _on_dbus_name_appeared(self, _connection, name, owner):
@@ -199,7 +185,7 @@ class TransferService(AppletPlugin):
             self._manager.disconnect(signal)
         self._manager = None
         if self._agent:
-            self._agent.close()
+            self._agent.unregister()
             self._agent = None
 
     def _on_transfer_started(self, _manager, transfer_path):

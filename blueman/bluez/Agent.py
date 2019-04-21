@@ -1,66 +1,64 @@
 # coding=utf-8
-from gi.repository import Gio, GLib
+import abc
 
-introspection_xml = '''
-<node name='/'>
-  <interface name='org.bluez.Agent1'>
-    <method name='Release'/>
-    <method name='RequestPinCode'>
-      <arg type='o' name='device' direction='in'/>
-      <arg type='s' name='pincode' direction='out'/>
-    </method>
-    <method name='RequestPasskey'>
-      <arg type='o' name='device' direction='in'/>
-      <arg type='u' name='passkey' direction='out'/>
-    </method>
-    <method name='DisplayPasskey'>
-      <arg type='o' name='device' direction='in'/>
-      <arg type='u' name='passkey' direction='in'/>
-      <arg type='y' name='entered' direction='in'/>
-    </method>
-    <method name='DisplayPinCode'>
-      <arg type='o' name='device' direction='in'/>
-      <arg type='s' name='pincode' direction='in'/>
-    </method>
-    <method name='RequestConfirmation'>
-      <arg type='o' name='device' direction='in'/>
-      <arg type='u' name='passkey' direction='in'/>
-    </method>
-    <method name='RequestAuthorization'>
-      <arg type='o' name='device' direction='in'/>
-    </method>
-    <method name='AuthorizeService'>
-      <arg type='o' name='device' direction='in'/>
-      <arg type='s' name='uuid' direction='in'/>
-    </method>
-    <method name='Cancel'/>
-  </interface>
-</node>
-'''
+from gi.repository import Gio
+
+from blueman.main.DbusService import DbusService, DbusError
 
 
-class Agent(object):
-    __bus = Gio.bus_get_sync(Gio.BusType.SYSTEM)
+class Agent(DbusService, metaclass=abc.ABCMeta):
+    def __init__(self, agent_path):
+        super().__init__(None, "org.bluez.Agent1", agent_path, Gio.BusType.SYSTEM)
+        self.add_method("Release", (), "", self._on_release)
+        self.add_method("RequestPinCode", ("o",), "s", self._on_request_pin_code, is_async=True)
+        self.add_method("DisplayPinCode", ("o", "s"), "", self._on_display_pin_code)
+        self.add_method("RequestPasskey", ("o",), "u", self._on_request_passkey, is_async=True)
+        self.add_method("DisplayPasskey", ("o", "u", "y"), "", self._on_display_passkey)
+        self.add_method("RequestConfirmation", ("o", "u"), "", self._on_request_confirmation, is_async=True)
+        self.add_method("RequestAuthorization", ("o",), "", self._on_request_authorization, is_async=True)
+        self.add_method("AuthorizeService", ("o", "s"), "", self._on_authorize_service, is_async=True)
+        self.add_method("Cancel", (), "", self._on_cancel)
 
-    def __init__(self, agent_path, handle_method_call):
-        self.__agent_path = agent_path
-        self.__handle_method_call = handle_method_call
-        self.__node_info = Gio.DBusNodeInfo.new_for_xml(introspection_xml)
-        self.__regid = None
+    @abc.abstractmethod
+    def _on_release(self):
+        pass
 
-    def _register_object(self):
-        regid = self.__bus.register_object(
-            self.__agent_path,
-            self.__node_info.interfaces[0],
-            self.__handle_method_call,
-            None,
-            None)
+    @abc.abstractmethod
+    def _on_request_pin_code(self, device_path, ok, err):
+        pass
 
-        if regid:
-            self.__regid = regid
-        else:
-            raise GLib.Error('Failed to register object with path: %s', self.__agent_path)
+    @abc.abstractmethod
+    def _on_display_pin_code(self, device_path, pin_code):
+        pass
 
-    def _unregister_object(self):
-        self.__bus.unregister_object(self.__regid)
-        self.__regid = None
+    @abc.abstractmethod
+    def _on_request_passkey(self, device_path, ok, err):
+        pass
+
+    @abc.abstractmethod
+    def _on_display_passkey(self, device_path, passkey, entered):
+        pass
+
+    @abc.abstractmethod
+    def _on_request_confirmation(self, device_path, passkey, ok, err):
+        pass
+
+    @abc.abstractmethod
+    def _on_request_authorization(self, device_path, ok, err):
+        pass
+
+    @abc.abstractmethod
+    def _on_authorize_service(self, device_path, uuid, ok, err):
+        pass
+
+    @abc.abstractmethod
+    def _on_cancel(self):
+        pass
+
+
+class BluezErrorCanceled(DbusError):
+    _name = "org.bluez.Error.Canceled"
+
+
+class BluezErrorRejected(DbusError):
+    _name = "org.bluez.Error.Rejected"

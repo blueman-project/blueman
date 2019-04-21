@@ -1,38 +1,35 @@
 # coding=utf-8
-from gi.repository import Gio, GLib
+import abc
 
-introspection_xml = '''
-<node name='/org/blueman/obex_agent'>
-  <interface name='org.bluez.obex.Agent1'>
-    <method name='Release'/>
-    <method name='Cancel'/>
-    <method name ='AuthorizePush'>
-      <arg type='o' name='transfer' direction='in'/>
-      <arg type='s' name='path' direction='out'/>
-    </method>
-  </interface>
-</node>
-'''
+from gi.repository import Gio
+
+from blueman.main.DbusService import DbusService, DbusError
 
 
-class Agent(object):
-    __bus = Gio.bus_get_sync(Gio.BusType.SESSION)
+class Agent(DbusService, metaclass=abc.ABCMeta):
+    def __init__(self, agent_path):
+        super().__init__(None, "org.bluez.obex.Agent1", agent_path, Gio.BusType.SESSION)
+        self.add_method("Release", (), "", self._release)
+        self.add_method("Cancel", (), "", self._cancel)
+        self.add_method("AuthorizePush", ("o",), "s", self._authorize_push, is_async=True)
+        self.register()
 
-    def __init__(self, agent_path, handle_method_call):
-        node_info = Gio.DBusNodeInfo.new_for_xml(introspection_xml)
+    @abc.abstractmethod
+    def _release(self):
+        pass
 
-        regid = self.__bus.register_object(
-            agent_path,
-            node_info.interfaces[0],
-            handle_method_call,
-            None,
-            None)
+    @abc.abstractmethod
+    def _cancel(self):
+        pass
 
-        if regid:
-            self.__regid = regid
-        else:
-            raise GLib.Error('Failed to register object with path: %s', agent_path)
+    @abc.abstractmethod
+    def _authorize_push(self, transfer_path, ok, err):
+        pass
 
-    def close(self):
-        self.__bus.unregister_object(self.__regid)
-        self.__regid = None
+
+class ObexErrorRejected(DbusError):
+    _name = "org.bluez.obex.Error.Rejected"
+
+
+class ObexErrorCanceled(DbusError):
+    _name = "org.bluez.obex.Error.Canceled"
