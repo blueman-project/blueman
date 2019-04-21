@@ -1,5 +1,5 @@
 # coding=utf-8
-import dbus.service
+
 import os
 import subprocess
 import signal
@@ -10,12 +10,14 @@ from blueman.plugins.MechanismPlugin import MechanismPlugin
 class Rfcomm(MechanismPlugin):
     files = {}
 
-    @dbus.service.method('org.blueman.Mechanism', in_signature="d")
-    def open_rfcomm(self, port_id):
+    def on_load(self):
+        self.parent.add_method("open_rfcomm", ("d",), "", self._open_rfcomm)
+        self.parent.add_method("close_rfcomm", ("d",), "", self._close_rfcomm)
+
+    def _open_rfcomm(self, port_id):
         subprocess.Popen([RFCOMM_WATCHER_PATH, '/dev/rfcomm%d' % port_id])
 
-    @dbus.service.method('org.blueman.Mechanism', in_signature="d")
-    def close_rfcomm(self, port_id):
+    def _close_rfcomm(self, port_id):
         command = 'blueman-rfcomm-watcher /dev/rfcomm%d' % port_id
 
         out, err = subprocess.Popen(['ps', '-e', 'o', 'pid,args'], stdout=subprocess.PIPE).communicate()

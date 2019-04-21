@@ -1,5 +1,5 @@
 # coding=utf-8
-import dbus.service
+
 import logging
 from blueman.plugins.AppletPlugin import AppletPlugin
 import blueman.bluez as bluez
@@ -44,6 +44,10 @@ class PowerManager(AppletPlugin):
         self.STATE_ON = 2
         self.STATE_OFF = 1
         self.STATE_OFF_FORCED = 0
+
+        self._add_dbus_signal("BluetoothStatusChanged", "b")
+        self._add_dbus_method("SetBluetoothStatus", ("b",), "", self.request_power_state)
+        self._add_dbus_method("get_bluetooth_status", (), "b", self.get_bluetooth_status)
 
     def on_unload(self):
         self.parent.Plugins.Menu.unregister(self)
@@ -171,19 +175,10 @@ class PowerManager(AppletPlugin):
             logging.info("Signalling %s" % new_state)
             self.current_state = new_state
 
-            self.BluetoothStatusChanged(new_state)
+            self._emit_dbus_signal("BluetoothStatusChanged", new_state)
             self.parent.Plugins.run("on_power_state_changed", self, new_state)
             self.parent.Plugins.StatusIcon.icon_should_change()
 
-    @dbus.service.signal('org.blueman.Applet', signature="b")
-    def BluetoothStatusChanged(self, status):
-        pass
-
-    @dbus.service.method('org.blueman.Applet', in_signature="b", out_signature="")
-    def SetBluetoothStatus(self, status):
-        self.request_power_state(status)
-
-    @dbus.service.method('org.blueman.Applet', in_signature="", out_signature="b")
     def get_bluetooth_status(self):
         return self.current_state
 

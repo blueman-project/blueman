@@ -1,27 +1,27 @@
 # coding=utf-8
+
 from blueman.plugins.MechanismPlugin import MechanismPlugin
-import dbus
-import dbus.service
 
 
 class Ppp(MechanismPlugin):
-    def ppp_connected(self, ppp, port, ok, err):
+    def on_load(self):
+        self.parent.add_method("PPPConnect", ("s", "s", "s"), "s", self._ppp_connect, pass_sender=True, is_async=True)
+
+    def _ppp_connected(self, _ppp, port, ok):
         ok(port)
         self.timer.resume()
 
-    def ppp_error(self, ppp, message, ok, err):
-        err(dbus.DBusException(message))
+    def _ppp_error(self, _ppp, message, err):
+        err(message)
         self.timer.resume()
 
-    @dbus.service.method('org.blueman.Mechanism', in_signature="sss", out_signature="s", sender_keyword="caller",
-                         async_callbacks=("ok", "err"))
-    def PPPConnect(self, port, number, apn, caller, ok, err):
+    def _ppp_connect(self, port, number, apn, caller, ok, err):
         self.confirm_authorization(caller, "org.blueman.pppd.pppconnect")
         self.timer.stop()
         from blueman.main.PPPConnection import PPPConnection
 
         ppp = PPPConnection(port, number, apn)
-        ppp.connect("error-occurred", self.ppp_error, ok, err)
-        ppp.connect("connected", self.ppp_connected, ok, err)
+        ppp.connect("error-occurred", self._ppp_error, err)
+        ppp.connect("connected", self._ppp_connected, ok)
 
         ppp.connect_rfcomm()

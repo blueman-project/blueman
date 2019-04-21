@@ -5,10 +5,6 @@ import os
 import logging
 import importlib
 
-import dbus
-import dbus.service
-from dbus.mainloop.glib import DBusGMainLoop
-
 from gi.repository import Gio, GLib
 
 # support running uninstalled
@@ -27,7 +23,7 @@ from blueman.Functions import set_proc_title, create_logger, create_parser
 import blueman.plugins.mechanism
 from blueman.plugins.MechanismPlugin import MechanismPlugin
 
-from blueman.main.DbusService import DbusService
+from blueman.main.DbusService import DbusService, DbusError
 
 loop = GLib.MainLoop()
 
@@ -81,8 +77,6 @@ sys.stderr = sl
 
 logging.info("Starting blueman-mechanism")
 
-DBusGMainLoop(set_as_default=True)
-
 os.environ["PATH"] = "/usr/bin:/bin:/usr/sbin:/sbin"
 
 dhcp_pids = []
@@ -116,7 +110,7 @@ class Timer:
 
 class ConfService(DbusService):
     def __init__(self):
-        super(ConfService, self).__init__("org.blueman.Mechanism", "/", dbus.SystemBus)
+        super().__init__("org.blueman.Mechanism", "org.blueman.Mechanism", "/", Gio.BusType.SYSTEM)
         self.timer = Timer()
         if args.stoptimer:
             self.timer.stop()
@@ -154,14 +148,15 @@ class ConfService(DbusService):
             logging.info("loading %s" % cls.__name__)
             cls(self)
 
+        self.register()
+
     def confirm_authorization(self, subject, action_id):
         self.timer.reset()
         if not POLKIT:
             return
         else:
             if not self.pk:
-                raise dbus.DBusException(
-                    "Blueman was built with PolicyKit-1 support, but it's not available on the system")
+                raise DbusError("Blueman was built with PolicyKit-1 support, but it's not available on the system")
 
         v_subject = GLib.Variant('s', subject)
         res = self.pk.CheckAuthorization('((sa{sv})sa{ss}us)', ("system-bus-name", {"name": v_subject}),
@@ -170,7 +165,7 @@ class ConfService(DbusService):
         logging.debug(str(res))
         (is_authorized, is_challenge, details) = res
         if not is_authorized:
-            raise dbus.DBusException("Not authorized")
+            raise DbusError("Not authorized")
 
 
 set_proc_title()

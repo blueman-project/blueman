@@ -174,7 +174,7 @@ def e_(msg):
     if isinstance(msg, Exception):
         return str(msg), traceback.format_exc()
     else:
-        s = msg.strip().split(": ")[-1]
+        s = msg.strip().split(": ", 1)[-1]
         return s, None
 
 
