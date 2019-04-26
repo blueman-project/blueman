@@ -1,7 +1,6 @@
 # coding=utf-8
-import weakref
+
 from html import escape
-import dbus
 import time
 import datetime
 import gettext
@@ -14,7 +13,6 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Config import Config
 from blueman.bluez.Device import Device
 from blueman.bluez.Network import AnyNetwork
-from _blueman import rfcomm_list
 from gi.repository import GObject
 from gi.repository import GLib
 
@@ -67,27 +65,6 @@ class MonitorBase(GObject.GObject):
         self.emit("disconnected")
 
 
-class NMMonitor(MonitorBase):
-    def __init__(self, device, nm_dev_path):
-        super(NMMonitor, self).__init__(device, "NM")
-        logging.info("created nm monitor for path %s" % nm_dev_path)
-        self.__bus = dbus.SystemBus()
-        self.__nm_dev_path = nm_dev_path
-        self.__bus.add_signal_receiver(self.on_ppp_stats, "PppStats", "org.freedesktop.NetworkManager.Device.Serial",
-                                       path=nm_dev_path)
-
-        device.connect("property-changed", self.on_device_property_changed)
-
-    def on_ppp_stats(self, rx, tx):
-        self.update_stats(tx, rx)
-
-    def on_device_property_changed(self, device, key, value):
-        if key == "Connected" and not value:
-            self.__bus.remove_signal_receiver(self.on_ppp_stats, "PppStats",
-                                              "org.freedesktop.NetworkManager.Device.Serial", path=self.__nm_dev_path)
-            self.disconnect_monitor()
-
-
 class Monitor(MonitorBase):
     def __init__(self, device, interface):
         super(Monitor, self).__init__(device, interface)
@@ -138,8 +115,6 @@ class Dialog:
         self.dialog.connect("response", self.on_response)
         cr1 = Gtk.CellRendererText()
         cr1.props.ellipsize = Pango.EllipsizeMode.END
-
-        self.devices = {}
 
         self._signals = [
             plugin.connect("monitor-added", self.monitor_added),
@@ -329,45 +304,12 @@ class NetUsage(AppletPlugin, GObject.GObject):
     def on_load(self):
         GObject.GObject.__init__(self)
         self.monitors = []
-        self.devices = weakref.WeakValueDictionary()
-
-        self.bus = dbus.SystemBus()
 
         self._any_network = AnyNetwork()
         self._any_network.connect_signal('property-changed', self._on_network_property_changed)
 
         self.parent.Plugins.Menu.add(self, 84, text=_("Network _Usage"), icon_name="network-wireless",
                                      tooltip=_("Shows network traffic usage"), callback=self.activate_ui)
-
-        self.bus.add_signal_receiver(self.on_nm_ppp_stats, "PppStats", "org.freedesktop.NetworkManager.Device.Serial",
-                                     path_keyword="path")
-        self.nm_paths = {}
-
-    def on_nm_ppp_stats(self, down, up, path):
-        if path not in self.nm_paths:
-            props = self.bus.call_blocking("org.freedesktop.NetworkManager",
-                                           path,
-                                           "org.freedesktop.DBus.Properties",
-                                           "GetAll",
-                                           "s",
-                                           ["org.freedesktop.NetworkManager.Device"])
-
-            if props["Driver"] == "bluetooth" and "rfcomm" in props["Interface"]:
-                self.nm_paths[path] = True
-
-                portid = int(props["Interface"].strip("rfcomm"))
-
-                ls = rfcomm_list()
-                for dev in ls:
-                    if dev["id"] == portid:
-                        adapter = self.parent.Manager.get_adapter(dev["src"])
-                        device = self.parent.Manager.find_device(dev["dst"], adapter.get_object_path())
-
-                        self.monitor_interface(NMMonitor, device, path)
-
-                        return
-            else:
-                self.nm_paths[path] = False
 
     def _on_network_property_changed(self, _network, key, value, path):
         if key == "Interface" and value != "":
@@ -378,8 +320,6 @@ class NetUsage(AppletPlugin, GObject.GObject):
         Dialog(self)
 
     def on_unload(self):
-        self.bus.remove_signal_receiver(self.on_nm_ppp_stats, "PppStats",
-                                        "org.freedesktop.NetworkManager.Device.Serial", path_keyword="path")
         del self._any_network
         self.parent.Plugins.Menu.unregister(self)
 
