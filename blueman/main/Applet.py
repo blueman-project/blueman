@@ -27,7 +27,8 @@ class BluemanApplet(object):
         self.Manager.connect_signal('device-created', self.on_device_created)
         self.Manager.connect_signal('device-removed', self.on_device_removed)
 
-        self.DbusSvc = DbusService("org.blueman.Applet", "org.blueman.Applet", "/", Gio.BusType.SESSION)
+        self.DbusSvc = DbusService("org.blueman.Applet", "org.blueman.Applet", "/org/blueman/applet",
+                                   Gio.BusType.SESSION)
 
         self.Plugins = PersistentPluginManager(AppletPlugin, blueman.plugins.applet, self)
         self.Plugins.load_plugin()

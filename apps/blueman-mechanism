@@ -110,7 +110,7 @@ class Timer:
 
 class ConfService(DbusService):
     def __init__(self):
-        super().__init__("org.blueman.Mechanism", "org.blueman.Mechanism", "/", Gio.BusType.SYSTEM)
+        super().__init__("org.blueman.Mechanism", "org.blueman.Mechanism", "/org/blueman/mechanism", Gio.BusType.SYSTEM)
         self.timer = Timer()
         if args.stoptimer:
             self.timer.stop()

@@ -41,10 +41,10 @@ class ProxyBase(Gio.DBusProxy, metaclass=ProxyBaseMeta):
 class Mechanism(ProxyBase):
     def __init__(self, *args, **kwargs):
         super().__init__(name='org.blueman.Mechanism', interface_name='org.blueman.Mechanism',
-                         systembus=True, *args, **kwargs)
+                         object_path="/org/blueman/mechanism", systembus=True, *args, **kwargs)
 
 
 class AppletService(ProxyBase):
     def __init__(self, *args, **kwargs):
         super().__init__(name='org.blueman.Applet', interface_name='org.blueman.Applet',
-                         *args, **kwargs)
+                         object_path="/org/blueman/applet", *args, **kwargs)
