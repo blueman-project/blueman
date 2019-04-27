@@ -8,7 +8,6 @@ from html import escape
 
 from blueman.bluez import obex
 from blueman.Functions import launch
-from blueman.gui.CommonUi import ErrorDialog
 from blueman.gui.Notification import Notification
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Config import Config
@@ -142,26 +141,26 @@ class TransferService(AppletPlugin):
     _signals = []
     _agent = None
     _watch = None
+    _notification = None
 
     def on_load(self):
+        def on_reset(*_args):
+            self._notification = None
+            self._config.reset('shared-path')
+            logging.info('Reset share path')
+
         self._config = Config("org.blueman.transfer")
 
-        if not self._config["shared-path"]:
-            d = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_DOWNLOAD)
-            if not d:
-                self._config["shared-path"] = os.path.expanduser("~")
-            else:
-                self._config["shared-path"] = d
+        share_path, invalid_share_path = self._make_share_path()
 
-        if not os.path.isdir(self._config["shared-path"]):
-            logging.info("Configured share directory %s does not exist" % self._config["shared-path"])
-
-            text = _("Configured directory for incoming files does not exist")
-            secondary_text = _("Please make sure that directory \"<b>%s</b>\" exists or "
-                               "configure it with blueman-services")
-            dlg = ErrorDialog(text, secondary_text % self._config["shared-path"])
-            dlg.run()
-            dlg.destroy()
+        if invalid_share_path:
+            text = _('Configured directory for incoming files does not exist')
+            secondary_text = _('Please make sure that directory "<b>%s</b>" exists or '
+                               'configure it with blueman-services. Until then the default "%s" will be used')
+            self._notification = Notification(text, secondary_text % (self._config["shared-path"], share_path),
+                                              icon_name='blueman', timeout=30000,
+                                              actions=[['reset', 'Reset to default', 'blueman']], actions_cb=on_reset)
+            self._notification.show()
 
         self._watch = obex.Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
 
@@ -170,6 +169,32 @@ class TransferService(AppletPlugin):
             Gio.bus_unwatch_name(self._watch)
 
         self._unregister_agent()
+
+    def _make_share_path(self):
+        config_path = self._config["shared-path"]
+        default_path = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_DOWNLOAD)
+        path = None
+        error = False
+
+        if config_path == '':
+            path = default_path
+        elif not os.path.isdir(config_path):
+            path = default_path
+            error = True
+            logging.warning('Invalid shared-path %s' % config_path)
+        else:
+            path = config_path
+
+        if not path:
+            path = os.path.expanduser("~")
+            logging.warning('Failed to get Download dir from XDG')
+
+        # We used to always store the full path which caused problems
+        if config_path == default_path:
+            logging.info('Reset stored path, identical to default path.')
+            self._config["shared-path"] = ''
+
+        return path, error
 
     def _register_agent(self):
         if not self._agent:
@@ -241,7 +266,7 @@ class TransferService(AppletPlugin):
             return
 
         src = attributes['path']
-        dest_dir = self._config["shared-path"]
+        dest_dir, ignored = self._make_share_path()
         filename = os.path.basename(src)
 
         dest = os.path.join(dest_dir, filename)
@@ -284,13 +309,14 @@ class TransferService(AppletPlugin):
         if self._silent_transfers == 0:
             return
 
+        share_path, ignored = self._make_share_path()
         if self._normal_transfers == 0:
             n = Notification(_("Files received"),
                              ngettext("Received %d file in the background", "Received %d files in the background",
                                       self._silent_transfers) % self._silent_transfers,
                              **self._notify_kwargs)
 
-            self._add_open(n, "Open Location", self._config["shared-path"])
+            self._add_open(n, "Open Location", share_path)
             n.show()
         else:
             n = Notification(_("Files received"),
@@ -298,5 +324,5 @@ class TransferService(AppletPlugin):
                                       "Received %d more files in the background",
                                       self._silent_transfers) % self._silent_transfers,
                              **self._notify_kwargs)
-            self._add_open(n, "Open Location", self._config["shared-path"])
+            self._add_open(n, "Open Location", share_path)
             n.show()
