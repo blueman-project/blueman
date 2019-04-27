@@ -8,20 +8,33 @@ from html import escape
 
 from blueman.bluez import obex
 from blueman.Functions import launch
-from blueman.bluez.obex.Agent import ObexErrorRejected, ObexErrorCanceled
 from blueman.gui.CommonUi import ErrorDialog
 from blueman.gui.Notification import Notification
+from blueman.main.DbusService import DbusService, DbusError
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Config import Config
 
 from gi.repository import GLib, Gio
 
 
-class Agent(obex.Agent):
+class ObexErrorRejected(DbusError):
+    _name = "org.bluez.obex.Error.Rejected"
+
+
+class ObexErrorCanceled(DbusError):
+    _name = "org.bluez.obex.Error.Canceled"
+
+
+class Agent(DbusService):
     __agent_path = '/org/bluez/obex/agent/blueman'
 
     def __init__(self, applet):
-        super(Agent, self).__init__(self.__agent_path)
+        super().__init__(None, "org.bluez.obex.Agent1", self.__agent_path, Gio.BusType.SESSION)
+
+        self.add_method("Release", (), "", self._release)
+        self.add_method("Cancel", (), "", self._cancel)
+        self.add_method("AuthorizePush", ("o",), "s", self._authorize_push, is_async=True)
+        self.register()
 
         self._applet = applet
         self._config = Config("org.blueman.transfer")

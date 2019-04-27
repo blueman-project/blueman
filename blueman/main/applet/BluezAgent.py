@@ -10,11 +10,12 @@ import blueman.bluez as bluez
 from blueman.Sdp import ServiceUUID
 from blueman.Constants import *
 from blueman.gui.Notification import Notification
-from blueman.bluez.Agent import Agent, BluezErrorCanceled, BluezErrorRejected
+from blueman.main.DbusService import DbusService, DbusError
 
-from gi.repository import GLib
+from gi.repository import GLib, Gio
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
@@ -63,11 +64,29 @@ PIN_SEARCHES = [
 ]
 
 
-class BluezAgent(Agent):
+class BluezErrorCanceled(DbusError):
+    _name = "org.bluez.Error.Canceled"
+
+
+class BluezErrorRejected(DbusError):
+    _name = "org.bluez.Error.Rejected"
+
+
+class BluezAgent(DbusService):
     __agent_path = '/org/bluez/agent/blueman'
 
     def __init__(self):
-        super().__init__(self.__agent_path)
+        super().__init__(None, "org.bluez.Agent1", self.__agent_path, Gio.BusType.SYSTEM)
+
+        self.add_method("Release", (), "", self._on_release)
+        self.add_method("RequestPinCode", ("o",), "s", self._on_request_pin_code, is_async=True)
+        self.add_method("DisplayPinCode", ("o", "s"), "", self._on_display_pin_code)
+        self.add_method("RequestPasskey", ("o",), "u", self._on_request_passkey, is_async=True)
+        self.add_method("DisplayPasskey", ("o", "u", "y"), "", self._on_display_passkey)
+        self.add_method("RequestConfirmation", ("o", "u"), "", self._on_request_confirmation, is_async=True)
+        self.add_method("RequestAuthorization", ("o",), "", self._on_request_authorization, is_async=True)
+        self.add_method("AuthorizeService", ("o", "s"), "", self._on_authorize_service, is_async=True)
+        self.add_method("Cancel", (), "", self._on_cancel)
 
         self.dialog = None
         self.n = None
