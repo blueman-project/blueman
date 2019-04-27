@@ -24,9 +24,9 @@ class DBusService(AppletPlugin):
         self._add_dbus_method("QueryPlugins", (), "as", self.parent.Plugins.get_loaded)
         self._add_dbus_method("QueryAvailablePlugins", (), "as", lambda: list(self.parent.Plugins.get_classes()))
         self._add_dbus_method("SetPluginConfig", ("s", "b"), "", self.parent.Plugins.set_config)
-        self._add_dbus_method("connect_service", ("o", "s"), "", self.connect_service, is_async=True)
-        self._add_dbus_method("disconnect_service", ("o", "s", "d"), "", self._disconnect_service, is_async=True)
-        self._add_dbus_method("open_plugin_dialog", (), "", self._open_plugin_dialog)
+        self._add_dbus_method("ConnectService", ("o", "s"), "", self.connect_service, is_async=True)
+        self._add_dbus_method("DisconnectService", ("o", "s", "d"), "", self._disconnect_service, is_async=True)
+        self._add_dbus_method("OpenPluginDialog", (), "", self._open_plugin_dialog)
 
     def on_device_disconnect(self, device):
         pass

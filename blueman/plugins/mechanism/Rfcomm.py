@@ -11,8 +11,8 @@ class Rfcomm(MechanismPlugin):
     files = {}
 
     def on_load(self):
-        self.parent.add_method("open_rfcomm", ("d",), "", self._open_rfcomm)
-        self.parent.add_method("close_rfcomm", ("d",), "", self._close_rfcomm)
+        self.parent.add_method("OpenRFCOMM", ("d",), "", self._open_rfcomm)
+        self.parent.add_method("CloseRFCOMM", ("d",), "", self._close_rfcomm)
 
     def _open_rfcomm(self, port_id):
         subprocess.Popen([RFCOMM_WATCHER_PATH, '/dev/rfcomm%d' % port_id])

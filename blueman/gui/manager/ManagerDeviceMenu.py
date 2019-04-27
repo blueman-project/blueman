@@ -125,9 +125,9 @@ class ManagerDeviceMenu(Gtk.Menu):
             fail(None, GLib.Error('Applet DBus Service not available'), None)
             return
 
-        self._appl.connect_service('(os)', device.get_object_path(), service.uuid,
-                                   result_handler=success, error_handler=fail,
-                                   timeout=GLib.MAXINT)
+        self._appl.ConnectService('(os)', device.get_object_path(), service.uuid,
+                                  result_handler=success, error_handler=fail,
+                                  timeout=GLib.MAXINT)
 
         prog.start()
 
@@ -146,8 +146,8 @@ class ManagerDeviceMenu(Gtk.Menu):
             err(None, GLib.Error('Applet DBus Service not available'), None)
             return
 
-        self._appl.disconnect_service('(osd)', service.device.get_object_path(), service.uuid, port,
-                                      result_handler=ok, error_handler=err)
+        self._appl.DisconnectService('(osd)', service.device.get_object_path(), service.uuid, port,
+                                     result_handler=ok, error_handler=err)
 
     def on_device_property_changed(self, lst, device, tree_iter, key_value):
         key, value = key_value
@@ -172,19 +172,19 @@ class ManagerDeviceMenu(Gtk.Menu):
 
         if connect:
             self.set_op(self.SelectedDevice, _("Connecting..."))
-            self._appl.connect_service("(os)",
-                                       device.get_object_path(),
-                                       '00000000-0000-0000-0000-000000000000',
-                                       result_handler=success, error_handler=fail,
-                                       timeout=GLib.MAXINT)
+            self._appl.ConnectService("(os)",
+                                      device.get_object_path(),
+                                      '00000000-0000-0000-0000-000000000000',
+                                      result_handler=success, error_handler=fail,
+                                      timeout=GLib.MAXINT)
         else:
             self.set_op(self.SelectedDevice, _("Disconnecting..."))
-            self._appl.disconnect_service("(osd)",
-                                          device.get_object_path(),
-                                          '00000000-0000-0000-0000-000000000000',
-                                          0,
-                                          result_handler=success, error_handler=fail,
-                                          timeout=GLib.MAXINT)
+            self._appl.DisconnectService("(osd)",
+                                         device.get_object_path(),
+                                         '00000000-0000-0000-0000-000000000000',
+                                         0,
+                                         result_handler=success, error_handler=fail,
+                                         timeout=GLib.MAXINT)
 
         prog = ManagerProgressbar(self.Blueman, False)
         prog.start()
