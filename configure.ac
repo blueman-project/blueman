@@ -199,25 +199,6 @@ PKG_CHECK_MODULES([BLUEZ], [bluez >= 5.0 gthread-2.0 >= 2.32])
 AC_SUBST([BLUEZ_CFLAGS])
 AC_SUBST([BLUEZ_LIBS])
 
-PKG_CHECK_MODULES([GNOMEICONS],[gnome-icon-theme],
-                  [HAVE_GNOME_ICONS="yes"], [HAVE_GNOME_ICONS="no"])
-
-PKG_CHECK_MODULES([MATEICONS],[mate-icon-theme],
-		  [HAVE_MATE_ICONS="yes"], [HAVE_MATE_ICONS="no"])
-
-PKG_CHECK_MODULES([FAENZAICONS], [faenza-icon-theme],
-		  [HAVE_FAENZA_ICONS="yes"], [HAVE_FAENZA_ICONS="no"])
-
-PKG_CHECK_MODULES([ADWAITAICONS],[adwaita-icon-theme],
-                  [HAVE_ADWAITA_THEME="yes"], [HAVE_ADWAITA_THEME="no"])
-
-if test "x$HAVE_GNOME_ICONS" = "xno" &&
-   test "x$HAVE_MATE_ICONS" = "xno" &&
-   test "x$HAVE_FAENZA_ICONS" = "xno" &&
-   test "x$HAVE_ADWAITA_ICONS" = "xno"; then
-	AC_MSG_ERROR([Required icon themes not found.])
-fi
-
 dnl ----------------------------
 
 AC_ARG_ENABLE([pulseaudio],
@@ -355,4 +336,5 @@ echo PulseAudio support: $use_pulseaudio
 echo AppIndicator support: $use_appindicator
 echo Systemd system unit dir: ${systemd_system_unit_dir}
 echo Systemd user unit dir: ${systemd_user_unit_dir}
+echo Icon theme: gnome-icon-theme, mate-icon-theme, adwaita-icon-theme, elementary-xfce, or Papirus
 echo
