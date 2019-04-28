@@ -8,14 +8,8 @@ from gi.repository import Gtk
 
 class DeviceSelectorDialog(Gtk.Dialog):
     def __init__(self, title=_("Select Device"), parent=None, discover=True, adapter_name=None):
-        super().__init__(
-            title=title,
-            name="DeviceSelectorDialog",
-            parent=parent,
-            buttons=("_Cancel", Gtk.ResponseType.REJECT, "_OK", Gtk.ResponseType.ACCEPT),
-            icon_name="blueman",
-            resizable=False,
-        )
+        super().__init__(title=title, name="DeviceSelectorDialog", parent=parent, icon_name="blueman", resizable=False)
+        self.add_buttons('_Cancel', Gtk.ResponseType.REJECT, '_OK', Gtk.ResponseType.ACCEPT)
 
         self.vbox.props.halign = Gtk.Align.CENTER
         self.vbox.props.valign = Gtk.Align.CENTER
