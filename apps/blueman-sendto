@@ -109,7 +109,7 @@ class SendTo:
             return files
         else:
             d.destroy()
-            return []
+            quit()
 
     def select_device(self):
         adapter_name = os.path.split(self.adapter_path)[-1]
