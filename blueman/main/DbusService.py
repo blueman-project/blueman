@@ -33,6 +33,9 @@ class DbusService:
         self._regid = None
 
     def add_method(self, name, arguments, return_value, method, pass_sender=False, is_async=False):
+        if name in self._signals:
+            raise Exception("%s already defined" % name)
+
         options = set()
         if pass_sender:
             options.add("sender")
@@ -46,6 +49,9 @@ class DbusService:
         self._reregister()
 
     def add_signal(self, name, signature):
+        if name in self._signals:
+            raise Exception("%s already defined" % name)
+
         self._signals[name] = signature
         self._reregister()
 
@@ -117,7 +123,8 @@ class DbusService:
         except Exception as e:
             self._return_dbus_error(invocation, e)
 
-    def _return_dbus_error(self, invocation, data):
+    @staticmethod
+    def _return_dbus_error(invocation, data):
         if isinstance(data, DbusError):
             name, message = data.name, data.message
         elif isinstance(data, Exception):

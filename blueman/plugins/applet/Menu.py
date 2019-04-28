@@ -126,9 +126,12 @@ class Menu(AppletPlugin):
         self._emit_dbus_signal("MenuChanged", self._get_menu())
 
     def _get_menu(self):
-        return [dict((k, GLib.Variant("aa{sv}", [dict((k, self._build_variant(v)) for k, v in i.items()) for i in v])
-                     if k == "submenu" else self._build_variant(v)) for k, v in dict(item).items())
-                for item in self.__menuitems if item.visible]
+        return self._prepare_menu(dict(item) for item in self.__menuitems if item.visible)
+
+    def _prepare_menu(self, data):
+        return [dict((k, GLib.Variant("aa{sv}", self._prepare_menu(v)) if k == "submenu" else self._build_variant(v))
+                     for k, v in item.items())
+                for item in data]
 
     def _build_variant(self, value):
         return GLib.Variant({str: "s", bool: "b"}[type(value)], value)
