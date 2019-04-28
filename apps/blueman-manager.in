@@ -1,21 +1,26 @@
-#!/usr/bin/env python3
+#!@PYTHON@
 # coding=utf-8
-import logging
-import os
 import sys
+import os
 import signal
+import logging
+
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
 
 # support running uninstalled
-_dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+_dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if 'BLUEMAN_SOURCE' in os.environ:
-    sys.path.insert(0, _dirname)
+    sys.path = [_dirname, os.path.join(_dirname, 'module', '.libs')] + sys.path
+    os.environ["GSETTINGS_SCHEMA_DIR"] = os.path.join(_dirname, "data")
 
+from blueman.main.Manager import Blueman
 from blueman.Functions import set_proc_title, create_parser, create_logger
-from blueman.main.Tray import BluemanTray
 
 # Workaround introspection bug, gnome bug 622084
 signal.signal(signal.SIGINT, signal.SIG_DFL)
-signal.signal(signal.SIGTERM, signal.SIG_DFL)
+
 
 if __name__ == '__main__':
     parser = create_parser()
@@ -34,7 +39,8 @@ if __name__ == '__main__':
     else:
         log_level = logging.WARNING
 
-    create_logger(log_level, "blueman-tray", syslog=args.syslog)
+    create_logger(log_level, "blueman-manager", syslog=args.syslog)
 
+    manager = Blueman()
     set_proc_title()
-    BluemanTray()
+    Gtk.main()
