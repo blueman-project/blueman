@@ -1,6 +1,7 @@
 # coding=utf-8
 
 import logging
+import sys
 import traceback
 
 from gi.repository import Gio, GLib
@@ -102,13 +103,14 @@ class DbusService:
             self.unregister()
             self.register()
 
-    def _handle_method_call(self, _connection, sender, _path, _interface_name, method_name, parameters, invocation):
+    def _handle_method_call(self, _connection, sender, _path, interface_name, method_name, parameters, invocation):
         try:
             try:
                 _arguments, result_signature, method, options = self._methods[method_name]
             except KeyError:
                 logging.warning('Unhandled method: %s' % method_name)
-                raise Exception
+                invocation.return_error_literal(Gio.dbus_error_quark(), Gio.DBusError.UNKNOWN_METHOD,
+                                                "No such method on interface: %s.%s" % (interface_name, method_name))
 
             def ok(*result):
                 invocation.return_value(self._prepare_arguments(result_signature, result))
@@ -126,13 +128,17 @@ class DbusService:
     @staticmethod
     def _return_dbus_error(invocation, data):
         if isinstance(data, DbusError):
-            name, message = data.name, data.message
-        elif isinstance(data, Exception):
-            tb = "".join(traceback.format_exception(type(data), data, data.__traceback__))
-            name, message = "org.blueman.Exception", "%s: %s\n%s" % (data.__class__.__name__, data, tb)
+            invocation.return_dbus_error(data.name, data.message)
         else:
-            name, message = "org.blueman.Error", str(data)
-        invocation.return_dbus_error(name, message)
+            if isinstance(data, Exception):
+                et, ev, etb = sys.exc_info()
+                if ev is data:
+                    message = "".join(traceback.format_exception(et, ev, etb))
+                else:
+                    message = "".join(traceback.format_exception_only(data.__class__, data))
+            else:
+                message = str(data)
+            invocation.return_error_literal(Gio.dbus_error_quark(), Gio.DBusError.FAILED, message)
 
     @staticmethod
     def _prepare_arguments(signature, args):
