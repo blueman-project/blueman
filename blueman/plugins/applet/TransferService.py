@@ -237,12 +237,12 @@ class TransferService(AppletPlugin):
         else:
             self._silent_transfers += 1
 
-    @staticmethod
-    def _add_open(n, name, path):
+    def _add_open(self, n, name, path):
         if n.actions_supported:
             logging.info("adding action")
 
             def on_open(*_args):
+                self._notification = None
                 logging.info("open")
                 launch("xdg-open", [path], True)
 
@@ -282,13 +282,13 @@ class TransferService(AppletPlugin):
             success = False
 
         if success:
-            n = Notification(_("File received"),
-                             _("File %(0)s from %(1)s successfully received") % {
-                                 "0": "<b>" + escape(filename) + "</b>",
-                                 "1": "<b>" + escape(attributes['name']) + "</b>"},
-                             **self._notify_kwargs)
-            self._add_open(n, "Open", dest)
-            n.show()
+            self._notification = Notification(_("File received"),
+                                              _("File %(0)s from %(1)s successfully received") % {
+                                                  "0": "<b>" + escape(filename) + "</b>",
+                                                  "1": "<b>" + escape(attributes['name']) + "</b>"},
+                                              **self._notify_kwargs)
+            self._add_open(self._notification, "Open", dest)
+            self._notification.show()
         elif not success:
             n = Notification(
                 _("Transfer failed"),
@@ -311,18 +311,19 @@ class TransferService(AppletPlugin):
 
         share_path, ignored = self._make_share_path()
         if self._normal_transfers == 0:
-            n = Notification(_("Files received"),
-                             ngettext("Received %d file in the background", "Received %d files in the background",
-                                      self._silent_transfers) % self._silent_transfers,
-                             **self._notify_kwargs)
+            self._notification = Notification(_("Files received"),
+                                              ngettext("Received %d file in the background",
+                                                       "Received %d files in the background",
+                                                       self._silent_transfers) % self._silent_transfers,
+                                              **self._notify_kwargs)
 
-            self._add_open(n, "Open Location", share_path)
-            n.show()
+            self._add_open(self._notification, "Open Location", share_path)
+            self._notification.show()
         else:
-            n = Notification(_("Files received"),
-                             ngettext("Received %d more file in the background",
-                                      "Received %d more files in the background",
-                                      self._silent_transfers) % self._silent_transfers,
-                             **self._notify_kwargs)
-            self._add_open(n, "Open Location", share_path)
-            n.show()
+            self._notification = Notification(_("Files received"),
+                                              ngettext("Received %d more file in the background",
+                                                       "Received %d more files in the background",
+                                                       self._silent_transfers) % self._silent_transfers,
+                                              **self._notify_kwargs)
+            self._add_open(self._notification, "Open Location", share_path)
+            self._notification.show()
