@@ -1,5 +1,22 @@
 # Changelog
 
+## 2.1.beta1
+
+### Changes
+
+* Use GDBus and drop dependency on dbus-python
+* Small improvements for LE devices
+* Removed NetworkManager 0.8 support from NetUsage plugin
+* Handle invalid directory for incoming file transfers
+* Quit blueman-sendto when no file was selected
+* Use build-time python executable for shebangs
+
+### Bugs fixed
+
+* Streamlined icon usage so that blueman now supports gnome-icon-theme, mate-icon-theme, adwaita-icon-theme, elementary-xfce, and Papirus
+* Handle corrupt network configuration file
+* The menu bar did not get updated correctly
+
 ## 2.1.alpha3
 
 ### Changes
