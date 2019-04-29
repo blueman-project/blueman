@@ -1,8 +1,8 @@
-#!/usr/bin/env python3
+#!@PYTHON@
 # coding=utf-8
-
 import os
 import sys
+import signal
 import logging
 
 import gi
@@ -15,11 +15,16 @@ if 'BLUEMAN_SOURCE' in os.environ:
     sys.path = [_dirname, os.path.join(_dirname, 'module', '.libs')] + sys.path
     os.environ["GSETTINGS_SCHEMA_DIR"] = os.path.join(_dirname, "data")
 
-from blueman.Functions import set_proc_title, setup_icon_path, create_logger, create_parser
-from blueman.main.Services import BluemanServices
+from blueman.Functions import create_parser, create_logger, set_proc_title
+from blueman.main.Adapter import BluemanAdapters
+
+# Workaround introspection bug, gnome bug 622084
+signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 if __name__ == '__main__':
-    parser = create_parser()
+    parser = parser = create_parser()
+    parser.add_argument("--socket-id", dest="socket_id", action="store", type=int, metavar="ID")
+    parser.add_argument("adapter", nargs="?", metavar="ADAPTER NAME")
     args = parser.parse_args()
 
     if args.LEVEL.upper() == "DEBUG":
@@ -35,9 +40,9 @@ if __name__ == '__main__':
     else:
         log_level = logging.WARNING
 
-    create_logger(log_level, "blueman-services", syslog=args.syslog)
+    create_logger(log_level, "blueman-adapters", syslog=args.syslog)
 
-    setup_icon_path()
-    services = BluemanServices()
     set_proc_title()
+
+    blueman_adapters = BluemanAdapters(args.adapter, args.socket_id)
     Gtk.main()

@@ -39,6 +39,7 @@ AM_PATH_PYTHON([3.3])
 PKG_CHECK_MODULES([PYTHON], [python-${PYTHON_VERSION}])
 AC_SUBST(PYTHON_LIBS)
 AC_SUBST(PYTHON_CFLAGS)
+AC_SUBST(PYTHON)
 
 AC_ARG_ENABLE([runtime_deps_check],
   AS_HELP_STRING([--disable-runtime-deps-check], [Disable runtime dependency check (for package maintainers)]),
@@ -241,6 +242,16 @@ GLIB_GSETTINGS
 AC_OUTPUT([
 Makefile
 apps/Makefile
+apps/blueman-adapters
+apps/blueman-applet
+apps/blueman-assistant
+apps/blueman-manager
+apps/blueman-mechanism
+apps/blueman-report
+apps/blueman-rfcomm-watcher
+apps/blueman-sendto
+apps/blueman-services
+apps/blueman-tray
 blueman/Makefile
 blueman/Constants.py
 blueman/bluez/Makefile
