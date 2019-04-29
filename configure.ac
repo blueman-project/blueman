@@ -39,6 +39,7 @@ AM_PATH_PYTHON([3.3])
 PKG_CHECK_MODULES([PYTHON], [python-${PYTHON_VERSION}])
 AC_SUBST(PYTHON_LIBS)
 AC_SUBST(PYTHON_CFLAGS)
+AC_SUBST(PYTHON)
 
 AC_ARG_ENABLE([runtime_deps_check],
   AS_HELP_STRING([--disable-runtime-deps-check], [Disable runtime dependency check (for package maintainers)]),
@@ -198,25 +199,6 @@ PKG_CHECK_MODULES([BLUEZ], [bluez >= 5.0 gthread-2.0 >= 2.32])
 AC_SUBST([BLUEZ_CFLAGS])
 AC_SUBST([BLUEZ_LIBS])
 
-PKG_CHECK_MODULES([GNOMEICONS],[gnome-icon-theme],
-                  [HAVE_GNOME_ICONS="yes"], [HAVE_GNOME_ICONS="no"])
-
-PKG_CHECK_MODULES([MATEICONS],[mate-icon-theme],
-		  [HAVE_MATE_ICONS="yes"], [HAVE_MATE_ICONS="no"])
-
-PKG_CHECK_MODULES([FAENZAICONS], [faenza-icon-theme],
-		  [HAVE_FAENZA_ICONS="yes"], [HAVE_FAENZA_ICONS="no"])
-
-PKG_CHECK_MODULES([ADWAITAICONS],[adwaita-icon-theme],
-                  [HAVE_ADWAITA_THEME="yes"], [HAVE_ADWAITA_THEME="no"])
-
-if test "x$HAVE_GNOME_ICONS" = "xno" &&
-   test "x$HAVE_MATE_ICONS" = "xno" &&
-   test "x$HAVE_FAENZA_ICONS" = "xno" &&
-   test "x$HAVE_ADWAITA_ICONS" = "xno"; then
-	AC_MSG_ERROR([Required icon themes not found.])
-fi
-
 dnl ----------------------------
 
 AC_ARG_ENABLE([pulseaudio],
@@ -259,6 +241,16 @@ GLIB_GSETTINGS
 AC_OUTPUT([
 Makefile
 apps/Makefile
+apps/blueman-adapters
+apps/blueman-applet
+apps/blueman-assistant
+apps/blueman-manager
+apps/blueman-mechanism
+apps/blueman-report
+apps/blueman-rfcomm-watcher
+apps/blueman-sendto
+apps/blueman-services
+apps/blueman-tray
 blueman/Makefile
 blueman/Constants.py
 blueman/bluez/Makefile
@@ -354,4 +346,5 @@ echo PulseAudio support: $use_pulseaudio
 echo AppIndicator support: $use_appindicator
 echo Systemd system unit dir: ${systemd_system_unit_dir}
 echo Systemd user unit dir: ${systemd_user_unit_dir}
+echo Icon theme: gnome-icon-theme, mate-icon-theme, adwaita-icon-theme, elementary-xfce, or Papirus
 echo

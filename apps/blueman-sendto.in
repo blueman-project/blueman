@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!@PYTHON@
 # coding=utf-8
 import os
 import sys
@@ -96,11 +96,10 @@ class SendTo:
 
         sender.connect("result", on_result)
 
-    def select_files(self):
-        d = Gtk.FileChooserDialog(_("Select files to send"), buttons=("_Cancel", Gtk.ResponseType.REJECT,
-                                                                      "_OK", Gtk.ResponseType.ACCEPT))
-        d.props.icon_name = "blueman-send-file"
-        d.set_select_multiple(True)
+    @staticmethod
+    def select_files():
+        d = Gtk.FileChooserDialog(title=_("Select files to send"), icon_name='blueman-send-file', select_multiple=True)
+        d.add_buttons('_Cancel', Gtk.ResponseType.REJECT, '_OK', Gtk.ResponseType.ACCEPT)
         resp = d.run()
 
         if resp == Gtk.ResponseType.ACCEPT:
@@ -109,7 +108,7 @@ class SendTo:
             return files
         else:
             d.destroy()
-            return []
+            quit()
 
     def select_device(self):
         adapter_name = os.path.split(self.adapter_path)[-1]
