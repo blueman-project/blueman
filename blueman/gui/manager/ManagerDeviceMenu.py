@@ -158,7 +158,7 @@ class ManagerDeviceMenu(Gtk.Menu):
 
     def _generic_connect(self, item, device, connect):
         def fail(obj, result, user_date):
-            logging.info("fail", result)
+            logging.info("fail: %s", result)
             prog.message(_("Failed"))
             self.unset_op(device)
             msg, tb = e_(result.message)

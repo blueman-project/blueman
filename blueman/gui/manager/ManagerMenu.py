@@ -229,7 +229,7 @@ class ManagerMenu:
     def on_adapter_selected(self, menuitem, adapter_path):
         if menuitem.props.active:
             if adapter_path != self.blueman.List.Adapter.get_object_path():
-                logging.info("selected", adapter_path)
+                logging.info("selected %s", adapter_path)
                 self.blueman.Config["last-adapter"] = adapter_path_to_name(adapter_path)
                 self.blueman.List.set_adapter(adapter_path)
 
