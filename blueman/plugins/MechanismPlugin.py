@@ -10,7 +10,5 @@ class MechanismPlugin(object):
 
         self.on_load()
 
-        self.parent.add_definitions(self)
-
     def on_load(self):
         pass

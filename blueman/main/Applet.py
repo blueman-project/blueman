@@ -9,7 +9,7 @@ import logging
 
 import gi
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+from gi.repository import Gtk, Gio
 
 
 class BluemanApplet(object):
@@ -27,7 +27,8 @@ class BluemanApplet(object):
         self.Manager.connect_signal('device-created', self.on_device_created)
         self.Manager.connect_signal('device-removed', self.on_device_removed)
 
-        self.DbusSvc = DbusService("org.blueman.Applet", "/")
+        self.DbusSvc = DbusService("org.blueman.Applet", "org.blueman.Applet", "/org/blueman/applet",
+                                   Gio.BusType.SESSION)
 
         self.Plugins = PersistentPluginManager(AppletPlugin, blueman.plugins.applet, self)
         self.Plugins.load_plugin()
@@ -41,6 +42,8 @@ class BluemanApplet(object):
 
         self._any_device = bluez.AnyDevice()
         self._any_device.connect_signal('property-changed', self._on_device_property_changed)
+
+        self.DbusSvc.register()
 
         Gtk.main()
 

@@ -1,7 +1,6 @@
 # coding=utf-8
 
-import dbus
-import dbus.service
+from gi.repository import GLib
 
 from blueman.plugins.AppletPlugin import AppletPlugin
 from operator import attrgetter
@@ -96,6 +95,10 @@ class Menu(AppletPlugin):
 
         self.__menuitems = []
 
+        self._add_dbus_signal("MenuChanged", "aa{sv}")
+        self._add_dbus_method("GetMenu", (), "aa{sv}", self._get_menu)
+        self._add_dbus_method("ActivateMenuItem", ("ai",), "", self._activate_menu_item)
+
     def __sort(self):
         self.__menuitems.sort(key=attrgetter('priority'))
 
@@ -120,22 +123,20 @@ class Menu(AppletPlugin):
         self.__sort()
 
     def on_menu_changed(self):
-        self.MenuChanged(self.GetMenu())
+        self._emit_dbus_signal("MenuChanged", self._get_menu())
 
-    @dbus.service.signal('org.blueman.Applet', signature='aa{sv}')
-    def MenuChanged(self, menu):
-        pass
+    def _get_menu(self):
+        return self._prepare_menu(dict(item) for item in self.__menuitems if item.visible)
 
-    @dbus.service.method('org.blueman.Applet', in_signature='', out_signature='aa{sv}')
-    def GetMenu(self):
-        items = [dict(item) for item in self.__menuitems if item.visible]
-        for item in items:
-            if 'submenu' in item:
-                item['submenu'] = dbus.Array(item['submenu'], signature="a{sv}")
-        return items
+    def _prepare_menu(self, data):
+        return [dict((k, GLib.Variant("aa{sv}", self._prepare_menu(v)) if k == "submenu" else self._build_variant(v))
+                     for k, v in item.items())
+                for item in data]
 
-    @dbus.service.method('org.blueman.Applet', in_signature='ai', out_signature='')
-    def ActivateMenuItem(self, indexes):
+    def _build_variant(self, value):
+        return GLib.Variant({str: "s", bool: "b"}[type(value)], value)
+
+    def _activate_menu_item(self, indexes):
         node = [item for item in self.__menuitems if item.visible][indexes[0]]
         for index in list(indexes)[1:]:
             node = [item for item in node.submenu_items if item.visible][index]

@@ -1,5 +1,5 @@
 # coding=utf-8
-import dbus.service
+
 import logging
 from blueman.bluez.Network import AnyNetwork
 from blueman.gui.Notification import Notification
@@ -20,12 +20,10 @@ class DhcpClient(AppletPlugin):
 
         self.quering = []
 
+        self._add_dbus_method("DhcpClient", ("s",), "", self.dhcp_acquire)
+
     def on_unload(self):
         del self._any_network
-
-    @dbus.service.method('org.blueman.Applet', in_signature="s")
-    def DhcpClient(self, interface):
-        self.dhcp_acquire(interface)
 
     def _on_network_prop_changed(self, _network, key, value, _path):
         if key == "Interface":

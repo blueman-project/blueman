@@ -4,7 +4,6 @@
 
 * [BlueZ 5](http://www.bluez.org/)
 * [dbus](http://www.freedesktop.org/wiki/Software/dbus/)
-* [dbus-python](http://www.freedesktop.org/wiki/Software/DBusBindings/#python)
 * [GdkPixbuf](http://www.gtk.org/) (GI bindings)
 * [GLib 2, Gio 2](http://www.gtk.org/) (>= 2.32) (GI bindings)
 * [GTK+ 3](http://www.gtk.org/) (GI bindings) [1]

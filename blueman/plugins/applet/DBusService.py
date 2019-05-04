@@ -4,8 +4,6 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.bluez.Device import Device
 from blueman.services.Functions import get_service
 
-import dbus
-import dbus.service
 import logging
 
 
@@ -23,22 +21,16 @@ class DBusService(AppletPlugin):
         AppletPlugin.add_method(self.service_connect_handler)
         AppletPlugin.add_method(self.service_disconnect_handler)
 
-    @dbus.service.method('org.blueman.Applet', in_signature="", out_signature="as")
-    def QueryPlugins(self):
-        return self.parent.Plugins.get_loaded()
+        self._add_dbus_method("QueryPlugins", (), "as", self.parent.Plugins.get_loaded)
+        self._add_dbus_method("QueryAvailablePlugins", (), "as", lambda: list(self.parent.Plugins.get_classes()))
+        self._add_dbus_method("SetPluginConfig", ("s", "b"), "", self.parent.Plugins.set_config)
+        self._add_dbus_method("ConnectService", ("o", "s"), "", self.connect_service, is_async=True)
+        self._add_dbus_method("DisconnectService", ("o", "s", "d"), "", self._disconnect_service, is_async=True)
+        self._add_dbus_method("OpenPluginDialog", (), "", self._open_plugin_dialog)
 
     def on_device_disconnect(self, device):
         pass
 
-    @dbus.service.method('org.blueman.Applet', in_signature="", out_signature="as")
-    def QueryAvailablePlugins(self):
-        return list(self.parent.Plugins.get_classes())
-
-    @dbus.service.method('org.blueman.Applet', in_signature="sb", out_signature="")
-    def SetPluginConfig(self, plugin, value):
-        self.parent.Plugins.set_config(plugin, value)
-
-    @dbus.service.method('org.blueman.Applet', in_signature="os", async_callbacks=("ok", "err"))
     def connect_service(self, object_path, uuid, ok, err):
         try:
             self.parent.Plugins.RecentConns
@@ -57,9 +49,9 @@ class DBusService(AppletPlugin):
 
             service = get_service(Device(object_path), uuid)
 
-            if service.group == 'serial' and 'NMDUNSupport' in self.QueryPlugins():
+            if service.group == 'serial' and 'NMDUNSupport' in self.parent.Plugins.get_loaded():
                 self.parent.Plugins.run_ex("service_connect_handler", cb, service, ok, err)
-            elif service.group == 'serial' and 'PPPSupport' in self.QueryPlugins():
+            elif service.group == 'serial' and 'PPPSupport' in self.parent.Plugins.get_loaded():
                 def reply(rfcomm):
                     self.parent.Plugins.run("on_rfcomm_connected", service, rfcomm)
                     ok(rfcomm)
@@ -69,14 +61,12 @@ class DBusService(AppletPlugin):
                     pass
                 else:
                     logging.info("No handler registered")
-                    err(dbus.DBusException(
-                        "Service not supported\nPossibly the plugin that handles this service is not loaded"))
+                    err("Service not supported\nPossibly the plugin that handles this service is not loaded")
             else:
                 if not self.parent.Plugins.run_ex("service_connect_handler", cb, service, ok, err):
                     service.connect(reply_handler=ok, error_handler=err)
 
-    @dbus.service.method('org.blueman.Applet', in_signature="osd", async_callbacks=("ok", "err"))
-    def disconnect_service(self, object_path, uuid, port, ok, err):
+    def _disconnect_service(self, object_path, uuid, port, ok, err):
         if uuid == '00000000-0000-0000-0000-000000000000':
             device = Device(object_path)
             device.disconnect(reply_handler=ok, error_handler=err)
@@ -87,9 +77,9 @@ class DBusService(AppletPlugin):
 
             service = get_service(Device(object_path), uuid)
 
-            if service.group == 'serial' and 'NMDUNSupport' in self.QueryPlugins():
+            if service.group == 'serial' and 'NMDUNSupport' in self.parent.Plugins.get_loaded():
                 self.parent.Plugins.run_ex("service_disconnect_handler", cb, service, ok, err)
-            elif service.group == 'serial' and 'PPPSupport' in self.QueryPlugins():
+            elif service.group == 'serial' and 'PPPSupport' in self.parent.Plugins.get_loaded():
                 service.disconnect(port, reply_handler=ok, error_handler=err)
 
                 self.parent.Plugins.run("on_rfcomm_disconnect", port)
@@ -105,8 +95,7 @@ class DBusService(AppletPlugin):
     def service_disconnect_handler(self, service, ok, err):
         pass
 
-    @dbus.service.method('org.blueman.Applet')
-    def open_plugin_dialog(self):
+    def _open_plugin_dialog(self):
         self.parent.Plugins.StandardItems.on_plugins()
 
     def rfcomm_connect_handler(self, service, reply_handler, error_handler):

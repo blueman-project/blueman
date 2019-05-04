@@ -1,6 +1,5 @@
 # coding=utf-8
 from blueman.plugins.BasePlugin import BasePlugin
-from functools import partial
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -9,12 +8,11 @@ from gi.repository import Gtk
 ictheme = Gtk.IconTheme.get_default()
 
 
-class MethodAlreadyExists(Exception):
-    pass
-
-
 class AppletPlugin(BasePlugin):
     __icon__ = "blueman-plugin"
+
+    _dbus_methods = None
+    _dbus_signals = None
 
     def __init__(self, parent):
         super(AppletPlugin, self).__init__(parent)
@@ -26,14 +24,23 @@ class AppletPlugin(BasePlugin):
 
         self.__overrides = []
 
+        self._dbus_service = parent.DbusSvc
+        self._dbus_methods = set()
+        self._dbus_signals = set()
+
+    def _add_dbus_method(self, name, arguments, return_value, method, is_async=False):
+        self._dbus_methods.add(name)
+        self._dbus_service.add_method(name, arguments, return_value, method, is_async=is_async)
+
+    def _add_dbus_signal(self, name, signature):
+        self._dbus_signals.add(name)
+        self._dbus_service.add_signal(name, signature)
+
+    def _emit_dbus_signal(self, name, *args):
+        self._dbus_service.emit_signal(name, *args)
+
     def on_unload(self):
         pass
-
-    def override_method(self, obj, method, override):
-        """Replace a method on an object with another which will be called instead"""
-        orig = obj.__getattribute__(method)
-        obj.__setattr__(method, partial(override, obj))
-        self.__overrides.append((obj, method, orig))
 
     def _unload(self):
         for (obj, method, orig) in self.__overrides:
@@ -41,12 +48,13 @@ class AppletPlugin(BasePlugin):
 
         super(AppletPlugin, self)._unload()
 
-        self.parent.DbusSvc.remove_definitions(self)
+        for method in self._dbus_methods:
+            self._dbus_service.remove_method(method)
+        for signal in self._dbus_signals:
+            self._dbus_service.remove_signal(signal)
 
     def _load(self):
         super(AppletPlugin, self)._load()
-
-        self.parent.DbusSvc.add_definitions(self)
 
         # The applet will run on_manager_state_changed once at startup so until it has we don't.
         if self.parent.plugin_run_state_changed:

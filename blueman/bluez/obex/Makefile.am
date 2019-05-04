@@ -1,6 +1,5 @@
 bluemandir = $(pythondir)/blueman/bluez/obex
 blueman_PYTHON = 	\
-	Agent.py	\
 	AgentManager.py	\
 	Base.py		\
 	Client.py	\

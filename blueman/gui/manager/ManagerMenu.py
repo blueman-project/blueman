@@ -272,4 +272,4 @@ class ManagerMenu:
     def _on_plugin_dialog_activate(self, *args):
         def cb(*args):
             pass
-        self.blueman.Applet.open_plugin_dialog(result_handler=cb)
+        self.blueman.Applet.OpenPluginDialog(result_handler=cb)

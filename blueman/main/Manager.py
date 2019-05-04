@@ -109,7 +109,7 @@ class Blueman(Gtk.Window):
                 exit()
 
             if 'PowerManager' in self.Applet.QueryPlugins():
-                if not self.Applet.get_bluetooth_status():
+                if not self.Applet.GetBluetoothStatus():
                     bt_status_changed(False)
 
             self._applet_sig = self.Applet.connect('g-signal', on_applet_signal)

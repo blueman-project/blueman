@@ -1,6 +1,5 @@
 # coding=utf-8
 
-import dbus.service
 from gi.repository import GObject, GLib
 
 from blueman.Functions import launch, kill, get_pid, get_lockfile
@@ -38,6 +37,15 @@ class StatusIcon(AppletPlugin, GObject.GObject):
         self.parent.Plugins.connect('plugin-loaded', self._on_plugins_changed)
         self.parent.Plugins.connect('plugin-unloaded', self._on_plugins_changed)
 
+        self._add_dbus_method("GetVisibility", (), "b", lambda: self.visible)
+        self._add_dbus_signal("VisibilityChanged", "b")
+        self._add_dbus_signal("TextChanged", "s")
+        self._add_dbus_method("GetText", (), "s", self._get_text)
+        self._add_dbus_signal("IconNameChanged", "s")
+        self._add_dbus_method("GetStatusIconImplementation", (), "s", self._get_status_icon_implementation)
+        self._add_dbus_method("GetIconName", (), "s", self._get_icon_name)
+        self._add_dbus_method("Activate", (), "", lambda: self.emit("activate"))
+
     def on_power_state_changed(self, _manager, state):
         if state:
             self.set_text_line(0, _("Bluetooth Enabled"))
@@ -71,18 +79,10 @@ class StatusIcon(AppletPlugin, GObject.GObject):
         self.visibility_timeout = None
         self.query_visibility()
 
-    @dbus.service.method('org.blueman.Applet', in_signature="", out_signature="b")
-    def GetVisibility(self):
-        return self.visible
-
     def set_visible(self, visible, emit):
         self.visible = visible
         if emit:
-            self.VisibilityChanged(visible)
-
-    @dbus.service.signal('org.blueman.Applet', signature='b')
-    def VisibilityChanged(self, visible):
-        pass
+            self._emit_dbus_signal("VisibilityChanged", visible)
 
     def set_text_line(self, lineid, text):
         if text:
@@ -90,23 +90,14 @@ class StatusIcon(AppletPlugin, GObject.GObject):
         else:
             self.lines.pop(lineid, None)
 
-        self.TextChanged(self.GetText())
+        self._emit_dbus_signal("TextChanged", self._get_text())
 
-    @dbus.service.signal('org.blueman.Applet', signature='s')
-    def TextChanged(self, text):
-        pass
-
-    @dbus.service.method('org.blueman.Applet', in_signature="", out_signature="s")
-    def GetText(self):
+    def _get_text(self):
         return '\n'.join([self.lines[key] for key in sorted(self.lines)])
 
     def icon_should_change(self):
-        self.IconNameChanged(self.GetIconName())
+        self._emit_dbus_signal("IconNameChanged", self._get_icon_name())
         self.query_visibility()
-
-    @dbus.service.signal('org.blueman.Applet', signature='s')
-    def IconNameChanged(self, icon_name):
-        pass
 
     def on_adapter_added(self, path):
         self.query_visibility()
@@ -118,19 +109,17 @@ class StatusIcon(AppletPlugin, GObject.GObject):
         self.query_visibility()
 
     def _on_plugins_changed(self, _plugins, _name):
-        implementation = self.GetStatusIconImplementation()
+        implementation = self._get_status_icon_implementation()
         if not self._implementation or self._implementation != implementation:
             self._implementation = implementation
             kill(get_pid(get_lockfile('blueman-tray')), 'blueman-tray')
             launch('blueman-tray', icon_name='blueman', sn=False)
 
-    @dbus.service.method('org.blueman.Applet', in_signature="", out_signature="s")
-    def GetStatusIconImplementation(self):
+    def _get_status_icon_implementation(self):
         implementations = self.parent.Plugins.run("on_query_status_icon_implementation")
         return next((implementation for implementation in implementations if implementation), 'GtkStatusIcon')
 
-    @dbus.service.method('org.blueman.Applet', in_signature="", out_signature="s")
-    def GetIconName(self):
+    def _get_icon_name(self):
         icon = "blueman-tray"
 
         def callback(inst, ret):
@@ -151,7 +140,3 @@ class StatusIcon(AppletPlugin, GObject.GObject):
 
     def on_status_icon_query_icon(self):
         return None
-
-    @dbus.service.method('org.blueman.Applet', in_signature="")
-    def Activate(self):
-        self.emit('activate')

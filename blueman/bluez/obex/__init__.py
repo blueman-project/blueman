@@ -1,5 +1,4 @@
 # coding=utf-8
-from blueman.bluez.obex.Agent import Agent  # noqa: F401
 from blueman.bluez.obex.AgentManager import AgentManager  # noqa: F401
 from blueman.bluez.obex.Client import Client  # noqa: F401
 from blueman.bluez.obex.Manager import Manager  # noqa: F401
