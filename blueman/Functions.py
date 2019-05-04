@@ -18,6 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 from time import sleep
+from typing import Optional, Dict, Tuple
 import re
 import os
 import signal
@@ -32,6 +33,8 @@ import traceback
 import fcntl
 import struct
 import termios
+import socket
+import array
 
 from blueman.main.Config import Config
 
@@ -56,7 +59,7 @@ from gi.repository import Gio
 __all__ = ["check_bluetooth_status", "launch", "setup_icon_path", "get_icon",
            "get_notification_icon", "adapter_path_to_name", "e_", "opacify_pixbuf", "composite_icon",
            "format_bytes", "create_menuitem", "get_lockfile", "get_pid", "is_running", "check_single_instance", "kill",
-           "have", "set_proc_title", "create_logger", "create_parser", "open_rfcomm"]
+           "have", "set_proc_title", "create_logger", "create_parser", "open_rfcomm", "get_local_interfaces"]
 
 
 def check_bluetooth_status(message, exitfunc):
@@ -411,3 +414,46 @@ def open_rfcomm(file, mode):
             return open_rfcomm(file, mode)
         else:
             raise
+
+
+def _netmask_for_ifacename(name: str, sock: socket.socket) -> Optional[str]:
+    siocgifnetmask = 0x891b
+    bytebuf = struct.pack('256s', name.encode('utf-8'))
+    try:
+        ret = fcntl.ioctl(sock.fileno(), siocgifnetmask, bytebuf)
+    except IOError:
+        logging.error('siocgifnetmask failed')
+        return None
+
+    return socket.inet_ntoa(ret[20:24])
+
+
+def get_local_interfaces() -> Dict[str, Tuple[str, Optional[str]]]:
+    """ Returns a dictionary of name:ip, mask key value pairs. """
+    siocgifconf = 0x8912
+    names = array.array('B', 4096 * b'\0')
+    names_address, names_length = names.buffer_info()
+    mutable_byte_buffer = struct.pack('iL', 4096, names_address)
+
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+            try:
+                mutated_byte_buffer = fcntl.ioctl(sock.fileno(), siocgifconf, mutable_byte_buffer)
+            except IOError:
+                logging.error('siocgifconf failed')
+                return {}
+
+            max_bytes_out, names_address_out = struct.unpack('iL', mutated_byte_buffer)
+            namestr = names.tobytes()
+
+            ip_dict = {}
+            for i in range(0, max_bytes_out, 40):
+                name = namestr[i: i + 16].split(b'\0', 1)[0].decode('utf-8')
+                ipaddr = socket.inet_ntoa(namestr[i + 20: i + 24])
+                mask = _netmask_for_ifacename(name, sock)
+                ip_dict[name] = (ipaddr, mask)
+    except socket.error:
+        logging.error('Socket creation failed', exc_info=True)
+        return {}
+
+    return ip_dict

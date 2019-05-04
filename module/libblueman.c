@@ -44,52 +44,6 @@
 
 #include "libblueman.h"
 
-char* get_net_address(char* iface, int _ioctl) {
-	int sock = socket(AF_INET, SOCK_STREAM, 0);
-	if (sock < 0) {
-		return NULL;
-	}
-		
-	struct ifreq ifr;
-	strncpy(ifr.ifr_name, iface, IFNAMSIZ);
-	
-	int err = ioctl(sock, _ioctl, &ifr);
-	if (err < 0) {
-		close(sock);
-		return NULL;
-	}
-	
-	return inet_ntoa(((struct sockaddr_in*) &ifr.ifr_addr)->sin_addr);
-}
-
-char** get_interface_list() {
-	int sock = socket(AF_INET, SOCK_STREAM, 0);
-	char** rets = NULL;
-	
-	struct ifconf ifc;
-	ifc.ifc_len = 128 * sizeof(struct ifreq);
-	ifc.ifc_req = malloc(ifc.ifc_len);
-	
-	int res = ioctl(sock, SIOCGIFCONF, &ifc);
-	if(res < 0) {
-
-	} else {
-		int size = ifc.ifc_len/sizeof(struct ifreq);
-	
-		rets = malloc((size+1)*sizeof(char*));
-		memset(rets, '\0', (size+1)*sizeof(char*));
-	
-		int i;
-		for(i = 0; i < size; i++) {
-			rets[i] = strdup(ifc.ifc_req[i].ifr_name);
-		}
-	}
-
-	close(sock);
-	free(ifc.ifc_req);
-	return rets;
-}
-
 static inline unsigned long __tv_to_jiffies(const struct timeval *tv)
 {
         unsigned long long jif;

@@ -4,8 +4,7 @@ from gi.repository import GLib
 import socket
 import subprocess
 import logging
-from blueman.Functions import have
-from _blueman import get_net_address
+from blueman.Functions import have, get_local_interfaces
 
 
 class DhcpClient(GObject.GObject):
@@ -56,10 +55,11 @@ class DhcpClient(GObject.GObject):
             self._client.terminate()
 
     def _check_client(self):
+        netifs = get_local_interfaces()
         status = self._client.poll()
         if status == 0:
             def complete():
-                ip = get_net_address(self._interface)
+                ip = netifs[self._interface][0]
                 logging.info("bound to %s" % ip)
                 self.emit("connected", ip)
 
