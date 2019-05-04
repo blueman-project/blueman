@@ -3,10 +3,8 @@ from random import randint
 from locale import bind_textdomain_codeset
 import logging
 import ipaddress
-
 from blueman.Constants import *
-from blueman.Functions import have
-from _blueman import get_net_interfaces, get_net_address, get_net_netmask
+from blueman.Functions import have, get_local_interfaces
 from blueman.plugins.ServicePlugin import ServicePlugin
 from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler, UdhcpdHandler
 from blueman.main.Config import Config
@@ -33,10 +31,11 @@ class Network(ServicePlugin):
         container.pack_start(self.widget, True, True, 0)
 
         self.interfaces = []
-        for iface in get_net_interfaces():
+        netifs = get_local_interfaces()
+        for iface in netifs:
             if iface != "lo" and iface != "pan1":
                 logging.info(iface)
-                ipiface = ipaddress.ip_interface('/'.join((get_net_address(iface), get_net_netmask(iface))))
+                ipiface = ipaddress.ip_interface('/'.join(netifs[iface]))
                 self.interfaces.append((iface, ipiface))
 
         self.setup_network()

@@ -90,55 +90,7 @@ cdef extern from "libblueman.h":
     cdef float get_page_timeout(int hdev)
     cdef int _create_bridge(char* name)
     cdef int _destroy_bridge(char* name)
-    cdef char* c_get_net_address "get_net_address" (char* iface, int i)
-    cdef char** c_get_interface_list "get_interface_list" ()
 
-cdef extern from "linux/sockios.h":
-    cdef int SIOCGIFADDR
-    cdef int SIOCGIFNETMASK
-
-def get_net_address(py_iface):
-    py_bytes_iface = py_iface.encode('UTF-8')
-    cdef char* iface = py_bytes_iface
-    cdef char* addr
-    if iface is not None:
-        addr = c_get_net_address(iface, SIOCGIFADDR)
-        if addr == NULL:
-            return None
-        else:
-            return addr.decode("UTF-8")
-
-def get_net_netmask(py_iface):
-    py_bytes_iface = py_iface.encode("UTF-8")
-    cdef char* iface = py_bytes_iface
-    cdef char* addr
-    if iface is not None:
-        addr = c_get_net_address(iface, SIOCGIFNETMASK)
-        if addr == NULL:
-            return None
-        else:
-            return addr.decode("UTF-8")
-
-def get_net_interfaces():
-    cdef char** ifaces
-    cdef int i
-    i = 0
-
-    ifaces = c_get_interface_list()
-    if ifaces == NULL:
-        return []
-
-    ret = []
-    while 1:
-        if ifaces[i] == NULL:
-            break
-        else:
-            ret.append(ifaces[i].decode("UTF-8"))
-            free(ifaces[i])
-        i = i + 1
-
-    free(ifaces)
-    return ret
 
 class RFCOMMError(Exception):
     pass
