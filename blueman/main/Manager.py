@@ -108,9 +108,8 @@ class Blueman(Gtk.Window):
                 print("Blueman applet needs to be running")
                 exit()
 
-            if 'PowerManager' in self.Applet.QueryPlugins():
-                if not self.Applet.GetBluetoothStatus():
-                    bt_status_changed(False)
+            check_bluetooth_status(_("Bluetooth needs to be turned on for the device manager to function"),
+                                   lambda: Gtk.main_quit())
 
             self._applet_sig = self.Applet.connect('g-signal', on_applet_signal)
 
