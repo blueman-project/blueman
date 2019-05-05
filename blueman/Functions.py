@@ -59,44 +59,50 @@ __all__ = ["check_bluetooth_status", "launch", "setup_icon_path", "get_icon",
            "have", "set_proc_title", "create_logger", "create_parser", "open_rfcomm"]
 
 
-def check_bluetooth_status(message, exitfunc, *args, **kwargs):
+def check_bluetooth_status(message, exitfunc):
     try:
         applet = AppletService()
     except DBusProxyFailed as e:
         logging.exception(e)
         print("Blueman applet needs to be running")
         exitfunc()
-    if "PowerManager" in applet.QueryPlugins():
-        if not applet.GetBluetoothStatus():
+        return
 
-            d = Gtk.MessageDialog(None, type=Gtk.MessageType.ERROR)
-            d.props.icon_name = "blueman"
-            d.props.text = _("Bluetooth Turned Off")
-            d.props.secondary_text = message
+    if "PowerManager" not in applet.QueryPlugins():
+        return
 
-            d.add_button(_("Exit"), Gtk.ResponseType.NO)
-            d.add_button(_("Enable Bluetooth"), Gtk.ResponseType.YES)
-            resp = d.run()
-            d.destroy()
-            if resp != Gtk.ResponseType.YES:
-                exitfunc()
-            else:
-                applet.SetBluetoothStatus('(b)', True, **kwargs)
-                if not applet.GetBluetoothStatus():
-                    print('Failed to enable bluetooth')
-                    exitfunc()
+    if not applet.GetBluetoothStatus():
+        d = Gtk.MessageDialog(
+            None, type=Gtk.MessageType.ERROR, icon_name="blueman",
+            text=_("Bluetooth Turned Off"), secondary_text=message)
+        d.add_button(_("Exit"), Gtk.ResponseType.NO)
+        d.add_button(_("Enable Bluetooth"), Gtk.ResponseType.YES)
 
-        config = Config("org.blueman.plugins.powermanager", None)
-        if config["auto-power-on"] is None:
-            d = Gtk.MessageDialog(None, type=Gtk.MessageType.ERROR)
-            d.props.icon_name = "blueman"
-            d.props.text = _("Shall bluetooth get enabled automatically?")
+        resp = d.run()
+        d.destroy()
 
-            d.add_button(_("No"), Gtk.ResponseType.NO)
-            d.add_button(_("Yes"), Gtk.ResponseType.YES)
-            resp = d.run()
-            d.destroy()
-            config["auto-power-on"] = resp == Gtk.ResponseType.YES
+        if resp != Gtk.ResponseType.YES:
+            exitfunc()
+            return
+
+    applet.SetBluetoothStatus('(b)', True)
+    if not applet.GetBluetoothStatus():
+        print('Failed to enable bluetooth')
+        exitfunc()
+        return
+
+    config = Config("org.blueman.plugins.powermanager")
+    if config["auto-power-on"] is None:
+        d = Gtk.MessageDialog(
+            None, type=Gtk.MessageType.QUESTION, icon_name="blueman",
+            text=_("Shall bluetooth get enabled automatically?"))
+        d.add_button(_("Yes"), Gtk.ResponseType.YES)
+        d.add_button(_("No"), Gtk.ResponseType.NO)
+
+        resp = d.run()
+        d.destroy()
+
+        config["auto-power-on"] = resp == Gtk.ResponseType.YES
 
 
 def launch(cmd, paths=None, system=False, icon_name=None, sn=True, name="blueman"):
