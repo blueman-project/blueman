@@ -33,6 +33,8 @@ import fcntl
 import struct
 import termios
 
+from blueman.main.Config import Config
+
 try:
     in_fg = os.getpgrp() == struct.unpack(str('h'), fcntl.ioctl(0, termios.TIOCGPGRP, "  "))[0]
 except IOError:
@@ -72,7 +74,7 @@ def check_bluetooth_status(message, exitfunc, *args, **kwargs):
             d.props.text = _("Bluetooth Turned Off")
             d.props.secondary_text = message
 
-            d.add_button("Exit", Gtk.ResponseType.NO)
+            d.add_button(_("Exit"), Gtk.ResponseType.NO)
             d.add_button(_("Enable Bluetooth"), Gtk.ResponseType.YES)
             resp = d.run()
             d.destroy()
@@ -83,6 +85,18 @@ def check_bluetooth_status(message, exitfunc, *args, **kwargs):
                 if not applet.GetBluetoothStatus():
                     print('Failed to enable bluetooth')
                     exitfunc()
+
+        config = Config("org.blueman.plugins.powermanager", None)
+        if config["auto-power-on"] is None:
+            d = Gtk.MessageDialog(None, type=Gtk.MessageType.ERROR)
+            d.props.icon_name = "blueman"
+            d.props.text = _("Shall bluetooth get enabled automatically?")
+
+            d.add_button(_("No"), Gtk.ResponseType.NO)
+            d.add_button(_("Yes"), Gtk.ResponseType.YES)
+            resp = d.run()
+            d.destroy()
+            config["auto-power-on"] = resp == Gtk.ResponseType.YES
 
 
 def launch(cmd, paths=None, system=False, icon_name=None, sn=True, name="blueman"):
