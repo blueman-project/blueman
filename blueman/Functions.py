@@ -32,17 +32,10 @@ from ctypes import cdll, byref, create_string_buffer
 import traceback
 import fcntl
 import struct
-import termios
 import socket
 import array
 
 from blueman.main.Config import Config
-
-try:
-    in_fg = os.getpgrp() == struct.unpack(str('h'), fcntl.ioctl(0, termios.TIOCGPGRP, "  "))[0]
-except IOError:
-    in_fg = 'DEBUG' in os.environ
-
 from blueman.main.DBusProxies import AppletService, DBusProxyFailed
 from blueman.Constants import *
 
