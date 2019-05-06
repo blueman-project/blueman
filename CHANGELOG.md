@@ -10,6 +10,7 @@
 * Handle invalid directory for incoming file transfers
 * Quit blueman-sendto when no file was selected
 * Use build-time python executable for shebangs
+* Ask user for initial auto-power-on setting
 
 ### Bugs fixed
 
