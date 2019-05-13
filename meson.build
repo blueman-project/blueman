@@ -1,8 +1,8 @@
 project(
     'blueman', 'c',
-    version: '2.1-alpha2',
+    version: '2.1-beta1',
     license: 'GPL3',
-    meson_version: '>=0.44.0'
+    meson_version: '>=0.47.0'
 )
 
 package_name = 'blueman'
@@ -12,8 +12,9 @@ python = import('python3')
 gnome = import('gnome')
 i18n = import('i18n')
 
+pyprog = python.find_python()
 # Make sure Python is installed and found
-if not python.find_python().found()
+if not pyprog.found()
     error('No valid python3 binary found')
 endif
 
@@ -45,7 +46,7 @@ conf_data.set('icondir', join_paths(datadir, 'icons'))
 conf_data.set('dhconfig', get_option('dhcp-config-path'))
 conf_data.set('have_polkit', have_polkit)
 conf_data.set('GETTEXT_PACKAGE', package_name)
-
+conf_data.set('PYTHON', pyprog.path())
 
 # Check for build dependencies
 pythonlib = dependency('python-' + python.language_version(), required: true)
@@ -60,44 +61,30 @@ systemd = dependency('systemd', required: false)
 do_runtime_checks = get_option('runtime_deps_check')
 
 gtk = dependency('gtk+-3.0', version: '>= 3.10.', required: do_runtime_checks)
-dbus_python = dependency('dbus-python', required: do_runtime_checks)
 
-# handle icons slightly differently
-gnome_icons = dependency('gnome-icon-theme', required: false)
-mate_icons = dependency('mate-icon-theme', required: false)
-adwaita_icons = dependency('adwaita-icon-theme', required: false)
-faenza_icons = dependency('faenza-icon-theme', required: false)
+# Configure blueman apps
+foreach libexecapp: ['blueman-mechanism', 'blueman-rfcomm-watcher']
+    configure_file(
+        input: join_paths('apps', libexecapp + '.in'),
+        output: libexecapp,
+        install_dir: libexecdir,
+        install_mode: 'rwxr-xr-x',
+        configuration: conf_data
+    )
+endforeach
 
-icon_theme_found = gnome_icons.found() or mate_icons.found() or adwaita_icons.found() or faenza_icons.found()
-icon_msg = 'No icon theme found, blueman requires an icon theme'
-if not icon_theme_found and do_runtime_checks
-    error(icon_msg)
-elif not icon_theme_found
-    warning(icon_msg)
-endif
+binapps = ['blueman-adapters', 'blueman-applet', 'blueman-assistant', 'blueman-manager',
+           'blueman-report', 'blueman-sendto', 'blueman-services', 'blueman-tray']
 
-
-# Install our scripts in the proper location
-install_data(
-    'apps/blueman-adapters',
-    'apps/blueman-applet',
-    'apps/blueman-assistant',
-    'apps/blueman-manager',
-    'apps/blueman-report',
-    'apps/blueman-sendto',
-    'apps/blueman-services',
-    'apps/blueman-tray',
-    install_dir: bindir,
-    install_mode: 'rwxr-xr-x'
-)
-
-install_data(
-    'apps/blueman-mechanism',
-    'apps/blueman-rfcomm-watcher',
-    install_dir: libexecdir,
-    install_mode: 'rwxr-xr-x'
-)
-
+foreach binapp: binapps
+    configure_file(
+        input: join_paths('apps', binapp + '.in'),
+        output: binapp,
+        install_dir: bindir,
+        install_mode: 'rwxr-xr-x',
+        configuration: conf_data
+    )
+endforeach
 
 # Install all the artwork and icons
 # FIXME use strip_directory when meson 0.45.0 is mainstream
