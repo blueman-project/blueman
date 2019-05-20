@@ -1,7 +1,6 @@
 # coding=utf-8
 import time
 import logging
-import os
 from locale import bind_textdomain_codeset
 from gettext import ngettext
 
@@ -233,7 +232,8 @@ class Sender(Gtk.Dialog):
                 if resp == "_Cancel":
                     self.on_cancel(None)
                 elif resp == Gtk.ResponseType.NO:
-                    self.total_bytes -= os.path.getsize(self.files[-1])
+                    finfo = self.files[-1].query_info('standard::*', Gio.FileQueryInfoFlags.NONE)
+                    self.total_bytes -= finfo.get_size()
                     self.total_transferred -= self.transferred
                     self.transferred = 0
                     del self.files[-1]
