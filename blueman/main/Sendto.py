@@ -218,7 +218,7 @@ class Sender(Gtk.Dialog):
         if not self.error_dialog:
             self.speed.reset()
             d = ErrorDialog(msg, _("Error occurred while sending file %s") % self.files[-1].get_basename(),
-                            modal=True, icon_name="blueman", parent=self.get_toplevel())
+                            modal=True, icon_name="blueman", parent=self.get_toplevel(), buttons=[])
 
             if len(self.files) > 1:
                 d.add_button(_("Skip"), Gtk.ResponseType.NO)
