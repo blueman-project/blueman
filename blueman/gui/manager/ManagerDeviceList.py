@@ -196,10 +196,8 @@ class ManagerDeviceList(DeviceList):
             height = target.get_height()
             mini_height = trusted_surface.get_height()
             y = height / scale - mini_height / scale - 1 / scale
-            width = trusted_surface.get_width()
-            x = width / scale - width / scale - 1 / scale
 
-            ctx.set_source_surface(trusted_surface, x, y)
+            ctx.set_source_surface(trusted_surface, 1 / scale, y)
             ctx.paint_with_alpha(0.8)
 
         return target
