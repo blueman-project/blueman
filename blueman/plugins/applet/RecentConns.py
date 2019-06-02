@@ -40,9 +40,10 @@ class RecentConns(AppletPlugin):
         "recent-connections": {"type": list, "default": "[]"}
     }
 
+    _items = None
+
     def on_load(self):
         self.Adapters = {}
-        self.items = None
         self.__menuitems = []
 
         self.item = self.parent.Plugins.Menu.add(self, 52, text=_("Recent _Connections") + "…",
@@ -86,19 +87,15 @@ class RecentConns(AppletPlugin):
     def on_unload(self):
         self.parent.Plugins.Menu.unregister(self)
 
-        RecentConns.items = []
-
     def initialize(self):
         logging.info("rebuilding menu")
-        if self.items is None:
-            self.recover_state()
 
         self.__menuitems = []
         self.parent.Plugins.Menu.on_menu_changed()
 
         self.items.sort(key=itemgetter("time"), reverse=True)
 
-        self.items = self.items[0:self.get_option("max-items")]
+        self._items = self.items[0:self.get_option("max-items")]
         self.items.reverse()
 
         if len(self.items) == 0:
@@ -127,15 +124,11 @@ class RecentConns(AppletPlugin):
             for adapter in adapters:
                 self.Adapters[str(adapter.get_object_path())] = str(adapter["Address"])
 
-            if self.items is not None:
-                for i in reversed(self.items):
-
-                    try:
-                        i["device"] = self.get_device_path(i)
-                    except (AdapterNotFound, DeviceNotFound):
-                        pass
-            else:
-                self.recover_state()
+            for i in reversed(self.items):
+                try:
+                    i["device"] = self.get_device_path(i)
+                except (AdapterNotFound, DeviceNotFound):
+                    pass
 
             self.initialize()
         else:
@@ -262,12 +255,16 @@ class RecentConns(AppletPlugin):
         else:
             return device.get_object_path()
 
-    def recover_state(self):
+    @property
+    def items(self):
+        if self._items is not None:
+            return self._items
+
         items = self.get_option("recent-connections")
 
         if not items:
-            self.items = []
-            return
+            self._items = []
+            return self._items
 
         for i in reversed(items):
             if "name" not in i or "uuid" not in i:
@@ -281,4 +278,6 @@ class RecentConns(AppletPlugin):
 
             i["time"] = float(i["time"])
 
-        self.items = items
+        self._items = items
+
+        return self._items
