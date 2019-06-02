@@ -227,6 +227,8 @@ class Sender(Gtk.Dialog):
             d.add_button(_("Retry"), Gtk.ResponseType.YES)
             d.add_button("_Cancel", Gtk.ResponseType.CANCEL)
 
+            self.client.remove_session(self.object_push.get_object_path())
+
             def on_response(dialog, resp):
                 dialog.destroy()
                 self.error_dialog = None
