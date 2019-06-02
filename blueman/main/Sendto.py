@@ -10,6 +10,7 @@ gi.require_version("Gdk", "3.0")
 
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.obex.ObjectPush import ObjectPush
+from blueman.bluez.obex.Manager import Manager
 from blueman.Functions import format_bytes
 from blueman.Constants import UI_PATH
 from blueman.main.SpeedCalc import SpeedCalc
@@ -59,6 +60,7 @@ class Sender(Gtk.Dialog):
 
         self.device = device
         self.adapter = Adapter(adapter_path)
+        self.manager = Manager()
         self.files = []
         self.num_files = 0
         self.object_push = None
@@ -100,6 +102,8 @@ class Sender(Gtk.Dialog):
 
         try:
             self.client = obex.Client()
+            self.manager.connect_signal('session-added', self.on_session_added)
+            self.manager.connect_signal('session-removed', self.on_session_removed)
         except GLib.Error as e:
             if 'StartServiceByName' in e.message:
                 logging.debug(e.message)
@@ -114,9 +118,7 @@ class Sender(Gtk.Dialog):
 
         self.l_file.props.label = self.files[-1].get_basename()
 
-        self.client.connect('session-created', self.on_session_created)
         self.client.connect('session-failed', self.on_session_failed)
-        self.client.connect('session-removed', self.on_session_removed)
 
         logging.info("Sending to %s" % device['Address'])
         self.l_dest.props.label = device['Alias']
@@ -254,11 +256,17 @@ class Sender(Gtk.Dialog):
             d.show()
             self.error_dialog = d
 
-    def on_session_created(self, _client, session_path):
+    def on_session_added(self, _manager, session_path):
         self.object_push = ObjectPush(session_path)
         self.object_push.connect("transfer-started", self.on_transfer_started)
         self.object_push.connect("transfer-failed", self.on_transfer_failed)
         self.process_queue()
+
+    def on_session_removed(self, _manager, session_path):
+        logging.debug('Session removed: %s' % session_path)
+        self.object_push.disconnect_by_func(self.on_transfer_started)
+        self.object_push.disconnect_by_func(self.on_transfer_failed)
+        self.object_push = None
 
     def on_session_failed(self, _client, msg):
         d = ErrorDialog(_("Error occurred"), msg.reason.split(None, 1)[1], icon_name="blueman",
@@ -266,7 +274,4 @@ class Sender(Gtk.Dialog):
 
         d.run()
         d.destroy()
-        self.emit("result", False)
-
-    def on_session_removed(self, _client):
         self.emit("result", False)

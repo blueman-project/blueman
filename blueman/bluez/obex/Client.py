@@ -6,9 +6,7 @@ from gi.repository import GObject, GLib
 
 class Client(Base):
     __gsignals__ = {
-        'session-created': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
         'session-failed': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-        'session-removed': (GObject.SignalFlags.NO_HOOKS, None, ()),
     }
 
     _interface_name = 'org.bluez.obex.Client1'
@@ -19,7 +17,6 @@ class Client(Base):
     def create_session(self, dest_addr, source_addr="00:00:00:00:00:00", pattern="opp"):
         def on_session_created(session_path):
             logging.info("%s %s %s %s" % (dest_addr, source_addr, pattern, session_path))
-            self.emit("session-created", session_path)
 
         def on_session_failed(error):
             logging.error("%s %s %s %s" % (dest_addr, source_addr, pattern, error))
@@ -33,7 +30,6 @@ class Client(Base):
     def remove_session(self, session_path):
         def on_session_removed():
             logging.info(session_path)
-            self.emit('session-removed')
 
         def on_session_remove_failed(error):
             logging.error("%s %s" % (session_path, error))
