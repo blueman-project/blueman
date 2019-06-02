@@ -14,12 +14,12 @@ class MessageArea(Gtk.InfoBar):
 
     def __new__(cls):
         if not MessageArea._inst_:
-            MessageArea._inst_ = super(MessageArea, cls).__new__(cls)
+            MessageArea._inst_ = super().__new__(cls)
 
         return MessageArea._inst_
 
     def __init__(self):
-        super(MessageArea, self).__init__(show_close_button=True)
+        super().__init__(show_close_button=True)
 
         self.set_name("MessageArea")
 

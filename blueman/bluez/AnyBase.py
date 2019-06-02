@@ -16,7 +16,7 @@ class AnyBase(GObject.GObject):
     __bus_interface_name = 'org.freedesktop.DBus.Properties'
 
     def __init__(self, interface_name):
-        super(AnyBase, self).__init__()
+        super().__init__()
 
         self.__interface_name = interface_name
         self.__signal = None

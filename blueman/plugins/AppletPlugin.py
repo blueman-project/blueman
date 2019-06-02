@@ -15,7 +15,7 @@ class AppletPlugin(BasePlugin):
     _dbus_signals = None
 
     def __init__(self, parent):
-        super(AppletPlugin, self).__init__(parent)
+        super().__init__(parent)
 
         if not ictheme.has_icon(self.__class__.__icon__):
             self.__class__.__icon__ = "blueman-plugin"
@@ -46,7 +46,7 @@ class AppletPlugin(BasePlugin):
         for (obj, method, orig) in self.__overrides:
             obj.__setattr__(method, orig)
 
-        super(AppletPlugin, self)._unload()
+        super()._unload()
 
         for method in self._dbus_methods:
             self._dbus_service.remove_method(method)
@@ -54,7 +54,7 @@ class AppletPlugin(BasePlugin):
             self._dbus_service.remove_signal(signal)
 
     def _load(self):
-        super(AppletPlugin, self)._load()
+        super()._load()
 
         # The applet will run on_manager_state_changed once at startup so until it has we don't.
         if self.parent.plugin_run_state_changed:

@@ -31,7 +31,7 @@ class AnimBase(GObject.GObject):
     }
 
     def __init__(self, state=1.0):
-        super(AnimBase, self).__init__()
+        super().__init__()
         self._source = None
         self._state = state
         self.frozen = False
@@ -118,7 +118,7 @@ class AnimBase(GObject.GObject):
 
 class TreeRowFade(AnimBase):
     def __init__(self, tw, path, columns=None):
-        super(TreeRowFade, self).__init__(1.0)
+        super().__init__(1.0)
         self.tw = tw
 
         self.sig = self.tw.connect_after("draw", self.on_draw)
@@ -169,7 +169,7 @@ class TreeRowFade(AnimBase):
 
 class TreeRowColorFade(TreeRowFade):
     def __init__(self, tw, path, color):
-        super(TreeRowColorFade, self).__init__(tw, path, None)
+        super().__init__(tw, path, None)
 
         self.color = color
 
@@ -203,7 +203,7 @@ class TreeRowColorFade(TreeRowFade):
 
 class CellFade(AnimBase):
     def __init__(self, tw, path, columns=None):
-        super(CellFade, self).__init__(1.0)
+        super().__init__(1.0)
         self.tw = tw
 
         self.frozen = False
@@ -266,7 +266,7 @@ class CellFade(AnimBase):
 
 class WidgetFade(AnimBase):
     def __init__(self, widget, color):
-        super(WidgetFade, self).__init__(1.0)
+        super().__init__(1.0)
 
         self.widget = widget
         self.color = color

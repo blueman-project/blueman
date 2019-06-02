@@ -29,7 +29,7 @@ class PluginManager(GObject.GObject):
     }
 
     def __init__(self, plugin_class, module_path, parent):
-        super(PluginManager, self).__init__()
+        super().__init__()
         self.__plugins = {}
         self.__classes = {}
         self.__deps = {}
@@ -229,7 +229,7 @@ class PluginManager(GObject.GObject):
 
 class PersistentPluginManager(PluginManager):
     def __init__(self, *args):
-        super(PersistentPluginManager, self).__init__(*args)
+        super().__init__(*args)
 
         self.__config = Config("org.blueman.general")
 

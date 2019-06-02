@@ -14,7 +14,7 @@ from blueman.Constants import RFCOMM_WATCHER_PATH
 
 class SerialService(Service):
     def __init__(self, device, uuid):
-        super(SerialService, self).__init__(device, uuid)
+        super().__init__(device, uuid)
         self.file_changed_handler = None
 
     def serial_port_id(self, channel):

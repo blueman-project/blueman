@@ -21,4 +21,4 @@ class Device(Base):
 
 class AnyDevice(AnyBase):
     def __init__(self):
-        super(AnyDevice, self).__init__('org.bluez.Device1')
+        super().__init__('org.bluez.Device1')

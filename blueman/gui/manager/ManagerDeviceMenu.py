@@ -31,7 +31,7 @@ class ManagerDeviceMenu(Gtk.Menu):
     __instances__ = []
 
     def __init__(self, blueman):
-        super(ManagerDeviceMenu, self).__init__()
+        super().__init__()
         self.set_name("ManagerDeviceMenu")
         self.Blueman = blueman
         self.SelectedDevice = None

@@ -24,7 +24,7 @@ class DhcpClient(GObject.GObject):
     quering = []
 
     def __init__(self, interface, timeout=30):
-        super(DhcpClient, self).__init__()
+        super().__init__()
 
         self._interface = interface
         self._timeout = timeout

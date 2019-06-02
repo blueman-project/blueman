@@ -11,7 +11,7 @@ from gi.repository import Gtk
 
 class GsmSettings(Gtk.Dialog):
     def __init__(self, bd_address):
-        super(GsmSettings, self).__init__()
+        super().__init__()
 
         self.set_name("GsmSettings")
         self.device = bd_address

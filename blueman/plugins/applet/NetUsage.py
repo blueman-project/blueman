@@ -29,7 +29,7 @@ class MonitorBase(GObject.GObject):
     }
 
     def __init__(self, device, interface):
-        super(MonitorBase, self).__init__()
+        super().__init__()
 
         self.interface = interface
         self.device = device
@@ -67,7 +67,7 @@ class MonitorBase(GObject.GObject):
 
 class Monitor(MonitorBase):
     def __init__(self, device, interface):
-        super(Monitor, self).__init__(device, interface)
+        super().__init__(device, interface)
         self.poller = None
         self.ppp_port = None
 
