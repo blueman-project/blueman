@@ -47,43 +47,16 @@ class DeviceList(GenericList):
         if not tabledata:
             tabledata = []
 
-        def on_adapter_removed(_manager, path):
-            self.emit("adapter-removed", path)
-            if path == self.__adapter_path:
-                self.clear()
-                self.Adapter = None
-                self.set_adapter()
-
-        def on_adapter_added(_manager, path):
-            if self.Adapter is None:
-                self.set_adapter(path)
-
-            self.emit("adapter-added", path)
-
-        def on_device_created(_adapter, path):
-            tree_iter = self.find_device_by_path(path)
-            if tree_iter is None:
-                dev = bluez.Device(path)
-                self.device_add_event(dev)
-
-        def on_device_removed(_manager, path):
-            tree_iter = self.find_device_by_path(path)
-            if tree_iter:
-                row = self.get(tree_iter, "device")
-                dev = row["device"]
-
-                self.device_remove_event(dev, tree_iter)
-
         # cache for fast lookup in the list
         self.path_to_row = {}
 
         self.monitored_devices = []
 
         self.manager = bluez.Manager()
-        self.manager.connect_signal('adapter-removed', on_adapter_removed)
-        self.manager.connect_signal('adapter-added', on_adapter_added)
-        self.manager.connect_signal('device-created', on_device_created)
-        self.manager.connect_signal('device-removed', on_device_removed)
+        self.manager.connect_signal('adapter-removed', self.__on_manager_signal, 'adapter-removed')
+        self.manager.connect_signal('adapter-added', self.__on_manager_signal, 'adapter-added')
+        self.manager.connect_signal('device-created', self.__on_manager_signal, 'device-created')
+        self.manager.connect_signal('device-removed', self.__on_manager_signal, 'device-removed')
 
         self.any_device = bluez.AnyDevice()
         self.any_device.connect_signal("property-changed", self._on_device_property_changed)
@@ -115,7 +88,38 @@ class DeviceList(GenericList):
 
     def destroy(self):
         self.any_device.disconnect_by_func(self._on_device_property_changed)
+        self._any_adapter.disconnect_by_func(self._on_property_changed)
+        self.selection.disconnect_by_func(self.on_selection_changed)
+        self.manager.disconnect_by_func(self.__on_manager_signal)
         super().destroy()
+
+    def __on_manager_signal(self, manager, path, signal_name):
+        if signal_name == 'adapter-removed':
+            self.emit("adapter-removed", path)
+            if path == self.__adapter_path:
+                self.clear()
+                self.Adapter = None
+                self.set_adapter()
+
+        if signal_name == 'adapter-added':
+            if self.Adapter is None:
+                self.set_adapter(path)
+
+            self.emit("adapter-added", path)
+
+        if signal_name == 'device-created':
+            tree_iter = self.find_device_by_path(path)
+            if tree_iter is None:
+                dev = bluez.Device(path)
+                self.device_add_event(dev)
+
+        if signal_name == 'device-removed':
+            tree_iter = self.find_device_by_path(path)
+            if tree_iter:
+                row = self.get(tree_iter, "device")
+                dev = row["device"]
+
+                self.device_remove_event(dev, tree_iter)
 
     def on_selection_changed(self, selection):
         _model, tree_iter = selection.get_selected()
