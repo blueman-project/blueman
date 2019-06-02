@@ -18,6 +18,7 @@ class ManagerMeta(GObjectMeta):
 
 class Manager(GObject.GObject, metaclass=ManagerMeta):
     __gsignals__ = {
+        'session-added': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
         'session-removed': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
         'transfer-started': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
         'transfer-completed': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT)),
@@ -47,17 +48,21 @@ class Manager(GObject.GObject, metaclass=ManagerMeta):
             self._object_manager.disconnect(sig)
 
     def _on_object_added(self, object_manager, dbus_object):
+        session_proxy = dbus_object.get_interface('org.bluez.obex.Session1')
         transfer_proxy = dbus_object.get_interface('org.bluez.obex.Transfer1')
+        object_path = dbus_object.get_object_path()
 
         if transfer_proxy:
-            transfer_path = transfer_proxy.get_object_path()
-            transfer = Transfer(transfer_path)
+            logging.info(object_path)
+            transfer = Transfer(object_path)
             completed_sig = transfer.connect_signal('completed', self._on_transfer_completed, True)
             error_sig = transfer.connect_signal('error', self._on_transfer_completed, False)
-            self.__transfers[transfer_path] = (transfer, (completed_sig, error_sig))
+            self.__transfers[object_path] = (transfer, (completed_sig, error_sig))
+            self.emit('transfer-started', object_path)
 
-            logging.info(transfer_path)
-            self.emit('transfer-started', transfer_path)
+        if session_proxy:
+            logging.info(object_path)
+            self.emit('session-added', object_path)
 
     def _on_object_removed(self, object_manager, dbus_object):
         session_proxy = dbus_object.get_interface('org.bluez.obex.Session1')
