@@ -229,7 +229,7 @@ class Sender(Gtk.Dialog):
                 dialog.destroy()
                 self.error_dialog = None
 
-                if resp == "_Cancel":
+                if resp == Gtk.ResponseType.CANCEL:
                     self.on_cancel(None)
                 elif resp == Gtk.ResponseType.NO:
                     finfo = self.files[-1].query_info('standard::*', Gio.FileQueryInfoFlags.NONE)
