@@ -140,8 +140,8 @@ class Sender(Gtk.Dialog):
 
         if self.object_push:
             self.client.remove_session(self.object_push.get_session_path())
-        else:
-            self.emit("result", False)
+
+        self.emit("result", False)
 
     def on_transfer_started(self, _object_push, transfer_path, filename):
         if self.total_transferred == 0:
