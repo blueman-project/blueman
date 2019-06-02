@@ -85,8 +85,8 @@ class DeviceList(GenericList):
         self.manager.connect_signal('device-created', on_device_created)
         self.manager.connect_signal('device-removed', on_device_removed)
 
-        any_device = bluez.AnyDevice()
-        any_device.connect_signal("property-changed", self._on_device_property_changed)
+        self.any_device = bluez.AnyDevice()
+        self.any_device.connect_signal("property-changed", self._on_device_property_changed)
 
         self.__discovery_time = 0
         self.__adapter_path = None
@@ -112,6 +112,10 @@ class DeviceList(GenericList):
         self.icon_theme.prepend_search_path(ICON_PATH)
         # handle icon theme changes
         self.icon_theme.connect("changed", self.on_icon_theme_changed)
+
+    def destroy(self):
+        self.any_device.disconnect_by_func(self._on_device_property_changed)
+        super().destroy()
 
     def on_selection_changed(self, selection):
         _model, tree_iter = selection.get_selected()
