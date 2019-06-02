@@ -16,7 +16,7 @@ OPACITY_START = 0.7
 
 class Fade(AnimBase):
     def __init__(self, window):
-        super(Fade, self).__init__(state=OPACITY_START)
+        super().__init__(state=OPACITY_START)
         self.window = window
 
     def state_changed(self, state):
@@ -26,8 +26,8 @@ class Fade(AnimBase):
 class _NotificationDialog(Gtk.MessageDialog):
     def __init__(self, summary, message, timeout=-1, actions=None, actions_cb=None,
                  icon_name=None, image_data=None):
-        super(_NotificationDialog, self).__init__(parent=None, flags=0, type=Gtk.MessageType.QUESTION,
-                                                  buttons=Gtk.ButtonsType.NONE, message_format=None)
+        super().__init__(parent=None, flags=0, type=Gtk.MessageType.QUESTION,
+                         buttons=Gtk.ButtonsType.NONE, message_format=None)
 
         self.set_name("NotificationDialog")
         i = 100
@@ -130,7 +130,7 @@ class _NotificationDialog(Gtk.MessageDialog):
 class _NotificationBubble(Gio.DBusProxy):
     def __init__(self, summary, message, timeout=-1, actions=None, actions_cb=None,
                  icon_name=None, image_data=None):
-        super(_NotificationBubble, self).__init__(
+        super().__init__(
             g_name='org.freedesktop.Notifications',
             g_interface_name='org.freedesktop.Notifications',
             g_object_path='/org/freedesktop/Notifications',

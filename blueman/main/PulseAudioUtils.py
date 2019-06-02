@@ -628,7 +628,7 @@ class PulseAudioUtils(GObject.GObject, metaclass=PulseAudioUtilsMeta):
         self.emit("event", event_type, idx)
 
     def __init__(self):
-        super(PulseAudioUtils, self).__init__()
+        super().__init__()
 
         self.event_cb = pa_context_subscribe_cb_t(self.__event_callback)
 

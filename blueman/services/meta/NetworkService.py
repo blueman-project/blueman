@@ -5,7 +5,7 @@ from blueman.bluez.Network import Network
 
 class NetworkService(Service):
     def __init__(self, device, uuid):
-        super(NetworkService, self).__init__(device, uuid)
+        super().__init__(device, uuid)
         self._service = Network(device.get_object_path())
 
     @property

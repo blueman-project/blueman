@@ -53,7 +53,7 @@ class Base(Gio.DBusProxy, metaclass=BaseMeta):
     }
 
     def __init__(self, interface_name, obj_path, *args, **kwargs):
-        super(Base, self).__init__(
+        super().__init__(
             g_name=self.__name,
             g_interface_name=interface_name,
             g_object_path=obj_path,

@@ -7,7 +7,7 @@ from gi.repository import Gtk
 # noinspection PyAttributeOutsideInit
 class GenericList(Gtk.TreeView):
     def __init__(self, data, **kwargs):
-        super(GenericList, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.set_name("GenericList")
         self.selection = self.get_selection()
         self._load(data)

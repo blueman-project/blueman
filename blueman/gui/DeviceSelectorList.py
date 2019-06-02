@@ -24,7 +24,7 @@ class DeviceSelectorList(DeviceList):
              "render_attrs": {"icon_name": 3}}
         ]
 
-        super(DeviceSelectorList, self).__init__(adapter_name, tabledata, headers_visible=False)
+        super().__init__(adapter_name, tabledata, headers_visible=False)
 
     def on_icon_theme_changed(self, widget):
         for row in self.liststore:

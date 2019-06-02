@@ -54,7 +54,7 @@ class ManagerDeviceList(DeviceList):
             {"id": "levels_visible", "type": bool},
             {"id": "initial_anim", "type": bool},
         ]
-        super(ManagerDeviceList, self).__init__(adapter, tabledata)
+        super().__init__(adapter, tabledata)
         self.set_name("ManagerDeviceList")
         self.set_headers_visible(False)
         self.props.has_tooltip = True
@@ -209,7 +209,7 @@ class ManagerDeviceList(DeviceList):
 
             fader.disconnect(signal)
             fader.freeze()
-            super(ManagerDeviceList, self).device_remove_event(device, tree_iter)
+            super().device_remove_event(device, tree_iter)
 
         signal = row_fader.connect("animation-finished", on_finished)
         row_fader.thaw()

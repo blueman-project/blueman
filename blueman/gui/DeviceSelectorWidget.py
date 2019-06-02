@@ -12,9 +12,9 @@ from gi.repository import Gtk
 class DeviceSelectorWidget(Gtk.Box):
     def __init__(self, adapter_name=None, orientation=Gtk.Orientation.VERTICAL, **kwargs):
 
-        super(DeviceSelectorWidget, self).__init__(orientation=orientation, spacing=1, vexpand=True,
-                                                   width_request=360, height_request=340,
-                                                   name="DeviceSelectorWidget", **kwargs)
+        super().__init__(orientation=orientation, spacing=1, vexpand=True,
+                         width_request=360, height_request=340,
+                         name="DeviceSelectorWidget", **kwargs)
 
         self.List = DeviceSelectorList(adapter_name)
         if self.List.Adapter is not None:

@@ -10,8 +10,8 @@ from gi.repository import Gtk
 class ErrorDialog(Gtk.MessageDialog):
     def __init__(self, markup, secondary_markup=None, excp=None, icon_name="dialog-error",
                  buttons=Gtk.ButtonsType.CLOSE, **kwargs):
-        super(ErrorDialog, self).__init__(name="ErrorDialog", icon_name=icon_name, buttons=buttons,
-                                          type=Gtk.MessageType.ERROR, **kwargs)
+        super().__init__(name="ErrorDialog", icon_name=icon_name, buttons=buttons,
+                         type=Gtk.MessageType.ERROR, **kwargs)
 
         self.set_markup(markup)
 

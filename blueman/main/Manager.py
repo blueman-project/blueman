@@ -26,7 +26,7 @@ from gi.repository import Gtk
 
 class Blueman(Gtk.Window):
     def __init__(self):
-        super(Blueman, self).__init__(title=_("Bluetooth Devices"))
+        super().__init__(title=_("Bluetooth Devices"))
 
         self._applet_sig = None
 
