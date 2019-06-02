@@ -111,6 +111,12 @@ class Blueman(Gtk.Window):
             check_bluetooth_status(_("Bluetooth needs to be turned on for the device manager to function"),
                                    lambda: Gtk.main_quit())
 
+            try:
+                bluez.Manager().get_adapter(self.Config['last-adapter'])
+            except bluez.errors.DBusNoSuchAdapterError:
+                logging.error('No bluetooth adapter(s) found.')
+                exit(1)
+
             self._applet_sig = self.Applet.connect('g-signal', on_applet_signal)
 
             self.connect("delete-event", on_window_delete)

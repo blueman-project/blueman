@@ -42,21 +42,20 @@ class BluemanAdapters(Gtk.Window):
 
         setup_icon_path()
         bluez.Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
+        self.manager = bluez.Manager()
 
         check_single_instance("blueman-adapters", lambda time: self.present_with_time(time))
 
         check_bluetooth_status(_("Bluetooth needs to be turned on for the adapter manager to work"), lambda: exit())
 
-        try:
-            self.manager = bluez.Manager()
-        except Exception as e:
-            logging.exception(e)
-            self.manager = None
-        # fixme: show error dialog and exit
+        adapters = self.manager.get_adapters()
+        if not adapters:
+            logging.error('No adapter(s) found')
+            exit(1)
 
         self.manager.connect_signal('adapter-added', self.on_adapter_added)
         self.manager.connect_signal('adapter-removed', self.on_adapter_removed)
-        for adapter in self.manager.get_adapters():
+        for adapter in adapters:
             path = adapter.get_object_path()
             hci_dev = os.path.basename(path)
             self._adapters[hci_dev] = adapter
