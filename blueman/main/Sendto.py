@@ -96,7 +96,7 @@ class Sender(Gtk.Dialog):
             self.total_bytes += file_info.get_size()
 
         if len(self.files) == 0:
-            exit(1)
+            self.emit("result", False)
 
         try:
             self.client = obex.Client()
@@ -107,7 +107,7 @@ class Sender(Gtk.Dialog):
                                                             "daemon is running"), parent=self.get_toplevel())
                 d.run()
                 d.destroy()
-                exit(1)
+                self.emit("result", False)
             else:
                 # Fail on anything else
                 raise
@@ -266,7 +266,7 @@ class Sender(Gtk.Dialog):
 
         d.run()
         d.destroy()
-        exit(1)
+        self.emit("result", False)
 
     def on_session_removed(self, _client):
         self.emit("result", False)
