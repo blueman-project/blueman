@@ -45,3 +45,7 @@ Fork, make your changes, and issue a pull request. If you just want to edit a si
 
 Translations are managed with transifex.
 Go to [transifex blueman project page](https://www.transifex.com/projects/p/MATE/resource/blueman/).
+
+## License
+
+Except for most icons that are under a GPLv2 license and require GPLv2 for redistribution all parts of the software are licensed under GPLv3 (or GPLv2) and allow redistribution under any later version.
