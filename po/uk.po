@@ -5,6 +5,7 @@
 # Translators:
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2007
 # Oleh, 2014
+# Микола Ткач <chistomov@gmail.com>, 2019
 # Микола Ткач <chistomov@gmail.com>, 2014-2016
 # Микола Ткач <chistomov@gmail.com>, 2017-2018
 # Микола Ткач <chistomov@gmail.com>, 2017
@@ -12,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-29 08:27+0200\n"
-"PO-Revision-Date: 2019-04-29 06:32+0000\n"
-"Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
+"POT-Creation-Date: 2019-06-09 11:42+0200\n"
+"PO-Revision-Date: 2019-06-01 03:32+0000\n"
+"Last-Translator: Микола Ткач <chistomov@gmail.com>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/mate/MATE/language/uk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,9 +25,9 @@ msgstr ""
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Visibility Setting</b>"
-msgstr "<b>Налаштування видимости</b>"
+msgstr "<b>Налаштування видимості</b>"
 
-#: ../data/ui/adapters-tab.ui.h:2 ../blueman/main/Adapter.py:131
+#: ../data/ui/adapters-tab.ui.h:2 ../blueman/main/Adapter.py:130
 msgid "Hidden"
 msgstr "Прихований"
 
@@ -357,15 +358,15 @@ msgstr "Відправити нотатку"
 msgid "Bluetooth Adapters"
 msgstr "Адаптери Bluetooth"
 
-#: ../blueman/main/Adapter.py:48
+#: ../blueman/main/Adapter.py:49
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
 msgstr "Для роботи керівника адаптерів повинен бути увімкнений bluetooth"
 
-#: ../blueman/main/Adapter.py:129
+#: ../blueman/main/Adapter.py:128
 msgid "Always"
 msgstr "Завжди"
 
-#: ../blueman/main/Adapter.py:133
+#: ../blueman/main/Adapter.py:132
 #, python-format
 msgid "%d Minute"
 msgid_plural "%d Minutes"
@@ -374,7 +375,7 @@ msgstr[1] "%d хвилини"
 msgstr[2] "%d хвилин"
 msgstr[3] "%d хвилин"
 
-#: ../blueman/main/Adapter.py:199
+#: ../blueman/main/Adapter.py:198
 msgid "Adapter"
 msgstr "Адаптер"
 
@@ -382,7 +383,7 @@ msgstr "Адаптер"
 msgid "Bluetooth Devices"
 msgstr "Пристрої Bluetooth"
 
-#: ../blueman/main/Manager.py:71
+#: ../blueman/main/Manager.py:71 ../blueman/main/Manager.py:111
 msgid "Bluetooth needs to be turned on for the device manager to function"
 msgstr "Потрібно увімкнути bluetooth для роботи керівника пристроїв"
 
@@ -396,21 +397,21 @@ msgid ""
 "This probably means that there were no Bluetooth adapters detected or Bluetooth daemon was not started."
 msgstr "Blueman-manager не може продовжити, оскільки служба bluez не активна.\nЦе зазвичай означає, що не було знайдено адаптерів bluetooth або служба bluetooth не запущена."
 
-#: ../blueman/main/Manager.py:174
+#: ../blueman/main/Manager.py:179
 msgid "Searching"
 msgstr "Пошук"
 
-#: ../blueman/main/Manager.py:187
+#: ../blueman/main/Manager.py:192
 #: ../blueman/plugins/applet/StandardItems.py:69 ../apps/blueman-assistant:65
 msgid "Bluetooth Assistant"
 msgstr "Помічник bluetooth"
 
-#: ../blueman/main/Manager.py:198
+#: ../blueman/main/Manager.py:203
 #: ../blueman/plugins/applet/StandardItems.py:81
 msgid "Adapter Preferences"
 msgstr "Параметри адаптера"
 
-#: ../blueman/main/Manager.py:207
+#: ../blueman/main/Manager.py:212
 #: ../blueman/gui/manager/ManagerDeviceList.py:131
 #: ../blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
@@ -425,27 +426,27 @@ msgstr "Передача файлу через bluetooth"
 msgid "Connecting"
 msgstr "Під’єднання"
 
-#: ../blueman/main/Sendto.py:107
+#: ../blueman/main/Sendto.py:110
 msgid "obexd not available"
 msgstr "obexd недоступний"
 
-#: ../blueman/main/Sendto.py:107
+#: ../blueman/main/Sendto.py:110
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
-msgstr ""
+msgstr "Помилка автозапуску служби obex. Переконайтеся, що запущений демон obex"
 
-#: ../blueman/main/Sendto.py:138
+#: ../blueman/main/Sendto.py:139
 msgid "Cancelling"
 msgstr "Скасування"
 
-#: ../blueman/main/Sendto.py:149 ../blueman/main/Sendto.py:191
+#: ../blueman/main/Sendto.py:150 ../blueman/main/Sendto.py:192
 msgid "Sending File"
 msgstr "Надсилання файлу"
 
-#: ../blueman/main/Sendto.py:149 ../blueman/main/Sendto.py:191
+#: ../blueman/main/Sendto.py:150 ../blueman/main/Sendto.py:192
 msgid "ETA:"
 msgstr "час, що залишився:"
 
-#: ../blueman/main/Sendto.py:185
+#: ../blueman/main/Sendto.py:186
 #, python-format
 msgid "%.0f Minute"
 msgid_plural "%.0f Minutes"
@@ -454,7 +455,7 @@ msgstr[1] "%.0f хвилини"
 msgstr[2] "%.0f хвилин"
 msgstr[3] "%.0f хвилин"
 
-#: ../blueman/main/Sendto.py:187
+#: ../blueman/main/Sendto.py:188
 #, python-format
 msgid "%.0f Second"
 msgid_plural "%.0f Seconds"
@@ -463,20 +464,20 @@ msgstr[1] "%.0f секунди"
 msgstr[2] "%.0f секунд"
 msgstr[3] "%.0f секунд"
 
-#: ../blueman/main/Sendto.py:221
+#: ../blueman/main/Sendto.py:222
 #, python-format
 msgid "Error occurred while sending file %s"
 msgstr "Виникла помилка при надсиланні файлу %s"
 
-#: ../blueman/main/Sendto.py:225
+#: ../blueman/main/Sendto.py:226
 msgid "Skip"
 msgstr "Пропустити"
 
-#: ../blueman/main/Sendto.py:226
+#: ../blueman/main/Sendto.py:227
 msgid "Retry"
 msgstr "Спробувати знову"
 
-#: ../blueman/main/Sendto.py:264
+#: ../blueman/main/Sendto.py:274
 msgid "Error occurred"
 msgstr "Виникла помилка"
 
@@ -484,71 +485,71 @@ msgstr "Виникла помилка"
 msgid "Local Services"
 msgstr "Локальні служби"
 
-#: ../blueman/main/applet/BluezAgent.py:186
+#: ../blueman/main/applet/BluezAgent.py:180
 #, python-format
 msgid "Pairing request for %s"
 msgstr "Запит на утворення пари для %s"
 
-#: ../blueman/main/applet/BluezAgent.py:198
-#: ../blueman/main/applet/BluezAgent.py:323
+#: ../blueman/main/applet/BluezAgent.py:192
+#: ../blueman/main/applet/BluezAgent.py:300
 msgid "Bluetooth Authentication"
 msgstr "Розпізнання bluetooth"
 
-#: ../blueman/main/applet/BluezAgent.py:225
+#: ../blueman/main/applet/BluezAgent.py:219
 msgid "Enter PIN code for authentication:"
 msgstr "Уведіть PIN код для розпізнання:"
 
-#: ../blueman/main/applet/BluezAgent.py:226
+#: ../blueman/main/applet/BluezAgent.py:220
 msgid "Enter PIN code"
 msgstr "Уведіть PIN код"
 
-#: ../blueman/main/applet/BluezAgent.py:241
+#: ../blueman/main/applet/BluezAgent.py:233
 msgid "Enter passkey for authentication:"
 msgstr "Уведіть гасло для розпізнання:"
 
-#: ../blueman/main/applet/BluezAgent.py:242
+#: ../blueman/main/applet/BluezAgent.py:234
 msgid "Enter passkey"
 msgstr "Уведіть гасло"
 
-#: ../blueman/main/applet/BluezAgent.py:253
+#: ../blueman/main/applet/BluezAgent.py:244
 msgid "Pairing passkey for"
 msgstr "Спаровування ключа для"
 
-#: ../blueman/main/applet/BluezAgent.py:265
+#: ../blueman/main/applet/BluezAgent.py:253
 msgid "Pairing PIN code for"
 msgstr "Спаровування PIN коду для"
 
-#: ../blueman/main/applet/BluezAgent.py:286
+#: ../blueman/main/applet/BluezAgent.py:265
 msgid "Pairing request for:"
 msgstr "Запит на утворення пари для:"
 
-#: ../blueman/main/applet/BluezAgent.py:289
+#: ../blueman/main/applet/BluezAgent.py:268
 msgid "Confirm value for authentication:"
 msgstr "Схвалити значення для розпізнання:"
 
-#: ../blueman/main/applet/BluezAgent.py:290
+#: ../blueman/main/applet/BluezAgent.py:269
 msgid "Confirm"
 msgstr "Схвалити"
 
-#: ../blueman/main/applet/BluezAgent.py:290
-#: ../blueman/main/applet/BluezAgent.py:321
+#: ../blueman/main/applet/BluezAgent.py:269
+#: ../blueman/main/applet/BluezAgent.py:298
 msgid "Deny"
 msgstr "Заборонити"
 
-#: ../blueman/main/applet/BluezAgent.py:318
+#: ../blueman/main/applet/BluezAgent.py:295
 msgid "Authorization request for:"
 msgstr "Запит авторизації для:"
 
-#: ../blueman/main/applet/BluezAgent.py:318
+#: ../blueman/main/applet/BluezAgent.py:295
 msgid "Service:"
 msgstr "Служба:"
 
-#: ../blueman/main/applet/BluezAgent.py:319
+#: ../blueman/main/applet/BluezAgent.py:296
 msgid "Always accept"
 msgstr "Завжди приймати"
 
-#: ../blueman/main/applet/BluezAgent.py:320
-#: ../blueman/plugins/applet/TransferService.py:106
+#: ../blueman/main/applet/BluezAgent.py:297
+#: ../blueman/plugins/applet/TransferService.py:105
 msgid "Accept"
 msgstr "Прийняти"
 
@@ -558,13 +559,29 @@ msgid ""
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgstr "<b>Виникла помилка під час завантаження модулю. Будь ласка, повідомте вміст цього повідомлення розробникам. На нашому </b>\n<a href=\"http://github.com/blueman-project/blueman/issues\">сайті.</a>"
 
-#: ../blueman/Functions.py:72
+#: ../blueman/Functions.py:77
 msgid "Bluetooth Turned Off"
 msgstr "Bluetooth вимкнено"
 
-#: ../blueman/Functions.py:76
+#: ../blueman/Functions.py:78
+msgid "Exit"
+msgstr "Вийти"
+
+#: ../blueman/Functions.py:79
 msgid "Enable Bluetooth"
 msgstr "Увімкнути bluetooth"
+
+#: ../blueman/Functions.py:98
+msgid "Shall bluetooth get enabled automatically?"
+msgstr "Чи буде Bluetooth увімкнений автоматично?"
+
+#: ../blueman/Functions.py:99
+msgid "Yes"
+msgstr "Так"
+
+#: ../blueman/Functions.py:100
+msgid "No"
+msgstr "Ні"
 
 #: ../blueman/gui/manager/ManagerMenu.py:38
 msgid "_Report a Problem"
@@ -618,49 +635,49 @@ msgstr "Налаштування служб"
 msgid "_Search"
 msgstr "_Шукати"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:420
+#: ../blueman/gui/manager/ManagerDeviceList.py:418
 msgid "<b>Trusted and Paired</b>"
 msgstr "<b>Надійні та зв'язані</b>"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:422
+#: ../blueman/gui/manager/ManagerDeviceList.py:420
 msgid "<b>Paired</b>"
 msgstr "<b>Зв'язані</b>"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:424
+#: ../blueman/gui/manager/ManagerDeviceList.py:422
 msgid "<b>Trusted</b>"
 msgstr "<b>Надійний</b>"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:444
+#: ../blueman/gui/manager/ManagerDeviceList.py:442
 msgid "Poor"
 msgstr "Поганий"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:446
-#: ../blueman/gui/manager/ManagerDeviceList.py:457
+#: ../blueman/gui/manager/ManagerDeviceList.py:444
+#: ../blueman/gui/manager/ManagerDeviceList.py:455
 msgid "Sub-optimal"
 msgstr "Середній"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:448
-#: ../blueman/gui/manager/ManagerDeviceList.py:459
+#: ../blueman/gui/manager/ManagerDeviceList.py:446
+#: ../blueman/gui/manager/ManagerDeviceList.py:457
 msgid "Optimal"
 msgstr "Оптимальний"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:450
+#: ../blueman/gui/manager/ManagerDeviceList.py:448
 msgid "Much"
 msgstr "Значний"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:452
+#: ../blueman/gui/manager/ManagerDeviceList.py:450
 msgid "Too much"
 msgstr "Дуже значний"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:455
+#: ../blueman/gui/manager/ManagerDeviceList.py:453
 msgid "Low"
 msgstr "Низький"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:461
+#: ../blueman/gui/manager/ManagerDeviceList.py:459
 msgid "High"
 msgstr "Високий"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:463
+#: ../blueman/gui/manager/ManagerDeviceList.py:461
 msgid "Very High"
 msgstr "Дуже високий"
 
@@ -909,11 +926,11 @@ msgstr "Комутоване з'єднання (DUN)"
 
 #: ../blueman/Sdp.py:135
 msgid "Audio Source"
-msgstr "Джерело аудіо"
+msgstr "Джерело авдіо"
 
 #: ../blueman/Sdp.py:136
 msgid "Audio Sink"
-msgstr "Приймач аудіо"
+msgstr "Приймач авдіо"
 
 #: ../blueman/Sdp.py:147
 msgid "Network Access Point"
@@ -1049,14 +1066,14 @@ msgstr "Використання _мережі"
 msgid "Shows network traffic usage"
 msgstr "Показати використання мережевого трафіку"
 
-#: ../blueman/plugins/applet/StatusIcon.py:30
-#: ../blueman/plugins/applet/StatusIcon.py:43
+#: ../blueman/plugins/applet/StatusIcon.py:29
+#: ../blueman/plugins/applet/StatusIcon.py:51
 #: ../blueman/plugins/applet/ShowConnected.py:58
 #: ../blueman/plugins/applet/ShowConnected.py:60
 msgid "Bluetooth Enabled"
 msgstr "Bluetooth увімкнено"
 
-#: ../blueman/plugins/applet/StatusIcon.py:46
+#: ../blueman/plugins/applet/StatusIcon.py:54
 msgid "Bluetooth Disabled"
 msgstr "Bluetooth вимкнено"
 
@@ -1084,30 +1101,30 @@ msgstr "Максимальна кількість елементів"
 msgid "The maximum number of items recent connections menu will display."
 msgstr "Максимальна кількість елементів у меню переліку останніх під’єднань"
 
-#: ../blueman/plugins/applet/RecentConns.py:48
+#: ../blueman/plugins/applet/RecentConns.py:49
 msgid "Recent _Connections"
 msgstr "Нещодавні _з'єднання"
 
-#: ../blueman/plugins/applet/RecentConns.py:208
+#: ../blueman/plugins/applet/RecentConns.py:201
 #: ../blueman/plugins/applet/PPPSupport.py:50
 msgid "Connected"
 msgstr "Під’єднано"
 
-#: ../blueman/plugins/applet/RecentConns.py:208
+#: ../blueman/plugins/applet/RecentConns.py:201
 #, python-format
 msgid "Connected to %s"
 msgstr "Під’єднаний до %s"
 
-#: ../blueman/plugins/applet/RecentConns.py:214
+#: ../blueman/plugins/applet/RecentConns.py:207
 msgid "Failed to connect"
 msgstr "Не вдалося під’єднатися"
 
-#: ../blueman/plugins/applet/RecentConns.py:230
+#: ../blueman/plugins/applet/RecentConns.py:223
 #, python-format
 msgid "%(service)s on %(device)s"
 msgstr "%(service)s на %(device)s"
 
-#: ../blueman/plugins/applet/RecentConns.py:245
+#: ../blueman/plugins/applet/RecentConns.py:238
 msgid "Adapter for this connection is not available"
 msgstr "Адаптер для цього з’єднання не доступний"
 
@@ -1117,71 +1134,71 @@ msgid ""
 "NetworkManager 0.8"
 msgstr "Забезпечує підтримку персональної мережі (PAN), зреалізовану у Мережевих з'єднаннях версії 0.8"
 
-#: ../blueman/plugins/applet/DBusService.py:15
+#: ../blueman/plugins/applet/DBusService.py:13
 msgid "Provides DBus API for other Blueman components"
 msgstr "Надає DBus API для иньших компонентів Blueman"
 
-#: ../blueman/plugins/applet/TransferService.py:103
+#: ../blueman/plugins/applet/TransferService.py:102
 msgid "Incoming file over Bluetooth"
 msgstr "Вхідний файл через bluetooth"
 
-#: ../blueman/plugins/applet/TransferService.py:104
+#: ../blueman/plugins/applet/TransferService.py:103
 #, python-format
 msgid "Incoming file %(0)s from %(1)s"
 msgstr "Вхідний файл %(0)s від %(1)s"
 
-#: ../blueman/plugins/applet/TransferService.py:106
+#: ../blueman/plugins/applet/TransferService.py:105
 msgid "Reject"
 msgstr "Відхилити"
 
-#: ../blueman/plugins/applet/TransferService.py:113
+#: ../blueman/plugins/applet/TransferService.py:112
 msgid "Receiving file"
 msgstr "Отримання файлу"
 
-#: ../blueman/plugins/applet/TransferService.py:114
+#: ../blueman/plugins/applet/TransferService.py:113
 #, python-format
 msgid "Receiving file %(0)s from %(1)s"
 msgstr "Отримання файлу %(0)s від %(1)s"
 
-#: ../blueman/plugins/applet/TransferService.py:132
+#: ../blueman/plugins/applet/TransferService.py:131
 msgid "Provides OBEX file transfer capabilities"
 msgstr "Забезпечує передачу файлів через протокол OBEX"
 
-#: ../blueman/plugins/applet/TransferService.py:157
+#: ../blueman/plugins/applet/TransferService.py:156
 msgid "Configured directory for incoming files does not exist"
 msgstr "Налаштованої директорії для вхідних файлів не існує"
 
-#: ../blueman/plugins/applet/TransferService.py:158
+#: ../blueman/plugins/applet/TransferService.py:157
 #, python-format
 msgid ""
 "Please make sure that directory \"<b>%s</b>\" exists or configure it with "
 "blueman-services. Until then the default \"%s\" will be used"
 msgstr ""
 
-#: ../blueman/plugins/applet/TransferService.py:285
+#: ../blueman/plugins/applet/TransferService.py:284
 msgid "File received"
 msgstr "Файл отримано"
 
-#: ../blueman/plugins/applet/TransferService.py:286
+#: ../blueman/plugins/applet/TransferService.py:285
 #, python-format
 msgid "File %(0)s from %(1)s successfully received"
 msgstr "Файл %(0)s від %(1)s отримано успішно"
 
-#: ../blueman/plugins/applet/TransferService.py:294
+#: ../blueman/plugins/applet/TransferService.py:293
 msgid "Transfer failed"
 msgstr "Помилка передавання"
 
-#: ../blueman/plugins/applet/TransferService.py:295
+#: ../blueman/plugins/applet/TransferService.py:294
 #, python-format
 msgid "Transfer of file %(0)s failed"
 msgstr "Не вдалося передати файл %(0)s"
 
-#: ../blueman/plugins/applet/TransferService.py:314
-#: ../blueman/plugins/applet/TransferService.py:323
+#: ../blueman/plugins/applet/TransferService.py:313
+#: ../blueman/plugins/applet/TransferService.py:322
 msgid "Files received"
 msgstr "Файли отримано"
 
-#: ../blueman/plugins/applet/TransferService.py:315
+#: ../blueman/plugins/applet/TransferService.py:314
 #, python-format
 msgid "Received %d file in the background"
 msgid_plural "Received %d files in the background"
@@ -1190,7 +1207,7 @@ msgstr[1] "Отримано %d файли у режимі тла"
 msgstr[2] "Отримано %d файлів у тловому режимі"
 msgstr[3] "Отримано %d файлів у тловому режимі"
 
-#: ../blueman/plugins/applet/TransferService.py:324
+#: ../blueman/plugins/applet/TransferService.py:323
 #, python-format
 msgid "Received %d more file in the background"
 msgid_plural "Received %d more files in the background"
@@ -1242,23 +1259,23 @@ msgstr "Додавати в меню аплету кнопку виходу"
 msgid "Provides a basic dhcp client for Bluetooth PAN connections."
 msgstr "Забезпечує базову підтримку DHCP клієнта для під’єднань до персональної мережі PAN."
 
-#: ../blueman/plugins/applet/DhcpClient.py:44
-#: ../blueman/plugins/applet/DhcpClient.py:52
-#: ../blueman/plugins/applet/DhcpClient.py:57
+#: ../blueman/plugins/applet/DhcpClient.py:42
+#: ../blueman/plugins/applet/DhcpClient.py:50
+#: ../blueman/plugins/applet/DhcpClient.py:55
 msgid "Bluetooth Network"
 msgstr "Мережа bluetooth"
 
-#: ../blueman/plugins/applet/DhcpClient.py:45
+#: ../blueman/plugins/applet/DhcpClient.py:43
 #, python-format
 msgid "Interface %(0)s bound to IP address %(1)s"
 msgstr "Інтерфейс %(0)s пов'язаний з IP адресою %(1)s"
 
-#: ../blueman/plugins/applet/DhcpClient.py:52
+#: ../blueman/plugins/applet/DhcpClient.py:50
 #, python-format
 msgid "Failed to obtain an IP address on %s"
 msgstr "Не вдається отримати IP адресу на %s"
 
-#: ../blueman/plugins/applet/DhcpClient.py:57
+#: ../blueman/plugins/applet/DhcpClient.py:55
 #, python-format
 msgid ""
 "Trying to obtain an IP address on %s\n"
@@ -1315,7 +1332,7 @@ msgstr "Зробити типовий адаптер тимчасово види
 msgid "Discoverable… %ss"
 msgstr "Видимий... %ss"
 
-#: ../blueman/plugins/applet/Menu.py:89
+#: ../blueman/plugins/applet/Menu.py:88
 msgid ""
 "Provides a menu for the applet and an API for other plugins to manipulate it"
 msgstr "Надає меню для аплету та API маніпулювання ним для иньших втулок"
@@ -1385,20 +1402,20 @@ msgid "Automatically power on adapters"
 msgstr "Автоматичне увімкнення адаптерів "
 
 #: ../blueman/plugins/applet/PowerManager.py:36
-#: ../blueman/plugins/applet/PowerManager.py:160
+#: ../blueman/plugins/applet/PowerManager.py:164
 msgid "<b>Turn Bluetooth _Off</b>"
 msgstr "<b>_Вимкнути Bluetooth</b>"
 
 #: ../blueman/plugins/applet/PowerManager.py:37
-#: ../blueman/plugins/applet/PowerManager.py:162
+#: ../blueman/plugins/applet/PowerManager.py:166
 msgid "Turn off all adapters"
 msgstr "Вимкнути усі адаптери"
 
-#: ../blueman/plugins/applet/PowerManager.py:151
+#: ../blueman/plugins/applet/PowerManager.py:155
 msgid "<b>Turn Bluetooth _On</b>"
 msgstr "<b>У_вімкнути Bluetooth</b>"
 
-#: ../blueman/plugins/applet/PowerManager.py:153
+#: ../blueman/plugins/applet/PowerManager.py:157
 msgid "Turn on all adapters"
 msgstr "Увімкнути на усіх адаптерах"
 
@@ -1502,19 +1519,19 @@ msgstr "Для надсилання файлів необхідно увімкн
 msgid "Select files to send"
 msgstr "Виберіть файли для надсилання"
 
-#: ../apps/blueman-sendto:130
+#: ../apps/blueman-sendto:131
 msgid "Send files to this device"
 msgstr "Надіслати файли на цей пристрій"
 
-#: ../apps/blueman-sendto:132
+#: ../apps/blueman-sendto:133
 msgid "Source adapter. Takes address or adapter's name eg. hci0"
 msgstr "Адаптер джерела. Візьміть адресу або ім'я адаптера, такі як hci0"
 
-#: ../apps/blueman-sendto:133
+#: ../apps/blueman-sendto:134
 msgid "Delete files on exit"
 msgstr "Вилучити файли при виході"
 
-#: ../apps/blueman-sendto:135
+#: ../apps/blueman-sendto:136
 msgid "Files to be send to the bluetooth device"
 msgstr "Файли для відправки на пристрій bluetooth"
 
@@ -1540,11 +1557,11 @@ msgstr "Не під’єднувати"
 
 #: ../apps/blueman-assistant:234
 msgid "<b>Device added and connected successfully</b>"
-msgstr ""
+msgstr "<b>Пристрій додано та успішно під'єднано</b>"
 
 #: ../apps/blueman-assistant:239
 msgid "<b>Device added successfully, but failed to connect</b>"
-msgstr ""
+msgstr "<b>Пристрій додано успішно, але не вдалося під'єднатися</b>"
 
 #: ../apps/blueman-assistant:250
 msgid "Start configuration assistant for this device"

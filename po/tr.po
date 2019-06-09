@@ -5,6 +5,7 @@
 # Translators:
 # tarakbumba <tarakbumba@gmail.com>, 2014-2015
 # Butterfly <gokhanlnx@gmail.com>, 2017
+# Cenk Yıldızlı <goncagul@national.shitposting.agency>, 2019
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2007
 # mauron, 2017-2018
 # tarakbumba <tarakbumba@gmail.com>, 2014
@@ -12,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-29 08:27+0200\n"
-"PO-Revision-Date: 2019-04-29 06:32+0000\n"
-"Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
+"POT-Creation-Date: 2019-06-09 11:42+0200\n"
+"PO-Revision-Date: 2019-06-03 17:43+0000\n"
+"Last-Translator: Cenk Yıldızlı <goncagul@national.shitposting.agency>\n"
 "Language-Team: Turkish (http://www.transifex.com/mate/MATE/language/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,7 +27,7 @@ msgstr ""
 msgid "<b>Visibility Setting</b>"
 msgstr "<b>Görünürlük Ayarı</b>"
 
-#: ../data/ui/adapters-tab.ui.h:2 ../blueman/main/Adapter.py:131
+#: ../data/ui/adapters-tab.ui.h:2 ../blueman/main/Adapter.py:130
 msgid "Hidden"
 msgstr "Gizli"
 
@@ -357,22 +358,22 @@ msgstr "Not gönder"
 msgid "Bluetooth Adapters"
 msgstr "Bluetooth Aygıtları"
 
-#: ../blueman/main/Adapter.py:48
+#: ../blueman/main/Adapter.py:49
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
 msgstr "Bluetooth yöneticisinin çalışması için Bluetooth açılmalıdır"
 
-#: ../blueman/main/Adapter.py:129
+#: ../blueman/main/Adapter.py:128
 msgid "Always"
 msgstr "Her zaman"
 
-#: ../blueman/main/Adapter.py:133
+#: ../blueman/main/Adapter.py:132
 #, python-format
 msgid "%d Minute"
 msgid_plural "%d Minutes"
 msgstr[0] "%d Dakika"
 msgstr[1] "%d Dakika"
 
-#: ../blueman/main/Adapter.py:199
+#: ../blueman/main/Adapter.py:198
 msgid "Adapter"
 msgstr "Bağdaştırıcı"
 
@@ -380,7 +381,7 @@ msgstr "Bağdaştırıcı"
 msgid "Bluetooth Devices"
 msgstr "Bluetooth Aygıtları"
 
-#: ../blueman/main/Manager.py:71
+#: ../blueman/main/Manager.py:71 ../blueman/main/Manager.py:111
 msgid "Bluetooth needs to be turned on for the device manager to function"
 msgstr "Aygıt yöneticisinin çalışabilmesi için bluetooth açılmalı"
 
@@ -394,21 +395,21 @@ msgid ""
 "This probably means that there were no Bluetooth adapters detected or Bluetooth daemon was not started."
 msgstr "Bluez programı çalışmıyor, blueman-manager çalışmayı durdurdu.\nBüyük olasılıkla Bluetooth adaptörü takılmadı veya Bluetooth devredışı."
 
-#: ../blueman/main/Manager.py:174
+#: ../blueman/main/Manager.py:179
 msgid "Searching"
 msgstr "Aranıyor"
 
-#: ../blueman/main/Manager.py:187
+#: ../blueman/main/Manager.py:192
 #: ../blueman/plugins/applet/StandardItems.py:69 ../apps/blueman-assistant:65
 msgid "Bluetooth Assistant"
 msgstr "Bluetooth Yardımcısı"
 
-#: ../blueman/main/Manager.py:198
+#: ../blueman/main/Manager.py:203
 #: ../blueman/plugins/applet/StandardItems.py:81
 msgid "Adapter Preferences"
 msgstr "Bağdaştırıcı Seçenekleri"
 
-#: ../blueman/main/Manager.py:207
+#: ../blueman/main/Manager.py:212
 #: ../blueman/gui/manager/ManagerDeviceList.py:131
 #: ../blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
@@ -423,54 +424,54 @@ msgstr "Bluetooth Dosya Transferi"
 msgid "Connecting"
 msgstr "Bağlanıyor"
 
-#: ../blueman/main/Sendto.py:107
+#: ../blueman/main/Sendto.py:110
 msgid "obexd not available"
 msgstr "obexd bulunamadı"
 
-#: ../blueman/main/Sendto.py:107
+#: ../blueman/main/Sendto.py:110
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
-msgstr ""
+msgstr "Obex hizmeti otomatik olarak başlatılamadı. Obex yazılımının çalışıp çalışmadığını kontrol edin."
 
-#: ../blueman/main/Sendto.py:138
+#: ../blueman/main/Sendto.py:139
 msgid "Cancelling"
 msgstr "İptal ediliyor"
 
-#: ../blueman/main/Sendto.py:149 ../blueman/main/Sendto.py:191
+#: ../blueman/main/Sendto.py:150 ../blueman/main/Sendto.py:192
 msgid "Sending File"
 msgstr "Dosya Gönderiliyor"
 
-#: ../blueman/main/Sendto.py:149 ../blueman/main/Sendto.py:191
+#: ../blueman/main/Sendto.py:150 ../blueman/main/Sendto.py:192
 msgid "ETA:"
 msgstr "ETA:"
 
-#: ../blueman/main/Sendto.py:185
+#: ../blueman/main/Sendto.py:186
 #, python-format
 msgid "%.0f Minute"
 msgid_plural "%.0f Minutes"
 msgstr[0] "%.0f  Dakika"
 msgstr[1] "%.0f Dakika"
 
-#: ../blueman/main/Sendto.py:187
+#: ../blueman/main/Sendto.py:188
 #, python-format
 msgid "%.0f Second"
 msgid_plural "%.0f Seconds"
 msgstr[0] "%.0f  Saniye"
 msgstr[1] "%.0f  Saniye"
 
-#: ../blueman/main/Sendto.py:221
+#: ../blueman/main/Sendto.py:222
 #, python-format
 msgid "Error occurred while sending file %s"
 msgstr "%s dosyası gönderilirken hata oluştu"
 
-#: ../blueman/main/Sendto.py:225
+#: ../blueman/main/Sendto.py:226
 msgid "Skip"
 msgstr "Atla"
 
-#: ../blueman/main/Sendto.py:226
+#: ../blueman/main/Sendto.py:227
 msgid "Retry"
 msgstr "Yeniden Dene"
 
-#: ../blueman/main/Sendto.py:264
+#: ../blueman/main/Sendto.py:274
 msgid "Error occurred"
 msgstr "Hata oluştu"
 
@@ -478,71 +479,71 @@ msgstr "Hata oluştu"
 msgid "Local Services"
 msgstr "Yerel Servisler"
 
-#: ../blueman/main/applet/BluezAgent.py:186
+#: ../blueman/main/applet/BluezAgent.py:180
 #, python-format
 msgid "Pairing request for %s"
 msgstr "%s için eşleme isteği"
 
-#: ../blueman/main/applet/BluezAgent.py:198
-#: ../blueman/main/applet/BluezAgent.py:323
+#: ../blueman/main/applet/BluezAgent.py:192
+#: ../blueman/main/applet/BluezAgent.py:300
 msgid "Bluetooth Authentication"
 msgstr "Bluetooth Kimlik Doğrulama"
 
-#: ../blueman/main/applet/BluezAgent.py:225
+#: ../blueman/main/applet/BluezAgent.py:219
 msgid "Enter PIN code for authentication:"
 msgstr "Tanımlama için PIN kodunu girin"
 
-#: ../blueman/main/applet/BluezAgent.py:226
+#: ../blueman/main/applet/BluezAgent.py:220
 msgid "Enter PIN code"
 msgstr "PIN kodunu girin"
 
-#: ../blueman/main/applet/BluezAgent.py:241
+#: ../blueman/main/applet/BluezAgent.py:233
 msgid "Enter passkey for authentication:"
 msgstr "Doğrulama için geçiş anahtarını girin:"
 
-#: ../blueman/main/applet/BluezAgent.py:242
+#: ../blueman/main/applet/BluezAgent.py:234
 msgid "Enter passkey"
 msgstr "Şifre girin"
 
-#: ../blueman/main/applet/BluezAgent.py:253
+#: ../blueman/main/applet/BluezAgent.py:244
 msgid "Pairing passkey for"
 msgstr "Erişim anahtarı eşleştiriliyor"
 
-#: ../blueman/main/applet/BluezAgent.py:265
+#: ../blueman/main/applet/BluezAgent.py:253
 msgid "Pairing PIN code for"
 msgstr "PIN kodu şunun için eşleştiriliyor:"
 
-#: ../blueman/main/applet/BluezAgent.py:286
+#: ../blueman/main/applet/BluezAgent.py:265
 msgid "Pairing request for:"
 msgstr "Eşleme isteği:"
 
-#: ../blueman/main/applet/BluezAgent.py:289
+#: ../blueman/main/applet/BluezAgent.py:268
 msgid "Confirm value for authentication:"
 msgstr "Doğrulama için değeri onayla:"
 
-#: ../blueman/main/applet/BluezAgent.py:290
+#: ../blueman/main/applet/BluezAgent.py:269
 msgid "Confirm"
 msgstr "Doğrula"
 
-#: ../blueman/main/applet/BluezAgent.py:290
-#: ../blueman/main/applet/BluezAgent.py:321
+#: ../blueman/main/applet/BluezAgent.py:269
+#: ../blueman/main/applet/BluezAgent.py:298
 msgid "Deny"
 msgstr "Reddet"
 
-#: ../blueman/main/applet/BluezAgent.py:318
+#: ../blueman/main/applet/BluezAgent.py:295
 msgid "Authorization request for:"
 msgstr "Yetkilendirme isteği:"
 
-#: ../blueman/main/applet/BluezAgent.py:318
+#: ../blueman/main/applet/BluezAgent.py:295
 msgid "Service:"
 msgstr "Servis:"
 
-#: ../blueman/main/applet/BluezAgent.py:319
+#: ../blueman/main/applet/BluezAgent.py:296
 msgid "Always accept"
 msgstr "Daima izinli"
 
-#: ../blueman/main/applet/BluezAgent.py:320
-#: ../blueman/plugins/applet/TransferService.py:106
+#: ../blueman/main/applet/BluezAgent.py:297
+#: ../blueman/plugins/applet/TransferService.py:105
 msgid "Accept"
 msgstr "Kabul Et"
 
@@ -552,13 +553,29 @@ msgid ""
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgstr "<b>Eklenti yüklenmesi sırasında bir hata meydana geldi. Lütfen geliştiricilere bu mesajın içeriği ile bildirimde bulunun, </b>\n<a href=\"http://github.com/blueman-project/blueman/issues\">sitemizde.</a>"
 
-#: ../blueman/Functions.py:72
+#: ../blueman/Functions.py:77
 msgid "Bluetooth Turned Off"
 msgstr "Bluetooth Kapatıldı"
 
-#: ../blueman/Functions.py:76
+#: ../blueman/Functions.py:78
+msgid "Exit"
+msgstr "Çıkış"
+
+#: ../blueman/Functions.py:79
 msgid "Enable Bluetooth"
 msgstr "Bluetooth'u Etkinleştir"
+
+#: ../blueman/Functions.py:98
+msgid "Shall bluetooth get enabled automatically?"
+msgstr ""
+
+#: ../blueman/Functions.py:99
+msgid "Yes"
+msgstr "Evet"
+
+#: ../blueman/Functions.py:100
+msgid "No"
+msgstr "Hayır"
 
 #: ../blueman/gui/manager/ManagerMenu.py:38
 msgid "_Report a Problem"
@@ -612,49 +629,49 @@ msgstr "Hizmet Seçenekleri"
 msgid "_Search"
 msgstr "_Ara"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:420
+#: ../blueman/gui/manager/ManagerDeviceList.py:418
 msgid "<b>Trusted and Paired</b>"
 msgstr "<b>Güvenilir ve Eşlenmiş</b>"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:422
+#: ../blueman/gui/manager/ManagerDeviceList.py:420
 msgid "<b>Paired</b>"
 msgstr "<b>Eşlenmiş</b>"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:424
+#: ../blueman/gui/manager/ManagerDeviceList.py:422
 msgid "<b>Trusted</b>"
 msgstr "<b>Güvenilir</b>"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:444
+#: ../blueman/gui/manager/ManagerDeviceList.py:442
 msgid "Poor"
 msgstr "Zayıf"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:446
-#: ../blueman/gui/manager/ManagerDeviceList.py:457
+#: ../blueman/gui/manager/ManagerDeviceList.py:444
+#: ../blueman/gui/manager/ManagerDeviceList.py:455
 msgid "Sub-optimal"
 msgstr "Optimal altı"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:448
-#: ../blueman/gui/manager/ManagerDeviceList.py:459
+#: ../blueman/gui/manager/ManagerDeviceList.py:446
+#: ../blueman/gui/manager/ManagerDeviceList.py:457
 msgid "Optimal"
 msgstr "En Uygun"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:450
+#: ../blueman/gui/manager/ManagerDeviceList.py:448
 msgid "Much"
 msgstr "Daha fazla"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:452
+#: ../blueman/gui/manager/ManagerDeviceList.py:450
 msgid "Too much"
 msgstr "Çok fazla"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:455
+#: ../blueman/gui/manager/ManagerDeviceList.py:453
 msgid "Low"
 msgstr "Düşük"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:461
+#: ../blueman/gui/manager/ManagerDeviceList.py:459
 msgid "High"
 msgstr "Yüksek"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:463
+#: ../blueman/gui/manager/ManagerDeviceList.py:461
 msgid "Very High"
 msgstr "Çok Yüksek"
 
@@ -1037,14 +1054,14 @@ msgstr "Ağ _Kullanımı"
 msgid "Shows network traffic usage"
 msgstr "Ağ kullanımını görüntüler"
 
-#: ../blueman/plugins/applet/StatusIcon.py:30
-#: ../blueman/plugins/applet/StatusIcon.py:43
+#: ../blueman/plugins/applet/StatusIcon.py:29
+#: ../blueman/plugins/applet/StatusIcon.py:51
 #: ../blueman/plugins/applet/ShowConnected.py:58
 #: ../blueman/plugins/applet/ShowConnected.py:60
 msgid "Bluetooth Enabled"
 msgstr "Bluetooth Etkin"
 
-#: ../blueman/plugins/applet/StatusIcon.py:46
+#: ../blueman/plugins/applet/StatusIcon.py:54
 msgid "Bluetooth Disabled"
 msgstr "Bluetooth Devredışı"
 
@@ -1072,30 +1089,30 @@ msgstr "Azami öğe"
 msgid "The maximum number of items recent connections menu will display."
 msgstr "Yeni  bağlantı menüsünün gösterecek olduğu maddelerin maksimum sayısı."
 
-#: ../blueman/plugins/applet/RecentConns.py:48
+#: ../blueman/plugins/applet/RecentConns.py:49
 msgid "Recent _Connections"
 msgstr "Son _Bağlantılar"
 
-#: ../blueman/plugins/applet/RecentConns.py:208
+#: ../blueman/plugins/applet/RecentConns.py:201
 #: ../blueman/plugins/applet/PPPSupport.py:50
 msgid "Connected"
 msgstr "Bağlandı"
 
-#: ../blueman/plugins/applet/RecentConns.py:208
+#: ../blueman/plugins/applet/RecentConns.py:201
 #, python-format
 msgid "Connected to %s"
 msgstr "%s cihazına bağlı"
 
-#: ../blueman/plugins/applet/RecentConns.py:214
+#: ../blueman/plugins/applet/RecentConns.py:207
 msgid "Failed to connect"
 msgstr "Bağlanma girişimi başarısız"
 
-#: ../blueman/plugins/applet/RecentConns.py:230
+#: ../blueman/plugins/applet/RecentConns.py:223
 #, python-format
 msgid "%(service)s on %(device)s"
 msgstr "%(device)s üzerinden %(service)s"
 
-#: ../blueman/plugins/applet/RecentConns.py:245
+#: ../blueman/plugins/applet/RecentConns.py:238
 msgid "Adapter for this connection is not available"
 msgstr "Bu bağlantı için bağdaştırıcı kullanılabilir değil"
 
@@ -1105,78 +1122,78 @@ msgid ""
 "NetworkManager 0.8"
 msgstr "NetworkManager 0.8'de tanıtılan Kişisel Alan Ağı (PAN) için destek sağlar."
 
-#: ../blueman/plugins/applet/DBusService.py:15
+#: ../blueman/plugins/applet/DBusService.py:13
 msgid "Provides DBus API for other Blueman components"
 msgstr "Diğer Blueman öğeleri için DBus API sağlar"
 
-#: ../blueman/plugins/applet/TransferService.py:103
+#: ../blueman/plugins/applet/TransferService.py:102
 msgid "Incoming file over Bluetooth"
 msgstr "Bluetooth 'dan gelen Dosya"
 
-#: ../blueman/plugins/applet/TransferService.py:104
+#: ../blueman/plugins/applet/TransferService.py:103
 #, python-format
 msgid "Incoming file %(0)s from %(1)s"
 msgstr "%(1)s kaynağından %(0)s dosyası alınıyor"
 
-#: ../blueman/plugins/applet/TransferService.py:106
+#: ../blueman/plugins/applet/TransferService.py:105
 msgid "Reject"
 msgstr "Reddet"
 
-#: ../blueman/plugins/applet/TransferService.py:113
+#: ../blueman/plugins/applet/TransferService.py:112
 msgid "Receiving file"
 msgstr "Alınan dosya"
 
-#: ../blueman/plugins/applet/TransferService.py:114
+#: ../blueman/plugins/applet/TransferService.py:113
 #, python-format
 msgid "Receiving file %(0)s from %(1)s"
 msgstr "%(1)s kaynağından %(0)s dosyası alınıyor"
 
-#: ../blueman/plugins/applet/TransferService.py:132
+#: ../blueman/plugins/applet/TransferService.py:131
 msgid "Provides OBEX file transfer capabilities"
 msgstr "OBEX dosya transferi yetenekleri sunar"
 
-#: ../blueman/plugins/applet/TransferService.py:157
+#: ../blueman/plugins/applet/TransferService.py:156
 msgid "Configured directory for incoming files does not exist"
 msgstr "Gelen dosyalar için ayarlanan dizin mevcut değil"
 
-#: ../blueman/plugins/applet/TransferService.py:158
+#: ../blueman/plugins/applet/TransferService.py:157
 #, python-format
 msgid ""
 "Please make sure that directory \"<b>%s</b>\" exists or configure it with "
 "blueman-services. Until then the default \"%s\" will be used"
 msgstr ""
 
-#: ../blueman/plugins/applet/TransferService.py:285
+#: ../blueman/plugins/applet/TransferService.py:284
 msgid "File received"
 msgstr "Dosya alındı"
 
-#: ../blueman/plugins/applet/TransferService.py:286
+#: ../blueman/plugins/applet/TransferService.py:285
 #, python-format
 msgid "File %(0)s from %(1)s successfully received"
 msgstr "%(1)s kaynağından %(0)s dosyası başarıyla alındı"
 
-#: ../blueman/plugins/applet/TransferService.py:294
+#: ../blueman/plugins/applet/TransferService.py:293
 msgid "Transfer failed"
 msgstr "Transfer başarısız"
 
-#: ../blueman/plugins/applet/TransferService.py:295
+#: ../blueman/plugins/applet/TransferService.py:294
 #, python-format
 msgid "Transfer of file %(0)s failed"
 msgstr "%(0)s dosyasının transferi başarısızlığa uğradı"
 
-#: ../blueman/plugins/applet/TransferService.py:314
-#: ../blueman/plugins/applet/TransferService.py:323
+#: ../blueman/plugins/applet/TransferService.py:313
+#: ../blueman/plugins/applet/TransferService.py:322
 msgid "Files received"
 msgstr "Alınan dosyalar"
 
-#: ../blueman/plugins/applet/TransferService.py:315
+#: ../blueman/plugins/applet/TransferService.py:314
 #, python-format
 msgid "Received %d file in the background"
 msgid_plural "Received %d files in the background"
 msgstr[0] "Arka planda %d dosya alındı"
 msgstr[1] "Arka planda %d dosya alındı"
 
-#: ../blueman/plugins/applet/TransferService.py:324
+#: ../blueman/plugins/applet/TransferService.py:323
 #, python-format
 msgid "Received %d more file in the background"
 msgid_plural "Received %d more files in the background"
@@ -1226,23 +1243,23 @@ msgstr "Eklentiden çıkmak için çıkış menüsü iconu ekle"
 msgid "Provides a basic dhcp client for Bluetooth PAN connections."
 msgstr "Bluetooth PAN bağlantısı için temel bir DHCP istemcisi sağlar."
 
-#: ../blueman/plugins/applet/DhcpClient.py:44
-#: ../blueman/plugins/applet/DhcpClient.py:52
-#: ../blueman/plugins/applet/DhcpClient.py:57
+#: ../blueman/plugins/applet/DhcpClient.py:42
+#: ../blueman/plugins/applet/DhcpClient.py:50
+#: ../blueman/plugins/applet/DhcpClient.py:55
 msgid "Bluetooth Network"
 msgstr "Bluetooth Ağı"
 
-#: ../blueman/plugins/applet/DhcpClient.py:45
+#: ../blueman/plugins/applet/DhcpClient.py:43
 #, python-format
 msgid "Interface %(0)s bound to IP address %(1)s"
 msgstr "Arayüz %(0)s IP adresine geçiş yaptı %(1)s"
 
-#: ../blueman/plugins/applet/DhcpClient.py:52
+#: ../blueman/plugins/applet/DhcpClient.py:50
 #, python-format
 msgid "Failed to obtain an IP address on %s"
 msgstr "%s üzerinden IP adresi alınamadı"
 
-#: ../blueman/plugins/applet/DhcpClient.py:57
+#: ../blueman/plugins/applet/DhcpClient.py:55
 #, python-format
 msgid ""
 "Trying to obtain an IP address on %s\n"
@@ -1297,7 +1314,7 @@ msgstr "Öntanımlı bağdaştırıcıyı geçici olarak görünür yap"
 msgid "Discoverable… %ss"
 msgstr "Keşfedilebilir… %ss"
 
-#: ../blueman/plugins/applet/Menu.py:89
+#: ../blueman/plugins/applet/Menu.py:88
 msgid ""
 "Provides a menu for the applet and an API for other plugins to manipulate it"
 msgstr "Uygulamacık için bir menü ve diğer eklentilerin ona erişmesi için bir API sağlar"
@@ -1367,20 +1384,20 @@ msgid "Automatically power on adapters"
 msgstr "Bağdaştırıcılar bağlandığında kendiliğinden çalıştır"
 
 #: ../blueman/plugins/applet/PowerManager.py:36
-#: ../blueman/plugins/applet/PowerManager.py:160
+#: ../blueman/plugins/applet/PowerManager.py:164
 msgid "<b>Turn Bluetooth _Off</b>"
 msgstr "<b>Bluetooth'u _Kapat</b>"
 
 #: ../blueman/plugins/applet/PowerManager.py:37
-#: ../blueman/plugins/applet/PowerManager.py:162
+#: ../blueman/plugins/applet/PowerManager.py:166
 msgid "Turn off all adapters"
 msgstr "Tüm bağdaştırıcıları kapat"
 
-#: ../blueman/plugins/applet/PowerManager.py:151
+#: ../blueman/plugins/applet/PowerManager.py:155
 msgid "<b>Turn Bluetooth _On</b>"
 msgstr "<b>Bluetooth'u _Aç</b>"
 
-#: ../blueman/plugins/applet/PowerManager.py:153
+#: ../blueman/plugins/applet/PowerManager.py:157
 msgid "Turn on all adapters"
 msgstr "Tüm bağdaştırıcıları aç"
 
@@ -1484,19 +1501,19 @@ msgstr "Dosya gönderebilmek için bluetooth açılmalı"
 msgid "Select files to send"
 msgstr "Gönderilecek dosyaları seçin"
 
-#: ../apps/blueman-sendto:130
+#: ../apps/blueman-sendto:131
 msgid "Send files to this device"
 msgstr "Aygıta dosyaları yolla"
 
-#: ../apps/blueman-sendto:132
+#: ../apps/blueman-sendto:133
 msgid "Source adapter. Takes address or adapter's name eg. hci0"
 msgstr "Kaynak bağdaştırıcı. Bağdaştırıcının adresini ya da ismini alır, mesela hci0"
 
-#: ../apps/blueman-sendto:133
+#: ../apps/blueman-sendto:134
 msgid "Delete files on exit"
 msgstr "Çıkışta dosyaları sil"
 
-#: ../apps/blueman-sendto:135
+#: ../apps/blueman-sendto:136
 msgid "Files to be send to the bluetooth device"
 msgstr "Bluetooth aygıtına gönderilecek dosyalar"
 
@@ -1522,11 +1539,11 @@ msgstr "Bağlanma"
 
 #: ../apps/blueman-assistant:234
 msgid "<b>Device added and connected successfully</b>"
-msgstr ""
+msgstr "<b>Cihaz eklendi ve başarıyla bağlandı</b>"
 
 #: ../apps/blueman-assistant:239
 msgid "<b>Device added successfully, but failed to connect</b>"
-msgstr ""
+msgstr "<b>Cihaz başarıyla eklendi, ama bağlanamadı</b>"
 
 #: ../apps/blueman-assistant:250
 msgid "Start configuration assistant for this device"
