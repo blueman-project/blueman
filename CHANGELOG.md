@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.1
+
+### Changes
+
+* New PIN database
+
+### Bugs fixed
+
+* Crash in blueman-manager and blueman-adapters if no adapter is present
+* Many issues in blueman-sendto
+
 ## 2.1.beta1
 
 ### Changes
