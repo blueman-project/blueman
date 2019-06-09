@@ -8,14 +8,14 @@
 # infirit <inactive+infirit@transifex.com>, 2014-2015
 # Marcel van den Boer <marcelvdboer@gmail.com>, 2017
 # Nathan Follens, 2015
-# Pjotr <pjotrvertaalt@gmail.com>, 2017
+# Pjotr <pjotrvertaalt@gmail.com>, 2017,2019
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-29 08:27+0200\n"
-"PO-Revision-Date: 2019-04-29 06:32+0000\n"
-"Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
+"POT-Creation-Date: 2019-06-09 11:42+0200\n"
+"PO-Revision-Date: 2019-06-01 15:24+0000\n"
+"Last-Translator: Pjotr <pjotrvertaalt@gmail.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/mate/MATE/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,7 +27,7 @@ msgstr ""
 msgid "<b>Visibility Setting</b>"
 msgstr "<b>Zichtbaarheidinstelling</b>"
 
-#: ../data/ui/adapters-tab.ui.h:2 ../blueman/main/Adapter.py:131
+#: ../data/ui/adapters-tab.ui.h:2 ../blueman/main/Adapter.py:130
 msgid "Hidden"
 msgstr "Verborgen"
 
@@ -358,22 +358,22 @@ msgstr "Notitie verzenden"
 msgid "Bluetooth Adapters"
 msgstr "Bluetooth-adapters"
 
-#: ../blueman/main/Adapter.py:48
+#: ../blueman/main/Adapter.py:49
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
 msgstr "Bluetooth moet zijn ingeschakeld, anders werkt het adapterbeheer niet"
 
-#: ../blueman/main/Adapter.py:129
+#: ../blueman/main/Adapter.py:128
 msgid "Always"
 msgstr "Altijd"
 
-#: ../blueman/main/Adapter.py:133
+#: ../blueman/main/Adapter.py:132
 #, python-format
 msgid "%d Minute"
 msgid_plural "%d Minutes"
 msgstr[0] "%d minuut"
 msgstr[1] "%d minuten"
 
-#: ../blueman/main/Adapter.py:199
+#: ../blueman/main/Adapter.py:198
 msgid "Adapter"
 msgstr "Adapter"
 
@@ -381,7 +381,7 @@ msgstr "Adapter"
 msgid "Bluetooth Devices"
 msgstr "Bluetooth-apparaten"
 
-#: ../blueman/main/Manager.py:71
+#: ../blueman/main/Manager.py:71 ../blueman/main/Manager.py:111
 msgid "Bluetooth needs to be turned on for the device manager to function"
 msgstr "Bluetooth moet ingeschakeld worden om het apparaatbeheer te kunnen gebruiken"
 
@@ -395,21 +395,21 @@ msgid ""
 "This probably means that there were no Bluetooth adapters detected or Bluetooth daemon was not started."
 msgstr "Bluez-achtergronddienst is niet actief, Blueman-beheer kan niet doorgaan.\nDit betekent waarschijnlijk dat er geen Bluetooth-adapters gevonden zijn of dat de Bluetooth-achtergronddienst niet gestart is."
 
-#: ../blueman/main/Manager.py:174
+#: ../blueman/main/Manager.py:179
 msgid "Searching"
 msgstr "Bezig met zoeken"
 
-#: ../blueman/main/Manager.py:187
+#: ../blueman/main/Manager.py:192
 #: ../blueman/plugins/applet/StandardItems.py:69 ../apps/blueman-assistant:65
 msgid "Bluetooth Assistant"
 msgstr "Bluetooth-assistent"
 
-#: ../blueman/main/Manager.py:198
+#: ../blueman/main/Manager.py:203
 #: ../blueman/plugins/applet/StandardItems.py:81
 msgid "Adapter Preferences"
 msgstr "Adaptervoorkeuren"
 
-#: ../blueman/main/Manager.py:207
+#: ../blueman/main/Manager.py:212
 #: ../blueman/gui/manager/ManagerDeviceList.py:131
 #: ../blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
@@ -424,54 +424,54 @@ msgstr "Bluetooth-bestandoverdracht"
 msgid "Connecting"
 msgstr "Bezig met verbinden"
 
-#: ../blueman/main/Sendto.py:107
+#: ../blueman/main/Sendto.py:110
 msgid "obexd not available"
 msgstr "obexd is niet beschikbaar"
 
-#: ../blueman/main/Sendto.py:107
+#: ../blueman/main/Sendto.py:110
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
-msgstr ""
+msgstr "Kon de obex-dienst niet automatisch starten. Zorg ervoor dat de obex-achtergronddienst draait."
 
-#: ../blueman/main/Sendto.py:138
+#: ../blueman/main/Sendto.py:139
 msgid "Cancelling"
 msgstr "Bezig met annuleren"
 
-#: ../blueman/main/Sendto.py:149 ../blueman/main/Sendto.py:191
+#: ../blueman/main/Sendto.py:150 ../blueman/main/Sendto.py:192
 msgid "Sending File"
 msgstr "Bezig met verzenden van bestand"
 
-#: ../blueman/main/Sendto.py:149 ../blueman/main/Sendto.py:191
+#: ../blueman/main/Sendto.py:150 ../blueman/main/Sendto.py:192
 msgid "ETA:"
 msgstr "Geschatte aankomsttijd:"
 
-#: ../blueman/main/Sendto.py:185
+#: ../blueman/main/Sendto.py:186
 #, python-format
 msgid "%.0f Minute"
 msgid_plural "%.0f Minutes"
 msgstr[0] "%.0f minuut"
 msgstr[1] "%.0f minuten"
 
-#: ../blueman/main/Sendto.py:187
+#: ../blueman/main/Sendto.py:188
 #, python-format
 msgid "%.0f Second"
 msgid_plural "%.0f Seconds"
 msgstr[0] "%.0f seconde"
 msgstr[1] "%.0f seconden"
 
-#: ../blueman/main/Sendto.py:221
+#: ../blueman/main/Sendto.py:222
 #, python-format
 msgid "Error occurred while sending file %s"
 msgstr "Er is een fout opgetreden bij het verzenden van bestand %s"
 
-#: ../blueman/main/Sendto.py:225
+#: ../blueman/main/Sendto.py:226
 msgid "Skip"
 msgstr "Overslaan"
 
-#: ../blueman/main/Sendto.py:226
+#: ../blueman/main/Sendto.py:227
 msgid "Retry"
 msgstr "Opnieuw proberen"
 
-#: ../blueman/main/Sendto.py:264
+#: ../blueman/main/Sendto.py:274
 msgid "Error occurred"
 msgstr "Er is een fout opgetreden"
 
@@ -479,71 +479,71 @@ msgstr "Er is een fout opgetreden"
 msgid "Local Services"
 msgstr "Lokale diensten"
 
-#: ../blueman/main/applet/BluezAgent.py:186
+#: ../blueman/main/applet/BluezAgent.py:180
 #, python-format
 msgid "Pairing request for %s"
 msgstr "Koppelingsverzoek voor %s"
 
-#: ../blueman/main/applet/BluezAgent.py:198
-#: ../blueman/main/applet/BluezAgent.py:323
+#: ../blueman/main/applet/BluezAgent.py:192
+#: ../blueman/main/applet/BluezAgent.py:300
 msgid "Bluetooth Authentication"
 msgstr "Bluetooth-authenticatie"
 
-#: ../blueman/main/applet/BluezAgent.py:225
+#: ../blueman/main/applet/BluezAgent.py:219
 msgid "Enter PIN code for authentication:"
 msgstr "Voer pincode in voor authenticatie:"
 
-#: ../blueman/main/applet/BluezAgent.py:226
+#: ../blueman/main/applet/BluezAgent.py:220
 msgid "Enter PIN code"
 msgstr "Voer pincode in"
 
-#: ../blueman/main/applet/BluezAgent.py:241
+#: ../blueman/main/applet/BluezAgent.py:233
 msgid "Enter passkey for authentication:"
 msgstr "Voer wachtwoordsleutel in voor authenticatie:"
 
-#: ../blueman/main/applet/BluezAgent.py:242
+#: ../blueman/main/applet/BluezAgent.py:234
 msgid "Enter passkey"
 msgstr "Voer wachtwoordsleutel in"
 
-#: ../blueman/main/applet/BluezAgent.py:253
+#: ../blueman/main/applet/BluezAgent.py:244
 msgid "Pairing passkey for"
 msgstr "Koppelingsverzoek voor"
 
-#: ../blueman/main/applet/BluezAgent.py:265
+#: ../blueman/main/applet/BluezAgent.py:253
 msgid "Pairing PIN code for"
 msgstr "PIN-code koppelen voor"
 
-#: ../blueman/main/applet/BluezAgent.py:286
+#: ../blueman/main/applet/BluezAgent.py:265
 msgid "Pairing request for:"
 msgstr "Koppelingsverzoek voor:"
 
-#: ../blueman/main/applet/BluezAgent.py:289
+#: ../blueman/main/applet/BluezAgent.py:268
 msgid "Confirm value for authentication:"
 msgstr "Bevestig waarde voor authenticatie:"
 
-#: ../blueman/main/applet/BluezAgent.py:290
+#: ../blueman/main/applet/BluezAgent.py:269
 msgid "Confirm"
 msgstr "Bevestigen"
 
-#: ../blueman/main/applet/BluezAgent.py:290
-#: ../blueman/main/applet/BluezAgent.py:321
+#: ../blueman/main/applet/BluezAgent.py:269
+#: ../blueman/main/applet/BluezAgent.py:298
 msgid "Deny"
 msgstr "Weigeren"
 
-#: ../blueman/main/applet/BluezAgent.py:318
+#: ../blueman/main/applet/BluezAgent.py:295
 msgid "Authorization request for:"
 msgstr "Machtigingsverzoek voor:"
 
-#: ../blueman/main/applet/BluezAgent.py:318
+#: ../blueman/main/applet/BluezAgent.py:295
 msgid "Service:"
 msgstr "Dienst:"
 
-#: ../blueman/main/applet/BluezAgent.py:319
+#: ../blueman/main/applet/BluezAgent.py:296
 msgid "Always accept"
 msgstr "Altijd aanvaarden"
 
-#: ../blueman/main/applet/BluezAgent.py:320
-#: ../blueman/plugins/applet/TransferService.py:106
+#: ../blueman/main/applet/BluezAgent.py:297
+#: ../blueman/plugins/applet/TransferService.py:105
 msgid "Accept"
 msgstr "Aanvaarden"
 
@@ -553,13 +553,29 @@ msgid ""
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgstr "<b>Er is een fout opgetreden bij het laden van een invoegsel. Meld dit a.u.b. aan de ontwikkelaars met de inhoud van deze boodschap op onze </b>\n<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 
-#: ../blueman/Functions.py:72
+#: ../blueman/Functions.py:77
 msgid "Bluetooth Turned Off"
 msgstr "Bluetooth uitgeschakeld"
 
-#: ../blueman/Functions.py:76
+#: ../blueman/Functions.py:78
+msgid "Exit"
+msgstr "Afsluiten"
+
+#: ../blueman/Functions.py:79
 msgid "Enable Bluetooth"
 msgstr "Bluetooth inschakelen"
+
+#: ../blueman/Functions.py:98
+msgid "Shall bluetooth get enabled automatically?"
+msgstr "Moet bluetooth automatisch worden ingeschakeld?"
+
+#: ../blueman/Functions.py:99
+msgid "Yes"
+msgstr "Ja"
+
+#: ../blueman/Functions.py:100
+msgid "No"
+msgstr "Nee"
 
 #: ../blueman/gui/manager/ManagerMenu.py:38
 msgid "_Report a Problem"
@@ -613,49 +629,49 @@ msgstr "Dienstvoorkeuren"
 msgid "_Search"
 msgstr "_Zoeken"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:420
+#: ../blueman/gui/manager/ManagerDeviceList.py:418
 msgid "<b>Trusted and Paired</b>"
 msgstr "<b>Vertrouwd en gepaard</b>"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:422
+#: ../blueman/gui/manager/ManagerDeviceList.py:420
 msgid "<b>Paired</b>"
 msgstr "<b>Gepaard</b>"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:424
+#: ../blueman/gui/manager/ManagerDeviceList.py:422
 msgid "<b>Trusted</b>"
 msgstr "<b>Vertrouwd></b>"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:444
+#: ../blueman/gui/manager/ManagerDeviceList.py:442
 msgid "Poor"
 msgstr "Matig"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:446
-#: ../blueman/gui/manager/ManagerDeviceList.py:457
+#: ../blueman/gui/manager/ManagerDeviceList.py:444
+#: ../blueman/gui/manager/ManagerDeviceList.py:455
 msgid "Sub-optimal"
 msgstr "Sub-optimaal"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:448
-#: ../blueman/gui/manager/ManagerDeviceList.py:459
+#: ../blueman/gui/manager/ManagerDeviceList.py:446
+#: ../blueman/gui/manager/ManagerDeviceList.py:457
 msgid "Optimal"
 msgstr "Optimaal"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:450
+#: ../blueman/gui/manager/ManagerDeviceList.py:448
 msgid "Much"
 msgstr "Veel"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:452
+#: ../blueman/gui/manager/ManagerDeviceList.py:450
 msgid "Too much"
 msgstr "Te veel"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:455
+#: ../blueman/gui/manager/ManagerDeviceList.py:453
 msgid "Low"
 msgstr "Laag"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:461
+#: ../blueman/gui/manager/ManagerDeviceList.py:459
 msgid "High"
 msgstr "Hoog"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:463
+#: ../blueman/gui/manager/ManagerDeviceList.py:461
 msgid "Very High"
 msgstr "Zeer hoog"
 
@@ -1038,14 +1054,14 @@ msgstr "Netwerk _gebruik"
 msgid "Shows network traffic usage"
 msgstr "Laat netwerkverkeergebruik zien"
 
-#: ../blueman/plugins/applet/StatusIcon.py:30
-#: ../blueman/plugins/applet/StatusIcon.py:43
+#: ../blueman/plugins/applet/StatusIcon.py:29
+#: ../blueman/plugins/applet/StatusIcon.py:51
 #: ../blueman/plugins/applet/ShowConnected.py:58
 #: ../blueman/plugins/applet/ShowConnected.py:60
 msgid "Bluetooth Enabled"
 msgstr "Bluetooth ingeschakeld"
 
-#: ../blueman/plugins/applet/StatusIcon.py:46
+#: ../blueman/plugins/applet/StatusIcon.py:54
 msgid "Bluetooth Disabled"
 msgstr "Bluetooth uitgeschakeld"
 
@@ -1073,30 +1089,30 @@ msgstr "Maximaal aantal onderdelen"
 msgid "The maximum number of items recent connections menu will display."
 msgstr "Het maximaal aantal onderdelen dat getoond zal worden in het recente verbindingenmenu."
 
-#: ../blueman/plugins/applet/RecentConns.py:48
+#: ../blueman/plugins/applet/RecentConns.py:49
 msgid "Recent _Connections"
 msgstr "Recente _verbindingen"
 
-#: ../blueman/plugins/applet/RecentConns.py:208
+#: ../blueman/plugins/applet/RecentConns.py:201
 #: ../blueman/plugins/applet/PPPSupport.py:50
 msgid "Connected"
 msgstr "Verbonden"
 
-#: ../blueman/plugins/applet/RecentConns.py:208
+#: ../blueman/plugins/applet/RecentConns.py:201
 #, python-format
 msgid "Connected to %s"
 msgstr "Verbonden met %s"
 
-#: ../blueman/plugins/applet/RecentConns.py:214
+#: ../blueman/plugins/applet/RecentConns.py:207
 msgid "Failed to connect"
 msgstr "Kon niet verbinden"
 
-#: ../blueman/plugins/applet/RecentConns.py:230
+#: ../blueman/plugins/applet/RecentConns.py:223
 #, python-format
 msgid "%(service)s on %(device)s"
 msgstr "%(service)s op %(device)s"
 
-#: ../blueman/plugins/applet/RecentConns.py:245
+#: ../blueman/plugins/applet/RecentConns.py:238
 msgid "Adapter for this connection is not available"
 msgstr "Adapter voor deze verbinding is niet beschikbaar"
 
@@ -1106,78 +1122,78 @@ msgid ""
 "NetworkManager 0.8"
 msgstr "Biedt ondersteuning voor Personal Area Netwerken (PAN) geïntroduceerd in NetworkManager 0.8"
 
-#: ../blueman/plugins/applet/DBusService.py:15
+#: ../blueman/plugins/applet/DBusService.py:13
 msgid "Provides DBus API for other Blueman components"
 msgstr "Biedt een DBus-API aan voor andere Blueman-componenten"
 
-#: ../blueman/plugins/applet/TransferService.py:103
+#: ../blueman/plugins/applet/TransferService.py:102
 msgid "Incoming file over Bluetooth"
 msgstr "Binnenkomend bestand via Bluetooth"
 
-#: ../blueman/plugins/applet/TransferService.py:104
+#: ../blueman/plugins/applet/TransferService.py:103
 #, python-format
 msgid "Incoming file %(0)s from %(1)s"
 msgstr "Binnenkomend bestand %(0)s van %(1)s"
 
-#: ../blueman/plugins/applet/TransferService.py:106
+#: ../blueman/plugins/applet/TransferService.py:105
 msgid "Reject"
 msgstr "Weigeren"
 
-#: ../blueman/plugins/applet/TransferService.py:113
+#: ../blueman/plugins/applet/TransferService.py:112
 msgid "Receiving file"
 msgstr "Bestand wordt ontvangen"
 
-#: ../blueman/plugins/applet/TransferService.py:114
+#: ../blueman/plugins/applet/TransferService.py:113
 #, python-format
 msgid "Receiving file %(0)s from %(1)s"
 msgstr "Bestand %(0)s van %(1)s wordt ontvangen"
 
-#: ../blueman/plugins/applet/TransferService.py:132
+#: ../blueman/plugins/applet/TransferService.py:131
 msgid "Provides OBEX file transfer capabilities"
 msgstr "Biedt mogelijkheden voor OBEX-bestandsoverdracht"
 
-#: ../blueman/plugins/applet/TransferService.py:157
+#: ../blueman/plugins/applet/TransferService.py:156
 msgid "Configured directory for incoming files does not exist"
 msgstr "Ingestelde map voor binnenkomende bestanden bestaat niet"
 
-#: ../blueman/plugins/applet/TransferService.py:158
+#: ../blueman/plugins/applet/TransferService.py:157
 #, python-format
 msgid ""
 "Please make sure that directory \"<b>%s</b>\" exists or configure it with "
 "blueman-services. Until then the default \"%s\" will be used"
-msgstr ""
+msgstr "Zorg er a.u.b. voor dat de map '<b>%s</b>' bestaat of stel hem in met blueman-diensten. Tot dat ogenblik zal de standaard '%s' worden gebruikt"
 
-#: ../blueman/plugins/applet/TransferService.py:285
+#: ../blueman/plugins/applet/TransferService.py:284
 msgid "File received"
 msgstr "Bestand ontvangen"
 
-#: ../blueman/plugins/applet/TransferService.py:286
+#: ../blueman/plugins/applet/TransferService.py:285
 #, python-format
 msgid "File %(0)s from %(1)s successfully received"
 msgstr "Bestand %(0)s van %(1)s succesvol ontvangen"
 
-#: ../blueman/plugins/applet/TransferService.py:294
+#: ../blueman/plugins/applet/TransferService.py:293
 msgid "Transfer failed"
 msgstr "Overdracht mislukt"
 
-#: ../blueman/plugins/applet/TransferService.py:295
+#: ../blueman/plugins/applet/TransferService.py:294
 #, python-format
 msgid "Transfer of file %(0)s failed"
 msgstr "Overdracht van bestand %(0)s mislukt"
 
-#: ../blueman/plugins/applet/TransferService.py:314
-#: ../blueman/plugins/applet/TransferService.py:323
+#: ../blueman/plugins/applet/TransferService.py:313
+#: ../blueman/plugins/applet/TransferService.py:322
 msgid "Files received"
 msgstr "Bestanden ontvangen"
 
-#: ../blueman/plugins/applet/TransferService.py:315
+#: ../blueman/plugins/applet/TransferService.py:314
 #, python-format
 msgid "Received %d file in the background"
 msgid_plural "Received %d files in the background"
 msgstr[0] "%d bestand op de achtergrond ontvangen"
 msgstr[1] "%d bestanden op de achtergrond ontvangen"
 
-#: ../blueman/plugins/applet/TransferService.py:324
+#: ../blueman/plugins/applet/TransferService.py:323
 #, python-format
 msgid "Received %d more file in the background"
 msgid_plural "Received %d more files in the background"
@@ -1227,23 +1243,23 @@ msgstr "Voegt een menu-onderdeel 'Afsluiten' toe om het applet af te sluiten"
 msgid "Provides a basic dhcp client for Bluetooth PAN connections."
 msgstr "Biedt een basis dhcp-client voor Bluetooth-PAN-verbindingen."
 
-#: ../blueman/plugins/applet/DhcpClient.py:44
-#: ../blueman/plugins/applet/DhcpClient.py:52
-#: ../blueman/plugins/applet/DhcpClient.py:57
+#: ../blueman/plugins/applet/DhcpClient.py:42
+#: ../blueman/plugins/applet/DhcpClient.py:50
+#: ../blueman/plugins/applet/DhcpClient.py:55
 msgid "Bluetooth Network"
 msgstr "Bluetooth-netwerk"
 
-#: ../blueman/plugins/applet/DhcpClient.py:45
+#: ../blueman/plugins/applet/DhcpClient.py:43
 #, python-format
 msgid "Interface %(0)s bound to IP address %(1)s"
 msgstr "Apparaat %(0)s gekoppeld aan IP-adres %(1)s"
 
-#: ../blueman/plugins/applet/DhcpClient.py:52
+#: ../blueman/plugins/applet/DhcpClient.py:50
 #, python-format
 msgid "Failed to obtain an IP address on %s"
 msgstr "Kon geen IP-adres verkrijgen op %s"
 
-#: ../blueman/plugins/applet/DhcpClient.py:57
+#: ../blueman/plugins/applet/DhcpClient.py:55
 #, python-format
 msgid ""
 "Trying to obtain an IP address on %s\n"
@@ -1298,7 +1314,7 @@ msgstr "Maak de standaardadapter tijdelijk zichtbaar"
 msgid "Discoverable… %ss"
 msgstr "Ontdekbaar... %ss"
 
-#: ../blueman/plugins/applet/Menu.py:89
+#: ../blueman/plugins/applet/Menu.py:88
 msgid ""
 "Provides a menu for the applet and an API for other plugins to manipulate it"
 msgstr "Biedt een menu aan voor het applet en een API zodat andere invoegtoepassingen dit kunnen wijzigen"
@@ -1368,20 +1384,20 @@ msgid "Automatically power on adapters"
 msgstr "Adapters automatisch inschakelen"
 
 #: ../blueman/plugins/applet/PowerManager.py:36
-#: ../blueman/plugins/applet/PowerManager.py:160
+#: ../blueman/plugins/applet/PowerManager.py:164
 msgid "<b>Turn Bluetooth _Off</b>"
 msgstr "<b>Bluetooth _uitschakelen</b>"
 
 #: ../blueman/plugins/applet/PowerManager.py:37
-#: ../blueman/plugins/applet/PowerManager.py:162
+#: ../blueman/plugins/applet/PowerManager.py:166
 msgid "Turn off all adapters"
 msgstr "Alle adapters uitschakelen"
 
-#: ../blueman/plugins/applet/PowerManager.py:151
+#: ../blueman/plugins/applet/PowerManager.py:155
 msgid "<b>Turn Bluetooth _On</b>"
 msgstr "<b>Bluetooth _aan</b>"
 
-#: ../blueman/plugins/applet/PowerManager.py:153
+#: ../blueman/plugins/applet/PowerManager.py:157
 msgid "Turn on all adapters"
 msgstr "Alle adapters inschakelen"
 
@@ -1410,7 +1426,7 @@ msgstr "IP-adres conflicteert met apparaat %s dat hetzelfde adres heeft"
 msgid ""
 "IP address overlaps with subnet of interface %s, which has the following configuration  %s/%s\n"
 "This may cause incorrect network behavior"
-msgstr ""
+msgstr "IP-adres overlapt met subnet van apparaat %s, dat de volgende instellingen heeft  %s/%s\nDit kan onjuist netwerkgedrag veroorzaken"
 
 #: ../blueman/plugins/services/Network.py:237
 #: ../blueman/plugins/services/Network.py:246
@@ -1485,19 +1501,19 @@ msgstr "Om bestandverzending te kunnen gebruiken dient Bluetooth ingeschakeld te
 msgid "Select files to send"
 msgstr "Kies te verzenden bestanden"
 
-#: ../apps/blueman-sendto:130
+#: ../apps/blueman-sendto:131
 msgid "Send files to this device"
 msgstr "Bestanden verzenden naar dit apparaat"
 
-#: ../apps/blueman-sendto:132
+#: ../apps/blueman-sendto:133
 msgid "Source adapter. Takes address or adapter's name eg. hci0"
 msgstr "Bron-adapter. Gebruikt een adres of adapternaam, bijv. hci0"
 
-#: ../apps/blueman-sendto:133
+#: ../apps/blueman-sendto:134
 msgid "Delete files on exit"
 msgstr "Bestanden verwijderen tijdens het afsluiten"
 
-#: ../apps/blueman-sendto:135
+#: ../apps/blueman-sendto:136
 msgid "Files to be send to the bluetooth device"
 msgstr "Bestanden die worden verzonden naar het Bluetooth-apparaat"
 
@@ -1523,11 +1539,11 @@ msgstr "Niet verbinden"
 
 #: ../apps/blueman-assistant:234
 msgid "<b>Device added and connected successfully</b>"
-msgstr ""
+msgstr "<b>Apparaat toegevoegd en met succes verbonden</b>"
 
 #: ../apps/blueman-assistant:239
 msgid "<b>Device added successfully, but failed to connect</b>"
-msgstr ""
+msgstr "<b>Apparaat met succes toegevoegd, maar kon niet verbinden</b>"
 
 #: ../apps/blueman-assistant:250
 msgid "Start configuration assistant for this device"
