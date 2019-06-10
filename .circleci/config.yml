@@ -18,15 +18,6 @@ jobs:
       - run: make distcheck
       - run: sudo make install
 
-  flake8-3.4:
-      docker:
-        - image: circleci/python:3.4
-
-      steps:
-        - checkout
-        - run: python3 -m pip install --user flake8
-        - run: python3 -m flake8
-
   flake8-3.6:
       docker:
         - image: circleci/python:3.6
@@ -50,6 +41,5 @@ workflows:
   build_and_test:
     jobs:
       - releasebuild
-      - flake8-3.4
       - flake8-3.6
       - flake8-3.7
