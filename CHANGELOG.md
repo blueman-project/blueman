@@ -1,5 +1,11 @@
 # Changelog
 
+## master
+
+### Changes
+
+* Raise minimum Python version to 3.6
+
 ## 2.1
 
 ### Changes
