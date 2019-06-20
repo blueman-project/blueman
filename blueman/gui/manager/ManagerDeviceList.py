@@ -209,7 +209,7 @@ class ManagerDeviceList(DeviceList):
 
             fader.disconnect(signal)
             fader.freeze()
-            super().device_remove_event(device, tree_iter)
+            super(ManagerDeviceList, self).device_remove_event(device, tree_iter)
 
         signal = row_fader.connect("animation-finished", on_finished)
         row_fader.thaw()
