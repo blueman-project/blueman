@@ -204,17 +204,15 @@ class ManagerDeviceList(DeviceList):
 
     def device_remove_event(self, device, tree_iter):
         row_fader = self.get(tree_iter, "row_fader")["row_fader"]
-
-        def on_finished(fader):
-
-            fader.disconnect(signal)
-            fader.freeze()
-            super().device_remove_event(device, tree_iter)
-
-        signal = row_fader.connect("animation-finished", on_finished)
+        row_fader.connect("animation-finished", self.__on_fader_finished, device, tree_iter)
         row_fader.thaw()
         self.emit("device-selected", None, None)
         row_fader.animate(start=row_fader.get_state(), end=0.0, duration=400)
+
+    def __on_fader_finished(self, fader, device, tree_iter):
+        fader.disconnect_by_func(self.__on_fader_finished)
+        fader.freeze()
+        super().device_remove_event(device, tree_iter)
 
     def device_add_event(self, device):
         self.add_device(device)
