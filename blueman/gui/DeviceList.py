@@ -236,23 +236,27 @@ class DeviceList(GenericList):
 
         adapter = adapter_path_to_name(adapter)
 
-        logging.debug(adapter)
+        logging.debug("Setting adapter to: %s " % adapter)
 
-        # The pattern may be incorrect (ie removed adapter), see #590
-        try:
-            self.Adapter = self.manager.get_adapter(adapter)
-        except bluez.errors.DBusNoSuchAdapterError:
-            logging.info('Adapter pattern not valid, trying default adapter.')
+        if adapter is not None:
+            try:
+                self.Adapter = self.manager.get_adapter(adapter)
+                self.__adapter_path = self.Adapter.get_object_path()
+                self.emit("adapter-changed", self.__adapter_path)
+            except bluez.errors.DBusNoSuchAdapterError:
+                logging.warning('Failed to set adapter, trying first available.')
+                self.set_adapter(None)
+                return
+        else:
+            adapters = self.manager.get_adapters()
+            if len(adapters) > 0:
+                self.Adapter = adapters[0]
+                self.__adapter_path = self.Adapter.get_object_path()
+            else:
+                self.Adapter = None
+                self.__adapter_path = None
 
-        try:
-            self.Adapter = self.manager.get_adapter()
-            self.__adapter_path = self.Adapter.get_object_path()
-        except bluez.errors.DBusNoSuchAdapterError as e:
-            logging.exception(e)
-            self.Adapter = None
-            self.__adapter_path = None
-        finally:
-            self.emit("adapter-changed", None)
+        self.emit("adapter-changed", self.__adapter_path)
 
     def update_progress(self, time, totaltime):
         if not self.discovering:
