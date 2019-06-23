@@ -231,8 +231,8 @@ class DeviceList(GenericList):
     def set_adapter(self, adapter=None):
         self.clear()
         if self.discovering:
-            self.emit("adapter-property-changed", self.Adapter, ("Discovering", False))
             self.stop_discovery()
+            self.emit("adapter-property-changed", self.Adapter, ("Discovering", False))
 
         adapter = adapter_path_to_name(adapter)
 
