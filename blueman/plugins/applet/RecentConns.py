@@ -209,7 +209,7 @@ class RecentConns(AppletPlugin):
             item["mitem"]["sensitive"] = True
             self.parent.Plugins.Menu.on_menu_changed()
 
-        self.parent.DbusSvc.connect_service(item["device"], item["uuid"], reply, err)
+        self.parent.Plugins.DBusService.connect_service(item["device"], item["uuid"], reply, err)
 
     def add_item(self, item):
         if not item["mitem"]:
