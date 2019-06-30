@@ -71,7 +71,7 @@ def show_info(device, parent):
         ('AddressType', None),
         ('Name', None),
         ('Alias', None),
-        ('Class', lambda x: x and "0x{:06x}".format(x)),
+        ('Class', lambda x: "0x{:06x}".format(x)),
         ('Appearance', lambda x: "0x{:04x}".format(x)),
         ('Icon', None),
         ('Paired', format_boolean),
