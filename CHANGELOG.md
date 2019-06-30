@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.1 (unreleased)
+
+### Bugs fixed
+
+* Using recent connections did not work
+
 ## 2.1
 
 ### Changes
