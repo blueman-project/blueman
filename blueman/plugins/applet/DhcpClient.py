@@ -1,6 +1,8 @@
 # coding=utf-8
 
+from gettext import gettext as _
 import logging
+
 from blueman.bluez.Network import AnyNetwork
 from blueman.gui.Notification import Notification
 from blueman.plugins.AppletPlugin import AppletPlugin

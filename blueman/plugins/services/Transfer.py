@@ -1,5 +1,6 @@
 # coding=utf-8
-from locale import bind_textdomain_codeset
+from gettext import gettext as _
+from gettext import bind_textdomain_codeset
 import logging
 
 from blueman.Constants import *

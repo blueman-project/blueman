@@ -1,4 +1,6 @@
 # coding=utf-8
+from gettext import gettext as _
+
 from blueman.gui.DeviceSelectorWidget import DeviceSelectorWidget
 
 import gi

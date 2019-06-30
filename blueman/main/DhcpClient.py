@@ -1,4 +1,6 @@
 # coding=utf-8
+from typing import List
+
 from gi.repository import GObject
 from gi.repository import GLib
 import socket
@@ -20,7 +22,7 @@ class DhcpClient(GObject.GObject):
         ["udhcpc", "-t", "20", "-x", "hostname", socket.gethostname(), "-n", "-i"]
     ]
 
-    quering = []
+    quering: List[str] = []
 
     def __init__(self, interface, timeout=30):
         super().__init__()

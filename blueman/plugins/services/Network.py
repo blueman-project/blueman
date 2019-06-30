@@ -1,8 +1,10 @@
 # coding=utf-8
+from gettext import gettext as _
 from random import randint
-from locale import bind_textdomain_codeset
+from gettext import bind_textdomain_codeset
 import logging
 import ipaddress
+
 from blueman.Constants import *
 from blueman.Functions import have, get_local_interfaces
 from blueman.plugins.ServicePlugin import ServicePlugin

@@ -1,4 +1,6 @@
 # coding=utf-8
+from gettext import gettext as _
+
 from blueman.Functions import launch, get_lockfile, get_pid, kill
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.CommonUi import show_about_dialog

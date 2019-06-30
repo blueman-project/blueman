@@ -8,8 +8,6 @@ from blueman.plugins.MechanismPlugin import MechanismPlugin
 
 
 class Rfcomm(MechanismPlugin):
-    files = {}
-
     def on_load(self):
         self.parent.add_method("OpenRFCOMM", ("d",), "", self._open_rfcomm)
         self.parent.add_method("CloseRFCOMM", ("d",), "", self._close_rfcomm)

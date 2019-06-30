@@ -16,7 +16,7 @@ class NMConnectionError(Exception):
 
 
 class NMConnectionBase(object):
-    conntype = None
+    conntype: str
 
     def __init__(self, service, reply_handler=None, error_handler=None):
         if self.conntype not in ('dun', 'panu'):

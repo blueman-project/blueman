@@ -1,6 +1,8 @@
 # coding=utf-8
 import logging
 import weakref
+from typing import List, TYPE_CHECKING, Type, Dict, Tuple, Any
+
 from blueman.main.Config import Config
 
 
@@ -8,22 +10,39 @@ class MethodAlreadyExists(Exception):
     pass
 
 
+if TYPE_CHECKING:
+    from mypy_extensions import TypedDict
+
+    class OptionBase(TypedDict):
+        type: Type
+        default: Any
+
+    class Option(OptionBase, total=False):
+        name: str
+        desc: str
+        range: Tuple[int, int]
+
+    class GSettings(TypedDict):
+        schema: str
+        path: None
+
+
 class BasePlugin(object):
-    __depends__ = []
-    __conflicts__ = []
+    __depends__: List[str] = []
+    __conflicts__: List[str] = []
     __priority__ = 0
 
-    __description__ = None
-    __author__ = None
+    __description__: str
+    __author__: str
 
     __unloadable__ = True
     __autoload__ = True
 
     __instance__ = None
 
-    __gsettings__ = None
+    __gsettings__: "GSettings"
 
-    __options__ = {}
+    __options__: Dict[str, "Option"] = {}
 
     def __init__(self, parent):
         self.parent = parent

@@ -1,10 +1,11 @@
 # coding=utf-8
 from datetime import datetime
-from gettext import ngettext
+from gettext import gettext as _, ngettext
 import os
 import shutil
 import logging
 from html import escape
+from typing import List
 
 from blueman.bluez import obex
 from blueman.Functions import launch
@@ -137,7 +138,7 @@ class TransferService(AppletPlugin):
     _normal_transfers = 0
 
     _manager = None
-    _signals = []
+    _signals: List[int] = []
     _agent = None
     _watch = None
     _notification = None

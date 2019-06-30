@@ -1,7 +1,9 @@
 # coding=utf-8
+from gettext import gettext as _
 from operator import itemgetter
 import time
 import logging
+
 from blueman.bluez.Device import Device
 from blueman.bluez.Manager import DBusNoSuchAdapterError
 from blueman.gui.Notification import Notification

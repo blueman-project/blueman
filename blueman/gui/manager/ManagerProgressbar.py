@@ -1,5 +1,7 @@
 # coding=utf-8
+from gettext import gettext as _
 import logging
+from typing import List
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -15,7 +17,7 @@ class ManagerProgressbar(GObject.GObject):
     __gsignals__ = {
         'cancelled': (GObject.SignalFlags.RUN_LAST, None, ()),
     }
-    __instances__ = []
+    __instances__: List["ManagerProgressbar"] = []
 
     def __init__(self, blueman, cancellable=True, text=_("Connecting")):
         super().__init__()

@@ -1,4 +1,6 @@
 # coding=utf-8
+from gettext import gettext as _
+
 from blueman.main.Config import Config
 from blueman.bluez.NetworkServer import NetworkServer
 from blueman.main.DBusProxies import Mechanism

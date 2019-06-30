@@ -1,14 +1,12 @@
 # coding=utf-8
 import gettext
+from gettext import gettext as _
 from uuid import UUID
 
 from blueman.Constants import GETTEXT_PACKAGE, LOCALEDIR
 
 translation = gettext.translation(GETTEXT_PACKAGE, LOCALEDIR, fallback=True)
-try:
-    translation.install(unicode=True)
-except TypeError:
-    translation.install()
+translation.install()
 
 # https://www.bluetooth.com/specifications/assigned-numbers/service-discovery
 # http://git.kernel.org/cgit/bluetooth/bluez.git/tree/lib/sdp.h

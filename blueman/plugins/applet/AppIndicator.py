@@ -1,4 +1,6 @@
 # coding=utf-8
+from gettext import gettext as _
+
 from blueman.plugins.AppletPlugin import AppletPlugin
 
 # Check if Appindicator is available and raise ImportError

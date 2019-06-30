@@ -1,7 +1,8 @@
 # coding=utf-8
 import os.path
 import logging
-from locale import bind_textdomain_codeset
+from gettext import bind_textdomain_codeset
+from gettext import gettext as _
 from html import escape
 import random
 from xml.etree import ElementTree
