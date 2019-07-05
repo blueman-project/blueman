@@ -83,9 +83,10 @@ def show_info(device, parent):
         ('UUIDs', format_uuids),
         ('Modalias', None),
         ('Adapter', None),
-        ('ManufacturerData', None),
-        ('ServiceData', None),
-        ('AdvertisingData', None)
+        # FIXME below 3 we need some sample data to decode and display properly
+        ('ManufacturerData', str),
+        ('ServiceData', str),
+        ('AdvertisingData', str)
     )
     for name, func in properties:
         try:
