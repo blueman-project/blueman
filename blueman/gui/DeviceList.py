@@ -348,7 +348,7 @@ class DeviceList(GenericList):
             row = self.path_to_row[object_path]
             if row.valid():
                 path = row.get_path()
-                tree_iter = self.get_model().get_iter(path)
+                tree_iter = self.liststore.get_iter(path)
                 return tree_iter
             else:
                 del self.path_to_row[object_path]
@@ -362,7 +362,7 @@ class DeviceList(GenericList):
             row = self.path_to_row[path]
             if row.valid():
                 path = row.get_path()
-                tree_iter = self.get_model().get_iter(path)
+                tree_iter = self.liststore.get_iter(path)
                 return tree_iter
             else:
                 del self.path_to_row[path]
@@ -387,8 +387,8 @@ class DeviceList(GenericList):
 
         if object_path:
             logging.info("Caching new device %s" % object_path)
-            self.path_to_row[object_path] = Gtk.TreeRowReference.new(self.get_model(),
-                                                                     self.get_model().get_path(tree_iter))
+            self.path_to_row[object_path] = Gtk.TreeRowReference.new(self.liststore,
+                                                                     self.liststore.get_path(tree_iter))
 
     def append(self, **columns):
         tree_iter = GenericList.append(self, **columns)
