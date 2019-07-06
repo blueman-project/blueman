@@ -119,7 +119,7 @@ class DeviceList(GenericList):
                 row = self.get(tree_iter, "device")
                 dev = row["device"]
 
-                self.device_remove_event(dev, tree_iter)
+                self.device_remove_event(dev)
 
     def on_selection_changed(self, selection):
         _model, tree_iter = selection.get_selected()
@@ -216,10 +216,9 @@ class DeviceList(GenericList):
     def device_add_event(self, device):
         self.add_device(device)
 
-    def device_remove_event(self, device, tree_iter):
+    def device_remove_event(self, device):
         logging.debug(device)
-        if tree_iter is None:
-            tree_iter = self.find_device(device)
+        tree_iter = self.find_device(device)
 
         if self.compare(self.selected(), tree_iter):
             self.emit("device-selected", None, None)
@@ -337,7 +336,7 @@ class DeviceList(GenericList):
             for i in self.liststore:
                 tree_iter = i.iter
                 device = self.get(tree_iter, "device")["device"]
-                self.device_remove_event(device, tree_iter)
+                self.device_remove_event(device)
             self.liststore.clear()
             self.emit("device-selected", None, None)
 
