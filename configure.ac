@@ -52,7 +52,7 @@ AC_MSG_ERROR([ifconfig or ip not found, install net-tools or iproute2])
 fi
 fi
 
-PKG_CHECK_MODULES([PYGOBJECT],[pygobject-3.0])
+PKG_CHECK_MODULES([PYGOBJECT],[pygobject-3.0 >= 3.27.2])
 AC_SUBST([PYGOBJECT_CFLAGS])
 AC_SUBST([PYGOBJECT_LIBS])
 
