@@ -14,7 +14,7 @@
 * [Pango](http://www.gtk.org/) (GI bindings)
 * [pulseaudio](http://www.freedesktop.org/wiki/Software/PulseAudio/) (optional; its bluetooth module is required to actually use audio devices)
 * [pycairo](http://cairographics.org/pycairo/)
-* [PyGObject 3](https://wiki.gnome.org/PyGObject)
+* [PyGObject 3](https://wiki.gnome.org/PyGObject) (>= 3.27.2)
 * [Python](http://www.python.org/) (>= 3.3)
 * [net-tools](http://net-tools.sourceforge.net/) for blueman 2.0 and net-tools __or__ [iproute2](https://wiki.linuxfoundation.org/networking/iproute2) for blueman 2.1
 * [libnm](https://wiki.gnome.org/Projects/NetworkManager) For managing DUN and PANU connection (GI bindings)
@@ -26,7 +26,7 @@
 * [GLib 2](http://www.gtk.org/) (>= 2.32)
 * [intltool](http://freedesktop.org/wiki/Software/intltool/)
 * [libtool](http://www.gnu.org/software/libtool/)
-* [PyGObject 3](https://wiki.gnome.org/PyGObject)
+* [PyGObject 3](https://wiki.gnome.org/PyGObject) (>= 3.27.2)
 * [Python](http://www.python.org/) (>= 3.3)
 
 ## Additional dependencies for VCS version
