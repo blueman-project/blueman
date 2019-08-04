@@ -1,5 +1,5 @@
 # coding=utf-8
-from typing import Dict, Any, Tuple
+from typing import Dict, Tuple
 
 from gi.repository import Gio, GLib, GObject
 from gi.types import GObjectMeta
@@ -49,7 +49,7 @@ class Base(Gio.DBusProxy, metaclass=BaseMeta):
     __name = 'org.bluez'
     __bus_type = Gio.BusType.SYSTEM
 
-    __gsignals__: Dict[str, Tuple[Any, GObject.SignalFlags, Tuple]] = {
+    __gsignals__: Dict[str, Tuple[GObject.SignalFlags, None, Tuple]] = {
         'property-changed': (GObject.SignalFlags.NO_HOOKS, None,
                              (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT))
     }
