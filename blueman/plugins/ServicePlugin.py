@@ -1,9 +1,10 @@
 # coding=utf-8
+from typing import List, Tuple
 
 
 class ServicePlugin(object):
-    instances = []
-    __plugin_info__ = None
+    instances: List["ServicePlugin"] = []
+    __plugin_info__: Tuple[str, str]
 
     def __init__(self, parent):
         ServicePlugin.instances.append(self)

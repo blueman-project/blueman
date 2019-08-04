@@ -1,6 +1,9 @@
 # coding=utf-8
+from gettext import gettext as _
 import os
 import weakref
+from typing import Dict
+
 from gi.repository import GLib, Gio
 import struct
 import logging
@@ -47,7 +50,7 @@ class KillSwitch(AppletPlugin):
         "checked": {"type": bool, "default": False}
     }
 
-    _switches = {}
+    _switches: Dict[int, Switch] = {}
     _iom = None
     _fd = None
     _enabled = True

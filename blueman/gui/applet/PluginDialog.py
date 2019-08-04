@@ -1,7 +1,7 @@
 # coding=utf-8
 import weakref
 import logging
-from locale import bind_textdomain_codeset
+from gettext import bind_textdomain_codeset
 
 from blueman.Constants import *
 from blueman.gui.GenericList import GenericList

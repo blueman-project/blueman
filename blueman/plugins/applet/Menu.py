@@ -1,5 +1,7 @@
 # coding=utf-8
 
+from gettext import gettext as _
+
 from gi.repository import GLib
 
 from blueman.plugins.AppletPlugin import AppletPlugin

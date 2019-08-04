@@ -1,6 +1,6 @@
 # coding=utf-8
 import logging
-from locale import bind_textdomain_codeset
+from gettext import bind_textdomain_codeset
 
 import blueman.bluez as bluez
 from blueman.Functions import *

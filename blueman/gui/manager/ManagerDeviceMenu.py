@@ -1,7 +1,9 @@
 # coding=utf-8
 import logging
-from locale import bind_textdomain_codeset
+from gettext import bind_textdomain_codeset
 from operator import itemgetter
+from typing import Dict, List
+
 from blueman.Constants import UI_PATH
 from blueman.Functions import create_menuitem, e_
 from blueman.bluez.Network import AnyNetwork
@@ -27,8 +29,8 @@ from gi.repository import GLib
 
 
 class ManagerDeviceMenu(Gtk.Menu):
-    __ops__ = {}
-    __instances__ = []
+    __ops__: Dict[str, str] = {}
+    __instances__: List["ManagerDeviceMenu"] = []
 
     def __init__(self, blueman):
         super().__init__()

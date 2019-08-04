@@ -1,6 +1,8 @@
 # coding=utf-8
 
+from gettext import gettext as _
 import logging
+
 from blueman.plugins.AppletPlugin import AppletPlugin
 import blueman.bluez as bluez
 

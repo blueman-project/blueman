@@ -1,6 +1,5 @@
 # coding=utf-8
 import os
-import builtins
 import logging
 import traceback
 import importlib
@@ -17,9 +16,6 @@ class StopException(Exception):
 
 class LoadException(Exception):
     pass
-
-
-builtins.StopException = StopException
 
 
 class PluginManager(GObject.GObject):

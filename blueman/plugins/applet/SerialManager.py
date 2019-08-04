@@ -1,4 +1,7 @@
 # coding=utf-8
+from gettext import gettext as _
+from typing import Dict
+
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.Notification import Notification
 from blueman.Sdp import SERIAL_PORT_SVCLASS_ID
@@ -32,7 +35,7 @@ class SerialManager(AppletPlugin):
                              "Upon device disconnection the script will be sent a HUP signal</span>")},
     }
 
-    scripts = {}
+    scripts: Dict[str, Dict[str, Popen]] = {}
 
     def on_load(self):
         self.scripts = {}

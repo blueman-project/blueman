@@ -1,4 +1,6 @@
 # coding=utf-8
+from gettext import gettext as _
+
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.NetworkManager import NMPANConnection
 

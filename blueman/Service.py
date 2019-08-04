@@ -3,11 +3,11 @@ from blueman.Sdp import ServiceUUID
 
 
 class Service(object):
-    __group__ = None
-    __svclass_id__ = None
+    __group__: str
+    __svclass_id__: int
     __description__ = None
-    __icon__ = None
-    __priority__ = None
+    __icon__: str
+    __priority__: int
 
     def __init__(self, device, uuid):
         self.__device = device

@@ -1,5 +1,5 @@
 # coding=utf-8
-from gi.repository import Gio, GLib
+from gi.repository import Gio, GLib  # type: ignore
 from gi.types import GObjectMeta
 
 

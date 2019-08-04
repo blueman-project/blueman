@@ -3,9 +3,9 @@
 from html import escape
 import time
 import datetime
-import gettext
+from gettext import gettext as _, ngettext
 import logging
-from locale import bind_textdomain_codeset
+from gettext import bind_textdomain_codeset
 
 from blueman.Functions import *
 from blueman.Constants import *
@@ -204,9 +204,9 @@ class Dialog:
 
             delta = datetime.datetime.now() - self.datetime
 
-            d = gettext.ngettext("day", "days", delta.days)
-            h = gettext.ngettext("hour", "hours", delta.seconds / 3600)
-            m = gettext.ngettext("minute", "minutes", delta.seconds % 3600 / 60)
+            d = ngettext("day", "days", delta.days)
+            h = ngettext("hour", "hours", delta.seconds / 3600)
+            m = ngettext("minute", "minutes", delta.seconds % 3600 / 60)
 
             self.l_duration.props.label = _("%d %s %d %s and %d %s") % (
                 delta.days, d, delta.seconds / 3600, h, delta.seconds % 3600 / 60, m)
