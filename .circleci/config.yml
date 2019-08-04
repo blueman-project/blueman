@@ -45,6 +45,33 @@ jobs:
         - run: python3 -m pip install --user flake8
         - run: python3 -m flake8
 
+  mypy-3.6:
+      docker:
+        - image: circleci/python:3.6
+
+      steps:
+        - checkout
+        - run: python3 -m pip install --user mypy
+        - run: python3 -m mypy -p blueman --ignore-missing-imports --warn-unused-configs --disallow-untyped-calls --disallow-incomplete-defs --disallow-untyped-decorators --no-implicit-optional --warn-redundant-casts --warn-unused-ignores --warn-return-any
+
+  mypy-3.7:
+      docker:
+        - image: circleci/python:3.7
+
+      steps:
+        - checkout
+        - run: python3 -m pip install --user mypy
+        - run: python3 -m mypy -p blueman --ignore-missing-imports --warn-unused-configs --disallow-untyped-calls --disallow-incomplete-defs --disallow-untyped-decorators --no-implicit-optional --warn-redundant-casts --warn-unused-ignores --warn-return-any
+
+  mypy-3.8:
+      docker:
+        - image: circleci/python:3.8.0b1
+
+      steps:
+        - checkout
+        - run: python3 -m pip install --user mypy
+        - run: python3 -m mypy -p blueman --ignore-missing-imports --warn-unused-configs --disallow-untyped-calls --disallow-incomplete-defs --disallow-untyped-decorators --no-implicit-optional --warn-redundant-casts --warn-unused-ignores --warn-return-any
+
 workflows:
   version: 2
   build_and_test:
@@ -53,3 +80,6 @@ workflows:
       - flake8-3.6
       - flake8-3.7
       - flake8-3.8
+      - mypy-3.6
+      - mypy-3.7
+      - mypy-3.8
