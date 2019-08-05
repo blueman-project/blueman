@@ -1,7 +1,8 @@
 # coding=utf-8
-from blueman.bluez.Adapter import Adapter, AnyAdapter  # noqa: F401
-from blueman.bluez.AgentManager import AgentManager  # noqa: F401
-from blueman.bluez.Device import Device, AnyDevice  # noqa: F401
-from blueman.bluez.Manager import Manager  # noqa: F401
+from blueman.bluez.Adapter import Adapter as Adapter, AnyAdapter as AnyAdapter
+from blueman.bluez.AgentManager import AgentManager as AgentManager
+from blueman.bluez.Device import Device as Device, AnyDevice as AnyDevice
+from blueman.bluez.Manager import Manager as Manager
+import blueman.bluez.errors as errors
 
-import blueman.bluez.errors  # noqa: F401
+__all__ = ["Adapter", "AnyAdapter", "AgentManager", "Device", "AnyDevice", "Manager", "errors"]
