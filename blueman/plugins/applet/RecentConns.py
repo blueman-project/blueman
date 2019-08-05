@@ -5,7 +5,7 @@ import time
 import logging
 
 from blueman.bluez.Device import Device
-from blueman.bluez.Manager import DBusNoSuchAdapterError
+from blueman.bluez.errors import DBusNoSuchAdapterError
 from blueman.gui.Notification import Notification
 from blueman.Sdp import ServiceUUID
 from blueman.plugins.AppletPlugin import AppletPlugin

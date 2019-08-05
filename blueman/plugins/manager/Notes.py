@@ -2,7 +2,8 @@ import datetime
 from gettext import bind_textdomain_codeset
 from tempfile import NamedTemporaryFile
 
-from blueman.Functions import create_menuitem, launch, UI_PATH
+from blueman.Constants import UI_PATH
+from blueman.Functions import create_menuitem, launch
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 
 import gi
