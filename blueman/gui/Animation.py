@@ -1,10 +1,12 @@
 # coding=utf-8
+from typing import List
+
 from gi.repository import GLib
 
 
 class Animation:
     def __init__(self, icon, icons, rate=1, rev=False):
-        self.icon_names = []
+        self.icon_names: List[str] = []
         self.timer = None
         self.current = 0
         self.icon = icon

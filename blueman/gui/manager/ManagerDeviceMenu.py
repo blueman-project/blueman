@@ -1,13 +1,13 @@
 # coding=utf-8
 import logging
-from gettext import bind_textdomain_codeset
+from gettext import gettext as _, bind_textdomain_codeset
 from operator import itemgetter
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 from blueman.Constants import UI_PATH
 from blueman.Functions import create_menuitem, e_
 from blueman.bluez.Network import AnyNetwork
-from blueman.bluez.Device import AnyDevice
+from blueman.bluez.Device import AnyDevice, Device
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.DBusProxies import AppletService, DBusProxyFailed
 from blueman.gui.MessageArea import MessageArea
@@ -32,11 +32,12 @@ class ManagerDeviceMenu(Gtk.Menu):
     __ops__: Dict[str, str] = {}
     __instances__: List["ManagerDeviceMenu"] = []
 
+    SelectedDevice: Device
+
     def __init__(self, blueman):
         super().__init__()
         self.set_name("ManagerDeviceMenu")
         self.Blueman = blueman
-        self.SelectedDevice = None
 
         self.is_popup = False
 
@@ -194,7 +195,7 @@ class ManagerDeviceMenu(Gtk.Menu):
     def generate(self):
         self.clear()
 
-        items = []
+        items: List[Tuple[int, Gtk.MenuItem]] = []
 
         if not self.is_popup or self.props.visible:
             selected = self.Blueman.List.selected()

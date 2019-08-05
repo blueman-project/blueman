@@ -1,3 +1,5 @@
+from gettext import gettext as _
+
 from gi.repository import Gtk, Gdk
 
 import logging
@@ -20,6 +22,11 @@ def show_info(device, parent):
 
     def format_uuids(uuids):
         return "\n".join([uuid + ' ' + ServiceUUID(uuid).name for uuid in uuids])
+
+    store = Gtk.ListStore(str, str)
+    view = Gtk.TreeView(model=store, headers_visible=False)
+    view_selection = view.get_selection()
+    view_selection.set_mode(Gtk.SelectionMode.MULTIPLE)
 
     def on_accel_activated(group, dialog, key, flags):
         if key != 99:
@@ -51,11 +58,6 @@ def show_info(device, parent):
 
     key, mod = Gtk.accelerator_parse("<Control>C")
     accelgroup.connect(key, mod, Gtk.AccelFlags.MASK, on_accel_activated)
-
-    store = Gtk.ListStore(str, str)
-    view = Gtk.TreeView(model=store, headers_visible=False)
-    view_selection = view.get_selection()
-    view_selection.set_mode(Gtk.SelectionMode.MULTIPLE)
 
     for i in range(2):
         column = Gtk.TreeViewColumn()

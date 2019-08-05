@@ -1,6 +1,7 @@
 # coding=utf-8
 from gettext import gettext as _
 import logging
+from typing import Dict, Tuple, List
 
 import blueman.bluez as bluez
 from blueman.main.Config import Config
@@ -20,8 +21,8 @@ class ManagerMenu:
         self.blueman = blueman
         self.Config = Config("org.blueman.general")
 
-        self.adapter_items = {}
-        self._adapters_group = []
+        self.adapter_items: Dict[str, Tuple[Gtk.RadioMenuItem, int, bluez.Adapter, int]] = {}
+        self._adapters_group: List[Gtk.RadioMenuItem] = []
         self._insert_adapter_item_pos = 2
         self.Search = None
 
@@ -69,7 +70,7 @@ class ManagerMenu:
         view_menu.append(item_services)
         item_services.show()
 
-        sorting_group = []
+        sorting_group: List[Gtk.RadioMenuItem] = []
         item_sort = Gtk.MenuItem.new_with_mnemonic(_("S_ort By"))
         view_menu.append(item_sort)
         item_sort.show()

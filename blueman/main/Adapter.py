@@ -1,7 +1,9 @@
 # coding=utf-8
+from gettext import gettext as _
 import os.path
 import logging
 import gettext
+from typing import Dict, TYPE_CHECKING
 
 from blueman.Constants import UI_PATH
 from blueman.Functions import *
@@ -12,6 +14,16 @@ gi.require_version("Gtk", "3.0")
 gi.require_version("Pango", "1.0")
 from gi.repository import Gtk
 from gi.repository import Pango
+
+
+if TYPE_CHECKING:
+    from typing_extensions import TypedDict
+
+    class Tab(TypedDict):
+        grid: Gtk.Grid
+        hidden_radio: Gtk.RadioButton
+        always_radio: Gtk.RadioButton
+        temparary_radio: Gtk.RadioButton
 
 
 class BluemanAdapters(Gtk.Window):
@@ -37,8 +49,8 @@ class BluemanAdapters(Gtk.Window):
             self.connect("delete-event", self._on_close)
             self.show()
 
-        self.tabs = {}
-        self._adapters = {}
+        self.tabs: Dict[str, Dict[str, "Tab"]] = {}
+        self._adapters: Dict[str, bluez.Adapter] = {}
 
         setup_icon_path()
         bluez.Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)

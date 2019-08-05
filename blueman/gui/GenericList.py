@@ -1,4 +1,6 @@
 # coding=utf-8
+from typing import Dict, Optional
+
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
@@ -13,8 +15,8 @@ class GenericList(Gtk.TreeView):
         self._load(data)
 
     def _load(self, data):
-        self.ids = {}
-        self.columns = {}
+        self.ids: Dict[str, int] = {}
+        self.columns: Dict[str, Gtk.TreeViewColumn] = {}
 
         types = [row["type"] for row in data]
 
@@ -61,7 +63,7 @@ class GenericList(Gtk.TreeView):
             return False
 
     def _add(self, **columns):
-        items = {}
+        items: Dict[int, Optional[Gtk.TreeViewColumn]] = {}
         for k, v in self.ids.items():
             items[v] = None
 

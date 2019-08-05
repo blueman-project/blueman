@@ -48,7 +48,7 @@ class BasePlugin(object):
     def __init__(self, parent):
         self.parent = parent
 
-        self.__methods = []
+        self.__methods: List[str] = []
 
         if self.__options__:
             self.__config = Config(

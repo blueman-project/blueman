@@ -18,13 +18,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 from time import sleep
-from typing import Optional, Dict, Tuple
+from typing import Optional, Dict, Tuple, List
 import re
 import os
 import signal
 import atexit
 import sys
 import errno
+from gettext import gettext as _
 import logging
 import logging.handlers
 import argparse
@@ -121,7 +122,7 @@ def launch(cmd, paths=None, system=False, icon_name=None, sn=True, name="blueman
         cmd = os.path.expanduser(cmd)
 
     if paths:
-        files = [Gio.File.new_for_commandline_arg(p) for p in paths]
+        files: Optional[List[Gio.File]] = [Gio.File.new_for_commandline_arg(p) for p in paths]
     else:
         files = None
 

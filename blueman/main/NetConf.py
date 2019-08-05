@@ -8,6 +8,8 @@ from pickle import UnpicklingError
 from tempfile import mkstemp
 from time import sleep
 import logging
+from typing import List, Tuple
+
 from blueman.Constants import DHCP_CONFIG_FILE
 from blueman.Functions import have, is_running, kill
 from _blueman import create_bridge, destroy_bridge, BridgeException
@@ -21,11 +23,9 @@ class NetworkSetupError(Exception):
 def read_pid_file(fname):
     try:
         with open(fname, "r") as f:
-            pid = int(f.read())
+            return int(f.read())
     except (IOError, ValueError):
-        pid = None
-
-    return pid
+        return None
 
 
 def get_dns_servers():
@@ -292,7 +292,7 @@ class NetConf(object):
         logging.info("init")
         self.version = class_id
         self.dhcp_handler = None
-        self.ipt_rules = []
+        self.ipt_rules: List[Tuple[str, str, str]] = []
 
         self.ip4_address = None
         self.ip4_mask = None

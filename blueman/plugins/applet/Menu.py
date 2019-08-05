@@ -1,6 +1,7 @@
 # coding=utf-8
 
 from gettext import gettext as _
+from typing import List
 
 from gi.repository import GLib
 
@@ -95,7 +96,7 @@ class Menu(AppletPlugin):
     def on_load(self):
         self.__plugins_loaded = False
 
-        self.__menuitems = []
+        self.__menuitems: List[MenuItem] = []
 
         self._add_dbus_signal("MenuChanged", "aa{sv}")
         self._add_dbus_method("GetMenu", (), "aa{sv}", self._get_menu)

@@ -1,13 +1,17 @@
 # coding=utf-8
+from gettext import gettext as _
 import os
 import logging
 import traceback
 import importlib
-
-from blueman.main.Config import Config
-from blueman.gui.CommonUi import ErrorDialog
+from typing import Dict, Type, List, TypeVar, Generic
 
 from gi.repository import GObject
+
+from blueman.gui.CommonUi import ErrorDialog
+from blueman.main.Config import Config
+from blueman.plugins.AppletPlugin import AppletPlugin
+from blueman.plugins.ManagerPlugin import ManagerPlugin
 
 
 class StopException(Exception):
@@ -18,7 +22,10 @@ class LoadException(Exception):
     pass
 
 
-class PluginManager(GObject.GObject):
+T = TypeVar('T', AppletPlugin, ManagerPlugin)
+
+
+class PluginManager(GObject.GObject, Generic[T]):
     __gsignals__ = {
         'plugin-loaded': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
         'plugin-unloaded': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
@@ -26,11 +33,11 @@ class PluginManager(GObject.GObject):
 
     def __init__(self, plugin_class, module_path, parent):
         super().__init__()
-        self.__plugins = {}
-        self.__classes = {}
-        self.__deps = {}
-        self.__cfls = {}
-        self.__loaded = []
+        self.__plugins: Dict[str, T] = {}
+        self.__classes: Dict[str, Type[T]] = {}
+        self.__deps: Dict[str, str] = {}
+        self.__cfls: Dict[str, str] = {}
+        self.__loaded: List[str] = []
         self.parent = parent
 
         self.module_path = module_path
@@ -223,7 +230,7 @@ class PluginManager(GObject.GObject):
                 args = ret
 
 
-class PersistentPluginManager(PluginManager):
+class PersistentPluginManager(PluginManager[T]):
     def __init__(self, *args):
         super().__init__(*args)
 

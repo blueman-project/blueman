@@ -1,6 +1,8 @@
 # coding=utf-8
 import logging
 import weakref
+from typing import Dict, Tuple, List
+
 from blueman.bluez.obex.Transfer import Transfer
 from gi.repository import GObject, Gio
 from gi.types import GObjectMeta
@@ -31,8 +33,8 @@ class Manager(GObject.GObject, metaclass=ManagerMeta):
 
     def __init__(self):
         super().__init__()
-        self.__transfers = {}
-        self.__signals = []
+        self.__transfers: Dict[str, Tuple[Transfer, Tuple[int, int]]] = {}
+        self.__signals: List[int] = []
 
         self._object_manager = Gio.DBusObjectManagerClient.new_for_bus_sync(
             Gio.BusType.SESSION, Gio.DBusObjectManagerClientFlags.NONE,

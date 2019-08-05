@@ -5,7 +5,7 @@ import os
 import shutil
 import logging
 from html import escape
-from typing import List
+from typing import List, Dict, TYPE_CHECKING
 
 from blueman.bluez import obex
 from blueman.Functions import launch
@@ -15,6 +15,14 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Config import Config
 
 from gi.repository import GLib, Gio
+
+if TYPE_CHECKING:
+    from typing_extensions import TypedDict
+
+    class Transfer(TypedDict):
+        path: str
+        size: int
+        name: str
 
 
 class ObexErrorRejected(DbusError):
@@ -39,10 +47,10 @@ class Agent(DbusService):
         self._applet = applet
         self._config = Config("org.blueman.transfer")
 
-        self._allowed_devices = []
+        self._allowed_devices: List[str] = []
         self._notification = None
         self._pending_transfer = None
-        self.transfers = {}
+        self.transfers: Dict[str, "Transfer"] = {}
 
     def register_at_manager(self):
         obex.AgentManager().register_agent(self.__agent_path)

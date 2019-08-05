@@ -6,6 +6,7 @@ import datetime
 from gettext import gettext as _, ngettext
 import logging
 from gettext import bind_textdomain_codeset
+from typing import List
 
 from blueman.Functions import *
 from blueman.Constants import *
@@ -303,7 +304,7 @@ class NetUsage(AppletPlugin, GObject.GObject):
 
     def on_load(self):
         GObject.GObject.__init__(self)
-        self.monitors = []
+        self.monitors: List[Monitor] = []
 
         self._any_network = AnyNetwork()
         self._any_network.connect_signal('property-changed', self._on_network_property_changed)

@@ -1,11 +1,12 @@
 # coding=utf-8
 import time
+from typing import List, Tuple
 
 
 class SpeedCalc:
     def __init__(self, moving_avg=3):
         self.moving_avg = moving_avg
-        self.log = []
+        self.log: List[Tuple[float, int]] = []
 
         self.reference = 0
 
