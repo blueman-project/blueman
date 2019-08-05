@@ -1,7 +1,7 @@
 # coding=utf-8
 import logging
 import weakref
-from typing import List, TYPE_CHECKING, Type, Dict, Tuple, Any
+from typing import List, TYPE_CHECKING, Dict, Tuple, Any
 
 from blueman.main.Config import Config
 
@@ -13,8 +13,9 @@ class MethodAlreadyExists(Exception):
 if TYPE_CHECKING:
     from mypy_extensions import TypedDict
 
+    # type is actually Type[T] and default is T but this is not supported https://github.com/python/mypy/issues/3863
     class OptionBase(TypedDict):
-        type: Type
+        type: type
         default: Any
 
     class Option(OptionBase, total=False):
