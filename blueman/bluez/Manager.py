@@ -6,6 +6,7 @@ import logging
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device
 from blueman.bluez.errors import DBusNoSuchAdapterError
+from blueman.typing import GSignals
 
 
 class ManagerMeta(GObjectMeta):
@@ -19,11 +20,11 @@ class ManagerMeta(GObjectMeta):
 
 
 class Manager(GObject.GObject, metaclass=ManagerMeta):
-    __gsignals__ = {
-        'adapter-added': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-        'adapter-removed': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-        'device-created': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-        'device-removed': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+    __gsignals__: GSignals = {
+        'adapter-added': (GObject.SignalFlags.NO_HOOKS, None, (str,)),
+        'adapter-removed': (GObject.SignalFlags.NO_HOOKS, None, (str,)),
+        'device-created': (GObject.SignalFlags.NO_HOOKS, None, (str,)),
+        'device-removed': (GObject.SignalFlags.NO_HOOKS, None, (str,)),
     }
 
     connect_signal = GObject.GObject.connect

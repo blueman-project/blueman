@@ -11,7 +11,7 @@ class MethodAlreadyExists(Exception):
 
 
 if TYPE_CHECKING:
-    from mypy_extensions import TypedDict
+    from typing_extensions import TypedDict
 
     # type is actually Type[T] and default is T but this is not supported https://github.com/python/mypy/issues/3863
     class OptionBase(TypedDict):

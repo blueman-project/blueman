@@ -6,6 +6,8 @@ from gi.types import GObjectMeta
 import weakref
 import logging
 
+from blueman.typing import GSignals
+
 try:
     libpulse = CDLL("libpulse.so.0")
     libpulse_glib = CDLL("libpulse-mainloop-glib.so.0")
@@ -336,10 +338,10 @@ class PulseAudioUtilsMeta(GObjectMeta):
 
 
 class PulseAudioUtils(GObject.GObject, metaclass=PulseAudioUtilsMeta):
-    __gsignals__ = {
+    __gsignals__: GSignals = {
         'connected': (GObject.SignalFlags.NO_HOOKS, None, ()),
         'disconnected': (GObject.SignalFlags.NO_HOOKS, None, ()),
-        'event': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT)),
+        'event': (GObject.SignalFlags.NO_HOOKS, None, (int, int)),
     }
 
     def check_connected(self):

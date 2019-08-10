@@ -1,10 +1,11 @@
 # coding=utf-8
-from typing import Dict, Tuple, Union
 
 from gi.repository import Gio, GLib, GObject
 from gi.types import GObjectMeta
 from blueman.bluez.errors import parse_dbus_error
 import logging
+
+from blueman.typing import GSignals
 
 
 class BaseMeta(GObjectMeta):
@@ -49,16 +50,8 @@ class Base(Gio.DBusProxy, metaclass=BaseMeta):
     __name = 'org.bluez'
     __bus_type = Gio.BusType.SYSTEM
 
-    __gsignals__: Dict[str, Tuple[
-        GObject.SignalFlags,
-        None,
-        Union[
-            Tuple[()],
-            Tuple[GObject.GType],
-            Tuple[GObject.GType, GObject.GType],
-            Tuple[GObject.GType, GObject.GType, GObject.GType]]]] = {
-        'property-changed': (GObject.SignalFlags.NO_HOOKS, None,
-                             (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT))
+    __gsignals__: GSignals = {
+        'property-changed': (GObject.SignalFlags.NO_HOOKS, None, (str, object, str))
     }
 
     def __init__(self, interface_name, obj_path, *args, **kwargs):

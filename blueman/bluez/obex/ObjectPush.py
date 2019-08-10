@@ -3,11 +3,13 @@ import logging
 from blueman.bluez.obex.Base import Base
 from gi.repository import GObject, GLib
 
+from blueman.typing import GSignals
+
 
 class ObjectPush(Base):
-    __gsignals__ = {
-        'transfer-started': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
-        'transfer-failed': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+    __gsignals__: GSignals = {
+        'transfer-started': (GObject.SignalFlags.NO_HOOKS, None, (str, str,)),
+        'transfer-failed': (GObject.SignalFlags.NO_HOOKS, None, (str,)),
     }
 
     _interface_name = 'org.bluez.obex.ObjectPush1'

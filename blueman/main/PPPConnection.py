@@ -10,6 +10,8 @@ from gi.repository import GLib
 import errno
 import re
 
+from blueman.typing import GSignals
+
 pppd_errors = {
     1: "An immediately fatal error of some kind  occurred, such as an essential system call failing, "
        "or running out of virtual memory.",
@@ -40,9 +42,9 @@ class PPPException(Exception):
 
 
 class PPPConnection(GObject.GObject):
-    __gsignals__ = {  # arg: interface name eg. ppp0
-        'connected': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-        'error-occurred': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,))
+    __gsignals__: GSignals = {  # arg: interface name eg. ppp0
+        'connected': (GObject.SignalFlags.NO_HOOKS, None, (str,)),
+        'error-occurred': (GObject.SignalFlags.NO_HOOKS, None, (str,))
     }
 
     def __init__(self, port, number="*99#", apn="", user="", pwd=""):

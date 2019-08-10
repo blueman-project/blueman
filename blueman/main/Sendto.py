@@ -5,6 +5,9 @@ from gettext import bind_textdomain_codeset
 from gettext import ngettext
 
 import gi
+
+from blueman.typing import GSignals
+
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
 
@@ -24,7 +27,7 @@ from gi.repository import Gdk, Gtk, GObject, GLib, Gio
 
 
 class Sender(Gtk.Dialog):
-    __gsignals__ = {
+    __gsignals__: GSignals = {
         'result': (GObject.SignalFlags.RUN_FIRST, None, (GObject.TYPE_BOOLEAN,)),
     }
 

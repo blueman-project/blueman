@@ -9,6 +9,8 @@ from blueman.gui.CommonUi import ErrorDialog
 
 from gi.repository import GObject
 
+from blueman.typing import GSignals
+
 
 class StopException(Exception):
     pass
@@ -19,7 +21,7 @@ class LoadException(Exception):
 
 
 class PluginManager(GObject.GObject):
-    __gsignals__ = {
+    __gsignals__: GSignals = {
         'plugin-loaded': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
         'plugin-unloaded': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
     }

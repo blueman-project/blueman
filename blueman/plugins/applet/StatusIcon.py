@@ -5,10 +5,11 @@ from gi.repository import GObject, GLib
 from blueman.Functions import launch, kill, get_pid, get_lockfile
 from blueman.main.PluginManager import StopException
 from blueman.plugins.AppletPlugin import AppletPlugin
+from blueman.typing import GSignals
 
 
 class StatusIcon(AppletPlugin, GObject.GObject):
-    __gsignals__ = {str('activate'): (GObject.SignalFlags.NO_HOOKS, None, ())}
+    __gsignals__: GSignals = {str('activate'): (GObject.SignalFlags.NO_HOOKS, None, ())}
 
     __unloadable__ = False
     __icon__ = "blueman-tray"

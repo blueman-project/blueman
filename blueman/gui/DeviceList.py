@@ -4,6 +4,7 @@ import os
 import logging
 
 from blueman.Functions import adapter_path_to_name
+from blueman.bluez import Device, Adapter
 from blueman.gui.GenericList import GenericList
 from blueman.Constants import ICON_PATH
 from _blueman import conn_info, ConnInfoReadError
@@ -13,30 +14,31 @@ from gi.repository import GObject
 from gi.repository import GLib
 
 import gi
+
+from blueman.typing import GSignals
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 
 class DeviceList(GenericList):
-    __gsignals__ = {
+    __gsignals__: GSignals = {
         # @param: device TreeIter
         # note: None None is given when there ar no more rows, or when selected device is removed
-        'device-selected': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
+        'device-selected': (GObject.SignalFlags.RUN_LAST, None, (Device, Gtk.TreeIter,)),
         # @param: device, TreeIter, (key, value)
-        'device-property-changed': (GObject.SignalFlags.RUN_LAST, None,
-                                    (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
+        'device-property-changed': (GObject.SignalFlags.RUN_LAST, None, (Device, Gtk.TreeIter, object,)),
         # @param: adapter, (key, value)
-        'adapter-property-changed': (GObject.SignalFlags.RUN_LAST, None,
-                                     (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
+        'adapter-property-changed': (GObject.SignalFlags.RUN_LAST, None, (Adapter, object,)),
         # @param: progress (0 to 1)
-        'discovery-progress': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_FLOAT,)),
+        'discovery-progress': (GObject.SignalFlags.RUN_LAST, None, (float,)),
 
         # @param: new adapter path, None if there are no more adapters
-        'adapter-changed': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
+        'adapter-changed': (GObject.SignalFlags.RUN_LAST, None, (str,)),
 
         # @param: adapter path
-        'adapter-added': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
-        'adapter-removed': (GObject.SignalFlags.RUN_LAST, None, (GObject.TYPE_PYOBJECT,)),
+        'adapter-added': (GObject.SignalFlags.RUN_LAST, None, (str,)),
+        'adapter-removed': (GObject.SignalFlags.RUN_LAST, None, (str,)),
     }
 
     def __del__(self):

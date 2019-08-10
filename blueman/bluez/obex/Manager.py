@@ -5,6 +5,8 @@ from blueman.bluez.obex.Transfer import Transfer
 from gi.repository import GObject, Gio
 from gi.types import GObjectMeta
 
+from blueman.typing import GSignals
+
 
 class ManagerMeta(GObjectMeta):
     _instance = None
@@ -17,11 +19,11 @@ class ManagerMeta(GObjectMeta):
 
 
 class Manager(GObject.GObject, metaclass=ManagerMeta):
-    __gsignals__ = {
-        'session-added': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-        'session-removed': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-        'transfer-started': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-        'transfer-completed': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT)),
+    __gsignals__: GSignals = {
+        'session-added': (GObject.SignalFlags.NO_HOOKS, None, (str,)),
+        'session-removed': (GObject.SignalFlags.NO_HOOKS, None, (str,)),
+        'transfer-started': (GObject.SignalFlags.NO_HOOKS, None, (str,)),
+        'transfer-completed': (GObject.SignalFlags.NO_HOOKS, None, (str, bool)),
     }
 
     connect_signal = GObject.GObject.connect

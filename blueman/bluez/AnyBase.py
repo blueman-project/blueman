@@ -1,11 +1,12 @@
 from gi.repository import GObject
 from gi.repository import Gio
 
+from blueman.typing import GSignals
+
 
 class AnyBase(GObject.GObject):
-    __gsignals__ = {
-        'property-changed': (GObject.SignalFlags.NO_HOOKS, None,
-                             (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT))
+    __gsignals__: GSignals = {
+        'property-changed': (GObject.SignalFlags.NO_HOOKS, None, (str, object, str))
     }
 
     connect_signal = GObject.GObject.connect
