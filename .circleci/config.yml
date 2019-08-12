@@ -38,7 +38,7 @@ jobs:
 
   flake8-3.8:
       docker:
-        - image: circleci/python:3.8.0b1
+        - image: circleci/python:3.8-rc
 
       steps:
         - checkout
@@ -65,7 +65,7 @@ jobs:
 
   mypy-3.8:
       docker:
-        - image: circleci/python:3.8.0b1
+        - image: circleci/python:3.8-rc
 
       steps:
         - checkout
