@@ -1,6 +1,8 @@
 # coding=utf-8
 import logging
 import weakref
+from typing import Dict
+
 from blueman.bluez.obex.Transfer import Transfer
 from gi.repository import GObject, Gio
 from gi.types import GObjectMeta
@@ -31,21 +33,20 @@ class Manager(GObject.GObject, metaclass=ManagerMeta):
 
     def __init__(self):
         super().__init__()
-        self.__transfers = {}
-        self.__signals = []
+        self.__transfers: Dict[str, Transfer] = {}
 
         self._object_manager = Gio.DBusObjectManagerClient.new_for_bus_sync(
             Gio.BusType.SESSION, Gio.DBusObjectManagerClientFlags.NONE,
             self.__bus_name, '/', None, None, None)
 
-        self.__signals.append(self._object_manager.connect('object-added', self._on_object_added))
-        self.__signals.append(self._object_manager.connect('object-removed', self._on_object_removed))
+        self._object_manager.connect('object-added', self._on_object_added)
+        self._object_manager.connect('object-removed', self._on_object_removed)
 
         weakref.finalize(self, self._on_delete)
 
     def _on_delete(self):
-        for sig in self.__signals:
-            self._object_manager.disconnect(sig)
+        self._object_manager.disconnect_by_func(self._on_object_added)
+        self._object_manager.disconnect_by_func(self._on_object_removed)
 
     def _on_object_added(self, object_manager, dbus_object):
         session_proxy = dbus_object.get_interface('org.bluez.obex.Session1')
@@ -55,9 +56,9 @@ class Manager(GObject.GObject, metaclass=ManagerMeta):
         if transfer_proxy:
             logging.info(object_path)
             transfer = Transfer(object_path)
-            completed_sig = transfer.connect_signal('completed', self._on_transfer_completed, True)
-            error_sig = transfer.connect_signal('error', self._on_transfer_completed, False)
-            self.__transfers[object_path] = (transfer, (completed_sig, error_sig))
+            transfer.connect_signal('completed', self._on_transfer_completed, True)
+            transfer.connect_signal('error', self._on_transfer_completed, False)
+            self.__transfers[object_path] = transfer
             self.emit('transfer-started', object_path)
 
         if session_proxy:
@@ -71,10 +72,10 @@ class Manager(GObject.GObject, metaclass=ManagerMeta):
 
         if transfer_proxy and object_path in self.__transfers:
             logging.info(object_path)
-            transfer, signals = self.__transfers.pop(object_path)
+            transfer = self.__transfers.pop(object_path)
 
-            for sig in signals:
-                transfer.disconnect_signal(sig)
+            transfer.disconnect_by_func(self._on_transfer_completed, True)
+            transfer.disconnect_by_func(self._on_transfer_completed, False)
 
         if session_proxy:
             logging.info(object_path)
