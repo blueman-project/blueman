@@ -2,7 +2,7 @@ project(
     'blueman', 'c',
     version: '2.1-beta1',
     license: 'GPL3',
-    meson_version: '>=0.47.0'
+    meson_version: '>=0.48.0'
 )
 
 package_name = 'blueman'
