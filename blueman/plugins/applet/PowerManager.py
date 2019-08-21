@@ -30,14 +30,12 @@ class PowerManager(AppletPlugin):
         }
     }
 
-
     def __init__(self, parent):
         super().__init__(parent)
         conf = GLib.KeyFile()
         conf.load_from_file('/etc/bluetooth/main.conf', GLib.KeyFileFlags.NONE)
         self.__options__["auto-power-on"]["default"] = conf.get_boolean('Policy', 'AutoEnable')
-    
-
+ 
     def on_load(self):
         AppletPlugin.add_method(self.on_power_state_query)
         AppletPlugin.add_method(self.on_power_state_change_requested)
