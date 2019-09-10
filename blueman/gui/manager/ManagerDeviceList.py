@@ -156,6 +156,25 @@ class ManagerDeviceList(DeviceList):
 
     def on_event_clicked(self, widget, event):
 
+        if event.type == Gdk.EventType._2BUTTON_PRESS and event.button == 1:
+            path = self.get_path_at_pos(int(event.x), int(event.y))
+            if path is not None:
+                row = self.get(path[0], "device", "connected")
+
+                if row:
+                    device = row["device"]
+                    if device:
+                        if self.Blueman is not None:
+                            if self.menu is None:
+                                self.menu = ManagerDeviceMenu(self.Blueman)
+                                show_generic_connect = self.menu.show_generic_connect_calc(device['UUIDs'])
+                                if not row["connected"] and show_generic_connect:
+                                    self.menu._generic_connect(item=None, device=device, connect=True)
+                                elif show_generic_connect:
+                                    self.menu._generic_connect(item=None, device=device, connect=False)
+                                self.menu.clear()
+                                self.menu = None
+
         if event.type == Gdk.EventType.BUTTON_PRESS and event.button == 3:
             path = self.get_path_at_pos(int(event.x), int(event.y))
             if path is not None:
