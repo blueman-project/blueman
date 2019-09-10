@@ -192,6 +192,25 @@ class ManagerDeviceMenu(Gtk.Menu):
         prog = ManagerProgressbar(self.Blueman, False)
         prog.start()
 
+    # Generic (dis)connect
+    # LE devices do not appear to expose certain properties like uuids until connect to at least once.
+    # show generic connect for these as we will not show any way to connect otherwise.
+    def show_generic_connect_calc(self, device_uuids):
+        show_generic_connect = not device_uuids
+        for uuid in device_uuids:
+            service_uuid = ServiceUUID(uuid)
+            if service_uuid.short_uuid in (
+                    AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID, HANDSFREE_AGW_SVCLASS_ID, HANDSFREE_SVCLASS_ID,
+                    HEADSET_SVCLASS_ID, HID_SVCLASS_ID, 0x1812
+            ):
+                show_generic_connect = True
+                break
+            elif not service_uuid.reserved:
+                if uuid == '03b80e5a-ede8-4b33-a751-6ce34ec4c700':
+                    show_generic_connect = True
+                    break
+        return show_generic_connect
+
     def generate(self):
         self.clear()
 
@@ -221,23 +240,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             self.append(item)
             return
 
-        # Generic (dis)connect
-        # LE devices do not appear to expose certain properties like uuids until connect to at least once.
-        # show generic connect for these as we will not show any way to connect otherwise.
-        device_uuids = self.SelectedDevice['UUIDs']
-        show_generic_connect = not device_uuids
-        for uuid in device_uuids:
-            service_uuid = ServiceUUID(uuid)
-            if service_uuid.short_uuid in (
-                    AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID, HANDSFREE_AGW_SVCLASS_ID, HANDSFREE_SVCLASS_ID,
-                    HEADSET_SVCLASS_ID, HID_SVCLASS_ID, 0x1812
-            ):
-                show_generic_connect = True
-                break
-            elif not service_uuid.reserved:
-                if uuid == '03b80e5a-ede8-4b33-a751-6ce34ec4c700':
-                    show_generic_connect = True
-                    break
+        show_generic_connect = self.show_generic_connect_calc(self.SelectedDevice['UUIDs'])
 
         if not row["connected"] and show_generic_connect:
             connect_item = create_menuitem(_("_<b>Connect</b>"), "blueman")
