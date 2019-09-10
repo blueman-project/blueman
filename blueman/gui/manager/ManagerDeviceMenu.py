@@ -240,13 +240,13 @@ class ManagerDeviceMenu(Gtk.Menu):
                     break
 
         if not row["connected"] and show_generic_connect:
-            connect_item = create_menuitem(_("_Connect"), "blueman")
+            connect_item = create_menuitem(_("_<b>Connect</b>"), "blueman")
             connect_item.connect("activate", self._generic_connect, self.SelectedDevice, True)
             connect_item.props.tooltip_text = _("Connects auto connect profiles A2DP source, A2DP sink, and HID")
             connect_item.show()
             self.append(connect_item)
         elif show_generic_connect:
-            connect_item = create_menuitem(_("_Disconnect"), "network-offline")
+            connect_item = create_menuitem(_("_<b>Disconnect</b>"), "network-offline")
             connect_item.props.tooltip_text = _("Forcefully disconnect the device")
             connect_item.connect("activate", self._generic_connect, self.SelectedDevice, False)
             connect_item.show()
