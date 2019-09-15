@@ -190,6 +190,7 @@ class PowerManager(AppletPlugin):
                 logging.warning("adapter powered on while in off state, turning bluetooth on")
                 self.request_power_state(True)
 
+            self.adapter_state = self.get_adapter_state()
             self.update_power_state()
 
     def on_bluetooth_toggled(self):
