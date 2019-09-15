@@ -246,7 +246,6 @@ apps/blueman-applet
 apps/blueman-assistant
 apps/blueman-manager
 apps/blueman-mechanism
-apps/blueman-report
 apps/blueman-rfcomm-watcher
 apps/blueman-sendto
 apps/blueman-services

@@ -21,7 +21,7 @@ class ManagerMenu:
         self.blueman = blueman
         self.Config = Config("org.blueman.general")
 
-        self.adapter_items: Dict[str, Tuple[Gtk.RadioMenuItem, int, bluez.Adapter, int]] = {}
+        self.adapter_items: Dict[str, Tuple[Gtk.RadioMenuItem, bluez.Adapter]] = {}
         self._adapters_group: List[Gtk.RadioMenuItem] = []
         self._insert_adapter_item_pos = 2
         self.Search = None
@@ -244,13 +244,13 @@ class ManagerMenu:
         item.show()
         self._adapters_group = item.get_group()
 
-        item_sig = item.connect("activate", self.on_adapter_selected, object_path)
-        adapter_sig = adapter.connect_signal("property-changed", self.on_adapter_property_changed)
+        item.connect("activate", self.on_adapter_selected, object_path)
+        adapter.connect_signal("property-changed", self.on_adapter_property_changed)
 
         menu.insert(item, self._insert_adapter_item_pos)
         self._insert_adapter_item_pos += 1
 
-        self.adapter_items[object_path] = (item, item_sig, adapter, adapter_sig)
+        self.adapter_items[object_path] = (item, adapter)
 
         if adapter_path == self.blueman.List.Adapter.get_object_path():
             item.props.active = True
@@ -259,11 +259,11 @@ class ManagerMenu:
             self.item_adapter.props.sensitive = True
 
     def on_adapter_removed(self, _manager, adapter_path):
-        item, item_sig, adapter, adapter_sig = self.adapter_items.pop(adapter_path)
+        item, adapter = self.adapter_items.pop(adapter_path)
         menu = self.item_adapter.get_submenu()
 
-        item.disconnect(item_sig)
-        adapter.disconnect_signal(adapter_sig)
+        item.disconnect_by_func(self.on_adapter_selected, adapter.get_object_path())
+        adapter.disconnect_by_func(self.on_adapter_property_changed)
 
         menu.remove(item)
         self._insert_adapter_item_pos -= 1

@@ -154,8 +154,8 @@ class PluginDialog(Gtk.Window):
 
         self.populate()
 
-        self.sig_a = self.applet.Plugins.connect("plugin-loaded", self.plugin_state_changed, True)
-        self.sig_b = self.applet.Plugins.connect("plugin-unloaded", self.plugin_state_changed, False)
+        self.applet.Plugins.connect("plugin-loaded", self.plugin_state_changed, True)
+        self.applet.Plugins.connect("plugin-unloaded", self.plugin_state_changed, False)
         self.connect("delete-event", self._on_close)
 
         self.list.set_cursor(0)
@@ -179,8 +179,8 @@ class PluginDialog(Gtk.Window):
                 return 1
 
     def _on_close(self, *args, **kwargs):
-        self.applet.Plugins.disconnect(self.sig_a)
-        self.applet.Plugins.disconnect(self.sig_b)
+        self.applet.Plugins.disconnect_by_func(self.plugin_state_changed, True)
+        self.applet.Plugins.disconnect_by_func(self.plugin_state_changed, False)
 
     def on_selection_changed(self, selection):
         model, tree_iter = selection.get_selected()

@@ -18,6 +18,17 @@ jobs:
       - run: make distcheck
       - run: sudo make install
 
+  mesonbuild:
+    docker:
+      - image: debian:unstable
+
+    steps:
+      - checkout
+      - run: apt-get update
+      - run: apt-get install -y -qq --no-install-recommends build-essential meson sudo intltool libglib2.0-dev python3-dev python-gi python-gi-dev cython libbluetooth-dev gtk-update-icon-cache python3-pip
+      - run: meson --warnlevel 3 --buildtype debug -Druntime_deps_check=false builddebug
+      - run: ninja -v -C builddebug/
+
   flake8-3.6:
       docker:
         - image: circleci/python:3.6
@@ -38,7 +49,7 @@ jobs:
 
   flake8-3.8:
       docker:
-        - image: circleci/python:3.8.0b1
+        - image: circleci/python:3.8-rc
 
       steps:
         - checkout
@@ -86,6 +97,7 @@ workflows:
   build_and_test:
     jobs:
       - releasebuild
+      - mesonbuild
       - flake8-3.6
       - flake8-3.7
       - flake8-3.8

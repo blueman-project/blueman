@@ -243,10 +243,10 @@ class ManagerDeviceList(DeviceList):
             cell_fader.freeze()
 
             def on_finished(fader):
-                fader.disconnect(signal)
+                fader.disconnect_by_func(on_finished)
                 fader.freeze()
 
-            signal = row_fader.connect("animation-finished", on_finished)
+            row_fader.connect("animation-finished", on_finished)
             row_fader.set_state(0.0)
             row_fader.animate(start=0.0, end=1.0, duration=500)
 
@@ -356,9 +356,9 @@ class ManagerDeviceList(DeviceList):
 
                 def on_finished(fader):
                     fader.freeze()
-                    fader.disconnect(signal)
+                    fader.disconnect_by_func(on_finished)
 
-                signal = fader.connect("animation-finished", on_finished)
+                fader.connect("animation-finished", on_finished)
 
             to_store = {}
             if round(row["rssi"], -1) != round(rssi_perc, -1):
@@ -393,12 +393,12 @@ class ManagerDeviceList(DeviceList):
                 fader.animate(start=fader.get_state(), end=0.0, duration=400)
 
                 def on_finished(fader):
-                    fader.disconnect(signal)
+                    fader.disconnect_by_func(on_finished)
                     fader.freeze()
                     if row_ref.valid():
                         self.set(tree_iter, rssi_pb=None, lq_pb=None, tpl_pb=None)
 
-                signal = fader.connect("animation-finished", on_finished)
+                fader.connect("animation-finished", on_finished)
 
     def tooltip_query(self, tw, x, y, kb, tooltip):
         path = self.get_path_at_pos(x, y)
