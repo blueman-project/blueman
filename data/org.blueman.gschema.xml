@@ -130,6 +130,13 @@
       <description></description>
     </key>
   </schema>
+  <schema id="org.blueman.plugins.autoconnect" path="/org/blueman/plugins/autoconnect/">
+    <key type="a(ss)" name="services">
+      <default>[]</default>
+      <summary>Services to connect to automatically</summary>
+      <description>A list of services to connect to stored as tuples with the address and the UUID</description>
+    </key>
+  </schema>
   <schema id="org.blueman.plugins.powermanager" path="/org/blueman/plugins/powermanager/">
     <key type="mb" name="auto-power-on">
         <default>nothing</default>
