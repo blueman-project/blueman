@@ -5,7 +5,6 @@ APPS =				\
 	blueman-services	\
 	blueman-sendto		\
 	blueman-assistant	\
-	blueman-report		\
 	blueman-tray
 
 appsdir = $(bindir)
