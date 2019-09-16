@@ -1,3 +1,5 @@
+from gettext import gettext as _
+
 from gi.repository import GLib
 
 from blueman.Sdp import ServiceUUID
