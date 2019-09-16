@@ -50,7 +50,7 @@ class DeviceNotFound(Exception):
 
 
 class RecentConns(AppletPlugin):
-    __depends__ = ["Menu"]
+    __depends__ = ["DBusService", "Menu"]
     __icon__ = "document-open-recent"
     __description__ = _("Provides a menu item that contains last used connections for quick access")
     __author__ = "Walmis"
