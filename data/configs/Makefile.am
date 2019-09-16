@@ -1,4 +1,4 @@
-dbusdir = $(sysconfdir)/dbus-1/system.d
+dbusdir = $(datadir)/dbus-1/system.d
 dbus_DATA = org.blueman.Mechanism.conf
 
 dbus_servicesdir = $(datadir)/dbus-1/system-services
@@ -18,7 +18,7 @@ systemd_user_DATA = blueman-applet.service
 endif
 
 if HAVE_POLKIT
-@INTLTOOL_POLICY_RULE@ 
+@INTLTOOL_POLICY_RULE@
 policykitactionsdir = $(datadir)/polkit-1/actions
 policykitactions_in_files = org.blueman.policy.in
 policykitactions_DATA = $(policykitactions_in_files:.policy.in=.policy)
@@ -43,7 +43,7 @@ CLEANFILES =		\
 	org.blueman.policy		\
 	org.blueman.Applet.service		\
 	$(BUILT_SOURCES)
-	
+
 DISTCLEANFILES = \
 	$(CLEANFILES)
 

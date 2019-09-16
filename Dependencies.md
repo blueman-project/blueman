@@ -3,7 +3,7 @@
 ## Runtime dependencies
 
 * [BlueZ 5](http://www.bluez.org/)
-* [dbus](http://www.freedesktop.org/wiki/Software/dbus/)
+* [dbus](http://www.freedesktop.org/wiki/Software/dbus/) (>= 1.9.18)
 * [GdkPixbuf](http://www.gtk.org/) (GI bindings)
 * [GLib 2, Gio 2](http://www.gtk.org/) (>= 2.32) (GI bindings)
 * [GTK+ 3](http://www.gtk.org/) (GI bindings) [1]
