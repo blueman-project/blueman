@@ -257,7 +257,7 @@ endforeach
 
 install_data(
     'data/configs/org.blueman.Mechanism.conf',
-    install_dir: join_paths(get_option('sysconfdir'), 'dbus-1', 'system.d')
+    install_dir: join_paths(get_option('datadir'), 'dbus-1', 'system.d')
 )
 
 
