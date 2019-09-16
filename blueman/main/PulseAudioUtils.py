@@ -1,5 +1,7 @@
 # coding=utf-8
 from ctypes import *
+from typing import Dict, TYPE_CHECKING, List
+
 from gi.repository import GObject
 from gi.repository import GLib
 from gi.types import GObjectMeta
@@ -11,6 +13,41 @@ try:
     libpulse_glib = CDLL("libpulse-mainloop-glib.so.0")
 except OSError:
     raise ImportError("Could not load pulseaudio shared library")
+
+if TYPE_CHECKING:
+    from typing_extensions import TypedDict
+
+    class InfoBase(TypedDict):
+        name: str
+        proplist: Dict[str, str]
+        owner_module: int
+        driver: str
+
+    class SinkInfo(InfoBase):
+        description: str
+
+    SourceInfo = SinkInfo
+
+    class SinkInputInfo(InfoBase):
+        sink: int
+
+    class CardProfileInfo(TypedDict):
+        name: str
+        description: str
+        n_sinks: int
+        n_sources: int
+        priority: int
+
+    class CardInfo(InfoBase):
+        index: int
+        profiles: List[CardProfileInfo]
+        active_profile: str
+
+    class ModuleInfo(TypedDict):
+        name: str
+        argument: str
+        n_used: int
+        proplist: Dict[str, str]
 
 pa_glib_mainloop_new = libpulse_glib.pa_glib_mainloop_new
 pa_glib_mainloop_new.argtypes = [c_void_p]
@@ -377,7 +414,7 @@ class PulseAudioUtils(GObject.GObject, metaclass=PulseAudioUtilsMeta):
             pla = pa_proplist_to_string_sep(proplist, b"|")
             pl = cast(pla, c_char_p)
 
-            ls = [prop.decode("UTF-8") for prop in pl.value.split(b"|")]
+            ls = [prop.decode("UTF-8") for prop in pl.value.split(b"|")] if pl.value else []
             del pl
             pa_xfree(pla)
         else:
@@ -427,7 +464,7 @@ class PulseAudioUtils(GObject.GObject, metaclass=PulseAudioUtilsMeta):
     def list_sources(self, callback):
         self.check_connected()
 
-        data = {}
+        data: Dict[int, "SourceInfo"] = {}
 
         def handler(entry_info, end):
             if end:
@@ -452,7 +489,7 @@ class PulseAudioUtils(GObject.GObject, metaclass=PulseAudioUtilsMeta):
     def list_sinks(self, callback, card_id=None):
         self.check_connected()
 
-        data = {}
+        data: Dict[int, "SinkInfo"] = {}
 
         def handler(entry_info, end):
             if end:
@@ -481,7 +518,7 @@ class PulseAudioUtils(GObject.GObject, metaclass=PulseAudioUtilsMeta):
     def list_sink_inputs(self, callback):
         self.check_connected()
 
-        data = {}
+        data: Dict[int, "SinkInputInfo"] = {}
 
         def handler(entry_info, end):
             if end:
@@ -542,7 +579,7 @@ class PulseAudioUtils(GObject.GObject, metaclass=PulseAudioUtilsMeta):
     def list_cards(self, callback):
         self.check_connected()
 
-        data = {}
+        data: Dict[str, "CardInfo"] = {}
 
         def handler(entry_info, end):
             if end:
@@ -587,7 +624,7 @@ class PulseAudioUtils(GObject.GObject, metaclass=PulseAudioUtilsMeta):
     def list_module(self, callback):
 
         self.check_connected()
-        data = {}
+        data: Dict[int, "ModuleInfo"] = {}
 
         def handler(entry_info, end):
             if end:

@@ -1,4 +1,6 @@
 # coding=utf-8
+from typing import List
+
 import cairo
 import gi
 gi.require_version("Gtk", "3.0")
@@ -206,7 +208,7 @@ class CellFade(AnimBase):
         tw.connect_after("draw", self.on_draw)
         self.row = Gtk.TreeRowReference.new(tw.props.model, path)
         self.selection = tw.get_selection()
-        self.columns = []
+        self.columns: List[Gtk.TreeViewColumn] = []
         for i in columns:
             self.columns.append(self.tw.get_column(i))
 

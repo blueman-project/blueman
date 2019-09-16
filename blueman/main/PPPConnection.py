@@ -1,14 +1,17 @@
 # coding=utf-8
+import errno
 import logging
-from blueman.Functions import open_rfcomm
-import tty
-import termios
 import os
+import re
 import subprocess
+import termios
+import tty
+from typing import Any, List
+
 from gi.repository import GObject
 from gi.repository import GLib
-import errno
-import re
+
+from blueman.Functions import open_rfcomm
 
 pppd_errors = {
     1: "An immediately fatal error of some kind  occurred, such as an essential system call failing, "
@@ -125,7 +128,7 @@ class PPPConnection(GObject.GObject):
 
         tty.setraw(self.file)
 
-        attrs = termios.tcgetattr(self.file)
+        attrs: List[Any] = termios.tcgetattr(self.file)
 
         attrs[0] &= ~(termios.IGNCR | termios.ICRNL | termios.IUCLC | termios.INPCK | termios.IXON | termios.IXANY |
                       termios.IGNPAR)

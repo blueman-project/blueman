@@ -3,6 +3,7 @@
 import logging
 import sys
 import traceback
+from typing import Dict, Tuple, Callable, Set
 
 from gi.repository import Gio, GLib
 
@@ -27,8 +28,8 @@ class DbusService:
         self._bus = Gio.bus_get_sync(bus_type)
         if bus_name:
             Gio.bus_own_name(bus_type, bus_name, Gio.BusNameOwnerFlags.NONE, None, None, None)
-        self._methods = {}
-        self._signals = {}
+        self._methods: Dict[str, Tuple[Tuple[str, ...], str, Callable[..., None], Set[str]]] = {}
+        self._signals: Dict[str, str] = {}
         self._interface_name = interface_name
         self._path = path
         self._regid = None

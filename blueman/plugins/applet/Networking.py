@@ -1,5 +1,6 @@
 # coding=utf-8
 from gettext import gettext as _
+from typing import Dict
 
 from blueman.main.Config import Config
 from blueman.bluez.NetworkServer import NetworkServer
@@ -18,7 +19,7 @@ class Networking(AppletPlugin):
     _signal = None
 
     def on_load(self):
-        self._registered = {}
+        self._registered: Dict[str, bool] = {}
 
         self.Config = Config("org.blueman.network")
         self.Config.connect("changed", self.on_config_changed)

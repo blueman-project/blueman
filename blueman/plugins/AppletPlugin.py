@@ -20,10 +20,6 @@ class AppletPlugin(BasePlugin):
         if not ictheme.has_icon(self.__class__.__icon__):
             self.__class__.__icon__ = "blueman-plugin"
 
-        self.__opts = {}
-
-        self.__overrides = []
-
         self._dbus_service = parent.DbusSvc
         self._dbus_methods = set()
         self._dbus_signals = set()
@@ -43,9 +39,6 @@ class AppletPlugin(BasePlugin):
         pass
 
     def _unload(self):
-        for (obj, method, orig) in self.__overrides:
-            obj.__setattr__(method, orig)
-
         super()._unload()
 
         for method in self._dbus_methods:

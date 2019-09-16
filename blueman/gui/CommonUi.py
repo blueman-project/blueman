@@ -1,5 +1,7 @@
 # coding=utf-8
 from datetime import datetime
+from gettext import gettext as _
+
 from blueman.Constants import WEBSITE, VERSION
 
 import gi

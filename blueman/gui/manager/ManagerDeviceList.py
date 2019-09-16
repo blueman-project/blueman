@@ -1,4 +1,5 @@
 # coding=utf-8
+from gettext import gettext as _
 import html
 import logging
 import cairo
@@ -318,7 +319,7 @@ class ManagerDeviceList(DeviceList):
             # cinfo init may fail for bluetooth devices version 4 and up
             # FIXME Workaround is horrible and we should show something better
             if cinfo.failed:
-                rssi_perc = tpl_perc = lq_perc = 100
+                rssi_perc = tpl_perc = lq_perc = 100.0
             else:
                 try:
                     rssi = float(cinfo.get_rssi())
@@ -460,7 +461,7 @@ class ManagerDeviceList(DeviceList):
                     else:
                         tpl_state = _("Very High")
 
-                    tooltip_template = None
+                    tooltip_template: str = ""
                     if path[1] == self.columns["tpl_pb"]:
                         tooltip_template = \
                             "<b>Connected</b>\nReceived Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>\n" \

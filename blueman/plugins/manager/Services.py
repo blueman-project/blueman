@@ -1,4 +1,6 @@
 # coding=utf-8
+from gettext import gettext as _
+
 import cairo
 from blueman.bluez.Network import Network
 from blueman.plugins.ManagerPlugin import ManagerPlugin

@@ -147,7 +147,7 @@ class PowerManager(AppletPlugin):
     def update_power_state(self):
         rets = self.parent.Plugins.run("on_power_state_query", self)
 
-        off = True in map(lambda x: x < self.STATE_ON, rets)
+        off = any(x < self.STATE_ON for x in rets)
         foff = self.STATE_OFF_FORCED in rets
         on = self.STATE_ON in rets
 

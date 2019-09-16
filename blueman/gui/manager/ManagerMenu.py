@@ -70,7 +70,7 @@ class ManagerMenu:
         view_menu.append(item_services)
         item_services.show()
 
-        sorting_group = []
+        sorting_group: List[Gtk.RadioMenuItem] = []
         item_sort = Gtk.MenuItem.new_with_mnemonic(_("S_ort By"))
         view_menu.append(item_sort)
         item_sort.show()
