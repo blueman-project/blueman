@@ -158,22 +158,23 @@ class ManagerDeviceList(DeviceList):
 
         if event.type == Gdk.EventType._2BUTTON_PRESS and event.button == 1:
             path = self.get_path_at_pos(int(event.x), int(event.y))
-            if path is not None:
-                row = self.get(path[0], "device", "connected")
+            if path is None:
+                return
 
-                if row:
-                    device = row["device"]
-                    if device:
-                        if self.Blueman is not None:
-                            if self.menu is None:
-                                self.menu = ManagerDeviceMenu(self.Blueman)
-                                show_generic_connect = self.menu.show_generic_connect_calc(device['UUIDs'])
-                                if not row["connected"] and show_generic_connect:
-                                    self.menu._generic_connect(item=None, device=device, connect=True)
-                                elif show_generic_connect:
-                                    self.menu._generic_connect(item=None, device=device, connect=False)
-                                self.menu.clear()
-                                self.menu = None
+            row = self.get(path[0], "device", "connected")
+
+            if not row:
+                return
+
+            device = row["device"]
+            if device:
+                if self.Blueman is not None:
+                    if self.menu is None:
+                        self.menu = ManagerDeviceMenu(self.Blueman)
+                        if self.menu.show_generic_connect_calc(device['UUIDs']):
+                            self.menu._generic_connect(item=None, device=device, connect=not row["connected"])
+                        self.menu.clear()
+                        self.menu = None
 
         if event.type == Gdk.EventType.BUTTON_PRESS and event.button == 3:
             path = self.get_path_at_pos(int(event.x), int(event.y))
