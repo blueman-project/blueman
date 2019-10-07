@@ -193,7 +193,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         prog.start()
 
     def show_generic_connect_calc(self, device_uuids):
-    # Generic (dis)connect
+        # Generic (dis)connect
         for uuid in device_uuids:
             service_uuid = ServiceUUID(uuid)
             if service_uuid.short_uuid in (
