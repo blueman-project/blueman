@@ -241,7 +241,6 @@ class DeviceList(GenericList):
             try:
                 self.Adapter = self.manager.get_adapter(adapter)
                 self.__adapter_path = self.Adapter.get_object_path()
-                self.emit("adapter-changed", self.__adapter_path)
             except bluez.errors.DBusNoSuchAdapterError:
                 logging.warning('Failed to set adapter, trying first available.')
                 self.set_adapter(None)
