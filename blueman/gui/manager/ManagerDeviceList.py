@@ -175,8 +175,6 @@ class ManagerDeviceList(DeviceList):
         if event.type == Gdk.EventType._2BUTTON_PRESS and event.button == 1:
             if self.menu.show_generic_connect_calc(row["device"]['UUIDs']):
                 self.menu._generic_connect(item=None, device=row["device"], connect=not row["connected"])
-                self.menu.clear()
-                self.menu = None
 
         if event.type == Gdk.EventType.BUTTON_PRESS and event.button == 3:
             self.menu.popup(None, None, None, None, event.button, event.time)
