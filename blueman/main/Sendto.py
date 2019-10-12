@@ -1,8 +1,10 @@
 # coding=utf-8
+from gettext import gettext as _
 import time
 import logging
 from gettext import bind_textdomain_codeset
 from gettext import ngettext
+from typing import List
 
 import gi
 
@@ -64,7 +66,7 @@ class Sender(Gtk.Dialog):
         self.device = device
         self.adapter = Adapter(adapter_path)
         self.manager = Manager()
-        self.files = []
+        self.files: List[Gio.File] = []
         self.num_files = 0
         self.object_push = None
         self.transfer = None

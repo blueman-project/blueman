@@ -1,13 +1,13 @@
 # coding=utf-8
 import logging
-from gettext import bind_textdomain_codeset
+from gettext import gettext as _, bind_textdomain_codeset
 from operator import itemgetter
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 from blueman.Constants import UI_PATH
 from blueman.Functions import create_menuitem, e_
 from blueman.bluez.Network import AnyNetwork
-from blueman.bluez.Device import AnyDevice
+from blueman.bluez.Device import AnyDevice, Device
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.DBusProxies import AppletService, DBusProxyFailed
 from blueman.gui.MessageArea import MessageArea
@@ -32,11 +32,12 @@ class ManagerDeviceMenu(Gtk.Menu):
     __ops__: Dict[str, str] = {}
     __instances__: List["ManagerDeviceMenu"] = []
 
+    SelectedDevice: Device
+
     def __init__(self, blueman):
         super().__init__()
         self.set_name("ManagerDeviceMenu")
         self.Blueman = blueman
-        self.SelectedDevice = None
 
         self.is_popup = False
 
@@ -191,10 +192,25 @@ class ManagerDeviceMenu(Gtk.Menu):
         prog = ManagerProgressbar(self.Blueman, False)
         prog.start()
 
+    def show_generic_connect_calc(self, device_uuids):
+        # Generic (dis)connect
+        for uuid in device_uuids:
+            service_uuid = ServiceUUID(uuid)
+            if service_uuid.short_uuid in (
+                    AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID, HANDSFREE_AGW_SVCLASS_ID, HANDSFREE_SVCLASS_ID,
+                    HEADSET_SVCLASS_ID, HID_SVCLASS_ID, 0x1812
+            ):
+                return True
+            elif not service_uuid.reserved:
+                if uuid == '03b80e5a-ede8-4b33-a751-6ce34ec4c700':
+                    return True
+        # LE devices do not appear to expose certain properties like uuids until connect to at least once.
+        return not device_uuids
+
     def generate(self):
         self.clear()
 
-        items = []
+        items: List[Tuple[int, Gtk.MenuItem]] = []
 
         if not self.is_popup or self.props.visible:
             selected = self.Blueman.List.selected()
@@ -220,32 +236,16 @@ class ManagerDeviceMenu(Gtk.Menu):
             self.append(item)
             return
 
-        # Generic (dis)connect
-        # LE devices do not appear to expose certain properties like uuids until connect to at least once.
-        # show generic connect for these as we will not show any way to connect otherwise.
-        device_uuids = self.SelectedDevice['UUIDs']
-        show_generic_connect = not device_uuids
-        for uuid in device_uuids:
-            service_uuid = ServiceUUID(uuid)
-            if service_uuid.short_uuid in (
-                    AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID, HANDSFREE_AGW_SVCLASS_ID, HANDSFREE_SVCLASS_ID,
-                    HEADSET_SVCLASS_ID, HID_SVCLASS_ID, 0x1812
-            ):
-                show_generic_connect = True
-                break
-            elif not service_uuid.reserved:
-                if uuid == '03b80e5a-ede8-4b33-a751-6ce34ec4c700':
-                    show_generic_connect = True
-                    break
+        show_generic_connect = self.show_generic_connect_calc(self.SelectedDevice['UUIDs'])
 
         if not row["connected"] and show_generic_connect:
-            connect_item = create_menuitem(_("_Connect"), "blueman")
+            connect_item = create_menuitem(_("_<b>Connect</b>"), "blueman")
             connect_item.connect("activate", self._generic_connect, self.SelectedDevice, True)
             connect_item.props.tooltip_text = _("Connects auto connect profiles A2DP source, A2DP sink, and HID")
             connect_item.show()
             self.append(connect_item)
         elif show_generic_connect:
-            connect_item = create_menuitem(_("_Disconnect"), "network-offline")
+            connect_item = create_menuitem(_("_<b>Disconnect</b>"), "network-offline")
             connect_item.props.tooltip_text = _("Forcefully disconnect the device")
             connect_item.connect("activate", self._generic_connect, self.SelectedDevice, False)
             connect_item.show()

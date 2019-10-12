@@ -2,6 +2,7 @@
 from datetime import datetime
 import os
 import logging
+from typing import Dict, List
 
 from blueman.Functions import adapter_path_to_name
 from blueman.bluez import Device, Adapter
@@ -50,9 +51,9 @@ class DeviceList(GenericList):
             tabledata = []
 
         # cache for fast lookup in the list
-        self.path_to_row = {}
+        self.path_to_row: Dict[str, Gtk.TreeRowReference] = {}
 
-        self.monitored_devices = []
+        self.monitored_devices: List[str] = []
 
         self.manager = bluez.Manager()
         self.manager.connect_signal('adapter-removed', self.__on_manager_signal, 'adapter-removed')

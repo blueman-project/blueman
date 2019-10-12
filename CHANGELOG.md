@@ -2,6 +2,8 @@
 
 ## master
 
+* Drop blueman-report
+
 ### Changes
 
 * Raise minimum Python version to 3.6

@@ -2,6 +2,7 @@
 
 from gettext import gettext as _
 import logging
+from typing import List
 
 from blueman.bluez.Network import AnyNetwork
 from blueman.gui.Notification import Notification
@@ -20,7 +21,7 @@ class DhcpClient(AppletPlugin):
         self._any_network = AnyNetwork()
         self._any_network.connect_signal('property-changed', self._on_network_prop_changed)
 
-        self.quering = []
+        self.quering: List[str] = []
 
         self._add_dbus_method("DhcpClient", ("s",), "", self.dhcp_acquire)
 

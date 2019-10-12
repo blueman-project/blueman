@@ -5,7 +5,7 @@ import os
 import shutil
 import logging
 from html import escape
-from typing import List
+from typing import List, Dict, TYPE_CHECKING
 
 from blueman.bluez import obex
 from blueman.Functions import launch
@@ -15,6 +15,14 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Config import Config
 
 from gi.repository import GLib, Gio
+
+if TYPE_CHECKING:
+    from typing_extensions import TypedDict
+
+    class Transfer(TypedDict):
+        path: str
+        size: int
+        name: str
 
 
 class ObexErrorRejected(DbusError):
@@ -39,10 +47,10 @@ class Agent(DbusService):
         self._applet = applet
         self._config = Config("org.blueman.transfer")
 
-        self._allowed_devices = []
+        self._allowed_devices: List[str] = []
         self._notification = None
         self._pending_transfer = None
-        self.transfers = {}
+        self.transfers: Dict[str, "Transfer"] = {}
 
     def register_at_manager(self):
         obex.AgentManager().register_agent(self.__agent_path)
@@ -138,7 +146,6 @@ class TransferService(AppletPlugin):
     _normal_transfers = 0
 
     _manager = None
-    _signals: List[int] = []
     _agent = None
     _watch = None
     _notification = None
@@ -211,17 +218,18 @@ class TransferService(AppletPlugin):
         logging.info("%s %s" % (name, owner))
 
         self._manager = obex.Manager()
-        self._signals.append(self._manager.connect("transfer-started", self._on_transfer_started))
-        self._signals.append(self._manager.connect("transfer-completed", self._on_transfer_completed))
-        self._signals.append(self._manager.connect('session-removed', self._on_session_removed))
+        self._manager.connect("transfer-started", self._on_transfer_started)
+        self._manager.connect("transfer-completed", self._on_transfer_completed)
+        self._manager.connect('session-removed', self._on_session_removed)
 
         self._register_agent()
 
     def _on_dbus_name_vanished(self, _connection, name):
         logging.info("%s not running or was stopped" % name)
 
-        for signal in self._signals:
-            self._manager.disconnect(signal)
+        self._manager.disconnect_by_func(self._on_transfer_started)
+        self._manager.disconnect_by_func(self._on_transfer_completed)
+        self._manager.disconnect_by_func(self._on_session_removed)
         self._manager = None
         if self._agent:
             self._agent.unregister()

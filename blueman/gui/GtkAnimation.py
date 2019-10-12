@@ -1,4 +1,6 @@
 # coding=utf-8
+from typing import List
+
 import cairo
 import gi
 
@@ -124,16 +126,14 @@ class TreeRowFade(AnimBase):
         super().__init__(1.0)
         self.tw = tw
 
-        self.sig = self.tw.connect_after("draw", self.on_draw)
+        self.tw.connect_after("draw", self.on_draw)
 
         self.row = Gtk.TreeRowReference.new(tw.props.model, path)
         self.stylecontext = tw.get_style_context()
         self.columns = columns
 
     def unref(self):
-        if self.sig is not None:
-            self.tw.disconnect(self.sig)
-            self.sig = None
+        self.tw.disconnect_by_func(self.on_draw)
 
     def get_iter(self):
         return self.tw.props.model.get_iter(self.row.get_path())
@@ -143,8 +143,7 @@ class TreeRowFade(AnimBase):
             return
 
         if not self.row.valid():
-            self.tw.disconnect(self.sig)
-            self.sig = None
+            self.tw.disconnect_by_func(self.on_draw)
             return
 
         path = self.row.get_path()
@@ -184,8 +183,7 @@ class TreeRowColorFade(TreeRowFade):
             return
 
         if not self.row.valid():
-            self.tw.disconnect(self.sig)
-            self.sig = None
+            self.tw.disconnect_by_func(self.on_draw)
             return
 
         path = self.row.get_path()
@@ -210,17 +208,15 @@ class CellFade(AnimBase):
         self.tw = tw
 
         self.frozen = False
-        self.sig = tw.connect_after("draw", self.on_draw)
+        tw.connect_after("draw", self.on_draw)
         self.row = Gtk.TreeRowReference.new(tw.props.model, path)
         self.selection = tw.get_selection()
-        self.columns = []
+        self.columns: List[Gtk.TreeViewColumn] = []
         for i in columns:
             self.columns.append(self.tw.get_column(i))
 
     def unref(self):
-        if self.sig is not None:
-            self.tw.disconnect(self.sig)
-            self.sig = None
+        self.tw.disconnect_by_func(self.on_draw)
 
     def get_iter(self):
         return self.tw.props.model.get_iter(self.row.get_path())
@@ -230,8 +226,7 @@ class CellFade(AnimBase):
             return
 
         if not self.row.valid():
-            self.tw.disconnect(self.sig)
-            self.sig = None
+            self.tw.disconnect_by_func(self.on_draw)
             return
 
         path = self.row.get_path()
@@ -274,7 +269,7 @@ class WidgetFade(AnimBase):
         self.widget = widget
         self.color = color
 
-        self.sig = widget.connect_after("draw", self.on_draw)
+        widget.connect_after("draw", self.on_draw)
 
     def on_draw(self, widget, cr):
         if not self.frozen:

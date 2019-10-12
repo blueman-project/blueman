@@ -1,5 +1,7 @@
 # coding=utf-8
 
+from gettext import gettext as _
+
 from gi.repository import GObject, GLib
 
 from blueman.Functions import launch, kill, get_pid, get_lockfile

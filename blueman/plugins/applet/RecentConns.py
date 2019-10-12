@@ -3,12 +3,39 @@ from gettext import gettext as _
 from operator import itemgetter
 import time
 import logging
+from typing import Dict, List, TYPE_CHECKING, Optional, Callable
 
 from blueman.bluez.Device import Device
 from blueman.bluez.errors import DBusNoSuchAdapterError
 from blueman.gui.Notification import Notification
 from blueman.Sdp import ServiceUUID
 from blueman.plugins.AppletPlugin import AppletPlugin
+
+
+if TYPE_CHECKING:
+    from typing_extensions import TypedDict
+
+    class MenuItemBase(TypedDict):
+        icon_name: str
+        sensitive: bool
+        tooltip: Optional[str]
+
+    class SimpleMenuItem(MenuItemBase):
+        callback: Callable[[MenuItemBase], None]
+
+    class Item(TypedDict):
+        adapter: str
+        address: str
+        alias: str
+        icon: str
+        name: str
+        uuid: str
+        time: float
+        device: str
+        mitem: Optional[SimpleMenuItem]
+
+    class MenuItem(MenuItemBase):
+        callback: Callable[[Item], None]
 
 
 REGISTRY_VERSION = 0
@@ -23,7 +50,7 @@ class DeviceNotFound(Exception):
 
 
 class RecentConns(AppletPlugin):
-    __depends__ = ["Menu"]
+    __depends__ = ["DBusService", "Menu"]
     __icon__ = "document-open-recent"
     __description__ = _("Provides a menu item that contains last used connections for quick access")
     __author__ = "Walmis"
@@ -45,8 +72,8 @@ class RecentConns(AppletPlugin):
     _items = None
 
     def on_load(self):
-        self.Adapters = {}
-        self.__menuitems = []
+        self.Adapters: Dict[str, str] = {}
+        self.__menuitems: List["MenuItem"] = []
 
         self.item = self.parent.Plugins.Menu.add(self, 52, text=_("Recent _Connections") + "…",
                                                  icon_name="document-open-recent", submenu_function=self.get_menu)

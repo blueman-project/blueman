@@ -1,4 +1,5 @@
 # coding=utf-8
+from gettext import gettext as _
 import os
 import logging
 import importlib

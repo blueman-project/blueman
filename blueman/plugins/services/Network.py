@@ -4,6 +4,7 @@ from random import randint
 from gettext import bind_textdomain_codeset
 import logging
 import ipaddress
+from typing import List, Tuple, cast
 
 from blueman.Constants import *
 from blueman.Functions import have, get_local_interfaces
@@ -32,12 +33,12 @@ class Network(ServicePlugin):
 
         container.pack_start(self.widget, True, True, 0)
 
-        self.interfaces = []
+        self.interfaces: List[Tuple[str, ipaddress.IPv4Interface]] = []
         netifs = get_local_interfaces()
         for iface in netifs:
             if iface != "lo" and iface != "pan1":
                 logging.info(iface)
-                ipiface = ipaddress.ip_interface('/'.join(netifs[iface]))
+                ipiface = ipaddress.ip_interface('/'.join(cast(Tuple[str, str], netifs[iface])))
                 self.interfaces.append((iface, ipiface))
 
         self.setup_network()

@@ -1,6 +1,6 @@
 # coding=utf-8
 import logging
-from gettext import bind_textdomain_codeset
+from gettext import gettext as _, bind_textdomain_codeset
 
 import blueman.bluez as bluez
 from blueman.Functions import *
@@ -27,8 +27,6 @@ from gi.repository import Gtk
 class Blueman(Gtk.Window):
     def __init__(self):
         super().__init__(title=_("Bluetooth Devices"))
-
-        self._applet_sig = None
 
         self.Config = Config("org.blueman.general")
 
@@ -80,9 +78,7 @@ class Blueman(Gtk.Window):
 
         def on_dbus_name_vanished(_connection, name):
             logging.info(name)
-            if self._applet_sig is not None:
-                self.Applet.disconnect(self._applet_sig)
-                self._applet_sig = None
+            self.Applet.disconnect_by_func(on_applet_signal)
 
             self.hide()
 
@@ -122,7 +118,7 @@ class Blueman(Gtk.Window):
                     logging.error('No adapter(s) found, exiting')
                     exit(1)
 
-            self._applet_sig = self.Applet.connect('g-signal', on_applet_signal)
+            self.Applet.connect('g-signal', on_applet_signal)
 
             self.connect("delete-event", on_window_delete)
             self.props.icon_name = "blueman"
@@ -171,8 +167,8 @@ class Blueman(Gtk.Window):
             key, value = key_value
             if key == "Discovering" and not value:
                 prog.finalize()
-                self.List.disconnect(s1)
-                self.List.disconnect(s2)
+                self.List.disconnect_by_func(on_progress)
+                self.List.disconnect_by_func(prop_changed)
 
         def on_progress(lst, frac):
             if abs(1.0 - frac) <= 0.00001:
@@ -189,8 +185,8 @@ class Blueman(Gtk.Window):
             prog.finalize()
             MessageArea.show_message(*e_(e))
 
-        s1 = self.List.connect("discovery-progress", on_progress)
-        s2 = self.List.connect("adapter-property-changed", prop_changed)
+        self.List.connect("discovery-progress", on_progress)
+        self.List.connect("adapter-property-changed", prop_changed)
 
     def setup(self, device):
         command = "blueman-assistant --device=%s" % device['Address']

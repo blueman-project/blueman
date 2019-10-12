@@ -1,7 +1,6 @@
 # coding=utf-8
 from gettext import gettext as _
 import os
-import weakref
 from typing import Dict
 
 from gi.repository import GLib, Gio
@@ -63,9 +62,7 @@ class KillSwitch(AppletPlugin):
 
         self._fd = os.open('/dev/rfkill', os.O_RDONLY | os.O_NONBLOCK)
 
-        ref = weakref.ref(self)
-        self._iom = GLib.io_add_watch(self._fd, GLib.IO_IN | GLib.IO_ERR | GLib.IO_HUP,
-                                      lambda *args: ref() and ref().io_event(*args))
+        self._iom = GLib.io_add_watch(self._fd, GLib.IO_IN | GLib.IO_ERR | GLib.IO_HUP, self.io_event)
 
     def on_unload(self):
         Gio.bus_unwatch_name(self._connman_watch_id)

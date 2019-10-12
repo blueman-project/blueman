@@ -16,7 +16,9 @@ EXTRA_DIST = 			\
 	${DIST_DOCS}		\
 	intltool-extract.in	\
 	intltool-update.in	\
-	intltool-merge.in
+	intltool-merge.in	\
+	meson.build		\
+	po/meson.build
 
 DISTCLEANFILES = 		\
 	intltool-extract 	\

@@ -1,4 +1,6 @@
 # coding=utf-8
+from typing import Dict, List, Callable
+
 from blueman.main.Config import Config
 
 import gi
@@ -32,7 +34,7 @@ class _NotificationDialog(Gtk.MessageDialog):
         self.set_name("NotificationDialog")
         i = 100
         self.actions_supported = True
-        self.actions = {}
+        self.actions: Dict[int, str] = {}
         self.callback = actions_cb
         if actions:
             for a in actions:
@@ -141,9 +143,9 @@ class _NotificationBubble(Gio.DBusProxy):
 
         self._app_name = 'blueman'
         self._app_icon = ''
-        self._actions = []
-        self._callbacks = {}
-        self._hints = {}
+        self._actions: List[str] = []
+        self._callbacks: Dict[str, Callable[[str], None]] = {}
+        self._hints: Dict[str, GLib.Variant] = {}
 
         # hint : (variant format, spec version)
         self._supported_hints = {
@@ -264,26 +266,25 @@ class _NotificationBubble(Gio.DBusProxy):
         self._return_id = None
 
 
-class Notification(object):
-    def __new__(cls, summary, message, timeout=-1, actions=None, actions_cb=None,
-                icon_name=None, image_data=None):
+def Notification(summary, message, timeout=-1, actions=None, actions_cb=None,
+                 icon_name=None, image_data=None):
 
-        forced_fallback = not Config('org.blueman.general')['notification-daemon']
-        try:
-            bus = Gio.bus_get_sync(Gio.BusType.SESSION)
-            caps = bus.call_sync('org.freedesktop.Notifications', '/org/freedesktop/Notifications',
-                                 'org.freedesktop.Notifications', 'GetCapabilities', None, None,
-                                 Gio.DBusCallFlags.NONE, -1, None).unpack()[0]
-        except GLib.Error:
-            caps = []
+    forced_fallback = not Config('org.blueman.general')['notification-daemon']
+    try:
+        bus = Gio.bus_get_sync(Gio.BusType.SESSION)
+        caps = bus.call_sync('org.freedesktop.Notifications', '/org/freedesktop/Notifications',
+                             'org.freedesktop.Notifications', 'GetCapabilities', None, None,
+                             Gio.DBusCallFlags.NONE, -1, None).unpack()[0]
+    except GLib.Error:
+        caps = []
 
-        if forced_fallback or 'body' not in caps or (actions and 'actions' not in caps):
-            # Use fallback in the case:
-            # * user does not want to use a notification daemon
-            # * the notification daemon is not available
-            # * we have to show actions and the notification daemon does not provide them
-            klass = _NotificationDialog
-        else:
-            klass = _NotificationBubble
+    if forced_fallback or 'body' not in caps or (actions and 'actions' not in caps):
+        # Use fallback in the case:
+        # * user does not want to use a notification daemon
+        # * the notification daemon is not available
+        # * we have to show actions and the notification daemon does not provide them
+        klass = _NotificationDialog
+    else:
+        klass = _NotificationBubble
 
-        return klass(summary, message, timeout, actions, actions_cb, icon_name, image_data)
+    return klass(summary, message, timeout, actions, actions_cb, icon_name, image_data)

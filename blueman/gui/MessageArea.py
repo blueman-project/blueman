@@ -1,4 +1,6 @@
 # coding=utf-8
+from gettext import gettext as _
+
 from blueman.gui.GtkAnimation import WidgetFade
 
 import gi
@@ -10,10 +12,10 @@ from gi.repository import Pango
 
 
 class MessageArea(Gtk.InfoBar):
-    _inst_ = None
+    _inst_: "MessageArea"
 
     def __new__(cls):
-        if not MessageArea._inst_:
+        if not hasattr(MessageArea, "_inst_"):
             MessageArea._inst_ = super().__new__(cls)
 
         return MessageArea._inst_
@@ -64,7 +66,7 @@ class MessageArea(Gtk.InfoBar):
 
     def _show_message(self, text, bt=None, icon="dialog-warning"):
         def on_finished(anim):
-            anim.disconnect(sig)
+            anim.disconnect_by_func(on_finished)
             anim.freeze()
 
         self.text = text
@@ -81,12 +83,12 @@ class MessageArea(Gtk.InfoBar):
             self.hl_anim.color = Gdk.RGBA(0, 0, 1, 1)
 
         if not self.props.visible:
-            sig = self.anim.connect("animation-finished", on_finished)
+            self.anim.connect("animation-finished", on_finished)
             self.anim.thaw()
             self.show()
             self.anim.animate(start=0.0, end=1.0, duration=500)
         else:
-            sig = self.hl_anim.connect("animation-finished", on_finished)
+            self.hl_anim.connect("animation-finished", on_finished)
             self.hl_anim.thaw()
             self.hl_anim.animate(start=0.7, end=1.0, duration=1000)
 

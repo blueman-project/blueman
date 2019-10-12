@@ -1,6 +1,9 @@
 # coding=utf-8
+from gettext import gettext as _
 import logging
+from typing import Dict, List, TYPE_CHECKING
 
+from blueman.bluez import Device
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 from blueman.main.PulseAudioUtils import PulseAudioUtils, EventType
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
@@ -13,12 +16,16 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 
+if TYPE_CHECKING:
+    from blueman.main.PulseAudioUtils import CardInfo  # noqa: F401
+
+
 class PulseAudioProfile(ManagerPlugin):
     def on_load(self):
-        self.devices = {}
+        self.devices: Dict[str, Dict[str, "CardInfo"]] = {}
         self.item = None
 
-        self.deferred = []
+        self.deferred: List[Device] = []
 
         pa = PulseAudioUtils()
         pa.connect("event", self.on_pa_event)
@@ -85,7 +92,7 @@ class PulseAudioProfile(ManagerPlugin):
 
     def generate_menu(self, device):
         info = self.devices[device['Address']]
-        group = []
+        group: List[Gtk.RadioMenuItem] = []
 
         sub = Gtk.Menu()
 

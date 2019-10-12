@@ -13,10 +13,6 @@ from blueman.Constants import RFCOMM_WATCHER_PATH
 
 
 class SerialService(Service):
-    def __init__(self, device, uuid):
-        super().__init__(device, uuid)
-        self.file_changed_handler = None
-
     def serial_port_id(self, channel):
         for dev in rfcomm_list():
             if dev["dst"] == self.device['Address'] and dev["state"] == "connected" and dev["channel"] == channel:
@@ -34,7 +30,7 @@ class SerialService(Service):
     def on_file_changed(self, monitor, file, other_file, event_type, port):
         if event_type == Gio.FileMonitorEvent.DELETED:
             logging.info('%s got deleted' % file.get_path())
-            monitor.disconnect(self.file_changed_handler)
+            monitor.disconnect_by_func(self.on_file_changed, port)
         elif event_type == Gio.FileMonitorEvent.ATTRIBUTE_CHANGED:
             self.try_replace_root_watcher(monitor, file.get_path(), port)
 
@@ -46,7 +42,7 @@ class SerialService(Service):
         logging.info('Replacing root watcher')
         Mechanism().CloseRFCOMM('(d)', port)
         subprocess.Popen([RFCOMM_WATCHER_PATH, path])
-        monitor.disconnect(self.file_changed_handler)
+        monitor.disconnect_by_func(self.on_file_changed, port)
 
     def connect(self, reply_handler=None, error_handler=None):
         channel = get_rfcomm_channel(self.short_uuid, self.device['Address'])
@@ -64,7 +60,7 @@ class SerialService(Service):
             logging.info('Starting rfcomm watcher as root')
             Mechanism().OpenRFCOMM('(d)', port_id)
             mon = Gio.File.new_for_path(filename).monitor_file(Gio.FileMonitorFlags.NONE)
-            self.file_changed_handler = mon.connect('changed', self.on_file_changed, port_id)
+            mon.connect('changed', self.on_file_changed, port_id)
             self.try_replace_root_watcher(mon, filename, port_id)
 
             if reply_handler:

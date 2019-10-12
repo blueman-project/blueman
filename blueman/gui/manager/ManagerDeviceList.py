@@ -1,4 +1,5 @@
 # coding=utf-8
+from gettext import gettext as _
 import html
 import logging
 import cairo
@@ -155,6 +156,25 @@ class ManagerDeviceList(DeviceList):
 
     def on_event_clicked(self, widget, event):
 
+        if event.type == Gdk.EventType._2BUTTON_PRESS and event.button == 1:
+            path = self.get_path_at_pos(int(event.x), int(event.y))
+            if path is None:
+                return
+
+            row = self.get(path[0], "device", "connected")
+
+            if not row:
+                return
+
+            device = row["device"]
+            if self.Blueman is not None:
+                if self.menu is None:
+                    self.menu = ManagerDeviceMenu(self.Blueman)
+                    if self.menu.show_generic_connect_calc(device['UUIDs']):
+                        self.menu._generic_connect(item=None, device=device, connect=not row["connected"])
+                    self.menu.clear()
+                    self.menu = None
+
         if event.type == Gdk.EventType.BUTTON_PRESS and event.button == 3:
             path = self.get_path_at_pos(int(event.x), int(event.y))
             if path is not None:
@@ -242,10 +262,10 @@ class ManagerDeviceList(DeviceList):
             cell_fader.freeze()
 
             def on_finished(fader):
-                fader.disconnect(signal)
+                fader.disconnect_by_func(on_finished)
                 fader.freeze()
 
-            signal = row_fader.connect("animation-finished", on_finished)
+            row_fader.connect("animation-finished", on_finished)
             row_fader.set_state(0.0)
             row_fader.animate(start=0.0, end=1.0, duration=500)
 
@@ -318,7 +338,7 @@ class ManagerDeviceList(DeviceList):
             # cinfo init may fail for bluetooth devices version 4 and up
             # FIXME Workaround is horrible and we should show something better
             if cinfo.failed:
-                rssi_perc = tpl_perc = lq_perc = 100
+                rssi_perc = tpl_perc = lq_perc = 100.0
             else:
                 try:
                     rssi = float(cinfo.get_rssi())
@@ -355,9 +375,9 @@ class ManagerDeviceList(DeviceList):
 
                 def on_finished(fader):
                     fader.freeze()
-                    fader.disconnect(signal)
+                    fader.disconnect_by_func(on_finished)
 
-                signal = fader.connect("animation-finished", on_finished)
+                fader.connect("animation-finished", on_finished)
 
             to_store = {}
             if round(row["rssi"], -1) != round(rssi_perc, -1):
@@ -392,12 +412,12 @@ class ManagerDeviceList(DeviceList):
                 fader.animate(start=fader.get_state(), end=0.0, duration=400)
 
                 def on_finished(fader):
-                    fader.disconnect(signal)
+                    fader.disconnect_by_func(on_finished)
                     fader.freeze()
                     if row_ref.valid():
                         self.set(tree_iter, rssi_pb=None, lq_pb=None, tpl_pb=None)
 
-                signal = fader.connect("animation-finished", on_finished)
+                fader.connect("animation-finished", on_finished)
 
     def tooltip_query(self, tw, x, y, kb, tooltip):
         path = self.get_path_at_pos(x, y)
@@ -460,7 +480,7 @@ class ManagerDeviceList(DeviceList):
                     else:
                         tpl_state = _("Very High")
 
-                    tooltip_template = None
+                    tooltip_template: str = ""
                     if path[1] == self.columns["tpl_pb"]:
                         tooltip_template = \
                             "<b>Connected</b>\nReceived Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>\n" \

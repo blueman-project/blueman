@@ -24,8 +24,6 @@ class Transfer(ServicePlugin):
         self.Builder.add_from_file(UI_PATH + "/services-transfer.ui")
         self.widget = self.Builder.get_object("transfer")
 
-        self.ignored_keys = []
-
         container.pack_start(self.widget, True, True, 0)
         a = AppletService()
         if "TransferService" in a.QueryPlugins():

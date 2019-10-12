@@ -3,13 +3,13 @@ from typing import List, Tuple
 
 
 class ServicePlugin(object):
+    _options: List[str]
     instances: List["ServicePlugin"] = []
     __plugin_info__: Tuple[str, str]
 
     def __init__(self, parent):
         ServicePlugin.instances.append(self)
         self._options = []
-        self._orig_state = {}
         self.parent = parent
 
         self.__is_exposed = False

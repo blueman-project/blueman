@@ -1,9 +1,11 @@
+caja_blueman_sendto.py: blueman_sendto.py.in
+	$(SED) -e "s|@FILEMANAGER@|Caja|" $< >$@
 
-nemo_blueman_sendto.py: caja_blueman_sendto.py
-	$(SED) -e "s|Caja|Nemo|" $< >$@
+nemo_blueman_sendto.py: blueman_sendto.py.in
+	$(SED) -e "s|@FILEMANAGER@|Nemo|" $< >$@
 
-nautilus_blueman_sendto.py: caja_blueman_sendto.py
-	$(SED) -e "s|Caja|Nautilus|" $< >$@
+nautilus_blueman_sendto.py: blueman_sendto.py.in
+	$(SED) -e "s|@FILEMANAGER@|Nautilus|" $< >$@
 
 if HAVE_CAJA_PYTHON
 cajasendtodir = $(datadir)/caja-python/extensions
@@ -20,5 +22,5 @@ nautilussendtodir = $(datadir)/nautilus-python/extensions
 nautilussendto_DATA = nautilus_blueman_sendto.py
 endif
 
-CLEANFILES = nemo_blueman_sendto.py nautilus_blueman_sendto.py
-EXTRA_DIST = caja_blueman_sendto.py
+CLEANFILES = caja_blueman_sendto.py nemo_blueman_sendto.py nautilus_blueman_sendto.py
+EXTRA_DIST = blueman_sendto.py.in

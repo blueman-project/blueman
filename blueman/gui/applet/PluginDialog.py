@@ -1,5 +1,5 @@
 # coding=utf-8
-import weakref
+from gettext import gettext as _
 import logging
 from gettext import bind_textdomain_codeset
 
@@ -121,12 +121,10 @@ class PluginDialog(Gtk.Window):
         self.b_prefs = self.Builder.get_object("b_prefs")
         self.b_prefs.connect("toggled", self.on_prefs_toggled)
 
-        ref = weakref.ref(self)
-
         self.add(self.Builder.get_object("all"))
 
         cr = Gtk.CellRendererToggle()
-        cr.connect("toggled", lambda *args: ref() and ref().on_toggled(*args))
+        cr.connect("toggled", self.on_toggled)
 
         data = [
             {"id": "active", "type": bool, "renderer": cr, "render_attrs": {"active": 0, "activatable": 1,
@@ -143,7 +141,7 @@ class PluginDialog(Gtk.Window):
         self.list.liststore.set_sort_column_id(3, Gtk.SortType.ASCENDING)
         self.list.liststore.set_sort_func(3, self.list_compare_func)
 
-        self.list.selection.connect("changed", lambda *args: ref() and ref().on_selection_changed(*args))
+        self.list.selection.connect("changed", self.on_selection_changed)
 
         plugin_list = self.Builder.get_object("plugin_list")
         plugin_info = self.Builder.get_object("main_scrolled_window")
@@ -156,8 +154,8 @@ class PluginDialog(Gtk.Window):
 
         self.populate()
 
-        self.sig_a = self.applet.Plugins.connect("plugin-loaded", self.plugin_state_changed, True)
-        self.sig_b = self.applet.Plugins.connect("plugin-unloaded", self.plugin_state_changed, False)
+        self.applet.Plugins.connect("plugin-loaded", self.plugin_state_changed, True)
+        self.applet.Plugins.connect("plugin-unloaded", self.plugin_state_changed, False)
         self.connect("delete-event", self._on_close)
 
         self.list.set_cursor(0)
@@ -181,8 +179,8 @@ class PluginDialog(Gtk.Window):
                 return 1
 
     def _on_close(self, *args, **kwargs):
-        self.applet.Plugins.disconnect(self.sig_a)
-        self.applet.Plugins.disconnect(self.sig_b)
+        self.applet.Plugins.disconnect_by_func(self.plugin_state_changed, True)
+        self.applet.Plugins.disconnect_by_func(self.plugin_state_changed, False)
 
     def on_selection_changed(self, selection):
         model, tree_iter = selection.get_selected()

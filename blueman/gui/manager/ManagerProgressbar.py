@@ -33,7 +33,7 @@ class ManagerProgressbar(GObject.GObject):
         self.progressbar = Gtk.ProgressBar()
         self.progressbar.set_name("ManagerProgressbar")
 
-        self._signals = []
+        self._signals: List[int] = []
 
         self.button = Gtk.Image(icon_name="process-stop", pixel_size=16)
 
