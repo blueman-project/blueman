@@ -155,37 +155,31 @@ class ManagerDeviceList(DeviceList):
             return False
 
     def on_event_clicked(self, widget, event):
+        if event.type not in (Gdk.EventType._2BUTTON_PRESS, Gdk.EventType.BUTTON_PRESS):
+            return
+
+        path = self.get_path_at_pos(int(event.x), int(event.y))
+        if path is None:
+            return
+
+        row = self.get(path[0], "device", "connected")
+        if not row:
+            return
+
+        if self.Blueman is None:
+            return
+
+        if self.menu is None:
+            self.menu = ManagerDeviceMenu(self.Blueman)
 
         if event.type == Gdk.EventType._2BUTTON_PRESS and event.button == 1:
-            path = self.get_path_at_pos(int(event.x), int(event.y))
-            if path is None:
-                return
-
-            row = self.get(path[0], "device", "connected")
-
-            if not row:
-                return
-
-            device = row["device"]
-            if self.Blueman is not None:
-                if self.menu is None:
-                    self.menu = ManagerDeviceMenu(self.Blueman)
-                    if self.menu.show_generic_connect_calc(device['UUIDs']):
-                        self.menu._generic_connect(item=None, device=device, connect=not row["connected"])
-                    self.menu.clear()
-                    self.menu = None
+            if self.menu.show_generic_connect_calc(row["device"]['UUIDs']):
+                self.menu._generic_connect(item=None, device=row["device"], connect=not row["connected"])
+                self.menu.clear()
+                self.menu = None
 
         if event.type == Gdk.EventType.BUTTON_PRESS and event.button == 3:
-            path = self.get_path_at_pos(int(event.x), int(event.y))
-            if path is not None:
-                row = self.get(path[0], "device")
-
-                if row:
-                    if self.Blueman is not None:
-                        if self.menu is None:
-                            self.menu = ManagerDeviceMenu(self.Blueman)
-
-                        self.menu.popup(None, None, None, None, event.button, event.time)
+            self.menu.popup(None, None, None, None, event.button, event.time)
 
     def get_icon_info(self, icon_name, size=48, fallback=True):
         if icon_name is None and not fallback:
