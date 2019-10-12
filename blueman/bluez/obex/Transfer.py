@@ -3,10 +3,12 @@ import logging
 from blueman.bluez.obex.Base import Base
 from gi.repository import GObject
 
+from blueman.typing import GSignals
+
 
 class Transfer(Base):
-    __gsignals__ = {
-        'progress': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+    __gsignals__: GSignals = {
+        'progress': (GObject.SignalFlags.NO_HOOKS, None, (int,)),
         'completed': (GObject.SignalFlags.NO_HOOKS, None, ()),
         'error': (GObject.SignalFlags.NO_HOOKS, None, ())
     }

@@ -7,13 +7,14 @@ import socket
 import subprocess
 import logging
 from blueman.Functions import have, get_local_interfaces
+from blueman.typing import GSignals
 
 
 class DhcpClient(GObject.GObject):
-    __gsignals__ = {
+    __gsignals__: GSignals = {
         # arg: interface name eg. ppp0
-        'connected': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-        'error-occurred': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+        'connected': (GObject.SignalFlags.NO_HOOKS, None, (str,)),
+        'error-occurred': (GObject.SignalFlags.NO_HOOKS, None, (int,)),
     }
 
     COMMANDS = [

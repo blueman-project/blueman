@@ -18,15 +18,18 @@ from gi.repository import GObject
 from gi.repository import GLib
 
 import gi
+
+from blueman.typing import GSignals
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import Pango
 
 
 class MonitorBase(GObject.GObject):
-    __gsignals__ = {
+    __gsignals__: GSignals = {
         'disconnected': (GObject.SignalFlags.NO_HOOKS, None, ()),
-        'stats': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
+        'stats': (GObject.SignalFlags.NO_HOOKS, None, (int, int)),
     }
 
     def __init__(self, device, interface):
@@ -290,12 +293,11 @@ class NetUsage(AppletPlugin, GObject.GObject):
                         "data access plans. This plugin tracks every device seperately.")
     __author__ = "Walmis"
     __autoload__ = False
-    __gsignals__ = {
-        'monitor-added': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
-        'monitor-removed': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+    __gsignals__: GSignals = {
+        'monitor-added': (GObject.SignalFlags.NO_HOOKS, None, (Monitor,)),
+        'monitor-removed': (GObject.SignalFlags.NO_HOOKS, None, (Monitor,)),
         # monitor, tx, rx
-        'stats': (GObject.SignalFlags.NO_HOOKS, None,
-                  (GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT, GObject.TYPE_PYOBJECT,)),
+        'stats': (GObject.SignalFlags.NO_HOOKS, None, (Monitor, int, int)),
     }
 
     _any_network = None

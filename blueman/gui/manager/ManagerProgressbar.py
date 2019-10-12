@@ -4,6 +4,9 @@ import logging
 from typing import List
 
 import gi
+
+from blueman.typing import GSignals
+
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
 from gi.repository import Pango
@@ -14,7 +17,7 @@ from gi.repository import GLib
 
 
 class ManagerProgressbar(GObject.GObject):
-    __gsignals__ = {
+    __gsignals__: GSignals = {
         'cancelled': (GObject.SignalFlags.RUN_LAST, None, ()),
     }
     __instances__: List["ManagerProgressbar"] = []

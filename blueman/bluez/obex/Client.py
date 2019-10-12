@@ -3,10 +3,12 @@ import logging
 from blueman.bluez.obex.Base import Base
 from gi.repository import GObject, GLib
 
+from blueman.typing import GSignals
+
 
 class Client(Base):
-    __gsignals__ = {
-        'session-failed': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_PYOBJECT,)),
+    __gsignals__: GSignals = {
+        'session-failed': (GObject.SignalFlags.NO_HOOKS, None, (str,)),
     }
 
     _interface_name = 'org.bluez.obex.Client1'

@@ -12,6 +12,7 @@ from blueman.gui.CommonUi import ErrorDialog
 from blueman.main.Config import Config
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.plugins.ManagerPlugin import ManagerPlugin
+from blueman.typing import GSignals
 
 
 class StopException(Exception):
@@ -26,7 +27,7 @@ T = TypeVar('T', AppletPlugin, ManagerPlugin)
 
 
 class PluginManager(GObject.GObject, Generic[T]):
-    __gsignals__ = {
+    __gsignals__: GSignals = {
         'plugin-loaded': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
         'plugin-unloaded': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
     }

@@ -3,6 +3,9 @@ from typing import List
 
 import cairo
 import gi
+
+from blueman.typing import GSignals
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import GObject
@@ -28,7 +31,7 @@ class BezierController(LinearController):
 
 
 class AnimBase(GObject.GObject):
-    __gsignals__ = {
+    __gsignals__: GSignals = {
         'animation-finished': (GObject.SignalFlags.RUN_LAST, None, ()),
     }
 
