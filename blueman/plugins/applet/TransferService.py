@@ -227,10 +227,12 @@ class TransferService(AppletPlugin):
     def _on_dbus_name_vanished(self, _connection, name):
         logging.info("%s not running or was stopped" % name)
 
-        self._manager.disconnect_by_func(self._on_transfer_started)
-        self._manager.disconnect_by_func(self._on_transfer_completed)
-        self._manager.disconnect_by_func(self._on_session_removed)
-        self._manager = None
+        if self._manager:
+            self._manager.disconnect_by_func(self._on_transfer_started)
+            self._manager.disconnect_by_func(self._on_transfer_completed)
+            self._manager.disconnect_by_func(self._on_session_removed)
+            self._manager = None
+
         if self._agent:
             self._agent.unregister()
             self._agent = None
