@@ -12,6 +12,7 @@ blueman_PYTHON = 	\
 	Functions.py	\
 	Sdp.py		\
 	Service.py	\
+	typing.py	\
 	__init__.py
 
 CLEANFILES =		\
