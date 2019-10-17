@@ -25,6 +25,8 @@ if TYPE_CHECKING:
         hidden_radio: Gtk.RadioButton
         always_radio: Gtk.RadioButton
         temparary_radio: Gtk.RadioButton
+        visible: bool
+        label: Gtk.Label
 
 
 class BluemanAdapters(Gtk.Window):
@@ -50,7 +52,7 @@ class BluemanAdapters(Gtk.Window):
             self.connect("delete-event", self._on_close)
             self.show()
 
-        self.tabs: Dict[str, Dict[str, "Tab"]] = {}
+        self.tabs: Dict[str, "Tab"] = {}
         self._adapters: Dict[str, Adapter] = {}
 
         setup_icon_path()
@@ -110,7 +112,6 @@ class BluemanAdapters(Gtk.Window):
 
     def _on_dbus_name_vanished(self, _connection, name):
         logging.info(name)
-        self.manager = None
         # FIXME: show error dialog and exit
 
     def build_adapter_tab(self, adapter):

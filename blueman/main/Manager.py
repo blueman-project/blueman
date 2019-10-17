@@ -210,8 +210,11 @@ class Blueman(Gtk.Window):
     def send(self, device, f=None):
         adapter = self.List.Adapter
 
+        assert adapter
+
         command = "blueman-sendto --source=%s --device=%s" % (adapter["Address"], device['Address'])
         launch(command, None, False, "blueman", _("File Sender"))
 
     def remove(self, device):
+        assert self.List.Adapter
         self.List.Adapter.remove_device(device)

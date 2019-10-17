@@ -77,7 +77,7 @@ class Sender(Gtk.Dialog):
         self.total_transferred = 0
 
         self._last_bytes = 0
-        self._last_update = 0
+        self._last_update = 0.0
 
         self.error_dialog = None
         self.cancelling = False
@@ -234,7 +234,8 @@ class Sender(Gtk.Dialog):
             d.add_button(_("Retry"), Gtk.ResponseType.YES)
             d.add_button("_Cancel", Gtk.ResponseType.CANCEL)
 
-            self.client.remove_session(self.object_push.get_object_path())
+            if self.object_push:
+                self.client.remove_session(self.object_push.get_object_path())
 
             def on_response(dialog, resp):
                 dialog.destroy()
@@ -273,9 +274,10 @@ class Sender(Gtk.Dialog):
 
     def on_session_removed(self, _manager, session_path):
         logging.debug('Session removed: %s' % session_path)
-        self.object_push.disconnect_by_func(self.on_transfer_started)
-        self.object_push.disconnect_by_func(self.on_transfer_failed)
-        self.object_push = None
+        if self.object_push:
+            self.object_push.disconnect_by_func(self.on_transfer_started)
+            self.object_push.disconnect_by_func(self.on_transfer_failed)
+            self.object_push = None
 
     def on_session_failed(self, _client, msg):
         d = ErrorDialog(_("Error occurred"), msg.reason.split(None, 1)[1], icon_name="blueman",

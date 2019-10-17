@@ -294,16 +294,14 @@ class NetConf(object):
         self.dhcp_handler = None
         self.ipt_rules: List[Tuple[str, str, str]] = []
 
-        self.ip4_address = None
-        self.ip4_mask = None
         self.ip4_changed = False
 
     def set_ipv4(self, ip, netmask):
         if self.ip4_address != ip or self.ip4_mask != netmask:
             self.ip4_changed = True
 
-        self.ip4_address = ip
-        self.ip4_mask = netmask
+        self.ip4_address: str = ip
+        self.ip4_mask: str = netmask
 
     def get_ipv4(self):
         return self.ip4_address, self.ip4_mask

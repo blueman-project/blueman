@@ -134,7 +134,7 @@ class DeviceList(GenericList):
             self.emit("device-selected", dev, tree_iter)
 
     def _on_property_changed(self, _adapter, key, value, path):
-        if self.Adapter.get_object_path() != path:
+        if not self.Adapter or self.Adapter.get_object_path() != path:
             return
 
         if key == "Discovering":
@@ -190,6 +190,7 @@ class DeviceList(GenericList):
             logging.info("starting monitor")
             tree_iter = self.find_device(device)
 
+            assert self.Adapter is not None
             hci = os.path.basename(self.Adapter.get_object_path())
             cinfo = conn_info(bt_address, hci)
             try:
@@ -279,7 +280,7 @@ class DeviceList(GenericList):
 
     def add_device(self, device):
         # device belongs to another adapter
-        if not device['Adapter'] == self.Adapter.get_object_path():
+        if not self.Adapter or not device['Adapter'] == self.Adapter.get_object_path():
             return
 
         logging.info("adding new device")
@@ -297,9 +298,10 @@ class DeviceList(GenericList):
 
     def display_known_devices(self, autoselect=False):
         self.clear()
-        devices = self.manager.get_devices(self.Adapter.get_object_path())
-        for device in devices:
-            self.device_add_event(device)
+        if self.Adapter:
+            devices = self.manager.get_devices(self.Adapter.get_object_path())
+            for device in devices:
+                self.device_add_event(device)
 
         if autoselect:
             self.selection.select_path(0)

@@ -94,7 +94,7 @@ class ManagerDeviceList(DeviceList):
             else:
                 sort_type = Gtk.SortType.DESCENDING
 
-            column_id = self.ids.setdefault(sort_by, None)
+            column_id = self.ids.get(sort_by)
 
             if column_id:
                 self.liststore.set_sort_column_id(column_id, sort_type)

@@ -91,7 +91,6 @@ class Monitor(MonitorBase):
             self.poller = None
             self.ppp_port = None
             self.interface = None
-            self.config = None
             self.disconnect_monitor()
             return False
 
@@ -108,7 +107,6 @@ class Dialog:
             Dialog.running = True
         else:
             return
-        self.config = None
         self.plugin = plugin
         builder = Gtk.Builder()
         builder.add_from_file(UI_PATH + "/net-usage.ui")

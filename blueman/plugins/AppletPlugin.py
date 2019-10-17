@@ -11,9 +11,6 @@ ictheme = Gtk.IconTheme.get_default()
 class AppletPlugin(BasePlugin):
     __icon__ = "blueman-plugin"
 
-    _dbus_methods = None
-    _dbus_signals = None
-
     def __init__(self, parent):
         super().__init__(parent)
 

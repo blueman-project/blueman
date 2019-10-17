@@ -91,7 +91,6 @@ class BluezAgent(DbusService):
         self.add_method("Cancel", (), "", self._on_cancel)
 
         self.dialog = None
-        self.n = None
         self._db = None
 
     def register_agent(self):
@@ -286,8 +285,6 @@ class BluezAgent(DbusService):
                 ok()
             else:
                 err(BluezErrorRejected("Rejected"))
-
-            self.n = None
 
         logging.info("Agent.Authorize")
         dev_str = self.get_device_string(device)

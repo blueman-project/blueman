@@ -2,7 +2,7 @@
 import logging
 from gettext import gettext as _, bind_textdomain_codeset
 from operator import itemgetter
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Optional
 
 from blueman.Constants import UI_PATH
 from blueman.Functions import create_menuitem, e_
@@ -52,7 +52,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         self._any_device.connect_signal('property-changed', self._on_service_property_changed)
 
         try:
-            self._appl = AppletService()
+            self._appl: Optional[AppletService] = AppletService()
         except DBusProxyFailed:
             logging.error("** Failed to connect to applet", exc_info=True)
             self._appl = None
@@ -172,6 +172,8 @@ class ManagerDeviceMenu(Gtk.Menu):
             prog.message(_("Success!"))
             MessageArea.close()
             self.unset_op(device)
+
+        assert self._appl
 
         if connect:
             self.set_op(self.SelectedDevice, _("Connecting..."))

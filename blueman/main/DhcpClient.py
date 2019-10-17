@@ -37,7 +37,6 @@ class DhcpClient(GObject.GObject):
             if path:
                 self._command = [path] + command[1:] + [self._interface]
                 break
-        self._client = None
 
     def run(self):
         if not self._command:
