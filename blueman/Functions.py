@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-from time import sleep
+from time import sleep, time
 from typing import Optional, Dict, Tuple, List
 import re
 import os
@@ -83,6 +83,13 @@ def check_bluetooth_status(message, exitfunc):
             return
 
     applet.SetBluetoothStatus('(b)', True)
+
+    timeout = time() + 60
+    while applet.GetRequestStatus():
+        sleep(0.1)
+        if time() > timeout:
+            break
+
     if not applet.GetBluetoothStatus():
         print('Failed to enable bluetooth')
         exitfunc()

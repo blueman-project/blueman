@@ -50,6 +50,7 @@ class PowerManager(AppletPlugin):
         self._add_dbus_signal("BluetoothStatusChanged", "b")
         self._add_dbus_method("SetBluetoothStatus", ("b",), "", self.request_power_state)
         self._add_dbus_method("GetBluetoothStatus", (), "b", self.get_bluetooth_status)
+        self._add_dbus_method("GetRequestStatus", (), "b", self.get_request_status)
 
     def on_unload(self):
         self.parent.Plugins.Menu.unregister(self)
@@ -183,6 +184,9 @@ class PowerManager(AppletPlugin):
 
     def get_bluetooth_status(self):
         return self.current_state
+
+    def get_request_status(self):
+        return self.request_in_progress
 
     def on_adapter_property_changed(self, _path, key, value):
         if key == "Powered":
