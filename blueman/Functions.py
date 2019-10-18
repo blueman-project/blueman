@@ -18,7 +18,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 from time import sleep
-from typing import Optional, Dict, Tuple, List
+from typing import Optional, Dict, Tuple, List, Callable, Iterable, Union, Any
+from types import FrameType
 import re
 import os
 import signal
@@ -35,6 +36,8 @@ import fcntl
 import struct
 import socket
 import array
+
+import cairo
 
 from blueman.main.Config import Config
 from blueman.main.DBusProxies import AppletService, DBusProxyFailed
@@ -56,7 +59,7 @@ __all__ = ["check_bluetooth_status", "launch", "setup_icon_path", "get_icon",
            "have", "set_proc_title", "create_logger", "create_parser", "open_rfcomm", "get_local_interfaces"]
 
 
-def check_bluetooth_status(message, exitfunc):
+def check_bluetooth_status(message: str, exitfunc: Callable[[], Any]) -> None:
     try:
         applet = AppletService()
     except DBusProxyFailed as e:
@@ -102,7 +105,14 @@ def check_bluetooth_status(message, exitfunc):
         config["auto-power-on"] = resp == Gtk.ResponseType.YES
 
 
-def launch(cmd, paths=None, system=False, icon_name=None, sn=True, name="blueman"):
+def launch(
+    cmd: str,
+    paths: Optional[Iterable[str]] = None,
+    system: bool = False,
+    icon_name: Optional[str] = None,
+    name: str = "blueman",
+    sn: bool = True,
+) -> bool:
     """Launch a gui app with starup notification"""
     display = Gdk.Display.get_default()
     timestamp = Gtk.get_current_event_time()
@@ -131,7 +141,7 @@ def launch(cmd, paths=None, system=False, icon_name=None, sn=True, name="blueman
         context.set_icon(icon)
 
     appinfo = Gio.AppInfo.create_from_commandline(cmd, name, flags)
-    launched = appinfo.launch(files, context)
+    launched: bool = appinfo.launch(files, context)
 
     if not launched:
         logging.error("Command: %s failed" % cmd)
@@ -139,12 +149,12 @@ def launch(cmd, paths=None, system=False, icon_name=None, sn=True, name="blueman
     return launched
 
 
-def setup_icon_path():
+def setup_icon_path() -> None:
     ic = Gtk.IconTheme.get_default()
     ic.prepend_search_path(ICON_PATH)
 
 
-def get_icon(name, size=24, fallback="image-missing"):
+def get_icon(name: str, size: int = 24, fallback: str = "image-missing") -> GdkPixbuf.Pixbuf:
     ic = Gtk.IconTheme.get_default()
 
     try:
@@ -170,24 +180,25 @@ def get_icon(name, size=24, fallback="image-missing"):
     return icon
 
 
-def get_notification_icon(icon, main_icon="blueman"):
+def get_notification_icon(icon: str, main_icon: str = "blueman") -> GdkPixbuf.Pixbuf:
     main = get_icon(main_icon, 48)
     sub = get_icon(icon, 24)
 
     return composite_icon(main, [(sub, 24, 24, 255)])
 
 
-def adapter_path_to_name(path):
+def adapter_path_to_name(path: str) -> Optional[str]:
     if path is None or path == '':
-        return
+        return None
 
     match = re.search(r".*(hci[0-9]*)", path)
     if match:
         return match.group(1)
+    return None
 
 
 # format error
-def e_(msg):
+def e_(msg: Union[str, Exception]) -> Tuple[str, Optional[str]]:
     if isinstance(msg, Exception):
         return str(msg), traceback.format_exc()
     else:
@@ -195,7 +206,7 @@ def e_(msg):
         return s, None
 
 
-def opacify_pixbuf(pixbuf, alpha):
+def opacify_pixbuf(pixbuf: GdkPixbuf.Pixbuf, alpha: int) -> GdkPixbuf.Pixbuf:
     new = pixbuf.copy()
     new.fill(0x00000000)
     pixbuf.composite(new, 0, 0, pixbuf.props.width, pixbuf.props.height, 0, 0, 1, 1,
@@ -205,7 +216,10 @@ def opacify_pixbuf(pixbuf, alpha):
 
 # pixbuf, [(pixbuf, x, y, alpha), (pixbuf, x, y, alpha)]
 
-def composite_icon(target, sources):
+def composite_icon(
+    target: GdkPixbuf.Pixbuf,
+    sources: Iterable[Tuple[GdkPixbuf.Pixbuf, int, int, int]],
+) -> GdkPixbuf.Pixbuf:
     target = target.copy()
     for source in sources:
         source[0].composite(target, source[1], source[2], source[0].get_width(), source[0].get_height(), source[1],
@@ -214,7 +228,7 @@ def composite_icon(target, sources):
     return target
 
 
-def format_bytes(size):
+def format_bytes(size: float) -> Tuple[float, str]:
     size = float(size)
     if size < 1024:
         ret = size
@@ -232,7 +246,12 @@ def format_bytes(size):
     return ret, suffix
 
 
-def create_menuitem(text, icon_name=None, pixbuf=None, surface=None):
+def create_menuitem(
+    text: str,
+    icon_name: Optional[str] = None,
+    pixbuf: Optional[GdkPixbuf.Pixbuf] = None,
+    surface: Optional[cairo.Surface] = None,
+) -> Gtk.ImageMenuItem:
     image = Gtk.Image(pixel_size=16)
     if icon_name:
         image.set_from_icon_name(icon_name, Gtk.IconSize.MENU)
@@ -251,7 +270,7 @@ def create_menuitem(text, icon_name=None, pixbuf=None, surface=None):
     return item
 
 
-def get_lockfile(name):
+def get_lockfile(name: str) -> str:
     cachedir = GLib.get_user_cache_dir()
     if not os.path.exists(cachedir):
         try:
@@ -262,15 +281,15 @@ def get_lockfile(name):
     return os.path.join(cachedir, "%s-%s" % (name, os.getuid()))
 
 
-def get_pid(lockfile):
+def get_pid(lockfile: str) -> Optional[int]:
     try:
         with open(lockfile, "r") as f:
             return int(f.readline())
     except (ValueError, IOError):
-        pass
+        return None
 
 
-def is_running(name, pid):
+def is_running(name: str, pid: int) -> bool:
     if not os.path.exists("/proc/%s" % pid):
         return False
 
@@ -278,11 +297,11 @@ def is_running(name, pid):
         return name in f.readline().replace("\0", " ")
 
 
-def check_single_instance(name, unhide_func=None):
+def check_single_instance(name: str, unhide_func: Optional[Callable[[int], Any]] = None) -> None:
     print("%s version %s starting" % (name, VERSION))
     lockfile = get_lockfile(name)
 
-    def handler(signum, frame):
+    def handler(_sig: signal.Signals, _frame: FrameType) -> None:
         if unhide_func:
             try:
                 with open(lockfile, "r") as f:
@@ -325,7 +344,7 @@ def check_single_instance(name, unhide_func=None):
     atexit.register(lambda: os.remove(lockfile))
 
 
-def kill(pid, name):
+def kill(pid: int, name: str) -> bool:
     if pid and is_running(name, pid):
         print('Terminating ' + name)
         os.kill(pid, signal.SIGTERM)
@@ -333,7 +352,7 @@ def kill(pid, name):
     return False
 
 
-def have(t):
+def have(t: str) -> Optional[str]:
     paths = os.environ['PATH'] + ':/sbin:/usr/sbin'
     for path in paths.split(os.pathsep):
         exec_path = os.path.join(path, t)
@@ -344,7 +363,7 @@ def have(t):
     return None
 
 
-def set_proc_title(name=None):
+def set_proc_title(name: Optional[str] = None) -> int:
     """Set the process title"""
 
     if not name:
@@ -353,7 +372,7 @@ def set_proc_title(name=None):
     libc = cdll.LoadLibrary('libc.so.6')
     buff = create_string_buffer(len(name) + 1)
     buff.value = name.encode("UTF-8")
-    ret = libc.prctl(15, byref(buff), 0, 0, 0)
+    ret: int = libc.prctl(15, byref(buff), 0, 0, 0)
 
     if ret != 0:
         logging.error("Failed to set process title")
@@ -366,7 +385,13 @@ syslog_logger_format = '%(name)s %(levelname)s %(module)s:%(lineno)s %(funcName)
 logger_date_fmt = '%H.%M.%S'
 
 
-def create_logger(log_level, name, log_format=None, date_fmt=None, syslog=False):
+def create_logger(
+    log_level: int,
+    name: str,
+    log_format: Optional[str] = None,
+    date_fmt: Optional[str] = None,
+    syslog: bool = False,
+) -> logging.Logger:
     if log_format is None:
         log_format = logger_format
     if date_fmt is None:
@@ -385,7 +410,11 @@ def create_logger(log_level, name, log_format=None, date_fmt=None, syslog=False)
     return logger
 
 
-def create_parser(parser=None, syslog=True, loglevel=True):
+def create_parser(
+    parser: Optional[argparse.ArgumentParser] = None,
+    syslog: bool = True,
+    loglevel: bool = True,
+) -> argparse.ArgumentParser:
     if parser is None:
         parser = argparse.ArgumentParser()
 
@@ -398,7 +427,7 @@ def create_parser(parser=None, syslog=True, loglevel=True):
     return parser
 
 
-def open_rfcomm(file, mode):
+def open_rfcomm(file: str, mode: int) -> int:
     try:
         return os.open(file, mode | os.O_EXCL | os.O_NONBLOCK | os.O_NOCTTY)
     except OSError as err:

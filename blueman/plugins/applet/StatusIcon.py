@@ -115,7 +115,9 @@ class StatusIcon(AppletPlugin, GObject.GObject):
         implementation = self._get_status_icon_implementation()
         if not self._implementation or self._implementation != implementation:
             self._implementation = implementation
-            kill(get_pid(get_lockfile('blueman-tray')), 'blueman-tray')
+            pid = get_pid(get_lockfile('blueman-tray'))
+            if pid:
+                kill(pid, 'blueman-tray')
             launch('blueman-tray', icon_name='blueman', sn=False)
 
     def _get_status_icon_implementation(self):
