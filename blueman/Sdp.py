@@ -1,6 +1,7 @@
 # coding=utf-8
 import gettext
 from gettext import gettext as _
+from typing import Optional
 from uuid import UUID
 
 from blueman.Constants import GETTEXT_PACKAGE, LOCALEDIR
@@ -365,17 +366,19 @@ GATT_REPORT_REFERENCE = 0x2908
 
 
 class ServiceUUID(UUID):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, uuid: str):
+        super().__init__(uuid)
 
     @property
-    def short_uuid(self):
+    def short_uuid(self) -> Optional[int]:
         if self.reserved:
             return self.int >> 96 & 0xFFFF
+        else:
+            return None
 
     @property
-    def name(self):
-        if self.reserved:
+    def name(self) -> str:
+        if self.short_uuid:
             try:
                 return uuid_names[self.short_uuid]
             except KeyError:
@@ -386,6 +389,6 @@ class ServiceUUID(UUID):
             return _('Proprietary')
 
     @property
-    def reserved(self):
+    def reserved(self) -> bool:
         return self.int & UUID('FFFF0000-0000-FFFF-FFFF-FFFFFFFFFFFF').int == \
             UUID('00000000-0000-1000-8000-00805F9B34FB').int

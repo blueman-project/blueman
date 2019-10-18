@@ -76,7 +76,7 @@ class StandardItems(AppletPlugin):
     def on_devices(self):
         lockfile = get_lockfile('blueman-manager')
         pid = get_pid(lockfile)
-        if not lockfile or not kill(pid, 'blueman-manager'):
+        if not pid or not kill(pid, 'blueman-manager'):
             launch("blueman-manager", None, False, "blueman", _("Device Manager"))
 
     def on_adapters(self):

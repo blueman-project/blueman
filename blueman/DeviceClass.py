@@ -232,7 +232,7 @@ gatt_appearance_categories = {
 }
 
 
-def get_major_class(klass):
+def get_major_class(klass: int) -> str:
     index = (klass >> 8) & 0x1F
 
     if index > 8:
@@ -241,7 +241,7 @@ def get_major_class(klass):
     return major_cls[index]
 
 
-def get_minor_class(klass, i18n=False):
+def get_minor_class(klass: int, i18n: bool = False) -> str:
     if not klass:
         if i18n:
             return _("unknown")
@@ -314,7 +314,7 @@ def get_minor_class(klass, i18n=False):
 
 
 # First 10 bits is the category, the following 6 bits sub category
-def gatt_appearance_to_name(appearance):
+def gatt_appearance_to_name(appearance: int) -> str:
     cat = appearance >> 0x6
     subcat = appearance & 0x3f
 
