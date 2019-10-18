@@ -1,7 +1,9 @@
 # coding=utf-8
+import logging
+from typing import List, Optional, Callable
+
 from gi.repository import GObject, Gio
 from gi.types import GObjectMeta
-import logging
 
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device
@@ -12,9 +14,10 @@ from blueman.typing import GSignals
 class ManagerMeta(GObjectMeta):
     _instance = None
 
-    def __call__(cls, *args, **kwargs):
+    def __call__(cls, *args: str, **kwargs: str) -> "Manager":
         if not cls._instance:
-            cls._instance = super().__call__(*args, **kwargs)
+            inst: "Manager" = super().__call__(*args, **kwargs)
+            cls._instance = inst
 
         return cls._instance
 
@@ -32,7 +35,7 @@ class Manager(GObject.GObject, metaclass=ManagerMeta):
 
     __bus_name = 'org.bluez'
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self._object_manager = Gio.DBusObjectManagerClient.new_for_bus_sync(
             Gio.BusType.SYSTEM, Gio.DBusObjectManagerClientFlags.DO_NOT_AUTO_START,
@@ -41,7 +44,7 @@ class Manager(GObject.GObject, metaclass=ManagerMeta):
         self._object_manager.connect("object-added", self._on_object_added)
         self._object_manager.connect("object-removed", self._on_object_removed)
 
-    def _on_object_added(self, object_manager, dbus_object):
+    def _on_object_added(self, _object_manager: Gio.DBusObjectManager, dbus_object: Gio.DBusObject) -> None:
         device_proxy = dbus_object.get_interface('org.bluez.Device1')
         adapter_proxy = dbus_object.get_interface('org.bluez.Adapter1')
 
@@ -54,7 +57,7 @@ class Manager(GObject.GObject, metaclass=ManagerMeta):
             logging.debug(object_path)
             self.emit('device-created', object_path)
 
-    def _on_object_removed(self, object_manager, dbus_object):
+    def _on_object_removed(self, _object_manager: Gio.DBusObjectManager, dbus_object: Gio.DBusObject) -> None:
         device_proxy = dbus_object.get_interface('org.bluez.Device1')
         adapter_proxy = dbus_object.get_interface('org.bluez.Adapter1')
 
@@ -67,7 +70,7 @@ class Manager(GObject.GObject, metaclass=ManagerMeta):
             logging.debug(object_path)
             self.emit('device-removed', object_path)
 
-    def get_adapters(self):
+    def get_adapters(self) -> List[Adapter]:
         paths = []
         for obj_proxy in self._object_manager.get_objects():
             proxy = obj_proxy.get_interface('org.bluez.Adapter1')
@@ -77,7 +80,7 @@ class Manager(GObject.GObject, metaclass=ManagerMeta):
 
         return [Adapter(path) for path in paths]
 
-    def get_adapter(self, pattern=None):
+    def get_adapter(self, pattern: Optional[str] = None) -> Adapter:
         adapters = self.get_adapters()
         if pattern is None:
             if len(adapters):
@@ -91,7 +94,7 @@ class Manager(GObject.GObject, metaclass=ManagerMeta):
                     return adapter
             raise DBusNoSuchAdapterError("No adapters found with pattern: %s" % pattern)
 
-    def get_devices(self, adapter_path='/'):
+    def get_devices(self, adapter_path: str = "/") -> List[Device]:
         paths = []
         for obj_proxy in self._object_manager.get_objects():
             proxy = obj_proxy.get_interface('org.bluez.Device1')
@@ -103,12 +106,17 @@ class Manager(GObject.GObject, metaclass=ManagerMeta):
 
         return [Device(path) for path in paths]
 
-    def find_device(self, address, adapter_path='/'):
+    def find_device(self, address: str, adapter_path: str = "/") -> Optional[Device]:
         for device in self.get_devices(adapter_path):
             if device['Address'] == address:
                 return device
+        return None
 
     @classmethod
-    def watch_name_owner(cls, appeared_handler, vanished_handler):
+    def watch_name_owner(
+        cls,
+        appeared_handler: Callable[[Gio.DBusConnection, str, str], None],
+        vanished_handler: Callable[[Gio.DBusConnection, str], None],
+    ) -> None:
         Gio.bus_watch_name(Gio.BusType.SYSTEM, cls.__bus_name, Gio.BusNameWatcherFlags.AUTO_START,
                            appeared_handler, vanished_handler)

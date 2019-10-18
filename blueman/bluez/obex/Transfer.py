@@ -1,7 +1,9 @@
 # coding=utf-8
 import logging
+from typing import List, Optional
+
 from blueman.bluez.obex.Base import Base
-from gi.repository import GObject
+from gi.repository import GObject, GLib
 
 from blueman.typing import GSignals
 
@@ -15,14 +17,30 @@ class Transfer(Base):
 
     _interface_name = 'org.bluez.obex.Transfer1'
 
-    def __init__(self, transfer_path):
+    def __init__(self, transfer_path: str):
         super().__init__(interface_name=self._interface_name, obj_path=transfer_path)
 
-    def __getattr__(self, name):
-        if name in ('filename', 'name', 'session', 'size'):
-            return self.get(name.capitalize())
+    @property
+    def filename(self) -> Optional[str]:
+        name: Optional[str] = self.get("Filename")
+        return name
 
-    def do_g_properties_changed(self, changed_properties, _invalidated_properties):
+    @property
+    def name(self) -> str:
+        name: str = self.get("Name")
+        return name
+
+    @property
+    def session(self) -> str:
+        session: str = self.get("Session")
+        return session
+
+    @property
+    def size(self) -> Optional[int]:
+        size: Optional[int] = self.get("Size")
+        return size
+
+    def do_g_properties_changed(self, changed_properties: GLib.Variant, _invalidated_properties: List[str]) -> None:
         for name, value in changed_properties.unpack().items():
             logging.debug("%s %s %s" % (self.get_object_path(), name, value))
             if name == 'Transferred':

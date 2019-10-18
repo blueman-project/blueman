@@ -119,7 +119,7 @@ class Agent(DbusService):
             )
             self._notification.show()
         # Device is trusted or was already allowed, larger file -> display a notification, but auto-accept
-        elif size > 350000:
+        elif size and size > 350000:
             self._notification = Notification(
                 _("Receiving file"),
                 _("Receiving file %(0)s from %(1)s") % {"0": "<b>" + escape(filename) + "</b>",

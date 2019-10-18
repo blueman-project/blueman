@@ -28,7 +28,7 @@ class NetworkService(Service):
 
     def connect(
         self,
-        reply_handler: Optional[Callable[[], None]] = None,
+        reply_handler: Optional[Callable[[str], None]] = None,
         error_handler: Optional[Callable[[BluezDBusException], None]] = None,
     ) -> None:
         self._service.connect(self.uuid, reply_handler=reply_handler, error_handler=error_handler)

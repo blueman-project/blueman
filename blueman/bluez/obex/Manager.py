@@ -1,21 +1,22 @@
 # coding=utf-8
 import logging
 import weakref
-from typing import Dict
+from typing import Dict, Callable, Optional
 
-from blueman.bluez.obex.Transfer import Transfer
 from gi.repository import GObject, Gio
 from gi.types import GObjectMeta
 
+from blueman.bluez.obex.Transfer import Transfer
 from blueman.typing import GSignals
 
 
 class ManagerMeta(GObjectMeta):
-    _instance = None
+    _instance: Optional["Manager"] = None
 
-    def __call__(cls, *args, **kwargs):
+    def __call__(cls, *args: str, **kwargs: str) -> "Manager":
         if not cls._instance:
-            cls._instance = super().__call__(*args, **kwargs)
+            inst: "Manager" = super().__call__(*args, **kwargs)
+            cls._instance = inst
 
         return cls._instance
 
@@ -33,7 +34,7 @@ class Manager(GObject.GObject, metaclass=ManagerMeta):
 
     __bus_name = 'org.bluez.obex'
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.__transfers: Dict[str, Transfer] = {}
 
@@ -46,11 +47,11 @@ class Manager(GObject.GObject, metaclass=ManagerMeta):
 
         weakref.finalize(self, self._on_delete)
 
-    def _on_delete(self):
+    def _on_delete(self) -> None:
         self._object_manager.disconnect_by_func(self._on_object_added)
         self._object_manager.disconnect_by_func(self._on_object_removed)
 
-    def _on_object_added(self, object_manager, dbus_object):
+    def _on_object_added(self, _object_manager: Gio.DBusObjectManager, dbus_object: Gio.DBusObject) -> None:
         session_proxy = dbus_object.get_interface('org.bluez.obex.Session1')
         transfer_proxy = dbus_object.get_interface('org.bluez.obex.Transfer1')
         object_path = dbus_object.get_object_path()
@@ -67,7 +68,7 @@ class Manager(GObject.GObject, metaclass=ManagerMeta):
             logging.info(object_path)
             self.emit('session-added', object_path)
 
-    def _on_object_removed(self, object_manager, dbus_object):
+    def _on_object_removed(self, _object_manager: Gio.DBusObjectManager, dbus_object: Gio.DBusObject) -> None:
         session_proxy = dbus_object.get_interface('org.bluez.obex.Session1')
         transfer_proxy = dbus_object.get_interface('org.bluez.obex.Transfer1')
         object_path = dbus_object.get_object_path()
@@ -83,13 +84,17 @@ class Manager(GObject.GObject, metaclass=ManagerMeta):
             logging.info(object_path)
             self.emit('session-removed', object_path)
 
-    def _on_transfer_completed(self, transfer, success):
+    def _on_transfer_completed(self, transfer: Transfer, success: bool) -> None:
         transfer_path = transfer.get_object_path()
 
         logging.info("%s %s" % (transfer_path, success))
         self.emit('transfer-completed', transfer_path, success)
 
     @classmethod
-    def watch_name_owner(cls, appeared_handler, vanished_handler):
+    def watch_name_owner(
+        cls,
+        appeared_handler: Callable[[Gio.DBusConnection, str, str], None],
+        vanished_handler: Callable[[Gio.DBusConnection, str], None],
+    ) -> None:
         Gio.bus_watch_name(Gio.BusType.SESSION, cls.__bus_name, Gio.BusNameWatcherFlags.AUTO_START,
                            appeared_handler, vanished_handler)
