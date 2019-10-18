@@ -52,6 +52,7 @@ class DBusService(AppletPlugin):
                     raise StopException
 
             service = get_service(Device(object_path), uuid)
+            assert service is not None
 
             if isinstance(service, SerialService) and 'NMDUNSupport' in self.parent.Plugins.get_loaded():
                 self.parent.Plugins.run_ex("service_connect_handler", cb, service, ok, err)
@@ -81,6 +82,7 @@ class DBusService(AppletPlugin):
                     raise StopException
 
             service = get_service(Device(object_path), uuid)
+            assert service is not None
 
             if isinstance(service, SerialService) and 'NMDUNSupport' in self.parent.Plugins.get_loaded():
                 self.parent.Plugins.run_ex("service_disconnect_handler", cb, service, ok, err)
