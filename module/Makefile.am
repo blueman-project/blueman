@@ -9,9 +9,7 @@ _blueman_la_LIBADD = $(BLUEZ_LIBS) $(PYGOBJECT_LIBS) $(PYTHON_LIBS)
 _blueman_la_SOURCES = \
 	_blueman.c			\
 	libblueman.c	\
-	libblueman.h	\
-	modem-prober.h \
-	modem-prober.c
+	libblueman.h
 
 _blueman.c: _blueman.pyx
 	$(CYTHONEXEC) -o $@ $<
