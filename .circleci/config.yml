@@ -50,6 +50,8 @@ jobs:
   flake8-3.8:
       docker:
         - image: circleci/python:3.8-rc
+          environment:
+            MYPYPATH: '/home/circleci/project/stubs'
 
       steps:
         - checkout
@@ -71,6 +73,8 @@ jobs:
   mypy-3.7:
       docker:
         - image: circleci/python:3.7
+          environment:
+            MYPYPATH: '/home/circleci/project/stubs'
 
       steps:
         - checkout
@@ -83,6 +87,8 @@ jobs:
   mypy-3.8:
       docker:
         - image: circleci/python:3.8-rc
+          environment:
+            MYPYPATH: '/home/circleci/project/stubs'
 
       steps:
         - checkout
