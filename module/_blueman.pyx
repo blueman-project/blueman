@@ -328,20 +328,3 @@ cdef extern from "glib-object.h":
 
 cdef extern from "pygobject.h":
     cdef GObject* pygobject_get(object)
-
-cdef extern from "modem-prober.h":
-    cdef void c_probe_modem "probe_modem" (char* device, object callback)
-    cdef void c_set_probe_debug "set_probe_debug" (int debug)
-
-def probe_modem(node, callback):
-
-    if not callable(callback):
-        raise TypeError, "callback must be callable"
-
-    if node is not None:
-        c_probe_modem(node, callback)
-    else:
-        raise TypeError, "device node must not be None"
-
-def set_probe_debug(enable):
-    c_set_probe_debug(int(enable))

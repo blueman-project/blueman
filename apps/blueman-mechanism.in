@@ -16,7 +16,6 @@ if 'BLUEMAN_SOURCE' in os.environ:
 else:
     timeout = 30
 
-from _blueman import set_probe_debug
 from blueman.Constants import POLKIT
 from blueman.Functions import set_proc_title, create_logger, create_parser
 
@@ -67,7 +66,6 @@ logger = create_logger(log_level, "blueman-mechanism", syslog=True)
 
 if args.debug:
     logging.info("Enabled verbose output")
-    set_probe_debug(True)
 
 sl = StreamToLogger(logger, logging.INFO)
 sys.stdout = sl

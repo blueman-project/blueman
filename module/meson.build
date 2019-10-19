@@ -9,9 +9,7 @@ blueman_c = custom_target(
 sources = [
     blueman_c,
     'libblueman.c',
-    'libblueman.h',
-    'modem-prober.c',
-    'modem-prober.h'
+    'libblueman.h'
 ]
 
 deps = [pygobject, pythonlib, gthread, bluez]
