@@ -2,39 +2,43 @@
 import logging
 import os
 import subprocess
+from typing import Callable, Optional
 
 from gi.repository import Gio, GLib
 
 from blueman.bluez.Adapter import Adapter
-from _blueman import rfcomm_list, create_rfcomm_device, get_rfcomm_channel, RFCOMMError
+from _blueman import create_rfcomm_device, get_rfcomm_channel, RFCOMMError
 from blueman.Service import Service
 from blueman.main.DBusProxies import Mechanism
 from blueman.Constants import RFCOMM_WATCHER_PATH
 
 
 class SerialService(Service):
-    def serial_port_id(self, channel):
-        for dev in rfcomm_list():
-            if dev["dst"] == self.device['Address'] and dev["state"] == "connected" and dev["channel"] == channel:
-                return dev["id"]
-
     @property
-    def available(self):
+    def available(self) -> bool:
         # It will ask to pair anyway so not make it available
-        return self.device["Paired"]
+        paired: bool = self.device["Paired"]
+        return paired
 
     @property
-    def connected(self):
+    def connected(self) -> bool:
         return False
 
-    def on_file_changed(self, monitor, file, other_file, event_type, port):
+    def on_file_changed(
+        self,
+        monitor: Gio.FileMonitor,
+        file: Gio.File,
+        _other_file: Gio.File,
+        event_type: Gio.FileMonitorEvent,
+        port: int
+    ) -> None:
         if event_type == Gio.FileMonitorEvent.DELETED:
             logging.info('%s got deleted' % file.get_path())
             monitor.disconnect_by_func(self.on_file_changed, port)
         elif event_type == Gio.FileMonitorEvent.ATTRIBUTE_CHANGED:
             self.try_replace_root_watcher(monitor, file.get_path(), port)
 
-    def try_replace_root_watcher(self, monitor, path, port):
+    def try_replace_root_watcher(self, monitor: Gio.FileMonitor, path: str, port: int) -> None:
         if not os.access(path, os.R_OK | os.W_OK):
             return
 
@@ -44,7 +48,11 @@ class SerialService(Service):
         subprocess.Popen([RFCOMM_WATCHER_PATH, path])
         monitor.disconnect_by_func(self.on_file_changed, port)
 
-    def connect(self, reply_handler=None, error_handler=None):
+    def connect(
+        self,
+        reply_handler: Optional[Callable[[str], None]] = None,
+        error_handler: Optional[Callable[[RFCOMMError], None]] = None
+    ) -> bool:
         channel = get_rfcomm_channel(self.short_uuid, self.device['Address'])
         if channel == 0:
             error = RFCOMMError("Failed to get rfcomm channel")
@@ -72,7 +80,12 @@ class SerialService(Service):
                 raise e
         return True
 
-    def disconnect(self, port_id, reply_handler=None, error_handler=None):
+    def disconnect(
+        self,
+        port_id: int,
+        reply_handler: Optional[Callable[[], None]] = None,
+        error_handler: Optional[Callable[[str], None]] = None
+    ) -> None:
         try:
             Mechanism().CloseRFCOMM('(d)', port_id)
         except GLib.Error as e:

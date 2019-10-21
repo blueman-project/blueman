@@ -3,6 +3,7 @@ from gettext import gettext as _
 
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.NetworkManager import NMPANConnection
+from blueman.services.meta import NetworkService
 
 
 class NMPANSupport(AppletPlugin):
@@ -18,7 +19,7 @@ class NMPANSupport(AppletPlugin):
 
     @staticmethod
     def service_connect_handler(service, ok, err):
-        if service.group != 'network':
+        if not isinstance(service, NetworkService):
             return False
 
         conn = NMPANConnection(service, ok, err)
@@ -28,7 +29,7 @@ class NMPANSupport(AppletPlugin):
 
     @staticmethod
     def service_disconnect_handler(service, ok, err):
-        if service.group != 'network':
+        if not isinstance(service, NetworkService):
             return False
 
         conn = NMPANConnection(service, ok, err)

@@ -14,6 +14,8 @@ import signal
 import blueman.bluez as bluez
 from gi.repository import GLib
 
+from blueman.services.meta import SerialService
+
 
 class SerialManager(AppletPlugin):
     __icon__ = "blueman-serial"
@@ -130,7 +132,7 @@ class SerialManager(AppletPlugin):
             return False
 
     def on_device_disconnect(self, device):
-        serial_services = [service for service in get_services(device) if service.group == 'serial']
+        serial_services = [service for service in get_services(device) if isinstance(service, SerialService)]
 
         if not serial_services:
             return

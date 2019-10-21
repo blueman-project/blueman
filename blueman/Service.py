@@ -3,7 +3,6 @@ from blueman.Sdp import ServiceUUID
 
 
 class Service(object):
-    __group__: str
     __svclass_id__: int
     __description__ = None
     __icon__: str
@@ -40,7 +39,3 @@ class Service(object):
     @property
     def priority(self):
         return self.__priority__
-
-    @property
-    def group(self):
-        return self.__group__

@@ -1,27 +1,41 @@
 # coding=utf-8
+from typing import Optional, Callable
+
 from blueman.Service import Service
+from blueman.bluez import Device
 from blueman.bluez.Network import Network
+from blueman.bluez.errors import BluezDBusException
 
 
 class NetworkService(Service):
-    def __init__(self, device, uuid):
+    def __init__(self, device: Device, uuid: str):
         super().__init__(device, uuid)
         self._service = Network(device.get_object_path())
 
     @property
-    def available(self):
+    def available(self) -> bool:
         # This interface is only available after pairing
-        return self.device["Paired"]
+        paired: bool = self.device["Paired"]
+        return paired
 
     @property
-    def connected(self):
+    def connected(self) -> bool:
         if not self.available:
             return False
 
-        return self._service['Connected']
+        connected: bool = self._service["Connected"]
+        return connected
 
-    def connect(self, reply_handler=None, error_handler=None):
+    def connect(
+        self,
+        reply_handler: Optional[Callable[[], None]] = None,
+        error_handler: Optional[Callable[[BluezDBusException], None]] = None,
+    ) -> None:
         self._service.connect(self.uuid, reply_handler=reply_handler, error_handler=error_handler)
 
-    def disconnect(self, reply_handler=None, error_handler=None, *args):
+    def disconnect(
+        self,
+        reply_handler: Optional[Callable[[], None]] = None,
+        error_handler: Optional[Callable[[BluezDBusException], None]] = None,
+    ) -> None:
         self._service.disconnect(reply_handler=reply_handler, error_handler=error_handler)
