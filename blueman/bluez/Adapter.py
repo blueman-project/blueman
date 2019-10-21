@@ -20,18 +20,11 @@ class Adapter(Base):
         param = GLib.Variant('(o)', (device.get_object_path(),))
         self._call('RemoveDevice', param)
 
-    # FIXME in BlueZ 5.31 getting and setting Alias appears to never fail
     def get_name(self):
-        if 'Alias' in self:
-            return self['Alias']
-        else:
-            return self['Name']
+        return self['Alias']
 
     def set_name(self, name):
-        try:
-            return self.set('Alias', name)
-        except GLib.Error:
-            return self.set('Name', name)
+        self.set('Alias', name)
 
 
 class AnyAdapter(AnyBase):
