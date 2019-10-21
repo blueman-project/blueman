@@ -8,6 +8,8 @@ from blueman.services.Functions import get_service
 
 import logging
 
+from blueman.services.meta import SerialService, NetworkService
+
 
 class DBusService(AppletPlugin):
     __depends__ = ["StatusIcon"]
@@ -51,9 +53,9 @@ class DBusService(AppletPlugin):
 
             service = get_service(Device(object_path), uuid)
 
-            if service.group == 'serial' and 'NMDUNSupport' in self.parent.Plugins.get_loaded():
+            if isinstance(service, SerialService) and 'NMDUNSupport' in self.parent.Plugins.get_loaded():
                 self.parent.Plugins.run_ex("service_connect_handler", cb, service, ok, err)
-            elif service.group == 'serial' and 'PPPSupport' in self.parent.Plugins.get_loaded():
+            elif isinstance(service, SerialService) and 'PPPSupport' in self.parent.Plugins.get_loaded():
                 def reply(rfcomm):
                     self.parent.Plugins.run("on_rfcomm_connected", service, rfcomm)
                     ok(rfcomm)
@@ -65,7 +67,8 @@ class DBusService(AppletPlugin):
                     logging.info("No handler registered")
                     err("Service not supported\nPossibly the plugin that handles this service is not loaded")
             else:
-                if not self.parent.Plugins.run_ex("service_connect_handler", cb, service, ok, err):
+                if not self.parent.Plugins.run_ex("service_connect_handler", cb, service, ok, err) \
+                        and isinstance(service, (SerialService, NetworkService)):
                     service.connect(reply_handler=ok, error_handler=err)
 
     def _disconnect_service(self, object_path, uuid, port, ok, err):
@@ -79,16 +82,17 @@ class DBusService(AppletPlugin):
 
             service = get_service(Device(object_path), uuid)
 
-            if service.group == 'serial' and 'NMDUNSupport' in self.parent.Plugins.get_loaded():
+            if isinstance(service, SerialService) and 'NMDUNSupport' in self.parent.Plugins.get_loaded():
                 self.parent.Plugins.run_ex("service_disconnect_handler", cb, service, ok, err)
-            elif service.group == 'serial' and 'PPPSupport' in self.parent.Plugins.get_loaded():
+            elif isinstance(service, SerialService) and 'PPPSupport' in self.parent.Plugins.get_loaded():
                 service.disconnect(port, reply_handler=ok, error_handler=err)
 
                 self.parent.Plugins.run("on_rfcomm_disconnect", port)
 
                 logging.info("Disconnecting rfcomm device")
             else:
-                if not self.parent.Plugins.run_ex("service_disconnect_handler", cb, service, ok, err):
+                if not self.parent.Plugins.run_ex("service_disconnect_handler", cb, service, ok, err) \
+                        and isinstance(service, NetworkService):
                     service.disconnect(reply_handler=ok, error_handler=err)
 
     def service_connect_handler(self, service, ok, err):

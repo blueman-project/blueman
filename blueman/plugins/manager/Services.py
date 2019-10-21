@@ -10,6 +10,9 @@ from blueman.services import *
 from _blueman import rfcomm_list
 
 import gi
+
+from blueman.services.meta import NetworkService, SerialService
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
@@ -51,7 +54,7 @@ class Services(ManagerPlugin):
                 if service.description:
                     item.props.tooltip_text = service.description
                 item.connect("activate", manager_menu.on_connect, service)
-                if service.group == 'serial':
+                if isinstance(service, SerialService):
                     serial_items.append(item)
                     if isinstance(service, DialupNetwork):
                         self.has_dun = True
@@ -63,7 +66,7 @@ class Services(ManagerPlugin):
         for service in get_services(device):
             add_menu_item(manager_menu, service)
 
-            if service.group == 'serial':
+            if isinstance(service, SerialService):
                 for dev in rfcomm_list():
                     if dev["dst"] == device['Address'] and dev["state"] == "connected":
                         devname = _("Serial Port %s") % "rfcomm%d" % dev["id"]
@@ -74,7 +77,7 @@ class Services(ManagerPlugin):
                         items.append((item, 120))
                         item.show()
 
-            if service.group == 'network' and service.connected:
+            if isinstance(service, NetworkService) and service.connected:
                 if "DhcpClient" in appl.QueryPlugins():
                     def renew(x):
                         appl.DhcpClient('(s)', Network(device.get_object_path())["Interface"])
