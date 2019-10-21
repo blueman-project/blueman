@@ -6,18 +6,13 @@ import subprocess
 from gi.repository import Gio, GLib
 
 from blueman.bluez.Adapter import Adapter
-from _blueman import rfcomm_list, create_rfcomm_device, get_rfcomm_channel, RFCOMMError
+from _blueman import create_rfcomm_device, get_rfcomm_channel, RFCOMMError
 from blueman.Service import Service
 from blueman.main.DBusProxies import Mechanism
 from blueman.Constants import RFCOMM_WATCHER_PATH
 
 
 class SerialService(Service):
-    def serial_port_id(self, channel):
-        for dev in rfcomm_list():
-            if dev["dst"] == self.device['Address'] and dev["state"] == "connected" and dev["channel"] == channel:
-                return dev["id"]
-
     @property
     def available(self):
         # It will ask to pair anyway so not make it available
