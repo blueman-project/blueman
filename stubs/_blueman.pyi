@@ -32,6 +32,7 @@ class _HciInfo(TypedDict):
     type: int
 
 class BridgeException(Exception):
+    errno: int
     def __init__(self, errno: int) -> None: ...
 
 class ConnInfoReadError(Exception): ...
