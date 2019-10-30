@@ -54,7 +54,7 @@ class SerialService(Service):
         error_handler: Optional[Callable[[RFCOMMError], None]] = None
     ) -> bool:
         channel = get_rfcomm_channel(self.short_uuid, self.device['Address'])
-        if channel == 0:
+        if channel is None or channel == 0:
             error = RFCOMMError("Failed to get rfcomm channel")
             if error_handler:
                 error_handler(error)
