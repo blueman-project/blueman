@@ -5,7 +5,7 @@ from typing import Optional, List
 
 from blueman.Service import Service
 from blueman.Sdp import ServiceUUID
-from blueman.bluez import Device
+from blueman.bluez.Device import Device
 from blueman.bluez.errors import BluezDBusException
 import blueman.services
 

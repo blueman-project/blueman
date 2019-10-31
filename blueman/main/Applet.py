@@ -1,6 +1,8 @@
 # coding=utf-8
 from blueman.Functions import *
-import blueman.bluez as bluez
+from blueman.bluez.Manager import Manager
+from blueman.bluez.Adapter import AnyAdapter
+from blueman.bluez.Device import AnyDevice
 import blueman.plugins.applet
 from blueman.main.PluginManager import PersistentPluginManager
 from blueman.main.DbusService import DbusService
@@ -21,7 +23,7 @@ class BluemanApplet(object):
         self.plugin_run_state_changed = False
         self.manager_state = False
 
-        self.Manager = bluez.Manager()
+        self.Manager = Manager()
         self.Manager.connect_signal('adapter-added', self.on_adapter_added)
         self.Manager.connect_signal('adapter-removed', self.on_adapter_removed)
         self.Manager.connect_signal('device-created', self.on_device_created)
@@ -37,10 +39,10 @@ class BluemanApplet(object):
 
         self.Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
 
-        self._any_adapter = bluez.AnyAdapter()
+        self._any_adapter = AnyAdapter()
         self._any_adapter.connect_signal('property-changed', self._on_adapter_property_changed)
 
-        self._any_device = bluez.AnyDevice()
+        self._any_device = AnyDevice()
         self._any_device.connect_signal('property-changed', self._on_device_property_changed)
 
         self.DbusSvc.register()

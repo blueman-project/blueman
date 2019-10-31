@@ -7,7 +7,8 @@ from typing import Dict, TYPE_CHECKING
 
 from blueman.Constants import UI_PATH
 from blueman.Functions import *
-import blueman.bluez as bluez
+from blueman.bluez.Manager import Manager
+from blueman.bluez.Adapter import Adapter
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -50,11 +51,11 @@ class BluemanAdapters(Gtk.Window):
             self.show()
 
         self.tabs: Dict[str, Dict[str, "Tab"]] = {}
-        self._adapters: Dict[str, bluez.Adapter] = {}
+        self._adapters: Dict[str, Adapter] = {}
 
         setup_icon_path()
-        bluez.Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
-        self.manager = bluez.Manager()
+        Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
+        self.manager = Manager()
 
         check_single_instance("blueman-adapters", lambda time: self.present_with_time(time))
 
@@ -95,7 +96,7 @@ class BluemanAdapters(Gtk.Window):
     def on_adapter_added(self, _manager, adapter_path):
         hci_dev = os.path.basename(adapter_path)
         if hci_dev not in self._adapters:
-            self._adapters[hci_dev] = bluez.Adapter(adapter_path)
+            self._adapters[hci_dev] = Adapter(adapter_path)
 
         self._adapters[hci_dev].connect_signal("property-changed", self.on_property_changed)
         self.add_to_notebook(self._adapters[hci_dev])

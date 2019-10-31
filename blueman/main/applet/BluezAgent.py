@@ -7,7 +7,8 @@ from html import escape
 import random
 from xml.etree import ElementTree
 
-import blueman.bluez as bluez
+from blueman.bluez.Device import Device
+from blueman.bluez.AgentManager import AgentManager
 from blueman.Sdp import ServiceUUID
 from blueman.Constants import *
 from blueman.gui.Notification import Notification
@@ -96,12 +97,12 @@ class BluezAgent(DbusService):
     def register_agent(self):
         logging.info("Register Agent")
         self.register()
-        bluez.AgentManager().register_agent(self.__agent_path, "KeyboardDisplay", default=True)
+        AgentManager().register_agent(self.__agent_path, "KeyboardDisplay", default=True)
 
     def unregister_agent(self):
         logging.info("Unregister Agent")
         self.unregister()
-        bluez.AgentManager().unregister_agent(self.__agent_path)
+        AgentManager().unregister_agent(self.__agent_path)
 
     def build_passkey_dialog(self, device_alias, dialog_msg, is_numeric):
         def on_insert_text(editable, new_text, new_text_length, position):
@@ -137,14 +138,14 @@ class BluezAgent(DbusService):
         return dialog, pin_entry
 
     def get_device_string(self, device_path):
-        device = bluez.Device(device_path)
+        device = Device(device_path)
         return "<b>%s</b> (%s)" % (escape(device["Alias"]), device["Address"])
 
     def _lookup_default_pin(self, device_path):
         if not self._db:
             self._db = ElementTree.parse(os.path.join(PKGDATA_DIR, 'pin-code-database.xml'))
 
-        device = bluez.Device(device_path)
+        device = Device(device_path)
         lookup_dict = {
             'name': device['Name'],
             'type': bt_class_to_string(device['Class']),
@@ -238,7 +239,7 @@ class BluezAgent(DbusService):
 
     def _on_display_passkey(self, device, passkey, _entered):
         logging.info('DisplayPasskey (%s, %d)' % (device, passkey))
-        dev = bluez.Device(device)
+        dev = Device(device)
         dev.connect_signal("property-changed", self._on_device_property_changed)
 
         notify_message = _("Pairing passkey for") + " %s: %s" % (self.get_device_string(device), passkey)
@@ -247,7 +248,7 @@ class BluezAgent(DbusService):
 
     def _on_display_pin_code(self, device, pin_code):
         logging.info('DisplayPinCode (%s, %s)' % (device, pin_code))
-        dev = bluez.Device(device)
+        dev = Device(device)
         dev.connect_signal("property-changed", self._on_device_property_changed)
 
         notify_message = _("Pairing PIN code for") + " %s: %s" % (self.get_device_string(device), pin_code)
@@ -279,7 +280,7 @@ class BluezAgent(DbusService):
             logging.info(action)
 
             if action == "always":
-                device = bluez.Device(n._device)
+                device = Device(n._device)
                 device.set("Trusted", True)
             if action == "always" or action == "accept":
                 ok()

@@ -3,7 +3,8 @@ from gettext import gettext as _
 import logging
 from typing import Dict, Tuple, List
 
-import blueman.bluez as bluez
+from blueman.bluez.Adapter import Adapter
+from blueman.bluez.Manager import Manager
 from blueman.main.Config import Config
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.gui.CommonUi import show_about_dialog
@@ -21,7 +22,7 @@ class ManagerMenu:
         self.blueman = blueman
         self.Config = Config("org.blueman.general")
 
-        self.adapter_items: Dict[str, Tuple[Gtk.RadioMenuItem, bluez.Adapter]] = {}
+        self.adapter_items: Dict[str, Tuple[Gtk.RadioMenuItem, Adapter]] = {}
         self._adapters_group: List[Gtk.RadioMenuItem] = []
         self._insert_adapter_item_pos = 2
         self.Search = None
@@ -159,7 +160,7 @@ class ManagerMenu:
         self.item_device.show()
         self.item_device.props.sensitive = False
 
-        self._manager = bluez.Manager()
+        self._manager = Manager()
         self._manager.connect_signal("adapter-added", self.on_adapter_added)
         self._manager.connect_signal("adapter-removed", self.on_adapter_removed)
 
@@ -236,7 +237,7 @@ class ManagerMenu:
                 self.blueman.List.set_adapter(adapter_path)
 
     def on_adapter_added(self, _manager, adapter_path):
-        adapter = bluez.Adapter(adapter_path)
+        adapter = Adapter(adapter_path)
         menu = self.item_adapter.get_submenu()
         object_path = adapter.get_object_path()
 

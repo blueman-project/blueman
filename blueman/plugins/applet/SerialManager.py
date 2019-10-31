@@ -11,7 +11,7 @@ from subprocess import Popen
 import logging
 import os
 import signal
-import blueman.bluez as bluez
+from blueman.bluez.Device import Device
 from gi.repository import GLib
 
 from blueman.services.meta import SerialService
@@ -53,7 +53,7 @@ class SerialManager(AppletPlugin):
 
     def on_device_property_changed(self, path, key, value):
         if key == "Connected" and not value:
-            device = bluez.Device(path)
+            device = Device(path)
             self.terminate_all_scripts(device["Address"])
             self.on_device_disconnect(device)
 

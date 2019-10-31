@@ -4,7 +4,7 @@ from gettext import gettext as _
 import logging
 
 from blueman.plugins.AppletPlugin import AppletPlugin
-import blueman.bluez as bluez
+from blueman.bluez.Adapter import Adapter
 
 from gi.repository import GLib
 
@@ -201,5 +201,5 @@ class PowerManager(AppletPlugin):
             return "blueman-disabled", "blueman-disabled"
 
     def on_adapter_added(self, path):
-        adapter = bluez.Adapter(path)
+        adapter = Adapter(path)
         adapter.set("Powered", self.adapter_state)

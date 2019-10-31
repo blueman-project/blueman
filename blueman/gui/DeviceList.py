@@ -5,11 +5,13 @@ import logging
 from typing import Dict, List
 
 from blueman.Functions import adapter_path_to_name
-from blueman.bluez import Device, Adapter
 from blueman.gui.GenericList import GenericList
 from blueman.Constants import ICON_PATH
 from _blueman import conn_info, ConnInfoReadError
-import blueman.bluez as bluez
+from blueman.bluez.Manager import Manager
+from blueman.bluez.Device import Device, AnyDevice
+from blueman.bluez.Adapter import Adapter, AnyAdapter
+from blueman.bluez.errors import DBusNoSuchAdapterError
 
 from gi.repository import GObject
 from gi.repository import GLib
@@ -55,13 +57,13 @@ class DeviceList(GenericList):
 
         self.monitored_devices: List[str] = []
 
-        self.manager = bluez.Manager()
+        self.manager = Manager()
         self.manager.connect_signal('adapter-removed', self.__on_manager_signal, 'adapter-removed')
         self.manager.connect_signal('adapter-added', self.__on_manager_signal, 'adapter-added')
         self.manager.connect_signal('device-created', self.__on_manager_signal, 'device-created')
         self.manager.connect_signal('device-removed', self.__on_manager_signal, 'device-removed')
 
-        self.any_device = bluez.AnyDevice()
+        self.any_device = AnyDevice()
         self.any_device.connect_signal("property-changed", self._on_device_property_changed)
 
         self.__discovery_time = 0
@@ -79,7 +81,7 @@ class DeviceList(GenericList):
         self.set_name("DeviceList")
 
         self.set_adapter(adapter_name)
-        self._any_adapter = bluez.AnyAdapter()
+        self._any_adapter = AnyAdapter()
         self._any_adapter.connect_signal("property-changed", self._on_property_changed)
 
         self.selection.connect('changed', self.on_selection_changed)
@@ -113,7 +115,7 @@ class DeviceList(GenericList):
         if signal_name == 'device-created':
             tree_iter = self.find_device_by_path(path)
             if tree_iter is None:
-                dev = bluez.Device(path)
+                dev = Device(path)
                 self.device_add_event(dev)
 
         if signal_name == 'device-removed':
@@ -244,7 +246,7 @@ class DeviceList(GenericList):
             try:
                 self.Adapter = self.manager.get_adapter(adapter)
                 self.__adapter_path = self.Adapter.get_object_path()
-            except bluez.errors.DBusNoSuchAdapterError:
+            except DBusNoSuchAdapterError:
                 logging.warning('Failed to set adapter, trying first available.')
                 self.set_adapter(None)
                 return
