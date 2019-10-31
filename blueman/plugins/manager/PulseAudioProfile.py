@@ -3,7 +3,7 @@ from gettext import gettext as _
 import logging
 from typing import Dict, List, TYPE_CHECKING
 
-from blueman.bluez import Device
+from blueman.bluez.Device import Device
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 from blueman.main.PulseAudioUtils import PulseAudioUtils, EventType
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu

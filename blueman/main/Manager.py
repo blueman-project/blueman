@@ -2,7 +2,8 @@
 import logging
 from gettext import gettext as _, bind_textdomain_codeset
 
-import blueman.bluez as bluez
+from blueman.bluez.Manager import Manager
+from blueman.bluez.errors import DBusNoSuchAdapterError
 from blueman.Functions import *
 from blueman.Constants import UI_PATH
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
@@ -107,14 +108,14 @@ class Blueman(Gtk.Window):
             check_bluetooth_status(_("Bluetooth needs to be turned on for the device manager to function"),
                                    lambda: Gtk.main_quit())
 
-            manager = bluez.Manager()
+            manager = Manager()
             try:
                 manager.get_adapter(self.Config['last-adapter'])
-            except bluez.errors.DBusNoSuchAdapterError:
+            except DBusNoSuchAdapterError:
                 logging.error('Default adapter not found, trying first available.')
                 try:
                     manager.get_adapter(None)
-                except bluez.errors.DBusNoSuchAdapterError:
+                except DBusNoSuchAdapterError:
                     logging.error('No adapter(s) found, exiting')
                     exit(1)
 
@@ -156,7 +157,7 @@ class Blueman(Gtk.Window):
 
             self.show()
 
-        bluez.Manager.watch_name_owner(on_dbus_name_appeared, on_dbus_name_vanished)
+        Manager.watch_name_owner(on_dbus_name_appeared, on_dbus_name_vanished)
 
     def on_adapter_changed(self, lst, adapter):
         if adapter is not None:

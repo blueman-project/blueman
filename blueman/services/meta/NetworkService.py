@@ -2,7 +2,7 @@
 from typing import Optional, Callable
 
 from blueman.Service import Service
-from blueman.bluez import Device
+from blueman.bluez.Device import Device
 from blueman.bluez.Network import Network
 from blueman.bluez.errors import BluezDBusException
 

@@ -7,7 +7,10 @@ import logging
 from html import escape
 from typing import List, Dict, TYPE_CHECKING
 
-from blueman.bluez import obex
+from blueman.bluez.obex.AgentManager import AgentManager
+from blueman.bluez.obex.Manager import Manager
+from blueman.bluez.obex.Transfer import Transfer
+from blueman.bluez.obex.Session import Session
 from blueman.Functions import launch
 from blueman.gui.Notification import Notification
 from blueman.main.DbusService import DbusService, DbusError
@@ -19,7 +22,7 @@ from gi.repository import GLib, Gio
 if TYPE_CHECKING:
     from typing_extensions import TypedDict
 
-    class Transfer(TypedDict):
+    class TransferDict(TypedDict):
         path: str
         size: int
         name: str
@@ -50,13 +53,13 @@ class Agent(DbusService):
         self._allowed_devices: List[str] = []
         self._notification = None
         self._pending_transfer = None
-        self.transfers: Dict[str, "Transfer"] = {}
+        self.transfers: Dict[str, "TransferDict"] = {}
 
     def register_at_manager(self):
-        obex.AgentManager().register_agent(self.__agent_path)
+        AgentManager().register_agent(self.__agent_path)
 
     def unregister_from_manager(self):
-        obex.AgentManager().unregister_agent(self.__agent_path)
+        AgentManager().unregister_agent(self.__agent_path)
 
     def _release(self):
         raise Exception(self.__agent_path + " was released unexpectedly")
@@ -79,8 +82,8 @@ class Agent(DbusService):
             else:
                 err(ObexErrorRejected("Rejected"))
 
-        transfer = obex.Transfer(transfer_path)
-        session = obex.Session(transfer.session)
+        transfer = Transfer(transfer_path)
+        session = Session(transfer.session)
         root = session.root
         address = session.address
         filename = transfer.name
@@ -169,7 +172,7 @@ class TransferService(AppletPlugin):
                                               actions=[['reset', 'Reset to default', 'blueman']], actions_cb=on_reset)
             self._notification.show()
 
-        self._watch = obex.Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
+        self._watch = Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
 
     def on_unload(self):
         if self._watch:
@@ -217,7 +220,7 @@ class TransferService(AppletPlugin):
     def _on_dbus_name_appeared(self, _connection, name, owner):
         logging.info("%s %s" % (name, owner))
 
-        self._manager = obex.Manager()
+        self._manager = Manager()
         self._manager.connect("transfer-started", self._on_transfer_started)
         self._manager.connect("transfer-completed", self._on_transfer_completed)
         self._manager.connect('session-removed', self._on_session_removed)

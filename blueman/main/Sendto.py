@@ -16,11 +16,13 @@ gi.require_version("Gdk", "3.0")
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.obex.ObjectPush import ObjectPush
 from blueman.bluez.obex.Manager import Manager
+from blueman.bluez.obex.Client import Client
+from blueman.bluez.obex.Transfer import Transfer
 from blueman.Functions import format_bytes
 from blueman.Constants import UI_PATH
 from blueman.main.SpeedCalc import SpeedCalc
 from blueman.gui.CommonUi import ErrorDialog
-from blueman.bluez import obex
+
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -106,7 +108,7 @@ class Sender(Gtk.Dialog):
             self.emit("result", False)
 
         try:
-            self.client = obex.Client()
+            self.client = Client()
             self.manager.connect_signal('session-added', self.on_session_added)
             self.manager.connect_signal('session-removed', self.on_session_removed)
         except GLib.Error as e:
@@ -163,7 +165,7 @@ class Sender(Gtk.Dialog):
         self._last_bytes = 0
         self.transferred = 0
 
-        self.transfer = obex.Transfer(transfer_path)
+        self.transfer = Transfer(transfer_path)
         self.transfer.connect("error", self.on_transfer_error)
         self.transfer.connect("progress", self.on_transfer_progress)
         self.transfer.connect("completed", self.on_transfer_completed)

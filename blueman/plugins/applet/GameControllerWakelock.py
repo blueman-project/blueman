@@ -2,7 +2,7 @@
 from gettext import gettext as _
 import logging
 
-import blueman.bluez as bluez
+from blueman.bluez.Device import Device
 from blueman.Functions import launch
 from blueman.plugins.AppletPlugin import AppletPlugin
 
@@ -31,7 +31,7 @@ class GameControllerWakelock(AppletPlugin):
 
     def on_device_property_changed(self, path, key, value):
         if key == "Connected":
-            klass = bluez.Device(path)["Class"] & 0x1fff
+            klass = Device(path)["Class"] & 0x1fff
 
             if klass == 0x504 or klass == 0x508:
                 if value:
