@@ -4,7 +4,7 @@ import os
 import logging
 import traceback
 import importlib
-from typing import Dict, Type, List, TypeVar, Generic
+from typing import Dict, List, Type, Union
 
 from gi.repository import GObject
 
@@ -23,10 +23,7 @@ class LoadException(Exception):
     pass
 
 
-T = TypeVar('T', AppletPlugin, ManagerPlugin)
-
-
-class PluginManager(GObject.GObject, Generic[T]):
+class PluginManager(GObject.GObject):
     __gsignals__: GSignals = {
         'plugin-loaded': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
         'plugin-unloaded': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
@@ -34,10 +31,10 @@ class PluginManager(GObject.GObject, Generic[T]):
 
     def __init__(self, plugin_class, module_path, parent):
         super().__init__()
-        self.__plugins: Dict[str, T] = {}
-        self.__classes: Dict[str, Type[T]] = {}
         self.__deps: Dict[str, str] = {}
         self.__cfls: Dict[str, str] = {}
+        self.__plugins: Dict[str, Union[AppletPlugin, ManagerPlugin]] = {}
+        self.__classes: Dict[str, Type[Union[AppletPlugin, ManagerPlugin]]] = {}
         self.__loaded: List[str] = []
         self.parent = parent
 
@@ -231,7 +228,7 @@ class PluginManager(GObject.GObject, Generic[T]):
                 args = ret
 
 
-class PersistentPluginManager(PluginManager[T]):
+class PersistentPluginManager(PluginManager):
     def __init__(self, *args):
         super().__init__(*args)
 
