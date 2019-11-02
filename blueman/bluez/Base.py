@@ -10,8 +10,12 @@ from blueman.typing import GSignals
 
 
 class BaseMeta(GObjectMeta):
+    __instances__: Dict[str, Dict[Optional[str], "Base"]]
+
     def __call__(cls, *args: str, **kwargs: str) -> "Base":
-        instances: Dict[str, Dict[str, "Base"]] = cls.__dict__.setdefault("__instances__", {})
+        if not hasattr(cls, "__instances__"):
+            cls.__instances__ = {}
+        instances = cls.__instances__
 
         path = None
         interface_name = None
@@ -31,6 +35,8 @@ class BaseMeta(GObjectMeta):
 
         if not interface_name:
             interface_name = cls._interface_name
+
+        assert interface_name
 
         if interface_name in instances:
             if path in instances[interface_name]:
