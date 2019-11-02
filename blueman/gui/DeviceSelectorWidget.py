@@ -114,5 +114,5 @@ class DeviceSelectorWidget(Gtk.Box):
             self.cb_adapters.props.visible = True
             for adapter in adapters:
                 tree_iter = self.cb_adapters.get_model().append([adapter.get_name(), adapter.get_object_path()])
-                if adapter.get_object_path() == self.List.Adapter.get_object_path():
+                if self.List.Adapter and adapter.get_object_path() == self.List.Adapter.get_object_path():
                     self.cb_adapters.set_active_iter(tree_iter)

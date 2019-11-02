@@ -16,6 +16,8 @@ if TYPE_CHECKING:
     from typing_extensions import TypedDict
 
     class MenuItemBase(TypedDict):
+        text: str
+        markup: bool
         icon_name: str
         sensitive: bool
         tooltip: Optional[str]
@@ -241,17 +243,6 @@ class RecentConns(AppletPlugin):
         self.parent.Plugins.DBusService.connect_service(item["device"], item["uuid"], reply, err)
 
     def add_item(self, item):
-        if not item["mitem"]:
-            mitem = {"icon_name": item["icon"], "callback": lambda itm=item: self.on_item_activated(itm)}
-            item["mitem"] = mitem
-        else:
-            mitem = item["mitem"]
-            mitem['sensitive'] = True
-            mitem['tooltip'] = None
-
-        item["mitem"]["text"] = _("%(service)s on %(device)s") % {"service": item["name"], "device": item["alias"]}
-        item["mitem"]["markup"] = True
-
         if item["adapter"] not in self.Adapters.values():
             item["device"] = None
         elif not item["device"] and item["adapter"] in self.Adapters.values():
@@ -262,9 +253,16 @@ class RecentConns(AppletPlugin):
                 self.items.remove(item)
                 self.initialize()
 
-        if not item["device"]:
-            mitem["sensitive"] = False
-            mitem["tooltip"] = _("Adapter for this connection is not available")
+        mitem: "MenuItem" = {
+            "text": _("%(service)s on %(device)s") % {"service": item["name"], "device": item["alias"]},
+            "markup": True,
+            "icon_name": item["mitem"]["icon_name"] if item["mitem"] else item["icon"],
+            "sensitive": item["device"] is not None,
+            "tooltip": None if item["device"] is None else _("Adapter for this connection is not available"),
+            "callback": item["mitem"]["callback"] if item["mitem"] else lambda itm=item: self.on_item_activated(itm)
+        }
+
+        item["mitem"] = mitem
 
         self.__menuitems.append(mitem)
         self.parent.Plugins.Menu.on_menu_changed()

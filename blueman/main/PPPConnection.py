@@ -60,9 +60,6 @@ class PPPConnection(GObject.GObject):
         self.port = port
         self.interface = None
 
-        self.pppd = None
-        self.file = None
-
         self.commands = [
             ("ATZ E0 V1 X4 &C1 +FCLASS=0", self.simple_callback),
             ("ATE0", self.simple_callback),
@@ -78,7 +75,6 @@ class PPPConnection(GObject.GObject):
 
     def cleanup(self):
         os.close(self.file)
-        self.file = None
 
     def simple_callback(self, response):
         pass
@@ -214,8 +210,7 @@ class PPPConnection(GObject.GObject):
                         found = True
 
         if found:
-            lines = filter(lambda x: x != "", lines)
-            lines = [x.strip("\r\n") for x in lines]
+            lines = [x.strip("\r\n") for x in lines if x != ""]
             logging.info("<-- %s" % lines)
 
             on_done(lines, None)

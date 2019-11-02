@@ -22,8 +22,7 @@ if TYPE_CHECKING:
 
 class PulseAudioProfile(ManagerPlugin):
     def on_load(self):
-        self.devices: Dict[str, Dict[str, "CardInfo"]] = {}
-        self.item = None
+        self.devices: Dict[str, "CardInfo"] = {}
 
         self.deferred: List[Device] = []
 
@@ -67,12 +66,12 @@ class PulseAudioProfile(ManagerPlugin):
                 logging.info("add")
                 utils.get_card(idx, get_card_cb)
 
-    def query_pa(self, device):
+    def query_pa(self, device, item):
         def list_cb(cards):
             for c in cards.values():
                 if c["proplist"]["device.string"] == device['Address']:
                     self.devices[device['Address']] = c
-                    self.generate_menu(device)
+                    self.generate_menu(device, item)
                     return
 
         pa = PulseAudioUtils()
@@ -90,7 +89,7 @@ class PulseAudioProfile(ManagerPlugin):
 
             pa.set_card_profile(c["index"], profile, on_result)
 
-    def generate_menu(self, device):
+    def generate_menu(self, device, item):
         info = self.devices[device['Address']]
         group: List[Gtk.RadioMenuItem] = []
 
@@ -110,8 +109,8 @@ class PulseAudioProfile(ManagerPlugin):
                 sub.append(i)
                 i.show()
 
-            self.item.set_submenu(sub)
-            self.item.show()
+            item.set_submenu(sub)
+            item.show()
 
     def on_request_menu_items(self, manager_menu, device):
         audio_source = False
@@ -127,15 +126,15 @@ class PulseAudioProfile(ManagerPlugin):
                 self.deferred.append(device)
                 return
 
-            self.item = create_menuitem(_("Audio Profile"), "audio-card")
-            self.item.props.tooltip_text = _("Select audio profile for PulseAudio")
+            item = create_menuitem(_("Audio Profile"), "audio-card")
+            item.props.tooltip_text = _("Select audio profile for PulseAudio")
 
             if not device['Address'] in self.devices:
-                self.query_pa(device)
+                self.query_pa(device, item)
             else:
-                self.generate_menu(device)
+                self.generate_menu(device, item)
 
         else:
             return
 
-        return [(self.item, 300)]
+        return [(item, 300)]

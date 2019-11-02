@@ -69,6 +69,7 @@ class Agent(DbusService):
             logging.info("Action %s" % action)
 
             if action == "accept":
+                assert self._pending_transfer
                 self.transfers[self._pending_transfer['transfer_path']] = {
                     'path': self._pending_transfer['root'] + '/' + os.path.basename(self._pending_transfer['filename']),
                     'size': self._pending_transfer['size'],
@@ -134,7 +135,8 @@ class Agent(DbusService):
             on_action("accept")
 
     def _cancel(self):
-        self._notification.close()
+        if self._notification:
+            self._notification.close()
         raise ObexErrorCanceled("Canceled")
 
 
@@ -142,8 +144,6 @@ class TransferService(AppletPlugin):
     __author__ = "cschramm"
     __description__ = _("Provides OBEX file transfer capabilities")
     __icon__ = "blueman-send-file"
-
-    _config = None
 
     _silent_transfers = 0
     _normal_transfers = 0
@@ -241,7 +241,7 @@ class TransferService(AppletPlugin):
             self._agent = None
 
     def _on_transfer_started(self, _manager, transfer_path):
-        if transfer_path not in self._agent.transfers:
+        if not self._agent or transfer_path not in self._agent.transfers:
             # This is not an incoming transfer we authorized
             return
 
@@ -272,11 +272,11 @@ class TransferService(AppletPlugin):
         return kwargs
 
     def _on_transfer_completed(self, _manager, transfer_path, success):
-        try:
-            attributes = self._agent.transfers[transfer_path]
-        except KeyError:
+        if not self._agent or transfer_path not in self._agent.transfers:
             logging.info("This is probably not an incoming transfer we authorized")
             return
+
+        attributes = self._agent.transfers[transfer_path]
 
         src = attributes['path']
         dest_dir, ignored = self._make_share_path()

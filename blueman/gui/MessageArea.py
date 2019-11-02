@@ -30,8 +30,6 @@ class MessageArea(Gtk.InfoBar):
         self.anim = WidgetFade(self, self.get_style_context().get_background_color(Gtk.StateFlags.NORMAL))
         self.hl_anim = WidgetFade(self, Gdk.RGBA(1, 0, 0, 1))
 
-        self.bt = None
-
         self.icon = Gtk.Image(pixel_size=16, visible=True)
         self.label = Gtk.Label(xalign=0, ellipsize=Pango.EllipsizeMode.END, single_line_mode=True,
                                selectable=True, visible=True)
