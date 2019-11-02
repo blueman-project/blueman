@@ -7,7 +7,7 @@ from blueman.bluez.AnyBase import AnyBase
 class Adapter(Base):
     _interface_name = 'org.bluez.Adapter1'
 
-    def __init__(self, obj_path=None):
+    def __init__(self, obj_path):
         super().__init__(self._interface_name, obj_path=obj_path)
 
     def start_discovery(self):

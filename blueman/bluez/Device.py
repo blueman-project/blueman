@@ -6,7 +6,7 @@ from blueman.bluez.AnyBase import AnyBase
 class Device(Base):
     _interface_name = 'org.bluez.Device1'
 
-    def __init__(self, obj_path=None):
+    def __init__(self, obj_path):
         super().__init__(interface_name=self._interface_name, obj_path=obj_path)
 
     def pair(self, reply_handler=None, error_handler=None):
