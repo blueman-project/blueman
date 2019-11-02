@@ -1,27 +1,16 @@
 # coding=utf-8
 import logging
 import weakref
-from typing import Dict, Callable, Optional
+from typing import Dict, Callable
 
 from gi.repository import GObject, Gio
-from gi.types import GObjectMeta
 
 from blueman.bluez.obex.Transfer import Transfer
+from blueman.gobject import SingletonGObjectMeta
 from blueman.typing import GSignals
 
 
-class ManagerMeta(GObjectMeta):
-    _instance: Optional["Manager"] = None
-
-    def __call__(cls, *args: str, **kwargs: str) -> "Manager":
-        if not cls._instance:
-            inst: "Manager" = super().__call__(*args, **kwargs)
-            cls._instance = inst
-
-        return cls._instance
-
-
-class Manager(GObject.GObject, metaclass=ManagerMeta):
+class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
     __gsignals__: GSignals = {
         'session-added': (GObject.SignalFlags.NO_HOOKS, None, (str,)),
         'session-removed': (GObject.SignalFlags.NO_HOOKS, None, (str,)),
