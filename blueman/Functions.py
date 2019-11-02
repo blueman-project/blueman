@@ -53,8 +53,7 @@ from gi.repository import GLib
 from gi.repository import Gio
 
 
-__all__ = ["check_bluetooth_status", "launch", "setup_icon_path", "get_icon",
-           "get_notification_icon", "adapter_path_to_name", "e_", "opacify_pixbuf", "composite_icon",
+__all__ = ["check_bluetooth_status", "launch", "setup_icon_path", "adapter_path_to_name", "e_",
            "format_bytes", "create_menuitem", "get_lockfile", "get_pid", "is_running", "check_single_instance", "kill",
            "have", "set_proc_title", "create_logger", "create_parser", "open_rfcomm", "get_local_interfaces"]
 
@@ -154,39 +153,6 @@ def setup_icon_path() -> None:
     ic.prepend_search_path(ICON_PATH)
 
 
-def get_icon(name: str, size: int = 24, fallback: str = "image-missing") -> GdkPixbuf.Pixbuf:
-    ic = Gtk.IconTheme.get_default()
-
-    try:
-        icon = ic.load_icon(name, size, 0)
-    except GLib.Error:
-        if not fallback:
-            raise
-        try:
-            icon = ic.load_icon(fallback, size, 0)
-        except GLib.Error:
-            icon = ic.load_icon("image-missing", size, 0)
-
-    if icon.props.width > size:
-        new_w = size
-        new_h = int(size * (float(icon.props.width) / icon.props.height))
-        icon = icon.scale_simple(new_w, new_h, GdkPixbuf.InterpType.BILINEAR)
-
-    if icon.props.height > size:
-        new_w = int(size * (float(icon.props.height) / icon.props.width))
-        new_h = size
-        icon = icon.scale_simple(new_w, new_h, GdkPixbuf.InterpType.BILINEAR)
-
-    return icon
-
-
-def get_notification_icon(icon: str, main_icon: str = "blueman") -> GdkPixbuf.Pixbuf:
-    main = get_icon(main_icon, 48)
-    sub = get_icon(icon, 24)
-
-    return composite_icon(main, [(sub, 24, 24, 255)])
-
-
 def adapter_path_to_name(path: str) -> Optional[str]:
     if path is None or path == '':
         return None
@@ -204,28 +170,6 @@ def e_(msg: Union[str, Exception]) -> Tuple[str, Optional[str]]:
     else:
         s = msg.strip().split(": ")[-1]
         return s, None
-
-
-def opacify_pixbuf(pixbuf: GdkPixbuf.Pixbuf, alpha: int) -> GdkPixbuf.Pixbuf:
-    new = pixbuf.copy()
-    new.fill(0x00000000)
-    pixbuf.composite(new, 0, 0, pixbuf.props.width, pixbuf.props.height, 0, 0, 1, 1,
-                     GdkPixbuf.InterpType.BILINEAR, alpha)
-    return new
-
-
-# pixbuf, [(pixbuf, x, y, alpha), (pixbuf, x, y, alpha)]
-
-def composite_icon(
-    target: GdkPixbuf.Pixbuf,
-    sources: Iterable[Tuple[GdkPixbuf.Pixbuf, int, int, int]],
-) -> GdkPixbuf.Pixbuf:
-    target = target.copy()
-    for source in sources:
-        source[0].composite(target, source[1], source[2], source[0].get_width(), source[0].get_height(), source[1],
-                            source[2], 1, 1, GdkPixbuf.InterpType.NEAREST, source[3])
-
-    return target
 
 
 def format_bytes(size: float) -> Tuple[float, str]:
