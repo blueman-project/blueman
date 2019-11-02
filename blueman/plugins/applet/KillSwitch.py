@@ -51,7 +51,6 @@ class KillSwitch(AppletPlugin):
 
     _switches: Dict[int, Switch] = {}
     _iom = None
-    _fd = None
     _enabled = True
     _hardblocked = False
 
@@ -60,17 +59,17 @@ class KillSwitch(AppletPlugin):
         self._connman_watch_id = Gio.bus_watch_name(Gio.BusType.SYSTEM, "net.connman", Gio.BusNameWatcherFlags.NONE,
                                                     self._on_connman_appeared, self._on_connman_vanished)
 
-        self._fd = os.open('/dev/rfkill', os.O_RDONLY | os.O_NONBLOCK)
+        channel = GLib.IOChannel.new_file("/dev/rfkill", "r")
+        if channel is None:
+            raise ImportError('Failed to open rfkill device')
 
-        self._iom = GLib.io_add_watch(self._fd, GLib.IO_IN | GLib.IO_ERR | GLib.IO_HUP, self.io_event)
+        self._iom = GLib.io_add_watch(channel, GLib.IO_IN | GLib.IO_ERR | GLib.IO_HUP, self.io_event)
 
     def on_unload(self):
         Gio.bus_unwatch_name(self._connman_watch_id)
         self._connman_proxy = None
         if self._iom:
             GLib.source_remove(self._iom)
-        if self._fd:
-            os.close(self._fd)
 
     def _on_connman_appeared(self, connection, name, owner):
         logging.info("%s appeared" % name)
@@ -87,11 +86,11 @@ class KillSwitch(AppletPlugin):
         logging.info("%s vanished" % name)
         self._connman_proxy = None
 
-    def io_event(self, _, condition):
+    def io_event(self, channel, condition):
         if condition & GLib.IO_ERR or condition & GLib.IO_HUP:
             return False
 
-        data = os.read(self._fd, RFKILL_EVENT_SIZE_V1)
+        data = channel.read(RFKILL_EVENT_SIZE_V1)
         if len(data) != RFKILL_EVENT_SIZE_V1:
             logging.warning("Bad rfkill event size")
             return True
