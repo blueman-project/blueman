@@ -207,11 +207,11 @@ class Dialog:
             delta = datetime.datetime.now() - self.datetime
 
             d = ngettext("day", "days", delta.days)
-            h = ngettext("hour", "hours", delta.seconds / 3600)
-            m = ngettext("minute", "minutes", delta.seconds % 3600 / 60)
+            h = ngettext("hour", "hours", delta.seconds // 3600)
+            m = ngettext("minute", "minutes", delta.seconds % 3600 // 60)
 
             self.l_duration.props.label = _("%d %s %d %s and %d %s") % (
-                delta.days, d, delta.seconds / 3600, h, delta.seconds % 3600 / 60, m)
+                delta.days, d, delta.seconds // 3600, h, delta.seconds % 3600 // 60, m)
         else:
             self.l_started.props.label = _("Unknown")
             self.l_duration.props.label = _("Unknown")
