@@ -1,18 +1,17 @@
 # coding=utf-8
+from typing import List, Callable, Optional, Any, Union, Dict
 
 from gi.repository import Gio, GLib, GObject
 from gi.types import GObjectMeta
-from blueman.bluez.errors import parse_dbus_error
+from blueman.bluez.errors import parse_dbus_error, BluezDBusException
 import logging
 
 from blueman.typing import GSignals
 
 
 class BaseMeta(GObjectMeta):
-    def __call__(cls, *args, **kwargs):
-        instances = cls.__dict__.get("__instances__")
-        if instances is None:
-            cls.__instances__ = instances = {}
+    def __call__(cls, *args: str, **kwargs: str) -> "Base":
+        instances: Dict[str, Dict[str, "Base"]] = cls.__dict__.setdefault("__instances__", {})
 
         path = None
         interface_name = None
@@ -37,7 +36,7 @@ class BaseMeta(GObjectMeta):
             if path in instances[interface_name]:
                 return instances[interface_name][path]
 
-        instance = super().__call__(*args, **kwargs)
+        instance: "Base" = super().__call__(*args, **kwargs)
         cls.__instances__[interface_name] = {path: instance}
 
         return instance
@@ -54,15 +53,14 @@ class Base(Gio.DBusProxy, metaclass=BaseMeta):
         'property-changed': (GObject.SignalFlags.NO_HOOKS, None, (str, object, str))
     }
 
-    def __init__(self, interface_name, obj_path, *args, **kwargs):
+    def __init__(self, interface_name: str, obj_path: str):
         super().__init__(
             g_name=self.__name,
             g_interface_name=interface_name,
             g_object_path=obj_path,
             g_bus_type=self.__bus_type,
             # FIXME See issue 620
-            g_flags=Gio.DBusProxyFlags.GET_INVALIDATED_PROPERTIES,
-            *args, **kwargs)
+            g_flags=Gio.DBusProxyFlags.GET_INVALIDATED_PROPERTIES)
 
         self.init()
         self.__interface_name = interface_name
@@ -70,21 +68,30 @@ class Base(Gio.DBusProxy, metaclass=BaseMeta):
 
         self.__variant_map = {str: 's', int: 'u', bool: 'b'}
 
-    def do_g_properties_changed(self, changed_properties, _invalidated_properties):
+    def do_g_properties_changed(self, changed_properties: GLib.Variant, _invalidated_properties: List[str]) -> None:
         changed = changed_properties.unpack()
         object_path = self.get_object_path()
         logging.debug("%s %s" % (object_path, changed))
         for key, value in changed.items():
             self.emit("property-changed", key, value, object_path)
 
-    def _call(self, method, param=None, reply_handler=None, error_handler=None):
-        def callback(proxy, result, reply, error):
+    def _call(
+        self,
+        method: str,
+        param: GLib.Variant = None,
+        reply_handler: Optional[Callable[..., None]] = None,
+        error_handler: Optional[Callable[[BluezDBusException], None]] = None,
+    ) -> None:
+        def callback(
+            proxy: Base,
+            result: Gio.Task,
+            reply: Optional[Callable[..., None]],
+            error: Optional[Callable[[BluezDBusException], None]],
+        ) -> None:
             try:
                 value = proxy.call_finish(result).unpack()
                 if reply:
                     reply(*value)
-                else:
-                    return value
             except GLib.Error as e:
                 if error:
                     error(parse_dbus_error(e))
@@ -94,7 +101,7 @@ class Base(Gio.DBusProxy, metaclass=BaseMeta):
         self.call(method, param, Gio.DBusCallFlags.NONE, GLib.MAXINT, None,
                   callback, reply_handler, error_handler)
 
-    def get(self, name):
+    def get(self, name: str) -> Any:
         try:
             prop = self.call_sync(
                 'org.freedesktop.DBus.Properties.Get',
@@ -111,7 +118,7 @@ class Base(Gio.DBusProxy, metaclass=BaseMeta):
             else:
                 raise parse_dbus_error(e)
 
-    def set(self, name, value):
+    def set(self, name: str, value: Union[str, int, bool]) -> None:
         v = GLib.Variant(self.__variant_map[type(value)], value)
         param = GLib.Variant('(ssv)', (self._interface_name, name, v))
         self.call('org.freedesktop.DBus.Properties.Set',
@@ -120,7 +127,7 @@ class Base(Gio.DBusProxy, metaclass=BaseMeta):
                   GLib.MAXINT,
                   None)
 
-    def get_properties(self):
+    def get_properties(self) -> Dict[str, Any]:
         param = GLib.Variant('(s)', (self._interface_name,))
         res = self.call_sync('org.freedesktop.DBus.Properties.GetAll',
                              param,
@@ -128,7 +135,7 @@ class Base(Gio.DBusProxy, metaclass=BaseMeta):
                              GLib.MAXINT,
                              None)
 
-        props = res.unpack()[0]
+        props: Dict[str, Any] = res.unpack()[0]
         for k, v in self.__fallback.items():
             if k in props:
                 continue
@@ -137,11 +144,11 @@ class Base(Gio.DBusProxy, metaclass=BaseMeta):
 
         return props
 
-    def __getitem__(self, key):
+    def __getitem__(self, key: str) -> Any:
         return self.get(key)
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, key: str, value: Union[str, int, bool]) -> None:
         self.set(key, value)
 
-    def __contains__(self, key):
+    def __contains__(self, key: str) -> bool:
         return key in self.get_properties()

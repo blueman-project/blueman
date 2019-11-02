@@ -1,4 +1,6 @@
-from gi.repository import GObject
+from typing import Dict, List
+
+from gi.repository import GObject, GLib
 from gi.repository import Gio
 
 from blueman.typing import GSignals
@@ -16,13 +18,20 @@ class AnyBase(GObject.GObject):
     __bus_name = 'org.bluez'
     __bus_interface_name = 'org.freedesktop.DBus.Properties'
 
-    def __init__(self, interface_name):
+    def __init__(self, interface_name: str):
         super().__init__()
 
         self.__interface_name = interface_name
         self.__signal = None
 
-        def on_signal(_connection, _sender_name, object_path, _interface_name, _signal_name, param):
+        def on_signal(
+            _connection: Gio.DBusConnection,
+            _sender_name: str,
+            object_path: str,
+            _interface_name: str,
+            _signal_name: str,
+            param: GLib.Variant,
+        ) -> None:
             iface_name, changed, invalidated = param.unpack()
             if iface_name == self.__interface_name:
                 self._on_properties_changed(object_path, changed, invalidated)
@@ -31,11 +40,13 @@ class AnyBase(GObject.GObject):
             self.__bus_name, self.__bus_interface_name, 'PropertiesChanged', None, None,
             Gio.DBusSignalFlags.NONE, on_signal)
 
-    def _on_properties_changed(self, object_path, changed_properties, invalidated):
+    def _on_properties_changed(
+        self, object_path: str, changed_properties: Dict[str, object], _invalidated: List[str]
+    ) -> None:
         for name, value in changed_properties.items():
             self.emit('property-changed', name, value, object_path)
 
-    def close(self):
+    def close(self) -> None:
         if self.__signal:
             self.__bus.signal_unsubscribe(self.__signal)
             self.__signal = None

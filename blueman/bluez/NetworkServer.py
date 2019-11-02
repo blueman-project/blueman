@@ -6,13 +6,13 @@ from gi.repository import GLib
 class NetworkServer(Base):
     _interface_name = 'org.bluez.NetworkServer1'
 
-    def __init__(self, obj_path):
+    def __init__(self, obj_path: str):
         super().__init__(interface_name=self._interface_name, obj_path=obj_path)
 
-    def register(self, uuid, bridge):
+    def register(self, uuid: str, bridge: str) -> None:
         param = GLib.Variant('(ss)', (uuid, bridge))
         self._call('Register', param)
 
-    def unregister(self, uuid):
+    def unregister(self, uuid: str) -> None:
         param = GLib.Variant('(s)', (uuid,))
         self._call('Unregister', param)

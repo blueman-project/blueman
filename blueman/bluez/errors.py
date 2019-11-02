@@ -1,11 +1,12 @@
 # coding=utf-8
+from gi.repository import GLib
 
 
 class BluezDBusException(Exception):
-    def __init__(self, reason):
+    def __init__(self, reason: str):
         self.reason = reason
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.reason
 
 
@@ -124,7 +125,7 @@ __DICT_ERROR__ = {'org.bluez.Error.Failed': DBusFailedError,
                   'org.freedesktop.DBus.Error.ServiceUnknown': DBusServiceUnknownError}
 
 
-def parse_dbus_error(exception):
+def parse_dbus_error(exception: GLib.Error) -> BluezDBusException:
     global __DICT_ERROR__
 
     gerror, dbus_error, message = exception.message.split(':', 2)
