@@ -14,12 +14,13 @@ class AnyBase(GObject.GObject):
     connect_signal = GObject.GObject.connect
     disconnect_signal = GObject.GObject.disconnect
 
-    __bus = Gio.bus_get_sync(Gio.BusType.SYSTEM)
     __bus_name = 'org.bluez'
     __bus_interface_name = 'org.freedesktop.DBus.Properties'
 
     def __init__(self, interface_name: str):
         super().__init__()
+
+        self.__bus = Gio.bus_get_sync(Gio.BusType.SYSTEM)
 
         self.__interface_name = interface_name
         self.__signal = None
