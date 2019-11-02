@@ -54,15 +54,14 @@ class Base(Gio.DBusProxy, metaclass=BaseMeta):
         'property-changed': (GObject.SignalFlags.NO_HOOKS, None, (str, object, str))
     }
 
-    def __init__(self, interface_name, obj_path, *args, **kwargs):
+    def __init__(self, interface_name, obj_path):
         super().__init__(
             g_name=self.__name,
             g_interface_name=interface_name,
             g_object_path=obj_path,
             g_bus_type=self.__bus_type,
             # FIXME See issue 620
-            g_flags=Gio.DBusProxyFlags.GET_INVALIDATED_PROPERTIES,
-            *args, **kwargs)
+            g_flags=Gio.DBusProxyFlags.GET_INVALIDATED_PROPERTIES)
 
         self.init()
         self.__interface_name = interface_name
