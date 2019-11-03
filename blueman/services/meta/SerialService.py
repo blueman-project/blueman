@@ -2,7 +2,7 @@
 import logging
 import os
 import subprocess
-from typing import Callable, Optional
+from typing import Callable, Dict, Optional
 
 from gi.repository import Gio, GLib
 
@@ -14,6 +14,10 @@ from blueman.Constants import RFCOMM_WATCHER_PATH
 
 
 class SerialService(Service):
+    def __init__(self, device, uuid):
+        super().__init__(device, uuid)
+        self._handlerids: Dict[int, int] = {}
+
     @property
     def available(self) -> bool:
         # It will ask to pair anyway so not make it available
@@ -34,7 +38,11 @@ class SerialService(Service):
     ) -> None:
         if event_type == Gio.FileMonitorEvent.DELETED:
             logging.info('%s got deleted' % file.get_path())
-            monitor.disconnect_by_func(self.on_file_changed, port)
+            if port in self._handlerids:
+                handler_id = self._handlerids.pop(port)
+                monitor.disconnect(handler_id)
+            else:
+                logging.warning(f"No handler id for {port}")
         elif event_type == Gio.FileMonitorEvent.ATTRIBUTE_CHANGED:
             self.try_replace_root_watcher(monitor, file.get_path(), port)
 
@@ -46,7 +54,11 @@ class SerialService(Service):
         logging.info('Replacing root watcher')
         Mechanism().CloseRFCOMM('(d)', port)
         subprocess.Popen([RFCOMM_WATCHER_PATH, path])
-        monitor.disconnect_by_func(self.on_file_changed, port)
+        if port in self._handlerids:
+            handler_id = self._handlerids.pop(port)
+            monitor.disconnect(handler_id)
+        else:
+            logging.warning(f"No handler id for {port}")
 
     def connect(
         self,
@@ -71,7 +83,7 @@ class SerialService(Service):
             logging.info('Starting rfcomm watcher as root')
             Mechanism().OpenRFCOMM('(d)', port_id)
             mon = Gio.File.new_for_path(filename).monitor_file(Gio.FileMonitorFlags.NONE)
-            mon.connect('changed', self.on_file_changed, port_id)
+            self._handlerids[port_id] = mon.connect('changed', self.on_file_changed, port_id)
             self.try_replace_root_watcher(mon, filename, port_id)
 
             if reply_handler:

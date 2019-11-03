@@ -58,13 +58,18 @@ class DeviceList(GenericList):
         self.monitored_devices: List[str] = []
 
         self.manager = Manager()
-        self.manager.connect_signal('adapter-removed', self.__on_manager_signal, 'adapter-removed')
-        self.manager.connect_signal('adapter-added', self.__on_manager_signal, 'adapter-added')
-        self.manager.connect_signal('device-created', self.__on_manager_signal, 'device-created')
-        self.manager.connect_signal('device-removed', self.__on_manager_signal, 'device-removed')
+        self._managerhandlers: List[int] = []
+        self._managerhandlers.append(self.manager.connect_signal('adapter-removed', self.__on_manager_signal,
+                                                                 'adapter-removed'))
+        self._managerhandlers.append(self.manager.connect_signal('adapter-added', self.__on_manager_signal,
+                                                                 'adapter-added'))
+        self._managerhandlers.append(self.manager.connect_signal('device-created', self.__on_manager_signal,
+                                                                 'device-created'))
+        self._managerhandlers.append(self.manager.connect_signal('device-removed', self.__on_manager_signal,
+                                                                 'device-removed'))
 
         self.any_device = AnyDevice()
-        self.any_device.connect_signal("property-changed", self._on_device_property_changed)
+        self._anydevhandler = self.any_device.connect_signal("property-changed", self._on_device_property_changed)
 
         self.__discovery_time = 0
         self.__adapter_path = None
@@ -82,9 +87,9 @@ class DeviceList(GenericList):
 
         self.set_adapter(adapter_name)
         self._any_adapter = AnyAdapter()
-        self._any_adapter.connect_signal("property-changed", self._on_property_changed)
+        self._anyadapterhandler = self._any_adapter.connect_signal("property-changed", self._on_property_changed)
 
-        self.selection.connect('changed', self.on_selection_changed)
+        self._selectionhandler = self.selection.connect('changed', self.on_selection_changed)
 
         self.icon_theme = Gtk.IconTheme.get_default()
         self.icon_theme.prepend_search_path(ICON_PATH)
@@ -92,10 +97,11 @@ class DeviceList(GenericList):
         self.icon_theme.connect("changed", self.on_icon_theme_changed)
 
     def destroy(self):
-        self.any_device.disconnect_by_func(self._on_device_property_changed)
-        self._any_adapter.disconnect_by_func(self._on_property_changed)
-        self.selection.disconnect_by_func(self.on_selection_changed)
-        self.manager.disconnect_by_func(self.__on_manager_signal)
+        self.any_device.disconnect(self._anydevhandler)
+        self._any_adapter.disconnect(self._anyadapterhandler)
+        self.selection.disconnect(self._selectionhandler)
+        for handler in self._managerhandlers:
+            self.manager.disconnect(handler)
         super().destroy()
 
     def __on_manager_signal(self, manager, path, signal_name):

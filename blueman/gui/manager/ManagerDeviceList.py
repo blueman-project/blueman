@@ -1,5 +1,6 @@
 # coding=utf-8
 from gettext import gettext as _
+from typing import Optional
 import html
 import logging
 import cairo
@@ -83,6 +84,8 @@ class ManagerDeviceList(DeviceList):
         Gtk.Widget.drag_dest_add_uri_targets(self)
 
         self.set_search_equal_func(self.search_func, None)
+
+        self._faderhandler: Optional[int] = None
 
     def _on_settings_changed(self, settings, key):
         if key in ('sort-by', 'sort-order'):
@@ -218,13 +221,14 @@ class ManagerDeviceList(DeviceList):
         tree_iter = self.find_device(device)
 
         row_fader = self.get(tree_iter, "row_fader")["row_fader"]
-        row_fader.connect("animation-finished", self.__on_fader_finished, device, tree_iter)
+        self._faderhandler = row_fader.connect("animation-finished", self.__on_fader_finished, device, tree_iter)
         row_fader.thaw()
         self.emit("device-selected", None, None)
         row_fader.animate(start=row_fader.get_state(), end=0.0, duration=400)
 
     def __on_fader_finished(self, fader, device, tree_iter):
-        fader.disconnect_by_func(self.__on_fader_finished)
+        fader.disconnect(self._faderhandler)
+        self._faderhandler = None
         fader.freeze()
         super().device_remove_event(device)
 
@@ -254,10 +258,10 @@ class ManagerDeviceList(DeviceList):
             cell_fader.freeze()
 
             def on_finished(fader):
-                fader.disconnect_by_func(on_finished)
+                fader.disconnect(faderhandler)
                 fader.freeze()
 
-            row_fader.connect("animation-finished", on_finished)
+            faderhandler = row_fader.connect("animation-finished", on_finished)
             row_fader.set_state(0.0)
             row_fader.animate(start=0.0, end=1.0, duration=500)
 
@@ -367,9 +371,9 @@ class ManagerDeviceList(DeviceList):
 
                 def on_finished(fader):
                     fader.freeze()
-                    fader.disconnect_by_func(on_finished)
+                    fader.disconnect(faderhandler)
 
-                fader.connect("animation-finished", on_finished)
+                faderhandler = fader.connect("animation-finished", on_finished)
 
             to_store = {}
             if round(row["rssi"], -1) != round(rssi_perc, -1):
@@ -404,12 +408,12 @@ class ManagerDeviceList(DeviceList):
                 fader.animate(start=fader.get_state(), end=0.0, duration=400)
 
                 def on_finished(fader):
-                    fader.disconnect_by_func(on_finished)
+                    fader.disconnect(faderhandler)
                     fader.freeze()
                     if row_ref.valid():
                         self.set(tree_iter, rssi_pb=None, lq_pb=None, tpl_pb=None)
 
-                fader.connect("animation-finished", on_finished)
+                faderhandler = fader.connect("animation-finished", on_finished)
 
     def tooltip_query(self, tw, x, y, kb, tooltip):
         path = self.get_path_at_pos(x, y)
