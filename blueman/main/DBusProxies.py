@@ -1,22 +1,14 @@
 # coding=utf-8
 from gi.repository import Gio, GLib
-from gi.types import GObjectMeta
+
+from blueman.gobject import SingletonGObjectMeta
 
 
 class DBusProxyFailed(Exception):
     pass
 
 
-class ProxyBaseMeta(GObjectMeta):
-    _instance = None
-
-    def __call__(cls, *args, **kwargs):
-        if not cls._instance:
-            cls._instance = super().__call__(*args, **kwargs)
-        return cls._instance
-
-
-class ProxyBase(Gio.DBusProxy, metaclass=ProxyBaseMeta):
+class ProxyBase(Gio.DBusProxy, metaclass=SingletonGObjectMeta):
     def __init__(self, name, interface_name, object_path='/', systembus=False, *args, **kwargs):
         if systembus:
             bustype = Gio.BusType.SYSTEM

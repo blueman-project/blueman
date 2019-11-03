@@ -4,10 +4,10 @@ from typing import Dict, TYPE_CHECKING, List
 
 from gi.repository import GObject
 from gi.repository import GLib
-from gi.types import GObjectMeta
 import weakref
 import logging
 
+from blueman.gobject import SingletonGObjectMeta
 from blueman.typing import GSignals
 
 try:
@@ -364,17 +364,7 @@ pa_context_errno.restype = c_int
 pa_context_errno.argtypes = [c_void_p]
 
 
-class PulseAudioUtilsMeta(GObjectMeta):
-    _instance = None
-
-    def __call__(cls, *args, **kwargs):
-        if not cls._instance:
-            cls._instance = super().__call__(*args, **kwargs)
-
-        return cls._instance
-
-
-class PulseAudioUtils(GObject.GObject, metaclass=PulseAudioUtilsMeta):
+class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
     __gsignals__: GSignals = {
         'connected': (GObject.SignalFlags.NO_HOOKS, None, ()),
         'disconnected': (GObject.SignalFlags.NO_HOOKS, None, ()),

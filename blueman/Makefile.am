@@ -12,6 +12,7 @@ blueman_PYTHON = 	\
 	Functions.py	\
 	Sdp.py		\
 	Service.py	\
+	gobject.py	\
 	typing.py	\
 	__init__.py
 
