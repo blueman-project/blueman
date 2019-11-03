@@ -1,6 +1,7 @@
 # coding=utf-8
 import logging
 from gettext import gettext as _, bind_textdomain_codeset
+from typing import Optional
 
 from blueman.bluez.Manager import Manager
 from blueman.bluez.errors import DBusNoSuchAdapterError
@@ -46,6 +47,8 @@ class Blueman(Gtk.Window):
         area = MessageArea()
         grid.attach(area, 0, 3, 1, 1)
 
+        self._applethandlerid: Optional[int] = None
+
         # Add margin for resize grip or it will overlap
         if self.get_has_resize_grip():
             statusbar = self.Builder.get_object("statusbar")
@@ -79,7 +82,9 @@ class Blueman(Gtk.Window):
 
         def on_dbus_name_vanished(_connection, name):
             logging.info(name)
-            self.Applet.disconnect_by_func(on_applet_signal)
+            if self._applethandlerid:
+                self.Applet.disconnect(self._applethandlerid)
+                self._applethandlerid = None
 
             self.hide()
 
@@ -119,7 +124,7 @@ class Blueman(Gtk.Window):
                     logging.error('No adapter(s) found, exiting')
                     exit(1)
 
-            self.Applet.connect('g-signal', on_applet_signal)
+            self._applethandlerid = self.Applet.connect('g-signal', on_applet_signal)
 
             self.connect("delete-event", on_window_delete)
             self.props.icon_name = "blueman"
@@ -168,8 +173,12 @@ class Blueman(Gtk.Window):
             key, value = key_value
             if key == "Discovering" and not value:
                 prog.finalize()
-                self.List.disconnect_by_func(on_progress)
-                self.List.disconnect_by_func(prop_changed)
+                # FIXME for some reason the signal handler is None
+                if proghandler is not None:
+                    prog.disconnect(proghandler)
+
+                self.List.disconnect(s1)
+                self.List.disconnect(s2)
 
         def on_progress(lst, frac):
             if abs(1.0 - frac) <= 0.00001:
@@ -179,15 +188,15 @@ class Blueman(Gtk.Window):
                 prog.fraction(frac)
 
         prog = ManagerProgressbar(self, text=_("Searching"))
-        prog.connect("cancelled", lambda x: self.List.stop_discovery())
+        proghandler = prog.connect("cancelled", lambda x: self.List.stop_discovery())
         try:
             self.List.discover_devices()
         except Exception as e:
             prog.finalize()
             MessageArea.show_message(*e_(e))
 
-        self.List.connect("discovery-progress", on_progress)
-        self.List.connect("adapter-property-changed", prop_changed)
+        s1 = self.List.connect("discovery-progress", on_progress)
+        s2 = self.List.connect("adapter-property-changed", prop_changed)
 
     def setup(self, device):
         command = "blueman-assistant --device=%s" % device['Address']

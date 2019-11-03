@@ -118,9 +118,10 @@ class Dialog:
         cr1 = Gtk.CellRendererText()
         cr1.props.ellipsize = Pango.EllipsizeMode.END
 
-        plugin.connect("monitor-added", self.monitor_added),
-        plugin.connect("monitor-removed", self.monitor_removed),
-        plugin.connect("stats", self.on_stats)
+        self._handlerids: List[int] = []
+        self._handlerids.append(plugin.connect("monitor-added", self.monitor_added))
+        self._handlerids.append(plugin.connect("monitor-removed", self.monitor_removed))
+        self._handlerids.append(plugin.connect("stats", self.on_stats))
 
         cr2 = Gtk.CellRendererText()
         cr2.props.sensitive = False
@@ -189,9 +190,9 @@ class Dialog:
         self.dialog.show()
 
     def on_response(self, dialog, response):
-        self.plugin.disconnect_by_func(self.monitor_added)
-        self.plugin.disconnect_by_func(self.monitor_removed)
-        self.plugin.disconnect_by_func(self.on_stats)
+        for sigid in self._handlerids:
+            self.plugin.disconnect(sigid)
+        self._handlerids = []
         Dialog.running = False
         self.dialog.destroy()
 

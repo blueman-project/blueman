@@ -245,8 +245,8 @@ class ManagerMenu:
         item.show()
         self._adapters_group = item.get_group()
 
-        item.connect("activate", self.on_adapter_selected, object_path)
-        adapter.connect_signal("property-changed", self.on_adapter_property_changed)
+        self._itemhandler = item.connect("activate", self.on_adapter_selected, object_path)
+        self._adapterhandler = adapter.connect_signal("property-changed", self.on_adapter_property_changed)
 
         menu.insert(item, self._insert_adapter_item_pos)
         self._insert_adapter_item_pos += 1
@@ -263,8 +263,8 @@ class ManagerMenu:
         item, adapter = self.adapter_items.pop(adapter_path)
         menu = self.item_adapter.get_submenu()
 
-        item.disconnect_by_func(self.on_adapter_selected, adapter.get_object_path())
-        adapter.disconnect_by_func(self.on_adapter_property_changed)
+        item.disconnect(self._itemhandler)
+        adapter.disconnect(self._adapterhandler)
 
         menu.remove(item)
         self._insert_adapter_item_pos -= 1

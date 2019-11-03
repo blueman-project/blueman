@@ -71,6 +71,7 @@ class Sender(Gtk.Dialog):
         self.files: List[Gio.File] = []
         self.num_files = 0
         self.object_push = None
+        self.object_push_handlers: List[int] = []
         self.transfer = None
 
         self.total_bytes = 0
@@ -268,15 +269,15 @@ class Sender(Gtk.Dialog):
 
     def on_session_added(self, _manager, session_path):
         self.object_push = ObjectPush(session_path)
-        self.object_push.connect("transfer-started", self.on_transfer_started)
-        self.object_push.connect("transfer-failed", self.on_transfer_failed)
+        self.object_push_handlers.append(self.object_push.connect("transfer-started", self.on_transfer_started))
+        self.object_push_handlers.append(self.object_push.connect("transfer-failed", self.on_transfer_failed))
         self.process_queue()
 
     def on_session_removed(self, _manager, session_path):
         logging.debug('Session removed: %s' % session_path)
         if self.object_push:
-            self.object_push.disconnect_by_func(self.on_transfer_started)
-            self.object_push.disconnect_by_func(self.on_transfer_failed)
+            for handlerid in self.object_push_handlers:
+                self.object_push.disconnect(handlerid)
             self.object_push = None
 
     def on_session_failed(self, _client, msg):

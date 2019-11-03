@@ -31,14 +31,16 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
             Gio.BusType.SESSION, Gio.DBusObjectManagerClientFlags.NONE,
             self.__bus_name, '/', None, None, None)
 
-        self._object_manager.connect('object-added', self._on_object_added)
-        self._object_manager.connect('object-removed', self._on_object_removed)
+        self._manager_handlerids: List[int] = []
+        self._manager_handlerids.append(self._object_manager.connect('object-added', self._on_object_added))
+        self._manager_handlerids.append(self._object_manager.connect('object-removed', self._on_object_removed))
 
         weakref.finalize(self, self._on_delete)
 
     def _on_delete(self) -> None:
-        self._object_manager.disconnect_by_func(self._on_object_added)
-        self._object_manager.disconnect_by_func(self._on_object_removed)
+        for handlerid in self._manager_handlerids:
+            self._object_manager.disconnect(handlerid)
+        self._manager_handlerids = []
 
     def _on_object_added(self, _object_manager: Gio.DBusObjectManager, dbus_object: Gio.DBusObject) -> None:
         session_proxy = dbus_object.get_interface('org.bluez.obex.Session1')
@@ -66,8 +68,9 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
             logging.info(object_path)
             transfer = self.__transfers.pop(object_path)
 
-            transfer.disconnect_by_func(self._on_transfer_completed, True)
-            transfer.disconnect_by_func(self._on_transfer_completed, False)
+            # Disconnect as many times as we connect (pygobject bug #106)
+            transfer.disconnect_by_func(self._on_transfer_completed)
+            transfer.disconnect_by_func(self._on_transfer_completed)
 
         if session_proxy:
             logging.info(object_path)

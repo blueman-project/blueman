@@ -152,6 +152,7 @@ class TransferService(AppletPlugin):
     _agent = None
     _watch = None
     _notification = None
+    _handlerids: List[int] = []
 
     def on_load(self):
         def on_reset(*_args):
@@ -221,9 +222,9 @@ class TransferService(AppletPlugin):
         logging.info("%s %s" % (name, owner))
 
         self._manager = Manager()
-        self._manager.connect("transfer-started", self._on_transfer_started)
-        self._manager.connect("transfer-completed", self._on_transfer_completed)
-        self._manager.connect('session-removed', self._on_session_removed)
+        self._handlerids.append(self._manager.connect("transfer-started", self._on_transfer_started))
+        self._handlerids.append(self._manager.connect("transfer-completed", self._on_transfer_completed))
+        self._handlerids.append(self._manager.connect('session-removed', self._on_session_removed))
 
         self._register_agent()
 
@@ -231,10 +232,10 @@ class TransferService(AppletPlugin):
         logging.info("%s not running or was stopped" % name)
 
         if self._manager:
-            self._manager.disconnect_by_func(self._on_transfer_started)
-            self._manager.disconnect_by_func(self._on_transfer_completed)
-            self._manager.disconnect_by_func(self._on_session_removed)
+            for sigid in self._handlerids:
+                self._manager.disconnect(sigid)
             self._manager = None
+            self._handlerids = []
 
         if self._agent:
             self._agent.unregister()

@@ -6,6 +6,7 @@ from gettext import gettext as _
 from html import escape
 import random
 from xml.etree import ElementTree
+from typing import Dict
 
 from blueman.bluez.Device import Device
 from blueman.bluez.AgentManager import AgentManager
@@ -92,6 +93,7 @@ class BluezAgent(DbusService):
 
         self.dialog = None
         self._db = None
+        self._devhandlerids: Dict[str, int] = {}
 
     def register_agent(self):
         logging.info("Register Agent")
@@ -197,7 +199,8 @@ class BluezAgent(DbusService):
     # Workaround BlueZ not calling the Cancel method, see #164
     def _on_device_property_changed(self, device, key, value, path):
         if (key == "Paired" and value) or (key == "Connected" and not value):
-            device.disconnect_by_func(self._on_device_property_changed)
+            handlerid = self._devhandlerids.pop(path)
+            device.disconnect(handlerid)
             self._on_cancel()
 
     def _on_release(self):
@@ -239,7 +242,7 @@ class BluezAgent(DbusService):
     def _on_display_passkey(self, device, passkey, _entered):
         logging.info('DisplayPasskey (%s, %d)' % (device, passkey))
         dev = Device(device)
-        dev.connect_signal("property-changed", self._on_device_property_changed)
+        self._devhandlerids[device] = dev.connect_signal("property-changed", self._on_device_property_changed)
 
         notify_message = _("Pairing passkey for") + " %s: %s" % (self.get_device_string(device), passkey)
         self.n = Notification("Bluetooth", notify_message, 0, icon_name="blueman")
@@ -248,7 +251,7 @@ class BluezAgent(DbusService):
     def _on_display_pin_code(self, device, pin_code):
         logging.info('DisplayPinCode (%s, %s)' % (device, pin_code))
         dev = Device(device)
-        dev.connect_signal("property-changed", self._on_device_property_changed)
+        self._devhandlerids[device] = dev.connect_signal("property-changed", self._on_device_property_changed)
 
         notify_message = _("Pairing PIN code for") + " %s: %s" % (self.get_device_string(device), pin_code)
         self.n = Notification("Bluetooth", notify_message, 0, icon_name="blueman")

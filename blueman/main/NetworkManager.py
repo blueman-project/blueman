@@ -1,6 +1,7 @@
 import gi
 import logging
 import uuid
+from typing import Optional
 
 try:
     gi.require_version('NM', '1.0')
@@ -31,6 +32,7 @@ class NMConnectionBase(object):
         self.active_connection = None
         self.client = NM.Client.new()
         self.Config = Config('org.blueman.gsmsetting', '/org/blueman/gsmsettings/%s/' % self.bdaddr)
+        self._statehandler: Optional[int] = None
 
         self.find_or_create_connection()
 
@@ -78,7 +80,7 @@ class NMConnectionBase(object):
             return  # Keep checking the state changes
 
         # We are done with state changes
-        device.disconnect_by_func(self._on_device_state_changed)
+        device.disconnect(self._statehandler)
         if error_msg is None:
             self._return_or_reply_handler(reply_msg)
         else:
@@ -98,7 +100,7 @@ class NMConnectionBase(object):
         elif device.get_state() == NM.DeviceState.ACTIVATED:
             self._raise_or_error_handler(NMConnectionError('Device %s already activated' % self.bdaddr))
         else:
-            device.connect('state-changed', self._on_device_state_changed)
+            self._statehandler = device.connect('state-changed', self._on_device_state_changed)
             self.client.activate_connection_async(self.connection, device, None, None, on_connection_activate)
 
     def deactivate(self):
