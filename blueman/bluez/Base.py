@@ -14,21 +14,16 @@ class BaseMeta(GObjectMeta):
         if not hasattr(cls, "__instances__"):
             cls.__instances__: Dict[str, Dict[str, "Base"]] = {}
 
-        # cls._interface_name or cls._obj_path need to exist to act as fallback, they may not
-        interface_name = kwargs.get('interface_name')
-        if interface_name is None:
-            interface_name = cls._interface_name
-
         path = kwargs.get('obj_path')
         if path is None:
             path = cls._obj_path
 
-        if interface_name in cls.__instances__:
-            if path in cls.__instances__[interface_name]:
-                return cls.__instances__[interface_name][path]
+        if cls._interface_name in cls.__instances__:
+            if path in cls.__instances__[cls._interface_name]:
+                return cls.__instances__[cls._interface_name][path]
 
         instance: "Base" = super().__call__(**kwargs)
-        cls.__instances__[interface_name] = {path: instance}
+        cls.__instances__[cls._interface_name] = {path: instance}
 
         return instance
 
@@ -45,17 +40,16 @@ class Base(Gio.DBusProxy, metaclass=BaseMeta):
     }
     __instances__: Dict[str, Dict[str, "Base"]]
 
-    def __init__(self, interface_name: str, obj_path: str):
+    def __init__(self, obj_path: str):
         super().__init__(
             g_name=self.__name,
-            g_interface_name=interface_name,
+            g_interface_name=self._interface_name,
             g_object_path=obj_path,
             g_bus_type=self.__bus_type,
             # FIXME See issue 620
             g_flags=Gio.DBusProxyFlags.GET_INVALIDATED_PROPERTIES)
 
         self.init()
-        self.__interface_name = interface_name
         self.__fallback = {'Icon': 'blueman', 'Class': 0, 'Appearance': 0}
 
         self.__variant_map = {str: 's', int: 'u', bool: 'b'}
