@@ -66,7 +66,7 @@ class Sender(Gtk.Dialog):
         self.pb.props.text = _("Connecting")
 
         self.device = device
-        self.adapter = Adapter(adapter_path)
+        self.adapter = Adapter(obj_path=adapter_path)
         self.manager = Manager()
         self.files: List[Gio.File] = []
         self.num_files = 0
@@ -166,7 +166,7 @@ class Sender(Gtk.Dialog):
         self._last_bytes = 0
         self.transferred = 0
 
-        self.transfer = Transfer(transfer_path)
+        self.transfer = Transfer(obj_path=transfer_path)
         self.transfer.connect("error", self.on_transfer_error)
         self.transfer.connect("progress", self.on_transfer_progress)
         self.transfer.connect("completed", self.on_transfer_completed)
@@ -268,7 +268,7 @@ class Sender(Gtk.Dialog):
             self.error_dialog = d
 
     def on_session_added(self, _manager, session_path):
-        self.object_push = ObjectPush(session_path)
+        self.object_push = ObjectPush(obj_path=session_path)
         self.object_push_handlers.append(self.object_push.connect("transfer-started", self.on_transfer_started))
         self.object_push_handlers.append(self.object_push.connect("transfer-failed", self.on_transfer_failed))
         self.process_queue()

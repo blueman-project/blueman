@@ -313,7 +313,7 @@ class NetUsage(AppletPlugin, GObject.GObject):
 
     def _on_network_property_changed(self, _network, key, value, path):
         if key == "Interface" and value != "":
-            d = Device(path)
+            d = Device(obj_path=path)
             self.monitor_interface(Monitor, d, value)
 
     def activate_ui(self):

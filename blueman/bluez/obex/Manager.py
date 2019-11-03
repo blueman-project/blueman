@@ -49,7 +49,7 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
 
         if transfer_proxy:
             logging.info(object_path)
-            transfer = Transfer(object_path)
+            transfer = Transfer(obj_path=object_path)
             transfer.connect_signal('completed', self._on_transfer_completed, True)
             transfer.connect_signal('error', self._on_transfer_completed, False)
             self.__transfers[object_path] = transfer

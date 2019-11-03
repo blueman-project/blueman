@@ -53,7 +53,7 @@ class SerialManager(AppletPlugin):
 
     def on_device_property_changed(self, path, key, value):
         if key == "Connected" and not value:
-            device = Device(path)
+            device = Device(obj_path=path)
             self.terminate_all_scripts(device["Address"])
             self.on_device_disconnect(device)
 

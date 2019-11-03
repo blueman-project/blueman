@@ -10,7 +10,7 @@ from blueman.bluez.errors import BluezDBusException
 class NetworkService(Service):
     def __init__(self, device: Device, uuid: str):
         super().__init__(device, uuid)
-        self._service = Network(device.get_object_path())
+        self._service = Network(obj_path=device.get_object_path())
 
     @property
     def available(self) -> bool:

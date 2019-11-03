@@ -201,5 +201,5 @@ class PowerManager(AppletPlugin):
             return "blueman-disabled", "blueman-disabled"
 
     def on_adapter_added(self, path):
-        adapter = Adapter(path)
+        adapter = Adapter(obj_path=path)
         adapter.set("Powered", self.adapter_state)

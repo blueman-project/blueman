@@ -139,14 +139,14 @@ class BluezAgent(DbusService):
         return dialog, pin_entry
 
     def get_device_string(self, device_path):
-        device = Device(device_path)
+        device = Device(obj_path=device_path)
         return "<b>%s</b> (%s)" % (escape(device["Alias"]), device["Address"])
 
     def _lookup_default_pin(self, device_path):
         if not self._db:
             self._db = ElementTree.parse(os.path.join(PKGDATA_DIR, 'pin-code-database.xml'))
 
-        device = Device(device_path)
+        device = Device(obj_path=device_path)
         lookup_dict = {
             'name': device['Name'],
             'type': bt_class_to_string(device['Class']),
@@ -241,7 +241,7 @@ class BluezAgent(DbusService):
 
     def _on_display_passkey(self, device, passkey, _entered):
         logging.info('DisplayPasskey (%s, %d)' % (device, passkey))
-        dev = Device(device)
+        dev = Device(obj_path=device)
         self._devhandlerids[device] = dev.connect_signal("property-changed", self._on_device_property_changed)
 
         notify_message = _("Pairing passkey for") + " %s: %s" % (self.get_device_string(device), passkey)
@@ -250,7 +250,7 @@ class BluezAgent(DbusService):
 
     def _on_display_pin_code(self, device, pin_code):
         logging.info('DisplayPinCode (%s, %s)' % (device, pin_code))
-        dev = Device(device)
+        dev = Device(obj_path=device)
         self._devhandlerids[device] = dev.connect_signal("property-changed", self._on_device_property_changed)
 
         notify_message = _("Pairing PIN code for") + " %s: %s" % (self.get_device_string(device), pin_code)
@@ -282,7 +282,7 @@ class BluezAgent(DbusService):
             logging.info(action)
 
             if action == "always":
-                device = Device(n._device)
+                device = Device(obj_path=n._device)
                 device.set("Trusted", True)
             if action == "always" or action == "accept":
                 ok()

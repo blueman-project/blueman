@@ -17,8 +17,8 @@ class Transfer(Base):
 
     _interface_name = 'org.bluez.obex.Transfer1'
 
-    def __init__(self, transfer_path: str):
-        super().__init__(interface_name=self._interface_name, obj_path=transfer_path)
+    def __init__(self, obj_path: str):
+        super().__init__(interface_name=self._interface_name, obj_path=obj_path)
 
     @property
     def filename(self) -> Optional[str]:

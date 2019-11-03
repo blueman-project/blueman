@@ -121,7 +121,7 @@ class DeviceList(GenericList):
         if signal_name == 'device-created':
             tree_iter = self.find_device_by_path(path)
             if tree_iter is None:
-                dev = Device(path)
+                dev = Device(obj_path=path)
                 self.device_add_event(dev)
 
         if signal_name == 'device-removed':
