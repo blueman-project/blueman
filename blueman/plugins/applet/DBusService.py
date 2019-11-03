@@ -44,14 +44,14 @@ class DBusService(AppletPlugin):
             self.parent.Plugins.RecentConns.notify(object_path, uuid)
 
         if uuid == '00000000-0000-0000-0000-000000000000':
-            device = Device(object_path)
+            device = Device(obj_path=object_path)
             device.connect(reply_handler=ok, error_handler=err)
         else:
             def cb(_inst, ret):
                 if ret:
                     raise StopException
 
-            service = get_service(Device(object_path), uuid)
+            service = get_service(Device(obj_path=object_path), uuid)
             assert service is not None
 
             if isinstance(service, SerialService) and 'NMDUNSupport' in self.parent.Plugins.get_loaded():
@@ -74,14 +74,14 @@ class DBusService(AppletPlugin):
 
     def _disconnect_service(self, object_path, uuid, port, ok, err):
         if uuid == '00000000-0000-0000-0000-000000000000':
-            device = Device(object_path)
+            device = Device(obj_path=object_path)
             device.disconnect(reply_handler=ok, error_handler=err)
         else:
             def cb(_inst, ret):
                 if ret:
                     raise StopException
 
-            service = get_service(Device(object_path), uuid)
+            service = get_service(Device(obj_path=object_path), uuid)
             assert service is not None
 
             if isinstance(service, SerialService) and 'NMDUNSupport' in self.parent.Plugins.get_loaded():

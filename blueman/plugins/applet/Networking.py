@@ -50,7 +50,7 @@ class Networking(AppletPlugin):
 
     def on_unload(self):
         for adapter_path in self._registered:
-            s = NetworkServer(adapter_path)
+            s = NetworkServer(obj_path=adapter_path)
             s.unregister("nap")
 
         self._registered = {}
@@ -75,7 +75,7 @@ class Networking(AppletPlugin):
 
                 registered = self._registered.setdefault(object_path, False)
 
-                s = NetworkServer(object_path)
+                s = NetworkServer(obj_path=object_path)
                 if on and not registered:
                     s.register("nap", "pan1")
                     self._registered[object_path] = True

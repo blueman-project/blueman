@@ -83,8 +83,8 @@ class Agent(DbusService):
             else:
                 err(ObexErrorRejected("Rejected"))
 
-        transfer = Transfer(transfer_path)
-        session = Session(transfer.session)
+        transfer = Transfer(obj_path=transfer_path)
+        session = Session(obj_path=transfer.session)
         root = session.root
         address = session.address
         filename = transfer.name

@@ -98,7 +98,7 @@ class BluemanAdapters(Gtk.Window):
     def on_adapter_added(self, _manager, adapter_path):
         hci_dev = os.path.basename(adapter_path)
         if hci_dev not in self._adapters:
-            self._adapters[hci_dev] = Adapter(adapter_path)
+            self._adapters[hci_dev] = Adapter(obj_path=adapter_path)
 
         self._adapters[hci_dev].connect_signal("property-changed", self.on_property_changed)
         self.add_to_notebook(self._adapters[hci_dev])

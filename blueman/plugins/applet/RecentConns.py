@@ -188,7 +188,7 @@ class RecentConns(AppletPlugin):
         self.initialize()
 
     def notify(self, object_path, uuid):
-        device = Device(object_path)
+        device = Device(obj_path=object_path)
         logging.info("%s %s" % (device, uuid))
         item = {}
         try:

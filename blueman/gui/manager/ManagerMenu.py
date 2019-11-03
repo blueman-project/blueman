@@ -237,7 +237,7 @@ class ManagerMenu:
                 self.blueman.List.set_adapter(adapter_path)
 
     def on_adapter_added(self, _manager, adapter_path):
-        adapter = Adapter(adapter_path)
+        adapter = Adapter(obj_path=adapter_path)
         menu = self.item_adapter.get_submenu()
         object_path = adapter.get_object_path()
 

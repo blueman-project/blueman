@@ -67,7 +67,7 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
             if proxy:
                 paths.append(proxy.get_object_path())
 
-        return [Adapter(path) for path in paths]
+        return [Adapter(obj_path=path) for path in paths]
 
     def get_adapter(self, pattern: Optional[str] = None) -> Adapter:
         adapters = self.get_adapters()
@@ -93,7 +93,7 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
                 if object_path.startswith(adapter_path):
                     paths.append(object_path)
 
-        return [Device(path) for path in paths]
+        return [Device(obj_path=path) for path in paths]
 
     def find_device(self, address: str, adapter_path: str = "/") -> Optional[Device]:
         for device in self.get_devices(adapter_path):

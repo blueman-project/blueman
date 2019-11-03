@@ -10,33 +10,24 @@ from blueman.typing import GSignals
 
 
 class BaseMeta(GObjectMeta):
-    def __call__(cls, *args: str, **kwargs: str) -> "Base":
-        instances: Dict[str, Dict[str, "Base"]] = cls.__dict__.setdefault("__instances__", {})
+    def __call__(cls, **kwargs: str) -> "Base":
+        if not hasattr(cls, "__instances__"):
+            cls.__instances__: Dict[str, Dict[str, "Base"]] = {}
 
-        path = None
-        interface_name = None
-
-        if kwargs:
-            interface_name = kwargs.get('interface_name')
-            path = kwargs.get('obj_path')
-
-        if args:
-            for arg in args:
-                if args is None:
-                    continue
-                elif '/' in arg:
-                    path = arg
-                elif '.' in arg:
-                    interface_name = arg
-
-        if not interface_name:
+        # cls._interface_name or cls._obj_path need to exist to act as fallback, they may not
+        interface_name = kwargs.get('interface_name')
+        if interface_name is None:
             interface_name = cls._interface_name
 
-        if interface_name in instances:
-            if path in instances[interface_name]:
-                return instances[interface_name][path]
+        path = kwargs.get('obj_path')
+        if path is None:
+            path = cls._obj_path
 
-        instance: "Base" = super().__call__(*args, **kwargs)
+        if interface_name in cls.__instances__:
+            if path in cls.__instances__[interface_name]:
+                return cls.__instances__[interface_name][path]
+
+        instance: "Base" = super().__call__(**kwargs)
         cls.__instances__[interface_name] = {path: instance}
 
         return instance
@@ -52,6 +43,7 @@ class Base(Gio.DBusProxy, metaclass=BaseMeta):
     __gsignals__: GSignals = {
         'property-changed': (GObject.SignalFlags.NO_HOOKS, None, (str, object, str))
     }
+    __instances__: Dict[str, Dict[str, "Base"]]
 
     def __init__(self, interface_name: str, obj_path: str):
         super().__init__(

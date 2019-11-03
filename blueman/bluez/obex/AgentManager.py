@@ -8,9 +8,10 @@ from gi.repository import GLib
 
 class AgentManager(Base):
     _interface_name = 'org.bluez.obex.AgentManager1'
+    _obj_path = '/org/bluez/obex'
 
     def __init__(self) -> None:
-        super().__init__(interface_name=self._interface_name, obj_path='/org/bluez/obex')
+        super().__init__(interface_name=self._interface_name, obj_path=self._obj_path)
 
     def register_agent(self, agent_path: str) -> None:
         def on_registered() -> None:

@@ -14,9 +14,10 @@ class Client(Base):
     }
 
     _interface_name = 'org.bluez.obex.Client1'
+    _obj_path = '/org/bluez/obex'
 
     def __init__(self) -> None:
-        super().__init__(interface_name=self._interface_name, obj_path='/org/bluez/obex')
+        super().__init__(interface_name=self._interface_name, obj_path=self._obj_path)
 
     def create_session(self, dest_addr: str, source_addr: str = "00:00:00:00:00:00", pattern: str = "opp") -> None:
         def on_session_created(session_path: str) -> None:

@@ -78,7 +78,8 @@ class SerialService(Service):
                 raise error
 
         try:
-            port_id = create_rfcomm_device(Adapter(self.device["Adapter"])['Address'], self.device["Address"], channel)
+            port_id = create_rfcomm_device(Adapter(obj_path=self.device["Adapter"])['Address'], self.device["Address"],
+                                           channel)
             filename = '/dev/rfcomm%d' % port_id
             logging.info('Starting rfcomm watcher as root')
             Mechanism().OpenRFCOMM('(d)', port_id)
