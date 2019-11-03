@@ -11,7 +11,7 @@ class AgentManager(Base):
     _obj_path = '/org/bluez/obex'
 
     def __init__(self) -> None:
-        super().__init__(interface_name=self._interface_name, obj_path=self._obj_path)
+        super().__init__(obj_path=self._obj_path)
 
     def register_agent(self, agent_path: str) -> None:
         def on_registered() -> None:

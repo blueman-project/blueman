@@ -8,7 +8,7 @@ class AgentManager(Base):
     _obj_path = '/org/bluez'
 
     def __init__(self) -> None:
-        super().__init__(interface_name=self._interface_name, obj_path=self._obj_path)
+        super().__init__(obj_path=self._obj_path)
 
     def register_agent(self, agent_path: str, capability: str = "", default: bool = False) -> None:
         param = GLib.Variant('(os)', (agent_path, capability))
