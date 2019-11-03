@@ -41,6 +41,14 @@ def get_dns_servers():
     return dns_servers
 
 
+def get_binary(*names):
+    for name in names:
+        path = have(name)
+        if path:
+            return path
+    raise FileNotFoundError(f"{' '.join(names)} not found")
+
+
 class DnsMasqHandler(object):
     def __init__(self, netconf):
         self.pid = None
@@ -52,7 +60,7 @@ class DnsMasqHandler(object):
                 self.do_remove()
 
             ipiface = ipaddress.ip_interface('/'.join((self.netconf.ip4_address, '255.255.255.0')))
-            cmd = [have("dnsmasq"), "--port=0", "--pid-file=/var/run/dnsmasq.pan1.pid", "--except-interface=lo",
+            cmd = [get_binary("dnsmasq"), "--port=0", "--pid-file=/var/run/dnsmasq.pan1.pid", "--except-interface=lo",
                    "--interface=pan1", "--bind-interfaces",
                    "--dhcp-range=%s,%s,60m" % (ipiface.network[2], ipiface.network[-2]),
                    "--dhcp-option=option:router,%s" % self.netconf.ip4_address]
@@ -153,7 +161,7 @@ class DhcpdHandler(object):
                 f.write(dhcp_config)
                 f.write(subnet)
 
-            cmd = [have("dhcpd3") or have("dhcpd"), "-pf", "/var/run/dhcpd.pan1.pid", "pan1"]
+            cmd = [get_binary("dhcpd3", "dhcpd"), "-pf", "/var/run/dhcpd.pan1.pid", "pan1"]
             p = Popen(cmd, stderr=PIPE)
 
             error = p.communicate()[1]
@@ -221,7 +229,7 @@ class UdhcpdHandler(object):
             os.close(config_file)
 
             logging.info("Running udhcpd with config file %s" % config_path)
-            cmd = [have("udhcpd"), "-S", config_path]
+            cmd = [get_binary("udhcpd"), "-S", config_path]
             p = Popen(cmd, stderr=PIPE)
             error = p.communicate()[1]
 
