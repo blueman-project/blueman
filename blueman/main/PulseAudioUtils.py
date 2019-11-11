@@ -19,20 +19,6 @@ except OSError:
 if TYPE_CHECKING:
     from typing_extensions import TypedDict
 
-    class InfoBase(TypedDict):
-        name: str
-        proplist: Dict[str, str]
-        owner_module: int
-        driver: str
-
-    class SinkInfo(InfoBase):
-        description: str
-
-    SourceInfo = SinkInfo
-
-    class SinkInputInfo(InfoBase):
-        sink: int
-
     class CardProfileInfo(TypedDict):
         name: str
         description: str
@@ -40,16 +26,14 @@ if TYPE_CHECKING:
         n_sources: int
         priority: int
 
-    class CardInfo(InfoBase):
+    class CardInfo(TypedDict):
+        name: str
+        proplist: Dict[str, str]
+        owner_module: int
+        driver: str
         index: int
         profiles: List[CardProfileInfo]
         active_profile: str
-
-    class ModuleInfo(TypedDict):
-        name: str
-        argument: str
-        n_used: int
-        proplist: Dict[str, str]
 
 pa_glib_mainloop_new = libpulse_glib.pa_glib_mainloop_new
 pa_glib_mainloop_new.argtypes = [c_void_p]
@@ -93,128 +77,6 @@ class PANotConnected(Exception):
     pass
 
 
-class PaModuleInfo(Structure):
-    _fields_ = [("index", c_uint),
-                ("name", c_char_p),
-                ("argument", c_char_p),
-                ("n_used", c_int),
-                ("proplist", c_void_p),
-                ]
-
-
-class PaSampleSpec(Structure):
-    pass
-
-
-PaSampleSpec._fields_ = [
-    ('format', c_int),
-    ('rate', c_uint32),
-    ('channels', c_uint8),
-]
-
-
-class PaChannelMap(Structure):
-    pass
-
-
-PaChannelMap._fields_ = [
-    ('channels', c_uint8),
-    ('map', c_int * 32),
-]
-
-
-class PaCvolume(Structure):
-    pass
-
-
-PaCvolume._fields_ = [
-    ('channels', c_uint8),
-    ('values', c_uint32 * 32),
-]
-
-
-class PaSourceInfo(Structure):
-    pass
-
-
-PaSourceInfo._fields_ = [
-    ('name', c_char_p),
-    ('index', c_uint32),
-    ('description', c_char_p),
-    ('sample_spec', PaSampleSpec),
-    ('channel_map', PaChannelMap),
-    ('owner_module', c_uint32),
-    ('volume', PaCvolume),
-    ('mute', c_int),
-    ('monitor_of_sink', c_uint32),
-    ('monitor_of_sink_name', c_char_p),
-    ('latency', c_uint64),
-    ('driver', c_char_p),
-    ('flags', c_int),
-    ('proplist', c_void_p),
-    ('configured_latency', c_ulong),
-    # ('base_volume', pa_volume_t),
-    # ('state', pa_source_state_t),
-    # ('n_volume_steps', c_uint32),
-    # ('card', c_uint32),
-    # ('n_ports', c_uint32),
-    # ('ports', POINTER(POINTER(pa_source_port_info))),
-    # ('active_port', POINTER(pa_source_port_info)),
-]
-
-
-class PaSinkInfo(Structure):
-    pass
-
-
-PaSinkInfo._fields_ = [
-    ('name', c_char_p),
-    ('index', c_uint32),
-    ('description', c_char_p),
-    ('sample_spec', PaSampleSpec),
-    ('channel_map', PaChannelMap),
-    ('owner_module', c_uint32),
-    ('volume', PaCvolume),
-    ('mute', c_int),
-    ('monitor_of_sink', c_uint32),
-    ('monitor_of_sink_name', c_char_p),
-    ('latency', c_uint64),
-    ('driver', c_char_p),
-    ('flags', c_int),
-    ('proplist', c_void_p),
-    ('configured_latency', c_ulong),
-    # ('base_volume', pa_volume_t),
-    # ('state', pa_source_state_t),
-    # ('n_volume_steps', c_uint32),
-    # ('card', c_uint32),
-    # ('n_ports', c_uint32),
-    # ('ports', POINTER(POINTER(pa_source_port_info))),
-    # ('active_port', POINTER(pa_source_port_info)),
-]
-
-
-class PaSinkInputInfo(Structure):
-    pass
-
-
-PaSinkInputInfo._fields_ = [
-    ('index', c_uint32),
-    ('name', c_char_p),
-    ('owner_module', c_uint32),
-    ('client', c_uint32),
-    ('sink', c_uint32),
-    ('sample_spec', PaSampleSpec),
-    ('channel_map', PaChannelMap),
-    ('volume', PaCvolume),
-    ('buffer_usec', c_uint64),
-    ('sink_usec', c_uint64),
-    ('resample_method', c_char_p),
-    ('driver', c_char_p),
-    ('mute', c_int),
-    ('proplist', c_void_p),
-]
-
-
 class PaCardProfileInfo(Structure):
     pass
 
@@ -247,17 +109,8 @@ pa_context_notify_cb_t = CFUNCTYPE(None, c_void_p, py_object)
 pa_context_index_cb_t = CFUNCTYPE(None, c_void_p, c_int, py_object)
 pa_context_success_cb_t = pa_context_index_cb_t
 
-pa_module_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(PaModuleInfo), c_int, py_object)
-pa_source_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(PaSourceInfo), c_int, py_object)
-pa_sink_input_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(PaSinkInputInfo), c_int, py_object)
 pa_card_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(PaCardInfo), c_int, py_object)
 pa_context_subscribe_cb_t = CFUNCTYPE(None, c_void_p, c_uint32, c_uint32, c_void_p)
-
-pa_sink_info_cb_t = CFUNCTYPE(None, c_void_p, POINTER(PaSinkInfo), c_int, py_object)
-
-pa_context_get_module_info_list = libpulse.pa_context_get_module_info_list
-pa_context_get_module_info_list.restype = c_void_p
-pa_context_get_module_info_list.argtypes = [c_void_p, pa_module_info_cb_t, py_object]
 
 pa_context_set_card_profile_by_name = libpulse.pa_context_set_card_profile_by_name
 pa_context_set_card_profile_by_name.restype = c_void_p
@@ -278,34 +131,6 @@ pa_context_get_card_info_by_name.argtypes = [c_void_p, c_char_p, pa_card_info_cb
 pa_context_get_card_info_list = libpulse.pa_context_get_card_info_list
 pa_context_get_card_info_list.restype = c_void_p
 pa_context_get_card_info_list.argtypes = [c_void_p, pa_card_info_cb_t, py_object]
-
-pa_context_load_module = libpulse.pa_context_load_module
-pa_context_load_module.restype = c_void_p
-pa_context_load_module.argtypes = [c_void_p, c_char_p, c_char_p, pa_context_index_cb_t, py_object]
-
-pa_context_unload_module = libpulse.pa_context_unload_module
-pa_context_unload_module.restype = c_void_p
-pa_context_unload_module.argtypes = [c_void_p, c_uint32, pa_context_success_cb_t, py_object]
-
-pa_context_move_sink_input_by_index = libpulse.pa_context_move_sink_input_by_index
-pa_context_move_sink_input_by_index.restype = c_void_p
-pa_context_move_sink_input_by_index.argtypes = [c_void_p, c_uint32, c_uint32, pa_context_success_cb_t, py_object]
-
-pa_context_get_sink_input_info_list = libpulse.pa_context_get_sink_input_info_list
-pa_context_get_sink_input_info_list.restype = c_void_p
-pa_context_get_sink_input_info_list.argtypes = [c_void_p, pa_sink_input_info_cb_t, py_object]
-
-pa_context_get_sink_info_list = libpulse.pa_context_get_sink_info_list
-pa_context_get_sink_info_list.restype = c_void_p
-pa_context_get_sink_info_list.argtypes = [c_void_p, pa_sink_info_cb_t, py_object]
-
-pa_context_get_sink_info_list = libpulse.pa_context_get_sink_info_list
-pa_context_get_sink_info_list.restype = c_void_p
-pa_context_get_sink_info_list.argtypes = [c_void_p, pa_sink_info_cb_t, py_object]
-
-pa_context_get_source_info_list = libpulse.pa_context_get_source_info_list
-pa_context_get_source_info_list.restype = c_void_p
-pa_context_get_source_info_list.argtypes = [c_void_p, pa_source_info_cb_t, py_object]
 
 pa_proplist_to_string_sep = libpulse.pa_proplist_to_string_sep
 pa_proplist_to_string_sep.restype = POINTER(c_char)
@@ -335,10 +160,6 @@ pa_operation_unref = libpulse.pa_operation_unref
 pa_operation_unref.restype = None
 pa_operation_unref.argtypes = [c_void_p]
 
-pa_context_set_default_sink = libpulse.pa_context_set_default_sink
-pa_context_set_default_sink.restype = c_void_p
-pa_context_set_default_sink.argtypes = [c_void_p, c_char_p, pa_context_success_cb_t, py_object]
-
 pa_context_set_state_callback = libpulse.pa_context_set_state_callback
 pa_context_set_state_callback.restype = None
 pa_context_set_state_callback.argtypes = [c_void_p, pa_context_notify_cb_t, py_object]
@@ -354,14 +175,6 @@ pa_context_set_subscribe_callback.argtypes = [c_void_p, pa_context_subscribe_cb_
 pa_context_new = libpulse.pa_context_new
 pa_context_new.restype = c_void_p
 pa_context_new.argtypes = [c_void_p, c_char_p]
-
-pa_get_library_version = libpulse.pa_get_library_version
-pa_get_library_version.restype = c_char_p
-pa_get_library_version.argtypes = []
-
-pa_context_errno = libpulse.pa_context_errno
-pa_context_errno.restype = c_int
-pa_context_errno.argtypes = [c_void_p]
 
 
 class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
@@ -453,96 +266,6 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
             logging.error(func.__name__)
         pa_operation_unref(op)
 
-    def list_sources(self, callback):
-        self.check_connected()
-
-        data: Dict[int, "SourceInfo"] = {}
-
-        def handler(entry_info, end):
-            if end:
-                callback(data)
-                return
-
-            props = self.__get_proplist(entry_info[0].proplist)
-
-            data[entry_info[0].index] = {
-                "name": entry_info[0].name.decode("UTF-8"),
-                "proplist": props,
-                "description": entry_info[0].description.decode("UTF-8"),
-                "owner_module": entry_info[0].owner_module,
-                "driver": entry_info[0].driver.decode("UTF-8")
-            }
-            if end:
-                callback(data)
-
-        self.__init_list_callback(pa_context_get_source_info_list,
-                                  pa_source_info_cb_t, handler)
-
-    def list_sinks(self, callback, card_id=None):
-        self.check_connected()
-
-        data: Dict[int, "SinkInfo"] = {}
-
-        def handler(entry_info, end):
-            if end:
-                callback(data)
-                return
-            props = self.__get_proplist(entry_info[0].proplist)
-
-            data[entry_info[0].index] = {
-                "name": entry_info[0].name.decode("UTF-8"),
-                "proplist": props,
-                "description": entry_info[0].description.decode("UTF-8"),
-                "owner_module": entry_info[0].owner_module,
-                "driver": entry_info[0].driver.decode("UTF-8")
-            }
-
-            if end:
-                callback(data)
-
-        if card_id is not None:
-            self.__init_list_callback(pa_context_get_sink_info_list,
-                                      pa_sink_info_cb_t, handler, card_id)
-        else:
-            self.__init_list_callback(pa_context_get_sink_info_list,
-                                      pa_sink_info_cb_t, handler)
-
-    def list_sink_inputs(self, callback):
-        self.check_connected()
-
-        data: Dict[int, "SinkInputInfo"] = {}
-
-        def handler(entry_info, end):
-            if end:
-                callback(data)
-                return
-
-            props = self.__get_proplist(entry_info[0].proplist)
-
-            data[entry_info[0].index] = {
-                "name": entry_info[0].name.decode("UTF-8"),
-                "proplist": props,
-                "owner_module": entry_info[0].owner_module,
-                "sink": entry_info[0].sink,
-                "driver": entry_info[0].driver.decode("UTF-8")
-            }
-
-        self.__init_list_callback(pa_context_get_sink_input_info_list,
-                                  pa_sink_input_info_cb_t, handler)
-
-    def move_sink_input(self, input_id, sink_id, callback):
-        self.check_connected()
-
-        self.simple_callback(callback,
-                             pa_context_move_sink_input_by_index,
-                             int(input_id), int(sink_id))
-
-    def set_default_sink(self, name, callback):
-        self.check_connected()
-
-        self.simple_callback(callback, pa_context_set_default_sink, name)
-
-    # CARDS
     def __card_info(self, card_info):
         props = self.__get_proplist(card_info[0].proplist)
         stuff = {
@@ -611,46 +334,6 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
             fn = pa_context_set_card_profile_by_index
 
         self.simple_callback(callback, fn, card, profile)
-
-    # #### Module API ####
-    def list_module(self, callback):
-
-        self.check_connected()
-        data: Dict[int, "ModuleInfo"] = {}
-
-        def handler(entry_info, end):
-            if end:
-                callback(data)
-                return
-
-            props = self.__get_proplist(entry_info[0].proplist)
-            data[entry_info[0].index] = {
-                "name": entry_info[0].name.decode("UTF-8"),
-                "argument": entry_info[0].argument.decode("UTF-8"),
-                "n_used": entry_info[0].n_used,
-                "proplist": props
-            }
-
-        self.__init_list_callback(pa_context_get_module_info_list,
-                                  pa_module_info_cb_t, handler)
-
-    def unload_module(self, index, callback):
-        self.check_connected()
-
-        self.simple_callback(callback, pa_context_unload_module, index)
-
-    def load_module(self, name, args, callback):
-        self.check_connected()
-
-        def handler(res):
-            if res < 0:
-                callback(-pa_context_errno(self.pa_context))
-            else:
-                callback(res)
-
-        self.simple_callback(handler, pa_context_load_module, name, args)
-
-    #####################
 
     def __event_callback(self, context, event_type, idx, userdata):
         logging.info("%s %s" % (event_type, idx))
