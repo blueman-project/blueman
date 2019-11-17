@@ -12,18 +12,17 @@ from blueman.typing import GSignals
 class BaseMeta(GObjectMeta):
     def __call__(cls, **kwargs: str) -> "Base":
         if not hasattr(cls, "__instances__"):
-            cls.__instances__: Dict[str, Dict[str, "Base"]] = {}
+            cls.__instances__: Dict[str, "Base"] = {}
 
         path = kwargs.get('obj_path')
         if path is None:
             path = cls._obj_path
 
-        if cls._interface_name in cls.__instances__:
-            if path in cls.__instances__[cls._interface_name]:
-                return cls.__instances__[cls._interface_name][path]
+        if path in cls.__instances__:
+            return cls.__instances__[path]
 
         instance: "Base" = super().__call__(**kwargs)
-        cls.__instances__[cls._interface_name] = {path: instance}
+        cls.__instances__[path] = instance
 
         return instance
 
@@ -38,7 +37,7 @@ class Base(Gio.DBusProxy, metaclass=BaseMeta):
     __gsignals__: GSignals = {
         'property-changed': (GObject.SignalFlags.NO_HOOKS, None, (str, object, str))
     }
-    __instances__: Dict[str, Dict[str, "Base"]]
+    __instances__: Dict[str, "Base"]
 
     def __init__(self, obj_path: str):
         super().__init__(
