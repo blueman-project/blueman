@@ -235,11 +235,13 @@ class ManagerDeviceList(DeviceList):
     def device_add_event(self, device):
         self.add_device(device)
 
-    def make_caption(self, name, klass, address):
+    @staticmethod
+    def make_caption(name, klass, address):
         return "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" \
                % {"0": html.escape(name), "1": klass.capitalize(), "2": address}
 
-    def get_device_class(self, device):
+    @staticmethod
+    def get_device_class(device):
         klass = get_minor_class(device['Class'])
         if klass != "uncategorized":
             return get_minor_class(device['Class'], True)
