@@ -1,7 +1,7 @@
 # coding=utf-8
 import logging
 import weakref
-from typing import Dict, Callable
+from typing import Dict, Callable, List, Tuple
 
 from gi.repository import GObject, Gio
 
@@ -25,7 +25,7 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
 
     def __init__(self) -> None:
         super().__init__()
-        self.__transfers: Dict[str, Transfer] = {}
+        self.__transfers: Dict[str, Tuple[Transfer, Tuple[int, ...]]] = {}
 
         self._object_manager = Gio.DBusObjectManagerClient.new_for_bus_sync(
             Gio.BusType.SESSION, Gio.DBusObjectManagerClientFlags.NONE,
@@ -50,9 +50,9 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
         if transfer_proxy:
             logging.info(object_path)
             transfer = Transfer(obj_path=object_path)
-            transfer.connect_signal('completed', self._on_transfer_completed, True)
-            transfer.connect_signal('error', self._on_transfer_completed, False)
-            self.__transfers[object_path] = transfer
+            chandlerid = transfer.connect_signal('completed', self._on_transfer_completed, True)
+            ehandlerid = transfer.connect_signal('error', self._on_transfer_completed, False)
+            self.__transfers[object_path] = (transfer, (chandlerid, ehandlerid))
             self.emit('transfer-started', object_path)
 
         if session_proxy:
@@ -66,11 +66,10 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
 
         if transfer_proxy and object_path in self.__transfers:
             logging.info(object_path)
-            transfer = self.__transfers.pop(object_path)
+            transfer, handlerids = self.__transfers.pop(object_path)
 
-            # Disconnect as many times as we connect (pygobject bug #106)
-            transfer.disconnect_by_func(self._on_transfer_completed)
-            transfer.disconnect_by_func(self._on_transfer_completed)
+            for handlerid in handlerids:
+                transfer.disconnect_signal(handlerid)
 
         if session_proxy:
             logging.info(object_path)
