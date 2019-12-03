@@ -198,11 +198,13 @@ class Blueman(Gtk.Window):
         s1 = self.List.connect("discovery-progress", on_progress)
         s2 = self.List.connect("adapter-property-changed", prop_changed)
 
-    def setup(self, device):
+    @staticmethod
+    def setup(device):
         command = "blueman-assistant --device=%s" % device['Address']
         launch(command, None, False, "blueman", _("Bluetooth Assistant"))
 
-    def bond(self, device):
+    @staticmethod
+    def bond(device):
         def error_handler(e):
             logging.exception(e)
             message = 'Pairing failed for:\n%s (%s)' % (device['Alias'], device['Address'])
@@ -210,10 +212,12 @@ class Blueman(Gtk.Window):
 
         device.pair(error_handler=error_handler)
 
-    def adapter_properties(self):
+    @staticmethod
+    def adapter_properties():
         launch("blueman-adapters", None, False, "blueman", _("Adapter Preferences"))
 
-    def toggle_trust(self, device):
+    @staticmethod
+    def toggle_trust(device):
         device['Trusted'] = not device['Trusted']
 
     def send(self, device, f=None):
