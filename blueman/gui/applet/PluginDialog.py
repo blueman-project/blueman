@@ -50,7 +50,7 @@ class SettingsWidget(Gtk.Box):
             return params["widget"](self.inst, opt, params)
 
         elif params["type"] == bool:
-            c = Gtk.CheckButton(params["name"])
+            c = Gtk.CheckButton(label=params["name"])
 
             c.props.active = self.inst.get_option(opt)
             c.connect("toggled", self.handle_change, opt, params, "active")
