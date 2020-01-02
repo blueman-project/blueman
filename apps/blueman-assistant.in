@@ -209,14 +209,14 @@ class Assistant:
             rbs = []
 
             for service in services:
-                rbs.append(Gtk.RadioButton(service.name))
+                rbs.append(Gtk.RadioButton(label=service.name))
                 rbs[-1].connect("toggled", self.on_service_toggled, service)
                 self.svc_vbox.pack_start(rbs[-1], False, False, 0)
 
                 if len(rbs) > 1:
                     rbs[-1].join_group(rbs[0])
 
-            rbs.append(Gtk.RadioButton(_("Don't connect")))
+            rbs.append(Gtk.RadioButton(label=_("Don't connect")))
             rbs[-1].join_group(rbs[0])
             rbs[-1].connect("toggled", self.on_service_toggled, None)
             self.svc_vbox.pack_start(rbs[-1], False, False, 8)
