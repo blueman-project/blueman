@@ -189,8 +189,8 @@ class PluginDialog(Gtk.Window):
         cls = self.applet.Plugins.get_classes()[name]
         self.plugin_name.props.label = "<b>" + name + "</b>"
         self.icon.props.icon_name = cls.__icon__
-        self.author_txt.props.label = cls.__author__ or _("Unspecified")
-        self.description.props.label = cls.__description__ or _("Unspecified")
+        self.author_txt.props.label = cls.__author__
+        self.description.props.label = cls.__description__
 
         if cls.__depends__:
             self.depends_hdr.props.visible = True

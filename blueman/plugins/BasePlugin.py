@@ -1,6 +1,7 @@
 # coding=utf-8
 import logging
 import weakref
+from gettext import gettext as _
 from typing import List, TYPE_CHECKING, Dict, Tuple, Any
 
 from blueman.main.Config import Config
@@ -33,8 +34,8 @@ class BasePlugin(object):
     __conflicts__: List[str] = []
     __priority__ = 0
 
-    __description__: str
-    __author__: str
+    __description__: str = _("Unspecified")
+    __author__: str = _("Unspecified")
 
     __unloadable__ = True
     __autoload__ = True
