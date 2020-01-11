@@ -7,6 +7,10 @@
 * Drop blueman-report
 * Raise minimum Python version to 3.6
 
+### Bugs fixed
+
+* Pairing with pincode
+
 ## 2.1.1
 
 ### Bugs fixed
