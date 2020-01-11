@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.1-stable
+
+### Bugs fixed
+
+* Signal bar updates with multiple adapters
+* Pairing with pincode
+
 ## 2.1.1
 
 ### Bugs fixed

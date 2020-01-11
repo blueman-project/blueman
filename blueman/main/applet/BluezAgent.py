@@ -12,7 +12,7 @@ from blueman.Constants import *
 from blueman.gui.Notification import Notification
 from blueman.main.DbusService import DbusService, DbusError
 
-from gi.repository import GLib, Gio
+from gi.repository import Gio
 
 import gi
 
@@ -168,9 +168,7 @@ class BluezAgent(DbusService):
         def passkey_dialog_cb(dialog, response_id):
             if response_id == Gtk.ResponseType.ACCEPT:
                 ret = pin_entry.get_text()
-                if is_numeric:
-                    ret = GLib.Variant('(u)', int(ret))
-                ok(ret)
+                ok(int(ret) if is_numeric else ret)
             else:
                 err(BluezErrorRejected("Rejected"))
             dialog.destroy()
