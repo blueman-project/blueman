@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.1-stable
+## 2.1.2
 
 ### Bugs fixed
 
