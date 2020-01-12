@@ -2,17 +2,19 @@
 
 ## master
 
-* Drop blueman-report
-
 ### Changes
 
+* Drop blueman-report
 * Raise minimum Python version to 3.6
 
-## 2.1.1 (unreleased)
+## 2.1.1
 
 ### Bugs fixed
 
 * Using recent connections did not work
+* Switching adapters did not work
+* Errors when removing a device
+* Error tracebacks from info dialog
 
 ## 2.1
 
