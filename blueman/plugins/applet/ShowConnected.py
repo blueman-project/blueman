@@ -50,6 +50,7 @@ class ShowConnected(AppletPlugin):
                                                                      "<b>%d Active Connections</b>",
                                                                      self.num_connections) % self.num_connections)
         else:
+            self.parent.Plugins.StatusIcon.set_text_line(1, None)
             # bluetooth should be always enabled if powermanager is not loaded
             status = True
             if 'PowerManager' in self.parent.Plugins.get_loaded():
