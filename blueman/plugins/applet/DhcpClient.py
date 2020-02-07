@@ -56,4 +56,4 @@ class DhcpClient(AppletPlugin):
                          icon_name="network-workgroup").show()
 
             m = Mechanism()
-            m.DhcpClient('(s)', device, result_handler=reply, error_handler=err, timeout=120)
+            m.DhcpClient('(s)', device, result_handler=reply, error_handler=err, timeout=120 * 1000)
