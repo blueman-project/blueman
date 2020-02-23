@@ -105,7 +105,7 @@ jobs:
       steps:
         - checkout
         - run: sudo apt-get update
-        - run: sudo apt-get install -y -qq --no-install-recommends sudo automake autoconf libglib2.0-dev libtool intltool python3-dev python-gi python-gi-dev cython dh-autoreconf libbluetooth-dev gtk-update-icon-cache python3-pip libgirepository1.0-dev gir1.2-gtk-3.0
+        - run: sudo apt-get install -y -qq --no-install-recommends sudo automake autoconf libglib2.0-dev libtool intltool python3-dev python-gi python-gi-dev cython dh-autoreconf libbluetooth-dev gtk-update-icon-cache python3-pip libgirepository1.0-dev gir1.2-gtk-3.0 libpulse0 libpulse-mainloop-glib0
         - run: ./autogen.sh
         - run: make -C module
         - run: python3 -m pip install --user pygobject
@@ -118,7 +118,7 @@ jobs:
       steps:
         - checkout
         - run: sudo apt-get update
-        - run: sudo apt-get install -y -qq --no-install-recommends sudo automake autoconf libglib2.0-dev libtool intltool python3-dev python-gi python-gi-dev cython dh-autoreconf libbluetooth-dev gtk-update-icon-cache python3-pip libgirepository1.0-dev gir1.2-gtk-3.0
+        - run: sudo apt-get install -y -qq --no-install-recommends sudo automake autoconf libglib2.0-dev libtool intltool python3-dev python-gi python-gi-dev cython dh-autoreconf libbluetooth-dev gtk-update-icon-cache python3-pip libgirepository1.0-dev gir1.2-gtk-3.0 libpulse0 libpulse-mainloop-glib0
         - run: ./autogen.sh
         - run: make -C module
         - run: python3 -m pip install --user pygobject
@@ -131,7 +131,7 @@ jobs:
       steps:
         - checkout
         - run: sudo apt-get update
-        - run: sudo apt-get install -y -qq --no-install-recommends sudo automake autoconf libglib2.0-dev libtool intltool python3-dev python-gi python-gi-dev cython dh-autoreconf libbluetooth-dev gtk-update-icon-cache python3-pip libgirepository1.0-dev gir1.2-gtk-3.0
+        - run: sudo apt-get install -y -qq --no-install-recommends sudo automake autoconf libglib2.0-dev libtool intltool python3-dev python-gi python-gi-dev cython dh-autoreconf libbluetooth-dev gtk-update-icon-cache python3-pip libgirepository1.0-dev gir1.2-gtk-3.0 libpulse0 libpulse-mainloop-glib0
         - run: ./autogen.sh
         - run: make -C module
         - run: python3 -m pip install --user pygobject
