@@ -368,7 +368,7 @@ class PulseAudioUtils(GObject.GObject, metaclass=PulseAudioUtilsMeta):
 
         if self.prev_state == PA_CONTEXT_READY and state == PA_CONTEXT_FAILED:
             logging.info("Pulseaudio probably crashed, restarting in 5s")
-            GLib.timeout_add(5000, self.connect_rfcomm)
+            GLib.timeout_add(5000, self.connect_pulseaudio)
 
         self.prev_state = state
 
