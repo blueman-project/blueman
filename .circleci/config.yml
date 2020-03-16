@@ -7,12 +7,12 @@ version: 2
 jobs:
   releasebuild:
     docker:
-      - image: debian:unstable
+      - image: circleci/buildpack-deps:testing
 
     steps:
       - checkout
-      - run: apt-get update
-      - run: apt-get install -y -qq --no-install-recommends sudo automake autoconf libglib2.0-dev libtool intltool python3-dev python-gi python-gi-dev cython dh-autoreconf libbluetooth-dev gtk-update-icon-cache python-pip
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y -qq --no-install-recommends sudo automake autoconf libglib2.0-dev libtool intltool python3-dev python-gi python-gi-dev cython dh-autoreconf libbluetooth-dev gtk-update-icon-cache python-pip
       - run: ./autogen.sh
       - run: make
       - run: make distcheck
@@ -20,12 +20,12 @@ jobs:
 
   mesonbuild:
     docker:
-      - image: debian:unstable
+      - image: circleci/buildpack-deps:testing
 
     steps:
       - checkout
-      - run: apt-get update
-      - run: apt-get install -y -qq --no-install-recommends build-essential meson sudo intltool libglib2.0-dev python3-dev python-gi python-gi-dev cython libbluetooth-dev gtk-update-icon-cache python3-pip
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y -qq --no-install-recommends build-essential meson sudo intltool libglib2.0-dev python3-dev python-gi python-gi-dev cython libbluetooth-dev gtk-update-icon-cache python3-pip
       - run: meson --warnlevel 3 --buildtype debug -Druntime_deps_check=false builddebug
       - run: ninja -v -C builddebug/
 
