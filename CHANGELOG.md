@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.1.3
+
+### Changes
+* Force cython to use python language version 3
+
+### Bugs fixed
+* Fix tooltip not updating when bluetooth is disabled
+* Fix dbus timeout in DhcClient
+* Call the right method when pulseaudio crashes
+
 ## 2.1.2
 
 ### Bugs fixed
