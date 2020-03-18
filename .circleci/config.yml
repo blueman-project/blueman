@@ -12,7 +12,7 @@ jobs:
     steps:
       - checkout
       - run: apt-get update
-      - run: apt-get install -y -qq --no-install-recommends sudo automake autoconf libglib2.0-dev libtool intltool python3-dev python-gi python-gi-dev cython dh-autoreconf libbluetooth-dev gtk-update-icon-cache python-pip
+      - run: apt-get install -y -qq --no-install-recommends sudo automake autoconf libglib2.0-dev libtool intltool python3-dev python-gi python-gi-dev cython dh-autoreconf libbluetooth-dev gtk-update-icon-cache python3-pip
       - run: ./autogen.sh
       - run: make
       - run: make distcheck
