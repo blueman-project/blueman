@@ -19,14 +19,16 @@ msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-29 08:27+0200\n"
-"PO-Revision-Date: 2019-04-29 06:32+0000\n"
-"Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
-"Language-Team: French (http://www.transifex.com/mate/MATE/language/fr/)\n"
+"PO-Revision-Date: 2020-03-23 03:49+0000\n"
+"Last-Translator: Jeannette L <j.lavoie@net-c.ca>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/blueman/blueman/"
+"fr/>\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Visibility Setting</b>"
@@ -436,6 +438,7 @@ msgstr "obexd non disponible"
 #: ../blueman/main/Sendto.py:107
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
 msgstr ""
+"Échec du démarrage du service obex. Assurez-vous que le démon obex est activé"
 
 #: ../blueman/main/Sendto.py:138
 msgid "Cancelling"
@@ -1146,11 +1149,13 @@ msgid "Configured directory for incoming files does not exist"
 msgstr "Le répertoire configuré pour les fichiers entrants n'existe pas"
 
 #: ../blueman/plugins/applet/TransferService.py:158
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "Please make sure that directory \"<b>%s</b>\" exists or configure it with "
 "blueman-services. Until then the default \"%s\" will be used"
 msgstr ""
+"Veuillez vous assurer que le registre « <b>%s</b> » existe ou configurez-le "
+"avec services blueman. Entretemps, « %s » sera utilisé par défaut"
 
 #: ../blueman/plugins/applet/TransferService.py:285
 msgid "File received"
@@ -1528,11 +1533,11 @@ msgstr "Ne pas connecter"
 
 #: ../apps/blueman-assistant:234
 msgid "<b>Device added and connected successfully</b>"
-msgstr ""
+msgstr "<b>Appareil ajouté et connecté avec succès</b>"
 
 #: ../apps/blueman-assistant:239
 msgid "<b>Device added successfully, but failed to connect</b>"
-msgstr ""
+msgstr "<b>Appareil ajouté avec succès, maid échec de la connexion</b>"
 
 #: ../apps/blueman-assistant:250
 msgid "Start configuration assistant for this device"
