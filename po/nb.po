@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-29 08:27+0200\n"
-"PO-Revision-Date: 2020-03-23 03:49+0000\n"
+"PO-Revision-Date: 2020-03-28 10:09+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/blueman/"
 "blueman/nb_NO/>\n"
@@ -102,13 +102,13 @@ msgstr "Koble sammen"
 #: ../data/ui/manager-main.ui.h:11
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:346
 msgid "Mark/Unmark this device as trusted"
-msgstr "Angi/fjern enhet som autorisert"
+msgstr "Angi/fjern enhet som tiltrodd"
 
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:13 ../blueman/gui/manager/ManagerToolbar.py:30
 #: ../blueman/gui/manager/ManagerToolbar.py:95
 msgid "Trust"
-msgstr "Stol på"
+msgstr "Tiltro"
 
 #: ../data/ui/manager-main.ui.h:14
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:352
@@ -177,9 +177,10 @@ msgstr "<b>NAP-instillinger</b>"
 
 #: ../data/ui/services-network.ui.h:9
 msgid "<b>PAN Support</b>"
-msgstr "PAN-støtte"
+msgstr "<b>PAN-støtte</b>"
 
 #: ../data/ui/services-network.ui.h:10
+#, fuzzy
 msgid "<b>DUN Support</b>"
 msgstr "<b>Oppringt nettverk håndteres av</b>"
 
@@ -225,7 +226,11 @@ msgid ""
 "\n"
 "\n"
 "It will walk you through the process of configuring and connecting to your Bluetooth enabled devices."
-msgstr "<b>Velkommen til oppsettsassistenten for Blåtannsenheter. </b>\n\n\nDen vil lede deg gjennom prosessen med å konfigurere og koble til Blåtann-aktiverte enheter."
+msgstr ""
+"<b>Velkommen til oppsettsassistenten for Blåtannsenheter.</b>\n"
+"\n"
+"\n"
+"Assistenten vil hjelpe deg med oppsett og oppkobling mot din Blåtannsenhet."
 
 #: ../data/ui/assistant.ui.h:5
 msgid "Introduction"
@@ -237,7 +242,7 @@ msgstr "Enhet"
 
 #: ../data/ui/assistant.ui.h:7
 msgid "<b>Select pairing method to use:</b>"
-msgstr "<b>Velg sammenkoblingsmetode du vil bruke:</b>"
+msgstr "<b>Velg hvilken sammenkoblingsmetode :</b>"
 
 #: ../data/ui/assistant.ui.h:8
 msgid "Pair Device"
@@ -248,6 +253,7 @@ msgid "Proceed Without Pairing"
 msgstr "Fortsett uten å koble sammen"
 
 #: ../data/ui/assistant.ui.h:10
+#, fuzzy
 msgid "Pairing"
 msgstr "Sammenkobler"
 
@@ -260,16 +266,19 @@ msgid "Connect"
 msgstr "Koble til"
 
 #: ../data/ui/assistant.ui.h:13
+#, fuzzy
 msgid "<b>Please wait...</b>"
 msgstr "<b>Vennligst vent …</b>"
 
 #: ../data/ui/assistant.ui.h:14
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:124
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:179
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:121
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:174
+#, fuzzy
 msgid "Connecting..."
 msgstr "Kobler til …"
 
 #: ../data/ui/assistant.ui.h:15
+#, fuzzy
 msgid "<b>Congratulations, device successfully added</b>"
 msgstr "<b>Gratulerer! Enheten ble lagt til</b>"
 
@@ -291,7 +300,7 @@ msgstr "<b>Tillegg:</b>"
 
 #: ../data/ui/applet-plugins-widget.ui.h:4
 msgid "Not specified"
-msgstr "Ikke oppgitt"
+msgstr "Ikke angitt"
 
 #: ../data/ui/applet-plugins-widget.ui.h:5
 msgid "<b>Author:</b>"
@@ -371,8 +380,8 @@ msgstr "Blåtann må være påslått for at adapterbehandleren skal virke."
 msgid "Always"
 msgstr "Alltid"
 
-#: ../blueman/main/Adapter.py:146
-#, python-format
+#: ../blueman/main/Adapter.py:133
+#, fuzzy, python-format
 msgid "%d Minute"
 msgid_plural "%d Minutes"
 msgstr[0] "%d minutt"
@@ -384,7 +393,7 @@ msgstr "Adapter"
 
 #: ../blueman/main/Manager.py:31
 msgid "Bluetooth Devices"
-msgstr "Blåtanns-enheter"
+msgstr "Blåtannsenheter"
 
 #: ../blueman/main/Manager.py:73 ../blueman/main/Manager.py:113
 msgid "Bluetooth needs to be turned on for the device manager to function"
@@ -394,11 +403,15 @@ msgstr "Blåtann må være påskrudd for at enhetshåndteringen skal fungere"
 msgid "Connection to BlueZ failed"
 msgstr "Forbindelse til BlueZ mislyktes"
 
-#: ../blueman/main/Manager.py:93
+#: ../blueman/main/Manager.py:91
+#, fuzzy
 msgid ""
 "Bluez daemon is not running, blueman-manager cannot continue.\n"
 "This probably means that there were no Bluetooth adapters detected or Bluetooth daemon was not started."
-msgstr "Bluez-nissen kjører ikke, blueman-manager kan ikke fortsette.\nDette betyr kanskje at det ikke fantes noen Blåtannsadaptere eller at Blåtannsnissen ikke kjørte."
+msgstr ""
+"Bluez-nissen kjører ikke, blueman-manager kan ikke fortsette.\n"
+"Dette betyr kanskje at det ikke fantes noen Blåtannsadaptere eller at "
+"Blåtannsnissen ikke kjørte."
 
 #: ../blueman/main/Manager.py:190
 msgid "Searching"
@@ -407,7 +420,7 @@ msgstr "Søker"
 #: ../blueman/main/Manager.py:204
 #: ../blueman/plugins/applet/StandardItems.py:71 ../apps/blueman-assistant:65
 msgid "Bluetooth Assistant"
-msgstr "Blåtann-assistent"
+msgstr "Blåtannsassistent"
 
 #: ../blueman/main/Manager.py:217
 #: ../blueman/plugins/applet/StandardItems.py:83
@@ -424,8 +437,9 @@ msgstr "Filavsender"
 msgid "Bluetooth File Transfer"
 msgstr "Filoverføring via Blåtann"
 
-#: ../blueman/main/Sendto.py:66
-#: ../blueman/gui/manager/ManagerProgressbar.py:25
+#: ../blueman/main/Sendto.py:59
+#: ../blueman/gui/manager/ManagerProgressbar.py:20
+#, fuzzy
 msgid "Connecting"
 msgstr "Kobler til"
 
@@ -440,11 +454,13 @@ msgstr ""
 "Klarte ikke å starte OBEX-tjeneste automatisk. Forsikre deg om at OBEX-"
 "nissen kjører."
 
-#: ../blueman/main/Sendto.py:147
+#: ../blueman/main/Sendto.py:138
+#, fuzzy
 msgid "Cancelling"
 msgstr "Avbryter"
 
-#: ../blueman/main/Sendto.py:158 ../blueman/main/Sendto.py:200
+#: ../blueman/main/Sendto.py:149 ../blueman/main/Sendto.py:191
+#, fuzzy
 msgid "Sending File"
 msgstr "Sender fil"
 
@@ -452,22 +468,22 @@ msgstr "Sender fil"
 msgid "ETA:"
 msgstr "Estimert tid til ankomst:"
 
-#: ../blueman/main/Sendto.py:194
-#, python-format
+#: ../blueman/main/Sendto.py:185
+#, fuzzy, python-format
 msgid "%.0f Minute"
 msgid_plural "%.0f Minutes"
 msgstr[0] "%.0f minutt"
 msgstr[1] "%.0f minutter"
 
-#: ../blueman/main/Sendto.py:196
-#, python-format
+#: ../blueman/main/Sendto.py:187
+#, fuzzy, python-format
 msgid "%.0f Second"
 msgid_plural "%.0f Seconds"
 msgstr[0] "%.0f sekund"
 msgstr[1] "%.0f sekunder"
 
-#: ../blueman/main/Sendto.py:230
-#, python-format
+#: ../blueman/main/Sendto.py:221
+#, fuzzy, python-format
 msgid "Error occurred while sending file %s"
 msgstr "Det oppsto en feil under forsendelse av filen %s"
 
@@ -479,7 +495,8 @@ msgstr "Hopp over"
 msgid "Retry"
 msgstr "Prøv igjen"
 
-#: ../blueman/main/Sendto.py:284
+#: ../blueman/main/Sendto.py:264
+#, fuzzy
 msgid "Error occurred"
 msgstr "Det oppsto en feil"
 
@@ -505,19 +522,23 @@ msgstr "Skriv inn PIN-koden for å godkjenne:"
 msgid "Enter PIN code"
 msgstr "Skriv inn PIN-kode"
 
-#: ../blueman/main/applet/BluezAgent.py:234
+#: ../blueman/main/applet/BluezAgent.py:241
+#, fuzzy
 msgid "Enter passkey for authentication:"
 msgstr "Skriv inn passord for tilgangskontroll:"
 
-#: ../blueman/main/applet/BluezAgent.py:235
+#: ../blueman/main/applet/BluezAgent.py:242
+#, fuzzy
 msgid "Enter passkey"
 msgstr "Oppgi adgangskode"
 
-#: ../blueman/main/applet/BluezAgent.py:245
+#: ../blueman/main/applet/BluezAgent.py:253
+#, fuzzy
 msgid "Pairing passkey for"
 msgstr "Sammenkobler adgangsnøkkel for"
 
-#: ../blueman/main/applet/BluezAgent.py:254
+#: ../blueman/main/applet/BluezAgent.py:265
+#, fuzzy
 msgid "Pairing PIN code for"
 msgstr "Sammenkobler PIN-kode for"
 
@@ -555,21 +576,24 @@ msgstr "Godkjenn hver gang"
 msgid "Accept"
 msgstr "Godta"
 
-#: ../blueman/main/PluginManager.py:68
+#: ../blueman/main/PluginManager.py:67
+#, fuzzy
 msgid ""
 "<b>An error has occured while loading a plugin. Please notify the developers with the content of this message to our </b>\n"
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
-msgstr "<b>Det har skjedd en feil ved innlasting av et programtillegg. Varsle utviklerne med innholdet i denne meldingen til</b>\n<a href=\"http://github.com/blueman-project/blueman/issues\">nettstedet</a> vårt."
+msgstr ""
+"<b>Det har skjedd en feil ved innlasting av et programtillegg. Varsle "
+"utviklerne med innholdet i denne meldingen til</b>\n"
+"<a href=\"http://github.com/blueman-project/blueman/issues\">nettstedet</a> "
+"vårt."
 
-#: ../blueman/Functions.py:76
+#: ../blueman/Functions.py:72
+#, fuzzy
 msgid "Bluetooth Turned Off"
 msgstr "Blåtann er slått av"
 
-#: ../blueman/Functions.py:77
-msgid "Exit"
-msgstr "Avslutt"
-
-#: ../blueman/Functions.py:78
+#: ../blueman/Functions.py:76
+#, fuzzy
 msgid "Enable Bluetooth"
 msgstr "Aktiver Blåtann"
 
@@ -639,11 +663,11 @@ msgstr "_Søk"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:436
 msgid "<b>Trusted and Paired</b>"
-msgstr "<b> Tiltrodd og parret </b>"
+msgstr "<b>Tiltrodd og parret</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:438
 msgid "<b>Paired</b>"
-msgstr "<b> Parret </b>"
+msgstr "<b>Parret</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:440
 msgid "<b>Trusted</b>"
@@ -656,7 +680,7 @@ msgstr "Svak"
 #: ../blueman/gui/manager/ManagerDeviceList.py:462
 #: ../blueman/gui/manager/ManagerDeviceList.py:473
 msgid "Sub-optimal"
-msgstr "Under-optimal"
+msgstr "Suboptimal"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:464
 #: ../blueman/gui/manager/ManagerDeviceList.py:475
@@ -707,7 +731,8 @@ msgstr "Tilkobling mislyktes:"
 msgid "Disconnection Failed: "
 msgstr "Frakobling mislyktes:"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:186
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:181
+#, fuzzy
 msgid "Disconnecting..."
 msgstr "Kobler fra …"
 
@@ -715,7 +740,8 @@ msgstr "Kobler fra …"
 msgid "_<b>Connect</b>"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:246
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:242
+#, fuzzy
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr "Kobler til auto-tilkoblingsprofilene A2DP-kilde, A2DP-sink og HID"
 
@@ -723,7 +749,8 @@ msgstr "Kobler til auto-tilkoblingsprofilene A2DP-kilde, A2DP-sink og HID"
 msgid "_<b>Disconnect</b>"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:251
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:247
+#, fuzzy
 msgid "Forcefully disconnect the device"
 msgstr "Tvangsfrakoble enheten"
 
@@ -735,7 +762,8 @@ msgstr "<b>Koble til::</b>"
 msgid "<b>Disconnect:</b>"
 msgstr "<b>Avbryt:</b>"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:314
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:310
+#, fuzzy
 msgid "Send a _File..."
 msgstr "Send en _fil …"
 
@@ -793,7 +821,16 @@ msgstr "Mer"
 
 #: ../blueman/gui/CommonUi.py:41
 msgid "translator-credits"
-msgstr "Launchpad-bidrag:\n  Erik E. Seierstad https://launchpad.net/~seierstad\n  Håvard Havdal https://launchpad.net/~haavard-wty\n  Jim Nygård https://launchpad.net/~jim-nygard\n  Kenneth Langdalen https://launchpad.net/~spam-klnetworks\n  Kent Vegard Evjen https://launchpad.net/~kenvegar\n  Tommy Mikkelsen https://launchpad.net/~tamikkelsen\n  Valmantas Palikša https://launchpad.net/~walmis\n  Øyvind Øritsland https://launchpad.net/~abdobe2001"
+msgstr ""
+"Allan Nordhøy <epost@anotheragency.no>\n"
+"Erik E. Seierstad\n"
+"Håvard Havdal\n"
+"Jim Nygård\n"
+"Kenneth Langdalen\n"
+"Kent Vegard Evjen\n"
+"Tommy Mikkelsen\n"
+"Valmantas Palikša\n"
+"Øyvind Øritsland"
 
 #: ../blueman/gui/CommonUi.py:46
 msgid "Blueman is a GTK+ Bluetooth manager"
@@ -813,19 +850,25 @@ msgstr "Programtillegg"
 msgid "Dependency issue"
 msgstr "Avhengighetsproblem"
 
-#: ../blueman/gui/applet/PluginDialog.py:286
-#, python-format
+#: ../blueman/gui/applet/PluginDialog.py:288
+#, fuzzy, python-format
 msgid ""
 "Plugin <b>\"%(0)s\"</b> depends on <b>%(1)s</b>. Unloading <b>%(1)s</b> will also unload <b>\"%(0)s\"</b>.\n"
 "Proceed?"
-msgstr "Programtillegg<b>»%(0)s«</b> avhenger av <b>%(1)s</b>. Utlasting <b>%(1)s</b> vil også utlaste <b>»%(0)s«</b>.\nFortsett?"
+msgstr ""
+"Programtillegg<b>»%(0)s«</b> avhenger av <b>%(1)s</b>. Fjerning av "
+"<b>%(1)s</b> vil også fjerne <b>»%(0)s«</b>.\n"
+"Fortsett?"
 
-#: ../blueman/gui/applet/PluginDialog.py:308
-#, python-format
+#: ../blueman/gui/applet/PluginDialog.py:310
+#, fuzzy, python-format
 msgid ""
 "Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will unload <b>%(0)s</b>.\n"
 "Proceed?"
-msgstr "Programtillegg <b>%(0)s</b> er i konflikt med <b>%(1)s</b>. Innlasting av <b>%(1)s</b> vil fjerne <b>%(0)s</b>.\nFortsett?"
+msgstr ""
+"Programtillegg <b>%(0)s</b> er i konflikt med <b>%(1)s</b>. Innlasting av "
+"<b>%(1)s</b> vil fjerne <b>%(0)s</b>.\n"
+"Fortsett?"
 
 #: ../blueman/gui/DeviceSelectorWidget.py:38
 msgid "Adapter selection"
@@ -834,7 +877,7 @@ msgstr "Valg av adapter"
 #. translators: device class
 #: ../blueman/DeviceClass.py:40 ../blueman/DeviceClass.py:64
 msgid "uncategorized"
-msgstr "ikke kategorisert"
+msgstr "ukategorisert"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:42
@@ -857,9 +900,10 @@ msgid "handheld"
 msgstr "håndholdt"
 
 #. translators: device class
-#: ../blueman/DeviceClass.py:50
+#: ../blueman/DeviceClass.py:49
+#, fuzzy
 msgid "palm"
-msgstr "håndflate"
+msgstr "PDA"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:66
@@ -915,7 +959,7 @@ msgstr "tastatur"
 #. translators: device class
 #: ../blueman/DeviceClass.py:144
 msgid "pointing"
-msgstr "peker til"
+msgstr "pekeenhet"
 
 #: ../blueman/Sdp.py:127
 msgid "Dialup Networking (DUN)"
@@ -957,9 +1001,10 @@ msgstr "nei"
 msgid "_Info"
 msgstr "_Info"
 
-#: ../blueman/plugins/manager/Info.py:116
+#: ../blueman/plugins/manager/Info.py:113
+#, fuzzy
 msgid "Show device information"
-msgstr "Vis informasjon om enhet"
+msgstr "Vis enhetsinfo"
 
 #: ../blueman/plugins/manager/Notes.py:53
 msgid "Send _note"
@@ -1058,11 +1103,15 @@ msgstr "%d %s %d %s og %d %s"
 msgid "Are you sure you want to reset the counter?"
 msgstr "Bekreft nullstilling av telleren."
 
-#: ../blueman/plugins/applet/NetUsage.py:291
+#: ../blueman/plugins/applet/NetUsage.py:290
+#, fuzzy
 msgid ""
 "Allows you to monitor your (mobile broadband) network traffic usage. Useful "
 "for limited data access plans. This plugin tracks every device seperately."
-msgstr "Gir deg muligheten til å overvåke ditt forbruk (mobilt bredbånd) av nettverkstrafikk. Nyttig for abonnement med begrenset databruk. Dette programtillegget sporer hver enhet separat."
+msgstr ""
+"Muliggjør overvåkning av nettverksforbruk (mobilt bredbånd). Nyttig for "
+"abonnement med begrenset databruk. Dette programtillegget sporer hver enhet "
+"separat."
 
 #: ../blueman/plugins/applet/NetUsage.py:311
 msgid "Network _Usage"
@@ -1081,7 +1130,7 @@ msgstr "Blåtann påslått"
 
 #: ../blueman/plugins/applet/StatusIcon.py:57
 msgid "Bluetooth Disabled"
-msgstr "Blåtann er avskrudd"
+msgstr "Blåtann avskrudd"
 
 #: ../blueman/plugins/applet/Networking.py:16
 msgid "Manages local network services, like NAP bridges"
@@ -1111,12 +1160,13 @@ msgstr "Maksimalt antall punkter menyen for siste tilkoblinger vil vise."
 msgid "Recent _Connections"
 msgstr "Siste _tilkoblinger"
 
-#: ../blueman/plugins/applet/RecentConns.py:232
-#, python-format
+#: ../blueman/plugins/applet/RecentConns.py:208
+#, fuzzy, python-format
 msgid "Connected to %s"
-msgstr "Koblet til %s"
+msgstr "Tilkoblet %s"
 
-#: ../blueman/plugins/applet/RecentConns.py:238
+#: ../blueman/plugins/applet/RecentConns.py:214
+#, fuzzy
 msgid "Failed to connect"
 msgstr "Kunne ikke koble til"
 
@@ -1254,7 +1304,8 @@ msgstr "Tilbyr adgangsnøkkel, godkjennelsestjenester for BlueZ-nissen"
 msgid "Adds an exit menu item to quit the applet"
 msgstr "Tilføyer et punkt i menyen til å avslutte panelprogrammet"
 
-#: ../blueman/plugins/applet/DhcpClient.py:14
+#: ../blueman/plugins/applet/DhcpClient.py:11
+#, fuzzy
 msgid "Provides a basic dhcp client for Bluetooth PAN connections."
 msgstr "Tilbyr en grunnleggende DHCP-klient for Blåtanns-PAN-tilkoblinger."
 
@@ -1262,7 +1313,7 @@ msgstr "Tilbyr en grunnleggende DHCP-klient for Blåtanns-PAN-tilkoblinger."
 #: ../blueman/plugins/applet/DhcpClient.py:53
 #: ../blueman/plugins/applet/DhcpClient.py:58
 msgid "Bluetooth Network"
-msgstr "Blåtanns-nettverk"
+msgstr "Blåtannsnettverk"
 
 #: ../blueman/plugins/applet/DhcpClient.py:46
 #, python-format
@@ -1296,7 +1347,7 @@ msgstr "Blåtann er påslått"
 msgid "<b>%d Active Connection</b>"
 msgid_plural "<b>%d Active Connections</b>"
 msgstr[0] "<b>%d aktiv tilknytning</b>"
-msgstr[1] "<b>%d aktive tilknytninger < /b>"
+msgstr[1] "<b>%d aktive tilknytninger</b>"
 
 #: ../blueman/plugins/applet/AppIndicator.py:15
 msgid "Uses libappindicator to show a statusicon"
@@ -1332,7 +1383,9 @@ msgstr "Synlig … %ss"
 #: ../blueman/plugins/applet/Menu.py:91
 msgid ""
 "Provides a menu for the applet and an API for other plugins to manipulate it"
-msgstr "Tilbyr en meny for panelprogrammet og et API slik at andre utvidelsesmoduler kan manipulere den"
+msgstr ""
+"Tilbyr meny for panelprogrammet og et API slik at andre programtillegg kan "
+"manipulere det"
 
 #: ../blueman/plugins/applet/PPPSupport.py:49
 #, python-format
@@ -1388,7 +1441,7 @@ msgstr "Det oppsto et problem under igangsetting av skriptet %s\n%s"
 
 #: ../blueman/plugins/applet/PowerManager.py:15
 msgid "Controls Bluetooth adapter power states"
-msgstr "Kontroller driftstilstander for Blåtann-adaptere"
+msgstr "Kontroller driftstilstander for Blåtannsadaptere"
 
 #: ../blueman/plugins/applet/PowerManager.py:28
 msgid "Auto power-on"
@@ -1410,7 +1463,7 @@ msgstr "Skru av alle adaptere"
 
 #: ../blueman/plugins/applet/PowerManager.py:157
 msgid "<b>Turn Bluetooth _On</b>"
-msgstr "<b>_Skru på blåtann</b>"
+msgstr "<b>_Skru på Blåtann</b>"
 
 #: ../blueman/plugins/applet/PowerManager.py:159
 msgid "Turn on all adapters"
@@ -1455,9 +1508,30 @@ msgstr "For øyeblikket ikke støttet med dette oppsettet"
 msgid "Transfer"
 msgstr "Overfør"
 
-#: ../blueman/plugins/services/Transfer.py:33
+#: ../blueman/plugins/services/Transfer.py:34
+#, fuzzy
 msgid "Applet's transfer service plugin is disabled"
-msgstr "Panelprogrammet utvidelsesprogramtillegg for overføring er deaktivert"
+msgstr "Panelprogrammet utvidelsesprogramtillegg for overføring er avskrudd"
+
+#: ../data/blueman-adapters.desktop.in.h:2
+msgid "Set Bluetooth Adapter Properties"
+msgstr "Velg egenskaper for Blåtannsadaptere"
+
+#: ../data/blueman.desktop.in.h:1
+msgid "Blueman Applet"
+msgstr "Blueman-panelprogram"
+
+#: ../data/blueman.desktop.in.h:2 ../data/blueman-manager.desktop.in.h:2
+msgid "Blueman Bluetooth Manager"
+msgstr "Blueman Blåtannsbehandler"
+
+#: ../data/blueman-manager.desktop.in.h:1
+msgid "Bluetooth Manager"
+msgstr "Håndtering av Blåtann"
+
+#: ../data/thunar-sendto-blueman.desktop.in.h:1
+msgid "Bluetooth Device"
+msgstr "Blåtannsenhet"
 
 #: ../data/configs/org.blueman.policy.in.h:1
 msgid "Configure Bluetooth Network"
@@ -1484,10 +1558,12 @@ msgid "Launching PPP daemon requires privileges"
 msgstr "Igangsetting av PPP-nisse krever rettigheter"
 
 #: ../data/configs/org.blueman.policy.in.h:7
+#, fuzzy
 msgid "Set RfKill State"
 msgstr "Sett RfKill-tilstand"
 
 #: ../data/configs/org.blueman.policy.in.h:8
+#, fuzzy
 msgid "Setting RfKill State requires privileges"
 msgstr "Setting av RfKill-tilstand krever rettigheter"
 
@@ -1507,7 +1583,8 @@ msgstr "Send filer til denne enheten"
 msgid "Source adapter. Takes address or adapter's name eg. hci0"
 msgstr "Kildeadapter. Bruker adresser eller adapterets navn f.eks. hci0"
 
-#: ../apps/blueman-sendto:134
+#: ../apps/blueman-sendto:133
+#, fuzzy
 msgid "Delete files on exit"
 msgstr "Slett filer ved avslutting"
 
