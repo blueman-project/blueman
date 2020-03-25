@@ -25,8 +25,8 @@ msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-29 08:27+0200\n"
-"PO-Revision-Date: 2020-03-23 03:49+0000\n"
-"Last-Translator: Jeannette L <j.lavoie@net-c.ca>\n"
+"PO-Revision-Date: 2020-03-25 21:33+0000\n"
+"Last-Translator: anonymous <noreply@weblate.org>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/blueman/blueman/"
 "fr/>\n"
 "Language: fr\n"
@@ -1176,13 +1176,13 @@ msgid "Configured directory for incoming files does not exist"
 msgstr "Le répertoire configuré pour les fichiers entrants n'existe pas"
 
 #: ../blueman/plugins/applet/TransferService.py:158
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Please make sure that directory \"<b>%s</b>\" exists or configure it with "
 "blueman-services. Until then the default \"%s\" will be used"
 msgstr ""
-"Veuillez vous assurer que le registre « <b>%s</b> » existe ou configurez-le "
-"avec services blueman. Entretemps, « %s » sera utilisé par défaut"
+"Veuillez vous assurer que le dossier « <b>%s</b> » existe ou configurez-le "
+"avec blueman-services. Entretemps, « %s » sera utilisé par défaut"
 
 #: ../blueman/plugins/applet/TransferService.py:299
 msgid "File received"
@@ -1447,7 +1447,10 @@ msgstr "Conflit d'adresses IP avec l'interface %s qui a la même adresse"
 msgid ""
 "IP address overlaps with subnet of interface %s, which has the following configuration  %s/%s\n"
 "This may cause incorrect network behavior"
-msgstr "L'adresse IP chevauche le sous-réseau de l'interface %s, qui a la configuration suivante %s/%s\nCela peut entraîner un comportement réseau incorrect"
+msgstr ""
+"L'adresse IP recouvre le sous-réseau de l'interface %s, qui a la "
+"configuration %s/%s\n"
+"Ça peut causer un mauvais comportement réseau"
 
 #: ../blueman/plugins/services/Network.py:239
 #: ../blueman/plugins/services/Network.py:248
