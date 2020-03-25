@@ -17,19 +17,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-14 12:14+0200\n"
-"PO-Revision-Date: 2020-04-14 10:14+0000\n"
-"Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
-"Language-Team: Italian (http://www.transifex.com/mate/MATE/language/it/)\n"
+"POT-Creation-Date: 2019-04-29 08:27+0200\n"
+"PO-Revision-Date: 2020-03-28 10:09+0000\n"
+"Last-Translator: Jeannette L <j.lavoie@net-c.ca>\n"
+"Language-Team: Italian <https://hosted.weblate.org/projects/blueman/blueman/"
+"it/>\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: it\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Visibility Setting</b>"
-msgstr "<b>Impostazioni visibilitá</b>"
+msgstr "<b>Impostazioni di visibilità</b>"
 
 #: ../data/ui/adapters-tab.ui.h:2 ../blueman/main/Adapter.py:144
 msgid "Hidden"
@@ -144,7 +146,7 @@ msgstr "Rinomina dispositivo"
 
 #: ../data/ui/services-network.ui.h:1
 msgid "Network Access Point (NAP)"
-msgstr "Network Access Point (NAP)"
+msgstr "Punto di accesso alla rete (NAP)"
 
 #: ../data/ui/services-network.ui.h:2
 msgid "<b>Services</b>"
@@ -511,7 +513,7 @@ msgstr "Inserisci chiave d'accesso"
 
 #: ../blueman/main/applet/BluezAgent.py:245
 msgid "Pairing passkey for"
-msgstr "Password di associazione per:"
+msgstr "Password di associazione per"
 
 #: ../blueman/main/applet/BluezAgent.py:254
 msgid "Pairing PIN code for"
@@ -523,7 +525,7 @@ msgstr "Richiesta di associazione per:"
 
 #: ../blueman/main/applet/BluezAgent.py:269
 msgid "Confirm value for authentication:"
-msgstr "Conferma il valore per l'autenticazione"
+msgstr "Conferma il valore per l'autenticazione:"
 
 #: ../blueman/main/applet/BluezAgent.py:270
 msgid "Confirm"
@@ -697,11 +699,11 @@ msgstr "Fallito"
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:122
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:168
 msgid "Connection Failed: "
-msgstr "Connessione fallita:"
+msgstr "Connessione fallita: "
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:145
 msgid "Disconnection Failed: "
-msgstr "Disconessione fallita:"
+msgstr "Disconessione fallita: "
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:186
 msgid "Disconnecting..."
@@ -745,7 +747,7 @@ msgstr "Au_torizza"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:342
 msgid "_Untrust"
-msgstr "_Untrust"
+msgstr "_Non c'è fiducia"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:348
 msgid "_Set up…"
@@ -865,7 +867,7 @@ msgstr "cellulare"
 #. translators: device class
 #: ../blueman/DeviceClass.py:68
 msgid "cordless"
-msgstr "cordless"
+msgstr "senza fili"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:70
@@ -1019,7 +1021,7 @@ msgstr "Connesso:"
 #: ../blueman/plugins/applet/NetUsage.py:174
 #: ../blueman/plugins/applet/NetUsage.py:284
 msgid "Not Connected"
-msgstr "Non connesso:"
+msgstr "Non connesso"
 
 #: ../blueman/plugins/applet/NetUsage.py:180
 msgid ""
@@ -1101,7 +1103,7 @@ msgstr "Connessioni recenti visualizzate"
 
 #: ../blueman/plugins/applet/RecentConns.py:69
 msgid "The maximum number of items recent connections menu will display."
-msgstr "Il numero massimo di connessioni recenti visualizzate nel menu"
+msgstr "Il numero massimo di connessioni recenti visualizzate nel menu."
 
 #: ../blueman/plugins/applet/RecentConns.py:80
 msgid "Recent _Connections"
@@ -1312,7 +1314,7 @@ msgstr "Durata in secondi della rilevabilità"
 
 #: ../blueman/plugins/applet/DiscvManager.py:32
 msgid "_Make Discoverable"
-msgstr "_Make Discoverable"
+msgstr "_Rendi rilevabile"
 
 #: ../blueman/plugins/applet/DiscvManager.py:33
 msgid "Make the default adapter temporarily visible"
@@ -1326,7 +1328,9 @@ msgstr "Visibile… %ss"
 #: ../blueman/plugins/applet/Menu.py:91
 msgid ""
 "Provides a menu for the applet and an API for other plugins to manipulate it"
-msgstr "Aggiunge un menu per l'applet e una API per permettere ad altri plugin per manipolarlo."
+msgstr ""
+"Aggiunge un menu per l'applet e un'API per permettere ad altri plugin per "
+"manipolarlo"
 
 #: ../blueman/plugins/applet/PPPSupport.py:49
 #, python-format
@@ -1342,7 +1346,9 @@ msgstr "Fornisce un supporto di base pr connettersi ad internet attraverso il pr
 #: ../blueman/plugins/applet/SerialManager.py:22
 msgid ""
 "Standard SPP profile connection handler, allows executing custom actions"
-msgstr "Gestore standard dei profili di connessione SPP, permette di eseguire azioni personalizzate."
+msgstr ""
+"Gestore standard dei profili di connessione SPP, permette di eseguire azioni "
+"personalizzate"
 
 #: ../blueman/plugins/applet/SerialManager.py:31
 msgid "Script to execute on connection"
@@ -1367,7 +1373,9 @@ msgstr "Porta seriale connessa"
 #, python-format
 msgid ""
 "Serial port service on device <b>%s</b> now will be available via <b>%s</b>"
-msgstr "Il servizio porta seriale sul dispositivo <b>%s</b> sarà  ora disponibile attraverso <b>%s</b>"
+msgstr ""
+"Il servizio porta seriale sul dispositivo <b>%s</b> sarà ora disponibile "
+"attraverso <b>%s</b>"
 
 #: ../blueman/plugins/applet/SerialManager.py:114
 msgid "Serial port connection script failed"
@@ -1435,7 +1443,10 @@ msgstr "L'indirizzo IP va in conflitto con l'interfaccia %s che ha lo stesso ind
 msgid ""
 "IP address overlaps with subnet of interface %s, which has the following configuration  %s/%s\n"
 "This may cause incorrect network behavior"
-msgstr "Sovrapposizione dell'indirizzo IP con la subnet dell'interfaccia %s, così configurata  %s/%s\nCiò può causare comportamenti di rete anomali."
+msgstr ""
+"Sovrapposizione dell'indirizzo IP con la subnet dell'interfaccia %s, così "
+"configurata %s/%s\n"
+"Ciò può causare comportamenti di rete anomali"
 
 #: ../blueman/plugins/services/Network.py:239
 #: ../blueman/plugins/services/Network.py:248
@@ -1448,7 +1459,7 @@ msgstr "Trasferimento"
 
 #: ../blueman/plugins/services/Transfer.py:33
 msgid "Applet's transfer service plugin is disabled"
-msgstr "Il plugin del servizio di trasferimento dell'Applet è disabilitato."
+msgstr "Il plugin del servizio di trasferimento dell'applet è disabilitato"
 
 #: ../data/configs/org.blueman.policy.in.h:1
 msgid "Configure Bluetooth Network"
