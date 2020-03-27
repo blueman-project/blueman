@@ -13,15 +13,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-14 12:14+0200\n"
-"PO-Revision-Date: 2020-04-14 10:14+0000\n"
-"Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
-"Language-Team: Japanese (http://www.transifex.com/mate/MATE/language/ja/)\n"
+"POT-Creation-Date: 2019-04-29 08:27+0200\n"
+"PO-Revision-Date: 2020-03-28 10:09+0000\n"
+"Last-Translator: Takuya Ohe <hi@tohe.xyz>\n"
+"Language-Team: Japanese <https://hosted.weblate.org/projects/blueman/blueman/"
+"ja/>\n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Visibility Setting</b>"
@@ -429,7 +431,7 @@ msgstr "obexd が利用できません"
 
 #: ../blueman/main/Sendto.py:118
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
-msgstr "obex サービスの自動起動に失敗しました。 obex デーモンが実行されていることを確認してください"
+msgstr "obexサービスの自動起動に失敗しました。obexデーモンが実行されているか確認してください"
 
 #: ../blueman/main/Sendto.py:147
 msgid "Cancelling"
@@ -548,7 +550,10 @@ msgstr "許可する"
 msgid ""
 "<b>An error has occured while loading a plugin. Please notify the developers with the content of this message to our </b>\n"
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
-msgstr "<b>プラグインの読み込み中にエラーが発生しました。開発者にこのメッセージを当社のウェブサイトに</b>\n<a href=\"http://github.com/blueman-project/blueman/issues\">通知してください。</a>"
+msgstr ""
+"<b>プラグインの読み込み中にエラーが発生しました。</b>\n"
+"このメッセージを開発者に、私達のウェブサイト<a href=\"http://github.com/blueman-project/blueman/"
+"issues\">でお知らせください。</a>"
 
 #: ../blueman/Functions.py:76
 msgid "Bluetooth Turned Off"
@@ -690,11 +695,11 @@ msgstr "失敗"
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:122
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:168
 msgid "Connection Failed: "
-msgstr "接続失敗:"
+msgstr "接続失敗: "
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:145
 msgid "Disconnection Failed: "
-msgstr "切断失敗:"
+msgstr "切断失敗: "
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:186
 msgid "Disconnecting..."
@@ -706,7 +711,7 @@ msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:246
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
-msgstr "自動接続プロファイルの A2DP ソース、A2DP シンク、および HID を接続します。"
+msgstr "自動接続プロファイルの A2DP ソース、A2DP シンク、および HID を接続します"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:250
 msgid "_<b>Disconnect</b>"
@@ -786,7 +791,7 @@ msgstr "Launchpad Contributions:\n  Karl Skewes https://launchpad.net/~karl-gara
 
 #: ../blueman/gui/CommonUi.py:46
 msgid "Blueman is a GTK+ Bluetooth manager"
-msgstr "Blueman は GTK+ の Bluetooth マネージャーです。"
+msgstr "Blueman は GTK+ の Bluetooth マネージャーです"
 
 #: ../blueman/gui/GsmSettings.py:28
 msgid "GSM Settings"
@@ -961,7 +966,7 @@ msgstr "テキスト付箋紙を送る"
 #: ../blueman/plugins/manager/PulseAudioProfile.py:88
 #, python-format
 msgid "Failed to change profile to %s"
-msgstr "プロファイルを %s に変更できませんでした。"
+msgstr "プロファイルを %s に変更できませんでした"
 
 #: ../blueman/plugins/manager/PulseAudioProfile.py:129
 msgid "Audio Profile"
@@ -1077,7 +1082,7 @@ msgstr "NAP ブリッジのようなローカルネットワークデバイス�
 msgid ""
 "Provides support for Dial Up Networking (DUN) with ModemManager and "
 "NetworkManager"
-msgstr "モデムマネージャーとネットワークマネージャーにダイヤルアップネットワーク (DUN) を提供します。"
+msgstr "モデムマネージャーとネットワークマネージャーにダイヤルアップネットワーク (DUN) を提供します"
 
 #: ../blueman/plugins/applet/RecentConns.py:57
 msgid ""
@@ -1091,7 +1096,7 @@ msgstr "最大表示項目数"
 
 #: ../blueman/plugins/applet/RecentConns.py:69
 msgid "The maximum number of items recent connections menu will display."
-msgstr "最近使用した接続に表示される最大の項目数"
+msgstr "最近使用した接続に表示される最大の項目数。"
 
 #: ../blueman/plugins/applet/RecentConns.py:80
 msgid "Recent _Connections"
@@ -1119,7 +1124,7 @@ msgstr "この接続のアダプターは使用できません"
 msgid ""
 "Provides support for Personal Area Networking (PAN) introduced in "
 "NetworkManager 0.8"
-msgstr "パーソナルエリアネットワーク (PAN) は NetworkManager 0.8 で利用可能です。"
+msgstr "パーソナルエリアネットワーク (PAN) は NetworkManager 0.8 で利用可能です"
 
 #: ../blueman/plugins/applet/DBusService.py:17
 msgid "Provides DBus API for other Blueman components"
@@ -1161,6 +1166,8 @@ msgid ""
 "Please make sure that directory \"<b>%s</b>\" exists or configure it with "
 "blueman-services. Until then the default \"%s\" will be used"
 msgstr ""
+"ディレクトリ\"<b>%s</b>\"が存在するか確認してください。または、blueman-servicesで設定してください。それまでは、\"%s\""
+"が使われます"
 
 #: ../blueman/plugins/applet/TransferService.py:299
 msgid "File received"
@@ -1206,7 +1213,7 @@ msgstr "Bluetooth の電源状態の変更に応じて Bluetooth の有効状態
 
 #: ../blueman/plugins/applet/StandardItems.py:17
 msgid "Adds standard menu items to the status icon menu"
-msgstr "ステータスアイコンメニューに通常メニューを追加します。"
+msgstr "ステータスアイコンメニューに通常メニューを追加します"
 
 #: ../blueman/plugins/applet/StandardItems.py:25
 msgid "_Set Up New Device"
@@ -1230,11 +1237,11 @@ msgstr "アプレット"
 
 #: ../blueman/plugins/applet/AuthAgent.py:9
 msgid "Provides passkey, authentication services for BlueZ daemon"
-msgstr "BlueZ デーモンのためにパスキーと認証サービスを提供します。"
+msgstr "BlueZ デーモンのためにパスキーと認証サービスを提供します"
 
 #: ../blueman/plugins/applet/ExitItem.py:12
 msgid "Adds an exit menu item to quit the applet"
-msgstr "アプレットを終了するメニューを追加します。"
+msgstr "アプレットを終了するメニューを追加します"
 
 #: ../blueman/plugins/applet/DhcpClient.py:14
 msgid "Provides a basic dhcp client for Bluetooth PAN connections."
@@ -1254,7 +1261,7 @@ msgstr "インターフェース %(0)s は IP アドレス %(1)s に接続して
 #: ../blueman/plugins/applet/DhcpClient.py:53
 #, python-format
 msgid "Failed to obtain an IP address on %s"
-msgstr "%s の IP アドレスを取得できませんでした。"
+msgstr "%s の IP アドレスを取得できませんでした"
 
 #: ../blueman/plugins/applet/DhcpClient.py:58
 #, python-format
@@ -1281,13 +1288,13 @@ msgstr[0] "<b>%d 件のアクティブな接続</b>"
 
 #: ../blueman/plugins/applet/AppIndicator.py:15
 msgid "Uses libappindicator to show a statusicon"
-msgstr "ステータスアイコンを表示するために libappindicator を使用します。"
+msgstr "ステータスアイコンを表示するために libappindicator を使用します"
 
 #: ../blueman/plugins/applet/DiscvManager.py:15
 msgid ""
 "Provides a menu item for making the default adapter temporarily visible when"
 " it is set to hidden by default"
-msgstr "デフォルトで非表示にされているデフォルトアダプターを一時的に表示するメニューアイテムを提供します。"
+msgstr "デフォルトで非表示にされているデフォルトアダプターを一時的に表示するメニューアイテムを提供します"
 
 #: ../blueman/plugins/applet/DiscvManager.py:25
 msgid "Discoverable timeout"
@@ -1313,14 +1320,16 @@ msgstr "検出可能... %ss"
 #: ../blueman/plugins/applet/Menu.py:91
 msgid ""
 "Provides a menu for the applet and an API for other plugins to manipulate it"
-msgstr "アプレットにメニューを、その他のプラグインに API を提供し、操作できるようにします。"
+msgstr "アプレットにメニューを、その他のプラグインに API を提供し、操作できるようにします"
 
 #: ../blueman/plugins/applet/PPPSupport.py:49
 #, python-format
 msgid ""
 "Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\n"
 "Network is now available through <b>%(1)s</b>"
-msgstr " <b>%(0)s</b> 上の <b>DUN</b> サービスに接続しました。\n<b>%(1)s</b> を経由してネットワークを利用可能です。"
+msgstr ""
+"<b>%(0)s</b> 上の <b>DUN</b> サービスに接続しました。\n"
+"<b>%(1)s</b> を経由してネットワークを利用可能です"
 
 #: ../blueman/plugins/applet/PPPSupport.py:57
 msgid "Provides basic support for connecting to the internet via DUN profile."
@@ -1354,7 +1363,7 @@ msgstr "シリアルポートが接続されました"
 #, python-format
 msgid ""
 "Serial port service on device <b>%s</b> now will be available via <b>%s</b>"
-msgstr "デバイス <b>%s</b> 上のシリアルポートサービスを <b>%s</b> 経由で利用可能になりました。"
+msgstr "デバイス <b>%s</b> 上のシリアルポートサービスを <b>%s</b> 経由で利用可能になりました"
 
 #: ../blueman/plugins/applet/SerialManager.py:114
 msgid "Serial port connection script failed"
@@ -1369,7 +1378,7 @@ msgstr "スクリプト %s の実行に失敗しました\n%s"
 
 #: ../blueman/plugins/applet/PowerManager.py:15
 msgid "Controls Bluetooth adapter power states"
-msgstr "Bluetooth アダプターの電源状態を設定します。"
+msgstr "Bluetooth アダプターの電源状態を設定します"
 
 #: ../blueman/plugins/applet/PowerManager.py:28
 msgid "Auto power-on"
@@ -1387,7 +1396,7 @@ msgstr "<b>Bluetooth をオフにする(_O)</b>"
 #: ../blueman/plugins/applet/PowerManager.py:39
 #: ../blueman/plugins/applet/PowerManager.py:168
 msgid "Turn off all adapters"
-msgstr "全てのアダプターをオフにします。"
+msgstr "全てのアダプターをオフにします"
 
 #: ../blueman/plugins/applet/PowerManager.py:157
 msgid "<b>Turn Bluetooth _On</b>"
@@ -1415,7 +1424,7 @@ msgstr "不正な IP アドレス"
 #: ../blueman/plugins/services/Network.py:104
 #, python-format
 msgid "IP address conflicts with interface %s which has the same address"
-msgstr "IP アドレスが同じアドレスを持つインターフェース %s と衝突しています。"
+msgstr "IP アドレスが同じアドレスを持つインターフェース %s と衝突しています"
 
 #: ../blueman/plugins/services/Network.py:112
 #, python-format
@@ -1423,6 +1432,8 @@ msgid ""
 "IP address overlaps with subnet of interface %s, which has the following configuration  %s/%s\n"
 "This may cause incorrect network behavior"
 msgstr ""
+"IPアドレスが、次の構成 %s/%s を持つインターフェース%s のサブネットと重複しています\n"
+"これにより、不正なネットワーク動作が発生する可能性があります"
 
 #: ../blueman/plugins/services/Network.py:239
 #: ../blueman/plugins/services/Network.py:248
@@ -1495,7 +1506,7 @@ msgstr "Bluetooth デバイスに送信するファイル"
 
 #: ../apps/blueman-assistant:52
 msgid "Bluetooth needs to be turned on for the Bluetooth assistant to work"
-msgstr "Bluetooth アシスタントを使うには Bluetooth をオンにする必要があります。"
+msgstr "Bluetooth アシスタントを使うには Bluetooth をオンにする必要があります"
 
 #: ../apps/blueman-assistant:100
 msgid "No adapters found"
@@ -1515,11 +1526,11 @@ msgstr "接続しない"
 
 #: ../apps/blueman-assistant:234
 msgid "<b>Device added and connected successfully</b>"
-msgstr ""
+msgstr "<b>デバイスが追加され、接続に成功しました。</b>"
 
 #: ../apps/blueman-assistant:239
 msgid "<b>Device added successfully, but failed to connect</b>"
-msgstr ""
+msgstr "<b>デバイスが追加されましたが、接続に失敗しました</b>"
 
 #: ../apps/blueman-assistant:250
 msgid "Start configuration assistant for this device"
