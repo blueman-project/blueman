@@ -38,9 +38,9 @@ class GtkStatusIcon(object):
         self.indicator.connect('activate', lambda _status_icon: on_activate_status_icon())
         self._menu = None
 
-    def on_popup_menu(self, status_icon, button, activate_time):
+    def on_popup_menu(self, _status_icon, _button, _activate_time):
         if self._menu:
-            self._menu.popup(None, None, Gtk.StatusIcon.position_menu, status_icon, button, activate_time)
+            self._menu.popup_at_pointer(None)
 
     def set_icon(self, icon_name):
         self.indicator.props.icon_name = icon_name
