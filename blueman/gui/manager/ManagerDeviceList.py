@@ -180,7 +180,7 @@ class ManagerDeviceList(DeviceList):
                 self.menu.generic_connect(item=None, device=row["device"], connect=not row["connected"])
 
         if event.type == Gdk.EventType.BUTTON_PRESS and event.button == 3:
-            self.menu.popup(None, None, None, None, event.button, event.time)
+            self.menu.popup_at_pointer(event)
 
     def get_icon_info(self, icon_name, size=48, fallback=True):
         if icon_name is None and not fallback:

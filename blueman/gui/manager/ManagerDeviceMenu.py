@@ -62,11 +62,11 @@ class ManagerDeviceMenu(Gtk.Menu):
     def __del__(self):
         logging.debug("deleting devicemenu")
 
-    def popup(self, *args):
+    def popup_at_pointer(self, event):
         self.is_popup = True
         self.generate()
 
-        super().popup(*args)
+        super().popup_at_pointer(event)
 
     def clear(self):
         def remove_and_destroy(child):
