@@ -28,7 +28,7 @@ If you are packaging it for your distribution, please make sure to pass `--disab
 
 ## Packaged versions
 
-The [wiki page has info about packaged versions of Blueman](https://github.com/blueman-project/blueman/wiki/Packaged-versions).
+The [wiki page has info about packaged versions of blueman](https://github.com/blueman-project/blueman/wiki/Packaged-versions).
 
 ## Support / Troubleshooting
 
