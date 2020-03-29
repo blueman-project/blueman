@@ -43,7 +43,7 @@ Fork, make your changes, and issue a pull request. If you just want to edit a si
 ### Translate
 
 Translations are managed on Hosted Weblate.
-Go to the [Weblate Blueman project page](https://hosted.weblate.org/projects/blueman/).
+Go to the [Weblate blueman project page](https://hosted.weblate.org/projects/blueman/).
 
 ## License
 
