@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-29 08:27+0200\n"
-"PO-Revision-Date: 2020-03-28 10:09+0000\n"
+"PO-Revision-Date: 2020-04-01 05:14+0000\n"
 "Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/blueman/blueman/"
 "fi/>\n"
@@ -221,7 +221,12 @@ msgid ""
 "\n"
 "\n"
 "It will walk you through the process of configuring and connecting to your Bluetooth enabled devices."
-msgstr "Tervetuloa Bluetooth-laite asennusvelhoon.\n\n\nSe opastaa sinut asetuksien ja yhteydenluonnin kanssa Bluetooth-laitteitesi käyttöä varten."
+msgstr ""
+"<b>Tervetuloa Bluetooth-laite asennusvelhoon.</b>\n"
+"\n"
+"\n"
+"Se opastaa sinut asetuksien ja yhteydenluonnin kanssa Bluetooth-laitteitesi "
+"käyttöä varten."
 
 #: ../data/ui/assistant.ui.h:5
 msgid "Introduction"
@@ -604,9 +609,8 @@ msgid "Show _Statusbar"
 msgstr "Näytä _Tilarivi"
 
 #: ../blueman/gui/manager/ManagerMenu.py:72
-#, fuzzy
 msgid "S_ort By"
-msgstr "Järjestä"
+msgstr "Lajittele"
 
 #: ../blueman/gui/manager/ManagerMenu.py:82
 msgid "_Name"
@@ -718,9 +722,8 @@ msgid "_<b>Connect</b>"
 msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:242
-#, fuzzy
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
-msgstr "Yhdistää automaattisen yhteysprofiilin A2DP-lähde, A2DP-sink ja HID"
+msgstr "Yhdistää automaattisen yhteysprofiilin A2DP-lähde, A2DP-nielu ja HID"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:250
 msgid "_<b>Disconnect</b>"
@@ -929,9 +932,8 @@ msgid "Audio Source"
 msgstr "Äänilähde"
 
 #: ../blueman/Sdp.py:136
-#, fuzzy
 msgid "Audio Sink"
-msgstr "Audio Sink"
+msgstr "Ääninielu"
 
 #: ../blueman/Sdp.py:146
 msgid "Network Access Point"
@@ -1172,7 +1174,7 @@ msgstr "Tarjoaa OBEX-tiedostonsiirtotuen"
 
 #: ../blueman/plugins/applet/TransferService.py:168
 msgid "Configured directory for incoming files does not exist"
-msgstr ""
+msgstr "Konfiguroitua hakemistoa tuleville tiedostoille ei ole"
 
 #: ../blueman/plugins/applet/TransferService.py:169
 #, python-format
@@ -1180,6 +1182,8 @@ msgid ""
 "Please make sure that directory \"<b>%s</b>\" exists or configure it with "
 "blueman-services. Until then the default \"%s\" will be used"
 msgstr ""
+"Varmista, että hakemisto \"<b>%s</b>\" on olemassa, tai määritä se blueman-"
+"palveluiden kanssa. Siihen asti oletusasetusta \"%s\" käytetään"
 
 #: ../blueman/plugins/applet/TransferService.py:299
 msgid "File received"
@@ -1224,14 +1228,17 @@ msgid ""
 "(Useless with USB dongles) and makes sure a status icon is shown if there is"
 " a bluetooth killswitch but no adapter."
 msgstr ""
+"Vaihtaa Bluetoothin käyttöympäristöä tappokytkimellä, kun Bluetoothin virran "
+"tila muuttuu (Hyödytön USB-dongien kanssa) ja samalla varmistaa, että "
+"tilakuvake näkyy, jos Bluetooth-tappokytkin on kytketty, mutta ei sovitinta."
 
 #: ../blueman/plugins/applet/StandardItems.py:17
 msgid "Adds standard menu items to the status icon menu"
-msgstr ""
+msgstr "Lisää vakiovalikkokohteita tilakuvakevalikkoon"
 
 #: ../blueman/plugins/applet/StandardItems.py:25
 msgid "_Set Up New Device"
-msgstr ""
+msgstr "_Asenna uusi laite"
 
 #: ../blueman/plugins/applet/StandardItems.py:30
 msgid "Send _Files to Device"
@@ -1255,11 +1262,11 @@ msgstr "Tarjoaa tunnusluvun, todennuspalvelut BlueZ-taustaprosessille"
 
 #: ../blueman/plugins/applet/ExitItem.py:12
 msgid "Adds an exit menu item to quit the applet"
-msgstr ""
+msgstr "Lisää lopetusvalikon vaihtoehdon sovelman lopettamiseksi"
 
 #: ../blueman/plugins/applet/DhcpClient.py:14
 msgid "Provides a basic dhcp client for Bluetooth PAN connections."
-msgstr ""
+msgstr "Tarjoaa dhcp-perusohjelman Bluetooth PAN -yhteyksille."
 
 #: ../blueman/plugins/applet/DhcpClient.py:45
 #: ../blueman/plugins/applet/DhcpClient.py:53
@@ -1283,12 +1290,16 @@ msgid ""
 "Trying to obtain an IP address on %s\n"
 "Please wait…"
 msgstr ""
+"Yritetään saada IP-osoitetta kohteessa %s\n"
+"Ole hyvä ja odota…"
 
 #: ../blueman/plugins/applet/ShowConnected.py:13
 msgid ""
 "Adds an indication on the status icon when Bluetooth is active and shows the"
 " number of connections in the tooltip."
 msgstr ""
+"Lisää tilakuvakkeen merkin kun Bluetooth on aktiivinen ja näyttää "
+"työkaluvihjeessä yhteyksien määrän."
 
 #: ../blueman/plugins/applet/ShowConnected.py:48
 msgid "Bluetooth Active"
@@ -1303,13 +1314,15 @@ msgstr[1] "<b>%d aktiivista yhteyttä</b>"
 
 #: ../blueman/plugins/applet/AppIndicator.py:15
 msgid "Uses libappindicator to show a statusicon"
-msgstr ""
+msgstr "Näyttää tilakuvakkeen libappindicatorin avulla"
 
 #: ../blueman/plugins/applet/DiscvManager.py:15
 msgid ""
 "Provides a menu item for making the default adapter temporarily visible when"
 " it is set to hidden by default"
-msgstr "Tarjoaa valikkokohdan, jolla saa oletussovittimen väliaikaisesti näkyväksi, vaikka se on asetettu piilotetuksi."
+msgstr ""
+"Tarjoaa valikkokohdan, jolla saa oletussovittimen väliaikaisesti näkyväksi, "
+"vaikka se on asetettu piilotetuksi"
 
 #: ../blueman/plugins/applet/DiscvManager.py:25
 msgid "Discoverable timeout"
@@ -1317,7 +1330,7 @@ msgstr "Näkyvillä olon aikaraja"
 
 #: ../blueman/plugins/applet/DiscvManager.py:26
 msgid "Amount of time in seconds discoverable mode will last"
-msgstr "Aika sekunneissa, jonka näkyvä tila kestää."
+msgstr "Aika sekunneissa, jonka näkyvä tila kestää"
 
 #: ../blueman/plugins/applet/DiscvManager.py:32
 msgid "_Make Discoverable"
@@ -1330,7 +1343,7 @@ msgstr "Aseta oletussovitin väliaikaisesti näkyväksi"
 #: ../blueman/plugins/applet/DiscvManager.py:57
 #, python-format
 msgid "Discoverable… %ss"
-msgstr ""
+msgstr "Havaittavissa… %ss"
 
 #: ../blueman/plugins/applet/Menu.py:91
 msgid ""
@@ -1347,15 +1360,18 @@ msgstr "Kytkeydyttiin onnistuneesti <b>DUN</b>-palveluun kohteessa <b>%(0)s.</b>
 #: ../blueman/plugins/applet/PPPSupport.py:57
 msgid "Provides basic support for connecting to the internet via DUN profile."
 msgstr ""
+"Tarjoaa perustuen internet-yhteyden muodostamiselle DUN-profiilin kautta."
 
 #: ../blueman/plugins/applet/SerialManager.py:22
 msgid ""
 "Standard SPP profile connection handler, allows executing custom actions"
 msgstr ""
+"Tavallinen SPP-profiiliyhteyskäsittelijä, mahdollistaa mukautettujen "
+"toimintojen suorittamisen"
 
 #: ../blueman/plugins/applet/SerialManager.py:31
 msgid "Script to execute on connection"
-msgstr ""
+msgstr "Skripti suorittaa yhteyden"
 
 #: ../blueman/plugins/applet/SerialManager.py:32
 msgid ""
@@ -1367,6 +1383,13 @@ msgid ""
 "\n"
 "Upon device disconnection the script will be sent a HUP signal</span>"
 msgstr ""
+"<span size=\"small\">>Seuraavat argumentit välitetään:\n"
+"Osoite, Nimi, palvelun nimi, uuid16s, rfcomm-solmu\n"
+"Esimerkiksi:\n"
+"AA:BB:CC:DD:EE:FF, Puhelin, DUN-palvelu, 0x1103, /dev/rfcomm0\n"
+"uuid16s palautetaan pilkuerotteisena luettelona\n"
+"\n"
+"Kun laite katkaisee yhteyden, komentosarja lähetetään HUP-signaalilla</span>"
 
 #: ../blueman/plugins/applet/SerialManager.py:63
 msgid "Serial port connected"
@@ -1380,7 +1403,7 @@ msgstr "Sarjaporttipalvelu laitteessa <b>%s</b> on käytettävissä kohteen <b>%
 
 #: ../blueman/plugins/applet/SerialManager.py:114
 msgid "Serial port connection script failed"
-msgstr ""
+msgstr "Sarjaportin yhteyskomentosarja epäonnistui"
 
 #: ../blueman/plugins/applet/SerialManager.py:115
 #, python-format
@@ -1388,18 +1411,20 @@ msgid ""
 "There was a problem launching script %s\n"
 "%s"
 msgstr ""
+"Komentosarjan käynnistämisessä oli ongelma %s\n"
+"%s"
 
 #: ../blueman/plugins/applet/PowerManager.py:15
 msgid "Controls Bluetooth adapter power states"
-msgstr ""
+msgstr "Ohjaa Bluetooth-sovittimen virtatiloja"
 
 #: ../blueman/plugins/applet/PowerManager.py:28
 msgid "Auto power-on"
-msgstr ""
+msgstr "Automaattinen käynnistys"
 
 #: ../blueman/plugins/applet/PowerManager.py:29
 msgid "Automatically power on adapters"
-msgstr ""
+msgstr "Kytke sovittimet automaattisesti päälle"
 
 #: ../blueman/plugins/applet/PowerManager.py:38
 #: ../blueman/plugins/applet/PowerManager.py:166
@@ -1417,13 +1442,14 @@ msgstr "<b>Kytke _bluetooth päälle</b>"
 
 #: ../blueman/plugins/applet/PowerManager.py:159
 msgid "Turn on all adapters"
-msgstr ""
+msgstr "Ota kaikki sovittimet käyttöön"
 
 #: ../blueman/plugins/applet/GameControllerWakelock.py:19
 msgid ""
 "Temporarily suspends the screensaver when a bluetooth game controller is "
 "connected."
 msgstr ""
+"Keskeytä näytönsäästäjä tilapäisesti, kun bluetooth-peliohjain on liitetty."
 
 #: ../blueman/plugins/services/Network.py:24
 #: ../blueman/plugins/services/Network.py:49
@@ -1438,6 +1464,7 @@ msgstr "Virheellinen IP-osoite"
 #, python-format
 msgid "IP address conflicts with interface %s which has the same address"
 msgstr ""
+"IP-osoite on ristiriidassa käyttöliittymän %s kanssa, jolla on sama osoite"
 
 #: ../blueman/plugins/services/Network.py:112
 #, python-format
@@ -1445,6 +1472,9 @@ msgid ""
 "IP address overlaps with subnet of interface %s, which has the following configuration  %s/%s\n"
 "This may cause incorrect network behavior"
 msgstr ""
+"IP-osoite on päällekkäinen aliverkon rajapinnan %s kanssa,  jolla on "
+"seuraavat määritykset  %s/%s\n"
+"Tämä saattaa aiheuttaa virheellisen verkon toiminnan"
 
 #: ../blueman/plugins/services/Network.py:239
 #: ../blueman/plugins/services/Network.py:248
@@ -1459,13 +1489,33 @@ msgstr "Siirrot"
 msgid "Applet's transfer service plugin is disabled"
 msgstr "Appletin siirtopalveluliitännäinen on poistettu käytöstä"
 
+#: ../data/blueman-adapters.desktop.in.h:2
+msgid "Set Bluetooth Adapter Properties"
+msgstr "Aseta Bluetooth-sovittimen ominaisuudet"
+
+#: ../data/blueman.desktop.in.h:1
+msgid "Blueman Applet"
+msgstr "Blueman-sovelma"
+
+#: ../data/blueman.desktop.in.h:2 ../data/blueman-manager.desktop.in.h:2
+msgid "Blueman Bluetooth Manager"
+msgstr "Blueman bluetooth-hallinta"
+
+#: ../data/blueman-manager.desktop.in.h:1
+msgid "Bluetooth Manager"
+msgstr "Bluetooth-hallinta"
+
+#: ../data/thunar-sendto-blueman.desktop.in.h:1
+msgid "Bluetooth Device"
+msgstr "Bluetooth-laite"
+
 #: ../data/configs/org.blueman.policy.in.h:1
 msgid "Configure Bluetooth Network"
 msgstr "Määritä bluetooth-verkko"
 
 #: ../data/configs/org.blueman.policy.in.h:2
 msgid "Configuring networking requires privileges"
-msgstr "Verkon määrittäminen vaatii lisäoikeuksia."
+msgstr "Verkon määrittäminen vaatii lisäoikeuksia"
 
 #: ../data/configs/org.blueman.policy.in.h:3
 msgid "Launch DHCP client"
@@ -1477,7 +1527,7 @@ msgstr "DHCP-asiakkaan käynnistäminen vaatii lisäoikeuksia"
 
 #: ../data/configs/org.blueman.policy.in.h:5
 msgid "Launch PPP daemon"
-msgstr ""
+msgstr "Käynnistä PPP-daemoni"
 
 #: ../data/configs/org.blueman.policy.in.h:6
 msgid "Launching PPP daemon requires privileges"
@@ -1485,7 +1535,7 @@ msgstr "PPP-taustaprosessin käynnistäminen vaatii lisäoikeuksia"
 
 #: ../data/configs/org.blueman.policy.in.h:7
 msgid "Set RfKill State"
-msgstr ""
+msgstr "Aseta RfKill-tila"
 
 #: ../data/configs/org.blueman.policy.in.h:8
 msgid "Setting RfKill State requires privileges"
@@ -1505,19 +1555,19 @@ msgstr "Lähetä tiedostoja tähän laitteeseen"
 
 #: ../apps/blueman-sendto:133
 msgid "Source adapter. Takes address or adapter's name eg. hci0"
-msgstr ""
+msgstr "Lähdesovitin. Ottaa osoitteen tai sovittimen nimen esim. hci0"
 
 #: ../apps/blueman-sendto:134
 msgid "Delete files on exit"
-msgstr ""
+msgstr "Poista tiedostot poistuessasi"
 
 #: ../apps/blueman-sendto:136
 msgid "Files to be send to the bluetooth device"
-msgstr ""
+msgstr "Bluetooth-laitteelle lähetettävät tiedostot"
 
 #: ../apps/blueman-assistant:52
 msgid "Bluetooth needs to be turned on for the Bluetooth assistant to work"
-msgstr ""
+msgstr "Bluetooth on otettava käyttöön, jotta Bluetooth-avustaja toimisi"
 
 #: ../apps/blueman-assistant:100
 msgid "No adapters found"
@@ -1525,7 +1575,7 @@ msgstr "Sovittimia ei löydetty"
 
 #: ../apps/blueman-assistant:189
 msgid "<b>Pairing in progress...</b>"
-msgstr ""
+msgstr "<b>Pariliitos on käynnissä...</b>"
 
 #: ../apps/blueman-assistant:198
 msgid "<b>Failed to add device</b>"
@@ -1537,11 +1587,12 @@ msgstr "Älä yhdistä"
 
 #: ../apps/blueman-assistant:234
 msgid "<b>Device added and connected successfully</b>"
-msgstr ""
+msgstr "<b>Laite lisätty ja yhdistetty onnistuneesti</b>"
 
 #: ../apps/blueman-assistant:239
 msgid "<b>Device added successfully, but failed to connect</b>"
 msgstr ""
+"<b>Laite lisätty onnistuneesti, mutta yhteyden muodostaminen epäonnistui</b>"
 
 #: ../apps/blueman-assistant:250
 msgid "Start configuration assistant for this device"
