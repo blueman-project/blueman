@@ -13,15 +13,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-14 12:14+0200\n"
-"PO-Revision-Date: 2020-04-14 10:14+0000\n"
-"Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
-"Language-Team: Turkish (http://www.transifex.com/mate/MATE/language/tr/)\n"
+"POT-Creation-Date: 2019-06-09 11:42+0200\n"
+"PO-Revision-Date: 2020-04-04 01:35+0000\n"
+"Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
+"Language-Team: Turkish <https://hosted.weblate.org/projects/blueman/blueman/"
+"tr/>\n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: tr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Visibility Setting</b>"
@@ -430,7 +432,9 @@ msgstr "obexd bulunamadı"
 
 #: ../blueman/main/Sendto.py:118
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
-msgstr "Obex hizmeti otomatik olarak başlatılamadı. Obex yazılımının çalışıp çalışmadığını kontrol edin."
+msgstr ""
+"Obex hizmeti otomatik olarak başlatılamadı. Obex arka plan programının "
+"çalıştığından emin olun"
 
 #: ../blueman/main/Sendto.py:147
 msgid "Cancelling"
@@ -448,15 +452,15 @@ msgstr "ETA:"
 #, python-format
 msgid "%.0f Minute"
 msgid_plural "%.0f Minutes"
-msgstr[0] "%.0f  Dakika"
+msgstr[0] "%.0f Dakika"
 msgstr[1] "%.0f Dakika"
 
 #: ../blueman/main/Sendto.py:196
 #, python-format
 msgid "%.0f Second"
 msgid_plural "%.0f Seconds"
-msgstr[0] "%.0f  Saniye"
-msgstr[1] "%.0f  Saniye"
+msgstr[0] "%.0f Saniye"
+msgstr[1] "%.0f Saniye"
 
 #: ../blueman/main/Sendto.py:230
 #, python-format
@@ -491,7 +495,7 @@ msgstr "Bluetooth Kimlik Doğrulama"
 
 #: ../blueman/main/applet/BluezAgent.py:220
 msgid "Enter PIN code for authentication:"
-msgstr "Tanımlama için PIN kodunu girin"
+msgstr "Kimlik doğrulaması için PIN kodunu girin:"
 
 #: ../blueman/main/applet/BluezAgent.py:221
 msgid "Enter PIN code"
@@ -567,7 +571,7 @@ msgstr "Bluetooth'u Etkinleştir"
 
 #: ../blueman/Functions.py:97
 msgid "Shall bluetooth get enabled automatically?"
-msgstr ""
+msgstr "Bluetooth otomatik olarak etkinleştirilecek mi?"
 
 #: ../blueman/Functions.py:98
 msgid "Yes"
@@ -697,7 +701,7 @@ msgstr "Bağlantı Başarısız: "
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:145
 msgid "Disconnection Failed: "
-msgstr "Bağlantı kesilmesi başarısız oldu:"
+msgstr "Bağlantı Kesilemedi: "
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:186
 msgid "Disconnecting..."
@@ -729,7 +733,7 @@ msgstr "<b>Bağlantıyı Kes:</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:314
 msgid "Send a _File..."
-msgstr "Bir Dosya _Gönder"
+msgstr "Bir Dosya _Gönder..."
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:327
 msgid "_Pair"
@@ -749,7 +753,7 @@ msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:383
 msgid "_Remove..."
-msgstr "_Kaldır"
+msgstr "_Kaldır..."
 
 #: ../blueman/gui/manager/ManagerProgressbar.py:42
 msgid "Cancel Operation"
@@ -817,7 +821,10 @@ msgstr "<b>\"%(0)s\"</b> eklentisi <b>%(1)s</b> ile bağımlıdır. <b>%(1)s</b>
 msgid ""
 "Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will unload <b>%(0)s</b>.\n"
 "Proceed?"
-msgstr "<b>%(0)s</b> eklentisi <b>%(1)s</b> eklentisi ile çakışıyor .  <b>%(1)s</b> eklentisinin yüklenmesi <b>%(0)s</b> eklentisinin silinmesini gerektiriyor.\nİşlem Uygulansın Mı?"
+msgstr ""
+"<b>%(0)s</b> eklentisi <b>%(1)s</b> eklentisi ile çakışıyor. <b>%(1)s</b> "
+"eklentisinin yüklenmesi <b>%(0)s</b> eklentisinin silinmesini gerektiriyor.\n"
+"Devam edilsin mi?"
 
 #: ../blueman/gui/DeviceSelectorWidget.py:38
 msgid "Adapter selection"
@@ -1077,7 +1084,7 @@ msgstr "Bluetooth Devredışı"
 
 #: ../blueman/plugins/applet/Networking.py:16
 msgid "Manages local network services, like NAP bridges"
-msgstr "Yerel ağ servislerini düzenler , NAP köprüsü gibi.."
+msgstr "NAP köprüleri gibi yerel ağ hizmetlerini yönetir"
 
 #: ../blueman/plugins/applet/NMDUNSupport.py:14
 msgid ""
@@ -1097,7 +1104,7 @@ msgstr "Azami öğe"
 
 #: ../blueman/plugins/applet/RecentConns.py:69
 msgid "The maximum number of items recent connections menu will display."
-msgstr "Yeni  bağlantı menüsünün gösterecek olduğu maddelerin maksimum sayısı."
+msgstr "Son bağlantılar menüsünün göstereceği maksimum öge sayısı."
 
 #: ../blueman/plugins/applet/RecentConns.py:80
 msgid "Recent _Connections"
@@ -1125,7 +1132,8 @@ msgstr "Bu bağlantı için bağdaştırıcı kullanılabilir değil"
 msgid ""
 "Provides support for Personal Area Networking (PAN) introduced in "
 "NetworkManager 0.8"
-msgstr "NetworkManager 0.8'de tanıtılan Kişisel Alan Ağı (PAN) için destek sağlar."
+msgstr ""
+"NetworkManager 0.8'de tanıtılan Kişisel Alan Ağı (PAN) için destek sağlar"
 
 #: ../blueman/plugins/applet/DBusService.py:17
 msgid "Provides DBus API for other Blueman components"
@@ -1167,6 +1175,8 @@ msgid ""
 "Please make sure that directory \"<b>%s</b>\" exists or configure it with "
 "blueman-services. Until then the default \"%s\" will be used"
 msgstr ""
+"Lütfen \"<b>%s</b>\" dizininin bulunduğundan emin olun veya blueman-services "
+"ile yapılandırın. O zamana kadar varsayılan \"%s\" kullanılacak"
 
 #: ../blueman/plugins/applet/TransferService.py:299
 msgid "File received"
@@ -1238,7 +1248,7 @@ msgstr "programcık"
 
 #: ../blueman/plugins/applet/AuthAgent.py:9
 msgid "Provides passkey, authentication services for BlueZ daemon"
-msgstr "BlueZ hizmeti için passkey ve kimlik doğrulama servisi sağlar."
+msgstr "BlueZ hizmeti için passkey ve kimlik doğrulama servisi sağlar"
 
 #: ../blueman/plugins/applet/ExitItem.py:12
 msgid "Adds an exit menu item to quit the applet"
@@ -1275,7 +1285,9 @@ msgstr "%s üzerinde IP adresi elde edilmeye çalışılıyor\nLütfen bekleyin�
 msgid ""
 "Adds an indication on the status icon when Bluetooth is active and shows the"
 " number of connections in the tooltip."
-msgstr "Bluetooth aktif olduğu zaman durum ikonunda  göstergeyi ekle ve araç ipucunda bağlantıların sayısını göster."
+msgstr ""
+"Bluetooth etkinken durum simgesine bir gösterge ekler ve araç ipucunda "
+"bağlantı sayısını gösterir."
 
 #: ../blueman/plugins/applet/ShowConnected.py:48
 msgid "Bluetooth Active"
@@ -1329,11 +1341,13 @@ msgstr "Uygulamacık için bir menü ve diğer eklentilerin ona erişmesi için 
 msgid ""
 "Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\n"
 "Network is now available through <b>%(1)s</b>"
-msgstr "<b>DUN</b>'a başarıyla bağlanıldı. Servis <b>%(0)s.</b>'dir aktif.\n <b>%(1)s</b> ağ şuan geçerli."
+msgstr ""
+"<b>%(0)s</b> aygıtında <b>DUN</b> hizmetine başarıyla bağlandı.\n"
+"Ağ artık <b>%(1)s</b> üzerinden kullanılabilir"
 
 #: ../blueman/plugins/applet/PPPSupport.py:57
 msgid "Provides basic support for connecting to the internet via DUN profile."
-msgstr "DUN  profili yoluyla internete bağlamak için temel desteği sağlar."
+msgstr "DUN profili üzerinden internete bağlanmak için temel destek sağlar."
 
 #: ../blueman/plugins/applet/SerialManager.py:22
 msgid ""
@@ -1363,7 +1377,9 @@ msgstr "Seri port'tan bağlanıldı"
 #, python-format
 msgid ""
 "Serial port service on device <b>%s</b> now will be available via <b>%s</b>"
-msgstr "Seri port servisine  <b>%s</b> üzerinden <b>%s</b> ile bağlanıldı."
+msgstr ""
+"<b>%s</b> aygıtındaki seri port hizmeti şimdi <b>%s</b> üzerinden "
+"kullanılabilir"
 
 #: ../blueman/plugins/applet/SerialManager.py:114
 msgid "Serial port connection script failed"
@@ -1432,6 +1448,9 @@ msgid ""
 "IP address overlaps with subnet of interface %s, which has the following configuration  %s/%s\n"
 "This may cause incorrect network behavior"
 msgstr ""
+"IP adresi, %s arayüzünün (%s/%s yapılandırmasına sahip) alt ağıyla "
+"çakışmaktadır\n"
+"Bu yanlış ağ davranışına neden olabilir"
 
 #: ../blueman/plugins/services/Network.py:239
 #: ../blueman/plugins/services/Network.py:248
@@ -1504,7 +1523,9 @@ msgstr "Bluetooth aygıtına gönderilecek dosyalar"
 
 #: ../apps/blueman-assistant:52
 msgid "Bluetooth needs to be turned on for the Bluetooth assistant to work"
-msgstr "Bluetooth yöneticisinin çalışabilmesi için Bluetooth'un açık olması gerekir."
+msgstr ""
+"Bluetooth asistanının çalışabilmesi için Bluetooth'un açık olması "
+"gerekmektedir"
 
 #: ../apps/blueman-assistant:100
 msgid "No adapters found"
