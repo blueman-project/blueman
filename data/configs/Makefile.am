@@ -7,13 +7,13 @@ dbus_services_DATA = org.blueman.Mechanism.service
 dbus_sessdir = $(datadir)/dbus-1/services
 dbus_sess_DATA = org.blueman.Applet.service
 
-if SYSTEMD_SYSTEM_UNIT_DIR
-systemd_systemdir = $(systemd_system_unit_dir)
+if HAS_SYSTEMD_SYSTEM_UNIT_DIR
+systemd_systemdir = $(SYSTEMD_SYSTEM_UNIT_DIR)
 systemd_system_DATA = blueman-mechanism.service
 endif
 
-if SYSTEMD_USER_UNIT_DIR
-systemd_userdir = $(systemd_user_unit_dir)
+if HAS_SYSTEMD_USER_UNIT_DIR
+systemd_userdir = $(SYSTEMD_USER_UNIT_DIR)
 systemd_user_DATA = blueman-applet.service
 endif
 
