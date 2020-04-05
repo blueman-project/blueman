@@ -23,8 +23,9 @@ translation = gettext.translation(GETTEXT_PACKAGE, LOCALEDIR, fallback=True)
 translation.install()
 
 if 'BLUEMAN_SOURCE' in os.environ:
-    _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-    BIN_DIR = os.path.join(_dirname, 'apps')
-    ICON_PATH = os.path.join(_dirname, 'data', 'icons')
-    PIXMAP_PATH = os.path.join(_dirname, 'data', 'icons', 'pixmaps')
-    UI_PATH = os.path.join(_dirname, 'data', 'ui')
+    currentdir = os.path.abspath(os.path.dirname(__file__))
+    datadir = os.path.join(currentdir, "..", 'data')
+    BIN_DIR = currentdir
+    ICON_PATH = os.path.join(datadir, 'icons')
+    PIXMAP_PATH = os.path.join(datadir, 'icons', 'pixmaps')
+    UI_PATH = os.path.join(datadir, 'ui')

@@ -6,9 +6,12 @@ import sys
 import signal
 
 # support running uninstalled
-_dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if 'BLUEMAN_SOURCE' in os.environ:
-    sys.path.insert(0, _dirname)
+    currentdir = os.path.abspath(os.path.dirname(__file__))
+    srcdir = os.path.join(currentdir, "..")
+    moduledir = os.path.join(currentdir, "module")
+    sys.path = [moduledir, srcdir] + sys.path
+    os.environ["GSETTINGS_SCHEMA_DIR"] = os.path.join(currentdir, "data")
 
 from blueman.Functions import set_proc_title, create_parser, create_logger
 from blueman.main.Tray import BluemanTray

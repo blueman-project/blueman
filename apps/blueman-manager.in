@@ -10,10 +10,12 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 # support running uninstalled
-_dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if 'BLUEMAN_SOURCE' in os.environ:
-    sys.path = [_dirname, os.path.join(_dirname, 'module', '.libs')] + sys.path
-    os.environ["GSETTINGS_SCHEMA_DIR"] = os.path.join(_dirname, "data")
+    currentdir = os.path.abspath(os.path.dirname(__file__))
+    srcdir = os.path.join(currentdir, "..")
+    moduledir = os.path.join(currentdir, "module")
+    sys.path = [moduledir, srcdir] + sys.path
+    os.environ["GSETTINGS_SCHEMA_DIR"] = os.path.join(currentdir, "data")
 
 from blueman.main.Manager import Blueman
 from blueman.Functions import set_proc_title, create_parser, create_logger
