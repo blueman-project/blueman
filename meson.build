@@ -205,9 +205,6 @@ install_man(
 
 # Gather all configurable files
 configurable_files = [
-    ['blueman/Constants.py.in',
-     'Constants.py',
-     join_paths(pythondir, package_name)],
     ['data/configs/org.blueman.Applet.service.in',
      'org.blueman.Applet.service',
      join_paths(datadir, 'dbus-1', 'services')],
@@ -299,6 +296,7 @@ foreach name: get_option('sendto-plugins')
 endforeach
 
 # Add data as custom_target does not work in subdirectory
+subdir('blueman')
 subdir('data')
 subdir('po')
 subdir('module')

@@ -17,7 +17,8 @@ EXTRA_DIST = 			\
 	intltool-extract.in	\
 	intltool-update.in	\
 	intltool-merge.in	\
-	meson.build		\
+	meson.build		    \
+	blueman/meson.build \
 	po/meson.build
 
 DISTCLEANFILES = 		\
