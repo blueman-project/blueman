@@ -63,6 +63,8 @@ class KillSwitch(AppletPlugin):
         if channel is None:
             raise ImportError('Failed to open rfkill device')
 
+        channel.set_encoding(None)
+
         self._iom = GLib.io_add_watch(channel, GLib.IO_IN | GLib.IO_ERR | GLib.IO_HUP, self.io_event)
 
     def on_unload(self):
