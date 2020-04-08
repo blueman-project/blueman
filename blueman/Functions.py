@@ -296,6 +296,12 @@ def check_single_instance(name, unhide_func=None):
 
             unhide_func(event_time)
 
+    def remove_file(path):
+        try:
+            os.remove(path)
+        except OSError:
+            logging.error("Failed to remove: %s" % path)
+
     signal.signal(signal.SIGUSR1, handler)
 
     if os.path.exists(lockfile):
@@ -303,7 +309,7 @@ def check_single_instance(name, unhide_func=None):
         if pid:
             if not is_running(name, pid):
                 print("Stale PID, overwriting")
-                os.remove(lockfile)
+                remove_file(lockfile)
             else:
                 print("There is an instance already running")
                 time = os.getenv("BLUEMAN_EVENT_TIME") or 0
@@ -314,7 +320,7 @@ def check_single_instance(name, unhide_func=None):
                 os.kill(pid, signal.SIGUSR1)
                 exit()
         else:
-            os.remove(lockfile)
+            remove_file(lockfile)
 
     try:
         fd = os.open(lockfile, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o664)
@@ -325,7 +331,7 @@ def check_single_instance(name, unhide_func=None):
         print("There is an instance already running")
         exit()
 
-    atexit.register(lambda: os.remove(lockfile))
+    atexit.register(lambda: remove_file(lockfile))
 
 
 def kill(pid, name):
