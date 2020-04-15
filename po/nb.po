@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-29 08:27+0200\n"
-"PO-Revision-Date: 2020-03-28 10:09+0000\n"
+"PO-Revision-Date: 2020-04-17 17:11+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/blueman/"
 "blueman/nb_NO/>\n"
@@ -26,7 +26,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.0-dev\n"
+"X-Generator: Weblate 4.0.1-dev\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Visibility Setting</b>"
@@ -738,7 +738,7 @@ msgstr "Kobler fra …"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:244
 msgid "_<b>Connect</b>"
-msgstr ""
+msgstr "_<b>Koble til</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:242
 #, fuzzy
@@ -747,7 +747,7 @@ msgstr "Kobler til auto-tilkoblingsprofilene A2DP-kilde, A2DP-sink og HID"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:250
 msgid "_<b>Disconnect</b>"
-msgstr ""
+msgstr "_<b>Koble fra</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:247
 #, fuzzy
@@ -781,7 +781,7 @@ msgstr "_Mistro"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:348
 msgid "_Set up…"
-msgstr ""
+msgstr "_Sett opp…"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:383
 msgid "_Remove..."
@@ -1270,6 +1270,9 @@ msgid ""
 "(Useless with USB dongles) and makes sure a status icon is shown if there is"
 " a bluetooth killswitch but no adapter."
 msgstr ""
+"Veksler status på Blåtanns-killswitch når Blåtann skrus av eller på. "
+"Fungerer ikke med fjernbare enheter, og viser et statusikon hvis det finnes "
+"en RF kill bryter, men ingen adapter."
 
 #: ../blueman/plugins/applet/StandardItems.py:17
 msgid "Adds standard menu items to the status icon menu"
