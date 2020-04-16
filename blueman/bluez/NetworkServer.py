@@ -1,4 +1,3 @@
-# coding=utf-8
 from blueman.bluez.Base import Base
 from gi.repository import GLib
 

@@ -1,4 +1,3 @@
-# coding=utf-8
 # Copyright (C) 2008 Valmantas Paliksa <walmis at balticum-tv dot lt>
 # Copyright (C) 2008 Tadas Dailyda <tadas at dailyda dot com>
 #

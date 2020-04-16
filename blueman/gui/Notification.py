@@ -1,4 +1,3 @@
-# coding=utf-8
 from typing import Dict, List, Callable
 
 from blueman.main.Config import Config

@@ -1,4 +1,3 @@
-# coding=utf-8
 from blueman.services.meta import NetworkService
 from blueman.Sdp import NAP_SVCLASS_ID
 

@@ -1,4 +1,3 @@
-# coding=utf-8
 from blueman.services.meta import NetworkService
 from blueman.Sdp import GN_SVCLASS_ID
 

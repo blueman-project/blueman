@@ -1,5 +1,3 @@
-# coding=utf-8
-
 from blueman.services.meta.NetworkService import NetworkService as NetworkService
 from blueman.services.meta.SerialService import SerialService as SerialService
 

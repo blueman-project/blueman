@@ -1,4 +1,3 @@
-# coding=utf-8
 import logging
 import weakref
 from typing import Dict, Callable, List, Tuple

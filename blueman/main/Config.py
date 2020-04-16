@@ -1,4 +1,3 @@
-# coding=utf-8
 from gi.repository import Gio
 import logging
 

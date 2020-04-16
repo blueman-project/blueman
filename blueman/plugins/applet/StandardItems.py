@@ -1,4 +1,3 @@
-# coding=utf-8
 from gettext import gettext as _
 
 from blueman.Functions import launch, get_lockfile, get_pid, kill

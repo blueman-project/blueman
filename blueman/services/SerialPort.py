@@ -1,4 +1,3 @@
-# coding=utf-8
 from blueman.services.meta import SerialService
 from blueman.Sdp import SERIAL_PORT_SVCLASS_ID
 
