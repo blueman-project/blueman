@@ -1,7 +1,7 @@
 from typing import List, Tuple
 
 
-class ServicePlugin(object):
+class ServicePlugin:
     _options: List[str]
     instances: List["ServicePlugin"] = []
     __plugin_info__: Tuple[str, str]

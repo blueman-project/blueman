@@ -16,7 +16,7 @@ class NMConnectionError(Exception):
     pass
 
 
-class NMConnectionBase(object):
+class NMConnectionBase:
     conntype: str
 
     def __init__(self, service, reply_handler=None, error_handler=None):

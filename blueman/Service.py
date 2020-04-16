@@ -4,7 +4,7 @@ from blueman.Sdp import ServiceUUID
 from blueman.bluez.Device import Device
 
 
-class Service(object):
+class Service:
     __svclass_id__: int
     __description__ = None
     __icon__: str

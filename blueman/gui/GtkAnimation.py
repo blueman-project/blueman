@@ -11,7 +11,7 @@ from gi.repository import GObject
 from gi.repository import GLib
 
 
-class LinearController(object):
+class LinearController:
     def get_value(self, inpt):
         return inpt
 
