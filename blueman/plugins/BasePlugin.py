@@ -28,7 +28,7 @@ if TYPE_CHECKING:
         path: None
 
 
-class BasePlugin(object):
+class BasePlugin:
     __depends__: List[str] = []
     __conflicts__: List[str] = []
     __priority__ = 0

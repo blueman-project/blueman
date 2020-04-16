@@ -48,7 +48,7 @@ def get_binary(*names):
     raise FileNotFoundError(f"{' '.join(names)} not found")
 
 
-class DnsMasqHandler(object):
+class DnsMasqHandler:
     def __init__(self, netconf):
         self.pid = None
         self.netconf = netconf
@@ -103,7 +103,7 @@ subnet %(ip_mask)s netmask %(netmask)s {
 #### END BLUEMAN AUTOMAGIC SUBNET ####'''
 
 
-class DhcpdHandler(object):
+class DhcpdHandler:
     def __init__(self, netconf):
         self.pid = None
         self.netconf = netconf
@@ -202,7 +202,7 @@ option router %(rtr)s
 """
 
 
-class UdhcpdHandler(object):
+class UdhcpdHandler:
     def __init__(self, netconf):
         self.pid = None
         self.netconf = netconf
@@ -264,7 +264,7 @@ class UdhcpdHandler(object):
 class_id = 10
 
 
-class NetConf(object):
+class NetConf:
     default_inst = None
 
     @classmethod

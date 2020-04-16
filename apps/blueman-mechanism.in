@@ -26,7 +26,7 @@ from blueman.main.DbusService import DbusService, DbusError
 loop = GLib.MainLoop()
 
 
-class StreamToLogger(object):
+class StreamToLogger:
     """
     Fake file-like stream object that redirects writes to a logger instance.
     """

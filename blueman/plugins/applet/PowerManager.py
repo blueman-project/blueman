@@ -85,7 +85,7 @@ class PowerManager(AppletPlugin):
         except Exception:
             logging.error("Exception occurred", exc_info=True)
 
-    class Callback(object):
+    class Callback:
         def __init__(self, parent, state):
             self.parent = parent
             self.num_cb = 0

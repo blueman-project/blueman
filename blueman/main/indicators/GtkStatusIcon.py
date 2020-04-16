@@ -28,7 +28,7 @@ def build_menu(items, activate):
     return menu
 
 
-class GtkStatusIcon(object):
+class GtkStatusIcon:
     def __init__(self, icon_name, on_activate_menu_item, on_activate_status_icon):
         self._on_activate = on_activate_menu_item
         self.indicator = Gtk.StatusIcon(icon_name=icon_name)

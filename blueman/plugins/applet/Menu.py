@@ -7,7 +7,7 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 from operator import attrgetter
 
 
-class MenuItem(object):
+class MenuItem:
     def __init__(self, menu_plugin, owner, priority, text, markup, icon_name, tooltip, callback, submenu_function,
                  visible, sensitive):
         self._menu_plugin = menu_plugin

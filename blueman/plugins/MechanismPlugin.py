@@ -1,4 +1,4 @@
-class MechanismPlugin(object):
+class MechanismPlugin:
     def __init__(self, parent):
         self.parent = parent
         self.timer = self.parent.timer

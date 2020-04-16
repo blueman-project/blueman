@@ -13,7 +13,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gio
 
 
-class BluemanApplet(object):
+class BluemanApplet:
     def __init__(self):
         setup_icon_path()
 
