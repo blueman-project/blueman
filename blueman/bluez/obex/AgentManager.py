@@ -17,7 +17,7 @@ class AgentManager(Base):
             logging.info(agent_path)
 
         def on_register_failed(error: BluezDBusException) -> None:
-            logging.error("%s %s" % (agent_path, error))
+            logging.error(f"{agent_path} {error}")
 
         param = GLib.Variant('(o)', (agent_path,))
         self._call('RegisterAgent', param, reply_handler=on_registered, error_handler=on_register_failed)
@@ -27,7 +27,7 @@ class AgentManager(Base):
             logging.info(agent_path)
 
         def on_unregister_failed(error: BluezDBusException) -> None:
-            logging.error("%s %s" % (agent_path, error))
+            logging.error(f"{agent_path} {error}")
 
         param = GLib.Variant('(o)', (agent_path,))
         self._call('UnregisterAgent', param, reply_handler=on_unregistered, error_handler=on_unregister_failed)

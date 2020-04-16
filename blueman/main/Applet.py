@@ -48,7 +48,7 @@ class BluemanApplet:
         Gtk.main()
 
     def _on_dbus_name_appeared(self, _connection, name, owner):
-        logging.info("%s %s" % (name, owner))
+        logging.info(f"{name} {owner}")
         self.manager_state = True
         self.plugin_run_state_changed = True
         self.Plugins.run("on_manager_state_changed", self.manager_state)
@@ -66,17 +66,17 @@ class BluemanApplet:
         self.Plugins.run("on_device_property_changed", path, key, value)
 
     def on_adapter_added(self, _manager, path):
-        logging.info("Adapter added %s" % path)
+        logging.info(f"Adapter added {path}")
         self.Plugins.run("on_adapter_added", path)
 
     def on_adapter_removed(self, _manager, path):
-        logging.info("Adapter removed %s" % path)
+        logging.info(f"Adapter removed {path}")
         self.Plugins.run("on_adapter_removed", path)
 
     def on_device_created(self, _manager, path):
-        logging.info("Device created %s" % path)
+        logging.info(f"Device created {path}")
         self.Plugins.run("on_device_created", path)
 
     def on_device_removed(self, _manager, path):
-        logging.info("Device removed %s" % path)
+        logging.info(f"Device removed {path}")
         self.Plugins.run("on_device_removed", path)

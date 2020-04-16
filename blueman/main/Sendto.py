@@ -89,13 +89,13 @@ class Sender(Gtk.Dialog):
             parsed_file = Gio.File.parse_name(file_name)
 
             if not parsed_file.query_exists():
-                logging.info("Skipping non existing file %s" % parsed_file.get_path())
+                logging.info(f"Skipping non existing file {parsed_file.get_path()}")
                 continue
 
             file_info = parsed_file.query_info("standard::*", Gio.FileQueryInfoFlags.NONE)
 
             if file_info.get_file_type() == Gio.FileType.DIRECTORY:
-                logging.info("Skipping directory %s" % parsed_file.get_path())
+                logging.info(f"Skipping directory {parsed_file.get_path()}")
                 continue
 
             self.files.append(parsed_file)
@@ -125,7 +125,7 @@ class Sender(Gtk.Dialog):
 
         self.client.connect('session-failed', self.on_session_failed)
 
-        logging.info("Sending to %s" % device['Address'])
+        logging.info(f"Sending to {device['Address']}")
         self.l_dest.props.label = device['Alias']
 
         # Stop discovery if discovering and let adapter settle for a second
@@ -271,7 +271,7 @@ class Sender(Gtk.Dialog):
         self.process_queue()
 
     def on_session_removed(self, _manager, session_path):
-        logging.debug('Session removed: %s' % session_path)
+        logging.debug(f"Session removed: {session_path}")
         if self.object_push:
             for handlerid in self.object_push_handlers:
                 self.object_push.disconnect(handlerid)

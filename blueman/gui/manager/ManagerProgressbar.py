@@ -52,7 +52,7 @@ class ManagerProgressbar(GObject.GObject):
         hbox.pack_end(self.progressbar, False, False, 0)
 
         if ManagerProgressbar.__instances__:
-            logging.info("hiding %s" % ManagerProgressbar.__instances__[-1])
+            logging.info(f"hiding {ManagerProgressbar.__instances__[-1]}")
             ManagerProgressbar.__instances__[-1].hide()
 
         self.show()

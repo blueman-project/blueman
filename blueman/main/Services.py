@@ -90,19 +90,19 @@ class BluemanServices(Gtk.Window):
         logging.info(plugins)
         for plugin in plugins:
             try:
-                importlib.import_module("blueman.plugins.services.%s" % plugin)
+                importlib.import_module(f"blueman.plugins.services.{plugin}")
             except ImportError:
-                logging.error("Unable to load %s plugin" % plugin, exc_info=True)
+                logging.error(f"Unable to load {plugin} plugin", exc_info=True)
 
         for cls in ServicePlugin.__subclasses__():
             # FIXME this should not fail, if it does its a bug in the plugin
             try:
                 inst = cls(self)
             except:  # noqa: E722
-                logging.error("Failed to create instance of %s" % cls, exc_info=True)
+                logging.error(f"Failed to create instance of {cls}", exc_info=True)
                 continue
             if not cls.__plugin_info__:
-                logging.warning("Invalid plugin info in %s" % cls)
+                logging.warning(f"Invalid plugin info in {cls}")
             else:
                 (name, icon) = cls.__plugin_info__
                 self.setup_list_item(inst, name, icon)
@@ -125,7 +125,7 @@ class BluemanServices(Gtk.Window):
         self.option_changed()
 
     def set_page(self, pageid):
-        logging.info("Set page %s" % pageid)
+        logging.info(f"Set page {pageid}")
 
         if len(ServicePlugin.instances) == 0:
             return

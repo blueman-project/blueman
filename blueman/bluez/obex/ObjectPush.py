@@ -25,7 +25,7 @@ class ObjectPush(Base):
             self.emit('transfer-started', transfer_path, props['Filename'])
 
         def on_transfer_error(error: BluezDBusException) -> None:
-            logging.error("%s %s" % (file_path, error))
+            logging.error(f"{file_path} {error}")
             self.emit('transfer-failed', error)
 
         param = GLib.Variant('(s)', (file_path,))

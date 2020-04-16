@@ -336,10 +336,10 @@ def gatt_appearance_to_name(appearance: int) -> str:
 
     if (19 <= cat <= 48) or (55 <= cat <= 80):
         # These ranges are reserved
-        logging.debug('Reserved category found: %s' % appearance)
+        logging.debug(f"Reserved category found: {appearance}")
         return gatt_appearance_categories[0][0]
     elif cat > 81:
-        logging.warning('Invalid catagory found: %s' % appearance)
+        logging.warning(f"Invalid catagory found: {appearance}")
         return gatt_appearance_categories[0][0]
 
     cat_name, subcats = gatt_appearance_categories[cat]

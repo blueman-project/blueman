@@ -77,7 +77,7 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
     def _on_transfer_completed(self, transfer: Transfer, success: bool) -> None:
         transfer_path = transfer.get_object_path()
 
-        logging.info("%s %s" % (transfer_path, success))
+        logging.info(f"{transfer_path} {success}")
         self.emit('transfer-completed', transfer_path, success)
 
     @classmethod

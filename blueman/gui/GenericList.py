@@ -70,7 +70,7 @@ class GenericList(Gtk.TreeView):
             if k in self.ids:
                 items[self.ids[k]] = v
             else:
-                raise Exception("Invalid key %s" % k)
+                raise Exception(f"Invalid key {k}")
 
         return items.values()
 

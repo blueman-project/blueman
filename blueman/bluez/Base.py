@@ -55,7 +55,7 @@ class Base(Gio.DBusProxy, metaclass=BaseMeta):
     def do_g_properties_changed(self, changed_properties: GLib.Variant, _invalidated_properties: List[str]) -> None:
         changed = changed_properties.unpack()
         object_path = self.get_object_path()
-        logging.debug("%s %s" % (object_path, changed))
+        logging.debug(f"{object_path} {changed}")
         for key, value in changed.items():
             self.emit("property-changed", key, value, object_path)
 

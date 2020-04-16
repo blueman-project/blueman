@@ -73,7 +73,7 @@ class KillSwitch(AppletPlugin):
             GLib.source_remove(self._iom)
 
     def _on_connman_appeared(self, connection, name, owner):
-        logging.info("%s appeared" % name)
+        logging.info(f"{name} appeared")
         self._connman_proxy = Gio.DBusProxy.new_for_bus_sync(
             Gio.BusType.SYSTEM,
             Gio.DBusProxyFlags.DO_NOT_AUTO_START,
@@ -84,7 +84,7 @@ class KillSwitch(AppletPlugin):
             None)
 
     def _on_connman_vanished(self, connection, name):
-        logging.info("%s vanished" % name)
+        logging.info(f"{name} vanished")
         self._connman_proxy = None
 
     def io_event(self, channel, condition):
@@ -103,13 +103,13 @@ class KillSwitch(AppletPlugin):
 
         if op == RFKILL_OP_ADD:
             self._switches[idx] = Switch(idx, switch_type, soft, hard)
-            logging.info("killswitch registered %s" % idx)
+            logging.info(f"killswitch registered {idx}")
         elif op == RFKILL_OP_DEL:
             del self._switches[idx]
-            logging.info("killswitch removed %s" % idx)
+            logging.info(f"killswitch removed {idx}")
         elif op == RFKILL_OP_CHANGE and (self._switches[idx].soft != soft or self._switches[idx].hard != hard):
             self._switches[idx] = Switch(idx, switch_type, soft, hard)
-            logging.info("killswitch changed %s" % idx)
+            logging.info(f"killswitch changed {idx}")
         else:
             return True
 
@@ -119,7 +119,7 @@ class KillSwitch(AppletPlugin):
             self._hardblocked |= s.hard
             self._enabled &= (s.soft == 0 and s.hard == 0)
 
-        logging.info("State: %s" % self._enabled)
+        logging.info(f"State: {self._enabled}")
 
         self.parent.Plugins.StatusIcon.query_visibility(delay_hiding=not self._hardblocked)
         self.parent.Plugins.PowerManager.update_power_state()
@@ -144,11 +144,11 @@ class KillSwitch(AppletPlugin):
             cb(False)
 
         if self._connman_proxy:
-            logging.debug("Using connman to set state: %s" % state)
+            logging.debug(f"Using connman to set state: {state}")
             self._connman_proxy.SetProperty('(sv)', 'Powered', GLib.Variant.new_boolean(state),
                                             result_handler=reply, error_handler=error)
         else:
-            logging.debug("Using mechanism to set state: %s" % state)
+            logging.debug(f"Using mechanism to set state: {state}")
             Mechanism().SetRfkillState('(b)', state, result_handler=reply, error_handler=error)
 
     def on_query_status_icon_visibility(self):

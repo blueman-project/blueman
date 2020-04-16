@@ -76,16 +76,16 @@ class SerialManager(AppletPlugin):
             return
 
         for p in self.scripts[address].values():
-            logging.info("Sending HUP to %s" % p.pid)
+            logging.info(f"Sending HUP to {p.pid}")
             try:
                 os.killpg(p.pid, signal.SIGHUP)
             except ProcessLookupError:
-                logging.debug("No process found for pid %s" % p.pid)
+                logging.debug(f"No process found for pid {p.pid}")
 
     def on_script_closed(self, pid, cond, address_node):
         address, node = address_node
         del self.scripts[address][node]
-        logging.info("Script with PID %s closed" % pid)
+        logging.info(f"Script with PID {pid} closed")
 
     def manage_script(self, address, node, process):
         if address not in self.scripts:
@@ -102,7 +102,7 @@ class SerialManager(AppletPlugin):
         if c and c != "":
             args = c.split(" ")
             try:
-                args += [address, name, sv_name, "%s" % hex(uuid16), node]
+                args += [address, name, sv_name, f"{uuid16:#x}", node]
                 logging.debug(" ".join(args))
                 p = Popen(args, preexec_fn=lambda: os.setpgid(0, 0))
 
@@ -120,7 +120,7 @@ class SerialManager(AppletPlugin):
         for bdaddr, scripts in self.scripts.items():
             process = scripts.get(node)
             if process:
-                logging.info("Sending HUP to %s" % process.pid)
+                logging.info(f"Sending HUP to {process.pid}")
                 os.killpg(process.pid, signal.SIGHUP)
 
     def rfcomm_connect_handler(self, service, reply, err):
@@ -141,7 +141,7 @@ class SerialManager(AppletPlugin):
         for port in active_ports:
             name = "/dev/rfcomm%d" % port
             try:
-                logging.info("Disconnecting %s" % name)
+                logging.info(f"Disconnecting {name}")
                 serial_services[0].disconnect(port)
             except GLib.Error:
-                logging.error("Failed to disconnect %s" % name, exc_info=True)
+                logging.error(f"Failed to disconnect {name}", exc_info=True)

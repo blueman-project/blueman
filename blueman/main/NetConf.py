@@ -33,7 +33,7 @@ def get_dns_servers():
         for line in f:
             match = re.search(r"^nameserver ((?:[0-9]{1,3}\.){3}[0-9]{1,3}$)", line)
             if match:
-                dns_servers += "%s, " % match.group(1)
+                dns_servers += f"{match.group(1)}, "
 
         dns_servers = dns_servers.strip(", ")
 
@@ -61,8 +61,8 @@ class DnsMasqHandler:
             ipiface = ipaddress.ip_interface('/'.join((self.netconf.ip4_address, '255.255.255.0')))
             cmd = [get_binary("dnsmasq"), "--port=0", "--pid-file=/var/run/dnsmasq.pan1.pid", "--except-interface=lo",
                    "--interface=pan1", "--bind-interfaces",
-                   "--dhcp-range=%s,%s,60m" % (ipiface.network[2], ipiface.network[-2]),
-                   "--dhcp-option=option:router,%s" % self.netconf.ip4_address]
+                   f"--dhcp-range={ipiface.network[2]},{ipiface.network[-2]},60m",
+                   f"--dhcp-option=option:router,{self.netconf.ip4_address}"]
 
             logging.info(cmd)
             p = Popen(cmd, stderr=PIPE)
@@ -71,14 +71,14 @@ class DnsMasqHandler:
 
             if not error:
                 logging.info("Dnsmasq started correctly")
-                with open("/var/run/dnsmasq.pan1.pid", "r") as f:
+                with open("/var/run/dnsmasq.pan1.pid") as f:
                     self.pid = int(f.read())
-                logging.info("pid %s" % self.pid)
+                logging.info(f"pid {self.pid}")
                 self.netconf.lock("dhcp")
             else:
                 error_msg = error.decode("UTF-8").strip()
                 logging.info(error_msg)
-                raise NetworkSetupError("dnsmasq failed to start: %s" % error_msg)
+                raise NetworkSetupError(f"dnsmasq failed to start: {error_msg}")
 
     def do_remove(self):
         if self.netconf.locked("dhcp"):
@@ -169,12 +169,12 @@ class DhcpdHandler:
                 logging.info("dhcpd started correctly")
                 with open("/var/run/dhcpd.pan1.pid", "r") as f:
                     self.pid = int(f.read())
-                logging.info("pid %s" % self.pid)
+                logging.info(f"pid {self.pid}")
                 self.netconf.lock("dhcp")
             else:
                 error_msg = error.decode("UTF-8").strip()
                 logging.info(error_msg)
-                raise NetworkSetupError("dhcpd failed to start: %s " % error_msg)
+                raise NetworkSetupError(f"dhcpd failed to start: {error_msg}")
 
     def do_remove(self):
         dhcp_config, existing_subnet = self._read_dhcp_config()
@@ -227,7 +227,7 @@ class UdhcpdHandler:
             os.write(config_file, self._generate_config().encode('UTF-8'))
             os.close(config_file)
 
-            logging.info("Running udhcpd with config file %s" % config_path)
+            logging.info(f"Running udhcpd with config file {config_path}")
             cmd = [get_binary("udhcpd"), "-S", config_path]
             p = Popen(cmd, stderr=PIPE)
             error = p.communicate()[1]
@@ -240,12 +240,12 @@ class UdhcpdHandler:
             if p.pid and is_running("udhcpd", pid):
                 logging.info("udhcpd started correctly")
                 self.pid = pid
-                logging.info("pid %s" % self.pid)
+                logging.info(f"pid {self.pid}")
                 self.netconf.lock("dhcp")
             else:
                 error_msg = error.decode("UTF-8").strip()
                 logging.info(error_msg)
-                raise NetworkSetupError("udhcpd failed to start: %s" % error_msg)
+                raise NetworkSetupError(f"udhcpd failed to start: {error_msg}")
 
             os.remove(config_path)
 
@@ -319,7 +319,7 @@ class NetConf:
             f.write("1")
 
         for d in os.listdir("/proc/sys/net/ipv4/conf"):
-            with open("/proc/sys/net/ipv4/conf/%s/forwarding" % d, "w") as f:
+            with open(f"/proc/sys/net/ipv4/conf/{d}/forwarding", "w") as f:
                 f.write("1")
 
     def add_ipt_rule(self, table, chain, rule):
@@ -327,7 +327,7 @@ class NetConf:
         args = ["/sbin/iptables", "-t", table, "-A", chain] + rule.split(" ")
         logging.debug(" ".join(args))
         ret = call(args)
-        logging.info("Return code %s" % ret)
+        logging.info(f"Return code {ret}")
 
     def del_ipt_rules(self):
         for table, chain, rule in self.ipt_rules:
@@ -372,13 +372,13 @@ class NetConf:
                     raise NetworkSetupError("Failed to bring up interface pan1")
                 ret = call(["ip", "address", "add", "/".join((self.ip4_address, self.ip4_mask)), "dev", "pan1"])
                 if ret != 0:
-                    raise NetworkSetupError("Failed to add ip address %s with netmask %s" % (self.ip4_address,
-                                                                                             self.ip4_mask))
+                    raise NetworkSetupError(f"Failed to add ip address {self.ip4_address}"
+                                            f"with netmask {self.ip4_mask}")
             elif have('ifconfig'):
                 ret = call(["ifconfig", "pan1", self.ip4_address, "netmask", self.ip4_mask, "up"])
                 if ret != 0:
-                    raise NetworkSetupError("Failed to add ip address %s with netmask %s" % (self.ip4_address,
-                                                                                             self.ip4_mask))
+                    raise NetworkSetupError(f"Failed to add ip address {self.ip4_address}"
+                                            f"with netmask {self.ip4_mask}")
             else:
                 raise NetworkSetupError(
                     "Neither ifconfig or ip commands are found. Please install net-tools or iproute2")
@@ -388,7 +388,7 @@ class NetConf:
         if self.ip4_changed or not self.locked("iptables"):
             self.del_ipt_rules()
 
-            self.add_ipt_rule("nat", "POSTROUTING", "-s %s/%s -j MASQUERADE" % (self.ip4_address, self.ip4_mask))
+            self.add_ipt_rule("nat", "POSTROUTING", f"-s {self.ip4_address}/{self.ip4_mask} -j MASQUERADE")
             self.add_ipt_rule("filter", "FORWARD", "-i pan1 -j ACCEPT")
             self.add_ipt_rule("filter", "FORWARD", "-o pan1 -j ACCEPT")
             self.add_ipt_rule("filter", "FORWARD", "-i pan1 -j ACCEPT")
@@ -418,19 +418,19 @@ class NetConf:
 
     @staticmethod
     def lock(key):
-        with open("/var/run/blueman-%s" % key, "w"):
+        with open(f"/var/run/blueman-{key}", "w"):
             pass
 
     @staticmethod
     def unlock(key):
         try:
-            os.unlink("/var/run/blueman-%s" % key)
+            os.unlink(f"/var/run/blueman-{key}")
         except OSError:
             pass
 
     @staticmethod
     def locked(key):
-        return os.path.exists("/var/run/blueman-%s" % key)
+        return os.path.exists(f"/var/run/blueman-{key}")
 
     # save the instance of this class, requires root
     def store(self):

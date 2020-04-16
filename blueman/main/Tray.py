@@ -21,7 +21,7 @@ class BluemanTray:
                            Gio.BusNameWatcherFlags.NONE, None, lambda _connection, _name: main_loop.quit())
 
         indicator_name = applet.GetStatusIconImplementation()
-        logging.info('Using indicator "%s"' % indicator_name)
+        logging.info(f'Using indicator "{indicator_name}"')
         indicator_class = getattr(import_module('blueman.main.indicators.' + indicator_name), indicator_name)
         self.indicator = indicator_class(applet.GetIconName(), self._activate_menu_item, self._activate_status_icon)
 

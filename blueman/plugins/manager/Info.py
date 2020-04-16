@@ -16,9 +16,9 @@ def show_info(device, parent):
 
     def format_rssi(rssi):
         if rssi in [0x99, 0x7f]:
-            'invalid (0x{:02x})'.format(rssi)
+            f'invalid (0x{rssi:02x})'
         else:
-            '{} dBm (0x{:02x})'.format(rssi, rssi)
+            f'{rssi} dBm (0x{rssi:02x})'
 
     def format_uuids(uuids):
         return "\n".join([uuid + ' ' + ServiceUUID(uuid).name for uuid in uuids])
@@ -30,7 +30,7 @@ def show_info(device, parent):
 
     def on_accel_activated(group, dialog, key, flags):
         if key != 99:
-            logging.warning("Ignoring key %s" % key)
+            logging.warning(f"Ignoring key {key}")
             return
 
         store, paths = view_selection.get_selected_rows()
@@ -73,8 +73,8 @@ def show_info(device, parent):
         ('AddressType', None),
         ('Name', None),
         ('Alias', None),
-        ('Class', lambda x: "0x{:06x}".format(x)),
-        ('Appearance', lambda x: "0x{:04x}".format(x)),
+        ('Class', lambda x: f"0x{x:06x}"),
+        ('Appearance', lambda x: f"0x{x:04x}"),
         ('Icon', None),
         ('Paired', format_boolean),
         ('Trusted', format_boolean),
@@ -97,10 +97,10 @@ def show_info(device, parent):
             else:
                 store.append((name, func(device.get(name))))
         except BluezDBusException:
-            logging.info("Could not get property %s" % name)
+            logging.info(f"Could not get property {name}")
             pass
         except ValueError:
-            logging.info("Could not add property %s" % name)
+            logging.info(f"Could not add property {name}")
             pass
 
     dialog.run()

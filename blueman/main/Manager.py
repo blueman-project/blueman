@@ -99,7 +99,7 @@ class Blueman(Gtk.Window):
             Gtk.main_quit()
 
         def on_dbus_name_appeared(_connection, name, owner):
-            logging.info("%s %s" % (name, owner))
+            logging.info(f"{name} {owner}")
             setup_icon_path()
 
             try:
@@ -198,14 +198,14 @@ class Blueman(Gtk.Window):
 
     @staticmethod
     def setup(device):
-        command = "blueman-assistant --device=%s" % device['Address']
+        command = f"blueman-assistant --device={device['Address']}"
         launch(command, name=_("Bluetooth Assistant"))
 
     @staticmethod
     def bond(device):
         def error_handler(e):
             logging.exception(e)
-            message = 'Pairing failed for:\n%s (%s)' % (device['Alias'], device['Address'])
+            message = f"Pairing failed for:\n{device['Alias']} ({device['Address']})"
             Notification('Bluetooth', message, icon_name="blueman").show()
 
         device.pair(error_handler=error_handler)
@@ -223,7 +223,7 @@ class Blueman(Gtk.Window):
 
         assert adapter
 
-        command = "blueman-sendto --source=%s --device=%s" % (adapter["Address"], device['Address'])
+        command = f"blueman-sendto --source={adapter['Address']} --device={device['Address']}"
         launch(command, name=_("File Sender"))
 
     def remove(self, device):

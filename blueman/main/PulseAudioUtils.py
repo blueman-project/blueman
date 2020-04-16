@@ -335,7 +335,7 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
         self.simple_callback(callback, fn, card, profile)
 
     def __event_callback(self, context, event_type, idx, userdata):
-        logging.info("%s %s" % (event_type, idx))
+        logging.info(f"{event_type} {idx}")
         self.emit("event", event_type, idx)
 
     def __init__(self):

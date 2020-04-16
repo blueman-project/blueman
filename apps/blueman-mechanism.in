@@ -136,13 +136,13 @@ class ConfService(DbusService):
 
         for plugin in plugins:
             try:
-                importlib.import_module("blueman.plugins.mechanism.%s" % plugin)
+                importlib.import_module(f"blueman.plugins.mechanism.{plugin}")
             except ImportError:
-                logging.error("Skipping plugin %s" % plugin, exc_info=True)
+                logging.error(f"Skipping plugin {plugin}", exc_info=True)
 
         classes = MechanismPlugin.__subclasses__()
         for cls in classes:
-            logging.info("loading %s" % cls.__name__)
+            logging.info(f"loading {cls.__name__}")
             cls(self)
 
         self.register()

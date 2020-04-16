@@ -38,7 +38,7 @@ class SettingsWidget(Gtk.Box):
 
     def handle_change(self, widget, opt, params, prop):
         val = params["type"](getattr(widget.props, prop))
-        logging.debug("changed %s %s" % (opt, val))
+        logging.debug(f"changed {opt} {val}")
 
         self.inst.set_option(opt, val)
 
@@ -246,7 +246,7 @@ class PluginDialog(Gtk.Window):
         loaded = self.applet.Plugins.get_loaded()
         for name, cls in classes.items():
             if cls.is_configurable():
-                desc = "<span weight=\"bold\">%s</span>" % name
+                desc = f"<span weight=\"bold\">{name}</span>"
             else:
                 desc = name
             self.list.append(active=(name in loaded), icon=cls.__icon__, activatable=cls.__unloadable__, name=name,

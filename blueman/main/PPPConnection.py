@@ -64,13 +64,13 @@ class PPPConnection(GObject.GObject):
             ("ATE0", self.simple_callback),
             ("AT+GCAP", self.simple_callback),
             (
-                "ATD%s" % self.number,
+                f"ATD{self.number}",
                 self.connect_callback,
                 ["CONNECT", "NO CARRIER", "BUSY", "NO ANSWER", "NO DIALTONE", "OK", "ERROR"]
             )
         ]
         if self.apn != "":
-            self.commands.insert(-1, ('AT+CGDCONT=1,"IP","%s"' % self.apn, self.simple_callback))
+            self.commands.insert(-1, (f'AT+CGDCONT=1,"IP","{self.apn}"', self.simple_callback))
 
     def cleanup(self):
         os.close(self.file)
@@ -82,7 +82,7 @@ class PPPConnection(GObject.GObject):
         if "CONNECT" in response:
             logging.info("Starting pppd")
             self.pppd = subprocess.Popen(
-                ["/usr/sbin/pppd", "%s" % self.port, "115200", "defaultroute", "updetach", "usepeerdns"], bufsize=1,
+                ["/usr/sbin/pppd", f"{self.port}", "115200", "defaultroute", "updetach", "usepeerdns"], bufsize=1,
                 stdout=subprocess.PIPE)
             GLib.io_add_watch(self.pppd.stdout, GLib.IO_IN | GLib.IO_ERR | GLib.IO_HUP, self.on_pppd_stdout)
             GLib.timeout_add(1000, self.check_pppd)
@@ -90,7 +90,7 @@ class PPPConnection(GObject.GObject):
             self.cleanup()
         else:
             self.cleanup()
-            raise PPPException("Bad modem response %s, expected CONNECT" % response[0])
+            raise PPPException(f"Bad modem response {response[0]}, expected CONNECT")
 
     def __cmd_response_cb(self, response, exception, item_id):
         if exception:
@@ -176,8 +176,8 @@ class PPPConnection(GObject.GObject):
         return True
 
     def send_command(self, command):
-        logging.info("--> %s" % command)
-        out = "%s\r\n" % command
+        logging.info(f"--> {command}")
+        out = f"{command}\r\n"
         os.write(self.file, out.encode("UTF-8"))
         termios.tcdrain(self.file)
 
@@ -210,7 +210,7 @@ class PPPConnection(GObject.GObject):
 
         if found:
             lines = [x.strip("\r\n") for x in lines if x != ""]
-            logging.info("<-- %s" % lines)
+            logging.info(f"<-- {lines}")
 
             on_done(lines, None)
             return False
