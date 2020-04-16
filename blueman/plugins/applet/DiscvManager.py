@@ -80,7 +80,7 @@ class DiscvManager(AppletPlugin):
 
     def on_adapter_property_changed(self, path, key, value):
         if self.adapter and path == self.adapter.get_object_path():
-            logging.debug("prop %s %s" % (key, value))
+            logging.debug(f"prop {key} {value}")
             if key == "DiscoverableTimeout":
                 if value == 0:  # always visible
                     if self.timeout is not None:

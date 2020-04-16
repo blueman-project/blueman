@@ -120,7 +120,7 @@ class PowerManager(AppletPlugin):
         if self.current_state != state or force:
             if not self.request_in_progress:
                 self.request_in_progress = True
-                logging.info("Requesting %s" % state)
+                logging.info(f"Requesting {state}")
                 cb = PowerManager.Callback(self, state)
 
                 rets = self.parent.Plugins.run("on_power_state_change_requested", self, state, cb)
@@ -168,11 +168,10 @@ class PowerManager(AppletPlugin):
 
             new_state = True
 
-        logging.info("off %s | foff %s | on %s | current state %s | new state %s" %
-                     (off, foff, on, self.current_state, new_state))
+        logging.info(f"off {off} | foff {foff} | on {on} | current state {self.current_state} | new state {new_state}")
 
         if self.current_state != new_state:
-            logging.info("Signalling %s" % new_state)
+            logging.info(f"Signalling {new_state}")
             self.current_state = new_state
 
             self._emit_dbus_signal("BluetoothStatusChanged", new_state)

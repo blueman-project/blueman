@@ -34,7 +34,7 @@ class DbusService:
 
     def add_method(self, name, arguments, return_value, method, pass_sender=False, is_async=False):
         if name in self._signals:
-            raise Exception("%s already defined" % name)
+            raise Exception(f"{name} already defined")
 
         options = set()
         if pass_sender:
@@ -50,7 +50,7 @@ class DbusService:
 
     def add_signal(self, name, signature):
         if name in self._signals:
-            raise Exception("%s already defined" % name)
+            raise Exception(f"{name} already defined")
 
         self._signals[name] = signature
         self._reregister()
@@ -64,18 +64,18 @@ class DbusService:
                               self._prepare_arguments(self._signals[name], args))
 
     def register(self):
-        node_xml = "<node name='/'><interface name='%s'>" % self._interface_name
+        node_xml = f"<node name='/'><interface name='{self._interface_name}'>"
         for method_name, method_info in self._methods.items():
-            node_xml += "<method name='%s'>" % method_name
+            node_xml += f"<method name='{method_name}'>"
             for argument in method_info[0]:
-                node_xml += "<arg type='%s' direction='in'/>" % argument
+                node_xml += f"<arg type='{argument}' direction='in'/>"
             if method_info[1]:
-                node_xml += "<arg type='%s' direction='out'/>" % method_info[1]
+                node_xml += f"<arg type='{method_info[1]}' direction='out'/>"
             node_xml += "</method>"
         for signal_name, signal_signature in self._signals.items():
-            node_xml += "<signal name='%s'>" % signal_name
+            node_xml += f"<signal name='{signal_name}'>"
             if signal_signature:
-                node_xml += "<arg type='%s'/>" % signal_signature
+                node_xml += f"<arg type='{signal_signature}'/>"
             node_xml += "</signal>"
         node_xml += "</interface></node>"
 
@@ -91,7 +91,7 @@ class DbusService:
         if regid:
             self._regid = regid
         else:
-            raise GLib.Error('Failed to register object with path: %s', self._path)
+            raise GLib.Error(f"Failed to register object with path: {self._path}")
 
     def unregister(self):
         self._bus.unregister_object(self._regid)
@@ -107,9 +107,9 @@ class DbusService:
             try:
                 _arguments, result_signature, method, options = self._methods[method_name]
             except KeyError:
-                logging.warning('Unhandled method: %s' % method_name)
+                logging.warning(f"Unhandled method: {method_name}")
                 invocation.return_error_literal(Gio.dbus_error_quark(), Gio.DBusError.UNKNOWN_METHOD,
-                                                "No such method on interface: %s.%s" % (interface_name, method_name))
+                                                f"No such method on interface: {interface_name}.{method_name}")
 
             def ok(*result):
                 invocation.return_value(self._prepare_arguments(result_signature, result))
@@ -141,4 +141,4 @@ class DbusService:
 
     @staticmethod
     def _prepare_arguments(signature, args):
-        return GLib.Variant("(%s)" % signature, args) if signature else None
+        return GLib.Variant(f"({signature})", args) if signature else None

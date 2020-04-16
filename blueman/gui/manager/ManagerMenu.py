@@ -40,7 +40,8 @@ class ManagerMenu:
         report_item = create_menuitem(_("_Report a Problem"), "dialog-warning")
         report_item.show()
         help_menu.append(report_item)
-        report_item.connect("activate", lambda x: launch("xdg-open %s/issues" % WEBSITE))
+
+        report_item.connect("activate", lambda x: launch(f"xdg-open {WEBSITE}/issues"))
 
         sep = Gtk.SeparatorMenuItem()
         sep.show()
@@ -230,7 +231,7 @@ class ManagerMenu:
     def on_adapter_selected(self, menuitem, adapter_path):
         if menuitem.props.active:
             if adapter_path != self.blueman.List.Adapter.get_object_path():
-                logging.info("selected %s", adapter_path)
+                logging.info(f"selected {adapter_path}")
                 self.blueman.Config["last-adapter"] = adapter_path_to_name(adapter_path)
                 self.blueman.List.set_adapter(adapter_path)
 

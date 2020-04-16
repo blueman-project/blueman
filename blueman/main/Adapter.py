@@ -107,7 +107,7 @@ class BluemanAdapters(Gtk.Window):
         self.remove_from_notebook(self._adapters[hci_dev])
 
     def _on_dbus_name_appeared(self, _connection, name, owner):
-        logging.info("%s %s" % (name, owner))
+        logging.info(f"{name} {owner}")
 
     def _on_dbus_name_vanished(self, _connection, name):
         logging.info(name)
@@ -146,7 +146,7 @@ class BluemanAdapters(Gtk.Window):
 
         def on_scale_value_changed(scale):
             val = scale.get_value()
-            logging.info('value: %s' % val)
+            logging.info(f"value: {val}")
             if val == 0 and adapter['Discoverable']:
                 always_radio.props.active = True
             timeout = int(val * 60)

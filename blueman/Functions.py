@@ -149,7 +149,7 @@ def launch(
     launched: bool = appinfo.launch(files, context)
 
     if not launched:
-        logging.error("Command: %s failed" % cmd)
+        logging.error(f"Command: {cmd} failed")
 
     return launched
 
@@ -228,7 +228,7 @@ def get_lockfile(name: str) -> str:
         except OSError as e:
             if e.errno != errno.EEXIST:
                 raise
-    return os.path.join(cachedir, "%s-%s" % (name, os.getuid()))
+    return os.path.join(cachedir, f"{name}-{os.getuid()}")
 
 
 def get_pid(lockfile: str) -> Optional[int]:
@@ -240,15 +240,15 @@ def get_pid(lockfile: str) -> Optional[int]:
 
 
 def is_running(name: str, pid: int) -> bool:
-    if not os.path.exists("/proc/%s" % pid):
+    if not os.path.exists(f"/proc/{pid}"):
         return False
 
-    with open("/proc/%s/cmdline" % pid, "r") as f:
+    with open(f"/proc/{pid}/cmdline", "r") as f:
         return name in f.readline().replace("\0", " ")
 
 
 def check_single_instance(name: str, unhide_func: Optional[Callable[[int], Any]] = None) -> None:
-    print("%s version %s starting" % (name, VERSION))
+    print(f"{name} version {VERSION} starting")
     lockfile = get_lockfile(name)
 
     def handler(_sig: signal.Signals, _frame: FrameType) -> None:
@@ -281,7 +281,7 @@ def check_single_instance(name: str, unhide_func: Optional[Callable[[int], Any]]
                 time = os.getenv("BLUEMAN_EVENT_TIME") or 0
 
                 with open(lockfile, "w") as f:
-                    f.write("%s\n%s" % (str(pid), str(time)))
+                    f.write(f"{pid}\n{time}")
 
                 os.kill(pid, signal.SIGUSR1)
                 bmexit()
@@ -290,7 +290,7 @@ def check_single_instance(name: str, unhide_func: Optional[Callable[[int], Any]]
 
     try:
         fd = os.open(lockfile, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o664)
-        pid_str = "%s\n%s" % (str(os.getpid()), "0")
+        pid_str = f"{os.getpid()}\n0"
         os.write(fd, pid_str.encode("UTF-8"))
         os.close(fd)
     except OSError:
@@ -388,7 +388,7 @@ def open_rfcomm(file: str, mode: int) -> int:
         return os.open(file, mode | os.O_EXCL | os.O_NONBLOCK | os.O_NOCTTY)
     except OSError as err:
         if err.errno == errno.EBUSY:
-            logging.warning('%s is busy, delaying 2 seconds' % file)
+            logging.warning(f"{file} is busy, delaying 2 seconds")
             sleep(2)
             return open_rfcomm(file, mode)
         else:

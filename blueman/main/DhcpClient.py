@@ -61,14 +61,14 @@ class DhcpClient(GObject.GObject):
         if status == 0:
             def complete():
                 ip = netifs[self._interface][0]
-                logging.info("bound to %s" % ip)
+                logging.info(f"bound to {ip}")
                 self.emit("connected", ip)
 
             GLib.timeout_add(1000, complete)
             DhcpClient.quering.remove(self._interface)
             return False
         elif status:
-            logging.error("dhcp client failed with status code %s" % status)
+            logging.error(f"dhcp client failed with status code {status}")
             self.emit("error-occurred", status)
             DhcpClient.quering.remove(self._interface)
             return False

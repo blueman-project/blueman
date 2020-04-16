@@ -188,7 +188,7 @@ class RecentConns(AppletPlugin):
 
     def notify(self, object_path, uuid):
         device = Device(obj_path=object_path)
-        logging.info("%s %s" % (device, uuid))
+        logging.info(f"{device} {uuid}")
         item = {}
         try:
             adapter = self.parent.Manager.get_adapter(device['Adapter'])
@@ -222,7 +222,7 @@ class RecentConns(AppletPlugin):
         self.store_state()
 
     def on_item_activated(self, item):
-        logging.info("Connect %s %s" % (item["address"], item["uuid"]))
+        logging.info(f"Connect {item['address']} {item['uuid']}")
 
         item["mitem"]["sensitive"] = False
         self.parent.Plugins.Menu.on_menu_changed()

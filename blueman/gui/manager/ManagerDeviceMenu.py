@@ -77,7 +77,7 @@ class ManagerDeviceMenu(Gtk.Menu):
     def set_op(self, device, message):
         ManagerDeviceMenu.__ops__[device.get_object_path()] = message
         for inst in ManagerDeviceMenu.__instances__:
-            logging.info("op: regenerating instance %s" % inst)
+            logging.info(f"op: regenerating instance {inst}")
             if inst.SelectedDevice == self.SelectedDevice and not (inst.is_popup and not inst.props.visible):
                 inst.generate()
 
@@ -90,7 +90,7 @@ class ManagerDeviceMenu(Gtk.Menu):
     def unset_op(self, device):
         del ManagerDeviceMenu.__ops__[device.get_object_path()]
         for inst in ManagerDeviceMenu.__instances__:
-            logging.info("op: regenerating instance %s" % inst)
+            logging.info(f"op: regenerating instance {inst}")
             if inst.SelectedDevice == self.SelectedDevice and not (inst.is_popup and not inst.props.visible):
                 inst.generate()
 
@@ -116,7 +116,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             prog.message(_("Failed"))
 
             self.unset_op(device)
-            logging.warning("fail %s" % result)
+            logging.warning(f"fail {result}")
             msg, tb = e_(result.message)
             MessageArea.show_message(_("Connection Failed: ") + msg, tb)
 
@@ -139,7 +139,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             self.generate()
 
         def err(obj, result, user_date):
-            logging.warning("disconnect failed %s" % result)
+            logging.warning(f"disconnect failed {result}")
             msg, tb = e_(result.message)
             MessageArea.show_message(_("Disconnection Failed: ") + msg, tb)
             self.generate()
@@ -160,7 +160,7 @@ class ManagerDeviceMenu(Gtk.Menu):
 
     def generic_connect(self, item, device, connect):
         def fail(obj, result, user_date):
-            logging.info("fail: %s", result)
+            logging.info(f"fail: {result}")
             prog.message(_("Failed"))
             self.unset_op(device)
             msg, tb = e_(result.message)

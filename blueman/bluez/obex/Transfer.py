@@ -41,7 +41,7 @@ class Transfer(Base):
 
     def do_g_properties_changed(self, changed_properties: GLib.Variant, _invalidated_properties: List[str]) -> None:
         for name, value in changed_properties.unpack().items():
-            logging.debug("%s %s %s" % (self.get_object_path(), name, value))
+            logging.debug(f"{self.get_object_path()} {name} {value}")
             if name == 'Transferred':
                 self.emit('progress', value)
             elif name == 'Status':

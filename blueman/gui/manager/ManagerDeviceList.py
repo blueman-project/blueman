@@ -116,7 +116,7 @@ class ManagerDeviceList(DeviceList):
         row = self.get(tree_iter, "caption")
         if key.lower() in row["caption"].lower():
             return False
-        logging.info("%s %s %s %s" % (model, column, key, tree_iter))
+        logging.info(f"{model} {column} {key} {tree_iter}")
         return True
 
     def drag_recv(self, widget, context, x, y, selection, target_type, time):
@@ -129,7 +129,7 @@ class ManagerDeviceList(DeviceList):
         if path:
             tree_iter = self.get_iter(path[0])
             device = self.get(tree_iter, "device")["device"]
-            command = "blueman-sendto --device=%s" % device['Address']
+            command = f"blueman-sendto --device={device['Address']}"
 
             launch(command, paths=uris, name=_("File Sender"))
             context.finish(True, False, time)
@@ -300,7 +300,7 @@ class ManagerDeviceList(DeviceList):
             logging.exception(e)
 
     def row_update_event(self, tree_iter, key, value):
-        logging.info("%s %s" % (key, value))
+        logging.info(f"{key} {value}")
 
         if key == "Trusted":
             if value:

@@ -246,7 +246,7 @@ class DeviceList(GenericList):
 
         adapter = adapter_path_to_name(adapter)
 
-        logging.debug("Setting adapter to: %s " % adapter)
+        logging.debug(f"Setting adapter to: {adapter}")
 
         if adapter is not None:
             try:
@@ -397,7 +397,7 @@ class DeviceList(GenericList):
                     del self.path_to_row[existing]
 
         if object_path:
-            logging.info("Caching new device %s" % object_path)
+            logging.info(f"Caching new device {object_path}")
             self.path_to_row[object_path] = Gtk.TreeRowReference.new(self.liststore,
                                                                      self.liststore.get_path(tree_iter))
 

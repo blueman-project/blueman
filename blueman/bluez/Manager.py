@@ -80,7 +80,7 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
                 path = adapter.get_object_path()
                 if path.endswith(pattern) or adapter['Address'] == pattern:
                     return adapter
-            raise DBusNoSuchAdapterError("No adapters found with pattern: %s" % pattern)
+            raise DBusNoSuchAdapterError(f"No adapters found with pattern: {pattern}")
 
     def get_devices(self, adapter_path: str = "/") -> List[Device]:
         paths = []

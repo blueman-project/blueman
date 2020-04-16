@@ -218,7 +218,7 @@ class TransferService(AppletPlugin):
             self._agent = None
 
     def _on_dbus_name_appeared(self, _connection, name, owner):
-        logging.info("%s %s" % (name, owner))
+        logging.info(f"{name} {owner}")
 
         self._manager = Manager()
         self._handlerids.append(self._manager.connect("transfer-started", self._on_transfer_started))
@@ -228,7 +228,7 @@ class TransferService(AppletPlugin):
         self._register_agent()
 
     def _on_dbus_name_vanished(self, _connection, name):
-        logging.info("%s not running or was stopped" % name)
+        logging.info(f"{name} not running or was stopped")
 
         if self._manager:
             for sigid in self._handlerids:
@@ -285,8 +285,8 @@ class TransferService(AppletPlugin):
         dest = os.path.join(dest_dir, filename)
         if os.path.exists(dest):
             now = datetime.now()
-            filename = "%s_%s" % (now.strftime("%Y%m%d%H%M%S"), filename)
-            logging.info("Destination file exists, renaming to: %s" % filename)
+            filename = f"{now.strftime('%Y%m%d%H%M%S')}_{filename}"
+            logging.info(f"Destination file exists, renaming to: {filename}")
 
         try:
             shutil.move(src, dest)

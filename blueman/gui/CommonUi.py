@@ -40,7 +40,7 @@ def show_about_dialog(app_name, run=True, parent=None):
     about.set_translator_credits(_("translator-credits"))
     about.set_copyright('Copyright © 2008 Valmantas Palikša\n'
                         'Copyright © 2008 Tadas Dailyda\n'
-                        'Copyright © 2008 - %s blueman project' % datetime.now().year
+                        f'Copyright © 2008 - {datetime.now().year} blueman project'
                         )
     about.set_comments(_('Blueman is a GTK+ Bluetooth manager'))
     about.set_website(WEBSITE)
@@ -49,7 +49,7 @@ def show_about_dialog(app_name, run=True, parent=None):
     about.set_logo_icon_name('blueman')
     about.set_authors(['Valmantas Palikša <walmis@balticum-tv.lt>',
                        'Tadas Dailyda <tadas@dailyda.com>',
-                       '%s/graphs/contributors' % WEBSITE
+                       f'{WEBSITE}/graphs/contributors'
                        ])
     if run:
         about.run()

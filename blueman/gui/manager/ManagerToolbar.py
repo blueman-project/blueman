@@ -59,7 +59,7 @@ class ManagerToolbar:
                 self.b_search.props.sensitive = True
 
     def on_adapter_changed(self, lst, adapter_path):
-        logging.debug("toolbar adapter %s" % adapter_path)
+        logging.debug(f"toolbar adapter {adapter_path}")
         if adapter_path is None:
             self.b_search.props.sensitive = False
             self.b_send.props.sensitive = False

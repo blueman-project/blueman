@@ -22,7 +22,7 @@ class NMConnectionBase:
     def __init__(self, service, reply_handler=None, error_handler=None):
         if self.conntype not in ('dun', 'panu'):
             self._raise_or_error_handler(
-                NMConnectionError('Invalid connection type %s, should be panu or dun' % self.conntype)
+                NMConnectionError(f"Invalid connection type {self.conntype}, should be panu or dun")
             )
         self.device = service.device
         self.bdaddr = self.device['Address']
@@ -31,7 +31,7 @@ class NMConnectionBase:
         self.connection = None
         self.active_connection = None
         self.client = NM.Client.new()
-        self.Config = Config('org.blueman.gsmsetting', '/org/blueman/gsmsettings/%s/' % self.bdaddr)
+        self.Config = Config(f"org.blueman.gsmsetting', '/org/blueman/gsmsettings/{self.bdaddr}/")
         self._statehandler: Optional[int] = None
 
         self.find_or_create_connection()
@@ -64,18 +64,18 @@ class NMConnectionBase:
         new = NM.DeviceState(new_state)
         old = NM.DeviceState(old_state)
         state_reason = NM.DeviceStateReason(reason)
-        logging.debug('New: %s Old: %s Reason: %s' % (new.value_nick, old.value_nick, state_reason.value_nick))
+        logging.debug(f"New: {new.value_nick} Old: {old.value_nick} Reason: {state_reason.value_nick}")
 
         error_msg = None
         reply_msg = None
 
         if new == NM.DeviceState.FAILED:
-            error_msg = 'Connection failed with reason: %s' % state_reason.value_nick
+            error_msg = f"Connection failed with reason: {state_reason.value_nick}"
         elif new == NM.DeviceState.ACTIVATED:
             reply_msg = 'Connection sucesfully activated'
         elif (new <= NM.DeviceState.DISCONNECTED or new == NM.DeviceState.DEACTIVATING) and \
                 (NM.DeviceState.DISCONNECTED < old <= NM.DeviceState.ACTIVATED):
-            error_msg = 'Connection disconnected with reason %s' % state_reason.value_nick
+            error_msg = f"Connection disconnected with reason {state_reason.value_nick}"
         else:
             return  # Keep checking the state changes
 
@@ -96,9 +96,9 @@ class NMConnectionBase:
 
         device = self.client.get_device_by_iface(self.bdaddr)
         if not device:
-            self._raise_or_error_handler(NMConnectionError('Could not find device %s' % self.bdaddr))
+            self._raise_or_error_handler(NMConnectionError(f"Could not find device {self.bdaddr}"))
         elif device.get_state() == NM.DeviceState.ACTIVATED:
-            self._raise_or_error_handler(NMConnectionError('Device %s already activated' % self.bdaddr))
+            self._raise_or_error_handler(NMConnectionError(f"Device {self.bdaddr} already activated"))
         else:
             self._statehandler = device.connect('state-changed', self._on_device_state_changed)
             self.client.activate_connection_async(self.connection, device, None, None, on_connection_activate)
@@ -107,7 +107,7 @@ class NMConnectionBase:
         def on_connection_deactivate(client, result):
             try:
                 client.deactivate_connection_finish(result)
-                self._return_or_reply_handler('Device %s deactivated sucessfully' % self.bdaddr)
+                self._return_or_reply_handler(f"Device {self.bdaddr} deactivated sucessfully")
                 self.active_connection = None
             except GLib.Error as e:
                 self._raise_or_error_handler(e)
@@ -122,17 +122,17 @@ class NMConnectionBase:
             if conn is None:
                 self.create_connection()
             else:
-                logging.debug('Found existing connection with uuid %s' % self.connection_uuid)
+                logging.debug(f"Found existing connection with uuid {self.connection_uuid}")
                 self.connection = conn
 
                 if self.conntype == 'dun':
                     settings_gsm = conn.get_setting_gsm()
 
                     if settings_gsm.props.apn != self.Config['apn']:
-                        logging.debug('Updating apn on connection to %s' % self.Config['apn'])
+                        logging.debug(f"Updating apn on connection to {self.Config['apn']}")
                         settings_gsm.props.apn = self.Config['apn']
                     if settings_gsm.props.number != self.Config['number']:
-                        logging.debug('Updating number on connection to %s' % self.Config['number'])
+                        logging.debug(f"Updating number on connection to {self.Config['number']}")
                         settings_gsm.props.number = self.Config['number']
 
                 conn.commit_changes(True, None)
@@ -175,7 +175,7 @@ class NMPANConnection(NMConnectionBase):
     def connection_uuid(self):
         # PANU connections are automatically created so attempt to find it
         # It appears the Name property is used not Alias!
-        conn = self.client.get_connection_by_id('%s Network' % self.device['Name'])
+        conn = self.client.get_connection_by_id(f"{self.device['Name']} Network")
         if conn is not None:
             conn_settings = conn.get_setting_connection()
             return conn_settings.get_uuid()
@@ -184,7 +184,7 @@ class NMPANConnection(NMConnectionBase):
 
     def create_connection(self):
         conn = NM.SimpleConnection()
-        conn_id = '%s Network' % self.device['Name']
+        conn_id = f"{self.device['Name']} Network"
         conn_uuid = str(uuid.uuid4())
 
         conn_sett = NM.SettingConnection(type='bluetooth', id=conn_id, uuid=conn_uuid, autoconnect=False)
@@ -211,7 +211,7 @@ class NMDUNConnection(NMConnectionBase):
             return
 
         conn = NM.SimpleConnection()
-        conn_id = 'blueman dun for %s' % self.device['Alias']
+        conn_id = f"blueman dun for {self.device['Alias']}"
         conn_uuid = str(uuid.uuid4())
 
         conn_sett = NM.SettingConnection(type='bluetooth', id=conn_id, uuid=conn_uuid, autoconnect=False)

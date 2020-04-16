@@ -60,7 +60,7 @@ class BasePlugin:
 
     def _on_plugin_delete(self):
         self.on_delete()
-        logging.debug("Deleting plugin instance %s" % self)
+        logging.debug(f"Deleting plugin instance {self}")
 
     @classmethod
     def is_configurable(cls):
@@ -123,7 +123,7 @@ class BasePlugin:
             self.__config[key] = value
             self.option_changed(key, value)
         else:
-            raise TypeError("Wrong type, must be %s" % repr(opt["type"]))
+            raise TypeError(f"Wrong type, must be {repr(opt['type'])}")
 
     def option_changed(self, key, value):
         pass

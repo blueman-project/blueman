@@ -43,7 +43,7 @@ class PulseAudioProfile(ManagerPlugin):
                 inst.generate()
 
     def on_pa_event(self, utils, event, idx):
-        logging.debug("%s %s" % (event, idx))
+        logging.debug(f"{event} {idx}")
 
         def get_card_cb(card):
             drivers = ("module-bluetooth-device.c",

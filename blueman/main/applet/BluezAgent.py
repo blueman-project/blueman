@@ -137,7 +137,7 @@ class BluezAgent(DbusService):
 
     def get_device_string(self, device_path):
         device = Device(obj_path=device_path)
-        return "<b>%s</b> (%s)" % (escape(device["Alias"]), device["Address"])
+        return f"<b>{escape(device['Alias'])}</b> ({device['Address']})"
 
     def _lookup_default_pin(self, device_path):
         if not self._db:
@@ -219,7 +219,7 @@ class BluezAgent(DbusService):
 
         default_pin = self._lookup_default_pin(device_path)
         if default_pin is not None:
-            logging.info('Sending default pin: %s' % default_pin)
+            logging.info(f"Sending default pin: {default_pin}")
             return default_pin
 
         self.ask_passkey(dialog_msg, notify_msg, False, True, device_path, ok, err)
@@ -235,20 +235,20 @@ class BluezAgent(DbusService):
             self.dialog.present()
 
     def _on_display_passkey(self, device, passkey, _entered):
-        logging.info('DisplayPasskey (%s, %d)' % (device, passkey))
+        logging.info(f"DisplayPasskey ({device}, {passkey:d})")
         dev = Device(obj_path=device)
         self._devhandlerids[device] = dev.connect_signal("property-changed", self._on_device_property_changed)
 
-        notify_message = _("Pairing passkey for") + " %s: %s" % (self.get_device_string(device), passkey)
+        notify_message = _("Pairing passkey for") + f" {self.get_device_string(device)}: {passkey}"
         self.n = Notification("Bluetooth", notify_message, 0, icon_name="blueman")
         self.n.show()
 
     def _on_display_pin_code(self, device, pin_code):
-        logging.info('DisplayPinCode (%s, %s)' % (device, pin_code))
+        logging.info(f'DisplayPinCode ({device}, {pin_code})')
         dev = Device(obj_path=device)
         self._devhandlerids[device] = dev.connect_signal("property-changed", self._on_device_property_changed)
 
-        notify_message = _("Pairing PIN code for") + " %s: %s" % (self.get_device_string(device), pin_code)
+        notify_message = _("Pairing PIN code for") + f" {self.get_device_string(device)}: {pin_code}"
         self.n = Notification("Bluetooth", notify_message, 0, icon_name="blueman")
         self.n.show()
 
@@ -260,10 +260,10 @@ class BluezAgent(DbusService):
                 err(BluezErrorCanceled("User canceled pairing"))
 
         logging.info("Agent.RequestConfirmation")
-        notify_message = _("Pairing request for:") + "\n%s" % self.get_device_string(device_path)
+        notify_message = _("Pairing request for:") + f"\n{self.get_device_string(device_path)}"
 
         if passkey:
-            notify_message += "\n" + _("Confirm value for authentication:") + " <b>%s</b>" % passkey
+            notify_message += "\n" + _("Confirm value for authentication:") + f" <b>{passkey}</b>"
         actions = [["confirm", _("Confirm")], ["deny", _("Deny")]]
 
         self.n = Notification("Bluetooth", notify_message, 0, actions, on_confirm_action, icon_name="blueman")
@@ -288,7 +288,7 @@ class BluezAgent(DbusService):
         dev_str = self.get_device_string(device)
         service = ServiceUUID(uuid).name
         notify_message = \
-            (_("Authorization request for:") + "\n%s\n" + _("Service:") + " <b>%s</b>") % (dev_str, service)
+            _("Authorization request for:") + f"\n{dev_str}\n" + _("Service:") + f" <b>{service}</b>"
         actions = [["always", _("Always accept")],
                    ["accept", _("Accept")],
                    ["deny", _("Deny")]]

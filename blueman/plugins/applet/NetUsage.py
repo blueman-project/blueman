@@ -35,7 +35,7 @@ class MonitorBase(GObject.GObject):
         self.interface = interface
         self.device = device
         self.general_config = Config("org.blueman.general")
-        self.config = Config("org.blueman.plugins.netusage", "/org/blueman/plugins/netusages/%s/" % device["Address"])
+        self.config = Config("org.blueman.plugins.netusage", f"/org/blueman/plugins/netusages/{device['Addres']}/")
 
         self.last_tx = 0
         self.last_rx = 0
@@ -79,10 +79,10 @@ class Monitor(MonitorBase):
 
     def poll_stats(self):
         try:
-            with open("/sys/class/net/%s/statistics/tx_bytes" % self.interface, "r") as f:
+            with open(f"/sys/class/net/{self.interface}/statistics/tx_bytes", "r") as f:
                 tx = int(f.readline())
 
-            with open("/sys/class/net/%s/statistics/rx_bytes" % self.interface, "r") as f:
+            with open(f"/sys/class/net/{self.interface}/statistics/rx_bytes", "r") as f:
                 rx = int(f.readline())
         except OSError:
             self.poller = None
@@ -214,25 +214,25 @@ class Dialog:
     def on_selection_changed(self, cb):
         titer = cb.get_active_iter()
         (addr,) = self.liststore.get(titer, 0)
-        self.config = Config("org.blueman.plugins.netusage", "/org/blueman/plugins/netusages/%s/" % addr)
+        self.config = Config("org.blueman.plugins.netusage", f"/org/blueman/plugins/netusages/{addr}/")
         self.update_counts(self.config["tx"], self.config["rx"])
         self.update_time()
 
     def get_caption(self, name, address):
-        return "%s\n<small>%s</small>" % (escape(name), address)
+        return f"{escape(name)}\n<small>{address}</small>"
 
     def update_counts(self, tx, rx):
         tx = int(tx)
         rx = int(rx)
 
         (num, suffix) = format_bytes(tx)
-        self.e_ul.props.text = "%.2f %s" % (num, suffix)
+        self.e_ul.props.text = f"{num:.2f} {suffix}"
 
         (num, suffix) = format_bytes(rx)
-        self.e_dl.props.text = "%.2f %s" % (num, suffix)
+        self.e_dl.props.text = f"{num:.2f} {suffix}"
 
         (num, suffix) = format_bytes(int(tx) + int(rx))
-        self.e_total.props.text = "%.2f %s" % (num, suffix)
+        self.e_total.props.text = f"{num:.2f} {suffix}"
 
         self.update_time()
 

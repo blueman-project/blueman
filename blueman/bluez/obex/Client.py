@@ -20,10 +20,10 @@ class Client(Base):
 
     def create_session(self, dest_addr: str, source_addr: str = "00:00:00:00:00:00", pattern: str = "opp") -> None:
         def on_session_created(session_path: str) -> None:
-            logging.info("%s %s %s %s" % (dest_addr, source_addr, pattern, session_path))
+            logging.info(f"{dest_addr} {source_addr} {pattern} {session_path}")
 
         def on_session_failed(error: BluezDBusException) -> None:
-            logging.error("%s %s %s %s" % (dest_addr, source_addr, pattern, error))
+            logging.error(f"{dest_addr} {source_addr} {pattern} {error}")
             self.emit("session-failed", error)
 
         v_source_addr = GLib.Variant('s', source_addr)
@@ -36,7 +36,7 @@ class Client(Base):
             logging.info(session_path)
 
         def on_session_remove_failed(error: BluezDBusException) -> None:
-            logging.error("%s %s" % (session_path, error))
+            logging.error(f"{session_path} {error}")
 
         param = GLib.Variant('(o)', (session_path,))
         self._call('RemoveSession', param, reply_handler=on_session_removed,

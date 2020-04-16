@@ -125,6 +125,6 @@ class ManagerStats:
 
     def set_data(self, uploaded, u_name, downloaded, d_name, u_speed, us_name, d_speed, ds_name):
         self.down_rate.set_markup(
-            '<span size="small">%.2f %s <i>%5.2f %s/s</i></span>' % (downloaded, d_name, d_speed, ds_name))
+            f'<span size="small">{downloaded:.2f} {d_name} <i>{d_speed:5.2f} {ds_name}/s</i></span>')
         self.up_rate.set_markup(
-            '<span size="small">%.2f %s <i>%5.2f %s/s</i></span>' % (uploaded, u_name, u_speed, us_name))
+            f'<span size="small">{uploaded:.2f} {u_name} <i>{u_speed:5.2f} {us_name}/s</i></span>')

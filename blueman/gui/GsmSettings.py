@@ -21,7 +21,7 @@ class GsmSettings(Gtk.Dialog):
 
         gsm_grid = self.Builder.get_object("gsm_grid")
 
-        self.config = Config("org.blueman.gsmsetting", "/org/blueman/gsmsettings/%s/" % bd_address)
+        self.config = Config("org.blueman.gsmsetting", f"/org/blueman/gsmsettings/{bd_address}/")
         self.props.icon_name = "network-wireless"
         self.props.title = _("GSM Settings")
 

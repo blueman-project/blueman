@@ -23,20 +23,20 @@ class Connection:
         stdout, stderr = subprocess.Popen(['ps', 'ax', '-o', 'pid,args'], stdout=subprocess.PIPE).communicate()
         if b'ModemManager' in stdout:
             timeout = 10
-            logging.info("ModemManager is running, delaying connection %ssec for it to complete probing" % timeout)
+            logging.info(f"ModemManager is running, delaying connection {timeout} sec for it to complete probing")
             GLib.timeout_add_seconds(timeout, self.connect)
         else:
             self.connect()
 
     def connect(self):
-        c = Config("org.blueman.gsmsetting", "/org/blueman/gsmsettings/%s/" % self.service.device['Address'])
+        c = Config("org.blueman.gsmsetting", f"/org/blueman/gsmsettings/{self.service.device['Address']}/")
 
         m = Mechanism()
         m.PPPConnect('(sss)', self.port, c["number"], c["apn"], result_handler=self.on_connected,
                      error_handler=self.on_error)
 
     def on_error(self, _obj, result, _user_data):
-        logging.info('Failed %s' % result)
+        logging.info(f"Failed {result}")
         # FIXME confusingly self.port is the full rfcomm device path but the service expects the number only
         self.error_handler(result)
         GLib.timeout_add(1000, self.service.disconnect, int(self.port[-1]))
