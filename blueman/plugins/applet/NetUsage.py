@@ -84,7 +84,7 @@ class Monitor(MonitorBase):
 
             with open("/sys/class/net/%s/statistics/rx_bytes" % self.interface, "r") as f:
                 rx = int(f.readline())
-        except IOError:
+        except OSError:
             self.poller = None
             self.ppp_port = None
             self.interface = None

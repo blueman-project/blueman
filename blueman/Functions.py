@@ -235,7 +235,7 @@ def get_pid(lockfile: str) -> Optional[int]:
     try:
         with open(lockfile, "r") as f:
             return int(f.readline())
-    except (ValueError, IOError):
+    except (ValueError, OSError):
         return None
 
 
@@ -400,7 +400,7 @@ def _netmask_for_ifacename(name: str, sock: socket.socket) -> Optional[str]:
     bytebuf = struct.pack('256s', name.encode('utf-8'))
     try:
         ret = fcntl.ioctl(sock.fileno(), siocgifnetmask, bytebuf)
-    except IOError:
+    except OSError:
         logging.error('siocgifnetmask failed')
         return None
 
@@ -418,7 +418,7 @@ def get_local_interfaces() -> Dict[str, Tuple[str, Optional[str]]]:
         with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
             try:
                 mutated_byte_buffer = fcntl.ioctl(sock.fileno(), siocgifconf, mutable_byte_buffer)
-            except IOError:
+            except OSError:
                 logging.error('siocgifconf failed')
                 return {}
 
@@ -431,7 +431,7 @@ def get_local_interfaces() -> Dict[str, Tuple[str, Optional[str]]]:
                 ipaddr = socket.inet_ntoa(namestr[i + 20: i + 24])
                 mask = _netmask_for_ifacename(name, sock)
                 ip_dict[name] = (ipaddr, mask)
-    except socket.error:
+    except OSError:
         logging.error('Socket creation failed', exc_info=True)
         return {}
 

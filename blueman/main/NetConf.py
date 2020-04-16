@@ -23,7 +23,7 @@ def read_pid_file(fname):
     try:
         with open(fname, "r") as f:
             return int(f.read())
-    except (IOError, ValueError):
+    except (OSError, ValueError):
         return None
 
 
@@ -285,7 +285,7 @@ class NetConf:
 
                 NetConf.default_inst = obj
                 return obj
-        except (IOError, UnicodeDecodeError, UnpicklingError):
+        except (OSError, UnicodeDecodeError, UnpicklingError):
             n = cls()
             try:
                 n.store()
