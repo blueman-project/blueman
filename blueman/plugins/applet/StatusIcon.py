@@ -9,7 +9,7 @@ from blueman.typing import GSignals
 
 
 class StatusIcon(AppletPlugin, GObject.GObject):
-    __gsignals__: GSignals = {str('activate'): (GObject.SignalFlags.NO_HOOKS, None, ())}
+    __gsignals__: GSignals = {'activate': (GObject.SignalFlags.NO_HOOKS, None, ())}
 
     __unloadable__ = False
     __icon__ = "blueman-tray"
