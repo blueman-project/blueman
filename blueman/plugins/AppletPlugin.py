@@ -1,4 +1,3 @@
-# coding=utf-8
 from blueman.plugins.BasePlugin import BasePlugin
 
 import gi

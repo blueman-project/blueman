@@ -1,5 +1,3 @@
-# coding=utf-8
-
 from blueman.plugins.MechanismPlugin import MechanismPlugin
 from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler, UdhcpdHandler
 

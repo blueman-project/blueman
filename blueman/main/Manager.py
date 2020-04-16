@@ -1,4 +1,3 @@
-# coding=utf-8
 import logging
 from gettext import gettext as _
 from typing import Optional

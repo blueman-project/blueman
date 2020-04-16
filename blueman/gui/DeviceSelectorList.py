@@ -1,4 +1,3 @@
-# coding=utf-8
 from html import escape
 from blueman.gui.DeviceList import DeviceList
 from gi.repository import Pango

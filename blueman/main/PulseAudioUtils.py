@@ -1,4 +1,3 @@
-# coding=utf-8
 from ctypes import *
 from typing import Dict, TYPE_CHECKING, List
 

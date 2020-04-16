@@ -1,4 +1,3 @@
-# coding=utf-8
 import gi
 
 gi.require_version('AppIndicator3', '0.1')

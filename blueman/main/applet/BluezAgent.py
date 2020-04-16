@@ -1,4 +1,3 @@
-# coding=utf-8
 import os.path
 import logging
 from gettext import gettext as _

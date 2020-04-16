@@ -1,5 +1,3 @@
-# coding=utf-8
-
 import os
 import struct
 from blueman.plugins.MechanismPlugin import MechanismPlugin

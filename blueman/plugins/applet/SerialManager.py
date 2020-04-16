@@ -1,4 +1,3 @@
-# coding=utf-8
 from gettext import gettext as _
 from typing import Dict, Any  # noqa: F401
 

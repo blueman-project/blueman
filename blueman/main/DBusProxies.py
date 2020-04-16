@@ -1,4 +1,3 @@
-# coding=utf-8
 from gi.repository import Gio, GLib
 
 from blueman.gobject import SingletonGObjectMeta

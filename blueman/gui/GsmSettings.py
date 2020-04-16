@@ -1,4 +1,3 @@
-# coding=utf-8
 from gettext import gettext as _
 
 from blueman.main.Config import Config

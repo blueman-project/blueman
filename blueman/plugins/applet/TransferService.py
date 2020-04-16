@@ -1,4 +1,3 @@
-# coding=utf-8
 from datetime import datetime
 from gettext import gettext as _, ngettext
 import os

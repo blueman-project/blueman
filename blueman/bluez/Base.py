@@ -1,4 +1,3 @@
-# coding=utf-8
 from typing import List, Callable, Optional, Any, Union, Dict
 
 from gi.repository import Gio, GLib, GObject

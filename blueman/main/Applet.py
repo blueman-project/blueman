@@ -1,4 +1,3 @@
-# coding=utf-8
 from blueman.Functions import *
 from blueman.bluez.Manager import Manager
 from blueman.bluez.Adapter import AnyAdapter

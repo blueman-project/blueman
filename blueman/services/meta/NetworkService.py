@@ -1,4 +1,3 @@
-# coding=utf-8
 from typing import Optional, Callable
 
 from blueman.Service import Service

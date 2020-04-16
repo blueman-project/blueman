@@ -1,5 +1,3 @@
-# coding=utf-8
-
 from blueman.services.DialupNetwork import DialupNetwork as DialupNetwork
 from blueman.services.GroupNetwork import GroupNetwork as GroupNetwork
 from blueman.services.NetworkAccessPoint import NetworkAccessPoint as NetworkAccessPoint
