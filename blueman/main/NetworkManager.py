@@ -8,7 +8,7 @@ try:
 except ValueError:
     raise ImportError('NM python bindings not found.')
 
-from gi.repository import GLib, NM
+from gi.repository import GLib, GObject, NM
 from blueman.main.Config import Config
 
 
@@ -80,7 +80,7 @@ class NMConnectionBase(object):
             return  # Keep checking the state changes
 
         # We are done with state changes
-        device.disconnect(self._statehandler)
+        GObject.signal_handler_disconnect(device, self._statehandler)
         if error_msg is None:
             self._return_or_reply_handler(reply_msg)
         else:
