@@ -24,8 +24,8 @@ msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-29 08:27+0200\n"
-"PO-Revision-Date: 2020-03-28 10:09+0000\n"
-"Last-Translator: Samuel Carvalho de Araújo <samuelnegro12345@gmail.com>\n"
+"PO-Revision-Date: 2020-04-20 21:14+0000\n"
+"Last-Translator: Lucas Araujo <lucassants2808@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "blueman/blueman/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -33,7 +33,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.0-dev\n"
+"X-Generator: Weblate 4.0.2-dev\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Visibility Setting</b>"
@@ -372,7 +372,8 @@ msgstr "Adaptadores de Bluetooth"
 
 #: ../blueman/main/Adapter.py:64
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
-msgstr "O Bluetooth precisa ser desligado para o gerenciador funcionar."
+msgstr ""
+"O Bluetooth precisa ser ligado para que o gerenciador de adaptador funcione"
 
 #: ../blueman/main/Adapter.py:142
 msgid "Always"
@@ -581,7 +582,7 @@ msgstr "Ativar Bluetooth"
 
 #: ../blueman/Functions.py:97
 msgid "Shall bluetooth get enabled automatically?"
-msgstr ""
+msgstr "o bluetooth deve ser ativado automaticamente?"
 
 #: ../blueman/Functions.py:98
 msgid "Yes"
@@ -653,7 +654,7 @@ msgstr "<b>Emparelhado</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:440
 msgid "<b>Trusted</b>"
-msgstr "<b>Confiável<b>"
+msgstr "<b>Confiável</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:460
 msgid "Poor"
@@ -707,11 +708,11 @@ msgstr "Falhou"
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:122
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:168
 msgid "Connection Failed: "
-msgstr "Falha de Conexão:"
+msgstr "Falha de Conexão: "
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:145
 msgid "Disconnection Failed: "
-msgstr "Falha ao desconectar:"
+msgstr "Falha ao desconectar: "
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:186
 msgid "Disconnecting..."
@@ -719,7 +720,7 @@ msgstr "Desconectando..."
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:244
 msgid "_<b>Connect</b>"
-msgstr ""
+msgstr "_<b>Conectar</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:246
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
@@ -727,7 +728,7 @@ msgstr "Conecta perfis de conexão automática de fonte A2DP, coletor A2DP, e HI
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:250
 msgid "_<b>Disconnect</b>"
-msgstr ""
+msgstr "_<b>Desconectar</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:251
 msgid "Forcefully disconnect the device"
@@ -759,7 +760,7 @@ msgstr "_Não confiar"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:348
 msgid "_Set up…"
-msgstr ""
+msgstr "_configuração…"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:383
 msgid "_Remove..."
@@ -799,7 +800,7 @@ msgstr "Mais"
 
 #: ../blueman/gui/CommonUi.py:41
 msgid "translator-credits"
-msgstr "Equipe de tradução no Transifex:\nFabrizzio Alphonsus Soares https://www.transifex.com/accounts/profile/fabrizzio\nAlberto Federman Neto https://www.transifex.com/accounts/profile/albfneto\nAppes https://www.transifex.com/accounts/profile/apps\narm332 https://www.transifex.com/accounts/profile/arm332\naugusteiner https://www.transifex.com/accounts/profile/augusteiner\ndreto https://www.transifex.com/accounts/profile/dreto\nEnrico Nicoletto https://www.transifex.com/accounts/profile/EnricoNicoletto\neverton_seib https://www.transifex.com/accounts/profile/everton_seib\nFelipe Rozelio https://www.transifex.com/accounts/profile/feliperozelio\nJoão Paulo da Silva Júnior https://www.transifex.com/accounts/profile/jpsilvaj\nJuliana Paula Felix https://www.transifex.com/accounts/profile/jufelix\nMarcelo Ghelman https://www.transifex.com/accounts/profile/marcelo.ghelman\nMarcio Andre Padula https://www.transifex.com/accounts/profile/Padula\nMarcus Vinícius Marques https://www.transifex.com/accounts/profile/Pygmalion\nMatheus Macabu https://www.transifex.com/accounts/profile/mkbu95\nMatheus Martins https://www.transifex.com/accounts/profile/Matheus_Martins\nMichele dos Santos da Silva https://www.transifex.com/accounts/profile/mchelem\nThiago Cangussu https://www.transifex.com/accounts/profile/cangussu.thg\nvitorgatti https://www.transifex.com/accounts/profile/vitorgatti"
+msgstr "Tradutor- créditos"
 
 #: ../blueman/gui/CommonUi.py:46
 msgid "Blueman is a GTK+ Bluetooth manager"
@@ -831,7 +832,10 @@ msgstr "O plugin <b>\"%(0)s\"</b> depende de <b>%(1)s</b>. Descarregar <b>%(1)s<
 msgid ""
 "Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will unload <b>%(0)s</b>.\n"
 "Proceed?"
-msgstr "O plugin <b>%(0)s</b> entra em conflito com <b>%(1)s</b>. Carregar <b>%(1)s</b> vai descarregar <b>%(0)s</b>. Continuar?"
+msgstr ""
+"Plugin <b>%(0)s</b> entra em conflito com <b>%(1)s</b>. Carregar <b>%(1)s</b>"
+" vai descarregar <b>%(0)s</b>\n"
+"Continuar?"
 
 #: ../blueman/gui/DeviceSelectorWidget.py:38
 msgid "Adapter selection"
@@ -855,12 +859,12 @@ msgstr "servidor"
 #. translators: device class
 #: ../blueman/DeviceClass.py:46
 msgid "laptop"
-msgstr "laptop"
+msgstr "computador portátil"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:48
 msgid "handheld"
-msgstr "handheld"
+msgstr "portátil"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:50
@@ -1018,7 +1022,7 @@ msgstr "Conectado"
 #: ../blueman/plugins/applet/AutoConnect.py:36
 #, python-format
 msgid "Automatically connected to %(service)s on %(device)s"
-msgstr ""
+msgstr "Conexão automática de %(service)s em %(device)s"
 
 #: ../blueman/plugins/applet/NetUsage.py:160
 #: ../blueman/plugins/applet/NetUsage.py:269
@@ -1181,6 +1185,8 @@ msgid ""
 "Please make sure that directory \"<b>%s</b>\" exists or configure it with "
 "blueman-services. Until then the default \"%s\" will be used"
 msgstr ""
+"por favor, tenha certeza de que o diretório \"<b>%s</b>\" existe ou "
+"configure-o com os serviços blueman. Até lá, o padrão \"%s\" será usado"
 
 #: ../blueman/plugins/applet/TransferService.py:299
 msgid "File received"
@@ -1283,7 +1289,9 @@ msgstr "Falha na obtenção de um endereço IP em %s"
 msgid ""
 "Trying to obtain an IP address on %s\n"
 "Please wait…"
-msgstr "Tentando obter um endereço IP em %s\nAguarde..."
+msgstr ""
+"Tentando obter um endereço IP em %s\n"
+"Aguarde"
 
 #: ../blueman/plugins/applet/ShowConnected.py:13
 msgid ""
@@ -1310,7 +1318,9 @@ msgstr "Usa a libappindicator para mostrar um ícone de status"
 msgid ""
 "Provides a menu item for making the default adapter temporarily visible when"
 " it is set to hidden by default"
-msgstr "Fornece um item de menu para tornar o adaptador padrão temporariamente visível quando este é definido como oculto por padrão."
+msgstr ""
+"Fornece um item de menu para tornar o adaptador padrão temporariamente "
+"visível quando este é definido como oculto por padrão"
 
 #: ../blueman/plugins/applet/DiscvManager.py:25
 msgid "Discoverable timeout"
@@ -1446,6 +1456,9 @@ msgid ""
 "IP address overlaps with subnet of interface %s, which has the following configuration  %s/%s\n"
 "This may cause incorrect network behavior"
 msgstr ""
+"O endereço IP sobrepõe a sub-rede da interface %s, que possui a seguinte "
+"configuração %s/%s\n"
+"Isso causará um comportamento incorreto na rede"
 
 #: ../blueman/plugins/services/Network.py:239
 #: ../blueman/plugins/services/Network.py:248
@@ -1526,7 +1539,7 @@ msgstr "Nenhum adaptador encontrado"
 
 #: ../apps/blueman-assistant:189
 msgid "<b>Pairing in progress...</b>"
-msgstr "O emparelhamento em andamento ..."
+msgstr "<b>Emparelhamento em andamento</b>"
 
 #: ../apps/blueman-assistant:198
 msgid "<b>Failed to add device</b>"
@@ -1538,11 +1551,11 @@ msgstr "Não conectar"
 
 #: ../apps/blueman-assistant:234
 msgid "<b>Device added and connected successfully</b>"
-msgstr ""
+msgstr "<b>o dispositivo foi conectado e adicionado com sucesso</b>"
 
 #: ../apps/blueman-assistant:239
 msgid "<b>Device added successfully, but failed to connect</b>"
-msgstr ""
+msgstr "<b>o dispositivo foi adicionado com sucesso, mas falhou na conexão</b>"
 
 #: ../apps/blueman-assistant:250
 msgid "Start configuration assistant for this device"
