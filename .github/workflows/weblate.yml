@@ -1,0 +1,20 @@
+name: Weblate
+
+on:
+  push:
+    branches:
+      - master
+      - weblate
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: sudo apt-get install intltool curl
+      - run: intltool-update --pot
+        working-directory: po
+      - env:
+          TOKEN: ${{ secrets.WEBLATE_KEY }}
+        run: "curl -F file=@po/blueman.pot -F method=source -H \"Authorization: Token $TOKEN\" https://hosted.weblate.org/api/translations/blueman/blueman/en/file/"
