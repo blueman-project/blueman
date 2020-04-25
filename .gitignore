@@ -9,11 +9,22 @@
 /ltmain.sh
 /m4
 
-# intltoolize
-/intltool-extract.in
-/intltool-merge.in
-/intltool-update.in
+# gettext
+/config.rpath
+/ABOUT-NLS
+/po/config.rpath
 /po/Makefile.in.in
+/po/Makefile.in
+/po/Makefile
+/po/Makevars.template
+/po/quot.sed
+/po/remove-potcdate.sin
+/po/Rules-quot
+/po/blueman.pot
+/po/boldquot.sed
+/po/*.header
+/po/stamp-po
+/po/insert-header.sin
 
 # automake
 Makefile.in
@@ -66,7 +77,6 @@ Makefile
 /module/_blueman_la-*.lo
 /module/_blueman_la-*.o
 /po/*.gmo
-/po/.intltool-merge-cache
 
 # Local execution
 /blueman/**/*.pyc

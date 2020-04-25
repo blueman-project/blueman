@@ -14,28 +14,33 @@ DIST_DOCS =			\
 
 EXTRA_DIST = 			\
 	${DIST_DOCS}		\
-	intltool-extract.in	\
-	intltool-update.in	\
-	intltool-merge.in	\
 	meson.build		\
 	po/meson.build
-
-DISTCLEANFILES = 		\
-	intltool-extract 	\
-	intltool-update		\
-	intltool-merge
 
 MAINTAINERCLEANFILES = 	\
 	Makefile.in			\
 	aclocal.m4			\
 	configure			\
 	config.h.in			\
+	config.rpath			\
 	depcomp				\
 	missing				\
 	install-sh			\
-	intltool-extract.in	\
-	intltool-update.in	\
-	intltool-merge.in
+	ABOUT-NLS			\
+	config.rpath			\
+	po/Makefile.in.in		\
+	po/Makefile.in			\
+	po/Makefile			\
+	po/Makevars.template		\
+	po/quot.sed			\
+	po/remove-potcdate.sin		\
+	po/Rules-quot			\
+	po/blueman.pot			\
+	po/boldquot.sed			\
+	po/*.header			\
+	po/stamp-po			\
+	po/insert-header.sin		\
+	$NULL
 
 doc_DATA = ${DIST_DOCS}
 

@@ -28,8 +28,8 @@ dnl ==========================================================================
 GETTEXT_PACKAGE="blueman"
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [The gettext package])
-AM_GLIB_GNU_GETTEXT
-IT_PROG_INTLTOOL([0.35.0])
+AM_GNU_GETTEXT_VERSION([0.19.7])
+AM_GNU_GETTEXT([external])
 
 AC_ENABLE_SHARED(yes)
 AC_ENABLE_STATIC(no)

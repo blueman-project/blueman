@@ -20,12 +20,7 @@ if test -z "$AUTOGEN_SUBDIR_MODE" && test -z "$NOCONFIGURE"; then
 fi
 
 
-aclocal || exit $?
-autoheader || exit $?
-libtoolize --copy --automake || exit $?
-intltoolize --automake --copy --force || exit $?
-automake --add-missing --copy || exit $?
-autoconf || exit $?
+autoreconf --verbose --force --install || exit $?
 
 if test -z "$AUTOGEN_SUBDIR_MODE" && test -z "$NOCONFIGURE"; then
     $srcdir/configure --enable-maintainer-mode $AUTOGEN_CONFIGURE_ARGS "$@" || exit $?
