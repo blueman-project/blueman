@@ -18,16 +18,19 @@ systemd_user_DATA = blueman-applet.service
 endif
 
 if HAVE_POLKIT
-@INTLTOOL_POLICY_RULE@
 policykitactionsdir = $(datadir)/polkit-1/actions
-policykitactions_in_files = org.blueman.policy.in
-policykitactions_DATA = $(policykitactions_in_files:.policy.in=.policy)
+policykitactions_DATA = org.blueman.policy
+
+org.blueman.policy: org.blueman.policy.in
+	$(AM_V_GEN) GETTEXTDATADIR=$(top_srcdir)/data/configs $(MSGFMT) --xml -d $(top_srcdir)/po/ -o $@ --template $<
+
 
 policykitrulesdir = $(datadir)/polkit-1/rules.d
 policykitrules_DATA = blueman.rules
 endif
 
 EXTRA_DIST = \
+	its 					\
 	blueman-applet.service.in		\
 	blueman-mechanism.service.in		\
 	org.blueman.Mechanism.conf		\
@@ -40,8 +43,8 @@ CLEANFILES =		\
 	blueman-applet.service		\
 	blueman-mechanism.service	\
 	org.blueman.Mechanism.service	\
-	org.blueman.policy		\
 	org.blueman.Applet.service		\
+	org.blueman.policy		\
 	$(BUILT_SOURCES)
 
 DISTCLEANFILES = \

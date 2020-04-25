@@ -140,16 +140,14 @@ install_subdir(
 install_data('data/org.blueman.gschema.xml', install_dir: schemadir)
 install_data('data/pin-code-database.xml', install_dir: pkgdatadir)
 
-# FIXME when polkit 0.114 is in stable releases use i18n.merge_file, until then use intltool
 # Merge translation into policy file
-intltool_merge = find_program('intltool-merge')
-podir = join_paths('@CURRENT_SOURCE_DIR@', 'po')
-
-custom_target('org.blueman.policy',
+i18n.merge_file(
     input: 'data/configs/org.blueman.policy.in',
     output: 'org.blueman.policy',
+    type: 'xml',
+    po_dir: 'po',
+    data_dirs: 'data/configs',
     install: true,
-    command: [intltool_merge, '--xml-style', podir, '@INPUT@', '@OUTPUT@'],
     install_dir: join_paths(datadir, 'polkit-1', 'actions'),
 )
 

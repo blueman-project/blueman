@@ -6,21 +6,18 @@
   <vendor>The Blueman Project</vendor>
   <vendor_url>https://github.com/blueman-project/blueman</vendor_url>
   <icon_name>blueman</icon_name>
-  
    <action id="org.blueman.network.setup">
-    <_description>Configure Bluetooth Network</_description>
-    <_message>Configuring networking requires privileges</_message>
-
+    <description>Configure Bluetooth Network</description>
+    <message>Configuring networking requires privileges</message>
     <defaults>
       <allow_inactive>no</allow_inactive>
       <allow_active>auth_admin_keep</allow_active>
-
     </defaults>
   </action>
-  
+
   <action id="org.blueman.dhcp.client">
-    <_description>Launch DHCP client</_description>
-    <_message>Launching DHCP client requires privileges</_message>
+    <description>Launch DHCP client</description>
+    <message>Launching DHCP client requires privileges</message>
     <defaults>
       <allow_inactive>no</allow_inactive>
       <allow_active>auth_admin_keep</allow_active>
@@ -28,8 +25,8 @@
   </action>
 
   <action id="org.blueman.pppd.pppconnect">
-    <_description>Launch PPP daemon</_description>
-    <_message>Launching PPP daemon requires privileges</_message>
+    <description>Launch PPP daemon</description>
+    <message>Launching PPP daemon requires privileges</message>
     <defaults>
       <allow_inactive>no</allow_inactive>
       <allow_active>auth_admin_keep</allow_active>
@@ -37,8 +34,8 @@
   </action>
 
   <action id="org.blueman.rfkill.setstate">
-    <_description>Set RfKill State</_description>
-    <_message>Setting RfKill State requires privileges</_message>
+    <description>Set RfKill State</description>
+    <message>Setting RfKill State requires privileges</message>
     <defaults>
       <allow_inactive>no</allow_inactive>
       <allow_active>auth_admin_keep</allow_active>
