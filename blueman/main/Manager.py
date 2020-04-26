@@ -14,7 +14,6 @@ from blueman.gui.manager.ManagerStats import ManagerStats
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.Config import Config
 from blueman.main.DBusProxies import AppletService, DBusProxyFailed
-from blueman.gui.CommonUi import ErrorDialog
 from blueman.gui.MessageArea import MessageArea
 from blueman.gui.Notification import Notification
 from blueman.main.PluginManager import PluginManager
@@ -67,102 +66,59 @@ class Blueman(Gtk.Window):
             self.Config["window-properties"] = [w, h, x, y]
             Gtk.main_quit()
 
-        def bt_status_changed(status):
-            if not status:
-                self.hide()
-                check_bluetooth_status(_("Bluetooth needs to be turned on for the device manager to function"),
-                                       lambda: Gtk.main_quit())
-            else:
-                self.show()
+        setup_icon_path()
 
-        def on_applet_signal(_proxy, _sender, signal_name, params):
-            if signal_name == 'BluetoothStatusChanged':
-                status = params.unpack()
-                bt_status_changed(status)
+        try:
+            self.Applet = AppletService()
+        except DBusProxyFailed:
+            print("Blueman applet needs to be running")
+            exit()
 
-        def on_dbus_name_vanished(_connection, name):
-            logging.info(name)
-            if self._applethandlerid:
-                self.Applet.disconnect(self._applethandlerid)
-                self._applethandlerid = None
-
-            self.hide()
-
-            d = ErrorDialog(
-                _("Connection to BlueZ failed"),
-                _("Bluez daemon is not running, blueman-manager cannot continue.\n"
-                  "This probably means that there were no Bluetooth adapters detected "
-                  "or Bluetooth daemon was not started."),
-                icon_name="blueman")
-            d.run()
-            d.destroy()
-
-            # FIXME ui can handle BlueZ start/stop but we should inform user
-            Gtk.main_quit()
-
-        def on_dbus_name_appeared(_connection, name, owner):
-            logging.info("%s %s" % (name, owner))
-            setup_icon_path()
-
+        manager = Manager()
+        try:
+            manager.get_adapter(self.Config['last-adapter'])
+        except DBusNoSuchAdapterError:
+            logging.error('Default adapter not found, trying first available.')
             try:
-                self.Applet = AppletService()
-            except DBusProxyFailed:
-                print("Blueman applet needs to be running")
-                exit()
-
-            check_bluetooth_status(_("Bluetooth needs to be turned on for the device manager to function"),
-                                   lambda: Gtk.main_quit())
-
-            manager = Manager()
-            try:
-                manager.get_adapter(self.Config['last-adapter'])
+                manager.get_adapter(None)
             except DBusNoSuchAdapterError:
-                logging.error('Default adapter not found, trying first available.')
-                try:
-                    manager.get_adapter(None)
-                except DBusNoSuchAdapterError:
-                    logging.error('No adapter(s) found, exiting')
-                    exit(1)
+                logging.error('No adapter(s) found')
 
-            self._applethandlerid = self.Applet.connect('g-signal', on_applet_signal)
+        self.connect("delete-event", on_window_delete)
+        self.props.icon_name = "blueman"
 
-            self.connect("delete-event", on_window_delete)
-            self.props.icon_name = "blueman"
+        w, h, x, y = self.Config["window-properties"]
+        if w and h:
+            self.resize(w, h)
+        if x and y:
+            self.move(x, y)
 
-            w, h, x, y = self.Config["window-properties"]
-            if w and h:
-                self.resize(w, h)
-            if x and y:
-                self.move(x, y)
+        sw = self.Builder.get_object("scrollview")
+        # Disable overlay scrolling
+        if Gtk.get_minor_version() >= 16:
+            sw.props.overlay_scrolling = False
 
-            sw = self.Builder.get_object("scrollview")
-            # Disable overlay scrolling
-            if Gtk.get_minor_version() >= 16:
-                sw.props.overlay_scrolling = False
+        self.List = ManagerDeviceList(adapter=self.Config["last-adapter"], inst=self)
 
-            self.List = ManagerDeviceList(adapter=self.Config["last-adapter"], inst=self)
+        self.List.show()
+        sw.add(self.List)
 
-            self.List.show()
-            sw.add(self.List)
+        self.Toolbar = ManagerToolbar(self)
+        self.Menu = ManagerMenu(self)
+        self.Stats = ManagerStats(self)
 
-            self.Toolbar = ManagerToolbar(self)
-            self.Menu = ManagerMenu(self)
-            self.Stats = ManagerStats(self)
+        if self.List.is_valid_adapter():
+            self.List.display_known_devices(autoselect=True)
 
-            if self.List.is_valid_adapter():
-                self.List.display_known_devices(autoselect=True)
+        self.List.connect("adapter-changed", self.on_adapter_changed)
 
-            self.List.connect("adapter-changed", self.on_adapter_changed)
+        toolbar = self.Builder.get_object("toolbar")
+        statusbar = self.Builder.get_object("statusbar")
 
-            toolbar = self.Builder.get_object("toolbar")
-            statusbar = self.Builder.get_object("statusbar")
+        self.Config.bind_to_widget("show-toolbar", toolbar, "visible")
+        self.Config.bind_to_widget("show-statusbar", statusbar, "visible")
 
-            self.Config.bind_to_widget("show-toolbar", toolbar, "visible")
-            self.Config.bind_to_widget("show-statusbar", statusbar, "visible")
-
-            self.show()
-
-        Manager.watch_name_owner(on_dbus_name_appeared, on_dbus_name_vanished)
+        self.show()
 
     def on_adapter_changed(self, lst, adapter):
         if adapter is not None:
