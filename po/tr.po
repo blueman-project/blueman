@@ -1,6 +1,6 @@
 # Turkish translation for blueman.
 # This file is distributed under the same license as the blueman package.
-# 
+#
 # Translators:
 # tarakbumba <tarakbumba@gmail.com>, 2014-2015
 # Butterfly <gokhanlnx@gmail.com>, 2017
@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-09 11:42+0200\n"
+"POT-Creation-Date: 2020-04-26 09:11+0000\n"
 "PO-Revision-Date: 2020-04-17 17:11+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/blueman/blueman/"
@@ -205,7 +205,9 @@ msgstr "<b>Transfer Ayarları</b>"
 
 #: ../data/ui/send-dialog.ui.h:1
 msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
-msgstr "<span weight=\"bold\" size=\"large\">Dosyalar Bluetooth ile gönderiliyor...</span>"
+msgstr ""
+"<span weight=\"bold\" size=\"large\">Dosyalar Bluetooth ile gönderiliyor...</"
+"span>"
 
 #: ../data/ui/send-dialog.ui.h:2
 msgid "<b>To:</b>"
@@ -220,8 +222,13 @@ msgid ""
 "<b>Welcome to the Bluetooth device setup assistant. </b>\n"
 "\n"
 "\n"
-"It will walk you through the process of configuring and connecting to your Bluetooth enabled devices."
-msgstr "<b>Bluetooth aygıt ayarları yardımcısına hoşgeldiniz. </b>\n\n\nŞimdi ayarlarınızı yapın ve aktif Bluetooth cihazlarına bağlanın."
+"It will walk you through the process of configuring and connecting to your "
+"Bluetooth enabled devices."
+msgstr ""
+"<b>Bluetooth aygıt ayarları yardımcısına hoşgeldiniz. </b>\n"
+"\n"
+"\n"
+"Şimdi ayarlarınızı yapın ve aktif Bluetooth cihazlarına bağlanın."
 
 #: ../data/ui/assistant.ui.h:5
 msgid "Introduction"
@@ -259,8 +266,7 @@ msgstr "Bağlan"
 msgid "<b>Please wait...</b>"
 msgstr "<b>Lütfen bekleyin...</b>"
 
-#: ../data/ui/assistant.ui.h:14
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:124
+#: ../data/ui/assistant.ui.h:14 ../blueman/gui/manager/ManagerDeviceMenu.py:124
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:179
 msgid "Connecting..."
 msgstr "Bağlanıyor..."
@@ -393,20 +399,22 @@ msgstr "BlueZ bağlantısı başarısız"
 #: ../blueman/main/Manager.py:93
 msgid ""
 "Bluez daemon is not running, blueman-manager cannot continue.\n"
-"This probably means that there were no Bluetooth adapters detected or Bluetooth daemon was not started."
-msgstr "Bluez programı çalışmıyor, blueman-manager çalışmayı durdurdu.\nBüyük olasılıkla Bluetooth adaptörü takılmadı veya Bluetooth devredışı."
+"This probably means that there were no Bluetooth adapters detected or "
+"Bluetooth daemon was not started."
+msgstr ""
+"Bluez programı çalışmıyor, blueman-manager çalışmayı durdurdu.\n"
+"Büyük olasılıkla Bluetooth adaptörü takılmadı veya Bluetooth devredışı."
 
 #: ../blueman/main/Manager.py:190
 msgid "Searching"
 msgstr "Aranıyor"
 
-#: ../blueman/main/Manager.py:204
-#: ../blueman/plugins/applet/StandardItems.py:71 ../apps/blueman-assistant:65
+#: ../blueman/main/Manager.py:204 ../blueman/plugins/applet/StandardItems.py:71
+#: ../apps/blueman-assistant.in:65
 msgid "Bluetooth Assistant"
 msgstr "Bluetooth Yardımcısı"
 
-#: ../blueman/main/Manager.py:217
-#: ../blueman/plugins/applet/StandardItems.py:83
+#: ../blueman/main/Manager.py:217 ../blueman/plugins/applet/StandardItems.py:83
 msgid "Adapter Preferences"
 msgstr "Bağdaştırıcı Seçenekleri"
 
@@ -420,8 +428,7 @@ msgstr "Dosya Gönderici"
 msgid "Bluetooth File Transfer"
 msgstr "Bluetooth Dosya Transferi"
 
-#: ../blueman/main/Sendto.py:66
-#: ../blueman/gui/manager/ManagerProgressbar.py:25
+#: ../blueman/main/Sendto.py:66 ../blueman/gui/manager/ManagerProgressbar.py:25
 msgid "Connecting"
 msgstr "Bağlanıyor"
 
@@ -552,9 +559,13 @@ msgstr "Kabul Et"
 
 #: ../blueman/main/PluginManager.py:68
 msgid ""
-"<b>An error has occured while loading a plugin. Please notify the developers with the content of this message to our </b>\n"
+"<b>An error has occured while loading a plugin. Please notify the developers "
+"with the content of this message to our </b>\n"
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
-msgstr "<b>Eklenti yüklenmesi sırasında bir hata meydana geldi. Lütfen geliştiricilere bu mesajın içeriği ile bildirimde bulunun, </b>\n<a href=\"http://github.com/blueman-project/blueman/issues\">sitemizde.</a>"
+msgstr ""
+"<b>Eklenti yüklenmesi sırasında bir hata meydana geldi. Lütfen "
+"geliştiricilere bu mesajın içeriği ile bildirimde bulunun, </b>\n"
+"<a href=\"http://github.com/blueman-project/blueman/issues\">sitemizde.</a>"
 
 #: ../blueman/Functions.py:76
 msgid "Bluetooth Turned Off"
@@ -788,7 +799,23 @@ msgstr "Daha Fazla"
 
 #: ../blueman/gui/CommonUi.py:41
 msgid "translator-credits"
-msgstr "Launchpad Contributions:\n  Burak Anıl https://launchpad.net/~abstract-tr39\n  DenizCakir https://launchpad.net/~dezincakir\n  Emre UGUR https://launchpad.net/~emrwe\n  Kubilayk https://launchpad.net/~hkubilayk\n  MindLess https://launchpad.net/~berkan-demirci\n  Murat Bişkin https://launchpad.net/~muratbiskin\n  Osman Tosun https://launchpad.net/~rainman-neu\n  Said Tahsin Dane https://launchpad.net/~tasomaniac\n  Serdar Delican https://launchpad.net/~delicanserdar\n  Serdar KAHYA https://launchpad.net/~kahyainsaat\n  Valmantas Palikša https://launchpad.net/~walmis\n  Yiğit Ateş https://launchpad.net/~yigitates52\n  blablamate https://launchpad.net/~blablamate\n  denz https://launchpad.net/~psycho2dct\n  zeugma https://launchpad.net/~sunder67"
+msgstr ""
+"Launchpad Contributions:\n"
+"  Burak Anıl https://launchpad.net/~abstract-tr39\n"
+"  DenizCakir https://launchpad.net/~dezincakir\n"
+"  Emre UGUR https://launchpad.net/~emrwe\n"
+"  Kubilayk https://launchpad.net/~hkubilayk\n"
+"  MindLess https://launchpad.net/~berkan-demirci\n"
+"  Murat Bişkin https://launchpad.net/~muratbiskin\n"
+"  Osman Tosun https://launchpad.net/~rainman-neu\n"
+"  Said Tahsin Dane https://launchpad.net/~tasomaniac\n"
+"  Serdar Delican https://launchpad.net/~delicanserdar\n"
+"  Serdar KAHYA https://launchpad.net/~kahyainsaat\n"
+"  Valmantas Palikša https://launchpad.net/~walmis\n"
+"  Yiğit Ateş https://launchpad.net/~yigitates52\n"
+"  blablamate https://launchpad.net/~blablamate\n"
+"  denz https://launchpad.net/~psycho2dct\n"
+"  zeugma https://launchpad.net/~sunder67"
 
 #: ../blueman/gui/CommonUi.py:46
 msgid "Blueman is a GTK+ Bluetooth manager"
@@ -811,14 +838,19 @@ msgstr "Bağımlılık sorunu"
 #: ../blueman/gui/applet/PluginDialog.py:286
 #, python-format
 msgid ""
-"Plugin <b>\"%(0)s\"</b> depends on <b>%(1)s</b>. Unloading <b>%(1)s</b> will also unload <b>\"%(0)s\"</b>.\n"
+"Plugin <b>\"%(0)s\"</b> depends on <b>%(1)s</b>. Unloading <b>%(1)s</b> will "
+"also unload <b>\"%(0)s\"</b>.\n"
 "Proceed?"
-msgstr "<b>\"%(0)s\"</b> eklentisi <b>%(1)s</b> ile bağımlıdır. <b>%(1)s</b> öğesini kaldırmak <b>\"%(0)s\"</b> öğesini de kaldıracaktır.\nDevam?"
+msgstr ""
+"<b>\"%(0)s\"</b> eklentisi <b>%(1)s</b> ile bağımlıdır. <b>%(1)s</b> öğesini "
+"kaldırmak <b>\"%(0)s\"</b> öğesini de kaldıracaktır.\n"
+"Devam?"
 
 #: ../blueman/gui/applet/PluginDialog.py:308
 #, python-format
 msgid ""
-"Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will unload <b>%(0)s</b>.\n"
+"Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will "
+"unload <b>%(0)s</b>.\n"
 "Proceed?"
 msgstr ""
 "<b>%(0)s</b> eklentisi <b>%(1)s</b> eklentisi ile çakışıyor. <b>%(1)s</b> "
@@ -1027,7 +1059,9 @@ msgstr "Bağlı Değil"
 msgid ""
 "No usage statistics are available yet. Try establishing a connection first "
 "and then check this page."
-msgstr "Henüz kaydedilmiş kullanım istatistiği bulunmamakta. Önce bir bağlantı kurmayı deneyin ardından bu sayfayı tekrar kontrol edin."
+msgstr ""
+"Henüz kaydedilmiş kullanım istatistiği bulunmamakta. Önce bir bağlantı "
+"kurmayı deneyin ardından bu sayfayı tekrar kontrol edin."
 
 #: ../blueman/plugins/applet/NetUsage.py:208
 msgid "day"
@@ -1060,7 +1094,10 @@ msgstr "Sayacı sıfırlamak istediğinizden emin misiniz?"
 msgid ""
 "Allows you to monitor your (mobile broadband) network traffic usage. Useful "
 "for limited data access plans. This plugin tracks every device seperately."
-msgstr "(Mobil Genişbant) Ağ kullanımınızı görüntülemenizi sağlar. Sınırlı bağlantılar için kullanışlı bir özelliktir . Bu eklenti her bir aygıtı ayrı ayrı takip eder."
+msgstr ""
+"(Mobil Genişbant) Ağ kullanımınızı görüntülemenizi sağlar. Sınırlı "
+"bağlantılar için kullanışlı bir özelliktir . Bu eklenti her bir aygıtı ayrı "
+"ayrı takip eder."
 
 #: ../blueman/plugins/applet/NetUsage.py:311
 msgid "Network _Usage"
@@ -1089,7 +1126,8 @@ msgstr "NAP köprüleri gibi yerel ağ hizmetlerini yönetir"
 msgid ""
 "Provides support for Dial Up Networking (DUN) with ModemManager and "
 "NetworkManager"
-msgstr "Çevirmeli Ağ (DUN) için ModemManager ve NetworkManager ile destek sağlar"
+msgstr ""
+"Çevirmeli Ağ (DUN) için ModemManager ve NetworkManager ile destek sağlar"
 
 #: ../blueman/plugins/applet/RecentConns.py:57
 msgid ""
@@ -1217,9 +1255,12 @@ msgstr[1] "Arka planda %d dosya daha alındı"
 #: ../blueman/plugins/applet/KillSwitch.py:38
 msgid ""
 "Toggles a platform Bluetooth killswitch when Bluetooth power state changes "
-"(Useless with USB dongles) and makes sure a status icon is shown if there is"
-" a bluetooth killswitch but no adapter."
-msgstr "Bluetooth güç durumu değiştiğinde platform Bluetooth şalterinin durumunu değiştirir (USB anahtarları ile bir işe yaramaz). Bir bluetooth şalteri var fakat bir adaptör yoksa durum simgesinin gösterilmesini sağlar."
+"(Useless with USB dongles) and makes sure a status icon is shown if there is "
+"a bluetooth killswitch but no adapter."
+msgstr ""
+"Bluetooth güç durumu değiştiğinde platform Bluetooth şalterinin durumunu "
+"değiştirir (USB anahtarları ile bir işe yaramaz). Bir bluetooth şalteri var "
+"fakat bir adaptör yoksa durum simgesinin gösterilmesini sağlar."
 
 #: ../blueman/plugins/applet/StandardItems.py:17
 msgid "Adds standard menu items to the status icon menu"
@@ -1278,12 +1319,14 @@ msgstr "%s üzerinden IP adresi alınamadı"
 msgid ""
 "Trying to obtain an IP address on %s\n"
 "Please wait…"
-msgstr "%s üzerinde IP adresi elde edilmeye çalışılıyor\nLütfen bekleyin…"
+msgstr ""
+"%s üzerinde IP adresi elde edilmeye çalışılıyor\n"
+"Lütfen bekleyin…"
 
 #: ../blueman/plugins/applet/ShowConnected.py:13
 msgid ""
-"Adds an indication on the status icon when Bluetooth is active and shows the"
-" number of connections in the tooltip."
+"Adds an indication on the status icon when Bluetooth is active and shows the "
+"number of connections in the tooltip."
 msgstr ""
 "Bluetooth etkinken durum simgesine bir gösterge ekler ve araç ipucunda "
 "bağlantı sayısını gösterir."
@@ -1305,8 +1348,8 @@ msgstr "Durum ikonu göstermek için libappindicator'ı kullanır"
 
 #: ../blueman/plugins/applet/DiscvManager.py:15
 msgid ""
-"Provides a menu item for making the default adapter temporarily visible when"
-" it is set to hidden by default"
+"Provides a menu item for making the default adapter temporarily visible when "
+"it is set to hidden by default"
 msgstr ""
 "Öntanımlı olarak gizli olarak ayarlandığında öntanımlı bağdaştırıcıyı geçici "
 "olarak görünür yapmak için bir menü ögesi sağlar"
@@ -1335,7 +1378,9 @@ msgstr "Keşfedilebilir… %ss"
 #: ../blueman/plugins/applet/Menu.py:91
 msgid ""
 "Provides a menu for the applet and an API for other plugins to manipulate it"
-msgstr "Uygulamacık için bir menü ve diğer eklentilerin ona erişmesi için bir API sağlar"
+msgstr ""
+"Uygulamacık için bir menü ve diğer eklentilerin ona erişmesi için bir API "
+"sağlar"
 
 #: ../blueman/plugins/applet/PPPSupport.py:49
 #, python-format
@@ -1353,7 +1398,9 @@ msgstr "DUN profili üzerinden internete bağlanmak için temel destek sağlar."
 #: ../blueman/plugins/applet/SerialManager.py:22
 msgid ""
 "Standard SPP profile connection handler, allows executing custom actions"
-msgstr "Standart SPP profil bağlantısı yöneticisi, özel eylemlerin çalıştırılmasına imkân verir"
+msgstr ""
+"Standart SPP profil bağlantısı yöneticisi, özel eylemlerin çalıştırılmasına "
+"imkân verir"
 
 #: ../blueman/plugins/applet/SerialManager.py:31
 msgid "Script to execute on connection"
@@ -1368,7 +1415,14 @@ msgid ""
 "uuid16s are returned as a comma seperated list\n"
 "\n"
 "Upon device disconnection the script will be sent a HUP signal</span>"
-msgstr "<span size=\"small\">Şu argümanlar geçilecektir:\nAdres, İsim, hizmet ismi, uuid16s, rfcomm düğümü\nMesela:\nAA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0\nuuid16s unsurları virgülle ayrılmış bir liste olarak geri döndürülür\n\nCihazın bağlantısı kesildiğinde betiğe bir HUP sinyali gönderilecektir</span>"
+msgstr ""
+"<span size=\"small\">Şu argümanlar geçilecektir:\n"
+"Adres, İsim, hizmet ismi, uuid16s, rfcomm düğümü\n"
+"Mesela:\n"
+"AA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0\n"
+"uuid16s unsurları virgülle ayrılmış bir liste olarak geri döndürülür\n"
+"\n"
+"Cihazın bağlantısı kesildiğinde betiğe bir HUP sinyali gönderilecektir</span>"
 
 #: ../blueman/plugins/applet/SerialManager.py:63
 msgid "Serial port connected"
@@ -1391,7 +1445,9 @@ msgstr "Seri porttan bağlantı betiği başarısız oldu"
 msgid ""
 "There was a problem launching script %s\n"
 "%s"
-msgstr "Başlangıç yazısında hata var %s\n%s"
+msgstr ""
+"Başlangıç yazısında hata var %s\n"
+"%s"
 
 #: ../blueman/plugins/applet/PowerManager.py:15
 msgid "Controls Bluetooth adapter power states"
@@ -1427,7 +1483,9 @@ msgstr "Tüm bağdaştırıcıları aç"
 msgid ""
 "Temporarily suspends the screensaver when a bluetooth game controller is "
 "connected."
-msgstr "Bir Bluetooth oyun denetleyicisi bağlı ise ekran koruyucuyu geçici olarak devre dışı bırakır."
+msgstr ""
+"Bir Bluetooth oyun denetleyicisi bağlı ise ekran koruyucuyu geçici olarak "
+"devre dışı bırakır."
 
 #: ../blueman/plugins/services/Network.py:24
 #: ../blueman/plugins/services/Network.py:49
@@ -1446,7 +1504,8 @@ msgstr "IP adresi aynı adrese sahip %s arayüzü ile çakışmaktadır"
 #: ../blueman/plugins/services/Network.py:112
 #, python-format
 msgid ""
-"IP address overlaps with subnet of interface %s, which has the following configuration  %s/%s\n"
+"IP address overlaps with subnet of interface %s, which has the following "
+"configuration  %s/%s\n"
 "This may cause incorrect network behavior"
 msgstr ""
 "IP adresi, %s arayüzünün (%s/%s yapılandırmasına sahip) alt ağıyla "
@@ -1498,60 +1557,61 @@ msgstr "RfKill Durumunu Ayarla"
 msgid "Setting RfKill State requires privileges"
 msgstr "RfKill durumunu ayarlamak özel haklar gerektirir"
 
-#: ../apps/blueman-sendto:35
+#: ../apps/blueman-sendto.in:35
 msgid "Bluetooth needs to be turned on for file sending to work"
 msgstr "Dosya gönderebilmek için bluetooth açılmalı"
 
-#: ../apps/blueman-sendto:101
+#: ../apps/blueman-sendto.in:101
 msgid "Select files to send"
 msgstr "Gönderilecek dosyaları seçin"
 
-#: ../apps/blueman-sendto:131
+#: ../apps/blueman-sendto.in:131
 msgid "Send files to this device"
 msgstr "Aygıta dosyaları yolla"
 
-#: ../apps/blueman-sendto:133
+#: ../apps/blueman-sendto.in:133
 msgid "Source adapter. Takes address or adapter's name eg. hci0"
-msgstr "Kaynak bağdaştırıcı. Bağdaştırıcının adresini ya da ismini alır, mesela hci0"
+msgstr ""
+"Kaynak bağdaştırıcı. Bağdaştırıcının adresini ya da ismini alır, mesela hci0"
 
-#: ../apps/blueman-sendto:134
+#: ../apps/blueman-sendto.in:134
 msgid "Delete files on exit"
 msgstr "Çıkışta dosyaları sil"
 
-#: ../apps/blueman-sendto:136
+#: ../apps/blueman-sendto.in:136
 msgid "Files to be send to the bluetooth device"
 msgstr "Bluetooth aygıtına gönderilecek dosyalar"
 
-#: ../apps/blueman-assistant:52
+#: ../apps/blueman-assistant.in:52
 msgid "Bluetooth needs to be turned on for the Bluetooth assistant to work"
 msgstr ""
 "Bluetooth asistanının çalışabilmesi için Bluetooth'un açık olması "
 "gerekmektedir"
 
-#: ../apps/blueman-assistant:100
+#: ../apps/blueman-assistant.in:100
 msgid "No adapters found"
 msgstr "Adaptör bulunamadı"
 
-#: ../apps/blueman-assistant:189
+#: ../apps/blueman-assistant.in:189
 msgid "<b>Pairing in progress...</b>"
 msgstr "<b>Eşleştirme sürüyor...</b>"
 
-#: ../apps/blueman-assistant:198
+#: ../apps/blueman-assistant.in:198
 msgid "<b>Failed to add device</b>"
 msgstr "<b>Aygıt eklenemedi</b>"
 
-#: ../apps/blueman-assistant:219
+#: ../apps/blueman-assistant.in:219
 msgid "Don't connect"
 msgstr "Bağlanma"
 
-#: ../apps/blueman-assistant:234
+#: ../apps/blueman-assistant.in:234
 msgid "<b>Device added and connected successfully</b>"
 msgstr "<b>Cihaz eklendi ve başarıyla bağlandı</b>"
 
-#: ../apps/blueman-assistant:239
+#: ../apps/blueman-assistant.in:239
 msgid "<b>Device added successfully, but failed to connect</b>"
 msgstr "<b>Cihaz başarıyla eklendi, ama bağlanamadı</b>"
 
-#: ../apps/blueman-assistant:250
+#: ../apps/blueman-assistant.in:250
 msgid "Start configuration assistant for this device"
 msgstr "Bu aygıt için ayarlama yardımcısını başlat"

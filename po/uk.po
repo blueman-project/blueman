@@ -1,6 +1,6 @@
 # Ukrainian translation for blueman.
 # This file is distributed under the same license as the blueman package.
-# 
+#
 # Translators:
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2007
 # Oleh, 2014
@@ -12,15 +12,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-14 12:14+0200\n"
+"POT-Creation-Date: 2020-04-26 09:11+0000\n"
 "PO-Revision-Date: 2020-04-14 10:14+0000\n"
 "Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/mate/MATE/language/uk/)\n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: uk\n"
-"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != "
+"11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
+"100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
+"(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Visibility Setting</b>"
@@ -203,7 +206,8 @@ msgstr "<b>Налаштування передачі</b>"
 
 #: ../data/ui/send-dialog.ui.h:1
 msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
-msgstr "<span weight=\"bold\" size=\"large\">Надсилання файлів через bluetooth</span>"
+msgstr ""
+"<span weight=\"bold\" size=\"large\">Надсилання файлів через bluetooth</span>"
 
 #: ../data/ui/send-dialog.ui.h:2
 msgid "<b>To:</b>"
@@ -218,8 +222,14 @@ msgid ""
 "<b>Welcome to the Bluetooth device setup assistant. </b>\n"
 "\n"
 "\n"
-"It will walk you through the process of configuring and connecting to your Bluetooth enabled devices."
-msgstr "<b>Вітаємо Вас у помічнику налаштування пристрою bluetooth. </b>\n\n\nВін проведе Вас через процес налаштування та під’єднання Ваших пристроїв bluetooth."
+"It will walk you through the process of configuring and connecting to your "
+"Bluetooth enabled devices."
+msgstr ""
+"<b>Вітаємо Вас у помічнику налаштування пристрою bluetooth. </b>\n"
+"\n"
+"\n"
+"Він проведе Вас через процес налаштування та під’єднання Ваших пристроїв "
+"bluetooth."
 
 #: ../data/ui/assistant.ui.h:5
 msgid "Introduction"
@@ -257,8 +267,7 @@ msgstr "Під’єднати"
 msgid "<b>Please wait...</b>"
 msgstr "<b>Будь ласка, зачекайте...</b>"
 
-#: ../data/ui/assistant.ui.h:14
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:124
+#: ../data/ui/assistant.ui.h:14 ../blueman/gui/manager/ManagerDeviceMenu.py:124
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:179
 msgid "Connecting..."
 msgstr "Під’єднання..."
@@ -393,20 +402,23 @@ msgstr "Не вдалося під’єднатися до BlueZ"
 #: ../blueman/main/Manager.py:93
 msgid ""
 "Bluez daemon is not running, blueman-manager cannot continue.\n"
-"This probably means that there were no Bluetooth adapters detected or Bluetooth daemon was not started."
-msgstr "Blueman-manager не може продовжити, оскільки служба bluez не активна.\nЦе зазвичай означає, що не було знайдено адаптерів bluetooth або служба bluetooth не запущена."
+"This probably means that there were no Bluetooth adapters detected or "
+"Bluetooth daemon was not started."
+msgstr ""
+"Blueman-manager не може продовжити, оскільки служба bluez не активна.\n"
+"Це зазвичай означає, що не було знайдено адаптерів bluetooth або служба "
+"bluetooth не запущена."
 
 #: ../blueman/main/Manager.py:190
 msgid "Searching"
 msgstr "Пошук"
 
-#: ../blueman/main/Manager.py:204
-#: ../blueman/plugins/applet/StandardItems.py:71 ../apps/blueman-assistant:65
+#: ../blueman/main/Manager.py:204 ../blueman/plugins/applet/StandardItems.py:71
+#: ../apps/blueman-assistant.in:65
 msgid "Bluetooth Assistant"
 msgstr "Помічник bluetooth"
 
-#: ../blueman/main/Manager.py:217
-#: ../blueman/plugins/applet/StandardItems.py:83
+#: ../blueman/main/Manager.py:217 ../blueman/plugins/applet/StandardItems.py:83
 msgid "Adapter Preferences"
 msgstr "Параметри адаптера"
 
@@ -420,8 +432,7 @@ msgstr "Передавач файлів"
 msgid "Bluetooth File Transfer"
 msgstr "Передача файлу через bluetooth"
 
-#: ../blueman/main/Sendto.py:66
-#: ../blueman/gui/manager/ManagerProgressbar.py:25
+#: ../blueman/main/Sendto.py:66 ../blueman/gui/manager/ManagerProgressbar.py:25
 msgid "Connecting"
 msgstr "Під’єднання"
 
@@ -431,7 +442,8 @@ msgstr "obexd недоступний"
 
 #: ../blueman/main/Sendto.py:118
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
-msgstr "Помилка самозапуску служби obex. Переконайтеся, що запущений демон obex"
+msgstr ""
+"Помилка самозапуску служби obex. Переконайтеся, що запущений демон obex"
 
 #: ../blueman/main/Sendto.py:147
 msgid "Cancelling"
@@ -554,9 +566,13 @@ msgstr "Прийняти"
 
 #: ../blueman/main/PluginManager.py:68
 msgid ""
-"<b>An error has occured while loading a plugin. Please notify the developers with the content of this message to our </b>\n"
+"<b>An error has occured while loading a plugin. Please notify the developers "
+"with the content of this message to our </b>\n"
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
-msgstr "<b>Виникла помилка під час завантаження модулю. Будь ласка, повідомте вміст цього повідомлення розробникам. На нашому </b>\n<a href=\"http://github.com/blueman-project/blueman/issues\">сайті.</a>"
+msgstr ""
+"<b>Виникла помилка під час завантаження модулю. Будь ласка, повідомте вміст "
+"цього повідомлення розробникам. На нашому </b>\n"
+"<a href=\"http://github.com/blueman-project/blueman/issues\">сайті.</a>"
 
 #: ../blueman/Functions.py:76
 msgid "Bluetooth Turned Off"
@@ -714,7 +730,8 @@ msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:246
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
-msgstr "Під’єднує профілі самоз’єднання з джерелами A2DP, приймачами A2DP та HID"
+msgstr ""
+"Під’єднує профілі самоз’єднання з джерелами A2DP, приймачами A2DP та HID"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:250
 msgid "_<b>Disconnect</b>"
@@ -790,7 +807,21 @@ msgstr "Додатково"
 
 #: ../blueman/gui/CommonUi.py:41
 msgid "translator-credits"
-msgstr "Інформація про перекладачів:\nTransifex Contributions:\n  Микола Ткач <Stuartlittle1970@gmail.com>\nLaunchpad Contributions:\n  Andrey https://launchpad.net/~andreysey\n  CrabMan https://launchpad.net/~oleg-min\n  Eugene Babiy https://launchpad.net/~eugene-babiy\n  Knedlyk https://launchpad.net/~yupadmin\n  Nizzzia https://launchpad.net/~nizzzia\n  Serhey Kusyumoff (Сергій Кусюмов) https://launchpad.net/~sergemine\n  Valmantas Palikša https://launchpad.net/~walmis\n  atany https://launchpad.net/~ye-gorshkov\n  shcherbet https://launchpad.net/~shcherbet\n  Сергій Матрунчик (SkyMan) https://launchpad.net/~skymanphp"
+msgstr ""
+"Інформація про перекладачів:\n"
+"Transifex Contributions:\n"
+"  Микола Ткач <Stuartlittle1970@gmail.com>\n"
+"Launchpad Contributions:\n"
+"  Andrey https://launchpad.net/~andreysey\n"
+"  CrabMan https://launchpad.net/~oleg-min\n"
+"  Eugene Babiy https://launchpad.net/~eugene-babiy\n"
+"  Knedlyk https://launchpad.net/~yupadmin\n"
+"  Nizzzia https://launchpad.net/~nizzzia\n"
+"  Serhey Kusyumoff (Сергій Кусюмов) https://launchpad.net/~sergemine\n"
+"  Valmantas Palikša https://launchpad.net/~walmis\n"
+"  atany https://launchpad.net/~ye-gorshkov\n"
+"  shcherbet https://launchpad.net/~shcherbet\n"
+"  Сергій Матрунчик (SkyMan) https://launchpad.net/~skymanphp"
 
 #: ../blueman/gui/CommonUi.py:46
 msgid "Blueman is a GTK+ Bluetooth manager"
@@ -813,16 +844,24 @@ msgstr "Проблема з залежностями"
 #: ../blueman/gui/applet/PluginDialog.py:286
 #, python-format
 msgid ""
-"Plugin <b>\"%(0)s\"</b> depends on <b>%(1)s</b>. Unloading <b>%(1)s</b> will also unload <b>\"%(0)s\"</b>.\n"
+"Plugin <b>\"%(0)s\"</b> depends on <b>%(1)s</b>. Unloading <b>%(1)s</b> will "
+"also unload <b>\"%(0)s\"</b>.\n"
 "Proceed?"
-msgstr "Втулок <b>\"%(0)s\"</b> залежить від <b>%(1)s</b>. Вивантаження <b>%(1)s</b> призведе також до вивантаження <b>\"%(0)s\"</b>. \nВивантажити?"
+msgstr ""
+"Втулок <b>\"%(0)s\"</b> залежить від <b>%(1)s</b>. Вивантаження <b>%(1)s</b> "
+"призведе також до вивантаження <b>\"%(0)s\"</b>. \n"
+"Вивантажити?"
 
 #: ../blueman/gui/applet/PluginDialog.py:308
 #, python-format
 msgid ""
-"Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will unload <b>%(0)s</b>.\n"
+"Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will "
+"unload <b>%(0)s</b>.\n"
 "Proceed?"
-msgstr "Втулок <b>%(0)s</b> конфліктує з <b>%(1)s</b>. Завантаження <b>%(1)s</b> призведе до вивантаження <b>%(0)s</b>.\nЗавантажити?"
+msgstr ""
+"Втулок <b>%(0)s</b> конфліктує з <b>%(1)s</b>. Завантаження <b>%(1)s</b> "
+"призведе до вивантаження <b>%(0)s</b>.\n"
+"Завантажити?"
 
 #: ../blueman/gui/DeviceSelectorWidget.py:38
 msgid "Adapter selection"
@@ -1026,7 +1065,9 @@ msgstr "Не під’єднаний"
 msgid ""
 "No usage statistics are available yet. Try establishing a connection first "
 "and then check this page."
-msgstr "Статистики використання ще немає. Спробуйте встановити з’єднання, а потім перевірити цю сторінку."
+msgstr ""
+"Статистики використання ще немає. Спробуйте встановити з’єднання, а потім "
+"перевірити цю сторінку."
 
 #: ../blueman/plugins/applet/NetUsage.py:208
 msgid "day"
@@ -1065,7 +1106,10 @@ msgstr "Ви впевнені, що бажаєте скинути лічильн
 msgid ""
 "Allows you to monitor your (mobile broadband) network traffic usage. Useful "
 "for limited data access plans. This plugin tracks every device seperately."
-msgstr "Дозволяє відстежувати використання мережевого трафіку (через мобільну широкосмугову мережу). Корисно для тарифних планів з обмеженим обсягом трафіку. Статистика ведеться для кожного пристрою окремо."
+msgstr ""
+"Дозволяє відстежувати використання мережевого трафіку (через мобільну "
+"широкосмугову мережу). Корисно для тарифних планів з обмеженим обсягом "
+"трафіку. Статистика ведеться для кожного пристрою окремо."
 
 #: ../blueman/plugins/applet/NetUsage.py:311
 msgid "Network _Usage"
@@ -1088,18 +1132,24 @@ msgstr "Bluetooth вимкнено"
 
 #: ../blueman/plugins/applet/Networking.py:16
 msgid "Manages local network services, like NAP bridges"
-msgstr "Керує службами локальної мережі, такими як мости точок доступу до мережі (NAP)"
+msgstr ""
+"Керує службами локальної мережі, такими як мости точок доступу до мережі "
+"(NAP)"
 
 #: ../blueman/plugins/applet/NMDUNSupport.py:14
 msgid ""
 "Provides support for Dial Up Networking (DUN) with ModemManager and "
 "NetworkManager"
-msgstr "Забезпечує підтримку для Dial Up Networking (DUN) для ModemManager і NetworkManager"
+msgstr ""
+"Забезпечує підтримку для Dial Up Networking (DUN) для ModemManager і "
+"NetworkManager"
 
 #: ../blueman/plugins/applet/RecentConns.py:57
 msgid ""
 "Provides a menu item that contains last used connections for quick access"
-msgstr "Додає пункт меню, що містить перелік нещодавніх під’єднань для швидкого доступу"
+msgstr ""
+"Додає пункт меню, що містить перелік нещодавніх під’єднань для швидкого "
+"доступу"
 
 #. the maximum number of items RecentConns menu will display
 #: ../blueman/plugins/applet/RecentConns.py:68
@@ -1136,7 +1186,9 @@ msgstr "Адаптер для цього з’єднання не доступн
 msgid ""
 "Provides support for Personal Area Networking (PAN) introduced in "
 "NetworkManager 0.8"
-msgstr "Забезпечує підтримку персональної мережі (PAN), зреалізовану у Мережевих з'єднаннях версії 0.8"
+msgstr ""
+"Забезпечує підтримку персональної мережі (PAN), зреалізовану у Мережевих "
+"з'єднаннях версії 0.8"
 
 #: ../blueman/plugins/applet/DBusService.py:17
 msgid "Provides DBus API for other Blueman components"
@@ -1223,9 +1275,12 @@ msgstr[3] "Отримано ще %d файлів у тловому режимі"
 #: ../blueman/plugins/applet/KillSwitch.py:38
 msgid ""
 "Toggles a platform Bluetooth killswitch when Bluetooth power state changes "
-"(Useless with USB dongles) and makes sure a status icon is shown if there is"
-" a bluetooth killswitch but no adapter."
-msgstr "Перемикати Bluetooth перемикач, коли стан живлення Bluetooth змінюється (марно для USB заглушок) й переконуватися, що піктограма статусу показується якщо активований перемикач bluetooth, але не адаптер."
+"(Useless with USB dongles) and makes sure a status icon is shown if there is "
+"a bluetooth killswitch but no adapter."
+msgstr ""
+"Перемикати Bluetooth перемикач, коли стан живлення Bluetooth змінюється "
+"(марно для USB заглушок) й переконуватися, що піктограма статусу показується "
+"якщо активований перемикач bluetooth, але не адаптер."
 
 #: ../blueman/plugins/applet/StandardItems.py:17
 msgid "Adds standard menu items to the status icon menu"
@@ -1261,7 +1316,9 @@ msgstr "Додавати в меню аплету кнопку виходу"
 
 #: ../blueman/plugins/applet/DhcpClient.py:14
 msgid "Provides a basic dhcp client for Bluetooth PAN connections."
-msgstr "Забезпечує базову підтримку DHCP клієнта для під’єднань до персональної мережі PAN."
+msgstr ""
+"Забезпечує базову підтримку DHCP клієнта для під’єднань до персональної "
+"мережі PAN."
 
 #: ../blueman/plugins/applet/DhcpClient.py:45
 #: ../blueman/plugins/applet/DhcpClient.py:53
@@ -1284,13 +1341,17 @@ msgstr "Не вдається отримати IP адресу на %s"
 msgid ""
 "Trying to obtain an IP address on %s\n"
 "Please wait…"
-msgstr "Спроба отримати IP адресу на %s\nБудь ласка, зачекайте..."
+msgstr ""
+"Спроба отримати IP адресу на %s\n"
+"Будь ласка, зачекайте..."
 
 #: ../blueman/plugins/applet/ShowConnected.py:13
 msgid ""
-"Adds an indication on the status icon when Bluetooth is active and shows the"
-" number of connections in the tooltip."
-msgstr "Додає індикацію до піктограми статусу, коли bluetooth активний і показує кількість під’єднань у підказці."
+"Adds an indication on the status icon when Bluetooth is active and shows the "
+"number of connections in the tooltip."
+msgstr ""
+"Додає індикацію до піктограми статусу, коли bluetooth активний і показує "
+"кількість під’єднань у підказці."
 
 #: ../blueman/plugins/applet/ShowConnected.py:48
 msgid "Bluetooth Active"
@@ -1311,9 +1372,11 @@ msgstr "Використовує libappindicator, щоб показати пік
 
 #: ../blueman/plugins/applet/DiscvManager.py:15
 msgid ""
-"Provides a menu item for making the default adapter temporarily visible when"
-" it is set to hidden by default"
-msgstr "Додає пункт меню, що дозволяє робити основний адаптер видимим для зовнішніх пристроїв, коли типово встановлено режим невидимости."
+"Provides a menu item for making the default adapter temporarily visible when "
+"it is set to hidden by default"
+msgstr ""
+"Додає пункт меню, що дозволяє робити основний адаптер видимим для зовнішніх "
+"пристроїв, коли типово встановлено режим невидимости."
 
 #: ../blueman/plugins/applet/DiscvManager.py:25
 msgid "Discoverable timeout"
@@ -1346,16 +1409,23 @@ msgstr "Надає меню для аплету та API маніпулюван�
 msgid ""
 "Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\n"
 "Network is now available through <b>%(1)s</b>"
-msgstr "Успішно під’єднано до служби <b>комутованого з'єднання</b> (DUN) на <b>%(0)s.</b>\nМережа наразі доступна через <b>%(1)s</b>"
+msgstr ""
+"Успішно під’єднано до служби <b>комутованого з'єднання</b> (DUN) на <b>%(0)s."
+"</b>\n"
+"Мережа наразі доступна через <b>%(1)s</b>"
 
 #: ../blueman/plugins/applet/PPPSupport.py:57
 msgid "Provides basic support for connecting to the internet via DUN profile."
-msgstr "Забезпечує базову підтримку під’єднання до тенет через комутоване з'єднання (DUN профіль)."
+msgstr ""
+"Забезпечує базову підтримку під’єднання до тенет через комутоване з'єднання "
+"(DUN профіль)."
 
 #: ../blueman/plugins/applet/SerialManager.py:22
 msgid ""
 "Standard SPP profile connection handler, allows executing custom actions"
-msgstr "Провайдер стандартного профілю з’єднання SPP, дозволяє виконувати дії користувача"
+msgstr ""
+"Провайдер стандартного профілю з’єднання SPP, дозволяє виконувати дії "
+"користувача"
 
 #: ../blueman/plugins/applet/SerialManager.py:31
 msgid "Script to execute on connection"
@@ -1370,7 +1440,14 @@ msgid ""
 "uuid16s are returned as a comma seperated list\n"
 "\n"
 "Upon device disconnection the script will be sent a HUP signal</span>"
-msgstr "<span size=\"small\">Такі арґументи будуть передані:\nАдреса, ім’я, ім’я служби, ідентифікатор UUID16s, rfcomm вузол\nНаприклад:\nAA:BB:CC:DD:EE:FF, Телефон, DUN служба, 0x1103, /dev/rfcomm0\nuuid16s повертаються як перелік розділений комами\n\nПісля від’єднання пристрою скрипту буде послано сигнал HIP</span>"
+msgstr ""
+"<span size=\"small\">Такі арґументи будуть передані:\n"
+"Адреса, ім’я, ім’я служби, ідентифікатор UUID16s, rfcomm вузол\n"
+"Наприклад:\n"
+"AA:BB:CC:DD:EE:FF, Телефон, DUN служба, 0x1103, /dev/rfcomm0\n"
+"uuid16s повертаються як перелік розділений комами\n"
+"\n"
+"Після від’єднання пристрою скрипту буде послано сигнал HIP</span>"
 
 #: ../blueman/plugins/applet/SerialManager.py:63
 msgid "Serial port connected"
@@ -1380,7 +1457,8 @@ msgstr "Послідовний порт під’єднаний"
 #, python-format
 msgid ""
 "Serial port service on device <b>%s</b> now will be available via <b>%s</b>"
-msgstr "Послідовний порт на пристрої <b>%s</b> тепер буде доступний через <b>%s</b>"
+msgstr ""
+"Послідовний порт на пристрої <b>%s</b> тепер буде доступний через <b>%s</b>"
 
 #: ../blueman/plugins/applet/SerialManager.py:114
 msgid "Serial port connection script failed"
@@ -1391,7 +1469,9 @@ msgstr "При виконанні скрипту з'єднання серійн�
 msgid ""
 "There was a problem launching script %s\n"
 "%s"
-msgstr "Виникла помилка при запуску скрипту %s\n%s"
+msgstr ""
+"Виникла помилка при запуску скрипту %s\n"
+"%s"
 
 #: ../blueman/plugins/applet/PowerManager.py:15
 msgid "Controls Bluetooth adapter power states"
@@ -1427,7 +1507,9 @@ msgstr "Увімкнути на усіх адаптерах"
 msgid ""
 "Temporarily suspends the screensaver when a bluetooth game controller is "
 "connected."
-msgstr "Тимчасово призупиняє зберігач екрану, коли ігровий контролер bluetooth під’єднаний."
+msgstr ""
+"Тимчасово призупиняє зберігач екрану, коли ігровий контролер bluetooth "
+"під’єднаний."
 
 #: ../blueman/plugins/services/Network.py:24
 #: ../blueman/plugins/services/Network.py:49
@@ -1446,7 +1528,8 @@ msgstr "IP адреса конфліктує з інтерфейсом %s, що 
 #: ../blueman/plugins/services/Network.py:112
 #, python-format
 msgid ""
-"IP address overlaps with subnet of interface %s, which has the following configuration  %s/%s\n"
+"IP address overlaps with subnet of interface %s, which has the following "
+"configuration  %s/%s\n"
 "This may cause incorrect network behavior"
 msgstr ""
 
@@ -1495,58 +1578,58 @@ msgstr "Встановити стан RfKill"
 msgid "Setting RfKill State requires privileges"
 msgstr "Встановлення стану RfKill потребує відповідних привілеїв"
 
-#: ../apps/blueman-sendto:35
+#: ../apps/blueman-sendto.in:35
 msgid "Bluetooth needs to be turned on for file sending to work"
 msgstr "Для надсилання файлів необхідно увімкнути bluetooth"
 
-#: ../apps/blueman-sendto:101
+#: ../apps/blueman-sendto.in:101
 msgid "Select files to send"
 msgstr "Виберіть файли для надсилання"
 
-#: ../apps/blueman-sendto:131
+#: ../apps/blueman-sendto.in:131
 msgid "Send files to this device"
 msgstr "Надіслати файли на цей пристрій"
 
-#: ../apps/blueman-sendto:133
+#: ../apps/blueman-sendto.in:133
 msgid "Source adapter. Takes address or adapter's name eg. hci0"
 msgstr "Адаптер джерела. Візьміть адресу або ім'я адаптера, такі як hci0"
 
-#: ../apps/blueman-sendto:134
+#: ../apps/blueman-sendto.in:134
 msgid "Delete files on exit"
 msgstr "Вилучити файли при виході"
 
-#: ../apps/blueman-sendto:136
+#: ../apps/blueman-sendto.in:136
 msgid "Files to be send to the bluetooth device"
 msgstr "Файли для відправки на пристрій bluetooth"
 
-#: ../apps/blueman-assistant:52
+#: ../apps/blueman-assistant.in:52
 msgid "Bluetooth needs to be turned on for the Bluetooth assistant to work"
 msgstr "Для роботи помічника налаштування потрібно вимкнути bluetooth"
 
-#: ../apps/blueman-assistant:100
+#: ../apps/blueman-assistant.in:100
 msgid "No adapters found"
 msgstr "Адаптери не знайдені"
 
-#: ../apps/blueman-assistant:189
+#: ../apps/blueman-assistant.in:189
 msgid "<b>Pairing in progress...</b>"
 msgstr "<b>Спаровування у процесі...</b>"
 
-#: ../apps/blueman-assistant:198
+#: ../apps/blueman-assistant.in:198
 msgid "<b>Failed to add device</b>"
 msgstr "<b>Не вдалося додати пристрій</b>"
 
-#: ../apps/blueman-assistant:219
+#: ../apps/blueman-assistant.in:219
 msgid "Don't connect"
 msgstr "Не під’єднувати"
 
-#: ../apps/blueman-assistant:234
+#: ../apps/blueman-assistant.in:234
 msgid "<b>Device added and connected successfully</b>"
 msgstr "<b>Пристрій додано та успішно під'єднано</b>"
 
-#: ../apps/blueman-assistant:239
+#: ../apps/blueman-assistant.in:239
 msgid "<b>Device added successfully, but failed to connect</b>"
 msgstr "<b>Пристрій додано успішно, але не вдалося під'єднатися</b>"
 
-#: ../apps/blueman-assistant:250
+#: ../apps/blueman-assistant.in:250
 msgid "Start configuration assistant for this device"
 msgstr "Завантажити помічник налаштування для цього пристрою"

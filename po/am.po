@@ -1,20 +1,20 @@
 # Amharic translation for blueman.
 # This file is distributed under the same license as the blueman package.
-# 
+#
 # Translators:
 # samson <sambelet@yahoo.com>, 2014-2015,2017
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-14 12:14+0200\n"
+"POT-Creation-Date: 2020-04-26 09:11+0000\n"
 "PO-Revision-Date: 2020-04-14 10:14+0000\n"
 "Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
 "Language-Team: Amharic (http://www.transifex.com/mate/MATE/language/am/)\n"
+"Language: am\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: am\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -213,8 +213,13 @@ msgid ""
 "<b>Welcome to the Bluetooth device setup assistant. </b>\n"
 "\n"
 "\n"
-"It will walk you through the process of configuring and connecting to your Bluetooth enabled devices."
-msgstr "<b>እንኳን ደህና መጡ ወደ ብሉቱዝ አካል ማሰናጃ እረዳት </b>\n\n\nእረዳቱ እርስዎን ይረዳዎታል እንዴት እንደሚሰናዱ እና እንደሚገናኙ ከ ብሉቱዝ አካሎች ጋር"
+"It will walk you through the process of configuring and connecting to your "
+"Bluetooth enabled devices."
+msgstr ""
+"<b>እንኳን ደህና መጡ ወደ ብሉቱዝ አካል ማሰናጃ እረዳት </b>\n"
+"\n"
+"\n"
+"እረዳቱ እርስዎን ይረዳዎታል እንዴት እንደሚሰናዱ እና እንደሚገናኙ ከ ብሉቱዝ አካሎች ጋር"
 
 #: ../data/ui/assistant.ui.h:5
 msgid "Introduction"
@@ -252,8 +257,7 @@ msgstr "መገናኛ"
 msgid "<b>Please wait...</b>"
 msgstr "<b>እባክዎን ይቆዩ...</b>"
 
-#: ../data/ui/assistant.ui.h:14
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:124
+#: ../data/ui/assistant.ui.h:14 ../blueman/gui/manager/ManagerDeviceMenu.py:124
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:179
 msgid "Connecting..."
 msgstr "በ መገናኘት ላይ..."
@@ -386,20 +390,22 @@ msgstr "ግንኙነት ወደ BlueZ አልተሳካም"
 #: ../blueman/main/Manager.py:93
 msgid ""
 "Bluez daemon is not running, blueman-manager cannot continue.\n"
-"This probably means that there were no Bluetooth adapters detected or Bluetooth daemon was not started."
-msgstr "Bluez daemon እየሄደ አይደለም: blueman-manager መቀጠል አይችልም.\nይህ ማለት ምናልባት የ ብሉቱዝ አዳፕተር አልተገኘም ማለት ነው ወይንም የ ብሉቱዝ daemon አልጀመረም ማለት ነው"
+"This probably means that there were no Bluetooth adapters detected or "
+"Bluetooth daemon was not started."
+msgstr ""
+"Bluez daemon እየሄደ አይደለም: blueman-manager መቀጠል አይችልም.\n"
+"ይህ ማለት ምናልባት የ ብሉቱዝ አዳፕተር አልተገኘም ማለት ነው ወይንም የ ብሉቱዝ daemon አልጀመረም ማለት ነው"
 
 #: ../blueman/main/Manager.py:190
 msgid "Searching"
 msgstr "በመፈለግ ላይ"
 
-#: ../blueman/main/Manager.py:204
-#: ../blueman/plugins/applet/StandardItems.py:71 ../apps/blueman-assistant:65
+#: ../blueman/main/Manager.py:204 ../blueman/plugins/applet/StandardItems.py:71
+#: ../apps/blueman-assistant.in:65
 msgid "Bluetooth Assistant"
 msgstr "የ ብሉቱዝ እረዳት"
 
-#: ../blueman/main/Manager.py:217
-#: ../blueman/plugins/applet/StandardItems.py:83
+#: ../blueman/main/Manager.py:217 ../blueman/plugins/applet/StandardItems.py:83
 msgid "Adapter Preferences"
 msgstr "የ ተሰኪ ምርጫዎች"
 
@@ -413,8 +419,7 @@ msgstr "ፋይል መላኪያ"
 msgid "Bluetooth File Transfer"
 msgstr "የ ብሉቱዝ ፋይል ማስተላለፊያ"
 
-#: ../blueman/main/Sendto.py:66
-#: ../blueman/gui/manager/ManagerProgressbar.py:25
+#: ../blueman/main/Sendto.py:66 ../blueman/gui/manager/ManagerProgressbar.py:25
 msgid "Connecting"
 msgstr "በመገናኘት ላይ"
 
@@ -543,9 +548,13 @@ msgstr "ተቀብያለሁ"
 
 #: ../blueman/main/PluginManager.py:68
 msgid ""
-"<b>An error has occured while loading a plugin. Please notify the developers with the content of this message to our </b>\n"
+"<b>An error has occured while loading a plugin. Please notify the developers "
+"with the content of this message to our </b>\n"
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
-msgstr "<b>ተሰኪ በ መጫን ላይ እንዳለ ስህተት ተፈጥሯል: እባክዎን ይህን ችግር ለ አበልፃጊዎች ያሳውቁ: ከዚህ መልእክት ይዞታ ጋር </b>\n<a href=\"http://github.com/blueman-project/blueman/issues\">ድህረ ገጽ.</a>"
+msgstr ""
+"<b>ተሰኪ በ መጫን ላይ እንዳለ ስህተት ተፈጥሯል: እባክዎን ይህን ችግር ለ አበልፃጊዎች ያሳውቁ: ከዚህ መልእክት ይዞታ "
+"ጋር </b>\n"
+"<a href=\"http://github.com/blueman-project/blueman/issues\">ድህረ ገጽ.</a>"
 
 #: ../blueman/Functions.py:76
 msgid "Bluetooth Turned Off"
@@ -779,7 +788,9 @@ msgstr "ተጨማሪ"
 
 #: ../blueman/gui/CommonUi.py:41
 msgid "translator-credits"
-msgstr "ምስጋና ለተርጓሚዎች:\n  samson https://launchpad.net/~sambelet"
+msgstr ""
+"ምስጋና ለተርጓሚዎች:\n"
+"  samson https://launchpad.net/~sambelet"
 
 #: ../blueman/gui/CommonUi.py:46
 msgid "Blueman is a GTK+ Bluetooth manager"
@@ -802,16 +813,24 @@ msgstr "የ ጥገኝነት ችግር"
 #: ../blueman/gui/applet/PluginDialog.py:286
 #, python-format
 msgid ""
-"Plugin <b>\"%(0)s\"</b> depends on <b>%(1)s</b>. Unloading <b>%(1)s</b> will also unload <b>\"%(0)s\"</b>.\n"
+"Plugin <b>\"%(0)s\"</b> depends on <b>%(1)s</b>. Unloading <b>%(1)s</b> will "
+"also unload <b>\"%(0)s\"</b>.\n"
 "Proceed?"
-msgstr "ተሰኪ <b>\"%(0)s\"</b> እንደ ሁኔታው ነው <b>%(1)s</b>. በማውረድ ላይ <b>%(1)s</b> እንዲሁም ያወርዳል <b>\"%(0)s\"</b>.\nልቀጥል?"
+msgstr ""
+"ተሰኪ <b>\"%(0)s\"</b> እንደ ሁኔታው ነው <b>%(1)s</b>. በማውረድ ላይ <b>%(1)s</b> እንዲሁም "
+"ያወርዳል <b>\"%(0)s\"</b>.\n"
+"ልቀጥል?"
 
 #: ../blueman/gui/applet/PluginDialog.py:308
 #, python-format
 msgid ""
-"Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will unload <b>%(0)s</b>.\n"
+"Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will "
+"unload <b>%(0)s</b>.\n"
 "Proceed?"
-msgstr "ተሰኪ <b>%(0)s</b> ይጋጫል ከ <b>%(1)s</b>. መጫኛ ጋር <b>%(1)s</b> ያወርዳል <b>%(0)s</b>.\nልቀጥል?"
+msgstr ""
+"ተሰኪ <b>%(0)s</b> ይጋጫል ከ <b>%(1)s</b>. መጫኛ ጋር <b>%(1)s</b> ያወርዳል <b>%(0)s</"
+"b>.\n"
+"ልቀጥል?"
 
 #: ../blueman/gui/DeviceSelectorWidget.py:38
 msgid "Adapter selection"
@@ -1048,7 +1067,9 @@ msgstr "በ እርግጥ መቁጠሪያውን እንደ ነበር መመለስ 
 msgid ""
 "Allows you to monitor your (mobile broadband) network traffic usage. Useful "
 "for limited data access plans. This plugin tracks every device seperately."
-msgstr "እርስዎን መቆጣጠር ያስችሎታል  (ተንቀሳቃሽ broadband) ኔትዎርክ ትራፊክ አጠቃቀም: ለ ተወሰነ ዳታ ተጠቃሚዎች በጣም ጠቃሚ ነው: ይህ ተሰኪ እያንዳንዱን አካል ይከታተላል"
+msgstr ""
+"እርስዎን መቆጣጠር ያስችሎታል  (ተንቀሳቃሽ broadband) ኔትዎርክ ትራፊክ አጠቃቀም: ለ ተወሰነ ዳታ ተጠቃሚዎች "
+"በጣም ጠቃሚ ነው: ይህ ተሰኪ እያንዳንዱን አካል ይከታተላል"
 
 #: ../blueman/plugins/applet/NetUsage.py:311
 msgid "Network _Usage"
@@ -1077,7 +1098,8 @@ msgstr "የ አካባቢ ኔትዎርክ ግልጋሎት አስተዳዳሪ እ�
 msgid ""
 "Provides support for Dial Up Networking (DUN) with ModemManager and "
 "NetworkManager"
-msgstr "ድጋፍ ይሰጣል ለ Dial Up Networking (DUN) with ModemManager እና NetworkManager"
+msgstr ""
+"ድጋፍ ይሰጣል ለ Dial Up Networking (DUN) with ModemManager እና NetworkManager"
 
 #: ../blueman/plugins/applet/RecentConns.py:57
 msgid ""
@@ -1119,7 +1141,8 @@ msgstr "ተሰኪ ለዚህ ግንኙነት አልተገኘም"
 msgid ""
 "Provides support for Personal Area Networking (PAN) introduced in "
 "NetworkManager 0.8"
-msgstr "እርዳታ ያቀርባል ለ Personal Area Networking (PAN) introduced in NetworkManager 0.8"
+msgstr ""
+"እርዳታ ያቀርባል ለ Personal Area Networking (PAN) introduced in NetworkManager 0.8"
 
 #: ../blueman/plugins/applet/DBusService.py:17
 msgid "Provides DBus API for other Blueman components"
@@ -1202,9 +1225,11 @@ msgstr[1] "ተቀብለዋል %d ተጨማሪ ፋይሎች ከ በስተ ጀር�
 #: ../blueman/plugins/applet/KillSwitch.py:38
 msgid ""
 "Toggles a platform Bluetooth killswitch when Bluetooth power state changes "
-"(Useless with USB dongles) and makes sure a status icon is shown if there is"
-" a bluetooth killswitch but no adapter."
-msgstr "የ ብሉቱዝ መደረክ መቀያየሪያ ማጥፊያ ብሉቱዝ ሐይ በሚቀየር ጊዜ: (የ USB dongles ዋጋ አይኖረውም) እና የ ሁኔታ ምልክት መታየቱን እርግጠኛ ይሁኑ የ ብሉቱዝ ማጥፊያ እንዳለ ነገር ግን ተሰኪ አይደለም"
+"(Useless with USB dongles) and makes sure a status icon is shown if there is "
+"a bluetooth killswitch but no adapter."
+msgstr ""
+"የ ብሉቱዝ መደረክ መቀያየሪያ ማጥፊያ ብሉቱዝ ሐይ በሚቀየር ጊዜ: (የ USB dongles ዋጋ አይኖረውም) እና የ ሁኔታ "
+"ምልክት መታየቱን እርግጠኛ ይሁኑ የ ብሉቱዝ ማጥፊያ እንዳለ ነገር ግን ተሰኪ አይደለም"
 
 #: ../blueman/plugins/applet/StandardItems.py:17
 msgid "Adds standard menu items to the status icon menu"
@@ -1263,12 +1288,14 @@ msgstr "የ IP አድራሻ ማግኘት አልተቻለም %s"
 msgid ""
 "Trying to obtain an IP address on %s\n"
 "Please wait…"
-msgstr "ለ ማግኘት በ መሞከር ላይ የ %s\nእባክዎን ይጠብቁ…"
+msgstr ""
+"ለ ማግኘት በ መሞከር ላይ የ %s\n"
+"እባክዎን ይጠብቁ…"
 
 #: ../blueman/plugins/applet/ShowConnected.py:13
 msgid ""
-"Adds an indication on the status icon when Bluetooth is active and shows the"
-" number of connections in the tooltip."
+"Adds an indication on the status icon when Bluetooth is active and shows the "
+"number of connections in the tooltip."
 msgstr "መጠቆሚያ መጨመሪያ በ ሁኔታዎች ምልክት ላይ: ብሉቱዝ ንቁ ሲሆን እና የ ተገናኘውን የ እቃ ጫፍ ቁጥር ማሳያ"
 
 #: ../blueman/plugins/applet/ShowConnected.py:48
@@ -1288,8 +1315,8 @@ msgstr "ይጠቀማል የ libappindicator ለማሳየት የ statusicon"
 
 #: ../blueman/plugins/applet/DiscvManager.py:15
 msgid ""
-"Provides a menu item for making the default adapter temporarily visible when"
-" it is set to hidden by default"
+"Provides a menu item for making the default adapter temporarily visible when "
+"it is set to hidden by default"
 msgstr "ዝርዝር እቃ ያቀርባል ለ ነባር ተሰኪ ለጊዜው የሚታይ በ ነባር ወደ መደበቂያ ሲሰናዳ"
 
 #: ../blueman/plugins/applet/DiscvManager.py:25
@@ -1323,7 +1350,9 @@ msgstr "ዝርዝር ያቀርባል ለአፕሌት እና API ለ ሌላ ተ�
 msgid ""
 "Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\n"
 "Network is now available through <b>%(1)s</b>"
-msgstr "ተሳክቶ ተገናኝቷል ወደ <b>DUN</b> ግልጋሎት በ <b>%(0)s.</b>\nኔትዎርክ አሁን በ ሙሉ ዝግጁ ነው <b>%(1)s</b>"
+msgstr ""
+"ተሳክቶ ተገናኝቷል ወደ <b>DUN</b> ግልጋሎት በ <b>%(0)s.</b>\n"
+"ኔትዎርክ አሁን በ ሙሉ ዝግጁ ነው <b>%(1)s</b>"
 
 #: ../blueman/plugins/applet/PPPSupport.py:57
 msgid "Provides basic support for connecting to the internet via DUN profile."
@@ -1347,7 +1376,14 @@ msgid ""
 "uuid16s are returned as a comma seperated list\n"
 "\n"
 "Upon device disconnection the script will be sent a HUP signal</span>"
-msgstr "<span size=\"small\">የሚቀጥለው ክርክር ይታለፋል:\nአድራሻ: ስም: የ ግልጋሎት ስም: uuid16s, rfcomm node\nለምሳሌ:\nAA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0\nuuid16s የሚመልሰው በ ኮማ የ ተለያዩ ዝርዝር ነው\n\nአካሉ በሚለያይ ጊዜ ጽሁፍ ይላካል የ HUP ምልክት</span>"
+msgstr ""
+"<span size=\"small\">የሚቀጥለው ክርክር ይታለፋል:\n"
+"አድራሻ: ስም: የ ግልጋሎት ስም: uuid16s, rfcomm node\n"
+"ለምሳሌ:\n"
+"AA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0\n"
+"uuid16s የሚመልሰው በ ኮማ የ ተለያዩ ዝርዝር ነው\n"
+"\n"
+"አካሉ በሚለያይ ጊዜ ጽሁፍ ይላካል የ HUP ምልክት</span>"
 
 #: ../blueman/plugins/applet/SerialManager.py:63
 msgid "Serial port connected"
@@ -1368,7 +1404,9 @@ msgstr "የ Serial port ግንኙነት ጽሁፍ ወደቋል"
 msgid ""
 "There was a problem launching script %s\n"
 "%s"
-msgstr "ችግር ተፈጥሯል ጽሁፍ በማስጀመር ላይ እንዳለ %s\n%s"
+msgstr ""
+"ችግር ተፈጥሯል ጽሁፍ በማስጀመር ላይ እንዳለ %s\n"
+"%s"
 
 #: ../blueman/plugins/applet/PowerManager.py:15
 msgid "Controls Bluetooth adapter power states"
@@ -1423,7 +1461,8 @@ msgstr "IP address ከ ገጽታው ጋር ይጋጫል %s ተመሳሳይ አ�
 #: ../blueman/plugins/services/Network.py:112
 #, python-format
 msgid ""
-"IP address overlaps with subnet of interface %s, which has the following configuration  %s/%s\n"
+"IP address overlaps with subnet of interface %s, which has the following "
+"configuration  %s/%s\n"
 "This may cause incorrect network behavior"
 msgstr ""
 
@@ -1472,58 +1511,58 @@ msgstr "የ RfKill ሁኔታ ማሰናጃ ቅድሚያ ማስነሻ ይፈልጋ
 msgid "Setting RfKill State requires privileges"
 msgstr "የ RfKill ሁኔታ ማሰናጃ ቅድሚያ ማስነሻ ይፈልጋል "
 
-#: ../apps/blueman-sendto:35
+#: ../apps/blueman-sendto.in:35
 msgid "Bluetooth needs to be turned on for file sending to work"
 msgstr "ፋይል መላኪያው እንዲሰራ ብሉቱዝ መብራት አለበት"
 
-#: ../apps/blueman-sendto:101
+#: ../apps/blueman-sendto.in:101
 msgid "Select files to send"
 msgstr "የሚላኩ ፋይሎች ይምረጡ"
 
-#: ../apps/blueman-sendto:131
+#: ../apps/blueman-sendto.in:131
 msgid "Send files to this device"
 msgstr "ወደ ሌላ አካል ፋይል መላኪያ"
 
-#: ../apps/blueman-sendto:133
+#: ../apps/blueman-sendto.in:133
 msgid "Source adapter. Takes address or adapter's name eg. hci0"
 msgstr "የ ተሰኪ ምንጭ: አድራሻ ወይንም ተሰኪ ስም ይወስዳል: ለምሳሌ: hci0"
 
-#: ../apps/blueman-sendto:134
+#: ../apps/blueman-sendto.in:134
 msgid "Delete files on exit"
 msgstr "ፋይል ማጥፊያ በሚወጡ ጊዜ"
 
-#: ../apps/blueman-sendto:136
+#: ../apps/blueman-sendto.in:136
 msgid "Files to be send to the bluetooth device"
 msgstr "ወደ ብሉቱዝ አካል የሚላኩ ፋይሎች"
 
-#: ../apps/blueman-assistant:52
+#: ../apps/blueman-assistant.in:52
 msgid "Bluetooth needs to be turned on for the Bluetooth assistant to work"
 msgstr "ብሉቱዝ መብራት አለበት የ ብሉቱዝ ረዳት እንዲሰራ"
 
-#: ../apps/blueman-assistant:100
+#: ../apps/blueman-assistant.in:100
 msgid "No adapters found"
 msgstr "ምንም አዳፕተር አልተገኘም"
 
-#: ../apps/blueman-assistant:189
+#: ../apps/blueman-assistant.in:189
 msgid "<b>Pairing in progress...</b>"
 msgstr "<b>ማጣመር በ ሂደት ላይ...</b>"
 
-#: ../apps/blueman-assistant:198
+#: ../apps/blueman-assistant.in:198
 msgid "<b>Failed to add device</b>"
 msgstr "<b>አካል መጨመር አልተቻለም</b>"
 
-#: ../apps/blueman-assistant:219
+#: ../apps/blueman-assistant.in:219
 msgid "Don't connect"
 msgstr "አትገናኝ"
 
-#: ../apps/blueman-assistant:234
+#: ../apps/blueman-assistant.in:234
 msgid "<b>Device added and connected successfully</b>"
 msgstr ""
 
-#: ../apps/blueman-assistant:239
+#: ../apps/blueman-assistant.in:239
 msgid "<b>Device added successfully, but failed to connect</b>"
 msgstr ""
 
-#: ../apps/blueman-assistant:250
+#: ../apps/blueman-assistant.in:250
 msgid "Start configuration assistant for this device"
 msgstr "ለዚህ አካል የ ማስጀመሪያ ረዳት ማስጀመሪያ"
