@@ -1,6 +1,6 @@
 # coding=utf-8
 from gettext import gettext as _
-from typing import Optional
+from typing import Dict
 import html
 import logging
 import cairo
@@ -85,7 +85,7 @@ class ManagerDeviceList(DeviceList):
 
         self.set_search_equal_func(self.search_func, None)
 
-        self._faderhandler: Optional[int] = None
+        self._faderhandlers: Dict[str, int] = {}
 
     def _on_settings_changed(self, settings, key):
         if key in ('sort-by', 'sort-order'):
@@ -221,16 +221,18 @@ class ManagerDeviceList(DeviceList):
         tree_iter = self.find_device(device)
 
         row_fader = self.get(tree_iter, "row_fader")["row_fader"]
-        self._faderhandler = row_fader.connect("animation-finished", self.__on_fader_finished, device, tree_iter)
+        super().device_remove_event(device)
+        self._faderhandlers.update({
+            device.get_object_path(): row_fader.connect("animation-finished", self.__on_fader_finished, device)
+        })
+
         row_fader.thaw()
         self.emit("device-selected", None, None)
         row_fader.animate(start=row_fader.get_state(), end=0.0, duration=400)
 
-    def __on_fader_finished(self, fader, device, tree_iter):
-        fader.disconnect(self._faderhandler)
-        self._faderhandler = None
+    def __on_fader_finished(self, fader, device):
+        fader.disconnect(self._faderhandlers.pop(device.get_object_path()))
         fader.freeze()
-        super().device_remove_event(device)
 
     def device_add_event(self, device):
         self.add_device(device)
