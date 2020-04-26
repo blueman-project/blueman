@@ -1,6 +1,6 @@
 # Estonian translation for blueman.
 # This file is distributed under the same license as the blueman package.
-# 
+#
 # Translators:
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2009
 # Ivar Smolin <okul@linux.ee>, 2014-2015,2018
@@ -9,14 +9,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-14 12:14+0200\n"
+"POT-Creation-Date: 2020-04-26 09:11+0000\n"
 "PO-Revision-Date: 2020-04-14 10:14+0000\n"
 "Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
 "Language-Team: Estonian (http://www.transifex.com/mate/MATE/language/et/)\n"
+"Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: et\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -200,7 +200,8 @@ msgstr "<b>Ülekande sätted</b>"
 
 #: ../data/ui/send-dialog.ui.h:1
 msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
-msgstr "<span weight=\"bold\" size=\"large\">Bluetoothi kaudu failide saatmine</span>"
+msgstr ""
+"<span weight=\"bold\" size=\"large\">Bluetoothi kaudu failide saatmine</span>"
 
 #: ../data/ui/send-dialog.ui.h:2
 msgid "<b>To:</b>"
@@ -215,7 +216,8 @@ msgid ""
 "<b>Welcome to the Bluetooth device setup assistant. </b>\n"
 "\n"
 "\n"
-"It will walk you through the process of configuring and connecting to your Bluetooth enabled devices."
+"It will walk you through the process of configuring and connecting to your "
+"Bluetooth enabled devices."
 msgstr ""
 
 #: ../data/ui/assistant.ui.h:5
@@ -254,8 +256,7 @@ msgstr "Ühendu"
 msgid "<b>Please wait...</b>"
 msgstr "<b>Palun oota...</b>"
 
-#: ../data/ui/assistant.ui.h:14
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:124
+#: ../data/ui/assistant.ui.h:14 ../blueman/gui/manager/ManagerDeviceMenu.py:124
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:179
 msgid "Connecting..."
 msgstr "Ühendumine..."
@@ -388,20 +389,23 @@ msgstr "Tõrge Bluez'iga ühendumisel"
 #: ../blueman/main/Manager.py:93
 msgid ""
 "Bluez daemon is not running, blueman-manager cannot continue.\n"
-"This probably means that there were no Bluetooth adapters detected or Bluetooth daemon was not started."
-msgstr "Bluez deemon ei tööta, blueman-manageril pole võimalik jätkata.\nSee tähendab arvatavasti, et ühtegi Bluetooth adapterit pole tuvastatud või pole Bluetooth deemon käivitatud."
+"This probably means that there were no Bluetooth adapters detected or "
+"Bluetooth daemon was not started."
+msgstr ""
+"Bluez deemon ei tööta, blueman-manageril pole võimalik jätkata.\n"
+"See tähendab arvatavasti, et ühtegi Bluetooth adapterit pole tuvastatud või "
+"pole Bluetooth deemon käivitatud."
 
 #: ../blueman/main/Manager.py:190
 msgid "Searching"
 msgstr "Otsimine"
 
-#: ../blueman/main/Manager.py:204
-#: ../blueman/plugins/applet/StandardItems.py:71 ../apps/blueman-assistant:65
+#: ../blueman/main/Manager.py:204 ../blueman/plugins/applet/StandardItems.py:71
+#: ../apps/blueman-assistant.in:65
 msgid "Bluetooth Assistant"
 msgstr "Bluetoothi abiline"
 
-#: ../blueman/main/Manager.py:217
-#: ../blueman/plugins/applet/StandardItems.py:83
+#: ../blueman/main/Manager.py:217 ../blueman/plugins/applet/StandardItems.py:83
 msgid "Adapter Preferences"
 msgstr "Adapteri eelistused"
 
@@ -415,8 +419,7 @@ msgstr ""
 msgid "Bluetooth File Transfer"
 msgstr "Bluetoothi failiülekanne"
 
-#: ../blueman/main/Sendto.py:66
-#: ../blueman/gui/manager/ManagerProgressbar.py:25
+#: ../blueman/main/Sendto.py:66 ../blueman/gui/manager/ManagerProgressbar.py:25
 msgid "Connecting"
 msgstr "Ühendumine"
 
@@ -545,7 +548,8 @@ msgstr "Võta vastu"
 
 #: ../blueman/main/PluginManager.py:68
 msgid ""
-"<b>An error has occured while loading a plugin. Please notify the developers with the content of this message to our </b>\n"
+"<b>An error has occured while loading a plugin. Please notify the developers "
+"with the content of this message to our </b>\n"
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgstr ""
 
@@ -781,7 +785,17 @@ msgstr "Veel"
 
 #: ../blueman/gui/CommonUi.py:41
 msgid "translator-credits"
-msgstr "Ivar Smolin, 2014–2015, 2018\n\nLaunchpad Contributions:\n  Cancer https://launchpad.net/~kancer\n  René Pärts https://launchpad.net/~renep\n  Valmantas Palikša https://launchpad.net/~walmis\n  gert7 https://launchpad.net/~gertoja\n  lyyser https://launchpad.net/~logard-1961\n  mahfiaz https://launchpad.net/~mahfiaz\n  veidu https://launchpad.net/~viljarveidenberg"
+msgstr ""
+"Ivar Smolin, 2014–2015, 2018\n"
+"\n"
+"Launchpad Contributions:\n"
+"  Cancer https://launchpad.net/~kancer\n"
+"  René Pärts https://launchpad.net/~renep\n"
+"  Valmantas Palikša https://launchpad.net/~walmis\n"
+"  gert7 https://launchpad.net/~gertoja\n"
+"  lyyser https://launchpad.net/~logard-1961\n"
+"  mahfiaz https://launchpad.net/~mahfiaz\n"
+"  veidu https://launchpad.net/~viljarveidenberg"
 
 #: ../blueman/gui/CommonUi.py:46
 msgid "Blueman is a GTK+ Bluetooth manager"
@@ -804,14 +818,16 @@ msgstr "Sõltuvusprobleem"
 #: ../blueman/gui/applet/PluginDialog.py:286
 #, python-format
 msgid ""
-"Plugin <b>\"%(0)s\"</b> depends on <b>%(1)s</b>. Unloading <b>%(1)s</b> will also unload <b>\"%(0)s\"</b>.\n"
+"Plugin <b>\"%(0)s\"</b> depends on <b>%(1)s</b>. Unloading <b>%(1)s</b> will "
+"also unload <b>\"%(0)s\"</b>.\n"
 "Proceed?"
 msgstr ""
 
 #: ../blueman/gui/applet/PluginDialog.py:308
 #, python-format
 msgid ""
-"Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will unload <b>%(0)s</b>.\n"
+"Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will "
+"unload <b>%(0)s</b>.\n"
 "Proceed?"
 msgstr ""
 
@@ -1017,7 +1033,9 @@ msgstr "Pole ühendatud"
 msgid ""
 "No usage statistics are available yet. Try establishing a connection first "
 "and then check this page."
-msgstr "Kasutusstatistika pole veel saadaval. Proovi enne luua ühendus ja siis vaadata seda lehte."
+msgstr ""
+"Kasutusstatistika pole veel saadaval. Proovi enne luua ühendus ja siis "
+"vaadata seda lehte."
 
 #: ../blueman/plugins/applet/NetUsage.py:208
 msgid "day"
@@ -1050,7 +1068,9 @@ msgstr "Kas oled kindel, et tahad loenduri nullida?"
 msgid ""
 "Allows you to monitor your (mobile broadband) network traffic usage. Useful "
 "for limited data access plans. This plugin tracks every device seperately."
-msgstr "Võimaldab seirata (mobile broadband) võrguliikluse kasutust. Kasulik piiratud andmeligipääsu plaanide korral. See plugin seirab iga seadet eraldi."
+msgstr ""
+"Võimaldab seirata (mobile broadband) võrguliikluse kasutust. Kasulik "
+"piiratud andmeligipääsu plaanide korral. See plugin seirab iga seadet eraldi."
 
 #: ../blueman/plugins/applet/NetUsage.py:311
 msgid "Network _Usage"
@@ -1204,8 +1224,8 @@ msgstr[1] "Taustal võeti vastu veel %d faili"
 #: ../blueman/plugins/applet/KillSwitch.py:38
 msgid ""
 "Toggles a platform Bluetooth killswitch when Bluetooth power state changes "
-"(Useless with USB dongles) and makes sure a status icon is shown if there is"
-" a bluetooth killswitch but no adapter."
+"(Useless with USB dongles) and makes sure a status icon is shown if there is "
+"a bluetooth killswitch but no adapter."
 msgstr ""
 
 #: ../blueman/plugins/applet/StandardItems.py:17
@@ -1269,9 +1289,11 @@ msgstr ""
 
 #: ../blueman/plugins/applet/ShowConnected.py:13
 msgid ""
-"Adds an indication on the status icon when Bluetooth is active and shows the"
-" number of connections in the tooltip."
-msgstr "Aktiivse Bluetoothi korral olekuikoonile näidiku lisamine ja vihjetekstis ühenduste arvu näitamine."
+"Adds an indication on the status icon when Bluetooth is active and shows the "
+"number of connections in the tooltip."
+msgstr ""
+"Aktiivse Bluetoothi korral olekuikoonile näidiku lisamine ja vihjetekstis "
+"ühenduste arvu näitamine."
 
 #: ../blueman/plugins/applet/ShowConnected.py:48
 msgid "Bluetooth Active"
@@ -1290,9 +1312,11 @@ msgstr "Kasutab olekuikooni näitamiseks libappindicator teeki"
 
 #: ../blueman/plugins/applet/DiscvManager.py:15
 msgid ""
-"Provides a menu item for making the default adapter temporarily visible when"
-" it is set to hidden by default"
-msgstr "Vaikimisi adapteri menüükirje ajutine nähtavakstegemine, kui see on vaikimisi peidetuks määratud"
+"Provides a menu item for making the default adapter temporarily visible when "
+"it is set to hidden by default"
+msgstr ""
+"Vaikimisi adapteri menüükirje ajutine nähtavakstegemine, kui see on "
+"vaikimisi peidetuks määratud"
 
 #: ../blueman/plugins/applet/DiscvManager.py:25
 msgid "Discoverable timeout"
@@ -1318,7 +1342,9 @@ msgstr ""
 #: ../blueman/plugins/applet/Menu.py:91
 msgid ""
 "Provides a menu for the applet and an API for other plugins to manipulate it"
-msgstr "Rakendi menüü ja teistele pluginatele selle manipuleerimiseks vajaliku API tagamine."
+msgstr ""
+"Rakendi menüü ja teistele pluginatele selle manipuleerimiseks vajaliku API "
+"tagamine."
 
 #: ../blueman/plugins/applet/PPPSupport.py:49
 #, python-format
@@ -1334,7 +1360,9 @@ msgstr "DUN-profiili abil internetti ühendumise põhilise toe tagamine."
 #: ../blueman/plugins/applet/SerialManager.py:22
 msgid ""
 "Standard SPP profile connection handler, allows executing custom actions"
-msgstr "Standardne SPP profiili ühendustehaldur, mis võimaldab käivitada kohandatud tegevusi."
+msgstr ""
+"Standardne SPP profiili ühendustehaldur, mis võimaldab käivitada kohandatud "
+"tegevusi."
 
 #: ../blueman/plugins/applet/SerialManager.py:31
 msgid "Script to execute on connection"
@@ -1349,7 +1377,14 @@ msgid ""
 "uuid16s are returned as a comma seperated list\n"
 "\n"
 "Upon device disconnection the script will be sent a HUP signal</span>"
-msgstr "<span size=\"small\">Lisatakse järgmised argumendid:\nAadress, Nimi, teenuse nimi, uuid16s, rfcomm sõlm\nNäiteks:\nAA:BB:CC:DD:EE:FF, Telefon, DUN service, 0x1103, /dev/rfcomm0\nuuid16s tagastatakse komadega eraldatud nimekirjana\n\nSeadmega ühenduse katkestamisel saadetakse skriptile HUP-signaal</span>"
+msgstr ""
+"<span size=\"small\">Lisatakse järgmised argumendid:\n"
+"Aadress, Nimi, teenuse nimi, uuid16s, rfcomm sõlm\n"
+"Näiteks:\n"
+"AA:BB:CC:DD:EE:FF, Telefon, DUN service, 0x1103, /dev/rfcomm0\n"
+"uuid16s tagastatakse komadega eraldatud nimekirjana\n"
+"\n"
+"Seadmega ühenduse katkestamisel saadetakse skriptile HUP-signaal</span>"
 
 #: ../blueman/plugins/applet/SerialManager.py:63
 msgid "Serial port connected"
@@ -1425,7 +1460,8 @@ msgstr "IP-aadress on vastuolus sama aadressi omava liidesega %s"
 #: ../blueman/plugins/services/Network.py:112
 #, python-format
 msgid ""
-"IP address overlaps with subnet of interface %s, which has the following configuration  %s/%s\n"
+"IP address overlaps with subnet of interface %s, which has the following "
+"configuration  %s/%s\n"
 "This may cause incorrect network behavior"
 msgstr ""
 
@@ -1474,58 +1510,58 @@ msgstr ""
 msgid "Setting RfKill State requires privileges"
 msgstr ""
 
-#: ../apps/blueman-sendto:35
+#: ../apps/blueman-sendto.in:35
 msgid "Bluetooth needs to be turned on for file sending to work"
 msgstr "Bluetooth peab failide saatmiseks olema sisse lülitatud"
 
-#: ../apps/blueman-sendto:101
+#: ../apps/blueman-sendto.in:101
 msgid "Select files to send"
 msgstr "Märgi failid saatmiseks"
 
-#: ../apps/blueman-sendto:131
+#: ../apps/blueman-sendto.in:131
 msgid "Send files to this device"
 msgstr "Failide saatmine sellesse seadmesse"
 
-#: ../apps/blueman-sendto:133
+#: ../apps/blueman-sendto.in:133
 msgid "Source adapter. Takes address or adapter's name eg. hci0"
 msgstr ""
 
-#: ../apps/blueman-sendto:134
+#: ../apps/blueman-sendto.in:134
 msgid "Delete files on exit"
 msgstr ""
 
-#: ../apps/blueman-sendto:136
+#: ../apps/blueman-sendto.in:136
 msgid "Files to be send to the bluetooth device"
 msgstr "Bluetooth-seadmele saadetavad failid"
 
-#: ../apps/blueman-assistant:52
+#: ../apps/blueman-assistant.in:52
 msgid "Bluetooth needs to be turned on for the Bluetooth assistant to work"
 msgstr ""
 
-#: ../apps/blueman-assistant:100
+#: ../apps/blueman-assistant.in:100
 msgid "No adapters found"
 msgstr "Adaptereid ei leitud"
 
-#: ../apps/blueman-assistant:189
+#: ../apps/blueman-assistant.in:189
 msgid "<b>Pairing in progress...</b>"
 msgstr "<b>Toimub paari loomine...</b>"
 
-#: ../apps/blueman-assistant:198
+#: ../apps/blueman-assistant.in:198
 msgid "<b>Failed to add device</b>"
 msgstr "<b>Seadme lisamine ei õnnestunud</b>"
 
-#: ../apps/blueman-assistant:219
+#: ../apps/blueman-assistant.in:219
 msgid "Don't connect"
 msgstr "Ära ühenda"
 
-#: ../apps/blueman-assistant:234
+#: ../apps/blueman-assistant.in:234
 msgid "<b>Device added and connected successfully</b>"
 msgstr ""
 
-#: ../apps/blueman-assistant:239
+#: ../apps/blueman-assistant.in:239
 msgid "<b>Device added successfully, but failed to connect</b>"
 msgstr ""
 
-#: ../apps/blueman-assistant:250
+#: ../apps/blueman-assistant.in:250
 msgid "Start configuration assistant for this device"
 msgstr "Seadme seadistusabilise käivitamine"

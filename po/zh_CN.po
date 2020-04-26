@@ -1,6 +1,6 @@
 # Chinese (China) translation for blueman.
 # This file is distributed under the same license as the blueman package.
-# 
+#
 # Translators:
 # Aron Xu <Unknown>, 2007
 # shuyu liu <liushuyu011@gmail.com>, 2017
@@ -15,14 +15,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-14 12:14+0200\n"
+"POT-Creation-Date: 2020-04-26 09:11+0000\n"
 "PO-Revision-Date: 2020-04-14 10:14+0000\n"
 "Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
-"Language-Team: Chinese (China) (http://www.transifex.com/mate/MATE/language/zh_CN/)\n"
+"Language-Team: Chinese (China) (http://www.transifex.com/mate/MATE/language/"
+"zh_CN/)\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
@@ -221,8 +222,13 @@ msgid ""
 "<b>Welcome to the Bluetooth device setup assistant. </b>\n"
 "\n"
 "\n"
-"It will walk you through the process of configuring and connecting to your Bluetooth enabled devices."
-msgstr "<b>欢迎使用蓝牙装置安装助手。</b>\n\n\n此助手会引导你配置、连接到蓝牙使能设备。"
+"It will walk you through the process of configuring and connecting to your "
+"Bluetooth enabled devices."
+msgstr ""
+"<b>欢迎使用蓝牙装置安装助手。</b>\n"
+"\n"
+"\n"
+"此助手会引导你配置、连接到蓝牙使能设备。"
 
 #: ../data/ui/assistant.ui.h:5
 msgid "Introduction"
@@ -260,8 +266,7 @@ msgstr "连接"
 msgid "<b>Please wait...</b>"
 msgstr "<b>请稍候...</b>"
 
-#: ../data/ui/assistant.ui.h:14
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:124
+#: ../data/ui/assistant.ui.h:14 ../blueman/gui/manager/ManagerDeviceMenu.py:124
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:179
 msgid "Connecting..."
 msgstr "正在连接..."
@@ -393,20 +398,22 @@ msgstr "连接至 BlueZ 失败"
 #: ../blueman/main/Manager.py:93
 msgid ""
 "Bluez daemon is not running, blueman-manager cannot continue.\n"
-"This probably means that there were no Bluetooth adapters detected or Bluetooth daemon was not started."
-msgstr "Bluez 守护进程没有运行。blueman-manager 无法继续。\n这可能是因为没检测到蓝牙适配器，或蓝牙守护进程未启动。"
+"This probably means that there were no Bluetooth adapters detected or "
+"Bluetooth daemon was not started."
+msgstr ""
+"Bluez 守护进程没有运行。blueman-manager 无法继续。\n"
+"这可能是因为没检测到蓝牙适配器，或蓝牙守护进程未启动。"
 
 #: ../blueman/main/Manager.py:190
 msgid "Searching"
 msgstr "正在搜索"
 
-#: ../blueman/main/Manager.py:204
-#: ../blueman/plugins/applet/StandardItems.py:71 ../apps/blueman-assistant:65
+#: ../blueman/main/Manager.py:204 ../blueman/plugins/applet/StandardItems.py:71
+#: ../apps/blueman-assistant.in:65
 msgid "Bluetooth Assistant"
 msgstr "蓝牙助手"
 
-#: ../blueman/main/Manager.py:217
-#: ../blueman/plugins/applet/StandardItems.py:83
+#: ../blueman/main/Manager.py:217 ../blueman/plugins/applet/StandardItems.py:83
 msgid "Adapter Preferences"
 msgstr "适配器首选项"
 
@@ -420,8 +427,7 @@ msgstr "文件发送方"
 msgid "Bluetooth File Transfer"
 msgstr "蓝牙文件传输"
 
-#: ../blueman/main/Sendto.py:66
-#: ../blueman/gui/manager/ManagerProgressbar.py:25
+#: ../blueman/main/Sendto.py:66 ../blueman/gui/manager/ManagerProgressbar.py:25
 msgid "Connecting"
 msgstr "正在连接"
 
@@ -548,9 +554,12 @@ msgstr "接收"
 
 #: ../blueman/main/PluginManager.py:68
 msgid ""
-"<b>An error has occured while loading a plugin. Please notify the developers with the content of this message to our </b>\n"
+"<b>An error has occured while loading a plugin. Please notify the developers "
+"with the content of this message to our </b>\n"
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
-msgstr "<b>在加载插件时出错。请将此消息的内容提供给开发人员并上传到我们的<b><a href=\"http://github.com/blueman-project/blueman/issues\">网站。</a>"
+msgstr ""
+"<b>在加载插件时出错。请将此消息的内容提供给开发人员并上传到我们的<b><a href="
+"\"http://github.com/blueman-project/blueman/issues\">网站。</a>"
 
 #: ../blueman/Functions.py:76
 msgid "Bluetooth Turned Off"
@@ -784,7 +793,32 @@ msgstr "更多"
 
 #: ../blueman/gui/CommonUi.py:41
 msgid "translator-credits"
-msgstr "Launchpad Contributions:\n  Aron Xu https://launchpad.net/~happyaron\n  BiOgErM https://launchpad.net/~biogerm\n  Careone https://launchpad.net/~zzbusagain\n  D4nielfree https://launchpad.net/~d4nielfree\n  Dingar https://launchpad.net/~cndingar\n  EAdam https://launchpad.net/~liuannan\n  GrayWaLL https://launchpad.net/~graywall\n  Heling Yao https://launchpad.net/~hyao\n  Jimhu https://launchpad.net/~huyiwei\n  Kyle WANG https://launchpad.net/~osfans\n  Mu Yang https://launchpad.net/~mu-yang-gmail\n  Valmantas Palikša https://launchpad.net/~walmis\n  Wentao Tang https://launchpad.net/~wisetang\n  Zhang.H https://launchpad.net/~i-zhh\n  ZhangCheng https://launchpad.net/~xxzc\n  crazycode https://launchpad.net/~crazycode08\n  fpoint https://launchpad.net/~fpoint\n  ginus https://launchpad.net/~ginus800615\n  luojie-dune https://launchpad.net/~luojie-dune\n  lyman https://launchpad.net/~lyman\n  sascsy https://launchpad.net/~sascsy\n  yanq.wang https://launchpad.net/~nile-wangyq\n  丁鑫_XJTU https://launchpad.net/~xgnid\n  王英华 https://launchpad.net/~wantinghard"
+msgstr ""
+"Launchpad Contributions:\n"
+"  Aron Xu https://launchpad.net/~happyaron\n"
+"  BiOgErM https://launchpad.net/~biogerm\n"
+"  Careone https://launchpad.net/~zzbusagain\n"
+"  D4nielfree https://launchpad.net/~d4nielfree\n"
+"  Dingar https://launchpad.net/~cndingar\n"
+"  EAdam https://launchpad.net/~liuannan\n"
+"  GrayWaLL https://launchpad.net/~graywall\n"
+"  Heling Yao https://launchpad.net/~hyao\n"
+"  Jimhu https://launchpad.net/~huyiwei\n"
+"  Kyle WANG https://launchpad.net/~osfans\n"
+"  Mu Yang https://launchpad.net/~mu-yang-gmail\n"
+"  Valmantas Palikša https://launchpad.net/~walmis\n"
+"  Wentao Tang https://launchpad.net/~wisetang\n"
+"  Zhang.H https://launchpad.net/~i-zhh\n"
+"  ZhangCheng https://launchpad.net/~xxzc\n"
+"  crazycode https://launchpad.net/~crazycode08\n"
+"  fpoint https://launchpad.net/~fpoint\n"
+"  ginus https://launchpad.net/~ginus800615\n"
+"  luojie-dune https://launchpad.net/~luojie-dune\n"
+"  lyman https://launchpad.net/~lyman\n"
+"  sascsy https://launchpad.net/~sascsy\n"
+"  yanq.wang https://launchpad.net/~nile-wangyq\n"
+"  丁鑫_XJTU https://launchpad.net/~xgnid\n"
+"  王英华 https://launchpad.net/~wantinghard"
 
 #: ../blueman/gui/CommonUi.py:46
 msgid "Blueman is a GTK+ Bluetooth manager"
@@ -807,16 +841,24 @@ msgstr "依赖问题"
 #: ../blueman/gui/applet/PluginDialog.py:286
 #, python-format
 msgid ""
-"Plugin <b>\"%(0)s\"</b> depends on <b>%(1)s</b>. Unloading <b>%(1)s</b> will also unload <b>\"%(0)s\"</b>.\n"
+"Plugin <b>\"%(0)s\"</b> depends on <b>%(1)s</b>. Unloading <b>%(1)s</b> will "
+"also unload <b>\"%(0)s\"</b>.\n"
 "Proceed?"
-msgstr "插件 <b>\"%(0)s\"</b> 依赖于 <b>%(1)s</b>。禁用 <b>%(1)s</b> 也将会禁用 <b>\"%(0)s\"</b>。\n继续吗?"
+msgstr ""
+"插件 <b>\"%(0)s\"</b> 依赖于 <b>%(1)s</b>。禁用 <b>%(1)s</b> 也将会禁用 <b>"
+"\"%(0)s\"</b>。\n"
+"继续吗?"
 
 #: ../blueman/gui/applet/PluginDialog.py:308
 #, python-format
 msgid ""
-"Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will unload <b>%(0)s</b>.\n"
+"Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will "
+"unload <b>%(0)s</b>.\n"
 "Proceed?"
-msgstr "插件 <b>%(0)s</b>  与 <b>%(1)s</b>有冲突。 载入 <b>%(1)s</b>  将卸载 <b>%(0)s</b>。\n确定吗?"
+msgstr ""
+"插件 <b>%(0)s</b>  与 <b>%(1)s</b>有冲突。 载入 <b>%(1)s</b>  将卸载 <b>"
+"%(0)s</b>。\n"
+"确定吗?"
 
 #: ../blueman/gui/DeviceSelectorWidget.py:38
 msgid "Adapter selection"
@@ -1050,7 +1092,9 @@ msgstr "您确定要重置计数器吗？"
 msgid ""
 "Allows you to monitor your (mobile broadband) network traffic usage. Useful "
 "for limited data access plans. This plugin tracks every device seperately."
-msgstr "允许监视您移动设备的网络流量使用量。在使用有限流量套餐时非常有用。该插件能分别跟踪每一个设备。"
+msgstr ""
+"允许监视您移动设备的网络流量使用量。在使用有限流量套餐时非常有用。该插件能分"
+"别跟踪每一个设备。"
 
 #: ../blueman/plugins/applet/NetUsage.py:311
 msgid "Network _Usage"
@@ -1162,7 +1206,9 @@ msgstr "指定的文件收取目录不存在"
 msgid ""
 "Please make sure that directory \"<b>%s</b>\" exists or configure it with "
 "blueman-services. Until then the default \"%s\" will be used"
-msgstr "请确保目录\"<b>%s</b>\" 存在或使用blueman-services配置它。在此之前，将使用默认配置的\"%s\" "
+msgstr ""
+"请确保目录\"<b>%s</b>\" 存在或使用blueman-services配置它。在此之前，将使用默"
+"认配置的\"%s\" "
 
 #: ../blueman/plugins/applet/TransferService.py:299
 msgid "File received"
@@ -1202,9 +1248,11 @@ msgstr[0] "在后台又接收了 %d 个文件"
 #: ../blueman/plugins/applet/KillSwitch.py:38
 msgid ""
 "Toggles a platform Bluetooth killswitch when Bluetooth power state changes "
-"(Useless with USB dongles) and makes sure a status icon is shown if there is"
-" a bluetooth killswitch but no adapter."
-msgstr "当蓝牙电源状态改变时开/关平台蓝牙开关 killswitch（对USB蓝牙模块无效）；如果有一个蓝牙 killswitch 但没有适配器时，确保显示一个状态图标。"
+"(Useless with USB dongles) and makes sure a status icon is shown if there is "
+"a bluetooth killswitch but no adapter."
+msgstr ""
+"当蓝牙电源状态改变时开/关平台蓝牙开关 killswitch（对USB蓝牙模块无效）；如果有"
+"一个蓝牙 killswitch 但没有适配器时，确保显示一个状态图标。"
 
 #: ../blueman/plugins/applet/StandardItems.py:17
 msgid "Adds standard menu items to the status icon menu"
@@ -1263,12 +1311,14 @@ msgstr "在 %s 上获取 IP 地址失败"
 msgid ""
 "Trying to obtain an IP address on %s\n"
 "Please wait…"
-msgstr "正在尝试在 %s 在获取 IP 地址\n请稍候……"
+msgstr ""
+"正在尝试在 %s 在获取 IP 地址\n"
+"请稍候……"
 
 #: ../blueman/plugins/applet/ShowConnected.py:13
 msgid ""
-"Adds an indication on the status icon when Bluetooth is active and shows the"
-" number of connections in the tooltip."
+"Adds an indication on the status icon when Bluetooth is active and shows the "
+"number of connections in the tooltip."
 msgstr "在状态图标上添加一个蓝牙活动的指示器，并在弹出提示中显示连接数目。"
 
 #: ../blueman/plugins/applet/ShowConnected.py:48
@@ -1287,8 +1337,8 @@ msgstr "使用 libappindicator 显示一个状态图标"
 
 #: ../blueman/plugins/applet/DiscvManager.py:15
 msgid ""
-"Provides a menu item for making the default adapter temporarily visible when"
-" it is set to hidden by default"
+"Provides a menu item for making the default adapter temporarily visible when "
+"it is set to hidden by default"
 msgstr "提供一个菜单项，让默认被隐藏的首选适配器临时可见"
 
 #: ../blueman/plugins/applet/DiscvManager.py:25
@@ -1322,7 +1372,9 @@ msgstr "提供一个目录以操作为其他插件提供的的 applet 和 API"
 msgid ""
 "Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\n"
 "Network is now available through <b>%(1)s</b>"
-msgstr "成功连接到 <b>%(0)s.</b>的<b>DUN</b> 服务 \n现在可以通过 <b>%(1)s</b>连网"
+msgstr ""
+"成功连接到 <b>%(0)s.</b>的<b>DUN</b> 服务 \n"
+"现在可以通过 <b>%(1)s</b>连网"
 
 #: ../blueman/plugins/applet/PPPSupport.py:57
 msgid "Provides basic support for connecting to the internet via DUN profile."
@@ -1346,7 +1398,14 @@ msgid ""
 "uuid16s are returned as a comma seperated list\n"
 "\n"
 "Upon device disconnection the script will be sent a HUP signal</span>"
-msgstr "<span size=\"small\">将传递以下参数：\n地址, 名称, 服务名称, uuid16s, rfcomm 节点\n例如：\nAA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0\nuuid16s 将以逗号分隔的列表形式返回\n\n设备断开时将向脚本发送一个 HUP 信号</span>"
+msgstr ""
+"<span size=\"small\">将传递以下参数：\n"
+"地址, 名称, 服务名称, uuid16s, rfcomm 节点\n"
+"例如：\n"
+"AA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0\n"
+"uuid16s 将以逗号分隔的列表形式返回\n"
+"\n"
+"设备断开时将向脚本发送一个 HUP 信号</span>"
 
 #: ../blueman/plugins/applet/SerialManager.py:63
 msgid "Serial port connected"
@@ -1367,7 +1426,9 @@ msgstr "串口连接脚本失败"
 msgid ""
 "There was a problem launching script %s\n"
 "%s"
-msgstr "启动脚本 %s 出现了问题\n%s"
+msgstr ""
+"启动脚本 %s 出现了问题\n"
+"%s"
 
 #: ../blueman/plugins/applet/PowerManager.py:15
 msgid "Controls Bluetooth adapter power states"
@@ -1422,9 +1483,12 @@ msgstr "IP 地址与接口 %s 冲突，它也是这个地址"
 #: ../blueman/plugins/services/Network.py:112
 #, python-format
 msgid ""
-"IP address overlaps with subnet of interface %s, which has the following configuration  %s/%s\n"
+"IP address overlaps with subnet of interface %s, which has the following "
+"configuration  %s/%s\n"
 "This may cause incorrect network behavior"
-msgstr "IP地址与接口 %s的子网重叠，具有以下配置 %s/%s\n这可能会导致错误的网络行为"
+msgstr ""
+"IP地址与接口 %s的子网重叠，具有以下配置 %s/%s\n"
+"这可能会导致错误的网络行为"
 
 #: ../blueman/plugins/services/Network.py:239
 #: ../blueman/plugins/services/Network.py:248
@@ -1471,58 +1535,58 @@ msgstr "设置 RfKill 状态"
 msgid "Setting RfKill State requires privileges"
 msgstr "设置 RfKill 状态需要权限"
 
-#: ../apps/blueman-sendto:35
+#: ../apps/blueman-sendto.in:35
 msgid "Bluetooth needs to be turned on for file sending to work"
 msgstr "蓝牙需要开启以便文件传输工作"
 
-#: ../apps/blueman-sendto:101
+#: ../apps/blueman-sendto.in:101
 msgid "Select files to send"
 msgstr "选择发送的文件"
 
-#: ../apps/blueman-sendto:131
+#: ../apps/blueman-sendto.in:131
 msgid "Send files to this device"
 msgstr "发送文件到此设备"
 
-#: ../apps/blueman-sendto:133
+#: ../apps/blueman-sendto.in:133
 msgid "Source adapter. Takes address or adapter's name eg. hci0"
 msgstr "源适配器。填写地址或适配器的名称，如 :hci0"
 
-#: ../apps/blueman-sendto:134
+#: ../apps/blueman-sendto.in:134
 msgid "Delete files on exit"
 msgstr "退出时删除文件"
 
-#: ../apps/blueman-sendto:136
+#: ../apps/blueman-sendto.in:136
 msgid "Files to be send to the bluetooth device"
 msgstr "要发送到蓝牙设备的文件"
 
-#: ../apps/blueman-assistant:52
+#: ../apps/blueman-assistant.in:52
 msgid "Bluetooth needs to be turned on for the Bluetooth assistant to work"
 msgstr "需要打开蓝牙，蓝牙助手才能工作"
 
-#: ../apps/blueman-assistant:100
+#: ../apps/blueman-assistant.in:100
 msgid "No adapters found"
 msgstr "没找到适配器"
 
-#: ../apps/blueman-assistant:189
+#: ../apps/blueman-assistant.in:189
 msgid "<b>Pairing in progress...</b>"
 msgstr "<b>配对进行中...</b>"
 
-#: ../apps/blueman-assistant:198
+#: ../apps/blueman-assistant.in:198
 msgid "<b>Failed to add device</b>"
 msgstr "<b>添加设备失败</b>"
 
-#: ../apps/blueman-assistant:219
+#: ../apps/blueman-assistant.in:219
 msgid "Don't connect"
 msgstr "不要连接"
 
-#: ../apps/blueman-assistant:234
+#: ../apps/blueman-assistant.in:234
 msgid "<b>Device added and connected successfully</b>"
 msgstr "<b>设备成功添加并连接</b>"
 
-#: ../apps/blueman-assistant:239
+#: ../apps/blueman-assistant.in:239
 msgid "<b>Device added successfully, but failed to connect</b>"
 msgstr "<b>设备成功添加, 但是连接失败</b>"
 
-#: ../apps/blueman-assistant:250
+#: ../apps/blueman-assistant.in:250
 msgid "Start configuration assistant for this device"
 msgstr "为此设备启动配置助手"

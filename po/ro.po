@@ -1,6 +1,6 @@
 # Romanian translation for blueman.
 # This file is distributed under the same license as the blueman package.
-# 
+#
 # Translators:
 # Daniel <danny3@tutanota.com>, 2015-2016
 # Daniel <danny3@tutanota.com>, 2017
@@ -12,15 +12,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-14 12:14+0200\n"
+"POT-Creation-Date: 2020-04-26 09:11+0000\n"
 "PO-Revision-Date: 2020-04-14 10:14+0000\n"
 "Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
 "Language-Team: Romanian (http://www.transifex.com/mate/MATE/language/ro/)\n"
+"Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ro\n"
-"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?"
+"2:1));\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Visibility Setting</b>"
@@ -203,7 +204,8 @@ msgstr "<b>Stabiliri transfer</b>"
 
 #: ../data/ui/send-dialog.ui.h:1
 msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
-msgstr "<span weight=\"bold\" size=\"large\">Se trimit fișiere prin Bluetooth</span>"
+msgstr ""
+"<span weight=\"bold\" size=\"large\">Se trimit fișiere prin Bluetooth</span>"
 
 #: ../data/ui/send-dialog.ui.h:2
 msgid "<b>To:</b>"
@@ -218,8 +220,15 @@ msgid ""
 "<b>Welcome to the Bluetooth device setup assistant. </b>\n"
 "\n"
 "\n"
-"It will walk you through the process of configuring and connecting to your Bluetooth enabled devices."
-msgstr "<b>Bine ați venit la asistentul de configurare al serviciului Bluetooth. </b>\n\n\nAcesta vă va ajuta în procesul de configururare și conectare a dispozitivelor dumneavoastră cu capabilitate de comunicare prin Bluetooth."
+"It will walk you through the process of configuring and connecting to your "
+"Bluetooth enabled devices."
+msgstr ""
+"<b>Bine ați venit la asistentul de configurare al serviciului Bluetooth. </"
+"b>\n"
+"\n"
+"\n"
+"Acesta vă va ajuta în procesul de configururare și conectare a "
+"dispozitivelor dumneavoastră cu capabilitate de comunicare prin Bluetooth."
 
 #: ../data/ui/assistant.ui.h:5
 msgid "Introduction"
@@ -257,8 +266,7 @@ msgstr "Conectează"
 msgid "<b>Please wait...</b>"
 msgstr "<b>Așteptați...</b>"
 
-#: ../data/ui/assistant.ui.h:14
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:124
+#: ../data/ui/assistant.ui.h:14 ../blueman/gui/manager/ManagerDeviceMenu.py:124
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:179
 msgid "Connecting..."
 msgstr "Se conectează..."
@@ -359,7 +367,9 @@ msgstr "Adaptoare bluetooth"
 
 #: ../blueman/main/Adapter.py:64
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
-msgstr "Serviciul Bluetooth trebuie să fie pornit pentru ca administratorul de adaptoare să funcționeze"
+msgstr ""
+"Serviciul Bluetooth trebuie să fie pornit pentru ca administratorul de "
+"adaptoare să funcționeze"
 
 #: ../blueman/main/Adapter.py:142
 msgid "Always"
@@ -383,7 +393,9 @@ msgstr "Dispozitive Bluetooth"
 
 #: ../blueman/main/Manager.py:73 ../blueman/main/Manager.py:113
 msgid "Bluetooth needs to be turned on for the device manager to function"
-msgstr "Serviciul Bluetooth trebuie să fie pornit pentru ca administratorul de dispozitive să funcționeze"
+msgstr ""
+"Serviciul Bluetooth trebuie să fie pornit pentru ca administratorul de "
+"dispozitive să funcționeze"
 
 #: ../blueman/main/Manager.py:92
 msgid "Connection to BlueZ failed"
@@ -392,20 +404,23 @@ msgstr "Conectarea la BlueZ a eșuat"
 #: ../blueman/main/Manager.py:93
 msgid ""
 "Bluez daemon is not running, blueman-manager cannot continue.\n"
-"This probably means that there were no Bluetooth adapters detected or Bluetooth daemon was not started."
-msgstr "Demonul Bluez nu rulează, blueman-manager nu poate continua.\nAceasta probabil înseamnă că nu au fost detectate adaptoare Bluetooth  sau demonul Bluetooth nu a fost pornit."
+"This probably means that there were no Bluetooth adapters detected or "
+"Bluetooth daemon was not started."
+msgstr ""
+"Demonul Bluez nu rulează, blueman-manager nu poate continua.\n"
+"Aceasta probabil înseamnă că nu au fost detectate adaptoare Bluetooth  sau "
+"demonul Bluetooth nu a fost pornit."
 
 #: ../blueman/main/Manager.py:190
 msgid "Searching"
 msgstr "Se caută"
 
-#: ../blueman/main/Manager.py:204
-#: ../blueman/plugins/applet/StandardItems.py:71 ../apps/blueman-assistant:65
+#: ../blueman/main/Manager.py:204 ../blueman/plugins/applet/StandardItems.py:71
+#: ../apps/blueman-assistant.in:65
 msgid "Bluetooth Assistant"
 msgstr "Asistent Bluetooth"
 
-#: ../blueman/main/Manager.py:217
-#: ../blueman/plugins/applet/StandardItems.py:83
+#: ../blueman/main/Manager.py:217 ../blueman/plugins/applet/StandardItems.py:83
 msgid "Adapter Preferences"
 msgstr "Preferințe adaptor"
 
@@ -419,8 +434,7 @@ msgstr "Expeditor fișier"
 msgid "Bluetooth File Transfer"
 msgstr "Transfer de fișiere prin Bluetooth"
 
-#: ../blueman/main/Sendto.py:66
-#: ../blueman/gui/manager/ManagerProgressbar.py:25
+#: ../blueman/main/Sendto.py:66 ../blueman/gui/manager/ManagerProgressbar.py:25
 msgid "Connecting"
 msgstr "Se conectează"
 
@@ -551,7 +565,8 @@ msgstr "Acceptă"
 
 #: ../blueman/main/PluginManager.py:68
 msgid ""
-"<b>An error has occured while loading a plugin. Please notify the developers with the content of this message to our </b>\n"
+"<b>An error has occured while loading a plugin. Please notify the developers "
+"with the content of this message to our </b>\n"
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgstr ""
 
@@ -787,7 +802,16 @@ msgstr "Mai multe"
 
 #: ../blueman/gui/CommonUi.py:41
 msgid "translator-credits"
-msgstr "Transifex:\nDaniel Alămiță <danny3@tutanota.com>\nLaunchpad:\n  Adi Roiban https://launchpad.net/~adiroiban\n  Alex Eftimie https://launchpad.net/~alexeftimie\n  Bisericaru Sebastian https://launchpad.net/~tweety\n  Chisu Vasile Marius https://launchpad.net/~111979vasile\n  Ionuț Jula https://launchpad.net/~ionutjula\n  Ovidiu Nitan https://launchpad.net/~nitanovidiu"
+msgstr ""
+"Transifex:\n"
+"Daniel Alămiță <danny3@tutanota.com>\n"
+"Launchpad:\n"
+"  Adi Roiban https://launchpad.net/~adiroiban\n"
+"  Alex Eftimie https://launchpad.net/~alexeftimie\n"
+"  Bisericaru Sebastian https://launchpad.net/~tweety\n"
+"  Chisu Vasile Marius https://launchpad.net/~111979vasile\n"
+"  Ionuț Jula https://launchpad.net/~ionutjula\n"
+"  Ovidiu Nitan https://launchpad.net/~nitanovidiu"
 
 #: ../blueman/gui/CommonUi.py:46
 msgid "Blueman is a GTK+ Bluetooth manager"
@@ -810,16 +834,24 @@ msgstr "Problemă de dependență"
 #: ../blueman/gui/applet/PluginDialog.py:286
 #, python-format
 msgid ""
-"Plugin <b>\"%(0)s\"</b> depends on <b>%(1)s</b>. Unloading <b>%(1)s</b> will also unload <b>\"%(0)s\"</b>.\n"
+"Plugin <b>\"%(0)s\"</b> depends on <b>%(1)s</b>. Unloading <b>%(1)s</b> will "
+"also unload <b>\"%(0)s\"</b>.\n"
 "Proceed?"
-msgstr "Modulul <b>\"%(0)s\"</b> depinde de <b>%(1)s</b>. Dezactivarea <b>%(1)s</b> va dezactiva și <b>\"%(0)s\"</b>.\nContinuați?"
+msgstr ""
+"Modulul <b>\"%(0)s\"</b> depinde de <b>%(1)s</b>. Dezactivarea <b>%(1)s</b> "
+"va dezactiva și <b>\"%(0)s\"</b>.\n"
+"Continuați?"
 
 #: ../blueman/gui/applet/PluginDialog.py:308
 #, python-format
 msgid ""
-"Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will unload <b>%(0)s</b>.\n"
+"Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will "
+"unload <b>%(0)s</b>.\n"
 "Proceed?"
-msgstr "Modulul <b>%(0)s</b> este în conflict cu <b>%(1)s</b>. Activarea <b>%(1)s</b> va dezctiva <b>%(0)s</b>.\nContinuați?"
+msgstr ""
+"Modulul <b>%(0)s</b> este în conflict cu <b>%(1)s</b>. Activarea <b>%(1)s</"
+"b> va dezctiva <b>%(0)s</b>.\n"
+"Continuați?"
 
 #: ../blueman/gui/DeviceSelectorWidget.py:38
 msgid "Adapter selection"
@@ -1023,7 +1055,9 @@ msgstr "Neconectat"
 msgid ""
 "No usage statistics are available yet. Try establishing a connection first "
 "and then check this page."
-msgstr "Deocamdată nu sunt disponibile statistici de utilizare. Încercați să stabiliți o conexiune prima dată și apoi să verificați această pagină."
+msgstr ""
+"Deocamdată nu sunt disponibile statistici de utilizare. Încercați să "
+"stabiliți o conexiune prima dată și apoi să verificați această pagină."
 
 #: ../blueman/plugins/applet/NetUsage.py:208
 msgid "day"
@@ -1059,7 +1093,10 @@ msgstr "Sigur doriți să restabiliți contorul?"
 msgid ""
 "Allows you to monitor your (mobile broadband) network traffic usage. Useful "
 "for limited data access plans. This plugin tracks every device seperately."
-msgstr "Vă permite să vă monitorizați utilizarea traficului (mobil) în rețea. Folositor pentru planurile cu aces limitat de date. Acest modul urmărește fiecare dispozitiv separat."
+msgstr ""
+"Vă permite să vă monitorizați utilizarea traficului (mobil) în rețea. "
+"Folositor pentru planurile cu aces limitat de date. Acest modul urmărește "
+"fiecare dispozitiv separat."
 
 #: ../blueman/plugins/applet/NetUsage.py:311
 msgid "Network _Usage"
@@ -1088,12 +1125,15 @@ msgstr "Administrează serviciile din rețeaua locală, cum ar fi punțiile NAP"
 msgid ""
 "Provides support for Dial Up Networking (DUN) with ModemManager and "
 "NetworkManager"
-msgstr "Oferă capabilitate rețea Dial Up (DUN) pentru ModemManager și NetworkManager"
+msgstr ""
+"Oferă capabilitate rețea Dial Up (DUN) pentru ModemManager și NetworkManager"
 
 #: ../blueman/plugins/applet/RecentConns.py:57
 msgid ""
 "Provides a menu item that contains last used connections for quick access"
-msgstr "Oferă un element de meniu care conține ultimele conexiuni utilizate pentru acces rapid"
+msgstr ""
+"Oferă un element de meniu care conține ultimele conexiuni utilizate pentru "
+"acces rapid"
 
 #. the maximum number of items RecentConns menu will display
 #: ../blueman/plugins/applet/RecentConns.py:68
@@ -1102,7 +1142,8 @@ msgstr "Maximum de elemente"
 
 #: ../blueman/plugins/applet/RecentConns.py:69
 msgid "The maximum number of items recent connections menu will display."
-msgstr "Numărul maxim de elemente pe care meniul de conexiuni recente îl va afișa."
+msgstr ""
+"Numărul maxim de elemente pe care meniul de conexiuni recente îl va afișa."
 
 #: ../blueman/plugins/applet/RecentConns.py:80
 msgid "Recent _Connections"
@@ -1130,7 +1171,9 @@ msgstr "Adaptorul pentru această conexiune nu este disponibil"
 msgid ""
 "Provides support for Personal Area Networking (PAN) introduced in "
 "NetworkManager 0.8"
-msgstr "Oferă suport pentru rețea zonă personală (PAN) introdudusă în NetworkManager 0.8"
+msgstr ""
+"Oferă suport pentru rețea zonă personală (PAN) introdudusă în NetworkManager "
+"0.8"
 
 #: ../blueman/plugins/applet/DBusService.py:17
 msgid "Provides DBus API for other Blueman components"
@@ -1160,7 +1203,9 @@ msgstr "Se primește fișierul %(0)s de la %(1)s"
 
 #: ../blueman/plugins/applet/TransferService.py:145
 msgid "Provides OBEX file transfer capabilities"
-msgstr "Oferă capabilitatatea de a utiliza protocolul OBEX pentru transferul fișierelor"
+msgstr ""
+"Oferă capabilitatatea de a utiliza protocolul OBEX pentru transferul "
+"fișierelor"
 
 #: ../blueman/plugins/applet/TransferService.py:168
 msgid "Configured directory for incoming files does not exist"
@@ -1215,9 +1260,13 @@ msgstr[2] "S-au primit încă %d de fișiere pe fundal"
 #: ../blueman/plugins/applet/KillSwitch.py:38
 msgid ""
 "Toggles a platform Bluetooth killswitch when Bluetooth power state changes "
-"(Useless with USB dongles) and makes sure a status icon is shown if there is"
-" a bluetooth killswitch but no adapter."
-msgstr "Comută un comutator de întrerupere al platformei Bluetooth când starea limentării Bluetooth se schimbă (Inutil pentru dispozitivele USB) și se asigură că o pictogramă de stare este afișată dacă există un comutator de întrerupere bluetooth dar niciun adaptor."
+"(Useless with USB dongles) and makes sure a status icon is shown if there is "
+"a bluetooth killswitch but no adapter."
+msgstr ""
+"Comută un comutator de întrerupere al platformei Bluetooth când starea "
+"limentării Bluetooth se schimbă (Inutil pentru dispozitivele USB) și se "
+"asigură că o pictogramă de stare este afișată dacă există un comutator de "
+"întrerupere bluetooth dar niciun adaptor."
 
 #: ../blueman/plugins/applet/StandardItems.py:17
 msgid "Adds standard menu items to the status icon menu"
@@ -1245,7 +1294,8 @@ msgstr "miniaplicație"
 
 #: ../blueman/plugins/applet/AuthAgent.py:9
 msgid "Provides passkey, authentication services for BlueZ daemon"
-msgstr "Oferă protecție prin parolă, servicii de autentificare pentru daemonul BlueZ"
+msgstr ""
+"Oferă protecție prin parolă, servicii de autentificare pentru daemonul BlueZ"
 
 #: ../blueman/plugins/applet/ExitItem.py:12
 msgid "Adds an exit menu item to quit the applet"
@@ -1280,9 +1330,11 @@ msgstr ""
 
 #: ../blueman/plugins/applet/ShowConnected.py:13
 msgid ""
-"Adds an indication on the status icon when Bluetooth is active and shows the"
-" number of connections in the tooltip."
-msgstr "Adaugă o indicație pe pictograma de stare când serviciul Bluetooth este activ și arată numărul de conexiuni într-o fereastră informativă."
+"Adds an indication on the status icon when Bluetooth is active and shows the "
+"number of connections in the tooltip."
+msgstr ""
+"Adaugă o indicație pe pictograma de stare când serviciul Bluetooth este "
+"activ și arată numărul de conexiuni într-o fereastră informativă."
 
 #: ../blueman/plugins/applet/ShowConnected.py:48
 msgid "Bluetooth Active"
@@ -1302,9 +1354,11 @@ msgstr "Utilizează libappindicator pentru a afișa o pictogramă de stare"
 
 #: ../blueman/plugins/applet/DiscvManager.py:15
 msgid ""
-"Provides a menu item for making the default adapter temporarily visible when"
-" it is set to hidden by default"
-msgstr "Oferă un element de meniu pentru facerea adaptorului implicit temporar vizibil când este stabilit ca ascuns impliicit"
+"Provides a menu item for making the default adapter temporarily visible when "
+"it is set to hidden by default"
+msgstr ""
+"Oferă un element de meniu pentru facerea adaptorului implicit temporar "
+"vizibil când este stabilit ca ascuns impliicit"
 
 #: ../blueman/plugins/applet/DiscvManager.py:25
 msgid "Discoverable timeout"
@@ -1330,23 +1384,30 @@ msgstr ""
 #: ../blueman/plugins/applet/Menu.py:91
 msgid ""
 "Provides a menu for the applet and an API for other plugins to manipulate it"
-msgstr "Oferă un meniu pentru miniaplicație și un API de manipulat de către celelalte module"
+msgstr ""
+"Oferă un meniu pentru miniaplicație și un API de manipulat de către "
+"celelalte module"
 
 #: ../blueman/plugins/applet/PPPSupport.py:49
 #, python-format
 msgid ""
 "Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\n"
 "Network is now available through <b>%(1)s</b>"
-msgstr "Conectat cu succes la serviciul <b>DUN</b> pe <b>%(0)s.</b>\nRețeaua este de acum disponibilă prin <b>%(1)s</b>"
+msgstr ""
+"Conectat cu succes la serviciul <b>DUN</b> pe <b>%(0)s.</b>\n"
+"Rețeaua este de acum disponibilă prin <b>%(1)s</b>"
 
 #: ../blueman/plugins/applet/PPPSupport.py:57
 msgid "Provides basic support for connecting to the internet via DUN profile."
-msgstr "Oferă capabilitatea de bază pentru conectarea la internet prin profil DUN."
+msgstr ""
+"Oferă capabilitatea de bază pentru conectarea la internet prin profil DUN."
 
 #: ../blueman/plugins/applet/SerialManager.py:22
 msgid ""
 "Standard SPP profile connection handler, allows executing custom actions"
-msgstr "Operator conexiune profil SPP standard, permite executarea de acțiune particularizate"
+msgstr ""
+"Operator conexiune profil SPP standard, permite executarea de acțiune "
+"particularizate"
 
 #: ../blueman/plugins/applet/SerialManager.py:31
 msgid "Script to execute on connection"
@@ -1361,7 +1422,15 @@ msgid ""
 "uuid16s are returned as a comma seperated list\n"
 "\n"
 "Upon device disconnection the script will be sent a HUP signal</span>"
-msgstr "<span size=\"small\">Următoarele argumente vor fi transferate:\nAddresă, Nume,  nume serviciu, uuid16s,  nod rfcomm\nDe exemplu:\nAA:BB:CC:DD:EE:FF, Telefon, serviciu DUN, 0x1103, /dev/rfcomm0\nuuid16s sunt întoarse ca o listă separată prin virgule\n\nLa deconectarea dispozitivului, scriptului îi va fi trimis un semnal HUP</span>"
+msgstr ""
+"<span size=\"small\">Următoarele argumente vor fi transferate:\n"
+"Addresă, Nume,  nume serviciu, uuid16s,  nod rfcomm\n"
+"De exemplu:\n"
+"AA:BB:CC:DD:EE:FF, Telefon, serviciu DUN, 0x1103, /dev/rfcomm0\n"
+"uuid16s sunt întoarse ca o listă separată prin virgule\n"
+"\n"
+"La deconectarea dispozitivului, scriptului îi va fi trimis un semnal HUP</"
+"span>"
 
 #: ../blueman/plugins/applet/SerialManager.py:63
 msgid "Serial port connected"
@@ -1371,7 +1440,9 @@ msgstr "Port serial conectat"
 #, python-format
 msgid ""
 "Serial port service on device <b>%s</b> now will be available via <b>%s</b>"
-msgstr "Serviciu de port serial pe dispozitivul <b>%s</b> va fi disponibil de acum prin <b>%s</b>"
+msgstr ""
+"Serviciu de port serial pe dispozitivul <b>%s</b> va fi disponibil de acum "
+"prin <b>%s</b>"
 
 #: ../blueman/plugins/applet/SerialManager.py:114
 msgid "Serial port connection script failed"
@@ -1382,7 +1453,9 @@ msgstr "Scriptul de conectare port serial a eșuat"
 msgid ""
 "There was a problem launching script %s\n"
 "%s"
-msgstr "A intervenit o eroare la lansarea scriptului %s\n%s"
+msgstr ""
+"A intervenit o eroare la lansarea scriptului %s\n"
+"%s"
 
 #: ../blueman/plugins/applet/PowerManager.py:15
 msgid "Controls Bluetooth adapter power states"
@@ -1418,7 +1491,9 @@ msgstr "Pornește toate adaptoarele"
 msgid ""
 "Temporarily suspends the screensaver when a bluetooth game controller is "
 "connected."
-msgstr "Suspendă temporar protecorul ecran când este conectată o manetă prin bluetooth."
+msgstr ""
+"Suspendă temporar protecorul ecran când este conectată o manetă prin "
+"bluetooth."
 
 #: ../blueman/plugins/services/Network.py:24
 #: ../blueman/plugins/services/Network.py:49
@@ -1437,7 +1512,8 @@ msgstr "Adresa IP este în conflict cu interfața %s care are aceeași adresă"
 #: ../blueman/plugins/services/Network.py:112
 #, python-format
 msgid ""
-"IP address overlaps with subnet of interface %s, which has the following configuration  %s/%s\n"
+"IP address overlaps with subnet of interface %s, which has the following "
+"configuration  %s/%s\n"
 "This may cause incorrect network behavior"
 msgstr ""
 
@@ -1486,58 +1562,62 @@ msgstr ""
 msgid "Setting RfKill State requires privileges"
 msgstr ""
 
-#: ../apps/blueman-sendto:35
+#: ../apps/blueman-sendto.in:35
 msgid "Bluetooth needs to be turned on for file sending to work"
-msgstr "Rețeaua Bluetooth trebuie să fie pornită pentru ca trimiterea fișierelor să funcționeze"
+msgstr ""
+"Rețeaua Bluetooth trebuie să fie pornită pentru ca trimiterea fișierelor să "
+"funcționeze"
 
-#: ../apps/blueman-sendto:101
+#: ../apps/blueman-sendto.in:101
 msgid "Select files to send"
 msgstr "Selectați fișierele de trimis"
 
-#: ../apps/blueman-sendto:131
+#: ../apps/blueman-sendto.in:131
 msgid "Send files to this device"
 msgstr "Trimite fișiere dispozitivului acesta"
 
-#: ../apps/blueman-sendto:133
+#: ../apps/blueman-sendto.in:133
 msgid "Source adapter. Takes address or adapter's name eg. hci0"
 msgstr "Adaptor sursă. Acceptă o adresă sau numele adaptorului, de ex.: hci0"
 
-#: ../apps/blueman-sendto:134
+#: ../apps/blueman-sendto.in:134
 msgid "Delete files on exit"
 msgstr "Șterge fișierele la ieșire"
 
-#: ../apps/blueman-sendto:136
+#: ../apps/blueman-sendto.in:136
 msgid "Files to be send to the bluetooth device"
 msgstr "Fișiere de trimis dispozitivului bluetooth"
 
-#: ../apps/blueman-assistant:52
+#: ../apps/blueman-assistant.in:52
 msgid "Bluetooth needs to be turned on for the Bluetooth assistant to work"
-msgstr "Rețeaua Bluetooth trebuie să fie pornită pentru ca asistentul Bluetooth să funcționeze"
+msgstr ""
+"Rețeaua Bluetooth trebuie să fie pornită pentru ca asistentul Bluetooth să "
+"funcționeze"
 
-#: ../apps/blueman-assistant:100
+#: ../apps/blueman-assistant.in:100
 msgid "No adapters found"
 msgstr "Nu a fost găsit niciun adaptor"
 
-#: ../apps/blueman-assistant:189
+#: ../apps/blueman-assistant.in:189
 msgid "<b>Pairing in progress...</b>"
 msgstr "<b>Asociere în curs...</b>"
 
-#: ../apps/blueman-assistant:198
+#: ../apps/blueman-assistant.in:198
 msgid "<b>Failed to add device</b>"
 msgstr "<b>Adăugarea dispozitivului a eșuat</b>"
 
-#: ../apps/blueman-assistant:219
+#: ../apps/blueman-assistant.in:219
 msgid "Don't connect"
 msgstr "Nu te conecta"
 
-#: ../apps/blueman-assistant:234
+#: ../apps/blueman-assistant.in:234
 msgid "<b>Device added and connected successfully</b>"
 msgstr ""
 
-#: ../apps/blueman-assistant:239
+#: ../apps/blueman-assistant.in:239
 msgid "<b>Device added successfully, but failed to connect</b>"
 msgstr ""
 
-#: ../apps/blueman-assistant:250
+#: ../apps/blueman-assistant.in:250
 msgid "Start configuration assistant for this device"
 msgstr "Pornește asistentul de configurare pentru acest dispozitiv"
