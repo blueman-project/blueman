@@ -10,6 +10,7 @@
 ### Bugs fixed
 
 * Pairing with pincode
+* Handle os.remove failing
 
 ## 2.1.1
 
