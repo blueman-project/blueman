@@ -9,6 +9,7 @@
 * Fix tooltip not updating when bluetooth is disabled
 * Fix dbus timeout in DhcClient
 * Call the right method when pulseaudio crashes
+* Handle os.remove failing
 
 ## 2.1.2
 
