@@ -18,18 +18,18 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-28 08:21+0000\n"
-"PO-Revision-Date: 2020-04-26 09:11+0000\n"
-"Last-Translator: Artem <KovalevArtem.ru@gmail.com>\n"
+"PO-Revision-Date: 2020-05-07 12:13+0000\n"
+"Last-Translator: Mingun <Alexander_Sergey@mail.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/blueman/blueman/"
 "ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
-"%100>=11 && n%100<=14)? 2 : 3);\n"
-"X-Generator: Weblate 4.0.2-dev\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Generator: Weblate 4.1-dev\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Visibility Setting</b>"
@@ -156,7 +156,7 @@ msgstr "<b>Службы</b>"
 
 #: ../data/ui/services-network.ui.h:3
 msgid "DHCP server type:"
-msgstr "Тип DHCP сервера"
+msgstr "Тип DHCP сервера:"
 
 #: ../data/ui/services-network.ui.h:4
 msgid "Recommended"
@@ -540,7 +540,7 @@ msgstr "Сопряжение PIN кода для"
 
 #: ../blueman/main/applet/BluezAgent.py:266
 msgid "Pairing request for:"
-msgstr "Запрос соединения  для:"
+msgstr "Запрос соединения для:"
 
 #: ../blueman/main/applet/BluezAgent.py:269
 msgid "Confirm value for authentication:"
@@ -588,7 +588,7 @@ msgstr "Bluetooth выключен"
 
 #: ../blueman/Functions.py:77
 msgid "Exit"
-msgstr ""
+msgstr "Выход"
 
 #: ../blueman/Functions.py:78
 msgid "Enable Bluetooth"
@@ -596,7 +596,7 @@ msgstr "Включить Bluetooth"
 
 #: ../blueman/Functions.py:97
 msgid "Shall bluetooth get enabled automatically?"
-msgstr ""
+msgstr "Должен ли Bluetooth включаться автоматически?"
 
 #: ../blueman/Functions.py:98
 msgid "Yes"
@@ -726,7 +726,7 @@ msgstr "Соединение невозможно или разорвано: "
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:145
 msgid "Disconnection Failed: "
-msgstr "Не удалось отсоединиться:"
+msgstr "Не удалось отсоединиться: "
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:186
 msgid "Disconnecting..."
@@ -734,7 +734,7 @@ msgstr "Отключение…"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:244
 msgid "_<b>Connect</b>"
-msgstr ""
+msgstr "_<b>Подключиться</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:246
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
@@ -743,7 +743,7 @@ msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:250
 msgid "_<b>Disconnect</b>"
-msgstr ""
+msgstr "_<b>Отключиться</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:251
 msgid "Forcefully disconnect the device"
@@ -775,7 +775,7 @@ msgstr "_Не доверять"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:348
 msgid "_Set up…"
-msgstr ""
+msgstr "_Настроить…"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:383
 msgid "_Remove..."
@@ -826,7 +826,7 @@ msgstr ""
 
 #: ../blueman/gui/CommonUi.py:46
 msgid "Blueman is a GTK+ Bluetooth manager"
-msgstr "Blueman – это менеджер Bluetooth, построенный на основе GTK+"
+msgstr "Blueman — это менеджер Bluetooth, построенный на основе GTK+"
 
 #: ../blueman/gui/GsmSettings.py:28
 msgid "GSM Settings"
@@ -1050,6 +1050,8 @@ msgstr "Соединение установлено"
 #, python-format
 msgid "Automatically connected to %(service)s on %(device)s"
 msgstr ""
+"Установлено автоматическое соединение со службой %(service)s на устройстве "
+"%(device)s"
 
 #: ../blueman/plugins/applet/NetUsage.py:160
 #: ../blueman/plugins/applet/NetUsage.py:269
@@ -1231,6 +1233,8 @@ msgid ""
 "Please make sure that directory \"<b>%s</b>\" exists or configure it with "
 "blueman-services. Until then the default \"%s\" will be used"
 msgstr ""
+"Убедитесь, что каталог «<b>%s</b>» существует или настройте его через "
+"blueman-services. До тех пор будет использоваться умолчательный каталог «%s»"
 
 #: ../blueman/plugins/applet/TransferService.py:299
 msgid "File received"
@@ -1279,10 +1283,9 @@ msgid ""
 "(Useless with USB dongles) and makes sure a status icon is shown if there is "
 "a bluetooth killswitch but no adapter."
 msgstr ""
-"Переключать Bluetooth выключатель, когда состояние питания Bluetooth "
-"изменяется  (бесполезно для USB заглушек) и удостоверяться, что иконка "
-"статуса показывается если задействован переключатель bluetooth, но не "
-"адаптер."
+"Переключать выключатель Bluetooth, когда изменяется состояние питания "
+"Bluetooth (бесполезно для USB заглушек) и удостоверяться, что иконка статуса "
+"показывается, если задействован переключатель bluetooth, но не адаптер."
 
 #: ../blueman/plugins/applet/StandardItems.py:17
 msgid "Adds standard menu items to the status icon menu"
@@ -1343,7 +1346,7 @@ msgid ""
 "Please wait…"
 msgstr ""
 "Попытка получить IP адрес на %s\n"
-"Пожалуйста подождите..."
+"Пожалуйста, подождите…"
 
 #: ../blueman/plugins/applet/ShowConnected.py:13
 msgid ""
@@ -1376,7 +1379,7 @@ msgid ""
 "it is set to hidden by default"
 msgstr ""
 "Пункт меню, который позволяет сделать основной адаптер видимым для внешних "
-"устройств, когда по умолчанию установлен режим невидимости."
+"устройств, когда по умолчанию установлен режим невидимости"
 
 #: ../blueman/plugins/applet/DiscvManager.py:25
 msgid "Discoverable timeout"
@@ -1404,8 +1407,7 @@ msgstr "Видимый...%ss"
 #: ../blueman/plugins/applet/Menu.py:91
 msgid ""
 "Provides a menu for the applet and an API for other plugins to manipulate it"
-msgstr ""
-"Предоставляет меню апплета и API для плагинов, позволяющее им управлять."
+msgstr "Предоставляет меню апплета и API для плагинов, позволяющее им управлять"
 
 #: ../blueman/plugins/applet/PPPSupport.py:49
 #, python-format
@@ -1534,6 +1536,9 @@ msgid ""
 "configuration  %s/%s\n"
 "This may cause incorrect network behavior"
 msgstr ""
+"IP-адрес пересекается с подсетью интерфейса %s, которая имеет следующую "
+"конфигурацию: %s/%s\n"
+"Это может привести к некорректному поведению сети"
 
 #: ../blueman/plugins/services/Network.py:239
 #: ../blueman/plugins/services/Network.py:248
@@ -1626,11 +1631,11 @@ msgstr "Не подключаться"
 
 #: ../apps/blueman-assistant.in:234
 msgid "<b>Device added and connected successfully</b>"
-msgstr ""
+msgstr "<b>Устройство успешно добавлено и подключено</b>"
 
 #: ../apps/blueman-assistant.in:239
 msgid "<b>Device added successfully, but failed to connect</b>"
-msgstr ""
+msgstr "<b>Устройство добавлено успешно, но подключиться не удалось</b>"
 
 #: ../apps/blueman-assistant.in:250
 msgid "Start configuration assistant for this device"
