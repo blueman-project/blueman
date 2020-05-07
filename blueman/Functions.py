@@ -53,7 +53,7 @@ from gi.repository import GLib
 from gi.repository import Gio
 
 
-__all__ = ["check_bluetooth_status", "launch", "setup_icon_path", "adapter_path_to_name", "e_",
+__all__ = ["check_bluetooth_status", "launch", "setup_icon_path", "adapter_path_to_name", "e_", "bmexit",
            "format_bytes", "create_menuitem", "get_lockfile", "get_pid", "is_running", "check_single_instance", "kill",
            "have", "set_proc_title", "create_logger", "create_parser", "open_rfcomm", "get_local_interfaces"]
 
@@ -278,7 +278,7 @@ def check_single_instance(name: str, unhide_func: Optional[Callable[[int], Any]]
                     f.write("%s\n%s" % (str(pid), str(time)))
 
                 os.kill(pid, signal.SIGUSR1)
-                exit()
+                bmexit()
         else:
             remove_file(lockfile)
 
@@ -289,7 +289,7 @@ def check_single_instance(name: str, unhide_func: Optional[Callable[[int], Any]]
         os.close(fd)
     except OSError:
         print("There is an instance already running")
-        exit()
+        bmexit()
 
     atexit.register(lambda: remove_file(lockfile))
 
@@ -430,3 +430,7 @@ def get_local_interfaces() -> Dict[str, Tuple[str, Optional[str]]]:
         return {}
 
     return ip_dict
+
+
+def bmexit(msg: Optional[Union[str, int]] = None) -> None:
+    raise SystemExit(msg)

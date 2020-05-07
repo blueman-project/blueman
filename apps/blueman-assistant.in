@@ -21,7 +21,8 @@ from blueman.Functions import (
     set_proc_title,
     check_bluetooth_status,
     create_logger,
-    create_parser
+    create_parser,
+    bmexit
 )
 
 from blueman.Constants import UI_PATH
@@ -49,7 +50,7 @@ class Assistant:
     def __init__(self, parsed_args):
         setup_icon_path()
 
-        check_bluetooth_status(_("Bluetooth needs to be turned on for the Bluetooth assistant to work"), lambda: exit())
+        check_bluetooth_status(_("Bluetooth needs to be turned on for the Bluetooth assistant to work"), bmexit)
 
         self.Manager = Manager()
         self.Device = None
@@ -99,7 +100,7 @@ class Assistant:
         if not self.dev_widget.List.is_valid_adapter():
             d = ErrorDialog(_("No adapters found"), icon_name="blueman", title="Blueman Assistant")
             d.run()
-            exit(1)
+            bmexit()
 
         self.assistant.show()
 
@@ -108,7 +109,7 @@ class Assistant:
                 self.Adapter = self.Manager.get_adapter()
             except ValueError:
                 logging.error("Error: No Adapters present")
-                exit(1)
+                bmexit()
             self.Device = self.Manager.find_device(parsed_args.device, self.Adapter.get_object_path())
             if self.Device['Paired']:
                 self.assistant.set_current_page(PAGE_CONNECT)
