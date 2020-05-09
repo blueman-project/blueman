@@ -19,16 +19,18 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-08 06:40+0000\n"
-"PO-Revision-Date: 2020-04-14 10:14+0000\n"
-"Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
-"Language-Team: Polish (http://www.transifex.com/mate/MATE/language/pl/)\n"
+"PO-Revision-Date: 2020-05-14 16:55+0000\n"
+"Last-Translator: Szylu <chipolade@gmail.com>\n"
+"Language-Team: Polish <https://hosted.weblate.org/projects/blueman/blueman/"
+"pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
-"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
-"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<"
+"12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) ||"
+" (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"X-Generator: Weblate 4.1-dev\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Visibility Setting</b>"
@@ -448,6 +450,8 @@ msgstr "obexd nie dostępny"
 #: ../blueman/main/Sendto.py:118
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
 msgstr ""
+"Nie można automatycznie uruchomić usługi obex. Upewnij się, że obex daemon "
+"jest uruchomiony"
 
 #: ../blueman/main/Sendto.py:147
 msgid "Cancelling"
@@ -584,7 +588,7 @@ msgstr "Bluetooth wyłączono"
 
 #: ../blueman/Functions.py:77
 msgid "Exit"
-msgstr ""
+msgstr "Wyjście"
 
 #: ../blueman/Functions.py:78
 msgid "Enable Bluetooth"
@@ -592,7 +596,7 @@ msgstr "Włącz Bluetooth"
 
 #: ../blueman/Functions.py:97
 msgid "Shall bluetooth get enabled automatically?"
-msgstr ""
+msgstr "Czy bluetooth ma włączyć się automatycznie?"
 
 #: ../blueman/Functions.py:98
 msgid "Yes"
@@ -722,7 +726,7 @@ msgstr "Połączenie nie powiodło się: "
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:145
 msgid "Disconnection Failed: "
-msgstr "Błąd rozłączania:"
+msgstr "Rozłączenie nie powiodło się: "
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:186
 msgid "Disconnecting..."
@@ -730,7 +734,7 @@ msgstr "Rozłączanie..."
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:244
 msgid "_<b>Connect</b>"
-msgstr ""
+msgstr "_<b>Połącz</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:246
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
@@ -738,7 +742,7 @@ msgstr "Łączy automatyczne profile źródła A2DP, złącza A2DP i HID"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:250
 msgid "_<b>Disconnect</b>"
-msgstr ""
+msgstr "_<b>Rozłącz</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:251
 msgid "Forcefully disconnect the device"
@@ -770,7 +774,7 @@ msgstr "P_rzestań ufać"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:348
 msgid "_Set up…"
-msgstr ""
+msgstr "_Ustaw…"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:383
 msgid "_Remove..."
@@ -926,7 +930,7 @@ msgstr "bezprzewodowy"
 #. translators: device class
 #: ../blueman/DeviceClass.py:70
 msgid "smart phone"
-msgstr "smart phone"
+msgstr "smartfon"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:72
@@ -971,7 +975,7 @@ msgstr "urządzenie wskazujące"
 
 #: ../blueman/Sdp.py:127
 msgid "Dialup Networking (DUN)"
-msgstr "Dialup Networking (DUN)"
+msgstr "Sieci wdzwaniane (DUN)"
 
 #: ../blueman/Sdp.py:134
 msgid "Audio Source"
@@ -1064,7 +1068,7 @@ msgstr "Połączono"
 #: ../blueman/plugins/applet/AutoConnect.py:36
 #, python-format
 msgid "Automatically connected to %(service)s on %(device)s"
-msgstr ""
+msgstr "Automatycznie połączony z %(service)s na %(device)s"
 
 #: ../blueman/plugins/applet/NetUsage.py:160
 #: ../blueman/plugins/applet/NetUsage.py:269
@@ -1242,6 +1246,8 @@ msgid ""
 "Please make sure that directory \"<b>%s</b>\" exists or configure it with "
 "blueman-services. Until then the default \"%s\" will be used"
 msgstr ""
+"Upewnij się, że katalog „<b>%s</b>” istnieje lub skonfiguruj go za pomocą "
+"blueman-services. Do tego czasu będzie używany domyślny „%s”"
 
 #: ../blueman/plugins/applet/TransferService.py:299
 msgid "File received"
@@ -1320,7 +1326,7 @@ msgstr "aplet"
 
 #: ../blueman/plugins/applet/AuthAgent.py:9
 msgid "Provides passkey, authentication services for BlueZ daemon"
-msgstr "Dostarcza usługi kluczy/haseł i autentyfikacji  serwerowi BlueZ"
+msgstr "Zapewnia hasło, usługi uwierzytelniania dla daemona BlueZ"
 
 #: ../blueman/plugins/applet/ExitItem.py:12
 msgid "Adds an exit menu item to quit the applet"
@@ -1385,8 +1391,8 @@ msgid ""
 "Provides a menu item for making the default adapter temporarily visible when "
 "it is set to hidden by default"
 msgstr ""
-"Dostarcza element menu do ustawienia domyślnego adaptera jako tymczasowo "
-"widoczny kiedy jest ustawiony domyślnie jako ukryty."
+"Udostępnia element menu służący do tymczasowego wyświetlania domyślnego "
+"adaptera, gdy jest domyślnie ustawiony jako ukryty"
 
 #: ../blueman/plugins/applet/DiscvManager.py:25
 msgid "Discoverable timeout"
@@ -1542,6 +1548,9 @@ msgid ""
 "configuration  %s/%s\n"
 "This may cause incorrect network behavior"
 msgstr ""
+"Adres IP pokrywa się z podsiecią interfejsu %s, który ma następującą "
+"konfigurację %s/%s\n"
+"Może to spowodować nieprawidłowe zachowanie sieci"
 
 #: ../blueman/plugins/services/Network.py:239
 #: ../blueman/plugins/services/Network.py:248
@@ -1634,11 +1643,11 @@ msgstr "Nie podłączaj"
 
 #: ../apps/blueman-assistant.in:234
 msgid "<b>Device added and connected successfully</b>"
-msgstr ""
+msgstr "<b>Urządzenie zostało pomyślnie dodane i podłączone</b>"
 
 #: ../apps/blueman-assistant.in:239
 msgid "<b>Device added successfully, but failed to connect</b>"
-msgstr ""
+msgstr "<b>Urządzenie zostało dodane pomyślnie, ale nie udało się połączyć</b>"
 
 #: ../apps/blueman-assistant.in:250
 msgid "Start configuration assistant for this device"
