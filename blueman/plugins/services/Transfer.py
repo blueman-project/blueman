@@ -49,6 +49,16 @@ class Transfer(ServicePlugin):
 
     def on_apply(self):
         if self.on_query_apply_state():
+            for opt in self.get_options():
+                if opt == "shared-path":
+                    shared_path = self.Builder.get_object("shared-path")
+                    self._config["shared-path"] = shared_path.get_filename()
+                elif opt == "opp-accept":
+                    opp_accept = self.Builder.get_object("opp-accept")
+                    self._config["opp-accept"] = opp_accept.get_active()
+                else:
+                    raise NotImplementedError("Unknow option: %s" % opt)
+
             self.clear_options()
             logging.info("transfer apply")
 
@@ -70,6 +80,5 @@ class Transfer(ServicePlugin):
         if self._config["shared-path"]:
             shared_path.set_current_folder(self._config["shared-path"])
 
-        opp_accept.connect("toggled", lambda x: self._config.set_boolean("opp-accept", x.props.active))
-
-        shared_path.connect("file-set", lambda x: self._config.set_string("shared-path", x.get_filename()))
+        opp_accept.connect("toggled", lambda x: self.option_changed_notify("opp-accept"))
+        shared_path.connect("file-set", lambda x: self.option_changed_notify("shared-path"))
