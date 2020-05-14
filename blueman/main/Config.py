@@ -1,5 +1,6 @@
 # coding=utf-8
 from gi.repository import Gio
+import logging
 
 
 class Config(Gio.Settings):
@@ -12,3 +13,8 @@ class Config(Gio.Settings):
 
     def bind_to_widget(self, key, widget, prop, flags=Gio.SettingsBindFlags.DEFAULT):
         self.bind(key, widget, prop, flags)
+
+    def __setitem__(self, key, value):
+        if not self.is_writable(key):
+            logging.error("GSetting not writable, settings not saved")
+        super().__setitem__(key, value)
