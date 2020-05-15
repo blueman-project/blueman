@@ -13,7 +13,7 @@ class TestImports(TestCase):
 def load_tests(*_args):
     test_cases = TestSuite()
     home = os.path.dirname(os.path.dirname(__file__))
-    for package in pkgutil.iter_modules([f"{home}/blueman"], f"blueman."):
+    for package in pkgutil.iter_modules([f"{home}/blueman"], "blueman."):
         test_cases.addTest(TestImports(package.name))
 
     assert test_cases.countTestCases() > 0
