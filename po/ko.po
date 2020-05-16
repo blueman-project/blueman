@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-16 11:35+0000\n"
+"POT-Creation-Date: 2020-05-16 22:05+0000\n"
 "PO-Revision-Date: 2020-04-14 10:14+0000\n"
 "Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
 "Language-Team: Korean (http://www.transifex.com/mate/MATE/language/ko/)\n"
@@ -23,198 +23,194 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../data/ui/adapters-tab.ui.h:1
+#: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
 msgstr "<b>노출 설정</b>"
 
-#: ../data/ui/adapters-tab.ui.h:2 ../blueman/main/Adapter.py:144
+#: data/ui/adapters-tab.ui:39 blueman/main/Adapter.py:144
 msgid "Hidden"
 msgstr "숨겨짐"
 
-#: ../data/ui/adapters-tab.ui.h:3
+#: data/ui/adapters-tab.ui:54
 msgid "Always visible"
 msgstr "항상 보임"
 
-#: ../data/ui/adapters-tab.ui.h:4
+#: data/ui/adapters-tab.ui:70
 msgid "Temporarily visible"
 msgstr "잠깐 보임"
 
-#: ../data/ui/adapters-tab.ui.h:5
+#: data/ui/adapters-tab.ui:101
 msgid "<b>Friendly Name</b>"
 msgstr "<b>별명</b>"
 
-#: ../data/ui/applet-passkey.ui.h:1
+#: data/ui/applet-passkey.ui:8
 msgid "Pairing request"
 msgstr "페어링 요청"
 
-#: ../data/ui/applet-passkey.ui.h:2
+#: data/ui/applet-passkey.ui:91
 msgid "Pairing request for device:"
 msgstr "장치 페어링 요청:"
 
-#: ../data/ui/applet-passkey.ui.h:3
+#: data/ui/applet-passkey.ui:120
 msgid "This should be overwritten"
 msgstr "덮어써야 합니다"
 
-#: ../data/ui/applet-passkey.ui.h:4
+#: data/ui/applet-passkey.ui:140
 msgid "Show input"
 msgstr "입력 보이기"
 
-#: ../data/ui/manager-main.ui.h:1
+#: data/ui/manager-main.ui:53
 msgid "_Adapter"
 msgstr "어댑터(_A)"
 
-#: ../data/ui/manager-main.ui.h:2
+#: data/ui/manager-main.ui:61
 msgid "_Device"
 msgstr "장치(_D)"
 
-#: ../data/ui/manager-main.ui.h:3
+#: data/ui/manager-main.ui:69
 msgid "_View"
 msgstr "보기(_V)"
 
-#: ../data/ui/manager-main.ui.h:4
+#: data/ui/manager-main.ui:77
 msgid "_Help"
 msgstr "도움말(_H)"
 
-#: ../data/ui/manager-main.ui.h:5
+#: data/ui/manager-main.ui:96
 msgid "Search for nearby devices"
 msgstr "가까운 곳의 장치를 검색합니다"
 
 #. translators: toolbar item: keep it as short as possible
-#: ../data/ui/manager-main.ui.h:7
+#: data/ui/manager-main.ui:98
 msgid "Search"
 msgstr "검색"
 
-#: ../data/ui/manager-main.ui.h:8
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:328
+#: data/ui/manager-main.ui:121 blueman/gui/manager/ManagerDeviceMenu.py:328
 msgid "Create pairing with the device"
 msgstr "장치와 페어링을 만듭니다"
 
 #. translators: toolbar item: keep it as short as possible
-#: ../data/ui/manager-main.ui.h:10
+#: data/ui/manager-main.ui:122
 msgid "Pair"
 msgstr "페어링"
 
-#: ../data/ui/manager-main.ui.h:11
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:346
+#: data/ui/manager-main.ui:135 blueman/gui/manager/ManagerDeviceMenu.py:346
 msgid "Mark/Unmark this device as trusted"
 msgstr "신뢰할 수 있는 장치로 설정/해제합니다"
 
 #. translators: toolbar item: keep it as short as possible
-#: ../data/ui/manager-main.ui.h:13 ../blueman/gui/manager/ManagerToolbar.py:30
-#: ../blueman/gui/manager/ManagerToolbar.py:95
+#: data/ui/manager-main.ui:136 blueman/gui/manager/ManagerToolbar.py:30
+#: blueman/gui/manager/ManagerToolbar.py:95
 msgid "Trust"
 msgstr "신뢰"
 
-#: ../data/ui/manager-main.ui.h:14
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:352
+#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:352
 msgid "Run the setup assistant for this device"
 msgstr "이 장치에 대한 설치 도우미를 실행합니다"
 
 #. translators: toolbar item: keep it as short as possible
-#: ../data/ui/manager-main.ui.h:16
+#: data/ui/manager-main.ui:151
 msgid "Setup..."
 msgstr "설정..."
 
-#: ../data/ui/manager-main.ui.h:17
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:387
+#: data/ui/manager-main.ui:164 blueman/gui/manager/ManagerDeviceMenu.py:387
 msgid "Remove this device from the known devices list"
 msgstr "이 장치를 알려진 장치 목록에서 제거합니다"
 
 #. translators: toolbar item: keep it as short as possible
-#: ../data/ui/manager-main.ui.h:19
+#: data/ui/manager-main.ui:165
 msgid "Remove"
 msgstr "제거"
 
-#: ../data/ui/manager-main.ui.h:20
+#: data/ui/manager-main.ui:187
 msgid "Send file(s) to the device"
 msgstr "파일을 장치로 전송합니다"
 
 #. translators: toolbar item: keep it as short as possible
-#: ../data/ui/manager-main.ui.h:22
+#: data/ui/manager-main.ui:189
 msgid "Send File"
 msgstr "파일 보내기"
 
-#: ../data/ui/rename-device.ui.h:1
+#: data/ui/rename-device.ui:8
 msgid "Rename device"
 msgstr "장치 이름 바꾸기"
 
-#: ../data/ui/services-network.ui.h:1
+#: data/ui/services-network.ui:37
 msgid "Network Access Point (NAP)"
 msgstr "네트워크 액세스 지점(NAP)"
 
-#: ../data/ui/services-network.ui.h:2
+#: data/ui/services-network.ui:57
 msgid "<b>Services</b>"
 msgstr "<b>서비스</b>"
 
-#: ../data/ui/services-network.ui.h:3
+#: data/ui/services-network.ui:87
 msgid "DHCP server type:"
 msgstr "DHCP 서버 형식:"
 
-#: ../data/ui/services-network.ui.h:4
+#: data/ui/services-network.ui:114
 msgid "Recommended"
 msgstr "권장"
 
-#: ../data/ui/services-network.ui.h:5
+#: data/ui/services-network.ui:138
 msgid "IP Address:"
 msgstr "IP 주소:"
 
-#: ../data/ui/services-network.ui.h:6
+#: data/ui/services-network.ui:181
 msgid "<b>No DHCP servers installed</b>"
 msgstr "<b>DHCP 서버를 설치하지 않음</b>"
 
-#: ../data/ui/services-network.ui.h:7
+#: data/ui/services-network.ui:199
 msgid "udhcpd"
 msgstr "udhcpd"
 
-#: ../data/ui/services-network.ui.h:8
+#: data/ui/services-network.ui:218
 msgid "<b>NAP Settings</b>"
 msgstr "<b>NAP 설정</b>"
 
-#: ../data/ui/services-network.ui.h:9
+#: data/ui/services-network.ui:282
 msgid "<b>PAN Support</b>"
 msgstr "<b>PAN 지원</b>"
 
-#: ../data/ui/services-network.ui.h:10
+#: data/ui/services-network.ui:357
 msgid "<b>DUN Support</b>"
 msgstr "<b>DUN 지원</b>"
 
-#: ../data/ui/services-network.ui.h:11
+#: data/ui/services-network.ui:391
 msgid "<b>Network Settings</b>"
 msgstr "<b>네트워크 설정</b>"
 
-#: ../data/ui/services-transfer.ui.h:1
+#: data/ui/services-transfer.ui:24
 msgid "<b>File Receiving (Object Push)</b>"
 msgstr "<b>파일 받기(객체 밀어넣기)</b>"
 
-#: ../data/ui/services-transfer.ui.h:2
+#: data/ui/services-transfer.ui:37
 msgid "Incoming Folder:"
 msgstr "받는 폴더: "
 
-#: ../data/ui/services-transfer.ui.h:3
+#: data/ui/services-transfer.ui:49
 msgid "Select folder for incoming file transfers"
 msgstr "받아오는 파일 전송을 위한 폴더를 선택합니다"
 
-#: ../data/ui/services-transfer.ui.h:4
+#: data/ui/services-transfer.ui:58
 msgid "Accept files from trusted devices"
 msgstr "신뢰하는 장치로부터 파일을 받음"
 
-#: ../data/ui/services-transfer.ui.h:5
+#: data/ui/services-transfer.ui:96
 msgid "<b>Transfer Settings</b>"
 msgstr "<b>전송 설정</b>"
 
-#: ../data/ui/send-dialog.ui.h:1
+#: data/ui/send-dialog.ui:32
 msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr "<span weight=\"bold\" size=\"large\">블루투스로 파일 보내기</span>"
 
-#: ../data/ui/send-dialog.ui.h:2
+#: data/ui/send-dialog.ui:68
 msgid "<b>To:</b>"
 msgstr "<b>수신자:</b>"
 
-#: ../data/ui/send-dialog.ui.h:3
+#: data/ui/send-dialog.ui:106
 msgid "<b>File:</b>"
 msgstr "<b>파일:</b>"
 
-#: ../data/ui/assistant.ui.h:1
+#: data/ui/assistant.ui:16
 msgid ""
 "<b>Welcome to the Bluetooth device setup assistant. </b>\n"
 "\n"
@@ -227,172 +223,172 @@ msgstr ""
 "\n"
 "블루투스 장치를 설정하고 연결하도록 안내해드립니다."
 
-#: ../data/ui/assistant.ui.h:5
+#: data/ui/assistant.ui:25
 msgid "Introduction"
 msgstr "소개"
 
-#: ../data/ui/assistant.ui.h:6
+#: data/ui/assistant.ui:38
 msgid "Device"
 msgstr "장치"
 
-#: ../data/ui/assistant.ui.h:7
+#: data/ui/assistant.ui:54
 msgid "<b>Select pairing method to use:</b>"
 msgstr "<b>사용할 페어링 방식을 선택:</b>"
 
-#: ../data/ui/assistant.ui.h:8
+#: data/ui/assistant.ui:65
 msgid "Pair Device"
 msgstr "장치 페어링하기"
 
-#: ../data/ui/assistant.ui.h:9
+#: data/ui/assistant.ui:81
 msgid "Proceed Without Pairing"
 msgstr "페어링 없이 진행"
 
-#: ../data/ui/assistant.ui.h:10
+#: data/ui/assistant.ui:97 data/ui/assistant.ui:111
 msgid "Pairing"
 msgstr "페어링"
 
-#: ../data/ui/assistant.ui.h:11
+#: data/ui/assistant.ui:128
 msgid "<b>Connect to:</b>"
 msgstr "<b>연결 대상:</b>"
 
-#: ../data/ui/assistant.ui.h:12
+#: data/ui/assistant.ui:154
 msgid "Connect"
 msgstr "연결"
 
-#: ../data/ui/assistant.ui.h:13
+#: data/ui/assistant.ui:161
 msgid "<b>Please wait...</b>"
 msgstr "<b>기다려 주세요...</b>"
 
-#: ../data/ui/assistant.ui.h:14 ../blueman/gui/manager/ManagerDeviceMenu.py:124
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:179
+#: data/ui/assistant.ui:166 blueman/gui/manager/ManagerDeviceMenu.py:124
+#: blueman/gui/manager/ManagerDeviceMenu.py:179
 msgid "Connecting..."
 msgstr "연결 중..."
 
-#: ../data/ui/assistant.ui.h:15
+#: data/ui/assistant.ui:173
 msgid "<b>Congratulations, device successfully added</b>"
 msgstr "<b>축하드립니다. 장치를 성공적으로 추가했습니다.</b>"
 
-#: ../data/ui/assistant.ui.h:16
+#: data/ui/assistant.ui:180
 msgid "Finished"
 msgstr "끝"
 
-#: ../data/ui/applet-plugins-widget.ui.h:1
+#: data/ui/applet-plugins-widget.ui:69
 msgid "Configuration"
 msgstr "설정"
 
-#: ../data/ui/applet-plugins-widget.ui.h:2
+#: data/ui/applet-plugins-widget.ui:73
 msgid "Configure selected plugin's preferences"
 msgstr "선택된 플러그인 설정"
 
-#: ../data/ui/applet-plugins-widget.ui.h:3
+#: data/ui/applet-plugins-widget.ui:115
 msgid "<b>Plugin description:</b>"
 msgstr "<b>플러그인 설명:</b>"
 
-#: ../data/ui/applet-plugins-widget.ui.h:4
+#: data/ui/applet-plugins-widget.ui:130
 msgid "Not specified"
 msgstr "지정 안함"
 
-#: ../data/ui/applet-plugins-widget.ui.h:5
+#: data/ui/applet-plugins-widget.ui:146
 msgid "<b>Author:</b>"
 msgstr "<b>작성자:</b>"
 
-#: ../data/ui/applet-plugins-widget.ui.h:6 ../blueman/Sdp.py:385
-#: ../blueman/plugins/applet/NetUsage.py:215
-#: ../blueman/plugins/applet/NetUsage.py:216
+#: data/ui/applet-plugins-widget.ui:161 blueman/Sdp.py:385
+#: blueman/plugins/applet/NetUsage.py:215
+#: blueman/plugins/applet/NetUsage.py:216
 msgid "Unknown"
 msgstr "알 수 없음"
 
-#: ../data/ui/applet-plugins-widget.ui.h:7
+#: data/ui/applet-plugins-widget.ui:174
 msgid "<b>Depends on:</b>"
 msgstr "<b>다음에 의존:</b>"
 
-#: ../data/ui/applet-plugins-widget.ui.h:8
+#: data/ui/applet-plugins-widget.ui:202
 msgid "<b>Conflicts with:</b>"
 msgstr "<b>다음과 충돌:</b>"
 
-#: ../data/ui/gsm-settings.ui.h:1
+#: data/ui/gsm-settings.ui:34
 msgid "<b>GSM settings</b>"
 msgstr "<b>GSM 설정</b>"
 
-#: ../data/ui/gsm-settings.ui.h:2
+#: data/ui/gsm-settings.ui:55
 msgid "Number:"
 msgstr "숫자:"
 
-#: ../data/ui/gsm-settings.ui.h:3
+#: data/ui/gsm-settings.ui:78
 msgid "APN:"
 msgstr "APN:"
 
-#: ../data/ui/net-usage.ui.h:1
+#: data/ui/net-usage.ui:14
 msgid "Traffic statistics"
 msgstr "트래픽 통"
 
-#: ../data/ui/net-usage.ui.h:2
+#: data/ui/net-usage.ui:33
 msgid "_Close"
 msgstr "닫기(_C)"
 
-#: ../data/ui/net-usage.ui.h:3
+#: data/ui/net-usage.ui:79
 msgid "<b>Downloaded:</b>"
 msgstr "<b>다운로드 양:</b>"
 
-#: ../data/ui/net-usage.ui.h:4
+#: data/ui/net-usage.ui:119
 msgid "<b>Uploaded:</b>"
 msgstr "<b>업로드 양:</b>"
 
-#: ../data/ui/net-usage.ui.h:5
+#: data/ui/net-usage.ui:159
 msgid "<b>Total:</b>"
 msgstr "<b>전체:</b>"
 
-#: ../data/ui/net-usage.ui.h:6
+#: data/ui/net-usage.ui:196
 msgid "<b>Log started:</b>"
 msgstr "<b>로그 시작:</b>"
 
-#: ../data/ui/net-usage.ui.h:7
+#: data/ui/net-usage.ui:209
 msgid "<b>Log duration:</b>"
 msgstr "<b>로그 기간:</b>"
 
-#: ../data/ui/net-usage.ui.h:8
+#: data/ui/net-usage.ui:243
 msgid "_Reset"
 msgstr "리셋(_R)"
 
-#: ../data/ui/note.ui.h:1
+#: data/ui/note.ui:8
 msgid "Send note"
 msgstr "메모 보내기"
 
-#: ../blueman/main/Adapter.py:35
+#: blueman/main/Adapter.py:35 data/blueman-adapters.desktop.in:3
 msgid "Bluetooth Adapters"
 msgstr "블루투스 어댑터"
 
-#: ../blueman/main/Adapter.py:64
+#: blueman/main/Adapter.py:64
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
 msgstr "어댑터 관리자를 동작하게 하려면 블루투스를 켜야 합니다"
 
-#: ../blueman/main/Adapter.py:142
+#: blueman/main/Adapter.py:142
 msgid "Always"
 msgstr "항상"
 
-#: ../blueman/main/Adapter.py:146
+#: blueman/main/Adapter.py:146
 #, python-format
 msgid "%d Minute"
 msgid_plural "%d Minutes"
 msgstr[0] "%d분"
 
-#: ../blueman/main/Adapter.py:212
+#: blueman/main/Adapter.py:212
 msgid "Adapter"
 msgstr "어뎁터"
 
-#: ../blueman/main/Manager.py:31
+#: blueman/main/Manager.py:31
 msgid "Bluetooth Devices"
 msgstr "블루투스 장치"
 
-#: ../blueman/main/Manager.py:73 ../blueman/main/Manager.py:113
+#: blueman/main/Manager.py:73 blueman/main/Manager.py:113
 msgid "Bluetooth needs to be turned on for the device manager to function"
 msgstr "장치 관리자를 동작하게 하려면 블루투스를 켜야 합니다"
 
-#: ../blueman/main/Manager.py:92
+#: blueman/main/Manager.py:92
 msgid "Connection to BlueZ failed"
 msgstr "blueZ 연결에 실패했습니다"
 
-#: ../blueman/main/Manager.py:93
+#: blueman/main/Manager.py:93
 msgid ""
 "Bluez daemon is not running, blueman-manager cannot continue.\n"
 "This probably means that there were no Bluetooth adapters detected or "
@@ -402,155 +398,151 @@ msgstr ""
 "아마도 감지한 블루투스 어댑터가 없거나 블루투스 데몬을 시작하지 않았음을 의미"
 "할지도 모릅니다."
 
-#: ../blueman/main/Manager.py:190
+#: blueman/main/Manager.py:190
 msgid "Searching"
 msgstr "검색중"
 
-#: ../blueman/main/Manager.py:204 ../blueman/plugins/applet/StandardItems.py:71
-#: ../apps/blueman-assistant.in:66
+#: blueman/main/Manager.py:204 blueman/plugins/applet/StandardItems.py:71
 msgid "Bluetooth Assistant"
 msgstr "블루투스 도우미"
 
-#: ../blueman/main/Manager.py:217 ../blueman/plugins/applet/StandardItems.py:83
+#: blueman/main/Manager.py:217 blueman/plugins/applet/StandardItems.py:83
 msgid "Adapter Preferences"
 msgstr "어댑터 기본 설정"
 
-#: ../blueman/main/Manager.py:229
-#: ../blueman/gui/manager/ManagerDeviceList.py:135
-#: ../blueman/plugins/applet/StandardItems.py:74
+#: blueman/main/Manager.py:229 blueman/gui/manager/ManagerDeviceList.py:135
+#: blueman/plugins/applet/StandardItems.py:74
 msgid "File Sender"
 msgstr "파일 전송자"
 
-#: ../blueman/main/Sendto.py:40
+#: blueman/main/Sendto.py:40
 msgid "Bluetooth File Transfer"
 msgstr "블루투스 파일 전송"
 
-#: ../blueman/main/Sendto.py:66 ../blueman/gui/manager/ManagerProgressbar.py:25
+#: blueman/main/Sendto.py:66 blueman/gui/manager/ManagerProgressbar.py:25
 msgid "Connecting"
 msgstr "연결 중"
 
-#: ../blueman/main/Sendto.py:118
+#: blueman/main/Sendto.py:118
 msgid "obexd not available"
 msgstr "obexd 사용 불가"
 
-#: ../blueman/main/Sendto.py:118
+#: blueman/main/Sendto.py:118
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
 msgstr ""
 
-#: ../blueman/main/Sendto.py:147
+#: blueman/main/Sendto.py:147
 msgid "Cancelling"
 msgstr "취소 중"
 
-#: ../blueman/main/Sendto.py:158 ../blueman/main/Sendto.py:200
+#: blueman/main/Sendto.py:158 blueman/main/Sendto.py:200
 msgid "Sending File"
 msgstr "파일 전송 중"
 
-#: ../blueman/main/Sendto.py:158 ../blueman/main/Sendto.py:200
+#: blueman/main/Sendto.py:158 blueman/main/Sendto.py:200
 msgid "ETA:"
 msgstr "총 예상 시간:"
 
-#: ../blueman/main/Sendto.py:194
+#: blueman/main/Sendto.py:194
 #, python-format
 msgid "%.0f Minute"
 msgid_plural "%.0f Minutes"
 msgstr[0] "%.0f 분"
 
-#: ../blueman/main/Sendto.py:196
+#: blueman/main/Sendto.py:196
 #, python-format
 msgid "%.0f Second"
 msgid_plural "%.0f Seconds"
 msgstr[0] "%.0f 초"
 
-#: ../blueman/main/Sendto.py:230
+#: blueman/main/Sendto.py:230
 #, python-format
 msgid "Error occurred while sending file %s"
 msgstr "%s 파일을 보내는 중 오류가 발생했습니다"
 
-#: ../blueman/main/Sendto.py:234
+#: blueman/main/Sendto.py:234
 msgid "Skip"
 msgstr "건너뛰기"
 
-#: ../blueman/main/Sendto.py:235
+#: blueman/main/Sendto.py:235
 msgid "Retry"
 msgstr "다시 시도"
 
-#: ../blueman/main/Sendto.py:284
+#: blueman/main/Sendto.py:284
 msgid "Error occurred"
 msgstr "오류가 발생했습니다"
 
-#: ../blueman/main/Services.py:20
+#: blueman/main/Services.py:20
 msgid "Local Services"
 msgstr "로컬 서비스"
 
-#: ../blueman/main/applet/BluezAgent.py:180
+#: blueman/main/applet/BluezAgent.py:180
 #, python-format
 msgid "Pairing request for %s"
 msgstr "%s의 페어링 요청"
 
-#: ../blueman/main/applet/BluezAgent.py:192
-#: ../blueman/main/applet/BluezAgent.py:299
+#: blueman/main/applet/BluezAgent.py:192 blueman/main/applet/BluezAgent.py:299
 msgid "Bluetooth Authentication"
 msgstr "블루투스 인증"
 
-#: ../blueman/main/applet/BluezAgent.py:220
+#: blueman/main/applet/BluezAgent.py:220
 msgid "Enter PIN code for authentication:"
 msgstr "인증 핀 코드 입력:"
 
-#: ../blueman/main/applet/BluezAgent.py:221
+#: blueman/main/applet/BluezAgent.py:221
 msgid "Enter PIN code"
 msgstr "핀 코드 입력"
 
-#: ../blueman/main/applet/BluezAgent.py:234
+#: blueman/main/applet/BluezAgent.py:234
 msgid "Enter passkey for authentication:"
 msgstr "인증용 암호 입력:"
 
-#: ../blueman/main/applet/BluezAgent.py:235
+#: blueman/main/applet/BluezAgent.py:235
 msgid "Enter passkey"
 msgstr "통과키 입력"
 
-#: ../blueman/main/applet/BluezAgent.py:245
+#: blueman/main/applet/BluezAgent.py:245
 msgid "Pairing passkey for"
 msgstr "페어링 확인 키 "
 
-#: ../blueman/main/applet/BluezAgent.py:254
+#: blueman/main/applet/BluezAgent.py:254
 msgid "Pairing PIN code for"
 msgstr "페어링 확인 PIN 코드"
 
-#: ../blueman/main/applet/BluezAgent.py:266
+#: blueman/main/applet/BluezAgent.py:266
 msgid "Pairing request for:"
 msgstr "페어링 요청:"
 
-#: ../blueman/main/applet/BluezAgent.py:269
+#: blueman/main/applet/BluezAgent.py:269
 msgid "Confirm value for authentication:"
 msgstr "인증용 확인 값:"
 
-#: ../blueman/main/applet/BluezAgent.py:270
+#: blueman/main/applet/BluezAgent.py:270
 msgid "Confirm"
 msgstr "확인"
 
-#: ../blueman/main/applet/BluezAgent.py:270
-#: ../blueman/main/applet/BluezAgent.py:297
+#: blueman/main/applet/BluezAgent.py:270 blueman/main/applet/BluezAgent.py:297
 msgid "Deny"
 msgstr "거절"
 
-#: ../blueman/main/applet/BluezAgent.py:294
+#: blueman/main/applet/BluezAgent.py:294
 msgid "Authorization request for:"
 msgstr "인증 요청:"
 
-#: ../blueman/main/applet/BluezAgent.py:294
+#: blueman/main/applet/BluezAgent.py:294
 msgid "Service:"
 msgstr "서비스:"
 
-#: ../blueman/main/applet/BluezAgent.py:295
+#: blueman/main/applet/BluezAgent.py:295
 msgid "Always accept"
 msgstr "항상 허용"
 
-#: ../blueman/main/applet/BluezAgent.py:296
-#: ../blueman/plugins/applet/TransferService.py:118
+#: blueman/main/applet/BluezAgent.py:296
+#: blueman/plugins/applet/TransferService.py:118
 msgid "Accept"
 msgstr "수락"
 
-#: ../blueman/main/PluginManager.py:69
+#: blueman/main/PluginManager.py:69
 msgid ""
 "<b>An error has occured while loading a plugin. Please notify the developers "
 "with the content of this message to our </b>\n"
@@ -561,237 +553,237 @@ msgstr ""
 "<a href=\"http://github.com/blueman-project/blueman/issues\">알려주실 웹사이"
 "트입니다.</a>"
 
-#: ../blueman/Functions.py:76
+#: blueman/Functions.py:76
 msgid "Bluetooth Turned Off"
 msgstr "블루투스 꺼짐"
 
-#: ../blueman/Functions.py:77
+#: blueman/Functions.py:77
 msgid "Exit"
 msgstr ""
 
-#: ../blueman/Functions.py:78
+#: blueman/Functions.py:78
 msgid "Enable Bluetooth"
 msgstr "블루투스 활성화"
 
-#: ../blueman/Functions.py:97
+#: blueman/Functions.py:97
 msgid "Shall bluetooth get enabled automatically?"
 msgstr ""
 
-#: ../blueman/Functions.py:98
+#: blueman/Functions.py:98
 msgid "Yes"
 msgstr "예"
 
-#: ../blueman/Functions.py:99
+#: blueman/Functions.py:99
 msgid "No"
 msgstr "아니요"
 
-#: ../blueman/gui/manager/ManagerMenu.py:41
+#: blueman/gui/manager/ManagerMenu.py:41
 msgid "_Report a Problem"
 msgstr "문제 보고(_R)"
 
-#: ../blueman/gui/manager/ManagerMenu.py:53
-#: ../blueman/plugins/applet/StandardItems.py:80
+#: blueman/gui/manager/ManagerMenu.py:53
+#: blueman/plugins/applet/StandardItems.py:80
 msgid "Device Manager"
 msgstr "장치 관리자"
 
-#: ../blueman/gui/manager/ManagerMenu.py:60
+#: blueman/gui/manager/ManagerMenu.py:60
 msgid "Show _Toolbar"
 msgstr "도구 모음 보이기(_T)"
 
-#: ../blueman/gui/manager/ManagerMenu.py:65
+#: blueman/gui/manager/ManagerMenu.py:65
 msgid "Show _Statusbar"
 msgstr "상태 표시줄 보이기(_S)"
 
-#: ../blueman/gui/manager/ManagerMenu.py:75
+#: blueman/gui/manager/ManagerMenu.py:75
 msgid "S_ort By"
 msgstr "정렬 순서(_O)"
 
-#: ../blueman/gui/manager/ManagerMenu.py:82
+#: blueman/gui/manager/ManagerMenu.py:82
 msgid "_Name"
 msgstr "이름(_N)"
 
-#: ../blueman/gui/manager/ManagerMenu.py:87
+#: blueman/gui/manager/ManagerMenu.py:87
 msgid "_Added"
 msgstr "추가(_A)"
 
-#: ../blueman/gui/manager/ManagerMenu.py:101
+#: blueman/gui/manager/ManagerMenu.py:101
 msgid "_Descending"
 msgstr "내림차순(_D)"
 
-#: ../blueman/gui/manager/ManagerMenu.py:114
-#: ../blueman/plugins/applet/StandardItems.py:48
+#: blueman/gui/manager/ManagerMenu.py:114
+#: blueman/plugins/applet/StandardItems.py:48
 msgid "_Plugins"
 msgstr "플러그인(_P)"
 
-#: ../blueman/gui/manager/ManagerMenu.py:119
-#: ../blueman/plugins/applet/StandardItems.py:41
+#: blueman/gui/manager/ManagerMenu.py:119
+#: blueman/plugins/applet/StandardItems.py:41
 msgid "_Local Services"
 msgstr "로컬 서비스(_L)"
 
-#: ../blueman/gui/manager/ManagerMenu.py:121
-#: ../blueman/plugins/applet/StandardItems.py:86
+#: blueman/gui/manager/ManagerMenu.py:121
+#: blueman/plugins/applet/StandardItems.py:86
 msgid "Service Preferences"
 msgstr "서비스 기본 설정"
 
-#: ../blueman/gui/manager/ManagerMenu.py:129
+#: blueman/gui/manager/ManagerMenu.py:129
 msgid "_Search"
 msgstr "검색(_S)"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:438
+#: blueman/gui/manager/ManagerDeviceList.py:438
 msgid "<b>Trusted and Paired</b>"
 msgstr "<b>신뢰하며 페어링함</b>"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:440
+#: blueman/gui/manager/ManagerDeviceList.py:440
 msgid "<b>Paired</b>"
 msgstr "<b>페어링함</b>"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:442
+#: blueman/gui/manager/ManagerDeviceList.py:442
 msgid "<b>Trusted</b>"
 msgstr "<b>신뢰함</b>"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:462
+#: blueman/gui/manager/ManagerDeviceList.py:462
 msgid "Poor"
 msgstr "나쁨"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:464
-#: ../blueman/gui/manager/ManagerDeviceList.py:475
+#: blueman/gui/manager/ManagerDeviceList.py:464
+#: blueman/gui/manager/ManagerDeviceList.py:475
 msgid "Sub-optimal"
 msgstr "약간 최적"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:466
-#: ../blueman/gui/manager/ManagerDeviceList.py:477
+#: blueman/gui/manager/ManagerDeviceList.py:466
+#: blueman/gui/manager/ManagerDeviceList.py:477
 msgid "Optimal"
 msgstr "최적"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:468
+#: blueman/gui/manager/ManagerDeviceList.py:468
 msgid "Much"
 msgstr "많음"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:470
+#: blueman/gui/manager/ManagerDeviceList.py:470
 msgid "Too much"
 msgstr "매우 많음"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:473
+#: blueman/gui/manager/ManagerDeviceList.py:473
 msgid "Low"
 msgstr "낮음"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:479
+#: blueman/gui/manager/ManagerDeviceList.py:479
 msgid "High"
 msgstr "높음"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:481
+#: blueman/gui/manager/ManagerDeviceList.py:481
 msgid "Very High"
 msgstr "매우 높음"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:107
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:172
+#: blueman/gui/manager/ManagerDeviceMenu.py:107
+#: blueman/gui/manager/ManagerDeviceMenu.py:172
 msgid "Success!"
 msgstr "성공!"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:110
+#: blueman/gui/manager/ManagerDeviceMenu.py:110
 #, python-format
 msgid "Serial port connected to %s"
 msgstr "%s(으)로 직렬 포트 연결함"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:117
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:165
+#: blueman/gui/manager/ManagerDeviceMenu.py:117
+#: blueman/gui/manager/ManagerDeviceMenu.py:165
 msgid "Failed"
 msgstr "실패"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:122
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:168
+#: blueman/gui/manager/ManagerDeviceMenu.py:122
+#: blueman/gui/manager/ManagerDeviceMenu.py:168
 msgid "Connection Failed: "
 msgstr "연결 실패: "
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:145
+#: blueman/gui/manager/ManagerDeviceMenu.py:145
 msgid "Disconnection Failed: "
 msgstr "연결 끊기 실패:"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:186
+#: blueman/gui/manager/ManagerDeviceMenu.py:186
 msgid "Disconnecting..."
 msgstr "연결 끊는 중..."
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:244
+#: blueman/gui/manager/ManagerDeviceMenu.py:244
 msgid "_<b>Connect</b>"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:246
+#: blueman/gui/manager/ManagerDeviceMenu.py:246
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr "자동 연결 프로파일 A2DP 소스, A2DP 싱크 및 HID에 연결합니다."
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:250
+#: blueman/gui/manager/ManagerDeviceMenu.py:250
 msgid "_<b>Disconnect</b>"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:251
+#: blueman/gui/manager/ManagerDeviceMenu.py:251
 msgid "Forcefully disconnect the device"
 msgstr "강제로 장치 연결 끊기"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:282
+#: blueman/gui/manager/ManagerDeviceMenu.py:282
 msgid "<b>Connect To:</b>"
 msgstr "<b>연결 대상:</b>"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:294
+#: blueman/gui/manager/ManagerDeviceMenu.py:294
 msgid "<b>Disconnect:</b>"
 msgstr "<b>연결 취소:</b>"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:314
+#: blueman/gui/manager/ManagerDeviceMenu.py:314
 msgid "Send a _File..."
 msgstr "파일 보내기(_F)..."
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:327
+#: blueman/gui/manager/ManagerDeviceMenu.py:327
 msgid "_Pair"
 msgstr "페어링(_P)"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:337
+#: blueman/gui/manager/ManagerDeviceMenu.py:337
 msgid "_Trust"
 msgstr "신뢰함(_T)"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:342
+#: blueman/gui/manager/ManagerDeviceMenu.py:342
 msgid "_Untrust"
 msgstr "신뢰하지 않음(_U)"
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:348
+#: blueman/gui/manager/ManagerDeviceMenu.py:348
 msgid "_Set up…"
 msgstr ""
 
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:383
+#: blueman/gui/manager/ManagerDeviceMenu.py:383
 msgid "_Remove..."
 msgstr "제거(_R)..."
 
-#: ../blueman/gui/manager/ManagerProgressbar.py:42
+#: blueman/gui/manager/ManagerProgressbar.py:42
 msgid "Cancel Operation"
 msgstr "작업 취소"
 
-#: ../blueman/gui/manager/ManagerStats.py:30
-#: ../blueman/gui/manager/ManagerStats.py:33
+#: blueman/gui/manager/ManagerStats.py:30
+#: blueman/gui/manager/ManagerStats.py:33
 msgid "Data activity indication"
 msgstr "데이터 활동 표시"
 
-#: ../blueman/gui/manager/ManagerStats.py:35
-#: ../blueman/gui/manager/ManagerStats.py:45
+#: blueman/gui/manager/ManagerStats.py:35
+#: blueman/gui/manager/ManagerStats.py:45
 msgid "Total data received and rate of transmission"
 msgstr "총 데이터 수신 및 전송 속도"
 
-#: ../blueman/gui/manager/ManagerStats.py:39
-#: ../blueman/gui/manager/ManagerStats.py:43
+#: blueman/gui/manager/ManagerStats.py:39
+#: blueman/gui/manager/ManagerStats.py:43
 msgid "Total data sent and rate of transmission"
 msgstr "총 데이터 전송 및 전송 속도"
 
-#: ../blueman/gui/manager/ManagerToolbar.py:28
-#: ../blueman/gui/manager/ManagerToolbar.py:89
+#: blueman/gui/manager/ManagerToolbar.py:28
+#: blueman/gui/manager/ManagerToolbar.py:89
 msgid "Untrust"
 msgstr "신뢰 중지"
 
-#: ../blueman/gui/DeviceSelectorDialog.py:12
+#: blueman/gui/DeviceSelectorDialog.py:12
 msgid "Select Device"
 msgstr "장치 선택"
 
-#: ../blueman/gui/MessageArea.py:38
+#: blueman/gui/MessageArea.py:38
 msgid "More"
 msgstr "더 보기"
 
-#: ../blueman/gui/CommonUi.py:41
+#: blueman/gui/CommonUi.py:41
 msgid "translator-credits"
 msgstr ""
 "Elex https://launchpad.net/~mysticzizone\n"
@@ -803,25 +795,25 @@ msgstr ""
 "MATE Desktop Environment Team <https://www.transifex.com/mate/teams/13566/ko/"
 ">"
 
-#: ../blueman/gui/CommonUi.py:46
+#: blueman/gui/CommonUi.py:46
 msgid "Blueman is a GTK+ Bluetooth manager"
 msgstr "블루맨은 GTK+ 블루투스 관리자입니다"
 
-#: ../blueman/gui/GsmSettings.py:28
+#: blueman/gui/GsmSettings.py:28
 msgid "GSM Settings"
 msgstr "GSM 설정"
 
-#: ../blueman/gui/applet/PluginDialog.py:92
-#: ../blueman/plugins/applet/StandardItems.py:92
+#: blueman/gui/applet/PluginDialog.py:92
+#: blueman/plugins/applet/StandardItems.py:92
 msgid "Plugins"
 msgstr "플러그인"
 
-#: ../blueman/gui/applet/PluginDialog.py:284
-#: ../blueman/gui/applet/PluginDialog.py:306
+#: blueman/gui/applet/PluginDialog.py:284
+#: blueman/gui/applet/PluginDialog.py:306
 msgid "Dependency issue"
 msgstr "의존성 문제"
 
-#: ../blueman/gui/applet/PluginDialog.py:286
+#: blueman/gui/applet/PluginDialog.py:286
 #, python-format
 msgid ""
 "Plugin <b>\"%(0)s\"</b> depends on <b>%(1)s</b>. Unloading <b>%(1)s</b> will "
@@ -832,7 +824,7 @@ msgstr ""
 "를 취소하면 <b>\"%(0)s\"</b> 불러오기도 취소합니다.\n"
 "계속할까요?"
 
-#: ../blueman/gui/applet/PluginDialog.py:308
+#: blueman/gui/applet/PluginDialog.py:308
 #, python-format
 msgid ""
 "Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will "
@@ -843,205 +835,205 @@ msgstr ""
 "를 취소하면 <b>%(0)s</b> 불러오기도 취소합니다.\n"
 "계속할까요?"
 
-#: ../blueman/gui/DeviceSelectorWidget.py:38
+#: blueman/gui/DeviceSelectorWidget.py:38
 msgid "Adapter selection"
 msgstr "어댑터 선택"
 
 #. translators: device class
-#: ../blueman/DeviceClass.py:40 ../blueman/DeviceClass.py:64
+#: blueman/DeviceClass.py:40 blueman/DeviceClass.py:64
 msgid "uncategorized"
 msgstr "분류 안함"
 
 #. translators: device class
-#: ../blueman/DeviceClass.py:42
+#: blueman/DeviceClass.py:42
 msgid "desktop"
 msgstr "데스크톱"
 
 #. translators: device class
-#: ../blueman/DeviceClass.py:44
+#: blueman/DeviceClass.py:44
 msgid "server"
 msgstr "서버"
 
 #. translators: device class
-#: ../blueman/DeviceClass.py:46
+#: blueman/DeviceClass.py:46
 msgid "laptop"
 msgstr "랩톱"
 
 #. translators: device class
-#: ../blueman/DeviceClass.py:48
+#: blueman/DeviceClass.py:48
 msgid "handheld"
 msgstr "휴대장비"
 
 #. translators: device class
-#: ../blueman/DeviceClass.py:50
+#: blueman/DeviceClass.py:50
 msgid "palm"
 msgstr "Palm"
 
 #. translators: device class
-#: ../blueman/DeviceClass.py:66
+#: blueman/DeviceClass.py:66
 msgid "cellular"
 msgstr "휴대폰"
 
 #. translators: device class
-#: ../blueman/DeviceClass.py:68
+#: blueman/DeviceClass.py:68
 msgid "cordless"
 msgstr "무선"
 
 #. translators: device class
-#: ../blueman/DeviceClass.py:70
+#: blueman/DeviceClass.py:70
 msgid "smart phone"
 msgstr "스마트폰"
 
 #. translators: device class
-#: ../blueman/DeviceClass.py:72
+#: blueman/DeviceClass.py:72
 msgid "modem"
 msgstr "모뎀"
 
 #. translators: device class
-#: ../blueman/DeviceClass.py:74
+#: blueman/DeviceClass.py:74
 msgid "isdn"
 msgstr "ISDN"
 
 #. translators: device class
-#: ../blueman/DeviceClass.py:111
+#: blueman/DeviceClass.py:111
 msgid "headset"
 msgstr "헤드셋"
 
 #. translators: device class
-#: ../blueman/DeviceClass.py:113
+#: blueman/DeviceClass.py:113
 msgid "handsfree"
 msgstr "핸즈프리"
 
 #. translators: device class
-#: ../blueman/DeviceClass.py:115 ../blueman/DeviceClass.py:247
-#: ../blueman/DeviceClass.py:311
+#: blueman/DeviceClass.py:115 blueman/DeviceClass.py:247
+#: blueman/DeviceClass.py:311
 msgid "unknown"
 msgstr "알 수 없음"
 
 #. translators: device class
-#: ../blueman/DeviceClass.py:117
+#: blueman/DeviceClass.py:117
 msgid "microphone"
 msgstr "마이크"
 
 #. translators: device class
-#: ../blueman/DeviceClass.py:142
+#: blueman/DeviceClass.py:142
 msgid "keyboard"
 msgstr "키보드"
 
 #. translators: device class
-#: ../blueman/DeviceClass.py:144
+#: blueman/DeviceClass.py:144
 msgid "pointing"
 msgstr "포인팅 장치"
 
-#: ../blueman/Sdp.py:127
+#: blueman/Sdp.py:127
 msgid "Dialup Networking (DUN)"
 msgstr "전화 접속 네트워킹(DUN)"
 
-#: ../blueman/Sdp.py:134
+#: blueman/Sdp.py:134
 msgid "Audio Source"
 msgstr "오디오 소스"
 
-#: ../blueman/Sdp.py:135
+#: blueman/Sdp.py:135
 msgid "Audio Sink"
 msgstr "오디오 싱크"
 
-#: ../blueman/Sdp.py:146
+#: blueman/Sdp.py:146
 msgid "Network Access Point"
 msgstr "네트워크 접근 지역"
 
-#: ../blueman/Sdp.py:147
+#: blueman/Sdp.py:147
 msgid "Group Network"
 msgstr "그룹 네트워크"
 
-#: ../blueman/Sdp.py:387
+#: blueman/Sdp.py:387
 msgid "Auto connect profiles"
 msgstr "자동 연결 프로필"
 
-#: ../blueman/Sdp.py:389
+#: blueman/Sdp.py:389
 msgid "Proprietary"
 msgstr "독점"
 
-#: ../blueman/plugins/manager/Info.py:15
+#: blueman/plugins/manager/Info.py:15
 msgid "yes"
 msgstr "예"
 
-#: ../blueman/plugins/manager/Info.py:15
+#: blueman/plugins/manager/Info.py:15
 msgid "no"
 msgstr "아니오"
 
-#: ../blueman/plugins/manager/Info.py:115
+#: blueman/plugins/manager/Info.py:115
 msgid "_Info"
 msgstr "정보(_I)"
 
-#: ../blueman/plugins/manager/Info.py:116
+#: blueman/plugins/manager/Info.py:116
 msgid "Show device information"
 msgstr "장치 정보 보이기"
 
-#: ../blueman/plugins/manager/Notes.py:53
+#: blueman/plugins/manager/Notes.py:53
 msgid "Send _note"
 msgstr "메모 보내기(_N)"
 
-#: ../blueman/plugins/manager/Notes.py:54
+#: blueman/plugins/manager/Notes.py:54
 msgid "Send a text note"
 msgstr "텍스트 메모 보내기"
 
-#: ../blueman/plugins/manager/PulseAudioProfile.py:88
+#: blueman/plugins/manager/PulseAudioProfile.py:88
 #, python-format
 msgid "Failed to change profile to %s"
 msgstr "%s 프로파일을 바꾸는데 실패했습니다."
 
-#: ../blueman/plugins/manager/PulseAudioProfile.py:129
+#: blueman/plugins/manager/PulseAudioProfile.py:129
 msgid "Audio Profile"
 msgstr "오디오 프로파일"
 
-#: ../blueman/plugins/manager/PulseAudioProfile.py:130
+#: blueman/plugins/manager/PulseAudioProfile.py:130
 msgid "Select audio profile for PulseAudio"
 msgstr "PulseAudio 오디오 프로파일을 선택"
 
-#: ../blueman/plugins/manager/Services.py:72
+#: blueman/plugins/manager/Services.py:72
 #, python-format
 msgid "Serial Port %s"
 msgstr "시리얼 포트 %s"
 
-#: ../blueman/plugins/manager/Services.py:85
+#: blueman/plugins/manager/Services.py:85
 msgid "Renew IP Address"
 msgstr "IP 주소 새로 고침"
 
-#: ../blueman/plugins/manager/Services.py:102
+#: blueman/plugins/manager/Services.py:102
 msgid "Dialup Settings"
 msgstr "전화 접속 설정"
 
-#: ../blueman/plugins/manager/Services.py:111
+#: blueman/plugins/manager/Services.py:111
 msgid "Serial Ports"
 msgstr "시리얼 포트"
 
-#: ../blueman/plugins/BasePlugin.py:37 ../blueman/plugins/BasePlugin.py:38
+#: blueman/plugins/BasePlugin.py:37 blueman/plugins/BasePlugin.py:38
 msgid "Unspecified"
 msgstr "지정 안함"
 
-#: ../blueman/plugins/applet/AutoConnect.py:36
-#: ../blueman/plugins/applet/RecentConns.py:232
-#: ../blueman/plugins/applet/PPPSupport.py:52
+#: blueman/plugins/applet/AutoConnect.py:36
+#: blueman/plugins/applet/RecentConns.py:232
+#: blueman/plugins/applet/PPPSupport.py:52
 msgid "Connected"
 msgstr "연결함"
 
-#: ../blueman/plugins/applet/AutoConnect.py:36
+#: blueman/plugins/applet/AutoConnect.py:36
 #, python-format
 msgid "Automatically connected to %(service)s on %(device)s"
 msgstr ""
 
-#: ../blueman/plugins/applet/NetUsage.py:160
-#: ../blueman/plugins/applet/NetUsage.py:269
-#: ../blueman/plugins/applet/NetUsage.py:274
+#: blueman/plugins/applet/NetUsage.py:160
+#: blueman/plugins/applet/NetUsage.py:269
+#: blueman/plugins/applet/NetUsage.py:274
 msgid "Connected:"
 msgstr "연결 됨:"
 
-#: ../blueman/plugins/applet/NetUsage.py:174
-#: ../blueman/plugins/applet/NetUsage.py:284
+#: blueman/plugins/applet/NetUsage.py:174
+#: blueman/plugins/applet/NetUsage.py:284
 msgid "Not Connected"
 msgstr "연결 안됨"
 
-#: ../blueman/plugins/applet/NetUsage.py:180
+#: blueman/plugins/applet/NetUsage.py:180
 msgid ""
 "No usage statistics are available yet. Try establishing a connection first "
 "and then check this page."
@@ -1049,31 +1041,31 @@ msgstr ""
 "사용량 통계를 아직 사용할 수 없습니다. 첫번째 연결을 설정하고 이 페이지를 다"
 "시 확인해보세요."
 
-#: ../blueman/plugins/applet/NetUsage.py:208
+#: blueman/plugins/applet/NetUsage.py:208
 msgid "day"
 msgid_plural "days"
 msgstr[0] "일"
 
-#: ../blueman/plugins/applet/NetUsage.py:209
+#: blueman/plugins/applet/NetUsage.py:209
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "시간"
 
-#: ../blueman/plugins/applet/NetUsage.py:210
+#: blueman/plugins/applet/NetUsage.py:210
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "분"
 
-#: ../blueman/plugins/applet/NetUsage.py:212
+#: blueman/plugins/applet/NetUsage.py:212
 #, python-format
 msgid "%d %s %d %s and %d %s"
 msgstr "%d %s %d %s 그리고 %d %s"
 
-#: ../blueman/plugins/applet/NetUsage.py:246
+#: blueman/plugins/applet/NetUsage.py:246
 msgid "Are you sure you want to reset the counter?"
 msgstr "정말 카운터를 초기화할까요?"
 
-#: ../blueman/plugins/applet/NetUsage.py:291
+#: blueman/plugins/applet/NetUsage.py:291
 msgid ""
 "Allows you to monitor your (mobile broadband) network traffic usage. Useful "
 "for limited data access plans. This plugin tracks every device seperately."
@@ -1081,30 +1073,30 @@ msgstr ""
 "(모바일 브로드밴드) 네트워크 사용량을 감시할 수 있게 합니다. 제한된 데이터 요"
 "금제 사용시 유용합니다. 이 프러그인은 모든 장치를 따로 추적합니다."
 
-#: ../blueman/plugins/applet/NetUsage.py:311
+#: blueman/plugins/applet/NetUsage.py:311
 msgid "Network _Usage"
 msgstr "네트워크 사용(_U)"
 
-#: ../blueman/plugins/applet/NetUsage.py:312
+#: blueman/plugins/applet/NetUsage.py:312
 msgid "Shows network traffic usage"
 msgstr "네트워크 트래픽 표시"
 
-#: ../blueman/plugins/applet/StatusIcon.py:32
-#: ../blueman/plugins/applet/StatusIcon.py:54
-#: ../blueman/plugins/applet/ShowConnected.py:60
-#: ../blueman/plugins/applet/ShowConnected.py:62
+#: blueman/plugins/applet/StatusIcon.py:32
+#: blueman/plugins/applet/StatusIcon.py:54
+#: blueman/plugins/applet/ShowConnected.py:60
+#: blueman/plugins/applet/ShowConnected.py:62
 msgid "Bluetooth Enabled"
 msgstr "블루투스 켜짐"
 
-#: ../blueman/plugins/applet/StatusIcon.py:57
+#: blueman/plugins/applet/StatusIcon.py:57
 msgid "Bluetooth Disabled"
 msgstr "블루투스 꺼짐"
 
-#: ../blueman/plugins/applet/Networking.py:16
+#: blueman/plugins/applet/Networking.py:16
 msgid "Manages local network services, like NAP bridges"
 msgstr "NAP 브릿지 같은 로컬 네트워크 서비스를 관리합니다"
 
-#: ../blueman/plugins/applet/NMDUNSupport.py:14
+#: blueman/plugins/applet/NMDUNSupport.py:14
 msgid ""
 "Provides support for Dial Up Networking (DUN) with ModemManager and "
 "NetworkManager"
@@ -1112,126 +1104,126 @@ msgstr ""
 "모뎀 매니저(ModemManager)와 네트워크 매니저(NetworkManager)는 전화 접속 네트"
 "워킹(DUN)을 지원합니다"
 
-#: ../blueman/plugins/applet/RecentConns.py:57
+#: blueman/plugins/applet/RecentConns.py:57
 msgid ""
 "Provides a menu item that contains last used connections for quick access"
 msgstr ""
 "빠른 접근을 위해 마지막으로 사용한 연결을 포함한 메뉴 항목을 제공합니다"
 
 #. the maximum number of items RecentConns menu will display
-#: ../blueman/plugins/applet/RecentConns.py:68
+#: blueman/plugins/applet/RecentConns.py:68
 msgid "Maximum items"
 msgstr "최대 항목"
 
-#: ../blueman/plugins/applet/RecentConns.py:69
+#: blueman/plugins/applet/RecentConns.py:69
 msgid "The maximum number of items recent connections menu will display."
 msgstr "최근 접속 메뉴의 최대 숫자가 곧 나타납니다."
 
-#: ../blueman/plugins/applet/RecentConns.py:80
+#: blueman/plugins/applet/RecentConns.py:80
 msgid "Recent _Connections"
 msgstr "최근 연결(_C)"
 
-#: ../blueman/plugins/applet/RecentConns.py:232
+#: blueman/plugins/applet/RecentConns.py:232
 #, python-format
 msgid "Connected to %s"
 msgstr "%s에 연결함"
 
-#: ../blueman/plugins/applet/RecentConns.py:238
+#: blueman/plugins/applet/RecentConns.py:238
 msgid "Failed to connect"
 msgstr "연결 실패"
 
-#: ../blueman/plugins/applet/RecentConns.py:257
+#: blueman/plugins/applet/RecentConns.py:257
 #, python-format
 msgid "%(service)s on %(device)s"
 msgstr "%(device)s의 %(service)s"
 
-#: ../blueman/plugins/applet/RecentConns.py:261
+#: blueman/plugins/applet/RecentConns.py:261
 msgid "Adapter for this connection is not available"
 msgstr "이 연결에 대해 존재하는 어댑터가 없습니다."
 
-#: ../blueman/plugins/applet/NMPANSupport.py:14
+#: blueman/plugins/applet/NMPANSupport.py:14
 msgid ""
 "Provides support for Personal Area Networking (PAN) introduced in "
 "NetworkManager 0.8"
 msgstr "NetworkManager 0.8에서 도입한 PAN 지원을 제공합니다"
 
-#: ../blueman/plugins/applet/DBusService.py:17
+#: blueman/plugins/applet/DBusService.py:17
 msgid "Provides DBus API for other Blueman components"
 msgstr "블루투스 구성 요소를 위한 DBus API를 제공합니다"
 
-#: ../blueman/plugins/applet/TransferService.py:115
+#: blueman/plugins/applet/TransferService.py:115
 msgid "Incoming file over Bluetooth"
 msgstr "블루투스로 들어온 파일"
 
-#: ../blueman/plugins/applet/TransferService.py:116
+#: blueman/plugins/applet/TransferService.py:116
 #, python-format
 msgid "Incoming file %(0)s from %(1)s"
 msgstr "파일 %(1)s에서 %(0)s(으)로 수신중"
 
-#: ../blueman/plugins/applet/TransferService.py:118
+#: blueman/plugins/applet/TransferService.py:118
 msgid "Reject"
 msgstr "거절"
 
-#: ../blueman/plugins/applet/TransferService.py:125
+#: blueman/plugins/applet/TransferService.py:125
 msgid "Receiving file"
 msgstr "파일 수신 중"
 
-#: ../blueman/plugins/applet/TransferService.py:126
+#: blueman/plugins/applet/TransferService.py:126
 #, python-format
 msgid "Receiving file %(0)s from %(1)s"
 msgstr "파일 %(1)s에서 %(0)s(으)로 수신중"
 
-#: ../blueman/plugins/applet/TransferService.py:145
+#: blueman/plugins/applet/TransferService.py:145
 msgid "Provides OBEX file transfer capabilities"
 msgstr "OBEX 파일 전송 기능 제공"
 
-#: ../blueman/plugins/applet/TransferService.py:168
+#: blueman/plugins/applet/TransferService.py:168
 msgid "Configured directory for incoming files does not exist"
 msgstr "받아오는 파일을 위해 설정한 디렉토리가 없습니다"
 
-#: ../blueman/plugins/applet/TransferService.py:169
+#: blueman/plugins/applet/TransferService.py:169
 #, python-format
 msgid ""
 "Please make sure that directory \"<b>%s</b>\" exists or configure it with "
 "blueman-services. Until then the default \"%s\" will be used"
 msgstr ""
 
-#: ../blueman/plugins/applet/TransferService.py:299
+#: blueman/plugins/applet/TransferService.py:299
 msgid "File received"
 msgstr "파일 수신함"
 
-#: ../blueman/plugins/applet/TransferService.py:300
+#: blueman/plugins/applet/TransferService.py:300
 #, python-format
 msgid "File %(0)s from %(1)s successfully received"
 msgstr "파일 %(1)s에서 %(0)s(으)로 정상적으로 수신됨"
 
-#: ../blueman/plugins/applet/TransferService.py:308
+#: blueman/plugins/applet/TransferService.py:308
 msgid "Transfer failed"
 msgstr "전송 실패"
 
-#: ../blueman/plugins/applet/TransferService.py:309
+#: blueman/plugins/applet/TransferService.py:309
 #, python-format
 msgid "Transfer of file %(0)s failed"
 msgstr "%(0)s 파일 전송 실패"
 
-#: ../blueman/plugins/applet/TransferService.py:328
-#: ../blueman/plugins/applet/TransferService.py:337
+#: blueman/plugins/applet/TransferService.py:328
+#: blueman/plugins/applet/TransferService.py:337
 msgid "Files received"
 msgstr "파일 수신함"
 
-#: ../blueman/plugins/applet/TransferService.py:329
+#: blueman/plugins/applet/TransferService.py:329
 #, python-format
 msgid "Received %d file in the background"
 msgid_plural "Received %d files in the background"
 msgstr[0] "파일 %d개를 백그라운드에서 수신함"
 
-#: ../blueman/plugins/applet/TransferService.py:338
+#: blueman/plugins/applet/TransferService.py:338
 #, python-format
 msgid "Received %d more file in the background"
 msgid_plural "Received %d more files in the background"
 msgstr[0] "파일 %d개 이상을 백그라운드에서 수신함"
 
-#: ../blueman/plugins/applet/KillSwitch.py:38
+#: blueman/plugins/applet/KillSwitch.py:38
 msgid ""
 "Toggles a platform Bluetooth killswitch when Bluetooth power state changes "
 "(Useless with USB dongles) and makes sure a status icon is shown if there is "
@@ -1241,59 +1233,59 @@ msgstr ""
 "을 표시하고 블루투스 종료 스위치는 있지만 어댑터가 없으면 상태 아이콘이 표시"
 "되나 확인합니다."
 
-#: ../blueman/plugins/applet/StandardItems.py:17
+#: blueman/plugins/applet/StandardItems.py:17
 msgid "Adds standard menu items to the status icon menu"
 msgstr "상태 아이콘 메뉴에 표준 메뉴 항목을 추가합니다"
 
-#: ../blueman/plugins/applet/StandardItems.py:25
+#: blueman/plugins/applet/StandardItems.py:25
 msgid "_Set Up New Device"
 msgstr "새 장치 설정(_S)"
 
-#: ../blueman/plugins/applet/StandardItems.py:30
+#: blueman/plugins/applet/StandardItems.py:30
 msgid "Send _Files to Device"
 msgstr "장치에 파일 보내기(_F)"
 
-#: ../blueman/plugins/applet/StandardItems.py:35
+#: blueman/plugins/applet/StandardItems.py:35
 msgid "_Devices"
 msgstr "장치(_D)"
 
-#: ../blueman/plugins/applet/StandardItems.py:38
+#: blueman/plugins/applet/StandardItems.py:38
 msgid "Adap_ters"
 msgstr "어뎁터(_T)"
 
-#: ../blueman/plugins/applet/StandardItems.py:89
+#: blueman/plugins/applet/StandardItems.py:89
 msgid "applet"
 msgstr "애플릿"
 
-#: ../blueman/plugins/applet/AuthAgent.py:9
+#: blueman/plugins/applet/AuthAgent.py:9
 msgid "Provides passkey, authentication services for BlueZ daemon"
 msgstr "blueZ 데몬용 패스키, 인증 서비스를 제공합니다"
 
-#: ../blueman/plugins/applet/ExitItem.py:12
+#: blueman/plugins/applet/ExitItem.py:12
 msgid "Adds an exit menu item to quit the applet"
 msgstr "애플릿을 끝낼 나가기 메뉴 항목을 추가합니다"
 
-#: ../blueman/plugins/applet/DhcpClient.py:14
+#: blueman/plugins/applet/DhcpClient.py:14
 msgid "Provides a basic dhcp client for Bluetooth PAN connections."
 msgstr "블루투스 PAN 연결용 기본 DHCP 클라이언트를 제공합니다."
 
-#: ../blueman/plugins/applet/DhcpClient.py:45
-#: ../blueman/plugins/applet/DhcpClient.py:53
-#: ../blueman/plugins/applet/DhcpClient.py:58
+#: blueman/plugins/applet/DhcpClient.py:45
+#: blueman/plugins/applet/DhcpClient.py:53
+#: blueman/plugins/applet/DhcpClient.py:58
 msgid "Bluetooth Network"
 msgstr "블루투스 네트워크"
 
-#: ../blueman/plugins/applet/DhcpClient.py:46
+#: blueman/plugins/applet/DhcpClient.py:46
 #, python-format
 msgid "Interface %(0)s bound to IP address %(1)s"
 msgstr "%(0)s 인터페이스가 %(1)s IP 주소를 잡았습니다"
 
-#: ../blueman/plugins/applet/DhcpClient.py:53
+#: blueman/plugins/applet/DhcpClient.py:53
 #, python-format
 msgid "Failed to obtain an IP address on %s"
 msgstr "%s에서 IP 주소를 가져오는데 실패했습니다"
 
-#: ../blueman/plugins/applet/DhcpClient.py:58
+#: blueman/plugins/applet/DhcpClient.py:58
 #, python-format
 msgid ""
 "Trying to obtain an IP address on %s\n"
@@ -1302,7 +1294,7 @@ msgstr ""
 "%s에서 IP주소를 가져오려고 합니다\n"
 "잠시만 기다려 주세요…"
 
-#: ../blueman/plugins/applet/ShowConnected.py:13
+#: blueman/plugins/applet/ShowConnected.py:13
 msgid ""
 "Adds an indication on the status icon when Bluetooth is active and shows the "
 "number of connections in the tooltip."
@@ -1310,21 +1302,21 @@ msgstr ""
 "블루투스가 활성중이고 도구 표시줄에 몇가지 연결이 나타날 때 상태 아이콘 표시"
 "를 추가합니다."
 
-#: ../blueman/plugins/applet/ShowConnected.py:48
+#: blueman/plugins/applet/ShowConnected.py:48
 msgid "Bluetooth Active"
 msgstr "블루투스 활성"
 
-#: ../blueman/plugins/applet/ShowConnected.py:49
+#: blueman/plugins/applet/ShowConnected.py:49
 #, python-format
 msgid "<b>%d Active Connection</b>"
 msgid_plural "<b>%d Active Connections</b>"
 msgstr[0] "<b>활성 연결 %d개</b>"
 
-#: ../blueman/plugins/applet/AppIndicator.py:15
+#: blueman/plugins/applet/AppIndicator.py:15
 msgid "Uses libappindicator to show a statusicon"
 msgstr "상태 아이콘을 표시할 때 libappindicator 활용"
 
-#: ../blueman/plugins/applet/DiscvManager.py:15
+#: blueman/plugins/applet/DiscvManager.py:15
 msgid ""
 "Provides a menu item for making the default adapter temporarily visible when "
 "it is set to hidden by default"
@@ -1332,33 +1324,33 @@ msgstr ""
 "기본으로 숨김 설정했을때 기본 어댑터를 임시로 보이게 하는 메뉴 항목을 제공합"
 "니다"
 
-#: ../blueman/plugins/applet/DiscvManager.py:25
+#: blueman/plugins/applet/DiscvManager.py:25
 msgid "Discoverable timeout"
 msgstr "발견 제한 시간을 초과하였습니다"
 
-#: ../blueman/plugins/applet/DiscvManager.py:26
+#: blueman/plugins/applet/DiscvManager.py:26
 msgid "Amount of time in seconds discoverable mode will last"
 msgstr "발견 가능 상태를 지속할 초 단위 시간입니다"
 
-#: ../blueman/plugins/applet/DiscvManager.py:32
+#: blueman/plugins/applet/DiscvManager.py:32
 msgid "_Make Discoverable"
 msgstr "발견 가능한 상태로 만들기(_M)"
 
-#: ../blueman/plugins/applet/DiscvManager.py:33
+#: blueman/plugins/applet/DiscvManager.py:33
 msgid "Make the default adapter temporarily visible"
 msgstr "기본 어댑터를 임시로 보이게 합니다"
 
-#: ../blueman/plugins/applet/DiscvManager.py:57
+#: blueman/plugins/applet/DiscvManager.py:57
 #, python-format
 msgid "Discoverable… %ss"
 msgstr "탐색 가능… %ss"
 
-#: ../blueman/plugins/applet/Menu.py:91
+#: blueman/plugins/applet/Menu.py:91
 msgid ""
 "Provides a menu for the applet and an API for other plugins to manipulate it"
 msgstr "애플릿과 다른 플러그인을 다룬  API에서 메뉴를 제공합니다"
 
-#: ../blueman/plugins/applet/PPPSupport.py:49
+#: blueman/plugins/applet/PPPSupport.py:49
 #, python-format
 msgid ""
 "Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\n"
@@ -1367,20 +1359,20 @@ msgstr ""
 "<b>%(0)s</b>의 <b>DUN</b> 서비스 연결에 성공했습니다.\n"
 "이제 <b>%(1)s</b>(으)로 네트워크를 사용할 수 있습니다"
 
-#: ../blueman/plugins/applet/PPPSupport.py:57
+#: blueman/plugins/applet/PPPSupport.py:57
 msgid "Provides basic support for connecting to the internet via DUN profile."
 msgstr "DUN 프로파일을 통해 인터넷으로 연결하는 기본 지원을 제공합니다."
 
-#: ../blueman/plugins/applet/SerialManager.py:22
+#: blueman/plugins/applet/SerialManager.py:22
 msgid ""
 "Standard SPP profile connection handler, allows executing custom actions"
 msgstr "표준 SPP 프로파일 연결 처리자는 사용자 정의 동작 실행을 허용합니다"
 
-#: ../blueman/plugins/applet/SerialManager.py:31
+#: blueman/plugins/applet/SerialManager.py:31
 msgid "Script to execute on connection"
 msgstr "연결할 때 실행할 스크립트"
 
-#: ../blueman/plugins/applet/SerialManager.py:32
+#: blueman/plugins/applet/SerialManager.py:32
 msgid ""
 "<span size=\"small\">The following arguments will be passed:\n"
 "Address, Name, service name, uuid16s, rfcomm node\n"
@@ -1397,22 +1389,22 @@ msgstr ""
 "\n"
 "장치 연결 차잔 스크립트는 HUP신호를 보냅니다</span>"
 
-#: ../blueman/plugins/applet/SerialManager.py:63
+#: blueman/plugins/applet/SerialManager.py:63
 msgid "Serial port connected"
 msgstr "시리얼 포트에 연결했습니다"
 
-#: ../blueman/plugins/applet/SerialManager.py:64
+#: blueman/plugins/applet/SerialManager.py:64
 #, python-format
 msgid ""
 "Serial port service on device <b>%s</b> now will be available via <b>%s</b>"
 msgstr ""
 "<b>%s</b> 장치의 시리얼 포트 서비스는 이제 <b>%s</b>(으)로 사용할 수 있습니다"
 
-#: ../blueman/plugins/applet/SerialManager.py:114
+#: blueman/plugins/applet/SerialManager.py:114
 msgid "Serial port connection script failed"
 msgstr "시리얼 포트 연결 스크립트 실행에 실패했습니다"
 
-#: ../blueman/plugins/applet/SerialManager.py:115
+#: blueman/plugins/applet/SerialManager.py:115
 #, python-format
 msgid ""
 "There was a problem launching script %s\n"
@@ -1421,58 +1413,58 @@ msgstr ""
 "%s 스크립트를 실행하는데 문제가 있습니다\n"
 "%s"
 
-#: ../blueman/plugins/applet/PowerManager.py:15
+#: blueman/plugins/applet/PowerManager.py:15
 msgid "Controls Bluetooth adapter power states"
 msgstr "블루투스 어댑터 전원 상태를 제어합니다"
 
-#: ../blueman/plugins/applet/PowerManager.py:28
+#: blueman/plugins/applet/PowerManager.py:28
 msgid "Auto power-on"
 msgstr "자동 전원 켜기"
 
-#: ../blueman/plugins/applet/PowerManager.py:29
+#: blueman/plugins/applet/PowerManager.py:29
 msgid "Automatically power on adapters"
 msgstr "어댑터의 전원을 자동으로 켭니다"
 
-#: ../blueman/plugins/applet/PowerManager.py:38
-#: ../blueman/plugins/applet/PowerManager.py:166
+#: blueman/plugins/applet/PowerManager.py:38
+#: blueman/plugins/applet/PowerManager.py:166
 msgid "<b>Turn Bluetooth _Off</b>"
 msgstr "<b>블루투스 끄기(_O)</b>"
 
-#: ../blueman/plugins/applet/PowerManager.py:39
-#: ../blueman/plugins/applet/PowerManager.py:168
+#: blueman/plugins/applet/PowerManager.py:39
+#: blueman/plugins/applet/PowerManager.py:168
 msgid "Turn off all adapters"
 msgstr "모든 어댑터를 끕니다"
 
-#: ../blueman/plugins/applet/PowerManager.py:157
+#: blueman/plugins/applet/PowerManager.py:157
 msgid "<b>Turn Bluetooth _On</b>"
 msgstr "<b>블루투스 켜기(_O)</b>"
 
-#: ../blueman/plugins/applet/PowerManager.py:159
+#: blueman/plugins/applet/PowerManager.py:159
 msgid "Turn on all adapters"
 msgstr "모든 어댑터 켜기"
 
-#: ../blueman/plugins/applet/GameControllerWakelock.py:19
+#: blueman/plugins/applet/GameControllerWakelock.py:19
 msgid ""
 "Temporarily suspends the screensaver when a bluetooth game controller is "
 "connected."
 msgstr ""
 "블루트스 게임 컨트롤러가 연결되어 있을 땐 스크린 세이버를 잠시 미룹니다."
 
-#: ../blueman/plugins/services/Network.py:24
-#: ../blueman/plugins/services/Network.py:49
+#: blueman/plugins/services/Network.py:24
+#: blueman/plugins/services/Network.py:49
 msgid "Network"
 msgstr "네트워크"
 
-#: ../blueman/plugins/services/Network.py:99
+#: blueman/plugins/services/Network.py:99
 msgid "Invalid IP address"
 msgstr "잘못된 IP 주소 입니다"
 
-#: ../blueman/plugins/services/Network.py:104
+#: blueman/plugins/services/Network.py:104
 #, python-format
 msgid "IP address conflicts with interface %s which has the same address"
 msgstr "같은 주소를 가진 %s 인터페이스와 IP 주소가 충돌합니다"
 
-#: ../blueman/plugins/services/Network.py:112
+#: blueman/plugins/services/Network.py:112
 #, python-format
 msgid ""
 "IP address overlaps with subnet of interface %s, which has the following "
@@ -1480,103 +1472,122 @@ msgid ""
 "This may cause incorrect network behavior"
 msgstr ""
 
-#: ../blueman/plugins/services/Network.py:239
-#: ../blueman/plugins/services/Network.py:248
+#: blueman/plugins/services/Network.py:239
+#: blueman/plugins/services/Network.py:248
 msgid "Not currently supported with this setup"
 msgstr "이 설정을 현재 지원하지 않습니다"
 
-#: ../blueman/plugins/services/Transfer.py:17
+#: blueman/plugins/services/Transfer.py:17
 msgid "Transfer"
 msgstr "전송"
 
-#: ../blueman/plugins/services/Transfer.py:33
+#: blueman/plugins/services/Transfer.py:33
 msgid "Applet's transfer service plugin is disabled"
 msgstr "애플릿 전송 서비스 플러그인을 비활성화했습니다"
 
-#: ../data/configs/org.blueman.policy.in.h:1
+#: data/blueman-adapters.desktop.in:4
+#, fuzzy
+#| msgid "Bluetooth Adapters"
+msgid "Set Bluetooth Adapter Properties"
+msgstr "블루투스 어댑터"
+
+#: data/blueman-adapters.desktop.in:6
+msgid "blueman-device"
+msgstr ""
+
+#: data/blueman.desktop.in:3
+#, fuzzy
+#| msgid "applet"
+msgid "Blueman Applet"
+msgstr "애플릿"
+
+#: data/blueman.desktop.in:4 data/blueman-manager.desktop.in:4
+#, fuzzy
+#| msgid "Blueman is a GTK+ Bluetooth manager"
+msgid "Blueman Bluetooth Manager"
+msgstr "블루맨은 GTK+ 블루투스 관리자입니다"
+
+#: data/blueman.desktop.in:5 data/blueman-manager.desktop.in:5
+#: data/thunar-sendto-blueman.desktop.in:6
+msgid "blueman"
+msgstr ""
+
+#: data/blueman-manager.desktop.in:3
+#, fuzzy
+#| msgid "Bluetooth Enabled"
+msgid "Bluetooth Manager"
+msgstr "블루투스 켜짐"
+
+#: data/thunar-sendto-blueman.desktop.in:5
+#, fuzzy
+#| msgid "Bluetooth Devices"
+msgid "Bluetooth Device"
+msgstr "블루투스 장치"
+
+#: data/configs/org.blueman.policy.in:10
 msgid "Configure Bluetooth Network"
 msgstr "블루투스 네트워크 설정"
 
-#: ../data/configs/org.blueman.policy.in.h:2
+#: data/configs/org.blueman.policy.in:11
 msgid "Configuring networking requires privileges"
 msgstr "네트워크 설정에 권한이 필요합니다"
 
-#: ../data/configs/org.blueman.policy.in.h:3
+#: data/configs/org.blueman.policy.in:19
 msgid "Launch DHCP client"
 msgstr "DHCP 클라이언트 실행"
 
-#: ../data/configs/org.blueman.policy.in.h:4
+#: data/configs/org.blueman.policy.in:20
 msgid "Launching DHCP client requires privileges"
 msgstr "DHCP 클라이언트 실행에 권한이 필요합니다"
 
-#: ../data/configs/org.blueman.policy.in.h:5
+#: data/configs/org.blueman.policy.in:28
 msgid "Launch PPP daemon"
 msgstr "PPP 대몬 실행"
 
-#: ../data/configs/org.blueman.policy.in.h:6
+#: data/configs/org.blueman.policy.in:29
 msgid "Launching PPP daemon requires privileges"
 msgstr "PPP 대몬 실행에는 관지라 권한이 필요합니다"
 
-#: ../data/configs/org.blueman.policy.in.h:7
+#: data/configs/org.blueman.policy.in:37
 msgid "Set RfKill State"
 msgstr "RfKill 상태 설정"
 
-#: ../data/configs/org.blueman.policy.in.h:8
+#: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr "RfKill을 설정하려면 관리자 권한이 있어야 합니다"
 
-#: ../apps/blueman-sendto.in:35
-msgid "Bluetooth needs to be turned on for file sending to work"
-msgstr "파일 전송을 동작하게 하려면 블루투스를 켜야 합니다"
+#~ msgid "Bluetooth needs to be turned on for file sending to work"
+#~ msgstr "파일 전송을 동작하게 하려면 블루투스를 켜야 합니다"
 
-#: ../apps/blueman-sendto.in:101
-msgid "Select files to send"
-msgstr "보낼 파일을 선택하십시오"
+#~ msgid "Select files to send"
+#~ msgstr "보낼 파일을 선택하십시오"
 
-#: ../apps/blueman-sendto.in:131
-msgid "Send files to this device"
-msgstr "이 장치에 파일 전송"
+#~ msgid "Send files to this device"
+#~ msgstr "이 장치에 파일 전송"
 
-#: ../apps/blueman-sendto.in:133
-msgid "Source adapter. Takes address or adapter's name eg. hci0"
-msgstr "원본 어댑터입니다. 주소 또는 어댑터 이름을 부여하십시오(예: hcl0)"
+#~ msgid "Source adapter. Takes address or adapter's name eg. hci0"
+#~ msgstr "원본 어댑터입니다. 주소 또는 어댑터 이름을 부여하십시오(예: hcl0)"
 
-#: ../apps/blueman-sendto.in:134
-msgid "Delete files on exit"
-msgstr "끝낼 때 파일 지우기"
+#~ msgid "Delete files on exit"
+#~ msgstr "끝낼 때 파일 지우기"
 
-#: ../apps/blueman-sendto.in:136
-msgid "Files to be send to the bluetooth device"
-msgstr "블루투스 장치로 보낼 파일"
+#~ msgid "Files to be send to the bluetooth device"
+#~ msgstr "블루투스 장치로 보낼 파일"
 
-#: ../apps/blueman-assistant.in:53
-msgid "Bluetooth needs to be turned on for the Bluetooth assistant to work"
-msgstr "블루투스 도우미를 동작하게 하려면 블루투스를 켜야 합니다"
+#~ msgid "Bluetooth needs to be turned on for the Bluetooth assistant to work"
+#~ msgstr "블루투스 도우미를 동작하게 하려면 블루투스를 켜야 합니다"
 
-#: ../apps/blueman-assistant.in:101
-msgid "No adapters found"
-msgstr "어댑터를 찾지 못했습니다"
+#~ msgid "No adapters found"
+#~ msgstr "어댑터를 찾지 못했습니다"
 
-#: ../apps/blueman-assistant.in:190
-msgid "<b>Pairing in progress...</b>"
-msgstr "<b>페어링 중입니다...</b>"
+#~ msgid "<b>Pairing in progress...</b>"
+#~ msgstr "<b>페어링 중입니다...</b>"
 
-#: ../apps/blueman-assistant.in:199
-msgid "<b>Failed to add device</b>"
-msgstr "<b>장치 추가 실패</b>"
+#~ msgid "<b>Failed to add device</b>"
+#~ msgstr "<b>장치 추가 실패</b>"
 
-#: ../apps/blueman-assistant.in:220
-msgid "Don't connect"
-msgstr "연결 안함"
+#~ msgid "Don't connect"
+#~ msgstr "연결 안함"
 
-#: ../apps/blueman-assistant.in:235
-msgid "<b>Device added and connected successfully</b>"
-msgstr ""
-
-#: ../apps/blueman-assistant.in:240
-msgid "<b>Device added successfully, but failed to connect</b>"
-msgstr ""
-
-#: ../apps/blueman-assistant.in:251
-msgid "Start configuration assistant for this device"
-msgstr "이 장치의 설정 도우미 시작"
+#~ msgid "Start configuration assistant for this device"
+#~ msgstr "이 장치의 설정 도우미 시작"
