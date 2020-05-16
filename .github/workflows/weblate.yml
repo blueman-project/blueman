@@ -12,8 +12,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - run: sudo apt-get install intltool curl
-      - run: intltool-update --pot
+      - run: sudo apt-get install gettext curl
+      - run: /usr/bin/xgettext --default-domain=blueman --directory=.. --from-code=UTF-8 --add-comments --files-from=./POTFILES.in --output=blueman.pot
         working-directory: po
       - env:
           TOKEN: ${{ secrets.WEBLATE_KEY }}
