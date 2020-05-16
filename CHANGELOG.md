@@ -4,12 +4,15 @@
 
 ### Changes
 * Force cython to use python language version 3
+* Do not use exitcode 1 when we expect to fail
+* Use apply button for transfer options
 
 ### Bugs fixed
 * Fix tooltip not updating when bluetooth is disabled
 * Fix dbus timeout in DhcClient
 * Call the right method when pulseaudio crashes
 * Handle os.remove failing
+* Fix device removal handling (@Yannik)
 
 ## 2.1.2
 
