@@ -46,12 +46,12 @@ class BluemanAdapters(Gtk.Window):
 
         check_single_instance("blueman-adapters", lambda time: self.present_with_time(time))
 
-        check_bluetooth_status(_("Bluetooth needs to be turned on for the adapter manager to work"), lambda: exit())
+        check_bluetooth_status(_("Bluetooth needs to be turned on for the adapter manager to work"), bmexit)
 
         adapters = self.manager.get_adapters()
         if not adapters:
             logging.error('No adapter(s) found')
-            exit(1)
+            bmexit()
 
         self.manager.connect_signal('adapter-added', self.on_adapter_added)
         self.manager.connect_signal('adapter-removed', self.on_adapter_removed)

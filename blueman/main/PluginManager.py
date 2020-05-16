@@ -5,6 +5,7 @@ import logging
 import traceback
 import importlib
 
+from blueman.Functions import bmexit
 from blueman.main.Config import Config
 from blueman.gui.CommonUi import ErrorDialog
 
@@ -160,7 +161,7 @@ class PluginManager(GObject.GObject):
         except Exception:
             logging.error("Failed to load %s" % cls.__name__, exc_info=True)
             if not cls.__unloadable__:
-                os._exit(1)
+                bmexit()
 
             raise  # NOTE TO SELF: might cause bugs
 

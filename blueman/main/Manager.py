@@ -106,7 +106,7 @@ class Blueman(Gtk.Window):
                 self.Applet = AppletService()
             except DBusProxyFailed:
                 print("Blueman applet needs to be running")
-                exit()
+                bmexit()
 
             check_bluetooth_status(_("Bluetooth needs to be turned on for the device manager to function"),
                                    lambda: Gtk.main_quit())
@@ -120,7 +120,7 @@ class Blueman(Gtk.Window):
                     manager.get_adapter(None)
                 except bluez.errors.DBusNoSuchAdapterError:
                     logging.error('No adapter(s) found, exiting')
-                    exit(1)
+                    bmexit()
 
             self._applet_sig = self.Applet.connect('g-signal', on_applet_signal)
 
