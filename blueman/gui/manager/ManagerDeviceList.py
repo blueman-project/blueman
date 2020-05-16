@@ -562,3 +562,10 @@ class ManagerDeviceList(DeviceList):
                 cell.set_property("surface", surface)
             else:
                 cell.set_property("surface", None)
+
+    def add_device(self, device: Device) -> None:
+        if "Name" not in device and self.Config["hide-unnamed"]:
+            logging.info(f"Hiding unnamed device: {device['Address']}")
+            return
+
+        super().add_device(device)

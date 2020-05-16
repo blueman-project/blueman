@@ -75,6 +75,11 @@ class ManagerMenu:
         view_menu.append(item_statusbar)
         self.blueman.Config.bind_to_widget("show-statusbar", item_statusbar, "active")
 
+        item_unnamed = Gtk.CheckMenuItem.new_with_mnemonic(_("Hide _unnamed devices"))
+        item_unnamed.show()
+        view_menu.append(item_unnamed)
+        self.blueman.Config.bind_to_widget("hide-unnamed", item_unnamed, "active")
+
         item_services: Gtk.MenuItem = Gtk.SeparatorMenuItem()
         view_menu.append(item_services)
         item_services.show()
@@ -211,6 +216,8 @@ class ManagerMenu:
             else:
                 if not self._sort_type_item.props.active:
                     self._sort_type_item.props.active = False
+        elif key == "hide-unnamed":
+            self.blueman.List.display_known_devices()
 
     def on_device_selected(self, _lst: ManagerDeviceList, device: Device, tree_iter: Gtk.TreeIter) -> None:
         if tree_iter and device:
