@@ -32,7 +32,7 @@ class SendTo:
     def __init__(self, parsed_args):
         setup_icon_path()
 
-        check_bluetooth_status(_("Bluetooth needs to be turned on for file sending to work"), lambda: exit())
+        check_bluetooth_status(_("Bluetooth needs to be turned on for file sending to work"), bmexit)
 
         if not parsed_args.files:
             self.files = self.select_files()
@@ -47,7 +47,7 @@ class SendTo:
 
         if len(adapters) == 0:
             logging.error("Error: No Adapters present")
-            exit()
+            bmexit()
 
         if parsed_args.source is not None:
             try:
@@ -72,14 +72,14 @@ class SendTo:
 
         if parsed_args.device is None:
             if not self.select_device():
-                exit()
+                bmexit()
 
             self.do_send()
 
         else:
             d = manager.find_device(parsed_args.device, self.adapter_path)
             if d is None:
-                exit("Unknown bluetooth device")
+                bmexit("Unknown bluetooth device")
 
             self.device = d
             self.do_send()
@@ -87,7 +87,7 @@ class SendTo:
     def do_send(self):
         if not self.files:
             logging.warning("No files to send")
-            exit()
+            bmexit()
 
         sender = Sender(self.device, self.adapter_path, self.files)
 

@@ -53,7 +53,7 @@ from gi.repository import GLib
 from gi.repository import Gio
 
 
-__all__ = ["check_bluetooth_status", "launch", "setup_icon_path", "get_icon",
+__all__ = ["check_bluetooth_status", "launch", "setup_icon_path", "get_icon", "bmexit",
            "get_notification_icon", "adapter_path_to_name", "e_", "opacify_pixbuf", "composite_icon",
            "format_bytes", "create_menuitem", "get_lockfile", "get_pid", "is_running", "check_single_instance", "kill",
            "have", "set_proc_title", "create_logger", "create_parser", "open_rfcomm"]
@@ -318,7 +318,7 @@ def check_single_instance(name, unhide_func=None):
                     f.write("%s\n%s" % (str(pid), str(time)))
 
                 os.kill(pid, signal.SIGUSR1)
-                exit()
+                bmexit()
         else:
             remove_file(lockfile)
 
@@ -329,7 +329,7 @@ def check_single_instance(name, unhide_func=None):
         os.close(fd)
     except OSError:
         print("There is an instance already running")
-        exit()
+        bmexit()
 
     atexit.register(lambda: remove_file(lockfile))
 
@@ -417,3 +417,7 @@ def open_rfcomm(file, mode):
             return open_rfcomm(file, mode)
         else:
             raise
+
+
+def bmexit(msg=None):
+    raise SystemExit(msg)
