@@ -6,11 +6,14 @@
 
 * Drop blueman-report
 * Raise minimum Python version to 3.6
+* Do not use exitcode 1 when we expect to fail
+* Use apply button for transfer options
 
 ### Bugs fixed
 
 * Pairing with pincode
 * Handle os.remove failing
+* Fix disconnecting NMDevice
 
 ## 2.1.1
 
