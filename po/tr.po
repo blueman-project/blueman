@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-16 22:05+0000\n"
-"PO-Revision-Date: 2020-04-17 17:11+0000\n"
+"POT-Creation-Date: 2020-05-17 08:04+0000\n"
+"PO-Revision-Date: 2020-05-17 08:04+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/blueman/blueman/"
 "tr/>\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.0.1-dev\n"
+"X-Generator: Weblate 4.1-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -398,8 +398,9 @@ msgid ""
 "This probably means that there were no Bluetooth adapters detected or "
 "Bluetooth daemon was not started."
 msgstr ""
-"Bluez programı çalışmıyor, blueman-manager çalışmayı durdurdu.\n"
-"Büyük olasılıkla Bluetooth adaptörü takılmadı veya Bluetooth devredışı."
+"Bluez arka plan programı çalışmıyor, blueman-manager devam edemiyor.\n"
+"Bu muhtemelen Bluetooth bağdaştırıcısının algılanmadığı veya Bluetooth arka "
+"plan programının başlatılmadığı anlamına gelir."
 
 #: blueman/main/Manager.py:190
 msgid "Searching"
@@ -555,9 +556,9 @@ msgid ""
 "with the content of this message to our </b>\n"
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgstr ""
-"<b>Eklenti yüklenmesi sırasında bir hata meydana geldi. Lütfen "
-"geliştiricilere bu mesajın içeriği ile bildirimde bulunun, </b>\n"
-"<a href=\"http://github.com/blueman-project/blueman/issues\">sitemizde.</a>"
+"<b>Eklenti yüklenirken bir hata oluştu. Lütfen bu mesajın içeriği ile "
+"birlikte geliştiricilere bildirin: </b>\n"
+"<a href=\"http://github.com/blueman-project/blueman/issues\">web sitemiz</a>"
 
 #: blueman/Functions.py:76
 msgid "Bluetooth Turned Off"
@@ -1276,15 +1277,16 @@ msgstr "Adaptörler"
 
 #: blueman/plugins/applet/StandardItems.py:89
 msgid "applet"
-msgstr "programcık"
+msgstr "uygulama"
 
 #: blueman/plugins/applet/AuthAgent.py:9
 msgid "Provides passkey, authentication services for BlueZ daemon"
-msgstr "BlueZ hizmeti için passkey ve kimlik doğrulama servisi sağlar"
+msgstr ""
+"BlueZ arka plan programı için passkey ve kimlik doğrulama servisi sağlar"
 
 #: blueman/plugins/applet/ExitItem.py:12
 msgid "Adds an exit menu item to quit the applet"
-msgstr "Eklentiden çıkmak için çıkış menüsü iconu ekle"
+msgstr "Uygulamadan çıkmak için çıkış menüsü ögesi ekle"
 
 #: blueman/plugins/applet/DhcpClient.py:14
 msgid "Provides a basic dhcp client for Bluetooth PAN connections."
@@ -1371,8 +1373,7 @@ msgstr "Keşfedilebilir… %ss"
 msgid ""
 "Provides a menu for the applet and an API for other plugins to manipulate it"
 msgstr ""
-"Uygulamacık için bir menü ve diğer eklentilerin ona erişmesi için bir API "
-"sağlar"
+"Uygulama için bir menü ve diğer eklentilerin ona erişmesi için bir API sağlar"
 
 #: blueman/plugins/applet/PPPSupport.py:49
 #, python-format
@@ -1515,46 +1516,36 @@ msgstr "Transfer"
 
 #: blueman/plugins/services/Transfer.py:33
 msgid "Applet's transfer service plugin is disabled"
-msgstr "Programın transfer servis eklentisi devredışı"
+msgstr "Uygulamanın aktarım hizmeti eklentisi devre dışı"
 
 #: data/blueman-adapters.desktop.in:4
-#, fuzzy
-#| msgid "Bluetooth Adapters"
 msgid "Set Bluetooth Adapter Properties"
-msgstr "Bluetooth Aygıtları"
+msgstr "Bluetooth Aygıtı Özelliklerini Ayarla"
 
 #: data/blueman-adapters.desktop.in:6
 msgid "blueman-device"
-msgstr ""
+msgstr "blueman-device"
 
 #: data/blueman.desktop.in:3
-#, fuzzy
-#| msgid "applet"
 msgid "Blueman Applet"
-msgstr "programcık"
+msgstr "Blueman Uygulaması"
 
 #: data/blueman.desktop.in:4 data/blueman-manager.desktop.in:4
-#, fuzzy
-#| msgid "Blueman is a GTK+ Bluetooth manager"
 msgid "Blueman Bluetooth Manager"
-msgstr "Blueman, bir GTK+ Bluetooth yönetimi aracıdır"
+msgstr "Blueman Bluetooth Yöneticisi"
 
 #: data/blueman.desktop.in:5 data/blueman-manager.desktop.in:5
 #: data/thunar-sendto-blueman.desktop.in:6
 msgid "blueman"
-msgstr ""
+msgstr "blueman"
 
 #: data/blueman-manager.desktop.in:3
-#, fuzzy
-#| msgid "Bluetooth Enabled"
 msgid "Bluetooth Manager"
-msgstr "Bluetooth Etkin"
+msgstr "Bluetooth Yöneticisi"
 
 #: data/thunar-sendto-blueman.desktop.in:5
-#, fuzzy
-#| msgid "Bluetooth Devices"
 msgid "Bluetooth Device"
-msgstr "Bluetooth Aygıtları"
+msgstr "Bluetooth Aygıtı"
 
 #: data/configs/org.blueman.policy.in:10
 msgid "Configure Bluetooth Network"
@@ -1574,11 +1565,11 @@ msgstr "DHCP istemcisini başlatmak yetki gerektirir"
 
 #: data/configs/org.blueman.policy.in:28
 msgid "Launch PPP daemon"
-msgstr "PPP art-servisini başlat"
+msgstr "PPP arka plan programını başlat"
 
 #: data/configs/org.blueman.policy.in:29
 msgid "Launching PPP daemon requires privileges"
-msgstr "PPP art-servisinin başlatılması özel haklar gerektirir"
+msgstr "PPP arka plan programının başlatılması özel haklar gerektirir"
 
 #: data/configs/org.blueman.policy.in:37
 msgid "Set RfKill State"
