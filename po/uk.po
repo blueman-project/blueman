@@ -13,17 +13,19 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-17 08:14+0000\n"
-"PO-Revision-Date: 2020-04-14 10:14+0000\n"
-"Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
-"Language-Team: Ukrainian (http://www.transifex.com/mate/MATE/language/uk/)\n"
+"PO-Revision-Date: 2020-05-19 14:13+0000\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <https://hosted.weblate.org/projects/blueman/"
+"blueman/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != "
-"11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
-"100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
-"(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 "
+"? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > "
+"14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % "
+"100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
+"X-Generator: Weblate 4.1-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -710,7 +712,7 @@ msgstr "Не вдалося під’єднатися: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:145
 msgid "Disconnection Failed: "
-msgstr "Помилка від’єднання:"
+msgstr "Помилка від’єднання: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:186
 msgid "Disconnecting..."
@@ -718,7 +720,7 @@ msgstr "Від’єднання..."
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:244
 msgid "_<b>Connect</b>"
-msgstr ""
+msgstr "<b>З'_єднатися</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:246
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
@@ -727,7 +729,7 @@ msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:250
 msgid "_<b>Disconnect</b>"
-msgstr ""
+msgstr "_<b>Від'єднатися</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:251
 msgid "Forcefully disconnect the device"
@@ -759,7 +761,7 @@ msgstr "_Ненадійний"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:348
 msgid "_Set up…"
-msgstr ""
+msgstr "_Налаштувати…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:383
 msgid "_Remove..."
@@ -1040,7 +1042,7 @@ msgstr "Під’єднано"
 #: blueman/plugins/applet/AutoConnect.py:36
 #, python-format
 msgid "Automatically connected to %(service)s on %(device)s"
-msgstr ""
+msgstr "Автоматично з'єднано із %(service)s на %(device)s"
 
 #: blueman/plugins/applet/NetUsage.py:160
 #: blueman/plugins/applet/NetUsage.py:269
@@ -1150,7 +1152,7 @@ msgstr "Щонайбільша кількість елементів"
 
 #: blueman/plugins/applet/RecentConns.py:69
 msgid "The maximum number of items recent connections menu will display."
-msgstr "Щонайбільша кількість елементів у меню переліку останніх під’єднань"
+msgstr "Найбільша кількість елементів у меню переліку останніх з’єднань."
 
 #: blueman/plugins/applet/RecentConns.py:80
 msgid "Recent _Connections"
@@ -1222,6 +1224,9 @@ msgid ""
 "Please make sure that directory \"<b>%s</b>\" exists or configure it with "
 "blueman-services. Until then the default \"%s\" will be used"
 msgstr ""
+"Будь ласка, переконайтеся, що існує каталог «<b>%s</b>» або налаштуйте його "
+"за допомогою blueman-services. Аж до моменту налаштування, буде використано "
+"«%s»"
 
 #: blueman/plugins/applet/TransferService.py:299
 msgid "File received"
@@ -1335,7 +1340,7 @@ msgid ""
 "Please wait…"
 msgstr ""
 "Спроба отримати IP адресу на %s\n"
-"Будь ласка, зачекайте..."
+"Будь ласка, зачекайте…"
 
 #: blueman/plugins/applet/ShowConnected.py:13
 msgid ""
@@ -1368,7 +1373,7 @@ msgid ""
 "it is set to hidden by default"
 msgstr ""
 "Додає пункт меню, що дозволяє робити основний адаптер видимим для зовнішніх "
-"пристроїв, коли типово встановлено режим невидимости."
+"пристроїв, коли типово встановлено режим невидимості"
 
 #: blueman/plugins/applet/DiscvManager.py:25
 msgid "Discoverable timeout"
@@ -1471,11 +1476,11 @@ msgstr "Контролювати стан живлення адаптера blue
 
 #: blueman/plugins/applet/PowerManager.py:28
 msgid "Auto power-on"
-msgstr "Самочинне увімкнення "
+msgstr "Автоматичне вмикання"
 
 #: blueman/plugins/applet/PowerManager.py:29
 msgid "Automatically power on adapters"
-msgstr "Самочинне увімкнення адаптерів "
+msgstr "Автоматичне увімкнення адаптерів"
 
 #: blueman/plugins/applet/PowerManager.py:38
 #: blueman/plugins/applet/PowerManager.py:166
@@ -1524,6 +1529,9 @@ msgid ""
 "configuration  %s/%s\n"
 "This may cause incorrect network behavior"
 msgstr ""
+"IP-адреса перекривається із підмережею інтерфейсу %s, яка має таке "
+"налаштування: %s/%s\n"
+"Це може призвести до некоректної поведінки мережі"
 
 #: blueman/plugins/services/Network.py:239
 #: blueman/plugins/services/Network.py:248
@@ -1539,43 +1547,33 @@ msgid "Applet's transfer service plugin is disabled"
 msgstr "Програмний втулок передачі файлів вимкнено"
 
 #: data/blueman-adapters.desktop.in:4
-#, fuzzy
-#| msgid "Bluetooth Adapters"
 msgid "Set Bluetooth Adapter Properties"
-msgstr "Адаптери Bluetooth"
+msgstr "Встановити властивості адаптера Bluetooth"
 
 #: data/blueman-adapters.desktop.in:6
 msgid "blueman-device"
-msgstr ""
+msgstr "blueman-device"
 
 #: data/blueman.desktop.in:3
-#, fuzzy
-#| msgid "applet"
 msgid "Blueman Applet"
-msgstr "аплет"
+msgstr "Аплет Blueman"
 
 #: data/blueman.desktop.in:4 data/blueman-manager.desktop.in:4
-#, fuzzy
-#| msgid "Blueman is a GTK+ Bluetooth manager"
 msgid "Blueman Bluetooth Manager"
-msgstr "Blueman – це розпорядник Bluetooth, побудований на базі GTK+"
+msgstr "Blueman — засіб керування Bluetooth"
 
 #: data/blueman.desktop.in:5 data/blueman-manager.desktop.in:5
 #: data/thunar-sendto-blueman.desktop.in:6
 msgid "blueman"
-msgstr ""
+msgstr "blueman"
 
 #: data/blueman-manager.desktop.in:3
-#, fuzzy
-#| msgid "Bluetooth Enabled"
 msgid "Bluetooth Manager"
-msgstr "Bluetooth увімкнено"
+msgstr "Засіб керування Bluetooth"
 
 #: data/thunar-sendto-blueman.desktop.in:5
-#, fuzzy
-#| msgid "Bluetooth Devices"
 msgid "Bluetooth Device"
-msgstr "Пристрої Bluetooth"
+msgstr "Пристрій Bluetooth"
 
 #: data/configs/org.blueman.policy.in:10
 msgid "Configure Bluetooth Network"
