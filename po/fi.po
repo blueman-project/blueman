@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-17 08:14+0000\n"
-"PO-Revision-Date: 2020-04-01 05:14+0000\n"
+"PO-Revision-Date: 2020-06-05 12:28+0000\n"
 "Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/blueman/blueman/"
 "fi/>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.0-dev\n"
+"X-Generator: Weblate 4.1-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -566,7 +566,7 @@ msgstr "Bluetooth pois päältä"
 
 #: blueman/Functions.py:77
 msgid "Exit"
-msgstr ""
+msgstr "Lopeta"
 
 #: blueman/Functions.py:78
 msgid "Enable Bluetooth"
@@ -574,7 +574,7 @@ msgstr "Ota bluetooth käyttöön"
 
 #: blueman/Functions.py:97
 msgid "Shall bluetooth get enabled automatically?"
-msgstr ""
+msgstr "Otetaanko bluetooth automaattisesti käyttöön?"
 
 #: blueman/Functions.py:98
 msgid "Yes"
@@ -712,17 +712,15 @@ msgstr "Katkaistaan yhteyttä..."
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:244
 msgid "_<b>Connect</b>"
-msgstr ""
+msgstr "_<b>Yhdistä</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:246
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr "Yhdistää automaattisen yhteysprofiilin A2DP-lähde, A2DP-nielu ja HID"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:250
-#, fuzzy
-#| msgid "<b>Disconnect:</b>"
 msgid "_<b>Disconnect</b>"
-msgstr "<b>Katkaise:</b>"
+msgstr "_<b>Katkaise yhteys</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:251
 msgid "Forcefully disconnect the device"
@@ -753,10 +751,8 @@ msgid "_Untrust"
 msgstr "_Epäluotettava"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:348
-#, fuzzy
-#| msgid "_Setup..."
 msgid "_Set up…"
-msgstr "_Asetukset..."
+msgstr "_Aseta ylös…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:383
 msgid "_Remove..."
@@ -1038,6 +1034,7 @@ msgstr "Yhdistetty"
 #, python-format
 msgid "Automatically connected to %(service)s on %(device)s"
 msgstr ""
+"Yhdistetty automaattisesti palveluun %(service)s ja laitteeseen %(device)s"
 
 #: blueman/plugins/applet/NetUsage.py:160
 #: blueman/plugins/applet/NetUsage.py:269
@@ -1528,7 +1525,7 @@ msgstr "Aseta Bluetooth-sovittimen ominaisuudet"
 
 #: data/blueman-adapters.desktop.in:6
 msgid "blueman-device"
-msgstr ""
+msgstr "blueman-laite"
 
 #: data/blueman.desktop.in:3
 msgid "Blueman Applet"
@@ -1541,7 +1538,7 @@ msgstr "Blueman bluetooth-hallinta"
 #: data/blueman.desktop.in:5 data/blueman-manager.desktop.in:5
 #: data/thunar-sendto-blueman.desktop.in:6
 msgid "blueman"
-msgstr ""
+msgstr "blueman"
 
 #: data/blueman-manager.desktop.in:3
 msgid "Bluetooth Manager"
