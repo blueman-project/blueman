@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-17 08:14+0000\n"
-"PO-Revision-Date: 2020-04-17 17:11+0000\n"
+"PO-Revision-Date: 2020-06-05 12:28+0000\n"
 "Last-Translator: george k <norhorn@gmail.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/blueman/blueman/el/"
 ">\n"
@@ -26,7 +26,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.0.1-dev\n"
+"X-Generator: Weblate 4.1-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -189,7 +189,7 @@ msgstr "<b>Λήψη Αρχείου (Object Push)</b>"
 
 #: data/ui/services-transfer.ui:37
 msgid "Incoming Folder:"
-msgstr "Φάκελος εισερχομένων"
+msgstr "Φάκελος εισερχομένων:"
 
 #: data/ui/services-transfer.ui:49
 msgid "Select folder for incoming file transfers"
@@ -384,7 +384,7 @@ msgstr[1] "%d Λεπτά"
 
 #: blueman/main/Adapter.py:212
 msgid "Adapter"
-msgstr "Προσαρμογέας "
+msgstr "Προσαρμογέας"
 
 #: blueman/main/Manager.py:31
 msgid "Bluetooth Devices"
@@ -409,7 +409,7 @@ msgstr ""
 "Η διεργασία παρασκηνίου Bluez δεν εκτελείται, ο διαχειριστής blueman-manager "
 "δεν μπορεί να συνεχίσει.\n"
 "Αυτό πιθανότατα σημαίνει ότι δεν βρεθήκαν προσαρμογείς Bluetooth στο σύστημά "
-"σας ή ότι η διεργασία παρασκηνίου για το Bluetooth δεν ξεκίνησε. "
+"σας ή ότι η διεργασία παρασκηνίου για το Bluetooth δεν ξεκίνησε."
 
 #: blueman/main/Manager.py:190
 msgid "Searching"
@@ -443,6 +443,7 @@ msgstr "Το obexd δεν είναι διαθέσιμο"
 #: blueman/main/Sendto.py:118
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
 msgstr ""
+"Η αυτόματη εκκίνηση της υπηρεσίας obex απέτυχε. Βεβαιωθείτε ότι εκτελείται"
 
 #: blueman/main/Sendto.py:147
 msgid "Cancelling"
@@ -510,7 +511,7 @@ msgstr "Εισάγετε τον κωδικό PIN"
 
 #: blueman/main/applet/BluezAgent.py:234
 msgid "Enter passkey for authentication:"
-msgstr "Εισαγάγετε φράσης-κλειδιού πρόσβασης για την αυθεντικοποίηση"
+msgstr "Εισάγετε φράση-κλειδιού πρόσβασης για την αυθεντικοποίηση:"
 
 #: blueman/main/applet/BluezAgent.py:235
 msgid "Enter passkey"
@@ -574,7 +575,7 @@ msgstr "Το Bluetooth έχει απενεργοποιηθεί"
 
 #: blueman/Functions.py:77
 msgid "Exit"
-msgstr ""
+msgstr "Έξοδος"
 
 #: blueman/Functions.py:78
 msgid "Enable Bluetooth"
@@ -582,7 +583,7 @@ msgstr "Ενεργοποίηση Bluetooth"
 
 #: blueman/Functions.py:97
 msgid "Shall bluetooth get enabled automatically?"
-msgstr ""
+msgstr "Να ενεργοποιείται αυτόματα το bluetooth;"
 
 #: blueman/Functions.py:98
 msgid "Yes"
@@ -619,7 +620,7 @@ msgstr "_Όνομα"
 
 #: blueman/gui/manager/ManagerMenu.py:87
 msgid "_Added"
-msgstr "Προστιθεμένο "
+msgstr "_ Προστέθηκε"
 
 #: blueman/gui/manager/ManagerMenu.py:101
 msgid "_Descending"
@@ -708,11 +709,11 @@ msgstr "Αποτυχία"
 #: blueman/gui/manager/ManagerDeviceMenu.py:122
 #: blueman/gui/manager/ManagerDeviceMenu.py:168
 msgid "Connection Failed: "
-msgstr "Η σύνδεση απέτυχε:"
+msgstr "Η σύνδεση απέτυχε: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:145
 msgid "Disconnection Failed: "
-msgstr "Αποτυχία αποσύνδεσης"
+msgstr "Αποτυχία αποσύνδεσης: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:186
 msgid "Disconnecting..."
@@ -720,15 +721,15 @@ msgstr "Γίνεται αποσύνδεση..."
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:244
 msgid "_<b>Connect</b>"
-msgstr ""
+msgstr "_<b>Σύνδεση</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:246
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
-msgstr "Συνδέει τα προφίλ αυτόματης σύνδεσης πηγής στοιχείου A2DP και HID "
+msgstr "Συνδέει τα προφίλ αυτόματης σύνδεσης A2DP source, A2DP sink, και HID"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:250
 msgid "_<b>Disconnect</b>"
-msgstr ""
+msgstr "_<b>Αποσύνδεση</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:251
 msgid "Forcefully disconnect the device"
@@ -760,7 +761,7 @@ msgstr "_Μη έμπιστη"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:348
 msgid "_Set up…"
-msgstr ""
+msgstr "_Ρύθμιση…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:383
 msgid "_Remove..."
@@ -768,7 +769,7 @@ msgstr "_Αφαίρεση..."
 
 #: blueman/gui/manager/ManagerProgressbar.py:42
 msgid "Cancel Operation"
-msgstr "Ακύρωση λειτουργίας."
+msgstr "Ακύρωση λειτουργίας"
 
 #: blueman/gui/manager/ManagerStats.py:30
 #: blueman/gui/manager/ManagerStats.py:33
@@ -886,7 +887,7 @@ msgstr "υπολογιστής παλάμης"
 #. translators: device class
 #: blueman/DeviceClass.py:50
 msgid "palm"
-msgstr "palm"
+msgstr "μέγεθος παλάμης"
 
 #. translators: device class
 #: blueman/DeviceClass.py:66
@@ -1039,7 +1040,7 @@ msgstr "Συνδεδεμένο"
 #: blueman/plugins/applet/AutoConnect.py:36
 #, python-format
 msgid "Automatically connected to %(service)s on %(device)s"
-msgstr ""
+msgstr "Αυτόματη σύνδεση στο %(service)s του %(device)s"
 
 #: blueman/plugins/applet/NetUsage.py:160
 #: blueman/plugins/applet/NetUsage.py:269
@@ -1094,7 +1095,7 @@ msgid ""
 msgstr ""
 "Σας επιτρέπει να ελέγχετε την κίνηση χρήσης του δικτύου σας (mobile "
 "broadband). Αυτό είναι χρήσιμο για συμβόλαια με περιορισμένη πρόσβαση "
-"δεδομένων. Αυτή η προσθήκη ελέγχει κάθε συσκευή ξεχωριστά. "
+"δεδομένων. Αυτή η προσθήκη ελέγχει κάθε συσκευή ξεχωριστά."
 
 #: blueman/plugins/applet/NetUsage.py:311
 msgid "Network _Usage"
@@ -1214,6 +1215,8 @@ msgid ""
 "Please make sure that directory \"<b>%s</b>\" exists or configure it with "
 "blueman-services. Until then the default \"%s\" will be used"
 msgstr ""
+"Βεβαιωθείτε ότι ο κατάλογος \"<b>%s</b>\" υπάρχει ή ρυθμίστε τον με τις "
+"υπηρεσίες του blueman. Μέχρι τότε θα χρησιμοποιηθεί η προεπιλογή \"%s\""
 
 #: blueman/plugins/applet/TransferService.py:299
 msgid "File received"
@@ -1264,9 +1267,7 @@ msgstr ""
 
 #: blueman/plugins/applet/StandardItems.py:17
 msgid "Adds standard menu items to the status icon menu"
-msgstr ""
-"Προσθέτει πρότυπα αντικείμενα του καταλόγου της εφαρμογής στον κατάλογο του "
-"εικονιδίου κατάστασης "
+msgstr "Προσθέτει τυπικά στοιχεία μενού στο μενού εικονιδίων κατάστασης"
 
 #: blueman/plugins/applet/StandardItems.py:25
 msgid "_Set Up New Device"
@@ -1391,7 +1392,7 @@ msgid ""
 "Provides a menu for the applet and an API for other plugins to manipulate it"
 msgstr ""
 "Παρέχει ένα μενού για την μικροεφαρμογή και ένα API για χειρισμό της από "
-"άλλα πρόσθετα."
+"άλλα πρόσθετα"
 
 #: blueman/plugins/applet/PPPSupport.py:49
 #, python-format
@@ -1405,7 +1406,7 @@ msgstr ""
 #: blueman/plugins/applet/PPPSupport.py:57
 msgid "Provides basic support for connecting to the internet via DUN profile."
 msgstr ""
-"Παρέχει βασική υποστήριξη για σύνδεση στο internet μέσω ενός προφίλ DUN"
+"Παρέχει βασική υποστήριξη για σύνδεση στο διαδίκτυο μέσω ενός προφίλ DUN."
 
 #: blueman/plugins/applet/SerialManager.py:22
 msgid ""
@@ -1498,7 +1499,7 @@ msgid ""
 "connected."
 msgstr ""
 "Διακόπτει προσωρινά την προφύλαξη οθόνης όταν ένα χειριστήριο παιχνιδιού "
-"είναι συνδεδεμένο"
+"συνδεθεί."
 
 #: blueman/plugins/services/Network.py:24
 #: blueman/plugins/services/Network.py:49
@@ -1507,7 +1508,7 @@ msgstr "Δίκτυο"
 
 #: blueman/plugins/services/Network.py:99
 msgid "Invalid IP address"
-msgstr "Μη έγκυρη διεύθυνση IP "
+msgstr "Μη έγκυρη διεύθυνση IP"
 
 #: blueman/plugins/services/Network.py:104
 #, python-format
@@ -1522,6 +1523,9 @@ msgid ""
 "configuration  %s/%s\n"
 "This may cause incorrect network behavior"
 msgstr ""
+"Η διεύθυνση IP επικαλύπτεται από τις ρυθμίσεις της διεπαφής %s, η οποία έχει "
+"παράμετρους %s/%s\n"
+"Αυτό μπορεί να προκαλέσει εσφαλμένη συμπεριφορά δικτύου"
 
 #: blueman/plugins/services/Network.py:239
 #: blueman/plugins/services/Network.py:248
@@ -1538,43 +1542,33 @@ msgstr ""
 "Το πρόσθετο υπηρεσίας μεταφορών της μικροεφαρμογής είναι απενεργοποιημένο"
 
 #: data/blueman-adapters.desktop.in:4
-#, fuzzy
-#| msgid "Bluetooth Adapters"
 msgid "Set Bluetooth Adapter Properties"
-msgstr "Προσαρμογείς Bluetooth"
+msgstr "Ρύθμιση προσαρμογέα Bluetooth"
 
 #: data/blueman-adapters.desktop.in:6
 msgid "blueman-device"
-msgstr ""
+msgstr "συσκευή-blueman"
 
 #: data/blueman.desktop.in:3
-#, fuzzy
-#| msgid "applet"
 msgid "Blueman Applet"
-msgstr "Μικροεφαρμογή"
+msgstr "Εφαρμογή blueman"
 
 #: data/blueman.desktop.in:4 data/blueman-manager.desktop.in:4
-#, fuzzy
-#| msgid "Blueman is a GTK+ Bluetooth manager"
 msgid "Blueman Bluetooth Manager"
-msgstr "Το Blueman είναι ένα διαχειριστής Bluetooth στο GTK+"
+msgstr "Διαχειριστής bluetooth του blueman"
 
 #: data/blueman.desktop.in:5 data/blueman-manager.desktop.in:5
 #: data/thunar-sendto-blueman.desktop.in:6
 msgid "blueman"
-msgstr ""
+msgstr "blueman"
 
 #: data/blueman-manager.desktop.in:3
-#, fuzzy
-#| msgid "Bluetooth Enabled"
 msgid "Bluetooth Manager"
-msgstr "Το Bluetooth Ενεργοποιήθηκε"
+msgstr "Διαχειριστής Bluetooth"
 
 #: data/thunar-sendto-blueman.desktop.in:5
-#, fuzzy
-#| msgid "Bluetooth Devices"
 msgid "Bluetooth Device"
-msgstr "Συσκευές Bluetooth"
+msgstr "Συσκευή Bluetooth"
 
 #: data/configs/org.blueman.policy.in:10
 msgid "Configure Bluetooth Network"
