@@ -144,8 +144,7 @@ def launch(
         files = None
 
     if icon_name and context is not None:
-        icon = Gio.Icon.new_for_string(icon_name)
-        context.set_icon(icon)
+        context.set_icon_name(icon_name)
 
     appinfo = Gio.AppInfo.create_from_commandline(cmd, name, flags)
     launched: bool = appinfo.launch(files, context)
