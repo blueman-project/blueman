@@ -132,7 +132,7 @@ class ManagerDeviceList(DeviceList):
             device = self.get(tree_iter, "device")["device"]
             command = "blueman-sendto --device=%s" % device['Address']
 
-            launch(command, uris, False, "blueman", _("File Sender"))
+            launch(command, paths=uris, name=_("File Sender"))
             context.finish(True, False, time)
         else:
             context.finish(False, False, time)
