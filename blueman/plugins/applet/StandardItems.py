@@ -66,22 +66,22 @@ class StandardItems(AppletPlugin):
         self.change_sensitivity(state)
 
     def on_setup_new(self):
-        launch("blueman-assistant", None, False, "blueman", _("Bluetooth Assistant"))
+        launch("blueman-assistant", name=_("Bluetooth Assistant"))
 
     def on_send(self):
-        launch("blueman-sendto", None, False, "blueman", _("File Sender"))
+        launch("blueman-sendto", name=_("File Sender"))
 
     def on_devices(self):
         lockfile = get_lockfile('blueman-manager')
         pid = get_pid(lockfile)
         if not lockfile or not kill(pid, 'blueman-manager'):
-            launch("blueman-manager", None, False, "blueman", _("Device Manager"))
+            launch("blueman-manager", name=_("Device Manager"))
 
     def on_adapters(self):
-        launch("blueman-adapters", None, False, "blueman", _("Adapter Preferences"))
+        launch("blueman-adapters", name=_("Adapter Preferences"))
 
     def on_local_services(self):
-        launch("blueman-services", None, False, "blueman", _("Service Preferences"))
+        launch("blueman-services", name=_("Service Preferences"))
 
     def on_about(self):
         about = show_about_dialog("Blueman " + _("applet"), run=False)
