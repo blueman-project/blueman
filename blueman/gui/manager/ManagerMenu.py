@@ -41,7 +41,7 @@ class ManagerMenu:
         report_item = create_menuitem(_("_Report a Problem"), "dialog-warning")
         report_item.show()
         help_menu.append(report_item)
-        report_item.connect("activate", lambda x: launch("xdg-open %s/issues" % WEBSITE, None, True))
+        report_item.connect("activate", lambda x: launch("xdg-open %s/issues" % WEBSITE))
 
         sep = Gtk.SeparatorMenuItem()
         sep.show()
@@ -117,8 +117,7 @@ class ManagerMenu:
         item_plugins.connect('activate', self._on_plugin_dialog_activate)
 
         item_services = create_menuitem(_("_Local Services") + "...", "preferences-desktop")
-        item_services.connect('activate', lambda *args: launch("blueman-services", None, False, "blueman",
-                                                               _("Service Preferences")))
+        item_services.connect('activate', lambda *args: launch("blueman-services", name=_("Service Preferences")))
         view_menu.append(item_services)
         item_services.show()
 

@@ -201,7 +201,7 @@ class Blueman(Gtk.Window):
     @staticmethod
     def setup(device):
         command = "blueman-assistant --device=%s" % device['Address']
-        launch(command, None, False, "blueman", _("Bluetooth Assistant"))
+        launch(command, name=_("Bluetooth Assistant"))
 
     @staticmethod
     def bond(device):
@@ -214,7 +214,7 @@ class Blueman(Gtk.Window):
 
     @staticmethod
     def adapter_properties():
-        launch("blueman-adapters", None, False, "blueman", _("Adapter Preferences"))
+        launch("blueman-adapters", name=_("Adapter Preferences"))
 
     @staticmethod
     def toggle_trust(device):
@@ -226,7 +226,7 @@ class Blueman(Gtk.Window):
         assert adapter
 
         command = "blueman-sendto --source=%s --device=%s" % (adapter["Address"], device['Address'])
-        launch(command, None, False, "blueman", _("File Sender"))
+        launch(command, name=_("File Sender"))
 
     def remove(self, device):
         assert self.List.Adapter

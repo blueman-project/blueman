@@ -30,7 +30,7 @@ def send_note_cb(dialog, response_id, device_address, text_view):
     tempfile = NamedTemporaryFile(suffix='.vnt', prefix='note', delete=False)
     tempfile.write(data.encode('utf-8'))
     tempfile.close()
-    launch('blueman-sendto --delete --device=%s' % device_address, [tempfile.name], False, 'blueman')
+    launch('blueman-sendto --delete --device=%s' % device_address, paths=[tempfile.name])
 
 
 def send_note(device, parent):
