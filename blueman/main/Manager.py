@@ -194,7 +194,7 @@ class Blueman(Gtk.Window):
 
     def setup(self, device):
         command = "blueman-assistant --device=%s" % device['Address']
-        launch(command, None, False, "blueman", _("Bluetooth Assistant"))
+        launch(command, name=_("Bluetooth Assistant"))
 
     def bond(self, device):
         def error_handler(e):
@@ -205,7 +205,7 @@ class Blueman(Gtk.Window):
         device.pair(error_handler=error_handler)
 
     def adapter_properties(self):
-        launch("blueman-adapters", None, False, "blueman", _("Adapter Preferences"))
+        launch("blueman-adapters", name=_("Adapter Preferences"))
 
     def toggle_trust(self, device):
         device['Trusted'] = not device['Trusted']
@@ -214,7 +214,7 @@ class Blueman(Gtk.Window):
         adapter = self.List.Adapter
 
         command = "blueman-sendto --source=%s --device=%s" % (adapter["Address"], device['Address'])
-        launch(command, None, False, "blueman", _("File Sender"))
+        launch(command, name=_("File Sender"))
 
     def remove(self, device):
         self.List.Adapter.remove_device(device)

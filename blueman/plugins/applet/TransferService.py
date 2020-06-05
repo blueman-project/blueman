@@ -243,7 +243,7 @@ class TransferService(AppletPlugin):
             def on_open(*_args):
                 self._notification = None
                 logging.info("open")
-                launch("xdg-open", [path], True)
+                launch("xdg-open", paths=[path], system=True)
 
             n.add_action("open", name, on_open)
 
