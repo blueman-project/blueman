@@ -14,14 +14,16 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-05 12:28+0000\n"
-"PO-Revision-Date: 2020-04-14 10:14+0000\n"
-"Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
-"Language-Team: Korean (http://www.transifex.com/mate/MATE/language/ko/)\n"
+"PO-Revision-Date: 2020-06-19 18:56+0000\n"
+"Last-Translator: 이정희 <daemul72@gmail.com>\n"
+"Language-Team: Korean <https://hosted.weblate.org/projects/blueman/blueman/"
+"ko/>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.1.1\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -429,7 +431,7 @@ msgstr "obexd 사용 불가"
 
 #: blueman/main/Sendto.py:118
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
-msgstr ""
+msgstr "obex 서비스를 자동으로 시작하지 못했습니다. obex 데몬이 실행 중인지 확인하십시오"
 
 #: blueman/main/Sendto.py:147
 msgid "Cancelling"
@@ -559,7 +561,7 @@ msgstr "블루투스 꺼짐"
 
 #: blueman/Functions.py:78
 msgid "Exit"
-msgstr ""
+msgstr "끝내기"
 
 #: blueman/Functions.py:79
 msgid "Enable Bluetooth"
@@ -567,7 +569,7 @@ msgstr "블루투스 활성화"
 
 #: blueman/Functions.py:98
 msgid "Shall bluetooth get enabled automatically?"
-msgstr ""
+msgstr "블루투스가 자동으로 활성화됩니까?"
 
 #: blueman/Functions.py:99
 msgid "Yes"
@@ -705,7 +707,7 @@ msgstr "연결 끊는 중..."
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:244
 msgid "_<b>Connect</b>"
-msgstr ""
+msgstr "<b>연결하기(_C)</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:246
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
@@ -713,7 +715,7 @@ msgstr "자동 연결 프로파일 A2DP 소스, A2DP 싱크 및 HID에 연결합
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:250
 msgid "_<b>Disconnect</b>"
-msgstr ""
+msgstr "<b>연결끊기(_D)</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:251
 msgid "Forcefully disconnect the device"
@@ -745,7 +747,7 @@ msgstr "신뢰하지 않음(_U)"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:348
 msgid "_Set up…"
-msgstr ""
+msgstr "설정(_S)…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:383
 msgid "_Remove..."
@@ -1020,7 +1022,7 @@ msgstr "연결함"
 #: blueman/plugins/applet/AutoConnect.py:36
 #, python-format
 msgid "Automatically connected to %(service)s on %(device)s"
-msgstr ""
+msgstr "%(device)s의 %(service)s에 자동으로 연결됨"
 
 #: blueman/plugins/applet/NetUsage.py:160
 #: blueman/plugins/applet/NetUsage.py:269
@@ -1187,6 +1189,7 @@ msgid ""
 "Please make sure that directory \"<b>%s</b>\" exists or configure it with "
 "blueman-services. Until then the default \"%s\" will be used"
 msgstr ""
+"\"<b>%s</b>\" 디렉터리가 있는지 확인하거나 blueman-서비스로 구성하십시오. 그때까지 기본 \"%s\"이(가) 사용됩니다."
 
 #: blueman/plugins/applet/TransferService.py:299
 msgid "File received"
@@ -1382,12 +1385,13 @@ msgid ""
 "\n"
 "Upon device disconnection the script will be sent a HUP signal</span>"
 msgstr ""
-"<span size=\"small\">다음 인자를 전달합니다;\n"
+"<span size=\"small\">다음과 같은 인수가 전달됩니다:\n"
 "주소, 이름, 서비스 아름, UUID16, rfcomm 노드\n"
-"예:AA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0\n"
+"예를 들어:\n"
+"AA:BB:CC:DD:EE:FF, 전화, DUN 서비스, 0x1103, /dev/rfcomm0\n"
 "uuid16은 쉼표로 구분한 목록으로 반환합니다\n"
 "\n"
-"장치 연결 차잔 스크립트는 HUP신호를 보냅니다</span>"
+"장치 연결이 끊어지면 스크립트가 HUP 신호를 전송합니다.</span>"
 
 #: blueman/plugins/applet/SerialManager.py:63
 msgid "Serial port connected"
@@ -1471,6 +1475,8 @@ msgid ""
 "configuration  %s/%s\n"
 "This may cause incorrect network behavior"
 msgstr ""
+"IP 주소는 다음과 같은 %s/%s 구성이 있는 %s 인터페이스의 서브넷과 겹칩니다.\n"
+"이로 인해 잘못된 네트워크 동작이 발생할 수 있습니다."
 
 #: blueman/plugins/services/Network.py:239
 #: blueman/plugins/services/Network.py:248
@@ -1486,37 +1492,30 @@ msgid "Applet's transfer service plugin is disabled"
 msgstr "애플릿 전송 서비스 플러그인을 비활성화했습니다"
 
 #: data/blueman-adapters.desktop.in:4
-#, fuzzy
-#| msgid "Bluetooth Adapters"
 msgid "Set Bluetooth Adapter Properties"
-msgstr "블루투스 어댑터"
+msgstr "블루투스 어댑터 속성 지정하기"
 
 #: data/blueman-adapters.desktop.in:6
 msgid "blueman-device"
-msgstr ""
+msgstr "blueman-장치"
 
 #: data/blueman.desktop.in:3
-#, fuzzy
-#| msgid "applet"
 msgid "Blueman Applet"
-msgstr "애플릿"
+msgstr "Blueman 애플릿"
 
 #: data/blueman.desktop.in:4 data/blueman-manager.desktop.in:4
-#, fuzzy
-#| msgid "Blueman is a GTK+ Bluetooth manager"
 msgid "Blueman Bluetooth Manager"
-msgstr "블루맨은 GTK+ 블루투스 관리자입니다"
+msgstr "Blueman 블루투스 관리자"
 
 #: data/blueman.desktop.in:5 data/blueman-manager.desktop.in:5
 #: data/thunar-sendto-blueman.desktop.in:6
+#, fuzzy
 msgid "blueman"
-msgstr ""
+msgstr "blueman"
 
 #: data/blueman-manager.desktop.in:3
-#, fuzzy
-#| msgid "Bluetooth Enabled"
 msgid "Bluetooth Manager"
-msgstr "블루투스 켜짐"
+msgstr "블루투스 관리자"
 
 #: data/thunar-sendto-blueman.desktop.in:5
 #, fuzzy
