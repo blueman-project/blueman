@@ -41,7 +41,7 @@ class DeviceSelectorWidget(Gtk.Box):
 
         spinner_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6, height_request=8)
         self.spinner = Gtk.Spinner(halign=Gtk.Align.START, hexpand=True, has_tooltip=True,
-                                   tooltip_text="Discovering…", margin=6)
+                                   tooltip_text=_("Discovering…"), margin=6)
 
         spinner_box.add(self.cb_adapters)
         spinner_box.add(self.spinner)
