@@ -367,7 +367,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             dialog.connect("response", on_response)
             dialog.present()
 
-        item = Gtk.MenuItem.new_with_mnemonic("R_ename device...")
+        item = Gtk.MenuItem.new_with_mnemonic(_("R_ename device..."))
         item.connect('activate', on_rename, self.SelectedDevice)
         self.append(item)
         item.show()

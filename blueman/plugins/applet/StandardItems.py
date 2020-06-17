@@ -41,7 +41,7 @@ class StandardItems(AppletPlugin):
 
         self.parent.Plugins.Menu.add(self, 81)
 
-        self.parent.Plugins.Menu.add(self, 90, text="_Help", icon_name='help-about', callback=self.on_about)
+        self.parent.Plugins.Menu.add(self, 90, text=_("_Help"), icon_name='help-about', callback=self.on_about)
 
         self.parent.Plugins.Menu.add(self, 85, text=_("_Plugins"), icon_name="blueman-plugin", callback=self.on_plugins)
 

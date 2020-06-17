@@ -12,7 +12,7 @@ class ExitItem(AppletPlugin):
     __icon__ = "application-exit"
 
     def on_load(self):
-        self.parent.Plugins.Menu.add(self, 100, text="_Exit", icon_name='application-exit', callback=Gtk.main_quit)
+        self.parent.Plugins.Menu.add(self, 100, text=_("_Exit"), icon_name='application-exit', callback=Gtk.main_quit)
 
     def on_unload(self):
         self.parent.Plugins.Menu.unregister(self)
