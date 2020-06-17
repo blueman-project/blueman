@@ -114,8 +114,10 @@ audio_video_minor_cls_i18n = [
     _("unknown"),
     # translators: device class
     _("microphone"),
-    "loudspeaker",
-    "headphones",
+    # translators: device class
+    _("loudspeaker"),
+    # translators: device class
+    _("headphones"),
     "portable audio",
     "car audio",
     "set-top box",
