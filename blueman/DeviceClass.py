@@ -105,7 +105,8 @@ audio_video_minor_cls = [
     "gaming/toy"
 ]
 audio_video_minor_cls_i18n = [
-    "uncategorized",
+    # translators: device class
+    _("uncategorized"),
     # translators: device class
     _("headset"),
     # translators: device class
@@ -118,18 +119,30 @@ audio_video_minor_cls_i18n = [
     _("loudspeaker"),
     # translators: device class
     _("headphones"),
-    "portable audio",
-    "car audio",
-    "set-top box",
-    "hifi audio",
-    "vcr",
-    "video camera",
-    "camcorder",
-    "video monitor",
-    "video display and loudspeaker",
-    "video conferencing",
-    "unknown",
-    "gaming/toy"
+    # translators: device class
+    _("portable audio"),
+    # translators: device class
+    _("car audio"),
+    # translators: device class
+    _("set-top box"),
+    # translators: device class
+    _("hifi audio"),
+    # translators: device class
+    _("vcr"),
+    # translators: device class
+    _("video camera"),
+    # translators: device class
+    _("camcorder"),
+    # translators: device class
+    _("video monitor"),
+    # translators: device class
+    _("video display and loudspeaker"),
+    # translators: device class
+    _("video conferencing"),
+    # translators: device class
+    _("unknown"),
+    # translators: device class
+    _("gaming/toy")
 ]
 peripheral_minor_cls = [
     "uncategorized",
@@ -138,12 +151,14 @@ peripheral_minor_cls = [
     "combo"
 ]
 peripheral_minor_cls_i18n = [
-    "uncategorized",
+    # translators: device class
+    _("uncategorized"),
     # translators: device class
     _("keyboard"),
     # translators: device class
     _("pointing"),
-    "combo"
+    # translators: device class
+    _("combo")
 ]
 
 imaging_minor_cls = [
