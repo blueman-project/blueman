@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-23 06:42+0000\n"
-"PO-Revision-Date: 2020-06-23 06:42+0000\n"
+"PO-Revision-Date: 2020-06-24 16:00+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/blueman/blueman/"
 "tr/>\n"
@@ -198,7 +198,7 @@ msgstr "Güvenilir cihazlardan dosyaları kabul et"
 
 #: data/ui/services-transfer.ui:96
 msgid "<b>Transfer Settings</b>"
-msgstr "<b>Transfer Ayarları</b>"
+msgstr "<b>Aktarım Ayarları</b>"
 
 #: data/ui/send-dialog.ui:32
 msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
@@ -282,7 +282,7 @@ msgstr "Yapılandırma"
 
 #: data/ui/applet-plugins-widget.ui:73
 msgid "Configure selected plugin's preferences"
-msgstr "Seçilen eklentinin yapılandırmasını ayarla"
+msgstr "Seçilen eklentinin tercihlerini yapılandır"
 
 #: data/ui/applet-plugins-widget.ui:115
 msgid "<b>Plugin description:</b>"
@@ -423,7 +423,7 @@ msgstr "Dosya Gönderici"
 
 #: blueman/main/Sendto.py:40
 msgid "Bluetooth File Transfer"
-msgstr "Bluetooth Dosya Transferi"
+msgstr "Bluetooth Dosya Aktarımı"
 
 #: blueman/main/Sendto.py:66 blueman/gui/manager/ManagerProgressbar.py:25
 msgid "Connecting"
@@ -632,23 +632,19 @@ msgstr "_Yerel Servisler"
 #: blueman/gui/manager/ManagerMenu.py:120
 #: blueman/plugins/applet/StandardItems.py:86
 msgid "Service Preferences"
-msgstr "Hizmet Seçenekleri"
+msgstr "Hizmet Tercihleri"
 
 #: blueman/gui/manager/ManagerMenu.py:128
 msgid "_Search"
 msgstr "_Ara"
 
 #: blueman/gui/manager/ManagerMenu.py:142
-#, fuzzy
-#| msgid "Adapter Preferences"
 msgid "_Preferences"
-msgstr "Bağdaştırıcı Tercihleri"
+msgstr "_Tercihler"
 
 #: blueman/gui/manager/ManagerMenu.py:151 blueman/plugins/applet/ExitItem.py:17
-#, fuzzy
-#| msgid "Exit"
 msgid "_Exit"
-msgstr "Çıkış"
+msgstr "_Çıkış"
 
 #: blueman/gui/manager/ManagerDeviceList.py:438
 msgid "<b>Trusted and Paired</b>"
@@ -704,7 +700,7 @@ msgstr "Başarılı!"
 #: blueman/gui/manager/ManagerDeviceMenu.py:110
 #, python-format
 msgid "Serial port connected to %s"
-msgstr "Seri Port %s ile bağlandı"
+msgstr "Seri bağlantı noktası %s ile bağlandı"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:117
 #: blueman/gui/manager/ManagerDeviceMenu.py:165
@@ -769,10 +765,8 @@ msgid "_Set up…"
 msgstr "_Kurulum…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:374
-#, fuzzy
-#| msgid "Rename device"
 msgid "R_ename device..."
-msgstr "Aygıtı yeniden adlandır"
+msgstr "Aygıtı _yeniden adlandır..."
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:383
 msgid "_Remove..."
@@ -875,10 +869,8 @@ msgid "Adapter selection"
 msgstr "Bağdaştırıcı seçimi"
 
 #: blueman/gui/DeviceSelectorWidget.py:44
-#, fuzzy
-#| msgid "Discoverable… %ss"
 msgid "Discovering…"
-msgstr "Keşfedilebilir… %ss"
+msgstr "Keşfediliyor…"
 
 #. translators: device class
 #: blueman/DeviceClass.py:40 blueman/DeviceClass.py:64
@@ -1039,10 +1031,8 @@ msgstr ""
 
 #. 0x0000 is for our generic connect
 #: blueman/Sdp.py:96
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Connect"
-msgstr "Bağlan"
+msgstr "Genel Bağlantı"
 
 #: blueman/Sdp.py:97
 msgid "SDP"
@@ -1153,10 +1143,8 @@ msgid "Public Browse Group"
 msgstr ""
 
 #: blueman/Sdp.py:125
-#, fuzzy
-#| msgid "Serial Ports"
 msgid "Serial Port"
-msgstr "Seri Portlar"
+msgstr "Seri Bağlantı Noktası"
 
 #: blueman/Sdp.py:126
 msgid "LAN Access Using PPP"
@@ -1175,20 +1163,16 @@ msgid "OBEX Object Push"
 msgstr ""
 
 #: blueman/Sdp.py:130
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "OBEX File Transfer"
-msgstr "Bluetooth Dosya Transferi"
+msgstr "OBEX Dosya Aktarımı"
 
 #: blueman/Sdp.py:131
 msgid "IrMC Sync Command"
 msgstr ""
 
 #: blueman/Sdp.py:132 blueman/Sdp.py:173
-#, fuzzy
-#| msgid "headset"
 msgid "Headset"
-msgstr "kulaklık"
+msgstr "Kulaklık"
 
 #: blueman/Sdp.py:133
 msgid "Cordless Telephony"
@@ -1275,10 +1259,8 @@ msgid "ImagingReferencedObjects (BIP)"
 msgstr ""
 
 #: blueman/Sdp.py:154
-#, fuzzy
-#| msgid "handsfree"
 msgid "Handsfree"
-msgstr "eller serbest"
+msgstr "Eller serbest"
 
 #: blueman/Sdp.py:155
 msgid "Handsfree Audio Gateway"
@@ -1349,10 +1331,8 @@ msgid "Phonebook Access (PBAP) - PSE"
 msgstr ""
 
 #: blueman/Sdp.py:172
-#, fuzzy
-#| msgid "Network Access Point (NAP)"
 msgid "Phonebook Access (PBAP)"
-msgstr "Ağ Erişim Noktası (NAP)"
+msgstr "Telefon Defteri Erişimi (PBAP)"
 
 #: blueman/Sdp.py:174
 msgid "Message Access Server"
@@ -1363,10 +1343,8 @@ msgid "Message Notification Server"
 msgstr ""
 
 #: blueman/Sdp.py:176
-#, fuzzy
-#| msgid "Network Access Point (NAP)"
 msgid "Message Access Profile (MAP)"
-msgstr "Ağ Erişim Noktası (NAP)"
+msgstr "Mesaj Erişim Profili (MAP)"
 
 #: blueman/Sdp.py:177
 msgid "GNSS"
@@ -1413,16 +1391,12 @@ msgid "PnP Information"
 msgstr ""
 
 #: blueman/Sdp.py:188
-#, fuzzy
-#| msgid "Group Network"
 msgid "Generic Networking"
-msgstr "Şebeke grubu"
+msgstr "Genel Ağ"
 
 #: blueman/Sdp.py:189
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "Generic FileTransfer"
-msgstr "Bluetooth Dosya Transferi"
+msgstr "Genel Dosya Aktarımı"
 
 #: blueman/Sdp.py:190
 msgid "Generic Audio"
@@ -1433,16 +1407,12 @@ msgid "Generic Telephony"
 msgstr ""
 
 #: blueman/Sdp.py:192
-#, fuzzy
-#| msgid "Audio Source"
 msgid "Video Source"
-msgstr "Ses Girişi"
+msgstr "Video Girişi"
 
 #: blueman/Sdp.py:193
-#, fuzzy
-#| msgid "Audio Sink"
 msgid "Video Sink"
-msgstr "Ses Çıkışı"
+msgstr "Video Çıkışı"
 
 #: blueman/Sdp.py:194
 msgid "Video Distribution"
@@ -1453,10 +1423,8 @@ msgid "HDP"
 msgstr ""
 
 #: blueman/Sdp.py:196
-#, fuzzy
-#| msgid "Audio Source"
 msgid "HDP Source"
-msgstr "Ses Girişi"
+msgstr "HDP Girişi"
 
 #: blueman/Sdp.py:197
 msgid "HDP Sink"
@@ -1483,10 +1451,8 @@ msgid "Tx Power"
 msgstr ""
 
 #: blueman/Sdp.py:203
-#, fuzzy
-#| msgid "Rename device"
 msgid "Current Time Service"
-msgstr "Aygıtı yeniden adlandır"
+msgstr "Geçerli Zaman Hizmeti"
 
 #: blueman/Sdp.py:204
 msgid "Reference Time Update Service"
@@ -1505,10 +1471,8 @@ msgid "Health Thermometer"
 msgstr ""
 
 #: blueman/Sdp.py:208
-#, fuzzy
-#| msgid "Show device information"
 msgid "Device Information"
-msgstr "Aygıt bilgisini göster"
+msgstr "Aygıt Bilgileri"
 
 #: blueman/Sdp.py:209
 msgid "Heart Rate"
@@ -1519,10 +1483,8 @@ msgid "Phone Alert Status Service"
 msgstr ""
 
 #: blueman/Sdp.py:211
-#, fuzzy
-#| msgid "Local Services"
 msgid "Battery Service"
-msgstr "Yerel Servisler"
+msgstr "Pil Hizmeti"
 
 #: blueman/Sdp.py:212
 msgid "Blood Pressure"
@@ -1605,28 +1567,20 @@ msgid "Transport Discovery"
 msgstr ""
 
 #: blueman/Sdp.py:232
-#, fuzzy
-#| msgid "Transfer"
 msgid "Object Transfer"
-msgstr "Transfer"
+msgstr "Nesne Aktarımı"
 
 #: blueman/Sdp.py:233
-#, fuzzy
-#| msgid "applet"
 msgid "AppleAgent"
-msgstr "uygulama"
+msgstr "AppleAgent"
 
 #: blueman/Sdp.py:234
-#, fuzzy
-#| msgid "Pair Device"
 msgid "Primary Service"
-msgstr "Aygıt Eşleştir"
+msgstr "Birincil Hizmet"
 
 #: blueman/Sdp.py:235
-#, fuzzy
-#| msgid "Search for nearby devices"
 msgid "Secondary Service"
-msgstr "Çevredeki aygıtları ara"
+msgstr "İkincil Hizmet"
 
 #: blueman/Sdp.py:236
 msgid "Include"
@@ -1637,10 +1591,8 @@ msgid "Characteristic Declaration"
 msgstr ""
 
 #: blueman/Sdp.py:238
-#, fuzzy
-#| msgid "Device Manager"
 msgid "Device Name"
-msgstr "Aygıt Yöneticisi"
+msgstr "Aygıt Adı"
 
 #: blueman/Sdp.py:239
 msgid "Appearance"
@@ -1651,20 +1603,16 @@ msgid "Peripheral Privacy Flag"
 msgstr ""
 
 #: blueman/Sdp.py:241
-#, fuzzy
-#| msgid "Recent _Connections"
 msgid "Reconnection Address"
-msgstr "Son _Bağlantılar"
+msgstr "Yeniden Bağlantı Adresi"
 
 #: blueman/Sdp.py:242
 msgid "Peripheral Preferred Connection Parameters"
 msgstr ""
 
 #: blueman/Sdp.py:243
-#, fuzzy
-#| msgid "Device Manager"
 msgid "Service Changed"
-msgstr "Aygıt Yöneticisi"
+msgstr "Hizmet Değişti"
 
 #: blueman/Sdp.py:244
 msgid "System ID"
@@ -1731,10 +1679,8 @@ msgid "External Report Reference"
 msgstr ""
 
 #: blueman/Sdp.py:260
-#, fuzzy
-#| msgid "Adapter Preferences"
 msgid "Report Reference"
-msgstr "Bağdaştırıcı Tercihleri"
+msgstr "Bildirme Referansı"
 
 #: blueman/Sdp.py:387
 msgid "Auto connect profiles"
@@ -1784,7 +1730,7 @@ msgstr "PulseAudio için ses profili seçin"
 #: blueman/plugins/manager/Services.py:72
 #, python-format
 msgid "Serial Port %s"
-msgstr "Seri Bağlantı Portu %s"
+msgstr "Seri Bağlantı Noktası %s"
 
 #: blueman/plugins/manager/Services.py:85
 msgid "Renew IP Address"
@@ -1796,7 +1742,7 @@ msgstr "Çevirmeli GSM Data Bağlantı Ayarları"
 
 #: blueman/plugins/manager/Services.py:111
 msgid "Serial Ports"
-msgstr "Seri Portlar"
+msgstr "Seri Bağlantı Noktaları"
 
 #: blueman/plugins/BasePlugin.py:37 blueman/plugins/BasePlugin.py:38
 msgid "Unspecified"
@@ -1969,7 +1915,7 @@ msgstr "%(1)s kaynağından %(0)s dosyası alınıyor"
 
 #: blueman/plugins/applet/TransferService.py:145
 msgid "Provides OBEX file transfer capabilities"
-msgstr "OBEX dosya transferi yetenekleri sunar"
+msgstr "OBEX dosya aktarımı yetenekleri sunar"
 
 #: blueman/plugins/applet/TransferService.py:168
 msgid "Configured directory for incoming files does not exist"
@@ -1995,12 +1941,12 @@ msgstr "%(1)s kaynağından %(0)s dosyası başarıyla alındı"
 
 #: blueman/plugins/applet/TransferService.py:308
 msgid "Transfer failed"
-msgstr "Transfer başarısız"
+msgstr "Aktarım başarısız"
 
 #: blueman/plugins/applet/TransferService.py:309
 #, python-format
 msgid "Transfer of file %(0)s failed"
-msgstr "%(0)s dosyasının transferi başarısızlığa uğradı"
+msgstr "%(0)s dosyasının aktarımı başarısız oldu"
 
 #: blueman/plugins/applet/TransferService.py:328
 #: blueman/plugins/applet/TransferService.py:337
@@ -2126,15 +2072,15 @@ msgstr ""
 
 #: blueman/plugins/applet/DiscvManager.py:25
 msgid "Discoverable timeout"
-msgstr "Görünürlük zaman aşımı"
+msgstr "Keşfedilebilirlik zaman aşımı"
 
 #: blueman/plugins/applet/DiscvManager.py:26
 msgid "Amount of time in seconds discoverable mode will last"
-msgstr "Görünür biçimde saniye cinsinden kalınacak süre"
+msgstr "Keşfedilebilir moddaki saniye cinsinden süre"
 
 #: blueman/plugins/applet/DiscvManager.py:32
 msgid "_Make Discoverable"
-msgstr "Görünür yap"
+msgstr "Keşfedilebilir _Yap"
 
 #: blueman/plugins/applet/DiscvManager.py:33
 msgid "Make the default adapter temporarily visible"
@@ -2195,19 +2141,19 @@ msgstr ""
 
 #: blueman/plugins/applet/SerialManager.py:63
 msgid "Serial port connected"
-msgstr "Seri port'tan bağlanıldı"
+msgstr "Seri bağlantı noktasından bağlanıldı"
 
 #: blueman/plugins/applet/SerialManager.py:64
 #, python-format
 msgid ""
 "Serial port service on device <b>%s</b> now will be available via <b>%s</b>"
 msgstr ""
-"<b>%s</b> aygıtındaki seri port hizmeti şimdi <b>%s</b> üzerinden "
-"kullanılabilir"
+"<b>%s</b> aygıtındaki seri bağlantı noktası hizmeti şimdi <b>%s</b> "
+"üzerinden kullanılabilir"
 
 #: blueman/plugins/applet/SerialManager.py:114
 msgid "Serial port connection script failed"
-msgstr "Seri porttan bağlantı betiği başarısız oldu"
+msgstr "Seri bağlantı noktasından bağlantı betiği başarısız oldu"
 
 #: blueman/plugins/applet/SerialManager.py:115
 #, python-format
@@ -2288,7 +2234,7 @@ msgstr "Bu kurulum halen desteklenmiyor"
 
 #: blueman/plugins/services/Transfer.py:17
 msgid "Transfer"
-msgstr "Transfer"
+msgstr "Aktarım"
 
 #: blueman/plugins/services/Transfer.py:33
 msgid "Applet's transfer service plugin is disabled"
