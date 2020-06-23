@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-23 06:42+0000\n"
-"PO-Revision-Date: 2020-06-19 18:56+0000\n"
+"PO-Revision-Date: 2020-06-24 16:00+0000\n"
 "Last-Translator: Colomban Wendling <hypra@ban.netlib.re>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/blueman/blueman/"
 "fr/>\n"
@@ -33,7 +33,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.1.1\n"
+"X-Generator: Weblate 4.2-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -654,16 +654,12 @@ msgid "_Search"
 msgstr "_Rechercher"
 
 #: blueman/gui/manager/ManagerMenu.py:142
-#, fuzzy
-#| msgid "Adapter Preferences"
 msgid "_Preferences"
-msgstr "Préférences de l'adaptateur"
+msgstr "_Préférences"
 
 #: blueman/gui/manager/ManagerMenu.py:151 blueman/plugins/applet/ExitItem.py:17
-#, fuzzy
-#| msgid "Exit"
 msgid "_Exit"
-msgstr "Quitter"
+msgstr "_Quitter"
 
 #: blueman/gui/manager/ManagerDeviceList.py:438
 msgid "<b>Trusted and Paired</b>"
@@ -786,10 +782,8 @@ msgid "_Set up…"
 msgstr "_Configurer…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:374
-#, fuzzy
-#| msgid "Rename device"
 msgid "R_ename device..."
-msgstr "Renommer le périphérique"
+msgstr "R_enommer le périphérique…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:383
 msgid "_Remove..."
@@ -995,12 +989,12 @@ msgstr "microphone"
 #. translators: device class
 #: blueman/DeviceClass.py:120
 msgid "loudspeaker"
-msgstr ""
+msgstr "haut-parleur"
 
 #. translators: device class
 #: blueman/DeviceClass.py:122
 msgid "headphones"
-msgstr ""
+msgstr "écouteurs"
 
 #. translators: device class
 #: blueman/DeviceClass.py:124
@@ -1030,7 +1024,7 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:134
 msgid "video camera"
-msgstr ""
+msgstr "caméra vidéo"
 
 #. translators: device class
 #: blueman/DeviceClass.py:136
@@ -1040,7 +1034,7 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:138
 msgid "video monitor"
-msgstr ""
+msgstr "moniteur vidéo"
 
 #. translators: device class
 #: blueman/DeviceClass.py:140
@@ -1085,7 +1079,7 @@ msgstr ""
 
 #: blueman/Sdp.py:98
 msgid "UDP"
-msgstr ""
+msgstr "UDP"
 
 #: blueman/Sdp.py:99
 msgid "RFCOMM"
@@ -1093,7 +1087,7 @@ msgstr ""
 
 #: blueman/Sdp.py:100
 msgid "TCP"
-msgstr ""
+msgstr "TCP"
 
 #: blueman/Sdp.py:101
 msgid "TCS-BIN"
@@ -1113,15 +1107,15 @@ msgstr ""
 
 #: blueman/Sdp.py:105
 msgid "IP"
-msgstr ""
+msgstr "IP"
 
 #: blueman/Sdp.py:106
 msgid "FTP"
-msgstr ""
+msgstr "FTP"
 
 #: blueman/Sdp.py:107
 msgid "HTTP"
-msgstr ""
+msgstr "HTTP"
 
 #: blueman/Sdp.py:108
 msgid "WSP"
@@ -1188,10 +1182,8 @@ msgid "Public Browse Group"
 msgstr ""
 
 #: blueman/Sdp.py:125
-#, fuzzy
-#| msgid "Serial Ports"
 msgid "Serial Port"
-msgstr "Ports série"
+msgstr "Port série"
 
 #: blueman/Sdp.py:126
 msgid "LAN Access Using PPP"
@@ -1213,29 +1205,27 @@ msgstr ""
 #, fuzzy
 #| msgid "Bluetooth File Transfer"
 msgid "OBEX File Transfer"
-msgstr "Transfert de fichiers Bluetooth"
+msgstr "Transfert de fichiers OBEX"
 
 #: blueman/Sdp.py:131
 msgid "IrMC Sync Command"
 msgstr ""
 
 #: blueman/Sdp.py:132 blueman/Sdp.py:173
-#, fuzzy
-#| msgid "headset"
 msgid "Headset"
-msgstr "oreillette"
+msgstr "Oreillette"
 
 #: blueman/Sdp.py:133
 msgid "Cordless Telephony"
-msgstr ""
+msgstr "Téléphonie sans fil"
 
 #: blueman/Sdp.py:134
 msgid "Audio Source"
-msgstr "Source Audio"
+msgstr "Entrée audio"
 
 #: blueman/Sdp.py:135
 msgid "Audio Sink"
-msgstr "Synchronie audio"
+msgstr "Sortie audio"
 
 #: blueman/Sdp.py:136
 msgid "Remote Control Target"
@@ -1310,10 +1300,8 @@ msgid "ImagingReferencedObjects (BIP)"
 msgstr ""
 
 #: blueman/Sdp.py:154
-#, fuzzy
-#| msgid "handsfree"
 msgid "Handsfree"
-msgstr "kit mains-libres"
+msgstr "Kit mains-libres"
 
 #: blueman/Sdp.py:155
 msgid "Handsfree Audio Gateway"
@@ -1369,7 +1357,7 @@ msgstr ""
 
 #: blueman/Sdp.py:168
 msgid "Audio/Video"
-msgstr ""
+msgstr "Audio/Vidéo"
 
 #: blueman/Sdp.py:169
 msgid "SIM Access (SAP)"
@@ -1413,11 +1401,11 @@ msgstr ""
 
 #: blueman/Sdp.py:179
 msgid "3D Display"
-msgstr ""
+msgstr "Écran 3D"
 
 #: blueman/Sdp.py:180
 msgid "3D Glasses"
-msgstr ""
+msgstr "Lunettes 3D"
 
 #: blueman/Sdp.py:181
 msgid "3D Synchronization (3DSP)"
@@ -1468,16 +1456,12 @@ msgid "Generic Telephony"
 msgstr ""
 
 #: blueman/Sdp.py:192
-#, fuzzy
-#| msgid "Audio Source"
 msgid "Video Source"
-msgstr "Source Audio"
+msgstr "Entrée vidéo"
 
 #: blueman/Sdp.py:193
-#, fuzzy
-#| msgid "Audio Sink"
 msgid "Video Sink"
-msgstr "Synchronie audio"
+msgstr "Sortie vidéo"
 
 #: blueman/Sdp.py:194
 msgid "Video Distribution"
@@ -1633,7 +1617,7 @@ msgstr ""
 
 #: blueman/Sdp.py:230
 msgid "HTTP Proxy"
-msgstr ""
+msgstr "Proxy HTTP"
 
 #: blueman/Sdp.py:231
 msgid "Transport Discovery"
