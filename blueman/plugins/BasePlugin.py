@@ -2,7 +2,7 @@
 import logging
 import weakref
 from gettext import gettext as _
-from typing import List, TYPE_CHECKING, Dict, Tuple, Any
+from typing import List, TYPE_CHECKING, Dict, Tuple, Any, Type
 
 from blueman.main.Config import Config
 
@@ -49,7 +49,7 @@ class BasePlugin(object):
     def __init__(self, parent):
         self.parent = parent
 
-        self.__methods: List[str] = []
+        self.__methods: List[Tuple[Type[BasePlugin], str]] = []
 
         if self.__options__:
             self.__config = Config(
