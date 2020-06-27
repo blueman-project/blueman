@@ -4,17 +4,24 @@ on:
   push:
     branches:
       - master
-      - weblate
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
       - uses: actions/checkout@v2
-      - run: sudo apt-get install gettext curl
-      - run: /usr/bin/xgettext --default-domain=blueman --directory=.. --from-code=UTF-8 --add-comments --files-from=./POTFILES.in --output=blueman.pot
-        working-directory: po
+      - run: sudo apt-get install autopoint python-gi-dev cython libglib2.0-dev libbluetooth-dev
+      - run: ./autogen.sh
+      - env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: "curl -L -H \"Authorization: Bearer $TOKEN\" -o blueman.pot.zip \"$(curl \"$(curl 'https://api.github.com/repos/blueman-project/blueman/actions/workflows/weblate.yml/runs?status=success&event=push' | jq -r .workflow_runs[0].artifacts_url)\" | jq -r .artifacts[0].archive_download_url)\""
+      - run: unzip -d po blueman.pot.zip
+      - run: make -C po blueman.pot-update
+      - uses: actions/upload-artifact@v2
+        with:
+          name: blueman.pot
+          path: po/blueman.pot
       - env:
           TOKEN: ${{ secrets.WEBLATE_KEY }}
         run: "curl -F file=@po/blueman.pot -F method=source -H \"Authorization: Token $TOKEN\" https://hosted.weblate.org/api/translations/blueman/blueman/en/file/"
