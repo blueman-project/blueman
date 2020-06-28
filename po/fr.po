@@ -24,8 +24,8 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-24 16:00+0000\n"
-"PO-Revision-Date: 2020-06-27 12:47+0000\n"
-"Last-Translator: Djeremaille <jeremy.tisserand@gmail.com>\n"
+"PO-Revision-Date: 2020-07-02 15:56+0000\n"
+"Last-Translator: Estébastien Robespi <estebastien@mailbox.org>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/blueman/blueman/"
 "fr/>\n"
 "Language: fr\n"
@@ -904,10 +904,8 @@ msgid "Adapter selection"
 msgstr "Sélection de l'adaptateur"
 
 #: blueman/gui/DeviceSelectorWidget.py:44
-#, fuzzy
-#| msgid "Discoverable… %ss"
 msgid "Discovering…"
-msgstr "Recherche en cours…"
+msgstr "Exploration en cours…"
 
 #. translators: device class
 #: blueman/DeviceClass.py:40 blueman/DeviceClass.py:64
@@ -1009,17 +1007,17 @@ msgstr "audio véhicule"
 #. translators: device class
 #: blueman/DeviceClass.py:128
 msgid "set-top box"
-msgstr ""
+msgstr "décodeur (set-top box)"
 
 #. translators: device class
 #: blueman/DeviceClass.py:130
 msgid "hifi audio"
-msgstr ""
+msgstr "chaîne hifi"
 
 #. translators: device class
 #: blueman/DeviceClass.py:132
 msgid "vcr"
-msgstr ""
+msgstr "magnétoscope"
 
 #. translators: device class
 #: blueman/DeviceClass.py:134
@@ -1029,7 +1027,7 @@ msgstr "caméra vidéo"
 #. translators: device class
 #: blueman/DeviceClass.py:136
 msgid "camcorder"
-msgstr ""
+msgstr "caméscope"
 
 #. translators: device class
 #: blueman/DeviceClass.py:138
@@ -1039,17 +1037,17 @@ msgstr "moniteur vidéo"
 #. translators: device class
 #: blueman/DeviceClass.py:140
 msgid "video display and loudspeaker"
-msgstr ""
+msgstr "écran vidéo et enceinte"
 
 #. translators: device class
 #: blueman/DeviceClass.py:142
 msgid "video conferencing"
-msgstr ""
+msgstr "système de visioconférence"
 
 #. translators: device class
 #: blueman/DeviceClass.py:146
 msgid "gaming/toy"
-msgstr ""
+msgstr "appareil de jeu vidéo ou jouet"
 
 #. translators: device class
 #: blueman/DeviceClass.py:158
@@ -1064,18 +1062,16 @@ msgstr "pointage"
 #. translators: device class
 #: blueman/DeviceClass.py:162
 msgid "combo"
-msgstr ""
+msgstr "combo"
 
 #. 0x0000 is for our generic connect
 #: blueman/Sdp.py:96
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Connect"
-msgstr "Connecter"
+msgstr "Connexion générique"
 
 #: blueman/Sdp.py:97
 msgid "SDP"
-msgstr ""
+msgstr "SDP"
 
 #: blueman/Sdp.py:98
 msgid "UDP"
@@ -1083,7 +1079,7 @@ msgstr "UDP"
 
 #: blueman/Sdp.py:99
 msgid "RFCOMM"
-msgstr ""
+msgstr "RFCOMM"
 
 #: blueman/Sdp.py:100
 msgid "TCP"
@@ -1091,19 +1087,19 @@ msgstr "TCP"
 
 #: blueman/Sdp.py:101
 msgid "TCS-BIN"
-msgstr ""
+msgstr "TCS-BIN"
 
 #: blueman/Sdp.py:102
 msgid "TCS-AT"
-msgstr ""
+msgstr "TCS-AT"
 
 #: blueman/Sdp.py:103
 msgid "ATT"
-msgstr ""
+msgstr "ATT"
 
 #: blueman/Sdp.py:104
 msgid "OBEX"
-msgstr ""
+msgstr "OBEX"
 
 #: blueman/Sdp.py:105
 msgid "IP"
@@ -1119,67 +1115,67 @@ msgstr "HTTP"
 
 #: blueman/Sdp.py:108
 msgid "WSP"
-msgstr ""
+msgstr "WSP"
 
 #: blueman/Sdp.py:109
 msgid "BNEP"
-msgstr ""
+msgstr "BNEP"
 
 #: blueman/Sdp.py:110
 msgid "UPnP/ESDP"
-msgstr ""
+msgstr "UPnP ou ESDP"
 
 #: blueman/Sdp.py:111
 msgid "HIDP"
-msgstr ""
+msgstr "HIDP"
 
 #: blueman/Sdp.py:112
 msgid "Hardcopy Control Channel"
-msgstr ""
+msgstr "Hardcopy Control Channel"
 
 #: blueman/Sdp.py:113
 msgid "Hardcopy Data Channel"
-msgstr ""
+msgstr "Hardcopy Data Channel"
 
 #: blueman/Sdp.py:114
 msgid "Hardcopy Notification"
-msgstr ""
+msgstr "Hardcopy Notification"
 
 #: blueman/Sdp.py:115
 msgid "AVCTP"
-msgstr ""
+msgstr "AVCTP"
 
 #: blueman/Sdp.py:116
 msgid "AVDTP"
-msgstr ""
+msgstr "AVDTP"
 
 #: blueman/Sdp.py:117
 msgid "CMTP"
-msgstr ""
+msgstr "CMTP"
 
 #: blueman/Sdp.py:118
 msgid "UDI_C-Plane"
-msgstr ""
+msgstr "UDI_C-Plane"
 
 #: blueman/Sdp.py:119 blueman/Sdp.py:120
 msgid "Multi-Channel Adaptation Protocol (MCAP)"
-msgstr ""
+msgstr "Multi-Channel Adaptation Protocol (MCAP)"
 
 #: blueman/Sdp.py:121
 msgid "L2CAP"
-msgstr ""
+msgstr "L2CAP"
 
 #: blueman/Sdp.py:122
 msgid "ServiceDiscoveryServerServiceClassID"
-msgstr ""
+msgstr "ServiceDiscoveryServerServiceClassID"
 
 #: blueman/Sdp.py:123
 msgid "BrowseGroupDescriptorServiceClassID"
-msgstr ""
+msgstr "BrowseGroupDescriptorServiceClassID"
 
 #: blueman/Sdp.py:124
 msgid "Public Browse Group"
-msgstr ""
+msgstr "Public Browse Group"
 
 #: blueman/Sdp.py:125
 msgid "Serial Port"
@@ -1187,7 +1183,7 @@ msgstr "Port série"
 
 #: blueman/Sdp.py:126
 msgid "LAN Access Using PPP"
-msgstr ""
+msgstr "Accès LAN en utilisant PPP"
 
 #: blueman/Sdp.py:127
 msgid "Dialup Networking (DUN)"
@@ -1195,21 +1191,19 @@ msgstr "Réseau téléphonique (DUN)"
 
 #: blueman/Sdp.py:128
 msgid "IrMC Sync"
-msgstr ""
+msgstr "Synchro IrMC"
 
 #: blueman/Sdp.py:129
 msgid "OBEX Object Push"
-msgstr ""
+msgstr "Push d'objet OBEX"
 
 #: blueman/Sdp.py:130
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "OBEX File Transfer"
 msgstr "Transfert de fichiers OBEX"
 
 #: blueman/Sdp.py:131
 msgid "IrMC Sync Command"
-msgstr ""
+msgstr "Commande de synchro IrMC"
 
 #: blueman/Sdp.py:132 blueman/Sdp.py:173
 msgid "Headset"
@@ -1229,43 +1223,43 @@ msgstr "Sortie audio"
 
 #: blueman/Sdp.py:136
 msgid "Remote Control Target"
-msgstr ""
+msgstr "Cible de télécommande"
 
 #: blueman/Sdp.py:137
 msgid "Advanced Audio"
-msgstr ""
+msgstr "Audio avancé"
 
 #: blueman/Sdp.py:138
 msgid "Remote Control"
-msgstr ""
+msgstr "Télécommande"
 
 #: blueman/Sdp.py:139
 msgid "Video Conferencing"
-msgstr ""
+msgstr "Visioconférence"
 
 #: blueman/Sdp.py:140
 msgid "Intercom"
-msgstr ""
+msgstr "Interphone"
 
 #: blueman/Sdp.py:141
 msgid "Fax"
-msgstr ""
+msgstr "Fax"
 
 #: blueman/Sdp.py:142
 msgid "Headset Audio Gateway"
-msgstr ""
+msgstr "Passerelle audio pour casque"
 
 #: blueman/Sdp.py:143
 msgid "WAP"
-msgstr ""
+msgstr "WAP"
 
 #: blueman/Sdp.py:144
 msgid "WAP Client"
-msgstr ""
+msgstr "Client WAP"
 
 #: blueman/Sdp.py:145
 msgid "PANU"
-msgstr ""
+msgstr "PANU"
 
 #: blueman/Sdp.py:146
 msgid "Network Access Point"
@@ -1277,27 +1271,27 @@ msgstr "Groupe réseau"
 
 #: blueman/Sdp.py:148
 msgid "DirectPrinting (BPP)"
-msgstr ""
+msgstr "DirectPrinting (BPP)"
 
 #: blueman/Sdp.py:149
 msgid "ReferencePrinting (BPP)"
-msgstr ""
+msgstr "ReferencePrinting (BPP)"
 
 #: blueman/Sdp.py:150
 msgid "Imaging (BIP)"
-msgstr ""
+msgstr "Imaging (BIP)"
 
 #: blueman/Sdp.py:151
 msgid "ImagingResponder (BIP)"
-msgstr ""
+msgstr "ImagingResponder (BIP)"
 
 #: blueman/Sdp.py:152
 msgid "ImagingAutomaticArchive (BIP)"
-msgstr ""
+msgstr "ImagingAutomaticArchive (BIP)"
 
 #: blueman/Sdp.py:153
 msgid "ImagingReferencedObjects (BIP)"
-msgstr ""
+msgstr "ImagingReferencedObjects (BIP)"
 
 #: blueman/Sdp.py:154
 msgid "Handsfree"
@@ -1305,55 +1299,55 @@ msgstr "Kit mains-libres"
 
 #: blueman/Sdp.py:155
 msgid "Handsfree Audio Gateway"
-msgstr ""
+msgstr "Passerelle audio mains libres"
 
 #: blueman/Sdp.py:156
 msgid "DirectPrintingReferenceObjectsService (BPP)"
-msgstr ""
+msgstr "DirectPrintingReferenceObjectsService (BPP)"
 
 #: blueman/Sdp.py:157
 msgid "ReflectedUI (BPP)"
-msgstr ""
+msgstr "ReflectedUI (BPP)"
 
 #: blueman/Sdp.py:158
 msgid "Basic Printing (BPP)"
-msgstr ""
+msgstr "Impression simple (BPP)"
 
 #: blueman/Sdp.py:159
 msgid "Printing Status (BPP)"
-msgstr ""
+msgstr "État d'impression (BPP)"
 
 #: blueman/Sdp.py:160
 msgid "Human Interface Device Service (HID)"
-msgstr ""
+msgstr "Service de périphérique d'interface humaine (HID)"
 
 #: blueman/Sdp.py:161
 msgid "HardcopyCableReplacement (HCR)"
-msgstr ""
+msgstr "HardcopyCableReplacement (HCR)"
 
 #: blueman/Sdp.py:162
 msgid "HCR_Print (HCR)"
-msgstr ""
+msgstr "HCR_Print (HCR)"
 
 #: blueman/Sdp.py:163
 msgid "HCR_Scan (HCR)"
-msgstr ""
+msgstr "HCR_Scan (HCR)"
 
 #: blueman/Sdp.py:164
 msgid "Common ISDN Access (CIP)"
-msgstr ""
+msgstr "Accès ISDN usuels (CIP)"
 
 #: blueman/Sdp.py:165
 msgid "VideoConferencingGW (VCP)"
-msgstr ""
+msgstr "VideoConferencingGW (VCP)"
 
 #: blueman/Sdp.py:166
 msgid "UDI-MT"
-msgstr ""
+msgstr "UDI-MT"
 
 #: blueman/Sdp.py:167
 msgid "UDI-TA"
-msgstr ""
+msgstr "UDI-TA"
 
 #: blueman/Sdp.py:168
 msgid "Audio/Video"
@@ -1361,43 +1355,39 @@ msgstr "Audio/Vidéo"
 
 #: blueman/Sdp.py:169
 msgid "SIM Access (SAP)"
-msgstr ""
+msgstr "Accès SIM (SAP)"
 
 #: blueman/Sdp.py:170
 msgid "Phonebook Access (PBAP) - PCE"
-msgstr ""
+msgstr "Accès au répertoire téléphonique (PBAP) - PCE"
 
 #: blueman/Sdp.py:171
 msgid "Phonebook Access (PBAP) - PSE"
-msgstr ""
+msgstr "Accès au répertoire téléphonique (PBAP) - PCE"
 
 #: blueman/Sdp.py:172
-#, fuzzy
-#| msgid "Network Access Point (NAP)"
 msgid "Phonebook Access (PBAP)"
-msgstr "Point d'accès réseau (NAP)"
+msgstr "Accès au répertoire téléphonique (PBAP)"
 
 #: blueman/Sdp.py:174
 msgid "Message Access Server"
-msgstr ""
+msgstr "Serveur d'accès aux messages"
 
 #: blueman/Sdp.py:175
 msgid "Message Notification Server"
-msgstr ""
+msgstr "Serveur de notification des messages"
 
 #: blueman/Sdp.py:176
-#, fuzzy
-#| msgid "Network Access Point (NAP)"
 msgid "Message Access Profile (MAP)"
-msgstr "Point d'accès réseau (NAP)"
+msgstr "Profil d’accès au message (MAP)"
 
 #: blueman/Sdp.py:177
 msgid "GNSS"
-msgstr ""
+msgstr "GNSS"
 
 #: blueman/Sdp.py:178
 msgid "GNSS Server"
-msgstr ""
+msgstr "Serveur GNSS"
 
 #: blueman/Sdp.py:179
 msgid "3D Display"
@@ -1409,19 +1399,19 @@ msgstr "Lunettes 3D"
 
 #: blueman/Sdp.py:181
 msgid "3D Synchronization (3DSP)"
-msgstr ""
+msgstr "Synchronisation 3D (3DSP)"
 
 #: blueman/Sdp.py:182
 msgid "Multi-Profile Specification (MPS) Profile"
-msgstr ""
+msgstr "Profil de spécification multi-profil (MPS)"
 
 #: blueman/Sdp.py:183
 msgid "Multi-Profile Specification (MPS) Service"
-msgstr ""
+msgstr "Service de spécifications multiprofil (MPS)"
 
 #: blueman/Sdp.py:184
 msgid "Calendar, Task, and Notes (CTN) Access Service"
-msgstr ""
+msgstr "Service d'accès au calendrier, aux tâches et aux notes (CTN)"
 
 #: blueman/Sdp.py:185
 msgid "Calendar, Task, and Notes (CTN) Notification Service"
