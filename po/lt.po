@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-27 11:08+0000\n"
-"PO-Revision-Date: 2020-05-15 18:08+0000\n"
-"Last-Translator: Andrius Majauskas <komitetas@gmail.com>\n"
+"PO-Revision-Date: 2020-07-07 06:23+0000\n"
+"Last-Translator: Moo <hazap@hotmail.com>\n"
 "Language-Team: Lithuanian <https://hosted.weblate.org/projects/blueman/"
 "blueman/lt/>\n"
 "Language: lt\n"
@@ -20,9 +20,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < "
-"11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? "
-"1 : n % 1 != 0 ? 2: 3);\n"
-"X-Generator: Weblate 4.1-dev\n"
+"11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 :"
+" n % 1 != 0 ? 2: 3);\n"
+"X-Generator: Weblate 4.2-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -644,16 +644,12 @@ msgid "_Search"
 msgstr "Pa_ieška"
 
 #: blueman/gui/manager/ManagerMenu.py:142
-#, fuzzy
-#| msgid "Adapter Preferences"
 msgid "_Preferences"
-msgstr "Adapterio nustatymai"
+msgstr "_Nuostatos"
 
 #: blueman/gui/manager/ManagerMenu.py:151 blueman/plugins/applet/ExitItem.py:17
-#, fuzzy
-#| msgid "Exit"
 msgid "_Exit"
-msgstr "Išeiti"
+msgstr "_Išeiti"
 
 #: blueman/gui/manager/ManagerDeviceList.py:438
 msgid "<b>Trusted and Paired</b>"
@@ -775,10 +771,8 @@ msgid "_Set up…"
 msgstr "_Nustatyti…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:374
-#, fuzzy
-#| msgid "Rename device"
 msgid "R_ename device..."
-msgstr "Pervadinti įrenginį"
+msgstr "P_ervadinti įrenginį..."
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:383
 msgid "_Remove..."
@@ -950,12 +944,12 @@ msgstr "mikrofonas"
 #. translators: device class
 #: blueman/DeviceClass.py:120
 msgid "loudspeaker"
-msgstr ""
+msgstr "garsiakalbis"
 
 #. translators: device class
 #: blueman/DeviceClass.py:122
 msgid "headphones"
-msgstr ""
+msgstr "ausinės"
 
 #. translators: device class
 #: blueman/DeviceClass.py:124
@@ -985,7 +979,7 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:134
 msgid "video camera"
-msgstr ""
+msgstr "vaizdo kamera"
 
 #. translators: device class
 #: blueman/DeviceClass.py:136
@@ -1040,23 +1034,23 @@ msgstr ""
 
 #: blueman/Sdp.py:98
 msgid "UDP"
-msgstr ""
+msgstr "UDP"
 
 #: blueman/Sdp.py:99
 msgid "RFCOMM"
-msgstr ""
+msgstr "RFCOMM"
 
 #: blueman/Sdp.py:100
 msgid "TCP"
-msgstr ""
+msgstr "TCP"
 
 #: blueman/Sdp.py:101
 msgid "TCS-BIN"
-msgstr ""
+msgstr "TCS-BIN"
 
 #: blueman/Sdp.py:102
 msgid "TCS-AT"
-msgstr ""
+msgstr "TCS-AT"
 
 #: blueman/Sdp.py:103
 msgid "ATT"
@@ -1064,7 +1058,7 @@ msgstr ""
 
 #: blueman/Sdp.py:104
 msgid "OBEX"
-msgstr ""
+msgstr "OBEX"
 
 #: blueman/Sdp.py:105
 msgid "IP"
@@ -1076,19 +1070,19 @@ msgstr ""
 
 #: blueman/Sdp.py:107
 msgid "HTTP"
-msgstr ""
+msgstr "HTTP"
 
 #: blueman/Sdp.py:108
 msgid "WSP"
-msgstr ""
+msgstr "WSP"
 
 #: blueman/Sdp.py:109
 msgid "BNEP"
-msgstr ""
+msgstr "BNEP"
 
 #: blueman/Sdp.py:110
 msgid "UPnP/ESDP"
-msgstr ""
+msgstr "UPnP/ESDP"
 
 #: blueman/Sdp.py:111
 msgid "HIDP"
@@ -1143,10 +1137,8 @@ msgid "Public Browse Group"
 msgstr ""
 
 #: blueman/Sdp.py:125
-#, fuzzy
-#| msgid "Serial Ports"
 msgid "Serial Port"
-msgstr "Nuoseklieji prievadai"
+msgstr "Nuoseklusis prievadas"
 
 #: blueman/Sdp.py:126
 msgid "LAN Access Using PPP"
@@ -2295,14 +2287,12 @@ msgid "Applet's transfer service plugin is disabled"
 msgstr "Programėlės failų persiuntimo įskiepis yra išjungtas"
 
 #: data/blueman-adapters.desktop.in:4
-#, fuzzy
-#| msgid "Bluetooth Adapters"
 msgid "Set Bluetooth Adapter Properties"
-msgstr "„Bluetooth“ adapteriai"
+msgstr "Nustatyti „Bluetooth“ adapterio savybes"
 
 #: data/blueman-adapters.desktop.in:6
 msgid "blueman-device"
-msgstr ""
+msgstr "blueman-device"
 
 #: data/blueman.desktop.in:3
 #, fuzzy
@@ -2311,27 +2301,21 @@ msgid "Blueman Applet"
 msgstr "įskiepis"
 
 #: data/blueman.desktop.in:4 data/blueman-manager.desktop.in:4
-#, fuzzy
-#| msgid "Blueman is a GTK+ Bluetooth manager"
 msgid "Blueman Bluetooth Manager"
-msgstr "Blueman yra GTK+ Bluetooth tvarkytuvė"
+msgstr "Blueman „Bluetooth“ tvarkytuvė"
 
 #: data/blueman.desktop.in:5 data/blueman-manager.desktop.in:5
 #: data/thunar-sendto-blueman.desktop.in:6
 msgid "blueman"
-msgstr ""
+msgstr "blueman"
 
 #: data/blueman-manager.desktop.in:3
-#, fuzzy
-#| msgid "Bluetooth Enabled"
 msgid "Bluetooth Manager"
-msgstr "Bluetooth įjungtas"
+msgstr "„Bluetooth“ tvarkytuvė"
 
 #: data/thunar-sendto-blueman.desktop.in:5
-#, fuzzy
-#| msgid "Bluetooth Devices"
 msgid "Bluetooth Device"
-msgstr "„Bluetooth“ įrenginiai"
+msgstr "„Bluetooth“ įrenginys"
 
 #: data/configs/org.blueman.policy.in:10
 msgid "Configure Bluetooth Network"
