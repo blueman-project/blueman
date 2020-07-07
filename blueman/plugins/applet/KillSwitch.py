@@ -36,7 +36,8 @@ class Switch:
 class KillSwitch(AppletPlugin):
     __author__ = "Walmis"
     __description__ = _("Switches Bluetooth killswitch status to match Bluetooth power state."
-                        "Allows turning Bluetooth back on from an icon that shows its status; provided it isn't unplugged by the system, or physically.")
+                        "Allows turning Bluetooth back on from an icon that shows its status; "
+                        "provided it isn't unplugged by the system, or physically.")
     __depends__ = ["PowerManager", "StatusIcon"]
     __icon__ = "system-shutdown"
 
