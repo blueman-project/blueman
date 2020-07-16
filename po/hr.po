@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-27 11:08+0000\n"
-"PO-Revision-Date: 2020-06-09 12:59+0000\n"
+"PO-Revision-Date: 2020-07-16 13:59+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/blueman/blueman/"
 "hr/>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.1-dev\n"
+"X-Generator: Weblate 4.2-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -642,16 +642,12 @@ msgid "_Search"
 msgstr "_Traži"
 
 #: blueman/gui/manager/ManagerMenu.py:142
-#, fuzzy
-#| msgid "Adapter Preferences"
 msgid "_Preferences"
-msgstr "Osobitosti adaptera"
+msgstr "_Osobitosti"
 
 #: blueman/gui/manager/ManagerMenu.py:151 blueman/plugins/applet/ExitItem.py:17
-#, fuzzy
-#| msgid "Exit"
 msgid "_Exit"
-msgstr "Zatvori"
+msgstr "_Zatvori"
 
 #: blueman/gui/manager/ManagerDeviceList.py:438
 msgid "<b>Trusted and Paired</b>"
@@ -773,10 +769,8 @@ msgid "_Set up…"
 msgstr "_Postavi…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:374
-#, fuzzy
-#| msgid "Rename device"
 msgid "R_ename device..."
-msgstr "Preimenuj uređaj"
+msgstr "Pr_eimenuj uređaj..."
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:383
 msgid "_Remove..."
@@ -869,10 +863,8 @@ msgid "Adapter selection"
 msgstr "Odabir adaptera"
 
 #: blueman/gui/DeviceSelectorWidget.py:44
-#, fuzzy
-#| msgid "Discoverable… %ss"
 msgid "Discovering…"
-msgstr "Vidljiv… %ss"
+msgstr "Otkrivanje…"
 
 #. translators: device class
 #: blueman/DeviceClass.py:40 blueman/DeviceClass.py:64
@@ -954,67 +946,67 @@ msgstr "mikrofon"
 #. translators: device class
 #: blueman/DeviceClass.py:120
 msgid "loudspeaker"
-msgstr ""
+msgstr "zvučnik"
 
 #. translators: device class
 #: blueman/DeviceClass.py:122
 msgid "headphones"
-msgstr ""
+msgstr "slušalice"
 
 #. translators: device class
 #: blueman/DeviceClass.py:124
 msgid "portable audio"
-msgstr ""
+msgstr "prijenosni audio-uređaj"
 
 #. translators: device class
 #: blueman/DeviceClass.py:126
 msgid "car audio"
-msgstr ""
+msgstr "audio-uređaj za auto"
 
 #. translators: device class
 #: blueman/DeviceClass.py:128
 msgid "set-top box"
-msgstr ""
+msgstr "set-top boks"
 
 #. translators: device class
 #: blueman/DeviceClass.py:130
 msgid "hifi audio"
-msgstr ""
+msgstr "hifi audio-uređaj"
 
 #. translators: device class
 #: blueman/DeviceClass.py:132
 msgid "vcr"
-msgstr ""
+msgstr "vcr"
 
 #. translators: device class
 #: blueman/DeviceClass.py:134
 msgid "video camera"
-msgstr ""
+msgstr "videokamera"
 
 #. translators: device class
 #: blueman/DeviceClass.py:136
 msgid "camcorder"
-msgstr ""
+msgstr "kamkorder"
 
 #. translators: device class
 #: blueman/DeviceClass.py:138
 msgid "video monitor"
-msgstr ""
+msgstr "videomonitor"
 
 #. translators: device class
 #: blueman/DeviceClass.py:140
 msgid "video display and loudspeaker"
-msgstr ""
+msgstr "videoekran i zvučnik"
 
 #. translators: device class
 #: blueman/DeviceClass.py:142
 msgid "video conferencing"
-msgstr ""
+msgstr "videokonferencije"
 
 #. translators: device class
 #: blueman/DeviceClass.py:146
 msgid "gaming/toy"
-msgstr ""
+msgstr "igranje/igračka"
 
 #. translators: device class
 #: blueman/DeviceClass.py:158
@@ -1029,74 +1021,72 @@ msgstr "pokazivački"
 #. translators: device class
 #: blueman/DeviceClass.py:162
 msgid "combo"
-msgstr ""
+msgstr "kombinacija"
 
 #. 0x0000 is for our generic connect
 #: blueman/Sdp.py:96
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Connect"
-msgstr "Povezivanje"
+msgstr "Generičko povezivanje"
 
 #: blueman/Sdp.py:97
 msgid "SDP"
-msgstr ""
+msgstr "SDP"
 
 #: blueman/Sdp.py:98
 msgid "UDP"
-msgstr ""
+msgstr "UDP"
 
 #: blueman/Sdp.py:99
 msgid "RFCOMM"
-msgstr ""
+msgstr "RFCOMM"
 
 #: blueman/Sdp.py:100
 msgid "TCP"
-msgstr ""
+msgstr "TCP"
 
 #: blueman/Sdp.py:101
 msgid "TCS-BIN"
-msgstr ""
+msgstr "TCS-BIN"
 
 #: blueman/Sdp.py:102
 msgid "TCS-AT"
-msgstr ""
+msgstr "TCS-AT"
 
 #: blueman/Sdp.py:103
 msgid "ATT"
-msgstr ""
+msgstr "ATT"
 
 #: blueman/Sdp.py:104
 msgid "OBEX"
-msgstr ""
+msgstr "OBEX"
 
 #: blueman/Sdp.py:105
 msgid "IP"
-msgstr ""
+msgstr "IP"
 
 #: blueman/Sdp.py:106
 msgid "FTP"
-msgstr ""
+msgstr "FTP"
 
 #: blueman/Sdp.py:107
 msgid "HTTP"
-msgstr ""
+msgstr "HTTP"
 
 #: blueman/Sdp.py:108
 msgid "WSP"
-msgstr ""
+msgstr "WSP"
 
 #: blueman/Sdp.py:109
 msgid "BNEP"
-msgstr ""
+msgstr "BNEP"
 
 #: blueman/Sdp.py:110
 msgid "UPnP/ESDP"
-msgstr ""
+msgstr "UPnP/ESDP"
 
 #: blueman/Sdp.py:111
 msgid "HIDP"
-msgstr ""
+msgstr "HIDP"
 
 #: blueman/Sdp.py:112
 msgid "Hardcopy Control Channel"
@@ -1112,27 +1102,27 @@ msgstr ""
 
 #: blueman/Sdp.py:115
 msgid "AVCTP"
-msgstr ""
+msgstr "AVCTP"
 
 #: blueman/Sdp.py:116
 msgid "AVDTP"
-msgstr ""
+msgstr "AVDTP"
 
 #: blueman/Sdp.py:117
 msgid "CMTP"
-msgstr ""
+msgstr "CMTP"
 
 #: blueman/Sdp.py:118
 msgid "UDI_C-Plane"
-msgstr ""
+msgstr "UDI_C-Plane"
 
 #: blueman/Sdp.py:119 blueman/Sdp.py:120
 msgid "Multi-Channel Adaptation Protocol (MCAP)"
-msgstr ""
+msgstr "Multi-Channel Adaptation Protocol (MCAP)"
 
 #: blueman/Sdp.py:121
 msgid "L2CAP"
-msgstr ""
+msgstr "L2CAP"
 
 #: blueman/Sdp.py:122
 msgid "ServiceDiscoveryServerServiceClassID"
@@ -1147,14 +1137,12 @@ msgid "Public Browse Group"
 msgstr ""
 
 #: blueman/Sdp.py:125
-#, fuzzy
-#| msgid "Serial Ports"
 msgid "Serial Port"
-msgstr "Serijski ulazi"
+msgstr "Serijski ulaz"
 
 #: blueman/Sdp.py:126
 msgid "LAN Access Using PPP"
-msgstr ""
+msgstr "LAN pristup koristeći PPP"
 
 #: blueman/Sdp.py:127
 msgid "Dialup Networking (DUN)"
@@ -1162,31 +1150,27 @@ msgstr "Modemsko umrežavanje (DUN)"
 
 #: blueman/Sdp.py:128
 msgid "IrMC Sync"
-msgstr ""
+msgstr "IrMC sinkronizacija"
 
 #: blueman/Sdp.py:129
 msgid "OBEX Object Push"
 msgstr ""
 
 #: blueman/Sdp.py:130
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "OBEX File Transfer"
-msgstr "Bluetooth prijenos datoteka"
+msgstr "OBEX prijenos datoteka"
 
 #: blueman/Sdp.py:131
 msgid "IrMC Sync Command"
-msgstr ""
+msgstr "Naredba za IrMC sinkronizaciju"
 
 #: blueman/Sdp.py:132 blueman/Sdp.py:173
-#, fuzzy
-#| msgid "headset"
 msgid "Headset"
-msgstr "slušalice s mikrofonom"
+msgstr "Slušalice s mikrofonom"
 
 #: blueman/Sdp.py:133
 msgid "Cordless Telephony"
-msgstr ""
+msgstr "Bežićno telefoniranje"
 
 #: blueman/Sdp.py:134
 msgid "Audio Source"
@@ -1198,27 +1182,27 @@ msgstr "Slivnik zvuka"
 
 #: blueman/Sdp.py:136
 msgid "Remote Control Target"
-msgstr ""
+msgstr "Cilj daljinskog upravljanja"
 
 #: blueman/Sdp.py:137
 msgid "Advanced Audio"
-msgstr ""
+msgstr "Napredni zvuk"
 
 #: blueman/Sdp.py:138
 msgid "Remote Control"
-msgstr ""
+msgstr "Daljinsko upravljanje"
 
 #: blueman/Sdp.py:139
 msgid "Video Conferencing"
-msgstr ""
+msgstr "Videokonferencije"
 
 #: blueman/Sdp.py:140
 msgid "Intercom"
-msgstr ""
+msgstr "Interkom"
 
 #: blueman/Sdp.py:141
 msgid "Fax"
-msgstr ""
+msgstr "Faks"
 
 #: blueman/Sdp.py:142
 msgid "Headset Audio Gateway"
@@ -1226,15 +1210,15 @@ msgstr ""
 
 #: blueman/Sdp.py:143
 msgid "WAP"
-msgstr ""
+msgstr "WAP"
 
 #: blueman/Sdp.py:144
 msgid "WAP Client"
-msgstr ""
+msgstr "WAP klijent"
 
 #: blueman/Sdp.py:145
 msgid "PANU"
-msgstr ""
+msgstr "PANU"
 
 #: blueman/Sdp.py:146
 msgid "Network Access Point"
@@ -1269,10 +1253,8 @@ msgid "ImagingReferencedObjects (BIP)"
 msgstr ""
 
 #: blueman/Sdp.py:154
-#, fuzzy
-#| msgid "handsfree"
 msgid "Handsfree"
-msgstr "uređaj bez korištenja ruku"
+msgstr "Bez korištenja ruku"
 
 #: blueman/Sdp.py:155
 msgid "Handsfree Audio Gateway"
@@ -1288,15 +1270,15 @@ msgstr ""
 
 #: blueman/Sdp.py:158
 msgid "Basic Printing (BPP)"
-msgstr ""
+msgstr "Osnovni ispis (BPP)"
 
 #: blueman/Sdp.py:159
 msgid "Printing Status (BPP)"
-msgstr ""
+msgstr "Stanje ispisa (BPP)"
 
 #: blueman/Sdp.py:160
 msgid "Human Interface Device Service (HID)"
-msgstr ""
+msgstr "Human Interface Device usluga (HID)"
 
 #: blueman/Sdp.py:161
 msgid "HardcopyCableReplacement (HCR)"
@@ -1312,7 +1294,7 @@ msgstr ""
 
 #: blueman/Sdp.py:164
 msgid "Common ISDN Access (CIP)"
-msgstr ""
+msgstr "Zajednički ISDN pristup (CIP)"
 
 #: blueman/Sdp.py:165
 msgid "VideoConferencingGW (VCP)"
@@ -1320,33 +1302,31 @@ msgstr ""
 
 #: blueman/Sdp.py:166
 msgid "UDI-MT"
-msgstr ""
+msgstr "UDI-MT"
 
 #: blueman/Sdp.py:167
 msgid "UDI-TA"
-msgstr ""
+msgstr "UDI-TA"
 
 #: blueman/Sdp.py:168
 msgid "Audio/Video"
-msgstr ""
+msgstr "Audio/Video"
 
 #: blueman/Sdp.py:169
 msgid "SIM Access (SAP)"
-msgstr ""
+msgstr "SIM pristup (SAP)"
 
 #: blueman/Sdp.py:170
 msgid "Phonebook Access (PBAP) - PCE"
-msgstr ""
+msgstr "Pristup adresaru (PBAP) - PCE"
 
 #: blueman/Sdp.py:171
 msgid "Phonebook Access (PBAP) - PSE"
-msgstr ""
+msgstr "Pristup adresaru (PBAP) - PSE"
 
 #: blueman/Sdp.py:172
-#, fuzzy
-#| msgid "Network Access Point (NAP)"
 msgid "Phonebook Access (PBAP)"
-msgstr "Mrežna pristupna točka (NAP)"
+msgstr "Pristup adresaru (PBAP)"
 
 #: blueman/Sdp.py:174
 msgid "Message Access Server"
@@ -1364,23 +1344,23 @@ msgstr "Mrežna pristupna točka (NAP)"
 
 #: blueman/Sdp.py:177
 msgid "GNSS"
-msgstr ""
+msgstr "GNSS"
 
 #: blueman/Sdp.py:178
 msgid "GNSS Server"
-msgstr ""
+msgstr "GNSS poslužitelj"
 
 #: blueman/Sdp.py:179
 msgid "3D Display"
-msgstr ""
+msgstr "3D ekran"
 
 #: blueman/Sdp.py:180
 msgid "3D Glasses"
-msgstr ""
+msgstr "3D naočale"
 
 #: blueman/Sdp.py:181
 msgid "3D Synchronization (3DSP)"
-msgstr ""
+msgstr "3D sinkronizacija (3DSP)"
 
 #: blueman/Sdp.py:182
 msgid "Multi-Profile Specification (MPS) Profile"
@@ -1404,7 +1384,7 @@ msgstr ""
 
 #: blueman/Sdp.py:187
 msgid "PnP Information"
-msgstr ""
+msgstr "PnP podaci"
 
 #: blueman/Sdp.py:188
 #, fuzzy
@@ -1413,60 +1393,52 @@ msgid "Generic Networking"
 msgstr "Mrežna grupa"
 
 #: blueman/Sdp.py:189
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "Generic FileTransfer"
-msgstr "Bluetooth prijenos datoteka"
+msgstr "Generički prijenos datoteka"
 
 #: blueman/Sdp.py:190
 msgid "Generic Audio"
-msgstr ""
+msgstr "Generički zvuk"
 
 #: blueman/Sdp.py:191
 msgid "Generic Telephony"
-msgstr ""
+msgstr "Generičko telefoniranje"
 
 #: blueman/Sdp.py:192
-#, fuzzy
-#| msgid "Audio Source"
 msgid "Video Source"
-msgstr "Izvor zvuka"
+msgstr "Izvor videa"
 
 #: blueman/Sdp.py:193
-#, fuzzy
-#| msgid "Audio Sink"
 msgid "Video Sink"
-msgstr "Slivnik zvuka"
+msgstr "Slivnik videa"
 
 #: blueman/Sdp.py:194
 msgid "Video Distribution"
-msgstr ""
+msgstr "Distribucija videa"
 
 #: blueman/Sdp.py:195
 msgid "HDP"
-msgstr ""
+msgstr "HDP"
 
 #: blueman/Sdp.py:196
-#, fuzzy
-#| msgid "Audio Source"
 msgid "HDP Source"
-msgstr "Izvor zvuka"
+msgstr "Izvor HDP-a"
 
 #: blueman/Sdp.py:197
 msgid "HDP Sink"
-msgstr ""
+msgstr "Slivnik HDP-a"
 
 #: blueman/Sdp.py:198
 msgid "Generic Access"
-msgstr ""
+msgstr "Generički pristup"
 
 #: blueman/Sdp.py:199
 msgid "Generic Attribute"
-msgstr ""
+msgstr "Generičko svojstvo"
 
 #: blueman/Sdp.py:200
 msgid "Immediate Alert"
-msgstr ""
+msgstr "Trenutno upozorenje"
 
 #: blueman/Sdp.py:201
 msgid "Link Loss"
@@ -1492,21 +1464,19 @@ msgstr ""
 
 #: blueman/Sdp.py:206
 msgid "Glucose"
-msgstr ""
+msgstr "Glukoza"
 
 #: blueman/Sdp.py:207
 msgid "Health Thermometer"
-msgstr ""
+msgstr "Termometar"
 
 #: blueman/Sdp.py:208
-#, fuzzy
-#| msgid "Show device information"
 msgid "Device Information"
-msgstr "Prikaži podatke uređaja"
+msgstr "Podaci uređaja"
 
 #: blueman/Sdp.py:209
 msgid "Heart Rate"
-msgstr ""
+msgstr "Otkucaji srca"
 
 #: blueman/Sdp.py:210
 msgid "Phone Alert Status Service"
@@ -1520,23 +1490,23 @@ msgstr "Lokalne usluge"
 
 #: blueman/Sdp.py:212
 msgid "Blood Pressure"
-msgstr ""
+msgstr "Krvni tlak"
 
 #: blueman/Sdp.py:213
 msgid "Alert Notification Service"
-msgstr ""
+msgstr "Usluga obavještavanja o upozorenjima"
 
 #: blueman/Sdp.py:214
 msgid "Human Interface Device"
-msgstr ""
+msgstr "Uređaj korisničkog sučelja"
 
 #: blueman/Sdp.py:215
 msgid "Scan Parameters"
-msgstr ""
+msgstr "Pretraži parametre"
 
 #: blueman/Sdp.py:216
 msgid "Running Speed and Cadence"
-msgstr ""
+msgstr "Brzina trčanja i ritam"
 
 #: blueman/Sdp.py:217
 msgid "Automation IO"
@@ -1544,15 +1514,15 @@ msgstr ""
 
 #: blueman/Sdp.py:218
 msgid "Cycling Speed and Cadence"
-msgstr ""
+msgstr "Brzina pedaliranja i ritam"
 
 #: blueman/Sdp.py:219
 msgid "Cycling Power"
-msgstr ""
+msgstr "Snaga pedaliranja"
 
 #: blueman/Sdp.py:220
 msgid "Location and Navigation"
-msgstr ""
+msgstr "Lociranje i navigiranje"
 
 #: blueman/Sdp.py:221
 msgid "Environmental Sensing"
@@ -1611,16 +1581,12 @@ msgid "AppleAgent"
 msgstr "programčić"
 
 #: blueman/Sdp.py:234
-#, fuzzy
-#| msgid "Pair Device"
 msgid "Primary Service"
-msgstr "Upari uređaj"
+msgstr "Primarna usluga"
 
 #: blueman/Sdp.py:235
-#, fuzzy
-#| msgid "Search for nearby devices"
 msgid "Secondary Service"
-msgstr "Pretraži uređaje u blizini"
+msgstr "Sekundarna usluga"
 
 #: blueman/Sdp.py:236
 msgid "Include"
@@ -1631,10 +1597,8 @@ msgid "Characteristic Declaration"
 msgstr ""
 
 #: blueman/Sdp.py:238
-#, fuzzy
-#| msgid "Device Manager"
 msgid "Device Name"
-msgstr "Upravitelj uređaja"
+msgstr "Ime uređaja"
 
 #: blueman/Sdp.py:239
 msgid "Appearance"
@@ -1645,20 +1609,16 @@ msgid "Peripheral Privacy Flag"
 msgstr ""
 
 #: blueman/Sdp.py:241
-#, fuzzy
-#| msgid "Recent _Connections"
 msgid "Reconnection Address"
-msgstr "Nedavna _povezivanja"
+msgstr "Adresa za ponovno povezivanje"
 
 #: blueman/Sdp.py:242
 msgid "Peripheral Preferred Connection Parameters"
 msgstr ""
 
 #: blueman/Sdp.py:243
-#, fuzzy
-#| msgid "Device Manager"
 msgid "Service Changed"
-msgstr "Upravitelj uređaja"
+msgstr "Usluga se promijenila"
 
 #: blueman/Sdp.py:244
 msgid "System ID"
