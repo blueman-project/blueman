@@ -1,7 +1,7 @@
 # coding=utf-8
 from gettext import gettext as _
 
-from blueman.Functions import launch, get_lockfile, get_pid, kill
+from blueman.Functions import launch, kill, LockFileHandle
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.CommonUi import show_about_dialog
 from blueman.gui.applet.PluginDialog import PluginDialog
@@ -74,8 +74,7 @@ class StandardItems(AppletPlugin):
         launch("blueman-sendto", name=_("File Sender"))
 
     def on_devices(self):
-        lockfile = get_lockfile('blueman-manager')
-        pid = get_pid(lockfile)
+        pid = LockFileHandle('blueman-manager').get_pid()
         if not pid or not kill(pid, 'blueman-manager'):
             launch("blueman-manager", name=_("Device Manager"))
 
