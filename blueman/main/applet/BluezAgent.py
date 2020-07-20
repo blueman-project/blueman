@@ -1,7 +1,6 @@
 # coding=utf-8
 import os.path
 import logging
-from gettext import bind_textdomain_codeset
 from gettext import gettext as _
 from html import escape
 import random
@@ -113,7 +112,6 @@ class BluezAgent(DbusService):
         builder = Gtk.Builder()
         builder.add_from_file(UI_PATH + "/applet-passkey.ui")
         builder.set_translation_domain("blueman")
-        bind_textdomain_codeset("blueman", "UTF-8")
         dialog = builder.get_object("dialog")
 
         dialog.props.icon_name = "blueman"

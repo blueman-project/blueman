@@ -1,6 +1,5 @@
 # coding=utf-8
 from gettext import gettext as _
-from gettext import bind_textdomain_codeset
 import logging
 
 from blueman.Constants import *
@@ -20,7 +19,6 @@ class Transfer(ServicePlugin):
 
         self.Builder = Gtk.Builder()
         self.Builder.set_translation_domain("blueman")
-        bind_textdomain_codeset("blueman", "UTF-8")
         self.Builder.add_from_file(UI_PATH + "/services-transfer.ui")
         self.widget = self.Builder.get_object("transfer")
 

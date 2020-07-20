@@ -1,6 +1,6 @@
 # coding=utf-8
 import logging
-from gettext import gettext as _, bind_textdomain_codeset
+from gettext import gettext as _
 from operator import itemgetter
 from typing import Dict, List, Tuple, Optional
 
@@ -361,7 +361,6 @@ class ManagerDeviceMenu(Gtk.Menu):
 
             builder = Gtk.Builder()
             builder.set_translation_domain("blueman")
-            bind_textdomain_codeset("blueman", "UTF-8")
             builder.add_from_file(UI_PATH + "/rename-device.ui")
             dialog = builder.get_object("dialog")
             dialog.set_transient_for(self.Blueman)

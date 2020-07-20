@@ -1,5 +1,5 @@
 # coding=utf-8
-from gettext import gettext as _, bind_textdomain_codeset
+from gettext import gettext as _
 
 from blueman.main.Config import Config
 from blueman.Constants import *
@@ -18,7 +18,6 @@ class GsmSettings(Gtk.Dialog):
 
         self.Builder = Gtk.Builder()
         self.Builder.set_translation_domain("blueman")
-        bind_textdomain_codeset("blueman", "UTF-8")
         self.Builder.add_from_file(UI_PATH + "/gsm-settings.ui")
 
         gsm_grid = self.Builder.get_object("gsm_grid")

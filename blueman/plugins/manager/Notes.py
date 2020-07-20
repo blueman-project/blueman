@@ -1,5 +1,5 @@
 import datetime
-from gettext import gettext as _, bind_textdomain_codeset
+from gettext import gettext as _
 from tempfile import NamedTemporaryFile
 
 from blueman.Constants import UI_PATH
@@ -36,7 +36,6 @@ def send_note_cb(dialog, response_id, device_address, text_view):
 def send_note(device, parent):
     builder = Gtk.Builder()
     builder.set_translation_domain('blueman')
-    bind_textdomain_codeset('blueman', 'UTF-8')
     builder.add_from_file(UI_PATH + '/note.ui')
     dialog = builder.get_object('dialog')
     dialog.set_transient_for(parent)

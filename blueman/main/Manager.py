@@ -1,6 +1,6 @@
 # coding=utf-8
 import logging
-from gettext import gettext as _, bind_textdomain_codeset
+from gettext import gettext as _
 from typing import Optional
 
 from blueman.bluez.Manager import Manager
@@ -34,7 +34,6 @@ class Blueman(Gtk.Window):
 
         self.Builder = Gtk.Builder()
         self.Builder.set_translation_domain("blueman")
-        bind_textdomain_codeset("blueman", "UTF-8")
         self.Builder.add_from_file(UI_PATH + "/manager-main.ui")
 
         grid = self.Builder.get_object("grid")
