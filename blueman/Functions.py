@@ -112,6 +112,7 @@ def launch(
     icon_name: Optional[str] = None,
     name: str = "blueman",
     sn: bool = True,
+    launched_cb: Optional[Callable[[Gio.AppLaunchContext, Gio.AppInfo, GLib.Variant], None]] = None
 ) -> bool:
     """Launch a gui app with starup notification"""
 
@@ -140,6 +141,9 @@ def launch(
 
     if icon_name:
         context.set_icon_name(icon_name)
+
+    if launched_cb:
+        context.connect('launched', launched_cb)
 
     appinfo = Gio.AppInfo.create_from_commandline(cmd, name, flags)
     launched: bool = appinfo.launch(files, context)

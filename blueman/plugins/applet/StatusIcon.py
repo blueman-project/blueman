@@ -4,7 +4,7 @@ from gettext import gettext as _
 
 from gi.repository import GObject, GLib
 
-from blueman.Functions import launch, kill, LockFileHandle
+from blueman.Functions import launch, kill, is_running, LockFileHandle
 from blueman.main.PluginManager import StopException
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.typing import GSignals
@@ -26,6 +26,8 @@ class StatusIcon(AppletPlugin, GObject.GObject):
     visibility_timeout = None
 
     _implementation = None
+
+    _tray_pid = None
 
     def on_load(self):
         GObject.GObject.__init__(self)
@@ -115,10 +117,15 @@ class StatusIcon(AppletPlugin, GObject.GObject):
         implementation = self._get_status_icon_implementation()
         if not self._implementation or self._implementation != implementation:
             self._implementation = implementation
-            pid = LockFileHandle('blueman-tray').get_pid()
+            if not self._tray_pid or not is_running('blueman-tray', self._tray_pid):
+                pid = LockFileHandle('blueman-tray').get_pid()
+            else:
+                pid = self._tray_pid
             if pid:
                 kill(pid, 'blueman-tray')
-            launch('blueman-tray', icon_name='blueman', sn=False)
+            def launched_cb(_context, _appinfo, platform_data):
+                self._tray_pid = platform_data['pid']
+            launch('blueman-tray', icon_name='blueman', sn=False, launched_cb=launched_cb)
 
     def _get_status_icon_implementation(self):
         implementations = self.parent.Plugins.run("on_query_status_icon_implementation")
