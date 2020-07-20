@@ -245,7 +245,7 @@ class LockFileHandle(object):
 
     def get_pid(self) -> int:
         with self as f:
-            return f.get_data()[0]
+            return int(f.get_data()[0])
 
     def __enter__(self):
         logging.debug("locking file %s" % self._filename)
@@ -271,7 +271,7 @@ class LockFileHandle(object):
             else:
                 return (None, None)
 
-        def set_data(self, pid: int, time: int):
+        def set_data(self, pid: int, time: int) -> None:
             self._file.seek(0)
             self._file.truncate(0)
             self._file.write("%s\n%s" % (str(pid), str(time)))
