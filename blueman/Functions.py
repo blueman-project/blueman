@@ -114,16 +114,11 @@ def launch(
     sn: bool = True,
 ) -> bool:
     """Launch a gui app with starup notification"""
-    context = None
-    gtktimestamp = Gtk.get_current_event_time()
-    if gtktimestamp == 0:
-        logging.info("Gtk eventtime is 0, not using LaunchContext")
-        timestamp = int(time.clock_gettime(time.CLOCK_MONOTONIC_RAW))
-    else:
-        timestamp = gtktimestamp
-        display = Gdk.Display.get_default()
-        context = display.get_app_launch_context()
-        context.set_timestamp(timestamp)
+
+    timestamp = Gtk.get_current_event_time()
+    display = Gdk.Display.get_default()
+    context = display.get_app_launch_context()
+    context.set_timestamp(timestamp)
 
     if sn:
         flags = Gio.AppInfoCreateFlags.SUPPORTS_STARTUP_NOTIFICATION
@@ -143,7 +138,7 @@ def launch(
     else:
         files = None
 
-    if icon_name and context is not None:
+    if icon_name:
         context.set_icon_name(icon_name)
 
     appinfo = Gio.AppInfo.create_from_commandline(cmd, name, flags)
