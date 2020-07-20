@@ -23,7 +23,6 @@ from types import FrameType
 import re
 import os
 import signal
-import atexit
 import sys
 import errno
 from gettext import gettext as _
@@ -36,7 +35,6 @@ import fcntl
 import struct
 import socket
 import array
-import time
 
 import cairo
 

@@ -126,8 +126,10 @@ class StatusIcon(AppletPlugin, GObject.GObject):
                 # to wait for a non-child process to exit on Linux, and the tray process is not always
                 # a child of the applet process.
                 kill(pid, 'blueman-tray')
+
             def launched_cb(_context, _appinfo, platform_data):
                 self._tray_pid = platform_data['pid']
+
             launch('blueman-tray', icon_name='blueman', sn=False, launched_cb=launched_cb)
 
     def _get_status_icon_implementation(self):
