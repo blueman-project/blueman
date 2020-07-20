@@ -2,7 +2,6 @@
 from gettext import gettext as _
 import time
 import logging
-from gettext import bind_textdomain_codeset
 from gettext import ngettext
 from typing import List
 
@@ -52,7 +51,6 @@ class Sender(Gtk.Dialog):
         self.b_cancel.connect("clicked", self.on_cancel)
 
         self.Builder = Gtk.Builder(translation_domain="blueman")
-        bind_textdomain_codeset("blueman", "UTF-8")
         self.Builder.add_from_file(UI_PATH + "/send-dialog.ui")
 
         grid = self.Builder.get_object("sendto")

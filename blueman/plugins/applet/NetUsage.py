@@ -5,7 +5,6 @@ import time
 import datetime
 from gettext import gettext as _, ngettext
 import logging
-from gettext import bind_textdomain_codeset
 from typing import List
 
 from blueman.Functions import *
@@ -111,7 +110,6 @@ class Dialog:
         builder = Gtk.Builder()
         builder.add_from_file(UI_PATH + "/net-usage.ui")
         builder.set_translation_domain("blueman")
-        bind_textdomain_codeset("blueman", "UTF-8")
 
         self.dialog = builder.get_object("dialog")
         self.dialog.connect("response", self.on_response)
