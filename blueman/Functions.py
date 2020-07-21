@@ -241,9 +241,9 @@ class LockFileHandle(object):
         self._filename = os.path.join(cachedir, "%s-%s" % (name, os.getuid()))
         self._file = os.fdopen(os.open(self._filename, os.O_RDWR | os.O_CREAT), 'r+')
 
-    def get_pid(self) -> int:
+    def get_pid(self) -> Optional[int]:
         with self as f:
-            return int(f.get_data()[0])
+            return f.get_data()[0]
 
     def __enter__(self):
         logging.debug("locking file %s" % self._filename)
