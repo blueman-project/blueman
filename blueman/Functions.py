@@ -300,9 +300,13 @@ def check_single_instance(name: str, unhide_func: Optional[Callable[[int], Any]]
                 print("Stale PID, overwriting")
             else:
                 print("There is an instance already running")
-                time = os.getenv("BLUEMAN_EVENT_TIME") or 0
+                env_time = os.getenv("BLUEMAN_EVENT_TIME")
+                if env_time:
+                    timestamp = int(env_time)
+                else:
+                    timestamp = int(time.clock_gettime(time.CLOCK_MONOTONIC_RAW) * 1000)
 
-                f.set_data(pid, time)
+                f.set_data(pid, timestamp)
 
                 os.kill(pid, signal.SIGUSR1)
                 bmexit()
