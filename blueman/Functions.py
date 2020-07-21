@@ -250,15 +250,9 @@ class LockFileHandle(object):
 
     def get_pid(self) -> Optional[int]:
         with self as f:
-            # `return f.get_data[0]` is enough,
-            # but mypy can't infer the correct return type.
-            pid = f.get_data()[0]
-            if pid:
-                return int(pid)
-            else:
-                return None
+            return f.get_data()[0]
 
-    def __enter__(self):
+    def __enter__(self) -> LockFile:
         logging.debug("locking file %s" % self._filename)
         fcntl.flock(self._file.fileno(), fcntl.LOCK_EX)
         return self.LockFile(self._file)
