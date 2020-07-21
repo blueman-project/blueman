@@ -237,6 +237,26 @@ class LockFileHandle(object):
     _filename: str
     _file: TextIO
 
+    class LockFile(object):
+        _file: TextIO
+
+        def __init__(self, file: TextIO):
+            self._file = file
+
+        def get_data(self) -> Tuple[Optional[int], Optional[int]]:
+            self._file.seek(0)
+            lines = self._file.readlines()
+            if lines:
+                return (int(lines[0]), int(lines[1]))
+            else:
+                return (None, None)
+
+        def set_data(self, pid: int, time: int) -> None:
+            self._file.seek(0)
+            self._file.truncate(0)
+            self._file.write("%s\n%s" % (str(pid), str(time)))
+            self._file.flush()
+
     def __init__(self, name: str):
         cachedir = GLib.get_user_cache_dir()
         if not os.path.exists(cachedir):
@@ -261,26 +281,6 @@ class LockFileHandle(object):
         logging.debug("unlocking file %s" % self._filename)
         fcntl.flock(self._file.fileno(), fcntl.LOCK_UN)
         return False
-
-    class LockFile(object):
-        _file: TextIO
-
-        def __init__(self, file: TextIO):
-            self._file = file
-
-        def get_data(self) -> Tuple[Optional[int], Optional[int]]:
-            self._file.seek(0)
-            lines = self._file.readlines()
-            if lines:
-                return (int(lines[0]), int(lines[1]))
-            else:
-                return (None, None)
-
-        def set_data(self, pid: int, time: int) -> None:
-            self._file.seek(0)
-            self._file.truncate(0)
-            self._file.write("%s\n%s" % (str(pid), str(time)))
-            self._file.flush()
 
 
 def check_single_instance(name: str, unhide_func: Optional[Callable[[int], Any]] = None) -> None:
