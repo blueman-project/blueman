@@ -25,6 +25,7 @@ import os
 import signal
 import sys
 import errno
+import time
 from gettext import gettext as _
 import logging
 import logging.handlers
@@ -114,7 +115,13 @@ def launch(
 ) -> bool:
     """Launch a gui app with starup notification"""
 
-    timestamp = Gtk.get_current_event_time()
+    gtktimestamp = Gtk.get_current_event_time()
+    if gtktimestamp == 0:
+        # clock_gettime() returns time in seconds as a floating point value,
+        # but timestamps are ints representing milliseconds.
+        timestamp = int(time.clock_gettime(time.CLOCK_MONOTONIC_RAW) * 1000)
+    else:
+        timestamp = gtktimestamp
     display = Gdk.Display.get_default()
     context = display.get_app_launch_context()
     context.set_timestamp(timestamp)
