@@ -6,21 +6,18 @@ import blueman.plugins.applet
 from blueman.main.PluginManager import PersistentPluginManager
 from blueman.main.DbusService import DbusService
 from blueman.plugins.AppletPlugin import AppletPlugin
+from gi.repository import Gio
 import logging
 
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gio
 
-
-class BluemanApplet:
+class BluemanApplet(Gio.Application):
     def __init__(self):
+        super().__init__(application_id="org.blueman.Applet", flags=Gio.ApplicationFlags.FLAGS_NONE)
         setup_icon_path()
-
-        check_single_instance("blueman-applet")
 
         self.plugin_run_state_changed = False
         self.manager_state = False
+        self._active = False
 
         self.Manager = Manager()
         self.Manager.connect_signal('adapter-added', self.on_adapter_added)
@@ -45,7 +42,10 @@ class BluemanApplet:
         self._any_device = AnyDevice()
         self._any_device.connect_signal('property-changed', self._on_device_property_changed)
 
-        Gtk.main()
+    def do_activate(self):
+        if not self._active:
+            self.hold()
+            self._active = True
 
     def _on_dbus_name_appeared(self, _connection, name, owner):
         logging.info(f"{name} {owner}")

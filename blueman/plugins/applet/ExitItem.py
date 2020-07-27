@@ -1,8 +1,4 @@
 from gettext import gettext as _
-
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
 from blueman.plugins.AppletPlugin import AppletPlugin
 
 
@@ -13,7 +9,8 @@ class ExitItem(AppletPlugin):
     __icon__ = "application-exit"
 
     def on_load(self):
-        self.parent.Plugins.Menu.add(self, 100, text=_("_Exit"), icon_name='application-exit', callback=Gtk.main_quit)
+        self.parent.Plugins.Menu.add(self, 100, text=_("_Exit"), icon_name='application-exit',
+                                     callback=self.parent.quit)
 
     def on_unload(self):
         self.parent.Plugins.Menu.unregister(self)
