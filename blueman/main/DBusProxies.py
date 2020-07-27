@@ -38,4 +38,4 @@ class Mechanism(ProxyBase):
 class AppletService(ProxyBase):
     def __init__(self):
         super().__init__(name='org.blueman.Applet', interface_name='org.blueman.Applet',
-                         object_path="/org/blueman/applet")
+                         object_path="/org/blueman/Applet")
