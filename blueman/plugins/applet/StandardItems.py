@@ -1,6 +1,7 @@
 from gettext import gettext as _
 
-from blueman.Functions import launch, get_lockfile, get_pid, kill
+from blueman.Functions import launch
+from blueman.main.DBusProxies import ManagerService
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.CommonUi import show_about_dialog
 from blueman.gui.applet.PluginDialog import PluginDialog
@@ -73,10 +74,8 @@ class StandardItems(AppletPlugin):
         launch("blueman-sendto", name=_("File Sender"))
 
     def on_devices(self):
-        lockfile = get_lockfile('blueman-manager')
-        pid = get_pid(lockfile)
-        if not pid or not kill(pid, 'blueman-manager'):
-            launch("blueman-manager", name=_("Device Manager"))
+        m = ManagerService()
+        m.startstop()
 
     def on_adapters(self):
         launch("blueman-adapters", name=_("Adapter Preferences"))
