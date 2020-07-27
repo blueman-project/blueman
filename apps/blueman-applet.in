@@ -38,4 +38,5 @@ if __name__ == '__main__':
     create_logger(log_level, "blueman-applet", syslog=args.syslog)
 
     set_proc_title()
-    BluemanApplet()
+    app = BluemanApplet()
+    app.run()
