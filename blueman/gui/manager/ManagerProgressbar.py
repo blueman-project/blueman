@@ -66,10 +66,10 @@ class ManagerProgressbar(GObject.GObject):
 
     def _on_enter(self, evbox, event):
         c = Gdk.Cursor.new(Gdk.CursorType.HAND2)
-        self.Blueman.get_window().set_cursor(c)
+        self.Blueman.window.get_window().set_cursor(c)
 
     def _on_leave(self, evbox, event):
-        self.Blueman.get_window().set_cursor(None)
+        self.Blueman.window.get_window().set_cursor(None)
 
     def _on_clicked(self, evbox, event):
         self.eventbox.props.sensitive = False
@@ -102,7 +102,7 @@ class ManagerProgressbar(GObject.GObject):
         if not self.finalized:
             self.hide()
             self.stop()
-            self.Blueman.get_window().set_cursor(None)
+            self.Blueman.window.get_window().set_cursor(None)
             self.hbox.remove(self.eventbox)
             self.hbox.remove(self.progressbar)
             # self.hbox.remove(self.seperator)

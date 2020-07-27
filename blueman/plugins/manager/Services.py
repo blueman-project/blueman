@@ -22,7 +22,7 @@ class Services(ManagerPlugin):
 
     def _make_x_icon(self, icon_name, size):
         scale = self.parent.get_scale_factor()
-        window = self.parent.get_window()
+        window = self.parent.window.get_window()
 
         target = self.icon_theme.load_surface(icon_name, size, scale, window, Gtk.IconLookupFlags.FORCE_SIZE)
         bmx = self.icon_theme.load_surface("blueman-x", size, scale, window, Gtk.IconLookupFlags.FORCE_SIZE)

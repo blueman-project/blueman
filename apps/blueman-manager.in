@@ -4,10 +4,6 @@ import os
 import signal
 import logging
 
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
-
 # support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if 'BLUEMAN_SOURCE' in os.environ:
@@ -40,6 +36,6 @@ if __name__ == '__main__':
 
     create_logger(log_level, "blueman-manager", syslog=args.syslog)
 
-    manager = Blueman()
+    app = Blueman()
     set_proc_title()
-    Gtk.main()
+    app.run()
