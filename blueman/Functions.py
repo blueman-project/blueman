@@ -18,11 +18,9 @@
 #
 from time import sleep
 from typing import Optional, Dict, Tuple, List, Callable, Iterable, Union, Any
-from types import FrameType
 import re
 import os
 import signal
-import atexit
 import sys
 import errno
 from gettext import gettext as _
@@ -49,13 +47,11 @@ gi.require_version("Gdk", "3.0")
 from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import GdkPixbuf
-from gi.repository import GLib
 from gi.repository import Gio
 
-
 __all__ = ["check_bluetooth_status", "launch", "setup_icon_path", "adapter_path_to_name", "e_", "bmexit",
-           "format_bytes", "create_menuitem", "get_lockfile", "get_pid", "is_running", "check_single_instance", "kill",
-           "have", "set_proc_title", "create_logger", "create_parser", "open_rfcomm", "get_local_interfaces"]
+           "format_bytes", "create_menuitem", "is_running", "kill", "have", "set_proc_title", "create_logger",
+           "create_parser", "open_rfcomm", "get_local_interfaces"]
 
 
 def check_bluetooth_status(message: str, exitfunc: Callable[[], Any]) -> None:
@@ -220,84 +216,12 @@ def create_menuitem(
     return item
 
 
-def get_lockfile(name: str) -> str:
-    cachedir = GLib.get_user_cache_dir()
-    if not os.path.exists(cachedir):
-        try:
-            os.mkdir(cachedir)
-        except OSError as e:
-            if e.errno != errno.EEXIST:
-                raise
-    return os.path.join(cachedir, f"{name}-{os.getuid()}")
-
-
-def get_pid(lockfile: str) -> Optional[int]:
-    try:
-        with open(lockfile) as f:
-            return int(f.readline())
-    except (ValueError, OSError):
-        return None
-
-
 def is_running(name: str, pid: int) -> bool:
     if not os.path.exists(f"/proc/{pid}"):
         return False
 
     with open(f"/proc/{pid}/cmdline") as f:
         return name in f.readline().replace("\0", " ")
-
-
-def check_single_instance(name: str, unhide_func: Optional[Callable[[int], Any]] = None) -> None:
-    print(f"{name} version {VERSION} starting")
-    lockfile = get_lockfile(name)
-
-    def handler(_sig: signal.Signals, _frame: FrameType) -> None:
-        if unhide_func:
-            try:
-                with open(lockfile) as f:
-                    f.readline()
-                    event_time = int(f.readline())
-            except ValueError:
-                event_time = 0
-
-            unhide_func(event_time)
-
-    def remove_file(path):
-        try:
-            os.remove(path)
-        except OSError:
-            logging.error(f"Failed to remove: {path}")
-
-    signal.signal(signal.SIGUSR1, handler)
-
-    if os.path.exists(lockfile):
-        pid = get_pid(lockfile)
-        if pid:
-            if not is_running(name, pid):
-                print("Stale PID, overwriting")
-                remove_file(lockfile)
-            else:
-                print("There is an instance already running")
-                time = os.getenv("BLUEMAN_EVENT_TIME") or 0
-
-                with open(lockfile, "w") as f:
-                    f.write(f"{pid}\n{time}")
-
-                os.kill(pid, signal.SIGUSR1)
-                bmexit()
-        else:
-            remove_file(lockfile)
-
-    try:
-        fd = os.open(lockfile, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o664)
-        pid_str = f"{os.getpid()}\n0"
-        os.write(fd, pid_str.encode("UTF-8"))
-        os.close(fd)
-    except OSError:
-        print("There is an instance already running")
-        bmexit()
-
-    atexit.register(lambda: remove_file(lockfile))
 
 
 def kill(pid: int, name: str) -> bool:
