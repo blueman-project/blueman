@@ -4,9 +4,6 @@ import sys
 import signal
 import logging
 
-import gi
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
 
 # support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -43,5 +40,5 @@ if __name__ == '__main__':
 
     set_proc_title()
 
-    blueman_adapters = BluemanAdapters(args.adapter, args.socket_id)
-    Gtk.main()
+    app = blueman_adapters = BluemanAdapters(args.adapter, args.socket_id)
+    app.run()
