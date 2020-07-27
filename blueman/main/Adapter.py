@@ -28,28 +28,16 @@ if TYPE_CHECKING:
         label: Gtk.Label
 
 
-class BluemanAdapters(Gtk.Window):
+class BluemanAdapters(Gtk.Application):
     def __init__(self, selected_hci_dev, socket_id):
-        super().__init__(
-            title=_("Bluetooth Adapters"),
-            border_width=5,
-            resizable=False,
-            icon_name="blueman-device",
-            name="BluemanAdapters"
-        )
-        self.connect("delete-event", self._on_close)
+        super().__init__(application_id="org.blueman.Adapters")
+
+        self.socket_id = socket_id
+        self.selected_hci_dev = selected_hci_dev
 
         self.notebook = Gtk.Notebook(visible=True)
 
-        if socket_id:
-            plug = Gtk.Plug.new(socket_id)
-            plug.show()
-            plug.connect('delete-event', self._on_close)
-            plug.add(self.notebook)
-        else:
-            self.add(self.notebook)
-            self.connect("delete-event", self._on_close)
-            self.show()
+        self.window = None
 
         self.tabs: Dict[str, "Tab"] = {}
         self._adapters: Dict[str, Adapter] = {}
@@ -57,8 +45,6 @@ class BluemanAdapters(Gtk.Window):
         setup_icon_path()
         Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
         self.manager = Manager()
-
-        check_single_instance("blueman-adapters", lambda time: self.present_with_time(time))
 
         check_bluetooth_status(_("Bluetooth needs to be turned on for the adapter manager to work"), bmexit)
 
@@ -71,8 +57,6 @@ class BluemanAdapters(Gtk.Window):
         self.manager.connect_signal('adapter-removed', self.on_adapter_removed)
         for adapter in adapters:
             path = adapter.get_object_path()
-            hci_dev = os.path.basename(path)
-            self._adapters[hci_dev] = adapter
             self.on_adapter_added(self.manager, path)
 
         # activate a particular tab according to command line option
@@ -84,8 +68,25 @@ class BluemanAdapters(Gtk.Window):
                 logging.error('Error: the selected adapter does not exist')
         self.notebook.show_all()
 
-    def _on_close(self, *args, **kwargs):
-        Gtk.main_quit()
+    def do_activate(self):
+        def app_release(_plug, event):
+            self.release()
+
+        if self.socket_id:
+            self.hold()
+            plug = Gtk.Plug.new(self.socket_id)
+            plug.show()
+            plug.connect('delete-event', app_release)
+            plug.add(self.notebook)
+        else:
+            if self.window:
+                self.window.present_with_time(Gtk.get_current_event_time())
+                return
+
+            self.window = Gtk.ApplicationWindow(application=self, title=_("Bluetooth Adapters"), border_width=5,
+                                                resizable=False, icon_name="blueman-device", name="BluemanAdapters",
+                                                visible=True)
+            self.window.add(self.notebook)
 
     def on_property_changed(self, adapter, name, value, path):
         hci_dev = os.path.basename(path)
