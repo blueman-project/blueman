@@ -110,6 +110,8 @@ class StatusIcon(AppletPlugin, GObject.GObject):
 
     def on_manager_state_changed(self, state):
         self.query_visibility()
+        if state:
+            launch('blueman-tray', icon_name='blueman', sn=False)
 
     def _on_plugins_changed(self, _plugins, _name):
         implementation = self._get_status_icon_implementation()
@@ -118,6 +120,8 @@ class StatusIcon(AppletPlugin, GObject.GObject):
             pid = get_pid(get_lockfile('blueman-tray'))
             if pid:
                 kill(pid, 'blueman-tray')
+
+        if self.parent.manager_state:
             launch('blueman-tray', icon_name='blueman', sn=False)
 
     def _get_status_icon_implementation(self):
