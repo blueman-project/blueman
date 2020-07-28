@@ -8,7 +8,7 @@ class DBusProxyFailed(Exception):
 
 
 class ProxyBase(Gio.DBusProxy, metaclass=SingletonGObjectMeta):
-    def __init__(self, name, interface_name, object_path='/', systembus=False, *args, **kwargs):
+    def __init__(self, name, interface_name, object_path='/', systembus=False, flags=0, *args, **kwargs):
         if systembus:
             bustype = Gio.BusType.SYSTEM
         else:
@@ -19,7 +19,7 @@ class ProxyBase(Gio.DBusProxy, metaclass=SingletonGObjectMeta):
             g_interface_name=interface_name,
             g_object_path=object_path,
             g_bus_type=bustype,
-            g_flags=Gio.DBusProxyFlags.NONE,
+            g_flags=flags,
             *args, **kwargs
         )
 
