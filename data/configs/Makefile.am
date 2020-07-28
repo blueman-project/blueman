@@ -7,6 +7,9 @@ dbus_services_DATA = org.blueman.Mechanism.service
 dbus_sessdir = $(datadir)/dbus-1/services
 dbus_sess_DATA = org.blueman.Applet.service
 
+dbus_managerdir = $(datadir)/dbus-1/services
+dbus_manager_DATA = org.blueman.Manager.service
+
 if SYSTEMD_SYSTEM_UNIT_DIR
 systemd_systemdir = $(systemd_system_unit_dir)
 systemd_system_DATA = blueman-mechanism.service
@@ -35,6 +38,7 @@ EXTRA_DIST = \
 	blueman-mechanism.service.in		\
 	org.blueman.Mechanism.conf		\
 	org.blueman.Applet.service.in		\
+	org.blueman.Manager.service.in	\
 	org.blueman.Mechanism.service.in	\
 	org.blueman.policy.in			\
 	blueman.rules
@@ -42,6 +46,7 @@ EXTRA_DIST = \
 CLEANFILES =		\
 	blueman-applet.service		\
 	blueman-mechanism.service	\
+	org.blueman.Manager.service \
 	org.blueman.Mechanism.service	\
 	org.blueman.Applet.service		\
 	org.blueman.policy		\
