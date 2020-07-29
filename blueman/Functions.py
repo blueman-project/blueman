@@ -233,7 +233,7 @@ def get_lockfile(name: str) -> str:
 
 def get_pid(lockfile: str) -> Optional[int]:
     try:
-        with open(lockfile, "r") as f:
+        with open(lockfile) as f:
             return int(f.readline())
     except (ValueError, OSError):
         return None
@@ -243,7 +243,7 @@ def is_running(name: str, pid: int) -> bool:
     if not os.path.exists(f"/proc/{pid}"):
         return False
 
-    with open(f"/proc/{pid}/cmdline", "r") as f:
+    with open(f"/proc/{pid}/cmdline") as f:
         return name in f.readline().replace("\0", " ")
 
 
@@ -254,7 +254,7 @@ def check_single_instance(name: str, unhide_func: Optional[Callable[[int], Any]]
     def handler(_sig: signal.Signals, _frame: FrameType) -> None:
         if unhide_func:
             try:
-                with open(lockfile, "r") as f:
+                with open(lockfile) as f:
                     f.readline()
                     event_time = int(f.readline())
             except ValueError:

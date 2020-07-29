@@ -79,10 +79,10 @@ class Monitor(MonitorBase):
 
     def poll_stats(self):
         try:
-            with open(f"/sys/class/net/{self.interface}/statistics/tx_bytes", "r") as f:
+            with open(f"/sys/class/net/{self.interface}/statistics/tx_bytes") as f:
                 tx = int(f.readline())
 
-            with open(f"/sys/class/net/{self.interface}/statistics/rx_bytes", "r") as f:
+            with open(f"/sys/class/net/{self.interface}/statistics/rx_bytes") as f:
                 rx = int(f.readline())
         except OSError:
             self.poller = None
