@@ -21,7 +21,7 @@ class NetworkSetupError(Exception):
 
 def read_pid_file(fname):
     try:
-        with open(fname, "r") as f:
+        with open(fname) as f:
             return int(f.read())
     except (OSError, ValueError):
         return None
@@ -29,7 +29,7 @@ def read_pid_file(fname):
 
 def get_dns_servers():
     dns_servers = ''
-    with open("/etc/resolv.conf", "r") as f:
+    with open("/etc/resolv.conf") as f:
         for line in f:
             match = re.search(r"^nameserver ((?:[0-9]{1,3}\.){3}[0-9]{1,3}$)", line)
             if match:
@@ -114,7 +114,7 @@ class DhcpdHandler:
         existing_subnet = ''
         start = end = False
 
-        with open(DHCP_CONFIG_FILE, 'r') as f:
+        with open(DHCP_CONFIG_FILE) as f:
             for line in f:
                 if line == '#### BLUEMAN AUTOMAGIC SUBNET ####\n':
                     start = True
@@ -167,7 +167,7 @@ class DhcpdHandler:
 
             if p.returncode == 0:
                 logging.info("dhcpd started correctly")
-                with open("/var/run/dhcpd.pan1.pid", "r") as f:
+                with open("/var/run/dhcpd.pan1.pid") as f:
                     self.pid = int(f.read())
                 logging.info(f"pid {self.pid}")
                 self.netconf.lock("dhcp")
