@@ -18,8 +18,8 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-27 11:08+0000\n"
-"PO-Revision-Date: 2020-06-05 12:28+0000\n"
-"Last-Translator: Alex <theavganec@gmail.com>\n"
+"PO-Revision-Date: 2020-07-29 15:23+0000\n"
+"Last-Translator: Artyom <mccoal@hotmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/blueman/blueman/"
 "ru/>\n"
 "Language: ru\n"
@@ -29,7 +29,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
-"X-Generator: Weblate 4.1-dev\n"
+"X-Generator: Weblate 4.2-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -652,14 +652,10 @@ msgid "_Search"
 msgstr "П_оиск"
 
 #: blueman/gui/manager/ManagerMenu.py:142
-#, fuzzy
-#| msgid "Adapter Preferences"
 msgid "_Preferences"
-msgstr "Настройки адаптеров"
+msgstr "Настройки"
 
 #: blueman/gui/manager/ManagerMenu.py:151 blueman/plugins/applet/ExitItem.py:17
-#, fuzzy
-#| msgid "Exit"
 msgid "_Exit"
 msgstr "Выход"
 
@@ -783,10 +779,8 @@ msgid "_Set up…"
 msgstr "_Настроить…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:374
-#, fuzzy
-#| msgid "Rename device"
 msgid "R_ename device..."
-msgstr "Переименовать устройство"
+msgstr "Переименовать устройство..."
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:383
 msgid "_Remove..."
@@ -880,10 +874,8 @@ msgid "Adapter selection"
 msgstr "Выбор адаптера"
 
 #: blueman/gui/DeviceSelectorWidget.py:44
-#, fuzzy
-#| msgid "Discoverable… %ss"
 msgid "Discovering…"
-msgstr "Видимый...%ss"
+msgstr "Обнаружение…"
 
 #. translators: device class
 #: blueman/DeviceClass.py:40 blueman/DeviceClass.py:64
@@ -965,67 +957,67 @@ msgstr "микрофон"
 #. translators: device class
 #: blueman/DeviceClass.py:120
 msgid "loudspeaker"
-msgstr ""
+msgstr "громкоговоритель"
 
 #. translators: device class
 #: blueman/DeviceClass.py:122
 msgid "headphones"
-msgstr ""
+msgstr "наушники"
 
 #. translators: device class
 #: blueman/DeviceClass.py:124
 msgid "portable audio"
-msgstr ""
+msgstr "портативное аудиоустройство"
 
 #. translators: device class
 #: blueman/DeviceClass.py:126
 msgid "car audio"
-msgstr ""
+msgstr "аудиоустройство для автомобиля"
 
 #. translators: device class
 #: blueman/DeviceClass.py:128
 msgid "set-top box"
-msgstr ""
+msgstr "телеприставка"
 
 #. translators: device class
 #: blueman/DeviceClass.py:130
 msgid "hifi audio"
-msgstr ""
+msgstr "hifi аудиоустройство"
 
 #. translators: device class
 #: blueman/DeviceClass.py:132
 msgid "vcr"
-msgstr ""
+msgstr "видеомагнитофон"
 
 #. translators: device class
 #: blueman/DeviceClass.py:134
 msgid "video camera"
-msgstr ""
+msgstr "видеокамера"
 
 #. translators: device class
 #: blueman/DeviceClass.py:136
 msgid "camcorder"
-msgstr ""
+msgstr "видеокамера"
 
 #. translators: device class
 #: blueman/DeviceClass.py:138
 msgid "video monitor"
-msgstr ""
+msgstr "видеомонитор"
 
 #. translators: device class
 #: blueman/DeviceClass.py:140
 msgid "video display and loudspeaker"
-msgstr ""
+msgstr "видео дисплей и громкоговоритель"
 
 #. translators: device class
 #: blueman/DeviceClass.py:142
 msgid "video conferencing"
-msgstr ""
+msgstr "видео-конференциальное"
 
 #. translators: device class
 #: blueman/DeviceClass.py:146
 msgid "gaming/toy"
-msgstr ""
+msgstr "игровое"
 
 #. translators: device class
 #: blueman/DeviceClass.py:158
@@ -1040,42 +1032,40 @@ msgstr "манипулятор"
 #. translators: device class
 #: blueman/DeviceClass.py:162
 msgid "combo"
-msgstr ""
+msgstr "комбо"
 
 #. 0x0000 is for our generic connect
 #: blueman/Sdp.py:96
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Connect"
-msgstr "Подключить"
+msgstr "Обычное подключение"
 
 #: blueman/Sdp.py:97
 msgid "SDP"
-msgstr ""
+msgstr "SDP"
 
 #: blueman/Sdp.py:98
 msgid "UDP"
-msgstr ""
+msgstr "UDP"
 
 #: blueman/Sdp.py:99
 msgid "RFCOMM"
-msgstr ""
+msgstr "RFCOMM"
 
 #: blueman/Sdp.py:100
 msgid "TCP"
-msgstr ""
+msgstr "TCP"
 
 #: blueman/Sdp.py:101
 msgid "TCS-BIN"
-msgstr ""
+msgstr "TCS-BIN"
 
 #: blueman/Sdp.py:102
 msgid "TCS-AT"
-msgstr ""
+msgstr "TCS-AT"
 
 #: blueman/Sdp.py:103
 msgid "ATT"
-msgstr ""
+msgstr "ATT"
 
 #: blueman/Sdp.py:104
 msgid "OBEX"
@@ -1197,7 +1187,7 @@ msgstr "наушники"
 
 #: blueman/Sdp.py:133
 msgid "Cordless Telephony"
-msgstr ""
+msgstr "Беспроводная телефония"
 
 #: blueman/Sdp.py:134
 msgid "Audio Source"
@@ -1209,7 +1199,7 @@ msgstr "Приёмник звука"
 
 #: blueman/Sdp.py:136
 msgid "Remote Control Target"
-msgstr ""
+msgstr "Пульт ДУ цели"
 
 #: blueman/Sdp.py:137
 msgid "Advanced Audio"
