@@ -189,9 +189,9 @@ class Sender(Gtk.Dialog):
                 x = ((self.total_bytes - self.total_transferred) / spd) + 1
                 if x > 60:
                     x /= 60
-                    eta = ngettext("%.0f Minute", "%.0f Minutes", round(x)) % x
+                    eta = ngettext("%(minutes)d Minute", "%(minutes)d Minutes", round(x)) % {"minutes": round(x)}
                 else:
-                    eta = ngettext("%.0f Second", "%.0f Seconds", round(x)) % x
+                    eta = ngettext("%(seconds)d Second", "%(seconds)d Seconds", round(x)) % {"seconds": round(x)}
             except ZeroDivisionError:
                 eta = "∞"
 
