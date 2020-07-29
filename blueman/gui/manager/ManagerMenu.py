@@ -116,7 +116,7 @@ class ManagerMenu:
         view_menu.append(item_plugins)
         item_plugins.connect('activate', self._on_plugin_dialog_activate)
 
-        item_services = create_menuitem(_("_Local Services") + "...", "preferences-desktop")
+        item_services = create_menuitem(_("_Local Services") + "…", "preferences-desktop")
         item_services.connect('activate', lambda *args: launch("blueman-services", name=_("Service Preferences")))
         view_menu.append(item_services)
         item_services.show()

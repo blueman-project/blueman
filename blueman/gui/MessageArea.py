@@ -90,7 +90,7 @@ class MessageArea(Gtk.InfoBar):
             self.hl_anim.animate(start=0.7, end=1.0, duration=1000)
 
         if self.bt:
-            self.label.props.label = self.text + "..."
+            self.label.props.label = self.text + "…"
             self.b_more.props.visible = True
         else:
             self.label.props.label = self.text

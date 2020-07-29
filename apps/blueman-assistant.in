@@ -183,7 +183,7 @@ class Assistant:
             self.assistant.set_page_complete(pages[PAGE_PASSKEY], True)
 
         elif num == PAGE_PAIRING:
-            pages[PAGE_PAIRING].set_markup(_("<b>Pairing in progress...</b>"))
+            pages[PAGE_PAIRING].set_markup(_("<b>Pairing in progress…</b>"))
 
             if self.pair:
                 def ok():

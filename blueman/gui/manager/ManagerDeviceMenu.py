@@ -120,7 +120,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             msg, tb = e_(result.message)
             MessageArea.show_message(_("Connection Failed: ") + msg, tb)
 
-        self.set_op(device, _("Connecting..."))
+        self.set_op(device, _("Connecting…"))
         prog = ManagerProgressbar(self.Blueman, False)
 
         if self._appl is None:
@@ -175,14 +175,14 @@ class ManagerDeviceMenu(Gtk.Menu):
         assert self._appl
 
         if connect:
-            self.set_op(self.SelectedDevice, _("Connecting..."))
+            self.set_op(self.SelectedDevice, _("Connecting…"))
             self._appl.ConnectService("(os)",
                                       device.get_object_path(),
                                       '00000000-0000-0000-0000-000000000000',
                                       result_handler=success, error_handler=fail,
                                       timeout=GLib.MAXINT)
         else:
-            self.set_op(self.SelectedDevice, _("Disconnecting..."))
+            self.set_op(self.SelectedDevice, _("Disconnecting…"))
             self._appl.DisconnectService("(osd)",
                                          device.get_object_path(),
                                          '00000000-0000-0000-0000-000000000000',
@@ -310,7 +310,7 @@ class ManagerDeviceMenu(Gtk.Menu):
 
         del items
 
-        send_item = create_menuitem(_("Send a _File..."), "edit-copy")
+        send_item = create_menuitem(_("Send a _File…"), "edit-copy")
         send_item.props.sensitive = False
         self.append(send_item)
         send_item.show()
@@ -369,7 +369,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             dialog.connect("response", on_response)
             dialog.present()
 
-        item = Gtk.MenuItem.new_with_mnemonic(_("R_ename device..."))
+        item = Gtk.MenuItem.new_with_mnemonic(_("R_ename device…"))
         item.connect('activate', on_rename, self.SelectedDevice)
         self.append(item)
         item.show()
@@ -378,7 +378,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         item.show()
         self.append(item)
 
-        item = create_menuitem(_("_Remove..."), "edit-delete")
+        item = create_menuitem(_("_Remove…"), "edit-delete")
         item.connect("activate", lambda x: self.Blueman.remove(self.SelectedDevice))
         self.append(item)
         item.show()
