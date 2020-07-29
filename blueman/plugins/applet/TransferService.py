@@ -326,18 +326,18 @@ class TransferService(AppletPlugin):
         share_path, ignored = self._make_share_path()
         if self._normal_transfers == 0:
             self._notification = Notification(_("Files received"),
-                                              ngettext("Received %d file in the background",
-                                                       "Received %d files in the background",
-                                                       self._silent_transfers) % self._silent_transfers,
+                                              ngettext("Received %(files)d file in the background",
+                                                       "Received %(files)d files in the background",
+                                                       self._silent_transfers) % {"files": self._silent_transfers},
                                               **self._notify_kwargs)
 
             self._add_open(self._notification, "Open Location", share_path)
             self._notification.show()
         else:
             self._notification = Notification(_("Files received"),
-                                              ngettext("Received %d more file in the background",
-                                                       "Received %d more files in the background",
-                                                       self._silent_transfers) % self._silent_transfers,
+                                              ngettext("Received %(files)d more file in the background",
+                                                       "Received %(files)d more files in the background",
+                                                       self._silent_transfers) % {"files": self._silent_transfers},
                                               **self._notify_kwargs)
             self._add_open(self._notification, "Open Location", share_path)
             self._notification.show()

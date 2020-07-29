@@ -46,9 +46,11 @@ class ShowConnected(AppletPlugin):
     def update_statusicon(self):
         if self.num_connections > 0:
             self.parent.Plugins.StatusIcon.set_text_line(0, _("Bluetooth Active"))
-            self.parent.Plugins.StatusIcon.set_text_line(1, ngettext("<b>%d Active Connection</b>",
-                                                                     "<b>%d Active Connections</b>",
-                                                                     self.num_connections) % self.num_connections)
+            self.parent.Plugins.StatusIcon.set_text_line(
+                1,
+                ngettext("<b>%(connections)d Active Connection</b>",
+                         "<b>%(connections)d Active Connections</b>",
+                         self.num_connections) % {"connections": self.num_connections})
         else:
             self.parent.Plugins.StatusIcon.set_text_line(1, None)
             # bluetooth should be always enabled if powermanager is not loaded
