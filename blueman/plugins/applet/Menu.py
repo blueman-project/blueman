@@ -130,8 +130,8 @@ class Menu(AppletPlugin):
         return self._prepare_menu(dict(item) for item in self.__menuitems if item.visible)
 
     def _prepare_menu(self, data):
-        return [dict((k, GLib.Variant("aa{sv}", self._prepare_menu(v)) if k == "submenu" else self._build_variant(v))
-                     for k, v in item.items())
+        return [{k: GLib.Variant("aa{sv}", self._prepare_menu(v)) if k == "submenu" else self._build_variant(v)
+                 for k, v in item.items()}
                 for item in data]
 
     def _build_variant(self, value):
