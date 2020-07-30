@@ -12,7 +12,6 @@ translation.install()
 # https://www.bluetooth.com/specifications/assigned-numbers/service-discovery
 # http://git.kernel.org/cgit/bluetooth/bluez.git/tree/lib/sdp.h
 
-BLUEMAN_GENERIC_CONNECT_ID = 0x0000
 SDP_SERVER_SVCLASS_ID = 0x1000
 BROWSE_GRP_DESC_SVCLASS_ID = 0x1001
 PUBLIC_BROWSE_GROUP = 0x1002
@@ -92,8 +91,6 @@ GENERIC_ATTRIB_SVCLASS_ID = 0x1801
 APPLE_AGENT_SVCLASS_ID = 0x2112
 
 uuid_names = {
-    # 0x0000 is for our generic connect
-    0x0000: _("Generic Connect"),
     0x0001: _("SDP"),
     0x0002: _("UDP"),
     0x0003: _("RFCOMM"),
