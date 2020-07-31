@@ -1,0 +1,77 @@
+on: pull_request
+
+jobs:
+  releasebuild:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y -qq --no-install-recommends sudo automake autoconf libglib2.0-dev libtool intltool python3-dev python-gi python-gi-dev cython dh-autoreconf libbluetooth-dev gtk-update-icon-cache python3-pip
+      - run: ./autogen.sh
+      - run: make
+      - run: make distcheck
+      - run: sudo make install
+
+  mesonbuild:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y -qq --no-install-recommends build-essential meson sudo intltool libglib2.0-dev python3-dev python-gi python-gi-dev cython libbluetooth-dev gtk-update-icon-cache python3-pip
+      - run: meson --warnlevel 3 --buildtype debug -Druntime_deps_check=false builddebug
+      - run: ninja -v -C builddebug/
+
+  flake8:
+    strategy:
+      matrix:
+        python:
+          - 3.6
+          - 3.7
+          - 3.8
+          - 3.9-rc
+    runs-on: ubuntu-latest
+    container:
+      image: python:${{ matrix.python }}
+    steps:
+      - uses: actions/checkout@v2
+      - run: python3 -m pip install --user flake8
+      - run: python3 -m flake8
+
+  mypy:
+    strategy:
+      matrix:
+        python:
+          - 3.6
+          - 3.7
+          - 3.8
+    runs-on: ubuntu-latest
+    container:
+      image: python:${{ matrix.python }}
+    steps:
+      - uses: actions/checkout@v2
+      - run: apt-get update
+      - run: apt-get install -y -qq --no-install-recommends sudo automake autoconf libglib2.0-dev libtool intltool python3-dev python-gi python-gi-dev cython dh-autoreconf libbluetooth-dev gtk-update-icon-cache python3-pip
+      - run: ./autogen.sh
+      - run: python3 -m pip install --user mypy==0.740
+      - run: python3 -m mypy -p blueman --ignore-missing-imports --warn-unused-configs --disallow-any-generics --disallow-incomplete-defs --check-untyped-defs --disallow-untyped-decorators --no-implicit-optional --warn-redundant-casts --warn-unused-ignores --warn-return-any --no-implicit-reexport
+        env:
+          MYPYPATH: ${{ github.workspace }}/stubs
+
+  test:
+    strategy:
+      matrix:
+        python:
+          - 3.6
+          - 3.7
+          - 3.8
+    runs-on: ubuntu-latest
+    container:
+      image: python:${{ matrix.python }}
+    steps:
+      - uses: actions/checkout@v2
+      - run: apt-get update
+      - run: apt-get install -y -qq --no-install-recommends sudo automake autoconf libglib2.0-dev libtool intltool python3-dev python-gi python-gi-dev cython dh-autoreconf libbluetooth-dev gtk-update-icon-cache python3-pip libgirepository1.0-dev gir1.2-gtk-3.0 libpulse0 libpulse-mainloop-glib0
+      - run: ./autogen.sh
+      - run: make -C module
+      - run: python3 -m pip install --user pygobject
+      - run: PYTHONPATH=module/.libs python3 -m unittest
