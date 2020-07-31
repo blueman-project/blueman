@@ -20,7 +20,6 @@ from time import sleep
 from typing import Optional, Dict, Tuple, List, Callable, Iterable, Union, Any
 import re
 import os
-import signal
 import sys
 import errno
 from gettext import gettext as _
@@ -50,8 +49,8 @@ from gi.repository import GdkPixbuf
 from gi.repository import Gio
 
 __all__ = ["check_bluetooth_status", "launch", "setup_icon_path", "adapter_path_to_name", "e_", "bmexit",
-           "format_bytes", "create_menuitem", "is_running", "kill", "have", "set_proc_title", "create_logger",
-           "create_parser", "open_rfcomm", "get_local_interfaces"]
+           "format_bytes", "create_menuitem", "have", "set_proc_title", "create_logger", "create_parser", "open_rfcomm",
+           "get_local_interfaces"]
 
 
 def check_bluetooth_status(message: str, exitfunc: Callable[[], Any]) -> None:
@@ -214,22 +213,6 @@ def create_menuitem(
     item.show_all()
 
     return item
-
-
-def is_running(name: str, pid: int) -> bool:
-    if not os.path.exists(f"/proc/{pid}"):
-        return False
-
-    with open(f"/proc/{pid}/cmdline") as f:
-        return name in f.readline().replace("\0", " ")
-
-
-def kill(pid: int, name: str) -> bool:
-    if pid and is_running(name, pid):
-        print('Terminating ' + name)
-        os.kill(pid, signal.SIGTERM)
-        return True
-    return False
 
 
 def have(t: str) -> Optional[str]:
