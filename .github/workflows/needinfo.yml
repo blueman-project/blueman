@@ -1,0 +1,15 @@
+name: "Close issues with needinfo and remove the label on updates"
+on:
+  schedule:
+  - cron: "0 0 * * *"
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/stale@v3
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        days-before-stale: -1
+        days-before-close: 14
+        stale-issue-label: needinfo
