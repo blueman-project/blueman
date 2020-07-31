@@ -3,6 +3,7 @@ import os
 import sys
 import signal
 import logging
+import gettext
 
 
 # support running uninstalled
@@ -10,6 +11,8 @@ _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if 'BLUEMAN_SOURCE' in os.environ:
     sys.path = [_dirname, os.path.join(_dirname, 'module', '.libs')] + sys.path
     os.environ["GSETTINGS_SCHEMA_DIR"] = os.path.join(_dirname, "data")
+
+gettext.textdomain("@GETTEXT_PACKAGE@")
 
 from blueman.Functions import create_parser, create_logger, set_proc_title
 from blueman.main.Adapter import BluemanAdapters
