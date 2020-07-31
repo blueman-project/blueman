@@ -7,16 +7,33 @@ from pickle import UnpicklingError
 from tempfile import mkstemp
 from time import sleep
 import logging
+import signal
 from typing import List, Tuple
 
 from blueman.Constants import DHCP_CONFIG_FILE
-from blueman.Functions import have, is_running, kill
+from blueman.Functions import have
 from _blueman import create_bridge, destroy_bridge, BridgeException
 from subprocess import call, Popen, PIPE
 
 
 class NetworkSetupError(Exception):
     pass
+
+
+def is_running(name: str, pid: int) -> bool:
+    if not os.path.exists(f"/proc/{pid}"):
+        return False
+
+    with open(f"/proc/{pid}/cmdline") as f:
+        return name in f.readline().replace("\0", " ")
+
+
+def kill(pid: int, name: str) -> bool:
+    if pid and is_running(name, pid):
+        print('Terminating ' + name)
+        os.kill(pid, signal.SIGTERM)
+        return True
+    return False
 
 
 def read_pid_file(fname):
