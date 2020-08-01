@@ -246,8 +246,8 @@ class ManagerDeviceList(DeviceList):
     @staticmethod
     def get_device_class(device: Device) -> str:
         klass = get_minor_class(device['Class'])
-        if klass != "uncategorized":
-            return get_minor_class(device['Class'], True)
+        if klass != _("uncategorized"):
+            return klass
         else:
             return get_major_class(device['Class'])
 
@@ -275,10 +275,9 @@ class ManagerDeviceList(DeviceList):
         klass = get_minor_class(device['Class'])
         # Bluetooth >= 4 devices use Appearance property
         appearance = device["Appearance"]
-        if klass != "uncategorized" and klass != "unknown":
-            # get translated version
-            description = get_minor_class(device['Class'], True).capitalize()
-        elif klass == "unknown" and appearance:
+        if klass != _("uncategorized") and klass != _("unknown"):
+            description = get_minor_class(device['Class']).capitalize()
+        elif klass == _("unknown") and appearance:
             description = gatt_appearance_to_name(appearance)
         else:
             description = get_major_class(device['Class']).capitalize()
