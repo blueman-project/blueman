@@ -2,39 +2,48 @@ from gettext import gettext as _
 import logging
 
 service_cls = [
-    "positioning",
-    "networking",
-    "rendering",
-    "capturing",
-    "object transfer",
-    "audio",
-    "telephony",
-    "information"
+    # translators: device class
+    _("positioning"),
+    # translators: device class
+    _("networking"),
+    # translators: device class
+    _("rendering"),
+    # translators: device class
+    _("capturing"),
+    # translators: device class
+    _("object transfer"),
+    # translators: device class
+    _("audio"),
+    # translators: device class
+    _("telephony"),
+    # translators: device class
+    _("information")
 ]
 
 major_cls = [
-    "miscellaneous",
-    "computer",
-    "phone",
-    "access point",
-    "audio/video",
-    "peripheral",
-    "imaging",
-    "wearable",
-    "toy",
-    "uncategorized"
+    # translators: device class
+    _("miscellaneous"),
+    # translators: device class
+    _("computer"),
+    # translators: device class
+    _("phone"),
+    # translators: device class
+    _("access point"),
+    # translators: device class
+    _("audio/video"),
+    # translators: device class
+    _("peripheral"),
+    # translators: device class
+    _("imaging"),
+    # translators: device class
+    _("wearable"),
+    # translators: device class
+    _("toy"),
+    # translators: device class
+    _("uncategorized")
 ]
 
 computer_minor_cls = [
-    "uncategorized",
-    "desktop",
-    "server",
-    "laptop",
-    "handheld",
-    "palm",
-    "wearable"
-]
-computer_minor_cls_i18n = [
     # translators: device class
     _("uncategorized"),
     # translators: device class
@@ -47,18 +56,11 @@ computer_minor_cls_i18n = [
     _("handheld"),
     # translators: device class
     _("palm"),
-    "wearable"
+    # translators: device class
+    _("wearable")
 ]
 
 phone_minor_cls = [
-    "uncategorized",
-    "cellular",
-    "cordless",
-    "smart phone",
-    "modem",
-    "isdn"
-]
-phone_minor_cls_i18n = [
     # translators: device class
     _("uncategorized"),
     # translators: device class
@@ -72,39 +74,27 @@ phone_minor_cls_i18n = [
     # translators: device class
     _("isdn")
 ]
+
 access_point_minor_cls = [
-    "fully",
-    "1-17 percent",
-    "17-33 percent",
-    "33-50 percent",
-    "50-67 percent",
-    "67-83 percent",
-    "83-99 percent",
-    "not available"
+    # translators: device class
+    _("fully"),
+    # translators: device class
+    _("1-17 percent"),
+    # translators: device class
+    _("17-33 percent"),
+    # translators: device class
+    _("33-50 percent"),
+    # translators: device class
+    _("50-67 percent"),
+    # translators: device class
+    _("67-83 percent"),
+    # translators: device class
+    _("83-99 percent"),
+    # translators: device class
+    _("not available")
 ]
 
 audio_video_minor_cls = [
-    "uncategorized",
-    "headset",
-    "handsfree",
-    "unknown",
-    "microphone",
-    "loudspeaker",
-    "headphones",
-    "portable audio",
-    "car audio",
-    "set-top box",
-    "hifi audio",
-    "vcr",
-    "video camera",
-    "camcorder",
-    "video monitor",
-    "video display and loudspeaker",
-    "video conferencing",
-    "unknown",
-    "gaming/toy"
-]
-audio_video_minor_cls_i18n = [
     # translators: device class
     _("uncategorized"),
     # translators: device class
@@ -144,13 +134,8 @@ audio_video_minor_cls_i18n = [
     # translators: device class
     _("gaming/toy")
 ]
+
 peripheral_minor_cls = [
-    "uncategorized",
-    "keyboard",
-    "pointing",
-    "combo"
-]
-peripheral_minor_cls_i18n = [
     # translators: device class
     _("uncategorized"),
     # translators: device class
@@ -162,89 +147,103 @@ peripheral_minor_cls_i18n = [
 ]
 
 imaging_minor_cls = [
-    "display",
-    "camera",
-    "scanner",
-    "printer"
+    # translators: device class
+    _("display"),
+    # translators: device class
+    _("camera"),
+    # translators: device class
+    _("scanner"),
+    # translators: device class
+    _("printer")
 ]
 
 wearable_minor_cls = [
-    "wrist watch",
-    "pager",
-    "jacket",
-    "helmet",
-    "glasses"
+    # translators: device class
+    _("wrist watch"),
+    # translators: device class
+    _("pager"),
+    # translators: device class
+    _("jacket"),
+    # translators: device class
+    _("helmet"),
+    # translators: device class
+    _("glasses")
 ]
 
 toy_minor_cls = [
-    "robot",
-    "vehicle",
-    "doll",
-    "controller",
-    "game"
+    # translators: device class
+    _("robot"),
+    # translators: device class
+    _("vehicle"),
+    # translators: device class
+    _("doll"),
+    # translators: device class
+    _("controller"),
+    # translators: device class
+    _("game")
 ]
 
 gatt_appearance_categories = {
-    0: ('Unknown', {0: 'Unknown'}),
-    1: ('Phone', {0: 'Generic Phone'}),
-    2: ('Computer', {0: 'Generic Computer'}),
-    3: ('Watch', {0: 'Generic Watch',
-                  1: 'Watch: Sports Watch'}),
-    4: ('Clock', {0: 'Generic Clock'}),
-    5: ('Display', {0: 'Generic Display'}),
-    6: ('Remote Control', {0: 'Generic Remote Control'}),
-    7: ('Eye-glasses', {0: 'Generic Eye-glasses'}),
-    8: ('Tag', {0: 'Generic Tag'}),
-    9: ('Keyring', {0: 'Generic Keyring'}),
-    10: ('Media Player', {0: 'Generic Media Player'}),
-    11: ('Barcode Scanner', {0: 'Generic Barcode Scanner'}),
-    12: ('Thermometer', {0: 'Generic Thermometer',
-                         1: 'Thermometer: Ear'}),
-    13: ('Heart rate Sensor', {0: 'Generic Heart rate Sensor',
-                               1: 'Heart Rate Sensor: Heart Rate Belt'}),
-    14: ('Blood Pressure', {0: 'Generic Blood Pressure',
-                            1: 'Blood Pressure: Arm',
-                            2: 'Blood Pressure: Wrist'}),
-    15: ('Human Interface Device (HID)', {0: 'Human Interface Device (HID)',
-                                          1: 'Keyboard',
-                                          2: 'Mouse',
-                                          3: 'Joystick',
-                                          4: 'Gamepad',
-                                          5: 'Digitizer Tablet',
-                                          6: 'Card Reader',
-                                          7: 'Digital Pen',
-                                          8: 'Barcode Scanner'}),
-    16: ('Glucose Meter', {0: 'Generic Glucose Meter'}),
-    17: ('Running Walking Sensor', {0: 'Generic: Running Walking Sensor',
-                                    1: 'Running Walking Sensor: In-Shoe',
-                                    2: 'Running Walking Sensor: On-Shoe',
-                                    3: 'Running Walking Sensor: On-Hip'}),
-    18: ('Cycling', {0: 'Generic: Cycling',
-                     1: 'Cycling: Cycling Computer',
-                     2: 'Cycling: Speed Sensor',
-                     3: 'Cycling: Cadence Sensor',
-                     4: 'Cycling: Power Sensor',
-                     5: 'Cycling: Speed and Cadence Sensor'}),
+    0: ('Unknown', {0: _("Unknown")}),
+    1: ('Phone', {0: _("Generic Phone")}),
+    2: ('Computer', {0: _("Generic Computer")}),
+    3: ('Watch', {0: _("Generic Watch"),
+                  1: _("Watch: Sports Watch")}),
+    4: ('Clock', {0: _("Generic Clock")}),
+    5: ('Display', {0: _("Generic Display")}),
+    6: ('Remote Control', {0: _("Generic Remote Control")}),
+    7: ('Eye-glasses', {0: _("Generic Eye-glasses")}),
+    8: ('Tag', {0: _("Generic Tag")}),
+    9: ('Keyring', {0: _("Generic Keyring")}),
+    10: ('Media Player', {0: _("Generic Media Player")}),
+    11: ('Barcode Scanner', {0: _("Generic Barcode Scanner")}),
+    12: ('Thermometer', {0: _("Generic Thermometer"),
+                         1: _("Thermometer: Ear")}),
+    13: ('Heart rate Sensor', {0: _("Generic Heart rate Sensor"),
+                               1: _("Heart Rate Sensor: Heart Rate Belt")}),
+    14: ('Blood Pressure', {0: _("Generic Blood Pressure"),
+                            1: _("Blood Pressure: Arm"),
+                            2: _("Blood Pressure: Wrist")}),
+    15: ('Human Interface Device (HID)', {0: _("Human Interface Device (HID)"),
+                                          1: _("Keyboard"),
+                                          2: _("Mouse"),
+                                          3: _("Joystick"),
+                                          4: _("Gamepad"),
+                                          5: _("Digitizer Tablet"),
+                                          6: _("Card Reader"),
+                                          7: _("Digital Pen"),
+                                          8: _("Barcode Scanner")}),
+    16: ('Glucose Meter', {0: _("Generic Glucose Meter")}),
+    17: ('Running Walking Sensor', {0: _("Generic: Running Walking Sensor"),
+                                    1: _("Running Walking Sensor: In-Shoe"),
+                                    2: _("Running Walking Sensor: On-Shoe"),
+                                    3: _("Running Walking Sensor: On-Hip")}),
+    18: ('Cycling', {0: _("Generic: Cycling"),
+                     1: _("Cycling: Cycling Computer"),
+                     2: _("Cycling: Speed Sensor"),
+                     3: _("Cycling: Cadence Sensor"),
+                     4: _("Cycling: Power Sensor"),
+                     5: _("Cycling: Speed and Cadence Sensor")}),
     # 19 - 48 reserved
-    49: ('Pulse Oximeter', {0: 'Generic: Pulse Oximeter',
-                            1: 'Fingertip',
-                            2: 'Wrist Worn'}),
-    50: ('Weight Scale', {0: 'Generic: Weight Scale'}),
-    51: ('Personal Mobility Device', {0: 'Generic Personal Mobility Device',
-                                      1: 'Powered Wheelchair',
-                                      2: 'Mobility Scooter'}),
-    52: ('Continuous Glucose Monitor', {0: 'Generic Continuous Glucose Monitor'}),
-    53: ('Insulin Pump', {0: 'Generic Insulin Pump',
-                          1: 'Insulin Pump, durable pump',
-                          4: 'Insulin Pump, patch pump',
-                          8: 'Insulin Pen'}),
-    54: ('Medication Delivery', {0: 'Generic Medication Delivery'}),
+    49: ('Pulse Oximeter', {0: _("Generic: Pulse Oximeter"),
+                            1: _("Fingertip"),
+                            2: _("Wrist Worn")}),
+    50: ('Weight Scale', {0: _("Generic: Weight Scale")}),
+    51: ('Personal Mobility Device', {0: _("Generic Personal Mobility Device"),
+                                      1: _("Powered Wheelchair"),
+                                      2: _("Mobility Scooter")}),
+    52: ('Continuous Glucose Monitor', {0: _("Generic Continuous Glucose Monitor")}),
+    53: ('Insulin Pump', {0: _("Generic Insulin Pump"),
+                          1: _("Insulin Pump, durable pump"),
+                          4: _("Insulin Pump, patch pump"),
+                          8: _("Insulin Pen")}),
+    54: ('Medication Delivery', {0: _("Generic Medication Delivery")}),
     # 55 - 80 reserved
-    81: ('Outdoor Sports Activity', {0: 'Generic: Outdoor Sports Activity',
-                                     1: 'Location Display Device',
-                                     2: 'Location and Navigation Display Device',
-                                     3: 'Location Pod',
-                                     4: 'Location and Navigation Pod'})
+    81: ('Outdoor Sports Activity', {0: _("Generic: Outdoor Sports Activity"),
+                                     1: _("Location Display Device"),
+                                     2: _("Location and Navigation Display Device"),
+                                     3: _("Location Pod"),
+                                     4: _("Location and Navigation Pod")})
 }
 
 
@@ -257,31 +256,22 @@ def get_major_class(klass: int) -> str:
     return major_cls[index]
 
 
-def get_minor_class(klass: int, i18n: bool = False) -> str:
+def get_minor_class(klass: int) -> str:
     if not klass:
-        if i18n:
-            return _("unknown")
-        else:
-            return "unknown"
+        return _("unknown")
 
     i = (klass >> 8) & 0x1F
 
     if i == 1:
         minor_index = (klass >> 2) & 0x3F
         if minor_index < len(computer_minor_cls):
-            if i18n:
-                return computer_minor_cls_i18n[minor_index]
-            else:
-                return computer_minor_cls[minor_index]
+            return computer_minor_cls[minor_index]
         else:
             return ""
     elif i == 2:
         minor_index = (klass >> 2) & 0x3F
         if minor_index < len(phone_minor_cls):
-            if i18n:
-                return phone_minor_cls_i18n[minor_index]
-            else:
-                return phone_minor_cls[minor_index]
+            return phone_minor_cls[minor_index]
         return ""
     elif i == 3:
         minor_index = (klass >> 5) & 0x07
@@ -292,23 +282,17 @@ def get_minor_class(klass: int, i18n: bool = False) -> str:
     elif i == 4:
         minor_index = (klass >> 2) & 0x3F
         if minor_index < len(audio_video_minor_cls):
-            if i18n:
-                return audio_video_minor_cls_i18n[minor_index]
-            else:
-                return audio_video_minor_cls[minor_index]
+            return audio_video_minor_cls[minor_index]
         else:
             return ""
     elif i == 5:
         minor_index = (klass >> 6) & 0x03
         if minor_index < len(peripheral_minor_cls):
-            if i18n:
-                return peripheral_minor_cls_i18n[minor_index]
-            else:
-                return peripheral_minor_cls[minor_index]
+            return peripheral_minor_cls[minor_index]
         else:
             return ""
     elif i == 6:
-        return "imaging"
+        return _("imaging")
 
     elif i == 7:
         minor_index = (klass >> 2) & 0x3F
@@ -323,10 +307,7 @@ def get_minor_class(klass: int, i18n: bool = False) -> str:
         else:
             return ""
 
-    if i18n:
-        return _("unknown")
-    else:
-        return "unknown"
+    return _("unknown")
 
 
 # First 10 bits is the category, the following 6 bits sub category
