@@ -64,7 +64,8 @@ jobs:
           - 3.6
           - 3.7
           - 3.8
-    runs-on: ubuntu-latest
+          - 3.9-rc
+    runs-on: ubuntu-20.04
     container:
       image: python:${{ matrix.python }}
     steps:
