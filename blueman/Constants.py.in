@@ -16,10 +16,6 @@ GETTEXT_PACKAGE = "@GETTEXT_PACKAGE@"
 RFCOMM_WATCHER_PATH = "@LIBEXECDIR@/blueman-rfcomm-watcher"
 
 import os
-import gettext
-
-translation = gettext.translation(GETTEXT_PACKAGE, LOCALEDIR, fallback=True)
-translation.install()
 
 if 'BLUEMAN_SOURCE' in os.environ:
     _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
