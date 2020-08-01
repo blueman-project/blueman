@@ -1,0 +1,32 @@
+on: pull_request
+
+jobs:
+  releasebuild:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y -qq --no-install-recommends sudo automake autoconf libglib2.0-dev libtool intltool python3-dev python-gi python-gi-dev cython dh-autoreconf libbluetooth-dev gtk-update-icon-cache python3-pip
+      - run: ./autogen.sh
+      - run: make
+      - run: make distcheck
+      - run: sudo make install
+
+  flake8:
+    strategy:
+      matrix:
+        python:
+          - 3.3
+          - 3.4
+          - 3.5
+          - 3.6
+          - 3.7
+          - 3.8
+          - 3.9-rc
+    runs-on: ubuntu-latest
+    container:
+      image: python:${{ matrix.python }}
+    steps:
+      - uses: actions/checkout@v2
+      - run: python3 -m pip install --user flake8
+      - run: python3 -m flake8
