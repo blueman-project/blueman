@@ -24,16 +24,15 @@
 * [BlueZ 5](http://www.bluez.org/)
 * [Cython](http://www.cython.org/)
 * [GLib 2](http://www.gtk.org/) (>= 2.32)
-* [intltool](http://freedesktop.org/wiki/Software/intltool/)
-* [libtool](http://www.gnu.org/software/libtool/)
+* [gettext](https://www.gnu.org/software/gettext/)
 * [PyGObject 3](https://wiki.gnome.org/PyGObject) (>= 3.27.2)
 * [Python](http://www.python.org/) (>= 3.6)
 
 ## Additional dependencies for VCS version
 
-* [autogen](https://www.gnu.org/software/autogen/)
 * [automake](https://www.gnu.org/software/automake/)
 * [autoconf](https://www.gnu.org/software/autoconf/)
+* [libtool](http://www.gnu.org/software/libtool/)
 
 [1] There is a known issue with GTK+ <= 3.10.6, possibly in conjuction with specific themes or similar conditions. If it is present and a message is to be displayed in blueman-manager's message area the application will crash with
 
