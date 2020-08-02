@@ -148,7 +148,11 @@ AS_IF([test "x$enable_polkit" = "xyes"],
 
 AM_CONDITIONAL([HAVE_POLKIT], [test "x$have_polkit" = "xyes"])
 
-AC_SUBST([have_polkit])
+AS_IF([test "x$have_polkit" = "xyes"],
+  [POLKIT=True],
+  [POLKIT=False])
+
+AC_SUBST([POLKIT])
 
 AC_ARG_ENABLE([caja-sendto],
   AS_HELP_STRING([--enable-caja-sendto], [Enable caja-sendto installation]),

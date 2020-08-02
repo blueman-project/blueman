@@ -11,7 +11,7 @@ ICON_PATH = "@icondir@"
 PIXMAP_PATH = "@prefix@/share/pixmaps/@PACKAGE@"
 UI_PATH = "@pkgdatadir@/ui"
 DHCP_CONFIG_FILE = "@dhconfig@"
-POLKIT = "@have_polkit@" == "yes"
+POLKIT = @POLKIT@
 GETTEXT_PACKAGE = "@GETTEXT_PACKAGE@"
 RFCOMM_WATCHER_PATH = "@LIBEXECDIR@/blueman-rfcomm-watcher"
 

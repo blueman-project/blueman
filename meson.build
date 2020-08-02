@@ -29,9 +29,9 @@ schemadir = join_paths([datadir, 'glib-2.0', 'schemas'])
 pythondir = join_paths([prefix, python.sysconfig_path('purelib')])
 
 if get_option('policykit')
-    have_polkit = 'yes'
+    have_polkit = 'True'
 else
-    have_polkit = 'no'
+    have_polkit = 'False'
 endif
 
 # Setup congfiguration
@@ -45,7 +45,7 @@ conf_data.set('pkgdatadir', pkgdatadir)
 conf_data.set('LOCALEDIR', join_paths(prefix, get_option('localedir')))
 conf_data.set('icondir', join_paths(datadir, 'icons'))
 conf_data.set('dhconfig', get_option('dhcp-config-path'))
-conf_data.set('have_polkit', have_polkit)
+conf_data.set('POLKIT', have_polkit)
 conf_data.set('GETTEXT_PACKAGE', package_name)
 conf_data.set('PYTHON', pyprog.path())
 
