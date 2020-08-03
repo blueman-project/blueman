@@ -14,7 +14,7 @@ class StatusIconImplementationProvider:
 
 
 class StatusIconVisibilityHandler:
-    def on_query_status_icon_visibility(self) -> int:
+    def on_query_force_status_icon_visibility(self) -> bool:
         ...
 
 
@@ -29,10 +29,6 @@ class StatusIcon(AppletPlugin, GObject.GObject):
     __unloadable__ = False
     __icon__ = "blueman-tray"
     __depends__ = ['Menu']
-
-    FORCE_SHOW = 2
-    SHOW = 1
-    FORCE_HIDE = 0
 
     visible = None
 
@@ -59,25 +55,15 @@ class StatusIcon(AppletPlugin, GObject.GObject):
         self._add_dbus_method("Activate", (), "", lambda: self.emit("activate"))
 
     def query_visibility(self, delay_hiding=False, emit=True):
-        rets = [plugin.on_query_status_icon_visibility()
-                for plugin in self.parent.Plugins.get_loaded_plugins(StatusIconVisibilityHandler)]
-        if StatusIcon.FORCE_HIDE not in rets:
-            if StatusIcon.FORCE_SHOW in rets:
-                self.set_visible(True, emit)
+        if self.parent.Manager.get_adapters() or \
+           any(plugin.on_query_force_status_icon_visibility()
+               for plugin in self.parent.Plugins.get_loaded_plugins(StatusIconVisibilityHandler)):
+            self.set_visible(True, emit)
+        elif not self.visibility_timeout:
+            if delay_hiding:
+                self.visibility_timeout = GLib.timeout_add(1000, self.on_visibility_timeout)
             else:
-                if not self.parent.Manager:
-                    self.set_visible(False, emit)
-                    return
-
-                if self.parent.Manager.get_adapters():
-                    self.set_visible(True, emit)
-                elif not self.visibility_timeout:
-                    if delay_hiding:
-                        self.visibility_timeout = GLib.timeout_add(1000, self.on_visibility_timeout)
-                    else:
-                        self.set_visible(False, emit)
-        else:
-            self.set_visible(False, emit)
+                self.set_visible(False, emit)
 
     def on_visibility_timeout(self):
         GLib.source_remove(self.visibility_timeout)
