@@ -18,51 +18,50 @@ class BluemanServices(Gtk.Application):
         self.window = None
 
     def do_activate(self):
-        if self.window:
-            self.window.present_with_time(Gtk.get_current_event_time())
-            return
-        else:
+        if not self.window:
             self.window = Gtk.ApplicationWindow(application=self, title=_("Local Services"), icon_name="blueman",
-                                                border_width=5, visible=True)
+                                                border_width=5)
 
-        grid = Gtk.Grid(orientation=Gtk.Orientation.VERTICAL, visible=True, row_spacing=10)
-        self.window.add(grid)
+            grid = Gtk.Grid(orientation=Gtk.Orientation.VERTICAL, visible=True, row_spacing=10)
+            self.window.add(grid)
 
-        self.box = Gtk.Box(Gtk.Orientation.HORIZONTAL, vexpand=True, visible=True)
-        grid.add(self.box)
+            self.box = Gtk.Box(Gtk.Orientation.HORIZONTAL, vexpand=True, visible=True)
+            grid.add(self.box)
 
-        button_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, halign=Gtk.Align.END, visible=True)
-        grid.add(button_box)
+            button_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, halign=Gtk.Align.END, visible=True)
+            grid.add(button_box)
 
-        self.b_apply = Gtk.Button(label="_Apply", receives_default=True, use_underline=True,
-                                  sensitive=False, visible=True, width_request=80)
-        button_box.add(self.b_apply)
+            self.b_apply = Gtk.Button(label="_Apply", receives_default=True, use_underline=True,
+                                      sensitive=False, visible=True, width_request=80)
+            button_box.add(self.b_apply)
 
-        self.viewport = Gtk.Viewport(visible=True, width_request=120)
+            self.viewport = Gtk.Viewport(visible=True, width_request=120)
 
-        self.box.add(self.viewport)
+            self.box.add(self.viewport)
 
-        self.Config = Config("org.blueman.general")
+            self.Config = Config("org.blueman.general")
 
-        data = [
-            {"id": "icon_name", "type": str, "renderer": Gtk.CellRendererPixbuf(stock_size=Gtk.IconSize.DND),
-             "render_attrs": {"icon_name": 0}},
-            {"id": "caption", "type": str, "renderer": Gtk.CellRendererText(), "render_attrs": {"markup": 1},
-             "view_props": {"expand": True}},
-            {"id": "id", "type": str},
-        ]
+            data = [
+                {"id": "icon_name", "type": str, "renderer": Gtk.CellRendererPixbuf(stock_size=Gtk.IconSize.DND),
+                 "render_attrs": {"icon_name": 0}},
+                {"id": "caption", "type": str, "renderer": Gtk.CellRendererText(), "render_attrs": {"markup": 1},
+                 "view_props": {"expand": True}},
+                {"id": "id", "type": str},
+            ]
 
-        self.List = ls = GenericList(data, headers_visible=False, visible=True)
+            self.List = ls = GenericList(data, headers_visible=False, visible=True)
 
-        ls.selection.connect("changed", self.on_selection_changed)
+            ls.selection.connect("changed", self.on_selection_changed)
 
-        self.viewport.add(ls)
+            self.viewport.add(ls)
 
-        self.load_plugins()
+            self.load_plugins()
 
-        ls.selection.select_path(self.Config["services-last-item"])
+            ls.selection.select_path(self.Config["services-last-item"])
 
-        self.b_apply.connect("clicked", self.on_apply_clicked)
+            self.b_apply.connect("clicked", self.on_apply_clicked)
+
+        self.window.present_with_time(Gtk.get_current_event_time())
 
     def option_changed(self):
         rets = self.plugin_exec("on_query_apply_state")
