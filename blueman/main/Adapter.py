@@ -78,15 +78,14 @@ class BluemanAdapters(Gtk.Application):
             plug.show()
             plug.connect('delete-event', app_release)
             plug.add(self.notebook)
-        else:
-            if self.window:
-                self.window.present_with_time(Gtk.get_current_event_time())
-                return
+            return
 
+        if not self.window:
             self.window = Gtk.ApplicationWindow(application=self, title=_("Bluetooth Adapters"), border_width=5,
-                                                resizable=False, icon_name="blueman-device", name="BluemanAdapters",
-                                                visible=True)
+                                                resizable=False, icon_name="blueman-device", name="BluemanAdapters")
             self.window.add(self.notebook)
+
+        self.window.present_with_time(Gtk.get_current_event_time())
 
     def on_property_changed(self, adapter, name, value, path):
         hci_dev = os.path.basename(path)
