@@ -21,7 +21,7 @@ class Services(ManagerPlugin):
         self.icon_theme = Gtk.IconTheme.get_default()
 
     def _make_x_icon(self, icon_name, size):
-        scale = self.parent.get_scale_factor()
+        scale = self.parent.window.get_scale_factor()
         window = self.parent.window.get_window()
 
         target = self.icon_theme.load_surface(icon_name, size, scale, window, Gtk.IconLookupFlags.FORCE_SIZE)
