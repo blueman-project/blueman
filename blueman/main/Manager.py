@@ -29,6 +29,8 @@ class Blueman(Gtk.Application):
     def __init__(self):
         super().__init__(application_id="org.blueman.Manager")
 
+    window: Optional[Gtk.ApplicationWindow]
+
     def do_startup(self):
         def doquit(_a, _param):
             self.quit()

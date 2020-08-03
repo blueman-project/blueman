@@ -1,5 +1,7 @@
 from gettext import gettext as _
 import logging
+from typing import Optional, Any
+
 from gi.repository import GLib
 from blueman.plugins.AppletPlugin import AppletPlugin
 from gettext import ngettext
@@ -14,24 +16,25 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
     __description__ = _("Adds an indication on the status icon when Bluetooth is active and shows the number of "
                         "connections in the tooltip.")
 
-    def on_load(self):
+    def on_load(self) -> None:
         self.num_connections = 0
         self.active = False
         self.initialized = False
 
-    def on_unload(self):
+    def on_unload(self) -> None:
         self.parent.Plugins.StatusIcon.set_text_line(1, None)
         self.num_connections = 0
         self.parent.Plugins.StatusIcon.icon_should_change()
 
-    def on_status_icon_query_icon(self):
+    def on_status_icon_query_icon(self) -> Optional[str]:
         if self.num_connections > 0:
             self.active = True
             return "blueman-active"
         else:
             self.active = False
+            return None
 
-    def enumerate_connections(self):
+    def enumerate_connections(self) -> bool:
         self.num_connections = 0
         for device in self.parent.Manager.get_devices():
             if device["Connected"]:
@@ -46,7 +49,7 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
 
         return False
 
-    def update_statusicon(self):
+    def update_statusicon(self) -> None:
         if self.num_connections > 0:
             self.parent.Plugins.StatusIcon.set_text_line(0, _("Bluetooth Active"))
             self.parent.Plugins.StatusIcon.set_text_line(
@@ -66,7 +69,7 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
             else:
                 self.parent.Plugins.StatusIcon.set_text_line(0, _("Bluetooth Enabled"))
 
-    def on_manager_state_changed(self, state):
+    def on_manager_state_changed(self, state: bool) -> None:
         if state:
             if not self.initialized:
                 GLib.timeout_add(0, self.enumerate_connections)
@@ -77,7 +80,7 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
             self.num_connections = 0
             self.update_statusicon()
 
-    def on_device_property_changed(self, _path, key, value):
+    def on_device_property_changed(self, _path: str, key: str, value: Any) -> None:
         if key == "Connected":
             if value:
                 self.num_connections += 1
@@ -89,8 +92,8 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
 
             self.update_statusicon()
 
-    def on_adapter_added(self, adapter):
+    def on_adapter_added(self, _path: str) -> None:
         self.enumerate_connections()
 
-    def on_adapter_removed(self, adapter):
+    def on_adapter_removed(self, _path: str) -> None:
         self.enumerate_connections()

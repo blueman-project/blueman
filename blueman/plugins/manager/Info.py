@@ -1,27 +1,32 @@
 from gettext import gettext as _
+from typing import List, Tuple, Iterable, Callable, Any, Optional
 
 from gi.repository import Gtk, Gdk
 
 import logging
+
+from gi.repository.GObject import GObject
+
 from blueman.Functions import create_menuitem
 from blueman.Sdp import ServiceUUID
+from blueman.bluez.Device import Device
 from blueman.bluez.errors import BluezDBusException
-from blueman.gui.manager.ManagerDeviceMenu import MenuItemsProvider
+from blueman.gui.manager.ManagerDeviceMenu import MenuItemsProvider, ManagerDeviceMenu
 
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 
 
-def show_info(device, parent):
-    def format_boolean(x):
+def show_info(device: Device, parent: Gtk.Widget) -> None:
+    def format_boolean(x: bool) -> str:
         return _('yes') if x else _('no')
 
-    def format_rssi(rssi):
+    def format_rssi(rssi: int) -> str:
         if rssi in [0x99, 0x7f]:
             return f'invalid (0x{rssi:02x})'
         else:
             return f'{rssi} dBm (0x{rssi:02x})'
 
-    def format_uuids(uuids):
+    def format_uuids(uuids: Iterable[str]) -> str:
         return "\n".join([uuid + ' ' + ServiceUUID(uuid).name for uuid in uuids])
 
     store = Gtk.ListStore(str, str)
@@ -29,7 +34,7 @@ def show_info(device, parent):
     view_selection = view.get_selection()
     view_selection.set_mode(Gtk.SelectionMode.MULTIPLE)
 
-    def on_accel_activated(group, dialog, key, flags):
+    def on_accel_activated(_group: Gtk.AccelGroup, _dialog: GObject, key: int, _modifier: Gdk.ModifierType) -> None:
         if key != 99:
             logging.warning(f"Ignoring key {key}")
             return
@@ -69,7 +74,7 @@ def show_info(device, parent):
     dialog_content_area.pack_start(view, True, False, 0)
     view.show_all()
 
-    properties = (
+    properties: Iterable[Tuple[str, Optional[Callable[[Any], str]]]] = (
         ('Address', None),
         ('AddressType', None),
         ('Name', None),
@@ -109,7 +114,7 @@ def show_info(device, parent):
 
 
 class Info(ManagerPlugin, MenuItemsProvider):
-    def on_request_menu_items(self, manager_menu, device):
+    def on_request_menu_items(self, manager_menu: ManagerDeviceMenu, device: Device) -> List[Tuple[Gtk.MenuItem, int]]:
         item = create_menuitem(_("_Info"), "dialog-information")
         item.props.tooltip_text = _("Show device information")
         item.connect('activate', lambda x: show_info(device, manager_menu.get_toplevel()))

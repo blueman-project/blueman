@@ -8,13 +8,13 @@ from blueman.main.Config import Config
 
 import gi
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+from gi.repository import Gtk, Gio
 
 
 class Transfer(ServicePlugin):
     __plugin_info__ = (_("Transfer"), "document-open")
 
-    def on_load(self, container):
+    def on_load(self, container: Gtk.Box) -> None:
 
         self.Builder = Gtk.Builder()
         self.Builder.set_translation_domain("blueman")
@@ -29,20 +29,20 @@ class Transfer(ServicePlugin):
             self.widget.props.sensitive = False
             self.widget.props.tooltip_text = _("Applet's transfer service plugin is disabled")
 
-    def on_enter(self):
+    def on_enter(self) -> None:
         self.widget.props.visible = True
 
-    def on_leave(self):
+    def on_leave(self) -> None:
         self.widget.props.visible = False
 
-    def on_property_changed(self, config, key):
+    def on_property_changed(self, config: Gio.Settings, key: str) -> None:
         value = config[key]
 
         if key == "shared-path":
             self.Builder.get_object(key).set_current_folder(value)
             self.option_changed_notify(key, False)
 
-    def on_apply(self):
+    def on_apply(self) -> None:
         if self.on_query_apply_state():
             for opt in self.get_options():
                 if opt == "shared-path":
@@ -57,14 +57,14 @@ class Transfer(ServicePlugin):
             self.clear_options()
             logging.info("transfer apply")
 
-    def on_query_apply_state(self):
+    def on_query_apply_state(self) -> bool:
         opts = self.get_options()
         if not opts:
             return False
         else:
             return True
 
-    def _setup_transfer(self):
+    def _setup_transfer(self) -> None:
         self._config = Config("org.blueman.transfer")
         self._config.connect("changed", self.on_property_changed)
 

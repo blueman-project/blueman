@@ -3,7 +3,7 @@ import time
 import datetime
 from gettext import gettext as _, ngettext
 import logging
-from typing import List
+from typing import List, Any, Optional
 
 from blueman.Functions import *
 from blueman.Constants import *
@@ -30,7 +30,7 @@ class MonitorBase(GObject.GObject):
         'stats': (GObject.SignalFlags.NO_HOOKS, None, (int, int)),
     }
 
-    def __init__(self, device, interface):
+    def __init__(self, device: Device, interface: str):
         super().__init__()
 
         self.interface = interface
@@ -42,7 +42,7 @@ class MonitorBase(GObject.GObject):
         self.last_rx = 0
 
     # tx and rx must be cumulative absolute values
-    def update_stats(self, tx, rx):
+    def update_stats(self, tx: int, rx: int) -> None:
         dtx = tx - self.last_tx
         drx = rx - self.last_rx
 
@@ -63,22 +63,22 @@ class MonitorBase(GObject.GObject):
         if not self.device["Address"] in self.general_config["netusage-dev-list"]:
             self.general_config["netusage-dev-list"] += [self.device["Address"]]
 
-    def disconnect_monitor(self):
+    def disconnect_monitor(self) -> None:
         self.emit("disconnected")
 
 
 class Monitor(MonitorBase):
-    def __init__(self, device, interface):
+    def __init__(self, device: Device, interface: str):
         super().__init__(device, interface)
         self.poller = None
         self.ppp_port = None
 
         self.poller = GLib.timeout_add(5000, self.poll_stats)
 
-    def __del__(self):
+    def __del__(self) -> None:
         logging.debug("deleting monitor")
 
-    def poll_stats(self):
+    def poll_stats(self) -> bool:
         try:
             with open(f"/sys/class/net/{self.interface}/statistics/tx_bytes") as f:
                 tx = int(f.readline())
@@ -88,7 +88,6 @@ class Monitor(MonitorBase):
         except OSError:
             self.poller = None
             self.ppp_port = None
-            self.interface = None
             self.disconnect_monitor()
             return False
 
@@ -100,7 +99,7 @@ class Monitor(MonitorBase):
 class Dialog:
     running = False
 
-    def __init__(self, plugin):
+    def __init__(self, plugin: "NetUsage"):
         if not Dialog.running:
             Dialog.running = True
         else:
@@ -186,14 +185,14 @@ class Dialog:
 
         self.dialog.show()
 
-    def on_response(self, dialog, response):
+    def on_response(self, _dialog: Optional[Gtk.Dialog], _response: Optional[int]) -> None:
         for sigid in self._handlerids:
             self.plugin.disconnect(sigid)
         self._handlerids = []
         Dialog.running = False
         self.dialog.destroy()
 
-    def update_time(self):
+    def update_time(self) -> None:
         time = self.config["time"]
         if time:
             self.datetime = datetime.datetime.fromtimestamp(time)
@@ -212,17 +211,17 @@ class Dialog:
             self.l_started.props.label = _("Unknown")
             self.l_duration.props.label = _("Unknown")
 
-    def on_selection_changed(self, cb):
+    def on_selection_changed(self, cb: Gtk.ComboBox) -> None:
         titer = cb.get_active_iter()
         (addr,) = self.liststore.get(titer, 0)
         self.config = Config("org.blueman.plugins.netusage", f"/org/blueman/plugins/netusages/{addr}/")
         self.update_counts(self.config["tx"], self.config["rx"])
         self.update_time()
 
-    def get_caption(self, name, address):
+    def get_caption(self, name: str, address: str) -> str:
         return f"{escape(name)}\n<small>{address}</small>"
 
-    def update_counts(self, tx, rx):
+    def update_counts(self, tx: int, rx: int) -> None:
         tx = int(tx)
         rx = int(rx)
 
@@ -237,7 +236,7 @@ class Dialog:
 
         self.update_time()
 
-    def on_reset(self, button):
+    def on_reset(self, _button: Gtk.Button) -> None:
         d = Gtk.MessageDialog(parent=self.dialog, flags=Gtk.DialogFlags.MODAL, type=Gtk.MessageType.QUESTION,
                               buttons=Gtk.ButtonsType.YES_NO,
                               message_format=_("Are you sure you want to reset the counter?"))
@@ -250,13 +249,13 @@ class Dialog:
 
             self.update_counts(0, 0)
 
-    def on_stats(self, parent, monitor, tx, rx):
+    def on_stats(self, _parent: "NetUsage", monitor: Monitor, tx: int, rx: int) -> None:
         titer = self.cb_device.get_active_iter()
         (mon,) = self.liststore.get(titer, 3)
         if mon == monitor:
             self.update_counts(tx, rx)
 
-    def monitor_added(self, parent, monitor):
+    def monitor_added(self, _parent: "NetUsage", monitor: Monitor) -> None:
         for row in self.liststore:
             titer = row.iter
             (val,) = self.liststore.get(titer, 0)
@@ -271,7 +270,7 @@ class Dialog:
              _("Connected:") + " " + monitor.interface, monitor]
         )
 
-    def monitor_removed(self, parent, monitor):
+    def monitor_removed(self, _parent: "NetUsage", monitor: Monitor) -> None:
         for row in self.liststore:
             titer = row.iter
             (val,) = self.liststore.get(titer, 0)
@@ -298,7 +297,7 @@ class NetUsage(AppletPlugin, GObject.GObject, PPPConnectedListener):
 
     _any_network = None
 
-    def on_load(self):
+    def on_load(self) -> None:
         GObject.GObject.__init__(self)
         self.monitors: List[Monitor] = []
 
@@ -308,15 +307,15 @@ class NetUsage(AppletPlugin, GObject.GObject, PPPConnectedListener):
         self.parent.Plugins.Menu.add(self, 84, text=_("Network _Usage"), icon_name="network-wireless",
                                      tooltip=_("Shows network traffic usage"), callback=self.activate_ui)
 
-    def _on_network_property_changed(self, _network, key, value, path):
+    def _on_network_property_changed(self, _network: AnyNetwork, key: str, value: Any, path: str) -> None:
         if key == "Interface" and value != "":
             d = Device(obj_path=path)
             self.monitor_interface(d, value)
 
-    def activate_ui(self):
+    def activate_ui(self) -> None:
         Dialog(self)
 
-    def on_unload(self):
+    def on_unload(self) -> None:
         del self._any_network
         self.parent.Plugins.Menu.unregister(self)
 
@@ -327,12 +326,12 @@ class NetUsage(AppletPlugin, GObject.GObject, PPPConnectedListener):
         m.connect("disconnected", self.on_monitor_disconnected)
         self.emit("monitor-added", m)
 
-    def on_ppp_connected(self, device, rfcomm, ppp_port):
+    def on_ppp_connected(self, device: Device, _rfcomm: str, ppp_port: str) -> None:
         self.monitor_interface(device, ppp_port)
 
-    def on_monitor_disconnected(self, monitor):
+    def on_monitor_disconnected(self, monitor: Monitor) -> None:
         self.monitors.remove(monitor)
         self.emit("monitor-removed", monitor)
 
-    def on_stats(self, monitor, tx, rx):
+    def on_stats(self, monitor: Monitor, tx: int, rx: int) -> None:
         self.emit("stats", monitor, tx, rx)

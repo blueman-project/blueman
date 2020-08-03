@@ -1,4 +1,5 @@
 from gettext import gettext as _
+from typing import Optional
 
 from blueman.Functions import launch
 from blueman.main.DBusProxies import ManagerService
@@ -8,10 +9,11 @@ from blueman.gui.applet.PluginDialog import PluginDialog
 
 import gi
 
-from blueman.plugins.applet.PowerManager import PowerStateListener
+from blueman.plugins.applet.PowerManager import PowerManager, PowerStateListener
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+gi.require_version("Gdk", "3.0")
+from gi.repository import Gtk, Gdk
 
 
 class StandardItems(AppletPlugin, PowerStateListener):
@@ -20,8 +22,8 @@ class StandardItems(AppletPlugin, PowerStateListener):
     __description__ = _("Adds standard menu items to the status icon menu")
     __author__ = "walmis"
 
-    def on_load(self):
-        self._plugin_window = None
+    def on_load(self) -> None:
+        self._plugin_window: Optional[Gtk.Window] = None
 
         self.parent.Plugins.Menu.add(self, 21)
 
@@ -52,7 +54,7 @@ class StandardItems(AppletPlugin, PowerStateListener):
 
         self.parent.Plugins.StatusIcon.connect("activate", lambda _status_icon: self.on_devices())
 
-    def change_sensitivity(self, sensitive):
+    def change_sensitivity(self, sensitive: bool) -> None:
         if 'PowerManager' in self.parent.Plugins.get_loaded():
             power = self.parent.Plugins.PowerManager.get_bluetooth_status()
         else:
@@ -64,29 +66,29 @@ class StandardItems(AppletPlugin, PowerStateListener):
         self.devices.set_sensitive(sensitive)
         self.adapters.set_sensitive(sensitive)
 
-    def on_manager_state_changed(self, state):
+    def on_manager_state_changed(self, state: bool) -> None:
         self.change_sensitivity(state)
 
-    def on_power_state_changed(self, manager, state):
+    def on_power_state_changed(self, manager: PowerManager, state: bool) -> None:
         self.change_sensitivity(state)
 
-    def on_setup_new(self):
+    def on_setup_new(self) -> None:
         launch("blueman-assistant", name=_("Bluetooth Assistant"))
 
-    def on_send(self):
+    def on_send(self) -> None:
         launch("blueman-sendto", name=_("File Sender"))
 
-    def on_devices(self):
+    def on_devices(self) -> None:
         m = ManagerService()
         m.startstop()
 
-    def on_adapters(self):
+    def on_adapters(self) -> None:
         launch("blueman-adapters", name=_("Adapter Preferences"))
 
-    def on_local_services(self):
+    def on_local_services(self) -> None:
         launch("blueman-services", name=_("Service Preferences"))
 
-    def on_about(self):
+    def on_about(self) -> None:
         about = show_about_dialog("Blueman " + _("applet"), run=False)
 
         im = Gtk.Image(icon_name="blueman-plugin", pixel_size=16)
@@ -100,8 +102,8 @@ class StandardItems(AppletPlugin, PowerStateListener):
         about.run()
         about.destroy()
 
-    def on_plugins(self):
-        def on_close(win, event):
+    def on_plugins(self) -> None:
+        def on_close(win: Gtk.Window, _event: Gdk.Event) -> bool:
             win.destroy()
             self._plugin_window = None
             return False

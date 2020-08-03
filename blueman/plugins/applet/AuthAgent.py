@@ -12,12 +12,12 @@ class AuthAgent(AppletPlugin):
 
     _agent = None
 
-    def on_unload(self):
+    def on_unload(self) -> None:
         if self._agent:
             self._agent.unregister_agent()
             self._agent = None
 
-    def on_manager_state_changed(self, state):
+    def on_manager_state_changed(self, state: bool) -> None:
         if state:
             self._agent = BluezAgent()
             self._agent.register_agent()

@@ -12,14 +12,9 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.plugins.applet.PowerManager import PowerManager, PowerStateListener
 
 if TYPE_CHECKING:
-    from typing_extensions import TypedDict
+    from blueman.plugins.applet.Menu import MenuItemDict
 
-    class MenuItemBase(TypedDict):
-        text: str
-        markup: bool
-        icon_name: str
-        sensitive: bool
-        tooltip: Optional[str]
+    from typing_extensions import TypedDict
 
     class _ItemBase(TypedDict):
         adapter: str
@@ -29,13 +24,10 @@ if TYPE_CHECKING:
         name: str
         uuid: str
 
-    class MenuItem(MenuItemBase):
-        callback: Callable[[_ItemBase], None]
-
     class Item(_ItemBase):
         time: float
         device: Optional[str]
-        mitem: Optional[MenuItem]
+        mitem: Optional[MenuItemDict]
 
     class StoredIcon(_ItemBase):
         time: str
@@ -67,7 +59,7 @@ class RecentConns(AppletPlugin, PowerStateListener):
 
     def on_load(self) -> None:
         self._adapters: Dict[str, str] = {}
-        self.__menuitems: List["MenuItem"] = []
+        self.__menuitems: List["MenuItemDict"] = []
 
         self.item = self.parent.Plugins.Menu.add(self, 52, text=_("Recent _Connections") + "…",
                                                  icon_name="document-open-recent", submenu_function=self.get_menu)
@@ -249,14 +241,14 @@ class RecentConns(AppletPlugin, PowerStateListener):
                 self.items.remove(item)
                 self.initialize()
 
-        mitem: "MenuItem" = {
+        mitem: "MenuItemDict" = {
             "text": _("%(service)s on %(device)s") % {"service": item["name"], "device": item["alias"]},
             "markup": True,
             "icon_name": item["mitem"]["icon_name"] if item["mitem"] is not None else item["icon"],
             "sensitive": item["device"] is not None,
             "tooltip": None if item["device"] is None else _("Adapter for this connection is not available"),
             "callback": (item["mitem"]["callback"] if item["mitem"] is not None
-                         else cast(Callable[["_ItemBase"], None], lambda itm=item: self.on_item_activated(itm)))
+                         else cast(Callable[[], None], lambda itm=item: self.on_item_activated(itm)))
         }
 
         item["mitem"] = mitem
@@ -264,7 +256,7 @@ class RecentConns(AppletPlugin, PowerStateListener):
         self.__menuitems.append(mitem)
         self.parent.Plugins.Menu.on_menu_changed()
 
-    def get_menu(self) -> List["MenuItem"]:
+    def get_menu(self) -> List["MenuItemDict"]:
         return self.__menuitems
 
     def _get_device_path(self, adapter_path: str, address: str) -> Optional[str]:

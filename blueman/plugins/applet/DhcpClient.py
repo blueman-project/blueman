@@ -1,6 +1,8 @@
 from gettext import gettext as _
 import logging
-from typing import List
+from typing import List, Any
+
+from gi.repository import GLib
 
 from blueman.bluez.Network import AnyNetwork
 from blueman.gui.Notification import Notification
@@ -15,7 +17,7 @@ class DhcpClient(AppletPlugin):
 
     _any_network = None
 
-    def on_load(self):
+    def on_load(self) -> None:
         self._any_network = AnyNetwork()
         self._any_network.connect_signal('property-changed', self._on_network_prop_changed)
 
@@ -23,22 +25,22 @@ class DhcpClient(AppletPlugin):
 
         self._add_dbus_method("DhcpClient", ("s",), "", self.dhcp_acquire)
 
-    def on_unload(self):
+    def on_unload(self) -> None:
         del self._any_network
 
-    def _on_network_prop_changed(self, _network, key, value, _path):
+    def _on_network_prop_changed(self, _network: AnyNetwork, key: str, value: Any, _path: str) -> None:
         if key == "Interface":
             if value != "":
                 self.dhcp_acquire(value)
 
-    def dhcp_acquire(self, device):
+    def dhcp_acquire(self, device: str) -> None:
         if device not in self.quering:
             self.quering.append(device)
         else:
             return
 
         if device != "":
-            def reply(_obj, result, _user_data):
+            def reply(_obj: Mechanism, result: str, _user_data: None) -> None:
                 logging.info(result)
                 Notification(_("Bluetooth Network"),
                              _("Interface %(0)s bound to IP address %(1)s") % {"0": device, "1": result},
@@ -46,7 +48,7 @@ class DhcpClient(AppletPlugin):
 
                 self.quering.remove(device)
 
-            def err(_obj, result, _user_data):
+            def err(_obj: Mechanism, result: GLib.Error, _user_data: None) -> None:
                 logging.warning(result)
                 Notification(_("Bluetooth Network"), _("Failed to obtain an IP address on %s") % device,
                              icon_name="network-workgroup").show()

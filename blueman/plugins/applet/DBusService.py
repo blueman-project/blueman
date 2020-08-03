@@ -17,7 +17,7 @@ from blueman.services.meta import SerialService, NetworkService
 
 
 class RFCOMMConnectedListener:
-    def on_rfcomm_connected(self, service: Service, port: str) -> None:
+    def on_rfcomm_connected(self, service: SerialService, port: str) -> None:
         ...
 
     def on_rfcomm_disconnect(self, port: int) -> None:
@@ -25,7 +25,7 @@ class RFCOMMConnectedListener:
 
 
 class RFCOMMConnectHandler:
-    def rfcomm_connect_handler(self, service: Service, reply: Callable[[str], None],
+    def rfcomm_connect_handler(self, service: SerialService, reply: Callable[[str], None],
                                err: Callable[[Exception], None]) -> bool:
         ...
 
@@ -46,7 +46,7 @@ class DBusService(AppletPlugin):
     __description__ = _("Provides DBus API for other Blueman components")
     __author__ = "Walmis"
 
-    def on_load(self):
+    def on_load(self) -> None:
         self._add_dbus_method("QueryPlugins", (), "as", self.parent.Plugins.get_loaded)
         self._add_dbus_method("QueryAvailablePlugins", (), "as", lambda: list(self.parent.Plugins.get_classes()))
         self._add_dbus_method("SetPluginConfig", ("s", "b"), "", self.parent.Plugins.set_config)
@@ -75,7 +75,8 @@ class DBusService(AppletPlugin):
                    for plugin in self.parent.Plugins.get_loaded_plugins(ServiceConnectHandler)):
                 pass
             elif isinstance(service, SerialService):
-                def reply(rfcomm):
+                def reply(rfcomm: str) -> None:
+                    assert isinstance(service, SerialService)  # https://github.com/python/mypy/issues/2608
                     for plugin in self.parent.Plugins.get_loaded_plugins(RFCOMMConnectedListener):
                         plugin.on_rfcomm_connected(service, rfcomm)
                     ok()
@@ -112,5 +113,5 @@ class DBusService(AppletPlugin):
             elif isinstance(service, NetworkService):
                 service.disconnect(reply_handler=ok, error_handler=err)
 
-    def _open_plugin_dialog(self):
+    def _open_plugin_dialog(self) -> None:
         self.parent.Plugins.StandardItems.on_plugins()

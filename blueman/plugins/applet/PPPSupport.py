@@ -2,8 +2,8 @@ from gettext import gettext as _
 from typing import TYPE_CHECKING, Callable, Union
 
 from _blueman import RFCOMMError
+from blueman.services.meta.SerialService import SerialService
 
-from blueman.Service import Service
 from blueman.bluez.Device import Device
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.Notification import Notification
@@ -44,7 +44,7 @@ class Connection:
         else:
             self.connect()
 
-    def connect(self):
+    def connect(self) -> bool:
         c = Config("org.blueman.gsmsetting", f"/org/blueman/gsmsettings/{self.service.device['Address']}/")
 
         m = Mechanism()
@@ -82,7 +82,7 @@ class PPPSupport(AppletPlugin, RFCOMMConnectHandler):
     __icon__ = "modem"
     __priority__ = 0
 
-    def rfcomm_connect_handler(self, service: Service, reply: Callable[[str], None],
+    def rfcomm_connect_handler(self, service: SerialService, reply: Callable[[str], None],
                                err: Callable[[Union[RFCOMMError, GLib.Error]], None]) -> bool:
         if isinstance(service, DialupNetwork):
             def local_reply(port: str) -> None:

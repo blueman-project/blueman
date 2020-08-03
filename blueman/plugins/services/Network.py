@@ -2,7 +2,7 @@ from gettext import gettext as _
 from random import randint
 import logging
 import ipaddress
-from typing import List, Tuple, cast
+from typing import List, Tuple, cast, Union, TYPE_CHECKING
 
 from blueman.Constants import *
 from blueman.Functions import have, get_local_interfaces
@@ -17,11 +17,14 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gio, Gtk
 
+if TYPE_CHECKING:
+    from typing_extensions import Literal
+
 
 class Network(ServicePlugin):
     __plugin_info__ = (_("Network"), "network-workgroup")
 
-    def on_load(self, container):
+    def on_load(self, container: Gtk.Box) -> None:
 
         self.Builder = Gtk.Builder()
         self.Builder.set_translation_domain("blueman")
@@ -44,13 +47,13 @@ class Network(ServicePlugin):
         except (ValueError, ipaddress.AddressValueError) as e:
             logging.exception(e)
 
-    def on_enter(self):
+    def on_enter(self) -> None:
         self.widget.props.visible = True
 
-    def on_leave(self):
+    def on_leave(self) -> None:
         self.widget.props.visible = False
 
-    def on_apply(self):
+    def on_apply(self) -> None:
 
         if self.on_query_apply_state():
             logging.info("network apply")
@@ -86,7 +89,7 @@ class Network(ServicePlugin):
 
             self.clear_options()
 
-    def ip_check(self):
+    def ip_check(self) -> None:
         entry = self.Builder.get_object("net_ip")
         try:
             nap_ipiface = ipaddress.ip_interface('/'.join((entry.props.text, '255.255.255.0')))
@@ -113,7 +116,7 @@ class Network(ServicePlugin):
 
         entry.props.secondary_icon_name = None
 
-    def on_query_apply_state(self):
+    def on_query_apply_state(self) -> Union[bool, "Literal[-1]"]:
         opts = self.get_options()
         if not opts:
             return False
@@ -127,7 +130,7 @@ class Network(ServicePlugin):
 
         return True
 
-    def setup_network(self):
+    def setup_network(self) -> None:
         self.Config = Config("org.blueman.network")
 
         nap_enable = self.Builder.get_object("nap-enable")
@@ -208,7 +211,7 @@ class Network(ServicePlugin):
         avail_plugins = applet.QueryAvailablePlugins()
         active_plugins = applet.QueryPlugins()
 
-        def dun_support_toggled(rb, x):
+        def dun_support_toggled(rb: Gtk.ToggleButton, x: Union["Literal[\"nm\"]", "Literal[\"blueman\"]"]) -> None:
             if rb.props.active and x == "nm":
                 applet.SetPluginConfig('(sb)', "PPPSupport", False)
                 applet.SetPluginConfig('(sb)', "NMDUNSupport", True)
@@ -216,7 +219,7 @@ class Network(ServicePlugin):
                 applet.SetPluginConfig('(sb)', "NMDUNSupport", False)
                 applet.SetPluginConfig('(sb)', "PPPSupport", True)
 
-        def pan_support_toggled(rb, x):
+        def pan_support_toggled(rb: Gtk.ToggleButton, x: Union[Literal["nm"], Literal["blueman"]]) -> None:
             if rb.props.active and x == "nm":
                 applet.SetPluginConfig('(sb)', "DhcpClient", False)
                 applet.SetPluginConfig('(sb)', "NMPANSupport", True)

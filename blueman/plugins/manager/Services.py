@@ -1,8 +1,12 @@
 from gettext import gettext as _
+from typing import List, Tuple
 
 import cairo
+
+from blueman.Service import Service
+from blueman.bluez.Device import Device
 from blueman.bluez.Network import Network
-from blueman.gui.manager.ManagerDeviceMenu import MenuItemsProvider
+from blueman.gui.manager.ManagerDeviceMenu import MenuItemsProvider, ManagerDeviceMenu
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 from blueman.Functions import create_menuitem
 from blueman.main.DBusProxies import AppletService
@@ -18,10 +22,12 @@ from gi.repository import Gtk
 
 
 class Services(ManagerPlugin, MenuItemsProvider):
-    def on_load(self):
+    def on_load(self) -> None:
         self.icon_theme = Gtk.IconTheme.get_default()
 
-    def _make_x_icon(self, icon_name, size):
+    def _make_x_icon(self, icon_name: str, size: int) -> cairo.ImageSurface:
+        assert self.parent.window is not None
+
         scale = self.parent.window.get_scale_factor()
         window = self.parent.window.get_window()
 
@@ -36,14 +42,14 @@ class Services(ManagerPlugin, MenuItemsProvider):
 
         return target
 
-    def on_request_menu_items(self, manager_menu, device):
+    def on_request_menu_items(self, manager_menu: ManagerDeviceMenu, device: Device) -> List[Tuple[Gtk.MenuItem, int]]:
         items = []
         appl = AppletService()
 
         self.has_dun = False
         serial_items = []
 
-        def add_menu_item(manager_menu, service):
+        def add_menu_item(manager_menu: ManagerDeviceMenu, service: Service) -> None:
             if service.connected:
                 surface = self._make_x_icon(service.icon, 16)
                 item = create_menuitem(service.name, surface=surface)
@@ -79,7 +85,7 @@ class Services(ManagerPlugin, MenuItemsProvider):
 
             if isinstance(service, NetworkService) and service.connected:
                 if "DhcpClient" in appl.QueryPlugins():
-                    def renew(x):
+                    def renew(_item: Gtk.MenuItem) -> None:
                         appl.DhcpClient('(s)', Network(device.get_object_path())["Interface"])
 
                     item = create_menuitem(_("Renew IP Address"), "view-refresh")
@@ -88,7 +94,7 @@ class Services(ManagerPlugin, MenuItemsProvider):
                     items.append((item, 201))
 
         if self.has_dun and ('PPPSupport' in appl.QueryPlugins() or 'NMDUNSupport' in appl.QueryPlugins()):
-            def open_settings(i, device):
+            def open_settings(_item: Gtk.MenuItem, device: Device) -> None:
                 from blueman.gui.GsmSettings import GsmSettings
 
                 d = GsmSettings(device['Address'])

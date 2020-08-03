@@ -1,5 +1,7 @@
 from gettext import gettext as _
+from typing import Any, Optional
 
+from blueman.bluez.Adapter import Adapter
 from blueman.bluez.errors import DBusNoSuchAdapterError
 from blueman.plugins.AppletPlugin import AppletPlugin
 from gi.repository import GLib
@@ -27,7 +29,9 @@ class DiscvManager(AppletPlugin):
         }
     }
 
-    def on_load(self):
+    adapter: Optional[Adapter]
+
+    def on_load(self) -> None:
         self.item = self.parent.Plugins.Menu.add(self, 20, text=_("_Make Discoverable"), icon_name="edit-find",
                                                  tooltip=_("Make the default adapter temporarily visible"),
                                                  callback=self.on_set_discoverable, visible=False)
@@ -36,14 +40,14 @@ class DiscvManager(AppletPlugin):
 
         self.timeout = None
 
-    def on_unload(self):
+    def on_unload(self) -> None:
         self.parent.Plugins.Menu.unregister(self)
         del self.item
 
         if self.timeout:
             GLib.source_remove(self.timeout)
 
-    def on_manager_state_changed(self, state):
+    def on_manager_state_changed(self, state: bool) -> None:
         if state:
             self.init_adapter()
             self.update_menuitems()
@@ -51,25 +55,25 @@ class DiscvManager(AppletPlugin):
             self.adapter = None
             self.update_menuitems()
 
-    def on_update(self):
+    def on_update(self) -> bool:
         self.time_left -= 1
         self.item.set_text(_("Discoverable… %ss") % self.time_left)
         self.item.set_sensitive(False)
 
         return True
 
-    def on_set_discoverable(self):
+    def on_set_discoverable(self) -> None:
         if self.adapter:
             self.adapter.set("Discoverable", True)
             self.adapter.set("DiscoverableTimeout", self.get_option("time"))
 
-    def init_adapter(self):
+    def init_adapter(self) -> None:
         try:
             self.adapter = self.parent.Manager.get_adapter()
         except DBusNoSuchAdapterError:
             self.adapter = None
 
-    def on_adapter_removed(self, path):
+    def on_adapter_removed(self, path: str) -> None:
         logging.info(path)
         if self.adapter is None:
             # FIXME we appear to call this more than once on adapter removal
@@ -78,7 +82,7 @@ class DiscvManager(AppletPlugin):
             self.init_adapter()
             self.update_menuitems()
 
-    def on_adapter_property_changed(self, path, key, value):
+    def on_adapter_property_changed(self, path: str, key: str, value: Any) -> None:
         if self.adapter and path == self.adapter.get_object_path():
             logging.debug(f"prop {key} {value}")
             if key == "DiscoverableTimeout":
@@ -105,7 +109,7 @@ class DiscvManager(AppletPlugin):
 
             self.update_menuitems()
 
-    def update_menuitems(self):
+    def update_menuitems(self) -> None:
         if self.adapter is None:
             logging.warning("warning: Adapter is None")
             self.item.set_visible(False)

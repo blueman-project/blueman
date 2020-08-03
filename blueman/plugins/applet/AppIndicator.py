@@ -19,5 +19,5 @@ class AppIndicator(AppletPlugin, StatusIconImplementationProvider):
     __author__ = "Walmis"
     __depends__ = ['StatusIcon']
 
-    def on_query_status_icon_implementation(self):
+    def on_query_status_icon_implementation(self) -> str:
         return 'AppIndicator'
