@@ -1,10 +1,12 @@
 import datetime
 from gettext import gettext as _
 from tempfile import NamedTemporaryFile
+from typing import List, Tuple
 
 from blueman.Constants import UI_PATH
 from blueman.Functions import create_menuitem, launch
-from blueman.gui.manager.ManagerDeviceMenu import MenuItemsProvider
+from blueman.bluez.Device import Device
+from blueman.gui.manager.ManagerDeviceMenu import MenuItemsProvider, ManagerDeviceMenu
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 
 import gi
@@ -12,7 +14,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 
-def send_note_cb(dialog, response_id, device_address, text_view):
+def send_note_cb(dialog: Gtk.Dialog, response_id: int, device_address: str, text_view: Gtk.Entry) -> None:
     text = text_view.get_buffer().props.text
     dialog.destroy()
     if response_id == Gtk.ResponseType.CANCEL:
@@ -34,7 +36,7 @@ def send_note_cb(dialog, response_id, device_address, text_view):
     launch(f"blueman-sendto --delete --device={device_address}", paths=[tempfile.name])
 
 
-def send_note(device, parent):
+def send_note(device: Device, parent: Gtk.Widget) -> None:
     builder = Gtk.Builder()
     builder.set_translation_domain('blueman')
     builder.add_from_file(UI_PATH + '/note.ui')
@@ -46,7 +48,7 @@ def send_note(device, parent):
 
 
 class Notes(ManagerPlugin, MenuItemsProvider):
-    def on_request_menu_items(self, manager_menu, device):
+    def on_request_menu_items(self, manager_menu: ManagerDeviceMenu, device: Device) -> List[Tuple[Gtk.MenuItem, int]]:
         item = create_menuitem(_("Send _note"), "dialog-information")
         item.props.tooltip_text = _("Send a text note")
         item.connect('activate', lambda x: send_note(device, manager_menu.get_toplevel()))

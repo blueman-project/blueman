@@ -4,14 +4,15 @@ import os
 import shutil
 import logging
 from html import escape
-from typing import List, Dict, TYPE_CHECKING
+from typing import List, Dict, TYPE_CHECKING, Callable, Tuple, Optional, Union
 
 from blueman.bluez.obex.AgentManager import AgentManager
 from blueman.bluez.obex.Manager import Manager
 from blueman.bluez.obex.Transfer import Transfer
 from blueman.bluez.obex.Session import Session
 from blueman.Functions import launch
-from blueman.gui.Notification import Notification
+from blueman.gui.Notification import Notification, _NotificationBubble, _NotificationDialog
+from blueman.main.Applet import BluemanApplet
 from blueman.main.DbusService import DbusService, DbusError
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Config import Config
@@ -23,8 +24,18 @@ if TYPE_CHECKING:
 
     class TransferDict(TypedDict):
         path: str
-        size: int
+        size: Optional[int]
         name: str
+
+    class PendingTransferDict(TypedDict):
+        transfer_path: str
+        address: str
+        root: str
+        filename: str
+        size: Optional[int]
+        name: str
+
+NotificationType = Union[_NotificationBubble, _NotificationDialog]
 
 
 class ObexErrorRejected(DbusError):
@@ -38,7 +49,7 @@ class ObexErrorCanceled(DbusError):
 class Agent(DbusService):
     __agent_path = '/org/bluez/obex/agent/blueman'
 
-    def __init__(self, applet):
+    def __init__(self, applet: BluemanApplet):
         super().__init__(None, "org.bluez.obex.Agent1", self.__agent_path, Gio.BusType.SESSION)
 
         self.add_method("Release", (), "", self._release)
@@ -50,21 +61,22 @@ class Agent(DbusService):
         self._config = Config("org.blueman.transfer")
 
         self._allowed_devices: List[str] = []
-        self._notification = None
-        self._pending_transfer = None
+        self._notification: Optional[NotificationType] = None
+        self._pending_transfer: Optional["PendingTransferDict"] = None
         self.transfers: Dict[str, "TransferDict"] = {}
 
-    def register_at_manager(self):
+    def register_at_manager(self) -> None:
         AgentManager().register_agent(self.__agent_path)
 
-    def unregister_from_manager(self):
+    def unregister_from_manager(self) -> None:
         AgentManager().unregister_agent(self.__agent_path)
 
-    def _release(self):
+    def _release(self) -> None:
         raise Exception(self.__agent_path + " was released unexpectedly")
 
-    def _authorize_push(self, transfer_path, ok, err):
-        def on_action(action):
+    def _authorize_push(self, transfer_path: str, ok: Callable[[str], None],
+                        err: Callable[[ObexErrorRejected], None]) -> None:
+        def on_action(action: str) -> None:
             logging.info("Action %s" % action)
 
             if action == "accept":
@@ -98,6 +110,7 @@ class Agent(DbusService):
         try:
             adapter = self._applet.Manager.get_adapter()
             device = self._applet.Manager.find_device(address, adapter.get_object_path())
+            assert device is not None
             name = device["Alias"]
             trusted = device["Trusted"]
         except Exception as e:
@@ -110,30 +123,30 @@ class Agent(DbusService):
 
         # This device was neither allowed nor is it trusted -> ask for confirmation
         if address not in self._allowed_devices and not (self._config['opp-accept'] and trusted):
-            self._notification = Notification(
+            self._notification = notification = Notification(
                 _("Incoming file over Bluetooth"),
                 _("Incoming file %(0)s from %(1)s") % {"0": "<b>" + escape(filename) + "</b>",
                                                        "1": "<b>" + escape(name) + "</b>"},
                 30000, [("accept", _("Accept")), ("reject", _("Reject"))], on_action,
                 icon_name="blueman"
             )
-            self._notification.show()
+            notification.show()
         # Device is trusted or was already allowed, larger file -> display a notification, but auto-accept
         elif size and size > 350000:
-            self._notification = Notification(
+            self._notification = notification = Notification(
                 _("Receiving file"),
                 _("Receiving file %(0)s from %(1)s") % {"0": "<b>" + escape(filename) + "</b>",
                                                         "1": "<b>" + escape(name) + "</b>"},
                 icon_name="blueman"
             )
             on_action('accept')
-            self._notification.show()
+            notification.show()
         # Device is trusted or was already allowed. very small file -> auto-accept and transfer silently
         else:
             self._notification = None
             on_action("accept")
 
-    def _cancel(self):
+    def _cancel(self) -> None:
         if self._notification:
             self._notification.close()
         raise ObexErrorCanceled("Canceled")
@@ -153,8 +166,8 @@ class TransferService(AppletPlugin):
     _notification = None
     _handlerids: List[int] = []
 
-    def on_load(self):
-        def on_reset(*_args):
+    def on_load(self) -> None:
+        def on_reset(_action: str) -> None:
             self._notification = None
             self._config.reset('shared-path')
             logging.info('Reset share path')
@@ -174,13 +187,13 @@ class TransferService(AppletPlugin):
 
         self._watch = Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
 
-    def on_unload(self):
+    def on_unload(self) -> None:
         if self._watch:
             Gio.bus_unwatch_name(self._watch)
 
         self._unregister_agent()
 
-    def _make_share_path(self):
+    def _make_share_path(self) -> Tuple[str, bool]:
         config_path = self._config["shared-path"]
         default_path = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_DOWNLOAD)
         path = None
@@ -206,18 +219,18 @@ class TransferService(AppletPlugin):
 
         return path, error
 
-    def _register_agent(self):
+    def _register_agent(self) -> None:
         if not self._agent:
             self._agent = Agent(self.parent)
         self._agent.register_at_manager()
 
-    def _unregister_agent(self):
+    def _unregister_agent(self) -> None:
         if self._agent:
             self._agent.unregister_from_manager()
             self._agent.unregister()
             self._agent = None
 
-    def _on_dbus_name_appeared(self, _connection, name, owner):
+    def _on_dbus_name_appeared(self, _connection: Manager, name: str, owner: str) -> None:
         logging.info(f"{name} {owner}")
 
         self._manager = Manager()
@@ -227,7 +240,7 @@ class TransferService(AppletPlugin):
 
         self._register_agent()
 
-    def _on_dbus_name_vanished(self, _connection, name):
+    def _on_dbus_name_vanished(self, _connection: Manager, name: str) -> None:
         logging.info(f"{name} not running or was stopped")
 
         if self._manager:
@@ -240,28 +253,30 @@ class TransferService(AppletPlugin):
             self._agent.unregister()
             self._agent = None
 
-    def _on_transfer_started(self, _manager, transfer_path):
+    def _on_transfer_started(self, _manager: Manager, transfer_path: str) -> None:
         if not self._agent or transfer_path not in self._agent.transfers:
             # This is not an incoming transfer we authorized
             return
 
-        if self._agent.transfers[transfer_path]['size'] > 350000:
+        size = self._agent.transfers[transfer_path]['size']
+        assert size is not None
+        if size > 350000:
             self._normal_transfers += 1
         else:
             self._silent_transfers += 1
 
-    def _add_open(self, n, name, path):
+    def _add_open(self, n: NotificationType, name: str, path: str) -> None:
         if n.actions_supported:
             logging.info("adding action")
 
-            def on_open(*_args):
+            def on_open(_action: str) -> None:
                 self._notification = None
                 logging.info("open")
                 launch("xdg-open", paths=[path], system=True)
 
             n.add_action("open", name, on_open)
 
-    def _on_transfer_completed(self, _manager, transfer_path, success):
+    def _on_transfer_completed(self, _manager: Manager, transfer_path: str, success: bool) -> None:
         if not self._agent or transfer_path not in self._agent.transfers:
             logging.info("This is probably not an incoming transfer we authorized")
             return
@@ -301,6 +316,7 @@ class TransferService(AppletPlugin):
                 icon_name="blueman"
             )
             n.show()
+            assert attributes['size'] is not None
             if attributes['size'] > 350000:
                 self._normal_transfers -= 1
             else:
@@ -308,7 +324,7 @@ class TransferService(AppletPlugin):
 
         del self._agent.transfers[transfer_path]
 
-    def _on_session_removed(self, _manager, _session_path):
+    def _on_session_removed(self, _manager: Manager, _session_path: str) -> None:
         if self._silent_transfers == 0:
             return
 

@@ -1,6 +1,6 @@
 from gettext import gettext as _
 import os
-from typing import Dict
+from typing import Dict, Callable, Any
 
 from gi.repository import GLib, Gio
 import struct
@@ -25,7 +25,7 @@ if not os.path.exists('/dev/rfkill'):
 
 
 class Switch:
-    def __init__(self, idx, switch_type, soft, hard):
+    def __init__(self, idx: int, switch_type: int, soft: int, hard: int):
         self.idx = idx
         self.type = switch_type
         self.soft = soft
@@ -53,7 +53,7 @@ class KillSwitch(AppletPlugin, PowerStateHandler, StatusIconVisibilityHandler):
     _enabled = True
     _hardblocked = False
 
-    def on_load(self):
+    def on_load(self) -> None:
         self._connman_proxy = None
         self._connman_watch_id = Gio.bus_watch_name(Gio.BusType.SYSTEM, "net.connman", Gio.BusNameWatcherFlags.NONE,
                                                     self._on_connman_appeared, self._on_connman_vanished)
@@ -66,13 +66,13 @@ class KillSwitch(AppletPlugin, PowerStateHandler, StatusIconVisibilityHandler):
 
         self._iom = GLib.io_add_watch(channel, GLib.IO_IN | GLib.IO_ERR | GLib.IO_HUP, self.io_event)
 
-    def on_unload(self):
+    def on_unload(self) -> None:
         Gio.bus_unwatch_name(self._connman_watch_id)
         self._connman_proxy = None
         if self._iom:
             GLib.source_remove(self._iom)
 
-    def _on_connman_appeared(self, connection, name, owner):
+    def _on_connman_appeared(self, connection: Gio.DBusConnection, name: str, owner: str) -> None:
         logging.info(f"{name} appeared")
         self._connman_proxy = Gio.DBusProxy.new_for_bus_sync(
             Gio.BusType.SYSTEM,
@@ -83,11 +83,11 @@ class KillSwitch(AppletPlugin, PowerStateHandler, StatusIconVisibilityHandler):
             'net.connman.Technology',
             None)
 
-    def _on_connman_vanished(self, connection, name):
+    def _on_connman_vanished(self, connection: Gio.DBusConnection, name: str) -> None:
         logging.info(f"{name} vanished")
         self._connman_proxy = None
 
-    def io_event(self, channel, condition):
+    def io_event(self, channel: GLib.IOChannel, condition: GLib.IOCondition) -> bool:
         if condition & GLib.IO_ERR or condition & GLib.IO_HUP:
             return False
 
@@ -116,7 +116,7 @@ class KillSwitch(AppletPlugin, PowerStateHandler, StatusIconVisibilityHandler):
         self._enabled = True
         self._hardblocked = False
         for s in self._switches.values():
-            self._hardblocked |= s.hard
+            self._hardblocked |= s.hard == 1
             self._enabled &= (s.soft == 0 and s.hard == 0)
 
         logging.info(f"State: {self._enabled}")
@@ -126,7 +126,7 @@ class KillSwitch(AppletPlugin, PowerStateHandler, StatusIconVisibilityHandler):
 
         return True
 
-    def on_power_state_query(self):
+    def on_power_state_query(self) -> PowerManager.State:
         if self._hardblocked:
             return PowerManager.State.OFF_FORCED
         elif self._enabled:
@@ -134,13 +134,13 @@ class KillSwitch(AppletPlugin, PowerStateHandler, StatusIconVisibilityHandler):
         else:
             return PowerManager.State.OFF
 
-    def on_power_state_change_requested(self, _, state, cb):
+    def on_power_state_change_requested(self, _: PowerManager, state: bool, cb: Callable[[bool], None]) -> None:
         logging.info(state)
 
-        def reply(*_):
+        def reply(*_: Any) -> None:
             cb(True)
 
-        def error(*_):
+        def error(*_: Any) -> None:
             cb(False)
 
         if self._connman_proxy:
@@ -151,6 +151,6 @@ class KillSwitch(AppletPlugin, PowerStateHandler, StatusIconVisibilityHandler):
             logging.debug(f"Using mechanism to set state: {state}")
             Mechanism().SetRfkillState('(b)', state, result_handler=reply, error_handler=error)
 
-    def on_query_force_status_icon_visibility(self):
+    def on_query_force_status_icon_visibility(self) -> bool:
         # Force status icon to show if Bluetooth is soft-blocked
         return not self._hardblocked and not self._enabled

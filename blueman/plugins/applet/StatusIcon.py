@@ -4,6 +4,7 @@ from typing import Optional
 from gi.repository import GObject, GLib
 
 from blueman.Functions import launch
+from blueman.main.PluginManager import PluginManager
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.typing import GSignals
 
@@ -36,7 +37,7 @@ class StatusIcon(AppletPlugin, GObject.GObject):
 
     _implementation = None
 
-    def on_load(self):
+    def on_load(self) -> None:
         GObject.GObject.__init__(self)
         self.lines = {0: _("Bluetooth Enabled")}
 
@@ -54,7 +55,7 @@ class StatusIcon(AppletPlugin, GObject.GObject):
         self._add_dbus_method("GetIconName", (), "s", self._get_icon_name)
         self._add_dbus_method("Activate", (), "", lambda: self.emit("activate"))
 
-    def query_visibility(self, delay_hiding=False, emit=True):
+    def query_visibility(self, delay_hiding: bool = False, emit: bool = True) -> None:
         if self.parent.Manager.get_adapters() or \
            any(plugin.on_query_force_status_icon_visibility()
                for plugin in self.parent.Plugins.get_loaded_plugins(StatusIconVisibilityHandler)):
@@ -65,18 +66,18 @@ class StatusIcon(AppletPlugin, GObject.GObject):
             else:
                 self.set_visible(False, emit)
 
-    def on_visibility_timeout(self):
+    def on_visibility_timeout(self) -> bool:
         GLib.source_remove(self.visibility_timeout)
         self.visibility_timeout = None
         self.query_visibility()
         return False
 
-    def set_visible(self, visible, emit):
+    def set_visible(self, visible: bool, emit: bool) -> None:
         self.visible = visible
         if emit:
             self._emit_dbus_signal("VisibilityChanged", visible)
 
-    def set_text_line(self, lineid, text):
+    def set_text_line(self, lineid: int, text: str) -> None:
         if text:
             self.lines[lineid] = text
         else:
@@ -84,25 +85,25 @@ class StatusIcon(AppletPlugin, GObject.GObject):
 
         self._emit_dbus_signal("TextChanged", self._get_text())
 
-    def _get_text(self):
+    def _get_text(self) -> str:
         return '\n'.join([self.lines[key] for key in sorted(self.lines)])
 
-    def icon_should_change(self):
+    def icon_should_change(self) -> None:
         self._emit_dbus_signal("IconNameChanged", self._get_icon_name())
         self.query_visibility()
 
-    def on_adapter_added(self, path):
+    def on_adapter_added(self, _path: str) -> None:
         self.query_visibility()
 
-    def on_adapter_removed(self, path):
+    def on_adapter_removed(self, _path: str) -> None:
         self.query_visibility()
 
-    def on_manager_state_changed(self, state):
+    def on_manager_state_changed(self, state: bool) -> None:
         self.query_visibility()
         if state:
             launch('blueman-tray', icon_name='blueman', sn=False)
 
-    def _on_plugins_changed(self, _plugins, _name):
+    def _on_plugins_changed(self, _plugins: PluginManager, _name: str) -> None:
         implementation = self._get_status_icon_implementation()
         if not self._implementation or self._implementation != implementation:
             self._implementation = implementation
@@ -110,14 +111,14 @@ class StatusIcon(AppletPlugin, GObject.GObject):
         if self.parent.manager_state:
             launch('blueman-tray', icon_name='blueman', sn=False)
 
-    def _get_status_icon_implementation(self):
+    def _get_status_icon_implementation(self) -> str:
         for plugin in self.parent.Plugins.get_loaded_plugins(StatusIconImplementationProvider):
             implementation = plugin.on_query_status_icon_implementation()
             if implementation:
                 return implementation
         return "GtkStatusIcon"
 
-    def _get_icon_name(self):
+    def _get_icon_name(self) -> str:
         for plugin in self.parent.Plugins.get_loaded_plugins(StatusIconProvider):
             icon = plugin.on_status_icon_query_icon()
             if icon is not None:

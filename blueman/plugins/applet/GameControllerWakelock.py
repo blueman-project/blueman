@@ -1,5 +1,6 @@
 from gettext import gettext as _
 import logging
+from typing import Any
 
 from blueman.bluez.Device import Device
 from blueman.Functions import launch
@@ -19,16 +20,16 @@ class GameControllerWakelock(AppletPlugin):
     __author__ = "bwRavencl"
     __icon__ = "input-gaming"
 
-    def on_load(self):
+    def on_load(self) -> None:
         self.wake_lock = 0
         self.root_window_id = "0x%x" % Gdk.Screen.get_default().get_root_window().get_xid()
 
-    def on_unload(self):
+    def on_unload(self) -> None:
         if self.wake_lock:
             self.wake_lock = 1
             self.xdg_screensaver("resume")
 
-    def on_device_property_changed(self, path, key, value):
+    def on_device_property_changed(self, path: str, key: str, value: Any) -> None:
         if key == "Connected":
             klass = Device(obj_path=path)["Class"] & 0x1fff
 
@@ -38,7 +39,7 @@ class GameControllerWakelock(AppletPlugin):
                 else:
                     self.xdg_screensaver("resume")
 
-    def xdg_screensaver(self, action):
+    def xdg_screensaver(self, action: str) -> None:
         command = f"xdg-screensaver {action} {self.root_window_id}"
 
         if action == "resume":

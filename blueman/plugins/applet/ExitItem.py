@@ -8,9 +8,9 @@ class ExitItem(AppletPlugin):
     __author__ = "Walmis"
     __icon__ = "application-exit"
 
-    def on_load(self):
+    def on_load(self) -> None:
         self.parent.Plugins.Menu.add(self, 100, text=_("_Exit"), icon_name='application-exit',
                                      callback=self.parent.quit)
 
-    def on_unload(self):
+    def on_unload(self) -> None:
         self.parent.Plugins.Menu.unregister(self)

@@ -8,12 +8,25 @@ from tempfile import mkstemp
 from time import sleep
 import logging
 import signal
-from typing import List, Tuple
+from typing import List, Tuple, TYPE_CHECKING
 
 from blueman.Constants import DHCP_CONFIG_FILE
 from blueman.Functions import have
 from _blueman import create_bridge, destroy_bridge, BridgeException
 from subprocess import call, Popen, PIPE
+
+if TYPE_CHECKING:
+    from typing_extensions import Protocol
+
+    class DHCPHandler(Protocol):
+        def __init__(self, netconf: "NetConf"):
+            ...
+
+        def do_apply(self) -> None:
+            ...
+
+        def do_remove(self) -> None:
+            ...
 
 
 class NetworkSetupError(Exception):

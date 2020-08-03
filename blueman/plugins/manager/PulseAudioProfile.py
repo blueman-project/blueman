@@ -1,6 +1,6 @@
 from gettext import gettext as _
 import logging
-from typing import Dict, List, TYPE_CHECKING
+from typing import Dict, List, TYPE_CHECKING, Tuple, Mapping
 
 from blueman.bluez.Device import Device
 from blueman.plugins.ManagerPlugin import ManagerPlugin
@@ -20,7 +20,7 @@ if TYPE_CHECKING:
 
 
 class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
-    def on_load(self):
+    def on_load(self) -> None:
         self.devices: Dict[str, "CardInfo"] = {}
 
         self.deferred: List[Device] = []
@@ -29,7 +29,7 @@ class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
         pa.connect("event", self.on_pa_event)
         pa.connect("connected", self.on_pa_ready)
 
-    def on_pa_ready(self, utils):
+    def on_pa_ready(self, _utils: PulseAudioUtils) -> None:
         logging.info("connected")
         for dev in self.deferred:
             self.regenerate_with_device(dev['Address'])
@@ -37,15 +37,15 @@ class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
         self.deferred = []
 
     # updates all menu instances with the following device address
-    def regenerate_with_device(self, device_addr):
+    def regenerate_with_device(self, device_addr: str) -> None:
         for inst in ManagerDeviceMenu.__instances__:
             if inst.SelectedDevice['Address'] == device_addr and not inst.is_popup:
                 inst.generate()
 
-    def on_pa_event(self, utils, event, idx):
+    def on_pa_event(self, utils: PulseAudioUtils, event: int, idx: int) -> None:
         logging.debug(f"{event} {idx}")
 
-        def get_card_cb(card):
+        def get_card_cb(card: "CardInfo") -> None:
             drivers = ("module-bluetooth-device.c",
                        "module-bluez4-device.c",
                        "module-bluez5-device.c")
@@ -65,8 +65,8 @@ class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
                 logging.info("add")
                 utils.get_card(idx, get_card_cb)
 
-    def query_pa(self, device, item):
-        def list_cb(cards):
+    def query_pa(self, device: Device, item: Gtk.MenuItem) -> None:
+        def list_cb(cards: Mapping[str, "CardInfo"]) -> None:
             for c in cards.values():
                 if c["proplist"]["device.string"] == device['Address']:
                     self.devices[device['Address']] = c
@@ -76,19 +76,19 @@ class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
         pa = PulseAudioUtils()
         pa.list_cards(list_cb)
 
-    def on_selection_changed(self, item, device, profile):
+    def on_selection_changed(self, item: Gtk.CheckMenuItem, device: Device, profile: str) -> None:
         if item.get_active():
             pa = PulseAudioUtils()
 
             c = self.devices[device['Address']]
 
-            def on_result(res):
+            def on_result(res: int) -> None:
                 if not res:
                     MessageArea.show_message(_("Failed to change profile to %s" % profile))
 
             pa.set_card_profile(c["index"], profile, on_result)
 
-    def generate_menu(self, device, item):
+    def generate_menu(self, device: Device, item: Gtk.MenuItem) -> None:
         info = self.devices[device['Address']]
         group: List[Gtk.RadioMenuItem] = []
 
@@ -111,7 +111,7 @@ class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
             item.set_submenu(sub)
             item.show()
 
-    def on_request_menu_items(self, manager_menu, device):
+    def on_request_menu_items(self, manager_menu: ManagerDeviceMenu, device: Device) -> List[Tuple[Gtk.MenuItem, int]]:
         audio_source = False
         for uuid in device['UUIDs']:
             if ServiceUUID(uuid).short_uuid in (AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID):
@@ -123,7 +123,7 @@ class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
             pa = PulseAudioUtils()
             if not pa.connected:
                 self.deferred.append(device)
-                return
+                return []
 
             item = create_menuitem(_("Audio Profile"), "audio-card")
             item.props.tooltip_text = _("Select audio profile for PulseAudio")
@@ -134,6 +134,6 @@ class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
                 self.generate_menu(device, item)
 
         else:
-            return
+            return []
 
         return [(item, 300)]
