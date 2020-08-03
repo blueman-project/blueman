@@ -9,7 +9,7 @@ import logging
 from blueman.main.DBusProxies import Mechanism
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.plugins.applet.PowerManager import PowerManager, PowerStateHandler
-from blueman.plugins.applet.StatusIcon import StatusIcon, StatusIconVisibilityHandler
+from blueman.plugins.applet.StatusIcon import StatusIconVisibilityHandler
 
 RFKILL_TYPE_BLUETOOTH = 2
 
@@ -151,9 +151,6 @@ class KillSwitch(AppletPlugin, PowerStateHandler, StatusIconVisibilityHandler):
             logging.debug(f"Using mechanism to set state: {state}")
             Mechanism().SetRfkillState('(b)', state, result_handler=reply, error_handler=error)
 
-    def on_query_status_icon_visibility(self):
+    def on_query_force_status_icon_visibility(self):
         # Force status icon to show if Bluetooth is soft-blocked
-        if not self._hardblocked and not self._enabled:
-            return StatusIcon.FORCE_SHOW
-
-        return StatusIcon.SHOW
+        return not self._hardblocked and not self._enabled
