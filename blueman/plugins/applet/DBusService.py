@@ -1,5 +1,12 @@
 from gettext import gettext as _
+from typing import Callable, Union
 
+from _blueman import RFCOMMError
+from gi.repository import GLib
+
+from blueman.Service import Service
+from blueman.bluez.errors import BluezDBusException
+from blueman.main.NetworkManager import NMConnectionError
 from blueman.main.PluginManager import StopException
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.bluez.Device import Device
@@ -34,7 +41,9 @@ class DBusService(AppletPlugin):
     def on_device_disconnect(self, device):
         pass
 
-    def connect_service(self, object_path, uuid, ok, err):
+    def connect_service(self, object_path: str, uuid: str, ok: Callable[[], None],
+                        err: Callable[[Union[BluezDBusException, NMConnectionError,
+                                             RFCOMMError, GLib.Error, str]], None]) -> None:
         try:
             self.parent.Plugins.RecentConns
         except KeyError:
@@ -58,7 +67,7 @@ class DBusService(AppletPlugin):
             elif isinstance(service, SerialService) and 'PPPSupport' in self.parent.Plugins.get_loaded():
                 def reply(rfcomm):
                     self.parent.Plugins.run("on_rfcomm_connected", service, rfcomm)
-                    ok(rfcomm)
+                    ok()
 
                 rets = self.parent.Plugins.run("rfcomm_connect_handler", service, reply, err)
                 if True in rets:
@@ -69,9 +78,11 @@ class DBusService(AppletPlugin):
             else:
                 if not self.parent.Plugins.run_ex("service_connect_handler", cb, service, ok, err) \
                         and isinstance(service, (SerialService, NetworkService)):
-                    service.connect(reply_handler=ok, error_handler=err)
+                    service.connect(reply_handler=lambda *args: ok(), error_handler=err)
 
-    def _disconnect_service(self, object_path, uuid, port, ok, err):
+    def _disconnect_service(self, object_path: str, uuid: str, port: int, ok: Callable[[], None],
+                            err: Callable[[Union[BluezDBusException, NMConnectionError,
+                                                 GLib.Error, str]], None]) -> None:
         if uuid == '00000000-0000-0000-0000-000000000000':
             device = Device(obj_path=object_path)
             device.disconnect(reply_handler=ok, error_handler=err)
@@ -96,16 +107,16 @@ class DBusService(AppletPlugin):
                         and isinstance(service, NetworkService):
                     service.disconnect(reply_handler=ok, error_handler=err)
 
-    def service_connect_handler(self, service, ok, err):
-        pass
+    def service_connect_handler(self, service: Service, ok: Callable[..., None], err: Callable[..., None]) -> bool:
+        return False
 
-    def service_disconnect_handler(self, service, ok, err):
-        pass
+    def service_disconnect_handler(self, service: Service, ok: Callable[..., None], err: Callable[..., None]) -> bool:
+        return False
 
     def _open_plugin_dialog(self):
         self.parent.Plugins.StandardItems.on_plugins()
 
-    def rfcomm_connect_handler(self, service, reply_handler, error_handler):
+    def rfcomm_connect_handler(self, service: Service, reply: Callable[..., None], err: Callable[..., None]) -> bool:
         return False
 
     def on_rfcomm_connected(self, service, port):

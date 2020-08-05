@@ -1,7 +1,9 @@
 import gi
 import logging
 import uuid
-from typing import Optional
+from typing import Optional, Callable, Union
+
+from blueman.Service import Service
 
 try:
     gi.require_version('NM', '1.0')
@@ -19,7 +21,8 @@ class NMConnectionError(Exception):
 class NMConnectionBase:
     conntype: str
 
-    def __init__(self, service, reply_handler, error_handler):
+    def __init__(self, service: Service, reply_handler: Callable[[], None],
+                 error_handler: Callable[[Union[NMConnectionError, GLib.Error]], None]):
         if self.conntype not in ('dun', 'panu'):
             error_handler(
                 NMConnectionError(f"Invalid connection type {self.conntype}, should be panu or dun")

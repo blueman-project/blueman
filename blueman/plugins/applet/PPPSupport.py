@@ -1,5 +1,9 @@
 from gettext import gettext as _
+from typing import TYPE_CHECKING, Callable, Union
 
+from _blueman import RFCOMMError
+
+from blueman.Service import Service
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.Notification import Notification
 from blueman.main.DBusProxies import Mechanism
@@ -7,13 +11,18 @@ from blueman.main.Config import Config
 
 from gi.repository import GLib
 
-from blueman.Sdp import DIALUP_NET_SVCLASS_ID
 import subprocess
 import logging
 
+from blueman.services import DialupNetwork
+
+if TYPE_CHECKING:
+    from blueman.main.Applet import BluemanApplet
+
 
 class Connection:
-    def __init__(self, applet, service, port, ok, err):
+    def __init__(self, applet: "BluemanApplet", service: DialupNetwork, port: str,
+                 ok: Callable[[str], None], err: Callable[[GLib.Error], None]):
         self.reply_handler = ok
         self.error_handler = err
         self.service = service
@@ -35,13 +44,13 @@ class Connection:
         m.PPPConnect('(sss)', self.port, c["number"], c["apn"], result_handler=self.on_connected,
                      error_handler=self.on_error)
 
-    def on_error(self, _obj, result, _user_data):
+    def on_error(self, _obj: Mechanism, result: GLib.Error, _user_data: None) -> None:
         logging.info(f"Failed {result}")
         # FIXME confusingly self.port is the full rfcomm device path but the service expects the number only
         self.error_handler(result)
         GLib.timeout_add(1000, self.service.disconnect, int(self.port[-1]))
 
-    def on_connected(self, _obj, result, _user_data):
+    def on_connected(self, _obj: Mechanism, result: str, _user_data: None) -> None:
         self.reply_handler(self.port)
         self.parent.Plugins.run("on_ppp_connected", self.service.device, self.port, result)
 
@@ -70,9 +79,11 @@ class PPPSupport(AppletPlugin):
     def on_rfcomm_connected(self, service, port):
         pass
 
-    def rfcomm_connect_handler(self, service, reply, err):
-        if DIALUP_NET_SVCLASS_ID == service.short_uuid:
-            def local_reply(port):
+    def rfcomm_connect_handler(self, service: Service, reply: Callable[[str], None],
+                               err: Callable[[Union[RFCOMMError, GLib.Error]], None]) -> bool:
+        if isinstance(service, DialupNetwork):
+            def local_reply(port: str) -> None:
+                assert isinstance(service, DialupNetwork)  # https://github.com/python/mypy/issues/2608
                 Connection(self.parent, service, port, reply, err)
 
             service.connect(reply_handler=local_reply, error_handler=err)

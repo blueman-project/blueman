@@ -72,7 +72,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: apt-get update
-      - run: apt-get install -y -qq --no-install-recommends automake autoconf libtool autopoint gettext libglib2.0-dev python-gi-dev libbluetooth-dev libgirepository1.0-dev gir1.2-gtk-3.0 libpulse0 libpulse-mainloop-glib0
+      - run: apt-get install -y -qq --no-install-recommends automake autoconf libtool autopoint gettext libglib2.0-dev python-gi-dev libbluetooth-dev libgirepository1.0-dev gir1.2-gtk-3.0 gir1.2-nm-1.0 libpulse0 libpulse-mainloop-glib0
       - run: python3 -m pip install cython pygobject
       - run: ./autogen.sh
       - run: make -C module

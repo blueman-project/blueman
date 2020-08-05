@@ -231,12 +231,12 @@ class Assistant:
         elif num == PAGE_CONNECTING:
             logging.info("connect")
 
-            def success(*args):
+            def success(_obj: AppletService, _result: None, _user_data: None) -> None:
                 pages[PAGE_FINISH].set_markup(_("<b>Device added and connected successfully</b>"))
                 self.assistant.set_page_complete(pages[PAGE_CONNECTING], True)
                 self.assistant.set_current_page(PAGE_FINISH)
 
-            def fail(*args):
+            def fail(_obj: AppletService, _result: GLib.Error, _user_data: None) -> None:
                 pages[PAGE_FINISH].set_markup(_("<b>Device added successfully, but failed to connect</b>"))
                 self.assistant.set_page_complete(pages[PAGE_CONNECTING], True)
                 self.assistant.set_current_page(PAGE_FINISH)
