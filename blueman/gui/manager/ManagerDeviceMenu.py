@@ -5,12 +5,12 @@ from typing import Dict, List, Tuple, Optional
 
 from blueman.Constants import UI_PATH
 from blueman.Functions import create_menuitem, e_
+from blueman.Service import Service
 from blueman.bluez.Network import AnyNetwork
 from blueman.bluez.Device import AnyDevice, Device
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.DBusProxies import AppletService, DBusProxyFailed
 from blueman.gui.MessageArea import MessageArea
-from blueman.services import SerialPort
 from blueman.Sdp import (
     ServiceUUID,
     AUDIO_SOURCE_SVCLASS_ID,
@@ -18,8 +18,7 @@ from blueman.Sdp import (
     HANDSFREE_AGW_SVCLASS_ID,
     HANDSFREE_SVCLASS_ID,
     HEADSET_SVCLASS_ID,
-    HID_SVCLASS_ID,
-    SERIAL_PORT_SVCLASS_ID)
+    HID_SVCLASS_ID)
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -98,10 +97,10 @@ class ManagerDeviceMenu(Gtk.Menu):
         if key == "Connected":
             self.generate()
 
-    def on_connect(self, _item, service):
+    def on_connect(self, _item: Gtk.MenuItem, service: Service) -> None:
         device = service.device
 
-        def success(_obj, _result, _user_data):
+        def success(_obj: AppletService, _result: None, _user_data: None) -> None:
             logging.info("success")
             prog.message(_("Success!"))
 
@@ -109,7 +108,7 @@ class ManagerDeviceMenu(Gtk.Menu):
 
             self.unset_op(device)
 
-        def fail(obj, result, _user_data):
+        def fail(_obj: Optional[AppletService], result: GLib.Error, _user_data: None) -> None:
             prog.message(_("Failed"))
 
             self.unset_op(device)
@@ -130,12 +129,12 @@ class ManagerDeviceMenu(Gtk.Menu):
 
         prog.start()
 
-    def on_disconnect(self, item, service, port=0):
-        def ok(obj, result, user_date):
+    def on_disconnect(self, _item: Gtk.MenuItem, service: Service, port: int = 0) -> None:
+        def ok(_obj: AppletService, _result: None, _user_date: None) -> None:
             logging.info("disconnect success")
             self.generate()
 
-        def err(obj, result, user_date):
+        def err(_obj: Optional[AppletService], result: GLib.Error, _user_date: None) -> None:
             logging.warning(f"disconnect failed {result}")
             msg, tb = e_(result.message)
             MessageArea.show_message(_("Disconnection Failed: ") + msg, tb)
@@ -155,15 +154,15 @@ class ManagerDeviceMenu(Gtk.Menu):
             if key in ("Connected", "UUIDs", "Trusted", "Paired"):
                 self.generate()
 
-    def generic_connect(self, item, device, connect):
-        def fail(obj, result, user_date):
+    def generic_connect(self, _item: Gtk.MenuItem, device: Device, connect: bool) -> None:
+        def fail(_obj: AppletService, result: GLib.Error, _user_data: None) -> None:
             logging.info(f"fail: {result}")
             prog.message(_("Failed"))
             self.unset_op(device)
             msg, tb = e_(result.message)
             MessageArea.show_message(_("Connection Failed: ") + msg)
 
-        def success(obj, result, user_data):
+        def success(_obj: AppletService, _result: None, _user_data: None) -> None:
             logging.info("success")
             prog.message(_("Success!"))
             MessageArea.close()

@@ -2,10 +2,10 @@ from gettext import gettext as _
 from operator import itemgetter
 import time
 import logging
-from typing import Dict, List, TYPE_CHECKING, Optional, Callable, cast
+from typing import Dict, List, TYPE_CHECKING, Optional, Callable, cast, Union
 
 from blueman.bluez.Device import Device
-from blueman.bluez.errors import DBusNoSuchAdapterError, BluezDBusException
+from blueman.bluez.errors import DBusNoSuchAdapterError
 from blueman.gui.Notification import Notification
 from blueman.Sdp import ServiceUUID
 from blueman.plugins.AppletPlugin import AppletPlugin
@@ -224,16 +224,16 @@ class RecentConns(AppletPlugin):
         self.parent.Plugins.Menu.on_menu_changed()
 
         def reply() -> None:
-            assert item["mitem"] is not None
+            assert item["mitem"] is not None  # https://github.com/python/mypy/issues/2608
             Notification(_("Connected"), _("Connected to %s") % item["mitem"]["text"],
                          icon_name=item["icon"]).show()
             item["mitem"]["sensitive"] = True
             self.parent.Plugins.Menu.on_menu_changed()
 
-        def err(reason: BluezDBusException) -> None:
+        def err(reason: Union[Exception, str]) -> None:
             Notification(_("Failed to connect"), str(reason).split(": ")[-1],
                          icon_name="dialog-error").show()
-            assert item["mitem"] is not None
+            assert item["mitem"] is not None  # https://github.com/python/mypy/issues/2608
             item["mitem"]["sensitive"] = True
             self.parent.Plugins.Menu.on_menu_changed()
 

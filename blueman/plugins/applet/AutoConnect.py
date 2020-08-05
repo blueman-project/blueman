@@ -1,4 +1,5 @@
 from gettext import gettext as _
+from typing import Union
 
 from gi.repository import GLib
 
@@ -32,12 +33,12 @@ class AutoConnect(AppletPlugin):
             if device is None or device.get("Connected"):
                 continue
 
-            def reply(*_args):
+            def reply() -> None:
                 Notification(_("Connected"), _("Automatically connected to %(service)s on %(device)s") %
                              {"service": ServiceUUID(uuid).name, "device": device["Alias"]},
                              icon_name=device["Icon"]).show()
 
-            def err(_reason):
+            def err(_reason: Union[Exception, str]) -> None:
                 pass
 
             self.parent.Plugins.DBusService.connect_service(device.get_object_path(), uuid, reply, err)

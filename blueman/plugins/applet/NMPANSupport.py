@@ -1,7 +1,11 @@
 from gettext import gettext as _
+from typing import Callable, Union
 
+from gi.repository import GLib
+
+from blueman.Service import Service
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.main.NetworkManager import NMPANConnection
+from blueman.main.NetworkManager import NMPANConnection, NMConnectionError
 from blueman.services.meta import NetworkService
 
 
@@ -17,7 +21,8 @@ class NMPANSupport(AppletPlugin):
         pass
 
     @staticmethod
-    def service_connect_handler(service, ok, err):
+    def service_connect_handler(service: Service, ok: Callable[[], None],
+                                err: Callable[[Union[NMConnectionError, GLib.Error]], None]) -> bool:
         if not isinstance(service, NetworkService):
             return False
 
@@ -27,7 +32,8 @@ class NMPANSupport(AppletPlugin):
         return True
 
     @staticmethod
-    def service_disconnect_handler(service, ok, err):
+    def service_disconnect_handler(service: Service, ok: Callable[[], None],
+                                   err: Callable[[Union[NMConnectionError, GLib.Error]], None]) -> bool:
         if not isinstance(service, NetworkService):
             return False
 

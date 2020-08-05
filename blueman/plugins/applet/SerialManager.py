@@ -1,11 +1,12 @@
 from gettext import gettext as _
-from typing import Dict, Any  # noqa: F401
+from typing import Dict, Any, Callable  # noqa: F401
 
+from blueman.Service import Service
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.Notification import Notification
 from blueman.Sdp import SERIAL_PORT_SVCLASS_ID
 from blueman.services.Functions import get_services
-from _blueman import rfcomm_list
+from _blueman import rfcomm_list, RFCOMMError
 from subprocess import Popen
 import logging
 import os
@@ -123,8 +124,9 @@ class SerialManager(AppletPlugin):
                 logging.info(f"Sending HUP to {process.pid}")
                 os.killpg(process.pid, signal.SIGHUP)
 
-    def rfcomm_connect_handler(self, service, reply, err):
-        if SERIAL_PORT_SVCLASS_ID == service.short_uuid:
+    def rfcomm_connect_handler(self, service: Service, reply: Callable[[str], None],
+                               err: Callable[[RFCOMMError], None]) -> bool:
+        if isinstance(service, SerialService):
             service.connect(reply_handler=reply, error_handler=err)
             return True
         else:
