@@ -4,6 +4,7 @@ from tempfile import NamedTemporaryFile
 
 from blueman.Constants import UI_PATH
 from blueman.Functions import create_menuitem, launch
+from blueman.gui.manager.ManagerDeviceMenu import MenuItemsProvider
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 
 import gi
@@ -44,7 +45,7 @@ def send_note(device, parent):
     dialog.present()
 
 
-class Notes(ManagerPlugin):
+class Notes(ManagerPlugin, MenuItemsProvider):
     def on_unload(self):
         pass
 

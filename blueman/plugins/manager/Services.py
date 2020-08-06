@@ -2,6 +2,7 @@ from gettext import gettext as _
 
 import cairo
 from blueman.bluez.Network import Network
+from blueman.gui.manager.ManagerDeviceMenu import MenuItemsProvider
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 from blueman.Functions import create_menuitem
 from blueman.main.DBusProxies import AppletService
@@ -16,7 +17,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 
-class Services(ManagerPlugin):
+class Services(ManagerPlugin, MenuItemsProvider):
     def on_load(self):
         self.icon_theme = Gtk.IconTheme.get_default()
 

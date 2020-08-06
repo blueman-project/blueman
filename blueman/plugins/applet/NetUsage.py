@@ -16,6 +16,7 @@ from gi.repository import GLib
 
 import gi
 
+from blueman.plugins.applet.PPPSupport import PPPConnectedListener
 from blueman.typing import GSignals
 
 gi.require_version("Gtk", "3.0")
@@ -281,7 +282,7 @@ class Dialog:
                 return
 
 
-class NetUsage(AppletPlugin, GObject.GObject):
+class NetUsage(AppletPlugin, GObject.GObject, PPPConnectedListener):
     __depends__ = ["Menu"]
     __icon__ = "network-wireless"
     __description__ = _("Allows you to monitor your (mobile broadband) network traffic usage. Useful for limited "

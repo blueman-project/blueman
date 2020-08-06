@@ -1,14 +1,30 @@
 from gettext import gettext as _
+from typing import Optional
 
 from gi.repository import GObject, GLib
 
 from blueman.Functions import launch
-from blueman.main.PluginManager import StopException
 from blueman.plugins.AppletPlugin import AppletPlugin
+from blueman.plugins.applet.PowerManager import PowerStateListener
 from blueman.typing import GSignals
 
 
-class StatusIcon(AppletPlugin, GObject.GObject):
+class StatusIconImplementationProvider:
+    def on_query_status_icon_implementation(self) -> Optional[str]:
+        ...
+
+
+class StatusIconVisibilityHandler:
+    def on_query_status_icon_visibility(self) -> int:
+        ...
+
+
+class StatusIconProvider:
+    def on_status_icon_query_icon(self) -> Optional[str]:
+        ...
+
+
+class StatusIcon(AppletPlugin, GObject.GObject, PowerStateListener):
     __gsignals__: GSignals = {'activate': (GObject.SignalFlags.NO_HOOKS, None, ())}
 
     __unloadable__ = False
@@ -28,10 +44,6 @@ class StatusIcon(AppletPlugin, GObject.GObject):
     def on_load(self):
         GObject.GObject.__init__(self)
         self.lines = {0: _("Bluetooth Enabled")}
-
-        AppletPlugin.add_method(self.on_query_status_icon_implementation)
-        AppletPlugin.add_method(self.on_query_status_icon_visibility)
-        AppletPlugin.add_method(self.on_status_icon_query_icon)
 
         self.query_visibility(emit=False)
 
@@ -56,7 +68,8 @@ class StatusIcon(AppletPlugin, GObject.GObject):
             self.query_visibility()
 
     def query_visibility(self, delay_hiding=False, emit=True):
-        rets = self.parent.Plugins.run("on_query_status_icon_visibility")
+        rets = [plugin.on_query_status_icon_visibility()
+                for plugin in self.parent.Plugins.get_loaded_plugins(StatusIconVisibilityHandler)]
         if StatusIcon.FORCE_HIDE not in rets:
             if StatusIcon.FORCE_SHOW in rets:
                 self.set_visible(True, emit)
@@ -120,27 +133,15 @@ class StatusIcon(AppletPlugin, GObject.GObject):
             launch('blueman-tray', icon_name='blueman', sn=False)
 
     def _get_status_icon_implementation(self):
-        implementations = self.parent.Plugins.run("on_query_status_icon_implementation")
-        return next((implementation for implementation in implementations if implementation), 'GtkStatusIcon')
+        for plugin in self.parent.Plugins.get_loaded_plugins(StatusIconImplementationProvider):
+            implementation = plugin.on_query_status_icon_implementation()
+            if implementation:
+                return implementation
+        return "GtkStatusIcon"
 
     def _get_icon_name(self):
-        icon = "blueman-tray"
-
-        def callback(inst, ret):
-            if ret is not None:
-                for i in ret:
-                    nonlocal icon
-                    icon = i
-                    raise StopException
-
-        self.parent.Plugins.run_ex("on_status_icon_query_icon", callback)
-        return icon
-
-    def on_query_status_icon_implementation(self):
-        return None
-
-    def on_query_status_icon_visibility(self):
-        return StatusIcon.SHOW
-
-    def on_status_icon_query_icon(self):
-        return None
+        for plugin in self.parent.Plugins.get_loaded_plugins(StatusIconProvider):
+            icon = plugin.on_status_icon_query_icon()
+            if icon is not None:
+                return icon
+        return "blueman-tray"

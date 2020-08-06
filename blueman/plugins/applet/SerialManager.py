@@ -5,6 +5,7 @@ from blueman.Service import Service
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.Notification import Notification
 from blueman.Sdp import SERIAL_PORT_SVCLASS_ID
+from blueman.plugins.applet.DBusService import RFCOMMConnectedListener, RFCOMMConnectHandler
 from blueman.services.Functions import get_services
 from _blueman import rfcomm_list, RFCOMMError
 from subprocess import Popen
@@ -17,7 +18,7 @@ from gi.repository import GLib
 from blueman.services.meta import SerialService
 
 
-class SerialManager(AppletPlugin):
+class SerialManager(AppletPlugin, RFCOMMConnectedListener, RFCOMMConnectHandler):
     __icon__ = "blueman-serial"
     __description__ = _("Standard SPP profile connection handler, allows executing custom actions")
     __author__ = "walmis"

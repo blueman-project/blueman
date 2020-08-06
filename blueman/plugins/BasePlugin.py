@@ -1,13 +1,9 @@
 import logging
 import weakref
 from gettext import gettext as _
-from typing import List, TYPE_CHECKING, Dict, Tuple, Any, Type
+from typing import List, TYPE_CHECKING, Dict, Tuple, Any
 
 from blueman.main.Config import Config
-
-
-class MethodAlreadyExists(Exception):
-    pass
 
 
 if TYPE_CHECKING:
@@ -48,8 +44,6 @@ class BasePlugin:
     def __init__(self, parent):
         self.parent = parent
 
-        self.__methods: List[Tuple[Type[BasePlugin], str]] = []
-
         if self.__options__:
             self.__config = Config(
                 self.__class__.__gsettings__.get("schema"),
@@ -67,21 +61,8 @@ class BasePlugin:
         res = map(lambda x: (len(x) > 2), cls.__options__.values())
         return True in res
 
-    @classmethod
-    def add_method(cls, func):
-        """Add a new method that can be used by other plugins to listen for changes, query state, etc"""
-        func.__self__.__methods.append((cls, func.__name__))
-
-        if func.__name__ in cls.__dict__:
-            raise MethodAlreadyExists
-        else:
-            setattr(cls, func.__name__, func)
-
     def _unload(self):
         self.on_unload()
-
-        for cls, met in self.__methods:
-            delattr(cls, met)
 
         self.__class__.__instance__ = None
 

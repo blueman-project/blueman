@@ -5,7 +5,7 @@ from typing import Dict, List, TYPE_CHECKING
 from blueman.bluez.Device import Device
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 from blueman.main.PulseAudioUtils import PulseAudioUtils, EventType
-from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
+from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu, MenuItemsProvider
 from blueman.gui.MessageArea import MessageArea
 from blueman.Functions import create_menuitem
 from blueman.Sdp import AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID, ServiceUUID
@@ -19,7 +19,7 @@ if TYPE_CHECKING:
     from blueman.main.PulseAudioUtils import CardInfo  # noqa: F401
 
 
-class PulseAudioProfile(ManagerPlugin):
+class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
     def on_load(self):
         self.devices: Dict[str, "CardInfo"] = {}
 

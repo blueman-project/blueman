@@ -4,8 +4,10 @@ from gi.repository import GLib
 from blueman.plugins.AppletPlugin import AppletPlugin
 from gettext import ngettext
 
+from blueman.plugins.applet.StatusIcon import StatusIconProvider
 
-class ShowConnected(AppletPlugin):
+
+class ShowConnected(AppletPlugin, StatusIconProvider):
     __author__ = "Walmis"
     __depends__ = ["StatusIcon"]
     __icon__ = "blueman-active"
@@ -25,7 +27,7 @@ class ShowConnected(AppletPlugin):
     def on_status_icon_query_icon(self):
         if self.num_connections > 0:
             self.active = True
-            return "blueman-active",
+            return "blueman-active"
         else:
             self.active = False
 

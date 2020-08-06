@@ -7,11 +7,14 @@ from blueman.gui.CommonUi import show_about_dialog
 from blueman.gui.applet.PluginDialog import PluginDialog
 
 import gi
+
+from blueman.plugins.applet.PowerManager import PowerStateListener
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 
-class StandardItems(AppletPlugin):
+class StandardItems(AppletPlugin, PowerStateListener):
     __depends__ = ["StatusIcon", "Menu"]
     __unloadable__ = False
     __description__ = _("Adds standard menu items to the status icon menu")

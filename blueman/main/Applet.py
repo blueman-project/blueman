@@ -32,7 +32,8 @@ class BluemanApplet(Gio.Application):
         self.Plugins = PersistentPluginManager(AppletPlugin, blueman.plugins.applet, self)
         self.Plugins.load_plugin()
 
-        self.Plugins.run("on_plugins_loaded")
+        for plugin in self.Plugins.get_loaded_plugins(AppletPlugin):
+            plugin.on_plugins_loaded()
 
         self.Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
 
@@ -51,32 +52,40 @@ class BluemanApplet(Gio.Application):
         logging.info(f"{name} {owner}")
         self.manager_state = True
         self.plugin_run_state_changed = True
-        self.Plugins.run("on_manager_state_changed", self.manager_state)
+        for plugin in self.Plugins.get_loaded_plugins(AppletPlugin):
+            plugin.on_manager_state_changed(self.manager_state)
 
     def _on_dbus_name_vanished(self, _connection, name):
         logging.info(name)
         self.manager_state = False
         self.plugin_run_state_changed = True
-        self.Plugins.run("on_manager_state_changed", self.manager_state)
+        for plugin in self.Plugins.get_loaded_plugins(AppletPlugin):
+            plugin.on_manager_state_changed(self.manager_state)
 
     def _on_adapter_property_changed(self, _adapter, key, value, path):
-        self.Plugins.run("on_adapter_property_changed", path, key, value)
+        for plugin in self.Plugins.get_loaded_plugins(AppletPlugin):
+            plugin.on_adapter_property_changed(path, key, value)
 
     def _on_device_property_changed(self, _device, key, value, path):
-        self.Plugins.run("on_device_property_changed", path, key, value)
+        for plugin in self.Plugins.get_loaded_plugins(AppletPlugin):
+            plugin.on_device_property_changed(path, key, value)
 
     def on_adapter_added(self, _manager, path):
         logging.info(f"Adapter added {path}")
-        self.Plugins.run("on_adapter_added", path)
+        for plugin in self.Plugins.get_loaded_plugins(AppletPlugin):
+            plugin.on_adapter_added(path)
 
     def on_adapter_removed(self, _manager, path):
         logging.info(f"Adapter removed {path}")
-        self.Plugins.run("on_adapter_removed", path)
+        for plugin in self.Plugins.get_loaded_plugins(AppletPlugin):
+            plugin.on_adapter_removed(path)
 
     def on_device_created(self, _manager, path):
         logging.info(f"Device created {path}")
-        self.Plugins.run("on_device_created", path)
+        for plugin in self.Plugins.get_loaded_plugins(AppletPlugin):
+            plugin.on_device_created(path)
 
     def on_device_removed(self, _manager, path):
         logging.info(f"Device removed {path}")
-        self.Plugins.run("on_device_removed", path)
+        for plugin in self.Plugins.get_loaded_plugins(AppletPlugin):
+            plugin.on_device_removed(path)

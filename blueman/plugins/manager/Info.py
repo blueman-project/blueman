@@ -6,6 +6,7 @@ import logging
 from blueman.Functions import create_menuitem
 from blueman.Sdp import ServiceUUID
 from blueman.bluez.errors import BluezDBusException
+from blueman.gui.manager.ManagerDeviceMenu import MenuItemsProvider
 
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 
@@ -107,7 +108,7 @@ def show_info(device, parent):
     dialog.destroy()
 
 
-class Info(ManagerPlugin):
+class Info(ManagerPlugin, MenuItemsProvider):
     def on_unload(self):
         pass
 

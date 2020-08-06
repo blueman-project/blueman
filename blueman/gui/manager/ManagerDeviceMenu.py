@@ -26,6 +26,12 @@ from gi.repository import Gtk
 from gi.repository import GLib
 
 
+class MenuItemsProvider:
+    def on_request_menu_items(self, manager_menu: "ManagerDeviceMenu",
+                              device: Device) -> List[Tuple[Gtk.MenuItem, int]]:
+        ...
+
+
 class ManagerDeviceMenu(Gtk.Menu):
     __ops__: Dict[str, str] = {}
     __instances__: List["ManagerDeviceMenu"] = []
@@ -248,7 +254,8 @@ class ManagerDeviceMenu(Gtk.Menu):
             connect_item.show()
             self.append(connect_item)
 
-        rets = self.Blueman.Plugins.run("on_request_menu_items", self, self.SelectedDevice)
+        rets = [plugin.on_request_menu_items(self, self.SelectedDevice)
+                for plugin in self.Blueman.Plugins.get_loaded_plugins(MenuItemsProvider)]
 
         for ret in rets:
             if ret:
