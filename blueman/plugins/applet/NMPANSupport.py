@@ -6,10 +6,11 @@ from gi.repository import GLib
 from blueman.Service import Service
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.NetworkManager import NMPANConnection, NMConnectionError
+from blueman.plugins.applet.DBusService import ServiceConnectHandler
 from blueman.services.meta import NetworkService
 
 
-class NMPANSupport(AppletPlugin):
+class NMPANSupport(AppletPlugin, ServiceConnectHandler):
     __depends__ = ["DBusService"]
     __conflicts__ = ["DhcpClient"]
     __icon__ = "network-workgroup"
@@ -20,8 +21,7 @@ class NMPANSupport(AppletPlugin):
     def on_load(self):
         pass
 
-    @staticmethod
-    def service_connect_handler(service: Service, ok: Callable[[], None],
+    def service_connect_handler(self, service: Service, ok: Callable[[], None],
                                 err: Callable[[Union[NMConnectionError, GLib.Error]], None]) -> bool:
         if not isinstance(service, NetworkService):
             return False
@@ -31,8 +31,7 @@ class NMPANSupport(AppletPlugin):
 
         return True
 
-    @staticmethod
-    def service_disconnect_handler(service: Service, ok: Callable[[], None],
+    def service_disconnect_handler(self, service: Service, ok: Callable[[], None],
                                    err: Callable[[Union[NMConnectionError, GLib.Error]], None]) -> bool:
         if not isinstance(service, NetworkService):
             return False

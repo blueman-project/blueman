@@ -3,7 +3,7 @@ import os
 import logging
 import traceback
 import importlib
-from typing import Dict, List, Type, Union
+from typing import Dict, List, Type, TypeVar, Iterable, Union
 
 from gi.repository import GObject
 
@@ -200,32 +200,13 @@ class PluginManager(GObject.GObject):
     def get_plugins(self):
         return self.__plugins
 
-    # executes a function on all plugin instances
-    def run(self, func, *args, **kwargs):
-        rets = []
-        for inst in self.__plugins.values():
-            try:
-                ret = getattr(inst, func)(*args, **kwargs)
-                rets.append(ret)
-            except Exception:
-                logging.error(f"Function {func} on {inst.__class__.__name__} failed", exc_info=True)
+    _U = TypeVar("_U")
 
-        return rets
-
-    # executes a function on all plugin instances, runs a callback after each plugin returns something
-    def run_ex(self, func, callback, *args, **kwargs):
-        for inst in self.__plugins.values():
-            ret = getattr(inst, func)(*args, **kwargs)
-            try:
-                ret = callback(inst, ret)
-            except StopException:
-                return ret
-            except Exception:
-                logging.error(f"Function {func} on {inst.__class__.__name__} failed", exc_info=True)
-                return
-
-            if ret is not None:
-                args = ret
+    def get_loaded_plugins(self, protocol: Type[_U]) -> Iterable[_U]:
+        for name in self.__loaded:
+            plugin = self.__plugins[name]
+            if isinstance(plugin, protocol):
+                yield plugin
 
 
 class PersistentPluginManager(PluginManager):

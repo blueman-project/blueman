@@ -7,9 +7,10 @@ from blueman.Service import Service
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.NetworkManager import NMDUNConnection, NMConnectionError
 from blueman.Sdp import DIALUP_NET_SVCLASS_ID
+from blueman.plugins.applet.DBusService import ServiceConnectHandler
 
 
-class NMDUNSupport(AppletPlugin):
+class NMDUNSupport(AppletPlugin, ServiceConnectHandler):
     __depends__ = ["StatusIcon", "DBusService"]
     __conflicts__ = ["PPPSupport"]
     __icon__ = "modem"
@@ -20,8 +21,7 @@ class NMDUNSupport(AppletPlugin):
     def on_load(self):
         pass
 
-    @staticmethod
-    def service_connect_handler(service: Service, ok: Callable[[], None],
+    def service_connect_handler(self, service: Service, ok: Callable[[], None],
                                 err: Callable[[Union[NMConnectionError, GLib.Error]], None]) -> bool:
         if DIALUP_NET_SVCLASS_ID != service.short_uuid:
             return False
@@ -31,8 +31,7 @@ class NMDUNSupport(AppletPlugin):
 
         return True
 
-    @staticmethod
-    def service_disconnect_handler(service: Service, ok: Callable[[], None],
+    def service_disconnect_handler(self, service: Service, ok: Callable[[], None],
                                    err: Callable[[Union[NMConnectionError, GLib.Error]], None]) -> bool:
         if DIALUP_NET_SVCLASS_ID != service.short_uuid:
             return False

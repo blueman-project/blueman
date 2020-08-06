@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING, Callable, Union
 from _blueman import RFCOMMError
 
 from blueman.Service import Service
+from blueman.bluez.Device import Device
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.Notification import Notification
 from blueman.main.DBusProxies import Mechanism
@@ -14,10 +15,16 @@ from gi.repository import GLib
 import subprocess
 import logging
 
+from blueman.plugins.applet.DBusService import RFCOMMConnectHandler
 from blueman.services import DialupNetwork
 
 if TYPE_CHECKING:
     from blueman.main.Applet import BluemanApplet
+
+
+class PPPConnectedListener:
+    def on_ppp_connected(self, device: Device, rfcomm: str, ppp_port: str) -> None:
+        ...
 
 
 class Connection:
@@ -52,7 +59,8 @@ class Connection:
 
     def on_connected(self, _obj: Mechanism, result: str, _user_data: None) -> None:
         self.reply_handler(self.port)
-        self.parent.Plugins.run("on_ppp_connected", self.service.device, self.port, result)
+        for plugin in self.parent.Plugins.get_loaded_plugins(PPPConnectedListener):
+            plugin.on_ppp_connected(self.service.device, self.port, result)
 
         msg = _("Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\n"
                 "Network is now available through <b>%(1)s</b>") % {"0": self.service.device['Alias'], "1": result}
@@ -60,23 +68,14 @@ class Connection:
         Notification(_("Connected"), msg, icon_name="network-wireless").show()
 
 
-class PPPSupport(AppletPlugin):
+class PPPSupport(AppletPlugin, RFCOMMConnectHandler):
     __depends__ = ["DBusService"]
     __description__ = _("Provides basic support for connecting to the internet via DUN profile.")
     __author__ = "Walmis"
     __icon__ = "modem"
     __priority__ = 0
 
-    def on_load(self):
-        AppletPlugin.add_method(self.on_ppp_connected)
-
     def on_unload(self):
-        pass
-
-    def on_ppp_connected(self, device, rfcomm, ppp_port):
-        pass
-
-    def on_rfcomm_connected(self, service, port):
         pass
 
     def rfcomm_connect_handler(self, service: Service, reply: Callable[[str], None],

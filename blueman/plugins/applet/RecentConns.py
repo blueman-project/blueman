@@ -9,8 +9,7 @@ from blueman.bluez.errors import DBusNoSuchAdapterError
 from blueman.gui.Notification import Notification
 from blueman.Sdp import ServiceUUID
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.plugins.applet.PowerManager import PowerManager
-
+from blueman.plugins.applet.PowerManager import PowerManager, PowerStateListener
 
 if TYPE_CHECKING:
     from typing_extensions import TypedDict
@@ -44,7 +43,7 @@ if TYPE_CHECKING:
 REGISTRY_VERSION = 0
 
 
-class RecentConns(AppletPlugin):
+class RecentConns(AppletPlugin, PowerStateListener):
     __depends__ = ["DBusService", "Menu"]
     __icon__ = "document-open-recent"
     __description__ = _("Provides a menu item that contains last used connections for quick access")

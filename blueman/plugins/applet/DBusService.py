@@ -7,7 +7,6 @@ from gi.repository import GLib
 from blueman.Service import Service
 from blueman.bluez.errors import BluezDBusException
 from blueman.main.NetworkManager import NMConnectionError
-from blueman.main.PluginManager import StopException
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.bluez.Device import Device
 from blueman.services.Functions import get_service
@@ -17,6 +16,30 @@ import logging
 from blueman.services.meta import SerialService, NetworkService
 
 
+class RFCOMMConnectedListener:
+    def on_rfcomm_connected(self, service: Service, port: str) -> None:
+        ...
+
+    def on_rfcomm_disconnect(self, port: int) -> None:
+        ...
+
+
+class RFCOMMConnectHandler:
+    def rfcomm_connect_handler(self, service: Service, reply: Callable[[str], None],
+                               err: Callable[[Exception], None]) -> bool:
+        ...
+
+
+class ServiceConnectHandler:
+    def service_connect_handler(self, service: Service, ok: Callable[[], None],
+                                err: Callable[[Union[NMConnectionError, GLib.Error]], None]) -> bool:
+        ...
+
+    def service_disconnect_handler(self, service: Service, ok: Callable[[], None],
+                                   err: Callable[[Union[NMConnectionError, GLib.Error]], None]) -> bool:
+        ...
+
+
 class DBusService(AppletPlugin):
     __depends__ = ["StatusIcon"]
     __unloadable__ = False
@@ -24,13 +47,6 @@ class DBusService(AppletPlugin):
     __author__ = "Walmis"
 
     def on_load(self):
-
-        AppletPlugin.add_method(self.on_rfcomm_connected)
-        AppletPlugin.add_method(self.on_rfcomm_disconnect)
-        AppletPlugin.add_method(self.rfcomm_connect_handler)
-        AppletPlugin.add_method(self.service_connect_handler)
-        AppletPlugin.add_method(self.service_disconnect_handler)
-
         self._add_dbus_method("QueryPlugins", (), "as", self.parent.Plugins.get_loaded)
         self._add_dbus_method("QueryAvailablePlugins", (), "as", lambda: list(self.parent.Plugins.get_classes()))
         self._add_dbus_method("SetPluginConfig", ("s", "b"), "", self.parent.Plugins.set_config)
@@ -55,28 +71,25 @@ class DBusService(AppletPlugin):
             device = Device(obj_path=object_path)
             device.connect(reply_handler=ok, error_handler=err)
         else:
-            def cb(_inst, ret):
-                if ret:
-                    raise StopException
-
             service = get_service(Device(obj_path=object_path), uuid)
             assert service is not None
 
             if isinstance(service, SerialService) and 'NMDUNSupport' in self.parent.Plugins.get_loaded():
-                self.parent.Plugins.run_ex("service_connect_handler", cb, service, ok, err)
+                any(plugin.service_connect_handler(service, ok, err)
+                    for plugin in self.parent.Plugins.get_loaded_plugins(ServiceConnectHandler))
             elif isinstance(service, SerialService) and 'PPPSupport' in self.parent.Plugins.get_loaded():
                 def reply(rfcomm):
-                    self.parent.Plugins.run("on_rfcomm_connected", service, rfcomm)
+                    for plugin in self.parent.Plugins.get_loaded_plugins(RFCOMMConnectedListener):
+                        plugin.on_rfcomm_connected(service, rfcomm)
                     ok()
 
-                rets = self.parent.Plugins.run("rfcomm_connect_handler", service, reply, err)
-                if True in rets:
-                    pass
-                else:
+                if not any(plugin.rfcomm_connect_handler(service, reply, err)
+                           for plugin in self.parent.Plugins.get_loaded_plugins(RFCOMMConnectHandler)):
                     logging.info("No handler registered")
                     err("Service not supported\nPossibly the plugin that handles this service is not loaded")
             else:
-                if not self.parent.Plugins.run_ex("service_connect_handler", cb, service, ok, err) \
+                if not any(plugin.service_connect_handler(service, ok, err)
+                           for plugin in self.parent.Plugins.get_loaded_plugins(ServiceConnectHandler)) \
                         and isinstance(service, (SerialService, NetworkService)):
                     service.connect(reply_handler=lambda *args: ok(), error_handler=err)
 
@@ -87,40 +100,24 @@ class DBusService(AppletPlugin):
             device = Device(obj_path=object_path)
             device.disconnect(reply_handler=ok, error_handler=err)
         else:
-            def cb(_inst, ret):
-                if ret:
-                    raise StopException
-
             service = get_service(Device(obj_path=object_path), uuid)
             assert service is not None
 
             if isinstance(service, SerialService) and 'NMDUNSupport' in self.parent.Plugins.get_loaded():
-                self.parent.Plugins.run_ex("service_disconnect_handler", cb, service, ok, err)
+                any(plugin.service_disconnect_handler(service, ok, err)
+                    for plugin in self.parent.Plugins.get_loaded_plugins(ServiceConnectHandler))
             elif isinstance(service, SerialService) and 'PPPSupport' in self.parent.Plugins.get_loaded():
                 service.disconnect(port, reply_handler=ok, error_handler=err)
 
-                self.parent.Plugins.run("on_rfcomm_disconnect", port)
+                for plugin in self.parent.Plugins.get_loaded_plugins(RFCOMMConnectedListener):
+                    plugin.on_rfcomm_disconnect(port)
 
                 logging.info("Disconnecting rfcomm device")
             else:
-                if not self.parent.Plugins.run_ex("service_disconnect_handler", cb, service, ok, err) \
+                if not any(plugin.service_disconnect_handler(service, ok, err)
+                           for plugin in self.parent.Plugins.get_loaded_plugins(ServiceConnectHandler)) \
                         and isinstance(service, NetworkService):
                     service.disconnect(reply_handler=ok, error_handler=err)
 
-    def service_connect_handler(self, service: Service, ok: Callable[..., None], err: Callable[..., None]) -> bool:
-        return False
-
-    def service_disconnect_handler(self, service: Service, ok: Callable[..., None], err: Callable[..., None]) -> bool:
-        return False
-
     def _open_plugin_dialog(self):
         self.parent.Plugins.StandardItems.on_plugins()
-
-    def rfcomm_connect_handler(self, service: Service, reply: Callable[..., None], err: Callable[..., None]) -> bool:
-        return False
-
-    def on_rfcomm_connected(self, service, port):
-        pass
-
-    def on_rfcomm_disconnect(self, port):
-        pass

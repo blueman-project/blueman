@@ -8,8 +8,8 @@ import logging
 
 from blueman.main.DBusProxies import Mechanism
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.plugins.applet.StatusIcon import StatusIcon
-
+from blueman.plugins.applet.PowerManager import PowerStateHandler
+from blueman.plugins.applet.StatusIcon import StatusIcon, StatusIconVisibilityHandler
 
 RFKILL_TYPE_BLUETOOTH = 2
 
@@ -32,7 +32,7 @@ class Switch:
         self.hard = hard
 
 
-class KillSwitch(AppletPlugin):
+class KillSwitch(AppletPlugin, PowerStateHandler, StatusIconVisibilityHandler):
     __author__ = "Walmis"
     __description__ = _("Switches Bluetooth killswitch status to match Bluetooth power state."
                         "Allows turning Bluetooth back on from an icon that shows its status; "
