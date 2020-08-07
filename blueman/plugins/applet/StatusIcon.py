@@ -5,7 +5,6 @@ from gi.repository import GObject, GLib
 
 from blueman.Functions import launch
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.plugins.applet.PowerManager import PowerStateListener
 from blueman.typing import GSignals
 
 
@@ -24,7 +23,7 @@ class StatusIconProvider:
         ...
 
 
-class StatusIcon(AppletPlugin, GObject.GObject, PowerStateListener):
+class StatusIcon(AppletPlugin, GObject.GObject):
     __gsignals__: GSignals = {'activate': (GObject.SignalFlags.NO_HOOKS, None, ())}
 
     __unloadable__ = False
@@ -58,14 +57,6 @@ class StatusIcon(AppletPlugin, GObject.GObject, PowerStateListener):
         self._add_dbus_method("GetStatusIconImplementation", (), "s", self._get_status_icon_implementation)
         self._add_dbus_method("GetIconName", (), "s", self._get_icon_name)
         self._add_dbus_method("Activate", (), "", lambda: self.emit("activate"))
-
-    def on_power_state_changed(self, _manager, state):
-        if state:
-            self.set_text_line(0, _("Bluetooth Enabled"))
-            self.query_visibility(delay_hiding=True)
-        else:
-            self.set_text_line(0, _("Bluetooth Disabled"))
-            self.query_visibility()
 
     def query_visibility(self, delay_hiding=False, emit=True):
         rets = [plugin.on_query_status_icon_visibility()
