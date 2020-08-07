@@ -19,9 +19,9 @@ class NMConnectionError(Exception):
 class NMConnectionBase:
     conntype: str
 
-    def __init__(self, service, reply_handler=None, error_handler=None):
+    def __init__(self, service, reply_handler, error_handler):
         if self.conntype not in ('dun', 'panu'):
-            self._raise_or_error_handler(
+            error_handler(
                 NMConnectionError(f"Invalid connection type {self.conntype}, should be panu or dun")
             )
         self.device = service.device
@@ -36,27 +36,11 @@ class NMConnectionBase:
 
         self.find_or_create_connection()
 
-    def _return_or_reply_handler(self, msg):
-        logging.debug(msg)
-        if not self.reply_handler:
-            return msg
-        else:
-            self.reply_handler(msg)
-            return
-
-    def _raise_or_error_handler(self, error):
-        logging.debug(str(error))
-        if not self.error_handler:
-            raise error
-        else:
-            self.error_handler(error)
-            return
-
     def _on_connection_added(self, client, result, conn_uuid):
         try:
             self.connection = client.add_connection_finish(result)
         except GLib.Error as e:
-            self._raise_or_error_handler(e)
+            self.error_handler(e)
 
         self.store_uuid(conn_uuid)
 
@@ -67,12 +51,11 @@ class NMConnectionBase:
         logging.debug(f"New: {new.value_nick} Old: {old.value_nick} Reason: {state_reason.value_nick}")
 
         error_msg = None
-        reply_msg = None
 
         if new == NM.DeviceState.FAILED:
             error_msg = f"Connection failed with reason: {state_reason.value_nick}"
         elif new == NM.DeviceState.ACTIVATED:
-            reply_msg = 'Connection sucesfully activated'
+            logging.debug("Connection successfully activated")
         elif (new <= NM.DeviceState.DISCONNECTED or new == NM.DeviceState.DEACTIVATING) and \
                 (NM.DeviceState.DISCONNECTED < old <= NM.DeviceState.ACTIVATED):
             error_msg = f"Connection disconnected with reason {state_reason.value_nick}"
@@ -82,23 +65,23 @@ class NMConnectionBase:
         # We are done with state changes
         GObject.signal_handler_disconnect(device, self._statehandler)
         if error_msg is None:
-            self._return_or_reply_handler(reply_msg)
+            self.reply_handler()
         else:
             logging.debug(error_msg)
-            self._raise_or_error_handler(NMConnectionError(error_msg))
+            self.error_handler(NMConnectionError(error_msg))
 
     def activate(self):
         def on_connection_activate(client, result):
             try:
                 self.active_connection = client.activate_connection_finish(result)
             except GLib.Error as e:
-                self._raise_or_error_handler(e)
+                self.error_handler(e)
 
         device = self.client.get_device_by_iface(self.bdaddr)
         if not device:
-            self._raise_or_error_handler(NMConnectionError(f"Could not find device {self.bdaddr}"))
+            self.error_handler(NMConnectionError(f"Could not find device {self.bdaddr}"))
         elif device.get_state() == NM.DeviceState.ACTIVATED:
-            self._raise_or_error_handler(NMConnectionError(f"Device {self.bdaddr} already activated"))
+            self.error_handler(NMConnectionError(f"Device {self.bdaddr} already activated"))
         else:
             self._statehandler = device.connect('state-changed', self._on_device_state_changed)
             self.client.activate_connection_async(self.connection, device, None, None, on_connection_activate)
@@ -107,10 +90,11 @@ class NMConnectionBase:
         def on_connection_deactivate(client, result):
             try:
                 client.deactivate_connection_finish(result)
-                self._return_or_reply_handler(f"Device {self.bdaddr} deactivated sucessfully")
+                logging.debug(f"Device {self.bdaddr} deactivated sucessfully")
+                self.reply_handler()
                 self.active_connection = None
             except GLib.Error as e:
-                self._raise_or_error_handler(e)
+                self.error_handler(e)
 
         self.client.deactivate_connection_async(self.active_connection, None, on_connection_deactivate)
 
@@ -207,7 +191,7 @@ class NMDUNConnection(NMConnectionBase):
 
     def create_connection(self):
         if not self.Config['apn']:
-            self._raise_or_error_handler(NMConnectionError('No apn configured, make sure to configure dialup settings'))
+            self.error_handler(NMConnectionError('No apn configured, make sure to configure dialup settings'))
             return
 
         conn = NM.SimpleConnection()
