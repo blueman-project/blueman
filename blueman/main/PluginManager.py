@@ -15,10 +15,6 @@ from blueman.plugins.ManagerPlugin import ManagerPlugin
 from blueman.typing import GSignals
 
 
-class StopException(Exception):
-    pass
-
-
 class LoadException(Exception):
     pass
 

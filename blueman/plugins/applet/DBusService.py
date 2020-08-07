@@ -74,10 +74,10 @@ class DBusService(AppletPlugin):
             service = get_service(Device(obj_path=object_path), uuid)
             assert service is not None
 
-            if isinstance(service, SerialService) and 'NMDUNSupport' in self.parent.Plugins.get_loaded():
-                any(plugin.service_connect_handler(service, ok, err)
-                    for plugin in self.parent.Plugins.get_loaded_plugins(ServiceConnectHandler))
-            elif isinstance(service, SerialService) and 'PPPSupport' in self.parent.Plugins.get_loaded():
+            if any(plugin.service_connect_handler(service, ok, err)
+                   for plugin in self.parent.Plugins.get_loaded_plugins(ServiceConnectHandler)):
+                pass
+            elif isinstance(service, SerialService):
                 def reply(rfcomm):
                     for plugin in self.parent.Plugins.get_loaded_plugins(RFCOMMConnectedListener):
                         plugin.on_rfcomm_connected(service, rfcomm)
@@ -85,13 +85,12 @@ class DBusService(AppletPlugin):
 
                 if not any(plugin.rfcomm_connect_handler(service, reply, err)
                            for plugin in self.parent.Plugins.get_loaded_plugins(RFCOMMConnectHandler)):
-                    logging.info("No handler registered")
-                    err("Service not supported\nPossibly the plugin that handles this service is not loaded")
+                    service.connect(reply_handler=lambda port: ok(), error_handler=err)
+            elif isinstance(service, NetworkService):
+                service.connect(reply_handler=lambda interface: ok(), error_handler=err)
             else:
-                if not any(plugin.service_connect_handler(service, ok, err)
-                           for plugin in self.parent.Plugins.get_loaded_plugins(ServiceConnectHandler)) \
-                        and isinstance(service, (SerialService, NetworkService)):
-                    service.connect(reply_handler=lambda *args: ok(), error_handler=err)
+                logging.info("No handler registered")
+                err("Service not supported\nPossibly the plugin that handles this service is not loaded")
 
     def _disconnect_service(self, object_path: str, uuid: str, port: int, ok: Callable[[], None],
                             err: Callable[[Union[BluezDBusException, NMConnectionError,
@@ -103,21 +102,18 @@ class DBusService(AppletPlugin):
             service = get_service(Device(obj_path=object_path), uuid)
             assert service is not None
 
-            if isinstance(service, SerialService) and 'NMDUNSupport' in self.parent.Plugins.get_loaded():
-                any(plugin.service_disconnect_handler(service, ok, err)
-                    for plugin in self.parent.Plugins.get_loaded_plugins(ServiceConnectHandler))
-            elif isinstance(service, SerialService) and 'PPPSupport' in self.parent.Plugins.get_loaded():
+            if any(plugin.service_disconnect_handler(service, ok, err)
+                   for plugin in self.parent.Plugins.get_loaded_plugins(ServiceConnectHandler)):
+                pass
+            elif isinstance(service, SerialService):
                 service.disconnect(port, reply_handler=ok, error_handler=err)
 
                 for plugin in self.parent.Plugins.get_loaded_plugins(RFCOMMConnectedListener):
                     plugin.on_rfcomm_disconnect(port)
 
                 logging.info("Disconnecting rfcomm device")
-            else:
-                if not any(plugin.service_disconnect_handler(service, ok, err)
-                           for plugin in self.parent.Plugins.get_loaded_plugins(ServiceConnectHandler)) \
-                        and isinstance(service, NetworkService):
-                    service.disconnect(reply_handler=ok, error_handler=err)
+            elif isinstance(service, NetworkService):
+                service.disconnect(reply_handler=ok, error_handler=err)
 
     def _open_plugin_dialog(self):
         self.parent.Plugins.StandardItems.on_plugins()
