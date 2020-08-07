@@ -1,13 +1,12 @@
 from gettext import gettext as _
 from typing import Dict, Any, Callable  # noqa: F401
 
-from blueman.Service import Service
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.Notification import Notification
 from blueman.Sdp import SERIAL_PORT_SVCLASS_ID
-from blueman.plugins.applet.DBusService import RFCOMMConnectedListener, RFCOMMConnectHandler
+from blueman.plugins.applet.DBusService import RFCOMMConnectedListener
 from blueman.services.Functions import get_services
-from _blueman import rfcomm_list, RFCOMMError
+from _blueman import rfcomm_list
 from subprocess import Popen
 import logging
 import os
@@ -18,7 +17,7 @@ from gi.repository import GLib
 from blueman.services.meta import SerialService
 
 
-class SerialManager(AppletPlugin, RFCOMMConnectedListener, RFCOMMConnectHandler):
+class SerialManager(AppletPlugin, RFCOMMConnectedListener):
     __icon__ = "blueman-serial"
     __description__ = _("Standard SPP profile connection handler, allows executing custom actions")
     __author__ = "walmis"
@@ -124,14 +123,6 @@ class SerialManager(AppletPlugin, RFCOMMConnectedListener, RFCOMMConnectHandler)
             if process:
                 logging.info(f"Sending HUP to {process.pid}")
                 os.killpg(process.pid, signal.SIGHUP)
-
-    def rfcomm_connect_handler(self, service: Service, reply: Callable[[str], None],
-                               err: Callable[[RFCOMMError], None]) -> bool:
-        if isinstance(service, SerialService):
-            service.connect(reply_handler=reply, error_handler=err)
-            return True
-        else:
-            return False
 
     def on_device_disconnect(self, device):
         serial_services = [service for service in get_services(device) if isinstance(service, SerialService)]

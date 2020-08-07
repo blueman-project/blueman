@@ -1,6 +1,6 @@
 from gettext import gettext as _
 import logging
-from typing import Callable, Optional
+from typing import Callable
 
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.bluez.Adapter import Adapter
@@ -20,11 +20,11 @@ class PowerStateHandler:
         ...
 
     def on_power_state_change_requested(self, manager: "PowerManager", state: bool,
-                                        cb: Callable[[Optional[bool]], None]) -> None:
+                                        cb: Callable[[bool], None]) -> None:
         ...
 
 
-class PowerManager(AppletPlugin, PowerStateHandler, StatusIconProvider):
+class PowerManager(AppletPlugin, StatusIconProvider):
     __depends__ = ["StatusIcon", "Menu"]
     __unloadable__ = True
     __description__ = _("Controls Bluetooth adapter power states")
@@ -144,23 +144,14 @@ class PowerManager(AppletPlugin, PowerStateHandler, StatusIconProvider):
             else:
                 logging.info("Another request in progress")
 
-    def on_power_state_change_requested(self, pm, state, cb):
-        cb(None)
-
-    def on_power_state_query(self, pm):
-        if self.adapter_state:
-            return self.STATE_ON
-        else:
-            return self.STATE_OFF
-
     # queries other plugins to determine the current power state
     def update_power_state(self):
         rets = [plugin.on_power_state_query(self)
                 for plugin in self.parent.Plugins.get_loaded_plugins(PowerStateHandler)]
 
-        off = any(x < self.STATE_ON for x in rets)
+        off = any(x < self.STATE_ON for x in rets) or not self.adapter_state
         foff = self.STATE_OFF_FORCED in rets
-        on = self.STATE_ON in rets
+        on = self.STATE_ON in rets or self.adapter_state
 
         new_state = True
         if foff or off:
@@ -190,6 +181,13 @@ class PowerManager(AppletPlugin, PowerStateHandler, StatusIconProvider):
             self._emit_dbus_signal("BluetoothStatusChanged", new_state)
             for plugin in self.parent.Plugins.get_loaded_plugins(PowerStateListener):
                 plugin.on_power_state_changed(self, new_state)
+
+            if new_state:
+                self.parent.Plugins.StatusIcon.set_text_line(0, _("Bluetooth Enabled"))
+                self.parent.Plugins.StatusIcon.query_visibility(delay_hiding=True)
+            else:
+                self.parent.Plugins.StatusIcon.set_text_line(0, _("Bluetooth Disabled"))
+                self.parent.Plugins.StatusIcon.query_visibility()
             self.parent.Plugins.StatusIcon.icon_should_change()
 
     def get_bluetooth_status(self):
