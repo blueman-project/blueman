@@ -101,14 +101,11 @@ class ManagerDeviceMenu(Gtk.Menu):
     def on_connect(self, _item, service):
         device = service.device
 
-        def success(obj, result, _user_data):
+        def success(_obj, _result, _user_data):
             logging.info("success")
             prog.message(_("Success!"))
 
-            if isinstance(service, SerialPort) and SERIAL_PORT_SVCLASS_ID == service.short_uuid:
-                MessageArea.show_message(_("Serial port connected to %s") % result, None, "dialog-information")
-            else:
-                MessageArea.close()
+            MessageArea.close()
 
             self.unset_op(device)
 
