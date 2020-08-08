@@ -8,7 +8,7 @@ import logging
 
 from blueman.main.DBusProxies import Mechanism
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.plugins.applet.PowerManager import PowerStateHandler
+from blueman.plugins.applet.PowerManager import PowerManager, PowerStateHandler
 from blueman.plugins.applet.StatusIcon import StatusIcon, StatusIconVisibilityHandler
 
 RFKILL_TYPE_BLUETOOTH = 2
@@ -126,13 +126,13 @@ class KillSwitch(AppletPlugin, PowerStateHandler, StatusIconVisibilityHandler):
 
         return True
 
-    def on_power_state_query(self, manager):
+    def on_power_state_query(self):
         if self._hardblocked:
-            return manager.STATE_OFF_FORCED
+            return PowerManager.State.OFF_FORCED
         elif self._enabled:
-            return manager.STATE_ON
+            return PowerManager.State.ON
         else:
-            return manager.STATE_OFF
+            return PowerManager.State.OFF
 
     def on_power_state_change_requested(self, _, state, cb):
         logging.info(state)

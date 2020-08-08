@@ -1,3 +1,4 @@
+from enum import Enum
 from gettext import gettext as _
 import logging
 from typing import Callable
@@ -16,7 +17,7 @@ class PowerStateListener:
 
 
 class PowerStateHandler:
-    def on_power_state_query(self, manager: "PowerManager") -> int:
+    def on_power_state_query(self) -> "PowerManager.State":
         ...
 
     def on_power_state_change_requested(self, manager: "PowerManager", state: bool,
@@ -45,6 +46,11 @@ class PowerManager(AppletPlugin, StatusIconProvider):
         }
     }
 
+    class State(Enum):
+        ON = 2
+        OFF = 1
+        OFF_FORCED = 0
+
     def on_load(self):
         self.item = self.parent.Plugins.Menu.add(self, 0, text=_("<b>Turn Bluetooth _Off</b>"), markup=True,
                                                  icon_name="blueman-disabled", tooltip=_("Turn off all adapters"),
@@ -53,10 +59,6 @@ class PowerManager(AppletPlugin, StatusIconProvider):
         self.current_state = True
 
         self.request_in_progress = False
-
-        self.STATE_ON = 2
-        self.STATE_OFF = 1
-        self.STATE_OFF_FORCED = 0
 
         self._add_dbus_signal("BluetoothStatusChanged", "b")
         self._add_dbus_method("SetBluetoothStatus", ("b",), "", self.request_power_state)
@@ -147,12 +149,12 @@ class PowerManager(AppletPlugin, StatusIconProvider):
 
     # queries other plugins to determine the current power state
     def update_power_state(self):
-        rets = [plugin.on_power_state_query(self)
+        rets = [plugin.on_power_state_query()
                 for plugin in self.parent.Plugins.get_loaded_plugins(PowerStateHandler)]
 
-        off = any(x < self.STATE_ON for x in rets) or not self.adapter_state
-        foff = self.STATE_OFF_FORCED in rets
-        on = self.STATE_ON in rets or self.adapter_state
+        off = any(x != self.State.ON for x in rets) or not self.adapter_state
+        foff = self.State.OFF_FORCED in rets
+        on = self.State.ON in rets or self.adapter_state
 
         new_state = True
         if foff or off:
