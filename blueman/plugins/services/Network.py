@@ -43,7 +43,6 @@ class Network(ServicePlugin):
             self.ip_check()
         except (ValueError, ipaddress.AddressValueError) as e:
             logging.exception(e)
-        return _("Network"), "network-workgroup"
 
     def on_enter(self):
         self.widget.props.visible = True
