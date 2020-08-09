@@ -54,9 +54,6 @@ class DBusService(AppletPlugin):
         self._add_dbus_method("DisconnectService", ("o", "s", "d"), "", self._disconnect_service, is_async=True)
         self._add_dbus_method("OpenPluginDialog", (), "", self._open_plugin_dialog)
 
-    def on_device_disconnect(self, device):
-        pass
-
     def connect_service(self, object_path: str, uuid: str, ok: Callable[[], None],
                         err: Callable[[Union[BluezDBusException, NMConnectionError,
                                              RFCOMMError, GLib.Error, str]], None]) -> None:
