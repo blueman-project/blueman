@@ -17,9 +17,9 @@ def show_info(device, parent):
 
     def format_rssi(rssi):
         if rssi in [0x99, 0x7f]:
-            f'invalid (0x{rssi:02x})'
+            return f'invalid (0x{rssi:02x})'
         else:
-            f'{rssi} dBm (0x{rssi:02x})'
+            return f'{rssi} dBm (0x{rssi:02x})'
 
     def format_uuids(uuids):
         return "\n".join([uuid + ' ' + ServiceUUID(uuid).name for uuid in uuids])
