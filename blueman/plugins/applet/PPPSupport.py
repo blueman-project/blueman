@@ -82,9 +82,6 @@ class PPPSupport(AppletPlugin, RFCOMMConnectHandler):
     __icon__ = "modem"
     __priority__ = 0
 
-    def on_unload(self):
-        pass
-
     def rfcomm_connect_handler(self, service: Service, reply: Callable[[str], None],
                                err: Callable[[Union[RFCOMMError, GLib.Error]], None]) -> bool:
         if isinstance(service, DialupNetwork):

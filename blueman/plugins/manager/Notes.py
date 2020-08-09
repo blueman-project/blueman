@@ -46,9 +46,6 @@ def send_note(device, parent):
 
 
 class Notes(ManagerPlugin, MenuItemsProvider):
-    def on_unload(self):
-        pass
-
     def on_request_menu_items(self, manager_menu, device):
         item = create_menuitem(_("Send _note"), "dialog-information")
         item.props.tooltip_text = _("Send a text note")

@@ -109,9 +109,6 @@ def show_info(device, parent):
 
 
 class Info(ManagerPlugin, MenuItemsProvider):
-    def on_unload(self):
-        pass
-
     def on_request_menu_items(self, manager_menu, device):
         item = create_menuitem(_("_Info"), "dialog-information")
         item.props.tooltip_text = _("Show device information")
