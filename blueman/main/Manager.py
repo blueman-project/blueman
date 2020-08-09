@@ -1,7 +1,9 @@
 import logging
 from gettext import gettext as _
-from typing import Optional
+from typing import Optional, Any, Tuple
 
+from blueman.bluez.Adapter import Adapter
+from blueman.bluez.Device import Device
 from blueman.bluez.Manager import Manager
 from blueman.bluez.errors import DBusNoSuchAdapterError
 from blueman.Functions import *
@@ -22,17 +24,18 @@ from blueman.plugins.ManagerPlugin import ManagerPlugin
 
 import gi
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gio
+gi.require_version("Gdk", "3.0")
+from gi.repository import Gtk, Gio, Gdk, GLib
 
 
 class Blueman(Gtk.Application):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(application_id="org.blueman.Manager")
 
     window: Optional[Gtk.ApplicationWindow]
 
-    def do_startup(self):
-        def doquit(_a, _param):
+    def do_startup(self) -> None:
+        def doquit(_a: Gio.SimpleAction, _param: None) -> None:
             self.quit()
 
         Gtk.Application.do_startup(self)
@@ -44,7 +47,7 @@ class Blueman(Gtk.Application):
         quit_action.connect("activate", doquit)
         self.add_action(quit_action)
 
-    def do_activate(self):
+    def do_activate(self) -> None:
         if not self.window:
             self.window = Gtk.ApplicationWindow(application=self, name="BluemanManager", icon_name="blueman",
                                                 title="Bluetooth Devices")
@@ -80,7 +83,7 @@ class Blueman(Gtk.Application):
                 margin_right = statusbar.get_margin_right()
                 statusbar.set_margin_right(margin_right + 10)
 
-            def bt_status_changed(status):
+            def bt_status_changed(status: bool) -> None:
                 assert self.window is not None
                 if not status:
                     self.window.hide()
@@ -89,12 +92,12 @@ class Blueman(Gtk.Application):
                 else:
                     self.window.show()
 
-            def on_applet_signal(_proxy, _sender, signal_name, params):
+            def on_applet_signal(_proxy: AppletService, _sender: str, signal_name: str, params: GLib.Variant) -> None:
                 if signal_name == 'BluetoothStatusChanged':
                     status = params.unpack()
                     bt_status_changed(status)
 
-            def on_dbus_name_vanished(_connection, name):
+            def on_dbus_name_vanished(_connection: Gio.DBusConnection, name: str) -> None:
                 logging.info(name)
                 if self._applethandlerid:
                     self.Applet.disconnect(self._applethandlerid)
@@ -114,7 +117,7 @@ class Blueman(Gtk.Application):
                 # FIXME ui can handle BlueZ start/stop but we should inform user
                 self.quit()
 
-            def on_dbus_name_appeared(_connection, name, owner):
+            def on_dbus_name_appeared(_connection: Gio.DBusConnection, name: str, owner: str) -> None:
                 logging.info(f"{name} {owner}")
                 setup_icon_path()
 
@@ -166,18 +169,18 @@ class Blueman(Gtk.Application):
 
         self.window.present_with_time(Gtk.get_current_event_time())
 
-    def _on_configure(self, window, event):
+    def _on_configure(self, _window: Gtk.ApplicationWindow, event: Gdk.Event) -> bool:
         width, height, x, y = self.Config["window-properties"]
         if event.x != x or event.y != y or event.width != width or event.height != height:
             self.Config["window-properties"] = [event.width, event.height, event.x, event.y]
         return False
 
-    def on_adapter_changed(self, lst, adapter):
+    def on_adapter_changed(self, lst: ManagerDeviceList, adapter: str) -> None:
         if adapter is not None:
             self.List.display_known_devices(autoselect=True)
 
-    def inquiry(self):
-        def prop_changed(lst, adapter, key_value):
+    def inquiry(self) -> None:
+        def prop_changed(_lst: ManagerDeviceList, _adapter: Adapter, key_value: Tuple[str, Any]) -> None:
             key, value = key_value
             if key == "Discovering" and not value:
                 prog.finalize()
@@ -185,7 +188,7 @@ class Blueman(Gtk.Application):
                 self.List.disconnect(s1)
                 self.List.disconnect(s2)
 
-        def on_progress(lst, frac):
+        def on_progress(_lst: ManagerDeviceList, frac: float) -> None:
             if abs(1.0 - frac) <= 0.00001:
                 if not prog.started():
                     prog.start()
@@ -205,13 +208,13 @@ class Blueman(Gtk.Application):
         s2 = self.List.connect("adapter-property-changed", prop_changed)
 
     @staticmethod
-    def setup(device):
+    def setup(device: Device) -> None:
         command = f"blueman-assistant --device={device['Address']}"
         launch(command, name=_("Bluetooth Assistant"))
 
     @staticmethod
-    def bond(device):
-        def error_handler(e):
+    def bond(device: Device) -> None:
+        def error_handler(e: Exception) -> None:
             logging.exception(e)
             message = f"Pairing failed for:\n{device['Alias']} ({device['Address']})"
             Notification('Bluetooth', message, icon_name="blueman").show()
@@ -219,14 +222,14 @@ class Blueman(Gtk.Application):
         device.pair(error_handler=error_handler)
 
     @staticmethod
-    def adapter_properties():
+    def adapter_properties() -> None:
         launch("blueman-adapters", name=_("Adapter Preferences"))
 
     @staticmethod
-    def toggle_trust(device):
+    def toggle_trust(device: Device) -> None:
         device['Trusted'] = not device['Trusted']
 
-    def send(self, device, f=None):
+    def send(self, device: Device) -> None:
         adapter = self.List.Adapter
 
         assert adapter
@@ -234,6 +237,6 @@ class Blueman(Gtk.Application):
         command = f"blueman-sendto --source={adapter['Address']} --device={device['Address']}"
         launch(command, name=_("File Sender"))
 
-    def remove(self, device):
+    def remove(self, device: Device) -> None:
         assert self.List.Adapter
         self.List.Adapter.remove_device(device)

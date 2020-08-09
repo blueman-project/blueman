@@ -1,5 +1,5 @@
 from ctypes import *
-from typing import Dict, TYPE_CHECKING, List
+from typing import Dict, TYPE_CHECKING, List, Callable, Mapping, Optional, Any
 
 from gi.repository import GObject
 from gi.repository import GLib
@@ -16,6 +16,7 @@ except OSError:
     raise ImportError("Could not load pulseaudio shared library")
 
 if TYPE_CHECKING:
+    from ctypes import _FuncPointer
     from typing_extensions import TypedDict
 
     class CardProfileInfo(TypedDict):
@@ -179,12 +180,12 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
         'event': (GObject.SignalFlags.NO_HOOKS, None, (int, int)),
     }
 
-    def check_connected(self):
+    def check_connected(self) -> None:
         if not self.connected:
             raise PANotConnected("Connection to PulseAudio daemon is not established")
 
     @staticmethod
-    def pa_context_event(pa_context, self):
+    def pa_context_event(pa_context: c_void_p, self: "PulseAudioUtils") -> None:
         if not self:
             return
 
@@ -209,7 +210,7 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
 
         self.prev_state = state
 
-    def __get_proplist(self, proplist):
+    def __get_proplist(self, proplist: c_void_p) -> Dict[str, str]:
         if proplist:
             pla = pa_proplist_to_string_sep(proplist, b"|")
             pl = cast(pla, c_char_p)
@@ -220,15 +221,21 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
         else:
             ls = []
 
-        proplist = {}
+        result = {}
         for item in ls:
             spl = [x.strip(" \"") for x in item.split("=")]
             if len(spl) == 2:
-                proplist[spl[0]] = spl[1]
+                result[spl[0]] = spl[1]
 
-        return proplist
+        return result
 
-    def __list_callback(self, context, entry_info, eol, info):
+    if TYPE_CHECKING:
+        class _ListCallbackInfo(TypedDict):
+            cb_info: "_FuncPointer"
+            handler: Callable[[Optional["pointer[PaCardInfo]"], bool], None]
+
+    def __list_callback(self, _context: c_void_p, entry_info: "pointer[PaCardInfo]", eol: c_int,
+                        info: "_ListCallbackInfo") -> None:
         if entry_info:
             info["handler"](entry_info, False)
 
@@ -236,7 +243,9 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
             info["handler"](None, True)
             pythonapi.Py_DecRef(py_object(info))
 
-    def __init_list_callback(self, func, cb_type, handler, *args):
+    def __init_list_callback(self, func: Callable[..., c_void_p], cb_type: Callable[[Callable[[c_void_p,
+                             "pointer[PaCardInfo]", c_int, "_ListCallbackInfo"], None]], "_FuncPointer"],
+                             handler: Callable[[Optional["pointer[PaCardInfo]"], bool], None], *args: Any) -> None:
         info = {"cb_info": cb_type(self.__list_callback), "handler": handler}
         pythonapi.Py_IncRef(py_object(info))
 
@@ -244,9 +253,9 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
         op = func(self.pa_context, *args)
         pa_operation_unref(op)
 
-    def simple_callback(self, handler, func, *args):
+    def simple_callback(self, handler: Callable[[int], None], func: "_FuncPointer", *args: Any) -> None:
 
-        def wrapper(context, res, data):
+        def wrapper(_context: c_void_p, res: int, data: "_FuncPointer") -> None:
             if handler:
                 handler(res)
             pythonapi.Py_DecRef(py_object(data))
@@ -258,44 +267,37 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
         op = func(self.pa_context, *args)
         if not op:
             logging.info("Operation failed")
-            logging.error(func.__name__)
+            logging.error(func.__name__)  # type: ignore  # https://github.com/python/typeshed/pull/4444
         pa_operation_unref(op)
 
-    def __card_info(self, card_info):
-        props = self.__get_proplist(card_info[0].proplist)
-        stuff = {
+    def __card_info(self, card_info: "pointer[PaCardInfo]") -> "CardInfo":
+        return {
             "name": card_info[0].name.decode("UTF-8"),
-            "proplist": props,
+            "proplist": self.__get_proplist(card_info[0].proplist),
             "owner_module": card_info[0].owner_module,
             "driver": card_info[0].driver.decode("UTF-8"),
             "index": card_info[0].index,
-        }
-        profiles = []
-        for i in range(0, card_info[0].n_profiles):
-            x = {
+            "profiles": [{
                 "name": card_info[0].profiles[i].name.decode("UTF-8"),
                 "description": card_info[0].profiles[i].description.decode("UTF-8"),
                 "n_sinks": card_info[0].profiles[i].n_sinks,
                 "n_sources": card_info[0].profiles[i].n_sources,
                 "priority": card_info[0].profiles[i].priority,
-            }
-            profiles.append(x)
+            } for i in range(0, card_info[0].n_profiles)],
+            "active_profile": card_info[0].active_profile[0].name.decode("UTF-8")
+        }
 
-        stuff["profiles"] = profiles
-        stuff["active_profile"] = card_info[0].active_profile[0].name.decode("UTF-8")
-
-        return stuff
-
-    def list_cards(self, callback):
+    def list_cards(self, callback: Callable[[Mapping[str, "CardInfo"]], None]) -> None:
         self.check_connected()
 
         data: Dict[str, "CardInfo"] = {}
 
-        def handler(entry_info, end):
+        def handler(entry_info: Optional["pointer[PaCardInfo]"], end: bool) -> None:
             if end:
                 callback(data)
                 return
 
+            assert entry_info is not None
             entry = self.__card_info(entry_info)
 
             data[entry["name"]] = entry
@@ -303,25 +305,26 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
         self.__init_list_callback(pa_context_get_card_info_list,
                                   pa_card_info_cb_t, handler)
 
-    def get_card(self, card, callback):
+    def get_card(self, card: int, callback: Callable[["CardInfo"], None]) -> None:
         self.check_connected()
 
-        def handler(entry_info, end):
+        def handler(entry_info: Optional["pointer[PaCardInfo]"], end: bool) -> None:
             if end:
                 return
 
+            assert entry_info is not None
             callback(self.__card_info(entry_info))
 
         self.__init_list_callback(pa_context_get_card_info_by_index, pa_card_info_cb_t, handler, card)
 
-    def set_card_profile(self, card, profile, callback):
+    def set_card_profile(self, card: int, profile: str, callback: Callable[[int], None]) -> None:
         self.simple_callback(callback, pa_context_set_card_profile_by_index, card, profile.encode("UTF-8"))
 
-    def __event_callback(self, context, event_type, idx, userdata):
+    def __event_callback(self, _context: c_void_p, event_type: int, idx: int, _userdata: c_void_p) -> None:
         logging.info(f"{event_type} {idx}")
         self.emit("event", event_type, idx)
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
 
         self.event_cb = pa_context_subscribe_cb_t(self.__event_callback)
@@ -341,7 +344,7 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
 
         weakref.finalize(self, self._on_delete)
 
-    def connect_pulseaudio(self):
+    def connect_pulseaudio(self) -> bool:
         if not self.connected:
             if self.pa_context:
                 pa_context_unref(self.pa_context)
@@ -360,7 +363,7 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
                                               None)
         return False
 
-    def _on_delete(self):
+    def _on_delete(self) -> None:
         logging.info("Destroying PulseAudioUtils instance")
 
         pa_context_disconnect(self.pa_context)

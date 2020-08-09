@@ -3,13 +3,13 @@ from typing import List, Tuple
 
 
 class SpeedCalc:
-    def __init__(self, moving_avg=3):
+    def __init__(self, moving_avg: float = 3.0) -> None:
         self.moving_avg = moving_avg
-        self.log: List[Tuple[float, int]] = []
+        self.log: List[Tuple[float, float]] = []
 
-        self.reference = 0
+        self.reference: float = 0
 
-    def calc(self, amount):
+    def calc(self, amount: float) -> float:
         if not self.log:
             self.reference = amount
         amount -= self.reference
@@ -33,5 +33,5 @@ class SpeedCalc:
         else:
             return 0
 
-    def reset(self):
+    def reset(self) -> None:
         self.log = []

@@ -2,7 +2,7 @@ from gettext import gettext as _
 import os
 import logging
 import importlib
-from typing import List
+from typing import List, Optional
 
 from blueman.gui.GenericList import GenericList, ListDataDict
 import blueman.plugins.services
@@ -15,11 +15,11 @@ from gi.repository import Gtk
 
 
 class BluemanServices(Gtk.Application):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(application_id="org.blueman.Services")
-        self.window = None
+        self.window: Optional[Gtk.Window] = None
 
-    def do_activate(self):
+    def do_activate(self) -> None:
         if not self.window:
             self.window = Gtk.ApplicationWindow(application=self, title=_("Local Services"), icon_name="blueman",
                                                 border_width=5)
@@ -65,18 +65,19 @@ class BluemanServices(Gtk.Application):
 
         self.window.present_with_time(Gtk.get_current_event_time())
 
-    def option_changed(self):
+    def option_changed(self) -> None:
         rets = [plugin.on_query_apply_state() for plugin in ServicePlugin.instances if plugin._is_loaded]
         show_apply = False
         for ret in rets:
             if ret == -1:
                 show_apply = False
                 break
+            assert isinstance(ret, bool)
             show_apply = show_apply or ret
 
         self.b_apply.props.sensitive = show_apply
 
-    def load_plugins(self):
+    def load_plugins(self) -> None:
         path = os.path.dirname(blueman.plugins.services.__file__)
         plugins = []
         for root, dirs, files in os.walk(path):
@@ -104,16 +105,16 @@ class BluemanServices(Gtk.Application):
                 (name, icon) = cls.__plugin_info__
                 self.setup_list_item(inst, name, icon)
 
-    def setup_list_item(self, inst, name, icon):
+    def setup_list_item(self, inst: ServicePlugin, name: str, icon: str) -> None:
         self.List.append(icon_name=icon, caption=name, id=inst.__class__.__name__)
 
-    def on_apply_clicked(self, button):
+    def on_apply_clicked(self, _button: Gtk.Button) -> None:
         for plugin in ServicePlugin.instances:
             if plugin._is_loaded:
                 plugin.on_apply()
         self.option_changed()
 
-    def set_page(self, pageid):
+    def set_page(self, pageid: str) -> None:
         logging.info(f"Set page {pageid}")
 
         if len(ServicePlugin.instances) == 0:
@@ -131,7 +132,7 @@ class BluemanServices(Gtk.Application):
             else:
                 inst._on_leave()
 
-    def on_selection_changed(self, selection):
+    def on_selection_changed(self, _selection: Gtk.TreeSelection) -> None:
         tree_iter = self.List.selected()
         if self.List.get_cursor()[0]:
             # GtkTreePath returns row when used as string

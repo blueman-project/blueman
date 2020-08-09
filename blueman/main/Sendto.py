@@ -2,10 +2,12 @@ from gettext import gettext as _
 import time
 import logging
 from gettext import ngettext
-from typing import List
+from typing import List, Iterable, Optional
 
 import gi
 
+from blueman.bluez.Device import Device
+from blueman.bluez.errors import BluezDBusException
 from blueman.typing import GSignals
 
 gi.require_version("Gtk", "3.0")
@@ -33,7 +35,7 @@ class Sender(Gtk.Dialog):
         'result': (GObject.SignalFlags.RUN_FIRST, None, (GObject.TYPE_BOOLEAN,)),
     }
 
-    def __init__(self, device, adapter_path, files):
+    def __init__(self, device: Device, adapter_path: str, files: Iterable[str]) -> None:
         super().__init__(
             title=_("Bluetooth File Transfer"),
             name="BluemanSendTo",
@@ -67,9 +69,9 @@ class Sender(Gtk.Dialog):
         self.manager = Manager()
         self.files: List[Gio.File] = []
         self.num_files = 0
-        self.object_push = None
+        self.object_push: Optional[ObjectPush] = None
         self.object_push_handlers: List[int] = []
-        self.transfer = None
+        self.transfer: Optional[Transfer] = None
 
         self.total_bytes = 0
         self.total_transferred = 0
@@ -77,7 +79,7 @@ class Sender(Gtk.Dialog):
         self._last_bytes = 0
         self._last_update = 0.0
 
-        self.error_dialog = None
+        self.error_dialog: Optional[ErrorDialog] = None
         self.cancelling = False
 
         # bytes transferred on a current transfer
@@ -137,10 +139,10 @@ class Sender(Gtk.Dialog):
 
         self.show()
 
-    def create_session(self):
+    def create_session(self) -> None:
         self.client.create_session(self.device['Address'], self.adapter["Address"])
 
-    def on_cancel(self, button):
+    def on_cancel(self, button: Optional[Gtk.Button]) -> None:
         self.pb.props.text = _("Cancelling")
         if button:
             button.props.sensitive = False
@@ -150,7 +152,7 @@ class Sender(Gtk.Dialog):
 
         self.emit("result", False)
 
-    def on_transfer_started(self, _object_push, transfer_path, filename):
+    def on_transfer_started(self, _object_push: ObjectPush, transfer_path: str, filename: str) -> None:
         if self.total_transferred == 0:
             self.pb.props.text = _("Sending File") + (" %(0)s/%(1)s (%(2).2f %(3)s/s) " + _("ETA:") + " %(4)s") % {
                 "1": self.num_files,
@@ -168,10 +170,10 @@ class Sender(Gtk.Dialog):
         self.transfer.connect("progress", self.on_transfer_progress)
         self.transfer.connect("completed", self.on_transfer_completed)
 
-    def on_transfer_failed(self, _object_push, error):
+    def on_transfer_failed(self, _object_push: ObjectPush, error: str) -> None:
         self.on_transfer_error(None, str(error))
 
-    def on_transfer_progress(self, _transfer, progress):
+    def on_transfer_progress(self, _transfer: Transfer, progress: int) -> None:
         self.transferred = progress
         if self._last_bytes == 0:
             self.total_transferred += progress
@@ -204,24 +206,24 @@ class Sender(Gtk.Dialog):
 
         self.pb.props.fraction = float(self.total_transferred) / self.total_bytes
 
-    def on_transfer_completed(self, _transfer):
+    def on_transfer_completed(self, _transfer: Transfer) -> None:
         del self.files[-1]
         self.transfer = None
 
         self.process_queue()
 
-    def process_queue(self):
+    def process_queue(self) -> None:
         if len(self.files) > 0:
             self.send_file(self.files[-1].get_path())
         else:
             self.emit("result", True)
 
-    def send_file(self, file_path):
+    def send_file(self, file_path: str) -> None:
         logging.info(file_path)
         if self.object_push:
             self.object_push.send_file(file_path)
 
-    def on_transfer_error(self, _transfer, msg=""):
+    def on_transfer_error(self, _transfer: Optional[Transfer], msg: str = "") -> None:
         if not self.error_dialog:
             self.speed.reset()
             d = ErrorDialog(msg, _("Error occurred while sending file %s") % self.files[-1].get_basename(),
@@ -235,7 +237,7 @@ class Sender(Gtk.Dialog):
             if self.object_push:
                 self.client.remove_session(self.object_push.get_object_path())
 
-            def on_response(dialog, resp):
+            def on_response(dialog: Gtk.Dialog, resp: int) -> None:
                 dialog.destroy()
                 self.error_dialog = None
 
@@ -264,20 +266,20 @@ class Sender(Gtk.Dialog):
             d.show()
             self.error_dialog = d
 
-    def on_session_added(self, _manager, session_path):
+    def on_session_added(self, _manager: Manager, session_path: str) -> None:
         self.object_push = ObjectPush(obj_path=session_path)
         self.object_push_handlers.append(self.object_push.connect("transfer-started", self.on_transfer_started))
         self.object_push_handlers.append(self.object_push.connect("transfer-failed", self.on_transfer_failed))
         self.process_queue()
 
-    def on_session_removed(self, _manager, session_path):
+    def on_session_removed(self, _manager: Manager, session_path: str) -> None:
         logging.debug(f"Session removed: {session_path}")
         if self.object_push:
             for handlerid in self.object_push_handlers:
                 self.object_push.disconnect(handlerid)
             self.object_push = None
 
-    def on_session_failed(self, _client, msg):
+    def on_session_failed(self, _client: Client, msg: BluezDBusException) -> None:
         d = ErrorDialog(_("Error occurred"), msg.reason.split(None, 1)[1], icon_name="blueman",
                         parent=self.get_toplevel())
 

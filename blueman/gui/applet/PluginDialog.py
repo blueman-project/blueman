@@ -1,6 +1,6 @@
 from gettext import gettext as _
 import logging
-from typing import TYPE_CHECKING, List, Type
+from typing import TYPE_CHECKING, List, Type, Dict
 
 from blueman.Constants import *
 from blueman.gui.GenericList import GenericList, ListDataDict
@@ -191,7 +191,7 @@ class PluginDialog(Gtk.Window):
         model, tree_iter = selection.get_selected()
 
         name = self.list.get(tree_iter, "name")["name"]
-        cls = self.applet.Plugins.get_classes()[name]
+        cls: Type[AppletPlugin] = self.applet.Plugins.get_classes()[name]
         self.plugin_name.props.label = "<b>" + name + "</b>"
         self.icon.props.icon_name = cls.__icon__
         self.author_txt.props.label = cls.__author__
@@ -223,7 +223,7 @@ class PluginDialog(Gtk.Window):
     def on_prefs_toggled(self, _button: Gtk.ToggleButton) -> None:
         model, tree_iter = self.list.selection.get_selected()
         name = self.list.get(tree_iter, "name")["name"]
-        cls = self.applet.Plugins.get_classes()[name]
+        cls: Type[AppletPlugin] = self.applet.Plugins.get_classes()[name]
 
         self.update_config_widget(cls)
 
@@ -252,7 +252,7 @@ class PluginDialog(Gtk.Window):
             self.main_container.add(self.content_grid)
 
     def populate(self) -> None:
-        classes = self.applet.Plugins.get_classes()
+        classes: Dict[str, Type[AppletPlugin]] = self.applet.Plugins.get_classes()
         loaded = self.applet.Plugins.get_loaded()
         for name, cls in classes.items():
             if cls.is_configurable():
@@ -266,7 +266,7 @@ class PluginDialog(Gtk.Window):
         row = self.list.get_conditional(name=name)
         self.list.set(row[0], active=loaded)
 
-        cls = self.applet.Plugins.get_classes()[name]
+        cls: Type[AppletPlugin] = self.applet.Plugins.get_classes()[name]
         if not loaded:
             self.update_config_widget(cls)
             self.b_prefs.props.sensitive = False

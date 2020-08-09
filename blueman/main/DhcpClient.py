@@ -24,7 +24,7 @@ class DhcpClient(GObject.GObject):
 
     quering: List[str] = []
 
-    def __init__(self, interface, timeout=30):
+    def __init__(self, interface: str, timeout: int = 30) -> None:
         super().__init__()
 
         self._interface = interface
@@ -37,7 +37,7 @@ class DhcpClient(GObject.GObject):
                 self._command = [path] + command[1:] + [self._interface]
                 break
 
-    def run(self):
+    def run(self) -> None:
         if not self._command:
             raise Exception("No DHCP client found, please install dhclient, dhcpcd, or udhcpc")
 
@@ -50,17 +50,17 @@ class DhcpClient(GObject.GObject):
         GLib.timeout_add(1000, self._check_client)
         GLib.timeout_add(self._timeout * 1000, self._on_timeout)
 
-    def _on_timeout(self):
+    def _on_timeout(self) -> bool:
         if not self._client.poll():
             logging.warning("Timeout reached, terminating DHCP client")
             self._client.terminate()
         return False
 
-    def _check_client(self):
+    def _check_client(self) -> bool:
         netifs = get_local_interfaces()
         status = self._client.poll()
         if status == 0:
-            def complete():
+            def complete() -> bool:
                 ip = netifs[self._interface][0]
                 logging.info(f"bound to {ip}")
                 self.emit("connected", ip)

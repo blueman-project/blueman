@@ -1,7 +1,7 @@
 import logging
 import sys
 import traceback
-from typing import Dict, Tuple, Callable, Set
+from typing import Dict, Tuple, Callable, Set, Optional, Any, Collection
 
 from gi.repository import Gio, GLib
 
@@ -9,20 +9,20 @@ from gi.repository import Gio, GLib
 class DbusError(Exception):
     _name = "org.blueman.Error"
 
-    def __init__(self, message=None):
+    def __init__(self, message: Optional[str] = None) -> None:
         self._message = message
 
     @property
-    def name(self):
+    def name(self) -> str:
         return self._name
 
     @property
-    def message(self):
+    def message(self) -> Optional[str]:
         return self._message
 
 
 class DbusService:
-    def __init__(self, bus_name, interface_name, path, bus_type):
+    def __init__(self, bus_name: Optional[str], interface_name: str, path: str, bus_type: Gio.BusType) -> None:
         self._bus = Gio.bus_get_sync(bus_type)
         if bus_name:
             Gio.bus_own_name(bus_type, bus_name, Gio.BusNameOwnerFlags.NONE, None, None, None)
@@ -32,7 +32,8 @@ class DbusService:
         self._path = path
         self._regid = None
 
-    def add_method(self, name, arguments, return_value, method, pass_sender=False, is_async=False):
+    def add_method(self, name: str, arguments: Tuple[str, ...], return_value: str, method: Callable[..., None],
+                   pass_sender: bool = False, is_async: bool = False) -> None:
         if name in self._signals:
             raise Exception(f"{name} already defined")
 
@@ -44,26 +45,26 @@ class DbusService:
         self._methods[name] = (arguments, return_value, method, options)
         self._reregister()
 
-    def remove_method(self, name):
+    def remove_method(self, name: str) -> None:
         del self._methods[name]
         self._reregister()
 
-    def add_signal(self, name, signature):
+    def add_signal(self, name: str, signature: str) -> None:
         if name in self._signals:
             raise Exception(f"{name} already defined")
 
         self._signals[name] = signature
         self._reregister()
 
-    def remove_signal(self, name):
+    def remove_signal(self, name: str) -> None:
         del self._signals[name]
         self._reregister()
 
-    def emit_signal(self, name, *args):
+    def emit_signal(self, name: str, *args: Any) -> None:
         self._bus.emit_signal(None, self._path, self._interface_name, name,
                               self._prepare_arguments(self._signals[name], args))
 
-    def register(self):
+    def register(self) -> None:
         node_xml = f"<node name='/'><interface name='{self._interface_name}'>"
         for method_name, method_info in self._methods.items():
             node_xml += f"<method name='{method_name}'>"
@@ -93,16 +94,17 @@ class DbusService:
         else:
             raise GLib.Error(f"Failed to register object with path: {self._path}")
 
-    def unregister(self):
+    def unregister(self) -> None:
         self._bus.unregister_object(self._regid)
         self._regid = None
 
-    def _reregister(self):
+    def _reregister(self) -> None:
         if self._regid:
             self.unregister()
             self.register()
 
-    def _handle_method_call(self, _connection, sender, _path, interface_name, method_name, parameters, invocation):
+    def _handle_method_call(self, _connection: Gio.DBusConnection, sender: str, _path: str, interface_name: str,
+                            method_name: str, parameters: GLib.Variant, invocation: Gio.DBusMethodInvocation) -> None:
         try:
             try:
                 _arguments, result_signature, method, options = self._methods[method_name]
@@ -111,7 +113,7 @@ class DbusService:
                 invocation.return_error_literal(Gio.dbus_error_quark(), Gio.DBusError.UNKNOWN_METHOD,
                                                 f"No such method on interface: {interface_name}.{method_name}")
 
-            def ok(*result):
+            def ok(*result: Any) -> None:
                 invocation.return_value(self._prepare_arguments(result_signature, result))
 
             args = parameters.unpack()
@@ -125,7 +127,7 @@ class DbusService:
             self._return_dbus_error(invocation, e)
 
     @staticmethod
-    def _return_dbus_error(invocation, data):
+    def _return_dbus_error(invocation: Gio.DBusMethodInvocation, data: object) -> None:
         if isinstance(data, DbusError):
             invocation.return_dbus_error(data.name, data.message)
         else:
@@ -140,5 +142,5 @@ class DbusService:
             invocation.return_error_literal(Gio.dbus_error_quark(), Gio.DBusError.FAILED, message)
 
     @staticmethod
-    def _prepare_arguments(signature, args):
+    def _prepare_arguments(signature: str, args: Collection[Any]) -> Optional[GLib.Variant]:
         return GLib.Variant(f"({signature})", args) if signature else None

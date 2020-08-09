@@ -17,7 +17,7 @@ class Timer:
         self._loop = loop
         GLib.timeout_add(1000, self.tick)
 
-    def tick(self):
+    def tick(self) -> bool:
         if not self.stopped:
             self.time += 1
             if self.time == (9999 if 'BLUEMAN_SOURCE' in os.environ else 30):
@@ -26,13 +26,13 @@ class Timer:
 
         return True
 
-    def reset(self):
+    def reset(self) -> None:
         self.time = 0
 
-    def stop(self):
+    def stop(self) -> None:
         self.stopped = True
 
-    def resume(self):
+    def resume(self) -> None:
         self.stopped = False
         self.reset()
 
@@ -83,7 +83,7 @@ class MechanismApplication(DbusService):
     def run(self) -> None:
         self._loop.run()
 
-    def confirm_authorization(self, subject, action_id):
+    def confirm_authorization(self, subject: str, action_id: str) -> None:
         self.timer.reset()
         if not POLKIT:
             return

@@ -3,20 +3,23 @@ import os
 import logging
 import traceback
 import importlib
-from typing import Dict, List, Type, TypeVar, Iterable, Union
+from types import ModuleType
+from typing import Dict, List, Type, TypeVar, Iterable, Optional, Any
 
-from gi.repository import GObject
+from gi.repository import GObject, Gio
 
 from blueman.Functions import bmexit
 from blueman.gui.CommonUi import ErrorDialog
 from blueman.main.Config import Config
-from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.plugins.ManagerPlugin import ManagerPlugin
+from blueman.plugins.BasePlugin import BasePlugin
 from blueman.typing import GSignals
 
 
 class LoadException(Exception):
     pass
+
+
+_T = TypeVar("_T", bound=BasePlugin)
 
 
 class PluginManager(GObject.GObject):
@@ -25,12 +28,12 @@ class PluginManager(GObject.GObject):
         'plugin-unloaded': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
     }
 
-    def __init__(self, plugin_class, module_path, parent):
+    def __init__(self, plugin_class: Type[_T], module_path: ModuleType, parent: object) -> None:
         super().__init__()
         self.__deps: Dict[str, List[str]] = {}
         self.__cfls: Dict[str, List[str]] = {}
-        self.__plugins: Dict[str, Union[AppletPlugin, ManagerPlugin]] = {}
-        self.__classes: Dict[str, Type[Union[AppletPlugin, ManagerPlugin]]] = {}
+        self.__plugins: Dict[str, _T] = {}
+        self.__classes: Dict[str, Type[_T]] = {}
         self.__loaded: List[str] = []
         self.parent = parent
 
@@ -38,22 +41,22 @@ class PluginManager(GObject.GObject):
         self.plugin_class = plugin_class
 
     @property
-    def config_list(self):
+    def config_list(self) -> List[str]:
         return []
 
-    def get_classes(self):
+    def get_classes(self) -> Dict[str, Type[_T]]:
         return self.__classes
 
-    def get_loaded(self):
+    def get_loaded(self) -> List[str]:
         return self.__loaded
 
-    def get_dependencies(self):
+    def get_dependencies(self) -> Dict[str, List[str]]:
         return self.__deps
 
-    def get_conflicts(self):
+    def get_conflicts(self) -> Dict[str, List[str]]:
         return self.__cfls
 
-    def load_plugin(self, name=None, user_action=False):
+    def load_plugin(self, name: Optional[str] = None, user_action: bool = False) -> None:
         if name:
             try:
                 self.__load_plugin(self.__classes[name])
@@ -106,24 +109,24 @@ class PluginManager(GObject.GObject):
                 if c not in self.__cfls[cls.__name__]:
                     self.__cfls[cls.__name__].append(c)
 
-        c = self.config_list
+        cl = self.config_list
         for name, cls in self.__classes.items():
             for dep in self.__deps[name]:
                 # plugins that are required by not unloadable plugins are not unloadable too
                 if not self.__classes[dep].__unloadable__:
                     cls.__unloadable__ = False
 
-            if (cls.__autoload__ or (c and cls.__name__ in c)) and \
-                    not (cls.__unloadable__ and c and "!" + cls.__name__ in c):
+            if (cls.__autoload__ or (cl and cls.__name__ in cl)) and \
+                    not (cls.__unloadable__ and cl and "!" + cls.__name__ in cl):
                 self.__load_plugin(cls)
 
-    def disable_plugin(self, plugin):
+    def disable_plugin(self, plugin: str) -> bool:
         return False
 
-    def enable_plugin(self, plugin):
+    def enable_plugin(self, plugin: str) -> bool:
         return True
 
-    def __load_plugin(self, cls):
+    def __load_plugin(self, cls: Type[_T]) -> None:
         if cls.__name__ in self.__loaded:
             return
 
@@ -167,13 +170,13 @@ class PluginManager(GObject.GObject):
             self.__loaded.append(cls.__name__)
             self.emit("plugin-loaded", cls.__name__)
 
-    def __getattr__(self, key):
+    def __getattr__(self, key: str) -> Any:
         try:
             return self.__plugins[key]
         except KeyError:
             return self.__dict__[key]
 
-    def unload_plugin(self, name):
+    def unload_plugin(self, name: str) -> None:
         if self.__classes[name].__unloadable__:
             for d in self.__deps[name]:
                 self.unload_plugin(d)
@@ -193,7 +196,7 @@ class PluginManager(GObject.GObject):
         else:
             raise Exception(f"Plugin {name} is not unloadable")
 
-    def get_plugins(self):
+    def get_plugins(self) -> Dict[str, _T]:
         return self.__plugins
 
     _U = TypeVar("_U")
@@ -206,22 +209,22 @@ class PluginManager(GObject.GObject):
 
 
 class PersistentPluginManager(PluginManager):
-    def __init__(self, *args):
-        super().__init__(*args)
+    def __init__(self, plugin_class: Type[_T], module_path: ModuleType, parent: object) -> None:
+        super().__init__(plugin_class, module_path, parent)
 
         self.__config = Config("org.blueman.general")
 
         self.__config.connect("changed::plugin-list", self.on_property_changed)
 
-    def disable_plugin(self, plugin):
+    def disable_plugin(self, plugin: str) -> bool:
         plugins = self.__config["plugin-list"]
         return "!" + plugin in plugins
 
-    def enable_plugin(self, plugin):
+    def enable_plugin(self, plugin: str) -> bool:
         plugins = self.__config["plugin-list"]
         return plugin in plugins
 
-    def set_config(self, plugin, state):
+    def set_config(self, plugin: str, state: bool) -> None:
         plugins = self.__config["plugin-list"]
         if plugin in plugins:
             plugins.remove(plugin)
@@ -232,17 +235,18 @@ class PersistentPluginManager(PluginManager):
         self.__config["plugin-list"] = plugins
 
     @property
-    def config_list(self):
-        return self.__config["plugin-list"]
+    def config_list(self) -> List[str]:
+        list: List[str] = self.__config["plugin-list"]
+        return list
 
-    def on_property_changed(self, config, key):
+    def on_property_changed(self, config: Gio.Settings, key: str) -> None:
         for item in config[key]:
             disable = item.startswith("!")
             if disable:
                 item = item.lstrip("!")
 
             try:
-                cls = self.get_classes()[item]
+                cls: Type[BasePlugin] = self.get_classes()[item]
                 if not cls.__unloadable__ and disable:
                     logging.warning(f"warning: {item} is not unloadable")
                 elif item in self.get_loaded() and disable:

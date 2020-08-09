@@ -8,7 +8,8 @@ class DBusProxyFailed(Exception):
 
 
 class ProxyBase(Gio.DBusProxy, metaclass=SingletonGObjectMeta):
-    def __init__(self, name, interface_name, object_path='/', systembus=False, flags=0, *args, **kwargs):
+    def __init__(self, name: str, interface_name: str, object_path: str = "/", systembus: bool = False,
+                 flags: Gio.DBusProxyFlags = 0) -> None:
         if systembus:
             bustype = Gio.BusType.SYSTEM
         else:
@@ -19,8 +20,7 @@ class ProxyBase(Gio.DBusProxy, metaclass=SingletonGObjectMeta):
             g_interface_name=interface_name,
             g_object_path=object_path,
             g_bus_type=bustype,
-            g_flags=flags,
-            *args, **kwargs
+            g_flags=flags
         )
 
         try:
@@ -30,31 +30,31 @@ class ProxyBase(Gio.DBusProxy, metaclass=SingletonGObjectMeta):
 
 
 class Mechanism(ProxyBase):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(name='org.blueman.Mechanism', interface_name='org.blueman.Mechanism',
                          object_path="/org/blueman/mechanism", systembus=True)
 
 
 class AppletService(ProxyBase):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(name='org.blueman.Applet', interface_name='org.blueman.Applet',
                          object_path="/org/blueman/Applet")
 
 
 class ManagerService(ProxyBase):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(name="org.blueman.Manager", interface_name="org.freedesktop.Application",
                          object_path="/org/blueman/Manager",
                          flags=Gio.DBusProxyFlags.DO_NOT_AUTO_START_AT_CONSTRUCTION)
 
     def _call_action(self, name: str) -> None:
-        def call_finish(proxy, resp):
+        def call_finish(proxy: "ManagerService", resp: Gio.AsyncResult) -> None:
             proxy.call_finish(resp)
 
         param = GLib.Variant('(sava{sv})', (name, [], {}))
         self.call('ActivateAction', param, Gio.DBusProxyFlags.NONE, -1, None, call_finish)
 
-    def startstop(self):
+    def startstop(self) -> None:
         if self.get_name_owner() is None:
             self._call_action("Activate")
         else:

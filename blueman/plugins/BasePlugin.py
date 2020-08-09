@@ -46,8 +46,8 @@ class BasePlugin:
     def __init__(self, *_args: object) -> None:
         if self.__options__:
             self.__config = Config(
-                self.__class__.__gsettings__.get("schema"),
-                self.__class__.__gsettings__.get("path")
+                self.__class__.__gsettings__["schema"],
+                self.__class__.__gsettings__["path"]
             )
 
         weakref.finalize(self, self._on_plugin_delete)
