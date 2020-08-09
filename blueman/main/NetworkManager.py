@@ -31,7 +31,7 @@ class NMConnectionBase:
         self.connection = None
         self.active_connection = None
         self.client = NM.Client.new()
-        self.Config = Config(f"org.blueman.gsmsetting', '/org/blueman/gsmsettings/{self.bdaddr}/")
+        self.Config = Config("org.blueman.gsmsetting", f"/org/blueman/gsmsettings/{self.bdaddr}/")
         self._statehandler: Optional[int] = None
 
         self.find_or_create_connection()
