@@ -102,12 +102,6 @@ class Agent(DbusService):
         self._pending_transfer = {'transfer_path': transfer_path, 'address': address, 'root': root,
                                   'filename': filename, 'size': size, 'name': name}
 
-        notif_kwargs = {"icon_name": "blueman"}
-        try:
-            notif_kwargs["pos_hint"] = self._applet.Plugins.StatusIcon.geometry
-        except AttributeError:
-            logging.error("Failed to get StatusIcon")
-
         # This device was neither allowed nor is it trusted -> ask for confirmation
         if address not in self._allowed_devices and not (self._config['opp-accept'] and trusted):
             self._notification = Notification(
@@ -115,7 +109,7 @@ class Agent(DbusService):
                 _("Incoming file %(0)s from %(1)s") % {"0": "<b>" + escape(filename) + "</b>",
                                                        "1": "<b>" + escape(name) + "</b>"},
                 30000, [["accept", _("Accept"), "help-about"], ["reject", _("Reject"), "help-about"]], on_action,
-                **notif_kwargs
+                icon_name="blueman"
             )
             self._notification.show()
         # Device is trusted or was already allowed, larger file -> display a notification, but auto-accept
@@ -124,7 +118,7 @@ class Agent(DbusService):
                 _("Receiving file"),
                 _("Receiving file %(0)s from %(1)s") % {"0": "<b>" + escape(filename) + "</b>",
                                                         "1": "<b>" + escape(name) + "</b>"},
-                **notif_kwargs
+                icon_name="blueman"
             )
             on_action('accept')
             self._notification.show()
@@ -261,16 +255,6 @@ class TransferService(AppletPlugin):
 
             n.add_action("open", name, on_open)
 
-    @property
-    def _notify_kwargs(self):
-        kwargs = {"icon_name": "blueman"}
-        try:
-            kwargs["pos_hint"] = self.parent.Plugins.StatusIcon.geometry
-        except AttributeError:
-            logging.error("No statusicon found")
-
-        return kwargs
-
     def _on_transfer_completed(self, _manager, transfer_path, success):
         if not self._agent or transfer_path not in self._agent.transfers:
             logging.info("This is probably not an incoming transfer we authorized")
@@ -299,7 +283,7 @@ class TransferService(AppletPlugin):
                                               _("File %(0)s from %(1)s successfully received") % {
                                                   "0": "<b>" + escape(filename) + "</b>",
                                                   "1": "<b>" + escape(attributes['name']) + "</b>"},
-                                              **self._notify_kwargs)
+                                              icon_name="blueman")
             self._add_open(self._notification, "Open", dest)
             self._notification.show()
         elif not success:
@@ -308,7 +292,7 @@ class TransferService(AppletPlugin):
                 _("Transfer of file %(0)s failed") % {
                     "0": "<b>" + escape(filename) + "</b>",
                     "1": "<b>" + escape(attributes['name']) + "</b>"},
-                **self._notify_kwargs
+                icon_name="blueman"
             )
             n.show()
             if attributes['size'] > 350000:
@@ -328,7 +312,7 @@ class TransferService(AppletPlugin):
                                               ngettext("Received %(files)d file in the background",
                                                        "Received %(files)d files in the background",
                                                        self._silent_transfers) % {"files": self._silent_transfers},
-                                              **self._notify_kwargs)
+                                              icon_name="blueman")
 
             self._add_open(self._notification, "Open Location", share_path)
             self._notification.show()
@@ -337,6 +321,6 @@ class TransferService(AppletPlugin):
                                               ngettext("Received %(files)d more file in the background",
                                                        "Received %(files)d more files in the background",
                                                        self._silent_transfers) % {"files": self._silent_transfers},
-                                              **self._notify_kwargs)
+                                              icon_name="blueman")
             self._add_open(self._notification, "Open Location", share_path)
             self._notification.show()
