@@ -35,7 +35,7 @@ class MonitorBase(GObject.GObject):
         self.interface = interface
         self.device = device
         self.general_config = Config("org.blueman.general")
-        self.config = Config("org.blueman.plugins.netusage", f"/org/blueman/plugins/netusages/{device['Addres']}/")
+        self.config = Config("org.blueman.plugins.netusage", f"/org/blueman/plugins/netusages/{device['Address']}/")
 
         self.last_tx = 0
         self.last_rx = 0
