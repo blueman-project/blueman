@@ -10,7 +10,7 @@ try:
 except ValueError:
     raise ImportError('NM python bindings not found.')
 
-from gi.repository import GLib, GObject, NM
+from gi.repository import GLib, GObject, NM, Gio
 from blueman.main.Config import Config
 
 
@@ -39,7 +39,7 @@ class NMConnectionBase:
 
         self.find_or_create_connection()
 
-    def _on_connection_added(self, client, result, conn_uuid):
+    def _on_connection_added(self, client: NM.Client, result: Gio.AsyncResult, conn_uuid: str) -> None:
         try:
             self.connection = client.add_connection_finish(result)
         except GLib.Error as e:
@@ -47,7 +47,7 @@ class NMConnectionBase:
 
         self.store_uuid(conn_uuid)
 
-    def _on_device_state_changed(self, device, new_state, old_state, reason):
+    def _on_device_state_changed(self, device: NM.Device, new_state: int, old_state: int, reason: int) -> None:
         new = NM.DeviceState(new_state)
         old = NM.DeviceState(old_state)
         state_reason = NM.DeviceStateReason(reason)
@@ -73,8 +73,8 @@ class NMConnectionBase:
             logging.debug(error_msg)
             self.error_handler(NMConnectionError(error_msg))
 
-    def activate(self):
-        def on_connection_activate(client, result):
+    def activate(self) -> None:
+        def on_connection_activate(client: NM.Client, result: Gio.AsyncResult) -> None:
             try:
                 self.active_connection = client.activate_connection_finish(result)
             except GLib.Error as e:
@@ -89,8 +89,8 @@ class NMConnectionBase:
             self._statehandler = device.connect('state-changed', self._on_device_state_changed)
             self.client.activate_connection_async(self.connection, device, None, None, on_connection_activate)
 
-    def deactivate(self):
-        def on_connection_deactivate(client, result):
+    def deactivate(self) -> None:
+        def on_connection_deactivate(client: NM.Client, result: Gio.AsyncResult) -> None:
             try:
                 client.deactivate_connection_finish(result)
                 logging.debug(f"Device {self.bdaddr} deactivated sucessfully")
@@ -101,7 +101,7 @@ class NMConnectionBase:
 
         self.client.deactivate_connection_async(self.active_connection, None, on_connection_deactivate)
 
-    def find_or_create_connection(self):
+    def find_or_create_connection(self) -> None:
         if not self.connection_uuid:
             self.create_connection()
         else:
@@ -131,7 +131,7 @@ class NMConnectionBase:
                 self.active_connection = active_conn
 
     @property
-    def connected(self):
+    def connected(self) -> bool:
         if self.active_connection is None:
             return False
 
@@ -141,35 +141,37 @@ class NMConnectionBase:
         else:
             return False
 
-    def create_connection(self):
+    def create_connection(self) -> None:
         raise NotImplementedError
 
-    def store_uuid(self, conn_uuid):
+    def store_uuid(self, conn_uuid: str) -> None:
         raise NotImplementedError
 
     @property
-    def connection_uuid(self):
+    def connection_uuid(self) -> str:
         raise NotImplementedError
 
 
 class NMPANConnection(NMConnectionBase):
     conntype = 'panu'
 
-    def store_uuid(self, conn_uuid):
+    def store_uuid(self, conn_uuid: str) -> None:
         self.Config['nmpanuuid'] = conn_uuid
 
     @property
-    def connection_uuid(self):
+    def connection_uuid(self) -> str:
         # PANU connections are automatically created so attempt to find it
         # It appears the Name property is used not Alias!
         conn = self.client.get_connection_by_id(f"{self.device['Name']} Network")
+        res: str
         if conn is not None:
             conn_settings = conn.get_setting_connection()
-            return conn_settings.get_uuid()
+            res = conn_settings.get_uuid()
         else:
-            return self.Config['nmpanuuid']
+            res = self.Config['nmpanuuid']
+        return res
 
-    def create_connection(self):
+    def create_connection(self) -> None:
         conn = NM.SimpleConnection()
         conn_id = f"{self.device['Name']} Network"
         conn_uuid = str(uuid.uuid4())
@@ -185,14 +187,15 @@ class NMPANConnection(NMConnectionBase):
 class NMDUNConnection(NMConnectionBase):
     conntype = 'dun'
 
-    def store_uuid(self, conn_uuid):
+    def store_uuid(self, conn_uuid: str) -> None:
         self.Config['nmdunuuid'] = conn_uuid
 
     @property
-    def connection_uuid(self):
-        return self.Config['nmdunuuid']
+    def connection_uuid(self) -> str:
+        res: str = self.Config['nmdunuuid']
+        return res
 
-    def create_connection(self):
+    def create_connection(self) -> None:
         if not self.Config['apn']:
             self.error_handler(NMConnectionError('No apn configured, make sure to configure dialup settings'))
             return

@@ -3,22 +3,22 @@ import logging
 import os
 import sys
 from blueman.main.DBusProxies import AppletService
-from gi.repository import Gio
+from gi.repository import Gio, GLib
 
 
 class BluemanTray(Gio.Application):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(application_id="org.blueman.Tray", flags=Gio.ApplicationFlags.FLAGS_NONE)
         self._active = False
 
-    def do_startup(self):
+    def do_startup(self) -> None:
         Gio.Application.do_startup(self)
 
         quit_action = Gio.SimpleAction.new("Quit", None)
         quit_action.connect("activate", self.quit)
         self.add_action(quit_action)
 
-    def do_activate(self):
+    def do_activate(self) -> None:
         if self._active:
             logging.info("Already running, restarting instance")
             os.execv(sys.argv[0], sys.argv)
@@ -27,7 +27,7 @@ class BluemanTray(Gio.Application):
                            self._on_name_appeared, self._on_name_vanished)
         self.hold()
 
-    def _on_name_appeared(self, _connection, name, _owner):
+    def _on_name_appeared(self, _connection: Gio.DBusConnection, name: str, _owner: str) -> None:
         logging.debug("Applet started on name %s, showing indicator" % name)
 
         applet = AppletService()
@@ -44,17 +44,17 @@ class BluemanTray(Gio.Application):
 
         self._active = True
 
-    def _on_name_vanished(self, _connection, _name):
+    def _on_name_vanished(self, _connection: Gio.DBusConnection, _name: str) -> None:
         logging.debug("Applet shutdown or not available at startup")
         self.quit()
 
-    def _activate_menu_item(self, *indexes):
-        return AppletService().ActivateMenuItem('(ai)', indexes)
+    def _activate_menu_item(self, *indexes: int) -> None:
+        AppletService().ActivateMenuItem('(ai)', indexes)
 
-    def _activate_status_icon(self):
-        return AppletService().Activate()
+    def _activate_status_icon(self) -> None:
+        AppletService().Activate()
 
-    def on_signal(self, _applet, sender_name, signal_name, args):
+    def on_signal(self, _applet: AppletService, _sender_name: str, signal_name: str, args: GLib.Variant) -> None:
         if signal_name == 'IconNameChanged':
             self.indicator.set_icon(*args)
         elif signal_name == 'TextChanged':

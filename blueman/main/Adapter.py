@@ -2,7 +2,7 @@ from gettext import gettext as _
 import os.path
 import logging
 import gettext
-from typing import Dict, TYPE_CHECKING
+from typing import Dict, TYPE_CHECKING, Optional, Any
 
 from blueman.Constants import UI_PATH
 from blueman.Functions import *
@@ -11,8 +11,9 @@ from blueman.bluez.Adapter import Adapter
 
 import gi
 gi.require_version("Gtk", "3.0")
+gi.require_version("Gdk", "3.0")
 gi.require_version("Pango", "1.0")
-from gi.repository import Gtk
+from gi.repository import Gtk, Gio, Gdk
 from gi.repository import Pango
 
 
@@ -29,7 +30,7 @@ if TYPE_CHECKING:
 
 
 class BluemanAdapters(Gtk.Application):
-    def __init__(self, selected_hci_dev, socket_id):
+    def __init__(self, selected_hci_dev: Optional[str], socket_id: Optional[int]) -> None:
         super().__init__(application_id="org.blueman.Adapters")
 
         self.socket_id = socket_id
@@ -37,7 +38,7 @@ class BluemanAdapters(Gtk.Application):
 
         self.notebook = Gtk.Notebook(visible=True)
 
-        self.window = None
+        self.window: Optional[Gtk.ApplicationWindow] = None
 
         self.tabs: Dict[str, "Tab"] = {}
         self._adapters: Dict[str, Adapter] = {}
@@ -68,8 +69,8 @@ class BluemanAdapters(Gtk.Application):
                 logging.error('Error: the selected adapter does not exist')
         self.notebook.show_all()
 
-    def do_activate(self):
-        def app_release(_plug, event):
+    def do_activate(self) -> None:
+        def app_release(_plug: Gtk.Plug, _event: Gdk.Event) -> bool:
             self.release()
             return False
 
@@ -88,14 +89,14 @@ class BluemanAdapters(Gtk.Application):
 
         self.window.present_with_time(Gtk.get_current_event_time())
 
-    def on_property_changed(self, adapter, name, value, path):
+    def on_property_changed(self, _adapter: Adapter, name: str, value: Any, path: str) -> None:
         hci_dev = os.path.basename(path)
         if name == "Discoverable" and value == 0:
             self.tabs[hci_dev]["hidden_radio"].set_active(True)
         elif name == "Alias":
             self.tabs[hci_dev]["label"].set_text(value)
 
-    def on_adapter_added(self, _manager, adapter_path):
+    def on_adapter_added(self, _manager: Manager, adapter_path: str) -> None:
         hci_dev = os.path.basename(adapter_path)
         if hci_dev not in self._adapters:
             self._adapters[hci_dev] = Adapter(obj_path=adapter_path)
@@ -103,49 +104,49 @@ class BluemanAdapters(Gtk.Application):
         self._adapters[hci_dev].connect_signal("property-changed", self.on_property_changed)
         self.add_to_notebook(self._adapters[hci_dev])
 
-    def on_adapter_removed(self, _manager, adapter_path):
+    def on_adapter_removed(self, _manager: Manager, adapter_path: str) -> None:
         hci_dev = os.path.basename(adapter_path)
         self.remove_from_notebook(self._adapters[hci_dev])
 
-    def _on_dbus_name_appeared(self, _connection, name, owner):
+    def _on_dbus_name_appeared(self, _connection: Gio.DBusConnection, name: str, owner: str) -> None:
         logging.info(f"{name} {owner}")
 
-    def _on_dbus_name_vanished(self, _connection, name):
+    def _on_dbus_name_vanished(self, _connection: Gio.DBusConnection, name: str) -> None:
         logging.info(name)
         # FIXME: show error dialog and exit
 
-    def build_adapter_tab(self, adapter):
-        def on_hidden_toggle(radio):
+    def build_adapter_tab(self, adapter: Adapter) -> "Tab":
+        def on_hidden_toggle(radio: Gtk.RadioButton) -> None:
             if not radio.props.active:
                 return
             adapter['DiscoverableTimeout'] = 0
             adapter['Discoverable'] = False
             hscale.set_sensitive(False)
 
-        def on_always_toggle(radio):
+        def on_always_toggle(radio: Gtk.RadioButton) -> None:
             if not radio.props.active:
                 return
             adapter['DiscoverableTimeout'] = 0
             adapter['Discoverable'] = True
             hscale.set_sensitive(False)
 
-        def on_temporary_toggle(radio):
+        def on_temporary_toggle(radio: Gtk.RadioButton) -> None:
             if not radio.props.active:
                 return
             adapter['Discoverable'] = True
             hscale.set_sensitive(True)
             hscale.set_value(3)
 
-        def on_scale_format_value(scale, value):
+        def on_scale_format_value(_scale: Gtk.Scale, value: float) -> str:
             if value == 0:
                 if adapter['Discoverable']:
                     return _("Always")
                 else:
                     return _("Hidden")
             else:
-                return gettext.ngettext("%(minutes)d Minute", "%(minutes)d Minutes", value) % {"minutes": value}
+                return gettext.ngettext("%(minutes)d Minute", "%(minutes)d Minutes", int(value)) % {"minutes": value}
 
-        def on_scale_value_changed(scale):
+        def on_scale_value_changed(scale: Gtk.Scale) -> None:
             val = scale.get_value()
             logging.info(f"value: {val}")
             if val == 0 and adapter['Discoverable']:
@@ -153,10 +154,8 @@ class BluemanAdapters(Gtk.Application):
             timeout = int(val * 60)
             adapter['DiscoverableTimeout'] = timeout
 
-        def on_name_changed(entry):
+        def on_name_changed(entry: Gtk.Entry) -> None:
             adapter['Alias'] = entry.get_text()
-
-        ui = {}
 
         builder = Gtk.Builder()
         builder.set_translation_domain("blueman")
@@ -189,13 +188,16 @@ class BluemanAdapters(Gtk.Application):
         temporary_radio.connect("toggled", on_temporary_toggle)
         name_entry.connect("changed", on_name_changed)
 
-        ui['grid'] = builder.get_object("grid")
-        ui["hidden_radio"] = hidden_radio
-        ui["always_radio"] = always_radio
-        ui["temparary_radio"] = temporary_radio
-        return ui
+        return {
+            "grid": builder.get_object("grid"),
+            "hidden_radio": hidden_radio,
+            "always_radio": always_radio,
+            "temparary_radio": temporary_radio,
+            "visible": False,
+            "label": Gtk.Label()
+        }
 
-    def add_to_notebook(self, adapter):
+    def add_to_notebook(self, adapter: Adapter) -> None:
         hci_dev = os.path.basename(adapter.get_object_path())
         hci_dev_num = int(hci_dev[3:])
 
@@ -217,7 +219,7 @@ class BluemanAdapters(Gtk.Application):
         label.set_ellipsize(Pango.EllipsizeMode.END)
         self.notebook.insert_page(ui['grid'], label, hci_dev_num)
 
-    def remove_from_notebook(self, adapter):
+    def remove_from_notebook(self, adapter: Adapter) -> None:
         hci_dev = os.path.basename(adapter.get_object_path())
         hci_dev_num = int(hci_dev[3:])
 

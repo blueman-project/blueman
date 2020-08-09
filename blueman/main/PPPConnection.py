@@ -5,7 +5,7 @@ import re
 import subprocess
 import termios
 import tty
-from typing import Any, List
+from typing import Any, List, Iterable, Callable, Optional, Tuple, Union, MutableSequence
 
 from gi.repository import GObject
 from gi.repository import GLib
@@ -49,7 +49,7 @@ class PPPConnection(GObject.GObject):
         'error-occurred': (GObject.SignalFlags.NO_HOOKS, None, (str,))
     }
 
-    def __init__(self, port, number="*99#", apn="", user="", pwd=""):
+    def __init__(self, port: str, number: str = "*99#", apn: str = "", user: str = "", pwd: str = "") -> None:
         super().__init__()
 
         self.apn = apn
@@ -59,7 +59,7 @@ class PPPConnection(GObject.GObject):
         self.port = port
         self.interface = None
 
-        self.commands = [
+        self.commands: MutableSequence[Union[str, Tuple[str, Callable[[List[str]], None], Iterable[str]]]] = [
             "ATZ E0 V1 X4 &C1 +FCLASS=0",
             "ATE0",
             "AT+GCAP",
@@ -72,10 +72,10 @@ class PPPConnection(GObject.GObject):
         if self.apn != "":
             self.commands.insert(-1, f'AT+CGDCONT=1,"IP","{self.apn}"')
 
-    def cleanup(self):
+    def cleanup(self) -> None:
         os.close(self.file)
 
-    def connect_callback(self, response):
+    def connect_callback(self, response: List[str]) -> None:
         if "CONNECT" in response:
             logging.info("Starting pppd")
             self.pppd = subprocess.Popen(
@@ -89,20 +89,23 @@ class PPPConnection(GObject.GObject):
             self.cleanup()
             raise PPPException(f"Bad modem response {response[0]}, expected CONNECT")
 
-    def __cmd_response_cb(self, response, exception, command_id):
+    def __cmd_response_cb(self, response: Optional[List[str]], exception: Optional[PPPException],
+                          command_id: int) -> None:
         if exception:
             self.emit("error-occurred", str(exception))
         else:
-            if isinstance(self.commands[command_id], tuple):
+            command = self.commands[command_id]
+            if isinstance(command, tuple):
+                assert response is not None
                 try:
-                    self.commands[command_id][1](response)
+                    command[1](response)
                 except PPPException as e:
                     self.emit("error-occurred", str(e))
                     return
 
             self.send_commands(command_id + 1)
 
-    def send_commands(self, start=0):
+    def send_commands(self, start: int = 0) -> None:
         try:
             item = self.commands[start]
         except IndexError:
@@ -111,7 +114,7 @@ class PPPConnection(GObject.GObject):
         self.send_command(item[0] if isinstance(item, tuple) else item)
         self.wait_for_reply(start)
 
-    def connect_rfcomm(self):
+    def connect_rfcomm(self) -> None:
 
         self.file = open_rfcomm(self.port, os.O_RDWR)
 
@@ -137,7 +140,7 @@ class PPPConnection(GObject.GObject):
 
         self.send_commands()
 
-    def on_pppd_stdout(self, source, cond):
+    def on_pppd_stdout(self, source: GLib.IOChannel, cond: GLib.IOCondition) -> bool:
         if cond & GLib.IO_ERR or cond & GLib.IO_HUP:
             return False
 
@@ -150,7 +153,7 @@ class PPPConnection(GObject.GObject):
 
         return True
 
-    def check_pppd(self):
+    def check_pppd(self) -> bool:
         status = self.pppd.poll()
         if status is not None:
             if status == 0:
@@ -167,13 +170,13 @@ class PPPConnection(GObject.GObject):
             return False
         return True
 
-    def send_command(self, command):
+    def send_command(self, command: str) -> None:
         logging.info(f"--> {command}")
         out = f"{command}\r\n"
         os.write(self.file, out.encode("UTF-8"))
         termios.tcdrain(self.file)
 
-    def on_data_ready(self, _source, condition, command_id):
+    def on_data_ready(self, _source: GLib.IOChannel, condition: GLib.IOCondition, command_id: int) -> bool:
         if condition & GLib.IO_ERR or condition & GLib.IO_HUP:
             GLib.source_remove(self.timeout)
             self.__cmd_response_cb(None, PPPException("Socket error"), command_id)
@@ -204,8 +207,8 @@ class PPPConnection(GObject.GObject):
 
         return True
 
-    def wait_for_reply(self, command_id):
-        def on_timeout():
+    def wait_for_reply(self, command_id: int) -> None:
+        def on_timeout() -> bool:
             GLib.source_remove(self.io_watch)
             self.__cmd_response_cb(None, PPPException("Modem initialization timed out"), command_id)
             self.cleanup()

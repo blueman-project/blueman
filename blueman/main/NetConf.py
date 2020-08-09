@@ -8,7 +8,7 @@ from tempfile import mkstemp
 from time import sleep
 import logging
 import signal
-from typing import List, Tuple, TYPE_CHECKING
+from typing import List, Tuple, Optional, Type, TYPE_CHECKING
 
 from blueman.Constants import DHCP_CONFIG_FILE
 from blueman.Functions import have
@@ -41,7 +41,7 @@ def is_running(name: str, pid: int) -> bool:
         return name in f.readline().replace("\0", " ")
 
 
-def kill(pid: int, name: str) -> bool:
+def kill(pid: Optional[int], name: str) -> bool:
     if pid and is_running(name, pid):
         print('Terminating ' + name)
         os.kill(pid, signal.SIGTERM)
@@ -49,7 +49,7 @@ def kill(pid: int, name: str) -> bool:
     return False
 
 
-def read_pid_file(fname):
+def read_pid_file(fname: str) -> Optional[int]:
     try:
         with open(fname) as f:
             return int(f.read())
@@ -57,7 +57,7 @@ def read_pid_file(fname):
         return None
 
 
-def get_dns_servers():
+def get_dns_servers() -> str:
     dns_servers = ''
     with open("/etc/resolv.conf") as f:
         for line in f:
@@ -70,7 +70,7 @@ def get_dns_servers():
     return dns_servers
 
 
-def get_binary(*names):
+def get_binary(*names: str) -> str:
     for name in names:
         path = have(name)
         if path:
@@ -79,14 +79,16 @@ def get_binary(*names):
 
 
 class DnsMasqHandler:
-    def __init__(self, netconf):
-        self.pid = None
+    def __init__(self, netconf: "NetConf") -> None:
+        self.pid: Optional[int] = None
         self.netconf = netconf
 
-    def do_apply(self):
+    def do_apply(self) -> None:
         if not self.netconf.locked("dhcp") or self.netconf.ip4_changed:
             if self.netconf.ip4_changed:
                 self.do_remove()
+
+            assert self.netconf.ip4_address is not None
 
             ipiface = ipaddress.ip_interface('/'.join((self.netconf.ip4_address, '255.255.255.0')))
             cmd = [get_binary("dnsmasq"), "--port=0", "--pid-file=/var/run/dnsmasq.pan1.pid", "--except-interface=lo",
@@ -110,7 +112,7 @@ class DnsMasqHandler:
                 logging.info(error_msg)
                 raise NetworkSetupError(f"dnsmasq failed to start: {error_msg}")
 
-    def do_remove(self):
+    def do_remove(self) -> None:
         if self.netconf.locked("dhcp"):
             if not self.pid:
                 pid = read_pid_file("/var/run/dnsmasq.pan1.pid")
@@ -134,12 +136,12 @@ subnet %(ip_mask)s netmask %(netmask)s {
 
 
 class DhcpdHandler:
-    def __init__(self, netconf):
-        self.pid = None
+    def __init__(self, netconf: "NetConf") -> None:
+        self.pid: Optional[int] = None
         self.netconf = netconf
 
     @staticmethod
-    def _read_dhcp_config():
+    def _read_dhcp_config() -> Tuple[str, str]:
         dhcp_config = ''
         existing_subnet = ''
         start = end = False
@@ -164,8 +166,10 @@ class DhcpdHandler:
 
         return dhcp_config, existing_subnet
 
-    def _generate_subnet_config(self):
+    def _generate_subnet_config(self) -> str:
         dns = get_dns_servers()
+
+        assert self.netconf.ip4_address is not None and self.netconf.ip4_mask is not None
 
         ipiface = ipaddress.ip_interface('/'.join((self.netconf.ip4_address, self.netconf.ip4_mask)))
 
@@ -176,7 +180,7 @@ class DhcpdHandler:
                               "start": ipiface.network[2],
                               "end": ipiface.network[-2]}
 
-    def do_apply(self):
+    def do_apply(self) -> None:
         if not self.netconf.locked("dhcp") or self.netconf.ip4_changed:
             if self.netconf.ip4_changed:
                 self.do_remove()
@@ -206,7 +210,7 @@ class DhcpdHandler:
                 logging.info(error_msg)
                 raise NetworkSetupError(f"dhcpd failed to start: {error_msg}")
 
-    def do_remove(self):
+    def do_remove(self) -> None:
         dhcp_config, existing_subnet = self._read_dhcp_config()
         with open(DHCP_CONFIG_FILE, "w") as f:
             f.write(dhcp_config)
@@ -233,12 +237,14 @@ option router %(rtr)s
 
 
 class UdhcpdHandler:
-    def __init__(self, netconf):
-        self.pid = None
+    def __init__(self, netconf: "NetConf") -> None:
+        self.pid: Optional[int] = None
         self.netconf = netconf
 
-    def _generate_config(self):
+    def _generate_config(self) -> str:
         dns = get_dns_servers()
+
+        assert self.netconf.ip4_address is not None and self.netconf.ip4_mask is not None
 
         ipiface = ipaddress.ip_interface('/'.join((self.netconf.ip4_address, self.netconf.ip4_mask)))
 
@@ -248,7 +254,7 @@ class UdhcpdHandler:
                                       "start": ipiface.network[2],
                                       "end": ipiface.network[-2]}
 
-    def do_apply(self):
+    def do_apply(self) -> None:
         if not self.netconf.locked("dhcp") or self.netconf.ip4_changed:
             if self.netconf.ip4_changed:
                 self.do_remove()
@@ -267,7 +273,7 @@ class UdhcpdHandler:
 
             pid = read_pid_file("/var/run/udhcpd.pan1.pid")
 
-            if p.pid and is_running("udhcpd", pid):
+            if p.pid and pid is not None and is_running("udhcpd", pid):
                 logging.info("udhcpd started correctly")
                 self.pid = pid
                 logging.info(f"pid {self.pid}")
@@ -279,7 +285,7 @@ class UdhcpdHandler:
 
             os.remove(config_path)
 
-    def do_remove(self):
+    def do_remove(self) -> None:
         if self.netconf.locked("dhcp"):
             if not self.pid:
                 pid = read_pid_file("/var/run/udhcpd.pan1.pid")
@@ -298,13 +304,13 @@ class NetConf:
     default_inst = None
 
     @classmethod
-    def get_default(cls):
+    def get_default(cls) -> "NetConf":
         if NetConf.default_inst:
             return NetConf.default_inst
 
         try:
             with open("/var/lib/blueman/network.state", "rb") as f:
-                obj = pickle.load(f)
+                obj: "NetConf" = pickle.load(f)
                 if obj.version != class_id:
                     raise Exception
 
@@ -325,26 +331,26 @@ class NetConf:
             NetConf.default_inst = n
             return n
 
-    def __init__(self):
+    def __init__(self) -> None:
         logging.info("init")
         self.version = class_id
-        self.dhcp_handler = None
+        self.dhcp_handler: Optional[DHCPHandler] = None
         self.ipt_rules: List[Tuple[str, str, str]] = []
 
         self.ip4_changed = False
 
-    def set_ipv4(self, ip, netmask):
+    def set_ipv4(self, ip: Optional[str], netmask: Optional[str]) -> None:
         if self.ip4_address != ip or self.ip4_mask != netmask:
             self.ip4_changed = True
 
-        self.ip4_address: str = ip
-        self.ip4_mask: str = netmask
+        self.ip4_address: Optional[str] = ip
+        self.ip4_mask: Optional[str] = netmask
 
-    def get_ipv4(self):
+    def get_ipv4(self) -> Tuple[Optional[str], Optional[str]]:
         return self.ip4_address, self.ip4_mask
 
     @staticmethod
-    def enable_ip4_forwarding():
+    def enable_ip4_forwarding() -> None:
         with open("/proc/sys/net/ipv4/ip_forward", "w") as f:
             f.write("1")
 
@@ -352,20 +358,20 @@ class NetConf:
             with open(f"/proc/sys/net/ipv4/conf/{d}/forwarding", "w") as f:
                 f.write("1")
 
-    def add_ipt_rule(self, table, chain, rule):
+    def add_ipt_rule(self, table: str, chain: str, rule: str) -> None:
         self.ipt_rules.append((table, chain, rule))
         args = ["/sbin/iptables", "-t", table, "-A", chain] + rule.split(" ")
         logging.debug(" ".join(args))
         ret = call(args)
         logging.info(f"Return code {ret}")
 
-    def del_ipt_rules(self):
+    def del_ipt_rules(self) -> None:
         for table, chain, rule in self.ipt_rules:
             call(["/sbin/iptables", "-t", table, "-D", chain] + rule.split(" "))
         self.ipt_rules = []
         self.unlock("iptables")
 
-    def set_dhcp_handler(self, handler):
+    def set_dhcp_handler(self, handler: Type["DHCPHandler"]) -> None:
         if not isinstance(self.dhcp_handler, handler):
             running = False
             if self.dhcp_handler:
@@ -376,13 +382,13 @@ class NetConf:
             if running:
                 self.dhcp_handler.do_apply()
 
-    def get_dhcp_handler(self):
+    def get_dhcp_handler(self) -> Optional[Type["DHCPHandler"]]:
         if not self.dhcp_handler:
             return None
 
         return type(self.dhcp_handler)
 
-    def apply_settings(self):
+    def apply_settings(self) -> None:
         if self != NetConf.get_default():
             NetConf.get_default().remove_settings()
             NetConf.default_inst = self
@@ -400,11 +406,16 @@ class NetConf:
                 ret = call(["ip", "link", "set", "dev", "pan1", "up"])
                 if ret != 0:
                     raise NetworkSetupError("Failed to bring up interface pan1")
+
+                assert self.ip4_address is not None and self.ip4_mask is not None
+
                 ret = call(["ip", "address", "add", "/".join((self.ip4_address, self.ip4_mask)), "dev", "pan1"])
                 if ret != 0:
                     raise NetworkSetupError(f"Failed to add ip address {self.ip4_address}"
                                             f"with netmask {self.ip4_mask}")
             elif have('ifconfig'):
+                assert self.ip4_address is not None and self.ip4_mask is not None
+
                 ret = call(["ifconfig", "pan1", self.ip4_address, "netmask", self.ip4_mask, "up"])
                 if ret != 0:
                     raise NetworkSetupError(f"Failed to add ip address {self.ip4_address}"
@@ -430,7 +441,7 @@ class NetConf:
 
         self.store()
 
-    def remove_settings(self):
+    def remove_settings(self) -> None:
         logging.info(self)
 
         if self.dhcp_handler:
@@ -447,23 +458,23 @@ class NetConf:
         self.store()
 
     @staticmethod
-    def lock(key):
+    def lock(key: str) -> None:
         with open(f"/var/run/blueman-{key}", "w"):
             pass
 
     @staticmethod
-    def unlock(key):
+    def unlock(key: str) -> None:
         try:
             os.unlink(f"/var/run/blueman-{key}")
         except OSError:
             pass
 
     @staticmethod
-    def locked(key):
+    def locked(key: str) -> bool:
         return os.path.exists(f"/var/run/blueman-{key}")
 
     # save the instance of this class, requires root
-    def store(self):
+    def store(self) -> None:
         if not os.path.exists("/var/lib/blueman"):
             os.mkdir("/var/lib/blueman")
         with open("/var/lib/blueman/network.state", "wb") as f:
