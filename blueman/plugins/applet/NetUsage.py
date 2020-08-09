@@ -311,7 +311,7 @@ class NetUsage(AppletPlugin, GObject.GObject, PPPConnectedListener):
     def _on_network_property_changed(self, _network, key, value, path):
         if key == "Interface" and value != "":
             d = Device(obj_path=path)
-            self.monitor_interface(Monitor, d, value)
+            self.monitor_interface(d, value)
 
     def activate_ui(self):
         Dialog(self)
@@ -320,15 +320,15 @@ class NetUsage(AppletPlugin, GObject.GObject, PPPConnectedListener):
         del self._any_network
         self.parent.Plugins.Menu.unregister(self)
 
-    def monitor_interface(self, montype, *args):
-        m = montype(*args)
+    def monitor_interface(self, device: Device, interface: str) -> None:
+        m = Monitor(device, interface)
         self.monitors.append(m)
         m.connect("stats", self.on_stats)
         m.connect("disconnected", self.on_monitor_disconnected)
         self.emit("monitor-added", m)
 
     def on_ppp_connected(self, device, rfcomm, ppp_port):
-        self.monitor_interface(Monitor, device, ppp_port)
+        self.monitor_interface(device, ppp_port)
 
     def on_monitor_disconnected(self, monitor):
         self.monitors.remove(monitor)
