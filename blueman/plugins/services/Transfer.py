@@ -29,8 +29,6 @@ class Transfer(ServicePlugin):
             self.widget.props.sensitive = False
             self.widget.props.tooltip_text = _("Applet's transfer service plugin is disabled")
 
-        return True
-
     def on_enter(self):
         self.widget.props.visible = True
 
