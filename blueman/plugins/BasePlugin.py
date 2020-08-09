@@ -43,9 +43,7 @@ class BasePlugin:
 
     __options__: Dict[str, "Option"] = {}
 
-    def __init__(self, parent):
-        self.parent = parent
-
+    def __init__(self, *_args):
         if self.__options__:
             self.__config = Config(
                 self.__class__.__gsettings__.get("schema"),
