@@ -1,10 +1,11 @@
+from abc import ABC, abstractmethod
 from typing import Optional
 
 from blueman.Sdp import ServiceUUID
 from blueman.bluez.Device import Device
 
 
-class Service:
+class Service(ABC):
     __svclass_id__: int
     __description__ = None
     __icon__: str
@@ -41,3 +42,13 @@ class Service:
     @property
     def priority(self) -> int:
         return self.__priority__
+
+    @property
+    @abstractmethod
+    def connected(self) -> bool:
+        ...
+
+    @property
+    @abstractmethod
+    def available(self) -> bool:
+        ...
