@@ -11,7 +11,8 @@ class AppletPlugin(BasePlugin):
     __icon__ = "blueman-plugin"
 
     def __init__(self, parent):
-        super().__init__(parent)
+        super().__init__()
+        self.parent = parent
 
         if not ictheme.has_icon(self.__class__.__icon__):
             self.__class__.__icon__ = "blueman-plugin"
