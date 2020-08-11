@@ -60,9 +60,9 @@ class PPPConnection(GObject.GObject):
         self.interface = None
 
         self.commands = [
-            ("ATZ E0 V1 X4 &C1 +FCLASS=0", self.simple_callback),
-            ("ATE0", self.simple_callback),
-            ("AT+GCAP", self.simple_callback),
+            "ATZ E0 V1 X4 &C1 +FCLASS=0",
+            "ATE0",
+            "AT+GCAP",
             (
                 f"ATD{self.number}",
                 self.connect_callback,
@@ -70,13 +70,10 @@ class PPPConnection(GObject.GObject):
             )
         ]
         if self.apn != "":
-            self.commands.insert(-1, (f'AT+CGDCONT=1,"IP","{self.apn}"', self.simple_callback))
+            self.commands.insert(-1, f'AT+CGDCONT=1,"IP","{self.apn}"')
 
     def cleanup(self):
         os.close(self.file)
-
-    def simple_callback(self, response):
-        pass
 
     def connect_callback(self, response):
         if "CONNECT" in response:
@@ -92,32 +89,27 @@ class PPPConnection(GObject.GObject):
             self.cleanup()
             raise PPPException(f"Bad modem response {response[0]}, expected CONNECT")
 
-    def __cmd_response_cb(self, response, exception, item_id):
+    def __cmd_response_cb(self, response, exception, command_id):
         if exception:
             self.emit("error-occurred", str(exception))
         else:
-            try:
-                self.commands[item_id][1](response)
-            except PPPException as e:
-                self.emit("error-occurred", str(e))
-                return
+            if isinstance(self.commands[command_id], tuple):
+                try:
+                    self.commands[command_id][1](response)
+                except PPPException as e:
+                    self.emit("error-occurred", str(e))
+                    return
 
-            self.send_commands(item_id + 1)
+            self.send_commands(command_id + 1)
 
-    def send_commands(self, i=0):
+    def send_commands(self, start=0):
         try:
-            item = self.commands[i]
+            item = self.commands[start]
         except IndexError:
             return
 
-        if len(item) == 3:
-            (command, callback, terminators) = item
-        else:
-            (command, callback) = item
-            terminators = ["OK", "ERROR"]
-
-        self.send_command(command)
-        self.wait_for_reply(self.__cmd_response_cb, terminators, i)
+        self.send_command(item[0] if isinstance(item, tuple) else item)
+        self.wait_for_reply(start)
 
     def connect_rfcomm(self):
 
@@ -181,9 +173,10 @@ class PPPConnection(GObject.GObject):
         os.write(self.file, out.encode("UTF-8"))
         termios.tcdrain(self.file)
 
-    def on_data_ready(self, source, condition, terminators, on_done):
+    def on_data_ready(self, _source, condition, command_id):
         if condition & GLib.IO_ERR or condition & GLib.IO_HUP:
-            on_done(None, PPPException("Socket error"))
+            GLib.source_remove(self.timeout)
+            self.__cmd_response_cb(None, PPPException("Socket error"), command_id)
             self.cleanup()
             return False
         try:
@@ -193,44 +186,34 @@ class PPPConnection(GObject.GObject):
                 logging.error("Got EAGAIN")
                 return True
             else:
-                on_done(None, PPPException("Socket error"))
+                self.__cmd_response_cb(None, PPPException("Socket error"), command_id)
                 logging.exception(e)
                 self.cleanup()
                 return False
 
-        lines = self.buffer.split("\r\n")
-        found = False
-        for line in lines:
-            if line == "":
-                pass
-            else:
-                for t in terminators:
-                    if t in line:
-                        found = True
+        terminators = self.commands[command_id][2] if isinstance(self.commands[command_id], tuple) else ["OK", "ERROR"]
 
-        if found:
+        lines = self.buffer.split("\r\n")
+
+        if any(terminator in line for line in lines for terminator in terminators):
             lines = [x.strip("\r\n") for x in lines if x != ""]
             logging.info(f"<-- {lines}")
 
-            on_done(lines, None)
+            self.__cmd_response_cb(lines, None, command_id)
             return False
 
         return True
 
-    def wait_for_reply(self, callback, terminators=("OK", "ERROR"), *user_data):
+    def wait_for_reply(self, command_id):
         def on_timeout():
             GLib.source_remove(self.io_watch)
-            callback(None, PPPException("Modem initialization timed out"), *user_data)
+            self.__cmd_response_cb(None, PPPException("Modem initialization timed out"), command_id)
             self.cleanup()
             return False
-
-        def on_done(ret, exception):
-            GLib.source_remove(self.timeout)
-            callback(ret, exception, *user_data)
 
         self.buffer = ""
         self.term_found = False
 
         self.io_watch = GLib.io_add_watch(self.file, GLib.IO_IN | GLib.IO_ERR | GLib.IO_HUP, self.on_data_ready,
-                                          terminators, on_done)
+                                          command_id)
         self.timeout = GLib.timeout_add(15000, on_timeout)
