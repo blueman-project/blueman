@@ -5,6 +5,7 @@
 ### Bugs fixed
 
 * Unstranslated strings
+* Default PIN lookup
 
 ## 2.1.3
 
