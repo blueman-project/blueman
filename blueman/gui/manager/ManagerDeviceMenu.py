@@ -254,13 +254,9 @@ class ManagerDeviceMenu(Gtk.Menu):
             connect_item.show()
             self.append(connect_item)
 
-        rets = [plugin.on_request_menu_items(self, self.SelectedDevice)
-                for plugin in self.Blueman.Plugins.get_loaded_plugins(MenuItemsProvider)]
-
-        for ret in rets:
-            if ret:
-                for (item, pos) in ret:
-                    items.append((pos, item))
+        for plugin in self.Blueman.Plugins.get_loaded_plugins(MenuItemsProvider):
+            for item, pos in plugin.on_request_menu_items(self, self.SelectedDevice):
+                items.append((pos, item))
 
         logging.debug(row["alias"])
 
