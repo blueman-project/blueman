@@ -15,6 +15,7 @@
 * Handle os.remove failing
 * Fix disconnecting NMDevice
 * Untranslated string in DiscvManager
+* Default PIN lookup
 
 ## 2.1.1
 

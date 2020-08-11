@@ -195,7 +195,7 @@ class BluezAgent(DbusService):
     def _on_device_property_changed(self, device, key, value, path):
         if (key == "Paired" and value) or (key == "Connected" and not value):
             handlerid = self._devhandlerids.pop(path)
-            device.disconnect(handlerid)
+            device.disconnect_signal(handlerid)
             self._on_cancel()
 
     def _on_release(self):
@@ -220,7 +220,8 @@ class BluezAgent(DbusService):
         default_pin = self._lookup_default_pin(device_path)
         if default_pin is not None:
             logging.info(f"Sending default pin: {default_pin}")
-            return default_pin
+            ok(default_pin)
+            return
 
         self.ask_passkey(dialog_msg, notify_msg, False, True, device_path, ok, err)
         if self.dialog:
