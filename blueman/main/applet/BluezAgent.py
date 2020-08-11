@@ -220,7 +220,8 @@ class BluezAgent(DbusService):
         default_pin = self._lookup_default_pin(device_path)
         if default_pin is not None:
             logging.info('Sending default pin: %s' % default_pin)
-            return default_pin
+            ok(default_pin)
+            return
 
         self.ask_passkey(dialog_msg, notify_msg, False, True, device_path, ok, err)
         if self.dialog:
