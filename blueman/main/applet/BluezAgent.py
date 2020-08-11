@@ -163,7 +163,7 @@ class BluezAgent(DbusService):
                 pin = "".join(random.sample('123456789', int(pin[-1])))
         return pin
 
-    def ask_passkey(self, dialog_msg, notify_msg, is_numeric, notification, device_path, ok, err):
+    def ask_passkey(self, dialog_msg, is_numeric, device_path, ok, err):
         def passkey_dialog_cb(dialog, response_id):
             if response_id == Gtk.ResponseType.ACCEPT:
                 ret = pin_entry.get_text()
@@ -185,8 +185,7 @@ class BluezAgent(DbusService):
             logging.error("Agent: Failed to build dialog")
             err(BluezErrorCanceled("Canceled"))
 
-        if notification:
-            Notification(_("Bluetooth Authentication"), notify_message, icon_name="blueman").show()
+        Notification(_("Bluetooth Authentication"), notify_message, icon_name="blueman").show()
 
         self.dialog.connect("response", passkey_dialog_cb)
         self.dialog.present()
@@ -215,7 +214,6 @@ class BluezAgent(DbusService):
     def _on_request_pin_code(self, device_path, ok, err):
         logging.info("Agent.RequestPinCode")
         dialog_msg = _("Enter PIN code for authentication:")
-        notify_msg = _("Enter PIN code")
 
         default_pin = self._lookup_default_pin(device_path)
         if default_pin is not None:
@@ -223,15 +221,14 @@ class BluezAgent(DbusService):
             ok(default_pin)
             return
 
-        self.ask_passkey(dialog_msg, notify_msg, False, True, device_path, ok, err)
+        self.ask_passkey(dialog_msg, False, device_path, ok, err)
         if self.dialog:
             self.dialog.present()
 
     def _on_request_passkey(self, device, ok, err):
         logging.info("Agent.RequestPasskey")
         dialog_msg = _("Enter passkey for authentication:")
-        notify_msg = _("Enter passkey")
-        self.ask_passkey(dialog_msg, notify_msg, True, True, device, ok, err)
+        self.ask_passkey(dialog_msg, True, device, ok, err)
         if self.dialog:
             self.dialog.present()
 
