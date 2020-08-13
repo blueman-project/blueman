@@ -54,6 +54,7 @@ class DhcpClient(GObject.GObject):
         if not self._client.poll():
             logging.warning("Timeout reached, terminating DHCP client")
             self._client.terminate()
+        return False
 
     def _check_client(self):
         netifs = get_local_interfaces()
@@ -63,6 +64,7 @@ class DhcpClient(GObject.GObject):
                 ip = netifs[self._interface][0]
                 logging.info(f"bound to {ip}")
                 self.emit("connected", ip)
+                return False
 
             GLib.timeout_add(1000, complete)
             DhcpClient.quering.remove(self._interface)

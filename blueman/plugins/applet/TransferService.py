@@ -78,7 +78,13 @@ class Agent(DbusService):
                 ok(self.transfers[self._pending_transfer['transfer_path']]['path'])
 
                 self._allowed_devices.append(self._pending_transfer['address'])
-                GLib.timeout_add(60000, self._allowed_devices.remove, self._pending_transfer['address'])
+
+                def _remove() -> bool:
+                    assert self._pending_transfer is not None  # https://github.com/python/mypy/issues/2608
+                    self._allowed_devices.remove(self._pending_transfer['address'])
+                    return False
+
+                GLib.timeout_add(60000, _remove)
             else:
                 err(ObexErrorRejected("Rejected"))
 

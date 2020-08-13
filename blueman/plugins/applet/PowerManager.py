@@ -77,6 +77,7 @@ class PowerManager(AppletPlugin, StatusIconProvider):
                     self.request_power_state(True, force=True)
                 else:
                     self.request_power_state(self.adapter_state)
+                return False
 
             GLib.timeout_add(1000, timeout)
 

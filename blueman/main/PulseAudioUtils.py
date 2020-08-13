@@ -375,6 +375,7 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
             pa_context_set_subscribe_callback(self.pa_context,
                                               self.event_cb,
                                               None)
+        return False
 
     def _on_delete(self):
         logging.info("Destroying PulseAudioUtils instance")

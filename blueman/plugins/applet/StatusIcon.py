@@ -83,6 +83,7 @@ class StatusIcon(AppletPlugin, GObject.GObject):
         GLib.source_remove(self.visibility_timeout)
         self.visibility_timeout = None
         self.query_visibility()
+        return False
 
     def set_visible(self, visible, emit):
         self.visible = visible

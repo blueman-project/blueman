@@ -51,11 +51,18 @@ class Connection:
         m.PPPConnect('(sss)', self.port, c["number"], c["apn"], result_handler=self.on_connected,
                      error_handler=self.on_error)
 
+        return False
+
     def on_error(self, _obj: Mechanism, result: GLib.Error, _user_data: None) -> None:
         logging.info(f"Failed {result}")
         # FIXME confusingly self.port is the full rfcomm device path but the service expects the number only
         self.error_handler(result)
-        GLib.timeout_add(1000, self.service.disconnect, int(self.port[-1]))
+
+        def _connect() -> bool:
+            self.service.disconnect(int(self.port[-1]))
+            return False
+
+        GLib.timeout_add(1000, _connect)
 
     def on_connected(self, _obj: Mechanism, result: str, _user_data: None) -> None:
         self.reply_handler(self.port)
