@@ -66,7 +66,7 @@ class BluemanServices(Gtk.Application):
         self.window.present_with_time(Gtk.get_current_event_time())
 
     def option_changed(self):
-        rets = self.plugin_exec("on_query_apply_state")
+        rets = [plugin.on_query_apply_state() for plugin in ServicePlugin.instances if plugin._is_loaded]
         show_apply = False
         for ret in rets:
             if ret == -1:
@@ -107,18 +107,10 @@ class BluemanServices(Gtk.Application):
     def setup_list_item(self, inst, name, icon):
         self.List.append(icon_name=icon, caption=name, id=inst.__class__.__name__)
 
-    # executes a function on all plugin instances
-    def plugin_exec(self, func, *args, **kwargs):
-        rets = []
-        for inst in ServicePlugin.instances:
-            if inst._is_loaded:
-                ret = getattr(inst, func)(*args, **kwargs)
-                rets.append(ret)
-
-        return rets
-
     def on_apply_clicked(self, button):
-        self.plugin_exec("on_apply")
+        for plugin in ServicePlugin.instances:
+            if plugin._is_loaded:
+                plugin.on_apply()
         self.option_changed()
 
     def set_page(self, pageid):
