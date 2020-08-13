@@ -123,10 +123,6 @@ pa_context_get_card_info_by_index = libpulse.pa_context_get_card_info_by_index
 pa_context_get_card_info_by_index.restype = c_void_p
 pa_context_get_card_info_by_index.argtypes = [c_void_p, c_uint32, pa_card_info_cb_t, py_object]
 
-pa_context_get_card_info_by_name = libpulse.pa_context_get_card_info_by_name
-pa_context_get_card_info_by_name.restype = c_void_p
-pa_context_get_card_info_by_name.argtypes = [c_void_p, c_char_p, pa_card_info_cb_t, py_object]
-
 pa_context_get_card_info_list = libpulse.pa_context_get_card_info_list
 pa_context_get_card_info_list.restype = c_void_p
 pa_context_get_card_info_list.argtypes = [c_void_p, pa_card_info_cb_t, py_object]
@@ -316,23 +312,10 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
 
             callback(self.__card_info(entry_info))
 
-        if type(card) is str:
-            fn = pa_context_get_card_info_by_name
-        else:
-            fn = pa_context_get_card_info_by_index
-
-        self.__init_list_callback(fn,
-                                  pa_card_info_cb_t, handler, card)
+        self.__init_list_callback(pa_context_get_card_info_by_index, pa_card_info_cb_t, handler, card)
 
     def set_card_profile(self, card, profile, callback):
-        profile = profile.encode("UTF-8")
-        if type(card) is str:
-            card = card.encode("UTF-8")
-            fn = pa_context_set_card_profile_by_name
-        else:
-            fn = pa_context_set_card_profile_by_index
-
-        self.simple_callback(callback, fn, card, profile)
+        self.simple_callback(callback, pa_context_set_card_profile_by_index, card, profile.encode("UTF-8"))
 
     def __event_callback(self, context, event_type, idx, userdata):
         logging.info(f"{event_type} {idx}")
