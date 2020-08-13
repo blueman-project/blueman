@@ -177,6 +177,7 @@ class PluginDialog(Gtk.Window):
     def _on_close(self, *args, **kwargs):
         self.applet.Plugins.disconnect(self.sig_a)
         self.applet.Plugins.disconnect(self.sig_b)
+        return False
 
     def on_selection_changed(self, selection):
         model, tree_iter = selection.get_selected()
