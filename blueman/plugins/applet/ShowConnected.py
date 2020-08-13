@@ -44,6 +44,8 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
 
         self.update_statusicon()
 
+        return False
+
     def update_statusicon(self):
         if self.num_connections > 0:
             self.parent.Plugins.StatusIcon.set_text_line(0, _("Bluetooth Active"))
