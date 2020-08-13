@@ -71,6 +71,7 @@ class BluemanAdapters(Gtk.Application):
     def do_activate(self):
         def app_release(_plug, event):
             self.release()
+            return False
 
         if self.socket_id:
             self.hold()

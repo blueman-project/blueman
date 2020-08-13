@@ -104,6 +104,7 @@ class StandardItems(AppletPlugin, PowerStateListener):
         def on_close(win, event):
             win.destroy()
             self._plugin_window = None
+            return False
 
         if self._plugin_window:
             self._plugin_window.present()
