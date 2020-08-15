@@ -9,7 +9,7 @@ from blueman.typing import GSignals
 
 class Client(Base):
     __gsignals__: GSignals = {
-        'session-failed': (GObject.SignalFlags.NO_HOOKS, None, (str,)),
+        'session-failed': (GObject.SignalFlags.NO_HOOKS, None, (object,)),
     }
 
     _interface_name = 'org.bluez.obex.Client1'
