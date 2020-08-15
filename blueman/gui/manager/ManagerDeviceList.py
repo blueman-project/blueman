@@ -1,19 +1,21 @@
 from gettext import gettext as _
-from typing import Dict
+from typing import Dict, Optional, TYPE_CHECKING, List, Any
 import html
 import logging
 import cairo
 import os
 
+from blueman.bluez.Device import Device
 from blueman.gui.DeviceList import DeviceList
 from blueman.DeviceClass import get_minor_class, get_major_class, gatt_appearance_to_name
+from blueman.gui.GenericList import ListDataDict
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.Constants import PIXMAP_PATH
 from blueman.Functions import launch
 from blueman.Sdp import ServiceUUID, OBEX_OBJPUSH_SVCLASS_ID
 from blueman.gui.GtkAnimation import TreeRowFade, CellFade
 from blueman.main.Config import Config
-from _blueman import ConnInfoReadError
+from _blueman import ConnInfoReadError, conn_info
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -23,12 +25,15 @@ from gi.repository import GdkPixbuf
 from gi.repository import GObject
 from gi.repository import Pango
 
+if TYPE_CHECKING:
+    from blueman.main.Manager import Blueman
+
 
 class ManagerDeviceList(DeviceList):
-    def __init__(self, adapter=None, inst=None):
+    def __init__(self, adapter: Optional[str] = None, inst: Optional["Blueman"] = None) -> None:
         cr = Gtk.CellRendererText()
         cr.props.ellipsize = Pango.EllipsizeMode.END
-        tabledata = [
+        tabledata: List[ListDataDict] = [
             # device picture
             {"id": "device_surface", "type": str, "renderer": Gtk.CellRendererPixbuf(),
              "render_attrs": {}, "celldata_func": (self._set_device_cell_data, None)},
@@ -74,7 +79,7 @@ class ManagerDeviceList(DeviceList):
         self.connect("button_press_event", self.on_event_clicked)
         self.connect("button_release_event", self.on_event_clicked)
 
-        self.menu = None
+        self.menu: Optional[ManagerDeviceMenu] = None
 
         self.connect("drag_data_received", self.drag_recv)
         self.connect("drag-motion", self.drag_motion)
@@ -86,7 +91,7 @@ class ManagerDeviceList(DeviceList):
 
         self._faderhandlers: Dict[str, int] = {}
 
-    def _on_settings_changed(self, settings, key):
+    def _on_settings_changed(self, settings: Config, key: str) -> None:
         if key in ('sort-by', 'sort-order'):
             sort_by = settings['sort-by']
             sort_order = settings['sort-order']
@@ -101,19 +106,20 @@ class ManagerDeviceList(DeviceList):
             if column_id:
                 self.liststore.set_sort_column_id(column_id, sort_type)
 
-    def on_icon_theme_changed(self, widget):
+    def on_icon_theme_changed(self, _icon_them: Gtk.IconTheme) -> None:
         for row in self.liststore:
             device = self.get(row.iter, "device")["device"]
             self.row_setup_event(row.iter, device)
 
-    def search_func(self, model, column, key, tree_iter):
+    def search_func(self, model: Gtk.TreeModel, column: int, key: str, tree_iter: Gtk.TreeIter) -> bool:
         row = self.get(tree_iter, "caption")
         if key.lower() in row["caption"].lower():
             return False
         logging.info(f"{model} {column} {key} {tree_iter}")
         return True
 
-    def drag_recv(self, widget, context, x, y, selection, target_type, time):
+    def drag_recv(self, _widget: Gtk.Widget, context: Gdk.DragContext, x: int, y: int, selection: Gtk.SelectionData,
+                  _info: int, time: int) -> None:
 
         uris = list(selection.get_uris())
 
@@ -130,9 +136,7 @@ class ManagerDeviceList(DeviceList):
         else:
             context.finish(False, False, time)
 
-        return True
-
-    def drag_motion(self, widget, drag_context, x, y, timestamp):
+    def drag_motion(self, _widget: Gtk.Widget, drag_context: Gdk.DragContext, x: int, y: int, timestamp: int) -> bool:
         result = self.get_path_at_pos(x, y)
         if result is not None:
             path = result[0]
@@ -146,36 +150,39 @@ class ManagerDeviceList(DeviceList):
                 else:
                     Gdk.drag_status(drag_context, Gdk.DragAction.DEFAULT, timestamp)
                     return False
+            return False
         else:
             Gdk.drag_status(drag_context, Gdk.DragAction.DEFAULT, timestamp)
             return False
 
-    def on_event_clicked(self, widget, event):
+    def on_event_clicked(self, _widget: Gtk.Widget, event: Gdk.Event) -> bool:
         if event.type not in (Gdk.EventType._2BUTTON_PRESS, Gdk.EventType.BUTTON_PRESS):
-            return
+            return False
 
         path = self.get_path_at_pos(int(event.x), int(event.y))
         if path is None:
-            return
+            return False
 
         row = self.get(path[0], "device", "connected")
         if not row:
-            return
+            return False
 
         if self.Blueman is None:
-            return
+            return False
 
         if self.menu is None:
             self.menu = ManagerDeviceMenu(self.Blueman)
 
         if event.type == Gdk.EventType._2BUTTON_PRESS and event.button == 1:
             if self.menu.show_generic_connect_calc(row["device"]['UUIDs']):
-                self.menu.generic_connect(item=None, device=row["device"], connect=not row["connected"])
+                self.menu.generic_connect(None, device=row["device"], connect=not row["connected"])
 
         if event.type == Gdk.EventType.BUTTON_PRESS and event.button == 3:
             self.menu.popup_at_pointer(event)
 
-    def get_icon_info(self, icon_name, size=48, fallback=True):
+        return False
+
+    def get_icon_info(self, icon_name: str, size: int = 48, fallback: bool = True) -> Optional[Gtk.IconInfo]:
         if icon_name is None and not fallback:
             return None
         elif icon_name is None and fallback:
@@ -186,7 +193,8 @@ class ManagerDeviceList(DeviceList):
 
         return icon_info
 
-    def make_device_icon(self, icon_info, is_paired=False, is_trusted=False):
+    def make_device_icon(self, icon_info: Gtk.IconInfo, is_paired: bool = False, is_trusted: bool = False
+                         ) -> cairo.Surface:
         window = self.get_window()
         scale = self.get_scale_factor()
         target = icon_info.load_surface(window)
@@ -210,7 +218,7 @@ class ManagerDeviceList(DeviceList):
 
         return target
 
-    def device_remove_event(self, device):
+    def device_remove_event(self, device: Device) -> None:
         tree_iter = self.find_device(device)
 
         row_fader = self.get(tree_iter, "row_fader")["row_fader"]
@@ -223,27 +231,27 @@ class ManagerDeviceList(DeviceList):
         self.emit("device-selected", None, None)
         row_fader.animate(start=row_fader.get_state(), end=0.0, duration=400)
 
-    def __on_fader_finished(self, fader, device):
+    def __on_fader_finished(self, fader: TreeRowFade, device: Device) -> None:
         fader.disconnect(self._faderhandlers.pop(device.get_object_path()))
         fader.freeze()
 
-    def device_add_event(self, device):
+    def device_add_event(self, device: Device) -> None:
         self.add_device(device)
 
     @staticmethod
-    def make_caption(name, klass, address):
+    def make_caption(name: str, klass: str, address: str) -> str:
         return "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" \
                % {"0": html.escape(name), "1": klass.capitalize(), "2": address}
 
     @staticmethod
-    def get_device_class(device):
+    def get_device_class(device: Device) -> str:
         klass = get_minor_class(device['Class'])
         if klass != "uncategorized":
             return get_minor_class(device['Class'], True)
         else:
             return get_major_class(device['Class'])
 
-    def row_setup_event(self, tree_iter, device):
+    def row_setup_event(self, tree_iter: Gtk.TreeIter, device: Device) -> None:
         if not self.get(tree_iter, "initial_anim")["initial_anim"]:
             cell_fader = CellFade(self, self.props.model.get_path(tree_iter), [2, 3, 4])
             row_fader = TreeRowFade(self, self.props.model.get_path(tree_iter))
@@ -254,7 +262,7 @@ class ManagerDeviceList(DeviceList):
 
             cell_fader.freeze()
 
-            def on_finished(fader):
+            def on_finished(fader: TreeRowFade) -> None:
                 fader.disconnect(faderhandler)
                 fader.freeze()
 
@@ -293,7 +301,7 @@ class ManagerDeviceList(DeviceList):
         except Exception as e:
             logging.exception(e)
 
-    def row_update_event(self, tree_iter, key, value):
+    def row_update_event(self, tree_iter: Gtk.TreeIter, key: str, value: Any) -> None:
         logging.info(f"{key} {value}")
 
         if key == "Trusted":
@@ -321,7 +329,7 @@ class ManagerDeviceList(DeviceList):
         elif key == "Connected":
             self.set(tree_iter, connected=value)
 
-    def level_setup_event(self, row_ref, device, cinfo):
+    def level_setup_event(self, row_ref: Gtk.TreeRowReference, device: Device, cinfo: Optional[conn_info]) -> None:
         if not row_ref.valid():
             return
 
@@ -366,7 +374,7 @@ class ManagerDeviceList(DeviceList):
                 fader.set_state(0.0)
                 fader.animate(start=0.0, end=1.0, duration=400)
 
-                def on_finished(fader):
+                def on_finished(fader: CellFade) -> None:
                     fader.freeze()
                     fader.disconnect(faderhandler)
 
@@ -404,7 +412,7 @@ class ManagerDeviceList(DeviceList):
                 fader.set_state(1.0)
                 fader.animate(start=fader.get_state(), end=0.0, duration=400)
 
-                def on_finished(fader):
+                def on_finished(fader: CellFade) -> None:
                     fader.disconnect(faderhandler)
                     fader.freeze()
                     if row_ref.valid():
@@ -412,7 +420,7 @@ class ManagerDeviceList(DeviceList):
 
                 faderhandler = fader.connect("animation-finished", on_finished)
 
-    def tooltip_query(self, tw, x, y, kb, tooltip):
+    def tooltip_query(self, _tw: Gtk.Widget, x: int, y: int, _kb: bool, tooltip: Gtk.Tooltip) -> bool:
         path = self.get_path_at_pos(x, y)
 
         if path is not None:
@@ -494,7 +502,7 @@ class ManagerDeviceList(DeviceList):
                     return True
         return False
 
-    def _has_objpush(self, device):
+    def _has_objpush(self, device: Device) -> bool:
         if device is None:
             return False
 
@@ -503,7 +511,8 @@ class ManagerDeviceList(DeviceList):
                 return True
         return False
 
-    def _set_device_cell_data(self, col, cell, model, tree_iter, data):
+    def _set_device_cell_data(self, _col: Gtk.TreeViewColumn, cell: Gtk.CellRenderer, _model: Gtk.TreeModel,
+                              tree_iter: Gtk.TreeIter, _data: None) -> None:
         row = self.get(tree_iter, "icon_info", "trusted", "paired")
         surface = self.make_device_icon(row["icon_info"], row["paired"], row["trusted"])
         cell.set_property("surface", surface)

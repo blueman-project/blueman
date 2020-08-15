@@ -1,5 +1,6 @@
 from datetime import datetime
 from gettext import gettext as _
+from typing import Optional, overload, TYPE_CHECKING
 
 from blueman.Constants import WEBSITE, VERSION
 
@@ -7,10 +8,14 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
+if TYPE_CHECKING:
+    from typing_extensions import Literal
+
 
 class ErrorDialog(Gtk.MessageDialog):
-    def __init__(self, markup, secondary_markup=None, excp=None, icon_name="dialog-error",
-                 buttons=Gtk.ButtonsType.CLOSE, **kwargs):
+    def __init__(self, markup: str, secondary_markup: Optional[str] = None, excp: Optional[object] = None,
+                 icon_name: str = "dialog-error", buttons: Gtk.ButtonsType = Gtk.ButtonsType.CLOSE, **kwargs: object
+                 ) -> None:
         super().__init__(name="ErrorDialog", icon_name=icon_name, buttons=buttons,
                          type=Gtk.MessageType.ERROR, **kwargs)
 
@@ -32,7 +37,17 @@ class ErrorDialog(Gtk.MessageDialog):
             message_box.pack_start(expander, False, False, 10)
 
 
-def show_about_dialog(app_name, run=True, parent=None):
+@overload
+def show_about_dialog(app_name: str, run: "Literal[True]" = True, parent: Gtk.Window = None) -> None:
+    ...
+
+
+@overload
+def show_about_dialog(app_name: str, run: "Literal[False]", parent: Gtk.Window = None) -> Gtk.AboutDialog:
+    ...
+
+
+def show_about_dialog(app_name: str, run: bool = True, parent: Gtk.Window = None) -> Optional[Gtk.AboutDialog]:
     about = Gtk.AboutDialog()
     about.set_transient_for(parent)
     about.set_name(app_name)
@@ -54,5 +69,6 @@ def show_about_dialog(app_name, run=True, parent=None):
     if run:
         about.run()
         about.destroy()
+        return None
     else:
         return about

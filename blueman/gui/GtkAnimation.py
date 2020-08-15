@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Collection, Iterable
 
 import cairo
 import gi
@@ -7,6 +7,8 @@ from blueman.typing import GSignals
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
+gi.require_version("Gdk", "3.0")
+from gi.repository import Gdk
 from gi.repository import GObject
 from gi.repository import GLib
 
@@ -16,14 +18,14 @@ class AnimBase(GObject.GObject):
         'animation-finished': (GObject.SignalFlags.RUN_LAST, None, ()),
     }
 
-    def __init__(self, state=1.0):
+    def __init__(self, state: float = 1.0) -> None:
         super().__init__()
         self._source = None
         self._state = state
         self.frozen = False
         self.fps = 24.0
 
-    def _do_transition(self):
+    def _do_transition(self) -> bool:
         if abs(self._end - self._start) < 0.000001:
             return False
 
@@ -47,13 +49,13 @@ class AnimBase(GObject.GObject):
         self._state_changed(self._state)
         return True
 
-    def thaw(self):
+    def thaw(self) -> None:
         self.frozen = False
 
-    def freeze(self):
+    def freeze(self) -> None:
         self.frozen = True
 
-    def animate(self, start=1.0, end=0.0, duration=1000):
+    def animate(self, start: float = 1.0, end: float = 0.0, duration: int = 1000) -> None:
         if self.frozen:
             self.emit("animation-finished")
             return
@@ -76,25 +78,26 @@ class AnimBase(GObject.GObject):
         self._state_changed(self._state)
         self._source = GLib.timeout_add(int(1.0 / self.fps * 1000), self._do_transition)
 
-    def _state_changed(self, state):
+    def _state_changed(self, state: float) -> None:
         self.state_changed(state)
 
-    def state_changed(self, state):
+    def state_changed(self, state: float) -> None:
         pass
 
-    def get_state(self):
+    def get_state(self) -> float:
         return self._state
 
-    def set_state(self, state):
+    def set_state(self, state: float) -> None:
         self._state = state
         self._state_changed(state)
 
-    def is_animating(self):
+    def is_animating(self) -> bool:
         return self._source is not None
 
 
 class TreeRowFade(AnimBase):
-    def __init__(self, tw, path, columns=None):
+    def __init__(self, tw: Gtk.TreeView, path: Gtk.TreePath, columns: Optional[Collection[Gtk.TreeViewColumn]] = None
+                 ) -> None:
         super().__init__(1.0)
         self.tw = tw
 
@@ -104,22 +107,22 @@ class TreeRowFade(AnimBase):
         self.stylecontext = tw.get_style_context()
         self.columns = columns
 
-    def unref(self):
+    def unref(self) -> None:
         if self.sig is not None:
             self.tw.disconnect(self.sig)
             self.sig = None
 
-    def get_iter(self):
+    def get_iter(self) -> Optional[Gtk.TreeIter]:
         return self.tw.props.model.get_iter(self.row.get_path())
 
-    def on_draw(self, widget, cr):
+    def on_draw(self, widget: Gtk.Widget, cr: cairo.Context) -> bool:
         if self.frozen:
-            return
+            return False
 
         if not self.row.valid():
             self.tw.disconnect(self.sig)
             self.sig = None
-            return
+            return False
 
         path = self.row.get_path()
 
@@ -127,6 +130,7 @@ class TreeRowFade(AnimBase):
 
         if not self.columns:
             self.columns = self.tw.get_columns()
+        assert self.columns is not None
 
         for col in self.columns:
             rect = self.tw.get_background_area(path, col)
@@ -138,12 +142,14 @@ class TreeRowFade(AnimBase):
         cr.set_operator(cairo.OPERATOR_OVER)
         cr.paint()
 
-    def state_changed(self, state):
+        return False
+
+    def state_changed(self, state: float) -> None:
         self.tw.queue_draw()
 
 
 class CellFade(AnimBase):
-    def __init__(self, tw, path, columns=None):
+    def __init__(self, tw: Gtk.TreeView, path: Gtk.TreePath, columns: Iterable[int]) -> None:
         super().__init__(1.0)
         self.tw = tw
 
@@ -155,17 +161,17 @@ class CellFade(AnimBase):
         for i in columns:
             self.columns.append(self.tw.get_column(i))
 
-    def unref(self):
+    def unref(self) -> None:
         if self.sig is not None:
             self.tw.disconnect(self.sig)
             self.sig = None
 
-    def get_iter(self):
+    def get_iter(self) -> Optional[Gtk.TreeIter]:
         return self.tw.props.model.get_iter(self.row.get_path())
 
-    def on_draw(self, widget, cr):
+    def on_draw(self, _widget: Gtk.Widget, cr: cairo.Context) -> bool:
         if self.frozen:
-            return
+            return False
 
         if not self.row.valid():
             self.tw.disconnect(self.sig)
@@ -198,14 +204,14 @@ class CellFade(AnimBase):
         cr.set_source_rgb(bg_color.red, bg_color.green, bg_color.blue)
         cr.paint_with_alpha(1.0 - self.get_state())
 
-    def state_changed(self, state):
-        self.tw.queue_draw()
+        return False
 
-    # print state
+    def state_changed(self, state: float) -> None:
+        self.tw.queue_draw()
 
 
 class WidgetFade(AnimBase):
-    def __init__(self, widget, color):
+    def __init__(self, widget: Gtk.Widget, color: Gdk.RGBA) -> None:
         super().__init__(1.0)
 
         self.widget = widget
@@ -213,11 +219,12 @@ class WidgetFade(AnimBase):
 
         self.sig = widget.connect_after("draw", self.on_draw)
 
-    def on_draw(self, widget, cr):
+    def on_draw(self, _widget: Gtk.Widget, cr: cairo.Context) -> bool:
         if not self.frozen:
             cr.set_source_rgba(self.color.red, self.color.green, self.color.blue, self.color.alpha - self.get_state())
             cr.set_operator(cairo.OPERATOR_OVER)
             cr.paint()
+        return False
 
-    def state_changed(self, state):
+    def state_changed(self, state: float) -> None:
         self.widget.queue_draw()

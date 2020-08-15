@@ -2,7 +2,9 @@ from gettext import gettext as _
 import os
 import logging
 import importlib
-from blueman.gui.GenericList import GenericList
+from typing import List
+
+from blueman.gui.GenericList import GenericList, ListDataDict
 import blueman.plugins.services
 from blueman.plugins.ServicePlugin import ServicePlugin
 from blueman.main.Config import Config
@@ -41,7 +43,7 @@ class BluemanServices(Gtk.Application):
 
             self.Config = Config("org.blueman.general")
 
-            data = [
+            data: List[ListDataDict] = [
                 {"id": "icon_name", "type": str, "renderer": Gtk.CellRendererPixbuf(stock_size=Gtk.IconSize.DND),
                  "render_attrs": {"icon_name": 0}},
                 {"id": "caption", "type": str, "renderer": Gtk.CellRendererText(), "render_attrs": {"markup": 1},

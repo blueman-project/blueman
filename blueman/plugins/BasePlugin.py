@@ -1,7 +1,7 @@
 import logging
 import weakref
 from gettext import gettext as _
-from typing import List, TYPE_CHECKING, Dict, Tuple, Any
+from typing import List, TYPE_CHECKING, Dict, Tuple, Any, TypeVar, Type, Optional
 
 from blueman.main.Config import Config
 
@@ -53,6 +53,12 @@ class BasePlugin:
             )
 
         weakref.finalize(self, self._on_plugin_delete)
+
+    _T = TypeVar("_T", bound="BasePlugin")
+
+    @classmethod
+    def get_instance(cls: Type[_T]) -> Optional[_T]:
+        return cls.__instance__
 
     def _on_plugin_delete(self):
         self.on_delete()

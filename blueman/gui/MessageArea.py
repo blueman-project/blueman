@@ -1,4 +1,5 @@
 from gettext import gettext as _
+from typing import Optional
 
 from blueman.gui.GtkAnimation import WidgetFade
 
@@ -13,13 +14,13 @@ from gi.repository import Pango
 class MessageArea(Gtk.InfoBar):
     _inst_: "MessageArea"
 
-    def __new__(cls):
+    def __new__(cls) -> "MessageArea":
         if not hasattr(MessageArea, "_inst_"):
             MessageArea._inst_ = super().__new__(cls)
 
         return MessageArea._inst_
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(show_close_button=True)
 
         self.set_name("MessageArea")
@@ -44,8 +45,9 @@ class MessageArea(Gtk.InfoBar):
 
         self.connect("response", self.on_response)
 
-    def on_response(self, info_bar, response_id):
+    def on_response(self, info_bar: Gtk.InfoBar, response_id: int) -> None:
         if response_id == 0:
+            assert self.bt is not None
             d = Gtk.MessageDialog(parent=self.get_toplevel(), flags=0, type=Gtk.MessageType.INFO,
                                   buttons=Gtk.ButtonsType.CLOSE, text='\n'.join((self.text, self.bt)))
             d.run()
@@ -54,15 +56,15 @@ class MessageArea(Gtk.InfoBar):
             info_bar.props.visible = False
 
     @staticmethod
-    def close():
+    def close() -> None:
         MessageArea._inst_.response(1)
 
     @staticmethod
-    def show_message(*args):
-        MessageArea._inst_._show_message(*args)
+    def show_message(text: str, bt: Optional[str] = None, icon: str = "dialog-warning") -> None:
+        MessageArea._inst_._show_message(text, bt, icon)
 
-    def _show_message(self, text, bt=None, icon="dialog-warning"):
-        def on_finished(anim):
+    def _show_message(self, text: str, bt: Optional[str] = None, icon: str = "dialog-warning") -> None:
+        def on_finished(anim: WidgetFade) -> None:
             anim.disconnect(sig)
             anim.freeze()
 

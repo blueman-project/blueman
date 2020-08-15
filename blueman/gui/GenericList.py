@@ -1,19 +1,36 @@
-from typing import Dict, Optional
+from typing import Dict, Optional, TYPE_CHECKING, Iterable, Mapping, Callable, Tuple, Union, Collection, List, Any
 
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 
+if TYPE_CHECKING:
+    from typing_extensions import TypedDict
+
+    class _ListDataDictBase(TypedDict):
+        id: str
+        type: type
+
+    class ListDataDict(_ListDataDictBase, total=False):
+        renderer: Gtk.CellRenderer
+        render_attrs: Mapping[str, int]
+        view_props: Mapping[str, object]
+        celldata_func: Tuple[Callable[[Gtk.TreeViewColumn, Gtk.CellRenderer, Gtk.TreeModel, Gtk.TreeIter, Any],
+                                      None], Any]
+else:
+    ListDataDict = dict
+
+
 # noinspection PyAttributeOutsideInit
 class GenericList(Gtk.TreeView):
-    def __init__(self, data, **kwargs):
+    def __init__(self, data: Iterable[ListDataDict], **kwargs: object) -> None:
         super().__init__(**kwargs)
         self.set_name("GenericList")
         self.selection = self.get_selection()
         self._load(data)
 
-    def _load(self, data):
+    def _load(self, data: Iterable[ListDataDict]) -> None:
         self.ids: Dict[str, int] = {}
         self.columns: Dict[str, Gtk.TreeViewColumn] = {}
 
@@ -42,12 +59,12 @@ class GenericList(Gtk.TreeView):
             self.columns[row["id"]] = column
             self.append_column(column)
 
-    def selected(self):
+    def selected(self) -> Gtk.TreeIter:
         (model, tree_iter) = self.selection.get_selected()
 
         return tree_iter
 
-    def delete(self, iterid):
+    def delete(self, iterid: Union[Gtk.TreeIter, Gtk.TreePath, int, str]) -> bool:
         if type(iterid) == Gtk.TreeIter:
             tree_iter = iterid
         else:
@@ -61,28 +78,28 @@ class GenericList(Gtk.TreeView):
         else:
             return False
 
-    def _add(self, **columns):
-        items: Dict[int, Optional[Gtk.TreeViewColumn]] = {}
+    def _add(self, **columns: object) -> Collection[object]:
+        items: Dict[int, object] = {}
         for k, v in self.ids.items():
             items[v] = None
 
-        for k, v in columns.items():
+        for k, val in columns.items():
             if k in self.ids:
-                items[self.ids[k]] = v
+                items[self.ids[k]] = val
             else:
                 raise Exception(f"Invalid key {k}")
 
         return items.values()
 
-    def append(self, **columns):
+    def append(self, **columns: object) -> Gtk.TreeIter:
         vals = self._add(**columns)
         return self.liststore.append(vals)
 
-    def prepend(self, **columns):
+    def prepend(self, **columns: object) -> Gtk.TreeIter:
         vals = self._add(**columns)
         return self.liststore.prepend(vals)
 
-    def get_conditional(self, **cols):
+    def get_conditional(self, **cols: object) -> List[int]:
         ret = []
         matches = 0
         for i in range(len(self.liststore)):
@@ -98,7 +115,7 @@ class GenericList(Gtk.TreeView):
 
         return ret
 
-    def set(self, iterid, **cols):
+    def set(self, iterid: Union[Gtk.TreeIter, Gtk.TreePath, int, str], **cols: object) -> None:
         if type(iterid) == Gtk.TreeIter:
             tree_iter = iterid
         else:
@@ -107,11 +124,8 @@ class GenericList(Gtk.TreeView):
         if tree_iter is not None:
             for k, v in cols.items():
                 self.liststore.set(tree_iter, self.ids[k], v)
-            return True
-        else:
-            return False
 
-    def get(self, iterid, *items):
+    def get(self, iterid: Union[Gtk.TreeIter, Gtk.TreePath, int, str], *items: str) -> Dict[str, Any]:
         ret = {}
 
         if iterid is not None:
@@ -127,11 +141,11 @@ class GenericList(Gtk.TreeView):
                     if items[i] in self.ids:
                         ret[items[i]] = self.liststore.get(tree_iter, self.ids[items[i]])[0]
         else:
-            return False
+            return {}
 
         return ret
 
-    def get_iter(self, path):
+    def get_iter(self, path: Optional[Union[Gtk.TreePath, int, str]]) -> Optional[Gtk.TreeIter]:
         if path is None:
             return None
 
@@ -140,11 +154,12 @@ class GenericList(Gtk.TreeView):
         except ValueError:
             return None
 
-    def clear(self):
+    def clear(self) -> None:
         self.liststore.clear()
 
-    def compare(self, iter_a, iter_b):
+    def compare(self, iter_a: Gtk.TreeIter, iter_b: Gtk.TreeIter) -> bool:
         if iter_a is not None and iter_b is not None:
-            return self.get_model().get_path(iter_a) == self.get_model().get_path(iter_b)
+            res: bool = self.get_model().get_path(iter_a) == self.get_model().get_path(iter_b)
+            return res
         else:
             return False

@@ -1,10 +1,10 @@
 from datetime import datetime
 import os
 import logging
-from typing import Dict, List
+from typing import Dict, List, Optional, Any
 
 from blueman.Functions import adapter_path_to_name
-from blueman.gui.GenericList import GenericList
+from blueman.gui.GenericList import GenericList, ListDataDict
 from blueman.Constants import ICON_PATH
 from _blueman import conn_info, ConnInfoReadError
 from blueman.bluez.Manager import Manager
@@ -43,11 +43,12 @@ class DeviceList(GenericList):
         'adapter-removed': (GObject.SignalFlags.RUN_LAST, None, (str,)),
     }
 
-    def __del__(self):
+    def __del__(self) -> None:
         logging.debug("deleting mainlist")
         super().__del__()
 
-    def __init__(self, adapter_name=None, tabledata=None, **kwargs):
+    def __init__(self, adapter_name: Optional[str] = None, tabledata: Optional[List[ListDataDict]] = None,
+                 **kwargs: object) -> None:
         if not tabledata:
             tabledata = []
 
@@ -70,9 +71,9 @@ class DeviceList(GenericList):
         self.any_device = AnyDevice()
         self._anydevhandler = self.any_device.connect_signal("property-changed", self._on_device_property_changed)
 
-        self.__discovery_time = 0
+        self.__discovery_time: float = 0
         self.__adapter_path = None
-        self.Adapter = None
+        self.Adapter: Optional[Adapter] = None
         self.discovering = False
 
         data = tabledata + [
@@ -95,7 +96,7 @@ class DeviceList(GenericList):
         # handle icon theme changes
         self.icon_theme.connect("changed", self.on_icon_theme_changed)
 
-    def destroy(self):
+    def destroy(self) -> None:
         self.any_device.disconnect(self._anydevhandler)
         self._any_adapter.disconnect(self._anyadapterhandler)
         self.selection.disconnect(self._selectionhandler)
@@ -103,7 +104,7 @@ class DeviceList(GenericList):
             self.manager.disconnect(handler)
         super().destroy()
 
-    def __on_manager_signal(self, manager, path, signal_name):
+    def __on_manager_signal(self, _manager: Manager, path: str, signal_name: str) -> None:
         if signal_name == 'adapter-removed':
             self.emit("adapter-removed", path)
             if path == self.__adapter_path:
@@ -131,14 +132,14 @@ class DeviceList(GenericList):
 
                 self.device_remove_event(dev)
 
-    def on_selection_changed(self, selection):
+    def on_selection_changed(self, selection: Gtk.TreeSelection) -> None:
         _model, tree_iter = selection.get_selected()
         if tree_iter:
             row = self.get(tree_iter, "device")
             dev = row["device"]
             self.emit("device-selected", dev, tree_iter)
 
-    def _on_property_changed(self, _adapter, key, value, path):
+    def _on_property_changed(self, _adapter: AnyAdapter, key: str, value: object, path: str) -> None:
         if not self.Adapter or self.Adapter.get_object_path() != path:
             return
 
@@ -148,7 +149,7 @@ class DeviceList(GenericList):
 
         self.emit("adapter-property-changed", self.Adapter, (key, value))
 
-    def _on_device_property_changed(self, _device, key, value, path):
+    def _on_device_property_changed(self, _device: AnyDevice, key: str, value: object, path: str) -> None:
         tree_iter = self.find_device_by_path(path)
 
         if tree_iter is not None:
@@ -165,11 +166,11 @@ class DeviceList(GenericList):
                     self.level_setup_event(r, dev, None)
 
     # Override when subclassing
-    def on_icon_theme_changed(self, widget):
+    def on_icon_theme_changed(self, _icon_them: Gtk.IconTheme) -> None:
         logging.warning("Icons may not be updated with icon theme changes")
 
-    def monitor_power_levels(self, device):
-        def update(row_ref, cinfo, address):
+    def monitor_power_levels(self, device: Device) -> None:
+        def update(row_ref: Gtk.TreeRowReference, cinfo: conn_info, address: str) -> bool:
             if not row_ref.valid():
                 logging.warning("stopping monitor (row does not exist)")
                 cinfo.deinit()
@@ -212,22 +213,22 @@ class DeviceList(GenericList):
 
     # called when power levels need updating
     # if cinfo is None then info icons need to be removed
-    def level_setup_event(self, tree_iter, device, cinfo):
+    def level_setup_event(self, row_ref: Gtk.TreeRowReference, device: Device, cinfo: Optional[conn_info]) -> None:
         pass
 
     # called when row needs to be initialized
-    def row_setup_event(self, tree_iter, device):
+    def row_setup_event(self, tree_iter: Gtk.TreeIter, device: Device) -> None:
         pass
 
     # called when a property for a device changes
-    def row_update_event(self, tree_iter, key, value):
+    def row_update_event(self, tree_iter: Gtk.TreeIter, key: str, value: Any) -> None:
         pass
 
     # called when device needs to be added to the list
-    def device_add_event(self, device):
+    def device_add_event(self, device: Device) -> None:
         self.add_device(device)
 
-    def device_remove_event(self, device):
+    def device_remove_event(self, device: Device) -> None:
         logging.debug(device)
         tree_iter = self.find_device(device)
 
@@ -238,7 +239,7 @@ class DeviceList(GenericList):
 
     #########################
 
-    def set_adapter(self, adapter=None):
+    def set_adapter(self, adapter: Optional[str] = None) -> None:
         self.clear()
         if self.discovering:
             self.stop_discovery()
@@ -267,7 +268,7 @@ class DeviceList(GenericList):
 
         self.emit("adapter-changed", self.__adapter_path)
 
-    def update_progress(self, time, totaltime):
+    def update_progress(self, time: float, totaltime: float) -> bool:
         if not self.discovering:
             return False
 
@@ -283,7 +284,7 @@ class DeviceList(GenericList):
         self.emit("discovery-progress", progress)
         return True
 
-    def add_device(self, device):
+    def add_device(self, device: Device) -> None:
         # device belongs to another adapter
         if not self.Adapter or not device['Adapter'] == self.Adapter.get_object_path():
             return
@@ -301,7 +302,7 @@ class DeviceList(GenericList):
         if device["Connected"]:
             self.monitor_power_levels(device)
 
-    def display_known_devices(self, autoselect=False):
+    def display_known_devices(self, autoselect: bool = False) -> None:
         self.clear()
         if self.Adapter:
             devices = self.manager.get_devices(self.Adapter.get_object_path())
@@ -311,7 +312,7 @@ class DeviceList(GenericList):
         if autoselect:
             self.selection.select_path(0)
 
-    def discover_devices(self, time=10.24):
+    def discover_devices(self, time: float = 10.24) -> None:
         if not self.discovering:
             self.__discovery_time = 0
             if self.Adapter is not None:
@@ -320,29 +321,29 @@ class DeviceList(GenericList):
                 t = 1.0 / 15 * 1000
                 GLib.timeout_add(int(t), self.update_progress, t / 1000, time)
 
-    def is_valid_adapter(self):
+    def is_valid_adapter(self) -> bool:
         if self.Adapter is None:
             return False
         else:
             return True
 
-    def get_adapter_path(self):
-        if self.is_valid_adapter():
-            return self.__adapter_path
+    def get_adapter_path(self) -> Optional[str]:
+        return self.__adapter_path if self.is_valid_adapter() else None
 
-    def stop_discovery(self):
+    def stop_discovery(self) -> None:
         self.discovering = False
         if self.Adapter is not None:
             self.Adapter.stop_discovery()
 
-    def get_selected_device(self):
+    def get_selected_device(self) -> Optional[Device]:
         selected = self.selected()
         if selected is not None:
             row = self.get(selected, "device")
-            device = row["device"]
+            device: Device = row["device"]
             return device
+        return None
 
-    def clear(self):
+    def clear(self) -> None:
         if len(self.liststore):
             for i in self.liststore:
                 tree_iter = i.iter
@@ -353,7 +354,7 @@ class DeviceList(GenericList):
 
         self.path_to_row = {}
 
-    def find_device(self, device):
+    def find_device(self, device: Device) -> Optional[Gtk.TreeIter]:
         object_path = device.get_object_path()
         try:
             row = self.path_to_row[object_path]
@@ -368,7 +369,7 @@ class DeviceList(GenericList):
         except KeyError:
             return None
 
-    def find_device_by_path(self, path):
+    def find_device_by_path(self, path: str) -> Optional[Gtk.TreeIter]:
         try:
             row = self.path_to_row[path]
             if row.valid():
@@ -381,7 +382,7 @@ class DeviceList(GenericList):
         except KeyError:
             return None
 
-    def do_cache(self, tree_iter, kwargs):
+    def do_cache(self, tree_iter: Gtk.TreeIter, kwargs: Dict[str, Any]) -> None:
         object_path = None
 
         if "device" in kwargs:
@@ -401,14 +402,14 @@ class DeviceList(GenericList):
             self.path_to_row[object_path] = Gtk.TreeRowReference.new(self.liststore,
                                                                      self.liststore.get_path(tree_iter))
 
-    def append(self, **columns):
+    def append(self, **columns: object) -> None:
         tree_iter = GenericList.append(self, **columns)
         self.do_cache(tree_iter, columns)
 
-    def prepend(self, **columns):
+    def prepend(self, **columns: object) -> None:
         tree_iter = GenericList.prepend(self, **columns)
         self.do_cache(tree_iter, columns)
 
-    def set(self, tree_iter, **kwargs):
-        GenericList.set(self, tree_iter, **kwargs)
-        self.do_cache(tree_iter, kwargs)
+    def set(self, iterid: Gtk.TreeIter, **kwargs: object) -> None:
+        GenericList.set(self, iterid, **kwargs)
+        self.do_cache(iterid, kwargs)

@@ -1,7 +1,7 @@
 import logging
 from gettext import gettext as _
 from operator import itemgetter
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, List, Tuple, Optional, TYPE_CHECKING, Union, Iterable
 
 from blueman.Constants import UI_PATH
 from blueman.Functions import create_menuitem, e_
@@ -23,7 +23,13 @@ from blueman.Sdp import (
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
+gi.require_version("Gdk", "3.0")
+from gi.repository import Gdk
 from gi.repository import GLib
+
+if TYPE_CHECKING:
+    from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
+    from blueman.main.Manager import Blueman
 
 
 class MenuItemsProvider:
@@ -38,7 +44,7 @@ class ManagerDeviceMenu(Gtk.Menu):
 
     SelectedDevice: Device
 
-    def __init__(self, blueman):
+    def __init__(self, blueman: "Blueman") -> None:
         super().__init__()
         self.set_name("ManagerDeviceMenu")
         self.Blueman = blueman
@@ -63,43 +69,44 @@ class ManagerDeviceMenu(Gtk.Menu):
 
         self.generate()
 
-    def __del__(self):
+    def __del__(self) -> None:
         logging.debug("deleting devicemenu")
 
-    def popup_at_pointer(self, event):
+    def popup_at_pointer(self, event: Gdk.Event) -> None:
         self.is_popup = True
         self.generate()
 
         super().popup_at_pointer(event)
 
-    def clear(self):
-        def remove_and_destroy(child):
+    def clear(self) -> None:
+        def remove_and_destroy(child: Gtk.Widget) -> None:
             self.remove(child)
             child.destroy()
 
         self.foreach(remove_and_destroy)
 
-    def set_op(self, device, message):
+    def set_op(self, device: Device, message: str) -> None:
         ManagerDeviceMenu.__ops__[device.get_object_path()] = message
         for inst in ManagerDeviceMenu.__instances__:
             logging.info(f"op: regenerating instance {inst}")
             if inst.SelectedDevice == self.SelectedDevice and not (inst.is_popup and not inst.props.visible):
                 inst.generate()
 
-    def get_op(self, device):
+    def get_op(self, device: Device) -> Optional[str]:
         try:
             return ManagerDeviceMenu.__ops__[device.get_object_path()]
         except KeyError:
             return None
 
-    def unset_op(self, device):
+    def unset_op(self, device: Device) -> None:
         del ManagerDeviceMenu.__ops__[device.get_object_path()]
         for inst in ManagerDeviceMenu.__instances__:
             logging.info(f"op: regenerating instance {inst}")
             if inst.SelectedDevice == self.SelectedDevice and not (inst.is_popup and not inst.props.visible):
                 inst.generate()
 
-    def _on_service_property_changed(self, _service, key, _value, _path):
+    def _on_service_property_changed(self, _service: Union[AnyNetwork, AnyDevice], key: str, _value: object,
+                                     _path: str) -> None:
         if key == "Connected":
             self.generate()
 
@@ -153,14 +160,15 @@ class ManagerDeviceMenu(Gtk.Menu):
         self._appl.DisconnectService('(osd)', service.device.get_object_path(), service.uuid, port,
                                      result_handler=ok, error_handler=err)
 
-    def on_device_property_changed(self, lst, device, tree_iter, key_value):
+    def on_device_property_changed(self, lst: "ManagerDeviceList", _device: Device, tree_iter: Gtk.TreeIter,
+                                   key_value: Tuple[str, object]) -> None:
         key, value = key_value
         # print "menu:", key, value
         if lst.compare(tree_iter, lst.selected()):
             if key in ("Connected", "UUIDs", "Trusted", "Paired"):
                 self.generate()
 
-    def generic_connect(self, _item: Gtk.MenuItem, device: Device, connect: bool) -> None:
+    def generic_connect(self, _item: Optional[Gtk.MenuItem], device: Device, connect: bool) -> None:
         def fail(_obj: AppletService, result: GLib.Error, _user_data: None) -> None:
             logging.info(f"fail: {result}")
             prog.message(_("Failed"))
@@ -195,7 +203,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         prog = ManagerProgressbar(self.Blueman, False)
         prog.start()
 
-    def show_generic_connect_calc(self, device_uuids):
+    def show_generic_connect_calc(self, device_uuids: Iterable[str]) -> bool:
         # Generic (dis)connect
         for uuid in device_uuids:
             service_uuid = ServiceUUID(uuid)
@@ -210,7 +218,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         # LE devices do not appear to expose certain properties like uuids until connect to at least once.
         return not device_uuids
 
-    def generate(self):
+    def generate(self) -> None:
         self.clear()
 
         items: List[Tuple[int, Gtk.MenuItem]] = []
@@ -349,8 +357,8 @@ class ManagerDeviceMenu(Gtk.Menu):
         item.show()
         item.props.tooltip_text = _("Run the setup assistant for this device")
 
-        def on_rename(_item, device):
-            def on_response(dialog, response_id):
+        def on_rename(_item: Gtk.MenuItem, device: Device) -> None:
+            def on_response(dialog: Gtk.Dialog, response_id: int) -> None:
                 if response_id == Gtk.ResponseType.ACCEPT:
                     device.set('Alias', alias_entry.get_text())
                 elif response_id == 1:
@@ -363,7 +371,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             dialog = builder.get_object("dialog")
             dialog.set_transient_for(self.Blueman.window)
             dialog.props.icon_name = "blueman"
-            alias_entry = builder.get_object("alias_entry")
+            alias_entry: Gtk.Entry = builder.get_object("alias_entry")
             alias_entry.set_text(device['Alias'])
             dialog.connect("response", on_response)
             dialog.present()

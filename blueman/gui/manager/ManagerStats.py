@@ -1,8 +1,11 @@
+from typing import TYPE_CHECKING, Optional
+
 from _blueman import device_info
 from gi.repository import GLib
 from gi.repository import Gtk
 
 from blueman.gui.Animation import Animation
+from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 from blueman.main.SpeedCalc import SpeedCalc
 from blueman.Functions import adapter_path_to_name
 from blueman.Functions import format_bytes
@@ -11,12 +14,18 @@ import gettext
 
 _ = gettext.gettext
 
+if TYPE_CHECKING:
+    from blueman.main.Manager import Blueman
+
 
 class ManagerStats:
-    def __init__(self, blueman):
+    hbox: Gtk.Box
+
+    def __init__(self, blueman: "Blueman") -> None:
 
         blueman.List.connect("adapter-changed", self.on_adapter_changed)
 
+        assert blueman.List.Adapter is not None
         self.hci = adapter_path_to_name(blueman.List.Adapter.get_object_path())
 
         self.time = None
@@ -63,7 +72,7 @@ class ManagerStats:
 
         self.start_update()
 
-    def on_adapter_changed(self, lst, adapter_path):
+    def on_adapter_changed(self, _lst: ManagerDeviceList, adapter_path: Optional[str]) -> None:
         self.hci = adapter_path_to_name(adapter_path)
         if self.hci is None:
             self.hbox.props.sensitive = False
@@ -73,7 +82,7 @@ class ManagerStats:
         self.up_speed.reset()
         self.down_speed.reset()
 
-    def set_blinker_by_speed(self, blinker, speed):
+    def set_blinker_by_speed(self, blinker: Animation, speed: float) -> None:
 
         if speed > 0 and not blinker.status():
             blinker.start()
@@ -93,7 +102,7 @@ class ManagerStats:
         else:
             blinker.set_rate(1)
 
-    def _update(self):
+    def _update(self) -> bool:
         if self.hci is not None:
             devinfo = device_info(self.hci)
             _tx = devinfo["stat"]["byte_tx"]
@@ -113,17 +122,18 @@ class ManagerStats:
 
             self.set_data(tx, s_tx, rx, s_rx, u_speed, s_u_speed, d_speed, s_d_speed)
 
-        return 1
+        return True
 
-    def start_update(self):
+    def start_update(self) -> None:
         self._update()
         self.timer = GLib.timeout_add(1000, self._update)
 
-    def stop_update(self):
+    def stop_update(self) -> None:
         if self.timer:
             GLib.source_remove(self.timer)
 
-    def set_data(self, uploaded, u_name, downloaded, d_name, u_speed, us_name, d_speed, ds_name):
+    def set_data(self, uploaded: float, u_name: str, downloaded: float, d_name: str, u_speed: float, us_name: str,
+                 d_speed: float, ds_name: str) -> None:
         self.down_rate.set_markup(
             f'<span size="small">{downloaded:.2f} {d_name} <i>{d_speed:5.2f} {ds_name}/s</i></span>')
         self.up_rate.set_markup(
