@@ -1,6 +1,6 @@
 from gettext import gettext as _
 import logging
-from typing import List
+from typing import List, TYPE_CHECKING, Callable
 
 import gi
 
@@ -14,6 +14,9 @@ from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import GLib
 
+if TYPE_CHECKING:
+    from blueman.main.Manager import Blueman
+
 
 class ManagerProgressbar(GObject.GObject):
     __gsignals__: GSignals = {
@@ -21,7 +24,7 @@ class ManagerProgressbar(GObject.GObject):
     }
     __instances__: List["ManagerProgressbar"] = []
 
-    def __init__(self, blueman, cancellable=True, text=_("Connecting")):
+    def __init__(self, blueman: "Blueman", cancellable: bool = True, text: str = _("Connecting")) -> None:
         super().__init__()
         self.Blueman = blueman
 
@@ -64,23 +67,28 @@ class ManagerProgressbar(GObject.GObject):
 
         ManagerProgressbar.__instances__.append(self)
 
-    def _on_enter(self, evbox, event):
+    def _on_enter(self, _evbox: Gtk.EventBox, _event: Gdk.Event) -> bool:
         c = Gdk.Cursor.new(Gdk.CursorType.HAND2)
+        assert self.Blueman.window is not None
         self.Blueman.window.get_window().set_cursor(c)
+        return False
 
-    def _on_leave(self, evbox, event):
+    def _on_leave(self, _evbox: Gtk.EventBox, _event: Gdk.Event) -> bool:
+        assert self.Blueman.window is not None
         self.Blueman.window.get_window().set_cursor(None)
+        return False
 
-    def _on_clicked(self, evbox, event):
+    def _on_clicked(self, _evbox: Gtk.EventBox, _event: Gdk.Event) -> bool:
         self.eventbox.props.sensitive = False
         self.emit("cancelled")
+        return False
 
-    def connect(self, *args):
-        handler_id = super().connect(*args)
+    def connect(self, signal: str, callback: Callable[..., object], *args: object) -> int:
+        handler_id: int = super().connect(signal, callback, *args)
         self._signals.append(handler_id)
         return handler_id
 
-    def show(self):
+    def show(self) -> None:
         if not self.Blueman.Config["show-statusbar"]:
             self.Blueman.Builder.get_object("statusbar").props.visible = True
 
@@ -88,22 +96,23 @@ class ManagerProgressbar(GObject.GObject):
         self.eventbox.props.visible = True
         self.button.props.visible = True
 
-    def hide(self):
+    def hide(self) -> None:
         self.Blueman.Stats.hbox.show_all()
         self.progressbar.props.visible = False
         self.eventbox.props.visible = False
         self.button.props.visible = False
 
-    def message(self, msg, timeout=1500):
+    def message(self, msg: str, timeout: int = 1500) -> None:
         self.stop()
         self.set_label(msg)
         self.set_cancellable(False)
         GLib.timeout_add(timeout, self.finalize)
 
-    def finalize(self):
+    def finalize(self) -> bool:
         if not self.finalized:
             self.hide()
             self.stop()
+            assert self.Blueman.window is not None
             self.Blueman.window.get_window().set_cursor(None)
             self.hbox.remove(self.eventbox)
             self.hbox.remove(self.progressbar)
@@ -129,8 +138,9 @@ class ManagerProgressbar(GObject.GObject):
                 if self.handler_is_connected(sig):
                     self.disconnect(sig)
             self._signals = []
+        return False
 
-    def set_cancellable(self, b, hide=False):
+    def set_cancellable(self, b: bool, hide: bool = False) -> None:
         if b:
             self.eventbox.props.visible = True
             self.eventbox.props.sensitive = True
@@ -140,18 +150,18 @@ class ManagerProgressbar(GObject.GObject):
             else:
                 self.eventbox.props.sensitive = False
 
-    def set_label(self, label):
+    def set_label(self, label: str) -> None:
         self.progressbar.props.text = label
 
-    def fraction(self, frac):
+    def fraction(self, frac: float) -> None:
         if not self.finalized:
             self.progressbar.set_fraction(frac)
 
-    def started(self):
+    def started(self) -> bool:
         return self.gsource is not None
 
-    def start(self):
-        def pulse():
+    def start(self) -> None:
+        def pulse() -> bool:
             self.progressbar.pulse()
             return self.pulsing
 
@@ -159,6 +169,6 @@ class ManagerProgressbar(GObject.GObject):
             self.pulsing = True
             GLib.timeout_add(1000 / 24, pulse)
 
-    def stop(self):
+    def stop(self) -> None:
         self.pulsing = False
         self.progressbar.set_fraction(0.0)

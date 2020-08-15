@@ -154,7 +154,7 @@ def setup_icon_path() -> None:
     ic.prepend_search_path(ICON_PATH)
 
 
-def adapter_path_to_name(path: str) -> Optional[str]:
+def adapter_path_to_name(path: Optional[str]) -> Optional[str]:
     if path is None or path == '':
         return None
 

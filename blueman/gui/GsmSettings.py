@@ -9,7 +9,7 @@ from gi.repository import Gtk
 
 
 class GsmSettings(Gtk.Dialog):
-    def __init__(self, bd_address):
+    def __init__(self, bd_address: str) -> None:
         super().__init__()
 
         self.set_name("GsmSettings")

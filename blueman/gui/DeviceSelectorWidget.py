@@ -1,7 +1,9 @@
 from gettext import gettext as _
 import os
 import logging
+from typing import Optional, Tuple
 
+from blueman.bluez.Adapter import Adapter
 from blueman.gui.DeviceSelectorList import DeviceSelectorList
 
 import gi
@@ -10,7 +12,8 @@ from gi.repository import Gtk
 
 
 class DeviceSelectorWidget(Gtk.Box):
-    def __init__(self, adapter_name=None, orientation=Gtk.Orientation.VERTICAL, **kwargs):
+    def __init__(self, adapter_name: Optional[str] = None, orientation: Gtk.Orientation = Gtk.Orientation.VERTICAL,
+                 **kwargs: object) -> None:
 
         super().__init__(orientation=orientation, spacing=1, vexpand=True,
                          width_request=360, height_request=340,
@@ -56,11 +59,12 @@ class DeviceSelectorWidget(Gtk.Box):
         self.update_adapters_list()
         self.show_all()
 
-    def __del__(self):
+    def __del__(self) -> None:
         self.List.destroy()
         logging.debug("Deleting widget")
 
-    def on_adapter_prop_changed(self, devlist, adapter, key_value):
+    def on_adapter_prop_changed(self, _devlist: DeviceSelectorList, adapter: Adapter, key_value: Tuple[str, object]
+                                ) -> None:
         key, value = key_value
         if key == "Name" or key == "Alias":
             self.update_adapters_list()
@@ -70,13 +74,13 @@ class DeviceSelectorWidget(Gtk.Box):
             else:
                 self.spinner.start()
 
-    def on_adapter_added(self, devlist, adapter_path):
+    def on_adapter_added(self, _devlist: DeviceSelectorList, _adapter_path: str) -> None:
         self.update_adapters_list()
 
-    def on_adapter_removed(self, devlist, adapter_path):
+    def on_adapter_removed(self, _devlist: DeviceSelectorList, _adapter_path: str) -> None:
         self.update_adapters_list()
 
-    def on_adapter_selected(self, cb_adapters):
+    def on_adapter_selected(self, cb_adapters: Gtk.ComboBox) -> None:
         logging.info("selected")
         tree_iter = cb_adapters.get_active_iter()
         if tree_iter:
@@ -89,7 +93,7 @@ class DeviceSelectorWidget(Gtk.Box):
                     # Start discovery on selected adapter
                     self.List.Adapter.start_discovery()
 
-    def on_adapter_changed(self, devlist, adapter_path):
+    def on_adapter_changed(self, _devlist: DeviceSelectorList, adapter_path: str) -> None:
         logging.info("changed")
         if adapter_path is None:
             self.update_adapters_list()
@@ -97,7 +101,7 @@ class DeviceSelectorWidget(Gtk.Box):
             if self.List.Adapter:
                 self.List.display_known_devices()
 
-    def update_adapters_list(self):
+    def update_adapters_list(self) -> None:
 
         self.cb_adapters.get_model().clear()
         adapters = self.List.manager.get_adapters()

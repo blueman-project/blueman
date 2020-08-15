@@ -1,12 +1,22 @@
 from gettext import gettext as _
 import logging
+from typing import TYPE_CHECKING, Callable, Tuple, Optional
+
 import gi
+
+from blueman.bluez.Adapter import Adapter
+from blueman.bluez.Device import Device
+from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
+if TYPE_CHECKING:
+    from blueman.main.Manager import Blueman
+
 
 class ManagerToolbar:
-    def __init__(self, blueman):
+    def __init__(self, blueman: "Blueman") -> None:
         self.blueman = blueman
 
         self.blueman.List.connect("device-selected", self.on_device_selected)
@@ -45,12 +55,13 @@ class ManagerToolbar:
 
         self.on_adapter_changed(blueman.List, blueman.List.get_adapter_path())
 
-    def on_action(self, button, func):
+    def on_action(self, _button: Gtk.ToolButton, func: Callable[[Device], None]) -> None:
         device = self.blueman.List.get_selected_device()
         if device is not None:
             func(device)
 
-    def on_adapter_property_changed(self, lst, adapter, key_value):
+    def on_adapter_property_changed(self, _lst: ManagerDeviceList, _adapter: Adapter,
+                                    key_value: Tuple[str, object]) -> None:
         key, value = key_value
         if key == "Discovering":
             if value:
@@ -58,7 +69,7 @@ class ManagerToolbar:
             else:
                 self.b_search.props.sensitive = True
 
-    def on_adapter_changed(self, lst, adapter_path):
+    def on_adapter_changed(self, _lst: ManagerDeviceList, adapter_path: Optional[str]) -> None:
         logging.debug(f"toolbar adapter {adapter_path}")
         if adapter_path is None:
             self.b_search.props.sensitive = False
@@ -66,7 +77,7 @@ class ManagerToolbar:
         else:
             self.b_search.props.sensitive = True
 
-    def on_device_selected(self, dev_list, device, tree_iter):
+    def on_device_selected(self, dev_list: ManagerDeviceList, device: Device, tree_iter: Gtk.TreeIter) -> None:
         if device is None or tree_iter is None:
             self.b_bond.props.sensitive = False
             self.b_remove.props.sensitive = False
@@ -98,7 +109,8 @@ class ManagerToolbar:
             else:
                 self.b_send.props.sensitive = False
 
-    def on_device_propery_changed(self, dev_list, device, tree_iter, key_value):
+    def on_device_propery_changed(self, dev_list: ManagerDeviceList, device: Device, tree_iter: Gtk.TreeIter,
+                                  key_value: Tuple[str, object]) -> None:
         key, value = key_value
         if dev_list.compare(tree_iter, dev_list.selected()):
             if key == "Trusted" or key == "Paired" or key == "UUIDs":

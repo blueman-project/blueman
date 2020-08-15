@@ -1,15 +1,21 @@
 from html import escape
+from typing import Optional, Any, List
+
+from blueman.bluez.Device import Device
 from blueman.gui.DeviceList import DeviceList
 from gi.repository import Pango
 
 import gi
+
+from blueman.gui.GenericList import ListDataDict
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 
 class DeviceSelectorList(DeviceList):
-    def __init__(self, adapter_name=None):
-        tabledata = [
+    def __init__(self, adapter_name: Optional[str] = None) -> None:
+        tabledata: List[ListDataDict] = [
             # device picture
             {"id": "device_icon", "type": str, "renderer": Gtk.CellRendererPixbuf(stock_size=Gtk.IconSize.MENU),
              "render_attrs": {"icon_name": 0}},
@@ -25,18 +31,18 @@ class DeviceSelectorList(DeviceList):
 
         super().__init__(adapter_name, tabledata, headers_visible=False)
 
-    def on_icon_theme_changed(self, widget):
+    def on_icon_theme_changed(self, _icon_them: Gtk.IconTheme) -> None:
         for row in self.liststore:
             device = self.get(row.iter, "device")["device"]
             self.row_setup_event(row.iter, device)
 
-    def row_setup_event(self, tree_iter, device):
+    def row_setup_event(self, tree_iter: Gtk.TreeIter, device: Device) -> None:
         self.row_update_event(tree_iter, "Trusted", device['Trusted'])
         self.row_update_event(tree_iter, "Paired", device['Paired'])
         self.row_update_event(tree_iter, "Alias", device['Alias'])
         self.row_update_event(tree_iter, "Icon", device['Icon'])
 
-    def row_update_event(self, tree_iter, key, value):
+    def row_update_event(self, tree_iter: Gtk.TreeIter, key: str, value: Any) -> None:
         if key == "Trusted":
             if value:
                 self.set(tree_iter, trusted_icon="blueman-trust")

@@ -1,9 +1,11 @@
 from gettext import gettext as _
 import logging
-from typing import Dict, Tuple, List
+from typing import Dict, Tuple, List, TYPE_CHECKING, Any, Optional
 
 from blueman.bluez.Adapter import Adapter
+from blueman.bluez.Device import Device
 from blueman.bluez.Manager import Manager
+from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 from blueman.main.Config import Config
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.gui.CommonUi import show_about_dialog
@@ -15,9 +17,12 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import GLib
 
+if TYPE_CHECKING:
+    from blueman.main.Manager import Blueman
+
 
 class ManagerMenu:
-    def __init__(self, blueman):
+    def __init__(self, blueman: "Blueman"):
         self.blueman = blueman
         self.Config = Config("org.blueman.general")
 
@@ -168,14 +173,14 @@ class ManagerMenu:
         for adapter in self._manager.get_adapters():
             self.on_adapter_added(None, adapter.get_object_path())
 
-        self.device_menu = None
+        self.device_menu: Optional[ManagerDeviceMenu] = None
 
         self.Config.connect("changed", self._on_settings_changed)
         self._sort_alias_item.connect("activate", self._on_sorting_changed, "alias")
         self._sort_timestamp_item.connect("activate", self._on_sorting_changed, "timestamp")
         self._sort_type_item.connect("activate", self._on_sorting_changed, "sort-type")
 
-    def _on_sorting_changed(self, btn, sort_opt):
+    def _on_sorting_changed(self, btn: Gtk.CheckMenuItem, sort_opt: str) -> None:
         if sort_opt == 'alias' and btn.props.active:
             self.Config['sort-by'] = "alias"
         elif sort_opt == "timestamp" and btn.props.active:
@@ -187,7 +192,7 @@ class ManagerMenu:
             else:
                 self.Config["sort-order"] = "ascending"
 
-    def _on_settings_changed(self, settings, key):
+    def _on_settings_changed(self, settings: Config, key: str) -> None:
         value = settings[key]
         if key == 'sort-by':
             if value == "alias":
@@ -204,7 +209,7 @@ class ManagerMenu:
                 if not self._sort_type_item.props.active:
                     self._sort_type_item.props.active = False
 
-    def on_device_selected(self, lst, device, tree_iter):
+    def on_device_selected(self, _lst: ManagerDeviceList, device: Device, tree_iter: Gtk.TreeIter) -> None:
         if tree_iter and device:
             self.item_device.props.sensitive = True
 
@@ -217,7 +222,7 @@ class ManagerMenu:
         else:
             self.item_device.props.sensitive = False
 
-    def on_adapter_property_changed(self, _adapter, name, value, path):
+    def on_adapter_property_changed(self, _adapter: Adapter, name: str, value: Any, path: str) -> None:
         if name == "Name" or name == "Alias":
             item = self.adapter_items[path][0]
             item.set_label(value)
@@ -228,14 +233,15 @@ class ManagerMenu:
                 else:
                     self.Search.props.sensitive = True
 
-    def on_adapter_selected(self, menuitem, adapter_path):
+    def on_adapter_selected(self, menuitem: Gtk.MenuItem, adapter_path: str) -> None:
         if menuitem.props.active:
+            assert self.blueman.List.Adapter is not None
             if adapter_path != self.blueman.List.Adapter.get_object_path():
                 logging.info(f"selected {adapter_path}")
                 self.blueman.Config["last-adapter"] = adapter_path_to_name(adapter_path)
                 self.blueman.List.set_adapter(adapter_path)
 
-    def on_adapter_added(self, _manager, adapter_path):
+    def on_adapter_added(self, _manager: Optional[Manager], adapter_path: str) -> None:
         adapter = Adapter(obj_path=adapter_path)
         menu = self.item_adapter.get_submenu()
         object_path = adapter.get_object_path()
@@ -252,13 +258,14 @@ class ManagerMenu:
 
         self.adapter_items[object_path] = (item, adapter)
 
+        assert self.blueman.List.Adapter is not None
         if adapter_path == self.blueman.List.Adapter.get_object_path():
             item.props.active = True
 
         if len(self.adapter_items) > 0:
             self.item_adapter.props.sensitive = True
 
-    def on_adapter_removed(self, _manager, adapter_path):
+    def on_adapter_removed(self, _manager: Manager, adapter_path: str) -> None:
         item, adapter = self.adapter_items.pop(adapter_path)
         menu = self.item_adapter.get_submenu()
 
@@ -271,7 +278,7 @@ class ManagerMenu:
         if len(self.adapter_items) == 0:
             self.item_adapter.props.sensitive = False
 
-    def _on_plugin_dialog_activate(self, *args):
-        def cb(*args):
+    def _on_plugin_dialog_activate(self, _item: Gtk.MenuItem) -> None:
+        def cb() -> None:
             pass
         self.blueman.Applet.OpenPluginDialog(result_handler=cb)

@@ -1,16 +1,25 @@
 from gettext import gettext as _
 import logging
+from typing import TYPE_CHECKING, List, Type
+
 from blueman.Constants import *
-from blueman.gui.GenericList import GenericList
+from blueman.gui.GenericList import GenericList, ListDataDict
+from blueman.main.PluginManager import PluginManager
+from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.plugins.BasePlugin import Option
 
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
+gi.require_version("Gdk", "3.0")
+from gi.repository import Gdk
+
+if TYPE_CHECKING:
+    from blueman.main.Applet import BluemanApplet
 
 
 class SettingsWidget(Gtk.Box):
-    def __init__(self, inst, orientation=Gtk.Orientation.VERTICAL):
+    def __init__(self, inst: AppletPlugin, orientation: Gtk.Orientation = Gtk.Orientation.VERTICAL) -> None:
         super().__init__(
             name="SettingsWidget",
             orientation=orientation,
@@ -21,7 +30,7 @@ class SettingsWidget(Gtk.Box):
         self.construct_settings()
         self.show_all()
 
-    def construct_settings(self):
+    def construct_settings(self) -> None:
         for k, v in self.inst.__class__.__options__.items():
             if len(v) > 2:
 
@@ -35,7 +44,7 @@ class SettingsWidget(Gtk.Box):
                 label = Gtk.Label(label="<i >" + v["desc"] + "</i>", wrap=True, use_markup=True, xalign=0.0)
                 self.pack_start(label, False, False, 0)
 
-    def handle_change(self, widget, opt, params, prop):
+    def handle_change(self, widget: Gtk.Widget, opt: str, params: "Option", prop: str) -> None:
         val = params["type"](getattr(widget.props, prop))
         logging.debug(f"changed {opt} {val}")
 
@@ -80,7 +89,7 @@ class SettingsWidget(Gtk.Box):
 
 
 class PluginDialog(Gtk.Window):
-    def __init__(self, applet):
+    def __init__(self, applet: "BluemanApplet") -> None:
         super().__init__(
             title=_("Plugins"),
             icon_name="blueman",
@@ -118,7 +127,7 @@ class PluginDialog(Gtk.Window):
         cr = Gtk.CellRendererToggle()
         cr.connect("toggled", self.on_toggled)
 
-        data = [
+        data: List[ListDataDict] = [
             {"id": "active", "type": bool, "renderer": cr, "render_attrs": {"active": 0, "activatable": 1,
                                                                             "visible": 1}},
             {"id": "activatable", "type": bool},
@@ -152,7 +161,8 @@ class PluginDialog(Gtk.Window):
 
         self.list.set_cursor(0)
 
-    def list_compare_func(self, treemodel, iter1, iter2, user_data):
+    def list_compare_func(self, _treemodel: Gtk.TreeModel, iter1: Gtk.TreeIter, iter2: Gtk.TreeIter, _user_data: None
+                          ) -> int:
         a = self.list.get(iter1, "activatable", "name")
         b = self.list.get(iter2, "activatable", "name")
 
@@ -169,13 +179,15 @@ class PluginDialog(Gtk.Window):
                 return -1
             elif not a["activatable"] and b["activatable"]:
                 return 1
+            else:
+                return 0
 
-    def _on_close(self, *args, **kwargs):
+    def _on_close(self, _widget: Gtk.Widget, _event: Gdk.Event) -> bool:
         self.applet.Plugins.disconnect(self.sig_a)
         self.applet.Plugins.disconnect(self.sig_b)
         return False
 
-    def on_selection_changed(self, selection):
+    def on_selection_changed(self, selection: Gtk.TreeSelection) -> None:
         model, tree_iter = selection.get_selected()
 
         name = self.list.get(tree_iter, "name")["name"]
@@ -208,20 +220,21 @@ class PluginDialog(Gtk.Window):
 
         self.update_config_widget(cls)
 
-    def on_prefs_toggled(self, button):
+    def on_prefs_toggled(self, _button: Gtk.ToggleButton) -> None:
         model, tree_iter = self.list.selection.get_selected()
         name = self.list.get(tree_iter, "name")["name"]
         cls = self.applet.Plugins.get_classes()[name]
 
         self.update_config_widget(cls)
 
-    def update_config_widget(self, cls):
+    def update_config_widget(self, cls: Type[AppletPlugin]) -> None:
         if self.b_prefs.props.active:
             if not cls.is_configurable():
                 self.b_prefs.props.active = False
                 return
 
-            if not cls.__instance__:
+            inst = cls.get_instance()
+            if not inst:
                 self.b_prefs.props.active = False
             else:
                 c = self.main_container.get_child()
@@ -229,7 +242,7 @@ class PluginDialog(Gtk.Window):
                 if isinstance(c, SettingsWidget):
                     c.destroy()
 
-                self.main_container.add(SettingsWidget(cls.__instance__))
+                self.main_container.add(SettingsWidget(inst))
 
         else:
             c = self.main_container.get_child()
@@ -238,7 +251,7 @@ class PluginDialog(Gtk.Window):
                 c.destroy()
             self.main_container.add(self.content_grid)
 
-    def populate(self):
+    def populate(self) -> None:
         classes = self.applet.Plugins.get_classes()
         loaded = self.applet.Plugins.get_loaded()
         for name, cls in classes.items():
@@ -249,7 +262,7 @@ class PluginDialog(Gtk.Window):
             self.list.append(active=(name in loaded), icon=cls.__icon__, activatable=cls.__unloadable__, name=name,
                              desc=desc)
 
-    def plugin_state_changed(self, plugins, name, loaded):
+    def plugin_state_changed(self, _plugins: PluginManager, name: str, loaded: bool) -> None:
         row = self.list.get_conditional(name=name)
         self.list.set(row[0], active=loaded)
 
@@ -260,7 +273,7 @@ class PluginDialog(Gtk.Window):
         elif cls.is_configurable():
             self.b_prefs.props.sensitive = True
 
-    def on_toggled(self, cellrenderer, path):
+    def on_toggled(self, _toggle: Gtk.CellRendererToggle, path: str) -> None:
         name = self.list.get(path, "name")["name"]
 
         deps = self.applet.Plugins.get_dependencies()[name]
@@ -311,5 +324,4 @@ class PluginDialog(Gtk.Window):
             for p in to_unload:
                 self.applet.Plugins.set_config(p, False)
 
-        loaded = name in self.applet.Plugins.get_loaded()
-        self.applet.Plugins.set_config(name, not loaded)
+        self.applet.Plugins.set_config(name, name not in self.applet.Plugins.get_loaded())

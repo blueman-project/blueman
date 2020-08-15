@@ -1,4 +1,4 @@
-from typing import Dict, List, Callable
+from typing import Dict, List, Callable, Optional, Iterable, Tuple, Union, Type
 
 from blueman.main.Config import Config
 
@@ -7,6 +7,7 @@ gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
 from gi.repository import Gtk
 from gi.repository import Gdk
+from gi.repository import GdkPixbuf
 from gi.repository import GLib
 from gi.repository import Gio
 from blueman.gui.GtkAnimation import AnimBase
@@ -16,17 +17,19 @@ OPACITY_START = 0.7
 
 
 class Fade(AnimBase):
-    def __init__(self, window):
+    def __init__(self, window: Gtk.Window) -> None:
         super().__init__(state=OPACITY_START)
         self.window = window
 
-    def state_changed(self, state):
+    def state_changed(self, state: float) -> None:
         self.window.props.opacity = state
 
 
 class _NotificationDialog(Gtk.MessageDialog):
-    def __init__(self, summary, message, timeout=-1, actions=None, actions_cb=None,
-                 icon_name=None, image_data=None):
+    def __init__(self, summary: str, message: str, _timeout: int = -1,
+                 actions: Optional[Iterable[Tuple[str, str]]] = None,
+                 actions_cb: Optional[Callable[[str], None]] = None, icon_name: Optional[str] = None,
+                 image_data: Optional[GdkPixbuf.Pixbuf] = None) -> None:
         super().__init__(parent=None, flags=0, type=Gtk.MessageType.QUESTION,
                          buttons=Gtk.ButtonsType.NONE, message_format=None)
 
@@ -69,68 +72,53 @@ class _NotificationDialog(Gtk.MessageDialog):
 
         self.entered = False
 
-        def on_enter(widget, event):
+        def on_enter(_widget: Gtk.Widget, _event: Gdk.Event) -> bool:
             if self.get_window() == Gdk.Window.at_pointer()[0] or not self.entered:
                 self.fader.animate(start=self.fader.get_state(), end=1.0, duration=500)
                 self.entered = True
+            return False
 
-        def on_leave(widget, event):
+        def on_leave(_widget: Gtk.Widget, _event: Gdk.Event) -> bool:
             if not Gdk.Window.at_pointer():
                 self.entered = False
                 self.fader.animate(start=self.fader.get_state(), end=OPACITY_START, duration=500)
+            return False
 
         self.connect("enter-notify-event", on_enter)
         self.connect("leave-notify-event", on_leave)
 
-    def dialog_response(self, dialog, response):
+    def dialog_response(self, _dialog: Gtk.Dialog, response: int) -> None:
         if self.callback:
             self.callback(self.actions[response])
         self.hide()
 
-    def show(self):
+    def show(self) -> None:
         self.set_opacity(OPACITY_START)
         self.present()
         self.set_opacity(OPACITY_START)
 
-    def close(self):
+    def close(self) -> None:
         self.hide()
 
-    def set_hint_int32(self, *args):
+    def add_action(self, _action_id: str, _label: str, _callback: Optional[Callable[[str], None]] = None) -> None:
         logging.warning("stub")
 
-    def set_timeout(self, *args):
-        logging.warning("stub")
-
-    def add_action(self, *args):
-        logging.warning("stub")
-
-    def clear_actions(self, *args):
-        logging.warning("stub")
-
-    def set_urgency(self, *args):
-        logging.warning("stub")
-
-    def update(self, summary, message):
-        self.props.title = summary
-
-        self.props.text = summary
-        self.props.secondary_text = message
-        self.present()
-
-    def set_icon_from_pixbuf(self, pixbuf):
+    def set_icon_from_pixbuf(self, pixbuf: GdkPixbuf.Pixbuf) -> None:
         im = Gtk.Image.new_from_pixbuf(pixbuf)
         self.set_image(im)
         im.show()
 
-    def set_icon_from_icon_name(self, icon_name, size):
+    def set_icon_from_icon_name(self, icon_name: str, size: int) -> None:
         im = Gtk.Image(icon_name=icon_name, pixel_size=size)
         self.set_image(im)
         im.show()
 
 
 class _NotificationBubble(Gio.DBusProxy):
-    def __init__(self, summary, message, timeout=-1, actions=None, actions_cb=None,
-                 icon_name=None, image_data=None):
+    def __init__(self, summary: str, message: str, timeout: int = -1,
+                 actions: Optional[Iterable[Tuple[str, str]]] = None,
+                 actions_cb: Optional[Callable[[str], None]] = None, icon_name: Optional[str] = None,
+                 image_data: Optional[GdkPixbuf.Pixbuf] = None) -> None:
         super().__init__(
             g_name='org.freedesktop.Notifications',
             g_interface_name='org.freedesktop.Notifications',
@@ -199,15 +187,15 @@ class _NotificationBubble(Gio.DBusProxy):
         self._capabilities = self.GetCapabilities()
 
     @property
-    def server_information(self):
-        info = self.GetServerInformation()
+    def server_information(self) -> Tuple[str, str, str, str]:
+        info: Tuple[str, str, str, str] = self.GetServerInformation()
         return info
 
     @property
-    def actions_supported(self):
+    def actions_supported(self) -> bool:
         return 'actions' in self._capabilities
 
-    def set_hint(self, key, val):
+    def set_hint(self, key: str, val: object) -> None:
         if key not in self._supported_hints:
             raise ValueError('Unsupported hint')
         fmt, spec_version = self._supported_hints[key]
@@ -217,22 +205,22 @@ class _NotificationBubble(Gio.DBusProxy):
         param = GLib.Variant(fmt, val)
         self._hints[key] = param
 
-    def remove_hint(self, key):
+    def remove_hint(self, key: str) -> None:
         del (self._hints[key])
 
-    def clear_hints(self):
+    def clear_hints(self) -> None:
         self._hints = {}
 
-    def add_action(self, action_id, label, callback=None):
+    def add_action(self, action_id: str, label: str, callback: Optional[Callable[[str], None]] = None) -> None:
         self._actions.extend([action_id, label])
         if callback:
             self._callbacks[action_id] = callback
 
-    def clear_actions(self):
+    def clear_actions(self) -> None:
         self._actions = []
         self._callbacks = {}
 
-    def do_g_signal(self, sender_name, signal_name, params):
+    def do_g_signal(self, _sender_name: str, signal_name: str, params: GLib.Variant) -> None:
         notif_id, signal_val = params.unpack()
         if notif_id != self._return_id:
             return
@@ -252,21 +240,22 @@ class _NotificationBubble(Gio.DBusProxy):
             if signal_val in self._callbacks:
                 self._callbacks[signal_val](signal_val)
 
-    def show(self):
+    def show(self) -> None:
         replace_id = self._return_id if self._return_id else 0
         return_id = self.Notify('(susssasa{sv}i)', self._app_name, replace_id, self._app_icon,
                                 self._summary, self._body, self._actions, self._hints,
                                 self._timeout)
         self._return_id = return_id
 
-    def close(self):
+    def close(self) -> None:
         param = GLib.Variant('(u)', (self._return_id,))
         self.call_sync('CloseNotification', param, Gio.DBusProxyFlags.NONE, -1, None)
         self._return_id = None
 
 
-def Notification(summary, message, timeout=-1, actions=None, actions_cb=None,
-                 icon_name=None, image_data=None):
+def Notification(summary: str, message: str, timeout: int = -1, actions: Optional[Iterable[Tuple[str, str]]] = None,
+                 actions_cb: Optional[Callable[[str], None]] = None, icon_name: Optional[str] = None,
+                 image_data: Optional[GdkPixbuf.Pixbuf] = None) -> Union[_NotificationBubble, _NotificationDialog]:
 
     forced_fallback = not Config('org.blueman.general')['notification-daemon']
     try:
@@ -282,7 +271,7 @@ def Notification(summary, message, timeout=-1, actions=None, actions_cb=None,
         # * user does not want to use a notification daemon
         # * the notification daemon is not available
         # * we have to show actions and the notification daemon does not provide them
-        klass = _NotificationDialog
+        klass: Type[Union[_NotificationBubble, _NotificationDialog]] = _NotificationDialog
     else:
         klass = _NotificationBubble
 
