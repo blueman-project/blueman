@@ -22,6 +22,8 @@ if TYPE_CHECKING:
     class GSettings(TypedDict):
         schema: str
         path: None
+else:
+    Option = dict
 
 
 class BasePlugin:

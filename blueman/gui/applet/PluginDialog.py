@@ -2,6 +2,7 @@ from gettext import gettext as _
 import logging
 from blueman.Constants import *
 from blueman.gui.GenericList import GenericList
+from blueman.plugins.BasePlugin import Option
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -28,8 +29,6 @@ class SettingsWidget(Gtk.Box):
                 label.props.xalign = 0.0
 
                 w = self.get_control_widget(k, v)
-                if "decorator" in v:
-                    v["decorator"](self.inst, w, k, v)
 
                 self.pack_start(w, False, False, 0)
 
@@ -42,11 +41,8 @@ class SettingsWidget(Gtk.Box):
 
         self.inst.set_option(opt, val)
 
-    def get_control_widget(self, opt, params):
-        if "widget" in params:
-            return params["widget"](self.inst, opt, params)
-
-        elif params["type"] == bool:
+    def get_control_widget(self, opt: str, params: "Option") -> Gtk.Widget:
+        if params["type"] == bool:
             c = Gtk.CheckButton(label=params["name"])
 
             c.props.active = self.inst.get_option(opt)
