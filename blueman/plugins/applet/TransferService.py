@@ -108,7 +108,7 @@ class Agent(DbusService):
                 _("Incoming file over Bluetooth"),
                 _("Incoming file %(0)s from %(1)s") % {"0": "<b>" + escape(filename) + "</b>",
                                                        "1": "<b>" + escape(name) + "</b>"},
-                30000, [["accept", _("Accept"), "help-about"], ["reject", _("Reject"), "help-about"]], on_action,
+                30000, [("accept", _("Accept")), ("reject", _("Reject"))], on_action,
                 icon_name="blueman"
             )
             self._notification.show()
@@ -163,7 +163,7 @@ class TransferService(AppletPlugin):
                                'configure it with blueman-services. Until then the default "%s" will be used')
             self._notification = Notification(text, secondary_text % (self._config["shared-path"], share_path),
                                               icon_name='blueman', timeout=30000,
-                                              actions=[['reset', 'Reset to default', 'blueman']], actions_cb=on_reset)
+                                              actions=[('reset', 'Reset to default')], actions_cb=on_reset)
             self._notification.show()
 
         self._watch = Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
