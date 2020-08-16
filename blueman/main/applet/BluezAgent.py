@@ -265,7 +265,7 @@ class BluezAgent(DbusService):
 
         if passkey:
             notify_message += "\n" + _("Confirm value for authentication:") + f" <b>{passkey}</b>"
-        actions = [["confirm", _("Confirm")], ["deny", _("Deny")]]
+        actions = [("confirm", _("Confirm")), ("deny", _("Deny"))]
 
         self.n = Notification("Bluetooth", notify_message, 0, actions, on_confirm_action, icon_name="blueman")
         self.n.show()
@@ -290,9 +290,9 @@ class BluezAgent(DbusService):
         service = ServiceUUID(uuid).name
         notify_message = \
             _("Authorization request for:") + f"\n{dev_str}\n" + _("Service:") + f" <b>{service}</b>"
-        actions = [["always", _("Always accept")],
-                   ["accept", _("Accept")],
-                   ["deny", _("Deny")]]
+        actions = [("always", _("Always accept")),
+                   ("accept", _("Accept")),
+                   ("deny", _("Deny"))]
 
         n = Notification(_("Bluetooth Authentication"), notify_message, 0, actions, on_auth_action, icon_name="blueman")
         n.show()
