@@ -11,24 +11,6 @@ from gi.repository import GObject
 from gi.repository import GLib
 
 
-class LinearController:
-    def get_value(self, inpt):
-        return inpt
-
-
-class BezierController(LinearController):
-    def __init__(self, curvature=0.5, start=0.0, end=1.0):
-        self.curvature = curvature
-        self.start = start
-        self.end = end
-
-    def __b(self, t, p1, p2, p3):
-        return (1 - t) ** 2 * p1 + 2 * (1 - t) * t * p2 + t ** 2 * p3
-
-    def get_value(self, inpt):
-        return self.__b(inpt, self.start, self.curvature, self.end)
-
-
 class AnimBase(GObject.GObject):
     __gsignals__: GSignals = {
         'animation-finished': (GObject.SignalFlags.RUN_LAST, None, ()),
@@ -40,10 +22,6 @@ class AnimBase(GObject.GObject):
         self._state = state
         self.frozen = False
         self.fps = 24.0
-        self.controller = LinearController()
-
-    def set_controller(self, cls, *params):
-        self.controller = cls(*params)
 
     def _do_transition(self):
         if abs(self._end - self._start) < 0.000001:
@@ -71,14 +49,9 @@ class AnimBase(GObject.GObject):
 
     def thaw(self):
         self.frozen = False
-        self.on_frozen(self.frozen)
 
     def freeze(self):
         self.frozen = True
-        self.on_frozen(self.frozen)
-
-    def on_frozen(self, is_frozen):
-        pass
 
     def animate(self, start=1.0, end=0.0, duration=1000):
         if self.frozen:
@@ -104,7 +77,7 @@ class AnimBase(GObject.GObject):
         self._source = GLib.timeout_add(int(1.0 / self.fps * 1000), self._do_transition)
 
     def _state_changed(self, state):
-        self.state_changed(self.controller.get_value(state))
+        self.state_changed(state)
 
     def state_changed(self, state):
         pass
