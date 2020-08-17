@@ -141,42 +141,6 @@ class TreeRowFade(AnimBase):
     def state_changed(self, state):
         self.tw.queue_draw()
 
-    # print state
-
-
-class TreeRowColorFade(TreeRowFade):
-    def __init__(self, tw, path, color):
-        super().__init__(tw, path, None)
-
-        self.color = color
-
-    def do_animation_finished(self):
-        self.unref()
-
-    def on_draw(self, widget, cr):
-        if self.frozen:
-            return
-
-        if not self.row.valid():
-            self.tw.disconnect(self.sig)
-            self.sig = None
-            return
-
-        path = self.row.get_path()
-
-        if not self.columns:
-            self.columns = self.tw.get_columns()
-
-        for col in self.columns:
-            rect = self.tw.get_background_area(path, col)
-            cr.rectangle(rect.x, rect.y, rect.width, rect.height)
-
-        cr.clip()
-
-        cr.set_source_rgba(self.color.red, self.color.green, self.color.blue, 1.0 - self.get_state())
-        cr.set_operator(cairo.OPERATOR_OVER)
-        cr.paint()
-
 
 class CellFade(AnimBase):
     def __init__(self, tw, path, columns=None):
