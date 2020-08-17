@@ -11,7 +11,7 @@ from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.Constants import PIXMAP_PATH
 from blueman.Functions import launch
 from blueman.Sdp import ServiceUUID, OBEX_OBJPUSH_SVCLASS_ID
-from blueman.gui.GtkAnimation import TreeRowColorFade, TreeRowFade, CellFade
+from blueman.gui.GtkAnimation import TreeRowFade, CellFade
 from blueman.main.Config import Config
 from _blueman import ConnInfoReadError
 
@@ -105,12 +105,6 @@ class ManagerDeviceList(DeviceList):
         for row in self.liststore:
             device = self.get(row.iter, "device")["device"]
             self.row_setup_event(row.iter, device)
-
-    def do_device_found(self, device):
-        tree_iter = self.find_device(device)
-        if tree_iter:
-            anim = TreeRowColorFade(self, self.props.model.get_path(tree_iter), Gdk.RGBA(0, 0, 1, 1))
-            anim.animate(start=0.8, end=1.0)
 
     def search_func(self, model, column, key, tree_iter):
         row = self.get(tree_iter, "caption")
