@@ -82,7 +82,7 @@ class ManagerDeviceList(DeviceList):
         Gtk.Widget.drag_dest_set(self, Gtk.DestDefaults.ALL, [], Gdk.DragAction.COPY | Gdk.DragAction.DEFAULT)
         Gtk.Widget.drag_dest_add_uri_targets(self)
 
-        self.set_search_equal_func(self.search_func, None)
+        self.set_search_equal_func(self.search_func)
 
         self._faderhandlers: Dict[str, int] = {}
 
