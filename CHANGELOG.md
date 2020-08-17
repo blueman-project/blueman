@@ -5,6 +5,7 @@
 ### Bugs fixed
 
 * Unstranslated strings
+* Searching (with Ctrl+F in manager device list) did not work
 * Default PIN lookup
 
 ## 2.1.3
