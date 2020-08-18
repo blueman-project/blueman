@@ -14,6 +14,7 @@
 * Pairing with pincode
 * Handle os.remove failing
 * Fix disconnecting NMDevice
+* Untranslated string in DiscvManager
 
 ## 2.1.1
 
