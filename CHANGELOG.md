@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.4
+
+### Bugs fixed
+
+* Unstranslated strings
+
 ## 2.1.3
 
 ### Changes
