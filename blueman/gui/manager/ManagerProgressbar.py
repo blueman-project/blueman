@@ -76,7 +76,9 @@ class ManagerProgressbar(GObject.GObject):
         self.emit("cancelled")
 
     def connect(self, *args):
-        self._signals.append(super().connect(*args))
+        handler_id = super().connect(*args)
+        self._signals.append(handler_id)
+        return handler_id
 
     def show(self):
         if not self.Blueman.Config["show-statusbar"]:
@@ -124,7 +126,8 @@ class ManagerProgressbar(GObject.GObject):
                     self.Blueman.Builder.get_object("statusbar").props.visible = False
 
             for sig in self._signals:
-                self.disconnect(sig)
+                if self.handler_is_connected(sig):
+                    self.disconnect(sig)
             self._signals = []
 
     def set_cancellable(self, b, hide=False):

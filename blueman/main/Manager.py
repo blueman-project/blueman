@@ -178,9 +178,7 @@ class Blueman(Gtk.Application):
             key, value = key_value
             if key == "Discovering" and not value:
                 prog.finalize()
-                # FIXME for some reason the signal handler is None
-                if proghandler is not None:
-                    prog.disconnect(proghandler)
+                prog.disconnect(proghandler)
 
                 self.List.disconnect(s1)
                 self.List.disconnect(s2)
