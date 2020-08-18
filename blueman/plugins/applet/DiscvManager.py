@@ -110,7 +110,7 @@ class DiscvManager(AppletPlugin):
             self.item.set_visible(False)
         elif (not self.adapter["Discoverable"] or self.adapter["DiscoverableTimeout"] > 0) and self.adapter["Powered"]:
             self.item.set_visible(True)
-            self.item.set_text("_Make Discoverable")
+            self.item.set_text(_("_Make Discoverable"))
             self.item.set_sensitive(True)
         else:
             self.item.set_visible(False)
