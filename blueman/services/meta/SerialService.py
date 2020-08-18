@@ -8,12 +8,13 @@ from gi.repository import Gio, GLib
 from blueman.bluez.Adapter import Adapter
 from _blueman import create_rfcomm_device, get_rfcomm_channel, RFCOMMError
 from blueman.Service import Service
+from blueman.bluez.Device import Device
 from blueman.main.DBusProxies import Mechanism
 from blueman.Constants import RFCOMM_WATCHER_PATH
 
 
 class SerialService(Service):
-    def __init__(self, device, uuid):
+    def __init__(self, device: Device, uuid: str) -> None:
         super().__init__(device, uuid)
         self._handlerids: Dict[int, int] = {}
 
