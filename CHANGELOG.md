@@ -14,7 +14,7 @@
 * Pairing with pincode
 * Handle os.remove failing
 * Fix disconnecting NMDevice
-* Untranslated string in DiscvManager
+* Untranslated strings (@cwenling / Colomban Wendling)
 * Searching (with Ctrl+F in manager device list) did not work
 * Default PIN lookup
 

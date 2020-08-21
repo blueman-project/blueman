@@ -55,7 +55,7 @@ def show_info(device: Device, parent: Gtk.Widget) -> None:
     dialog_content_area = dialog.get_content_area()
 
     label = Gtk.Label()
-    label.set_markup("<big>Select row(s) and use <i>Control + C</i> to copy</big>")
+    label.set_markup(_("<big>Select row(s) and use <i>Control + C</i> to copy</big>"))
     label.show()
     dialog_content_area.pack_start(label, True, False, 0)
 
