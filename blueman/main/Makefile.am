@@ -14,6 +14,7 @@ blueman_PYTHON = \
 	Adapter.py \
 	Applet.py \
 	Manager.py \
+	MechanismApplication.py \
 	Sendto.py \
 	Services.py \
 	Tray.py \
