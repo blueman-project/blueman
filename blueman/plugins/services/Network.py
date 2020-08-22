@@ -219,7 +219,7 @@ class Network(ServicePlugin):
                 applet.SetPluginConfig('(sb)', "NMDUNSupport", False)
                 applet.SetPluginConfig('(sb)', "PPPSupport", True)
 
-        def pan_support_toggled(rb: Gtk.ToggleButton, x: Union[Literal["nm"], Literal["blueman"]]) -> None:
+        def pan_support_toggled(rb: Gtk.ToggleButton, x: Union["Literal[\"nm\"]", "Literal[\"blueman\"]"]) -> None:
             if rb.props.active and x == "nm":
                 applet.SetPluginConfig('(sb)', "DhcpClient", False)
                 applet.SetPluginConfig('(sb)', "NMPANSupport", True)
