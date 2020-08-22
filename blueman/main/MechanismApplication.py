@@ -2,7 +2,7 @@ import importlib
 import logging
 import os
 
-import blueman
+import blueman.plugins.mechanism
 from blueman.Constants import POLKIT
 from gi.repository import GLib, Gio
 
