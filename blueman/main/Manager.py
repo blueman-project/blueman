@@ -81,12 +81,13 @@ class Blueman(Gtk.Application):
                 statusbar.set_margin_right(margin_right + 10)
 
             def bt_status_changed(status):
+                assert self.window is not None
                 if not status:
-                    self.hide()
+                    self.window.hide()
                     check_bluetooth_status(_("Bluetooth needs to be turned on for the device manager to function"),
                                            self.quit)
                 else:
-                    self.show()
+                    self.window.show()
 
             def on_applet_signal(_proxy, _sender, signal_name, params):
                 if signal_name == 'BluetoothStatusChanged':

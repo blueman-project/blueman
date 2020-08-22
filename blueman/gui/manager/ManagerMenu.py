@@ -55,8 +55,9 @@ class ManagerMenu:
         help_item = create_menuitem(_("_Help"), "help-about")
         help_item.show()
         help_menu.append(help_item)
+        assert self.blueman.window is not None
         help_item.connect("activate", lambda x: show_about_dialog('Blueman ' + _('Device Manager'),
-                                                                  parent=self.blueman.get_toplevel()))
+                                                                  parent=self.blueman.window.get_toplevel()))
 
         view_menu = Gtk.Menu()
         self.item_view.set_submenu(view_menu)
