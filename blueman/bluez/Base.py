@@ -80,7 +80,7 @@ class Base(Gio.DBusProxy, metaclass=BaseMeta):
                 if error:
                     error(parse_dbus_error(e))
                 else:
-                    raise parse_dbus_error(e)
+                    logging.error(f"Unhandled error for {self.get_interface_name()}.{method}", exc_info=True)
 
         self.call(method, param, Gio.DBusCallFlags.NONE, GLib.MAXINT, None,
                   callback, reply_handler, error_handler)
