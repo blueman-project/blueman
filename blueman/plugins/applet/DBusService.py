@@ -26,7 +26,7 @@ class RFCOMMConnectedListener:
 
 class RFCOMMConnectHandler:
     def rfcomm_connect_handler(self, service: SerialService, reply: Callable[[str], None],
-                               err: Callable[[Exception], None]) -> bool:
+                               err: Callable[[Union[RFCOMMError, GLib.Error]], None]) -> bool:
         ...
 
 

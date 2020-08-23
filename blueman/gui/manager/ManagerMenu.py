@@ -218,7 +218,11 @@ class ManagerMenu:
                 self.device_menu = ManagerDeviceMenu(self.blueman)
                 self.item_device.set_submenu(self.device_menu)
             else:
-                GLib.idle_add(self.device_menu.generate, priority=GLib.PRIORITY_LOW)
+                def idle() -> bool:
+                    assert self.device_menu is not None  # https://github.com/python/mypy/issues/2608
+                    self.device_menu.generate()
+                    return False
+                GLib.idle_add(idle, priority=GLib.PRIORITY_LOW)
 
         else:
             self.item_device.props.sensitive = False
