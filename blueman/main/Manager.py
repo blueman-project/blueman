@@ -181,7 +181,6 @@ class Blueman(Gtk.Application):
             key, value = key_value
             if key == "Discovering" and not value:
                 prog.finalize()
-                prog.disconnect(proghandler)
 
                 self.List.disconnect(s1)
                 self.List.disconnect(s2)
@@ -194,7 +193,7 @@ class Blueman(Gtk.Application):
                 prog.fraction(frac)
 
         prog = ManagerProgressbar(self, text=_("Searching"))
-        proghandler = prog.connect("cancelled", lambda x: self.List.stop_discovery())
+        prog.connect("cancelled", lambda x: self.List.stop_discovery())
         try:
             self.List.discover_devices()
         except Exception as e:
