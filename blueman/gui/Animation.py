@@ -1,4 +1,4 @@
-from typing import Iterable
+from typing import Iterable, Optional
 
 from gi import require_version
 require_version("Gtk", "3.0")
@@ -8,10 +8,10 @@ from gi.repository import GLib, Gtk
 class Animation:
     def __init__(self, icon: Gtk.Image, icons: Iterable[str], rate: int = 1) -> None:
         self.icon_names = list(icons)
-        self.timer = None
+        self.timer: Optional[int] = None
         self.current = 0
         self.icon = icon
-        self.rate = 1000 / rate
+        self.rate = int(1000 / rate)
 
     def status(self) -> bool:
         if self.timer:
@@ -20,8 +20,8 @@ class Animation:
             return False
 
     def set_rate(self, rate: float) -> None:
-        if not self.rate == (1000 / rate):
-            self.rate = 1000 / rate
+        if not self.rate == int(1000 / rate):
+            self.rate = int(1000 / rate)
             self.stop()
             self.start()
 

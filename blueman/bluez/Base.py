@@ -62,7 +62,7 @@ class Base(Gio.DBusProxy, metaclass=BaseMeta):
     def _call(
         self,
         method: str,
-        param: GLib.Variant = None,
+        param: Optional[GLib.Variant] = None,
         reply_handler: Optional[Callable[..., None]] = None,
         error_handler: Optional[Callable[[BluezDBusException], None]] = None,
     ) -> None:

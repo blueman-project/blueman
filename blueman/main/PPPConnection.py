@@ -5,7 +5,7 @@ import re
 import subprocess
 import termios
 import tty
-from typing import Any, List, Iterable, Callable, Optional, Tuple, Union, MutableSequence
+from typing import Any, List, Iterable, Callable, Optional, Tuple, Union, MutableSequence, IO
 
 from gi.repository import GObject
 from gi.repository import GLib
@@ -57,7 +57,7 @@ class PPPConnection(GObject.GObject):
         self.user = user
         self.pwd = pwd
         self.port = port
-        self.interface = None
+        self.interface: Optional[str] = None
 
         self.commands: MutableSequence[Union[str, Tuple[str, Callable[[List[str]], None], Iterable[str]]]] = [
             "ATZ E0 V1 X4 &C1 +FCLASS=0",
@@ -81,6 +81,7 @@ class PPPConnection(GObject.GObject):
             self.pppd = subprocess.Popen(
                 ["/usr/sbin/pppd", f"{self.port}", "115200", "defaultroute", "updetach", "usepeerdns"], bufsize=1,
                 stdout=subprocess.PIPE)
+            assert self.pppd.stdout is not None
             GLib.io_add_watch(self.pppd.stdout, GLib.IO_IN | GLib.IO_ERR | GLib.IO_HUP, self.on_pppd_stdout)
             GLib.timeout_add(1000, self.check_pppd)
 
@@ -140,14 +141,14 @@ class PPPConnection(GObject.GObject):
 
         self.send_commands()
 
-    def on_pppd_stdout(self, source: GLib.IOChannel, cond: GLib.IOCondition) -> bool:
+    def on_pppd_stdout(self, source: IO[bytes], cond: GLib.IOCondition) -> bool:
         if cond & GLib.IO_ERR or cond & GLib.IO_HUP:
             return False
 
         line = source.readline().decode('utf-8')
         m = re.match(r'Using interface (ppp[0-9]*)', line)
         if m:
-            self.interface = m.groups(1)[0]
+            self.interface = m.groups()[0]
 
         logging.info(line)
 
@@ -176,7 +177,7 @@ class PPPConnection(GObject.GObject):
         os.write(self.file, out.encode("UTF-8"))
         termios.tcdrain(self.file)
 
-    def on_data_ready(self, _source: GLib.IOChannel, condition: GLib.IOCondition, command_id: int) -> bool:
+    def on_data_ready(self, _source: int, condition: GLib.IOCondition, command_id: int) -> bool:
         if condition & GLib.IO_ERR or condition & GLib.IO_HUP:
             GLib.source_remove(self.timeout)
             self.__cmd_response_cb(None, PPPException("Socket error"), command_id)

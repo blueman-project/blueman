@@ -166,7 +166,7 @@ class ManagerProgressbar(GObject.GObject):
 
         if not self.pulsing:
             self.pulsing = True
-            GLib.timeout_add(1000 / 24, pulse)
+            GLib.timeout_add(41, pulse)
 
     def stop(self) -> None:
         self.pulsing = False

@@ -38,7 +38,7 @@ class DiscvManager(AppletPlugin):
         self.adapter = None
         self.time_left = -1
 
-        self.timeout = None
+        self.timeout: Optional[int] = None
 
     def on_unload(self) -> None:
         self.parent.Plugins.Menu.unregister(self)

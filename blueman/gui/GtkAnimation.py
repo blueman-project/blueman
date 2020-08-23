@@ -20,7 +20,7 @@ class AnimBase(GObject.GObject):
 
     def __init__(self, state: float = 1.0) -> None:
         super().__init__()
-        self._source = None
+        self._source: Optional[int] = None
         self._state = state
         self.frozen = False
         self.fps = 24.0
