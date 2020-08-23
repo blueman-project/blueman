@@ -9,18 +9,18 @@ from blueman.typing import GSignals
 
 
 class BaseMeta(GObjectMeta):
-    def __call__(cls, **kwargs: str) -> "Base":
+    def __call__(cls, *args: object, **kwargs: str) -> "Base":
         if not hasattr(cls, "__instances__"):
             cls.__instances__: Dict[str, "Base"] = {}
 
         path = kwargs.get('obj_path')
         if path is None:
-            path = cls._obj_path
+            path = getattr(cls, "_obj_path")
 
         if path in cls.__instances__:
             return cls.__instances__[path]
 
-        instance: "Base" = super().__call__(**kwargs)
+        instance: "Base" = super().__call__(*args, **kwargs)
         cls.__instances__[path] = instance
 
         return instance
