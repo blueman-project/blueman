@@ -276,7 +276,7 @@ class ManagerDeviceList(DeviceList):
         # Bluetooth >= 4 devices use Appearance property
         appearance = device["Appearance"]
         if klass != _("Uncategorized") and klass != _("Unknown"):
-            description = get_minor_class(device['Class'])
+            description = klass
         elif klass == _("Unknown") and appearance:
             description = gatt_appearance_to_name(appearance)
         else:
