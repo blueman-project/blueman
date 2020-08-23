@@ -1,7 +1,7 @@
 from datetime import datetime
 import os
 import logging
-from typing import Dict, List, Optional, Any
+from typing import Dict, List, Optional, Any, Callable
 
 from blueman.Functions import adapter_path_to_name
 from blueman.gui.GenericList import GenericList, ListDataDict
@@ -10,7 +10,7 @@ from _blueman import conn_info, ConnInfoReadError
 from blueman.bluez.Manager import Manager
 from blueman.bluez.Device import Device, AnyDevice
 from blueman.bluez.Adapter import Adapter, AnyAdapter
-from blueman.bluez.errors import DBusNoSuchAdapterError
+from blueman.bluez.errors import DBusNoSuchAdapterError, BluezDBusException
 
 from gi.repository import GObject
 from gi.repository import GLib
@@ -312,11 +312,12 @@ class DeviceList(GenericList):
         if autoselect:
             self.selection.select_path(0)
 
-    def discover_devices(self, time: float = 10.24) -> None:
+    def discover_devices(self, time: float = 10.24,
+                         error_handler: Optional[Callable[[BluezDBusException], None]] = None) -> None:
         if not self.discovering:
             self.__discovery_time = 0
             if self.Adapter is not None:
-                self.Adapter.start_discovery()
+                self.Adapter.start_discovery(error_handler=error_handler)
                 self.discovering = True
                 t = 1.0 / 15 * 1000
                 GLib.timeout_add(int(t), self.update_progress, t / 1000, time)

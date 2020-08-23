@@ -1,8 +1,11 @@
+from typing import Optional, Callable
+
 from gi.repository import GLib
 
 from blueman.bluez.AnyBase import AnyBase
 from blueman.bluez.Base import Base
 from blueman.bluez.Device import Device
+from blueman.bluez.errors import BluezDBusException
 
 
 class Adapter(Base):
@@ -11,8 +14,8 @@ class Adapter(Base):
     def __init__(self, obj_path: str):
         super().__init__(obj_path=obj_path)
 
-    def start_discovery(self) -> None:
-        self._call('StartDiscovery')
+    def start_discovery(self, error_handler: Optional[Callable[[BluezDBusException], None]] = None) -> None:
+        self._call('StartDiscovery', error_handler=error_handler)
 
     def stop_discovery(self) -> None:
         self._call('StopDiscovery')

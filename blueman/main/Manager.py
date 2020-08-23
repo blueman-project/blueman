@@ -194,11 +194,12 @@ class Blueman(Gtk.Application):
 
         prog = ManagerProgressbar(self, text=_("Searching"))
         prog.connect("cancelled", lambda x: self.List.stop_discovery())
-        try:
-            self.List.discover_devices()
-        except Exception as e:
+
+        def on_error(e: Exception) -> None:
             prog.finalize()
             MessageArea.show_message(*e_(e))
+
+        self.List.discover_devices(error_handler=on_error)
 
         s1 = self.List.connect("discovery-progress", on_progress)
         s2 = self.List.connect("adapter-property-changed", prop_changed)
