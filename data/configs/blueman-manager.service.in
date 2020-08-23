@@ -1,0 +1,7 @@
+[Unit]
+Description=Bluetooth Manager
+
+[Service]
+Type=dbus
+BusName=org.blueman.Manager
+ExecStart=@BINDIR@/blueman-manager
