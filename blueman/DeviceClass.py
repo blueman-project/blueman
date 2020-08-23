@@ -1,7 +1,7 @@
 from gettext import gettext as _
 import logging
 
-major_cls = [
+major_cls = (
     # translators: device class
     _("Miscellaneous"),
     # translators: device class
@@ -22,9 +22,9 @@ major_cls = [
     _("Toy"),
     # translators: device class
     _("Uncategorized")
-]
+)
 
-computer_minor_cls = [
+computer_minor_cls = (
     # translators: device class
     _("Uncategorized"),
     # translators: device class
@@ -39,9 +39,9 @@ computer_minor_cls = [
     _("Palm"),
     # translators: device class
     _("Wearable")
-]
+)
 
-phone_minor_cls = [
+phone_minor_cls = (
     # translators: device class
     _("Uncategorized"),
     # translators: device class
@@ -54,9 +54,9 @@ phone_minor_cls = [
     _("Modem"),
     # translators: device class
     _("Isdn")
-]
+)
 
-access_point_minor_cls = [
+access_point_minor_cls = (
     # translators: device class
     _("Fully"),
     # translators: device class
@@ -73,9 +73,9 @@ access_point_minor_cls = [
     _("83-99 percent"),
     # translators: device class
     _("Not available")
-]
+)
 
-audio_video_minor_cls = [
+audio_video_minor_cls = (
     # translators: device class
     _("Uncategorized"),
     # translators: device class
@@ -114,9 +114,9 @@ audio_video_minor_cls = [
     _("Unknown"),
     # translators: device class
     _("Gaming/Toy")
-]
+)
 
-peripheral_minor_cls = [
+peripheral_minor_cls = (
     # translators: device class
     _("Uncategorized"),
     # translators: device class
@@ -125,9 +125,9 @@ peripheral_minor_cls = [
     _("Pointing"),
     # translators: device class
     _("Combo")
-]
+)
 
-imaging_minor_cls = [
+imaging_minor_cls = (
     # translators: device class
     _("Display"),
     # translators: device class
@@ -136,9 +136,9 @@ imaging_minor_cls = [
     _("Scanner"),
     # translators: device class
     _("Printer")
-]
+)
 
-wearable_minor_cls = [
+wearable_minor_cls = (
     # translators: device class
     _("Wrist watch"),
     # translators: device class
@@ -149,9 +149,9 @@ wearable_minor_cls = [
     _("Helmet"),
     # translators: device class
     _("Glasses")
-]
+)
 
-toy_minor_cls = [
+toy_minor_cls = (
     # translators: device class
     _("Robot"),
     # translators: device class
@@ -162,7 +162,7 @@ toy_minor_cls = [
     _("Controller"),
     # translators: device class
     _("Game")
-]
+)
 
 gatt_appearance_categories = {
     0: ('Unknown', {0: _("Unknown")}),
