@@ -22,7 +22,6 @@ class DeviceSelectorWidget(Gtk.Box):
         self.List = DeviceSelectorList(adapter_name)
         if self.List.Adapter is not None:
             self.List.display_known_devices()
-            self.List.Adapter.start_discovery()
 
         sw = Gtk.ScrolledWindow(hscrollbar_policy=Gtk.PolicyType.NEVER,
                                 vscrollbar_policy=Gtk.PolicyType.AUTOMATIC,
