@@ -322,6 +322,7 @@ data/icons/pixmaps/Makefile
 data/ui/Makefile
 data/man/Makefile
 data/configs/blueman-applet.service
+data/configs/blueman-manager.service
 data/configs/blueman-mechanism.service
 data/configs/org.blueman.Applet.service
 data/configs/org.blueman.Manager.service

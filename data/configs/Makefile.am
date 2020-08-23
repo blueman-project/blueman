@@ -17,7 +17,7 @@ endif
 
 if SYSTEMD_USER_UNIT_DIR
 systemd_userdir = $(systemd_user_unit_dir)
-systemd_user_DATA = blueman-applet.service
+systemd_user_DATA = blueman-applet.service blueman-manager.service
 endif
 
 if HAVE_POLKIT
@@ -35,6 +35,7 @@ endif
 EXTRA_DIST = \
 	its 					\
 	blueman-applet.service.in		\
+	blueman-manager.service.in    \
 	blueman-mechanism.service.in		\
 	org.blueman.Mechanism.conf		\
 	org.blueman.Applet.service.in		\
@@ -45,6 +46,7 @@ EXTRA_DIST = \
 
 CLEANFILES =		\
 	blueman-applet.service		\
+	blueman-manager.service \
 	blueman-mechanism.service	\
 	org.blueman.Manager.service \
 	org.blueman.Mechanism.service	\
