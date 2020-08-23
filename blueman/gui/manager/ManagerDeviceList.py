@@ -241,12 +241,12 @@ class ManagerDeviceList(DeviceList):
     @staticmethod
     def make_caption(name: str, klass: str, address: str) -> str:
         return "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" \
-               % {"0": html.escape(name), "1": klass.capitalize(), "2": address}
+               % {"0": html.escape(name), "1": klass, "2": address}
 
     @staticmethod
     def get_device_class(device: Device) -> str:
         klass = get_minor_class(device['Class'])
-        if klass != _("uncategorized"):
+        if klass != _("Uncategorized"):
             return klass
         else:
             return get_major_class(device['Class'])
@@ -275,12 +275,12 @@ class ManagerDeviceList(DeviceList):
         klass = get_minor_class(device['Class'])
         # Bluetooth >= 4 devices use Appearance property
         appearance = device["Appearance"]
-        if klass != _("uncategorized") and klass != _("unknown"):
-            description = get_minor_class(device['Class']).capitalize()
-        elif klass == _("unknown") and appearance:
+        if klass != _("Uncategorized") and klass != _("Unknown"):
+            description = get_minor_class(device['Class'])
+        elif klass == _("Unknown") and appearance:
             description = gatt_appearance_to_name(appearance)
         else:
-            description = get_major_class(device['Class']).capitalize()
+            description = get_major_class(device['Class'])
 
         icon_info = self.get_icon_info(device["Icon"], 48, False)
         caption = self.make_caption(device['Alias'], description, device['Address'])
