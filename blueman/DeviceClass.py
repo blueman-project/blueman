@@ -3,81 +3,81 @@ import logging
 
 service_cls = [
     # translators: device class
-    _("positioning"),
+    _("Positioning"),
     # translators: device class
-    _("networking"),
+    _("Networking"),
     # translators: device class
-    _("rendering"),
+    _("Rendering"),
     # translators: device class
-    _("capturing"),
+    _("Capturing"),
     # translators: device class
-    _("object transfer"),
+    _("Object transfer"),
     # translators: device class
-    _("audio"),
+    _("Audio"),
     # translators: device class
-    _("telephony"),
+    _("Telephony"),
     # translators: device class
-    _("information")
+    _("Information")
 ]
 
 major_cls = [
     # translators: device class
-    _("miscellaneous"),
+    _("Miscellaneous"),
     # translators: device class
-    _("computer"),
+    _("Computer"),
     # translators: device class
-    _("phone"),
+    _("Phone"),
     # translators: device class
-    _("access point"),
+    _("Access point"),
     # translators: device class
-    _("audio/video"),
+    _("Audio/video"),
     # translators: device class
-    _("peripheral"),
+    _("Peripheral"),
     # translators: device class
-    _("imaging"),
+    _("Imaging"),
     # translators: device class
-    _("wearable"),
+    _("Wearable"),
     # translators: device class
-    _("toy"),
+    _("Toy"),
     # translators: device class
-    _("uncategorized")
+    _("Uncategorized")
 ]
 
 computer_minor_cls = [
     # translators: device class
-    _("uncategorized"),
+    _("Uncategorized"),
     # translators: device class
-    _("desktop"),
+    _("Desktop"),
     # translators: device class
-    _("server"),
+    _("Server"),
     # translators: device class
-    _("laptop"),
+    _("Laptop"),
     # translators: device class
-    _("handheld"),
+    _("Handheld"),
     # translators: device class
-    _("palm"),
+    _("Palm"),
     # translators: device class
-    _("wearable")
+    _("Wearable")
 ]
 
 phone_minor_cls = [
     # translators: device class
-    _("uncategorized"),
+    _("Uncategorized"),
     # translators: device class
-    _("cellular"),
+    _("Cellular"),
     # translators: device class
-    _("cordless"),
+    _("Cordless"),
     # translators: device class
-    _("smart phone"),
+    _("Smart phone"),
     # translators: device class
-    _("modem"),
+    _("Modem"),
     # translators: device class
-    _("isdn")
+    _("Isdn")
 ]
 
 access_point_minor_cls = [
     # translators: device class
-    _("fully"),
+    _("Fully"),
     # translators: device class
     _("1-17 percent"),
     # translators: device class
@@ -91,96 +91,96 @@ access_point_minor_cls = [
     # translators: device class
     _("83-99 percent"),
     # translators: device class
-    _("not available")
+    _("Not available")
 ]
 
 audio_video_minor_cls = [
     # translators: device class
-    _("uncategorized"),
+    _("Uncategorized"),
     # translators: device class
-    _("headset"),
+    _("Headset"),
     # translators: device class
-    _("handsfree"),
+    _("Handsfree"),
     # translators: device class
-    _("unknown"),
+    _("Unknown"),
     # translators: device class
-    _("microphone"),
+    _("Microphone"),
     # translators: device class
-    _("loudspeaker"),
+    _("Loudspeaker"),
     # translators: device class
-    _("headphones"),
+    _("Headphones"),
     # translators: device class
-    _("portable audio"),
+    _("Portable audio"),
     # translators: device class
-    _("car audio"),
+    _("Car audio"),
     # translators: device class
-    _("set-top box"),
+    _("Set-top box"),
     # translators: device class
-    _("hifi audio"),
+    _("Hifi audio"),
     # translators: device class
-    _("vcr"),
+    _("Vcr"),
     # translators: device class
-    _("video camera"),
+    _("Video camera"),
     # translators: device class
-    _("camcorder"),
+    _("Camcorder"),
     # translators: device class
-    _("video monitor"),
+    _("Video monitor"),
     # translators: device class
-    _("video display and loudspeaker"),
+    _("Video display and loudspeaker"),
     # translators: device class
-    _("video conferencing"),
+    _("Video conferencing"),
     # translators: device class
-    _("unknown"),
+    _("Unknown"),
     # translators: device class
-    _("gaming/toy")
+    _("Gaming/Toy")
 ]
 
 peripheral_minor_cls = [
     # translators: device class
-    _("uncategorized"),
+    _("Uncategorized"),
     # translators: device class
-    _("keyboard"),
+    _("Keyboard"),
     # translators: device class
-    _("pointing"),
+    _("Pointing"),
     # translators: device class
-    _("combo")
+    _("Combo")
 ]
 
 imaging_minor_cls = [
     # translators: device class
-    _("display"),
+    _("Display"),
     # translators: device class
-    _("camera"),
+    _("Camera"),
     # translators: device class
-    _("scanner"),
+    _("Scanner"),
     # translators: device class
-    _("printer")
+    _("Printer")
 ]
 
 wearable_minor_cls = [
     # translators: device class
-    _("wrist watch"),
+    _("Wrist watch"),
     # translators: device class
-    _("pager"),
+    _("Pager"),
     # translators: device class
-    _("jacket"),
+    _("Jacket"),
     # translators: device class
-    _("helmet"),
+    _("Helmet"),
     # translators: device class
-    _("glasses")
+    _("Glasses")
 ]
 
 toy_minor_cls = [
     # translators: device class
-    _("robot"),
+    _("Robot"),
     # translators: device class
-    _("vehicle"),
+    _("Vehicle"),
     # translators: device class
-    _("doll"),
+    _("Doll"),
     # translators: device class
-    _("controller"),
+    _("Controller"),
     # translators: device class
-    _("game")
+    _("Game")
 ]
 
 gatt_appearance_categories = {
@@ -258,7 +258,7 @@ def get_major_class(klass: int) -> str:
 
 def get_minor_class(klass: int) -> str:
     if not klass:
-        return _("unknown")
+        return _("Unknown")
 
     i = (klass >> 8) & 0x1F
 
@@ -292,7 +292,7 @@ def get_minor_class(klass: int) -> str:
         else:
             return ""
     elif i == 6:
-        return _("imaging")
+        return _("Imaging")
 
     elif i == 7:
         minor_index = (klass >> 2) & 0x3F
@@ -307,7 +307,7 @@ def get_minor_class(klass: int) -> str:
         else:
             return ""
 
-    return _("unknown")
+    return _("Unknown")
 
 
 # First 10 bits is the category, the following 6 bits sub category
