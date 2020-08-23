@@ -1,25 +1,6 @@
 from gettext import gettext as _
 import logging
 
-service_cls = [
-    # translators: device class
-    _("Positioning"),
-    # translators: device class
-    _("Networking"),
-    # translators: device class
-    _("Rendering"),
-    # translators: device class
-    _("Capturing"),
-    # translators: device class
-    _("Object transfer"),
-    # translators: device class
-    _("Audio"),
-    # translators: device class
-    _("Telephony"),
-    # translators: device class
-    _("Information")
-]
-
 major_cls = [
     # translators: device class
     _("Miscellaneous"),
