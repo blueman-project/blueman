@@ -1,6 +1,5 @@
 from typing import Any
 
-GLib: Any
 GObject: Any
 Gio: Any
 Pango: Any
