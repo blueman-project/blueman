@@ -18,7 +18,8 @@ blueman_PYTHON = \
 	Services.py \
 	Tray.py \
 	DBusProxies.py \
-	NetworkManager.py
+	NetworkManager.py \
+	MechanismApplication.py
 
 if HAVE_PULSEAUDIO
 blueman_PYTHON += PulseAudioUtils.py
