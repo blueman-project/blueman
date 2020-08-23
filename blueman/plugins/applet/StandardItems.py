@@ -60,7 +60,7 @@ class StandardItems(AppletPlugin, PowerStateListener):
         else:
             power = True
 
-        sensitive = sensitive and self.parent.Manager and power
+        sensitive = sensitive and self.parent.Manager is not None and power
         self.new_dev.set_sensitive(sensitive)
         self.send.set_sensitive(sensitive)
         self.devices.set_sensitive(sensitive)

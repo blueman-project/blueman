@@ -83,9 +83,10 @@ class ManagerProgressbar(GObject.GObject):
         self.emit("cancelled")
         return False
 
-    def connect(self, signal: str, callback: Callable[..., object], *args: object) -> None:
+    def connect(self, signal: str, callback: Callable[..., None], *args: object) -> int:
         handler_id: int = super().connect(signal, callback, *args)
         self._signals.append(handler_id)
+        return handler_id
 
     def show(self) -> None:
         if not self.Blueman.Config["show-statusbar"]:
@@ -157,7 +158,7 @@ class ManagerProgressbar(GObject.GObject):
             self.progressbar.set_fraction(frac)
 
     def started(self) -> bool:
-        return self.gsource is not None
+        return self.pulsing
 
     def start(self) -> None:
         def pulse() -> bool:

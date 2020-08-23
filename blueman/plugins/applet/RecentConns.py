@@ -87,7 +87,7 @@ class RecentConns(AppletPlugin, PowerStateListener):
             power = True
 
         sensitive = sensitive and \
-            self.parent.Manager and \
+            self.parent.Manager is not None and \
             power and \
             self.items is not None and \
             (len(self.items) > 0)
