@@ -22,7 +22,6 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import GdkPixbuf
-from gi.repository import GObject
 from gi.repository import Pango
 
 if TYPE_CHECKING:
@@ -55,8 +54,8 @@ class ManagerDeviceList(DeviceList):
             {"id": "lq", "type": float},
             {"id": "tpl", "type": float},
             {"id": "icon_info", "type": Gtk.IconInfo},
-            {"id": "cell_fader", "type": GObject.TYPE_PYOBJECT},
-            {"id": "row_fader", "type": GObject.TYPE_PYOBJECT},
+            {"id": "cell_fader", "type": CellFade},
+            {"id": "row_fader", "type": TreeRowFade},
             {"id": "levels_visible", "type": bool},
             {"id": "initial_anim", "type": bool},
         ]

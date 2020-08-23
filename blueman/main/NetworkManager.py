@@ -66,6 +66,7 @@ class NMConnectionBase:
             return  # Keep checking the state changes
 
         # We are done with state changes
+        assert self._statehandler is not None
         GObject.signal_handler_disconnect(device, self._statehandler)
         if error_msg is None:
             self.reply_handler()
