@@ -1,12 +1,13 @@
 from gettext import gettext as _
 import logging
-from typing import Optional, Any
+from typing import Optional, Any, List
 
 from gi.repository import GLib
 from blueman.plugins.AppletPlugin import AppletPlugin
 from gettext import ngettext
 
 from blueman.plugins.applet.StatusIcon import StatusIconProvider
+from blueman.main.PluginManager import PluginManager
 
 
 class ShowConnected(AppletPlugin, StatusIconProvider):
@@ -20,11 +21,17 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
         self.num_connections = 0
         self.active = False
         self.initialized = False
+        self._handlers: List[int] = []
+        self._handlers.append(self.parent.Plugins.connect('plugin-loaded', self._on_plugins_changed))
+        self._handlers.append(self.parent.Plugins.connect('plugin-unloaded', self._on_plugins_changed))
 
     def on_unload(self) -> None:
         self.parent.Plugins.StatusIcon.set_text_line(1, None)
         self.num_connections = 0
         self.parent.Plugins.StatusIcon.icon_should_change()
+        for handler in self._handlers:
+            self.parent.Plugins.disconnect(handler)
+        self._handlers = []
 
     def on_status_icon_query_icon(self) -> Optional[str]:
         if self.num_connections > 0:
@@ -96,3 +103,7 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
 
     def on_adapter_removed(self, _path: str) -> None:
         self.enumerate_connections()
+
+    def _on_plugins_changed(self, _pluginmngr: PluginManager, name: str) -> None:
+        if name == "PowerManager":
+            self.update_statusicon()
