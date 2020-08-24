@@ -1,6 +1,5 @@
 from typing import Any
 
-Gio: Any
 Pango: Any
 GdkPixbuf: Any
 Gdk: Any
