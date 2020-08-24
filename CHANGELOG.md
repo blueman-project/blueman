@@ -18,6 +18,7 @@
 * Searching (with Ctrl+F in manager device list) did not work
 * Default PIN lookup
 * Exceptions from asynchronous DBus calls (getting picked up by tools like Apport or ABRT)
+* Fix and properly update tooltip on blueman-tray
 
 ## 2.1.1
 
