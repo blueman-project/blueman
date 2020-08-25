@@ -1,0 +1,1436 @@
+import builtins
+import typing
+
+from gi.repository import GLib
+from gi.repository import GObject
+
+
+class Action(GObject.GInterface):
+
+    def do_action(self, i: builtins.int) -> builtins.bool: ...
+
+    def get_description(self, i: builtins.int) -> typing.Optional[builtins.str]: ...
+
+    def get_keybinding(self, i: builtins.int) -> typing.Optional[builtins.str]: ...
+
+    def get_localized_name(self, i: builtins.int) -> typing.Optional[builtins.str]: ...
+
+    def get_n_actions(self) -> builtins.int: ...
+
+    def get_name(self, i: builtins.int) -> typing.Optional[builtins.str]: ...
+
+    def set_description(self, i: builtins.int, desc: builtins.str) -> builtins.bool: ...
+
+    def do_do_action(self, i: builtins.int) -> builtins.bool: ...
+
+    def do_get_description(self, i: builtins.int) -> typing.Optional[builtins.str]: ...
+
+    def do_get_keybinding(self, i: builtins.int) -> typing.Optional[builtins.str]: ...
+
+    def do_get_localized_name(self, i: builtins.int) -> typing.Optional[builtins.str]: ...
+
+    def do_get_n_actions(self) -> builtins.int: ...
+
+    def do_get_name(self, i: builtins.int) -> typing.Optional[builtins.str]: ...
+
+    def do_set_description(self, i: builtins.int, desc: builtins.str) -> builtins.bool: ...
+
+
+class Component(GObject.GInterface):
+
+    def contains(self, x: builtins.int, y: builtins.int, coord_type: CoordType) -> builtins.bool: ...
+
+    def get_alpha(self) -> builtins.float: ...
+
+    def get_extents(self, coord_type: CoordType) -> typing.Tuple[builtins.int, builtins.int, builtins.int, builtins.int]: ...
+
+    def get_layer(self) -> Layer: ...
+
+    def get_mdi_zorder(self) -> builtins.int: ...
+
+    def get_position(self, coord_type: CoordType) -> typing.Tuple[builtins.int, builtins.int]: ...
+
+    def get_size(self) -> typing.Tuple[builtins.int, builtins.int]: ...
+
+    def grab_focus(self) -> builtins.bool: ...
+
+    def ref_accessible_at_point(self, x: builtins.int, y: builtins.int, coord_type: CoordType) -> typing.Optional[Object]: ...
+
+    def remove_focus_handler(self, handler_id: builtins.int) -> None: ...
+
+    def scroll_to(self, type: ScrollType) -> builtins.bool: ...
+
+    def scroll_to_point(self, coords: CoordType, x: builtins.int, y: builtins.int) -> builtins.bool: ...
+
+    def set_extents(self, x: builtins.int, y: builtins.int, width: builtins.int, height: builtins.int, coord_type: CoordType) -> builtins.bool: ...
+
+    def set_position(self, x: builtins.int, y: builtins.int, coord_type: CoordType) -> builtins.bool: ...
+
+    def set_size(self, width: builtins.int, height: builtins.int) -> builtins.bool: ...
+
+    def do_bounds_changed(self, bounds: Rectangle) -> None: ...
+
+    def do_contains(self, x: builtins.int, y: builtins.int, coord_type: CoordType) -> builtins.bool: ...
+
+    def do_get_alpha(self) -> builtins.float: ...
+
+    def do_get_extents(self, coord_type: CoordType) -> typing.Tuple[builtins.int, builtins.int, builtins.int, builtins.int]: ...
+
+    def do_get_layer(self) -> Layer: ...
+
+    def do_get_mdi_zorder(self) -> builtins.int: ...
+
+    def do_get_position(self, coord_type: CoordType) -> typing.Tuple[builtins.int, builtins.int]: ...
+
+    def do_get_size(self) -> typing.Tuple[builtins.int, builtins.int]: ...
+
+    def do_grab_focus(self) -> builtins.bool: ...
+
+    def do_ref_accessible_at_point(self, x: builtins.int, y: builtins.int, coord_type: CoordType) -> typing.Optional[Object]: ...
+
+    def do_remove_focus_handler(self, handler_id: builtins.int) -> None: ...
+
+    def do_scroll_to(self, type: ScrollType) -> builtins.bool: ...
+
+    def do_scroll_to_point(self, coords: CoordType, x: builtins.int, y: builtins.int) -> builtins.bool: ...
+
+    def do_set_extents(self, x: builtins.int, y: builtins.int, width: builtins.int, height: builtins.int, coord_type: CoordType) -> builtins.bool: ...
+
+    def do_set_position(self, x: builtins.int, y: builtins.int, coord_type: CoordType) -> builtins.bool: ...
+
+    def do_set_size(self, width: builtins.int, height: builtins.int) -> builtins.bool: ...
+
+
+class Document(GObject.GInterface):
+
+    def get_attribute_value(self, attribute_name: builtins.str) -> typing.Optional[builtins.str]: ...
+
+    def get_attributes(self) -> typing.Sequence[builtins.object]: ...
+
+    def get_current_page_number(self) -> builtins.int: ...
+
+    def get_document(self) -> typing.Optional[builtins.object]: ...
+
+    def get_document_type(self) -> builtins.str: ...
+
+    def get_locale(self) -> builtins.str: ...
+
+    def get_page_count(self) -> builtins.int: ...
+
+    def set_attribute_value(self, attribute_name: builtins.str, attribute_value: builtins.str) -> builtins.bool: ...
+
+    def do_get_current_page_number(self) -> builtins.int: ...
+
+    def do_get_document(self) -> typing.Optional[builtins.object]: ...
+
+    def do_get_document_attribute_value(self, attribute_name: builtins.str) -> typing.Optional[builtins.str]: ...
+
+    def do_get_document_attributes(self) -> typing.Sequence[builtins.object]: ...
+
+    def do_get_document_locale(self) -> builtins.str: ...
+
+    def do_get_document_type(self) -> builtins.str: ...
+
+    def do_get_page_count(self) -> builtins.int: ...
+
+    def do_set_document_attribute(self, attribute_name: builtins.str, attribute_value: builtins.str) -> builtins.bool: ...
+
+
+class EditableText(GObject.GInterface):
+
+    def copy_text(self, start_pos: builtins.int, end_pos: builtins.int) -> None: ...
+
+    def cut_text(self, start_pos: builtins.int, end_pos: builtins.int) -> None: ...
+
+    def delete_text(self, start_pos: builtins.int, end_pos: builtins.int) -> None: ...
+
+    def insert_text(self, string: builtins.str, length: builtins.int, position: builtins.int) -> None: ...
+
+    def paste_text(self, position: builtins.int) -> None: ...
+
+    def set_run_attributes(self, attrib_set: typing.Sequence[builtins.object], start_offset: builtins.int, end_offset: builtins.int) -> builtins.bool: ...
+
+    def set_text_contents(self, string: builtins.str) -> None: ...
+
+    def do_copy_text(self, start_pos: builtins.int, end_pos: builtins.int) -> None: ...
+
+    def do_cut_text(self, start_pos: builtins.int, end_pos: builtins.int) -> None: ...
+
+    def do_delete_text(self, start_pos: builtins.int, end_pos: builtins.int) -> None: ...
+
+    def do_insert_text(self, string: builtins.str, length: builtins.int, position: builtins.int) -> None: ...
+
+    def do_paste_text(self, position: builtins.int) -> None: ...
+
+    def do_set_run_attributes(self, attrib_set: typing.Sequence[builtins.object], start_offset: builtins.int, end_offset: builtins.int) -> builtins.bool: ...
+
+    def do_set_text_contents(self, string: builtins.str) -> None: ...
+
+
+class HyperlinkImpl(GObject.GInterface):
+
+    def get_hyperlink(self) -> Hyperlink: ...
+
+    def do_get_hyperlink(self) -> Hyperlink: ...
+
+
+class Hypertext(GObject.GInterface):
+
+    def get_link(self, link_index: builtins.int) -> Hyperlink: ...
+
+    def get_link_index(self, char_index: builtins.int) -> builtins.int: ...
+
+    def get_n_links(self) -> builtins.int: ...
+
+    def do_get_link(self, link_index: builtins.int) -> Hyperlink: ...
+
+    def do_get_link_index(self, char_index: builtins.int) -> builtins.int: ...
+
+    def do_get_n_links(self) -> builtins.int: ...
+
+    def do_link_selected(self, link_index: builtins.int) -> None: ...
+
+
+class Image(GObject.GInterface):
+
+    def get_image_description(self) -> builtins.str: ...
+
+    def get_image_locale(self) -> typing.Optional[builtins.str]: ...
+
+    def get_image_position(self, coord_type: CoordType) -> typing.Tuple[builtins.int, builtins.int]: ...
+
+    def get_image_size(self) -> typing.Tuple[builtins.int, builtins.int]: ...
+
+    def set_image_description(self, description: builtins.str) -> builtins.bool: ...
+
+    def do_get_image_description(self) -> builtins.str: ...
+
+    def do_get_image_locale(self) -> typing.Optional[builtins.str]: ...
+
+    def do_get_image_position(self, coord_type: CoordType) -> typing.Tuple[builtins.int, builtins.int]: ...
+
+    def do_get_image_size(self) -> typing.Tuple[builtins.int, builtins.int]: ...
+
+    def do_set_image_description(self, description: builtins.str) -> builtins.bool: ...
+
+
+class ImplementorIface(GObject.GInterface):
+    ...
+
+
+class Misc(GObject.Object):
+    parent: GObject.Object
+
+    @staticmethod
+    def get_instance() -> Misc: ...
+
+    def threads_enter(self) -> None: ...
+
+    def threads_leave(self) -> None: ...
+
+    def do_threads_enter(self) -> None: ...
+
+    def do_threads_leave(self) -> None: ...
+
+
+class Object(GObject.Object):
+    accessible_parent: Object
+    description: builtins.str
+    layer: Layer
+    name: builtins.str
+    parent: GObject.Object
+    relation_set: RelationSet
+    role: Role
+
+    def add_relationship(self, relationship: RelationType, target: Object) -> builtins.bool: ...
+
+    def get_accessible_id(self) -> builtins.str: ...
+
+    def get_attributes(self) -> typing.Sequence[builtins.object]: ...
+
+    def get_description(self) -> builtins.str: ...
+
+    def get_index_in_parent(self) -> builtins.int: ...
+
+    def get_layer(self) -> Layer: ...
+
+    def get_mdi_zorder(self) -> builtins.int: ...
+
+    def get_n_accessible_children(self) -> builtins.int: ...
+
+    def get_name(self) -> builtins.str: ...
+
+    def get_object_locale(self) -> builtins.str: ...
+
+    def get_parent(self) -> Object: ...
+
+    def get_role(self) -> Role: ...
+
+    def initialize(self, data: typing.Optional[builtins.object]) -> None: ...
+
+    def notify_state_change(self, state: builtins.int, value: builtins.bool) -> None: ...
+
+    def peek_parent(self) -> Object: ...
+
+    def ref_accessible_child(self, i: builtins.int) -> Object: ...
+
+    def ref_relation_set(self) -> RelationSet: ...
+
+    def ref_state_set(self) -> StateSet: ...
+
+    def remove_property_change_handler(self, handler_id: builtins.int) -> None: ...
+
+    def remove_relationship(self, relationship: RelationType, target: Object) -> builtins.bool: ...
+
+    def set_accessible_id(self, name: builtins.str) -> None: ...
+
+    def set_description(self, description: builtins.str) -> None: ...
+
+    def set_name(self, name: builtins.str) -> None: ...
+
+    def set_parent(self, parent: Object) -> None: ...
+
+    def set_role(self, role: Role) -> None: ...
+
+    def do_active_descendant_changed(self, child: typing.Optional[builtins.object]) -> None: ...
+
+    def do_children_changed(self, change_index: builtins.int, changed_child: typing.Optional[builtins.object]) -> None: ...
+
+    def do_focus_event(self, focus_in: builtins.bool) -> None: ...
+
+    def do_get_attributes(self) -> typing.Sequence[builtins.object]: ...
+
+    def do_get_description(self) -> builtins.str: ...
+
+    def do_get_index_in_parent(self) -> builtins.int: ...
+
+    def do_get_layer(self) -> Layer: ...
+
+    def do_get_mdi_zorder(self) -> builtins.int: ...
+
+    def do_get_n_children(self) -> builtins.int: ...
+
+    def do_get_name(self) -> builtins.str: ...
+
+    def do_get_object_locale(self) -> builtins.str: ...
+
+    def do_get_parent(self) -> Object: ...
+
+    def do_get_role(self) -> Role: ...
+
+    def do_initialize(self, data: typing.Optional[builtins.object]) -> None: ...
+
+    def do_property_change(self, values: PropertyValues) -> None: ...
+
+    def do_ref_relation_set(self) -> RelationSet: ...
+
+    def do_ref_state_set(self) -> StateSet: ...
+
+    def do_remove_property_change_handler(self, handler_id: builtins.int) -> None: ...
+
+    def do_set_description(self, description: builtins.str) -> None: ...
+
+    def do_set_name(self, name: builtins.str) -> None: ...
+
+    def do_set_parent(self, parent: Object) -> None: ...
+
+    def do_set_role(self, role: Role) -> None: ...
+
+    def do_state_change(self, name: builtins.str, state_set: builtins.bool) -> None: ...
+
+    def do_visible_data_changed(self) -> None: ...
+
+
+class ObjectFactory(GObject.Object):
+    parent: GObject.Object
+
+    def create_accessible(self, obj: GObject.Object) -> Object: ...
+
+    def get_accessible_type(self) -> GObject.GType: ...
+
+    def invalidate(self) -> None: ...
+
+    def do_invalidate(self) -> None: ...
+
+
+class Registry(GObject.Object):
+    factory_singleton_cache: typing.Mapping[builtins.object, builtins.object]
+    factory_type_registry: typing.Mapping[builtins.object, builtins.object]
+    parent: GObject.Object
+
+    def get_factory(self, type: GObject.GType) -> ObjectFactory: ...
+
+    def get_factory_type(self, type: GObject.GType) -> GObject.GType: ...
+
+    def set_factory_type(self, type: GObject.GType, factory_type: GObject.GType) -> None: ...
+
+
+class Relation(GObject.Object):
+    parent: GObject.Object
+    relationship: RelationType
+    target: typing.Sequence[builtins.object]
+
+    def add_target(self, target: Object) -> None: ...
+
+    def get_relation_type(self) -> RelationType: ...
+
+    def get_target(self) -> typing.Sequence[Object]: ...
+
+    @staticmethod
+    def new(targets: typing.Sequence[Object], relationship: RelationType, **kwargs) -> Relation: ...  # type: ignore
+
+    def remove_target(self, target: Object) -> builtins.bool: ...
+
+
+class RelationSet(GObject.Object):
+    parent: GObject.Object
+    relations: typing.Sequence[builtins.object]
+
+    def add(self, relation: Relation) -> None: ...
+
+    def add_relation_by_type(self, relationship: RelationType, target: Object) -> None: ...
+
+    def contains(self, relationship: RelationType) -> builtins.bool: ...
+
+    def contains_target(self, relationship: RelationType, target: Object) -> builtins.bool: ...
+
+    def get_n_relations(self) -> builtins.int: ...
+
+    def get_relation(self, i: builtins.int) -> Relation: ...
+
+    def get_relation_by_type(self, relationship: RelationType) -> Relation: ...
+
+    @staticmethod
+    def new(**kwargs) -> RelationSet: ...  # type: ignore
+
+    def remove(self, relation: Relation) -> None: ...
+
+
+class Selection(GObject.GInterface):
+
+    def add_selection(self, i: builtins.int) -> builtins.bool: ...
+
+    def clear_selection(self) -> builtins.bool: ...
+
+    def get_selection_count(self) -> builtins.int: ...
+
+    def is_child_selected(self, i: builtins.int) -> builtins.bool: ...
+
+    def ref_selection(self, i: builtins.int) -> typing.Optional[Object]: ...
+
+    def remove_selection(self, i: builtins.int) -> builtins.bool: ...
+
+    def select_all_selection(self) -> builtins.bool: ...
+
+    def do_add_selection(self, i: builtins.int) -> builtins.bool: ...
+
+    def do_clear_selection(self) -> builtins.bool: ...
+
+    def do_get_selection_count(self) -> builtins.int: ...
+
+    def do_is_child_selected(self, i: builtins.int) -> builtins.bool: ...
+
+    def do_ref_selection(self, i: builtins.int) -> typing.Optional[Object]: ...
+
+    def do_remove_selection(self, i: builtins.int) -> builtins.bool: ...
+
+    def do_select_all_selection(self) -> builtins.bool: ...
+
+    def do_selection_changed(self) -> None: ...
+
+
+class StateSet(GObject.Object):
+    parent: GObject.Object
+
+    def add_state(self, type: StateType) -> builtins.bool: ...
+
+    def add_states(self, types: typing.Sequence[StateType]) -> None: ...
+
+    def and_sets(self, compare_set: StateSet) -> StateSet: ...
+
+    def clear_states(self) -> None: ...
+
+    def contains_state(self, type: StateType) -> builtins.bool: ...
+
+    def contains_states(self, types: typing.Sequence[StateType]) -> builtins.bool: ...
+
+    def is_empty(self) -> builtins.bool: ...
+
+    @staticmethod
+    def new(**kwargs) -> StateSet: ...  # type: ignore
+
+    def or_sets(self, compare_set: StateSet) -> typing.Optional[StateSet]: ...
+
+    def remove_state(self, type: StateType) -> builtins.bool: ...
+
+    def xor_sets(self, compare_set: StateSet) -> StateSet: ...
+
+
+class StreamableContent(GObject.GInterface):
+
+    def get_mime_type(self, i: builtins.int) -> builtins.str: ...
+
+    def get_n_mime_types(self) -> builtins.int: ...
+
+    def get_stream(self, mime_type: builtins.str) -> GLib.IOChannel: ...
+
+    def get_uri(self, mime_type: builtins.str) -> typing.Optional[builtins.str]: ...
+
+    def do_get_mime_type(self, i: builtins.int) -> builtins.str: ...
+
+    def do_get_n_mime_types(self) -> builtins.int: ...
+
+    def do_get_stream(self, mime_type: builtins.str) -> GLib.IOChannel: ...
+
+    def do_get_uri(self, mime_type: builtins.str) -> typing.Optional[builtins.str]: ...
+
+
+class Table(GObject.GInterface):
+
+    def add_column_selection(self, column: builtins.int) -> builtins.bool: ...
+
+    def add_row_selection(self, row: builtins.int) -> builtins.bool: ...
+
+    def get_caption(self) -> typing.Optional[Object]: ...
+
+    def get_column_at_index(self, index_: builtins.int) -> builtins.int: ...
+
+    def get_column_description(self, column: builtins.int) -> builtins.str: ...
+
+    def get_column_extent_at(self, row: builtins.int, column: builtins.int) -> builtins.int: ...
+
+    def get_column_header(self, column: builtins.int) -> typing.Optional[Object]: ...
+
+    def get_index_at(self, row: builtins.int, column: builtins.int) -> builtins.int: ...
+
+    def get_n_columns(self) -> builtins.int: ...
+
+    def get_n_rows(self) -> builtins.int: ...
+
+    def get_row_at_index(self, index_: builtins.int) -> builtins.int: ...
+
+    def get_row_description(self, row: builtins.int) -> typing.Optional[builtins.str]: ...
+
+    def get_row_extent_at(self, row: builtins.int, column: builtins.int) -> builtins.int: ...
+
+    def get_row_header(self, row: builtins.int) -> typing.Optional[Object]: ...
+
+    def get_selected_columns(self, selected: builtins.int) -> builtins.int: ...
+
+    def get_selected_rows(self, selected: builtins.int) -> builtins.int: ...
+
+    def get_summary(self) -> Object: ...
+
+    def is_column_selected(self, column: builtins.int) -> builtins.bool: ...
+
+    def is_row_selected(self, row: builtins.int) -> builtins.bool: ...
+
+    def is_selected(self, row: builtins.int, column: builtins.int) -> builtins.bool: ...
+
+    def ref_at(self, row: builtins.int, column: builtins.int) -> Object: ...
+
+    def remove_column_selection(self, column: builtins.int) -> builtins.bool: ...
+
+    def remove_row_selection(self, row: builtins.int) -> builtins.bool: ...
+
+    def set_caption(self, caption: Object) -> None: ...
+
+    def set_column_description(self, column: builtins.int, description: builtins.str) -> None: ...
+
+    def set_column_header(self, column: builtins.int, header: Object) -> None: ...
+
+    def set_row_description(self, row: builtins.int, description: builtins.str) -> None: ...
+
+    def set_row_header(self, row: builtins.int, header: Object) -> None: ...
+
+    def set_summary(self, accessible: Object) -> None: ...
+
+    def do_add_column_selection(self, column: builtins.int) -> builtins.bool: ...
+
+    def do_add_row_selection(self, row: builtins.int) -> builtins.bool: ...
+
+    def do_column_deleted(self, column: builtins.int, num_deleted: builtins.int) -> None: ...
+
+    def do_column_inserted(self, column: builtins.int, num_inserted: builtins.int) -> None: ...
+
+    def do_column_reordered(self) -> None: ...
+
+    def do_get_caption(self) -> typing.Optional[Object]: ...
+
+    def do_get_column_at_index(self, index_: builtins.int) -> builtins.int: ...
+
+    def do_get_column_description(self, column: builtins.int) -> builtins.str: ...
+
+    def do_get_column_extent_at(self, row: builtins.int, column: builtins.int) -> builtins.int: ...
+
+    def do_get_column_header(self, column: builtins.int) -> typing.Optional[Object]: ...
+
+    def do_get_index_at(self, row: builtins.int, column: builtins.int) -> builtins.int: ...
+
+    def do_get_n_columns(self) -> builtins.int: ...
+
+    def do_get_n_rows(self) -> builtins.int: ...
+
+    def do_get_row_at_index(self, index_: builtins.int) -> builtins.int: ...
+
+    def do_get_row_description(self, row: builtins.int) -> typing.Optional[builtins.str]: ...
+
+    def do_get_row_extent_at(self, row: builtins.int, column: builtins.int) -> builtins.int: ...
+
+    def do_get_row_header(self, row: builtins.int) -> typing.Optional[Object]: ...
+
+    def do_get_selected_columns(self, selected: builtins.int) -> builtins.int: ...
+
+    def do_get_selected_rows(self, selected: builtins.int) -> builtins.int: ...
+
+    def do_get_summary(self) -> Object: ...
+
+    def do_is_column_selected(self, column: builtins.int) -> builtins.bool: ...
+
+    def do_is_row_selected(self, row: builtins.int) -> builtins.bool: ...
+
+    def do_is_selected(self, row: builtins.int, column: builtins.int) -> builtins.bool: ...
+
+    def do_model_changed(self) -> None: ...
+
+    def do_ref_at(self, row: builtins.int, column: builtins.int) -> Object: ...
+
+    def do_remove_column_selection(self, column: builtins.int) -> builtins.bool: ...
+
+    def do_remove_row_selection(self, row: builtins.int) -> builtins.bool: ...
+
+    def do_row_deleted(self, row: builtins.int, num_deleted: builtins.int) -> None: ...
+
+    def do_row_inserted(self, row: builtins.int, num_inserted: builtins.int) -> None: ...
+
+    def do_row_reordered(self) -> None: ...
+
+    def do_set_caption(self, caption: Object) -> None: ...
+
+    def do_set_column_description(self, column: builtins.int, description: builtins.str) -> None: ...
+
+    def do_set_column_header(self, column: builtins.int, header: Object) -> None: ...
+
+    def do_set_row_description(self, row: builtins.int, description: builtins.str) -> None: ...
+
+    def do_set_row_header(self, row: builtins.int, header: Object) -> None: ...
+
+    def do_set_summary(self, accessible: Object) -> None: ...
+
+
+class TableCell(GObject.GInterface):
+
+    def get_column_header_cells(self) -> typing.Sequence[Object]: ...
+
+    def get_column_span(self) -> builtins.int: ...
+
+    def get_position(self) -> typing.Tuple[builtins.bool, builtins.int, builtins.int]: ...
+
+    def get_row_column_span(self) -> typing.Tuple[builtins.bool, builtins.int, builtins.int, builtins.int, builtins.int]: ...
+
+    def get_row_header_cells(self) -> typing.Sequence[Object]: ...
+
+    def get_row_span(self) -> builtins.int: ...
+
+    def get_table(self) -> Object: ...
+
+    def do_get_column_header_cells(self) -> typing.Sequence[Object]: ...
+
+    def do_get_column_span(self) -> builtins.int: ...
+
+    def do_get_position(self) -> typing.Tuple[builtins.bool, builtins.int, builtins.int]: ...
+
+    def do_get_row_column_span(self) -> typing.Tuple[builtins.bool, builtins.int, builtins.int, builtins.int, builtins.int]: ...
+
+    def do_get_row_header_cells(self) -> typing.Sequence[Object]: ...
+
+    def do_get_row_span(self) -> builtins.int: ...
+
+    def do_get_table(self) -> Object: ...
+
+
+class Text(GObject.GInterface):
+
+    def add_selection(self, start_offset: builtins.int, end_offset: builtins.int) -> builtins.bool: ...
+
+    @staticmethod
+    def free_ranges(ranges: typing.Sequence[TextRange]) -> None: ...
+
+    def get_bounded_ranges(self, rect: TextRectangle, coord_type: CoordType, x_clip_type: TextClipType, y_clip_type: TextClipType) -> typing.Sequence[TextRange]: ...
+
+    def get_caret_offset(self) -> builtins.int: ...
+
+    def get_character_at_offset(self, offset: builtins.int) -> builtins.str: ...
+
+    def get_character_count(self) -> builtins.int: ...
+
+    def get_character_extents(self, offset: builtins.int, coords: CoordType) -> typing.Tuple[builtins.int, builtins.int, builtins.int, builtins.int]: ...
+
+    def get_default_attributes(self) -> typing.Sequence[builtins.object]: ...
+
+    def get_n_selections(self) -> builtins.int: ...
+
+    def get_offset_at_point(self, x: builtins.int, y: builtins.int, coords: CoordType) -> builtins.int: ...
+
+    def get_range_extents(self, start_offset: builtins.int, end_offset: builtins.int, coord_type: CoordType) -> TextRectangle: ...
+
+    def get_run_attributes(self, offset: builtins.int) -> typing.Tuple[typing.Sequence[builtins.object], builtins.int, builtins.int]: ...
+
+    def get_selection(self, selection_num: builtins.int) -> typing.Tuple[builtins.str, builtins.int, builtins.int]: ...
+
+    def get_string_at_offset(self, offset: builtins.int, granularity: TextGranularity) -> typing.Tuple[typing.Optional[builtins.str], builtins.int, builtins.int]: ...
+
+    def get_text(self, start_offset: builtins.int, end_offset: builtins.int) -> builtins.str: ...
+
+    def get_text_after_offset(self, offset: builtins.int, boundary_type: TextBoundary) -> typing.Tuple[builtins.str, builtins.int, builtins.int]: ...
+
+    def get_text_at_offset(self, offset: builtins.int, boundary_type: TextBoundary) -> typing.Tuple[builtins.str, builtins.int, builtins.int]: ...
+
+    def get_text_before_offset(self, offset: builtins.int, boundary_type: TextBoundary) -> typing.Tuple[builtins.str, builtins.int, builtins.int]: ...
+
+    def remove_selection(self, selection_num: builtins.int) -> builtins.bool: ...
+
+    def scroll_substring_to(self, start_offset: builtins.int, end_offset: builtins.int, type: ScrollType) -> builtins.bool: ...
+
+    def scroll_substring_to_point(self, start_offset: builtins.int, end_offset: builtins.int, coords: CoordType, x: builtins.int, y: builtins.int) -> builtins.bool: ...
+
+    def set_caret_offset(self, offset: builtins.int) -> builtins.bool: ...
+
+    def set_selection(self, selection_num: builtins.int, start_offset: builtins.int, end_offset: builtins.int) -> builtins.bool: ...
+
+    def do_add_selection(self, start_offset: builtins.int, end_offset: builtins.int) -> builtins.bool: ...
+
+    def do_get_bounded_ranges(self, rect: TextRectangle, coord_type: CoordType, x_clip_type: TextClipType, y_clip_type: TextClipType) -> typing.Sequence[TextRange]: ...
+
+    def do_get_caret_offset(self) -> builtins.int: ...
+
+    def do_get_character_at_offset(self, offset: builtins.int) -> builtins.str: ...
+
+    def do_get_character_count(self) -> builtins.int: ...
+
+    def do_get_character_extents(self, offset: builtins.int, coords: CoordType) -> typing.Tuple[builtins.int, builtins.int, builtins.int, builtins.int]: ...
+
+    def do_get_default_attributes(self) -> typing.Sequence[builtins.object]: ...
+
+    def do_get_n_selections(self) -> builtins.int: ...
+
+    def do_get_offset_at_point(self, x: builtins.int, y: builtins.int, coords: CoordType) -> builtins.int: ...
+
+    def do_get_range_extents(self, start_offset: builtins.int, end_offset: builtins.int, coord_type: CoordType) -> TextRectangle: ...
+
+    def do_get_run_attributes(self, offset: builtins.int) -> typing.Tuple[typing.Sequence[builtins.object], builtins.int, builtins.int]: ...
+
+    def do_get_selection(self, selection_num: builtins.int) -> typing.Tuple[builtins.str, builtins.int, builtins.int]: ...
+
+    def do_get_string_at_offset(self, offset: builtins.int, granularity: TextGranularity) -> typing.Tuple[typing.Optional[builtins.str], builtins.int, builtins.int]: ...
+
+    def do_get_text(self, start_offset: builtins.int, end_offset: builtins.int) -> builtins.str: ...
+
+    def do_get_text_after_offset(self, offset: builtins.int, boundary_type: TextBoundary) -> typing.Tuple[builtins.str, builtins.int, builtins.int]: ...
+
+    def do_get_text_at_offset(self, offset: builtins.int, boundary_type: TextBoundary) -> typing.Tuple[builtins.str, builtins.int, builtins.int]: ...
+
+    def do_get_text_before_offset(self, offset: builtins.int, boundary_type: TextBoundary) -> typing.Tuple[builtins.str, builtins.int, builtins.int]: ...
+
+    def do_remove_selection(self, selection_num: builtins.int) -> builtins.bool: ...
+
+    def do_scroll_substring_to(self, start_offset: builtins.int, end_offset: builtins.int, type: ScrollType) -> builtins.bool: ...
+
+    def do_scroll_substring_to_point(self, start_offset: builtins.int, end_offset: builtins.int, coords: CoordType, x: builtins.int, y: builtins.int) -> builtins.bool: ...
+
+    def do_set_caret_offset(self, offset: builtins.int) -> builtins.bool: ...
+
+    def do_set_selection(self, selection_num: builtins.int, start_offset: builtins.int, end_offset: builtins.int) -> builtins.bool: ...
+
+    def do_text_attributes_changed(self) -> None: ...
+
+    def do_text_caret_moved(self, location: builtins.int) -> None: ...
+
+    def do_text_changed(self, position: builtins.int, length: builtins.int) -> None: ...
+
+    def do_text_selection_changed(self) -> None: ...
+
+
+class Util(GObject.Object):
+    parent: GObject.Object
+
+
+class Value(GObject.GInterface):
+
+    def get_current_value(self) -> GObject.Value: ...
+
+    def get_increment(self) -> builtins.float: ...
+
+    def get_maximum_value(self) -> GObject.Value: ...
+
+    def get_minimum_increment(self) -> GObject.Value: ...
+
+    def get_minimum_value(self) -> GObject.Value: ...
+
+    def get_range(self) -> typing.Optional[Range]: ...
+
+    def get_sub_ranges(self) -> typing.Sequence[Range]: ...
+
+    def get_value_and_text(self) -> typing.Tuple[builtins.float, builtins.str]: ...
+
+    def set_current_value(self, value: GObject.Value) -> builtins.bool: ...
+
+    def set_value(self, new_value: builtins.float) -> None: ...
+
+    def do_get_current_value(self) -> GObject.Value: ...
+
+    def do_get_increment(self) -> builtins.float: ...
+
+    def do_get_maximum_value(self) -> GObject.Value: ...
+
+    def do_get_minimum_increment(self) -> GObject.Value: ...
+
+    def do_get_minimum_value(self) -> GObject.Value: ...
+
+    def do_get_range(self) -> typing.Optional[Range]: ...
+
+    def do_get_sub_ranges(self) -> typing.Sequence[Range]: ...
+
+    def do_get_value_and_text(self) -> typing.Tuple[builtins.float, builtins.str]: ...
+
+    def do_set_current_value(self, value: GObject.Value) -> builtins.bool: ...
+
+    def do_set_value(self, new_value: builtins.float) -> None: ...
+
+
+class Window(GObject.GInterface):
+    ...
+
+
+class Hyperlink(GObject.Object, Action):
+    parent: GObject.Object
+
+    def get_end_index(self) -> builtins.int: ...
+
+    def get_n_anchors(self) -> builtins.int: ...
+
+    def get_object(self, i: builtins.int) -> Object: ...
+
+    def get_start_index(self) -> builtins.int: ...
+
+    def get_uri(self, i: builtins.int) -> builtins.str: ...
+
+    def is_inline(self) -> builtins.bool: ...
+
+    def is_selected_link(self) -> builtins.bool: ...
+
+    def is_valid(self) -> builtins.bool: ...
+
+    def do_get_end_index(self) -> builtins.int: ...
+
+    def do_get_n_anchors(self) -> builtins.int: ...
+
+    def do_get_object(self, i: builtins.int) -> Object: ...
+
+    def do_get_start_index(self) -> builtins.int: ...
+
+    def do_get_uri(self, i: builtins.int) -> builtins.str: ...
+
+    def do_is_selected_link(self) -> builtins.bool: ...
+
+    def do_is_valid(self) -> builtins.bool: ...
+
+    def do_link_activated(self) -> None: ...
+
+    def do_link_state(self) -> builtins.int: ...
+
+
+class GObjectAccessible(Object):
+    parent: Object
+
+    @staticmethod
+    def for_object(obj: GObject.Object) -> Object: ...
+
+    def get_object(self) -> GObject.Object: ...
+
+
+class Plug(Object, Component):
+    parent: Object
+
+    def get_id(self) -> builtins.str: ...
+
+    @staticmethod
+    def new() -> Object: ...  # type: ignore
+
+    def set_child(self, child: Object) -> None: ...
+
+    def do_get_object_id(self) -> builtins.str: ...
+
+
+class Socket(Object, Component):
+    embedded_plug_id: builtins.str
+    parent: Object
+
+    def embed(self, plug_id: builtins.str) -> None: ...
+
+    def is_occupied(self) -> builtins.bool: ...
+
+    @staticmethod
+    def new() -> Object: ...  # type: ignore
+
+    def do_embed(self, plug_id: builtins.str) -> None: ...
+
+
+class NoOpObjectFactory(ObjectFactory):
+    parent: ObjectFactory
+
+    @staticmethod
+    def new() -> ObjectFactory: ...  # type: ignore
+
+
+class NoOpObject(Object, Action, Component, Document, EditableText, Hypertext, Image, Selection, Table, TableCell, Text, Value, Window):
+    parent: Object
+
+    @staticmethod
+    def new(obj: GObject.Object) -> Object: ...  # type: ignore
+
+
+class Attribute():
+    name: builtins.str
+    value: builtins.str
+
+    @staticmethod
+    def set_free(attrib_set: typing.Sequence[builtins.object]) -> None: ...
+
+
+class Implementor():
+
+    def ref_accessible(self) -> Object: ...
+
+
+class KeyEventStruct():
+    keycode: builtins.int
+    keyval: builtins.int
+    length: builtins.int
+    state: builtins.int
+    string: builtins.str
+    timestamp: builtins.int
+    type: builtins.int
+
+
+class PropertyValues():
+    new_value: GObject.Value
+    old_value: GObject.Value
+    property_name: builtins.str
+
+
+class Range():
+
+    def copy(self) -> Range: ...
+
+    def free(self) -> None: ...
+
+    def get_description(self) -> builtins.str: ...
+
+    def get_lower_limit(self) -> builtins.float: ...
+
+    def get_upper_limit(self) -> builtins.float: ...
+
+    @staticmethod
+    def new(lower_limit: builtins.float, upper_limit: builtins.float, description: builtins.str) -> Range: ...  # type: ignore
+
+
+class Rectangle():
+    height: builtins.int
+    width: builtins.int
+    x: builtins.int
+    y: builtins.int
+
+
+class TextRange():
+    bounds: TextRectangle
+    content: builtins.str
+    end_offset: builtins.int
+    start_offset: builtins.int
+
+
+class TextRectangle():
+    height: builtins.int
+    width: builtins.int
+    x: builtins.int
+    y: builtins.int
+
+
+class HyperlinkStateFlags(GObject.GFlags, builtins.int):
+    INLINE = ...  # type: HyperlinkStateFlags
+
+
+class CoordType(GObject.GEnum, builtins.int):
+    PARENT = ...  # type: CoordType
+    SCREEN = ...  # type: CoordType
+    WINDOW = ...  # type: CoordType
+
+
+class KeyEventType(GObject.GEnum, builtins.int):
+    LAST_DEFINED = ...  # type: KeyEventType
+    PRESS = ...  # type: KeyEventType
+    RELEASE = ...  # type: KeyEventType
+
+
+class Layer(GObject.GEnum, builtins.int):
+    BACKGROUND = ...  # type: Layer
+    CANVAS = ...  # type: Layer
+    INVALID = ...  # type: Layer
+    MDI = ...  # type: Layer
+    OVERLAY = ...  # type: Layer
+    POPUP = ...  # type: Layer
+    WIDGET = ...  # type: Layer
+    WINDOW = ...  # type: Layer
+
+
+class RelationType(GObject.GEnum, builtins.int):
+    CONTROLLED_BY = ...  # type: RelationType
+    CONTROLLER_FOR = ...  # type: RelationType
+    DESCRIBED_BY = ...  # type: RelationType
+    DESCRIPTION_FOR = ...  # type: RelationType
+    DETAILS = ...  # type: RelationType
+    DETAILS_FOR = ...  # type: RelationType
+    EMBEDDED_BY = ...  # type: RelationType
+    EMBEDS = ...  # type: RelationType
+    ERROR_FOR = ...  # type: RelationType
+    ERROR_MESSAGE = ...  # type: RelationType
+    FLOWS_FROM = ...  # type: RelationType
+    FLOWS_TO = ...  # type: RelationType
+    LABELLED_BY = ...  # type: RelationType
+    LABEL_FOR = ...  # type: RelationType
+    LAST_DEFINED = ...  # type: RelationType
+    MEMBER_OF = ...  # type: RelationType
+    NODE_CHILD_OF = ...  # type: RelationType
+    NODE_PARENT_OF = ...  # type: RelationType
+    NULL = ...  # type: RelationType
+    PARENT_WINDOW_OF = ...  # type: RelationType
+    POPUP_FOR = ...  # type: RelationType
+    SUBWINDOW_OF = ...  # type: RelationType
+
+    @staticmethod
+    def for_name(name: builtins.str) -> RelationType: ...
+
+    @staticmethod
+    def get_name(type: RelationType) -> builtins.str: ...
+
+    @staticmethod
+    def register(name: builtins.str) -> RelationType: ...
+
+
+class Role(GObject.GEnum, builtins.int):
+    ACCELERATOR_LABEL = ...  # type: Role
+    ALERT = ...  # type: Role
+    ANIMATION = ...  # type: Role
+    APPLICATION = ...  # type: Role
+    ARROW = ...  # type: Role
+    ARTICLE = ...  # type: Role
+    AUDIO = ...  # type: Role
+    AUTOCOMPLETE = ...  # type: Role
+    BLOCK_QUOTE = ...  # type: Role
+    CALENDAR = ...  # type: Role
+    CANVAS = ...  # type: Role
+    CAPTION = ...  # type: Role
+    CHART = ...  # type: Role
+    CHECK_BOX = ...  # type: Role
+    CHECK_MENU_ITEM = ...  # type: Role
+    COLOR_CHOOSER = ...  # type: Role
+    COLUMN_HEADER = ...  # type: Role
+    COMBO_BOX = ...  # type: Role
+    COMMENT = ...  # type: Role
+    CONTENT_DELETION = ...  # type: Role
+    CONTENT_INSERTION = ...  # type: Role
+    DATE_EDITOR = ...  # type: Role
+    DEFINITION = ...  # type: Role
+    DESCRIPTION_LIST = ...  # type: Role
+    DESCRIPTION_TERM = ...  # type: Role
+    DESCRIPTION_VALUE = ...  # type: Role
+    DESKTOP_FRAME = ...  # type: Role
+    DESKTOP_ICON = ...  # type: Role
+    DIAL = ...  # type: Role
+    DIALOG = ...  # type: Role
+    DIRECTORY_PANE = ...  # type: Role
+    DOCUMENT_EMAIL = ...  # type: Role
+    DOCUMENT_FRAME = ...  # type: Role
+    DOCUMENT_PRESENTATION = ...  # type: Role
+    DOCUMENT_SPREADSHEET = ...  # type: Role
+    DOCUMENT_TEXT = ...  # type: Role
+    DOCUMENT_WEB = ...  # type: Role
+    DRAWING_AREA = ...  # type: Role
+    EDIT_BAR = ...  # type: Role
+    EMBEDDED = ...  # type: Role
+    ENTRY = ...  # type: Role
+    FILE_CHOOSER = ...  # type: Role
+    FILLER = ...  # type: Role
+    FONT_CHOOSER = ...  # type: Role
+    FOOTER = ...  # type: Role
+    FOOTNOTE = ...  # type: Role
+    FORM = ...  # type: Role
+    FRAME = ...  # type: Role
+    GLASS_PANE = ...  # type: Role
+    GROUPING = ...  # type: Role
+    HEADER = ...  # type: Role
+    HEADING = ...  # type: Role
+    HTML_CONTAINER = ...  # type: Role
+    ICON = ...  # type: Role
+    IMAGE = ...  # type: Role
+    IMAGE_MAP = ...  # type: Role
+    INFO_BAR = ...  # type: Role
+    INPUT_METHOD_WINDOW = ...  # type: Role
+    INTERNAL_FRAME = ...  # type: Role
+    INVALID = ...  # type: Role
+    LABEL = ...  # type: Role
+    LANDMARK = ...  # type: Role
+    LAST_DEFINED = ...  # type: Role
+    LAYERED_PANE = ...  # type: Role
+    LEVEL_BAR = ...  # type: Role
+    LINK = ...  # type: Role
+    LIST = ...  # type: Role
+    LIST_BOX = ...  # type: Role
+    LIST_ITEM = ...  # type: Role
+    LOG = ...  # type: Role
+    MARK = ...  # type: Role
+    MARQUEE = ...  # type: Role
+    MATH = ...  # type: Role
+    MATH_FRACTION = ...  # type: Role
+    MATH_ROOT = ...  # type: Role
+    MENU = ...  # type: Role
+    MENU_BAR = ...  # type: Role
+    MENU_ITEM = ...  # type: Role
+    NOTIFICATION = ...  # type: Role
+    OPTION_PANE = ...  # type: Role
+    PAGE = ...  # type: Role
+    PAGE_TAB = ...  # type: Role
+    PAGE_TAB_LIST = ...  # type: Role
+    PANEL = ...  # type: Role
+    PARAGRAPH = ...  # type: Role
+    PASSWORD_TEXT = ...  # type: Role
+    POPUP_MENU = ...  # type: Role
+    PROGRESS_BAR = ...  # type: Role
+    PUSH_BUTTON = ...  # type: Role
+    RADIO_BUTTON = ...  # type: Role
+    RADIO_MENU_ITEM = ...  # type: Role
+    RATING = ...  # type: Role
+    REDUNDANT_OBJECT = ...  # type: Role
+    ROOT_PANE = ...  # type: Role
+    ROW_HEADER = ...  # type: Role
+    RULER = ...  # type: Role
+    SCROLL_BAR = ...  # type: Role
+    SCROLL_PANE = ...  # type: Role
+    SECTION = ...  # type: Role
+    SEPARATOR = ...  # type: Role
+    SLIDER = ...  # type: Role
+    SPIN_BUTTON = ...  # type: Role
+    SPLIT_PANE = ...  # type: Role
+    STATIC = ...  # type: Role
+    STATUSBAR = ...  # type: Role
+    SUBSCRIPT = ...  # type: Role
+    SUGGESTION = ...  # type: Role
+    SUPERSCRIPT = ...  # type: Role
+    TABLE = ...  # type: Role
+    TABLE_CELL = ...  # type: Role
+    TABLE_COLUMN_HEADER = ...  # type: Role
+    TABLE_ROW = ...  # type: Role
+    TABLE_ROW_HEADER = ...  # type: Role
+    TEAR_OFF_MENU_ITEM = ...  # type: Role
+    TERMINAL = ...  # type: Role
+    TEXT = ...  # type: Role
+    TIMER = ...  # type: Role
+    TITLE_BAR = ...  # type: Role
+    TOGGLE_BUTTON = ...  # type: Role
+    TOOL_BAR = ...  # type: Role
+    TOOL_TIP = ...  # type: Role
+    TREE = ...  # type: Role
+    TREE_ITEM = ...  # type: Role
+    TREE_TABLE = ...  # type: Role
+    UNKNOWN = ...  # type: Role
+    VIDEO = ...  # type: Role
+    VIEWPORT = ...  # type: Role
+    WINDOW = ...  # type: Role
+
+    @staticmethod
+    def for_name(name: builtins.str) -> Role: ...
+
+    @staticmethod
+    def get_localized_name(role: Role) -> builtins.str: ...
+
+    @staticmethod
+    def get_name(role: Role) -> builtins.str: ...
+
+    @staticmethod
+    def register(name: builtins.str) -> Role: ...
+
+
+class ScrollType(GObject.GEnum, builtins.int):
+    ANYWHERE = ...  # type: ScrollType
+    BOTTOM_EDGE = ...  # type: ScrollType
+    BOTTOM_RIGHT = ...  # type: ScrollType
+    LEFT_EDGE = ...  # type: ScrollType
+    RIGHT_EDGE = ...  # type: ScrollType
+    TOP_EDGE = ...  # type: ScrollType
+    TOP_LEFT = ...  # type: ScrollType
+
+
+class StateType(GObject.GEnum, builtins.int):
+    ACTIVE = ...  # type: StateType
+    ANIMATED = ...  # type: StateType
+    ARMED = ...  # type: StateType
+    BUSY = ...  # type: StateType
+    CHECKABLE = ...  # type: StateType
+    CHECKED = ...  # type: StateType
+    DEFAULT = ...  # type: StateType
+    DEFUNCT = ...  # type: StateType
+    EDITABLE = ...  # type: StateType
+    ENABLED = ...  # type: StateType
+    EXPANDABLE = ...  # type: StateType
+    EXPANDED = ...  # type: StateType
+    FOCUSABLE = ...  # type: StateType
+    FOCUSED = ...  # type: StateType
+    HAS_POPUP = ...  # type: StateType
+    HAS_TOOLTIP = ...  # type: StateType
+    HORIZONTAL = ...  # type: StateType
+    ICONIFIED = ...  # type: StateType
+    INDETERMINATE = ...  # type: StateType
+    INVALID = ...  # type: StateType
+    INVALID_ENTRY = ...  # type: StateType
+    LAST_DEFINED = ...  # type: StateType
+    MANAGES_DESCENDANTS = ...  # type: StateType
+    MODAL = ...  # type: StateType
+    MULTISELECTABLE = ...  # type: StateType
+    MULTI_LINE = ...  # type: StateType
+    OPAQUE = ...  # type: StateType
+    PRESSED = ...  # type: StateType
+    READ_ONLY = ...  # type: StateType
+    REQUIRED = ...  # type: StateType
+    RESIZABLE = ...  # type: StateType
+    SELECTABLE = ...  # type: StateType
+    SELECTABLE_TEXT = ...  # type: StateType
+    SELECTED = ...  # type: StateType
+    SENSITIVE = ...  # type: StateType
+    SHOWING = ...  # type: StateType
+    SINGLE_LINE = ...  # type: StateType
+    STALE = ...  # type: StateType
+    SUPPORTS_AUTOCOMPLETION = ...  # type: StateType
+    TRANSIENT = ...  # type: StateType
+    TRUNCATED = ...  # type: StateType
+    VERTICAL = ...  # type: StateType
+    VISIBLE = ...  # type: StateType
+    VISITED = ...  # type: StateType
+
+    @staticmethod
+    def for_name(name: builtins.str) -> StateType: ...
+
+    @staticmethod
+    def get_name(type: StateType) -> builtins.str: ...
+
+    @staticmethod
+    def register(name: builtins.str) -> StateType: ...
+
+
+class TextAttribute(GObject.GEnum, builtins.int):
+    BG_COLOR = ...  # type: TextAttribute
+    BG_FULL_HEIGHT = ...  # type: TextAttribute
+    BG_STIPPLE = ...  # type: TextAttribute
+    DIRECTION = ...  # type: TextAttribute
+    EDITABLE = ...  # type: TextAttribute
+    FAMILY_NAME = ...  # type: TextAttribute
+    FG_COLOR = ...  # type: TextAttribute
+    FG_STIPPLE = ...  # type: TextAttribute
+    INDENT = ...  # type: TextAttribute
+    INVALID = ...  # type: TextAttribute
+    INVISIBLE = ...  # type: TextAttribute
+    JUSTIFICATION = ...  # type: TextAttribute
+    LANGUAGE = ...  # type: TextAttribute
+    LAST_DEFINED = ...  # type: TextAttribute
+    LEFT_MARGIN = ...  # type: TextAttribute
+    PIXELS_ABOVE_LINES = ...  # type: TextAttribute
+    PIXELS_BELOW_LINES = ...  # type: TextAttribute
+    PIXELS_INSIDE_WRAP = ...  # type: TextAttribute
+    RIGHT_MARGIN = ...  # type: TextAttribute
+    RISE = ...  # type: TextAttribute
+    SCALE = ...  # type: TextAttribute
+    SIZE = ...  # type: TextAttribute
+    STRETCH = ...  # type: TextAttribute
+    STRIKETHROUGH = ...  # type: TextAttribute
+    STYLE = ...  # type: TextAttribute
+    TEXT_POSITION = ...  # type: TextAttribute
+    UNDERLINE = ...  # type: TextAttribute
+    VARIANT = ...  # type: TextAttribute
+    WEIGHT = ...  # type: TextAttribute
+    WRAP_MODE = ...  # type: TextAttribute
+
+    @staticmethod
+    def for_name(name: builtins.str) -> TextAttribute: ...
+
+    @staticmethod
+    def get_name(attr: TextAttribute) -> builtins.str: ...
+
+    @staticmethod
+    def get_value(attr: TextAttribute, index_: builtins.int) -> typing.Optional[builtins.str]: ...
+
+    @staticmethod
+    def register(name: builtins.str) -> TextAttribute: ...
+
+
+class TextBoundary(GObject.GEnum, builtins.int):
+    CHAR = ...  # type: TextBoundary
+    LINE_END = ...  # type: TextBoundary
+    LINE_START = ...  # type: TextBoundary
+    SENTENCE_END = ...  # type: TextBoundary
+    SENTENCE_START = ...  # type: TextBoundary
+    WORD_END = ...  # type: TextBoundary
+    WORD_START = ...  # type: TextBoundary
+
+
+class TextClipType(GObject.GEnum, builtins.int):
+    BOTH = ...  # type: TextClipType
+    MAX = ...  # type: TextClipType
+    MIN = ...  # type: TextClipType
+    NONE = ...  # type: TextClipType
+
+
+class TextGranularity(GObject.GEnum, builtins.int):
+    CHAR = ...  # type: TextGranularity
+    LINE = ...  # type: TextGranularity
+    PARAGRAPH = ...  # type: TextGranularity
+    SENTENCE = ...  # type: TextGranularity
+    WORD = ...  # type: TextGranularity
+
+
+class ValueType(GObject.GEnum, builtins.int):
+    ACCEPTABLE = ...  # type: ValueType
+    BAD = ...  # type: ValueType
+    BEST = ...  # type: ValueType
+    GOOD = ...  # type: ValueType
+    HIGH = ...  # type: ValueType
+    LAST_DEFINED = ...  # type: ValueType
+    LOW = ...  # type: ValueType
+    MEDIUM = ...  # type: ValueType
+    STRONG = ...  # type: ValueType
+    VERY_BAD = ...  # type: ValueType
+    VERY_GOOD = ...  # type: ValueType
+    VERY_HIGH = ...  # type: ValueType
+    VERY_LOW = ...  # type: ValueType
+    VERY_STRONG = ...  # type: ValueType
+    VERY_WEAK = ...  # type: ValueType
+    WEAK = ...  # type: ValueType
+
+    @staticmethod
+    def get_localized_name(value_type: ValueType) -> builtins.str: ...
+
+    @staticmethod
+    def get_name(value_type: ValueType) -> builtins.str: ...
+
+
+EventListener = typing.Callable[[Object], None]
+EventListenerInit = typing.Callable[[], None]
+FocusHandler = typing.Callable[[Object, builtins.bool], None]
+Function = typing.Callable[[typing.Optional[builtins.object]], builtins.bool]
+KeySnoopFunc = typing.Callable[[KeyEventStruct, typing.Optional[builtins.object]], builtins.int]
+PropertyChangeHandler = typing.Callable[[Object, PropertyValues], None]
+
+
+def attribute_set_free(attrib_set: typing.Sequence[builtins.object]) -> None: ...
+
+
+def focus_tracker_notify(object: Object) -> None: ...
+
+
+def get_binary_age() -> builtins.int: ...
+
+
+def get_default_registry() -> Registry: ...
+
+
+def get_focus_object() -> Object: ...
+
+
+def get_interface_age() -> builtins.int: ...
+
+
+def get_major_version() -> builtins.int: ...
+
+
+def get_micro_version() -> builtins.int: ...
+
+
+def get_minor_version() -> builtins.int: ...
+
+
+def get_root() -> Object: ...
+
+
+def get_toolkit_name() -> builtins.str: ...
+
+
+def get_toolkit_version() -> builtins.str: ...
+
+
+def get_version() -> builtins.str: ...
+
+
+def relation_type_for_name(name: builtins.str) -> RelationType: ...
+
+
+def relation_type_get_name(type: RelationType) -> builtins.str: ...
+
+
+def relation_type_register(name: builtins.str) -> RelationType: ...
+
+
+def remove_focus_tracker(tracker_id: builtins.int) -> None: ...
+
+
+def remove_global_event_listener(listener_id: builtins.int) -> None: ...
+
+
+def remove_key_event_listener(listener_id: builtins.int) -> None: ...
+
+
+def role_for_name(name: builtins.str) -> Role: ...
+
+
+def role_get_localized_name(role: Role) -> builtins.str: ...
+
+
+def role_get_name(role: Role) -> builtins.str: ...
+
+
+def role_register(name: builtins.str) -> Role: ...
+
+
+def state_type_for_name(name: builtins.str) -> StateType: ...
+
+
+def state_type_get_name(type: StateType) -> builtins.str: ...
+
+
+def state_type_register(name: builtins.str) -> StateType: ...
+
+
+def text_attribute_for_name(name: builtins.str) -> TextAttribute: ...
+
+
+def text_attribute_get_name(attr: TextAttribute) -> builtins.str: ...
+
+
+def text_attribute_get_value(attr: TextAttribute, index_: builtins.int) -> typing.Optional[builtins.str]: ...
+
+
+def text_attribute_register(name: builtins.str) -> TextAttribute: ...
+
+
+def text_free_ranges(ranges: typing.Sequence[TextRange]) -> None: ...
+
+
+def value_type_get_localized_name(value_type: ValueType) -> builtins.str: ...
+
+
+def value_type_get_name(value_type: ValueType) -> builtins.str: ...
+
+
+BINARY_AGE: builtins.int
+INTERFACE_AGE: builtins.int
+MAJOR_VERSION: builtins.int
+MICRO_VERSION: builtins.int
+MINOR_VERSION: builtins.int
+VERSION_MIN_REQUIRED: builtins.int
