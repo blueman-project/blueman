@@ -38,6 +38,8 @@ class Base(Gio.DBusProxy, metaclass=BaseMeta):
     }
     __instances__: Dict[str, "Base"]
 
+    _interface_name: str
+
     def __init__(self, obj_path: str):
         super().__init__(
             g_name=self.__name,
@@ -68,7 +70,7 @@ class Base(Gio.DBusProxy, metaclass=BaseMeta):
     ) -> None:
         def callback(
             proxy: Base,
-            result: Gio.Task,
+            result: Gio.AsyncResult,
             reply: Optional[Callable[..., None]],
             error: Optional[Callable[[BluezDBusException], None]],
         ) -> None:
@@ -95,8 +97,9 @@ class Base(Gio.DBusProxy, metaclass=BaseMeta):
                 None)
             return prop.unpack()[0]
         except GLib.Error as e:
-            if name in self.get_cached_property_names():
-                return self.get_cached_property(name).unpack()
+            property = self.get_cached_property(name)
+            if property is not None:
+                return property.unpack()
             elif name in self.__fallback:
                 return self.__fallback[name]
             else:

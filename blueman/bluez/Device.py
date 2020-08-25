@@ -18,14 +18,14 @@ class Device(Base):
     ) -> None:
         self._call('Pair', reply_handler=reply_handler, error_handler=error_handler)
 
-    def connect(
+    def connect(  # type: ignore
         self,
         reply_handler: Optional[Callable[[], None]] = None,
         error_handler: Optional[Callable[[BluezDBusException], None]] = None,
     ) -> None:
         self._call('Connect', reply_handler=reply_handler, error_handler=error_handler)
 
-    def disconnect(
+    def disconnect(  # type: ignore
         self,
         reply_handler: Optional[Callable[[], None]] = None,
         error_handler: Optional[Callable[[BluezDBusException], None]] = None,

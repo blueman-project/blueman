@@ -9,7 +9,7 @@ class DBusProxyFailed(Exception):
 
 class ProxyBase(Gio.DBusProxy, metaclass=SingletonGObjectMeta):
     def __init__(self, name: str, interface_name: str, object_path: str = "/", systembus: bool = False,
-                 flags: Gio.DBusProxyFlags = 0) -> None:
+                 flags: Gio.DBusProxyFlags = Gio.DBusProxyFlags.NONE) -> None:
         if systembus:
             bustype = Gio.BusType.SYSTEM
         else:
@@ -52,7 +52,7 @@ class ManagerService(ProxyBase):
             proxy.call_finish(resp)
 
         param = GLib.Variant('(sava{sv})', (name, [], {}))
-        self.call('ActivateAction', param, Gio.DBusProxyFlags.NONE, -1, None, call_finish)
+        self.call('ActivateAction', param, Gio.DBusCallFlags.NONE, -1, None, call_finish)
 
     def startstop(self) -> None:
         if self.get_name_owner() is None:

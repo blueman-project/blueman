@@ -37,10 +37,12 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
         adapter_proxy = dbus_object.get_interface('org.bluez.Adapter1')
 
         if adapter_proxy:
+            assert isinstance(adapter_proxy, Gio.DBusProxy)
             object_path = adapter_proxy.get_object_path()
             logging.debug(object_path)
             self.emit('adapter-added', object_path)
         elif device_proxy:
+            assert isinstance(device_proxy, Gio.DBusProxy)
             object_path = device_proxy.get_object_path()
             logging.debug(object_path)
             self.emit('device-created', object_path)
@@ -50,10 +52,12 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
         adapter_proxy = dbus_object.get_interface('org.bluez.Adapter1')
 
         if adapter_proxy:
+            assert isinstance(adapter_proxy, Gio.DBusProxy)
             object_path = adapter_proxy.get_object_path()
             logging.debug(object_path)
             self.emit('adapter-removed', object_path)
         elif device_proxy:
+            assert isinstance(device_proxy, Gio.DBusProxy)
             object_path = device_proxy.get_object_path()
             logging.debug(object_path)
             self.emit('device-removed', object_path)
@@ -64,6 +68,7 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
             proxy = obj_proxy.get_interface('org.bluez.Adapter1')
 
             if proxy:
+                assert isinstance(proxy, Gio.DBusProxy)
                 paths.append(proxy.get_object_path())
 
         return [Adapter(obj_path=path) for path in paths]
@@ -88,6 +93,7 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
             proxy = obj_proxy.get_interface('org.bluez.Device1')
 
             if proxy:
+                assert isinstance(proxy, Gio.DBusProxy)
                 object_path = proxy.get_object_path()
                 if object_path.startswith(adapter_path):
                     paths.append(object_path)

@@ -44,7 +44,9 @@ class SerialService(Service):
             else:
                 logging.warning(f"No handler id for {port}")
         elif event_type == Gio.FileMonitorEvent.ATTRIBUTE_CHANGED:
-            self.try_replace_root_watcher(monitor, file.get_path(), port)
+            path = file.get_path()
+            assert path is not None
+            self.try_replace_root_watcher(monitor, path, port)
 
     def try_replace_root_watcher(self, monitor: Gio.FileMonitor, path: str, port: int) -> None:
         if not os.access(path, os.R_OK | os.W_OK):

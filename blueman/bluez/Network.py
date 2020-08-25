@@ -13,7 +13,7 @@ class Network(Base):
     def __init__(self, obj_path: str):
         super().__init__(obj_path=obj_path)
 
-    def connect(
+    def connect(  # type: ignore
         self,
         uuid: str,
         reply_handler: Optional[Callable[[str], None]] = None,
@@ -22,7 +22,7 @@ class Network(Base):
         param = GLib.Variant('(s)', (uuid,))
         self._call('Connect', param, reply_handler=reply_handler, error_handler=error_handler)
 
-    def disconnect(
+    def disconnect(  # type: ignore
         self,
         reply_handler: Optional[Callable[[], None]] = None,
         error_handler: Optional[Callable[[BluezDBusException], None]] = None,

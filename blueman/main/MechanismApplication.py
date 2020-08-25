@@ -1,6 +1,7 @@
 import importlib
 import logging
 import os
+from typing import Optional
 
 import blueman.plugins.mechanism
 from blueman.Constants import POLKIT
@@ -47,7 +48,7 @@ class MechanismApplication(DbusService):
 
         if POLKIT:
             try:
-                self.pk = Gio.DBusProxy.new_for_bus_sync(
+                self.pk: Optional[Gio.DBusProxy] = Gio.DBusProxy.new_for_bus_sync(
                     Gio.BusType.SYSTEM,
                     Gio.DBusProxyFlags.NONE,
                     None,

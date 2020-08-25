@@ -230,7 +230,7 @@ class TransferService(AppletPlugin):
             self._agent.unregister()
             self._agent = None
 
-    def _on_dbus_name_appeared(self, _connection: Manager, name: str, owner: str) -> None:
+    def _on_dbus_name_appeared(self, _connection: Gio.DBusConnection, name: str, owner: str) -> None:
         logging.info(f"{name} {owner}")
 
         self._manager = Manager()
@@ -240,7 +240,7 @@ class TransferService(AppletPlugin):
 
         self._register_agent()
 
-    def _on_dbus_name_vanished(self, _connection: Manager, name: str) -> None:
+    def _on_dbus_name_vanished(self, _connection: Gio.DBusConnection, name: str) -> None:
         logging.info(f"{name} not running or was stopped")
 
         if self._manager:

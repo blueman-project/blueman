@@ -295,8 +295,7 @@ class BluezAgent(DbusService):
             logging.info(action)
 
             if action == "always":
-                device = Device(obj_path=n._device)
-                device.set("Trusted", True)
+                Device(obj_path=device).set("Trusted", True)
             if action == "always" or action == "accept":
                 ok()
             else:
@@ -313,4 +312,3 @@ class BluezAgent(DbusService):
 
         n = Notification(_("Bluetooth Authentication"), notify_message, 0, actions, on_auth_action, icon_name="blueman")
         n.show()
-        n._device = device

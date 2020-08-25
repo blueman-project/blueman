@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 from gi.repository import GObject, GLib
 from gi.repository import Gio
@@ -20,7 +20,7 @@ class AnyBase(GObject.GObject):
     def __init__(self, interface_name: str):
         super().__init__()
 
-        self.__bus = Gio.bus_get_sync(Gio.BusType.SYSTEM)
+        self.__bus: Optional[Gio.DBusConnection] = Gio.bus_get_sync(Gio.BusType.SYSTEM)
 
         self.__interface_name = interface_name
         self.__signal = None
@@ -49,6 +49,7 @@ class AnyBase(GObject.GObject):
 
     def close(self) -> None:
         if self.__signal:
-            self.__bus.signal_unsubscribe(self.__signal)
+            if self.__bus is not None:
+                self.__bus.signal_unsubscribe(self.__signal)
             self.__signal = None
         self.__bus = None

@@ -249,7 +249,7 @@ class _NotificationBubble(Gio.DBusProxy):
 
     def close(self) -> None:
         param = GLib.Variant('(u)', (self._return_id,))
-        self.call_sync('CloseNotification', param, Gio.DBusProxyFlags.NONE, -1, None)
+        self.call_sync('CloseNotification', param, Gio.DBusCallFlags.NONE, -1, None)
         self._return_id = None
 
 

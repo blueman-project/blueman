@@ -214,7 +214,9 @@ class Sender(Gtk.Dialog):
 
     def process_queue(self) -> None:
         if len(self.files) > 0:
-            self.send_file(self.files[-1].get_path())
+            path = self.files[-1].get_path()
+            assert path is not None
+            self.send_file(path)
         else:
             self.emit("result", True)
 
