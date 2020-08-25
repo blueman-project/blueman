@@ -1,6 +1,5 @@
 from typing import Any
 
-Gdk: Any
 GdkX11: Any
 Gtk: Any
 AppIndicator3: Any
