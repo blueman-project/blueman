@@ -2,12 +2,31 @@ import builtins
 import typing
 
 from gi.repository import GLib
-from gi.repository import GModule
 from gi.repository import GObject
 from gi.repository import Gio
 
 
 class Pixbuf(GObject.Object, Gio.Icon, Gio.LoadableIcon):
+    class _Props:
+        @property
+        def bits_per_sample(self) -> int: ...
+
+        @property
+        def has_alpha(self) -> bool: ...
+
+        @property
+        def height(self) -> int: ...
+
+        @property
+        def n_channels(self) -> int: ...
+
+        @property
+        def rowstride(self) -> int: ...
+
+        @property
+        def width(self) -> int: ...
+
+    props: _Props
 
     def add_alpha(self, substitute_color: builtins.bool, r: builtins.int, g: builtins.int, b: builtins.int) -> Pixbuf: ...
 
@@ -228,7 +247,7 @@ class PixbufSimpleAnim(PixbufAnimation):
     def get_loop(self) -> builtins.bool: ...
 
     @staticmethod
-    def new(width: builtins.int, height: builtins.int, rate: builtins.float) -> PixbufSimpleAnim: ...  # type: ignore
+    def new(width: builtins.int, height: builtins.int, rate: builtins.float) -> PixbufSimpleAnim: ...
 
     def set_loop(self, loop: builtins.bool) -> None: ...
 
