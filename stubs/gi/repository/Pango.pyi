@@ -436,7 +436,7 @@ class FontsetSimple(Fontset):
     def append(self, font: Font) -> None: ...
 
     @staticmethod
-    def new(language: Language) -> FontsetSimple: ...  # type: ignore
+    def new(language: Language) -> FontsetSimple: ...
 
     def size(self) -> builtins.int: ...
 
@@ -475,7 +475,7 @@ class AttrFontDesc():
     desc: FontDescription
 
     @staticmethod
-    def new(desc: FontDescription) -> Attribute: ...  # type: ignore
+    def new(desc: FontDescription) -> Attribute: ...
 
 
 class AttrFontFeatures():
@@ -483,7 +483,7 @@ class AttrFontFeatures():
     features: builtins.str
 
     @staticmethod
-    def new(features: builtins.str) -> Attribute: ...  # type: ignore
+    def new(features: builtins.str) -> Attribute: ...
 
 
 class AttrInt():
@@ -513,7 +513,7 @@ class AttrLanguage():
     value: Language
 
     @staticmethod
-    def new(language: Language) -> Attribute: ...  # type: ignore
+    def new(language: Language) -> Attribute: ...
 
 
 class AttrList():
@@ -535,7 +535,7 @@ class AttrList():
     def insert_before(self, attr: Attribute) -> None: ...
 
     @staticmethod
-    def new() -> AttrList: ...  # type: ignore
+    def new() -> AttrList: ...
 
     def ref(self) -> AttrList: ...
 
@@ -555,7 +555,7 @@ class AttrShape():
     logical_rect: Rectangle
 
     @staticmethod
-    def new(ink_rect: Rectangle, logical_rect: Rectangle) -> Attribute: ...  # type: ignore
+    def new(ink_rect: Rectangle, logical_rect: Rectangle) -> Attribute: ...
 
     @staticmethod
     def new_with_data(ink_rect: Rectangle, logical_rect: Rectangle, data: typing.Optional[builtins.object], copy_func: typing.Optional[AttrDataCopyFunc]) -> Attribute: ...
@@ -567,7 +567,7 @@ class AttrSize():
     size: builtins.int
 
     @staticmethod
-    def new(size: builtins.int) -> Attribute: ...  # type: ignore
+    def new(size: builtins.int) -> Attribute: ...
 
     @staticmethod
     def new_absolute(size: builtins.int) -> Attribute: ...
@@ -663,7 +663,7 @@ class FontDescription():
     def merge_static(self, desc_to_merge: FontDescription, replace_existing: builtins.bool) -> None: ...
 
     @staticmethod
-    def new() -> FontDescription: ...  # type: ignore
+    def new() -> FontDescription: ...
 
     def set_absolute_size(self, size: builtins.float) -> None: ...
 
@@ -802,7 +802,7 @@ class GlyphString():
     def index_to_x(self, text: builtins.str, length: builtins.int, analysis: Analysis, index_: builtins.int, trailing: builtins.bool) -> builtins.int: ...
 
     @staticmethod
-    def new() -> GlyphString: ...  # type: ignore
+    def new() -> GlyphString: ...
 
     def set_size(self, new_len: builtins.int) -> None: ...
 
@@ -833,7 +833,7 @@ class Item():
     def free(self) -> None: ...
 
     @staticmethod
-    def new() -> Item: ...  # type: ignore
+    def new() -> Item: ...
 
     def split(self, split_index: builtins.int, split_offset: builtins.int) -> Item: ...
 
@@ -996,7 +996,7 @@ class ScriptIter():
     def get_range(self) -> typing.Tuple[builtins.str, builtins.str, Script]: ...
 
     @staticmethod
-    def new(text: builtins.str, length: builtins.int) -> ScriptIter: ...  # type: ignore
+    def new(text: builtins.str, length: builtins.int) -> ScriptIter: ...
 
     def next(self) -> builtins.bool: ...
 
@@ -1016,7 +1016,7 @@ class TabArray():
     def get_tabs(self) -> typing.Tuple[TabAlign, typing.Sequence[builtins.int]]: ...
 
     @staticmethod
-    def new(initial_size: builtins.int, positions_in_pixels: builtins.bool) -> TabArray: ...  # type: ignore
+    def new(initial_size: builtins.int, positions_in_pixels: builtins.bool) -> TabArray: ...
 
     def resize(self, new_size: builtins.int) -> None: ...
 
