@@ -22,7 +22,11 @@ class GameControllerWakelock(AppletPlugin):
 
     def on_load(self) -> None:
         self.wake_lock = 0
-        self.root_window_id = "0x%x" % Gdk.Screen.get_default().get_root_window().get_xid()
+        screen = Gdk.Screen.get_default()
+        assert screen is not None
+        window = screen.get_root_window()
+        assert isinstance(window, GdkX11.X11Window)
+        self.root_window_id = "0x%x" % window.get_xid()
 
     def on_unload(self) -> None:
         if self.wake_lock:
