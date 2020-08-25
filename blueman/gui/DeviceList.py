@@ -72,7 +72,7 @@ class DeviceList(GenericList):
         self._anydevhandler = self.any_device.connect_signal("property-changed", self._on_device_property_changed)
 
         self.__discovery_time: float = 0
-        self.__adapter_path = None
+        self.__adapter_path: Optional[str] = None
         self.Adapter: Optional[Adapter] = None
         self.discovering = False
 

@@ -9,7 +9,7 @@ from gi.repository import Gio, GLib
 class DbusError(Exception):
     _name = "org.blueman.Error"
 
-    def __init__(self, message: Optional[str] = None) -> None:
+    def __init__(self, message: str) -> None:
         self._message = message
 
     @property
@@ -17,7 +17,7 @@ class DbusError(Exception):
         return self._name
 
     @property
-    def message(self) -> Optional[str]:
+    def message(self) -> str:
         return self._message
 
 
@@ -30,7 +30,7 @@ class DbusService:
         self._signals: Dict[str, str] = {}
         self._interface_name = interface_name
         self._path = path
-        self._regid = None
+        self._regid: Optional[int] = None
 
     def add_method(self, name: str, arguments: Tuple[str, ...], return_value: str, method: Callable[..., None],
                    pass_sender: bool = False, is_async: bool = False) -> None:
@@ -95,8 +95,9 @@ class DbusService:
             raise GLib.Error(f"Failed to register object with path: {self._path}")
 
     def unregister(self) -> None:
-        self._bus.unregister_object(self._regid)
-        self._regid = None
+        if self._regid is not None:
+            self._bus.unregister_object(self._regid)
+            self._regid = None
 
     def _reregister(self) -> None:
         if self._regid:

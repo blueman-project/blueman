@@ -1,6 +1,6 @@
 from gettext import gettext as _
 import os
-from typing import Dict, Callable, Any
+from typing import Dict, Callable, Any, Optional
 
 from gi.repository import GLib, Gio
 import struct
@@ -54,7 +54,7 @@ class KillSwitch(AppletPlugin, PowerStateHandler, StatusIconVisibilityHandler):
     _hardblocked = False
 
     def on_load(self) -> None:
-        self._connman_proxy = None
+        self._connman_proxy: Optional[Gio.DBusProxy] = None
         self._connman_watch_id = Gio.bus_watch_name(Gio.BusType.SYSTEM, "net.connman", Gio.BusNameWatcherFlags.NONE,
                                                     self._on_connman_appeared, self._on_connman_vanished)
 
