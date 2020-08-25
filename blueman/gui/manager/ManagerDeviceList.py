@@ -1,5 +1,5 @@
 from gettext import gettext as _
-from typing import Dict, Optional, TYPE_CHECKING, List, Any
+from typing import Dict, Optional, TYPE_CHECKING, List, Any, cast
 import html
 import logging
 import cairo
@@ -158,7 +158,7 @@ class ManagerDeviceList(DeviceList):
         if event.type not in (Gdk.EventType._2BUTTON_PRESS, Gdk.EventType.BUTTON_PRESS):
             return False
 
-        path = self.get_path_at_pos(int(event.x), int(event.y))
+        path = self.get_path_at_pos(int(cast(Gdk.EventButton, event).x), int(cast(Gdk.EventButton, event).y))
         if path is None:
             return False
 
@@ -172,11 +172,11 @@ class ManagerDeviceList(DeviceList):
         if self.menu is None:
             self.menu = ManagerDeviceMenu(self.Blueman)
 
-        if event.type == Gdk.EventType._2BUTTON_PRESS and event.button == 1:
+        if event.type == Gdk.EventType._2BUTTON_PRESS and cast(Gdk.EventButton, event).button == 1:
             if self.menu.show_generic_connect_calc(row["device"]['UUIDs']):
                 self.menu.generic_connect(None, device=row["device"], connect=not row["connected"])
 
-        if event.type == Gdk.EventType.BUTTON_PRESS and event.button == 3:
+        if event.type == Gdk.EventType.BUTTON_PRESS and cast(Gdk.EventButton, event).button == 3:
             self.menu.popup_at_pointer(event)
 
         return False

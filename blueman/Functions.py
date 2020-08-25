@@ -116,6 +116,7 @@ def launch(
     else:
         timestamp = gtktimestamp
         display = Gdk.Display.get_default()
+        assert display
         context = display.get_app_launch_context()
         context.set_timestamp(timestamp)
 

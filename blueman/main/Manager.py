@@ -169,7 +169,7 @@ class Blueman(Gtk.Application):
 
         self.window.present_with_time(Gtk.get_current_event_time())
 
-    def _on_configure(self, _window: Gtk.ApplicationWindow, event: Gdk.Event) -> bool:
+    def _on_configure(self, _window: Gtk.ApplicationWindow, event: Gdk.EventConfigure) -> bool:
         width, height, x, y = self.Config["window-properties"]
         if event.x != x or event.y != y or event.width != width or event.height != height:
             self.Config["window-properties"] = [event.width, event.height, event.x, event.y]
