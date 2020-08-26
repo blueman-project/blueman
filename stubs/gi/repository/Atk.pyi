@@ -855,7 +855,7 @@ class Plug(Object, Component):
     def get_id(self) -> builtins.str: ...
 
     @staticmethod
-    def new() -> Object: ...  # type: ignore
+    def new() -> Object: ...
 
     def set_child(self, child: Object) -> None: ...
 
@@ -871,7 +871,7 @@ class Socket(Object, Component):
     def is_occupied(self) -> builtins.bool: ...
 
     @staticmethod
-    def new() -> Object: ...  # type: ignore
+    def new() -> Object: ...
 
     def do_embed(self, plug_id: builtins.str) -> None: ...
 
@@ -880,14 +880,14 @@ class NoOpObjectFactory(ObjectFactory):
     parent: ObjectFactory
 
     @staticmethod
-    def new() -> ObjectFactory: ...  # type: ignore
+    def new() -> ObjectFactory: ...
 
 
-class NoOpObject(Object, Action, Component, Document, EditableText, Hypertext, Image, Selection, Table, TableCell, Text, Value, Window):
+class NoOpObject(Object, Action, Component, Document, EditableText, Hypertext, Image, Selection, Table, TableCell, Text, Value, Window):  # type: ignore
     parent: Object
 
     @staticmethod
-    def new(obj: GObject.Object) -> Object: ...  # type: ignore
+    def new(obj: GObject.Object) -> Object: ...
 
 
 class Attribute():
@@ -932,7 +932,7 @@ class Range():
     def get_upper_limit(self) -> builtins.float: ...
 
     @staticmethod
-    def new(lower_limit: builtins.float, upper_limit: builtins.float, description: builtins.str) -> Range: ...  # type: ignore
+    def new(lower_limit: builtins.float, upper_limit: builtins.float, description: builtins.str) -> Range: ...
 
 
 class Rectangle():
