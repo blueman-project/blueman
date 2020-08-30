@@ -103,7 +103,8 @@ class Blueman(Gtk.Application):
                     self.Applet.disconnect(self._applethandlerid)
                     self._applethandlerid = None
 
-                self.hide()
+                if self.window is not None:
+                    self.window.hide()
 
                 d = ErrorDialog(
                     _("Connection to BlueZ failed"),
