@@ -2,12 +2,10 @@ from gettext import gettext as _
 from typing import Optional, Tuple
 
 from blueman.bluez.Device import Device
+from blueman.gui.DeviceList import DeviceList
 from blueman.gui.DeviceSelectorWidget import DeviceSelectorWidget
 
 import gi
-
-from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
-
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
@@ -44,9 +42,9 @@ class DeviceSelectorDialog(Gtk.Dialog):
                          *_args: object) -> None:
         self.response(Gtk.ResponseType.ACCEPT)
 
-    def on_adapter_changed(self, _devlist: ManagerDeviceList, _adapter: str) -> None:
+    def on_adapter_changed(self, _devlist: DeviceList, _adapter: str) -> None:
         self.selection = None
 
-    def on_device_selected(self, devlist: ManagerDeviceList, device: Device, _tree_iter: Gtk.TreeIter) -> None:
+    def on_device_selected(self, devlist: DeviceList, device: Device, _tree_iter: Gtk.TreeIter) -> None:
         assert devlist.Adapter is not None
         self.selection = (devlist.Adapter.get_object_path(), device)

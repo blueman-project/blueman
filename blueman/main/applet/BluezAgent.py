@@ -9,8 +9,9 @@ from typing import Dict, Optional, overload, Callable, Union, TYPE_CHECKING, Tup
 from blueman.bluez.Device import Device
 from blueman.bluez.AgentManager import AgentManager
 from blueman.Sdp import ServiceUUID
-from blueman.Constants import *
+from blueman.Constants import PKGDATA_DIR
 from blueman.gui.Notification import Notification
+from blueman.main.Builder import Builder
 from blueman.main.DbusService import DbusService, DbusError
 
 from gi.repository import Gio
@@ -107,22 +108,21 @@ class BluezAgent(DbusService):
 
     def build_passkey_dialog(self, device_alias: str, dialog_msg: str, is_numeric: bool
                              ) -> Tuple[Gtk.Dialog, Gtk.Entry]:
-        def on_insert_text(editable: Gtk.Editable, new_text: str, _new_text_length: int, _position: int) -> None:
+        def on_insert_text(editable: Gtk.Entry, new_text: str, _new_text_length: int, _position: int) -> None:
             if not new_text.isdigit():
                 editable.stop_emission("insert-text")
 
-        builder = Gtk.Builder()
-        builder.add_from_file(UI_PATH + "/applet-passkey.ui")
-        builder.set_translation_domain("blueman")
-        dialog = builder.get_object("dialog")
+        builder = Builder("applet-passkey.ui")
+
+        dialog = builder.get_widget("dialog", Gtk.Dialog)
 
         dialog.props.icon_name = "blueman"
-        dev_name = builder.get_object("device_name")
+        dev_name = builder.get_widget("device_name", Gtk.Label)
         dev_name.set_markup(device_alias)
-        msg = builder.get_object("message")
+        msg = builder.get_widget("message", Gtk.Label)
         msg.set_text(dialog_msg)
-        pin_entry = builder.get_object("pin_entry")
-        show_input = builder.get_object("show_input_check")
+        pin_entry = builder.get_widget("pin_entry", Gtk.Entry)
+        show_input = builder.get_widget("show_input_check", Gtk.CheckButton)
         if is_numeric:
             pin_entry.set_max_length(6)
             pin_entry.set_width_chars(6)
@@ -133,7 +133,7 @@ class BluezAgent(DbusService):
             pin_entry.set_width_chars(16)
             pin_entry.set_visibility(False)
         show_input.connect("toggled", lambda x: pin_entry.set_visibility(x.props.active))
-        accept_button = builder.get_object("accept")
+        accept_button = builder.get_widget("accept", Gtk.Button)
         pin_entry.connect("changed", lambda x: accept_button.set_sensitive(x.get_text() != ''))
 
         return dialog, pin_entry
@@ -176,8 +176,7 @@ class BluezAgent(DbusService):
                     err: Callable[[Union[BluezErrorCanceled, BluezErrorRejected]], None]) -> None:
         ...
 
-    def ask_passkey(self, dialog_msg: str, is_numeric: bool, device_path: str,
-                    ok: Union[Callable[[int], None], Callable[[str], None]],
+    def ask_passkey(self, dialog_msg: str, is_numeric: bool, device_path: str, ok: Callable[[Any], None],
                     err: Callable[[Union[BluezErrorCanceled, BluezErrorRejected]], None]) -> None:
         def passkey_dialog_cb(dialog: Gtk.Dialog, response_id: int) -> None:
             if response_id == Gtk.ResponseType.ACCEPT:

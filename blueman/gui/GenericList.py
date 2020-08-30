@@ -24,8 +24,8 @@ else:
 
 # noinspection PyAttributeOutsideInit
 class GenericList(Gtk.TreeView):
-    def __init__(self, data: Iterable[ListDataDict], **kwargs: object) -> None:
-        super().__init__(**kwargs)
+    def __init__(self, data: Iterable[ListDataDict], headers_visible: bool = True, visible: bool = False) -> None:
+        super().__init__(headers_visible=headers_visible, visible=visible)
         self.set_name("GenericList")
         self.selection = self.get_selection()
         self._load(data)
@@ -61,12 +61,12 @@ class GenericList(Gtk.TreeView):
 
     def selected(self) -> Gtk.TreeIter:
         (model, tree_iter) = self.selection.get_selected()
-
+        assert tree_iter is not None
         return tree_iter
 
     def delete(self, iterid: Union[Gtk.TreeIter, Gtk.TreePath, int, str]) -> bool:
-        if type(iterid) == Gtk.TreeIter:
-            tree_iter = iterid
+        if isinstance(iterid, Gtk.TreeIter):
+            tree_iter: Optional[Gtk.TreeIter] = iterid
         else:
             tree_iter = self.get_iter(iterid)
 
@@ -115,9 +115,9 @@ class GenericList(Gtk.TreeView):
 
         return ret
 
-    def set(self, iterid: Union[Gtk.TreeIter, Gtk.TreePath, int, str], **cols: object) -> None:
-        if type(iterid) == Gtk.TreeIter:
-            tree_iter = iterid
+    def set(self, iterid: Union[Gtk.TreeIter, int, str], **cols: object) -> None:
+        if isinstance(iterid, Gtk.TreeIter):
+            tree_iter: Optional[Gtk.TreeIter] = iterid
         else:
             tree_iter = self.get_iter(iterid)
 
@@ -129,10 +129,11 @@ class GenericList(Gtk.TreeView):
         ret = {}
 
         if iterid is not None:
-            if type(iterid) == Gtk.TreeIter:
-                tree_iter = iterid
+            if isinstance(iterid, Gtk.TreeIter):
+                tree_iter: Optional[Gtk.TreeIter] = iterid
             else:
                 tree_iter = self.get_iter(iterid)
+            assert tree_iter is not None
             if len(items) == 0:
                 for k, v in self.ids.items():
                     ret[k] = self.liststore.get(tree_iter, v)[0]
@@ -159,7 +160,8 @@ class GenericList(Gtk.TreeView):
 
     def compare(self, iter_a: Gtk.TreeIter, iter_b: Gtk.TreeIter) -> bool:
         if iter_a is not None and iter_b is not None:
-            res: bool = self.get_model().get_path(iter_a) == self.get_model().get_path(iter_b)
-            return res
+            model = self.get_model()
+            assert model is not None
+            return model.get_path(iter_a) == model.get_path(iter_b)
         else:
             return False

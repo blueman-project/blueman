@@ -13,11 +13,11 @@ from gi.repository import Gtk
 
 class DeviceSelectorWidget(Gtk.Box):
     def __init__(self, adapter_name: Optional[str] = None, orientation: Gtk.Orientation = Gtk.Orientation.VERTICAL,
-                 **kwargs: object) -> None:
+                 visible: bool = False) -> None:
 
         super().__init__(orientation=orientation, spacing=1, vexpand=True,
                          width_request=360, height_request=340,
-                         name="DeviceSelectorWidget", **kwargs)
+                         name="DeviceSelectorWidget", visible=visible)
 
         self.List = DeviceSelectorList(adapter_name)
         if self.List.Adapter is not None:
@@ -101,8 +101,9 @@ class DeviceSelectorWidget(Gtk.Box):
                 self.List.display_known_devices()
 
     def update_adapters_list(self) -> None:
-
-        self.cb_adapters.get_model().clear()
+        model = self.cb_adapters.get_model()
+        assert isinstance(model, Gtk.ListStore)
+        model.clear()
         adapters = self.List.manager.get_adapters()
         num = len(adapters)
         if num == 0:
@@ -115,6 +116,6 @@ class DeviceSelectorWidget(Gtk.Box):
             self.List.props.sensitive = True
             self.cb_adapters.props.visible = True
             for adapter in adapters:
-                tree_iter = self.cb_adapters.get_model().append([adapter.get_name(), adapter.get_object_path()])
+                tree_iter = model.append([adapter.get_name(), adapter.get_object_path()])
                 if self.List.Adapter and adapter.get_object_path() == self.List.Adapter.get_object_path():
                     self.cb_adapters.set_active_iter(tree_iter)

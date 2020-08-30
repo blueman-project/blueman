@@ -27,7 +27,7 @@ class BluemanServices(Gtk.Application):
             grid = Gtk.Grid(orientation=Gtk.Orientation.VERTICAL, visible=True, row_spacing=10)
             self.window.add(grid)
 
-            self.box = Gtk.Box(Gtk.Orientation.HORIZONTAL, vexpand=True, visible=True)
+            self.box = Gtk.Box(vexpand=True, visible=True)
             grid.add(self.box)
 
             button_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, halign=Gtk.Align.END, visible=True)

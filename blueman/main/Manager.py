@@ -7,12 +7,12 @@ from blueman.bluez.Device import Device
 from blueman.bluez.Manager import Manager
 from blueman.bluez.errors import DBusNoSuchAdapterError
 from blueman.Functions import *
-from blueman.Constants import UI_PATH
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 from blueman.gui.manager.ManagerToolbar import ManagerToolbar
 from blueman.gui.manager.ManagerMenu import ManagerMenu
 from blueman.gui.manager.ManagerStats import ManagerStats
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
+from blueman.main.Builder import Builder
 from blueman.main.Config import Config
 from blueman.main.DBusProxies import AppletService, DBusProxyFailed
 from blueman.gui.CommonUi import ErrorDialog
@@ -60,15 +60,13 @@ class Blueman(Gtk.Application):
             # Connect to configure event to store new window position and size
             self.window.connect("configure-event", self._on_configure)
 
-            self.Builder = Gtk.Builder()
-            self.Builder.set_translation_domain("blueman")
-            self.Builder.add_from_file(UI_PATH + "/manager-main.ui")
+            self.builder = Builder("manager-main.ui")
 
-            grid = self.Builder.get_object("grid")
+            grid = self.builder.get_widget("grid", Gtk.Grid)
             self.window.add(grid)
 
-            toolbar = self.Builder.get_object("toolbar")
-            statusbar = self.Builder.get_object("statusbar")
+            toolbar = self.builder.get_widget("toolbar", Gtk.Toolbar)
+            statusbar = self.builder.get_widget("statusbar", Gtk.Box)
 
             self.Plugins = PluginManager(ManagerPlugin, blueman.plugins.manager, self)
             self.Plugins.load_plugin()
@@ -144,7 +142,7 @@ class Blueman(Gtk.Application):
 
                 self._applethandlerid = self.Applet.connect('g-signal', on_applet_signal)
 
-                sw = self.Builder.get_object("scrollview")
+                sw = self.builder.get_widget("scrollview", Gtk.ScrolledWindow)
                 # Disable overlay scrolling
                 if Gtk.get_minor_version() >= 16:
                     sw.props.overlay_scrolling = False

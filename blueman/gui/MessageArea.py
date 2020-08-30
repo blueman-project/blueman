@@ -48,7 +48,9 @@ class MessageArea(Gtk.InfoBar):
     def on_response(self, info_bar: Gtk.InfoBar, response_id: int) -> None:
         if response_id == 0:
             assert self.bt is not None
-            d = Gtk.MessageDialog(parent=self.get_toplevel(), flags=0, type=Gtk.MessageType.INFO,
+            parent = self.get_toplevel()
+            assert isinstance(parent, Gtk.Container)
+            d = Gtk.MessageDialog(parent=parent, type=Gtk.MessageType.INFO,
                                   buttons=Gtk.ButtonsType.CLOSE, text='\n'.join((self.text, self.bt)))
             d.run()
             d.destroy()

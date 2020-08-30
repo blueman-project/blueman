@@ -24,13 +24,13 @@ class ManagerToolbar:
         self.blueman.List.connect("adapter-changed", self.on_adapter_changed)
         self.blueman.List.connect("adapter-property-changed", self.on_adapter_property_changed)
 
-        self.b_search = blueman.Builder.get_object("b_search")
+        self.b_search = blueman.builder.get_widget("b_search", Gtk.ToolButton)
         self.b_search.connect("clicked", lambda button: blueman.inquiry())
 
-        self.b_bond = blueman.Builder.get_object("b_bond")
+        self.b_bond = blueman.builder.get_widget("b_bond", Gtk.ToolButton)
         self.b_bond.connect("clicked", self.on_action, self.blueman.bond)
 
-        self.b_trust = blueman.Builder.get_object("b_trust")
+        self.b_trust = blueman.builder.get_widget("b_trust", Gtk.ToolButton)
         self.b_trust.connect("clicked", self.on_action, self.blueman.toggle_trust)
         self.b_trust.set_homogeneous(False)
 
@@ -41,14 +41,14 @@ class ManagerToolbar:
 
         self.b_trust.props.width_request = max(size.width, size2.width)
 
-        self.b_remove = blueman.Builder.get_object("b_remove")
+        self.b_remove = blueman.builder.get_widget("b_remove", Gtk.ToolButton)
         self.b_remove.connect("clicked", self.on_action, self.blueman.remove)
 
-        self.b_setup = blueman.Builder.get_object("b_setup")
+        self.b_setup = blueman.builder.get_widget("b_setup", Gtk.ToolButton)
         self.b_setup.connect("clicked", self.on_action, self.blueman.setup)
         self.b_setup.set_homogeneous(False)
 
-        self.b_send = blueman.Builder.get_object("b_send")
+        self.b_send = blueman.builder.get_widget("b_send", Gtk.ToolButton)
         self.b_send.props.sensitive = False
         self.b_send.connect("clicked", self.on_action, self.blueman.send)
         self.b_send.set_homogeneous(False)

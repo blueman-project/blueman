@@ -1,7 +1,7 @@
 from gettext import gettext as _
 
+from blueman.main.Builder import Builder
 from blueman.main.Config import Config
-from blueman.Constants import *
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -15,11 +15,9 @@ class GsmSettings(Gtk.Dialog):
         self.set_name("GsmSettings")
         self.device = bd_address
 
-        self.Builder = Gtk.Builder()
-        self.Builder.set_translation_domain("blueman")
-        self.Builder.add_from_file(UI_PATH + "/gsm-settings.ui")
+        builder = Builder("gsm-settings.ui")
 
-        gsm_grid = self.Builder.get_object("gsm_grid")
+        gsm_grid = builder.get_widget("gsm_grid", Gtk.Grid)
 
         self.config = Config("org.blueman.gsmsetting", f"/org/blueman/gsmsettings/{bd_address}/")
         self.props.icon_name = "network-wireless"
@@ -31,8 +29,8 @@ class GsmSettings(Gtk.Dialog):
         a.pack_start(gsm_grid, True, True, 0)
         gsm_grid.show()
 
-        self.e_apn = self.Builder.get_object("e_apn")
-        self.e_number = self.Builder.get_object("e_number")
+        self.e_apn = builder.get_widget("e_apn", Gtk.Entry)
+        self.e_number = builder.get_widget("e_number", Gtk.Entry)
 
         self.config.bind_to_widget("apn", self.e_apn, "text")
         self.config.bind_to_widget("number", self.e_number, "text")

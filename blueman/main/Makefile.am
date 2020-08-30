@@ -13,6 +13,7 @@ blueman_PYTHON = \
 	PluginManager.py \
 	Adapter.py \
 	Applet.py \
+	Builder.py \
 	Manager.py \
 	MechanismApplication.py \
 	Sendto.py \

@@ -6,7 +6,7 @@ import logging
 from typing import List, Any, Optional
 
 from blueman.Functions import *
-from blueman.Constants import *
+from blueman.main.Builder import Builder
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.Config import Config
 from blueman.bluez.Device import Device
@@ -105,11 +105,9 @@ class Dialog:
         else:
             return
         self.plugin = plugin
-        builder = Gtk.Builder()
-        builder.add_from_file(UI_PATH + "/net-usage.ui")
-        builder.set_translation_domain("blueman")
+        builder = Builder("net-usage.ui")
 
-        self.dialog = builder.get_object("dialog")
+        self.dialog = builder.get_widget("dialog", Gtk.Dialog)
         self.dialog.connect("response", self.on_response)
         cr1 = Gtk.CellRendererText()
         cr1.props.ellipsize = Pango.EllipsizeMode.END
@@ -125,17 +123,17 @@ class Dialog:
 
         self.liststore = Gtk.ListStore(str, str, str, object)
 
-        self.e_ul = builder.get_object("e_ul")
-        self.e_dl = builder.get_object("e_dl")
-        self.e_total = builder.get_object("e_total")
+        self.e_ul = builder.get_widget("e_ul", Gtk.Entry)
+        self.e_dl = builder.get_widget("e_dl", Gtk.Entry)
+        self.e_total = builder.get_widget("e_total", Gtk.Entry)
 
-        self.l_started = builder.get_object("l_started")
-        self.l_duration = builder.get_object("l_duration")
+        self.l_started = builder.get_widget("l_started", Gtk.Label)
+        self.l_duration = builder.get_widget("l_duration", Gtk.Label)
 
-        self.b_reset = builder.get_object("b_reset")
+        self.b_reset = builder.get_widget("b_reset", Gtk.Button)
         self.b_reset.connect("clicked", self.on_reset)
 
-        self.cb_device = builder.get_object("cb_device")
+        self.cb_device = builder.get_widget("cb_device", Gtk.ComboBox)
         self.cb_device.props.model = self.liststore
         self.cb_device.connect("changed", self.on_selection_changed)
 
@@ -175,8 +173,8 @@ class Dialog:
         else:
             msg = _("No usage statistics are available yet. Try establishing a connection first and "
                     "then check this page.")
-            d = Gtk.MessageDialog(parent=self.dialog, flags=Gtk.DialogFlags.MODAL, type=Gtk.MessageType.INFO,
-                                  buttons=Gtk.ButtonsType.CLOSE, message_format=msg)
+            d = Gtk.MessageDialog(parent=self.dialog, modal=True, type=Gtk.MessageType.INFO,
+                                  buttons=Gtk.ButtonsType.CLOSE, text=msg)
             d.props.icon_name = "blueman"
             d.run()
             d.destroy()
@@ -213,6 +211,7 @@ class Dialog:
 
     def on_selection_changed(self, cb: Gtk.ComboBox) -> None:
         titer = cb.get_active_iter()
+        assert titer is not None
         (addr,) = self.liststore.get(titer, 0)
         self.config = Config("org.blueman.plugins.netusage", f"/org/blueman/plugins/netusages/{addr}/")
         self.update_counts(self.config["tx"], self.config["rx"])
@@ -237,9 +236,9 @@ class Dialog:
         self.update_time()
 
     def on_reset(self, _button: Gtk.Button) -> None:
-        d = Gtk.MessageDialog(parent=self.dialog, flags=Gtk.DialogFlags.MODAL, type=Gtk.MessageType.QUESTION,
+        d = Gtk.MessageDialog(parent=self.dialog, modal=True, type=Gtk.MessageType.QUESTION,
                               buttons=Gtk.ButtonsType.YES_NO,
-                              message_format=_("Are you sure you want to reset the counter?"))
+                              text=_("Are you sure you want to reset the counter?"))
         res = d.run()
         d.destroy()
         if res == Gtk.ResponseType.YES:
@@ -251,6 +250,7 @@ class Dialog:
 
     def on_stats(self, _parent: "NetUsage", monitor: Monitor, tx: int, rx: int) -> None:
         titer = self.cb_device.get_active_iter()
+        assert titer is not None
         (mon,) = self.liststore.get(titer, 3)
         if mon == monitor:
             self.update_counts(tx, rx)

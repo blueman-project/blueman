@@ -3,12 +3,12 @@ from gettext import gettext as _
 from operator import itemgetter
 from typing import Dict, List, Tuple, Optional, TYPE_CHECKING, Union, Iterable
 
-from blueman.Constants import UI_PATH
 from blueman.Functions import create_menuitem, e_
 from blueman.Service import Service
 from blueman.bluez.Network import AnyNetwork
 from blueman.bluez.Device import AnyDevice, Device
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
+from blueman.main.Builder import Builder
 from blueman.main.DBusProxies import AppletService, DBusProxyFailed
 from blueman.gui.MessageArea import MessageArea
 from blueman.Sdp import (
@@ -72,7 +72,7 @@ class ManagerDeviceMenu(Gtk.Menu):
     def __del__(self) -> None:
         logging.debug("deleting devicemenu")
 
-    def popup_at_pointer(self, event: Gdk.Event) -> None:
+    def popup_at_pointer(self, event: Optional[Gdk.Event]) -> None:
         self.is_popup = True
         self.generate()
 
@@ -232,6 +232,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             (x, y) = self.Blueman.List.get_pointer()
             path = self.Blueman.List.get_path_at_pos(x, y)
             if path is not None:
+                assert path[0] is not None
                 row = self.Blueman.List.get(path[0], "alias", "paired", "connected", "trusted", "objpush", "device")
             else:
                 return
@@ -241,7 +242,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         op = self.get_op(self.SelectedDevice)
 
         if op is not None:
-            item = create_menuitem(op, "network-transmit-receive")
+            item: Gtk.MenuItem = create_menuitem(op, "network-transmit-receive")
             item.props.sensitive = False
             item.show()
             self.append(item)
@@ -360,18 +361,17 @@ class ManagerDeviceMenu(Gtk.Menu):
         def on_rename(_item: Gtk.MenuItem, device: Device) -> None:
             def on_response(dialog: Gtk.Dialog, response_id: int) -> None:
                 if response_id == Gtk.ResponseType.ACCEPT:
+                    assert isinstance(alias_entry, Gtk.Entry)  # https://github.com/python/mypy/issues/2608
                     device.set('Alias', alias_entry.get_text())
                 elif response_id == 1:
                     device.set('Alias', '')
                 dialog.destroy()
 
-            builder = Gtk.Builder()
-            builder.set_translation_domain("blueman")
-            builder.add_from_file(UI_PATH + "/rename-device.ui")
-            dialog = builder.get_object("dialog")
+            builder = Builder("rename-device.ui")
+            dialog = builder.get_widget("dialog", Gtk.Dialog)
             dialog.set_transient_for(self.Blueman.window)
             dialog.props.icon_name = "blueman"
-            alias_entry: Gtk.Entry = builder.get_object("alias_entry")
+            alias_entry = builder.get_widget("alias_entry", Gtk.Entry)
             alias_entry.set_text(device['Alias'])
             dialog.connect("response", on_response)
             dialog.present()

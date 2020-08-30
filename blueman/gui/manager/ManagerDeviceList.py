@@ -72,8 +72,8 @@ class ManagerDeviceList(DeviceList):
         self._on_settings_changed(self.Config, "sort-type")
 
         self.connect("query-tooltip", self.tooltip_query)
-        self.tooltip_row = None
-        self.tooltip_col = None
+        self.tooltip_row: Optional[Gtk.TreePath] = None
+        self.tooltip_col: Optional[Gtk.TreeViewColumn] = None
 
         self.connect("button_press_event", self.on_event_clicked)
         self.connect("button_release_event", self.on_event_clicked)
@@ -127,6 +127,7 @@ class ManagerDeviceList(DeviceList):
         path = self.get_path_at_pos(x, y)
         if path:
             tree_iter = self.get_iter(path[0])
+            assert tree_iter is not None
             device = self.get(tree_iter, "device")["device"]
             command = f"blueman-sendto --device={device['Address']}"
 
@@ -139,8 +140,10 @@ class ManagerDeviceList(DeviceList):
         result = self.get_path_at_pos(x, y)
         if result is not None:
             path = result[0]
+            assert path is not None
             if not self.selection.path_is_selected(path):
                 tree_iter = self.get_iter(path)
+                assert tree_iter is not None
                 has_obj_push = self._has_objpush(self.get(tree_iter, "device")["device"])
                 if has_obj_push:
                     Gdk.drag_status(drag_context, Gdk.DragAction.COPY, timestamp)
@@ -162,6 +165,7 @@ class ManagerDeviceList(DeviceList):
         if path is None:
             return False
 
+        assert path[0] is not None
         row = self.get(path[0], "device", "connected")
         if not row:
             return False
@@ -200,14 +204,18 @@ class ManagerDeviceList(DeviceList):
         ctx = cairo.Context(target)
 
         if is_paired:
-            icon_info = self.get_icon_info("dialog-password", 16, False)
-            paired_surface = icon_info.load_surface(window)
+            _icon_info = self.get_icon_info("dialog-password", 16, False)
+            assert _icon_info is not None
+            paired_surface = _icon_info.load_surface(window)
             ctx.set_source_surface(paired_surface, 1 / scale, 1 / scale)
             ctx.paint_with_alpha(0.8)
 
         if is_trusted:
-            icon_info = self.get_icon_info("blueman-trust", 16, False)
-            trusted_surface = icon_info.load_surface(window)
+            _icon_info = self.get_icon_info("blueman-trust", 16, False)
+            assert _icon_info is not None
+            trusted_surface = _icon_info.load_surface(window)
+            assert isinstance(target, cairo.ImageSurface)
+            assert isinstance(trusted_surface, cairo.ImageSurface)
             height = target.get_height()
             mini_height = trusted_surface.get_height()
             y = height / scale - mini_height / scale - 1 / scale
@@ -219,6 +227,7 @@ class ManagerDeviceList(DeviceList):
 
     def device_remove_event(self, device: Device) -> None:
         tree_iter = self.find_device(device)
+        assert tree_iter is not None
 
         row_fader = self.get(tree_iter, "row_fader")["row_fader"]
         super().device_remove_event(device)
@@ -252,8 +261,10 @@ class ManagerDeviceList(DeviceList):
 
     def row_setup_event(self, tree_iter: Gtk.TreeIter, device: Device) -> None:
         if not self.get(tree_iter, "initial_anim")["initial_anim"]:
-            cell_fader = CellFade(self, self.props.model.get_path(tree_iter), [2, 3, 4])
-            row_fader = TreeRowFade(self, self.props.model.get_path(tree_iter))
+            model = self.props.model
+            assert model is not None
+            cell_fader = CellFade(self, model.get_path(tree_iter), [2, 3, 4])
+            row_fader = TreeRowFade(self, model.get_path(tree_iter))
 
             has_objpush = self._has_objpush(device)
 
@@ -332,6 +343,7 @@ class ManagerDeviceList(DeviceList):
             return
 
         tree_iter = self.get_iter(row_ref.get_path())
+        assert tree_iter is not None
         row = self.get(tree_iter, "levels_visible", "cell_fader", "rssi", "lq", "tpl")
         if cinfo is not None:
             # cinfo init may fail for bluetooth devices version 4 and up
@@ -414,6 +426,7 @@ class ManagerDeviceList(DeviceList):
                     fader.disconnect(faderhandler)
                     fader.freeze()
                     if row_ref.valid():
+                        assert tree_iter is not None  # https://github.com/python/mypy/issues/2608
                         self.set(tree_iter, rssi_pb=None, lq_pb=None, tpl_pb=None)
 
                 faderhandler = fader.connect("animation-finished", on_finished)
@@ -429,6 +442,7 @@ class ManagerDeviceList(DeviceList):
 
             if path[1] == self.columns["device_surface"]:
                 tree_iter = self.get_iter(path[0])
+                assert tree_iter is not None
 
                 row = self.get(tree_iter, "trusted", "paired")
                 trusted = row["trusted"]
@@ -450,6 +464,7 @@ class ManagerDeviceList(DeviceList):
                     or path[1] == self.columns["lq_pb"] \
                     or path[1] == self.columns["rssi_pb"]:
                 tree_iter = self.get_iter(path[0])
+                assert tree_iter is not None
 
                 dt = self.get(tree_iter, "connected")["connected"]
                 if dt:

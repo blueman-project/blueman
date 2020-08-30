@@ -1,6 +1,6 @@
 from gettext import gettext as _
 import logging
-from typing import Dict, List, TYPE_CHECKING, Tuple, Mapping
+from typing import Dict, List, TYPE_CHECKING, Tuple, Mapping, Sequence
 
 from blueman.bluez.Device import Device
 from blueman.plugins.ManagerPlugin import ManagerPlugin
@@ -90,7 +90,7 @@ class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
 
     def generate_menu(self, device: Device, item: Gtk.MenuItem) -> None:
         info = self.devices[device['Address']]
-        group: List[Gtk.RadioMenuItem] = []
+        group: Sequence[Gtk.RadioMenuItem] = []
 
         sub = Gtk.Menu()
 

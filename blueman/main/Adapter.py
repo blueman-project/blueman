@@ -4,10 +4,10 @@ import logging
 import gettext
 from typing import Dict, TYPE_CHECKING, Optional, Any
 
-from blueman.Constants import UI_PATH
 from blueman.Functions import *
 from blueman.bluez.Manager import Manager
 from blueman.bluez.Adapter import Adapter
+from blueman.main.Builder import Builder
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -157,19 +157,17 @@ class BluemanAdapters(Gtk.Application):
         def on_name_changed(entry: Gtk.Entry) -> None:
             adapter['Alias'] = entry.get_text()
 
-        builder = Gtk.Builder()
-        builder.set_translation_domain("blueman")
-        builder.add_from_file(UI_PATH + "/adapters-tab.ui")
+        builder = Builder("adapters-tab.ui")
 
-        hscale = builder.get_object("hscale")
+        hscale = builder.get_widget("hscale", Gtk.Scale)
         hscale.connect("format-value", on_scale_format_value)
         hscale.connect("value-changed", on_scale_value_changed)
         hscale.set_range(0, 30)
         hscale.set_increments(1, 1)
 
-        hidden_radio = builder.get_object("hidden")
-        always_radio = builder.get_object("always")
-        temporary_radio = builder.get_object("temporary")
+        hidden_radio = builder.get_widget("hidden", Gtk.RadioButton)
+        always_radio = builder.get_widget("always", Gtk.RadioButton)
+        temporary_radio = builder.get_widget("temporary", Gtk.RadioButton)
 
         if adapter['Discoverable'] and adapter['DiscoverableTimeout'] > 0:
             temporary_radio.set_active(True)
@@ -180,7 +178,7 @@ class BluemanAdapters(Gtk.Application):
         else:
             hidden_radio.set_active(True)
 
-        name_entry = builder.get_object("name_entry")
+        name_entry = builder.get_widget("name_entry", Gtk.Entry)
         name_entry.set_text(adapter.get_name())
 
         hidden_radio.connect("toggled", on_hidden_toggle)
@@ -189,7 +187,7 @@ class BluemanAdapters(Gtk.Application):
         name_entry.connect("changed", on_name_changed)
 
         return {
-            "grid": builder.get_object("grid"),
+            "grid": builder.get_widget("grid", Gtk.Grid),
             "hidden_radio": hidden_radio,
             "always_radio": always_radio,
             "temparary_radio": temporary_radio,

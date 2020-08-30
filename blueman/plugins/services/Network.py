@@ -4,8 +4,8 @@ import logging
 import ipaddress
 from typing import List, Tuple, cast, Union, TYPE_CHECKING
 
-from blueman.Constants import *
 from blueman.Functions import have, get_local_interfaces
+from blueman.main.Builder import Builder
 from blueman.plugins.ServicePlugin import ServicePlugin
 from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler, UdhcpdHandler
 from blueman.main.Config import Config
@@ -15,7 +15,7 @@ from blueman.gui.CommonUi import ErrorDialog
 
 import gi
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gio, Gtk
+from gi.repository import Gio, Gtk, GObject
 
 if TYPE_CHECKING:
     from typing_extensions import Literal
@@ -26,10 +26,8 @@ class Network(ServicePlugin):
 
     def on_load(self, container: Gtk.Box) -> None:
 
-        self.Builder = Gtk.Builder()
-        self.Builder.set_translation_domain("blueman")
-        self.Builder.add_from_file(UI_PATH + "/services-network.ui")
-        self.widget = self.Builder.get_object("network_frame")
+        self._builder = Builder("services-network.ui")
+        self.widget = self._builder.get_widget("network_frame", Gtk.Widget)
 
         container.pack_start(self.widget, True, True, 0)
 
@@ -59,17 +57,17 @@ class Network(ServicePlugin):
             logging.info("network apply")
 
             m = Mechanism()
-            nap_enable = self.Builder.get_object("nap-enable")
+            nap_enable = self._builder.get_widget("nap-enable", Gtk.CheckButton)
             if nap_enable.props.active:
 
-                if self.Builder.get_object("r_dhcpd").props.active:
+                if self._builder.get_widget("r_dhcpd", Gtk.RadioButton).props.active:
                     stype = "DhcpdHandler"
-                elif self.Builder.get_object("r_dnsmasq").props.active:
+                elif self._builder.get_widget("r_dnsmasq", Gtk.RadioButton).props.active:
                     stype = "DnsMasqHandler"
-                elif self.Builder.get_object("r_udhcpd").props.active:
+                elif self._builder.get_widget("r_udhcpd", Gtk.RadioButton).props.active:
                     stype = "UdhcpdHandler"
 
-                net_ip = self.Builder.get_object("net_ip")
+                net_ip = self._builder.get_widget("net_ip", Gtk.Entry)
 
                 try:
                     m.EnableNetwork('(sss)', net_ip.props.text, "255.255.255.0", stype)
@@ -77,8 +75,9 @@ class Network(ServicePlugin):
                     if not self.Config["nap-enable"]:
                         self.Config["nap-enable"] = True
                 except Exception as e:
-                    d = ErrorDialog("<b>Failed to apply network settings</b>",
-                                    excp=e, parent=self.widget.get_toplevel())
+                    parent = self.widget.get_toplevel()
+                    assert isinstance(parent, Gtk.Container)
+                    d = ErrorDialog("<b>Failed to apply network settings</b>", excp=e, parent=parent)
 
                     d.run()
                     d.destroy()
@@ -90,7 +89,7 @@ class Network(ServicePlugin):
             self.clear_options()
 
     def ip_check(self) -> None:
-        entry = self.Builder.get_object("net_ip")
+        entry = self._builder.get_widget("net_ip", Gtk.Entry)
         try:
             nap_ipiface = ipaddress.ip_interface('/'.join((entry.props.text, '255.255.255.0')))
         except (ValueError, ipaddress.AddressValueError):
@@ -133,18 +132,18 @@ class Network(ServicePlugin):
     def setup_network(self) -> None:
         self.Config = Config("org.blueman.network")
 
-        nap_enable = self.Builder.get_object("nap-enable")
-        r_dnsmasq = self.Builder.get_object("r_dnsmasq")
-        r_dhcpd = self.Builder.get_object("r_dhcpd")
-        r_udhcpd = self.Builder.get_object("r_udhcpd")
-        net_ip = self.Builder.get_object("net_ip")
-        rb_nm = self.Builder.get_object("rb_nm")
-        rb_blueman = self.Builder.get_object("rb_blueman")
-        rb_dun_nm = self.Builder.get_object("rb_dun_nm")
-        rb_dun_blueman = self.Builder.get_object("rb_dun_blueman")
+        nap_enable = self._builder.get_widget("nap-enable", Gtk.CheckButton)
+        r_dnsmasq = self._builder.get_widget("r_dnsmasq", Gtk.RadioButton)
+        r_dhcpd = self._builder.get_widget("r_dhcpd", Gtk.RadioButton)
+        r_udhcpd = self._builder.get_widget("r_udhcpd", Gtk.RadioButton)
+        net_ip = self._builder.get_widget("net_ip", Gtk.Entry)
+        rb_nm = self._builder.get_widget("rb_nm", Gtk.RadioButton)
+        rb_blueman = self._builder.get_widget("rb_blueman", Gtk.RadioButton)
+        rb_dun_nm = self._builder.get_widget("rb_dun_nm", Gtk.RadioButton)
+        rb_dun_blueman = self._builder.get_widget("rb_dun_blueman", Gtk.RadioButton)
 
-        nap_frame = self.Builder.get_object("nap_frame")
-        warning = self.Builder.get_object("warning")
+        nap_frame = self._builder.get_widget("nap_frame", Gtk.Frame)
+        warning = self._builder.get_widget("warning", Gtk.Box)
 
         if not self.Config["nap-enable"]:
             nap_frame.props.sensitive = False
@@ -204,14 +203,14 @@ class Network(ServicePlugin):
 
         self.Config.bind_to_widget("nap-enable", nap_enable, "active", Gio.SettingsBindFlags.GET)
 
-        nap_enable.bind_property("active", nap_frame, "sensitive", 0)
+        nap_enable.bind_property("active", nap_frame, "sensitive", GObject.BindingFlags.DEFAULT)
 
         applet = AppletService()
 
         avail_plugins = applet.QueryAvailablePlugins()
         active_plugins = applet.QueryPlugins()
 
-        def dun_support_toggled(rb: Gtk.ToggleButton, x: Union["Literal[\"nm\"]", "Literal[\"blueman\"]"]) -> None:
+        def dun_support_toggled(rb: Gtk.RadioButton, x: str) -> None:
             if rb.props.active and x == "nm":
                 applet.SetPluginConfig('(sb)', "PPPSupport", False)
                 applet.SetPluginConfig('(sb)', "NMDUNSupport", True)
@@ -219,7 +218,7 @@ class Network(ServicePlugin):
                 applet.SetPluginConfig('(sb)', "NMDUNSupport", False)
                 applet.SetPluginConfig('(sb)', "PPPSupport", True)
 
-        def pan_support_toggled(rb: Gtk.ToggleButton, x: Union["Literal[\"nm\"]", "Literal[\"blueman\"]"]) -> None:
+        def pan_support_toggled(rb: Gtk.RadioButton, x: str) -> None:
             if rb.props.active and x == "nm":
                 applet.SetPluginConfig('(sb)', "DhcpClient", False)
                 applet.SetPluginConfig('(sb)', "NMPANSupport", True)

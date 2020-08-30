@@ -30,8 +30,8 @@ class _NotificationDialog(Gtk.MessageDialog):
                  actions: Optional[Iterable[Tuple[str, str]]] = None,
                  actions_cb: Optional[Callable[[str], None]] = None, icon_name: Optional[str] = None,
                  image_data: Optional[GdkPixbuf.Pixbuf] = None) -> None:
-        super().__init__(parent=None, flags=0, type=Gtk.MessageType.QUESTION,
-                         buttons=Gtk.ButtonsType.NONE, message_format=None)
+        super().__init__(parent=None, type=Gtk.MessageType.QUESTION,
+                         buttons=Gtk.ButtonsType.NONE, text=None)
 
         self.set_name("NotificationDialog")
         i = 100
@@ -72,13 +72,13 @@ class _NotificationDialog(Gtk.MessageDialog):
 
         self.entered = False
 
-        def on_enter(_widget: Gtk.Widget, _event: Gdk.Event) -> bool:
+        def on_enter(_widget: "_NotificationDialog", _event: Gdk.Event) -> bool:
             if self.get_window() == Gdk.Window.at_pointer()[0] or not self.entered:
                 self.fader.animate(start=self.fader.get_state(), end=1.0, duration=500)
                 self.entered = True
             return False
 
-        def on_leave(_widget: Gtk.Widget, _event: Gdk.Event) -> bool:
+        def on_leave(_widget: "_NotificationDialog", _event: Gdk.Event) -> bool:
             if not Gdk.Window.at_pointer():
                 self.entered = False
                 self.fader.animate(start=self.fader.get_state(), end=OPACITY_START, duration=500)
