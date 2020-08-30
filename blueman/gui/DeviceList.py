@@ -43,10 +43,6 @@ class DeviceList(GenericList):
         'adapter-removed': (GObject.SignalFlags.RUN_LAST, None, (str,)),
     }
 
-    def __del__(self) -> None:
-        logging.debug("deleting mainlist")
-        super().__del__()
-
     def __init__(self, adapter_name: Optional[str] = None, tabledata: Optional[List[ListDataDict]] = None,
                  **kwargs: object) -> None:
         if not tabledata:
