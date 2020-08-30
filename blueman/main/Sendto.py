@@ -4,25 +4,18 @@ import logging
 from gettext import ngettext
 from typing import List, Iterable, Optional
 
-import gi
-
 from blueman.bluez.Device import Device
 from blueman.bluez.errors import BluezDBusException
+from blueman.main.Builder import Builder
 from blueman.typing import GSignals
-
-gi.require_version("Gtk", "3.0")
-gi.require_version("Gdk", "3.0")
-
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.obex.ObjectPush import ObjectPush
 from blueman.bluez.obex.Manager import Manager
 from blueman.bluez.obex.Client import Client
 from blueman.bluez.obex.Transfer import Transfer
 from blueman.Functions import format_bytes
-from blueman.Constants import UI_PATH
 from blueman.main.SpeedCalc import SpeedCalc
 from blueman.gui.CommonUi import ErrorDialog
-
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -51,17 +44,16 @@ class Sender(Gtk.Dialog):
         self.b_cancel.props.use_underline = True
         self.b_cancel.connect("clicked", self.on_cancel)
 
-        self.Builder = Gtk.Builder(translation_domain="blueman")
-        self.Builder.add_from_file(UI_PATH + "/send-dialog.ui")
+        builder = Builder("send-dialog.ui")
 
-        grid = self.Builder.get_object("sendto")
+        grid = builder.get_widget("sendto", Gtk.Grid)
         content_area = self.get_content_area()
         content_area.add(grid)
 
-        self.l_dest = self.Builder.get_object("l_dest")
-        self.l_file = self.Builder.get_object("l_file")
+        self.l_dest = builder.get_widget("l_dest", Gtk.Label)
+        self.l_file = builder.get_widget("l_file", Gtk.Label)
 
-        self.pb = self.Builder.get_object("pb")
+        self.pb = builder.get_widget("pb", Gtk.ProgressBar)
         self.pb.props.text = _("Connecting")
 
         self.device = device
@@ -114,8 +106,10 @@ class Sender(Gtk.Dialog):
         except GLib.Error as e:
             if 'StartServiceByName' in e.message:
                 logging.debug(e.message)
+                parent = self.get_toplevel()
+                assert isinstance(parent, Gtk.Container)
                 d = ErrorDialog(_("obexd not available"), _("Failed to autostart obex service. Make sure the obex "
-                                                            "daemon is running"), parent=self.get_toplevel())
+                                                            "daemon is running"), parent=parent)
                 d.run()
                 d.destroy()
                 self.emit("result", False)
@@ -123,7 +117,9 @@ class Sender(Gtk.Dialog):
                 # Fail on anything else
                 raise
 
-        self.l_file.props.label = self.files[-1].get_basename()
+        basename = self.files[-1].get_basename()
+        assert basename is not None
+        self.l_file.props.label = basename
 
         self.client.connect('session-failed', self.on_session_failed)
 
@@ -228,8 +224,10 @@ class Sender(Gtk.Dialog):
     def on_transfer_error(self, _transfer: Optional[Transfer], msg: str = "") -> None:
         if not self.error_dialog:
             self.speed.reset()
+            parent = self.get_toplevel()
+            assert isinstance(parent, Gtk.Container)
             d = ErrorDialog(msg, _("Error occurred while sending file %s") % self.files[-1].get_basename(),
-                            modal=True, icon_name="blueman", parent=self.get_toplevel(), buttons=[])
+                            modal=True, icon_name="blueman", parent=parent, buttons=Gtk.ButtonsType.NONE)
 
             if len(self.files) > 1:
                 d.add_button(_("Skip"), Gtk.ResponseType.NO)
@@ -282,8 +280,9 @@ class Sender(Gtk.Dialog):
             self.object_push = None
 
     def on_session_failed(self, _client: Client, msg: BluezDBusException) -> None:
-        d = ErrorDialog(_("Error occurred"), msg.reason.split(None, 1)[1], icon_name="blueman",
-                        parent=self.get_toplevel())
+        parent = self.get_toplevel()
+        assert isinstance(parent, Gtk.Container)
+        d = ErrorDialog(_("Error occurred"), msg.reason.split(None, 1)[1], icon_name="blueman", parent=parent)
 
         d.run()
         d.destroy()

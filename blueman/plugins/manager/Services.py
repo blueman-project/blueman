@@ -32,7 +32,9 @@ class Services(ManagerPlugin, MenuItemsProvider):
         window = self.parent.window.get_window()
 
         target = self.icon_theme.load_surface(icon_name, size, scale, window, Gtk.IconLookupFlags.FORCE_SIZE)
+        assert isinstance(target, cairo.ImageSurface)
         bmx = self.icon_theme.load_surface("blueman-x", size, scale, window, Gtk.IconLookupFlags.FORCE_SIZE)
+        assert isinstance(bmx, cairo.ImageSurface)
 
         x = target.get_width() - bmx.get_width()
         y = target.get_height() - bmx.get_height()
@@ -43,11 +45,11 @@ class Services(ManagerPlugin, MenuItemsProvider):
         return target
 
     def on_request_menu_items(self, manager_menu: ManagerDeviceMenu, device: Device) -> List[Tuple[Gtk.MenuItem, int]]:
-        items = []
+        items: List[Tuple[Gtk.MenuItem, int]] = []
         appl = AppletService()
 
         self.has_dun = False
-        serial_items = []
+        serial_items: List[Gtk.MenuItem] = []
 
         def add_menu_item(manager_menu: ManagerDeviceMenu, service: Service) -> None:
             if service.connected:
@@ -78,7 +80,7 @@ class Services(ManagerPlugin, MenuItemsProvider):
                         devname = _("Serial Port %s") % "rfcomm%d" % dev["id"]
 
                         surface = self._make_x_icon("modem", 16)
-                        item = create_menuitem(devname, surface=surface)
+                        item: Gtk.MenuItem = create_menuitem(devname, surface=surface)
                         item.connect("activate", manager_menu.on_disconnect, service, dev["id"])
                         items.append((item, 120))
                         item.show()

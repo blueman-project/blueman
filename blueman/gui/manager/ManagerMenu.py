@@ -1,6 +1,6 @@
 from gettext import gettext as _
 import logging
-from typing import Dict, Tuple, List, TYPE_CHECKING, Any, Optional
+from typing import Dict, Tuple, TYPE_CHECKING, Any, Optional, Sequence
 
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device
@@ -27,15 +27,15 @@ class ManagerMenu:
         self.Config = Config("org.blueman.general")
 
         self.adapter_items: Dict[str, Tuple[Gtk.RadioMenuItem, Adapter]] = {}
-        self._adapters_group: List[Gtk.RadioMenuItem] = []
+        self._adapters_group: Sequence[Gtk.RadioMenuItem] = []
         self._insert_adapter_item_pos = 2
         self.Search = None
 
-        self.item_adapter = self.blueman.Builder.get_object("item_adapter")
-        self.item_device = self.blueman.Builder.get_object("item_device")
+        self.item_adapter = self.blueman.builder.get_widget("item_adapter", Gtk.MenuItem)
+        self.item_device = self.blueman.builder.get_widget("item_device", Gtk.MenuItem)
 
-        self.item_view = self.blueman.Builder.get_object("item_view")
-        self.item_help = self.blueman.Builder.get_object("item_help")
+        self.item_view = self.blueman.builder.get_widget("item_view", Gtk.MenuItem)
+        self.item_help = self.blueman.builder.get_widget("item_help", Gtk.MenuItem)
 
         help_menu = Gtk.Menu()
 
@@ -56,8 +56,10 @@ class ManagerMenu:
         help_item.show()
         help_menu.append(help_item)
         assert self.blueman.window is not None
-        help_item.connect("activate", lambda x: show_about_dialog('Blueman ' + _('Device Manager'),
-                                                                  parent=self.blueman.window.get_toplevel()))
+        widget = self.blueman.window.get_toplevel()
+        assert isinstance(widget, Gtk.Window)
+        window = widget
+        help_item.connect("activate", lambda x: show_about_dialog('Blueman ' + _('Device Manager'), parent=window))
 
         view_menu = Gtk.Menu()
         self.item_view.set_submenu(view_menu)
@@ -73,11 +75,11 @@ class ManagerMenu:
         view_menu.append(item_statusbar)
         self.blueman.Config.bind_to_widget("show-statusbar", item_statusbar, "active")
 
-        item_services = Gtk.SeparatorMenuItem()
+        item_services: Gtk.MenuItem = Gtk.SeparatorMenuItem()
         view_menu.append(item_services)
         item_services.show()
 
-        sorting_group: List[Gtk.RadioMenuItem] = []
+        sorting_group: Sequence[Gtk.RadioMenuItem] = []
         item_sort = Gtk.MenuItem.new_with_mnemonic(_("S_ort By"))
         view_menu.append(item_sort)
         item_sort.show()
@@ -238,7 +240,7 @@ class ManagerMenu:
                 else:
                     self.Search.props.sensitive = True
 
-    def on_adapter_selected(self, menuitem: Gtk.MenuItem, adapter_path: str) -> None:
+    def on_adapter_selected(self, menuitem: Gtk.CheckMenuItem, adapter_path: str) -> None:
         if menuitem.props.active:
             assert self.blueman.List.Adapter is not None
             if adapter_path != self.blueman.List.Adapter.get_object_path():
@@ -249,6 +251,7 @@ class ManagerMenu:
     def on_adapter_added(self, _manager: Optional[Manager], adapter_path: str) -> None:
         adapter = Adapter(obj_path=adapter_path)
         menu = self.item_adapter.get_submenu()
+        assert isinstance(menu, Gtk.Menu)
         object_path = adapter.get_object_path()
 
         item = Gtk.RadioMenuItem.new_with_label(self._adapters_group, adapter.get_name())
@@ -273,6 +276,7 @@ class ManagerMenu:
     def on_adapter_removed(self, _manager: Manager, adapter_path: str) -> None:
         item, adapter = self.adapter_items.pop(adapter_path)
         menu = self.item_adapter.get_submenu()
+        assert isinstance(menu, Gtk.Menu)
 
         item.disconnect(self._itemhandler)
         adapter.disconnect(self._adapterhandler)

@@ -30,7 +30,7 @@ class ManagerProgressbar(GObject.GObject):
 
         self.cancellable = cancellable
 
-        self.hbox = hbox = blueman.Builder.get_object("status_data")
+        self.hbox = hbox = blueman.builder.get_widget("status_data", Gtk.Box)
 
         self.progressbar = Gtk.ProgressBar()
         self.progressbar.set_name("ManagerProgressbar")
@@ -67,15 +67,20 @@ class ManagerProgressbar(GObject.GObject):
 
         ManagerProgressbar.__instances__.append(self)
 
+    def _get_window(self) -> Gdk.Window:
+        assert self.Blueman.window is not None
+        window = self.Blueman.window.get_window()
+        assert window is not None
+        return window
+
     def _on_enter(self, _evbox: Gtk.EventBox, _event: Gdk.Event) -> bool:
         c = Gdk.Cursor.new(Gdk.CursorType.HAND2)
-        assert self.Blueman.window is not None
-        self.Blueman.window.get_window().set_cursor(c)
+        self._get_window().set_cursor(c)
         return False
 
     def _on_leave(self, _evbox: Gtk.EventBox, _event: Gdk.Event) -> bool:
         assert self.Blueman.window is not None
-        self.Blueman.window.get_window().set_cursor(None)
+        self._get_window().set_cursor(None)
         return False
 
     def _on_clicked(self, _evbox: Gtk.EventBox, _event: Gdk.Event) -> bool:
@@ -90,7 +95,8 @@ class ManagerProgressbar(GObject.GObject):
 
     def show(self) -> None:
         if not self.Blueman.Config["show-statusbar"]:
-            self.Blueman.Builder.get_object("statusbar").props.visible = True
+            statusbar = self.Blueman.builder.get_widget("statusbar", Gtk.Box)
+            statusbar.props.visible = True
 
         self.progressbar.props.visible = True
         self.eventbox.props.visible = True
@@ -112,8 +118,7 @@ class ManagerProgressbar(GObject.GObject):
         if not self.finalized:
             self.hide()
             self.stop()
-            assert self.Blueman.window is not None
-            self.Blueman.window.get_window().set_cursor(None)
+            self._get_window().set_cursor(None)
             self.hbox.remove(self.eventbox)
             self.hbox.remove(self.progressbar)
             # self.hbox.remove(self.seperator)
@@ -132,7 +137,8 @@ class ManagerProgressbar(GObject.GObject):
 
             if not ManagerProgressbar.__instances__:
                 if not self.Blueman.Config["show-statusbar"]:
-                    self.Blueman.Builder.get_object("statusbar").props.visible = False
+                    statusbar = self.Blueman.builder.get_widget("statusbar", Gtk.Box)
+                    statusbar.props.visible = False
 
             for sig in self._signals:
                 if self.handler_is_connected(sig):

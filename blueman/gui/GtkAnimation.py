@@ -103,6 +103,7 @@ class TreeRowFade(AnimBase):
 
         self.sig: Optional[int] = self.tw.connect_after("draw", self.on_draw)
 
+        assert tw.props.model is not None
         self.row = Gtk.TreeRowReference.new(tw.props.model, path)
         self.stylecontext = tw.get_style_context()
         self.columns = columns
@@ -113,15 +114,19 @@ class TreeRowFade(AnimBase):
             self.sig = None
 
     def get_iter(self) -> Optional[Gtk.TreeIter]:
-        return self.tw.props.model.get_iter(self.row.get_path())
+        assert isinstance(self.tw.props.model, Gtk.TreeModel)
+        path = self.row.get_path()
+        assert path is not None
+        return self.tw.props.model.get_iter(path)
 
     def on_draw(self, widget: Gtk.Widget, cr: cairo.Context) -> bool:
         if self.frozen:
             return False
 
         if not self.row.valid():
-            self.tw.disconnect(self.sig)
-            self.sig = None
+            if self.sig is not None:
+                self.tw.disconnect(self.sig)
+                self.sig = None
             return False
 
         path = self.row.get_path()
@@ -154,10 +159,11 @@ class CellFade(AnimBase):
         self.tw = tw
 
         self.frozen = False
-        self.sig = tw.connect_after("draw", self.on_draw)
+        self.sig: Optional[int] = tw.connect_after("draw", self.on_draw)
+        assert tw.props.model is not None
         self.row = Gtk.TreeRowReference.new(tw.props.model, path)
         self.selection = tw.get_selection()
-        self.columns: List[Gtk.TreeViewColumn] = []
+        self.columns: List[Optional[Gtk.TreeViewColumn]] = []
         for i in columns:
             self.columns.append(self.tw.get_column(i))
 
@@ -167,15 +173,19 @@ class CellFade(AnimBase):
             self.sig = None
 
     def get_iter(self) -> Optional[Gtk.TreeIter]:
-        return self.tw.props.model.get_iter(self.row.get_path())
+        assert isinstance(self.tw.props.model, Gtk.TreeModel)
+        path = self.row.get_path()
+        assert path is not None
+        return self.tw.props.model.get_iter(path)
 
     def on_draw(self, _widget: Gtk.Widget, cr: cairo.Context) -> bool:
         if self.frozen:
             return False
 
         if not self.row.valid():
-            self.tw.disconnect(self.sig)
-            self.sig = None
+            if self.sig is not None:
+                self.tw.disconnect(self.sig)
+                self.sig = None
 
         path = self.row.get_path()
 
@@ -191,8 +201,12 @@ class CellFade(AnimBase):
 
         cr.clip()
 
-        selected = self.selection.get_selected()[1] and \
-            self.tw.props.model.get_path(self.selection.get_selected()[1]) == path
+        assert self.tw.props.model is not None
+        maybe_selected = self.selection.get_selected()[1]
+        if maybe_selected is not None:
+            selected = self.tw.props.model.get_path(maybe_selected) == path
+        else:
+            selected = False
 
         stylecontext = self.tw.get_style_context()
 

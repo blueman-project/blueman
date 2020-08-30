@@ -14,10 +14,12 @@ if TYPE_CHECKING:
 
 class ErrorDialog(Gtk.MessageDialog):
     def __init__(self, markup: str, secondary_markup: Optional[str] = None, excp: Optional[object] = None,
-                 icon_name: str = "dialog-error", buttons: Gtk.ButtonsType = Gtk.ButtonsType.CLOSE, **kwargs: object
+                 icon_name: str = "dialog-error", buttons: Gtk.ButtonsType = Gtk.ButtonsType.CLOSE,
+                 title: Optional[str] = None, parent: Optional[Gtk.Container] = None, modal: bool = False,
+                 margin_left: int = 0,
                  ) -> None:
         super().__init__(name="ErrorDialog", icon_name=icon_name, buttons=buttons,
-                         type=Gtk.MessageType.ERROR, **kwargs)
+                         type=Gtk.MessageType.ERROR, title=title, parent=parent, modal=modal, margin_left=margin_left)
 
         self.set_markup(markup)
 
@@ -29,7 +31,7 @@ class ErrorDialog(Gtk.MessageDialog):
 
             label_expander = Gtk.Label(label="<b>Exception</b>", use_markup=True, visible=True)
 
-            excp_label = Gtk.Label(str(excp), selectable=True, visible=True)
+            excp_label = Gtk.Label(label=str(excp), selectable=True, visible=True)
 
             expander = Gtk.Expander(label_widget=label_expander, visible=True)
             expander.add(excp_label)
@@ -38,16 +40,17 @@ class ErrorDialog(Gtk.MessageDialog):
 
 
 @overload
-def show_about_dialog(app_name: str, run: "Literal[True]" = True, parent: Gtk.Window = None) -> None:
+def show_about_dialog(app_name: str, run: "Literal[True]" = True, parent: Optional[Gtk.Window] = None) -> None:
     ...
 
 
 @overload
-def show_about_dialog(app_name: str, run: "Literal[False]", parent: Gtk.Window = None) -> Gtk.AboutDialog:
+def show_about_dialog(app_name: str, run: "Literal[False]", parent: Optional[Gtk.Window] = None) -> Gtk.AboutDialog:
     ...
 
 
-def show_about_dialog(app_name: str, run: bool = True, parent: Gtk.Window = None) -> Optional[Gtk.AboutDialog]:
+def show_about_dialog(app_name: str, run: bool = True, parent: Optional[Gtk.Window] = None
+                      ) -> Optional[Gtk.AboutDialog]:
     about = Gtk.AboutDialog()
     about.set_transient_for(parent)
     about.set_name(app_name)

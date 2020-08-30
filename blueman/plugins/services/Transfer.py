@@ -1,7 +1,7 @@
 from gettext import gettext as _
 import logging
 
-from blueman.Constants import *
+from blueman.main.Builder import Builder
 from blueman.plugins.ServicePlugin import ServicePlugin
 from blueman.main.DBusProxies import AppletService
 from blueman.main.Config import Config
@@ -16,10 +16,8 @@ class Transfer(ServicePlugin):
 
     def on_load(self, container: Gtk.Box) -> None:
 
-        self.Builder = Gtk.Builder()
-        self.Builder.set_translation_domain("blueman")
-        self.Builder.add_from_file(UI_PATH + "/services-transfer.ui")
-        self.widget = self.Builder.get_object("transfer")
+        self._builder = Builder("services-transfer.ui")
+        self.widget = self._builder.get_widget("transfer", Gtk.Widget)
 
         container.pack_start(self.widget, True, True, 0)
         a = AppletService()
@@ -39,17 +37,17 @@ class Transfer(ServicePlugin):
         value = config[key]
 
         if key == "shared-path":
-            self.Builder.get_object(key).set_current_folder(value)
+            self._builder.get_widget(key, Gtk.FileChooserButton).set_current_folder(value)
             self.option_changed_notify(key, False)
 
     def on_apply(self) -> None:
         if self.on_query_apply_state():
             for opt in self.get_options():
                 if opt == "shared-path":
-                    shared_path = self.Builder.get_object("shared-path")
+                    shared_path = self._builder.get_widget("shared-path", Gtk.FileChooserButton)
                     self._config["shared-path"] = shared_path.get_filename()
                 elif opt == "opp-accept":
-                    opp_accept = self.Builder.get_object("opp-accept")
+                    opp_accept = self._builder.get_widget("opp-accept", Gtk.CheckButton)
                     self._config["opp-accept"] = opp_accept.get_active()
                 else:
                     raise NotImplementedError("Unknow option: %s" % opt)
@@ -68,8 +66,8 @@ class Transfer(ServicePlugin):
         self._config = Config("org.blueman.transfer")
         self._config.connect("changed", self.on_property_changed)
 
-        opp_accept = self.Builder.get_object("opp-accept")
-        shared_path = self.Builder.get_object("shared-path")
+        opp_accept = self._builder.get_widget("opp-accept", Gtk.CheckButton)
+        shared_path = self._builder.get_widget("shared-path", Gtk.FileChooserButton)
 
         opp_accept.props.active = self._config["opp-accept"]
         if self._config["shared-path"]:

@@ -44,7 +44,7 @@ class DeviceList(GenericList):
     }
 
     def __init__(self, adapter_name: Optional[str] = None, tabledata: Optional[List[ListDataDict]] = None,
-                 **kwargs: object) -> None:
+                 headers_visible: bool = True) -> None:
         if not tabledata:
             tabledata = []
 
@@ -78,7 +78,7 @@ class DeviceList(GenericList):
             {"id": "timestamp", "type": float}
         ]
 
-        super().__init__(data, **kwargs)
+        super().__init__(data, headers_visible=headers_visible)
         self.set_name("DeviceList")
 
         self.set_adapter(adapter_name)
@@ -158,7 +158,9 @@ class DeviceList(GenericList):
                 if value:
                     self.monitor_power_levels(dev)
                 else:
-                    r = Gtk.TreeRowReference.new(self.get_model(), self.props.model.get_path(tree_iter))
+                    model = self.get_model()
+                    assert isinstance(model, Gtk.TreeModel)
+                    r = Gtk.TreeRowReference.new(model, model.get_path(tree_iter))
                     self.level_setup_event(r, dev, None)
 
     # Override when subclassing
@@ -191,6 +193,7 @@ class DeviceList(GenericList):
         if device["Connected"] and bt_address not in self.monitored_devices:
             logging.info("starting monitor")
             tree_iter = self.find_device(device)
+            assert tree_iter is not None
 
             assert self.Adapter is not None
             hci = os.path.basename(self.Adapter.get_object_path())
@@ -200,7 +203,9 @@ class DeviceList(GenericList):
             except ConnInfoReadError:
                 logging.warning("Failed to get power levels, probably a LE device.")
 
-            r = Gtk.TreeRowReference.new(self.get_model(), self.get_model().get_path(tree_iter))
+            model = self.get_model()
+            assert isinstance(model, Gtk.TreeModel)
+            r = Gtk.TreeRowReference.new(model, model.get_path(tree_iter))
             self.level_setup_event(r, device, cinfo)
             GLib.timeout_add(1000, update, r, cinfo, bt_address)
             self.monitored_devices.append(bt_address)
@@ -227,6 +232,7 @@ class DeviceList(GenericList):
     def device_remove_event(self, device: Device) -> None:
         logging.debug(device)
         tree_iter = self.find_device(device)
+        assert tree_iter is not None
 
         if self.compare(self.selected(), tree_iter):
             self.emit("device-selected", None, None)
@@ -357,6 +363,7 @@ class DeviceList(GenericList):
             row = self.path_to_row[object_path]
             if row.valid():
                 path = row.get_path()
+                assert path is not None
                 tree_iter = self.liststore.get_iter(path)
                 return tree_iter
             else:
@@ -370,8 +377,9 @@ class DeviceList(GenericList):
         try:
             row = self.path_to_row[path]
             if row.valid():
-                path = row.get_path()
-                tree_iter = self.liststore.get_iter(path)
+                path_ = row.get_path()
+                assert path_ is not None
+                tree_iter = self.liststore.get_iter(path_)
                 return tree_iter
             else:
                 del self.path_to_row[path]
@@ -399,14 +407,17 @@ class DeviceList(GenericList):
             self.path_to_row[object_path] = Gtk.TreeRowReference.new(self.liststore,
                                                                      self.liststore.get_path(tree_iter))
 
-    def append(self, **columns: object) -> None:
+    def append(self, **columns: object) -> Gtk.TreeIter:
         tree_iter = GenericList.append(self, **columns)
         self.do_cache(tree_iter, columns)
+        return tree_iter
 
-    def prepend(self, **columns: object) -> None:
+    def prepend(self, **columns: object) -> Gtk.TreeIter:
         tree_iter = GenericList.prepend(self, **columns)
         self.do_cache(tree_iter, columns)
+        return tree_iter
 
-    def set(self, iterid: Gtk.TreeIter, **kwargs: object) -> None:
+    # FIXME: GenericList.set accepts int and str as iterid, DeviceList does not
+    def set(self, iterid: Gtk.TreeIter, **kwargs: object) -> None:  # type: ignore
         GenericList.set(self, iterid, **kwargs)
         self.do_cache(iterid, kwargs)

@@ -1,4 +1,4 @@
-from typing import Callable, Iterable, TYPE_CHECKING, overload, Any, cast, Mapping
+from typing import Callable, Iterable, TYPE_CHECKING, overload, Any, cast, Mapping, Optional
 
 import gi
 
@@ -35,13 +35,14 @@ def build_menu(items: Iterable[Mapping[str, Any]], activate: Callable[..., None]
     menu = Gtk.Menu()
     for index, item in enumerate(items):
         if 'text' in item and 'icon_name' in item:
-            gtk_item = create_menuitem(item['text'], item['icon_name'])
+            gtk_item: Gtk.MenuItem = create_menuitem(item['text'], item['icon_name'])
             label = gtk_item.get_child()
+            assert isinstance(label, Gtk.Label)
             if item['markup']:
                 label.set_markup_with_mnemonic(item['text'])
             else:
                 label.set_text_with_mnemonic(item['text'])
-            gtk_item.connect('activate', lambda _, idx=index: activate(idx))
+            gtk_item.connect('activate', cast(Callable[[Gtk.MenuItem], None], lambda _, idx=index: activate(idx)))
             if 'submenu' in item:
                 gtk_item.set_submenu(build_menu(item['submenu'], cast(Callable[[int], None],
                                                                       lambda subid, idx=index: activate(idx, subid))))
@@ -63,7 +64,7 @@ class GtkStatusIcon:
         self.indicator.set_title('blueman')
         self.indicator.connect('popup-menu', self.on_popup_menu)
         self.indicator.connect('activate', lambda _status_icon: on_activate_status_icon())
-        self._menu = None
+        self._menu: Optional[Gtk.Menu] = None
 
     def on_popup_menu(self, _status_icon: Gtk.StatusIcon, _button: int, _activate_time: int) -> None:
         if self._menu:

@@ -2,8 +2,8 @@ from gettext import gettext as _
 import logging
 from typing import TYPE_CHECKING, List, Type, Dict
 
-from blueman.Constants import *
 from blueman.gui.GenericList import GenericList, ListDataDict
+from blueman.main.Builder import Builder
 from blueman.main.PluginManager import PluginManager
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.plugins.BasePlugin import Option
@@ -59,7 +59,7 @@ class SettingsWidget(Gtk.Box):
             return c
 
         elif params["type"] == int:
-            b = Gtk.Box(Gtk.Orientation.HORIZONTAL, spacing=6)
+            b = Gtk.Box(spacing=6)
             label = Gtk.Label(label=params["name"])
             b.pack_start(label, False, False, 0)
 
@@ -86,6 +86,7 @@ class SettingsWidget(Gtk.Box):
             e.connect("changed", self.handle_change, opt, params, "text")
 
             return b
+        raise ValueError()
 
 
 class PluginDialog(Gtk.Window):
@@ -103,26 +104,25 @@ class PluginDialog(Gtk.Window):
 
         self.applet = applet
 
-        self.Builder = Gtk.Builder(translation_domain="blueman")
-        self.Builder.add_from_file(UI_PATH + "/applet-plugins-widget.ui")
+        builder = Builder("applet-plugins-widget.ui")
 
-        self.description = self.Builder.get_object("description")
+        self.description = builder.get_widget("description", Gtk.Label)
 
-        self.icon = self.Builder.get_object("icon")
-        self.author_txt = self.Builder.get_object("author_txt")
-        self.depends_hdr = self.Builder.get_object("depends_hdr")
-        self.depends_txt = self.Builder.get_object("depends_txt")
-        self.conflicts_hdr = self.Builder.get_object("conflicts_hdr")
-        self.conflicts_txt = self.Builder.get_object("conflicts_txt")
-        self.plugin_name = self.Builder.get_object("name")
+        self.icon = builder.get_widget("icon", Gtk.Image)
+        self.author_txt = builder.get_widget("author_txt", Gtk.Label)
+        self.depends_hdr = builder.get_widget("depends_hdr", Gtk.Widget)
+        self.depends_txt = builder.get_widget("depends_txt", Gtk.Label)
+        self.conflicts_hdr = builder.get_widget("conflicts_hdr", Gtk.Widget)
+        self.conflicts_txt = builder.get_widget("conflicts_txt", Gtk.Label)
+        self.plugin_name = builder.get_widget("name", Gtk.Label)
 
-        self.main_container = self.Builder.get_object("main_container")
-        self.content_grid = self.Builder.get_object("content")
+        self.main_container = builder.get_widget("main_container", Gtk.Bin)
+        self.content_grid = builder.get_widget("content", Gtk.Widget)
 
-        self.b_prefs = self.Builder.get_object("b_prefs")
+        self.b_prefs = builder.get_widget("b_prefs", Gtk.ToggleButton)
         self.b_prefs.connect("toggled", self.on_prefs_toggled)
 
-        self.add(self.Builder.get_object("all"))
+        self.add(builder.get_widget("all", Gtk.Container))
 
         cr = Gtk.CellRendererToggle()
         cr.connect("toggled", self.on_toggled)
@@ -144,8 +144,8 @@ class PluginDialog(Gtk.Window):
 
         self.list.selection.connect("changed", self.on_selection_changed)
 
-        plugin_list = self.Builder.get_object("plugin_list")
-        plugin_info = self.Builder.get_object("main_scrolled_window")
+        plugin_list = builder.get_widget("plugin_list", Gtk.ScrolledWindow)
+        plugin_info = builder.get_widget("main_scrolled_window", Gtk.ScrolledWindow)
         plugin_list.add(self.list)
 
         # Disable overlay scrolling
@@ -161,7 +161,7 @@ class PluginDialog(Gtk.Window):
 
         self.list.set_cursor(0)
 
-    def list_compare_func(self, _treemodel: Gtk.TreeModel, iter1: Gtk.TreeIter, iter2: Gtk.TreeIter, _user_data: None
+    def list_compare_func(self, _treemodel: Gtk.TreeModel, iter1: Gtk.TreeIter, iter2: Gtk.TreeIter, _user_data: object
                           ) -> int:
         a = self.list.get(iter1, "activatable", "name")
         b = self.list.get(iter2, "activatable", "name")
@@ -189,6 +189,7 @@ class PluginDialog(Gtk.Window):
 
     def on_selection_changed(self, selection: Gtk.TreeSelection) -> None:
         model, tree_iter = selection.get_selected()
+        assert tree_iter is not None
 
         name = self.list.get(tree_iter, "name")["name"]
         cls: Type[AppletPlugin] = self.applet.Plugins.get_classes()[name]
@@ -222,6 +223,7 @@ class PluginDialog(Gtk.Window):
 
     def on_prefs_toggled(self, _button: Gtk.ToggleButton) -> None:
         model, tree_iter = self.list.selection.get_selected()
+        assert tree_iter is not None
         name = self.list.get(tree_iter, "name")["name"]
         cls: Type[AppletPlugin] = self.applet.Plugins.get_classes()[name]
 
@@ -238,6 +240,7 @@ class PluginDialog(Gtk.Window):
                 self.b_prefs.props.active = False
             else:
                 c = self.main_container.get_child()
+                assert c is not None
                 self.main_container.remove(c)
                 if isinstance(c, SettingsWidget):
                     c.destroy()
@@ -246,6 +249,7 @@ class PluginDialog(Gtk.Window):
 
         else:
             c = self.main_container.get_child()
+            assert c is not None
             self.main_container.remove(c)
             if isinstance(c, SettingsWidget):
                 c.destroy()
@@ -284,7 +288,7 @@ class PluginDialog(Gtk.Window):
                 to_unload.append(dep)
 
         if to_unload:
-            dialog = Gtk.MessageDialog(self, type=Gtk.MessageType.QUESTION, buttons=Gtk.ButtonsType.YES_NO)
+            dialog = Gtk.MessageDialog(parent=self, type=Gtk.MessageType.QUESTION, buttons=Gtk.ButtonsType.YES_NO)
             dialog.props.secondary_use_markup = True
             dialog.props.icon_name = "blueman"
             dialog.props.text = _("Dependency issue")
@@ -306,7 +310,7 @@ class PluginDialog(Gtk.Window):
                 to_unload.append(conf)
 
         if to_unload:
-            dialog = Gtk.MessageDialog(self, type=Gtk.MessageType.QUESTION, buttons=Gtk.ButtonsType.YES_NO)
+            dialog = Gtk.MessageDialog(parent=self, type=Gtk.MessageType.QUESTION, buttons=Gtk.ButtonsType.YES_NO)
             dialog.props.secondary_use_markup = True
             dialog.props.icon_name = "blueman"
             dialog.props.text = _("Dependency issue")

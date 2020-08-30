@@ -52,7 +52,7 @@ class ManagerStats:
         self.downarrow = Gtk.Image(icon_name="go-down", pixel_size=16, halign=Gtk.Align.END, valign=Gtk.Align.CENTER,
                                    tooltip_text=_("Total data received and rate of transmission"))
 
-        self.hbox = hbox = blueman.Builder.get_object("status_activity")
+        self.hbox = hbox = blueman.builder.get_widget("status_activity", Gtk.Box)
 
         hbox.pack_start(self.uparrow, False, False, 0)
         hbox.pack_start(self.up_rate, False, False, 0)

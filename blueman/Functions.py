@@ -38,7 +38,7 @@ import cairo
 
 from blueman.main.Config import Config
 from blueman.main.DBusProxies import AppletService, DBusProxyFailed
-from blueman.Constants import *
+from blueman.Constants import BIN_DIR, ICON_PATH
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -67,7 +67,7 @@ def check_bluetooth_status(message: str, exitfunc: Callable[[], Any]) -> None:
 
     if not applet.GetBluetoothStatus():
         d = Gtk.MessageDialog(
-            None, type=Gtk.MessageType.ERROR, icon_name="blueman",
+            type=Gtk.MessageType.ERROR, icon_name="blueman",
             text=_("Bluetooth Turned Off"), secondary_text=message)
         d.add_button(_("Exit"), Gtk.ResponseType.NO)
         d.add_button(_("Enable Bluetooth"), Gtk.ResponseType.YES)
@@ -88,7 +88,7 @@ def check_bluetooth_status(message: str, exitfunc: Callable[[], Any]) -> None:
     config = Config("org.blueman.plugins.powermanager")
     if config["auto-power-on"] is None:
         d = Gtk.MessageDialog(
-            None, type=Gtk.MessageType.QUESTION, icon_name="blueman",
+            type=Gtk.MessageType.QUESTION, icon_name="blueman",
             text=_("Shall bluetooth get enabled automatically?"))
         d.add_button(_("Yes"), Gtk.ResponseType.YES)
         d.add_button(_("No"), Gtk.ResponseType.NO)
@@ -210,6 +210,7 @@ def create_menuitem(
 
     item = Gtk.ImageMenuItem(label=text, image=image, use_underline=True)
     child = item.get_child()
+    assert isinstance(child, Gtk.AccelLabel)
     child.set_use_markup(True)
     item.show_all()
 
