@@ -1,0 +1,27 @@
+name: Weblate
+
+on:
+  push:
+    branches:
+      - 2-1-stable
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: sudo apt-get install autopoint python-gi-dev cython libglib2.0-dev libbluetooth-dev intltool
+      - run: ./autogen.sh
+      - env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: "curl -L -H \"Authorization: Bearer $TOKEN\" -o blueman.pot.zip \"$(curl \"$(curl 'https://api.github.com/repos/blueman-project/blueman/actions/workflows/weblate.yml/runs?status=success&event=push&branch=2-1-stable' | jq -r .workflow_runs[0].artifacts_url)\" | jq -r .artifacts[0].archive_download_url)\""
+      - run: unzip -d po blueman.pot.zip
+      - run: make -C po blueman.pot
+      - uses: actions/upload-artifact@v2
+        with:
+          name: blueman.pot
+          path: po/blueman.pot
+      - env:
+          TOKEN: ${{ secrets.WEBLATE_KEY }}
+        run: "curl -F file=@po/blueman.pot -F method=source -H \"Authorization: Token $TOKEN\" https://hosted.weblate.org/api/translations/blueman/stable/en/file/"
