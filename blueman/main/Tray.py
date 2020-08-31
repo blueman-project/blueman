@@ -11,13 +11,6 @@ class BluemanTray(Gio.Application):
         super().__init__(application_id="org.blueman.Tray", flags=Gio.ApplicationFlags.FLAGS_NONE)
         self._active = False
 
-    def do_startup(self) -> None:
-        Gio.Application.do_startup(self)
-
-        quit_action = Gio.SimpleAction.new("Quit", None)
-        quit_action.connect("activate", self.quit)
-        self.add_action(quit_action)
-
     def do_activate(self) -> None:
         if self._active:
             logging.info("Already running, restarting instance")
