@@ -14,7 +14,7 @@
 * Pairing with pincode
 * Handle os.remove failing
 * Fix disconnecting NMDevice
-* Untranslated strings (@cwenling / Colomban Wendling)
+* Untranslated strings (@cwendling / Colomban Wendling)
 * Searching (with Ctrl+F in manager device list) did not work
 * Default PIN lookup
 * Exceptions from asynchronous DBus calls (getting picked up by tools like Apport or ABRT)
