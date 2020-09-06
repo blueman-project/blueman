@@ -186,10 +186,10 @@ class PowerManager(AppletPlugin, StatusIconProvider):
                 plugin.on_power_state_changed(self, new_state)
 
             if new_state:
-                self.parent.Plugins.StatusIcon.set_text_line(0, _("Bluetooth Enabled"))
+                self.parent.Plugins.StatusIcon.set_tooltip_title(_("Bluetooth Enabled"))
                 self.parent.Plugins.StatusIcon.query_visibility(delay_hiding=True)
             else:
-                self.parent.Plugins.StatusIcon.set_text_line(0, _("Bluetooth Disabled"))
+                self.parent.Plugins.StatusIcon.set_tooltip_title(_("Bluetooth Disabled"))
                 self.parent.Plugins.StatusIcon.query_visibility()
             self.parent.Plugins.StatusIcon.icon_should_change()
 

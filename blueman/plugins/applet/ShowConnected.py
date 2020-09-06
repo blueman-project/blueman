@@ -26,7 +26,7 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
         self._handlers.append(self.parent.Plugins.connect('plugin-unloaded', self._on_plugins_changed))
 
     def on_unload(self) -> None:
-        self.parent.Plugins.StatusIcon.set_text_line(1, None)
+        self.parent.Plugins.StatusIcon.set_tooltip_text(None)
         self.num_connections = 0
         self.parent.Plugins.StatusIcon.icon_should_change()
         for handler in self._handlers:
@@ -58,22 +58,21 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
 
     def update_statusicon(self) -> None:
         if self.num_connections > 0:
-            self.parent.Plugins.StatusIcon.set_text_line(0, _("Bluetooth Active"))
-            self.parent.Plugins.StatusIcon.set_text_line(
-                1,
+            self.parent.Plugins.StatusIcon.set_tooltip_title(_("Bluetooth Active"))
+            self.parent.Plugins.StatusIcon.set_tooltip_text(
                 ngettext("<b>%(connections)d Active Connection</b>",
                          "<b>%(connections)d Active Connections</b>",
                          self.num_connections) % {"connections": self.num_connections})
         else:
-            self.parent.Plugins.StatusIcon.set_text_line(1, None)
+            self.parent.Plugins.StatusIcon.set_tooltip_text(None)
             if 'PowerManager' in self.parent.Plugins.get_loaded():
                 status = self.parent.Plugins.PowerManager.get_bluetooth_status()
                 if status:
-                    self.parent.Plugins.StatusIcon.set_text_line(0, _("Bluetooth Enabled"))
+                    self.parent.Plugins.StatusIcon.set_tooltip_title(_("Bluetooth Enabled"))
                 else:
-                    self.parent.Plugins.StatusIcon.set_text_line(0, _("Bluetooth Disabled"))
+                    self.parent.Plugins.StatusIcon.set_tooltip_title(_("Bluetooth Disabled"))
             else:
-                self.parent.Plugins.StatusIcon.set_text_line(0, "Blueman")
+                self.parent.Plugins.StatusIcon.set_tooltip_title("Blueman")
 
     def on_manager_state_changed(self, state: bool) -> None:
         if state:

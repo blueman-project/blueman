@@ -18,13 +18,26 @@ class AppIndicator:
         self.indicator = AppIndicator3.Indicator.new('blueman', icon_name,
                                                      AppIndicator3.IndicatorCategory.APPLICATION_STATUS)
         self.indicator.set_status(AppIndicator3.IndicatorStatus.ACTIVE)
+        self._tooltip_title = ""
+        self._tooltip_text = ""
 
     def set_icon(self, icon_name: str) -> None:
         self.indicator.set_icon(icon_name)
         self.indicator.set_status(AppIndicator3.IndicatorStatus.ATTENTION)
         self.indicator.set_status(AppIndicator3.IndicatorStatus.ACTIVE)
 
-    def set_text(self, text: str) -> None:
+    def set_tooltip_title(self, title: str) -> None:
+        self._tooltip_title = title
+        self._update_tooltip()
+
+    def set_tooltip_text(self, text: str) -> None:
+        self._tooltip_text = text
+        self._update_tooltip()
+
+    def _update_tooltip(self) -> None:
+        text = self._tooltip_title
+        if self._tooltip_text:
+            text += "\n" + self._tooltip_text
         self.indicator.props.title = text
 
     def set_visibility(self, visible: bool) -> None:
