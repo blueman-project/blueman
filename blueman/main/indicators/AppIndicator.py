@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 
 
 class AppIndicator:
-    def __init__(self, icon_name: str, on_activate_menu_item: MenuItemActivator,
+    def __init__(self, icon_name: str, on_activate_menu_item: "MenuItemActivator",
                  _on_activate_status_icon: Callable[[], None]) -> None:
         self._on_activate = on_activate_menu_item
         self.indicator = AppIndicator3.Indicator.new('blueman', icon_name,
