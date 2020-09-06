@@ -64,6 +64,8 @@ class GtkStatusIcon:
         self.indicator.set_title('blueman')
         self.indicator.connect('popup-menu', self.on_popup_menu)
         self.indicator.connect('activate', lambda _status_icon: on_activate_status_icon())
+        self._tooltip_title = ""
+        self._tooltip_text = ""
         self._menu: Optional[Gtk.Menu] = None
 
     def on_popup_menu(self, _status_icon: Gtk.StatusIcon, _button: int, _activate_time: int) -> None:
@@ -73,7 +75,18 @@ class GtkStatusIcon:
     def set_icon(self, icon_name: str) -> None:
         self.indicator.props.icon_name = icon_name
 
-    def set_text(self, text: str) -> None:
+    def set_tooltip_title(self, title: str) -> None:
+        self._tooltip_title = title
+        self._update_tooltip()
+
+    def set_tooltip_text(self, text: str) -> None:
+        self._tooltip_text = text
+        self._update_tooltip()
+
+    def _update_tooltip(self) -> None:
+        text = self._tooltip_title
+        if self._tooltip_text:
+            text += "\n" + self._tooltip_text
         self.indicator.props.tooltip_markup = text
 
     def set_visibility(self, visible: bool) -> None:

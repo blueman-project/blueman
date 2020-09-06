@@ -39,7 +39,8 @@ class StatusIcon(AppletPlugin, GObject.GObject):
 
     def on_load(self) -> None:
         GObject.GObject.__init__(self)
-        self.lines = {0: _("Bluetooth Enabled")}
+        self._tooltip_title = _("Bluetooth Enabled")
+        self._tooltip_text = ""
 
         self.query_visibility(emit=False)
 
@@ -48,8 +49,10 @@ class StatusIcon(AppletPlugin, GObject.GObject):
 
         self._add_dbus_method("GetVisibility", (), "b", lambda: self.visible)
         self._add_dbus_signal("VisibilityChanged", "b")
-        self._add_dbus_signal("TextChanged", "s")
-        self._add_dbus_method("GetText", (), "s", self._get_text)
+        self._add_dbus_signal("ToolTipTitleChanged", "s")
+        self._add_dbus_signal("ToolTipTextChanged", "s")
+        self._add_dbus_method("GetToolTipTitle", (), "s", lambda: self._tooltip_title)
+        self._add_dbus_method("GetToolTipText", (), "s", lambda: self._tooltip_text)
         self._add_dbus_signal("IconNameChanged", "s")
         self._add_dbus_method("GetStatusIconImplementation", (), "s", self._get_status_icon_implementation)
         self._add_dbus_method("GetIconName", (), "s", self._get_icon_name)
@@ -78,16 +81,13 @@ class StatusIcon(AppletPlugin, GObject.GObject):
         if emit:
             self._emit_dbus_signal("VisibilityChanged", visible)
 
-    def set_text_line(self, lineid: int, text: str) -> None:
-        if text:
-            self.lines[lineid] = text
-        else:
-            self.lines.pop(lineid, None)
+    def set_tooltip_title(self, title: str) -> None:
+        self._tooltip_title = title
+        self._emit_dbus_signal("ToolTipTitleChanged", title)
 
-        self._emit_dbus_signal("TextChanged", self._get_text())
-
-    def _get_text(self) -> str:
-        return '\n'.join([self.lines[key] for key in sorted(self.lines)])
+    def set_tooltip_text(self, text: Optional[str]) -> None:
+        self._tooltip_text = "" if text is None else text
+        self._emit_dbus_signal("ToolTipTextChanged", self._tooltip_text)
 
     def icon_should_change(self) -> None:
         self._emit_dbus_signal("IconNameChanged", self._get_icon_name())

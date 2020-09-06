@@ -31,7 +31,8 @@ class BluemanTray(Gio.Application):
 
         applet.connect('g-signal', self.on_signal)
 
-        self.indicator.set_text(applet.GetText())
+        self.indicator.set_tooltip_title(applet.GetToolTipTitle())
+        self.indicator.set_tooltip_text(applet.GetToolTipText())
         self.indicator.set_visibility(applet.GetVisibility())
         self.indicator.set_menu(applet.GetMenu())
 
@@ -50,8 +51,10 @@ class BluemanTray(Gio.Application):
     def on_signal(self, _applet: AppletService, _sender_name: str, signal_name: str, args: GLib.Variant) -> None:
         if signal_name == 'IconNameChanged':
             self.indicator.set_icon(*args)
-        elif signal_name == 'TextChanged':
-            self.indicator.set_text(*args)
+        elif signal_name == 'ToolTipTitleChanged':
+            self.indicator.set_tooltip_title(*args)
+        elif signal_name == 'ToolTipTextChanged':
+            self.indicator.set_tooltip_text(*args)
         elif signal_name == 'VisibilityChanged':
             self.indicator.set_visibility(*args)
         elif signal_name == 'MenuChanged':
