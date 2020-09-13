@@ -25,6 +25,7 @@ blueman_PYTHON = \
     ShowConnected.py \
     StatusIcon.py \
     StandardItems.py \
+    StatusNotifierItem.py \
     TransferService.py
 
 
