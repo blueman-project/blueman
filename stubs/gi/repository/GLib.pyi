@@ -2081,6 +2081,7 @@ class VariantDict():
 
 
 class VariantType():
+    def __init__(self, type_string: str) -> None: ...
 
     @staticmethod
     def checked_(arg0: builtins.str) -> VariantType: ...
