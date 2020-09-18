@@ -2,6 +2,8 @@ from typing import Iterable, TYPE_CHECKING, Callable
 
 import gi
 
+from blueman.main.indicators.IndicatorInterface import IndicatorInterface
+
 gi.require_version('AppIndicator3', '0.1')
 from gi.repository import AppIndicator3
 from blueman.main.indicators.GtkStatusIcon import build_menu
@@ -11,7 +13,7 @@ if TYPE_CHECKING:
     from blueman.main.indicators.GtkStatusIcon import MenuItemActivator
 
 
-class AppIndicator:
+class AppIndicator(IndicatorInterface):
     def __init__(self, icon_name: str, on_activate_menu_item: "MenuItemActivator",
                  _on_activate_status_icon: Callable[[], None]) -> None:
         self._on_activate = on_activate_menu_item

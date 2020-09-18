@@ -2,6 +2,8 @@ from typing import Callable, Iterable, TYPE_CHECKING, overload, Any, cast, Mappi
 
 import gi
 
+from blueman.main.indicators.IndicatorInterface import IndicatorInterface
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from blueman.Functions import create_menuitem
@@ -56,7 +58,7 @@ def build_menu(items: Iterable[Mapping[str, Any]], activate: Callable[..., None]
     return menu
 
 
-class GtkStatusIcon:
+class GtkStatusIcon(IndicatorInterface):
     def __init__(self, icon_name: str, on_activate_menu_item: "MenuItemActivator",
                  on_activate_status_icon: Callable[[], None]) -> None:
         self._on_activate = on_activate_menu_item

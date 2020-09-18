@@ -3,6 +3,7 @@ from typing import Iterable, TYPE_CHECKING, Callable, List, Tuple, Dict, Union, 
 from gi.repository import Gio, GLib, Pango
 
 from blueman.main.DbusService import DbusService
+from blueman.main.indicators.IndicatorInterface import IndicatorInterface
 
 if TYPE_CHECKING:
     from blueman.plugins.applet.Menu import MenuItemDict, SubmenuItemDict
@@ -110,7 +111,7 @@ class StatusNotifierItemService(DbusService):
         self.menu.unregister()
 
 
-class StatusNotifierItem:
+class StatusNotifierItem(IndicatorInterface):
     def __init__(self, icon_name: str, on_activate_menu_item: "MenuItemActivator",
                  on_activate_status_icon: Callable[[], None]) -> None:
         self._sni = StatusNotifierItemService(icon_name, on_activate_status_icon, on_activate_menu_item)
