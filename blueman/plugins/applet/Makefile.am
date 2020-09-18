@@ -29,10 +29,6 @@ blueman_PYTHON = \
     TransferService.py
 
 
-if HAVE_APPINDICATOR
-blueman_PYTHON += AppIndicator.py
-endif
-
 CLEANFILES =		\
 	$(BUILT_SOURCES)
 	

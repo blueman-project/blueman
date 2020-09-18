@@ -6,6 +6,10 @@
 
 * Audio profile switcher in applet menu (@abhijeetviswa)
 
+### Changes
+
+* Replace AppIndicator with DBus StatusNotifierItem
+
 ## 2.2.3
 
 ### Bugs fixed

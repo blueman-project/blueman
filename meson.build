@@ -276,11 +276,6 @@ if not pulseaudio
     blueman_exclude_files += 'plugins/manager/PulseAudioProfile.py'
 endif
 
-appindicator = get_option('appindicator')
-if not appindicator
-    blueman_exclude_files += 'plugins/applet/AppIndicator.py'
-endif
-
 install_subdir(
     'blueman',
     install_dir: pythondir,
