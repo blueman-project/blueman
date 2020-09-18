@@ -5,6 +5,8 @@ import sys
 from blueman.main.DBusProxies import AppletService
 from gi.repository import Gio, GLib
 
+from blueman.main.indicators.IndicatorInterface import IndicatorNotAvailable
+
 
 class BluemanTray(Gio.Application):
     def __init__(self) -> None:
@@ -24,10 +26,15 @@ class BluemanTray(Gio.Application):
         logging.debug("Applet started on name %s, showing indicator" % name)
 
         applet = AppletService()
-        indicator_name = applet.GetStatusIconImplementation()
-        logging.info(f'Using indicator "{indicator_name}"')
-        indicator_class = getattr(import_module('blueman.main.indicators.' + indicator_name), indicator_name)
-        self.indicator = indicator_class(applet.GetIconName(), self._activate_menu_item, self._activate_status_icon)
+        for indicator_name in applet.GetStatusIconImplementations():
+            indicator_class = getattr(import_module('blueman.main.indicators.' + indicator_name), indicator_name)
+            try:
+                self.indicator = indicator_class(
+                    applet.GetIconName(), self._activate_menu_item, self._activate_status_icon)
+                break
+            except IndicatorNotAvailable:
+                logging.info(f'Indicator "{indicator_name}" is not available')
+        logging.info(f'Using indicator "{self.indicator.__class__.__name__}"')
 
         applet.connect('g-signal', self.on_signal)
 

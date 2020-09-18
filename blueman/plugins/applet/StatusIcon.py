@@ -1,5 +1,5 @@
 from gettext import gettext as _
-from typing import Optional
+from typing import Optional, Tuple, List
 
 from gi.repository import GObject, GLib
 
@@ -10,7 +10,7 @@ from blueman.bluemantyping import GSignals
 
 
 class StatusIconImplementationProvider:
-    def on_query_status_icon_implementation(self) -> Optional[str]:
+    def on_query_status_icon_implementation(self) -> Tuple[str, int]:
         ...
 
 
@@ -35,7 +35,7 @@ class StatusIcon(AppletPlugin, GObject.GObject):
 
     visibility_timeout = None
 
-    _implementation = None
+    _implementations = None
 
     def on_load(self) -> None:
         GObject.GObject.__init__(self)
@@ -54,7 +54,7 @@ class StatusIcon(AppletPlugin, GObject.GObject):
         self._add_dbus_method("GetToolTipTitle", (), "s", lambda: self._tooltip_title)
         self._add_dbus_method("GetToolTipText", (), "s", lambda: self._tooltip_text)
         self._add_dbus_signal("IconNameChanged", "s")
-        self._add_dbus_method("GetStatusIconImplementation", (), "s", self._get_status_icon_implementation)
+        self._add_dbus_method("GetStatusIconImplementations", (), "as", self._get_status_icon_implementations)
         self._add_dbus_method("GetIconName", (), "s", self._get_icon_name)
         self._add_dbus_method("Activate", (), "", lambda: self.emit("activate"))
 
@@ -105,19 +105,20 @@ class StatusIcon(AppletPlugin, GObject.GObject):
             launch('blueman-tray', icon_name='blueman', sn=False)
 
     def _on_plugins_changed(self, _plugins: PluginManager, _name: str) -> None:
-        implementation = self._get_status_icon_implementation()
-        if not self._implementation or self._implementation != implementation:
-            self._implementation = implementation
+        implementations = self._get_status_icon_implementations()
+        if not self._implementations or self._implementations != implementations:
+            self._implementations = implementations
 
         if self.parent.manager_state:
             launch('blueman-tray', icon_name='blueman', sn=False)
 
-    def _get_status_icon_implementation(self) -> str:
-        for plugin in self.parent.Plugins.get_loaded_plugins(StatusIconImplementationProvider):
-            implementation = plugin.on_query_status_icon_implementation()
-            if implementation:
-                return implementation
-        return "GtkStatusIcon"
+    def _get_status_icon_implementations(self) -> List[str]:
+        return [implementation for implementation, _ in sorted(
+            (plugin.on_query_status_icon_implementation()
+             for plugin in self.parent.Plugins.get_loaded_plugins(StatusIconImplementationProvider)),
+            key=lambda implementation_priority: implementation_priority[1],
+            reverse=True
+        )] + ["GtkStatusIcon"]
 
     def _get_icon_name(self) -> str:
         for plugin in self.parent.Plugins.get_loaded_plugins(StatusIconProvider):

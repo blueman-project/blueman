@@ -3,7 +3,7 @@ from typing import Iterable, TYPE_CHECKING, Callable, List, Tuple, Dict, Union, 
 from gi.repository import Gio, GLib, Pango
 
 from blueman.main.DbusService import DbusService
-from blueman.main.indicators.IndicatorInterface import IndicatorInterface
+from blueman.main.indicators.IndicatorInterface import IndicatorInterface, IndicatorNotAvailable
 
 if TYPE_CHECKING:
     from blueman.plugins.applet.Menu import MenuItemDict, SubmenuItemDict
@@ -117,10 +117,15 @@ class StatusNotifierItem(IndicatorInterface):
         self._sni = StatusNotifierItemService(icon_name, on_activate_status_icon, on_activate_menu_item)
         self._sni.register()
 
-        Gio.bus_get_sync(Gio.BusType.SESSION).call(
-            "org.kde.StatusNotifierWatcher", "/StatusNotifierWatcher", "org.kde.StatusNotifierWatcher",
-            "RegisterStatusNotifierItem", GLib.Variant("(s)", ("/org/blueman/sni",)),
-            GLib.VariantType("(s)"), Gio.DBusCallFlags.NONE, -1)
+        self._bus = Gio.bus_get_sync(Gio.BusType.SESSION)
+
+        try:
+            Gio.bus_get_sync(Gio.BusType.SESSION).call_sync(
+                "org.kde.StatusNotifierWatcher", "/StatusNotifierWatcher", "org.kde.StatusNotifierWatcher",
+                "RegisterStatusNotifierItem", GLib.Variant("(s)", ("/org/blueman/sni",)),
+                None, Gio.DBusCallFlags.NONE, -1)
+        except GLib.Error:
+            raise IndicatorNotAvailable
 
     def set_icon(self, icon_name: str) -> None:
         self._sni.IconName = icon_name

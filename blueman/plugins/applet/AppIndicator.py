@@ -1,5 +1,7 @@
 from gettext import gettext as _
 
+from typing import Tuple
+
 from blueman.plugins.AppletPlugin import AppletPlugin
 
 # Check if Appindicator is available and raise ImportError
@@ -19,5 +21,5 @@ class AppIndicator(AppletPlugin, StatusIconImplementationProvider):
     __author__ = "Walmis"
     __depends__ = ['StatusIcon']
 
-    def on_query_status_icon_implementation(self) -> str:
-        return 'AppIndicator'
+    def on_query_status_icon_implementation(self) -> Tuple[str, int]:
+        return 'AppIndicator', 10
