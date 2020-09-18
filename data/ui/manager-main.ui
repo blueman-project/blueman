@@ -142,21 +142,6 @@
           </packing>
         </child>
         <child>
-          <object class="GtkToolButton" id="b_setup">
-            <property name="visible">True</property>
-            <property name="sensitive">False</property>
-            <property name="can_focus">False</property>
-            <property name="tooltip_text" translatable="yes">Run the setup assistant for this device</property>
-            <property name="is_important">True</property>
-            <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Setup...</property>
-            <property name="icon_widget">im_setup</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="homogeneous">True</property>
-          </packing>
-        </child>
-        <child>
           <object class="GtkToolButton" id="b_remove">
             <property name="visible">True</property>
             <property name="sensitive">False</property>

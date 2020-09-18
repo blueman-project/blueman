@@ -74,7 +74,7 @@ foreach libexecapp: ['blueman-mechanism', 'blueman-rfcomm-watcher']
     )
 endforeach
 
-binapps = ['blueman-adapters', 'blueman-applet', 'blueman-assistant', 'blueman-manager',
+binapps = ['blueman-adapters', 'blueman-applet', 'blueman-manager',
            'blueman-sendto', 'blueman-services', 'blueman-tray']
 
 foreach binapp: binapps
@@ -193,7 +193,6 @@ i18n.merge_file(
 install_man(
     'data/man/blueman-adapters.1',
     'data/man/blueman-applet.1',
-    'data/man/blueman-assistant.1',
     'data/man/blueman-manager.1',
     'data/man/blueman-sendto.1',
     'data/man/blueman-services.1',

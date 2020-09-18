@@ -7,7 +7,6 @@ ui_DATA =				\
 	services-network.ui \
 	services-transfer.ui	\
 	send-dialog.ui		\
-	assistant.ui		\
 	applet-plugins-widget.ui \
 	gsm-settings.ui		\
 	net-usage.ui		\

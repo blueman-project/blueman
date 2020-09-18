@@ -247,7 +247,6 @@ Makefile
 apps/Makefile
 apps/blueman-adapters
 apps/blueman-applet
-apps/blueman-assistant
 apps/blueman-manager
 apps/blueman-mechanism
 apps/blueman-rfcomm-watcher

@@ -44,10 +44,6 @@ class ManagerToolbar:
         self.b_remove = blueman.builder.get_widget("b_remove", Gtk.ToolButton)
         self.b_remove.connect("clicked", self.on_action, self.blueman.remove)
 
-        self.b_setup = blueman.builder.get_widget("b_setup", Gtk.ToolButton)
-        self.b_setup.connect("clicked", self.on_action, self.blueman.setup)
-        self.b_setup.set_homogeneous(False)
-
         self.b_send = blueman.builder.get_widget("b_send", Gtk.ToolButton)
         self.b_send.props.sensitive = False
         self.b_send.connect("clicked", self.on_action, self.blueman.send)
@@ -82,10 +78,8 @@ class ManagerToolbar:
             self.b_bond.props.sensitive = False
             self.b_remove.props.sensitive = False
             self.b_trust.props.sensitive = False
-            self.b_setup.props.sensitive = False
         else:
             row = dev_list.get(tree_iter, "paired", "trusted", "objpush")
-            self.b_setup.props.sensitive = True
             self.b_remove.props.sensitive = True
             if row["paired"]:
                 self.b_bond.props.sensitive = False
