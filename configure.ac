@@ -210,12 +210,6 @@ AM_CONDITIONAL([HAVE_PULSEAUDIO], [test "x$use_pulseaudio" = "xyes"])
 
 dnl ----------------------------
 
-AC_ARG_ENABLE([appindicator],
-  AS_HELP_STRING([--disable-appindicator], [Disable Libappindicator support]),
-  [use_appindicator=$enableval], [use_appindicator=yes])
-
-AM_CONDITIONAL([HAVE_APPINDICATOR], [test "x$use_appindicator" = "xyes"])
-
 AC_ARG_WITH([systemdsystemunitdir],
   AS_HELP_STRING([--with-systemdsystemunitdir=PATH],
     [Directory for systemd system unit files]
@@ -345,7 +339,6 @@ echo Nautilus sendto: $have_nautilus_python
 echo Settings menu integration enabled: $have_settings
 echo Dhcpd 3 configuration file: $dhconfig
 echo PulseAudio support: $use_pulseaudio
-echo AppIndicator support: $use_appindicator
 echo Systemd system unit dir: ${systemd_system_unit_dir}
 echo Systemd user unit dir: ${systemd_user_unit_dir}
 echo Icon theme: gnome-icon-theme, mate-icon-theme, adwaita-icon-theme, elementary-xfce, or Papirus

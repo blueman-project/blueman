@@ -20,7 +20,6 @@ class TestImports(TestCase):
 
 def load_tests(*_args):
     expected_exceptions = {
-        "blueman.plugins.applet.AppIndicator": "AppIndicator3 not found",
         "blueman.plugins.applet.GameControllerWakelock": "This is not an X11 screen",
         "blueman.plugins.applet.KillSwitch": "Hardware kill switch not found",
         "blueman.plugins.applet.NMDUNSupport": "NM python bindings not found.",
