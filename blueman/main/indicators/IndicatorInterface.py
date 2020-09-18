@@ -5,6 +5,10 @@ if TYPE_CHECKING:
     from blueman.plugins.applet.Menu import MenuItemDict
 
 
+class IndicatorNotAvailable(RuntimeError):
+    pass
+
+
 class IndicatorInterface(metaclass=ABCMeta):
     @abstractmethod
     def set_icon(self, icon_name: str) -> None:
