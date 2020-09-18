@@ -5,6 +5,7 @@
 ### Changes
 
 * Drop blueman-report
+* Drop blueman-assistant
 * Raise minimum Python version to 3.6
 * Do not use exitcode 1 when we expect to fail
 * Use apply button for transfer options

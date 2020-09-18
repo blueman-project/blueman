@@ -4,7 +4,6 @@ man_MANS = 			\
 	blueman-manager.1	\
 	blueman-sendto.1	\
 	blueman-services.1	\
-	blueman-assistant.1	\
 	blueman-tray.1
 
 EXTRA_DIST = $(man_MANS)

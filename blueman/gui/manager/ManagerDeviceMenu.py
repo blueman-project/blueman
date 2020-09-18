@@ -352,12 +352,6 @@ class ManagerDeviceMenu(Gtk.Menu):
             item.show()
         item.props.tooltip_text = _("Mark/Unmark this device as trusted")
 
-        item = create_menuitem(_("_Set up…"), "document-properties")
-        self.append(item)
-        item.connect("activate", lambda x: self.Blueman.setup(self.SelectedDevice))
-        item.show()
-        item.props.tooltip_text = _("Run the setup assistant for this device")
-
         def on_rename(_item: Gtk.MenuItem, device: Device) -> None:
             def on_response(dialog: Gtk.Dialog, response_id: int) -> None:
                 if response_id == Gtk.ResponseType.ACCEPT:

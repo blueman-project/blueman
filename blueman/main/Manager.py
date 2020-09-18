@@ -207,11 +207,6 @@ class Blueman(Gtk.Application):
         s2 = self.List.connect("adapter-property-changed", prop_changed)
 
     @staticmethod
-    def setup(device: Device) -> None:
-        command = f"blueman-assistant --device={device['Address']}"
-        launch(command, name=_("Bluetooth Assistant"))
-
-    @staticmethod
     def bond(device: Device) -> None:
         def error_handler(e: Exception) -> None:
             logging.exception(e)

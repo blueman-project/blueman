@@ -27,9 +27,6 @@ class StandardItems(AppletPlugin, PowerStateListener):
 
         self.parent.Plugins.Menu.add(self, 21)
 
-        self.new_dev = self.parent.Plugins.Menu.add(self, 30, text=_("_Set Up New Device") + "…",
-                                                    icon_name="document-new", callback=self.on_setup_new)
-
         self.parent.Plugins.Menu.add(self, 31)
 
         self.send = self.parent.Plugins.Menu.add(self, 40, text=_("Send _Files to Device") + "…",
@@ -61,7 +58,6 @@ class StandardItems(AppletPlugin, PowerStateListener):
             power = True
 
         sensitive = sensitive and self.parent.Manager is not None and power
-        self.new_dev.set_sensitive(sensitive)
         self.send.set_sensitive(sensitive)
         self.devices.set_sensitive(sensitive)
         self.adapters.set_sensitive(sensitive)
@@ -71,9 +67,6 @@ class StandardItems(AppletPlugin, PowerStateListener):
 
     def on_power_state_changed(self, manager: PowerManager, state: bool) -> None:
         self.change_sensitivity(state)
-
-    def on_setup_new(self) -> None:
-        launch("blueman-assistant", name=_("Bluetooth Assistant"))
 
     def on_send(self) -> None:
         launch("blueman-sendto", name=_("File Sender"))
