@@ -7,13 +7,14 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2007
 # brennus <jonas.ska@gmail.com>, 2014-2015
 # Moo, 2015-2018
+# Kornelijus Tvarijanavičius <kornelitvari@protonmail.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-01 06:46+0000\n"
-"PO-Revision-Date: 2020-09-12 08:19+0000\n"
-"Last-Translator: Christopher Schramm <github@cschramm.eu>\n"
+"POT-Creation-Date: 2020-09-26 22:08+0000\n"
+"PO-Revision-Date: 2020-09-26 22:08+0000\n"
+"Last-Translator: Kornelijus Tvarijanavičius <kornelitvari@protonmail.com>\n"
 "Language-Team: Lithuanian <https://hosted.weblate.org/projects/blueman/"
 "stable/lt/>\n"
 "Language: lt\n"
@@ -21,13 +22,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < "
-"11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 :"
-" n % 1 != 0 ? 2: 3);\n"
+"11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? "
+"1 : n % 1 != 0 ? 2: 3);\n"
 "X-Generator: Weblate 4.3-dev\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Visibility Setting</b>"
-msgstr "Matomumas"
+msgstr "<b>Matomumo Nustatymas</b>"
 
 #: ../data/ui/adapters-tab.ui.h:2 ../blueman/main/Adapter.py:130
 msgid "Hidden"
@@ -43,7 +44,7 @@ msgstr "Laikinai matomas"
 
 #: ../data/ui/adapters-tab.ui.h:5
 msgid "<b>Friendly Name</b>"
-msgstr "Rankinis pavadinimas"
+msgstr "<b>Draugiškas Pavadinimas</b>"
 
 #: ../data/ui/applet-passkey.ui.h:1
 msgid "Pairing request"
@@ -226,11 +227,10 @@ msgid ""
 "It will walk you through the process of configuring and connecting to your "
 "Bluetooth enabled devices."
 msgstr ""
-"<b>Sveiki, čia Bluetooth sąrankos pagelbiklis. </b>\n"
+"<b>Sveiki atvertę Bluetooth įrenginio nustatymų vedlį. </b>\n"
 "\n"
 "\n"
-"\n"
-"Jis parodys konfigūravimo ir prisijungimo prie Bluetooth įrenginių eigą."
+"Jis jus lydės jūsų Bluetooth įreginio konfigūravimo ir prisijungimo eigoje."
 
 #: ../data/ui/assistant.ui.h:5
 msgid "Introduction"
@@ -510,7 +510,7 @@ msgstr "Bluetooth atpažinimas"
 
 #: ../blueman/main/applet/BluezAgent.py:217
 msgid "Enter PIN code for authentication:"
-msgstr "Įveskite PIN kodą atpažinimui"
+msgstr "Įveskite PIN kodą atpažinimui:"
 
 #: ../blueman/main/applet/BluezAgent.py:218
 msgid "Enter PIN code"
@@ -654,10 +654,8 @@ msgid "_Search"
 msgstr "Pa_ieška"
 
 #: ../blueman/gui/manager/ManagerMenu.py:139
-#, fuzzy
-#| msgid "Adapter Preferences"
 msgid "_Preferences"
-msgstr "Adapterio nustatymai"
+msgstr "_Nuostatos"
 
 #: ../blueman/gui/manager/ManagerMenu.py:148
 #: ../blueman/plugins/applet/ExitItem.py:15
@@ -887,7 +885,7 @@ msgstr "Adapterio pasirinkimas"
 #, fuzzy
 #| msgid "Discoverable… %ss"
 msgid "Discovering…"
-msgstr "Matomas… %ss"
+msgstr "Matomas…"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:39 ../blueman/DeviceClass.py:63
@@ -1194,10 +1192,8 @@ msgid "IrMC Sync Command"
 msgstr ""
 
 #: ../blueman/Sdp.py:133 ../blueman/Sdp.py:174
-#, fuzzy
-#| msgid "headset"
 msgid "Headset"
-msgstr "ausinė(s)"
+msgstr "Ausinė(s)"
 
 #: ../blueman/Sdp.py:134
 msgid "Cordless Telephony"
@@ -1284,10 +1280,8 @@ msgid "ImagingReferencedObjects (BIP)"
 msgstr ""
 
 #: ../blueman/Sdp.py:155
-#, fuzzy
-#| msgid "handsfree"
 msgid "Handsfree"
-msgstr "laisvų rankų įranga"
+msgstr "Laisvų rankų įranga"
 
 #: ../blueman/Sdp.py:156
 msgid "Handsfree Audio Gateway"
@@ -1900,9 +1894,7 @@ msgstr ""
 #: ../blueman/plugins/applet/RecentConns.py:26
 msgid ""
 "Provides a menu item that contains last used connections for quick access"
-msgstr ""
-"Prideda meniu punktą kuriame yra neseniai naudoti prisijungimai, kad būtų "
-"patogiau pakartotinai prisijungti."
+msgstr "Prideda meniu punktą su paskutiniais prisijungimais greitam pasiekimui"
 
 #. the maximum number of items RecentConns menu will display
 #: ../blueman/plugins/applet/RecentConns.py:37
@@ -1946,7 +1938,7 @@ msgid ""
 "NetworkManager 0.8"
 msgstr ""
 "Suteikia asmeninio vietos tinklo (PAN) palaikymą, atsiradusį NetworkManager "
-"0.8 versijoje."
+"0.8 versijoje"
 
 #: ../blueman/plugins/applet/DBusService.py:13
 msgid "Provides DBus API for other Blueman components"
@@ -1976,7 +1968,7 @@ msgstr "Priimamas failas %(0)s iš %(1)s"
 
 #: ../blueman/plugins/applet/TransferService.py:131
 msgid "Provides OBEX file transfer capabilities"
-msgstr "Suteikia OBEX failų persiuntimo galimybes."
+msgstr "Suteikia OBEX failų persiuntimo galimybes"
 
 #: ../blueman/plugins/applet/TransferService.py:156
 msgid "Configured directory for incoming files does not exist"
