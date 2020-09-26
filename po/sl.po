@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2020-09-26 21:20+0000\n"
+"POT-Creation-Date: 2020-09-26 22:02+0000\n"
 "PO-Revision-Date: 2020-04-14 10:14+0000\n"
 "Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
 "Language-Team: Slovenian (http://www.transifex.com/mate/MATE/language/sl/)\n"
@@ -72,7 +72,7 @@ msgid "_View"
 msgstr "_Pogled"
 
 #: data/ui/manager-main.ui:77 blueman/gui/manager/ManagerMenu.py:55
-#: blueman/plugins/applet/StandardItems.py:51
+#: blueman/plugins/applet/StandardItems.py:48
 msgid "_Help"
 msgstr "_Pomoč"
 
@@ -100,34 +100,25 @@ msgstr "Označi/Odznači to napravo kot zaupanja vredno"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:136 blueman/gui/manager/ManagerToolbar.py:39
-#: blueman/gui/manager/ManagerToolbar.py:105
+#: blueman/gui/manager/ManagerToolbar.py:99
 msgid "Trust"
 msgstr "Zaupaj"
 
-#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:359
-msgid "Run the setup assistant for this device"
-msgstr "Zaženi pomočnika nastavitev za to napravo"
-
-#. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:151
-msgid "Setup..."
-msgstr "Nastavi ..."
-
-#: data/ui/manager-main.ui:164 blueman/gui/manager/ManagerDeviceMenu.py:392
+#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:386
 msgid "Remove this device from the known devices list"
 msgstr "Odstrani to napravo s seznama znanih naprav"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:165
+#: data/ui/manager-main.ui:150
 msgid "Remove"
 msgstr "Odstrani"
 
-#: data/ui/manager-main.ui:187
+#: data/ui/manager-main.ui:172
 msgid "Send file(s) to the device"
 msgstr "Pošlji datoteko(e) napravi"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:189
+#: data/ui/manager-main.ui:174
 msgid "Send File"
 msgstr "Pošlji datoteko"
 
@@ -212,68 +203,6 @@ msgstr "<b>Za:</b>"
 #: data/ui/send-dialog.ui:106
 msgid "<b>File:</b>"
 msgstr "<b>Datoteka:</b>"
-
-#: data/ui/assistant.ui:16
-msgid ""
-"<b>Welcome to the Bluetooth device setup assistant. </b>\n"
-"\n"
-"\n"
-"It will walk you through the process of configuring and connecting to your "
-"Bluetooth enabled devices."
-msgstr ""
-"<b>Dobrodošli v pomočniku za nastavitev naprav Bluetooth</b>\n"
-"\n"
-"\n"
-"Ta vas bo vodil skozi postopek nastavitve in povezovanja z vašimi napravami "
-"z Bluetoothom."
-
-#: data/ui/assistant.ui:25
-msgid "Introduction"
-msgstr "Uvod"
-
-#: data/ui/assistant.ui:38
-msgid "Device"
-msgstr "Naprava"
-
-#: data/ui/assistant.ui:54
-msgid "<b>Select pairing method to use:</b>"
-msgstr "<b>Izberite način seznanjanja:</b>"
-
-#: data/ui/assistant.ui:65
-msgid "Pair Device"
-msgstr "Seznani napravo"
-
-#: data/ui/assistant.ui:81
-msgid "Proceed Without Pairing"
-msgstr "Nadaljuj brez seznanjanja"
-
-#: data/ui/assistant.ui:97 data/ui/assistant.ui:111
-msgid "Pairing"
-msgstr "Seznanjanje"
-
-#: data/ui/assistant.ui:128
-msgid "<b>Connect to:</b>"
-msgstr "<b>Povezava z:</b>"
-
-#: data/ui/assistant.ui:154
-msgid "Connect"
-msgstr "Poveži"
-
-#: data/ui/assistant.ui:161
-msgid "<b>Please wait...</b>"
-msgstr "<b>Počakajte ...</b>"
-
-#: data/ui/assistant.ui:166
-msgid "Connecting..."
-msgstr "Povezovanje ..."
-
-#: data/ui/assistant.ui:173
-msgid "<b>Congratulations, device successfully added</b>"
-msgstr "<b>Čestitke, naprava je uspešno dodana</b>"
-
-#: data/ui/assistant.ui:180
-msgid "Finished"
-msgstr "Končano"
 
 #: data/ui/applet-plugins-widget.ui:69
 msgid "Configuration"
@@ -412,16 +341,12 @@ msgstr ""
 msgid "Searching"
 msgstr "Iskanje"
 
-#: blueman/main/Manager.py:212 blueman/plugins/applet/StandardItems.py:76
-msgid "Bluetooth Assistant"
-msgstr "Pomočnik za Bluetooth"
-
-#: blueman/main/Manager.py:225 blueman/plugins/applet/StandardItems.py:86
+#: blueman/main/Manager.py:220 blueman/plugins/applet/StandardItems.py:79
 msgid "Adapter Preferences"
 msgstr "Lastnosti vmesnika"
 
-#: blueman/main/Manager.py:237 blueman/gui/manager/ManagerDeviceList.py:134
-#: blueman/plugins/applet/StandardItems.py:79
+#: blueman/main/Manager.py:232 blueman/gui/manager/ManagerDeviceList.py:134
+#: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
 msgstr "Pošiljatelj datotek"
 
@@ -605,17 +530,17 @@ msgid "_Descending"
 msgstr ""
 
 #: blueman/gui/manager/ManagerMenu.py:122
-#: blueman/plugins/applet/StandardItems.py:53
+#: blueman/plugins/applet/StandardItems.py:50
 msgid "_Plugins"
 msgstr "_Vstavki"
 
 #: blueman/gui/manager/ManagerMenu.py:127
-#: blueman/plugins/applet/StandardItems.py:46
+#: blueman/plugins/applet/StandardItems.py:43
 msgid "_Local Services"
 msgstr "_Krajevne storitve"
 
 #: blueman/gui/manager/ManagerMenu.py:128
-#: blueman/plugins/applet/StandardItems.py:89
+#: blueman/plugins/applet/StandardItems.py:82
 msgid "Service Preferences"
 msgstr "Nastavitev storitev"
 
@@ -763,17 +688,13 @@ msgstr "_Zaupaj"
 msgid "_Untrust"
 msgstr "_Ne zaupaj"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:355
-msgid "_Set up…"
-msgstr ""
-
-#: blueman/gui/manager/ManagerDeviceMenu.py:379
+#: blueman/gui/manager/ManagerDeviceMenu.py:373
 #, fuzzy
 #| msgid "Rename device"
 msgid "R_ename device…"
 msgstr "Preimenuj napravo"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:388
+#: blueman/gui/manager/ManagerDeviceMenu.py:382
 #, fuzzy
 #| msgid "Remove"
 msgid "_Remove…"
@@ -799,7 +720,7 @@ msgid "Total data sent and rate of transmission"
 msgstr "Skupaj poslano in hitrost prenosa"
 
 #: blueman/gui/manager/ManagerToolbar.py:37
-#: blueman/gui/manager/ManagerToolbar.py:99
+#: blueman/gui/manager/ManagerToolbar.py:93
 msgid "Untrust"
 msgstr "Ne zaupaj"
 
@@ -828,7 +749,7 @@ msgid "GSM Settings"
 msgstr "Nastavitve GSM"
 
 #: blueman/gui/applet/PluginDialog.py:95
-#: blueman/plugins/applet/StandardItems.py:95
+#: blueman/plugins/applet/StandardItems.py:88
 msgid "Plugins"
 msgstr "Vstavki"
 
@@ -2448,23 +2369,19 @@ msgstr ""
 msgid "Adds standard menu items to the status icon menu"
 msgstr "Dodaja standardne predmete menija na meni z ikono stanja"
 
-#: blueman/plugins/applet/StandardItems.py:30
-msgid "_Set Up New Device"
-msgstr "Na_stavi novo napravo"
-
-#: blueman/plugins/applet/StandardItems.py:35
+#: blueman/plugins/applet/StandardItems.py:32
 msgid "Send _Files to Device"
 msgstr "Pošlji _datoteke na napravo"
 
-#: blueman/plugins/applet/StandardItems.py:40
+#: blueman/plugins/applet/StandardItems.py:37
 msgid "_Devices"
 msgstr "_Naprave"
 
-#: blueman/plugins/applet/StandardItems.py:43
+#: blueman/plugins/applet/StandardItems.py:40
 msgid "Adap_ters"
 msgstr "Vm_esniki"
 
-#: blueman/plugins/applet/StandardItems.py:92
+#: blueman/plugins/applet/StandardItems.py:85
 msgid "applet"
 msgstr "aplet"
 
@@ -2778,6 +2695,67 @@ msgstr ""
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr ""
+
+#~ msgid "Run the setup assistant for this device"
+#~ msgstr "Zaženi pomočnika nastavitev za to napravo"
+
+#~ msgid "Setup..."
+#~ msgstr "Nastavi ..."
+
+#~ msgid ""
+#~ "<b>Welcome to the Bluetooth device setup assistant. </b>\n"
+#~ "\n"
+#~ "\n"
+#~ "It will walk you through the process of configuring and connecting to "
+#~ "your Bluetooth enabled devices."
+#~ msgstr ""
+#~ "<b>Dobrodošli v pomočniku za nastavitev naprav Bluetooth</b>\n"
+#~ "\n"
+#~ "\n"
+#~ "Ta vas bo vodil skozi postopek nastavitve in povezovanja z vašimi "
+#~ "napravami z Bluetoothom."
+
+#~ msgid "Introduction"
+#~ msgstr "Uvod"
+
+#~ msgid "Device"
+#~ msgstr "Naprava"
+
+#~ msgid "<b>Select pairing method to use:</b>"
+#~ msgstr "<b>Izberite način seznanjanja:</b>"
+
+#~ msgid "Pair Device"
+#~ msgstr "Seznani napravo"
+
+#~ msgid "Proceed Without Pairing"
+#~ msgstr "Nadaljuj brez seznanjanja"
+
+#~ msgid "Pairing"
+#~ msgstr "Seznanjanje"
+
+#~ msgid "<b>Connect to:</b>"
+#~ msgstr "<b>Povezava z:</b>"
+
+#~ msgid "Connect"
+#~ msgstr "Poveži"
+
+#~ msgid "<b>Please wait...</b>"
+#~ msgstr "<b>Počakajte ...</b>"
+
+#~ msgid "Connecting..."
+#~ msgstr "Povezovanje ..."
+
+#~ msgid "<b>Congratulations, device successfully added</b>"
+#~ msgstr "<b>Čestitke, naprava je uspešno dodana</b>"
+
+#~ msgid "Finished"
+#~ msgstr "Končano"
+
+#~ msgid "Bluetooth Assistant"
+#~ msgstr "Pomočnik za Bluetooth"
+
+#~ msgid "_Set Up New Device"
+#~ msgstr "Na_stavi novo napravo"
 
 #~ msgid "Enter PIN code"
 #~ msgstr "Vnesite kodo PIN"

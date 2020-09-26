@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2020-09-26 21:20+0000\n"
+"POT-Creation-Date: 2020-09-26 22:02+0000\n"
 "PO-Revision-Date: 2020-08-18 17:04+0000\n"
 "Last-Translator: Luna Jernberg <droidbittin@gmail.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/blueman/blueman/"
@@ -75,7 +75,7 @@ msgid "_View"
 msgstr "_Visa"
 
 #: data/ui/manager-main.ui:77 blueman/gui/manager/ManagerMenu.py:55
-#: blueman/plugins/applet/StandardItems.py:51
+#: blueman/plugins/applet/StandardItems.py:48
 msgid "_Help"
 msgstr "_Hjälp"
 
@@ -103,34 +103,25 @@ msgstr "Markera/avmarkera denna enhet som pålitlig"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:136 blueman/gui/manager/ManagerToolbar.py:39
-#: blueman/gui/manager/ManagerToolbar.py:105
+#: blueman/gui/manager/ManagerToolbar.py:99
 msgid "Trust"
 msgstr "Tillit"
 
-#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:359
-msgid "Run the setup assistant for this device"
-msgstr "Kör konfigurationsguiden för denna enhet"
-
-#. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:151
-msgid "Setup..."
-msgstr "Konfigurera..."
-
-#: data/ui/manager-main.ui:164 blueman/gui/manager/ManagerDeviceMenu.py:392
+#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:386
 msgid "Remove this device from the known devices list"
 msgstr "Ta bort denna enhet från listan över kända enheter"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:165
+#: data/ui/manager-main.ui:150
 msgid "Remove"
 msgstr "Ta bort"
 
-#: data/ui/manager-main.ui:187
+#: data/ui/manager-main.ui:172
 msgid "Send file(s) to the device"
 msgstr "Skicka fil(er) till enheten"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:189
+#: data/ui/manager-main.ui:174
 msgid "Send File"
 msgstr "Skicka fil"
 
@@ -213,68 +204,6 @@ msgstr "<b>Till:</b>"
 #: data/ui/send-dialog.ui:106
 msgid "<b>File:</b>"
 msgstr "<b>Fil:</b>"
-
-#: data/ui/assistant.ui:16
-msgid ""
-"<b>Welcome to the Bluetooth device setup assistant. </b>\n"
-"\n"
-"\n"
-"It will walk you through the process of configuring and connecting to your "
-"Bluetooth enabled devices."
-msgstr ""
-"<b>Välkommen till konfigurationsguiden för blåtandsenheter. </b>\n"
-"\n"
-"\n"
-"Guiden kommer att hjälpa dig att konfigurera och ansluta till dina "
-"blåtandsenheter."
-
-#: data/ui/assistant.ui:25
-msgid "Introduction"
-msgstr "Introduktion"
-
-#: data/ui/assistant.ui:38
-msgid "Device"
-msgstr "Enhet"
-
-#: data/ui/assistant.ui:54
-msgid "<b>Select pairing method to use:</b>"
-msgstr "<b>Välj hopparningsmetod att använda:</b>"
-
-#: data/ui/assistant.ui:65
-msgid "Pair Device"
-msgstr "Para Enhet"
-
-#: data/ui/assistant.ui:81
-msgid "Proceed Without Pairing"
-msgstr "Fortsätt utan att para ihop"
-
-#: data/ui/assistant.ui:97 data/ui/assistant.ui:111
-msgid "Pairing"
-msgstr "Ihopparning"
-
-#: data/ui/assistant.ui:128
-msgid "<b>Connect to:</b>"
-msgstr "<b>Anslut till:</b>"
-
-#: data/ui/assistant.ui:154
-msgid "Connect"
-msgstr "Anslut"
-
-#: data/ui/assistant.ui:161
-msgid "<b>Please wait...</b>"
-msgstr "<b>Vänta...</b>"
-
-#: data/ui/assistant.ui:166
-msgid "Connecting..."
-msgstr "Ansluter..."
-
-#: data/ui/assistant.ui:173
-msgid "<b>Congratulations, device successfully added</b>"
-msgstr "<b>Gratulerar, enheten lades till</b>"
-
-#: data/ui/assistant.ui:180
-msgid "Finished"
-msgstr "Slutförd"
 
 #: data/ui/applet-plugins-widget.ui:69
 msgid "Configuration"
@@ -410,16 +339,12 @@ msgstr ""
 msgid "Searching"
 msgstr "Söker"
 
-#: blueman/main/Manager.py:212 blueman/plugins/applet/StandardItems.py:76
-msgid "Bluetooth Assistant"
-msgstr "Blåtandsguide"
-
-#: blueman/main/Manager.py:225 blueman/plugins/applet/StandardItems.py:86
+#: blueman/main/Manager.py:220 blueman/plugins/applet/StandardItems.py:79
 msgid "Adapter Preferences"
 msgstr "Adapterinställningar"
 
-#: blueman/main/Manager.py:237 blueman/gui/manager/ManagerDeviceList.py:134
-#: blueman/plugins/applet/StandardItems.py:79
+#: blueman/main/Manager.py:232 blueman/gui/manager/ManagerDeviceList.py:134
+#: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
 msgstr "Filsändare"
 
@@ -604,17 +529,17 @@ msgid "_Descending"
 msgstr "Fallande"
 
 #: blueman/gui/manager/ManagerMenu.py:122
-#: blueman/plugins/applet/StandardItems.py:53
+#: blueman/plugins/applet/StandardItems.py:50
 msgid "_Plugins"
 msgstr "Insti_cksmoduler"
 
 #: blueman/gui/manager/ManagerMenu.py:127
-#: blueman/plugins/applet/StandardItems.py:46
+#: blueman/plugins/applet/StandardItems.py:43
 msgid "_Local Services"
 msgstr "_Lokala tjänster"
 
 #: blueman/gui/manager/ManagerMenu.py:128
-#: blueman/plugins/applet/StandardItems.py:89
+#: blueman/plugins/applet/StandardItems.py:82
 msgid "Service Preferences"
 msgstr "Tjänsteinställningar"
 
@@ -754,15 +679,11 @@ msgstr "_Lita på"
 msgid "_Untrust"
 msgstr "_Sluta lita på"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:355
-msgid "_Set up…"
-msgstr "_Ställ in…"
-
-#: blueman/gui/manager/ManagerDeviceMenu.py:379
+#: blueman/gui/manager/ManagerDeviceMenu.py:373
 msgid "R_ename device…"
 msgstr "D_öp om enheten…"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:388
+#: blueman/gui/manager/ManagerDeviceMenu.py:382
 msgid "_Remove…"
 msgstr "_Ta bort…"
 
@@ -786,7 +707,7 @@ msgid "Total data sent and rate of transmission"
 msgstr "Totalt antal data skickat och överföringshastighet"
 
 #: blueman/gui/manager/ManagerToolbar.py:37
-#: blueman/gui/manager/ManagerToolbar.py:99
+#: blueman/gui/manager/ManagerToolbar.py:93
 msgid "Untrust"
 msgstr "Inte pålitlig"
 
@@ -824,7 +745,7 @@ msgid "GSM Settings"
 msgstr "GSM-inställningar"
 
 #: blueman/gui/applet/PluginDialog.py:95
-#: blueman/plugins/applet/StandardItems.py:95
+#: blueman/plugins/applet/StandardItems.py:88
 msgid "Plugins"
 msgstr "Insticksmoduler"
 
@@ -2435,23 +2356,19 @@ msgstr ""
 msgid "Adds standard menu items to the status icon menu"
 msgstr "Lägger till ett standardmenyobjekt till statusikonens meny"
 
-#: blueman/plugins/applet/StandardItems.py:30
-msgid "_Set Up New Device"
-msgstr "Ställ in ny enhet"
-
-#: blueman/plugins/applet/StandardItems.py:35
+#: blueman/plugins/applet/StandardItems.py:32
 msgid "Send _Files to Device"
 msgstr "Skicka _filer till enhet"
 
-#: blueman/plugins/applet/StandardItems.py:40
+#: blueman/plugins/applet/StandardItems.py:37
 msgid "_Devices"
 msgstr "_Enheter"
 
-#: blueman/plugins/applet/StandardItems.py:43
+#: blueman/plugins/applet/StandardItems.py:40
 msgid "Adap_ters"
 msgstr "Adap_trar"
 
-#: blueman/plugins/applet/StandardItems.py:92
+#: blueman/plugins/applet/StandardItems.py:85
 msgid "applet"
 msgstr "panelprogram"
 
@@ -2764,6 +2681,70 @@ msgstr "Ange RfKill tillstånd"
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr "Ändra status för RfKill kräver privilegier"
+
+#~ msgid "Run the setup assistant for this device"
+#~ msgstr "Kör konfigurationsguiden för denna enhet"
+
+#~ msgid "Setup..."
+#~ msgstr "Konfigurera..."
+
+#~ msgid ""
+#~ "<b>Welcome to the Bluetooth device setup assistant. </b>\n"
+#~ "\n"
+#~ "\n"
+#~ "It will walk you through the process of configuring and connecting to "
+#~ "your Bluetooth enabled devices."
+#~ msgstr ""
+#~ "<b>Välkommen till konfigurationsguiden för blåtandsenheter. </b>\n"
+#~ "\n"
+#~ "\n"
+#~ "Guiden kommer att hjälpa dig att konfigurera och ansluta till dina "
+#~ "blåtandsenheter."
+
+#~ msgid "Introduction"
+#~ msgstr "Introduktion"
+
+#~ msgid "Device"
+#~ msgstr "Enhet"
+
+#~ msgid "<b>Select pairing method to use:</b>"
+#~ msgstr "<b>Välj hopparningsmetod att använda:</b>"
+
+#~ msgid "Pair Device"
+#~ msgstr "Para Enhet"
+
+#~ msgid "Proceed Without Pairing"
+#~ msgstr "Fortsätt utan att para ihop"
+
+#~ msgid "Pairing"
+#~ msgstr "Ihopparning"
+
+#~ msgid "<b>Connect to:</b>"
+#~ msgstr "<b>Anslut till:</b>"
+
+#~ msgid "Connect"
+#~ msgstr "Anslut"
+
+#~ msgid "<b>Please wait...</b>"
+#~ msgstr "<b>Vänta...</b>"
+
+#~ msgid "Connecting..."
+#~ msgstr "Ansluter..."
+
+#~ msgid "<b>Congratulations, device successfully added</b>"
+#~ msgstr "<b>Gratulerar, enheten lades till</b>"
+
+#~ msgid "Finished"
+#~ msgstr "Slutförd"
+
+#~ msgid "Bluetooth Assistant"
+#~ msgstr "Blåtandsguide"
+
+#~ msgid "_Set up…"
+#~ msgstr "_Ställ in…"
+
+#~ msgid "_Set Up New Device"
+#~ msgstr "Ställ in ny enhet"
 
 #~ msgid "Enter PIN code"
 #~ msgstr "Ange PIN-kod"

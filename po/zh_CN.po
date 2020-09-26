@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2020-09-26 21:20+0000\n"
+"POT-Creation-Date: 2020-09-26 22:02+0000\n"
 "PO-Revision-Date: 2020-07-21 05:24+0000\n"
 "Last-Translator: Heart & Soul <shenzhe100@126.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -76,7 +76,7 @@ msgid "_View"
 msgstr "视图(_V)"
 
 #: data/ui/manager-main.ui:77 blueman/gui/manager/ManagerMenu.py:55
-#: blueman/plugins/applet/StandardItems.py:51
+#: blueman/plugins/applet/StandardItems.py:48
 msgid "_Help"
 msgstr "帮助 (_H)"
 
@@ -104,34 +104,25 @@ msgstr "将这个设备标记/取消标记为信任"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:136 blueman/gui/manager/ManagerToolbar.py:39
-#: blueman/gui/manager/ManagerToolbar.py:105
+#: blueman/gui/manager/ManagerToolbar.py:99
 msgid "Trust"
 msgstr "信任"
 
-#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:359
-msgid "Run the setup assistant for this device"
-msgstr "为此设备运行设置助理"
-
-#. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:151
-msgid "Setup..."
-msgstr "设置..."
-
-#: data/ui/manager-main.ui:164 blueman/gui/manager/ManagerDeviceMenu.py:392
+#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:386
 msgid "Remove this device from the known devices list"
 msgstr "将这个设备从已知设备列表中删去"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:165
+#: data/ui/manager-main.ui:150
 msgid "Remove"
 msgstr "移除"
 
-#: data/ui/manager-main.ui:187
+#: data/ui/manager-main.ui:172
 msgid "Send file(s) to the device"
 msgstr "向此设备发送文件"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:189
+#: data/ui/manager-main.ui:174
 msgid "Send File"
 msgstr "发送文件"
 
@@ -214,67 +205,6 @@ msgstr "<b>收件人：</b>"
 #: data/ui/send-dialog.ui:106
 msgid "<b>File:</b>"
 msgstr "<b>文件：</b>"
-
-#: data/ui/assistant.ui:16
-msgid ""
-"<b>Welcome to the Bluetooth device setup assistant. </b>\n"
-"\n"
-"\n"
-"It will walk you through the process of configuring and connecting to your "
-"Bluetooth enabled devices."
-msgstr ""
-"<b>欢迎使用蓝牙装置安装助手。</b>\n"
-"\n"
-"\n"
-"此助手会引导你配置、连接到蓝牙使能设备。"
-
-#: data/ui/assistant.ui:25
-msgid "Introduction"
-msgstr "介绍"
-
-#: data/ui/assistant.ui:38
-msgid "Device"
-msgstr "设备"
-
-#: data/ui/assistant.ui:54
-msgid "<b>Select pairing method to use:</b>"
-msgstr "<b>选择配对方法:</b>"
-
-#: data/ui/assistant.ui:65
-msgid "Pair Device"
-msgstr "配对设备"
-
-#: data/ui/assistant.ui:81
-msgid "Proceed Without Pairing"
-msgstr "以未配对处理"
-
-#: data/ui/assistant.ui:97 data/ui/assistant.ui:111
-msgid "Pairing"
-msgstr "配对"
-
-#: data/ui/assistant.ui:128
-msgid "<b>Connect to:</b>"
-msgstr "<b>连接到:</b>"
-
-#: data/ui/assistant.ui:154
-msgid "Connect"
-msgstr "连接"
-
-#: data/ui/assistant.ui:161
-msgid "<b>Please wait...</b>"
-msgstr "<b>请稍候...</b>"
-
-#: data/ui/assistant.ui:166
-msgid "Connecting..."
-msgstr "正在连接..."
-
-#: data/ui/assistant.ui:173
-msgid "<b>Congratulations, device successfully added</b>"
-msgstr "<b>恭喜, 成功添加设备</b>"
-
-#: data/ui/assistant.ui:180
-msgid "Finished"
-msgstr "已完成"
 
 #: data/ui/applet-plugins-widget.ui:69
 msgid "Configuration"
@@ -408,16 +338,12 @@ msgstr ""
 msgid "Searching"
 msgstr "正在搜索"
 
-#: blueman/main/Manager.py:212 blueman/plugins/applet/StandardItems.py:76
-msgid "Bluetooth Assistant"
-msgstr "蓝牙助手"
-
-#: blueman/main/Manager.py:225 blueman/plugins/applet/StandardItems.py:86
+#: blueman/main/Manager.py:220 blueman/plugins/applet/StandardItems.py:79
 msgid "Adapter Preferences"
 msgstr "适配器首选项"
 
-#: blueman/main/Manager.py:237 blueman/gui/manager/ManagerDeviceList.py:134
-#: blueman/plugins/applet/StandardItems.py:79
+#: blueman/main/Manager.py:232 blueman/gui/manager/ManagerDeviceList.py:134
+#: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
 msgstr "文件发送方"
 
@@ -600,17 +526,17 @@ msgid "_Descending"
 msgstr "降序(_D)"
 
 #: blueman/gui/manager/ManagerMenu.py:122
-#: blueman/plugins/applet/StandardItems.py:53
+#: blueman/plugins/applet/StandardItems.py:50
 msgid "_Plugins"
 msgstr "插件(_P)"
 
 #: blueman/gui/manager/ManagerMenu.py:127
-#: blueman/plugins/applet/StandardItems.py:46
+#: blueman/plugins/applet/StandardItems.py:43
 msgid "_Local Services"
 msgstr "本地服务(_L)"
 
 #: blueman/gui/manager/ManagerMenu.py:128
-#: blueman/plugins/applet/StandardItems.py:89
+#: blueman/plugins/applet/StandardItems.py:82
 msgid "Service Preferences"
 msgstr "服务首选项"
 
@@ -760,17 +686,13 @@ msgstr "信任:(_T)"
 msgid "_Untrust"
 msgstr "取消信任(_U)"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:355
-msgid "_Set up…"
-msgstr "配对"
-
-#: blueman/gui/manager/ManagerDeviceMenu.py:379
+#: blueman/gui/manager/ManagerDeviceMenu.py:373
 #, fuzzy
 #| msgid "Rename device"
 msgid "R_ename device…"
 msgstr "重命名设备"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:388
+#: blueman/gui/manager/ManagerDeviceMenu.py:382
 #, fuzzy
 #| msgid "Remove"
 msgid "_Remove…"
@@ -796,7 +718,7 @@ msgid "Total data sent and rate of transmission"
 msgstr "发出的数据总量和传输速率"
 
 #: blueman/gui/manager/ManagerToolbar.py:37
-#: blueman/gui/manager/ManagerToolbar.py:99
+#: blueman/gui/manager/ManagerToolbar.py:93
 msgid "Untrust"
 msgstr "不信任"
 
@@ -846,7 +768,7 @@ msgid "GSM Settings"
 msgstr "GSM 设置"
 
 #: blueman/gui/applet/PluginDialog.py:95
-#: blueman/plugins/applet/StandardItems.py:95
+#: blueman/plugins/applet/StandardItems.py:88
 msgid "Plugins"
 msgstr "插件"
 
@@ -2449,23 +2371,19 @@ msgstr ""
 msgid "Adds standard menu items to the status icon menu"
 msgstr "向状态图标菜单添加标准菜单项"
 
-#: blueman/plugins/applet/StandardItems.py:30
-msgid "_Set Up New Device"
-msgstr "设置新设备(_S)"
-
-#: blueman/plugins/applet/StandardItems.py:35
+#: blueman/plugins/applet/StandardItems.py:32
 msgid "Send _Files to Device"
 msgstr "向设备发送文件:(_F)"
 
-#: blueman/plugins/applet/StandardItems.py:40
+#: blueman/plugins/applet/StandardItems.py:37
 msgid "_Devices"
 msgstr "设备(_D)"
 
-#: blueman/plugins/applet/StandardItems.py:43
+#: blueman/plugins/applet/StandardItems.py:40
 msgid "Adap_ters"
 msgstr "适配器(_T)"
 
-#: blueman/plugins/applet/StandardItems.py:92
+#: blueman/plugins/applet/StandardItems.py:85
 msgid "applet"
 msgstr "applet"
 
@@ -2771,6 +2689,69 @@ msgstr "设置 RfKill 状态"
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr "设置 RfKill 状态需要权限"
+
+#~ msgid "Run the setup assistant for this device"
+#~ msgstr "为此设备运行设置助理"
+
+#~ msgid "Setup..."
+#~ msgstr "设置..."
+
+#~ msgid ""
+#~ "<b>Welcome to the Bluetooth device setup assistant. </b>\n"
+#~ "\n"
+#~ "\n"
+#~ "It will walk you through the process of configuring and connecting to "
+#~ "your Bluetooth enabled devices."
+#~ msgstr ""
+#~ "<b>欢迎使用蓝牙装置安装助手。</b>\n"
+#~ "\n"
+#~ "\n"
+#~ "此助手会引导你配置、连接到蓝牙使能设备。"
+
+#~ msgid "Introduction"
+#~ msgstr "介绍"
+
+#~ msgid "Device"
+#~ msgstr "设备"
+
+#~ msgid "<b>Select pairing method to use:</b>"
+#~ msgstr "<b>选择配对方法:</b>"
+
+#~ msgid "Pair Device"
+#~ msgstr "配对设备"
+
+#~ msgid "Proceed Without Pairing"
+#~ msgstr "以未配对处理"
+
+#~ msgid "Pairing"
+#~ msgstr "配对"
+
+#~ msgid "<b>Connect to:</b>"
+#~ msgstr "<b>连接到:</b>"
+
+#~ msgid "Connect"
+#~ msgstr "连接"
+
+#~ msgid "<b>Please wait...</b>"
+#~ msgstr "<b>请稍候...</b>"
+
+#~ msgid "Connecting..."
+#~ msgstr "正在连接..."
+
+#~ msgid "<b>Congratulations, device successfully added</b>"
+#~ msgstr "<b>恭喜, 成功添加设备</b>"
+
+#~ msgid "Finished"
+#~ msgstr "已完成"
+
+#~ msgid "Bluetooth Assistant"
+#~ msgstr "蓝牙助手"
+
+#~ msgid "_Set up…"
+#~ msgstr "配对"
+
+#~ msgid "_Set Up New Device"
+#~ msgstr "设置新设备(_S)"
 
 #~ msgid "Enter PIN code"
 #~ msgstr "输入 PIN 码"

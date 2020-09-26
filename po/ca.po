@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2020-09-26 21:20+0000\n"
+"POT-Creation-Date: 2020-09-26 22:02+0000\n"
 "PO-Revision-Date: 2020-04-12 09:11+0000\n"
 "Last-Translator: Sergi Almacellas Abellana <sergi@koolpi.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/blueman/blueman/"
@@ -71,7 +71,7 @@ msgid "_View"
 msgstr "_Vista"
 
 #: data/ui/manager-main.ui:77 blueman/gui/manager/ManagerMenu.py:55
-#: blueman/plugins/applet/StandardItems.py:51
+#: blueman/plugins/applet/StandardItems.py:48
 msgid "_Help"
 msgstr "_Ajuda"
 
@@ -99,34 +99,25 @@ msgstr "Marca o desmarca aquest dispositiu com de confiança"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:136 blueman/gui/manager/ManagerToolbar.py:39
-#: blueman/gui/manager/ManagerToolbar.py:105
+#: blueman/gui/manager/ManagerToolbar.py:99
 msgid "Trust"
 msgstr "Confia"
 
-#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:359
-msgid "Run the setup assistant for this device"
-msgstr "Executa l'assistent de configuració per a aquest dispositiu"
-
-#. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:151
-msgid "Setup..."
-msgstr "Configura..."
-
-#: data/ui/manager-main.ui:164 blueman/gui/manager/ManagerDeviceMenu.py:392
+#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:386
 msgid "Remove this device from the known devices list"
 msgstr "Suprimeix aquest dispositiu dels dispositius coneguts"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:165
+#: data/ui/manager-main.ui:150
 msgid "Remove"
 msgstr "Suprimeix"
 
-#: data/ui/manager-main.ui:187
+#: data/ui/manager-main.ui:172
 msgid "Send file(s) to the device"
 msgstr "Envia fitxers al dispositiu"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:189
+#: data/ui/manager-main.ui:174
 msgid "Send File"
 msgstr "Envia un fitxer"
 
@@ -211,68 +202,6 @@ msgstr "<b>A:</b>"
 #: data/ui/send-dialog.ui:106
 msgid "<b>File:</b>"
 msgstr "<b>Fitxer:</b>"
-
-#: data/ui/assistant.ui:16
-msgid ""
-"<b>Welcome to the Bluetooth device setup assistant. </b>\n"
-"\n"
-"\n"
-"It will walk you through the process of configuring and connecting to your "
-"Bluetooth enabled devices."
-msgstr ""
-"<b>Benvingut a l'assistent de configuració del dispositiu Bluetooth</b>\n"
-"\n"
-"\n"
-"Se us guiarà a través del procés de configuració i de connexió als "
-"dispositius habilitats per Bluetooth."
-
-#: data/ui/assistant.ui:25
-msgid "Introduction"
-msgstr "Introducció"
-
-#: data/ui/assistant.ui:38
-msgid "Device"
-msgstr "Dispositiu"
-
-#: data/ui/assistant.ui:54
-msgid "<b>Select pairing method to use:</b>"
-msgstr "<b>Selecciona el mètode d'aparellament a utilitzar:</b>"
-
-#: data/ui/assistant.ui:65
-msgid "Pair Device"
-msgstr "Aparella el dispositiu"
-
-#: data/ui/assistant.ui:81
-msgid "Proceed Without Pairing"
-msgstr "Continua sense l'aparellament"
-
-#: data/ui/assistant.ui:97 data/ui/assistant.ui:111
-msgid "Pairing"
-msgstr "S'està aparellant"
-
-#: data/ui/assistant.ui:128
-msgid "<b>Connect to:</b>"
-msgstr "<b>Connecta a:</b>"
-
-#: data/ui/assistant.ui:154
-msgid "Connect"
-msgstr "Connecta"
-
-#: data/ui/assistant.ui:161
-msgid "<b>Please wait...</b>"
-msgstr "<b>Espereu...</b>"
-
-#: data/ui/assistant.ui:166
-msgid "Connecting..."
-msgstr "S'està connectant..."
-
-#: data/ui/assistant.ui:173
-msgid "<b>Congratulations, device successfully added</b>"
-msgstr "<b>Enhorabona, s'ha afegit correctament el dispositiu</b>"
-
-#: data/ui/assistant.ui:180
-msgid "Finished"
-msgstr "Acabat"
 
 #: data/ui/applet-plugins-widget.ui:69
 msgid "Configuration"
@@ -408,16 +337,12 @@ msgstr ""
 msgid "Searching"
 msgstr "S'està cercant"
 
-#: blueman/main/Manager.py:212 blueman/plugins/applet/StandardItems.py:76
-msgid "Bluetooth Assistant"
-msgstr "Assistent de Bluetooth"
-
-#: blueman/main/Manager.py:225 blueman/plugins/applet/StandardItems.py:86
+#: blueman/main/Manager.py:220 blueman/plugins/applet/StandardItems.py:79
 msgid "Adapter Preferences"
 msgstr "Preferències de l'adaptador"
 
-#: blueman/main/Manager.py:237 blueman/gui/manager/ManagerDeviceList.py:134
-#: blueman/plugins/applet/StandardItems.py:79
+#: blueman/main/Manager.py:232 blueman/gui/manager/ManagerDeviceList.py:134
+#: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
 msgstr "Eina d'enviament de fitxers"
 
@@ -604,17 +529,17 @@ msgid "_Descending"
 msgstr "_Descendent"
 
 #: blueman/gui/manager/ManagerMenu.py:122
-#: blueman/plugins/applet/StandardItems.py:53
+#: blueman/plugins/applet/StandardItems.py:50
 msgid "_Plugins"
 msgstr "_Connectors"
 
 #: blueman/gui/manager/ManagerMenu.py:127
-#: blueman/plugins/applet/StandardItems.py:46
+#: blueman/plugins/applet/StandardItems.py:43
 msgid "_Local Services"
 msgstr "Serveis _locals"
 
 #: blueman/gui/manager/ManagerMenu.py:128
-#: blueman/plugins/applet/StandardItems.py:89
+#: blueman/plugins/applet/StandardItems.py:82
 msgid "Service Preferences"
 msgstr "Preferències del servei"
 
@@ -766,17 +691,13 @@ msgstr "C_onfia"
 msgid "_Untrust"
 msgstr "De_sconfia"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:355
-msgid "_Set up…"
-msgstr ""
-
-#: blueman/gui/manager/ManagerDeviceMenu.py:379
+#: blueman/gui/manager/ManagerDeviceMenu.py:373
 #, fuzzy
 #| msgid "Rename device"
 msgid "R_ename device…"
 msgstr "Reanomena el dispositiu"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:388
+#: blueman/gui/manager/ManagerDeviceMenu.py:382
 #, fuzzy
 #| msgid "Remove"
 msgid "_Remove…"
@@ -802,7 +723,7 @@ msgid "Total data sent and rate of transmission"
 msgstr "El nombre total de dades enviades i la relació de transmissió"
 
 #: blueman/gui/manager/ManagerToolbar.py:37
-#: blueman/gui/manager/ManagerToolbar.py:99
+#: blueman/gui/manager/ManagerToolbar.py:93
 msgid "Untrust"
 msgstr "Desconfia"
 
@@ -829,7 +750,7 @@ msgid "GSM Settings"
 msgstr "Ajusts GSM"
 
 #: blueman/gui/applet/PluginDialog.py:95
-#: blueman/plugins/applet/StandardItems.py:95
+#: blueman/plugins/applet/StandardItems.py:88
 msgid "Plugins"
 msgstr "Connectors"
 
@@ -2447,23 +2368,19 @@ msgstr ""
 msgid "Adds standard menu items to the status icon menu"
 msgstr "Afegeix les opcions de menú estàndards al menú de la icona d'estat"
 
-#: blueman/plugins/applet/StandardItems.py:30
-msgid "_Set Up New Device"
-msgstr "Configura un dispo_sitiu nou"
-
-#: blueman/plugins/applet/StandardItems.py:35
+#: blueman/plugins/applet/StandardItems.py:32
 msgid "Send _Files to Device"
 msgstr "Envia _fitxers al dispositiu"
 
-#: blueman/plugins/applet/StandardItems.py:40
+#: blueman/plugins/applet/StandardItems.py:37
 msgid "_Devices"
 msgstr "_Dispositius"
 
-#: blueman/plugins/applet/StandardItems.py:43
+#: blueman/plugins/applet/StandardItems.py:40
 msgid "Adap_ters"
 msgstr "Adap_tadors"
 
-#: blueman/plugins/applet/StandardItems.py:92
+#: blueman/plugins/applet/StandardItems.py:85
 msgid "applet"
 msgstr "miniaplicació"
 
@@ -2789,6 +2706,67 @@ msgstr "Estableix l'estat RfKill"
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr "El fet d'establir l'estat RfKill requereix privilegis"
+
+#~ msgid "Run the setup assistant for this device"
+#~ msgstr "Executa l'assistent de configuració per a aquest dispositiu"
+
+#~ msgid "Setup..."
+#~ msgstr "Configura..."
+
+#~ msgid ""
+#~ "<b>Welcome to the Bluetooth device setup assistant. </b>\n"
+#~ "\n"
+#~ "\n"
+#~ "It will walk you through the process of configuring and connecting to "
+#~ "your Bluetooth enabled devices."
+#~ msgstr ""
+#~ "<b>Benvingut a l'assistent de configuració del dispositiu Bluetooth</b>\n"
+#~ "\n"
+#~ "\n"
+#~ "Se us guiarà a través del procés de configuració i de connexió als "
+#~ "dispositius habilitats per Bluetooth."
+
+#~ msgid "Introduction"
+#~ msgstr "Introducció"
+
+#~ msgid "Device"
+#~ msgstr "Dispositiu"
+
+#~ msgid "<b>Select pairing method to use:</b>"
+#~ msgstr "<b>Selecciona el mètode d'aparellament a utilitzar:</b>"
+
+#~ msgid "Pair Device"
+#~ msgstr "Aparella el dispositiu"
+
+#~ msgid "Proceed Without Pairing"
+#~ msgstr "Continua sense l'aparellament"
+
+#~ msgid "Pairing"
+#~ msgstr "S'està aparellant"
+
+#~ msgid "<b>Connect to:</b>"
+#~ msgstr "<b>Connecta a:</b>"
+
+#~ msgid "Connect"
+#~ msgstr "Connecta"
+
+#~ msgid "<b>Please wait...</b>"
+#~ msgstr "<b>Espereu...</b>"
+
+#~ msgid "Connecting..."
+#~ msgstr "S'està connectant..."
+
+#~ msgid "<b>Congratulations, device successfully added</b>"
+#~ msgstr "<b>Enhorabona, s'ha afegit correctament el dispositiu</b>"
+
+#~ msgid "Finished"
+#~ msgstr "Acabat"
+
+#~ msgid "Bluetooth Assistant"
+#~ msgstr "Assistent de Bluetooth"
+
+#~ msgid "_Set Up New Device"
+#~ msgstr "Configura un dispo_sitiu nou"
 
 #~ msgid "Enter PIN code"
 #~ msgstr "Introdueix el codi PIN"

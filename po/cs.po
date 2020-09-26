@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2020-09-26 21:20+0000\n"
+"POT-Creation-Date: 2020-09-26 22:02+0000\n"
 "PO-Revision-Date: 2020-04-14 10:14+0000\n"
 "Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
 "Language-Team: Czech (http://www.transifex.com/mate/MATE/language/cs/)\n"
@@ -81,7 +81,7 @@ msgid "_View"
 msgstr "_Zobrazit"
 
 #: data/ui/manager-main.ui:77 blueman/gui/manager/ManagerMenu.py:55
-#: blueman/plugins/applet/StandardItems.py:51
+#: blueman/plugins/applet/StandardItems.py:48
 msgid "_Help"
 msgstr "_Nápověda"
 
@@ -109,34 +109,25 @@ msgstr "Označit/Odznačit toto zařízení jako důvěryhodné"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:136 blueman/gui/manager/ManagerToolbar.py:39
-#: blueman/gui/manager/ManagerToolbar.py:105
+#: blueman/gui/manager/ManagerToolbar.py:99
 msgid "Trust"
 msgstr "Důvěřovat"
 
-#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:359
-msgid "Run the setup assistant for this device"
-msgstr "Spustit instalačního pomocníka pro toto zařízení"
-
-#. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:151
-msgid "Setup..."
-msgstr "Nastavení..."
-
-#: data/ui/manager-main.ui:164 blueman/gui/manager/ManagerDeviceMenu.py:392
+#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:386
 msgid "Remove this device from the known devices list"
 msgstr "Odebrat toto zařízení ze seznamu důvěryhodných zařízení"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:165
+#: data/ui/manager-main.ui:150
 msgid "Remove"
 msgstr "Odstranit"
 
-#: data/ui/manager-main.ui:187
+#: data/ui/manager-main.ui:172
 msgid "Send file(s) to the device"
 msgstr "Odeslat soubor(y) do zařízení"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:189
+#: data/ui/manager-main.ui:174
 msgid "Send File"
 msgstr "Odeslat soubor"
 
@@ -220,67 +211,6 @@ msgstr "<b>Do:</b>"
 #: data/ui/send-dialog.ui:106
 msgid "<b>File:</b>"
 msgstr "<b>Soubor:</b>"
-
-#: data/ui/assistant.ui:16
-msgid ""
-"<b>Welcome to the Bluetooth device setup assistant. </b>\n"
-"\n"
-"\n"
-"It will walk you through the process of configuring and connecting to your "
-"Bluetooth enabled devices."
-msgstr ""
-"<b>Vítejte v průvodci pro nastavení zařízení Bluetooth. </b>\n"
-"\n"
-"\n"
-"Provede vás procesem nastavení a připojení vašich Bluetooth zařízení."
-
-#: data/ui/assistant.ui:25
-msgid "Introduction"
-msgstr "Úvod"
-
-#: data/ui/assistant.ui:38
-msgid "Device"
-msgstr "Zařízení"
-
-#: data/ui/assistant.ui:54
-msgid "<b>Select pairing method to use:</b>"
-msgstr "<b>Vyberte metodu párování, kterou chcete použít:</b>"
-
-#: data/ui/assistant.ui:65
-msgid "Pair Device"
-msgstr "Spárovat zařízení"
-
-#: data/ui/assistant.ui:81
-msgid "Proceed Without Pairing"
-msgstr "Pokračovat bez párování"
-
-#: data/ui/assistant.ui:97 data/ui/assistant.ui:111
-msgid "Pairing"
-msgstr "Párování"
-
-#: data/ui/assistant.ui:128
-msgid "<b>Connect to:</b>"
-msgstr "<b>Připojit se k:</b>"
-
-#: data/ui/assistant.ui:154
-msgid "Connect"
-msgstr "Připojení"
-
-#: data/ui/assistant.ui:161
-msgid "<b>Please wait...</b>"
-msgstr "<b>Prosím čekejte…</b>"
-
-#: data/ui/assistant.ui:166
-msgid "Connecting..."
-msgstr "Připojování…"
-
-#: data/ui/assistant.ui:173
-msgid "<b>Congratulations, device successfully added</b>"
-msgstr "<b>Gratulujeme, zařízení bylo úspěšně přidáno</b>"
-
-#: data/ui/assistant.ui:180
-msgid "Finished"
-msgstr "Dokončení"
 
 #: data/ui/applet-plugins-widget.ui:69
 msgid "Configuration"
@@ -418,16 +348,12 @@ msgstr ""
 msgid "Searching"
 msgstr "Probíhá hledání"
 
-#: blueman/main/Manager.py:212 blueman/plugins/applet/StandardItems.py:76
-msgid "Bluetooth Assistant"
-msgstr "Asistent Bluetooth"
-
-#: blueman/main/Manager.py:225 blueman/plugins/applet/StandardItems.py:86
+#: blueman/main/Manager.py:220 blueman/plugins/applet/StandardItems.py:79
 msgid "Adapter Preferences"
 msgstr "Předvolby adaptéru"
 
-#: blueman/main/Manager.py:237 blueman/gui/manager/ManagerDeviceList.py:134
-#: blueman/plugins/applet/StandardItems.py:79
+#: blueman/main/Manager.py:232 blueman/gui/manager/ManagerDeviceList.py:134
+#: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
 msgstr "Odesílatel souborů"
 
@@ -617,17 +543,17 @@ msgid "_Descending"
 msgstr "_Sestupně"
 
 #: blueman/gui/manager/ManagerMenu.py:122
-#: blueman/plugins/applet/StandardItems.py:53
+#: blueman/plugins/applet/StandardItems.py:50
 msgid "_Plugins"
 msgstr "_Zásuvné moduly"
 
 #: blueman/gui/manager/ManagerMenu.py:127
-#: blueman/plugins/applet/StandardItems.py:46
+#: blueman/plugins/applet/StandardItems.py:43
 msgid "_Local Services"
 msgstr "_Lokální služby"
 
 #: blueman/gui/manager/ManagerMenu.py:128
-#: blueman/plugins/applet/StandardItems.py:89
+#: blueman/plugins/applet/StandardItems.py:82
 msgid "Service Preferences"
 msgstr "Předvolby služby"
 
@@ -777,17 +703,13 @@ msgstr "_Důvěřovat"
 msgid "_Untrust"
 msgstr "_Nedůvěřovat"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:355
-msgid "_Set up…"
-msgstr ""
-
-#: blueman/gui/manager/ManagerDeviceMenu.py:379
+#: blueman/gui/manager/ManagerDeviceMenu.py:373
 #, fuzzy
 #| msgid "Rename device"
 msgid "R_ename device…"
 msgstr "Přejmenovat zařízení"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:388
+#: blueman/gui/manager/ManagerDeviceMenu.py:382
 #, fuzzy
 #| msgid "Remove"
 msgid "_Remove…"
@@ -813,7 +735,7 @@ msgid "Total data sent and rate of transmission"
 msgstr "Celkem odeslaných dat a poměr přenosu"
 
 #: blueman/gui/manager/ManagerToolbar.py:37
-#: blueman/gui/manager/ManagerToolbar.py:99
+#: blueman/gui/manager/ManagerToolbar.py:93
 msgid "Untrust"
 msgstr "Nedůvěřovat"
 
@@ -855,7 +777,7 @@ msgid "GSM Settings"
 msgstr "Nastavení GSM"
 
 #: blueman/gui/applet/PluginDialog.py:95
-#: blueman/plugins/applet/StandardItems.py:95
+#: blueman/plugins/applet/StandardItems.py:88
 msgid "Plugins"
 msgstr "Zásuvné moduly"
 
@@ -2481,23 +2403,19 @@ msgstr ""
 msgid "Adds standard menu items to the status icon menu"
 msgstr "Přidá standardní položky nabídky do nabídky stavové ikony"
 
-#: blueman/plugins/applet/StandardItems.py:30
-msgid "_Set Up New Device"
-msgstr "_Nastavit nové zařízení"
-
-#: blueman/plugins/applet/StandardItems.py:35
+#: blueman/plugins/applet/StandardItems.py:32
 msgid "Send _Files to Device"
 msgstr "Odeslat _soubory do zařízení"
 
-#: blueman/plugins/applet/StandardItems.py:40
+#: blueman/plugins/applet/StandardItems.py:37
 msgid "_Devices"
 msgstr "_Zařízení"
 
-#: blueman/plugins/applet/StandardItems.py:43
+#: blueman/plugins/applet/StandardItems.py:40
 msgid "Adap_ters"
 msgstr "Adap_téry"
 
-#: blueman/plugins/applet/StandardItems.py:92
+#: blueman/plugins/applet/StandardItems.py:85
 msgid "applet"
 msgstr "applet"
 
@@ -2816,6 +2734,66 @@ msgstr "Nastavení stavu RfKill"
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr "Nastavení stavu RfKill vyžaduje oprávnění"
+
+#~ msgid "Run the setup assistant for this device"
+#~ msgstr "Spustit instalačního pomocníka pro toto zařízení"
+
+#~ msgid "Setup..."
+#~ msgstr "Nastavení..."
+
+#~ msgid ""
+#~ "<b>Welcome to the Bluetooth device setup assistant. </b>\n"
+#~ "\n"
+#~ "\n"
+#~ "It will walk you through the process of configuring and connecting to "
+#~ "your Bluetooth enabled devices."
+#~ msgstr ""
+#~ "<b>Vítejte v průvodci pro nastavení zařízení Bluetooth. </b>\n"
+#~ "\n"
+#~ "\n"
+#~ "Provede vás procesem nastavení a připojení vašich Bluetooth zařízení."
+
+#~ msgid "Introduction"
+#~ msgstr "Úvod"
+
+#~ msgid "Device"
+#~ msgstr "Zařízení"
+
+#~ msgid "<b>Select pairing method to use:</b>"
+#~ msgstr "<b>Vyberte metodu párování, kterou chcete použít:</b>"
+
+#~ msgid "Pair Device"
+#~ msgstr "Spárovat zařízení"
+
+#~ msgid "Proceed Without Pairing"
+#~ msgstr "Pokračovat bez párování"
+
+#~ msgid "Pairing"
+#~ msgstr "Párování"
+
+#~ msgid "<b>Connect to:</b>"
+#~ msgstr "<b>Připojit se k:</b>"
+
+#~ msgid "Connect"
+#~ msgstr "Připojení"
+
+#~ msgid "<b>Please wait...</b>"
+#~ msgstr "<b>Prosím čekejte…</b>"
+
+#~ msgid "Connecting..."
+#~ msgstr "Připojování…"
+
+#~ msgid "<b>Congratulations, device successfully added</b>"
+#~ msgstr "<b>Gratulujeme, zařízení bylo úspěšně přidáno</b>"
+
+#~ msgid "Finished"
+#~ msgstr "Dokončení"
+
+#~ msgid "Bluetooth Assistant"
+#~ msgstr "Asistent Bluetooth"
+
+#~ msgid "_Set Up New Device"
+#~ msgstr "_Nastavit nové zařízení"
 
 #~ msgid "Enter PIN code"
 #~ msgstr "Zadejte PIN kód"

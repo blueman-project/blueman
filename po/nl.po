@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2020-09-26 21:20+0000\n"
+"POT-Creation-Date: 2020-09-26 22:02+0000\n"
 "PO-Revision-Date: 2020-08-01 22:21+0000\n"
 "Last-Translator: Sander Sweers <infirit@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/blueman/blueman/nl/"
@@ -73,7 +73,7 @@ msgid "_View"
 msgstr "Beel_d"
 
 #: data/ui/manager-main.ui:77 blueman/gui/manager/ManagerMenu.py:55
-#: blueman/plugins/applet/StandardItems.py:51
+#: blueman/plugins/applet/StandardItems.py:48
 msgid "_Help"
 msgstr "_Hulp"
 
@@ -101,34 +101,25 @@ msgstr "Markeer/demarkeer dit apparaat als vertrouwd"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:136 blueman/gui/manager/ManagerToolbar.py:39
-#: blueman/gui/manager/ManagerToolbar.py:105
+#: blueman/gui/manager/ManagerToolbar.py:99
 msgid "Trust"
 msgstr "Vertrouwen"
 
-#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:359
-msgid "Run the setup assistant for this device"
-msgstr "Start de instelhulp voor dit apparaat"
-
-#. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:151
-msgid "Setup..."
-msgstr "Instellen..."
-
-#: data/ui/manager-main.ui:164 blueman/gui/manager/ManagerDeviceMenu.py:392
+#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:386
 msgid "Remove this device from the known devices list"
 msgstr "Verwijder dit apparaat uit de lijst met bekende apparaten"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:165
+#: data/ui/manager-main.ui:150
 msgid "Remove"
 msgstr "Verwijderen"
 
-#: data/ui/manager-main.ui:187
+#: data/ui/manager-main.ui:172
 msgid "Send file(s) to the device"
 msgstr "Bestand(en) verzenden naar het apparaat"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:189
+#: data/ui/manager-main.ui:174
 msgid "Send File"
 msgstr "Bestand verzenden"
 
@@ -213,68 +204,6 @@ msgstr "<b>Naar:</b>"
 #: data/ui/send-dialog.ui:106
 msgid "<b>File:</b>"
 msgstr "<b>Bestand:</b>"
-
-#: data/ui/assistant.ui:16
-msgid ""
-"<b>Welcome to the Bluetooth device setup assistant. </b>\n"
-"\n"
-"\n"
-"It will walk you through the process of configuring and connecting to your "
-"Bluetooth enabled devices."
-msgstr ""
-"<b>Welkom bij de instelhulp voor uw Bluetooth-apparaat. </b>\n"
-"\n"
-"\n"
-"Deze instelhulp zal u assisteren met het instellen en verbinden van uw "
-"ingeschakelde Bluetooth-apparaten."
-
-#: data/ui/assistant.ui:25
-msgid "Introduction"
-msgstr "Introductie"
-
-#: data/ui/assistant.ui:38
-msgid "Device"
-msgstr "Apparaat"
-
-#: data/ui/assistant.ui:54
-msgid "<b>Select pairing method to use:</b>"
-msgstr "<b>Selecteer de koppelmethode:</b>"
-
-#: data/ui/assistant.ui:65
-msgid "Pair Device"
-msgstr "Koppel apparaat"
-
-#: data/ui/assistant.ui:81
-msgid "Proceed Without Pairing"
-msgstr "Verder gaan zonder koppelen"
-
-#: data/ui/assistant.ui:97 data/ui/assistant.ui:111
-msgid "Pairing"
-msgstr "Bezig met koppelen"
-
-#: data/ui/assistant.ui:128
-msgid "<b>Connect to:</b>"
-msgstr "<b>Verbind met:</b>"
-
-#: data/ui/assistant.ui:154
-msgid "Connect"
-msgstr "Verbinden"
-
-#: data/ui/assistant.ui:161
-msgid "<b>Please wait...</b>"
-msgstr "<b>Een ogenblik aub...</b>"
-
-#: data/ui/assistant.ui:166
-msgid "Connecting..."
-msgstr "Bezig met verbinden..."
-
-#: data/ui/assistant.ui:173
-msgid "<b>Congratulations, device successfully added</b>"
-msgstr "<b>Proficiat, apparaat succesvol toegevoegd</b>"
-
-#: data/ui/assistant.ui:180
-msgid "Finished"
-msgstr "Voltooid"
 
 #: data/ui/applet-plugins-widget.ui:69
 msgid "Configuration"
@@ -409,16 +338,12 @@ msgstr ""
 msgid "Searching"
 msgstr "Bezig met zoeken"
 
-#: blueman/main/Manager.py:212 blueman/plugins/applet/StandardItems.py:76
-msgid "Bluetooth Assistant"
-msgstr "Bluetooth-assistent"
-
-#: blueman/main/Manager.py:225 blueman/plugins/applet/StandardItems.py:86
+#: blueman/main/Manager.py:220 blueman/plugins/applet/StandardItems.py:79
 msgid "Adapter Preferences"
 msgstr "Adaptervoorkeuren"
 
-#: blueman/main/Manager.py:237 blueman/gui/manager/ManagerDeviceList.py:134
-#: blueman/plugins/applet/StandardItems.py:79
+#: blueman/main/Manager.py:232 blueman/gui/manager/ManagerDeviceList.py:134
+#: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
 msgstr "Bestandverzender"
 
@@ -605,17 +530,17 @@ msgid "_Descending"
 msgstr "_Aflopend"
 
 #: blueman/gui/manager/ManagerMenu.py:122
-#: blueman/plugins/applet/StandardItems.py:53
+#: blueman/plugins/applet/StandardItems.py:50
 msgid "_Plugins"
 msgstr "Invoegtoe_passingen"
 
 #: blueman/gui/manager/ManagerMenu.py:127
-#: blueman/plugins/applet/StandardItems.py:46
+#: blueman/plugins/applet/StandardItems.py:43
 msgid "_Local Services"
 msgstr "_Lokale diensten"
 
 #: blueman/gui/manager/ManagerMenu.py:128
-#: blueman/plugins/applet/StandardItems.py:89
+#: blueman/plugins/applet/StandardItems.py:82
 msgid "Service Preferences"
 msgstr "Dienstvoorkeuren"
 
@@ -757,15 +682,11 @@ msgstr "_Vertrouwen"
 msgid "_Untrust"
 msgstr "_Niet vertrouwen"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:355
-msgid "_Set up…"
-msgstr "_Instellen…"
-
-#: blueman/gui/manager/ManagerDeviceMenu.py:379
+#: blueman/gui/manager/ManagerDeviceMenu.py:373
 msgid "R_ename device…"
 msgstr "_Hernoem apparaat…"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:388
+#: blueman/gui/manager/ManagerDeviceMenu.py:382
 msgid "_Remove…"
 msgstr "_Verwijderen…"
 
@@ -789,7 +710,7 @@ msgid "Total data sent and rate of transmission"
 msgstr "Totaal van verstuurde gegevens en verbindingssnelheid"
 
 #: blueman/gui/manager/ManagerToolbar.py:37
-#: blueman/gui/manager/ManagerToolbar.py:99
+#: blueman/gui/manager/ManagerToolbar.py:93
 msgid "Untrust"
 msgstr "Vertrouwen beëindigen"
 
@@ -814,7 +735,7 @@ msgid "GSM Settings"
 msgstr "GSM-instellingen"
 
 #: blueman/gui/applet/PluginDialog.py:95
-#: blueman/plugins/applet/StandardItems.py:95
+#: blueman/plugins/applet/StandardItems.py:88
 msgid "Plugins"
 msgstr "Invoegtoepassingen"
 
@@ -2451,23 +2372,19 @@ msgstr ""
 msgid "Adds standard menu items to the status icon menu"
 msgstr "Voegt standaardmenu-onderdelen toe aan het statuspictogrammenu"
 
-#: blueman/plugins/applet/StandardItems.py:30
-msgid "_Set Up New Device"
-msgstr "Nieuw apparaat in_stellen"
-
-#: blueman/plugins/applet/StandardItems.py:35
+#: blueman/plugins/applet/StandardItems.py:32
 msgid "Send _Files to Device"
 msgstr "_Bestanden verzenden naar apparaat"
 
-#: blueman/plugins/applet/StandardItems.py:40
+#: blueman/plugins/applet/StandardItems.py:37
 msgid "_Devices"
 msgstr "_Apparaten"
 
-#: blueman/plugins/applet/StandardItems.py:43
+#: blueman/plugins/applet/StandardItems.py:40
 msgid "Adap_ters"
 msgstr "Adapters"
 
-#: blueman/plugins/applet/StandardItems.py:92
+#: blueman/plugins/applet/StandardItems.py:85
 msgid "applet"
 msgstr "applet"
 
@@ -2778,6 +2695,70 @@ msgstr "RfKill status instellen"
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr "U heeft rechten nodig om de status van RfKill in te stellen"
+
+#~ msgid "Run the setup assistant for this device"
+#~ msgstr "Start de instelhulp voor dit apparaat"
+
+#~ msgid "Setup..."
+#~ msgstr "Instellen..."
+
+#~ msgid ""
+#~ "<b>Welcome to the Bluetooth device setup assistant. </b>\n"
+#~ "\n"
+#~ "\n"
+#~ "It will walk you through the process of configuring and connecting to "
+#~ "your Bluetooth enabled devices."
+#~ msgstr ""
+#~ "<b>Welkom bij de instelhulp voor uw Bluetooth-apparaat. </b>\n"
+#~ "\n"
+#~ "\n"
+#~ "Deze instelhulp zal u assisteren met het instellen en verbinden van uw "
+#~ "ingeschakelde Bluetooth-apparaten."
+
+#~ msgid "Introduction"
+#~ msgstr "Introductie"
+
+#~ msgid "Device"
+#~ msgstr "Apparaat"
+
+#~ msgid "<b>Select pairing method to use:</b>"
+#~ msgstr "<b>Selecteer de koppelmethode:</b>"
+
+#~ msgid "Pair Device"
+#~ msgstr "Koppel apparaat"
+
+#~ msgid "Proceed Without Pairing"
+#~ msgstr "Verder gaan zonder koppelen"
+
+#~ msgid "Pairing"
+#~ msgstr "Bezig met koppelen"
+
+#~ msgid "<b>Connect to:</b>"
+#~ msgstr "<b>Verbind met:</b>"
+
+#~ msgid "Connect"
+#~ msgstr "Verbinden"
+
+#~ msgid "<b>Please wait...</b>"
+#~ msgstr "<b>Een ogenblik aub...</b>"
+
+#~ msgid "Connecting..."
+#~ msgstr "Bezig met verbinden..."
+
+#~ msgid "<b>Congratulations, device successfully added</b>"
+#~ msgstr "<b>Proficiat, apparaat succesvol toegevoegd</b>"
+
+#~ msgid "Finished"
+#~ msgstr "Voltooid"
+
+#~ msgid "Bluetooth Assistant"
+#~ msgstr "Bluetooth-assistent"
+
+#~ msgid "_Set up…"
+#~ msgstr "_Instellen…"
+
+#~ msgid "_Set Up New Device"
+#~ msgstr "Nieuw apparaat in_stellen"
 
 #~ msgid "Enter PIN code"
 #~ msgstr "Voer pincode in"

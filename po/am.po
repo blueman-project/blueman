@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2020-09-26 21:20+0000\n"
+"POT-Creation-Date: 2020-09-26 22:02+0000\n"
 "PO-Revision-Date: 2020-04-14 10:14+0000\n"
 "Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
 "Language-Team: Amharic (http://www.transifex.com/mate/MATE/language/am/)\n"
@@ -66,7 +66,7 @@ msgid "_View"
 msgstr "_መመልከቻ"
 
 #: data/ui/manager-main.ui:77 blueman/gui/manager/ManagerMenu.py:55
-#: blueman/plugins/applet/StandardItems.py:51
+#: blueman/plugins/applet/StandardItems.py:48
 msgid "_Help"
 msgstr "_እርዳታ"
 
@@ -94,34 +94,25 @@ msgstr "ይህ አካል ይታመን እንደሆን ምልክት ማድረጊ�
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:136 blueman/gui/manager/ManagerToolbar.py:39
-#: blueman/gui/manager/ManagerToolbar.py:105
+#: blueman/gui/manager/ManagerToolbar.py:99
 msgid "Trust"
 msgstr "የሚታመን"
 
-#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:359
-msgid "Run the setup assistant for this device"
-msgstr "ለዚህ አካል የ ማሰጃ ረዳት ያስኪዱ"
-
-#. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:151
-msgid "Setup..."
-msgstr "ማሰናጃ..."
-
-#: data/ui/manager-main.ui:164 blueman/gui/manager/ManagerDeviceMenu.py:392
+#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:386
 msgid "Remove this device from the known devices list"
 msgstr "ይህን አካል ከሚታወቁ አካሎች ዝርዝር ውስጥ ማስወገጃ"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:165
+#: data/ui/manager-main.ui:150
 msgid "Remove"
 msgstr "ማስወገጃ \"%s\""
 
-#: data/ui/manager-main.ui:187
+#: data/ui/manager-main.ui:172
 msgid "Send file(s) to the device"
 msgstr "ፋይል(ሎች) ወደ ሌላ አካል መላኪያ"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:189
+#: data/ui/manager-main.ui:174
 msgid "Send File"
 msgstr "ፋይል መላኪያ"
 
@@ -204,67 +195,6 @@ msgstr "<b>ለ:</b>"
 #: data/ui/send-dialog.ui:106
 msgid "<b>File:</b>"
 msgstr "<b>ፋይል:</b>"
-
-#: data/ui/assistant.ui:16
-msgid ""
-"<b>Welcome to the Bluetooth device setup assistant. </b>\n"
-"\n"
-"\n"
-"It will walk you through the process of configuring and connecting to your "
-"Bluetooth enabled devices."
-msgstr ""
-"<b>እንኳን ደህና መጡ ወደ ብሉቱዝ አካል ማሰናጃ እረዳት </b>\n"
-"\n"
-"\n"
-"እረዳቱ እርስዎን ይረዳዎታል እንዴት እንደሚሰናዱ እና እንደሚገናኙ ከ ብሉቱዝ አካሎች ጋር"
-
-#: data/ui/assistant.ui:25
-msgid "Introduction"
-msgstr "መግቢያ"
-
-#: data/ui/assistant.ui:38
-msgid "Device"
-msgstr "አካል"
-
-#: data/ui/assistant.ui:54
-msgid "<b>Select pairing method to use:</b>"
-msgstr "<b>ለመጠቀም ማጣመሪያ ዘዴ ይምረጡ:</b>"
-
-#: data/ui/assistant.ui:65
-msgid "Pair Device"
-msgstr "አካል ማጣመሪያ"
-
-#: data/ui/assistant.ui:81
-msgid "Proceed Without Pairing"
-msgstr "ሳያጣምሩ ማስኬጃ"
-
-#: data/ui/assistant.ui:97 data/ui/assistant.ui:111
-msgid "Pairing"
-msgstr "በማጣመር ላይ"
-
-#: data/ui/assistant.ui:128
-msgid "<b>Connect to:</b>"
-msgstr "<b>መገናኛ ወደ:</b>"
-
-#: data/ui/assistant.ui:154
-msgid "Connect"
-msgstr "መገናኛ"
-
-#: data/ui/assistant.ui:161
-msgid "<b>Please wait...</b>"
-msgstr "<b>እባክዎን ይቆዩ...</b>"
-
-#: data/ui/assistant.ui:166
-msgid "Connecting..."
-msgstr "በ መገናኘት ላይ..."
-
-#: data/ui/assistant.ui:173
-msgid "<b>Congratulations, device successfully added</b>"
-msgstr "<b>እንኳን ደስ አሎት አካሉ ተሳክቶ ተጨምሯል</b>"
-
-#: data/ui/assistant.ui:180
-msgid "Finished"
-msgstr "ጨርሷል"
 
 #: data/ui/applet-plugins-widget.ui:69
 msgid "Configuration"
@@ -399,16 +329,12 @@ msgstr ""
 msgid "Searching"
 msgstr "በመፈለግ ላይ"
 
-#: blueman/main/Manager.py:212 blueman/plugins/applet/StandardItems.py:76
-msgid "Bluetooth Assistant"
-msgstr "የ ብሉቱዝ እረዳት"
-
-#: blueman/main/Manager.py:225 blueman/plugins/applet/StandardItems.py:86
+#: blueman/main/Manager.py:220 blueman/plugins/applet/StandardItems.py:79
 msgid "Adapter Preferences"
 msgstr "የ ተሰኪ ምርጫዎች"
 
-#: blueman/main/Manager.py:237 blueman/gui/manager/ManagerDeviceList.py:134
-#: blueman/plugins/applet/StandardItems.py:79
+#: blueman/main/Manager.py:232 blueman/gui/manager/ManagerDeviceList.py:134
+#: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
 msgstr "ፋይል መላኪያ"
 
@@ -593,17 +519,17 @@ msgid "_Descending"
 msgstr "_እየቀነሰ በሚሄድ"
 
 #: blueman/gui/manager/ManagerMenu.py:122
-#: blueman/plugins/applet/StandardItems.py:53
+#: blueman/plugins/applet/StandardItems.py:50
 msgid "_Plugins"
 msgstr "_ተሰኪዎች"
 
 #: blueman/gui/manager/ManagerMenu.py:127
-#: blueman/plugins/applet/StandardItems.py:46
+#: blueman/plugins/applet/StandardItems.py:43
 msgid "_Local Services"
 msgstr "የ _አካባቢ ግልጋሎቶች "
 
 #: blueman/gui/manager/ManagerMenu.py:128
-#: blueman/plugins/applet/StandardItems.py:89
+#: blueman/plugins/applet/StandardItems.py:82
 msgid "Service Preferences"
 msgstr "የ ግልጋሎት ምርጫዎች "
 
@@ -751,17 +677,13 @@ msgstr "_የሚታመን"
 msgid "_Untrust"
 msgstr "_የማይታመን"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:355
-msgid "_Set up…"
-msgstr ""
-
-#: blueman/gui/manager/ManagerDeviceMenu.py:379
+#: blueman/gui/manager/ManagerDeviceMenu.py:373
 #, fuzzy
 #| msgid "Rename device"
 msgid "R_ename device…"
 msgstr "አካሉን እንደገና መሰየሚያ"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:388
+#: blueman/gui/manager/ManagerDeviceMenu.py:382
 #, fuzzy
 #| msgid "Remove"
 msgid "_Remove…"
@@ -787,7 +709,7 @@ msgid "Total data sent and rate of transmission"
 msgstr "ጠቅላላ የ ተላከው ዳታ እና የ ማስተላለፊያ መጠን"
 
 #: blueman/gui/manager/ManagerToolbar.py:37
-#: blueman/gui/manager/ManagerToolbar.py:99
+#: blueman/gui/manager/ManagerToolbar.py:93
 msgid "Untrust"
 msgstr "የማይታመን"
 
@@ -814,7 +736,7 @@ msgid "GSM Settings"
 msgstr "GSM ማሰናጃ"
 
 #: blueman/gui/applet/PluginDialog.py:95
-#: blueman/plugins/applet/StandardItems.py:95
+#: blueman/plugins/applet/StandardItems.py:88
 msgid "Plugins"
 msgstr "ተሰኪዎች"
 
@@ -2422,23 +2344,19 @@ msgstr ""
 msgid "Adds standard menu items to the status icon menu"
 msgstr " መደበኛ ዝርዝር እቃዎች መጨመሪያ ለ ሁኔታዎች ምልክት ዝርዝር"
 
-#: blueman/plugins/applet/StandardItems.py:30
-msgid "_Set Up New Device"
-msgstr "አዲስ አካል _ማሰናጃ"
-
-#: blueman/plugins/applet/StandardItems.py:35
+#: blueman/plugins/applet/StandardItems.py:32
 msgid "Send _Files to Device"
 msgstr "_ፋይሎች ወደ አካሉ መላኪያ"
 
-#: blueman/plugins/applet/StandardItems.py:40
+#: blueman/plugins/applet/StandardItems.py:37
 msgid "_Devices"
 msgstr "_አካሎች"
 
-#: blueman/plugins/applet/StandardItems.py:43
+#: blueman/plugins/applet/StandardItems.py:40
 msgid "Adap_ters"
 msgstr "አዳፕ_ተሮች"
 
-#: blueman/plugins/applet/StandardItems.py:92
+#: blueman/plugins/applet/StandardItems.py:85
 msgid "applet"
 msgstr "አፕሌት"
 
@@ -2743,6 +2661,66 @@ msgstr "የ RfKill ሁኔታ ማሰናጃ ቅድሚያ ማስነሻ ይፈልጋ
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr "የ RfKill ሁኔታ ማሰናጃ ቅድሚያ ማስነሻ ይፈልጋል "
+
+#~ msgid "Run the setup assistant for this device"
+#~ msgstr "ለዚህ አካል የ ማሰጃ ረዳት ያስኪዱ"
+
+#~ msgid "Setup..."
+#~ msgstr "ማሰናጃ..."
+
+#~ msgid ""
+#~ "<b>Welcome to the Bluetooth device setup assistant. </b>\n"
+#~ "\n"
+#~ "\n"
+#~ "It will walk you through the process of configuring and connecting to "
+#~ "your Bluetooth enabled devices."
+#~ msgstr ""
+#~ "<b>እንኳን ደህና መጡ ወደ ብሉቱዝ አካል ማሰናጃ እረዳት </b>\n"
+#~ "\n"
+#~ "\n"
+#~ "እረዳቱ እርስዎን ይረዳዎታል እንዴት እንደሚሰናዱ እና እንደሚገናኙ ከ ብሉቱዝ አካሎች ጋር"
+
+#~ msgid "Introduction"
+#~ msgstr "መግቢያ"
+
+#~ msgid "Device"
+#~ msgstr "አካል"
+
+#~ msgid "<b>Select pairing method to use:</b>"
+#~ msgstr "<b>ለመጠቀም ማጣመሪያ ዘዴ ይምረጡ:</b>"
+
+#~ msgid "Pair Device"
+#~ msgstr "አካል ማጣመሪያ"
+
+#~ msgid "Proceed Without Pairing"
+#~ msgstr "ሳያጣምሩ ማስኬጃ"
+
+#~ msgid "Pairing"
+#~ msgstr "በማጣመር ላይ"
+
+#~ msgid "<b>Connect to:</b>"
+#~ msgstr "<b>መገናኛ ወደ:</b>"
+
+#~ msgid "Connect"
+#~ msgstr "መገናኛ"
+
+#~ msgid "<b>Please wait...</b>"
+#~ msgstr "<b>እባክዎን ይቆዩ...</b>"
+
+#~ msgid "Connecting..."
+#~ msgstr "በ መገናኘት ላይ..."
+
+#~ msgid "<b>Congratulations, device successfully added</b>"
+#~ msgstr "<b>እንኳን ደስ አሎት አካሉ ተሳክቶ ተጨምሯል</b>"
+
+#~ msgid "Finished"
+#~ msgstr "ጨርሷል"
+
+#~ msgid "Bluetooth Assistant"
+#~ msgstr "የ ብሉቱዝ እረዳት"
+
+#~ msgid "_Set Up New Device"
+#~ msgstr "አዲስ አካል _ማሰናጃ"
 
 #~ msgid "Enter PIN code"
 #~ msgstr "የ ፒን ኮድ ያስገቡ"

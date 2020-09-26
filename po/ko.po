@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2020-09-26 21:20+0000\n"
+"POT-Creation-Date: 2020-09-26 22:02+0000\n"
 "PO-Revision-Date: 2020-06-19 18:56+0000\n"
 "Last-Translator: 이정희 <daemul72@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/blueman/blueman/"
@@ -74,7 +74,7 @@ msgid "_View"
 msgstr "보기(_V)"
 
 #: data/ui/manager-main.ui:77 blueman/gui/manager/ManagerMenu.py:55
-#: blueman/plugins/applet/StandardItems.py:51
+#: blueman/plugins/applet/StandardItems.py:48
 msgid "_Help"
 msgstr "도움말(_H)"
 
@@ -102,34 +102,25 @@ msgstr "신뢰할 수 있는 장치로 설정/해제합니다"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:136 blueman/gui/manager/ManagerToolbar.py:39
-#: blueman/gui/manager/ManagerToolbar.py:105
+#: blueman/gui/manager/ManagerToolbar.py:99
 msgid "Trust"
 msgstr "신뢰"
 
-#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:359
-msgid "Run the setup assistant for this device"
-msgstr "이 장치에 대한 설치 도우미를 실행합니다"
-
-#. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:151
-msgid "Setup..."
-msgstr "설정..."
-
-#: data/ui/manager-main.ui:164 blueman/gui/manager/ManagerDeviceMenu.py:392
+#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:386
 msgid "Remove this device from the known devices list"
 msgstr "이 장치를 알려진 장치 목록에서 제거합니다"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:165
+#: data/ui/manager-main.ui:150
 msgid "Remove"
 msgstr "제거"
 
-#: data/ui/manager-main.ui:187
+#: data/ui/manager-main.ui:172
 msgid "Send file(s) to the device"
 msgstr "파일을 장치로 전송합니다"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:189
+#: data/ui/manager-main.ui:174
 msgid "Send File"
 msgstr "파일 보내기"
 
@@ -212,67 +203,6 @@ msgstr "<b>수신자:</b>"
 #: data/ui/send-dialog.ui:106
 msgid "<b>File:</b>"
 msgstr "<b>파일:</b>"
-
-#: data/ui/assistant.ui:16
-msgid ""
-"<b>Welcome to the Bluetooth device setup assistant. </b>\n"
-"\n"
-"\n"
-"It will walk you through the process of configuring and connecting to your "
-"Bluetooth enabled devices."
-msgstr ""
-"<b>블루투스 장치 설정 도구에 오신것을 환영합니다.</b>\n"
-"\n"
-"\n"
-"블루투스 장치를 설정하고 연결하도록 안내해드립니다."
-
-#: data/ui/assistant.ui:25
-msgid "Introduction"
-msgstr "소개"
-
-#: data/ui/assistant.ui:38
-msgid "Device"
-msgstr "장치"
-
-#: data/ui/assistant.ui:54
-msgid "<b>Select pairing method to use:</b>"
-msgstr "<b>사용할 페어링 방식을 선택:</b>"
-
-#: data/ui/assistant.ui:65
-msgid "Pair Device"
-msgstr "장치 페어링하기"
-
-#: data/ui/assistant.ui:81
-msgid "Proceed Without Pairing"
-msgstr "페어링 없이 진행"
-
-#: data/ui/assistant.ui:97 data/ui/assistant.ui:111
-msgid "Pairing"
-msgstr "페어링"
-
-#: data/ui/assistant.ui:128
-msgid "<b>Connect to:</b>"
-msgstr "<b>연결 대상:</b>"
-
-#: data/ui/assistant.ui:154
-msgid "Connect"
-msgstr "연결"
-
-#: data/ui/assistant.ui:161
-msgid "<b>Please wait...</b>"
-msgstr "<b>기다려 주세요...</b>"
-
-#: data/ui/assistant.ui:166
-msgid "Connecting..."
-msgstr "연결 중..."
-
-#: data/ui/assistant.ui:173
-msgid "<b>Congratulations, device successfully added</b>"
-msgstr "<b>축하드립니다. 장치를 성공적으로 추가했습니다.</b>"
-
-#: data/ui/assistant.ui:180
-msgid "Finished"
-msgstr "끝"
 
 #: data/ui/applet-plugins-widget.ui:69
 msgid "Configuration"
@@ -407,16 +337,12 @@ msgstr ""
 msgid "Searching"
 msgstr "검색중"
 
-#: blueman/main/Manager.py:212 blueman/plugins/applet/StandardItems.py:76
-msgid "Bluetooth Assistant"
-msgstr "블루투스 도우미"
-
-#: blueman/main/Manager.py:225 blueman/plugins/applet/StandardItems.py:86
+#: blueman/main/Manager.py:220 blueman/plugins/applet/StandardItems.py:79
 msgid "Adapter Preferences"
 msgstr "어댑터 기본 설정"
 
-#: blueman/main/Manager.py:237 blueman/gui/manager/ManagerDeviceList.py:134
-#: blueman/plugins/applet/StandardItems.py:79
+#: blueman/main/Manager.py:232 blueman/gui/manager/ManagerDeviceList.py:134
+#: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
 msgstr "파일 전송자"
 
@@ -603,17 +529,17 @@ msgid "_Descending"
 msgstr "내림차순(_D)"
 
 #: blueman/gui/manager/ManagerMenu.py:122
-#: blueman/plugins/applet/StandardItems.py:53
+#: blueman/plugins/applet/StandardItems.py:50
 msgid "_Plugins"
 msgstr "플러그인(_P)"
 
 #: blueman/gui/manager/ManagerMenu.py:127
-#: blueman/plugins/applet/StandardItems.py:46
+#: blueman/plugins/applet/StandardItems.py:43
 msgid "_Local Services"
 msgstr "로컬 서비스(_L)"
 
 #: blueman/gui/manager/ManagerMenu.py:128
-#: blueman/plugins/applet/StandardItems.py:89
+#: blueman/plugins/applet/StandardItems.py:82
 msgid "Service Preferences"
 msgstr "서비스 기본 설정"
 
@@ -763,17 +689,13 @@ msgstr "신뢰함(_T)"
 msgid "_Untrust"
 msgstr "신뢰하지 않음(_U)"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:355
-msgid "_Set up…"
-msgstr "설정(_S)…"
-
-#: blueman/gui/manager/ManagerDeviceMenu.py:379
+#: blueman/gui/manager/ManagerDeviceMenu.py:373
 #, fuzzy
 #| msgid "Rename device"
 msgid "R_ename device…"
 msgstr "장치 이름 바꾸기"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:388
+#: blueman/gui/manager/ManagerDeviceMenu.py:382
 #, fuzzy
 #| msgid "Remove"
 msgid "_Remove…"
@@ -799,7 +721,7 @@ msgid "Total data sent and rate of transmission"
 msgstr "총 데이터 전송 및 전송 속도"
 
 #: blueman/gui/manager/ManagerToolbar.py:37
-#: blueman/gui/manager/ManagerToolbar.py:99
+#: blueman/gui/manager/ManagerToolbar.py:93
 msgid "Untrust"
 msgstr "신뢰 중지"
 
@@ -832,7 +754,7 @@ msgid "GSM Settings"
 msgstr "GSM 설정"
 
 #: blueman/gui/applet/PluginDialog.py:95
-#: blueman/plugins/applet/StandardItems.py:95
+#: blueman/plugins/applet/StandardItems.py:88
 msgid "Plugins"
 msgstr "플러그인"
 
@@ -2440,23 +2362,19 @@ msgstr ""
 msgid "Adds standard menu items to the status icon menu"
 msgstr "상태 아이콘 메뉴에 표준 메뉴 항목을 추가합니다"
 
-#: blueman/plugins/applet/StandardItems.py:30
-msgid "_Set Up New Device"
-msgstr "새 장치 설정(_S)"
-
-#: blueman/plugins/applet/StandardItems.py:35
+#: blueman/plugins/applet/StandardItems.py:32
 msgid "Send _Files to Device"
 msgstr "장치에 파일 보내기(_F)"
 
-#: blueman/plugins/applet/StandardItems.py:40
+#: blueman/plugins/applet/StandardItems.py:37
 msgid "_Devices"
 msgstr "장치(_D)"
 
-#: blueman/plugins/applet/StandardItems.py:43
+#: blueman/plugins/applet/StandardItems.py:40
 msgid "Adap_ters"
 msgstr "어뎁터(_T)"
 
-#: blueman/plugins/applet/StandardItems.py:92
+#: blueman/plugins/applet/StandardItems.py:85
 msgid "applet"
 msgstr "애플릿"
 
@@ -2761,6 +2679,69 @@ msgstr "RfKill 상태 설정"
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr "RfKill을 설정하려면 관리자 권한이 있어야 합니다"
+
+#~ msgid "Run the setup assistant for this device"
+#~ msgstr "이 장치에 대한 설치 도우미를 실행합니다"
+
+#~ msgid "Setup..."
+#~ msgstr "설정..."
+
+#~ msgid ""
+#~ "<b>Welcome to the Bluetooth device setup assistant. </b>\n"
+#~ "\n"
+#~ "\n"
+#~ "It will walk you through the process of configuring and connecting to "
+#~ "your Bluetooth enabled devices."
+#~ msgstr ""
+#~ "<b>블루투스 장치 설정 도구에 오신것을 환영합니다.</b>\n"
+#~ "\n"
+#~ "\n"
+#~ "블루투스 장치를 설정하고 연결하도록 안내해드립니다."
+
+#~ msgid "Introduction"
+#~ msgstr "소개"
+
+#~ msgid "Device"
+#~ msgstr "장치"
+
+#~ msgid "<b>Select pairing method to use:</b>"
+#~ msgstr "<b>사용할 페어링 방식을 선택:</b>"
+
+#~ msgid "Pair Device"
+#~ msgstr "장치 페어링하기"
+
+#~ msgid "Proceed Without Pairing"
+#~ msgstr "페어링 없이 진행"
+
+#~ msgid "Pairing"
+#~ msgstr "페어링"
+
+#~ msgid "<b>Connect to:</b>"
+#~ msgstr "<b>연결 대상:</b>"
+
+#~ msgid "Connect"
+#~ msgstr "연결"
+
+#~ msgid "<b>Please wait...</b>"
+#~ msgstr "<b>기다려 주세요...</b>"
+
+#~ msgid "Connecting..."
+#~ msgstr "연결 중..."
+
+#~ msgid "<b>Congratulations, device successfully added</b>"
+#~ msgstr "<b>축하드립니다. 장치를 성공적으로 추가했습니다.</b>"
+
+#~ msgid "Finished"
+#~ msgstr "끝"
+
+#~ msgid "Bluetooth Assistant"
+#~ msgstr "블루투스 도우미"
+
+#~ msgid "_Set up…"
+#~ msgstr "설정(_S)…"
+
+#~ msgid "_Set Up New Device"
+#~ msgstr "새 장치 설정(_S)"
 
 #~ msgid "Enter PIN code"
 #~ msgstr "핀 코드 입력"

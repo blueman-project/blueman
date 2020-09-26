@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2020-09-26 21:20+0000\n"
+"POT-Creation-Date: 2020-09-26 22:02+0000\n"
 "PO-Revision-Date: 2020-07-16 21:29+0000\n"
 "Last-Translator: Arben Tapia <arben_tapia@firstclass.com>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/blueman/blueman/"
@@ -69,7 +69,7 @@ msgid "_View"
 msgstr "_Shfaq"
 
 #: data/ui/manager-main.ui:77 blueman/gui/manager/ManagerMenu.py:55
-#: blueman/plugins/applet/StandardItems.py:51
+#: blueman/plugins/applet/StandardItems.py:48
 msgid "_Help"
 msgstr "_Ndihmë"
 
@@ -97,34 +97,25 @@ msgstr "Shënoje/Hiq shënjën këtë pajisje si të besueshme"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:136 blueman/gui/manager/ManagerToolbar.py:39
-#: blueman/gui/manager/ManagerToolbar.py:105
+#: blueman/gui/manager/ManagerToolbar.py:99
 msgid "Trust"
 msgstr "Beso"
 
-#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:359
-msgid "Run the setup assistant for this device"
-msgstr "Egsekuto ndihmuesin instalues për këtë pajisje"
-
-#. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:151
-msgid "Setup..."
-msgstr "Instalo..."
-
-#: data/ui/manager-main.ui:164 blueman/gui/manager/ManagerDeviceMenu.py:392
+#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:386
 msgid "Remove this device from the known devices list"
 msgstr "Hiqe këtë pajisje nga lista e pajisjeve të njohura"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:165
+#: data/ui/manager-main.ui:150
 msgid "Remove"
 msgstr "Hiq"
 
-#: data/ui/manager-main.ui:187
+#: data/ui/manager-main.ui:172
 msgid "Send file(s) to the device"
 msgstr "Dërgo dokument(a) tek kjo pajisje"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:189
+#: data/ui/manager-main.ui:174
 msgid "Send File"
 msgstr "Dërgo Skedarë"
 
@@ -209,68 +200,6 @@ msgstr "<b>Tek:</b>"
 #: data/ui/send-dialog.ui:106
 msgid "<b>File:</b>"
 msgstr "<b>Skedarë:</b>"
-
-#: data/ui/assistant.ui:16
-msgid ""
-"<b>Welcome to the Bluetooth device setup assistant. </b>\n"
-"\n"
-"\n"
-"It will walk you through the process of configuring and connecting to your "
-"Bluetooth enabled devices."
-msgstr ""
-"<b>Mirsevini tek ndihmuesi i konfigurimit të pajisjes Bluetooth. </b>\n"
-"\n"
-"\n"
-"Ky ndimues do t'ju përshkruaj mënyrën e konfigurimit dhe të lidhjes së "
-"pajisjeve tuaja që njohin protokollin Bluetooth."
-
-#: data/ui/assistant.ui:25
-msgid "Introduction"
-msgstr "paraqitje"
-
-#: data/ui/assistant.ui:38
-msgid "Device"
-msgstr "Pajisje"
-
-#: data/ui/assistant.ui:54
-msgid "<b>Select pairing method to use:</b>"
-msgstr "<b>Zgjidh menyrën a çiftimit në përdorim:</b>"
-
-#: data/ui/assistant.ui:65
-msgid "Pair Device"
-msgstr "Çifto Pajisjen"
-
-#: data/ui/assistant.ui:81
-msgid "Proceed Without Pairing"
-msgstr "Vazhdo pa çiftim"
-
-#: data/ui/assistant.ui:97 data/ui/assistant.ui:111
-msgid "Pairing"
-msgstr "Duke çiftuar"
-
-#: data/ui/assistant.ui:128
-msgid "<b>Connect to:</b>"
-msgstr "<b>Lidhu me:</b>"
-
-#: data/ui/assistant.ui:154
-msgid "Connect"
-msgstr "Lidhu"
-
-#: data/ui/assistant.ui:161
-msgid "<b>Please wait...</b>"
-msgstr "<b>Ju lutem prisni...</b>"
-
-#: data/ui/assistant.ui:166
-msgid "Connecting..."
-msgstr "Duke u lidhur..."
-
-#: data/ui/assistant.ui:173
-msgid "<b>Congratulations, device successfully added</b>"
-msgstr "<b>Urime, pajisja u lidh me sukses</b>"
-
-#: data/ui/assistant.ui:180
-msgid "Finished"
-msgstr "Mbaruar"
 
 #: data/ui/applet-plugins-widget.ui:69
 msgid "Configuration"
@@ -407,16 +336,12 @@ msgstr ""
 msgid "Searching"
 msgstr "Duke kërkuar"
 
-#: blueman/main/Manager.py:212 blueman/plugins/applet/StandardItems.py:76
-msgid "Bluetooth Assistant"
-msgstr "Ndihmuesi Bluetooth"
-
-#: blueman/main/Manager.py:225 blueman/plugins/applet/StandardItems.py:86
+#: blueman/main/Manager.py:220 blueman/plugins/applet/StandardItems.py:79
 msgid "Adapter Preferences"
 msgstr "Preferencat e Përshtatësit"
 
-#: blueman/main/Manager.py:237 blueman/gui/manager/ManagerDeviceList.py:134
-#: blueman/plugins/applet/StandardItems.py:79
+#: blueman/main/Manager.py:232 blueman/gui/manager/ManagerDeviceList.py:134
+#: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
 msgstr "Dërgues Dokumenti"
 
@@ -604,17 +529,17 @@ msgid "_Descending"
 msgstr "_Zbritës"
 
 #: blueman/gui/manager/ManagerMenu.py:122
-#: blueman/plugins/applet/StandardItems.py:53
+#: blueman/plugins/applet/StandardItems.py:50
 msgid "_Plugins"
 msgstr "_Shtojcat"
 
 #: blueman/gui/manager/ManagerMenu.py:127
-#: blueman/plugins/applet/StandardItems.py:46
+#: blueman/plugins/applet/StandardItems.py:43
 msgid "_Local Services"
 msgstr "Shërbimet _Lokale"
 
 #: blueman/gui/manager/ManagerMenu.py:128
-#: blueman/plugins/applet/StandardItems.py:89
+#: blueman/plugins/applet/StandardItems.py:82
 msgid "Service Preferences"
 msgstr "Preferencat e shërbimit"
 
@@ -760,17 +685,13 @@ msgstr "_Beso"
 msgid "_Untrust"
 msgstr "_Mosbeso"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:355
-msgid "_Set up…"
-msgstr "_Konfiguro…"
-
-#: blueman/gui/manager/ManagerDeviceMenu.py:379
+#: blueman/gui/manager/ManagerDeviceMenu.py:373
 #, fuzzy
 #| msgid "Rename device"
 msgid "R_ename device…"
 msgstr "Riemëro pajisjen"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:388
+#: blueman/gui/manager/ManagerDeviceMenu.py:382
 #, fuzzy
 #| msgid "Remove"
 msgid "_Remove…"
@@ -796,7 +717,7 @@ msgid "Total data sent and rate of transmission"
 msgstr "Totali i të dhënave të dërguara dhe shpejtësia e transmetimit"
 
 #: blueman/gui/manager/ManagerToolbar.py:37
-#: blueman/gui/manager/ManagerToolbar.py:99
+#: blueman/gui/manager/ManagerToolbar.py:93
 msgid "Untrust"
 msgstr "Mosbesim"
 
@@ -824,7 +745,7 @@ msgid "GSM Settings"
 msgstr "Konfigurimet e GSM-së"
 
 #: blueman/gui/applet/PluginDialog.py:95
-#: blueman/plugins/applet/StandardItems.py:95
+#: blueman/plugins/applet/StandardItems.py:88
 msgid "Plugins"
 msgstr "Plugins (Shtojcat)"
 
@@ -2456,23 +2377,19 @@ msgstr ""
 msgid "Adds standard menu items to the status icon menu"
 msgstr ""
 
-#: blueman/plugins/applet/StandardItems.py:30
-msgid "_Set Up New Device"
-msgstr ""
-
-#: blueman/plugins/applet/StandardItems.py:35
+#: blueman/plugins/applet/StandardItems.py:32
 msgid "Send _Files to Device"
 msgstr ""
 
-#: blueman/plugins/applet/StandardItems.py:40
+#: blueman/plugins/applet/StandardItems.py:37
 msgid "_Devices"
 msgstr "_Pajisjet"
 
-#: blueman/plugins/applet/StandardItems.py:43
+#: blueman/plugins/applet/StandardItems.py:40
 msgid "Adap_ters"
 msgstr ""
 
-#: blueman/plugins/applet/StandardItems.py:92
+#: blueman/plugins/applet/StandardItems.py:85
 msgid "applet"
 msgstr ""
 
@@ -2756,6 +2673,67 @@ msgstr ""
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr ""
+
+#~ msgid "Run the setup assistant for this device"
+#~ msgstr "Egsekuto ndihmuesin instalues për këtë pajisje"
+
+#~ msgid "Setup..."
+#~ msgstr "Instalo..."
+
+#~ msgid ""
+#~ "<b>Welcome to the Bluetooth device setup assistant. </b>\n"
+#~ "\n"
+#~ "\n"
+#~ "It will walk you through the process of configuring and connecting to "
+#~ "your Bluetooth enabled devices."
+#~ msgstr ""
+#~ "<b>Mirsevini tek ndihmuesi i konfigurimit të pajisjes Bluetooth. </b>\n"
+#~ "\n"
+#~ "\n"
+#~ "Ky ndimues do t'ju përshkruaj mënyrën e konfigurimit dhe të lidhjes së "
+#~ "pajisjeve tuaja që njohin protokollin Bluetooth."
+
+#~ msgid "Introduction"
+#~ msgstr "paraqitje"
+
+#~ msgid "Device"
+#~ msgstr "Pajisje"
+
+#~ msgid "<b>Select pairing method to use:</b>"
+#~ msgstr "<b>Zgjidh menyrën a çiftimit në përdorim:</b>"
+
+#~ msgid "Pair Device"
+#~ msgstr "Çifto Pajisjen"
+
+#~ msgid "Proceed Without Pairing"
+#~ msgstr "Vazhdo pa çiftim"
+
+#~ msgid "Pairing"
+#~ msgstr "Duke çiftuar"
+
+#~ msgid "<b>Connect to:</b>"
+#~ msgstr "<b>Lidhu me:</b>"
+
+#~ msgid "Connect"
+#~ msgstr "Lidhu"
+
+#~ msgid "<b>Please wait...</b>"
+#~ msgstr "<b>Ju lutem prisni...</b>"
+
+#~ msgid "Connecting..."
+#~ msgstr "Duke u lidhur..."
+
+#~ msgid "<b>Congratulations, device successfully added</b>"
+#~ msgstr "<b>Urime, pajisja u lidh me sukses</b>"
+
+#~ msgid "Finished"
+#~ msgstr "Mbaruar"
+
+#~ msgid "Bluetooth Assistant"
+#~ msgstr "Ndihmuesi Bluetooth"
+
+#~ msgid "_Set up…"
+#~ msgstr "_Konfiguro…"
 
 #~ msgid "Enter PIN code"
 #~ msgstr "Fut kodin PIN"
