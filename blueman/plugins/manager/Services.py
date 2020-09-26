@@ -5,7 +5,6 @@ import cairo
 
 from blueman.Service import Service
 from blueman.bluez.Device import Device
-from blueman.bluez.Network import Network
 from blueman.gui.manager.ManagerDeviceMenu import MenuItemsProvider, ManagerDeviceMenu
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 from blueman.Functions import create_menuitem
@@ -88,7 +87,7 @@ class Services(ManagerPlugin, MenuItemsProvider):
             if isinstance(service, NetworkService) and service.connected:
                 if "DhcpClient" in appl.QueryPlugins():
                     def renew(_item: Gtk.MenuItem) -> None:
-                        appl.DhcpClient('(s)', Network(device.get_object_path())["Interface"])
+                        appl.DhcpClient('(s)', device.get_object_path())
 
                     item = create_menuitem(_("Renew IP Address"), "view-refresh")
                     item.connect("activate", renew)

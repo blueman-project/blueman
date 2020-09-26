@@ -1,5 +1,6 @@
 from typing import Callable, Union, Dict, Type, TYPE_CHECKING
 
+from blueman.bluez.Network import Network as BluezNetwork
 from blueman.plugins.MechanismPlugin import MechanismPlugin
 from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler, UdhcpdHandler
 
@@ -20,7 +21,7 @@ class Network(MechanismPlugin):
         self.parent.add_method("ReloadNetwork", (), "", self._reload_network, pass_sender=True)
         self.parent.add_method("DisableNetwork", (), "", self._disable_network, pass_sender=True)
 
-    def _run_dhcp_client(self, net_interface: str, caller: str, ok: Callable[[str], None],
+    def _run_dhcp_client(self, object_path: str, caller: str, ok: Callable[[str], None],
                          err: Callable[[Union[Exception, int]], None]) -> None:
         self.timer.stop()
 
@@ -36,7 +37,7 @@ class Network(MechanismPlugin):
             ok(ip)
             self.timer.resume()
 
-        dh = DhcpClient(net_interface)
+        dh = DhcpClient(BluezNetwork(obj_path=object_path)["Interface"])
         dh.connect("error-occurred", dh_error)
         dh.connect("connected", dh_connected)
         try:

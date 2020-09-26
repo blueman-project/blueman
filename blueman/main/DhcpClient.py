@@ -25,6 +25,7 @@ class DhcpClient(GObject.GObject):
     quering: List[str] = []
 
     def __init__(self, interface: str, timeout: int = 30) -> None:
+        """The interface name has to be trusted / sanitized!"""
         super().__init__()
 
         self._interface = interface
