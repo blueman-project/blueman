@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2020-09-26 21:20+0000\n"
+"POT-Creation-Date: 2020-09-26 22:02+0000\n"
 "PO-Revision-Date: 2020-06-05 12:28+0000\n"
 "Last-Translator: Tuomas Lähteenmäki <lahtis@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/blueman/blueman/"
@@ -72,7 +72,7 @@ msgid "_View"
 msgstr "_Näytä"
 
 #: data/ui/manager-main.ui:77 blueman/gui/manager/ManagerMenu.py:55
-#: blueman/plugins/applet/StandardItems.py:51
+#: blueman/plugins/applet/StandardItems.py:48
 msgid "_Help"
 msgstr "_Ohje"
 
@@ -100,34 +100,25 @@ msgstr "Merkitse tai poista laitteen luottamus"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:136 blueman/gui/manager/ManagerToolbar.py:39
-#: blueman/gui/manager/ManagerToolbar.py:105
+#: blueman/gui/manager/ManagerToolbar.py:99
 msgid "Trust"
 msgstr "Aseta luottamus"
 
-#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:359
-msgid "Run the setup assistant for this device"
-msgstr "Suorita asetusvelho tälle laitteelle"
-
-#. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:151
-msgid "Setup..."
-msgstr "Asetukset..."
-
-#: data/ui/manager-main.ui:164 blueman/gui/manager/ManagerDeviceMenu.py:392
+#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:386
 msgid "Remove this device from the known devices list"
 msgstr "Poista laite tunnettujen laitteiden listalta"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:165
+#: data/ui/manager-main.ui:150
 msgid "Remove"
 msgstr "Poista"
 
-#: data/ui/manager-main.ui:187
+#: data/ui/manager-main.ui:172
 msgid "Send file(s) to the device"
 msgstr "Lähetä tiedosto(ja) laitteeseen"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:189
+#: data/ui/manager-main.ui:174
 msgid "Send File"
 msgstr "Lähetä tiedosto"
 
@@ -212,68 +203,6 @@ msgstr "<b>Kohde:</b>"
 #: data/ui/send-dialog.ui:106
 msgid "<b>File:</b>"
 msgstr "<b>Tiedosto:</b>"
-
-#: data/ui/assistant.ui:16
-msgid ""
-"<b>Welcome to the Bluetooth device setup assistant. </b>\n"
-"\n"
-"\n"
-"It will walk you through the process of configuring and connecting to your "
-"Bluetooth enabled devices."
-msgstr ""
-"<b>Tervetuloa Bluetooth-laite asennusvelhoon.</b>\n"
-"\n"
-"\n"
-"Se opastaa sinut asetuksien ja yhteydenluonnin kanssa Bluetooth-laitteitesi "
-"käyttöä varten."
-
-#: data/ui/assistant.ui:25
-msgid "Introduction"
-msgstr "Johdanto"
-
-#: data/ui/assistant.ui:38
-msgid "Device"
-msgstr "Laite"
-
-#: data/ui/assistant.ui:54
-msgid "<b>Select pairing method to use:</b>"
-msgstr "<b>Valitse käytettävä paritustapa:</b>"
-
-#: data/ui/assistant.ui:65
-msgid "Pair Device"
-msgstr "Laitepari"
-
-#: data/ui/assistant.ui:81
-msgid "Proceed Without Pairing"
-msgstr "Jatka parittamatta"
-
-#: data/ui/assistant.ui:97 data/ui/assistant.ui:111
-msgid "Pairing"
-msgstr "Paritus"
-
-#: data/ui/assistant.ui:128
-msgid "<b>Connect to:</b>"
-msgstr "<b>Yhdistä kohteeseen:</b>"
-
-#: data/ui/assistant.ui:154
-msgid "Connect"
-msgstr "Yhdistä"
-
-#: data/ui/assistant.ui:161
-msgid "<b>Please wait...</b>"
-msgstr "<b>Odota hetkinen...</b>"
-
-#: data/ui/assistant.ui:166
-msgid "Connecting..."
-msgstr "Yhdistetään..."
-
-#: data/ui/assistant.ui:173
-msgid "<b>Congratulations, device successfully added</b>"
-msgstr "<b>Onnittelut, laite lisättiin onnistuneesti</b>"
-
-#: data/ui/assistant.ui:180
-msgid "Finished"
-msgstr "Valmis"
 
 #: data/ui/applet-plugins-widget.ui:69
 msgid "Configuration"
@@ -409,16 +338,12 @@ msgstr ""
 msgid "Searching"
 msgstr "Etsitään"
 
-#: blueman/main/Manager.py:212 blueman/plugins/applet/StandardItems.py:76
-msgid "Bluetooth Assistant"
-msgstr "Bluetooth-avustaja"
-
-#: blueman/main/Manager.py:225 blueman/plugins/applet/StandardItems.py:86
+#: blueman/main/Manager.py:220 blueman/plugins/applet/StandardItems.py:79
 msgid "Adapter Preferences"
 msgstr "Sovittimen asetukset"
 
-#: blueman/main/Manager.py:237 blueman/gui/manager/ManagerDeviceList.py:134
-#: blueman/plugins/applet/StandardItems.py:79
+#: blueman/main/Manager.py:232 blueman/gui/manager/ManagerDeviceList.py:134
+#: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
 msgstr "Tiedoston lähettäjä"
 
@@ -605,17 +530,17 @@ msgid "_Descending"
 msgstr "_Laskeva"
 
 #: blueman/gui/manager/ManagerMenu.py:122
-#: blueman/plugins/applet/StandardItems.py:53
+#: blueman/plugins/applet/StandardItems.py:50
 msgid "_Plugins"
 msgstr "_Liitännäiset"
 
 #: blueman/gui/manager/ManagerMenu.py:127
-#: blueman/plugins/applet/StandardItems.py:46
+#: blueman/plugins/applet/StandardItems.py:43
 msgid "_Local Services"
 msgstr "_Paikalliset palvelut"
 
 #: blueman/gui/manager/ManagerMenu.py:128
-#: blueman/plugins/applet/StandardItems.py:89
+#: blueman/plugins/applet/StandardItems.py:82
 msgid "Service Preferences"
 msgstr "Palveluasetukset"
 
@@ -765,17 +690,13 @@ msgstr "_Luotettu"
 msgid "_Untrust"
 msgstr "_Epäluotettava"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:355
-msgid "_Set up…"
-msgstr "_Aseta ylös…"
-
-#: blueman/gui/manager/ManagerDeviceMenu.py:379
+#: blueman/gui/manager/ManagerDeviceMenu.py:373
 #, fuzzy
 #| msgid "Rename device"
 msgid "R_ename device…"
 msgstr "Nimeä laite uudelleen"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:388
+#: blueman/gui/manager/ManagerDeviceMenu.py:382
 #, fuzzy
 #| msgid "Remove"
 msgid "_Remove…"
@@ -801,7 +722,7 @@ msgid "Total data sent and rate of transmission"
 msgstr "Lähetetty kokonaisdata ja lähetysnopeus"
 
 #: blueman/gui/manager/ManagerToolbar.py:37
-#: blueman/gui/manager/ManagerToolbar.py:99
+#: blueman/gui/manager/ManagerToolbar.py:93
 msgid "Untrust"
 msgstr "Poista luottamus"
 
@@ -838,7 +759,7 @@ msgid "GSM Settings"
 msgstr "GSM-asetukset"
 
 #: blueman/gui/applet/PluginDialog.py:95
-#: blueman/plugins/applet/StandardItems.py:95
+#: blueman/plugins/applet/StandardItems.py:88
 msgid "Plugins"
 msgstr "Liitännäiset"
 
@@ -2456,23 +2377,19 @@ msgstr ""
 msgid "Adds standard menu items to the status icon menu"
 msgstr "Lisää vakiovalikkokohteita tilakuvakevalikkoon"
 
-#: blueman/plugins/applet/StandardItems.py:30
-msgid "_Set Up New Device"
-msgstr "_Asenna uusi laite"
-
-#: blueman/plugins/applet/StandardItems.py:35
+#: blueman/plugins/applet/StandardItems.py:32
 msgid "Send _Files to Device"
 msgstr "Lähetä tiedostoja laitteelle"
 
-#: blueman/plugins/applet/StandardItems.py:40
+#: blueman/plugins/applet/StandardItems.py:37
 msgid "_Devices"
 msgstr "_Laitteet"
 
-#: blueman/plugins/applet/StandardItems.py:43
+#: blueman/plugins/applet/StandardItems.py:40
 msgid "Adap_ters"
 msgstr "Sovi_ttimet"
 
-#: blueman/plugins/applet/StandardItems.py:92
+#: blueman/plugins/applet/StandardItems.py:85
 msgid "applet"
 msgstr "sovelma"
 
@@ -2782,6 +2699,70 @@ msgstr "Aseta RfKill-tila"
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr "RfKill-tilan asettaminen vaatii lisäoikeuksia"
+
+#~ msgid "Run the setup assistant for this device"
+#~ msgstr "Suorita asetusvelho tälle laitteelle"
+
+#~ msgid "Setup..."
+#~ msgstr "Asetukset..."
+
+#~ msgid ""
+#~ "<b>Welcome to the Bluetooth device setup assistant. </b>\n"
+#~ "\n"
+#~ "\n"
+#~ "It will walk you through the process of configuring and connecting to "
+#~ "your Bluetooth enabled devices."
+#~ msgstr ""
+#~ "<b>Tervetuloa Bluetooth-laite asennusvelhoon.</b>\n"
+#~ "\n"
+#~ "\n"
+#~ "Se opastaa sinut asetuksien ja yhteydenluonnin kanssa Bluetooth-"
+#~ "laitteitesi käyttöä varten."
+
+#~ msgid "Introduction"
+#~ msgstr "Johdanto"
+
+#~ msgid "Device"
+#~ msgstr "Laite"
+
+#~ msgid "<b>Select pairing method to use:</b>"
+#~ msgstr "<b>Valitse käytettävä paritustapa:</b>"
+
+#~ msgid "Pair Device"
+#~ msgstr "Laitepari"
+
+#~ msgid "Proceed Without Pairing"
+#~ msgstr "Jatka parittamatta"
+
+#~ msgid "Pairing"
+#~ msgstr "Paritus"
+
+#~ msgid "<b>Connect to:</b>"
+#~ msgstr "<b>Yhdistä kohteeseen:</b>"
+
+#~ msgid "Connect"
+#~ msgstr "Yhdistä"
+
+#~ msgid "<b>Please wait...</b>"
+#~ msgstr "<b>Odota hetkinen...</b>"
+
+#~ msgid "Connecting..."
+#~ msgstr "Yhdistetään..."
+
+#~ msgid "<b>Congratulations, device successfully added</b>"
+#~ msgstr "<b>Onnittelut, laite lisättiin onnistuneesti</b>"
+
+#~ msgid "Finished"
+#~ msgstr "Valmis"
+
+#~ msgid "Bluetooth Assistant"
+#~ msgstr "Bluetooth-avustaja"
+
+#~ msgid "_Set up…"
+#~ msgstr "_Aseta ylös…"
+
+#~ msgid "_Set Up New Device"
+#~ msgstr "_Asenna uusi laite"
 
 #~ msgid "Enter PIN code"
 #~ msgstr "Syötä PIN-koodi"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2020-09-26 21:20+0000\n"
+"POT-Creation-Date: 2020-09-26 22:02+0000\n"
 "PO-Revision-Date: 2020-04-14 10:14+0000\n"
 "Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
 "Language-Team: Belarusian (http://www.transifex.com/mate/MATE/language/be/)\n"
@@ -70,7 +70,7 @@ msgid "_View"
 msgstr "Пра_гляд"
 
 #: data/ui/manager-main.ui:77 blueman/gui/manager/ManagerMenu.py:55
-#: blueman/plugins/applet/StandardItems.py:51
+#: blueman/plugins/applet/StandardItems.py:48
 msgid "_Help"
 msgstr "_Даведка"
 
@@ -98,34 +98,25 @@ msgstr "Пазначыць/зняць пазнаку прылады як дав�
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:136 blueman/gui/manager/ManagerToolbar.py:39
-#: blueman/gui/manager/ManagerToolbar.py:105
+#: blueman/gui/manager/ManagerToolbar.py:99
 msgid "Trust"
 msgstr "Давер"
 
-#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:359
-msgid "Run the setup assistant for this device"
-msgstr "Запусціць дапаможнік усталёўвання для гэтай прылады"
-
-#. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:151
-msgid "Setup..."
-msgstr "Наставіць..."
-
-#: data/ui/manager-main.ui:164 blueman/gui/manager/ManagerDeviceMenu.py:392
+#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:386
 msgid "Remove this device from the known devices list"
 msgstr "Выдаліць гэтую прыладу са спісу вядомых"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:165
+#: data/ui/manager-main.ui:150
 msgid "Remove"
 msgstr "Выдаліць"
 
-#: data/ui/manager-main.ui:187
+#: data/ui/manager-main.ui:172
 msgid "Send file(s) to the device"
 msgstr "Адаслаць файл(ы) на прыладу"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:189
+#: data/ui/manager-main.ui:174
 msgid "Send File"
 msgstr "Адаслаць файл"
 
@@ -209,68 +200,6 @@ msgstr "<b>У:</b>"
 #: data/ui/send-dialog.ui:106
 msgid "<b>File:</b>"
 msgstr "<b>Файл:</b>"
-
-#: data/ui/assistant.ui:16
-msgid ""
-"<b>Welcome to the Bluetooth device setup assistant. </b>\n"
-"\n"
-"\n"
-"It will walk you through the process of configuring and connecting to your "
-"Bluetooth enabled devices."
-msgstr ""
-"<b>Вітаем у дапаможніку настáўлення Bluetooth. </b>\n"
-"\n"
-"\n"
-"Ён правядзе вас праз працэс канфігуравання і злучэння з вашай Bluetooth-"
-"прыладай."
-
-#: data/ui/assistant.ui:25
-msgid "Introduction"
-msgstr "Уводзіны"
-
-#: data/ui/assistant.ui:38
-msgid "Device"
-msgstr "Прылада"
-
-#: data/ui/assistant.ui:54
-msgid "<b>Select pairing method to use:</b>"
-msgstr "<b>Абярыце спосаб звязвання:</b>"
-
-#: data/ui/assistant.ui:65
-msgid "Pair Device"
-msgstr ""
-
-#: data/ui/assistant.ui:81
-msgid "Proceed Without Pairing"
-msgstr "Працягваць без звязвання"
-
-#: data/ui/assistant.ui:97 data/ui/assistant.ui:111
-msgid "Pairing"
-msgstr "Звязванне"
-
-#: data/ui/assistant.ui:128
-msgid "<b>Connect to:</b>"
-msgstr "<b>Злучыцца з:</b>"
-
-#: data/ui/assistant.ui:154
-msgid "Connect"
-msgstr "Далучыцца"
-
-#: data/ui/assistant.ui:161
-msgid "<b>Please wait...</b>"
-msgstr "<b>Калі ласка, пачакайце...</b>"
-
-#: data/ui/assistant.ui:166
-msgid "Connecting..."
-msgstr "Злучэнне..."
-
-#: data/ui/assistant.ui:173
-msgid "<b>Congratulations, device successfully added</b>"
-msgstr "<b>Віншуем, прылада паспяхова даданая</b>"
-
-#: data/ui/assistant.ui:180
-msgid "Finished"
-msgstr "Скончыўся"
 
 #: data/ui/applet-plugins-widget.ui:69
 msgid "Configuration"
@@ -408,16 +337,12 @@ msgstr ""
 msgid "Searching"
 msgstr "Пошук"
 
-#: blueman/main/Manager.py:212 blueman/plugins/applet/StandardItems.py:76
-msgid "Bluetooth Assistant"
-msgstr "Дапаможнік Bluetooth"
-
-#: blueman/main/Manager.py:225 blueman/plugins/applet/StandardItems.py:86
+#: blueman/main/Manager.py:220 blueman/plugins/applet/StandardItems.py:79
 msgid "Adapter Preferences"
 msgstr "Настáўленні адаптара"
 
-#: blueman/main/Manager.py:237 blueman/gui/manager/ManagerDeviceList.py:134
-#: blueman/plugins/applet/StandardItems.py:79
+#: blueman/main/Manager.py:232 blueman/gui/manager/ManagerDeviceList.py:134
+#: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
 msgstr "Адпраўнік файлаў"
 
@@ -601,17 +526,17 @@ msgid "_Descending"
 msgstr ""
 
 #: blueman/gui/manager/ManagerMenu.py:122
-#: blueman/plugins/applet/StandardItems.py:53
+#: blueman/plugins/applet/StandardItems.py:50
 msgid "_Plugins"
 msgstr "_Плагіны"
 
 #: blueman/gui/manager/ManagerMenu.py:127
-#: blueman/plugins/applet/StandardItems.py:46
+#: blueman/plugins/applet/StandardItems.py:43
 msgid "_Local Services"
 msgstr "Лакальные _сэрвісы"
 
 #: blueman/gui/manager/ManagerMenu.py:128
-#: blueman/plugins/applet/StandardItems.py:89
+#: blueman/plugins/applet/StandardItems.py:82
 msgid "Service Preferences"
 msgstr "Настáўленні сэрвіса"
 
@@ -759,17 +684,13 @@ msgstr "_Давяраць"
 msgid "_Untrust"
 msgstr "_Не давяраць"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:355
-msgid "_Set up…"
-msgstr ""
-
-#: blueman/gui/manager/ManagerDeviceMenu.py:379
+#: blueman/gui/manager/ManagerDeviceMenu.py:373
 #, fuzzy
 #| msgid "Rename device"
 msgid "R_ename device…"
 msgstr "Пераназваць прыладу"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:388
+#: blueman/gui/manager/ManagerDeviceMenu.py:382
 #, fuzzy
 #| msgid "Remove"
 msgid "_Remove…"
@@ -795,7 +716,7 @@ msgid "Total data sent and rate of transmission"
 msgstr "Агульны аб'ём адпраўленых даных і хуткасці перадачы"
 
 #: blueman/gui/manager/ManagerToolbar.py:37
-#: blueman/gui/manager/ManagerToolbar.py:99
+#: blueman/gui/manager/ManagerToolbar.py:93
 msgid "Untrust"
 msgstr "Выдаліць з давераных"
 
@@ -825,7 +746,7 @@ msgid "GSM Settings"
 msgstr "Настáўленні GSM"
 
 #: blueman/gui/applet/PluginDialog.py:95
-#: blueman/plugins/applet/StandardItems.py:95
+#: blueman/plugins/applet/StandardItems.py:88
 msgid "Plugins"
 msgstr "Плагіны"
 
@@ -2445,23 +2366,19 @@ msgstr ""
 msgid "Adds standard menu items to the status icon menu"
 msgstr "Дадаць стандартныя пункты меню да меню значка ў трэі"
 
-#: blueman/plugins/applet/StandardItems.py:30
-msgid "_Set Up New Device"
-msgstr ""
-
-#: blueman/plugins/applet/StandardItems.py:35
+#: blueman/plugins/applet/StandardItems.py:32
 msgid "Send _Files to Device"
 msgstr "Адаслаць _файлы на прыладу"
 
-#: blueman/plugins/applet/StandardItems.py:40
+#: blueman/plugins/applet/StandardItems.py:37
 msgid "_Devices"
 msgstr "_Прылады"
 
-#: blueman/plugins/applet/StandardItems.py:43
+#: blueman/plugins/applet/StandardItems.py:40
 msgid "Adap_ters"
 msgstr "_Адаптары"
 
-#: blueman/plugins/applet/StandardItems.py:92
+#: blueman/plugins/applet/StandardItems.py:85
 msgid "applet"
 msgstr "аплет"
 
@@ -2773,6 +2690,61 @@ msgstr ""
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr ""
+
+#~ msgid "Run the setup assistant for this device"
+#~ msgstr "Запусціць дапаможнік усталёўвання для гэтай прылады"
+
+#~ msgid "Setup..."
+#~ msgstr "Наставіць..."
+
+#~ msgid ""
+#~ "<b>Welcome to the Bluetooth device setup assistant. </b>\n"
+#~ "\n"
+#~ "\n"
+#~ "It will walk you through the process of configuring and connecting to "
+#~ "your Bluetooth enabled devices."
+#~ msgstr ""
+#~ "<b>Вітаем у дапаможніку настáўлення Bluetooth. </b>\n"
+#~ "\n"
+#~ "\n"
+#~ "Ён правядзе вас праз працэс канфігуравання і злучэння з вашай Bluetooth-"
+#~ "прыладай."
+
+#~ msgid "Introduction"
+#~ msgstr "Уводзіны"
+
+#~ msgid "Device"
+#~ msgstr "Прылада"
+
+#~ msgid "<b>Select pairing method to use:</b>"
+#~ msgstr "<b>Абярыце спосаб звязвання:</b>"
+
+#~ msgid "Proceed Without Pairing"
+#~ msgstr "Працягваць без звязвання"
+
+#~ msgid "Pairing"
+#~ msgstr "Звязванне"
+
+#~ msgid "<b>Connect to:</b>"
+#~ msgstr "<b>Злучыцца з:</b>"
+
+#~ msgid "Connect"
+#~ msgstr "Далучыцца"
+
+#~ msgid "<b>Please wait...</b>"
+#~ msgstr "<b>Калі ласка, пачакайце...</b>"
+
+#~ msgid "Connecting..."
+#~ msgstr "Злучэнне..."
+
+#~ msgid "<b>Congratulations, device successfully added</b>"
+#~ msgstr "<b>Віншуем, прылада паспяхова даданая</b>"
+
+#~ msgid "Finished"
+#~ msgstr "Скончыўся"
+
+#~ msgid "Bluetooth Assistant"
+#~ msgstr "Дапаможнік Bluetooth"
 
 #~ msgid "Enter PIN code"
 #~ msgstr "Увядзіце PIN-код"

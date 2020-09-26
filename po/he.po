@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2020-09-26 21:20+0000\n"
+"POT-Creation-Date: 2020-09-26 22:02+0000\n"
 "PO-Revision-Date: 2020-09-11 19:40+0000\n"
 "Last-Translator: Omeritzics Games <omeritzicschwartz@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/blueman/blueman/"
@@ -72,7 +72,7 @@ msgid "_View"
 msgstr "_תצוגה"
 
 #: data/ui/manager-main.ui:77 blueman/gui/manager/ManagerMenu.py:55
-#: blueman/plugins/applet/StandardItems.py:51
+#: blueman/plugins/applet/StandardItems.py:48
 msgid "_Help"
 msgstr "_עזרה"
 
@@ -100,34 +100,25 @@ msgstr "סימון/ביטול הסימון של מכשיר זה כמהימן"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:136 blueman/gui/manager/ManagerToolbar.py:39
-#: blueman/gui/manager/ManagerToolbar.py:105
+#: blueman/gui/manager/ManagerToolbar.py:99
 msgid "Trust"
 msgstr "מהימן"
 
-#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:359
-msgid "Run the setup assistant for this device"
-msgstr "הפעלת מסייע ההגדרות עבור מכשיר זה"
-
-#. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:151
-msgid "Setup..."
-msgstr "התקנה…"
-
-#: data/ui/manager-main.ui:164 blueman/gui/manager/ManagerDeviceMenu.py:392
+#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:386
 msgid "Remove this device from the known devices list"
 msgstr "הסרת התקן זה מרשימת ההתקנים הידועים"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:165
+#: data/ui/manager-main.ui:150
 msgid "Remove"
 msgstr "הסרה"
 
-#: data/ui/manager-main.ui:187
+#: data/ui/manager-main.ui:172
 msgid "Send file(s) to the device"
 msgstr "שליחת קבצים למכשיר"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:189
+#: data/ui/manager-main.ui:174
 msgid "Send File"
 msgstr "שליחת קובץ"
 
@@ -210,67 +201,6 @@ msgstr "<b>אל:</b>"
 #: data/ui/send-dialog.ui:106
 msgid "<b>File:</b>"
 msgstr "<b>קובץ:</b>"
-
-#: data/ui/assistant.ui:16
-msgid ""
-"<b>Welcome to the Bluetooth device setup assistant. </b>\n"
-"\n"
-"\n"
-"It will walk you through the process of configuring and connecting to your "
-"Bluetooth enabled devices."
-msgstr ""
-"<b>ברוך בואך לאשף הגדרת מכשירים תומכי Bluetooth.</b>\n"
-"\n"
-"\n"
-"אשף זה ינחה אותך במהלך ההגדרה והחיבור של המכשירים שלך שתומכים ב־Bluetooth."
-
-#: data/ui/assistant.ui:25
-msgid "Introduction"
-msgstr "היכרות"
-
-#: data/ui/assistant.ui:38
-msgid "Device"
-msgstr "מכשיר"
-
-#: data/ui/assistant.ui:54
-msgid "<b>Select pairing method to use:</b>"
-msgstr "<b>בחירת שיטת צימוד לשימוש:</b>"
-
-#: data/ui/assistant.ui:65
-msgid "Pair Device"
-msgstr "צימוד התקן"
-
-#: data/ui/assistant.ui:81
-msgid "Proceed Without Pairing"
-msgstr "להמשיך ללא צימוד"
-
-#: data/ui/assistant.ui:97 data/ui/assistant.ui:111
-msgid "Pairing"
-msgstr "חיבור"
-
-#: data/ui/assistant.ui:128
-msgid "<b>Connect to:</b>"
-msgstr "<b>התחברות אל:</b>"
-
-#: data/ui/assistant.ui:154
-msgid "Connect"
-msgstr "לחבר"
-
-#: data/ui/assistant.ui:161
-msgid "<b>Please wait...</b>"
-msgstr "<b>נא להמתין…</b>"
-
-#: data/ui/assistant.ui:166
-msgid "Connecting..."
-msgstr "מתחבר..."
-
-#: data/ui/assistant.ui:173
-msgid "<b>Congratulations, device successfully added</b>"
-msgstr "<b>המכשיר נוסף בהצלחה.</b>"
-
-#: data/ui/assistant.ui:180
-msgid "Finished"
-msgstr "נגמר"
 
 #: data/ui/applet-plugins-widget.ui:69
 msgid "Configuration"
@@ -406,16 +336,12 @@ msgstr ""
 msgid "Searching"
 msgstr "מתבצע חיפוש"
 
-#: blueman/main/Manager.py:212 blueman/plugins/applet/StandardItems.py:76
-msgid "Bluetooth Assistant"
-msgstr "אשף הbluetooth"
-
-#: blueman/main/Manager.py:225 blueman/plugins/applet/StandardItems.py:86
+#: blueman/main/Manager.py:220 blueman/plugins/applet/StandardItems.py:79
 msgid "Adapter Preferences"
 msgstr "העדפות מתאם"
 
-#: blueman/main/Manager.py:237 blueman/gui/manager/ManagerDeviceList.py:134
-#: blueman/plugins/applet/StandardItems.py:79
+#: blueman/main/Manager.py:232 blueman/gui/manager/ManagerDeviceList.py:134
+#: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
 msgstr "שולח הקבצים"
 
@@ -601,17 +527,17 @@ msgid "_Descending"
 msgstr "יו_רד"
 
 #: blueman/gui/manager/ManagerMenu.py:122
-#: blueman/plugins/applet/StandardItems.py:53
+#: blueman/plugins/applet/StandardItems.py:50
 msgid "_Plugins"
 msgstr "_תוספים"
 
 #: blueman/gui/manager/ManagerMenu.py:127
-#: blueman/plugins/applet/StandardItems.py:46
+#: blueman/plugins/applet/StandardItems.py:43
 msgid "_Local Services"
 msgstr "_שירותים מקומיים"
 
 #: blueman/gui/manager/ManagerMenu.py:128
-#: blueman/plugins/applet/StandardItems.py:89
+#: blueman/plugins/applet/StandardItems.py:82
 msgid "Service Preferences"
 msgstr "העדפות שירות"
 
@@ -749,15 +675,11 @@ msgstr "מ_הימנות"
 msgid "_Untrust"
 msgstr "ה_סרת מהימנות"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:355
-msgid "_Set up…"
-msgstr "ה_גדרה…"
-
-#: blueman/gui/manager/ManagerDeviceMenu.py:379
+#: blueman/gui/manager/ManagerDeviceMenu.py:373
 msgid "R_ename device…"
 msgstr "שינוי שם הה_תקן…"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:388
+#: blueman/gui/manager/ManagerDeviceMenu.py:382
 msgid "_Remove…"
 msgstr "ה_סרה…"
 
@@ -781,7 +703,7 @@ msgid "Total data sent and rate of transmission"
 msgstr "סך הכל נתונים שנשלחו ומהירות השליחה"
 
 #: blueman/gui/manager/ManagerToolbar.py:37
-#: blueman/gui/manager/ManagerToolbar.py:99
+#: blueman/gui/manager/ManagerToolbar.py:93
 msgid "Untrust"
 msgstr "אל תסמוך"
 
@@ -806,7 +728,7 @@ msgid "GSM Settings"
 msgstr "הגדרות GSM"
 
 #: blueman/gui/applet/PluginDialog.py:95
-#: blueman/plugins/applet/StandardItems.py:95
+#: blueman/plugins/applet/StandardItems.py:88
 msgid "Plugins"
 msgstr "תוספים"
 
@@ -2320,23 +2242,19 @@ msgstr ""
 msgid "Adds standard menu items to the status icon menu"
 msgstr "הוספת פריטים תקניים לתפריט סמל המצב"
 
-#: blueman/plugins/applet/StandardItems.py:30
-msgid "_Set Up New Device"
-msgstr "ה_גדרת מכשיר חדש"
-
-#: blueman/plugins/applet/StandardItems.py:35
+#: blueman/plugins/applet/StandardItems.py:32
 msgid "Send _Files to Device"
 msgstr "_שליחת קבצים למכשיר"
 
-#: blueman/plugins/applet/StandardItems.py:40
+#: blueman/plugins/applet/StandardItems.py:37
 msgid "_Devices"
 msgstr "מ_כשירים"
 
-#: blueman/plugins/applet/StandardItems.py:43
+#: blueman/plugins/applet/StandardItems.py:40
 msgid "Adap_ters"
 msgstr "מת_אמים"
 
-#: blueman/plugins/applet/StandardItems.py:92
+#: blueman/plugins/applet/StandardItems.py:85
 msgid "applet"
 msgstr "יישומון"
 
@@ -2637,6 +2555,69 @@ msgstr "הגדרת מצב RfKill"
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr "הגדרת מצב ה־RfKill דורשת הרשאות"
+
+#~ msgid "Run the setup assistant for this device"
+#~ msgstr "הפעלת מסייע ההגדרות עבור מכשיר זה"
+
+#~ msgid "Setup..."
+#~ msgstr "התקנה…"
+
+#~ msgid ""
+#~ "<b>Welcome to the Bluetooth device setup assistant. </b>\n"
+#~ "\n"
+#~ "\n"
+#~ "It will walk you through the process of configuring and connecting to "
+#~ "your Bluetooth enabled devices."
+#~ msgstr ""
+#~ "<b>ברוך בואך לאשף הגדרת מכשירים תומכי Bluetooth.</b>\n"
+#~ "\n"
+#~ "\n"
+#~ "אשף זה ינחה אותך במהלך ההגדרה והחיבור של המכשירים שלך שתומכים ב־Bluetooth."
+
+#~ msgid "Introduction"
+#~ msgstr "היכרות"
+
+#~ msgid "Device"
+#~ msgstr "מכשיר"
+
+#~ msgid "<b>Select pairing method to use:</b>"
+#~ msgstr "<b>בחירת שיטת צימוד לשימוש:</b>"
+
+#~ msgid "Pair Device"
+#~ msgstr "צימוד התקן"
+
+#~ msgid "Proceed Without Pairing"
+#~ msgstr "להמשיך ללא צימוד"
+
+#~ msgid "Pairing"
+#~ msgstr "חיבור"
+
+#~ msgid "<b>Connect to:</b>"
+#~ msgstr "<b>התחברות אל:</b>"
+
+#~ msgid "Connect"
+#~ msgstr "לחבר"
+
+#~ msgid "<b>Please wait...</b>"
+#~ msgstr "<b>נא להמתין…</b>"
+
+#~ msgid "Connecting..."
+#~ msgstr "מתחבר..."
+
+#~ msgid "<b>Congratulations, device successfully added</b>"
+#~ msgstr "<b>המכשיר נוסף בהצלחה.</b>"
+
+#~ msgid "Finished"
+#~ msgstr "נגמר"
+
+#~ msgid "Bluetooth Assistant"
+#~ msgstr "אשף הbluetooth"
+
+#~ msgid "_Set up…"
+#~ msgstr "ה_גדרה…"
+
+#~ msgid "_Set Up New Device"
+#~ msgstr "ה_גדרת מכשיר חדש"
 
 #~ msgid "Enter PIN code"
 #~ msgstr "נא למלא את קוד הזיהוי האישי"

@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2020-09-26 21:20+0000\n"
+"POT-Creation-Date: 2020-09-26 22:02+0000\n"
 "PO-Revision-Date: 2020-04-14 10:14+0000\n"
 "Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
 "Language-Team: Indonesian (http://www.transifex.com/mate/MATE/language/id/)\n"
@@ -73,7 +73,7 @@ msgid "_View"
 msgstr "_Lihat"
 
 #: data/ui/manager-main.ui:77 blueman/gui/manager/ManagerMenu.py:55
-#: blueman/plugins/applet/StandardItems.py:51
+#: blueman/plugins/applet/StandardItems.py:48
 msgid "_Help"
 msgstr "_Bantuan"
 
@@ -101,34 +101,25 @@ msgstr "Tandai/Hapus tanda perangkat ini sebagai terpercaya"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:136 blueman/gui/manager/ManagerToolbar.py:39
-#: blueman/gui/manager/ManagerToolbar.py:105
+#: blueman/gui/manager/ManagerToolbar.py:99
 msgid "Trust"
 msgstr "Dipercaya"
 
-#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:359
-msgid "Run the setup assistant for this device"
-msgstr "Jalankan bantuan setup untuk perangkat ini"
-
-#. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:151
-msgid "Setup..."
-msgstr "Setup..."
-
-#: data/ui/manager-main.ui:164 blueman/gui/manager/ManagerDeviceMenu.py:392
+#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:386
 msgid "Remove this device from the known devices list"
 msgstr "Hapus perangkat ini dari daftar perangkat yang dikenali"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:165
+#: data/ui/manager-main.ui:150
 msgid "Remove"
 msgstr "Hapus"
 
-#: data/ui/manager-main.ui:187
+#: data/ui/manager-main.ui:172
 msgid "Send file(s) to the device"
 msgstr "Kirim berkas ke perangkat"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:189
+#: data/ui/manager-main.ui:174
 msgid "Send File"
 msgstr "Kirim Berkas"
 
@@ -212,68 +203,6 @@ msgstr "<b>Ke:</b>"
 #: data/ui/send-dialog.ui:106
 msgid "<b>File:</b>"
 msgstr "<b>Berkas:</b>"
-
-#: data/ui/assistant.ui:16
-msgid ""
-"<b>Welcome to the Bluetooth device setup assistant. </b>\n"
-"\n"
-"\n"
-"It will walk you through the process of configuring and connecting to your "
-"Bluetooth enabled devices."
-msgstr ""
-"<b>Selamat datang di Perangkat Bluetooth setup assistant.</b>\n"
-"\n"
-"\n"
-"Ini akan memandu Anda melalui proses konfigurasi dan menghubungkan ke "
-"perangkat Bluetooth yang diaktifkan."
-
-#: data/ui/assistant.ui:25
-msgid "Introduction"
-msgstr "Pengantar"
-
-#: data/ui/assistant.ui:38
-msgid "Device"
-msgstr "Perangkat"
-
-#: data/ui/assistant.ui:54
-msgid "<b>Select pairing method to use:</b>"
-msgstr "<b>Pilih metode penyambungan untuk menggunakan</b>"
-
-#: data/ui/assistant.ui:65
-msgid "Pair Device"
-msgstr "Pasangan Perangkat"
-
-#: data/ui/assistant.ui:81
-msgid "Proceed Without Pairing"
-msgstr "Proses tanpa menyambung"
-
-#: data/ui/assistant.ui:97 data/ui/assistant.ui:111
-msgid "Pairing"
-msgstr "Memasangkan"
-
-#: data/ui/assistant.ui:128
-msgid "<b>Connect to:</b>"
-msgstr "<b>Hubungkan ke:</b>"
-
-#: data/ui/assistant.ui:154
-msgid "Connect"
-msgstr "Sambung"
-
-#: data/ui/assistant.ui:161
-msgid "<b>Please wait...</b>"
-msgstr "<b>Silahkan tunggu</b>"
-
-#: data/ui/assistant.ui:166
-msgid "Connecting..."
-msgstr "Sedang menyambung..."
-
-#: data/ui/assistant.ui:173
-msgid "<b>Congratulations, device successfully added</b>"
-msgstr "<b>Selamat, perangkat berhasil ditambahkan</b>"
-
-#: data/ui/assistant.ui:180
-msgid "Finished"
-msgstr "Selesai"
 
 #: data/ui/applet-plugins-widget.ui:69
 msgid "Configuration"
@@ -408,16 +337,12 @@ msgstr ""
 msgid "Searching"
 msgstr "Mencari"
 
-#: blueman/main/Manager.py:212 blueman/plugins/applet/StandardItems.py:76
-msgid "Bluetooth Assistant"
-msgstr "Bantuan Bluetooth"
-
-#: blueman/main/Manager.py:225 blueman/plugins/applet/StandardItems.py:86
+#: blueman/main/Manager.py:220 blueman/plugins/applet/StandardItems.py:79
 msgid "Adapter Preferences"
 msgstr "Preferensi Adapter"
 
-#: blueman/main/Manager.py:237 blueman/gui/manager/ManagerDeviceList.py:134
-#: blueman/plugins/applet/StandardItems.py:79
+#: blueman/main/Manager.py:232 blueman/gui/manager/ManagerDeviceList.py:134
+#: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
 msgstr "Pengirim Berkas"
 
@@ -603,17 +528,17 @@ msgid "_Descending"
 msgstr "Urut _Turun"
 
 #: blueman/gui/manager/ManagerMenu.py:122
-#: blueman/plugins/applet/StandardItems.py:53
+#: blueman/plugins/applet/StandardItems.py:50
 msgid "_Plugins"
 msgstr "_Plugin"
 
 #: blueman/gui/manager/ManagerMenu.py:127
-#: blueman/plugins/applet/StandardItems.py:46
+#: blueman/plugins/applet/StandardItems.py:43
 msgid "_Local Services"
 msgstr "Layanan _Lokal"
 
 #: blueman/gui/manager/ManagerMenu.py:128
-#: blueman/plugins/applet/StandardItems.py:89
+#: blueman/plugins/applet/StandardItems.py:82
 msgid "Service Preferences"
 msgstr "Preferensi Layanan"
 
@@ -763,17 +688,13 @@ msgstr "_Terpercaya"
 msgid "_Untrust"
 msgstr "_Tidak Terpercaya"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:355
-msgid "_Set up…"
-msgstr ""
-
-#: blueman/gui/manager/ManagerDeviceMenu.py:379
+#: blueman/gui/manager/ManagerDeviceMenu.py:373
 #, fuzzy
 #| msgid "Rename device"
 msgid "R_ename device…"
 msgstr "Ubah nama perangkat"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:388
+#: blueman/gui/manager/ManagerDeviceMenu.py:382
 #, fuzzy
 #| msgid "Remove"
 msgid "_Remove…"
@@ -799,7 +720,7 @@ msgid "Total data sent and rate of transmission"
 msgstr "Jumlah data yang dikirim dan laju transmisi"
 
 #: blueman/gui/manager/ManagerToolbar.py:37
-#: blueman/gui/manager/ManagerToolbar.py:99
+#: blueman/gui/manager/ManagerToolbar.py:93
 msgid "Untrust"
 msgstr "Tidak terpercaya"
 
@@ -830,7 +751,7 @@ msgid "GSM Settings"
 msgstr "Settingan GSM"
 
 #: blueman/gui/applet/PluginDialog.py:95
-#: blueman/plugins/applet/StandardItems.py:95
+#: blueman/plugins/applet/StandardItems.py:88
 msgid "Plugins"
 msgstr "Pengaya"
 
@@ -2442,23 +2363,19 @@ msgstr ""
 msgid "Adds standard menu items to the status icon menu"
 msgstr "Menambahkan menu standar pada menu ikon status"
 
-#: blueman/plugins/applet/StandardItems.py:30
-msgid "_Set Up New Device"
-msgstr "_Atur Perangkat Baru"
-
-#: blueman/plugins/applet/StandardItems.py:35
+#: blueman/plugins/applet/StandardItems.py:32
 msgid "Send _Files to Device"
 msgstr "Kirim _Berkas ke Perangkat"
 
-#: blueman/plugins/applet/StandardItems.py:40
+#: blueman/plugins/applet/StandardItems.py:37
 msgid "_Devices"
 msgstr "_Perangkat"
 
-#: blueman/plugins/applet/StandardItems.py:43
+#: blueman/plugins/applet/StandardItems.py:40
 msgid "Adap_ters"
 msgstr "Adap_ter"
 
-#: blueman/plugins/applet/StandardItems.py:92
+#: blueman/plugins/applet/StandardItems.py:85
 msgid "applet"
 msgstr "applet"
 
@@ -2774,6 +2691,67 @@ msgstr "Atur Keadaan RfKill"
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr "Mengatur Keadaan RfKill memerlukan hak khusus"
+
+#~ msgid "Run the setup assistant for this device"
+#~ msgstr "Jalankan bantuan setup untuk perangkat ini"
+
+#~ msgid "Setup..."
+#~ msgstr "Setup..."
+
+#~ msgid ""
+#~ "<b>Welcome to the Bluetooth device setup assistant. </b>\n"
+#~ "\n"
+#~ "\n"
+#~ "It will walk you through the process of configuring and connecting to "
+#~ "your Bluetooth enabled devices."
+#~ msgstr ""
+#~ "<b>Selamat datang di Perangkat Bluetooth setup assistant.</b>\n"
+#~ "\n"
+#~ "\n"
+#~ "Ini akan memandu Anda melalui proses konfigurasi dan menghubungkan ke "
+#~ "perangkat Bluetooth yang diaktifkan."
+
+#~ msgid "Introduction"
+#~ msgstr "Pengantar"
+
+#~ msgid "Device"
+#~ msgstr "Perangkat"
+
+#~ msgid "<b>Select pairing method to use:</b>"
+#~ msgstr "<b>Pilih metode penyambungan untuk menggunakan</b>"
+
+#~ msgid "Pair Device"
+#~ msgstr "Pasangan Perangkat"
+
+#~ msgid "Proceed Without Pairing"
+#~ msgstr "Proses tanpa menyambung"
+
+#~ msgid "Pairing"
+#~ msgstr "Memasangkan"
+
+#~ msgid "<b>Connect to:</b>"
+#~ msgstr "<b>Hubungkan ke:</b>"
+
+#~ msgid "Connect"
+#~ msgstr "Sambung"
+
+#~ msgid "<b>Please wait...</b>"
+#~ msgstr "<b>Silahkan tunggu</b>"
+
+#~ msgid "Connecting..."
+#~ msgstr "Sedang menyambung..."
+
+#~ msgid "<b>Congratulations, device successfully added</b>"
+#~ msgstr "<b>Selamat, perangkat berhasil ditambahkan</b>"
+
+#~ msgid "Finished"
+#~ msgstr "Selesai"
+
+#~ msgid "Bluetooth Assistant"
+#~ msgstr "Bantuan Bluetooth"
+
+#~ msgid "_Set Up New Device"
+#~ msgstr "_Atur Perangkat Baru"
 
 #~ msgid "Enter PIN code"
 #~ msgstr "Masukan kode PIN"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2020-09-26 21:20+0000\n"
+"POT-Creation-Date: 2020-09-26 22:02+0000\n"
 "PO-Revision-Date: 2020-04-14 10:14+0000\n"
 "Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
 "Language-Team: Marathi (http://www.transifex.com/mate/MATE/language/mr/)\n"
@@ -66,7 +66,7 @@ msgid "_View"
 msgstr "दृश्य(_V)"
 
 #: data/ui/manager-main.ui:77 blueman/gui/manager/ManagerMenu.py:55
-#: blueman/plugins/applet/StandardItems.py:51
+#: blueman/plugins/applet/StandardItems.py:48
 msgid "_Help"
 msgstr "मदत(_H)"
 
@@ -94,34 +94,25 @@ msgstr "साधनाची विश्वासू अशी नोंद �
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:136 blueman/gui/manager/ManagerToolbar.py:39
-#: blueman/gui/manager/ManagerToolbar.py:105
+#: blueman/gui/manager/ManagerToolbar.py:99
 msgid "Trust"
 msgstr "विश्वासर्ह"
 
-#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:359
-msgid "Run the setup assistant for this device"
-msgstr "साधनाचा प्रस्थापना सहकारी सुरु करा"
-
-#. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:151
-msgid "Setup..."
-msgstr "प्रस्थापना..."
-
-#: data/ui/manager-main.ui:164 blueman/gui/manager/ManagerDeviceMenu.py:392
+#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:386
 msgid "Remove this device from the known devices list"
 msgstr "या साधनाला माहितीतल्या साधनांच्या यादीतून काढून टाका"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:165
+#: data/ui/manager-main.ui:150
 msgid "Remove"
 msgstr "काढून टाका"
 
-#: data/ui/manager-main.ui:187
+#: data/ui/manager-main.ui:172
 msgid "Send file(s) to the device"
 msgstr "साधन करीता फाइल पाठवा"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:189
+#: data/ui/manager-main.ui:174
 msgid "Send File"
 msgstr "फाइल पाठवा"
 
@@ -204,67 +195,6 @@ msgstr "<b>प्रति:</b>"
 #: data/ui/send-dialog.ui:106
 msgid "<b>File:</b>"
 msgstr "<b>फाइल:</b>"
-
-#: data/ui/assistant.ui:16
-msgid ""
-"<b>Welcome to the Bluetooth device setup assistant. </b>\n"
-"\n"
-"\n"
-"It will walk you through the process of configuring and connecting to your "
-"Bluetooth enabled devices."
-msgstr ""
-"<b>ब्लूटूथ साधन प्रस्थापना मदतनीसामध्ये स्वागत. </b>\n"
-"\n"
-"\n"
-"हे तुम्हाला तुमच्या ब्लूटूथ साधनाच्या संरचना आणि जोडणीची प्रक्रिया दाखवेल."
-
-#: data/ui/assistant.ui:25
-msgid "Introduction"
-msgstr "परिचय"
-
-#: data/ui/assistant.ui:38
-msgid "Device"
-msgstr "यंत्र"
-
-#: data/ui/assistant.ui:54
-msgid "<b>Select pairing method to use:</b>"
-msgstr "<b>जोडी बनवायची पद्धत निवडा:</b>"
-
-#: data/ui/assistant.ui:65
-msgid "Pair Device"
-msgstr ""
-
-#: data/ui/assistant.ui:81
-msgid "Proceed Without Pairing"
-msgstr "जोडी बनवल्याशिवाय पुढे जा"
-
-#: data/ui/assistant.ui:97 data/ui/assistant.ui:111
-msgid "Pairing"
-msgstr "जोडी बनवत आहे"
-
-#: data/ui/assistant.ui:128
-msgid "<b>Connect to:</b>"
-msgstr "<b>जोडणी करा:</b>"
-
-#: data/ui/assistant.ui:154
-msgid "Connect"
-msgstr "जुळवणी करा"
-
-#: data/ui/assistant.ui:161
-msgid "<b>Please wait...</b>"
-msgstr "<b>कृपया थांबा...</b>"
-
-#: data/ui/assistant.ui:166
-msgid "Connecting..."
-msgstr "जुळवत आहे..."
-
-#: data/ui/assistant.ui:173
-msgid "<b>Congratulations, device successfully added</b>"
-msgstr "<b>अभिनंदन, साधन जोडणी यशस्वी झाली आहे</b>"
-
-#: data/ui/assistant.ui:180
-msgid "Finished"
-msgstr "संपला"
 
 #: data/ui/applet-plugins-widget.ui:69
 msgid "Configuration"
@@ -397,16 +327,12 @@ msgstr ""
 msgid "Searching"
 msgstr "शोधत आहे"
 
-#: blueman/main/Manager.py:212 blueman/plugins/applet/StandardItems.py:76
-msgid "Bluetooth Assistant"
-msgstr ""
-
-#: blueman/main/Manager.py:225 blueman/plugins/applet/StandardItems.py:86
+#: blueman/main/Manager.py:220 blueman/plugins/applet/StandardItems.py:79
 msgid "Adapter Preferences"
 msgstr ""
 
-#: blueman/main/Manager.py:237 blueman/gui/manager/ManagerDeviceList.py:134
-#: blueman/plugins/applet/StandardItems.py:79
+#: blueman/main/Manager.py:232 blueman/gui/manager/ManagerDeviceList.py:134
+#: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
 msgstr ""
 
@@ -588,17 +514,17 @@ msgid "_Descending"
 msgstr ""
 
 #: blueman/gui/manager/ManagerMenu.py:122
-#: blueman/plugins/applet/StandardItems.py:53
+#: blueman/plugins/applet/StandardItems.py:50
 msgid "_Plugins"
 msgstr "प्लगइन (_P)"
 
 #: blueman/gui/manager/ManagerMenu.py:127
-#: blueman/plugins/applet/StandardItems.py:46
+#: blueman/plugins/applet/StandardItems.py:43
 msgid "_Local Services"
 msgstr "स्थानिक सेवा(_L)"
 
 #: blueman/gui/manager/ManagerMenu.py:128
-#: blueman/plugins/applet/StandardItems.py:89
+#: blueman/plugins/applet/StandardItems.py:82
 msgid "Service Preferences"
 msgstr ""
 
@@ -744,15 +670,11 @@ msgstr "विश्वासू बनवा (_T)"
 msgid "_Untrust"
 msgstr "विश्वासू यादीतून काढा (_U)"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:355
-msgid "_Set up…"
-msgstr ""
-
-#: blueman/gui/manager/ManagerDeviceMenu.py:379
+#: blueman/gui/manager/ManagerDeviceMenu.py:373
 msgid "R_ename device…"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:388
+#: blueman/gui/manager/ManagerDeviceMenu.py:382
 #, fuzzy
 #| msgid "Remove"
 msgid "_Remove…"
@@ -778,7 +700,7 @@ msgid "Total data sent and rate of transmission"
 msgstr "एकूण डेटा पाठवला आणि किती वेगाने पाठवला"
 
 #: blueman/gui/manager/ManagerToolbar.py:37
-#: blueman/gui/manager/ManagerToolbar.py:99
+#: blueman/gui/manager/ManagerToolbar.py:93
 msgid "Untrust"
 msgstr "अविश्वासू बनवा"
 
@@ -805,7 +727,7 @@ msgid "GSM Settings"
 msgstr "GSM सेटिंग"
 
 #: blueman/gui/applet/PluginDialog.py:95
-#: blueman/plugins/applet/StandardItems.py:95
+#: blueman/plugins/applet/StandardItems.py:88
 msgid "Plugins"
 msgstr "प्लगईन"
 
@@ -2405,23 +2327,19 @@ msgstr ""
 msgid "Adds standard menu items to the status icon menu"
 msgstr ""
 
-#: blueman/plugins/applet/StandardItems.py:30
-msgid "_Set Up New Device"
-msgstr ""
-
-#: blueman/plugins/applet/StandardItems.py:35
+#: blueman/plugins/applet/StandardItems.py:32
 msgid "Send _Files to Device"
 msgstr "साधनाला फाईल पाठवा (_F)"
 
-#: blueman/plugins/applet/StandardItems.py:40
+#: blueman/plugins/applet/StandardItems.py:37
 msgid "_Devices"
 msgstr "साधने(_D)"
 
-#: blueman/plugins/applet/StandardItems.py:43
+#: blueman/plugins/applet/StandardItems.py:40
 msgid "Adap_ters"
 msgstr "अॅङॅप्टर (_T)"
 
-#: blueman/plugins/applet/StandardItems.py:92
+#: blueman/plugins/applet/StandardItems.py:85
 msgid "applet"
 msgstr " एप्लेट"
 
@@ -2713,6 +2631,57 @@ msgstr ""
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr ""
+
+#~ msgid "Run the setup assistant for this device"
+#~ msgstr "साधनाचा प्रस्थापना सहकारी सुरु करा"
+
+#~ msgid "Setup..."
+#~ msgstr "प्रस्थापना..."
+
+#~ msgid ""
+#~ "<b>Welcome to the Bluetooth device setup assistant. </b>\n"
+#~ "\n"
+#~ "\n"
+#~ "It will walk you through the process of configuring and connecting to "
+#~ "your Bluetooth enabled devices."
+#~ msgstr ""
+#~ "<b>ब्लूटूथ साधन प्रस्थापना मदतनीसामध्ये स्वागत. </b>\n"
+#~ "\n"
+#~ "\n"
+#~ "हे तुम्हाला तुमच्या ब्लूटूथ साधनाच्या संरचना आणि जोडणीची प्रक्रिया दाखवेल."
+
+#~ msgid "Introduction"
+#~ msgstr "परिचय"
+
+#~ msgid "Device"
+#~ msgstr "यंत्र"
+
+#~ msgid "<b>Select pairing method to use:</b>"
+#~ msgstr "<b>जोडी बनवायची पद्धत निवडा:</b>"
+
+#~ msgid "Proceed Without Pairing"
+#~ msgstr "जोडी बनवल्याशिवाय पुढे जा"
+
+#~ msgid "Pairing"
+#~ msgstr "जोडी बनवत आहे"
+
+#~ msgid "<b>Connect to:</b>"
+#~ msgstr "<b>जोडणी करा:</b>"
+
+#~ msgid "Connect"
+#~ msgstr "जुळवणी करा"
+
+#~ msgid "<b>Please wait...</b>"
+#~ msgstr "<b>कृपया थांबा...</b>"
+
+#~ msgid "Connecting..."
+#~ msgstr "जुळवत आहे..."
+
+#~ msgid "<b>Congratulations, device successfully added</b>"
+#~ msgstr "<b>अभिनंदन, साधन जोडणी यशस्वी झाली आहे</b>"
+
+#~ msgid "Finished"
+#~ msgstr "संपला"
 
 #~ msgid "Enter PIN code"
 #~ msgstr "PIN द्या"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2020-09-26 21:20+0000\n"
+"POT-Creation-Date: 2020-09-26 22:02+0000\n"
 "PO-Revision-Date: 2020-09-26 21:20+0000\n"
 "Last-Translator: Kornelijus Tvarijanavičius <kornelitvari@protonmail.com>\n"
 "Language-Team: Lithuanian <https://hosted.weblate.org/projects/blueman/"
@@ -74,7 +74,7 @@ msgid "_View"
 msgstr "_Rodymas"
 
 #: data/ui/manager-main.ui:77 blueman/gui/manager/ManagerMenu.py:55
-#: blueman/plugins/applet/StandardItems.py:51
+#: blueman/plugins/applet/StandardItems.py:48
 msgid "_Help"
 msgstr "_Pagalba"
 
@@ -102,34 +102,25 @@ msgstr "Pažymėti arba atžymėti įrenginį patikimu"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:136 blueman/gui/manager/ManagerToolbar.py:39
-#: blueman/gui/manager/ManagerToolbar.py:105
+#: blueman/gui/manager/ManagerToolbar.py:99
 msgid "Trust"
 msgstr "Pasitikėti"
 
-#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:359
-msgid "Run the setup assistant for this device"
-msgstr "Paleisti sąrankos pagelbiklį šiam įrenginiui"
-
-#. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:151
-msgid "Setup..."
-msgstr "Nustatymai..."
-
-#: data/ui/manager-main.ui:164 blueman/gui/manager/ManagerDeviceMenu.py:392
+#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:386
 msgid "Remove this device from the known devices list"
 msgstr "Pašalinti įrenginį iš žinomų įrenginų sąrašo"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:165
+#: data/ui/manager-main.ui:150
 msgid "Remove"
 msgstr "Šalinti"
 
-#: data/ui/manager-main.ui:187
+#: data/ui/manager-main.ui:172
 msgid "Send file(s) to the device"
 msgstr "Siųsti failus šiam įrenginiui"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:189
+#: data/ui/manager-main.ui:174
 msgid "Send File"
 msgstr "Siųsti"
 
@@ -213,67 +204,6 @@ msgstr "<b>Į:</b>"
 #: data/ui/send-dialog.ui:106
 msgid "<b>File:</b>"
 msgstr "<b>Failas:</b>"
-
-#: data/ui/assistant.ui:16
-msgid ""
-"<b>Welcome to the Bluetooth device setup assistant. </b>\n"
-"\n"
-"\n"
-"It will walk you through the process of configuring and connecting to your "
-"Bluetooth enabled devices."
-msgstr ""
-"<b>Sveiki atvertę Bluetooth įrenginio nustatymų vedlį. </b>\n"
-"\n"
-"\n"
-"Jis jus lydės jūsų Bluetooth įreginio konfigūravimo ir prisijungimo eigoje."
-
-#: data/ui/assistant.ui:25
-msgid "Introduction"
-msgstr "Įžanga"
-
-#: data/ui/assistant.ui:38
-msgid "Device"
-msgstr "Įrenginys"
-
-#: data/ui/assistant.ui:54
-msgid "<b>Select pairing method to use:</b>"
-msgstr "<b>Pasirinkite poravimo metodą:</b>"
-
-#: data/ui/assistant.ui:65
-msgid "Pair Device"
-msgstr "Suporuoti įrenginį"
-
-#: data/ui/assistant.ui:81
-msgid "Proceed Without Pairing"
-msgstr "Tęsti be suporavimo"
-
-#: data/ui/assistant.ui:97 data/ui/assistant.ui:111
-msgid "Pairing"
-msgstr "Poravimas"
-
-#: data/ui/assistant.ui:128
-msgid "<b>Connect to:</b>"
-msgstr "<b>Jungtis prie:</b>"
-
-#: data/ui/assistant.ui:154
-msgid "Connect"
-msgstr "Prisijungti"
-
-#: data/ui/assistant.ui:161
-msgid "<b>Please wait...</b>"
-msgstr "<b>Palaukite...</b>"
-
-#: data/ui/assistant.ui:166
-msgid "Connecting..."
-msgstr "Jungiamasi..."
-
-#: data/ui/assistant.ui:173
-msgid "<b>Congratulations, device successfully added</b>"
-msgstr "<b>Sveikiname, įrenginys sėkmingai pridėtas</b>"
-
-#: data/ui/assistant.ui:180
-msgid "Finished"
-msgstr "Užbaigta"
 
 #: data/ui/applet-plugins-widget.ui:69
 msgid "Configuration"
@@ -409,16 +339,12 @@ msgstr ""
 msgid "Searching"
 msgstr "Ieškoma"
 
-#: blueman/main/Manager.py:212 blueman/plugins/applet/StandardItems.py:76
-msgid "Bluetooth Assistant"
-msgstr "Bluetooth Pagalbininkas"
-
-#: blueman/main/Manager.py:225 blueman/plugins/applet/StandardItems.py:86
+#: blueman/main/Manager.py:220 blueman/plugins/applet/StandardItems.py:79
 msgid "Adapter Preferences"
 msgstr "Adapterio nustatymai"
 
-#: blueman/main/Manager.py:237 blueman/gui/manager/ManagerDeviceList.py:134
-#: blueman/plugins/applet/StandardItems.py:79
+#: blueman/main/Manager.py:232 blueman/gui/manager/ManagerDeviceList.py:134
+#: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
 msgstr "Failų siuntėjas"
 
@@ -608,17 +534,17 @@ msgid "_Descending"
 msgstr "_Mažėjančiai"
 
 #: blueman/gui/manager/ManagerMenu.py:122
-#: blueman/plugins/applet/StandardItems.py:53
+#: blueman/plugins/applet/StandardItems.py:50
 msgid "_Plugins"
 msgstr "Į_skiepiai"
 
 #: blueman/gui/manager/ManagerMenu.py:127
-#: blueman/plugins/applet/StandardItems.py:46
+#: blueman/plugins/applet/StandardItems.py:43
 msgid "_Local Services"
 msgstr "_Paslaugos"
 
 #: blueman/gui/manager/ManagerMenu.py:128
-#: blueman/plugins/applet/StandardItems.py:89
+#: blueman/plugins/applet/StandardItems.py:82
 msgid "Service Preferences"
 msgstr "Paslaugų nustatymai"
 
@@ -757,15 +683,11 @@ msgstr "_Pasitikėti"
 msgid "_Untrust"
 msgstr "_Nepasitikėti"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:355
-msgid "_Set up…"
-msgstr "_Nustatyti…"
-
-#: blueman/gui/manager/ManagerDeviceMenu.py:379
+#: blueman/gui/manager/ManagerDeviceMenu.py:373
 msgid "R_ename device…"
 msgstr "Pervadinti įrenginį…"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:388
+#: blueman/gui/manager/ManagerDeviceMenu.py:382
 msgid "_Remove…"
 msgstr "_Šalinti…"
 
@@ -789,7 +711,7 @@ msgid "Total data sent and rate of transmission"
 msgstr "Visi išsiųsti duomenys ir išsiuntimo sparta"
 
 #: blueman/gui/manager/ManagerToolbar.py:37
-#: blueman/gui/manager/ManagerToolbar.py:99
+#: blueman/gui/manager/ManagerToolbar.py:93
 msgid "Untrust"
 msgstr "Nepasitikėti"
 
@@ -814,7 +736,7 @@ msgid "GSM Settings"
 msgstr "GSM nustatymai"
 
 #: blueman/gui/applet/PluginDialog.py:95
-#: blueman/plugins/applet/StandardItems.py:95
+#: blueman/plugins/applet/StandardItems.py:88
 msgid "Plugins"
 msgstr "Papildiniai"
 
@@ -2397,23 +2319,19 @@ msgstr ""
 msgid "Adds standard menu items to the status icon menu"
 msgstr "Prideda įprastinius meniu elementus į būsenos ikonos meniu"
 
-#: blueman/plugins/applet/StandardItems.py:30
-msgid "_Set Up New Device"
-msgstr "Nu_statyti naują įrenginį"
-
-#: blueman/plugins/applet/StandardItems.py:35
+#: blueman/plugins/applet/StandardItems.py:32
 msgid "Send _Files to Device"
 msgstr "Siųsti _failus į įrenginį"
 
-#: blueman/plugins/applet/StandardItems.py:40
+#: blueman/plugins/applet/StandardItems.py:37
 msgid "_Devices"
 msgstr "Į_renginiai"
 
-#: blueman/plugins/applet/StandardItems.py:43
+#: blueman/plugins/applet/StandardItems.py:40
 msgid "Adap_ters"
 msgstr "Adap_teriai"
 
-#: blueman/plugins/applet/StandardItems.py:92
+#: blueman/plugins/applet/StandardItems.py:85
 msgid "applet"
 msgstr "įskiepis"
 
@@ -2723,6 +2641,70 @@ msgstr "Nustatyti RfKill būseną"
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr "RfKill būsenos nustatymas reikalauja privilegijų"
+
+#~ msgid "Run the setup assistant for this device"
+#~ msgstr "Paleisti sąrankos pagelbiklį šiam įrenginiui"
+
+#~ msgid "Setup..."
+#~ msgstr "Nustatymai..."
+
+#~ msgid ""
+#~ "<b>Welcome to the Bluetooth device setup assistant. </b>\n"
+#~ "\n"
+#~ "\n"
+#~ "It will walk you through the process of configuring and connecting to "
+#~ "your Bluetooth enabled devices."
+#~ msgstr ""
+#~ "<b>Sveiki atvertę Bluetooth įrenginio nustatymų vedlį. </b>\n"
+#~ "\n"
+#~ "\n"
+#~ "Jis jus lydės jūsų Bluetooth įreginio konfigūravimo ir prisijungimo "
+#~ "eigoje."
+
+#~ msgid "Introduction"
+#~ msgstr "Įžanga"
+
+#~ msgid "Device"
+#~ msgstr "Įrenginys"
+
+#~ msgid "<b>Select pairing method to use:</b>"
+#~ msgstr "<b>Pasirinkite poravimo metodą:</b>"
+
+#~ msgid "Pair Device"
+#~ msgstr "Suporuoti įrenginį"
+
+#~ msgid "Proceed Without Pairing"
+#~ msgstr "Tęsti be suporavimo"
+
+#~ msgid "Pairing"
+#~ msgstr "Poravimas"
+
+#~ msgid "<b>Connect to:</b>"
+#~ msgstr "<b>Jungtis prie:</b>"
+
+#~ msgid "Connect"
+#~ msgstr "Prisijungti"
+
+#~ msgid "<b>Please wait...</b>"
+#~ msgstr "<b>Palaukite...</b>"
+
+#~ msgid "Connecting..."
+#~ msgstr "Jungiamasi..."
+
+#~ msgid "<b>Congratulations, device successfully added</b>"
+#~ msgstr "<b>Sveikiname, įrenginys sėkmingai pridėtas</b>"
+
+#~ msgid "Finished"
+#~ msgstr "Užbaigta"
+
+#~ msgid "Bluetooth Assistant"
+#~ msgstr "Bluetooth Pagalbininkas"
+
+#~ msgid "_Set up…"
+#~ msgstr "_Nustatyti…"
+
+#~ msgid "_Set Up New Device"
+#~ msgstr "Nu_statyti naują įrenginį"
 
 #~ msgid "Enter PIN code"
 #~ msgstr "Įveskite PIN kodą"
