@@ -2,17 +2,22 @@
 
 ## 2.1.4
 
+### Changes
+* Force cython to use python language version 3
+* Do not use exitcode 1 when we expect to fail
+* Mark more strings translatable (@cwendling)
+
 ### Bugs fixed
 
 * Unstranslated strings
 * Searching (with Ctrl+F in manager device list) did not work
 * Default PIN lookup
+* Fix device removal handling (@Yannik)
+* Only use LaunchContext when we have proper event time
 
 ## 2.1.3
 
 ### Changes
-* Force cython to use python language version 3
-* Do not use exitcode 1 when we expect to fail
 * Use apply button for transfer options
 
 ### Bugs fixed
@@ -20,7 +25,6 @@
 * Fix dbus timeout in DhcClient
 * Call the right method when pulseaudio crashes
 * Handle os.remove failing
-* Fix device removal handling (@Yannik)
 
 ## 2.1.2
 
