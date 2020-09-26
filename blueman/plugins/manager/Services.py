@@ -75,7 +75,7 @@ class Services(ManagerPlugin):
             if service.group == 'network' and service.connected:
                 if "DhcpClient" in appl.QueryPlugins():
                     def renew(x):
-                        appl.DhcpClient('(s)', Network(device.get_object_path())["Interface"])
+                        appl.DhcpClient('(s)', device.get_object_path())
 
                     item = create_menuitem(_("Renew IP Address"), "view-refresh")
                     item.connect("activate", renew)

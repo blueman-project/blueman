@@ -1,5 +1,6 @@
 # coding=utf-8
 
+from blueman.bluez.Network import Network as BluezNetwork
 from blueman.plugins.MechanismPlugin import MechanismPlugin
 from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler, UdhcpdHandler
 
@@ -15,7 +16,7 @@ class Network(MechanismPlugin):
         self.parent.add_method("ReloadNetwork", (), "", self._reload_network, pass_sender=True)
         self.parent.add_method("DisableNetwork", (), "", self._disable_network, pass_sender=True)
 
-    def _run_dhcp_client(self, net_interface, caller, ok, err):
+    def _run_dhcp_client(self, object_path, caller, ok, err):
         self.timer.stop()
 
         self.confirm_authorization(caller, "org.blueman.dhcp.client")
@@ -30,7 +31,7 @@ class Network(MechanismPlugin):
             ok(ip)
             self.timer.resume()
 
-        dh = DhcpClient(net_interface)
+        dh = DhcpClient(BluezNetwork(obj_path=object_path)["Interface"])
         dh.connect("error-occurred", dh_error, ok, err)
         dh.connect("connected", dh_connected, ok, err)
         try:

@@ -1,7 +1,7 @@
 # coding=utf-8
 
 import logging
-from blueman.bluez.Network import AnyNetwork
+from blueman.bluez.Network import AnyNetwork, Network
 from blueman.gui.Notification import Notification
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.main.DBusProxies import Mechanism
@@ -25,12 +25,14 @@ class DhcpClient(AppletPlugin):
     def on_unload(self):
         del self._any_network
 
-    def _on_network_prop_changed(self, _network, key, value, _path):
+    def _on_network_prop_changed(self, _network, key, value, object_path):
         if key == "Interface":
             if value != "":
-                self.dhcp_acquire(value)
+                self.dhcp_acquire(object_path)
 
-    def dhcp_acquire(self, device):
+    def dhcp_acquire(self, object_path):
+        device = Network(obj_path=object_path)["Interface"]
+
         if device not in self.quering:
             self.quering.append(device)
         else:
@@ -56,4 +58,4 @@ class DhcpClient(AppletPlugin):
                          icon_name="network-workgroup").show()
 
             m = Mechanism()
-            m.DhcpClient('(s)', device, result_handler=reply, error_handler=err, timeout=120 * 1000)
+            m.DhcpClient('(s)', object_path, result_handler=reply, error_handler=err, timeout=120 * 1000)
