@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # alexandros_ <alexandros.venn@gmail.com>, 2014
 # alexandros_ <alexandros.venn@gmail.com>, 2014
@@ -17,21 +17,23 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-29 08:27+0200\n"
-"PO-Revision-Date: 2019-04-29 06:32+0000\n"
-"Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
-"Language-Team: Greek (http://www.transifex.com/mate/MATE/language/el/)\n"
+"POT-Creation-Date: 2020-09-26 22:08+0000\n"
+"PO-Revision-Date: 2020-09-12 08:19+0000\n"
+"Last-Translator: Christopher Schramm <github@cschramm.eu>\n"
+"Language-Team: Greek <https://hosted.weblate.org/projects/blueman/stable/el/"
+">\n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: el\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3-dev\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Visibility Setting</b>"
 msgstr "<b>Ρύθμιση Ορατότητας</b>"
 
-#: ../data/ui/adapters-tab.ui.h:2 ../blueman/main/Adapter.py:131
+#: ../data/ui/adapters-tab.ui.h:2 ../blueman/main/Adapter.py:130
 msgid "Hidden"
 msgstr "Σε απόκρυψη"
 
@@ -75,7 +77,8 @@ msgstr "_Συσκευή"
 msgid "_View"
 msgstr "_Προβολή"
 
-#: ../data/ui/manager-main.ui.h:4
+#: ../data/ui/manager-main.ui.h:4 ../blueman/gui/manager/ManagerMenu.py:47
+#: ../blueman/plugins/applet/StandardItems.py:44
 msgid "_Help"
 msgstr "_Βοήθεια"
 
@@ -208,7 +211,8 @@ msgstr "<b>Ρυθμίσεις Μεταφοράς</b>"
 
 #: ../data/ui/send-dialog.ui.h:1
 msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
-msgstr "<span weight=\"bold\" size=\"large\">Αποστολή αρχείων μέσω Bluetooth</span>"
+msgstr ""
+"<span weight=\"bold\" size=\"large\">Αποστολή αρχείων μέσω Bluetooth</span>"
 
 #: ../data/ui/send-dialog.ui.h:2
 msgid "<b>To:</b>"
@@ -223,8 +227,14 @@ msgid ""
 "<b>Welcome to the Bluetooth device setup assistant. </b>\n"
 "\n"
 "\n"
-"It will walk you through the process of configuring and connecting to your Bluetooth enabled devices."
-msgstr "<b>Καλωσήρθατε στον οδηγό ρυθμίσεων συσκευής Bluetooth</b>\n\n\nΘα σας καθοδηγήσει στη διαδικασία ρύθμισης και σύνδεσης των Bluetooth συσκευών σας."
+"It will walk you through the process of configuring and connecting to your "
+"Bluetooth enabled devices."
+msgstr ""
+"<b>Καλωσήρθατε στον οδηγό ρυθμίσεων συσκευής Bluetooth</b>\n"
+"\n"
+"\n"
+"Θα σας καθοδηγήσει στη διαδικασία ρύθμισης και σύνδεσης των Bluetooth "
+"συσκευών σας."
 
 #: ../data/ui/assistant.ui.h:5
 msgid "Introduction"
@@ -262,8 +272,7 @@ msgstr "Σύνδεση"
 msgid "<b>Please wait...</b>"
 msgstr "<b>Παρακαλώ περιμένετε...</b>"
 
-#: ../data/ui/assistant.ui.h:14
-#: ../blueman/gui/manager/ManagerDeviceMenu.py:121
+#: ../data/ui/assistant.ui.h:14 ../blueman/gui/manager/ManagerDeviceMenu.py:121
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:174
 msgid "Connecting..."
 msgstr "Γίνεται σύνδεση..."
@@ -362,22 +371,24 @@ msgstr "Αποστολή σημείωσης"
 msgid "Bluetooth Adapters"
 msgstr "Προσαρμογείς Bluetooth"
 
-#: ../blueman/main/Adapter.py:48
+#: ../blueman/main/Adapter.py:49
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
-msgstr "Πρέπει να ενεργοποιηθεί το Bluetooth για να μπορεί να λειτουργήσει ο διαχειριστής προσαρμογέα"
+msgstr ""
+"Πρέπει να ενεργοποιηθεί το Bluetooth για να μπορεί να λειτουργήσει ο "
+"διαχειριστής προσαρμογέα"
 
-#: ../blueman/main/Adapter.py:129
+#: ../blueman/main/Adapter.py:128
 msgid "Always"
 msgstr "Πάντα"
 
-#: ../blueman/main/Adapter.py:133
+#: ../blueman/main/Adapter.py:132
 #, python-format
 msgid "%d Minute"
 msgid_plural "%d Minutes"
 msgstr[0] "%d Λεπτό"
 msgstr[1] "%d Λεπτά"
 
-#: ../blueman/main/Adapter.py:199
+#: ../blueman/main/Adapter.py:198
 msgid "Adapter"
 msgstr "Προσαρμογέας "
 
@@ -385,9 +396,11 @@ msgstr "Προσαρμογέας "
 msgid "Bluetooth Devices"
 msgstr "Συσκευές Bluetooth"
 
-#: ../blueman/main/Manager.py:71
+#: ../blueman/main/Manager.py:71 ../blueman/main/Manager.py:111
 msgid "Bluetooth needs to be turned on for the device manager to function"
-msgstr "Πρέπει να είναι ενεργοποιημένο το Bluetooth για να μπορέσει να λειτουργήσει ο διαχειριστής συσκευών"
+msgstr ""
+"Πρέπει να είναι ενεργοποιημένο το Bluetooth για να μπορέσει να λειτουργήσει "
+"ο διαχειριστής συσκευών"
 
 #: ../blueman/main/Manager.py:90
 msgid "Connection to BlueZ failed"
@@ -396,25 +409,29 @@ msgstr "Απέτυχε η σύνδεση με το BlueZ"
 #: ../blueman/main/Manager.py:91
 msgid ""
 "Bluez daemon is not running, blueman-manager cannot continue.\n"
-"This probably means that there were no Bluetooth adapters detected or Bluetooth daemon was not started."
-msgstr "Η διεργασία παρασκηνίου Bluez δεν εκτελείται, ο διαχειριστής blueman-manager δεν μπορεί να συνεχίσει.\nΑυτό πιθανότατα σημαίνει ότι δεν βρεθήκαν προσαρμογείς Bluetooth στο σύστημά σας ή ότι η διεργασία παρασκηνίου για το Bluetooth δεν ξεκίνησε. "
+"This probably means that there were no Bluetooth adapters detected or "
+"Bluetooth daemon was not started."
+msgstr ""
+"Η διεργασία παρασκηνίου Bluez δεν εκτελείται, ο διαχειριστής blueman-manager "
+"δεν μπορεί να συνεχίσει.\n"
+"Αυτό πιθανότατα σημαίνει ότι δεν βρεθήκαν προσαρμογείς Bluetooth στο σύστημά "
+"σας ή ότι η διεργασία παρασκηνίου για το Bluetooth δεν ξεκίνησε. "
 
-#: ../blueman/main/Manager.py:174
+#: ../blueman/main/Manager.py:184
 msgid "Searching"
 msgstr "Αναζήτηση"
 
-#: ../blueman/main/Manager.py:187
-#: ../blueman/plugins/applet/StandardItems.py:69 ../apps/blueman-assistant:65
+#: ../blueman/main/Manager.py:197 ../blueman/plugins/applet/StandardItems.py:69
+#: ../apps/blueman-assistant:66
 msgid "Bluetooth Assistant"
 msgstr "Βοηθός Bluetooth"
 
-#: ../blueman/main/Manager.py:198
-#: ../blueman/plugins/applet/StandardItems.py:81
+#: ../blueman/main/Manager.py:208 ../blueman/plugins/applet/StandardItems.py:81
 msgid "Adapter Preferences"
 msgstr "Προτιμήσεις προσαρμογέα"
 
-#: ../blueman/main/Manager.py:207
-#: ../blueman/gui/manager/ManagerDeviceList.py:131
+#: ../blueman/main/Manager.py:217
+#: ../blueman/gui/manager/ManagerDeviceList.py:133
 #: ../blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
 msgstr "Αποστολέας αρχείων"
@@ -423,59 +440,59 @@ msgstr "Αποστολέας αρχείων"
 msgid "Bluetooth File Transfer"
 msgstr "Μεταφορά αρχείων μέσω Bluetooth"
 
-#: ../blueman/main/Sendto.py:59
-#: ../blueman/gui/manager/ManagerProgressbar.py:20
+#: ../blueman/main/Sendto.py:59 ../blueman/gui/manager/ManagerProgressbar.py:20
 msgid "Connecting"
 msgstr "Γίνεται σύνδεση"
 
-#: ../blueman/main/Sendto.py:107
+#: ../blueman/main/Sendto.py:110
 msgid "obexd not available"
 msgstr "Το obexd δεν είναι διαθέσιμο"
 
-#: ../blueman/main/Sendto.py:107
+#: ../blueman/main/Sendto.py:110
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
 msgstr ""
+"Η αυτόματη εκκίνηση της υπηρεσίας obex απέτυχε. Βεβαιωθείτε ότι εκτελείται"
 
-#: ../blueman/main/Sendto.py:138
+#: ../blueman/main/Sendto.py:139
 msgid "Cancelling"
 msgstr "Ακύρωση"
 
-#: ../blueman/main/Sendto.py:149 ../blueman/main/Sendto.py:191
+#: ../blueman/main/Sendto.py:150 ../blueman/main/Sendto.py:192
 msgid "Sending File"
 msgstr "Αποστολή Αρχείου"
 
-#: ../blueman/main/Sendto.py:149 ../blueman/main/Sendto.py:191
+#: ../blueman/main/Sendto.py:150 ../blueman/main/Sendto.py:192
 msgid "ETA:"
 msgstr "Χρόνος Που Απομένει:"
 
-#: ../blueman/main/Sendto.py:185
+#: ../blueman/main/Sendto.py:186
 #, python-format
 msgid "%.0f Minute"
 msgid_plural "%.0f Minutes"
 msgstr[0] "%.0f Λεπτό"
 msgstr[1] "%.0f Λεπτά"
 
-#: ../blueman/main/Sendto.py:187
+#: ../blueman/main/Sendto.py:188
 #, python-format
 msgid "%.0f Second"
 msgid_plural "%.0f Seconds"
 msgstr[0] "%.0f Δευτερόλεπτο"
 msgstr[1] "%.0f Δευτερόλεπτα"
 
-#: ../blueman/main/Sendto.py:221
+#: ../blueman/main/Sendto.py:222
 #, python-format
 msgid "Error occurred while sending file %s"
 msgstr "Παρουσιάστηκε σφάλμα κατα την αποστολή του αρχείου %s"
 
-#: ../blueman/main/Sendto.py:225
+#: ../blueman/main/Sendto.py:226
 msgid "Skip"
 msgstr "Παράλεψη"
 
-#: ../blueman/main/Sendto.py:226
+#: ../blueman/main/Sendto.py:227
 msgid "Retry"
 msgstr "Επανάληψη"
 
-#: ../blueman/main/Sendto.py:264
+#: ../blueman/main/Sendto.py:274
 msgid "Error occurred"
 msgstr "Παρουσιάστηκε σφάλμα"
 
@@ -483,87 +500,110 @@ msgstr "Παρουσιάστηκε σφάλμα"
 msgid "Local Services"
 msgstr "Τοπικές υπηρεσίες"
 
-#: ../blueman/main/applet/BluezAgent.py:186
+#: ../blueman/main/applet/BluezAgent.py:178
 #, python-format
 msgid "Pairing request for %s"
 msgstr "Αίτηση ζεύξης για %s"
 
-#: ../blueman/main/applet/BluezAgent.py:198
-#: ../blueman/main/applet/BluezAgent.py:323
+#: ../blueman/main/applet/BluezAgent.py:190
+#: ../blueman/main/applet/BluezAgent.py:299
 msgid "Bluetooth Authentication"
 msgstr "Αυθεντικοποίηση Bluetooth"
 
-#: ../blueman/main/applet/BluezAgent.py:225
+#: ../blueman/main/applet/BluezAgent.py:217
 msgid "Enter PIN code for authentication:"
 msgstr "Εισάγετε τον κωδικό PIN για αυθεντικοπίηση:"
 
-#: ../blueman/main/applet/BluezAgent.py:226
+#: ../blueman/main/applet/BluezAgent.py:218
 msgid "Enter PIN code"
 msgstr "Εισάγετε τον κωδικό PIN"
 
-#: ../blueman/main/applet/BluezAgent.py:241
+#: ../blueman/main/applet/BluezAgent.py:232
 msgid "Enter passkey for authentication:"
 msgstr "Εισαγάγετε φράσης-κλειδιού πρόσβασης για την αυθεντικοποίηση"
 
-#: ../blueman/main/applet/BluezAgent.py:242
+#: ../blueman/main/applet/BluezAgent.py:233
 msgid "Enter passkey"
 msgstr "Εισάγετε τη φράση-κλειδί"
 
-#: ../blueman/main/applet/BluezAgent.py:253
+#: ../blueman/main/applet/BluezAgent.py:243
 msgid "Pairing passkey for"
 msgstr "Φράση-κλειδί ζεύξης για"
 
-#: ../blueman/main/applet/BluezAgent.py:265
+#: ../blueman/main/applet/BluezAgent.py:252
 msgid "Pairing PIN code for"
 msgstr "Κωδικός ΡΙΝ ζεύξης για"
 
-#: ../blueman/main/applet/BluezAgent.py:286
+#: ../blueman/main/applet/BluezAgent.py:264
 msgid "Pairing request for:"
 msgstr "Αίτημα ζεύξης για:"
 
-#: ../blueman/main/applet/BluezAgent.py:289
+#: ../blueman/main/applet/BluezAgent.py:267
 msgid "Confirm value for authentication:"
 msgstr "Επιβεβαίωση τιμής για αυθεντικοποίηση:"
 
-#: ../blueman/main/applet/BluezAgent.py:290
+#: ../blueman/main/applet/BluezAgent.py:268
 msgid "Confirm"
 msgstr "Επιβεβαίωση"
 
-#: ../blueman/main/applet/BluezAgent.py:290
-#: ../blueman/main/applet/BluezAgent.py:321
+#: ../blueman/main/applet/BluezAgent.py:268
+#: ../blueman/main/applet/BluezAgent.py:297
 msgid "Deny"
 msgstr "Άρνηση"
 
-#: ../blueman/main/applet/BluezAgent.py:318
+#: ../blueman/main/applet/BluezAgent.py:294
 msgid "Authorization request for:"
 msgstr "Αίτημα εξουσιοδότησης απο:"
 
-#: ../blueman/main/applet/BluezAgent.py:318
+#: ../blueman/main/applet/BluezAgent.py:294
 msgid "Service:"
 msgstr "Υπηρεσία:"
 
-#: ../blueman/main/applet/BluezAgent.py:319
+#: ../blueman/main/applet/BluezAgent.py:295
 msgid "Always accept"
 msgstr "Πάντα αποδοχή"
 
-#: ../blueman/main/applet/BluezAgent.py:320
-#: ../blueman/plugins/applet/TransferService.py:106
+#: ../blueman/main/applet/BluezAgent.py:296
+#: ../blueman/plugins/applet/TransferService.py:105
 msgid "Accept"
 msgstr "Αποδοχή"
 
-#: ../blueman/main/PluginManager.py:67
+#: ../blueman/main/PluginManager.py:68
 msgid ""
-"<b>An error has occured while loading a plugin. Please notify the developers with the content of this message to our </b>\n"
+"<b>An error has occured while loading a plugin. Please notify the developers "
+"with the content of this message to our </b>\n"
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
-msgstr "<b>Παρουσιάστηκε σφάλμα κατά τη φόρτωση μιας προσθήκης. Παρακαλείσθε να ενημερώσετε τους προγραμματιστές σχετικά με το περιεχόμενο αυτού του μηνύματος</b>\n<a href=\"http://github.com/blueman-project/blueman/issues\">Ιστοσελίδα</a>"
+msgstr ""
+"<b>Παρουσιάστηκε σφάλμα κατά τη φόρτωση μιας προσθήκης. Παρακαλείσθε να "
+"ενημερώσετε τους προγραμματιστές σχετικά με το περιεχόμενο αυτού του "
+"μηνύματος</b>\n"
+"<a href=\"http://github.com/blueman-project/blueman/issues\">Ιστοσελίδα</a>"
 
-#: ../blueman/Functions.py:72
+#: ../blueman/Functions.py:79
 msgid "Bluetooth Turned Off"
 msgstr "Το Bluetooth έχει απενεργοποιηθεί"
 
-#: ../blueman/Functions.py:76
+#: ../blueman/Functions.py:80
+msgid "Exit"
+msgstr "Έξοδος"
+
+#: ../blueman/Functions.py:81
 msgid "Enable Bluetooth"
 msgstr "Ενεργοποίηση Bluetooth"
+
+#: ../blueman/Functions.py:100
+msgid "Shall bluetooth get enabled automatically?"
+msgstr "Να ενεργοποιείται αυτόματα το bluetooth;"
+
+#: ../blueman/Functions.py:101
+#, fuzzy
+#| msgid "yes"
+msgid "Yes"
+msgstr "ναι"
+
+#: ../blueman/Functions.py:102
+msgid "No"
+msgstr "Όχι"
 
 #: ../blueman/gui/manager/ManagerMenu.py:38
 msgid "_Report a Problem"
@@ -608,58 +648,69 @@ msgstr "_Πρόσθετα"
 msgid "_Local Services"
 msgstr "_Τοπικές Υπηρεσίες"
 
-#: ../blueman/gui/manager/ManagerMenu.py:118
+#: ../blueman/gui/manager/ManagerMenu.py:117
 #: ../blueman/plugins/applet/StandardItems.py:84
 msgid "Service Preferences"
 msgstr "Προτιμήσεις Υπηρεσίας"
 
-#: ../blueman/gui/manager/ManagerMenu.py:126
+#: ../blueman/gui/manager/ManagerMenu.py:125
 msgid "_Search"
 msgstr "_Αναζήτηση"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:420
+#: ../blueman/gui/manager/ManagerMenu.py:139
+#, fuzzy
+#| msgid "Adapter Preferences"
+msgid "_Preferences"
+msgstr "Προτιμήσεις προσαρμογέα"
+
+#: ../blueman/gui/manager/ManagerMenu.py:148
+#: ../blueman/plugins/applet/ExitItem.py:15
+msgid "_Exit"
+msgstr ""
+
+#: ../blueman/gui/manager/ManagerDeviceList.py:423
 msgid "<b>Trusted and Paired</b>"
 msgstr "<b>Έμπιστος και Συνδυαζμένος</b>"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:422
+#: ../blueman/gui/manager/ManagerDeviceList.py:425
 msgid "<b>Paired</b>"
 msgstr "<b>Συνδυασμένος</b>"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:424
+#: ../blueman/gui/manager/ManagerDeviceList.py:427
 msgid "<b>Trusted</b>"
 msgstr "<b>Έμπιστες</b>"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:444
+#: ../blueman/gui/manager/ManagerDeviceList.py:447
 msgid "Poor"
 msgstr "Κακή"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:446
-#: ../blueman/gui/manager/ManagerDeviceList.py:457
+#: ../blueman/gui/manager/ManagerDeviceList.py:449
+#: ../blueman/gui/manager/ManagerDeviceList.py:460
 msgid "Sub-optimal"
 msgstr "Ημί-βέλτιστη"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:448
-#: ../blueman/gui/manager/ManagerDeviceList.py:459
+#: ../blueman/gui/manager/ManagerDeviceList.py:451
+#: ../blueman/gui/manager/ManagerDeviceList.py:462
 msgid "Optimal"
 msgstr "Βέλτιστη"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:450
+#: ../blueman/gui/manager/ManagerDeviceList.py:453
 msgid "Much"
 msgstr "Ικανοποιητική"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:452
+#: ../blueman/gui/manager/ManagerDeviceList.py:455
 msgid "Too much"
 msgstr "Ιδιαίτερα ικανοποιητική"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:455
+#: ../blueman/gui/manager/ManagerDeviceList.py:458
 msgid "Low"
 msgstr "Χαμηλή"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:461
+#: ../blueman/gui/manager/ManagerDeviceList.py:464
 msgid "High"
 msgstr "Υψηλή"
 
-#: ../blueman/gui/manager/ManagerDeviceList.py:463
+#: ../blueman/gui/manager/ManagerDeviceList.py:466
 msgid "Very High"
 msgstr "Πολύ Υψηλή"
 
@@ -735,6 +786,12 @@ msgstr "_Μη έμπιστη"
 msgid "_Setup..."
 msgstr "_Ρύθμιση"
 
+#: ../blueman/gui/manager/ManagerDeviceMenu.py:370
+#, fuzzy
+#| msgid "Rename device"
+msgid "R_ename device..."
+msgstr "Μετονομασία συσκευής"
+
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:379
 msgid "_Remove..."
 msgstr "_Αφαίρεση..."
@@ -773,7 +830,19 @@ msgstr "Περισσότερα"
 
 #: ../blueman/gui/CommonUi.py:39
 msgid "translator-credits"
-msgstr "Launchpad Contributions:\n  Adonis Papaderos https://launchpad.net/~ado-papas\n  Burak Anıl https://launchpad.net/~abstract-tr39\n  Clopy https://launchpad.net/~muz-diktio\n  Galatsanos Panagiotis https://launchpad.net/~oneinchman\n  George Kontis https://launchpad.net/~giormatsis\n  Giorgos Skafidas https://launchpad.net/~giorgos-skafidas\n  Petros Kyladitis https://launchpad.net/~multipetros\n  Spiros Gezerlis https://launchpad.net/~gezerlis\n  Thanos Lefteris https://launchpad.net/~alefteris\n  Valmantas Palikša https://launchpad.net/~walmis\n  Τάσος Παπανικολάου https://launchpad.net/~taspap"
+msgstr ""
+"Launchpad Contributions:\n"
+"  Adonis Papaderos https://launchpad.net/~ado-papas\n"
+"  Burak Anıl https://launchpad.net/~abstract-tr39\n"
+"  Clopy https://launchpad.net/~muz-diktio\n"
+"  Galatsanos Panagiotis https://launchpad.net/~oneinchman\n"
+"  George Kontis https://launchpad.net/~giormatsis\n"
+"  Giorgos Skafidas https://launchpad.net/~giorgos-skafidas\n"
+"  Petros Kyladitis https://launchpad.net/~multipetros\n"
+"  Spiros Gezerlis https://launchpad.net/~gezerlis\n"
+"  Thanos Lefteris https://launchpad.net/~alefteris\n"
+"  Valmantas Palikša https://launchpad.net/~walmis\n"
+"  Τάσος Παπανικολάου https://launchpad.net/~taspap"
 
 #: ../blueman/gui/CommonUi.py:44
 msgid "Blueman is a GTK+ Bluetooth manager"
@@ -801,23 +870,38 @@ msgstr "Πρόβλημα εξάρτησης"
 #: ../blueman/gui/applet/PluginDialog.py:288
 #, python-format
 msgid ""
-"Plugin <b>\"%(0)s\"</b> depends on <b>%(1)s</b>. Unloading <b>%(1)s</b> will also unload <b>\"%(0)s\"</b>.\n"
+"Plugin <b>\"%(0)s\"</b> depends on <b>%(1)s</b>. Unloading <b>%(1)s</b> will "
+"also unload <b>\"%(0)s\"</b>.\n"
 "Proceed?"
-msgstr "Το plugin <b>\"%(0)s\"</b> εξαρτάται από το <b>%(1)s</b>. Η αποφόρτωση του <b>%(1)s</b> θα έχει ως αποτέλεσμα την αποφόρτωση και του <b>\"%(0)s\"</b>.\nΘέλετε να συνεχίσετε;"
+msgstr ""
+"Το plugin <b>\"%(0)s\"</b> εξαρτάται από το <b>%(1)s</b>. Η αποφόρτωση του "
+"<b>%(1)s</b> θα έχει ως αποτέλεσμα την αποφόρτωση και του <b>\"%(0)s\"</b>.\n"
+"Θέλετε να συνεχίσετε;"
 
 #: ../blueman/gui/applet/PluginDialog.py:310
 #, python-format
 msgid ""
-"Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will unload <b>%(0)s</b>.\n"
+"Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will "
+"unload <b>%(0)s</b>.\n"
 "Proceed?"
-msgstr "Η πρόσθετη λειτουργία <b>%(0)s</b> ερχεται σε σύγκρουση με <b>%(1)s</b>. Όταν φορτώσετε το <b>%(1)s</b> θα αποφορτώσετε το <b>%(0)s</b>.\nΘέλετε να συνεχίσετε;"
+msgstr ""
+"Η πρόσθετη λειτουργία <b>%(0)s</b> ερχεται σε σύγκρουση με <b>%(1)s</b>. "
+"Όταν φορτώσετε το <b>%(1)s</b> θα αποφορτώσετε το <b>%(0)s</b>.\n"
+"Θέλετε να συνεχίσετε;"
 
 #: ../blueman/gui/DeviceSelectorWidget.py:37
 msgid "Adapter selection"
 msgstr "Επιλογή προσαρμογέα"
 
+#: ../blueman/gui/DeviceSelectorWidget.py:43
+#, fuzzy
+#| msgid "Discoverable… %ss"
+msgid "Discovering…"
+msgstr "Ανιχνεύσιμο... %ss"
+
 #. translators: device class
 #: ../blueman/DeviceClass.py:39 ../blueman/DeviceClass.py:63
+#: ../blueman/DeviceClass.py:109 ../blueman/DeviceClass.py:155
 msgid "uncategorized"
 msgstr "ακατηγοριοποίητο"
 
@@ -872,39 +956,262 @@ msgid "isdn"
 msgstr "isdn"
 
 #. translators: device class
-#: ../blueman/DeviceClass.py:110
+#: ../blueman/DeviceClass.py:111
 msgid "headset"
 msgstr "σετ ακουστικών"
 
 #. translators: device class
-#: ../blueman/DeviceClass.py:112
+#: ../blueman/DeviceClass.py:113
 msgid "handsfree"
 msgstr "ακουστικά"
 
 #. translators: device class
-#: ../blueman/DeviceClass.py:114 ../blueman/DeviceClass.py:246
-#: ../blueman/DeviceClass.py:310
+#: ../blueman/DeviceClass.py:115 ../blueman/DeviceClass.py:143
+#: ../blueman/DeviceClass.py:263 ../blueman/DeviceClass.py:327
 msgid "unknown"
 msgstr "άγνωστο"
 
 #. translators: device class
-#: ../blueman/DeviceClass.py:116
+#: ../blueman/DeviceClass.py:117
 msgid "microphone"
 msgstr "μικρόφωνο"
 
 #. translators: device class
+#: ../blueman/DeviceClass.py:119
+msgid "loudspeaker"
+msgstr ""
+
+#. translators: device class
+#: ../blueman/DeviceClass.py:121
+msgid "headphones"
+msgstr ""
+
+#. translators: device class
+#: ../blueman/DeviceClass.py:123
+msgid "portable audio"
+msgstr ""
+
+#. translators: device class
+#: ../blueman/DeviceClass.py:125
+msgid "car audio"
+msgstr ""
+
+#. translators: device class
+#: ../blueman/DeviceClass.py:127
+msgid "set-top box"
+msgstr ""
+
+#. translators: device class
+#: ../blueman/DeviceClass.py:129
+msgid "hifi audio"
+msgstr ""
+
+#. translators: device class
+#: ../blueman/DeviceClass.py:131
+msgid "vcr"
+msgstr ""
+
+#. translators: device class
+#: ../blueman/DeviceClass.py:133
+msgid "video camera"
+msgstr ""
+
+#. translators: device class
+#: ../blueman/DeviceClass.py:135
+msgid "camcorder"
+msgstr ""
+
+#. translators: device class
+#: ../blueman/DeviceClass.py:137
+msgid "video monitor"
+msgstr ""
+
+#. translators: device class
+#: ../blueman/DeviceClass.py:139
+msgid "video display and loudspeaker"
+msgstr ""
+
+#. translators: device class
 #: ../blueman/DeviceClass.py:141
+msgid "video conferencing"
+msgstr ""
+
+#. translators: device class
+#: ../blueman/DeviceClass.py:145
+msgid "gaming/toy"
+msgstr ""
+
+#. translators: device class
+#: ../blueman/DeviceClass.py:157
 msgid "keyboard"
 msgstr "πληκτρολόγιο"
 
 #. translators: device class
-#: ../blueman/DeviceClass.py:143
+#: ../blueman/DeviceClass.py:159
 msgid "pointing"
 msgstr "συσκευή επίδειξης"
+
+#. translators: device class
+#: ../blueman/DeviceClass.py:161
+msgid "combo"
+msgstr ""
+
+#. 0x0000 is for our generic connect
+#: ../blueman/Sdp.py:97
+#, fuzzy
+#| msgid "Connect"
+msgid "Generic Connect"
+msgstr "Σύνδεση"
+
+#: ../blueman/Sdp.py:98
+msgid "SDP"
+msgstr ""
+
+#: ../blueman/Sdp.py:99
+msgid "UDP"
+msgstr ""
+
+#: ../blueman/Sdp.py:100
+msgid "RFCOMM"
+msgstr ""
+
+#: ../blueman/Sdp.py:101
+msgid "TCP"
+msgstr ""
+
+#: ../blueman/Sdp.py:102
+msgid "TCS-BIN"
+msgstr ""
+
+#: ../blueman/Sdp.py:103
+msgid "TCS-AT"
+msgstr ""
+
+#: ../blueman/Sdp.py:104
+msgid "ATT"
+msgstr ""
+
+#: ../blueman/Sdp.py:105
+msgid "OBEX"
+msgstr ""
+
+#: ../blueman/Sdp.py:106
+msgid "IP"
+msgstr ""
+
+#: ../blueman/Sdp.py:107
+msgid "FTP"
+msgstr ""
+
+#: ../blueman/Sdp.py:108
+msgid "HTTP"
+msgstr ""
+
+#: ../blueman/Sdp.py:109
+msgid "WSP"
+msgstr ""
+
+#: ../blueman/Sdp.py:110
+msgid "BNEP"
+msgstr ""
+
+#: ../blueman/Sdp.py:111
+msgid "UPnP/ESDP"
+msgstr ""
+
+#: ../blueman/Sdp.py:112
+msgid "HIDP"
+msgstr ""
+
+#: ../blueman/Sdp.py:113
+msgid "Hardcopy Control Channel"
+msgstr ""
+
+#: ../blueman/Sdp.py:114
+msgid "Hardcopy Data Channel"
+msgstr ""
+
+#: ../blueman/Sdp.py:115
+msgid "Hardcopy Notification"
+msgstr ""
+
+#: ../blueman/Sdp.py:116
+msgid "AVCTP"
+msgstr ""
+
+#: ../blueman/Sdp.py:117
+msgid "AVDTP"
+msgstr ""
+
+#: ../blueman/Sdp.py:118
+msgid "CMTP"
+msgstr ""
+
+#: ../blueman/Sdp.py:119
+msgid "UDI_C-Plane"
+msgstr ""
+
+#: ../blueman/Sdp.py:120 ../blueman/Sdp.py:121
+msgid "Multi-Channel Adaptation Protocol (MCAP)"
+msgstr ""
+
+#: ../blueman/Sdp.py:122
+msgid "L2CAP"
+msgstr ""
+
+#: ../blueman/Sdp.py:123
+msgid "ServiceDiscoveryServerServiceClassID"
+msgstr ""
+
+#: ../blueman/Sdp.py:124
+msgid "BrowseGroupDescriptorServiceClassID"
+msgstr ""
+
+#: ../blueman/Sdp.py:125
+msgid "Public Browse Group"
+msgstr ""
+
+#: ../blueman/Sdp.py:126
+#, fuzzy
+#| msgid "Serial Ports"
+msgid "Serial Port"
+msgstr "Σειριακές Θύρες"
+
+#: ../blueman/Sdp.py:127
+msgid "LAN Access Using PPP"
+msgstr ""
 
 #: ../blueman/Sdp.py:128
 msgid "Dialup Networking (DUN)"
 msgstr "Σύνδεση μέσω τηλεφώνου (DUN)"
+
+#: ../blueman/Sdp.py:129
+msgid "IrMC Sync"
+msgstr ""
+
+#: ../blueman/Sdp.py:130
+msgid "OBEX Object Push"
+msgstr ""
+
+#: ../blueman/Sdp.py:131
+#, fuzzy
+#| msgid "Bluetooth File Transfer"
+msgid "OBEX File Transfer"
+msgstr "Μεταφορά αρχείων μέσω Bluetooth"
+
+#: ../blueman/Sdp.py:132
+msgid "IrMC Sync Command"
+msgstr ""
+
+#: ../blueman/Sdp.py:133 ../blueman/Sdp.py:174
+#, fuzzy
+#| msgid "headset"
+msgid "Headset"
+msgstr "σετ ακουστικών"
+
+#: ../blueman/Sdp.py:134
+msgid "Cordless Telephony"
+msgstr ""
 
 #: ../blueman/Sdp.py:135
 msgid "Audio Source"
@@ -914,6 +1221,46 @@ msgstr "Πηγή ήχου"
 msgid "Audio Sink"
 msgstr "Προορισμός Ήχου"
 
+#: ../blueman/Sdp.py:137
+msgid "Remote Control Target"
+msgstr ""
+
+#: ../blueman/Sdp.py:138
+msgid "Advanced Audio"
+msgstr ""
+
+#: ../blueman/Sdp.py:139
+msgid "Remote Control"
+msgstr ""
+
+#: ../blueman/Sdp.py:140
+msgid "Video Conferencing"
+msgstr ""
+
+#: ../blueman/Sdp.py:141
+msgid "Intercom"
+msgstr ""
+
+#: ../blueman/Sdp.py:142
+msgid "Fax"
+msgstr ""
+
+#: ../blueman/Sdp.py:143
+msgid "Headset Audio Gateway"
+msgstr ""
+
+#: ../blueman/Sdp.py:144
+msgid "WAP"
+msgstr ""
+
+#: ../blueman/Sdp.py:145
+msgid "WAP Client"
+msgstr ""
+
+#: ../blueman/Sdp.py:146
+msgid "PANU"
+msgstr ""
+
 #: ../blueman/Sdp.py:147
 msgid "Network Access Point"
 msgstr "Σημείο πρόσβασης δικτύου"
@@ -921,6 +1268,492 @@ msgstr "Σημείο πρόσβασης δικτύου"
 #: ../blueman/Sdp.py:148
 msgid "Group Network"
 msgstr "Ομάδα δικτύου"
+
+#: ../blueman/Sdp.py:149
+msgid "DirectPrinting (BPP)"
+msgstr ""
+
+#: ../blueman/Sdp.py:150
+msgid "ReferencePrinting (BPP)"
+msgstr ""
+
+#: ../blueman/Sdp.py:151
+msgid "Imaging (BIP)"
+msgstr ""
+
+#: ../blueman/Sdp.py:152
+msgid "ImagingResponder (BIP)"
+msgstr ""
+
+#: ../blueman/Sdp.py:153
+msgid "ImagingAutomaticArchive (BIP)"
+msgstr ""
+
+#: ../blueman/Sdp.py:154
+msgid "ImagingReferencedObjects (BIP)"
+msgstr ""
+
+#: ../blueman/Sdp.py:155
+#, fuzzy
+#| msgid "handsfree"
+msgid "Handsfree"
+msgstr "ακουστικά"
+
+#: ../blueman/Sdp.py:156
+msgid "Handsfree Audio Gateway"
+msgstr ""
+
+#: ../blueman/Sdp.py:157
+msgid "DirectPrintingReferenceObjectsService (BPP)"
+msgstr ""
+
+#: ../blueman/Sdp.py:158
+msgid "ReflectedUI (BPP)"
+msgstr ""
+
+#: ../blueman/Sdp.py:159
+msgid "Basic Printing (BPP)"
+msgstr ""
+
+#: ../blueman/Sdp.py:160
+msgid "Printing Status (BPP)"
+msgstr ""
+
+#: ../blueman/Sdp.py:161
+msgid "Human Interface Device Service (HID)"
+msgstr ""
+
+#: ../blueman/Sdp.py:162
+msgid "HardcopyCableReplacement (HCR)"
+msgstr ""
+
+#: ../blueman/Sdp.py:163
+msgid "HCR_Print (HCR)"
+msgstr ""
+
+#: ../blueman/Sdp.py:164
+msgid "HCR_Scan (HCR)"
+msgstr ""
+
+#: ../blueman/Sdp.py:165
+msgid "Common ISDN Access (CIP)"
+msgstr ""
+
+#: ../blueman/Sdp.py:166
+msgid "VideoConferencingGW (VCP)"
+msgstr ""
+
+#: ../blueman/Sdp.py:167
+msgid "UDI-MT"
+msgstr ""
+
+#: ../blueman/Sdp.py:168
+msgid "UDI-TA"
+msgstr ""
+
+#: ../blueman/Sdp.py:169
+msgid "Audio/Video"
+msgstr ""
+
+#: ../blueman/Sdp.py:170
+msgid "SIM Access (SAP)"
+msgstr ""
+
+#: ../blueman/Sdp.py:171
+msgid "Phonebook Access (PBAP) - PCE"
+msgstr ""
+
+#: ../blueman/Sdp.py:172
+msgid "Phonebook Access (PBAP) - PSE"
+msgstr ""
+
+#: ../blueman/Sdp.py:173
+#, fuzzy
+#| msgid "Network Access Point (NAP)"
+msgid "Phonebook Access (PBAP)"
+msgstr "Σημείο Πρόσβασης Δικτύου (NAP)"
+
+#: ../blueman/Sdp.py:175
+msgid "Message Access Server"
+msgstr ""
+
+#: ../blueman/Sdp.py:176
+msgid "Message Notification Server"
+msgstr ""
+
+#: ../blueman/Sdp.py:177
+#, fuzzy
+#| msgid "Network Access Point (NAP)"
+msgid "Message Access Profile (MAP)"
+msgstr "Σημείο Πρόσβασης Δικτύου (NAP)"
+
+#: ../blueman/Sdp.py:178
+msgid "GNSS"
+msgstr ""
+
+#: ../blueman/Sdp.py:179
+msgid "GNSS Server"
+msgstr ""
+
+#: ../blueman/Sdp.py:180
+msgid "3D Display"
+msgstr ""
+
+#: ../blueman/Sdp.py:181
+msgid "3D Glasses"
+msgstr ""
+
+#: ../blueman/Sdp.py:182
+msgid "3D Synchronization (3DSP)"
+msgstr ""
+
+#: ../blueman/Sdp.py:183
+msgid "Multi-Profile Specification (MPS) Profile"
+msgstr ""
+
+#: ../blueman/Sdp.py:184
+msgid "Multi-Profile Specification (MPS) Service"
+msgstr ""
+
+#: ../blueman/Sdp.py:185
+msgid "Calendar, Task, and Notes (CTN) Access Service"
+msgstr ""
+
+#: ../blueman/Sdp.py:186
+msgid "Calendar, Task, and Notes (CTN) Notification Service"
+msgstr ""
+
+#: ../blueman/Sdp.py:187
+msgid "Calendar, Task, and Notes (CTN) Profile"
+msgstr ""
+
+#: ../blueman/Sdp.py:188
+msgid "PnP Information"
+msgstr ""
+
+#: ../blueman/Sdp.py:189
+#, fuzzy
+#| msgid "Group Network"
+msgid "Generic Networking"
+msgstr "Ομάδα δικτύου"
+
+#: ../blueman/Sdp.py:190
+#, fuzzy
+#| msgid "Bluetooth File Transfer"
+msgid "Generic FileTransfer"
+msgstr "Μεταφορά αρχείων μέσω Bluetooth"
+
+#: ../blueman/Sdp.py:191
+msgid "Generic Audio"
+msgstr ""
+
+#: ../blueman/Sdp.py:192
+msgid "Generic Telephony"
+msgstr ""
+
+#: ../blueman/Sdp.py:193
+#, fuzzy
+#| msgid "Audio Source"
+msgid "Video Source"
+msgstr "Πηγή ήχου"
+
+#: ../blueman/Sdp.py:194
+#, fuzzy
+#| msgid "Audio Sink"
+msgid "Video Sink"
+msgstr "Προορισμός Ήχου"
+
+#: ../blueman/Sdp.py:195
+msgid "Video Distribution"
+msgstr ""
+
+#: ../blueman/Sdp.py:196
+msgid "HDP"
+msgstr ""
+
+#: ../blueman/Sdp.py:197
+#, fuzzy
+#| msgid "Audio Source"
+msgid "HDP Source"
+msgstr "Πηγή ήχου"
+
+#: ../blueman/Sdp.py:198
+msgid "HDP Sink"
+msgstr ""
+
+#: ../blueman/Sdp.py:199
+msgid "Generic Access"
+msgstr ""
+
+#: ../blueman/Sdp.py:200
+msgid "Generic Attribute"
+msgstr ""
+
+#: ../blueman/Sdp.py:201
+msgid "Immediate Alert"
+msgstr ""
+
+#: ../blueman/Sdp.py:202
+msgid "Link Loss"
+msgstr ""
+
+#: ../blueman/Sdp.py:203
+msgid "Tx Power"
+msgstr ""
+
+#: ../blueman/Sdp.py:204
+#, fuzzy
+#| msgid "Rename device"
+msgid "Current Time Service"
+msgstr "Μετονομασία συσκευής"
+
+#: ../blueman/Sdp.py:205
+msgid "Reference Time Update Service"
+msgstr ""
+
+#: ../blueman/Sdp.py:206
+msgid "Next DST Change Service"
+msgstr ""
+
+#: ../blueman/Sdp.py:207
+msgid "Glucose"
+msgstr ""
+
+#: ../blueman/Sdp.py:208
+msgid "Health Thermometer"
+msgstr ""
+
+#: ../blueman/Sdp.py:209
+#, fuzzy
+#| msgid "Show device information"
+msgid "Device Information"
+msgstr "Εμφάνιση πληροφορίες συσκευής"
+
+#: ../blueman/Sdp.py:210
+msgid "Heart Rate"
+msgstr ""
+
+#: ../blueman/Sdp.py:211
+msgid "Phone Alert Status Service"
+msgstr ""
+
+#: ../blueman/Sdp.py:212
+#, fuzzy
+#| msgid "Local Services"
+msgid "Battery Service"
+msgstr "Τοπικές υπηρεσίες"
+
+#: ../blueman/Sdp.py:213
+msgid "Blood Pressure"
+msgstr ""
+
+#: ../blueman/Sdp.py:214
+msgid "Alert Notification Service"
+msgstr ""
+
+#: ../blueman/Sdp.py:215
+msgid "Human Interface Device"
+msgstr ""
+
+#: ../blueman/Sdp.py:216
+msgid "Scan Parameters"
+msgstr ""
+
+#: ../blueman/Sdp.py:217
+msgid "Running Speed and Cadence"
+msgstr ""
+
+#: ../blueman/Sdp.py:218
+msgid "Automation IO"
+msgstr ""
+
+#: ../blueman/Sdp.py:219
+msgid "Cycling Speed and Cadence"
+msgstr ""
+
+#: ../blueman/Sdp.py:220
+msgid "Cycling Power"
+msgstr ""
+
+#: ../blueman/Sdp.py:221
+msgid "Location and Navigation"
+msgstr ""
+
+#: ../blueman/Sdp.py:222
+msgid "Environmental Sensing"
+msgstr ""
+
+#: ../blueman/Sdp.py:223
+msgid "Body Composition"
+msgstr ""
+
+#: ../blueman/Sdp.py:224
+msgid "User Data"
+msgstr ""
+
+#: ../blueman/Sdp.py:225
+msgid "Weight Scale"
+msgstr ""
+
+#: ../blueman/Sdp.py:226
+msgid "Bond Management"
+msgstr ""
+
+#: ../blueman/Sdp.py:227
+msgid "Continuous Glucose Monitoring"
+msgstr ""
+
+#: ../blueman/Sdp.py:228
+msgid "Internet Protocol Support"
+msgstr ""
+
+#: ../blueman/Sdp.py:229
+msgid "Indoor Positioning"
+msgstr ""
+
+#: ../blueman/Sdp.py:230
+msgid "Pulse Oximeter"
+msgstr ""
+
+#: ../blueman/Sdp.py:231
+msgid "HTTP Proxy"
+msgstr ""
+
+#: ../blueman/Sdp.py:232
+msgid "Transport Discovery"
+msgstr ""
+
+#: ../blueman/Sdp.py:233
+#, fuzzy
+#| msgid "Transfer"
+msgid "Object Transfer"
+msgstr "Μεταφορά"
+
+#: ../blueman/Sdp.py:234
+#, fuzzy
+#| msgid "applet"
+msgid "AppleAgent"
+msgstr "Μικροεφαρμογή"
+
+#: ../blueman/Sdp.py:235
+#, fuzzy
+#| msgid "Pair Device"
+msgid "Primary Service"
+msgstr "Ταίριασμα συσκευής"
+
+#: ../blueman/Sdp.py:236
+#, fuzzy
+#| msgid "Search for nearby devices"
+msgid "Secondary Service"
+msgstr "Αναζήτηση συσκευών που βρίσκονται κοντά"
+
+#: ../blueman/Sdp.py:237
+msgid "Include"
+msgstr ""
+
+#: ../blueman/Sdp.py:238
+msgid "Characteristic Declaration"
+msgstr ""
+
+#: ../blueman/Sdp.py:239
+#, fuzzy
+#| msgid "Device Manager"
+msgid "Device Name"
+msgstr "Διαχειριστής Συσκευών"
+
+#: ../blueman/Sdp.py:240
+msgid "Appearance"
+msgstr ""
+
+#: ../blueman/Sdp.py:241
+msgid "Peripheral Privacy Flag"
+msgstr ""
+
+#: ../blueman/Sdp.py:242
+#, fuzzy
+#| msgid "Recent _Connections"
+msgid "Reconnection Address"
+msgstr "Πρόσφατες _Συνδέσεις"
+
+#: ../blueman/Sdp.py:243
+msgid "Peripheral Preferred Connection Parameters"
+msgstr ""
+
+#: ../blueman/Sdp.py:244
+#, fuzzy
+#| msgid "Device Manager"
+msgid "Service Changed"
+msgstr "Διαχειριστής Συσκευών"
+
+#: ../blueman/Sdp.py:245
+msgid "System ID"
+msgstr ""
+
+#: ../blueman/Sdp.py:246
+msgid "Model Number String"
+msgstr ""
+
+#: ../blueman/Sdp.py:247
+msgid "Serial Number String"
+msgstr ""
+
+#: ../blueman/Sdp.py:248
+msgid "Firmware Revision String"
+msgstr ""
+
+#: ../blueman/Sdp.py:249
+msgid "Hardware Revision String"
+msgstr ""
+
+#: ../blueman/Sdp.py:250
+msgid "Software Revision String"
+msgstr ""
+
+#: ../blueman/Sdp.py:251
+msgid "Manufacturer Name String"
+msgstr ""
+
+#: ../blueman/Sdp.py:252
+msgid "PnP ID"
+msgstr ""
+
+#: ../blueman/Sdp.py:253
+msgid "Characteristic Extended Properties"
+msgstr ""
+
+#: ../blueman/Sdp.py:254
+msgid "Characteristic User Description"
+msgstr ""
+
+#: ../blueman/Sdp.py:255
+msgid "Client Characteristic Configuration"
+msgstr ""
+
+#: ../blueman/Sdp.py:256
+msgid "Server Characteristic Configuration"
+msgstr ""
+
+#: ../blueman/Sdp.py:257
+msgid "Characteristic Presentation Format"
+msgstr ""
+
+#: ../blueman/Sdp.py:258
+msgid "Characteristic Aggregate Format"
+msgstr ""
+
+#: ../blueman/Sdp.py:259
+msgid "Valid Range"
+msgstr ""
+
+#: ../blueman/Sdp.py:260
+msgid "External Report Reference"
+msgstr ""
+
+#: ../blueman/Sdp.py:261
+#, fuzzy
+#| msgid "Adapter Preferences"
+msgid "Report Reference"
+msgstr "Προτιμήσεις προσαρμογέα"
 
 #: ../blueman/Sdp.py:386
 msgid "Auto connect profiles"
@@ -938,11 +1771,11 @@ msgstr "ναι"
 msgid "no"
 msgstr "όχι"
 
-#: ../blueman/plugins/manager/Info.py:112
+#: ../blueman/plugins/manager/Info.py:113
 msgid "_Info"
 msgstr "_Πληροφορίες"
 
-#: ../blueman/plugins/manager/Info.py:113
+#: ../blueman/plugins/manager/Info.py:114
 msgid "Show device information"
 msgstr "Εμφάνιση πληροφορίες συσκευής"
 
@@ -999,7 +1832,9 @@ msgstr "Μη συνδεδεμένο"
 msgid ""
 "No usage statistics are available yet. Try establishing a connection first "
 "and then check this page."
-msgstr "Δεν υπάρχουν ακόμα στατιστικά χρήσης. Προσπαθήστε να συνδεθείτε πρώτα και ξαναγυρίστε μετά σε αυτή τη σελίδα."
+msgstr ""
+"Δεν υπάρχουν ακόμα στατιστικά χρήσης. Προσπαθήστε να συνδεθείτε πρώτα και "
+"ξαναγυρίστε μετά σε αυτή τη σελίδα."
 
 #: ../blueman/plugins/applet/NetUsage.py:207
 msgid "day"
@@ -1032,7 +1867,10 @@ msgstr "Είστε σίγουροι ότι θέλετε να επανεκκιν�
 msgid ""
 "Allows you to monitor your (mobile broadband) network traffic usage. Useful "
 "for limited data access plans. This plugin tracks every device seperately."
-msgstr "Σας επιτρέπει να ελέγχετε την κίνηση χρήσης του δικτύου σας (mobile broadband). Αυτό είναι χρήσιμο για συμβόλαια με περιορισμένη πρόσβαση δεδομένων. Αυτή η προσθήκη ελέγχει κάθε συσκευή ξεχωριστά. "
+msgstr ""
+"Σας επιτρέπει να ελέγχετε την κίνηση χρήσης του δικτύου σας (mobile "
+"broadband). Αυτό είναι χρήσιμο για συμβόλαια με περιορισμένη πρόσβαση "
+"δεδομένων. Αυτή η προσθήκη ελέγχει κάθε συσκευή ξεχωριστά. "
 
 #: ../blueman/plugins/applet/NetUsage.py:311
 msgid "Network _Usage"
@@ -1042,14 +1880,14 @@ msgstr "_Χρήση δικτύου"
 msgid "Shows network traffic usage"
 msgstr "Εμφανίζει τη χρήση κίνησης δικτύου"
 
-#: ../blueman/plugins/applet/StatusIcon.py:30
-#: ../blueman/plugins/applet/StatusIcon.py:43
-#: ../blueman/plugins/applet/ShowConnected.py:58
-#: ../blueman/plugins/applet/ShowConnected.py:60
+#: ../blueman/plugins/applet/StatusIcon.py:29
+#: ../blueman/plugins/applet/StatusIcon.py:51
+#: ../blueman/plugins/applet/ShowConnected.py:59
+#: ../blueman/plugins/applet/ShowConnected.py:61
 msgid "Bluetooth Enabled"
 msgstr "Το Bluetooth Ενεργοποιήθηκε"
 
-#: ../blueman/plugins/applet/StatusIcon.py:46
+#: ../blueman/plugins/applet/StatusIcon.py:54
 msgid "Bluetooth Disabled"
 msgstr "Το Bluetooth Απενεργοποιήθηκε"
 
@@ -1061,12 +1899,16 @@ msgstr "Διαχειρίζεται υπηρεσίες τοπικού δικτύ�
 msgid ""
 "Provides support for Dial Up Networking (DUN) with ModemManager and "
 "NetworkManager"
-msgstr "Παρέχει υποστήριξη για συνδέσεις μέσω τηλεφώνου (DUN) με τη βοήθεια του Διαχειριστή Modem και του Διαχειριστή Δικτύου"
+msgstr ""
+"Παρέχει υποστήριξη για συνδέσεις μέσω τηλεφώνου (DUN) με τη βοήθεια του "
+"Διαχειριστή Modem και του Διαχειριστή Δικτύου"
 
 #: ../blueman/plugins/applet/RecentConns.py:26
 msgid ""
 "Provides a menu item that contains last used connections for quick access"
-msgstr "Παρέχει ένα στοιχείο μενού που περιέχει τις πρόσφατες συνδέσεις για γρήγορη πρόσβαση"
+msgstr ""
+"Παρέχει ένα στοιχείο μενού που περιέχει τις πρόσφατες συνδέσεις για γρήγορη "
+"πρόσβαση"
 
 #. the maximum number of items RecentConns menu will display
 #: ../blueman/plugins/applet/RecentConns.py:37
@@ -1075,32 +1917,33 @@ msgstr "Μέγιστος αριθμός αντικειμένων"
 
 #: ../blueman/plugins/applet/RecentConns.py:38
 msgid "The maximum number of items recent connections menu will display."
-msgstr "Ο κατάλογος για το μέγιστο αριθμό των πρόσφατων συνδέσεων θα εμφανιστεί."
+msgstr ""
+"Ο κατάλογος για το μέγιστο αριθμό των πρόσφατων συνδέσεων θα εμφανιστεί."
 
-#: ../blueman/plugins/applet/RecentConns.py:48
+#: ../blueman/plugins/applet/RecentConns.py:49
 msgid "Recent _Connections"
 msgstr "Πρόσφατες _Συνδέσεις"
 
-#: ../blueman/plugins/applet/RecentConns.py:208
+#: ../blueman/plugins/applet/RecentConns.py:201
 #: ../blueman/plugins/applet/PPPSupport.py:50
 msgid "Connected"
 msgstr "Συνδεδεμένο"
 
-#: ../blueman/plugins/applet/RecentConns.py:208
+#: ../blueman/plugins/applet/RecentConns.py:201
 #, python-format
 msgid "Connected to %s"
 msgstr "Συνδέθηκε στο %s"
 
-#: ../blueman/plugins/applet/RecentConns.py:214
+#: ../blueman/plugins/applet/RecentConns.py:207
 msgid "Failed to connect"
 msgstr "Αποτυχία σύνδεσης"
 
-#: ../blueman/plugins/applet/RecentConns.py:230
+#: ../blueman/plugins/applet/RecentConns.py:223
 #, python-format
 msgid "%(service)s on %(device)s"
 msgstr "%(service)s στο %(device)s"
 
-#: ../blueman/plugins/applet/RecentConns.py:245
+#: ../blueman/plugins/applet/RecentConns.py:238
 msgid "Adapter for this connection is not available"
 msgstr "Ο προσαρμογέας για αυτή τη σύνδεση δεν είναι διαθέσιμος"
 
@@ -1108,80 +1951,84 @@ msgstr "Ο προσαρμογέας για αυτή τη σύνδεση δεν �
 msgid ""
 "Provides support for Personal Area Networking (PAN) introduced in "
 "NetworkManager 0.8"
-msgstr "Παρέχει υποστήριξη για Personal Area Networking (PAN) το οποίο πρωτοεμφανίστηκε στον NetworkManager 0.8"
+msgstr ""
+"Παρέχει υποστήριξη για Personal Area Networking (PAN) το οποίο "
+"πρωτοεμφανίστηκε στον NetworkManager 0.8"
 
-#: ../blueman/plugins/applet/DBusService.py:15
+#: ../blueman/plugins/applet/DBusService.py:13
 msgid "Provides DBus API for other Blueman components"
 msgstr "Παρέχει DBus API για άλλα στοιχεία του Blueman"
 
-#: ../blueman/plugins/applet/TransferService.py:103
+#: ../blueman/plugins/applet/TransferService.py:102
 msgid "Incoming file over Bluetooth"
 msgstr "Εισερχόμενο αρχείο μέσω Bluetooth"
 
-#: ../blueman/plugins/applet/TransferService.py:104
+#: ../blueman/plugins/applet/TransferService.py:103
 #, python-format
 msgid "Incoming file %(0)s from %(1)s"
 msgstr "Εισερχόμενο αρχείο %(0)s από %(1)s"
 
-#: ../blueman/plugins/applet/TransferService.py:106
+#: ../blueman/plugins/applet/TransferService.py:105
 msgid "Reject"
 msgstr "Απόρριψη"
 
-#: ../blueman/plugins/applet/TransferService.py:113
+#: ../blueman/plugins/applet/TransferService.py:112
 msgid "Receiving file"
 msgstr "Λήψη αρχείου"
 
-#: ../blueman/plugins/applet/TransferService.py:114
+#: ../blueman/plugins/applet/TransferService.py:113
 #, python-format
 msgid "Receiving file %(0)s from %(1)s"
 msgstr "Λήψη αρχείου %(0)s από %(1)s"
 
-#: ../blueman/plugins/applet/TransferService.py:132
+#: ../blueman/plugins/applet/TransferService.py:131
 msgid "Provides OBEX file transfer capabilities"
 msgstr "Παρέχει δυνατότητες μεταφοράς αρχείων OBEX"
 
-#: ../blueman/plugins/applet/TransferService.py:157
+#: ../blueman/plugins/applet/TransferService.py:156
 msgid "Configured directory for incoming files does not exist"
 msgstr "Ο ρυθμισμένος ως κατάλογος εισερχομένων αρχείων, δεν υπάρχει"
 
-#: ../blueman/plugins/applet/TransferService.py:158
+#: ../blueman/plugins/applet/TransferService.py:157
 #, python-format
 msgid ""
 "Please make sure that directory \"<b>%s</b>\" exists or configure it with "
 "blueman-services. Until then the default \"%s\" will be used"
 msgstr ""
+"Βεβαιωθείτε ότι ο κατάλογος \"<b>%s</b>\" υπάρχει ή ρυθμίστε τον με τις "
+"υπηρεσίες του blueman. Μέχρι τότε θα χρησιμοποιηθεί η προεπιλογή \"%s\""
 
-#: ../blueman/plugins/applet/TransferService.py:285
+#: ../blueman/plugins/applet/TransferService.py:284
 msgid "File received"
 msgstr "Ελήφθη αρχείο"
 
-#: ../blueman/plugins/applet/TransferService.py:286
+#: ../blueman/plugins/applet/TransferService.py:285
 #, python-format
 msgid "File %(0)s from %(1)s successfully received"
 msgstr "Το αρχείο %(0)s ελήφθη επιτυχώς από το %(1)s"
 
-#: ../blueman/plugins/applet/TransferService.py:294
+#: ../blueman/plugins/applet/TransferService.py:293
 msgid "Transfer failed"
 msgstr "Η μεταφορά απέτυχε"
 
-#: ../blueman/plugins/applet/TransferService.py:295
+#: ../blueman/plugins/applet/TransferService.py:294
 #, python-format
 msgid "Transfer of file %(0)s failed"
 msgstr "Η μεταφορά του αρχείου %(0)s απέτυχε"
 
-#: ../blueman/plugins/applet/TransferService.py:314
-#: ../blueman/plugins/applet/TransferService.py:323
+#: ../blueman/plugins/applet/TransferService.py:313
+#: ../blueman/plugins/applet/TransferService.py:322
 msgid "Files received"
 msgstr "Ελήφθησαν αρχεία"
 
-#: ../blueman/plugins/applet/TransferService.py:315
+#: ../blueman/plugins/applet/TransferService.py:314
 #, python-format
 msgid "Received %d file in the background"
 msgid_plural "Received %d files in the background"
 msgstr[0] "Ελήφθη %d αρχείο στο παρασκήνιο"
 msgstr[1] "Ελήφθησαν %d αρχεία στο παρασκήνιο"
 
-#: ../blueman/plugins/applet/TransferService.py:324
+#: ../blueman/plugins/applet/TransferService.py:323
 #, python-format
 msgid "Received %d more file in the background"
 msgid_plural "Received %d more files in the background"
@@ -1191,13 +2038,18 @@ msgstr[1] "Ελήφθησαν άλλα %d αρχεία στο παρασκήνι
 #: ../blueman/plugins/applet/KillSwitch.py:36
 msgid ""
 "Toggles a platform Bluetooth killswitch when Bluetooth power state changes "
-"(Useless with USB dongles) and makes sure a status icon is shown if there is"
-" a bluetooth killswitch but no adapter."
-msgstr "Αποσυνδέει την πλατφόρμα Bluetooth όταν αλλάξει η κάτασταση ενέργειας. Δεν λειτουργει με USB dongles. Βεβαιώνει ότι εμφανίζεται το εικονίδιο Bluetooth, ακόμη κι αν δεν υπάρχει προσαρμογέας Bluetooth."
+"(Useless with USB dongles) and makes sure a status icon is shown if there is "
+"a bluetooth killswitch but no adapter."
+msgstr ""
+"Αποσυνδέει την πλατφόρμα Bluetooth όταν αλλάξει η κάτασταση ενέργειας. Δεν "
+"λειτουργει με USB dongles. Βεβαιώνει ότι εμφανίζεται το εικονίδιο Bluetooth, "
+"ακόμη κι αν δεν υπάρχει προσαρμογέας Bluetooth."
 
 #: ../blueman/plugins/applet/StandardItems.py:15
 msgid "Adds standard menu items to the status icon menu"
-msgstr "Προσθέτει πρότυπα αντικείμενα του καταλόγου της εφαρμογής στον κατάλογο του εικονιδίου κατάστασης "
+msgstr ""
+"Προσθέτει πρότυπα αντικείμενα του καταλόγου της εφαρμογής στον κατάλογο του "
+"εικονιδίου κατάστασης "
 
 #: ../blueman/plugins/applet/StandardItems.py:23
 msgid "_Set Up New Device"
@@ -1221,44 +2073,53 @@ msgstr "Μικροεφαρμογή"
 
 #: ../blueman/plugins/applet/AuthAgent.py:7
 msgid "Provides passkey, authentication services for BlueZ daemon"
-msgstr "Παρέχει υπηρεσίες φράσης-κλειδιού και αυθεντικοποίησης για τον δαίμονα BlueZ"
+msgstr ""
+"Παρέχει υπηρεσίες φράσης-κλειδιού και αυθεντικοποίησης για τον δαίμονα BlueZ"
 
 #: ../blueman/plugins/applet/ExitItem.py:10
 msgid "Adds an exit menu item to quit the applet"
-msgstr "Προσθέτει ένα αντικείμενο μενού εξόδου στον κατάλογο για τερματισμό της μικροεφαρμογής"
+msgstr ""
+"Προσθέτει ένα αντικείμενο μενού εξόδου στον κατάλογο για τερματισμό της "
+"μικροεφαρμογής"
 
 #: ../blueman/plugins/applet/DhcpClient.py:11
 msgid "Provides a basic dhcp client for Bluetooth PAN connections."
 msgstr "Παρέχει ένα βασικό πελάτη dhcp για συνδέσεις Bluetooth PAN."
 
-#: ../blueman/plugins/applet/DhcpClient.py:44
-#: ../blueman/plugins/applet/DhcpClient.py:52
-#: ../blueman/plugins/applet/DhcpClient.py:57
+#: ../blueman/plugins/applet/DhcpClient.py:42
+#: ../blueman/plugins/applet/DhcpClient.py:50
+#: ../blueman/plugins/applet/DhcpClient.py:55
 msgid "Bluetooth Network"
 msgstr "Δίκτυο Βluetooth"
 
-#: ../blueman/plugins/applet/DhcpClient.py:45
+#: ../blueman/plugins/applet/DhcpClient.py:43
 #, python-format
 msgid "Interface %(0)s bound to IP address %(1)s"
 msgstr "Η διεπαφή %(0)s έχει αντιστοιχιστεί με την διεύθυνση IP %(1)s"
 
-#: ../blueman/plugins/applet/DhcpClient.py:52
+#: ../blueman/plugins/applet/DhcpClient.py:50
 #, python-format
 msgid "Failed to obtain an IP address on %s"
 msgstr "Αποτυχία κατά την απόκτηση διεύθυνσης IP από το %s"
 
-#: ../blueman/plugins/applet/DhcpClient.py:57
+#: ../blueman/plugins/applet/DhcpClient.py:55
 #, python-format
 msgid ""
 "Trying to obtain an IP address on %s\n"
 "Please wait…"
-msgstr "Προσπάθεια λήψης μιας διεύθυνσης IP%s\nΠαρακαλώ περιμένετε…"
+msgstr ""
+"Προσπάθεια λήψης μιας διεύθυνσης IP%s\n"
+"Παρακαλώ περιμένετε…"
 
 #: ../blueman/plugins/applet/ShowConnected.py:12
 msgid ""
-"Adds an indication on the status icon when Bluetooth is active and shows the"
-" number of connections in the tooltip."
-msgstr "Προσθέτει μια ένδειξη στο εικονίδιο κατάστασης όταν το Bluetooth είναι ενεργοποιημένο και δείχνει τον αριθμό των συνδέσεων στο μήνυμα που εμφανίζεται όταν ο δρομέας του ποντικιού βρίσκεται πάνω στο εικονίδιο κατάστασης."
+"Adds an indication on the status icon when Bluetooth is active and shows the "
+"number of connections in the tooltip."
+msgstr ""
+"Προσθέτει μια ένδειξη στο εικονίδιο κατάστασης όταν το Bluetooth είναι "
+"ενεργοποιημένο και δείχνει τον αριθμό των συνδέσεων στο μήνυμα που "
+"εμφανίζεται όταν ο δρομέας του ποντικιού βρίσκεται πάνω στο εικονίδιο "
+"κατάστασης."
 
 #: ../blueman/plugins/applet/ShowConnected.py:47
 msgid "Bluetooth Active"
@@ -1273,13 +2134,17 @@ msgstr[1] "<b>%d Ενεργές Συνδέσεις</b>"
 
 #: ../blueman/plugins/applet/AppIndicator.py:13
 msgid "Uses libappindicator to show a statusicon"
-msgstr "Χρησιμοποιεί τη βιβλιοθήκη libappindicator για να εμφανίσει ένα εικονίδιο κατάστασης"
+msgstr ""
+"Χρησιμοποιεί τη βιβλιοθήκη libappindicator για να εμφανίσει ένα εικονίδιο "
+"κατάστασης"
 
 #: ../blueman/plugins/applet/DiscvManager.py:13
 msgid ""
-"Provides a menu item for making the default adapter temporarily visible when"
-" it is set to hidden by default"
-msgstr "Παρέχει ένα στοιχείο μενού για προσωρινή ενεργοποίηση της ορατότητας του προεπιλεγμένου προσαρμογέα, όταν αυτός κανονικά είναι ρυθμισμένος σε απόκρυψη"
+"Provides a menu item for making the default adapter temporarily visible when "
+"it is set to hidden by default"
+msgstr ""
+"Παρέχει ένα στοιχείο μενού για προσωρινή ενεργοποίηση της ορατότητας του "
+"προεπιλεγμένου προσαρμογέα, όταν αυτός κανονικά είναι ρυθμισμένος σε απόκρυψη"
 
 #: ../blueman/plugins/applet/DiscvManager.py:23
 msgid "Discoverable timeout"
@@ -1287,9 +2152,12 @@ msgstr "Χρονικό όριο λειτουργίας ορατότητας"
 
 #: ../blueman/plugins/applet/DiscvManager.py:24
 msgid "Amount of time in seconds discoverable mode will last"
-msgstr "Χρονικό διάστημα (σε δευτερόλεπτα) για το οποίο θα είναι ενεργή η λειτουργία ορατότητας"
+msgstr ""
+"Χρονικό διάστημα (σε δευτερόλεπτα) για το οποίο θα είναι ενεργή η λειτουργία "
+"ορατότητας"
 
 #: ../blueman/plugins/applet/DiscvManager.py:30
+#: ../blueman/plugins/applet/DiscvManager.py:113
 msgid "_Make Discoverable"
 msgstr "Ορισμός ως Ανι_χνεύσιμο"
 
@@ -1302,26 +2170,33 @@ msgstr "Προσωρινή ενεργοποίηση ορατότητας προ�
 msgid "Discoverable… %ss"
 msgstr "Ανιχνεύσιμο... %ss"
 
-#: ../blueman/plugins/applet/Menu.py:89
+#: ../blueman/plugins/applet/Menu.py:88
 msgid ""
 "Provides a menu for the applet and an API for other plugins to manipulate it"
-msgstr "Παρέχει ένα μενού για την μικροεφαρμογή και ένα API για χειρισμό της από άλλα πρόσθετα."
+msgstr ""
+"Παρέχει ένα μενού για την μικροεφαρμογή και ένα API για χειρισμό της από "
+"άλλα πρόσθετα."
 
 #: ../blueman/plugins/applet/PPPSupport.py:47
 #, python-format
 msgid ""
 "Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\n"
 "Network is now available through <b>%(1)s</b>"
-msgstr "Επιτυχής σύνδεση στην υπηρεσία <b>DUN</b> στο <b>%(0)s.</b>\nΤο δίκτυο είναι τώρα διαθέσιμο μέσω <b>%(1)s</b>"
+msgstr ""
+"Επιτυχής σύνδεση στην υπηρεσία <b>DUN</b> στο <b>%(0)s.</b>\n"
+"Το δίκτυο είναι τώρα διαθέσιμο μέσω <b>%(1)s</b>"
 
 #: ../blueman/plugins/applet/PPPSupport.py:55
 msgid "Provides basic support for connecting to the internet via DUN profile."
-msgstr "Παρέχει βασική υποστήριξη για σύνδεση στο internet μέσω ενός προφίλ DUN"
+msgstr ""
+"Παρέχει βασική υποστήριξη για σύνδεση στο internet μέσω ενός προφίλ DUN"
 
 #: ../blueman/plugins/applet/SerialManager.py:17
 msgid ""
 "Standard SPP profile connection handler, allows executing custom actions"
-msgstr "Πρότυπο προφίλ SPP διαχείρισης συνδέσεων, επιτρέπει την εκτέλεση προσαρμοσμένων ενεργειών"
+msgstr ""
+"Πρότυπο προφίλ SPP διαχείρισης συνδέσεων, επιτρέπει την εκτέλεση "
+"προσαρμοσμένων ενεργειών"
 
 #: ../blueman/plugins/applet/SerialManager.py:26
 msgid "Script to execute on connection"
@@ -1336,7 +2211,15 @@ msgid ""
 "uuid16s are returned as a comma seperated list\n"
 "\n"
 "Upon device disconnection the script will be sent a HUP signal</span>"
-msgstr "<span size=\"small\"> Τα ακόλουθα πεδία θα προστεθούν:\nΔιεύθυνση, Όνομα, όνομα υπηρεσίας, uuid16, rfcomm node\nΠαραδείγματος χάριν:\nAA:BB:CC:DD:EE:FF, Τηλέφωνο, Υπηρεσία DUN, 0x1103, /dev/rfcomm0\nΤα uuid16 θα εμφανίζονται σε μια λίστα χωρισμένα με κόμματα\n\nΜε την αποσύνδεση της συσκευής θα αποσταλεί ένα σήμα HUP στη δέσμη εντολών</span>"
+msgstr ""
+"<span size=\"small\"> Τα ακόλουθα πεδία θα προστεθούν:\n"
+"Διεύθυνση, Όνομα, όνομα υπηρεσίας, uuid16, rfcomm node\n"
+"Παραδείγματος χάριν:\n"
+"AA:BB:CC:DD:EE:FF, Τηλέφωνο, Υπηρεσία DUN, 0x1103, /dev/rfcomm0\n"
+"Τα uuid16 θα εμφανίζονται σε μια λίστα χωρισμένα με κόμματα\n"
+"\n"
+"Με την αποσύνδεση της συσκευής θα αποσταλεί ένα σήμα HUP στη δέσμη εντολών</"
+"span>"
 
 #: ../blueman/plugins/applet/SerialManager.py:58
 msgid "Serial port connected"
@@ -1346,7 +2229,9 @@ msgstr "Η σειριακή θύρα συνδέθηκε"
 #, python-format
 msgid ""
 "Serial port service on device <b>%s</b> now will be available via <b>%s</b>"
-msgstr "Η υπηρεσία σειριακής θύρα της συσκευής <b>%s</b> θα είναι διαθέσιμη μέσω <b>%s</b>"
+msgstr ""
+"Η υπηρεσία σειριακής θύρα της συσκευής <b>%s</b> θα είναι διαθέσιμη μέσω <b>"
+"%s</b>"
 
 #: ../blueman/plugins/applet/SerialManager.py:109
 msgid "Serial port connection script failed"
@@ -1357,7 +2242,9 @@ msgstr "Η δέσμη εντολών για τη σύνδεση σειριακή
 msgid ""
 "There was a problem launching script %s\n"
 "%s"
-msgstr "Υπήρξε ένα πρόβλημα κατά την εκτέλεση της δέσμης εντολών %s\n%s"
+msgstr ""
+"Υπήρξε ένα πρόβλημα κατά την εκτέλεση της δέσμης εντολών %s\n"
+"%s"
 
 #: ../blueman/plugins/applet/PowerManager.py:13
 msgid "Controls Bluetooth adapter power states"
@@ -1372,20 +2259,20 @@ msgid "Automatically power on adapters"
 msgstr "Αυτόματη ενεργοποίηση προσαρμογέων"
 
 #: ../blueman/plugins/applet/PowerManager.py:36
-#: ../blueman/plugins/applet/PowerManager.py:160
+#: ../blueman/plugins/applet/PowerManager.py:164
 msgid "<b>Turn Bluetooth _Off</b>"
 msgstr "<b>_Απενεργοποίηση Bluetooth</b>"
 
 #: ../blueman/plugins/applet/PowerManager.py:37
-#: ../blueman/plugins/applet/PowerManager.py:162
+#: ../blueman/plugins/applet/PowerManager.py:166
 msgid "Turn off all adapters"
 msgstr "Απενεργοποίηση όλων των προσαρμογέων"
 
-#: ../blueman/plugins/applet/PowerManager.py:151
+#: ../blueman/plugins/applet/PowerManager.py:155
 msgid "<b>Turn Bluetooth _On</b>"
 msgstr "<b>_Ενεργοποίηση Bluetooth</b>"
 
-#: ../blueman/plugins/applet/PowerManager.py:153
+#: ../blueman/plugins/applet/PowerManager.py:157
 msgid "Turn on all adapters"
 msgstr "Ενεργοποίηση όλων των προσαρμογέων"
 
@@ -1393,7 +2280,9 @@ msgstr "Ενεργοποίηση όλων των προσαρμογέων"
 msgid ""
 "Temporarily suspends the screensaver when a bluetooth game controller is "
 "connected."
-msgstr "Διακόπτει προσωρινά την προφύλαξη οθόνης όταν ένα χειριστήριο παιχνιδιού είναι συνδεδεμένο"
+msgstr ""
+"Διακόπτει προσωρινά την προφύλαξη οθόνης όταν ένα χειριστήριο παιχνιδιού "
+"είναι συνδεδεμένο"
 
 #: ../blueman/plugins/services/Network.py:23
 #: ../blueman/plugins/services/Network.py:47
@@ -1407,14 +2296,19 @@ msgstr "Μη έγκυρη διεύθυνση IP "
 #: ../blueman/plugins/services/Network.py:102
 #, python-format
 msgid "IP address conflicts with interface %s which has the same address"
-msgstr "Η διεύθυνση IP συγκρούεται με τη διεπαφή %s η οποία έχει την ίδια διεύθυνση"
+msgstr ""
+"Η διεύθυνση IP συγκρούεται με τη διεπαφή %s η οποία έχει την ίδια διεύθυνση"
 
 #: ../blueman/plugins/services/Network.py:110
 #, python-format
 msgid ""
-"IP address overlaps with subnet of interface %s, which has the following configuration  %s/%s\n"
+"IP address overlaps with subnet of interface %s, which has the following "
+"configuration  %s/%s\n"
 "This may cause incorrect network behavior"
 msgstr ""
+"Η διεύθυνση IP επικαλύπτεται από τις ρυθμίσεις της διεπαφής %s, η οποία έχει "
+"παράμετρους %s/%s\n"
+"Αυτό μπορεί να προκαλέσει εσφαλμένη συμπεριφορά δικτύου"
 
 #: ../blueman/plugins/services/Network.py:237
 #: ../blueman/plugins/services/Network.py:246
@@ -1427,7 +2321,8 @@ msgstr "Μεταφορά"
 
 #: ../blueman/plugins/services/Transfer.py:34
 msgid "Applet's transfer service plugin is disabled"
-msgstr "Το πρόσθετο υπηρεσίας μεταφορών της μικροεφαρμογής είναι απενεργοποιημένο"
+msgstr ""
+"Το πρόσθετο υπηρεσίας μεταφορών της μικροεφαρμογής είναι απενεργοποιημένο"
 
 #: ../data/blueman-adapters.desktop.in.h:2
 msgid "Set Bluetooth Adapter Properties"
@@ -1481,58 +2376,61 @@ msgstr "Ορισμός κατάστασης RfKill"
 msgid "Setting RfKill State requires privileges"
 msgstr "Η ρύθμιση κατάστασης RfKill απαιτεί δικαιώματα"
 
-#: ../apps/blueman-sendto:35
+#: ../apps/blueman-sendto:42
 msgid "Bluetooth needs to be turned on for file sending to work"
-msgstr "Πρέπει να ενεργοποιηθεί το Bluetooth για να είναι δυνατή η αποστολή αρχείων"
+msgstr ""
+"Πρέπει να ενεργοποιηθεί το Bluetooth για να είναι δυνατή η αποστολή αρχείων"
 
-#: ../apps/blueman-sendto:101
+#: ../apps/blueman-sendto:108
 msgid "Select files to send"
 msgstr "Επιλογή αρχείων για αποστολή"
 
-#: ../apps/blueman-sendto:130
+#: ../apps/blueman-sendto:138
 msgid "Send files to this device"
 msgstr "Αποστολή αρχείων σε αυτή την συσκευή"
 
-#: ../apps/blueman-sendto:132
+#: ../apps/blueman-sendto:140
 msgid "Source adapter. Takes address or adapter's name eg. hci0"
-msgstr "Προσαρμογέας πηγής. Δέχεται διευθύνσεις ή το όνομα του προσαρμογέα π.χ. hci0"
+msgstr ""
+"Προσαρμογέας πηγής. Δέχεται διευθύνσεις ή το όνομα του προσαρμογέα π.χ. hci0"
 
-#: ../apps/blueman-sendto:133
+#: ../apps/blueman-sendto:141
 msgid "Delete files on exit"
 msgstr "Διαγραφή αρχείων κατά της έξοδο"
 
-#: ../apps/blueman-sendto:135
+#: ../apps/blueman-sendto:143
 msgid "Files to be send to the bluetooth device"
 msgstr "Τα αρχεία προς αποστολή στην συσκευή bluetooth"
 
-#: ../apps/blueman-assistant:52
+#: ../apps/blueman-assistant:53
 msgid "Bluetooth needs to be turned on for the Bluetooth assistant to work"
-msgstr "Το Bluetooth πρέπει να ενεργοποιηθεί πρώτα για να λειτουργήσει ο βοηθός του"
+msgstr ""
+"Το Bluetooth πρέπει να ενεργοποιηθεί πρώτα για να λειτουργήσει ο βοηθός του"
 
-#: ../apps/blueman-assistant:100
+#: ../apps/blueman-assistant:101
 msgid "No adapters found"
 msgstr "Δεν βρέθηκαν προσαρμογείς"
 
-#: ../apps/blueman-assistant:189
+#: ../apps/blueman-assistant:190
 msgid "<b>Pairing in progress...</b>"
 msgstr "<b>Πραγματοποιείται ζεύξη...</b>"
 
-#: ../apps/blueman-assistant:198
+#: ../apps/blueman-assistant:199
 msgid "<b>Failed to add device</b>"
 msgstr "<b>Αποτυχία προσθήκης συσκευής</b>"
 
-#: ../apps/blueman-assistant:219
+#: ../apps/blueman-assistant:220
 msgid "Don't connect"
 msgstr "Να μην συνδέεται"
 
-#: ../apps/blueman-assistant:234
+#: ../apps/blueman-assistant:235
 msgid "<b>Device added and connected successfully</b>"
 msgstr ""
 
-#: ../apps/blueman-assistant:239
+#: ../apps/blueman-assistant:240
 msgid "<b>Device added successfully, but failed to connect</b>"
 msgstr ""
 
-#: ../apps/blueman-assistant:250
+#: ../apps/blueman-assistant:251
 msgid "Start configuration assistant for this device"
 msgstr "Εκκίνηση βοηθού ρυθμίσεων για αυτή την συσκευή"
