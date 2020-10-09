@@ -16,7 +16,7 @@ except OSError:
     raise ImportError("Could not load pulseaudio shared library")
 
 if TYPE_CHECKING:
-    from ctypes import _FuncPointer
+    from ctypes import _FuncPointer, _NamedFuncPointer
     from typing_extensions import TypedDict
 
     class CardProfileInfo(TypedDict):
@@ -253,7 +253,7 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
         op = func(self.pa_context, *args)
         pa_operation_unref(op)
 
-    def simple_callback(self, handler: Callable[[int], None], func: "_FuncPointer", *args: Any) -> None:
+    def simple_callback(self, handler: Callable[[int], None], func: "_NamedFuncPointer", *args: Any) -> None:
 
         def wrapper(_context: c_void_p, res: int, data: "_FuncPointer") -> None:
             if handler:
@@ -267,7 +267,7 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
         op = func(self.pa_context, *args)
         if not op:
             logging.info("Operation failed")
-            logging.error(func.__name__)  # type: ignore  # https://github.com/python/typeshed/pull/4444
+            logging.error(func.__name__)
         pa_operation_unref(op)
 
     def __card_info(self, card_info: "pointer[PaCardInfo]") -> "CardInfo":
