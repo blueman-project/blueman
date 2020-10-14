@@ -6,7 +6,7 @@
 * [dbus](http://www.freedesktop.org/wiki/Software/dbus/) (>= 1.9.18)
 * [GdkPixbuf](http://www.gtk.org/) (GI bindings)
 * [GLib 2, Gio 2](http://www.gtk.org/) (>= 2.32) (GI bindings)
-* [GTK+ 3](http://www.gtk.org/) (GI bindings) [1]
+* [GTK+ 3](http://www.gtk.org/) (3.22) (GI bindings)
 * [gnome-icon-theme](https://git.gnome.org/browse/adwaita-icon-theme/), [mate-icon-theme](https://github.com/mate-desktop/mate-icon-theme), [adwaita-icon-theme](https://github.com/GNOME/adwaita-icon-theme), [elementary-xfce](https://github.com/shimmerproject/elementary-xfce), or [Papirus](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme)
 * [libappindicator](https://launchpad.net/libappindicator) (optional) (GI bindings)
 * [notification-daemon](https://developer.gnome.org/notification-spec/) that provides dbus name org.freedesktop.Notifications
@@ -33,7 +33,3 @@
 * [automake](https://www.gnu.org/software/automake/)
 * [autoconf](https://www.gnu.org/software/autoconf/)
 * [libtool](http://www.gnu.org/software/libtool/)
-
-[1] There is a known issue with GTK+ <= 3.10.6, possibly in conjuction with specific themes or similar conditions. If it is present and a message is to be displayed in blueman-manager's message area the application will crash with
-
-    Gtk-CRITICAL **: gtk_style_context_get_property: assertion ``priv->widget != NULL || priv->widget_path != NULL' failed
