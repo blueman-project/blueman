@@ -7,6 +7,7 @@
 * Drop blueman-report
 * Drop blueman-assistant
 * Raise minimum Python version to 3.6
+* Raise GTK+ 3 version to 3.22
 * Do not use exitcode 1 when we expect to fail
 * Use apply button for transfer options
 * Allow opening device menus via keyboard (Shift+F10 or menu key)
