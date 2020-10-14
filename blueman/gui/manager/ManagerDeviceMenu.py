@@ -251,7 +251,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         show_generic_connect = self.show_generic_connect_calc(self.SelectedDevice['UUIDs'])
 
         if not row["connected"] and show_generic_connect:
-            connect_item = create_menuitem(_("_<b>Connect</b>"), "blueman")
+            connect_item = create_menuitem(_("_<b>_Connect</b>"), "blueman")
             connect_item.connect("activate", self.generic_connect, self.SelectedDevice, True)
             connect_item.props.tooltip_text = _("Connects auto connect profiles A2DP source, A2DP sink, and HID")
             connect_item.show()
