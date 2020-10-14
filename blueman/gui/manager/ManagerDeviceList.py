@@ -75,6 +75,7 @@ class ManagerDeviceList(DeviceList):
         self.tooltip_row: Optional[Gtk.TreePath] = None
         self.tooltip_col: Optional[Gtk.TreeViewColumn] = None
 
+        self.connect("popup-menu", self._on_popup_menu)
         self.connect("button_press_event", self.on_event_clicked)
         self.connect("button_release_event", self.on_event_clicked)
 
@@ -156,6 +157,20 @@ class ManagerDeviceList(DeviceList):
         else:
             Gdk.drag_status(drag_context, Gdk.DragAction.DEFAULT, timestamp)
             return False
+
+    def _on_popup_menu(self, _widget: Gtk.Widget) -> bool:
+        if self.Blueman is None:
+            return False
+
+        if self.menu is None:
+            self.menu = ManagerDeviceMenu(self.Blueman)
+
+        window = self.get_window()
+        assert window is not None
+        rect = self.get_cell_area(self.liststore.get_path(self.selected()), self.get_column(1))
+        self.menu.popup_at_rect(window, rect, Gdk.Gravity.CENTER, Gdk.Gravity.NORTH)
+
+        return True
 
     def on_event_clicked(self, _widget: Gtk.Widget, event: Gdk.Event) -> bool:
         if event.type not in (Gdk.EventType._2BUTTON_PRESS, Gdk.EventType.BUTTON_PRESS):
