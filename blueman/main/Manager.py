@@ -45,6 +45,7 @@ class Blueman(Gtk.Application):
 
         quit_action = Gio.SimpleAction.new("Quit", None)
         quit_action.connect("activate", doquit)
+        self.set_accels_for_action("app.Quit", ["<Ctrl>q", "<Ctrl>w"])
         self.add_action(quit_action)
 
     def do_activate(self) -> None:

@@ -11,6 +11,7 @@
 * Do not use exitcode 1 when we expect to fail
 * Use apply button for transfer options
 * Allow opening device menus via keyboard (Shift+F10 or menu key)
+* Add Ctrl+Q and Ctrl+W accelerators for closing blueman-manager
 
 ### Bugs fixed
 
