@@ -157,7 +157,7 @@ class ManagerMenu:
         adapter_menu.append(sep)
 
         exit_item = create_menuitem(_("_Exit"), "application-exit")
-        exit_item.connect("activate", lambda x: Gtk.main_quit())
+        exit_item.connect("activate", lambda x: self.blueman.quit())
         exit_item.show()
         adapter_menu.append(exit_item)
 

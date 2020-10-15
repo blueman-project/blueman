@@ -127,7 +127,7 @@ class Blueman(Gtk.Application):
                     bmexit()
 
                 check_bluetooth_status(_("Bluetooth needs to be turned on for the device manager to function"),
-                                       lambda: Gtk.main_quit())
+                                       lambda: self.quit())
 
                 manager = Manager()
                 try:
