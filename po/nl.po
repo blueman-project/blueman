@@ -8,12 +8,13 @@
 # Marcel van den Boer <marcelvdboer@gmail.com>, 2017
 # Nathan Follens, 2015
 # Pjotr <pjotrvertaalt@gmail.com>, 2017,2019
+# Sander Sweers <infirit@gmail.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2020-09-26 22:02+0000\n"
-"PO-Revision-Date: 2020-08-01 22:21+0000\n"
+"POT-Creation-Date: 2020-10-15 20:51+0000\n"
+"PO-Revision-Date: 2020-09-29 11:27+0000\n"
 "Last-Translator: Sander Sweers <infirit@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/blueman/blueman/nl/"
 ">\n"
@@ -22,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.2-dev\n"
+"X-Generator: Weblate 4.3-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -227,8 +228,8 @@ msgstr "<b>Auteur:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:288
-#: blueman/gui/manager/ManagerDeviceList.py:290 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:303
+#: blueman/gui/manager/ManagerDeviceList.py:305 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:375
 #: blueman/plugins/applet/NetUsage.py:209
@@ -315,16 +316,16 @@ msgstr[1] "%(minutes)d minuten"
 msgid "Adapter"
 msgstr "Adapter"
 
-#: blueman/main/Manager.py:88 blueman/main/Manager.py:129
+#: blueman/main/Manager.py:89 blueman/main/Manager.py:130
 msgid "Bluetooth needs to be turned on for the device manager to function"
 msgstr ""
 "Bluetooth moet ingeschakeld worden om het apparaatbeheer te kunnen gebruiken"
 
-#: blueman/main/Manager.py:108
+#: blueman/main/Manager.py:109
 msgid "Connection to BlueZ failed"
 msgstr "Verbinding met BlueZ mislukt"
 
-#: blueman/main/Manager.py:109
+#: blueman/main/Manager.py:110
 msgid ""
 "Bluez daemon is not running, blueman-manager cannot continue.\n"
 "This probably means that there were no Bluetooth adapters detected or "
@@ -334,15 +335,15 @@ msgstr ""
 "Dit betekent waarschijnlijk dat er geen Bluetooth-adapters gevonden zijn of "
 "dat de Bluetooth-achtergronddienst niet gestart is."
 
-#: blueman/main/Manager.py:197
+#: blueman/main/Manager.py:198
 msgid "Searching"
 msgstr "Bezig met zoeken"
 
-#: blueman/main/Manager.py:220 blueman/plugins/applet/StandardItems.py:79
+#: blueman/main/Manager.py:221 blueman/plugins/applet/StandardItems.py:79
 msgid "Adapter Preferences"
 msgstr "Adaptervoorkeuren"
 
-#: blueman/main/Manager.py:232 blueman/gui/manager/ManagerDeviceList.py:134
+#: blueman/main/Manager.py:233 blueman/gui/manager/ManagerDeviceList.py:135
 #: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
 msgstr "Bestandverzender"
@@ -554,11 +555,11 @@ msgstr "_Voorkeuren"
 
 #: blueman/gui/manager/ManagerMenu.py:159 blueman/plugins/applet/ExitItem.py:12
 msgid "_Exit"
-msgstr "_Afsluiten"
+msgstr "Afsluiten"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:257
-#: blueman/gui/manager/ManagerDeviceList.py:288 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:272
+#: blueman/gui/manager/ManagerDeviceList.py:303 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 #, fuzzy
@@ -566,49 +567,49 @@ msgstr "_Afsluiten"
 msgid "Uncategorized"
 msgstr "geen classificatie"
 
-#: blueman/gui/manager/ManagerDeviceList.py:451
+#: blueman/gui/manager/ManagerDeviceList.py:466
 msgid "<b>Trusted and Paired</b>"
 msgstr "<b>Vertrouwd en gepaard</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:453
+#: blueman/gui/manager/ManagerDeviceList.py:468
 msgid "<b>Paired</b>"
 msgstr "<b>Gepaard</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:455
+#: blueman/gui/manager/ManagerDeviceList.py:470
 msgid "<b>Trusted</b>"
 msgstr "<b>Vertrouwd></b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:476
+#: blueman/gui/manager/ManagerDeviceList.py:491
 msgid "Poor"
 msgstr "Matig"
 
-#: blueman/gui/manager/ManagerDeviceList.py:478
-#: blueman/gui/manager/ManagerDeviceList.py:489
+#: blueman/gui/manager/ManagerDeviceList.py:493
+#: blueman/gui/manager/ManagerDeviceList.py:504
 msgid "Sub-optimal"
 msgstr "Sub-optimaal"
 
-#: blueman/gui/manager/ManagerDeviceList.py:480
-#: blueman/gui/manager/ManagerDeviceList.py:491
+#: blueman/gui/manager/ManagerDeviceList.py:495
+#: blueman/gui/manager/ManagerDeviceList.py:506
 msgid "Optimal"
 msgstr "Optimaal"
 
-#: blueman/gui/manager/ManagerDeviceList.py:482
+#: blueman/gui/manager/ManagerDeviceList.py:497
 msgid "Much"
 msgstr "Veel"
 
-#: blueman/gui/manager/ManagerDeviceList.py:484
+#: blueman/gui/manager/ManagerDeviceList.py:499
 msgid "Too much"
 msgstr "Te veel"
 
-#: blueman/gui/manager/ManagerDeviceList.py:487
+#: blueman/gui/manager/ManagerDeviceList.py:502
 msgid "Low"
 msgstr "Laag"
 
-#: blueman/gui/manager/ManagerDeviceList.py:493
+#: blueman/gui/manager/ManagerDeviceList.py:508
 msgid "High"
 msgstr "Hoog"
 
-#: blueman/gui/manager/ManagerDeviceList.py:495
+#: blueman/gui/manager/ManagerDeviceList.py:510
 msgid "Very High"
 msgstr "Zeer hoog"
 
@@ -641,7 +642,9 @@ msgid "Disconnecting…"
 msgstr "Bezig met verbreken van verbinding…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:254
-msgid "_<b>Connect</b>"
+#, fuzzy
+#| msgid "_<b>Connect</b>"
+msgid "_<b>_Connect</b>"
 msgstr "_<b>Verbinden</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:256
@@ -772,7 +775,7 @@ msgstr "Adapterkeuze"
 
 #: blueman/gui/DeviceSelectorWidget.py:45
 msgid "Discovering…"
-msgstr "Ontdekbaar…"
+msgstr "Ontdekken…"
 
 #. translators: device class
 #: blueman/DeviceClass.py:6
@@ -936,7 +939,7 @@ msgstr "obexd is niet beschikbaar"
 #. translators: device class
 #: blueman/DeviceClass.py:82 blueman/Sdp.py:122 blueman/Sdp.py:163
 msgid "Headset"
-msgstr "Koptelefoon/Microfoon"
+msgstr "Koptelefoo"
 
 #. translators: device class
 #: blueman/DeviceClass.py:84 blueman/Sdp.py:144
@@ -1514,7 +1517,6 @@ msgid "UDI_C-Plane"
 msgstr "UDI_C-Plane"
 
 #: blueman/Sdp.py:109 blueman/Sdp.py:110
-#, fuzzy
 msgid "Multi-Channel Adaptation Protocol (MCAP)"
 msgstr "Multi-Channel Adaptation Protocol (MCAP)"
 
@@ -1534,7 +1536,7 @@ msgstr "BrowseGroupDescriptorServiceClassID"
 
 #: blueman/Sdp.py:114
 msgid "Public Browse Group"
-msgstr "Public Browse Group"
+msgstr "Openbare bladergroep"
 
 #: blueman/Sdp.py:115
 msgid "Serial Port"
@@ -1554,6 +1556,7 @@ msgid "IrMC Sync"
 msgstr "IrMC Sync"
 
 #: blueman/Sdp.py:119
+#, fuzzy
 msgid "OBEX Object Push"
 msgstr "OBEX Object Push"
 
@@ -1606,7 +1609,6 @@ msgid "Headset Audio Gateway"
 msgstr "Hoofdtelefoon Audio Gateway"
 
 #: blueman/Sdp.py:133
-#, fuzzy
 msgid "WAP"
 msgstr "WAP"
 
@@ -2423,7 +2425,7 @@ msgid ""
 "Please wait…"
 msgstr ""
 "Aan het proberen om een IP-adres te verkrijgen op %s\n"
-"Een ogenblik geduld a.u.b…"
+"Een ogenblik geduld a.u.b.…"
 
 #: blueman/plugins/applet/ShowConnected.py:17
 msgid ""
@@ -2649,7 +2651,7 @@ msgstr "Blueman Applet"
 
 #: data/blueman.desktop.in:4 data/blueman-manager.desktop.in:4
 msgid "Blueman Bluetooth Manager"
-msgstr "Blueman is een Bluetooth-beheerder"
+msgstr "Blueman Bluetooth-beheer"
 
 #: data/blueman.desktop.in:5 data/blueman-manager.desktop.in:5
 #: data/thunar-sendto-blueman.desktop.in:6

@@ -5,14 +5,14 @@
 # Edward Sawyer <saoded@gmail.com>, 2016
 # haxoc c11 <haxoc112@disroot.org>, 2018
 # shy tzedaka <shaytzedaka123@gmail.com>, 2016
-# Yaron Shahrabani <sh.yaron@gmail.com>, 2017
+# Yaron Shahrabani <sh.yaron@gmail.com>, 2017, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2020-09-26 22:02+0000\n"
-"PO-Revision-Date: 2020-09-11 19:40+0000\n"
-"Last-Translator: Omeritzics Games <omeritzicschwartz@gmail.com>\n"
+"POT-Creation-Date: 2020-10-15 20:51+0000\n"
+"PO-Revision-Date: 2020-09-29 11:27+0000\n"
+"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/blueman/blueman/"
 "he/>\n"
 "Language: he\n"
@@ -224,8 +224,8 @@ msgstr "<b>יוצר:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:288
-#: blueman/gui/manager/ManagerDeviceList.py:290 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:303
+#: blueman/gui/manager/ManagerDeviceList.py:305 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:375
 #: blueman/plugins/applet/NetUsage.py:209
@@ -271,15 +271,15 @@ msgstr "<b>נשלחו:</b>"
 
 #: data/ui/net-usage.ui:159
 msgid "<b>Total:</b>"
-msgstr "<b>סך הכול:</b>"
+msgstr "<b>כללי:</b>"
 
 #: data/ui/net-usage.ui:196
 msgid "<b>Log started:</b>"
-msgstr "<b>תחילת הרישום:</b>"
+msgstr "<b>רישום התחיל:</b>"
 
 #: data/ui/net-usage.ui:209
 msgid "<b>Log duration:</b>"
-msgstr "<b>משך תיעוד הרישום:</b>"
+msgstr "<b>זמן שהרישום פעל:</b>"
 
 #: data/ui/net-usage.ui:243
 msgid "_Reset"
@@ -291,7 +291,7 @@ msgstr "שלח הערה"
 
 #: blueman/main/Adapter.py:50
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
-msgstr "אנא הפעל את שירות הBLUETOOTH בכדי שמנהל המתאמים יעבוד"
+msgstr "נא להפעיל את שירות ה־Bluetooth כדי שמנהל המתאמים יפעל"
 
 #: blueman/main/Adapter.py:86 data/blueman-adapters.desktop.in:3
 msgid "Bluetooth Adapters"
@@ -314,33 +314,33 @@ msgstr[3] "%(minutes)d דקות"
 msgid "Adapter"
 msgstr "מתא"
 
-#: blueman/main/Manager.py:88 blueman/main/Manager.py:129
+#: blueman/main/Manager.py:89 blueman/main/Manager.py:130
 msgid "Bluetooth needs to be turned on for the device manager to function"
-msgstr "אנא הפעל את שירות הBLUETOOTH בכדי שמנהל המכשירים יעבוד"
+msgstr "נא להפעיל את שירות ה־Bluetooth כדי שמנהל המתאמים יפעל"
 
-#: blueman/main/Manager.py:108
+#: blueman/main/Manager.py:109
 msgid "Connection to BlueZ failed"
 msgstr "חיבור ל BlueZ נכשל"
 
-#: blueman/main/Manager.py:109
+#: blueman/main/Manager.py:110
 msgid ""
 "Bluez daemon is not running, blueman-manager cannot continue.\n"
 "This probably means that there were no Bluetooth adapters detected or "
 "Bluetooth daemon was not started."
 msgstr ""
-"שירות BlueZ אינו פעיל, מנהל blueman לא יכול להמשיך.\n"
-" כנראה שהסיבה היא שהמערכת לא זיהתה אף מתאם bluetooth או ששירות ה־bluetooth "
-"לא הופעל."
+"הסוכן BlueZ אינו פעיל, blueman-manager לא יכול להמשיך.\n"
+"ככל הנראה בעיה זו נגרמה כי אין המערכת לא זיהתה אף מתאמי Bluetooth או ששירות "
+"ה־Bluetooth לא הופעל."
 
-#: blueman/main/Manager.py:197
+#: blueman/main/Manager.py:198
 msgid "Searching"
 msgstr "מתבצע חיפוש"
 
-#: blueman/main/Manager.py:220 blueman/plugins/applet/StandardItems.py:79
+#: blueman/main/Manager.py:221 blueman/plugins/applet/StandardItems.py:79
 msgid "Adapter Preferences"
 msgstr "העדפות מתאם"
 
-#: blueman/main/Manager.py:232 blueman/gui/manager/ManagerDeviceList.py:134
+#: blueman/main/Manager.py:233 blueman/gui/manager/ManagerDeviceList.py:135
 #: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
 msgstr "שולח הקבצים"
@@ -351,7 +351,7 @@ msgstr "העברת קבצים ב־Bluetooth"
 
 #: blueman/main/Sendto.py:57 blueman/gui/manager/ManagerProgressbar.py:27
 msgid "Connecting"
-msgstr "בהתחברות"
+msgstr "מתחבר"
 
 #: blueman/main/Sendto.py:111
 msgid "obexd not available"
@@ -554,63 +554,63 @@ msgid "_Exit"
 msgstr "י_ציאה"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:257
-#: blueman/gui/manager/ManagerDeviceList.py:288 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:272
+#: blueman/gui/manager/ManagerDeviceList.py:303 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 msgid "Uncategorized"
 msgstr "ללא קטגוריה"
 
-#: blueman/gui/manager/ManagerDeviceList.py:451
+#: blueman/gui/manager/ManagerDeviceList.py:466
 msgid "<b>Trusted and Paired</b>"
 msgstr "<b>מהימן ומצומד</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:453
+#: blueman/gui/manager/ManagerDeviceList.py:468
 msgid "<b>Paired</b>"
 msgstr "<b>מצומד</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:455
+#: blueman/gui/manager/ManagerDeviceList.py:470
 msgid "<b>Trusted</b>"
 msgstr "<b>מהימן</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:476
+#: blueman/gui/manager/ManagerDeviceList.py:491
 msgid "Poor"
 msgstr "עני"
 
-#: blueman/gui/manager/ManagerDeviceList.py:478
-#: blueman/gui/manager/ManagerDeviceList.py:489
+#: blueman/gui/manager/ManagerDeviceList.py:493
+#: blueman/gui/manager/ManagerDeviceList.py:504
 msgid "Sub-optimal"
 msgstr "לא מיטבי"
 
-#: blueman/gui/manager/ManagerDeviceList.py:480
-#: blueman/gui/manager/ManagerDeviceList.py:491
+#: blueman/gui/manager/ManagerDeviceList.py:495
+#: blueman/gui/manager/ManagerDeviceList.py:506
 msgid "Optimal"
 msgstr "מיטבי"
 
-#: blueman/gui/manager/ManagerDeviceList.py:482
+#: blueman/gui/manager/ManagerDeviceList.py:497
 msgid "Much"
 msgstr "הרבה"
 
-#: blueman/gui/manager/ManagerDeviceList.py:484
+#: blueman/gui/manager/ManagerDeviceList.py:499
 msgid "Too much"
 msgstr "יותר מדי"
 
-#: blueman/gui/manager/ManagerDeviceList.py:487
+#: blueman/gui/manager/ManagerDeviceList.py:502
 msgid "Low"
 msgstr "נמוך"
 
-#: blueman/gui/manager/ManagerDeviceList.py:493
+#: blueman/gui/manager/ManagerDeviceList.py:508
 msgid "High"
 msgstr "גבוה"
 
-#: blueman/gui/manager/ManagerDeviceList.py:495
+#: blueman/gui/manager/ManagerDeviceList.py:510
 msgid "Very High"
 msgstr "גבוה מאוד"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:118
 #: blueman/gui/manager/ManagerDeviceMenu.py:181
 msgid "Success!"
-msgstr "הצליח!"
+msgstr "הצלחה!"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:125
 #: blueman/gui/manager/ManagerDeviceMenu.py:174
@@ -636,7 +636,9 @@ msgid "Disconnecting…"
 msgstr "מתבצע ניתוק…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:254
-msgid "_<b>Connect</b>"
+#, fuzzy
+#| msgid "_<b>Connect</b>"
+msgid "_<b>_Connect</b>"
 msgstr "_<b>חיבור</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:256
@@ -905,7 +907,7 @@ msgstr "לא זמין"
 #. translators: device class
 #: blueman/DeviceClass.py:82 blueman/Sdp.py:122 blueman/Sdp.py:163
 msgid "Headset"
-msgstr "אוזניות"
+msgstr "אוזניות ראש"
 
 #. translators: device class
 #: blueman/DeviceClass.py:84 blueman/Sdp.py:144
@@ -1645,7 +1647,7 @@ msgstr "מידע PnP"
 
 #: blueman/Sdp.py:178
 msgid "Generic Networking"
-msgstr "רשת תקשורת גנרית"
+msgstr "ציוד רשת גנרי"
 
 #: blueman/Sdp.py:179
 msgid "Generic FileTransfer"
@@ -1705,7 +1707,7 @@ msgstr "עצמת שליחה"
 
 #: blueman/Sdp.py:193
 msgid "Current Time Service"
-msgstr "שירות זמן נוכחי"
+msgstr "שירות השעה הנוכחית"
 
 #: blueman/Sdp.py:194
 msgid "Reference Time Update Service"
@@ -1857,7 +1859,7 @@ msgstr "דגלון פרטיות היקפית"
 
 #: blueman/Sdp.py:231
 msgid "Reconnection Address"
-msgstr "כתובת לחיבור מחדש"
+msgstr "כתובת חיבור מחדש"
 
 #: blueman/Sdp.py:232
 msgid "Peripheral Preferred Connection Parameters"
@@ -1865,7 +1867,7 @@ msgstr "משתני חיבור היקפי מועדף"
 
 #: blueman/Sdp.py:233
 msgid "Service Changed"
-msgstr "השירות השתנה"
+msgstr "השירות הוחלף"
 
 #: blueman/Sdp.py:234
 msgid "System ID"
@@ -2021,7 +2023,7 @@ msgstr "התחבר אוטומטית אל %(service)s על %(device)s"
 #: blueman/plugins/applet/NetUsage.py:265
 #: blueman/plugins/applet/NetUsage.py:270
 msgid "Connected:"
-msgstr "מחוברים:"
+msgstr "מחובר:"
 
 #: blueman/plugins/applet/NetUsage.py:168
 #: blueman/plugins/applet/NetUsage.py:280
@@ -2033,8 +2035,8 @@ msgid ""
 "No usage statistics are available yet. Try establishing a connection first "
 "and then check this page."
 msgstr ""
-"אין סטטיסטיקת שימוש עדיין. כדאי לנסות להפעיל את החיבור קודם ואז לשוב ולבדוק "
-"מה קורה בעמוד הזה."
+"סטטיסטיקת נתוני השימוש לא זמינה. כדאי לנסות לבדוק את החיבור בטרם ביצוע "
+"ניסיון חוזר."
 
 #: blueman/plugins/applet/NetUsage.py:202
 msgid "day"
@@ -2048,7 +2050,7 @@ msgstr[3] "ימים"
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "שעה"
-msgstr[1] "שעות"
+msgstr[1] "שעתיים"
 msgstr[2] "שעות"
 msgstr[3] "שעות"
 
@@ -2056,7 +2058,7 @@ msgstr[3] "שעות"
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "שעה"
-msgstr[1] "שעות"
+msgstr[1] "שעתיים"
 msgstr[2] "שעות"
 msgstr[3] "שעות"
 
@@ -2425,7 +2427,7 @@ msgstr ""
 
 #: blueman/plugins/applet/PowerManager.py:31
 msgid "Controls Bluetooth adapter power states"
-msgstr "שולט במצבי הפעילות החשמלית של מתאים ה־Bluetooth"
+msgstr "שולט במצבי הפעילות החשמלית של מתאם ה־Bluetooth"
 
 #: blueman/plugins/applet/PowerManager.py:44
 msgid "Auto power-on"
@@ -2457,7 +2459,7 @@ msgstr "הפעלת כל המתאמים"
 msgid ""
 "Temporarily suspends the screensaver when a bluetooth game controller is "
 "connected."
-msgstr "להשהות זמנית את שומר המסך כאשר מחובר התקן משחק דרך bluetooth."
+msgstr "להשהות זמנית את שומר המסך כאשר מחובר התקן משחק דרך Bluetooth."
 
 #: blueman/plugins/services/Network.py:25
 msgid "Network"
@@ -2522,7 +2524,7 @@ msgstr "מנהל Bluetooth"
 
 #: data/thunar-sendto-blueman.desktop.in:5
 msgid "Bluetooth Device"
-msgstr "מכשירי Bluetooth"
+msgstr "מכשיר Bluetooth"
 
 #: data/configs/org.blueman.policy.in:10
 msgid "Configure Bluetooth Network"

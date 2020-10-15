@@ -8,12 +8,13 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2007
 # mauron, 2017-2018
 # tarakbumba <tarakbumba@gmail.com>, 2014
+# Oğuz Ersen <oguzersen@protonmail.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2020-09-26 22:02+0000\n"
-"PO-Revision-Date: 2020-09-15 15:43+0000\n"
+"POT-Creation-Date: 2020-10-15 20:51+0000\n"
+"PO-Revision-Date: 2020-10-15 17:06+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/blueman/blueman/"
 "tr/>\n"
@@ -38,7 +39,7 @@ msgstr "Her zaman görünür"
 
 #: data/ui/adapters-tab.ui:70
 msgid "Temporarily visible"
-msgstr "Geçici görünürlük"
+msgstr "Geçici olarak görünür"
 
 #: data/ui/adapters-tab.ui:101
 msgid "<b>Friendly Name</b>"
@@ -50,7 +51,7 @@ msgstr "Eşleşme isteği"
 
 #: data/ui/applet-passkey.ui:91
 msgid "Pairing request for device:"
-msgstr "Cihaz için eşleşme isteği:"
+msgstr "Aygıt için eşleşme isteği:"
 
 #: data/ui/applet-passkey.ui:120
 msgid "This should be overwritten"
@@ -185,7 +186,7 @@ msgstr "Gelen dosya aktarımları için dizin seçin"
 
 #: data/ui/services-transfer.ui:58
 msgid "Accept files from trusted devices"
-msgstr "Güvenilir cihazlardan dosyaları kabul et"
+msgstr "Güvenilen aygıtlardan dosyaları kabul et"
 
 #: data/ui/services-transfer.ui:96
 msgid "<b>Transfer Settings</b>"
@@ -199,7 +200,7 @@ msgstr ""
 
 #: data/ui/send-dialog.ui:68
 msgid "<b>To:</b>"
-msgstr "<b>Gönderilecek Cihaz:</b>"
+msgstr "<b>Gönderilecek aygıt:</b>"
 
 #: data/ui/send-dialog.ui:106
 msgid "<b>File:</b>"
@@ -227,8 +228,8 @@ msgstr "<b>Yazar:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:288
-#: blueman/gui/manager/ManagerDeviceList.py:290 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:303
+#: blueman/gui/manager/ManagerDeviceList.py:305 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:375
 #: blueman/plugins/applet/NetUsage.py:209
@@ -316,15 +317,15 @@ msgstr[1] "%(minutes)d Dakika"
 msgid "Adapter"
 msgstr "Bağdaştırıcı"
 
-#: blueman/main/Manager.py:88 blueman/main/Manager.py:129
+#: blueman/main/Manager.py:89 blueman/main/Manager.py:130
 msgid "Bluetooth needs to be turned on for the device manager to function"
 msgstr "Aygıt yöneticisinin çalışabilmesi için bluetooth açılmalı"
 
-#: blueman/main/Manager.py:108
+#: blueman/main/Manager.py:109
 msgid "Connection to BlueZ failed"
 msgstr "BlueZ bağlantısı başarısız"
 
-#: blueman/main/Manager.py:109
+#: blueman/main/Manager.py:110
 msgid ""
 "Bluez daemon is not running, blueman-manager cannot continue.\n"
 "This probably means that there were no Bluetooth adapters detected or "
@@ -334,15 +335,15 @@ msgstr ""
 "Bu muhtemelen Bluetooth bağdaştırıcısının algılanmadığı veya Bluetooth arka "
 "plan programının başlatılmadığı anlamına gelir."
 
-#: blueman/main/Manager.py:197
+#: blueman/main/Manager.py:198
 msgid "Searching"
 msgstr "Aranıyor"
 
-#: blueman/main/Manager.py:220 blueman/plugins/applet/StandardItems.py:79
+#: blueman/main/Manager.py:221 blueman/plugins/applet/StandardItems.py:79
 msgid "Adapter Preferences"
 msgstr "Bağdaştırıcı Tercihleri"
 
-#: blueman/main/Manager.py:232 blueman/gui/manager/ManagerDeviceList.py:134
+#: blueman/main/Manager.py:233 blueman/gui/manager/ManagerDeviceList.py:135
 #: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
 msgstr "Dosya Gönderici"
@@ -557,58 +558,56 @@ msgid "_Exit"
 msgstr "_Çıkış"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:257
-#: blueman/gui/manager/ManagerDeviceList.py:288 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:272
+#: blueman/gui/manager/ManagerDeviceList.py:303 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
-#, fuzzy
-#| msgid "uncategorized"
 msgid "Uncategorized"
-msgstr "sınıflandırılmamış"
+msgstr "Sınıflandırılmamış"
 
-#: blueman/gui/manager/ManagerDeviceList.py:451
+#: blueman/gui/manager/ManagerDeviceList.py:466
 msgid "<b>Trusted and Paired</b>"
 msgstr "<b>Güvenilir ve Eşlenmiş</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:453
+#: blueman/gui/manager/ManagerDeviceList.py:468
 msgid "<b>Paired</b>"
 msgstr "<b>Eşlenmiş</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:455
+#: blueman/gui/manager/ManagerDeviceList.py:470
 msgid "<b>Trusted</b>"
 msgstr "<b>Güvenilir</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:476
+#: blueman/gui/manager/ManagerDeviceList.py:491
 msgid "Poor"
 msgstr "Zayıf"
 
-#: blueman/gui/manager/ManagerDeviceList.py:478
-#: blueman/gui/manager/ManagerDeviceList.py:489
+#: blueman/gui/manager/ManagerDeviceList.py:493
+#: blueman/gui/manager/ManagerDeviceList.py:504
 msgid "Sub-optimal"
 msgstr "Optimal altı"
 
-#: blueman/gui/manager/ManagerDeviceList.py:480
-#: blueman/gui/manager/ManagerDeviceList.py:491
+#: blueman/gui/manager/ManagerDeviceList.py:495
+#: blueman/gui/manager/ManagerDeviceList.py:506
 msgid "Optimal"
 msgstr "En Uygun"
 
-#: blueman/gui/manager/ManagerDeviceList.py:482
+#: blueman/gui/manager/ManagerDeviceList.py:497
 msgid "Much"
 msgstr "Daha fazla"
 
-#: blueman/gui/manager/ManagerDeviceList.py:484
+#: blueman/gui/manager/ManagerDeviceList.py:499
 msgid "Too much"
 msgstr "Çok fazla"
 
-#: blueman/gui/manager/ManagerDeviceList.py:487
+#: blueman/gui/manager/ManagerDeviceList.py:502
 msgid "Low"
 msgstr "Düşük"
 
-#: blueman/gui/manager/ManagerDeviceList.py:493
+#: blueman/gui/manager/ManagerDeviceList.py:508
 msgid "High"
 msgstr "Yüksek"
 
-#: blueman/gui/manager/ManagerDeviceList.py:495
+#: blueman/gui/manager/ManagerDeviceList.py:510
 msgid "Very High"
 msgstr "Çok Yüksek"
 
@@ -641,12 +640,12 @@ msgid "Disconnecting…"
 msgstr "Bağlantı kesiliyor…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:254
-msgid "_<b>Connect</b>"
-msgstr "_<b>Bağlan</b>"
+msgid "_<b>_Connect</b>"
+msgstr "_<b>_Bağlan</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:256
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
-msgstr "A2DP kaynak, A2DP çöp ve HID otomatik bağlantı profillerini bağlar"
+msgstr "A2DP girişi, A2DP çıkışı ve HID otomatik bağlantı profillerini bağlar"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:260
 msgid "_<b>Disconnect</b>"
@@ -788,159 +787,137 @@ msgstr "Keşfediliyor…"
 #. translators: device class
 #: blueman/DeviceClass.py:6
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Çeşitli"
 
 #. translators: device class
 #: blueman/DeviceClass.py:8
 msgid "Computer"
-msgstr ""
+msgstr "Bilgisayar"
 
 #. translators: device class
 #: blueman/DeviceClass.py:10
 msgid "Phone"
-msgstr ""
+msgstr "Telefon"
 
 #. translators: device class
 #: blueman/DeviceClass.py:12
-#, fuzzy
-#| msgid "Network Access Point"
 msgid "Access point"
-msgstr "Ağ Erişim Noktası"
+msgstr "Erişim noktası"
 
 #. translators: device class
 #: blueman/DeviceClass.py:14
-#, fuzzy
-#| msgid "Audio/Video"
 msgid "Audio/video"
-msgstr "Ses/Video"
+msgstr "Ses/video"
 
 #. translators: device class
 #: blueman/DeviceClass.py:16
 msgid "Peripheral"
-msgstr ""
+msgstr "Çevre birimi"
 
 #. translators: device class
 #: blueman/DeviceClass.py:18 blueman/DeviceClass.py:276
 msgid "Imaging"
-msgstr ""
+msgstr "Resim"
 
 #. translators: device class
 #: blueman/DeviceClass.py:20 blueman/DeviceClass.py:41
 msgid "Wearable"
-msgstr ""
+msgstr "Giyilebilir"
 
 #. translators: device class
 #: blueman/DeviceClass.py:22
 msgid "Toy"
-msgstr ""
+msgstr "Oyuncak"
 
 #. translators: device class
 #: blueman/DeviceClass.py:31
-#, fuzzy
-#| msgid "desktop"
 msgid "Desktop"
-msgstr "masaüstü"
+msgstr "Masaüstü"
 
 #. translators: device class
 #: blueman/DeviceClass.py:33
-#, fuzzy
-#| msgid "server"
 msgid "Server"
-msgstr "sunucu"
+msgstr "Sunucu"
 
 #. translators: device class
 #: blueman/DeviceClass.py:35
-#, fuzzy
-#| msgid "laptop"
 msgid "Laptop"
-msgstr "dizüstü bilgisayar"
+msgstr "Dizüstü"
 
 #. translators: device class
 #: blueman/DeviceClass.py:37
-#, fuzzy
-#| msgid "handheld"
 msgid "Handheld"
-msgstr "taşınabilir"
+msgstr "Elde taşınabilir"
 
 #. translators: device class
 #: blueman/DeviceClass.py:39
 msgid "Palm"
-msgstr ""
+msgstr "Avuç içi"
 
 #. translators: device class
 #: blueman/DeviceClass.py:48
-#, fuzzy
-#| msgid "cellular"
 msgid "Cellular"
-msgstr "telefon"
+msgstr "Cep telefonu"
 
 #. translators: device class
 #: blueman/DeviceClass.py:50
-#, fuzzy
-#| msgid "cordless"
 msgid "Cordless"
-msgstr "kablosuz"
+msgstr "Kablosuz"
 
 #. translators: device class
 #: blueman/DeviceClass.py:52
-#, fuzzy
-#| msgid "smart phone"
 msgid "Smart phone"
-msgstr "akıllı telefon (Nokia N Series , Symbian vb.)"
+msgstr "Akıllı telefon"
 
 #. translators: device class
 #: blueman/DeviceClass.py:54
-#, fuzzy
-#| msgid "modem"
 msgid "Modem"
-msgstr "modem"
+msgstr "Modem"
 
 #. translators: device class
 #: blueman/DeviceClass.py:56
 msgid "Isdn"
-msgstr ""
+msgstr "ISDN"
 
 #. translators: device class
 #: blueman/DeviceClass.py:61
 msgid "Fully"
-msgstr ""
+msgstr "Tamamen"
 
 #. translators: device class
 #: blueman/DeviceClass.py:63
 msgid "1-17 percent"
-msgstr ""
+msgstr "Yüzde 1-17"
 
 #. translators: device class
 #: blueman/DeviceClass.py:65
 msgid "17-33 percent"
-msgstr ""
+msgstr "Yüzde 17-33"
 
 #. translators: device class
 #: blueman/DeviceClass.py:67
 msgid "33-50 percent"
-msgstr ""
+msgstr "Yüzde 33-50"
 
 #. translators: device class
 #: blueman/DeviceClass.py:69
 msgid "50-67 percent"
-msgstr ""
+msgstr "Yüzde 50-67"
 
 #. translators: device class
 #: blueman/DeviceClass.py:71
 msgid "67-83 percent"
-msgstr ""
+msgstr "Yüzde 67-83"
 
 #. translators: device class
 #: blueman/DeviceClass.py:73
 msgid "83-99 percent"
-msgstr ""
+msgstr "Yüzde 83-99"
 
 #. translators: device class
 #: blueman/DeviceClass.py:75
-#, fuzzy
-#| msgid "obexd not available"
 msgid "Not available"
-msgstr "obexd bulunamadı"
+msgstr "Kullanılabilir değil"
 
 #. translators: device class
 #: blueman/DeviceClass.py:82 blueman/Sdp.py:122 blueman/Sdp.py:163
@@ -954,466 +931,384 @@ msgstr "Eller serbest"
 
 #. translators: device class
 #: blueman/DeviceClass.py:88
-#, fuzzy
-#| msgid "microphone"
 msgid "Microphone"
-msgstr "mikrofon"
+msgstr "Mikrofon"
 
 #. translators: device class
 #: blueman/DeviceClass.py:90
-#, fuzzy
-#| msgid "loudspeaker"
 msgid "Loudspeaker"
-msgstr "hoparlör"
+msgstr "Hoparlör"
 
 #. translators: device class
 #: blueman/DeviceClass.py:92
-#, fuzzy
-#| msgid "headphones"
 msgid "Headphones"
-msgstr "kulaklık"
+msgstr "Kulaklık"
 
 #. translators: device class
 #: blueman/DeviceClass.py:94
-#, fuzzy
-#| msgid "portable audio"
 msgid "Portable audio"
-msgstr "taşınabilir ses sistemi"
+msgstr "Taşınabilir ses sistemi"
 
 #. translators: device class
 #: blueman/DeviceClass.py:96
-#, fuzzy
-#| msgid "car audio"
 msgid "Car audio"
-msgstr "araç ses sistemi"
+msgstr "Araç ses sistemi"
 
 #. translators: device class
 #: blueman/DeviceClass.py:98
-#, fuzzy
-#| msgid "set-top box"
 msgid "Set-top box"
-msgstr "set üstü kutusu"
+msgstr "Set üstü kutusu"
 
 #. translators: device class
 #: blueman/DeviceClass.py:100
-#, fuzzy
-#| msgid "hifi audio"
 msgid "Hifi audio"
-msgstr "hifi ses sistemi"
+msgstr "yüksek kaliteli ses sistemi"
 
 #. translators: device class
 #: blueman/DeviceClass.py:102
-#, fuzzy
-#| msgid "vcr"
 msgid "Vcr"
-msgstr "vcr"
+msgstr "Video kaset kaydedici"
 
 #. translators: device class
 #: blueman/DeviceClass.py:104
-#, fuzzy
-#| msgid "video camera"
 msgid "Video camera"
-msgstr "video kamera"
+msgstr "Video kamera"
 
 #. translators: device class
 #: blueman/DeviceClass.py:106
-#, fuzzy
-#| msgid "camcorder"
 msgid "Camcorder"
-msgstr "kayıt kamerası"
+msgstr "Kayıt kamerası"
 
 #. translators: device class
 #: blueman/DeviceClass.py:108
-#, fuzzy
-#| msgid "video monitor"
 msgid "Video monitor"
-msgstr "video ekranı"
+msgstr "Video ekranı"
 
 #. translators: device class
 #: blueman/DeviceClass.py:110
-#, fuzzy
-#| msgid "video display and loudspeaker"
 msgid "Video display and loudspeaker"
-msgstr "video ekranı ve hoparlör"
+msgstr "Video ekranı ve hoparlör"
 
 #. translators: device class
 #: blueman/DeviceClass.py:112
-#, fuzzy
-#| msgid "video conferencing"
 msgid "Video conferencing"
-msgstr "video konferans"
+msgstr "Video konferans"
 
 #. translators: device class
 #: blueman/DeviceClass.py:116
-#, fuzzy
-#| msgid "gaming/toy"
 msgid "Gaming/Toy"
-msgstr "oyun/oyuncak"
+msgstr "Oyun/Oyuncak"
 
 #. translators: device class
 #: blueman/DeviceClass.py:123 blueman/DeviceClass.py:189
-#, fuzzy
-#| msgid "keyboard"
 msgid "Keyboard"
-msgstr "klavye"
+msgstr "Klavye"
 
 #. translators: device class
 #: blueman/DeviceClass.py:125
-#, fuzzy
-#| msgid "pointing"
 msgid "Pointing"
-msgstr "işaretleme"
+msgstr "İşaretleme"
 
 #. translators: device class
 #: blueman/DeviceClass.py:127
-#, fuzzy
-#| msgid "combo"
 msgid "Combo"
-msgstr "birleşik"
+msgstr "Birleşik"
 
 #. translators: device class
 #: blueman/DeviceClass.py:132
-#, fuzzy
-#| msgid "3D Display"
 msgid "Display"
-msgstr "3B Ekran"
+msgstr "Ekran"
 
 #. translators: device class
 #: blueman/DeviceClass.py:134
 msgid "Camera"
-msgstr ""
+msgstr "Kamera"
 
 #. translators: device class
 #: blueman/DeviceClass.py:136
 msgid "Scanner"
-msgstr ""
+msgstr "Tarayıcı"
 
 #. translators: device class
 #: blueman/DeviceClass.py:138
 msgid "Printer"
-msgstr ""
+msgstr "Yazıcı"
 
 #. translators: device class
 #: blueman/DeviceClass.py:143
 msgid "Wrist watch"
-msgstr ""
+msgstr "Kol saati"
 
 #. translators: device class
 #: blueman/DeviceClass.py:145
 msgid "Pager"
-msgstr ""
+msgstr "Çağrı cihazı"
 
 #. translators: device class
 #: blueman/DeviceClass.py:147
 msgid "Jacket"
-msgstr ""
+msgstr "Ceket"
 
 #. translators: device class
 #: blueman/DeviceClass.py:149
 msgid "Helmet"
-msgstr ""
+msgstr "Kask"
 
 #. translators: device class
 #: blueman/DeviceClass.py:151
-#, fuzzy
-#| msgid "3D Glasses"
 msgid "Glasses"
-msgstr "3B Gözlük"
+msgstr "Gözlük"
 
 #. translators: device class
 #: blueman/DeviceClass.py:156
 msgid "Robot"
-msgstr ""
+msgstr "Robot"
 
 #. translators: device class
 #: blueman/DeviceClass.py:158
 msgid "Vehicle"
-msgstr ""
+msgstr "Araç"
 
 #. translators: device class
 #: blueman/DeviceClass.py:160
 msgid "Doll"
-msgstr ""
+msgstr "Oyuncak bebek"
 
 #. translators: device class
 #: blueman/DeviceClass.py:162
 msgid "Controller"
-msgstr ""
+msgstr "Denetleyici"
 
 #. translators: device class
 #: blueman/DeviceClass.py:164
 msgid "Game"
-msgstr ""
+msgstr "Oyun"
 
 #: blueman/DeviceClass.py:169
-#, fuzzy
-#| msgid "Generic Connect"
 msgid "Generic Phone"
-msgstr "Genel Bağlantı"
+msgstr "Genel Telefon"
 
 #: blueman/DeviceClass.py:170
-#, fuzzy
-#| msgid "Generic Connect"
 msgid "Generic Computer"
-msgstr "Genel Bağlantı"
+msgstr "Genel Bilgisayar"
 
 #: blueman/DeviceClass.py:171
-#, fuzzy
-#| msgid "Generic Connect"
 msgid "Generic Watch"
-msgstr "Genel Bağlantı"
+msgstr "Genel Saat"
 
 #: blueman/DeviceClass.py:172
 msgid "Watch: Sports Watch"
-msgstr ""
+msgstr "Saat: Spor Saati"
 
 #: blueman/DeviceClass.py:173
-#, fuzzy
-#| msgid "Generic Connect"
 msgid "Generic Clock"
-msgstr "Genel Bağlantı"
+msgstr "Genel Saat"
 
 #: blueman/DeviceClass.py:174
-#, fuzzy
-#| msgid "3D Display"
 msgid "Generic Display"
-msgstr "3B Ekran"
+msgstr "Genel Ekran"
 
 #: blueman/DeviceClass.py:175
-#, fuzzy
-#| msgid "Remote Control"
 msgid "Generic Remote Control"
-msgstr "Uzaktan Kumanda"
+msgstr "Genel Uzaktan Kumanda"
 
 #: blueman/DeviceClass.py:176
-#, fuzzy
-#| msgid "Generic FileTransfer"
 msgid "Generic Eye-glasses"
-msgstr "Genel Dosya Aktarımı"
+msgstr "Genel Gözlük"
 
 #: blueman/DeviceClass.py:177
-#, fuzzy
-#| msgid "Generic FileTransfer"
 msgid "Generic Tag"
-msgstr "Genel Dosya Aktarımı"
+msgstr "Genel Etiket"
 
 #: blueman/DeviceClass.py:178
-#, fuzzy
-#| msgid "Generic Networking"
 msgid "Generic Keyring"
-msgstr "Genel Ağ"
+msgstr "Genel Anahtarlık"
 
 #: blueman/DeviceClass.py:179
-#, fuzzy
-#| msgid "Generic FileTransfer"
 msgid "Generic Media Player"
-msgstr "Genel Dosya Aktarımı"
+msgstr "Genel Medya Oynatıcı"
 
 #: blueman/DeviceClass.py:180
-#, fuzzy
-#| msgid "Generic Connect"
 msgid "Generic Barcode Scanner"
-msgstr "Genel Bağlantı"
+msgstr "Genel Barkod Tarayıcı"
 
 #: blueman/DeviceClass.py:181
-#, fuzzy
-#| msgid "Health Thermometer"
 msgid "Generic Thermometer"
-msgstr "Sağlık Termometresi"
+msgstr "Genel Termometre"
 
 #: blueman/DeviceClass.py:182
-#, fuzzy
-#| msgid "Health Thermometer"
 msgid "Thermometer: Ear"
-msgstr "Sağlık Termometresi"
+msgstr "Termometre: Kulak"
 
 #: blueman/DeviceClass.py:183
-#, fuzzy
-#| msgid "Generic FileTransfer"
 msgid "Generic Heart rate Sensor"
-msgstr "Genel Dosya Aktarımı"
+msgstr "Genel Kalp Atış Hızı Sensörü"
 
 #: blueman/DeviceClass.py:184
 msgid "Heart Rate Sensor: Heart Rate Belt"
-msgstr ""
+msgstr "Kalp Atış Hızı Sensörü: Kalp Atış Hızı Kemeri"
 
 #: blueman/DeviceClass.py:185
-#, fuzzy
-#| msgid "Blood Pressure"
 msgid "Generic Blood Pressure"
-msgstr "Tansiyon"
+msgstr "Genel Tansiyon"
 
 #: blueman/DeviceClass.py:186
-#, fuzzy
-#| msgid "Blood Pressure"
 msgid "Blood Pressure: Arm"
-msgstr "Tansiyon"
+msgstr "Tansiyon: Kol"
 
 #: blueman/DeviceClass.py:187
-#, fuzzy
-#| msgid "Blood Pressure"
 msgid "Blood Pressure: Wrist"
-msgstr "Tansiyon"
+msgstr "Tansiyon: Bilek"
 
 #: blueman/DeviceClass.py:188
 msgid "Human Interface Device (HID)"
-msgstr ""
+msgstr "Kullanıcı Etkileşim Aygıtı (HID)"
 
 #: blueman/DeviceClass.py:190
 msgid "Mouse"
-msgstr ""
+msgstr "Fare"
 
 #: blueman/DeviceClass.py:191
 msgid "Joystick"
-msgstr ""
+msgstr "Oyun çubuğu"
 
 #: blueman/DeviceClass.py:192
 msgid "Gamepad"
-msgstr ""
+msgstr "Oyun kolu"
 
 #: blueman/DeviceClass.py:193
 msgid "Digitizer Tablet"
-msgstr ""
+msgstr "Grafik Tablet"
 
 #: blueman/DeviceClass.py:194
 msgid "Card Reader"
-msgstr ""
+msgstr "Kart Okuyucu"
 
 #: blueman/DeviceClass.py:195
 msgid "Digital Pen"
-msgstr ""
+msgstr "Dijital Kalem"
 
 #: blueman/DeviceClass.py:196
 msgid "Barcode Scanner"
-msgstr ""
+msgstr "Barkod Tarayıcı"
 
 #: blueman/DeviceClass.py:197
-#, fuzzy
-#| msgid "Generic Connect"
 msgid "Generic Glucose Meter"
-msgstr "Genel Bağlantı"
+msgstr "Genel Glikoz Ölçer"
 
 #: blueman/DeviceClass.py:198
 msgid "Generic: Running Walking Sensor"
-msgstr ""
+msgstr "Genel: Koşu Yürüyüş Sensörü"
 
 #: blueman/DeviceClass.py:199
 msgid "Running Walking Sensor: In-Shoe"
-msgstr ""
+msgstr "Koşu Yürüyüş Sensörü: Ayakkabı İçi"
 
 #: blueman/DeviceClass.py:200
 msgid "Running Walking Sensor: On-Shoe"
-msgstr ""
+msgstr "Koşu Yürüyüş Sensörü: Ayakkabı Üstü"
 
 #: blueman/DeviceClass.py:201
 msgid "Running Walking Sensor: On-Hip"
-msgstr ""
+msgstr "Koşu Yürüyüş Sensörü: Kalça Üstü"
 
 #: blueman/DeviceClass.py:202
-#, fuzzy
-#| msgid "Generic Networking"
 msgid "Generic: Cycling"
-msgstr "Genel Ağ"
+msgstr "Genel: Bisiklet"
 
 #: blueman/DeviceClass.py:203
 msgid "Cycling: Cycling Computer"
-msgstr ""
+msgstr "Bisiklet: Bisiklet Bilgisayarı"
 
 #: blueman/DeviceClass.py:204
 msgid "Cycling: Speed Sensor"
-msgstr ""
+msgstr "Bisiklet: Hız Sensörü"
 
 #: blueman/DeviceClass.py:205
 msgid "Cycling: Cadence Sensor"
-msgstr ""
+msgstr "Bisiklet: Tempo Sensörü"
 
 #: blueman/DeviceClass.py:206
 msgid "Cycling: Power Sensor"
-msgstr ""
+msgstr "Bisiklet: Güç Sensörü"
 
 #: blueman/DeviceClass.py:207
 msgid "Cycling: Speed and Cadence Sensor"
-msgstr ""
+msgstr "Bisiklet: Hız ve Tempo Sensörü"
 
 #. 19 - 48 reserved
 #: blueman/DeviceClass.py:209
 msgid "Generic: Pulse Oximeter"
-msgstr ""
+msgstr "Genel: Nabız Oksimetresi"
 
 #: blueman/DeviceClass.py:210
 msgid "Fingertip"
-msgstr ""
+msgstr "Parmak ucu"
 
 #: blueman/DeviceClass.py:211
 msgid "Wrist Worn"
-msgstr ""
+msgstr "Bileğe Takılan"
 
 #: blueman/DeviceClass.py:212
 msgid "Generic: Weight Scale"
-msgstr ""
+msgstr "Genel: Tartı"
 
 #: blueman/DeviceClass.py:213
 msgid "Generic Personal Mobility Device"
-msgstr ""
+msgstr "Genel Kişisel Hareketlilik Aygıtı"
 
 #: blueman/DeviceClass.py:214
 msgid "Powered Wheelchair"
-msgstr ""
+msgstr "Elektrikli Tekerlekli Sandalye"
 
 #: blueman/DeviceClass.py:215
 msgid "Mobility Scooter"
-msgstr ""
+msgstr "Elektrikli Scooter"
 
 #: blueman/DeviceClass.py:216
-#, fuzzy
-#| msgid "Continuous Glucose Monitoring"
 msgid "Generic Continuous Glucose Monitor"
-msgstr "Sürekli Glikoz İzleme"
+msgstr "Genel Sürekli Glikoz İzleyici"
 
 #: blueman/DeviceClass.py:217
 msgid "Generic Insulin Pump"
-msgstr ""
+msgstr "Genel İnsülin Pompası"
 
 #: blueman/DeviceClass.py:218
 msgid "Insulin Pump, durable pump"
-msgstr ""
+msgstr "İnsülin Pompası, dayanıklı pompa"
 
 #: blueman/DeviceClass.py:219
 msgid "Insulin Pump, patch pump"
-msgstr ""
+msgstr "İnsülin Pompası, yapışkanlı pompa"
 
 #: blueman/DeviceClass.py:220
 msgid "Insulin Pen"
-msgstr ""
+msgstr "İnsülin Kalemi"
 
 #: blueman/DeviceClass.py:221
 msgid "Generic Medication Delivery"
-msgstr ""
+msgstr "Genel İlaç Teslimatı"
 
 #. 55 - 80 reserved
 #: blueman/DeviceClass.py:223
 msgid "Generic: Outdoor Sports Activity"
-msgstr ""
+msgstr "Genel: Açık Hava Spor Etkinliği"
 
 #: blueman/DeviceClass.py:224
 msgid "Location Display Device"
-msgstr ""
+msgstr "Konum Görüntüleme Aygıtı"
 
 #: blueman/DeviceClass.py:225
-#, fuzzy
-#| msgid "Location and Navigation"
 msgid "Location and Navigation Display Device"
-msgstr "Konum ve Navigasyon"
+msgstr "Konum ve Navigasyon Görüntüleme Aygıtı"
 
 #: blueman/DeviceClass.py:226
 msgid "Location Pod"
-msgstr ""
+msgstr "Konum Bölmesi"
 
 #: blueman/DeviceClass.py:227
-#, fuzzy
-#| msgid "Location and Navigation"
 msgid "Location and Navigation Pod"
-msgstr "Konum ve Navigasyon"
+msgstr "Konum ve Navigasyon Bölmesi"
 
 #: blueman/Sdp.py:87
 msgid "SDP"
@@ -1521,7 +1416,7 @@ msgstr "BrowseGroupDescriptorServiceClassID"
 
 #: blueman/Sdp.py:114
 msgid "Public Browse Group"
-msgstr ""
+msgstr "Herkese Açık Göz Atma Grubu"
 
 #: blueman/Sdp.py:115
 msgid "Serial Port"
@@ -1589,7 +1484,7 @@ msgstr "Faks"
 
 #: blueman/Sdp.py:132
 msgid "Headset Audio Gateway"
-msgstr ""
+msgstr "Kulaklık Ses Ağ Geçidi"
 
 #: blueman/Sdp.py:133
 msgid "WAP"
@@ -1613,71 +1508,71 @@ msgstr "Şebeke grubu"
 
 #: blueman/Sdp.py:138
 msgid "DirectPrinting (BPP)"
-msgstr ""
+msgstr "Doğrudan Baskı (BPP)"
 
 #: blueman/Sdp.py:139
 msgid "ReferencePrinting (BPP)"
-msgstr ""
+msgstr "Referans Baskı (BPP)"
 
 #: blueman/Sdp.py:140
 msgid "Imaging (BIP)"
-msgstr ""
+msgstr "Resim (BIP)"
 
 #: blueman/Sdp.py:141
 msgid "ImagingResponder (BIP)"
-msgstr ""
+msgstr "ImagingResponder (BIP)"
 
 #: blueman/Sdp.py:142
 msgid "ImagingAutomaticArchive (BIP)"
-msgstr ""
+msgstr "Otomatik Resim Arşivleme (BIP)"
 
 #: blueman/Sdp.py:143
 msgid "ImagingReferencedObjects (BIP)"
-msgstr ""
+msgstr "ImagingReferencedObjects (BIP)"
 
 #: blueman/Sdp.py:145
 msgid "Handsfree Audio Gateway"
-msgstr ""
+msgstr "Eller Serbest Ses Ağ Geçidi"
 
 #: blueman/Sdp.py:146
 msgid "DirectPrintingReferenceObjectsService (BPP)"
-msgstr ""
+msgstr "DirectPrintingReferenceObjectsService (BPP)"
 
 #: blueman/Sdp.py:147
 msgid "ReflectedUI (BPP)"
-msgstr ""
+msgstr "ReflectedUI (BPP)"
 
 #: blueman/Sdp.py:148
 msgid "Basic Printing (BPP)"
-msgstr ""
+msgstr "Temel Baskı (BPP)"
 
 #: blueman/Sdp.py:149
 msgid "Printing Status (BPP)"
-msgstr ""
+msgstr "Baskı Durumu (BPP)"
 
 #: blueman/Sdp.py:150
 msgid "Human Interface Device Service (HID)"
-msgstr ""
+msgstr "Kullanıcı Etkileşim Aygıtı Hizmeti (HID)"
 
 #: blueman/Sdp.py:151
 msgid "HardcopyCableReplacement (HCR)"
-msgstr ""
+msgstr "HardcopyCableReplacement (HCR)"
 
 #: blueman/Sdp.py:152
 msgid "HCR_Print (HCR)"
-msgstr ""
+msgstr "HCR_Baskı (HCR)"
 
 #: blueman/Sdp.py:153
 msgid "HCR_Scan (HCR)"
-msgstr ""
+msgstr "HCR_Tarama (HCR)"
 
 #: blueman/Sdp.py:154
 msgid "Common ISDN Access (CIP)"
-msgstr ""
+msgstr "Ortak ISDN Erişimi (CIP)"
 
 #: blueman/Sdp.py:155
 msgid "VideoConferencingGW (VCP)"
-msgstr ""
+msgstr "VideoConferencingGW (VCP)"
 
 #: blueman/Sdp.py:156
 msgid "UDI-MT"
@@ -1697,15 +1592,15 @@ msgstr "SIM Erişimi (SAP)"
 
 #: blueman/Sdp.py:160
 msgid "Phonebook Access (PBAP) - PCE"
-msgstr ""
+msgstr "Telefon Rehberi Erişimi (PBAP) - PCE"
 
 #: blueman/Sdp.py:161
 msgid "Phonebook Access (PBAP) - PSE"
-msgstr ""
+msgstr "Telefon Rehberi Erişimi (PBAP) - PSE"
 
 #: blueman/Sdp.py:162
 msgid "Phonebook Access (PBAP)"
-msgstr "Telefon Defteri Erişimi (PBAP)"
+msgstr "Telefon Rehberi Erişimi (PBAP)"
 
 #: blueman/Sdp.py:164
 msgid "Message Access Server"
@@ -1737,31 +1632,31 @@ msgstr "3B Gözlük"
 
 #: blueman/Sdp.py:171
 msgid "3D Synchronization (3DSP)"
-msgstr ""
+msgstr "3D Eşzamanlama (3DSP)"
 
 #: blueman/Sdp.py:172
 msgid "Multi-Profile Specification (MPS) Profile"
-msgstr ""
+msgstr "Multi-Profile Specification (MPS) Profili"
 
 #: blueman/Sdp.py:173
 msgid "Multi-Profile Specification (MPS) Service"
-msgstr ""
+msgstr "Multi-Profile Specification (MPS) Hizmeti"
 
 #: blueman/Sdp.py:174
 msgid "Calendar, Task, and Notes (CTN) Access Service"
-msgstr ""
+msgstr "Takvim, Görev ve Notlara (CTN) Erişim Hizmeti"
 
 #: blueman/Sdp.py:175
 msgid "Calendar, Task, and Notes (CTN) Notification Service"
-msgstr ""
+msgstr "Takvim, Görev ve Notlar (CTN) Bildirim Hizmeti"
 
 #: blueman/Sdp.py:176
 msgid "Calendar, Task, and Notes (CTN) Profile"
-msgstr ""
+msgstr "Takvim, Görev ve Notlar (CTN) Profili"
 
 #: blueman/Sdp.py:177
 msgid "PnP Information"
-msgstr ""
+msgstr "PnP Bilgisi"
 
 #: blueman/Sdp.py:178
 msgid "Generic Networking"
@@ -1773,11 +1668,11 @@ msgstr "Genel Dosya Aktarımı"
 
 #: blueman/Sdp.py:180
 msgid "Generic Audio"
-msgstr ""
+msgstr "Genel Ses"
 
 #: blueman/Sdp.py:181
 msgid "Generic Telephony"
-msgstr ""
+msgstr "Genel Telefon"
 
 #: blueman/Sdp.py:182
 msgid "Video Source"
@@ -1789,7 +1684,7 @@ msgstr "Video Çıkışı"
 
 #: blueman/Sdp.py:184
 msgid "Video Distribution"
-msgstr ""
+msgstr "Video Dağıtımı"
 
 #: blueman/Sdp.py:185
 msgid "HDP"
@@ -1801,27 +1696,27 @@ msgstr "HDP Girişi"
 
 #: blueman/Sdp.py:187
 msgid "HDP Sink"
-msgstr ""
+msgstr "HDP Çıkışı"
 
 #: blueman/Sdp.py:188
 msgid "Generic Access"
-msgstr ""
+msgstr "Genel Erişim"
 
 #: blueman/Sdp.py:189
 msgid "Generic Attribute"
-msgstr ""
+msgstr "Genel Nitelik"
 
 #: blueman/Sdp.py:190
 msgid "Immediate Alert"
-msgstr ""
+msgstr "Anında Uyarı"
 
 #: blueman/Sdp.py:191
 msgid "Link Loss"
-msgstr ""
+msgstr "Bağlantı Kaybı"
 
 #: blueman/Sdp.py:192
 msgid "Tx Power"
-msgstr ""
+msgstr "İletim Gücü"
 
 #: blueman/Sdp.py:193
 msgid "Current Time Service"
@@ -1829,11 +1724,11 @@ msgstr "Geçerli Zaman Hizmeti"
 
 #: blueman/Sdp.py:194
 msgid "Reference Time Update Service"
-msgstr ""
+msgstr "Referans Zaman Güncelleme Hizmeti"
 
 #: blueman/Sdp.py:195
 msgid "Next DST Change Service"
-msgstr ""
+msgstr "Sonraki Yaz Saati Uygulaması Hizmeti"
 
 #: blueman/Sdp.py:196
 msgid "Glucose"
@@ -1853,7 +1748,7 @@ msgstr "Kalp Atış Hızı"
 
 #: blueman/Sdp.py:200
 msgid "Phone Alert Status Service"
-msgstr ""
+msgstr "Telefon Uyarı Durumu Hizmeti"
 
 #: blueman/Sdp.py:201
 msgid "Battery Service"
@@ -1865,31 +1760,31 @@ msgstr "Tansiyon"
 
 #: blueman/Sdp.py:203
 msgid "Alert Notification Service"
-msgstr ""
+msgstr "Uyarı Bildirim Hizmeti"
 
 #: blueman/Sdp.py:204
 msgid "Human Interface Device"
-msgstr ""
+msgstr "Kullanıcı Etkileşim Aygıtı"
 
 #: blueman/Sdp.py:205
 msgid "Scan Parameters"
-msgstr ""
+msgstr "Tarama Parametreleri"
 
 #: blueman/Sdp.py:206
 msgid "Running Speed and Cadence"
-msgstr ""
+msgstr "Koşu Hızı ve Temposu"
 
 #: blueman/Sdp.py:207
 msgid "Automation IO"
-msgstr ""
+msgstr "Otomasyon G/Ç"
 
 #: blueman/Sdp.py:208
 msgid "Cycling Speed and Cadence"
-msgstr ""
+msgstr "Bisiklet Hızı ve Temposu"
 
 #: blueman/Sdp.py:209
 msgid "Cycling Power"
-msgstr ""
+msgstr "Bisiklet Gücü"
 
 #: blueman/Sdp.py:210
 msgid "Location and Navigation"
@@ -1897,23 +1792,23 @@ msgstr "Konum ve Navigasyon"
 
 #: blueman/Sdp.py:211
 msgid "Environmental Sensing"
-msgstr ""
+msgstr "Ortam Sensörü"
 
 #: blueman/Sdp.py:212
 msgid "Body Composition"
-msgstr ""
+msgstr "Vücut Bileşimi"
 
 #: blueman/Sdp.py:213
 msgid "User Data"
-msgstr ""
+msgstr "Kullanıcı Verisi"
 
 #: blueman/Sdp.py:214
 msgid "Weight Scale"
-msgstr ""
+msgstr "Tartı"
 
 #: blueman/Sdp.py:215
 msgid "Bond Management"
-msgstr ""
+msgstr "Bağlantı Yönetimi"
 
 #: blueman/Sdp.py:216
 msgid "Continuous Glucose Monitoring"
@@ -1925,11 +1820,11 @@ msgstr "İnternet Protokolü Desteği"
 
 #: blueman/Sdp.py:218
 msgid "Indoor Positioning"
-msgstr ""
+msgstr "İç Mekan Konumlandırma"
 
 #: blueman/Sdp.py:219
 msgid "Pulse Oximeter"
-msgstr ""
+msgstr "Nabız Oksimetresi"
 
 #: blueman/Sdp.py:220
 msgid "HTTP Proxy"
@@ -1937,7 +1832,7 @@ msgstr "HTTP Vekili"
 
 #: blueman/Sdp.py:221
 msgid "Transport Discovery"
-msgstr ""
+msgstr "Taşıma Keşfi"
 
 #: blueman/Sdp.py:222
 msgid "Object Transfer"
@@ -1957,11 +1852,11 @@ msgstr "İkincil Hizmet"
 
 #: blueman/Sdp.py:226
 msgid "Include"
-msgstr ""
+msgstr "Dahil et"
 
 #: blueman/Sdp.py:227
 msgid "Characteristic Declaration"
-msgstr ""
+msgstr "Karakteristik Beyan"
 
 #: blueman/Sdp.py:228
 msgid "Device Name"
@@ -1973,7 +1868,7 @@ msgstr "Görünüm"
 
 #: blueman/Sdp.py:230
 msgid "Peripheral Privacy Flag"
-msgstr ""
+msgstr "Çevre Birimi Gizlilik İşareti"
 
 #: blueman/Sdp.py:231
 msgid "Reconnection Address"
@@ -1981,7 +1876,7 @@ msgstr "Yeniden Bağlantı Adresi"
 
 #: blueman/Sdp.py:232
 msgid "Peripheral Preferred Connection Parameters"
-msgstr ""
+msgstr "Çevre Birimi Tercih Edilen Bağlantı Parametreleri"
 
 #: blueman/Sdp.py:233
 msgid "Service Changed"
@@ -1989,7 +1884,7 @@ msgstr "Hizmet Değişti"
 
 #: blueman/Sdp.py:234
 msgid "System ID"
-msgstr ""
+msgstr "Sistem Kimliği"
 
 #: blueman/Sdp.py:235
 msgid "Model Number String"
@@ -2017,31 +1912,31 @@ msgstr "Üretici Adı Dizgesi"
 
 #: blueman/Sdp.py:241
 msgid "PnP ID"
-msgstr ""
+msgstr "PnP Kimliği"
 
 #: blueman/Sdp.py:242
 msgid "Characteristic Extended Properties"
-msgstr ""
+msgstr "Karakteristik Genişletilmiş Özellikler"
 
 #: blueman/Sdp.py:243
 msgid "Characteristic User Description"
-msgstr ""
+msgstr "Karakteristik Kullanıcı Açıklaması"
 
 #: blueman/Sdp.py:244
 msgid "Client Characteristic Configuration"
-msgstr ""
+msgstr "İstemci Karakteristik Yapılandırması"
 
 #: blueman/Sdp.py:245
 msgid "Server Characteristic Configuration"
-msgstr ""
+msgstr "Sunucu Karakteristik Yapılandırması"
 
 #: blueman/Sdp.py:246
 msgid "Characteristic Presentation Format"
-msgstr ""
+msgstr "Karakteristik Sunum Biçimi"
 
 #: blueman/Sdp.py:247
 msgid "Characteristic Aggregate Format"
-msgstr ""
+msgstr "Karakteristik Toplama Biçimi"
 
 #: blueman/Sdp.py:248
 msgid "Valid Range"
@@ -2049,7 +1944,7 @@ msgstr "Geçerli Aralık"
 
 #: blueman/Sdp.py:249
 msgid "External Report Reference"
-msgstr ""
+msgstr "Harici Rapor Referansı"
 
 #: blueman/Sdp.py:250
 msgid "Report Reference"
@@ -2074,6 +1969,8 @@ msgstr "hayır"
 #: blueman/plugins/manager/Info.py:60
 msgid "<big>Select row(s) and use <i>Control + C</i> to copy</big>"
 msgstr ""
+"<big>Satır(lar)ı seçin ve kopyalamak için <i>Ctrl + C</i> tuşlarını "
+"kullanın</big>"
 
 #: blueman/plugins/manager/Info.py:120
 msgid "_Info"
@@ -2141,7 +2038,7 @@ msgstr "%(device)s üzerinde %(service)s'e otomatik olarak bağlandı"
 #: blueman/plugins/applet/NetUsage.py:265
 #: blueman/plugins/applet/NetUsage.py:270
 msgid "Connected:"
-msgstr "Bağlanılan cihazlar:"
+msgstr "Bağlandı:"
 
 #: blueman/plugins/applet/NetUsage.py:168
 #: blueman/plugins/applet/NetUsage.py:280
@@ -2189,7 +2086,7 @@ msgid ""
 "for limited data access plans. This plugin tracks every device seperately."
 msgstr ""
 "(Mobil geniş bant) ağ trafiği kullanımınızı izlemenizi sağlar. Sınırlı veri "
-"erişim planları için kullanışlıdır. Bu eklenti her cihazı ayrı olarak takip "
+"erişim planları için kullanışlıdır. Bu eklenti her aygıtı ayrı olarak takip "
 "eder."
 
 #: blueman/plugins/applet/NetUsage.py:307
@@ -2238,7 +2135,7 @@ msgstr "Son _Bağlantılar"
 #: blueman/plugins/applet/RecentConns.py:219
 #, python-format
 msgid "Connected to %s"
-msgstr "%s cihazına bağlı"
+msgstr "%s aygıtına bağlı"
 
 #: blueman/plugins/applet/RecentConns.py:225
 msgid "Failed to connect"
@@ -2356,7 +2253,7 @@ msgstr "Standart menü maddelerini durum simgelerine ekle"
 
 #: blueman/plugins/applet/StandardItems.py:32
 msgid "Send _Files to Device"
-msgstr "Cihaza dosya gönder"
+msgstr "_Dosyaları Aygıta Gönder"
 
 #: blueman/plugins/applet/StandardItems.py:37
 msgid "_Devices"
@@ -2506,13 +2403,13 @@ msgid ""
 "\n"
 "Upon device disconnection the script will be sent a HUP signal</span>"
 msgstr ""
-"<span size=\"small\">Şu argümanlar geçilecektir:\n"
-"Adres, İsim, hizmet ismi, uuid16s, rfcomm düğümü\n"
-"Mesela:\n"
+"<span size=\"small\">Şu argümanlar iletilecek:\n"
+"Adres, Ad, hizmet adı, uuid16s, rfcomm düğümü\n"
+"Örnek:\n"
 "AA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0\n"
-"uuid16s unsurları virgülle ayrılmış bir liste olarak geri döndürülür\n"
+"uuid16s'lar virgülle ayrılmış bir liste olarak geri döndürülür\n"
 "\n"
-"Cihazın bağlantısı kesildiğinde betiğe bir HUP sinyali gönderilecektir</span>"
+"Aygıtın bağlantısı kesildiğinde betiğe bir HUP sinyali gönderilecektir</span>"
 
 #: blueman/plugins/applet/SerialManager.py:63
 msgid "Serial port connected"

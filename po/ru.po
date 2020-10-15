@@ -13,13 +13,15 @@
 # Дмитрий Михирев, 2017
 # павел назаров <nazar12101@gmail.com>, 2015
 # павел назаров <nazar12101@gmail.com>, 2015
+# Artem <KovalevArtem.ru@gmail.com>, 2020.
+# koffevar <egor.kafisov@gmail.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2020-09-26 22:02+0000\n"
-"PO-Revision-Date: 2020-08-18 17:04+0000\n"
-"Last-Translator: Alexey Napalkov <flynbit@gmail.com>\n"
+"POT-Creation-Date: 2020-10-15 20:51+0000\n"
+"PO-Revision-Date: 2020-10-09 00:08+0000\n"
+"Last-Translator: koffevar <egor.kafisov@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/blueman/blueman/"
 "ru/>\n"
 "Language: ru\n"
@@ -29,7 +31,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
-"X-Generator: Weblate 4.2-dev\n"
+"X-Generator: Weblate 4.3-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -233,8 +235,8 @@ msgstr "<b>Автор:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:288
-#: blueman/gui/manager/ManagerDeviceList.py:290 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:303
+#: blueman/gui/manager/ManagerDeviceList.py:305 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:375
 #: blueman/plugins/applet/NetUsage.py:209
@@ -311,30 +313,28 @@ msgid "Always"
 msgstr "Всегда"
 
 #: blueman/main/Adapter.py:147 blueman/main/Sendto.py:189
-#, fuzzy, python-format
-#| msgid "%d Minute"
-#| msgid_plural "%d Minutes"
+#, python-format
 msgid "%(minutes)d Minute"
 msgid_plural "%(minutes)d Minutes"
-msgstr[0] "%d минута"
-msgstr[1] "%d минуты"
-msgstr[2] "%d минут"
-msgstr[3] "%d минут"
+msgstr[0] "%(minutes)d минута"
+msgstr[1] "%(minutes)d минуты"
+msgstr[2] "%(minutes)d минут"
+msgstr[3] "%(minutes)d минут"
 
 #: blueman/main/Adapter.py:212
 msgid "Adapter"
 msgstr "Адаптер"
 
-#: blueman/main/Manager.py:88 blueman/main/Manager.py:129
+#: blueman/main/Manager.py:89 blueman/main/Manager.py:130
 msgid "Bluetooth needs to be turned on for the device manager to function"
 msgstr ""
 "Для того, чтобы менеджер устройств работал, Bluetooth должен быть включен"
 
-#: blueman/main/Manager.py:108
+#: blueman/main/Manager.py:109
 msgid "Connection to BlueZ failed"
 msgstr "Не удалось соединиться с BlueZ"
 
-#: blueman/main/Manager.py:109
+#: blueman/main/Manager.py:110
 msgid ""
 "Bluez daemon is not running, blueman-manager cannot continue.\n"
 "This probably means that there were no Bluetooth adapters detected or "
@@ -344,15 +344,15 @@ msgstr ""
 "Это может означать, что не было обнаружено адаптеров Bluetooth или что демон "
 "Bluetooth не был запущен."
 
-#: blueman/main/Manager.py:197
+#: blueman/main/Manager.py:198
 msgid "Searching"
 msgstr "Идёт поиск"
 
-#: blueman/main/Manager.py:220 blueman/plugins/applet/StandardItems.py:79
+#: blueman/main/Manager.py:221 blueman/plugins/applet/StandardItems.py:79
 msgid "Adapter Preferences"
 msgstr "Настройки адаптеров"
 
-#: blueman/main/Manager.py:232 blueman/gui/manager/ManagerDeviceList.py:134
+#: blueman/main/Manager.py:233 blueman/gui/manager/ManagerDeviceList.py:135
 #: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
 msgstr "Отправитель файлов"
@@ -569,58 +569,56 @@ msgid "_Exit"
 msgstr "Выход"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:257
-#: blueman/gui/manager/ManagerDeviceList.py:288 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:272
+#: blueman/gui/manager/ManagerDeviceList.py:303 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
-#, fuzzy
-#| msgid "uncategorized"
 msgid "Uncategorized"
-msgstr "не классифицировано"
+msgstr "Не классифицировано"
 
-#: blueman/gui/manager/ManagerDeviceList.py:451
+#: blueman/gui/manager/ManagerDeviceList.py:466
 msgid "<b>Trusted and Paired</b>"
 msgstr "<b>Доверенные и сопряжённые</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:453
+#: blueman/gui/manager/ManagerDeviceList.py:468
 msgid "<b>Paired</b>"
 msgstr "<b>Связанные</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:455
+#: blueman/gui/manager/ManagerDeviceList.py:470
 msgid "<b>Trusted</b>"
 msgstr "<b>Доверенный</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:476
+#: blueman/gui/manager/ManagerDeviceList.py:491
 msgid "Poor"
 msgstr "Слабый"
 
-#: blueman/gui/manager/ManagerDeviceList.py:478
-#: blueman/gui/manager/ManagerDeviceList.py:489
+#: blueman/gui/manager/ManagerDeviceList.py:493
+#: blueman/gui/manager/ManagerDeviceList.py:504
 msgid "Sub-optimal"
 msgstr "Хуже оптимального"
 
-#: blueman/gui/manager/ManagerDeviceList.py:480
-#: blueman/gui/manager/ManagerDeviceList.py:491
+#: blueman/gui/manager/ManagerDeviceList.py:495
+#: blueman/gui/manager/ManagerDeviceList.py:506
 msgid "Optimal"
 msgstr "Оптимальный"
 
-#: blueman/gui/manager/ManagerDeviceList.py:482
+#: blueman/gui/manager/ManagerDeviceList.py:497
 msgid "Much"
 msgstr "Хорошо"
 
-#: blueman/gui/manager/ManagerDeviceList.py:484
+#: blueman/gui/manager/ManagerDeviceList.py:499
 msgid "Too much"
 msgstr "Очень хорошо"
 
-#: blueman/gui/manager/ManagerDeviceList.py:487
+#: blueman/gui/manager/ManagerDeviceList.py:502
 msgid "Low"
 msgstr "Низкий"
 
-#: blueman/gui/manager/ManagerDeviceList.py:493
+#: blueman/gui/manager/ManagerDeviceList.py:508
 msgid "High"
 msgstr "Высокий"
 
-#: blueman/gui/manager/ManagerDeviceList.py:495
+#: blueman/gui/manager/ManagerDeviceList.py:510
 msgid "Very High"
 msgstr "Самый высокий"
 
@@ -641,23 +639,21 @@ msgstr "Соединение невозможно или разорвано: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:132
 #: blueman/gui/manager/ManagerDeviceMenu.py:188
-#, fuzzy
-#| msgid "Connecting"
 msgid "Connecting…"
-msgstr "Соединение"
+msgstr "Соединение…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:153
 msgid "Disconnection Failed: "
 msgstr "Не удалось отсоединиться: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:195
-#, fuzzy
-#| msgid "Disconnecting..."
 msgid "Disconnecting…"
 msgstr "Отключение…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:254
-msgid "_<b>Connect</b>"
+#, fuzzy
+#| msgid "_<b>Connect</b>"
+msgid "_<b>_Connect</b>"
 msgstr "_<b>Подключиться</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:256
@@ -682,10 +678,8 @@ msgid "<b>Disconnect:</b>"
 msgstr "<b>Отключиться:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:321
-#, fuzzy
-#| msgid "Send a _File..."
 msgid "Send a _File…"
-msgstr "Послать _файл…"
+msgstr "Отправить _файл…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:334
 msgid "_Pair"
@@ -700,16 +694,12 @@ msgid "_Untrust"
 msgstr "_Не доверять"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:373
-#, fuzzy
-#| msgid "Rename device"
 msgid "R_ename device…"
-msgstr "Переименовать устройство"
+msgstr "Переименовать устройство…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:382
-#, fuzzy
-#| msgid "Remove"
 msgid "_Remove…"
-msgstr "Удалить"
+msgstr "_Удалить…"
 
 #: blueman/gui/manager/ManagerProgressbar.py:44
 msgid "Cancel Operation"
@@ -805,115 +795,97 @@ msgstr "Обнаружение…"
 #. translators: device class
 #: blueman/DeviceClass.py:6
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Другое"
 
 #. translators: device class
 #: blueman/DeviceClass.py:8
 msgid "Computer"
-msgstr ""
+msgstr "Компьютер"
 
 #. translators: device class
 #: blueman/DeviceClass.py:10
 msgid "Phone"
-msgstr ""
+msgstr "Телефон"
 
 #. translators: device class
 #: blueman/DeviceClass.py:12
-#, fuzzy
-#| msgid "Network Access Point"
 msgid "Access point"
-msgstr "Точка доступа к сети"
+msgstr "Точка доступа"
 
 #. translators: device class
 #: blueman/DeviceClass.py:14
 msgid "Audio/video"
-msgstr ""
+msgstr "Аудио/видео"
 
 #. translators: device class
 #: blueman/DeviceClass.py:16
 msgid "Peripheral"
-msgstr ""
+msgstr "Переферия"
 
 #. translators: device class
 #: blueman/DeviceClass.py:18 blueman/DeviceClass.py:276
 msgid "Imaging"
-msgstr ""
+msgstr "Фото"
 
 #. translators: device class
 #: blueman/DeviceClass.py:20 blueman/DeviceClass.py:41
 msgid "Wearable"
-msgstr ""
+msgstr "Носимое"
 
 #. translators: device class
 #: blueman/DeviceClass.py:22
 msgid "Toy"
-msgstr ""
+msgstr "Игрушка"
 
 #. translators: device class
 #: blueman/DeviceClass.py:31
-#, fuzzy
-#| msgid "desktop"
 msgid "Desktop"
-msgstr "персональный компьютер"
+msgstr "Персональный компьютер"
 
 #. translators: device class
 #: blueman/DeviceClass.py:33
-#, fuzzy
-#| msgid "server"
 msgid "Server"
-msgstr "сервер"
+msgstr "Сервер"
 
 #. translators: device class
 #: blueman/DeviceClass.py:35
-#, fuzzy
-#| msgid "laptop"
 msgid "Laptop"
-msgstr "ноутбук"
+msgstr "Ноутбук"
 
 #. translators: device class
 #: blueman/DeviceClass.py:37
-#, fuzzy
-#| msgid "handheld"
 msgid "Handheld"
-msgstr "карманный компьютер"
+msgstr "Карманный компьютер"
 
 #. translators: device class
 #: blueman/DeviceClass.py:39
 msgid "Palm"
-msgstr ""
+msgstr "Наладонный компьютер"
 
 #. translators: device class
 #: blueman/DeviceClass.py:48
-#, fuzzy
-#| msgid "cellular"
 msgid "Cellular"
-msgstr "мобильный телефон"
+msgstr "Мобильный телефон"
 
 #. translators: device class
 #: blueman/DeviceClass.py:50
-#, fuzzy
-#| msgid "cordless"
 msgid "Cordless"
-msgstr "беспроводное устройство"
+msgstr "Беспроводное устройство"
 
 #. translators: device class
 #: blueman/DeviceClass.py:52
-#, fuzzy
-#| msgid "smart phone"
 msgid "Smart phone"
-msgstr "смартфон"
+msgstr "Смартфон"
 
 #. translators: device class
 #: blueman/DeviceClass.py:54
-#, fuzzy
-#| msgid "modem"
 msgid "Modem"
-msgstr "модем"
+msgstr "Модем"
 
 #. translators: device class
 #: blueman/DeviceClass.py:56
 msgid "Isdn"
-msgstr ""
+msgstr "Isdn"
 
 #. translators: device class
 #: blueman/DeviceClass.py:61
@@ -923,336 +895,270 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:63
 msgid "1-17 percent"
-msgstr ""
+msgstr "1-17 процентов"
 
 #. translators: device class
 #: blueman/DeviceClass.py:65
 msgid "17-33 percent"
-msgstr ""
+msgstr "17-33 процентов"
 
 #. translators: device class
 #: blueman/DeviceClass.py:67
 msgid "33-50 percent"
-msgstr ""
+msgstr "33-50 процентов"
 
 #. translators: device class
 #: blueman/DeviceClass.py:69
 msgid "50-67 percent"
-msgstr ""
+msgstr "50-67 процентов"
 
 #. translators: device class
 #: blueman/DeviceClass.py:71
 msgid "67-83 percent"
-msgstr ""
+msgstr "67-83 процентов"
 
 #. translators: device class
 #: blueman/DeviceClass.py:73
 msgid "83-99 percent"
-msgstr ""
+msgstr "83-99 процентов"
 
 #. translators: device class
 #: blueman/DeviceClass.py:75
-#, fuzzy
-#| msgid "obexd not available"
 msgid "Not available"
-msgstr "obexd недоступен"
+msgstr "Недоступно"
 
 #. translators: device class
 #: blueman/DeviceClass.py:82 blueman/Sdp.py:122 blueman/Sdp.py:163
-#, fuzzy
-#| msgid "headset"
 msgid "Headset"
-msgstr "наушники"
+msgstr "Наушники"
 
 #. translators: device class
 #: blueman/DeviceClass.py:84 blueman/Sdp.py:144
-#, fuzzy
-#| msgid "handsfree"
 msgid "Handsfree"
-msgstr "гарнитура"
+msgstr "Гарнитура"
 
 #. translators: device class
 #: blueman/DeviceClass.py:88
-#, fuzzy
-#| msgid "microphone"
 msgid "Microphone"
-msgstr "микрофон"
+msgstr "Микрофон"
 
 #. translators: device class
 #: blueman/DeviceClass.py:90
-#, fuzzy
-#| msgid "loudspeaker"
 msgid "Loudspeaker"
-msgstr "громкоговоритель"
+msgstr "Громкоговоритель"
 
 #. translators: device class
 #: blueman/DeviceClass.py:92
-#, fuzzy
-#| msgid "headphones"
 msgid "Headphones"
-msgstr "наушники"
+msgstr "Наушники"
 
 #. translators: device class
 #: blueman/DeviceClass.py:94
-#, fuzzy
-#| msgid "portable audio"
 msgid "Portable audio"
-msgstr "портативное аудиоустройство"
+msgstr "Портативное аудиоустройство"
 
 #. translators: device class
 #: blueman/DeviceClass.py:96
-#, fuzzy
-#| msgid "car audio"
 msgid "Car audio"
-msgstr "аудиоустройство для автомобиля"
+msgstr "Аудиоустройство для автомобиля"
 
 #. translators: device class
 #: blueman/DeviceClass.py:98
-#, fuzzy
-#| msgid "set-top box"
 msgid "Set-top box"
-msgstr "телеприставка"
+msgstr "Телеприставка"
 
 #. translators: device class
 #: blueman/DeviceClass.py:100
-#, fuzzy
-#| msgid "hifi audio"
 msgid "Hifi audio"
-msgstr "hifi аудиоустройство"
+msgstr "Hifi аудиоустройство"
 
 #. translators: device class
 #: blueman/DeviceClass.py:102
-#, fuzzy
-#| msgid "vcr"
 msgid "Vcr"
-msgstr "видеомагнитофон"
+msgstr "Видеомагнитофон"
 
 #. translators: device class
 #: blueman/DeviceClass.py:104
-#, fuzzy
-#| msgid "video camera"
 msgid "Video camera"
-msgstr "видеокамера"
+msgstr "Видеокамера"
 
 #. translators: device class
 #: blueman/DeviceClass.py:106
-#, fuzzy
-#| msgid "camcorder"
 msgid "Camcorder"
-msgstr "видеокамера"
+msgstr "Видеокамера"
 
 #. translators: device class
 #: blueman/DeviceClass.py:108
-#, fuzzy
-#| msgid "video monitor"
 msgid "Video monitor"
-msgstr "видеомонитор"
+msgstr "Видеомонитор"
 
 #. translators: device class
 #: blueman/DeviceClass.py:110
-#, fuzzy
-#| msgid "video display and loudspeaker"
 msgid "Video display and loudspeaker"
-msgstr "видео дисплей и громкоговоритель"
+msgstr "Видео дисплей и громкоговоритель"
 
 #. translators: device class
 #: blueman/DeviceClass.py:112
-#, fuzzy
-#| msgid "video conferencing"
 msgid "Video conferencing"
-msgstr "видео-конференциальное"
+msgstr "Видео-конференциальное"
 
 #. translators: device class
 #: blueman/DeviceClass.py:116
-#, fuzzy
-#| msgid "gaming/toy"
 msgid "Gaming/Toy"
-msgstr "игровое"
+msgstr "Игровое"
 
 #. translators: device class
 #: blueman/DeviceClass.py:123 blueman/DeviceClass.py:189
-#, fuzzy
-#| msgid "keyboard"
 msgid "Keyboard"
-msgstr "клавиатура"
+msgstr "Клавиатура"
 
 #. translators: device class
 #: blueman/DeviceClass.py:125
-#, fuzzy
-#| msgid "pointing"
 msgid "Pointing"
-msgstr "манипулятор"
+msgstr "Манипулятор"
 
 #. translators: device class
 #: blueman/DeviceClass.py:127
-#, fuzzy
-#| msgid "combo"
 msgid "Combo"
-msgstr "комбо"
+msgstr "Комбо"
 
 #. translators: device class
 #: blueman/DeviceClass.py:132
 msgid "Display"
-msgstr ""
+msgstr "Дисплей"
 
 #. translators: device class
 #: blueman/DeviceClass.py:134
 msgid "Camera"
-msgstr ""
+msgstr "Камера"
 
 #. translators: device class
 #: blueman/DeviceClass.py:136
 msgid "Scanner"
-msgstr ""
+msgstr "Сканер"
 
 #. translators: device class
 #: blueman/DeviceClass.py:138
 msgid "Printer"
-msgstr ""
+msgstr "Принтер"
 
 #. translators: device class
 #: blueman/DeviceClass.py:143
 msgid "Wrist watch"
-msgstr ""
+msgstr "Наручные часы"
 
 #. translators: device class
 #: blueman/DeviceClass.py:145
 msgid "Pager"
-msgstr ""
+msgstr "Пейджер"
 
 #. translators: device class
 #: blueman/DeviceClass.py:147
 msgid "Jacket"
-msgstr ""
+msgstr "Куртка"
 
 #. translators: device class
 #: blueman/DeviceClass.py:149
 msgid "Helmet"
-msgstr ""
+msgstr "Шлем"
 
 #. translators: device class
 #: blueman/DeviceClass.py:151
 msgid "Glasses"
-msgstr ""
+msgstr "Очки"
 
 #. translators: device class
 #: blueman/DeviceClass.py:156
 msgid "Robot"
-msgstr ""
+msgstr "Робот"
 
 #. translators: device class
 #: blueman/DeviceClass.py:158
 msgid "Vehicle"
-msgstr ""
+msgstr "Транспорт"
 
 #. translators: device class
 #: blueman/DeviceClass.py:160
 msgid "Doll"
-msgstr ""
+msgstr "Кукла"
 
 #. translators: device class
 #: blueman/DeviceClass.py:162
 msgid "Controller"
-msgstr ""
+msgstr "Контроллер"
 
 #. translators: device class
 #: blueman/DeviceClass.py:164
 msgid "Game"
-msgstr ""
+msgstr "Игра"
 
 #: blueman/DeviceClass.py:169
-#, fuzzy
-#| msgid "Generic Connect"
 msgid "Generic Phone"
-msgstr "Обычное подключение"
+msgstr "Обычный телефон"
 
 #: blueman/DeviceClass.py:170
-#, fuzzy
-#| msgid "Generic Connect"
 msgid "Generic Computer"
-msgstr "Обычное подключение"
+msgstr "Обычный компьютер"
 
 #: blueman/DeviceClass.py:171
-#, fuzzy
-#| msgid "Generic Connect"
 msgid "Generic Watch"
-msgstr "Обычное подключение"
+msgstr "Обычный часы"
 
 #: blueman/DeviceClass.py:172
 msgid "Watch: Sports Watch"
-msgstr ""
+msgstr "Часы: Спортивные часы"
 
 #: blueman/DeviceClass.py:173
-#, fuzzy
-#| msgid "Generic Connect"
 msgid "Generic Clock"
-msgstr "Обычное подключение"
+msgstr "Обычные часы"
 
 #: blueman/DeviceClass.py:174
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "Generic Display"
-msgstr "Передача файлов через Bluetooth"
+msgstr "Обычный дисплей"
 
 #: blueman/DeviceClass.py:175
-#, fuzzy
-#| msgid "Remote Control Target"
 msgid "Generic Remote Control"
-msgstr "Пульт ДУ цели"
+msgstr "Пульт ДУ"
 
 #: blueman/DeviceClass.py:176
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "Generic Eye-glasses"
-msgstr "Передача файлов через Bluetooth"
+msgstr "Обычные очки"
 
 #: blueman/DeviceClass.py:177
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "Generic Tag"
-msgstr "Передача файлов через Bluetooth"
+msgstr "Обычный тэг"
 
 #: blueman/DeviceClass.py:178
-#, fuzzy
-#| msgid "Group Network"
 msgid "Generic Keyring"
-msgstr "Групповая сеть"
+msgstr "Обычное кольцо"
 
 #: blueman/DeviceClass.py:179
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "Generic Media Player"
-msgstr "Передача файлов через Bluetooth"
+msgstr "Обычный медиа проигрыватель"
 
 #: blueman/DeviceClass.py:180
-#, fuzzy
-#| msgid "Generic Connect"
 msgid "Generic Barcode Scanner"
-msgstr "Обычное подключение"
+msgstr "Обычный сканер штрихкодов"
 
 #: blueman/DeviceClass.py:181
-#, fuzzy
-#| msgid "Generic Connect"
 msgid "Generic Thermometer"
-msgstr "Обычное подключение"
+msgstr "Обычный термометр"
 
 #: blueman/DeviceClass.py:182
 msgid "Thermometer: Ear"
-msgstr ""
+msgstr "Термометр: ушной"
 
 #: blueman/DeviceClass.py:183
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "Generic Heart rate Sensor"
-msgstr "Передача файлов через Bluetooth"
+msgstr "Обычный датчик сердцебиения"
 
 #: blueman/DeviceClass.py:184
 msgid "Heart Rate Sensor: Heart Rate Belt"
-msgstr ""
+msgstr "Датчик сердцебиения: пояс"
 
 #: blueman/DeviceClass.py:185
 msgid "Generic Blood Pressure"
-msgstr ""
+msgstr "Обычный датчик кровяного давления"
 
 #: blueman/DeviceClass.py:186
 msgid "Blood Pressure: Arm"
@@ -2382,26 +2288,22 @@ msgid "Files received"
 msgstr "Получены файлы"
 
 #: blueman/plugins/applet/TransferService.py:334
-#, fuzzy, python-format
-#| msgid "Received %d file in the background"
-#| msgid_plural "Received %d files in the background"
+#, python-format
 msgid "Received %(files)d file in the background"
 msgid_plural "Received %(files)d files in the background"
-msgstr[0] "Получен %d файл в фоне"
-msgstr[1] "Получено %d файла в фоне"
-msgstr[2] "Получено %d файлов в фоне"
-msgstr[3] "Получено %d файлов в фоне"
+msgstr[0] "Получен %(files)d файл в фоне"
+msgstr[1] "Получено %(files)d файла в фоне"
+msgstr[2] "Получено %(files)d файлов в фоне"
+msgstr[3] "Получено %(files)d файлов в фоне"
 
 #: blueman/plugins/applet/TransferService.py:343
-#, fuzzy, python-format
-#| msgid "Received %d more file in the background"
-#| msgid_plural "Received %d more files in the background"
+#, python-format
 msgid "Received %(files)d more file in the background"
 msgid_plural "Received %(files)d more files in the background"
-msgstr[0] "Получен ещё %d файл в фоне"
-msgstr[1] "Получены ещё %d файла в фоне"
-msgstr[2] "Получено ещё %d файлов в фоне"
-msgstr[3] "Получено ещё %d файлов в фоне"
+msgstr[0] "Получен ещё %(files)d файл в фоне"
+msgstr[1] "Получены ещё %(files)d файла в фоне"
+msgstr[2] "Получено ещё %(files)d файлов в фоне"
+msgstr[3] "Получено ещё %(files)d файлов в фоне"
 
 #: blueman/plugins/applet/KillSwitch.py:37
 msgid ""
@@ -2480,15 +2382,13 @@ msgid "Bluetooth Active"
 msgstr "Bluetooth активен"
 
 #: blueman/plugins/applet/ShowConnected.py:64
-#, fuzzy, python-format
-#| msgid "<b>%d Active Connection</b>"
-#| msgid_plural "<b>%d Active Connections</b>"
+#, python-format
 msgid "<b>%(connections)d Active Connection</b>"
 msgid_plural "<b>%(connections)d Active Connections</b>"
-msgstr[0] "<b>%d Активное соединение</b>"
-msgstr[1] "<b>%d Активных соединения</b>"
-msgstr[2] "<b>%d Активных соединений</b>"
-msgstr[3] "<b>%d Активных соединений</b>"
+msgstr[0] "<b>%(connections)d Активное соединение</b>"
+msgstr[1] "<b>%(connections)d Активных соединения</b>"
+msgstr[2] "<b>%(connections)d Активных соединений</b>"
+msgstr[3] "<b>%(connections)d Активных соединений</b>"
 
 #: blueman/plugins/applet/ShowConnected.py:74
 #: blueman/plugins/applet/PowerManager.py:192
