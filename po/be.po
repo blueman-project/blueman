@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2020-09-26 22:02+0000\n"
+"POT-Creation-Date: 2020-10-15 20:51+0000\n"
 "PO-Revision-Date: 2020-04-14 10:14+0000\n"
 "Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
 "Language-Team: Belarusian (http://www.transifex.com/mate/MATE/language/be/)\n"
@@ -223,8 +223,8 @@ msgstr "<b>Аўтар</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:288
-#: blueman/gui/manager/ManagerDeviceList.py:290 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:303
+#: blueman/gui/manager/ManagerDeviceList.py:305 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:375
 #: blueman/plugins/applet/NetUsage.py:209
@@ -315,15 +315,15 @@ msgstr[3] "%d хвілін"
 msgid "Adapter"
 msgstr ""
 
-#: blueman/main/Manager.py:88 blueman/main/Manager.py:129
+#: blueman/main/Manager.py:89 blueman/main/Manager.py:130
 msgid "Bluetooth needs to be turned on for the device manager to function"
 msgstr "Каб кіраўнік прыладамі працаваў, Bluetooth мае быць уключаным"
 
-#: blueman/main/Manager.py:108
+#: blueman/main/Manager.py:109
 msgid "Connection to BlueZ failed"
 msgstr "Злучыцца з BlueZ не выйшла"
 
-#: blueman/main/Manager.py:109
+#: blueman/main/Manager.py:110
 msgid ""
 "Bluez daemon is not running, blueman-manager cannot continue.\n"
 "This probably means that there were no Bluetooth adapters detected or "
@@ -333,15 +333,15 @@ msgstr ""
 "Гэта можа азначаць, што не было выяўлена Bluetooth-адаптараў або дэман "
 "Bluetooth не запушчаны."
 
-#: blueman/main/Manager.py:197
+#: blueman/main/Manager.py:198
 msgid "Searching"
 msgstr "Пошук"
 
-#: blueman/main/Manager.py:220 blueman/plugins/applet/StandardItems.py:79
+#: blueman/main/Manager.py:221 blueman/plugins/applet/StandardItems.py:79
 msgid "Adapter Preferences"
 msgstr "Настáўленні адаптара"
 
-#: blueman/main/Manager.py:232 blueman/gui/manager/ManagerDeviceList.py:134
+#: blueman/main/Manager.py:233 blueman/gui/manager/ManagerDeviceList.py:135
 #: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
 msgstr "Адпраўнік файлаў"
@@ -555,8 +555,8 @@ msgid "_Exit"
 msgstr ""
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:257
-#: blueman/gui/manager/ManagerDeviceList.py:288 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:272
+#: blueman/gui/manager/ManagerDeviceList.py:303 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 #, fuzzy
@@ -564,49 +564,49 @@ msgstr ""
 msgid "Uncategorized"
 msgstr "некласіфікавана"
 
-#: blueman/gui/manager/ManagerDeviceList.py:451
+#: blueman/gui/manager/ManagerDeviceList.py:466
 msgid "<b>Trusted and Paired</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:453
+#: blueman/gui/manager/ManagerDeviceList.py:468
 msgid "<b>Paired</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:455
+#: blueman/gui/manager/ManagerDeviceList.py:470
 msgid "<b>Trusted</b>"
 msgstr "<b>Даверанае</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:476
+#: blueman/gui/manager/ManagerDeviceList.py:491
 msgid "Poor"
 msgstr "Кепска"
 
-#: blueman/gui/manager/ManagerDeviceList.py:478
-#: blueman/gui/manager/ManagerDeviceList.py:489
+#: blueman/gui/manager/ManagerDeviceList.py:493
+#: blueman/gui/manager/ManagerDeviceList.py:504
 msgid "Sub-optimal"
 msgstr "Горшы за аптымальны"
 
-#: blueman/gui/manager/ManagerDeviceList.py:480
-#: blueman/gui/manager/ManagerDeviceList.py:491
+#: blueman/gui/manager/ManagerDeviceList.py:495
+#: blueman/gui/manager/ManagerDeviceList.py:506
 msgid "Optimal"
 msgstr "Аптымальны"
 
-#: blueman/gui/manager/ManagerDeviceList.py:482
+#: blueman/gui/manager/ManagerDeviceList.py:497
 msgid "Much"
 msgstr "Добра"
 
-#: blueman/gui/manager/ManagerDeviceList.py:484
+#: blueman/gui/manager/ManagerDeviceList.py:499
 msgid "Too much"
 msgstr "Вельмі добра"
 
-#: blueman/gui/manager/ManagerDeviceList.py:487
+#: blueman/gui/manager/ManagerDeviceList.py:502
 msgid "Low"
 msgstr "Нізкі"
 
-#: blueman/gui/manager/ManagerDeviceList.py:493
+#: blueman/gui/manager/ManagerDeviceList.py:508
 msgid "High"
 msgstr "Высокі"
 
-#: blueman/gui/manager/ManagerDeviceList.py:495
+#: blueman/gui/manager/ManagerDeviceList.py:510
 msgid "Very High"
 msgstr "Вельмі высокі"
 
@@ -643,8 +643,10 @@ msgid "Disconnecting…"
 msgstr "Адлучэнне…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:254
-msgid "_<b>Connect</b>"
-msgstr ""
+#, fuzzy
+#| msgid "<b>Connect To:</b>"
+msgid "_<b>_Connect</b>"
+msgstr "<b>Злучыцца з:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:256
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
