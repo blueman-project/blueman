@@ -47,4 +47,4 @@ Go to the [Weblate blueman project page](https://hosted.weblate.org/projects/blu
 
 ## License
 
-Except for most icons that are under a GPLv2 license and require GPLv2 for redistribution, all parts of the software are licensed under GPLv3 (or GPLv2) and allow redistribution under any later version.
+All parts of the software are licensed under GPLv3 (or GPLv2) and allow redistribution under any later version.
