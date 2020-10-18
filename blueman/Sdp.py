@@ -375,7 +375,7 @@ class ServiceUUID(UUID):
             except KeyError:
                 return _("Unknown")
         elif self.int == 0:
-            return _('Auto connect profiles')
+            return _('Audio and input profiles')
         else:
             return _('Proprietary')
 
