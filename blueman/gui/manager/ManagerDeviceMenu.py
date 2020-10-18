@@ -325,18 +325,13 @@ class ManagerDeviceMenu(Gtk.Menu):
             for it in sorted(disconnect_items, key=lambda i: i.position):
                 self.append(it.item)
 
-        if action_items and (connect_items or disconnect_items):
+        if show_generic_connect or connect_items or disconnect_items:
             item = Gtk.SeparatorMenuItem()
             item.show()
             self.append(item)
 
         for it in sorted(action_items, key=lambda i: i.position):
             self.append(it.item)
-
-        if items:
-            item = Gtk.SeparatorMenuItem()
-            item.show()
-            self.append(item)
 
         send_item = create_menuitem(_("Send a _File…"), "edit-copy")
         send_item.props.sensitive = False
