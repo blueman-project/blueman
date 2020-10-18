@@ -48,7 +48,6 @@ class Services(ManagerPlugin, MenuItemsProvider):
         appl = AppletService()
 
         self.has_dun = False
-        serial_items: List[Gtk.MenuItem] = []
 
         def add_menu_item(manager_menu: ManagerDeviceMenu, service: Service) -> None:
             if service.connected:
@@ -61,12 +60,9 @@ class Services(ManagerPlugin, MenuItemsProvider):
                 if service.description:
                     item.props.tooltip_text = service.description
                 item.connect("activate", manager_menu.on_connect, service)
-                if isinstance(service, SerialService):
-                    serial_items.append(item)
-                    if isinstance(service, DialupNetwork):
-                        self.has_dun = True
-                else:
-                    items.append((item, service.priority))
+                if isinstance(service, DialupNetwork):
+                    self.has_dun = True
+                items.append((item, service.priority))
             item.props.sensitive = service.available
             item.show()
 
@@ -102,28 +98,9 @@ class Services(ManagerPlugin, MenuItemsProvider):
                 d.run()
                 d.destroy()
 
-            item = Gtk.SeparatorMenuItem()
-            item.show()
-            serial_items.append(item)
-
             item = create_menuitem(_("Dialup Settings"), "preferences-other")
-            serial_items.append(item)
+            items.append((item, 250))
             item.show()
             item.connect("activate", open_settings, device)
-
-        if len(serial_items) > 1:
-            sub = Gtk.Menu()
-            sub.show()
-
-            item = create_menuitem(_("Serial Ports"), "modem")
-            item.set_submenu(sub)
-            item.show()
-            items.append((item, 90))
-
-            for item in serial_items:
-                sub.append(item)
-        else:
-            for item in serial_items:
-                items.append((item, 80))
 
         return items
