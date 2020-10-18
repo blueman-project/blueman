@@ -1,6 +1,9 @@
-from typing import Optional, Callable
+from gettext import gettext as _
+from typing import Optional, Callable, List, Set
 
-from blueman.Service import Service
+from blueman.main.DBusProxies import AppletService
+
+from blueman.Service import Service, Action, Instance
 from blueman.bluez.Device import Device
 from blueman.bluez.Network import Network
 from blueman.bluez.errors import BluezDBusException
@@ -18,12 +21,12 @@ class NetworkService(Service):
         return paired
 
     @property
-    def connected(self) -> bool:
-        if not self.available:
-            return False
+    def connectable(self) -> bool:
+        return not self.available or not self._service["Connected"]
 
-        connected: bool = self._service["Connected"]
-        return connected
+    @property
+    def connected_instances(self) -> List[Instance]:
+        return [] if self.connectable else [Instance(self.name)]
 
     def connect(
         self,
@@ -38,3 +41,15 @@ class NetworkService(Service):
         error_handler: Optional[Callable[[BluezDBusException], None]] = None,
     ) -> None:
         self._service.disconnect(reply_handler=reply_handler, error_handler=error_handler)
+
+    @property
+    def common_actions(self) -> Set[Action]:
+        def renew() -> None:
+            AppletService().DhcpClient('(s)', self.device.get_object_path())
+
+        return {Action(
+            _("Renew IP Address"),
+            "view-refresh",
+            {"DhcpClient"},
+            renew
+        )}

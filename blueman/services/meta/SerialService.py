@@ -1,13 +1,14 @@
+from gettext import gettext as _
 import logging
 import os
 import subprocess
-from typing import Callable, Dict, Optional
+from typing import Callable, Dict, Optional, List
 
 from gi.repository import Gio, GLib
 
 from blueman.bluez.Adapter import Adapter
-from _blueman import create_rfcomm_device, get_rfcomm_channel, RFCOMMError
-from blueman.Service import Service
+from _blueman import create_rfcomm_device, get_rfcomm_channel, RFCOMMError, rfcomm_list
+from blueman.Service import Service, Instance
 from blueman.bluez.Device import Device
 from blueman.main.DBusProxies import Mechanism
 from blueman.Constants import RFCOMM_WATCHER_PATH
@@ -25,8 +26,13 @@ class SerialService(Service):
         return paired
 
     @property
-    def connected(self) -> bool:
-        return False
+    def connectable(self) -> bool:
+        return True
+
+    @property
+    def connected_instances(self) -> List[Instance]:
+        return [Instance(_("Serial Port %s") % "rfcomm%d" % dev["id"], dev["id"]) for dev in rfcomm_list()
+                if dev["dst"] == self.device['Address'] and dev["state"] == "connected"]
 
     def on_file_changed(
         self,
