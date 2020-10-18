@@ -1,20 +1,15 @@
-from gettext import gettext as _
 from typing import List, Tuple
 
 import cairo
 
-from blueman.Service import Service
 from blueman.bluez.Device import Device
 from blueman.gui.manager.ManagerDeviceMenu import MenuItemsProvider, ManagerDeviceMenu
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 from blueman.Functions import create_menuitem
 from blueman.main.DBusProxies import AppletService
-from blueman.services import *
-from _blueman import rfcomm_list
+from blueman.services import get_services
 
 import gi
-
-from blueman.services.meta import NetworkService, SerialService
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
@@ -47,60 +42,32 @@ class Services(ManagerPlugin, MenuItemsProvider):
         items: List[Tuple[Gtk.MenuItem, int]] = []
         appl = AppletService()
 
-        self.has_dun = False
+        services = get_services(device)
 
-        def add_menu_item(manager_menu: ManagerDeviceMenu, service: Service) -> None:
-            if service.connected:
-                surface = self._make_x_icon(service.icon, 16)
-                item = create_menuitem(service.name, surface=surface)
-                item.connect("activate", manager_menu.on_disconnect, service)
-                items.append((item, service.priority + 100))
-            else:
-                item = create_menuitem(service.name, service.icon)
-                if service.description:
-                    item.props.tooltip_text = service.description
-                item.connect("activate", manager_menu.on_connect, service)
-                if isinstance(service, DialupNetwork):
-                    self.has_dun = True
-                items.append((item, service.priority))
+        connectable_services = [service for service in services if service.connectable]
+        for service in connectable_services:
+            item: Gtk.MenuItem = create_menuitem(service.name, service.icon)
+            if service.description:
+                item.props.tooltip_text = service.description
+            item.connect("activate", manager_menu.on_connect, service)
+            items.append((item, service.priority))
             item.props.sensitive = service.available
             item.show()
 
-        for service in get_services(device):
-            add_menu_item(manager_menu, service)
+        for service in services:
+            for instance in service.connected_instances:
+                surface = self._make_x_icon(service.icon, 16)
+                item = create_menuitem(instance.name, surface=surface)
+                item.connect("activate", manager_menu.on_disconnect, service, instance.port)
+                items.append((item, service.priority + 100))
+                item.show()
 
-            if isinstance(service, SerialService):
-                for dev in rfcomm_list():
-                    if dev["dst"] == device['Address'] and dev["state"] == "connected":
-                        devname = _("Serial Port %s") % "rfcomm%d" % dev["id"]
-
-                        surface = self._make_x_icon("modem", 16)
-                        item: Gtk.MenuItem = create_menuitem(devname, surface=surface)
-                        item.connect("activate", manager_menu.on_disconnect, service, dev["id"])
-                        items.append((item, 120))
-                        item.show()
-
-            if isinstance(service, NetworkService) and service.connected:
-                if "DhcpClient" in appl.QueryPlugins():
-                    def renew(_item: Gtk.MenuItem) -> None:
-                        appl.DhcpClient('(s)', device.get_object_path())
-
-                    item = create_menuitem(_("Renew IP Address"), "view-refresh")
-                    item.connect("activate", renew)
-                    item.show()
-                    items.append((item, 201))
-
-        if self.has_dun and ('PPPSupport' in appl.QueryPlugins() or 'NMDUNSupport' in appl.QueryPlugins()):
-            def open_settings(_item: Gtk.MenuItem, device: Device) -> None:
-                from blueman.gui.GsmSettings import GsmSettings
-
-                d = GsmSettings(device['Address'])
-                d.run()
-                d.destroy()
-
-            item = create_menuitem(_("Dialup Settings"), "preferences-other")
-            items.append((item, 250))
+        for action, priority in set((action, service.priority)
+                                    for service in services for action in service.common_actions
+                                    if any(plugin in appl.QueryPlugins() for plugin in action.plugins)):
+            item = create_menuitem(action.title, action.icon)
+            items.append((item, priority + 200))
             item.show()
-            item.connect("activate", open_settings, device)
+            item.connect("activate", lambda _: action.callback())
 
         return items
