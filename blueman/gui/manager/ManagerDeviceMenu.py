@@ -7,6 +7,7 @@ from blueman.Functions import create_menuitem, e_
 from blueman.Service import Service
 from blueman.bluez.Network import AnyNetwork
 from blueman.bluez.Device import AnyDevice, Device
+from blueman.config.AutoConnectConfig import AutoConnectConfig
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.Builder import Builder
 from blueman.main.DBusProxies import AppletService, DBusProxyFailed
@@ -36,6 +37,7 @@ class DeviceMenuItem:
     class Group(Enum):
         CONNECT = auto()
         DISCONNECT = auto()
+        AUTOCONNECT = auto()
         ACTIONS = auto()
 
     def __init__(self, item: Gtk.MenuItem, group: Group, position: int):
@@ -313,6 +315,7 @@ class ManagerDeviceMenu(Gtk.Menu):
 
         connect_items = [i for i in items if i.group == DeviceMenuItem.Group.CONNECT]
         disconnect_items = [i for i in items if i.group == DeviceMenuItem.Group.DISCONNECT]
+        autoconnect_items = [item for item in items if item.group == DeviceMenuItem.Group.AUTOCONNECT]
         action_items = [i for i in items if i.group == DeviceMenuItem.Group.ACTIONS]
 
         if connect_items:
@@ -325,7 +328,20 @@ class ManagerDeviceMenu(Gtk.Menu):
             for it in sorted(disconnect_items, key=lambda i: i.position):
                 self.append(it.item)
 
-        if show_generic_connect or connect_items or disconnect_items:
+        if show_generic_connect or autoconnect_items:
+            self.append(self._create_header(_("<b>Auto-connect:</b>")))
+
+            if show_generic_connect:
+                service = ServiceUUID("00000000-0000-0000-0000-000000000000")
+                item = Gtk.CheckMenuItem(label=service.name)
+                AutoConnectConfig().bind_to_menuitem(item, self.SelectedDevice, str(service))
+                item.show()
+                self.append(item)
+
+            for it in sorted(autoconnect_items, key=lambda i: i.position):
+                self.append(it.item)
+
+        if show_generic_connect or connect_items or disconnect_items or autoconnect_items:
             item = Gtk.SeparatorMenuItem()
             item.show()
             self.append(item)

@@ -3,6 +3,7 @@ from typing import List
 import cairo
 
 from blueman.bluez.Device import Device
+from blueman.config.AutoConnectConfig import AutoConnectConfig
 from blueman.gui.manager.ManagerDeviceMenu import MenuItemsProvider, ManagerDeviceMenu, DeviceMenuItem
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 from blueman.Functions import create_menuitem
@@ -62,6 +63,14 @@ class Services(ManagerPlugin, MenuItemsProvider):
                 item.connect("activate", manager_menu.on_disconnect, service, instance.port)
                 items.append(DeviceMenuItem(item, DeviceMenuItem.Group.DISCONNECT, service.priority + 100))
                 item.show()
+
+        if services:
+            config = AutoConnectConfig()
+            for service in services:
+                item = Gtk.CheckMenuItem(label=service.name)
+                config.bind_to_menuitem(item, device, service.uuid)
+                item.show()
+                items.append(DeviceMenuItem(item, DeviceMenuItem.Group.AUTOCONNECT, service.priority))
 
         for action, priority in set((action, service.priority)
                                     for service in services for action in service.common_actions

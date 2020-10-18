@@ -7861,6 +7861,31 @@ class ListBoxRow(Bin, Actionable):
 class MenuItem(Bin, Actionable, Activatable):
     bin: Bin
 
+    def __init__(self,
+        *,
+        label: str = "",
+        use_underline: bool = False,
+        # Container
+        border_width: int = 0,
+        # Widget
+        halign: Align = Align.FILL,
+        has_tooltip: bool = False,
+        height_request: int = -1,
+        hexpand: bool = False,
+        margin: int = 0,
+        margin_left: int = 0,
+        name: typing.Optional[str] = None,
+        opacity: float = 1,
+        parent: typing.Optional[Container] = None,
+        receives_default: bool = False,
+        sensitive: bool = True,
+        tooltip_text: typing.Optional[str] = None,
+        valign: Align = Align.FILL,
+        vexpand: bool = False,
+        visible: bool = False,
+        width_request: int = -1,
+    ) -> None: ...
+
     def activate(self) -> None: ...  # type: ignore
 
     def deselect(self) -> None: ...
@@ -9337,6 +9362,9 @@ class CheckMenuItem(MenuItem):
 
     def __init__(self,
         *,
+        # MenuItem
+        label: str = "",
+        use_underline: bool = False,
         # Container
         border_width: int = 0,
         # Widget
@@ -9392,8 +9420,28 @@ class ImageMenuItem(MenuItem):
     def __init__(self,
         *,
         image: typing.Optional[Widget] = None,
+        # MenuItem
         label: str = "",
-        use_underline: bool = False
+        use_underline: bool = False,
+        # Container
+        border_width: int = 0,
+        # Widget
+        halign: Align = Align.FILL,
+        has_tooltip: bool = False,
+        height_request: int = -1,
+        hexpand: bool = False,
+        margin: int = 0,
+        margin_left: int = 0,
+        name: typing.Optional[str] = None,
+        opacity: float = 1,
+        parent: typing.Optional[Container] = None,
+        receives_default: bool = False,
+        sensitive: bool = True,
+        tooltip_text: typing.Optional[str] = None,
+        valign: Align = Align.FILL,
+        vexpand: bool = False,
+        visible: bool = False,
+        width_request: int = -1,
     ) -> None: ...
 
     def get_always_show_image(self) -> builtins.bool: ...
