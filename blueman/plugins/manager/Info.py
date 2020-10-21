@@ -11,7 +11,7 @@ from blueman.Functions import create_menuitem
 from blueman.Sdp import ServiceUUID
 from blueman.bluez.Device import Device
 from blueman.bluez.errors import BluezDBusException
-from blueman.gui.manager.ManagerDeviceMenu import MenuItemsProvider, ManagerDeviceMenu
+from blueman.gui.manager.ManagerDeviceMenu import MenuItemsProvider, ManagerDeviceMenu, DeviceMenuItem
 
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 
@@ -116,11 +116,11 @@ def show_info(device: Device, parent: Gtk.Window) -> None:
 
 
 class Info(ManagerPlugin, MenuItemsProvider):
-    def on_request_menu_items(self, manager_menu: ManagerDeviceMenu, device: Device) -> List[Tuple[Gtk.MenuItem, int]]:
+    def on_request_menu_items(self, manager_menu: ManagerDeviceMenu, device: Device) -> List[DeviceMenuItem]:
         item = create_menuitem(_("_Info"), "dialog-information")
         item.props.tooltip_text = _("Show device information")
         _window = manager_menu.get_toplevel()
         assert isinstance(_window, Gtk.Window)
         window = _window  # https://github.com/python/mypy/issues/2608
         item.connect('activate', lambda x: show_info(device, window))
-        return [(item, 400)]
+        return [DeviceMenuItem(item, DeviceMenuItem.Group.ACTIONS, 400)]

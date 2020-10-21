@@ -1,6 +1,6 @@
 import logging
+from enum import Enum, auto
 from gettext import gettext as _
-from operator import itemgetter
 from typing import Dict, List, Tuple, Optional, TYPE_CHECKING, Union, Iterable
 
 from blueman.Functions import create_menuitem, e_
@@ -32,9 +32,20 @@ if TYPE_CHECKING:
     from blueman.main.Manager import Blueman
 
 
+class DeviceMenuItem:
+    class Group(Enum):
+        CONNECT = auto()
+        DISCONNECT = auto()
+        ACTIONS = auto()
+
+    def __init__(self, item: Gtk.MenuItem, group: Group, position: int):
+        self.item = item
+        self.group = group
+        self.position = position
+
+
 class MenuItemsProvider:
-    def on_request_menu_items(self, manager_menu: "ManagerDeviceMenu",
-                              device: Device) -> List[Tuple[Gtk.MenuItem, int]]:
+    def on_request_menu_items(self, manager_menu: "ManagerDeviceMenu", device: Device) -> List[DeviceMenuItem]:
         ...
 
 
@@ -255,8 +266,6 @@ class ManagerDeviceMenu(Gtk.Menu):
     def generate(self) -> None:
         self.clear()
 
-        items: List[Tuple[int, Gtk.MenuItem]] = []
-
         if not self.is_popup or self.props.visible:
             selected = self.Blueman.List.selected()
             if not selected:
@@ -297,60 +306,37 @@ class ManagerDeviceMenu(Gtk.Menu):
             connect_item.show()
             self.append(connect_item)
 
-        for plugin in self.Blueman.Plugins.get_loaded_plugins(MenuItemsProvider):
-            for item, pos in plugin.on_request_menu_items(self, self.SelectedDevice):
-                items.append((pos, item))
-
         logging.debug(row["alias"])
 
-        have_disconnectables = False
-        have_connectables = False
+        items = [item for plugin in self.Blueman.Plugins.get_loaded_plugins(MenuItemsProvider)
+                 for item in plugin.on_request_menu_items(self, self.SelectedDevice)]
 
-        if True in map(lambda x: 100 <= x[0] < 200, items):
-            have_disconnectables = True
+        connect_items = [i for i in items if i.group == DeviceMenuItem.Group.CONNECT]
+        disconnect_items = [i for i in items if i.group == DeviceMenuItem.Group.DISCONNECT]
+        action_items = [i for i in items if i.group == DeviceMenuItem.Group.ACTIONS]
 
-        if True in map(lambda x: x[0] < 100, items):
-            have_connectables = True
+        if connect_items:
+            self.append(self._create_header(_("<b>Connect To:</b>")))
+            for it in sorted(connect_items, key=lambda i: i.position):
+                self.append(it.item)
 
-        if True in map(lambda x: x[0] >= 200, items) and (have_connectables or have_disconnectables):
+        if disconnect_items:
+            self.append(self._create_header(_("<b>Disconnect:</b>")))
+            for it in sorted(disconnect_items, key=lambda i: i.position):
+                self.append(it.item)
+
+        if action_items and (connect_items or disconnect_items):
             item = Gtk.SeparatorMenuItem()
             item.show()
-            items.append((199, item))
-
-        if have_connectables:
-            item = Gtk.MenuItem()
-            label = Gtk.Label()
-            label.set_markup(_("<b>Connect To:</b>"))
-            label.props.xalign = 0.0
-
-            label.show()
-            item.add(label)
-            item.props.sensitive = False
-            item.show()
-            items.append((0, item))
-
-        if have_disconnectables:
-            item = Gtk.MenuItem()
-            label = Gtk.Label()
-            label.set_markup(_("<b>Disconnect:</b>"))
-            label.props.xalign = 0.0
-
-            label.show()
-            item.add(label)
-            item.props.sensitive = False
-            item.show()
-            items.append((99, item))
-
-        items.sort(key=itemgetter(0))
-        for priority, item in items:
             self.append(item)
+
+        for it in sorted(action_items, key=lambda i: i.position):
+            self.append(it.item)
 
         if items:
             item = Gtk.SeparatorMenuItem()
             item.show()
             self.append(item)
-
-        del items
 
         send_item = create_menuitem(_("Send a _File…"), "edit-copy")
         send_item.props.sensitive = False
@@ -418,3 +404,16 @@ class ManagerDeviceMenu(Gtk.Menu):
         self.append(item)
         item.show()
         item.props.tooltip_text = _("Remove this device from the known devices list")
+
+    @staticmethod
+    def _create_header(text: str) -> Gtk.MenuItem:
+        item = Gtk.MenuItem()
+        label = Gtk.Label()
+        label.set_markup(text)
+        label.props.xalign = 0.0
+
+        label.show()
+        item.add(label)
+        item.props.sensitive = False
+        item.show()
+        return item

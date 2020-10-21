@@ -1,9 +1,9 @@
-from typing import List, Tuple
+from typing import List
 
 import cairo
 
 from blueman.bluez.Device import Device
-from blueman.gui.manager.ManagerDeviceMenu import MenuItemsProvider, ManagerDeviceMenu
+from blueman.gui.manager.ManagerDeviceMenu import MenuItemsProvider, ManagerDeviceMenu, DeviceMenuItem
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 from blueman.Functions import create_menuitem
 from blueman.main.DBusProxies import AppletService
@@ -38,8 +38,8 @@ class Services(ManagerPlugin, MenuItemsProvider):
 
         return target
 
-    def on_request_menu_items(self, manager_menu: ManagerDeviceMenu, device: Device) -> List[Tuple[Gtk.MenuItem, int]]:
-        items: List[Tuple[Gtk.MenuItem, int]] = []
+    def on_request_menu_items(self, manager_menu: ManagerDeviceMenu, device: Device) -> List[DeviceMenuItem]:
+        items: List[DeviceMenuItem] = []
         appl = AppletService()
 
         services = get_services(device)
@@ -50,23 +50,24 @@ class Services(ManagerPlugin, MenuItemsProvider):
             if service.description:
                 item.props.tooltip_text = service.description
             item.connect("activate", manager_menu.on_connect, service)
-            items.append((item, service.priority))
+            items.append(DeviceMenuItem(item, DeviceMenuItem.Group.CONNECT, service.priority))
             item.props.sensitive = service.available
             item.show()
 
-        for service in services:
+        connected_services = [service for service in services if service.connected_instances]
+        for service in connected_services:
             for instance in service.connected_instances:
                 surface = self._make_x_icon(service.icon, 16)
                 item = create_menuitem(instance.name, surface=surface)
                 item.connect("activate", manager_menu.on_disconnect, service, instance.port)
-                items.append((item, service.priority + 100))
+                items.append(DeviceMenuItem(item, DeviceMenuItem.Group.DISCONNECT, service.priority + 100))
                 item.show()
 
         for action, priority in set((action, service.priority)
                                     for service in services for action in service.common_actions
                                     if any(plugin in appl.QueryPlugins() for plugin in action.plugins)):
             item = create_menuitem(action.title, action.icon)
-            items.append((item, priority + 200))
+            items.append(DeviceMenuItem(item, DeviceMenuItem.Group.ACTIONS, priority + 200))
             item.show()
             item.connect("activate", lambda _: action.callback())
 
