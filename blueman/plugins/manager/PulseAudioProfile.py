@@ -1,11 +1,11 @@
 from gettext import gettext as _
 import logging
-from typing import Dict, List, TYPE_CHECKING, Tuple, Mapping, Sequence
+from typing import Dict, List, TYPE_CHECKING, Mapping, Sequence
 
 from blueman.bluez.Device import Device
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 from blueman.main.PulseAudioUtils import PulseAudioUtils, EventType
-from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu, MenuItemsProvider
+from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu, MenuItemsProvider, DeviceMenuItem
 from blueman.gui.MessageArea import MessageArea
 from blueman.Functions import create_menuitem
 from blueman.Sdp import AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID, ServiceUUID
@@ -111,7 +111,7 @@ class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
             item.set_submenu(sub)
             item.show()
 
-    def on_request_menu_items(self, manager_menu: ManagerDeviceMenu, device: Device) -> List[Tuple[Gtk.MenuItem, int]]:
+    def on_request_menu_items(self, manager_menu: ManagerDeviceMenu, device: Device) -> List[DeviceMenuItem]:
         audio_source = False
         for uuid in device['UUIDs']:
             if ServiceUUID(uuid).short_uuid in (AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID):
@@ -136,4 +136,4 @@ class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
         else:
             return []
 
-        return [(item, 300)]
+        return [DeviceMenuItem(item, DeviceMenuItem.Group.ACTIONS, 300)]

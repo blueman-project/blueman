@@ -1,11 +1,11 @@
 import datetime
 from gettext import gettext as _
 from tempfile import NamedTemporaryFile
-from typing import List, Tuple
+from typing import List
 
 from blueman.Functions import create_menuitem, launch
 from blueman.bluez.Device import Device
-from blueman.gui.manager.ManagerDeviceMenu import MenuItemsProvider, ManagerDeviceMenu
+from blueman.gui.manager.ManagerDeviceMenu import MenuItemsProvider, ManagerDeviceMenu, DeviceMenuItem
 from blueman.main.Builder import Builder
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 
@@ -47,11 +47,11 @@ def send_note(device: Device, parent: Gtk.Window) -> None:
 
 
 class Notes(ManagerPlugin, MenuItemsProvider):
-    def on_request_menu_items(self, manager_menu: ManagerDeviceMenu, device: Device) -> List[Tuple[Gtk.MenuItem, int]]:
+    def on_request_menu_items(self, manager_menu: ManagerDeviceMenu, device: Device) -> List[DeviceMenuItem]:
         item = create_menuitem(_("Send _note"), "dialog-information")
         item.props.tooltip_text = _("Send a text note")
         _window = manager_menu.get_toplevel()
         assert isinstance(_window, Gtk.Window)
         window = _window  # https://github.com/python/mypy/issues/2608
         item.connect('activate', lambda x: send_note(device, window))
-        return [(item, 500)]
+        return [DeviceMenuItem(item, DeviceMenuItem.Group.ACTIONS, 500)]
