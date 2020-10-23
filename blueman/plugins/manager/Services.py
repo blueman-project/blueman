@@ -66,11 +66,13 @@ class Services(ManagerPlugin, MenuItemsProvider):
 
         if services:
             config = AutoConnectConfig()
+            autoconnect_services = set(config["services"])
             for service in services:
-                item = Gtk.CheckMenuItem(label=service.name)
-                config.bind_to_menuitem(item, device, service.uuid)
-                item.show()
-                items.append(DeviceMenuItem(item, DeviceMenuItem.Group.AUTOCONNECT, service.priority))
+                if service.connected_instances or (device.get_object_path(), service.uuid) in autoconnect_services:
+                    item = Gtk.CheckMenuItem(label=service.name)
+                    config.bind_to_menuitem(item, device, service.uuid)
+                    item.show()
+                    items.append(DeviceMenuItem(item, DeviceMenuItem.Group.AUTOCONNECT, service.priority))
 
         for action, priority in set((action, service.priority)
                                     for service in services for action in service.common_actions

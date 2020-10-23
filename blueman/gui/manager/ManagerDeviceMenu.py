@@ -328,13 +328,16 @@ class ManagerDeviceMenu(Gtk.Menu):
             for it in sorted(disconnect_items, key=lambda i: i.position):
                 self.append(it.item)
 
-        if show_generic_connect or autoconnect_items:
+        config = AutoConnectConfig()
+        generic_service = ServiceUUID("00000000-0000-0000-0000-000000000000")
+        generic_autoconnect = (self.SelectedDevice.get_object_path(), str(generic_service)) in set(config["services"])
+
+        if row["connected"] or generic_autoconnect or autoconnect_items:
             self.append(self._create_header(_("<b>Auto-connect:</b>")))
 
-            if show_generic_connect:
-                service = ServiceUUID("00000000-0000-0000-0000-000000000000")
-                item = Gtk.CheckMenuItem(label=service.name)
-                AutoConnectConfig().bind_to_menuitem(item, self.SelectedDevice, str(service))
+            if row["connected"] or generic_autoconnect:
+                item = Gtk.CheckMenuItem(label=generic_service.name)
+                config.bind_to_menuitem(item, self.SelectedDevice, str(generic_service))
                 item.show()
                 self.append(item)
 
