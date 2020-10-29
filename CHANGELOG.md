@@ -8,21 +8,46 @@
 * Drop blueman-assistant
 * Raise minimum Python version to 3.6
 * Raise GTK+ 3 version to 3.22
-* Do not use exitcode 1 when we expect to fail
-* Use apply button for transfer options
 * Allow opening device menus via keyboard (Shift+F10 or menu key)
 * Add Ctrl+Q and Ctrl+W accelerators for closing blueman-manager
 
 ### Bugs fixed
 
-* Pairing with pincode
-* Handle os.remove failing
 * Fix disconnecting NMDevice
+* Exceptions from asynchronous DBus calls (getting picked up by tools like Apport or ABRT)
+
+## 2.1.4
+
+### Changes
+* Force cython to use python language version 3
+* Do not use exitcode 1 when we expect to fail
+* Mark more strings translatable (@cwendling)
+
+### Bugs fixed
+
 * Untranslated strings (@cwendling / Colomban Wendling)
 * Searching (with Ctrl+F in manager device list) did not work
 * Default PIN lookup
-* Exceptions from asynchronous DBus calls (getting picked up by tools like Apport or ABRT)
-* Fix and properly update tooltip on blueman-tray
+* Fix device removal handling (@Yannik)
+* Only use LaunchContext when we have proper event time
+
+## 2.1.3
+
+### Changes
+* Use apply button for transfer options
+
+### Bugs fixed
+* Fix tooltip not updating when bluetooth is disabled
+* Fix dbus timeout in DhcClient
+* Call the right method when pulseaudio crashes
+* Handle os.remove failing
+
+## 2.1.2
+
+### Bugs fixed
+
+* Signal bar updates with multiple adapters
+* Pairing with pincode
 
 ## 2.1.1
 
