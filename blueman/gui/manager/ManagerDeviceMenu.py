@@ -200,7 +200,15 @@ class ManagerDeviceMenu(Gtk.Menu):
                                          result_handler=success, error_handler=fail,
                                          timeout=GLib.MAXINT)
 
-        prog = ManagerProgressbar(self.Blueman, False)
+        prog = ManagerProgressbar(self.Blueman)
+
+        def abort() -> None:
+            assert self._appl is not None  # https://github.com/python/mypy/issues/2608
+            self._appl.DisconnectService("(osd)",
+                                         device.get_object_path(),
+                                         '00000000-0000-0000-0000-000000000000',
+                                         0)
+        prog.connect("cancelled", lambda x: abort())
         prog.start()
 
     def show_generic_connect_calc(self, device_uuids: Iterable[str]) -> bool:
