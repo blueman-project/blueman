@@ -10,6 +10,7 @@
 * Raise GTK+ 3 version to 3.22
 * Allow opening device menus via keyboard (Shift+F10 or menu key)
 * Add Ctrl+Q and Ctrl+W accelerators for closing blueman-manager
+* Allow cancelling device connection attempts
 
 ### Bugs fixed
 
