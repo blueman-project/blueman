@@ -273,7 +273,7 @@ get_rfcomm_channel(uint16_t service_class, char* btd_addr) {
     err = sdp_service_search_attr_req(session, search_list, SDP_ATTR_REQ_RANGE, attrid_list, &response_list);
 
     if (err) {
-        printf("Faild to search attributes\n");
+        printf("Failed to search attributes\n");
         sdp_list_free(response_list, 0);
         sdp_list_free(search_list, 0);
         sdp_list_free(attrid_list, 0);
