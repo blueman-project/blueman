@@ -1,5 +1,5 @@
 from gettext import gettext as _
-from typing import Dict, Optional, TYPE_CHECKING, List, Any, cast
+from typing import Optional, TYPE_CHECKING, List, Any, cast, Callable, Set
 import html
 import logging
 import cairo
@@ -13,13 +13,14 @@ from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.Constants import PIXMAP_PATH
 from blueman.Functions import launch
 from blueman.Sdp import ServiceUUID, OBEX_OBJPUSH_SVCLASS_ID
-from blueman.gui.GtkAnimation import TreeRowFade, CellFade
+from blueman.gui.GtkAnimation import TreeRowFade, CellFade, AnimBase
 from blueman.main.Config import Config
 from _blueman import ConnInfoReadError, conn_info
 
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
+from gi.repository import GLib
 from gi.repository import Gdk
 from gi.repository import GdkPixbuf
 from gi.repository import Pango
@@ -59,7 +60,6 @@ class ManagerDeviceList(DeviceList):
             {"id": "icon_info", "type": Gtk.IconInfo},
             {"id": "cell_fader", "type": CellFade},
             {"id": "row_fader", "type": TreeRowFade},
-            {"id": "levels_visible", "type": bool},
             {"id": "initial_anim", "type": bool},
         ]
         super().__init__(adapter, tabledata)
@@ -67,6 +67,8 @@ class ManagerDeviceList(DeviceList):
         self.set_headers_visible(False)
         self.props.has_tooltip = True
         self.Blueman = inst
+
+        self._monitored_devices: Set[str] = set()
 
         self.Config = Config("org.blueman.general")
         self.Config.connect('changed', self._on_settings_changed)
@@ -91,8 +93,6 @@ class ManagerDeviceList(DeviceList):
         Gtk.Widget.drag_dest_add_uri_targets(self)
 
         self.set_search_equal_func(self.search_func)
-
-        self._faderhandlers: Dict[str, int] = {}
 
     def _on_settings_changed(self, settings: Config, key: str) -> None:
         if key in ('sort-by', 'sort-order'):
@@ -251,17 +251,8 @@ class ManagerDeviceList(DeviceList):
 
         row_fader = self.get(tree_iter, "row_fader")["row_fader"]
         super().device_remove_event(device)
-        self._faderhandlers.update({
-            device.get_object_path(): row_fader.connect("animation-finished", self.__on_fader_finished, device)
-        })
-
-        row_fader.thaw()
         self.emit("device-selected", None, None)
-        row_fader.animate(start=row_fader.get_state(), end=0.0, duration=400)
-
-    def __on_fader_finished(self, fader: TreeRowFade, device: Device) -> None:
-        fader.disconnect(self._faderhandlers.pop(device.get_object_path()))
-        fader.freeze()
+        self._prepare_fader(row_fader).animate(start=row_fader.get_state(), end=0.0, duration=400)
 
     def device_add_event(self, device: Device) -> None:
         self.add_device(device)
@@ -288,17 +279,11 @@ class ManagerDeviceList(DeviceList):
 
             has_objpush = self._has_objpush(device)
 
-            self.set(tree_iter, row_fader=row_fader, cell_fader=cell_fader, levels_visible=False, objpush=has_objpush)
+            self.set(tree_iter, row_fader=row_fader, cell_fader=cell_fader, objpush=has_objpush)
 
             cell_fader.freeze()
 
-            def on_finished(fader: TreeRowFade) -> None:
-                fader.disconnect(faderhandler)
-                fader.freeze()
-
-            faderhandler = row_fader.connect("animation-finished", on_finished)
-            row_fader.set_state(0.0)
-            row_fader.animate(start=0.0, end=1.0, duration=500)
+            self._prepare_fader(row_fader).animate(start=0.0, end=1.0, duration=500)
 
             self.set(tree_iter, initial_anim=True)
 
@@ -330,6 +315,46 @@ class ManagerDeviceList(DeviceList):
         except Exception as e:
             logging.exception(e)
 
+        if device["Connected"]:
+            self._monitor_power_levels(tree_iter, device)
+
+    def _monitor_power_levels(self, tree_iter: Gtk.TreeIter, device: Device) -> None:
+        if device["Address"] in self._monitored_devices:
+            return
+
+        assert self.Adapter is not None
+        cinfo = conn_info(device["Address"], os.path.basename(self.Adapter.get_object_path()))
+        try:
+            cinfo.init()
+        except ConnInfoReadError:
+            logging.warning("Failed to get power levels, probably a LE device.")
+
+        model = self.get_model()
+        assert isinstance(model, Gtk.TreeModel)
+        r = Gtk.TreeRowReference.new(model, model.get_path(tree_iter))
+        self._update_power_levels(tree_iter, cinfo)
+        GLib.timeout_add(1000, self._check_power_levels, r, cinfo, device["Address"])
+        self._monitored_devices.add(device["Address"])
+
+    def _check_power_levels(self, row_ref: Gtk.TreeRowReference, cinfo: conn_info, address: str) -> bool:
+        if not row_ref.valid():
+            logging.warning("stopping monitor (row does not exist)")
+            cinfo.deinit()
+            self._monitored_devices.remove(address)
+            return False
+
+        tree_iter = self.get_iter(row_ref.get_path())
+        assert tree_iter is not None
+
+        if self.get(tree_iter, "device")["device"]["Connected"]:
+            self._update_power_levels(tree_iter, cinfo)
+            return True
+        else:
+            cinfo.deinit()
+            self._disable_power_levels(tree_iter)
+            self._monitored_devices.remove(address)
+            return False
+
     def row_update_event(self, tree_iter: Gtk.TreeIter, key: str, value: Any) -> None:
         logging.info(f"{key} {value}")
 
@@ -358,184 +383,159 @@ class ManagerDeviceList(DeviceList):
         elif key == "Connected":
             self.set(tree_iter, connected=value)
 
-    def level_setup_event(self, row_ref: Gtk.TreeRowReference, device: Device, cinfo: Optional[conn_info]) -> None:
-        if not row_ref.valid():
+            if value:
+                self._monitor_power_levels(tree_iter, self.get(tree_iter, "device")["device"])
+            else:
+                self._disable_power_levels(tree_iter)
+
+    def _update_power_levels(self, tree_iter: Gtk.TreeIter, cinfo: conn_info) -> None:
+        row = self.get(tree_iter, "cell_fader", "rssi", "lq", "tpl")
+
+        # cinfo init may fail for bluetooth devices version 4 and up
+        # FIXME Workaround is horrible and we should show something better
+        if cinfo.failed:
+            bars = {"rssi": 100.0, "tpl": 100.0, "lq": 100.0}
+        else:
+            bars = {}
+            try:
+                bars["rssi"] = max(50 + float(cinfo.get_rssi()) / 127 * 50, 10)
+            except ConnInfoReadError:
+                bars["rssi"] = 50
+            try:
+                bars["lq"] = max(50 + float(cinfo.get_lq()) / 127 * 50, 10)
+            except ConnInfoReadError:
+                bars["lq"] = 50
+            try:
+                bars["tpl"] = max(float(cinfo.get_tpl()) / 255 * 100, 10)
+            except ConnInfoReadError:
+                bars["tpl"] = 0
+
+        if row["rssi"] == row["tpl"] == row["lq"] == 0:
+            self._prepare_fader(row["cell_fader"]).animate(start=0.0, end=1.0, duration=400)
+
+        w = 14 * self.get_scale_factor()
+        h = 48 * self.get_scale_factor()
+
+        for (name, perc) in bars.items():
+            if round(row[name], -1) != round(perc, -1):
+                icon_name = f"blueman-{name}-{int(round(perc, -1))}.png"
+                icon = GdkPixbuf.Pixbuf.new_from_file_at_scale(os.path.join(PIXMAP_PATH, icon_name), w, h, True)
+                self.set(tree_iter, **{name: perc, f"{name}_pb": icon})
+
+    def _disable_power_levels(self, tree_iter: Gtk.TreeIter) -> None:
+        row = self.get(tree_iter, "cell_fader", "rssi", "lq", "tpl")
+        if row["rssi"] == row["tpl"] == row["lq"] == 0:
             return
 
-        tree_iter = self.get_iter(row_ref.get_path())
-        assert tree_iter is not None
-        row = self.get(tree_iter, "levels_visible", "cell_fader", "rssi", "lq", "tpl")
-        if cinfo is not None:
-            # cinfo init may fail for bluetooth devices version 4 and up
-            # FIXME Workaround is horrible and we should show something better
-            if cinfo.failed:
-                rssi_perc = tpl_perc = lq_perc = 100.0
-            else:
-                try:
-                    rssi = float(cinfo.get_rssi())
-                except ConnInfoReadError:
-                    rssi = 0
-                try:
-                    lq = float(cinfo.get_lq())
-                except ConnInfoReadError:
-                    lq = 0
+        self.set(tree_iter, rssi=0, lq=0, tpl=0)
+        self._prepare_fader(row["cell_fader"], lambda: self.set(tree_iter, rssi_pb=None, lq_pb=None, tpl_pb=None))\
+            .animate(start=1.0, end=0.0, duration=400)
 
-                try:
-                    tpl = float(cinfo.get_tpl())
-                except ConnInfoReadError:
-                    tpl = 0
+    def _prepare_fader(self, fader: AnimBase, callback: Optional[Callable[[], None]] = None) -> AnimBase:
+        def on_finished(finished_fader: AnimBase) -> None:
+            finished_fader.disconnect(handler)
+            finished_fader.freeze()
+            if callback:
+                callback()
 
-                rssi_perc = 50 + (rssi / 127 / 2 * 100)
-                tpl_perc = 50 + (tpl / 127 / 2 * 100)
-                lq_perc = lq / 255 * 100
-
-                if lq_perc < 10:
-                    lq_perc = 10
-                if rssi_perc < 10:
-                    rssi_perc = 10
-                if tpl_perc < 10:
-                    tpl_perc = 10
-
-            if not row["levels_visible"]:
-                logging.info("animating up")
-                self.set(tree_iter, levels_visible=True)
-                fader = row["cell_fader"]
-                fader.thaw()
-                fader.set_state(0.0)
-                fader.animate(start=0.0, end=1.0, duration=400)
-
-                def on_finished(fader: CellFade) -> None:
-                    fader.freeze()
-                    fader.disconnect(faderhandler)
-
-                faderhandler = fader.connect("animation-finished", on_finished)
-
-            w = 14 * self.get_scale_factor()
-            h = 48 * self.get_scale_factor()
-
-            to_store = {}
-            if round(row["rssi"], -1) != round(rssi_perc, -1):
-                icon_name = "blueman-rssi-%d.png" % round(rssi_perc, -1)
-                icon = GdkPixbuf.Pixbuf.new_from_file_at_scale(os.path.join(PIXMAP_PATH, icon_name), w, h, True)
-                to_store.update({"rssi": rssi_perc, "rssi_pb": icon})
-
-            if round(row["lq"], -1) != round(lq_perc, -1):
-                icon_name = "blueman-lq-%d.png" % round(lq_perc, -1)
-                icon = GdkPixbuf.Pixbuf.new_from_file_at_scale(os.path.join(PIXMAP_PATH, icon_name), w, h, True)
-                to_store.update({"lq": lq_perc, "lq_pb": icon})
-
-            if round(row["tpl"], -1) != round(tpl_perc, -1):
-                icon_name = "blueman-tpl-%d.png" % round(tpl_perc, -1)
-                icon = GdkPixbuf.Pixbuf.new_from_file_at_scale(os.path.join(PIXMAP_PATH, icon_name), w, h, True)
-                to_store.update({"tpl": tpl_perc, "tpl_pb": icon})
-
-            if to_store:
-                self.set(tree_iter, **to_store)
-
-        else:
-
-            if row["levels_visible"]:
-                logging.info("animating down")
-                self.set(tree_iter, levels_visible=False,
-                         rssi=-1,
-                         lq=-1,
-                         tpl=-1)
-                fader = row["cell_fader"]
-                fader.thaw()
-                fader.set_state(1.0)
-                fader.animate(start=fader.get_state(), end=0.0, duration=400)
-
-                def on_finished(fader: CellFade) -> None:
-                    fader.disconnect(faderhandler)
-                    fader.freeze()
-                    if row_ref.valid():
-                        assert tree_iter is not None  # https://github.com/python/mypy/issues/2608
-                        self.set(tree_iter, rssi_pb=None, lq_pb=None, tpl_pb=None)
-
-                faderhandler = fader.connect("animation-finished", on_finished)
+        fader.thaw()
+        handler = fader.connect("animation-finished", on_finished)
+        return fader
 
     def tooltip_query(self, _tw: Gtk.Widget, x: int, y: int, _kb: bool, tooltip: Gtk.Tooltip) -> bool:
         path = self.get_path_at_pos(x, y)
+        if path is None:
+            return False
 
-        if path is not None:
-            if path[0] != self.tooltip_row or path[1] != self.tooltip_col:
-                self.tooltip_row = path[0]
-                self.tooltip_col = path[1]
+        if path[0] != self.tooltip_row or path[1] != self.tooltip_col:
+            self.tooltip_row = path[0]
+            self.tooltip_col = path[1]
+            return False
+
+        if path[1] == self.columns["device_surface"]:
+            tree_iter = self.get_iter(path[0])
+            assert tree_iter is not None
+
+            row = self.get(tree_iter, "trusted", "paired")
+            trusted = row["trusted"]
+            paired = row["paired"]
+            if trusted and paired:
+                tooltip.set_markup(_("<b>Trusted and Paired</b>"))
+            elif paired:
+                tooltip.set_markup(_("<b>Paired</b>"))
+            elif trusted:
+                tooltip.set_markup(_("<b>Trusted</b>"))
+            else:
                 return False
 
-            if path[1] == self.columns["device_surface"]:
-                tree_iter = self.get_iter(path[0])
-                assert tree_iter is not None
+            self.tooltip_row = path[0]
+            self.tooltip_col = path[1]
+            return True
 
-                row = self.get(tree_iter, "trusted", "paired")
-                trusted = row["trusted"]
-                paired = row["paired"]
-                if trusted and paired:
-                    tooltip.set_markup(_("<b>Trusted and Paired</b>"))
-                elif paired:
-                    tooltip.set_markup(_("<b>Paired</b>"))
-                elif trusted:
-                    tooltip.set_markup(_("<b>Trusted</b>"))
+        elif path[1] == self.columns["tpl_pb"] \
+                or path[1] == self.columns["lq_pb"] \
+                or path[1] == self.columns["rssi_pb"]:
+            tree_iter = self.get_iter(path[0])
+            assert tree_iter is not None
+
+            dt = self.get(tree_iter, "connected")["connected"]
+            if not dt:
+                return False
+
+            lines = [_("<b>Connected</b>")]
+
+            rssi = self.get(tree_iter, "rssi")["rssi"]
+            lq = self.get(tree_iter, "lq")["lq"]
+            tpl = self.get(tree_iter, "tpl")["tpl"]
+
+            if rssi != 0:
+                if rssi < 30:
+                    rssi_state = _("Poor")
+                elif rssi < 40:
+                    rssi_state = _("Sub-optimal")
+                elif rssi < 60:
+                    rssi_state = _("Optimal")
+                elif rssi < 70:
+                    rssi_state = _("Much")
                 else:
-                    return False
+                    rssi_state = _("Too much")
 
-                self.tooltip_row = path[0]
-                self.tooltip_col = path[1]
-                return True
+                if path[1] == self.columns["rssi_pb"]:
+                    lines.append(_("<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>") %
+                                 {"rssi": rssi, "rssi_state": rssi_state})
+                else:
+                    lines.append(_("Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>") %
+                                 {"rssi": rssi, "rssi_state": rssi_state})
 
-            if path[1] == self.columns["tpl_pb"] \
-                    or path[1] == self.columns["lq_pb"] \
-                    or path[1] == self.columns["rssi_pb"]:
-                tree_iter = self.get_iter(path[0])
-                assert tree_iter is not None
+            if lq != 0:
+                if path[1] == self.columns["lq_pb"]:
+                    lines.append(_("<b>Link Quality: %(lq)u%%</b>") % {"lq": lq})
+                else:
+                    lines.append(_("Link Quality: %(lq)u%%") % {"lq": lq})
 
-                dt = self.get(tree_iter, "connected")["connected"]
-                if dt:
-                    rssi = self.get(tree_iter, "rssi")["rssi"]
-                    lq = self.get(tree_iter, "lq")["lq"]
-                    tpl = self.get(tree_iter, "tpl")["tpl"]
+            if tpl != 0:
+                if tpl < 30:
+                    tpl_state = _("Low")
+                elif tpl < 40:
+                    tpl_state = _("Sub-optimal")
+                elif tpl < 60:
+                    tpl_state = _("Optimal")
+                elif tpl < 70:
+                    tpl_state = _("High")
+                else:
+                    tpl_state = _("Very High")
 
-                    if rssi < 30:
-                        rssi_state = _("Poor")
-                    elif rssi < 40:
-                        rssi_state = _("Sub-optimal")
-                    elif rssi < 60:
-                        rssi_state = _("Optimal")
-                    elif rssi < 70:
-                        rssi_state = _("Much")
-                    else:
-                        rssi_state = _("Too much")
+                if path[1] == self.columns["tpl_pb"]:
+                    lines.append(_("<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>") %
+                                 {"tpl": tpl, "tpl_state": tpl_state})
+                else:
+                    lines.append(_("Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>") %
+                                 {"tpl": tpl, "tpl_state": tpl_state})
 
-                    if tpl < 30:
-                        tpl_state = _("Low")
-                    elif tpl < 40:
-                        tpl_state = _("Sub-optimal")
-                    elif tpl < 60:
-                        tpl_state = _("Optimal")
-                    elif tpl < 70:
-                        tpl_state = _("High")
-                    else:
-                        tpl_state = _("Very High")
-
-                    tooltip_template: str = ""
-                    if path[1] == self.columns["tpl_pb"]:
-                        tooltip_template = \
-                            "<b>Connected</b>\nReceived Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>\n" \
-                            "Link Quality: %(lq)u%%\n<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
-                    elif path[1] == self.columns["lq_pb"]:
-                        tooltip_template = \
-                            "<b>Connected</b>\nReceived Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>\n" \
-                            "<b>Link Quality: %(lq)u%%</b>\nTransmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
-                    elif path[1] == self.columns["rssi_pb"]:
-                        tooltip_template = \
-                            "<b>Connected</b>\n<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>\n" \
-                            "Link Quality: %(lq)u%%\nTransmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
-
-                    state_dict = {"rssi_state": rssi_state, "rssi": rssi, "lq": lq, "tpl": tpl, "tpl_state": tpl_state}
-                    tooltip.set_markup(tooltip_template % state_dict)
-                    self.tooltip_row = path[0]
-                    self.tooltip_col = path[1]
-                    return True
+            tooltip.set_markup("\n".join(lines))
+            self.tooltip_row = path[0]
+            self.tooltip_col = path[1]
+            return True
         return False
 
     def _has_objpush(self, device: Device) -> bool:
