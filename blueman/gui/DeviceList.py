@@ -1,12 +1,10 @@
 from datetime import datetime
-import os
 import logging
 from typing import Dict, List, Optional, Any, Callable
 
 from blueman.Functions import adapter_path_to_name
 from blueman.gui.GenericList import GenericList, ListDataDict
 from blueman.Constants import ICON_PATH
-from _blueman import conn_info, ConnInfoReadError
 from blueman.bluez.Manager import Manager
 from blueman.bluez.Device import Device, AnyDevice
 from blueman.bluez.Adapter import Adapter, AnyAdapter
@@ -50,8 +48,6 @@ class DeviceList(GenericList):
 
         # cache for fast lookup in the list
         self.path_to_row: Dict[str, Gtk.TreeRowReference] = {}
-
-        self.monitored_devices: List[str] = []
 
         self.manager = Manager()
         self._managerhandlers: List[int] = []
@@ -153,68 +149,11 @@ class DeviceList(GenericList):
 
             self.emit("device-property-changed", dev, tree_iter, (key, value))
 
-            if key == "Connected":
-                if value:
-                    self.monitor_power_levels(dev)
-                else:
-                    model = self.get_model()
-                    assert isinstance(model, Gtk.TreeModel)
-                    r = Gtk.TreeRowReference.new(model, model.get_path(tree_iter))
-                    self.level_setup_event(r, dev, None)
-
     # Override when subclassing
     def on_icon_theme_changed(self, _icon_them: Gtk.IconTheme) -> None:
         logging.warning("Icons may not be updated with icon theme changes")
 
-    def monitor_power_levels(self, device: Device) -> None:
-        def update(row_ref: Gtk.TreeRowReference, cinfo: conn_info, address: str) -> bool:
-            if not row_ref.valid():
-                logging.warning("stopping monitor (row does not exist)")
-                cinfo.deinit()
-                self.monitored_devices.remove(address)
-                return False
-
-            if not self.get_model():
-                self.monitored_devices.remove(address)
-                return False
-
-            if not device['Connected']:
-                logging.info("stopping monitor (not connected)")
-                cinfo.deinit()
-                self.level_setup_event(row_ref, device, None)
-                self.monitored_devices.remove(address)
-                return False
-            else:
-                self.level_setup_event(row_ref, device, cinfo)
-                return True
-
-        bt_address = device["Address"]
-        if device["Connected"] and bt_address not in self.monitored_devices:
-            logging.info("starting monitor")
-            tree_iter = self.find_device(device)
-            assert tree_iter is not None
-
-            assert self.Adapter is not None
-            hci = os.path.basename(self.Adapter.get_object_path())
-            cinfo = conn_info(bt_address, hci)
-            try:
-                cinfo.init()
-            except ConnInfoReadError:
-                logging.warning("Failed to get power levels, probably a LE device.")
-
-            model = self.get_model()
-            assert isinstance(model, Gtk.TreeModel)
-            r = Gtk.TreeRowReference.new(model, model.get_path(tree_iter))
-            self.level_setup_event(r, device, cinfo)
-            GLib.timeout_add(1000, update, r, cinfo, bt_address)
-            self.monitored_devices.append(bt_address)
-
     # ##### virtual funcs #####
-
-    # called when power levels need updating
-    # if cinfo is None then info icons need to be removed
-    def level_setup_event(self, row_ref: Gtk.TreeRowReference, device: Device, cinfo: Optional[conn_info]) -> None:
-        pass
 
     # called when row needs to be initialized
     def row_setup_event(self, tree_iter: Gtk.TreeIter, device: Device) -> None:
@@ -299,9 +238,6 @@ class DeviceList(GenericList):
         object_path = device.get_object_path()
         timestamp = datetime.strftime(datetime.now(), '%Y%m%d%H%M%S%f')
         self.set(tree_iter, dbus_path=object_path, timestamp=float(timestamp))
-
-        if device["Connected"]:
-            self.monitor_power_levels(device)
 
     def display_known_devices(self, autoselect: bool = False) -> None:
         self.clear()
