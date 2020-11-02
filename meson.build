@@ -90,6 +90,16 @@ endforeach
 # Install all the artwork and icons
 # FIXME use strip_directory when meson 0.45.0 is mainstream
 install_data(
+    'data/icons/pixmaps/blueman-battery-10.png',
+    'data/icons/pixmaps/blueman-battery-20.png',
+    'data/icons/pixmaps/blueman-battery-30.png',
+    'data/icons/pixmaps/blueman-battery-40.png',
+    'data/icons/pixmaps/blueman-battery-50.png',
+    'data/icons/pixmaps/blueman-battery-60.png',
+    'data/icons/pixmaps/blueman-battery-70.png',
+    'data/icons/pixmaps/blueman-battery-80.png',
+    'data/icons/pixmaps/blueman-battery-90.png',
+    'data/icons/pixmaps/blueman-battery-100.png',
     'data/icons/pixmaps/blueman-lq-10.png',
     'data/icons/pixmaps/blueman-lq-20.png',
     'data/icons/pixmaps/blueman-lq-30.png',
