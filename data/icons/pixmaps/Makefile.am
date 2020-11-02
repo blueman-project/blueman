@@ -1,6 +1,16 @@
 pixmapsdir = $(datadir)/pixmaps/blueman
 
 pixmaps_DATA =			\
+	blueman-battery-10.png	\
+	blueman-battery-20.png	\
+	blueman-battery-30.png	\
+	blueman-battery-40.png	\
+	blueman-battery-50.png	\
+	blueman-battery-60.png	\
+	blueman-battery-70.png	\
+	blueman-battery-80.png	\
+	blueman-battery-90.png	\
+	blueman-battery-100.png	\
 	blueman-lq-10.png	\
 	blueman-lq-20.png	\
 	blueman-lq-30.png	\

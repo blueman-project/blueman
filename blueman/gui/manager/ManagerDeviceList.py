@@ -5,6 +5,7 @@ import logging
 import cairo
 import os
 
+from blueman.bluez.Battery import Battery
 from blueman.bluez.Device import Device
 from blueman.gui.DeviceList import DeviceList
 from blueman.DeviceClass import get_minor_class, get_major_class, gatt_appearance_to_name
@@ -12,7 +13,7 @@ from blueman.gui.GenericList import ListDataDict
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.Constants import PIXMAP_PATH
 from blueman.Functions import launch
-from blueman.Sdp import ServiceUUID, OBEX_OBJPUSH_SVCLASS_ID
+from blueman.Sdp import ServiceUUID, OBEX_OBJPUSH_SVCLASS_ID, BATTERY_SERVICE_SVCLASS_ID
 from blueman.gui.GtkAnimation import TreeRowFade, CellFade, AnimBase
 from blueman.main.Config import Config
 from _blueman import ConnInfoReadError, conn_info
@@ -40,6 +41,9 @@ class ManagerDeviceList(DeviceList):
             # device caption
             {"id": "caption", "type": str, "renderer": cr,
              "render_attrs": {"markup": 1}, "view_props": {"expand": True}},
+            {"id": "battery_pb", "type": GdkPixbuf.Pixbuf, "renderer": Gtk.CellRendererPixbuf(),
+             "render_attrs": {}, "view_props": {"spacing": 0},
+             "celldata_func": (self._set_cell_data, "battery")},
             {"id": "rssi_pb", "type": GdkPixbuf.Pixbuf, "renderer": Gtk.CellRendererPixbuf(),
              "render_attrs": {}, "view_props": {"spacing": 0},
              "celldata_func": (self._set_cell_data, "rssi")},
@@ -54,6 +58,7 @@ class ManagerDeviceList(DeviceList):
             {"id": "paired", "type": bool},  # used for quick access instead of device.GetProperties
             {"id": "trusted", "type": bool},  # used for quick access instead of device.GetProperties
             {"id": "objpush", "type": bool},  # used to set Send File button
+            {"id": "battery", "type": float},
             {"id": "rssi", "type": float},
             {"id": "lq", "type": float},
             {"id": "tpl", "type": float},
@@ -274,7 +279,7 @@ class ManagerDeviceList(DeviceList):
         if not self.get(tree_iter, "initial_anim")["initial_anim"]:
             model = self.props.model
             assert model is not None
-            cell_fader = CellFade(self, model.get_path(tree_iter), [2, 3, 4])
+            cell_fader = CellFade(self, model.get_path(tree_iter), [2, 3, 4, 5])
             row_fader = TreeRowFade(self, model.get_path(tree_iter))
 
             has_objpush = self._has_objpush(device)
@@ -332,7 +337,7 @@ class ManagerDeviceList(DeviceList):
         model = self.get_model()
         assert isinstance(model, Gtk.TreeModel)
         r = Gtk.TreeRowReference.new(model, model.get_path(tree_iter))
-        self._update_power_levels(tree_iter, cinfo)
+        self._update_power_levels(tree_iter, device, cinfo)
         GLib.timeout_add(1000, self._check_power_levels, r, cinfo, device["Address"])
         self._monitored_devices.add(device["Address"])
 
@@ -346,8 +351,10 @@ class ManagerDeviceList(DeviceList):
         tree_iter = self.get_iter(row_ref.get_path())
         assert tree_iter is not None
 
-        if self.get(tree_iter, "device")["device"]["Connected"]:
-            self._update_power_levels(tree_iter, cinfo)
+        device = self.get(tree_iter, "device")["device"]
+
+        if device["Connected"]:
+            self._update_power_levels(tree_iter, device, cinfo)
             return True
         else:
             cinfo.deinit()
@@ -388,15 +395,21 @@ class ManagerDeviceList(DeviceList):
             else:
                 self._disable_power_levels(tree_iter)
 
-    def _update_power_levels(self, tree_iter: Gtk.TreeIter, cinfo: conn_info) -> None:
-        row = self.get(tree_iter, "cell_fader", "rssi", "lq", "tpl")
+    def _update_power_levels(self, tree_iter: Gtk.TreeIter, device: Device, cinfo: conn_info) -> None:
+        row = self.get(tree_iter, "cell_fader", "battery", "rssi", "lq", "tpl")
+
+        bars = {}
+
+        if device["ServicesResolved"] and any(ServiceUUID(uuid).short_uuid == BATTERY_SERVICE_SVCLASS_ID
+                                              for uuid in device["UUIDs"]):
+            bars["battery"] = Battery(obj_path=device.get_object_path())["Percentage"]
 
         # cinfo init may fail for bluetooth devices version 4 and up
         # FIXME Workaround is horrible and we should show something better
         if cinfo.failed:
-            bars = {"rssi": 100.0, "tpl": 100.0, "lq": 100.0}
+            if not bars:
+                bars = {"rssi": 100.0, "tpl": 100.0, "lq": 100.0}
         else:
-            bars = {}
             try:
                 bars["rssi"] = max(50 + float(cinfo.get_rssi()) / 127 * 50, 10)
             except ConnInfoReadError:
@@ -410,7 +423,7 @@ class ManagerDeviceList(DeviceList):
             except ConnInfoReadError:
                 bars["tpl"] = 0
 
-        if row["rssi"] == row["tpl"] == row["lq"] == 0:
+        if row["battery"] == row["rssi"] == row["tpl"] == row["lq"] == 0:
             self._prepare_fader(row["cell_fader"]).animate(start=0.0, end=1.0, duration=400)
 
         w = 14 * self.get_scale_factor()
@@ -423,8 +436,8 @@ class ManagerDeviceList(DeviceList):
                 self.set(tree_iter, **{name: perc, f"{name}_pb": icon})
 
     def _disable_power_levels(self, tree_iter: Gtk.TreeIter) -> None:
-        row = self.get(tree_iter, "cell_fader", "rssi", "lq", "tpl")
-        if row["rssi"] == row["tpl"] == row["lq"] == 0:
+        row = self.get(tree_iter, "cell_fader", "battery", "rssi", "lq", "tpl")
+        if row["battery"] == row["rssi"] == row["tpl"] == row["lq"] == 0:
             return
 
         self.set(tree_iter, rssi=0, lq=0, tpl=0)
@@ -472,7 +485,8 @@ class ManagerDeviceList(DeviceList):
             self.tooltip_col = path[1]
             return True
 
-        elif path[1] == self.columns["tpl_pb"] \
+        elif path[1] == self.columns["battery_pb"] \
+                or path[1] == self.columns["tpl_pb"] \
                 or path[1] == self.columns["lq_pb"] \
                 or path[1] == self.columns["rssi_pb"]:
             tree_iter = self.get_iter(path[0])
@@ -484,9 +498,16 @@ class ManagerDeviceList(DeviceList):
 
             lines = [_("<b>Connected</b>")]
 
+            battery = self.get(tree_iter, "battery")["battery"]
             rssi = self.get(tree_iter, "rssi")["rssi"]
             lq = self.get(tree_iter, "lq")["lq"]
             tpl = self.get(tree_iter, "tpl")["tpl"]
+
+            if battery != 0:
+                if path[1] == self.columns["battery_pb"]:
+                    lines.append(f"<b>Battery: {int(battery)}%</b>")
+                else:
+                    lines.append(f"Battery: {int(battery)}%")
 
             if rssi != 0:
                 if rssi < 30:
@@ -553,7 +574,7 @@ class ManagerDeviceList(DeviceList):
             row = self.get(tree_iter, "icon_info", "trusted", "paired")
             surface = self.make_device_icon(row["icon_info"], row["paired"], row["trusted"])
             cell.set_property("surface", surface)
-        elif data in ("rssi", "lq", "tpl"):
+        else:
             window = self.get_window()
             scale = self.get_scale_factor()
             pb = self.get(tree_iter, data + "_pb")[data + "_pb"]
