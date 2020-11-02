@@ -6,6 +6,7 @@
 
 * Disconnect items in applet menu (plugin)
 * Desktop notifications on connect / disconnect (plugin)
+* Notifications with battery level for connecting devices (applet plugin)
 
 ### Changes
 
@@ -13,6 +14,7 @@
 * Drop blueman-assistant
 * Raise minimum Python version to 3.6
 * Raise GTK+ 3 version to 3.22
+* Raise minimum BlueZ version to 5.48
 * Allow opening device menus via keyboard (Shift+F10 or menu key)
 * Add Ctrl+Q and Ctrl+W accelerators for closing blueman-manager
 * Allow cancelling device connection attempts

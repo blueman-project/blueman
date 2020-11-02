@@ -7,6 +7,7 @@ blueman_PYTHON =				\
 	AgentManager.py				\
 	AnyBase.py					\
 	Base.py						\
+	Battery.py				\
 	Device.py					\
 	errors.py					\
 	Manager.py					\
