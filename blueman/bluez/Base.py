@@ -40,7 +40,7 @@ class Base(Gio.DBusProxy, metaclass=BaseMeta):
 
     _interface_name: str
 
-    def __init__(self, obj_path: str):
+    def __init__(self, *, obj_path: str):
         super().__init__(
             g_name=self.__name,
             g_interface_name=self._interface_name,
