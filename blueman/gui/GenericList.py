@@ -59,9 +59,8 @@ class GenericList(Gtk.TreeView):
             self.columns[row["id"]] = column
             self.append_column(column)
 
-    def selected(self) -> Gtk.TreeIter:
+    def selected(self) -> Optional[Gtk.TreeIter]:
         (model, tree_iter) = self.selection.get_selected()
-        assert tree_iter is not None
         return tree_iter
 
     def delete(self, iterid: Union[Gtk.TreeIter, Gtk.TreePath, int, str]) -> bool:
@@ -158,7 +157,7 @@ class GenericList(Gtk.TreeView):
     def clear(self) -> None:
         self.liststore.clear()
 
-    def compare(self, iter_a: Gtk.TreeIter, iter_b: Gtk.TreeIter) -> bool:
+    def compare(self, iter_a: Optional[Gtk.TreeIter], iter_b: Optional[Gtk.TreeIter]) -> bool:
         if iter_a is not None and iter_b is not None:
             model = self.get_model()
             assert model is not None
