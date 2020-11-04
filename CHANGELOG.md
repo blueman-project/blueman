@@ -1,5 +1,11 @@
 # Changelog
 
+## main
+
+### Changes
+
+* Terminate applet on manager termination if it was started by manager
+
 ## 2.4.2
 
 ### New features

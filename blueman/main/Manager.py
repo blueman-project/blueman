@@ -13,7 +13,7 @@ from blueman.gui.manager.ManagerMenu import ManagerMenu
 from blueman.gui.manager.ManagerStats import ManagerStats
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.Builder import Builder
-from blueman.main.DBusProxies import AppletService, DBusProxyFailed
+from blueman.main.DBusProxies import AppletService, DBusProxyFailed, DBus, AppletServiceApplication
 from blueman.gui.CommonUi import ErrorDialog
 from blueman.gui.Notification import Notification
 from blueman.main.PluginManager import PluginManager
@@ -29,6 +29,7 @@ from gi.repository import Gtk, Gio, Gdk, GLib
 class Blueman(Gtk.Application):
     def __init__(self) -> None:
         super().__init__(application_id="org.blueman.Manager")
+        self._applet_was_running = DBus().NameHasOwner("(s)", AppletService.NAME)
 
         def do_quit(_: object) -> bool:
             self.quit()
@@ -59,6 +60,12 @@ class Blueman(Gtk.Application):
         bt_status_action = Gio.SimpleAction.new_stateful("bluetooth_status", None, GLib.Variant.new_boolean(False))
         bt_status_action.connect("change-state", self._on_bt_state_changed)
         self.add_action(bt_status_action)
+
+    def do_shutdown(self) -> None:
+        Gtk.Application.do_shutdown(self)
+
+        if not self._applet_was_running:
+            AppletServiceApplication().stop()
 
     def do_activate(self) -> None:
         if not self.window:
