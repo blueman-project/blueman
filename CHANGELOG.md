@@ -8,6 +8,7 @@
 * AutoConnect: Store bluetooth address instead of object path
 
 ### Changes
+* Terminate applet on manager termination if it was started by manager
 * Add Galic and Esperanto translations
 * AutoConnect: Automatically convert path to address
 
