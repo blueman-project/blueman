@@ -23,12 +23,14 @@ jobs:
 
   flake8:
     strategy:
+      fail-fast: false
       matrix:
         python:
           - 3.6
           - 3.7
           - 3.8
-          - 3.9-rc
+          - 3.9
+          - 3.10-rc
     runs-on: ubuntu-latest
     container:
       image: python:${{ matrix.python }}
@@ -39,12 +41,14 @@ jobs:
 
   mypy:
     strategy:
+      fail-fast: false
       matrix:
         python:
           - 3.6
           - 3.7
           - 3.8
-          - 3.9-rc
+          - 3.9
+          - 3.10-rc
     runs-on: ubuntu-latest
     container:
       image: python:${{ matrix.python }}
@@ -60,12 +64,14 @@ jobs:
 
   test:
     strategy:
+      fail-fast: false
       matrix:
         python:
           - 3.6
           - 3.7
           - 3.8
-          - 3.9-rc
+          - 3.9
+          - 3.10-rc
     runs-on: ubuntu-latest
     container:
       image: python:${{ matrix.python }}
