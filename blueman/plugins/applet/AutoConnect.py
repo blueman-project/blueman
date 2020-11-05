@@ -1,5 +1,5 @@
 from gettext import gettext as _
-from typing import TYPE_CHECKING, Union
+from typing import TYPE_CHECKING, Union, Optional
 
 from gi.repository import GLib
 
@@ -14,6 +14,10 @@ if TYPE_CHECKING:
 
 class AutoConnect(AppletPlugin):
     __depends__ = ["DBusService"]
+
+    __icon__ = "blueman"
+    __author__ = "cschramm"
+    __description__ = _("Tries to auto-connect to configurable services on start and every 60 seconds.")
 
     __gsettings__ = {
         "schema": "org.blueman.plugins.autoconnect",
@@ -37,11 +41,11 @@ class AutoConnect(AppletPlugin):
             if device is None or device.get("Connected"):
                 continue
 
-            def reply() -> None:
-                assert isinstance(device, Device)  # https://github.com/python/mypy/issues/2608
+            def reply(dev: Optional[Device] = device, service_name: str = ServiceUUID(uuid).name) -> None:
+                assert isinstance(dev, Device)  # https://github.com/python/mypy/issues/2608
                 Notification(_("Connected"), _("Automatically connected to %(service)s on %(device)s") %
-                             {"service": ServiceUUID(uuid).name, "device": device["Alias"]},
-                             icon_name=device["Icon"]).show()
+                             {"service": service_name, "device": dev["Alias"]},
+                             icon_name=dev["Icon"]).show()
 
             def err(_reason: Union[Exception, str]) -> None:
                 pass
