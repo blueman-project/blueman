@@ -6,6 +6,7 @@ blueman_PYTHON = \
     AutoConnect.py \
     DBusService.py \
     DhcpClient.py \
+    DisconnectItems.py \
     DiscvManager.py \
     ExitItem.py \
     GameControllerWakelock.py \
