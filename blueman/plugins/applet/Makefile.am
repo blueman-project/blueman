@@ -4,6 +4,7 @@ blueman_PYTHON = \
     __init__.py \
     AuthAgent.py \
     AutoConnect.py \
+    ConnectionNotifier.py \
     DBusService.py \
     DhcpClient.py \
     DisconnectItems.py \
