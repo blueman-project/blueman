@@ -86,4 +86,4 @@ jobs:
       - run: sudo apt-get update
       - run: sudo apt-get install -y -qq --no-install-recommends autopoint gettext cython libglib2.0-dev python-gi-dev libbluetooth-dev
       - run: ./autogen.sh
-      - run: make -C po blueman.pot-update && git diff-index --exit-code HEAD -- po/blueman.pot || (echo "blueman.pot is not up to date" && exit 1)
+      - run: make -C po blueman.pot-update && git diff --exit-code HEAD -- po/blueman.pot || (echo "blueman.pot is not up to date" && exit 1)
