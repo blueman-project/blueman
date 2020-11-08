@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2020-10-15 20:51+0000\n"
+"POT-Creation-Date: 2020-11-08 22:08+0100\n"
 "PO-Revision-Date: 2020-09-22 16:37+0000\n"
 "Last-Translator: Amaro Martínez <xoas@airmail.cc>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/blueman/blueman/"
@@ -232,8 +232,8 @@ msgstr "<b>Autor:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:303
-#: blueman/gui/manager/ManagerDeviceList.py:305 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:305
+#: blueman/gui/manager/ManagerDeviceList.py:307 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:375
 #: blueman/plugins/applet/NetUsage.py:209
@@ -566,56 +566,56 @@ msgid "_Exit"
 msgstr "_Salir"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:272
-#: blueman/gui/manager/ManagerDeviceList.py:303 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:274
+#: blueman/gui/manager/ManagerDeviceList.py:305 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 msgid "Uncategorized"
 msgstr "Sin categoría"
 
-#: blueman/gui/manager/ManagerDeviceList.py:466
+#: blueman/gui/manager/ManagerDeviceList.py:468
 msgid "<b>Trusted and Paired</b>"
 msgstr "<b>Emparejados y de confianza</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:468
+#: blueman/gui/manager/ManagerDeviceList.py:470
 msgid "<b>Paired</b>"
 msgstr "<b>Emparejados</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:470
+#: blueman/gui/manager/ManagerDeviceList.py:472
 msgid "<b>Trusted</b>"
 msgstr "<b>De confianza</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:491
+#: blueman/gui/manager/ManagerDeviceList.py:493
 msgid "Poor"
 msgstr "Insuficiente"
 
-#: blueman/gui/manager/ManagerDeviceList.py:493
-#: blueman/gui/manager/ManagerDeviceList.py:504
+#: blueman/gui/manager/ManagerDeviceList.py:495
+#: blueman/gui/manager/ManagerDeviceList.py:506
 msgid "Sub-optimal"
 msgstr "Casi óptima"
 
-#: blueman/gui/manager/ManagerDeviceList.py:495
-#: blueman/gui/manager/ManagerDeviceList.py:506
+#: blueman/gui/manager/ManagerDeviceList.py:497
+#: blueman/gui/manager/ManagerDeviceList.py:508
 msgid "Optimal"
 msgstr "Óptima"
 
-#: blueman/gui/manager/ManagerDeviceList.py:497
+#: blueman/gui/manager/ManagerDeviceList.py:499
 msgid "Much"
 msgstr "Mucha"
 
-#: blueman/gui/manager/ManagerDeviceList.py:499
+#: blueman/gui/manager/ManagerDeviceList.py:501
 msgid "Too much"
 msgstr "Demasiada"
 
-#: blueman/gui/manager/ManagerDeviceList.py:502
+#: blueman/gui/manager/ManagerDeviceList.py:504
 msgid "Low"
 msgstr "Baja"
 
-#: blueman/gui/manager/ManagerDeviceList.py:508
+#: blueman/gui/manager/ManagerDeviceList.py:510
 msgid "High"
 msgstr "Alta"
 
-#: blueman/gui/manager/ManagerDeviceList.py:510
+#: blueman/gui/manager/ManagerDeviceList.py:512
 msgid "Very High"
 msgstr "Muy alta"
 
@@ -2011,20 +2011,20 @@ msgstr "Perfil de audio"
 msgid "Select audio profile for PulseAudio"
 msgstr "Seleccione el perfil de audio de PulseAudio"
 
-#: blueman/plugins/manager/Services.py:80
+#: blueman/plugins/manager/Services.py:79
 #, python-format
 msgid "Serial Port %s"
 msgstr "Puerto en serie %s"
 
-#: blueman/plugins/manager/Services.py:93
+#: blueman/plugins/manager/Services.py:92
 msgid "Renew IP Address"
 msgstr "Renovar dirección IP"
 
-#: blueman/plugins/manager/Services.py:110
+#: blueman/plugins/manager/Services.py:109
 msgid "Dialup Settings"
 msgstr "Ajustes de acceso telefónico"
 
-#: blueman/plugins/manager/Services.py:119
+#: blueman/plugins/manager/Services.py:118
 msgid "Serial Ports"
 msgstr "Puertos en serie"
 
@@ -2032,14 +2032,19 @@ msgstr "Puertos en serie"
 msgid "Unspecified"
 msgstr "Sin especificar"
 
+#: blueman/plugins/applet/AutoConnect.py:20
+msgid ""
+"Tries to auto-connect to configurable services on start and every 60 seconds."
+msgstr ""
+
 #. https://github.com/python/mypy/issues/2608
-#: blueman/plugins/applet/AutoConnect.py:42
+#: blueman/plugins/applet/AutoConnect.py:46
 #: blueman/plugins/applet/RecentConns.py:219
 #: blueman/plugins/applet/PPPSupport.py:75
 msgid "Connected"
 msgstr "Conectado"
 
-#: blueman/plugins/applet/AutoConnect.py:42
+#: blueman/plugins/applet/AutoConnect.py:46
 #, python-format
 msgid "Automatically connected to %(service)s on %(device)s"
 msgstr "Conectado automáticamente a %(service)s en %(device)s"
@@ -2298,23 +2303,23 @@ msgstr "Añade un opción de salida al menú para salir de la miniaplicación"
 msgid "Provides a basic dhcp client for Bluetooth PAN connections."
 msgstr "Proporciona un cliente dhcp básico para las conexiones PAN Bluetooth"
 
-#: blueman/plugins/applet/DhcpClient.py:45
-#: blueman/plugins/applet/DhcpClient.py:53
-#: blueman/plugins/applet/DhcpClient.py:58
+#: blueman/plugins/applet/DhcpClient.py:47
+#: blueman/plugins/applet/DhcpClient.py:55
+#: blueman/plugins/applet/DhcpClient.py:60
 msgid "Bluetooth Network"
 msgstr "Red Bluetooth"
 
-#: blueman/plugins/applet/DhcpClient.py:46
+#: blueman/plugins/applet/DhcpClient.py:48
 #, python-format
 msgid "Interface %(0)s bound to IP address %(1)s"
 msgstr "Interfaz %(0)s ligada a la dirección IP %(1)s"
 
-#: blueman/plugins/applet/DhcpClient.py:53
+#: blueman/plugins/applet/DhcpClient.py:55
 #, python-format
 msgid "Failed to obtain an IP address on %s"
 msgstr "No se ha podido obtener la dirección IP en %s"
 
-#: blueman/plugins/applet/DhcpClient.py:58
+#: blueman/plugins/applet/DhcpClient.py:60
 #, python-format
 msgid ""
 "Trying to obtain an IP address on %s\n"
@@ -2351,6 +2356,16 @@ msgstr "Bluetooth desactivado"
 #: blueman/plugins/applet/AppIndicator.py:17
 msgid "Uses libappindicator to show a statusicon"
 msgstr "Usa libappindicator para mostrar un icono de estado"
+
+#: blueman/plugins/applet/DisconnectItems.py:14
+msgid "Adds disconnect menu items"
+msgstr ""
+
+#: blueman/plugins/applet/DisconnectItems.py:36
+#, fuzzy, python-format
+#| msgid "Disconnecting…"
+msgid "Disconnect %s"
+msgstr "Desconectando…"
 
 #: blueman/plugins/applet/DiscvManager.py:16
 msgid ""
@@ -2541,10 +2556,6 @@ msgstr ""
 msgid "Set Bluetooth Adapter Properties"
 msgstr "Establecer propiedades del adaptador Bluetooth"
 
-#: data/blueman-adapters.desktop.in:6
-msgid "blueman-device"
-msgstr "blueman-device"
-
 #: data/blueman.desktop.in:3
 msgid "Blueman Applet"
 msgstr "Miniaplicación Blueman"
@@ -2552,11 +2563,6 @@ msgstr "Miniaplicación Blueman"
 #: data/blueman.desktop.in:4 data/blueman-manager.desktop.in:4
 msgid "Blueman Bluetooth Manager"
 msgstr "Gestor de conexiones Bluetooth Blueman"
-
-#: data/blueman.desktop.in:5 data/blueman-manager.desktop.in:5
-#: data/thunar-sendto-blueman.desktop.in:6
-msgid "blueman"
-msgstr "blueman"
 
 #: data/blueman-manager.desktop.in:3
 msgid "Bluetooth Manager"
@@ -2597,6 +2603,12 @@ msgstr "Establecer estado de RfKill"
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr "Configurar el estado de RfKill requiere privilegios"
+
+#~ msgid "blueman-device"
+#~ msgstr "blueman-device"
+
+#~ msgid "blueman"
+#~ msgstr "blueman"
 
 #~ msgid "Run the setup assistant for this device"
 #~ msgstr "Ejecutar el asistente de configuración para este dispositivo"

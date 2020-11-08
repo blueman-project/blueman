@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2020-10-15 20:51+0000\n"
+"POT-Creation-Date: 2020-11-08 22:08+0100\n"
 "PO-Revision-Date: 2020-04-14 10:14+0000\n"
 "Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
 "Language-Team: Amharic (http://www.transifex.com/mate/MATE/language/am/)\n"
@@ -218,8 +218,8 @@ msgstr "<b>ደራሲው:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:303
-#: blueman/gui/manager/ManagerDeviceList.py:305 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:305
+#: blueman/gui/manager/ManagerDeviceList.py:307 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:375
 #: blueman/plugins/applet/NetUsage.py:209
@@ -548,8 +548,8 @@ msgid "_Exit"
 msgstr ""
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:272
-#: blueman/gui/manager/ManagerDeviceList.py:303 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:274
+#: blueman/gui/manager/ManagerDeviceList.py:305 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 #, fuzzy
@@ -557,49 +557,49 @@ msgstr ""
 msgid "Uncategorized"
 msgstr "ያልተመደበ"
 
-#: blueman/gui/manager/ManagerDeviceList.py:466
+#: blueman/gui/manager/ManagerDeviceList.py:468
 msgid "<b>Trusted and Paired</b>"
 msgstr "<b>የሚታመን እና ማጣመሪያ</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:468
+#: blueman/gui/manager/ManagerDeviceList.py:470
 msgid "<b>Paired</b>"
 msgstr "<b>ማጣመሪያ</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:470
+#: blueman/gui/manager/ManagerDeviceList.py:472
 msgid "<b>Trusted</b>"
 msgstr "<b>የሚታመን</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:491
+#: blueman/gui/manager/ManagerDeviceList.py:493
 msgid "Poor"
 msgstr "ደካማ"
 
-#: blueman/gui/manager/ManagerDeviceList.py:493
-#: blueman/gui/manager/ManagerDeviceList.py:504
+#: blueman/gui/manager/ManagerDeviceList.py:495
+#: blueman/gui/manager/ManagerDeviceList.py:506
 msgid "Sub-optimal"
 msgstr "ንዑስ-አጥጋቢ"
 
-#: blueman/gui/manager/ManagerDeviceList.py:495
-#: blueman/gui/manager/ManagerDeviceList.py:506
+#: blueman/gui/manager/ManagerDeviceList.py:497
+#: blueman/gui/manager/ManagerDeviceList.py:508
 msgid "Optimal"
 msgstr "አጥጋቢ"
 
-#: blueman/gui/manager/ManagerDeviceList.py:497
+#: blueman/gui/manager/ManagerDeviceList.py:499
 msgid "Much"
 msgstr "ብዙ"
 
-#: blueman/gui/manager/ManagerDeviceList.py:499
+#: blueman/gui/manager/ManagerDeviceList.py:501
 msgid "Too much"
 msgstr "በጣም ብዙ"
 
-#: blueman/gui/manager/ManagerDeviceList.py:502
+#: blueman/gui/manager/ManagerDeviceList.py:504
 msgid "Low"
 msgstr "ዝቅተኛ"
 
-#: blueman/gui/manager/ManagerDeviceList.py:508
+#: blueman/gui/manager/ManagerDeviceList.py:510
 msgid "High"
 msgstr "ከፍተኛ"
 
-#: blueman/gui/manager/ManagerDeviceList.py:510
+#: blueman/gui/manager/ManagerDeviceList.py:512
 msgid "Very High"
 msgstr "በጣም ከፍተኛ"
 
@@ -2100,20 +2100,20 @@ msgstr "የ ድምፅ ገጽታ"
 msgid "Select audio profile for PulseAudio"
 msgstr "የ ድምፅ ገጽታ ይምረጡ ለ PulseAudio"
 
-#: blueman/plugins/manager/Services.py:80
+#: blueman/plugins/manager/Services.py:79
 #, python-format
 msgid "Serial Port %s"
 msgstr "Serial Port %s"
 
-#: blueman/plugins/manager/Services.py:93
+#: blueman/plugins/manager/Services.py:92
 msgid "Renew IP Address"
 msgstr "የ IP አድራሻ እንደገና ማደሻ"
 
-#: blueman/plugins/manager/Services.py:110
+#: blueman/plugins/manager/Services.py:109
 msgid "Dialup Settings"
 msgstr "መደወያ ማሰናጃ"
 
-#: blueman/plugins/manager/Services.py:119
+#: blueman/plugins/manager/Services.py:118
 msgid "Serial Ports"
 msgstr "Serial Ports"
 
@@ -2121,14 +2121,19 @@ msgstr "Serial Ports"
 msgid "Unspecified"
 msgstr "ያልተወሰነ"
 
+#: blueman/plugins/applet/AutoConnect.py:20
+msgid ""
+"Tries to auto-connect to configurable services on start and every 60 seconds."
+msgstr ""
+
 #. https://github.com/python/mypy/issues/2608
-#: blueman/plugins/applet/AutoConnect.py:42
+#: blueman/plugins/applet/AutoConnect.py:46
 #: blueman/plugins/applet/RecentConns.py:219
 #: blueman/plugins/applet/PPPSupport.py:75
 msgid "Connected"
 msgstr "ተገናኝቷል"
 
-#: blueman/plugins/applet/AutoConnect.py:42
+#: blueman/plugins/applet/AutoConnect.py:46
 #, python-format
 msgid "Automatically connected to %(service)s on %(device)s"
 msgstr ""
@@ -2374,23 +2379,23 @@ msgstr "የ መውጫ ዝርዝር ለ እቃ መጨመሪያ ከ አፕሌቱ �
 msgid "Provides a basic dhcp client for Bluetooth PAN connections."
 msgstr "መደበኛ የ dhcp ደንበኛ ያቀርባል ለ ብሉቱዝ PAN ግንኙነት."
 
-#: blueman/plugins/applet/DhcpClient.py:45
-#: blueman/plugins/applet/DhcpClient.py:53
-#: blueman/plugins/applet/DhcpClient.py:58
+#: blueman/plugins/applet/DhcpClient.py:47
+#: blueman/plugins/applet/DhcpClient.py:55
+#: blueman/plugins/applet/DhcpClient.py:60
 msgid "Bluetooth Network"
 msgstr "የ ብሉቱዝ ኔትዎርክ"
 
-#: blueman/plugins/applet/DhcpClient.py:46
+#: blueman/plugins/applet/DhcpClient.py:48
 #, python-format
 msgid "Interface %(0)s bound to IP address %(1)s"
 msgstr "ገጽታ %(0)s መዝለያ ወደ IP address %(1)s"
 
-#: blueman/plugins/applet/DhcpClient.py:53
+#: blueman/plugins/applet/DhcpClient.py:55
 #, python-format
 msgid "Failed to obtain an IP address on %s"
 msgstr "የ IP አድራሻ ማግኘት አልተቻለም %s"
 
-#: blueman/plugins/applet/DhcpClient.py:58
+#: blueman/plugins/applet/DhcpClient.py:60
 #, python-format
 msgid ""
 "Trying to obtain an IP address on %s\n"
@@ -2426,6 +2431,16 @@ msgstr "ብሉቱዝ ተሰናክሏል"
 #: blueman/plugins/applet/AppIndicator.py:17
 msgid "Uses libappindicator to show a statusicon"
 msgstr "ይጠቀማል የ libappindicator ለማሳየት የ statusicon"
+
+#: blueman/plugins/applet/DisconnectItems.py:14
+msgid "Adds disconnect menu items"
+msgstr ""
+
+#: blueman/plugins/applet/DisconnectItems.py:36
+#, fuzzy, python-format
+#| msgid "Disconnecting..."
+msgid "Disconnect %s"
+msgstr "በ መለያየት ላይ..."
 
 #: blueman/plugins/applet/DiscvManager.py:16
 msgid ""
@@ -2599,10 +2614,6 @@ msgstr "የ ማስተላለፊያ ግልጋሎት ተሰኪ አፕሌት ተሰ�
 msgid "Set Bluetooth Adapter Properties"
 msgstr "የ ብሉቱዝ አዳፕተሮች"
 
-#: data/blueman-adapters.desktop.in:6
-msgid "blueman-device"
-msgstr ""
-
 #: data/blueman.desktop.in:3
 #, fuzzy
 #| msgid "applet"
@@ -2614,11 +2625,6 @@ msgstr "አፕሌት"
 #| msgid "Blueman is a GTK+ Bluetooth manager"
 msgid "Blueman Bluetooth Manager"
 msgstr "Blueman is a GTK+ የ ብሉቱዝ አስተዳዳሪ"
-
-#: data/blueman.desktop.in:5 data/blueman-manager.desktop.in:5
-#: data/thunar-sendto-blueman.desktop.in:6
-msgid "blueman"
-msgstr ""
 
 #: data/blueman-manager.desktop.in:3
 #, fuzzy
