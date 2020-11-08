@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman 2.2\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2020-11-08 22:08+0100\n"
+"POT-Creation-Date: 2020-11-09 00:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -80,7 +80,7 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: data/ui/manager-main.ui:121 blueman/gui/manager/ManagerDeviceMenu.py:335
+#: data/ui/manager-main.ui:121 blueman/gui/manager/ManagerDeviceMenu.py:343
 msgid "Create pairing with the device"
 msgstr ""
 
@@ -89,7 +89,7 @@ msgstr ""
 msgid "Pair"
 msgstr ""
 
-#: data/ui/manager-main.ui:135 blueman/gui/manager/ManagerDeviceMenu.py:353
+#: data/ui/manager-main.ui:135 blueman/gui/manager/ManagerDeviceMenu.py:361
 msgid "Mark/Unmark this device as trusted"
 msgstr ""
 
@@ -99,7 +99,7 @@ msgstr ""
 msgid "Trust"
 msgstr ""
 
-#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:386
+#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:394
 msgid "Remove this device from the known devices list"
 msgstr ""
 
@@ -621,51 +621,51 @@ msgstr ""
 msgid "Disconnecting…"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:254
+#: blueman/gui/manager/ManagerDeviceMenu.py:262
 msgid "_<b>_Connect</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:256
+#: blueman/gui/manager/ManagerDeviceMenu.py:264
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:260
+#: blueman/gui/manager/ManagerDeviceMenu.py:268
 msgid "_<b>Disconnect</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:261
+#: blueman/gui/manager/ManagerDeviceMenu.py:269
 msgid "Forcefully disconnect the device"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:289
+#: blueman/gui/manager/ManagerDeviceMenu.py:297
 msgid "<b>Connect To:</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:301
+#: blueman/gui/manager/ManagerDeviceMenu.py:309
 msgid "<b>Disconnect:</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:321
+#: blueman/gui/manager/ManagerDeviceMenu.py:329
 msgid "Send a _File…"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:334
+#: blueman/gui/manager/ManagerDeviceMenu.py:342
 msgid "_Pair"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:344
+#: blueman/gui/manager/ManagerDeviceMenu.py:352
 msgid "_Trust"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:349
+#: blueman/gui/manager/ManagerDeviceMenu.py:357
 msgid "_Untrust"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:373
+#: blueman/gui/manager/ManagerDeviceMenu.py:381
 msgid "R_ename device…"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:382
+#: blueman/gui/manager/ManagerDeviceMenu.py:390
 msgid "_Remove…"
 msgstr ""
 
@@ -1990,6 +1990,7 @@ msgstr ""
 
 #. https://github.com/python/mypy/issues/2608
 #: blueman/plugins/applet/AutoConnect.py:46
+#: blueman/plugins/applet/ConnectionNotifier.py:17
 #: blueman/plugins/applet/RecentConns.py:219
 #: blueman/plugins/applet/PPPSupport.py:75
 msgid "Connected"
@@ -1998,6 +1999,14 @@ msgstr ""
 #: blueman/plugins/applet/AutoConnect.py:46
 #, python-format
 msgid "Automatically connected to %(service)s on %(device)s"
+msgstr ""
+
+#: blueman/plugins/applet/ConnectionNotifier.py:12
+msgid "Shows desktop notifications when devices get connected or disconnected."
+msgstr ""
+
+#: blueman/plugins/applet/ConnectionNotifier.py:17
+msgid "Disconnected"
 msgstr ""
 
 #: blueman/plugins/applet/NetUsage.py:154

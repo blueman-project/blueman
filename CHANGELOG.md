@@ -2,6 +2,11 @@
 
 ## master
 
+### New features
+
+* Disconnect items in applet menu (plugin)
+* Desktop notifications on connect / disconnect (plugin)
+
 ### Changes
 
 * Drop blueman-report
