@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2020-10-15 20:51+0000\n"
+"POT-Creation-Date: 2020-11-08 22:08+0100\n"
 "PO-Revision-Date: 2020-06-19 18:56+0000\n"
 "Last-Translator: 이정희 <daemul72@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/blueman/blueman/"
@@ -226,8 +226,8 @@ msgstr "<b>작성자:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:303
-#: blueman/gui/manager/ManagerDeviceList.py:305 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:305
+#: blueman/gui/manager/ManagerDeviceList.py:307 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:375
 #: blueman/plugins/applet/NetUsage.py:209
@@ -560,8 +560,8 @@ msgid "_Exit"
 msgstr "끝내기"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:272
-#: blueman/gui/manager/ManagerDeviceList.py:303 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:274
+#: blueman/gui/manager/ManagerDeviceList.py:305 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 #, fuzzy
@@ -569,49 +569,49 @@ msgstr "끝내기"
 msgid "Uncategorized"
 msgstr "분류 안함"
 
-#: blueman/gui/manager/ManagerDeviceList.py:466
+#: blueman/gui/manager/ManagerDeviceList.py:468
 msgid "<b>Trusted and Paired</b>"
 msgstr "<b>신뢰하며 페어링함</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:468
+#: blueman/gui/manager/ManagerDeviceList.py:470
 msgid "<b>Paired</b>"
 msgstr "<b>페어링함</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:470
+#: blueman/gui/manager/ManagerDeviceList.py:472
 msgid "<b>Trusted</b>"
 msgstr "<b>신뢰함</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:491
+#: blueman/gui/manager/ManagerDeviceList.py:493
 msgid "Poor"
 msgstr "나쁨"
 
-#: blueman/gui/manager/ManagerDeviceList.py:493
-#: blueman/gui/manager/ManagerDeviceList.py:504
+#: blueman/gui/manager/ManagerDeviceList.py:495
+#: blueman/gui/manager/ManagerDeviceList.py:506
 msgid "Sub-optimal"
 msgstr "약간 최적"
 
-#: blueman/gui/manager/ManagerDeviceList.py:495
-#: blueman/gui/manager/ManagerDeviceList.py:506
+#: blueman/gui/manager/ManagerDeviceList.py:497
+#: blueman/gui/manager/ManagerDeviceList.py:508
 msgid "Optimal"
 msgstr "최적"
 
-#: blueman/gui/manager/ManagerDeviceList.py:497
+#: blueman/gui/manager/ManagerDeviceList.py:499
 msgid "Much"
 msgstr "많음"
 
-#: blueman/gui/manager/ManagerDeviceList.py:499
+#: blueman/gui/manager/ManagerDeviceList.py:501
 msgid "Too much"
 msgstr "매우 많음"
 
-#: blueman/gui/manager/ManagerDeviceList.py:502
+#: blueman/gui/manager/ManagerDeviceList.py:504
 msgid "Low"
 msgstr "낮음"
 
-#: blueman/gui/manager/ManagerDeviceList.py:508
+#: blueman/gui/manager/ManagerDeviceList.py:510
 msgid "High"
 msgstr "높음"
 
-#: blueman/gui/manager/ManagerDeviceList.py:510
+#: blueman/gui/manager/ManagerDeviceList.py:512
 msgid "Very High"
 msgstr "매우 높음"
 
@@ -2118,20 +2118,20 @@ msgstr "오디오 프로파일"
 msgid "Select audio profile for PulseAudio"
 msgstr "PulseAudio 오디오 프로파일을 선택"
 
-#: blueman/plugins/manager/Services.py:80
+#: blueman/plugins/manager/Services.py:79
 #, python-format
 msgid "Serial Port %s"
 msgstr "시리얼 포트 %s"
 
-#: blueman/plugins/manager/Services.py:93
+#: blueman/plugins/manager/Services.py:92
 msgid "Renew IP Address"
 msgstr "IP 주소 새로 고침"
 
-#: blueman/plugins/manager/Services.py:110
+#: blueman/plugins/manager/Services.py:109
 msgid "Dialup Settings"
 msgstr "전화 접속 설정"
 
-#: blueman/plugins/manager/Services.py:119
+#: blueman/plugins/manager/Services.py:118
 msgid "Serial Ports"
 msgstr "시리얼 포트"
 
@@ -2139,14 +2139,19 @@ msgstr "시리얼 포트"
 msgid "Unspecified"
 msgstr "지정 안함"
 
+#: blueman/plugins/applet/AutoConnect.py:20
+msgid ""
+"Tries to auto-connect to configurable services on start and every 60 seconds."
+msgstr ""
+
 #. https://github.com/python/mypy/issues/2608
-#: blueman/plugins/applet/AutoConnect.py:42
+#: blueman/plugins/applet/AutoConnect.py:46
 #: blueman/plugins/applet/RecentConns.py:219
 #: blueman/plugins/applet/PPPSupport.py:75
 msgid "Connected"
 msgstr "연결함"
 
-#: blueman/plugins/applet/AutoConnect.py:42
+#: blueman/plugins/applet/AutoConnect.py:46
 #, python-format
 msgid "Automatically connected to %(service)s on %(device)s"
 msgstr "%(device)s의 %(service)s에 자동으로 연결됨"
@@ -2392,23 +2397,23 @@ msgstr "애플릿을 끝낼 나가기 메뉴 항목을 추가합니다"
 msgid "Provides a basic dhcp client for Bluetooth PAN connections."
 msgstr "블루투스 PAN 연결용 기본 DHCP 클라이언트를 제공합니다."
 
-#: blueman/plugins/applet/DhcpClient.py:45
-#: blueman/plugins/applet/DhcpClient.py:53
-#: blueman/plugins/applet/DhcpClient.py:58
+#: blueman/plugins/applet/DhcpClient.py:47
+#: blueman/plugins/applet/DhcpClient.py:55
+#: blueman/plugins/applet/DhcpClient.py:60
 msgid "Bluetooth Network"
 msgstr "블루투스 네트워크"
 
-#: blueman/plugins/applet/DhcpClient.py:46
+#: blueman/plugins/applet/DhcpClient.py:48
 #, python-format
 msgid "Interface %(0)s bound to IP address %(1)s"
 msgstr "%(0)s 인터페이스가 %(1)s IP 주소를 잡았습니다"
 
-#: blueman/plugins/applet/DhcpClient.py:53
+#: blueman/plugins/applet/DhcpClient.py:55
 #, python-format
 msgid "Failed to obtain an IP address on %s"
 msgstr "%s에서 IP 주소를 가져오는데 실패했습니다"
 
-#: blueman/plugins/applet/DhcpClient.py:58
+#: blueman/plugins/applet/DhcpClient.py:60
 #, python-format
 msgid ""
 "Trying to obtain an IP address on %s\n"
@@ -2445,6 +2450,16 @@ msgstr "블루투스 꺼짐"
 #: blueman/plugins/applet/AppIndicator.py:17
 msgid "Uses libappindicator to show a statusicon"
 msgstr "상태 아이콘을 표시할 때 libappindicator 활용"
+
+#: blueman/plugins/applet/DisconnectItems.py:14
+msgid "Adds disconnect menu items"
+msgstr ""
+
+#: blueman/plugins/applet/DisconnectItems.py:36
+#, fuzzy, python-format
+#| msgid "Disconnecting..."
+msgid "Disconnect %s"
+msgstr "연결 끊는 중..."
 
 #: blueman/plugins/applet/DiscvManager.py:16
 msgid ""
@@ -2622,10 +2637,6 @@ msgstr "애플릿 전송 서비스 플러그인을 비활성화했습니다"
 msgid "Set Bluetooth Adapter Properties"
 msgstr "블루투스 어댑터 속성 지정하기"
 
-#: data/blueman-adapters.desktop.in:6
-msgid "blueman-device"
-msgstr "blueman-장치"
-
 #: data/blueman.desktop.in:3
 msgid "Blueman Applet"
 msgstr "Blueman 애플릿"
@@ -2633,12 +2644,6 @@ msgstr "Blueman 애플릿"
 #: data/blueman.desktop.in:4 data/blueman-manager.desktop.in:4
 msgid "Blueman Bluetooth Manager"
 msgstr "Blueman 블루투스 관리자"
-
-#: data/blueman.desktop.in:5 data/blueman-manager.desktop.in:5
-#: data/thunar-sendto-blueman.desktop.in:6
-#, fuzzy
-msgid "blueman"
-msgstr "blueman"
 
 #: data/blueman-manager.desktop.in:3
 msgid "Bluetooth Manager"
@@ -2681,6 +2686,13 @@ msgstr "RfKill 상태 설정"
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr "RfKill을 설정하려면 관리자 권한이 있어야 합니다"
+
+#~ msgid "blueman-device"
+#~ msgstr "blueman-장치"
+
+#, fuzzy
+#~ msgid "blueman"
+#~ msgstr "blueman"
 
 #~ msgid "Run the setup assistant for this device"
 #~ msgstr "이 장치에 대한 설치 도우미를 실행합니다"
