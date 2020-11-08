@@ -16,6 +16,10 @@ class Battery(AppletPlugin):
     def on_device_property_changed(self, path: str, key: str, value: Any) -> None:
         if key == "ServicesResolved" and value:
             device = Device(obj_path=path)
-            if any(ServiceUUID(uuid).short_uuid == BATTERY_SERVICE_SVCLASS_ID for uuid in device["UUIDs"]):
+            if self.applicable(device):
                 text = "%d%%" % BluezBattery(obj_path=path)["Percentage"]
                 Notification(device["Alias"], text, icon_name="battery").show()
+
+    @staticmethod
+    def applicable(device: Device) -> bool:
+        return any(ServiceUUID(uuid).short_uuid == BATTERY_SERVICE_SVCLASS_ID for uuid in device["UUIDs"])
