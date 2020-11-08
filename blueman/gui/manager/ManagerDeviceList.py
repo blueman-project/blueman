@@ -35,16 +35,19 @@ class ManagerDeviceList(DeviceList):
         tabledata: List[ListDataDict] = [
             # device picture
             {"id": "device_surface", "type": str, "renderer": Gtk.CellRendererPixbuf(),
-             "render_attrs": {}, "celldata_func": (self._set_device_cell_data, None)},
+             "render_attrs": {}, "celldata_func": (self._set_cell_data, None)},
             # device caption
             {"id": "caption", "type": str, "renderer": cr,
              "render_attrs": {"markup": 1}, "view_props": {"expand": True}},
             {"id": "rssi_pb", "type": GdkPixbuf.Pixbuf, "renderer": Gtk.CellRendererPixbuf(),
-             "render_attrs": {"pixbuf": 2}, "view_props": {"spacing": 0}},
+             "render_attrs": {}, "view_props": {"spacing": 0},
+             "celldata_func": (self._set_cell_data, "rssi")},
             {"id": "lq_pb", "type": GdkPixbuf.Pixbuf, "renderer": Gtk.CellRendererPixbuf(),
-             "render_attrs": {"pixbuf": 3}, "view_props": {"spacing": 0}},
+             "render_attrs": {}, "view_props": {"spacing": 0},
+             "celldata_func": (self._set_cell_data, "lq")},
             {"id": "tpl_pb", "type": GdkPixbuf.Pixbuf, "renderer": Gtk.CellRendererPixbuf(),
-             "render_attrs": {"pixbuf": 4}, "view_props": {"spacing": 0}},
+             "render_attrs": {}, "view_props": {"spacing": 0},
+             "celldata_func": (self._set_cell_data, "tpl")},
             {"id": "alias", "type": str},  # used for quick access instead of device.GetProperties
             {"id": "connected", "type": bool},  # used for quick access instead of device.GetProperties
             {"id": "paired", "type": bool},  # used for quick access instead of device.GetProperties
@@ -407,20 +410,23 @@ class ManagerDeviceList(DeviceList):
 
                 faderhandler = fader.connect("animation-finished", on_finished)
 
+            w = 14 * self.get_scale_factor()
+            h = 48 * self.get_scale_factor()
+
             to_store = {}
             if round(row["rssi"], -1) != round(rssi_perc, -1):
                 icon_name = "blueman-rssi-%d.png" % round(rssi_perc, -1)
-                icon = GdkPixbuf.Pixbuf.new_from_file(os.path.join(PIXMAP_PATH, icon_name))
+                icon = GdkPixbuf.Pixbuf.new_from_file_at_scale(os.path.join(PIXMAP_PATH, icon_name), w, h, True)
                 to_store.update({"rssi": rssi_perc, "rssi_pb": icon})
 
             if round(row["lq"], -1) != round(lq_perc, -1):
                 icon_name = "blueman-lq-%d.png" % round(lq_perc, -1)
-                icon = GdkPixbuf.Pixbuf.new_from_file(os.path.join(PIXMAP_PATH, icon_name))
+                icon = GdkPixbuf.Pixbuf.new_from_file_at_scale(os.path.join(PIXMAP_PATH, icon_name), w, h, True)
                 to_store.update({"lq": lq_perc, "lq_pb": icon})
 
             if round(row["tpl"], -1) != round(tpl_perc, -1):
                 icon_name = "blueman-tpl-%d.png" % round(tpl_perc, -1)
-                icon = GdkPixbuf.Pixbuf.new_from_file(os.path.join(PIXMAP_PATH, icon_name))
+                icon = GdkPixbuf.Pixbuf.new_from_file_at_scale(os.path.join(PIXMAP_PATH, icon_name), w, h, True)
                 to_store.update({"tpl": tpl_perc, "tpl_pb": icon})
 
             if to_store:
@@ -541,8 +547,18 @@ class ManagerDeviceList(DeviceList):
                 return True
         return False
 
-    def _set_device_cell_data(self, _col: Gtk.TreeViewColumn, cell: Gtk.CellRenderer, _model: Gtk.TreeModel,
-                              tree_iter: Gtk.TreeIter, _data: None) -> None:
-        row = self.get(tree_iter, "icon_info", "trusted", "paired")
-        surface = self.make_device_icon(row["icon_info"], row["paired"], row["trusted"])
-        cell.set_property("surface", surface)
+    def _set_cell_data(self, _col: Gtk.TreeViewColumn, cell: Gtk.CellRenderer, _model: Gtk.TreeModel,
+                       tree_iter: Gtk.TreeIter, data: Optional[str]) -> None:
+        if data is None:
+            row = self.get(tree_iter, "icon_info", "trusted", "paired")
+            surface = self.make_device_icon(row["icon_info"], row["paired"], row["trusted"])
+            cell.set_property("surface", surface)
+        elif data in ("rssi", "lq", "tpl"):
+            window = self.get_window()
+            scale = self.get_scale_factor()
+            pb = self.get(tree_iter, data + "_pb")[data + "_pb"]
+            if pb:
+                surface = Gdk.cairo_surface_create_from_pixbuf(pb, scale, window)
+                cell.set_property("surface", surface)
+            else:
+                cell.set_property("surface", None)
