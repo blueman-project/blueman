@@ -1,11 +1,11 @@
 import builtins
 import typing
+import cairo
 
 from gi.repository import Gdk
 from gi.repository import GdkPixbuf
 from gi.repository import Gio
 from gi.repository import Pango
-from gi.repository import cairo
 from gi.repository import xlib
 
 

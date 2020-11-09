@@ -1,12 +1,12 @@
 import builtins
 import typing
+import cairo
 
 from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import GdkPixbuf
 from gi.repository import Gio
 from gi.repository import Pango
-from gi.repository import cairo
 
 
 class AppLaunchContext(Gio.AppLaunchContext):
