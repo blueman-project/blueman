@@ -168,14 +168,34 @@ class ManagerDeviceMenu(Gtk.Menu):
             if key in ("Connected", "UUIDs", "Trusted", "Paired"):
                 self.generate()
 
+    def _handle_error_message(self, msg: str) -> None:
+        msg = msg.split(":", 3)[-1].strip()
+
+        # https://sourceware.org/git/?p=glibc.git;a=blob;f=sysdeps/gnu/errlist.h
+        # https://git.musl-libc.org/cgit/musl/tree/src/errno/__strerror.h
+        # https://git.uclibc.org/uClibc/tree/libc/string/_string_syserrmsgs.c
+        if msg == "Protocol not available":
+            # ENOPROTOOPT
+            logging.warning("No audio endpoints registered to bluetoothd. "
+                            "Pulseaudio Bluetooth module, bluez-alsa, PipeWire or other audio support missing.")
+            msg = _("No audio endpoints registered")
+        elif msg in ("Input/output error", "I/O error"):
+            # EIO
+            logging.warning("bluetoothd reported input/output error. Check its logs for context.")
+            msg = _("Input/output error")
+        elif msg == "Host is down":
+            # EHOSTDOWN (Bluetooth errors 0x04 (Page Timeout) or 0x3c (Advertising Timeout))
+            msg = _("Device did not respond")
+
+        if msg != "Cancelled":
+            MessageArea.show_message(_("Connection Failed: ") + msg)
+
     def generic_connect(self, _item: Optional[Gtk.MenuItem], device: Device, connect: bool) -> None:
         def fail(_obj: AppletService, result: GLib.Error, _user_data: None) -> None:
             logging.info(f"fail: {result}")
             prog.message(_("Failed"))
             self.unset_op(device)
-            msg, tb = e_(result.message)
-            if msg != "Cancelled":
-                MessageArea.show_message(_("Connection Failed: ") + msg)
+            self._handle_error_message(result.message)
 
         def success(_obj: AppletService, _result: None, _user_data: None) -> None:
             logging.info("success")
