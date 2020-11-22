@@ -174,7 +174,8 @@ class ManagerDeviceMenu(Gtk.Menu):
             prog.message(_("Failed"))
             self.unset_op(device)
             msg, tb = e_(result.message)
-            MessageArea.show_message(_("Connection Failed: ") + msg)
+            if msg != "Cancelled":
+                MessageArea.show_message(_("Connection Failed: ") + msg)
 
         def success(_obj: AppletService, _result: None, _user_data: None) -> None:
             logging.info("success")
