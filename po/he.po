@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2020-11-08 22:08+0100\n"
-"PO-Revision-Date: 2020-10-19 14:24+0000\n"
+"POT-Creation-Date: 2020-11-09 00:15+0100\n"
+"PO-Revision-Date: 2020-11-19 12:48+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/blueman/blueman/"
 "he/>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 4.3.1-dev\n"
+"X-Generator: Weblate 4.4-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -85,7 +85,7 @@ msgstr "חיפוש מכשירים קרובים"
 msgid "Search"
 msgstr "חיפוש"
 
-#: data/ui/manager-main.ui:121 blueman/gui/manager/ManagerDeviceMenu.py:335
+#: data/ui/manager-main.ui:121 blueman/gui/manager/ManagerDeviceMenu.py:343
 msgid "Create pairing with the device"
 msgstr "יצירת חיבור עם המכשיר"
 
@@ -94,7 +94,7 @@ msgstr "יצירת חיבור עם המכשיר"
 msgid "Pair"
 msgstr "צימוד"
 
-#: data/ui/manager-main.ui:135 blueman/gui/manager/ManagerDeviceMenu.py:353
+#: data/ui/manager-main.ui:135 blueman/gui/manager/ManagerDeviceMenu.py:361
 msgid "Mark/Unmark this device as trusted"
 msgstr "סימון/ביטול הסימון של מכשיר זה כמהימן"
 
@@ -104,7 +104,7 @@ msgstr "סימון/ביטול הסימון של מכשיר זה כמהימן"
 msgid "Trust"
 msgstr "מהימן"
 
-#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:386
+#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:394
 msgid "Remove this device from the known devices list"
 msgstr "הסרת התקן זה מרשימת ההתקנים הידועים"
 
@@ -227,7 +227,7 @@ msgstr "<b>יוצר:</b>"
 #: blueman/gui/manager/ManagerDeviceList.py:305
 #: blueman/gui/manager/ManagerDeviceList.py:307 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
-#: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:375
+#: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:209
 #: blueman/plugins/applet/NetUsage.py:210
 msgid "Unknown"
@@ -635,51 +635,51 @@ msgstr "ניתוק נכשל: "
 msgid "Disconnecting…"
 msgstr "מתבצע ניתוק…"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:254
+#: blueman/gui/manager/ManagerDeviceMenu.py:262
 msgid "_<b>_Connect</b>"
 msgstr "_<b>_חיבור</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:256
+#: blueman/gui/manager/ManagerDeviceMenu.py:264
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr "מחבר פרופילים לחיבור אוטומטי של מקור A2DP, מקלט A2DP והתקני מנשק אנוש"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:260
+#: blueman/gui/manager/ManagerDeviceMenu.py:268
 msgid "_<b>Disconnect</b>"
 msgstr "_<b>ניתוק</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:261
+#: blueman/gui/manager/ManagerDeviceMenu.py:269
 msgid "Forcefully disconnect the device"
 msgstr "ניתוק המכשיר בכוח"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:289
+#: blueman/gui/manager/ManagerDeviceMenu.py:297
 msgid "<b>Connect To:</b>"
 msgstr "<b>התחברות אל:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:301
+#: blueman/gui/manager/ManagerDeviceMenu.py:309
 msgid "<b>Disconnect:</b>"
 msgstr "<b>ניתוק:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:321
+#: blueman/gui/manager/ManagerDeviceMenu.py:329
 msgid "Send a _File…"
 msgstr "_שליחת קובץ…"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:334
+#: blueman/gui/manager/ManagerDeviceMenu.py:342
 msgid "_Pair"
 msgstr "_צימוד"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:344
+#: blueman/gui/manager/ManagerDeviceMenu.py:352
 msgid "_Trust"
 msgstr "מ_הימנות"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:349
+#: blueman/gui/manager/ManagerDeviceMenu.py:357
 msgid "_Untrust"
 msgstr "ה_סרת מהימנות"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:373
+#: blueman/gui/manager/ManagerDeviceMenu.py:381
 msgid "R_ename device…"
 msgstr "שינוי שם הה_תקן…"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:382
+#: blueman/gui/manager/ManagerDeviceMenu.py:390
 msgid "_Remove…"
 msgstr "ה_סרה…"
 
@@ -903,12 +903,12 @@ msgid "Not available"
 msgstr "לא זמין"
 
 #. translators: device class
-#: blueman/DeviceClass.py:82 blueman/Sdp.py:122 blueman/Sdp.py:163
+#: blueman/DeviceClass.py:82 blueman/Sdp.py:123 blueman/Sdp.py:164
 msgid "Headset"
 msgstr "אוזניות ראש"
 
 #. translators: device class
-#: blueman/DeviceClass.py:84 blueman/Sdp.py:144
+#: blueman/DeviceClass.py:84 blueman/Sdp.py:145
 msgid "Handsfree"
 msgstr "דיבורית"
 
@@ -1293,653 +1293,653 @@ msgstr "מתקן מיקום"
 msgid "Location and Navigation Pod"
 msgstr "מתקן מיקום וניווט"
 
-#: blueman/Sdp.py:87
+#: blueman/Sdp.py:88
 msgid "SDP"
 msgstr "SDP"
 
-#: blueman/Sdp.py:88
+#: blueman/Sdp.py:89
 msgid "UDP"
 msgstr "UDP"
 
-#: blueman/Sdp.py:89
+#: blueman/Sdp.py:90
 msgid "RFCOMM"
 msgstr "RFCOMM"
 
-#: blueman/Sdp.py:90
+#: blueman/Sdp.py:91
 msgid "TCP"
 msgstr "TCP"
 
-#: blueman/Sdp.py:91
+#: blueman/Sdp.py:92
 msgid "TCS-BIN"
 msgstr "TCS-BIN"
 
-#: blueman/Sdp.py:92
+#: blueman/Sdp.py:93
 msgid "TCS-AT"
 msgstr "TCS-AT"
 
-#: blueman/Sdp.py:93
+#: blueman/Sdp.py:94
 msgid "ATT"
 msgstr "ATT"
 
-#: blueman/Sdp.py:94
+#: blueman/Sdp.py:95
 msgid "OBEX"
 msgstr "OBEX"
 
-#: blueman/Sdp.py:95
+#: blueman/Sdp.py:96
 msgid "IP"
 msgstr "IP"
 
-#: blueman/Sdp.py:96
+#: blueman/Sdp.py:97
 msgid "FTP"
 msgstr "FTP"
 
-#: blueman/Sdp.py:97
+#: blueman/Sdp.py:98
 msgid "HTTP"
 msgstr "HTTP"
 
-#: blueman/Sdp.py:98
+#: blueman/Sdp.py:99
 msgid "WSP"
 msgstr "WSP"
 
-#: blueman/Sdp.py:99
+#: blueman/Sdp.py:100
 msgid "BNEP"
 msgstr "BNEP"
 
-#: blueman/Sdp.py:100
+#: blueman/Sdp.py:101
 msgid "UPnP/ESDP"
 msgstr "UPnP/ESDP"
 
-#: blueman/Sdp.py:101
+#: blueman/Sdp.py:102
 msgid "HIDP"
 msgstr "HIDP"
 
-#: blueman/Sdp.py:102
+#: blueman/Sdp.py:103
 msgid "Hardcopy Control Channel"
 msgstr "ערוץ בקרה של Hardcopy"
 
-#: blueman/Sdp.py:103
+#: blueman/Sdp.py:104
 msgid "Hardcopy Data Channel"
 msgstr "ערוץ נתונים של Hardcopy"
 
-#: blueman/Sdp.py:104
+#: blueman/Sdp.py:105
 msgid "Hardcopy Notification"
 msgstr "התראת Hardcopy"
 
-#: blueman/Sdp.py:105
+#: blueman/Sdp.py:106
 msgid "AVCTP"
 msgstr "AVCTP"
 
-#: blueman/Sdp.py:106
+#: blueman/Sdp.py:107
 msgid "AVDTP"
 msgstr "AVDTP"
 
-#: blueman/Sdp.py:107
+#: blueman/Sdp.py:108
 msgid "CMTP"
 msgstr "CMTP"
 
-#: blueman/Sdp.py:108
+#: blueman/Sdp.py:109
 msgid "UDI_C-Plane"
 msgstr "UDI_C-Plane (מישור בקרה)"
 
-#: blueman/Sdp.py:109 blueman/Sdp.py:110
+#: blueman/Sdp.py:110 blueman/Sdp.py:111
 msgid "Multi-Channel Adaptation Protocol (MCAP)"
 msgstr "פרוטוקול הסתגלות רב ערוצי (MCAP)"
 
-#: blueman/Sdp.py:111
+#: blueman/Sdp.py:112
 msgid "L2CAP"
 msgstr "L2CAP"
 
-#: blueman/Sdp.py:112
+#: blueman/Sdp.py:113
 msgid "ServiceDiscoveryServerServiceClassID"
 msgstr ""
 "ServiceDiscoveryServerServiceClassID (מזהה מחלקת שירות שרת גילוי שירותים)"
 
-#: blueman/Sdp.py:113
+#: blueman/Sdp.py:114
 msgid "BrowseGroupDescriptorServiceClassID"
 msgstr ""
 "BrowseGroupDescriptorServiceClassID (מזהה מחלקת שירות מתאר קבוצות עיון)"
 
-#: blueman/Sdp.py:114
+#: blueman/Sdp.py:115
 msgid "Public Browse Group"
 msgstr "קבוצת עיון ציבורית"
 
-#: blueman/Sdp.py:115
+#: blueman/Sdp.py:116
 msgid "Serial Port"
 msgstr "פתחה טורית"
 
-#: blueman/Sdp.py:116
+#: blueman/Sdp.py:117
 msgid "LAN Access Using PPP"
 msgstr "גישה לרשת מקומית דרך PPP"
 
-#: blueman/Sdp.py:117
+#: blueman/Sdp.py:118
 msgid "Dialup Networking (DUN)"
 msgstr "חיבור אינטרנט דרך טלפון (DUP)"
 
-#: blueman/Sdp.py:118
+#: blueman/Sdp.py:119
 msgid "IrMC Sync"
 msgstr "סנכרון IrMC"
 
-#: blueman/Sdp.py:119
+#: blueman/Sdp.py:120
 msgid "OBEX Object Push"
 msgstr "דחיפת פריטים OBEX"
 
-#: blueman/Sdp.py:120
+#: blueman/Sdp.py:121
 msgid "OBEX File Transfer"
 msgstr "העברת קבצים ב־OBEX"
 
-#: blueman/Sdp.py:121
+#: blueman/Sdp.py:122
 msgid "IrMC Sync Command"
 msgstr "פקודת סנכרון של IrMC"
 
-#: blueman/Sdp.py:123
+#: blueman/Sdp.py:124
 msgid "Cordless Telephony"
 msgstr "טלפון אלחוטי"
 
-#: blueman/Sdp.py:124
+#: blueman/Sdp.py:125
 msgid "Audio Source"
 msgstr "מקור שמע"
 
-#: blueman/Sdp.py:125
+#: blueman/Sdp.py:126
 msgid "Audio Sink"
 msgstr "שקע שמע"
 
-#: blueman/Sdp.py:126
+#: blueman/Sdp.py:127
 msgid "Remote Control Target"
 msgstr "יעד שליטה מרחוק"
 
-#: blueman/Sdp.py:127
+#: blueman/Sdp.py:128
 msgid "Advanced Audio"
 msgstr "שמע מתקדם"
 
-#: blueman/Sdp.py:128
+#: blueman/Sdp.py:129
 msgid "Remote Control"
 msgstr "שליטה מרחוק"
 
-#: blueman/Sdp.py:129
+#: blueman/Sdp.py:130
 msgid "Video Conferencing"
 msgstr "ועידה בווידאו"
 
-#: blueman/Sdp.py:130
+#: blueman/Sdp.py:131
 msgid "Intercom"
 msgstr "אינטרקום"
 
-#: blueman/Sdp.py:131
+#: blueman/Sdp.py:132
 msgid "Fax"
 msgstr "פקס"
 
-#: blueman/Sdp.py:132
+#: blueman/Sdp.py:133
 msgid "Headset Audio Gateway"
 msgstr "שער שמע לאוזניות"
 
-#: blueman/Sdp.py:133
+#: blueman/Sdp.py:134
 msgid "WAP"
 msgstr "WAP (פרוטוקול יישום אלחוטי)"
 
-#: blueman/Sdp.py:134
+#: blueman/Sdp.py:135
 msgid "WAP Client"
 msgstr "לקוח WAP (פרוטוקול יישום אלחוטי)"
 
-#: blueman/Sdp.py:135
+#: blueman/Sdp.py:136
 msgid "PANU"
 msgstr "PANU (משתמש ברשת אישית)"
 
-#: blueman/Sdp.py:136
+#: blueman/Sdp.py:137
 msgid "Network Access Point"
 msgstr "נקודת גישה לרשת"
 
-#: blueman/Sdp.py:137
+#: blueman/Sdp.py:138
 msgid "Group Network"
 msgstr "קבוצת רשת"
 
-#: blueman/Sdp.py:138
+#: blueman/Sdp.py:139
 msgid "DirectPrinting (BPP)"
 msgstr "DirectPrinting (BPP)"
 
-#: blueman/Sdp.py:139
+#: blueman/Sdp.py:140
 msgid "ReferencePrinting (BPP)"
 msgstr "ReferencePrinting (BPP)"
 
-#: blueman/Sdp.py:140
+#: blueman/Sdp.py:141
 msgid "Imaging (BIP)"
 msgstr "דימות (BIP)"
 
-#: blueman/Sdp.py:141
+#: blueman/Sdp.py:142
 msgid "ImagingResponder (BIP)"
 msgstr "ImagingResponder (BIP)"
 
-#: blueman/Sdp.py:142
+#: blueman/Sdp.py:143
 msgid "ImagingAutomaticArchive (BIP)"
 msgstr "ImagingAutomaticArchive (BIP)"
 
-#: blueman/Sdp.py:143
+#: blueman/Sdp.py:144
 msgid "ImagingReferencedObjects (BIP)"
 msgstr "ImagingReferencedObjects (BIP)"
 
-#: blueman/Sdp.py:145
+#: blueman/Sdp.py:146
 msgid "Handsfree Audio Gateway"
 msgstr "שער השמעת דיבורית"
 
-#: blueman/Sdp.py:146
+#: blueman/Sdp.py:147
 msgid "DirectPrintingReferenceObjectsService (BPP)"
 msgstr "DirectPrintingReferenceObjectsService (BPP)"
 
-#: blueman/Sdp.py:147
+#: blueman/Sdp.py:148
 msgid "ReflectedUI (BPP)"
 msgstr "ReflectedUI (BPP)"
 
-#: blueman/Sdp.py:148
+#: blueman/Sdp.py:149
 msgid "Basic Printing (BPP)"
 msgstr "הדפסה בסיסית (BPP)"
 
-#: blueman/Sdp.py:149
+#: blueman/Sdp.py:150
 msgid "Printing Status (BPP)"
 msgstr "מצב הדפסה (BPP)"
 
-#: blueman/Sdp.py:150
+#: blueman/Sdp.py:151
 msgid "Human Interface Device Service (HID)"
 msgstr "שירות מכשיר מנשק אדם (HID)"
 
-#: blueman/Sdp.py:151
+#: blueman/Sdp.py:152
 msgid "HardcopyCableReplacement (HCR)"
 msgstr "HardcopyCableReplacement (HCR)"
 
-#: blueman/Sdp.py:152
+#: blueman/Sdp.py:153
 msgid "HCR_Print (HCR)"
 msgstr "HCR_Print (HCR)"
 
-#: blueman/Sdp.py:153
+#: blueman/Sdp.py:154
 msgid "HCR_Scan (HCR)"
 msgstr "HCR_Scan (HCR)"
 
-#: blueman/Sdp.py:154
+#: blueman/Sdp.py:155
 msgid "Common ISDN Access (CIP)"
 msgstr "גישה שיתופית ל־ISDN‏ (CIP)"
 
-#: blueman/Sdp.py:155
+#: blueman/Sdp.py:156
 msgid "VideoConferencingGW (VCP)"
 msgstr "VideoConferencingGW (VCP)"
 
-#: blueman/Sdp.py:156
+#: blueman/Sdp.py:157
 msgid "UDI-MT"
 msgstr "UDI-MT"
 
-#: blueman/Sdp.py:157
+#: blueman/Sdp.py:158
 msgid "UDI-TA"
 msgstr "UDI-TA"
 
-#: blueman/Sdp.py:158
+#: blueman/Sdp.py:159
 msgid "Audio/Video"
 msgstr "שמע/וידאו"
 
-#: blueman/Sdp.py:159
+#: blueman/Sdp.py:160
 msgid "SIM Access (SAP)"
 msgstr "גישה ל־SIM‏ (SAP)"
 
-#: blueman/Sdp.py:160
+#: blueman/Sdp.py:161
 msgid "Phonebook Access (PBAP) - PCE"
 msgstr "גישה לספר טלפונים (PBAP) ‏- PCE"
 
-#: blueman/Sdp.py:161
+#: blueman/Sdp.py:162
 msgid "Phonebook Access (PBAP) - PSE"
 msgstr "גישה לספר טלפונים (PBAP) ‏- PSE"
 
-#: blueman/Sdp.py:162
+#: blueman/Sdp.py:163
 msgid "Phonebook Access (PBAP)"
 msgstr "גישה לספר טלפונים (PBAP)"
 
-#: blueman/Sdp.py:164
+#: blueman/Sdp.py:165
 msgid "Message Access Server"
 msgstr "שרת גישה להודעות"
 
-#: blueman/Sdp.py:165
+#: blueman/Sdp.py:166
 msgid "Message Notification Server"
 msgstr "שרת דיווח על הודעות"
 
-#: blueman/Sdp.py:166
+#: blueman/Sdp.py:167
 msgid "Message Access Profile (MAP)"
 msgstr "פרופיל גישה להודעות (MAP)"
 
-#: blueman/Sdp.py:167
+#: blueman/Sdp.py:168
 msgid "GNSS"
 msgstr "מערכת ניווט לוויינית"
 
-#: blueman/Sdp.py:168
+#: blueman/Sdp.py:169
 msgid "GNSS Server"
 msgstr "שרת מערכת ניווט לוויינית"
 
-#: blueman/Sdp.py:169
+#: blueman/Sdp.py:170
 msgid "3D Display"
 msgstr "תצוגה תלת־ממדית"
 
-#: blueman/Sdp.py:170
+#: blueman/Sdp.py:171
 msgid "3D Glasses"
 msgstr "משקפי תלת־ממד"
 
-#: blueman/Sdp.py:171
+#: blueman/Sdp.py:172
 msgid "3D Synchronization (3DSP)"
 msgstr "סנכרון תלת־ממד (3DSP)"
 
-#: blueman/Sdp.py:172
+#: blueman/Sdp.py:173
 msgid "Multi-Profile Specification (MPS) Profile"
 msgstr "פרופיל ציון ריבוי פרופילים (MPS)"
 
-#: blueman/Sdp.py:173
+#: blueman/Sdp.py:174
 msgid "Multi-Profile Specification (MPS) Service"
 msgstr "שירות ציון ריבוי פרופילים (MPS)"
 
-#: blueman/Sdp.py:174
+#: blueman/Sdp.py:175
 msgid "Calendar, Task, and Notes (CTN) Access Service"
 msgstr "שירות גישה ללוח שנה, משימות ופתקיות (CTN)"
 
-#: blueman/Sdp.py:175
+#: blueman/Sdp.py:176
 msgid "Calendar, Task, and Notes (CTN) Notification Service"
 msgstr "שירות הודעות מלוח שנה, משימות ופתקיות (CTN)"
 
-#: blueman/Sdp.py:176
+#: blueman/Sdp.py:177
 msgid "Calendar, Task, and Notes (CTN) Profile"
 msgstr "פרופיל לוח שנה, משימות ופתקיות (CTN)"
 
-#: blueman/Sdp.py:177
+#: blueman/Sdp.py:178
 msgid "PnP Information"
 msgstr "מידע PnP"
 
-#: blueman/Sdp.py:178
+#: blueman/Sdp.py:179
 msgid "Generic Networking"
 msgstr "ציוד רשת גנרי"
 
-#: blueman/Sdp.py:179
+#: blueman/Sdp.py:180
 msgid "Generic FileTransfer"
 msgstr "העברת קבצים גנרית"
 
-#: blueman/Sdp.py:180
+#: blueman/Sdp.py:181
 msgid "Generic Audio"
 msgstr "שמע גנרי"
 
-#: blueman/Sdp.py:181
+#: blueman/Sdp.py:182
 msgid "Generic Telephony"
 msgstr "טלפוניה גנרית"
 
-#: blueman/Sdp.py:182
+#: blueman/Sdp.py:183
 msgid "Video Source"
 msgstr "מקור וידאו"
 
-#: blueman/Sdp.py:183
+#: blueman/Sdp.py:184
 msgid "Video Sink"
 msgstr "שקע וידאו"
 
-#: blueman/Sdp.py:184
+#: blueman/Sdp.py:185
 msgid "Video Distribution"
 msgstr "הפצת וידאו"
 
-#: blueman/Sdp.py:185
+#: blueman/Sdp.py:186
 msgid "HDP"
 msgstr "פרופיל מכשור רפואי"
 
-#: blueman/Sdp.py:186
+#: blueman/Sdp.py:187
 msgid "HDP Source"
 msgstr "מקור פרופיל מכשור רפואי"
 
-#: blueman/Sdp.py:187
+#: blueman/Sdp.py:188
 msgid "HDP Sink"
 msgstr "שקע פרופיל מכשור רפואי"
 
-#: blueman/Sdp.py:188
+#: blueman/Sdp.py:189
 msgid "Generic Access"
 msgstr "גישה גנרית"
 
-#: blueman/Sdp.py:189
+#: blueman/Sdp.py:190
 msgid "Generic Attribute"
 msgstr "מאפיין גנרי"
 
-#: blueman/Sdp.py:190
+#: blueman/Sdp.py:191
 msgid "Immediate Alert"
 msgstr "התראה מיידית"
 
-#: blueman/Sdp.py:191
+#: blueman/Sdp.py:192
 msgid "Link Loss"
 msgstr "אבדן קישור"
 
-#: blueman/Sdp.py:192
+#: blueman/Sdp.py:193
 msgid "Tx Power"
 msgstr "עצמת שליחה"
 
-#: blueman/Sdp.py:193
+#: blueman/Sdp.py:194
 msgid "Current Time Service"
 msgstr "שירות השעה הנוכחית"
 
-#: blueman/Sdp.py:194
+#: blueman/Sdp.py:195
 msgid "Reference Time Update Service"
 msgstr "שירות עדכון זמן הפניה"
 
-#: blueman/Sdp.py:195
+#: blueman/Sdp.py:196
 msgid "Next DST Change Service"
 msgstr "שירות החלפת שעון קיץ הבא"
 
-#: blueman/Sdp.py:196
+#: blueman/Sdp.py:197
 msgid "Glucose"
 msgstr "גלוקוז"
 
-#: blueman/Sdp.py:197
+#: blueman/Sdp.py:198
 msgid "Health Thermometer"
 msgstr "מד־חום רפואי"
 
-#: blueman/Sdp.py:198
+#: blueman/Sdp.py:199
 msgid "Device Information"
 msgstr "פרטי המכשיר"
 
-#: blueman/Sdp.py:199
+#: blueman/Sdp.py:200
 msgid "Heart Rate"
 msgstr "דופק"
 
-#: blueman/Sdp.py:200
+#: blueman/Sdp.py:201
 msgid "Phone Alert Status Service"
 msgstr "שירות מצב התראה בטלפון"
 
-#: blueman/Sdp.py:201
+#: blueman/Sdp.py:202
 msgid "Battery Service"
 msgstr "שירות סוללה"
 
-#: blueman/Sdp.py:202
+#: blueman/Sdp.py:203
 msgid "Blood Pressure"
 msgstr "לחץ דם"
 
-#: blueman/Sdp.py:203
+#: blueman/Sdp.py:204
 msgid "Alert Notification Service"
 msgstr "שירות הודעות התראה"
 
-#: blueman/Sdp.py:204
+#: blueman/Sdp.py:205
 msgid "Human Interface Device"
 msgstr "מכשיר מנשק אנוש"
 
-#: blueman/Sdp.py:205
+#: blueman/Sdp.py:206
 msgid "Scan Parameters"
 msgstr "מאפייני סריקה"
 
-#: blueman/Sdp.py:206
+#: blueman/Sdp.py:207
 msgid "Running Speed and Cadence"
 msgstr "מהירות וקצב ריצה"
 
-#: blueman/Sdp.py:207
+#: blueman/Sdp.py:208
 msgid "Automation IO"
 msgstr "קלט/פלט של אוטומציה"
 
-#: blueman/Sdp.py:208
+#: blueman/Sdp.py:209
 msgid "Cycling Speed and Cadence"
 msgstr "מהירות וקצב רכיבה"
 
-#: blueman/Sdp.py:209
+#: blueman/Sdp.py:210
 msgid "Cycling Power"
 msgstr "עצמת רכיבה"
 
-#: blueman/Sdp.py:210
+#: blueman/Sdp.py:211
 msgid "Location and Navigation"
 msgstr "מיקום וניווט"
 
-#: blueman/Sdp.py:211
+#: blueman/Sdp.py:212
 msgid "Environmental Sensing"
 msgstr "חישה סביבתית"
 
-#: blueman/Sdp.py:212
+#: blueman/Sdp.py:213
 msgid "Body Composition"
 msgstr "הרכב גוף"
 
-#: blueman/Sdp.py:213
+#: blueman/Sdp.py:214
 msgid "User Data"
 msgstr "נתוני משתמש"
 
-#: blueman/Sdp.py:214
+#: blueman/Sdp.py:215
 msgid "Weight Scale"
 msgstr "משקל אדם"
 
-#: blueman/Sdp.py:215
+#: blueman/Sdp.py:216
 msgid "Bond Management"
 msgstr "ניהול איגוד"
 
-#: blueman/Sdp.py:216
+#: blueman/Sdp.py:217
 msgid "Continuous Glucose Monitoring"
 msgstr "מעקב גלוקוז רציף"
 
-#: blueman/Sdp.py:217
+#: blueman/Sdp.py:218
 msgid "Internet Protocol Support"
 msgstr "תמיכה בפרוטוקול אינטרנט"
 
-#: blueman/Sdp.py:218
+#: blueman/Sdp.py:219
 msgid "Indoor Positioning"
 msgstr "מיקום פנים"
 
-#: blueman/Sdp.py:219
+#: blueman/Sdp.py:220
 msgid "Pulse Oximeter"
 msgstr "אוקסימטר"
 
-#: blueman/Sdp.py:220
+#: blueman/Sdp.py:221
 msgid "HTTP Proxy"
 msgstr "מתווך HTTP"
 
-#: blueman/Sdp.py:221
+#: blueman/Sdp.py:222
 msgid "Transport Discovery"
 msgstr "גילוי תעבורה"
 
-#: blueman/Sdp.py:222
+#: blueman/Sdp.py:223
 msgid "Object Transfer"
 msgstr "העברת פריטים"
 
-#: blueman/Sdp.py:223
+#: blueman/Sdp.py:224
 msgid "AppleAgent"
 msgstr "AppleAgent"
 
-#: blueman/Sdp.py:224
+#: blueman/Sdp.py:225
 msgid "Primary Service"
 msgstr "שירות עיקרי"
 
-#: blueman/Sdp.py:225
+#: blueman/Sdp.py:226
 msgid "Secondary Service"
 msgstr "שירות משני"
 
-#: blueman/Sdp.py:226
+#: blueman/Sdp.py:227
 msgid "Include"
 msgstr "כולל"
 
-#: blueman/Sdp.py:227
+#: blueman/Sdp.py:228
 msgid "Characteristic Declaration"
 msgstr "הצהרת מאפיינים"
 
-#: blueman/Sdp.py:228
+#: blueman/Sdp.py:229
 msgid "Device Name"
 msgstr "שם המכשיר"
 
-#: blueman/Sdp.py:229
+#: blueman/Sdp.py:230
 msgid "Appearance"
 msgstr "מראה"
 
-#: blueman/Sdp.py:230
+#: blueman/Sdp.py:231
 msgid "Peripheral Privacy Flag"
 msgstr "דגלון פרטיות היקפית"
 
-#: blueman/Sdp.py:231
+#: blueman/Sdp.py:232
 msgid "Reconnection Address"
 msgstr "כתובת חיבור מחדש"
 
-#: blueman/Sdp.py:232
+#: blueman/Sdp.py:233
 msgid "Peripheral Preferred Connection Parameters"
 msgstr "משתני חיבור היקפי מועדף"
 
-#: blueman/Sdp.py:233
+#: blueman/Sdp.py:234
 msgid "Service Changed"
 msgstr "השירות הוחלף"
 
-#: blueman/Sdp.py:234
+#: blueman/Sdp.py:235
 msgid "System ID"
 msgstr "מזהה מערכת"
 
-#: blueman/Sdp.py:235
+#: blueman/Sdp.py:236
 msgid "Model Number String"
 msgstr "מחרוזת מספר דגם"
 
-#: blueman/Sdp.py:236
+#: blueman/Sdp.py:237
 msgid "Serial Number String"
 msgstr "מחרוזת מספר סידורי"
 
-#: blueman/Sdp.py:237
+#: blueman/Sdp.py:238
 msgid "Firmware Revision String"
 msgstr "מחרוזת מהדורת קושחה"
 
-#: blueman/Sdp.py:238
+#: blueman/Sdp.py:239
 msgid "Hardware Revision String"
 msgstr "מחרוזת מהדורת חומרה"
 
-#: blueman/Sdp.py:239
+#: blueman/Sdp.py:240
 msgid "Software Revision String"
 msgstr "מחרוזת מהדורת תכנה"
 
-#: blueman/Sdp.py:240
+#: blueman/Sdp.py:241
 msgid "Manufacturer Name String"
 msgstr "מחרוזת שם יצרן"
 
-#: blueman/Sdp.py:241
+#: blueman/Sdp.py:242
 msgid "PnP ID"
 msgstr "מזהה PnP"
 
-#: blueman/Sdp.py:242
+#: blueman/Sdp.py:243
 msgid "Characteristic Extended Properties"
 msgstr "מאפיינים מורחבים לתכונות"
 
-#: blueman/Sdp.py:243
+#: blueman/Sdp.py:244
 msgid "Characteristic User Description"
 msgstr "תכונת תיאור משתמש"
 
-#: blueman/Sdp.py:244
+#: blueman/Sdp.py:245
 msgid "Client Characteristic Configuration"
 msgstr "הגדרת תכונת לקוח"
 
-#: blueman/Sdp.py:245
+#: blueman/Sdp.py:246
 msgid "Server Characteristic Configuration"
 msgstr "הגדרת מאפיין שרת"
 
-#: blueman/Sdp.py:246
+#: blueman/Sdp.py:247
 msgid "Characteristic Presentation Format"
 msgstr "תצורת ייצוג מאפיין"
 
-#: blueman/Sdp.py:247
+#: blueman/Sdp.py:248
 msgid "Characteristic Aggregate Format"
 msgstr "תצורת אגירת מאפיין"
 
-#: blueman/Sdp.py:248
+#: blueman/Sdp.py:249
 msgid "Valid Range"
 msgstr "טווח תקני"
 
-#: blueman/Sdp.py:249
+#: blueman/Sdp.py:250
 msgid "External Report Reference"
 msgstr "הפניית דיווח חיצונית"
 
-#: blueman/Sdp.py:250
+#: blueman/Sdp.py:251
 msgid "Report Reference"
 msgstr "הפניית דיווח"
 
-#: blueman/Sdp.py:377
+#: blueman/Sdp.py:378
 msgid "Auto connect profiles"
 msgstr "פרופילים להתחברות אוטומטית"
 
-#: blueman/Sdp.py:379
+#: blueman/Sdp.py:380
 msgid "Proprietary"
 msgstr "קנייני"
 
@@ -2008,10 +2008,11 @@ msgstr "לא צוין"
 #: blueman/plugins/applet/AutoConnect.py:20
 msgid ""
 "Tries to auto-connect to configurable services on start and every 60 seconds."
-msgstr ""
+msgstr "מנסה להתחבר אוטומטית לשירותים שניתן להגדיר בהתחלה כל 60 שניות."
 
 #. https://github.com/python/mypy/issues/2608
 #: blueman/plugins/applet/AutoConnect.py:46
+#: blueman/plugins/applet/ConnectionNotifier.py:21
 #: blueman/plugins/applet/RecentConns.py:219
 #: blueman/plugins/applet/PPPSupport.py:75
 msgid "Connected"
@@ -2021,6 +2022,16 @@ msgstr "מחובר"
 #, python-format
 msgid "Automatically connected to %(service)s on %(device)s"
 msgstr "התחבר אוטומטית אל %(service)s על %(device)s"
+
+#: blueman/plugins/applet/ConnectionNotifier.py:13
+msgid "Shows desktop notifications when devices get connected or disconnected."
+msgstr ""
+
+#: blueman/plugins/applet/ConnectionNotifier.py:21
+#, fuzzy
+#| msgid "Disconnect %s"
+msgid "Disconnected"
+msgstr "לנתק את %s"
 
 #: blueman/plugins/applet/NetUsage.py:154
 #: blueman/plugins/applet/NetUsage.py:265
@@ -2330,15 +2341,20 @@ msgstr "Bluetooth כבוי"
 msgid "Uses libappindicator to show a statusicon"
 msgstr "משתמש ב־libappindicator כדי להציג סמל מצב"
 
-#: blueman/plugins/applet/DisconnectItems.py:14
-msgid "Adds disconnect menu items"
+#: blueman/plugins/applet/Battery.py:14
+msgid ""
+"Shows desktop notifications with battery percentage when devices get "
+"connected."
 msgstr ""
 
+#: blueman/plugins/applet/DisconnectItems.py:14
+msgid "Adds disconnect menu items"
+msgstr "מוסיף פריטי תפריט לניתוק"
+
 #: blueman/plugins/applet/DisconnectItems.py:36
-#, fuzzy, python-format
-#| msgid "Disconnecting…"
+#, python-format
 msgid "Disconnect %s"
-msgstr "מתבצע ניתוק…"
+msgstr "לנתק את %s"
 
 #: blueman/plugins/applet/DiscvManager.py:16
 msgid ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2020-11-08 22:08+0100\n"
+"POT-Creation-Date: 2020-11-09 00:15+0100\n"
 "PO-Revision-Date: 2020-07-16 21:29+0000\n"
 "Last-Translator: Arben Tapia <arben_tapia@firstclass.com>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/blueman/blueman/"
@@ -82,7 +82,7 @@ msgstr "Kërko për pajisje të afërta"
 msgid "Search"
 msgstr "Kërko"
 
-#: data/ui/manager-main.ui:121 blueman/gui/manager/ManagerDeviceMenu.py:335
+#: data/ui/manager-main.ui:121 blueman/gui/manager/ManagerDeviceMenu.py:343
 msgid "Create pairing with the device"
 msgstr "Krijo lidhje me këtë pajisje"
 
@@ -91,7 +91,7 @@ msgstr "Krijo lidhje me këtë pajisje"
 msgid "Pair"
 msgstr "Çiftëzo (lidh)"
 
-#: data/ui/manager-main.ui:135 blueman/gui/manager/ManagerDeviceMenu.py:353
+#: data/ui/manager-main.ui:135 blueman/gui/manager/ManagerDeviceMenu.py:361
 msgid "Mark/Unmark this device as trusted"
 msgstr "Shënoje/Hiq shënjën këtë pajisje si të besueshme"
 
@@ -101,7 +101,7 @@ msgstr "Shënoje/Hiq shënjën këtë pajisje si të besueshme"
 msgid "Trust"
 msgstr "Beso"
 
-#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:386
+#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:394
 msgid "Remove this device from the known devices list"
 msgstr "Hiqe këtë pajisje nga lista e pajisjeve të njohura"
 
@@ -226,7 +226,7 @@ msgstr "<b>Autori:</b>"
 #: blueman/gui/manager/ManagerDeviceList.py:305
 #: blueman/gui/manager/ManagerDeviceList.py:307 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
-#: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:375
+#: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:209
 #: blueman/plugins/applet/NetUsage.py:210
 msgid "Unknown"
@@ -643,57 +643,57 @@ msgstr "Shkëputja Dështoi: "
 msgid "Disconnecting…"
 msgstr "Duke u shkëputur ..."
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:254
+#: blueman/gui/manager/ManagerDeviceMenu.py:262
 #, fuzzy
 #| msgid "_<b>Connect</b>"
 msgid "_<b>_Connect</b>"
 msgstr "_<b>Lidh</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:256
+#: blueman/gui/manager/ManagerDeviceMenu.py:264
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr "Lidh profilet e auto-lidhjes së burimit A2DP, derdhjes A2DP dhe të HID"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:260
+#: blueman/gui/manager/ManagerDeviceMenu.py:268
 msgid "_<b>Disconnect</b>"
 msgstr "_<b>Shkëput</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:261
+#: blueman/gui/manager/ManagerDeviceMenu.py:269
 msgid "Forcefully disconnect the device"
 msgstr "Shkëput me force pajisjen"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:289
+#: blueman/gui/manager/ManagerDeviceMenu.py:297
 msgid "<b>Connect To:</b>"
 msgstr "<b>Lidh me:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:301
+#: blueman/gui/manager/ManagerDeviceMenu.py:309
 msgid "<b>Disconnect:</b>"
 msgstr "<b>Shkëput:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:321
+#: blueman/gui/manager/ManagerDeviceMenu.py:329
 #, fuzzy
 #| msgid "Send a _File..."
 msgid "Send a _File…"
 msgstr "Dërgoni një _Skedar..."
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:334
+#: blueman/gui/manager/ManagerDeviceMenu.py:342
 msgid "_Pair"
 msgstr "Ç_ifto"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:344
+#: blueman/gui/manager/ManagerDeviceMenu.py:352
 msgid "_Trust"
 msgstr "_Beso"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:349
+#: blueman/gui/manager/ManagerDeviceMenu.py:357
 msgid "_Untrust"
 msgstr "_Mosbeso"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:373
+#: blueman/gui/manager/ManagerDeviceMenu.py:381
 #, fuzzy
 #| msgid "Rename device"
 msgid "R_ename device…"
 msgstr "Riemëro pajisjen"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:382
+#: blueman/gui/manager/ManagerDeviceMenu.py:390
 #, fuzzy
 #| msgid "Remove"
 msgid "_Remove…"
@@ -944,12 +944,12 @@ msgid "Not available"
 msgstr "'obexd' nuk është i disponueshëm"
 
 #. translators: device class
-#: blueman/DeviceClass.py:82 blueman/Sdp.py:122 blueman/Sdp.py:163
+#: blueman/DeviceClass.py:82 blueman/Sdp.py:123 blueman/Sdp.py:164
 msgid "Headset"
 msgstr "Kufje"
 
 #. translators: device class
-#: blueman/DeviceClass.py:84 blueman/Sdp.py:144
+#: blueman/DeviceClass.py:84 blueman/Sdp.py:145
 msgid "Handsfree"
 msgstr "Pa duar"
 
@@ -1432,671 +1432,671 @@ msgstr ""
 msgid "Location and Navigation Pod"
 msgstr "Vendi dhe Orientimi"
 
-#: blueman/Sdp.py:87
+#: blueman/Sdp.py:88
 msgid "SDP"
 msgstr "SDP"
 
-#: blueman/Sdp.py:88
+#: blueman/Sdp.py:89
 msgid "UDP"
 msgstr "UDP"
 
-#: blueman/Sdp.py:89
+#: blueman/Sdp.py:90
 msgid "RFCOMM"
 msgstr "RFCOMM"
 
-#: blueman/Sdp.py:90
+#: blueman/Sdp.py:91
 msgid "TCP"
 msgstr "TCP"
 
-#: blueman/Sdp.py:91
+#: blueman/Sdp.py:92
 msgid "TCS-BIN"
 msgstr "TCS-BIN"
 
-#: blueman/Sdp.py:92
+#: blueman/Sdp.py:93
 msgid "TCS-AT"
 msgstr "TCS-AT"
 
-#: blueman/Sdp.py:93
+#: blueman/Sdp.py:94
 msgid "ATT"
 msgstr "ATT"
 
-#: blueman/Sdp.py:94
+#: blueman/Sdp.py:95
 msgid "OBEX"
 msgstr "OBEX"
 
-#: blueman/Sdp.py:95
+#: blueman/Sdp.py:96
 msgid "IP"
 msgstr "IP"
 
-#: blueman/Sdp.py:96
+#: blueman/Sdp.py:97
 msgid "FTP"
 msgstr "FTP"
 
-#: blueman/Sdp.py:97
+#: blueman/Sdp.py:98
 msgid "HTTP"
 msgstr "HTTP"
 
-#: blueman/Sdp.py:98
+#: blueman/Sdp.py:99
 msgid "WSP"
 msgstr "WSP"
 
-#: blueman/Sdp.py:99
+#: blueman/Sdp.py:100
 msgid "BNEP"
 msgstr "BNEP"
 
-#: blueman/Sdp.py:100
+#: blueman/Sdp.py:101
 msgid "UPnP/ESDP"
 msgstr "UPnP/ESDP"
 
-#: blueman/Sdp.py:101
+#: blueman/Sdp.py:102
 msgid "HIDP"
 msgstr "HIDP"
 
-#: blueman/Sdp.py:102
+#: blueman/Sdp.py:103
 msgid "Hardcopy Control Channel"
 msgstr "Kanali i Kontrollit të Printim/Skanimit"
 
-#: blueman/Sdp.py:103
+#: blueman/Sdp.py:104
 msgid "Hardcopy Data Channel"
 msgstr "Kanali i të Dhënave të Printim/Skanimit"
 
-#: blueman/Sdp.py:104
+#: blueman/Sdp.py:105
 msgid "Hardcopy Notification"
 msgstr "Njoftimi për Printim/Skanim"
 
-#: blueman/Sdp.py:105
+#: blueman/Sdp.py:106
 #, fuzzy
 msgid "AVCTP"
 msgstr "AVCTP"
 
-#: blueman/Sdp.py:106
+#: blueman/Sdp.py:107
 #, fuzzy
 msgid "AVDTP"
 msgstr "AVDTP"
 
-#: blueman/Sdp.py:107
+#: blueman/Sdp.py:108
 #, fuzzy
 msgid "CMTP"
 msgstr "CMTP"
 
-#: blueman/Sdp.py:108
+#: blueman/Sdp.py:109
 msgid "UDI_C-Plane"
 msgstr "Plani UDI_C"
 
-#: blueman/Sdp.py:109 blueman/Sdp.py:110
+#: blueman/Sdp.py:110 blueman/Sdp.py:111
 msgid "Multi-Channel Adaptation Protocol (MCAP)"
 msgstr "Protokolli i Përshtatjes Shumë-Kanalëshe (MCAP)"
 
-#: blueman/Sdp.py:111
+#: blueman/Sdp.py:112
 #, fuzzy
 msgid "L2CAP"
 msgstr "L2CAP"
 
-#: blueman/Sdp.py:112
+#: blueman/Sdp.py:113
 msgid "ServiceDiscoveryServerServiceClassID"
 msgstr ""
 
-#: blueman/Sdp.py:113
+#: blueman/Sdp.py:114
 msgid "BrowseGroupDescriptorServiceClassID"
 msgstr ""
 
-#: blueman/Sdp.py:114
+#: blueman/Sdp.py:115
 msgid "Public Browse Group"
 msgstr "Grup Publik Shfletimi"
 
-#: blueman/Sdp.py:115
+#: blueman/Sdp.py:116
 msgid "Serial Port"
 msgstr "Portë Seriale"
 
-#: blueman/Sdp.py:116
+#: blueman/Sdp.py:117
 msgid "LAN Access Using PPP"
 msgstr "Hyrje në LAN duke përdorur PPP"
 
-#: blueman/Sdp.py:117
+#: blueman/Sdp.py:118
 msgid "Dialup Networking (DUN)"
 msgstr "Hyrje rrjeti nëpërmjet telefonisë"
 
-#: blueman/Sdp.py:118
+#: blueman/Sdp.py:119
 msgid "IrMC Sync"
 msgstr ""
 
-#: blueman/Sdp.py:119
+#: blueman/Sdp.py:120
 msgid "OBEX Object Push"
 msgstr "Shtytje Objekti OBEX"
 
-#: blueman/Sdp.py:120
+#: blueman/Sdp.py:121
 msgid "OBEX File Transfer"
 msgstr "Transferim dokumenti OBEX"
 
-#: blueman/Sdp.py:121
+#: blueman/Sdp.py:122
 msgid "IrMC Sync Command"
 msgstr "Komanda e sinkronizimit IrMC"
 
-#: blueman/Sdp.py:123
+#: blueman/Sdp.py:124
 msgid "Cordless Telephony"
 msgstr "Telefon pa tel"
 
-#: blueman/Sdp.py:124
+#: blueman/Sdp.py:125
 msgid "Audio Source"
 msgstr "Burim Zëri"
 
-#: blueman/Sdp.py:125
+#: blueman/Sdp.py:126
 msgid "Audio Sink"
 msgstr "\"Vesh\" zëri"
 
-#: blueman/Sdp.py:126
+#: blueman/Sdp.py:127
 msgid "Remote Control Target"
 msgstr "Objektiv për pult"
 
-#: blueman/Sdp.py:127
+#: blueman/Sdp.py:128
 msgid "Advanced Audio"
 msgstr "Zë i Avancuar"
 
-#: blueman/Sdp.py:128
+#: blueman/Sdp.py:129
 msgid "Remote Control"
 msgstr "Pult"
 
-#: blueman/Sdp.py:129
+#: blueman/Sdp.py:130
 msgid "Video Conferencing"
 msgstr "Konference Video"
 
-#: blueman/Sdp.py:130
+#: blueman/Sdp.py:131
 msgid "Intercom"
 msgstr "Ndërkomunikacion"
 
-#: blueman/Sdp.py:131
+#: blueman/Sdp.py:132
 msgid "Fax"
 msgstr "Faks"
 
-#: blueman/Sdp.py:132
+#: blueman/Sdp.py:133
 msgid "Headset Audio Gateway"
 msgstr ""
 
-#: blueman/Sdp.py:133
+#: blueman/Sdp.py:134
 #, fuzzy
 msgid "WAP"
 msgstr "WAP"
 
-#: blueman/Sdp.py:134
+#: blueman/Sdp.py:135
 msgid "WAP Client"
 msgstr "Klient WAP"
 
-#: blueman/Sdp.py:135
+#: blueman/Sdp.py:136
 #, fuzzy
 msgid "PANU"
 msgstr "PANU"
 
-#: blueman/Sdp.py:136
+#: blueman/Sdp.py:137
 msgid "Network Access Point"
 msgstr "Pikë Hyrëse e Rrjetit"
 
-#: blueman/Sdp.py:137
+#: blueman/Sdp.py:138
 msgid "Group Network"
 msgstr "Rrjet Grupi"
 
-#: blueman/Sdp.py:138
+#: blueman/Sdp.py:139
 msgid "DirectPrinting (BPP)"
 msgstr "Printim Direkt (BPP)"
 
-#: blueman/Sdp.py:139
+#: blueman/Sdp.py:140
 msgid "ReferencePrinting (BPP)"
 msgstr ""
 
-#: blueman/Sdp.py:140
+#: blueman/Sdp.py:141
 msgid "Imaging (BIP)"
 msgstr ""
 
-#: blueman/Sdp.py:141
+#: blueman/Sdp.py:142
 msgid "ImagingResponder (BIP)"
 msgstr ""
 
-#: blueman/Sdp.py:142
+#: blueman/Sdp.py:143
 msgid "ImagingAutomaticArchive (BIP)"
 msgstr ""
 
-#: blueman/Sdp.py:143
+#: blueman/Sdp.py:144
 msgid "ImagingReferencedObjects (BIP)"
 msgstr ""
 
-#: blueman/Sdp.py:145
+#: blueman/Sdp.py:146
 msgid "Handsfree Audio Gateway"
 msgstr ""
 
-#: blueman/Sdp.py:146
+#: blueman/Sdp.py:147
 msgid "DirectPrintingReferenceObjectsService (BPP)"
 msgstr ""
 
-#: blueman/Sdp.py:147
+#: blueman/Sdp.py:148
 msgid "ReflectedUI (BPP)"
 msgstr ""
 
-#: blueman/Sdp.py:148
+#: blueman/Sdp.py:149
 msgid "Basic Printing (BPP)"
 msgstr "Printimi Base (BPP)"
 
-#: blueman/Sdp.py:149
+#: blueman/Sdp.py:150
 msgid "Printing Status (BPP)"
 msgstr "Gjendja e Printimit"
 
-#: blueman/Sdp.py:150
+#: blueman/Sdp.py:151
 msgid "Human Interface Device Service (HID)"
 msgstr "Sherbimi i Pajisjes së Ndërfaqes për Persona (HID)"
 
-#: blueman/Sdp.py:151
+#: blueman/Sdp.py:152
 msgid "HardcopyCableReplacement (HCR)"
 msgstr "Zëvendësimi i Kabllit tv Printim/Skanimit (HCR)"
 
-#: blueman/Sdp.py:152
+#: blueman/Sdp.py:153
 msgid "HCR_Print (HCR)"
 msgstr "_Printim HCR (HCR)"
 
-#: blueman/Sdp.py:153
+#: blueman/Sdp.py:154
 msgid "HCR_Scan (HCR)"
 msgstr "_Skanim HCR (HCR)"
 
-#: blueman/Sdp.py:154
+#: blueman/Sdp.py:155
 msgid "Common ISDN Access (CIP)"
 msgstr "Hyrje e Përbashkët ISDN (CIP)"
 
-#: blueman/Sdp.py:155
+#: blueman/Sdp.py:156
 msgid "VideoConferencingGW (VCP)"
 msgstr ""
 
-#: blueman/Sdp.py:156
+#: blueman/Sdp.py:157
 msgid "UDI-MT"
 msgstr ""
 
-#: blueman/Sdp.py:157
+#: blueman/Sdp.py:158
 msgid "UDI-TA"
 msgstr ""
 
-#: blueman/Sdp.py:158
+#: blueman/Sdp.py:159
 msgid "Audio/Video"
 msgstr "Zë/Figurë"
 
-#: blueman/Sdp.py:159
+#: blueman/Sdp.py:160
 msgid "SIM Access (SAP)"
 msgstr "Hyrje SIM (SAP)"
 
-#: blueman/Sdp.py:160
+#: blueman/Sdp.py:161
 msgid "Phonebook Access (PBAP) - PCE"
 msgstr "Hyrje për Librin e Telefonave (PBAP) - PCE"
 
-#: blueman/Sdp.py:161
+#: blueman/Sdp.py:162
 msgid "Phonebook Access (PBAP) - PSE"
 msgstr "Hyrje për Librin e Telefonave (PBAP) - PSE"
 
-#: blueman/Sdp.py:162
+#: blueman/Sdp.py:163
 msgid "Phonebook Access (PBAP)"
 msgstr "Hyrje për Librin e Telefonave (PBAP)"
 
-#: blueman/Sdp.py:164
+#: blueman/Sdp.py:165
 msgid "Message Access Server"
 msgstr "Shërbyes për Hyrjen e Mesazheve"
 
-#: blueman/Sdp.py:165
+#: blueman/Sdp.py:166
 msgid "Message Notification Server"
 msgstr "Shërbyes për Mesazhet Njoftuese"
 
-#: blueman/Sdp.py:166
+#: blueman/Sdp.py:167
 msgid "Message Access Profile (MAP)"
 msgstr "Profili i Hyrjes së Mesazheve (MAP)"
 
-#: blueman/Sdp.py:167
+#: blueman/Sdp.py:168
 #, fuzzy
 msgid "GNSS"
 msgstr "GNSS"
 
-#: blueman/Sdp.py:168
+#: blueman/Sdp.py:169
 msgid "GNSS Server"
 msgstr "Shërbyes GNSS"
 
-#: blueman/Sdp.py:169
+#: blueman/Sdp.py:170
 msgid "3D Display"
 msgstr "Ekran 3D"
 
-#: blueman/Sdp.py:170
+#: blueman/Sdp.py:171
 msgid "3D Glasses"
 msgstr "Gjyslyke 3D"
 
-#: blueman/Sdp.py:171
+#: blueman/Sdp.py:172
 msgid "3D Synchronization (3DSP)"
 msgstr "Sinkronizim 3D (3DSP)"
 
-#: blueman/Sdp.py:172
+#: blueman/Sdp.py:173
 msgid "Multi-Profile Specification (MPS) Profile"
 msgstr "Profili Specifikim Shumë-Profilësh (MPS)"
 
-#: blueman/Sdp.py:173
+#: blueman/Sdp.py:174
 msgid "Multi-Profile Specification (MPS) Service"
 msgstr "Sherbimi Specifikim Shumë-Profilësh (MPS)"
 
-#: blueman/Sdp.py:174
+#: blueman/Sdp.py:175
 msgid "Calendar, Task, and Notes (CTN) Access Service"
 msgstr "Shërbimi i Hyrjes Kalendar, Detyrë dhe Shënime (CTN)"
 
-#: blueman/Sdp.py:175
+#: blueman/Sdp.py:176
 msgid "Calendar, Task, and Notes (CTN) Notification Service"
 msgstr "Shërbimi i Njoftimeve Kalendar, Detyrë dhe Shënime (CTN)"
 
-#: blueman/Sdp.py:176
+#: blueman/Sdp.py:177
 msgid "Calendar, Task, and Notes (CTN) Profile"
 msgstr "Profili Kalendar, Detyrë dhe Shënime (CTN)"
 
-#: blueman/Sdp.py:177
+#: blueman/Sdp.py:178
 msgid "PnP Information"
 msgstr "Informacioni PnP"
 
-#: blueman/Sdp.py:178
+#: blueman/Sdp.py:179
 msgid "Generic Networking"
 msgstr "Aktivitete Gjenerike të Rrjetit"
 
-#: blueman/Sdp.py:179
+#: blueman/Sdp.py:180
 msgid "Generic FileTransfer"
 msgstr "Transferim Gjenerik Dokumentash"
 
-#: blueman/Sdp.py:180
+#: blueman/Sdp.py:181
 msgid "Generic Audio"
 msgstr "Zë Gjenerik"
 
-#: blueman/Sdp.py:181
+#: blueman/Sdp.py:182
 msgid "Generic Telephony"
 msgstr "Telefoni Gjenerike"
 
-#: blueman/Sdp.py:182
+#: blueman/Sdp.py:183
 msgid "Video Source"
 msgstr "Burim Figure"
 
-#: blueman/Sdp.py:183
+#: blueman/Sdp.py:184
 msgid "Video Sink"
 msgstr "Tregues Figure"
 
-#: blueman/Sdp.py:184
+#: blueman/Sdp.py:185
 msgid "Video Distribution"
 msgstr "Shpërndarje Figure"
 
-#: blueman/Sdp.py:185
+#: blueman/Sdp.py:186
 #, fuzzy
 msgid "HDP"
 msgstr "HDP"
 
-#: blueman/Sdp.py:186
+#: blueman/Sdp.py:187
 msgid "HDP Source"
 msgstr "Burim HDP"
 
-#: blueman/Sdp.py:187
+#: blueman/Sdp.py:188
 msgid "HDP Sink"
 msgstr "Tregues HDP"
 
-#: blueman/Sdp.py:188
+#: blueman/Sdp.py:189
 msgid "Generic Access"
 msgstr "Hyrje Gjenerike"
 
-#: blueman/Sdp.py:189
+#: blueman/Sdp.py:190
 msgid "Generic Attribute"
 msgstr "Atribut Gjenerik"
 
-#: blueman/Sdp.py:190
+#: blueman/Sdp.py:191
 msgid "Immediate Alert"
 msgstr "Njoftim Imediat"
 
-#: blueman/Sdp.py:191
+#: blueman/Sdp.py:192
 msgid "Link Loss"
 msgstr "Humbje Lidhjeje"
 
-#: blueman/Sdp.py:192
+#: blueman/Sdp.py:193
 msgid "Tx Power"
 msgstr "Fuqi Transmetimi"
 
-#: blueman/Sdp.py:193
+#: blueman/Sdp.py:194
 #, fuzzy
 #| msgid "Rename device"
 msgid "Current Time Service"
 msgstr "Riemëro pajisjen"
 
-#: blueman/Sdp.py:194
+#: blueman/Sdp.py:195
 msgid "Reference Time Update Service"
 msgstr "Sherbim Referent për Përditësimin e Kohës"
 
-#: blueman/Sdp.py:195
+#: blueman/Sdp.py:196
 msgid "Next DST Change Service"
 msgstr "Shërbimi për Ndërrimin Pasardhës DST"
 
-#: blueman/Sdp.py:196
+#: blueman/Sdp.py:197
 msgid "Glucose"
 msgstr "Glukoze"
 
-#: blueman/Sdp.py:197
+#: blueman/Sdp.py:198
 msgid "Health Thermometer"
 msgstr "Termometer Shëndeti"
 
-#: blueman/Sdp.py:198
+#: blueman/Sdp.py:199
 msgid "Device Information"
 msgstr "Informacion Pajisjeje"
 
-#: blueman/Sdp.py:199
+#: blueman/Sdp.py:200
 msgid "Heart Rate"
 msgstr "Pulsi i Zëmrës"
 
-#: blueman/Sdp.py:200
+#: blueman/Sdp.py:201
 msgid "Phone Alert Status Service"
 msgstr "Shërbimi i Gjëndjes së Njoftimeve Telefonike"
 
-#: blueman/Sdp.py:201
+#: blueman/Sdp.py:202
 #, fuzzy
 #| msgid "Service:"
 msgid "Battery Service"
 msgstr "Shërbimet:"
 
-#: blueman/Sdp.py:202
+#: blueman/Sdp.py:203
 msgid "Blood Pressure"
 msgstr "Tensioni i Gjakut"
 
-#: blueman/Sdp.py:203
+#: blueman/Sdp.py:204
 msgid "Alert Notification Service"
 msgstr "Shërbimi i Njoftimeve të Sinjaleve"
 
-#: blueman/Sdp.py:204
+#: blueman/Sdp.py:205
 msgid "Human Interface Device"
 msgstr "Pajisje Ndërfaqore Personash"
 
-#: blueman/Sdp.py:205
+#: blueman/Sdp.py:206
 msgid "Scan Parameters"
 msgstr "Parametrat e Skanimit"
 
-#: blueman/Sdp.py:206
+#: blueman/Sdp.py:207
 msgid "Running Speed and Cadence"
 msgstr "Shpejtësia dhe Ritmi i Vrapimit"
 
-#: blueman/Sdp.py:207
+#: blueman/Sdp.py:208
 msgid "Automation IO"
 msgstr "Automotizimi i Hyrje/Daljes (IO)"
 
-#: blueman/Sdp.py:208
+#: blueman/Sdp.py:209
 msgid "Cycling Speed and Cadence"
 msgstr "Shpejtësia dhe Ritmi i Biçikletës"
 
-#: blueman/Sdp.py:209
+#: blueman/Sdp.py:210
 msgid "Cycling Power"
 msgstr "Fuqia e Ngarjes së Biçikletës"
 
-#: blueman/Sdp.py:210
+#: blueman/Sdp.py:211
 msgid "Location and Navigation"
 msgstr "Vendi dhe Orientimi"
 
-#: blueman/Sdp.py:211
+#: blueman/Sdp.py:212
 msgid "Environmental Sensing"
 msgstr "Dallimi i Mjedisit"
 
-#: blueman/Sdp.py:212
+#: blueman/Sdp.py:213
 msgid "Body Composition"
 msgstr "Përbërja e Trupit"
 
-#: blueman/Sdp.py:213
+#: blueman/Sdp.py:214
 msgid "User Data"
 msgstr "Të Dhënat e Përdoruesit"
 
-#: blueman/Sdp.py:214
+#: blueman/Sdp.py:215
 msgid "Weight Scale"
 msgstr "Peshorja"
 
-#: blueman/Sdp.py:215
+#: blueman/Sdp.py:216
 msgid "Bond Management"
 msgstr ""
 
-#: blueman/Sdp.py:216
+#: blueman/Sdp.py:217
 msgid "Continuous Glucose Monitoring"
 msgstr "Vëzhgimi i Vazhduar i Glukozës"
 
-#: blueman/Sdp.py:217
+#: blueman/Sdp.py:218
 msgid "Internet Protocol Support"
 msgstr "Mbështetja a Protokollit të Internetit (IP)"
 
-#: blueman/Sdp.py:218
+#: blueman/Sdp.py:219
 msgid "Indoor Positioning"
 msgstr "Vendndodhja Brënda"
 
-#: blueman/Sdp.py:219
+#: blueman/Sdp.py:220
 msgid "Pulse Oximeter"
 msgstr "Matësi i Oksigjenit"
 
-#: blueman/Sdp.py:220
+#: blueman/Sdp.py:221
 msgid "HTTP Proxy"
 msgstr ""
 
-#: blueman/Sdp.py:221
+#: blueman/Sdp.py:222
 msgid "Transport Discovery"
 msgstr "Zbulimi i Transportit"
 
-#: blueman/Sdp.py:222
+#: blueman/Sdp.py:223
 msgid "Object Transfer"
 msgstr "Transferimi i Objekteve"
 
-#: blueman/Sdp.py:223
+#: blueman/Sdp.py:224
 msgid "AppleAgent"
 msgstr ""
 
-#: blueman/Sdp.py:224
+#: blueman/Sdp.py:225
 #, fuzzy
 #| msgid "Service:"
 msgid "Primary Service"
 msgstr "Shërbimet:"
 
-#: blueman/Sdp.py:225
+#: blueman/Sdp.py:226
 #, fuzzy
 #| msgid "Rename device"
 msgid "Secondary Service"
 msgstr "Riemëro pajisjen"
 
-#: blueman/Sdp.py:226
+#: blueman/Sdp.py:227
 msgid "Include"
 msgstr "Përfshi"
 
-#: blueman/Sdp.py:227
+#: blueman/Sdp.py:228
 msgid "Characteristic Declaration"
 msgstr "Deklarim Karakteristike"
 
-#: blueman/Sdp.py:228
+#: blueman/Sdp.py:229
 #, fuzzy
 #| msgid "Device"
 msgid "Device Name"
 msgstr "Dispozitivi"
 
-#: blueman/Sdp.py:229
+#: blueman/Sdp.py:230
 msgid "Appearance"
 msgstr "Dukje"
 
-#: blueman/Sdp.py:230
+#: blueman/Sdp.py:231
 msgid "Peripheral Privacy Flag"
 msgstr "Flamuri i Privacisë Periferike"
 
-#: blueman/Sdp.py:231
+#: blueman/Sdp.py:232
 msgid "Reconnection Address"
 msgstr "Adresa e Rilidhjes"
 
-#: blueman/Sdp.py:232
+#: blueman/Sdp.py:233
 msgid "Peripheral Preferred Connection Parameters"
 msgstr "Parametrat a Lidhjes së Preferuar Periferike"
 
-#: blueman/Sdp.py:233
+#: blueman/Sdp.py:234
 #, fuzzy
 #| msgid "Service:"
 msgid "Service Changed"
 msgstr "Shërbimet:"
 
-#: blueman/Sdp.py:234
+#: blueman/Sdp.py:235
 msgid "System ID"
 msgstr "ID a Sistemit"
 
-#: blueman/Sdp.py:235
+#: blueman/Sdp.py:236
 msgid "Model Number String"
 msgstr "Vargu i Numrit të Modelit"
 
-#: blueman/Sdp.py:236
+#: blueman/Sdp.py:237
 msgid "Serial Number String"
 msgstr "Vargu i Numrit Serial"
 
-#: blueman/Sdp.py:237
+#: blueman/Sdp.py:238
 msgid "Firmware Revision String"
 msgstr "Vargu i Rishikimit të Firmware-it"
 
-#: blueman/Sdp.py:238
+#: blueman/Sdp.py:239
 msgid "Hardware Revision String"
 msgstr "Vargu i Rishikimit të Hardware-it"
 
-#: blueman/Sdp.py:239
+#: blueman/Sdp.py:240
 msgid "Software Revision String"
 msgstr "Vargu i Rishikimit të Software-it"
 
-#: blueman/Sdp.py:240
+#: blueman/Sdp.py:241
 msgid "Manufacturer Name String"
 msgstr "Vargu i Emrit të Prodhuesit"
 
-#: blueman/Sdp.py:241
+#: blueman/Sdp.py:242
 msgid "PnP ID"
 msgstr "ID e PnP"
 
-#: blueman/Sdp.py:242
+#: blueman/Sdp.py:243
 msgid "Characteristic Extended Properties"
 msgstr ""
 
-#: blueman/Sdp.py:243
+#: blueman/Sdp.py:244
 msgid "Characteristic User Description"
 msgstr ""
 
-#: blueman/Sdp.py:244
+#: blueman/Sdp.py:245
 msgid "Client Characteristic Configuration"
 msgstr ""
 
-#: blueman/Sdp.py:245
+#: blueman/Sdp.py:246
 msgid "Server Characteristic Configuration"
 msgstr ""
 
-#: blueman/Sdp.py:246
+#: blueman/Sdp.py:247
 msgid "Characteristic Presentation Format"
 msgstr ""
 
-#: blueman/Sdp.py:247
+#: blueman/Sdp.py:248
 msgid "Characteristic Aggregate Format"
 msgstr ""
 
-#: blueman/Sdp.py:248
+#: blueman/Sdp.py:249
 msgid "Valid Range"
 msgstr ""
 
-#: blueman/Sdp.py:249
+#: blueman/Sdp.py:250
 msgid "External Report Reference"
 msgstr ""
 
-#: blueman/Sdp.py:250
+#: blueman/Sdp.py:251
 msgid "Report Reference"
 msgstr ""
 
-#: blueman/Sdp.py:377
+#: blueman/Sdp.py:378
 msgid "Auto connect profiles"
 msgstr ""
 
-#: blueman/Sdp.py:379
+#: blueman/Sdp.py:380
 msgid "Proprietary"
 msgstr ""
 
@@ -2169,6 +2169,7 @@ msgstr ""
 
 #. https://github.com/python/mypy/issues/2608
 #: blueman/plugins/applet/AutoConnect.py:46
+#: blueman/plugins/applet/ConnectionNotifier.py:21
 #: blueman/plugins/applet/RecentConns.py:219
 #: blueman/plugins/applet/PPPSupport.py:75
 msgid "Connected"
@@ -2178,6 +2179,16 @@ msgstr "i lidhur"
 #, python-format
 msgid "Automatically connected to %(service)s on %(device)s"
 msgstr ""
+
+#: blueman/plugins/applet/ConnectionNotifier.py:13
+msgid "Shows desktop notifications when devices get connected or disconnected."
+msgstr ""
+
+#: blueman/plugins/applet/ConnectionNotifier.py:21
+#, fuzzy
+#| msgid "Disconnecting..."
+msgid "Disconnected"
+msgstr "Duke u shkëputur ..."
 
 #: blueman/plugins/applet/NetUsage.py:154
 #: blueman/plugins/applet/NetUsage.py:265
@@ -2459,6 +2470,12 @@ msgstr ""
 
 #: blueman/plugins/applet/AppIndicator.py:17
 msgid "Uses libappindicator to show a statusicon"
+msgstr ""
+
+#: blueman/plugins/applet/Battery.py:14
+msgid ""
+"Shows desktop notifications with battery percentage when devices get "
+"connected."
 msgstr ""
 
 #: blueman/plugins/applet/DisconnectItems.py:14
