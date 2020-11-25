@@ -55,7 +55,6 @@ def show_about_dialog(app_name: str, run: bool = True, parent: Optional[Gtk.Wind
     about.set_transient_for(parent)
     about.set_name(app_name)
     about.set_version(VERSION)
-    about.set_translator_credits(_("translator-credits"))
     about.set_copyright('Copyright © 2008 Valmantas Palikša\n'
                         'Copyright © 2008 Tadas Dailyda\n'
                         f'Copyright © 2008 - {datetime.now().year} blueman project'
