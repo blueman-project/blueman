@@ -18,6 +18,7 @@
 * Allow opening device menus via keyboard (Shift+F10 or menu key)
 * Add Ctrl+Q and Ctrl+W accelerators for closing blueman-manager
 * Allow cancelling device connection attempts
+* Improved passkey handling (fixed padding, highlighting, single notifitication)
 
 ### Bugs fixed
 
