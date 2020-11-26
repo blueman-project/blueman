@@ -10,7 +10,7 @@ from blueman.bluez.Device import Device
 from blueman.bluez.AgentManager import AgentManager
 from blueman.Sdp import ServiceUUID
 from blueman.Constants import PKGDATA_DIR
-from blueman.gui.Notification import Notification
+from blueman.gui.Notification import Notification, _NotificationBubble, _NotificationDialog
 from blueman.main.Builder import Builder
 from blueman.main.DbusService import DbusService, DbusError
 
@@ -95,6 +95,7 @@ class BluezAgent(DbusService):
         self.dialog: Optional[Gtk.Dialog] = None
         self._db: Optional[ElementTree.ElementTree] = None
         self._devhandlerids: Dict[str, int] = {}
+        self._notification: Optional[Union[_NotificationBubble, _NotificationDialog]] = None
 
     def register_agent(self) -> None:
         logging.info("Register Agent")
@@ -220,10 +221,12 @@ class BluezAgent(DbusService):
         logging.info("Agent.Cancel")
         if self.dialog:
             self.dialog.response(Gtk.ResponseType.REJECT)
-        try:
-            self.n.close()
-        except AttributeError:
-            pass
+        self._close()
+
+    def _close(self) -> None:
+        if self._notification is not None:
+            self._notification.close()
+            self._notification = None
 
     def _on_request_pin_code(self, device_path: str, ok: Callable[[str], None],
                              err: Callable[[Union[BluezErrorCanceled, BluezErrorRejected]], None]) -> None:
@@ -248,14 +251,17 @@ class BluezAgent(DbusService):
         if self.dialog:
             self.dialog.present()
 
-    def _on_display_passkey(self, device: str, passkey: int, _entered: int) -> None:
-        logging.info(f"DisplayPasskey ({device}, {passkey:d})")
+    def _on_display_passkey(self, device: str, passkey: int, entered: int) -> None:
+        logging.info(f"DisplayPasskey ({device}, {passkey:d} {entered:d})")
         dev = Device(obj_path=device)
         self._devhandlerids[device] = dev.connect_signal("property-changed", self._on_device_property_changed)
 
-        notify_message = _("Pairing passkey for") + f" {self.get_device_string(device)}: {passkey}"
-        self.n = Notification("Bluetooth", notify_message, 0, icon_name="blueman")
-        self.n.show()
+        key = f"{passkey:06}"
+        notify_message = _("Pairing passkey for") + f" {self.get_device_string(device)}: " \
+                                                    f"{key[:entered]}<b>{key[entered]}</b>{key[entered+1:]}"
+        self._close()
+        self._notification = Notification("Bluetooth", notify_message, 0, icon_name="blueman")
+        self._notification.show()
 
     def _on_display_pin_code(self, device: str, pin_code: str) -> None:
         logging.info(f'DisplayPinCode ({device}, {pin_code})')
@@ -263,8 +269,8 @@ class BluezAgent(DbusService):
         self._devhandlerids[device] = dev.connect_signal("property-changed", self._on_device_property_changed)
 
         notify_message = _("Pairing PIN code for") + f" {self.get_device_string(device)}: {pin_code}"
-        self.n = Notification("Bluetooth", notify_message, 0, icon_name="blueman")
-        self.n.show()
+        self._notification = Notification("Bluetooth", notify_message, 0, icon_name="blueman")
+        self._notification.show()
 
     def _on_request_confirmation(self, device_path: str, passkey: Optional[int], ok: Callable[[], None],
                                  err: Callable[[BluezErrorCanceled], None]) -> None:
@@ -281,8 +287,9 @@ class BluezAgent(DbusService):
             notify_message += "\n" + _("Confirm value for authentication:") + f" <b>{passkey}</b>"
         actions = [("confirm", _("Confirm")), ("deny", _("Deny"))]
 
-        self.n = Notification("Bluetooth", notify_message, 0, actions, on_confirm_action, icon_name="blueman")
-        self.n.show()
+        self._notification = Notification("Bluetooth", notify_message, 0, actions, on_confirm_action,
+                                          icon_name="blueman")
+        self._notification.show()
 
     def _on_request_authorization(self, device: str, ok: Callable[[], None],
                                   err: Callable[[BluezErrorCanceled], None]) -> None:
