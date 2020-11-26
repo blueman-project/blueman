@@ -186,6 +186,11 @@ class ManagerDeviceMenu(Gtk.Menu):
         elif msg == "Host is down":
             # EHOSTDOWN (Bluetooth errors 0x04 (Page Timeout) or 0x3c (Advertising Timeout))
             msg = _("Device did not respond")
+        elif msg == "Resource temporarily unavailable":
+            # EAGAIN
+            logging.warning("bluetoothd reported resource temporarily unavailable. "
+                            "Retry or check its logs for context.")
+            msg = _("Resource temporarily unavailable")
 
         if msg != "Cancelled":
             MessageArea.show_message(_("Connection Failed: ") + msg)
