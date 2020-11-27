@@ -284,7 +284,7 @@ class BluezAgent(DbusService):
         notify_message = _("Pairing request for:") + f"\n{self.get_device_string(device_path)}"
 
         if passkey:
-            notify_message += "\n" + _("Confirm value for authentication:") + f" <b>{passkey}</b>"
+            notify_message += "\n" + _("Confirm value for authentication:") + f" <b>{passkey:06}</b>"
         actions = [("confirm", _("Confirm")), ("deny", _("Deny"))]
 
         self._notification = Notification("Bluetooth", notify_message, 0, actions, on_confirm_action,
