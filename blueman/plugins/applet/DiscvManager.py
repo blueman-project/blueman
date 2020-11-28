@@ -73,6 +73,11 @@ class DiscvManager(AppletPlugin):
         except DBusNoSuchAdapterError:
             self.adapter = None
 
+    def on_adapter_added(self, path: str) -> None:
+        if self.adapter is None:
+            self.init_adapter()
+            self.update_menuitems()
+
     def on_adapter_removed(self, path: str) -> None:
         logging.info(path)
         if self.adapter is None:
