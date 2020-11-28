@@ -139,9 +139,8 @@ class DeviceList(GenericList):
         if not self.Adapter or self.Adapter.get_object_path() != path:
             return
 
-        if key == "Discovering":
-            if not value and self.discovering:
-                self.stop_discovery()
+        if key == "Discovering" and not value:
+            self.discovering = False
 
         self.emit("adapter-property-changed", self.Adapter, (key, value))
 
