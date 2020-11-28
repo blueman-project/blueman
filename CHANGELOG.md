@@ -23,6 +23,7 @@
 
 * Fix disconnecting NMDevice
 * Exceptions from asynchronous DBus calls (getting picked up by tools like Apport or ABRT)
+* DiscvManager plugin showed its icon unreliably
 
 ## 2.1.4
 
