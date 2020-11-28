@@ -70,6 +70,7 @@ class DeviceList(GenericList):
         self.__discovery_time: float = 0
         self.__adapter_path: Optional[str] = None
         self.Adapter: Optional[Adapter] = None
+        self.discovering = False
 
         data = tabledata + [
             {"id": "device", "type": object},
@@ -137,6 +138,10 @@ class DeviceList(GenericList):
     def _on_property_changed(self, _adapter: AnyAdapter, key: str, value: object, path: str) -> None:
         if not self.Adapter or self.Adapter.get_object_path() != path:
             return
+
+        if key == "Discovering":
+            if not value and self.discovering:
+                self.stop_discovery()
 
         self.emit("adapter-property-changed", self.Adapter, (key, value))
 
@@ -238,7 +243,7 @@ class DeviceList(GenericList):
 
     def set_adapter(self, adapter: Optional[str] = None) -> None:
         self.clear()
-        if self.Adapter is not None and self.Adapter["Discovering"]:
+        if self.discovering:
             self.stop_discovery()
             self.emit("adapter-property-changed", self.Adapter, ("Discovering", False))
 
@@ -266,7 +271,7 @@ class DeviceList(GenericList):
         self.emit("adapter-changed", self.__adapter_path)
 
     def update_progress(self, time: float, totaltime: float) -> bool:
-        if self.Adapter is None or not self.Adapter["Discovering"]:
+        if not self.discovering:
             return False
 
         self.__discovery_time += time
@@ -311,13 +316,13 @@ class DeviceList(GenericList):
 
     def discover_devices(self, time: float = 10.24,
                          error_handler: Optional[Callable[[BluezDBusException], None]] = None) -> None:
-        if self.Adapter is None or self.Adapter["Discovering"]:
-            return
-
-        self.__discovery_time = 0
-        self.Adapter.start_discovery(error_handler=error_handler)
-        t = 1.0 / 15 * 1000
-        GLib.timeout_add(int(t), self.update_progress, t / 1000, time)
+        if not self.discovering:
+            self.__discovery_time = 0
+            if self.Adapter is not None:
+                self.Adapter.start_discovery(error_handler=error_handler)
+                self.discovering = True
+                t = 1.0 / 15 * 1000
+                GLib.timeout_add(int(t), self.update_progress, t / 1000, time)
 
     def is_valid_adapter(self) -> bool:
         if self.Adapter is None:
@@ -329,6 +334,7 @@ class DeviceList(GenericList):
         return self.__adapter_path if self.is_valid_adapter() else None
 
     def stop_discovery(self) -> None:
+        self.discovering = False
         if self.Adapter is not None:
             self.Adapter.stop_discovery()
 
