@@ -19,6 +19,7 @@
 * Add Ctrl+Q and Ctrl+W accelerators for closing blueman-manager
 * Allow cancelling device connection attempts
 * Improved passkey handling (fixed padding, highlighting, single notifitication)
+* Hide devices with no name
 
 ### Bugs fixed
 
