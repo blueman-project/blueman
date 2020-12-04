@@ -12,7 +12,7 @@ from gi.repository import GLib
 
 from blueman.Functions import open_rfcomm
 
-from blueman.typing import GSignals
+from blueman.bluemantyping import GSignals
 
 pppd_errors = {
     1: "An immediately fatal error of some kind  occurred, such as an essential system call failing, "

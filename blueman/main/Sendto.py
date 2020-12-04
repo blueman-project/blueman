@@ -7,7 +7,7 @@ from typing import List, Iterable, Optional
 from blueman.bluez.Device import Device
 from blueman.bluez.errors import BluezDBusException
 from blueman.main.Builder import Builder
-from blueman.typing import GSignals
+from blueman.bluemantyping import GSignals
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.obex.ObjectPush import ObjectPush
 from blueman.bluez.obex.Manager import Manager

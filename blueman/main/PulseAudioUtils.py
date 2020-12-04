@@ -7,7 +7,7 @@ import weakref
 import logging
 
 from blueman.gobject import SingletonGObjectMeta
-from blueman.typing import GSignals
+from blueman.bluemantyping import GSignals
 
 try:
     libpulse = CDLL("libpulse.so.0")

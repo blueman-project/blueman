@@ -3,7 +3,7 @@ from typing import Dict, List, Optional
 from gi.repository import GObject, GLib
 from gi.repository import Gio
 
-from blueman.typing import GSignals
+from blueman.bluemantyping import GSignals
 
 
 class AnyBase(GObject.GObject):

@@ -5,7 +5,7 @@ from gi.types import GObjectMeta
 from blueman.bluez.errors import parse_dbus_error, BluezDBusException
 import logging
 
-from blueman.typing import GSignals
+from blueman.bluemantyping import GSignals
 
 
 class BaseMeta(GObjectMeta):

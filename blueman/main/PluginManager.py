@@ -12,7 +12,7 @@ from blueman.Functions import bmexit
 from blueman.gui.CommonUi import ErrorDialog
 from blueman.main.Config import Config
 from blueman.plugins.BasePlugin import BasePlugin
-from blueman.typing import GSignals
+from blueman.bluemantyping import GSignals
 
 
 class LoadException(Exception):

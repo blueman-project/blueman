@@ -6,7 +6,7 @@ import socket
 import subprocess
 import logging
 from blueman.Functions import have, get_local_interfaces
-from blueman.typing import GSignals
+from blueman.bluemantyping import GSignals
 
 
 class DhcpClient(GObject.GObject):
