@@ -1,6 +1,5 @@
 # coding=utf-8
 import cairo
-from blueman.bluez.Network import Network
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 from blueman.Functions import create_menuitem
 from blueman.main.DBusProxies import AppletService
