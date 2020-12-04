@@ -13,7 +13,7 @@ blueman_PYTHON = 	\
 	Sdp.py		\
 	Service.py	\
 	gobject.py	\
-	typing.py	\
+	bluemantyping.py	\
 	__init__.py
 
 CLEANFILES =		\

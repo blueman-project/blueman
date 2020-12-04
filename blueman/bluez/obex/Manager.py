@@ -6,7 +6,7 @@ from gi.repository import GObject, Gio
 
 from blueman.bluez.obex.Transfer import Transfer
 from blueman.gobject import SingletonGObjectMeta
-from blueman.typing import GSignals
+from blueman.bluemantyping import GSignals
 
 
 class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):

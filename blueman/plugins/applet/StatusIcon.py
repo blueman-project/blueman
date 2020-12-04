@@ -6,7 +6,7 @@ from gi.repository import GObject, GLib
 from blueman.Functions import launch
 from blueman.main.PluginManager import PluginManager
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.typing import GSignals
+from blueman.bluemantyping import GSignals
 
 
 class StatusIconImplementationProvider:

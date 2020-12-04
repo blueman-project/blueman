@@ -7,7 +7,7 @@ from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device
 from blueman.bluez.errors import DBusNoSuchAdapterError
 from blueman.gobject import SingletonGObjectMeta
-from blueman.typing import GSignals
+from blueman.bluemantyping import GSignals
 
 
 class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):

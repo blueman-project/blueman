@@ -4,7 +4,7 @@ from blueman.bluez.errors import BluezDBusException
 from blueman.bluez.obex.Base import Base
 from gi.repository import GObject, GLib
 
-from blueman.typing import GSignals
+from blueman.bluemantyping import GSignals
 
 
 class Client(Base):
