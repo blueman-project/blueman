@@ -167,7 +167,7 @@ class ManagerDeviceList(DeviceList):
                         if self.menu is None:
                             self.menu = ManagerDeviceMenu(self.Blueman)
 
-                        self.menu.popup(None, None, None, None, event.button, event.time)
+                        self.menu.popup_at_pointer(event)
 
     def get_icon_info(self, icon_name, size=48, fallback=True):
         if icon_name is None and not fallback:
