@@ -25,6 +25,10 @@ class DisconnectItems(AppletPlugin):
         if state:
             self._render()
 
+    def on_adapter_removed(self, path: str) -> None:
+        self._menu.unregister(self)
+        self._render()
+
     def on_device_property_changed(self, path: str, key: str, value: Any) -> None:
         if key == "Connected":
             self._menu.unregister(self)
