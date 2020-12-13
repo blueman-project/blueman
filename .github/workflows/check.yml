@@ -56,7 +56,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: apt-get update
       - run: apt-get install -y -qq --no-install-recommends automake autoconf libtool autopoint gettext libglib2.0-dev python-gi-dev libbluetooth-dev
-      - run: python3 -m pip install cython mypy==0.790 pycairo>=1.16.3
+      - run: python3 -m pip install --upgrade wheel cython mypy==0.790 pycairo>=1.16.3
       - run: ./autogen.sh
       - run: python3 -m mypy -p blueman --strict
         env:
@@ -79,7 +79,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: apt-get update
       - run: apt-get install -y -qq --no-install-recommends automake autoconf libtool autopoint gettext libglib2.0-dev python-gi-dev libbluetooth-dev libgirepository1.0-dev gir1.2-gtk-3.0 gir1.2-appindicator3-0.1 gir1.2-nm-1.0 libpulse0 libpulse-mainloop-glib0
-      - run: python3 -m pip install cython pygobject
+      - run: python3 -m pip install --upgrade wheel cython pygobject
       - run: ./autogen.sh
       - run: make -C module
       - run: touch /dev/rfkill
