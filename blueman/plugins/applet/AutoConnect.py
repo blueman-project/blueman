@@ -1,5 +1,5 @@
 from gettext import gettext as _
-from typing import TYPE_CHECKING, Union, Optional
+from typing import TYPE_CHECKING, Union, Optional, Any
 
 from gi.repository import GLib
 
@@ -33,6 +33,10 @@ class AutoConnect(AppletPlugin):
 
     def on_manager_state_changed(self, state: bool) -> None:
         if state:
+            self._run()
+
+    def on_adapter_property_changed(self, path: str, key: str, value: Any) -> None:
+        if key == "Powered" and value:
             self._run()
 
     def _run(self) -> bool:
