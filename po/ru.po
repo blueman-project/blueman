@@ -14,13 +14,19 @@
 # Дмитрий Михирев, 2017
 # павел назаров <nazar12101@gmail.com>, 2015
 # павел назаров <nazar12101@gmail.com>, 2015
+# Artem <KovalevArtem.ru@gmail.com>, 2020.
+# koffevar <egor.kafisov@gmail.com>, 2020.
+# Serg Bormant <bormant@mail.ru>, 2020.
+# Mihail Iosilevitch <yosik@tutanota.com>, 2020.
+# Andrey F. <firsan777@mail.ru>, 2020.
+# asrelo <syrslava@yandex.ru>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-26 22:08+0000\n"
-"PO-Revision-Date: 2020-09-12 08:19+0000\n"
-"Last-Translator: Christopher Schramm <github@cschramm.eu>\n"
+"POT-Creation-Date: 2020-12-04 23:06+0000\n"
+"PO-Revision-Date: 2020-12-21 11:29+0000\n"
+"Last-Translator: asrelo <syrslava@yandex.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/blueman/stable/"
 "ru/>\n"
 "Language: ru\n"
@@ -30,7 +36,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
-"X-Generator: Weblate 4.3-dev\n"
+"X-Generator: Weblate 4.4-dev\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Visibility Setting</b>"
@@ -158,7 +164,7 @@ msgstr "<b>Службы</b>"
 
 #: ../data/ui/services-network.ui.h:3
 msgid "DHCP server type:"
-msgstr "Тип DHCP сервера"
+msgstr "Тип DHCP сервера:"
 
 #: ../data/ui/services-network.ui.h:4
 msgid "Recommended"
@@ -348,7 +354,7 @@ msgstr "<b>Принято:</b>"
 
 #: ../data/ui/net-usage.ui.h:4
 msgid "<b>Uploaded:</b>"
-msgstr "<b>Отправлено:<b/>"
+msgstr "<b>Отправлено:</b>"
 
 #: ../data/ui/net-usage.ui.h:5
 msgid "<b>Total:</b>"
@@ -542,7 +548,7 @@ msgstr "Сопряжение PIN кода для"
 
 #: ../blueman/main/applet/BluezAgent.py:264
 msgid "Pairing request for:"
-msgstr "Запрос соединения  для:"
+msgstr "Запрос соединения для:"
 
 #: ../blueman/main/applet/BluezAgent.py:267
 msgid "Confirm value for authentication:"
@@ -601,10 +607,8 @@ msgid "Shall bluetooth get enabled automatically?"
 msgstr "Должен ли Bluetooth включаться автоматически?"
 
 #: ../blueman/Functions.py:101
-#, fuzzy
-#| msgid "yes"
 msgid "Yes"
-msgstr "да"
+msgstr "Да"
 
 #: ../blueman/Functions.py:102
 msgid "No"
@@ -663,10 +667,8 @@ msgid "_Search"
 msgstr "П_оиск"
 
 #: ../blueman/gui/manager/ManagerMenu.py:139
-#, fuzzy
-#| msgid "Adapter Preferences"
 msgid "_Preferences"
-msgstr "Настройки адаптеров"
+msgstr "Настройки"
 
 #: ../blueman/gui/manager/ManagerMenu.py:148
 #: ../blueman/plugins/applet/ExitItem.py:15
@@ -679,7 +681,7 @@ msgstr "<b>Доверенные и сопряжённые</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:425
 msgid "<b>Paired</b>"
-msgstr "Связанные"
+msgstr "<b>Связанные</b>"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:427
 msgid "<b>Trusted</b>"
@@ -741,7 +743,7 @@ msgstr "Соединение невозможно или разорвано: "
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:142
 msgid "Disconnection Failed: "
-msgstr "Не удалось отсоединиться:"
+msgstr "Не удалось отсоединиться: "
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:181
 msgid "Disconnecting..."
@@ -793,10 +795,8 @@ msgid "_Setup..."
 msgstr "_Параметры…"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:370
-#, fuzzy
-#| msgid "Rename device"
 msgid "R_ename device..."
-msgstr "Переименовать устройство"
+msgstr "Переименовать устройство…"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:379
 msgid "_Remove..."
@@ -847,7 +847,7 @@ msgstr ""
 
 #: ../blueman/gui/CommonUi.py:44
 msgid "Blueman is a GTK+ Bluetooth manager"
-msgstr "Blueman – это менеджер Bluetooth, построенный на основе GTK+"
+msgstr "Blueman - это диспетчер Bluetooth GTK +"
 
 #: ../blueman/gui/GsmSettings.py:28
 msgid "GSM Settings"
@@ -895,10 +895,8 @@ msgid "Adapter selection"
 msgstr "Выбор адаптера"
 
 #: ../blueman/gui/DeviceSelectorWidget.py:43
-#, fuzzy
-#| msgid "Discoverable… %ss"
 msgid "Discovering…"
-msgstr "Видимый...%ss"
+msgstr "Обнаружение…"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:39 ../blueman/DeviceClass.py:63
@@ -980,12 +978,12 @@ msgstr "микрофон"
 #. translators: device class
 #: ../blueman/DeviceClass.py:119
 msgid "loudspeaker"
-msgstr ""
+msgstr "громкоговоритель"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:121
 msgid "headphones"
-msgstr ""
+msgstr "наушники"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:123
@@ -1118,7 +1116,7 @@ msgstr "BNEP"
 
 #: ../blueman/Sdp.py:111
 msgid "UPnP/ESDP"
-msgstr "UPnP/ESDP"
+msgstr ""
 
 #: ../blueman/Sdp.py:112
 msgid "HIDP"
@@ -1195,20 +1193,16 @@ msgid "OBEX Object Push"
 msgstr ""
 
 #: ../blueman/Sdp.py:131
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "OBEX File Transfer"
-msgstr "Передача файлов через Bluetooth"
+msgstr "Передача файлов через OBEX"
 
 #: ../blueman/Sdp.py:132
 msgid "IrMC Sync Command"
 msgstr ""
 
 #: ../blueman/Sdp.py:133 ../blueman/Sdp.py:174
-#, fuzzy
-#| msgid "headset"
 msgid "Headset"
-msgstr "наушники"
+msgstr "Наушники"
 
 #: ../blueman/Sdp.py:134
 msgid "Cordless Telephony"
@@ -1232,7 +1226,7 @@ msgstr ""
 
 #: ../blueman/Sdp.py:139
 msgid "Remote Control"
-msgstr ""
+msgstr "Удаленный контроль"
 
 #: ../blueman/Sdp.py:140
 msgid "Video Conferencing"
@@ -1240,7 +1234,7 @@ msgstr ""
 
 #: ../blueman/Sdp.py:141
 msgid "Intercom"
-msgstr ""
+msgstr "Интерком"
 
 #: ../blueman/Sdp.py:142
 msgid "Fax"
@@ -1295,10 +1289,8 @@ msgid "ImagingReferencedObjects (BIP)"
 msgstr ""
 
 #: ../blueman/Sdp.py:155
-#, fuzzy
-#| msgid "handsfree"
 msgid "Handsfree"
-msgstr "гарнитура"
+msgstr "Гарнитура"
 
 #: ../blueman/Sdp.py:156
 msgid "Handsfree Audio Gateway"
@@ -1801,20 +1793,20 @@ msgstr "Профиль звука"
 msgid "Select audio profile for PulseAudio"
 msgstr "Выбрать профиль звука для PulseAudio"
 
-#: ../blueman/plugins/manager/Services.py:67
+#: ../blueman/plugins/manager/Services.py:66
 #, python-format
 msgid "Serial Port %s"
 msgstr "Последовательный порт %s"
 
-#: ../blueman/plugins/manager/Services.py:80
+#: ../blueman/plugins/manager/Services.py:79
 msgid "Renew IP Address"
 msgstr "Обновить IP адрес"
 
-#: ../blueman/plugins/manager/Services.py:97
+#: ../blueman/plugins/manager/Services.py:96
 msgid "Dialup Settings"
 msgstr "Настройки службы доступа к сети через модем"
 
-#: ../blueman/plugins/manager/Services.py:106
+#: ../blueman/plugins/manager/Services.py:105
 msgid "Serial Ports"
 msgstr "Последовательные порты"
 
@@ -2094,30 +2086,30 @@ msgstr "Добавляет пункт меню для выхода из прил
 msgid "Provides a basic dhcp client for Bluetooth PAN connections."
 msgstr "Предоставляет базовый dhcp клиент для PAN соединений Bluetooth."
 
-#: ../blueman/plugins/applet/DhcpClient.py:42
-#: ../blueman/plugins/applet/DhcpClient.py:50
-#: ../blueman/plugins/applet/DhcpClient.py:55
+#: ../blueman/plugins/applet/DhcpClient.py:44
+#: ../blueman/plugins/applet/DhcpClient.py:52
+#: ../blueman/plugins/applet/DhcpClient.py:57
 msgid "Bluetooth Network"
 msgstr "Сеть Bluetooth"
 
-#: ../blueman/plugins/applet/DhcpClient.py:43
+#: ../blueman/plugins/applet/DhcpClient.py:45
 #, python-format
 msgid "Interface %(0)s bound to IP address %(1)s"
 msgstr "Интерфейсу %(0)s присвоен IP адрес %(1)s"
 
-#: ../blueman/plugins/applet/DhcpClient.py:50
+#: ../blueman/plugins/applet/DhcpClient.py:52
 #, python-format
 msgid "Failed to obtain an IP address on %s"
 msgstr "Невозможно получить IP адрес на %s"
 
-#: ../blueman/plugins/applet/DhcpClient.py:55
+#: ../blueman/plugins/applet/DhcpClient.py:57
 #, python-format
 msgid ""
 "Trying to obtain an IP address on %s\n"
 "Please wait…"
 msgstr ""
 "Попытка получить IP адрес на %s\n"
-"Пожалуйста подождите..."
+"Пожалуйста, подождите…"
 
 #: ../blueman/plugins/applet/ShowConnected.py:12
 msgid ""
@@ -2149,8 +2141,8 @@ msgid ""
 "Provides a menu item for making the default adapter temporarily visible when "
 "it is set to hidden by default"
 msgstr ""
-"Пункт меню, который позволяет сделать основной адаптер видимым для внешних "
-"устройств, когда по умолчанию установлен режим невидимости."
+"Пункт меню для временного отображения адаптера по умолчанию, если по "
+"умолчанию он скрыт"
 
 #: ../blueman/plugins/applet/DiscvManager.py:23
 msgid "Discoverable timeout"
@@ -2180,7 +2172,7 @@ msgstr "Видимый...%ss"
 msgid ""
 "Provides a menu for the applet and an API for other plugins to manipulate it"
 msgstr ""
-"Предоставляет меню апплета и API для плагинов, позволяющее им управлять."
+"Предоставляет меню для апплета и API для плагинов, позволяющее им управлять"
 
 #: ../blueman/plugins/applet/PPPSupport.py:47
 #, python-format
@@ -2219,12 +2211,12 @@ msgid ""
 "Upon device disconnection the script will be sent a HUP signal</span>"
 msgstr ""
 "<span size=\"small\">Будут переданы следующие аргументы:\n"
-"Адрес устройства, имя, имя службы, uuid16s, нода rfcomm\n"
+"Адрес, имя, название службы, uuid16s, узел rfcomm\n"
 "Например:\n"
 "AA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0\n"
 "uuid16s будет возвращен списком, разделенным запятыми\n"
 "\n"
-"После отключения устройства скрипт передаст сигнал HUP</span>"
+"При отключении устройства скрипту будет отправлен сигнал HUP</span>"
 
 #: ../blueman/plugins/applet/SerialManager.py:58
 msgid "Serial port connected"
@@ -2328,7 +2320,7 @@ msgstr "Плагин сервиса передачи апплета отключ
 
 #: ../data/blueman-adapters.desktop.in.h:2
 msgid "Set Bluetooth Adapter Properties"
-msgstr "Установить свойства адаптеров Bluetooth"
+msgstr "Установить свойства адаптера Bluetooth"
 
 #: ../data/blueman.desktop.in.h:1
 msgid "Blueman Applet"
@@ -2340,11 +2332,11 @@ msgstr "Менеджер Bluetooth Blueman"
 
 #: ../data/blueman-manager.desktop.in.h:1
 msgid "Bluetooth Manager"
-msgstr "Менеджер Bluetooth"
+msgstr "Bluetooth менеджер"
 
 #: ../data/thunar-sendto-blueman.desktop.in.h:1
 msgid "Bluetooth Device"
-msgstr "Устройство Bluetooth"
+msgstr "Устройства Bluetooth"
 
 #: ../data/configs/org.blueman.policy.in.h:1
 msgid "Configure Bluetooth Network"
@@ -2424,11 +2416,11 @@ msgstr "Не подключаться"
 
 #: ../apps/blueman-assistant:235
 msgid "<b>Device added and connected successfully</b>"
-msgstr ""
+msgstr "<b> Устройство добавлено и подключено</b>"
 
 #: ../apps/blueman-assistant:240
 msgid "<b>Device added successfully, but failed to connect</b>"
-msgstr ""
+msgstr "<b> Устройство добавлено, но сбой подключения</b>"
 
 #: ../apps/blueman-assistant:251
 msgid "Start configuration assistant for this device"

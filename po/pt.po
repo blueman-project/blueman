@@ -13,13 +13,14 @@
 # Luis Neves <luisjneves@gmail.com>, 2015
 # Manel Tinoco <maneltinoco@gmail.com>, 2017
 # ssantos <ssantos@web.de>, 2020.
+# Bruno Portela <brunoportela.email@gmail.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-26 22:08+0000\n"
-"PO-Revision-Date: 2020-09-22 16:37+0000\n"
-"Last-Translator: ssantos <ssantos@web.de>\n"
+"POT-Creation-Date: 2020-12-04 23:06+0000\n"
+"PO-Revision-Date: 2020-11-19 12:48+0000\n"
+"Last-Translator: Bruno Portela <brunoportela.email@gmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/blueman/"
 "stable/pt/>\n"
 "Language: pt\n"
@@ -27,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3-dev\n"
+"X-Generator: Weblate 4.4-dev\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Visibility Setting</b>"
@@ -1426,10 +1427,8 @@ msgid "Video Source"
 msgstr "Fonte vídeo"
 
 #: ../blueman/Sdp.py:194
-#, fuzzy
-#| msgid "Audio Sink"
 msgid "Video Sink"
-msgstr "Tema Áudio"
+msgstr "Tema Vídeo"
 
 #: ../blueman/Sdp.py:195
 msgid "Video Distribution"
@@ -1744,20 +1743,20 @@ msgstr "Perfil Áudio"
 msgid "Select audio profile for PulseAudio"
 msgstr "Selecionar perfil áudio para PulseAudio"
 
-#: ../blueman/plugins/manager/Services.py:67
+#: ../blueman/plugins/manager/Services.py:66
 #, python-format
 msgid "Serial Port %s"
 msgstr "Porta de Série %s"
 
-#: ../blueman/plugins/manager/Services.py:80
+#: ../blueman/plugins/manager/Services.py:79
 msgid "Renew IP Address"
 msgstr "Renovar Endereço IP"
 
-#: ../blueman/plugins/manager/Services.py:97
+#: ../blueman/plugins/manager/Services.py:96
 msgid "Dialup Settings"
 msgstr "Definições de Ligação telefónica"
 
-#: ../blueman/plugins/manager/Services.py:106
+#: ../blueman/plugins/manager/Services.py:105
 msgid "Serial Ports"
 msgstr "Portas Série"
 
@@ -1989,7 +1988,7 @@ msgstr ""
 
 #: ../blueman/plugins/applet/StandardItems.py:15
 msgid "Adds standard menu items to the status icon menu"
-msgstr "Adiciona itens de menu padrão ao menu do ícone de status"
+msgstr "Adiciona itens de menu padrão ao menu do ícone de estado"
 
 #: ../blueman/plugins/applet/StandardItems.py:23
 msgid "_Set Up New Device"
@@ -2023,23 +2022,23 @@ msgstr "Adiciona um item de menu para sair do applet"
 msgid "Provides a basic dhcp client for Bluetooth PAN connections."
 msgstr "Fornece um cliente básico de dhcp para ligações Bluetooth PAN."
 
-#: ../blueman/plugins/applet/DhcpClient.py:42
-#: ../blueman/plugins/applet/DhcpClient.py:50
-#: ../blueman/plugins/applet/DhcpClient.py:55
+#: ../blueman/plugins/applet/DhcpClient.py:44
+#: ../blueman/plugins/applet/DhcpClient.py:52
+#: ../blueman/plugins/applet/DhcpClient.py:57
 msgid "Bluetooth Network"
 msgstr "Rede Bluetooth"
 
-#: ../blueman/plugins/applet/DhcpClient.py:43
+#: ../blueman/plugins/applet/DhcpClient.py:45
 #, python-format
 msgid "Interface %(0)s bound to IP address %(1)s"
 msgstr "Interface %(0)s atribuída ao endereço IP %(1)s"
 
-#: ../blueman/plugins/applet/DhcpClient.py:50
+#: ../blueman/plugins/applet/DhcpClient.py:52
 #, python-format
 msgid "Failed to obtain an IP address on %s"
 msgstr "Falhou ao obter um endereço IP de %s"
 
-#: ../blueman/plugins/applet/DhcpClient.py:55
+#: ../blueman/plugins/applet/DhcpClient.py:57
 #, python-format
 msgid ""
 "Trying to obtain an IP address on %s\n"
