@@ -5,13 +5,14 @@
 # Translators:
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2009
 # Ivica  Kolić <ikoli@yahoo.com>, 2014,2016
+# Milo Ivir <mail@milotype.de>, 2020, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-26 22:08+0000\n"
-"PO-Revision-Date: 2020-09-12 08:19+0000\n"
-"Last-Translator: Christopher Schramm <github@cschramm.eu>\n"
+"POT-Creation-Date: 2020-12-04 23:06+0000\n"
+"PO-Revision-Date: 2021-01-05 01:29+0000\n"
+"Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/blueman/stable/"
 "hr/>\n"
 "Language: hr\n"
@@ -20,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.3-dev\n"
+"X-Generator: Weblate 4.4.1-dev\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Visibility Setting</b>"
@@ -36,11 +37,11 @@ msgstr "Uvijek vidljiv"
 
 #: ../data/ui/adapters-tab.ui.h:4
 msgid "Temporarily visible"
-msgstr "Privremeno vidno"
+msgstr "Privremeno vidljiv"
 
 #: ../data/ui/adapters-tab.ui.h:5
 msgid "<b>Friendly Name</b>"
-msgstr "<b>Prijateljsko Ime</b>"
+msgstr "<b>Prijateljsko ime</b>"
 
 #: ../data/ui/applet-passkey.ui.h:1
 msgid "Pairing request"
@@ -77,7 +78,7 @@ msgstr "_Pomoć"
 
 #: ../data/ui/manager-main.ui.h:5
 msgid "Search for nearby devices"
-msgstr "Potraži uređaje u blizini"
+msgstr "Traži uređaje u blizini"
 
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:7
@@ -87,23 +88,23 @@ msgstr "Traži"
 #: ../data/ui/manager-main.ui.h:8
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:324
 msgid "Create pairing with the device"
-msgstr "Uparivanje sa uređajem"
+msgstr "Uparivanje s uređajem"
 
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:10
 msgid "Pair"
-msgstr "Par"
+msgstr "Upari"
 
 #: ../data/ui/manager-main.ui.h:11
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:342
 msgid "Mark/Unmark this device as trusted"
-msgstr "Dodaj/Ukloni oznaku povjerenja ovom uređaju"
+msgstr "Označi/odznači ovaj uređaj kao pouzdan"
 
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:13 ../blueman/gui/manager/ManagerToolbar.py:29
 #: ../blueman/gui/manager/ManagerToolbar.py:94
 msgid "Trust"
-msgstr "Povjerenje"
+msgstr "Vjeruj"
 
 #: ../data/ui/manager-main.ui.h:14
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:348
@@ -144,11 +145,11 @@ msgstr "Mjesto mrežnog pristupa (NAP)"
 
 #: ../data/ui/services-network.ui.h:2
 msgid "<b>Services</b>"
-msgstr "<b>Servisi</b>"
+msgstr "<b>Usluge</b>"
 
 #: ../data/ui/services-network.ui.h:3
 msgid "DHCP server type:"
-msgstr "Tip DHCP poslužitelja:"
+msgstr "Vrsta DHCP poslužitelja:"
 
 #: ../data/ui/services-network.ui.h:4
 msgid "Recommended"
@@ -160,7 +161,7 @@ msgstr "IP adresa:"
 
 #: ../data/ui/services-network.ui.h:6
 msgid "<b>No DHCP servers installed</b>"
-msgstr "<b>DHCP poslužitelji nisu instalirani</b>"
+msgstr "<b>Nema instaliranih DHCP poslužitelja</b>"
 
 #: ../data/ui/services-network.ui.h:7
 msgid "udhcpd"
@@ -172,11 +173,11 @@ msgstr "<b>NAP postavke</b>"
 
 #: ../data/ui/services-network.ui.h:9
 msgid "<b>PAN Support</b>"
-msgstr "<b>PAN Podrška</b>"
+msgstr "<b>PAN podrška</b>"
 
 #: ../data/ui/services-network.ui.h:10
 msgid "<b>DUN Support</b>"
-msgstr "<b>DUN Podrška</b>"
+msgstr "<b>DUN podrška</b>"
 
 #: ../data/ui/services-network.ui.h:11
 msgid "<b>Network Settings</b>"
@@ -227,7 +228,7 @@ msgstr ""
 "\n"
 "\n"
 "Provesti će vas kroz proces konfiguracije i spajanja na vaše omogućene "
-"Bluetooth uređaje. "
+"Bluetooth uređaje."
 
 #: ../data/ui/assistant.ui.h:5
 msgid "Introduction"
@@ -590,10 +591,8 @@ msgid "Shall bluetooth get enabled automatically?"
 msgstr "Treba li se Bluetooth automatski uključiti?"
 
 #: ../blueman/Functions.py:101
-#, fuzzy
-#| msgid "yes"
 msgid "Yes"
-msgstr "da"
+msgstr "Da"
 
 #: ../blueman/Functions.py:102
 msgid "No"
@@ -652,10 +651,8 @@ msgid "_Search"
 msgstr "_Traži"
 
 #: ../blueman/gui/manager/ManagerMenu.py:139
-#, fuzzy
-#| msgid "Adapter Preferences"
 msgid "_Preferences"
-msgstr "Osobitosti adaptera"
+msgstr "_Osobitosti"
 
 #: ../blueman/gui/manager/ManagerMenu.py:148
 #: ../blueman/plugins/applet/ExitItem.py:15
@@ -782,10 +779,8 @@ msgid "_Setup..."
 msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:370
-#, fuzzy
-#| msgid "Rename device"
 msgid "R_ename device..."
-msgstr "Preimenuj uređaj"
+msgstr "Pr_eimenuj uređaj …"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:379
 msgid "_Remove..."
@@ -883,10 +878,8 @@ msgid "Adapter selection"
 msgstr "Odabir adaptera"
 
 #: ../blueman/gui/DeviceSelectorWidget.py:43
-#, fuzzy
-#| msgid "Disconnecting..."
 msgid "Discovering…"
-msgstr "Otpajam se..."
+msgstr "Otkrivanje …"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:39 ../blueman/DeviceClass.py:63
@@ -912,7 +905,7 @@ msgstr "prijenosno računalo"
 #. translators: device class
 #: ../blueman/DeviceClass.py:47
 msgid "handheld"
-msgstr "priručni"
+msgstr "ručni uređaj"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:49
@@ -932,7 +925,7 @@ msgstr "bežični"
 #. translators: device class
 #: ../blueman/DeviceClass.py:69
 msgid "smart phone"
-msgstr "smart telefon"
+msgstr "pametni telefon"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:71
@@ -947,12 +940,12 @@ msgstr "isdn"
 #. translators: device class
 #: ../blueman/DeviceClass.py:111
 msgid "headset"
-msgstr "headset"
+msgstr "slušalice s mikrofonom"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:113
 msgid "handsfree"
-msgstr "handsfree"
+msgstr "bezručni"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:115 ../blueman/DeviceClass.py:143
@@ -968,67 +961,67 @@ msgstr "mikrofon"
 #. translators: device class
 #: ../blueman/DeviceClass.py:119
 msgid "loudspeaker"
-msgstr ""
+msgstr "zvučnik"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:121
 msgid "headphones"
-msgstr ""
+msgstr "slušalice"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:123
 msgid "portable audio"
-msgstr ""
+msgstr "prijenosni audiouređaj"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:125
 msgid "car audio"
-msgstr ""
+msgstr "audiouređaj za auto"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:127
 msgid "set-top box"
-msgstr ""
+msgstr "set-top box"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:129
 msgid "hifi audio"
-msgstr ""
+msgstr "hifi audiouređaj"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:131
 msgid "vcr"
-msgstr ""
+msgstr "vcr"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:133
 msgid "video camera"
-msgstr ""
+msgstr "video kamera"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:135
 msgid "camcorder"
-msgstr ""
+msgstr "digitalna kamera"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:137
 msgid "video monitor"
-msgstr ""
+msgstr "video monitor"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:139
 msgid "video display and loudspeaker"
-msgstr ""
+msgstr "video ekran i zvučnik"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:141
 msgid "video conferencing"
-msgstr ""
+msgstr "video konferencija"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:145
 msgid "gaming/toy"
-msgstr ""
+msgstr "igranje/igračka"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:157
@@ -1043,14 +1036,12 @@ msgstr "pokazivački"
 #. translators: device class
 #: ../blueman/DeviceClass.py:161
 msgid "combo"
-msgstr ""
+msgstr "kombinirani"
 
 #. 0x0000 is for our generic connect
 #: ../blueman/Sdp.py:97
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Connect"
-msgstr "Spoji"
+msgstr "Generičko povezivanje"
 
 #: ../blueman/Sdp.py:98
 msgid "SDP"
@@ -1787,20 +1778,20 @@ msgstr "Audio profil"
 msgid "Select audio profile for PulseAudio"
 msgstr "Odaberite audio profil za PulseAudio"
 
-#: ../blueman/plugins/manager/Services.py:67
+#: ../blueman/plugins/manager/Services.py:66
 #, python-format
 msgid "Serial Port %s"
 msgstr "Serijski Port %s"
 
-#: ../blueman/plugins/manager/Services.py:80
+#: ../blueman/plugins/manager/Services.py:79
 msgid "Renew IP Address"
 msgstr "Obnovi IP adresu"
 
-#: ../blueman/plugins/manager/Services.py:97
+#: ../blueman/plugins/manager/Services.py:96
 msgid "Dialup Settings"
 msgstr "Postavke Telefonske Veze"
 
-#: ../blueman/plugins/manager/Services.py:106
+#: ../blueman/plugins/manager/Services.py:105
 msgid "Serial Ports"
 msgstr "Serijski ulazi"
 
@@ -2069,23 +2060,23 @@ msgstr "Dodaje izbornik izlaza za zatvaranje programčića"
 msgid "Provides a basic dhcp client for Bluetooth PAN connections."
 msgstr "Omogućuje osnovni dhcp klijent za Bluetooth PAN povezivanja."
 
-#: ../blueman/plugins/applet/DhcpClient.py:42
-#: ../blueman/plugins/applet/DhcpClient.py:50
-#: ../blueman/plugins/applet/DhcpClient.py:55
+#: ../blueman/plugins/applet/DhcpClient.py:44
+#: ../blueman/plugins/applet/DhcpClient.py:52
+#: ../blueman/plugins/applet/DhcpClient.py:57
 msgid "Bluetooth Network"
 msgstr "Bluetooth mreža"
 
-#: ../blueman/plugins/applet/DhcpClient.py:43
+#: ../blueman/plugins/applet/DhcpClient.py:45
 #, python-format
 msgid "Interface %(0)s bound to IP address %(1)s"
 msgstr "Sučelje %(0)s povezano na IP adresu %(1)s"
 
-#: ../blueman/plugins/applet/DhcpClient.py:50
+#: ../blueman/plugins/applet/DhcpClient.py:52
 #, python-format
 msgid "Failed to obtain an IP address on %s"
 msgstr "Neuspjelo dobavljanje IP adrese na %s"
 
-#: ../blueman/plugins/applet/DhcpClient.py:55
+#: ../blueman/plugins/applet/DhcpClient.py:57
 #, python-format
 msgid ""
 "Trying to obtain an IP address on %s\n"
@@ -2125,7 +2116,7 @@ msgid ""
 msgstr ""
 "Omogućuje stavku izbornika za postavljanje zadanog adaptera u privremeno "
 "vidljiv način rada, kad je adapter, prema zadanim postavkama, postavljen kao "
-"skriven."
+"skriven"
 
 #: ../blueman/plugins/applet/DiscvManager.py:23
 msgid "Discoverable timeout"

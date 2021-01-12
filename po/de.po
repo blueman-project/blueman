@@ -15,12 +15,14 @@
 # qazwsxedc <qazwsxedc@gmx.net>, 2014
 # Tim Schulz <timschulz19980312@gmail.com>, 2015
 # Tobias Bannert <tobannert@gmail.com>, 2014-2015,2017
+# jugendhacker <jugendhacker@gmail.com>, 2020.
+# Christopher Schramm <github@cschramm.eu>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-26 22:08+0000\n"
-"PO-Revision-Date: 2020-09-01 08:54+0000\n"
+"POT-Creation-Date: 2020-12-04 23:06+0000\n"
+"PO-Revision-Date: 2020-11-11 03:44+0000\n"
 "Last-Translator: Christopher Schramm <github@cschramm.eu>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/blueman/stable/de/"
 ">\n"
@@ -29,7 +31,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.2.1-dev\n"
+"X-Generator: Weblate 4.4-dev\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Visibility Setting</b>"
@@ -525,7 +527,7 @@ msgstr "Passwort zur Legitimation eingeben:"
 
 #: ../blueman/main/applet/BluezAgent.py:233
 msgid "Enter passkey"
-msgstr "Passwort eingeben:"
+msgstr "Passwort eingeben"
 
 #: ../blueman/main/applet/BluezAgent.py:243
 msgid "Pairing passkey for"
@@ -784,10 +786,8 @@ msgid "_Setup..."
 msgstr "_Einrichten …"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:370
-#, fuzzy
-#| msgid "Rename device"
 msgid "R_ename device..."
-msgstr "Gerät umbenennen"
+msgstr "G_erät umbenennen..."
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:379
 msgid "_Remove..."
@@ -997,12 +997,12 @@ msgstr "Mikrofon"
 #. translators: device class
 #: ../blueman/DeviceClass.py:119
 msgid "loudspeaker"
-msgstr ""
+msgstr "Lautsprecher"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:121
 msgid "headphones"
-msgstr ""
+msgstr "Kopfhörer"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:123
@@ -1027,22 +1027,22 @@ msgstr ""
 #. translators: device class
 #: ../blueman/DeviceClass.py:131
 msgid "vcr"
-msgstr ""
+msgstr "Videorecorder"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:133
 msgid "video camera"
-msgstr ""
+msgstr "Videokamera"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:135
 msgid "camcorder"
-msgstr ""
+msgstr "Camcorder"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:137
 msgid "video monitor"
-msgstr ""
+msgstr "Bildschirm"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:139
@@ -1052,12 +1052,12 @@ msgstr ""
 #. translators: device class
 #: ../blueman/DeviceClass.py:141
 msgid "video conferencing"
-msgstr ""
+msgstr "Videokonferenzsystem"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:145
 msgid "gaming/toy"
-msgstr ""
+msgstr "Spielen"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:157
@@ -1072,7 +1072,7 @@ msgstr "Zeigegerät"
 #. translators: device class
 #: ../blueman/DeviceClass.py:161
 msgid "combo"
-msgstr ""
+msgstr "Kombination"
 
 #. 0x0000 is for our generic connect
 #: ../blueman/Sdp.py:97
@@ -1190,10 +1190,8 @@ msgid "Public Browse Group"
 msgstr ""
 
 #: ../blueman/Sdp.py:126
-#, fuzzy
-#| msgid "Serial Ports"
 msgid "Serial Port"
-msgstr "Serielle Anschlüsse"
+msgstr "Serieller Anschluss"
 
 #: ../blueman/Sdp.py:127
 msgid "LAN Access Using PPP"
@@ -1255,7 +1253,7 @@ msgstr "Videokonferenz"
 
 #: ../blueman/Sdp.py:141
 msgid "Intercom"
-msgstr ""
+msgstr "Sprechanlage"
 
 #: ../blueman/Sdp.py:142
 msgid "Fax"
@@ -1267,7 +1265,7 @@ msgstr "Headset Audio Gateway"
 
 #: ../blueman/Sdp.py:144
 msgid "WAP"
-msgstr ""
+msgstr "WAP"
 
 #: ../blueman/Sdp.py:145
 msgid "WAP Client"
@@ -1287,7 +1285,7 @@ msgstr "Gruppennetzwerk"
 
 #: ../blueman/Sdp.py:149
 msgid "DirectPrinting (BPP)"
-msgstr ""
+msgstr "Direktes Drucken (BPP)"
 
 #: ../blueman/Sdp.py:150
 msgid "ReferencePrinting (BPP)"
@@ -1333,7 +1331,7 @@ msgstr ""
 
 #: ../blueman/Sdp.py:160
 msgid "Printing Status (BPP)"
-msgstr ""
+msgstr "Druckstatus (BPP)"
 
 #: ../blueman/Sdp.py:161
 msgid "Human Interface Device Service (HID)"
@@ -1369,7 +1367,7 @@ msgstr ""
 
 #: ../blueman/Sdp.py:169
 msgid "Audio/Video"
-msgstr ""
+msgstr "Audio/Video"
 
 #: ../blueman/Sdp.py:170
 msgid "SIM Access (SAP)"
@@ -1409,11 +1407,11 @@ msgstr ""
 
 #: ../blueman/Sdp.py:180
 msgid "3D Display"
-msgstr ""
+msgstr "3D Anzeige"
 
 #: ../blueman/Sdp.py:181
 msgid "3D Glasses"
-msgstr ""
+msgstr "3D Brille"
 
 #: ../blueman/Sdp.py:182
 msgid "3D Synchronization (3DSP)"
@@ -1441,7 +1439,7 @@ msgstr ""
 
 #: ../blueman/Sdp.py:188
 msgid "PnP Information"
-msgstr ""
+msgstr "PnP-Information"
 
 #: ../blueman/Sdp.py:189
 msgid "Generic Networking"
@@ -1493,15 +1491,15 @@ msgstr ""
 
 #: ../blueman/Sdp.py:201
 msgid "Immediate Alert"
-msgstr ""
+msgstr "sofortige Alarmierung"
 
 #: ../blueman/Sdp.py:202
 msgid "Link Loss"
-msgstr ""
+msgstr "Verbindungsverlust"
 
 #: ../blueman/Sdp.py:203
 msgid "Tx Power"
-msgstr ""
+msgstr "Sendeleistung"
 
 #: ../blueman/Sdp.py:204
 msgid "Current Time Service"
@@ -1517,11 +1515,11 @@ msgstr ""
 
 #: ../blueman/Sdp.py:207
 msgid "Glucose"
-msgstr ""
+msgstr "Glukose"
 
 #: ../blueman/Sdp.py:208
 msgid "Health Thermometer"
-msgstr ""
+msgstr "Fieberthermometer"
 
 #: ../blueman/Sdp.py:209
 msgid "Device Information"
@@ -1529,7 +1527,7 @@ msgstr "Geräteinformationen"
 
 #: ../blueman/Sdp.py:210
 msgid "Heart Rate"
-msgstr ""
+msgstr "Herzfrequenz"
 
 #: ../blueman/Sdp.py:211
 msgid "Phone Alert Status Service"
@@ -1541,11 +1539,11 @@ msgstr "Batterie-Dienst"
 
 #: ../blueman/Sdp.py:213
 msgid "Blood Pressure"
-msgstr ""
+msgstr "Blutdruck"
 
 #: ../blueman/Sdp.py:214
 msgid "Alert Notification Service"
-msgstr ""
+msgstr "Alarm Benachrichtigungsservice"
 
 #: ../blueman/Sdp.py:215
 msgid "Human Interface Device"
@@ -1573,11 +1571,11 @@ msgstr ""
 
 #: ../blueman/Sdp.py:221
 msgid "Location and Navigation"
-msgstr ""
+msgstr "Ortung und Navigation"
 
 #: ../blueman/Sdp.py:222
 msgid "Environmental Sensing"
-msgstr ""
+msgstr "Umgebungserfassung"
 
 #: ../blueman/Sdp.py:223
 msgid "Body Composition"
@@ -1585,11 +1583,11 @@ msgstr ""
 
 #: ../blueman/Sdp.py:224
 msgid "User Data"
-msgstr ""
+msgstr "Nutzerdaten"
 
 #: ../blueman/Sdp.py:225
 msgid "Weight Scale"
-msgstr ""
+msgstr "Gewichtsskala"
 
 #: ../blueman/Sdp.py:226
 msgid "Bond Management"
@@ -1597,7 +1595,7 @@ msgstr ""
 
 #: ../blueman/Sdp.py:227
 msgid "Continuous Glucose Monitoring"
-msgstr ""
+msgstr "Kontinuierliche Glukoseüberwachung"
 
 #: ../blueman/Sdp.py:228
 msgid "Internet Protocol Support"
@@ -1613,7 +1611,7 @@ msgstr ""
 
 #: ../blueman/Sdp.py:231
 msgid "HTTP Proxy"
-msgstr ""
+msgstr "HTTP Proxy"
 
 #: ../blueman/Sdp.py:232
 msgid "Transport Discovery"
@@ -1653,7 +1651,7 @@ msgstr "Gerätename"
 
 #: ../blueman/Sdp.py:240
 msgid "Appearance"
-msgstr ""
+msgstr "Aussehen"
 
 #: ../blueman/Sdp.py:241
 msgid "Peripheral Privacy Flag"
@@ -1677,7 +1675,7 @@ msgstr "Geräteverwaltung"
 
 #: ../blueman/Sdp.py:245
 msgid "System ID"
-msgstr ""
+msgstr "Systemkennung"
 
 #: ../blueman/Sdp.py:246
 msgid "Model Number String"
@@ -1733,7 +1731,7 @@ msgstr ""
 
 #: ../blueman/Sdp.py:259
 msgid "Valid Range"
-msgstr ""
+msgstr "Bereich zulässiger Werte"
 
 #: ../blueman/Sdp.py:260
 msgid "External Report Reference"
@@ -1790,20 +1788,20 @@ msgstr "Audio-Profil"
 msgid "Select audio profile for PulseAudio"
 msgstr "Audioprofil für PulseAudio auswählen"
 
-#: ../blueman/plugins/manager/Services.py:67
+#: ../blueman/plugins/manager/Services.py:66
 #, python-format
 msgid "Serial Port %s"
 msgstr "Serielle Schnittstelle %s"
 
-#: ../blueman/plugins/manager/Services.py:80
+#: ../blueman/plugins/manager/Services.py:79
 msgid "Renew IP Address"
 msgstr "IP-Adresse erneuern"
 
-#: ../blueman/plugins/manager/Services.py:97
+#: ../blueman/plugins/manager/Services.py:96
 msgid "Dialup Settings"
 msgstr "Einwahleinstellungen"
 
-#: ../blueman/plugins/manager/Services.py:106
+#: ../blueman/plugins/manager/Services.py:105
 msgid "Serial Ports"
 msgstr "Serielle Anschlüsse"
 
@@ -2072,23 +2070,23 @@ msgid "Provides a basic dhcp client for Bluetooth PAN connections."
 msgstr ""
 "Stellt einen einfachen DHCP-Client für Bluetooth-PAN-Verbindungen bereit."
 
-#: ../blueman/plugins/applet/DhcpClient.py:42
-#: ../blueman/plugins/applet/DhcpClient.py:50
-#: ../blueman/plugins/applet/DhcpClient.py:55
+#: ../blueman/plugins/applet/DhcpClient.py:44
+#: ../blueman/plugins/applet/DhcpClient.py:52
+#: ../blueman/plugins/applet/DhcpClient.py:57
 msgid "Bluetooth Network"
 msgstr "Bluetooth-Netzwerk"
 
-#: ../blueman/plugins/applet/DhcpClient.py:43
+#: ../blueman/plugins/applet/DhcpClient.py:45
 #, python-format
 msgid "Interface %(0)s bound to IP address %(1)s"
 msgstr "Schnittstelle %(0)s gebunden an IP-Adresse %(1)s"
 
-#: ../blueman/plugins/applet/DhcpClient.py:50
+#: ../blueman/plugins/applet/DhcpClient.py:52
 #, python-format
 msgid "Failed to obtain an IP address on %s"
 msgstr "Konnte keine IP-Adresse von %s erhalten"
 
-#: ../blueman/plugins/applet/DhcpClient.py:55
+#: ../blueman/plugins/applet/DhcpClient.py:57
 #, python-format
 msgid ""
 "Trying to obtain an IP address on %s\n"
@@ -2374,7 +2372,7 @@ msgstr "Sende Datei zu diesem Gerät"
 msgid "Source adapter. Takes address or adapter's name eg. hci0"
 msgstr ""
 "Quelladapter. Sowohl Adressen als auch Adapternamen, wie z.B. hci0, werden "
-"akzeptiert."
+"akzeptiert"
 
 #: ../apps/blueman-sendto:141
 msgid "Delete files on exit"

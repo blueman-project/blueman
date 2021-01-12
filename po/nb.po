@@ -4,7 +4,7 @@
 #
 # Translators:
 # Alexander Mackinnon Jansen <bornxlo@gmail.com>, 2017
-# Allan Nordhøy <epost@anotheragency.no>, 2016-2017
+# Allan Nordhøy <epost@anotheragency.no>, 2016-2017, 2020, 2021.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2008
 # Kenneth Jenssen <kennethjenssen@yahoo.com>, 2016
 # Kim Malmo <berencamlost@msn.com>, 2018
@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-26 22:08+0000\n"
-"PO-Revision-Date: 2020-09-12 08:19+0000\n"
-"Last-Translator: Christopher Schramm <github@cschramm.eu>\n"
+"POT-Creation-Date: 2020-12-04 23:06+0000\n"
+"PO-Revision-Date: 2021-01-12 10:03+0000\n"
+"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/blueman/"
 "stable/nb_NO/>\n"
 "Language: nb\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3-dev\n"
+"X-Generator: Weblate 4.4.1-dev\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Visibility Setting</b>"
@@ -171,11 +171,11 @@ msgstr "udhcpd"
 
 #: ../data/ui/services-network.ui.h:8
 msgid "<b>NAP Settings</b>"
-msgstr "<b>NAP instillinger</b>"
+msgstr "<b>NAP-innstillinger</b>"
 
 #: ../data/ui/services-network.ui.h:9
 msgid "<b>PAN Support</b>"
-msgstr "PAN-støtte"
+msgstr "<b>PAN-støtte</b>"
 
 #: ../data/ui/services-network.ui.h:10
 msgid "<b>DUN Support</b>"
@@ -720,11 +720,11 @@ msgstr "Mislyktes"
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:119
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:165
 msgid "Connection Failed: "
-msgstr "Tilkobling mislyktes:"
+msgstr "Tilkobling mislyktes: "
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:142
 msgid "Disconnection Failed: "
-msgstr "Frakobling mislyktes:"
+msgstr "Frakobling mislyktes: "
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:181
 msgid "Disconnecting..."
@@ -964,12 +964,12 @@ msgstr "mikrofon"
 #. translators: device class
 #: ../blueman/DeviceClass.py:119
 msgid "loudspeaker"
-msgstr ""
+msgstr "høyttaler"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:121
 msgid "headphones"
-msgstr ""
+msgstr "hodetelefoner"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:123
@@ -979,7 +979,7 @@ msgstr ""
 #. translators: device class
 #: ../blueman/DeviceClass.py:125
 msgid "car audio"
-msgstr ""
+msgstr "bilstereo"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:127
@@ -999,7 +999,7 @@ msgstr ""
 #. translators: device class
 #: ../blueman/DeviceClass.py:133
 msgid "video camera"
-msgstr ""
+msgstr "videokamera"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:135
@@ -1480,7 +1480,7 @@ msgstr "Umiddelbar varsling"
 
 #: ../blueman/Sdp.py:202
 msgid "Link Loss"
-msgstr ""
+msgstr "Lenketap"
 
 #: ../blueman/Sdp.py:203
 msgid "Tx Power"
@@ -1746,7 +1746,7 @@ msgstr "Koble sammen profiler automatisk"
 
 #: ../blueman/Sdp.py:388
 msgid "Proprietary"
-msgstr "Proprietært "
+msgstr "Proprietært"
 
 #: ../blueman/plugins/manager/Info.py:13
 msgid "yes"
@@ -1785,20 +1785,20 @@ msgstr "Lydprofil"
 msgid "Select audio profile for PulseAudio"
 msgstr "Velg lydprofil for PulseAudio"
 
-#: ../blueman/plugins/manager/Services.py:67
+#: ../blueman/plugins/manager/Services.py:66
 #, python-format
 msgid "Serial Port %s"
 msgstr "Seriellport %s"
 
-#: ../blueman/plugins/manager/Services.py:80
+#: ../blueman/plugins/manager/Services.py:79
 msgid "Renew IP Address"
 msgstr "Forny IP-adresse"
 
-#: ../blueman/plugins/manager/Services.py:97
+#: ../blueman/plugins/manager/Services.py:96
 msgid "Dialup Settings"
 msgstr "Modemoppringingsinnstillinger"
 
-#: ../blueman/plugins/manager/Services.py:106
+#: ../blueman/plugins/manager/Services.py:105
 msgid "Serial Ports"
 msgstr "Seriellporter"
 
@@ -2062,23 +2062,23 @@ msgstr "Tilføyer et punkt i menyen til å avslutte panelprogrammet"
 msgid "Provides a basic dhcp client for Bluetooth PAN connections."
 msgstr "Tilbyr en grunnleggende DHCP-klient for Blåtanns-PAN-tilkoblinger."
 
-#: ../blueman/plugins/applet/DhcpClient.py:42
-#: ../blueman/plugins/applet/DhcpClient.py:50
-#: ../blueman/plugins/applet/DhcpClient.py:55
+#: ../blueman/plugins/applet/DhcpClient.py:44
+#: ../blueman/plugins/applet/DhcpClient.py:52
+#: ../blueman/plugins/applet/DhcpClient.py:57
 msgid "Bluetooth Network"
 msgstr "Blåtanns-nettverk"
 
-#: ../blueman/plugins/applet/DhcpClient.py:43
+#: ../blueman/plugins/applet/DhcpClient.py:45
 #, python-format
 msgid "Interface %(0)s bound to IP address %(1)s"
 msgstr "Grensesnitt %(0)s knyttet til IP-adressen %(1)s"
 
-#: ../blueman/plugins/applet/DhcpClient.py:50
+#: ../blueman/plugins/applet/DhcpClient.py:52
 #, python-format
 msgid "Failed to obtain an IP address on %s"
 msgstr "Kunne ikke innhente en IP-adresse på %s"
 
-#: ../blueman/plugins/applet/DhcpClient.py:55
+#: ../blueman/plugins/applet/DhcpClient.py:57
 #, python-format
 msgid ""
 "Trying to obtain an IP address on %s\n"
@@ -2104,7 +2104,7 @@ msgstr "Blåtann er påslått"
 msgid "<b>%d Active Connection</b>"
 msgid_plural "<b>%d Active Connections</b>"
 msgstr[0] "<b>%d aktiv tilknytning</b>"
-msgstr[1] "<b>%d aktive tilknytninger < /b>"
+msgstr[1] "<b>%d aktive tilknytninger</b>"
 
 #: ../blueman/plugins/applet/AppIndicator.py:13
 msgid "Uses libappindicator to show a statusicon"
