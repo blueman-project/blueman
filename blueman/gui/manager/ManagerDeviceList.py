@@ -203,7 +203,10 @@ class ManagerDeviceList(DeviceList):
 
         if event.type == Gdk.EventType._2BUTTON_PRESS and cast(Gdk.EventButton, event).button == 1:
             if self.menu.show_generic_connect_calc(row["device"]['UUIDs']):
-                self.menu.generic_connect(None, device=row["device"], connect=not row["connected"])
+                if row["connected"]:
+                    self.menu.disconnect_service(row["device"])
+                else:
+                    self.menu.connect_service(row["device"])
 
         if event.type == Gdk.EventType.BUTTON_PRESS and cast(Gdk.EventButton, event).button == 3:
             self.menu.popup_at_pointer(event)

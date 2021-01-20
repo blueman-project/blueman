@@ -50,7 +50,7 @@ class Services(ManagerPlugin, MenuItemsProvider):
             item: Gtk.MenuItem = create_menuitem(service.name, service.icon)
             if service.description:
                 item.props.tooltip_text = service.description
-            item.connect("activate", manager_menu.on_connect, service)
+            item.connect("activate", lambda _item: manager_menu.connect_service(service.device, service.uuid))
             items.append(DeviceMenuItem(item, DeviceMenuItem.Group.CONNECT, service.priority))
             item.props.sensitive = service.available
             item.show()
@@ -60,7 +60,10 @@ class Services(ManagerPlugin, MenuItemsProvider):
             for instance in service.connected_instances:
                 surface = self._make_x_icon(service.icon, 16)
                 item = create_menuitem(instance.name, surface=surface)
-                item.connect("activate", manager_menu.on_disconnect, service, instance.port)
+                item.connect(
+                    "activate",
+                    lambda _item: manager_menu.disconnect_service(service.device, service.uuid, instance.port)
+                )
                 items.append(DeviceMenuItem(item, DeviceMenuItem.Group.DISCONNECT, service.priority + 100))
                 item.show()
 
