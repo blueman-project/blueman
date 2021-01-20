@@ -7,6 +7,7 @@
 * Disconnect items in applet menu (plugin)
 * Desktop notifications on connect / disconnect (plugin)
 * Notifications with battery level for connecting devices (applet plugin)
+* Stop discovery and retry connection for broken adapter drivers
 * Auto-connect settings for supported services
 
 ### Changes

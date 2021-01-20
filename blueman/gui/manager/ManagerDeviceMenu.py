@@ -1,7 +1,8 @@
+import errno
 import logging
 from enum import Enum, auto
 from gettext import gettext as _
-from typing import Dict, List, Tuple, Optional, TYPE_CHECKING, Union, Iterable
+from typing import Dict, List, Tuple, Optional, TYPE_CHECKING, Union, Iterable, Callable
 
 from blueman.Functions import create_menuitem, e_
 from blueman.bluez.Network import AnyNetwork
@@ -138,7 +139,7 @@ class ManagerDeviceMenu(Gtk.Menu):
 
             self.unset_op(device)
             logging.warning(f"fail {result}")
-            self._handle_error_message(result.message)
+            self._handle_error_message(result)
 
         self.set_op(device, _("Connecting…"))
         prog = ManagerProgressbar(self.Blueman, cancellable=uuid == self.GENERIC_CONNECT)
@@ -149,9 +150,22 @@ class ManagerDeviceMenu(Gtk.Menu):
             fail(None, GLib.Error('Applet DBus Service not available'), None)
             return
 
-        self._appl.ConnectService('(os)', device.get_object_path(), uuid,
-                                  result_handler=success, error_handler=fail,
-                                  timeout=GLib.MAXINT)
+        def connect(error_handler: Callable[[AppletService, GLib.Error, None], None]) -> None:
+            assert self._appl is not None  # https://github.com/python/mypy/issues/2608
+            self._appl.ConnectService('(os)', device.get_object_path(), uuid,
+                                      result_handler=success, error_handler=error_handler,
+                                      timeout=GLib.MAXINT)
+
+        def initial_error_handler(obj: AppletService, result: GLib.Error, user_date: None) -> None:
+            # There are (Intel) drivers that fail to connect while a discovery is running
+            if self._get_errno(result) == errno.EAGAIN:
+                assert self.Blueman.List.Adapter is not None
+                self.Blueman.List.Adapter.stop_discovery()
+                connect(fail)
+            else:
+                fail(obj, result, user_date)
+
+        connect(initial_error_handler)
 
         prog.start()
 
@@ -181,32 +195,46 @@ class ManagerDeviceMenu(Gtk.Menu):
             if key in ("Connected", "UUIDs", "Trusted", "Paired"):
                 self.generate()
 
-    def _handle_error_message(self, msg: str) -> None:
-        msg = msg.split(":", 3)[-1].strip()
+    def _handle_error_message(self, error: GLib.Error) -> None:
+        err = self._get_errno(error)
+
+        if err == errno.ENOPROTOOPT:
+            logging.warning("No audio endpoints registered to bluetoothd. "
+                            "Pulseaudio Bluetooth module, bluez-alsa, PipeWire or other audio support missing.")
+            msg = _("No audio endpoints registered")
+        elif err == errno.EIO:
+            logging.warning("bluetoothd reported input/output error. Check its logs for context.")
+            msg = _("Input/output error")
+        elif err == errno.EHOSTDOWN:
+            msg = _("Device did not respond")
+        elif err == errno.EAGAIN:
+            logging.warning("bluetoothd reported resource temporarily unavailable. "
+                            "Retry or check its logs for context.")
+            msg = _("Resource temporarily unavailable")
+        else:
+            msg = error.message.split(":", 3)[-1].strip()
+
+        if msg != "Cancelled":
+            MessageArea.show_message(_("Connection Failed: ") + msg)
+
+    @staticmethod
+    def _get_errno(error: GLib.Error) -> Optional[int]:
+        msg = error.message.split(":", 3)[-1].strip()
 
         # https://sourceware.org/git/?p=glibc.git;a=blob;f=sysdeps/gnu/errlist.h
         # https://git.musl-libc.org/cgit/musl/tree/src/errno/__strerror.h
         # https://git.uclibc.org/uClibc/tree/libc/string/_string_syserrmsgs.c
         if msg == "Protocol not available":
-            # ENOPROTOOPT
-            logging.warning("No audio endpoints registered to bluetoothd. "
-                            "Pulseaudio Bluetooth module, bluez-alsa, PipeWire or other audio support missing.")
-            msg = _("No audio endpoints registered")
-        elif msg in ("Input/output error", "I/O error"):
-            # EIO
-            logging.warning("bluetoothd reported input/output error. Check its logs for context.")
-            msg = _("Input/output error")
-        elif msg == "Host is down":
-            # EHOSTDOWN (Bluetooth errors 0x04 (Page Timeout) or 0x3c (Advertising Timeout))
-            msg = _("Device did not respond")
-        elif msg == "Resource temporarily unavailable":
-            # EAGAIN
-            logging.warning("bluetoothd reported resource temporarily unavailable. "
-                            "Retry or check its logs for context.")
-            msg = _("Resource temporarily unavailable")
+            return errno.ENOPROTOOPT
+        if msg in ("Input/output error", "I/O error"):
+            return errno.EIO
+        if msg == "Host is down":
+            # Bluetooth errors 0x04 (Page Timeout) or 0x3c (Advertising Timeout)
+            return errno.EHOSTDOWN
+        if msg == "Resource temporarily unavailable":
+            return errno.EAGAIN
 
-        if msg != "Cancelled":
-            MessageArea.show_message(_("Connection Failed: ") + msg)
+        return None
 
     def show_generic_connect_calc(self, device_uuids: Iterable[str]) -> bool:
         # Generic (dis)connect
