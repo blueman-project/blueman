@@ -5,7 +5,6 @@ from gi.repository import GObject, GLib, Gio
 from blueman.Functions import launch
 from blueman.main.PluginManager import PluginManager
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.bluemantyping import GSignals
 
 
 class StatusIconImplementationProvider:
@@ -24,11 +23,8 @@ class StatusIconProvider:
 
 
 class StatusIcon(AppletPlugin, GObject.GObject):
-    __gsignals__: GSignals = {'activate': (GObject.SignalFlags.NO_HOOKS, None, ())}
-
-    __unloadable__ = False
     __icon__ = "bluetooth-symbolic"
-    __depends__ = ['Menu']
+    __depends__ = ["StandardItems", "Menu"]
 
     visible = None
 
@@ -58,7 +54,7 @@ class StatusIcon(AppletPlugin, GObject.GObject):
         self._add_dbus_signal("IconNameChanged", "s")
         self._add_dbus_method("GetStatusIconImplementations", (), "as", self._get_status_icon_implementations)
         self._add_dbus_method("GetIconName", (), "s", self._get_icon_name)
-        self._add_dbus_method("Activate", (), "", lambda: self.emit("activate"))
+        self._add_dbus_method("Activate", (), "", self.parent.Plugins.StandardItems.on_devices)
 
     def query_visibility(self, delay_hiding: bool = False, emit: bool = True) -> None:
         if self.parent.Manager.get_adapters() or \

@@ -26,7 +26,7 @@ class PowerStateHandler:
 
 
 class PowerManager(AppletPlugin, StatusIconProvider):
-    __depends__ = ["StatusIcon", "Menu"]
+    __depends__ = ["Menu"]
     __unloadable__ = True
     __description__ = _("Controls Bluetooth adapter power states")
     __author__ = "Walmis"
@@ -168,13 +168,14 @@ class PowerManager(AppletPlugin, StatusIconProvider):
             for plugin in self.parent.Plugins.get_loaded_plugins(PowerStateListener):
                 plugin.on_power_state_changed(self, new_state)
 
-            if new_state:
-                self.parent.Plugins.StatusIcon.set_tooltip_title(_("Bluetooth Enabled"))
-                self.parent.Plugins.StatusIcon.query_visibility(delay_hiding=True)
-            else:
-                self.parent.Plugins.StatusIcon.set_tooltip_title(_("Bluetooth Disabled"))
-                self.parent.Plugins.StatusIcon.query_visibility()
-            self.parent.Plugins.StatusIcon.icon_should_change()
+            if "StatusIcon" in self.parent.Plugins.get_loaded():
+                if new_state:
+                    self.parent.Plugins.StatusIcon.set_tooltip_title(_("Bluetooth Enabled"))
+                    self.parent.Plugins.StatusIcon.query_visibility(delay_hiding=True)
+                else:
+                    self.parent.Plugins.StatusIcon.set_tooltip_title(_("Bluetooth Disabled"))
+                    self.parent.Plugins.StatusIcon.query_visibility()
+                self.parent.Plugins.StatusIcon.icon_should_change()
 
     def get_bluetooth_status(self) -> bool:
         return self.current_state

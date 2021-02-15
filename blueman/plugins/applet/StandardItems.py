@@ -17,7 +17,7 @@ from gi.repository import Gtk, Gdk
 
 
 class StandardItems(AppletPlugin, PowerStateListener):
-    __depends__ = ["StatusIcon", "Menu"]
+    __depends__ = ["Menu"]
     __unloadable__ = False
     __description__ = _("Adds standard menu items to the status icon menu")
     __author__ = "walmis"
@@ -53,8 +53,6 @@ class StandardItems(AppletPlugin, PowerStateListener):
 
         self.parent.Plugins.Menu.add(self, 85, text=_("_Plugins"), icon_name="application-x-addon-symbolic",
                                      callback=self.on_plugins)
-
-        self.parent.Plugins.StatusIcon.connect("activate", lambda _status_icon: self.on_devices())
 
     def change_sensitivity(self, sensitive: bool) -> None:
         if 'PowerManager' in self.parent.Plugins.get_loaded():

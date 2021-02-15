@@ -37,7 +37,7 @@ class KillSwitch(AppletPlugin, PowerStateHandler, StatusIconVisibilityHandler):
     __description__ = _("Switches Bluetooth killswitch status to match Bluetooth power state. "
                         "Allows turning Bluetooth back on from an icon that shows its status; "
                         "provided it isn't unplugged by the system, or physically.")
-    __depends__ = ["PowerManager", "StatusIcon"]
+    __depends__ = ["PowerManager"]
     __icon__ = "system-shutdown-symbolic"
 
     __gsettings__ = {
@@ -121,7 +121,8 @@ class KillSwitch(AppletPlugin, PowerStateHandler, StatusIconVisibilityHandler):
 
         logging.info(f"State: {self._enabled}")
 
-        self.parent.Plugins.StatusIcon.query_visibility(delay_hiding=not self._hardblocked)
+        if "StatusIcon" in self.parent.Plugins.get_loaded():
+            self.parent.Plugins.StatusIcon.query_visibility(delay_hiding=not self._hardblocked)
         self.parent.Plugins.PowerManager.update_power_state()
 
         return True
