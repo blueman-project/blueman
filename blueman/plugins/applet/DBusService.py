@@ -42,7 +42,6 @@ class ServiceConnectHandler:
 
 
 class DBusService(AppletPlugin):
-    __depends__ = ["StatusIcon"]
     __unloadable__ = False
     __description__ = _("Provides DBus API for other Blueman components")
     __author__ = "Walmis"

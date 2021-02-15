@@ -11,7 +11,7 @@ from blueman.plugins.applet.DBusService import ServiceConnectHandler
 
 
 class NMDUNSupport(AppletPlugin, ServiceConnectHandler):
-    __depends__ = ["StatusIcon", "DBusService"]
+    __depends__ = ["DBusService"]
     __conflicts__ = ["PPPSupport"]
     __icon__ = "modem-symbolic"
     __author__ = "infirit"
