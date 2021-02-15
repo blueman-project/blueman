@@ -284,50 +284,36 @@ class PluginDialog(Gtk.Window):
 
         deps = self.applet.Plugins.get_dependencies()[name]
         loaded = self.applet.Plugins.get_loaded()
-        to_unload = []
-        for dep in deps:
-            if dep in loaded:
-                to_unload.append(dep)
+        to_unload = [dep for dep in deps if dep in loaded]
 
         if to_unload:
-            dialog = Gtk.MessageDialog(parent=self, type=Gtk.MessageType.QUESTION, buttons=Gtk.ButtonsType.YES_NO)
-            dialog.props.secondary_use_markup = True
-            dialog.props.icon_name = "blueman"
-            dialog.props.text = _("Dependency issue")
-            dialog.props.secondary_text = \
+            if not self._ask_unload(
                 _("Plugin <b>\"%(0)s\"</b> depends on <b>%(1)s</b>. Unloading <b>%(1)s</b> will also unload <b>"
                   "\"%(0)s\"</b>.\nProceed?") % {"0": ", ".join(to_unload), "1": name}
-
-            resp = dialog.run()
-            if resp != Gtk.ResponseType.YES:
-                dialog.destroy()
+            ):
                 return
+        else:
+            conflicts = self.applet.Plugins.get_conflicts()[name]
+            to_unload = [conf for conf in conflicts if conf in loaded]
 
-            dialog.destroy()
-
-        conflicts = self.applet.Plugins.get_conflicts()[name]
-        to_unload = []
-        for conf in conflicts:
-            if conf in loaded:
-                to_unload.append(conf)
-
-        if to_unload:
-            dialog = Gtk.MessageDialog(parent=self, type=Gtk.MessageType.QUESTION, buttons=Gtk.ButtonsType.YES_NO)
-            dialog.props.secondary_use_markup = True
-            dialog.props.icon_name = "blueman"
-            dialog.props.text = _("Dependency issue")
-            dialog.props.secondary_text = \
+            if to_unload and not self._ask_unload(
                 _("Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will unload <b>%(0)s</b>."
                   "\nProceed?") % {"0": ", ".join(to_unload), "1": name}
-
-            resp = dialog.run()
-            if resp != Gtk.ResponseType.YES:
-                dialog.destroy()
+            ):
                 return
 
-            dialog.destroy()
-
-            for p in to_unload:
-                self.applet.Plugins.set_config(p, False)
+        for p in to_unload:
+            self.applet.Plugins.set_config(p, False)
 
         self.applet.Plugins.set_config(name, name not in self.applet.Plugins.get_loaded())
+
+    def _ask_unload(self, text: str) -> bool:
+        dialog = Gtk.MessageDialog(parent=self, type=Gtk.MessageType.QUESTION, buttons=Gtk.ButtonsType.YES_NO)
+        dialog.props.secondary_use_markup = True
+        dialog.props.icon_name = "blueman"
+        dialog.props.text = _("Dependency issue")
+        dialog.props.secondary_text = text
+
+        resp = dialog.run()
+        dialog.destroy()
+        return resp == Gtk.ResponseType.YES
