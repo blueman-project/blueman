@@ -62,8 +62,6 @@ class KillSwitch(AppletPlugin, PowerStateHandler, StatusIconVisibilityHandler):
         if channel is None:
             raise ImportError('Could not access RF kill switch')
 
-        channel.set_encoding(None)
-
         self._iom = GLib.io_add_watch(channel, GLib.IO_IN | GLib.IO_ERR | GLib.IO_HUP, self.io_event)
 
     def on_unload(self) -> None:
@@ -91,9 +89,11 @@ class KillSwitch(AppletPlugin, PowerStateHandler, StatusIconVisibilityHandler):
         if condition & GLib.IO_ERR or condition & GLib.IO_HUP:
             return False
 
-        data = channel.read(RFKILL_EVENT_SIZE_V1)
+        fd = channel.unix_get_fd()
+        data = os.read(fd, RFKILL_EVENT_SIZE_V1)
+
         if len(data) != RFKILL_EVENT_SIZE_V1:
-            logging.warning("Bad rfkill event size")
+            logging.warning(f"Bad rfkill event size: {len(data)}")
             return True
 
         (idx, switch_type, op, soft, hard) = struct.unpack("IBBBB", data)
