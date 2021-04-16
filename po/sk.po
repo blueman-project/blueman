@@ -7,7 +7,7 @@
 # milboy https://launchpad.net/~milboys
 # vadimo https://launchpad.net/~michalgejdos-azet
 # xills pills https://launchpad.net/~adamturan
-# Dušan Kazik <prescott66@gmail.com>, 2015,2017,2019
+# Dušan Kazik <prescott66@gmail.com>, 2015,2017,2019, 2021.
 # Ján Ďanovský <dagsoftware@yahoo.com>, 2014-2017
 # Jose Riha <jose1711@gmail.com>, 2019
 # Pavol Šimo <palo.simo@gmail.com>, 2015
@@ -17,9 +17,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2020-11-09 00:15+0100\n"
-"PO-Revision-Date: 2020-06-05 12:28+0000\n"
-"Last-Translator: Juraj Liso <lisojuraj@gmail.com>\n"
+"POT-Creation-Date: 2021-04-15 22:17+0200\n"
+"PO-Revision-Date: 2021-02-04 15:41+0000\n"
+"Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: Slovak <https://hosted.weblate.org/projects/blueman/blueman/"
 "sk/>\n"
 "Language: sk\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n "
 ">= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
-"X-Generator: Weblate 4.1-dev\n"
+"X-Generator: Weblate 4.5-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -52,11 +52,11 @@ msgstr "<b>Priateľské pomenovanie</b>"
 
 #: data/ui/applet-passkey.ui:8
 msgid "Pairing request"
-msgstr "Žiadosti o spárovanie"
+msgstr "Požiadavka na spárovanie"
 
 #: data/ui/applet-passkey.ui:91
 msgid "Pairing request for device:"
-msgstr "Žiadosť o spárovanie pre zariadenie:"
+msgstr "Požiadavka na spárovanie pre zariadenie:"
 
 #: data/ui/applet-passkey.ui:120
 msgid "This should be overwritten"
@@ -76,7 +76,7 @@ msgstr "_Zariadenie"
 
 #: data/ui/manager-main.ui:69
 msgid "_View"
-msgstr "Z_obrazenie"
+msgstr "Z_obraziť"
 
 #: data/ui/manager-main.ui:77 blueman/gui/manager/ManagerMenu.py:55
 #: blueman/plugins/applet/StandardItems.py:48
@@ -92,18 +92,18 @@ msgstr "Vyhľadá zariadenia v blízkosti"
 msgid "Search"
 msgstr "Hľadať"
 
-#: data/ui/manager-main.ui:121 blueman/gui/manager/ManagerDeviceMenu.py:343
+#: data/ui/manager-main.ui:121 blueman/gui/manager/ManagerDeviceMenu.py:369
 msgid "Create pairing with the device"
-msgstr "Spáruje sa s týmto zariadením"
+msgstr "Vytvorí spárovanie s týmto zariadením"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:122
 msgid "Pair"
 msgstr "Spárovať"
 
-#: data/ui/manager-main.ui:135 blueman/gui/manager/ManagerDeviceMenu.py:361
+#: data/ui/manager-main.ui:135 blueman/gui/manager/ManagerDeviceMenu.py:387
 msgid "Mark/Unmark this device as trusted"
-msgstr "Označí/odznačí toto zariadenie ako dôveryhodné"
+msgstr "Označí/zruší označenie tohto zariadenia ako dôveryhodné"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:136 blueman/gui/manager/ManagerToolbar.py:39
@@ -111,7 +111,7 @@ msgstr "Označí/odznačí toto zariadenie ako dôveryhodné"
 msgid "Trust"
 msgstr "Dôveryhodné"
 
-#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:394
+#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:420
 msgid "Remove this device from the known devices list"
 msgstr "Odstráni toto zariadenie zo zoznamu známych zariadení"
 
@@ -131,11 +131,11 @@ msgstr "Odoslať súbor"
 
 #: data/ui/rename-device.ui:8
 msgid "Rename device"
-msgstr "Premenovať zariadenie"
+msgstr "Premenovanie zariadenia"
 
 #: data/ui/services-network.ui:37
 msgid "Network Access Point (NAP)"
-msgstr "Sieťový prítupový bod (NAP)"
+msgstr "Sieťový prístupový bod (NAP)"
 
 #: data/ui/services-network.ui:57
 msgid "<b>Services</b>"
@@ -143,7 +143,7 @@ msgstr "<b>Služby</b>"
 
 #: data/ui/services-network.ui:87
 msgid "DHCP server type:"
-msgstr "Typ DHCP servera:"
+msgstr "Typ servera DHCP:"
 
 #: data/ui/services-network.ui:114
 msgid "Recommended"
@@ -151,7 +151,7 @@ msgstr "Odporúčaný"
 
 #: data/ui/services-network.ui:138
 msgid "IP Address:"
-msgstr "IP adresa:"
+msgstr "Adresa IP:"
 
 #: data/ui/services-network.ui:181
 msgid "<b>No DHCP servers installed</b>"
@@ -175,7 +175,7 @@ msgstr "<b>Podpora DUN</b>"
 
 #: data/ui/services-network.ui:391
 msgid "<b>Network Settings</b>"
-msgstr "<b>Sieťové Nastavenia</b>"
+msgstr "<b>Sieťové nastavenia</b>"
 
 #: data/ui/services-transfer.ui:24
 msgid "<b>File Receiving (Object Push)</b>"
@@ -187,11 +187,11 @@ msgstr "Priečinok pre prichádzajúce súbory:"
 
 #: data/ui/services-transfer.ui:49
 msgid "Select folder for incoming file transfers"
-msgstr "Vyberte priečinok pre prichádzajúce súbory"
+msgstr "Výber priečinku pre prichádzajúce prenosy súborov"
 
 #: data/ui/services-transfer.ui:58
 msgid "Accept files from trusted devices"
-msgstr "Prijať súbory z dôveryhodných zariadení"
+msgstr "Prijímať súbory z dôveryhodných zariadení"
 
 #: data/ui/services-transfer.ui:96
 msgid "<b>Transfer Settings</b>"
@@ -200,11 +200,12 @@ msgstr "<b>Nastevenia prenosu</b>"
 #: data/ui/send-dialog.ui:32
 msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr ""
-"<span weight=\"bold\" size=\"large\">Posielajú sa súbory cez Bluetooth</span>"
+"<span weight=\"bold\" size=\"large\">Odosielajú sa súbory prostredníctvom "
+"Bluetooth</span>"
 
 #: data/ui/send-dialog.ui:68
 msgid "<b>To:</b>"
-msgstr "<b>Komu:</b>"
+msgstr "<b>Pre:</b>"
 
 #: data/ui/send-dialog.ui:106
 msgid "<b>File:</b>"
@@ -212,19 +213,19 @@ msgstr "<b>Súbor:</b>"
 
 #: data/ui/applet-plugins-widget.ui:69
 msgid "Configuration"
-msgstr "Nastavenia"
+msgstr "Nastavenie"
 
 #: data/ui/applet-plugins-widget.ui:73
 msgid "Configure selected plugin's preferences"
-msgstr "Nastaviť možnosti vybraných zásuvných modulov"
+msgstr "Nastaví predvoľby vybraného zásuvného modulu"
 
 #: data/ui/applet-plugins-widget.ui:115
 msgid "<b>Plugin description:</b>"
-msgstr "<b>Popis modulu:</b>"
+msgstr "<b>Popis zásuvného modulu:</b>"
 
 #: data/ui/applet-plugins-widget.ui:130
 msgid "Not specified"
-msgstr "Neuvedený"
+msgstr "Neurčený"
 
 #: data/ui/applet-plugins-widget.ui:146
 msgid "<b>Author:</b>"
@@ -232,8 +233,8 @@ msgstr "<b>Autor:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:305
-#: blueman/gui/manager/ManagerDeviceList.py:307 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:298
+#: blueman/gui/manager/ManagerDeviceList.py:300 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:209
@@ -243,15 +244,15 @@ msgstr "Neznáme"
 
 #: data/ui/applet-plugins-widget.ui:174
 msgid "<b>Depends on:</b>"
-msgstr "<b>Závislý na:</b>"
+msgstr "<b>Závisí na:</b>"
 
 #: data/ui/applet-plugins-widget.ui:202
 msgid "<b>Conflicts with:</b>"
-msgstr "<b>Konflikt s:</b>"
+msgstr "<b>V konflikte s:</b>"
 
 #: data/ui/gsm-settings.ui:34
 msgid "<b>GSM settings</b>"
-msgstr "<b>GSM nastavenia</b>"
+msgstr "<b>Nastavenia siete GSM</b>"
 
 #: data/ui/gsm-settings.ui:55
 msgid "Number:"
@@ -263,19 +264,19 @@ msgstr "APN:"
 
 #: data/ui/net-usage.ui:14
 msgid "Traffic statistics"
-msgstr "Štatistiky prenosu"
+msgstr "Štatistika prenosu"
 
 #: data/ui/net-usage.ui:33
 msgid "_Close"
-msgstr "Zat_voriť"
+msgstr "_Zavrieť"
 
 #: data/ui/net-usage.ui:79
 msgid "<b>Downloaded:</b>"
-msgstr "<b>Stiahnuté:</b>"
+msgstr "<b>Prevzaté:</b>"
 
 #: data/ui/net-usage.ui:119
 msgid "<b>Uploaded:</b>"
-msgstr "<b>Odoslané:</b>"
+msgstr "<b>Odovzdané:</b>"
 
 #: data/ui/net-usage.ui:159
 msgid "<b>Total:</b>"
@@ -283,11 +284,11 @@ msgstr "<b>Celkom:</b>"
 
 #: data/ui/net-usage.ui:196
 msgid "<b>Log started:</b>"
-msgstr "<b>Začiatok záznamu:</b>"
+msgstr "<b>Zahájenie záznamu:</b>"
 
 #: data/ui/net-usage.ui:209
 msgid "<b>Log duration:</b>"
-msgstr "<b>Dĺžka záznamu:</b>"
+msgstr "<b>Trvanie záznamu:</b>"
 
 #: data/ui/net-usage.ui:243
 msgid "_Reset"
@@ -299,7 +300,7 @@ msgstr "Odoslať poznámku"
 
 #: blueman/main/Adapter.py:50
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
-msgstr "Bluetooth musí byť pre fungovanie správcu adaptérov zapnutý"
+msgstr "Aby mohol správca adaptérov pracovať, musí byť zapnutý Bluetooth"
 
 #: blueman/main/Adapter.py:86 data/blueman-adapters.desktop.in:3
 msgid "Bluetooth Adapters"
@@ -326,7 +327,7 @@ msgstr "Adaptér"
 
 #: blueman/main/Manager.py:89 blueman/main/Manager.py:130
 msgid "Bluetooth needs to be turned on for the device manager to function"
-msgstr "Bluetooth musí byť pre fungovania správcu zariadení zapnutý"
+msgstr "Aby mohol správca adaptérov fungovať, musí byť zapnutý Bluetooth"
 
 #: blueman/main/Manager.py:109
 msgid "Connection to BlueZ failed"
@@ -338,30 +339,30 @@ msgid ""
 "This probably means that there were no Bluetooth adapters detected or "
 "Bluetooth daemon was not started."
 msgstr ""
-"Démon BlueZ nie je spustený, blueman-manager nevie pokračovať.\n"
-"Toto pravdepodobne znamená, že neboli nájdené žiadne Bluetooth adaptéry "
+"Démon BlueZ nie je spustený, program blueman-manager nedokáže pokračovať.\n"
+"Toto pravdepodobne znamená, že neboli nájdené žiadne adaptéry Bluetooth, "
 "alebo démon Bluetooth nebol spustený."
 
 #: blueman/main/Manager.py:198
 msgid "Searching"
-msgstr "Hľadá sa"
+msgstr "Vyhľadávanie"
 
 #: blueman/main/Manager.py:221 blueman/plugins/applet/StandardItems.py:79
 msgid "Adapter Preferences"
 msgstr "Nastavenia adaptéra"
 
-#: blueman/main/Manager.py:233 blueman/gui/manager/ManagerDeviceList.py:135
+#: blueman/main/Manager.py:233 blueman/gui/manager/ManagerDeviceList.py:143
 #: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
 msgstr "Nástroj na odoslanie súborov"
 
 #: blueman/main/Sendto.py:33
 msgid "Bluetooth File Transfer"
-msgstr "Prenos súborov cez Bluetooth"
+msgstr "Prenos súborov prostredníctvom Bluetooth"
 
 #: blueman/main/Sendto.py:57 blueman/gui/manager/ManagerProgressbar.py:27
 msgid "Connecting"
-msgstr "Pripája sa"
+msgstr "Pripájanie"
 
 #: blueman/main/Sendto.py:111
 msgid "obexd not available"
@@ -370,20 +371,20 @@ msgstr "Program obexd nie je dostupný"
 #: blueman/main/Sendto.py:111
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
 msgstr ""
-"Nepodarilo sa automaticky spustiť službu obex. Presvedčte sa, že obex démon "
-"je spustený"
+"Nepodarilo sa automaticky spustiť službu obex. Uistite sa, že démon obex je "
+"spustený"
 
 #: blueman/main/Sendto.py:142
 msgid "Cancelling"
-msgstr "Ruší sa"
+msgstr "Rušenie"
 
 #: blueman/main/Sendto.py:153 blueman/main/Sendto.py:195
 msgid "Sending File"
-msgstr "Odosiela sa súbor"
+msgstr "Odosielanie súboru"
 
 #: blueman/main/Sendto.py:153 blueman/main/Sendto.py:195
 msgid "ETA:"
-msgstr "ETA:"
+msgstr "Odhadovaný čas do konca:"
 
 #: blueman/main/Sendto.py:191
 #, python-format
@@ -397,7 +398,7 @@ msgstr[3] ""
 #: blueman/main/Sendto.py:229
 #, python-format
 msgid "Error occurred while sending file %s"
-msgstr "Počas odosielania súboru %s nastala chyba"
+msgstr "Počas odosielania súboru %s sa vyskytla chyba"
 
 #: blueman/main/Sendto.py:233
 msgid "Skip"
@@ -409,66 +410,62 @@ msgstr "Skúsiť znovu"
 
 #: blueman/main/Sendto.py:285
 msgid "Error occurred"
-msgstr "Nastala chyba"
+msgstr "Vyskytla sa chyba"
 
-#: blueman/main/Services.py:24
-msgid "Local Services"
-msgstr "Lokálne služby"
-
-#: blueman/main/applet/BluezAgent.py:191
+#: blueman/main/applet/BluezAgent.py:192
 #, python-format
 msgid "Pairing request for %s"
-msgstr "Požiadavka na spárovánie s %s"
+msgstr "Požiadavka na spárovánie so zariadením %s"
 
-#: blueman/main/applet/BluezAgent.py:202 blueman/main/applet/BluezAgent.py:312
+#: blueman/main/applet/BluezAgent.py:203 blueman/main/applet/BluezAgent.py:319
 msgid "Bluetooth Authentication"
-msgstr "Overenie Bluetooth"
+msgstr "Overenie totožnosti Bluetooth"
 
-#: blueman/main/applet/BluezAgent.py:231
+#: blueman/main/applet/BluezAgent.py:234
 msgid "Enter PIN code for authentication:"
-msgstr "Vložte PIN kód pre overenie:"
+msgstr "Zadajte PIN kód pre overenie totožnosti:"
 
-#: blueman/main/applet/BluezAgent.py:246
+#: blueman/main/applet/BluezAgent.py:249
 msgid "Enter passkey for authentication:"
-msgstr "Zadajte heslo pre overenie:"
+msgstr "Zadajte heslo pre overenie totožnosti:"
 
-#: blueman/main/applet/BluezAgent.py:256
+#: blueman/main/applet/BluezAgent.py:260
 msgid "Pairing passkey for"
-msgstr "Párovacie heslo pre"
+msgstr "Heslo spárovania pre"
 
-#: blueman/main/applet/BluezAgent.py:265
+#: blueman/main/applet/BluezAgent.py:271
 msgid "Pairing PIN code for"
-msgstr "Párovací PIN kód pre"
+msgstr "PIN kód spárovania pre"
 
-#: blueman/main/applet/BluezAgent.py:278
+#: blueman/main/applet/BluezAgent.py:284
 msgid "Pairing request for:"
-msgstr "Požadované párovanie pre:"
+msgstr "Požiadavka na spárovanie pre:"
 
-#: blueman/main/applet/BluezAgent.py:281
+#: blueman/main/applet/BluezAgent.py:287
 msgid "Confirm value for authentication:"
-msgstr "Potvrďte hodnotu pre overenie:"
+msgstr "Potvrďte hodnotu pre overenie totožnosti:"
 
-#: blueman/main/applet/BluezAgent.py:282
+#: blueman/main/applet/BluezAgent.py:288
 msgid "Confirm"
 msgstr "Potvrdiť"
 
-#: blueman/main/applet/BluezAgent.py:282 blueman/main/applet/BluezAgent.py:310
+#: blueman/main/applet/BluezAgent.py:288 blueman/main/applet/BluezAgent.py:317
 msgid "Deny"
 msgstr "Zamietnuť"
 
-#: blueman/main/applet/BluezAgent.py:307
+#: blueman/main/applet/BluezAgent.py:314
 msgid "Authorization request for:"
-msgstr "Požadované overenie pre:"
+msgstr "Požiadavka na overenie totožnosti pre:"
 
-#: blueman/main/applet/BluezAgent.py:307
+#: blueman/main/applet/BluezAgent.py:314
 msgid "Service:"
 msgstr "Služba:"
 
-#: blueman/main/applet/BluezAgent.py:308
+#: blueman/main/applet/BluezAgent.py:315
 msgid "Always accept"
-msgstr "Vždy prijať"
+msgstr "Prijať vždy"
 
-#: blueman/main/applet/BluezAgent.py:309
+#: blueman/main/applet/BluezAgent.py:316
 #: blueman/plugins/applet/TransferService.py:130
 msgid "Accept"
 msgstr "Prijať"
@@ -486,7 +483,7 @@ msgstr ""
 
 #: blueman/Functions.py:71
 msgid "Bluetooth Turned Off"
-msgstr "Bluetooth vypnutý"
+msgstr "Bluetooth je vypnutý"
 
 #: blueman/Functions.py:72
 msgid "Exit"
@@ -524,56 +521,56 @@ msgstr "Zobraziť panel _nástrojov"
 msgid "Show _Statusbar"
 msgstr "Zobraziť _stavový riadok"
 
-#: blueman/gui/manager/ManagerMenu.py:83
-msgid "S_ort By"
-msgstr "Z_oradiť podľa"
+#: blueman/gui/manager/ManagerMenu.py:78
+msgid "Hide _unnamed devices"
+msgstr "Skryť zariadenia _bez názvu"
 
-#: blueman/gui/manager/ManagerMenu.py:90
+#: blueman/gui/manager/ManagerMenu.py:88
+msgid "S_ort By"
+msgstr "Usp_oriadať podľa"
+
+#: blueman/gui/manager/ManagerMenu.py:95
 msgid "_Name"
 msgstr "_Názvu"
 
-#: blueman/gui/manager/ManagerMenu.py:95
+#: blueman/gui/manager/ManagerMenu.py:100
 msgid "_Added"
 msgstr "_Pridania"
 
-#: blueman/gui/manager/ManagerMenu.py:109
+#: blueman/gui/manager/ManagerMenu.py:114
 msgid "_Descending"
 msgstr "_Zostupne"
 
-#: blueman/gui/manager/ManagerMenu.py:122
+#: blueman/gui/manager/ManagerMenu.py:127
 #: blueman/plugins/applet/StandardItems.py:50
 msgid "_Plugins"
 msgstr "_Zásuvné moduly"
 
-#: blueman/gui/manager/ManagerMenu.py:127
+#: blueman/gui/manager/ManagerMenu.py:132
 #: blueman/plugins/applet/StandardItems.py:43
 msgid "_Local Services"
-msgstr "_Lokálne služby"
+msgstr "_Miestne služby"
 
-#: blueman/gui/manager/ManagerMenu.py:128
+#: blueman/gui/manager/ManagerMenu.py:133
 #: blueman/plugins/applet/StandardItems.py:82
 msgid "Service Preferences"
 msgstr "Nastavenia služby"
 
-#: blueman/gui/manager/ManagerMenu.py:136
+#: blueman/gui/manager/ManagerMenu.py:141
 msgid "_Search"
 msgstr "_Hľadať"
 
-#: blueman/gui/manager/ManagerMenu.py:150
-#, fuzzy
-#| msgid "Adapter Preferences"
+#: blueman/gui/manager/ManagerMenu.py:155
 msgid "_Preferences"
-msgstr "Nastavenia adaptéra"
+msgstr "_Predvoľby"
 
-#: blueman/gui/manager/ManagerMenu.py:159 blueman/plugins/applet/ExitItem.py:12
-#, fuzzy
-#| msgid "Exit"
+#: blueman/gui/manager/ManagerMenu.py:164 blueman/plugins/applet/ExitItem.py:12
 msgid "_Exit"
-msgstr "Skončiť"
+msgstr "_Skončiť"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:274
-#: blueman/gui/manager/ManagerDeviceList.py:305 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:273
+#: blueman/gui/manager/ManagerDeviceList.py:298 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 #, fuzzy
@@ -581,135 +578,198 @@ msgstr "Skončiť"
 msgid "Uncategorized"
 msgstr "nezaradené"
 
-#: blueman/gui/manager/ManagerDeviceList.py:468
+#: blueman/gui/manager/ManagerDeviceList.py:476
 msgid "<b>Trusted and Paired</b>"
 msgstr "<b>Dôveryhodné a spárované</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:470
+#: blueman/gui/manager/ManagerDeviceList.py:478
 msgid "<b>Paired</b>"
 msgstr "<b>Spárované</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:472
+#: blueman/gui/manager/ManagerDeviceList.py:480
 msgid "<b>Trusted</b>"
-msgstr "<b>Dôveryhodný</b>"
-
-#: blueman/gui/manager/ManagerDeviceList.py:493
-msgid "Poor"
-msgstr "Slabé"
-
-#: blueman/gui/manager/ManagerDeviceList.py:495
-#: blueman/gui/manager/ManagerDeviceList.py:506
-msgid "Sub-optimal"
-msgstr "Sub-optimálne"
-
-#: blueman/gui/manager/ManagerDeviceList.py:497
-#: blueman/gui/manager/ManagerDeviceList.py:508
-msgid "Optimal"
-msgstr "Optimálne"
+msgstr "<b>Dôveryhodné</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:499
+#, fuzzy
+#| msgid "_<b>Connect</b>"
+msgid "<b>Connected</b>"
+msgstr "_<b>Pripojiť sa</b>"
+
+#: blueman/gui/manager/ManagerDeviceList.py:514
+msgid "Poor"
+msgstr "Slabý"
+
+#: blueman/gui/manager/ManagerDeviceList.py:516
+#: blueman/gui/manager/ManagerDeviceList.py:541
+msgid "Sub-optimal"
+msgstr "Takmer optimálny"
+
+#: blueman/gui/manager/ManagerDeviceList.py:518
+#: blueman/gui/manager/ManagerDeviceList.py:543
+msgid "Optimal"
+msgstr "Optimálny"
+
+#: blueman/gui/manager/ManagerDeviceList.py:520
 msgid "Much"
-msgstr "Viac"
+msgstr "Nadmerný"
 
-#: blueman/gui/manager/ManagerDeviceList.py:501
+#: blueman/gui/manager/ManagerDeviceList.py:522
 msgid "Too much"
-msgstr "Prílíš veľa"
+msgstr "Silný"
 
-#: blueman/gui/manager/ManagerDeviceList.py:504
+#: blueman/gui/manager/ManagerDeviceList.py:525
+#, python-format
+msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceList.py:528
+#, python-format
+msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceList.py:533
+#, python-format
+msgid "<b>Link Quality: %(lq)u%%</b>"
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceList.py:535
+#, python-format
+msgid "Link Quality: %(lq)u%%"
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceList.py:539
 msgid "Low"
-msgstr "Nízke"
+msgstr "Nízka"
 
-#: blueman/gui/manager/ManagerDeviceList.py:510
+#: blueman/gui/manager/ManagerDeviceList.py:545
 msgid "High"
-msgstr "Vysoké"
+msgstr "Vysoká"
 
-#: blueman/gui/manager/ManagerDeviceList.py:512
+#: blueman/gui/manager/ManagerDeviceList.py:547
 msgid "Very High"
-msgstr "Veľmi vysoké"
+msgstr "Veľmi vysoká"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:118
-#: blueman/gui/manager/ManagerDeviceMenu.py:181
+#: blueman/gui/manager/ManagerDeviceList.py:550
+#, python-format
+msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceList.py:553
+#, python-format
+msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceMenu.py:131
+#: blueman/gui/manager/ManagerDeviceMenu.py:220
 msgid "Success!"
 msgstr "Úspech!"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:125
-#: blueman/gui/manager/ManagerDeviceMenu.py:174
+#: blueman/gui/manager/ManagerDeviceMenu.py:138
+#: blueman/gui/manager/ManagerDeviceMenu.py:214
 msgid "Failed"
-msgstr "Zlyhalo"
+msgstr "Zlyhanie"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:130
-#: blueman/gui/manager/ManagerDeviceMenu.py:177
+#: blueman/gui/manager/ManagerDeviceMenu.py:143
+#: blueman/gui/manager/ManagerDeviceMenu.py:209
 msgid "Connection Failed: "
 msgstr "Pripojenie zlyhalo: "
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:132
-#: blueman/gui/manager/ManagerDeviceMenu.py:188
+#: blueman/gui/manager/ManagerDeviceMenu.py:145
+#: blueman/gui/manager/ManagerDeviceMenu.py:227
 #, fuzzy
 #| msgid "Connecting"
 msgid "Connecting…"
 msgstr "Pripája sa"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:153
+#: blueman/gui/manager/ManagerDeviceMenu.py:166
 msgid "Disconnection Failed: "
 msgstr "Odpojenie zlyhalo: "
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:195
+#: blueman/gui/manager/ManagerDeviceMenu.py:194
+msgid "No audio endpoints registered"
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceMenu.py:198
+msgid "Input/output error"
+msgstr ""
+
+#. EHOSTDOWN (Bluetooth errors 0x04 (Page Timeout) or 0x3c (Advertising Timeout))
+#: blueman/gui/manager/ManagerDeviceMenu.py:201
+#, fuzzy
+#| msgid "Show device information"
+msgid "Device did not respond"
+msgstr "Zobraziť informácie o zariadení"
+
+#: blueman/gui/manager/ManagerDeviceMenu.py:206
+#, fuzzy
+#| msgid "Temporarily visible"
+msgid "Resource temporarily unavailable"
+msgstr "Dočasne viditeľný"
+
+#: blueman/gui/manager/ManagerDeviceMenu.py:234
 #, fuzzy
 #| msgid "Disconnecting..."
 msgid "Disconnecting…"
 msgstr "Odpája sa..."
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:262
+#: blueman/gui/manager/ManagerDeviceMenu.py:299
 #, fuzzy
 #| msgid "_<b>Connect</b>"
 msgid "_<b>_Connect</b>"
 msgstr "_<b>Pripojiť sa</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:264
+#: blueman/gui/manager/ManagerDeviceMenu.py:301
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
-msgstr "Prepája profily automatického pripojenie A2DP source, A2DP sink a HID"
+msgstr "Pripája profily automatického pripojenia zdroja A2DP, cieľa A2DP a HID"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:268
+#: blueman/gui/manager/ManagerDeviceMenu.py:305
 msgid "_<b>Disconnect</b>"
 msgstr "_<b>Odpojiť sa</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:269
+#: blueman/gui/manager/ManagerDeviceMenu.py:306
 msgid "Forcefully disconnect the device"
-msgstr "Nútene odpojiť zariadenie"
+msgstr "Nútene odpojí zariadenie"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:297
+#: blueman/gui/manager/ManagerDeviceMenu.py:322
 msgid "<b>Connect To:</b>"
-msgstr "<b>Pripojiť sa k:</b>"
+msgstr "<b>Pripojiť k:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:309
+#: blueman/gui/manager/ManagerDeviceMenu.py:327
 msgid "<b>Disconnect:</b>"
 msgstr "<b>Odpojiť:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:329
+#: blueman/gui/manager/ManagerDeviceMenu.py:336
+#, fuzzy
+#| msgid "<b>Disconnect:</b>"
+msgid "<b>Auto-connect:</b>"
+msgstr "<b>Odpojiť:</b>"
+
+#: blueman/gui/manager/ManagerDeviceMenu.py:355
 #, fuzzy
 #| msgid "Send a _File..."
 msgid "Send a _File…"
 msgstr "Odoslať súbor..."
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:342
+#: blueman/gui/manager/ManagerDeviceMenu.py:368
 msgid "_Pair"
 msgstr "_Spárovať"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:352
+#: blueman/gui/manager/ManagerDeviceMenu.py:378
 msgid "_Trust"
 msgstr "_Dôverovať"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:357
+#: blueman/gui/manager/ManagerDeviceMenu.py:383
 msgid "_Untrust"
 msgstr "_Nedôverovať"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:381
+#: blueman/gui/manager/ManagerDeviceMenu.py:407
 #, fuzzy
 #| msgid "Rename device"
 msgid "R_ename device…"
 msgstr "Premenovať zariadenie"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:390
+#: blueman/gui/manager/ManagerDeviceMenu.py:416
 #, fuzzy
 #| msgid "Remove"
 msgid "_Remove…"
@@ -717,7 +777,7 @@ msgstr "Odstrániť"
 
 #: blueman/gui/manager/ManagerProgressbar.py:44
 msgid "Cancel Operation"
-msgstr "Zrušiť operáciu"
+msgstr "Zruší operáciu"
 
 #: blueman/gui/manager/ManagerStats.py:38
 #: blueman/gui/manager/ManagerStats.py:41
@@ -727,12 +787,12 @@ msgstr "Indikácia aktivity údajov"
 #: blueman/gui/manager/ManagerStats.py:43
 #: blueman/gui/manager/ManagerStats.py:53
 msgid "Total data received and rate of transmission"
-msgstr "Celkové prijaté údaje a rýchlosť prenosu"
+msgstr "Celkovo prijaté údaje a rýchlosť prenosu"
 
 #: blueman/gui/manager/ManagerStats.py:47
 #: blueman/gui/manager/ManagerStats.py:51
 msgid "Total data sent and rate of transmission"
-msgstr "Celkové odoslané údaje a rýchlosť prenosu"
+msgstr "Celkovo odoslané údaje a rýchlosť prenosu"
 
 #: blueman/gui/manager/ManagerToolbar.py:37
 #: blueman/gui/manager/ManagerToolbar.py:93
@@ -741,19 +801,19 @@ msgstr "Nedôverovať"
 
 #: blueman/gui/DeviceSelectorDialog.py:14
 msgid "Select Device"
-msgstr "Vybrať zariadenie"
+msgstr "Výber zariadenia"
 
 #: blueman/gui/MessageArea.py:38
 msgid "More"
 msgstr "Viac"
 
-#: blueman/gui/CommonUi.py:63
+#: blueman/gui/CommonUi.py:62
 msgid "Blueman is a GTK+ Bluetooth manager"
-msgstr "Blueman je správca Bluetooth založený na GTK+"
+msgstr "Blueman je správca rozhrania Bluetooth vytvorený pomocou GTK+"
 
 #: blueman/gui/GsmSettings.py:24
 msgid "GSM Settings"
-msgstr "Nastavenia GSM"
+msgstr "Nastavenia siete GSM"
 
 #: blueman/gui/applet/PluginDialog.py:95
 #: blueman/plugins/applet/StandardItems.py:88
@@ -763,7 +823,7 @@ msgstr "Zásuvné moduly"
 #: blueman/gui/applet/PluginDialog.py:294
 #: blueman/gui/applet/PluginDialog.py:316
 msgid "Dependency issue"
-msgstr "Chyba so závislosťami"
+msgstr "Chyba závislostí"
 
 #: blueman/gui/applet/PluginDialog.py:296
 #, python-format
@@ -774,7 +834,7 @@ msgid ""
 msgstr ""
 "Zásuvný modul <b>„%(0)s“</b> závisí na <b>%(1)s</b>. Uvoľnenie <b>%(1)s</b> "
 "uvoľní aj <b>„%(0)s“</b>.\n"
-" Pokračovať?"
+"Pokračovať?"
 
 #: blueman/gui/applet/PluginDialog.py:318
 #, python-format
@@ -783,19 +843,17 @@ msgid ""
 "unload <b>%(0)s</b>.\n"
 "Proceed?"
 msgstr ""
-"Zásuvný modul <b>%(0)s</b> konfliktuje s <b>%(1)s</b>. Načítanie <b>%(1)s</"
-"b> uvoľní <b>%(0)s</b>.\n"
-" Pokračovať?"
+"Zásuvný modul <b>%(0)s</b> je v konflikte s <b>%(1)s</b>. Načítanie <b>"
+"%(1)s</b> uvoľní <b>%(0)s</b>.\n"
+"Pokračovať?"
 
 #: blueman/gui/DeviceSelectorWidget.py:39
 msgid "Adapter selection"
 msgstr "Výber adaptéra"
 
 #: blueman/gui/DeviceSelectorWidget.py:45
-#, fuzzy
-#| msgid "Discoverable… %ss"
 msgid "Discovering…"
-msgstr "Objaviteľné… %ss"
+msgstr "Objavuje sa…"
 
 #. translators: device class
 #: blueman/DeviceClass.py:6
@@ -954,17 +1012,13 @@ msgstr "Program obexd nie je dostupný"
 
 #. translators: device class
 #: blueman/DeviceClass.py:82 blueman/Sdp.py:123 blueman/Sdp.py:164
-#, fuzzy
-#| msgid "headset"
 msgid "Headset"
-msgstr "slúchadlo s mikrofónom"
+msgstr "Náhlavná súprava"
 
 #. translators: device class
 #: blueman/DeviceClass.py:84 blueman/Sdp.py:145
-#, fuzzy
-#| msgid "handsfree"
 msgid "Handsfree"
-msgstr "handsfree"
+msgstr "Handsfree"
 
 #. translators: device class
 #: blueman/DeviceClass.py:88
@@ -1391,63 +1445,63 @@ msgstr ""
 
 #: blueman/Sdp.py:88
 msgid "SDP"
-msgstr ""
+msgstr "SDP"
 
 #: blueman/Sdp.py:89
 msgid "UDP"
-msgstr ""
+msgstr "UDP"
 
 #: blueman/Sdp.py:90
 msgid "RFCOMM"
-msgstr ""
+msgstr "RFCOMM"
 
 #: blueman/Sdp.py:91
 msgid "TCP"
-msgstr ""
+msgstr "TCP"
 
 #: blueman/Sdp.py:92
 msgid "TCS-BIN"
-msgstr ""
+msgstr "TCS-BIN"
 
 #: blueman/Sdp.py:93
 msgid "TCS-AT"
-msgstr ""
+msgstr "TCS-AT"
 
 #: blueman/Sdp.py:94
 msgid "ATT"
-msgstr ""
+msgstr "ATT"
 
 #: blueman/Sdp.py:95
 msgid "OBEX"
-msgstr ""
+msgstr "OBEX"
 
 #: blueman/Sdp.py:96
 msgid "IP"
-msgstr ""
+msgstr "IP"
 
 #: blueman/Sdp.py:97
 msgid "FTP"
-msgstr ""
+msgstr "FTP"
 
 #: blueman/Sdp.py:98
 msgid "HTTP"
-msgstr ""
+msgstr "HTTP"
 
 #: blueman/Sdp.py:99
 msgid "WSP"
-msgstr ""
+msgstr "WSP"
 
 #: blueman/Sdp.py:100
 msgid "BNEP"
-msgstr ""
+msgstr "BNEP"
 
 #: blueman/Sdp.py:101
 msgid "UPnP/ESDP"
-msgstr ""
+msgstr "UPnP/ESDP"
 
 #: blueman/Sdp.py:102
 msgid "HIDP"
-msgstr ""
+msgstr "HIDP"
 
 #: blueman/Sdp.py:103
 msgid "Hardcopy Control Channel"
@@ -1463,15 +1517,15 @@ msgstr ""
 
 #: blueman/Sdp.py:106
 msgid "AVCTP"
-msgstr ""
+msgstr "AVCTP"
 
 #: blueman/Sdp.py:107
 msgid "AVDTP"
-msgstr ""
+msgstr "AVDTP"
 
 #: blueman/Sdp.py:108
 msgid "CMTP"
-msgstr ""
+msgstr "CMTP"
 
 #: blueman/Sdp.py:109
 msgid "UDI_C-Plane"
@@ -1479,11 +1533,11 @@ msgstr ""
 
 #: blueman/Sdp.py:110 blueman/Sdp.py:111
 msgid "Multi-Channel Adaptation Protocol (MCAP)"
-msgstr ""
+msgstr "Protokol viackanálovej adaptácie (MCAP)"
 
 #: blueman/Sdp.py:112
 msgid "L2CAP"
-msgstr ""
+msgstr "L2CAP"
 
 #: blueman/Sdp.py:113
 msgid "ServiceDiscoveryServerServiceClassID"
@@ -1498,14 +1552,12 @@ msgid "Public Browse Group"
 msgstr ""
 
 #: blueman/Sdp.py:116
-#, fuzzy
-#| msgid "Serial Ports"
 msgid "Serial Port"
-msgstr "Sériové porty"
+msgstr "Sériový port"
 
 #: blueman/Sdp.py:117
 msgid "LAN Access Using PPP"
-msgstr ""
+msgstr "Prístup k LAN pomocou PPP"
 
 #: blueman/Sdp.py:118
 msgid "Dialup Networking (DUN)"
@@ -1531,7 +1583,7 @@ msgstr ""
 
 #: blueman/Sdp.py:124
 msgid "Cordless Telephony"
-msgstr ""
+msgstr "Bezdrôtový telefón"
 
 #: blueman/Sdp.py:125
 msgid "Audio Source"
@@ -1539,23 +1591,23 @@ msgstr "Zdroj zvuku"
 
 #: blueman/Sdp.py:126
 msgid "Audio Sink"
-msgstr "Audio Sink"
+msgstr "Cieľ zvuku"
 
 #: blueman/Sdp.py:127
 msgid "Remote Control Target"
-msgstr ""
+msgstr "Cieľ diaľkového ovládania"
 
 #: blueman/Sdp.py:128
 msgid "Advanced Audio"
-msgstr ""
+msgstr "Pokročilý zvuk"
 
 #: blueman/Sdp.py:129
 msgid "Remote Control"
-msgstr ""
+msgstr "Diaľkové ovládanie"
 
 #: blueman/Sdp.py:130
 msgid "Video Conferencing"
-msgstr ""
+msgstr "Videokonferencia"
 
 #: blueman/Sdp.py:131
 msgid "Intercom"
@@ -1563,7 +1615,7 @@ msgstr ""
 
 #: blueman/Sdp.py:132
 msgid "Fax"
-msgstr ""
+msgstr "Fax"
 
 #: blueman/Sdp.py:133
 msgid "Headset Audio Gateway"
@@ -1571,15 +1623,15 @@ msgstr ""
 
 #: blueman/Sdp.py:134
 msgid "WAP"
-msgstr ""
+msgstr "WAP"
 
 #: blueman/Sdp.py:135
 msgid "WAP Client"
-msgstr ""
+msgstr "Klient WAP"
 
 #: blueman/Sdp.py:136
 msgid "PANU"
-msgstr ""
+msgstr "PANU"
 
 #: blueman/Sdp.py:137
 msgid "Network Access Point"
@@ -1675,51 +1727,47 @@ msgstr ""
 
 #: blueman/Sdp.py:161
 msgid "Phonebook Access (PBAP) - PCE"
-msgstr ""
+msgstr "Prístup k telefónnemu zoznamu (PBAP) - PCE"
 
 #: blueman/Sdp.py:162
 msgid "Phonebook Access (PBAP) - PSE"
-msgstr ""
+msgstr "Prístup k telefónnemu zoznamu (PBAP) - PSE"
 
 #: blueman/Sdp.py:163
-#, fuzzy
-#| msgid "Network Access Point (NAP)"
 msgid "Phonebook Access (PBAP)"
-msgstr "Sieťový prítupový bod (NAP)"
+msgstr "Prístup k telefónnemu zoznamu (PBAP)"
 
 #: blueman/Sdp.py:165
 msgid "Message Access Server"
-msgstr ""
+msgstr "Server prístupov k správam"
 
 #: blueman/Sdp.py:166
 msgid "Message Notification Server"
-msgstr ""
+msgstr "Server oznámení správ"
 
 #: blueman/Sdp.py:167
-#, fuzzy
-#| msgid "Network Access Point (NAP)"
 msgid "Message Access Profile (MAP)"
-msgstr "Sieťový prítupový bod (NAP)"
+msgstr "Profil prístupu k správam (MAP)"
 
 #: blueman/Sdp.py:168
 msgid "GNSS"
-msgstr ""
+msgstr "GNSS"
 
 #: blueman/Sdp.py:169
 msgid "GNSS Server"
-msgstr ""
+msgstr "Server GNSS"
 
 #: blueman/Sdp.py:170
 msgid "3D Display"
-msgstr ""
+msgstr "3D displej"
 
 #: blueman/Sdp.py:171
 msgid "3D Glasses"
-msgstr ""
+msgstr "3D okuliare"
 
 #: blueman/Sdp.py:172
 msgid "3D Synchronization (3DSP)"
-msgstr ""
+msgstr "3D synchronizácia (3DSP)"
 
 #: blueman/Sdp.py:173
 msgid "Multi-Profile Specification (MPS) Profile"
@@ -1743,127 +1791,111 @@ msgstr ""
 
 #: blueman/Sdp.py:178
 msgid "PnP Information"
-msgstr ""
+msgstr "Informácie PnP"
 
 #: blueman/Sdp.py:179
-#, fuzzy
-#| msgid "Group Network"
 msgid "Generic Networking"
-msgstr "Skupinová Sieť"
+msgstr "Všeobecná sieť"
 
 #: blueman/Sdp.py:180
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "Generic FileTransfer"
-msgstr "Prenos súborov cez Bluetooth"
+msgstr "Všeobecný prenos súborov"
 
 #: blueman/Sdp.py:181
 msgid "Generic Audio"
-msgstr ""
+msgstr "Všeobecný zvuk"
 
 #: blueman/Sdp.py:182
 msgid "Generic Telephony"
-msgstr ""
+msgstr "Všeobecný telefón"
 
 #: blueman/Sdp.py:183
-#, fuzzy
-#| msgid "Audio Source"
 msgid "Video Source"
-msgstr "Zdroj zvuku"
+msgstr "Zdroj videa"
 
 #: blueman/Sdp.py:184
-#, fuzzy
-#| msgid "Audio Sink"
 msgid "Video Sink"
-msgstr "Audio Sink"
+msgstr "Cieľ videa"
 
 #: blueman/Sdp.py:185
 msgid "Video Distribution"
-msgstr ""
+msgstr "Distribúcia videa"
 
 #: blueman/Sdp.py:186
 msgid "HDP"
-msgstr ""
+msgstr "HDP"
 
 #: blueman/Sdp.py:187
-#, fuzzy
-#| msgid "Audio Source"
 msgid "HDP Source"
-msgstr "Zdroj zvuku"
+msgstr "Zdroj HDP"
 
 #: blueman/Sdp.py:188
 msgid "HDP Sink"
-msgstr ""
+msgstr "Cieľ HDP"
 
 #: blueman/Sdp.py:189
 msgid "Generic Access"
-msgstr ""
+msgstr "Všeobecný prístup"
 
 #: blueman/Sdp.py:190
 msgid "Generic Attribute"
-msgstr ""
+msgstr "Všeobecný atribút"
 
 #: blueman/Sdp.py:191
 msgid "Immediate Alert"
-msgstr ""
+msgstr "Okamžitá výstraha"
 
 #: blueman/Sdp.py:192
 msgid "Link Loss"
-msgstr ""
+msgstr "Strata linky"
 
 #: blueman/Sdp.py:193
 msgid "Tx Power"
-msgstr ""
+msgstr "Vysielací výkon"
 
 #: blueman/Sdp.py:194
-#, fuzzy
-#| msgid "Rename device"
 msgid "Current Time Service"
-msgstr "Premenovať zariadenie"
+msgstr "Služba aktuálneho času"
 
 #: blueman/Sdp.py:195
 msgid "Reference Time Update Service"
-msgstr ""
+msgstr "Služba aktualizácie referenčného času"
 
 #: blueman/Sdp.py:196
 msgid "Next DST Change Service"
-msgstr ""
+msgstr "Služba nasledujúcej zmeny letného času"
 
 #: blueman/Sdp.py:197
 msgid "Glucose"
-msgstr ""
+msgstr "Glukóza"
 
 #: blueman/Sdp.py:198
 msgid "Health Thermometer"
-msgstr ""
+msgstr "Zdravotný teplomer"
 
 #: blueman/Sdp.py:199
-#, fuzzy
-#| msgid "Show device information"
 msgid "Device Information"
-msgstr "Zobraziť informácie o zariadení"
+msgstr "Informácie o zariadení"
 
 #: blueman/Sdp.py:200
 msgid "Heart Rate"
-msgstr ""
+msgstr "Tep srdca"
 
 #: blueman/Sdp.py:201
 msgid "Phone Alert Status Service"
-msgstr ""
+msgstr "Služba stavu výstrahy telefónu"
 
 #: blueman/Sdp.py:202
-#, fuzzy
-#| msgid "Local Services"
 msgid "Battery Service"
-msgstr "Lokálne služby"
+msgstr "Služba batérie"
 
 #: blueman/Sdp.py:203
 msgid "Blood Pressure"
-msgstr ""
+msgstr "Tlak krvi"
 
 #: blueman/Sdp.py:204
 msgid "Alert Notification Service"
-msgstr ""
+msgstr "Služba oznámenia výstrahy"
 
 #: blueman/Sdp.py:205
 msgid "Human Interface Device"
@@ -1871,7 +1903,7 @@ msgstr ""
 
 #: blueman/Sdp.py:206
 msgid "Scan Parameters"
-msgstr ""
+msgstr "Parametre skenovania"
 
 #: blueman/Sdp.py:207
 msgid "Running Speed and Cadence"
@@ -1931,53 +1963,43 @@ msgstr ""
 
 #: blueman/Sdp.py:221
 msgid "HTTP Proxy"
-msgstr ""
+msgstr "HTTP Proxy"
 
 #: blueman/Sdp.py:222
 msgid "Transport Discovery"
-msgstr ""
+msgstr "Objavenie prenosu"
 
 #: blueman/Sdp.py:223
-#, fuzzy
-#| msgid "Transfer"
 msgid "Object Transfer"
-msgstr "Prenos"
+msgstr "Prenos objektu"
 
 #: blueman/Sdp.py:224
-#, fuzzy
-#| msgid "applet"
 msgid "AppleAgent"
-msgstr "aplet"
+msgstr "AppleAgent"
 
 #: blueman/Sdp.py:225
-#, fuzzy
-#| msgid "Pair Device"
 msgid "Primary Service"
-msgstr "Spárovať zariadenie"
+msgstr "Hlavná služba"
 
 #: blueman/Sdp.py:226
-#, fuzzy
-#| msgid "Search for nearby devices"
 msgid "Secondary Service"
-msgstr "Vyhľadá zariadenia v blízkosti"
+msgstr "Vedľajšia služba"
 
 #: blueman/Sdp.py:227
 msgid "Include"
-msgstr ""
+msgstr "Zahrnutie"
 
 #: blueman/Sdp.py:228
 msgid "Characteristic Declaration"
 msgstr ""
 
 #: blueman/Sdp.py:229
-#, fuzzy
-#| msgid "Device Manager"
 msgid "Device Name"
-msgstr "Správca zariadení"
+msgstr "Názov zariadenia"
 
 #: blueman/Sdp.py:230
 msgid "Appearance"
-msgstr ""
+msgstr "Vzhľad"
 
 #: blueman/Sdp.py:231
 msgid "Peripheral Privacy Flag"
@@ -2001,7 +2023,7 @@ msgstr "Správca zariadení"
 
 #: blueman/Sdp.py:235
 msgid "System ID"
-msgstr ""
+msgstr "ID systému"
 
 #: blueman/Sdp.py:236
 msgid "Model Number String"
@@ -2029,7 +2051,7 @@ msgstr ""
 
 #: blueman/Sdp.py:242
 msgid "PnP ID"
-msgstr ""
+msgstr "ID PnP"
 
 #: blueman/Sdp.py:243
 msgid "Characteristic Extended Properties"
@@ -2057,7 +2079,7 @@ msgstr ""
 
 #: blueman/Sdp.py:249
 msgid "Valid Range"
-msgstr ""
+msgstr "Platný rozsah"
 
 #: blueman/Sdp.py:250
 msgid "External Report Reference"
@@ -2070,7 +2092,9 @@ msgid "Report Reference"
 msgstr "Nastavenia adaptéra"
 
 #: blueman/Sdp.py:378
-msgid "Auto connect profiles"
+#, fuzzy
+#| msgid "Auto connect profiles"
+msgid "Audio and input profiles"
 msgstr "Profily automatického pripojenia"
 
 #: blueman/Sdp.py:380
@@ -2095,7 +2119,7 @@ msgstr "_Informácie"
 
 #: blueman/plugins/manager/Info.py:121
 msgid "Show device information"
-msgstr "Zobraziť informácie o zariadení"
+msgstr "Zobrazí informácie o zariadení"
 
 #: blueman/plugins/manager/Notes.py:51
 msgid "Send _note"
@@ -2103,7 +2127,7 @@ msgstr "Odoslať _poznámku"
 
 #: blueman/plugins/manager/Notes.py:52
 msgid "Send a text note"
-msgstr "Odoslať textovú poznámku"
+msgstr "Odošle textovú poznámku"
 
 #: blueman/plugins/manager/PulseAudioProfile.py:87
 #, python-format
@@ -2116,28 +2140,11 @@ msgstr "Zvukový profil"
 
 #: blueman/plugins/manager/PulseAudioProfile.py:129
 msgid "Select audio profile for PulseAudio"
-msgstr "Vybrať zvukový profil pre PulseAudio"
-
-#: blueman/plugins/manager/Services.py:79
-#, python-format
-msgid "Serial Port %s"
-msgstr "Sériový port %s"
-
-#: blueman/plugins/manager/Services.py:92
-msgid "Renew IP Address"
-msgstr "Obnoviť IP adresu"
-
-#: blueman/plugins/manager/Services.py:109
-msgid "Dialup Settings"
-msgstr "Nastavenia vytáčaného spojenia"
-
-#: blueman/plugins/manager/Services.py:118
-msgid "Serial Ports"
-msgstr "Sériové porty"
+msgstr "Vyberie zvukový profil pre systém PulseAudio"
 
 #: blueman/plugins/BasePlugin.py:34 blueman/plugins/BasePlugin.py:35
 msgid "Unspecified"
-msgstr "Nešpecifikované"
+msgstr "Nešpecifikovaný"
 
 #: blueman/plugins/applet/AutoConnect.py:20
 msgid ""
@@ -2145,14 +2152,14 @@ msgid ""
 msgstr ""
 
 #. https://github.com/python/mypy/issues/2608
-#: blueman/plugins/applet/AutoConnect.py:46
+#: blueman/plugins/applet/AutoConnect.py:50
 #: blueman/plugins/applet/ConnectionNotifier.py:21
 #: blueman/plugins/applet/RecentConns.py:219
 #: blueman/plugins/applet/PPPSupport.py:75
 msgid "Connected"
 msgstr "Pripojené"
 
-#: blueman/plugins/applet/AutoConnect.py:46
+#: blueman/plugins/applet/AutoConnect.py:50
 #, python-format
 msgid "Automatically connected to %(service)s on %(device)s"
 msgstr "Automaticky pripojené k %(service)sna zariadení %(device)s"
@@ -2183,15 +2190,15 @@ msgid ""
 "No usage statistics are available yet. Try establishing a connection first "
 "and then check this page."
 msgstr ""
-"Nie sú ešte k dispozícií žiadne štatistiky používanosti. Skúste najprv "
-"vytvoriť pripojenie a opäť skontrolujte túto stránku."
+"Zatiaľ nie je dostupná žiadna štatistika o používaní. Skúste najskôr "
+"vytvoriť pripojenie a potom skontrolovať túto stránku."
 
 #: blueman/plugins/applet/NetUsage.py:202
 msgid "day"
 msgid_plural "days"
 msgstr[0] "deň"
 msgstr[1] "dni"
-msgstr[2] "dní"
+msgstr[2] "dňa"
 msgstr[3] "dní"
 
 #: blueman/plugins/applet/NetUsage.py:203
@@ -2199,7 +2206,7 @@ msgid "hour"
 msgid_plural "hours"
 msgstr[0] "hodina"
 msgstr[1] "hodiny"
-msgstr[2] "hodín"
+msgstr[2] "hodiny"
 msgstr[3] "hodín"
 
 #: blueman/plugins/applet/NetUsage.py:204
@@ -2207,7 +2214,7 @@ msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "minúta"
 msgstr[1] "minúty"
-msgstr[2] "minút"
+msgstr[2] "minúty"
 msgstr[3] "minút"
 
 #: blueman/plugins/applet/NetUsage.py:206
@@ -2217,7 +2224,7 @@ msgstr "%d %s %d %s a %d %s"
 
 #: blueman/plugins/applet/NetUsage.py:241
 msgid "Are you sure you want to reset the counter?"
-msgstr "Ste si istý, že chcete vynulovať počítadlo?"
+msgstr "Naozaj chcete vynulovať počítadlo?"
 
 #: blueman/plugins/applet/NetUsage.py:287
 msgid ""
@@ -2240,35 +2247,35 @@ msgstr "Zobrazí využitie sieťovej prevádzky"
 #: blueman/plugins/applet/ShowConnected.py:72
 #: blueman/plugins/applet/PowerManager.py:189
 msgid "Bluetooth Enabled"
-msgstr "Bluetooth povolený"
+msgstr "Bluetooth je povolený"
 
 #: blueman/plugins/applet/Networking.py:17
 msgid "Manages local network services, like NAP bridges"
-msgstr "Spravuje lokálne sieťové služby, ako mosty NAP"
+msgstr "Spravuje miestne sieťové služby, ako sú mosty NAP"
 
 #: blueman/plugins/applet/NMDUNSupport.py:18
 msgid ""
 "Provides support for Dial Up Networking (DUN) with ModemManager and "
 "NetworkManager"
 msgstr ""
-"Poskytuje podporu vytáčaného pripojenia siete (DUN) pomocou programov "
+"Poskytuje podporu vytáčaného pripojenia k sieti (DUN) pomocou programov "
 "ModemManager a NetworkManager"
 
 #: blueman/plugins/applet/RecentConns.py:41
 msgid ""
 "Provides a menu item that contains last used connections for quick access"
 msgstr ""
-"Poskytuje položku menu, ktorá obsahuje posledné použité pripojenie pre "
+"Poskytuje položku ponuky, ktorá obsahuje naposledy použité pripojenia pre "
 "rýchly prístup"
 
 #. the maximum number of items RecentConns menu will display
 #: blueman/plugins/applet/RecentConns.py:52
 msgid "Maximum items"
-msgstr "Maximálny počet položiek"
+msgstr "Maximum položiek"
 
 #: blueman/plugins/applet/RecentConns.py:53
 msgid "The maximum number of items recent connections menu will display."
-msgstr "Maximálny počet zobrazených položiek nedávnych spojení."
+msgstr "Maximálny počet zobrazených položiek v ponuke nedávnych pripojení."
 
 #: blueman/plugins/applet/RecentConns.py:64
 msgid "Recent _Connections"
@@ -2281,7 +2288,7 @@ msgstr "Pripojené k %s"
 
 #: blueman/plugins/applet/RecentConns.py:225
 msgid "Failed to connect"
-msgstr "Pripojenie neúspešné"
+msgstr "Pripojenie zlyhalo"
 
 #: blueman/plugins/applet/RecentConns.py:245
 #, python-format
@@ -2297,21 +2304,20 @@ msgid ""
 "Provides support for Personal Area Networking (PAN) introduced in "
 "NetworkManager 0.8"
 msgstr ""
-"Poskytuje podporu pre Personal Area Networking (PAN) uvedené v "
-"NetworkManager 0.8"
+"Poskytuje podporu pre osobnú sieť (PAN) uvedenú v programe NetworkManager 0.8"
 
 #: blueman/plugins/applet/DBusService.py:46
 msgid "Provides DBus API for other Blueman components"
-msgstr "Poskytuje DBus API pre daľšie súčasti Bleueman"
+msgstr "Poskytuje API zbernice DBus pre ďalšie súčasti aplikácie Blueman"
 
 #: blueman/plugins/applet/TransferService.py:127
 msgid "Incoming file over Bluetooth"
-msgstr "Prichádza súbor cez Bluetooth"
+msgstr "Prichádzajúci súbor prostredníctvom Bluetooth"
 
 #: blueman/plugins/applet/TransferService.py:128
 #, python-format
 msgid "Incoming file %(0)s from %(1)s"
-msgstr "Prichádza súbor %(0)s z %(1)s"
+msgstr "Prichádzajúci súbor %(0)s zo zariadenia %(1)s"
 
 #: blueman/plugins/applet/TransferService.py:130
 msgid "Reject"
@@ -2319,16 +2325,16 @@ msgstr "Odmietnuť"
 
 #: blueman/plugins/applet/TransferService.py:137
 msgid "Receiving file"
-msgstr "Prijatie súboru"
+msgstr "Prijímanie súboru"
 
 #: blueman/plugins/applet/TransferService.py:138
 #, python-format
 msgid "Receiving file %(0)s from %(1)s"
-msgstr "Prijímanie súboru %(0)s z %(1)s"
+msgstr "Prijímanie súboru %(0)s zo zariadenia %(1)s"
 
 #: blueman/plugins/applet/TransferService.py:157
 msgid "Provides OBEX file transfer capabilities"
-msgstr "Poskytuje schopnosť prenosu súborov OBEX"
+msgstr "Poskytuje schopnosti prenosu súborov OBEX"
 
 #: blueman/plugins/applet/TransferService.py:180
 msgid "Configured directory for incoming files does not exist"
@@ -2350,11 +2356,11 @@ msgstr "Súbor prijatý"
 #: blueman/plugins/applet/TransferService.py:304
 #, python-format
 msgid "File %(0)s from %(1)s successfully received"
-msgstr "Súbor %(0)s z %(1)s bol úspešne prijatý"
+msgstr "Súbor %(0)s zo zariadenia %(1)s bol úspešne prijatý"
 
 #: blueman/plugins/applet/TransferService.py:312
 msgid "Transfer failed"
-msgstr "Zlyhal prenos"
+msgstr "Prenos zlyhal"
 
 #: blueman/plugins/applet/TransferService.py:313
 #, python-format
@@ -2364,7 +2370,7 @@ msgstr "Prenos súboru %(0)s zlyhal"
 #: blueman/plugins/applet/TransferService.py:333
 #: blueman/plugins/applet/TransferService.py:342
 msgid "Files received"
-msgstr "Prijaté súbory"
+msgstr "Súbory prijaté"
 
 #: blueman/plugins/applet/TransferService.py:334
 #, fuzzy, python-format
@@ -2397,11 +2403,11 @@ msgstr ""
 
 #: blueman/plugins/applet/StandardItems.py:22
 msgid "Adds standard menu items to the status icon menu"
-msgstr "Pridá štandardné položky menu k menu stavovej ikony"
+msgstr "Pridá štandardné položky ponuky do ponuky stavovej ikony"
 
 #: blueman/plugins/applet/StandardItems.py:32
 msgid "Send _Files to Device"
-msgstr "_Odoslať súbory zariadeniu"
+msgstr "_Odoslať súbory do zariadenia"
 
 #: blueman/plugins/applet/StandardItems.py:37
 msgid "_Devices"
@@ -2417,21 +2423,22 @@ msgstr "aplet"
 
 #: blueman/plugins/applet/AuthAgent.py:8
 msgid "Provides passkey, authentication services for BlueZ daemon"
-msgstr "Poskytuje heslo, službu overenia totožnosti pre démona BlueZ"
+msgstr "Poskytuje heslo, služby overenia totožnosti pre démona BlueZ"
 
 #: blueman/plugins/applet/ExitItem.py:7
 msgid "Adds an exit menu item to quit the applet"
-msgstr "Pridá položku do menu pre ukončeniu apletu"
+msgstr "Pridá položku ponuky na skončenie apletu"
 
 #: blueman/plugins/applet/DhcpClient.py:14
 msgid "Provides a basic dhcp client for Bluetooth PAN connections."
-msgstr "Poskytuje základného dhcp klienta pre pripojenia Bluetooth PAN."
+msgstr ""
+"Poskytuje základného klienta servera dhcp pre pripojenia Bluetooth PAN."
 
 #: blueman/plugins/applet/DhcpClient.py:47
 #: blueman/plugins/applet/DhcpClient.py:55
 #: blueman/plugins/applet/DhcpClient.py:60
 msgid "Bluetooth Network"
-msgstr "Bluetooth sieť"
+msgstr "Sieť Bluetooth"
 
 #: blueman/plugins/applet/DhcpClient.py:48
 #, python-format
@@ -2441,7 +2448,7 @@ msgstr "Rozhranie %(0)s je viazané na IP adresu %(1)s"
 #: blueman/plugins/applet/DhcpClient.py:55
 #, python-format
 msgid "Failed to obtain an IP address on %s"
-msgstr "Nepodarilo sa získať IP adresu na %s"
+msgstr "Nepodarilo sa získať IP adresu zariadenia %s"
 
 #: blueman/plugins/applet/DhcpClient.py:60
 #, python-format
@@ -2449,7 +2456,7 @@ msgid ""
 "Trying to obtain an IP address on %s\n"
 "Please wait…"
 msgstr ""
-"Prebieha získavanie adresy IP na %s\n"
+"Prebieha získavanie adresy IP zariadenia %s\n"
 "Prosím, čakajte…"
 
 #: blueman/plugins/applet/ShowConnected.py:17
@@ -2462,7 +2469,7 @@ msgstr ""
 
 #: blueman/plugins/applet/ShowConnected.py:61
 msgid "Bluetooth Active"
-msgstr "Bluetooth aktívne"
+msgstr "Bluetooth je aktívny"
 
 #: blueman/plugins/applet/ShowConnected.py:64
 #, fuzzy, python-format
@@ -2478,11 +2485,11 @@ msgstr[3] "<b>%d Aktívnych pripojení</b>"
 #: blueman/plugins/applet/ShowConnected.py:74
 #: blueman/plugins/applet/PowerManager.py:192
 msgid "Bluetooth Disabled"
-msgstr "Bluetooth zakázaný"
+msgstr "Bluetooth je zakázaný"
 
 #: blueman/plugins/applet/AppIndicator.py:17
 msgid "Uses libappindicator to show a statusicon"
-msgstr "Použiť libappindicator na zobrazenie statovej ikony"
+msgstr "Použije knižnicu libappindicator na zobrazenie stavovej ikony"
 
 #: blueman/plugins/applet/Battery.py:14
 msgid ""
@@ -2494,7 +2501,7 @@ msgstr ""
 msgid "Adds disconnect menu items"
 msgstr ""
 
-#: blueman/plugins/applet/DisconnectItems.py:36
+#: blueman/plugins/applet/DisconnectItems.py:40
 #, fuzzy, python-format
 #| msgid "Disconnecting..."
 msgid "Disconnect %s"
@@ -2517,7 +2524,7 @@ msgid "Amount of time in seconds discoverable mode will last"
 msgstr "Počet minút v sekundách počas ktorých bude objaviteľný režim aktívny"
 
 #: blueman/plugins/applet/DiscvManager.py:35
-#: blueman/plugins/applet/DiscvManager.py:118
+#: blueman/plugins/applet/DiscvManager.py:123
 msgid "_Make Discoverable"
 msgstr "_Spraviť objaviteľným"
 
@@ -2621,7 +2628,7 @@ msgstr "<b>Vyp_núť Bluetooth</b>"
 #: blueman/plugins/applet/PowerManager.py:56
 #: blueman/plugins/applet/PowerManager.py:173
 msgid "Turn off all adapters"
-msgstr "Vypnúť všetky adaptéry"
+msgstr "Vypne všetky adaptéry"
 
 #: blueman/plugins/applet/PowerManager.py:162
 msgid "<b>Turn Bluetooth _On</b>"
@@ -2675,13 +2682,26 @@ msgstr "Prenos"
 msgid "Applet's transfer service plugin is disabled"
 msgstr "Modul pre prenosnú službu apletu je vypnutý"
 
+#: blueman/services/DialupNetwork.py:23
+msgid "Dialup Settings"
+msgstr "Nastavenia vytáčaného pripojenia"
+
+#: blueman/services/meta/SerialService.py:34
+#, python-format
+msgid "Serial Port %s"
+msgstr "Sériový port %s"
+
+#: blueman/services/meta/NetworkService.py:51
+msgid "Renew IP Address"
+msgstr "Obnoviť adresu IP"
+
 #: data/blueman-adapters.desktop.in:4
 msgid "Set Bluetooth Adapter Properties"
-msgstr "Nastavenie vlastnosti bluetooth adaptéra"
+msgstr "Nastavuje vlastnosti bluetooth adaptéra"
 
 #: data/blueman.desktop.in:3
 msgid "Blueman Applet"
-msgstr "Blueman Applet"
+msgstr "Aplet bluetooth"
 
 #: data/blueman.desktop.in:4 data/blueman-manager.desktop.in:4
 msgid "Blueman Bluetooth Manager"
@@ -2726,6 +2746,12 @@ msgstr "Nastavenie stavu RfKill"
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr "Nastavenie stavu RfKill vyžaduje práva"
+
+#~ msgid "Local Services"
+#~ msgstr "Miestne služby"
+
+#~ msgid "Serial Ports"
+#~ msgstr "Sériové porty"
 
 #~ msgid "blueman-device"
 #~ msgstr "blueman-device"

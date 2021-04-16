@@ -20,13 +20,14 @@
 # Αλέξανδρος Καπετάνιος <alexandros@gnugr.org>, 2017-2018
 # Νίκος Κοντ. <nkontopos@gmail.com>, 2016
 # george k <norhorn@gmail.com>
+# Michalis <michalisntovas@yahoo.gr>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2020-11-09 00:15+0100\n"
-"PO-Revision-Date: 2020-06-05 12:28+0000\n"
-"Last-Translator: george k <norhorn@gmail.com>\n"
+"POT-Creation-Date: 2021-04-15 22:17+0200\n"
+"PO-Revision-Date: 2021-02-17 22:44+0000\n"
+"Last-Translator: Michalis <michalisntovas@yahoo.gr>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/blueman/blueman/el/"
 ">\n"
 "Language: el\n"
@@ -34,7 +35,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.1-dev\n"
+"X-Generator: Weblate 4.5\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -98,7 +99,7 @@ msgstr "Αναζήτηση συσκευών που βρίσκονται κοντ
 msgid "Search"
 msgstr "Αναζήτηση"
 
-#: data/ui/manager-main.ui:121 blueman/gui/manager/ManagerDeviceMenu.py:343
+#: data/ui/manager-main.ui:121 blueman/gui/manager/ManagerDeviceMenu.py:369
 msgid "Create pairing with the device"
 msgstr "Δημιουργία ζεύξης με τη συσκευή"
 
@@ -107,7 +108,7 @@ msgstr "Δημιουργία ζεύξης με τη συσκευή"
 msgid "Pair"
 msgstr "Ζεύξη"
 
-#: data/ui/manager-main.ui:135 blueman/gui/manager/ManagerDeviceMenu.py:361
+#: data/ui/manager-main.ui:135 blueman/gui/manager/ManagerDeviceMenu.py:387
 msgid "Mark/Unmark this device as trusted"
 msgstr "Σημείωση αυτής της συσκευής ως έμπιστης/μη έμπιστης"
 
@@ -117,7 +118,7 @@ msgstr "Σημείωση αυτής της συσκευής ως έμπιστη�
 msgid "Trust"
 msgstr "Έμπιστο"
 
-#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:394
+#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:420
 msgid "Remove this device from the known devices list"
 msgstr "Αφαίρεση αυτής της συσκευής από τη λίστα γνωστών συσκευών"
 
@@ -238,8 +239,8 @@ msgstr "<b>Συγγραφέας:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:305
-#: blueman/gui/manager/ManagerDeviceList.py:307 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:298
+#: blueman/gui/manager/ManagerDeviceList.py:300 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:209
@@ -359,7 +360,7 @@ msgstr "Αναζήτηση"
 msgid "Adapter Preferences"
 msgstr "Προτιμήσεις προσαρμογέα"
 
-#: blueman/main/Manager.py:233 blueman/gui/manager/ManagerDeviceList.py:135
+#: blueman/main/Manager.py:233 blueman/gui/manager/ManagerDeviceList.py:143
 #: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
 msgstr "Αποστολέας αρχείων"
@@ -417,64 +418,60 @@ msgstr "Επανάληψη"
 msgid "Error occurred"
 msgstr "Παρουσιάστηκε σφάλμα"
 
-#: blueman/main/Services.py:24
-msgid "Local Services"
-msgstr "Τοπικές υπηρεσίες"
-
-#: blueman/main/applet/BluezAgent.py:191
+#: blueman/main/applet/BluezAgent.py:192
 #, python-format
 msgid "Pairing request for %s"
 msgstr "Αίτηση ζεύξης για %s"
 
-#: blueman/main/applet/BluezAgent.py:202 blueman/main/applet/BluezAgent.py:312
+#: blueman/main/applet/BluezAgent.py:203 blueman/main/applet/BluezAgent.py:319
 msgid "Bluetooth Authentication"
 msgstr "Αυθεντικοποίηση Bluetooth"
 
-#: blueman/main/applet/BluezAgent.py:231
+#: blueman/main/applet/BluezAgent.py:234
 msgid "Enter PIN code for authentication:"
 msgstr "Εισάγετε τον κωδικό PIN για αυθεντικοπίηση:"
 
-#: blueman/main/applet/BluezAgent.py:246
+#: blueman/main/applet/BluezAgent.py:249
 msgid "Enter passkey for authentication:"
 msgstr "Εισάγετε φράση-κλειδιού πρόσβασης για την αυθεντικοποίηση:"
 
-#: blueman/main/applet/BluezAgent.py:256
+#: blueman/main/applet/BluezAgent.py:260
 msgid "Pairing passkey for"
 msgstr "Φράση-κλειδί ζεύξης για"
 
-#: blueman/main/applet/BluezAgent.py:265
+#: blueman/main/applet/BluezAgent.py:271
 msgid "Pairing PIN code for"
 msgstr "Κωδικός ΡΙΝ ζεύξης για"
 
-#: blueman/main/applet/BluezAgent.py:278
+#: blueman/main/applet/BluezAgent.py:284
 msgid "Pairing request for:"
 msgstr "Αίτημα ζεύξης για:"
 
-#: blueman/main/applet/BluezAgent.py:281
+#: blueman/main/applet/BluezAgent.py:287
 msgid "Confirm value for authentication:"
 msgstr "Επιβεβαίωση τιμής για αυθεντικοποίηση:"
 
-#: blueman/main/applet/BluezAgent.py:282
+#: blueman/main/applet/BluezAgent.py:288
 msgid "Confirm"
 msgstr "Επιβεβαίωση"
 
-#: blueman/main/applet/BluezAgent.py:282 blueman/main/applet/BluezAgent.py:310
+#: blueman/main/applet/BluezAgent.py:288 blueman/main/applet/BluezAgent.py:317
 msgid "Deny"
 msgstr "Άρνηση"
 
-#: blueman/main/applet/BluezAgent.py:307
+#: blueman/main/applet/BluezAgent.py:314
 msgid "Authorization request for:"
 msgstr "Αίτημα εξουσιοδότησης απο:"
 
-#: blueman/main/applet/BluezAgent.py:307
+#: blueman/main/applet/BluezAgent.py:314
 msgid "Service:"
 msgstr "Υπηρεσία:"
 
-#: blueman/main/applet/BluezAgent.py:308
+#: blueman/main/applet/BluezAgent.py:315
 msgid "Always accept"
 msgstr "Πάντα αποδοχή"
 
-#: blueman/main/applet/BluezAgent.py:309
+#: blueman/main/applet/BluezAgent.py:316
 #: blueman/plugins/applet/TransferService.py:130
 msgid "Accept"
 msgstr "Αποδοχή"
@@ -530,56 +527,62 @@ msgstr "Εμφάνιση ερ_γαλειοθήκης"
 msgid "Show _Statusbar"
 msgstr "Εμφάνιση γραμμής_Κατάστασης"
 
-#: blueman/gui/manager/ManagerMenu.py:83
+#: blueman/gui/manager/ManagerMenu.py:78
+#, fuzzy
+#| msgid "Rename device"
+msgid "Hide _unnamed devices"
+msgstr "Μετονομασία συσκευής"
+
+#: blueman/gui/manager/ManagerMenu.py:88
 msgid "S_ort By"
 msgstr "Τα_ξινόμηση ανά"
 
-#: blueman/gui/manager/ManagerMenu.py:90
+#: blueman/gui/manager/ManagerMenu.py:95
 msgid "_Name"
 msgstr "_Όνομα"
 
-#: blueman/gui/manager/ManagerMenu.py:95
+#: blueman/gui/manager/ManagerMenu.py:100
 msgid "_Added"
-msgstr "_ Προστέθηκε"
+msgstr "_Προστέθηκε"
 
-#: blueman/gui/manager/ManagerMenu.py:109
+#: blueman/gui/manager/ManagerMenu.py:114
 msgid "_Descending"
-msgstr "_Μείωση"
+msgstr "_Φθίνουσα"
 
-#: blueman/gui/manager/ManagerMenu.py:122
+#: blueman/gui/manager/ManagerMenu.py:127
 #: blueman/plugins/applet/StandardItems.py:50
 msgid "_Plugins"
 msgstr "_Πρόσθετα"
 
-#: blueman/gui/manager/ManagerMenu.py:127
+#: blueman/gui/manager/ManagerMenu.py:132
 #: blueman/plugins/applet/StandardItems.py:43
 msgid "_Local Services"
 msgstr "_Τοπικές Υπηρεσίες"
 
-#: blueman/gui/manager/ManagerMenu.py:128
+#: blueman/gui/manager/ManagerMenu.py:133
 #: blueman/plugins/applet/StandardItems.py:82
 msgid "Service Preferences"
 msgstr "Προτιμήσεις Υπηρεσίας"
 
-#: blueman/gui/manager/ManagerMenu.py:136
+#: blueman/gui/manager/ManagerMenu.py:141
 msgid "_Search"
 msgstr "_Αναζήτηση"
 
-#: blueman/gui/manager/ManagerMenu.py:150
+#: blueman/gui/manager/ManagerMenu.py:155
 #, fuzzy
 #| msgid "Adapter Preferences"
 msgid "_Preferences"
 msgstr "Προτιμήσεις προσαρμογέα"
 
-#: blueman/gui/manager/ManagerMenu.py:159 blueman/plugins/applet/ExitItem.py:12
+#: blueman/gui/manager/ManagerMenu.py:164 blueman/plugins/applet/ExitItem.py:12
 #, fuzzy
 #| msgid "Exit"
 msgid "_Exit"
 msgstr "Έξοδος"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:274
-#: blueman/gui/manager/ManagerDeviceList.py:305 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:273
+#: blueman/gui/manager/ManagerDeviceList.py:298 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 #, fuzzy
@@ -587,135 +590,198 @@ msgstr "Έξοδος"
 msgid "Uncategorized"
 msgstr "ακατηγοριοποίητο"
 
-#: blueman/gui/manager/ManagerDeviceList.py:468
+#: blueman/gui/manager/ManagerDeviceList.py:476
 msgid "<b>Trusted and Paired</b>"
 msgstr "<b>Έμπιστος και Συνδυαζμένος</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:470
+#: blueman/gui/manager/ManagerDeviceList.py:478
 msgid "<b>Paired</b>"
 msgstr "<b>Συνδυασμένος</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:472
+#: blueman/gui/manager/ManagerDeviceList.py:480
 msgid "<b>Trusted</b>"
 msgstr "<b>Έμπιστες</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:493
+#: blueman/gui/manager/ManagerDeviceList.py:499
+#, fuzzy
+#| msgid "_<b>Connect</b>"
+msgid "<b>Connected</b>"
+msgstr "_<b>Σύνδεση</b>"
+
+#: blueman/gui/manager/ManagerDeviceList.py:514
 msgid "Poor"
 msgstr "Κακή"
 
-#: blueman/gui/manager/ManagerDeviceList.py:495
-#: blueman/gui/manager/ManagerDeviceList.py:506
+#: blueman/gui/manager/ManagerDeviceList.py:516
+#: blueman/gui/manager/ManagerDeviceList.py:541
 msgid "Sub-optimal"
 msgstr "Ημί-βέλτιστη"
 
-#: blueman/gui/manager/ManagerDeviceList.py:497
-#: blueman/gui/manager/ManagerDeviceList.py:508
+#: blueman/gui/manager/ManagerDeviceList.py:518
+#: blueman/gui/manager/ManagerDeviceList.py:543
 msgid "Optimal"
 msgstr "Βέλτιστη"
 
-#: blueman/gui/manager/ManagerDeviceList.py:499
+#: blueman/gui/manager/ManagerDeviceList.py:520
 msgid "Much"
 msgstr "Ικανοποιητική"
 
-#: blueman/gui/manager/ManagerDeviceList.py:501
+#: blueman/gui/manager/ManagerDeviceList.py:522
 msgid "Too much"
 msgstr "Ιδιαίτερα ικανοποιητική"
 
-#: blueman/gui/manager/ManagerDeviceList.py:504
+#: blueman/gui/manager/ManagerDeviceList.py:525
+#, python-format
+msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceList.py:528
+#, python-format
+msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceList.py:533
+#, python-format
+msgid "<b>Link Quality: %(lq)u%%</b>"
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceList.py:535
+#, python-format
+msgid "Link Quality: %(lq)u%%"
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceList.py:539
 msgid "Low"
 msgstr "Χαμηλή"
 
-#: blueman/gui/manager/ManagerDeviceList.py:510
+#: blueman/gui/manager/ManagerDeviceList.py:545
 msgid "High"
 msgstr "Υψηλή"
 
-#: blueman/gui/manager/ManagerDeviceList.py:512
+#: blueman/gui/manager/ManagerDeviceList.py:547
 msgid "Very High"
 msgstr "Πολύ Υψηλή"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:118
-#: blueman/gui/manager/ManagerDeviceMenu.py:181
+#: blueman/gui/manager/ManagerDeviceList.py:550
+#, python-format
+msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceList.py:553
+#, python-format
+msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceMenu.py:131
+#: blueman/gui/manager/ManagerDeviceMenu.py:220
 msgid "Success!"
 msgstr "Επιτυχία!"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:125
-#: blueman/gui/manager/ManagerDeviceMenu.py:174
+#: blueman/gui/manager/ManagerDeviceMenu.py:138
+#: blueman/gui/manager/ManagerDeviceMenu.py:214
 msgid "Failed"
 msgstr "Αποτυχία"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:130
-#: blueman/gui/manager/ManagerDeviceMenu.py:177
+#: blueman/gui/manager/ManagerDeviceMenu.py:143
+#: blueman/gui/manager/ManagerDeviceMenu.py:209
 msgid "Connection Failed: "
 msgstr "Η σύνδεση απέτυχε: "
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:132
-#: blueman/gui/manager/ManagerDeviceMenu.py:188
+#: blueman/gui/manager/ManagerDeviceMenu.py:145
+#: blueman/gui/manager/ManagerDeviceMenu.py:227
 #, fuzzy
 #| msgid "Connecting"
 msgid "Connecting…"
 msgstr "Γίνεται σύνδεση"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:153
+#: blueman/gui/manager/ManagerDeviceMenu.py:166
 msgid "Disconnection Failed: "
 msgstr "Αποτυχία αποσύνδεσης: "
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:195
+#: blueman/gui/manager/ManagerDeviceMenu.py:194
+msgid "No audio endpoints registered"
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceMenu.py:198
+msgid "Input/output error"
+msgstr ""
+
+#. EHOSTDOWN (Bluetooth errors 0x04 (Page Timeout) or 0x3c (Advertising Timeout))
+#: blueman/gui/manager/ManagerDeviceMenu.py:201
+#, fuzzy
+#| msgid "Show device information"
+msgid "Device did not respond"
+msgstr "Εμφάνιση πληροφορίες συσκευής"
+
+#: blueman/gui/manager/ManagerDeviceMenu.py:206
+#, fuzzy
+#| msgid "Temporarily visible"
+msgid "Resource temporarily unavailable"
+msgstr "Προσωρινά ορατό"
+
+#: blueman/gui/manager/ManagerDeviceMenu.py:234
 #, fuzzy
 #| msgid "Disconnecting..."
 msgid "Disconnecting…"
 msgstr "Γίνεται αποσύνδεση..."
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:262
+#: blueman/gui/manager/ManagerDeviceMenu.py:299
 #, fuzzy
 #| msgid "_<b>Connect</b>"
 msgid "_<b>_Connect</b>"
 msgstr "_<b>Σύνδεση</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:264
+#: blueman/gui/manager/ManagerDeviceMenu.py:301
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr "Συνδέει τα προφίλ αυτόματης σύνδεσης A2DP source, A2DP sink, και HID"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:268
+#: blueman/gui/manager/ManagerDeviceMenu.py:305
 msgid "_<b>Disconnect</b>"
 msgstr "_<b>Αποσύνδεση</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:269
+#: blueman/gui/manager/ManagerDeviceMenu.py:306
 msgid "Forcefully disconnect the device"
 msgstr "Εξαναγκαστική αποσύνδεση συσκευής"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:297
+#: blueman/gui/manager/ManagerDeviceMenu.py:322
 msgid "<b>Connect To:</b>"
 msgstr "<b>Σύνδεση σε:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:309
+#: blueman/gui/manager/ManagerDeviceMenu.py:327
 msgid "<b>Disconnect:</b>"
 msgstr "<b>Αποσύνδεση:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:329
+#: blueman/gui/manager/ManagerDeviceMenu.py:336
+#, fuzzy
+#| msgid "<b>Disconnect:</b>"
+msgid "<b>Auto-connect:</b>"
+msgstr "<b>Αποσύνδεση:</b>"
+
+#: blueman/gui/manager/ManagerDeviceMenu.py:355
 #, fuzzy
 #| msgid "Send a _File..."
 msgid "Send a _File…"
 msgstr "Αποστολή _Αρχείου..."
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:342
+#: blueman/gui/manager/ManagerDeviceMenu.py:368
 msgid "_Pair"
 msgstr "_Ζευξη"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:352
+#: blueman/gui/manager/ManagerDeviceMenu.py:378
 msgid "_Trust"
 msgstr "_Έμπιστο"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:357
+#: blueman/gui/manager/ManagerDeviceMenu.py:383
 msgid "_Untrust"
 msgstr "_Μη έμπιστη"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:381
+#: blueman/gui/manager/ManagerDeviceMenu.py:407
 #, fuzzy
 #| msgid "Rename device"
 msgid "R_ename device…"
 msgstr "Μετονομασία συσκευής"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:390
+#: blueman/gui/manager/ManagerDeviceMenu.py:416
 #, fuzzy
 #| msgid "Remove"
 msgid "_Remove…"
@@ -753,7 +819,7 @@ msgstr "Επιλογή συσκευής"
 msgid "More"
 msgstr "Περισσότερα"
 
-#: blueman/gui/CommonUi.py:63
+#: blueman/gui/CommonUi.py:62
 msgid "Blueman is a GTK+ Bluetooth manager"
 msgstr "Το Blueman είναι ένα διαχειριστής Bluetooth στο GTK+"
 
@@ -2076,7 +2142,9 @@ msgid "Report Reference"
 msgstr "Προτιμήσεις προσαρμογέα"
 
 #: blueman/Sdp.py:378
-msgid "Auto connect profiles"
+#, fuzzy
+#| msgid "Auto connect profiles"
+msgid "Audio and input profiles"
 msgstr "Αυτόματη σύνδεση προφίλ"
 
 #: blueman/Sdp.py:380
@@ -2124,23 +2192,6 @@ msgstr "Προφίλ Ήχου"
 msgid "Select audio profile for PulseAudio"
 msgstr "Επιλογή προφίλ ήχου για το PulseAudio"
 
-#: blueman/plugins/manager/Services.py:79
-#, python-format
-msgid "Serial Port %s"
-msgstr "Σειριακή Θύρα %s"
-
-#: blueman/plugins/manager/Services.py:92
-msgid "Renew IP Address"
-msgstr "Ανανέωση Διεύθυνσης IP"
-
-#: blueman/plugins/manager/Services.py:109
-msgid "Dialup Settings"
-msgstr "Ρυθμίσεις Dialup"
-
-#: blueman/plugins/manager/Services.py:118
-msgid "Serial Ports"
-msgstr "Σειριακές Θύρες"
-
 #: blueman/plugins/BasePlugin.py:34 blueman/plugins/BasePlugin.py:35
 msgid "Unspecified"
 msgstr "Ακαθόριστο"
@@ -2151,14 +2202,14 @@ msgid ""
 msgstr ""
 
 #. https://github.com/python/mypy/issues/2608
-#: blueman/plugins/applet/AutoConnect.py:46
+#: blueman/plugins/applet/AutoConnect.py:50
 #: blueman/plugins/applet/ConnectionNotifier.py:21
 #: blueman/plugins/applet/RecentConns.py:219
 #: blueman/plugins/applet/PPPSupport.py:75
 msgid "Connected"
 msgstr "Συνδεδεμένο"
 
-#: blueman/plugins/applet/AutoConnect.py:46
+#: blueman/plugins/applet/AutoConnect.py:50
 #, python-format
 msgid "Automatically connected to %(service)s on %(device)s"
 msgstr "Αυτόματη σύνδεση στο %(service)s του %(device)s"
@@ -2496,7 +2547,7 @@ msgstr ""
 msgid "Adds disconnect menu items"
 msgstr ""
 
-#: blueman/plugins/applet/DisconnectItems.py:36
+#: blueman/plugins/applet/DisconnectItems.py:40
 #, fuzzy, python-format
 #| msgid "Disconnecting..."
 msgid "Disconnect %s"
@@ -2521,7 +2572,7 @@ msgstr ""
 "ορατότητας"
 
 #: blueman/plugins/applet/DiscvManager.py:35
-#: blueman/plugins/applet/DiscvManager.py:118
+#: blueman/plugins/applet/DiscvManager.py:123
 msgid "_Make Discoverable"
 msgstr "Ορισμός ως Ανι_χνεύσιμο"
 
@@ -2687,6 +2738,19 @@ msgid "Applet's transfer service plugin is disabled"
 msgstr ""
 "Το πρόσθετο υπηρεσίας μεταφορών της μικροεφαρμογής είναι απενεργοποιημένο"
 
+#: blueman/services/DialupNetwork.py:23
+msgid "Dialup Settings"
+msgstr "Ρυθμίσεις Dialup"
+
+#: blueman/services/meta/SerialService.py:34
+#, python-format
+msgid "Serial Port %s"
+msgstr "Σειριακή Θύρα %s"
+
+#: blueman/services/meta/NetworkService.py:51
+msgid "Renew IP Address"
+msgstr "Ανανέωση Διεύθυνσης IP"
+
 #: data/blueman-adapters.desktop.in:4
 msgid "Set Bluetooth Adapter Properties"
 msgstr "Ρύθμιση προσαρμογέα Bluetooth"
@@ -2738,6 +2802,12 @@ msgstr "Ορισμός κατάστασης RfKill"
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr "Η ρύθμιση κατάστασης RfKill απαιτεί δικαιώματα"
+
+#~ msgid "Local Services"
+#~ msgstr "Τοπικές υπηρεσίες"
+
+#~ msgid "Serial Ports"
+#~ msgstr "Σειριακές Θύρες"
 
 #~ msgid "blueman-device"
 #~ msgstr "συσκευή-blueman"

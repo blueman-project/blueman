@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2020-11-09 00:15+0100\n"
+"POT-Creation-Date: 2021-04-15 22:17+0200\n"
 "PO-Revision-Date: 2020-07-16 21:29+0000\n"
 "Last-Translator: Arben Tapia <arben_tapia@firstclass.com>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/blueman/blueman/"
@@ -85,7 +85,7 @@ msgstr "Kërko për pajisje të afërta"
 msgid "Search"
 msgstr "Kërko"
 
-#: data/ui/manager-main.ui:121 blueman/gui/manager/ManagerDeviceMenu.py:343
+#: data/ui/manager-main.ui:121 blueman/gui/manager/ManagerDeviceMenu.py:369
 msgid "Create pairing with the device"
 msgstr "Krijo lidhje me këtë pajisje"
 
@@ -94,7 +94,7 @@ msgstr "Krijo lidhje me këtë pajisje"
 msgid "Pair"
 msgstr "Çiftëzo (lidh)"
 
-#: data/ui/manager-main.ui:135 blueman/gui/manager/ManagerDeviceMenu.py:361
+#: data/ui/manager-main.ui:135 blueman/gui/manager/ManagerDeviceMenu.py:387
 msgid "Mark/Unmark this device as trusted"
 msgstr "Shënoje/Hiq shënjën këtë pajisje si të besueshme"
 
@@ -104,7 +104,7 @@ msgstr "Shënoje/Hiq shënjën këtë pajisje si të besueshme"
 msgid "Trust"
 msgstr "Beso"
 
-#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:394
+#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:420
 msgid "Remove this device from the known devices list"
 msgstr "Hiqe këtë pajisje nga lista e pajisjeve të njohura"
 
@@ -226,8 +226,8 @@ msgstr "<b>Autori:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:305
-#: blueman/gui/manager/ManagerDeviceList.py:307 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:298
+#: blueman/gui/manager/ManagerDeviceList.py:300 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:209
@@ -343,7 +343,7 @@ msgstr "Duke kërkuar"
 msgid "Adapter Preferences"
 msgstr "Preferencat e Përshtatësit"
 
-#: blueman/main/Manager.py:233 blueman/gui/manager/ManagerDeviceList.py:135
+#: blueman/main/Manager.py:233 blueman/gui/manager/ManagerDeviceList.py:143
 #: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
 msgstr "Dërgues Dokumenti"
@@ -402,64 +402,60 @@ msgstr "Riprovo"
 msgid "Error occurred"
 msgstr "Ka ndodhur një gabim"
 
-#: blueman/main/Services.py:24
-msgid "Local Services"
-msgstr "Shërbimet Lokale"
-
-#: blueman/main/applet/BluezAgent.py:191
+#: blueman/main/applet/BluezAgent.py:192
 #, python-format
 msgid "Pairing request for %s"
 msgstr "Kërkesë çiftimi për %s"
 
-#: blueman/main/applet/BluezAgent.py:202 blueman/main/applet/BluezAgent.py:312
+#: blueman/main/applet/BluezAgent.py:203 blueman/main/applet/BluezAgent.py:319
 msgid "Bluetooth Authentication"
 msgstr "Autentikimi Bluetooth"
 
-#: blueman/main/applet/BluezAgent.py:231
+#: blueman/main/applet/BluezAgent.py:234
 msgid "Enter PIN code for authentication:"
 msgstr "Fut kodin PIN për autentikim:"
 
-#: blueman/main/applet/BluezAgent.py:246
+#: blueman/main/applet/BluezAgent.py:249
 msgid "Enter passkey for authentication:"
 msgstr "Fut çelës-kalimin për autentikim:"
 
-#: blueman/main/applet/BluezAgent.py:256
+#: blueman/main/applet/BluezAgent.py:260
 msgid "Pairing passkey for"
 msgstr "Duke çiftuar çelës-kalimin për"
 
-#: blueman/main/applet/BluezAgent.py:265
+#: blueman/main/applet/BluezAgent.py:271
 msgid "Pairing PIN code for"
 msgstr "Duke çiftuar kodin PIN për"
 
-#: blueman/main/applet/BluezAgent.py:278
+#: blueman/main/applet/BluezAgent.py:284
 msgid "Pairing request for:"
 msgstr "Duke çiftuar kërkesën për:"
 
-#: blueman/main/applet/BluezAgent.py:281
+#: blueman/main/applet/BluezAgent.py:287
 msgid "Confirm value for authentication:"
 msgstr "Konfirmo vlerën për autentikim:"
 
-#: blueman/main/applet/BluezAgent.py:282
+#: blueman/main/applet/BluezAgent.py:288
 msgid "Confirm"
 msgstr "Konfirmo"
 
-#: blueman/main/applet/BluezAgent.py:282 blueman/main/applet/BluezAgent.py:310
+#: blueman/main/applet/BluezAgent.py:288 blueman/main/applet/BluezAgent.py:317
 msgid "Deny"
 msgstr "Moho"
 
-#: blueman/main/applet/BluezAgent.py:307
+#: blueman/main/applet/BluezAgent.py:314
 msgid "Authorization request for:"
 msgstr "Kërkesë autorizimi për:"
 
-#: blueman/main/applet/BluezAgent.py:307
+#: blueman/main/applet/BluezAgent.py:314
 msgid "Service:"
 msgstr "Shërbimet:"
 
-#: blueman/main/applet/BluezAgent.py:308
+#: blueman/main/applet/BluezAgent.py:315
 msgid "Always accept"
 msgstr "Gjithmonë prano"
 
-#: blueman/main/applet/BluezAgent.py:309
+#: blueman/main/applet/BluezAgent.py:316
 #: blueman/plugins/applet/TransferService.py:130
 msgid "Accept"
 msgstr "Prano"
@@ -515,52 +511,58 @@ msgstr "Trego Shiri_TButonat"
 msgid "Show _Statusbar"
 msgstr "Trego _ShiritGjëndjen"
 
-#: blueman/gui/manager/ManagerMenu.py:83
+#: blueman/gui/manager/ManagerMenu.py:78
+#, fuzzy
+#| msgid "Rename device"
+msgid "Hide _unnamed devices"
+msgstr "Riemëro pajisjen"
+
+#: blueman/gui/manager/ManagerMenu.py:88
 msgid "S_ort By"
 msgstr "Resht_o Sipas"
 
-#: blueman/gui/manager/ManagerMenu.py:90
+#: blueman/gui/manager/ManagerMenu.py:95
 msgid "_Name"
 msgstr "_Emri"
 
-#: blueman/gui/manager/ManagerMenu.py:95
+#: blueman/gui/manager/ManagerMenu.py:100
 msgid "_Added"
 msgstr "_Shtuar"
 
-#: blueman/gui/manager/ManagerMenu.py:109
+#: blueman/gui/manager/ManagerMenu.py:114
 msgid "_Descending"
 msgstr "_Zbritës"
 
-#: blueman/gui/manager/ManagerMenu.py:122
+#: blueman/gui/manager/ManagerMenu.py:127
 #: blueman/plugins/applet/StandardItems.py:50
 msgid "_Plugins"
 msgstr "_Shtojcat"
 
-#: blueman/gui/manager/ManagerMenu.py:127
+#: blueman/gui/manager/ManagerMenu.py:132
 #: blueman/plugins/applet/StandardItems.py:43
 msgid "_Local Services"
 msgstr "Shërbimet _Lokale"
 
-#: blueman/gui/manager/ManagerMenu.py:128
+#: blueman/gui/manager/ManagerMenu.py:133
 #: blueman/plugins/applet/StandardItems.py:82
 msgid "Service Preferences"
 msgstr "Preferencat e shërbimit"
 
-#: blueman/gui/manager/ManagerMenu.py:136
+#: blueman/gui/manager/ManagerMenu.py:141
 msgid "_Search"
 msgstr "_Kërko"
 
-#: blueman/gui/manager/ManagerMenu.py:150
+#: blueman/gui/manager/ManagerMenu.py:155
 msgid "_Preferences"
 msgstr "_Preferencat"
 
-#: blueman/gui/manager/ManagerMenu.py:159 blueman/plugins/applet/ExitItem.py:12
+#: blueman/gui/manager/ManagerMenu.py:164 blueman/plugins/applet/ExitItem.py:12
 msgid "_Exit"
 msgstr "_Dil"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:274
-#: blueman/gui/manager/ManagerDeviceList.py:305 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:273
+#: blueman/gui/manager/ManagerDeviceList.py:298 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 #, fuzzy
@@ -568,135 +570,198 @@ msgstr "_Dil"
 msgid "Uncategorized"
 msgstr "e pa kategorizuar"
 
-#: blueman/gui/manager/ManagerDeviceList.py:468
+#: blueman/gui/manager/ManagerDeviceList.py:476
 msgid "<b>Trusted and Paired</b>"
 msgstr "<b>I besuar dhe i çiftuar</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:470
+#: blueman/gui/manager/ManagerDeviceList.py:478
 msgid "<b>Paired</b>"
 msgstr "<b> I çiftuar</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:472
+#: blueman/gui/manager/ManagerDeviceList.py:480
 msgid "<b>Trusted</b>"
 msgstr "<b>I besuar</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:493
+#: blueman/gui/manager/ManagerDeviceList.py:499
+#, fuzzy
+#| msgid "_<b>Connect</b>"
+msgid "<b>Connected</b>"
+msgstr "_<b>Lidh</b>"
+
+#: blueman/gui/manager/ManagerDeviceList.py:514
 msgid "Poor"
 msgstr "Dobët"
 
-#: blueman/gui/manager/ManagerDeviceList.py:495
-#: blueman/gui/manager/ManagerDeviceList.py:506
+#: blueman/gui/manager/ManagerDeviceList.py:516
+#: blueman/gui/manager/ManagerDeviceList.py:541
 msgid "Sub-optimal"
 msgstr "Nën-optimal"
 
-#: blueman/gui/manager/ManagerDeviceList.py:497
-#: blueman/gui/manager/ManagerDeviceList.py:508
+#: blueman/gui/manager/ManagerDeviceList.py:518
+#: blueman/gui/manager/ManagerDeviceList.py:543
 msgid "Optimal"
 msgstr "Optimale"
 
-#: blueman/gui/manager/ManagerDeviceList.py:499
+#: blueman/gui/manager/ManagerDeviceList.py:520
 msgid "Much"
 msgstr "Shumë"
 
-#: blueman/gui/manager/ManagerDeviceList.py:501
+#: blueman/gui/manager/ManagerDeviceList.py:522
 msgid "Too much"
 msgstr "Tepruar"
 
-#: blueman/gui/manager/ManagerDeviceList.py:504
+#: blueman/gui/manager/ManagerDeviceList.py:525
+#, python-format
+msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceList.py:528
+#, python-format
+msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceList.py:533
+#, python-format
+msgid "<b>Link Quality: %(lq)u%%</b>"
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceList.py:535
+#, python-format
+msgid "Link Quality: %(lq)u%%"
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceList.py:539
 msgid "Low"
 msgstr "Ulët"
 
-#: blueman/gui/manager/ManagerDeviceList.py:510
+#: blueman/gui/manager/ManagerDeviceList.py:545
 msgid "High"
 msgstr "Lartë"
 
-#: blueman/gui/manager/ManagerDeviceList.py:512
+#: blueman/gui/manager/ManagerDeviceList.py:547
 msgid "Very High"
 msgstr "Shumë e lartë"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:118
-#: blueman/gui/manager/ManagerDeviceMenu.py:181
+#: blueman/gui/manager/ManagerDeviceList.py:550
+#, python-format
+msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceList.py:553
+#, python-format
+msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceMenu.py:131
+#: blueman/gui/manager/ManagerDeviceMenu.py:220
 msgid "Success!"
 msgstr "Sukses!"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:125
-#: blueman/gui/manager/ManagerDeviceMenu.py:174
+#: blueman/gui/manager/ManagerDeviceMenu.py:138
+#: blueman/gui/manager/ManagerDeviceMenu.py:214
 msgid "Failed"
 msgstr "Dështoi"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:130
-#: blueman/gui/manager/ManagerDeviceMenu.py:177
+#: blueman/gui/manager/ManagerDeviceMenu.py:143
+#: blueman/gui/manager/ManagerDeviceMenu.py:209
 msgid "Connection Failed: "
 msgstr "Lidhja dështoi:"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:132
-#: blueman/gui/manager/ManagerDeviceMenu.py:188
+#: blueman/gui/manager/ManagerDeviceMenu.py:145
+#: blueman/gui/manager/ManagerDeviceMenu.py:227
 #, fuzzy
 #| msgid "Connecting"
 msgid "Connecting…"
 msgstr "Duke u lidhur"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:153
+#: blueman/gui/manager/ManagerDeviceMenu.py:166
 msgid "Disconnection Failed: "
 msgstr "Shkëputja Dështoi: "
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:195
+#: blueman/gui/manager/ManagerDeviceMenu.py:194
+msgid "No audio endpoints registered"
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceMenu.py:198
+msgid "Input/output error"
+msgstr ""
+
+#. EHOSTDOWN (Bluetooth errors 0x04 (Page Timeout) or 0x3c (Advertising Timeout))
+#: blueman/gui/manager/ManagerDeviceMenu.py:201
+#, fuzzy
+#| msgid "Device Information"
+msgid "Device did not respond"
+msgstr "Informacion Pajisjeje"
+
+#: blueman/gui/manager/ManagerDeviceMenu.py:206
+#, fuzzy
+#| msgid "Temporarily visible"
+msgid "Resource temporarily unavailable"
+msgstr "Përkohosisht i dukshëm"
+
+#: blueman/gui/manager/ManagerDeviceMenu.py:234
 #, fuzzy
 #| msgid "Disconnecting..."
 msgid "Disconnecting…"
 msgstr "Duke u shkëputur ..."
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:262
+#: blueman/gui/manager/ManagerDeviceMenu.py:299
 #, fuzzy
 #| msgid "_<b>Connect</b>"
 msgid "_<b>_Connect</b>"
 msgstr "_<b>Lidh</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:264
+#: blueman/gui/manager/ManagerDeviceMenu.py:301
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr "Lidh profilet e auto-lidhjes së burimit A2DP, derdhjes A2DP dhe të HID"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:268
+#: blueman/gui/manager/ManagerDeviceMenu.py:305
 msgid "_<b>Disconnect</b>"
 msgstr "_<b>Shkëput</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:269
+#: blueman/gui/manager/ManagerDeviceMenu.py:306
 msgid "Forcefully disconnect the device"
 msgstr "Shkëput me force pajisjen"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:297
+#: blueman/gui/manager/ManagerDeviceMenu.py:322
 msgid "<b>Connect To:</b>"
 msgstr "<b>Lidh me:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:309
+#: blueman/gui/manager/ManagerDeviceMenu.py:327
 msgid "<b>Disconnect:</b>"
 msgstr "<b>Shkëput:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:329
+#: blueman/gui/manager/ManagerDeviceMenu.py:336
+#, fuzzy
+#| msgid "<b>Disconnect:</b>"
+msgid "<b>Auto-connect:</b>"
+msgstr "<b>Shkëput:</b>"
+
+#: blueman/gui/manager/ManagerDeviceMenu.py:355
 #, fuzzy
 #| msgid "Send a _File..."
 msgid "Send a _File…"
 msgstr "Dërgoni një _Skedar..."
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:342
+#: blueman/gui/manager/ManagerDeviceMenu.py:368
 msgid "_Pair"
 msgstr "Ç_ifto"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:352
+#: blueman/gui/manager/ManagerDeviceMenu.py:378
 msgid "_Trust"
 msgstr "_Beso"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:357
+#: blueman/gui/manager/ManagerDeviceMenu.py:383
 msgid "_Untrust"
 msgstr "_Mosbeso"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:381
+#: blueman/gui/manager/ManagerDeviceMenu.py:407
 #, fuzzy
 #| msgid "Rename device"
 msgid "R_ename device…"
 msgstr "Riemëro pajisjen"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:390
+#: blueman/gui/manager/ManagerDeviceMenu.py:416
 #, fuzzy
 #| msgid "Remove"
 msgid "_Remove…"
@@ -734,7 +799,7 @@ msgstr "Zgjidh pajisjen"
 msgid "More"
 msgstr "Më shumë"
 
-#: blueman/gui/CommonUi.py:63
+#: blueman/gui/CommonUi.py:62
 msgid "Blueman is a GTK+ Bluetooth manager"
 msgstr "Blueman është një manaxher Bluetooth i bazuar në GTK+"
 
@@ -2089,7 +2154,7 @@ msgid "Report Reference"
 msgstr ""
 
 #: blueman/Sdp.py:378
-msgid "Auto connect profiles"
+msgid "Audio and input profiles"
 msgstr ""
 
 #: blueman/Sdp.py:380
@@ -2137,23 +2202,6 @@ msgstr ""
 msgid "Select audio profile for PulseAudio"
 msgstr ""
 
-#: blueman/plugins/manager/Services.py:79
-#, python-format
-msgid "Serial Port %s"
-msgstr ""
-
-#: blueman/plugins/manager/Services.py:92
-msgid "Renew IP Address"
-msgstr ""
-
-#: blueman/plugins/manager/Services.py:109
-msgid "Dialup Settings"
-msgstr ""
-
-#: blueman/plugins/manager/Services.py:118
-msgid "Serial Ports"
-msgstr ""
-
 #: blueman/plugins/BasePlugin.py:34 blueman/plugins/BasePlugin.py:35
 msgid "Unspecified"
 msgstr ""
@@ -2164,14 +2212,14 @@ msgid ""
 msgstr ""
 
 #. https://github.com/python/mypy/issues/2608
-#: blueman/plugins/applet/AutoConnect.py:46
+#: blueman/plugins/applet/AutoConnect.py:50
 #: blueman/plugins/applet/ConnectionNotifier.py:21
 #: blueman/plugins/applet/RecentConns.py:219
 #: blueman/plugins/applet/PPPSupport.py:75
 msgid "Connected"
 msgstr "i lidhur"
 
-#: blueman/plugins/applet/AutoConnect.py:46
+#: blueman/plugins/applet/AutoConnect.py:50
 #, python-format
 msgid "Automatically connected to %(service)s on %(device)s"
 msgstr ""
@@ -2478,7 +2526,7 @@ msgstr ""
 msgid "Adds disconnect menu items"
 msgstr ""
 
-#: blueman/plugins/applet/DisconnectItems.py:36
+#: blueman/plugins/applet/DisconnectItems.py:40
 #, fuzzy, python-format
 #| msgid "Disconnecting..."
 msgid "Disconnect %s"
@@ -2499,7 +2547,7 @@ msgid "Amount of time in seconds discoverable mode will last"
 msgstr ""
 
 #: blueman/plugins/applet/DiscvManager.py:35
-#: blueman/plugins/applet/DiscvManager.py:118
+#: blueman/plugins/applet/DiscvManager.py:123
 msgid "_Make Discoverable"
 msgstr ""
 
@@ -2639,6 +2687,19 @@ msgstr ""
 msgid "Applet's transfer service plugin is disabled"
 msgstr ""
 
+#: blueman/services/DialupNetwork.py:23
+msgid "Dialup Settings"
+msgstr ""
+
+#: blueman/services/meta/SerialService.py:34
+#, python-format
+msgid "Serial Port %s"
+msgstr ""
+
+#: blueman/services/meta/NetworkService.py:51
+msgid "Renew IP Address"
+msgstr ""
+
 #: data/blueman-adapters.desktop.in:4
 msgid "Set Bluetooth Adapter Properties"
 msgstr ""
@@ -2694,6 +2755,9 @@ msgstr ""
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr ""
+
+#~ msgid "Local Services"
+#~ msgstr "Shërbimet Lokale"
 
 #~ msgid "Run the setup assistant for this device"
 #~ msgstr "Egsekuto ndihmuesin instalues për këtë pajisje"
