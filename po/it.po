@@ -50,7 +50,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2021-04-14 18:21+0200\n"
+"POT-Creation-Date: 2021-04-15 22:17+0200\n"
 "PO-Revision-Date: 2020-06-09 12:59+0000\n"
 "Last-Translator: Edoardo Facchinelli <silpheel@gmail.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/blueman/blueman/"
@@ -263,8 +263,8 @@ msgstr "<b>Autore:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:308
-#: blueman/gui/manager/ManagerDeviceList.py:310 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:298
+#: blueman/gui/manager/ManagerDeviceList.py:300 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:209
@@ -379,7 +379,7 @@ msgstr "Ricerca"
 msgid "Adapter Preferences"
 msgstr "Preferenze Adattatore"
 
-#: blueman/main/Manager.py:233 blueman/gui/manager/ManagerDeviceList.py:138
+#: blueman/main/Manager.py:233 blueman/gui/manager/ManagerDeviceList.py:143
 #: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
 msgstr "Mittente del file"
@@ -601,8 +601,8 @@ msgid "_Exit"
 msgstr "Esci"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:277
-#: blueman/gui/manager/ManagerDeviceList.py:308 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:273
+#: blueman/gui/manager/ManagerDeviceList.py:298 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 #, fuzzy
@@ -610,51 +610,87 @@ msgstr "Esci"
 msgid "Uncategorized"
 msgstr "non categorizzato"
 
-#: blueman/gui/manager/ManagerDeviceList.py:474
+#: blueman/gui/manager/ManagerDeviceList.py:476
 msgid "<b>Trusted and Paired</b>"
 msgstr "<b>Fidato ed Accoppiato</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:476
+#: blueman/gui/manager/ManagerDeviceList.py:478
 msgid "<b>Paired</b>"
 msgstr "<b>Accoppiato</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:478
+#: blueman/gui/manager/ManagerDeviceList.py:480
 msgid "<b>Trusted</b>"
 msgstr "<b>Autorizzato</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:499
+#, fuzzy
+#| msgid "_<b>Connect</b>"
+msgid "<b>Connected</b>"
+msgstr "_<b>Connetti</b>"
+
+#: blueman/gui/manager/ManagerDeviceList.py:514
 msgid "Poor"
 msgstr "Scarso"
 
-#: blueman/gui/manager/ManagerDeviceList.py:501
-#: blueman/gui/manager/ManagerDeviceList.py:512
+#: blueman/gui/manager/ManagerDeviceList.py:516
+#: blueman/gui/manager/ManagerDeviceList.py:541
 msgid "Sub-optimal"
 msgstr "Sub-ottimale"
 
-#: blueman/gui/manager/ManagerDeviceList.py:503
-#: blueman/gui/manager/ManagerDeviceList.py:514
+#: blueman/gui/manager/ManagerDeviceList.py:518
+#: blueman/gui/manager/ManagerDeviceList.py:543
 msgid "Optimal"
 msgstr "Ottimale"
 
-#: blueman/gui/manager/ManagerDeviceList.py:505
+#: blueman/gui/manager/ManagerDeviceList.py:520
 msgid "Much"
 msgstr "Molto"
 
-#: blueman/gui/manager/ManagerDeviceList.py:507
+#: blueman/gui/manager/ManagerDeviceList.py:522
 msgid "Too much"
 msgstr "Troppo"
 
-#: blueman/gui/manager/ManagerDeviceList.py:510
+#: blueman/gui/manager/ManagerDeviceList.py:525
+#, python-format
+msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceList.py:528
+#, python-format
+msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceList.py:533
+#, python-format
+msgid "<b>Link Quality: %(lq)u%%</b>"
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceList.py:535
+#, python-format
+msgid "Link Quality: %(lq)u%%"
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceList.py:539
 msgid "Low"
 msgstr "Basso"
 
-#: blueman/gui/manager/ManagerDeviceList.py:516
+#: blueman/gui/manager/ManagerDeviceList.py:545
 msgid "High"
 msgstr "Alto"
 
-#: blueman/gui/manager/ManagerDeviceList.py:518
+#: blueman/gui/manager/ManagerDeviceList.py:547
 msgid "Very High"
 msgstr "Molto Alto"
+
+#: blueman/gui/manager/ManagerDeviceList.py:550
+#, python-format
+msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceList.py:553
+#, python-format
+msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
+msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:131
 #: blueman/gui/manager/ManagerDeviceMenu.py:220
