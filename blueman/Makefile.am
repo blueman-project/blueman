@@ -1,5 +1,6 @@
 SUBDIRS =	\
 	bluez	\
+        config  \
 	gui		\
 	main	\
 	plugins \

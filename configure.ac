@@ -257,6 +257,7 @@ blueman/Makefile
 blueman/Constants.py
 blueman/bluez/Makefile
 blueman/bluez/obex/Makefile
+blueman/config/Makefile
 blueman/gui/Makefile
 blueman/gui/applet/Makefile
 blueman/gui/manager/Makefile
