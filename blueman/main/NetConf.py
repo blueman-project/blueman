@@ -332,6 +332,8 @@ class NetConf:
             return n
 
     def __init__(self) -> None:
+        self.ip4_mask: Optional[str] = None
+        self.ip4_address: Optional[str] = None
         logging.info("init")
         self.version = class_id
         self.dhcp_handler: Optional[DHCPHandler] = None
@@ -343,8 +345,8 @@ class NetConf:
         if self.ip4_address != ip or self.ip4_mask != netmask:
             self.ip4_changed = True
 
-        self.ip4_address: Optional[str] = ip
-        self.ip4_mask: Optional[str] = netmask
+        self.ip4_address = ip
+        self.ip4_mask = netmask
 
     def get_ipv4(self) -> Tuple[Optional[str], Optional[str]]:
         return self.ip4_address, self.ip4_mask
