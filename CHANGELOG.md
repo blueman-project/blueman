@@ -1,6 +1,6 @@
 # Changelog
 
-## master
+## 2.2
 
 ### New features
 
