@@ -305,7 +305,7 @@ class TransferService(AppletPlugin):
                                                   "0": "<b>" + escape(filename) + "</b>",
                                                   "1": "<b>" + escape(attributes['name']) + "</b>"},
                                               icon_name="blueman")
-            self._add_open(self._notification, "Open", dest)
+            self._add_open(self._notification, _("Open"), dest)
             self._notification.show()
         elif not success:
             n = Notification(
@@ -336,7 +336,7 @@ class TransferService(AppletPlugin):
                                                        self._silent_transfers) % {"files": self._silent_transfers},
                                               icon_name="blueman")
 
-            self._add_open(self._notification, "Open Location", share_path)
+            self._add_open(self._notification, _("Open Location"), share_path)
             self._notification.show()
         else:
             self._notification = Notification(_("Files received"),
@@ -344,5 +344,5 @@ class TransferService(AppletPlugin):
                                                        "Received %(files)d more files in the background",
                                                        self._silent_transfers) % {"files": self._silent_transfers},
                                               icon_name="blueman")
-            self._add_open(self._notification, "Open Location", share_path)
+            self._add_open(self._notification, _("Open Location"), share_path)
             self._notification.show()
