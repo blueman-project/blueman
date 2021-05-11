@@ -1,4 +1,4 @@
-pixmapsdir = $(datadir)/pixmaps/blueman
+pixmapsdir = $(datadir)/blueman/pixmaps
 
 pixmaps_DATA =			\
 	blueman-battery-10.png	\

@@ -130,7 +130,7 @@ install_data(
     'data/icons/pixmaps/blueman-tpl-80.png',
     'data/icons/pixmaps/blueman-tpl-90.png',
     'data/icons/pixmaps/blueman-tpl-100.png',
-    install_dir: join_paths([datadir, 'pixmaps', package_name])
+    install_dir: join_paths([datadir, package_name, 'pixmaps'])
 )
 
 install_subdir(
