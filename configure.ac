@@ -117,9 +117,6 @@ AC_SUBST(pkgdatadir)
 icondir="${DATADIR}/icons"
 AC_SUBST(icondir)
 
-pixmapsdir="${DATADIR}/pixmaps"
-AC_SUBST(pixmapsdir)
-
 AS_AC_EXPAND(LOCALEDIR, $datarootdir/locale)
 AC_SUBST(LOCALEDIR)
 
