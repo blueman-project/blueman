@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2021-04-15 22:17+0200\n"
+"POT-Creation-Date: 2021-04-17 10:04+0200\n"
 "PO-Revision-Date: 2021-01-12 10:03+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/blueman/"
@@ -96,7 +96,7 @@ msgstr "Søk etter enheter i nærheten"
 msgid "Search"
 msgstr "Søk"
 
-#: data/ui/manager-main.ui:121 blueman/gui/manager/ManagerDeviceMenu.py:369
+#: data/ui/manager-main.ui:121 blueman/gui/manager/ManagerDeviceMenu.py:355
 msgid "Create pairing with the device"
 msgstr "Opprett en sammenkobling med enheten"
 
@@ -105,7 +105,7 @@ msgstr "Opprett en sammenkobling med enheten"
 msgid "Pair"
 msgstr "Koble sammen"
 
-#: data/ui/manager-main.ui:135 blueman/gui/manager/ManagerDeviceMenu.py:387
+#: data/ui/manager-main.ui:135 blueman/gui/manager/ManagerDeviceMenu.py:373
 msgid "Mark/Unmark this device as trusted"
 msgstr "Angi/fjern enhet som tiltrodd"
 
@@ -115,7 +115,7 @@ msgstr "Angi/fjern enhet som tiltrodd"
 msgid "Trust"
 msgstr "Tiltro"
 
-#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:420
+#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:406
 msgid "Remove this device from the known devices list"
 msgstr "Fjern denne enheten fra listen over kjente enheter"
 
@@ -236,8 +236,8 @@ msgstr "<b>Forfatter:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:298
-#: blueman/gui/manager/ManagerDeviceList.py:300 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:301
+#: blueman/gui/manager/ManagerDeviceList.py:303 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:209
@@ -582,8 +582,8 @@ msgid "_Exit"
 msgstr "_Avslutt"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:273
-#: blueman/gui/manager/ManagerDeviceList.py:298 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:276
+#: blueman/gui/manager/ManagerDeviceList.py:301 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 #, fuzzy
@@ -591,196 +591,186 @@ msgstr "_Avslutt"
 msgid "Uncategorized"
 msgstr "ukategorisert"
 
-#: blueman/gui/manager/ManagerDeviceList.py:476
+#: blueman/gui/manager/ManagerDeviceList.py:479
 msgid "<b>Trusted and Paired</b>"
 msgstr "<b>Tiltrodd og parret</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:478
+#: blueman/gui/manager/ManagerDeviceList.py:481
 msgid "<b>Paired</b>"
 msgstr "<b>Parret</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:480
+#: blueman/gui/manager/ManagerDeviceList.py:483
 msgid "<b>Trusted</b>"
 msgstr "<b>Tiltrodd</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:499
+#: blueman/gui/manager/ManagerDeviceList.py:502
 #, fuzzy
 #| msgid "_<b>Connect</b>"
 msgid "<b>Connected</b>"
 msgstr "_<b>Koble til</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:514
+#: blueman/gui/manager/ManagerDeviceList.py:517
 msgid "Poor"
 msgstr "Svak"
 
-#: blueman/gui/manager/ManagerDeviceList.py:516
-#: blueman/gui/manager/ManagerDeviceList.py:541
+#: blueman/gui/manager/ManagerDeviceList.py:519
+#: blueman/gui/manager/ManagerDeviceList.py:544
 msgid "Sub-optimal"
 msgstr "Suboptimal"
 
-#: blueman/gui/manager/ManagerDeviceList.py:518
-#: blueman/gui/manager/ManagerDeviceList.py:543
+#: blueman/gui/manager/ManagerDeviceList.py:521
+#: blueman/gui/manager/ManagerDeviceList.py:546
 msgid "Optimal"
 msgstr "Best mulig"
 
-#: blueman/gui/manager/ManagerDeviceList.py:520
+#: blueman/gui/manager/ManagerDeviceList.py:523
 msgid "Much"
 msgstr "Mye"
 
-#: blueman/gui/manager/ManagerDeviceList.py:522
+#: blueman/gui/manager/ManagerDeviceList.py:525
 msgid "Too much"
 msgstr "For mye"
 
-#: blueman/gui/manager/ManagerDeviceList.py:525
+#: blueman/gui/manager/ManagerDeviceList.py:528
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:528
+#: blueman/gui/manager/ManagerDeviceList.py:531
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:533
+#: blueman/gui/manager/ManagerDeviceList.py:536
 #, python-format
 msgid "<b>Link Quality: %(lq)u%%</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:535
+#: blueman/gui/manager/ManagerDeviceList.py:538
 #, python-format
 msgid "Link Quality: %(lq)u%%"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:539
+#: blueman/gui/manager/ManagerDeviceList.py:542
 msgid "Low"
 msgstr "Lav"
 
-#: blueman/gui/manager/ManagerDeviceList.py:545
+#: blueman/gui/manager/ManagerDeviceList.py:548
 msgid "High"
 msgstr "Høy"
 
-#: blueman/gui/manager/ManagerDeviceList.py:547
+#: blueman/gui/manager/ManagerDeviceList.py:550
 msgid "Very High"
 msgstr "Veldig høy"
 
-#: blueman/gui/manager/ManagerDeviceList.py:550
+#: blueman/gui/manager/ManagerDeviceList.py:553
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:553
+#: blueman/gui/manager/ManagerDeviceList.py:556
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:131
-#: blueman/gui/manager/ManagerDeviceMenu.py:220
 msgid "Success!"
 msgstr "Suksess!"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:138
-#: blueman/gui/manager/ManagerDeviceMenu.py:214
 msgid "Failed"
 msgstr "Mislyktes"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:143
-#: blueman/gui/manager/ManagerDeviceMenu.py:209
-msgid "Connection Failed: "
-msgstr "Tilkobling mislyktes: "
-
-#: blueman/gui/manager/ManagerDeviceMenu.py:145
-#: blueman/gui/manager/ManagerDeviceMenu.py:227
+#: blueman/gui/manager/ManagerDeviceMenu.py:144
 #, fuzzy
 msgid "Connecting…"
 msgstr "Kobler til"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:166
+#: blueman/gui/manager/ManagerDeviceMenu.py:180
 msgid "Disconnection Failed: "
 msgstr "Frakobling mislyktes: "
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:194
+#: blueman/gui/manager/ManagerDeviceMenu.py:204
 msgid "No audio endpoints registered"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:198
+#: blueman/gui/manager/ManagerDeviceMenu.py:207
 msgid "Input/output error"
 msgstr ""
 
-#. EHOSTDOWN (Bluetooth errors 0x04 (Page Timeout) or 0x3c (Advertising Timeout))
-#: blueman/gui/manager/ManagerDeviceMenu.py:201
+#: blueman/gui/manager/ManagerDeviceMenu.py:209
 #, fuzzy
 msgid "Device did not respond"
 msgstr "Vis enhetsinfo"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:206
+#: blueman/gui/manager/ManagerDeviceMenu.py:213
 #, fuzzy
 #| msgid "Temporarily visible"
 msgid "Resource temporarily unavailable"
 msgstr "Midlertidig synlig"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:234
-#, fuzzy
-msgid "Disconnecting…"
-msgstr "Kobler fra …"
+#: blueman/gui/manager/ManagerDeviceMenu.py:218
+msgid "Connection Failed: "
+msgstr "Tilkobling mislyktes: "
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:299
+#: blueman/gui/manager/ManagerDeviceMenu.py:285
 #, fuzzy
 #| msgid "_<b>Connect</b>"
 msgid "_<b>_Connect</b>"
 msgstr "_<b>Koble til</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:301
+#: blueman/gui/manager/ManagerDeviceMenu.py:287
 #, fuzzy
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr "Kobler til auto-tilkoblingsprofilene A2DP-kilde, A2DP-sink og HID"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:305
+#: blueman/gui/manager/ManagerDeviceMenu.py:291
 msgid "_<b>Disconnect</b>"
 msgstr "_<b>Koble fra</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:306
+#: blueman/gui/manager/ManagerDeviceMenu.py:292
 #, fuzzy
 msgid "Forcefully disconnect the device"
 msgstr "Tvangsfrakoble enheten"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:322
+#: blueman/gui/manager/ManagerDeviceMenu.py:308
 msgid "<b>Connect To:</b>"
 msgstr "<b>Koble til::</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:327
+#: blueman/gui/manager/ManagerDeviceMenu.py:313
 msgid "<b>Disconnect:</b>"
 msgstr "<b>Avbryt:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:336
+#: blueman/gui/manager/ManagerDeviceMenu.py:322
 #, fuzzy
 #| msgid "<b>Disconnect:</b>"
 msgid "<b>Auto-connect:</b>"
 msgstr "<b>Avbryt:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:355
+#: blueman/gui/manager/ManagerDeviceMenu.py:341
 #, fuzzy
 msgid "Send a _File…"
 msgstr "Send en _fil …"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:368
+#: blueman/gui/manager/ManagerDeviceMenu.py:354
 msgid "_Pair"
 msgstr "_Sammenkoble"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:378
+#: blueman/gui/manager/ManagerDeviceMenu.py:364
 msgid "_Trust"
 msgstr "_Tiltro"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:383
+#: blueman/gui/manager/ManagerDeviceMenu.py:369
 msgid "_Untrust"
 msgstr "_Mistro"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:407
+#: blueman/gui/manager/ManagerDeviceMenu.py:393
 #, fuzzy
 #| msgid "Rename device"
 msgid "R_ename device…"
 msgstr "Gi enheten nytt navn"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:416
+#: blueman/gui/manager/ManagerDeviceMenu.py:402
 #, fuzzy
 #| msgid "Remove"
 msgid "_Remove…"
@@ -2835,6 +2825,10 @@ msgstr "Sett RfKill-tilstand"
 #, fuzzy
 msgid "Setting RfKill State requires privileges"
 msgstr "Setting av RfKill-tilstand krever rettigheter"
+
+#, fuzzy
+#~ msgid "Disconnecting…"
+#~ msgstr "Kobler fra …"
 
 #~ msgid "Local Services"
 #~ msgstr "Lokale tjenester"

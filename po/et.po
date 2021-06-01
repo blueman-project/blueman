@@ -11,19 +11,22 @@
 # veidu https://launchpad.net/~viljarveidenberg
 # Ivar Smolin <okul@linux.ee>, 2014-2015,2018
 # Rivo Zängov <eraser@eraser.ee>, 2018
+# Priit Jõerüüt <hwlate@joeruut.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2021-04-15 22:17+0200\n"
-"PO-Revision-Date: 2020-04-14 10:14+0000\n"
-"Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
-"Language-Team: Estonian (http://www.transifex.com/mate/MATE/language/et/)\n"
+"POT-Creation-Date: 2021-04-17 10:04+0200\n"
+"PO-Revision-Date: 2021-05-13 16:27+0000\n"
+"Last-Translator: Priit Jõerüüt <hwlate@joeruut.com>\n"
+"Language-Team: Estonian <https://hosted.weblate.org/projects/blueman/blueman/"
+"et/>\n"
 "Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.7-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -87,7 +90,7 @@ msgstr "Lähedalasuvate seadmete otsimine"
 msgid "Search"
 msgstr "Otsi"
 
-#: data/ui/manager-main.ui:121 blueman/gui/manager/ManagerDeviceMenu.py:369
+#: data/ui/manager-main.ui:121 blueman/gui/manager/ManagerDeviceMenu.py:355
 msgid "Create pairing with the device"
 msgstr "Seadmega paari loomine"
 
@@ -96,7 +99,7 @@ msgstr "Seadmega paari loomine"
 msgid "Pair"
 msgstr "Paari loomine"
 
-#: data/ui/manager-main.ui:135 blueman/gui/manager/ManagerDeviceMenu.py:387
+#: data/ui/manager-main.ui:135 blueman/gui/manager/ManagerDeviceMenu.py:373
 msgid "Mark/Unmark this device as trusted"
 msgstr "Seadme usaldatavuse märkimine"
 
@@ -106,7 +109,7 @@ msgstr "Seadme usaldatavuse märkimine"
 msgid "Trust"
 msgstr "Usalda"
 
-#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:420
+#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:406
 msgid "Remove this device from the known devices list"
 msgstr "Selle seadme eemaldamine tuntud seadmete nimekirjast"
 
@@ -227,8 +230,8 @@ msgstr "<b>Autor:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:298
-#: blueman/gui/manager/ManagerDeviceList.py:300 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:301
+#: blueman/gui/manager/ManagerDeviceList.py:303 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:209
@@ -290,11 +293,11 @@ msgstr "_Lähtesta"
 
 #: data/ui/note.ui:8
 msgid "Send note"
-msgstr ""
+msgstr "Saada märge"
 
 #: blueman/main/Adapter.py:50
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
-msgstr ""
+msgstr "Selleks et adapteri haldur toimiks, palun lülita Bluetooth sisse"
 
 #: blueman/main/Adapter.py:86 data/blueman-adapters.desktop.in:3
 msgid "Bluetooth Adapters"
@@ -305,13 +308,11 @@ msgid "Always"
 msgstr "Alati"
 
 #: blueman/main/Adapter.py:147 blueman/main/Sendto.py:189
-#, fuzzy, python-format
-#| msgid "%d Minute"
-#| msgid_plural "%d Minutes"
+#, python-format
 msgid "%(minutes)d Minute"
 msgid_plural "%(minutes)d Minutes"
-msgstr[0] "%d minut"
-msgstr[1] "%d minutit"
+msgstr[0] "%(minutes)d minut"
+msgstr[1] "%(minutes)d minutit"
 
 #: blueman/main/Adapter.py:212
 msgid "Adapter"
@@ -319,7 +320,7 @@ msgstr "Adapter"
 
 #: blueman/main/Manager.py:89 blueman/main/Manager.py:130
 msgid "Bluetooth needs to be turned on for the device manager to function"
-msgstr ""
+msgstr "Selleks et seadmehaldur toimiks, palun lülita Bluetooth sisse"
 
 #: blueman/main/Manager.py:109
 msgid "Connection to BlueZ failed"
@@ -346,7 +347,7 @@ msgstr "Adapteri eelistused"
 #: blueman/main/Manager.py:233 blueman/gui/manager/ManagerDeviceList.py:143
 #: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
-msgstr ""
+msgstr "Failide saatja"
 
 #: blueman/main/Sendto.py:33
 msgid "Bluetooth File Transfer"
@@ -363,6 +364,8 @@ msgstr "obexd pole saadaval"
 #: blueman/main/Sendto.py:111
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
 msgstr ""
+"Obex-päringu käivitamine ei õnnestunud. Palun kontrolli, et obex'i "
+"taustateenus töötab"
 
 #: blueman/main/Sendto.py:142
 msgid "Cancelling"
@@ -380,8 +383,8 @@ msgstr "ETA:"
 #, python-format
 msgid "%(seconds)d Second"
 msgid_plural "%(seconds)d Seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(seconds)d sekund"
+msgstr[1] "%(seconds)d sekundit"
 
 #: blueman/main/Sendto.py:229
 #, python-format
@@ -547,18 +550,16 @@ msgid "_Search"
 msgstr "_Otsing"
 
 #: blueman/gui/manager/ManagerMenu.py:155
-#, fuzzy
-#| msgid "Adapter Preferences"
 msgid "_Preferences"
-msgstr "Adapteri eelistused"
+msgstr "_Eelistused"
 
 #: blueman/gui/manager/ManagerMenu.py:164 blueman/plugins/applet/ExitItem.py:12
 msgid "_Exit"
 msgstr ""
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:273
-#: blueman/gui/manager/ManagerDeviceList.py:298 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:276
+#: blueman/gui/manager/ManagerDeviceList.py:301 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 #, fuzzy
@@ -566,200 +567,181 @@ msgstr ""
 msgid "Uncategorized"
 msgstr "liigitamata"
 
-#: blueman/gui/manager/ManagerDeviceList.py:476
+#: blueman/gui/manager/ManagerDeviceList.py:479
 msgid "<b>Trusted and Paired</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:478
+#: blueman/gui/manager/ManagerDeviceList.py:481
 msgid "<b>Paired</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:480
+#: blueman/gui/manager/ManagerDeviceList.py:483
 msgid "<b>Trusted</b>"
 msgstr "<b>Usaldatud</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:499
+#: blueman/gui/manager/ManagerDeviceList.py:502
 #, fuzzy
 #| msgid "<b>Connect To:</b>"
 msgid "<b>Connected</b>"
 msgstr "<b>Ühendu:</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:514
+#: blueman/gui/manager/ManagerDeviceList.py:517
 msgid "Poor"
 msgstr "Kehv"
 
-#: blueman/gui/manager/ManagerDeviceList.py:516
-#: blueman/gui/manager/ManagerDeviceList.py:541
+#: blueman/gui/manager/ManagerDeviceList.py:519
+#: blueman/gui/manager/ManagerDeviceList.py:544
 msgid "Sub-optimal"
 msgstr "Alla optimaalse"
 
-#: blueman/gui/manager/ManagerDeviceList.py:518
-#: blueman/gui/manager/ManagerDeviceList.py:543
+#: blueman/gui/manager/ManagerDeviceList.py:521
+#: blueman/gui/manager/ManagerDeviceList.py:546
 msgid "Optimal"
 msgstr "Optimaalne"
 
-#: blueman/gui/manager/ManagerDeviceList.py:520
+#: blueman/gui/manager/ManagerDeviceList.py:523
 msgid "Much"
 msgstr "Palju"
 
-#: blueman/gui/manager/ManagerDeviceList.py:522
+#: blueman/gui/manager/ManagerDeviceList.py:525
 msgid "Too much"
 msgstr "Liiga palju"
 
-#: blueman/gui/manager/ManagerDeviceList.py:525
+#: blueman/gui/manager/ManagerDeviceList.py:528
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:528
+#: blueman/gui/manager/ManagerDeviceList.py:531
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:533
+#: blueman/gui/manager/ManagerDeviceList.py:536
 #, python-format
 msgid "<b>Link Quality: %(lq)u%%</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:535
+#: blueman/gui/manager/ManagerDeviceList.py:538
 #, python-format
 msgid "Link Quality: %(lq)u%%"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:539
+#: blueman/gui/manager/ManagerDeviceList.py:542
 msgid "Low"
 msgstr "Madal"
 
-#: blueman/gui/manager/ManagerDeviceList.py:545
+#: blueman/gui/manager/ManagerDeviceList.py:548
 msgid "High"
 msgstr "Kõrge"
 
-#: blueman/gui/manager/ManagerDeviceList.py:547
+#: blueman/gui/manager/ManagerDeviceList.py:550
 msgid "Very High"
 msgstr "Väga kõrge"
 
-#: blueman/gui/manager/ManagerDeviceList.py:550
+#: blueman/gui/manager/ManagerDeviceList.py:553
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:553
+#: blueman/gui/manager/ManagerDeviceList.py:556
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:131
-#: blueman/gui/manager/ManagerDeviceMenu.py:220
 msgid "Success!"
 msgstr "Edukas!"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:138
-#: blueman/gui/manager/ManagerDeviceMenu.py:214
 msgid "Failed"
 msgstr "Nurjus"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:143
-#: blueman/gui/manager/ManagerDeviceMenu.py:209
-msgid "Connection Failed: "
-msgstr "Ühendus nurjus: "
-
-#: blueman/gui/manager/ManagerDeviceMenu.py:145
-#: blueman/gui/manager/ManagerDeviceMenu.py:227
-#, fuzzy
-#| msgid "Connecting"
+#: blueman/gui/manager/ManagerDeviceMenu.py:144
 msgid "Connecting…"
-msgstr "Ühendumine"
+msgstr "Ühendan…"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:166
+#: blueman/gui/manager/ManagerDeviceMenu.py:180
 msgid "Disconnection Failed: "
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:194
+#: blueman/gui/manager/ManagerDeviceMenu.py:204
 msgid "No audio endpoints registered"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:198
+#: blueman/gui/manager/ManagerDeviceMenu.py:207
 msgid "Input/output error"
 msgstr ""
 
-#. EHOSTDOWN (Bluetooth errors 0x04 (Page Timeout) or 0x3c (Advertising Timeout))
-#: blueman/gui/manager/ManagerDeviceMenu.py:201
+#: blueman/gui/manager/ManagerDeviceMenu.py:209
 msgid "Device did not respond"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:206
+#: blueman/gui/manager/ManagerDeviceMenu.py:213
 #, fuzzy
 #| msgid "Temporarily visible"
 msgid "Resource temporarily unavailable"
 msgstr "Ajutiselt nähtav"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:234
-#, fuzzy
-#| msgid "Disconnecting..."
-msgid "Disconnecting…"
-msgstr "Ühenduse katkestamine..."
+#: blueman/gui/manager/ManagerDeviceMenu.py:218
+msgid "Connection Failed: "
+msgstr "Ühendus nurjus: "
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:299
+#: blueman/gui/manager/ManagerDeviceMenu.py:285
 #, fuzzy
 #| msgid "<b>Connect To:</b>"
 msgid "_<b>_Connect</b>"
 msgstr "<b>Ühendu:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:301
+#: blueman/gui/manager/ManagerDeviceMenu.py:287
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:305
+#: blueman/gui/manager/ManagerDeviceMenu.py:291
 msgid "_<b>Disconnect</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:306
+#: blueman/gui/manager/ManagerDeviceMenu.py:292
 msgid "Forcefully disconnect the device"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:322
+#: blueman/gui/manager/ManagerDeviceMenu.py:308
 msgid "<b>Connect To:</b>"
 msgstr "<b>Ühendu:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:327
+#: blueman/gui/manager/ManagerDeviceMenu.py:313
 msgid "<b>Disconnect:</b>"
 msgstr "<b>Katkesta:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:336
+#: blueman/gui/manager/ManagerDeviceMenu.py:322
 #, fuzzy
 #| msgid "<b>Disconnect:</b>"
 msgid "<b>Auto-connect:</b>"
 msgstr "<b>Katkesta:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:355
-#, fuzzy
-#| msgid "Send a _File..."
+#: blueman/gui/manager/ManagerDeviceMenu.py:341
 msgid "Send a _File…"
-msgstr "Faada _fail..."
+msgstr "Saada _fail…"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:368
+#: blueman/gui/manager/ManagerDeviceMenu.py:354
 msgid "_Pair"
 msgstr "Loo _paar"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:378
+#: blueman/gui/manager/ManagerDeviceMenu.py:364
 msgid "_Trust"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:383
+#: blueman/gui/manager/ManagerDeviceMenu.py:369
 msgid "_Untrust"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:407
-#, fuzzy
-#| msgid "Rename device"
+#: blueman/gui/manager/ManagerDeviceMenu.py:393
 msgid "R_ename device…"
-msgstr "Muuda seadme nime"
+msgstr "_Muuda seadme nime…"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:416
-#, fuzzy
-#| msgid "Remove"
+#: blueman/gui/manager/ManagerDeviceMenu.py:402
 msgid "_Remove…"
-msgstr "Eemalda"
+msgstr "_Eemalda…"
 
 #: blueman/gui/manager/ManagerProgressbar.py:44
 msgid "Cancel Operation"
@@ -832,10 +814,8 @@ msgid "Adapter selection"
 msgstr "Adapteri valik"
 
 #: blueman/gui/DeviceSelectorWidget.py:45
-#, fuzzy
-#| msgid "Disconnecting..."
 msgid "Discovering…"
-msgstr "Ühenduse katkestamine..."
+msgstr "Otsin…"
 
 #. translators: device class
 #: blueman/DeviceClass.py:6
@@ -994,17 +974,13 @@ msgstr "obexd pole saadaval"
 
 #. translators: device class
 #: blueman/DeviceClass.py:82 blueman/Sdp.py:123 blueman/Sdp.py:164
-#, fuzzy
-#| msgid "headset"
 msgid "Headset"
-msgstr "peakomplekt"
+msgstr "Peakomplekt"
 
 #. translators: device class
 #: blueman/DeviceClass.py:84 blueman/Sdp.py:145
-#, fuzzy
-#| msgid "handsfree"
 msgid "Handsfree"
-msgstr "käedvabad"
+msgstr "Vabakäeseade"
 
 #. translators: device class
 #: blueman/DeviceClass.py:88
@@ -1538,10 +1514,8 @@ msgid "Public Browse Group"
 msgstr ""
 
 #: blueman/Sdp.py:116
-#, fuzzy
-#| msgid "Serial Ports"
 msgid "Serial Port"
-msgstr "Jadapordid"
+msgstr "Jadaport"
 
 #: blueman/Sdp.py:117
 msgid "LAN Access Using PPP"
@@ -1560,10 +1534,8 @@ msgid "OBEX Object Push"
 msgstr ""
 
 #: blueman/Sdp.py:121
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "OBEX File Transfer"
-msgstr "Bluetoothi failiülekanne"
+msgstr "OBEX'i failiülekanne"
 
 #: blueman/Sdp.py:122
 msgid "IrMC Sync Command"
@@ -1722,10 +1694,8 @@ msgid "Phonebook Access (PBAP) - PSE"
 msgstr ""
 
 #: blueman/Sdp.py:163
-#, fuzzy
-#| msgid "Network Access Point (NAP)"
 msgid "Phonebook Access (PBAP)"
-msgstr "Võrgupääsukoht (NAP)"
+msgstr "Ligipääs telefoniraamatu andmetele (PBAP)"
 
 #: blueman/Sdp.py:165
 msgid "Message Access Server"
@@ -2185,10 +2155,8 @@ msgid "Shows desktop notifications when devices get connected or disconnected."
 msgstr ""
 
 #: blueman/plugins/applet/ConnectionNotifier.py:21
-#, fuzzy
-#| msgid "Disconnecting..."
 msgid "Disconnected"
-msgstr "Ühenduse katkestamine..."
+msgstr "Ühendus on katkenud"
 
 #: blueman/plugins/applet/NetUsage.py:154
 #: blueman/plugins/applet/NetUsage.py:265
@@ -2375,22 +2343,18 @@ msgid "Files received"
 msgstr "Failid vastu võetud"
 
 #: blueman/plugins/applet/TransferService.py:334
-#, fuzzy, python-format
-#| msgid "Received %d file in the background"
-#| msgid_plural "Received %d files in the background"
+#, python-format
 msgid "Received %(files)d file in the background"
 msgid_plural "Received %(files)d files in the background"
-msgstr[0] "Taustal võeti vastu %d fail"
-msgstr[1] "Taustal võeti vastu %d faili"
+msgstr[0] "Taustal võtsin vastu %(files)d faili"
+msgstr[1] "Taustal võtsin vastu %(files)d faili"
 
 #: blueman/plugins/applet/TransferService.py:343
-#, fuzzy, python-format
-#| msgid "Received %d more file in the background"
-#| msgid_plural "Received %d more files in the background"
+#, python-format
 msgid "Received %(files)d more file in the background"
 msgid_plural "Received %(files)d more files in the background"
-msgstr[0] "Taustal võeti vastu veel %d fail"
-msgstr[1] "Taustal võeti vastu veel %d faili"
+msgstr[0] "Taustal võtsin vastu veel %(files)d faili"
+msgstr[1] "Taustal võtsin vastu veel %(files)d faili"
 
 #: blueman/plugins/applet/KillSwitch.py:37
 msgid ""
@@ -2467,13 +2431,11 @@ msgid "Bluetooth Active"
 msgstr ""
 
 #: blueman/plugins/applet/ShowConnected.py:64
-#, fuzzy, python-format
-#| msgid "<b>%d Active Connection</b>"
-#| msgid_plural "<b>%d Active Connections</b>"
+#, python-format
 msgid "<b>%(connections)d Active Connection</b>"
 msgid_plural "<b>%(connections)d Active Connections</b>"
-msgstr[0] "<b>%d aktiivne ühendus</b>"
-msgstr[1] "<b>%d aktiivset ühendust</b>"
+msgstr[0] "<b>%(connections)d aktiivne ühendus</b>"
+msgstr[1] "<b>%(connections)d aktiivset ühendust</b>"
 
 #: blueman/plugins/applet/ShowConnected.py:74
 #: blueman/plugins/applet/PowerManager.py:192
@@ -2495,10 +2457,9 @@ msgid "Adds disconnect menu items"
 msgstr ""
 
 #: blueman/plugins/applet/DisconnectItems.py:40
-#, fuzzy, python-format
-#| msgid "Disconnecting..."
+#, python-format
 msgid "Disconnect %s"
-msgstr "Ühenduse katkestamine..."
+msgstr "Katkesta %s ühendus"
 
 #: blueman/plugins/applet/DiscvManager.py:16
 msgid ""
@@ -2534,8 +2495,8 @@ msgstr ""
 msgid ""
 "Provides a menu for the applet and an API for other plugins to manipulate it"
 msgstr ""
-"Rakendi menüü ja teistele pluginatele selle manipuleerimiseks vajaliku API "
-"tagamine."
+"Tagab rakendile menüü ja teistele pluginatele selle manipuleerimiseks "
+"vajaliku API"
 
 #: blueman/plugins/applet/PPPSupport.py:72
 #, python-format
@@ -2553,7 +2514,7 @@ msgid ""
 "Standard SPP profile connection handler, allows executing custom actions"
 msgstr ""
 "Standardne SPP profiili ühendustehaldur, mis võimaldab käivitada kohandatud "
-"tegevusi."
+"tegevusi"
 
 #: blueman/plugins/applet/SerialManager.py:31
 msgid "Script to execute on connection"
@@ -2682,34 +2643,24 @@ msgid "Renew IP Address"
 msgstr "IP-aadressi uuendamine"
 
 #: data/blueman-adapters.desktop.in:4
-#, fuzzy
-#| msgid "Bluetooth Adapters"
 msgid "Set Bluetooth Adapter Properties"
-msgstr "Bluetooth'i adapterid"
+msgstr "Seadista Bluetooth adapteri omadusi"
 
 #: data/blueman.desktop.in:3
-#, fuzzy
-#| msgid "applet"
 msgid "Blueman Applet"
-msgstr "rakend"
+msgstr "Blueman rakend"
 
 #: data/blueman.desktop.in:4 data/blueman-manager.desktop.in:4
-#, fuzzy
-#| msgid "Blueman is a GTK+ Bluetooth manager"
 msgid "Blueman Bluetooth Manager"
-msgstr "Blueman on GTK+ Bluetooth haldur"
+msgstr "Bluetoothi haldur Blueman"
 
 #: data/blueman-manager.desktop.in:3
-#, fuzzy
-#| msgid "Bluetooth Enabled"
 msgid "Bluetooth Manager"
-msgstr "Bluetooth on lubatud"
+msgstr "Bluetoothi haldur"
 
 #: data/thunar-sendto-blueman.desktop.in:5
-#, fuzzy
-#| msgid "Bluetooth Devices"
 msgid "Bluetooth Device"
-msgstr "Bluetoothi seadmed"
+msgstr "Bluetooth seade"
 
 #: data/configs/org.blueman.policy.in:10
 msgid "Configure Bluetooth Network"
@@ -2742,6 +2693,11 @@ msgstr ""
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Disconnecting..."
+#~ msgid "Disconnecting…"
+#~ msgstr "Ühenduse katkestamine..."
 
 #~ msgid "Local Services"
 #~ msgstr "Kohalikud teenused"

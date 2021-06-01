@@ -11,13 +11,14 @@
 # OKANO Takayoshi <kano@na.rim.or.jp>, 2015
 # Rockers <sumorock@hotmail.com>, 2018
 # Takuya Ohe <hi@tohe.xyz>
+# Jacque Fresco <aidter@use.startmail.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2021-04-15 22:17+0200\n"
-"PO-Revision-Date: 2020-03-28 10:09+0000\n"
-"Last-Translator: Takuya Ohe <hi@tohe.xyz>\n"
+"POT-Creation-Date: 2021-04-17 10:04+0200\n"
+"PO-Revision-Date: 2021-05-17 08:55+0000\n"
+"Last-Translator: Jacque Fresco <aidter@use.startmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/blueman/blueman/"
 "ja/>\n"
 "Language: ja\n"
@@ -25,7 +26,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.0-dev\n"
+"X-Generator: Weblate 4.7-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -89,7 +90,7 @@ msgstr "付近のデバイスを検索"
 msgid "Search"
 msgstr "検索"
 
-#: data/ui/manager-main.ui:121 blueman/gui/manager/ManagerDeviceMenu.py:369
+#: data/ui/manager-main.ui:121 blueman/gui/manager/ManagerDeviceMenu.py:355
 msgid "Create pairing with the device"
 msgstr "デバイスをペアリングする"
 
@@ -98,7 +99,7 @@ msgstr "デバイスをペアリングする"
 msgid "Pair"
 msgstr "ペア"
 
-#: data/ui/manager-main.ui:135 blueman/gui/manager/ManagerDeviceMenu.py:387
+#: data/ui/manager-main.ui:135 blueman/gui/manager/ManagerDeviceMenu.py:373
 msgid "Mark/Unmark this device as trusted"
 msgstr "信頼できるデバイスとしてマークを付ける・外す"
 
@@ -108,7 +109,7 @@ msgstr "信頼できるデバイスとしてマークを付ける・外す"
 msgid "Trust"
 msgstr "信頼"
 
-#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:420
+#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:406
 msgid "Remove this device from the known devices list"
 msgstr "このデバイスを既知のデバイス一覧から削除する"
 
@@ -228,8 +229,8 @@ msgstr "<b>作者:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:298
-#: blueman/gui/manager/ManagerDeviceList.py:300 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:301
+#: blueman/gui/manager/ManagerDeviceList.py:303 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:209
@@ -565,8 +566,8 @@ msgid "_Exit"
 msgstr "終了"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:273
-#: blueman/gui/manager/ManagerDeviceList.py:298 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:276
+#: blueman/gui/manager/ManagerDeviceList.py:301 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 #, fuzzy
@@ -574,199 +575,188 @@ msgstr "終了"
 msgid "Uncategorized"
 msgstr "未分類"
 
-#: blueman/gui/manager/ManagerDeviceList.py:476
+#: blueman/gui/manager/ManagerDeviceList.py:479
 msgid "<b>Trusted and Paired</b>"
 msgstr "<b>信頼とペアリング済み</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:478
+#: blueman/gui/manager/ManagerDeviceList.py:481
 msgid "<b>Paired</b>"
 msgstr "<b>ペアリング済み</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:480
+#: blueman/gui/manager/ManagerDeviceList.py:483
 msgid "<b>Trusted</b>"
 msgstr "<b>信頼</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:499
+#: blueman/gui/manager/ManagerDeviceList.py:502
 #, fuzzy
 #| msgid "<b>Connect To:</b>"
 msgid "<b>Connected</b>"
 msgstr "<b>接続中:</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:514
+#: blueman/gui/manager/ManagerDeviceList.py:517
 msgid "Poor"
 msgstr "弱い"
 
-#: blueman/gui/manager/ManagerDeviceList.py:516
-#: blueman/gui/manager/ManagerDeviceList.py:541
+#: blueman/gui/manager/ManagerDeviceList.py:519
+#: blueman/gui/manager/ManagerDeviceList.py:544
 msgid "Sub-optimal"
 msgstr "最適ではない"
 
-#: blueman/gui/manager/ManagerDeviceList.py:518
-#: blueman/gui/manager/ManagerDeviceList.py:543
+#: blueman/gui/manager/ManagerDeviceList.py:521
+#: blueman/gui/manager/ManagerDeviceList.py:546
 msgid "Optimal"
 msgstr "最適"
 
-#: blueman/gui/manager/ManagerDeviceList.py:520
+#: blueman/gui/manager/ManagerDeviceList.py:523
 msgid "Much"
 msgstr "多い"
 
-#: blueman/gui/manager/ManagerDeviceList.py:522
+#: blueman/gui/manager/ManagerDeviceList.py:525
 msgid "Too much"
 msgstr "多すぎる"
 
-#: blueman/gui/manager/ManagerDeviceList.py:525
+#: blueman/gui/manager/ManagerDeviceList.py:528
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:528
+#: blueman/gui/manager/ManagerDeviceList.py:531
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:533
+#: blueman/gui/manager/ManagerDeviceList.py:536
 #, python-format
 msgid "<b>Link Quality: %(lq)u%%</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:535
+#: blueman/gui/manager/ManagerDeviceList.py:538
 #, python-format
 msgid "Link Quality: %(lq)u%%"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:539
+#: blueman/gui/manager/ManagerDeviceList.py:542
 msgid "Low"
 msgstr "低い"
 
-#: blueman/gui/manager/ManagerDeviceList.py:545
+#: blueman/gui/manager/ManagerDeviceList.py:548
 msgid "High"
 msgstr "高い"
 
-#: blueman/gui/manager/ManagerDeviceList.py:547
+#: blueman/gui/manager/ManagerDeviceList.py:550
 msgid "Very High"
 msgstr "非常に高い"
 
-#: blueman/gui/manager/ManagerDeviceList.py:550
+#: blueman/gui/manager/ManagerDeviceList.py:553
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:553
+#: blueman/gui/manager/ManagerDeviceList.py:556
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:131
-#: blueman/gui/manager/ManagerDeviceMenu.py:220
 msgid "Success!"
 msgstr "成功!"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:138
-#: blueman/gui/manager/ManagerDeviceMenu.py:214
 msgid "Failed"
 msgstr "失敗"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:143
-#: blueman/gui/manager/ManagerDeviceMenu.py:209
-msgid "Connection Failed: "
-msgstr "接続失敗: "
-
-#: blueman/gui/manager/ManagerDeviceMenu.py:145
-#: blueman/gui/manager/ManagerDeviceMenu.py:227
+#: blueman/gui/manager/ManagerDeviceMenu.py:144
 #, fuzzy
 #| msgid "Connecting"
 msgid "Connecting…"
 msgstr "接続中"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:166
+#: blueman/gui/manager/ManagerDeviceMenu.py:180
 msgid "Disconnection Failed: "
 msgstr "切断失敗: "
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:194
+#: blueman/gui/manager/ManagerDeviceMenu.py:204
 msgid "No audio endpoints registered"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:198
+#: blueman/gui/manager/ManagerDeviceMenu.py:207
 msgid "Input/output error"
 msgstr ""
 
-#. EHOSTDOWN (Bluetooth errors 0x04 (Page Timeout) or 0x3c (Advertising Timeout))
-#: blueman/gui/manager/ManagerDeviceMenu.py:201
+#: blueman/gui/manager/ManagerDeviceMenu.py:209
 #, fuzzy
 #| msgid "Show device information"
 msgid "Device did not respond"
 msgstr "デバイスの情報を表示します"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:206
+#: blueman/gui/manager/ManagerDeviceMenu.py:213
 #, fuzzy
 #| msgid "Temporarily visible"
 msgid "Resource temporarily unavailable"
 msgstr "一時的に表示"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:234
-#, fuzzy
-#| msgid "Disconnecting..."
-msgid "Disconnecting…"
-msgstr "切断中..."
+#: blueman/gui/manager/ManagerDeviceMenu.py:218
+msgid "Connection Failed: "
+msgstr "接続失敗: "
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:299
+#: blueman/gui/manager/ManagerDeviceMenu.py:285
 #, fuzzy
 #| msgid "<b>Connect To:</b>"
 msgid "_<b>_Connect</b>"
 msgstr "<b>接続中:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:301
+#: blueman/gui/manager/ManagerDeviceMenu.py:287
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr ""
 "自動接続プロファイルの A2DP ソース、A2DP シンク、および HID を接続します"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:305
+#: blueman/gui/manager/ManagerDeviceMenu.py:291
 msgid "_<b>Disconnect</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:306
+#: blueman/gui/manager/ManagerDeviceMenu.py:292
 msgid "Forcefully disconnect the device"
 msgstr "強制的にデバイスを切断する"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:322
+#: blueman/gui/manager/ManagerDeviceMenu.py:308
 msgid "<b>Connect To:</b>"
 msgstr "<b>接続中:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:327
+#: blueman/gui/manager/ManagerDeviceMenu.py:313
 msgid "<b>Disconnect:</b>"
 msgstr "<b>切断:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:336
+#: blueman/gui/manager/ManagerDeviceMenu.py:322
 #, fuzzy
 #| msgid "<b>Disconnect:</b>"
 msgid "<b>Auto-connect:</b>"
 msgstr "<b>切断:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:355
+#: blueman/gui/manager/ManagerDeviceMenu.py:341
 #, fuzzy
 #| msgid "Send a _File..."
 msgid "Send a _File…"
 msgstr "ファイルを送信(_F)"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:368
+#: blueman/gui/manager/ManagerDeviceMenu.py:354
 msgid "_Pair"
 msgstr "ペア(_P)"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:378
+#: blueman/gui/manager/ManagerDeviceMenu.py:364
 msgid "_Trust"
 msgstr "信頼する(_T)"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:383
+#: blueman/gui/manager/ManagerDeviceMenu.py:369
 msgid "_Untrust"
 msgstr "信頼しない(_U)"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:407
+#: blueman/gui/manager/ManagerDeviceMenu.py:393
 #, fuzzy
 #| msgid "Rename device"
 msgid "R_ename device…"
 msgstr "デバイス名の変更"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:416
+#: blueman/gui/manager/ManagerDeviceMenu.py:402
 #, fuzzy
 #| msgid "Remove"
 msgid "_Remove…"
@@ -1464,11 +1454,11 @@ msgstr ""
 
 #: blueman/Sdp.py:92
 msgid "TCS-BIN"
-msgstr ""
+msgstr "TCS-BIN"
 
 #: blueman/Sdp.py:93
 msgid "TCS-AT"
-msgstr ""
+msgstr "TCS-AT"
 
 #: blueman/Sdp.py:94
 msgid "ATT"
@@ -1500,7 +1490,7 @@ msgstr ""
 
 #: blueman/Sdp.py:101
 msgid "UPnP/ESDP"
-msgstr ""
+msgstr "UPnP/ESDP"
 
 #: blueman/Sdp.py:102
 msgid "HIDP"
@@ -1532,7 +1522,7 @@ msgstr ""
 
 #: blueman/Sdp.py:109
 msgid "UDI_C-Plane"
-msgstr ""
+msgstr "UDI_C-Plane"
 
 #: blueman/Sdp.py:110 blueman/Sdp.py:111
 msgid "Multi-Channel Adaptation Protocol (MCAP)"
@@ -1700,11 +1690,11 @@ msgstr ""
 
 #: blueman/Sdp.py:153
 msgid "HCR_Print (HCR)"
-msgstr ""
+msgstr "HCR_Print (HCR)"
 
 #: blueman/Sdp.py:154
 msgid "HCR_Scan (HCR)"
-msgstr ""
+msgstr "HCR_Scan (HCR)"
 
 #: blueman/Sdp.py:155
 msgid "Common ISDN Access (CIP)"
@@ -1716,11 +1706,11 @@ msgstr ""
 
 #: blueman/Sdp.py:157
 msgid "UDI-MT"
-msgstr ""
+msgstr "UDI-MT"
 
 #: blueman/Sdp.py:158
 msgid "UDI-TA"
-msgstr ""
+msgstr "UDI-TA"
 
 #: blueman/Sdp.py:159
 msgid "Audio/Video"
@@ -2774,6 +2764,11 @@ msgstr "RfKill ステートを設定する"
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr "RfKill ステートの設定には権限が必要です"
+
+#, fuzzy
+#~| msgid "Disconnecting..."
+#~ msgid "Disconnecting…"
+#~ msgstr "切断中..."
 
 #~ msgid "Local Services"
 #~ msgstr "ローカルサービス"

@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2021-04-15 22:17+0200\n"
+"POT-Creation-Date: 2021-04-17 10:04+0200\n"
 "PO-Revision-Date: 2020-12-11 08:24+0000\n"
 "Last-Translator: Apostol Penkov <apostol.penkov@gmail.com>\n"
 "Language-Team: Bulgarian <https://hosted.weblate.org/projects/blueman/"
@@ -89,7 +89,7 @@ msgstr "Търсене на близки устройства"
 msgid "Search"
 msgstr "Търсене"
 
-#: data/ui/manager-main.ui:121 blueman/gui/manager/ManagerDeviceMenu.py:369
+#: data/ui/manager-main.ui:121 blueman/gui/manager/ManagerDeviceMenu.py:355
 msgid "Create pairing with the device"
 msgstr "Сдвояване с устройството"
 
@@ -98,7 +98,7 @@ msgstr "Сдвояване с устройството"
 msgid "Pair"
 msgstr "Сдвояване"
 
-#: data/ui/manager-main.ui:135 blueman/gui/manager/ManagerDeviceMenu.py:387
+#: data/ui/manager-main.ui:135 blueman/gui/manager/ManagerDeviceMenu.py:373
 msgid "Mark/Unmark this device as trusted"
 msgstr "Добавяне/Премахване на сдвоение с устройството"
 
@@ -108,7 +108,7 @@ msgstr "Добавяне/Премахване на сдвоение с устр�
 msgid "Trust"
 msgstr "Доверяване"
 
-#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:420
+#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:406
 msgid "Remove this device from the known devices list"
 msgstr "Премахване на устройството от познатите устройства"
 
@@ -229,8 +229,8 @@ msgstr "<b>Автор:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:298
-#: blueman/gui/manager/ManagerDeviceList.py:300 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:301
+#: blueman/gui/manager/ManagerDeviceList.py:303 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:209
@@ -561,8 +561,8 @@ msgid "_Exit"
 msgstr "_Изход"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:273
-#: blueman/gui/manager/ManagerDeviceList.py:298 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:276
+#: blueman/gui/manager/ManagerDeviceList.py:301 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 #, fuzzy
@@ -570,199 +570,188 @@ msgstr "_Изход"
 msgid "Uncategorized"
 msgstr "без категория"
 
-#: blueman/gui/manager/ManagerDeviceList.py:476
+#: blueman/gui/manager/ManagerDeviceList.py:479
 msgid "<b>Trusted and Paired</b>"
 msgstr "<b>Доверено и сдвоено</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:478
+#: blueman/gui/manager/ManagerDeviceList.py:481
 msgid "<b>Paired</b>"
 msgstr "<b>Сдвоено</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:480
+#: blueman/gui/manager/ManagerDeviceList.py:483
 msgid "<b>Trusted</b>"
 msgstr "<b>Доверено</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:499
+#: blueman/gui/manager/ManagerDeviceList.py:502
 #, fuzzy
 #| msgid "<b>Connect To:</b>"
 msgid "<b>Connected</b>"
 msgstr "<b>Свързан към:</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:514
+#: blueman/gui/manager/ManagerDeviceList.py:517
 msgid "Poor"
 msgstr "Слабо"
 
-#: blueman/gui/manager/ManagerDeviceList.py:516
-#: blueman/gui/manager/ManagerDeviceList.py:541
+#: blueman/gui/manager/ManagerDeviceList.py:519
+#: blueman/gui/manager/ManagerDeviceList.py:544
 msgid "Sub-optimal"
 msgstr "Под оптималното"
 
-#: blueman/gui/manager/ManagerDeviceList.py:518
-#: blueman/gui/manager/ManagerDeviceList.py:543
+#: blueman/gui/manager/ManagerDeviceList.py:521
+#: blueman/gui/manager/ManagerDeviceList.py:546
 msgid "Optimal"
 msgstr "Оптимално"
 
-#: blueman/gui/manager/ManagerDeviceList.py:520
+#: blueman/gui/manager/ManagerDeviceList.py:523
 msgid "Much"
 msgstr "Добро"
 
-#: blueman/gui/manager/ManagerDeviceList.py:522
+#: blueman/gui/manager/ManagerDeviceList.py:525
 msgid "Too much"
 msgstr "Много добро"
 
-#: blueman/gui/manager/ManagerDeviceList.py:525
+#: blueman/gui/manager/ManagerDeviceList.py:528
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:528
+#: blueman/gui/manager/ManagerDeviceList.py:531
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:533
+#: blueman/gui/manager/ManagerDeviceList.py:536
 #, python-format
 msgid "<b>Link Quality: %(lq)u%%</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:535
+#: blueman/gui/manager/ManagerDeviceList.py:538
 #, python-format
 msgid "Link Quality: %(lq)u%%"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:539
+#: blueman/gui/manager/ManagerDeviceList.py:542
 msgid "Low"
 msgstr "Ниско"
 
-#: blueman/gui/manager/ManagerDeviceList.py:545
+#: blueman/gui/manager/ManagerDeviceList.py:548
 msgid "High"
 msgstr "Високо"
 
-#: blueman/gui/manager/ManagerDeviceList.py:547
+#: blueman/gui/manager/ManagerDeviceList.py:550
 msgid "Very High"
 msgstr "Много високо"
 
-#: blueman/gui/manager/ManagerDeviceList.py:550
+#: blueman/gui/manager/ManagerDeviceList.py:553
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:553
+#: blueman/gui/manager/ManagerDeviceList.py:556
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:131
-#: blueman/gui/manager/ManagerDeviceMenu.py:220
 msgid "Success!"
 msgstr "Успех!"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:138
-#: blueman/gui/manager/ManagerDeviceMenu.py:214
 msgid "Failed"
 msgstr "Неуспех"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:143
-#: blueman/gui/manager/ManagerDeviceMenu.py:209
-msgid "Connection Failed: "
-msgstr "Неуспешно свързване "
-
-#: blueman/gui/manager/ManagerDeviceMenu.py:145
-#: blueman/gui/manager/ManagerDeviceMenu.py:227
+#: blueman/gui/manager/ManagerDeviceMenu.py:144
 #, fuzzy
 #| msgid "Connecting"
 msgid "Connecting…"
 msgstr "Свързване"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:166
+#: blueman/gui/manager/ManagerDeviceMenu.py:180
 msgid "Disconnection Failed: "
 msgstr "Неуспешно прекъсване на връзката:"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:194
+#: blueman/gui/manager/ManagerDeviceMenu.py:204
 msgid "No audio endpoints registered"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:198
+#: blueman/gui/manager/ManagerDeviceMenu.py:207
 msgid "Input/output error"
 msgstr ""
 
-#. EHOSTDOWN (Bluetooth errors 0x04 (Page Timeout) or 0x3c (Advertising Timeout))
-#: blueman/gui/manager/ManagerDeviceMenu.py:201
+#: blueman/gui/manager/ManagerDeviceMenu.py:209
 #, fuzzy
 #| msgid "Show device information"
 msgid "Device did not respond"
 msgstr "Показване на информация за устройството"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:206
+#: blueman/gui/manager/ManagerDeviceMenu.py:213
 #, fuzzy
 #| msgid "Temporarily visible"
 msgid "Resource temporarily unavailable"
 msgstr "Временно видим"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:234
-#, fuzzy
-#| msgid "Disconnecting..."
-msgid "Disconnecting…"
-msgstr "Прекъсване на връзката…"
+#: blueman/gui/manager/ManagerDeviceMenu.py:218
+msgid "Connection Failed: "
+msgstr "Неуспешно свързване "
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:299
+#: blueman/gui/manager/ManagerDeviceMenu.py:285
 #, fuzzy
 #| msgid "<b>Connect To:</b>"
 msgid "_<b>_Connect</b>"
 msgstr "<b>Свързан към:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:301
+#: blueman/gui/manager/ManagerDeviceMenu.py:287
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr ""
 "Свързва профилите за автоматично свързване A2DP-източник, A2DP-цел и HID"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:305
+#: blueman/gui/manager/ManagerDeviceMenu.py:291
 msgid "_<b>Disconnect</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:306
+#: blueman/gui/manager/ManagerDeviceMenu.py:292
 msgid "Forcefully disconnect the device"
 msgstr "Принудително изключва устройството"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:322
+#: blueman/gui/manager/ManagerDeviceMenu.py:308
 msgid "<b>Connect To:</b>"
 msgstr "<b>Свързан към:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:327
+#: blueman/gui/manager/ManagerDeviceMenu.py:313
 msgid "<b>Disconnect:</b>"
 msgstr "<b>Прекъсване:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:336
+#: blueman/gui/manager/ManagerDeviceMenu.py:322
 #, fuzzy
 #| msgid "<b>Disconnect:</b>"
 msgid "<b>Auto-connect:</b>"
 msgstr "<b>Прекъсване:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:355
+#: blueman/gui/manager/ManagerDeviceMenu.py:341
 #, fuzzy
 #| msgid "Send a _File..."
 msgid "Send a _File…"
 msgstr "Изпращане на _файл…"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:368
+#: blueman/gui/manager/ManagerDeviceMenu.py:354
 msgid "_Pair"
 msgstr "_Сдвояване"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:378
+#: blueman/gui/manager/ManagerDeviceMenu.py:364
 msgid "_Trust"
 msgstr "_Доверен"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:383
+#: blueman/gui/manager/ManagerDeviceMenu.py:369
 msgid "_Untrust"
 msgstr "_Недоверен"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:407
+#: blueman/gui/manager/ManagerDeviceMenu.py:393
 #, fuzzy
 #| msgid "Rename device"
 msgid "R_ename device…"
 msgstr "Преименуване на устройството"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:416
+#: blueman/gui/manager/ManagerDeviceMenu.py:402
 #, fuzzy
 #| msgid "Remove"
 msgid "_Remove…"
@@ -2769,6 +2758,11 @@ msgstr "Задаване на състояние на RfKill"
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr "Задаването на състояние на RfKill изисква правомощия"
+
+#, fuzzy
+#~| msgid "Disconnecting..."
+#~ msgid "Disconnecting…"
+#~ msgstr "Прекъсване на връзката…"
 
 #~ msgid "Local Services"
 #~ msgstr "Местни услуги"
