@@ -3,7 +3,7 @@ name: Weblate
 on:
   push:
     branches:
-      - master
+      - 2-2-stable
 
 jobs:
   build:
@@ -13,4 +13,4 @@ jobs:
       - uses: actions/checkout@v2
       - env:
           TOKEN: ${{ secrets.WEBLATE_KEY }}
-        run: "curl -F file=@po/blueman.pot -F method=source -H \"Authorization: Token $TOKEN\" https://hosted.weblate.org/api/translations/blueman/blueman/en/file/"
+        run: "curl -F file=@po/blueman.pot -F method=source -H \"Authorization: Token $TOKEN\" https://hosted.weblate.org/api/translations/blueman/2-2/en/file/"
