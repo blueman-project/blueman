@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.2.1
+
+### Bugs fixed
+
+* Hard dependency of DBusService on NetworkManager
+
 ## 2.2
 
 ### New features
