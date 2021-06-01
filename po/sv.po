@@ -19,12 +19,13 @@
 # Kristoffer Grundström <hamnisdude@gmail.com>, 2015-2016
 # Luna Jernberg <bittin@cafe8bitar.se>, 2020
 # Marcus Larborg, 2017
+# Luna Jernberg <droidbittin@gmail.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2021-04-15 22:17+0200\n"
-"PO-Revision-Date: 2020-08-18 17:04+0000\n"
+"POT-Creation-Date: 2021-04-17 10:04+0200\n"
+"PO-Revision-Date: 2021-05-01 20:38+0000\n"
 "Last-Translator: Luna Jernberg <droidbittin@gmail.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/blueman/blueman/"
 "sv/>\n"
@@ -33,7 +34,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.2-dev\n"
+"X-Generator: Weblate 4.7-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -97,7 +98,7 @@ msgstr "Sök efter närliggande enheter"
 msgid "Search"
 msgstr "Sök"
 
-#: data/ui/manager-main.ui:121 blueman/gui/manager/ManagerDeviceMenu.py:369
+#: data/ui/manager-main.ui:121 blueman/gui/manager/ManagerDeviceMenu.py:355
 msgid "Create pairing with the device"
 msgstr "Skapa ihopparning med enheten"
 
@@ -106,7 +107,7 @@ msgstr "Skapa ihopparning med enheten"
 msgid "Pair"
 msgstr "Par"
 
-#: data/ui/manager-main.ui:135 blueman/gui/manager/ManagerDeviceMenu.py:387
+#: data/ui/manager-main.ui:135 blueman/gui/manager/ManagerDeviceMenu.py:373
 msgid "Mark/Unmark this device as trusted"
 msgstr "Markera/avmarkera denna enhet som pålitlig"
 
@@ -116,7 +117,7 @@ msgstr "Markera/avmarkera denna enhet som pålitlig"
 msgid "Trust"
 msgstr "Tillit"
 
-#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:420
+#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:406
 msgid "Remove this device from the known devices list"
 msgstr "Ta bort denna enhet från listan över kända enheter"
 
@@ -236,8 +237,8 @@ msgstr "<b>Upphovsman:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:298
-#: blueman/gui/manager/ManagerDeviceList.py:300 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:301
+#: blueman/gui/manager/ManagerDeviceList.py:303 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:209
@@ -372,6 +373,8 @@ msgstr "obexd inte tillgängligt"
 #: blueman/main/Sendto.py:111
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
 msgstr ""
+"Misslyckades med att starta OBEX-tjänst automatiskt. Se till att OBEX-"
+"demonen körs"
 
 #: blueman/main/Sendto.py:142
 msgid "Cancelling"
@@ -389,8 +392,8 @@ msgstr "Färdig om:"
 #, python-format
 msgid "%(seconds)d Second"
 msgid_plural "%(seconds)d Seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(seconds)d Sekund"
+msgstr[1] "%(seconds)d Sekunder"
 
 #: blueman/main/Sendto.py:229
 #, python-format
@@ -491,7 +494,7 @@ msgstr "Aktivera Bluetooth"
 
 #: blueman/Functions.py:92
 msgid "Shall bluetooth get enabled automatically?"
-msgstr ""
+msgstr "Ska bluetooth aktiveras automatiskt?"
 
 #: blueman/Functions.py:93
 msgid "Yes"
@@ -567,8 +570,8 @@ msgid "_Exit"
 msgstr "_Avsluta"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:273
-#: blueman/gui/manager/ManagerDeviceList.py:298 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:276
+#: blueman/gui/manager/ManagerDeviceList.py:301 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 #, fuzzy
@@ -576,190 +579,181 @@ msgstr "_Avsluta"
 msgid "Uncategorized"
 msgstr "okategoriserad"
 
-#: blueman/gui/manager/ManagerDeviceList.py:476
+#: blueman/gui/manager/ManagerDeviceList.py:479
 msgid "<b>Trusted and Paired</b>"
 msgstr "<b>Betrodda och Parade</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:478
+#: blueman/gui/manager/ManagerDeviceList.py:481
 msgid "<b>Paired</b>"
 msgstr "<b>Parade</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:480
+#: blueman/gui/manager/ManagerDeviceList.py:483
 msgid "<b>Trusted</b>"
 msgstr "<b>Pålitlig</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:499
+#: blueman/gui/manager/ManagerDeviceList.py:502
 #, fuzzy
 #| msgid "_<b>Connect</b>"
 msgid "<b>Connected</b>"
 msgstr "_<b>Anslut</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:514
+#: blueman/gui/manager/ManagerDeviceList.py:517
 msgid "Poor"
 msgstr "Dålig"
 
-#: blueman/gui/manager/ManagerDeviceList.py:516
-#: blueman/gui/manager/ManagerDeviceList.py:541
+#: blueman/gui/manager/ManagerDeviceList.py:519
+#: blueman/gui/manager/ManagerDeviceList.py:544
 msgid "Sub-optimal"
 msgstr "Suboptimal"
 
-#: blueman/gui/manager/ManagerDeviceList.py:518
-#: blueman/gui/manager/ManagerDeviceList.py:543
+#: blueman/gui/manager/ManagerDeviceList.py:521
+#: blueman/gui/manager/ManagerDeviceList.py:546
 msgid "Optimal"
 msgstr "Optimal"
 
-#: blueman/gui/manager/ManagerDeviceList.py:520
+#: blueman/gui/manager/ManagerDeviceList.py:523
 msgid "Much"
 msgstr "Mycket"
 
-#: blueman/gui/manager/ManagerDeviceList.py:522
+#: blueman/gui/manager/ManagerDeviceList.py:525
 msgid "Too much"
 msgstr "För mycket"
 
-#: blueman/gui/manager/ManagerDeviceList.py:525
-#, python-format
-msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
-msgstr ""
-
 #: blueman/gui/manager/ManagerDeviceList.py:528
 #, python-format
-msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
-msgstr ""
+msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
+msgstr "<b>Mottagen signalstyrka: %(rssi)u%%</b><i>%(rssi_state)s</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:533
+#: blueman/gui/manager/ManagerDeviceList.py:531
+#, python-format
+msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
+msgstr "Mottagen signalstyrka: %(rssi)u%%<i>%(rssi_state)s</i>"
+
+#: blueman/gui/manager/ManagerDeviceList.py:536
 #, python-format
 msgid "<b>Link Quality: %(lq)u%%</b>"
-msgstr ""
+msgstr "<b>Länkkvalitet:%(lq)u%%</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:535
+#: blueman/gui/manager/ManagerDeviceList.py:538
 #, python-format
 msgid "Link Quality: %(lq)u%%"
-msgstr ""
+msgstr "Länkkvalitet: %(lq)u%%"
 
-#: blueman/gui/manager/ManagerDeviceList.py:539
+#: blueman/gui/manager/ManagerDeviceList.py:542
 msgid "Low"
 msgstr "Låg"
 
-#: blueman/gui/manager/ManagerDeviceList.py:545
+#: blueman/gui/manager/ManagerDeviceList.py:548
 msgid "High"
 msgstr "Hög"
 
-#: blueman/gui/manager/ManagerDeviceList.py:547
+#: blueman/gui/manager/ManagerDeviceList.py:550
 msgid "Very High"
 msgstr "Mycket hög"
 
-#: blueman/gui/manager/ManagerDeviceList.py:550
+#: blueman/gui/manager/ManagerDeviceList.py:553
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:553
+#: blueman/gui/manager/ManagerDeviceList.py:556
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:131
-#: blueman/gui/manager/ManagerDeviceMenu.py:220
 msgid "Success!"
 msgstr "Lyckades!"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:138
-#: blueman/gui/manager/ManagerDeviceMenu.py:214
 msgid "Failed"
 msgstr "Misslyckades"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:143
-#: blueman/gui/manager/ManagerDeviceMenu.py:209
-msgid "Connection Failed: "
-msgstr "Anslutningen misslyckades: "
-
-#: blueman/gui/manager/ManagerDeviceMenu.py:145
-#: blueman/gui/manager/ManagerDeviceMenu.py:227
+#: blueman/gui/manager/ManagerDeviceMenu.py:144
 msgid "Connecting…"
 msgstr "Ansluter…"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:166
+#: blueman/gui/manager/ManagerDeviceMenu.py:180
 msgid "Disconnection Failed: "
 msgstr "Frånkopplingen Misslyckades:"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:194
+#: blueman/gui/manager/ManagerDeviceMenu.py:204
 msgid "No audio endpoints registered"
-msgstr ""
+msgstr "Inga ljudändpunkter har registrerats"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:198
+#: blueman/gui/manager/ManagerDeviceMenu.py:207
 msgid "Input/output error"
 msgstr ""
 
-#. EHOSTDOWN (Bluetooth errors 0x04 (Page Timeout) or 0x3c (Advertising Timeout))
-#: blueman/gui/manager/ManagerDeviceMenu.py:201
+#: blueman/gui/manager/ManagerDeviceMenu.py:209
 #, fuzzy
 #| msgid "Show device information"
 msgid "Device did not respond"
 msgstr "Visa information om enheten"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:206
+#: blueman/gui/manager/ManagerDeviceMenu.py:213
 #, fuzzy
 #| msgid "Temporarily visible"
 msgid "Resource temporarily unavailable"
 msgstr "Temporärt synlig"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:234
-msgid "Disconnecting…"
-msgstr "Kopplar från…"
+#: blueman/gui/manager/ManagerDeviceMenu.py:218
+msgid "Connection Failed: "
+msgstr "Anslutningen misslyckades: "
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:299
+#: blueman/gui/manager/ManagerDeviceMenu.py:285
 #, fuzzy
 #| msgid "_<b>Connect</b>"
 msgid "_<b>_Connect</b>"
 msgstr "_<b>Anslut</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:301
+#: blueman/gui/manager/ManagerDeviceMenu.py:287
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr "Ansluter automatisk anslutningsprofiler A2DP källa, A2DP mål och HID"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:305
+#: blueman/gui/manager/ManagerDeviceMenu.py:291
 msgid "_<b>Disconnect</b>"
 msgstr "_<b>Koppla från</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:306
+#: blueman/gui/manager/ManagerDeviceMenu.py:292
 msgid "Forcefully disconnect the device"
 msgstr "Tvinga frånkoppling av enheten"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:322
+#: blueman/gui/manager/ManagerDeviceMenu.py:308
 msgid "<b>Connect To:</b>"
 msgstr "<b>Anslut till:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:327
+#: blueman/gui/manager/ManagerDeviceMenu.py:313
 msgid "<b>Disconnect:</b>"
 msgstr "<b>Koppla från:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:336
+#: blueman/gui/manager/ManagerDeviceMenu.py:322
 #, fuzzy
 #| msgid "<b>Disconnect:</b>"
 msgid "<b>Auto-connect:</b>"
 msgstr "<b>Koppla från:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:355
+#: blueman/gui/manager/ManagerDeviceMenu.py:341
 msgid "Send a _File…"
 msgstr "Sänd en _fil…"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:368
+#: blueman/gui/manager/ManagerDeviceMenu.py:354
 msgid "_Pair"
 msgstr "_Parkoppla"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:378
+#: blueman/gui/manager/ManagerDeviceMenu.py:364
 msgid "_Trust"
 msgstr "_Lita på"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:383
+#: blueman/gui/manager/ManagerDeviceMenu.py:369
 msgid "_Untrust"
 msgstr "_Sluta lita på"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:407
+#: blueman/gui/manager/ManagerDeviceMenu.py:393
 msgid "R_ename device…"
 msgstr "D_öp om enheten…"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:416
+#: blueman/gui/manager/ManagerDeviceMenu.py:402
 msgid "_Remove…"
 msgstr "_Ta bort…"
 
@@ -848,17 +842,17 @@ msgstr "Synlig... %ss"
 #. translators: device class
 #: blueman/DeviceClass.py:6
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Diverse"
 
 #. translators: device class
 #: blueman/DeviceClass.py:8
 msgid "Computer"
-msgstr ""
+msgstr "Dator"
 
 #. translators: device class
 #: blueman/DeviceClass.py:10
 msgid "Phone"
-msgstr ""
+msgstr "Telefon"
 
 #. translators: device class
 #: blueman/DeviceClass.py:12
@@ -877,7 +871,7 @@ msgstr "Ljud/Video"
 #. translators: device class
 #: blueman/DeviceClass.py:16
 msgid "Peripheral"
-msgstr ""
+msgstr "Tillbehör"
 
 #. translators: device class
 #: blueman/DeviceClass.py:18 blueman/DeviceClass.py:276
@@ -892,7 +886,7 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:22
 msgid "Toy"
-msgstr ""
+msgstr "Leksak"
 
 #. translators: device class
 #: blueman/DeviceClass.py:31
@@ -925,7 +919,7 @@ msgstr "handdator"
 #. translators: device class
 #: blueman/DeviceClass.py:39
 msgid "Palm"
-msgstr ""
+msgstr "Palm"
 
 #. translators: device class
 #: blueman/DeviceClass.py:48
@@ -958,7 +952,7 @@ msgstr "modem"
 #. translators: device class
 #: blueman/DeviceClass.py:56
 msgid "Isdn"
-msgstr ""
+msgstr "Isdn"
 
 #. translators: device class
 #: blueman/DeviceClass.py:61
@@ -968,32 +962,32 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:63
 msgid "1-17 percent"
-msgstr ""
+msgstr "1-17 procent"
 
 #. translators: device class
 #: blueman/DeviceClass.py:65
 msgid "17-33 percent"
-msgstr ""
+msgstr "17-33 procent"
 
 #. translators: device class
 #: blueman/DeviceClass.py:67
 msgid "33-50 percent"
-msgstr ""
+msgstr "33-50 procent"
 
 #. translators: device class
 #: blueman/DeviceClass.py:69
 msgid "50-67 percent"
-msgstr ""
+msgstr "50-67 procent"
 
 #. translators: device class
 #: blueman/DeviceClass.py:71
 msgid "67-83 percent"
-msgstr ""
+msgstr "67-83 procent"
 
 #. translators: device class
 #: blueman/DeviceClass.py:73
 msgid "83-99 percent"
-msgstr ""
+msgstr "83-99 procent"
 
 #. translators: device class
 #: blueman/DeviceClass.py:75
@@ -1050,7 +1044,7 @@ msgstr "bil ljud"
 #. translators: device class
 #: blueman/DeviceClass.py:98
 msgid "Set-top box"
-msgstr ""
+msgstr "Digitalbox"
 
 #. translators: device class
 #: blueman/DeviceClass.py:100
@@ -1076,7 +1070,7 @@ msgstr "video kamera"
 #. translators: device class
 #: blueman/DeviceClass.py:106
 msgid "Camcorder"
-msgstr ""
+msgstr "Videokamera"
 
 #. translators: device class
 #: blueman/DeviceClass.py:108
@@ -1100,7 +1094,7 @@ msgstr "Videokonferens"
 #. translators: device class
 #: blueman/DeviceClass.py:116
 msgid "Gaming/Toy"
-msgstr ""
+msgstr "Gaming/Leksak"
 
 #. translators: device class
 #: blueman/DeviceClass.py:123 blueman/DeviceClass.py:189
@@ -1131,37 +1125,37 @@ msgstr "3D Skärm"
 #. translators: device class
 #: blueman/DeviceClass.py:134
 msgid "Camera"
-msgstr ""
+msgstr "Kamera"
 
 #. translators: device class
 #: blueman/DeviceClass.py:136
 msgid "Scanner"
-msgstr ""
+msgstr "Scanner"
 
 #. translators: device class
 #: blueman/DeviceClass.py:138
 msgid "Printer"
-msgstr ""
+msgstr "Skrivare"
 
 #. translators: device class
 #: blueman/DeviceClass.py:143
 msgid "Wrist watch"
-msgstr ""
+msgstr "Armbandsur"
 
 #. translators: device class
 #: blueman/DeviceClass.py:145
 msgid "Pager"
-msgstr ""
+msgstr "Personsökare"
 
 #. translators: device class
 #: blueman/DeviceClass.py:147
 msgid "Jacket"
-msgstr ""
+msgstr "Jacka"
 
 #. translators: device class
 #: blueman/DeviceClass.py:149
 msgid "Helmet"
-msgstr ""
+msgstr "Hjälm"
 
 #. translators: device class
 #: blueman/DeviceClass.py:151
@@ -1173,27 +1167,27 @@ msgstr "3D glasögon"
 #. translators: device class
 #: blueman/DeviceClass.py:156
 msgid "Robot"
-msgstr ""
+msgstr "Robot"
 
 #. translators: device class
 #: blueman/DeviceClass.py:158
 msgid "Vehicle"
-msgstr ""
+msgstr "Fordon"
 
 #. translators: device class
 #: blueman/DeviceClass.py:160
 msgid "Doll"
-msgstr ""
+msgstr "Docka"
 
 #. translators: device class
 #: blueman/DeviceClass.py:162
 msgid "Controller"
-msgstr ""
+msgstr "Kontroller"
 
 #. translators: device class
 #: blueman/DeviceClass.py:164
 msgid "Game"
-msgstr ""
+msgstr "Spel"
 
 #: blueman/DeviceClass.py:169
 #, fuzzy
@@ -1215,7 +1209,7 @@ msgstr "Anslut"
 
 #: blueman/DeviceClass.py:172
 msgid "Watch: Sports Watch"
-msgstr ""
+msgstr "Klocka: Sportklocka"
 
 #: blueman/DeviceClass.py:173
 #, fuzzy
@@ -1273,7 +1267,7 @@ msgstr "Anslut"
 
 #: blueman/DeviceClass.py:182
 msgid "Thermometer: Ear"
-msgstr ""
+msgstr "Termometer: Öra"
 
 #: blueman/DeviceClass.py:183
 #, fuzzy
@@ -1309,11 +1303,11 @@ msgstr ""
 
 #: blueman/DeviceClass.py:190
 msgid "Mouse"
-msgstr ""
+msgstr "Mus"
 
 #: blueman/DeviceClass.py:191
 msgid "Joystick"
-msgstr ""
+msgstr "Joystick"
 
 #: blueman/DeviceClass.py:192
 msgid "Gamepad"
@@ -1325,15 +1319,15 @@ msgstr ""
 
 #: blueman/DeviceClass.py:194
 msgid "Card Reader"
-msgstr ""
+msgstr "Kortläsare"
 
 #: blueman/DeviceClass.py:195
 msgid "Digital Pen"
-msgstr ""
+msgstr "Digital penna"
 
 #: blueman/DeviceClass.py:196
 msgid "Barcode Scanner"
-msgstr ""
+msgstr "Streckkodsläsare"
 
 #: blueman/DeviceClass.py:197
 #, fuzzy
@@ -1365,11 +1359,11 @@ msgstr "Gruppnätverk"
 
 #: blueman/DeviceClass.py:203
 msgid "Cycling: Cycling Computer"
-msgstr ""
+msgstr "Cykling: Cykeldator"
 
 #: blueman/DeviceClass.py:204
 msgid "Cycling: Speed Sensor"
-msgstr ""
+msgstr "Cykling: Hastighetssensor"
 
 #: blueman/DeviceClass.py:205
 msgid "Cycling: Cadence Sensor"
@@ -1390,7 +1384,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:210
 msgid "Fingertip"
-msgstr ""
+msgstr "Fingertopp"
 
 #: blueman/DeviceClass.py:211
 msgid "Wrist Worn"
@@ -1410,19 +1404,19 @@ msgstr ""
 
 #: blueman/DeviceClass.py:215
 msgid "Mobility Scooter"
-msgstr ""
+msgstr "Mobilitetsskoter"
 
 #: blueman/DeviceClass.py:216
 msgid "Generic Continuous Glucose Monitor"
-msgstr ""
+msgstr "Generisk kontinuerlig glukosmonitor"
 
 #: blueman/DeviceClass.py:217
 msgid "Generic Insulin Pump"
-msgstr ""
+msgstr "Generisk insulinpump"
 
 #: blueman/DeviceClass.py:218
 msgid "Insulin Pump, durable pump"
-msgstr ""
+msgstr "Insulinpump, hållbar pump"
 
 #: blueman/DeviceClass.py:219
 msgid "Insulin Pump, patch pump"
@@ -1430,7 +1424,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:220
 msgid "Insulin Pen"
-msgstr ""
+msgstr "Insulinpenna"
 
 #: blueman/DeviceClass.py:221
 msgid "Generic Medication Delivery"
@@ -1439,23 +1433,23 @@ msgstr ""
 #. 55 - 80 reserved
 #: blueman/DeviceClass.py:223
 msgid "Generic: Outdoor Sports Activity"
-msgstr ""
+msgstr "Generisk: Utomhussportaktivitet"
 
 #: blueman/DeviceClass.py:224
 msgid "Location Display Device"
-msgstr ""
+msgstr "Platsvisningsenhet"
 
 #: blueman/DeviceClass.py:225
 msgid "Location and Navigation Display Device"
-msgstr ""
+msgstr "Plats och navigationsdisplayenhet"
 
 #: blueman/DeviceClass.py:226
 msgid "Location Pod"
-msgstr ""
+msgstr "Plats Pod"
 
 #: blueman/DeviceClass.py:227
 msgid "Location and Navigation Pod"
-msgstr ""
+msgstr "Plats och navigationspod"
 
 #: blueman/Sdp.py:88
 msgid "SDP"
@@ -1543,7 +1537,7 @@ msgstr "CMTP"
 
 #: blueman/Sdp.py:109
 msgid "UDI_C-Plane"
-msgstr ""
+msgstr "UDI_C-plan"
 
 #: blueman/Sdp.py:110 blueman/Sdp.py:111
 msgid "Multi-Channel Adaptation Protocol (MCAP)"
@@ -1571,7 +1565,7 @@ msgstr "Serieport"
 
 #: blueman/Sdp.py:117
 msgid "LAN Access Using PPP"
-msgstr ""
+msgstr "LAN-åtkomst med PPP"
 
 #: blueman/Sdp.py:118
 msgid "Dialup Networking (DUN)"
@@ -1595,7 +1589,7 @@ msgstr ""
 
 #: blueman/Sdp.py:124
 msgid "Cordless Telephony"
-msgstr ""
+msgstr "Trådlös telefoni"
 
 #: blueman/Sdp.py:125
 msgid "Audio Source"
@@ -1623,7 +1617,7 @@ msgstr "Videokonferens"
 
 #: blueman/Sdp.py:131
 msgid "Intercom"
-msgstr ""
+msgstr "Intercom"
 
 #: blueman/Sdp.py:132
 msgid "Fax"
@@ -1643,7 +1637,7 @@ msgstr "WAP Klient"
 
 #: blueman/Sdp.py:136
 msgid "PANU"
-msgstr ""
+msgstr "PANU"
 
 #: blueman/Sdp.py:137
 msgid "Network Access Point"
@@ -1821,11 +1815,11 @@ msgstr "Generisk filöverföring"
 
 #: blueman/Sdp.py:181
 msgid "Generic Audio"
-msgstr ""
+msgstr "Generiskt ljud"
 
 #: blueman/Sdp.py:182
 msgid "Generic Telephony"
-msgstr ""
+msgstr "Generisk telefoni"
 
 #: blueman/Sdp.py:183
 msgid "Video Source"
@@ -1837,7 +1831,7 @@ msgstr "Videosink"
 
 #: blueman/Sdp.py:185
 msgid "Video Distribution"
-msgstr ""
+msgstr "Videodistribution"
 
 #: blueman/Sdp.py:186
 msgid "HDP"
@@ -1853,15 +1847,15 @@ msgstr "HDP sink"
 
 #: blueman/Sdp.py:189
 msgid "Generic Access"
-msgstr ""
+msgstr "Generisk åtkomst"
 
 #: blueman/Sdp.py:190
 msgid "Generic Attribute"
-msgstr ""
+msgstr "Generiskt attribut"
 
 #: blueman/Sdp.py:191
 msgid "Immediate Alert"
-msgstr ""
+msgstr "Omedelbar varning"
 
 #: blueman/Sdp.py:192
 msgid "Link Loss"
@@ -1891,13 +1885,11 @@ msgstr "Glukos"
 
 #: blueman/Sdp.py:198
 msgid "Health Thermometer"
-msgstr ""
+msgstr "Hälsotermometer"
 
 #: blueman/Sdp.py:199
-#, fuzzy
-#| msgid "Show device information"
 msgid "Device Information"
-msgstr "Visa information om enheten"
+msgstr "Enhetsinformation"
 
 #: blueman/Sdp.py:200
 msgid "Heart Rate"
@@ -1945,7 +1937,7 @@ msgstr ""
 
 #: blueman/Sdp.py:211
 msgid "Location and Navigation"
-msgstr ""
+msgstr "Plats och navigering"
 
 #: blueman/Sdp.py:212
 msgid "Environmental Sensing"
@@ -1969,7 +1961,7 @@ msgstr ""
 
 #: blueman/Sdp.py:217
 msgid "Continuous Glucose Monitoring"
-msgstr ""
+msgstr "Kontinuerlig glukosövervakning"
 
 #: blueman/Sdp.py:218
 msgid "Internet Protocol Support"
@@ -1977,11 +1969,11 @@ msgstr ""
 
 #: blueman/Sdp.py:219
 msgid "Indoor Positioning"
-msgstr ""
+msgstr "Inomhuspositionering"
 
 #: blueman/Sdp.py:220
 msgid "Pulse Oximeter"
-msgstr ""
+msgstr "Pulsoximeter"
 
 #: blueman/Sdp.py:221
 msgid "HTTP Proxy"
@@ -2038,10 +2030,8 @@ msgid "Peripheral Preferred Connection Parameters"
 msgstr ""
 
 #: blueman/Sdp.py:234
-#, fuzzy
-#| msgid "Device Manager"
 msgid "Service Changed"
-msgstr "Enhetshanterare"
+msgstr "Tjänst ändrad"
 
 #: blueman/Sdp.py:235
 msgid "System ID"
@@ -2049,11 +2039,11 @@ msgstr "System ID"
 
 #: blueman/Sdp.py:236
 msgid "Model Number String"
-msgstr ""
+msgstr "Modellnummersträng"
 
 #: blueman/Sdp.py:237
 msgid "Serial Number String"
-msgstr ""
+msgstr "Serienummersträng"
 
 #: blueman/Sdp.py:238
 msgid "Firmware Revision String"
@@ -2069,7 +2059,7 @@ msgstr ""
 
 #: blueman/Sdp.py:241
 msgid "Manufacturer Name String"
-msgstr ""
+msgstr "Tillverkarens namn Sträng"
 
 #: blueman/Sdp.py:242
 msgid "PnP ID"
@@ -2133,7 +2123,7 @@ msgstr "nej"
 
 #: blueman/plugins/manager/Info.py:60
 msgid "<big>Select row(s) and use <i>Control + C</i> to copy</big>"
-msgstr ""
+msgstr "<big>Välj rad(er) och använd <i>Control + C</i> för att kopiera</big>"
 
 #: blueman/plugins/manager/Info.py:120
 msgid "_Info"
@@ -2188,7 +2178,7 @@ msgstr "Automatiskt ansluten till %(service)s på %(device)s"
 
 #: blueman/plugins/applet/ConnectionNotifier.py:13
 msgid "Shows desktop notifications when devices get connected or disconnected."
-msgstr ""
+msgstr "Visar skrivbordsaviseringar när enheter ansluts eller kopplas bort."
 
 #: blueman/plugins/applet/ConnectionNotifier.py:21
 #, fuzzy
@@ -2363,6 +2353,8 @@ msgid ""
 "Please make sure that directory \"<b>%s</b>\" exists or configure it with "
 "blueman-services. Until then the default \"%s\" will be used"
 msgstr ""
+"Se till att katalogen \"<b>%s</b> existerar eller konfigurera den med "
+"blueman-services. Tills dess standard \"%s\" kommer att användas"
 
 #: blueman/plugins/applet/TransferService.py:303
 msgid "File received"
@@ -2506,7 +2498,7 @@ msgstr "Använder libappindicator för att visa en statusikon"
 msgid ""
 "Shows desktop notifications with battery percentage when devices get "
 "connected."
-msgstr ""
+msgstr "Visar skrivbordsaviseringar med batteriprocent när enheter ansluts."
 
 #: blueman/plugins/applet/DisconnectItems.py:14
 msgid "Adds disconnect menu items"
@@ -2761,6 +2753,9 @@ msgstr "Ange RfKill tillstånd"
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr "Ändra status för RfKill kräver privilegier"
+
+#~ msgid "Disconnecting…"
+#~ msgstr "Kopplar från…"
 
 #~ msgid "Local Services"
 #~ msgstr "Lokala tjänster"
