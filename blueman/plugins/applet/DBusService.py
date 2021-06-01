@@ -1,12 +1,13 @@
 from gettext import gettext as _
-from typing import Callable, Union
+from typing import Callable, Union, TYPE_CHECKING
 
 from _blueman import RFCOMMError
 from gi.repository import GLib
 
 from blueman.Service import Service
 from blueman.bluez.errors import BluezDBusException
-from blueman.main.NetworkManager import NMConnectionError
+if TYPE_CHECKING:
+    from blueman.main.NetworkManager import NMConnectionError
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.bluez.Device import Device
 from blueman.services.Functions import get_service
@@ -32,11 +33,11 @@ class RFCOMMConnectHandler:
 
 class ServiceConnectHandler:
     def service_connect_handler(self, service: Service, ok: Callable[[], None],
-                                err: Callable[[Union[NMConnectionError, GLib.Error]], None]) -> bool:
+                                err: Callable[[Union["NMConnectionError", GLib.Error]], None]) -> bool:
         ...
 
     def service_disconnect_handler(self, service: Service, ok: Callable[[], None],
-                                   err: Callable[[Union[NMConnectionError, GLib.Error]], None]) -> bool:
+                                   err: Callable[[Union["NMConnectionError", GLib.Error]], None]) -> bool:
         ...
 
 
@@ -55,7 +56,7 @@ class DBusService(AppletPlugin):
         self._add_dbus_method("OpenPluginDialog", (), "", self._open_plugin_dialog)
 
     def connect_service(self, object_path: str, uuid: str, ok: Callable[[], None],
-                        err: Callable[[Union[BluezDBusException, NMConnectionError,
+                        err: Callable[[Union[BluezDBusException, "NMConnectionError",
                                              RFCOMMError, GLib.Error, str]], None]) -> None:
         try:
             self.parent.Plugins.RecentConns
@@ -91,7 +92,7 @@ class DBusService(AppletPlugin):
                 err("Service not supported\nPossibly the plugin that handles this service is not loaded")
 
     def _disconnect_service(self, object_path: str, uuid: str, port: int, ok: Callable[[], None],
-                            err: Callable[[Union[BluezDBusException, NMConnectionError,
+                            err: Callable[[Union[BluezDBusException, "NMConnectionError",
                                                  GLib.Error, str]], None]) -> None:
         if uuid == '00000000-0000-0000-0000-000000000000':
             device = Device(obj_path=object_path)
