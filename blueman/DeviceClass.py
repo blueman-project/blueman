@@ -53,24 +53,24 @@ phone_minor_cls = (
     # translators: device class
     _("Modem"),
     # translators: device class
-    _("Isdn")
+    _("ISDN")
 )
 
 access_point_minor_cls = (
     # translators: device class
     _("Fully"),
     # translators: device class
-    _("1-17 percent"),
+    _("1-17 %"),
     # translators: device class
-    _("17-33 percent"),
+    _("17-33 %"),
     # translators: device class
-    _("33-50 percent"),
+    _("33-50 %"),
     # translators: device class
-    _("50-67 percent"),
+    _("50-67 %"),
     # translators: device class
-    _("67-83 percent"),
+    _("67-83 %"),
     # translators: device class
-    _("83-99 percent"),
+    _("83-99 %"),
     # translators: device class
     _("Not available")
 )
@@ -97,9 +97,9 @@ audio_video_minor_cls = (
     # translators: device class
     _("Set-top box"),
     # translators: device class
-    _("Hifi audio"),
+    _("Hi-Fi audio"),
     # translators: device class
-    _("Vcr"),
+    _("VCR"),
     # translators: device class
     _("Video camera"),
     # translators: device class
@@ -180,8 +180,8 @@ gatt_appearance_categories = {
     11: ('Barcode Scanner', {0: _("Generic Barcode Scanner")}),
     12: ('Thermometer', {0: _("Generic Thermometer"),
                          1: _("Thermometer: Ear")}),
-    13: ('Heart rate Sensor', {0: _("Generic Heart rate Sensor"),
-                               1: _("Heart Rate Sensor: Heart Rate Belt")}),
+    13: ('Heart rate Sensor', {0: _("Generic Heart-rate Sensor"),
+                               1: _("Heart-rate Sensor: Heart-rate Belt")}),
     14: ('Blood Pressure', {0: _("Generic Blood Pressure"),
                             1: _("Blood Pressure: Arm"),
                             2: _("Blood Pressure: Wrist")}),
