@@ -309,7 +309,7 @@ class NetConf:
             return NetConf.default_inst
 
         try:
-            with open("/var/lib/blueman/network.state", "rb") as f:
+            with open("/var/run/blueman/network.state", "rb") as f:
                 obj: "NetConf" = pickle.load(f)
                 if obj.version != class_id:
                     raise Exception
@@ -477,7 +477,7 @@ class NetConf:
 
     # save the instance of this class, requires root
     def store(self) -> None:
-        if not os.path.exists("/var/lib/blueman"):
-            os.mkdir("/var/lib/blueman")
-        with open("/var/lib/blueman/network.state", "wb") as f:
+        if not os.path.exists("/var/run/blueman"):
+            os.mkdir("/var/run/blueman")
+        with open("/var/run/blueman/network.state", "wb") as f:
             pickle.dump(self, f, 2)
