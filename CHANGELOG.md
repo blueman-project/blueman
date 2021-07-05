@@ -1,5 +1,11 @@
 # Changelog
 
+## master
+
+### Bugs fixed
+
+* Issues with power level bars
+
 ## 2.2.1
 
 ### Bugs fixed
