@@ -6,6 +6,12 @@
 
 * Audio profile switcher in applet menu (@abhijeetviswa)
 
+## 2.2.2
+
+### Bugs fixed
+
+* Issues with power level bars
+
 ## 2.2.1
 
 ### Bugs fixed
