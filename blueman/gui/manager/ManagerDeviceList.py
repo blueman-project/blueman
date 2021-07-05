@@ -418,13 +418,13 @@ class ManagerDeviceList(DeviceList):
             except ConnInfoReadError:
                 bars["rssi"] = 50
             try:
-                bars["lq"] = max(50 + float(cinfo.get_lq()) / 127 * 50, 10)
+                bars["lq"] = max(float(cinfo.get_lq()) / 255 * 100, 10)
             except ConnInfoReadError:
-                bars["lq"] = 50
+                bars["lq"] = 10
             try:
-                bars["tpl"] = max(float(cinfo.get_tpl()) / 255 * 100, 10)
+                bars["tpl"] = max(50 + float(cinfo.get_tpl()) / 127 * 50, 10)
             except ConnInfoReadError:
-                bars["tpl"] = 0
+                bars["tpl"] = 50
 
         if row["battery"] == row["rssi"] == row["tpl"] == row["lq"] == 0:
             self._prepare_fader(row["cell_fader"]).animate(start=0.0, end=1.0, duration=400)
