@@ -82,20 +82,6 @@ def check_bluetooth_status(message: str, exitfunc: Callable[[], Any]) -> None:
     if not applet.GetBluetoothStatus():
         print('Failed to enable bluetooth')
         exitfunc()
-        return
-
-    config = Gio.Settings(schema_id="org.blueman.plugins.powermanager")
-    if config["auto-power-on"] is None:
-        d = Gtk.MessageDialog(
-            type=Gtk.MessageType.QUESTION, icon_name="blueman",
-            text=_("Shall bluetooth get enabled automatically?"))
-        d.add_button(_("Yes"), Gtk.ResponseType.YES)
-        d.add_button(_("No"), Gtk.ResponseType.NO)
-
-        resp = d.run()
-        d.destroy()
-
-        config["auto-power-on"] = resp == Gtk.ResponseType.YES
 
 
 def launch(
