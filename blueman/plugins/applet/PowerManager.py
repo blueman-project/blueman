@@ -32,20 +32,6 @@ class PowerManager(AppletPlugin, StatusIconProvider):
     __author__ = "Walmis"
     __icon__ = "gnome-power-manager-symbolic"
 
-    __gsettings__ = {
-        "schema": "org.blueman.plugins.powermanager",
-        "path": None
-    }
-
-    __options__ = {
-        "auto-power-on": {
-            "type": bool,
-            "default": True,
-            "name": _("Auto power-on"),
-            "desc": _("Automatically power on adapters")
-        }
-    }
-
     class State(Enum):
         ON = 2
         OFF = 1
@@ -75,11 +61,7 @@ class PowerManager(AppletPlugin, StatusIconProvider):
     def on_manager_state_changed(self, state: bool) -> None:
         if state:
             def timeout() -> bool:
-                self.adapter_state = self.get_adapter_state()
-                if self.get_option("auto-power-on"):
-                    self.request_power_state(True, force=True)
-                else:
-                    self.request_power_state(self.adapter_state)
+                self.request_power_state(self.get_adapter_state())
                 return False
 
             GLib.timeout_add(1000, timeout)
