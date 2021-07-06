@@ -12,7 +12,7 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.plugins.applet.PowerManager import PowerManager, PowerStateListener
 
 if TYPE_CHECKING:
-    from blueman.plugins.applet.Menu import SubmenuItemDict
+    from blueman.plugins.applet.Menu import Menu, SubmenuItemDict
 
     from typing_extensions import TypedDict
 
@@ -55,15 +55,10 @@ class RecentConns(AppletPlugin, PowerStateListener):
         "recent-connections": {"type": list, "default": "[]"}
     }
 
-    _items = None
-
     def on_load(self) -> None:
         self.__menuitems: List["SubmenuItemDict"] = []
 
-        self._item = self.parent.Plugins.Menu.add(self, 52, text=_("Recent _Connections") + "…",
-                                                  icon_name="document-open-recent-symbolic",
-                                                  submenu_function=self.get_menu)
-        self.parent.Plugins.Menu.add(self, 53)
+        self._rebuild_menu()
 
     def on_power_state_changed(self, manager: PowerManager, state: bool) -> None:
         self._rebuild()
@@ -74,26 +69,30 @@ class RecentConns(AppletPlugin, PowerStateListener):
     def _rebuild(self) -> None:
         if 'PowerManager' in self.parent.Plugins.get_loaded() and \
                 not self.parent.Plugins.PowerManager.get_bluetooth_status():
-            self._item.set_sensitive(False)
+            for mitem in self._mitems:
+                mitem.set_sensitive(False)
             return
 
-        self._items = self._get_items()
+        items = self._get_items()
 
-        if len(self._items) == 0:
-            self._item.set_sensitive(False)
+        if len(items) == 0:
+            for mitem in self._mitems:
+                mitem.set_sensitive(False)
             return
 
-        self._item.set_sensitive(True)
+        for mitem in self._mitems:
+            mitem.set_sensitive(True)
 
-        self.__menuitems = [self._build_menu_item(item) for item in self._items[:self.get_option("max-items")]]
+        self.__menuitems = [self._build_menu_item(item) for item in items[:self.get_option("max-items")]]
 
-        self.parent.Plugins.Menu.on_menu_changed()
+        self._rebuild_menu()
 
     def on_manager_state_changed(self, state: bool) -> None:
         if state:
             self._rebuild()
         else:
-            self._item.set_sensitive(False)
+            for mitem in self._mitems:
+                mitem.set_sensitive(False)
 
     def on_device_created(self, path: str) -> None:
         self._rebuild()
@@ -181,8 +180,15 @@ class RecentConns(AppletPlugin, PowerStateListener):
 
         return mitem
 
-    def get_menu(self) -> List["SubmenuItemDict"]:
-        return self.__menuitems
+    def _rebuild_menu(self) -> None:
+        menu: "Menu" = self.parent.Plugins.Menu
+        self._mitems = []
+        menu.unregister(self)
+        menu.add(self, 52, text=_("Recent _Connections"), icon_name="document-open-recent-symbolic",
+                 sensitive=False, callback=lambda: None)
+        for (idx, item) in enumerate(self.__menuitems):
+            self._mitems.append(menu.add(self, (53, idx), **item))
+        menu.add(self, 59)
 
     def _get_device_path(self, adapter_path: str, address: str) -> Optional[str]:
         try:
