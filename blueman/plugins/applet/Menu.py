@@ -25,8 +25,8 @@ if TYPE_CHECKING:
 
 
 class MenuItem:
-    def __init__(self, menu_plugin: "Menu", owner: AppletPlugin, priority: int, text: Optional[str], markup: bool,
-                 icon_name: Optional[str], tooltip: Optional[str], callback: Optional[Callable[[], None]],
+    def __init__(self, menu_plugin: "Menu", owner: AppletPlugin, priority: Tuple[int, int], text: Optional[str],
+                 markup: bool, icon_name: Optional[str], tooltip: Optional[str], callback: Optional[Callable[[], None]],
                  submenu_function: Optional[Callable[[], Iterable["SubmenuItemDict"]]], visible: bool, sensitive: bool):
         self._menu_plugin = menu_plugin
         self._owner = owner
@@ -48,7 +48,7 @@ class MenuItem:
         return self._owner
 
     @property
-    def priority(self) -> int:
+    def priority(self) -> Tuple[int, int]:
         return self._priority
 
     @property
@@ -66,7 +66,7 @@ class MenuItem:
                 yield key, value
 
     def __iter__(self) -> Iterator[Tuple[str, Union[int, str, bool, List[Dict[str, Union[str, bool]]]]]]:
-        yield "id", self.priority
+        yield "id", (self._priority[0] << 8) + self._priority[1]
         yield from self._iter_base()
         submenu = self.submenu_items
         if submenu:
@@ -79,7 +79,7 @@ class MenuItem:
         submenu_items = self._submenu_function()
         if not submenu_items:
             return []
-        return [SubmenuItem(self._menu_plugin, self._owner, 0, item.get('text'), item.get('markup', False),
+        return [SubmenuItem(self._menu_plugin, self._owner, (0, 0), item.get('text'), item.get('markup', False),
                             item.get('icon_name'), item.get('tooltip'), item.get('callback'), None, True,
                             item.get('sensitive', True))
                 for item in submenu_items]
@@ -118,17 +118,21 @@ class Menu(AppletPlugin):
     __unloadable__ = False
 
     def on_load(self) -> None:
-        self.__menuitems: Dict[int, MenuItem] = {}
+        self.__menuitems: Dict[Tuple[int, int], MenuItem] = {}
 
         self._add_dbus_signal("MenuChanged", "aa{sv}")
         self._add_dbus_method("GetMenu", (), "aa{sv}", self._get_menu)
         self._add_dbus_method("ActivateMenuItem", ("ai",), "", self._activate_menu_item)
 
-    def add(self, owner: AppletPlugin, priority: int, text: Optional[str] = None, markup: bool = False,
-            icon_name: Optional[str] = None, tooltip: Optional[str] = None,
+    def add(self, owner: AppletPlugin, priority: Union[int, Tuple[int, int]], text: Optional[str] = None,
+            markup: bool = False, icon_name: Optional[str] = None, tooltip: Optional[str] = None,
             callback: Optional[Callable[[], None]] = None,
             submenu_function: Optional[Callable[[], Iterable["SubmenuItemDict"]]] = None,
             visible: bool = True, sensitive: bool = True) -> MenuItem:
+
+        if isinstance(priority, int):
+            priority = (priority, 0)
+
         item = MenuItem(self, owner, priority, text, markup, icon_name, tooltip, callback, submenu_function, visible,
                         sensitive)
         self.__menuitems[item.priority] = item
@@ -164,7 +168,7 @@ class Menu(AppletPlugin):
         return GLib.Variant("aa{sv}", self._prepare_menu(value))
 
     def _activate_menu_item(self, indexes: Sequence[int]) -> None:
-        node = self.__menuitems[indexes[0]]
+        node = self.__menuitems[(indexes[0] >> 8, indexes[0] % (1 << 8))]
         for index in list(indexes)[1:]:
             node = node.submenu_items[index]
         if node.callback:

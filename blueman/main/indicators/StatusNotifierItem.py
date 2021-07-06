@@ -43,16 +43,17 @@ class MenuService(DbusService):
     def _get_layout(self, parent_id: int, _recursion_depth: int, _property_names: List[str]
                     ) -> Tuple[int, Tuple[int, Dict[str, GLib.Variant], List[GLib.Variant]]]:
         if parent_id == 0:
-            return self._revision, (0, {}, self._render_menu(self._items.items(), self._render_submenu))
+            return self._revision, (0, {}, self._render_menu(((item["id"] << 8, item) for item in self._items.values()),
+                                                             self._render_submenu))
         else:
-            item = self._items[parent_id]
+            item = self._items[parent_id >> 8]
             if "submenu" in item and _recursion_depth != 0:
                 return self._revision, (parent_id, self._render_item(item), self._render_submenu(item, parent_id))
             return self._revision, (parent_id, self._render_item(item), [])
 
     def _render_submenu(self, item: "MenuItemDict", idx: int) -> List[GLib.Variant]:
         if "submenu" in item:
-            return self._render_menu(enumerate(item["submenu"], idx * 100 + 1), lambda _item, _isx: [])
+            return self._render_menu(enumerate(item["submenu"], idx + 1), lambda _item, _isx: [])
         else:
             return []
 
@@ -65,9 +66,9 @@ class MenuService(DbusService):
 
     def _iterate_items(self) -> Iterable[Tuple[int, "SubmenuItemDict"]]:
         for item in self._items.values():
-            yield item["id"], item
+            yield item["id"] << 8, item
             if "submenu" in item:
-                yield from enumerate(item["submenu"], item["id"] * 100 + 1)
+                yield from enumerate(item["submenu"], (item["id"] << 8) + 1)
 
     def _render_item(self, item: Union["MenuItemDict", "SubmenuItemDict"]) -> Dict[str, GLib.Variant]:
         if "text" in item and "icon_name" in item:
@@ -85,10 +86,10 @@ class MenuService(DbusService):
 
     def _on_event(self, idx: int, event_id: str, _data: GLib.Variant, _timestamp: int) -> None:
         if event_id == "clicked":
-            if idx < 100:
-                self._on_activate(idx)
+            if idx % (1 << 8) == 0:
+                self._on_activate(idx >> 8)
             else:
-                self._on_activate(int(idx / 100), idx % 100 - 1)
+                self._on_activate(idx >> 8, idx % (1 << 8) - 1)
 
 
 class StatusNotifierItemService(DbusService):

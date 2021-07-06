@@ -11,6 +11,7 @@
 * Drop auto-power feature. BlueZ now has the AutoEnable setting for even better auto-powering.
 * Do not use pointless link quality value
 * Do not re-use dbusmenu item identifiers; avoids issues at least with gnome-shell-extension-appindicator.
+* Recent connections in toplevel applet menu
 
 ### Bugs fixed
 
