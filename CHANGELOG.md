@@ -6,6 +6,7 @@
 
 * Raise minimum Python version to 3.8
 * Hide recent connections associated with unavailable adapters
+* Store network configuration in GSettings instead of /var/lib/blueman/network.state.
 
 ## 2.3
 

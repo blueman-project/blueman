@@ -7,7 +7,6 @@ from typing import List, Tuple, cast, Union, TYPE_CHECKING
 from blueman.Functions import have, get_local_interfaces
 from blueman.main.Builder import Builder
 from blueman.plugins.ServicePlugin import ServicePlugin
-from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler, UdhcpdHandler
 from blueman.main.Config import Config
 from blueman.main.DBusProxies import Mechanism
 from blueman.main.DBusProxies import AppletService
@@ -70,10 +69,13 @@ class Network(ServicePlugin):
                 net_ip = self._builder.get_widget("net_ip", Gtk.Entry)
 
                 try:
-                    m.EnableNetwork('(sss)', net_ip.props.text, "255.255.255.0", stype)
+                    changed = net_ip.props.text != self.Config["ip4-address"]
+                    m.EnableNetwork('(sssb)', net_ip.props.text, "255.255.255.0", stype, changed)
 
                     if not self.Config["nap-enable"]:
                         self.Config["nap-enable"] = True
+                    self.Config["ip4-address"] = net_ip.props.text
+                    self.Config["dhcp-handler"] = stype
                 except Exception as e:
                     parent = self.widget.get_toplevel()
                     assert isinstance(parent, Gtk.Container)
@@ -148,15 +150,13 @@ class Network(ServicePlugin):
         if not self.Config["nap-enable"]:
             nap_frame.props.sensitive = False
 
-        nc = NetConf.get_default()
-        if nc.ip4_address is not None:
-            # previously we stored a bytearray, ipaddress module reads both
-            net_ip.props.text = str(ipaddress.ip_address(nc.ip4_address))
+        if self.Config["ip4-address"] is not None:
+            net_ip.props.text = self.Config["ip4-address"]
             nap_enable.props.active = True
         else:
             net_ip.props.text = "10.%d.%d.1" % (randint(0, 255), randint(0, 255))
 
-        if nc.get_dhcp_handler() is None:
+        if self.Config["dhcp-handler"] is None:
             nap_frame.props.sensitive = False
             nap_enable.props.active = False
             r_dnsmasq.props.active = True
@@ -166,11 +166,11 @@ class Network(ServicePlugin):
         have_dnsmasq = have("dnsmasq")
         have_udhcpd = have("udhcpd")
 
-        if nc.get_dhcp_handler() == DnsMasqHandler and have_dnsmasq:
+        if self.Config["dhcp-handler"] == "DnsMasqHandler" and have_dnsmasq:
             r_dnsmasq.props.active = True
-        elif nc.get_dhcp_handler() == DhcpdHandler and have_dhcpd:
+        elif self.Config["dhcp-handler"] == "DhcpdHandler" and have_dhcpd:
             r_dhcpd.props.active = True
-        elif nc.get_dhcp_handler() == UdhcpdHandler and have_udhcpd:
+        elif self.Config["dhcp-handler"] == "UdhcpdHandler" and have_udhcpd:
             r_udhcpd.props.active = True
         else:
             r_dnsmasq.props.active = True
