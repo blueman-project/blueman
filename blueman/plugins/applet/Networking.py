@@ -17,22 +17,21 @@ class Networking(AppletPlugin):
     __description__ = _("Manages local network services, like NAP bridges")
     __author__ = "Walmis"
 
-    _signal = None
-
     def on_load(self) -> None:
         self._registered: Dict[str, bool] = {}
 
         self.Config = Config("org.blueman.network")
         self.Config.connect("changed", self.on_config_changed)
 
-        self.load_nap_settings()
+        self._apply_nap_settings()
 
     def on_manager_state_changed(self, state: bool) -> None:
         if state:
             self.update_status()
 
-    def load_nap_settings(self) -> None:
-        logging.info("Loading NAP settings")
+    def _apply_nap_settings(self) -> None:
+        if not self.Config["nap-enable"] or self.Config["ip4-address"] is None:
+            return
 
         def reply(_obj: Mechanism, _result: None, _user_data: None) -> None:
             pass
@@ -47,7 +46,8 @@ class Networking(AppletPlugin):
             d.destroy()
 
         m = Mechanism()
-        m.ReloadNetwork(result_handler=reply, error_handler=err)
+        m.EnableNetwork('(sssb)', self.Config["ip4-address"], self.Config["ip4-netmask"], self.Config["dhcp-handler"],
+                        False, result_handler=reply, error_handler=err)
 
     def on_unload(self) -> None:
         for adapter_path in self._registered:

@@ -138,6 +138,18 @@
       <summary></summary>
       <description></description>
     </key>
+    <key type="ms" name="ip4-address">
+      <default>nothing</default>
+      <summary>NAP IPv4 address</summary>
+    </key>
+    <key type="s" name="ip4-netmask">
+      <default>"255.255.255.0"</default>
+      <summary>NAP IPv4 netmask</summary>
+    </key>
+    <key type="ms" name="dhcp-handler">
+      <default>nothing</default>
+      <summary>DHCP handler</summary>
+    </key>
   </schema>
   <schema id="org.blueman.plugins.autoconnect" path="/org/blueman/plugins/autoconnect/">
     <key type="a(ss)" name="services">

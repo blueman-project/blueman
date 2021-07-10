@@ -17,8 +17,7 @@ DHCPDHANDLERS: Dict[str, Type["DHCPHandler"]] = {
 class Network(MechanismPlugin):
     def on_load(self) -> None:
         self.parent.add_method("DhcpClient", ("s",), "s", self._run_dhcp_client, pass_sender=True, is_async=True)
-        self.parent.add_method("EnableNetwork", ("s", "s", "s"), "", self._enable_network, pass_sender=True)
-        self.parent.add_method("ReloadNetwork", (), "", self._reload_network, pass_sender=True)
+        self.parent.add_method("EnableNetwork", ("s", "s", "s", "b"), "", self._enable_network, pass_sender=True)
         self.parent.add_method("DisableNetwork", (), "", self._disable_network, pass_sender=True)
 
     def _run_dhcp_client(self, object_path: str, caller: str, ok: Callable[[str], None],
@@ -45,26 +44,11 @@ class Network(MechanismPlugin):
         except Exception as e:
             err(e)
 
-    def _enable_network(self, ip_address: str, netmask: str, dhcp_handler: str, caller: str) -> None:
+    def _enable_network(self, ip_address: str, netmask: str, dhcp_handler: str, address_changed: bool,
+                        caller: str) -> None:
         self.confirm_authorization(caller, "org.blueman.network.setup")
-        nc = NetConf.get_default()
-        nc.set_ipv4(ip_address, netmask)
-        nc.set_dhcp_handler(DHCPDHANDLERS[dhcp_handler])
-        nc.apply_settings()
-
-    def _reload_network(self, caller: str) -> None:
-        nc = NetConf.get_default()
-        if nc.ip4_address is None or nc.ip4_mask is None:
-            nc.ip4_changed = False
-            nc.store()
-            return
-
-        self.confirm_authorization(caller, "org.blueman.network.setup")
-        nc.apply_settings()
+        NetConf.apply_settings(ip_address, netmask, DHCPDHANDLERS[dhcp_handler], address_changed)
 
     def _disable_network(self, caller: str) -> None:
         self.confirm_authorization(caller, "org.blueman.network.setup")
-        nc = NetConf.get_default()
-        nc.remove_settings()
-        nc.set_ipv4(None, None)
-        nc.store()
+        NetConf.clean_up()

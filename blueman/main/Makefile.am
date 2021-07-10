@@ -10,6 +10,7 @@ blueman_PYTHON = \
 	NetConf.py \
 	SpeedCalc.py \
 	DbusService.py \
+	DNSServerProvider.py \
 	PluginManager.py \
 	Adapter.py \
 	Applet.py \
