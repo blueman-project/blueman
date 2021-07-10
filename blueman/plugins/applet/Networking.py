@@ -1,11 +1,12 @@
 from gettext import gettext as _
-from typing import Dict
+from typing import Dict, Optional
 
 from gi.repository import GLib
 from gi.repository import Gio
 
 from blueman.bluez.NetworkServer import NetworkServer
 from blueman.main.DBusProxies import Mechanism
+from blueman.main.DNSServerProvider import DNSServerProvider
 
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.CommonUi import ErrorDialog
@@ -17,6 +18,8 @@ class Networking(AppletPlugin):
     __description__ = _("Manages local network services, like NAP bridges")
     __author__ = "Walmis"
 
+    _dns_server_provider: Optional[DNSServerProvider] = None
+
     def on_load(self) -> None:
         self._registered: Dict[str, bool] = {}
 
@@ -24,6 +27,9 @@ class Networking(AppletPlugin):
         self.Config.connect("changed", self.on_config_changed)
 
         self._apply_nap_settings()
+
+        self._dns_server_provider = DNSServerProvider()
+        self._dns_server_provider.connect("changed", lambda _provider: self._apply_nap_settings())
 
     def on_manager_state_changed(self, state: bool) -> None:
         if state:
@@ -56,6 +62,7 @@ class Networking(AppletPlugin):
 
         self._registered = {}
         del self.Config
+        del self._dns_server_provider
 
     def on_adapter_added(self, path: str) -> None:
         self.update_status()
