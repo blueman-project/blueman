@@ -30,6 +30,7 @@ class TestDnsmasqHandler(TestCase):
     @patch("blueman.main.NetConf.Popen", return_value=Popen("true"))
     @patch("blueman.main.NetConf.NetConf.lock")
     @patch("blueman.main.NetConf.socket.socket", lambda *args: FakeSocket(1))
+    @patch("blueman.main.NetConf.DNSServerProvider.get_servers", lambda: [])
     def test_success_with_dns(self, lock_mock: Mock, popen_mock: Mock, have_mock: Mock) -> None:
         with open("/tmp/pid", "w") as f:
             f.write("123")
@@ -50,6 +51,7 @@ class TestDnsmasqHandler(TestCase):
 
     @patch("blueman.main.NetConf.Popen", return_value=Popen(["sh", "-c", "echo errormsg >&2"], stderr=subprocess.PIPE))
     @patch("blueman.main.NetConf.socket.socket", lambda *args: FakeSocket(1))
+    @patch("blueman.main.NetConf.DNSServerProvider.get_servers", lambda: [])
     def test_failure(self, popen_mock: Mock, have_mock: Mock) -> None:
         with self.assertRaises(NetworkSetupError) as cm:
             DnsMasqHandler().apply("203.0.113.1", "255.255.255.0")
@@ -69,6 +71,7 @@ class TestDnsmasqHandler(TestCase):
 @patch("blueman.main.NetConf.have", return_value="/usr/bin/mydhcpd")
 @patch("blueman.main.NetConf.DhcpdHandler._pid_path", PropertyMock(return_value="/tmp/pid"))
 @patch("blueman.main.NetConf.DHCP_CONFIG_FILE", "/tmp/dhcpd.conf")
+@patch("blueman.main.NetConf.DNSServerProvider.get_servers", lambda: [])
 class TestDhcpdHandler(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -106,6 +109,7 @@ class TestDhcpdHandler(TestCase):
 
 @patch("blueman.main.NetConf.have", return_value="/usr/bin/myudhcpd")
 @patch("blueman.main.NetConf.UdhcpdHandler._pid_path", PropertyMock(return_value="/tmp/pid"))
+@patch("blueman.main.NetConf.DNSServerProvider.get_servers", lambda: [])
 class TestUdhcpdHandler(TestCase):
     @classmethod
     def setUpClass(cls) -> None:

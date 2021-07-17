@@ -18,6 +18,11 @@
 * [net-tools](http://net-tools.sourceforge.net/) for blueman 2.0 and net-tools __or__ [iproute2](https://wiki.linuxfoundation.org/networking/iproute2) for blueman 2.1
 * [libnm](https://wiki.gnome.org/Projects/NetworkManager) For managing DUN and PANU connection (GI bindings)
 
+## Additional test dependencies
+
+* [python-dbusmock](https://github.com/martinpitt/python-dbusmock)
+* [dbus-python](http://www.freedesktop.org/wiki/Software/DBusBindings/#python)
+
 ## Build dependencies
 
 * [BlueZ 5](http://www.bluez.org/)
