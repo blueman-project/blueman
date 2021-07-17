@@ -1,6 +1,7 @@
 import errno
 import os
 import ipaddress
+import socket
 from tempfile import mkstemp
 from time import sleep
 import logging
@@ -62,7 +63,9 @@ class DHCPHandler:
         return f"/var/run/{self._key}.pan1.pid"
 
     def apply(self, ip4_address: str, ip4_mask: str) -> None:
-        error = self._start(_get_binary(*self._BINARIES), ip4_address, ip4_mask)
+        error = self._start(_get_binary(*self._BINARIES), ip4_address, ip4_mask,
+                            [ip4_address if addr.is_loopback else str(addr)
+                             for addr in DNSServerProvider.get_servers()])
         if error is None:
             logging.info(f"{self._key} started correctly")
             with open(self._pid_path) as f:
@@ -74,7 +77,7 @@ class DHCPHandler:
             logging.info(error_msg)
             raise NetworkSetupError(f"{self._key} failed to start: {error_msg}")
 
-    def _start(self, binary: str, ip4_address: str, ip4_mask: str) -> Optional[bytes]:
+    def _start(self, binary: str, ip4_address: str, ip4_mask: str, dns_servers: List[str]) -> Optional[bytes]:
         ...
 
     def clean_up(self) -> None:
@@ -106,12 +109,16 @@ class DHCPHandler:
 class DnsMasqHandler(DHCPHandler):
     _BINARIES = ["dnsmasq"]
 
-    def _start(self, binary: str, ip4_address: str, ip4_mask: str) -> Optional[bytes]:
+    def _start(self, binary: str, ip4_address: str, ip4_mask: str, dns_servers: List[str]) -> Optional[bytes]:
         ipiface = ipaddress.ip_interface('/'.join((ip4_address, ip4_mask)))
-        cmd = [binary, "--port=0", f"--pid-file={self._pid_path}", "--except-interface=lo",
+        cmd = [binary, f"--pid-file={self._pid_path}", "--except-interface=lo",
                "--interface=pan1", "--bind-interfaces",
                f"--dhcp-range={ipiface.network[2]},{ipiface.network[-2]},60m",
                f"--dhcp-option=option:router,{ip4_address}"]
+
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            if s.connect_ex(("localhost", 53)) == 0:
+                cmd += ["--port=0", f"--dhcp-option=option:dns-server,{', '.join(dns_servers)}"]
 
         logging.info(cmd)
         p = Popen(cmd, stderr=PIPE)
@@ -162,20 +169,20 @@ class DhcpdHandler(DHCPHandler):
         return dhcp_config, existing_subnet
 
     @staticmethod
-    def _generate_subnet_config(ip4_address: str, ip4_mask: str) -> str:
+    def _generate_subnet_config(ip4_address: str, ip4_mask: str, dns_servers: List[str]) -> str:
         ipiface = ipaddress.ip_interface('/'.join((ip4_address, ip4_mask)))
 
         return DHCPDSUBNET % {"ip_mask": ipiface.network.network_address,
                               "netmask": ipiface.netmask,
-                              "dns": ', '.join(str(addr) for addr in DNSServerProvider.get_servers()),
+                              "dns": ', '.join(dns_servers),
                               "rtr": ipiface.ip,
                               "start": ipiface.network[2],
                               "end": ipiface.network[-2]}
 
-    def _start(self, binary: str, ip4_address: str, ip4_mask: str) -> Optional[bytes]:
+    def _start(self, binary: str, ip4_address: str, ip4_mask: str, dns_servers: List[str]) -> Optional[bytes]:
         dhcp_config, existing_subnet = self._read_dhcp_config()
 
-        subnet = self._generate_subnet_config(ip4_address, ip4_mask)
+        subnet = self._generate_subnet_config(ip4_address, ip4_mask, dns_servers)
 
         with open(DHCP_CONFIG_FILE, "w") as f:
             f.write(dhcp_config)
@@ -207,20 +214,20 @@ option router %(rtr)s
 class UdhcpdHandler(DHCPHandler):
     _BINARIES = ["udhcpd"]
 
-    def _generate_config(self, ip4_address: str, ip4_mask: str) -> str:
+    def _generate_config(self, ip4_address: str, ip4_mask: str, dns_servers: List[str]) -> str:
         ipiface = ipaddress.ip_interface('/'.join((ip4_address, ip4_mask)))
 
         return UDHCP_CONF_TEMPLATE % {"ip_mask": ipiface.network.network_address,
-                                      "dns": ', '.join(str(addr) for addr in DNSServerProvider.get_servers()),
+                                      "dns": ', '.join(dns_servers),
                                       "rtr": ipiface.ip,
                                       "start": ipiface.network[2],
                                       "end": ipiface.network[-2],
                                       "pid_path": self._pid_path}
 
-    def _start(self, binary: str, ip4_address: str, ip4_mask: str) -> Optional[bytes]:
+    def _start(self, binary: str, ip4_address: str, ip4_mask: str, dns_servers: List[str]) -> Optional[bytes]:
         config_file, self._config_path = mkstemp(prefix="udhcpd-")
-        os.write(config_file, self._generate_config(ip4_address, ip4_mask).encode('UTF-8'))
-        os.close(config_file)
+        with open(config_file, "w", encoding="utf8") as f:
+            f.write(self._generate_config(ip4_address, ip4_mask, dns_servers))
 
         logging.info(f"Running udhcpd with config file {self._config_path}")
         cmd = [binary, "-S", self._config_path]
