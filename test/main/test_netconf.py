@@ -1,11 +1,27 @@
 import os.path
 import shutil
 import subprocess
+from ipaddress import IPv4Address
 from subprocess import Popen
+from typing import Optional, List
 from unittest import TestCase
 from unittest.mock import patch, Mock, PropertyMock
 
 from blueman.main.NetConf import DnsMasqHandler, NetworkSetupError, DhcpdHandler, UdhcpdHandler, NetConf, DHCPHandler
+
+
+class FakeSocket:
+    def __init__(self, connect_return_value: int) -> None:
+        self._ret = connect_return_value
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        pass
+
+    def connect_ex(self, *_args: object) -> int:
+        return self._ret
 
 
 @patch("blueman.main.NetConf.have", return_value="/usr/bin/mydnsmasq")
@@ -13,26 +29,39 @@ from blueman.main.NetConf import DnsMasqHandler, NetworkSetupError, DhcpdHandler
 class TestDnsmasqHandler(TestCase):
     @patch("blueman.main.NetConf.Popen", return_value=Popen("true"))
     @patch("blueman.main.NetConf.NetConf.lock")
-    def test_success(self, lock_mock: Mock, popen_mock: Mock, have_mock: Mock) -> None:
+    @patch("blueman.main.NetConf.socket.socket", lambda *args: FakeSocket(1))
+    def test_success_with_dns(self, lock_mock: Mock, popen_mock: Mock, have_mock: Mock) -> None:
         with open("/tmp/pid", "w") as f:
             f.write("123")
         DnsMasqHandler().apply("203.0.113.1", "255.255.255.0")
         self._check_invocation(have_mock, popen_mock)
         lock_mock.assert_called_with("dhcp")
 
+    @patch("blueman.main.NetConf.Popen", return_value=Popen("true"))
+    @patch("blueman.main.NetConf.NetConf.lock")
+    @patch("blueman.main.NetConf.socket.socket", lambda *args: FakeSocket(0))
+    @patch("blueman.main.NetConf.DNSServerProvider.get_servers", lambda: [IPv4Address("203.0.113.10")])
+    def test_success_without_dns(self, lock_mock: Mock, popen_mock: Mock, have_mock: Mock) -> None:
+        with open("/tmp/pid", "w") as f:
+            f.write("123")
+        DnsMasqHandler().apply("203.0.113.1", "255.255.255.0")
+        self._check_invocation(have_mock, popen_mock, ["--port=0", "--dhcp-option=option:dns-server,203.0.113.10"])
+        lock_mock.assert_called_with("dhcp")
+
     @patch("blueman.main.NetConf.Popen", return_value=Popen(["sh", "-c", "echo errormsg >&2"], stderr=subprocess.PIPE))
+    @patch("blueman.main.NetConf.socket.socket", lambda *args: FakeSocket(1))
     def test_failure(self, popen_mock: Mock, have_mock: Mock) -> None:
         with self.assertRaises(NetworkSetupError) as cm:
             DnsMasqHandler().apply("203.0.113.1", "255.255.255.0")
         self._check_invocation(have_mock, popen_mock)
         self.assertEqual(cm.exception.args, ("dnsmasq failed to start: errormsg",))
 
-    def _check_invocation(self, have_mock: Mock, popen_mock: Mock) -> None:
+    def _check_invocation(self, have_mock: Mock, popen_mock: Mock, additional_args: Optional[List[str]] = None) -> None:
         have_mock.assert_called_with("dnsmasq")
         popen_mock.assert_called_with(
-            ["/usr/bin/mydnsmasq", "--port=0", "--pid-file=/tmp/pid", "--except-interface=lo",
+            ["/usr/bin/mydnsmasq", "--pid-file=/tmp/pid", "--except-interface=lo",
              "--interface=pan1", "--bind-interfaces", "--dhcp-range=203.0.113.2,203.0.113.254,60m",
-             "--dhcp-option=option:router,203.0.113.1"],
+             "--dhcp-option=option:router,203.0.113.1"] + ([] if additional_args is None else additional_args),
             stderr=subprocess.PIPE
         )
 
