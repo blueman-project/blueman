@@ -1,5 +1,11 @@
 # Changelog
 
+## master
+
+### Bugs fixed
+
+* Error message in blueman-mechanism
+
 ## 2.2.1
 
 ### Bugs fixed
