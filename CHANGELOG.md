@@ -5,6 +5,7 @@
 ### Bugs fixed
 
 * Issues with power level bars
+* Error message in blueman-mechanism
 
 ## 2.2.1
 
