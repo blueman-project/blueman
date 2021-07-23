@@ -10,9 +10,6 @@ if TYPE_CHECKING:
     from blueman.main.Applet import BluemanApplet
 
 
-ictheme = Gtk.IconTheme.get_default()
-
-
 class AppletPlugin(BasePlugin):
     __icon__ = "blueman-plugin"
 
@@ -20,7 +17,7 @@ class AppletPlugin(BasePlugin):
         super().__init__()
         self.parent = parent
 
-        if not ictheme.has_icon(self.__class__.__icon__):
+        if not Gtk.IconTheme.get_default().has_icon(self.__class__.__icon__):
             self.__class__.__icon__ = "blueman-plugin"
 
         self._dbus_service = parent.DbusSvc
