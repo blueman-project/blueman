@@ -9,21 +9,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2021-04-17 10:04+0200\n"
-"PO-Revision-Date: 2020-04-12 09:11+0000\n"
-"Last-Translator: Sergi Almacellas Abellana <sergi@koolpi.com>\n"
-"Language-Team: Catalan <https://hosted.weblate.org/projects/blueman/blueman/"
-"ca/>\n"
+"POT-Creation-Date: 2021-08-06 23:06+0200\n"
+"PO-Revision-Date: 2021-06-12 01:34+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"Language-Team: Catalan <https://hosted.weblate.org/projects/blueman/2-2/ca/"
+">\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.0-dev\n"
+"X-Generator: Weblate 4.7-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
-msgstr "<b>Ajusts de visibilitat</b>"
+msgstr "<b>Paràmetre de visibilitat</b>"
 
 #: data/ui/adapters-tab.ui:39 blueman/main/Adapter.py:145
 msgid "Hidden"
@@ -154,7 +154,7 @@ msgstr "udhcpd"
 
 #: data/ui/services-network.ui:218
 msgid "<b>NAP Settings</b>"
-msgstr "<b>Ajusts de NAP</b>"
+msgstr "<b>Paràmetres de NAP</b>"
 
 #: data/ui/services-network.ui:282
 msgid "<b>PAN Support</b>"
@@ -166,7 +166,7 @@ msgstr "<b>Compatibilitat amb DUN</b>"
 
 #: data/ui/services-network.ui:391
 msgid "<b>Network Settings</b>"
-msgstr "<b>Ajusts de Xarxa</b>"
+msgstr "<b>Paràmetres de xarxa</b>"
 
 #: data/ui/services-transfer.ui:24
 msgid "<b>File Receiving (Object Push)</b>"
@@ -186,7 +186,7 @@ msgstr "Accepta fitxers dels dispositius de confiança"
 
 #: data/ui/services-transfer.ui:96
 msgid "<b>Transfer Settings</b>"
-msgstr "<b>Ajusts de transferència</b>"
+msgstr "<b>Paràmetres de transferència</b>"
 
 #: data/ui/send-dialog.ui:32
 msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
@@ -243,7 +243,7 @@ msgstr "<b>Conflicte amb:</b>"
 
 #: data/ui/gsm-settings.ui:34
 msgid "<b>GSM settings</b>"
-msgstr "<b>Ajusts GSM</b>"
+msgstr "<b>Paràmetres de GSM</b>"
 
 #: data/ui/gsm-settings.ui:55
 msgid "Number:"
@@ -302,13 +302,11 @@ msgid "Always"
 msgstr "Sempre"
 
 #: blueman/main/Adapter.py:147 blueman/main/Sendto.py:189
-#, fuzzy, python-format
-#| msgid "%d Minute"
-#| msgid_plural "%d Minutes"
+#, python-format
 msgid "%(minutes)d Minute"
 msgid_plural "%(minutes)d Minutes"
-msgstr[0] "%d minut"
-msgstr[1] "%d minuts"
+msgstr[0] "%(minutes)d minut"
+msgstr[1] "%(minutes)d minuts"
 
 #: blueman/main/Adapter.py:212
 msgid "Adapter"
@@ -508,10 +506,8 @@ msgid "Show _Statusbar"
 msgstr "Mo_stra la barra d'estat"
 
 #: blueman/gui/manager/ManagerMenu.py:78
-#, fuzzy
-#| msgid "Rename device"
 msgid "Hide _unnamed devices"
-msgstr "Reanomena el dispositiu"
+msgstr "Amaga els dispositius _sense nom"
 
 #: blueman/gui/manager/ManagerMenu.py:88
 msgid "S_ort By"
@@ -549,26 +545,20 @@ msgid "_Search"
 msgstr "_Cerca"
 
 #: blueman/gui/manager/ManagerMenu.py:155
-#, fuzzy
-#| msgid "Adapter Preferences"
 msgid "_Preferences"
-msgstr "Preferències de l'adaptador"
+msgstr "_Preferències"
 
 #: blueman/gui/manager/ManagerMenu.py:164 blueman/plugins/applet/ExitItem.py:12
-#, fuzzy
-#| msgid "Exit"
 msgid "_Exit"
-msgstr "Surt"
+msgstr "_Surt"
 
 #. translators: device class
 #: blueman/gui/manager/ManagerDeviceList.py:276
 #: blueman/gui/manager/ManagerDeviceList.py:301 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
-#, fuzzy
-#| msgid "uncategorized"
 msgid "Uncategorized"
-msgstr "Sense classificar"
+msgstr "Sense categoritzar"
 
 #: blueman/gui/manager/ManagerDeviceList.py:479
 msgid "<b>Trusted and Paired</b>"
@@ -623,12 +613,12 @@ msgstr ""
 #: blueman/gui/manager/ManagerDeviceList.py:536
 #, python-format
 msgid "<b>Link Quality: %(lq)u%%</b>"
-msgstr ""
+msgstr "<b>Qualitat de l’enllaç: %(lq)u%%</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:538
 #, python-format
 msgid "Link Quality: %(lq)u%%"
-msgstr ""
+msgstr "Qualitat de l’enllaç: %(lq)u%%"
 
 #: blueman/gui/manager/ManagerDeviceList.py:542
 msgid "Low"
@@ -685,10 +675,8 @@ msgid "Device did not respond"
 msgstr "Mostra la informació del dispositiu"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:213
-#, fuzzy
-#| msgid "Temporarily visible"
 msgid "Resource temporarily unavailable"
-msgstr "Temporalment visible"
+msgstr "El recurs temporalment no està disponible"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:218
 msgid "Connection Failed: "
@@ -723,10 +711,8 @@ msgid "<b>Disconnect:</b>"
 msgstr "<b>Desconnecta:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:322
-#, fuzzy
-#| msgid "<b>Disconnect:</b>"
 msgid "<b>Auto-connect:</b>"
-msgstr "<b>Desconnecta:</b>"
+msgstr "<b>Connexió automàtica:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:341
 #, fuzzy
@@ -796,7 +782,7 @@ msgstr "Blueman és un gestor de Bluetooth GTK+"
 
 #: blueman/gui/GsmSettings.py:24
 msgid "GSM Settings"
-msgstr "Ajusts GSM"
+msgstr "Paràmetres de GSM"
 
 #: blueman/gui/applet/PluginDialog.py:95
 #: blueman/plugins/applet/StandardItems.py:88
@@ -847,12 +833,12 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:8
 msgid "Computer"
-msgstr ""
+msgstr "Ordinador"
 
 #. translators: device class
 #: blueman/DeviceClass.py:10
 msgid "Phone"
-msgstr ""
+msgstr "Telèfon"
 
 #. translators: device class
 #: blueman/DeviceClass.py:12
@@ -869,7 +855,7 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:16
 msgid "Peripheral"
-msgstr ""
+msgstr "Perifèric"
 
 #. translators: device class
 #: blueman/DeviceClass.py:18 blueman/DeviceClass.py:276
@@ -884,7 +870,7 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:22
 msgid "Toy"
-msgstr ""
+msgstr "Joguina"
 
 #. translators: device class
 #: blueman/DeviceClass.py:31
@@ -935,17 +921,13 @@ msgstr "sense fil"
 
 #. translators: device class
 #: blueman/DeviceClass.py:52
-#, fuzzy
-#| msgid "smart phone"
 msgid "Smart phone"
-msgstr "telèfon intel·ligent"
+msgstr "Telèfon intel·ligent"
 
 #. translators: device class
 #: blueman/DeviceClass.py:54
-#, fuzzy
-#| msgid "modem"
 msgid "Modem"
-msgstr "mòdem"
+msgstr "Mòdem"
 
 #. translators: device class
 #: blueman/DeviceClass.py:56
@@ -989,10 +971,8 @@ msgstr ""
 
 #. translators: device class
 #: blueman/DeviceClass.py:75
-#, fuzzy
-#| msgid "obexd not available"
 msgid "Not available"
-msgstr "obexd no està disponible"
+msgstr "No disponible"
 
 #. translators: device class
 #: blueman/DeviceClass.py:82 blueman/Sdp.py:123 blueman/Sdp.py:164
@@ -1003,17 +983,13 @@ msgstr "auricular"
 
 #. translators: device class
 #: blueman/DeviceClass.py:84 blueman/Sdp.py:145
-#, fuzzy
-#| msgid "handsfree"
 msgid "Handsfree"
-msgstr "mans lliures"
+msgstr "Mans lliures"
 
 #. translators: device class
 #: blueman/DeviceClass.py:88
-#, fuzzy
-#| msgid "microphone"
 msgid "Microphone"
-msgstr "micròfon"
+msgstr "Micròfon"
 
 #. translators: device class
 #: blueman/DeviceClass.py:90
@@ -1088,10 +1064,8 @@ msgstr ""
 
 #. translators: device class
 #: blueman/DeviceClass.py:123 blueman/DeviceClass.py:189
-#, fuzzy
-#| msgid "keyboard"
 msgid "Keyboard"
-msgstr "teclat"
+msgstr "Teclat"
 
 #. translators: device class
 #: blueman/DeviceClass.py:125
@@ -1113,7 +1087,7 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:134
 msgid "Camera"
-msgstr ""
+msgstr "Càmera"
 
 #. translators: device class
 #: blueman/DeviceClass.py:136
@@ -1123,12 +1097,12 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:138
 msgid "Printer"
-msgstr ""
+msgstr "Impressora"
 
 #. translators: device class
 #: blueman/DeviceClass.py:143
 msgid "Wrist watch"
-msgstr ""
+msgstr "Rellotge de polsera"
 
 #. translators: device class
 #: blueman/DeviceClass.py:145
@@ -1158,7 +1132,7 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:158
 msgid "Vehicle"
-msgstr ""
+msgstr "Vehicle"
 
 #. translators: device class
 #: blueman/DeviceClass.py:160
@@ -1173,25 +1147,19 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:164
 msgid "Game"
-msgstr ""
+msgstr "Joc"
 
 #: blueman/DeviceClass.py:169
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Phone"
-msgstr "Connecta"
+msgstr "Telèfon genèric"
 
 #: blueman/DeviceClass.py:170
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Computer"
-msgstr "Connecta"
+msgstr "Ordinador genèric"
 
 #: blueman/DeviceClass.py:171
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Watch"
-msgstr "Connecta"
+msgstr "Rellotge genèric"
 
 #: blueman/DeviceClass.py:172
 msgid "Watch: Sports Watch"
@@ -1234,10 +1202,8 @@ msgid "Generic Keyring"
 msgstr "Grup xarxa"
 
 #: blueman/DeviceClass.py:179
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "Generic Media Player"
-msgstr "Transferència de fitxers Bluetooth"
+msgstr "Reproductor multimèdia genèric"
 
 #: blueman/DeviceClass.py:180
 #, fuzzy
@@ -1283,7 +1249,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:190
 msgid "Mouse"
-msgstr ""
+msgstr "Ratolí"
 
 #: blueman/DeviceClass.py:191
 msgid "Joystick"
@@ -1465,19 +1431,19 @@ msgstr ""
 
 #: blueman/Sdp.py:96
 msgid "IP"
-msgstr ""
+msgstr "IP"
 
 #: blueman/Sdp.py:97
 msgid "FTP"
-msgstr ""
+msgstr "FTP"
 
 #: blueman/Sdp.py:98
 msgid "HTTP"
-msgstr ""
+msgstr "HTTP"
 
 #: blueman/Sdp.py:99
 msgid "WSP"
-msgstr ""
+msgstr "WSP"
 
 #: blueman/Sdp.py:100
 msgid "BNEP"
@@ -1613,11 +1579,11 @@ msgstr ""
 
 #: blueman/Sdp.py:134
 msgid "WAP"
-msgstr ""
+msgstr "WAP"
 
 #: blueman/Sdp.py:135
 msgid "WAP Client"
-msgstr ""
+msgstr "Client WAP"
 
 #: blueman/Sdp.py:136
 msgid "PANU"
@@ -2322,7 +2288,7 @@ msgstr ""
 "Proporciona compatibilitat per a PAN (Personal Area Networking) que es va "
 "presentar amb NetworkManager 0.8"
 
-#: blueman/plugins/applet/DBusService.py:46
+#: blueman/plugins/applet/DBusService.py:47
 msgid "Provides DBus API for other Blueman components"
 msgstr "Proporciona l'API de DBus per als altres components de Blueman"
 
@@ -2704,7 +2670,7 @@ msgstr "El connector de transferència de la miniaplicació està inhabilitat"
 
 #: blueman/services/DialupNetwork.py:23
 msgid "Dialup Settings"
-msgstr "Ajusts de l'accés a través de línia telefònica"
+msgstr "Paràmetres de l'accés per línia telefònica"
 
 #: blueman/services/meta/SerialService.py:34
 #, python-format

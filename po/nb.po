@@ -22,17 +22,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2021-04-17 10:04+0200\n"
-"PO-Revision-Date: 2021-01-12 10:03+0000\n"
+"POT-Creation-Date: 2021-08-06 23:06+0200\n"
+"PO-Revision-Date: 2021-07-29 21:35+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
-"Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/blueman/"
-"blueman/nb_NO/>\n"
+"Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
+"blueman/2-2/nb_NO/>\n"
 "Language: nb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.4.1-dev\n"
+"X-Generator: Weblate 4.7.2-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -634,22 +634,22 @@ msgstr "For mye"
 #: blueman/gui/manager/ManagerDeviceList.py:528
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
-msgstr ""
+msgstr "<b>Mottatt signalstyrke: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:531
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
-msgstr ""
+msgstr "Mottatt signalstyrke: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:536
 #, python-format
 msgid "<b>Link Quality: %(lq)u%%</b>"
-msgstr ""
+msgstr "<b>Lenkekvalitet: %(lq)u%%</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:538
 #, python-format
 msgid "Link Quality: %(lq)u%%"
-msgstr ""
+msgstr "Lenkekvalitet: %(lq)u%%"
 
 #: blueman/gui/manager/ManagerDeviceList.py:542
 msgid "Low"
@@ -666,12 +666,12 @@ msgstr "Veldig høy"
 #: blueman/gui/manager/ManagerDeviceList.py:553
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
-msgstr ""
+msgstr "<b>Overføringseffektnivå: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:556
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
-msgstr ""
+msgstr "Overføringseffektnivå: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:131
 msgid "Success!"
@@ -969,7 +969,7 @@ msgstr "modem"
 #. translators: device class
 #: blueman/DeviceClass.py:56
 msgid "Isdn"
-msgstr ""
+msgstr "ISDN"
 
 #. translators: device class
 #: blueman/DeviceClass.py:61
@@ -979,32 +979,32 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:63
 msgid "1-17 percent"
-msgstr ""
+msgstr "1-17 %"
 
 #. translators: device class
 #: blueman/DeviceClass.py:65
 msgid "17-33 percent"
-msgstr ""
+msgstr "17-33 %"
 
 #. translators: device class
 #: blueman/DeviceClass.py:67
 msgid "33-50 percent"
-msgstr ""
+msgstr "33-50 %"
 
 #. translators: device class
 #: blueman/DeviceClass.py:69
 msgid "50-67 percent"
-msgstr ""
+msgstr "50-67 %"
 
 #. translators: device class
 #: blueman/DeviceClass.py:71
 msgid "67-83 percent"
-msgstr ""
+msgstr "67-83 %"
 
 #. translators: device class
 #: blueman/DeviceClass.py:73
 msgid "83-99 percent"
-msgstr ""
+msgstr "84-99 %"
 
 #. translators: device class
 #: blueman/DeviceClass.py:75
@@ -1170,7 +1170,7 @@ msgstr "Skriver"
 #. translators: device class
 #: blueman/DeviceClass.py:143
 msgid "Wrist watch"
-msgstr ""
+msgstr "Armbåndsur"
 
 #. translators: device class
 #: blueman/DeviceClass.py:145
@@ -1180,12 +1180,12 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:147
 msgid "Jacket"
-msgstr ""
+msgstr "Jakke"
 
 #. translators: device class
 #: blueman/DeviceClass.py:149
 msgid "Helmet"
-msgstr ""
+msgstr "Hjelm"
 
 #. translators: device class
 #: blueman/DeviceClass.py:151
@@ -1239,7 +1239,7 @@ msgstr "Generisk tilgang"
 
 #: blueman/DeviceClass.py:172
 msgid "Watch: Sports Watch"
-msgstr ""
+msgstr "Klokke: Sportsklokke"
 
 #: blueman/DeviceClass.py:173
 #, fuzzy
@@ -1343,7 +1343,7 @@ msgstr "Styrespak"
 
 #: blueman/DeviceClass.py:192
 msgid "Gamepad"
-msgstr ""
+msgstr "Spillkontroller"
 
 #: blueman/DeviceClass.py:193
 msgid "Digitizer Tablet"
@@ -1390,8 +1390,9 @@ msgid "Generic: Cycling"
 msgstr "Gruppenettverk"
 
 #: blueman/DeviceClass.py:203
+#, fuzzy
 msgid "Cycling: Cycling Computer"
-msgstr ""
+msgstr "Sykling: Sykkelcomputer"
 
 #: blueman/DeviceClass.py:204
 #, fuzzy
@@ -1424,11 +1425,11 @@ msgstr ""
 
 #: blueman/DeviceClass.py:210
 msgid "Fingertip"
-msgstr ""
+msgstr "Fingertipp"
 
 #: blueman/DeviceClass.py:211
 msgid "Wrist Worn"
-msgstr ""
+msgstr "Håndleddsbåret"
 
 #: blueman/DeviceClass.py:212
 #, fuzzy
@@ -1442,7 +1443,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:214
 msgid "Powered Wheelchair"
-msgstr ""
+msgstr "Elektrisk rullestol"
 
 #: blueman/DeviceClass.py:215
 msgid "Mobility Scooter"
@@ -1470,7 +1471,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:220
 msgid "Insulin Pen"
-msgstr ""
+msgstr "Insulinpenn"
 
 #: blueman/DeviceClass.py:221
 msgid "Generic Medication Delivery"
@@ -2391,7 +2392,7 @@ msgstr ""
 "Tilbyr støtte for Personlig områdesnettverk (PAN) introdusert i "
 "NetworkManager 0.8"
 
-#: blueman/plugins/applet/DBusService.py:46
+#: blueman/plugins/applet/DBusService.py:47
 msgid "Provides DBus API for other Blueman components"
 msgstr "Muliggjør DBus API for andre Blueman-komponenter"
 
@@ -2575,9 +2576,9 @@ msgid "Adds disconnect menu items"
 msgstr ""
 
 #: blueman/plugins/applet/DisconnectItems.py:40
-#, fuzzy, python-format
+#, python-format
 msgid "Disconnect %s"
-msgstr "Kobler fra …"
+msgstr "Koble fra %s"
 
 #: blueman/plugins/applet/DiscvManager.py:16
 msgid ""

@@ -16,17 +16,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2021-04-17 10:04+0200\n"
-"PO-Revision-Date: 2021-05-11 13:20+0000\n"
-"Last-Translator: LightFOSS <light325@protonmail.com>\n"
-"Language-Team: Spanish <https://hosted.weblate.org/projects/blueman/blueman/"
-"es/>\n"
+"POT-Creation-Date: 2021-08-06 23:06+0200\n"
+"PO-Revision-Date: 2021-06-18 19:33+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/blueman/2-2/es/"
+">\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.7\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -297,9 +297,7 @@ msgstr "Enviar una nota"
 
 #: blueman/main/Adapter.py:50
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
-msgstr ""
-"Es necesario encender el Bluetooth, para que el gestor de adaptadores "
-"funcione"
+msgstr "Encienda el Bluetooth para que funcione el gestor de adaptadores"
 
 #: blueman/main/Adapter.py:86 data/blueman-adapters.desktop.in:3
 msgid "Bluetooth Adapters"
@@ -328,7 +326,7 @@ msgstr ""
 
 #: blueman/main/Manager.py:109
 msgid "Connection to BlueZ failed"
-msgstr "La conexion a \"BlueZ\" Falló"
+msgstr "Falló la conexión con BlueZ"
 
 #: blueman/main/Manager.py:110
 msgid ""
@@ -336,9 +334,9 @@ msgid ""
 "This probably means that there were no Bluetooth adapters detected or "
 "Bluetooth daemon was not started."
 msgstr ""
-"blueman-manager, no puede continuar porque no se está ejecutando el servicio "
+"blueman-manager no puede continuar porque no se está ejecutando el servicio "
 "Bluez.\n"
-"Esto indica que no se han detectado adaptadores de Bluetooth o,que no se ha "
+"Esto indica que no se han detectado adaptadores de Bluetooth o que no se ha "
 "iniciado el servicio de Bluetooth."
 
 #: blueman/main/Manager.py:198
@@ -394,7 +392,7 @@ msgstr[1] "%(seconds)d segundos"
 #: blueman/main/Sendto.py:229
 #, python-format
 msgid "Error occurred while sending file %s"
-msgstr "Un error ocurrio al enviar el archivo %s"
+msgstr "Se produjo un error al enviar el archivo %s"
 
 #: blueman/main/Sendto.py:233
 msgid "Skip"
@@ -406,7 +404,7 @@ msgstr "Reintentar"
 
 #: blueman/main/Sendto.py:285
 msgid "Error occurred"
-msgstr "Se ha producido un error."
+msgstr "Se produjo un error"
 
 #: blueman/main/applet/BluezAgent.py:192
 #, python-format
@@ -517,10 +515,8 @@ msgid "Show _Statusbar"
 msgstr "Mostrar barra de _estado"
 
 #: blueman/gui/manager/ManagerMenu.py:78
-#, fuzzy
-#| msgid "Rename device"
 msgid "Hide _unnamed devices"
-msgstr "Cambiar nombre de dispositivo"
+msgstr "Oc_ultar dispositivos sin nombre"
 
 #: blueman/gui/manager/ManagerMenu.py:88
 msgid "S_ort By"
@@ -532,7 +528,7 @@ msgstr "_Nombre"
 
 #: blueman/gui/manager/ManagerMenu.py:100
 msgid "_Added"
-msgstr "_Añadidó"
+msgstr "_Adición"
 
 #: blueman/gui/manager/ManagerMenu.py:114
 msgid "_Descending"
@@ -655,7 +651,7 @@ msgstr "Nivel de Energia Transmitida: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:131
 msgid "Success!"
-msgstr "!Exito¡"
+msgstr "¡Correcto!"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:138
 msgid "Failed"
@@ -2068,10 +2064,8 @@ msgstr ""
 "desconectan."
 
 #: blueman/plugins/applet/ConnectionNotifier.py:21
-#, fuzzy
-#| msgid "Disconnecting…"
 msgid "Disconnected"
-msgstr "Desconectando…"
+msgstr "Desconectado"
 
 #: blueman/plugins/applet/NetUsage.py:154
 #: blueman/plugins/applet/NetUsage.py:265
@@ -2117,7 +2111,7 @@ msgstr "%d %s %d %s y %d %s"
 
 #: blueman/plugins/applet/NetUsage.py:241
 msgid "Are you sure you want to reset the counter?"
-msgstr "¿Seguro que quiere reiniciar el contador?"
+msgstr "¿Confirma que quiere restablecer el contador?"
 
 #: blueman/plugins/applet/NetUsage.py:287
 msgid ""
@@ -2202,7 +2196,7 @@ msgstr ""
 "Proporciona compatibilidad para Personal Area Networking (PAN) introducido "
 "en NetworkManager 0.8"
 
-#: blueman/plugins/applet/DBusService.py:46
+#: blueman/plugins/applet/DBusService.py:47
 msgid "Provides DBus API for other Blueman components"
 msgstr "Proporciona la API de DBus para otros componentes de Blueman"
 

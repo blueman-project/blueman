@@ -17,19 +17,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2021-04-17 10:04+0200\n"
-"PO-Revision-Date: 2021-04-08 10:27+0000\n"
+"POT-Creation-Date: 2021-08-06 23:06+0200\n"
+"PO-Revision-Date: 2021-07-05 21:33+0000\n"
 "Last-Translator: Mohammed Anas "
 "<6daf084a-8eaf-40fb-86c7-8500077c3b69@anonaddy.me>\n"
-"Language-Team: Arabic <https://hosted.weblate.org/projects/blueman/blueman/"
-"ar/>\n"
+"Language-Team: Arabic <https://hosted.weblate.org/projects/blueman/2-2/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 4.6-dev\n"
+"X-Generator: Weblate 4.8-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -310,17 +309,15 @@ msgid "Always"
 msgstr "دائما"
 
 #: blueman/main/Adapter.py:147 blueman/main/Sendto.py:189
-#, fuzzy, python-format
-#| msgid "%d Minute"
-#| msgid_plural "%d Minutes"
+#, python-format
 msgid "%(minutes)d Minute"
 msgid_plural "%(minutes)d Minutes"
-msgstr[0] "%d دقيقة"
-msgstr[1] "%d دقيقة"
-msgstr[2] "%d دقيقتان"
-msgstr[3] "%d دقائق"
-msgstr[4] "%d دقيقة"
-msgstr[5] "%d دقيقة"
+msgstr[0] "%(minutes)d دقيقة"
+msgstr[1] "%(minutes)d دقيقة"
+msgstr[2] "%(minutes)d دقيقتان"
+msgstr[3] "%(minutes)d دقائق"
+msgstr[4] "%(minutes)d دقيقة"
+msgstr[5] "%(minutes)d دقيقة"
 
 #: blueman/main/Adapter.py:212
 msgid "Adapter"
@@ -516,10 +513,8 @@ msgid "Show _Statusbar"
 msgstr "عرض شريط _الحالة"
 
 #: blueman/gui/manager/ManagerMenu.py:78
-#, fuzzy
-#| msgid "Rename device"
 msgid "Hide _unnamed devices"
-msgstr "غيّر اسم الجهاز"
+msgstr "أخفِ الأجهزة الغير مسماة"
 
 #: blueman/gui/manager/ManagerMenu.py:88
 msgid "S_ort By"
@@ -557,10 +552,8 @@ msgid "_Search"
 msgstr "_بحث"
 
 #: blueman/gui/manager/ManagerMenu.py:155
-#, fuzzy
-#| msgid "Service Preferences"
 msgid "_Preferences"
-msgstr "تفضيلات الخدمة"
+msgstr "تفضيلات"
 
 #: blueman/gui/manager/ManagerMenu.py:164 blueman/plugins/applet/ExitItem.py:12
 msgid "_Exit"
@@ -571,8 +564,6 @@ msgstr ""
 #: blueman/gui/manager/ManagerDeviceList.py:301 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
-#, fuzzy
-#| msgid "uncategorized"
 msgid "Uncategorized"
 msgstr "غير مصنّف"
 
@@ -589,10 +580,8 @@ msgid "<b>Trusted</b>"
 msgstr "<b>موثوق</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:502
-#, fuzzy
-#| msgid "<b>Connect To:</b>"
 msgid "<b>Connected</b>"
-msgstr "<b>إتصال بـ:</b>"
+msgstr "<b>متصل</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:517
 msgid "Poor"
@@ -667,10 +656,8 @@ msgid "Failed"
 msgstr "فشل"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:144
-#, fuzzy
-#| msgid "Connecting"
 msgid "Connecting…"
-msgstr "إتصال"
+msgstr "إتصال…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:180
 msgid "Disconnection Failed: "
@@ -725,16 +712,12 @@ msgid "<b>Disconnect:</b>"
 msgstr "<b>قطع الإتصال:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:322
-#, fuzzy
-#| msgid "<b>Disconnect:</b>"
 msgid "<b>Auto-connect:</b>"
-msgstr "<b>قطع الإتصال:</b>"
+msgstr "<b>اتصال تلقائي:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:341
-#, fuzzy
-#| msgid "Send a _File..."
 msgid "Send a _File…"
-msgstr "إرسال _ملف..."
+msgstr "إرسال _ملف…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:354
 msgid "_Pair"
@@ -749,16 +732,12 @@ msgid "_Untrust"
 msgstr "_غير-موثوق"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:393
-#, fuzzy
-#| msgid "Rename device"
 msgid "R_ename device…"
-msgstr "غيّر اسم الجهاز"
+msgstr "غيّر اسم الجهاز…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:402
-#, fuzzy
-#| msgid "Remove"
 msgid "_Remove…"
-msgstr "أزل"
+msgstr "أزل…"
 
 #: blueman/gui/manager/ManagerProgressbar.py:44
 msgid "Cancel Operation"
@@ -837,10 +816,8 @@ msgid "Adapter selection"
 msgstr "تحديد المحوّل"
 
 #: blueman/gui/DeviceSelectorWidget.py:45
-#, fuzzy
-#| msgid "Disconnecting..."
 msgid "Discovering…"
-msgstr "_قطع الإتصال..."
+msgstr "استكشاف…"
 
 #. translators: device class
 #: blueman/DeviceClass.py:6
@@ -859,10 +836,8 @@ msgstr ""
 
 #. translators: device class
 #: blueman/DeviceClass.py:12
-#, fuzzy
-#| msgid "Network Access Point"
 msgid "Access point"
-msgstr "نقطة إتصال شبكية"
+msgstr "نقطة إتصال"
 
 #. translators: device class
 #: blueman/DeviceClass.py:14
@@ -891,22 +866,16 @@ msgstr ""
 
 #. translators: device class
 #: blueman/DeviceClass.py:31
-#, fuzzy
-#| msgid "desktop"
 msgid "Desktop"
 msgstr "حاسوب مكتبي"
 
 #. translators: device class
 #: blueman/DeviceClass.py:33
-#, fuzzy
-#| msgid "server"
 msgid "Server"
 msgstr "خادم"
 
 #. translators: device class
 #: blueman/DeviceClass.py:35
-#, fuzzy
-#| msgid "laptop"
 msgid "Laptop"
 msgstr "حاسوب محمول"
 
@@ -922,10 +891,8 @@ msgstr ""
 
 #. translators: device class
 #: blueman/DeviceClass.py:48
-#, fuzzy
-#| msgid "cellular"
 msgid "Cellular"
-msgstr "هاتف خليوي"
+msgstr "هاتف خلوي"
 
 #. translators: device class
 #: blueman/DeviceClass.py:50
@@ -934,15 +901,11 @@ msgstr ""
 
 #. translators: device class
 #: blueman/DeviceClass.py:52
-#, fuzzy
-#| msgid "smart phone"
 msgid "Smart phone"
 msgstr "هاتف ذكي"
 
 #. translators: device class
 #: blueman/DeviceClass.py:54
-#, fuzzy
-#| msgid "modem"
 msgid "Modem"
 msgstr "مودم"
 
@@ -988,15 +951,11 @@ msgstr ""
 
 #. translators: device class
 #: blueman/DeviceClass.py:75
-#, fuzzy
-#| msgid "obexd not available"
 msgid "Not available"
-msgstr "obexd غير متوفر"
+msgstr "غير متوفر"
 
 #. translators: device class
 #: blueman/DeviceClass.py:82 blueman/Sdp.py:123 blueman/Sdp.py:164
-#, fuzzy
-#| msgid "headset"
 msgid "Headset"
 msgstr "سماعة الرأس"
 
@@ -1007,8 +966,6 @@ msgstr ""
 
 #. translators: device class
 #: blueman/DeviceClass.py:88
-#, fuzzy
-#| msgid "microphone"
 msgid "Microphone"
 msgstr "ميكروفون"
 
@@ -1049,10 +1006,8 @@ msgstr ""
 
 #. translators: device class
 #: blueman/DeviceClass.py:104
-#, fuzzy
-#| msgid "Audio Source"
 msgid "Video camera"
-msgstr "مصدر الصوت"
+msgstr "كاميرة فيديو"
 
 #. translators: device class
 #: blueman/DeviceClass.py:106
@@ -1085,8 +1040,6 @@ msgstr ""
 
 #. translators: device class
 #: blueman/DeviceClass.py:123 blueman/DeviceClass.py:189
-#, fuzzy
-#| msgid "keyboard"
 msgid "Keyboard"
 msgstr "لوحة مفاتيح"
 
@@ -1803,10 +1756,8 @@ msgid "Generic Telephony"
 msgstr ""
 
 #: blueman/Sdp.py:183
-#, fuzzy
-#| msgid "Audio Source"
 msgid "Video Source"
-msgstr "مصدر الصوت"
+msgstr "مصدر الفيديو"
 
 #: blueman/Sdp.py:184
 msgid "Video Sink"
@@ -1821,10 +1772,8 @@ msgid "HDP"
 msgstr ""
 
 #: blueman/Sdp.py:187
-#, fuzzy
-#| msgid "Audio Source"
 msgid "HDP Source"
-msgstr "مصدر الصوت"
+msgstr "مصدر HDP"
 
 #: blueman/Sdp.py:188
 msgid "HDP Sink"
@@ -1885,10 +1834,8 @@ msgid "Phone Alert Status Service"
 msgstr ""
 
 #: blueman/Sdp.py:202
-#, fuzzy
-#| msgid "Local Services"
 msgid "Battery Service"
-msgstr "خدمات محلية"
+msgstr "خدمة بطارية"
 
 #: blueman/Sdp.py:203
 msgid "Blood Pressure"
@@ -1987,10 +1934,8 @@ msgid "Primary Service"
 msgstr "الخدمة الأساسيّة"
 
 #: blueman/Sdp.py:226
-#, fuzzy
-#| msgid "Search for nearby devices"
 msgid "Secondary Service"
-msgstr "ابحث عن أجهزة قريبة"
+msgstr "خدمة ثانوية"
 
 #: blueman/Sdp.py:227
 msgid "Include"
@@ -2001,10 +1946,8 @@ msgid "Characteristic Declaration"
 msgstr ""
 
 #: blueman/Sdp.py:229
-#, fuzzy
-#| msgid "Device Manager"
 msgid "Device Name"
-msgstr "مدير الأجهزة"
+msgstr "اسم الجهاز"
 
 #: blueman/Sdp.py:230
 msgid "Appearance"
@@ -2101,10 +2044,8 @@ msgid "Report Reference"
 msgstr "تفضيلات الخدمة"
 
 #: blueman/Sdp.py:378
-#, fuzzy
-#| msgid "Audio Profile"
 msgid "Audio and input profiles"
-msgstr "نمط الصوت"
+msgstr "أنماط الصوت والإدخال"
 
 #: blueman/Sdp.py:380
 msgid "Proprietary"
@@ -2178,10 +2119,8 @@ msgid "Shows desktop notifications when devices get connected or disconnected."
 msgstr ""
 
 #: blueman/plugins/applet/ConnectionNotifier.py:21
-#, fuzzy
-#| msgid "Disconnecting..."
 msgid "Disconnected"
-msgstr "_قطع الإتصال..."
+msgstr "مقطوع الاتصال"
 
 #: blueman/plugins/applet/NetUsage.py:154
 #: blueman/plugins/applet/NetUsage.py:265
@@ -2314,7 +2253,7 @@ msgid ""
 "NetworkManager 0.8"
 msgstr ""
 
-#: blueman/plugins/applet/DBusService.py:46
+#: blueman/plugins/applet/DBusService.py:47
 msgid "Provides DBus API for other Blueman components"
 msgstr ""
 
@@ -2379,17 +2318,15 @@ msgid "Files received"
 msgstr "أُستقبِلت الملفات"
 
 #: blueman/plugins/applet/TransferService.py:334
-#, fuzzy, python-format
-#| msgid "Received %d file in the background"
-#| msgid_plural "Received %d files in the background"
+#, python-format
 msgid "Received %(files)d file in the background"
 msgid_plural "Received %(files)d files in the background"
-msgstr[0] "استقبال %d ملف في الخلفية"
-msgstr[1] "استقبال %d ملف في الخلفية"
-msgstr[2] "استقبال ملفين (%d) في الخلفية"
-msgstr[3] "استقبال %d ملفات في الخلفية"
-msgstr[4] "استقبال %d ملفا في الخلفية"
-msgstr[5] "استقبال %d ملف في الخلفية"
+msgstr[0] "استقبال %(files)d ملف في الخلفية"
+msgstr[1] "استقبال %(files)d ملف في الخلفية"
+msgstr[2] "استقبال ملفين (%(files)d) في الخلفية"
+msgstr[3] "استقبال %(files)d ملفات في الخلفية"
+msgstr[4] "استقبال %(files)d ملفا في الخلفية"
+msgstr[5] "استقبال %(files)d ملف في الخلفية"
 
 #: blueman/plugins/applet/TransferService.py:343
 #, fuzzy, python-format
@@ -2397,12 +2334,12 @@ msgstr[5] "استقبال %d ملف في الخلفية"
 #| msgid_plural "Received %d files in the background"
 msgid "Received %(files)d more file in the background"
 msgid_plural "Received %(files)d more files in the background"
-msgstr[0] "استقبال %d ملف في الخلفية"
-msgstr[1] "استقبال %d ملف في الخلفية"
-msgstr[2] "استقبال ملفين (%d) في الخلفية"
-msgstr[3] "استقبال %d ملفات في الخلفية"
-msgstr[4] "استقبال %d ملفا في الخلفية"
-msgstr[5] "استقبال %d ملف في الخلفية"
+msgstr[0] "استقبال %(files)d ملف في الخلفية"
+msgstr[1] "استقبال %(files)d ملف في الخلفية"
+msgstr[2] "استقبال ملفين (%(files)d) في الخلفية"
+msgstr[3] "استقبال %(files)d ملفات في الخلفية"
+msgstr[4] "استقبال %(files)d ملفا في الخلفية"
+msgstr[5] "استقبال %(files)d ملف في الخلفية"
 
 #: blueman/plugins/applet/KillSwitch.py:37
 msgid ""
@@ -2688,28 +2625,20 @@ msgid "Set Bluetooth Adapter Properties"
 msgstr "محولات بلوتوث"
 
 #: data/blueman.desktop.in:3
-#, fuzzy
-#| msgid "applet"
 msgid "Blueman Applet"
-msgstr "بريمج"
+msgstr "بريمج بلومان"
 
 #: data/blueman.desktop.in:4 data/blueman-manager.desktop.in:4
-#, fuzzy
-#| msgid "Bluetooth Enabled"
 msgid "Blueman Bluetooth Manager"
-msgstr "فُعّل البلوتوث"
+msgstr "مدير بلوتوث بلومان"
 
 #: data/blueman-manager.desktop.in:3
-#, fuzzy
-#| msgid "Bluetooth Enabled"
 msgid "Bluetooth Manager"
-msgstr "فُعّل البلوتوث"
+msgstr "مدير البلوتوث"
 
 #: data/thunar-sendto-blueman.desktop.in:5
-#, fuzzy
-#| msgid "Bluetooth Devices"
 msgid "Bluetooth Device"
-msgstr "أجهزة البلوتوث"
+msgstr "جهاز البلوتوث"
 
 #: data/configs/org.blueman.policy.in:10
 msgid "Configure Bluetooth Network"
