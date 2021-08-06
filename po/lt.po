@@ -6,18 +6,18 @@
 # brennus <jonas.ska@gmail.com>, 2014-2015
 # Moo, 2015-2019
 # Kornelijus Tvarijanavičius <kornelitvari@protonmail.com>, 2020.
-# Moo <hazap@hotmail.com>, 2020.
+# Moo <hazap@hotmail.com>, 2020, 2021.
 # Džiugas J <dziugas1959@hotmail.com>
 # Andrius Majauskas <komitetas@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2021-04-17 10:04+0200\n"
-"PO-Revision-Date: 2020-11-19 12:48+0000\n"
+"POT-Creation-Date: 2021-08-06 23:06+0200\n"
+"PO-Revision-Date: 2021-07-09 21:32+0000\n"
 "Last-Translator: Moo <hazap@hotmail.com>\n"
-"Language-Team: Lithuanian <https://hosted.weblate.org/projects/blueman/"
-"blueman/lt/>\n"
+"Language-Team: Lithuanian <https://hosted.weblate.org/projects/blueman/2-2/"
+"lt/>\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < "
 "11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? "
 "1 : n % 1 != 0 ? 2: 3);\n"
-"X-Generator: Weblate 4.4-dev\n"
+"X-Generator: Weblate 4.8-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -679,26 +679,20 @@ msgid "Input/output error"
 msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:209
-#, fuzzy
-#| msgid "Show device information"
 msgid "Device did not respond"
-msgstr "Rodyti įrenginio informaciją"
+msgstr "Įrenginys neatsakė"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:213
-#, fuzzy
-#| msgid "Temporarily visible"
 msgid "Resource temporarily unavailable"
-msgstr "Laikinai matomas"
+msgstr "Išteklius laikinai neprieinamas"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:218
 msgid "Connection Failed: "
 msgstr "Prisijungimas nepavyko: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:285
-#, fuzzy
-#| msgid "_<b>Connect</b>"
 msgid "_<b>_Connect</b>"
-msgstr "_<b>Prisijungti</b>"
+msgstr "_<b>_Prisijungti</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:287
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
@@ -722,10 +716,8 @@ msgid "<b>Disconnect:</b>"
 msgstr "<b>Atsijungti:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:322
-#, fuzzy
-#| msgid "<b>Disconnect:</b>"
 msgid "<b>Auto-connect:</b>"
-msgstr "<b>Atsijungti:</b>"
+msgstr "<b>Automatiškai prisijungti:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:341
 msgid "Send a _File…"
@@ -2281,7 +2273,7 @@ msgstr ""
 "Suteikia asmeninio vietos tinklo (PAN) palaikymą, atsiradusį NetworkManager "
 "0.8 versijoje"
 
-#: blueman/plugins/applet/DBusService.py:46
+#: blueman/plugins/applet/DBusService.py:47
 msgid "Provides DBus API for other Blueman components"
 msgstr "Suteikia DBus API kitiems programos „Blueman“ komponentams"
 

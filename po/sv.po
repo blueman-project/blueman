@@ -24,11 +24,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2021-04-17 10:04+0200\n"
-"PO-Revision-Date: 2021-05-01 20:38+0000\n"
-"Last-Translator: Luna Jernberg <droidbittin@gmail.com>\n"
-"Language-Team: Swedish <https://hosted.weblate.org/projects/blueman/blueman/"
-"sv/>\n"
+"POT-Creation-Date: 2021-08-06 23:06+0200\n"
+"PO-Revision-Date: 2021-06-14 07:22+0000\n"
+"Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
+"Language-Team: Swedish <https://hosted.weblate.org/projects/blueman/2-2/sv/"
+">\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -137,7 +137,7 @@ msgstr "Skicka fil"
 
 #: data/ui/rename-device.ui:8
 msgid "Rename device"
-msgstr "Döp om enheten"
+msgstr "Byt namn på enheten"
 
 #: data/ui/services-network.ui:37
 msgid "Network Access Point (NAP)"
@@ -308,7 +308,7 @@ msgstr "Bluetooth behöver aktiveras för att adapterhanteraren ska fungera"
 
 #: blueman/main/Adapter.py:86 data/blueman-adapters.desktop.in:3
 msgid "Bluetooth Adapters"
-msgstr "Blåtandsadaptrar"
+msgstr "Bluetooth-adaptrar"
 
 #: blueman/main/Adapter.py:143
 msgid "Always"
@@ -360,7 +360,7 @@ msgstr "Filsändare"
 
 #: blueman/main/Sendto.py:33
 msgid "Bluetooth File Transfer"
-msgstr "Bluetooth filöverföring"
+msgstr "Bluetooth-filöverföring"
 
 #: blueman/main/Sendto.py:57 blueman/gui/manager/ManagerProgressbar.py:27
 msgid "Connecting"
@@ -392,8 +392,8 @@ msgstr "Färdig om:"
 #, python-format
 msgid "%(seconds)d Second"
 msgid_plural "%(seconds)d Seconds"
-msgstr[0] "%(seconds)d Sekund"
-msgstr[1] "%(seconds)d Sekunder"
+msgstr[0] "%(seconds)d sekund"
+msgstr[1] "%(seconds)d sekunder"
 
 #: blueman/main/Sendto.py:229
 #, python-format
@@ -482,7 +482,7 @@ msgstr ""
 
 #: blueman/Functions.py:71
 msgid "Bluetooth Turned Off"
-msgstr "Bluetooth Avstängt"
+msgstr "Bluetooth avstängt"
 
 #: blueman/Functions.py:72
 msgid "Exit"
@@ -514,11 +514,11 @@ msgstr "Enhetshanterare"
 
 #: blueman/gui/manager/ManagerMenu.py:68
 msgid "Show _Toolbar"
-msgstr "Visa _Verktygsrad"
+msgstr "Visa _verktygsrad"
 
 #: blueman/gui/manager/ManagerMenu.py:73
 msgid "Show _Statusbar"
-msgstr "Visa _Statusrad"
+msgstr "Visa _statusrad"
 
 #: blueman/gui/manager/ManagerMenu.py:78
 #, fuzzy
@@ -528,19 +528,19 @@ msgstr "Döp om enheten"
 
 #: blueman/gui/manager/ManagerMenu.py:88
 msgid "S_ort By"
-msgstr "Sortera Efter"
+msgstr "S_ortera efter"
 
 #: blueman/gui/manager/ManagerMenu.py:95
 msgid "_Name"
-msgstr "Namn"
+msgstr "_Namn"
 
 #: blueman/gui/manager/ManagerMenu.py:100
 msgid "_Added"
-msgstr "Tillagd"
+msgstr "_Tillagd"
 
 #: blueman/gui/manager/ManagerMenu.py:114
 msgid "_Descending"
-msgstr "Fallande"
+msgstr "_Fallande"
 
 #: blueman/gui/manager/ManagerMenu.py:127
 #: blueman/plugins/applet/StandardItems.py:50
@@ -581,7 +581,7 @@ msgstr "okategoriserad"
 
 #: blueman/gui/manager/ManagerDeviceList.py:479
 msgid "<b>Trusted and Paired</b>"
-msgstr "<b>Betrodda och Parade</b>"
+msgstr "<b>Betrodda och parade</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:481
 msgid "<b>Paired</b>"
@@ -764,7 +764,7 @@ msgstr "Avbryt åtgärd"
 #: blueman/gui/manager/ManagerStats.py:38
 #: blueman/gui/manager/ManagerStats.py:41
 msgid "Data activity indication"
-msgstr "Data aktivitet angiven"
+msgstr "Dataaktivitet angiven"
 
 #: blueman/gui/manager/ManagerStats.py:43
 #: blueman/gui/manager/ManagerStats.py:53
@@ -791,7 +791,7 @@ msgstr "Mer"
 
 #: blueman/gui/CommonUi.py:62
 msgid "Blueman is a GTK+ Bluetooth manager"
-msgstr "Blueman är en GTK+ Bluetooth hanterare"
+msgstr "Blueman är en Bluetooth-hanterare för GTK+"
 
 #: blueman/gui/GsmSettings.py:24
 msgid "GSM Settings"
@@ -881,7 +881,7 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:20 blueman/DeviceClass.py:41
 msgid "Wearable"
-msgstr ""
+msgstr "Kroppsnära"
 
 #. translators: device class
 #: blueman/DeviceClass.py:22
@@ -1901,7 +1901,7 @@ msgstr ""
 
 #: blueman/Sdp.py:202
 msgid "Battery Service"
-msgstr "Batteri tjänster"
+msgstr "Batteritjänster"
 
 #: blueman/Sdp.py:203
 msgid "Blood Pressure"
@@ -1977,7 +1977,7 @@ msgstr "Pulsoximeter"
 
 #: blueman/Sdp.py:221
 msgid "HTTP Proxy"
-msgstr "HTTP Proxy"
+msgstr "HTTP-proxy"
 
 #: blueman/Sdp.py:222
 msgid "Transport Discovery"
@@ -1985,7 +1985,7 @@ msgstr ""
 
 #: blueman/Sdp.py:223
 msgid "Object Transfer"
-msgstr "Objekt Överföring"
+msgstr "Objektöverföring"
 
 #: blueman/Sdp.py:224
 msgid "AppleAgent"
@@ -2035,7 +2035,7 @@ msgstr "Tjänst ändrad"
 
 #: blueman/Sdp.py:235
 msgid "System ID"
-msgstr "System ID"
+msgstr "System-ID"
 
 #: blueman/Sdp.py:236
 msgid "Model Number String"
@@ -2059,11 +2059,11 @@ msgstr ""
 
 #: blueman/Sdp.py:241
 msgid "Manufacturer Name String"
-msgstr "Tillverkarens namn Sträng"
+msgstr "Tillverkarnamnsträng"
 
 #: blueman/Sdp.py:242
 msgid "PnP ID"
-msgstr "PnP ID"
+msgstr "PnP-ID"
 
 #: blueman/Sdp.py:243
 msgid "Characteristic Extended Properties"
@@ -2313,7 +2313,7 @@ msgstr ""
 "Tillhandahåller stöd för Personal Area Networking (PAN) som introducerades i "
 "NetworkManager 0.8"
 
-#: blueman/plugins/applet/DBusService.py:46
+#: blueman/plugins/applet/DBusService.py:47
 msgid "Provides DBus API for other Blueman components"
 msgstr "Tillhandahåller DBus API för andra Blueman-komponenter"
 
@@ -2443,7 +2443,7 @@ msgstr ""
 #: blueman/plugins/applet/DhcpClient.py:55
 #: blueman/plugins/applet/DhcpClient.py:60
 msgid "Bluetooth Network"
-msgstr "Bluetooth Nätverk"
+msgstr "Bluetooth-nätverk"
 
 #: blueman/plugins/applet/DhcpClient.py:48
 #, python-format
@@ -2470,7 +2470,7 @@ msgid ""
 "number of connections in the tooltip."
 msgstr ""
 "Lägger till en indikator på statusikonen när Bluetooth är aktiverat och "
-"visar antalet anslutningar i verktygstipset."
+"visar antalet anslutningar i inforutan."
 
 #: blueman/plugins/applet/ShowConnected.py:61
 msgid "Bluetooth Active"
@@ -2712,11 +2712,11 @@ msgstr "Blueman panelprogram"
 
 #: data/blueman.desktop.in:4 data/blueman-manager.desktop.in:4
 msgid "Blueman Bluetooth Manager"
-msgstr "Blueman Bluetooth hanterare"
+msgstr "Blueman Bluetooth-hanterare"
 
 #: data/blueman-manager.desktop.in:3
 msgid "Bluetooth Manager"
-msgstr "Bluetooth hanterare"
+msgstr "Bluetooth-hanterare"
 
 #: data/thunar-sendto-blueman.desktop.in:5
 msgid "Bluetooth Device"
@@ -2740,15 +2740,15 @@ msgstr "Start av DHCP-klient kräver behörighet"
 
 #: data/configs/org.blueman.policy.in:28
 msgid "Launch PPP daemon"
-msgstr "Starta PPP tjänsten"
+msgstr "Starta PPP-demonen"
 
 #: data/configs/org.blueman.policy.in:29
 msgid "Launching PPP daemon requires privileges"
-msgstr "Att starta PPP tjänsten kräver privilegier"
+msgstr "Att starta PPP-demonen kräver privilegier"
 
 #: data/configs/org.blueman.policy.in:37
 msgid "Set RfKill State"
-msgstr "Ange RfKill tillstånd"
+msgstr "Ange RfKill-tillstånd"
 
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"

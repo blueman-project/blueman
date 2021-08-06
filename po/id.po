@@ -17,17 +17,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2021-04-17 10:04+0200\n"
-"PO-Revision-Date: 2021-05-01 20:37+0000\n"
+"POT-Creation-Date: 2021-08-06 23:06+0200\n"
+"PO-Revision-Date: 2021-07-13 15:32+0000\n"
 "Last-Translator: Reza Almanda <rezaalmanda27@gmail.com>\n"
-"Language-Team: Indonesian <https://hosted.weblate.org/projects/blueman/"
-"blueman/id/>\n"
+"Language-Team: Indonesian <https://hosted.weblate.org/projects/blueman/2-2/"
+"id/>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.7.2-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -511,10 +511,8 @@ msgid "Show _Statusbar"
 msgstr "Tampilkan Batang _Status"
 
 #: blueman/gui/manager/ManagerMenu.py:78
-#, fuzzy
-#| msgid "Rename device"
 msgid "Hide _unnamed devices"
-msgstr "Ubah nama perangkat"
+msgstr "Sembunyikan _perangkat tanpa nama"
 
 #: blueman/gui/manager/ManagerMenu.py:88
 msgid "S_ort By"
@@ -552,26 +550,20 @@ msgid "_Search"
 msgstr "_Cari"
 
 #: blueman/gui/manager/ManagerMenu.py:155
-#, fuzzy
-#| msgid "Adapter Preferences"
 msgid "_Preferences"
-msgstr "Preferensi Adapter"
+msgstr "_Preferensi"
 
 #: blueman/gui/manager/ManagerMenu.py:164 blueman/plugins/applet/ExitItem.py:12
-#, fuzzy
-#| msgid "Exit"
 msgid "_Exit"
-msgstr "Keluar"
+msgstr "_Keluar"
 
 #. translators: device class
 #: blueman/gui/manager/ManagerDeviceList.py:276
 #: blueman/gui/manager/ManagerDeviceList.py:301 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
-#, fuzzy
-#| msgid "uncategorized"
 msgid "Uncategorized"
-msgstr "tidak terkategorisasi"
+msgstr "Tidak terkategorisasi"
 
 #: blueman/gui/manager/ManagerDeviceList.py:479
 msgid "<b>Trusted and Paired</b>"
@@ -586,10 +578,8 @@ msgid "<b>Trusted</b>"
 msgstr "<b>Terpercaya</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:502
-#, fuzzy
-#| msgid "<b>Connect To:</b>"
 msgid "<b>Connected</b>"
-msgstr "<b>Terhubung ke:</b>"
+msgstr "<b>Terhubung</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:517
 msgid "Poor"
@@ -617,21 +607,22 @@ msgstr "Terlalu banyak"
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 msgstr ""
+"<b>Kekuatan Sinyal yang Diterima: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:531
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
-msgstr ""
+msgstr "Kekuatan Sinyal yang Diterima: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:536
 #, python-format
 msgid "<b>Link Quality: %(lq)u%%</b>"
-msgstr ""
+msgstr "<b>Kualitas Tautan: %(lq)u%%</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:538
 #, python-format
 msgid "Link Quality: %(lq)u%%"
-msgstr ""
+msgstr "Kualitas tautan: %(lq)u%%%%"
 
 #: blueman/gui/manager/ManagerDeviceList.py:542
 msgid "Low"
@@ -648,30 +639,28 @@ msgstr "Sangat Tinggi"
 #: blueman/gui/manager/ManagerDeviceList.py:553
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
-msgstr ""
+msgstr "<b>Tingkat Daya Transmisi: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:556
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
-msgstr ""
+msgstr "Tingkat Daya Transmisi: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:131
 msgid "Success!"
-msgstr "Berhasil"
+msgstr "Berhasil!"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:138
 msgid "Failed"
 msgstr "Gagal"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:144
-#, fuzzy
-#| msgid "Connecting"
 msgid "Connecting…"
-msgstr "Menyambung"
+msgstr "Menyambung…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:180
 msgid "Disconnection Failed: "
-msgstr "Pemutusan Gagal:"
+msgstr "Pemutusan Gagal: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:204
 msgid "No audio endpoints registered"
@@ -682,26 +671,20 @@ msgid "Input/output error"
 msgstr "Galat input/output"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:209
-#, fuzzy
-#| msgid "Show device information"
 msgid "Device did not respond"
-msgstr "Tampilkan informasi perangkat"
+msgstr "Perangkat tidak merespons"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:213
-#, fuzzy
-#| msgid "Temporarily visible"
 msgid "Resource temporarily unavailable"
-msgstr "Terlihat sementara"
+msgstr "Sumber daya tidak tersedia untuk sementara"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:218
 msgid "Connection Failed: "
-msgstr "Sambungan Gagal"
+msgstr "Sambungan Gagal: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:285
-#, fuzzy
-#| msgid "<b>Connect To:</b>"
 msgid "_<b>_Connect</b>"
-msgstr "<b>Terhubung ke:</b>"
+msgstr "_<b>_Hubungkan</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:287
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
@@ -724,16 +707,12 @@ msgid "<b>Disconnect:</b>"
 msgstr "<b>Terputus:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:322
-#, fuzzy
-#| msgid "<b>Disconnect:</b>"
 msgid "<b>Auto-connect:</b>"
-msgstr "<b>Terputus:</b>"
+msgstr "<b>Sambungkan otomatis:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:341
-#, fuzzy
-#| msgid "Send a _File..."
 msgid "Send a _File…"
-msgstr "Kirim a_Berkas..."
+msgstr "Kirim _Berkas…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:354
 msgid "_Pair"
@@ -748,16 +727,12 @@ msgid "_Untrust"
 msgstr "_Tidak Terpercaya"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:393
-#, fuzzy
-#| msgid "Rename device"
 msgid "R_ename device…"
-msgstr "Ubah nama perangkat"
+msgstr "Ubah_nama perangkat…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:402
-#, fuzzy
-#| msgid "Remove"
 msgid "_Remove…"
-msgstr "Hapus"
+msgstr "_Hapus…"
 
 #: blueman/gui/manager/ManagerProgressbar.py:44
 msgid "Cancel Operation"
@@ -836,10 +811,8 @@ msgid "Adapter selection"
 msgstr "Pemilihan adapter"
 
 #: blueman/gui/DeviceSelectorWidget.py:45
-#, fuzzy
-#| msgid "Discoverable… %ss"
 msgid "Discovering…"
-msgstr "Dapat ditemukan... %ss"
+msgstr "Menemukan…"
 
 #. translators: device class
 #: blueman/DeviceClass.py:6
@@ -858,10 +831,8 @@ msgstr "Ponsel"
 
 #. translators: device class
 #: blueman/DeviceClass.py:12
-#, fuzzy
-#| msgid "Network Access Point"
 msgid "Access point"
-msgstr "Network Access Point"
+msgstr "Akses poin"
 
 #. translators: device class
 #: blueman/DeviceClass.py:14
@@ -890,31 +861,23 @@ msgstr "Mainan"
 
 #. translators: device class
 #: blueman/DeviceClass.py:31
-#, fuzzy
-#| msgid "desktop"
 msgid "Desktop"
-msgstr "desktop"
+msgstr "Desktop"
 
 #. translators: device class
 #: blueman/DeviceClass.py:33
-#, fuzzy
-#| msgid "server"
 msgid "Server"
-msgstr "server"
+msgstr "Server"
 
 #. translators: device class
 #: blueman/DeviceClass.py:35
-#, fuzzy
-#| msgid "laptop"
 msgid "Laptop"
-msgstr "laptop"
+msgstr "Laptop"
 
 #. translators: device class
 #: blueman/DeviceClass.py:37
-#, fuzzy
-#| msgid "handheld"
 msgid "Handheld"
-msgstr "handheld"
+msgstr "Gawai"
 
 #. translators: device class
 #: blueman/DeviceClass.py:39
@@ -923,10 +886,8 @@ msgstr ""
 
 #. translators: device class
 #: blueman/DeviceClass.py:48
-#, fuzzy
-#| msgid "cellular"
 msgid "Cellular"
-msgstr "selular"
+msgstr "Selular"
 
 #. translators: device class
 #: blueman/DeviceClass.py:50
@@ -937,17 +898,13 @@ msgstr "cordless"
 
 #. translators: device class
 #: blueman/DeviceClass.py:52
-#, fuzzy
-#| msgid "smart phone"
 msgid "Smart phone"
-msgstr "smart phone"
+msgstr "Ponsel pintar"
 
 #. translators: device class
 #: blueman/DeviceClass.py:54
-#, fuzzy
-#| msgid "modem"
 msgid "Modem"
-msgstr "modem"
+msgstr "Modem"
 
 #. translators: device class
 #: blueman/DeviceClass.py:56
@@ -991,31 +948,23 @@ msgstr "83-99 persen"
 
 #. translators: device class
 #: blueman/DeviceClass.py:75
-#, fuzzy
-#| msgid "obexd not available"
 msgid "Not available"
-msgstr "obexd tidak tersedia"
+msgstr "Tidak tersedia"
 
 #. translators: device class
 #: blueman/DeviceClass.py:82 blueman/Sdp.py:123 blueman/Sdp.py:164
-#, fuzzy
-#| msgid "headset"
 msgid "Headset"
-msgstr "headset"
+msgstr "Headset"
 
 #. translators: device class
 #: blueman/DeviceClass.py:84 blueman/Sdp.py:145
-#, fuzzy
-#| msgid "handsfree"
 msgid "Handsfree"
-msgstr "handsfree"
+msgstr "Handsfree"
 
 #. translators: device class
 #: blueman/DeviceClass.py:88
-#, fuzzy
-#| msgid "microphone"
 msgid "Microphone"
-msgstr "mikrofon"
+msgstr "Mikrofon"
 
 #. translators: device class
 #: blueman/DeviceClass.py:90
@@ -1054,10 +1003,8 @@ msgstr "Vcr"
 
 #. translators: device class
 #: blueman/DeviceClass.py:104
-#, fuzzy
-#| msgid "Audio Source"
 msgid "Video camera"
-msgstr "Sumber Audio"
+msgstr "Kamera video"
 
 #. translators: device class
 #: blueman/DeviceClass.py:106
@@ -1066,10 +1013,8 @@ msgstr "Camcorder"
 
 #. translators: device class
 #: blueman/DeviceClass.py:108
-#, fuzzy
-#| msgid "Audio Source"
 msgid "Video monitor"
-msgstr "Sumber Audio"
+msgstr "Monitor video"
 
 #. translators: device class
 #: blueman/DeviceClass.py:110
@@ -1078,10 +1023,8 @@ msgstr "Tampilan video dan pengeras suara"
 
 #. translators: device class
 #: blueman/DeviceClass.py:112
-#, fuzzy
-#| msgid "Audio Source"
 msgid "Video conferencing"
-msgstr "Sumber Audio"
+msgstr "Konferensi video"
 
 #. translators: device class
 #: blueman/DeviceClass.py:116
@@ -1090,17 +1033,13 @@ msgstr "Gim / Mainan"
 
 #. translators: device class
 #: blueman/DeviceClass.py:123 blueman/DeviceClass.py:189
-#, fuzzy
-#| msgid "keyboard"
 msgid "Keyboard"
-msgstr "keyboard"
+msgstr "Papan tik"
 
 #. translators: device class
 #: blueman/DeviceClass.py:125
-#, fuzzy
-#| msgid "pointing"
 msgid "Pointing"
-msgstr "penunjuk"
+msgstr "Penunjuk"
 
 #. translators: device class
 #: blueman/DeviceClass.py:127
@@ -1178,56 +1117,40 @@ msgid "Game"
 msgstr "gim"
 
 #: blueman/DeviceClass.py:169
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Phone"
-msgstr "Sambung"
+msgstr "Telepon Generik"
 
 #: blueman/DeviceClass.py:170
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Computer"
-msgstr "Sambung"
+msgstr "Komputer Generik"
 
 #: blueman/DeviceClass.py:171
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Watch"
-msgstr "Sambung"
+msgstr "Jam Tangan Generik"
 
 #: blueman/DeviceClass.py:172
 msgid "Watch: Sports Watch"
 msgstr "Jam tangan: Jam Tangan Olahraga"
 
 #: blueman/DeviceClass.py:173
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Clock"
-msgstr "Sambung"
+msgstr "Jam Generik"
 
 #: blueman/DeviceClass.py:174
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "Generic Display"
-msgstr "Transfer Berkas Bluetooth"
+msgstr "Display Generik"
 
 #: blueman/DeviceClass.py:175
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Remote Control"
-msgstr "Sambung"
+msgstr "Remote Kontrol Generik"
 
 #: blueman/DeviceClass.py:176
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "Generic Eye-glasses"
-msgstr "Transfer Berkas Bluetooth"
+msgstr "Kacamata Mata Generik"
 
 #: blueman/DeviceClass.py:177
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "Generic Tag"
-msgstr "Transfer Berkas Bluetooth"
+msgstr "Tag Generik"
 
 #: blueman/DeviceClass.py:178
 #, fuzzy
@@ -1285,11 +1208,11 @@ msgstr ""
 
 #: blueman/DeviceClass.py:190
 msgid "Mouse"
-msgstr ""
+msgstr "Tetikus"
 
 #: blueman/DeviceClass.py:191
 msgid "Joystick"
-msgstr ""
+msgstr "Joystik"
 
 #: blueman/DeviceClass.py:192
 msgid "Gamepad"
@@ -1305,11 +1228,11 @@ msgstr ""
 
 #: blueman/DeviceClass.py:195
 msgid "Digital Pen"
-msgstr ""
+msgstr "Pena Digital"
 
 #: blueman/DeviceClass.py:196
 msgid "Barcode Scanner"
-msgstr ""
+msgstr "Pemindai Barcode"
 
 #: blueman/DeviceClass.py:197
 #, fuzzy
@@ -1435,63 +1358,63 @@ msgstr ""
 
 #: blueman/Sdp.py:88
 msgid "SDP"
-msgstr ""
+msgstr "SDP"
 
 #: blueman/Sdp.py:89
 msgid "UDP"
-msgstr ""
+msgstr "UDP"
 
 #: blueman/Sdp.py:90
 msgid "RFCOMM"
-msgstr ""
+msgstr "RFCOMM"
 
 #: blueman/Sdp.py:91
 msgid "TCP"
-msgstr ""
+msgstr "TCP"
 
 #: blueman/Sdp.py:92
 msgid "TCS-BIN"
-msgstr ""
+msgstr "TCS-BIN"
 
 #: blueman/Sdp.py:93
 msgid "TCS-AT"
-msgstr ""
+msgstr "TCS-AT"
 
 #: blueman/Sdp.py:94
 msgid "ATT"
-msgstr ""
+msgstr "ATT"
 
 #: blueman/Sdp.py:95
 msgid "OBEX"
-msgstr ""
+msgstr "OBEX"
 
 #: blueman/Sdp.py:96
 msgid "IP"
-msgstr ""
+msgstr "IP"
 
 #: blueman/Sdp.py:97
 msgid "FTP"
-msgstr ""
+msgstr "FTP"
 
 #: blueman/Sdp.py:98
 msgid "HTTP"
-msgstr ""
+msgstr "HTTP"
 
 #: blueman/Sdp.py:99
 msgid "WSP"
-msgstr ""
+msgstr "WSP"
 
 #: blueman/Sdp.py:100
 msgid "BNEP"
-msgstr ""
+msgstr "BNEP"
 
 #: blueman/Sdp.py:101
 msgid "UPnP/ESDP"
-msgstr ""
+msgstr "UPnP/ESDP"
 
 #: blueman/Sdp.py:102
 msgid "HIDP"
-msgstr ""
+msgstr "HIDP"
 
 #: blueman/Sdp.py:103
 msgid "Hardcopy Control Channel"
@@ -1507,15 +1430,15 @@ msgstr ""
 
 #: blueman/Sdp.py:106
 msgid "AVCTP"
-msgstr ""
+msgstr "AVCTP"
 
 #: blueman/Sdp.py:107
 msgid "AVDTP"
-msgstr ""
+msgstr "AVDTP"
 
 #: blueman/Sdp.py:108
 msgid "CMTP"
-msgstr ""
+msgstr "CMTP"
 
 #: blueman/Sdp.py:109
 msgid "UDI_C-Plane"
@@ -1602,12 +1525,13 @@ msgid "Video Conferencing"
 msgstr ""
 
 #: blueman/Sdp.py:131
+#, fuzzy
 msgid "Intercom"
-msgstr ""
+msgstr "Radio"
 
 #: blueman/Sdp.py:132
 msgid "Fax"
-msgstr ""
+msgstr "Fax"
 
 #: blueman/Sdp.py:133
 msgid "Headset Audio Gateway"
@@ -1615,15 +1539,15 @@ msgstr ""
 
 #: blueman/Sdp.py:134
 msgid "WAP"
-msgstr ""
+msgstr "WAP"
 
 #: blueman/Sdp.py:135
 msgid "WAP Client"
-msgstr ""
+msgstr "Klien WAP"
 
 #: blueman/Sdp.py:136
 msgid "PANU"
-msgstr ""
+msgstr "PANU"
 
 #: blueman/Sdp.py:137
 msgid "Network Access Point"
@@ -1703,15 +1627,16 @@ msgstr ""
 
 #: blueman/Sdp.py:157
 msgid "UDI-MT"
-msgstr ""
+msgstr "UDI-MT"
 
 #: blueman/Sdp.py:158
 msgid "UDI-TA"
-msgstr ""
+msgstr "UDI-TA"
 
 #: blueman/Sdp.py:159
+#, fuzzy
 msgid "Audio/Video"
-msgstr ""
+msgstr "A/V"
 
 #: blueman/Sdp.py:160
 msgid "SIM Access (SAP)"
@@ -1747,7 +1672,7 @@ msgstr "Network Access Point (NAP)"
 
 #: blueman/Sdp.py:168
 msgid "GNSS"
-msgstr ""
+msgstr "GNSS"
 
 #: blueman/Sdp.py:169
 msgid "GNSS Server"
@@ -1827,7 +1752,7 @@ msgstr ""
 
 #: blueman/Sdp.py:186
 msgid "HDP"
-msgstr ""
+msgstr "HDP"
 
 #: blueman/Sdp.py:187
 #, fuzzy
@@ -2021,7 +1946,7 @@ msgstr "Manajer Perangkat"
 
 #: blueman/Sdp.py:230
 msgid "Appearance"
-msgstr ""
+msgstr "Penampilan"
 
 #: blueman/Sdp.py:231
 msgid "Peripheral Privacy Flag"
@@ -2320,7 +2245,7 @@ msgstr ""
 "Menyediakan dukungan untuk Personal Area Networking (PAN) diperkenalkan pada "
 "NetworkManager 0.8"
 
-#: blueman/plugins/applet/DBusService.py:46
+#: blueman/plugins/applet/DBusService.py:47
 msgid "Provides DBus API for other Blueman components"
 msgstr "Menyediakan DBus API untuk komponen Blueman lainnya"
 
