@@ -11,6 +11,7 @@
 ### Bugs fixed
 
 * Recent connections disabled after suspend and resume
+* Service authorization notifications did not respond
 
 ## 2.2.2
 
