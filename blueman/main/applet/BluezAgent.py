@@ -4,7 +4,7 @@ from gettext import gettext as _
 from html import escape
 import random
 from xml.etree import ElementTree
-from typing import Dict, Optional, overload, Callable, Union, TYPE_CHECKING, Tuple, Any
+from typing import Dict, Optional, overload, Callable, Union, TYPE_CHECKING, Tuple, Any, List
 
 from blueman.bluez.Device import Device
 from blueman.bluez.AgentManager import AgentManager
@@ -96,6 +96,7 @@ class BluezAgent(DbusService):
         self._db: Optional[ElementTree.ElementTree] = None
         self._devhandlerids: Dict[str, int] = {}
         self._notification: Optional[Union[_NotificationBubble, _NotificationDialog]] = None
+        self._service_notifications: List[Union[_NotificationBubble, _NotificationDialog]] = []
 
     def register_agent(self) -> None:
         logging.info("Register Agent")
@@ -307,6 +308,8 @@ class BluezAgent(DbusService):
             else:
                 err(BluezErrorRejected("Rejected"))
 
+            self._service_notifications.remove(n)
+
         logging.info("Agent.Authorize")
         dev_str = self.get_device_string(device)
         service = ServiceUUID(uuid).name
@@ -318,3 +321,4 @@ class BluezAgent(DbusService):
 
         n = Notification(_("Bluetooth Authentication"), notify_message, 0, actions, on_auth_action, icon_name="blueman")
         n.show()
+        self._service_notifications.append(n)
