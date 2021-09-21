@@ -13,6 +13,7 @@ from blueman.gui.CommonUi import ErrorDialog
 from blueman.main.Config import Config
 from blueman.plugins.BasePlugin import BasePlugin
 from blueman.bluemantyping import GSignals
+from blueman.plugins.errors import PluginException
 
 
 class LoadException(Exception):
@@ -88,6 +89,8 @@ class PluginManager(GObject.GObject):
                 importlib.import_module(self.module_path.__name__ + f".{plugin}")
             except ImportError:
                 logging.error(f"Unable to load plugin module {plugin}", exc_info=True)
+            except PluginException as err:
+                logging.warning(f"Failed to start plugin {plugin}: {err}")
 
         for cls in self.plugin_class.__subclasses__():
             self.__classes[cls.__name__] = cls
