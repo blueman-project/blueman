@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # coding=utf-8
 #cython: language_level=3
-import logging
 
 cdef extern from "malloc.h":
     cdef void free(void *ptr)
@@ -14,7 +13,6 @@ cdef extern from "bluetooth/bluetooth.h":
         unsigned char b[6]
 
     int ba2str(bdaddr_t *ba, char *str)
-    int str2ba(char *str, bdaddr_t *ba)
 
 cdef extern from "bluetooth/hci.h":
     cdef struct hci_dev_stats:
@@ -88,7 +86,6 @@ cdef extern from "libblueman.h":
     cdef int get_rfcomm_list(rfcomm_dev_list_req **ret)
     cdef int c_create_rfcomm_device "create_rfcomm_device" (char *local_address, char *remote_address, int channel)
     cdef int c_release_rfcomm_device "release_rfcomm_device" (int id)
-    cdef float get_page_timeout(int hdev)
     cdef int _create_bridge(char* name)
     cdef int _destroy_bridge(char* name)
 
@@ -106,8 +103,6 @@ ERR = {
     -7:"Read Link quality failed",
     -8:"Getting rfcomm list failed",
     -9:"ERR_SOCKET_FAILED",
-    -10:"ERR_CANT_READ_PAGE_TIMEOUT",
-    -11:"ERR_READ_PAGE_TIMEOUT",
     -12: "Can't bind RFCOMM socket",
     -13: "Can't connect RFCOMM socket",
     -14: "Can't create RFCOMM TTY",
@@ -269,17 +264,6 @@ cdef class conn_info:
 
         return tpl
 
-def page_timeout(py_hci_name="hci0"):
-    py_bytes_hci_name = py_hci_name.encode("UTF-8")
-    cdef char* hci_name = py_bytes_hci_name
-
-    dev_id = int(hci_name[3:])
-    ret = get_page_timeout(dev_id)
-    if ret < 0:
-        raise Exception, ERR[ret]
-    else:
-        return ret
-
 def device_info(py_hci_name="hci0"):
     py_bytes_hci_name = py_hci_name.encode("UTF-8")
     cdef char* hci_name = py_bytes_hci_name
@@ -324,9 +308,3 @@ def device_info(py_hci_name="hci0"):
     ("stat", dict(x))]
 
     return dict(z)
-
-cdef extern from "glib-object.h":
-    ctypedef struct GObject
-
-cdef extern from "pygobject.h":
-    cdef GObject* pygobject_get(object)
