@@ -72,15 +72,6 @@ cdef extern from "bluetooth/rfcomm.h":
 
 
 cdef extern from "libblueman.h":
-    cdef struct conn_info_handles:
-        unsigned int handle
-        int dd
-
-
-    cdef int connection_init(int dev_id, char *addr, conn_info_handles *ci)
-    cdef int connection_get_rssi(conn_info_handles *ci, signed char *ret_rssi)
-    cdef int connection_get_tpl(conn_info_handles *ci, signed char *ret_tpl, unsigned char type)
-    cdef int connection_close(conn_info_handles *ci)
     cdef int c_get_rfcomm_channel "get_rfcomm_channel" (unsigned short service_class, char* btd_addr)
     cdef int get_rfcomm_list(rfcomm_dev_list_req **ret)
     cdef int c_create_rfcomm_device "create_rfcomm_device" (char *local_address, char *remote_address, int channel)
@@ -94,11 +85,6 @@ class RFCOMMError(Exception):
 
 ERR = {
     -1:"Can't allocate memory",
-    -2:"HCI device open failed",
-    -3:"Not connected",
-    -4:"Get connection info failed",
-    -5:"Read RSSI failed",
-    -6:"Read transmit power level request failed",
     -8:"Getting rfcomm list failed",
     -9:"ERR_SOCKET_FAILED",
     -12: "Can't bind RFCOMM socket",
@@ -204,55 +190,6 @@ def destroy_bridge(py_name="pan1"):
     err = _destroy_bridge(name)
     if err < 0:
         raise BridgeException(-err)
-
-
-class ConnInfoReadError(Exception):
-    pass
-
-cdef class conn_info:
-    cdef conn_info_handles ci
-    cdef int hci
-    cdef char* addr
-    cdef public bint failed
-
-    def __init__(self, py_addr, py_hci_name="hci0"):
-        self.failed = False
-        py_bytes_addr = py_addr.encode("UTF-8")
-        cdef char* addr = py_bytes_addr
-
-        py_bytes_hci_name = py_hci_name.encode("UTF-8")
-        cdef char* hci_name = py_bytes_hci_name
-
-
-        self.hci = int(hci_name[3:])
-        self.addr = addr
-
-    def init(self):
-        res = connection_init(self.hci, self.addr, & self.ci)
-        if res < 0:
-            self.failed = True
-            raise ConnInfoReadError(ERR[res])
-
-    def deinit(self):
-        if self.failed:
-            return
-        connection_close(&self.ci)
-
-    def get_rssi(self):
-        cdef signed char rssi
-        res = connection_get_rssi(&self.ci, &rssi)
-        if res < 0:
-            raise ConnInfoReadError(ERR[res])
-
-        return rssi
-
-    def get_tpl(self, tp=0):
-        cdef signed char tpl
-        res = connection_get_tpl(&self.ci, &tpl, tp)
-        if res < 0:
-            raise ConnInfoReadError(ERR[res])
-
-        return tpl
 
 def device_info(py_hci_name="hci0"):
     py_bytes_hci_name = py_hci_name.encode("UTF-8")
