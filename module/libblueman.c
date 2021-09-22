@@ -52,7 +52,7 @@ static inline unsigned long __tv_to_jiffies(const struct timeval *tv)
 
         return jif/10000;
 }
-        
+
 int _create_bridge(const char* name) {
 	int sock;
 	sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -132,7 +132,7 @@ int _destroy_bridge(const char* name) {
 	return 0;
 }
 
-int find_conn(int s, int dev_id, long arg)
+static int find_conn(int s, int dev_id, long arg)
 {
 	struct hci_conn_list_req *cl;
 	struct hci_conn_info *ci;
@@ -431,48 +431,3 @@ int release_rfcomm_device(int id) {
         return 0;
     }
 }
-
-float get_page_timeout(int hdev)
-{
-	struct hci_request rq;
-	int s;
-	float ret;
-
-	if ((s = hci_open_dev(hdev)) < 0) {
-		ret = ERR_HCI_DEV_OPEN_FAILED;
-		goto out;
-	}
-
-	memset(&rq, 0, sizeof(rq));
-
-	uint16_t timeout;
-	read_page_timeout_rp rp;
-
-	rq.ogf = OGF_HOST_CTL;
-	rq.ocf = OCF_READ_PAGE_TIMEOUT;
-	rq.rparam = &rp;
-	rq.rlen = READ_PAGE_TIMEOUT_RP_SIZE;
-
-	if (hci_send_req(s, &rq, 1000) < 0) {
-		ret = ERR_CANT_READ_PAGE_TIMEOUT;
-		goto out;
-	}
-	if (rp.status) {
-		ret = ERR_READ_PAGE_TIMEOUT;
-		goto out;
-	}
-	
-	timeout = btohs(rp.timeout);
-	ret = ((float)timeout * 0.625);
-
-out:
-	if (s >= 0)
-		hci_close_dev(s);
-	return ret;
-}
-
-
-
-
-
-
