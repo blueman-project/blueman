@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Callable
 
 import cairo
 
@@ -83,6 +83,10 @@ class Services(ManagerPlugin, MenuItemsProvider):
             item = create_menuitem(action.title, action.icon)
             items.append(DeviceMenuItem(item, DeviceMenuItem.Group.ACTIONS, priority + 200))
             item.show()
-            item.connect("activate", lambda _: action.callback())
+            item.connect("activate", self._get_activation_handler(action.callback))
 
         return items
+
+    @staticmethod
+    def _get_activation_handler(callback: Callable[[], None]) -> Callable[[Gtk.MenuItem], None]:
+        return lambda _: callback()
