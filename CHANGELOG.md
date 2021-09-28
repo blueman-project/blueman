@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.2.3
+
+### Bugs fixed
+
+* Recent connections disabled after suspend and resume
+
 ## 2.2.2
 
 ### Bugs fixed
