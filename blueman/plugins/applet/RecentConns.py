@@ -151,6 +151,10 @@ class RecentConns(AppletPlugin, PowerStateListener):
 
         self.change_sensitivity(state)
 
+    def on_device_created(self, path: str) -> None:
+        self._items = None
+        self.initialize()
+
     def on_device_removed(self, path: str) -> None:
         for item in reversed(self.items):
             if item['device'] == path:
