@@ -6,6 +6,12 @@
 
 * Audio profile switcher in applet menu (@abhijeetviswa)
 
+## 2.2.3
+
+### Bugs fixed
+
+* Recent connections disabled after suspend and resume
+
 ## 2.2.2
 
 ### Bugs fixed
