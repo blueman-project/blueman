@@ -1,0 +1,20 @@
+name: potfile
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-pot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: make -C po blueman.pot-update
+      - uses: peter-evans/create-pull-request@v3
+        with:
+          commit-message: Update blumean.pot
+          branch: potfile
+          delete-branch: true
+          title: Update blueman.pot
+          body:
