@@ -7,13 +7,14 @@
 # Francesc Famadas <kiski97@gmail.com>, 2015
 # Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>, 2016-2018
 # Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>, 2015-2016
+# Adolfo Jayme Barrientos <fitojb@ubuntu.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-04 23:06+0000\n"
-"PO-Revision-Date: 2020-09-12 08:19+0000\n"
-"Last-Translator: Christopher Schramm <github@cschramm.eu>\n"
+"POT-Creation-Date: 2021-01-13 07:33+0000\n"
+"PO-Revision-Date: 2021-06-14 07:22+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/blueman/stable/"
 "ca/>\n"
 "Language: ca\n"
@@ -21,11 +22,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3-dev\n"
+"X-Generator: Weblate 4.7-dev\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Visibility Setting</b>"
-msgstr "<b>Ajusts de visibilitat</b>"
+msgstr "<b>Paràmetre de visibilitat</b>"
 
 #: ../data/ui/adapters-tab.ui.h:2 ../blueman/main/Adapter.py:130
 msgid "Hidden"
@@ -169,7 +170,7 @@ msgstr "udhcpd"
 
 #: ../data/ui/services-network.ui.h:8
 msgid "<b>NAP Settings</b>"
-msgstr "<b>Ajusts de NAP</b>"
+msgstr "<b>Paràmetres de NAP</b>"
 
 #: ../data/ui/services-network.ui.h:9
 msgid "<b>PAN Support</b>"
@@ -181,7 +182,7 @@ msgstr "<b>Compatibilitat amb DUN</b>"
 
 #: ../data/ui/services-network.ui.h:11
 msgid "<b>Network Settings</b>"
-msgstr "<b>Ajusts de Xarxa</b>"
+msgstr "<b>Paràmetres de xarxa</b>"
 
 #: ../data/ui/services-transfer.ui.h:1
 msgid "<b>File Receiving (Object Push)</b>"
@@ -201,7 +202,7 @@ msgstr "Accepta fitxers dels dispositius de confiança"
 
 #: ../data/ui/services-transfer.ui.h:5
 msgid "<b>Transfer Settings</b>"
-msgstr "<b>Ajusts de transferència</b>"
+msgstr "<b>Paràmetres de transferència</b>"
 
 #: ../data/ui/send-dialog.ui.h:1
 msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
@@ -316,7 +317,7 @@ msgstr "<b>Conflicte amb:</b>"
 
 #: ../data/ui/gsm-settings.ui.h:1
 msgid "<b>GSM settings</b>"
-msgstr "<b>Ajusts GSM</b>"
+msgstr "<b>Paràmetres de GSM</b>"
 
 #: ../data/ui/gsm-settings.ui.h:2
 msgid "Number:"
@@ -648,15 +649,13 @@ msgid "_Search"
 msgstr "_Cerca"
 
 #: ../blueman/gui/manager/ManagerMenu.py:139
-#, fuzzy
-#| msgid "Adapter Preferences"
 msgid "_Preferences"
-msgstr "Preferències de l'adaptador"
+msgstr "_Preferències"
 
 #: ../blueman/gui/manager/ManagerMenu.py:148
 #: ../blueman/plugins/applet/ExitItem.py:15
 msgid "_Exit"
-msgstr ""
+msgstr "_Surt"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:423
 msgid "<b>Trusted and Paired</b>"
@@ -832,7 +831,7 @@ msgstr "Blueman és un gestor de Bluetooth GTK+"
 
 #: ../blueman/gui/GsmSettings.py:28
 msgid "GSM Settings"
-msgstr "Ajusts GSM"
+msgstr "Paràmetres de GSM"
 
 #: ../blueman/gui/applet/PluginDialog.py:92
 #: ../blueman/plugins/applet/StandardItems.py:90
@@ -1078,19 +1077,19 @@ msgstr ""
 
 #: ../blueman/Sdp.py:106
 msgid "IP"
-msgstr ""
+msgstr "IP"
 
 #: ../blueman/Sdp.py:107
 msgid "FTP"
-msgstr ""
+msgstr "FTP"
 
 #: ../blueman/Sdp.py:108
 msgid "HTTP"
-msgstr ""
+msgstr "HTTP"
 
 #: ../blueman/Sdp.py:109
 msgid "WSP"
-msgstr ""
+msgstr "WSP"
 
 #: ../blueman/Sdp.py:110
 msgid "BNEP"
@@ -1232,11 +1231,11 @@ msgstr ""
 
 #: ../blueman/Sdp.py:144
 msgid "WAP"
-msgstr ""
+msgstr "WAP"
 
 #: ../blueman/Sdp.py:145
 msgid "WAP Client"
-msgstr ""
+msgstr "Client WAP"
 
 #: ../blueman/Sdp.py:146
 msgid "PANU"
@@ -1275,10 +1274,8 @@ msgid "ImagingReferencedObjects (BIP)"
 msgstr ""
 
 #: ../blueman/Sdp.py:155
-#, fuzzy
-#| msgid "handsfree"
 msgid "Handsfree"
-msgstr "mans lliures"
+msgstr "Mans lliures"
 
 #: ../blueman/Sdp.py:156
 msgid "Handsfree Audio Gateway"
@@ -1792,7 +1789,7 @@ msgstr "Renova l'adreça IP"
 
 #: ../blueman/plugins/manager/Services.py:96
 msgid "Dialup Settings"
-msgstr "Ajusts de l'accés a través de línia telefònica"
+msgstr "Paràmetres de l'accés per línia telefònica"
 
 #: ../blueman/plugins/manager/Services.py:105
 msgid "Serial Ports"

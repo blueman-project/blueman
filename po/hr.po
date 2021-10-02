@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-04 23:06+0000\n"
-"PO-Revision-Date: 2021-01-05 01:29+0000\n"
+"POT-Creation-Date: 2021-01-13 07:33+0000\n"
+"PO-Revision-Date: 2021-09-09 13:42+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/blueman/stable/"
 "hr/>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.4.1-dev\n"
+"X-Generator: Weblate 4.8.1-dev\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Visibility Setting</b>"
@@ -53,7 +53,7 @@ msgstr "Zahtjev za uparivanje uređaja:"
 
 #: ../data/ui/applet-passkey.ui.h:3
 msgid "This should be overwritten"
-msgstr "Ovo bi trebalo biti prebrisano"
+msgstr "Ovo bi se trebalo prepisati"
 
 #: ../data/ui/applet-passkey.ui.h:4
 msgid "Show input"
@@ -128,7 +128,7 @@ msgstr "Ukloni"
 
 #: ../data/ui/manager-main.ui.h:20
 msgid "Send file(s) to the device"
-msgstr "Pošalji datoteku(e) na uređaj"
+msgstr "Pošalji datoteke na uređaj"
 
 #. translators: toolbar item: keep it as short as possible
 #: ../data/ui/manager-main.ui.h:22
@@ -327,7 +327,7 @@ msgstr "APN:"
 
 #: ../data/ui/net-usage.ui.h:1
 msgid "Traffic statistics"
-msgstr "Statistike prometa"
+msgstr "Statistika prometa"
 
 #: ../data/ui/net-usage.ui.h:2
 msgid "_Close"
@@ -343,7 +343,7 @@ msgstr "<b>Poslano:</b>"
 
 #: ../data/ui/net-usage.ui.h:5
 msgid "<b>Total:</b>"
-msgstr "<b>Total:</b>"
+msgstr "<b>Ukupno:</b>"
 
 #: ../data/ui/net-usage.ui.h:6
 msgid "<b>Log started:</b>"
@@ -367,7 +367,7 @@ msgstr "Bluetooth adapteri"
 
 #: ../blueman/main/Adapter.py:49
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
-msgstr "Bluetooth mora biti uključen da bi upravitelj adaptera funkcionirao"
+msgstr "Bluetooth mora biti uključen kako bi upravljač adaptera radio"
 
 #: ../blueman/main/Adapter.py:128
 msgid "Always"
@@ -391,12 +391,11 @@ msgstr "Bluetooth uređaji"
 
 #: ../blueman/main/Manager.py:71 ../blueman/main/Manager.py:111
 msgid "Bluetooth needs to be turned on for the device manager to function"
-msgstr ""
-"Da bi upravitelj uređaja mogao funkcionirati, Bluetooth mora biti uključen"
+msgstr "Bluetooth mora biti uključen kako bi upravljač uređaja radio"
 
 #: ../blueman/main/Manager.py:90
 msgid "Connection to BlueZ failed"
-msgstr "Veza na BlueZ nije uspjela"
+msgstr "Povezivanje s BlueZ neuspjelo"
 
 #: ../blueman/main/Manager.py:91
 msgid ""
@@ -404,10 +403,9 @@ msgid ""
 "This probably means that there were no Bluetooth adapters detected or "
 "Bluetooth daemon was not started."
 msgstr ""
-"Bluez pozadinski program nije pokrenut, blueman-manager ne može nastaviti s "
-"radom.\n"
-"To vjerojatno znači da nema otkrivenih Bluetooth adaptera ili Bluetooth "
-"pozadinski program nije pokrenut."
+"BlueZ demon ne radi, blueman upravljač ne može nastaviti s radom.\n"
+"To vjerojatno znači da nije otkriven nijedan Bluetooth adapter ili da "
+"Bluetooth demon nije pokrenut."
 
 #: ../blueman/main/Manager.py:184
 msgid "Searching"
@@ -426,7 +424,7 @@ msgstr "Osobitosti adaptera"
 #: ../blueman/gui/manager/ManagerDeviceList.py:133
 #: ../blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
-msgstr "Otpremnik datoteka"
+msgstr "Pošiljatelj datoteka"
 
 #: ../blueman/main/Sendto.py:33
 msgid "Bluetooth File Transfer"
@@ -443,12 +441,12 @@ msgstr "obexd nije dostupan"
 #: ../blueman/main/Sendto.py:110
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
 msgstr ""
-"Neuspjelo automatsko pokretanje obex usluge. Pozadinski program obex mora "
-"biti pokrenut"
+"Neuspjelo automatsko pokretanje obex usluge. Uvjeri se da obex demon radi "
+"mora"
 
 #: ../blueman/main/Sendto.py:139
 msgid "Cancelling"
-msgstr "Otkazivanje"
+msgstr "Prekidanje"
 
 #: ../blueman/main/Sendto.py:150 ../blueman/main/Sendto.py:192
 msgid "Sending File"
@@ -456,7 +454,7 @@ msgstr "Slanje datoteke"
 
 #: ../blueman/main/Sendto.py:150 ../blueman/main/Sendto.py:192
 msgid "ETA:"
-msgstr "ETA:"
+msgstr "Procijenjeno vrijeme prijema:"
 
 #: ../blueman/main/Sendto.py:186
 #, python-format
@@ -477,7 +475,7 @@ msgstr[2] "%.0f Sekundi"
 #: ../blueman/main/Sendto.py:222
 #, python-format
 msgid "Error occurred while sending file %s"
-msgstr "Došlo je do greške pri slanju datoteke %s"
+msgstr "Dogodila se greška tijekom slanja datoteke „%s”"
 
 #: ../blueman/main/Sendto.py:226
 msgid "Skip"
@@ -485,7 +483,7 @@ msgstr "Preskoči"
 
 #: ../blueman/main/Sendto.py:227
 msgid "Retry"
-msgstr "Pokušaj ponovno"
+msgstr "Pokušaj ponovo"
 
 #: ../blueman/main/Sendto.py:274
 msgid "Error occurred"
@@ -507,7 +505,7 @@ msgstr "Bluetooth autentifikacija"
 
 #: ../blueman/main/applet/BluezAgent.py:217
 msgid "Enter PIN code for authentication:"
-msgstr "Upišite PIN za autentifikaciju:"
+msgstr "Upiši PIN za autentifikaciju:"
 
 #: ../blueman/main/applet/BluezAgent.py:218
 msgid "Enter PIN code"
@@ -515,7 +513,7 @@ msgstr "Upišite PIN"
 
 #: ../blueman/main/applet/BluezAgent.py:232
 msgid "Enter passkey for authentication:"
-msgstr "Unesite lozinku za autentifikaciju:"
+msgstr "Upiši lozinku za autentifikaciju:"
 
 #: ../blueman/main/applet/BluezAgent.py:233
 msgid "Enter passkey"
@@ -527,11 +525,11 @@ msgstr "Uparivanje lozinke za"
 
 #: ../blueman/main/applet/BluezAgent.py:252
 msgid "Pairing PIN code for"
-msgstr "Uparivanje PIN koda za"
+msgstr "Uparivanje PIN-a za"
 
 #: ../blueman/main/applet/BluezAgent.py:264
 msgid "Pairing request for:"
-msgstr "Zahtjev uparivanja za:"
+msgstr "Zahtjev za uparivanje za:"
 
 #: ../blueman/main/applet/BluezAgent.py:267
 msgid "Confirm value for authentication:"
@@ -548,11 +546,11 @@ msgstr "Odbij"
 
 #: ../blueman/main/applet/BluezAgent.py:294
 msgid "Authorization request for:"
-msgstr "Autorizacijski zahtjev za:"
+msgstr "Zahtjev za autorizaciju za:"
 
 #: ../blueman/main/applet/BluezAgent.py:294
 msgid "Service:"
-msgstr "Servis:"
+msgstr "Usluga:"
 
 #: ../blueman/main/applet/BluezAgent.py:295
 msgid "Always accept"
@@ -584,11 +582,11 @@ msgstr "Zatvori"
 
 #: ../blueman/Functions.py:81
 msgid "Enable Bluetooth"
-msgstr "Omogući Bluetooth"
+msgstr "Uključi Bluetooth"
 
 #: ../blueman/Functions.py:100
 msgid "Shall bluetooth get enabled automatically?"
-msgstr "Treba li se Bluetooth automatski uključiti?"
+msgstr "Želiš li da se Bluetooth automatski uključi?"
 
 #: ../blueman/Functions.py:101
 msgid "Yes"
@@ -605,15 +603,15 @@ msgstr "_Prijavi problem"
 #: ../blueman/gui/manager/ManagerMenu.py:50
 #: ../blueman/plugins/applet/StandardItems.py:78
 msgid "Device Manager"
-msgstr "Upravitelj uređaja"
+msgstr "Upravljač uređaja"
 
 #: ../blueman/gui/manager/ManagerMenu.py:57
 msgid "Show _Toolbar"
-msgstr "Pokaži _alatnu traku"
+msgstr "Prikaži _alatnu traku"
 
 #: ../blueman/gui/manager/ManagerMenu.py:62
 msgid "Show _Statusbar"
-msgstr "Pokaži _statusnu traku"
+msgstr "Prikaži _traku stanja"
 
 #: ../blueman/gui/manager/ManagerMenu.py:72
 msgid "S_ort By"
@@ -639,12 +637,12 @@ msgstr "_Priključci"
 #: ../blueman/gui/manager/ManagerMenu.py:116
 #: ../blueman/plugins/applet/StandardItems.py:39
 msgid "_Local Services"
-msgstr "_Lokalne Usluge"
+msgstr "_Lokalne usluge"
 
 #: ../blueman/gui/manager/ManagerMenu.py:117
 #: ../blueman/plugins/applet/StandardItems.py:84
 msgid "Service Preferences"
-msgstr "Osobitosti servisa"
+msgstr "Osobitosti usluga"
 
 #: ../blueman/gui/manager/ManagerMenu.py:125
 msgid "_Search"
@@ -727,7 +725,7 @@ msgstr "Neuspjelo Povezivanje: "
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:142
 msgid "Disconnection Failed: "
-msgstr "Prekidanje povezivanje neuspjelo: "
+msgstr "Prekidanje veze neuspjelo: "
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:181
 msgid "Disconnecting..."
@@ -1163,7 +1161,7 @@ msgstr "LAN pristup koristeći PPP"
 
 #: ../blueman/Sdp.py:128
 msgid "Dialup Networking (DUN)"
-msgstr "Pozivno umrežavanje (DUN)"
+msgstr "Umrežavanje modemom ili telefonom (DUN)"
 
 #: ../blueman/Sdp.py:129
 msgid "IrMC Sync"
@@ -1171,23 +1169,19 @@ msgstr "IrMC sinkronizacija"
 
 #: ../blueman/Sdp.py:130
 msgid "OBEX Object Push"
-msgstr ""
+msgstr "OBEX slanje objekata"
 
 #: ../blueman/Sdp.py:131
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "OBEX File Transfer"
-msgstr "Bluetooth prijenos datoteka"
+msgstr "OBEX prijenos datoteka"
 
 #: ../blueman/Sdp.py:132
 msgid "IrMC Sync Command"
 msgstr "Naredba za IrMC sinkronizaciju"
 
 #: ../blueman/Sdp.py:133 ../blueman/Sdp.py:174
-#, fuzzy
-#| msgid "headset"
 msgid "Headset"
-msgstr "headset"
+msgstr "Slušalice s mikrofonom"
 
 #: ../blueman/Sdp.py:134
 msgid "Cordless Telephony"
@@ -1195,11 +1189,11 @@ msgstr "Bežićno telefoniranje"
 
 #: ../blueman/Sdp.py:135
 msgid "Audio Source"
-msgstr "Izvor Zvuka"
+msgstr "Ulaz zvuka"
 
 #: ../blueman/Sdp.py:136
 msgid "Audio Sink"
-msgstr "Audio Sink"
+msgstr "Audio izlaz"
 
 #: ../blueman/Sdp.py:137
 msgid "Remote Control Target"
@@ -1227,7 +1221,7 @@ msgstr "Faks"
 
 #: ../blueman/Sdp.py:143
 msgid "Headset Audio Gateway"
-msgstr ""
+msgstr "Audio gateway za slušalice s mikrofonom"
 
 #: ../blueman/Sdp.py:144
 msgid "WAP"
@@ -1274,10 +1268,8 @@ msgid "ImagingReferencedObjects (BIP)"
 msgstr ""
 
 #: ../blueman/Sdp.py:155
-#, fuzzy
-#| msgid "handsfree"
 msgid "Handsfree"
-msgstr "handsfree"
+msgstr "Bezručni"
 
 #: ../blueman/Sdp.py:156
 msgid "Handsfree Audio Gateway"
@@ -1305,7 +1297,7 @@ msgstr "Human Interface Device usluga (HID)"
 
 #: ../blueman/Sdp.py:162
 msgid "HardcopyCableReplacement (HCR)"
-msgstr ""
+msgstr "HardcopyCableReplacement (HCR)"
 
 #: ../blueman/Sdp.py:163
 msgid "HCR_Print (HCR)"
@@ -1317,7 +1309,7 @@ msgstr ""
 
 #: ../blueman/Sdp.py:165
 msgid "Common ISDN Access (CIP)"
-msgstr "Zajednički ISDN pristup (CIP)"
+msgstr "ISDN pristup (CIP)"
 
 #: ../blueman/Sdp.py:166
 msgid "VideoConferencingGW (VCP)"
@@ -1348,24 +1340,20 @@ msgid "Phonebook Access (PBAP) - PSE"
 msgstr "Pristup adresaru (PBAP) - PSE"
 
 #: ../blueman/Sdp.py:173
-#, fuzzy
-#| msgid "Network Access Point (NAP)"
 msgid "Phonebook Access (PBAP)"
-msgstr "Mjesto mrežnog pristupa (NAP)"
+msgstr "Pristup adresaru (PBAP)"
 
 #: ../blueman/Sdp.py:175
 msgid "Message Access Server"
-msgstr ""
+msgstr "Poslužitelj za pristup porukama"
 
 #: ../blueman/Sdp.py:176
 msgid "Message Notification Server"
-msgstr ""
+msgstr "Poslužitelj za obavještavanje o porukama"
 
 #: ../blueman/Sdp.py:177
-#, fuzzy
-#| msgid "Network Access Point (NAP)"
 msgid "Message Access Profile (MAP)"
-msgstr "Mjesto mrežnog pristupa (NAP)"
+msgstr "Profil za pristup porukama (MAP)"
 
 #: ../blueman/Sdp.py:178
 msgid "GNSS"
@@ -1377,7 +1365,7 @@ msgstr "GNSS poslužitelj"
 
 #: ../blueman/Sdp.py:180
 msgid "3D Display"
-msgstr "3D ekran"
+msgstr "3D prikaz"
 
 #: ../blueman/Sdp.py:181
 msgid "3D Glasses"
@@ -1412,16 +1400,12 @@ msgid "PnP Information"
 msgstr "PnP podaci"
 
 #: ../blueman/Sdp.py:189
-#, fuzzy
-#| msgid "Group Network"
 msgid "Generic Networking"
-msgstr "Grupna mreža"
+msgstr "Generički mrežni rad"
 
 #: ../blueman/Sdp.py:190
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "Generic FileTransfer"
-msgstr "Bluetooth prijenos datoteka"
+msgstr "Generički prijenos datoteka"
 
 #: ../blueman/Sdp.py:191
 msgid "Generic Audio"
@@ -1432,16 +1416,12 @@ msgid "Generic Telephony"
 msgstr "Generičko telefoniranje"
 
 #: ../blueman/Sdp.py:193
-#, fuzzy
-#| msgid "Audio Source"
 msgid "Video Source"
-msgstr "Izvor Zvuka"
+msgstr "Video ulaz"
 
 #: ../blueman/Sdp.py:194
-#, fuzzy
-#| msgid "Audio Sink"
 msgid "Video Sink"
-msgstr "Audio Sink"
+msgstr "Video izlaz"
 
 #: ../blueman/Sdp.py:195
 msgid "Video Distribution"
@@ -1452,14 +1432,12 @@ msgid "HDP"
 msgstr "HDP"
 
 #: ../blueman/Sdp.py:197
-#, fuzzy
-#| msgid "Audio Source"
 msgid "HDP Source"
-msgstr "Izvor Zvuka"
+msgstr "HDP ulaz"
 
 #: ../blueman/Sdp.py:198
 msgid "HDP Sink"
-msgstr "Slivnik HDP-a"
+msgstr "HDP izlaz"
 
 #: ../blueman/Sdp.py:199
 msgid "Generic Access"
@@ -1475,17 +1453,15 @@ msgstr "Trenutno upozorenje"
 
 #: ../blueman/Sdp.py:202
 msgid "Link Loss"
-msgstr ""
+msgstr "Gubitak veze"
 
 #: ../blueman/Sdp.py:203
 msgid "Tx Power"
-msgstr ""
+msgstr "Snaga prijenosa"
 
 #: ../blueman/Sdp.py:204
-#, fuzzy
-#| msgid "Rename device"
 msgid "Current Time Service"
-msgstr "Preimenuj uređaj"
+msgstr "Trenutačno vrijeme – usluga"
 
 #: ../blueman/Sdp.py:205
 msgid "Reference Time Update Service"
@@ -1516,10 +1492,8 @@ msgid "Phone Alert Status Service"
 msgstr ""
 
 #: ../blueman/Sdp.py:212
-#, fuzzy
-#| msgid "Local Services"
 msgid "Battery Service"
-msgstr "Lokalni servisi"
+msgstr "Baterija – usluga"
 
 #: ../blueman/Sdp.py:213
 msgid "Blood Pressure"
@@ -1567,7 +1541,7 @@ msgstr ""
 
 #: ../blueman/Sdp.py:224
 msgid "User Data"
-msgstr ""
+msgstr "Korisnički podaci"
 
 #: ../blueman/Sdp.py:225
 msgid "Weight Scale"
@@ -1579,11 +1553,11 @@ msgstr ""
 
 #: ../blueman/Sdp.py:227
 msgid "Continuous Glucose Monitoring"
-msgstr ""
+msgstr "Kontinuirano praćenje glukoze"
 
 #: ../blueman/Sdp.py:228
 msgid "Internet Protocol Support"
-msgstr ""
+msgstr "Podrška za internetski protokol"
 
 #: ../blueman/Sdp.py:229
 msgid "Indoor Positioning"
@@ -1595,17 +1569,15 @@ msgstr ""
 
 #: ../blueman/Sdp.py:231
 msgid "HTTP Proxy"
-msgstr ""
+msgstr "HTTP Proxy"
 
 #: ../blueman/Sdp.py:232
 msgid "Transport Discovery"
 msgstr ""
 
 #: ../blueman/Sdp.py:233
-#, fuzzy
-#| msgid "Transfer"
 msgid "Object Transfer"
-msgstr "Prijenos"
+msgstr "Prijenos objekata"
 
 #: ../blueman/Sdp.py:234
 #, fuzzy
@@ -1614,86 +1586,76 @@ msgid "AppleAgent"
 msgstr "programčić"
 
 #: ../blueman/Sdp.py:235
-#, fuzzy
-#| msgid "Local Services"
 msgid "Primary Service"
-msgstr "Lokalni servisi"
+msgstr "Primarna usluga"
 
 #: ../blueman/Sdp.py:236
-#, fuzzy
-#| msgid "Search for nearby devices"
 msgid "Secondary Service"
-msgstr "Potraži uređaje u blizini"
+msgstr "Sekundarna usluga"
 
 #: ../blueman/Sdp.py:237
 msgid "Include"
-msgstr ""
+msgstr "Uključi"
 
 #: ../blueman/Sdp.py:238
 msgid "Characteristic Declaration"
 msgstr ""
 
 #: ../blueman/Sdp.py:239
-#, fuzzy
-#| msgid "Device Manager"
 msgid "Device Name"
-msgstr "Upravitelj uređaja"
+msgstr "Ime uređaja"
 
 #: ../blueman/Sdp.py:240
 msgid "Appearance"
-msgstr ""
+msgstr "Izgled"
 
 #: ../blueman/Sdp.py:241
 msgid "Peripheral Privacy Flag"
 msgstr ""
 
 #: ../blueman/Sdp.py:242
-#, fuzzy
-#| msgid "Renew IP Address"
 msgid "Reconnection Address"
-msgstr "Obnovi IP adresu"
+msgstr "Adresa za ponovno povezivanje"
 
 #: ../blueman/Sdp.py:243
 msgid "Peripheral Preferred Connection Parameters"
 msgstr ""
 
 #: ../blueman/Sdp.py:244
-#, fuzzy
-#| msgid "Device Manager"
 msgid "Service Changed"
-msgstr "Upravitelj uređaja"
+msgstr "Usluga se promijenila"
 
 #: ../blueman/Sdp.py:245
 msgid "System ID"
-msgstr ""
+msgstr "ID sustava"
 
 #: ../blueman/Sdp.py:246
 msgid "Model Number String"
-msgstr ""
+msgstr "Broj modela"
 
 #: ../blueman/Sdp.py:247
 msgid "Serial Number String"
-msgstr ""
+msgstr "Serijski broj"
 
 #: ../blueman/Sdp.py:248
 msgid "Firmware Revision String"
-msgstr ""
+msgstr "Revizija firmvera"
 
 #: ../blueman/Sdp.py:249
 msgid "Hardware Revision String"
-msgstr ""
+msgstr "Revizija hardvera"
 
 #: ../blueman/Sdp.py:250
 msgid "Software Revision String"
-msgstr ""
+msgstr "Revizija softvera"
 
 #: ../blueman/Sdp.py:251
 msgid "Manufacturer Name String"
-msgstr ""
+msgstr "Ime proizvođača"
 
 #: ../blueman/Sdp.py:252
 msgid "PnP ID"
-msgstr ""
+msgstr "PnP ID"
 
 #: ../blueman/Sdp.py:253
 msgid "Characteristic Extended Properties"
@@ -1721,7 +1683,7 @@ msgstr ""
 
 #: ../blueman/Sdp.py:259
 msgid "Valid Range"
-msgstr ""
+msgstr "Valjani raspon"
 
 #: ../blueman/Sdp.py:260
 msgid "External Report Reference"
@@ -1739,7 +1701,7 @@ msgstr "Profili automatskog povezivanja"
 
 #: ../blueman/Sdp.py:388
 msgid "Proprietary"
-msgstr "Svojstva"
+msgstr "Vlasnički"
 
 #: ../blueman/plugins/manager/Info.py:13
 msgid "yes"
@@ -1747,7 +1709,7 @@ msgstr "da"
 
 #: ../blueman/plugins/manager/Info.py:13
 msgid "no"
-msgstr "bez"
+msgstr "ne"
 
 #: ../blueman/plugins/manager/Info.py:113
 msgid "_Info"
@@ -1768,15 +1730,15 @@ msgstr "Pošalji tekstnu napomenu"
 #: ../blueman/plugins/manager/PulseAudioProfile.py:82
 #, python-format
 msgid "Failed to change profile to %s"
-msgstr "Neuspješna promjena profila %s"
+msgstr "Neuspjelo mijenjanje profila u %s"
 
 #: ../blueman/plugins/manager/PulseAudioProfile.py:123
 msgid "Audio Profile"
-msgstr "Audio profil"
+msgstr "Profil zvuka"
 
 #: ../blueman/plugins/manager/PulseAudioProfile.py:124
 msgid "Select audio profile for PulseAudio"
-msgstr "Odaberite audio profil za PulseAudio"
+msgstr "Odaberi profil zvuka za PulseAudio"
 
 #: ../blueman/plugins/manager/Services.py:66
 #, python-format
@@ -1963,7 +1925,7 @@ msgstr "Prijem datoteke %(0)s od %(1)s"
 
 #: ../blueman/plugins/applet/TransferService.py:131
 msgid "Provides OBEX file transfer capabilities"
-msgstr "Omogućuje OBEX mogućnosti prijenosa datoteka"
+msgstr "Omogućuje mogućnosti OBEX prijenosa datoteka"
 
 #: ../blueman/plugins/applet/TransferService.py:156
 msgid "Configured directory for incoming files does not exist"

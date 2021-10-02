@@ -5,13 +5,15 @@
 # Translators:
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2008
 # Meongu Ng. <meongu@gmail.com>, 2016
+# Tai Le <anhtaile0911@gmail.com>, 2021.
+# bruh <quangtrung02hn16@gmail.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-04 23:06+0000\n"
-"PO-Revision-Date: 2020-09-12 08:19+0000\n"
-"Last-Translator: Christopher Schramm <github@cschramm.eu>\n"
+"POT-Creation-Date: 2021-01-13 07:33+0000\n"
+"PO-Revision-Date: 2021-03-10 11:03+0000\n"
+"Last-Translator: bruh <quangtrung02hn16@gmail.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/blueman/"
 "stable/vi/>\n"
 "Language: vi\n"
@@ -19,11 +21,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.3-dev\n"
+"X-Generator: Weblate 4.5.2-dev\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Visibility Setting</b>"
-msgstr ""
+msgstr "<b>Thiết lập Hiển thị</b>"
 
 #: ../data/ui/adapters-tab.ui.h:2 ../blueman/main/Adapter.py:130
 msgid "Hidden"
@@ -39,7 +41,7 @@ msgstr "Hiện ra tạm thời"
 
 #: ../data/ui/adapters-tab.ui.h:5
 msgid "<b>Friendly Name</b>"
-msgstr ""
+msgstr "<b>Tên thân thiện</b>"
 
 #: ../data/ui/applet-passkey.ui.h:1
 msgid "Pairing request"
@@ -51,7 +53,7 @@ msgstr "Yêu cầu kết nối thiết bị:"
 
 #: ../data/ui/applet-passkey.ui.h:3
 msgid "This should be overwritten"
-msgstr ""
+msgstr "Cái này nên được ghi đè"
 
 #: ../data/ui/applet-passkey.ui.h:4
 msgid "Show input"
@@ -102,7 +104,7 @@ msgstr ""
 #: ../data/ui/manager-main.ui.h:13 ../blueman/gui/manager/ManagerToolbar.py:29
 #: ../blueman/gui/manager/ManagerToolbar.py:94
 msgid "Trust"
-msgstr ""
+msgstr "Tin"
 
 #: ../data/ui/manager-main.ui.h:14
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:348
@@ -363,7 +365,7 @@ msgstr ""
 
 #: ../blueman/main/Adapter.py:128
 msgid "Always"
-msgstr "Lúc nào cũng làm"
+msgstr "Luôn luôn"
 
 #: ../blueman/main/Adapter.py:132
 #, python-format
@@ -396,7 +398,7 @@ msgstr ""
 
 #: ../blueman/main/Manager.py:184
 msgid "Searching"
-msgstr ""
+msgstr "Đang tìm kiếm"
 
 #: ../blueman/main/Manager.py:197 ../blueman/plugins/applet/StandardItems.py:69
 #: ../apps/blueman-assistant:66
@@ -419,7 +421,7 @@ msgstr ""
 
 #: ../blueman/main/Sendto.py:59 ../blueman/gui/manager/ManagerProgressbar.py:20
 msgid "Connecting"
-msgstr "Đang kết nối..."
+msgstr "Đang kết nối"
 
 #: ../blueman/main/Sendto.py:110
 msgid "obexd not available"
@@ -431,11 +433,11 @@ msgstr ""
 
 #: ../blueman/main/Sendto.py:139
 msgid "Cancelling"
-msgstr ""
+msgstr "Đang huỷ"
 
 #: ../blueman/main/Sendto.py:150 ../blueman/main/Sendto.py:192
 msgid "Sending File"
-msgstr ""
+msgstr "Đang gửi tệp"
 
 #: ../blueman/main/Sendto.py:150 ../blueman/main/Sendto.py:192
 msgid "ETA:"
@@ -456,23 +458,23 @@ msgstr[0] ""
 #: ../blueman/main/Sendto.py:222
 #, python-format
 msgid "Error occurred while sending file %s"
-msgstr ""
+msgstr "Đã xảy ra lỗi khi đang gửi tập tin %s"
 
 #: ../blueman/main/Sendto.py:226
 msgid "Skip"
-msgstr ""
+msgstr "Bỏ qua"
 
 #: ../blueman/main/Sendto.py:227
 msgid "Retry"
-msgstr ""
+msgstr "Thử lại"
 
 #: ../blueman/main/Sendto.py:274
 msgid "Error occurred"
-msgstr ""
+msgstr "Đã xảy ra lỗi"
 
 #: ../blueman/main/Services.py:19
 msgid "Local Services"
-msgstr ""
+msgstr "Các dịch vụ cục bộ"
 
 #: ../blueman/main/applet/BluezAgent.py:178
 #, python-format
@@ -531,16 +533,16 @@ msgstr ""
 
 #: ../blueman/main/applet/BluezAgent.py:294
 msgid "Service:"
-msgstr ""
+msgstr "Dịch vụ:"
 
 #: ../blueman/main/applet/BluezAgent.py:295
 msgid "Always accept"
-msgstr ""
+msgstr "Luôn chấp nhận"
 
 #: ../blueman/main/applet/BluezAgent.py:296
 #: ../blueman/plugins/applet/TransferService.py:105
 msgid "Accept"
-msgstr ""
+msgstr "Chấp nhận"
 
 #: ../blueman/main/PluginManager.py:68
 msgid ""
@@ -551,11 +553,11 @@ msgstr ""
 
 #: ../blueman/Functions.py:79
 msgid "Bluetooth Turned Off"
-msgstr ""
+msgstr "Bluetooth đã tắt"
 
 #: ../blueman/Functions.py:80
 msgid "Exit"
-msgstr ""
+msgstr "Thoát"
 
 #: ../blueman/Functions.py:81
 msgid "Enable Bluetooth"
@@ -563,13 +565,11 @@ msgstr "Bật Bluetooth"
 
 #: ../blueman/Functions.py:100
 msgid "Shall bluetooth get enabled automatically?"
-msgstr ""
+msgstr "Bluetooth có được tự động bật không?"
 
 #: ../blueman/Functions.py:101
-#, fuzzy
-#| msgid "yes"
 msgid "Yes"
-msgstr "có"
+msgstr "Có"
 
 #: ../blueman/Functions.py:102
 msgid "No"
@@ -650,7 +650,7 @@ msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:447
 msgid "Poor"
-msgstr "Xấu"
+msgstr "Kém"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:449
 #: ../blueman/gui/manager/ManagerDeviceList.py:460
@@ -668,24 +668,24 @@ msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:455
 msgid "Too much"
-msgstr ""
+msgstr "Quá nhiều"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:458
 msgid "Low"
-msgstr ""
+msgstr "Thấp"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:464
 msgid "High"
-msgstr ""
+msgstr "Cao"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:466
 msgid "Very High"
-msgstr ""
+msgstr "Rất cao"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:104
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:169
 msgid "Success!"
-msgstr ""
+msgstr "Thành công!"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:107
 #, python-format
@@ -755,10 +755,8 @@ msgid "_Setup..."
 msgstr ""
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:370
-#, fuzzy
-#| msgid "Rename device"
 msgid "R_ename device..."
-msgstr "Sửa tên thiết bị"
+msgstr "Đổi tên thiết bị..."
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:379
 msgid "_Remove..."
@@ -766,7 +764,7 @@ msgstr "_Bỏ..."
 
 #: ../blueman/gui/manager/ManagerProgressbar.py:37
 msgid "Cancel Operation"
-msgstr ""
+msgstr "Huỷ hoạt động"
 
 #: ../blueman/gui/manager/ManagerStats.py:30
 #: ../blueman/gui/manager/ManagerStats.py:33
@@ -794,7 +792,7 @@ msgstr "Chọn thiết bị"
 
 #: ../blueman/gui/MessageArea.py:38
 msgid "More"
-msgstr ""
+msgstr "Thêm"
 
 #: ../blueman/gui/CommonUi.py:39
 msgid "translator-credits"
@@ -806,7 +804,7 @@ msgstr ""
 
 #: ../blueman/gui/CommonUi.py:44
 msgid "Blueman is a GTK+ Bluetooth manager"
-msgstr ""
+msgstr "Blueman là một trình quản lý Bluetooth GTK+"
 
 #: ../blueman/gui/GsmSettings.py:28
 msgid "GSM Settings"
@@ -848,10 +846,8 @@ msgid "Adapter selection"
 msgstr ""
 
 #: ../blueman/gui/DeviceSelectorWidget.py:43
-#, fuzzy
-#| msgid "Disconnecting..."
 msgid "Discovering…"
-msgstr "Đang ngắt kết nối..."
+msgstr "Đang tìm…"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:39 ../blueman/DeviceClass.py:63
@@ -1012,10 +1008,8 @@ msgstr ""
 
 #. 0x0000 is for our generic connect
 #: ../blueman/Sdp.py:97
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Connect"
-msgstr "Kết nối"
+msgstr "Kết nối chung chung"
 
 #: ../blueman/Sdp.py:98
 msgid "SDP"
@@ -1390,10 +1384,8 @@ msgid "Generic Telephony"
 msgstr ""
 
 #: ../blueman/Sdp.py:193
-#, fuzzy
-#| msgid "Audio Source"
 msgid "Video Source"
-msgstr "Nguồn âm thanh"
+msgstr "Nguồn hình ảnh"
 
 #: ../blueman/Sdp.py:194
 msgid "Video Sink"
@@ -1438,10 +1430,8 @@ msgid "Tx Power"
 msgstr ""
 
 #: ../blueman/Sdp.py:204
-#, fuzzy
-#| msgid "Rename device"
 msgid "Current Time Service"
-msgstr "Sửa tên thiết bị"
+msgstr "Dịch vụ thời gian hiện tại"
 
 #: ../blueman/Sdp.py:205
 msgid "Reference Time Update Service"
@@ -1461,11 +1451,11 @@ msgstr ""
 
 #: ../blueman/Sdp.py:209
 msgid "Device Information"
-msgstr ""
+msgstr "Thông tin thiết bị"
 
 #: ../blueman/Sdp.py:210
 msgid "Heart Rate"
-msgstr ""
+msgstr "Nhịp tim"
 
 #: ../blueman/Sdp.py:211
 msgid "Phone Alert Status Service"
@@ -1477,11 +1467,11 @@ msgstr ""
 
 #: ../blueman/Sdp.py:213
 msgid "Blood Pressure"
-msgstr ""
+msgstr "Huyết áp"
 
 #: ../blueman/Sdp.py:214
 msgid "Alert Notification Service"
-msgstr ""
+msgstr "Dịch vụ thông báo báo động"
 
 #: ../blueman/Sdp.py:215
 msgid "Human Interface Device"
@@ -1521,7 +1511,7 @@ msgstr ""
 
 #: ../blueman/Sdp.py:224
 msgid "User Data"
-msgstr ""
+msgstr "Dữ liệu người dùng"
 
 #: ../blueman/Sdp.py:225
 msgid "Weight Scale"
@@ -1565,31 +1555,27 @@ msgstr ""
 
 #: ../blueman/Sdp.py:235
 msgid "Primary Service"
-msgstr ""
+msgstr "Dịch vụ chính"
 
 #: ../blueman/Sdp.py:236
-#, fuzzy
-#| msgid "Search for nearby devices"
 msgid "Secondary Service"
-msgstr "Tìm thiết bị xung quanh"
+msgstr "Dịch vụ thứ hai"
 
 #: ../blueman/Sdp.py:237
 msgid "Include"
-msgstr ""
+msgstr "Bao gồm"
 
 #: ../blueman/Sdp.py:238
 msgid "Characteristic Declaration"
 msgstr ""
 
 #: ../blueman/Sdp.py:239
-#, fuzzy
-#| msgid "Device Manager"
 msgid "Device Name"
-msgstr "Trình quản lý thiết bị"
+msgstr "Tên thiết bị"
 
 #: ../blueman/Sdp.py:240
 msgid "Appearance"
-msgstr ""
+msgstr "Ngoại hình"
 
 #: ../blueman/Sdp.py:241
 msgid "Peripheral Privacy Flag"
@@ -1597,21 +1583,19 @@ msgstr ""
 
 #: ../blueman/Sdp.py:242
 msgid "Reconnection Address"
-msgstr ""
+msgstr "Địa chỉ kết nối lại"
 
 #: ../blueman/Sdp.py:243
 msgid "Peripheral Preferred Connection Parameters"
 msgstr ""
 
 #: ../blueman/Sdp.py:244
-#, fuzzy
-#| msgid "Device Manager"
 msgid "Service Changed"
-msgstr "Trình quản lý thiết bị"
+msgstr "Dịch vụ đã thay đổi"
 
 #: ../blueman/Sdp.py:245
 msgid "System ID"
-msgstr ""
+msgstr "ID Hệ thống"
 
 #: ../blueman/Sdp.py:246
 msgid "Model Number String"
@@ -1743,12 +1727,12 @@ msgstr ""
 #: ../blueman/plugins/applet/NetUsage.py:268
 #: ../blueman/plugins/applet/NetUsage.py:273
 msgid "Connected:"
-msgstr ""
+msgstr "Đã kết nối:"
 
 #: ../blueman/plugins/applet/NetUsage.py:173
 #: ../blueman/plugins/applet/NetUsage.py:283
 msgid "Not Connected"
-msgstr ""
+msgstr "Không kết nối"
 
 #: ../blueman/plugins/applet/NetUsage.py:179
 msgid ""
@@ -2198,15 +2182,15 @@ msgstr "Trình quản lý Bluetooth"
 
 #: ../data/thunar-sendto-blueman.desktop.in.h:1
 msgid "Bluetooth Device"
-msgstr ""
+msgstr "Thiết bị Bluetooth"
 
 #: ../data/configs/org.blueman.policy.in.h:1
 msgid "Configure Bluetooth Network"
-msgstr ""
+msgstr "Thiết lập mạng Bluetooth"
 
 #: ../data/configs/org.blueman.policy.in.h:2
 msgid "Configuring networking requires privileges"
-msgstr ""
+msgstr "Việc thiết lập mạng yêu cầu cấp quyền"
 
 #: ../data/configs/org.blueman.policy.in.h:3
 msgid "Launch DHCP client"

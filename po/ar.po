@@ -12,13 +12,15 @@
 # Mubarak Qahtani <abu-q76@hotmail.com>, 2016-2017
 # مهدي السطيفي <chinoune.mehdi@gmail.com>, 2014-2015
 # وجدي أبو سلطان, 2016
+# Mohammed Anas <6daf084a-8eaf-40fb-86c7-8500077c3b69@anonaddy.me>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-04 23:06+0000\n"
-"PO-Revision-Date: 2020-09-12 08:19+0000\n"
-"Last-Translator: Christopher Schramm <github@cschramm.eu>\n"
+"POT-Creation-Date: 2021-01-13 07:33+0000\n"
+"PO-Revision-Date: 2021-07-11 21:34+0000\n"
+"Last-Translator: Mohammed Anas <6daf084a-8eaf-40fb-86c7-8500077c3b69@anonaddy"
+".me>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/blueman/stable/ar/"
 ">\n"
 "Language: ar\n"
@@ -27,7 +29,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 4.3-dev\n"
+"X-Generator: Weblate 4.8-dev\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Visibility Setting</b>"
@@ -248,7 +250,7 @@ msgstr "<b>اختر طريقة اﻹقتران لاستخدامها:</b>"
 
 #: ../data/ui/assistant.ui.h:8
 msgid "Pair Device"
-msgstr "إقتران مع  الجهاز"
+msgstr "إقتران مع الجهاز"
 
 #: ../data/ui/assistant.ui.h:9
 msgid "Proceed Without Pairing"
@@ -554,7 +556,7 @@ msgstr "رفض"
 
 #: ../blueman/main/applet/BluezAgent.py:294
 msgid "Authorization request for:"
-msgstr "طلب المصادقة  لـ:"
+msgstr "طلب المصادقة لـ:"
 
 #: ../blueman/main/applet/BluezAgent.py:294
 msgid "Service:"
@@ -655,10 +657,8 @@ msgid "_Search"
 msgstr "_بحث"
 
 #: ../blueman/gui/manager/ManagerMenu.py:139
-#, fuzzy
-#| msgid "Service Preferences"
 msgid "_Preferences"
-msgstr "تفضيلات الخدمة"
+msgstr "تفضيلات"
 
 #: ../blueman/gui/manager/ManagerMenu.py:148
 #: ../blueman/plugins/applet/ExitItem.py:15
@@ -881,10 +881,8 @@ msgid "Adapter selection"
 msgstr "تحديد المحوّل"
 
 #: ../blueman/gui/DeviceSelectorWidget.py:43
-#, fuzzy
-#| msgid "Disconnecting..."
 msgid "Discovering…"
-msgstr "_قطع الإتصال..."
+msgstr "استكشاف…"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:39 ../blueman/DeviceClass.py:63
@@ -1189,8 +1187,6 @@ msgid "IrMC Sync Command"
 msgstr ""
 
 #: ../blueman/Sdp.py:133 ../blueman/Sdp.py:174
-#, fuzzy
-#| msgid "headset"
 msgid "Headset"
 msgstr "سماعة الرأس"
 
@@ -1435,10 +1431,8 @@ msgid "Generic Telephony"
 msgstr ""
 
 #: ../blueman/Sdp.py:193
-#, fuzzy
-#| msgid "Audio Source"
 msgid "Video Source"
-msgstr "مصدر الصوت"
+msgstr "مصدر الفيديو"
 
 #: ../blueman/Sdp.py:194
 msgid "Video Sink"
@@ -1453,10 +1447,8 @@ msgid "HDP"
 msgstr ""
 
 #: ../blueman/Sdp.py:197
-#, fuzzy
-#| msgid "Audio Source"
 msgid "HDP Source"
-msgstr "مصدر الصوت"
+msgstr "مصدر HDP"
 
 #: ../blueman/Sdp.py:198
 msgid "HDP Sink"
@@ -1517,10 +1509,8 @@ msgid "Phone Alert Status Service"
 msgstr ""
 
 #: ../blueman/Sdp.py:212
-#, fuzzy
-#| msgid "Local Services"
 msgid "Battery Service"
-msgstr "خدمات محلية"
+msgstr "خدمة بطارية"
 
 #: ../blueman/Sdp.py:213
 msgid "Blood Pressure"
@@ -1615,16 +1605,12 @@ msgid "AppleAgent"
 msgstr "بريمج"
 
 #: ../blueman/Sdp.py:235
-#, fuzzy
-#| msgid "Pair Device"
 msgid "Primary Service"
-msgstr "إقتران مع  الجهاز"
+msgstr "الخدمة الأساسيّة"
 
 #: ../blueman/Sdp.py:236
-#, fuzzy
-#| msgid "Search for nearby devices"
 msgid "Secondary Service"
-msgstr "ابحث عن أجهزة قريبة"
+msgstr "خدمة ثانوية"
 
 #: ../blueman/Sdp.py:237
 msgid "Include"
@@ -1635,10 +1621,8 @@ msgid "Characteristic Declaration"
 msgstr ""
 
 #: ../blueman/Sdp.py:239
-#, fuzzy
-#| msgid "Device Manager"
 msgid "Device Name"
-msgstr "مدير الأجهزة"
+msgstr "اسم الجهاز"
 
 #: ../blueman/Sdp.py:240
 msgid "Appearance"
@@ -2281,7 +2265,7 @@ msgstr "بريمج بلومان"
 
 #: ../data/blueman.desktop.in.h:2 ../data/blueman-manager.desktop.in.h:2
 msgid "Blueman Bluetooth Manager"
-msgstr "مدير البلوتوث بلومان"
+msgstr "مدير بلوتوث بلومان"
 
 #: ../data/blueman-manager.desktop.in.h:1
 msgid "Bluetooth Manager"
@@ -2289,7 +2273,7 @@ msgstr "مدير البلوتوث"
 
 #: ../data/thunar-sendto-blueman.desktop.in.h:1
 msgid "Bluetooth Device"
-msgstr "جهاز بلوتوث"
+msgstr "جهاز البلوتوث"
 
 #: ../data/configs/org.blueman.policy.in.h:1
 msgid "Configure Bluetooth Network"

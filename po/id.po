@@ -11,13 +11,15 @@
 # Willy Sudiarto Raharjo <willysr@slackware-id.org>, 2014
 # zk, 2015
 # zk, 2015
+# Reza Almanda <rezaalmanda27@gmail.com>, 2021.
+# Jacque Fresco <aidter@use.startmail.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: MATE Desktop Environment\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-04 23:06+0000\n"
-"PO-Revision-Date: 2020-09-12 08:19+0000\n"
-"Last-Translator: Christopher Schramm <github@cschramm.eu>\n"
+"POT-Creation-Date: 2021-01-13 07:33+0000\n"
+"PO-Revision-Date: 2021-08-02 22:34+0000\n"
+"Last-Translator: Reza Almanda <rezaalmanda27@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/blueman/"
 "stable/id/>\n"
 "Language: id\n"
@@ -25,7 +27,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.3-dev\n"
+"X-Generator: Weblate 4.8-dev\n"
 
 #: ../data/ui/adapters-tab.ui.h:1
 msgid "<b>Visibility Setting</b>"
@@ -586,10 +588,8 @@ msgid "Shall bluetooth get enabled automatically?"
 msgstr "Apakah bluetooth perlu difungsikan secara otomatis?"
 
 #: ../blueman/Functions.py:101
-#, fuzzy
-#| msgid "yes"
 msgid "Yes"
-msgstr "ya"
+msgstr "Ya"
 
 #: ../blueman/Functions.py:102
 msgid "No"
@@ -648,15 +648,13 @@ msgid "_Search"
 msgstr "_Cari"
 
 #: ../blueman/gui/manager/ManagerMenu.py:139
-#, fuzzy
-#| msgid "Adapter Preferences"
 msgid "_Preferences"
-msgstr "Preferensi Adapter"
+msgstr "_Preferensi"
 
 #: ../blueman/gui/manager/ManagerMenu.py:148
 #: ../blueman/plugins/applet/ExitItem.py:15
 msgid "_Exit"
-msgstr ""
+msgstr "_Keluar"
 
 #: ../blueman/gui/manager/ManagerDeviceList.py:423
 msgid "<b>Trusted and Paired</b>"
@@ -707,7 +705,7 @@ msgstr "Sangat Tinggi"
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:104
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:169
 msgid "Success!"
-msgstr "Berhasil"
+msgstr "Berhasil!"
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:107
 #, python-format
@@ -722,11 +720,11 @@ msgstr "Gagal"
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:119
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:165
 msgid "Connection Failed: "
-msgstr "Sambungan Gagal"
+msgstr "Sambungan Gagal: "
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:142
 msgid "Disconnection Failed: "
-msgstr "Pemutusan Gagal:"
+msgstr "Pemutusan Gagal: "
 
 #: ../blueman/gui/manager/ManagerDeviceMenu.py:181
 msgid "Disconnecting..."
@@ -878,10 +876,8 @@ msgid "Adapter selection"
 msgstr "Pemilihan adapter"
 
 #: ../blueman/gui/DeviceSelectorWidget.py:43
-#, fuzzy
-#| msgid "Discoverable… %ss"
 msgid "Discovering…"
-msgstr "Dapat ditemukan... %ss"
+msgstr "Menemukan…"
 
 #. translators: device class
 #: ../blueman/DeviceClass.py:39 ../blueman/DeviceClass.py:63
@@ -1049,63 +1045,63 @@ msgstr "Sambung"
 
 #: ../blueman/Sdp.py:98
 msgid "SDP"
-msgstr ""
+msgstr "SDP"
 
 #: ../blueman/Sdp.py:99
 msgid "UDP"
-msgstr ""
+msgstr "UDP"
 
 #: ../blueman/Sdp.py:100
 msgid "RFCOMM"
-msgstr ""
+msgstr "RFCOMM"
 
 #: ../blueman/Sdp.py:101
 msgid "TCP"
-msgstr ""
+msgstr "TCP"
 
 #: ../blueman/Sdp.py:102
 msgid "TCS-BIN"
-msgstr ""
+msgstr "TCS-BIN"
 
 #: ../blueman/Sdp.py:103
 msgid "TCS-AT"
-msgstr ""
+msgstr "TCS-AT"
 
 #: ../blueman/Sdp.py:104
 msgid "ATT"
-msgstr ""
+msgstr "ATT"
 
 #: ../blueman/Sdp.py:105
 msgid "OBEX"
-msgstr ""
+msgstr "OBEX"
 
 #: ../blueman/Sdp.py:106
 msgid "IP"
-msgstr ""
+msgstr "IP"
 
 #: ../blueman/Sdp.py:107
 msgid "FTP"
-msgstr ""
+msgstr "FTP"
 
 #: ../blueman/Sdp.py:108
 msgid "HTTP"
-msgstr ""
+msgstr "HTTP"
 
 #: ../blueman/Sdp.py:109
 msgid "WSP"
-msgstr ""
+msgstr "WSP"
 
 #: ../blueman/Sdp.py:110
 msgid "BNEP"
-msgstr ""
+msgstr "BNEP"
 
 #: ../blueman/Sdp.py:111
 msgid "UPnP/ESDP"
-msgstr ""
+msgstr "UPnP/ESDP"
 
 #: ../blueman/Sdp.py:112
 msgid "HIDP"
-msgstr ""
+msgstr "HIDP"
 
 #: ../blueman/Sdp.py:113
 msgid "Hardcopy Control Channel"
@@ -1121,15 +1117,15 @@ msgstr ""
 
 #: ../blueman/Sdp.py:116
 msgid "AVCTP"
-msgstr ""
+msgstr "AVCTP"
 
 #: ../blueman/Sdp.py:117
 msgid "AVDTP"
-msgstr ""
+msgstr "AVDTP"
 
 #: ../blueman/Sdp.py:118
 msgid "CMTP"
-msgstr ""
+msgstr "CMTP"
 
 #: ../blueman/Sdp.py:119
 msgid "UDI_C-Plane"
@@ -1188,10 +1184,8 @@ msgid "IrMC Sync Command"
 msgstr ""
 
 #: ../blueman/Sdp.py:133 ../blueman/Sdp.py:174
-#, fuzzy
-#| msgid "headset"
 msgid "Headset"
-msgstr "headset"
+msgstr "Headset"
 
 #: ../blueman/Sdp.py:134
 msgid "Cordless Telephony"
@@ -1222,12 +1216,13 @@ msgid "Video Conferencing"
 msgstr ""
 
 #: ../blueman/Sdp.py:141
+#, fuzzy
 msgid "Intercom"
-msgstr ""
+msgstr "Radio"
 
 #: ../blueman/Sdp.py:142
 msgid "Fax"
-msgstr ""
+msgstr "Fax"
 
 #: ../blueman/Sdp.py:143
 msgid "Headset Audio Gateway"
@@ -1235,15 +1230,15 @@ msgstr ""
 
 #: ../blueman/Sdp.py:144
 msgid "WAP"
-msgstr ""
+msgstr "WAP"
 
 #: ../blueman/Sdp.py:145
 msgid "WAP Client"
-msgstr ""
+msgstr "Klien WAP"
 
 #: ../blueman/Sdp.py:146
 msgid "PANU"
-msgstr ""
+msgstr "PANU"
 
 #: ../blueman/Sdp.py:147
 msgid "Network Access Point"
@@ -1278,10 +1273,8 @@ msgid "ImagingReferencedObjects (BIP)"
 msgstr ""
 
 #: ../blueman/Sdp.py:155
-#, fuzzy
-#| msgid "handsfree"
 msgid "Handsfree"
-msgstr "handsfree"
+msgstr "Handsfree"
 
 #: ../blueman/Sdp.py:156
 msgid "Handsfree Audio Gateway"
@@ -1329,15 +1322,16 @@ msgstr ""
 
 #: ../blueman/Sdp.py:167
 msgid "UDI-MT"
-msgstr ""
+msgstr "UDI-MT"
 
 #: ../blueman/Sdp.py:168
 msgid "UDI-TA"
-msgstr ""
+msgstr "UDI-TA"
 
 #: ../blueman/Sdp.py:169
+#, fuzzy
 msgid "Audio/Video"
-msgstr ""
+msgstr "A/V"
 
 #: ../blueman/Sdp.py:170
 msgid "SIM Access (SAP)"
@@ -1373,7 +1367,7 @@ msgstr "Network Access Point (NAP)"
 
 #: ../blueman/Sdp.py:178
 msgid "GNSS"
-msgstr ""
+msgstr "GNSS"
 
 #: ../blueman/Sdp.py:179
 msgid "GNSS Server"
@@ -1453,7 +1447,7 @@ msgstr ""
 
 #: ../blueman/Sdp.py:196
 msgid "HDP"
-msgstr ""
+msgstr "HDP"
 
 #: ../blueman/Sdp.py:197
 #, fuzzy
@@ -1647,7 +1641,7 @@ msgstr "Manajer Perangkat"
 
 #: ../blueman/Sdp.py:240
 msgid "Appearance"
-msgstr ""
+msgstr "Penampilan"
 
 #: ../blueman/Sdp.py:241
 msgid "Peripheral Privacy Flag"
