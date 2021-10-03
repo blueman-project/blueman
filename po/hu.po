@@ -31,17 +31,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2021-08-06 23:06+0200\n"
-"PO-Revision-Date: 2021-04-08 10:27+0000\n"
+"POT-Creation-Date: 2021-10-03 11:06+0200\n"
+"PO-Revision-Date: 2021-08-28 07:33+0000\n"
 "Last-Translator: Ács Zoltán <acszoltan111@gmail.com>\n"
-"Language-Team: Hungarian <https://hosted.weblate.org/projects/blueman/"
-"blueman/hu/>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/blueman/2-2/hu/"
+">\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.6-dev\n"
+"X-Generator: Weblate 4.8.1-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -324,13 +324,11 @@ msgid "Always"
 msgstr "Mindig"
 
 #: blueman/main/Adapter.py:147 blueman/main/Sendto.py:189
-#, fuzzy, python-format
-#| msgid "%d Minute"
-#| msgid_plural "%d Minutes"
+#, python-format
 msgid "%(minutes)d Minute"
 msgid_plural "%(minutes)d Minutes"
-msgstr[0] "%d perc"
-msgstr[1] "%d perc"
+msgstr[0] "%(minutes)d perc"
+msgstr[1] "%(minutes)d perc"
 
 #: blueman/main/Adapter.py:212
 msgid "Adapter"
@@ -398,11 +396,11 @@ msgid "ETA:"
 msgstr "Hátralévő idő:"
 
 #: blueman/main/Sendto.py:191
-#, fuzzy, python-format
+#, python-format
 msgid "%(seconds)d Second"
 msgid_plural "%(seconds)d Seconds"
-msgstr[0] "%(seconds)d mádodperc"
-msgstr[1] "%(seconds)d mádodperc"
+msgstr[0] "%(seconds)d másodperc"
+msgstr[1] "%(seconds)d másodperc"
 
 #: blueman/main/Sendto.py:229
 #, python-format
@@ -421,60 +419,60 @@ msgstr "Újra"
 msgid "Error occurred"
 msgstr "Hiba történt"
 
-#: blueman/main/applet/BluezAgent.py:192
+#: blueman/main/applet/BluezAgent.py:193
 #, python-format
 msgid "Pairing request for %s"
 msgstr "Párosítás kérés a(z) „%s” eszköztől"
 
-#: blueman/main/applet/BluezAgent.py:203 blueman/main/applet/BluezAgent.py:319
+#: blueman/main/applet/BluezAgent.py:204 blueman/main/applet/BluezAgent.py:322
 msgid "Bluetooth Authentication"
 msgstr "Bluetooth hitelesítés"
 
-#: blueman/main/applet/BluezAgent.py:234
+#: blueman/main/applet/BluezAgent.py:235
 msgid "Enter PIN code for authentication:"
 msgstr "Adja meg a PIN-kódot a hitelesítéshez:"
 
-#: blueman/main/applet/BluezAgent.py:249
+#: blueman/main/applet/BluezAgent.py:250
 msgid "Enter passkey for authentication:"
 msgstr "Írja be a hitelesítéshez használt jelszót:"
 
-#: blueman/main/applet/BluezAgent.py:260
+#: blueman/main/applet/BluezAgent.py:261
 msgid "Pairing passkey for"
 msgstr "Párosítási kulcs ehhez:"
 
-#: blueman/main/applet/BluezAgent.py:271
+#: blueman/main/applet/BluezAgent.py:272
 msgid "Pairing PIN code for"
 msgstr "Párosítási PIN-kód ehhez:"
 
-#: blueman/main/applet/BluezAgent.py:284
+#: blueman/main/applet/BluezAgent.py:285
 msgid "Pairing request for:"
 msgstr "Párosítási kérelem ehhez:"
 
-#: blueman/main/applet/BluezAgent.py:287
+#: blueman/main/applet/BluezAgent.py:288
 msgid "Confirm value for authentication:"
 msgstr "Erősítse meg a hitelesítéshez használt értéket:"
 
-#: blueman/main/applet/BluezAgent.py:288
+#: blueman/main/applet/BluezAgent.py:289
 msgid "Confirm"
 msgstr "Megerősítés"
 
-#: blueman/main/applet/BluezAgent.py:288 blueman/main/applet/BluezAgent.py:317
+#: blueman/main/applet/BluezAgent.py:289 blueman/main/applet/BluezAgent.py:320
 msgid "Deny"
 msgstr "Elutasítás"
 
-#: blueman/main/applet/BluezAgent.py:314
+#: blueman/main/applet/BluezAgent.py:317
 msgid "Authorization request for:"
 msgstr "Engedélykérés ehhez:"
 
-#: blueman/main/applet/BluezAgent.py:314
+#: blueman/main/applet/BluezAgent.py:317
 msgid "Service:"
 msgstr "Szolgáltatás:"
 
-#: blueman/main/applet/BluezAgent.py:315
+#: blueman/main/applet/BluezAgent.py:318
 msgid "Always accept"
 msgstr "Elfogadás mindig"
 
-#: blueman/main/applet/BluezAgent.py:316
+#: blueman/main/applet/BluezAgent.py:319
 #: blueman/plugins/applet/TransferService.py:130
 msgid "Accept"
 msgstr "Elfogadás"
@@ -531,10 +529,8 @@ msgid "Show _Statusbar"
 msgstr "Á_llapotsor megjelenítése"
 
 #: blueman/gui/manager/ManagerMenu.py:78
-#, fuzzy
-#| msgid "Rename device"
 msgid "Hide _unnamed devices"
-msgstr "Eszköz átnevezése"
+msgstr "_Névtelen eszközök elrejtése"
 
 #: blueman/gui/manager/ManagerMenu.py:88
 msgid "S_ort By"
@@ -572,26 +568,20 @@ msgid "_Search"
 msgstr "_Keresés"
 
 #: blueman/gui/manager/ManagerMenu.py:155
-#, fuzzy
-#| msgid "Adapter Preferences"
 msgid "_Preferences"
-msgstr "Csatoló beállítások"
+msgstr "_Beállítások"
 
 #: blueman/gui/manager/ManagerMenu.py:164 blueman/plugins/applet/ExitItem.py:12
-#, fuzzy
-#| msgid "Exit"
 msgid "_Exit"
-msgstr "Kilépés"
+msgstr "_Kilépés"
 
 #. translators: device class
 #: blueman/gui/manager/ManagerDeviceList.py:276
 #: blueman/gui/manager/ManagerDeviceList.py:301 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
-#, fuzzy
-#| msgid "uncategorized"
 msgid "Uncategorized"
-msgstr "besorolatlan"
+msgstr "Besorolatlan"
 
 #: blueman/gui/manager/ManagerDeviceList.py:479
 msgid "<b>Trusted and Paired</b>"
@@ -606,10 +596,8 @@ msgid "<b>Trusted</b>"
 msgstr "<b>Megbízható</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:502
-#, fuzzy
-#| msgid "<b>Connect To:</b>"
 msgid "<b>Connected</b>"
-msgstr "<b>Csatlakozva ehhez:</b>"
+msgstr "<b>Csatlakozva</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:517
 msgid "Poor"
@@ -2198,7 +2186,7 @@ msgstr ""
 #. https://github.com/python/mypy/issues/2608
 #: blueman/plugins/applet/AutoConnect.py:50
 #: blueman/plugins/applet/ConnectionNotifier.py:21
-#: blueman/plugins/applet/RecentConns.py:219
+#: blueman/plugins/applet/RecentConns.py:223
 #: blueman/plugins/applet/PPPSupport.py:75
 msgid "Connected"
 msgstr "Csatlakozva"
@@ -2317,21 +2305,21 @@ msgstr ""
 msgid "Recent _Connections"
 msgstr "Legutóbbi _kapcsolatok"
 
-#: blueman/plugins/applet/RecentConns.py:219
+#: blueman/plugins/applet/RecentConns.py:223
 #, python-format
 msgid "Connected to %s"
 msgstr "Csatlakozva ide: %s"
 
-#: blueman/plugins/applet/RecentConns.py:225
+#: blueman/plugins/applet/RecentConns.py:229
 msgid "Failed to connect"
 msgstr "Sikertelen csatlakozás"
 
-#: blueman/plugins/applet/RecentConns.py:245
+#: blueman/plugins/applet/RecentConns.py:249
 #, python-format
 msgid "%(service)s on %(device)s"
 msgstr "%(service)s ezen: %(device)s"
 
-#: blueman/plugins/applet/RecentConns.py:249
+#: blueman/plugins/applet/RecentConns.py:253
 msgid "Adapter for this connection is not available"
 msgstr "Nem érhető el a csatoló ehhez a kapcsolathoz"
 

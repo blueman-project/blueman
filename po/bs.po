@@ -6,20 +6,23 @@
 # Sanel https://launchpad.net/~sanel-bih
 # kenan3008 https://launchpad.net/~kenan3008
 # Sky Lion <xskylionx@gmail.com>, 2016
+# Dino Mesic <undeene@gmail.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2021-08-06 23:06+0200\n"
-"PO-Revision-Date: 2020-04-14 10:14+0000\n"
-"Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
-"Language-Team: Bosnian (http://www.transifex.com/mate/MATE/language/bs/)\n"
+"POT-Creation-Date: 2021-10-03 11:06+0200\n"
+"PO-Revision-Date: 2021-09-23 08:36+0000\n"
+"Last-Translator: Dino Mesic <undeene@gmail.com>\n"
+"Language-Team: Bosnian <https://hosted.weblate.org/projects/blueman/2-2/bs/"
+">\n"
 "Language: bs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.9-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -94,7 +97,7 @@ msgstr "Par"
 
 #: data/ui/manager-main.ui:135 blueman/gui/manager/ManagerDeviceMenu.py:373
 msgid "Mark/Unmark this device as trusted"
-msgstr ""
+msgstr "Označite/uklonite oznaku sa ovog uređaja kao pouzdanog"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:136 blueman/gui/manager/ManagerToolbar.py:39
@@ -146,7 +149,7 @@ msgstr "IP adresa:"
 
 #: data/ui/services-network.ui:181
 msgid "<b>No DHCP servers installed</b>"
-msgstr ""
+msgstr "<b>DHCP server nije instaliran</b>"
 
 #: data/ui/services-network.ui:199
 msgid "udhcpd"
@@ -178,7 +181,7 @@ msgstr ""
 
 #: data/ui/services-transfer.ui:49
 msgid "Select folder for incoming file transfers"
-msgstr ""
+msgstr "Odaberite mapu za dolazne prijenose datoteka"
 
 #: data/ui/services-transfer.ui:58
 msgid "Accept files from trusted devices"
@@ -206,7 +209,7 @@ msgstr "Konfiguracija"
 
 #: data/ui/applet-plugins-widget.ui:73
 msgid "Configure selected plugin's preferences"
-msgstr ""
+msgstr "Konfigurirajte postavke odabranog dodatka"
 
 #: data/ui/applet-plugins-widget.ui:115
 msgid "<b>Plugin description:</b>"
@@ -273,11 +276,11 @@ msgstr "<b>Ukupno:</b>"
 
 #: data/ui/net-usage.ui:196
 msgid "<b>Log started:</b>"
-msgstr ""
+msgstr "<b>Log zapocet:</b>"
 
 #: data/ui/net-usage.ui:209
 msgid "<b>Log duration:</b>"
-msgstr ""
+msgstr "<b>Trajanje Log-a:</b>"
 
 #: data/ui/net-usage.ui:243
 msgid "_Reset"
@@ -285,11 +288,11 @@ msgstr "_Resetuj"
 
 #: data/ui/note.ui:8
 msgid "Send note"
-msgstr ""
+msgstr "Posalji biljesku"
 
 #: blueman/main/Adapter.py:50
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
-msgstr ""
+msgstr "Bluetooth mora biti uključen da bi upravitelj adaptera radio"
 
 #: blueman/main/Adapter.py:86 data/blueman-adapters.desktop.in:3
 msgid "Bluetooth Adapters"
@@ -316,6 +319,7 @@ msgstr ""
 #: blueman/main/Manager.py:89 blueman/main/Manager.py:130
 msgid "Bluetooth needs to be turned on for the device manager to function"
 msgstr ""
+"Bluetooth mora biti uključen da bi upravitelj uređaja mogao funkcionirati"
 
 #: blueman/main/Manager.py:109
 msgid "Connection to BlueZ failed"
@@ -394,60 +398,60 @@ msgstr "Pokušaj ponovo"
 msgid "Error occurred"
 msgstr "Došlo je do greške"
 
-#: blueman/main/applet/BluezAgent.py:192
+#: blueman/main/applet/BluezAgent.py:193
 #, python-format
 msgid "Pairing request for %s"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:203 blueman/main/applet/BluezAgent.py:319
+#: blueman/main/applet/BluezAgent.py:204 blueman/main/applet/BluezAgent.py:322
 msgid "Bluetooth Authentication"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:234
+#: blueman/main/applet/BluezAgent.py:235
 msgid "Enter PIN code for authentication:"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:249
+#: blueman/main/applet/BluezAgent.py:250
 msgid "Enter passkey for authentication:"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:260
+#: blueman/main/applet/BluezAgent.py:261
 msgid "Pairing passkey for"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:271
+#: blueman/main/applet/BluezAgent.py:272
 msgid "Pairing PIN code for"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:284
+#: blueman/main/applet/BluezAgent.py:285
 msgid "Pairing request for:"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:287
+#: blueman/main/applet/BluezAgent.py:288
 msgid "Confirm value for authentication:"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:288
+#: blueman/main/applet/BluezAgent.py:289
 msgid "Confirm"
 msgstr "Potvrdi"
 
-#: blueman/main/applet/BluezAgent.py:288 blueman/main/applet/BluezAgent.py:317
+#: blueman/main/applet/BluezAgent.py:289 blueman/main/applet/BluezAgent.py:320
 msgid "Deny"
 msgstr "Zabrani"
 
-#: blueman/main/applet/BluezAgent.py:314
+#: blueman/main/applet/BluezAgent.py:317
 msgid "Authorization request for:"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:314
+#: blueman/main/applet/BluezAgent.py:317
 msgid "Service:"
 msgstr "Usluga:"
 
-#: blueman/main/applet/BluezAgent.py:315
+#: blueman/main/applet/BluezAgent.py:318
 msgid "Always accept"
 msgstr "Uvijek prihvati"
 
-#: blueman/main/applet/BluezAgent.py:316
+#: blueman/main/applet/BluezAgent.py:319
 #: blueman/plugins/applet/TransferService.py:130
 msgid "Accept"
 msgstr "Prihvati"
@@ -2127,7 +2131,7 @@ msgstr ""
 #. https://github.com/python/mypy/issues/2608
 #: blueman/plugins/applet/AutoConnect.py:50
 #: blueman/plugins/applet/ConnectionNotifier.py:21
-#: blueman/plugins/applet/RecentConns.py:219
+#: blueman/plugins/applet/RecentConns.py:223
 #: blueman/plugins/applet/PPPSupport.py:75
 msgid "Connected"
 msgstr "Povezan"
@@ -2242,21 +2246,21 @@ msgstr ""
 msgid "Recent _Connections"
 msgstr ""
 
-#: blueman/plugins/applet/RecentConns.py:219
+#: blueman/plugins/applet/RecentConns.py:223
 #, python-format
 msgid "Connected to %s"
 msgstr "Povezan s %s"
 
-#: blueman/plugins/applet/RecentConns.py:225
+#: blueman/plugins/applet/RecentConns.py:229
 msgid "Failed to connect"
 msgstr "Neuspjelo povezivanje"
 
-#: blueman/plugins/applet/RecentConns.py:245
+#: blueman/plugins/applet/RecentConns.py:249
 #, python-format
 msgid "%(service)s on %(device)s"
 msgstr ""
 
-#: blueman/plugins/applet/RecentConns.py:249
+#: blueman/plugins/applet/RecentConns.py:253
 msgid "Adapter for this connection is not available"
 msgstr ""
 

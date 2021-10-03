@@ -50,7 +50,7 @@
 # Boris Faure <billiob@gmail.com>
 # Johan Cwiklinski <trasher@x-tnd.be>
 # OozeBalk <oozebalk@gmail.com>
-# J. Lavoie <j.lavoie@net-c.ca>
+# J. Lavoie <j.lavoie@net-c.ca>, 2021.
 # Colomban Wendling <hypra@ban.netlib.re>
 # Estébastien Robespi <estebastien@mailbox.org>
 # Julien Humbert <julroy67@gmail.com>
@@ -59,8 +59,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2021-08-06 23:06+0200\n"
-"PO-Revision-Date: 2021-06-22 18:33+0000\n"
+"POT-Creation-Date: 2021-10-03 11:06+0200\n"
+"PO-Revision-Date: 2021-08-28 07:33+0000\n"
 "Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/blueman/2-2/fr/>\n"
 "Language: fr\n"
@@ -68,7 +68,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.7.1-dev\n"
+"X-Generator: Weblate 4.8.1-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -450,60 +450,60 @@ msgstr "Réessayer"
 msgid "Error occurred"
 msgstr "Une erreur est survenue"
 
-#: blueman/main/applet/BluezAgent.py:192
+#: blueman/main/applet/BluezAgent.py:193
 #, python-format
 msgid "Pairing request for %s"
 msgstr "Requête de liaison pour %s"
 
-#: blueman/main/applet/BluezAgent.py:203 blueman/main/applet/BluezAgent.py:319
+#: blueman/main/applet/BluezAgent.py:204 blueman/main/applet/BluezAgent.py:322
 msgid "Bluetooth Authentication"
 msgstr "Authentification Bluetooth"
 
-#: blueman/main/applet/BluezAgent.py:234
+#: blueman/main/applet/BluezAgent.py:235
 msgid "Enter PIN code for authentication:"
 msgstr "Saisissez votre code PIN pour l'authentification :"
 
-#: blueman/main/applet/BluezAgent.py:249
+#: blueman/main/applet/BluezAgent.py:250
 msgid "Enter passkey for authentication:"
 msgstr "Saisir le mot de passe pour l'authentification :"
 
-#: blueman/main/applet/BluezAgent.py:260
+#: blueman/main/applet/BluezAgent.py:261
 msgid "Pairing passkey for"
 msgstr "Clé de liaison pour"
 
-#: blueman/main/applet/BluezAgent.py:271
+#: blueman/main/applet/BluezAgent.py:272
 msgid "Pairing PIN code for"
 msgstr "Code PIN de liaison pour"
 
-#: blueman/main/applet/BluezAgent.py:284
+#: blueman/main/applet/BluezAgent.py:285
 msgid "Pairing request for:"
 msgstr "Requête de liaison pour :"
 
-#: blueman/main/applet/BluezAgent.py:287
+#: blueman/main/applet/BluezAgent.py:288
 msgid "Confirm value for authentication:"
 msgstr "Confirmez la valeur pour l'authentification :"
 
-#: blueman/main/applet/BluezAgent.py:288
+#: blueman/main/applet/BluezAgent.py:289
 msgid "Confirm"
 msgstr "Confirmer"
 
-#: blueman/main/applet/BluezAgent.py:288 blueman/main/applet/BluezAgent.py:317
+#: blueman/main/applet/BluezAgent.py:289 blueman/main/applet/BluezAgent.py:320
 msgid "Deny"
 msgstr "Refuser"
 
-#: blueman/main/applet/BluezAgent.py:314
+#: blueman/main/applet/BluezAgent.py:317
 msgid "Authorization request for:"
 msgstr "Requête d'autorisation pour :"
 
-#: blueman/main/applet/BluezAgent.py:314
+#: blueman/main/applet/BluezAgent.py:317
 msgid "Service:"
 msgstr "Service :"
 
-#: blueman/main/applet/BluezAgent.py:315
+#: blueman/main/applet/BluezAgent.py:318
 msgid "Always accept"
 msgstr "Toujours accepter"
 
-#: blueman/main/applet/BluezAgent.py:316
+#: blueman/main/applet/BluezAgent.py:319
 #: blueman/plugins/applet/TransferService.py:130
 msgid "Accept"
 msgstr "Accepter"
@@ -1300,15 +1300,15 @@ msgstr "Générique : Capteur de marche pour la course"
 
 #: blueman/DeviceClass.py:199
 msgid "Running Walking Sensor: In-Shoe"
-msgstr ""
+msgstr "Capteur de marche pour la course dans la chaussure"
 
 #: blueman/DeviceClass.py:200
 msgid "Running Walking Sensor: On-Shoe"
-msgstr ""
+msgstr "Capteur de marche pour la course sur le chaussure"
 
 #: blueman/DeviceClass.py:201
 msgid "Running Walking Sensor: On-Hip"
-msgstr ""
+msgstr "Capteur de course pour la chaussure sur la hanche"
 
 #: blueman/DeviceClass.py:202
 #, fuzzy
@@ -1318,7 +1318,7 @@ msgstr "Réseau générique"
 
 #: blueman/DeviceClass.py:203
 msgid "Cycling: Cycling Computer"
-msgstr ""
+msgstr "Ordinateur pour vélo"
 
 #: blueman/DeviceClass.py:204
 #, fuzzy
@@ -1346,10 +1346,8 @@ msgstr "Cadence à vélo"
 
 #. 19 - 48 reserved
 #: blueman/DeviceClass.py:209
-#, fuzzy
-#| msgid "Pulse Oximeter"
 msgid "Generic: Pulse Oximeter"
-msgstr "Oxymètre de Pouls"
+msgstr "Oxymètre de pouls"
 
 #: blueman/DeviceClass.py:210
 msgid "Fingertip"
@@ -1357,41 +1355,35 @@ msgstr ""
 
 #: blueman/DeviceClass.py:211
 msgid "Wrist Worn"
-msgstr ""
+msgstr "Porté au poignet"
 
 #: blueman/DeviceClass.py:212
-#, fuzzy
-#| msgid "Weight Scale"
 msgid "Generic: Weight Scale"
-msgstr "Échelle de Poids"
+msgstr "Générique : échelle de poids"
 
 #: blueman/DeviceClass.py:213
 msgid "Generic Personal Mobility Device"
-msgstr ""
+msgstr "Appareil de mobilité personnelle générique"
 
 #: blueman/DeviceClass.py:214
 msgid "Powered Wheelchair"
-msgstr ""
+msgstr "Fauteuil roulant électrique"
 
 #: blueman/DeviceClass.py:215
 msgid "Mobility Scooter"
-msgstr ""
+msgstr "Scooter de mobilité"
 
 #: blueman/DeviceClass.py:216
-#, fuzzy
-#| msgid "Continuous Glucose Monitoring"
 msgid "Generic Continuous Glucose Monitor"
-msgstr "Suivi Permanent du Glucose"
+msgstr "Moniteur de glycémie en continu générique"
 
 #: blueman/DeviceClass.py:217
-#, fuzzy
-#| msgid "Generic Audio"
 msgid "Generic Insulin Pump"
-msgstr "Audio générique"
+msgstr "Pompe à insuline générique"
 
 #: blueman/DeviceClass.py:218
 msgid "Insulin Pump, durable pump"
-msgstr ""
+msgstr "Pompe à insuline, pompe durable"
 
 #: blueman/DeviceClass.py:219
 msgid "Insulin Pump, patch pump"
@@ -1399,26 +1391,24 @@ msgstr ""
 
 #: blueman/DeviceClass.py:220
 msgid "Insulin Pen"
-msgstr ""
+msgstr "Stylo à insuline"
 
 #: blueman/DeviceClass.py:221
 msgid "Generic Medication Delivery"
-msgstr ""
+msgstr "Délivrance de médicaments générique"
 
 #. 55 - 80 reserved
 #: blueman/DeviceClass.py:223
 msgid "Generic: Outdoor Sports Activity"
-msgstr ""
+msgstr "Générique : activité sportive de plein air"
 
 #: blueman/DeviceClass.py:224
 msgid "Location Display Device"
-msgstr ""
+msgstr "Dispositif d'affichage de la position"
 
 #: blueman/DeviceClass.py:225
-#, fuzzy
-#| msgid "Location and Navigation"
 msgid "Location and Navigation Display Device"
-msgstr "Localisation et Navigation"
+msgstr "Dispositif d'affichage de localisation et de navigation"
 
 #: blueman/DeviceClass.py:226
 msgid "Location Pod"
@@ -2147,7 +2137,7 @@ msgstr ""
 #. https://github.com/python/mypy/issues/2608
 #: blueman/plugins/applet/AutoConnect.py:50
 #: blueman/plugins/applet/ConnectionNotifier.py:21
-#: blueman/plugins/applet/RecentConns.py:219
+#: blueman/plugins/applet/RecentConns.py:223
 #: blueman/plugins/applet/PPPSupport.py:75
 msgid "Connected"
 msgstr "Connecté(e)"
@@ -2269,21 +2259,21 @@ msgstr ""
 msgid "Recent _Connections"
 msgstr "_Connexions récentes"
 
-#: blueman/plugins/applet/RecentConns.py:219
+#: blueman/plugins/applet/RecentConns.py:223
 #, python-format
 msgid "Connected to %s"
 msgstr "Connecté(e) à %s"
 
-#: blueman/plugins/applet/RecentConns.py:225
+#: blueman/plugins/applet/RecentConns.py:229
 msgid "Failed to connect"
 msgstr "Impossible de se connecter"
 
-#: blueman/plugins/applet/RecentConns.py:245
+#: blueman/plugins/applet/RecentConns.py:249
 #, python-format
 msgid "%(service)s on %(device)s"
 msgstr "%(service)s sur %(device)s"
 
-#: blueman/plugins/applet/RecentConns.py:249
+#: blueman/plugins/applet/RecentConns.py:253
 msgid "Adapter for this connection is not available"
 msgstr "L'adaptateur pour cette connexion n'est pas disponible"
 
