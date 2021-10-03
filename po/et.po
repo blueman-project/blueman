@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2021-08-06 23:06+0200\n"
-"PO-Revision-Date: 2021-06-14 07:22+0000\n"
+"POT-Creation-Date: 2021-10-03 11:06+0200\n"
+"PO-Revision-Date: 2021-09-08 22:32+0000\n"
 "Last-Translator: Priit Jõerüüt <hwlate@joeruut.com>\n"
 "Language-Team: Estonian <https://hosted.weblate.org/projects/blueman/2-2/et/"
 ">\n"
@@ -26,7 +26,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.8.1-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -403,60 +403,60 @@ msgstr "Proovi uuesti"
 msgid "Error occurred"
 msgstr "Ilmnes tõrge"
 
-#: blueman/main/applet/BluezAgent.py:192
+#: blueman/main/applet/BluezAgent.py:193
 #, python-format
 msgid "Pairing request for %s"
 msgstr "Paari loomise päring seadmele %s"
 
-#: blueman/main/applet/BluezAgent.py:203 blueman/main/applet/BluezAgent.py:319
+#: blueman/main/applet/BluezAgent.py:204 blueman/main/applet/BluezAgent.py:322
 msgid "Bluetooth Authentication"
 msgstr "Bluetoothi autentimine"
 
-#: blueman/main/applet/BluezAgent.py:234
+#: blueman/main/applet/BluezAgent.py:235
 msgid "Enter PIN code for authentication:"
 msgstr "Autentimiseks sisesta PIN-kood:"
 
-#: blueman/main/applet/BluezAgent.py:249
+#: blueman/main/applet/BluezAgent.py:250
 msgid "Enter passkey for authentication:"
 msgstr "Autentimiseks sisesta parool:"
 
-#: blueman/main/applet/BluezAgent.py:260
+#: blueman/main/applet/BluezAgent.py:261
 msgid "Pairing passkey for"
 msgstr "Paardumise salasõna"
 
-#: blueman/main/applet/BluezAgent.py:271
+#: blueman/main/applet/BluezAgent.py:272
 msgid "Pairing PIN code for"
 msgstr "Paari loomise PIN-kood seadmele"
 
-#: blueman/main/applet/BluezAgent.py:284
+#: blueman/main/applet/BluezAgent.py:285
 msgid "Pairing request for:"
 msgstr "Paari loomise päring seadmele:"
 
-#: blueman/main/applet/BluezAgent.py:287
+#: blueman/main/applet/BluezAgent.py:288
 msgid "Confirm value for authentication:"
 msgstr "Autentimise kinnituskood:"
 
-#: blueman/main/applet/BluezAgent.py:288
+#: blueman/main/applet/BluezAgent.py:289
 msgid "Confirm"
 msgstr "Kinnita"
 
-#: blueman/main/applet/BluezAgent.py:288 blueman/main/applet/BluezAgent.py:317
+#: blueman/main/applet/BluezAgent.py:289 blueman/main/applet/BluezAgent.py:320
 msgid "Deny"
 msgstr "Keela"
 
-#: blueman/main/applet/BluezAgent.py:314
+#: blueman/main/applet/BluezAgent.py:317
 msgid "Authorization request for:"
 msgstr "Autoriseerimispäring seadmele:"
 
-#: blueman/main/applet/BluezAgent.py:314
+#: blueman/main/applet/BluezAgent.py:317
 msgid "Service:"
 msgstr "Teenus:"
 
-#: blueman/main/applet/BluezAgent.py:315
+#: blueman/main/applet/BluezAgent.py:318
 msgid "Always accept"
 msgstr "Alati nõustu"
 
-#: blueman/main/applet/BluezAgent.py:316
+#: blueman/main/applet/BluezAgent.py:319
 #: blueman/plugins/applet/TransferService.py:130
 msgid "Accept"
 msgstr "Võta vastu"
@@ -883,29 +883,23 @@ msgstr "Mobiil"
 
 #. translators: device class
 #: blueman/DeviceClass.py:50
-#, fuzzy
-#| msgid "cordless"
 msgid "Cordless"
-msgstr "juhtmeta"
+msgstr "Juhtmeta"
 
 #. translators: device class
 #: blueman/DeviceClass.py:52
-#, fuzzy
-#| msgid "smart phone"
 msgid "Smart phone"
-msgstr "nutitelefon"
+msgstr "Nutitelefon"
 
 #. translators: device class
 #: blueman/DeviceClass.py:54
-#, fuzzy
-#| msgid "modem"
 msgid "Modem"
-msgstr "modem"
+msgstr "Modem"
 
 #. translators: device class
 #: blueman/DeviceClass.py:56
 msgid "Isdn"
-msgstr ""
+msgstr "ISDN"
 
 #. translators: device class
 #: blueman/DeviceClass.py:61
@@ -944,10 +938,8 @@ msgstr ""
 
 #. translators: device class
 #: blueman/DeviceClass.py:75
-#, fuzzy
-#| msgid "obexd not available"
 msgid "Not available"
-msgstr "obexd pole saadaval"
+msgstr "Pole saadaval"
 
 #. translators: device class
 #: blueman/DeviceClass.py:82 blueman/Sdp.py:123 blueman/Sdp.py:164
@@ -961,10 +953,8 @@ msgstr "Vabakäeseade"
 
 #. translators: device class
 #: blueman/DeviceClass.py:88
-#, fuzzy
-#| msgid "microphone"
 msgid "Microphone"
-msgstr "mikrofon"
+msgstr "Mikrofon"
 
 #. translators: device class
 #: blueman/DeviceClass.py:90
@@ -1003,10 +993,8 @@ msgstr "Videomängija"
 
 #. translators: device class
 #: blueman/DeviceClass.py:104
-#, fuzzy
-#| msgid "Audio Source"
 msgid "Video camera"
-msgstr "Heli vastuvõtmine"
+msgstr "Videokaamera"
 
 #. translators: device class
 #: blueman/DeviceClass.py:106
@@ -1015,10 +1003,8 @@ msgstr "Videokaamera"
 
 #. translators: device class
 #: blueman/DeviceClass.py:108
-#, fuzzy
-#| msgid "Audio Source"
 msgid "Video monitor"
-msgstr "Heli vastuvõtmine"
+msgstr "Videomonitor"
 
 #. translators: device class
 #: blueman/DeviceClass.py:110
@@ -1027,10 +1013,8 @@ msgstr ""
 
 #. translators: device class
 #: blueman/DeviceClass.py:112
-#, fuzzy
-#| msgid "Audio Source"
 msgid "Video conferencing"
-msgstr "Heli vastuvõtmine"
+msgstr "Videokonverentsiseade"
 
 #. translators: device class
 #: blueman/DeviceClass.py:116
@@ -1039,17 +1023,13 @@ msgstr "Mängikonsool/mänguasi"
 
 #. translators: device class
 #: blueman/DeviceClass.py:123 blueman/DeviceClass.py:189
-#, fuzzy
-#| msgid "keyboard"
 msgid "Keyboard"
-msgstr "klaviatuur"
+msgstr "Klaviatuur"
 
 #. translators: device class
 #: blueman/DeviceClass.py:125
-#, fuzzy
-#| msgid "pointing"
 msgid "Pointing"
-msgstr "osutamine"
+msgstr "Kursoriseade"
 
 #. translators: device class
 #: blueman/DeviceClass.py:127
@@ -1127,90 +1107,64 @@ msgid "Game"
 msgstr "Mäng"
 
 #: blueman/DeviceClass.py:169
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Phone"
-msgstr "Ühendu"
+msgstr "Üldine telefon"
 
 #: blueman/DeviceClass.py:170
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Computer"
-msgstr "Ühendu"
+msgstr "Üldine arvuti"
 
 #: blueman/DeviceClass.py:171
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Watch"
-msgstr "Ühendu"
+msgstr "Üldine käekell"
 
 #: blueman/DeviceClass.py:172
 msgid "Watch: Sports Watch"
 msgstr ""
 
 #: blueman/DeviceClass.py:173
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Clock"
-msgstr "Ühendu"
+msgstr "Üldine kell"
 
 #: blueman/DeviceClass.py:174
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "Generic Display"
-msgstr "Bluetoothi failiülekanne"
+msgstr "Üldine monitor"
 
 #: blueman/DeviceClass.py:175
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Remote Control"
-msgstr "Ühendu"
+msgstr "Üldine kaugjuhtimispult"
 
 #: blueman/DeviceClass.py:176
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "Generic Eye-glasses"
-msgstr "Bluetoothi failiülekanne"
+msgstr "Üldised prillid"
 
 #: blueman/DeviceClass.py:177
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "Generic Tag"
-msgstr "Bluetoothi failiülekanne"
+msgstr "Üldine silt"
 
 #: blueman/DeviceClass.py:178
-#, fuzzy
-#| msgid "Group Network"
 msgid "Generic Keyring"
-msgstr "Gruppvõrk"
+msgstr "Üldine võtmerõngas"
 
 #: blueman/DeviceClass.py:179
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "Generic Media Player"
-msgstr "Bluetoothi failiülekanne"
+msgstr "Üldine meediamängija"
 
 #: blueman/DeviceClass.py:180
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Barcode Scanner"
-msgstr "Ühendu"
+msgstr "Üldine vöötkoodi lugeja"
 
 #: blueman/DeviceClass.py:181
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Thermometer"
-msgstr "Ühendu"
+msgstr "Üldine termomeeter"
 
 #: blueman/DeviceClass.py:182
 msgid "Thermometer: Ear"
 msgstr ""
 
 #: blueman/DeviceClass.py:183
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "Generic Heart rate Sensor"
-msgstr "Bluetoothi failiülekanne"
+msgstr "Üldine südame löögisageduse andur"
 
 #: blueman/DeviceClass.py:184
 msgid "Heart Rate Sensor: Heart Rate Belt"
@@ -1261,10 +1215,8 @@ msgid "Barcode Scanner"
 msgstr ""
 
 #: blueman/DeviceClass.py:197
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Glucose Meter"
-msgstr "Ühendu"
+msgstr "Üldine glükoosimõõtja"
 
 #: blueman/DeviceClass.py:198
 msgid "Generic: Running Walking Sensor"
@@ -1283,10 +1235,8 @@ msgid "Running Walking Sensor: On-Hip"
 msgstr ""
 
 #: blueman/DeviceClass.py:202
-#, fuzzy
-#| msgid "Group Network"
 msgid "Generic: Cycling"
-msgstr "Gruppvõrk"
+msgstr "Üldine: Jalgrattasõit"
 
 #: blueman/DeviceClass.py:203
 msgid "Cycling: Cycling Computer"
@@ -1923,10 +1873,8 @@ msgid "Transport Discovery"
 msgstr ""
 
 #: blueman/Sdp.py:223
-#, fuzzy
-#| msgid "Transfer"
 msgid "Object Transfer"
-msgstr "Ülekanne"
+msgstr "Objektide ülekanne"
 
 #: blueman/Sdp.py:224
 #, fuzzy
@@ -2055,10 +2003,8 @@ msgid "Report Reference"
 msgstr "Adapteri eelistused"
 
 #: blueman/Sdp.py:378
-#, fuzzy
-#| msgid "Audio Profile"
 msgid "Audio and input profiles"
-msgstr "Audioprofiil"
+msgstr "Audio- ja sisendprofiilid"
 
 #: blueman/Sdp.py:380
 msgid "Proprietary"
@@ -2117,7 +2063,7 @@ msgstr ""
 #. https://github.com/python/mypy/issues/2608
 #: blueman/plugins/applet/AutoConnect.py:50
 #: blueman/plugins/applet/ConnectionNotifier.py:21
-#: blueman/plugins/applet/RecentConns.py:219
+#: blueman/plugins/applet/RecentConns.py:223
 #: blueman/plugins/applet/PPPSupport.py:75
 msgid "Connected"
 msgstr "Ühendatud"
@@ -2232,21 +2178,21 @@ msgstr "Menüüs kuvatavate viimatiste ühenduste suurima arv."
 msgid "Recent _Connections"
 msgstr "_Viimased ühendused"
 
-#: blueman/plugins/applet/RecentConns.py:219
+#: blueman/plugins/applet/RecentConns.py:223
 #, python-format
 msgid "Connected to %s"
 msgstr "Ühendatud seadmega %s"
 
-#: blueman/plugins/applet/RecentConns.py:225
+#: blueman/plugins/applet/RecentConns.py:229
 msgid "Failed to connect"
 msgstr "Ühendumine nurjus"
 
-#: blueman/plugins/applet/RecentConns.py:245
+#: blueman/plugins/applet/RecentConns.py:249
 #, python-format
 msgid "%(service)s on %(device)s"
 msgstr "%(service)s seadmes %(device)s"
 
-#: blueman/plugins/applet/RecentConns.py:249
+#: blueman/plugins/applet/RecentConns.py:253
 msgid "Adapter for this connection is not available"
 msgstr "Selle ühenduse adapter ei ole kättesaadav"
 

@@ -46,9 +46,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2021-08-06 23:06+0200\n"
-"PO-Revision-Date: 2021-08-02 13:34+0000\n"
-"Last-Translator: Emily Ellis <e222d29f@outlook.com>\n"
+"POT-Creation-Date: 2021-10-03 11:06+0200\n"
+"PO-Revision-Date: 2021-10-03 09:03+0000\n"
+"Last-Translator: Eric <spice2wolf@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "blueman/2-2/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -56,7 +56,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.8-dev\n"
+"X-Generator: Weblate 4.9-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -427,60 +427,60 @@ msgstr "重试"
 msgid "Error occurred"
 msgstr "发生错误"
 
-#: blueman/main/applet/BluezAgent.py:192
+#: blueman/main/applet/BluezAgent.py:193
 #, python-format
 msgid "Pairing request for %s"
 msgstr "%s 配对请求"
 
-#: blueman/main/applet/BluezAgent.py:203 blueman/main/applet/BluezAgent.py:319
+#: blueman/main/applet/BluezAgent.py:204 blueman/main/applet/BluezAgent.py:322
 msgid "Bluetooth Authentication"
 msgstr "蓝牙认证"
 
-#: blueman/main/applet/BluezAgent.py:234
+#: blueman/main/applet/BluezAgent.py:235
 msgid "Enter PIN code for authentication:"
 msgstr "输入授权 PIN 码："
 
-#: blueman/main/applet/BluezAgent.py:249
+#: blueman/main/applet/BluezAgent.py:250
 msgid "Enter passkey for authentication:"
 msgstr "输入认证通行码："
 
-#: blueman/main/applet/BluezAgent.py:260
+#: blueman/main/applet/BluezAgent.py:261
 msgid "Pairing passkey for"
 msgstr "密码配对"
 
-#: blueman/main/applet/BluezAgent.py:271
+#: blueman/main/applet/BluezAgent.py:272
 msgid "Pairing PIN code for"
 msgstr "PIN 码配对"
 
-#: blueman/main/applet/BluezAgent.py:284
+#: blueman/main/applet/BluezAgent.py:285
 msgid "Pairing request for:"
 msgstr "配对请求："
 
-#: blueman/main/applet/BluezAgent.py:287
+#: blueman/main/applet/BluezAgent.py:288
 msgid "Confirm value for authentication:"
 msgstr "确认认证值："
 
-#: blueman/main/applet/BluezAgent.py:288
+#: blueman/main/applet/BluezAgent.py:289
 msgid "Confirm"
 msgstr "确认"
 
-#: blueman/main/applet/BluezAgent.py:288 blueman/main/applet/BluezAgent.py:317
+#: blueman/main/applet/BluezAgent.py:289 blueman/main/applet/BluezAgent.py:320
 msgid "Deny"
 msgstr "拒绝"
 
-#: blueman/main/applet/BluezAgent.py:314
+#: blueman/main/applet/BluezAgent.py:317
 msgid "Authorization request for:"
 msgstr "授权请求："
 
-#: blueman/main/applet/BluezAgent.py:314
+#: blueman/main/applet/BluezAgent.py:317
 msgid "Service:"
 msgstr "服务："
 
-#: blueman/main/applet/BluezAgent.py:315
+#: blueman/main/applet/BluezAgent.py:318
 msgid "Always accept"
 msgstr "总是同意"
 
-#: blueman/main/applet/BluezAgent.py:316
+#: blueman/main/applet/BluezAgent.py:319
 #: blueman/plugins/applet/TransferService.py:130
 msgid "Accept"
 msgstr "接受"
@@ -995,7 +995,7 @@ msgstr "扬声器"
 #. translators: device class
 #: blueman/DeviceClass.py:92
 msgid "Headphones"
-msgstr "听筒"
+msgstr "耳机"
 
 #. translators: device class
 #: blueman/DeviceClass.py:94
@@ -1070,7 +1070,7 @@ msgstr "光驱类型"
 #. translators: device class
 #: blueman/DeviceClass.py:132
 msgid "Display"
-msgstr "播放"
+msgstr "显示器"
 
 #. translators: device class
 #: blueman/DeviceClass.py:134
@@ -1135,7 +1135,7 @@ msgstr "遥控器"
 #. translators: device class
 #: blueman/DeviceClass.py:164
 msgid "Game"
-msgstr "比赛"
+msgstr "游戏设备"
 
 #: blueman/DeviceClass.py:169
 msgid "Generic Phone"
@@ -1199,7 +1199,7 @@ msgstr "通用心率传感器"
 
 #: blueman/DeviceClass.py:184
 msgid "Heart Rate Sensor: Heart Rate Belt"
-msgstr "心率传感器:心率带"
+msgstr "心率传感器：心率带"
 
 #: blueman/DeviceClass.py:185
 msgid "Generic Blood Pressure"
@@ -1207,11 +1207,11 @@ msgstr "通用的血压计"
 
 #: blueman/DeviceClass.py:186
 msgid "Blood Pressure: Arm"
-msgstr "右臂血压器"
+msgstr "血压：手臂"
 
 #: blueman/DeviceClass.py:187
 msgid "Blood Pressure: Wrist"
-msgstr "手腕血压器"
+msgstr "血压器：手腕"
 
 #: blueman/DeviceClass.py:188
 msgid "Human Interface Device (HID)"
@@ -1231,7 +1231,7 @@ msgstr "游戏手柄"
 
 #: blueman/DeviceClass.py:193
 msgid "Digitizer Tablet"
-msgstr "数字化仪器"
+msgstr "数字化平板"
 
 #: blueman/DeviceClass.py:194
 msgid "Card Reader"
@@ -1275,11 +1275,11 @@ msgstr "骑自行车：码表"
 
 #: blueman/DeviceClass.py:204
 msgid "Cycling: Speed Sensor"
-msgstr "骑自行车：转速传感器"
+msgstr "骑自行车：速度传感器"
 
 #: blueman/DeviceClass.py:205
 msgid "Cycling: Cadence Sensor"
-msgstr "骑自行车：韵律传感器"
+msgstr "骑自行车：节奏传感器"
 
 #: blueman/DeviceClass.py:206
 msgid "Cycling: Power Sensor"
@@ -1324,11 +1324,11 @@ msgstr "通用连续血糖监测器"
 
 #: blueman/DeviceClass.py:217
 msgid "Generic Insulin Pump"
-msgstr "一般胰岛素泵"
+msgstr "通用胰岛素泵"
 
 #: blueman/DeviceClass.py:218
 msgid "Insulin Pump, durable pump"
-msgstr "耐用胰岛素泵"
+msgstr "胰岛素泵、耐用泵"
 
 #: blueman/DeviceClass.py:219
 msgid "Insulin Pump, patch pump"
@@ -1345,7 +1345,7 @@ msgstr "通用药物交付"
 #. 55 - 80 reserved
 #: blueman/DeviceClass.py:223
 msgid "Generic: Outdoor Sports Activity"
-msgstr "通用类：户外运动活动"
+msgstr "通用类：户外体育活动"
 
 #: blueman/DeviceClass.py:224
 msgid "Location Display Device"
@@ -1357,7 +1357,7 @@ msgstr "定位和导航显示设备"
 
 #: blueman/DeviceClass.py:226
 msgid "Location Pod"
-msgstr "舱的位置"
+msgstr "位置吊舱"
 
 #: blueman/DeviceClass.py:227
 msgid "Location and Navigation Pod"
@@ -1425,7 +1425,7 @@ msgstr "HIDP"
 
 #: blueman/Sdp.py:103
 msgid "Hardcopy Control Channel"
-msgstr ""
+msgstr "硬拷贝控制通道"
 
 #: blueman/Sdp.py:104
 msgid "Hardcopy Data Channel"
@@ -1549,7 +1549,7 @@ msgstr "WAP 客户端"
 
 #: blueman/Sdp.py:136
 msgid "PANU"
-msgstr "PANU"
+msgstr "个人区域网用户"
 
 #: blueman/Sdp.py:137
 msgid "Network Access Point"
@@ -2064,7 +2064,7 @@ msgstr ""
 #. https://github.com/python/mypy/issues/2608
 #: blueman/plugins/applet/AutoConnect.py:50
 #: blueman/plugins/applet/ConnectionNotifier.py:21
-#: blueman/plugins/applet/RecentConns.py:219
+#: blueman/plugins/applet/RecentConns.py:223
 #: blueman/plugins/applet/PPPSupport.py:75
 msgid "Connected"
 msgstr "已连接"
@@ -2173,21 +2173,21 @@ msgstr "最近连接菜单显示的最大数目。"
 msgid "Recent _Connections"
 msgstr "最近连接 (_C)"
 
-#: blueman/plugins/applet/RecentConns.py:219
+#: blueman/plugins/applet/RecentConns.py:223
 #, python-format
 msgid "Connected to %s"
 msgstr "已连接到 %s"
 
-#: blueman/plugins/applet/RecentConns.py:225
+#: blueman/plugins/applet/RecentConns.py:229
 msgid "Failed to connect"
 msgstr "连接失败"
 
-#: blueman/plugins/applet/RecentConns.py:245
+#: blueman/plugins/applet/RecentConns.py:249
 #, python-format
 msgid "%(service)s on %(device)s"
 msgstr "%(device)s 上的 %(service)s"
 
-#: blueman/plugins/applet/RecentConns.py:249
+#: blueman/plugins/applet/RecentConns.py:253
 msgid "Adapter for this connection is not available"
 msgstr "这个连接的适配器不可用"
 
@@ -2460,7 +2460,7 @@ msgstr "串口已连接"
 #, python-format
 msgid ""
 "Serial port service on device <b>%s</b> now will be available via <b>%s</b>"
-msgstr "<b>%s</b> 设备上的串行端口服务现在可以通过 <b>%s</b> 使用"
+msgstr "<b>%s</b> 设备上的串口服务现在可以通过 <b>%s</b> 使用"
 
 #: blueman/plugins/applet/SerialManager.py:114
 msgid "Serial port connection script failed"

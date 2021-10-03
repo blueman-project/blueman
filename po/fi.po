@@ -20,13 +20,14 @@
 # Rauli L. <rauli.laine@iki.fi>, 2016
 # Matti Niemelä <niememat@gmail.com>, 2021.
 # Kimmo Kujansuu <mrkujansuu@gmail.com>, 2021.
+# Tommi Nieminen <translator@legisign.org>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2021-08-06 23:06+0200\n"
-"PO-Revision-Date: 2021-07-20 22:35+0000\n"
-"Last-Translator: Kimmo Kujansuu <mrkujansuu@gmail.com>\n"
+"POT-Creation-Date: 2021-10-03 11:06+0200\n"
+"PO-Revision-Date: 2021-08-28 15:16+0000\n"
+"Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/blueman/2-2/fi/"
 ">\n"
 "Language: fi\n"
@@ -34,7 +35,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7.2-dev\n"
+"X-Generator: Weblate 4.8.1-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -50,11 +51,11 @@ msgstr "Aina näkyvissä"
 
 #: data/ui/adapters-tab.ui:70
 msgid "Temporarily visible"
-msgstr "Toistaiseksi näkyvissä"
+msgstr "Tilapäisesti näkyvissä"
 
 #: data/ui/adapters-tab.ui:101
 msgid "<b>Friendly Name</b>"
-msgstr "<b>Tuttu nimi</b>"
+msgstr "<b>Kutsumanimi</b>"
 
 #: data/ui/applet-passkey.ui:8
 msgid "Pairing request"
@@ -109,17 +110,17 @@ msgstr "Parita"
 
 #: data/ui/manager-main.ui:135 blueman/gui/manager/ManagerDeviceMenu.py:373
 msgid "Mark/Unmark this device as trusted"
-msgstr "Merkitse tai poista laitteen luottamus"
+msgstr "Aseta laite luotetuksi tai peru luottamus"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:136 blueman/gui/manager/ManagerToolbar.py:39
 #: blueman/gui/manager/ManagerToolbar.py:99
 msgid "Trust"
-msgstr "Aseta luottamus"
+msgstr "Luota"
 
 #: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:406
 msgid "Remove this device from the known devices list"
-msgstr "Poista laite tunnettujen laitteiden listalta"
+msgstr "Poista laite tunnettujen laitteiden luettelosta"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:150
@@ -128,7 +129,7 @@ msgstr "Poista"
 
 #: data/ui/manager-main.ui:172
 msgid "Send file(s) to the device"
-msgstr "Lähetä tiedosto(ja) laitteeseen"
+msgstr "Lähetä laitteeseen tiedosto(ja)"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:174
@@ -137,7 +138,7 @@ msgstr "Lähetä tiedosto"
 
 #: data/ui/rename-device.ui:8
 msgid "Rename device"
-msgstr "Nimeä laite uudelleen"
+msgstr "Muuta laitteen nimeä"
 
 #: data/ui/services-network.ui:37
 msgid "Network Access Point (NAP)"
@@ -181,7 +182,7 @@ msgstr "<b>DUN-tuki</b>"
 
 #: data/ui/services-network.ui:391
 msgid "<b>Network Settings</b>"
-msgstr "<b>Verkon asetukset</b>"
+msgstr "<b>Verkkoasetukset</b>"
 
 #: data/ui/services-transfer.ui:24
 msgid "<b>File Receiving (Object Push)</b>"
@@ -189,11 +190,11 @@ msgstr "<b>Tiedoston vastaanotto (Object Push)</b>"
 
 #: data/ui/services-transfer.ui:37
 msgid "Incoming Folder:"
-msgstr "Saapuva kansio:"
+msgstr "Saapuvien kansio:"
 
 #: data/ui/services-transfer.ui:49
 msgid "Select folder for incoming file transfers"
-msgstr "Valitse kansio saapuvia tiedostonsiirtoja varten"
+msgstr "Valitse saapuvien tiedostonsiirtojen kansio"
 
 #: data/ui/services-transfer.ui:58
 msgid "Accept files from trusted devices"
@@ -206,8 +207,7 @@ msgstr "<b>Siirtoasetukset</b>"
 #: data/ui/send-dialog.ui:32
 msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr ""
-"<span weight=\"bold\" size=\"large\">Tiedostojen lähettäminen bluetoothilla</"
-"span>"
+"<span weight=\"bold\" size=\"large\">Tiedostojen Bluetooth-lähetys</span>"
 
 #: data/ui/send-dialog.ui:68
 msgid "<b>To:</b>"
@@ -223,7 +223,7 @@ msgstr "Asetukset"
 
 #: data/ui/applet-plugins-widget.ui:73
 msgid "Configure selected plugin's preferences"
-msgstr "Määritä valitun pluginin asetukset"
+msgstr "Määritä valitun liitännäisen asetukset"
 
 #: data/ui/applet-plugins-widget.ui:115
 msgid "<b>Plugin description:</b>"
@@ -231,7 +231,7 @@ msgstr "<b>Liitännäisen kuvaus:</b>"
 
 #: data/ui/applet-plugins-widget.ui:130
 msgid "Not specified"
-msgstr "Ei määritelty"
+msgstr "Ei määritetty"
 
 #: data/ui/applet-plugins-widget.ui:146
 msgid "<b>Author:</b>"
@@ -250,7 +250,7 @@ msgstr "Tuntematon"
 
 #: data/ui/applet-plugins-widget.ui:174
 msgid "<b>Depends on:</b>"
-msgstr "<b>Riippuvudet:</b>"
+msgstr "<b>Riippuvuudet:</b>"
 
 #: data/ui/applet-plugins-widget.ui:202
 msgid "<b>Conflicts with:</b>"
@@ -270,7 +270,7 @@ msgstr "APN:"
 
 #: data/ui/net-usage.ui:14
 msgid "Traffic statistics"
-msgstr "Liikennöintitilastot"
+msgstr "Liikenneitilastot"
 
 #: data/ui/net-usage.ui:33
 msgid "_Close"
@@ -294,7 +294,7 @@ msgstr "<b>Loki aloitettu:</b>"
 
 #: data/ui/net-usage.ui:209
 msgid "<b>Log duration:</b>"
-msgstr "<b>Lokita kesto:</b>"
+msgstr "<b>Merkitse lokiin kesto:</b>"
 
 #: data/ui/net-usage.ui:243
 msgid "_Reset"
@@ -306,7 +306,7 @@ msgstr "Lähetä muistiinpano"
 
 #: blueman/main/Adapter.py:50
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
-msgstr "Bluetoothin pitää olla päällä, jotta sovitinhallinta toimisi"
+msgstr "Bluetoothin on oltava käytössä, jotta sovitinhallinta toimisi"
 
 #: blueman/main/Adapter.py:86 data/blueman-adapters.desktop.in:3
 msgid "Bluetooth Adapters"
@@ -325,15 +325,15 @@ msgstr[1] "%(minutes)d minuuttia"
 
 #: blueman/main/Adapter.py:212
 msgid "Adapter"
-msgstr "Adapteri"
+msgstr "Sovitin"
 
 #: blueman/main/Manager.py:89 blueman/main/Manager.py:130
 msgid "Bluetooth needs to be turned on for the device manager to function"
-msgstr "Bluetoothin pitää olla päällä, jotta laitehallinta toimisi"
+msgstr "Bluetoothin on oltava käytössä, jotta laitehallinta toimisi"
 
 #: blueman/main/Manager.py:109
 msgid "Connection to BlueZ failed"
-msgstr "Blueziin yhdistäminen epäonnistui"
+msgstr "BlueZiin yhdistäminen epäonnistui"
 
 #: blueman/main/Manager.py:110
 msgid ""
@@ -341,9 +341,9 @@ msgid ""
 "This probably means that there were no Bluetooth adapters detected or "
 "Bluetooth daemon was not started."
 msgstr ""
-"Bluez-demoni ei ole käynnissä, blueman-manager ei voi jatkaa.\n"
-"Tämä tarkoittaa todennäköisesti, että Bluetooth-sovittimia ei havaittu tai "
-"Bluetooth-daemonia ei ollut käynnistetty."
+"BlueZ-palvelu ei ole käynnissä, joten blueman-manager ei voi jatkaa.\n"
+"Tämä tarkoittaa todennäköisesti, ettei Bluetooth-sovittimia havaittu tai "
+"Bluetooth-palvelua ole käynnistetty."
 
 #: blueman/main/Manager.py:198
 msgid "Searching"
@@ -351,12 +351,12 @@ msgstr "Etsitään"
 
 #: blueman/main/Manager.py:221 blueman/plugins/applet/StandardItems.py:79
 msgid "Adapter Preferences"
-msgstr "Sovittimen asetukset"
+msgstr "Sovitinasetukset"
 
 #: blueman/main/Manager.py:233 blueman/gui/manager/ManagerDeviceList.py:143
 #: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
-msgstr "Tiedoston lähettäjä"
+msgstr "Tiedoston lähetys"
 
 #: blueman/main/Sendto.py:33
 msgid "Bluetooth File Transfer"
@@ -368,13 +368,13 @@ msgstr "Yhdistetään"
 
 #: blueman/main/Sendto.py:111
 msgid "obexd not available"
-msgstr "obexd ei ole saatavilla"
+msgstr "obexd ei ole käytettävissä"
 
 #: blueman/main/Sendto.py:111
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
 msgstr ""
 "Obex-palvelun automaattinen käynnistäminen epäonnistui. Varmista, että obex-"
-"demoni on käynnissä"
+"palvelu on käynnissä"
 
 #: blueman/main/Sendto.py:142
 msgid "Cancelling"
@@ -386,14 +386,14 @@ msgstr "Lähetetään tiedostoa"
 
 #: blueman/main/Sendto.py:153 blueman/main/Sendto.py:195
 msgid "ETA:"
-msgstr "ETA:"
+msgstr "Valmis arviolta:"
 
 #: blueman/main/Sendto.py:191
 #, python-format
 msgid "%(seconds)d Second"
 msgid_plural "%(seconds)d Seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(seconds)d sekunti"
+msgstr[1] "%(seconds)d sekuntia"
 
 #: blueman/main/Sendto.py:229
 #, python-format
@@ -412,60 +412,60 @@ msgstr "Yritä uudelleen"
 msgid "Error occurred"
 msgstr "Tapahtui virhe"
 
-#: blueman/main/applet/BluezAgent.py:192
+#: blueman/main/applet/BluezAgent.py:193
 #, python-format
 msgid "Pairing request for %s"
 msgstr "Parituspyyntö laitteelta %s"
 
-#: blueman/main/applet/BluezAgent.py:203 blueman/main/applet/BluezAgent.py:319
+#: blueman/main/applet/BluezAgent.py:204 blueman/main/applet/BluezAgent.py:322
 msgid "Bluetooth Authentication"
-msgstr "Bluetooth-autentikointi"
+msgstr "Bluetooth-todennus"
 
-#: blueman/main/applet/BluezAgent.py:234
+#: blueman/main/applet/BluezAgent.py:235
 msgid "Enter PIN code for authentication:"
-msgstr "Syötä PIN-koodi tunnistusta varten:"
+msgstr "Syötä todennusta varten PIN-koodi:"
 
-#: blueman/main/applet/BluezAgent.py:249
+#: blueman/main/applet/BluezAgent.py:250
 msgid "Enter passkey for authentication:"
-msgstr "Anna tunnusluku todennusta varten:"
+msgstr "Anna todennusta varten salausavain:"
 
-#: blueman/main/applet/BluezAgent.py:260
+#: blueman/main/applet/BluezAgent.py:261
 msgid "Pairing passkey for"
-msgstr "Paritus salasana"
+msgstr "Paritussalausavain"
 
-#: blueman/main/applet/BluezAgent.py:271
+#: blueman/main/applet/BluezAgent.py:272
 msgid "Pairing PIN code for"
-msgstr "Pariliitoksen PIN-koodi"
+msgstr "Parituksen PIN-koodi"
 
-#: blueman/main/applet/BluezAgent.py:284
+#: blueman/main/applet/BluezAgent.py:285
 msgid "Pairing request for:"
 msgstr "Parituspyyntö kohteelle:"
 
-#: blueman/main/applet/BluezAgent.py:287
-msgid "Confirm value for authentication:"
-msgstr "Varmista arvo todennusta varten:"
-
 #: blueman/main/applet/BluezAgent.py:288
+msgid "Confirm value for authentication:"
+msgstr "Vahvista arvo todennusta varten:"
+
+#: blueman/main/applet/BluezAgent.py:289
 msgid "Confirm"
 msgstr "Vahvista"
 
-#: blueman/main/applet/BluezAgent.py:288 blueman/main/applet/BluezAgent.py:317
+#: blueman/main/applet/BluezAgent.py:289 blueman/main/applet/BluezAgent.py:320
 msgid "Deny"
-msgstr "Kiellä"
+msgstr "Estä"
 
-#: blueman/main/applet/BluezAgent.py:314
+#: blueman/main/applet/BluezAgent.py:317
 msgid "Authorization request for:"
-msgstr "Todentamispyyntö:"
+msgstr "Todennuspyyntö:"
 
-#: blueman/main/applet/BluezAgent.py:314
+#: blueman/main/applet/BluezAgent.py:317
 msgid "Service:"
 msgstr "Palvelu:"
 
-#: blueman/main/applet/BluezAgent.py:315
+#: blueman/main/applet/BluezAgent.py:318
 msgid "Always accept"
 msgstr "Hyväksy aina"
 
-#: blueman/main/applet/BluezAgent.py:316
+#: blueman/main/applet/BluezAgent.py:319
 #: blueman/plugins/applet/TransferService.py:130
 msgid "Accept"
 msgstr "Hyväksy"
@@ -476,13 +476,13 @@ msgid ""
 "with the content of this message to our </b>\n"
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgstr ""
-"<b>Virhe ladattaessa liitännäistä. Ilmoita kehittäjille tämän viestin "
-"sisältö ohjelmiston</b> \n"
+"<b>Virhe ladattaessa liitännäistä. Ilmoita tämän viestin sisältö "
+"kehittäjille ohjelman</b> \n"
 "<a href=\"http://github.com/blueman-project/blueman/issues\">kotisivulle.</a>"
 
 #: blueman/Functions.py:71
 msgid "Bluetooth Turned Off"
-msgstr "Bluetooth pois päältä"
+msgstr "Bluetooth ei käytössä"
 
 #: blueman/Functions.py:72
 msgid "Exit"
@@ -490,11 +490,11 @@ msgstr "Lopeta"
 
 #: blueman/Functions.py:73
 msgid "Enable Bluetooth"
-msgstr "Ota bluetooth käyttöön"
+msgstr "Ota Bluetooth käyttöön"
 
 #: blueman/Functions.py:92
 msgid "Shall bluetooth get enabled automatically?"
-msgstr "Otetaanko bluetooth automaattisesti käyttöön?"
+msgstr "Otetaanko Bluetooth automaattisesti käyttöön?"
 
 #: blueman/Functions.py:93
 msgid "Yes"
@@ -506,7 +506,7 @@ msgstr "Ei"
 
 #: blueman/gui/manager/ManagerMenu.py:45
 msgid "_Report a Problem"
-msgstr "_Raportoi ongelma"
+msgstr "_Ilmoita ongelmasta"
 
 #: blueman/gui/manager/ManagerMenu.py:62
 msgid "Device Manager"
@@ -518,17 +518,15 @@ msgstr "Näytä _työkalurivi"
 
 #: blueman/gui/manager/ManagerMenu.py:73
 msgid "Show _Statusbar"
-msgstr "Näytä _Tilarivi"
+msgstr "Näytä _tilarivi"
 
 #: blueman/gui/manager/ManagerMenu.py:78
-#, fuzzy
-#| msgid "Rename device"
 msgid "Hide _unnamed devices"
-msgstr "Nimeä laite uudelleen"
+msgstr "Piilota _nimettömät laitteet"
 
 #: blueman/gui/manager/ManagerMenu.py:88
 msgid "S_ort By"
-msgstr "Lajittele"
+msgstr "Lajitteluperuste"
 
 #: blueman/gui/manager/ManagerMenu.py:95
 msgid "_Name"
@@ -536,11 +534,11 @@ msgstr "_Nimi"
 
 #: blueman/gui/manager/ManagerMenu.py:100
 msgid "_Added"
-msgstr "_Lisätty"
+msgstr "L_isäysaika"
 
 #: blueman/gui/manager/ManagerMenu.py:114
 msgid "_Descending"
-msgstr "_Laskeva"
+msgstr "_Käänteinen"
 
 #: blueman/gui/manager/ManagerMenu.py:127
 #: blueman/plugins/applet/StandardItems.py:50
@@ -574,10 +572,8 @@ msgstr "_Poistu"
 #: blueman/gui/manager/ManagerDeviceList.py:301 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
-#, fuzzy
-#| msgid "uncategorized"
 msgid "Uncategorized"
-msgstr "luokittelematon"
+msgstr "Luokittelematta"
 
 #: blueman/gui/manager/ManagerDeviceList.py:479
 msgid "<b>Trusted and Paired</b>"
@@ -592,19 +588,17 @@ msgid "<b>Trusted</b>"
 msgstr "<b>Luotettu</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:502
-#, fuzzy
-#| msgid "_<b>Connect</b>"
 msgid "<b>Connected</b>"
-msgstr "_<b>Yhdistä</b>"
+msgstr "<b>Yhdistetty</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:517
 msgid "Poor"
-msgstr "Kriittinen"
+msgstr "Huono"
 
 #: blueman/gui/manager/ManagerDeviceList.py:519
 #: blueman/gui/manager/ManagerDeviceList.py:544
 msgid "Sub-optimal"
-msgstr "Huono"
+msgstr "Heikko"
 
 #: blueman/gui/manager/ManagerDeviceList.py:521
 #: blueman/gui/manager/ManagerDeviceList.py:546
@@ -613,53 +607,54 @@ msgstr "Optimaalinen"
 
 #: blueman/gui/manager/ManagerDeviceList.py:523
 msgid "Much"
-msgstr "Paljon"
+msgstr "Hyvä"
 
 #: blueman/gui/manager/ManagerDeviceList.py:525
 msgid "Too much"
-msgstr "Aivan liikaa"
+msgstr "Liiallinen"
 
 #: blueman/gui/manager/ManagerDeviceList.py:528
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 msgstr ""
+"<b>Saapuvan signaalin voimakkuus: %(rssi)u %%</b> <i>(%(rssi_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:531
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
-msgstr ""
+msgstr "Vastaanotetun signaalin voimakkuus: %(rssi)u %% <i>%(rssi_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:536
 #, python-format
 msgid "<b>Link Quality: %(lq)u%%</b>"
-msgstr ""
+msgstr "<b>Yhteyden laatu: %(lq)u %%</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:538
 #, python-format
 msgid "Link Quality: %(lq)u%%"
-msgstr ""
+msgstr "Yhteyden laatu: %(lq)u %%"
 
 #: blueman/gui/manager/ManagerDeviceList.py:542
 msgid "Low"
-msgstr "Matala"
+msgstr "Heikko"
 
 #: blueman/gui/manager/ManagerDeviceList.py:548
 msgid "High"
-msgstr "Korkea"
+msgstr "Hyvä"
 
 #: blueman/gui/manager/ManagerDeviceList.py:550
 msgid "Very High"
-msgstr "Hyvin korkea"
+msgstr "Erinomainen"
 
 #: blueman/gui/manager/ManagerDeviceList.py:553
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
-msgstr ""
+msgstr "<b>Siirtotehon taso: %(tpl)u %%</b> <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:556
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
-msgstr ""
+msgstr "Siirtotehon taso: %(tpl)u %% <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:131
 msgid "Success!"
@@ -679,31 +674,25 @@ msgstr "Yhteyden katkaiseminen epäonnistui: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:204
 msgid "No audio endpoints registered"
-msgstr ""
+msgstr "Äänipäätepisteitä ei ole rekisteröity"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:207
 msgid "Input/output error"
-msgstr ""
+msgstr "I/O-virhe"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:209
-#, fuzzy
-#| msgid "Show device information"
 msgid "Device did not respond"
-msgstr "Näytä laitetiedot"
+msgstr "Laite ei vastaa"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:213
-#, fuzzy
-#| msgid "Temporarily visible"
 msgid "Resource temporarily unavailable"
-msgstr "Toistaiseksi näkyvissä"
+msgstr "Resurssi ei hetkellisesti käytettävissä"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:218
 msgid "Connection Failed: "
-msgstr "Yhteys epäonnistui: "
+msgstr "Yhteydenotto epäonnistui: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:285
-#, fuzzy
-#| msgid "_<b>Connect</b>"
 msgid "_<b>_Connect</b>"
 msgstr "_<b>Yhdistä</b>"
 
@@ -721,23 +710,19 @@ msgstr "Irrota laite väkisin"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:308
 msgid "<b>Connect To:</b>"
-msgstr "<b>Yhdistä Kohteeseen:</b>"
+msgstr "<b>Yhdistä kohteeseen:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:313
 msgid "<b>Disconnect:</b>"
 msgstr "<b>Katkaise:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:322
-#, fuzzy
-#| msgid "<b>Disconnect:</b>"
 msgid "<b>Auto-connect:</b>"
-msgstr "<b>Katkaise:</b>"
+msgstr "<b>Yhdistä automaattisesti:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:341
-#, fuzzy
-#| msgid "Send a _File..."
 msgid "Send a _File…"
-msgstr "Lähetä tiedostoja…"
+msgstr "Lähetä t_iedosto…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:354
 msgid "_Pair"
@@ -749,7 +734,7 @@ msgstr "_Luotettu"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:369
 msgid "_Untrust"
-msgstr "_Epäluotettava"
+msgstr "_Ei luotettu"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:393
 msgid "R_ename device…"
@@ -771,17 +756,17 @@ msgstr "Datan aktiivisuuden ilmaisin"
 #: blueman/gui/manager/ManagerStats.py:43
 #: blueman/gui/manager/ManagerStats.py:53
 msgid "Total data received and rate of transmission"
-msgstr "Vastaanotettu kokonaisdata ja vastaanottonopeus"
+msgstr "Vastaanotettua data yhteensä sekä siirtonopeus"
 
 #: blueman/gui/manager/ManagerStats.py:47
 #: blueman/gui/manager/ManagerStats.py:51
 msgid "Total data sent and rate of transmission"
-msgstr "Lähetetty kokonaisdata ja lähetysnopeus"
+msgstr "Lähetetty dataa yhteen ja siirtonopeus"
 
 #: blueman/gui/manager/ManagerToolbar.py:37
 #: blueman/gui/manager/ManagerToolbar.py:93
 msgid "Untrust"
-msgstr "Poista luottamus"
+msgstr "Peru luottamus"
 
 #: blueman/gui/DeviceSelectorDialog.py:14
 msgid "Select Device"
@@ -793,7 +778,7 @@ msgstr "Lisää"
 
 #: blueman/gui/CommonUi.py:62
 msgid "Blueman is a GTK+ Bluetooth manager"
-msgstr "Blueman on GTK+ Bluetooth- manageri"
+msgstr "Blueman on GTK+:n Bluetooth-hallinta"
 
 #: blueman/gui/GsmSettings.py:24
 msgid "GSM Settings"
@@ -817,8 +802,8 @@ msgid ""
 "Proceed?"
 msgstr ""
 "Liitännäinen <b>\"%(0)s\"</b> riippuu liitännäisestä <b>%(1)s</b>. "
-"Liitännäisen <b>%(1)s</b> poistaminen käytöstä vaatii myös liitännäisen <b>"
-"\"%(0)s\"</b> poistamisen käytöstä.\n"
+"Liitännäisen <b>%(1)s</b> poistaminen käytöstä vaatii myös liitännäisen "
+"<b>”%(0)s”</b> poistamisen käytöstä.\n"
 "Jatketaanko?"
 
 #: blueman/gui/applet/PluginDialog.py:318
@@ -839,566 +824,500 @@ msgstr "Sovittimen valinta"
 
 #: blueman/gui/DeviceSelectorWidget.py:45
 msgid "Discovering…"
-msgstr "Havaittavissa…"
+msgstr "Tunnistetaan…"
 
 #. translators: device class
 #: blueman/DeviceClass.py:6
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Sekalaista"
 
 #. translators: device class
 #: blueman/DeviceClass.py:8
 msgid "Computer"
-msgstr ""
+msgstr "Tietokone"
 
 #. translators: device class
 #: blueman/DeviceClass.py:10
 msgid "Phone"
-msgstr ""
+msgstr "Puhelin"
 
 #. translators: device class
 #: blueman/DeviceClass.py:12
-#, fuzzy
-#| msgid "Network Access Point"
 msgid "Access point"
-msgstr "Verkon tukiasema"
+msgstr "Tukiasema"
 
 #. translators: device class
 #: blueman/DeviceClass.py:14
 msgid "Audio/video"
-msgstr ""
+msgstr "Ääni/video"
 
 #. translators: device class
 #: blueman/DeviceClass.py:16
 msgid "Peripheral"
-msgstr ""
+msgstr "Oheislaite"
 
 #. translators: device class
 #: blueman/DeviceClass.py:18 blueman/DeviceClass.py:276
 msgid "Imaging"
-msgstr ""
+msgstr "Kuva"
 
 #. translators: device class
 #: blueman/DeviceClass.py:20 blueman/DeviceClass.py:41
 msgid "Wearable"
-msgstr ""
+msgstr "Puettava"
 
 #. translators: device class
 #: blueman/DeviceClass.py:22
 msgid "Toy"
-msgstr ""
+msgstr "Lelu"
 
 #. translators: device class
 #: blueman/DeviceClass.py:31
-#, fuzzy
-#| msgid "desktop"
 msgid "Desktop"
-msgstr "työpöytä"
+msgstr "Työpöytä"
 
 #. translators: device class
 #: blueman/DeviceClass.py:33
-#, fuzzy
-#| msgid "server"
 msgid "Server"
-msgstr "palvelin"
+msgstr "Palvelin"
 
 #. translators: device class
 #: blueman/DeviceClass.py:35
-#, fuzzy
-#| msgid "laptop"
 msgid "Laptop"
-msgstr "kannettava tietokone"
+msgstr "Kannettava"
 
 #. translators: device class
 #: blueman/DeviceClass.py:37
-#, fuzzy
-#| msgid "handheld"
 msgid "Handheld"
-msgstr "kämmentietokone"
+msgstr "Kämmentietokone"
 
 #. translators: device class
 #: blueman/DeviceClass.py:39
 msgid "Palm"
-msgstr ""
+msgstr "Kämmentietokone"
 
 #. translators: device class
 #: blueman/DeviceClass.py:48
-#, fuzzy
-#| msgid "cellular"
 msgid "Cellular"
-msgstr "matkapuhelin"
+msgstr "Matkapuhelin"
 
 #. translators: device class
 #: blueman/DeviceClass.py:50
-#, fuzzy
-#| msgid "cordless"
 msgid "Cordless"
-msgstr "langaton"
+msgstr "Langaton"
 
 #. translators: device class
 #: blueman/DeviceClass.py:52
-#, fuzzy
-#| msgid "smart phone"
 msgid "Smart phone"
-msgstr "älypuhelin"
+msgstr "Älypuhelin"
 
 #. translators: device class
 #: blueman/DeviceClass.py:54
-#, fuzzy
-#| msgid "modem"
 msgid "Modem"
-msgstr "modeemi"
+msgstr "Modeemi"
 
 #. translators: device class
 #: blueman/DeviceClass.py:56
 msgid "Isdn"
-msgstr ""
+msgstr "ISDN"
 
 #. translators: device class
 #: blueman/DeviceClass.py:61
 msgid "Fully"
-msgstr ""
+msgstr "Täysi"
 
 #. translators: device class
 #: blueman/DeviceClass.py:63
 msgid "1-17 percent"
-msgstr ""
+msgstr "1–17 prosenttia"
 
 #. translators: device class
 #: blueman/DeviceClass.py:65
 msgid "17-33 percent"
-msgstr ""
+msgstr "17–33 prosenttia"
 
 #. translators: device class
 #: blueman/DeviceClass.py:67
 msgid "33-50 percent"
-msgstr ""
+msgstr "33–50 prosenttia"
 
 #. translators: device class
 #: blueman/DeviceClass.py:69
 msgid "50-67 percent"
-msgstr ""
+msgstr "50–67 prosenttia"
 
 #. translators: device class
 #: blueman/DeviceClass.py:71
 msgid "67-83 percent"
-msgstr ""
+msgstr "67–83 prosenttia"
 
 #. translators: device class
 #: blueman/DeviceClass.py:73
 msgid "83-99 percent"
-msgstr ""
+msgstr "83–99 prosenttia"
 
 #. translators: device class
 #: blueman/DeviceClass.py:75
-#, fuzzy
-#| msgid "obexd not available"
 msgid "Not available"
-msgstr "obexd ei ole saatavilla"
+msgstr "Ei käytettävissä"
 
 #. translators: device class
 #: blueman/DeviceClass.py:82 blueman/Sdp.py:123 blueman/Sdp.py:164
-#, fuzzy
-#| msgid "headset"
 msgid "Headset"
-msgstr "kuulokemikrofoni"
+msgstr "Kuulokemikrofoni"
 
 #. translators: device class
 #: blueman/DeviceClass.py:84 blueman/Sdp.py:145
-#, fuzzy
-#| msgid "handsfree"
 msgid "Handsfree"
-msgstr "handsfree"
+msgstr "Handsfree"
 
 #. translators: device class
 #: blueman/DeviceClass.py:88
-#, fuzzy
-#| msgid "microphone"
 msgid "Microphone"
-msgstr "mikrofoni"
+msgstr "Mikrofoni"
 
 #. translators: device class
 #: blueman/DeviceClass.py:90
 msgid "Loudspeaker"
-msgstr ""
+msgstr "Kaiutin"
 
 #. translators: device class
 #: blueman/DeviceClass.py:92
 msgid "Headphones"
-msgstr ""
+msgstr "Kuulokkeet"
 
 #. translators: device class
 #: blueman/DeviceClass.py:94
 msgid "Portable audio"
-msgstr ""
+msgstr "Kannettava äänisoitin"
 
 #. translators: device class
 #: blueman/DeviceClass.py:96
 msgid "Car audio"
-msgstr ""
+msgstr "Autosoitin"
 
 #. translators: device class
 #: blueman/DeviceClass.py:98
 msgid "Set-top box"
-msgstr ""
+msgstr "Digiboksi"
 
 #. translators: device class
 #: blueman/DeviceClass.py:100
 msgid "Hifi audio"
-msgstr ""
+msgstr "Hifi-ääni"
 
 #. translators: device class
 #: blueman/DeviceClass.py:102
 msgid "Vcr"
-msgstr ""
+msgstr "Videotallennin"
 
 #. translators: device class
 #: blueman/DeviceClass.py:104
-#, fuzzy
-#| msgid "Audio Source"
 msgid "Video camera"
-msgstr "Äänilähde"
+msgstr "Videokamera"
 
 #. translators: device class
 #: blueman/DeviceClass.py:106
 msgid "Camcorder"
-msgstr ""
+msgstr "Videokamera"
 
 #. translators: device class
 #: blueman/DeviceClass.py:108
-#, fuzzy
-#| msgid "Audio Source"
 msgid "Video monitor"
-msgstr "Äänilähde"
+msgstr "Näyttö"
 
 #. translators: device class
 #: blueman/DeviceClass.py:110
 msgid "Video display and loudspeaker"
-msgstr ""
+msgstr "Näyttö ja kaiutin"
 
 #. translators: device class
 #: blueman/DeviceClass.py:112
-#, fuzzy
-#| msgid "Audio Source"
 msgid "Video conferencing"
-msgstr "Äänilähde"
+msgstr "Videoneuvottelu"
 
 #. translators: device class
 #: blueman/DeviceClass.py:116
 msgid "Gaming/Toy"
-msgstr ""
+msgstr "Pelaaminen/lelu"
 
 #. translators: device class
 #: blueman/DeviceClass.py:123 blueman/DeviceClass.py:189
-#, fuzzy
-#| msgid "keyboard"
 msgid "Keyboard"
-msgstr "näppäimistö"
+msgstr "Näppäimistö"
 
 #. translators: device class
 #: blueman/DeviceClass.py:125
-#, fuzzy
-#| msgid "pointing"
 msgid "Pointing"
-msgstr "osoitinlaite"
+msgstr "Osoitinlaite"
 
 #. translators: device class
 #: blueman/DeviceClass.py:127
 msgid "Combo"
-msgstr ""
+msgstr "Yhdistelmä"
 
 #. translators: device class
 #: blueman/DeviceClass.py:132
 msgid "Display"
-msgstr ""
+msgstr "Näyttö"
 
 #. translators: device class
 #: blueman/DeviceClass.py:134
 msgid "Camera"
-msgstr ""
+msgstr "Kamera"
 
 #. translators: device class
 #: blueman/DeviceClass.py:136
 msgid "Scanner"
-msgstr ""
+msgstr "Kuvanlukija"
 
 #. translators: device class
 #: blueman/DeviceClass.py:138
 msgid "Printer"
-msgstr ""
+msgstr "Tulostin"
 
 #. translators: device class
 #: blueman/DeviceClass.py:143
 msgid "Wrist watch"
-msgstr ""
+msgstr "Rannekello"
 
 #. translators: device class
 #: blueman/DeviceClass.py:145
 msgid "Pager"
-msgstr ""
+msgstr "Hakulaite"
 
 #. translators: device class
 #: blueman/DeviceClass.py:147
 msgid "Jacket"
-msgstr ""
+msgstr "Takki"
 
 #. translators: device class
 #: blueman/DeviceClass.py:149
 msgid "Helmet"
-msgstr ""
+msgstr "Kypärä"
 
 #. translators: device class
 #: blueman/DeviceClass.py:151
 msgid "Glasses"
-msgstr ""
+msgstr "Silmälasit"
 
 #. translators: device class
 #: blueman/DeviceClass.py:156
 msgid "Robot"
-msgstr ""
+msgstr "Robotti"
 
 #. translators: device class
 #: blueman/DeviceClass.py:158
 msgid "Vehicle"
-msgstr ""
+msgstr "Ajoneuvo"
 
 #. translators: device class
 #: blueman/DeviceClass.py:160
 msgid "Doll"
-msgstr ""
+msgstr "Nukke"
 
 #. translators: device class
 #: blueman/DeviceClass.py:162
 msgid "Controller"
-msgstr ""
+msgstr "Ohjainlaite"
 
 #. translators: device class
 #: blueman/DeviceClass.py:164
 msgid "Game"
-msgstr ""
+msgstr "Peli"
 
 #: blueman/DeviceClass.py:169
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Phone"
-msgstr "Yhdistä"
+msgstr "Yleinen puhelin"
 
 #: blueman/DeviceClass.py:170
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Computer"
-msgstr "Yhdistä"
+msgstr "Yleinen tietokone"
 
 #: blueman/DeviceClass.py:171
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Watch"
-msgstr "Yhdistä"
+msgstr "Yleinen kello"
 
 #: blueman/DeviceClass.py:172
 msgid "Watch: Sports Watch"
-msgstr ""
+msgstr "Kello: urheilukello"
 
 #: blueman/DeviceClass.py:173
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Clock"
-msgstr "Yhdistä"
+msgstr "Yleinen kello"
 
 #: blueman/DeviceClass.py:174
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "Generic Display"
-msgstr "Bluetooth-tiedostonsiirto"
+msgstr "Yleinen näyttö"
 
 #: blueman/DeviceClass.py:175
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Remote Control"
-msgstr "Yhdistä"
+msgstr "Yleinen kaukosäädin"
 
 #: blueman/DeviceClass.py:176
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "Generic Eye-glasses"
-msgstr "Bluetooth-tiedostonsiirto"
+msgstr "Yleiset silmälasit"
 
 #: blueman/DeviceClass.py:177
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "Generic Tag"
-msgstr "Bluetooth-tiedostonsiirto"
+msgstr "Yleinen luokitus"
 
 #: blueman/DeviceClass.py:178
-#, fuzzy
-#| msgid "Group Network"
 msgid "Generic Keyring"
-msgstr "Ryhmäverkko"
+msgstr "Yleinen avainrengas"
 
 #: blueman/DeviceClass.py:179
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "Generic Media Player"
-msgstr "Bluetooth-tiedostonsiirto"
+msgstr "Yleinen mediasoitin"
 
 #: blueman/DeviceClass.py:180
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Barcode Scanner"
-msgstr "Yhdistä"
+msgstr "Yleinen viivakoodinlukija"
 
 #: blueman/DeviceClass.py:181
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Thermometer"
-msgstr "Yhdistä"
+msgstr "Yleinen lämpömittari"
 
 #: blueman/DeviceClass.py:182
 msgid "Thermometer: Ear"
-msgstr ""
+msgstr "Lämpömittari: korva"
 
 #: blueman/DeviceClass.py:183
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "Generic Heart rate Sensor"
-msgstr "Bluetooth-tiedostonsiirto"
+msgstr "Yleinen sykeanturi"
 
 #: blueman/DeviceClass.py:184
 msgid "Heart Rate Sensor: Heart Rate Belt"
-msgstr ""
+msgstr "Sykeanturi: sykevyö"
 
 #: blueman/DeviceClass.py:185
 msgid "Generic Blood Pressure"
-msgstr ""
+msgstr "Yleinen verenpaineanturi"
 
 #: blueman/DeviceClass.py:186
 msgid "Blood Pressure: Arm"
-msgstr ""
+msgstr "Verenpaine: käsivarsi"
 
 #: blueman/DeviceClass.py:187
 msgid "Blood Pressure: Wrist"
-msgstr ""
+msgstr "Verenpaine: ranne"
 
 #: blueman/DeviceClass.py:188
 msgid "Human Interface Device (HID)"
-msgstr ""
+msgstr "Ihmiskäyttöliittymälaite (HID)"
 
 #: blueman/DeviceClass.py:190
 msgid "Mouse"
-msgstr ""
+msgstr "Hiiri"
 
 #: blueman/DeviceClass.py:191
 msgid "Joystick"
-msgstr ""
+msgstr "Peliohjain"
 
 #: blueman/DeviceClass.py:192
 msgid "Gamepad"
-msgstr ""
+msgstr "Kaksikätinen peliohjain"
 
 #: blueman/DeviceClass.py:193
 msgid "Digitizer Tablet"
-msgstr ""
+msgstr "Piirtoalusta"
 
 #: blueman/DeviceClass.py:194
 msgid "Card Reader"
-msgstr ""
+msgstr "Kortinlukija"
 
 #: blueman/DeviceClass.py:195
 msgid "Digital Pen"
-msgstr ""
+msgstr "Digikynä"
 
 #: blueman/DeviceClass.py:196
 msgid "Barcode Scanner"
-msgstr ""
+msgstr "Viivakoodinlukija"
 
 #: blueman/DeviceClass.py:197
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Glucose Meter"
-msgstr "Yhdistä"
+msgstr "Yleinen verensokerimittari"
 
 #: blueman/DeviceClass.py:198
 msgid "Generic: Running Walking Sensor"
-msgstr ""
+msgstr "Yleinen: juoksu- tai kävelyanturi"
 
 #: blueman/DeviceClass.py:199
 msgid "Running Walking Sensor: In-Shoe"
-msgstr ""
+msgstr "Juoksu- tai kävelyanturi: jalkineensisäinen"
 
 #: blueman/DeviceClass.py:200
 msgid "Running Walking Sensor: On-Shoe"
-msgstr ""
+msgstr "Juoksu tai kävelyanturi: jalkineenulkoinen"
 
 #: blueman/DeviceClass.py:201
 msgid "Running Walking Sensor: On-Hip"
-msgstr ""
+msgstr "Juoksu- tai kävelyanturi: lanteella oleva"
 
 #: blueman/DeviceClass.py:202
-#, fuzzy
-#| msgid "Group Network"
 msgid "Generic: Cycling"
-msgstr "Ryhmäverkko"
+msgstr "Yleinen: pyöräily"
 
 #: blueman/DeviceClass.py:203
 msgid "Cycling: Cycling Computer"
-msgstr ""
+msgstr "Pyöräily: pyöräilytietokone"
 
 #: blueman/DeviceClass.py:204
 msgid "Cycling: Speed Sensor"
-msgstr ""
+msgstr "Pyöräily: nopeusanturi"
 
 #: blueman/DeviceClass.py:205
 msgid "Cycling: Cadence Sensor"
-msgstr ""
+msgstr "Pyöräily: rytmianturi"
 
 #: blueman/DeviceClass.py:206
 msgid "Cycling: Power Sensor"
-msgstr ""
+msgstr "Pyöräily: voima-anturi"
 
 #: blueman/DeviceClass.py:207
 msgid "Cycling: Speed and Cadence Sensor"
-msgstr ""
+msgstr "Pyöräily: nopeus- ja rytmianturi"
 
 #. 19 - 48 reserved
 #: blueman/DeviceClass.py:209
 msgid "Generic: Pulse Oximeter"
-msgstr ""
+msgstr "Yleistä: pulssioksimetri"
 
 #: blueman/DeviceClass.py:210
 msgid "Fingertip"
-msgstr ""
+msgstr "Sormenpää"
 
 #: blueman/DeviceClass.py:211
 msgid "Wrist Worn"
-msgstr ""
+msgstr "Ranteessa pidettävä"
 
 #: blueman/DeviceClass.py:212
 msgid "Generic: Weight Scale"
-msgstr ""
+msgstr "Yleinen: vaaka"
 
 #: blueman/DeviceClass.py:213
 msgid "Generic Personal Mobility Device"
-msgstr ""
+msgstr "Yleinen henkilökohtainen mobiililaite"
 
 #: blueman/DeviceClass.py:214
 msgid "Powered Wheelchair"
-msgstr ""
+msgstr "Moottoripyörätuoli"
 
 #: blueman/DeviceClass.py:215
 msgid "Mobility Scooter"
-msgstr ""
+msgstr "Sähköskootteri"
 
 #: blueman/DeviceClass.py:216
 msgid "Generic Continuous Glucose Monitor"
-msgstr ""
+msgstr "Yleinen jatkuva verensokerin valvonta"
 
 #: blueman/DeviceClass.py:217
 msgid "Generic Insulin Pump"
-msgstr ""
+msgstr "Yleinen insuliinipumppu"
 
 #: blueman/DeviceClass.py:218
 msgid "Insulin Pump, durable pump"
-msgstr ""
+msgstr "Insuliinipumppa, kestopumppu"
 
 #: blueman/DeviceClass.py:219
 msgid "Insulin Pump, patch pump"
@@ -2162,7 +2081,7 @@ msgstr "Valitse PulseAudion ääniprofiili"
 
 #: blueman/plugins/BasePlugin.py:34 blueman/plugins/BasePlugin.py:35
 msgid "Unspecified"
-msgstr "Määrittämätön"
+msgstr "Ei määritetty"
 
 #: blueman/plugins/applet/AutoConnect.py:20
 msgid ""
@@ -2172,7 +2091,7 @@ msgstr ""
 #. https://github.com/python/mypy/issues/2608
 #: blueman/plugins/applet/AutoConnect.py:50
 #: blueman/plugins/applet/ConnectionNotifier.py:21
-#: blueman/plugins/applet/RecentConns.py:219
+#: blueman/plugins/applet/RecentConns.py:223
 #: blueman/plugins/applet/PPPSupport.py:75
 msgid "Connected"
 msgstr "Yhdistetty"
@@ -2293,21 +2212,21 @@ msgstr "Näyttöön tulee viimeksi käytettyjen yhteyksien valikon enimmäismä�
 msgid "Recent _Connections"
 msgstr "Viimeisimmät _yhteydet"
 
-#: blueman/plugins/applet/RecentConns.py:219
+#: blueman/plugins/applet/RecentConns.py:223
 #, python-format
 msgid "Connected to %s"
 msgstr "Yhdistetty kohteeseen %s"
 
-#: blueman/plugins/applet/RecentConns.py:225
+#: blueman/plugins/applet/RecentConns.py:229
 msgid "Failed to connect"
 msgstr "Yhdistäminen epäonnistui"
 
-#: blueman/plugins/applet/RecentConns.py:245
+#: blueman/plugins/applet/RecentConns.py:249
 #, python-format
 msgid "%(service)s on %(device)s"
 msgstr "%(service)s laitteella %(device)s"
 
-#: blueman/plugins/applet/RecentConns.py:249
+#: blueman/plugins/applet/RecentConns.py:253
 msgid "Adapter for this connection is not available"
 msgstr "Sovitinta tälle yhteydelle ei ole saatavilla"
 

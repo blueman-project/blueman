@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2021-08-06 23:06+0200\n"
-"PO-Revision-Date: 2021-06-03 04:32+0000\n"
+"POT-Creation-Date: 2021-10-03 11:06+0200\n"
+"PO-Revision-Date: 2021-08-10 05:33+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/blueman/2-2/tr/"
 ">\n"
@@ -34,7 +34,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.8-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -413,60 +413,60 @@ msgstr "Yeniden Dene"
 msgid "Error occurred"
 msgstr "Hata oluştu"
 
-#: blueman/main/applet/BluezAgent.py:192
+#: blueman/main/applet/BluezAgent.py:193
 #, python-format
 msgid "Pairing request for %s"
 msgstr "%s için eşleme isteği"
 
-#: blueman/main/applet/BluezAgent.py:203 blueman/main/applet/BluezAgent.py:319
+#: blueman/main/applet/BluezAgent.py:204 blueman/main/applet/BluezAgent.py:322
 msgid "Bluetooth Authentication"
 msgstr "Bluetooth Kimlik Doğrulama"
 
-#: blueman/main/applet/BluezAgent.py:234
+#: blueman/main/applet/BluezAgent.py:235
 msgid "Enter PIN code for authentication:"
 msgstr "Kimlik doğrulaması için PIN kodunu girin:"
 
-#: blueman/main/applet/BluezAgent.py:249
+#: blueman/main/applet/BluezAgent.py:250
 msgid "Enter passkey for authentication:"
 msgstr "Doğrulama için geçiş anahtarını girin:"
 
-#: blueman/main/applet/BluezAgent.py:260
+#: blueman/main/applet/BluezAgent.py:261
 msgid "Pairing passkey for"
 msgstr "Erişim anahtarı eşleştiriliyor"
 
-#: blueman/main/applet/BluezAgent.py:271
+#: blueman/main/applet/BluezAgent.py:272
 msgid "Pairing PIN code for"
 msgstr "PIN kodu şunun için eşleştiriliyor:"
 
-#: blueman/main/applet/BluezAgent.py:284
+#: blueman/main/applet/BluezAgent.py:285
 msgid "Pairing request for:"
 msgstr "Eşleme isteği:"
 
-#: blueman/main/applet/BluezAgent.py:287
+#: blueman/main/applet/BluezAgent.py:288
 msgid "Confirm value for authentication:"
 msgstr "Doğrulama için değeri onayla:"
 
-#: blueman/main/applet/BluezAgent.py:288
+#: blueman/main/applet/BluezAgent.py:289
 msgid "Confirm"
 msgstr "Doğrula"
 
-#: blueman/main/applet/BluezAgent.py:288 blueman/main/applet/BluezAgent.py:317
+#: blueman/main/applet/BluezAgent.py:289 blueman/main/applet/BluezAgent.py:320
 msgid "Deny"
 msgstr "Reddet"
 
-#: blueman/main/applet/BluezAgent.py:314
+#: blueman/main/applet/BluezAgent.py:317
 msgid "Authorization request for:"
 msgstr "Yetkilendirme isteği:"
 
-#: blueman/main/applet/BluezAgent.py:314
+#: blueman/main/applet/BluezAgent.py:317
 msgid "Service:"
 msgstr "Servis:"
 
-#: blueman/main/applet/BluezAgent.py:315
+#: blueman/main/applet/BluezAgent.py:318
 msgid "Always accept"
 msgstr "Daima izinli"
 
-#: blueman/main/applet/BluezAgent.py:316
+#: blueman/main/applet/BluezAgent.py:319
 #: blueman/plugins/applet/TransferService.py:130
 msgid "Accept"
 msgstr "Kabul Et"
@@ -1190,15 +1190,15 @@ msgstr "Kalp Atış Hızı Sensörü: Kalp Atış Hızı Kemeri"
 
 #: blueman/DeviceClass.py:185
 msgid "Generic Blood Pressure"
-msgstr "Genel Tansiyon"
+msgstr "Genel Kan Basıncı"
 
 #: blueman/DeviceClass.py:186
 msgid "Blood Pressure: Arm"
-msgstr "Tansiyon: Kol"
+msgstr "Kan Basıncı: Kol"
 
 #: blueman/DeviceClass.py:187
 msgid "Blood Pressure: Wrist"
-msgstr "Tansiyon: Bilek"
+msgstr "Kan Basıncı: Bilek"
 
 #: blueman/DeviceClass.py:188
 msgid "Human Interface Device (HID)"
@@ -1796,7 +1796,7 @@ msgstr "Pil Hizmeti"
 
 #: blueman/Sdp.py:203
 msgid "Blood Pressure"
-msgstr "Tansiyon"
+msgstr "Kan Basıncı"
 
 #: blueman/Sdp.py:204
 msgid "Alert Notification Service"
@@ -2055,7 +2055,7 @@ msgstr ""
 #. https://github.com/python/mypy/issues/2608
 #: blueman/plugins/applet/AutoConnect.py:50
 #: blueman/plugins/applet/ConnectionNotifier.py:21
-#: blueman/plugins/applet/RecentConns.py:219
+#: blueman/plugins/applet/RecentConns.py:223
 #: blueman/plugins/applet/PPPSupport.py:75
 msgid "Connected"
 msgstr "Bağlandı"
@@ -2173,21 +2173,21 @@ msgstr "Son bağlantılar menüsünün göstereceği maksimum öge sayısı."
 msgid "Recent _Connections"
 msgstr "Son _Bağlantılar"
 
-#: blueman/plugins/applet/RecentConns.py:219
+#: blueman/plugins/applet/RecentConns.py:223
 #, python-format
 msgid "Connected to %s"
 msgstr "%s aygıtına bağlı"
 
-#: blueman/plugins/applet/RecentConns.py:225
+#: blueman/plugins/applet/RecentConns.py:229
 msgid "Failed to connect"
 msgstr "Bağlanma girişimi başarısız"
 
-#: blueman/plugins/applet/RecentConns.py:245
+#: blueman/plugins/applet/RecentConns.py:249
 #, python-format
 msgid "%(service)s on %(device)s"
 msgstr "%(device)s üzerinden %(service)s"
 
-#: blueman/plugins/applet/RecentConns.py:249
+#: blueman/plugins/applet/RecentConns.py:253
 msgid "Adapter for this connection is not available"
 msgstr "Bu bağlantı için bağdaştırıcı kullanılabilir değil"
 
