@@ -12,6 +12,10 @@
 
 ## 2.2.3
 
+### Changes
+
+* Dropped the PIN database
+
 ### Bugs fixed
 
 * Recent connections disabled after suspend and resume

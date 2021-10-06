@@ -1,15 +1,12 @@
-import os.path
 import logging
 from gettext import gettext as _
 from html import escape
-import random
 from xml.etree import ElementTree
 from typing import Dict, Optional, overload, Callable, Union, TYPE_CHECKING, Tuple, Any, List
 
 from blueman.bluez.Device import Device
 from blueman.bluez.AgentManager import AgentManager
 from blueman.Sdp import ServiceUUID
-from blueman.Constants import PKGDATA_DIR
 from blueman.gui.Notification import Notification, _NotificationBubble, _NotificationDialog
 from blueman.main.Builder import Builder
 from blueman.main.DbusService import DbusService, DbusError
@@ -23,49 +20,6 @@ from gi.repository import Gtk
 
 if TYPE_CHECKING:
     from typing_extensions import Literal
-
-
-def bt_class_to_string(bt_class: int) -> Optional[str]:
-    n1 = (bt_class & 0x1f00) >> 8
-    if n1 == 0x03:
-        return "network"
-    elif n1 == 0x04:
-        n2 = (bt_class & 0xfc) >> 2
-        if n2 in (0x01, 0x02):
-            return "headset"
-        elif n2 == 0x06:
-            return "headphone"
-        else:
-            return "audio"
-    elif n1 == 0x05:
-        n2 = (bt_class & 0xc0) >> 6
-        if n2 == 0x00:
-            n3 = (bt_class & 0x1e) >> 2
-            if n3 in [0x01, 0x02]:
-                return "joypad"
-        elif n2 == 0x01:
-            return "keyboard"
-        elif n2 == 0x02:
-            n3 = (bt_class & 0x1e) >> 2
-            if n3 == 0x05:
-                return "tablet"
-            else:
-                return "mouse"
-    elif n1 == 0x06:
-        if bt_class & 0x80:
-            return "printer"
-    return None
-
-
-PIN_SEARCHES = [
-    "./device[@oui='{oui}'][@type='{type}'][@name='{name}']",
-    "./device[@oui='{oui}'][@type='{type}']",
-    "./device[@oui='{oui}'][@name='{name}']",
-    "./device[@type='{type}'][@name='{name}']",
-    "./device[@oui='{oui}']",
-    "./device[@name='{name}']",
-    "./device[@type='{type}']",
-]
 
 
 class BluezErrorCanceled(DbusError):
@@ -144,30 +98,6 @@ class BluezAgent(DbusService):
         device = Device(obj_path=device_path)
         return f"<b>{escape(device['Alias'])}</b> ({device['Address']})"
 
-    def _lookup_default_pin(self, device_path: str) -> Optional[str]:
-        if not self._db:
-            self._db = ElementTree.parse(os.path.join(PKGDATA_DIR, 'pin-code-database.xml'))
-
-        device = Device(obj_path=device_path)
-        lookup_dict = {
-            'name': device['Name'],
-            'type': bt_class_to_string(device['Class']),
-            'oui': device['Address'][:9]
-        }
-
-        pin = None
-        for s in PIN_SEARCHES:
-            search = s.format(**lookup_dict)
-            entry = self._db.find(search)
-            if entry is not None:
-                pin = entry.get('pin')
-                break
-
-        if pin is not None:
-            if 'max:' in pin:
-                pin = "".join(random.sample('123456789', int(pin[-1])))
-        return pin
-
     @overload
     def ask_passkey(self, dialog_msg: str, is_numeric: "Literal[True]", device_path: str, ok: Callable[[int], None],
                     err: Callable[[Union[BluezErrorCanceled, BluezErrorRejected]], None]) -> None:
@@ -233,12 +163,6 @@ class BluezAgent(DbusService):
                              err: Callable[[Union[BluezErrorCanceled, BluezErrorRejected]], None]) -> None:
         logging.info("Agent.RequestPinCode")
         dialog_msg = _("Enter PIN code for authentication:")
-
-        default_pin = self._lookup_default_pin(device_path)
-        if default_pin is not None:
-            logging.info(f"Sending default pin: {default_pin}")
-            ok(default_pin)
-            return
 
         self.ask_passkey(dialog_msg, False, device_path, ok, err)
         if self.dialog:
