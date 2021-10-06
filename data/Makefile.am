@@ -50,15 +50,11 @@ update-icon-cache:
 	        echo "***   $(gtk_update_icon_cache)"; \
 	fi
 
-pindbdir = $(pkgdatadir)
-pindb_DATA = pin-code-database.xml
-
 EXTRA_DIST = 	$(autostart_in_files)	\
 		$(app_in_files)		\
 		$(thunar_in_files)	\
 		$(settings_in_files)	\
 		$(gsettings_SCHEMAS)    \
-		pin-code-database.xml	\
 		meson.build
 
 SUBDIRS = 		\
