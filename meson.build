@@ -148,7 +148,6 @@ install_subdir(
 
 # Gsettings and pin database
 install_data('data/org.blueman.gschema.xml', install_dir: schemadir)
-install_data('data/pin-code-database.xml', install_dir: pkgdatadir)
 
 # Merge translation into policy file
 i18n.merge_file(

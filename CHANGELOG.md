@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.2.4
+
+### Changes
+
+* Dropped the PIN database
+
 ## 2.2.3
 
 ### Bugs fixed
