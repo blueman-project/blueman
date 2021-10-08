@@ -30,7 +30,8 @@ jobs:
           - 3.7
           - 3.8
           - 3.9
-          - 3.10-rc
+          - "3.10"
+          - 3.11-rc
     runs-on: ubuntu-latest
     container:
       image: python:${{ matrix.python }}
@@ -48,7 +49,8 @@ jobs:
           - 3.7
           - 3.8
           - 3.9
-          - 3.10-rc
+          - "3.10"
+          - 3.11-rc
     runs-on: ubuntu-latest
     container:
       image: python:${{ matrix.python }}
@@ -71,7 +73,6 @@ jobs:
           - 3.7
           - 3.8
           - 3.9
-          - 3.10-rc
     runs-on: ubuntu-latest
     container:
       image: python:${{ matrix.python }}-buster
