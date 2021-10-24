@@ -86,7 +86,7 @@ class BluezAgent(DbusService):
         self.add_method("RequestPinCode", ("o",), "s", self._on_request_pin_code, is_async=True)
         self.add_method("DisplayPinCode", ("o", "s"), "", self._on_display_pin_code)
         self.add_method("RequestPasskey", ("o",), "u", self._on_request_passkey, is_async=True)
-        self.add_method("DisplayPasskey", ("o", "u", "y"), "", self._on_display_passkey)
+        self.add_method("DisplayPasskey", ("o", "u", "q"), "", self._on_display_passkey)
         self.add_method("RequestConfirmation", ("o", "u"), "", self._on_request_confirmation, is_async=True)
         self.add_method("RequestAuthorization", ("o",), "", self._on_request_authorization, is_async=True)
         self.add_method("AuthorizeService", ("o", "s"), "", self._on_authorize_service, is_async=True)
