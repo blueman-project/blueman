@@ -12,6 +12,7 @@
 
 * Recent connections disabled after suspend and resume
 * Service authorization notifications did not respond
+* Passkeys did not get displayed
 
 ## 2.2.2
 
