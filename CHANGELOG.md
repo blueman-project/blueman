@@ -1,5 +1,11 @@
 # Changelog
 
+## master
+
+### New features
+
+* Audio profile switcher in applet menu (@abhijeetviswa)
+
 ## 2.2.1
 
 ### Bugs fixed
