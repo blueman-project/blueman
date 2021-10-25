@@ -12,13 +12,14 @@
 # Amaro Martínez <xoas@airmail.cc>, 2020.
 # Allan Nordhøy <epost@anotheragency.no>
 # LightFOSS <light325@protonmail.com>, 2021.
+# Michael Manganiello <mike@fmanganiello.com.ar>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2021-10-03 11:06+0200\n"
-"PO-Revision-Date: 2021-06-18 19:33+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"PO-Revision-Date: 2021-10-22 22:43+0000\n"
+"Last-Translator: Michael Manganiello <mike@fmanganiello.com.ar>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/blueman/2-2/es/"
 ">\n"
 "Language: es\n"
@@ -26,7 +27,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7\n"
+"X-Generator: Weblate 4.9-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -421,11 +422,11 @@ msgstr "Escriba el código PIN para la autenticación:"
 
 #: blueman/main/applet/BluezAgent.py:250
 msgid "Enter passkey for authentication:"
-msgstr "Escriba la clave de paso para la autenticación:"
+msgstr "Escriba la clave para la autenticación:"
 
 #: blueman/main/applet/BluezAgent.py:261
 msgid "Pairing passkey for"
-msgstr "Clave de paso de emparejamiento para"
+msgstr "Clave de emparejamiento para"
 
 #: blueman/main/applet/BluezAgent.py:272
 msgid "Pairing PIN code for"
@@ -516,7 +517,7 @@ msgstr "Mostrar barra de _estado"
 
 #: blueman/gui/manager/ManagerMenu.py:78
 msgid "Hide _unnamed devices"
-msgstr "Oc_ultar dispositivos sin nombre"
+msgstr "Ocultar _dispositivos sin nombre"
 
 #: blueman/gui/manager/ManagerMenu.py:88
 msgid "S_ort By"
@@ -528,7 +529,7 @@ msgstr "_Nombre"
 
 #: blueman/gui/manager/ManagerMenu.py:100
 msgid "_Added"
-msgstr "_Adición"
+msgstr "_Añadido"
 
 #: blueman/gui/manager/ManagerMenu.py:114
 msgid "_Descending"
@@ -583,7 +584,7 @@ msgstr "<b>De confianza</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:502
 msgid "<b>Connected</b>"
-msgstr "_<b>Conectado</b>"
+msgstr "<b>Conectado</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:517
 msgid "Poor"
@@ -620,12 +621,12 @@ msgstr "Fuerza de la señal recibida: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 #: blueman/gui/manager/ManagerDeviceList.py:536
 #, python-format
 msgid "<b>Link Quality: %(lq)u%%</b>"
-msgstr "<b>Calidad de link: %(lq)u%%</b>"
+msgstr "<b>Calidad del enlace: %(lq)u%%</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:538
 #, python-format
 msgid "Link Quality: %(lq)u%%"
-msgstr "Calidad del Link: %(lq)u%%"
+msgstr "Calidad del enlace: %(lq)u%%"
 
 #: blueman/gui/manager/ManagerDeviceList.py:542
 msgid "Low"
@@ -642,16 +643,16 @@ msgstr "Muy alta"
 #: blueman/gui/manager/ManagerDeviceList.py:553
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
-msgstr "<b>Nivel de Energia Transmitida: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
+msgstr "<b>Nivel de Energía Transmitida: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:556
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
-msgstr "Nivel de Energia Transmitida: %(tpl)u%% <i>(%(tpl_state)s)</i>"
+msgstr "Nivel de Energía Transmitida: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:131
 msgid "Success!"
-msgstr "¡Correcto!"
+msgstr "¡Éxito!"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:138
 msgid "Failed"
@@ -671,11 +672,11 @@ msgstr "Sin puntos de audio registrados"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:207
 msgid "Input/output error"
-msgstr "Entrada/Salida error"
+msgstr "Error de entrada/salida"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:209
 msgid "Device did not respond"
-msgstr "El dispositivo no respondio"
+msgstr "El dispositivo no respondió"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:213
 msgid "Resource temporarily unavailable"
@@ -687,7 +688,7 @@ msgstr "Ha fallado la conexión: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:285
 msgid "_<b>_Connect</b>"
-msgstr "_<b>Conectado</b>"
+msgstr "_<b>_Conectar</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:287
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
@@ -712,7 +713,7 @@ msgstr "<b>Desconectar:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:322
 msgid "<b>Auto-connect:</b>"
-msgstr "<b>Auto -conectar:</b>"
+msgstr "<b>Auto-conectar:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:341
 msgid "Send a _File…"
@@ -856,7 +857,7 @@ msgstr "Captación de imágenes"
 #. translators: device class
 #: blueman/DeviceClass.py:20 blueman/DeviceClass.py:41
 msgid "Wearable"
-msgstr "Ponible"
+msgstr "Vestible"
 
 #. translators: device class
 #: blueman/DeviceClass.py:22
@@ -881,7 +882,7 @@ msgstr "Portátil"
 #. translators: device class
 #: blueman/DeviceClass.py:37
 msgid "Handheld"
-msgstr "Dispositivo movil"
+msgstr "Dispositivo móvil"
 
 #. translators: device class
 #: blueman/DeviceClass.py:39
@@ -1031,7 +1032,7 @@ msgstr "Videoconferencia"
 #. translators: device class
 #: blueman/DeviceClass.py:116
 msgid "Gaming/Toy"
-msgstr "Videojuego/ Juguete"
+msgstr "Videojuego/Juguete"
 
 #. translators: device class
 #: blueman/DeviceClass.py:123 blueman/DeviceClass.py:189
@@ -1124,7 +1125,7 @@ msgstr "Teléfono genérico"
 
 #: blueman/DeviceClass.py:170
 msgid "Generic Computer"
-msgstr "Computadora Generica"
+msgstr "Computadora genérica"
 
 #: blueman/DeviceClass.py:171
 msgid "Generic Watch"
@@ -1132,11 +1133,11 @@ msgstr "Reloj de pulsera genérico"
 
 #: blueman/DeviceClass.py:172
 msgid "Watch: Sports Watch"
-msgstr "Mirar: Deportes"
+msgstr "Reloj: Reloj deportivo"
 
 #: blueman/DeviceClass.py:173
 msgid "Generic Clock"
-msgstr "Reloj Generico"
+msgstr "Reloj genérico"
 
 #: blueman/DeviceClass.py:174
 msgid "Generic Display"
@@ -1144,7 +1145,7 @@ msgstr "Pantalla genérica"
 
 #: blueman/DeviceClass.py:175
 msgid "Generic Remote Control"
-msgstr "Control remoto Generico"
+msgstr "Control remoto genérico"
 
 #: blueman/DeviceClass.py:176
 msgid "Generic Eye-glasses"
@@ -1152,7 +1153,7 @@ msgstr "Gafas genéricas"
 
 #: blueman/DeviceClass.py:177
 msgid "Generic Tag"
-msgstr "Tag Generico"
+msgstr "Tag genérico"
 
 #: blueman/DeviceClass.py:178
 msgid "Generic Keyring"
@@ -1172,11 +1173,11 @@ msgstr "Termómetro genérico"
 
 #: blueman/DeviceClass.py:182
 msgid "Thermometer: Ear"
-msgstr "Termometro: Oido"
+msgstr "Termómetro: Oído"
 
 #: blueman/DeviceClass.py:183
 msgid "Generic Heart rate Sensor"
-msgstr "Sensor de pulsaciones Genérico"
+msgstr "Sensor de pulsaciones genérico"
 
 #: blueman/DeviceClass.py:184
 msgid "Heart Rate Sensor: Heart Rate Belt"
@@ -1184,15 +1185,15 @@ msgstr "Sensor de pulsaciones: Pulsaciones de cintura"
 
 #: blueman/DeviceClass.py:185
 msgid "Generic Blood Pressure"
-msgstr "Presion sanguinea Genérica"
+msgstr "Presión sanguínea genérica"
 
 #: blueman/DeviceClass.py:186
 msgid "Blood Pressure: Arm"
-msgstr "Presion sanguinea: Brazo"
+msgstr "Presión sanguínea: Brazo"
 
 #: blueman/DeviceClass.py:187
 msgid "Blood Pressure: Wrist"
-msgstr "Presión Sanguinéa: Cintura"
+msgstr "Presión sanguínea: Cintura"
 
 #: blueman/DeviceClass.py:188
 msgid "Human Interface Device (HID)"
@@ -1670,11 +1671,11 @@ msgstr "Sincronización 3D (3DSP)"
 
 #: blueman/Sdp.py:173
 msgid "Multi-Profile Specification (MPS) Profile"
-msgstr "Especificación de multiples Perfiles (EMP) Perfil"
+msgstr "Especificación de múltiples Perfiles (EMP) Perfil"
 
 #: blueman/Sdp.py:174
 msgid "Multi-Profile Specification (MPS) Service"
-msgstr "Especificación de Multiples Perfiles (EMP) Servicio"
+msgstr "Especificación de Múltiples Perfiles (EMP) Servicio"
 
 #: blueman/Sdp.py:175
 msgid "Calendar, Task, and Notes (CTN) Access Service"
@@ -1842,7 +1843,7 @@ msgstr "Escala de peso"
 
 #: blueman/Sdp.py:216
 msgid "Bond Management"
-msgstr "M"
+msgstr "Gestión de bonos"
 
 #: blueman/Sdp.py:217
 msgid "Continuous Glucose Monitoring"
@@ -1986,7 +1987,7 @@ msgstr "Referencia de informe"
 
 #: blueman/Sdp.py:378
 msgid "Audio and input profiles"
-msgstr "Perfil de Audió y entrada"
+msgstr "Perfiles de audio y entrada"
 
 #: blueman/Sdp.py:380
 msgid "Proprietary"
@@ -2042,7 +2043,7 @@ msgstr "Sin especificar"
 msgid ""
 "Tries to auto-connect to configurable services on start and every 60 seconds."
 msgstr ""
-"Intentando auto-conectar con los servicios al comienzo , cada 60 segundos."
+"Intenta auto-conectar con los servicios al comienzo, y cada 60 segundos."
 
 #. https://github.com/python/mypy/issues/2608
 #: blueman/plugins/applet/AutoConnect.py:50
@@ -2060,7 +2061,7 @@ msgstr "Conectado automáticamente a %(service)s en %(device)s"
 #: blueman/plugins/applet/ConnectionNotifier.py:13
 msgid "Shows desktop notifications when devices get connected or disconnected."
 msgstr ""
-"Mostrar notificaciónes del escritorio cuando los dispositivos se conectan o "
+"Mostrar notificaciones del escritorio cuando los dispositivos se conectan o "
 "desconectan."
 
 #: blueman/plugins/applet/ConnectionNotifier.py:21
@@ -2380,8 +2381,8 @@ msgid ""
 "Shows desktop notifications with battery percentage when devices get "
 "connected."
 msgstr ""
-"Mostrar notificaciones de escritorio con porcentajes de batterias se "
-"conectan."
+"Mostrar notificaciones de escritorio con porcentajes de batería cuando los "
+"dispositivos se conectan."
 
 #: blueman/plugins/applet/DisconnectItems.py:14
 msgid "Adds disconnect menu items"
