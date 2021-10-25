@@ -21,12 +21,13 @@
 # Marcus Larborg, 2017
 # Luna Jernberg <droidbittin@gmail.com>, 2021.
 # Anders Jonsson <anders.jonsson@norsjovallen.se>, 2021.
+# Kristoffer Grundström <swedishsailfishosuser@tutanota.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2021-10-03 11:06+0200\n"
-"PO-Revision-Date: 2021-08-18 20:35+0000\n"
+"PO-Revision-Date: 2021-10-17 16:41+0000\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/blueman/2-2/sv/"
 ">\n"
@@ -35,7 +36,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.8-dev\n"
+"X-Generator: Weblate 4.9-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -520,10 +521,8 @@ msgid "Show _Statusbar"
 msgstr "Visa _statusrad"
 
 #: blueman/gui/manager/ManagerMenu.py:78
-#, fuzzy
-#| msgid "Rename device"
 msgid "Hide _unnamed devices"
-msgstr "Döp om enheten"
+msgstr "Göm enheter som inte har ett _namn"
 
 #: blueman/gui/manager/ManagerMenu.py:88
 msgid "S_ort By"
@@ -649,12 +648,12 @@ msgstr "Mycket hög"
 #: blueman/gui/manager/ManagerDeviceList.py:553
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
-msgstr ""
+msgstr "<b>Överför ström-nivå: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:556
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
-msgstr ""
+msgstr "Överför ström-nivå: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:131
 msgid "Success!"
@@ -678,7 +677,7 @@ msgstr "Inga ljudändpunkter har registrerats"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:207
 msgid "Input/output error"
-msgstr ""
+msgstr "Inmatning/utmatningsfel"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:209
 msgid "Device did not respond"
@@ -717,10 +716,8 @@ msgid "<b>Disconnect:</b>"
 msgstr "<b>Koppla från:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:322
-#, fuzzy
-#| msgid "<b>Disconnect:</b>"
 msgid "<b>Auto-connect:</b>"
-msgstr "<b>Koppla från:</b>"
+msgstr "<b>Anslut automatiskt:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:341
 msgid "Send a _File…"
@@ -924,7 +921,7 @@ msgstr "Isdn"
 #. translators: device class
 #: blueman/DeviceClass.py:61
 msgid "Fully"
-msgstr ""
+msgstr "Fullt"
 
 #. translators: device class
 #: blueman/DeviceClass.py:63
@@ -1058,7 +1055,7 @@ msgstr "pekenhet"
 #. translators: device class
 #: blueman/DeviceClass.py:127
 msgid "Combo"
-msgstr ""
+msgstr "Kombo"
 
 #. translators: device class
 #: blueman/DeviceClass.py:132
@@ -1159,10 +1156,8 @@ msgid "Generic Remote Control"
 msgstr "Generisk fjärrkontroll"
 
 #: blueman/DeviceClass.py:176
-#, fuzzy
-#| msgid "Generic FileTransfer"
 msgid "Generic Eye-glasses"
-msgstr "Generisk filöverföring"
+msgstr "Generiska glasögon"
 
 #: blueman/DeviceClass.py:177
 msgid "Generic Tag"
@@ -1189,30 +1184,24 @@ msgid "Thermometer: Ear"
 msgstr "Termometer: Öra"
 
 #: blueman/DeviceClass.py:183
-#, fuzzy
-#| msgid "Generic FileTransfer"
 msgid "Generic Heart rate Sensor"
-msgstr "Generisk filöverföring"
+msgstr "Generisk hjärtfrekvens-sensor"
 
 #: blueman/DeviceClass.py:184
 msgid "Heart Rate Sensor: Heart Rate Belt"
 msgstr ""
 
 #: blueman/DeviceClass.py:185
-#, fuzzy
-#| msgid "Blood Pressure"
 msgid "Generic Blood Pressure"
-msgstr "Blodtryck"
+msgstr "Generiskt blodtryck"
 
 #: blueman/DeviceClass.py:186
 msgid "Blood Pressure: Arm"
 msgstr "Blodtryck: Arm"
 
 #: blueman/DeviceClass.py:187
-#, fuzzy
-#| msgid "Blood Pressure"
 msgid "Blood Pressure: Wrist"
-msgstr "Blodtryck"
+msgstr "Blodtryck: Handled"
 
 #: blueman/DeviceClass.py:188
 msgid "Human Interface Device (HID)"
@@ -1305,7 +1294,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:212
 msgid "Generic: Weight Scale"
-msgstr ""
+msgstr "Generisk: Viktvåg"
 
 #: blueman/DeviceClass.py:213
 msgid "Generic Personal Mobility Device"
@@ -1341,7 +1330,7 @@ msgstr "Insulinpenna"
 
 #: blueman/DeviceClass.py:221
 msgid "Generic Medication Delivery"
-msgstr ""
+msgstr "Generisk medicin-leverans"
 
 #. 55 - 80 reserved
 #: blueman/DeviceClass.py:223
@@ -1566,7 +1555,7 @@ msgstr ""
 
 #: blueman/Sdp.py:140
 msgid "ReferencePrinting (BPP)"
-msgstr ""
+msgstr "Referensutskrift (BPP)"
 
 #: blueman/Sdp.py:141
 msgid "Imaging (BIP)"
@@ -1598,11 +1587,11 @@ msgstr ""
 
 #: blueman/Sdp.py:149
 msgid "Basic Printing (BPP)"
-msgstr ""
+msgstr "Normal utskrift (BPP)"
 
 #: blueman/Sdp.py:150
 msgid "Printing Status (BPP)"
-msgstr ""
+msgstr "Utskriftstatus (BPP)"
 
 #: blueman/Sdp.py:151
 msgid "Human Interface Device Service (HID)"
@@ -1642,11 +1631,11 @@ msgstr "Ljud/Video"
 
 #: blueman/Sdp.py:160
 msgid "SIM Access (SAP)"
-msgstr ""
+msgstr "SIM-åtkomst (SAP)"
 
 #: blueman/Sdp.py:161
 msgid "Phonebook Access (PBAP) - PCE"
-msgstr ""
+msgstr "Telefonboksåtkomst (PBAP) - PCE"
 
 #: blueman/Sdp.py:162
 msgid "Phonebook Access (PBAP) - PSE"
