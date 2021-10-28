@@ -1,0 +1,36 @@
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  release:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo "::set-output name=VERSION::${GITHUB_REF#refs/tags/}"
+        id: version
+      - run: |
+          notes="$(sed --quiet '/^## ${{ steps.version.outputs.VERSION }}/,/^## /{/^## /b;p}' CHANGELOG.md)"
+          notes="${notes//'%'/'%25'}"
+          notes="${notes//$'\n'/'%0A'}"
+          notes="${notes//$'\r'/'%0D'}"
+          echo ::set-output name=NOTES::$notes
+        id: notes
+      - run: '[ -n "${{ steps.notes.outputs.NOTES }}" ] || (echo "Failed to parse changelog" && exit 1)'
+      - run: grep --quiet '^AC_INIT(\[blueman\], \[${{ steps.version.outputs.VERSION }}\]' configure.ac || (echo "Did not find expected verson in configure.ac" && exit 1)
+      - run: "grep --quiet \"version: '${{ steps.version.outputs.VERSION }}'\" meson.build || (echo 'Did not find expected verson in meson.build' && exit 1)"
+      - run: git archive --prefix="blueman-${{ steps.version.outputs.VERSION }}/" HEAD | tar x
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y -qq --no-install-recommends autopoint
+      - run: NOCONFIGURE=1 ./autogen.sh
+        working-directory: "blueman-${{ steps.version.outputs.VERSION }}"
+      - run: tar cJf "blueman-${{ steps.version.outputs.VERSION }}.tar.xz" "blueman-${{ steps.version.outputs.VERSION }}"
+      - run: tar czf "blueman-${{ steps.version.outputs.VERSION }}.tar.gz" "blueman-${{ steps.version.outputs.VERSION }}"
+      - uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          body: ${{ steps.notes.outputs.NOTES }}
+          files: |
+            blueman-${{ steps.version.outputs.VERSION }}.tar.xz
+            blueman-${{ steps.version.outputs.VERSION }}.tar.gz
