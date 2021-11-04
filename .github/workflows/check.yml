@@ -73,9 +73,10 @@ jobs:
           - 3.7
           - 3.8
           - 3.9
+          - "3.10"
     runs-on: ubuntu-latest
     container:
-      image: python:${{ matrix.python }}-buster
+      image: python:${{ matrix.python }}
     steps:
       - uses: actions/checkout@v2
       - run: apt-get update
