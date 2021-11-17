@@ -71,7 +71,8 @@ class DeviceList(GenericList):
         data = tabledata + [
             {"id": "device", "type": object},
             {"id": "dbus_path", "type": str},
-            {"id": "timestamp", "type": float}
+            {"id": "timestamp", "type": float},
+            {"id": "no_name", "type": bool}
         ]
 
         super().__init__(data, headers_visible=headers_visible)
@@ -238,7 +239,8 @@ class DeviceList(GenericList):
 
         object_path = device.get_object_path()
         timestamp = datetime.strftime(datetime.now(), '%Y%m%d%H%M%S%f')
-        self.set(tree_iter, dbus_path=object_path, timestamp=float(timestamp))
+        no_name = "Name" not in device
+        self.set(tree_iter, dbus_path=object_path, timestamp=float(timestamp), no_name=no_name)
 
     def display_known_devices(self, autoselect: bool = False) -> None:
         self.clear()

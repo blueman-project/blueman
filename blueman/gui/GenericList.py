@@ -61,8 +61,9 @@ class GenericList(Gtk.TreeView):
             self.append_column(column)
 
     def selected(self) -> Optional[Gtk.TreeIter]:
-        (model, tree_iter) = self.selection.get_selected()
-        tree_iter = model.convert_iter_to_child_iter(tree_iter)
+        model, tree_iter = self.selection.get_selected()
+        if tree_iter is not None:
+            tree_iter = model.convert_iter_to_child_iter(tree_iter)
         return tree_iter
 
     def delete(self, iterid: Union[Gtk.TreeIter, Gtk.TreePath, int, str]) -> bool:

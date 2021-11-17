@@ -217,7 +217,8 @@ class ManagerMenu:
                 if not self._sort_type_item.props.active:
                     self._sort_type_item.props.active = False
         elif key == "hide-unnamed":
-            self.blueman.List.display_known_devices()
+            logging.debug("refilter")
+            self.blueman.List.filter.refilter()
 
     def on_device_selected(self, _lst: ManagerDeviceList, device: Device, tree_iter: Gtk.TreeIter) -> None:
         if tree_iter and device:
