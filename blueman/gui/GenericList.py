@@ -16,7 +16,7 @@ if TYPE_CHECKING:
         renderer: Gtk.CellRenderer
         render_attrs: Mapping[str, int]
         view_props: Mapping[str, object]
-        celldata_func: Tuple[Callable[[Gtk.TreeViewColumn, Gtk.CellRenderer, Gtk.TreeModel, Gtk.TreeIter, Any],
+        celldata_func: Tuple[Callable[[Gtk.TreeViewColumn, Gtk.CellRenderer, Gtk.TreeModelFilter, Gtk.TreeIter, Any],
                                       None], Any]
 else:
     ListDataDict = dict
@@ -37,7 +37,8 @@ class GenericList(Gtk.TreeView):
         types = [row["type"] for row in data]
 
         self.liststore = Gtk.ListStore(*types)
-        self.set_model(self.liststore)
+        self.filter = self.liststore.filter_new()
+        self.set_model(self.filter)
 
         for i, row in enumerate(data):
             self.ids[row["id"]] = i
@@ -61,6 +62,7 @@ class GenericList(Gtk.TreeView):
 
     def selected(self) -> Optional[Gtk.TreeIter]:
         (model, tree_iter) = self.selection.get_selected()
+        tree_iter = model.convert_iter_to_child_iter(tree_iter)
         return tree_iter
 
     def delete(self, iterid: Union[Gtk.TreeIter, Gtk.TreePath, int, str]) -> bool:
@@ -159,8 +161,7 @@ class GenericList(Gtk.TreeView):
 
     def compare(self, iter_a: Optional[Gtk.TreeIter], iter_b: Optional[Gtk.TreeIter]) -> bool:
         if iter_a is not None and iter_b is not None:
-            model = self.get_model()
-            assert model is not None
-            return model.get_path(iter_a) == model.get_path(iter_b)
+            assert self.liststore is not None
+            return self.liststore.get_path(iter_a) == self.liststore.get_path(iter_b)
         else:
             return False

@@ -125,8 +125,9 @@ class DeviceList(GenericList):
                 self.device_remove_event(dev)
 
     def on_selection_changed(self, selection: Gtk.TreeSelection) -> None:
-        _model, tree_iter = selection.get_selected()
+        model, tree_iter = selection.get_selected()
         if tree_iter:
+            tree_iter = model.convert_iter_to_child_iter(tree_iter)
             row = self.get(tree_iter, "device")
             dev = row["device"]
             self.emit("device-selected", dev, tree_iter)
