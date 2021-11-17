@@ -105,11 +105,11 @@ class TreeRowFade(AnimBase):
                  columns: Optional[Collection[Gtk.TreeViewColumn]] = None) -> None:
         super().__init__(1.0)
         self.tw = tw
+        assert self.tw.liststore is not None
 
         self.sig: Optional[int] = self.tw.connect_after("draw", self.on_draw)
 
-        assert tw.props.model is not None
-        self.row = Gtk.TreeRowReference.new(tw.props.model, path)
+        self.row = Gtk.TreeRowReference.new(self.tw.liststore, path)
         self.stylecontext = tw.get_style_context()
         self.columns = columns
 
@@ -128,7 +128,9 @@ class TreeRowFade(AnimBase):
                 self.sig = None
             return False
 
-        path = self.row.get_path()
+        path = self.tw.filter.convert_child_path_to_path(self.row.get_path())
+        if path is None:
+            return False
 
         color = self.stylecontext.get_background_color(Gtk.StateFlags.NORMAL)
 
@@ -156,11 +158,11 @@ class CellFade(AnimBase):
     def __init__(self, tw: "ManagerDeviceList", path: Gtk.TreePath, columns: Iterable[int]) -> None:
         super().__init__(1.0)
         self.tw = tw
+        assert self.tw.liststore is not None
 
         self.frozen = False
         self.sig: Optional[int] = tw.connect_after("draw", self.on_draw)
-        assert tw.props.model is not None
-        self.row = Gtk.TreeRowReference.new(tw.props.model, path)
+        self.row = Gtk.TreeRowReference.new(self.tw.liststore, path)
         self.selection = tw.get_selection()
         self.columns: List[Optional[Gtk.TreeViewColumn]] = []
         for i in columns:
@@ -180,7 +182,10 @@ class CellFade(AnimBase):
                 self.tw.disconnect(self.sig)
                 self.sig = None
 
-        path = self.row.get_path()
+        assert self.tw.liststore is not None
+        path = self.tw.filter.convert_child_path_to_path(self.row.get_path())
+        if path is None:
+            return False
 
         # FIXME Use Gtk.render_background to render background.
         # However it does not use the correct colors/gradient.
@@ -194,10 +199,9 @@ class CellFade(AnimBase):
 
         cr.clip()
 
-        assert self.tw.props.model is not None
-        maybe_selected = self.selection.get_selected()[1]
+        maybe_selected = self.tw.selected()
         if maybe_selected is not None:
-            selected = self.tw.props.model.get_path(maybe_selected) == path
+            selected = self.tw.liststore.get_path(maybe_selected) == path
         else:
             selected = False
 

@@ -99,6 +99,7 @@ class ManagerDeviceList(DeviceList):
         Gtk.Widget.drag_dest_add_uri_targets(self)
 
         self.set_search_equal_func(self.search_func)
+        self.filter.set_visible_func(self.filter_func)
 
     def _on_settings_changed(self, settings: Config, key: str) -> None:
         if key in ('sort-by', 'sort-order'):
@@ -127,6 +128,14 @@ class ManagerDeviceList(DeviceList):
         logging.info(f"{model} {column} {key} {tree_iter}")
         return True
 
+    def filter_func(self, _model, tree_iter, _data):
+        no_name = self.get(tree_iter, "no_name")["no_name"]
+        if no_name and self.Config["hide-unnamed"]:
+            logging.debug("Hiding unnamed device")
+            return False
+        else:
+            return True
+
     def drag_recv(self, _widget: Gtk.Widget, context: Gdk.DragContext, x: int, y: int, selection: Gtk.SelectionData,
                   _info: int, time: int) -> None:
 
@@ -151,7 +160,7 @@ class ManagerDeviceList(DeviceList):
         if result is not None:
             path = result[0]
             assert path is not None
-            path = self.filter.conver_path_to_child_path(path)
+            path = self.filter.convert_path_to_child_path(path)
             if not self.selection.path_is_selected(path):
                 tree_iter = self.get_iter(path)
                 assert tree_iter is not None
@@ -269,9 +278,11 @@ class ManagerDeviceList(DeviceList):
         tree_iter = self.find_device(device)
         assert tree_iter is not None
 
-        row_fader = self.get(tree_iter, "row_fader")["row_fader"]
-        self._prepare_fader(row_fader, lambda: self.__fader_finished(device))
-        row_fader.animate(start=row_fader.get_state(), end=0.0, duration=400)
+        iter_set, _child_tree_iter = self.filter.convert_child_iter_to_iter(tree_iter)
+        if iter_set:
+            row_fader = self.get(tree_iter, "row_fader")["row_fader"]
+            self._prepare_fader(row_fader, lambda: self.__fader_finished(device))
+            row_fader.animate(start=row_fader.get_state(), end=0.0, duration=400)
 
     def __fader_finished(self, device: Device) -> None:
         super().device_remove_event(device)
@@ -295,22 +306,25 @@ class ManagerDeviceList(DeviceList):
 
     def row_setup_event(self, tree_iter: Gtk.TreeIter, device: Device) -> None:
         if not self.get(tree_iter, "initial_anim")["initial_anim"]:
-            model = self.liststore
-            assert model is not None
-            path = self.filter.convert_child_path_to_path(model.get_path(tree_iter))
-            cell_fader = CellFade(self, path, [2, 3, 4, 5])
-            row_fader = TreeRowFade(self, path)
+            assert self.liststore is not None
+            child_path = self.liststore.get_path(tree_iter)
+            result = self.filter.convert_child_path_to_path(child_path)
 
-            has_objpush = self._has_objpush(device)
+            if child_path is not None:
+                cell_fader = CellFade(self, child_path, [2, 3, 4, 5])
+                row_fader = TreeRowFade(self, child_path)
 
-            self.set(tree_iter, row_fader=row_fader, cell_fader=cell_fader, objpush=has_objpush)
+                self.set(tree_iter, row_fader=row_fader, cell_fader=cell_fader)
 
-            cell_fader.freeze()
+                cell_fader.freeze()
 
-            self._prepare_fader(row_fader).animate(start=0.0, end=1.0, duration=500)
+                if result is not None:
+                    self._prepare_fader(row_fader).animate(start=0.0, end=1.0, duration=500)
+                    self.set(tree_iter, initial_anim=True)
+                else:
+                    self.set(tree_iter, initial_anim=False)
 
-            self.set(tree_iter, initial_anim=True)
-
+        has_objpush = self._has_objpush(device)
         klass = get_minor_class(device['Class'])
         # Bluetooth >= 4 devices use Appearance property
         appearance = device["Appearance"]
@@ -324,7 +338,7 @@ class ManagerDeviceList(DeviceList):
         icon_info = self.get_icon_info(device["Icon"], 48, False)
         caption = self.make_caption(device['Alias'], description, device['Address'])
 
-        self.set(tree_iter, caption=caption, icon_info=icon_info, alias=device['Alias'])
+        self.set(tree_iter, caption=caption, icon_info=icon_info, alias=device['Alias'], objpush=has_objpush)
 
         try:
             self.row_update_event(tree_iter, "Trusted", device['Trusted'])
@@ -417,6 +431,9 @@ class ManagerDeviceList(DeviceList):
                 self._monitor_power_levels(tree_iter, self.get(tree_iter, "device")["device"])
             else:
                 self._disable_power_levels(tree_iter)
+        elif key == "Name":
+            self.set(tree_iter, no_name=False)
+            self.filter.refilter()
 
         elif key == "Blocked":
             self.set(tree_iter, blocked=value)
@@ -616,10 +633,3 @@ class ManagerDeviceList(DeviceList):
                 cell.set_property("surface", surface)
             else:
                 cell.set_property("surface", None)
-
-    def add_device(self, device: Device) -> None:
-        if "Name" not in device and self.Config["hide-unnamed"]:
-            logging.info(f"Hiding unnamed device: {device['Address']}")
-            return
-
-        super().add_device(device)
