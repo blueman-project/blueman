@@ -1,4 +1,4 @@
-from typing import List, Optional, Collection, Iterable
+from typing import List, Optional, Collection, Iterable, TYPE_CHECKING
 
 import cairo
 import gi
@@ -11,6 +11,10 @@ gi.require_version("Gdk", "3.0")
 from gi.repository import Gdk
 from gi.repository import GObject
 from gi.repository import GLib
+
+
+if TYPE_CHECKING:
+    from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 
 
 class AnimBase(GObject.GObject):
@@ -96,8 +100,9 @@ class AnimBase(GObject.GObject):
 
 
 class TreeRowFade(AnimBase):
-    def __init__(self, tw: Gtk.TreeView, path: Gtk.TreePath, columns: Optional[Collection[Gtk.TreeViewColumn]] = None
-                 ) -> None:
+    def __init__(self, tw: "ManagerDeviceList",
+                 path: Gtk.TreePath,
+                 columns: Optional[Collection[Gtk.TreeViewColumn]] = None) -> None:
         super().__init__(1.0)
         self.tw = tw
 
@@ -148,7 +153,7 @@ class TreeRowFade(AnimBase):
 
 
 class CellFade(AnimBase):
-    def __init__(self, tw: Gtk.TreeView, path: Gtk.TreePath, columns: Iterable[int]) -> None:
+    def __init__(self, tw: "ManagerDeviceList", path: Gtk.TreePath, columns: Iterable[int]) -> None:
         super().__init__(1.0)
         self.tw = tw
 

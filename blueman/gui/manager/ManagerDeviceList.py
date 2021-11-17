@@ -151,6 +151,7 @@ class ManagerDeviceList(DeviceList):
         if result is not None:
             path = result[0]
             assert path is not None
+            path = self.filter.conver_path_to_child_path(path)
             if not self.selection.path_is_selected(path):
                 tree_iter = self.get_iter(path)
                 assert tree_iter is not None
@@ -192,7 +193,7 @@ class ManagerDeviceList(DeviceList):
             return False
 
         assert path[0] is not None
-        row = self.get(path[0], "device", "connected")
+        row = self.get(self.filter.convert_path_to_child_path(path[0]), "device", "connected")
         if not row:
             return False
 
@@ -294,10 +295,11 @@ class ManagerDeviceList(DeviceList):
 
     def row_setup_event(self, tree_iter: Gtk.TreeIter, device: Device) -> None:
         if not self.get(tree_iter, "initial_anim")["initial_anim"]:
-            model = self.props.model
+            model = self.liststore
             assert model is not None
-            cell_fader = CellFade(self, model.get_path(tree_iter), [2, 3, 4, 5])
-            row_fader = TreeRowFade(self, model.get_path(tree_iter))
+            path = self.filter.convert_child_path_to_path(model.get_path(tree_iter))
+            cell_fader = CellFade(self, path, [2, 3, 4, 5])
+            row_fader = TreeRowFade(self, path)
 
             has_objpush = self._has_objpush(device)
 
@@ -355,7 +357,7 @@ class ManagerDeviceList(DeviceList):
         except ConnInfoReadError:
             logging.warning("Failed to get power levels, probably a LE device.")
 
-        model = self.get_model()
+        model = self.liststore
         assert isinstance(model, Gtk.TreeModel)
         r = Gtk.TreeRowReference.new(model, model.get_path(tree_iter))
         self._update_power_levels(tree_iter, device, cinfo)
@@ -598,8 +600,9 @@ class ManagerDeviceList(DeviceList):
                 return True
         return False
 
-    def _set_cell_data(self, _col: Gtk.TreeViewColumn, cell: Gtk.CellRenderer, _model: Gtk.TreeModel,
+    def _set_cell_data(self, _col: Gtk.TreeViewColumn, cell: Gtk.CellRenderer, model: Gtk.TreeModel,
                        tree_iter: Gtk.TreeIter, data: Optional[str]) -> None:
+        tree_iter = model.convert_iter_to_child_iter(tree_iter)
         if data is None:
             row = self.get(tree_iter, "icon_info", "trusted", "paired", "blocked")
             surface = self.make_device_icon(row["icon_info"], row["paired"], row["trusted"], row["blocked"])
