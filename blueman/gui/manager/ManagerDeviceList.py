@@ -258,9 +258,12 @@ class ManagerDeviceList(DeviceList):
         assert tree_iter is not None
 
         row_fader = self.get(tree_iter, "row_fader")["row_fader"]
+        self._prepare_fader(row_fader, lambda: self.__fader_finished(device))
+        row_fader.animate(start=row_fader.get_state(), end=0.0, duration=400)
+
+    def __fader_finished(self, device: Device) -> None:
         super().device_remove_event(device)
         self.emit("device-selected", None, None)
-        self._prepare_fader(row_fader).animate(start=row_fader.get_state(), end=0.0, duration=400)
 
     def device_add_event(self, device: Device) -> None:
         self.add_device(device)
