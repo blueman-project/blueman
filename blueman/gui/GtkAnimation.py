@@ -128,7 +128,11 @@ class TreeRowFade(AnimBase):
                 self.sig = None
             return False
 
-        path = self.tw.filter.convert_child_path_to_path(self.row.get_path())
+        path = self.row.get_path()
+        if path is None:
+            return False
+
+        path = self.tw.filter.convert_child_path_to_path(path)
         if path is None:
             return False
 
@@ -183,7 +187,11 @@ class CellFade(AnimBase):
                 self.sig = None
 
         assert self.tw.liststore is not None
-        path = self.tw.filter.convert_child_path_to_path(self.row.get_path())
+        path = self.row.get_path()
+        if path is None:
+            return False
+
+        path = self.tw.filter.convert_child_path_to_path(path)
         if path is None:
             return False
 

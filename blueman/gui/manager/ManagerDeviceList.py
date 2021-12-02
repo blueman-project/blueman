@@ -128,7 +128,7 @@ class ManagerDeviceList(DeviceList):
         logging.info(f"{model} {column} {key} {tree_iter}")
         return True
 
-    def filter_func(self, _model, tree_iter, _data):
+    def filter_func(self, _model: Gtk.TreeModel, tree_iter: Gtk.TreeIter, _data: Any) -> bool:
         no_name = self.get(tree_iter, "no_name")["no_name"]
         if no_name and self.Config["hide-unnamed"]:
             logging.debug("Hiding unnamed device")
@@ -161,6 +161,9 @@ class ManagerDeviceList(DeviceList):
             path = result[0]
             assert path is not None
             path = self.filter.convert_path_to_child_path(path)
+            if path is None:
+                return False
+
             if not self.selection.path_is_selected(path):
                 tree_iter = self.get_iter(path)
                 assert tree_iter is not None
@@ -197,12 +200,16 @@ class ManagerDeviceList(DeviceList):
         if event.type not in (Gdk.EventType._2BUTTON_PRESS, Gdk.EventType.BUTTON_PRESS):
             return False
 
-        path = self.get_path_at_pos(int(cast(Gdk.EventButton, event).x), int(cast(Gdk.EventButton, event).y))
-        if path is None:
+        posdata = self.get_path_at_pos(int(cast(Gdk.EventButton, event).x), int(cast(Gdk.EventButton, event).y))
+        if posdata is None:
             return False
+        else:
+            path = posdata[0]
+            assert path is not None
 
-        assert path[0] is not None
-        row = self.get(self.filter.convert_path_to_child_path(path[0]), "device", "connected")
+        childpath = self.filter.convert_path_to_child_path(path)
+        assert childpath is not None
+        row = self.get(childpath, "device", "connected")
         if not row:
             return False
 
@@ -617,7 +624,7 @@ class ManagerDeviceList(DeviceList):
                 return True
         return False
 
-    def _set_cell_data(self, _col: Gtk.TreeViewColumn, cell: Gtk.CellRenderer, model: Gtk.TreeModel,
+    def _set_cell_data(self, _col: Gtk.TreeViewColumn, cell: Gtk.CellRenderer, model: Gtk.TreeModelFilter,
                        tree_iter: Gtk.TreeIter, data: Optional[str]) -> None:
         tree_iter = model.convert_iter_to_child_iter(tree_iter)
         if data is None:
