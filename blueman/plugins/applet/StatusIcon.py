@@ -65,7 +65,7 @@ class StatusIcon(AppletPlugin, GObject.GObject):
             self.set_visible(True, emit)
         elif not self.visibility_timeout:
             if delay_hiding:
-                self.visibility_timeout = GLib.timeout_add(1000, self.on_visibility_timeout)
+                self.visibility_timeout = GLib.timeout_add(2500, self.on_visibility_timeout)
             else:
                 self.set_visible(False, emit)
 
