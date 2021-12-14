@@ -224,6 +224,10 @@ class Blueman(Gtk.Application):
     def toggle_trust(device: Device) -> None:
         device['Trusted'] = not device['Trusted']
 
+    @staticmethod
+    def toggle_blocked(device: Device) -> None:
+        device['Blocked'] = not device['Blocked']
+
     def send(self, device: Device) -> None:
         adapter = self.List.Adapter
 
