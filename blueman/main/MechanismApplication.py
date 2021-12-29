@@ -1,6 +1,8 @@
 import importlib
 import logging
 import os
+import pathlib
+from blueman.Functions import plugin_names
 
 import blueman.plugins.mechanism
 from blueman.Constants import POLKIT
@@ -60,12 +62,8 @@ class MechanismApplication(DbusService):
         else:
             self.pk = None
 
-        path = os.path.dirname(blueman.plugins.mechanism.__file__)
-        plugins = []
-        for root, dirs, files in os.walk(path):
-            for f in files:
-                if f.endswith(".py") and not (f.endswith(".pyc") or f.endswith("_.py")):
-                    plugins.append(f[0:-3])
+        path = pathlib.Path(blueman.plugins.mechanism.__file__)
+        plugins = plugin_names(path)
 
         for plugin in plugins:
             try:

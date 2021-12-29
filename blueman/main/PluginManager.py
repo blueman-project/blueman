@@ -1,15 +1,15 @@
 from gettext import gettext as _
-import os
 import logging
 import traceback
 import importlib
+import pathlib
 from types import ModuleType
 from typing import TypeVar, Generic
 from collections.abc import Iterable
 
 from gi.repository import GObject, Gio
 
-from blueman.Functions import bmexit
+from blueman.Functions import bmexit, plugin_names
 from blueman.gui.CommonUi import ErrorDialog
 from blueman.plugins.BasePlugin import BasePlugin
 from blueman.bluemantyping import GSignals
@@ -77,12 +77,8 @@ class PluginManager(GObject.GObject, Generic[_T]):
             return
 
         assert self.module_path.__file__ is not None
-        path = os.path.dirname(self.module_path.__file__)
-        plugins = []
-        for root, dirs, files in os.walk(path):
-            for f in files:
-                if f.endswith(".py") and not (f.endswith(".pyc") or f.endswith("_.py")):
-                    plugins.append(f[0:-3])
+        path = pathlib.Path(self.module_path.__file__)
+        plugins = plugin_names(path)
 
         logging.info(plugins)
         for plugin in plugins:
