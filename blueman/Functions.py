@@ -22,6 +22,7 @@ from typing import Any
 from collections.abc import Callable, Iterable
 import re
 import os
+import pathlib
 import sys
 import errno
 from gettext import gettext as _
@@ -51,7 +52,7 @@ from gi.repository import Gio
 
 __all__ = ["check_bluetooth_status", "launch", "setup_icon_path", "adapter_path_to_name", "e_", "bmexit",
            "format_bytes", "create_menuitem", "have", "set_proc_title", "create_logger", "create_parser", "open_rfcomm",
-           "get_local_interfaces", "log_system_info"]
+           "get_local_interfaces", "plugin_names", "log_system_info"]
 
 
 def check_bluetooth_status(message: str, exitfunc: Callable[[], Any]) -> None:
@@ -388,3 +389,15 @@ def log_system_info() -> None:
     desktop = os.environ.get("XDG_CURRENT_DESKTOP", "Unknown")
     session_type = os.environ.get("XDG_SESSION_TYPE", "Unknown")
     logging.info(f"Running: {desktop} on {session_type}")
+
+
+def plugin_names(path: pathlib.Path) -> list[str]:
+    plugins: list[str] = []
+    if not path.exists():
+        return plugins
+
+    for p in path.parent.glob("*.py"):
+        if p.name == "__init__.py":
+            continue
+        plugins.append(p.stem)
+    return plugins
