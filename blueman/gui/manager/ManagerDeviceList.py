@@ -16,7 +16,7 @@ from blueman.DeviceClass import get_minor_class, get_major_class, gatt_appearanc
 from blueman.gui.GenericList import ListDataDict
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.Constants import PIXMAP_PATH
-from blueman.Functions import launch
+from blueman.Functions import launch, adapter_path_to_name
 from blueman.Sdp import ServiceUUID, OBEX_OBJPUSH_SVCLASS_ID
 from blueman.gui.GtkAnimation import TreeRowFade, CellFade, AnimBase
 from _blueman import ConnInfoReadError, conn_info
@@ -415,7 +415,9 @@ class ManagerDeviceList(DeviceList):
             return
 
         assert self.Adapter is not None
-        cinfo = conn_info(device["Address"], os.path.basename(self.Adapter.get_object_path()))
+        hci_dev = adapter_path_to_name(self.Adapter.get_object_path())
+        assert hci_dev is not None
+        cinfo = conn_info(device["Address"], hci_dev)
         try:
             cinfo.init()
         except ConnInfoReadError:
