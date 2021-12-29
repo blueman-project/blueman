@@ -76,6 +76,7 @@ class PluginManager(GObject.GObject):
 
             return
 
+        assert self.module_path.__file__ is not None
         path = os.path.dirname(self.module_path.__file__)
         plugins = []
         for root, dirs, files in os.walk(path):
