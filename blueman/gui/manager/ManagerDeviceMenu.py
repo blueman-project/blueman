@@ -192,7 +192,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         key, value = key_value
         # print "menu:", key, value
         if lst.compare(tree_iter, lst.selected()):
-            if key in ("Connected", "UUIDs", "Trusted", "Paired"):
+            if key in ("Connected", "UUIDs", "Trusted", "Paired", "Blocked"):
                 self.generate()
 
     def _handle_error_message(self, error: GLib.Error) -> None:
@@ -258,13 +258,15 @@ class ManagerDeviceMenu(Gtk.Menu):
             selected = self.Blueman.List.selected()
             if not selected:
                 return
-            row = self.Blueman.List.get(selected, "alias", "paired", "connected", "trusted", "objpush", "device")
+            row = self.Blueman.List.get(selected, "alias", "paired", "connected", "trusted", "objpush", "device",
+                                        "blocked")
         else:
             (x, y) = self.Blueman.List.get_pointer()
             path = self.Blueman.List.get_path_at_pos(x, y)
             if path is not None:
                 assert path[0] is not None
-                row = self.Blueman.List.get(path[0], "alias", "paired", "connected", "trusted", "objpush", "device")
+                row = self.Blueman.List.get(path[0], "alias", "paired", "connected", "trusted", "objpush", "device",
+                                            "blocked")
             else:
                 return
 
@@ -371,6 +373,18 @@ class ManagerDeviceMenu(Gtk.Menu):
             item.connect("activate", lambda x: self.Blueman.toggle_trust(self.SelectedDevice))
             item.show()
         item.props.tooltip_text = _("Mark/Unmark this device as trusted")
+
+        if not row["blocked"]:
+            item = create_menuitem(_("_Block"), "window-close")
+            item.connect("activate", lambda x: self.Blueman.toggle_blocked(self.SelectedDevice))
+            self.append(item)
+            item.show()
+        else:
+            item = create_menuitem(_("_Unblock"), "window-close")
+            self.append(item)
+            item.connect("activate", lambda x: self.Blueman.toggle_blocked(self.SelectedDevice))
+            item.show()
+        item.props.tooltip_text = _("Block/Unblock this device")
 
         def on_rename(_item: Gtk.MenuItem, device: Device) -> None:
             def on_response(dialog: Gtk.Dialog, response_id: int) -> None:

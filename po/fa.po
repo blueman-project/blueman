@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2021-04-17 10:04+0200\n"
+"POT-Creation-Date: 2022-01-03 18:29+0100\n"
 "PO-Revision-Date: 2020-04-14 10:14+0000\n"
 "Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
 "Language-Team: Persian (http://www.transifex.com/mate/MATE/language/fa/)\n"
@@ -38,8 +38,9 @@ msgid "Temporarily visible"
 msgstr ""
 
 #: data/ui/adapters-tab.ui:101
-msgid "<b>Friendly Name</b>"
-msgstr ""
+#, fuzzy
+msgid "<b>Name</b>"
+msgstr "<b>فایل:</b>"
 
 #: data/ui/applet-passkey.ui:8
 msgid "Pairing request"
@@ -222,8 +223,8 @@ msgstr ""
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:301
-#: blueman/gui/manager/ManagerDeviceList.py:303 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:304
+#: blueman/gui/manager/ManagerDeviceList.py:306 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:209
@@ -390,65 +391,65 @@ msgstr ""
 msgid "Error occurred"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:192
+#: blueman/main/applet/BluezAgent.py:123
 #, python-format
 msgid "Pairing request for %s"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:203 blueman/main/applet/BluezAgent.py:319
+#: blueman/main/applet/BluezAgent.py:134 blueman/main/applet/BluezAgent.py:246
 msgid "Bluetooth Authentication"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:234
+#: blueman/main/applet/BluezAgent.py:165
 msgid "Enter PIN code for authentication:"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:249
+#: blueman/main/applet/BluezAgent.py:174
 msgid "Enter passkey for authentication:"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:260
+#: blueman/main/applet/BluezAgent.py:185
 msgid "Pairing passkey for"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:271
+#: blueman/main/applet/BluezAgent.py:196
 msgid "Pairing PIN code for"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:284
+#: blueman/main/applet/BluezAgent.py:209
 msgid "Pairing request for:"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:287
+#: blueman/main/applet/BluezAgent.py:212
 msgid "Confirm value for authentication:"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:288
+#: blueman/main/applet/BluezAgent.py:213
 msgid "Confirm"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:288 blueman/main/applet/BluezAgent.py:317
+#: blueman/main/applet/BluezAgent.py:213 blueman/main/applet/BluezAgent.py:244
 msgid "Deny"
 msgstr "انکار کردن"
 
-#: blueman/main/applet/BluezAgent.py:314
+#: blueman/main/applet/BluezAgent.py:241
 msgid "Authorization request for:"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:314
+#: blueman/main/applet/BluezAgent.py:241
 msgid "Service:"
 msgstr "خدمت:"
 
-#: blueman/main/applet/BluezAgent.py:315
+#: blueman/main/applet/BluezAgent.py:242
 msgid "Always accept"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:316
+#: blueman/main/applet/BluezAgent.py:243
 #: blueman/plugins/applet/TransferService.py:130
 msgid "Accept"
 msgstr ""
 
-#: blueman/main/PluginManager.py:67
+#: blueman/main/PluginManager.py:68
 msgid ""
 "<b>An error has occured while loading a plugin. Please notify the developers "
 "with the content of this message to our </b>\n"
@@ -497,7 +498,6 @@ msgstr ""
 
 #: blueman/gui/manager/ManagerMenu.py:78
 #, fuzzy
-#| msgid "Rename device"
 msgid "Hide _unnamed devices"
 msgstr "تغییر نام دستگاه"
 
@@ -545,91 +545,90 @@ msgid "_Exit"
 msgstr ""
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:276
-#: blueman/gui/manager/ManagerDeviceList.py:301 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:279
+#: blueman/gui/manager/ManagerDeviceList.py:304 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 msgid "Uncategorized"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:479
+#: blueman/gui/manager/ManagerDeviceList.py:482
 msgid "<b>Trusted and Paired</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:481
+#: blueman/gui/manager/ManagerDeviceList.py:484
 msgid "<b>Paired</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:483
+#: blueman/gui/manager/ManagerDeviceList.py:486
 msgid "<b>Trusted</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:502
+#: blueman/gui/manager/ManagerDeviceList.py:505
 #, fuzzy
-#| msgid "<b>Total:</b>"
 msgid "<b>Connected</b>"
 msgstr "<b>مجموع:</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:517
+#: blueman/gui/manager/ManagerDeviceList.py:520
 msgid "Poor"
 msgstr "ضعیف"
 
-#: blueman/gui/manager/ManagerDeviceList.py:519
-#: blueman/gui/manager/ManagerDeviceList.py:544
+#: blueman/gui/manager/ManagerDeviceList.py:522
+#: blueman/gui/manager/ManagerDeviceList.py:547
 msgid "Sub-optimal"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:521
-#: blueman/gui/manager/ManagerDeviceList.py:546
+#: blueman/gui/manager/ManagerDeviceList.py:524
+#: blueman/gui/manager/ManagerDeviceList.py:549
 msgid "Optimal"
 msgstr "بهینه"
 
-#: blueman/gui/manager/ManagerDeviceList.py:523
+#: blueman/gui/manager/ManagerDeviceList.py:526
 msgid "Much"
 msgstr "زیاد"
 
-#: blueman/gui/manager/ManagerDeviceList.py:525
+#: blueman/gui/manager/ManagerDeviceList.py:528
 msgid "Too much"
 msgstr "خیلی زیاد"
 
-#: blueman/gui/manager/ManagerDeviceList.py:528
+#: blueman/gui/manager/ManagerDeviceList.py:531
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:531
+#: blueman/gui/manager/ManagerDeviceList.py:534
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:536
+#: blueman/gui/manager/ManagerDeviceList.py:539
 #, python-format
 msgid "<b>Link Quality: %(lq)u%%</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:538
+#: blueman/gui/manager/ManagerDeviceList.py:541
 #, python-format
 msgid "Link Quality: %(lq)u%%"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:542
+#: blueman/gui/manager/ManagerDeviceList.py:545
 msgid "Low"
 msgstr "کم"
 
-#: blueman/gui/manager/ManagerDeviceList.py:548
+#: blueman/gui/manager/ManagerDeviceList.py:551
 msgid "High"
 msgstr "زیاد‌"
 
-#: blueman/gui/manager/ManagerDeviceList.py:550
+#: blueman/gui/manager/ManagerDeviceList.py:553
 msgid "Very High"
 msgstr "بسیار زیاد"
 
-#: blueman/gui/manager/ManagerDeviceList.py:553
+#: blueman/gui/manager/ManagerDeviceList.py:556
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:556
+#: blueman/gui/manager/ManagerDeviceList.py:559
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr ""
@@ -644,7 +643,6 @@ msgstr "شکست"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:144
 #, fuzzy
-#| msgid "Connecting..."
 msgid "Connecting…"
 msgstr "در حال اتصال..."
 
@@ -674,7 +672,6 @@ msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:285
 #, fuzzy
-#| msgid "<b>Total:</b>"
 msgid "_<b>_Connect</b>"
 msgstr "<b>مجموع:</b>"
 
@@ -700,13 +697,11 @@ msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:322
 #, fuzzy
-#| msgid "<b>Total:</b>"
 msgid "<b>Auto-connect:</b>"
 msgstr "<b>مجموع:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:341
 #, fuzzy
-#| msgid "Send File"
 msgid "Send a _File…"
 msgstr "ارسال پرونده"
 
@@ -724,13 +719,11 @@ msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:393
 #, fuzzy
-#| msgid "Rename device"
 msgid "R_ename device…"
 msgstr "تغییر نام دستگاه"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:402
 #, fuzzy
-#| msgid "Remove"
 msgid "_Remove…"
 msgstr "حذف"
 
@@ -861,7 +854,6 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:33
 #, fuzzy
-#| msgid "Service:"
 msgid "Server"
 msgstr "خدمت:"
 
@@ -1112,7 +1104,6 @@ msgstr ""
 
 #: blueman/DeviceClass.py:169
 #, fuzzy
-#| msgid "Group Network"
 msgid "Generic Phone"
 msgstr "شبکه گروهی"
 
@@ -1130,7 +1121,6 @@ msgstr ""
 
 #: blueman/DeviceClass.py:173
 #, fuzzy
-#| msgid "Group Network"
 msgid "Generic Clock"
 msgstr "شبکه گروهی"
 
@@ -1140,7 +1130,6 @@ msgstr ""
 
 #: blueman/DeviceClass.py:175
 #, fuzzy
-#| msgid "Group Network"
 msgid "Generic Remote Control"
 msgstr "شبکه گروهی"
 
@@ -1150,13 +1139,11 @@ msgstr ""
 
 #: blueman/DeviceClass.py:177
 #, fuzzy
-#| msgid "Group Network"
 msgid "Generic Tag"
 msgstr "شبکه گروهی"
 
 #: blueman/DeviceClass.py:178
 #, fuzzy
-#| msgid "Group Network"
 msgid "Generic Keyring"
 msgstr "شبکه گروهی"
 
@@ -1250,7 +1237,6 @@ msgstr ""
 
 #: blueman/DeviceClass.py:202
 #, fuzzy
-#| msgid "Group Network"
 msgid "Generic: Cycling"
 msgstr "شبکه گروهی"
 
@@ -1698,7 +1684,6 @@ msgstr ""
 
 #: blueman/Sdp.py:179
 #, fuzzy
-#| msgid "Group Network"
 msgid "Generic Networking"
 msgstr "شبکه گروهی"
 
@@ -1760,7 +1745,6 @@ msgstr ""
 
 #: blueman/Sdp.py:194
 #, fuzzy
-#| msgid "Rename device"
 msgid "Current Time Service"
 msgstr "تغییر نام دستگاه"
 
@@ -1794,7 +1778,6 @@ msgstr ""
 
 #: blueman/Sdp.py:202
 #, fuzzy
-#| msgid "Local Services"
 msgid "Battery Service"
 msgstr "سرویس داخلی"
 
@@ -1888,13 +1871,11 @@ msgstr ""
 
 #: blueman/Sdp.py:225
 #, fuzzy
-#| msgid "Local Services"
 msgid "Primary Service"
 msgstr "سرویس داخلی"
 
 #: blueman/Sdp.py:226
 #, fuzzy
-#| msgid "Search for nearby devices"
 msgid "Secondary Service"
 msgstr "جست و جوی دستگاه هی اطراف"
 
@@ -1908,7 +1889,6 @@ msgstr ""
 
 #: blueman/Sdp.py:229
 #, fuzzy
-#| msgid "Device"
 msgid "Device Name"
 msgstr "دستگاه"
 
@@ -1930,7 +1910,6 @@ msgstr ""
 
 #: blueman/Sdp.py:234
 #, fuzzy
-#| msgid "Service:"
 msgid "Service Changed"
 msgstr "خدمت:"
 
@@ -2063,7 +2042,7 @@ msgstr ""
 #. https://github.com/python/mypy/issues/2608
 #: blueman/plugins/applet/AutoConnect.py:50
 #: blueman/plugins/applet/ConnectionNotifier.py:21
-#: blueman/plugins/applet/RecentConns.py:219
+#: blueman/plugins/applet/RecentConns.py:154
 #: blueman/plugins/applet/PPPSupport.py:75
 msgid "Connected"
 msgstr ""
@@ -2079,7 +2058,6 @@ msgstr ""
 
 #: blueman/plugins/applet/ConnectionNotifier.py:21
 #, fuzzy
-#| msgid "Connecting..."
 msgid "Disconnected"
 msgstr "در حال اتصال..."
 
@@ -2142,7 +2120,7 @@ msgid "Shows network traffic usage"
 msgstr ""
 
 #: blueman/plugins/applet/StatusIcon.py:42
-#: blueman/plugins/applet/ShowConnected.py:72
+#: blueman/plugins/applet/ShowConnected.py:71
 #: blueman/plugins/applet/PowerManager.py:189
 msgid "Bluetooth Enabled"
 msgstr ""
@@ -2171,25 +2149,25 @@ msgstr ""
 msgid "The maximum number of items recent connections menu will display."
 msgstr ""
 
-#: blueman/plugins/applet/RecentConns.py:64
+#: blueman/plugins/applet/RecentConns.py:63
 msgid "Recent _Connections"
 msgstr ""
 
-#: blueman/plugins/applet/RecentConns.py:219
+#: blueman/plugins/applet/RecentConns.py:154
 #, python-format
 msgid "Connected to %s"
 msgstr ""
 
-#: blueman/plugins/applet/RecentConns.py:225
+#: blueman/plugins/applet/RecentConns.py:160
 msgid "Failed to connect"
 msgstr ""
 
-#: blueman/plugins/applet/RecentConns.py:245
+#: blueman/plugins/applet/RecentConns.py:170
 #, python-format
 msgid "%(service)s on %(device)s"
 msgstr ""
 
-#: blueman/plugins/applet/RecentConns.py:249
+#: blueman/plugins/applet/RecentConns.py:174
 msgid "Adapter for this connection is not available"
 msgstr ""
 
@@ -2199,7 +2177,7 @@ msgid ""
 "NetworkManager 0.8"
 msgstr ""
 
-#: blueman/plugins/applet/DBusService.py:46
+#: blueman/plugins/applet/DBusService.py:47
 msgid "Provides DBus API for other Blueman components"
 msgstr ""
 
@@ -2249,6 +2227,10 @@ msgstr ""
 msgid "File %(0)s from %(1)s successfully received"
 msgstr ""
 
+#: blueman/plugins/applet/TransferService.py:308
+msgid "Open"
+msgstr ""
+
 #: blueman/plugins/applet/TransferService.py:312
 msgid "Transfer failed"
 msgstr ""
@@ -2269,6 +2251,11 @@ msgid "Received %(files)d file in the background"
 msgid_plural "Received %(files)d files in the background"
 msgstr[0] ""
 msgstr[1] ""
+
+#: blueman/plugins/applet/TransferService.py:339
+#: blueman/plugins/applet/TransferService.py:347
+msgid "Open Location"
+msgstr ""
 
 #: blueman/plugins/applet/TransferService.py:343
 #, python-format
@@ -2349,20 +2336,16 @@ msgstr ""
 msgid "Bluetooth Active"
 msgstr ""
 
-#: blueman/plugins/applet/ShowConnected.py:64
+#: blueman/plugins/applet/ShowConnected.py:63
 #, python-format
 msgid "<b>%(connections)d Active Connection</b>"
 msgid_plural "<b>%(connections)d Active Connections</b>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: blueman/plugins/applet/ShowConnected.py:74
+#: blueman/plugins/applet/ShowConnected.py:73
 #: blueman/plugins/applet/PowerManager.py:192
 msgid "Bluetooth Disabled"
-msgstr ""
-
-#: blueman/plugins/applet/AppIndicator.py:17
-msgid "Uses libappindicator to show a statusicon"
 msgstr ""
 
 #: blueman/plugins/applet/Battery.py:14
@@ -2377,7 +2360,6 @@ msgstr ""
 
 #: blueman/plugins/applet/DisconnectItems.py:40
 #, fuzzy, python-format
-#| msgid "Connecting..."
 msgid "Disconnect %s"
 msgstr "در حال اتصال..."
 
@@ -2496,12 +2478,16 @@ msgstr ""
 msgid "Turn on all adapters"
 msgstr ""
 
-#: blueman/plugins/applet/GameControllerWakelock.py:19
+#: blueman/plugins/applet/GameControllerWakelock.py:20
 msgid ""
 "Temporarily suspends the screensaver when a bluetooth game controller is "
 "connected."
 msgstr ""
 "مادامی که یک کنترل کننده بلوتوث بازی متصل است، محافظ صفحه نمایش فعال نمیشود."
+
+#: blueman/plugins/applet/StatusNotifierItem.py:10
+msgid "Provides a StatusNotifierItem to show a statusicon"
+msgstr ""
 
 #: blueman/plugins/services/Network.py:25
 msgid "Network"
@@ -2552,7 +2538,6 @@ msgstr ""
 
 #: data/blueman-adapters.desktop.in:4
 #, fuzzy
-#| msgid "Bluetooth Adapters"
 msgid "Set Bluetooth Adapter Properties"
 msgstr "سازگار کننده‌ی بلوتوث"
 
@@ -2562,19 +2547,16 @@ msgstr ""
 
 #: data/blueman.desktop.in:4 data/blueman-manager.desktop.in:4
 #, fuzzy
-#| msgid "Bluetooth Adapters"
 msgid "Blueman Bluetooth Manager"
 msgstr "سازگار کننده‌ی بلوتوث"
 
 #: data/blueman-manager.desktop.in:3
 #, fuzzy
-#| msgid "Bluetooth Adapters"
 msgid "Bluetooth Manager"
 msgstr "سازگار کننده‌ی بلوتوث"
 
 #: data/thunar-sendto-blueman.desktop.in:5
 #, fuzzy
-#| msgid "Bluetooth Devices"
 msgid "Bluetooth Device"
 msgstr "بلوتوث ها"
 

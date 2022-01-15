@@ -66,6 +66,7 @@ class ManagerDeviceList(DeviceList):
             {"id": "cell_fader", "type": CellFade},
             {"id": "row_fader", "type": TreeRowFade},
             {"id": "initial_anim", "type": bool},
+            {"id": "blocked", "type": bool}
         ]
         super().__init__(adapter, tabledata)
         self.set_name("ManagerDeviceList")
@@ -224,8 +225,8 @@ class ManagerDeviceList(DeviceList):
 
         return icon_info
 
-    def make_device_icon(self, icon_info: Gtk.IconInfo, is_paired: bool = False, is_trusted: bool = False
-                         ) -> cairo.Surface:
+    def make_device_icon(self, icon_info: Gtk.IconInfo, is_paired: bool = False, is_trusted: bool = False,
+                         is_blocked: bool = False) -> cairo.Surface:
         window = self.get_window()
         scale = self.get_scale_factor()
         target = icon_info.load_surface(window)
@@ -249,6 +250,16 @@ class ManagerDeviceList(DeviceList):
             y = height / scale - mini_height / scale - 1 / scale
 
             ctx.set_source_surface(trusted_surface, 1 / scale, y)
+            ctx.paint_with_alpha(0.8)
+
+        if is_blocked:
+            _icon_info = self.get_icon_info("window-close", 16, False)
+            assert _icon_info is not None
+            blocked_surface = _icon_info.load_surface(window)
+            assert isinstance(target, cairo.ImageSurface)
+            assert isinstance(blocked_surface, cairo.ImageSurface)
+            width = target.get_width()
+            ctx.set_source_surface(blocked_surface, width - (1 + 16) / scale, 1 / scale)
             ctx.paint_with_alpha(0.8)
 
         return target
@@ -323,6 +334,10 @@ class ManagerDeviceList(DeviceList):
             logging.exception(e)
         try:
             self.row_update_event(tree_iter, "Connected", device["Connected"])
+        except Exception as e:
+            logging.exception(e)
+        try:
+            self.row_update_event(tree_iter, "Blocked", device["Blocked"])
         except Exception as e:
             logging.exception(e)
 
@@ -401,6 +416,9 @@ class ManagerDeviceList(DeviceList):
             else:
                 self._disable_power_levels(tree_iter)
 
+        elif key == "Blocked":
+            self.set(tree_iter, blocked=value)
+
     def _update_power_levels(self, tree_iter: Gtk.TreeIter, device: Device, cinfo: conn_info) -> None:
         row = self.get(tree_iter, "cell_fader", "battery", "rssi", "lq", "tpl")
 
@@ -475,15 +493,21 @@ class ManagerDeviceList(DeviceList):
             tree_iter = self.get_iter(path[0])
             assert tree_iter is not None
 
-            row = self.get(tree_iter, "trusted", "paired")
+            row = self.get(tree_iter, "trusted", "paired", "blocked")
             trusted = row["trusted"]
             paired = row["paired"]
-            if trusted and paired:
-                tooltip.set_markup(_("<b>Trusted and Paired</b>"))
-            elif paired:
-                tooltip.set_markup(_("<b>Paired</b>"))
-            elif trusted:
-                tooltip.set_markup(_("<b>Trusted</b>"))
+            blocked = row["blocked"]
+            str_list = []
+            if trusted:
+                str_list.append(_("Trusted"))
+            if paired:
+                str_list.append(_("Paired"))
+            if blocked:
+                str_list.append(_("Blocked"))
+
+            text = ", ".join(str_list)
+            if text:
+                tooltip.set_markup(f"<b>{text}</b>")
             else:
                 return False
 
@@ -577,8 +601,8 @@ class ManagerDeviceList(DeviceList):
     def _set_cell_data(self, _col: Gtk.TreeViewColumn, cell: Gtk.CellRenderer, _model: Gtk.TreeModel,
                        tree_iter: Gtk.TreeIter, data: Optional[str]) -> None:
         if data is None:
-            row = self.get(tree_iter, "icon_info", "trusted", "paired")
-            surface = self.make_device_icon(row["icon_info"], row["paired"], row["trusted"])
+            row = self.get(tree_iter, "icon_info", "trusted", "paired", "blocked")
+            surface = self.make_device_icon(row["icon_info"], row["paired"], row["trusted"], row["blocked"])
             cell.set_property("surface", surface)
         else:
             window = self.get_window()

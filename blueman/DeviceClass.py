@@ -49,28 +49,28 @@ phone_minor_cls = (
     # translators: device class
     _("Cordless"),
     # translators: device class
-    _("Smart phone"),
+    _("Smartphone"),
     # translators: device class
     _("Modem"),
     # translators: device class
-    _("Isdn")
+    _("ISDN")
 )
 
 access_point_minor_cls = (
     # translators: device class
     _("Fully"),
     # translators: device class
-    _("1-17 percent"),
+    _("1–17 percent"),
     # translators: device class
-    _("17-33 percent"),
+    _("17–33 percent"),
     # translators: device class
-    _("33-50 percent"),
+    _("33–50 percent"),
     # translators: device class
-    _("50-67 percent"),
+    _("50–67 percent"),
     # translators: device class
-    _("67-83 percent"),
+    _("67–83 percent"),
     # translators: device class
-    _("83-99 percent"),
+    _("83–99 percent"),
     # translators: device class
     _("Not available")
 )
@@ -97,9 +97,9 @@ audio_video_minor_cls = (
     # translators: device class
     _("Set-top box"),
     # translators: device class
-    _("Hifi audio"),
+    _("Hi-Fi audio"),
     # translators: device class
-    _("Vcr"),
+    _("VCR"),
     # translators: device class
     _("Video camera"),
     # translators: device class
@@ -208,7 +208,7 @@ gatt_appearance_categories = {
     # 19 - 48 reserved
     49: ('Pulse Oximeter', {0: _("Generic: Pulse Oximeter"),
                             1: _("Fingertip"),
-                            2: _("Wrist Worn")}),
+                            2: _("Wrist-Worn")}),
     50: ('Weight Scale', {0: _("Generic: Weight Scale")}),
     51: ('Personal Mobility Device', {0: _("Generic Personal Mobility Device"),
                                       1: _("Powered Wheelchair"),
