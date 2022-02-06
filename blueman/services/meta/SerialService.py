@@ -70,7 +70,7 @@ class SerialService(Service):
 
     def connect(
         self,
-        reply_handler: Optional[Callable[[str], None]] = None,
+        reply_handler: Optional[Callable[[int], None]] = None,
         error_handler: Optional[Callable[[RFCOMMError], None]] = None
     ) -> bool:
         # We expect this service to have a reserved UUID
@@ -96,7 +96,7 @@ class SerialService(Service):
             self.try_replace_root_watcher(mon, filename, port_id)
 
             if reply_handler:
-                reply_handler(filename)
+                reply_handler(port_id)
         except RFCOMMError as e:
             if error_handler:
                 error_handler(e)
