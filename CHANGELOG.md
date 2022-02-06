@@ -10,11 +10,17 @@
 
 * Replace AppIndicator with DBus StatusNotifierItem
 
-## 2.2.3
+## 2.2.4
 
 ### Changes
 
 * Dropped the PIN database
+
+### Bugs fixed
+
+* blueman-mechanism accepted arbitrary file paths and returned the errors from trying to open them, see https://github.com/blueman-project/blueman/security/advisories/GHSA-3r9p-m5c8-8mw8
+
+## 2.2.3
 
 ### Bugs fixed
 
