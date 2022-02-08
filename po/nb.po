@@ -12,7 +12,7 @@
 # Valmantas Palikša
 # Øyvind Øritsland
 # Alexander Jansen <bornxlo@gmail.com>, 2017
-# Allan Nordhøy <epost@anotheragency.no>, 2016-2017, 2020, 2021.
+# Allan Nordhøy <epost@anotheragency.no>, 2016-2017, 2020, 2021, 2022.
 # b84df44fb72862b85bae7a669218c6c2, 2019
 # Kenneth Jenssen <kennethjenssen@yahoo.com>, 2016
 # Kim Malmo <berencamlost@msn.com>, 2017-2018
@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2021-10-03 11:06+0200\n"
-"PO-Revision-Date: 2021-07-29 21:35+0000\n"
+"PO-Revision-Date: 2022-01-09 18:56+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "blueman/2-2/nb_NO/>\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7.2-dev\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -634,7 +634,7 @@ msgstr "For mye"
 #: blueman/gui/manager/ManagerDeviceList.py:528
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
-msgstr "<b>Mottatt signalstyrke: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
+msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceList.py:531
 #, python-format
@@ -765,16 +765,12 @@ msgid "_Untrust"
 msgstr "_Mistro"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:393
-#, fuzzy
-#| msgid "Rename device"
 msgid "R_ename device…"
-msgstr "Gi enheten nytt navn"
+msgstr "Gi enheten _nytt navn …"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:402
-#, fuzzy
-#| msgid "Remove"
 msgid "_Remove…"
-msgstr "Fjern"
+msgstr "_Fjern …"
 
 #: blueman/gui/manager/ManagerProgressbar.py:44
 msgid "Cancel Operation"
@@ -887,8 +883,9 @@ msgstr "Lyd/video"
 
 #. translators: device class
 #: blueman/DeviceClass.py:16
+#, fuzzy
 msgid "Peripheral"
-msgstr ""
+msgstr "Tilbehør"
 
 #. translators: device class
 #: blueman/DeviceClass.py:18 blueman/DeviceClass.py:276
@@ -897,8 +894,9 @@ msgstr ""
 
 #. translators: device class
 #: blueman/DeviceClass.py:20 blueman/DeviceClass.py:41
+#, fuzzy
 msgid "Wearable"
-msgstr ""
+msgstr "Ikledbar"
 
 #. translators: device class
 #: blueman/DeviceClass.py:22
@@ -979,32 +977,32 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:63
 msgid "1-17 percent"
-msgstr "1-17 %"
+msgstr "1–17 %"
 
 #. translators: device class
 #: blueman/DeviceClass.py:65
 msgid "17-33 percent"
-msgstr "17-33 %"
+msgstr "17–33 %"
 
 #. translators: device class
 #: blueman/DeviceClass.py:67
 msgid "33-50 percent"
-msgstr "33-50 %"
+msgstr "33–50 %"
 
 #. translators: device class
 #: blueman/DeviceClass.py:69
 msgid "50-67 percent"
-msgstr "50-67 %"
+msgstr "50–67 %"
 
 #. translators: device class
 #: blueman/DeviceClass.py:71
 msgid "67-83 percent"
-msgstr "67-83 %"
+msgstr "67–83%"
 
 #. translators: device class
 #: blueman/DeviceClass.py:73
 msgid "83-99 percent"
-msgstr "84-99 %"
+msgstr "83–99 %"
 
 #. translators: device class
 #: blueman/DeviceClass.py:75
@@ -1175,7 +1173,7 @@ msgstr "Armbåndsur"
 #. translators: device class
 #: blueman/DeviceClass.py:145
 msgid "Pager"
-msgstr ""
+msgstr "Personsøker"
 
 #. translators: device class
 #: blueman/DeviceClass.py:147
@@ -1390,7 +1388,6 @@ msgid "Generic: Cycling"
 msgstr "Gruppenettverk"
 
 #: blueman/DeviceClass.py:203
-#, fuzzy
 msgid "Cycling: Cycling Computer"
 msgstr "Sykling: Sykkelcomputer"
 
@@ -1425,11 +1422,11 @@ msgstr ""
 
 #: blueman/DeviceClass.py:210
 msgid "Fingertip"
-msgstr "Fingertipp"
+msgstr "Fingertupp"
 
 #: blueman/DeviceClass.py:211
 msgid "Wrist Worn"
-msgstr "Håndleddsbåret"
+msgstr "Håndleddsfestet"
 
 #: blueman/DeviceClass.py:212
 #, fuzzy
@@ -1470,6 +1467,7 @@ msgid "Insulin Pump, patch pump"
 msgstr ""
 
 #: blueman/DeviceClass.py:220
+#, fuzzy
 msgid "Insulin Pen"
 msgstr "Insulinpenn"
 
@@ -1480,7 +1478,7 @@ msgstr ""
 #. 55 - 80 reserved
 #: blueman/DeviceClass.py:223
 msgid "Generic: Outdoor Sports Activity"
-msgstr ""
+msgstr "Generisk: Utendørs sportsaktivitet"
 
 #: blueman/DeviceClass.py:224
 msgid "Location Display Device"

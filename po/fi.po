@@ -19,15 +19,16 @@
 # nomen omen, 2017-2018
 # Rauli L. <rauli.laine@iki.fi>, 2016
 # Matti Niemelä <niememat@gmail.com>, 2021.
-# Kimmo Kujansuu <mrkujansuu@gmail.com>, 2021.
+# Kimmo Kujansuu <mrkujansuu@gmail.com>, 2021, 2022.
 # Tommi Nieminen <translator@legisign.org>, 2021.
+# Ammuu5 <ammuu5@tutanota.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2021-10-03 11:06+0200\n"
-"PO-Revision-Date: 2021-08-28 15:16+0000\n"
-"Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
+"PO-Revision-Date: 2022-02-01 22:27+0000\n"
+"Last-Translator: Kimmo Kujansuu <mrkujansuu@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/blueman/2-2/fi/"
 ">\n"
 "Language: fi\n"
@@ -35,7 +36,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.8.1-dev\n"
+"X-Generator: Weblate 4.11-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -682,11 +683,11 @@ msgstr "I/O-virhe"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:209
 msgid "Device did not respond"
-msgstr "Laite ei vastaa"
+msgstr "Laite ei vastannut"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:213
 msgid "Resource temporarily unavailable"
-msgstr "Resurssi ei hetkellisesti käytettävissä"
+msgstr "Resurssi ei ole tilapäisesti käytettävissä"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:218
 msgid "Connection Failed: "
@@ -694,7 +695,7 @@ msgstr "Yhteydenotto epäonnistui: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:285
 msgid "_<b>_Connect</b>"
-msgstr "_<b>Yhdistä</b>"
+msgstr "_<b>_Yhdistä</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:287
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
@@ -722,7 +723,7 @@ msgstr "<b>Yhdistä automaattisesti:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:341
 msgid "Send a _File…"
-msgstr "Lähetä t_iedosto…"
+msgstr "Lähetä _tiedosto…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:354
 msgid "_Pair"
@@ -778,7 +779,7 @@ msgstr "Lisää"
 
 #: blueman/gui/CommonUi.py:62
 msgid "Blueman is a GTK+ Bluetooth manager"
-msgstr "Blueman on GTK+:n Bluetooth-hallinta"
+msgstr "Blueman on GTK+ Bluetooth-hallintaohjelma"
 
 #: blueman/gui/GsmSettings.py:24
 msgid "GSM Settings"
@@ -859,7 +860,7 @@ msgstr "Oheislaite"
 #. translators: device class
 #: blueman/DeviceClass.py:18 blueman/DeviceClass.py:276
 msgid "Imaging"
-msgstr "Kuva"
+msgstr "Kuvantaminen"
 
 #. translators: device class
 #: blueman/DeviceClass.py:20 blueman/DeviceClass.py:41
@@ -884,7 +885,7 @@ msgstr "Palvelin"
 #. translators: device class
 #: blueman/DeviceClass.py:35
 msgid "Laptop"
-msgstr "Kannettava"
+msgstr "Kannettava tietokone"
 
 #. translators: device class
 #: blueman/DeviceClass.py:37
@@ -959,7 +960,7 @@ msgstr "83–99 prosenttia"
 #. translators: device class
 #: blueman/DeviceClass.py:75
 msgid "Not available"
-msgstr "Ei käytettävissä"
+msgstr "Ei saatavilla"
 
 #. translators: device class
 #: blueman/DeviceClass.py:82 blueman/Sdp.py:123 blueman/Sdp.py:164
@@ -994,7 +995,7 @@ msgstr "Kannettava äänisoitin"
 #. translators: device class
 #: blueman/DeviceClass.py:96
 msgid "Car audio"
-msgstr "Autosoitin"
+msgstr "Auton äänentoisto"
 
 #. translators: device class
 #: blueman/DeviceClass.py:98
@@ -1009,7 +1010,7 @@ msgstr "Hifi-ääni"
 #. translators: device class
 #: blueman/DeviceClass.py:102
 msgid "Vcr"
-msgstr "Videotallennin"
+msgstr "Videonauhuri"
 
 #. translators: device class
 #: blueman/DeviceClass.py:104
@@ -1297,7 +1298,7 @@ msgstr "Yleinen: vaaka"
 
 #: blueman/DeviceClass.py:213
 msgid "Generic Personal Mobility Device"
-msgstr "Yleinen henkilökohtainen mobiililaite"
+msgstr "Yleinen henkilökohtainen liikkumislaite"
 
 #: blueman/DeviceClass.py:214
 msgid "Powered Wheelchair"
@@ -1305,7 +1306,7 @@ msgstr "Moottoripyörätuoli"
 
 #: blueman/DeviceClass.py:215
 msgid "Mobility Scooter"
-msgstr "Sähköskootteri"
+msgstr "Liikkuvuusskootteri"
 
 #: blueman/DeviceClass.py:216
 msgid "Generic Continuous Glucose Monitor"
@@ -1317,15 +1318,15 @@ msgstr "Yleinen insuliinipumppu"
 
 #: blueman/DeviceClass.py:218
 msgid "Insulin Pump, durable pump"
-msgstr "Insuliinipumppa, kestopumppu"
+msgstr "Insuliinipumppu, kestävä pumppu"
 
 #: blueman/DeviceClass.py:219
 msgid "Insulin Pump, patch pump"
-msgstr ""
+msgstr "Insuliinipumppu, laastaripumppu"
 
 #: blueman/DeviceClass.py:220
 msgid "Insulin Pen"
-msgstr ""
+msgstr "Insuliinikynä"
 
 #: blueman/DeviceClass.py:221
 msgid "Generic Medication Delivery"
@@ -1334,107 +1335,107 @@ msgstr ""
 #. 55 - 80 reserved
 #: blueman/DeviceClass.py:223
 msgid "Generic: Outdoor Sports Activity"
-msgstr ""
+msgstr "Yleinen: Ulkona tapahtuva urheiluaktiviteetti"
 
 #: blueman/DeviceClass.py:224
 msgid "Location Display Device"
-msgstr ""
+msgstr "Sijainnin näyttölaite"
 
 #: blueman/DeviceClass.py:225
 msgid "Location and Navigation Display Device"
-msgstr ""
+msgstr "Sijainti- ja navigointinäyttölaite"
 
 #: blueman/DeviceClass.py:226
 msgid "Location Pod"
-msgstr ""
+msgstr "Paikannin"
 
 #: blueman/DeviceClass.py:227
 msgid "Location and Navigation Pod"
-msgstr ""
+msgstr "Paikannin ja navigointipaneeli"
 
 #: blueman/Sdp.py:88
 msgid "SDP"
-msgstr ""
+msgstr "SDP"
 
 #: blueman/Sdp.py:89
 msgid "UDP"
-msgstr ""
+msgstr "UDP"
 
 #: blueman/Sdp.py:90
 msgid "RFCOMM"
-msgstr ""
+msgstr "RFCOMM"
 
 #: blueman/Sdp.py:91
 msgid "TCP"
-msgstr ""
+msgstr "TCP"
 
 #: blueman/Sdp.py:92
 msgid "TCS-BIN"
-msgstr ""
+msgstr "TCS-BIN"
 
 #: blueman/Sdp.py:93
 msgid "TCS-AT"
-msgstr ""
+msgstr "TCS-AT"
 
 #: blueman/Sdp.py:94
 msgid "ATT"
-msgstr ""
+msgstr "ATT"
 
 #: blueman/Sdp.py:95
 msgid "OBEX"
-msgstr ""
+msgstr "OBEX"
 
 #: blueman/Sdp.py:96
 msgid "IP"
-msgstr ""
+msgstr "IP"
 
 #: blueman/Sdp.py:97
 msgid "FTP"
-msgstr ""
+msgstr "FTP"
 
 #: blueman/Sdp.py:98
 msgid "HTTP"
-msgstr ""
+msgstr "HTTP"
 
 #: blueman/Sdp.py:99
 msgid "WSP"
-msgstr ""
+msgstr "WSP"
 
 #: blueman/Sdp.py:100
 msgid "BNEP"
-msgstr ""
+msgstr "BNEP"
 
 #: blueman/Sdp.py:101
 msgid "UPnP/ESDP"
-msgstr ""
+msgstr "UPnP/ESDP"
 
 #: blueman/Sdp.py:102
 msgid "HIDP"
-msgstr ""
+msgstr "HIDP"
 
 #: blueman/Sdp.py:103
 msgid "Hardcopy Control Channel"
-msgstr ""
+msgstr "Hardcopy ohjauskanava"
 
 #: blueman/Sdp.py:104
 msgid "Hardcopy Data Channel"
-msgstr ""
+msgstr "Hardcopy datakanava"
 
 #: blueman/Sdp.py:105
 msgid "Hardcopy Notification"
-msgstr ""
+msgstr "Hardcopy ilmoitus"
 
 #: blueman/Sdp.py:106
 msgid "AVCTP"
-msgstr ""
+msgstr "AVCTP"
 
 #: blueman/Sdp.py:107
 msgid "AVDTP"
-msgstr ""
+msgstr "AVDTP"
 
 #: blueman/Sdp.py:108
 msgid "CMTP"
-msgstr ""
+msgstr "CMTP"
 
 #: blueman/Sdp.py:109
 msgid "UDI_C-Plane"
@@ -1446,29 +1447,27 @@ msgstr ""
 
 #: blueman/Sdp.py:112
 msgid "L2CAP"
-msgstr ""
+msgstr "L2CAP"
 
 #: blueman/Sdp.py:113
 msgid "ServiceDiscoveryServerServiceClassID"
-msgstr ""
+msgstr "ServiceDiscoveryServerServiceClassID"
 
 #: blueman/Sdp.py:114
 msgid "BrowseGroupDescriptorServiceClassID"
-msgstr ""
+msgstr "BrowseGroupDescriptorServiceClassID"
 
 #: blueman/Sdp.py:115
 msgid "Public Browse Group"
-msgstr ""
+msgstr "Julkinen selausryhmä"
 
 #: blueman/Sdp.py:116
-#, fuzzy
-#| msgid "Serial Ports"
 msgid "Serial Port"
-msgstr "Sarjaportit"
+msgstr "Sarjaportti"
 
 #: blueman/Sdp.py:117
 msgid "LAN Access Using PPP"
-msgstr ""
+msgstr "Lähiverkkoyhteys PPP:tä käyttämällä"
 
 #: blueman/Sdp.py:118
 msgid "Dialup Networking (DUN)"
@@ -1476,17 +1475,15 @@ msgstr "Puhelinverkkoyhteys (DUN)"
 
 #: blueman/Sdp.py:119
 msgid "IrMC Sync"
-msgstr ""
+msgstr "IrMC-synkronointi"
 
 #: blueman/Sdp.py:120
 msgid "OBEX Object Push"
 msgstr ""
 
 #: blueman/Sdp.py:121
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "OBEX File Transfer"
-msgstr "Bluetooth-tiedostonsiirto"
+msgstr "OBEX-tiedostonsiirto"
 
 #: blueman/Sdp.py:122
 msgid "IrMC Sync Command"
@@ -1494,7 +1491,7 @@ msgstr ""
 
 #: blueman/Sdp.py:124
 msgid "Cordless Telephony"
-msgstr ""
+msgstr "Langaton puhelin"
 
 #: blueman/Sdp.py:125
 msgid "Audio Source"
@@ -1506,43 +1503,43 @@ msgstr "Ääninielu"
 
 #: blueman/Sdp.py:127
 msgid "Remote Control Target"
-msgstr ""
+msgstr "Kaukosäätimen kohde"
 
 #: blueman/Sdp.py:128
 msgid "Advanced Audio"
-msgstr ""
+msgstr "Lisäasetukset ääni"
 
 #: blueman/Sdp.py:129
 msgid "Remote Control"
-msgstr ""
+msgstr "Kaukosäädin"
 
 #: blueman/Sdp.py:130
 msgid "Video Conferencing"
-msgstr ""
+msgstr "Videoneuvottelu"
 
 #: blueman/Sdp.py:131
 msgid "Intercom"
-msgstr ""
+msgstr "Sisäpuhelin"
 
 #: blueman/Sdp.py:132
 msgid "Fax"
-msgstr ""
+msgstr "Faksi"
 
 #: blueman/Sdp.py:133
 msgid "Headset Audio Gateway"
-msgstr ""
+msgstr "Kuulokkeiden ääniyhdyskäytävä"
 
 #: blueman/Sdp.py:134
 msgid "WAP"
-msgstr ""
+msgstr "WAP"
 
 #: blueman/Sdp.py:135
 msgid "WAP Client"
-msgstr ""
+msgstr "WAP-asiakas"
 
 #: blueman/Sdp.py:136
 msgid "PANU"
-msgstr ""
+msgstr "PANU"
 
 #: blueman/Sdp.py:137
 msgid "Network Access Point"
@@ -1554,23 +1551,23 @@ msgstr "Ryhmäverkko"
 
 #: blueman/Sdp.py:139
 msgid "DirectPrinting (BPP)"
-msgstr ""
+msgstr "Suoratulostus (BPP)"
 
 #: blueman/Sdp.py:140
 msgid "ReferencePrinting (BPP)"
-msgstr ""
+msgstr "Viitetulostus (BPP)"
 
 #: blueman/Sdp.py:141
 msgid "Imaging (BIP)"
-msgstr ""
+msgstr "Kuvantaminen (BIP)"
 
 #: blueman/Sdp.py:142
 msgid "ImagingResponder (BIP)"
-msgstr ""
+msgstr "Kuvantamisvastaaja (BIP)"
 
 #: blueman/Sdp.py:143
 msgid "ImagingAutomaticArchive (BIP)"
-msgstr ""
+msgstr "KuvantaminenAutomaattinenArkisto (BIP)"
 
 #: blueman/Sdp.py:144
 msgid "ImagingReferencedObjects (BIP)"
@@ -1578,7 +1575,7 @@ msgstr ""
 
 #: blueman/Sdp.py:146
 msgid "Handsfree Audio Gateway"
-msgstr ""
+msgstr "Handsfree ääniyhdyskäytävä"
 
 #: blueman/Sdp.py:147
 msgid "DirectPrintingReferenceObjectsService (BPP)"
@@ -1590,15 +1587,15 @@ msgstr ""
 
 #: blueman/Sdp.py:149
 msgid "Basic Printing (BPP)"
-msgstr ""
+msgstr "Perustulostus (BPP)"
 
 #: blueman/Sdp.py:150
 msgid "Printing Status (BPP)"
-msgstr ""
+msgstr "Tulostuksen tila (BPP)"
 
 #: blueman/Sdp.py:151
 msgid "Human Interface Device Service (HID)"
-msgstr ""
+msgstr "Ihmiskäyttöliittymän laitepalvelu (HID)"
 
 #: blueman/Sdp.py:152
 msgid "HardcopyCableReplacement (HCR)"
@@ -1614,7 +1611,7 @@ msgstr ""
 
 #: blueman/Sdp.py:155
 msgid "Common ISDN Access (CIP)"
-msgstr ""
+msgstr "Yhteinen ISDN-liittymä (CIP)"
 
 #: blueman/Sdp.py:156
 msgid "VideoConferencingGW (VCP)"
@@ -1622,137 +1619,123 @@ msgstr ""
 
 #: blueman/Sdp.py:157
 msgid "UDI-MT"
-msgstr ""
+msgstr "UDI-MT"
 
 #: blueman/Sdp.py:158
 msgid "UDI-TA"
-msgstr ""
+msgstr "UDI-TA"
 
 #: blueman/Sdp.py:159
 msgid "Audio/Video"
-msgstr ""
+msgstr "Ääni/video"
 
 #: blueman/Sdp.py:160
 msgid "SIM Access (SAP)"
-msgstr ""
+msgstr "SIM-käyttö (SAP)"
 
 #: blueman/Sdp.py:161
 msgid "Phonebook Access (PBAP) - PCE"
-msgstr ""
+msgstr "Puhelinluettelon käyttö (PBAP) - PCE"
 
 #: blueman/Sdp.py:162
 msgid "Phonebook Access (PBAP) - PSE"
-msgstr ""
+msgstr "Puhelinluettelon käyttö (PBAP) - PSE"
 
 #: blueman/Sdp.py:163
-#, fuzzy
-#| msgid "Network Access Point (NAP)"
 msgid "Phonebook Access (PBAP)"
-msgstr "Verkon tukiasema (NAP)"
+msgstr "Puhelinluettelon käyttö (PBAP)"
 
 #: blueman/Sdp.py:165
 msgid "Message Access Server"
-msgstr ""
+msgstr "Viestin käyttöpalvelin"
 
 #: blueman/Sdp.py:166
 msgid "Message Notification Server"
-msgstr ""
+msgstr "Viestin ilmoituspalvelin"
 
 #: blueman/Sdp.py:167
-#, fuzzy
-#| msgid "Network Access Point (NAP)"
 msgid "Message Access Profile (MAP)"
-msgstr "Verkon tukiasema (NAP)"
+msgstr "Viestien käyttöprofiili (MAP)"
 
 #: blueman/Sdp.py:168
 msgid "GNSS"
-msgstr ""
+msgstr "GNSS"
 
 #: blueman/Sdp.py:169
 msgid "GNSS Server"
-msgstr ""
+msgstr "GNSS-palvelin"
 
 #: blueman/Sdp.py:170
 msgid "3D Display"
-msgstr ""
+msgstr "3D-näyttö"
 
 #: blueman/Sdp.py:171
 msgid "3D Glasses"
-msgstr ""
+msgstr "3D-lasit"
 
 #: blueman/Sdp.py:172
 msgid "3D Synchronization (3DSP)"
-msgstr ""
+msgstr "3D-synkronointi (3DSP)"
 
 #: blueman/Sdp.py:173
 msgid "Multi-Profile Specification (MPS) Profile"
-msgstr ""
+msgstr "Multi-Profile Specification (MPS) profiili"
 
 #: blueman/Sdp.py:174
 msgid "Multi-Profile Specification (MPS) Service"
-msgstr ""
+msgstr "Multi-Profile Specification (MPS) palvelu"
 
 #: blueman/Sdp.py:175
 msgid "Calendar, Task, and Notes (CTN) Access Service"
-msgstr ""
+msgstr "Kalenterin, tehtävien ja muistiinpanojen (CTN) käyttöpalvelu"
 
 #: blueman/Sdp.py:176
 msgid "Calendar, Task, and Notes (CTN) Notification Service"
-msgstr ""
+msgstr "Kalenteri, tehtävät ja muistiinpanot (CTN) ilmoituspalvelu"
 
 #: blueman/Sdp.py:177
 msgid "Calendar, Task, and Notes (CTN) Profile"
-msgstr ""
+msgstr "Kalenteri, tehtävä ja muistiinpano (CTN) profiili"
 
 #: blueman/Sdp.py:178
 msgid "PnP Information"
-msgstr ""
+msgstr "PnP-tiedot"
 
 #: blueman/Sdp.py:179
-#, fuzzy
-#| msgid "Group Network"
 msgid "Generic Networking"
-msgstr "Ryhmäverkko"
+msgstr "Yleinen verkko"
 
 #: blueman/Sdp.py:180
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "Generic FileTransfer"
-msgstr "Bluetooth-tiedostonsiirto"
+msgstr "Yleinen tiedostonsiirto"
 
 #: blueman/Sdp.py:181
 msgid "Generic Audio"
-msgstr ""
+msgstr "Yleinen ääni"
 
 #: blueman/Sdp.py:182
 msgid "Generic Telephony"
-msgstr ""
+msgstr "Yleinen puhelin"
 
 #: blueman/Sdp.py:183
-#, fuzzy
-#| msgid "Audio Source"
 msgid "Video Source"
-msgstr "Äänilähde"
+msgstr "Videolähde"
 
 #: blueman/Sdp.py:184
-#, fuzzy
-#| msgid "Audio Sink"
 msgid "Video Sink"
-msgstr "Ääninielu"
+msgstr "Videonielu"
 
 #: blueman/Sdp.py:185
 msgid "Video Distribution"
-msgstr ""
+msgstr "Videon jakelu"
 
 #: blueman/Sdp.py:186
 msgid "HDP"
-msgstr ""
+msgstr "HDP"
 
 #: blueman/Sdp.py:187
-#, fuzzy
-#| msgid "Audio Source"
 msgid "HDP Source"
-msgstr "Äänilähde"
+msgstr "HDP-lähde"
 
 #: blueman/Sdp.py:188
 msgid "HDP Sink"
@@ -1760,33 +1743,31 @@ msgstr ""
 
 #: blueman/Sdp.py:189
 msgid "Generic Access"
-msgstr ""
+msgstr "Yleinen pääsy"
 
 #: blueman/Sdp.py:190
 msgid "Generic Attribute"
-msgstr ""
+msgstr "Yleinen määrite"
 
 #: blueman/Sdp.py:191
 msgid "Immediate Alert"
-msgstr ""
+msgstr "Välitön hälytys"
 
 #: blueman/Sdp.py:192
 msgid "Link Loss"
-msgstr ""
+msgstr "Linkin menetys"
 
 #: blueman/Sdp.py:193
 msgid "Tx Power"
-msgstr ""
+msgstr "Tx-teho"
 
 #: blueman/Sdp.py:194
-#, fuzzy
-#| msgid "Rename device"
 msgid "Current Time Service"
-msgstr "Nimeä laite uudelleen"
+msgstr "Nykyinen aikapalvelu"
 
 #: blueman/Sdp.py:195
 msgid "Reference Time Update Service"
-msgstr ""
+msgstr "Viiteajan päivityspalvelu"
 
 #: blueman/Sdp.py:196
 msgid "Next DST Change Service"
@@ -1794,11 +1775,11 @@ msgstr ""
 
 #: blueman/Sdp.py:197
 msgid "Glucose"
-msgstr ""
+msgstr "Glukoosi"
 
 #: blueman/Sdp.py:198
 msgid "Health Thermometer"
-msgstr ""
+msgstr "Terveys lämpömittari"
 
 #: blueman/Sdp.py:199
 msgid "Device Information"
@@ -1806,21 +1787,19 @@ msgstr "Laitteen tiedot"
 
 #: blueman/Sdp.py:200
 msgid "Heart Rate"
-msgstr ""
+msgstr "Syke"
 
 #: blueman/Sdp.py:201
 msgid "Phone Alert Status Service"
-msgstr ""
+msgstr "Puhelinhälytysten tilapalvelu"
 
 #: blueman/Sdp.py:202
-#, fuzzy
-#| msgid "Local Services"
 msgid "Battery Service"
-msgstr "Paikalliset palvelut"
+msgstr "Akku palvelu"
 
 #: blueman/Sdp.py:203
 msgid "Blood Pressure"
-msgstr ""
+msgstr "Verenpaine"
 
 #: blueman/Sdp.py:204
 msgid "Alert Notification Service"
@@ -1840,7 +1819,7 @@ msgstr ""
 
 #: blueman/Sdp.py:208
 msgid "Automation IO"
-msgstr ""
+msgstr "Automaatio IO"
 
 #: blueman/Sdp.py:209
 msgid "Cycling Speed and Cadence"
@@ -1852,7 +1831,7 @@ msgstr ""
 
 #: blueman/Sdp.py:211
 msgid "Location and Navigation"
-msgstr ""
+msgstr "Sijainti ja navigointi"
 
 #: blueman/Sdp.py:212
 msgid "Environmental Sensing"
@@ -1864,7 +1843,7 @@ msgstr ""
 
 #: blueman/Sdp.py:214
 msgid "User Data"
-msgstr ""
+msgstr "Käyttäjätiedot"
 
 #: blueman/Sdp.py:215
 msgid "Weight Scale"
@@ -1888,39 +1867,31 @@ msgstr ""
 
 #: blueman/Sdp.py:220
 msgid "Pulse Oximeter"
-msgstr ""
+msgstr "Pulssioksimetri"
 
 #: blueman/Sdp.py:221
 msgid "HTTP Proxy"
-msgstr ""
+msgstr "HTTP-välityspalvelin"
 
 #: blueman/Sdp.py:222
 msgid "Transport Discovery"
 msgstr ""
 
 #: blueman/Sdp.py:223
-#, fuzzy
-#| msgid "Transfer"
 msgid "Object Transfer"
-msgstr "Siirrot"
+msgstr "Kohteen siirto"
 
 #: blueman/Sdp.py:224
-#, fuzzy
-#| msgid "applet"
 msgid "AppleAgent"
-msgstr "sovelma"
+msgstr "AppleAgent"
 
 #: blueman/Sdp.py:225
-#, fuzzy
-#| msgid "Pair Device"
 msgid "Primary Service"
-msgstr "Laitepari"
+msgstr "Ensisijainen palvelu"
 
 #: blueman/Sdp.py:226
-#, fuzzy
-#| msgid "Search for nearby devices"
 msgid "Secondary Service"
-msgstr "Etsi lähellä olevia laitteita"
+msgstr "Toissijainen palvelu"
 
 #: blueman/Sdp.py:227
 msgid "Include"
@@ -1931,50 +1902,44 @@ msgid "Characteristic Declaration"
 msgstr ""
 
 #: blueman/Sdp.py:229
-#, fuzzy
-#| msgid "Device Manager"
 msgid "Device Name"
-msgstr "Laitehallinta"
+msgstr "Laitteen nimi"
 
 #: blueman/Sdp.py:230
 msgid "Appearance"
-msgstr ""
+msgstr "Ulkonäkö"
 
 #: blueman/Sdp.py:231
 msgid "Peripheral Privacy Flag"
 msgstr ""
 
 #: blueman/Sdp.py:232
-#, fuzzy
-#| msgid "Recent _Connections"
 msgid "Reconnection Address"
-msgstr "Viimeisimmät _yhteydet"
+msgstr "Uudelleenyhdistämisosoite"
 
 #: blueman/Sdp.py:233
 msgid "Peripheral Preferred Connection Parameters"
-msgstr ""
+msgstr "Oheislaitteen ensisijaiset yhteysparametrit"
 
 #: blueman/Sdp.py:234
-#, fuzzy
-#| msgid "Device Manager"
 msgid "Service Changed"
-msgstr "Laitehallinta"
+msgstr "Palvelu muutettu"
 
 #: blueman/Sdp.py:235
 msgid "System ID"
-msgstr ""
+msgstr "Järjestelmän tunnus"
 
 #: blueman/Sdp.py:236
 msgid "Model Number String"
-msgstr ""
+msgstr "Mallinumeromerkkijono"
 
 #: blueman/Sdp.py:237
 msgid "Serial Number String"
-msgstr ""
+msgstr "Sarjanumeromerkkijono"
 
 #: blueman/Sdp.py:238
 msgid "Firmware Revision String"
-msgstr ""
+msgstr "Laiteohjelmiston versiomerkkijono"
 
 #: blueman/Sdp.py:239
 msgid "Hardware Revision String"
@@ -1990,7 +1955,7 @@ msgstr ""
 
 #: blueman/Sdp.py:242
 msgid "PnP ID"
-msgstr ""
+msgstr "PnP-tunnus"
 
 #: blueman/Sdp.py:243
 msgid "Characteristic Extended Properties"
@@ -2029,10 +1994,8 @@ msgid "Report Reference"
 msgstr "Raportin viite"
 
 #: blueman/Sdp.py:378
-#, fuzzy
-#| msgid "Auto connect profiles"
 msgid "Audio and input profiles"
-msgstr "Yhdistä profiilit automaattisesti"
+msgstr "Ääni- ja tuloprofiilit"
 
 #: blueman/Sdp.py:380
 msgid "Proprietary"
@@ -2060,7 +2023,7 @@ msgstr "Näytä laitetiedot"
 
 #: blueman/plugins/manager/Notes.py:51
 msgid "Send _note"
-msgstr "Lähetä viesti"
+msgstr "Lähetä _viesti"
 
 #: blueman/plugins/manager/Notes.py:52
 msgid "Send a text note"
@@ -2087,6 +2050,8 @@ msgstr "Ei määritetty"
 msgid ""
 "Tries to auto-connect to configurable services on start and every 60 seconds."
 msgstr ""
+"Yrittää muodostaa automaattisen yhteyden määritettäviin palveluihin "
+"käynnistyksen yhteydessä ja 60 sekunnin välein."
 
 #. https://github.com/python/mypy/issues/2608
 #: blueman/plugins/applet/AutoConnect.py:50
@@ -2105,12 +2070,11 @@ msgstr ""
 #: blueman/plugins/applet/ConnectionNotifier.py:13
 msgid "Shows desktop notifications when devices get connected or disconnected."
 msgstr ""
+"Näyttää työpöydän ilmoitukset, kun laitteet yhdistetään tai irrotetaan."
 
 #: blueman/plugins/applet/ConnectionNotifier.py:21
-#, fuzzy
-#| msgid "Disconnecting..."
 msgid "Disconnected"
-msgstr "Katkaistaan yhteyttä..."
+msgstr "Yhteys katkaistu"
 
 #: blueman/plugins/applet/NetUsage.py:154
 #: blueman/plugins/applet/NetUsage.py:265
@@ -2330,7 +2294,7 @@ msgstr "Lisää vakiovalikkokohteita tilakuvakevalikkoon"
 
 #: blueman/plugins/applet/StandardItems.py:32
 msgid "Send _Files to Device"
-msgstr "Lähetä tiedostoja laitteelle"
+msgstr "Lähetä _tiedostoja laitteelle"
 
 #: blueman/plugins/applet/StandardItems.py:37
 msgid "_Devices"
@@ -2414,10 +2378,12 @@ msgid ""
 "Shows desktop notifications with battery percentage when devices get "
 "connected."
 msgstr ""
+"Näyttää työpöydän ilmoitukset akun prosenttimäärällä, kun laitteet "
+"yhdistetään."
 
 #: blueman/plugins/applet/DisconnectItems.py:14
 msgid "Adds disconnect menu items"
-msgstr ""
+msgstr "Lisää yhteyden katkaisuvalikon kohteita"
 
 #: blueman/plugins/applet/DisconnectItems.py:40
 #, python-format
@@ -2483,7 +2449,7 @@ msgstr ""
 
 #: blueman/plugins/applet/SerialManager.py:31
 msgid "Script to execute on connection"
-msgstr "Skripti suorittaa yhteyden"
+msgstr "Yhteyden muodostaessa suoritettava skripti"
 
 #: blueman/plugins/applet/SerialManager.py:32
 msgid ""
@@ -2552,7 +2518,7 @@ msgstr "Kytke kaikki sovittimet pois päältä"
 
 #: blueman/plugins/applet/PowerManager.py:162
 msgid "<b>Turn Bluetooth _On</b>"
-msgstr "<b>Kytke _bluetooth päälle</b>"
+msgstr "<b>Kytke _bluetooth _päälle</b>"
 
 #: blueman/plugins/applet/PowerManager.py:164
 msgid "Turn on all adapters"

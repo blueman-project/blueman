@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2021-10-03 11:06+0200\n"
-"PO-Revision-Date: 2021-07-13 15:32+0000\n"
+"PO-Revision-Date: 2021-10-28 23:39+0000\n"
 "Last-Translator: Reza Almanda <rezaalmanda27@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/blueman/2-2/"
 "id/>\n"
@@ -27,7 +27,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.7.2-dev\n"
+"X-Generator: Weblate 4.9-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -258,7 +258,7 @@ msgstr "Nomor:"
 
 #: data/ui/gsm-settings.ui:78
 msgid "APN:"
-msgstr "APN"
+msgstr "APN:"
 
 #: data/ui/net-usage.ui:14
 msgid "Traffic statistics"
@@ -467,8 +467,8 @@ msgid ""
 msgstr ""
 "<b>Terjadi kesalahan saat memuat suatu pengaya. Harap beritahu para "
 "pengembang dengan isi pesan ini ke </b>\n"
-"<a href=\"http://github.com/blueman-project/blueman/issues\">situs web</a> "
-"kami."
+"<a href=\"http://github.com/blueman-project/blueman/issues\">situs web kami."
+"</a>"
 
 #: blueman/Functions.py:71
 msgid "Bluetooth Turned Off"
@@ -563,7 +563,7 @@ msgstr "_Keluar"
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 msgid "Uncategorized"
-msgstr "Tidak terkategorisasi"
+msgstr "Tidak terkategori"
 
 #: blueman/gui/manager/ManagerDeviceList.py:479
 msgid "<b>Trusted and Paired</b>"
@@ -617,12 +617,12 @@ msgstr "Kekuatan Sinyal yang Diterima: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 #: blueman/gui/manager/ManagerDeviceList.py:536
 #, python-format
 msgid "<b>Link Quality: %(lq)u%%</b>"
-msgstr "<b>Kualitas Tautan: %(lq)u%%</b>"
+msgstr "<b> Kualitas Link: %(lq)u%%</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:538
 #, python-format
 msgid "Link Quality: %(lq)u%%"
-msgstr "Kualitas tautan: %(lq)u%%%%"
+msgstr "Kualitas Link: %(lq)u%%"
 
 #: blueman/gui/manager/ManagerDeviceList.py:542
 msgid "Low"
@@ -664,7 +664,7 @@ msgstr "Pemutusan Gagal: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:204
 msgid "No audio endpoints registered"
-msgstr ""
+msgstr "Tidak ada audio endpoint yang terdaftar"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:207
 msgid "Input/output error"
@@ -708,7 +708,7 @@ msgstr "<b>Terputus:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:322
 msgid "<b>Auto-connect:</b>"
-msgstr "<b>Sambungkan otomatis:</b>"
+msgstr "<b>Sambung otomatis:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:341
 msgid "Send a _File…"
@@ -728,7 +728,7 @@ msgstr "_Tidak Terpercaya"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:393
 msgid "R_ename device…"
-msgstr "Ubah_nama perangkat…"
+msgstr "U_bah nama perangkat…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:402
 msgid "_Remove…"
@@ -832,7 +832,7 @@ msgstr "Ponsel"
 #. translators: device class
 #: blueman/DeviceClass.py:12
 msgid "Access point"
-msgstr "Akses poin"
+msgstr "Access Point"
 
 #. translators: device class
 #: blueman/DeviceClass.py:14
@@ -852,7 +852,7 @@ msgstr "Pencitraan"
 #. translators: device class
 #: blueman/DeviceClass.py:20 blueman/DeviceClass.py:41
 msgid "Wearable"
-msgstr ""
+msgstr "Wearable"
 
 #. translators: device class
 #: blueman/DeviceClass.py:22
@@ -877,12 +877,12 @@ msgstr "Laptop"
 #. translators: device class
 #: blueman/DeviceClass.py:37
 msgid "Handheld"
-msgstr "Gawai"
+msgstr "Gawai genggam"
 
 #. translators: device class
 #: blueman/DeviceClass.py:39
 msgid "Palm"
-msgstr ""
+msgstr "Palm"
 
 #. translators: device class
 #: blueman/DeviceClass.py:48
@@ -891,10 +891,8 @@ msgstr "Selular"
 
 #. translators: device class
 #: blueman/DeviceClass.py:50
-#, fuzzy
-#| msgid "cordless"
 msgid "Cordless"
-msgstr "cordless"
+msgstr "Cordless"
 
 #. translators: device class
 #: blueman/DeviceClass.py:52
@@ -914,7 +912,7 @@ msgstr "Isdn"
 #. translators: device class
 #: blueman/DeviceClass.py:61
 msgid "Fully"
-msgstr ""
+msgstr "Fully"
 
 #. translators: device class
 #: blueman/DeviceClass.py:63
@@ -1034,7 +1032,7 @@ msgstr "Gim / Mainan"
 #. translators: device class
 #: blueman/DeviceClass.py:123 blueman/DeviceClass.py:189
 msgid "Keyboard"
-msgstr "Papan tik"
+msgstr "Keyboard"
 
 #. translators: device class
 #: blueman/DeviceClass.py:125
@@ -1118,11 +1116,11 @@ msgstr "gim"
 
 #: blueman/DeviceClass.py:169
 msgid "Generic Phone"
-msgstr "Telepon Generik"
+msgstr "Ponsel biasa"
 
 #: blueman/DeviceClass.py:170
 msgid "Generic Computer"
-msgstr "Komputer Generik"
+msgstr "Komputer Biasa"
 
 #: blueman/DeviceClass.py:171
 msgid "Generic Watch"
@@ -1153,38 +1151,28 @@ msgid "Generic Tag"
 msgstr "Tag Generik"
 
 #: blueman/DeviceClass.py:178
-#, fuzzy
-#| msgid "Group Network"
 msgid "Generic Keyring"
-msgstr "Kelompok Jaringan"
+msgstr "Keyring Generik"
 
 #: blueman/DeviceClass.py:179
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "Generic Media Player"
-msgstr "Transfer Berkas Bluetooth"
+msgstr "Media Player Generik"
 
 #: blueman/DeviceClass.py:180
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Barcode Scanner"
-msgstr "Sambung"
+msgstr "Pemindai Barcode Generik"
 
 #: blueman/DeviceClass.py:181
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Thermometer"
-msgstr "Sambung"
+msgstr "Termometer Generik"
 
 #: blueman/DeviceClass.py:182
 msgid "Thermometer: Ear"
 msgstr "Termometer: Telinga"
 
 #: blueman/DeviceClass.py:183
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "Generic Heart rate Sensor"
-msgstr "Transfer Berkas Bluetooth"
+msgstr "Sensor Detak Jantung Generik"
 
 #: blueman/DeviceClass.py:184
 msgid "Heart Rate Sensor: Heart Rate Belt"
@@ -1192,7 +1180,7 @@ msgstr "Sensor Denyut Jantung: Sabuk Detak Jantung"
 
 #: blueman/DeviceClass.py:185
 msgid "Generic Blood Pressure"
-msgstr ""
+msgstr "Tekanan Darah Generik"
 
 #: blueman/DeviceClass.py:186
 msgid "Blood Pressure: Arm"
@@ -2116,10 +2104,8 @@ msgid "Shows desktop notifications when devices get connected or disconnected."
 msgstr ""
 
 #: blueman/plugins/applet/ConnectionNotifier.py:21
-#, fuzzy
-#| msgid "Disconnecting..."
 msgid "Disconnected"
-msgstr "Memutuskan..."
+msgstr "Memutuskan"
 
 #: blueman/plugins/applet/NetUsage.py:154
 #: blueman/plugins/applet/NetUsage.py:265
@@ -2213,7 +2199,7 @@ msgstr "Item maksimal"
 
 #: blueman/plugins/applet/RecentConns.py:53
 msgid "The maximum number of items recent connections menu will display."
-msgstr "Jumlah maksimal pada menu koneksi yang akan ditampilkan"
+msgstr "Jumlah maksimal pada menu koneksi yang akan ditampilkan."
 
 #: blueman/plugins/applet/RecentConns.py:64
 msgid "Recent _Connections"
@@ -2431,10 +2417,9 @@ msgid "Adds disconnect menu items"
 msgstr ""
 
 #: blueman/plugins/applet/DisconnectItems.py:40
-#, fuzzy, python-format
-#| msgid "Disconnecting..."
+#, python-format
 msgid "Disconnect %s"
-msgstr "Memutuskan..."
+msgstr "Memutuskan %s"
 
 #: blueman/plugins/applet/DiscvManager.py:16
 msgid ""
@@ -2650,8 +2635,6 @@ msgid "Bluetooth Manager"
 msgstr "Bluetooth Aktif"
 
 #: data/thunar-sendto-blueman.desktop.in:5
-#, fuzzy
-#| msgid "Bluetooth Devices"
 msgid "Bluetooth Device"
 msgstr "Perangkat bluetooth"
 

@@ -27,13 +27,14 @@
 # Artyom <mccoal@hotmail.com>
 # asrelo <syrslava@yandex.ru>, 2020.
 # Andrey F. <firsan777@mail.ru>, 2020, 2021.
+# Даниил Морозюк <morozdan2003@gmail.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2021-10-03 11:06+0200\n"
-"PO-Revision-Date: 2021-06-07 01:32+0000\n"
-"Last-Translator: Чтабс <chtabs2k19@gmail.com>\n"
+"PO-Revision-Date: 2021-12-10 15:50+0000\n"
+"Last-Translator: Даниил Морозюк <morozdan2003@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/blueman/2-2/ru/"
 ">\n"
 "Language: ru\n"
@@ -43,7 +44,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.10-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -174,7 +175,7 @@ msgstr "<b>DHCP сервер не установлен</b>"
 
 #: data/ui/services-network.ui:199
 msgid "udhcpd"
-msgstr ""
+msgstr "udchpd"
 
 #: data/ui/services-network.ui:218
 msgid "<b>NAP Settings</b>"
@@ -1417,11 +1418,11 @@ msgstr "BNEP"
 
 #: blueman/Sdp.py:101
 msgid "UPnP/ESDP"
-msgstr ""
+msgstr "UPnP/ESDP"
 
 #: blueman/Sdp.py:102
 msgid "HIDP"
-msgstr ""
+msgstr "HIDP"
 
 #: blueman/Sdp.py:103
 msgid "Hardcopy Control Channel"
@@ -1437,15 +1438,15 @@ msgstr "Уведомление на бумажном носителе"
 
 #: blueman/Sdp.py:106
 msgid "AVCTP"
-msgstr ""
+msgstr "AVCTP"
 
 #: blueman/Sdp.py:107
 msgid "AVDTP"
-msgstr ""
+msgstr "AVDTP"
 
 #: blueman/Sdp.py:108
 msgid "CMTP"
-msgstr ""
+msgstr "CMTP"
 
 #: blueman/Sdp.py:109
 msgid "UDI_C-Plane"
@@ -1457,7 +1458,7 @@ msgstr "Многоканальный протокол адаптации (MCAP)"
 
 #: blueman/Sdp.py:112
 msgid "L2CAP"
-msgstr ""
+msgstr "L2CAP"
 
 #: blueman/Sdp.py:113
 msgid "ServiceDiscoveryServerServiceClassID"
@@ -1489,7 +1490,7 @@ msgstr ""
 
 #: blueman/Sdp.py:120
 msgid "OBEX Object Push"
-msgstr ""
+msgstr "Отправка объекта OBEX"
 
 #: blueman/Sdp.py:121
 msgid "OBEX File Transfer"
@@ -1497,7 +1498,7 @@ msgstr "Передача файлов через OBEX"
 
 #: blueman/Sdp.py:122
 msgid "IrMC Sync Command"
-msgstr ""
+msgstr "Команда синхронизации IrMC"
 
 #: blueman/Sdp.py:124
 msgid "Cordless Telephony"
@@ -1541,7 +1542,7 @@ msgstr "Аудио шлюз гарнитуры"
 
 #: blueman/Sdp.py:134
 msgid "WAP"
-msgstr ""
+msgstr "WAP"
 
 #: blueman/Sdp.py:135
 msgid "WAP Client"
