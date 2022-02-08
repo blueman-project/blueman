@@ -42,13 +42,15 @@
 # cth451 <cth451@gmail.com>, 2021.
 # Zhou Nan <zhounan@nfschina.com>, 2021.
 # Emily Ellis <e222d29f@outlook.com>, 2021.
+# Haoyu Qiu <timothyqiu32@gmail.com>, 2021.
+# jingxuan@nfschina.com <jingxuan@nfschina.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2021-10-03 11:06+0200\n"
-"PO-Revision-Date: 2021-10-10 06:47+0000\n"
-"Last-Translator: Eric <spice2wolf@gmail.com>\n"
+"PO-Revision-Date: 2021-11-20 02:50+0000\n"
+"Last-Translator: Emily Ellis <e222d29f@outlook.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "blueman/2-2/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -56,7 +58,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.9-dev\n"
+"X-Generator: Weblate 4.9.1\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -870,7 +872,7 @@ msgstr "周边设备"
 #. translators: device class
 #: blueman/DeviceClass.py:18 blueman/DeviceClass.py:276
 msgid "Imaging"
-msgstr ""
+msgstr "图像"
 
 #. translators: device class
 #: blueman/DeviceClass.py:20 blueman/DeviceClass.py:41
@@ -905,7 +907,7 @@ msgstr "手持设备"
 #. translators: device class
 #: blueman/DeviceClass.py:39
 msgid "Palm"
-msgstr ""
+msgstr "Palm 设备"
 
 #. translators: device class
 #: blueman/DeviceClass.py:48
@@ -940,32 +942,32 @@ msgstr "充分"
 #. translators: device class
 #: blueman/DeviceClass.py:63
 msgid "1-17 percent"
-msgstr ""
+msgstr "1-17％"
 
 #. translators: device class
 #: blueman/DeviceClass.py:65
 msgid "17-33 percent"
-msgstr ""
+msgstr "17-33％"
 
 #. translators: device class
 #: blueman/DeviceClass.py:67
 msgid "33-50 percent"
-msgstr ""
+msgstr "33-50％"
 
 #. translators: device class
 #: blueman/DeviceClass.py:69
 msgid "50-67 percent"
-msgstr ""
+msgstr "50-67％"
 
 #. translators: device class
 #: blueman/DeviceClass.py:71
 msgid "67-83 percent"
-msgstr ""
+msgstr "67-83％"
 
 #. translators: device class
 #: blueman/DeviceClass.py:73
 msgid "83-99 percent"
-msgstr ""
+msgstr "83-99％"
 
 #. translators: device class
 #: blueman/DeviceClass.py:75
@@ -1429,11 +1431,11 @@ msgstr "硬拷贝控制通道"
 
 #: blueman/Sdp.py:104
 msgid "Hardcopy Data Channel"
-msgstr ""
+msgstr "硬拷贝数据通道"
 
 #: blueman/Sdp.py:105
 msgid "Hardcopy Notification"
-msgstr ""
+msgstr "硬拷贝通知"
 
 #: blueman/Sdp.py:106
 msgid "AVCTP"
@@ -1449,7 +1451,7 @@ msgstr "CMTP"
 
 #: blueman/Sdp.py:109
 msgid "UDI_C-Plane"
-msgstr ""
+msgstr "UDI_C-Plane"
 
 #: blueman/Sdp.py:110 blueman/Sdp.py:111
 msgid "Multi-Channel Adaptation Protocol (MCAP)"
@@ -1469,7 +1471,7 @@ msgstr ""
 
 #: blueman/Sdp.py:115
 msgid "Public Browse Group"
-msgstr ""
+msgstr "公共浏览群组"
 
 #: blueman/Sdp.py:116
 msgid "Serial Port"
@@ -1485,7 +1487,7 @@ msgstr "拨号网络 (DUN)"
 
 #: blueman/Sdp.py:119
 msgid "IrMC Sync"
-msgstr ""
+msgstr "IrMC 同步"
 
 #: blueman/Sdp.py:120
 msgid "OBEX Object Push"
@@ -1497,7 +1499,7 @@ msgstr "OBEX 文件传输"
 
 #: blueman/Sdp.py:122
 msgid "IrMC Sync Command"
-msgstr ""
+msgstr "IrMC 同步命令"
 
 #: blueman/Sdp.py:124
 msgid "Cordless Telephony"
@@ -1525,7 +1527,7 @@ msgstr "遥控"
 
 #: blueman/Sdp.py:130
 msgid "Video Conferencing"
-msgstr ""
+msgstr "电视会议"
 
 #: blueman/Sdp.py:131
 msgid "Intercom"
@@ -1537,7 +1539,7 @@ msgstr "传真"
 
 #: blueman/Sdp.py:133
 msgid "Headset Audio Gateway"
-msgstr ""
+msgstr "耳机音频网关"
 
 #: blueman/Sdp.py:134
 msgid "WAP"
@@ -1561,11 +1563,11 @@ msgstr "网络群"
 
 #: blueman/Sdp.py:139
 msgid "DirectPrinting (BPP)"
-msgstr ""
+msgstr "直接打印（BPP）"
 
 #: blueman/Sdp.py:140
 msgid "ReferencePrinting (BPP)"
-msgstr ""
+msgstr "参考打印（BPP）"
 
 #: blueman/Sdp.py:141
 msgid "Imaging (BIP)"
@@ -1585,7 +1587,7 @@ msgstr ""
 
 #: blueman/Sdp.py:146
 msgid "Handsfree Audio Gateway"
-msgstr ""
+msgstr "免提音频网关"
 
 #: blueman/Sdp.py:147
 msgid "DirectPrintingReferenceObjectsService (BPP)"
@@ -1597,7 +1599,7 @@ msgstr ""
 
 #: blueman/Sdp.py:149
 msgid "Basic Printing (BPP)"
-msgstr ""
+msgstr "基本打印(BPP)"
 
 #: blueman/Sdp.py:150
 msgid "Printing Status (BPP)"
@@ -1625,7 +1627,7 @@ msgstr "普通 ISDN 接入 (CIP)"
 
 #: blueman/Sdp.py:156
 msgid "VideoConferencingGW (VCP)"
-msgstr ""
+msgstr "视频会议网关(VCP)"
 
 #: blueman/Sdp.py:157
 msgid "UDI-MT"
@@ -1641,7 +1643,7 @@ msgstr "音频/视频"
 
 #: blueman/Sdp.py:160
 msgid "SIM Access (SAP)"
-msgstr ""
+msgstr "智能卡接口(SAP)"
 
 #: blueman/Sdp.py:161
 msgid "Phonebook Access (PBAP) - PCE"

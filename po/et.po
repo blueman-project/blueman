@@ -11,13 +11,13 @@
 # veidu https://launchpad.net/~viljarveidenberg
 # Ivar Smolin <okul@linux.ee>, 2014-2015,2018
 # Rivo Zängov <eraser@eraser.ee>, 2018
-# Priit Jõerüüt <hwlate@joeruut.com>, 2021.
+# Priit Jõerüüt <hwlate@joeruut.com>, 2021, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2021-10-03 11:06+0200\n"
-"PO-Revision-Date: 2021-09-08 22:32+0000\n"
+"PO-Revision-Date: 2022-01-05 20:53+0000\n"
 "Last-Translator: Priit Jõerüüt <hwlate@joeruut.com>\n"
 "Language-Team: Estonian <https://hosted.weblate.org/projects/blueman/2-2/et/"
 ">\n"
@@ -26,7 +26,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.8.1-dev\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -467,6 +467,9 @@ msgid ""
 "with the content of this message to our </b>\n"
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgstr ""
+"<b>Plugina laadimisel tekkis viga. Palun saada arendajatele sell sõnumi "
+"sisu</b>\n"
+"<a href=\"http://github.com/blueman-project/blueman/issues\">siin lehel.</a>"
 
 #: blueman/Functions.py:71
 msgid "Bluetooth Turned Off"
@@ -514,7 +517,7 @@ msgstr "Peida _nimeta seadmed"
 
 #: blueman/gui/manager/ManagerMenu.py:88
 msgid "S_ort By"
-msgstr ""
+msgstr "S_ortimise alus"
 
 #: blueman/gui/manager/ManagerMenu.py:95
 msgid "_Name"
@@ -637,12 +640,12 @@ msgstr "Väga kõrge"
 #: blueman/gui/manager/ManagerDeviceList.py:553
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
-msgstr ""
+msgstr "<b>Saatevõimsuse tase: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:556
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
-msgstr ""
+msgstr "Saatevõimsuse tase: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:131
 msgid "Success!"
@@ -662,11 +665,11 @@ msgstr "Ühenduse katkestamine ei õnnestunud: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:204
 msgid "No audio endpoints registered"
-msgstr ""
+msgstr "Heliväljundeid pole registreeritud"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:207
 msgid "Input/output error"
-msgstr ""
+msgstr "Sisend-/väljundviga"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:209
 msgid "Device did not respond"
@@ -789,6 +792,9 @@ msgid ""
 "also unload <b>\"%(0)s\"</b>.\n"
 "Proceed?"
 msgstr ""
+"<b>„%(0)s“</b> plugin sõltub <b>%(1)s</b>'st. <b>%(1)s</b> kasutusest "
+"kõrvaldamine eemaldab ka <b>„%(0)s“</b>.\n"
+"Kas jätkame?"
 
 #: blueman/gui/applet/PluginDialog.py:318
 #, python-format
@@ -797,6 +803,9 @@ msgid ""
 "unload <b>%(0)s</b>.\n"
 "Proceed?"
 msgstr ""
+"<b>%(0)s</b> plugin on vastuolus <b>%(1)s</b>'ga. <b>%(1)s</b> laadimine "
+"kõrvaldab kasutusest <b>%(0)s</b>.\n"
+"Kas jätkame?"
 
 #: blueman/gui/DeviceSelectorWidget.py:39
 msgid "Adapter selection"
@@ -809,7 +818,7 @@ msgstr "Otsin…"
 #. translators: device class
 #: blueman/DeviceClass.py:6
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Muud seadmed"
 
 #. translators: device class
 #: blueman/DeviceClass.py:8
@@ -829,7 +838,7 @@ msgstr "Juurdepääsupunkt"
 #. translators: device class
 #: blueman/DeviceClass.py:14
 msgid "Audio/video"
-msgstr ""
+msgstr "Audio-/videoseade"
 
 #. translators: device class
 #: blueman/DeviceClass.py:16
@@ -874,17 +883,17 @@ msgstr "Pihuarvuti"
 #. translators: device class
 #: blueman/DeviceClass.py:39
 msgid "Palm"
-msgstr ""
+msgstr "Palm"
 
 #. translators: device class
 #: blueman/DeviceClass.py:48
 msgid "Cellular"
-msgstr "Mobiil"
+msgstr "Mobiiltelefon"
 
 #. translators: device class
 #: blueman/DeviceClass.py:50
 msgid "Cordless"
-msgstr "Juhtmeta"
+msgstr "Juhtmeta telefon"
 
 #. translators: device class
 #: blueman/DeviceClass.py:52
@@ -904,37 +913,37 @@ msgstr "ISDN"
 #. translators: device class
 #: blueman/DeviceClass.py:61
 msgid "Fully"
-msgstr ""
+msgstr "Täielikult"
 
 #. translators: device class
 #: blueman/DeviceClass.py:63
 msgid "1-17 percent"
-msgstr ""
+msgstr "1-17 protsenti"
 
 #. translators: device class
 #: blueman/DeviceClass.py:65
 msgid "17-33 percent"
-msgstr ""
+msgstr "17-33 protsenti"
 
 #. translators: device class
 #: blueman/DeviceClass.py:67
 msgid "33-50 percent"
-msgstr ""
+msgstr "33-50 protsenti"
 
 #. translators: device class
 #: blueman/DeviceClass.py:69
 msgid "50-67 percent"
-msgstr ""
+msgstr "50-67 protsenti"
 
 #. translators: device class
 #: blueman/DeviceClass.py:71
 msgid "67-83 percent"
-msgstr ""
+msgstr "67-83 protsenti"
 
 #. translators: device class
 #: blueman/DeviceClass.py:73
 msgid "83-99 percent"
-msgstr ""
+msgstr "83-99 protsenti"
 
 #. translators: device class
 #: blueman/DeviceClass.py:75
@@ -999,7 +1008,7 @@ msgstr "Videokaamera"
 #. translators: device class
 #: blueman/DeviceClass.py:106
 msgid "Camcorder"
-msgstr "Videokaamera"
+msgstr "Kompaktne videokaamera"
 
 #. translators: device class
 #: blueman/DeviceClass.py:108
@@ -1009,7 +1018,7 @@ msgstr "Videomonitor"
 #. translators: device class
 #: blueman/DeviceClass.py:110
 msgid "Video display and loudspeaker"
-msgstr ""
+msgstr "Videoekraan ja valjuhääldi"
 
 #. translators: device class
 #: blueman/DeviceClass.py:112
@@ -1034,12 +1043,12 @@ msgstr "Kursoriseade"
 #. translators: device class
 #: blueman/DeviceClass.py:127
 msgid "Combo"
-msgstr ""
+msgstr "Kombineeritud seade"
 
 #. translators: device class
 #: blueman/DeviceClass.py:132
 msgid "Display"
-msgstr ""
+msgstr "Ekraan"
 
 #. translators: device class
 #: blueman/DeviceClass.py:134
@@ -1064,7 +1073,7 @@ msgstr "Käekell"
 #. translators: device class
 #: blueman/DeviceClass.py:145
 msgid "Pager"
-msgstr ""
+msgstr "Piipar"
 
 #. translators: device class
 #: blueman/DeviceClass.py:147
@@ -1120,7 +1129,7 @@ msgstr "Üldine käekell"
 
 #: blueman/DeviceClass.py:172
 msgid "Watch: Sports Watch"
-msgstr ""
+msgstr "Kellad: spordikell"
 
 #: blueman/DeviceClass.py:173
 msgid "Generic Clock"
@@ -1140,7 +1149,7 @@ msgstr "Üldised prillid"
 
 #: blueman/DeviceClass.py:177
 msgid "Generic Tag"
-msgstr "Üldine silt"
+msgstr "Üldine nutimärgis"
 
 #: blueman/DeviceClass.py:178
 msgid "Generic Keyring"
@@ -1204,15 +1213,15 @@ msgstr ""
 
 #: blueman/DeviceClass.py:194
 msgid "Card Reader"
-msgstr ""
+msgstr "Kaardilugeja"
 
 #: blueman/DeviceClass.py:195
 msgid "Digital Pen"
-msgstr ""
+msgstr "Digitaalne pliiats"
 
 #: blueman/DeviceClass.py:196
 msgid "Barcode Scanner"
-msgstr ""
+msgstr "Vöötkoodi lugeja"
 
 #: blueman/DeviceClass.py:197
 msgid "Generic Glucose Meter"
@@ -1269,11 +1278,11 @@ msgstr ""
 
 #: blueman/DeviceClass.py:211
 msgid "Wrist Worn"
-msgstr ""
+msgstr "Randmeseade"
 
 #: blueman/DeviceClass.py:212
 msgid "Generic: Weight Scale"
-msgstr ""
+msgstr "Üldine: kaal"
 
 #: blueman/DeviceClass.py:213
 msgid "Generic Personal Mobility Device"
@@ -1301,28 +1310,28 @@ msgstr ""
 
 #: blueman/DeviceClass.py:219
 msgid "Insulin Pump, patch pump"
-msgstr ""
+msgstr "Insuliinipump, plaastripump"
 
 #: blueman/DeviceClass.py:220
 msgid "Insulin Pen"
-msgstr ""
+msgstr "Insuliinipliiats"
 
 #: blueman/DeviceClass.py:221
 msgid "Generic Medication Delivery"
-msgstr ""
+msgstr "Üldine ravimite annustamine"
 
 #. 55 - 80 reserved
 #: blueman/DeviceClass.py:223
 msgid "Generic: Outdoor Sports Activity"
-msgstr ""
+msgstr "Üldine: sport välitingimustes"
 
 #: blueman/DeviceClass.py:224
 msgid "Location Display Device"
-msgstr ""
+msgstr "Ekraan asukoha näitamiseks"
 
 #: blueman/DeviceClass.py:225
 msgid "Location and Navigation Display Device"
-msgstr ""
+msgstr "Ekraan asukoha näitamiseks ja teekonna juhatamiseks"
 
 #: blueman/DeviceClass.py:226
 msgid "Location Pod"
@@ -1470,7 +1479,7 @@ msgstr ""
 
 #: blueman/Sdp.py:124
 msgid "Cordless Telephony"
-msgstr ""
+msgstr "Traadita telefon"
 
 #: blueman/Sdp.py:125
 msgid "Audio Source"
@@ -1490,11 +1499,11 @@ msgstr ""
 
 #: blueman/Sdp.py:129
 msgid "Remote Control"
-msgstr ""
+msgstr "Kaugjuhtimispult"
 
 #: blueman/Sdp.py:130
 msgid "Video Conferencing"
-msgstr ""
+msgstr "Videokonverentsiseade"
 
 #: blueman/Sdp.py:131
 msgid "Intercom"
@@ -1502,7 +1511,7 @@ msgstr ""
 
 #: blueman/Sdp.py:132
 msgid "Fax"
-msgstr ""
+msgstr "Faks"
 
 #: blueman/Sdp.py:133
 msgid "Headset Audio Gateway"
@@ -1514,7 +1523,7 @@ msgstr ""
 
 #: blueman/Sdp.py:135
 msgid "WAP Client"
-msgstr ""
+msgstr "WAP klient"
 
 #: blueman/Sdp.py:136
 msgid "PANU"
@@ -1633,10 +1642,8 @@ msgid "Message Notification Server"
 msgstr ""
 
 #: blueman/Sdp.py:167
-#, fuzzy
-#| msgid "Network Access Point (NAP)"
 msgid "Message Access Profile (MAP)"
-msgstr "Võrgupääsukoht (NAP)"
+msgstr "Sõnumiprofiil (MAP)"
 
 #: blueman/Sdp.py:168
 msgid "GNSS"
@@ -1644,19 +1651,19 @@ msgstr ""
 
 #: blueman/Sdp.py:169
 msgid "GNSS Server"
-msgstr ""
+msgstr "GNSS server"
 
 #: blueman/Sdp.py:170
 msgid "3D Display"
-msgstr ""
+msgstr "3D ekraan"
 
 #: blueman/Sdp.py:171
 msgid "3D Glasses"
-msgstr ""
+msgstr "3D prillid"
 
 #: blueman/Sdp.py:172
 msgid "3D Synchronization (3DSP)"
-msgstr ""
+msgstr "3D sünkroniseerimine (3DSP)"
 
 #: blueman/Sdp.py:173
 msgid "Multi-Profile Specification (MPS) Profile"
@@ -1683,16 +1690,12 @@ msgid "PnP Information"
 msgstr ""
 
 #: blueman/Sdp.py:179
-#, fuzzy
-#| msgid "Group Network"
 msgid "Generic Networking"
-msgstr "Gruppvõrk"
+msgstr "Üldine võrgundus"
 
 #: blueman/Sdp.py:180
-#, fuzzy
-#| msgid "Bluetooth File Transfer"
 msgid "Generic FileTransfer"
-msgstr "Bluetoothi failiülekanne"
+msgstr "Üldine failiedastus"
 
 #: blueman/Sdp.py:181
 msgid "Generic Audio"
@@ -1703,16 +1706,12 @@ msgid "Generic Telephony"
 msgstr ""
 
 #: blueman/Sdp.py:183
-#, fuzzy
-#| msgid "Audio Source"
 msgid "Video Source"
-msgstr "Heli vastuvõtmine"
+msgstr "Videoallikas"
 
 #: blueman/Sdp.py:184
-#, fuzzy
-#| msgid "Audio Sink"
 msgid "Video Sink"
-msgstr "Heli saatmine"
+msgstr "Video saatmine"
 
 #: blueman/Sdp.py:185
 msgid "Video Distribution"
@@ -1723,10 +1722,8 @@ msgid "HDP"
 msgstr ""
 
 #: blueman/Sdp.py:187
-#, fuzzy
-#| msgid "Audio Source"
 msgid "HDP Source"
-msgstr "Heli vastuvõtmine"
+msgstr "HPD allikas"
 
 #: blueman/Sdp.py:188
 msgid "HDP Sink"
@@ -1753,10 +1750,8 @@ msgid "Tx Power"
 msgstr ""
 
 #: blueman/Sdp.py:194
-#, fuzzy
-#| msgid "Rename device"
 msgid "Current Time Service"
-msgstr "Muuda seadme nime"
+msgstr "Ajateenus"
 
 #: blueman/Sdp.py:195
 msgid "Reference Time Update Service"
@@ -1787,10 +1782,8 @@ msgid "Phone Alert Status Service"
 msgstr ""
 
 #: blueman/Sdp.py:202
-#, fuzzy
-#| msgid "Local Services"
 msgid "Battery Service"
-msgstr "Kohalikud teenused"
+msgstr "Akuteenus"
 
 #: blueman/Sdp.py:203
 msgid "Blood Pressure"
@@ -1877,22 +1870,16 @@ msgid "Object Transfer"
 msgstr "Objektide ülekanne"
 
 #: blueman/Sdp.py:224
-#, fuzzy
-#| msgid "applet"
 msgid "AppleAgent"
-msgstr "rakend"
+msgstr "AppleAgent"
 
 #: blueman/Sdp.py:225
-#, fuzzy
-#| msgid "Local Services"
 msgid "Primary Service"
-msgstr "Kohalikud teenused"
+msgstr "Esmane teenus"
 
 #: blueman/Sdp.py:226
-#, fuzzy
-#| msgid "Search for nearby devices"
 msgid "Secondary Service"
-msgstr "Lähedalasuvate seadmete otsimine"
+msgstr "Teisene teenus"
 
 #: blueman/Sdp.py:227
 msgid "Include"
@@ -1903,10 +1890,8 @@ msgid "Characteristic Declaration"
 msgstr ""
 
 #: blueman/Sdp.py:229
-#, fuzzy
-#| msgid "Device Manager"
 msgid "Device Name"
-msgstr "Seadmehaldur"
+msgstr "Seadme nimi"
 
 #: blueman/Sdp.py:230
 msgid "Appearance"
@@ -1917,20 +1902,16 @@ msgid "Peripheral Privacy Flag"
 msgstr ""
 
 #: blueman/Sdp.py:232
-#, fuzzy
-#| msgid "Recent _Connections"
 msgid "Reconnection Address"
-msgstr "_Viimased ühendused"
+msgstr "Viimased aadressid"
 
 #: blueman/Sdp.py:233
 msgid "Peripheral Preferred Connection Parameters"
 msgstr ""
 
 #: blueman/Sdp.py:234
-#, fuzzy
-#| msgid "Device Manager"
 msgid "Service Changed"
-msgstr "Seadmehaldur"
+msgstr "Teenus on muutunud"
 
 #: blueman/Sdp.py:235
 msgid "System ID"
@@ -1997,10 +1978,8 @@ msgid "External Report Reference"
 msgstr ""
 
 #: blueman/Sdp.py:251
-#, fuzzy
-#| msgid "Adapter Preferences"
 msgid "Report Reference"
-msgstr "Adapteri eelistused"
+msgstr "Aruande viide"
 
 #: blueman/Sdp.py:378
 msgid "Audio and input profiles"
@@ -2059,6 +2038,8 @@ msgstr "Määramata"
 msgid ""
 "Tries to auto-connect to configurable services on start and every 60 seconds."
 msgstr ""
+"Käivitamisel proovi iga 60 sekundi järel automaatselt luua ühendust "
+"seadistatavate teenustega."
 
 #. https://github.com/python/mypy/issues/2608
 #: blueman/plugins/applet/AutoConnect.py:50
@@ -2374,11 +2355,11 @@ msgstr "Kasutab olekuikooni näitamiseks libappindicator teeki"
 msgid ""
 "Shows desktop notifications with battery percentage when devices get "
 "connected."
-msgstr ""
+msgstr "Seadmete ühendamisel näita aku täituvuse kohta töölauateavitusi."
 
 #: blueman/plugins/applet/DisconnectItems.py:14
 msgid "Adds disconnect menu items"
-msgstr ""
+msgstr "Lisa ühenduse katkestamiseks menüükirje"
 
 #: blueman/plugins/applet/DisconnectItems.py:40
 #, python-format
@@ -2395,11 +2376,11 @@ msgstr ""
 
 #: blueman/plugins/applet/DiscvManager.py:26
 msgid "Discoverable timeout"
-msgstr ""
+msgstr "Leitavuse aegumine"
 
 #: blueman/plugins/applet/DiscvManager.py:27
 msgid "Amount of time in seconds discoverable mode will last"
-msgstr ""
+msgstr "Aeg sekundites, mil seade on leitav"
 
 #: blueman/plugins/applet/DiscvManager.py:35
 #: blueman/plugins/applet/DiscvManager.py:123
@@ -2413,7 +2394,7 @@ msgstr "Vaikimisi adapteri ajutiselt avastatavaks tegemine"
 #: blueman/plugins/applet/DiscvManager.py:60
 #, python-format
 msgid "Discoverable… %ss"
-msgstr ""
+msgstr "Leitav… %ss"
 
 #: blueman/plugins/applet/Menu.py:113
 msgid ""
@@ -2520,6 +2501,8 @@ msgid ""
 "Temporarily suspends the screensaver when a bluetooth game controller is "
 "connected."
 msgstr ""
+"Kui bluetoothi-põhine mängupult on ühendatud, siis ajutiselt lülita "
+"ekraanisäästja välja."
 
 #: blueman/plugins/services/Network.py:25
 msgid "Network"
