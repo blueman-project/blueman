@@ -17,7 +17,7 @@ from gi.repository import Gtk
 def send_note_cb(dialog: Gtk.Dialog, response_id: int, device_address: str, text_view: Gtk.Entry) -> None:
     text = text_view.get_buffer().props.text
     dialog.destroy()
-    if response_id == Gtk.ResponseType.CANCEL:
+    if response_id == Gtk.ResponseType.REJECT:
         return
 
     date = datetime.datetime.now().strftime('%Y%m%dT%H%M00')
