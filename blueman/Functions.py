@@ -26,7 +26,7 @@ from gettext import gettext as _
 import logging
 import logging.handlers
 import argparse
-from ctypes import cdll, byref, create_string_buffer
+from ctypes import cdll, byref, create_string_buffer, sizeof, c_long
 import traceback
 import fcntl
 import struct
@@ -335,7 +335,7 @@ def get_local_interfaces() -> Dict[str, Tuple[str, Optional[str]]]:
             namestr = names.tobytes()
 
             ip_dict = {}
-            for i in range(0, max_bytes_out, 40):
+            for i in range(0, max_bytes_out, 24 + 2 * sizeof(c_long)):
                 name = namestr[i: i + 16].split(b'\0', 1)[0].decode('utf-8')
                 ipaddr = socket.inet_ntoa(namestr[i + 20: i + 24])
                 mask = _netmask_for_ifacename(name, sock)
