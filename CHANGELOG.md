@@ -10,6 +10,10 @@
 
 * Replace AppIndicator with DBus StatusNotifierItem
 
+### Bugs fixed
+
+* blueman-services did not start on 32 bit systems
+
 ## 2.2.4
 
 ### Changes
