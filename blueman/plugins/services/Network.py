@@ -31,7 +31,7 @@ class Network(ServicePlugin):
 
         container.pack_start(self.widget, True, True, 0)
 
-        self.interfaces: List[Tuple[str, ipaddress.IPv4Interface]] = []
+        self.interfaces: List[Tuple[str, Union[ipaddress.IPv4Interface, ipaddress.IPv6Interface]]] = []
         netifs = get_local_interfaces()
         for iface in netifs:
             if iface != "lo" and iface != "pan1":
