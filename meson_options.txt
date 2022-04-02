@@ -4,5 +4,6 @@ option('policykit', type: 'boolean', value: true, description: 'Enable policykit
 option('pulseaudio', type: 'boolean', value: true, description: 'Enable PulseAudio support')
 option('systemdsystemunitdir', type: 'string', description: 'Path to systemd system unit dir relative to ${prefix}')
 option('systemduserunitdir', type: 'string', description: 'Path to systemd user unit dir relative to ${prefix}')
+option('pythoninstalldir', type: 'string', description: 'Path to python site-packages dir relative to ${prefix}')
 option('sendto-plugins', type: 'array', choices: ['Caja', 'Nemo', 'Nautilus'], value: ['Caja', 'Nemo', 'Nautilus'], description: 'Install sendto plugins for various filemanagers')
 option('thunar-sendto', type: 'boolean', value: true, description: 'Install Thunar sendto plugin')

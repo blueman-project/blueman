@@ -26,7 +26,12 @@ pkgdatadir = join_paths([prefix, get_option('datadir'), package_name])
 bindir = join_paths([prefix, get_option('bindir')])
 libexecdir = join_paths([prefix, get_option('libexecdir')])
 schemadir = join_paths([datadir, 'glib-2.0', 'schemas'])
-pythondir = join_paths([prefix, python.sysconfig_path('purelib')])
+pythoninstalldir = get_option('pythoninstalldir')
+if pythoninstalldir != ''
+    pythondir = join_paths([prefix, pythoninstalldir])
+else
+    pythondir = join_paths([prefix, python.sysconfig_path('purelib')])
+endif
 
 if get_option('policykit')
     have_polkit = 'True'
