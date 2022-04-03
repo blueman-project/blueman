@@ -6,7 +6,7 @@ project(
     default_options: 'b_lundef=false'
 )
 
-package_name = 'blueman'
+package_name = meson.project_name()
 
 # Import needed modules
 python = import('python')
