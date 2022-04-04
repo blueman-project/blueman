@@ -25,7 +25,7 @@ datadir = join_paths([prefix, get_option('datadir')])
 pkgdatadir = join_paths([prefix, get_option('datadir'), package_name])
 bindir = join_paths([prefix, get_option('bindir')])
 libexecdir = join_paths([prefix, get_option('libexecdir')])
-schemadir = join_paths([datadir, 'glib-2.0', 'schemas'])
+schemadir = join_paths(['share', 'glib-2.0', 'schemas'])
 pythondir = pyinstall.get_install_dir()
 
 if get_option('policykit')
