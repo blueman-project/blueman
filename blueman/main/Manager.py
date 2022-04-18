@@ -1,4 +1,5 @@
 import logging
+import signal
 from gettext import gettext as _
 from typing import Optional, Any, Tuple
 
@@ -31,6 +32,14 @@ from gi.repository import Gtk, Gio, Gdk, GLib
 class Blueman(Gtk.Application):
     def __init__(self) -> None:
         super().__init__(application_id="org.blueman.Manager")
+
+        def do_quit(_: object) -> bool:
+            self.quit()
+            return False
+
+        s = GLib.unix_signal_source_new(signal.SIGINT)
+        s.set_callback(do_quit)
+        s.attach()
 
     window: Optional[Gtk.ApplicationWindow]
 
