@@ -53,6 +53,9 @@ def show_about_dialog(app_name: str, run: bool = True, parent: Optional[Gtk.Wind
                       ) -> Optional[Gtk.AboutDialog]:
     about = Gtk.AboutDialog()
     about.set_transient_for(parent)
+    about.set_modal(True)
+    # on KDE it shows a close button which is unconnected.
+    about.connect("response", lambda x, y: about.destroy())
     about.set_name(app_name)
     about.set_version(VERSION)
     about.set_copyright('Copyright © 2008 Valmantas Palikša\n'
@@ -69,8 +72,7 @@ def show_about_dialog(app_name: str, run: bool = True, parent: Optional[Gtk.Wind
                        f'{WEBSITE}/graphs/contributors'
                        ])
     if run:
-        about.run()
-        about.destroy()
+        about.show()
         return None
     else:
         return about
