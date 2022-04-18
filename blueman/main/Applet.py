@@ -8,14 +8,23 @@ import blueman.plugins.applet
 from blueman.main.PluginManager import PersistentPluginManager
 from blueman.main.DbusService import DbusService
 from blueman.plugins.AppletPlugin import AppletPlugin
-from gi.repository import Gio
+from gi.repository import Gio, GLib
 import logging
+import signal
 
 
 class BluemanApplet(Gio.Application):
     def __init__(self) -> None:
         super().__init__(application_id="org.blueman.Applet", flags=Gio.ApplicationFlags.FLAGS_NONE)
         setup_icon_path()
+
+        def do_quit(_: object) -> bool:
+            self.quit()
+            return False
+
+        s = GLib.unix_signal_source_new(signal.SIGINT)
+        s.set_callback(do_quit)
+        s.attach()
 
         self.plugin_run_state_changed = False
         self.manager_state = False

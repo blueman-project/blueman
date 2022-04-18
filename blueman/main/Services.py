@@ -2,6 +2,7 @@ from gettext import gettext as _
 import os
 import logging
 import importlib
+import signal
 from typing import List, Optional
 
 from blueman.gui.GenericList import GenericList, ListDataDict
@@ -11,13 +12,21 @@ from blueman.main.Config import Config
 
 import gi
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+from gi.repository import Gtk, GLib
 
 
 class BluemanServices(Gtk.Application):
     def __init__(self) -> None:
         super().__init__(application_id="org.blueman.Services")
         self.window: Optional[Gtk.Window] = None
+
+        def do_quit(_: object) -> bool:
+            self.quit()
+            return False
+
+        s = GLib.unix_signal_source_new(signal.SIGINT)
+        s.set_callback(do_quit)
+        s.attach()
 
     def do_activate(self) -> None:
         if not self.window:

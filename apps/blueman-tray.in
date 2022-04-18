@@ -15,9 +15,6 @@ gettext.textdomain("@GETTEXT_PACKAGE@")
 from blueman.Functions import set_proc_title, create_parser, create_logger
 from blueman.main.Tray import BluemanTray
 
-# Workaround introspection bug, gnome bug 622084
-signal.signal(signal.SIGINT, signal.SIG_DFL)
-signal.signal(signal.SIGTERM, signal.SIG_DFL)
 
 if __name__ == '__main__':
     parser = create_parser()

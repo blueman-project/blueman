@@ -2,6 +2,7 @@ from gettext import gettext as _
 import os.path
 import logging
 import gettext
+import signal
 from typing import Dict, TYPE_CHECKING, Optional, Any
 
 from blueman.Functions import *
@@ -13,7 +14,7 @@ import gi
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
 gi.require_version("Pango", "1.0")
-from gi.repository import Gtk, Gio, Gdk
+from gi.repository import Gtk, Gio, Gdk, GLib
 from gi.repository import Pango
 
 
@@ -32,6 +33,14 @@ if TYPE_CHECKING:
 class BluemanAdapters(Gtk.Application):
     def __init__(self, selected_hci_dev: Optional[str], socket_id: Optional[int]) -> None:
         super().__init__(application_id="org.blueman.Adapters")
+
+        def do_quit(_: object) -> bool:
+            self.quit()
+            return False
+
+        s = GLib.unix_signal_source_new(signal.SIGINT)
+        s.set_callback(do_quit)
+        s.attach()
 
         self.socket_id = socket_id
         self.selected_hci_dev = selected_hci_dev
