@@ -14,9 +14,9 @@ class ConnectionNotifier(AppletPlugin):
 
     def on_device_property_changed(self, path: str, key: str, value: Any) -> None:
         if key == "Connected":
-            device = Device(obj_path=path)
-            if value and "Battery" in self.parent.Plugins.get_loaded() and Battery.applicable(device):
+            if value and "Battery" in self.parent.Plugins.get_loaded() and Battery.applicable(path):
                 return
 
+            device = Device(obj_path=path)
             Notification(device["Alias"], _("Connected") if value else _("Disconnected"),
                          icon_name=device["Icon"]).show()

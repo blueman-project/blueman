@@ -7,13 +7,14 @@ import os
 
 from blueman.bluez.Battery import Battery
 from blueman.bluez.Device import Device
+from blueman.bluez.errors import BluezDBusException
 from blueman.gui.DeviceList import DeviceList
 from blueman.DeviceClass import get_minor_class, get_major_class, gatt_appearance_to_name
 from blueman.gui.GenericList import ListDataDict
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.Constants import PIXMAP_PATH
 from blueman.Functions import launch
-from blueman.Sdp import ServiceUUID, OBEX_OBJPUSH_SVCLASS_ID, BATTERY_SERVICE_SVCLASS_ID
+from blueman.Sdp import ServiceUUID, OBEX_OBJPUSH_SVCLASS_ID
 from blueman.gui.GtkAnimation import TreeRowFade, CellFade, AnimBase
 from blueman.main.Config import Config
 from _blueman import ConnInfoReadError, conn_info
@@ -424,9 +425,10 @@ class ManagerDeviceList(DeviceList):
 
         bars = {}
 
-        if device["ServicesResolved"] and any(ServiceUUID(uuid).short_uuid == BATTERY_SERVICE_SVCLASS_ID
-                                              for uuid in device["UUIDs"]):
+        try:
             bars["battery"] = Battery(obj_path=device.get_object_path())["Percentage"]
+        except BluezDBusException:
+            pass
 
         # cinfo init may fail for bluetooth devices version 4 and up
         # FIXME Workaround is horrible and we should show something better

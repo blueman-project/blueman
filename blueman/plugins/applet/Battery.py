@@ -1,9 +1,9 @@
 from gettext import gettext as _
 from typing import Any
 
-from blueman.Sdp import ServiceUUID, BATTERY_SERVICE_SVCLASS_ID
 from blueman.bluez.Battery import Battery as BluezBattery
 from blueman.bluez.Device import Device
+from blueman.bluez.errors import BluezDBusException
 from blueman.gui.Notification import Notification
 from blueman.plugins.AppletPlugin import AppletPlugin
 
@@ -15,11 +15,14 @@ class Battery(AppletPlugin):
 
     def on_device_property_changed(self, path: str, key: str, value: Any) -> None:
         if key == "ServicesResolved" and value:
-            device = Device(obj_path=path)
-            if self.applicable(device):
+            if self.applicable(path):
                 text = "%d%%" % BluezBattery(obj_path=path)["Percentage"]
-                Notification(device["Alias"], text, icon_name="battery").show()
+                Notification(Device(obj_path=path)["Alias"], text, icon_name="battery").show()
 
     @staticmethod
-    def applicable(device: Device) -> bool:
-        return any(ServiceUUID(uuid).short_uuid == BATTERY_SERVICE_SVCLASS_ID for uuid in device["UUIDs"])
+    def applicable(obj_path: str) -> bool:
+        try:
+            BluezBattery(obj_path=obj_path)["Percentage"]
+            return True
+        except BluezDBusException:
+            return False
