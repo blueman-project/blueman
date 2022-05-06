@@ -2396,7 +2396,7 @@ class TreeModel(GObject.GInterface):
 
     def __getitem__(self, key: typing.Union[TreePath, int, str]) -> TreeModelRow: ...
 
-    def filter_new(self, root: typing.Optional[TreePath] = None) -> TreeModel: ...
+    def filter_new(self, root: typing.Optional[TreePath] = None) -> TreeModelFilter: ...
 
     def foreach(self, func: TreeModelForeachFunc, *user_data: typing.Optional[builtins.object]) -> None: ...
 
@@ -2494,7 +2494,7 @@ class TreeSelection(GObject.Object):
 
     def get_mode(self) -> SelectionMode: ...
 
-    def get_selected(self) -> typing.Tuple[TreeModel, typing.Optional[TreeIter]]: ...
+    def get_selected(self) -> typing.Tuple[TreeModelFilter, typing.Optional[TreeIter]]: ...
 
     def get_selected_rows(self) -> typing.Tuple[TreeModel, typing.Sequence[TreePath]]: ...
 
@@ -12366,7 +12366,7 @@ TextCharPredicate = typing.Callable[[builtins.str, typing.Optional[builtins.obje
 TextTagTableForeach = typing.Callable[[TextTag, typing.Optional[builtins.object]], None]
 TickCallback = typing.Callable[[Widget, Gdk.FrameClock, typing.Optional[builtins.object]], builtins.bool]
 TranslateFunc = typing.Callable[[builtins.str, typing.Optional[builtins.object]], builtins.str]
-TreeCellDataFunc = typing.Callable[[TreeViewColumn, CellRenderer, TreeModel, TreeIter, typing.Optional[builtins.object]], None]
+TreeCellDataFunc = typing.Callable[[TreeViewColumn, CellRenderer, TreeModelFilter, TreeIter, typing.Optional[builtins.object]], None]
 TreeDestroyCountFunc = typing.Callable[[TreeView, TreePath, builtins.int, typing.Optional[builtins.object]], None]
 TreeIterCompareFunc = typing.Callable[[TreeModel, TreeIter, TreeIter, typing.Optional[builtins.object]], builtins.int]
 TreeModelFilterModifyFunc = typing.Callable[[TreeModel, TreeIter, builtins.int, typing.Optional[builtins.object]], GObject.Value]
