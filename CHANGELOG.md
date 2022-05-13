@@ -9,6 +9,9 @@
 ### Changes
 
 * Replace AppIndicator with DBus StatusNotifierItem
+* Use a GtkTreeModelFilter to show/hide unnamed devices
+* Replace sigint hack with GLib to catch it
+* Port meson from deprecated python3 module
 
 ### Bugs fixed
 
