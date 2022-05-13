@@ -6,6 +6,8 @@ iconsdir = $(themedir)/$(size)/$(context)
 
 icons_DATA =			\
 	blueman-device.svg	\
-	blueman-serial.svg
+	blueman-device-symbolic.svg	\
+	blueman-serial.svg	\
+	blueman-serial-symbolic.svg
 
 EXTRA_DIST = $(icons_DATA)
