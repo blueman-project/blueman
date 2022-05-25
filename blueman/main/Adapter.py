@@ -92,9 +92,10 @@ class BluemanAdapters(Gtk.Application):
             return
 
         if not self.window:
-            self.window = Gtk.ApplicationWindow(application=self, title=_("Bluetooth Adapters"), border_width=5,
+            self.window = Gtk.ApplicationWindow(application=self, title=_("Bluetooth Adapters"), border_width=10,
                                                 resizable=False, icon_name="blueman-device", name="BluemanAdapters")
             self.window.add(self.notebook)
+            self.window.set_position(Gtk.WindowPosition.CENTER)
 
         self.window.present_with_time(Gtk.get_current_event_time())
 
