@@ -31,7 +31,9 @@ class BluemanServices(Gtk.Application):
     def do_activate(self) -> None:
         if not self.window:
             self.window = Gtk.ApplicationWindow(application=self, title=_("Local Services"), icon_name="blueman",
-                                                border_width=5)
+                                                border_width=10)
+
+            self.window.set_position(Gtk.WindowPosition.CENTER)
 
             grid = Gtk.Grid(orientation=Gtk.Orientation.VERTICAL, visible=True, row_spacing=10)
             self.window.add(grid)

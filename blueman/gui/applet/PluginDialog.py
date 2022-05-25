@@ -95,12 +95,14 @@ class PluginDialog(Gtk.Window):
             title=_("Plugins"),
             icon_name="blueman",
             name="PluginDialog",
-            border_width=6,
+            border_width=10,
             default_width=490,
             default_height=380,
             resizable=False,
             visible=False
         )
+
+        self.set_position(Gtk.WindowPosition.CENTER)
 
         self.applet = applet
 
