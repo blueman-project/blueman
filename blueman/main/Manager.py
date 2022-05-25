@@ -71,9 +71,10 @@ class Blueman(Gtk.Application):
             self.window.connect("configure-event", self._on_configure)
 
             self.builder = Builder("manager-main.ui")
+            box = self.builder.get_widget("box", Gtk.Box)
+            self.window.add(box)
 
             grid = self.builder.get_widget("grid", Gtk.Grid)
-            self.window.add(grid)
 
             toolbar = self.builder.get_widget("toolbar", Gtk.Toolbar)
             statusbar = self.builder.get_widget("statusbar", Gtk.Box)
@@ -82,7 +83,7 @@ class Blueman(Gtk.Application):
             self.Plugins.load_plugin()
 
             area = MessageArea()
-            grid.attach(area, 0, 3, 1, 1)
+            grid.attach(area, 0, 1, 1, 1)
 
             self._applethandlerid: Optional[int] = None
 
