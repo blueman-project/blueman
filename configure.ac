@@ -306,6 +306,7 @@ data/icons/hicolor/256x256/status/Makefile
 data/icons/hicolor/256x256/apps/Makefile
 data/icons/hicolor/scalable/Makefile
 data/icons/hicolor/scalable/devices/Makefile
+data/icons/hicolor/scalable/emblems/Makefile
 data/icons/hicolor/scalable/actions/Makefile
 data/icons/hicolor/scalable/status/Makefile
 data/icons/hicolor/scalable/apps/Makefile
