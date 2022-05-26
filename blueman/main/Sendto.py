@@ -39,7 +39,7 @@ class Sender(Gtk.Dialog):
             type_hint=Gdk.WindowTypeHint.DIALOG
         )
 
-        self.b_cancel = self.add_button("_Stop", Gtk.ResponseType.CLOSE)
+        self.b_cancel = self.add_button(_("Stop"), Gtk.ResponseType.CLOSE)
         self.b_cancel.props.receives_default = True
         self.b_cancel.props.use_underline = True
         self.b_cancel.connect("clicked", self.on_cancel)
@@ -232,7 +232,7 @@ class Sender(Gtk.Dialog):
             if len(self.files) > 1:
                 d.add_button(_("Skip"), Gtk.ResponseType.NO)
             d.add_button(_("Retry"), Gtk.ResponseType.YES)
-            d.add_button("_Cancel", Gtk.ResponseType.CANCEL)
+            d.add_button(_("Cancel"), Gtk.ResponseType.CANCEL)
 
             if self.object_push:
                 self.client.remove_session(self.object_push.get_object_path())
