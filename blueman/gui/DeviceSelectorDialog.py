@@ -14,7 +14,7 @@ class DeviceSelectorDialog(Gtk.Dialog):
     def __init__(self, title: str = _("Select Device"), parent: Optional[Gtk.Container] = None, discover: bool = True,
                  adapter_name: Optional[str] = None) -> None:
         super().__init__(title=title, name="DeviceSelectorDialog", parent=parent, icon_name="blueman", resizable=False)
-        self.add_buttons(_("Cancel"), Gtk.ResponseType.REJECT, _("OK"), Gtk.ResponseType.ACCEPT)
+        self.add_buttons(_("_Cancel"), Gtk.ResponseType.REJECT, _("_OK"), Gtk.ResponseType.ACCEPT)
 
         self.vbox.props.halign = Gtk.Align.CENTER
         self.vbox.props.valign = Gtk.Align.CENTER

@@ -44,7 +44,7 @@ class BluemanServices(Gtk.Application):
             button_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, halign=Gtk.Align.END, visible=True)
             grid.add(button_box)
 
-            self.b_apply = Gtk.Button(label=_("Apply"), receives_default=True, use_underline=True,
+            self.b_apply = Gtk.Button(label=_("_Apply"), receives_default=True, use_underline=True,
                                       sensitive=False, visible=True, width_request=80)
             button_box.add(self.b_apply)
 

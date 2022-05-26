@@ -35,4 +35,4 @@ class GsmSettings(Gtk.Dialog):
         self.config.bind_to_widget("apn", self.e_apn, "text")
         self.config.bind_to_widget("number", self.e_number, "text")
 
-        self.add_button(_("Close"), Gtk.ResponseType.CLOSE)
+        self.add_button(_("_Close"), Gtk.ResponseType.CLOSE)
