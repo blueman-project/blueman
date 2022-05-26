@@ -60,7 +60,7 @@ class Blueman(Gtk.Application):
     def do_activate(self) -> None:
         if not self.window:
             self.window = Gtk.ApplicationWindow(application=self, name="BluemanManager", icon_name="blueman",
-                                                title="Bluetooth Devices")
+                                                title=_("Bluetooth Devices"))
             w, h, x, y = self.Config["window-properties"]
             if w and h:
                 self.window.resize(w, h)
