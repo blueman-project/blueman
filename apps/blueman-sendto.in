@@ -109,7 +109,7 @@ class SendTo:
     @staticmethod
     def select_files():
         d = Gtk.FileChooserDialog(title=_("Select files to send"), icon_name='blueman-send-file', select_multiple=True)
-        d.add_buttons(_("Cancel"), Gtk.ResponseType.REJECT, _("OK"), Gtk.ResponseType.ACCEPT)
+        d.add_buttons(_("_Cancel"), Gtk.ResponseType.REJECT, _("_OK"), Gtk.ResponseType.ACCEPT)
         resp = d.run()
 
         if resp == Gtk.ResponseType.ACCEPT:
