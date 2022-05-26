@@ -111,7 +111,7 @@ class SubmenuItem(MenuItem):
 
 class Menu(AppletPlugin):
     __description__ = _("Provides a menu for the applet and an API for other plugins to manipulate it")
-    __icon__ = "menu-editor"
+    __icon__ = "open-menu-symbolic"
     __author__ = "Walmis"
     __unloadable__ = False
 

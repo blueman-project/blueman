@@ -12,7 +12,7 @@ from gi.repository import GLib
 
 class ConnectionNotifier(AppletPlugin):
     __author__ = "cschramm"
-    __icon__ = "blueman-active"
+    __icon__ = "bluetooth-symbolic"
     __description__ = _("Shows desktop notifications when devices get connected or disconnected.")
 
     def on_device_property_changed(self, path: str, key: str, value: Any) -> None:

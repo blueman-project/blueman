@@ -30,24 +30,24 @@ class StandardItems(AppletPlugin, PowerStateListener):
         self.parent.Plugins.Menu.add(self, 31)
 
         self.send = self.parent.Plugins.Menu.add(self, 40, text=_("Send _Files to Device") + "…",
-                                                 icon_name="blueman-send-file", callback=self.on_send)
+                                                 icon_name="blueman-send-symbolic", callback=self.on_send)
 
         self.parent.Plugins.Menu.add(self, 51)
 
-        self.devices = self.parent.Plugins.Menu.add(self, 60, text=_("_Devices") + "…", icon_name="blueman",
+        self.devices = self.parent.Plugins.Menu.add(self, 60, text=_("_Devices") + "…", icon_name="bluetooth-symbolic",
                                                     callback=self.on_devices)
 
-        self.adapters = self.parent.Plugins.Menu.add(self, 70, text=_("Adap_ters") + "…", icon_name="blueman-device",
+        self.adapters = self.parent.Plugins.Menu.add(self, 70, text=_("Adap_ters") + "…", icon_name="bluetooth-symbolic",
                                                      callback=self.on_adapters)
 
-        self.parent.Plugins.Menu.add(self, 80, text=_("_Local Services") + "…", icon_name="preferences-desktop",
+        self.parent.Plugins.Menu.add(self, 80, text=_("_Local Services") + "…", icon_name="document-properties-symbolic",
                                      callback=self.on_local_services)
 
         self.parent.Plugins.Menu.add(self, 81)
 
-        self.parent.Plugins.Menu.add(self, 90, text=_("_Help"), icon_name='help-about', callback=self.on_about)
+        self.parent.Plugins.Menu.add(self, 90, text=_("_Help"), icon_name='help-about-symbolic', callback=self.on_about)
 
-        self.parent.Plugins.Menu.add(self, 85, text=_("_Plugins"), icon_name="blueman-plugin", callback=self.on_plugins)
+        self.parent.Plugins.Menu.add(self, 85, text=_("_Plugins"), icon_name="application-x-addon-symbolic", callback=self.on_plugins)
 
         self.parent.Plugins.StatusIcon.connect("activate", lambda _status_icon: self.on_devices())
 

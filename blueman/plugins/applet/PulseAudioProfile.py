@@ -69,7 +69,7 @@ class AudioProfiles(AppletPlugin):
                 items.append({
                     "text": profile_name,
                     "markup": True,
-                    "icon_name": "blueman",
+                    "icon_name": "bluetooth-symbolic",
                     "sensitive": True,
                     "callback": _activate_profile_wrapper(device, profile),
                     "tooltip": "",
@@ -78,7 +78,7 @@ class AudioProfiles(AppletPlugin):
 
         info = self._devices[device['Address']]
         menu = self._menu.add(self, 42, _("Audio Profiles for %s") % device['Alias'],
-                              icon_name="audio-card",
+                              icon_name="audio-card-symbolic",
                               submenu_function=lambda: _generate_profiles_menu(info))
         self._device_menus[device['Address']] = menu
 

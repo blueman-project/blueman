@@ -275,7 +275,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         op = self.get_op(self.SelectedDevice)
 
         if op is not None:
-            item: Gtk.MenuItem = create_menuitem(op, "network-transmit-receive")
+            item: Gtk.MenuItem = create_menuitem(op, "network-transmit-receive-symbolic")
             item.props.sensitive = False
             item.show()
             self.append(item)
@@ -284,13 +284,13 @@ class ManagerDeviceMenu(Gtk.Menu):
         show_generic_connect = self.show_generic_connect_calc(self.SelectedDevice['UUIDs'])
 
         if not row["connected"] and show_generic_connect:
-            connect_item = create_menuitem(_("_<b>_Connect</b>"), "blueman")
+            connect_item = create_menuitem(_("_<b>_Connect</b>"), "bluetooth-symbolic")
             connect_item.connect("activate", lambda _item: self.connect_service(self.SelectedDevice))
             connect_item.props.tooltip_text = _("Connects auto connect profiles A2DP source, A2DP sink, and HID")
             connect_item.show()
             self.append(connect_item)
         elif show_generic_connect:
-            connect_item = create_menuitem(_("_<b>Disconnect</b>"), "network-offline")
+            connect_item = create_menuitem(_("_<b>Disconnect</b>"), "bluetooth-disabled-symbolic")
             connect_item.props.tooltip_text = _("Forcefully disconnect the device")
             connect_item.connect("activate", lambda _item: self.disconnect_service(self.SelectedDevice))
             connect_item.show()
@@ -340,7 +340,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         for it in sorted(action_items, key=lambda i: i.position):
             self.append(it.item)
 
-        send_item = create_menuitem(_("Send a _File…"), "edit-copy")
+        send_item = create_menuitem(_("Send a _File…"), "blueman-send-symbolic")
         send_item.props.sensitive = False
         self.append(send_item)
         send_item.show()
@@ -353,7 +353,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         item.show()
         self.append(item)
 
-        item = create_menuitem(_("_Pair"), "dialog-password")
+        item = create_menuitem(_("_Pair"), "blueman-pair-symbolic")
         item.props.tooltip_text = _("Create pairing with the device")
         self.append(item)
         item.show()
@@ -363,24 +363,24 @@ class ManagerDeviceMenu(Gtk.Menu):
             item.props.sensitive = False
 
         if not row["trusted"]:
-            item = create_menuitem(_("_Trust"), "blueman-trust")
+            item = create_menuitem(_("_Trust"), "blueman-trust-symbolic")
             item.connect("activate", lambda x: self.Blueman.toggle_trust(self.SelectedDevice))
             self.append(item)
             item.show()
         else:
-            item = create_menuitem(_("_Untrust"), "blueman-untrust")
+            item = create_menuitem(_("_Untrust"), "blueman-untrust-symbolic")
             self.append(item)
             item.connect("activate", lambda x: self.Blueman.toggle_trust(self.SelectedDevice))
             item.show()
         item.props.tooltip_text = _("Mark/Unmark this device as trusted")
 
         if not row["blocked"]:
-            item = create_menuitem(_("_Block"), "window-close")
+            item = create_menuitem(_("_Block"), "blueman-block-symbolic")
             item.connect("activate", lambda x: self.Blueman.toggle_blocked(self.SelectedDevice))
             self.append(item)
             item.show()
         else:
-            item = create_menuitem(_("_Unblock"), "window-close")
+            item = create_menuitem(_("_Unblock"), "blueman-block-symbolic")
             self.append(item)
             item.connect("activate", lambda x: self.Blueman.toggle_blocked(self.SelectedDevice))
             item.show()
@@ -413,7 +413,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         item.show()
         self.append(item)
 
-        item = create_menuitem(_("_Remove…"), "edit-delete")
+        item = create_menuitem(_("_Remove…"), "list-remove-symbolic")
         item.connect("activate", lambda x: self.Blueman.remove(self.SelectedDevice))
         self.append(item)
         item.show()

@@ -266,14 +266,14 @@ class ManagerDeviceList(DeviceList):
         ctx = cairo.Context(target)
 
         if is_paired:
-            _icon_info = self.get_icon_info("dialog-password", 16, False)
+            _icon_info = self.get_icon_info("blueman-paired-emblem", 16, False)
             assert _icon_info is not None
             paired_surface = _icon_info.load_surface(window)
             ctx.set_source_surface(paired_surface, 1 / scale, 1 / scale)
             ctx.paint_with_alpha(0.8)
 
         if is_trusted:
-            _icon_info = self.get_icon_info("blueman-trust", 16, False)
+            _icon_info = self.get_icon_info("blueman-trusted-emblem", 16, False)
             assert _icon_info is not None
             trusted_surface = _icon_info.load_surface(window)
             assert isinstance(target, cairo.ImageSurface)
@@ -286,7 +286,7 @@ class ManagerDeviceList(DeviceList):
             ctx.paint_with_alpha(0.8)
 
         if is_blocked:
-            _icon_info = self.get_icon_info("window-close", 16, False)
+            _icon_info = self.get_icon_info("blueman-blocked-emblem", 16, False)
             assert _icon_info is not None
             blocked_surface = _icon_info.load_surface(window)
             assert isinstance(target, cairo.ImageSurface)

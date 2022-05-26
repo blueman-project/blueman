@@ -72,14 +72,14 @@ class Connection:
         msg = _("Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\n"
                 "Network is now available through <b>%(1)s</b>") % {"0": self.service.device['Alias'], "1": result}
 
-        Notification(_("Connected"), msg, icon_name="network-wireless").show()
+        Notification(_("Connected"), msg, icon_name="network-wireless-symbolic").show()
 
 
 class PPPSupport(AppletPlugin, RFCOMMConnectHandler):
     __depends__ = ["DBusService"]
     __description__ = _("Provides basic support for connecting to the internet via DUN profile.")
     __author__ = "Walmis"
-    __icon__ = "modem"
+    __icon__ = "modem-symbolic"
     __priority__ = 0
 
     def rfcomm_connect_handler(self, service: SerialService, reply: Callable[[str], None],

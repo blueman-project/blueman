@@ -20,7 +20,7 @@ class GsmSettings(Gtk.Dialog):
         gsm_grid = builder.get_widget("gsm_grid", Gtk.Grid)
 
         self.config = Config("org.blueman.gsmsetting", f"/org/blueman/gsmsettings/{bd_address}/")
-        self.props.icon_name = "network-wireless"
+        self.props.icon_name = "network-wireless-symbolic"
         self.props.title = _("GSM Settings")
 
         self.props.resizable = False

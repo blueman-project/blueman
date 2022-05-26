@@ -2,6 +2,42 @@
 <!-- Generated with glade 3.38.2 -->
 <interface>
   <requires lib="gtk+" version="3.0"/>
+  <object class="GtkImage" id="im_pair">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">blueman-pair-symbolic</property>
+    <property name="icon_size">3</property>
+  </object>
+  <object class="GtkImage" id="im_remove">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">list-remove-symbolic</property>
+    <property name="icon_size">2</property>
+  </object>
+  <object class="GtkImage" id="im_search">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">edit-find-symbolic</property>
+    <property name="icon_size">3</property>
+  </object>
+  <object class="GtkImage" id="im_send">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">blueman-send-symbolic</property>
+    <property name="icon_size">3</property>
+  </object>
+  <object class="GtkImage" id="im_setup">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="pixel-size">24</property>
+    <property name="icon-name">document-properties-symbolic</property>
+  </object>
+  <object class="GtkImage" id="im_trust">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">blueman-trust-symbolic</property>
+    <property name="icon_size">3</property>
+  </object>
   <object class="GtkBox" id="box">
     <property name="name">box</property>
     <property name="visible">True</property>
@@ -234,41 +270,5 @@
         <property name="position">2</property>
       </packing>
     </child>
-  </object>
-  <object class="GtkImage" id="im_pair">
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
-    <property name="pixel-size">24</property>
-    <property name="icon-name">dialog-password</property>
-  </object>
-  <object class="GtkImage" id="im_remove">
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
-    <property name="pixel-size">24</property>
-    <property name="icon-name">list-remove</property>
-  </object>
-  <object class="GtkImage" id="im_search">
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
-    <property name="pixel-size">24</property>
-    <property name="icon-name">edit-find</property>
-  </object>
-  <object class="GtkImage" id="im_send">
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
-    <property name="pixel-size">24</property>
-    <property name="icon-name">blueman-send-file</property>
-  </object>
-  <object class="GtkImage" id="im_setup">
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
-    <property name="pixel-size">24</property>
-    <property name="icon-name">document-properties</property>
-  </object>
-  <object class="GtkImage" id="im_trust">
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
-    <property name="pixel-size">24</property>
-    <property name="icon-name">blueman-trust</property>
   </object>
 </interface>

@@ -43,7 +43,7 @@ class ManagerMenu:
         self.item_help.set_submenu(help_menu)
         help_menu.show()
 
-        report_item = create_menuitem(_("_Report a Problem"), "dialog-warning")
+        report_item = create_menuitem(_("_Report a Problem"), "dialog-warning-symbolic")
         report_item.show()
         help_menu.append(report_item)
 
@@ -53,7 +53,7 @@ class ManagerMenu:
         sep.show()
         help_menu.append(sep)
 
-        help_item = create_menuitem(_("_Help"), "help-about")
+        help_item = create_menuitem(_("_Help"), "help-about-symbolic")
         help_item.show()
         help_menu.append(help_item)
         assert self.blueman.window is not None
@@ -125,12 +125,12 @@ class ManagerMenu:
         sep.show()
         view_menu.append(sep)
 
-        item_plugins = create_menuitem(_("_Plugins"), 'blueman-plugin')
+        item_plugins = create_menuitem(_("_Plugins"), 'application-x-addon-symbolic')
         item_plugins.show()
         view_menu.append(item_plugins)
         item_plugins.connect('activate', self._on_plugin_dialog_activate)
 
-        item_services = create_menuitem(_("_Local Services") + "…", "preferences-desktop")
+        item_services = create_menuitem(_("_Local Services") + "…", "document-properties-symbolic")
         item_services.connect('activate', lambda *args: launch("blueman-services", name=_("Service Preferences")))
         view_menu.append(item_services)
         item_services.show()
@@ -139,7 +139,7 @@ class ManagerMenu:
         self.item_adapter.set_submenu(adapter_menu)
         self.item_adapter.props.sensitive = False
 
-        search_item = create_menuitem(_("_Search"), "edit-find")
+        search_item = create_menuitem(_("_Search"), "edit-find-symbolic")
         search_item.connect("activate", lambda x: self.blueman.inquiry())
         search_item.show()
         adapter_menu.prepend(search_item)
@@ -153,7 +153,7 @@ class ManagerMenu:
         sep.show()
         adapter_menu.append(sep)
 
-        adapter_settings = create_menuitem(_("_Preferences"), "preferences-system")
+        adapter_settings = create_menuitem(_("_Preferences"), "document-properties-symbolic")
         adapter_settings.connect("activate", lambda x: self.blueman.adapter_properties())
         adapter_settings.show()
         adapter_menu.append(adapter_settings)
@@ -162,7 +162,7 @@ class ManagerMenu:
         sep.show()
         adapter_menu.append(sep)
 
-        exit_item = create_menuitem(_("_Exit"), "application-exit")
+        exit_item = create_menuitem(_("_Exit"), "application-exit-symbolic")
         exit_item.connect("activate", lambda x: self.blueman.quit())
         exit_item.show()
         adapter_menu.append(exit_item)

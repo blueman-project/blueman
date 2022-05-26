@@ -13,7 +13,7 @@ from blueman.services.meta import NetworkService
 class NMPANSupport(AppletPlugin, ServiceConnectHandler):
     __depends__ = ["DBusService"]
     __conflicts__ = ["DhcpClient"]
-    __icon__ = "network-workgroup"
+    __icon__ = "network-workgroup-symbolic"
     __author__ = "infirit"
     __description__ = _("Provides support for Personal Area Networking (PAN) introduced in NetworkManager 0.8")
     __priority__ = 2

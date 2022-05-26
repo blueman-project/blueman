@@ -6,7 +6,7 @@ from blueman.main.applet.BluezAgent import BluezAgent
 
 class AuthAgent(AppletPlugin):
     __description__ = _("Provides passkey, authentication services for BlueZ daemon")
-    __icon__ = "dialog-password"
+    __icon__ = "blueman-pair-symbolic"
     __author__ = "Walmis"
     __depends__ = ["StatusIcon"]
 
