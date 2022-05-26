@@ -49,10 +49,11 @@ class ManagerProgressbar(GObject.GObject):
         self.progressbar.set_size_request(100, 15)
         self.progressbar.set_ellipsize(Pango.EllipsizeMode.END)
         self.progressbar.set_text(text)
+        self.progressbar.set_show_text(True)
         self.progressbar.set_pulse_step(0.05)
 
-        hbox.pack_end(eventbox, True, False, 0)
-        hbox.pack_end(self.progressbar, False, False, 0)
+        hbox.pack_end(eventbox, True, False, 5)
+        hbox.pack_end(self.progressbar, False, False, 5)
 
         if ManagerProgressbar.__instances__:
             logging.info(f"hiding {ManagerProgressbar.__instances__[-1]}")
