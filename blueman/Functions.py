@@ -178,16 +178,16 @@ def format_bytes(size: float) -> Tuple[float, str]:
     size = float(size)
     if size < 1024:
         ret = size
-        suffix = "B"
+        suffix = _("B")
     elif 1024 < size < (1024 * 1024):
         ret = size / 1024
-        suffix = "KB"
+        suffix = _("KB")
     elif (1024 * 1024) < size < (1024 * 1024 * 1024):
         ret = size / (1024 * 1024)
-        suffix = "MB"
+        suffix = _("MB")
     else:
         ret = size / (1024 * 1024 * 1024)
-        suffix = "GB"
+        suffix = _("GB")
 
     return ret, suffix
 
