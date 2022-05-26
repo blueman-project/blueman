@@ -37,7 +37,7 @@ REGISTRY_VERSION = 0
 
 class RecentConns(AppletPlugin, PowerStateListener):
     __depends__ = ["DBusService", "Menu"]
-    __icon__ = "document-open-recent"
+    __icon__ = "document-open-recent-symbolic"
     __description__ = _("Provides a menu item that contains last used connections for quick access")
     __author__ = "Walmis"
 
@@ -61,7 +61,7 @@ class RecentConns(AppletPlugin, PowerStateListener):
         self.__menuitems: List["MenuItemDict"] = []
 
         self._item = self.parent.Plugins.Menu.add(self, 52, text=_("Recent _Connections") + "…",
-                                                  icon_name="document-open-recent", submenu_function=self.get_menu)
+                                                  icon_name="document-open-recent-symbolic", submenu_function=self.get_menu)
         self.parent.Plugins.Menu.add(self, 53)
 
     def on_power_state_changed(self, manager: PowerManager, state: bool) -> None:

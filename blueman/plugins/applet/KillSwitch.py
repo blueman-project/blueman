@@ -38,7 +38,7 @@ class KillSwitch(AppletPlugin, PowerStateHandler, StatusIconVisibilityHandler):
                         "Allows turning Bluetooth back on from an icon that shows its status; "
                         "provided it isn't unplugged by the system, or physically.")
     __depends__ = ["PowerManager", "StatusIcon"]
-    __icon__ = "system-shutdown"
+    __icon__ = "system-shutdown-symbolic"
 
     __gsettings__ = {
         "schema": "org.blueman.plugins.killswitch",

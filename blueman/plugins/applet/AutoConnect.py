@@ -15,7 +15,7 @@ if TYPE_CHECKING:
 class AutoConnect(AppletPlugin):
     __depends__ = ["DBusService"]
 
-    __icon__ = "blueman"
+    __icon__ = "bluetooth-symbolic"
     __author__ = "cschramm"
     __description__ = _("Tries to auto-connect to configurable services on start and every 60 seconds.")
 

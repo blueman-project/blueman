@@ -87,13 +87,13 @@ class ManagerToolbar:
                 self.b_bond.props.sensitive = True
 
             if row["trusted"]:
-                image = Gtk.Image(icon_name="blueman-untrust", pixel_size=24, visible=True)
+                image = Gtk.Image(icon_name="blueman-untrust-symbolic", pixel_size=24, visible=True)
                 self.b_trust.props.icon_widget = image
                 self.b_trust.props.sensitive = True
                 self.b_trust.props.label = _("Untrust")
 
             else:
-                image = Gtk.Image(icon_name="blueman-trust", pixel_size=24, visible=True)
+                image = Gtk.Image(icon_name="blueman-trust-symbolic", pixel_size=24, visible=True)
                 self.b_trust.props.icon_widget = image
                 self.b_trust.props.sensitive = True
                 self.b_trust.props.label = _("Trust")

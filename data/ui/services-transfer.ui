@@ -1,87 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.20.0 -->
+<!-- Generated with glade 3.38.2 -->
 <interface>
   <requires lib="gtk+" version="3.0"/>
   <object class="GtkFrame" id="transfer">
-    <property name="can_focus">False</property>
+    <property name="can-focus">False</property>
     <property name="hexpand">True</property>
-    <property name="border_width">6</property>
-    <property name="label_xalign">0</property>
-    <property name="shadow_type">none</property>
+    <property name="border-width">6</property>
+    <property name="label-xalign">0</property>
+    <property name="shadow-type">none</property>
     <child>
+      <!-- n-columns=3 n-rows=3 -->
       <object class="GtkGrid" id="incoming_grid">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="margin_left">12</property>
-        <property name="margin_top">10</property>
-        <property name="row_spacing">12</property>
-        <property name="column_spacing">6</property>
+        <property name="can-focus">False</property>
+        <property name="margin-left">12</property>
+        <property name="margin-top">10</property>
+        <property name="row-spacing">12</property>
+        <property name="column-spacing">6</property>
         <child>
           <object class="GtkLabel" id="push_label">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="halign">start</property>
             <property name="label" translatable="yes">&lt;b&gt;File Receiving (Object Push)&lt;/b&gt;</property>
-            <property name="use_markup">True</property>
+            <property name="use-markup">True</property>
           </object>
           <packing>
-            <property name="left_attach">0</property>
-            <property name="top_attach">1</property>
+            <property name="left-attach">0</property>
+            <property name="top-attach">1</property>
             <property name="width">2</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel" id="incoming_label">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="label" translatable="yes">Incoming Folder:</property>
           </object>
           <packing>
-            <property name="left_attach">0</property>
-            <property name="top_attach">0</property>
+            <property name="left-attach">0</property>
+            <property name="top-attach">0</property>
           </packing>
         </child>
         <child>
           <object class="GtkFileChooserButton" id="shared-path">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="action">select-folder</property>
             <property name="title" translatable="yes">Select folder for incoming file transfers</property>
           </object>
           <packing>
-            <property name="left_attach">1</property>
-            <property name="top_attach">0</property>
+            <property name="left-attach">1</property>
+            <property name="top-attach">0</property>
           </packing>
         </child>
         <child>
           <object class="GtkCheckButton" id="opp-accept">
             <property name="label" translatable="yes">Accept files from trusted devices</property>
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">False</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">False</property>
             <property name="halign">start</property>
-            <property name="margin_left">12</property>
-            <property name="draw_indicator">True</property>
+            <property name="margin-left">12</property>
+            <property name="draw-indicator">True</property>
           </object>
           <packing>
-            <property name="left_attach">0</property>
-            <property name="top_attach">2</property>
+            <property name="left-attach">0</property>
+            <property name="top-attach">2</property>
             <property name="width">2</property>
           </packing>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
         </child>
       </object>
     </child>
     <child type="label">
       <object class="GtkBox" id="transfer_top">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="spacing">6</property>
         <child>
           <object class="GtkImage" id="transfer_image">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="pixel_size">32</property>
-            <property name="icon_name">document-open</property>
+            <property name="can-focus">False</property>
+            <property name="pixel-size">32</property>
+            <property name="icon-name">folder</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -92,9 +102,9 @@
         <child>
           <object class="GtkLabel" id="transfer_label">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="label" translatable="yes">&lt;b&gt;Transfer Settings&lt;/b&gt;</property>
-            <property name="use_markup">True</property>
+            <property name="use-markup">True</property>
           </object>
           <packing>
             <property name="expand">False</property>

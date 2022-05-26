@@ -18,7 +18,7 @@ from blueman.services.meta import SerialService
 
 
 class SerialManager(AppletPlugin, RFCOMMConnectedListener):
-    __icon__ = "blueman-serial"
+    __icon__ = "bluetooth-symbolic"
     __description__ = _("Standard SPP profile connection handler, allows executing custom actions")
     __author__ = "walmis"
 

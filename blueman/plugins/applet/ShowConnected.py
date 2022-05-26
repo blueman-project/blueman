@@ -13,7 +13,7 @@ from blueman.main.PluginManager import PluginManager
 class ShowConnected(AppletPlugin, StatusIconProvider):
     __author__ = "Walmis"
     __depends__ = ["StatusIcon"]
-    __icon__ = "blueman-active"
+    __icon__ = "bluetooth-symbolic"
     __description__ = _("Adds an indication on the status icon when Bluetooth is active and shows the number of "
                         "connections in the tooltip.")
 

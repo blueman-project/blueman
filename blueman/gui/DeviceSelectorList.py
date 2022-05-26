@@ -45,13 +45,13 @@ class DeviceSelectorList(DeviceList):
     def row_update_event(self, tree_iter: Gtk.TreeIter, key: str, value: Any) -> None:
         if key == "Trusted":
             if value:
-                self.set(tree_iter, trusted_icon="blueman-trust")
+                self.set(tree_iter, trusted_icon="blueman-trust-symbolic")
             else:
                 self.set(tree_iter, trusted_icon=None)
 
         elif key == "Paired":
             if value:
-                self.set(tree_iter, paired_icon="dialog-password")
+                self.set(tree_iter, paired_icon="blueman-pair-symbolic")
             else:
                 self.set(tree_iter, paired_icon=None)
 

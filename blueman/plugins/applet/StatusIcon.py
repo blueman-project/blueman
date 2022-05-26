@@ -28,7 +28,7 @@ class StatusIcon(AppletPlugin, GObject.GObject):
     __gsignals__: GSignals = {'activate': (GObject.SignalFlags.NO_HOOKS, None, ())}
 
     __unloadable__ = False
-    __icon__ = "blueman-tray"
+    __icon__ = "bluetooth-symbolic"
     __depends__ = ['Menu']
 
     visible = None

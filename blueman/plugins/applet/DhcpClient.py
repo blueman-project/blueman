@@ -12,7 +12,7 @@ from blueman.main.DBusProxies import Mechanism
 
 class DhcpClient(AppletPlugin):
     __description__ = _("Provides a basic dhcp client for Bluetooth PAN connections.")
-    __icon__ = "network-workgroup"
+    __icon__ = "network-workgroup-symbolic"
     __author__ = "Walmis"
 
     _any_network = None

@@ -11,14 +11,14 @@ if TYPE_CHECKING:
 
 
 class AppletPlugin(BasePlugin):
-    __icon__ = "blueman-plugin"
+    __icon__ = "application-x-addon-symbolic"
 
     def __init__(self, parent: "BluemanApplet"):
         super().__init__()
         self.parent = parent
 
         if not Gtk.IconTheme.get_default().has_icon(self.__class__.__icon__):
-            self.__class__.__icon__ = "blueman-plugin"
+            self.__class__.__icon__ = "application-x-addon-symbolic"
 
         self._dbus_service = parent.DbusSvc
         self._dbus_methods: Set[str] = set()

@@ -11,7 +11,7 @@ import logging
 class DiscvManager(AppletPlugin):
     __depends__ = ["Menu"]
     __author__ = "Walmis"
-    __icon__ = "edit-find"
+    __icon__ = "edit-find-symbolic"
     __description__ = _(
         "Provides a menu item for making the default adapter temporarily visible when it is set to hidden by default")
 
@@ -32,7 +32,7 @@ class DiscvManager(AppletPlugin):
     adapter: Optional[Adapter]
 
     def on_load(self) -> None:
-        self.item = self.parent.Plugins.Menu.add(self, 20, text=_("_Make Discoverable"), icon_name="edit-find",
+        self.item = self.parent.Plugins.Menu.add(self, 20, text=_("_Make Discoverable"), icon_name="edit-find-symbolic",
                                                  tooltip=_("Make the default adapter temporarily visible"),
                                                  callback=self.on_set_discoverable, visible=False)
         self.adapter = None

@@ -283,7 +283,7 @@ class Dialog:
 
 class NetUsage(AppletPlugin, GObject.GObject, PPPConnectedListener):
     __depends__ = ["Menu"]
-    __icon__ = "network-wireless"
+    __icon__ = "network-wireless-symbolic"
     __description__ = _("Allows you to monitor your (mobile broadband) network traffic usage. Useful for limited "
                         "data access plans. This plugin tracks every device seperately.")
     __author__ = "Walmis"
@@ -304,7 +304,7 @@ class NetUsage(AppletPlugin, GObject.GObject, PPPConnectedListener):
         self._any_network = AnyNetwork()
         self._any_network.connect_signal('property-changed', self._on_network_property_changed)
 
-        self.parent.Plugins.Menu.add(self, 84, text=_("Network _Usage"), icon_name="network-wireless",
+        self.parent.Plugins.Menu.add(self, 84, text=_("Network _Usage"), icon_name="network-wireless-symbolic",
                                      tooltip=_("Shows network traffic usage"), callback=self.activate_ui)
 
     def _on_network_property_changed(self, _network: AnyNetwork, key: str, value: Any, path: str) -> None:

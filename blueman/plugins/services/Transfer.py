@@ -12,7 +12,7 @@ from gi.repository import Gtk, Gio
 
 
 class Transfer(ServicePlugin):
-    __plugin_info__ = (_("Transfer"), "document-open")
+    __plugin_info__ = (_("Transfer"), "folder")
 
     def on_load(self, container: Gtk.Box) -> None:
 

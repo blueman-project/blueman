@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 
 class DisconnectItems(AppletPlugin):
     __depends__ = ["Menu"]
-    __icon__ = "network-offline"
+    __icon__ = "bluetooth-disconnected-symbolic"
     __author__ = "cschramm"
     __description__ = _("Adds disconnect menu items")
 
@@ -37,5 +37,5 @@ class DisconnectItems(AppletPlugin):
     def _render(self) -> None:
         for device in self.parent.Manager.get_devices():
             if device["Connected"]:
-                self._menu.add(self, 25, text=_("Disconnect %s") % device["Alias"], icon_name="network-offline",
+                self._menu.add(self, 25, text=_("Disconnect %s") % device["Alias"], icon_name="bluetooth-disconnected-symbolic",
                                callback=lambda dev=device: dev.disconnect())

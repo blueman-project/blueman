@@ -155,7 +155,7 @@ class Agent(DbusService):
 class TransferService(AppletPlugin):
     __author__ = "cschramm"
     __description__ = _("Provides OBEX file transfer capabilities")
-    __icon__ = "blueman-send-file"
+    __icon__ = "blueman-send-symbolic"
 
     _silent_transfers = 0
     _normal_transfers = 0
