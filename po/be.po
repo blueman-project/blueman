@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2022-01-03 18:29+0100\n"
+"POT-Creation-Date: 2022-05-27 17:59+0000\n"
 "PO-Revision-Date: 2020-11-11 03:44+0000\n"
 "Last-Translator: Zmicer Turok <nashtlumach@gmail.com>\n"
 "Language-Team: Belarusian <https://hosted.weblate.org/projects/blueman/"
@@ -24,23 +24,23 @@ msgstr ""
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Generator: Weblate 4.4-dev\n"
 
-#: data/ui/adapters-tab.ui:29
+#: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
 msgstr "<b>Налады бачнасці</b>"
 
-#: data/ui/adapters-tab.ui:39 blueman/main/Adapter.py:145
+#: data/ui/adapters-tab.ui:40 blueman/main/Adapter.py:155
 msgid "Hidden"
 msgstr "Схаваны"
 
-#: data/ui/adapters-tab.ui:54
+#: data/ui/adapters-tab.ui:57
 msgid "Always visible"
 msgstr "Заўсёды бачны"
 
-#: data/ui/adapters-tab.ui:70
+#: data/ui/adapters-tab.ui:75
 msgid "Temporarily visible"
 msgstr "Часова бачны"
 
-#: data/ui/adapters-tab.ui:101
+#: data/ui/adapters-tab.ui:110
 #, fuzzy
 msgid "<b>Name</b>"
 msgstr "<b>Спалучаныя</b>"
@@ -61,72 +61,88 @@ msgstr "Гэта патрэбна перазапісаць"
 msgid "Show input"
 msgstr "Паказваць увод"
 
-#: data/ui/manager-main.ui:53
+#: data/ui/manager-main.ui:18
 msgid "_Adapter"
 msgstr "_Адаптар"
 
-#: data/ui/manager-main.ui:61
+#: data/ui/manager-main.ui:26
 msgid "_Device"
 msgstr "_Прылада"
 
-#: data/ui/manager-main.ui:69
+#: data/ui/manager-main.ui:34
 msgid "_View"
 msgstr "Пра_гляд"
 
-#: data/ui/manager-main.ui:77 blueman/gui/manager/ManagerMenu.py:55
+#: data/ui/manager-main.ui:42 blueman/gui/manager/ManagerMenu.py:55
 #: blueman/plugins/applet/StandardItems.py:48
 msgid "_Help"
 msgstr "_Даведка"
 
-#: data/ui/manager-main.ui:96
+#: data/ui/manager-main.ui:62
 msgid "Search for nearby devices"
 msgstr "Пошук прылад паблізу"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:98
+#: data/ui/manager-main.ui:64
 msgid "Search"
 msgstr "Пошук"
 
-#: data/ui/manager-main.ui:121 blueman/gui/manager/ManagerDeviceMenu.py:355
+#: data/ui/manager-main.ui:87 blueman/gui/manager/ManagerDeviceMenu.py:357
 msgid "Create pairing with the device"
 msgstr "Стварыць спалучэнне з прыладай"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:122
+#: data/ui/manager-main.ui:88
 msgid "Pair"
 msgstr "Спалучэнне"
 
-#: data/ui/manager-main.ui:135 blueman/gui/manager/ManagerDeviceMenu.py:373
+#: data/ui/manager-main.ui:101 blueman/gui/manager/ManagerDeviceMenu.py:375
 msgid "Mark/Unmark this device as trusted"
 msgstr "Пазначыць/прыбраць пазнаку даверанай прылады"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:136 blueman/gui/manager/ManagerToolbar.py:39
+#: data/ui/manager-main.ui:102 blueman/gui/manager/ManagerToolbar.py:39
 #: blueman/gui/manager/ManagerToolbar.py:99
 msgid "Trust"
 msgstr "Давер"
 
-#: data/ui/manager-main.ui:149 blueman/gui/manager/ManagerDeviceMenu.py:406
+#: data/ui/manager-main.ui:115 blueman/gui/manager/ManagerDeviceMenu.py:420
 msgid "Remove this device from the known devices list"
 msgstr "Выдаліць гэтую прыладу са спіса вядомых"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:150
+#: data/ui/manager-main.ui:116
 msgid "Remove"
 msgstr "Выдаліць"
 
-#: data/ui/manager-main.ui:172
+#: data/ui/manager-main.ui:138
 msgid "Send file(s) to the device"
 msgstr "Адправіць файл(ы) на прыладу"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:174
+#: data/ui/manager-main.ui:140
 msgid "Send File"
 msgstr "Адправіць файл"
 
 #: data/ui/rename-device.ui:8
 msgid "Rename device"
 msgstr "Змяніць назву прылады"
+
+#: data/ui/rename-device.ui:26 data/ui/net-usage.ui:243
+msgid "_Reset"
+msgstr "_Скінуць"
+
+#: data/ui/rename-device.ui:40 data/ui/note.ui:26 blueman/main/Sendto.py:235
+#: blueman/gui/DeviceSelectorDialog.py:17
+#, fuzzy
+#| msgid "Cancelling"
+msgid "_Cancel"
+msgstr "Скасаванне"
+
+#: data/ui/rename-device.ui:54 data/ui/note.ui:41
+#: blueman/gui/DeviceSelectorDialog.py:17
+msgid "_OK"
+msgstr ""
 
 #: data/ui/services-network.ui:37
 msgid "Network Access Point (NAP)"
@@ -227,8 +243,8 @@ msgstr "<b>Аўтар:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:304
-#: blueman/gui/manager/ManagerDeviceList.py:306 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:338
+#: blueman/gui/manager/ManagerDeviceList.py:340 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:209
@@ -260,7 +276,7 @@ msgstr "Пункт доступу (APN):"
 msgid "Traffic statistics"
 msgstr "Статыстыка трафіка"
 
-#: data/ui/net-usage.ui:33
+#: data/ui/net-usage.ui:33 blueman/gui/GsmSettings.py:38
 msgid "_Close"
 msgstr "_Закрыць"
 
@@ -284,27 +300,23 @@ msgstr "<b>Ад:</b>"
 msgid "<b>Log duration:</b>"
 msgstr "<b>Агульны час:</b>"
 
-#: data/ui/net-usage.ui:243
-msgid "_Reset"
-msgstr "_Скінуць"
-
 #: data/ui/note.ui:8
 msgid "Send note"
 msgstr "Адправіць нататку"
 
-#: blueman/main/Adapter.py:50
+#: blueman/main/Adapter.py:59
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
 msgstr "Для працы праграмы Bluetooth-адаптар мусіць быць уключаны"
 
-#: blueman/main/Adapter.py:86 data/blueman-adapters.desktop.in:3
+#: blueman/main/Adapter.py:95 data/blueman-adapters.desktop.in:3
 msgid "Bluetooth Adapters"
 msgstr "Bluetooth-адаптары"
 
-#: blueman/main/Adapter.py:143
+#: blueman/main/Adapter.py:153
 msgid "Always"
 msgstr "Заўсёды"
 
-#: blueman/main/Adapter.py:147 blueman/main/Sendto.py:189
+#: blueman/main/Adapter.py:157 blueman/main/Sendto.py:189
 #, python-format
 msgid "%(minutes)d Minute"
 msgid_plural "%(minutes)d Minutes"
@@ -313,19 +325,23 @@ msgstr[1] "%(minutes)d хвіліны"
 msgstr[2] "%(minutes)d хвілін"
 msgstr[3] "%(minutes)d хвілін"
 
-#: blueman/main/Adapter.py:212
+#: blueman/main/Adapter.py:222
 msgid "Adapter"
 msgstr "Адаптар"
 
-#: blueman/main/Manager.py:89 blueman/main/Manager.py:130
+#: blueman/main/Manager.py:63
+msgid "Bluetooth Devices"
+msgstr "Прылады Bluetooth"
+
+#: blueman/main/Manager.py:99 blueman/main/Manager.py:140
 msgid "Bluetooth needs to be turned on for the device manager to function"
 msgstr "Каб кіраўнік прылад працаваў, Bluetooth мусіць быць уключаны"
 
-#: blueman/main/Manager.py:109
+#: blueman/main/Manager.py:119
 msgid "Connection to BlueZ failed"
 msgstr "Не атрымалася злучыцца з BlueZ"
 
-#: blueman/main/Manager.py:110
+#: blueman/main/Manager.py:120
 msgid ""
 "Bluez daemon is not running, blueman-manager cannot continue.\n"
 "This probably means that there were no Bluetooth adapters detected or "
@@ -335,15 +351,15 @@ msgstr ""
 "Гэта магло адбыцца праз тое, што не было выяўлена Bluetooth-адаптараў або "
 "дэман Bluetooth не запушчаны."
 
-#: blueman/main/Manager.py:198
+#: blueman/main/Manager.py:208
 msgid "Searching"
 msgstr "Пошук"
 
-#: blueman/main/Manager.py:221 blueman/plugins/applet/StandardItems.py:79
+#: blueman/main/Manager.py:231 blueman/plugins/applet/StandardItems.py:79
 msgid "Adapter Preferences"
 msgstr "Налады адаптара"
 
-#: blueman/main/Manager.py:233 blueman/gui/manager/ManagerDeviceList.py:143
+#: blueman/main/Manager.py:247 blueman/gui/manager/ManagerDeviceList.py:153
 #: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
 msgstr "Адпраўнік файлаў"
@@ -351,6 +367,10 @@ msgstr "Адпраўнік файлаў"
 #: blueman/main/Sendto.py:33
 msgid "Bluetooth File Transfer"
 msgstr "Перадача файлаў праз Bluetooth"
+
+#: blueman/main/Sendto.py:42
+msgid "_Stop"
+msgstr ""
 
 #: blueman/main/Sendto.py:57 blueman/gui/manager/ManagerProgressbar.py:27
 msgid "Connecting"
@@ -473,6 +493,14 @@ msgstr ""
 "<a href=\"http://github.com/blueman-project/blueman/issues\">, дадаўшы "
 "змесціва гэтага паведамлення.</a>"
 
+#: blueman/main/Services.py:33
+msgid "Local Services"
+msgstr "Лакальныя службы"
+
+#: blueman/main/Services.py:47
+msgid "_Apply"
+msgstr ""
+
 #: blueman/Functions.py:71
 msgid "Bluetooth Turned Off"
 msgstr "Bluetooth адключаны"
@@ -496,6 +524,22 @@ msgstr "Так"
 #: blueman/Functions.py:94
 msgid "No"
 msgstr "Не"
+
+#: blueman/Functions.py:181
+msgid "B"
+msgstr ""
+
+#: blueman/Functions.py:184
+msgid "KB"
+msgstr ""
+
+#: blueman/Functions.py:187
+msgid "MB"
+msgstr ""
+
+#: blueman/Functions.py:190
+msgid "GB"
+msgstr ""
 
 #: blueman/gui/manager/ManagerMenu.py:45
 msgid "_Report a Problem"
@@ -562,90 +606,94 @@ msgid "_Exit"
 msgstr "_Выхад"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:279
-#: blueman/gui/manager/ManagerDeviceList.py:304 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:309
+#: blueman/gui/manager/ManagerDeviceList.py:338 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 msgid "Uncategorized"
 msgstr "Без катэгорыі"
 
-#: blueman/gui/manager/ManagerDeviceList.py:482
-msgid "<b>Trusted and Paired</b>"
-msgstr "<b>Дададзеныя і спалучаныя</b>"
+#: blueman/gui/manager/ManagerDeviceList.py:528
+#, fuzzy
+#| msgid "Trust"
+msgid "Trusted"
+msgstr "Давер"
 
-#: blueman/gui/manager/ManagerDeviceList.py:484
-msgid "<b>Paired</b>"
-msgstr "<b>Спалучаныя</b>"
+#: blueman/gui/manager/ManagerDeviceList.py:530
+#, fuzzy
+#| msgid "Pair"
+msgid "Paired"
+msgstr "Спалучэнне"
 
-#: blueman/gui/manager/ManagerDeviceList.py:486
-msgid "<b>Trusted</b>"
-msgstr "<b>Давер</b>"
+#: blueman/gui/manager/ManagerDeviceList.py:532
+msgid "Blocked"
+msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:505
+#: blueman/gui/manager/ManagerDeviceList.py:555
 #, fuzzy
 msgid "<b>Connected</b>"
 msgstr "<b>_Злучэнне</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:520
+#: blueman/gui/manager/ManagerDeviceList.py:570
 msgid "Poor"
 msgstr "Слабы"
 
-#: blueman/gui/manager/ManagerDeviceList.py:522
-#: blueman/gui/manager/ManagerDeviceList.py:547
+#: blueman/gui/manager/ManagerDeviceList.py:572
+#: blueman/gui/manager/ManagerDeviceList.py:597
 msgid "Sub-optimal"
 msgstr "Горшы за аптымальны"
 
-#: blueman/gui/manager/ManagerDeviceList.py:524
-#: blueman/gui/manager/ManagerDeviceList.py:549
+#: blueman/gui/manager/ManagerDeviceList.py:574
+#: blueman/gui/manager/ManagerDeviceList.py:599
 msgid "Optimal"
 msgstr "Аптымальны"
 
-#: blueman/gui/manager/ManagerDeviceList.py:526
+#: blueman/gui/manager/ManagerDeviceList.py:576
 msgid "Much"
 msgstr "Добра"
 
-#: blueman/gui/manager/ManagerDeviceList.py:528
+#: blueman/gui/manager/ManagerDeviceList.py:578
 msgid "Too much"
 msgstr "Вельмі добра"
 
-#: blueman/gui/manager/ManagerDeviceList.py:531
+#: blueman/gui/manager/ManagerDeviceList.py:581
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:534
+#: blueman/gui/manager/ManagerDeviceList.py:584
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:539
+#: blueman/gui/manager/ManagerDeviceList.py:589
 #, python-format
 msgid "<b>Link Quality: %(lq)u%%</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:541
+#: blueman/gui/manager/ManagerDeviceList.py:591
 #, python-format
 msgid "Link Quality: %(lq)u%%"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:545
+#: blueman/gui/manager/ManagerDeviceList.py:595
 msgid "Low"
 msgstr "Нізкі"
 
-#: blueman/gui/manager/ManagerDeviceList.py:551
+#: blueman/gui/manager/ManagerDeviceList.py:601
 msgid "High"
 msgstr "Высокі"
 
-#: blueman/gui/manager/ManagerDeviceList.py:553
+#: blueman/gui/manager/ManagerDeviceList.py:603
 msgid "Very High"
 msgstr "Вельмі высокі"
 
-#: blueman/gui/manager/ManagerDeviceList.py:556
+#: blueman/gui/manager/ManagerDeviceList.py:606
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:559
+#: blueman/gui/manager/ManagerDeviceList.py:609
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr ""
@@ -688,57 +736,71 @@ msgstr "Часова бачны"
 msgid "Connection Failed: "
 msgstr "Не атрымалася злучыцца: "
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:285
+#: blueman/gui/manager/ManagerDeviceMenu.py:287
 msgid "_<b>_Connect</b>"
 msgstr "<b>_Злучэнне</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:287
+#: blueman/gui/manager/ManagerDeviceMenu.py:289
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr ""
 "Падлучае профілі аўтаматычнага злучэння з крыніцамі і прымачамі A2DP і HID"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:291
+#: blueman/gui/manager/ManagerDeviceMenu.py:293
 msgid "_<b>Disconnect</b>"
 msgstr "_<b>Адлучыцца</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:292
+#: blueman/gui/manager/ManagerDeviceMenu.py:294
 msgid "Forcefully disconnect the device"
 msgstr "Прымусова адлучыць прыладу"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:308
+#: blueman/gui/manager/ManagerDeviceMenu.py:310
 msgid "<b>Connect To:</b>"
 msgstr "<b>Злучыцца з:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:313
+#: blueman/gui/manager/ManagerDeviceMenu.py:315
 msgid "<b>Disconnect:</b>"
 msgstr "<b>Адлучыцца:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:322
+#: blueman/gui/manager/ManagerDeviceMenu.py:324
 #, fuzzy
 msgid "<b>Auto-connect:</b>"
 msgstr "<b>Адлучыцца:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:341
+#: blueman/gui/manager/ManagerDeviceMenu.py:343
 msgid "Send a _File…"
 msgstr "Адправіць _файл…"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:354
+#: blueman/gui/manager/ManagerDeviceMenu.py:356
 msgid "_Pair"
 msgstr "_Спалучэнне"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:364
+#: blueman/gui/manager/ManagerDeviceMenu.py:366
 msgid "_Trust"
 msgstr "_Давяраць"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:369
+#: blueman/gui/manager/ManagerDeviceMenu.py:371
 msgid "_Untrust"
 msgstr "_Не давяраць"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:393
+#: blueman/gui/manager/ManagerDeviceMenu.py:378
+msgid "_Block"
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceMenu.py:383
+msgid "_Unblock"
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceMenu.py:387
+#, fuzzy
+#| msgid "Send files to this device"
+msgid "Block/Unblock this device"
+msgstr "Даслаць файлы на гэтую прыладу"
+
+#: blueman/gui/manager/ManagerDeviceMenu.py:407
 msgid "R_ename device…"
 msgstr "_Змяніць назву прылады…"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:402
+#: blueman/gui/manager/ManagerDeviceMenu.py:416
 msgid "_Remove…"
 msgstr "_Выдаліць…"
 
@@ -774,7 +836,7 @@ msgstr "Абярыце прыладу"
 msgid "More"
 msgstr "Яшчэ"
 
-#: blueman/gui/CommonUi.py:62
+#: blueman/gui/CommonUi.py:65
 msgid "Blueman is a GTK+ Bluetooth manager"
 msgstr "Blueman - гэта кіраўнік Bluetooth на GTK+"
 
@@ -787,12 +849,12 @@ msgstr "Налады GSM"
 msgid "Plugins"
 msgstr "Убудовы"
 
-#: blueman/gui/applet/PluginDialog.py:294
-#: blueman/gui/applet/PluginDialog.py:316
+#: blueman/gui/applet/PluginDialog.py:296
+#: blueman/gui/applet/PluginDialog.py:318
 msgid "Dependency issue"
 msgstr "Праблема з залежнасцямі"
 
-#: blueman/gui/applet/PluginDialog.py:296
+#: blueman/gui/applet/PluginDialog.py:298
 #, python-format
 msgid ""
 "Plugin <b>\"%(0)s\"</b> depends on <b>%(1)s</b>. Unloading <b>%(1)s</b> will "
@@ -803,7 +865,7 @@ msgstr ""
 "таксама адключыць <b>\"%(0)s\"</b>.\n"
 "Працягнуць?"
 
-#: blueman/gui/applet/PluginDialog.py:318
+#: blueman/gui/applet/PluginDialog.py:320
 #, python-format
 msgid ""
 "Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will "
@@ -904,7 +966,9 @@ msgstr "Бесправадная прылада"
 
 #. translators: device class
 #: blueman/DeviceClass.py:52
-msgid "Smart phone"
+#, fuzzy
+#| msgid "Smart phone"
+msgid "Smartphone"
 msgstr "Смартфон"
 
 #. translators: device class
@@ -914,8 +978,8 @@ msgstr "Мадэм"
 
 #. translators: device class
 #: blueman/DeviceClass.py:56
-msgid "Isdn"
-msgstr "Isdn"
+msgid "ISDN"
+msgstr ""
 
 #. translators: device class
 #: blueman/DeviceClass.py:61
@@ -924,32 +988,44 @@ msgstr "Суцэльная"
 
 #. translators: device class
 #: blueman/DeviceClass.py:63
-msgid "1-17 percent"
+#, fuzzy
+#| msgid "1-17 percent"
+msgid "1–17 percent"
 msgstr "1-17 адсоткаў"
 
 #. translators: device class
 #: blueman/DeviceClass.py:65
-msgid "17-33 percent"
+#, fuzzy
+#| msgid "17-33 percent"
+msgid "17–33 percent"
 msgstr "17-33 адсоткі"
 
 #. translators: device class
 #: blueman/DeviceClass.py:67
-msgid "33-50 percent"
+#, fuzzy
+#| msgid "33-50 percent"
+msgid "33–50 percent"
 msgstr "33-50 адсоткаў"
 
 #. translators: device class
 #: blueman/DeviceClass.py:69
-msgid "50-67 percent"
+#, fuzzy
+#| msgid "50-67 percent"
+msgid "50–67 percent"
 msgstr "50-67 адсоткаў"
 
 #. translators: device class
 #: blueman/DeviceClass.py:71
-msgid "67-83 percent"
+#, fuzzy
+#| msgid "67-83 percent"
+msgid "67–83 percent"
 msgstr "67-83 адсоткі"
 
 #. translators: device class
 #: blueman/DeviceClass.py:73
-msgid "83-99 percent"
+#, fuzzy
+#| msgid "83-99 percent"
+msgid "83–99 percent"
 msgstr "83-99 адсоткаў"
 
 #. translators: device class
@@ -999,13 +1075,15 @@ msgstr "Тэлепрыстаўка"
 
 #. translators: device class
 #: blueman/DeviceClass.py:100
-msgid "Hifi audio"
+#, fuzzy
+#| msgid "Hifi audio"
+msgid "Hi-Fi audio"
 msgstr "Аўдыяпрылада Hifi"
 
 #. translators: device class
 #: blueman/DeviceClass.py:102
-msgid "Vcr"
-msgstr "Відэамагнітафон"
+msgid "VCR"
+msgstr ""
 
 #. translators: device class
 #: blueman/DeviceClass.py:104
@@ -1284,7 +1362,9 @@ msgid "Fingertip"
 msgstr "На палец"
 
 #: blueman/DeviceClass.py:211
-msgid "Wrist Worn"
+#, fuzzy
+#| msgid "Wrist Worn"
+msgid "Wrist-Worn"
 msgstr "На прыдалонне"
 
 #: blueman/DeviceClass.py:212
@@ -2298,8 +2378,13 @@ msgstr[2] "Атрымана яшчэ %(files)d файлаў у фоне"
 msgstr[3] "Атрымана яшчэ %(files)d файлаў у фоне"
 
 #: blueman/plugins/applet/KillSwitch.py:37
+#, fuzzy
+#| msgid ""
+#| "Switches Bluetooth killswitch status to match Bluetooth power state."
+#| "Allows turning Bluetooth back on from an icon that shows its status; "
+#| "provided it isn't unplugged by the system, or physically."
 msgid ""
-"Switches Bluetooth killswitch status to match Bluetooth power state.Allows "
+"Switches Bluetooth killswitch status to match Bluetooth power state. Allows "
 "turning Bluetooth back on from an icon that shows its status; provided it "
 "isn't unplugged by the system, or physically."
 msgstr ""
@@ -2649,14 +2734,26 @@ msgstr "Вызначыць стан RfKill"
 msgid "Setting RfKill State requires privileges"
 msgstr "Для вызначэння стану RfKill патрабуюцца адпаведныя правы"
 
+#~ msgid "Isdn"
+#~ msgstr "Isdn"
+
+#~ msgid "Vcr"
+#~ msgstr "Відэамагнітафон"
+
+#~ msgid "<b>Trusted and Paired</b>"
+#~ msgstr "<b>Дададзеныя і спалучаныя</b>"
+
+#~ msgid "<b>Paired</b>"
+#~ msgstr "<b>Спалучаныя</b>"
+
+#~ msgid "<b>Trusted</b>"
+#~ msgstr "<b>Давер</b>"
+
 #~ msgid "<b>Friendly Name</b>"
 #~ msgstr "<b>Назва прылады</b>"
 
 #~ msgid "Disconnecting…"
 #~ msgstr "Адлучэнне…"
-
-#~ msgid "Local Services"
-#~ msgstr "Лакальныя службы"
 
 #~ msgid "Serial Ports"
 #~ msgstr "Паслядоўныя парты"
@@ -2740,9 +2837,6 @@ msgstr "Для вызначэння стану RfKill патрабуюцца а�
 #~ msgid "Serial port connected to %s"
 #~ msgstr "Падлучаны паслядоўны порт на %s"
 
-#~ msgid "Bluetooth Devices"
-#~ msgstr "Прылады Bluetooth"
-
 #~ msgid "%.0f Minute"
 #~ msgid_plural "%.0f Minutes"
 #~ msgstr[0] "%.0f хвіліна"
@@ -2758,7 +2852,6 @@ msgstr "Для вызначэння стану RfKill патрабуюцца а�
 #~ msgstr[3] "%.0f секунд"
 
 #, fuzzy
-#~| msgid "Rename device"
 #~ msgid "R_ename device..."
 #~ msgstr "Пераназваць прыладу"
 
@@ -2770,9 +2863,6 @@ msgstr "Для вызначэння стану RfKill патрабуюцца а�
 
 #~ msgid "Select files to send"
 #~ msgstr "Абярыце файлы на дасыланне"
-
-#~ msgid "Send files to this device"
-#~ msgstr "Даслаць файлы на гэтую прыладу"
 
 #~ msgid "Source adapter. Takes address or adapter's name eg. hci0"
 #~ msgstr "Адаптар-крыніца. Задаецца адрас ці назва адаптара, напр. hci0"
@@ -2794,3 +2884,6 @@ msgstr "Для вызначэння стану RfKill патрабуюцца а�
 
 #~ msgid "Start configuration assistant for this device"
 #~ msgstr "Запусціць Bluetooth-дапаможнік для гэтай прылады"
+
+#~ msgid "Uses libappindicator to show a statusicon"
+#~ msgstr "Выкарыстоўвае libappindicator, каб паказваць значок стану"
