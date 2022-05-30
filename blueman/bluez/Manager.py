@@ -16,6 +16,8 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
         'adapter-removed': (GObject.SignalFlags.NO_HOOKS, None, (str,)),
         'device-created': (GObject.SignalFlags.NO_HOOKS, None, (str,)),
         'device-removed': (GObject.SignalFlags.NO_HOOKS, None, (str,)),
+        'battery-created': (GObject.SignalFlags.NO_HOOKS, None, (str,)),
+        'battery-removed': (GObject.SignalFlags.NO_HOOKS, None, (str,)),
     }
 
     connect_signal = GObject.GObject.connect
@@ -31,36 +33,66 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
 
         self._object_manager.connect("object-added", self._on_object_added)
         self._object_manager.connect("object-removed", self._on_object_removed)
+        self._object_manager.connect("interface-added", self._on_interface_added)
+        self._object_manager.connect("interface-removed", self._on_interface_removed)
 
     def _on_object_added(self, _object_manager: Gio.DBusObjectManager, dbus_object: Gio.DBusObject) -> None:
         device_proxy = dbus_object.get_interface('org.bluez.Device1')
         adapter_proxy = dbus_object.get_interface('org.bluez.Adapter1')
+        battery_proxy = dbus_object.get_interface('org.bluez.Battery1')
 
         if adapter_proxy:
             assert isinstance(adapter_proxy, Gio.DBusProxy)
             object_path = adapter_proxy.get_object_path()
-            logging.debug(object_path)
+            logging.debug(f"Adapter1: {object_path}")
             self.emit('adapter-added', object_path)
-        elif device_proxy:
+        if device_proxy:
             assert isinstance(device_proxy, Gio.DBusProxy)
             object_path = device_proxy.get_object_path()
-            logging.debug(object_path)
+            logging.debug(f"Device1: {object_path}")
             self.emit('device-created', object_path)
+        if battery_proxy:
+            assert isinstance(device_proxy, Gio.DBusProxy)
+            object_path = device_proxy.get_object_path()
+            logging.debug(f"Battery1: {object_path}")
+            self.emit('battery-created', object_path)
 
     def _on_object_removed(self, _object_manager: Gio.DBusObjectManager, dbus_object: Gio.DBusObject) -> None:
         device_proxy = dbus_object.get_interface('org.bluez.Device1')
         adapter_proxy = dbus_object.get_interface('org.bluez.Adapter1')
+        battery_proxy = dbus_object.get_interface('org.bluez.Battery1')
 
         if adapter_proxy:
             assert isinstance(adapter_proxy, Gio.DBusProxy)
             object_path = adapter_proxy.get_object_path()
             logging.debug(object_path)
             self.emit('adapter-removed', object_path)
-        elif device_proxy:
+        if device_proxy:
             assert isinstance(device_proxy, Gio.DBusProxy)
             object_path = device_proxy.get_object_path()
             logging.debug(object_path)
             self.emit('device-removed', object_path)
+        if battery_proxy:
+            assert isinstance(device_proxy, Gio.DBusProxy)
+            object_path = device_proxy.get_object_path()
+            logging.debug(object_path)
+            self.emit('battery-removed', object_path)
+
+    def _on_interface_added(self, _object_manager: Gio.DBusObjectManager, dbus_object: Gio.DBusObject,
+                            _dbus_interface: Gio.DBusInterface) -> None:
+        object_path = dbus_object.get_object_path()
+        battery = dbus_object.get_interface("org.bluez.Battery1")
+        if battery is not None:
+            logging.debug(f"Battery1 added to {object_path}")
+            self.emit('battery-created', object_path)
+
+    def _on_interface_removed(self, _object_manager: Gio.DBusObjectManager, dbus_object: Gio.DBusObject,
+                              _dbus_interface: Gio.DBusInterface) -> None:
+        object_path = dbus_object.get_object_path()
+        battery = dbus_object.get_interface("org.bluez.Battery1")
+        if battery is not None:
+            logging.debug(f"Battery1 removed from {object_path}")
+            self.emit('battery-removed', object_path)
 
     def get_adapters(self) -> List[Adapter]:
         paths = []
