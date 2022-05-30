@@ -21,7 +21,7 @@ class DeviceSelectorWidget(Gtk.Box):
 
         self.List = DeviceSelectorList(adapter_name)
         if self.List.Adapter is not None:
-            self.List.display_known_devices()
+            self.List.populate_devices()
 
         sw = Gtk.ScrolledWindow(hscrollbar_policy=Gtk.PolicyType.NEVER,
                                 vscrollbar_policy=Gtk.PolicyType.AUTOMATIC,
@@ -98,7 +98,7 @@ class DeviceSelectorWidget(Gtk.Box):
             self.update_adapters_list()
         else:
             if self.List.Adapter:
-                self.List.display_known_devices()
+                self.List.populate_devices()
 
     def update_adapters_list(self) -> None:
         model = self.cb_adapters.get_model()
