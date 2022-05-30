@@ -1,5 +1,5 @@
 from gettext import gettext as _
-from typing import Optional, TYPE_CHECKING, List, Any, cast, Callable, Set
+from typing import Optional, TYPE_CHECKING, List, Any, cast, Callable, Set, Dict
 import html
 import logging
 import cairo
@@ -7,13 +7,14 @@ import os
 
 from blueman.bluez.Battery import Battery
 from blueman.bluez.Device import Device
+from blueman.bluez.Manager import Manager
 from blueman.gui.DeviceList import DeviceList
 from blueman.DeviceClass import get_minor_class, get_major_class, gatt_appearance_to_name
 from blueman.gui.GenericList import ListDataDict
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.Constants import PIXMAP_PATH
 from blueman.Functions import launch
-from blueman.Sdp import ServiceUUID, OBEX_OBJPUSH_SVCLASS_ID, BATTERY_SERVICE_SVCLASS_ID
+from blueman.Sdp import ServiceUUID, OBEX_OBJPUSH_SVCLASS_ID
 from blueman.gui.GtkAnimation import TreeRowFade, CellFade, AnimBase
 from blueman.main.Config import Config
 from _blueman import ConnInfoReadError, conn_info
@@ -76,6 +77,10 @@ class ManagerDeviceList(DeviceList):
 
         self._monitored_devices: Set[str] = set()
 
+        self.manager.connect_signal("battery-created", self.on_battery_created)
+        self.manager.connect_signal("battery-removed", self.on_battery_removed)
+        self._batteries: Dict[str, Battery] = {}
+
         self.Config = Config("org.blueman.general")
         self.Config.connect('changed', self._on_settings_changed)
         # Set the correct sorting
@@ -120,6 +125,17 @@ class ManagerDeviceList(DeviceList):
         for row in self.liststore:
             device = self.get(row.iter, "device")["device"]
             self.row_setup_event(row.iter, device)
+
+    def on_battery_created(self, _manager: Manager, obj_path: str) -> None:
+        if obj_path not in self._batteries:
+            battery_proxy = Battery(obj_path=obj_path)
+            self._batteries[obj_path] = battery_proxy
+            logging.debug(f"{obj_path} {battery_proxy['Percentage']}")
+
+    def on_battery_removed(self, _manager: Manager, obj_path: str) -> None:
+        if obj_path in self._batteries:
+            battery = self._batteries.pop(obj_path)
+            battery.destroy()
 
     def search_func(self, model: Gtk.TreeModel, column: int, key: str, tree_iter: Gtk.TreeIter) -> bool:
         row = self.get(tree_iter, "caption")
@@ -450,9 +466,9 @@ class ManagerDeviceList(DeviceList):
 
         bars = {}
 
-        if device["ServicesResolved"] and any(ServiceUUID(uuid).short_uuid == BATTERY_SERVICE_SVCLASS_ID
-                                              for uuid in device["UUIDs"]):
-            bars["battery"] = Battery(obj_path=device.get_object_path())["Percentage"]
+        obj_path = device.get_object_path()
+        if obj_path in self._batteries:
+            bars["battery"] = self._batteries[obj_path]["Percentage"]
 
         # cinfo init may fail for bluetooth devices version 4 and up
         # FIXME Workaround is horrible and we should show something better
