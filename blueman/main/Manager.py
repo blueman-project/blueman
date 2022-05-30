@@ -168,7 +168,7 @@ class Blueman(Gtk.Application):
                 self.Stats = ManagerStats(self)
 
                 if self.List.is_valid_adapter():
-                    self.List.display_known_devices(autoselect=True)
+                    self.List.populate_devices()
 
                 self.List.connect("adapter-changed", self.on_adapter_changed)
 
@@ -187,7 +187,7 @@ class Blueman(Gtk.Application):
 
     def on_adapter_changed(self, lst: ManagerDeviceList, adapter: str) -> None:
         if adapter is not None:
-            self.List.display_known_devices(autoselect=True)
+            self.List.populate_devices()
 
     def inquiry(self) -> None:
         def prop_changed(_lst: ManagerDeviceList, _adapter: Adapter, key_value: Tuple[str, Any]) -> None:

@@ -132,6 +132,12 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
 
         return [Device(obj_path=path) for path in paths]
 
+    def populate_devices(self, adapter_path: str = "/") -> None:
+        for obj_proxy in self._object_manager.get_objects():
+            object_path = obj_proxy.get_object_path()
+            if object_path.startswith(adapter_path):
+                self._on_object_added(self._object_manager, obj_proxy)
+
     def find_device(self, address: str, adapter_path: str = "/") -> Optional[Device]:
         for device in self.get_devices(adapter_path):
             if device['Address'] == address:

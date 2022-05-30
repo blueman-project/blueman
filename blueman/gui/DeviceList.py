@@ -242,15 +242,9 @@ class DeviceList(GenericList):
         no_name = "Name" not in device
         self.set(tree_iter, dbus_path=object_path, timestamp=float(timestamp), no_name=no_name)
 
-    def display_known_devices(self, autoselect: bool = False) -> None:
+    def populate_devices(self) -> None:
         self.clear()
-        if self.Adapter:
-            devices = self.manager.get_devices(self.Adapter.get_object_path())
-            for device in devices:
-                self.device_add_event(device)
-
-        if autoselect:
-            self.selection.select_path(0)
+        self.manager.populate_devices()
 
     def discover_devices(self, time: float = 10.24,
                          error_handler: Optional[Callable[[BluezDBusException], None]] = None) -> None:
