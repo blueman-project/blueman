@@ -189,8 +189,8 @@ class PluginDialog(Gtk.Window):
         self.applet.Plugins.disconnect(self.sig_b)
         return False
 
-    def on_selection_changed(self, selection: Gtk.TreeSelection) -> None:
-        model, tree_iter = selection.get_selected()
+    def on_selection_changed(self, _selection: Gtk.TreeSelection) -> None:
+        tree_iter = self.list.selected()
         assert tree_iter is not None
 
         name = self.list.get(tree_iter, "name")["name"]
