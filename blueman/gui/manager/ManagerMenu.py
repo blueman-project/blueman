@@ -16,6 +16,7 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import GLib
+from gi.repository import Gio
 
 if TYPE_CHECKING:
     from blueman.main.Manager import Blueman
@@ -295,6 +296,6 @@ class ManagerMenu:
             self.item_adapter.props.sensitive = False
 
     def _on_plugin_dialog_activate(self, _item: Gtk.MenuItem) -> None:
-        def cb() -> None:
+        def cb(_proxy: Gio.DBusProxy, _res: Any, _userdata: Any) -> None:
             pass
         self.blueman.Applet.OpenPluginDialog(result_handler=cb)
