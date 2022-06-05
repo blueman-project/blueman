@@ -490,9 +490,9 @@ class ManagerDeviceList(DeviceList):
         if row["battery"] == row["rssi"] == row["tpl"] == row["lq"] == 0:
             return
 
-        self.set(tree_iter, rssi=0, lq=0, tpl=0)
-        self._prepare_fader(row["cell_fader"], lambda: self.set(tree_iter, rssi_pb=None, lq_pb=None, tpl_pb=None))\
-            .animate(start=1.0, end=0.0, duration=400)
+        self.set(tree_iter, battery=0, rssi=0, lq=0, tpl=0)
+        self._prepare_fader(row["cell_fader"], lambda: self.set(tree_iter, battery_pb=None, rssi_pb=None, lq_pb=None,
+                                                                tpl_pb=None)).animate(start=1.0, end=0.0, duration=400)
 
     def _prepare_fader(self, fader: AnimBase, callback: Optional[Callable[[], None]] = None) -> AnimBase:
         def on_finished(finished_fader: AnimBase) -> None:
