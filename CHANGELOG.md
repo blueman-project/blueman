@@ -12,10 +12,13 @@
 * Use a GtkTreeModelFilter to show/hide unnamed devices
 * Replace sigint hack with GLib to catch it
 * Port meson from deprecated python3 module
+* Rework battery handling
+* Merge Battery applet plugin into ConnectionNotifier
 
 ### Bugs fixed
 
 * blueman-services did not start on 32 bit systems
+* Fix signal/battery bars
 
 ## 2.2.4
 
