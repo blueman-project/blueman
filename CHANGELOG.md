@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.2.5
+
+### Bugs fixes
+
+* Fix network interface iteration on 32 bit systems
+* Manager: Fix cancel button in send-note dialog
+* Fix battery and signals bars
+
 ## 2.2.4
 
 ### Changes
