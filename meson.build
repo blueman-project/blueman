@@ -1,6 +1,6 @@
 project(
     'blueman', 'c',
-    version: '2.2.4',
+    version: '2.2.5',
     license: 'GPL3',
     meson_version: '>=0.48.0',
     default_options: 'b_lundef=false'
