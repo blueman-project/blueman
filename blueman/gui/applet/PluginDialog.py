@@ -224,7 +224,7 @@ class PluginDialog(Gtk.Window):
         self.update_config_widget(cls)
 
     def on_prefs_toggled(self, _button: Gtk.ToggleButton) -> None:
-        model, tree_iter = self.list.selection.get_selected()
+        tree_iter = self.list.selected()
         assert tree_iter is not None
         name = self.list.get(tree_iter, "name")["name"]
         cls: Type[AppletPlugin] = self.applet.Plugins.get_classes()[name]
