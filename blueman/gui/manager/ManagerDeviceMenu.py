@@ -284,13 +284,13 @@ class ManagerDeviceMenu(Gtk.Menu):
         show_generic_connect = self.show_generic_connect_calc(self.SelectedDevice['UUIDs'])
 
         if not row["connected"] and show_generic_connect:
-            connect_item = create_menuitem(_("_<b>_Connect</b>"), "bluetooth-symbolic")
+            connect_item = create_menuitem(_("<b>_Connect</b>"), "bluetooth-symbolic")
             connect_item.connect("activate", lambda _item: self.connect_service(self.SelectedDevice))
             connect_item.props.tooltip_text = _("Connects auto connect profiles A2DP source, A2DP sink, and HID")
             connect_item.show()
             self.append(connect_item)
         elif show_generic_connect:
-            connect_item = create_menuitem(_("_<b>Disconnect</b>"), "bluetooth-disabled-symbolic")
+            connect_item = create_menuitem(_("<b>_Disconnect</b>"), "bluetooth-disabled-symbolic")
             connect_item.props.tooltip_text = _("Forcefully disconnect the device")
             connect_item.connect("activate", lambda _item: self.disconnect_service(self.SelectedDevice))
             connect_item.show()
