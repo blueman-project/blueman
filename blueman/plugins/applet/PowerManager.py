@@ -210,7 +210,7 @@ class PowerManager(AppletPlugin, StatusIconProvider):
         self.request_power_state(not self.current_state)
 
     def on_status_icon_query_icon(self) -> Optional[str]:
-        return "bluetooth-disabled-symbolic" if not self.get_bluetooth_status() else None
+        return "blueman-disabled" if not self.get_bluetooth_status() else None
 
     def on_adapter_added(self, path: str) -> None:
         adapter = Adapter(obj_path=path)
