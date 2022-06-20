@@ -1,7 +1,7 @@
 from gettext import gettext as _
 from typing import Optional, Tuple, List
 
-from gi.repository import GObject, GLib
+from gi.repository import GObject, GLib, Gio
 
 from blueman.Functions import launch
 from blueman.main.PluginManager import PluginManager
@@ -41,6 +41,9 @@ class StatusIcon(AppletPlugin, GObject.GObject):
         GObject.GObject.__init__(self)
         self._tooltip_title = _("Bluetooth Enabled")
         self._tooltip_text = ""
+
+        settings = Gio.Settings("org.blueman.general")
+        self.use_symbolic_icons = settings.get_boolean("symbolic-status-icons")
 
         self.query_visibility(emit=False)
 
@@ -121,8 +124,18 @@ class StatusIcon(AppletPlugin, GObject.GObject):
         )] + ["GtkStatusIcon"]
 
     def _get_icon_name(self) -> str:
+        # default icon name
+        name = "blueman-tray"
         for plugin in self.parent.Plugins.get_loaded_plugins(StatusIconProvider):
             icon = plugin.on_status_icon_query_icon()
             if icon is not None:
-                return icon
-        return "blueman-tray"
+                # status icon
+                name = icon
+
+        # depending on configuration, ensure fullcolor icons..
+        name = name.replace("-symbolic", "")
+        if self.use_symbolic_icons:
+            # or symbolic
+            name = f"{name}-symbolic"
+
+        return name
