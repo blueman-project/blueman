@@ -76,6 +76,11 @@
       <summary>Use notification daemon</summary>
       <description>If this is set to false blueman always uses its internal fallback notification dialog and does not invoke a notification daemon. Otherwise the fallback dialog will only be used if actions need to be displayed and the notification daemon does not report to support them.</description>
     </key>
+    <key type="b" name="symbolic-status-icons">
+      <default>false</default>
+      <summary>Use symbolic icons in the status tray</summary>
+      <description>If this is set to true blueman uses symbolic icon in the status tray, otherwise it uses fullcolor icons.</description>
+    </key>
   </schema>
   <schema id="org.blueman.gsmsettings" path="/org/blueman/gsmsettings/">
   </schema>
