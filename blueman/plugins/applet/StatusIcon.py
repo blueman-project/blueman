@@ -1,7 +1,7 @@
 from gettext import gettext as _
 from typing import Optional, Tuple, List
 
-from gi.repository import GObject, GLib
+from gi.repository import GObject, GLib, Gio
 
 from blueman.Functions import launch
 from blueman.main.Config import Config
@@ -43,8 +43,8 @@ class StatusIcon(AppletPlugin, GObject.GObject):
         self._tooltip_title = _("Bluetooth Enabled")
         self._tooltip_text = ""
 
-        general_config = Config("org.blueman.general")
-        self.use_symbolic_icons = general_config.get_boolean("symbolic-status-icons")
+        self.general_config = Config("org.blueman.general")
+        self.general_config.connect("changed::symbolic-status-icons", self.on_symbolic_config_change)
 
         self.query_visibility(emit=False)
 
@@ -93,6 +93,9 @@ class StatusIcon(AppletPlugin, GObject.GObject):
         self._tooltip_text = "" if text is None else text
         self._emit_dbus_signal("ToolTipTextChanged", self._tooltip_text)
 
+    def on_symbolic_config_change(self, settings: Gio.Settings, key: str) -> None:
+        self.icon_should_change()
+
     def icon_should_change(self) -> None:
         self._emit_dbus_signal("IconNameChanged", self._get_icon_name())
         self.query_visibility()
@@ -135,7 +138,7 @@ class StatusIcon(AppletPlugin, GObject.GObject):
 
         # depending on configuration, ensure fullcolor icons..
         name = name.replace("-symbolic", "")
-        if self.use_symbolic_icons:
+        if self.general_config.get_boolean("symbolic-status-icons"):
             # or symbolic
             name = f"{name}-symbolic"
 
