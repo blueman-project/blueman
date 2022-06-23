@@ -25,7 +25,7 @@ jobs:
       - run: "grep --quiet \"version: '${{ steps.version.outputs.VERSION }}'\" meson.build || (echo 'Did not find expected verson in meson.build' && exit 1)"
       - run: git archive --prefix="blueman-${{ steps.version.outputs.VERSION }}/" HEAD | tar x
       - run: apt-get update
-      - run: apt-get install -y -qq --no-install-recommends autopoint automake libtool
+      - run: apt-get install -y -qq --no-install-recommends autopoint automake libtool pkg-config
       - run: NOCONFIGURE=1 ./autogen.sh
         working-directory: "blueman-${{ steps.version.outputs.VERSION }}"
       - run: tar cJf "blueman-${{ steps.version.outputs.VERSION }}.tar.xz" "blueman-${{ steps.version.outputs.VERSION }}"
