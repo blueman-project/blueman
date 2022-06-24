@@ -1,11 +1,9 @@
-import logging
 from gettext import gettext as _
-from typing import Any, Optional, Dict, Union
+from typing import Any, Dict, Union
 
 from blueman.bluez.Device import Device
 from blueman.bluez.Battery import Battery
 from blueman.bluez.Manager import Manager
-from blueman.bluez.errors import BluezDBusException
 from blueman.gui.Notification import Notification, _NotificationBubble, _NotificationDialog
 from blueman.plugins.AppletPlugin import AppletPlugin
 from gi.repository import GLib
@@ -33,18 +31,10 @@ class ConnectionNotifier(AppletPlugin):
 
         if key == "Connected":
             if value:
-                try:
-                    perc = battery['Percentage']
-                    icon_name = "battery"
-                except BluezDBusException:
-                    logging.debug("Failed to get battery level")
-                    perc = None
-                    icon_name = device["Icon"]
-
                 self._notifications[path] = notification = Notification(
                     device["Alias"],
-                    self._get_message(perc),
-                    icon_name=icon_name
+                    _('Connected'),
+                    icon_name=device["Icon"]
                 )
                 notification.show()
 
@@ -57,12 +47,6 @@ class ConnectionNotifier(AppletPlugin):
             else:
                 Notification(device["Alias"], _('Disconnected'), icon_name=device["Icon"]).show()
 
-    def _get_message(self, battery_percentage: Optional[str]) -> str:
-        if battery_percentage is None:
-            return _('Connected')
-        else:
-            return f"{_('Connected')} {battery_percentage}%"
-
     def _on_battery_created(self, _manager: Manager, obj_path: str) -> None:
         battery = Battery(obj_path=obj_path)
         self._on_battery_property_changed(battery, "Percentage", battery["Percentage"], obj_path)
@@ -71,5 +55,5 @@ class ConnectionNotifier(AppletPlugin):
         if key == "Percentage":
             notification = self._notifications[path]
             if notification:
-                notification.set_message(self._get_message(value))
+                notification.set_message(f"{_('Connected')} {value}%")
                 notification.set_notification_icon("battery")
