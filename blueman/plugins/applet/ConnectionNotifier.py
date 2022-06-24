@@ -72,3 +72,4 @@ class ConnectionNotifier(AppletPlugin):
             notification = self._notifications[path]
             if notification:
                 notification.set_message(self._get_message(value))
+                notification.set_notification_icon("battery")
