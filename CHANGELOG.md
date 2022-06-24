@@ -1,10 +1,11 @@
 # Changelog
 
-## master
+## main
 
 ### New features
 
 * Audio profile switcher in applet menu (@abhijeetviswa)
+* Symbolic tray icon option (GSettings switch symbolic-status-icons in org.blueman.general)
 
 ### Changes
 
@@ -14,11 +15,15 @@
 * Port meson from deprecated python3 module
 * Rework battery handling
 * Merge Battery applet plugin into ConnectionNotifier
+* Symbolic icons and small UI improvements
 
-### Bugs fixed
+## 2.2.5
 
-* blueman-services did not start on 32 bit systems
-* Fix signal/battery bars
+### Bugs fixes
+
+* Fix network interface iteration on 32 bit systems
+* Manager: Fix cancel button in send-note dialog
+* Fix battery and signals bars
 
 ## 2.2.4
 
