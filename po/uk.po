@@ -16,13 +16,14 @@
 # Oleh, 2014
 # Микола Ткач <chistomov@gmail.com>, 2014-2019
 # Yuri Chornoivan <yurchor@ukr.net>
+# Artem <artem@molotov.work>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2022-05-27 17:59+0000\n"
-"PO-Revision-Date: 2020-06-05 12:28+0000\n"
-"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"POT-Creation-Date: 2022-06-05 21:46+0200\n"
+"PO-Revision-Date: 2022-06-15 15:12+0000\n"
+"Last-Translator: Artem <artem@molotov.work>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/blueman/"
 "blueman/uk/>\n"
 "Language: uk\n"
@@ -33,7 +34,7 @@ msgstr ""
 "11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
 "100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
 "(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
-"X-Generator: Weblate 4.1-dev\n"
+"X-Generator: Weblate 4.13-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -52,9 +53,8 @@ msgid "Temporarily visible"
 msgstr "Тимчасово видимий"
 
 #: data/ui/adapters-tab.ui:110
-#, fuzzy
 msgid "<b>Name</b>"
-msgstr "<b>Зв'язані</b>"
+msgstr "<b>Ім'я</b>"
 
 #: data/ui/applet-passkey.ui:8
 msgid "Pairing request"
@@ -145,15 +145,13 @@ msgstr "_Скинути"
 
 #: data/ui/rename-device.ui:40 data/ui/note.ui:26 blueman/main/Sendto.py:235
 #: blueman/gui/DeviceSelectorDialog.py:17
-#, fuzzy
-#| msgid "Cancelling"
 msgid "_Cancel"
-msgstr "Скасування"
+msgstr "_Скасувати"
 
 #: data/ui/rename-device.ui:54 data/ui/note.ui:41
 #: blueman/gui/DeviceSelectorDialog.py:17
 msgid "_OK"
-msgstr ""
+msgstr "_Гаразд"
 
 #: data/ui/services-network.ui:37
 msgid "Network Access Point (NAP)"
@@ -254,8 +252,8 @@ msgstr "<b>Автор:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:338
-#: blueman/gui/manager/ManagerDeviceList.py:340 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:354
+#: blueman/gui/manager/ManagerDeviceList.py:356 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:209
@@ -328,13 +326,13 @@ msgid "Always"
 msgstr "Завжди"
 
 #: blueman/main/Adapter.py:157 blueman/main/Sendto.py:189
-#, fuzzy, python-format
+#, python-format
 msgid "%(minutes)d Minute"
 msgid_plural "%(minutes)d Minutes"
-msgstr[0] "%d хвилина"
-msgstr[1] "%d хвилини"
-msgstr[2] "%d хвилин"
-msgstr[3] "%d хвилин"
+msgstr[0] "%(minutes)d хвилина"
+msgstr[1] "%(minutes)d хвилини"
+msgstr[2] "%(minutes)d хвилин"
+msgstr[3] "%(minutes)d хвилин"
 
 #: blueman/main/Adapter.py:222
 msgid "Adapter"
@@ -370,7 +368,7 @@ msgstr "Пошук"
 msgid "Adapter Preferences"
 msgstr "Параметри адаптера"
 
-#: blueman/main/Manager.py:247 blueman/gui/manager/ManagerDeviceList.py:153
+#: blueman/main/Manager.py:247 blueman/gui/manager/ManagerDeviceList.py:169
 #: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
 msgstr "Передавач файлів"
@@ -381,7 +379,7 @@ msgstr "Передача файлу через bluetooth"
 
 #: blueman/main/Sendto.py:42
 msgid "_Stop"
-msgstr ""
+msgstr "_Стоп"
 
 #: blueman/main/Sendto.py:57 blueman/gui/manager/ManagerProgressbar.py:27
 msgid "Connecting"
@@ -412,10 +410,10 @@ msgstr "час, що залишився:"
 #, python-format
 msgid "%(seconds)d Second"
 msgid_plural "%(seconds)d Seconds"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "%(seconds)d секунда"
+msgstr[1] "%(seconds)d секунди"
+msgstr[2] "%(seconds)d секунд"
+msgstr[3] "%(seconds)d секунд"
 
 #: blueman/main/Sendto.py:229
 #, python-format
@@ -508,7 +506,7 @@ msgstr "Локальні служби"
 
 #: blueman/main/Services.py:47
 msgid "_Apply"
-msgstr ""
+msgstr "_Застосувати"
 
 #: blueman/Functions.py:71
 msgid "Bluetooth Turned Off"
@@ -536,19 +534,19 @@ msgstr "Ні"
 
 #: blueman/Functions.py:181
 msgid "B"
-msgstr ""
+msgstr "Б"
 
 #: blueman/Functions.py:184
 msgid "KB"
-msgstr ""
+msgstr "КБ"
 
 #: blueman/Functions.py:187
 msgid "MB"
-msgstr ""
+msgstr "МБ"
 
 #: blueman/Functions.py:190
 msgid "GB"
-msgstr ""
+msgstr "ГБ"
 
 #: blueman/gui/manager/ManagerMenu.py:45
 msgid "_Report a Problem"
@@ -567,9 +565,8 @@ msgid "Show _Statusbar"
 msgstr "Показати _рядок стану"
 
 #: blueman/gui/manager/ManagerMenu.py:78
-#, fuzzy
 msgid "Hide _unnamed devices"
-msgstr "Перейменувати пристрій"
+msgstr "Сховати _unnamed пристрої"
 
 #: blueman/gui/manager/ManagerMenu.py:88
 msgid "S_ort By"
@@ -607,108 +604,101 @@ msgid "_Search"
 msgstr "_Шукати"
 
 #: blueman/gui/manager/ManagerMenu.py:155
-#, fuzzy
 msgid "_Preferences"
-msgstr "Параметри адаптера"
+msgstr "_Параметри"
 
 #: blueman/gui/manager/ManagerMenu.py:164 blueman/plugins/applet/ExitItem.py:12
-#, fuzzy
 msgid "_Exit"
-msgstr "Вийти"
+msgstr "_Вийти"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:309
-#: blueman/gui/manager/ManagerDeviceList.py:338 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:325
+#: blueman/gui/manager/ManagerDeviceList.py:354 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
-#, fuzzy
 msgid "Uncategorized"
-msgstr "невизначено"
+msgstr "Без категорії"
 
-#: blueman/gui/manager/ManagerDeviceList.py:528
-#, fuzzy
-#| msgid "Trust"
+#: blueman/gui/manager/ManagerDeviceList.py:544
 msgid "Trusted"
-msgstr "Надійний"
+msgstr "Довірений"
 
-#: blueman/gui/manager/ManagerDeviceList.py:530
-#, fuzzy
-#| msgid "Pair"
+#: blueman/gui/manager/ManagerDeviceList.py:546
 msgid "Paired"
-msgstr "Пара"
+msgstr "Спарений"
 
-#: blueman/gui/manager/ManagerDeviceList.py:532
+#: blueman/gui/manager/ManagerDeviceList.py:548
 msgid "Blocked"
-msgstr ""
+msgstr "Заблокований"
 
-#: blueman/gui/manager/ManagerDeviceList.py:555
-#, fuzzy
+#: blueman/gui/manager/ManagerDeviceList.py:571
 msgid "<b>Connected</b>"
-msgstr "<b>З'_єднатися</b>"
+msgstr "<b>З'_єднано</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:570
+#: blueman/gui/manager/ManagerDeviceList.py:586
 msgid "Poor"
 msgstr "Поганий"
 
-#: blueman/gui/manager/ManagerDeviceList.py:572
-#: blueman/gui/manager/ManagerDeviceList.py:597
+#: blueman/gui/manager/ManagerDeviceList.py:588
+#: blueman/gui/manager/ManagerDeviceList.py:613
 msgid "Sub-optimal"
 msgstr "Середній"
 
-#: blueman/gui/manager/ManagerDeviceList.py:574
-#: blueman/gui/manager/ManagerDeviceList.py:599
+#: blueman/gui/manager/ManagerDeviceList.py:590
+#: blueman/gui/manager/ManagerDeviceList.py:615
 msgid "Optimal"
 msgstr "Оптимальний"
 
-#: blueman/gui/manager/ManagerDeviceList.py:576
+#: blueman/gui/manager/ManagerDeviceList.py:592
 msgid "Much"
 msgstr "Значний"
 
-#: blueman/gui/manager/ManagerDeviceList.py:578
+#: blueman/gui/manager/ManagerDeviceList.py:594
 msgid "Too much"
 msgstr "Дуже значний"
 
-#: blueman/gui/manager/ManagerDeviceList.py:581
+#: blueman/gui/manager/ManagerDeviceList.py:597
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 msgstr ""
+"<b>Потужність отриманого сигналу: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:584
+#: blueman/gui/manager/ManagerDeviceList.py:600
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
-msgstr ""
+msgstr "Потужність отриманого сигналу: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:589
+#: blueman/gui/manager/ManagerDeviceList.py:605
 #, python-format
 msgid "<b>Link Quality: %(lq)u%%</b>"
-msgstr ""
+msgstr "<b>Якість зв'язку: %(lq)u%%</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:591
+#: blueman/gui/manager/ManagerDeviceList.py:607
 #, python-format
 msgid "Link Quality: %(lq)u%%"
-msgstr ""
+msgstr "Якість зв'язку: %(lq)u%%"
 
-#: blueman/gui/manager/ManagerDeviceList.py:595
+#: blueman/gui/manager/ManagerDeviceList.py:611
 msgid "Low"
 msgstr "Низький"
 
-#: blueman/gui/manager/ManagerDeviceList.py:601
+#: blueman/gui/manager/ManagerDeviceList.py:617
 msgid "High"
 msgstr "Високий"
 
-#: blueman/gui/manager/ManagerDeviceList.py:603
+#: blueman/gui/manager/ManagerDeviceList.py:619
 msgid "Very High"
 msgstr "Дуже високий"
 
-#: blueman/gui/manager/ManagerDeviceList.py:606
+#: blueman/gui/manager/ManagerDeviceList.py:622
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
-msgstr ""
+msgstr "<b>Рівень потужності передачі: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:609
+#: blueman/gui/manager/ManagerDeviceList.py:625
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
-msgstr ""
+msgstr "Рівень потужності передачі: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:131
 msgid "Success!"
@@ -719,9 +709,8 @@ msgid "Failed"
 msgstr "Невдало"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:144
-#, fuzzy
 msgid "Connecting…"
-msgstr "Під’єднання"
+msgstr "Під’єднання…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:180
 msgid "Disconnection Failed: "
@@ -729,30 +718,27 @@ msgstr "Помилка від’єднання: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:204
 msgid "No audio endpoints registered"
-msgstr ""
+msgstr "Немає зареєстрованих звукових кінцевих точок"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:207
 msgid "Input/output error"
-msgstr ""
+msgstr "Помилка введення/виведення"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:209
-#, fuzzy
 msgid "Device did not respond"
-msgstr "Показати інформацію про пристрій"
+msgstr "Пристрій не відповів"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:213
-#, fuzzy
 msgid "Resource temporarily unavailable"
-msgstr "Тимчасово видимий"
+msgstr "Ресурс тимчасово недоступний"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:218
 msgid "Connection Failed: "
 msgstr "Не вдалося під’єднатися: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:287
-#, fuzzy
 msgid "_<b>_Connect</b>"
-msgstr "<b>З'_єднатися</b>"
+msgstr "_<b>_З'_єднатися</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:289
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
@@ -776,14 +762,12 @@ msgid "<b>Disconnect:</b>"
 msgstr "<b>Від’єднати:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:324
-#, fuzzy
 msgid "<b>Auto-connect:</b>"
-msgstr "<b>Від’єднати:</b>"
+msgstr "<b>Авто з'_єднання:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:343
-#, fuzzy
 msgid "Send a _File…"
-msgstr "Надіслати _файл..."
+msgstr "Надіслати _файл…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:356
 msgid "_Pair"
@@ -799,27 +783,23 @@ msgstr "_Ненадійний"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:378
 msgid "_Block"
-msgstr ""
+msgstr "_Заблокувати"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:383
 msgid "_Unblock"
-msgstr ""
+msgstr "_Розблокувати"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:387
-#, fuzzy
-#| msgid "Send files to this device"
 msgid "Block/Unblock this device"
-msgstr "Надіслати файли на цей пристрій"
+msgstr "Заблокувати/Розблокувати цей пристрій"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:407
-#, fuzzy
 msgid "R_ename device…"
-msgstr "Перейменувати пристрій"
+msgstr "П_ерейменувати пристрій…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:416
-#, fuzzy
 msgid "_Remove…"
-msgstr "Вилучити"
+msgstr "_Вилучити…"
 
 #: blueman/gui/manager/ManagerProgressbar.py:44
 msgid "Cancel Operation"
@@ -898,685 +878,650 @@ msgid "Adapter selection"
 msgstr "Вибір пристрою"
 
 #: blueman/gui/DeviceSelectorWidget.py:45
-#, fuzzy
 msgid "Discovering…"
-msgstr "Видимий... %ss"
+msgstr "Виявлення…"
 
 #. translators: device class
 #: blueman/DeviceClass.py:6
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Інше"
 
 #. translators: device class
 #: blueman/DeviceClass.py:8
 msgid "Computer"
-msgstr ""
+msgstr "Комп'ютер"
 
 #. translators: device class
 #: blueman/DeviceClass.py:10
 msgid "Phone"
-msgstr ""
+msgstr "Телефон"
 
 #. translators: device class
 #: blueman/DeviceClass.py:12
-#, fuzzy
 msgid "Access point"
-msgstr "Точка доступу до мережі"
+msgstr "Точка доступу"
 
 #. translators: device class
 #: blueman/DeviceClass.py:14
 msgid "Audio/video"
-msgstr ""
+msgstr "Аудіо/відео"
 
 #. translators: device class
 #: blueman/DeviceClass.py:16
 msgid "Peripheral"
-msgstr ""
+msgstr "Периферія"
 
 #. translators: device class
 #: blueman/DeviceClass.py:18 blueman/DeviceClass.py:276
 msgid "Imaging"
-msgstr ""
+msgstr "Світлинне"
 
 #. translators: device class
 #: blueman/DeviceClass.py:20 blueman/DeviceClass.py:41
 msgid "Wearable"
-msgstr ""
+msgstr "Для носіння"
 
 #. translators: device class
 #: blueman/DeviceClass.py:22
 msgid "Toy"
-msgstr ""
+msgstr "Іграшка"
 
 #. translators: device class
 #: blueman/DeviceClass.py:31
-#, fuzzy
 msgid "Desktop"
-msgstr "стаціонарний"
+msgstr "Настільний"
 
 #. translators: device class
 #: blueman/DeviceClass.py:33
-#, fuzzy
 msgid "Server"
-msgstr "сервер"
+msgstr "Сервер"
 
 #. translators: device class
 #: blueman/DeviceClass.py:35
-#, fuzzy
 msgid "Laptop"
-msgstr "ноутбук"
+msgstr "Ноутбук"
 
 #. translators: device class
 #: blueman/DeviceClass.py:37
-#, fuzzy
 msgid "Handheld"
-msgstr "кишеньковий"
+msgstr "Кишеньковий"
 
 #. translators: device class
 #: blueman/DeviceClass.py:39
 msgid "Palm"
-msgstr ""
+msgstr "Комп'ютер для долоні"
 
 #. translators: device class
 #: blueman/DeviceClass.py:48
-#, fuzzy
 msgid "Cellular"
-msgstr "мобільний"
+msgstr "Мобільний"
 
 #. translators: device class
 #: blueman/DeviceClass.py:50
-#, fuzzy
 msgid "Cordless"
-msgstr "бездротовий"
+msgstr "Бездротовий"
 
 #. translators: device class
 #: blueman/DeviceClass.py:52
-#, fuzzy
 msgid "Smartphone"
-msgstr "смартфон"
+msgstr "Смартфон"
 
 #. translators: device class
 #: blueman/DeviceClass.py:54
-#, fuzzy
 msgid "Modem"
-msgstr "модем"
+msgstr "Модем"
 
 #. translators: device class
 #: blueman/DeviceClass.py:56
 msgid "ISDN"
-msgstr ""
+msgstr "ISDN"
 
 #. translators: device class
 #: blueman/DeviceClass.py:61
 msgid "Fully"
-msgstr ""
+msgstr "Повністю"
 
 #. translators: device class
 #: blueman/DeviceClass.py:63
 msgid "1–17 percent"
-msgstr ""
+msgstr "1–17 відсотків"
 
 #. translators: device class
 #: blueman/DeviceClass.py:65
 msgid "17–33 percent"
-msgstr ""
+msgstr "17–33 відсотків"
 
 #. translators: device class
 #: blueman/DeviceClass.py:67
 msgid "33–50 percent"
-msgstr ""
+msgstr "33-50 відсотків"
 
 #. translators: device class
 #: blueman/DeviceClass.py:69
 msgid "50–67 percent"
-msgstr ""
+msgstr "50–67 відсотків"
 
 #. translators: device class
 #: blueman/DeviceClass.py:71
 msgid "67–83 percent"
-msgstr ""
+msgstr "67–83 відсотків"
 
 #. translators: device class
 #: blueman/DeviceClass.py:73
 msgid "83–99 percent"
-msgstr ""
+msgstr "83–99 відсотків"
 
 #. translators: device class
 #: blueman/DeviceClass.py:75
-#, fuzzy
 msgid "Not available"
-msgstr "obexd недоступний"
+msgstr "Недоступно"
 
 #. translators: device class
 #: blueman/DeviceClass.py:82 blueman/Sdp.py:123 blueman/Sdp.py:164
-#, fuzzy
 msgid "Headset"
-msgstr "навушники"
+msgstr "Навушники"
 
 #. translators: device class
 #: blueman/DeviceClass.py:84 blueman/Sdp.py:145
-#, fuzzy
 msgid "Handsfree"
-msgstr "гарнітура"
+msgstr "Гарнітура"
 
 #. translators: device class
 #: blueman/DeviceClass.py:88
-#, fuzzy
 msgid "Microphone"
-msgstr "мікрофон"
+msgstr "Мікрофон"
 
 #. translators: device class
 #: blueman/DeviceClass.py:90
 msgid "Loudspeaker"
-msgstr ""
+msgstr "Гучномовець"
 
 #. translators: device class
 #: blueman/DeviceClass.py:92
 msgid "Headphones"
-msgstr ""
+msgstr "Навушники"
 
 #. translators: device class
 #: blueman/DeviceClass.py:94
 msgid "Portable audio"
-msgstr ""
+msgstr "Портативний аудіопристрій"
 
 #. translators: device class
 #: blueman/DeviceClass.py:96
 msgid "Car audio"
-msgstr ""
+msgstr "Аудіопристрій для автомобіля"
 
 #. translators: device class
 #: blueman/DeviceClass.py:98
 msgid "Set-top box"
-msgstr ""
+msgstr "ТВ-приставка"
 
 #. translators: device class
 #: blueman/DeviceClass.py:100
 msgid "Hi-Fi audio"
-msgstr ""
+msgstr "Hi-Fi аудіопристрій"
 
 #. translators: device class
 #: blueman/DeviceClass.py:102
 msgid "VCR"
-msgstr ""
+msgstr "Відеомагнітофон"
 
 #. translators: device class
 #: blueman/DeviceClass.py:104
-#, fuzzy
 msgid "Video camera"
-msgstr "Джерело аудіо"
+msgstr "Відеокамера"
 
 #. translators: device class
 #: blueman/DeviceClass.py:106
 msgid "Camcorder"
-msgstr ""
+msgstr "Відеокамера"
 
 #. translators: device class
 #: blueman/DeviceClass.py:108
-#, fuzzy
 msgid "Video monitor"
-msgstr "Джерело аудіо"
+msgstr "Відеомонітор"
 
 #. translators: device class
 #: blueman/DeviceClass.py:110
 msgid "Video display and loudspeaker"
-msgstr ""
+msgstr "Дисплей і гучномовець"
 
 #. translators: device class
 #: blueman/DeviceClass.py:112
-#, fuzzy
 msgid "Video conferencing"
-msgstr "Джерело аудіо"
+msgstr "Відеоконференція"
 
 #. translators: device class
 #: blueman/DeviceClass.py:116
 msgid "Gaming/Toy"
-msgstr ""
+msgstr "Ігрове/Іграшка"
 
 #. translators: device class
 #: blueman/DeviceClass.py:123 blueman/DeviceClass.py:189
-#, fuzzy
 msgid "Keyboard"
-msgstr "клавіатура"
+msgstr "Клавіатура"
 
 #. translators: device class
 #: blueman/DeviceClass.py:125
-#, fuzzy
 msgid "Pointing"
-msgstr "маніпулятор"
+msgstr "Маніпулятор"
 
 #. translators: device class
 #: blueman/DeviceClass.py:127
 msgid "Combo"
-msgstr ""
+msgstr "Комбо"
 
 #. translators: device class
 #: blueman/DeviceClass.py:132
 msgid "Display"
-msgstr ""
+msgstr "Дисплей"
 
 #. translators: device class
 #: blueman/DeviceClass.py:134
 msgid "Camera"
-msgstr ""
+msgstr "Камера"
 
 #. translators: device class
 #: blueman/DeviceClass.py:136
 msgid "Scanner"
-msgstr ""
+msgstr "Сканер"
 
 #. translators: device class
 #: blueman/DeviceClass.py:138
 msgid "Printer"
-msgstr ""
+msgstr "Принтер"
 
 #. translators: device class
 #: blueman/DeviceClass.py:143
 msgid "Wrist watch"
-msgstr ""
+msgstr "Наручний годинник"
 
 #. translators: device class
 #: blueman/DeviceClass.py:145
 msgid "Pager"
-msgstr ""
+msgstr "Пейджер"
 
 #. translators: device class
 #: blueman/DeviceClass.py:147
 msgid "Jacket"
-msgstr ""
+msgstr "Куртка"
 
 #. translators: device class
 #: blueman/DeviceClass.py:149
 msgid "Helmet"
-msgstr ""
+msgstr "Шолом"
 
 #. translators: device class
 #: blueman/DeviceClass.py:151
 msgid "Glasses"
-msgstr ""
+msgstr "Окуляри"
 
 #. translators: device class
 #: blueman/DeviceClass.py:156
 msgid "Robot"
-msgstr ""
+msgstr "Робот"
 
 #. translators: device class
 #: blueman/DeviceClass.py:158
 msgid "Vehicle"
-msgstr ""
+msgstr "Транспортний засіб"
 
 #. translators: device class
 #: blueman/DeviceClass.py:160
 msgid "Doll"
-msgstr ""
+msgstr "Лялька"
 
 #. translators: device class
 #: blueman/DeviceClass.py:162
 msgid "Controller"
-msgstr ""
+msgstr "Контролер"
 
 #. translators: device class
 #: blueman/DeviceClass.py:164
 msgid "Game"
-msgstr ""
+msgstr "Гра"
 
 #: blueman/DeviceClass.py:169
-#, fuzzy
 msgid "Generic Phone"
-msgstr "Під’єднати"
+msgstr "Універсальний телефон"
 
 #: blueman/DeviceClass.py:170
-#, fuzzy
 msgid "Generic Computer"
-msgstr "Під’єднати"
+msgstr "Універсальний комп'ютер"
 
 #: blueman/DeviceClass.py:171
-#, fuzzy
 msgid "Generic Watch"
-msgstr "Під’єднати"
+msgstr "Універсальний годинник"
 
 #: blueman/DeviceClass.py:172
 msgid "Watch: Sports Watch"
-msgstr ""
+msgstr "Годинники: Спортивний годинник"
 
 #: blueman/DeviceClass.py:173
-#, fuzzy
 msgid "Generic Clock"
-msgstr "Під’єднати"
+msgstr "Універсальні годинники"
 
 #: blueman/DeviceClass.py:174
-#, fuzzy
 msgid "Generic Display"
-msgstr "Передача файлу через bluetooth"
+msgstr "Універсальний дисплей"
 
 #: blueman/DeviceClass.py:175
-#, fuzzy
 msgid "Generic Remote Control"
-msgstr "Під’єднати"
+msgstr "Універсальний пульт дистан. керування"
 
 #: blueman/DeviceClass.py:176
-#, fuzzy
 msgid "Generic Eye-glasses"
-msgstr "Передача файлу через bluetooth"
+msgstr "Універсальні окуляри"
 
 #: blueman/DeviceClass.py:177
-#, fuzzy
 msgid "Generic Tag"
-msgstr "Передача файлу через bluetooth"
+msgstr "Універсальний тег"
 
 #: blueman/DeviceClass.py:178
-#, fuzzy
 msgid "Generic Keyring"
-msgstr "Групова мережа"
+msgstr "Універсальне кільце"
 
 #: blueman/DeviceClass.py:179
-#, fuzzy
 msgid "Generic Media Player"
-msgstr "Передача файлу через bluetooth"
+msgstr "Універсальний програвач медіа"
 
 #: blueman/DeviceClass.py:180
-#, fuzzy
 msgid "Generic Barcode Scanner"
-msgstr "Під’єднати"
+msgstr "Універсальний сканер штрих-кодів"
 
 #: blueman/DeviceClass.py:181
-#, fuzzy
 msgid "Generic Thermometer"
-msgstr "Під’єднати"
+msgstr "Універсальний термометр"
 
 #: blueman/DeviceClass.py:182
 msgid "Thermometer: Ear"
-msgstr ""
+msgstr "Термометр: вушний"
 
 #: blueman/DeviceClass.py:183
-#, fuzzy
 msgid "Generic Heart rate Sensor"
-msgstr "Передача файлу через bluetooth"
+msgstr "Універсальний датник пульсу"
 
 #: blueman/DeviceClass.py:184
 msgid "Heart Rate Sensor: Heart Rate Belt"
-msgstr ""
+msgstr "Пульсиметр: пояс"
 
 #: blueman/DeviceClass.py:185
 msgid "Generic Blood Pressure"
-msgstr ""
+msgstr "Універсальний датник артеріального тиску"
 
 #: blueman/DeviceClass.py:186
 msgid "Blood Pressure: Arm"
-msgstr ""
+msgstr "Артеріальний тиск: Рука"
 
 #: blueman/DeviceClass.py:187
 msgid "Blood Pressure: Wrist"
-msgstr ""
+msgstr "Артеріальний тиск: Зап'ястя"
 
 #: blueman/DeviceClass.py:188
 msgid "Human Interface Device (HID)"
-msgstr ""
+msgstr "Пристрій інтерфейсу людини (HID)"
 
 #: blueman/DeviceClass.py:190
 msgid "Mouse"
-msgstr ""
+msgstr "Миша"
 
 #: blueman/DeviceClass.py:191
 msgid "Joystick"
-msgstr ""
+msgstr "Джойстик"
 
 #: blueman/DeviceClass.py:192
 msgid "Gamepad"
-msgstr ""
+msgstr "Геймпад"
 
 #: blueman/DeviceClass.py:193
 msgid "Digitizer Tablet"
-msgstr ""
+msgstr "Цифровий планшет"
 
 #: blueman/DeviceClass.py:194
 msgid "Card Reader"
-msgstr ""
+msgstr "Зчитувач карт"
 
 #: blueman/DeviceClass.py:195
 msgid "Digital Pen"
-msgstr ""
+msgstr "Цифрова ручка"
 
 #: blueman/DeviceClass.py:196
 msgid "Barcode Scanner"
-msgstr ""
+msgstr "Сканер штрих-кодів"
 
 #: blueman/DeviceClass.py:197
-#, fuzzy
 msgid "Generic Glucose Meter"
-msgstr "Під’єднати"
+msgstr "Універсальний вимірювач глюкози"
 
 #: blueman/DeviceClass.py:198
 msgid "Generic: Running Walking Sensor"
-msgstr ""
+msgstr "Універсальне: Датник бігу та ходьби"
 
 #: blueman/DeviceClass.py:199
 msgid "Running Walking Sensor: In-Shoe"
-msgstr ""
+msgstr "Датник бігу та ходьби: У взутті"
 
 #: blueman/DeviceClass.py:200
 msgid "Running Walking Sensor: On-Shoe"
-msgstr ""
+msgstr "Датник бігу та ходьби: На взутті"
 
 #: blueman/DeviceClass.py:201
 msgid "Running Walking Sensor: On-Hip"
-msgstr ""
+msgstr "Датник бігу та ходьби: На стегні"
 
 #: blueman/DeviceClass.py:202
-#, fuzzy
 msgid "Generic: Cycling"
-msgstr "Групова мережа"
+msgstr "Універсальне: Їзда на велосипеді"
 
 #: blueman/DeviceClass.py:203
 msgid "Cycling: Cycling Computer"
-msgstr ""
+msgstr "Їзда на велосипеді: Велосипедний комп'ютер"
 
 #: blueman/DeviceClass.py:204
 msgid "Cycling: Speed Sensor"
-msgstr ""
+msgstr "Їзда на велосипеді: Датник швидкості"
 
 #: blueman/DeviceClass.py:205
 msgid "Cycling: Cadence Sensor"
-msgstr ""
+msgstr "Їзда на велосипеді: Датник частоти обертання педалей"
 
 #: blueman/DeviceClass.py:206
 msgid "Cycling: Power Sensor"
-msgstr ""
+msgstr "Їзда на велосипеді: Датник потужності"
 
 #: blueman/DeviceClass.py:207
 msgid "Cycling: Speed and Cadence Sensor"
-msgstr ""
+msgstr "Їзда на велосипеді: Датник швидкості та частоти обертання педалей"
 
 #. 19 - 48 reserved
 #: blueman/DeviceClass.py:209
 msgid "Generic: Pulse Oximeter"
-msgstr ""
+msgstr "Універсальне: Пульсоксиметр"
 
 #: blueman/DeviceClass.py:210
 msgid "Fingertip"
-msgstr ""
+msgstr "Кінчик пальця"
 
 #: blueman/DeviceClass.py:211
 msgid "Wrist-Worn"
-msgstr ""
+msgstr "Наручні"
 
 #: blueman/DeviceClass.py:212
 msgid "Generic: Weight Scale"
-msgstr ""
+msgstr "Універсальне: Ваги"
 
 #: blueman/DeviceClass.py:213
 msgid "Generic Personal Mobility Device"
-msgstr ""
+msgstr "Універсальний персональний мобільний пристрій"
 
 #: blueman/DeviceClass.py:214
 msgid "Powered Wheelchair"
-msgstr ""
+msgstr "Інвалідний візок з живленням"
 
 #: blueman/DeviceClass.py:215
 msgid "Mobility Scooter"
-msgstr ""
+msgstr "Мобільний скутер"
 
 #: blueman/DeviceClass.py:216
 msgid "Generic Continuous Glucose Monitor"
-msgstr ""
+msgstr "Універсальний безперервний монітор глюкози"
 
 #: blueman/DeviceClass.py:217
 msgid "Generic Insulin Pump"
-msgstr ""
+msgstr "Універсальний інсуліновий насос"
 
 #: blueman/DeviceClass.py:218
 msgid "Insulin Pump, durable pump"
-msgstr ""
+msgstr "Інсуліновий насос, надійний насос"
 
 #: blueman/DeviceClass.py:219
 msgid "Insulin Pump, patch pump"
-msgstr ""
+msgstr "Інсуліновий насос, пластир"
 
 #: blueman/DeviceClass.py:220
 msgid "Insulin Pen"
-msgstr ""
+msgstr "Інсулінова ручка"
 
 #: blueman/DeviceClass.py:221
 msgid "Generic Medication Delivery"
-msgstr ""
+msgstr "Універсальна медична доставка"
 
 #. 55 - 80 reserved
 #: blueman/DeviceClass.py:223
 msgid "Generic: Outdoor Sports Activity"
-msgstr ""
+msgstr "Універсальне: Діяльність на свіжому повітрі"
 
 #: blueman/DeviceClass.py:224
 msgid "Location Display Device"
-msgstr ""
+msgstr "Пристрій відображення розташування"
 
 #: blueman/DeviceClass.py:225
 msgid "Location and Navigation Display Device"
-msgstr ""
+msgstr "Пристрій відображення розташування та навігації"
 
 #: blueman/DeviceClass.py:226
 msgid "Location Pod"
-msgstr ""
+msgstr "Модуль розташування"
 
 #: blueman/DeviceClass.py:227
 msgid "Location and Navigation Pod"
-msgstr ""
+msgstr "Модуль розташування та навігації"
 
 #: blueman/Sdp.py:88
 msgid "SDP"
-msgstr ""
+msgstr "SDP"
 
 #: blueman/Sdp.py:89
 msgid "UDP"
-msgstr ""
+msgstr "UDP"
 
 #: blueman/Sdp.py:90
 msgid "RFCOMM"
-msgstr ""
+msgstr "RFCOMM"
 
 #: blueman/Sdp.py:91
 msgid "TCP"
-msgstr ""
+msgstr "TCP"
 
 #: blueman/Sdp.py:92
 msgid "TCS-BIN"
-msgstr ""
+msgstr "TCS-BIN"
 
 #: blueman/Sdp.py:93
 msgid "TCS-AT"
-msgstr ""
+msgstr "TCS-AT"
 
 #: blueman/Sdp.py:94
 msgid "ATT"
-msgstr ""
+msgstr "ATT"
 
 #: blueman/Sdp.py:95
 msgid "OBEX"
-msgstr ""
+msgstr "OBEX"
 
 #: blueman/Sdp.py:96
 msgid "IP"
-msgstr ""
+msgstr "IP"
 
 #: blueman/Sdp.py:97
 msgid "FTP"
-msgstr ""
+msgstr "FTP"
 
 #: blueman/Sdp.py:98
 msgid "HTTP"
-msgstr ""
+msgstr "HTTP"
 
 #: blueman/Sdp.py:99
 msgid "WSP"
-msgstr ""
+msgstr "WSP"
 
 #: blueman/Sdp.py:100
 msgid "BNEP"
-msgstr ""
+msgstr "BNEP"
 
 #: blueman/Sdp.py:101
 msgid "UPnP/ESDP"
-msgstr ""
+msgstr "UPnP/ESDP"
 
 #: blueman/Sdp.py:102
 msgid "HIDP"
-msgstr ""
+msgstr "HIDP"
 
 #: blueman/Sdp.py:103
 msgid "Hardcopy Control Channel"
-msgstr ""
+msgstr "Канал керування копією"
 
 #: blueman/Sdp.py:104
 msgid "Hardcopy Data Channel"
-msgstr ""
+msgstr "Канал даних у друкованому вигляді"
 
 #: blueman/Sdp.py:105
 msgid "Hardcopy Notification"
-msgstr ""
+msgstr "Сповіщення на паперовому носії"
 
 #: blueman/Sdp.py:106
 msgid "AVCTP"
-msgstr ""
+msgstr "AVCTP"
 
 #: blueman/Sdp.py:107
 msgid "AVDTP"
-msgstr ""
+msgstr "AVDTP"
 
 #: blueman/Sdp.py:108
 msgid "CMTP"
-msgstr ""
+msgstr "CMTP"
 
 #: blueman/Sdp.py:109
 msgid "UDI_C-Plane"
-msgstr ""
+msgstr "UDI_C-Plane"
 
 #: blueman/Sdp.py:110 blueman/Sdp.py:111
 msgid "Multi-Channel Adaptation Protocol (MCAP)"
-msgstr ""
+msgstr "Багатоканальний протокол адаптації (MCAP)"
 
 #: blueman/Sdp.py:112
 msgid "L2CAP"
-msgstr ""
+msgstr "L2CAP"
 
 #: blueman/Sdp.py:113
 msgid "ServiceDiscoveryServerServiceClassID"
-msgstr ""
+msgstr "ServiceDiscoveryServerServiceClassID"
 
 #: blueman/Sdp.py:114
 msgid "BrowseGroupDescriptorServiceClassID"
-msgstr ""
+msgstr "BrowseGroupDescriptorServiceClassID"
 
 #: blueman/Sdp.py:115
 msgid "Public Browse Group"
-msgstr ""
+msgstr "Група загальнодоступного перегляду"
 
 #: blueman/Sdp.py:116
-#, fuzzy
 msgid "Serial Port"
-msgstr "Послідовні порти"
+msgstr "Послідовний порт"
 
 #: blueman/Sdp.py:117
 msgid "LAN Access Using PPP"
-msgstr ""
+msgstr "Доступ до локальної мережі з PPP"
 
 #: blueman/Sdp.py:118
 msgid "Dialup Networking (DUN)"
@@ -1584,24 +1529,23 @@ msgstr "Комутоване з'єднання (DUN)"
 
 #: blueman/Sdp.py:119
 msgid "IrMC Sync"
-msgstr ""
+msgstr "Синхронізація IrMC"
 
 #: blueman/Sdp.py:120
 msgid "OBEX Object Push"
-msgstr ""
+msgstr "Відправлення об'єкта OBEX"
 
 #: blueman/Sdp.py:121
-#, fuzzy
 msgid "OBEX File Transfer"
-msgstr "Передача файлу через bluetooth"
+msgstr "Передавання файлів через OBEX"
 
 #: blueman/Sdp.py:122
 msgid "IrMC Sync Command"
-msgstr ""
+msgstr "Команда синхронізації IrMC"
 
 #: blueman/Sdp.py:124
 msgid "Cordless Telephony"
-msgstr ""
+msgstr "Бездротова телефонія"
 
 #: blueman/Sdp.py:125
 msgid "Audio Source"
@@ -1613,43 +1557,43 @@ msgstr "Приймач авдіо"
 
 #: blueman/Sdp.py:127
 msgid "Remote Control Target"
-msgstr ""
+msgstr "Призначення дистанц. керування"
 
 #: blueman/Sdp.py:128
 msgid "Advanced Audio"
-msgstr ""
+msgstr "Розширений звук"
 
 #: blueman/Sdp.py:129
 msgid "Remote Control"
-msgstr ""
+msgstr "Дистанційне керування"
 
 #: blueman/Sdp.py:130
 msgid "Video Conferencing"
-msgstr ""
+msgstr "Відеоконференція"
 
 #: blueman/Sdp.py:131
 msgid "Intercom"
-msgstr ""
+msgstr "Домофон"
 
 #: blueman/Sdp.py:132
 msgid "Fax"
-msgstr ""
+msgstr "Факс"
 
 #: blueman/Sdp.py:133
 msgid "Headset Audio Gateway"
-msgstr ""
+msgstr "Аудіошлюз гарнітури"
 
 #: blueman/Sdp.py:134
 msgid "WAP"
-msgstr ""
+msgstr "WAP"
 
 #: blueman/Sdp.py:135
 msgid "WAP Client"
-msgstr ""
+msgstr "Клієнт WAP"
 
 #: blueman/Sdp.py:136
 msgid "PANU"
-msgstr ""
+msgstr "PANU"
 
 #: blueman/Sdp.py:137
 msgid "Network Access Point"
@@ -1661,470 +1605,451 @@ msgstr "Групова мережа"
 
 #: blueman/Sdp.py:139
 msgid "DirectPrinting (BPP)"
-msgstr ""
+msgstr "DirectPrinting (BPP)"
 
 #: blueman/Sdp.py:140
 msgid "ReferencePrinting (BPP)"
-msgstr ""
+msgstr "ReferencePrinting (BPP)"
 
 #: blueman/Sdp.py:141
 msgid "Imaging (BIP)"
-msgstr ""
+msgstr "Світлина (BIP)"
 
 #: blueman/Sdp.py:142
 msgid "ImagingResponder (BIP)"
-msgstr ""
+msgstr "ImagingResponder (BIP)"
 
 #: blueman/Sdp.py:143
 msgid "ImagingAutomaticArchive (BIP)"
-msgstr ""
+msgstr "ImagingAutomaticArchive (BIP)"
 
 #: blueman/Sdp.py:144
 msgid "ImagingReferencedObjects (BIP)"
-msgstr ""
+msgstr "ImagingReferencedObjects (BIP)"
 
 #: blueman/Sdp.py:146
 msgid "Handsfree Audio Gateway"
-msgstr ""
+msgstr "Аудіошлюз гарнітури"
 
 #: blueman/Sdp.py:147
 msgid "DirectPrintingReferenceObjectsService (BPP)"
-msgstr ""
+msgstr "DirectPrintingReferenceObjectsService (BPP)"
 
 #: blueman/Sdp.py:148
 msgid "ReflectedUI (BPP)"
-msgstr ""
+msgstr "ReflectedUI (BPP)"
 
 #: blueman/Sdp.py:149
 msgid "Basic Printing (BPP)"
-msgstr ""
+msgstr "Базовий друк (BPP)"
 
 #: blueman/Sdp.py:150
 msgid "Printing Status (BPP)"
-msgstr ""
+msgstr "Стан друку (BPP)"
 
 #: blueman/Sdp.py:151
 msgid "Human Interface Device Service (HID)"
-msgstr ""
+msgstr "Служба пристроїв інтерфейсу людини (HID)"
 
 #: blueman/Sdp.py:152
 msgid "HardcopyCableReplacement (HCR)"
-msgstr ""
+msgstr "HardcopyCableReplacement (HCR)"
 
 #: blueman/Sdp.py:153
 msgid "HCR_Print (HCR)"
-msgstr ""
+msgstr "HCR_Print (HCR)"
 
 #: blueman/Sdp.py:154
 msgid "HCR_Scan (HCR)"
-msgstr ""
+msgstr "HCR_Scan (HCR)"
 
 #: blueman/Sdp.py:155
 msgid "Common ISDN Access (CIP)"
-msgstr ""
+msgstr "Спільний доступ до ISDN (CIP)"
 
 #: blueman/Sdp.py:156
 msgid "VideoConferencingGW (VCP)"
-msgstr ""
+msgstr "VideoConferencingGW (VCP)"
 
 #: blueman/Sdp.py:157
 msgid "UDI-MT"
-msgstr ""
+msgstr "UDI-MT"
 
 #: blueman/Sdp.py:158
 msgid "UDI-TA"
-msgstr ""
+msgstr "UDI-TA"
 
 #: blueman/Sdp.py:159
 msgid "Audio/Video"
-msgstr ""
+msgstr "Аудіо/Відео"
 
 #: blueman/Sdp.py:160
 msgid "SIM Access (SAP)"
-msgstr ""
+msgstr "Доступ до SIM-картки (SAP)"
 
 #: blueman/Sdp.py:161
 msgid "Phonebook Access (PBAP) - PCE"
-msgstr ""
+msgstr "Доступ до телефонної книжки (PBAP) - PCE"
 
 #: blueman/Sdp.py:162
 msgid "Phonebook Access (PBAP) - PSE"
-msgstr ""
+msgstr "Доступ до телефонної книжки (PBAP) - PSE"
 
 #: blueman/Sdp.py:163
-#, fuzzy
 msgid "Phonebook Access (PBAP)"
-msgstr "Точка доступу мережі (NAP)"
+msgstr "Доступ до телефонної книжки (PBAP)"
 
 #: blueman/Sdp.py:165
 msgid "Message Access Server"
-msgstr ""
+msgstr "Сервер доступу до повідомлень"
 
 #: blueman/Sdp.py:166
 msgid "Message Notification Server"
-msgstr ""
+msgstr "Сервер сповіщень про повідомлення"
 
 #: blueman/Sdp.py:167
-#, fuzzy
 msgid "Message Access Profile (MAP)"
-msgstr "Точка доступу мережі (NAP)"
+msgstr "Профіль доступу до повідомлень (MAP)"
 
 #: blueman/Sdp.py:168
 msgid "GNSS"
-msgstr ""
+msgstr "Супутникова система навігації (GNSS)"
 
 #: blueman/Sdp.py:169
 msgid "GNSS Server"
-msgstr ""
+msgstr "Сервер GNSS"
 
 #: blueman/Sdp.py:170
 msgid "3D Display"
-msgstr ""
+msgstr "3D дисплей"
 
 #: blueman/Sdp.py:171
 msgid "3D Glasses"
-msgstr ""
+msgstr "3D окуляри"
 
 #: blueman/Sdp.py:172
 msgid "3D Synchronization (3DSP)"
-msgstr ""
+msgstr "3D синхронізація (3DSP)"
 
 #: blueman/Sdp.py:173
 msgid "Multi-Profile Specification (MPS) Profile"
-msgstr ""
+msgstr "Профіль багатопрофільної специфікації (MPS)"
 
 #: blueman/Sdp.py:174
 msgid "Multi-Profile Specification (MPS) Service"
-msgstr ""
+msgstr "Служба багатопрофільної специфікації (MPS)"
 
 #: blueman/Sdp.py:175
 msgid "Calendar, Task, and Notes (CTN) Access Service"
-msgstr ""
+msgstr "Служба доступу до календаря, завдань і нотаток (CTN)"
 
 #: blueman/Sdp.py:176
 msgid "Calendar, Task, and Notes (CTN) Notification Service"
-msgstr ""
+msgstr "Служба сповіщень календаря, завдань і нотаток (CTN)"
 
 #: blueman/Sdp.py:177
 msgid "Calendar, Task, and Notes (CTN) Profile"
-msgstr ""
+msgstr "Профіль календаря, завдань і нотаток (CTN)"
 
 #: blueman/Sdp.py:178
 msgid "PnP Information"
-msgstr ""
+msgstr "Відомості про PnP"
 
 #: blueman/Sdp.py:179
-#, fuzzy
 msgid "Generic Networking"
-msgstr "Групова мережа"
+msgstr "Універсальна мережа"
 
 #: blueman/Sdp.py:180
-#, fuzzy
 msgid "Generic FileTransfer"
-msgstr "Передача файлу через bluetooth"
+msgstr "Універсальна передача файлів"
 
 #: blueman/Sdp.py:181
 msgid "Generic Audio"
-msgstr ""
+msgstr "Універсальний звук"
 
 #: blueman/Sdp.py:182
 msgid "Generic Telephony"
-msgstr ""
+msgstr "Універсальна телефонія"
 
 #: blueman/Sdp.py:183
-#, fuzzy
 msgid "Video Source"
-msgstr "Джерело аудіо"
+msgstr "Джерело відео"
 
 #: blueman/Sdp.py:184
-#, fuzzy
 msgid "Video Sink"
-msgstr "Приймач авдіо"
+msgstr "Приймач відео"
 
 #: blueman/Sdp.py:185
 msgid "Video Distribution"
-msgstr ""
+msgstr "Розповсюдження відео"
 
 #: blueman/Sdp.py:186
 msgid "HDP"
-msgstr ""
+msgstr "HDP"
 
 #: blueman/Sdp.py:187
-#, fuzzy
 msgid "HDP Source"
-msgstr "Джерело аудіо"
+msgstr "Джерело HDP"
 
 #: blueman/Sdp.py:188
 msgid "HDP Sink"
-msgstr ""
+msgstr "Приймач HDP"
 
 #: blueman/Sdp.py:189
 msgid "Generic Access"
-msgstr ""
+msgstr "Загальний доступ"
 
 #: blueman/Sdp.py:190
 msgid "Generic Attribute"
-msgstr ""
+msgstr "Загальний атрибут"
 
 #: blueman/Sdp.py:191
 msgid "Immediate Alert"
-msgstr ""
+msgstr "Негайне сповіщення"
 
 #: blueman/Sdp.py:192
 msgid "Link Loss"
-msgstr ""
+msgstr "Втрата зв'язку"
 
 #: blueman/Sdp.py:193
 msgid "Tx Power"
-msgstr ""
+msgstr "Потужність Tx"
 
 #: blueman/Sdp.py:194
-#, fuzzy
 msgid "Current Time Service"
-msgstr "Перейменувати пристрій"
+msgstr "Служба поточного часу"
 
 #: blueman/Sdp.py:195
 msgid "Reference Time Update Service"
-msgstr ""
+msgstr "Служба оновлення зразкового часу"
 
 #: blueman/Sdp.py:196
 msgid "Next DST Change Service"
-msgstr ""
+msgstr "Наступна служба зміни літнього часу"
 
 #: blueman/Sdp.py:197
 msgid "Glucose"
-msgstr ""
+msgstr "Глюкоза"
 
 #: blueman/Sdp.py:198
 msgid "Health Thermometer"
-msgstr ""
+msgstr "Термометр здоров'я"
 
 #: blueman/Sdp.py:199
-#, fuzzy
 msgid "Device Information"
-msgstr "Показати інформацію про пристрій"
+msgstr "Відомості про пристрій"
 
 #: blueman/Sdp.py:200
 msgid "Heart Rate"
-msgstr ""
+msgstr "Пульс"
 
 #: blueman/Sdp.py:201
 msgid "Phone Alert Status Service"
-msgstr ""
+msgstr "Служба стану сповіщень по телефону"
 
 #: blueman/Sdp.py:202
-#, fuzzy
 msgid "Battery Service"
-msgstr "Локальні служби"
+msgstr "Служба акумулятора"
 
 #: blueman/Sdp.py:203
 msgid "Blood Pressure"
-msgstr ""
+msgstr "Артеріальний тиск"
 
 #: blueman/Sdp.py:204
 msgid "Alert Notification Service"
-msgstr ""
+msgstr "Служба сповіщень про тривогу"
 
 #: blueman/Sdp.py:205
 msgid "Human Interface Device"
-msgstr ""
+msgstr "Пристрій інтерфейсу людини"
 
 #: blueman/Sdp.py:206
 msgid "Scan Parameters"
-msgstr ""
+msgstr "Параметри сканування"
 
 #: blueman/Sdp.py:207
 msgid "Running Speed and Cadence"
-msgstr ""
+msgstr "Швидкість бігу і частота обертання педалей"
 
 #: blueman/Sdp.py:208
 msgid "Automation IO"
-msgstr ""
+msgstr "Автоматизація введення-виведення"
 
 #: blueman/Sdp.py:209
 msgid "Cycling Speed and Cadence"
-msgstr ""
+msgstr "Швидкість їзди та частота обертання педалей"
 
 #: blueman/Sdp.py:210
 msgid "Cycling Power"
-msgstr ""
+msgstr "Потужність велосипеда"
 
 #: blueman/Sdp.py:211
 msgid "Location and Navigation"
-msgstr ""
+msgstr "Розташування та навігація"
 
 #: blueman/Sdp.py:212
 msgid "Environmental Sensing"
-msgstr ""
+msgstr "Екологічне зондування"
 
 #: blueman/Sdp.py:213
 msgid "Body Composition"
-msgstr ""
+msgstr "Склад тіла"
 
 #: blueman/Sdp.py:214
 msgid "User Data"
-msgstr ""
+msgstr "Дані користувача"
 
 #: blueman/Sdp.py:215
 msgid "Weight Scale"
-msgstr ""
+msgstr "Шкала ваги"
 
 #: blueman/Sdp.py:216
 msgid "Bond Management"
-msgstr ""
+msgstr "Керування даними"
 
 #: blueman/Sdp.py:217
 msgid "Continuous Glucose Monitoring"
-msgstr ""
+msgstr "Безперервний моніторинг глюкози"
 
 #: blueman/Sdp.py:218
 msgid "Internet Protocol Support"
-msgstr ""
+msgstr "Підтримка інтернет-протокола"
 
 #: blueman/Sdp.py:219
 msgid "Indoor Positioning"
-msgstr ""
+msgstr "Внутрішнє позиціонування"
 
 #: blueman/Sdp.py:220
 msgid "Pulse Oximeter"
-msgstr ""
+msgstr "Пульсоксиметр"
 
 #: blueman/Sdp.py:221
 msgid "HTTP Proxy"
-msgstr ""
+msgstr "Проксі-сервер HTTP"
 
 #: blueman/Sdp.py:222
 msgid "Transport Discovery"
-msgstr ""
+msgstr "Траспортне виявлення"
 
 #: blueman/Sdp.py:223
-#, fuzzy
 msgid "Object Transfer"
-msgstr "Передача"
+msgstr "Передача об'єкта"
 
 #: blueman/Sdp.py:224
-#, fuzzy
 msgid "AppleAgent"
-msgstr "аплет"
+msgstr "Агент Apple"
 
 #: blueman/Sdp.py:225
-#, fuzzy
 msgid "Primary Service"
-msgstr "Спаровування з пристроєм"
+msgstr "Первинна служба"
 
 #: blueman/Sdp.py:226
-#, fuzzy
 msgid "Secondary Service"
-msgstr "Шукати пристрої"
+msgstr "Вторинна служба"
 
 #: blueman/Sdp.py:227
 msgid "Include"
-msgstr ""
+msgstr "Залучає"
 
 #: blueman/Sdp.py:228
 msgid "Characteristic Declaration"
-msgstr ""
+msgstr "Характеристика декларації"
 
 #: blueman/Sdp.py:229
-#, fuzzy
 msgid "Device Name"
-msgstr "Упорядник пристроїв"
+msgstr "Назва пристрою"
 
 #: blueman/Sdp.py:230
 msgid "Appearance"
-msgstr ""
+msgstr "Вигляд"
 
 #: blueman/Sdp.py:231
 msgid "Peripheral Privacy Flag"
-msgstr ""
+msgstr "Прапор конфіденційності периферії"
 
 #: blueman/Sdp.py:232
-#, fuzzy
 msgid "Reconnection Address"
-msgstr "Нещодавні _з'єднання"
+msgstr "Адреса повторного під'єднання"
 
 #: blueman/Sdp.py:233
 msgid "Peripheral Preferred Connection Parameters"
-msgstr ""
+msgstr "Параметри бажаного під'єднання периферійних пристроїв"
 
 #: blueman/Sdp.py:234
-#, fuzzy
 msgid "Service Changed"
-msgstr "Упорядник пристроїв"
+msgstr "Службу змінено"
 
 #: blueman/Sdp.py:235
 msgid "System ID"
-msgstr ""
+msgstr "Ідентифікатор системи"
 
 #: blueman/Sdp.py:236
 msgid "Model Number String"
-msgstr ""
+msgstr "Рядок номера моделі"
 
 #: blueman/Sdp.py:237
 msgid "Serial Number String"
-msgstr ""
+msgstr "Рядок порядкового номера"
 
 #: blueman/Sdp.py:238
 msgid "Firmware Revision String"
-msgstr ""
+msgstr "Рядок версії прошивки"
 
 #: blueman/Sdp.py:239
 msgid "Hardware Revision String"
-msgstr ""
+msgstr "Рядок версії обладнання"
 
 #: blueman/Sdp.py:240
 msgid "Software Revision String"
-msgstr ""
+msgstr "Рядок версії програмного забезпечення"
 
 #: blueman/Sdp.py:241
 msgid "Manufacturer Name String"
-msgstr ""
+msgstr "Рядок назви виробника"
 
 #: blueman/Sdp.py:242
 msgid "PnP ID"
-msgstr ""
+msgstr "Ідентифікатор PnP"
 
 #: blueman/Sdp.py:243
 msgid "Characteristic Extended Properties"
-msgstr ""
+msgstr "Розширені властивості характеристик"
 
 #: blueman/Sdp.py:244
 msgid "Characteristic User Description"
-msgstr ""
+msgstr "Характеристика опису користувача"
 
 #: blueman/Sdp.py:245
 msgid "Client Characteristic Configuration"
-msgstr ""
+msgstr "Конфігурація характеристик клієнта"
 
 #: blueman/Sdp.py:246
 msgid "Server Characteristic Configuration"
-msgstr ""
+msgstr "Конфігурація характеристик сервера"
 
 #: blueman/Sdp.py:247
 msgid "Characteristic Presentation Format"
-msgstr ""
+msgstr "Формат відображення характеристик"
 
 #: blueman/Sdp.py:248
 msgid "Characteristic Aggregate Format"
-msgstr ""
+msgstr "Характеристика зведеного формату"
 
 #: blueman/Sdp.py:249
 msgid "Valid Range"
-msgstr ""
+msgstr "Прийнятний діапазон"
 
 #: blueman/Sdp.py:250
 msgid "External Report Reference"
-msgstr ""
+msgstr "Посилання на зовнішній звіт"
 
 #: blueman/Sdp.py:251
-#, fuzzy
 msgid "Report Reference"
-msgstr "Параметри адаптера"
+msgstr "Посилання на звіт"
 
 #: blueman/Sdp.py:378
-#, fuzzy
 msgid "Audio and input profiles"
-msgstr "Профілі самочинного під'єднання"
+msgstr "Профілі аудіо та вводу"
 
 #: blueman/Sdp.py:380
 msgid "Proprietary"
@@ -2141,6 +2066,8 @@ msgstr "ні"
 #: blueman/plugins/manager/Info.py:60
 msgid "<big>Select row(s) and use <i>Control + C</i> to copy</big>"
 msgstr ""
+"<big>Виберіть рядок(и) та використовуйте <i>Control + C</i>, щоб скопіювати</"
+"big>"
 
 #: blueman/plugins/manager/Info.py:120
 msgid "_Info"
@@ -2179,10 +2106,11 @@ msgstr "Не вказано"
 msgid ""
 "Tries to auto-connect to configurable services on start and every 60 seconds."
 msgstr ""
+"Намагатись автоматично під'єднатися до настроювальних служб під час запуску "
+"та кожні 60 секунд."
 
 #. https://github.com/python/mypy/issues/2608
 #: blueman/plugins/applet/AutoConnect.py:50
-#: blueman/plugins/applet/ConnectionNotifier.py:21
 #: blueman/plugins/applet/RecentConns.py:154
 #: blueman/plugins/applet/PPPSupport.py:75
 msgid "Connected"
@@ -2193,14 +2121,15 @@ msgstr "Під’єднано"
 msgid "Automatically connected to %(service)s on %(device)s"
 msgstr "Автоматично з'єднано із %(service)s на %(device)s"
 
-#: blueman/plugins/applet/ConnectionNotifier.py:13
+#: blueman/plugins/applet/ConnectionNotifier.py:16
 msgid "Shows desktop notifications when devices get connected or disconnected."
 msgstr ""
+"Показувати на робочому столі сповіщення, коли пристрої під'єднуються або "
+"від'єднуються."
 
-#: blueman/plugins/applet/ConnectionNotifier.py:21
-#, fuzzy
+#: blueman/plugins/applet/ConnectionNotifier.py:38
 msgid "Disconnected"
-msgstr "Від’єднання..."
+msgstr "Від’єднано"
 
 #: blueman/plugins/applet/NetUsage.py:154
 #: blueman/plugins/applet/NetUsage.py:265
@@ -2392,7 +2321,7 @@ msgstr "Файл %(0)s від %(1)s отримано успішно"
 
 #: blueman/plugins/applet/TransferService.py:308
 msgid "Open"
-msgstr ""
+msgstr "Відкритий"
 
 #: blueman/plugins/applet/TransferService.py:312
 msgid "Transfer failed"
@@ -2409,27 +2338,27 @@ msgid "Files received"
 msgstr "Файли отримано"
 
 #: blueman/plugins/applet/TransferService.py:334
-#, fuzzy, python-format
+#, python-format
 msgid "Received %(files)d file in the background"
 msgid_plural "Received %(files)d files in the background"
-msgstr[0] "Отримано %d файл у режимі тла"
-msgstr[1] "Отримано %d файли у режимі тла"
-msgstr[2] "Отримано %d файлів у тловому режимі"
-msgstr[3] "Отримано %d файлів у тловому режимі"
+msgstr[0] "Отримано %(files)d файл у режимі тла"
+msgstr[1] "Отримано %(files)d файли у режимі тла"
+msgstr[2] "Отримано %(files)d файлів у тловому режимі"
+msgstr[3] "Отримано %(files)d файлів у тловому режимі"
 
 #: blueman/plugins/applet/TransferService.py:339
 #: blueman/plugins/applet/TransferService.py:347
 msgid "Open Location"
-msgstr ""
+msgstr "Відкрити розташування"
 
 #: blueman/plugins/applet/TransferService.py:343
-#, fuzzy, python-format
+#, python-format
 msgid "Received %(files)d more file in the background"
 msgid_plural "Received %(files)d more files in the background"
-msgstr[0] "Отримано ще %d файл у режимі тла"
-msgstr[1] "Отримано ще %d файли у режимі тла"
-msgstr[2] "Отримано ще %d файлів у тловому режимі"
-msgstr[3] "Отримано ще %d файлів у тловому режимі"
+msgstr[0] "Отримано ще %(files)d файл у режимі тла"
+msgstr[1] "Отримано ще %(files)d файли у режимі тла"
+msgstr[2] "Отримано ще %(files)d файлів у тловому режимі"
+msgstr[3] "Отримано ще %(files)d файлів у тловому режимі"
 
 #: blueman/plugins/applet/KillSwitch.py:37
 msgid ""
@@ -2437,6 +2366,9 @@ msgid ""
 "turning Bluetooth back on from an icon that shows its status; provided it "
 "isn't unplugged by the system, or physically."
 msgstr ""
+"Перемикати вимикач Bluetooth відповідно до стану живлення Bluetooth. "
+"Дозволяє знову вмикати Bluetooth за допомогою піктограми, яка відображає "
+"його стан; за умови, що він не вимкнутий системою чи фізично."
 
 #: blueman/plugins/applet/StandardItems.py:22
 msgid "Adds standard menu items to the status icon menu"
@@ -2510,33 +2442,27 @@ msgid "Bluetooth Active"
 msgstr "Bluetooth активний"
 
 #: blueman/plugins/applet/ShowConnected.py:63
-#, fuzzy, python-format
+#, python-format
 msgid "<b>%(connections)d Active Connection</b>"
 msgid_plural "<b>%(connections)d Active Connections</b>"
-msgstr[0] "<b>%d Активне Під’єднання</b>"
-msgstr[1] "<b>%d Активних Під’єднань</b>"
-msgstr[2] "<b>%d Активних Під’єднань</b>"
-msgstr[3] "<b>%d Активних Під’єднань</b>"
+msgstr[0] "<b>%(connections)d Активне Під’єднання</b>"
+msgstr[1] "<b>%(connections)d Активних Під’єднання</b>"
+msgstr[2] "<b>%(connections)d Активних Під’єднань</b>"
+msgstr[3] "<b>%(connections)d Активних Під’єднань</b>"
 
 #: blueman/plugins/applet/ShowConnected.py:73
 #: blueman/plugins/applet/PowerManager.py:192
 msgid "Bluetooth Disabled"
 msgstr "Bluetooth вимкнено"
 
-#: blueman/plugins/applet/Battery.py:14
-msgid ""
-"Shows desktop notifications with battery percentage when devices get "
-"connected."
-msgstr ""
-
 #: blueman/plugins/applet/DisconnectItems.py:14
 msgid "Adds disconnect menu items"
-msgstr ""
+msgstr "Додавати елементи меню для від'єднання"
 
 #: blueman/plugins/applet/DisconnectItems.py:40
-#, fuzzy, python-format
+#, python-format
 msgid "Disconnect %s"
-msgstr "Від’єднання..."
+msgstr "Від’єднання %s"
 
 #: blueman/plugins/applet/DiscvManager.py:16
 msgid ""
@@ -2611,7 +2537,7 @@ msgid ""
 "Upon device disconnection the script will be sent a HUP signal</span>"
 msgstr ""
 "<span size=\"small\">Такі арґументи будуть передані:\n"
-"Адреса, ім’я, ім’я служби, ідентифікатор UUID16s, rfcomm вузол\n"
+"Адреса, ім’я, назва служби, ідентифікатор UUID16s, rfcomm вузол\n"
 "Наприклад:\n"
 "AA:BB:CC:DD:EE:FF, Телефон, DUN служба, 0x1103, /dev/rfcomm0\n"
 "uuid16s повертаються як перелік розділений комами\n"
@@ -2681,9 +2607,8 @@ msgstr ""
 "під’єднаний."
 
 #: blueman/plugins/applet/StatusNotifierItem.py:10
-#, fuzzy
 msgid "Provides a StatusNotifierItem to show a statusicon"
-msgstr "Використовує libappindicator, щоб показати піктограму стану"
+msgstr "Використовує StatusNotifierItem, щоб показати піктограму стану"
 
 #: blueman/plugins/services/Network.py:25
 msgid "Network"

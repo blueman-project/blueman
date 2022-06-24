@@ -25,8 +25,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2022-05-27 17:59+0000\n"
-"PO-Revision-Date: 2022-03-29 18:12+0000\n"
+"POT-Creation-Date: 2022-06-05 21:46+0200\n"
+"PO-Revision-Date: 2022-06-01 19:53+0000\n"
 "Last-Translator: Oğuz Ersen <oguz@ersen.moe>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/blueman/blueman/"
 "tr/>\n"
@@ -35,7 +35,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.12-dev\n"
+"X-Generator: Weblate 4.13-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -146,15 +146,13 @@ msgstr "_Sıfırla"
 
 #: data/ui/rename-device.ui:40 data/ui/note.ui:26 blueman/main/Sendto.py:235
 #: blueman/gui/DeviceSelectorDialog.py:17
-#, fuzzy
-#| msgid "Cancelling"
 msgid "_Cancel"
-msgstr "İptal ediliyor"
+msgstr "_İptal"
 
 #: data/ui/rename-device.ui:54 data/ui/note.ui:41
 #: blueman/gui/DeviceSelectorDialog.py:17
 msgid "_OK"
-msgstr ""
+msgstr "_Tamam"
 
 #: data/ui/services-network.ui:37
 msgid "Network Access Point (NAP)"
@@ -256,8 +254,8 @@ msgstr "<b>Yazar:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:338
-#: blueman/gui/manager/ManagerDeviceList.py:340 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:354
+#: blueman/gui/manager/ManagerDeviceList.py:356 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:209
@@ -371,7 +369,7 @@ msgstr "Aranıyor"
 msgid "Adapter Preferences"
 msgstr "Bağdaştırıcı Tercihleri"
 
-#: blueman/main/Manager.py:247 blueman/gui/manager/ManagerDeviceList.py:153
+#: blueman/main/Manager.py:247 blueman/gui/manager/ManagerDeviceList.py:169
 #: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
 msgstr "Dosya Gönderici"
@@ -382,7 +380,7 @@ msgstr "Bluetooth Dosya Aktarımı"
 
 #: blueman/main/Sendto.py:42
 msgid "_Stop"
-msgstr ""
+msgstr "_Durdur"
 
 #: blueman/main/Sendto.py:57 blueman/gui/manager/ManagerProgressbar.py:27
 msgid "Connecting"
@@ -508,7 +506,7 @@ msgstr "Yerel Servisler"
 
 #: blueman/main/Services.py:47
 msgid "_Apply"
-msgstr ""
+msgstr "_Uygula"
 
 #: blueman/Functions.py:71
 msgid "Bluetooth Turned Off"
@@ -536,19 +534,19 @@ msgstr "Hayır"
 
 #: blueman/Functions.py:181
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: blueman/Functions.py:184
 msgid "KB"
-msgstr ""
+msgstr "KB"
 
 #: blueman/Functions.py:187
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
 #: blueman/Functions.py:190
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: blueman/gui/manager/ManagerMenu.py:45
 msgid "_Report a Problem"
@@ -614,89 +612,89 @@ msgid "_Exit"
 msgstr "_Çıkış"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:309
-#: blueman/gui/manager/ManagerDeviceList.py:338 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:325
+#: blueman/gui/manager/ManagerDeviceList.py:354 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 msgid "Uncategorized"
 msgstr "Sınıflandırılmamış"
 
-#: blueman/gui/manager/ManagerDeviceList.py:528
+#: blueman/gui/manager/ManagerDeviceList.py:544
 msgid "Trusted"
 msgstr "Güvenilir"
 
-#: blueman/gui/manager/ManagerDeviceList.py:530
+#: blueman/gui/manager/ManagerDeviceList.py:546
 msgid "Paired"
 msgstr "Eşleştirildi"
 
-#: blueman/gui/manager/ManagerDeviceList.py:532
+#: blueman/gui/manager/ManagerDeviceList.py:548
 msgid "Blocked"
 msgstr "Engellendi"
 
-#: blueman/gui/manager/ManagerDeviceList.py:555
+#: blueman/gui/manager/ManagerDeviceList.py:571
 msgid "<b>Connected</b>"
 msgstr "<b>Bağlandı</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:570
+#: blueman/gui/manager/ManagerDeviceList.py:586
 msgid "Poor"
 msgstr "Zayıf"
 
-#: blueman/gui/manager/ManagerDeviceList.py:572
-#: blueman/gui/manager/ManagerDeviceList.py:597
+#: blueman/gui/manager/ManagerDeviceList.py:588
+#: blueman/gui/manager/ManagerDeviceList.py:613
 msgid "Sub-optimal"
 msgstr "Optimal altı"
 
-#: blueman/gui/manager/ManagerDeviceList.py:574
-#: blueman/gui/manager/ManagerDeviceList.py:599
+#: blueman/gui/manager/ManagerDeviceList.py:590
+#: blueman/gui/manager/ManagerDeviceList.py:615
 msgid "Optimal"
 msgstr "En Uygun"
 
-#: blueman/gui/manager/ManagerDeviceList.py:576
+#: blueman/gui/manager/ManagerDeviceList.py:592
 msgid "Much"
 msgstr "Daha fazla"
 
-#: blueman/gui/manager/ManagerDeviceList.py:578
+#: blueman/gui/manager/ManagerDeviceList.py:594
 msgid "Too much"
 msgstr "Çok fazla"
 
-#: blueman/gui/manager/ManagerDeviceList.py:581
+#: blueman/gui/manager/ManagerDeviceList.py:597
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 msgstr "<b>Alınan Sinyal Gücü: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:584
+#: blueman/gui/manager/ManagerDeviceList.py:600
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 msgstr "Alınan Sinyal Gücü: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:589
+#: blueman/gui/manager/ManagerDeviceList.py:605
 #, python-format
 msgid "<b>Link Quality: %(lq)u%%</b>"
 msgstr "<b>Bağlantı Kalitesi: %(lq)u%%</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:591
+#: blueman/gui/manager/ManagerDeviceList.py:607
 #, python-format
 msgid "Link Quality: %(lq)u%%"
 msgstr "Bağlantı Kalitesi: %(lq)u%%"
 
-#: blueman/gui/manager/ManagerDeviceList.py:595
+#: blueman/gui/manager/ManagerDeviceList.py:611
 msgid "Low"
 msgstr "Düşük"
 
-#: blueman/gui/manager/ManagerDeviceList.py:601
+#: blueman/gui/manager/ManagerDeviceList.py:617
 msgid "High"
 msgstr "Yüksek"
 
-#: blueman/gui/manager/ManagerDeviceList.py:603
+#: blueman/gui/manager/ManagerDeviceList.py:619
 msgid "Very High"
 msgstr "Çok Yüksek"
 
-#: blueman/gui/manager/ManagerDeviceList.py:606
+#: blueman/gui/manager/ManagerDeviceList.py:622
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr "<b>İletim Gücü Seviyesi: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:609
+#: blueman/gui/manager/ManagerDeviceList.py:625
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr "İletim Gücü Seviyesi: %(tpl)u%% <i>(%(tpl_state)s)</i>"
@@ -2111,7 +2109,6 @@ msgstr ""
 
 #. https://github.com/python/mypy/issues/2608
 #: blueman/plugins/applet/AutoConnect.py:50
-#: blueman/plugins/applet/ConnectionNotifier.py:21
 #: blueman/plugins/applet/RecentConns.py:154
 #: blueman/plugins/applet/PPPSupport.py:75
 msgid "Connected"
@@ -2122,13 +2119,13 @@ msgstr "Bağlandı"
 msgid "Automatically connected to %(service)s on %(device)s"
 msgstr "%(device)s üzerinde %(service)s'e otomatik olarak bağlandı"
 
-#: blueman/plugins/applet/ConnectionNotifier.py:13
+#: blueman/plugins/applet/ConnectionNotifier.py:16
 msgid "Shows desktop notifications when devices get connected or disconnected."
 msgstr ""
 "Aygıtlar bağlandığında veya bağlantısı kesildiğinde masaüstü bildirimleri "
 "gösterir."
 
-#: blueman/plugins/applet/ConnectionNotifier.py:21
+#: blueman/plugins/applet/ConnectionNotifier.py:38
 msgid "Disconnected"
 msgstr "Bağlantı kesildi"
 
@@ -2436,13 +2433,6 @@ msgstr[1] "<b>%(connections)d Faal Bağlantı</b>"
 msgid "Bluetooth Disabled"
 msgstr "Bluetooth Devredışı"
 
-#: blueman/plugins/applet/Battery.py:14
-msgid ""
-"Shows desktop notifications with battery percentage when devices get "
-"connected."
-msgstr ""
-"Aygıtlar bağlandığında pil yüzdesini gösteren masaüstü bildirimleri gösterir."
-
 #: blueman/plugins/applet/DisconnectItems.py:14
 msgid "Adds disconnect menu items"
 msgstr "Bağlantı kesme menü ögeleri ekler"
@@ -2698,6 +2688,13 @@ msgstr "RfKill Durumunu Ayarla"
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr "RfKill durumunu ayarlamak yetki gerektirir"
+
+#~ msgid ""
+#~ "Shows desktop notifications with battery percentage when devices get "
+#~ "connected."
+#~ msgstr ""
+#~ "Aygıtlar bağlandığında pil yüzdesini gösteren masaüstü bildirimleri "
+#~ "gösterir."
 
 #~ msgid "Isdn"
 #~ msgstr "ISDN"

@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2022-05-27 17:59+0000\n"
+"POT-Creation-Date: 2022-06-05 21:46+0200\n"
 "PO-Revision-Date: 2020-04-14 10:14+0000\n"
 "Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
 "Language-Team: Slovenian (http://www.transifex.com/mate/MATE/language/sl/)\n"
@@ -246,8 +246,8 @@ msgstr "<b>Avtor:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:338
-#: blueman/gui/manager/ManagerDeviceList.py:340 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:354
+#: blueman/gui/manager/ManagerDeviceList.py:356 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:209
@@ -363,7 +363,7 @@ msgstr "Iskanje"
 msgid "Adapter Preferences"
 msgstr "Lastnosti vmesnika"
 
-#: blueman/main/Manager.py:247 blueman/gui/manager/ManagerDeviceList.py:153
+#: blueman/main/Manager.py:247 blueman/gui/manager/ManagerDeviceList.py:169
 #: blueman/plugins/applet/StandardItems.py:72
 msgid "File Sender"
 msgstr "Pošiljatelj datotek"
@@ -609,93 +609,93 @@ msgid "_Exit"
 msgstr "_Izhod"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:309
-#: blueman/gui/manager/ManagerDeviceList.py:338 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:325
+#: blueman/gui/manager/ManagerDeviceList.py:354 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 msgid "Uncategorized"
 msgstr "Nekategorizirano"
 
-#: blueman/gui/manager/ManagerDeviceList.py:528
+#: blueman/gui/manager/ManagerDeviceList.py:544
 #, fuzzy
 #| msgid "Trust"
 msgid "Trusted"
 msgstr "Zaupaj"
 
-#: blueman/gui/manager/ManagerDeviceList.py:530
+#: blueman/gui/manager/ManagerDeviceList.py:546
 #, fuzzy
 #| msgid "Pair"
 msgid "Paired"
 msgstr "Seznani"
 
-#: blueman/gui/manager/ManagerDeviceList.py:532
+#: blueman/gui/manager/ManagerDeviceList.py:548
 msgid "Blocked"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:555
+#: blueman/gui/manager/ManagerDeviceList.py:571
 msgid "<b>Connected</b>"
 msgstr "<b>Povezano</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:570
+#: blueman/gui/manager/ManagerDeviceList.py:586
 msgid "Poor"
 msgstr "Slabo"
 
-#: blueman/gui/manager/ManagerDeviceList.py:572
-#: blueman/gui/manager/ManagerDeviceList.py:597
+#: blueman/gui/manager/ManagerDeviceList.py:588
+#: blueman/gui/manager/ManagerDeviceList.py:613
 msgid "Sub-optimal"
 msgstr "Dobro"
 
-#: blueman/gui/manager/ManagerDeviceList.py:574
-#: blueman/gui/manager/ManagerDeviceList.py:599
+#: blueman/gui/manager/ManagerDeviceList.py:590
+#: blueman/gui/manager/ManagerDeviceList.py:615
 msgid "Optimal"
 msgstr "Odlično"
 
-#: blueman/gui/manager/ManagerDeviceList.py:576
+#: blueman/gui/manager/ManagerDeviceList.py:592
 msgid "Much"
 msgstr "Zadostno"
 
-#: blueman/gui/manager/ManagerDeviceList.py:578
+#: blueman/gui/manager/ManagerDeviceList.py:594
 msgid "Too much"
 msgstr "Preveč"
 
-#: blueman/gui/manager/ManagerDeviceList.py:581
+#: blueman/gui/manager/ManagerDeviceList.py:597
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 msgstr "<b>Jakost prejetega signala: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:584
+#: blueman/gui/manager/ManagerDeviceList.py:600
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 msgstr "Jakost prejetega signala: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:589
+#: blueman/gui/manager/ManagerDeviceList.py:605
 #, python-format
 msgid "<b>Link Quality: %(lq)u%%</b>"
 msgstr "<b>Kakovost povezave: %(lq)u%%</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:591
+#: blueman/gui/manager/ManagerDeviceList.py:607
 #, python-format
 msgid "Link Quality: %(lq)u%%"
 msgstr "Kakovost povezave: %(lq)u%%"
 
-#: blueman/gui/manager/ManagerDeviceList.py:595
+#: blueman/gui/manager/ManagerDeviceList.py:611
 msgid "Low"
 msgstr "Nizko"
 
-#: blueman/gui/manager/ManagerDeviceList.py:601
+#: blueman/gui/manager/ManagerDeviceList.py:617
 msgid "High"
 msgstr "Visoko"
 
-#: blueman/gui/manager/ManagerDeviceList.py:603
+#: blueman/gui/manager/ManagerDeviceList.py:619
 msgid "Very High"
 msgstr "Zelo visoko"
 
-#: blueman/gui/manager/ManagerDeviceList.py:606
+#: blueman/gui/manager/ManagerDeviceList.py:622
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr "<b>Nivo moči oddajanja: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:609
+#: blueman/gui/manager/ManagerDeviceList.py:625
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr "Nivo moči oddajanja: %(tpl)u%% <i>(%(tpl_state)s)</i>"
@@ -2126,7 +2126,6 @@ msgstr ""
 
 #. https://github.com/python/mypy/issues/2608
 #: blueman/plugins/applet/AutoConnect.py:50
-#: blueman/plugins/applet/ConnectionNotifier.py:21
 #: blueman/plugins/applet/RecentConns.py:154
 #: blueman/plugins/applet/PPPSupport.py:75
 msgid "Connected"
@@ -2137,11 +2136,11 @@ msgstr "Povezano"
 msgid "Automatically connected to %(service)s on %(device)s"
 msgstr ""
 
-#: blueman/plugins/applet/ConnectionNotifier.py:13
+#: blueman/plugins/applet/ConnectionNotifier.py:16
 msgid "Shows desktop notifications when devices get connected or disconnected."
 msgstr ""
 
-#: blueman/plugins/applet/ConnectionNotifier.py:21
+#: blueman/plugins/applet/ConnectionNotifier.py:38
 msgid "Disconnected"
 msgstr "Odklopljeno"
 
@@ -2453,12 +2452,6 @@ msgstr[3] "<b>%(connections)d dejavnih povezav</b>"
 #: blueman/plugins/applet/PowerManager.py:192
 msgid "Bluetooth Disabled"
 msgstr "Bluetooth je onemogočen"
-
-#: blueman/plugins/applet/Battery.py:14
-msgid ""
-"Shows desktop notifications with battery percentage when devices get "
-"connected."
-msgstr ""
 
 #: blueman/plugins/applet/DisconnectItems.py:14
 msgid "Adds disconnect menu items"
