@@ -261,19 +261,18 @@ class ManagerMenu:
         adapter = Adapter(obj_path=adapter_path)
         menu = self.item_adapter.get_submenu()
         assert isinstance(menu, Gtk.Menu)
-        object_path = adapter.get_object_path()
 
         item = Gtk.RadioMenuItem.new_with_label(self._adapters_group, adapter.get_name())
         item.show()
         self._adapters_group = item.get_group()
 
-        self._itemhandler = item.connect("activate", self.on_adapter_selected, object_path)
+        self._itemhandler = item.connect("activate", self.on_adapter_selected, adapter_path)
         self._adapterhandler = adapter.connect_signal("property-changed", self.on_adapter_property_changed)
 
         menu.insert(item, self._insert_adapter_item_pos)
         self._insert_adapter_item_pos += 1
 
-        self.adapter_items[object_path] = (item, adapter)
+        self.adapter_items[adapter_path] = (item, adapter)
 
         assert self.blueman.List.Adapter is not None
         if adapter_path == self.blueman.List.Adapter.get_object_path():
