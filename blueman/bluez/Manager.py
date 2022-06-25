@@ -134,6 +134,9 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
 
     def populate_devices(self, adapter_path: str = "/") -> None:
         for obj_proxy in self._object_manager.get_objects():
+            # We handle adapters differently so skip them.
+            if obj_proxy.get_interface("org.bluez.Adapter1") is not None:
+                continue
             object_path = obj_proxy.get_object_path()
             if object_path.startswith(adapter_path):
                 self._on_object_added(self._object_manager, obj_proxy)
