@@ -90,6 +90,9 @@ class _NotificationDialog(Gtk.MessageDialog):
     def set_message(self, message: str) -> None:
         self.props.secondary_text = message
 
+    def set_notification_icon(self, icon_name: str) -> None:
+        self.set_icon_from_icon_name(icon_name, 48)
+
     def dialog_response(self, _dialog: Gtk.Dialog, response: int) -> None:
         if self.callback:
             self.callback(self.actions[response])
@@ -191,6 +194,11 @@ class _NotificationBubble(Gio.DBusProxy):
 
     def set_message(self, message: str) -> None:
         self._body = message
+        if self._return_id is not None:
+            self.show()
+
+    def set_notification_icon(self, icon_name: str) -> None:
+        self._app_icon = icon_name
         if self._return_id is not None:
             self.show()
 
