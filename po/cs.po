@@ -32,7 +32,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2022-06-05 21:46+0200\n"
+"POT-Creation-Date: 2022-06-24 12:19+0000\n"
 "PO-Revision-Date: 2022-06-15 15:12+0000\n"
 "Last-Translator: Vojtěch Otáhal <vojta.otahal@seznam.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/blueman/blueman/cs/"
@@ -82,66 +82,66 @@ msgstr "Toto by mělo být přepsáno"
 msgid "Show input"
 msgstr "Ukázat vstup"
 
-#: data/ui/manager-main.ui:18
+#: data/ui/manager-main.ui:54
 msgid "_Adapter"
 msgstr "_Adaptér"
 
-#: data/ui/manager-main.ui:26
+#: data/ui/manager-main.ui:62
 msgid "_Device"
 msgstr "_Zařízení"
 
-#: data/ui/manager-main.ui:34
+#: data/ui/manager-main.ui:70
 msgid "_View"
 msgstr "_Zobrazit"
 
-#: data/ui/manager-main.ui:42 blueman/gui/manager/ManagerMenu.py:55
-#: blueman/plugins/applet/StandardItems.py:48
+#: data/ui/manager-main.ui:78 blueman/gui/manager/ManagerMenu.py:56
+#: blueman/plugins/applet/StandardItems.py:51
 msgid "_Help"
 msgstr "_Nápověda"
 
-#: data/ui/manager-main.ui:62
+#: data/ui/manager-main.ui:98
 msgid "Search for nearby devices"
 msgstr "Hledat zařízení v dosahu"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:64
+#: data/ui/manager-main.ui:100
 msgid "Search"
 msgstr "Vyhledávání"
 
-#: data/ui/manager-main.ui:87 blueman/gui/manager/ManagerDeviceMenu.py:357
+#: data/ui/manager-main.ui:123 blueman/gui/manager/ManagerDeviceMenu.py:357
 msgid "Create pairing with the device"
 msgstr "Vytvořit párování se zařízením"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:88
+#: data/ui/manager-main.ui:124
 msgid "Pair"
 msgstr "Pár"
 
-#: data/ui/manager-main.ui:101 blueman/gui/manager/ManagerDeviceMenu.py:375
+#: data/ui/manager-main.ui:137 blueman/gui/manager/ManagerDeviceMenu.py:375
 msgid "Mark/Unmark this device as trusted"
 msgstr "Označit/Odznačit toto zařízení jako důvěryhodné"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:102 blueman/gui/manager/ManagerToolbar.py:39
+#: data/ui/manager-main.ui:138 blueman/gui/manager/ManagerToolbar.py:39
 #: blueman/gui/manager/ManagerToolbar.py:99
 msgid "Trust"
 msgstr "Důvěřovat"
 
-#: data/ui/manager-main.ui:115 blueman/gui/manager/ManagerDeviceMenu.py:420
+#: data/ui/manager-main.ui:151 blueman/gui/manager/ManagerDeviceMenu.py:420
 msgid "Remove this device from the known devices list"
 msgstr "Odebrat toto zařízení ze seznamu důvěryhodných zařízení"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:116
+#: data/ui/manager-main.ui:152
 msgid "Remove"
 msgstr "Odstranit"
 
-#: data/ui/manager-main.ui:138
+#: data/ui/manager-main.ui:174
 msgid "Send file(s) to the device"
 msgstr "Odeslat soubor(y) do zařízení"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:140
+#: data/ui/manager-main.ui:176
 msgid "Send File"
 msgstr "Odeslat soubor"
 
@@ -209,23 +209,23 @@ msgstr "<b>Podpora DUN</b>"
 msgid "<b>Network Settings</b>"
 msgstr "<b>Nastavení sítě</b>"
 
-#: data/ui/services-transfer.ui:24
+#: data/ui/services-transfer.ui:25
 msgid "<b>File Receiving (Object Push)</b>"
 msgstr "<b>Příjem souborů (Object Push)</b>"
 
-#: data/ui/services-transfer.ui:37
+#: data/ui/services-transfer.ui:38
 msgid "Incoming Folder:"
 msgstr "Složka pro příchozí soubory:"
 
-#: data/ui/services-transfer.ui:49
+#: data/ui/services-transfer.ui:50
 msgid "Select folder for incoming file transfers"
 msgstr "Vyberte složku pro příchozí soubory"
 
-#: data/ui/services-transfer.ui:58
+#: data/ui/services-transfer.ui:59
 msgid "Accept files from trusted devices"
 msgstr "Přijímat soubory z důvěryhodných zařízení"
 
-#: data/ui/services-transfer.ui:96
+#: data/ui/services-transfer.ui:106
 msgid "<b>Transfer Settings</b>"
 msgstr "<b>Nastavení přenosu</b>"
 
@@ -376,12 +376,12 @@ msgstr ""
 msgid "Searching"
 msgstr "Probíhá hledání"
 
-#: blueman/main/Manager.py:231 blueman/plugins/applet/StandardItems.py:79
+#: blueman/main/Manager.py:231 blueman/plugins/applet/StandardItems.py:84
 msgid "Adapter Preferences"
 msgstr "Předvolby adaptéru"
 
 #: blueman/main/Manager.py:247 blueman/gui/manager/ManagerDeviceList.py:169
-#: blueman/plugins/applet/StandardItems.py:72
+#: blueman/plugins/applet/StandardItems.py:77
 msgid "File Sender"
 msgstr "Odesílatel souborů"
 
@@ -562,67 +562,67 @@ msgstr ""
 msgid "GB"
 msgstr ""
 
-#: blueman/gui/manager/ManagerMenu.py:45
+#: blueman/gui/manager/ManagerMenu.py:46
 msgid "_Report a Problem"
 msgstr "Nahlásit p_roblém"
 
-#: blueman/gui/manager/ManagerMenu.py:62
+#: blueman/gui/manager/ManagerMenu.py:63
 msgid "Device Manager"
 msgstr "Správce zařízení"
 
-#: blueman/gui/manager/ManagerMenu.py:68
+#: blueman/gui/manager/ManagerMenu.py:69
 msgid "Show _Toolbar"
 msgstr "Zobrazit panel nástrojů"
 
-#: blueman/gui/manager/ManagerMenu.py:73
+#: blueman/gui/manager/ManagerMenu.py:74
 msgid "Show _Statusbar"
 msgstr "Zobrazit stavový panel"
 
-#: blueman/gui/manager/ManagerMenu.py:78
+#: blueman/gui/manager/ManagerMenu.py:79
 msgid "Hide _unnamed devices"
 msgstr "Skrýt nepojmenovanné zařízení"
 
-#: blueman/gui/manager/ManagerMenu.py:88
+#: blueman/gui/manager/ManagerMenu.py:89
 msgid "S_ort By"
 msgstr "Seřadit p_odle"
 
-#: blueman/gui/manager/ManagerMenu.py:95
+#: blueman/gui/manager/ManagerMenu.py:96
 msgid "_Name"
 msgstr "_Názvu"
 
-#: blueman/gui/manager/ManagerMenu.py:100
+#: blueman/gui/manager/ManagerMenu.py:101
 msgid "_Added"
 msgstr "_Přidání"
 
-#: blueman/gui/manager/ManagerMenu.py:114
+#: blueman/gui/manager/ManagerMenu.py:115
 msgid "_Descending"
 msgstr "_Sestupně"
 
-#: blueman/gui/manager/ManagerMenu.py:127
-#: blueman/plugins/applet/StandardItems.py:50
+#: blueman/gui/manager/ManagerMenu.py:128
+#: blueman/plugins/applet/StandardItems.py:54
 msgid "_Plugins"
 msgstr "_Zásuvné moduly"
 
-#: blueman/gui/manager/ManagerMenu.py:132
-#: blueman/plugins/applet/StandardItems.py:43
+#: blueman/gui/manager/ManagerMenu.py:133
+#: blueman/plugins/applet/StandardItems.py:45
 msgid "_Local Services"
 msgstr "_Lokální služby"
 
-#: blueman/gui/manager/ManagerMenu.py:133
-#: blueman/plugins/applet/StandardItems.py:82
+#: blueman/gui/manager/ManagerMenu.py:134
+#: blueman/plugins/applet/StandardItems.py:87
 msgid "Service Preferences"
 msgstr "Předvolby služby"
 
-#: blueman/gui/manager/ManagerMenu.py:141
+#: blueman/gui/manager/ManagerMenu.py:142
 msgid "_Search"
 msgstr "_Hledat"
 
-#: blueman/gui/manager/ManagerMenu.py:155
+#: blueman/gui/manager/ManagerMenu.py:156
 #, fuzzy
 msgid "_Preferences"
 msgstr "Předvolby adaptéru"
 
-#: blueman/gui/manager/ManagerMenu.py:164 blueman/plugins/applet/ExitItem.py:12
+#: blueman/gui/manager/ManagerMenu.py:165 blueman/plugins/applet/ExitItem.py:12
 #, fuzzy
 msgid "_Exit"
 msgstr "Ukončit"
@@ -636,86 +636,86 @@ msgstr "Ukončit"
 msgid "Uncategorized"
 msgstr "nekategorizováno"
 
-#: blueman/gui/manager/ManagerDeviceList.py:544
+#: blueman/gui/manager/ManagerDeviceList.py:543
 #, fuzzy
 #| msgid "Trust"
 msgid "Trusted"
 msgstr "Důvěřovat"
 
-#: blueman/gui/manager/ManagerDeviceList.py:546
+#: blueman/gui/manager/ManagerDeviceList.py:545
 #, fuzzy
 #| msgid "Pair"
 msgid "Paired"
 msgstr "Pár"
 
-#: blueman/gui/manager/ManagerDeviceList.py:548
+#: blueman/gui/manager/ManagerDeviceList.py:547
 msgid "Blocked"
 msgstr "Blokováno"
 
-#: blueman/gui/manager/ManagerDeviceList.py:571
+#: blueman/gui/manager/ManagerDeviceList.py:570
 msgid "<b>Connected</b>"
 msgstr "<b>Připojeno k:</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:586
+#: blueman/gui/manager/ManagerDeviceList.py:585
 msgid "Poor"
 msgstr "Mizerný"
 
-#: blueman/gui/manager/ManagerDeviceList.py:588
-#: blueman/gui/manager/ManagerDeviceList.py:613
+#: blueman/gui/manager/ManagerDeviceList.py:587
+#: blueman/gui/manager/ManagerDeviceList.py:612
 msgid "Sub-optimal"
 msgstr "Neoptimální"
 
-#: blueman/gui/manager/ManagerDeviceList.py:590
-#: blueman/gui/manager/ManagerDeviceList.py:615
+#: blueman/gui/manager/ManagerDeviceList.py:589
+#: blueman/gui/manager/ManagerDeviceList.py:614
 msgid "Optimal"
 msgstr "Optimální"
 
-#: blueman/gui/manager/ManagerDeviceList.py:592
+#: blueman/gui/manager/ManagerDeviceList.py:591
 msgid "Much"
 msgstr "Mnoho"
 
-#: blueman/gui/manager/ManagerDeviceList.py:594
+#: blueman/gui/manager/ManagerDeviceList.py:593
 msgid "Too much"
 msgstr "Příliš"
 
-#: blueman/gui/manager/ManagerDeviceList.py:597
+#: blueman/gui/manager/ManagerDeviceList.py:596
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 msgstr "<b>Síla přijímaného signálu: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:600
+#: blueman/gui/manager/ManagerDeviceList.py:599
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 msgstr "Síla přijímaného signálu: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:605
+#: blueman/gui/manager/ManagerDeviceList.py:604
 #, python-format
 msgid "<b>Link Quality: %(lq)u%%</b>"
 msgstr "<b>Kvalita spojení: %(lq)u%%</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:607
+#: blueman/gui/manager/ManagerDeviceList.py:606
 #, python-format
 msgid "Link Quality: %(lq)u%%"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:611
+#: blueman/gui/manager/ManagerDeviceList.py:610
 msgid "Low"
 msgstr "Nízké"
 
-#: blueman/gui/manager/ManagerDeviceList.py:617
+#: blueman/gui/manager/ManagerDeviceList.py:616
 msgid "High"
 msgstr "Vysoké"
 
-#: blueman/gui/manager/ManagerDeviceList.py:619
+#: blueman/gui/manager/ManagerDeviceList.py:618
 msgid "Very High"
 msgstr "Velmi vysoké"
 
-#: blueman/gui/manager/ManagerDeviceList.py:622
+#: blueman/gui/manager/ManagerDeviceList.py:621
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:625
+#: blueman/gui/manager/ManagerDeviceList.py:624
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr ""
@@ -837,12 +837,12 @@ msgid "Data activity indication"
 msgstr "Indikace datové aktivity"
 
 #: blueman/gui/manager/ManagerStats.py:43
-#: blueman/gui/manager/ManagerStats.py:53
+#: blueman/gui/manager/ManagerStats.py:55
 msgid "Total data received and rate of transmission"
 msgstr "Celkem přijatých dat a poměr přenosu"
 
 #: blueman/gui/manager/ManagerStats.py:47
-#: blueman/gui/manager/ManagerStats.py:51
+#: blueman/gui/manager/ManagerStats.py:52
 msgid "Total data sent and rate of transmission"
 msgstr "Celkem odeslaných dat a poměr přenosu"
 
@@ -868,7 +868,7 @@ msgid "GSM Settings"
 msgstr "Nastavení GSM"
 
 #: blueman/gui/applet/PluginDialog.py:95
-#: blueman/plugins/applet/StandardItems.py:88
+#: blueman/plugins/applet/StandardItems.py:93
 msgid "Plugins"
 msgstr "Zásuvné moduly"
 
@@ -2187,7 +2187,7 @@ msgstr ""
 
 #. https://github.com/python/mypy/issues/2608
 #: blueman/plugins/applet/AutoConnect.py:50
-#: blueman/plugins/applet/RecentConns.py:154
+#: blueman/plugins/applet/RecentConns.py:155
 #: blueman/plugins/applet/PPPSupport.py:75
 msgid "Connected"
 msgstr "Připojeno"
@@ -2201,7 +2201,7 @@ msgstr ""
 msgid "Shows desktop notifications when devices get connected or disconnected."
 msgstr ""
 
-#: blueman/plugins/applet/ConnectionNotifier.py:38
+#: blueman/plugins/applet/ConnectionNotifier.py:40
 msgid "Disconnected"
 msgstr "Odpojeno"
 
@@ -2273,9 +2273,9 @@ msgstr "Využití sítě"
 msgid "Shows network traffic usage"
 msgstr "Ukázat využití sítě"
 
-#: blueman/plugins/applet/StatusIcon.py:42
+#: blueman/plugins/applet/StatusIcon.py:43
 #: blueman/plugins/applet/ShowConnected.py:71
-#: blueman/plugins/applet/PowerManager.py:189
+#: blueman/plugins/applet/PowerManager.py:190
 msgid "Bluetooth Enabled"
 msgstr "Bluetooth povoleno"
 
@@ -2311,21 +2311,21 @@ msgstr "Maximální počet položek nedávných spojení, které se zobrazí v m
 msgid "Recent _Connections"
 msgstr "Poslední _spojení"
 
-#: blueman/plugins/applet/RecentConns.py:154
+#: blueman/plugins/applet/RecentConns.py:155
 #, python-format
 msgid "Connected to %s"
 msgstr "Připojeno k %s"
 
-#: blueman/plugins/applet/RecentConns.py:160
+#: blueman/plugins/applet/RecentConns.py:161
 msgid "Failed to connect"
 msgstr "Připojení selhalo"
 
-#: blueman/plugins/applet/RecentConns.py:170
+#: blueman/plugins/applet/RecentConns.py:171
 #, python-format
 msgid "%(service)s on %(device)s"
 msgstr "%(service)s na %(device)s"
 
-#: blueman/plugins/applet/RecentConns.py:174
+#: blueman/plugins/applet/RecentConns.py:175
 msgid "Adapter for this connection is not available"
 msgstr "Adaptér pro toto spojení není přístupný"
 
@@ -2449,11 +2449,11 @@ msgstr "Odeslat _soubory do zařízení"
 msgid "_Devices"
 msgstr "_Zařízení"
 
-#: blueman/plugins/applet/StandardItems.py:40
+#: blueman/plugins/applet/StandardItems.py:41
 msgid "Adap_ters"
 msgstr "Adap_téry"
 
-#: blueman/plugins/applet/StandardItems.py:85
+#: blueman/plugins/applet/StandardItems.py:90
 msgid "applet"
 msgstr "applet"
 
@@ -2516,7 +2516,7 @@ msgstr[2] "<b>%(connections)d aktivních spojení</b>"
 msgstr[3] "<b>%(connections)d aktivní spojení</b>"
 
 #: blueman/plugins/applet/ShowConnected.py:73
-#: blueman/plugins/applet/PowerManager.py:192
+#: blueman/plugins/applet/PowerManager.py:193
 msgid "Bluetooth Disabled"
 msgstr "Bluetooth zakázáno"
 
@@ -2644,20 +2644,20 @@ msgid "Automatically power on adapters"
 msgstr "Automaticky zapnout adaptéry"
 
 #: blueman/plugins/applet/PowerManager.py:55
-#: blueman/plugins/applet/PowerManager.py:171
+#: blueman/plugins/applet/PowerManager.py:172
 msgid "<b>Turn Bluetooth _Off</b>"
 msgstr "<b>Vypnout Bluetooth</b>"
 
-#: blueman/plugins/applet/PowerManager.py:56
-#: blueman/plugins/applet/PowerManager.py:173
+#: blueman/plugins/applet/PowerManager.py:57
+#: blueman/plugins/applet/PowerManager.py:174
 msgid "Turn off all adapters"
 msgstr "Vypnout všechny adaptéry"
 
-#: blueman/plugins/applet/PowerManager.py:162
+#: blueman/plugins/applet/PowerManager.py:163
 msgid "<b>Turn Bluetooth _On</b>"
 msgstr "<b>Zapnout Bluetooth</b>"
 
-#: blueman/plugins/applet/PowerManager.py:164
+#: blueman/plugins/applet/PowerManager.py:165
 msgid "Turn on all adapters"
 msgstr "Zapne všchny adaptéry"
 
