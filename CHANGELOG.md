@@ -1,6 +1,6 @@
 # Changelog
 
-## main
+## 2.3.beta1
 
 ### New features
 
