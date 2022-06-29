@@ -8,7 +8,7 @@
 # elio <micta2003@hotmail.com>, 2017
 # Pablo Díaz <reznorix@yahoo.es>, 2017
 # Toni Estévez <toni.estevez@gmail.com>, 2019-2020
-# Adolfo Jayme Barrientos <fitojb@ubuntu.com>, 2014-2015, 2017, 2019-2020
+# Adolfo Jayme Barrientos <fitojb@ubuntu.com>, 2014-2015, 2017, 2019-2020, 2022.
 # Amaro Martínez <xoas@airmail.cc>, 2020.
 # Allan Nordhøy <epost@anotheragency.no>
 # LightFOSS <light325@protonmail.com>, 2021.
@@ -20,20 +20,20 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2022-06-09 18:21+0200\n"
-"PO-Revision-Date: 2022-05-24 22:14+0000\n"
-"Last-Translator: Luiz Carlos Lucasv <csversut@gmail.com>\n"
-"Language-Team: Spanish <https://hosted.weblate.org/projects/blueman/2-2/es/"
-">\n"
+"PO-Revision-Date: 2022-06-28 14:16+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/blueman/2-2/es/>"
+"\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13-dev\n"
+"X-Generator: Weblate 4.13.1-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
-msgstr "<b>Ajustes de visibilidad</b>"
+msgstr "<b>Configuración de visibilidad</b>"
 
 #: data/ui/adapters-tab.ui:39 blueman/main/Adapter.py:145
 msgid "Hidden"
@@ -164,7 +164,7 @@ msgstr "udhcpd"
 
 #: data/ui/services-network.ui:218
 msgid "<b>NAP Settings</b>"
-msgstr "<b>Ajustes de NAP</b>"
+msgstr "<b>Configuración de NAP</b>"
 
 #: data/ui/services-network.ui:282
 msgid "<b>PAN Support</b>"
@@ -196,7 +196,7 @@ msgstr "Aceptar archivos de los dispositivos en que se confíe"
 
 #: data/ui/services-transfer.ui:96
 msgid "<b>Transfer Settings</b>"
-msgstr "<b>Ajustes de transferencia</b>"
+msgstr "<b>Configuración de transferencia</b>"
 
 #: data/ui/send-dialog.ui:32
 msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
@@ -229,7 +229,7 @@ msgstr "Sin especificar"
 
 #: data/ui/applet-plugins-widget.ui:146
 msgid "<b>Author:</b>"
-msgstr "<b>Autor:</b>"
+msgstr "<b>Autoría:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
@@ -252,7 +252,7 @@ msgstr "<b>Conflictúa con:</b>"
 
 #: data/ui/gsm-settings.ui:34
 msgid "<b>GSM settings</b>"
-msgstr "<b>Ajustes de GSM</b>"
+msgstr "<b>Configuración de GSM</b>"
 
 #: data/ui/gsm-settings.ui:55
 msgid "Number:"
@@ -300,7 +300,8 @@ msgstr "Enviar una nota"
 
 #: blueman/main/Adapter.py:50
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
-msgstr "Encienda el Bluetooth para que funcione el gestor de adaptadores"
+msgstr ""
+"Es necesario encender el Bluetooth para que el gestor de adaptadores funcione"
 
 #: blueman/main/Adapter.py:86 data/blueman-adapters.desktop.in:3
 msgid "Bluetooth Adapters"
@@ -329,7 +330,7 @@ msgstr ""
 
 #: blueman/main/Manager.py:109
 msgid "Connection to BlueZ failed"
-msgstr "Falló la conexión con BlueZ"
+msgstr "No se pudo establecer la conexión con BlueZ"
 
 #: blueman/main/Manager.py:110
 msgid ""
@@ -545,7 +546,7 @@ msgstr "_Complementos"
 #: blueman/gui/manager/ManagerMenu.py:133
 #: blueman/plugins/applet/StandardItems.py:43
 msgid "_Local Services"
-msgstr "_Servicios locales"
+msgstr "Servicios _locales"
 
 #: blueman/gui/manager/ManagerMenu.py:134
 #: blueman/plugins/applet/StandardItems.py:82
@@ -613,22 +614,22 @@ msgstr "Demasiada"
 #: blueman/gui/manager/ManagerDeviceList.py:530
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
-msgstr "<b>Fuerza de señal recibida: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
+msgstr "<b>Fuerza de señal recibida: %(rssi)u %%</b> <i>(%(rssi_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:533
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
-msgstr "Fuerza de la señal recibida: %(rssi)u%% <i>(%(rssi_state)s)</i>"
+msgstr "Fuerza de la señal recibida: %(rssi)u %% <i>(%(rssi_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:538
 #, python-format
 msgid "<b>Link Quality: %(lq)u%%</b>"
-msgstr "<b>Calidad del enlace: %(lq)u%%</b>"
+msgstr "<b>Calidad del enlace: %(lq)u %%</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:540
 #, python-format
 msgid "Link Quality: %(lq)u%%"
-msgstr "Calidad del enlace: %(lq)u%%"
+msgstr "Calidad del enlace: %(lq)u %%"
 
 #: blueman/gui/manager/ManagerDeviceList.py:544
 msgid "Low"
@@ -645,12 +646,12 @@ msgstr "Muy alta"
 #: blueman/gui/manager/ManagerDeviceList.py:555
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
-msgstr "<b>Nivel de Energía Transmitida: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
+msgstr "<b>Nivel de energía transmitida: %(tpl)u %%</b> <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:558
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
-msgstr "Nivel de Energía Transmitida: %(tpl)u%% <i>(%(tpl_state)s)</i>"
+msgstr "Nivel de energía transmitida: %(tpl)u %% <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:131
 msgid "Success!"
@@ -715,7 +716,7 @@ msgstr "<b>Desconectar:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:322
 msgid "<b>Auto-connect:</b>"
-msgstr "<b>Auto-conectar:</b>"
+msgstr "<b>Conexión automática:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:341
 msgid "Send a _File…"
@@ -763,7 +764,7 @@ msgstr "Total de datos enviados y tasa de transmisión"
 #: blueman/gui/manager/ManagerToolbar.py:37
 #: blueman/gui/manager/ManagerToolbar.py:93
 msgid "Untrust"
-msgstr "Eliminar confianza"
+msgstr "Desconfiar"
 
 #: blueman/gui/DeviceSelectorDialog.py:14
 msgid "Select Device"
@@ -779,7 +780,7 @@ msgstr "Blueman es un gestor de conexiones Bluetooth basado en GTK"
 
 #: blueman/gui/GsmSettings.py:24
 msgid "GSM Settings"
-msgstr "Ajustes de GSM"
+msgstr "Configuración de GSM"
 
 #: blueman/gui/applet/PluginDialog.py:95
 #: blueman/plugins/applet/StandardItems.py:88
@@ -859,7 +860,7 @@ msgstr "Captación de imágenes"
 #. translators: device class
 #: blueman/DeviceClass.py:20 blueman/DeviceClass.py:41
 msgid "Wearable"
-msgstr "Vestible"
+msgstr "Ponible"
 
 #. translators: device class
 #: blueman/DeviceClass.py:22
@@ -889,7 +890,7 @@ msgstr "Dispositivo móvil"
 #. translators: device class
 #: blueman/DeviceClass.py:39
 msgid "Palm"
-msgstr "Palm"
+msgstr "De palma"
 
 #. translators: device class
 #: blueman/DeviceClass.py:48
@@ -989,7 +990,7 @@ msgstr "Audio portátil"
 #. translators: device class
 #: blueman/DeviceClass.py:96
 msgid "Car audio"
-msgstr "Radio de coche"
+msgstr "Audio para automóviles"
 
 #. translators: device class
 #: blueman/DeviceClass.py:98
@@ -1024,7 +1025,7 @@ msgstr "Monitor de vídeo"
 #. translators: device class
 #: blueman/DeviceClass.py:110
 msgid "Video display and loudspeaker"
-msgstr "Visualizador de video y estereo"
+msgstr "Monitor de vídeo con altavoz"
 
 #. translators: device class
 #: blueman/DeviceClass.py:112
@@ -1034,7 +1035,7 @@ msgstr "Videoconferencia"
 #. translators: device class
 #: blueman/DeviceClass.py:116
 msgid "Gaming/Toy"
-msgstr "Videojuego/Juguete"
+msgstr "Videojuego/juguete"
 
 #. translators: device class
 #: blueman/DeviceClass.py:123 blueman/DeviceClass.py:189
@@ -1127,7 +1128,7 @@ msgstr "Teléfono genérico"
 
 #: blueman/DeviceClass.py:170
 msgid "Generic Computer"
-msgstr "Computadora genérica"
+msgstr "PC genérico"
 
 #: blueman/DeviceClass.py:171
 msgid "Generic Watch"
@@ -1135,7 +1136,7 @@ msgstr "Reloj de pulsera genérico"
 
 #: blueman/DeviceClass.py:172
 msgid "Watch: Sports Watch"
-msgstr "Ver: Reloj deportivo"
+msgstr "Reloj: reloj deportivo"
 
 #: blueman/DeviceClass.py:173
 msgid "Generic Clock"
@@ -1147,7 +1148,7 @@ msgstr "Pantalla genérica"
 
 #: blueman/DeviceClass.py:175
 msgid "Generic Remote Control"
-msgstr "Control remoto genérico"
+msgstr "Mando a distancia genérico"
 
 #: blueman/DeviceClass.py:176
 msgid "Generic Eye-glasses"
@@ -1175,15 +1176,15 @@ msgstr "Termómetro genérico"
 
 #: blueman/DeviceClass.py:182
 msgid "Thermometer: Ear"
-msgstr "Termómetro: Oído"
+msgstr "Termómetro: oído"
 
 #: blueman/DeviceClass.py:183
 msgid "Generic Heart rate Sensor"
-msgstr "Sensor de pulsaciones genérico"
+msgstr "Sensor de frecuencia cardíaca genérico"
 
 #: blueman/DeviceClass.py:184
 msgid "Heart Rate Sensor: Heart Rate Belt"
-msgstr "Sensor de pulsaciones: Pulsaciones de cintura"
+msgstr "Sensor de frecuencia cardíaca: cinturón medidor"
 
 #: blueman/DeviceClass.py:185
 msgid "Generic Blood Pressure"
@@ -1191,11 +1192,11 @@ msgstr "Presión sanguínea genérica"
 
 #: blueman/DeviceClass.py:186
 msgid "Blood Pressure: Arm"
-msgstr "Presión sanguínea: Brazo"
+msgstr "Presión sanguínea: brazo"
 
 #: blueman/DeviceClass.py:187
 msgid "Blood Pressure: Wrist"
-msgstr "Presión sanguínea: Cintura"
+msgstr "Presión sanguínea: muñeca"
 
 #: blueman/DeviceClass.py:188
 msgid "Human Interface Device (HID)"
@@ -1219,11 +1220,11 @@ msgstr "Tableta digitalizadora"
 
 #: blueman/DeviceClass.py:194
 msgid "Card Reader"
-msgstr "Lector de Cartas"
+msgstr "Lector de tarjetas"
 
 #: blueman/DeviceClass.py:195
 msgid "Digital Pen"
-msgstr "Lapicera Digital"
+msgstr "Lápiz digital"
 
 #: blueman/DeviceClass.py:196
 msgid "Barcode Scanner"
@@ -1235,23 +1236,23 @@ msgstr "Glucómetro genérico"
 
 #: blueman/DeviceClass.py:198
 msgid "Generic: Running Walking Sensor"
-msgstr "Genérico: Sensor de Caminar/Correr"
+msgstr "Genérico: sensor de caminata/carrera"
 
 #: blueman/DeviceClass.py:199
 msgid "Running Walking Sensor: In-Shoe"
-msgstr "Sensor Caminar/Correr: En Zapatilla"
+msgstr "Sensor de caminata/carrera: en zapatilla"
 
 #: blueman/DeviceClass.py:200
 msgid "Running Walking Sensor: On-Shoe"
-msgstr "Sensor de Caminar/Correr: Dentro zapatilla"
+msgstr "Sensor de caminata/carrera: sobre zapatilla"
 
 #: blueman/DeviceClass.py:201
 msgid "Running Walking Sensor: On-Hip"
-msgstr "Sensor de Caminar/Correr: Pierna"
+msgstr "Sensor de caminata/carrera: sobre cadera"
 
 #: blueman/DeviceClass.py:202
 msgid "Generic: Cycling"
-msgstr "Genérico: Ciclismo"
+msgstr "Genérico: ciclismo"
 
 #: blueman/DeviceClass.py:203
 msgid "Cycling: Cycling Computer"
@@ -1259,28 +1260,28 @@ msgstr "Ciclismo: Computadora"
 
 #: blueman/DeviceClass.py:204
 msgid "Cycling: Speed Sensor"
-msgstr "Ciclismo: Sensor de velocidad"
+msgstr "Ciclismo: sensor de velocidad"
 
 #: blueman/DeviceClass.py:205
 msgid "Cycling: Cadence Sensor"
-msgstr "Ciclismo: Sensor de Cadencia"
+msgstr "Ciclismo: sensor de cadencia"
 
 #: blueman/DeviceClass.py:206
 msgid "Cycling: Power Sensor"
-msgstr "Cliclismo: Sensor de energia"
+msgstr "Ciclismo: sensor de energía"
 
 #: blueman/DeviceClass.py:207
 msgid "Cycling: Speed and Cadence Sensor"
-msgstr "Ciclismo: Sensor de velocidad y cadencia"
+msgstr "Ciclismo: sensor de velocidad y cadencia"
 
 #. 19 - 48 reserved
 #: blueman/DeviceClass.py:209
 msgid "Generic: Pulse Oximeter"
-msgstr "Genérico: Pulso de Oximetro"
+msgstr "Genérico: oxímetro de pulso"
 
 #: blueman/DeviceClass.py:210
 msgid "Fingertip"
-msgstr "Punta de dedos"
+msgstr "De yema"
 
 #: blueman/DeviceClass.py:211
 msgid "Wrist Worn"
@@ -1288,7 +1289,7 @@ msgstr "Muñeca usada"
 
 #: blueman/DeviceClass.py:212
 msgid "Generic: Weight Scale"
-msgstr "Genérico: Escala de peso"
+msgstr "Genérico: báscula"
 
 #: blueman/DeviceClass.py:213
 msgid "Generic Personal Mobility Device"
@@ -1308,7 +1309,7 @@ msgstr "Monitor genérico de glucosa continuo"
 
 #: blueman/DeviceClass.py:217
 msgid "Generic Insulin Pump"
-msgstr "Bombeo genérico de insulina"
+msgstr "Bomba de insulina genérica"
 
 #: blueman/DeviceClass.py:218
 msgid "Insulin Pump, durable pump"
@@ -1324,20 +1325,20 @@ msgstr "Lapiz de insulina"
 
 #: blueman/DeviceClass.py:221
 msgid "Generic Medication Delivery"
-msgstr "Delivery de medicación Genérico"
+msgstr "Entrega de medicamentos genérico"
 
 #. 55 - 80 reserved
 #: blueman/DeviceClass.py:223
 msgid "Generic: Outdoor Sports Activity"
-msgstr "Genérico: Actividad de deporte al aire libre"
+msgstr "Genérico: actividad deportiva al aire libre"
 
 #: blueman/DeviceClass.py:224
 msgid "Location Display Device"
-msgstr "Visor de Ubicación"
+msgstr "Dispositivo visor de ubicación"
 
 #: blueman/DeviceClass.py:225
 msgid "Location and Navigation Display Device"
-msgstr "Dispositivo de Ubicación y navegación"
+msgstr "Dispositivo visor de ubicación y navegación"
 
 #: blueman/DeviceClass.py:226
 msgid "Location Pod"
@@ -1453,7 +1454,7 @@ msgstr "NavegadorGrupoDescripciondeServicioCLaseID"
 
 #: blueman/Sdp.py:115
 msgid "Public Browse Group"
-msgstr "Navegar en Grupos Publicos"
+msgstr "Grupo de navegación pública"
 
 #: blueman/Sdp.py:116
 msgid "Serial Port"
@@ -1469,7 +1470,7 @@ msgstr "Red de acceso telefónico (DUN)"
 
 #: blueman/Sdp.py:119
 msgid "IrMC Sync"
-msgstr "IrMC Sincronización"
+msgstr "Sincronización IrMC"
 
 #: blueman/Sdp.py:120
 msgid "OBEX Object Push"
@@ -1481,11 +1482,11 @@ msgstr "Transferencia de archivos por OBEX"
 
 #: blueman/Sdp.py:122
 msgid "IrMC Sync Command"
-msgstr "IrMC Comando de Sincronización"
+msgstr "Orden de sincronización por IrMC"
 
 #: blueman/Sdp.py:124
 msgid "Cordless Telephony"
-msgstr "Telefonía inalambrica"
+msgstr "Telefonía inalámbrica"
 
 #: blueman/Sdp.py:125
 msgid "Audio Source"
@@ -1505,11 +1506,11 @@ msgstr "Audio avanzado"
 
 #: blueman/Sdp.py:129
 msgid "Remote Control"
-msgstr "Control Remoto"
+msgstr "Mando a distancia"
 
 #: blueman/Sdp.py:130
 msgid "Video Conferencing"
-msgstr "VideoConferencía"
+msgstr "Videoconferencia"
 
 #: blueman/Sdp.py:131
 msgid "Intercom"
@@ -1545,7 +1546,7 @@ msgstr "Red de grupo"
 
 #: blueman/Sdp.py:139
 msgid "DirectPrinting (BPP)"
-msgstr "Impresora Directa"
+msgstr "Impresión directa (BPP)"
 
 #: blueman/Sdp.py:140
 msgid "ReferencePrinting (BPP)"
@@ -1625,27 +1626,27 @@ msgstr "Audio/vídeo"
 
 #: blueman/Sdp.py:160
 msgid "SIM Access (SAP)"
-msgstr "Acceso de SIM"
+msgstr "Acceso de SIM (SAP)"
 
 #: blueman/Sdp.py:161
 msgid "Phonebook Access (PBAP) - PCE"
-msgstr "Acceso de Celular (PBAP) - PCE"
+msgstr "Acceso a la agenda (PBAP) - PCE"
 
 #: blueman/Sdp.py:162
 msgid "Phonebook Access (PBAP) - PSE"
-msgstr "Acceso de celular (PBAP) - PSE"
+msgstr "Acceso a la agenda (PBAP) - PSE"
 
 #: blueman/Sdp.py:163
 msgid "Phonebook Access (PBAP)"
-msgstr "Acceso al telefono (PBAP)"
+msgstr "Acceso a la agenda (PBAP)"
 
 #: blueman/Sdp.py:165
 msgid "Message Access Server"
-msgstr "Mensaje de acceso al servidor"
+msgstr "Servidor de acceso a mensajes"
 
 #: blueman/Sdp.py:166
 msgid "Message Notification Server"
-msgstr "Notificacion de servidor"
+msgstr "Servidor de notificaciones de mensajes"
 
 #: blueman/Sdp.py:167
 msgid "Message Access Profile (MAP)"
@@ -1665,7 +1666,7 @@ msgstr "Visualización 3D"
 
 #: blueman/Sdp.py:171
 msgid "3D Glasses"
-msgstr "Lentes 3D"
+msgstr "Gafas 3D"
 
 #: blueman/Sdp.py:172
 msgid "3D Synchronization (3DSP)"
@@ -1673,23 +1674,23 @@ msgstr "Sincronización 3D (3DSP)"
 
 #: blueman/Sdp.py:173
 msgid "Multi-Profile Specification (MPS) Profile"
-msgstr "Especificación de múltiples Perfiles (EMP) Perfil"
+msgstr "Perfil de especificación pluriperfil (MPS)"
 
 #: blueman/Sdp.py:174
 msgid "Multi-Profile Specification (MPS) Service"
-msgstr "Especificación de Múltiples Perfiles (EMP) Servicio"
+msgstr "Servicio de especificación pluriperfil (MPS)"
 
 #: blueman/Sdp.py:175
 msgid "Calendar, Task, and Notes (CTN) Access Service"
-msgstr "Calendario, Tarea, y Notas (CTN) Servicio de acceso"
+msgstr "Servicio de acceso a calendario, tareas y notas (CTN)"
 
 #: blueman/Sdp.py:176
 msgid "Calendar, Task, and Notes (CTN) Notification Service"
-msgstr "Calendario, Tarea, y Notas (CTN) Notificación del servicio"
+msgstr "Servicio de notificaciones de calendario, tareas y notas (CTN)"
 
 #: blueman/Sdp.py:177
 msgid "Calendar, Task, and Notes (CTN) Profile"
-msgstr "Calendario, Tarea, y Notas (CTN) Perfil"
+msgstr "Perfil de calendario, tareas y notas (CTN)"
 
 #: blueman/Sdp.py:178
 msgid "PnP Information"
@@ -1697,7 +1698,7 @@ msgstr "Información de PnP"
 
 #: blueman/Sdp.py:179
 msgid "Generic Networking"
-msgstr "Conexion Genérica"
+msgstr "Funciones de redes genéricas"
 
 #: blueman/Sdp.py:180
 msgid "Generic FileTransfer"
@@ -1729,11 +1730,11 @@ msgstr "HDP"
 
 #: blueman/Sdp.py:187
 msgid "HDP Source"
-msgstr "HDP Fuente"
+msgstr "Fuente de HDP"
 
 #: blueman/Sdp.py:188
 msgid "HDP Sink"
-msgstr "HDP Laguna"
+msgstr "Receptor de HDP"
 
 #: blueman/Sdp.py:189
 msgid "Generic Access"
@@ -1749,7 +1750,7 @@ msgstr "Alerta inmediata"
 
 #: blueman/Sdp.py:192
 msgid "Link Loss"
-msgstr "LInk perdido"
+msgstr "Pérdida de enlace"
 
 #: blueman/Sdp.py:193
 msgid "Tx Power"
@@ -1761,11 +1762,11 @@ msgstr "Tiempo de servicio"
 
 #: blueman/Sdp.py:195
 msgid "Reference Time Update Service"
-msgstr "Referencia de tiempo"
+msgstr "Servicio de actualización de tiempos de referencia"
 
 #: blueman/Sdp.py:196
 msgid "Next DST Change Service"
-msgstr "SIguiente DST, Cambiar servicio"
+msgstr "Servicio de cambio DST siguiente"
 
 #: blueman/Sdp.py:197
 msgid "Glucose"
@@ -1773,7 +1774,7 @@ msgstr "Glucosa"
 
 #: blueman/Sdp.py:198
 msgid "Health Thermometer"
-msgstr "Salud del Termometro"
+msgstr "Termómetro médico"
 
 #: blueman/Sdp.py:199
 msgid "Device Information"
@@ -1781,11 +1782,11 @@ msgstr "Información del dispositivo"
 
 #: blueman/Sdp.py:200
 msgid "Heart Rate"
-msgstr "Pulsaciones"
+msgstr "Frecuencia cardíaca"
 
 #: blueman/Sdp.py:201
 msgid "Phone Alert Status Service"
-msgstr "Alerta de Estado del Servicio"
+msgstr "Servicio de alertas de estado del servicio telefónico"
 
 #: blueman/Sdp.py:202
 msgid "Battery Service"
@@ -1793,31 +1794,31 @@ msgstr "Servicio de batería"
 
 #: blueman/Sdp.py:203
 msgid "Blood Pressure"
-msgstr "Presión Arterial"
+msgstr "Presión arterial"
 
 #: blueman/Sdp.py:204
 msgid "Alert Notification Service"
-msgstr "Notificacion de alerta"
+msgstr "Servicio de notificación de alertas"
 
 #: blueman/Sdp.py:205
 msgid "Human Interface Device"
-msgstr "Interfaz humana"
+msgstr "Dispositivo de interfaz humana"
 
 #: blueman/Sdp.py:206
 msgid "Scan Parameters"
-msgstr "Parametros de escaneo"
+msgstr "Parámetros de análisis"
 
 #: blueman/Sdp.py:207
 msgid "Running Speed and Cadence"
-msgstr "Velocidad al correr y cadencia"
+msgstr "Velocidad y cadencia en carrera"
 
 #: blueman/Sdp.py:208
 msgid "Automation IO"
-msgstr "Automatizacion IO"
+msgstr "E/S de automatización"
 
 #: blueman/Sdp.py:209
 msgid "Cycling Speed and Cadence"
-msgstr "Ciclismo: Velocidad y cadencia"
+msgstr "Velocidad y cadencia en ciclismo"
 
 #: blueman/Sdp.py:210
 msgid "Cycling Power"
@@ -1833,7 +1834,7 @@ msgstr "Sensor de ambiente"
 
 #: blueman/Sdp.py:213
 msgid "Body Composition"
-msgstr "Composición del cuerpo"
+msgstr "Composición corporal"
 
 #: blueman/Sdp.py:214
 msgid "User Data"
@@ -1841,19 +1842,19 @@ msgstr "Datos del usuario"
 
 #: blueman/Sdp.py:215
 msgid "Weight Scale"
-msgstr "Escala de peso"
+msgstr "Báscula"
 
 #: blueman/Sdp.py:216
 msgid "Bond Management"
-msgstr "Gestión de bonos"
+msgstr "Gestión de vínculos"
 
 #: blueman/Sdp.py:217
 msgid "Continuous Glucose Monitoring"
-msgstr "Monitoreo de Glucosa continua"
+msgstr "Supervisión continua de la glucosa"
 
 #: blueman/Sdp.py:218
 msgid "Internet Protocol Support"
-msgstr "Protocolo de soporte web"
+msgstr "Compatibilidad con el Protocolo de Internet"
 
 #: blueman/Sdp.py:219
 msgid "Indoor Positioning"
@@ -1861,7 +1862,7 @@ msgstr "Posicionamiento en interiores"
 
 #: blueman/Sdp.py:220
 msgid "Pulse Oximeter"
-msgstr "Pulso de oximetro"
+msgstr "Oxímetro de pulso"
 
 #: blueman/Sdp.py:221
 msgid "HTTP Proxy"
@@ -1881,7 +1882,7 @@ msgstr "Agente Apple"
 
 #: blueman/Sdp.py:225
 msgid "Primary Service"
-msgstr "Servicio primario"
+msgstr "Servicio principal"
 
 #: blueman/Sdp.py:226
 msgid "Secondary Service"
@@ -1913,7 +1914,7 @@ msgstr "Dirección de reconexión"
 
 #: blueman/Sdp.py:233
 msgid "Peripheral Preferred Connection Parameters"
-msgstr "Conexion de parametros perifericos"
+msgstr "Parámetros de la conexión preferida del periférico"
 
 #: blueman/Sdp.py:234
 msgid "Service Changed"
@@ -2045,7 +2046,8 @@ msgstr "Sin especificar"
 msgid ""
 "Tries to auto-connect to configurable services on start and every 60 seconds."
 msgstr ""
-"Intenta auto-conectar con los servicios al comienzo, y cada 60 segundos."
+"Intenta conectarse automáticamente con los servicios al comienzo y cada 60 "
+"segundos."
 
 #. https://github.com/python/mypy/issues/2608
 #: blueman/plugins/applet/AutoConnect.py:50
@@ -2387,12 +2389,12 @@ msgstr ""
 
 #: blueman/plugins/applet/DisconnectItems.py:14
 msgid "Adds disconnect menu items"
-msgstr "Agregar desconexiones en los articulos del menu"
+msgstr "Añade elementos del menú para desconectarse"
 
 #: blueman/plugins/applet/DisconnectItems.py:40
 #, python-format
 msgid "Disconnect %s"
-msgstr "Desconectando…%s"
+msgstr "Desconectar %s"
 
 #: blueman/plugins/applet/DiscvManager.py:16
 msgid ""
@@ -2423,7 +2425,7 @@ msgstr "Hacer temporalmente visible el adaptador predeteminado"
 #: blueman/plugins/applet/DiscvManager.py:60
 #, python-format
 msgid "Discoverable… %ss"
-msgstr "Detectable… %s"
+msgstr "Detectable… %s s"
 
 #: blueman/plugins/applet/Menu.py:113
 msgid ""
@@ -2456,7 +2458,7 @@ msgstr ""
 
 #: blueman/plugins/applet/SerialManager.py:31
 msgid "Script to execute on connection"
-msgstr "Script para ejecutar en la conexión"
+msgstr "Secuencia que ejecutar al conectarse"
 
 #: blueman/plugins/applet/SerialManager.py:32
 msgid ""
@@ -2581,7 +2583,7 @@ msgstr ""
 
 #: blueman/services/DialupNetwork.py:23
 msgid "Dialup Settings"
-msgstr "Ajustes de acceso telefónico"
+msgstr "Configuración de acceso telefónico"
 
 #: blueman/services/meta/SerialService.py:34
 #, python-format

@@ -6,26 +6,26 @@
 # enolp <enolp@softastur.org>, 2014-2015
 # Ḷḷumex03, 2014
 # Xuacu Saturio <xuacusk8@gmail.com>, 2014
-# Adolfo Jayme Barrientos <fitojb@ubuntu.com>, 2020.
+# Adolfo Jayme Barrientos <fitojb@ubuntu.com>, 2020, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2022-06-09 18:21+0200\n"
-"PO-Revision-Date: 2020-11-06 12:03+0000\n"
+"PO-Revision-Date: 2022-06-28 14:16+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
-"Language-Team: Asturian <https://hosted.weblate.org/projects/blueman/blueman/"
-"ast/>\n"
+"Language-Team: Asturian <https://hosted.weblate.org/projects/blueman/2-2/ast/"
+">\n"
 "Language: ast\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.2\n"
+"X-Generator: Weblate 4.13.1-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
-msgstr "<b>Axustes de visibilidá</b>"
+msgstr "<b>Axuste de visibilidá</b>"
 
 #: data/ui/adapters-tab.ui:39 blueman/main/Adapter.py:145
 msgid "Hidden"
@@ -514,7 +514,7 @@ msgstr ""
 
 #: blueman/gui/manager/ManagerMenu.py:96
 msgid "_Name"
-msgstr ""
+msgstr "_Nome"
 
 #: blueman/gui/manager/ManagerMenu.py:101
 msgid "_Added"
@@ -537,7 +537,7 @@ msgstr "Servicios _llocales"
 #: blueman/gui/manager/ManagerMenu.py:134
 #: blueman/plugins/applet/StandardItems.py:82
 msgid "Service Preferences"
-msgstr ""
+msgstr "Preferencies del serviciu"
 
 #: blueman/gui/manager/ManagerMenu.py:142
 msgid "_Search"
@@ -545,11 +545,11 @@ msgstr "_Guetar"
 
 #: blueman/gui/manager/ManagerMenu.py:156
 msgid "_Preferences"
-msgstr ""
+msgstr "_Preferencies"
 
 #: blueman/gui/manager/ManagerMenu.py:165 blueman/plugins/applet/ExitItem.py:12
 msgid "_Exit"
-msgstr ""
+msgstr "_Colar"
 
 #. translators: device class
 #: blueman/gui/manager/ManagerDeviceList.py:279
@@ -1032,7 +1032,7 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:102
 msgid "Vcr"
-msgstr ""
+msgstr "VCR"
 
 #. translators: device class
 #: blueman/DeviceClass.py:104
@@ -2451,13 +2451,11 @@ msgid "Bluetooth Active"
 msgstr "Bluetooth activu"
 
 #: blueman/plugins/applet/ShowConnected.py:64
-#, fuzzy, python-format
-#| msgid "<b>%d Active Connection</b>"
-#| msgid_plural "<b>%d Active Connections</b>"
+#, python-format
 msgid "<b>%(connections)d Active Connection</b>"
 msgid_plural "<b>%(connections)d Active Connections</b>"
-msgstr[0] "<b>%d conexón activa</b>"
-msgstr[1] "<b>%d conexones actives</b>"
+msgstr[0] "<b>%(connections)d conexón activa</b>"
+msgstr[1] "<b>%(connections)d conexones actives</b>"
 
 #: blueman/plugins/applet/ShowConnected.py:74
 #: blueman/plugins/applet/PowerManager.py:192

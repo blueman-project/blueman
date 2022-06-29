@@ -28,13 +28,14 @@
 # Pavel Borecki <pavel.borecki@gmail.com>, 2019, 2022.
 # Stanislav Kučera <inactive+kacernator@transifex.com>, 2015
 # Immanuel Löwenstein <emanus90@justmail.de>, 2021.
+# Vojtěch Otáhal <vojta.otahal@seznam.cz>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2022-06-09 18:21+0200\n"
-"PO-Revision-Date: 2022-03-06 20:59+0000\n"
-"Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
+"PO-Revision-Date: 2022-06-11 13:18+0000\n"
+"Last-Translator: Vojtěch Otáhal <vojta.otahal@seznam.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/blueman/2-2/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -42,7 +43,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
 "<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
-"X-Generator: Weblate 4.12-dev\n"
+"X-Generator: Weblate 4.13-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -533,10 +534,8 @@ msgid "Show _Statusbar"
 msgstr "Zobrazit stavový panel"
 
 #: blueman/gui/manager/ManagerMenu.py:79
-#, fuzzy
-#| msgid "Rename device"
 msgid "Hide _unnamed devices"
-msgstr "Přejmenovat zařízení"
+msgstr "Skrýt nepojmenovanné zařízení"
 
 #: blueman/gui/manager/ManagerMenu.py:89
 msgid "S_ort By"
@@ -608,10 +607,8 @@ msgid "<b>Trusted</b>"
 msgstr "<b>Důvěryhodný</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:504
-#, fuzzy
-#| msgid "<b>Connect To:</b>"
 msgid "<b>Connected</b>"
-msgstr "<b>Připojit k:</b>"
+msgstr "<b>Připojeno k:</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:519
 msgid "Poor"
@@ -648,7 +645,7 @@ msgstr "Síla přijímaného signálu: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 #: blueman/gui/manager/ManagerDeviceList.py:538
 #, python-format
 msgid "<b>Link Quality: %(lq)u%%</b>"
-msgstr "<b>Kvalita linky: %(lq)u%%</b>"
+msgstr "<b>Kvalita spojení: %(lq)u%%</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:540
 #, python-format

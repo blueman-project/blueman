@@ -5,21 +5,22 @@
 # Francesc Famadas <kiski97@gmail.com>, 2015
 # Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>, 2015-2019
 # Sergi Almacellas Abellana <sergi@koolpi.com>
+# Adolfo Jayme Barrientos <fitojb@ubuntu.com>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2022-06-09 18:21+0200\n"
-"PO-Revision-Date: 2021-06-12 01:34+0000\n"
+"PO-Revision-Date: 2022-06-28 14:16+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
-"Language-Team: Catalan <https://hosted.weblate.org/projects/blueman/2-2/ca/"
-">\n"
+"Language-Team: Catalan <https://hosted.weblate.org/projects/blueman/2-2/ca/>"
+"\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.13.1-dev\n"
 
 #: data/ui/adapters-tab.ui:29
 msgid "<b>Visibility Setting</b>"
@@ -27,7 +28,7 @@ msgstr "<b>Paràmetre de visibilitat</b>"
 
 #: data/ui/adapters-tab.ui:39 blueman/main/Adapter.py:145
 msgid "Hidden"
-msgstr "Ocult"
+msgstr "Amagat"
 
 #: data/ui/adapters-tab.ui:54
 msgid "Always visible"
@@ -126,7 +127,7 @@ msgstr "Reanomena el dispositiu"
 
 #: data/ui/services-network.ui:37
 msgid "Network Access Point (NAP)"
-msgstr "NAP (Network Access Point)"
+msgstr "NAP (punt d’accés a la xarxa)"
 
 #: data/ui/services-network.ui:57
 msgid "<b>Services</b>"
@@ -154,7 +155,7 @@ msgstr "udhcpd"
 
 #: data/ui/services-network.ui:218
 msgid "<b>NAP Settings</b>"
-msgstr "<b>Paràmetres de NAP</b>"
+msgstr "<b>Paràmetres del NAP</b>"
 
 #: data/ui/services-network.ui:282
 msgid "<b>PAN Support</b>"
@@ -166,7 +167,7 @@ msgstr "<b>Compatibilitat amb DUN</b>"
 
 #: data/ui/services-network.ui:391
 msgid "<b>Network Settings</b>"
-msgstr "<b>Paràmetres de xarxa</b>"
+msgstr "<b>Paràmetres de la xarxa</b>"
 
 #: data/ui/services-transfer.ui:24
 msgid "<b>File Receiving (Object Push)</b>"
@@ -243,7 +244,7 @@ msgstr "<b>Conflicte amb:</b>"
 
 #: data/ui/gsm-settings.ui:34
 msgid "<b>GSM settings</b>"
-msgstr "<b>Paràmetres de GSM</b>"
+msgstr "<b>Paràmetres del GSM</b>"
 
 #: data/ui/gsm-settings.ui:55
 msgid "Number:"
@@ -283,7 +284,7 @@ msgstr "<b>Duració del registre:</b>"
 
 #: data/ui/net-usage.ui:243
 msgid "_Reset"
-msgstr "_Restableix"
+msgstr "_Reinicialitza"
 
 #: data/ui/note.ui:8
 msgid "Send note"
@@ -332,11 +333,11 @@ msgstr ""
 
 #: blueman/main/Manager.py:198
 msgid "Searching"
-msgstr "S'està cercant"
+msgstr "S’està cercant"
 
 #: blueman/main/Manager.py:221 blueman/plugins/applet/StandardItems.py:79
 msgid "Adapter Preferences"
-msgstr "Preferències de l'adaptador"
+msgstr "Preferències de l’adaptador"
 
 #: blueman/main/Manager.py:233 blueman/gui/manager/ManagerDeviceList.py:143
 #: blueman/plugins/applet/StandardItems.py:72
@@ -349,11 +350,11 @@ msgstr "Transferència de fitxers Bluetooth"
 
 #: blueman/main/Sendto.py:57 blueman/gui/manager/ManagerProgressbar.py:27
 msgid "Connecting"
-msgstr "S'està connectant"
+msgstr "S’està connectant"
 
 #: blueman/main/Sendto.py:111
 msgid "obexd not available"
-msgstr "obexd no està disponible"
+msgstr "L’obexd no està disponible"
 
 #: blueman/main/Sendto.py:111
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
@@ -363,11 +364,11 @@ msgstr ""
 
 #: blueman/main/Sendto.py:142
 msgid "Cancelling"
-msgstr "S'està cancel·lant"
+msgstr "S’està cancel·lant"
 
 #: blueman/main/Sendto.py:153 blueman/main/Sendto.py:195
 msgid "Sending File"
-msgstr "S'està enviant el fitxer"
+msgstr "S’està enviant el fitxer"
 
 #: blueman/main/Sendto.py:153 blueman/main/Sendto.py:195
 msgid "ETA:"
@@ -377,13 +378,13 @@ msgstr "Aprox.:"
 #, python-format
 msgid "%(seconds)d Second"
 msgid_plural "%(seconds)d Seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(seconds)d segon"
+msgstr[1] "%(seconds)d segons"
 
 #: blueman/main/Sendto.py:229
 #, python-format
 msgid "Error occurred while sending file %s"
-msgstr "S'ha produït un error mentre s'enviava el fitxer %s"
+msgstr "S’ha produït un error en enviar el fitxer %s"
 
 #: blueman/main/Sendto.py:233
 msgid "Skip"
@@ -395,7 +396,7 @@ msgstr "Torna-ho a intentar"
 
 #: blueman/main/Sendto.py:285
 msgid "Error occurred"
-msgstr "S'ha produït un error"
+msgstr "S’ha produït un error"
 
 #: blueman/main/applet/BluezAgent.py:123
 #, python-format
@@ -651,10 +652,8 @@ msgid "Failed"
 msgstr "Ha fallat"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:144
-#, fuzzy
-#| msgid "Connecting"
 msgid "Connecting…"
-msgstr "S'està connectant"
+msgstr "S’està connectant…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:180
 msgid "Disconnection Failed: "
@@ -666,7 +665,7 @@ msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:207
 msgid "Input/output error"
-msgstr ""
+msgstr "Error d’entrada i sortida"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:209
 #, fuzzy
@@ -715,10 +714,8 @@ msgid "<b>Auto-connect:</b>"
 msgstr "<b>Connexió automàtica:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:341
-#, fuzzy
-#| msgid "Send a _File..."
 msgid "Send a _File…"
-msgstr "Envia un _fitxer..."
+msgstr "Envia un _fitxer…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:354
 msgid "_Pair"
@@ -739,14 +736,12 @@ msgid "R_ename device…"
 msgstr "Reanomena el dispositiu"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:402
-#, fuzzy
-#| msgid "Remove"
 msgid "_Remove…"
-msgstr "Suprimeix"
+msgstr "_Elimina…"
 
 #: blueman/gui/manager/ManagerProgressbar.py:44
 msgid "Cancel Operation"
-msgstr "Cancel·la l'operació"
+msgstr "Cancel·la l’operació"
 
 #: blueman/gui/manager/ManagerStats.py:38
 #: blueman/gui/manager/ManagerStats.py:41
@@ -778,11 +773,11 @@ msgstr "Més"
 
 #: blueman/gui/CommonUi.py:62
 msgid "Blueman is a GTK+ Bluetooth manager"
-msgstr "Blueman és un gestor de Bluetooth GTK+"
+msgstr "El Blueman és un gestor de Bluetooth GTK+"
 
 #: blueman/gui/GsmSettings.py:24
 msgid "GSM Settings"
-msgstr "Paràmetres de GSM"
+msgstr "Paràmetres del GSM"
 
 #: blueman/gui/applet/PluginDialog.py:95
 #: blueman/plugins/applet/StandardItems.py:88
@@ -801,8 +796,8 @@ msgid ""
 "also unload <b>\"%(0)s\"</b>.\n"
 "Proceed?"
 msgstr ""
-"El connector <b>\"%(0)s\"</b> depèn de <b>%(1)s</b>. El fet de descarregar "
-"<b>%(1)s</b> també descarregarà <b>\"%(0)s\"</b>.\n"
+"El connector «<b>%(0)s</b>» depèn de <b>%(1)s</b>. El fet de descarregar "
+"<b>%(1)s</b> també descarregarà «<b>%(0)s</b>».\n"
 "Voleu procedir?"
 
 #: blueman/gui/applet/PluginDialog.py:318
@@ -813,11 +808,12 @@ msgid ""
 "Proceed?"
 msgstr ""
 "El connector <b>%(0)s</b> entra en conflicte amb <b>%(1)s</b>. El fet de "
-"carregar <b>%(1)s</b> descarregarà <b>\"%(0)s\"</b>. Voleu procedir?"
+"carregar <b>%(1)s</b> descarregarà <b>\"%(0)s\"</b>.\n"
+"Voleu procedir?"
 
 #: blueman/gui/DeviceSelectorWidget.py:39
 msgid "Adapter selection"
-msgstr "Selecció de l'adaptador"
+msgstr "Selecció de l’adaptador"
 
 #: blueman/gui/DeviceSelectorWidget.py:45
 #, fuzzy
@@ -865,7 +861,7 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:20 blueman/DeviceClass.py:41
 msgid "Wearable"
-msgstr ""
+msgstr "Per a vestir"
 
 #. translators: device class
 #: blueman/DeviceClass.py:22
@@ -881,10 +877,8 @@ msgstr "escriptori"
 
 #. translators: device class
 #: blueman/DeviceClass.py:33
-#, fuzzy
-#| msgid "server"
 msgid "Server"
-msgstr "servidor"
+msgstr "Servidor"
 
 #. translators: device class
 #: blueman/DeviceClass.py:35
@@ -994,22 +988,22 @@ msgstr "Micròfon"
 #. translators: device class
 #: blueman/DeviceClass.py:90
 msgid "Loudspeaker"
-msgstr ""
+msgstr "Altaveu"
 
 #. translators: device class
 #: blueman/DeviceClass.py:92
 msgid "Headphones"
-msgstr ""
+msgstr "Auriculars"
 
 #. translators: device class
 #: blueman/DeviceClass.py:94
 msgid "Portable audio"
-msgstr ""
+msgstr "Àudio portàtil"
 
 #. translators: device class
 #: blueman/DeviceClass.py:96
 msgid "Car audio"
-msgstr ""
+msgstr "Àudio per a l’automòbil"
 
 #. translators: device class
 #: blueman/DeviceClass.py:98
@@ -1024,7 +1018,7 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:102
 msgid "Vcr"
-msgstr ""
+msgstr "VCR"
 
 #. translators: device class
 #: blueman/DeviceClass.py:104
@@ -1166,10 +1160,8 @@ msgid "Watch: Sports Watch"
 msgstr ""
 
 #: blueman/DeviceClass.py:173
-#, fuzzy
-#| msgid "Connect"
 msgid "Generic Clock"
-msgstr "Connecta"
+msgstr "Rellotge genèric"
 
 #: blueman/DeviceClass.py:174
 #, fuzzy
@@ -1846,10 +1838,8 @@ msgid "Health Thermometer"
 msgstr ""
 
 #: blueman/Sdp.py:199
-#, fuzzy
-#| msgid "Show device information"
 msgid "Device Information"
-msgstr "Mostra la informació del dispositiu"
+msgstr "Informació del dispositiu"
 
 #: blueman/Sdp.py:200
 msgid "Heart Rate"
@@ -1860,10 +1850,8 @@ msgid "Phone Alert Status Service"
 msgstr ""
 
 #: blueman/Sdp.py:202
-#, fuzzy
-#| msgid "Local Services"
 msgid "Battery Service"
-msgstr "Serveis locals"
+msgstr "Servei de la bateria"
 
 #: blueman/Sdp.py:203
 msgid "Blood Pressure"
@@ -1946,10 +1934,8 @@ msgid "Transport Discovery"
 msgstr ""
 
 #: blueman/Sdp.py:223
-#, fuzzy
-#| msgid "Transfer"
 msgid "Object Transfer"
-msgstr "Transfereix"
+msgstr "Transferència d’objectes"
 
 #: blueman/Sdp.py:224
 #, fuzzy
@@ -1978,10 +1964,8 @@ msgid "Characteristic Declaration"
 msgstr ""
 
 #: blueman/Sdp.py:229
-#, fuzzy
-#| msgid "Device Manager"
 msgid "Device Name"
-msgstr "Gestor de dispositius"
+msgstr "Nom del dispositiu"
 
 #: blueman/Sdp.py:230
 msgid "Appearance"
@@ -1992,10 +1976,8 @@ msgid "Peripheral Privacy Flag"
 msgstr ""
 
 #: blueman/Sdp.py:232
-#, fuzzy
-#| msgid "Recent _Connections"
 msgid "Reconnection Address"
-msgstr "_Connexions recents"
+msgstr "Adreça de reconnexió"
 
 #: blueman/Sdp.py:233
 msgid "Peripheral Preferred Connection Parameters"
@@ -2078,10 +2060,8 @@ msgid "Report Reference"
 msgstr "Preferències de l'adaptador"
 
 #: blueman/Sdp.py:378
-#, fuzzy
-#| msgid "Auto connect profiles"
 msgid "Audio and input profiles"
-msgstr "Perfils de connexió automàtica"
+msgstr "Perfils d’àudio i entrada"
 
 #: blueman/Sdp.py:380
 msgid "Proprietary"
@@ -2452,13 +2432,11 @@ msgid "Bluetooth Active"
 msgstr "Bluetooth actiu"
 
 #: blueman/plugins/applet/ShowConnected.py:64
-#, fuzzy, python-format
-#| msgid "<b>%d Active Connection</b>"
-#| msgid_plural "<b>%d Active Connections</b>"
+#, python-format
 msgid "<b>%(connections)d Active Connection</b>"
 msgid_plural "<b>%(connections)d Active Connections</b>"
-msgstr[0] "<b>%d connexió activa</b>"
-msgstr[1] "<b>%d connexions actives</b>"
+msgstr[0] "<b>%(connections)d connexió activa</b>"
+msgstr[1] "<b>%(connections)d connexions actives</b>"
 
 #: blueman/plugins/applet/ShowConnected.py:74
 #: blueman/plugins/applet/PowerManager.py:192
@@ -2513,7 +2491,7 @@ msgstr "Fes temporalment visible l'adaptador predeterminat"
 #: blueman/plugins/applet/DiscvManager.py:60
 #, python-format
 msgid "Discoverable… %ss"
-msgstr "Mode de detecció… %ss"
+msgstr "Detectable… %ss"
 
 #: blueman/plugins/applet/Menu.py:113
 msgid ""
@@ -2670,7 +2648,7 @@ msgstr "El connector de transferència de la miniaplicació està inhabilitat"
 
 #: blueman/services/DialupNetwork.py:23
 msgid "Dialup Settings"
-msgstr "Paràmetres de l'accés per línia telefònica"
+msgstr "Paràmetres de l’accés per línia telefònica"
 
 #: blueman/services/meta/SerialService.py:34
 #, python-format
@@ -2694,22 +2672,16 @@ msgid "Blueman Applet"
 msgstr "miniaplicació"
 
 #: data/blueman.desktop.in:4 data/blueman-manager.desktop.in:4
-#, fuzzy
-#| msgid "Blueman is a GTK+ Bluetooth manager"
 msgid "Blueman Bluetooth Manager"
-msgstr "Blueman és un gestor de Bluetooth GTK+"
+msgstr "Gestor de Bluetooth Blueman"
 
 #: data/blueman-manager.desktop.in:3
-#, fuzzy
-#| msgid "Bluetooth Enabled"
 msgid "Bluetooth Manager"
-msgstr "Bluetooth habilitat"
+msgstr "Gestor de Bluetooth"
 
 #: data/thunar-sendto-blueman.desktop.in:5
-#, fuzzy
-#| msgid "Bluetooth Devices"
 msgid "Bluetooth Device"
-msgstr "Dispositius Bluetooth"
+msgstr "Dispositiu Bluetooth"
 
 #: data/configs/org.blueman.policy.in:10
 msgid "Configure Bluetooth Network"
