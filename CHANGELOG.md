@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3
+
+No changes
+
 ## 2.3.beta1
 
 ### New features
