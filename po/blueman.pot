@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: blueman 2.2.2\n"
+"Project-Id-Version: blueman 2.3\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2022-06-24 12:19+0000\n"
+"POT-Creation-Date: 2022-06-30 09:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -706,7 +706,7 @@ msgid "Connection Failed: "
 msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:287
-msgid "_<b>_Connect</b>"
+msgid "<b>_Connect</b>"
 msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:289
@@ -714,7 +714,7 @@ msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:293
-msgid "_<b>Disconnect</b>"
+msgid "<b>_Disconnect</b>"
 msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:294
@@ -2069,6 +2069,7 @@ msgstr ""
 
 #. https://github.com/python/mypy/issues/2608
 #: blueman/plugins/applet/AutoConnect.py:50
+#: blueman/plugins/applet/ConnectionNotifier.py:36
 #: blueman/plugins/applet/RecentConns.py:155
 #: blueman/plugins/applet/PPPSupport.py:75
 msgid "Connected"
@@ -2079,11 +2080,11 @@ msgstr ""
 msgid "Automatically connected to %(service)s on %(device)s"
 msgstr ""
 
-#: blueman/plugins/applet/ConnectionNotifier.py:16
+#: blueman/plugins/applet/ConnectionNotifier.py:15
 msgid "Shows desktop notifications when devices get connected or disconnected."
 msgstr ""
 
-#: blueman/plugins/applet/ConnectionNotifier.py:40
+#: blueman/plugins/applet/ConnectionNotifier.py:48
 msgid "Disconnected"
 msgstr ""
 
