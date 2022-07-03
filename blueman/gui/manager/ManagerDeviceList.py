@@ -292,7 +292,8 @@ class ManagerDeviceList(DeviceList):
             assert isinstance(target, cairo.ImageSurface)
             assert isinstance(blocked_surface, cairo.ImageSurface)
             width = target.get_width()
-            ctx.set_source_surface(blocked_surface, width - (1 + 16) / scale, 1 / scale)
+            mini_width = blocked_surface.get_width()
+            ctx.set_source_surface(blocked_surface, (width - mini_width - 1) / scale, 1 / scale)
             ctx.paint_with_alpha(0.8)
 
         return target
