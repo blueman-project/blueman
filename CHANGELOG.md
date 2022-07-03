@@ -2,7 +2,9 @@
 
 ## 2.3
 
-No changes
+### Bugs fixed
+
+* Blocked emblem was not visible for scales other than 1
 
 ## 2.3.beta1
 
@@ -23,7 +25,7 @@ No changes
 
 ## 2.2.5
 
-### Bugs fixes
+### Bugs fixed
 
 * Fix network interface iteration on 32 bit systems
 * Manager: Fix cancel button in send-note dialog
