@@ -26,7 +26,7 @@ if TYPE_CHECKING:
 
     class Item(_ItemBase):
         time: float
-        device: Optional[str]
+        device: str
         mitem: Optional[MenuItemDict]
 
     class StoredIcon(_ItemBase):
@@ -194,8 +194,6 @@ class RecentConns(AppletPlugin, PowerStateListener):
         return device.get_object_path() if device is not None else None
 
     def _get_items(self) -> List["Item"]:
-        adapter_addresses = {adapter["Address"] for adapter in self.parent.Manager.get_adapters()}
-
         return sorted(
             ({
                 "adapter": i["adapter"],
@@ -205,12 +203,11 @@ class RecentConns(AppletPlugin, PowerStateListener):
                 "name": i["name"],
                 "uuid": i["uuid"],
                 "time": float(i["time"]),
-                "device": (self._get_device_path(i["adapter"], i["address"])
-                           if i["adapter"] in adapter_addresses else None),
+                "device": device,
                 "mitem": None
             }
                 for i in self.get_option("recent-connections")
-                if i["adapter"] not in adapter_addresses or self._get_device_path(i["adapter"], i["address"])),
+                if (device := self._get_device_path(i["adapter"], i["address"]))),
             key=itemgetter("time"),
             reverse=True
         )

@@ -5,6 +5,7 @@
 ### Changes
 
 * Raise minimum Python version to 3.8
+* Hide recent connections associated with unavailable adapters
 
 ## 2.3
 
