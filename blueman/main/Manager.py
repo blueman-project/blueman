@@ -52,6 +52,8 @@ class Blueman(Gtk.Application):
 
         self.Config = Config("org.blueman.general")
 
+        self.builder = Builder("manager-main.ui")
+
         quit_action = Gio.SimpleAction.new("Quit", None)
         quit_action.connect("activate", doquit)
         self.set_accels_for_action("app.Quit", ["<Ctrl>q", "<Ctrl>w"])
@@ -59,8 +61,8 @@ class Blueman(Gtk.Application):
 
     def do_activate(self) -> None:
         if not self.window:
-            self.window = Gtk.ApplicationWindow(application=self, name="BluemanManager", icon_name="blueman",
-                                                title=_("Bluetooth Devices"))
+            self.window = self.builder.get_widget("manager_window", Gtk.ApplicationWindow)
+            self.window.set_application(self)
             w, h, x, y = self.Config["window-properties"]
             if w and h:
                 self.window.resize(w, h)
@@ -69,10 +71,6 @@ class Blueman(Gtk.Application):
 
             # Connect to configure event to store new window position and size
             self.window.connect("configure-event", self._on_configure)
-
-            self.builder = Builder("manager-main.ui")
-            box = self.builder.get_widget("box", Gtk.Box)
-            self.window.add(box)
 
             grid = self.builder.get_widget("grid", Gtk.Grid)
 
@@ -83,7 +81,7 @@ class Blueman(Gtk.Application):
             self.Plugins.load_plugin()
 
             area = MessageArea()
-            grid.attach(area, 0, 1, 1, 1)
+            grid.attach(area, 0, 3, 1, 1)
 
             self._applethandlerid: Optional[int] = None
 
