@@ -11,7 +11,6 @@ from blueman.config.AutoConnectConfig import AutoConnectConfig
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.Builder import Builder
 from blueman.main.DBusProxies import AppletService, DBusProxyFailed
-from blueman.gui.MessageArea import MessageArea
 from blueman.Sdp import (
     ServiceUUID,
     AUDIO_SOURCE_SVCLASS_ID,
@@ -130,8 +129,6 @@ class ManagerDeviceMenu(Gtk.Menu):
             logging.info("success")
             prog.message(_("Success!"))
 
-            MessageArea.close()
-
             self.unset_op(device)
 
         def fail(_obj: Optional[AppletService], result: GLib.Error, _user_data: None) -> None:
@@ -177,7 +174,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         def err(_obj: Optional[AppletService], result: GLib.Error, _user_date: None) -> None:
             logging.warning(f"disconnect failed {result}")
             msg, tb = e_(result.message)
-            MessageArea.show_message(_("Disconnection Failed: ") + msg, tb)
+            self.Blueman.infobar_update(_("Disconnection Failed: ") + msg, bt=tb)
             self.generate()
 
         if self._appl is None:
@@ -215,7 +212,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             msg = error.message.split(":", 3)[-1].strip()
 
         if msg != "Cancelled":
-            MessageArea.show_message(_("Connection Failed: ") + msg)
+            self.Blueman.infobar_update(_("Connection Failed: ") + msg)
 
     @staticmethod
     def _get_errno(error: GLib.Error) -> Optional[int]:

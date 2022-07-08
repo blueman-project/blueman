@@ -17,7 +17,6 @@ from blueman.main.Builder import Builder
 from blueman.main.Config import Config
 from blueman.main.DBusProxies import AppletService, DBusProxyFailed
 from blueman.gui.CommonUi import ErrorDialog
-from blueman.gui.MessageArea import MessageArea
 from blueman.gui.Notification import Notification
 from blueman.main.PluginManager import PluginManager
 import blueman.plugins.manager
@@ -72,16 +71,15 @@ class Blueman(Gtk.Application):
             # Connect to configure event to store new window position and size
             self.window.connect("configure-event", self._on_configure)
 
-            grid = self.builder.get_widget("grid", Gtk.Grid)
-
             toolbar = self.builder.get_widget("toolbar", Gtk.Toolbar)
             statusbar = self.builder.get_widget("statusbar", Gtk.Box)
 
+            self._infobar = self.builder.get_widget("message_area", Gtk.InfoBar)
+            self._infobar.connect("response", self._infobar_response)
+            self._infobar_bt: str = ""
+
             self.Plugins = PluginManager(ManagerPlugin, blueman.plugins.manager, self)
             self.Plugins.load_plugin()
-
-            area = MessageArea()
-            grid.attach(area, 0, 3, 1, 1)
 
             self._applethandlerid: Optional[int] = None
 
@@ -208,12 +206,51 @@ class Blueman(Gtk.Application):
 
         def on_error(e: Exception) -> None:
             prog.finalize()
-            MessageArea.show_message(*e_(e))
+            self.infobar_update(*e_(e))
 
         self.List.discover_devices(error_handler=on_error)
 
         s1 = self.List.connect("discovery-progress", on_progress)
         s2 = self.List.connect("adapter-property-changed", prop_changed)
+
+    def infobar_update(self, message: str, bt: Optional[str] = None, icon_name: str = "dialog-warning") -> None:
+        if icon_name == "dialog-warning":
+            self._infobar.set_message_type(Gtk.MessageType.WARNING)
+        else:
+            self._infobar.set_message_type(Gtk.MessageType.INFO)
+
+        more_button = self.builder.get_widget("ib_more_button", Gtk.Button)
+        image = self.builder.get_widget("ib_icon", Gtk.Image)
+        msg_lbl = self.builder.get_widget("ib_message", Gtk.Label)
+        image.set_from_icon_name(icon_name, 16)
+
+        if bt is not None:
+            msg_lbl.set_text(f"{message}…")
+            self._infobar_bt = f"{message}\n{bt}"
+            more_button.show()
+        else:
+            more_button.hide()
+            msg_lbl.set_text(f"{message}")
+
+        self._infobar.set_visible(True)
+        self._infobar.set_revealed(True)
+
+    def _infobar_response(self, info_bar: Gtk.InfoBar, response_id: int) -> None:
+        def hide() -> bool:
+            self._infobar.set_visible(False)
+            return False
+
+        logging.debug(f"Response: {response_id}")
+        if response_id == Gtk.ResponseType.CLOSE:
+            self._infobar_bt = ""
+            info_bar.set_revealed(False)
+            GLib.timeout_add(250, hide)  # transition is 250.
+        elif response_id == 0:
+            dialog = Gtk.MessageDialog(parent=self.window, type=Gtk.MessageType.INFO, modal=True,
+                                       buttons=Gtk.ButtonsType.CLOSE, text=self._infobar_bt)
+            dialog.connect("response", lambda d, _i: d.destroy())
+            dialog.connect("close", lambda d: d.destroy())
+            dialog.show()
 
     @staticmethod
     def bond(device: Device) -> None:
