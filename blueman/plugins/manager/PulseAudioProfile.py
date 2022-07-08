@@ -6,7 +6,6 @@ from blueman.bluez.Device import Device
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 from blueman.main.PulseAudioUtils import PulseAudioUtils, EventType
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu, MenuItemsProvider, DeviceMenuItem
-from blueman.gui.MessageArea import MessageArea
 from blueman.Functions import create_menuitem
 from blueman.Sdp import AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID, ServiceUUID
 
@@ -84,7 +83,7 @@ class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
 
             def on_result(res: int) -> None:
                 if not res:
-                    MessageArea.show_message(_("Failed to change profile to %s" % profile))
+                    self.parent.infobar_update(_("Failed to change profile to %s" % profile))
 
             pa.set_card_profile(c["index"], profile, on_result)
 
