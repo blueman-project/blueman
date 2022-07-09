@@ -20,13 +20,10 @@ jobs:
       - run: '[ -n "${{ steps.notes.outputs.NOTES }}" ] || (echo "Failed to parse changelog" && exit 1)'
       - run: grep --quiet '^AC_INIT(\[blueman\], \[${{ steps.version.outputs.VERSION }}\]' configure.ac || (echo "Did not find expected verson in configure.ac" && exit 1)
       - run: "grep --quiet \"version: '${{ steps.version.outputs.VERSION }}'\" meson.build || (echo 'Did not find expected verson in meson.build' && exit 1)"
-      - run: git archive --prefix="blueman-${{ steps.version.outputs.VERSION }}/" HEAD | tar x
       - run: sudo apt-get update
-      - run: sudo apt-get install -y -qq --no-install-recommends autopoint
-      - run: NOCONFIGURE=1 ./autogen.sh
-        working-directory: "blueman-${{ steps.version.outputs.VERSION }}"
-      - run: tar cJf "blueman-${{ steps.version.outputs.VERSION }}.tar.xz" "blueman-${{ steps.version.outputs.VERSION }}"
-      - run: tar czf "blueman-${{ steps.version.outputs.VERSION }}.tar.gz" "blueman-${{ steps.version.outputs.VERSION }}"
+      - run: sudo apt-get install -y -qq --no-install-recommends automake autoconf libtool autopoint gettext cython libglib2.0-dev python3-dev python-gi-dev libbluetooth-dev
+      - run: ./autogen.sh
+      - run: make distcheck
       - uses: softprops/action-gh-release@v1
         with:
           draft: true
