@@ -2,18 +2,18 @@ on: pull_request
 
 jobs:
   releasebuild:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
       - run: sudo apt-get update
-      - run: sudo apt-get install -y -qq --no-install-recommends automake autoconf libtool autopoint gettext cython libglib2.0-dev python3-dev python-gi-dev libbluetooth-dev
-      - run: ./autogen.sh
+      - run: sudo apt-get install -y -qq --no-install-recommends automake autoconf libtool autopoint gettext cython3 libglib2.0-dev python3-dev python-gi-dev libbluetooth-dev
+      - run: CYTHONEXEC=cython3 ./autogen.sh
       - run: make
-      - run: make distcheck
+      - run: CYTHONEXEC=cython3 make distcheck
       - run: sudo make install
 
   mesonbuild:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - run: sudo apt-get update
@@ -47,7 +47,7 @@ jobs:
           - 3.9
           - "3.10"
           - 3.11-rc
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     container:
       image: python:${{ matrix.python }}
     steps:
@@ -68,7 +68,7 @@ jobs:
           - 3.8
           - 3.9
           - "3.10"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     container:
       image: python:${{ matrix.python }}
     steps:
