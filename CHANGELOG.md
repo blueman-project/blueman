@@ -2,6 +2,8 @@
 
 ## main
 
+* Replace custom MessageArea widget with regular Gtk.InfoBar
+
 ### Changes
 
 * Raise minimum Python version to 3.8
