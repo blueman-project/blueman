@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2022-06-24 12:19+0000\n"
-"PO-Revision-Date: 2022-07-02 19:14+0000\n"
+"POT-Creation-Date: 2022-07-05 14:08+0200\n"
+"PO-Revision-Date: 2022-07-11 16:14+0000\n"
 "Last-Translator: Shinichi Abe <shin1.abe@nifty.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/blueman/2-3/ja/"
 ">\n"
@@ -27,7 +27,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.13.1-dev\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -244,8 +244,8 @@ msgstr "<b>作者:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:354
-#: blueman/gui/manager/ManagerDeviceList.py:356 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:355
+#: blueman/gui/manager/ManagerDeviceList.py:357 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:209
@@ -601,89 +601,89 @@ msgid "_Exit"
 msgstr "終了(_E)"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:325
-#: blueman/gui/manager/ManagerDeviceList.py:354 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:326
+#: blueman/gui/manager/ManagerDeviceList.py:355 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 msgid "Uncategorized"
 msgstr "未分類"
 
-#: blueman/gui/manager/ManagerDeviceList.py:543
+#: blueman/gui/manager/ManagerDeviceList.py:544
 msgid "Trusted"
 msgstr "信頼"
 
-#: blueman/gui/manager/ManagerDeviceList.py:545
+#: blueman/gui/manager/ManagerDeviceList.py:546
 msgid "Paired"
 msgstr "ペア"
 
-#: blueman/gui/manager/ManagerDeviceList.py:547
+#: blueman/gui/manager/ManagerDeviceList.py:548
 msgid "Blocked"
 msgstr "ブロック"
 
-#: blueman/gui/manager/ManagerDeviceList.py:570
+#: blueman/gui/manager/ManagerDeviceList.py:571
 msgid "<b>Connected</b>"
 msgstr "<b>接続済み</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:585
+#: blueman/gui/manager/ManagerDeviceList.py:586
 msgid "Poor"
 msgstr "弱い"
 
-#: blueman/gui/manager/ManagerDeviceList.py:587
-#: blueman/gui/manager/ManagerDeviceList.py:612
+#: blueman/gui/manager/ManagerDeviceList.py:588
+#: blueman/gui/manager/ManagerDeviceList.py:613
 msgid "Sub-optimal"
 msgstr "最適ではない"
 
-#: blueman/gui/manager/ManagerDeviceList.py:589
-#: blueman/gui/manager/ManagerDeviceList.py:614
+#: blueman/gui/manager/ManagerDeviceList.py:590
+#: blueman/gui/manager/ManagerDeviceList.py:615
 msgid "Optimal"
 msgstr "最適"
 
-#: blueman/gui/manager/ManagerDeviceList.py:591
+#: blueman/gui/manager/ManagerDeviceList.py:592
 msgid "Much"
 msgstr "多い"
 
-#: blueman/gui/manager/ManagerDeviceList.py:593
+#: blueman/gui/manager/ManagerDeviceList.py:594
 msgid "Too much"
 msgstr "多すぎる"
 
-#: blueman/gui/manager/ManagerDeviceList.py:596
+#: blueman/gui/manager/ManagerDeviceList.py:597
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 msgstr "<b>受信信号強度: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:599
+#: blueman/gui/manager/ManagerDeviceList.py:600
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 msgstr "受信信号強度: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:604
+#: blueman/gui/manager/ManagerDeviceList.py:605
 #, python-format
 msgid "<b>Link Quality: %(lq)u%%</b>"
 msgstr "<b>リンク品質: %(lq)u%%</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:606
+#: blueman/gui/manager/ManagerDeviceList.py:607
 #, python-format
 msgid "Link Quality: %(lq)u%%"
 msgstr "リンク品質: %(lq)u%%"
 
-#: blueman/gui/manager/ManagerDeviceList.py:610
+#: blueman/gui/manager/ManagerDeviceList.py:611
 msgid "Low"
 msgstr "低い"
 
-#: blueman/gui/manager/ManagerDeviceList.py:616
+#: blueman/gui/manager/ManagerDeviceList.py:617
 msgid "High"
 msgstr "高い"
 
-#: blueman/gui/manager/ManagerDeviceList.py:618
+#: blueman/gui/manager/ManagerDeviceList.py:619
 msgid "Very High"
 msgstr "非常に高い"
 
-#: blueman/gui/manager/ManagerDeviceList.py:621
+#: blueman/gui/manager/ManagerDeviceList.py:622
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr "<b>送信出力レベル: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:624
+#: blueman/gui/manager/ManagerDeviceList.py:625
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr "送信出力レベル: %(tpl)u%% <i>(%(tpl_state)s)</i>"
@@ -725,9 +725,8 @@ msgid "Connection Failed: "
 msgstr "接続失敗: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:287
-#, fuzzy
-msgid "_<b>_Connect</b>"
-msgstr "<b>接続中:</b>"
+msgid "<b>_Connect</b>"
+msgstr "<b>接続(_C)</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:289
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
@@ -735,8 +734,8 @@ msgstr ""
 "自動接続プロファイルの A2DP ソース、A2DP シンク、および HID を接続します"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:293
-msgid "_<b>Disconnect</b>"
-msgstr ""
+msgid "<b>_Disconnect</b>"
+msgstr "<b>切断(_D)</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:294
 msgid "Forcefully disconnect the device"
@@ -784,7 +783,7 @@ msgstr "このデバイスをブロック／ブロック解除"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:407
 msgid "R_ename device…"
-msgstr "デバイス名の変更(_R)…"
+msgstr "デバイス名を変更(_e)…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:416
 msgid "_Remove…"
@@ -2096,6 +2095,7 @@ msgstr "スタート時および60秒毎に構成可能なサービスへの自�
 
 #. https://github.com/python/mypy/issues/2608
 #: blueman/plugins/applet/AutoConnect.py:50
+#: blueman/plugins/applet/ConnectionNotifier.py:36
 #: blueman/plugins/applet/RecentConns.py:155
 #: blueman/plugins/applet/PPPSupport.py:75
 msgid "Connected"
@@ -2106,11 +2106,11 @@ msgstr "接続しました"
 msgid "Automatically connected to %(service)s on %(device)s"
 msgstr "デバイス %(device)s の %(service)s へ自動接続しました"
 
-#: blueman/plugins/applet/ConnectionNotifier.py:16
+#: blueman/plugins/applet/ConnectionNotifier.py:15
 msgid "Shows desktop notifications when devices get connected or disconnected."
 msgstr "デバイスが接続または切断されたときにデスクトップ通知を表示します。"
 
-#: blueman/plugins/applet/ConnectionNotifier.py:40
+#: blueman/plugins/applet/ConnectionNotifier.py:48
 msgid "Disconnected"
 msgstr "切断しました"
 

@@ -29,15 +29,16 @@
 # Andrey F. <firsan777@mail.ru>, 2020, 2021.
 # Christopher Schramm <github@cschramm.eu>, 2022.
 # Сергей <sw@atrus.ru>, 2022.
+# Сергей <asvmail.as@gmail.com>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2022-06-24 12:19+0000\n"
-"PO-Revision-Date: 2022-06-06 16:56+0000\n"
-"Last-Translator: Сергей <sw@atrus.ru>\n"
-"Language-Team: Russian <https://hosted.weblate.org/projects/blueman/blueman/"
-"ru/>\n"
+"POT-Creation-Date: 2022-07-05 14:08+0200\n"
+"PO-Revision-Date: 2022-07-10 13:20+0000\n"
+"Last-Translator: Сергей <asvmail.as@gmail.com>\n"
+"Language-Team: Russian <https://hosted.weblate.org/projects/blueman/2-3/ru/"
+">\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -45,7 +46,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
-"X-Generator: Weblate 4.13-dev\n"
+"X-Generator: Weblate 4.13.1-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -263,8 +264,8 @@ msgstr "<b>Автор:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:354
-#: blueman/gui/manager/ManagerDeviceList.py:356 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:355
+#: blueman/gui/manager/ManagerDeviceList.py:357 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:209
@@ -625,89 +626,89 @@ msgid "_Exit"
 msgstr "_Выход"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:325
-#: blueman/gui/manager/ManagerDeviceList.py:354 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:326
+#: blueman/gui/manager/ManagerDeviceList.py:355 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 msgid "Uncategorized"
 msgstr "Не классифицировано"
 
-#: blueman/gui/manager/ManagerDeviceList.py:543
+#: blueman/gui/manager/ManagerDeviceList.py:544
 msgid "Trusted"
 msgstr "Доверенный"
 
-#: blueman/gui/manager/ManagerDeviceList.py:545
+#: blueman/gui/manager/ManagerDeviceList.py:546
 msgid "Paired"
 msgstr "Сопряжённый"
 
-#: blueman/gui/manager/ManagerDeviceList.py:547
+#: blueman/gui/manager/ManagerDeviceList.py:548
 msgid "Blocked"
 msgstr "Заблокированный"
 
-#: blueman/gui/manager/ManagerDeviceList.py:570
+#: blueman/gui/manager/ManagerDeviceList.py:571
 msgid "<b>Connected</b>"
 msgstr "<b>Подключено</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:585
+#: blueman/gui/manager/ManagerDeviceList.py:586
 msgid "Poor"
 msgstr "Слабый"
 
-#: blueman/gui/manager/ManagerDeviceList.py:587
-#: blueman/gui/manager/ManagerDeviceList.py:612
+#: blueman/gui/manager/ManagerDeviceList.py:588
+#: blueman/gui/manager/ManagerDeviceList.py:613
 msgid "Sub-optimal"
 msgstr "Хуже оптимального"
 
-#: blueman/gui/manager/ManagerDeviceList.py:589
-#: blueman/gui/manager/ManagerDeviceList.py:614
+#: blueman/gui/manager/ManagerDeviceList.py:590
+#: blueman/gui/manager/ManagerDeviceList.py:615
 msgid "Optimal"
 msgstr "Оптимальный"
 
-#: blueman/gui/manager/ManagerDeviceList.py:591
+#: blueman/gui/manager/ManagerDeviceList.py:592
 msgid "Much"
 msgstr "Хорошо"
 
-#: blueman/gui/manager/ManagerDeviceList.py:593
+#: blueman/gui/manager/ManagerDeviceList.py:594
 msgid "Too much"
 msgstr "Очень хорошо"
 
-#: blueman/gui/manager/ManagerDeviceList.py:596
+#: blueman/gui/manager/ManagerDeviceList.py:597
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 msgstr "<b>Уровень принятого сигнала: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:599
+#: blueman/gui/manager/ManagerDeviceList.py:600
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 msgstr "Сила принятого сигнала: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:604
+#: blueman/gui/manager/ManagerDeviceList.py:605
 #, python-format
 msgid "<b>Link Quality: %(lq)u%%</b>"
 msgstr "<b>Качество связи: %(lq)u%%</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:606
+#: blueman/gui/manager/ManagerDeviceList.py:607
 #, python-format
 msgid "Link Quality: %(lq)u%%"
 msgstr "Качество связи: %(lq)u%%"
 
-#: blueman/gui/manager/ManagerDeviceList.py:610
+#: blueman/gui/manager/ManagerDeviceList.py:611
 msgid "Low"
 msgstr "Низкий"
 
-#: blueman/gui/manager/ManagerDeviceList.py:616
+#: blueman/gui/manager/ManagerDeviceList.py:617
 msgid "High"
 msgstr "Высокий"
 
-#: blueman/gui/manager/ManagerDeviceList.py:618
+#: blueman/gui/manager/ManagerDeviceList.py:619
 msgid "Very High"
 msgstr "Самый высокий"
 
-#: blueman/gui/manager/ManagerDeviceList.py:621
+#: blueman/gui/manager/ManagerDeviceList.py:622
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr "<b>Уровень мощности передачи: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:624
+#: blueman/gui/manager/ManagerDeviceList.py:625
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr "Уровень мощности передачи: %(tpl)u%% <i>(%(tpl_state)s)</i>"
@@ -749,8 +750,8 @@ msgid "Connection Failed: "
 msgstr "Соединение невозможно или разорвано: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:287
-msgid "_<b>_Connect</b>"
-msgstr "_<b>_Подключиться</b>"
+msgid "<b>_Connect</b>"
+msgstr "<b>_Подключиться</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:289
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
@@ -758,8 +759,8 @@ msgstr ""
 "Подключает профили автосоединения с источниками A2DP, приемниками A2DP и HID"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:293
-msgid "_<b>Disconnect</b>"
-msgstr "_<b>Отключиться</b>"
+msgid "<b>_Disconnect</b>"
+msgstr "<b>_Отключиться</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:294
 msgid "Forcefully disconnect the device"
@@ -2123,6 +2124,7 @@ msgstr ""
 
 #. https://github.com/python/mypy/issues/2608
 #: blueman/plugins/applet/AutoConnect.py:50
+#: blueman/plugins/applet/ConnectionNotifier.py:36
 #: blueman/plugins/applet/RecentConns.py:155
 #: blueman/plugins/applet/PPPSupport.py:75
 msgid "Connected"
@@ -2135,13 +2137,13 @@ msgstr ""
 "Установлено автоматическое соединение со службой %(service)s на устройстве "
 "%(device)s"
 
-#: blueman/plugins/applet/ConnectionNotifier.py:16
+#: blueman/plugins/applet/ConnectionNotifier.py:15
 msgid "Shows desktop notifications when devices get connected or disconnected."
 msgstr ""
 "Показывать уведомления на рабочем столе при подключении или отключении "
 "устройств."
 
-#: blueman/plugins/applet/ConnectionNotifier.py:40
+#: blueman/plugins/applet/ConnectionNotifier.py:48
 msgid "Disconnected"
 msgstr "Отключено"
 
