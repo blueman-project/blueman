@@ -99,7 +99,7 @@ class StatusNotifierItemService(DbusService):
         self.Menu = "/org/blueman/sni/menu"
 
         self.add_signal("NewIcon", "")
-        self.add_signal("NewStatus", "")
+        self.add_signal("NewStatus", "s")
         self.add_signal("NewToolTip", "")
 
     def register(self) -> None:
@@ -140,8 +140,8 @@ class StatusNotifierItem(IndicatorInterface):
         self._sni.emit_signal("NewToolTip")
 
     def set_visibility(self, visible: bool) -> None:
-        self._sni.Status = "Active" if visible else "Passive"
-        self._sni.emit_signal("NewStatus")
+        self._sni.Status = status = "Active" if visible else "Passive"
+        self._sni.emit_signal("NewStatus", status)
 
     def set_menu(self, menu: Iterable["MenuItemDict"]) -> None:
         self._sni.menu.set_items(menu)
