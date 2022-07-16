@@ -2,17 +2,19 @@
 
 ## main
 
-* Replace custom MessageArea widget with regular Gtk.InfoBar
-
 ### Changes
 
 * Raise minimum Python version to 3.8
 * Hide recent connections associated with unavailable adapters
 * Store network configuration in GSettings instead of /var/lib/blueman/network.state.
+* Replace custom MessageArea widget with regular Gtk.InfoBar
+
+## 2.3.1
 
 ### Bugs fixed
 
 * StatusNotifierItem sent an incomplete NewStatus signal.
+* Avoid statusbar resize when showing progressbar
 
 ## 2.3
 
