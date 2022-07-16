@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.3.1
+
+### Bugs fixed
+
+* StatusNotifierItem sent an incomplete NewStatus signal.
+* Avoid statusbar resize when showing progressbar
+
 ## 2.3
 
 ### Bugs fixed
