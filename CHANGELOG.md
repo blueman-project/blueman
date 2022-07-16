@@ -8,6 +8,10 @@
 * Hide recent connections associated with unavailable adapters
 * Store network configuration in GSettings instead of /var/lib/blueman/network.state.
 
+### Bugs fixed
+
+* StatusNotifierItem sent an incomplete NewStatus signal.
+
 ## 2.3
 
 ### Bugs fixed
