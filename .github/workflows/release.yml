@@ -21,9 +21,9 @@ jobs:
       - run: grep --quiet '^AC_INIT(\[blueman\], \[${{ steps.version.outputs.VERSION }}\]' configure.ac || (echo "Did not find expected verson in configure.ac" && exit 1)
       - run: "grep --quiet \"version: '${{ steps.version.outputs.VERSION }}'\" meson.build || (echo 'Did not find expected verson in meson.build' && exit 1)"
       - run: sudo apt-get update
-      - run: sudo apt-get install -y -qq --no-install-recommends automake autoconf libtool autopoint gettext cython libglib2.0-dev python3-dev python-gi-dev libbluetooth-dev
-      - run: ./autogen.sh
-      - run: make distcheck
+      - run: sudo apt-get install -y -qq --no-install-recommends automake autoconf libtool autopoint gettext cython3 libglib2.0-dev python3-dev python-gi-dev libbluetooth-dev
+      - run: CYTHONEXEC=cython3 ./autogen.sh
+      - run: CYTHONEXEC=cython3 make distcheck
       - uses: softprops/action-gh-release@v1
         with:
           draft: true
