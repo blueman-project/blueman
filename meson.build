@@ -260,9 +260,6 @@ install_man(
 
 # Gather all configurable files
 configurable_files = [
-    ['blueman/Constants.py.in',
-     'Constants.py',
-     join_paths(pythondir, package_name)],
     ['data/configs/org.blueman.Applet.service.in',
      'org.blueman.Applet.service',
      join_paths(datadir, 'dbus-1', 'services')],
@@ -317,40 +314,6 @@ install_data(
 )
 
 
-# Install blueman subdir and exclude files based on configure options
-blueman_makefiles = [
-    'Makefile.am',
-    'bluez/obex/Makefile.am',
-    'bluez/Makefile.am',
-    'config/Makefile.am',
-    'gui/applet/Makefile.am',
-    'gui/manager/Makefile.am',
-    'gui/Makefile.am',
-    'main/applet/Makefile.am',
-    'main/indicators/Makefile.am',
-    'main/Makefile.am',
-    'plugins/applet/Makefile.am',
-    'plugins/manager/Makefile.am',
-    'plugins/mechanism/Makefile.am',
-    'plugins/services/Makefile.am',
-    'plugins/Makefile.am',
-    'services/meta/Makefile.am',
-    'services/Makefile.am'
-]
-
-blueman_exclude_files = ['Constants.py.in'] + blueman_makefiles
-pulseaudio = get_option('pulseaudio')
-if not pulseaudio
-    blueman_exclude_files += 'plugins/manager/PulseAudioProfile.py'
-endif
-
-install_subdir(
-    'blueman',
-    install_dir: pythondir,
-    exclude_files: blueman_exclude_files
-)
-
-
 # Install nautilus (plus clones) python plugins for blueman-sendto
 foreach name: get_option('sendto-plugins')
     dep = dependency('@0@-python'.format(name.to_lower()), required: false)
@@ -369,6 +332,7 @@ foreach name: get_option('sendto-plugins')
 endforeach
 
 # Add data as custom_target does not work in subdirectory
+subdir('blueman')
 subdir('data')
 subdir('po')
 subdir('module')
