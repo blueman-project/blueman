@@ -21,11 +21,11 @@ endif
 
 # Setup all directories we install in
 prefix = get_option('prefix')
-datadir = join_paths([prefix, get_option('datadir')])
-pkgdatadir = join_paths([prefix, get_option('datadir'), package_name])
-bindir = join_paths([prefix, get_option('bindir')])
-libexecdir = join_paths([prefix, get_option('libexecdir')])
-schemadir = join_paths(['share', 'glib-2.0', 'schemas'])
+datadir = join_paths(prefix, get_option('datadir'))
+pkgdatadir = join_paths(prefix, get_option('datadir'), package_name)
+bindir = join_paths(prefix, get_option('bindir'))
+libexecdir = join_paths(prefix, get_option('libexecdir'))
+schemadir = join_paths('share', 'glib-2.0', 'schemas')
 pythondir = pyinstall.get_install_dir()
 
 if get_option('policykit')
@@ -272,7 +272,7 @@ systemd_user_dir = get_option('systemduserunitdir')
 if systemd_user_dir != ''
     systemd_user_path = join_paths(prefix, systemd_user_dir)
 elif systemd.found()
-    systemd_user_path = join_paths(prefix, systemd.get_pkgconfig_variable('systemduserunitdir'))
+    systemd_user_path = systemd.get_pkgconfig_variable('systemduserunitdir', define_variable: ['prefix', prefix])
 else
     systemd_user_path = ''
 endif
@@ -287,7 +287,7 @@ systemd_system_dir = get_option('systemdsystemunitdir')
 if systemd_system_dir != ''
     systemd_system_path = join_paths(prefix, systemd_system_dir)
 elif systemd.found()
-    systemd_system_path = join_paths(prefix, systemd.get_pkgconfig_variable('systemdsystemunitdir'))
+    systemd_system_path = systemd.get_pkgconfig_variable('systemdsystemunitdir', define_variable: ['rootprefix', prefix])
 else
     systemd_system_path = ''
 endif
