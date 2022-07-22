@@ -12,10 +12,12 @@ gi.require_version("Gdk", "3.0")
 from gi.repository import Gtk
 
 # support running uninstalled
-_dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if 'BLUEMAN_SOURCE' in os.environ:
-    sys.path = [_dirname, os.path.join(_dirname, 'module', '.libs')] + sys.path
-    os.environ["GSETTINGS_SCHEMA_DIR"] = os.path.join(_dirname, "data")
+    _builddir = os.path.abspath(os.path.dirname(__file__))
+    module_dir = os.path.join(_builddir, "module")
+    blueman_dir = os.path.join(_builddir, "blueman")
+    sys.path = [module_dir, blueman_dir] + sys.path
+    os.environ["GSETTINGS_SCHEMA_DIR"] = os.path.join(_builddir, "data")
 
 _ = gettext.gettext
 gettext.textdomain("@GETTEXT_PACKAGE@")

@@ -17,8 +17,9 @@ RFCOMM_WATCHER_PATH = "@LIBEXECDIR@/blueman-rfcomm-watcher"
 import os
 
 if 'BLUEMAN_SOURCE' in os.environ:
-    _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-    BIN_DIR = os.path.join(_dirname, 'apps')
-    ICON_PATH = os.path.join(_dirname, 'data', 'icons')
-    PIXMAP_PATH = os.path.join(_dirname, 'data', 'icons', 'pixmaps')
-    UI_PATH = os.path.join(_dirname, 'data', 'ui')
+    _builddir = os.path.abspath(os.path.dirname(__file__))
+    _src_dir = os.path.abspath(os.path.join(_builddir, "../.."))
+    BIN_DIR = _builddir
+    ICON_PATH = os.path.join(_src_dir, 'data', 'icons')
+    PIXMAP_PATH = os.path.join(_src_dir, 'data', 'icons', 'pixmaps')
+    UI_PATH = os.path.join(_src_dir, 'data', 'ui')
