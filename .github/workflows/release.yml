@@ -17,13 +17,11 @@ jobs:
           notes="${notes//$'\r'/'%0D'}"
           echo ::set-output name=NOTES::$notes
         id: notes
-      - run: '[ -n "${{ steps.notes.outputs.NOTES }}" ] || (echo "Failed to parse changelog" && exit 1)'
-      - run: grep --quiet '^AC_INIT(\[blueman\], \[${{ steps.version.outputs.VERSION }}\]' configure.ac || (echo "Did not find expected verson in configure.ac" && exit 1)
-      - run: "grep --quiet \"version: '${{ steps.version.outputs.VERSION }}'\" meson.build || (echo 'Did not find expected verson in meson.build' && exit 1)"
       - run: sudo apt-get update
-      - run: sudo apt-get install -y -qq --no-install-recommends automake autoconf libtool autopoint gettext cython3 libglib2.0-dev python3-dev python-gi-dev libbluetooth-dev
-      - run: CYTHONEXEC=cython3 ./autogen.sh
-      - run: CYTHONEXEC=cython3 make distcheck
+      - run: sudo apt-get install -y -qq --no-install-recommends cmake cython3 gcc jq libbluetooth-dev libc6-dev libglib2.0-dev meson python3-dev python-gi-dev xz-utils
+      - run: meson --warnlevel 3 --buildtype release -Druntime_deps_check=false build
+      - run: if [[ $(meson introspect --projectinfo build | jq -r .version) != ${{ steps.version.outputs.VERSION }} ]]; then echo "Did not find expected version in configure.ac"; exit 1; fi
+      - run: ./make_release.sh
       - uses: softprops/action-gh-release@v1
         with:
           draft: true

@@ -42,10 +42,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: apt-get update
-      - run: apt-get install -y -qq --no-install-recommends automake autoconf libtool autopoint gettext libglib2.0-dev python-gi-dev libbluetooth-dev iproute2
-      - run: python3 -m pip install cython mypy pycairo>=1.16.3
-      - run: ./autogen.sh
+      - run: apt-get install -y -qq --no-install-recommends meson gettext libglib2.0-dev python3-dev python-gi-dev libbluetooth-dev
+      - run: python3 -m pip install mypy cython pycairo>=1.16.3
+      - run: meson --warnlevel 3 --buildtype debug -Druntime_deps_check=false builddebug
+      - run: ninja -v -C builddebug
       - run: python3 -m mypy -p blueman --strict
+        working-directory:
+          ./builddebug
         env:
           MYPYPATH: ${{ github.workspace }}/stubs
 
@@ -63,9 +66,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: apt-get update
-      - run: apt-get install -y -qq --no-install-recommends automake autoconf libtool autopoint gettext libglib2.0-dev python-gi-dev libbluetooth-dev iproute2 libgirepository1.0-dev gir1.2-gtk-3.0 gir1.2-nm-1.0 libpulse0 libpulse-mainloop-glib0
+      - run: apt-get install -y -qq --no-install-recommends meson gettext gettext libglib2.0-dev python-gi-dev libbluetooth-dev iproute2 libgirepository1.0-dev gir1.2-gtk-3.0 gir1.2-nm-1.0 libpulse0 libpulse-mainloop-glib0
       - run: python3 -m pip install cython pygobject
-      - run: ./autogen.sh
-      - run: make -C module
+      - run: meson --warnlevel 3 --buildtype debug -Druntime_deps_check=false builddebug
+      - run: ninja -v -C builddebug
       - run: touch /dev/rfkill
-      - run: PYTHONPATH=module/.libs python3 -m unittest
+      - run: cp -R test builddebug
+      - run: PYTHONPATH=./module python3 -m unittest
+        working-directory:
+          ./builddebug
