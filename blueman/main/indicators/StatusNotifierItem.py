@@ -36,7 +36,11 @@ class MenuService(DbusService):
         if parent_id == 0:
             return self._revision, (0, {}, self._render_menu(self._items, 1, self._render_submenu))
         else:
-            return self._revision, (parent_id, self._render_item(self._items[parent_id - 1]), [])
+            item = self._items[parent_id - 1]
+            if "submenu" in item:
+                return self._revision, (parent_id, {}, self._render_submenu(item, parent_id ))
+            else:
+                return self._revision, (parent_id, self._render_item(item), [])
 
     def _render_submenu(self, item: "MenuItemDict", idx: int) -> List[GLib.Variant]:
         if "submenu" in item:
