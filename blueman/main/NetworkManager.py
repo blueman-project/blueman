@@ -11,7 +11,6 @@ except ValueError:
     raise ImportError('NM python bindings not found.')
 
 from gi.repository import GLib, GObject, NM, Gio
-from blueman.main.Config import Config
 
 
 class NMConnectionError(Exception):
@@ -34,7 +33,7 @@ class NMConnectionBase:
         self.connection = None
         self.active_connection = None
         self.client = NM.Client.new()
-        self.Config = Config("org.blueman.gsmsetting", f"/org/blueman/gsmsettings/{self.bdaddr}/")
+        self.Config = Gio.Settings(schema_id="org.blueman.gsmsetting", path=f"/org/blueman/gsmsettings/{self.bdaddr}/")
         self._statehandler: Optional[int] = None
 
         self.find_or_create_connection()

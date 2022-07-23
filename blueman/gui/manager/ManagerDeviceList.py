@@ -16,13 +16,13 @@ from blueman.Constants import PIXMAP_PATH
 from blueman.Functions import launch
 from blueman.Sdp import ServiceUUID, OBEX_OBJPUSH_SVCLASS_ID
 from blueman.gui.GtkAnimation import TreeRowFade, CellFade, AnimBase
-from blueman.main.Config import Config
 from _blueman import ConnInfoReadError, conn_info
 
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import GLib
+from gi.repository import Gio
 from gi.repository import Gdk
 from gi.repository import GdkPixbuf
 from gi.repository import Pango
@@ -81,7 +81,7 @@ class ManagerDeviceList(DeviceList):
         self.manager.connect_signal("battery-removed", self.on_battery_removed)
         self._batteries: Dict[str, Battery] = {}
 
-        self.Config = Config("org.blueman.general")
+        self.Config = Gio.Settings(schema_id="org.blueman.general")
         self.Config.connect('changed', self._on_settings_changed)
         # Set the correct sorting
         self._on_settings_changed(self.Config, "sort-by")
@@ -106,7 +106,7 @@ class ManagerDeviceList(DeviceList):
         self.set_search_equal_func(self.search_func)
         self.filter.set_visible_func(self.filter_func)
 
-    def _on_settings_changed(self, settings: Config, key: str) -> None:
+    def _on_settings_changed(self, settings: Gio.Settings, key: str) -> None:
         if key in ('sort-by', 'sort-order'):
             sort_by = settings['sort-by']
             sort_order = settings['sort-order']

@@ -2,8 +2,8 @@ from gettext import gettext as _
 from typing import Dict
 
 from gi.repository import GLib
+from gi.repository import Gio
 
-from blueman.main.Config import Config
 from blueman.bluez.NetworkServer import NetworkServer
 from blueman.main.DBusProxies import Mechanism
 
@@ -20,7 +20,7 @@ class Networking(AppletPlugin):
     def on_load(self) -> None:
         self._registered: Dict[str, bool] = {}
 
-        self.Config = Config("org.blueman.network")
+        self.Config = Gio.Settings(schema_id="org.blueman.network")
         self.Config.connect("changed", self.on_config_changed)
 
         self._apply_nap_settings()
@@ -63,7 +63,7 @@ class Networking(AppletPlugin):
     def update_status(self) -> None:
         self.set_nap(self.Config["nap-enable"])
 
-    def on_config_changed(self, config: Config, key: str) -> None:
+    def on_config_changed(self, config: Gio.Settings, key: str) -> None:
         if key == "nap-enable":
             self.set_nap(config[key])
 

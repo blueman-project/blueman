@@ -6,7 +6,6 @@ from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device
 from blueman.bluez.Manager import Manager
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
-from blueman.main.Config import Config
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.gui.CommonUi import show_about_dialog
 from blueman.Constants import WEBSITE
@@ -25,7 +24,7 @@ if TYPE_CHECKING:
 class ManagerMenu:
     def __init__(self, blueman: "Blueman"):
         self.blueman = blueman
-        self.Config = Config("org.blueman.general")
+        self.Config = Gio.Settings(schema_id="org.blueman.general")
 
         self.adapter_items: Dict[str, Tuple[Gtk.RadioMenuItem, Adapter]] = {}
         self._adapters_group: Sequence[Gtk.RadioMenuItem] = []
@@ -69,17 +68,17 @@ class ManagerMenu:
         item_toolbar = Gtk.CheckMenuItem.new_with_mnemonic(_("Show _Toolbar"))
         item_toolbar.show()
         view_menu.append(item_toolbar)
-        self.blueman.Config.bind_to_widget("show-toolbar", item_toolbar, "active")
+        self.blueman.Config.bind("show-toolbar", item_toolbar, "active", Gio.SettingsBindFlags.DEFAULT)
 
         item_statusbar = Gtk.CheckMenuItem.new_with_mnemonic(_("Show _Statusbar"))
         item_statusbar.show()
         view_menu.append(item_statusbar)
-        self.blueman.Config.bind_to_widget("show-statusbar", item_statusbar, "active")
+        self.blueman.Config.bind("show-statusbar", item_statusbar, "active", Gio.SettingsBindFlags.DEFAULT)
 
         item_unnamed = Gtk.CheckMenuItem.new_with_mnemonic(_("Hide _unnamed devices"))
         item_unnamed.show()
         view_menu.append(item_unnamed)
-        self.blueman.Config.bind_to_widget("hide-unnamed", item_unnamed, "active")
+        self.blueman.Config.bind("hide-unnamed", item_unnamed, "active", Gio.SettingsBindFlags.DEFAULT)
 
         item_services: Gtk.MenuItem = Gtk.SeparatorMenuItem()
         view_menu.append(item_services)
@@ -201,7 +200,7 @@ class ManagerMenu:
             else:
                 self.Config["sort-order"] = "ascending"
 
-    def _on_settings_changed(self, settings: Config, key: str) -> None:
+    def _on_settings_changed(self, settings: Gio.Settings, key: str) -> None:
         value = settings[key]
         if key == 'sort-by':
             if value == "alias":

@@ -2,9 +2,7 @@ from gettext import gettext as _
 from typing import Optional, Tuple, List
 
 from gi.repository import GObject, GLib, Gio
-
 from blueman.Functions import launch
-from blueman.main.Config import Config
 from blueman.main.PluginManager import PluginManager
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.bluemantyping import GSignals
@@ -43,7 +41,7 @@ class StatusIcon(AppletPlugin, GObject.GObject):
         self._tooltip_title = _("Bluetooth Enabled")
         self._tooltip_text = ""
 
-        self.general_config = Config("org.blueman.general")
+        self.general_config = Gio.Settings(schema_id="org.blueman.general")
         self.general_config.connect("changed::symbolic-status-icons", self.on_symbolic_config_change)
 
         self.query_visibility(emit=False)

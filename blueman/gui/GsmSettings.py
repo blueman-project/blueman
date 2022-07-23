@@ -1,11 +1,11 @@
 from gettext import gettext as _
 
 from blueman.main.Builder import Builder
-from blueman.main.Config import Config
 
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
+from gi.repository import Gio
 
 
 class GsmSettings(Gtk.Dialog):
@@ -19,7 +19,8 @@ class GsmSettings(Gtk.Dialog):
 
         gsm_grid = builder.get_widget("gsm_grid", Gtk.Grid)
 
-        self.config = Config("org.blueman.gsmsetting", f"/org/blueman/gsmsettings/{bd_address}/")
+        self.config = Gio.Settings(schema_id="org.blueman.gsmsetting",
+                                   path=f"/org/blueman/gsmsettings/{bd_address}/")
         self.props.icon_name = "network-wireless-symbolic"
         self.props.title = _("GSM Settings")
 
@@ -32,7 +33,7 @@ class GsmSettings(Gtk.Dialog):
         self.e_apn = builder.get_widget("e_apn", Gtk.Entry)
         self.e_number = builder.get_widget("e_number", Gtk.Entry)
 
-        self.config.bind_to_widget("apn", self.e_apn, "text")
-        self.config.bind_to_widget("number", self.e_number, "text")
+        self.config.bind("apn", self.e_apn, "text", Gio.SettingsBindFlags.DEFAULT)
+        self.config.bind("number", self.e_number, "text", Gio.SettingsBindFlags.DEFAULT)
 
         self.add_button(_("_Close"), Gtk.ResponseType.CLOSE)

@@ -8,9 +8,9 @@ from blueman.bluez.Device import Device
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.Notification import Notification
 from blueman.main.DBusProxies import Mechanism
-from blueman.main.Config import Config
 
 from gi.repository import GLib
+from gi.repository import Gio
 
 import subprocess
 import logging
@@ -45,7 +45,8 @@ class Connection:
             self.connect()
 
     def connect(self) -> bool:
-        c = Config("org.blueman.gsmsetting", f"/org/blueman/gsmsettings/{self.service.device['Address']}/")
+        c = Gio.Settings(schema_id="org.blueman.gsmsetting",
+                         path=f"/org/blueman/gsmsettings/{self.service.device['Address']}/")
 
         m = Mechanism()
         m.PPPConnect('(uss)', self.port, c["number"], c["apn"], result_handler=self.on_connected,

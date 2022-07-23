@@ -15,7 +15,6 @@ from blueman.gui.Notification import Notification, _NotificationBubble, _Notific
 from blueman.main.Applet import BluemanApplet
 from blueman.main.DbusService import DbusService, DbusError
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.main.Config import Config
 
 from gi.repository import GLib, Gio
 
@@ -58,7 +57,7 @@ class Agent(DbusService):
         self.register()
 
         self._applet = applet
-        self._config = Config("org.blueman.transfer")
+        self._config = Gio.Settings(schema_id="org.blueman.transfer")
 
         self._allowed_devices: List[str] = []
         self._notification: Optional[NotificationType] = None
@@ -172,7 +171,7 @@ class TransferService(AppletPlugin):
             self._config.reset('shared-path')
             logging.info('Reset share path')
 
-        self._config = Config("org.blueman.transfer")
+        self._config = Gio.Settings(schema_id="org.blueman.transfer")
 
         share_path, invalid_share_path = self._make_share_path()
 

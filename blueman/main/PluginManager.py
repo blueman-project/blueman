@@ -10,7 +10,6 @@ from gi.repository import GObject, Gio
 
 from blueman.Functions import bmexit
 from blueman.gui.CommonUi import ErrorDialog
-from blueman.main.Config import Config
 from blueman.plugins.BasePlugin import BasePlugin
 from blueman.bluemantyping import GSignals
 from blueman.plugins.errors import PluginException
@@ -216,7 +215,7 @@ class PersistentPluginManager(PluginManager):
     def __init__(self, plugin_class: Type[_T], module_path: ModuleType, parent: object) -> None:
         super().__init__(plugin_class, module_path, parent)
 
-        self.__config = Config("org.blueman.general")
+        self.__config = Gio.Settings(schema_id="org.blueman.general")
 
         self.__config.connect("changed::plugin-list", self.on_property_changed)
 

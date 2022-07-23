@@ -4,7 +4,6 @@ import logging
 from blueman.main.Builder import Builder
 from blueman.plugins.ServicePlugin import ServicePlugin
 from blueman.main.DBusProxies import AppletService
-from blueman.main.Config import Config
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -63,7 +62,7 @@ class Transfer(ServicePlugin):
             return True
 
     def _setup_transfer(self) -> None:
-        self._config = Config("org.blueman.transfer")
+        self._config = Gio.Settings(schema_id="org.blueman.transfer")
         self._config.connect("changed", self.on_property_changed)
 
         opp_accept = self._builder.get_widget("opp-accept", Gtk.CheckButton)
