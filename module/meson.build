@@ -1,4 +1,7 @@
-cython = find_program('cython', required: true)
+cython = find_program('cython', required: false)
+if not cython.found()
+    cython = find_program('cython3', required: true)
+endif
 
 blueman_c = custom_target(
     'blueman_c',
