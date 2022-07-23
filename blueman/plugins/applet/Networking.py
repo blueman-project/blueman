@@ -32,6 +32,9 @@ class Networking(AppletPlugin):
             self.update_status()
 
     def load_nap_settings(self) -> None:
+        if not self.Config["nap-enabled"]:
+            return
+
         logging.info("Loading NAP settings")
 
         def reply(_obj: Mechanism, _result: None, _user_data: None) -> None:
