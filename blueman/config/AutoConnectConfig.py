@@ -1,14 +1,14 @@
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
+from gi.repository import Gio
 
 from blueman.bluez.Device import Device
-from blueman.main.Config import Config
 
 
-class AutoConnectConfig(Config):
+class AutoConnectConfig(Gio.Settings):
     def __init__(self) -> None:
-        super().__init__("org.blueman.plugins.autoconnect")
+        super().__init__(schema_id="org.blueman.plugins.autoconnect")
 
     def bind_to_menuitem(self, item: Gtk.CheckMenuItem, device: Device, uuid: str) -> None:
         data = device.get_object_path(), uuid

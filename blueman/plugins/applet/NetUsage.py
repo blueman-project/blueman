@@ -8,11 +8,11 @@ from typing import List, Any, Optional
 from blueman.Functions import *
 from blueman.main.Builder import Builder
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.main.Config import Config
 from blueman.bluez.Device import Device
 from blueman.bluez.Network import AnyNetwork
 from gi.repository import GObject
 from gi.repository import GLib
+from gi.repository import Gio
 
 import gi
 
@@ -35,8 +35,9 @@ class MonitorBase(GObject.GObject):
 
         self.interface = interface
         self.device = device
-        self.general_config = Config("org.blueman.general")
-        self.config = Config("org.blueman.plugins.netusage", f"/org/blueman/plugins/netusages/{device['Address']}/")
+        self.general_config = Gio.Settings(schema_id="org.blueman.general")
+        self.config = Gio.Settings(schema_id="org.blueman.plugins.netusage",
+                                   path=f"/org/blueman/plugins/netusages/{device['Address']}/")
 
         self.last_tx = 0
         self.last_rx = 0
@@ -143,7 +144,7 @@ class Dialog:
         self.cb_device.pack_start(cr2, False)
         self.cb_device.add_attribute(cr2, 'markup', 2)
 
-        general_config = Config("org.blueman.general")
+        general_config = Gio.Settings(schema_id="org.blueman.general")
 
         added = False
         for d in general_config["netusage-dev-list"]:
@@ -213,7 +214,8 @@ class Dialog:
         titer = cb.get_active_iter()
         assert titer is not None
         (addr,) = self.liststore.get(titer, 0)
-        self.config = Config("org.blueman.plugins.netusage", f"/org/blueman/plugins/netusages/{addr}/")
+        self.config = Gio.Settings(schema_id="org.blueman.plugins.netusage",
+                                   path=f"/org/blueman/plugins/netusages/{addr}/")
         self.update_counts(self.config["tx"], self.config["rx"])
         self.update_time()
 

@@ -1,7 +1,5 @@
 from typing import Dict, List, Callable, Optional, Iterable, Tuple, Union, Type
 
-from blueman.main.Config import Config
-
 import gi
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
@@ -273,7 +271,7 @@ def Notification(summary: str, message: str, timeout: int = -1, actions: Optiona
                  actions_cb: Optional[Callable[[str], None]] = None, icon_name: Optional[str] = None,
                  image_data: Optional[GdkPixbuf.Pixbuf] = None) -> Union[_NotificationBubble, _NotificationDialog]:
 
-    forced_fallback = not Config('org.blueman.general')['notification-daemon']
+    forced_fallback = not Gio.Settings(schema_id='org.blueman.general')['notification-daemon']
     try:
         bus = Gio.bus_get_sync(Gio.BusType.SESSION)
         caps = bus.call_sync('org.freedesktop.Notifications', '/org/freedesktop/Notifications',

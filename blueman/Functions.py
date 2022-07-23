@@ -36,7 +36,6 @@ import time
 
 import cairo
 
-from blueman.main.Config import Config
 from blueman.main.DBusProxies import AppletService, DBusProxyFailed
 from blueman.Constants import BIN_DIR, ICON_PATH
 
@@ -85,7 +84,7 @@ def check_bluetooth_status(message: str, exitfunc: Callable[[], Any]) -> None:
         exitfunc()
         return
 
-    config = Config("org.blueman.plugins.powermanager")
+    config = Gio.Settings(schema_id="org.blueman.plugins.powermanager")
     if config["auto-power-on"] is None:
         d = Gtk.MessageDialog(
             type=Gtk.MessageType.QUESTION, icon_name="blueman",

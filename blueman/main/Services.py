@@ -8,11 +8,12 @@ from typing import List, Optional
 from blueman.gui.GenericList import GenericList, ListDataDict
 import blueman.plugins.services
 from blueman.plugins.ServicePlugin import ServicePlugin
-from blueman.main.Config import Config
 
 import gi
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, GLib
+from gi.repository import Gtk
+from gi.repository import GLib
+from gi.repository import Gio
 
 
 class BluemanServices(Gtk.Application):
@@ -52,7 +53,7 @@ class BluemanServices(Gtk.Application):
 
             self.box.add(self.viewport)
 
-            self.Config = Config("org.blueman.general")
+            self.Config = Gio.Settings(schema_id="org.blueman.general")
 
             data: List[ListDataDict] = [
                 {"id": "icon_name", "type": str, "renderer": Gtk.CellRendererPixbuf(stock_size=Gtk.IconSize.DND),

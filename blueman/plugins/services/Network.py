@@ -7,7 +7,6 @@ from typing import List, Tuple, cast, Union, TYPE_CHECKING
 from blueman.Functions import have, get_local_interfaces
 from blueman.main.Builder import Builder
 from blueman.plugins.ServicePlugin import ServicePlugin
-from blueman.main.Config import Config
 from blueman.main.DBusProxies import Mechanism
 from blueman.main.DBusProxies import AppletService
 from blueman.gui.CommonUi import ErrorDialog
@@ -132,7 +131,7 @@ class Network(ServicePlugin):
         return True
 
     def setup_network(self) -> None:
-        self.Config = Config("org.blueman.network")
+        self.Config = Gio.Settings(schema_id="org.blueman.network")
 
         nap_enable = self._builder.get_widget("nap-enable", Gtk.CheckButton)
         r_dnsmasq = self._builder.get_widget("r_dnsmasq", Gtk.RadioButton)
@@ -201,7 +200,7 @@ class Network(ServicePlugin):
         net_ip.connect("changed", lambda x: self.option_changed_notify("ip", False))
         nap_enable.connect("toggled", lambda x: self.option_changed_notify("nap_enable"))
 
-        self.Config.bind_to_widget("nap-enable", nap_enable, "active", Gio.SettingsBindFlags.GET)
+        self.Config.bind("nap-enable", nap_enable, "active", Gio.SettingsBindFlags.GET)
 
         nap_enable.bind_property("active", nap_frame, "sensitive", GObject.BindingFlags.DEFAULT)
 

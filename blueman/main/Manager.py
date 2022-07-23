@@ -14,7 +14,6 @@ from blueman.gui.manager.ManagerMenu import ManagerMenu
 from blueman.gui.manager.ManagerStats import ManagerStats
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.Builder import Builder
-from blueman.main.Config import Config
 from blueman.main.DBusProxies import AppletService, DBusProxyFailed
 from blueman.gui.CommonUi import ErrorDialog
 from blueman.gui.Notification import Notification
@@ -49,7 +48,7 @@ class Blueman(Gtk.Application):
         Gtk.Application.do_startup(self)
         self.window = None
 
-        self.Config = Config("org.blueman.general")
+        self.Config = Gio.Settings(schema_id="org.blueman.general")
 
         self.builder = Builder("manager-main.ui")
 
@@ -168,8 +167,8 @@ class Blueman(Gtk.Application):
 
                 self.List.connect("adapter-changed", self.on_adapter_changed)
 
-                self.Config.bind_to_widget("show-toolbar", toolbar, "visible")
-                self.Config.bind_to_widget("show-statusbar", statusbar, "visible")
+                self.Config.bind("show-toolbar", toolbar, "visible", Gio.SettingsBindFlags.DEFAULT)
+                self.Config.bind("show-statusbar", statusbar, "visible", Gio.SettingsBindFlags.DEFAULT)
 
             Manager.watch_name_owner(on_dbus_name_appeared, on_dbus_name_vanished)
 

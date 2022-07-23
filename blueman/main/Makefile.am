@@ -4,7 +4,6 @@ bluemandir = $(pythondir)/blueman/main
 
 blueman_PYTHON = \
 	PPPConnection.py \
-	Config.py \
 	DhcpClient.py \
 	__init__.py \
 	NetConf.py \
