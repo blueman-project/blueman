@@ -4,7 +4,8 @@ SUBDIRS = 		\
 	data		\
 	module		\
 	po		\
-	sendto
+	sendto  \
+	test
 
 DIST_DOCS =			\
 	CHANGELOG.md		\
