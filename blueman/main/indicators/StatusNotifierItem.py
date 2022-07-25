@@ -38,7 +38,7 @@ class MenuService(DbusService):
         else:
             item = self._items[parent_id - 1]
             if "submenu" in item:
-                return self._revision, (parent_id, {}, self._render_submenu(item, parent_id ))
+                return self._revision, (parent_id, self._render_item(item), self._render_submenu(item, parent_id ))
             else:
                 return self._revision, (parent_id, self._render_item(item), [])
 
