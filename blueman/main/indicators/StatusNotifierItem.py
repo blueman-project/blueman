@@ -38,7 +38,7 @@ class MenuService(DbusService):
         else:
             item = self._items[parent_id - 1]
             if "submenu" in item and _recursion_depth != 0:
-                return self._revision, (parent_id, self._render_item(item), self._render_submenu(item, parent_id ))
+                return self._revision, (parent_id, self._render_item(item), self._render_submenu(item, parent_id))
             return self._revision, (parent_id, self._render_item(item), [])
 
     def _render_submenu(self, item: "MenuItemDict", idx: int) -> List[GLib.Variant]:
