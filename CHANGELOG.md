@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.3.2
+
+### Bugs fixed
+
+* StatusNotifierItem submenus did not work in lxqt-panel (@niknah)
+* StatusNotifierItem vanished on panel restarts
+* StatusNotifierItem compatibility issues with libdbusmenu used at least by xfce4-panel and Waybar
+* StatusNotifierItem showed the menu on left click in xfce4-panel
+
 ## 2.3.1
 
 ### Bugs fixed
