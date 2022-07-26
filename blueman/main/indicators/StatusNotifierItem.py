@@ -115,6 +115,8 @@ class StatusNotifierItemService(DbusService):
 
 
 class StatusNotifierItem(IndicatorInterface):
+    _SNI_BUS_NAME = _SNI_INTERFACE_NAME = "org.kde.StatusNotifierWatcher"
+
     def __init__(self, icon_name: str, on_activate_menu_item: "MenuItemActivator",
                  on_activate_status_icon: Callable[[], None]) -> None:
         self._sni = StatusNotifierItemService(icon_name, on_activate_status_icon, on_activate_menu_item)
@@ -122,13 +124,19 @@ class StatusNotifierItem(IndicatorInterface):
 
         self._bus = Gio.bus_get_sync(Gio.BusType.SESSION)
 
+        Gio.bus_watch_name(Gio.BusType.SESSION, self._SNI_BUS_NAME, Gio.BusNameWatcherFlags.NONE,
+                           lambda *args: self._register(), None)
+
         try:
-            Gio.bus_get_sync(Gio.BusType.SESSION).call_sync(
-                "org.kde.StatusNotifierWatcher", "/StatusNotifierWatcher", "org.kde.StatusNotifierWatcher",
-                "RegisterStatusNotifierItem", GLib.Variant("(s)", ("/org/blueman/sni",)),
-                None, Gio.DBusCallFlags.NONE, -1)
+            self._register()
         except GLib.Error:
             raise IndicatorNotAvailable
+
+    def _register(self) -> None:
+        Gio.bus_get_sync(Gio.BusType.SESSION).call_sync(
+            self._SNI_BUS_NAME, "/StatusNotifierWatcher", self._SNI_INTERFACE_NAME,
+            "RegisterStatusNotifierItem", GLib.Variant("(s)", ("/org/blueman/sni",)),
+            None, Gio.DBusCallFlags.NONE, -1)
 
     def set_icon(self, icon_name: str) -> None:
         self._sni.IconName = icon_name
