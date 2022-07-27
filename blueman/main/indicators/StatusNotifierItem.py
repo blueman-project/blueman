@@ -15,6 +15,7 @@ class MenuService(DbusService):
         super().__init__(None, "com.canonical.dbusmenu", "/org/blueman/sni/menu", Gio.BusType.SESSION)
         self._items: List["MenuItemDict"] = []
         self._revision = 0
+        self._revision_advertised = -1
         self._on_activate = on_activate_menu_item
 
         self.add_method("GetLayout", ("i", "i", "as"), ("u", "(ia{sv}av)"), self._get_layout)
@@ -26,10 +27,17 @@ class MenuService(DbusService):
 
         self.add_signal("LayoutUpdated", ("u", "i"))
 
+        GLib.timeout_add(100, self._advertise_revision)
+
     def set_items(self, items: Iterable["MenuItemDict"]) -> None:
         self._items = list(items)
         self._revision += 1
-        self.emit_signal("LayoutUpdated", self._revision, 0)
+
+    def _advertise_revision(self) -> bool:
+        if self._revision != self._revision_advertised:
+            self.emit_signal("LayoutUpdated", self._revision, 0)
+            self._revision_advertised = self._revision
+        return True
 
     def _get_layout(self, parent_id: int, _recursion_depth: int, _property_names: List[str]
                     ) -> Tuple[int, Tuple[int, Dict[str, GLib.Variant], List[GLib.Variant]]]:
