@@ -151,8 +151,8 @@ AS_IF([test "x$enable_polkit" = "xyes"],
 AM_CONDITIONAL([HAVE_POLKIT], [test "x$have_polkit" = "xyes"])
 
 AS_IF([test "x$have_polkit" = "xyes"],
-  [POLKIT=True],
-  [POLKIT=False])
+  [POLKIT=true],
+  [POLKIT=false])
 
 AC_SUBST([POLKIT])
 
@@ -250,7 +250,6 @@ apps/blueman-sendto
 apps/blueman-services
 apps/blueman-tray
 blueman/Makefile
-blueman/Constants.py
 blueman/bluez/Makefile
 blueman/bluez/obex/Makefile
 blueman/config/Makefile
@@ -269,6 +268,7 @@ blueman/services/Makefile
 blueman/services/meta/Makefile
 data/Makefile
 data/configs/Makefile
+data/configs/settings.json
 data/icons/Makefile
 data/icons/hicolor/Makefile
 data/icons/hicolor/16x16/Makefile

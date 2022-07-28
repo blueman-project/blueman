@@ -1,5 +1,5 @@
 from gettext import gettext as _
-from typing import Optional, Callable, List, Set
+from typing import Optional, Callable, List, Set, TYPE_CHECKING
 
 from blueman.main.DBusProxies import AppletService
 
@@ -8,10 +8,13 @@ from blueman.bluez.Device import Device
 from blueman.bluez.Network import Network
 from blueman.bluez.errors import BluezDBusException
 
+if TYPE_CHECKING:
+    from blueman.config.Settings import BluemanSettings
+
 
 class NetworkService(Service):
-    def __init__(self, device: Device, uuid: str):
-        super().__init__(device, uuid)
+    def __init__(self, device: Device, uuid: str, settings: "BluemanSettings"):
+        super().__init__(device, uuid, settings)
         self._service = Network(obj_path=device.get_object_path())
 
     @property

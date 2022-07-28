@@ -9,6 +9,7 @@ from blueman.gui.Notification import Notification
 from blueman.plugins.AppletPlugin import AppletPlugin
 
 if TYPE_CHECKING:
+    from blueman.config.Settings import BluemanSettings
     from blueman.main.Applet import BluemanApplet
 
 
@@ -27,8 +28,8 @@ class AutoConnect(AppletPlugin):
         "services": {"type": list, "default": "[]"}
     }
 
-    def __init__(self, parent: "BluemanApplet"):
-        super().__init__(parent)
+    def __init__(self, parent: "BluemanApplet", settings: "BluemanSettings"):
+        super().__init__(parent, settings)
         GLib.timeout_add(60000, self._run)
 
     def on_manager_state_changed(self, state: bool) -> None:

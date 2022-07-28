@@ -2,7 +2,7 @@ from gettext import gettext as _
 import logging
 import os
 import subprocess
-from typing import Callable, Dict, Optional, List
+from typing import Callable, Dict, Optional, List, TYPE_CHECKING
 
 from gi.repository import Gio, GLib
 
@@ -11,12 +11,14 @@ from _blueman import create_rfcomm_device, get_rfcomm_channel, RFCOMMError, rfco
 from blueman.Service import Service, Instance
 from blueman.bluez.Device import Device
 from blueman.main.DBusProxies import Mechanism
-from blueman.Constants import RFCOMM_WATCHER_PATH
+
+if TYPE_CHECKING:
+    from blueman.config.Settings import BluemanSettings
 
 
 class SerialService(Service):
-    def __init__(self, device: Device, uuid: str) -> None:
-        super().__init__(device, uuid)
+    def __init__(self, device: Device, uuid: str, settings: "BluemanSettings") -> None:
+        super().__init__(device, uuid, settings)
         self._handlerids: Dict[int, int] = {}
 
     @property
@@ -61,7 +63,7 @@ class SerialService(Service):
         logging.info(f'User was granted access to {path}')
         logging.info('Replacing root watcher')
         Mechanism().CloseRFCOMM('(d)', port)
-        subprocess.Popen([RFCOMM_WATCHER_PATH, path])
+        subprocess.Popen([self._settings.rfcomm_watcher_path, path])
         if port in self._handlerids:
             handler_id = self._handlerids.pop(port)
             monitor.disconnect(handler_id)

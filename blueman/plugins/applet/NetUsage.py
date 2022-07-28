@@ -100,7 +100,7 @@ class Monitor(MonitorBase):
 class Dialog:
     running = False
 
-    def __init__(self, plugin: "NetUsage"):
+    def __init__(self, plugin: "NetUsage", ui_path: str):
         if not Dialog.running:
             Dialog.running = True
         else:

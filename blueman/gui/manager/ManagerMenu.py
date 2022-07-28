@@ -9,7 +9,6 @@ from blueman.bluez.Manager import Manager
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.gui.CommonUi import show_about_dialog
-from blueman.Constants import WEBSITE, BIN_DIR
 from blueman.Functions import create_menuitem, launch, adapter_path_to_name
 
 import gi
@@ -47,7 +46,8 @@ class ManagerMenu:
         report_item.show()
         help_menu.append(report_item)
 
-        report_item.connect("activate", lambda x: launch(os.path.join(BIN_DIR, f"xdg-open {WEBSITE}/issues")))
+        website_cmd = os.path.join(blueman.settings.bindir, f"xdg-open {blueman.settings.website}/issues")
+        report_item.connect("activate", lambda x: launch(website_cmd))
 
         sep = Gtk.SeparatorMenuItem()
         sep.show()
@@ -60,7 +60,8 @@ class ManagerMenu:
         widget = self.blueman.window.get_toplevel()
         assert isinstance(widget, Gtk.Window)
         window = widget
-        help_item.connect("activate", lambda x: show_about_dialog('Blueman ' + _('Device Manager'), parent=window))
+        help_item.connect("activate", lambda x: show_about_dialog('Blueman ' + _('Device Manager'), blueman.settings,
+                                                                  parent=window))
 
         view_menu = Gtk.Menu()
         self.item_view.set_submenu(view_menu)
@@ -130,9 +131,9 @@ class ManagerMenu:
         view_menu.append(item_plugins)
         item_plugins.connect('activate', self._on_plugin_dialog_activate)
 
+        services_cmd = os.path.join(blueman.settings.bindir, "blueman-services")
         item_services = create_menuitem(_("_Local Services") + "…", "document-properties-symbolic")
-        item_services.connect('activate', lambda *args: launch(os.path.join(BIN_DIR, "blueman-services"),
-                                                               name=_("Service Preferences")))
+        item_services.connect('activate', lambda *args: launch(services_cmd, name=_("Service Preferences")))
         view_menu.append(item_services)
         item_services.show()
 

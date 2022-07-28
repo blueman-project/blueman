@@ -33,6 +33,7 @@ import struct
 import socket
 import array
 import time
+import json
 
 import cairo
 
@@ -322,3 +323,19 @@ def get_local_interfaces() -> Dict[str, Tuple[str, Optional[str]]]:
 
 def bmexit(msg: Optional[Union[str, int]] = None) -> None:
     raise SystemExit(msg)
+
+
+def load_json(json_path: str, updates: Dict[str, str]) -> dict[str, Union[str, bool]]:
+    settings_dict = {}
+    try:
+        with open(json_path) as f:
+            data = json.load(f)
+            settings_dict.update(data)
+            settings_dict.update(updates)
+            return settings_dict
+    except json.JSONDecodeError:
+        logging.error("Could not decode json file.")
+        return {}
+    except FileNotFoundError:
+        logging.error("Settings file not found. Reinstall blueman.")
+        return {}

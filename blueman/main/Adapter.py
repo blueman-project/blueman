@@ -5,6 +5,7 @@ import gettext
 import signal
 from typing import Dict, TYPE_CHECKING, Optional, Any
 
+from blueman.config.Settings import BluemanSettings
 from blueman.Functions import *
 from blueman.bluez.Manager import Manager
 from blueman.bluez.Adapter import Adapter
@@ -31,7 +32,8 @@ if TYPE_CHECKING:
 
 
 class BluemanAdapters(Gtk.Application):
-    def __init__(self, selected_hci_dev: Optional[str], socket_id: Optional[int], resource_file: str) -> None:
+    def __init__(self, selected_hci_dev: Optional[str], socket_id: Optional[int],
+                 resource_file: str, settings: BluemanSettings) -> None:
         super().__init__(application_id="org.blueman.Adapters")
 
         def do_quit(_: object) -> bool:
@@ -46,6 +48,7 @@ class BluemanAdapters(Gtk.Application):
         Gio.Resource._register(gresource)
         Gtk.IconTheme.get_default().add_resource_path("/org/blueman/")
 
+        self.settings = settings
         self.socket_id = socket_id
         self.selected_hci_dev = selected_hci_dev
 

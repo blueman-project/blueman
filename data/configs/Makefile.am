@@ -52,6 +52,7 @@ CLEANFILES =		\
 	org.blueman.Mechanism.service	\
 	org.blueman.Applet.service		\
 	org.blueman.policy		\
+	settings.json		\
 	$(BUILT_SOURCES)
 
 DISTCLEANFILES = \

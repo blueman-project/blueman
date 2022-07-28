@@ -43,7 +43,7 @@ class Services(ManagerPlugin, MenuItemsProvider):
         items: List[DeviceMenuItem] = []
         appl = AppletService()
 
-        services = get_services(device)
+        services = get_services(device, self.settings)
 
         connectable_services = [service for service in services if service.connectable]
         for service in connectable_services:

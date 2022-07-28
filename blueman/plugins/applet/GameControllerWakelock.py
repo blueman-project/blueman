@@ -4,7 +4,6 @@ import os
 from typing import Any
 
 from blueman.bluez.Device import Device
-from blueman.Constants import BIN_DIR
 from blueman.Functions import launch
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.plugins.errors import UnsupportedPlatformError
@@ -61,7 +60,7 @@ class GameControllerWakelock(AppletPlugin):
             elif self.wake_lock > 1:
                 self.wake_lock -= 1
             else:
-                ret = launch(os.path.join(BIN_DIR, command), sn=False)
+                ret = launch(os.path.join(self.settings.bindir, command), sn=False)
                 if ret:
                     self.wake_lock -= 1
                 else:
@@ -71,7 +70,7 @@ class GameControllerWakelock(AppletPlugin):
             if self.wake_lock >= 1:
                 self.wake_lock += 1
             else:
-                ret = launch(os.path.join(BIN_DIR, command), sn=False)
+                ret = launch(os.path.join(self.settings.bindir, command), sn=False)
                 if ret:
                     self.wake_lock += 1
                 else:

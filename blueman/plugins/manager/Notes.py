@@ -1,10 +1,10 @@
 import datetime
+import os
 from gettext import gettext as _
 from tempfile import NamedTemporaryFile
 from typing import List
 
-
-from blueman.Constants import BIN_DIR
+from blueman.config.Settings import BluemanSettings
 from blueman.Functions import create_menuitem, launch
 from blueman.bluez.Device import Device
 from blueman.gui.manager.ManagerDeviceMenu import MenuItemsProvider, ManagerDeviceMenu, DeviceMenuItem
@@ -16,7 +16,8 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 
-def send_note_cb(dialog: Gtk.Dialog, response_id: int, device_address: str, text_view: Gtk.Entry) -> None:
+def send_note_cb(dialog: Gtk.Dialog, response_id: int, device_address: str, text_view: Gtk.Entry,
+                 settings: BluemanSettings) -> None:
     text = text_view.get_buffer().props.text
     dialog.destroy()
     if response_id == Gtk.ResponseType.REJECT:
@@ -35,16 +36,16 @@ def send_note_cb(dialog: Gtk.Dialog, response_id: int, device_address: str, text
     tempfile = NamedTemporaryFile(suffix='.vnt', prefix='note', delete=False)
     tempfile.write(data.encode('utf-8'))
     tempfile.close()
-    launch(os.path.join(BIN_DIR, f"blueman-sendto --delete --device={device_address}"), paths=[tempfile.name])
+    launch(os.path.join(settings.bindir, f"blueman-sendto --delete --device={device_address}"), paths=[tempfile.name])
 
 
-def send_note(device: Device, parent: Gtk.Window) -> None:
+def send_note(device: Device, parent: Gtk.Window, settings: BluemanSettings) -> None:
     builder = Builder("note.ui")
     dialog = builder.get_widget("dialog", Gtk.Dialog)
     dialog.set_transient_for(parent)
     dialog.props.icon_name = 'blueman'
     note = builder.get_widget("note", Gtk.Entry)
-    dialog.connect('response', send_note_cb, device['Address'], note)
+    dialog.connect('response', send_note_cb, device['Address'], note, settings)
     dialog.present()
 
 
@@ -55,5 +56,5 @@ class Notes(ManagerPlugin, MenuItemsProvider):
         _window = manager_menu.get_toplevel()
         assert isinstance(_window, Gtk.Window)
         window = _window  # https://github.com/python/mypy/issues/2608
-        item.connect('activate', lambda x: send_note(device, window))
+        item.connect('activate', lambda x: send_note(device, window, self.parent.settings))
         return [DeviceMenuItem(item, DeviceMenuItem.Group.ACTIONS, 500)]

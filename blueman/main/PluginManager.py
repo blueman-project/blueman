@@ -157,7 +157,7 @@ class PluginManager(GObject.GObject):
                     raise LoadException(f"Not loading conflicting plugin {cls.__name__} due to lower priority")
 
         logging.info(f"loading {cls}")
-        inst = cls(self.parent)
+        inst = cls(self.parent, self.parent.settings)
         try:
             inst._load()
         except Exception:

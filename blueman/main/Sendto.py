@@ -4,6 +4,7 @@ import logging
 from gettext import ngettext
 from typing import List, Iterable, Optional
 
+from blueman.config.Settings import BluemanSettings
 from blueman.bluez.Device import Device
 from blueman.bluez.errors import BluezDBusException
 from blueman.main.Builder import Builder
@@ -28,7 +29,7 @@ class Sender(Gtk.Dialog):
         'result': (GObject.SignalFlags.RUN_FIRST, None, (GObject.TYPE_BOOLEAN,)),
     }
 
-    def __init__(self, device: Device, adapter_path: str, files: Iterable[str]) -> None:
+    def __init__(self, device: Device, adapter_path: str, files: Iterable[str], settings: BluemanSettings) -> None:
         super().__init__(
             title=_("Bluetooth File Transfer"),
             name="BluemanSendTo",

@@ -45,9 +45,12 @@ conf_data.set('pkgdatadir', pkgdatadir)
 conf_data.set('LOCALEDIR', join_paths(prefix, get_option('localedir')))
 conf_data.set('icondir', join_paths(datadir, 'icons'))
 conf_data.set('dhconfig', get_option('dhcp-config-path'))
-conf_data.set('POLKIT', have_polkit)
+conf_data.set('POLKIT', get_option('policykit').to_string())
 conf_data.set('GETTEXT_PACKAGE', package_name)
 conf_data.set('PYTHON', pyinstall.path())
+conf_data.set('settings_path', pkgdatadir)
+
+message(get_option('policykit'))
 
 # Check for build dependencies
 pythonlib = pyinstall.dependency()
@@ -163,9 +166,6 @@ install_man(
 
 # Gather all configurable files
 configurable_files = [
-    ['blueman/Constants.py.in',
-     'Constants.py',
-     join_paths(pythondir, package_name)],
     ['data/configs/org.blueman.Applet.service.in',
      'org.blueman.Applet.service',
      join_paths(datadir, 'dbus-1', 'services')],
@@ -174,7 +174,10 @@ configurable_files = [
      join_paths(datadir, 'dbus-1', 'services')],
     ['data/configs/org.blueman.Mechanism.service.in',
      'org.blueman.Mechanism.service',
-     join_paths(datadir, 'dbus-1', 'system-services')]
+     join_paths(datadir, 'dbus-1', 'system-services')],
+     ['data/configs/settings.json.in',
+      'settings.json',
+      pkgdatadir]
 ]
 
 systemd_user_dir = get_option('systemduserunitdir')

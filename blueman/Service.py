@@ -1,8 +1,11 @@
 from abc import ABC, abstractmethod
-from typing import Optional, Callable, List, Set, Collection
+from typing import Optional, Callable, List, Set, Collection, TYPE_CHECKING
 
 from blueman.Sdp import ServiceUUID
 from blueman.bluez.Device import Device
+
+if TYPE_CHECKING:
+    from blueman.config.Settings import BluemanSettings
 
 
 class Instance:
@@ -31,9 +34,10 @@ class Service(ABC):
     __icon__: str
     __priority__: int
 
-    def __init__(self, device: Device, uuid: str):
+    def __init__(self, device: Device, uuid: str, settings: "BluemanSettings"):
         self.__device = device
         self.__uuid = uuid
+        self._settings = settings
 
     @property
     def name(self) -> str:

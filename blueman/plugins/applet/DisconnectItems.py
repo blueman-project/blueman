@@ -4,6 +4,7 @@ from typing import Any, TYPE_CHECKING, cast, Callable
 from blueman.plugins.AppletPlugin import AppletPlugin
 
 if TYPE_CHECKING:
+    from blueman.config.Settings import BluemanSettings
     from blueman.main.Applet import BluemanApplet
 
 
@@ -13,8 +14,8 @@ class DisconnectItems(AppletPlugin):
     __author__ = "cschramm"
     __description__ = _("Adds disconnect menu items")
 
-    def __init__(self, parent: "BluemanApplet"):
-        super().__init__(parent)
+    def __init__(self, parent: "BluemanApplet", settings: "BluemanSettings"):
+        super().__init__(parent, settings)
         self._menu = self.parent.Plugins.Menu
 
     def on_unload(self) -> None:

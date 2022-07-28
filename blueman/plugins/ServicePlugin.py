@@ -8,6 +8,7 @@ from gi.repository import Gtk
 if TYPE_CHECKING:
     from typing_extensions import Literal
 
+    from blueman.config.Settings import BluemanSettings
     from blueman.main.Services import BluemanServices
 
 
@@ -16,10 +17,11 @@ class ServicePlugin:
     instances: List["ServicePlugin"] = []
     __plugin_info__: Tuple[str, str]
 
-    def __init__(self, parent: "BluemanServices"):
+    def __init__(self, parent: "BluemanServices", settings: "BluemanSettings"):
         ServicePlugin.instances.append(self)
         self._options = []
         self.parent = parent
+        self.settings = settings
 
         self.__is_exposed = False
         self._is_loaded = False

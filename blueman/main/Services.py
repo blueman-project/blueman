@@ -5,6 +5,7 @@ import importlib
 import signal
 from typing import List, Optional
 
+from blueman.config.Settings import BluemanSettings
 from blueman.gui.GenericList import GenericList, ListDataDict
 import blueman.plugins.services
 from blueman.plugins.ServicePlugin import ServicePlugin
@@ -17,8 +18,9 @@ from gi.repository import Gio
 
 
 class BluemanServices(Gtk.Application):
-    def __init__(self, resource_file: str) -> None:
+    def __init__(self, resource_file: str, settings: BluemanSettings) -> None:
         super().__init__(application_id="org.blueman.Services")
+        self.settings = settings
         self.window: Optional[Gtk.Window] = None
 
         def do_quit(_: object) -> bool:
@@ -111,7 +113,7 @@ class BluemanServices(Gtk.Application):
         for cls in ServicePlugin.__subclasses__():
             # FIXME this should not fail, if it does its a bug in the plugin
             try:
-                inst = cls(self)
+                inst = cls(self, self.settings)
             except:  # noqa: E722
                 logging.error(f"Failed to create instance of {cls}", exc_info=True)
                 continue

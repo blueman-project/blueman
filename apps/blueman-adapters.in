@@ -6,21 +6,32 @@ import gettext
 
 
 resource_file = "@pkgdatadir@/blueman.gresource"
+settings_path = "@pkgdatadir@/settings.json"
+src_paths = {}
+
 # support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if 'BLUEMAN_SOURCE' in os.environ:
     sys.path = [_dirname, os.path.join(_dirname, 'module', '.libs')] + sys.path
     os.environ["GSETTINGS_SCHEMA_DIR"] = os.path.join(_dirname, "data")
     resource_file = os.path.join(_dirname, "data", "blueman.gresource")
+    settings_path = os.path.join(_dirname, "data", "configs", "settings.json")
+    src_paths.update({
+        "bindir": os.path.join(_dirname, "apps"),
+        "rfcomm_watcher_path": os.path.join(_dirname, "apps")
+    })
 
 gettext.textdomain("@GETTEXT_PACKAGE@")
 
-from blueman.Functions import create_parser, create_logger, set_proc_title
+from blueman.Functions import create_parser, create_logger, set_proc_title, load_json
+from blueman.config.Settings import BluemanSettings
 from blueman.main.Adapter import BluemanAdapters
 
+settings = load_json(settings_path, src_paths)
+bm_settings = BluemanSettings(**settings)
 
 if __name__ == '__main__':
-    parser = parser = create_parser()
+    parser = create_parser()
     parser.add_argument("--socket-id", dest="socket_id", action="store", type=int, metavar="ID")
     parser.add_argument("adapter", nargs="?", metavar="ADAPTER NAME")
     args = parser.parse_args()
@@ -42,5 +53,6 @@ if __name__ == '__main__':
 
     set_proc_title()
 
-    app = blueman_adapters = BluemanAdapters(args.adapter, args.socket_id, resource_file)
+    app = blueman_adapters = BluemanAdapters(args.adapter, args.socket_id, resource_file, bm_settings)
+
     app.run()

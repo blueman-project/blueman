@@ -1,14 +1,16 @@
 import importlib
 import logging
 import os
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
 
 import blueman.plugins.mechanism
-from blueman.Constants import POLKIT
 from gi.repository import GLib, Gio
 
 from blueman.main.DbusService import DbusService, DbusError
 from blueman.plugins.MechanismPlugin import MechanismPlugin
+
+if TYPE_CHECKING:
+    from blueman.config.Settings import BluemanSettings
 
 
 class Timer:
@@ -39,14 +41,15 @@ class Timer:
 
 
 class MechanismApplication(DbusService):
-    def __init__(self, stoptimer: bool):
+    def __init__(self, stoptimer: bool, settings: "BluemanSettings"):
         super().__init__("org.blueman.Mechanism", "org.blueman.Mechanism", "/org/blueman/mechanism", Gio.BusType.SYSTEM)
         self._loop = GLib.MainLoop()
         self.timer = Timer(self._loop)
+        self.settings = settings
         if stoptimer:
             self.timer.stop()
 
-        if POLKIT:
+        if settings.polkit:
             try:
                 self.pk: Optional[Gio.DBusProxy] = Gio.DBusProxy.new_for_bus_sync(
                     Gio.BusType.SYSTEM,
@@ -77,7 +80,7 @@ class MechanismApplication(DbusService):
         classes = MechanismPlugin.__subclasses__()
         for cls in classes:
             logging.info(f"loading {cls.__name__}")
-            cls(self)
+            cls(self, self.settings)
 
         self.register()
 
@@ -86,7 +89,7 @@ class MechanismApplication(DbusService):
 
     def confirm_authorization(self, subject: str, action_id: str) -> None:
         self.timer.reset()
-        if not POLKIT:
+        if not self.settings.polkit:
             return
         else:
             if not self.pk:

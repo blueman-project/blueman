@@ -7,15 +7,17 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 if TYPE_CHECKING:
+    from blueman.config.Settings import BluemanSettings
     from blueman.main.Applet import BluemanApplet
 
 
 class AppletPlugin(BasePlugin):
     __icon__ = "application-x-addon-symbolic"
 
-    def __init__(self, parent: "BluemanApplet"):
+    def __init__(self, parent: "BluemanApplet", settings: "BluemanSettings"):
         super().__init__()
         self.parent = parent
+        self.settings = settings
 
         if not Gtk.IconTheme.get_default().has_icon(self.__class__.__icon__):
             self.__class__.__icon__ = "application-x-addon-symbolic"

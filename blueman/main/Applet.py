@@ -6,6 +6,7 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gio, GLib, Gtk
 
+from blueman.config.Settings import BluemanSettings
 from blueman.bluez.Manager import Manager
 from blueman.bluez.Adapter import AnyAdapter
 from blueman.bluez.Device import AnyDevice
@@ -22,11 +23,12 @@ from blueman.plugins.applet.StatusIcon import StatusIcon
 
 
 class BluemanApplet(Gio.Application):
-    def __init__(self, resource_file: str) -> None:
+    def __init__(self, resource_file: str, settings: BluemanSettings) -> None:
         super().__init__(application_id="org.blueman.Applet", flags=Gio.ApplicationFlags.FLAGS_NONE)
         gresource = Gio.Resource.load(resource_file)
         Gio.Resource._register(gresource)
         Gtk.IconTheme.get_default().add_resource_path("/org/blueman")
+        self.settings = settings
 
         def do_quit(_: object) -> bool:
             self.quit()

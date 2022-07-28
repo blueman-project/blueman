@@ -8,7 +8,7 @@ from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device
 from blueman.bluez.Manager import Manager
 from blueman.bluez.errors import DBusNoSuchAdapterError
-from blueman.Constants import BIN_DIR
+from blueman.config.Settings import BluemanSettings
 from blueman.Functions import *
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 from blueman.gui.manager.ManagerToolbar import ManagerToolbar
@@ -30,7 +30,7 @@ from gi.repository import Gtk, Gio, Gdk, GLib
 
 
 class Blueman(Gtk.Application):
-    def __init__(self, resource_file: str) -> None:
+    def __init__(self, resource_file: str, settings: BluemanSettings) -> None:
         super().__init__(application_id="org.blueman.Manager")
 
         def do_quit(_: object) -> bool:
@@ -40,6 +40,7 @@ class Blueman(Gtk.Application):
         s = GLib.unix_signal_source_new(signal.SIGINT)
         s.set_callback(do_quit)
         s.attach()
+        self.settings = settings
 
         gresource = Gio.Resource.load(resource_file)
         Gio.Resource._register(gresource)
@@ -265,9 +266,8 @@ class Blueman(Gtk.Application):
 
         device.pair(error_handler=error_handler)
 
-    @staticmethod
     def adapter_properties(self) -> None:
-        launch(os.path.join(BIN_DIR, "blueman-adapters"), name=_("Adapter Preferences"))
+        launch(os.path.join(self.settings.bindir, "blueman-adapters"), name=_("Adapter Preferences"))
 
     @staticmethod
     def toggle_trust(device: Device) -> None:

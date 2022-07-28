@@ -40,8 +40,8 @@ class DeviceList(GenericList):
         'adapter-removed': (GObject.SignalFlags.RUN_LAST, None, (str,)),
     }
 
-    def __init__(self, adapter_name: Optional[str] = None, tabledata: Optional[List[ListDataDict]] = None,
-                 headers_visible: bool = True) -> None:
+    def __init__(self, adapter_name: Optional[str] = None,
+                 tabledata: Optional[List[ListDataDict]] = None, headers_visible: bool = True) -> None:
         if not tabledata:
             tabledata = []
 
@@ -185,7 +185,8 @@ class DeviceList(GenericList):
             self.stop_discovery()
             self.emit("adapter-property-changed", self.Adapter, ("Discovering", False))
 
-        adapter = adapter_path_to_name(adapter)
+        logging.debug(f"{adapter} {repr(adapter)}")
+        adapter = adapter_path_to_name(adapter) if adapter else None
 
         logging.debug(f"Setting adapter to: {adapter}")
 

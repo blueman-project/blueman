@@ -7,19 +7,31 @@ import signal
 import gettext
 
 resource_file = "@pkgdatadir@/blueman.gresource"
+settings_path = os.path.join("@settings_path@", "settings.json")
+src_paths = {}
+
 # support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 if 'BLUEMAN_SOURCE' in os.environ:
     sys.path = [_dirname, os.path.join(_dirname, 'module', '.libs')] + sys.path
     os.environ["GSETTINGS_SCHEMA_DIR"] = os.path.join(_dirname, "data")
     resource_file = os.path.join(_dirname, "data", "blueman.gresource")
+    settings_path = os.path.join(_dirname, "data", "configs", "settings.json")
+    src_paths.update({
+        "bindir": os.path.join(_dirname, "apps"),
+        "rfcomm_watcher_path": os.path.join(_dirname, "apps")
+    })
+
 
 _ = gettext.gettext
 gettext.textdomain("@GETTEXT_PACKAGE@")
 
-from blueman.Functions import set_proc_title, create_logger, create_parser
+from blueman.Functions import set_proc_title, create_logger, create_parser, load_json
+from blueman.config.Settings import BluemanSettings
 from blueman.main.Services import BluemanServices
 
+settings = load_json(settings_path, src_paths)
+bm_settings = BluemanSettings(**settings)
 
 if __name__ == '__main__':
     parser = create_parser()
@@ -41,5 +53,5 @@ if __name__ == '__main__':
     create_logger(log_level, "blueman-services", syslog=args.syslog)
 
     set_proc_title()
-    app = BluemanServices(resource_file)
+    app = BluemanServices(resource_file, bm_settings)
     app.run()

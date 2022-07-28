@@ -4,6 +4,7 @@ from html import escape
 from xml.etree import ElementTree
 from typing import Dict, Optional, overload, Callable, Union, TYPE_CHECKING, Tuple, Any, List
 
+from blueman.config.Settings import BluemanSettings
 from blueman.bluez.Device import Device
 from blueman.bluez.AgentManager import AgentManager
 from blueman.Sdp import ServiceUUID
@@ -33,8 +34,9 @@ class BluezErrorRejected(DbusError):
 class BluezAgent(DbusService):
     __agent_path = '/org/bluez/agent/blueman'
 
-    def __init__(self) -> None:
+    def __init__(self, settings: BluemanSettings) -> None:
         super().__init__(None, "org.bluez.Agent1", self.__agent_path, Gio.BusType.SYSTEM)
+        self.settings = settings
 
         self.add_method("Release", (), "", self._on_release)
         self.add_method("RequestPinCode", ("o",), "s", self._on_request_pin_code, is_async=True)

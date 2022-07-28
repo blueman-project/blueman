@@ -6,14 +6,16 @@ from tempfile import mkstemp
 from time import sleep
 import logging
 import signal
-from typing import List, Tuple, Optional, Type
+from typing import List, Tuple, Optional, Type, TYPE_CHECKING
 
-from blueman.Constants import DHCP_CONFIG_FILE
 from blueman.Functions import have
 from _blueman import create_bridge, destroy_bridge, BridgeException
 from subprocess import call, Popen, PIPE
 
 from blueman.main.DNSServerProvider import DNSServerProvider
+
+if TYPE_CHECKING:
+    from blueman.config.Settings import BluemanSettings
 
 
 class NetworkSetupError(Exception):
@@ -51,8 +53,9 @@ class DHCPHandler:
     def _key(self) -> str:
         return self._BINARIES[-1]
 
-    def __init__(self) -> None:
+    def __init__(self, settings: "BluemanSettings") -> None:
         self._pid: Optional[int] = None
+        self.settings = settings
 
     @staticmethod
     def _get_arguments(ip4_address: str) -> List[str]:
@@ -142,13 +145,12 @@ subnet %(ip_mask)s netmask %(netmask)s {
 class DhcpdHandler(DHCPHandler):
     _BINARIES = ["dhcpd3", "dhcpd"]
 
-    @staticmethod
-    def _read_dhcp_config() -> Tuple[str, str]:
+    def _read_dhcp_config(self) -> Tuple[str, str]:
         dhcp_config = ''
         existing_subnet = ''
         start = end = False
 
-        with open(DHCP_CONFIG_FILE) as f:
+        with open(self.settings.dhcp_config_file) as f:
             for line in f:
                 if line == '#### BLUEMAN AUTOMAGIC SUBNET ####\n':
                     start = True
@@ -184,7 +186,7 @@ class DhcpdHandler(DHCPHandler):
 
         subnet = self._generate_subnet_config(ip4_address, ip4_mask, dns_servers)
 
-        with open(DHCP_CONFIG_FILE, "w") as f:
+        with open(self.settings.dhcp_config_file, "w") as f:
             f.write(dhcp_config)
             f.write(subnet)
 
@@ -197,7 +199,7 @@ class DhcpdHandler(DHCPHandler):
 
     def _clean_up_configuration(self) -> None:
         dhcp_config, existing_subnet = self._read_dhcp_config()
-        with open(DHCP_CONFIG_FILE, "w") as f:
+        with open(self.settings.dhcp_config_file, "w") as f:
             f.write(dhcp_config)
 
 
@@ -252,6 +254,10 @@ class NetConf:
 
     _IPV4_SYS_PATH = "/proc/sys/net/ipv4"
     _RUN_PATH = "/var/run"
+    _settings: BluemanSettings
+
+    def __init__(self, settings: BluemanSettings):
+        self._settings = settings
 
     @classmethod
     def _enable_ip4_forwarding(cls) -> None:
@@ -284,7 +290,7 @@ class NetConf:
             if cls._dhcp_handler is not None:
                 cls._dhcp_handler.clean_up()
 
-            cls._dhcp_handler = handler()
+            cls._dhcp_handler = handler(cls._settings)
 
         try:
             create_bridge("pan1")
