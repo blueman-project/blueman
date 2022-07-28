@@ -5,7 +5,7 @@ Blueman is a GTK+ Bluetooth Manager
 Blueman is designed to provide a simple yet effective means for
 controlling the BlueZ API and simplifying Bluetooth tasks, such as:
 
-* Connecting to 3G/EDGE/GPRS via dial-up
+* Connecting to dial-up networks
 * Connecting to / Creating Bluetooth networks
 * Connecting to input devices
 * Connecting to audio devices
@@ -13,8 +13,6 @@ controlling the BlueZ API and simplifying Bluetooth tasks, such as:
 * Pairing
 
 It is lightweight, easy to use, Python based, and GPL licensed.
-
-The original project page of Valmantas Palikša can be found [on Launchpad](https://launchpad.net/blueman).
 
 ## Installing
 
@@ -26,9 +24,7 @@ To generate and run a configure script from source, run `./autogen.sh`.
 
 If you are packaging it for your distribution, please make sure to pass `--disable-schemas-compile` and run `glib-compile-schemas /datadir/glib-2.0/schemas` as part of your (un)install phase.
 
-## Packaged versions
-
-The [wiki page has info about packaged versions of blueman](https://github.com/blueman-project/blueman/wiki/Packaged-versions).
+[![Packaging status](https://repology.org/badge/tiny-repos/blueman.svg?header=blueman%20packages)](https://repology.org/project/blueman/versions)
 
 ## Support / Troubleshooting
 
@@ -43,7 +39,8 @@ Fork, make your changes, and issue a pull request. If you just want to edit a si
 ### Translate
 
 Translations are managed on Hosted Weblate.
-Go to the [Weblate blueman project page](https://hosted.weblate.org/projects/blueman/).
+
+[![Translation status](https://hosted.weblate.org/widgets/blueman/-/svg-badge.svg)](https://hosted.weblate.org/engage/blueman/)
 
 ## License
 
