@@ -12,6 +12,7 @@ from blueman.gui.DeviceList import DeviceList
 from blueman.DeviceClass import get_minor_class, get_major_class, gatt_appearance_to_name
 from blueman.gui.GenericList import ListDataDict
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
+from blueman.Constants import BIN_DIR
 from blueman.Functions import launch
 from blueman.Sdp import ServiceUUID, OBEX_OBJPUSH_SVCLASS_ID
 from blueman.gui.GtkAnimation import TreeRowFade, CellFade, AnimBase
@@ -161,7 +162,7 @@ class ManagerDeviceList(DeviceList):
             device = self.get(tree_iter, "device")["device"]
             command = f"blueman-sendto --device={device['Address']}"
 
-            launch(command, paths=uris, name=_("File Sender"))
+            launch(os.path.join(BIN_DIR, command), paths=uris, name=_("File Sender"))
             context.finish(True, False, time)
         else:
             context.finish(False, False, time)

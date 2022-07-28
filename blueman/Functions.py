@@ -37,7 +37,6 @@ import time
 import cairo
 
 from blueman.main.DBusProxies import AppletService, DBusProxyFailed
-from blueman.Constants import BIN_DIR
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -87,7 +86,6 @@ def check_bluetooth_status(message: str, exitfunc: Callable[[], Any]) -> None:
 def launch(
     cmd: str,
     paths: Optional[Iterable[str]] = None,
-    system: bool = False,
     icon_name: Optional[str] = None,
     name: str = "blueman",
     sn: bool = True,
@@ -112,11 +110,6 @@ def launch(
 
     env = os.environ
     env["BLUEMAN_EVENT_TIME"] = str(timestamp)
-
-    if not system:
-        cmd = os.path.join(BIN_DIR, cmd)
-    else:
-        cmd = os.path.expanduser(cmd)
 
     if paths:
         files: Optional[List[Gio.File]] = [Gio.File.new_for_commandline_arg(p) for p in paths]

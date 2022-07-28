@@ -3,6 +3,8 @@ from gettext import gettext as _
 from tempfile import NamedTemporaryFile
 from typing import List
 
+
+from blueman.Constants import BIN_DIR
 from blueman.Functions import create_menuitem, launch
 from blueman.bluez.Device import Device
 from blueman.gui.manager.ManagerDeviceMenu import MenuItemsProvider, ManagerDeviceMenu, DeviceMenuItem
@@ -33,7 +35,7 @@ def send_note_cb(dialog: Gtk.Dialog, response_id: int, device_address: str, text
     tempfile = NamedTemporaryFile(suffix='.vnt', prefix='note', delete=False)
     tempfile.write(data.encode('utf-8'))
     tempfile.close()
-    launch(f"blueman-sendto --delete --device={device_address}", paths=[tempfile.name])
+    launch(os.path.join(BIN_DIR, f"blueman-sendto --delete --device={device_address}"), paths=[tempfile.name])
 
 
 def send_note(device: Device, parent: Gtk.Window) -> None:

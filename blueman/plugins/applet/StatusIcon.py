@@ -1,7 +1,10 @@
 from gettext import gettext as _
 from typing import Optional, Tuple, List
+import os
 
 from gi.repository import GObject, GLib, Gio
+
+from blueman.Constants import BIN_DIR
 from blueman.Functions import launch
 from blueman.main.PluginManager import PluginManager
 from blueman.plugins.AppletPlugin import AppletPlugin
@@ -103,7 +106,7 @@ class StatusIcon(AppletPlugin, GObject.GObject):
     def on_manager_state_changed(self, state: bool) -> None:
         self.query_visibility()
         if state:
-            launch('blueman-tray', icon_name='blueman', sn=False)
+            launch(os.path.join(BIN_DIR, 'blueman-tray'), icon_name='blueman', sn=False)
 
     def _on_plugins_changed(self, _plugins: PluginManager, _name: str) -> None:
         implementations = self._get_status_icon_implementations()
@@ -111,7 +114,7 @@ class StatusIcon(AppletPlugin, GObject.GObject):
             self._implementations = implementations
 
         if self.parent.manager_state:
-            launch('blueman-tray', icon_name='blueman', sn=False)
+            launch(os.path.join(BIN_DIR, 'blueman-tray'), icon_name='blueman', sn=False)
 
     def _get_status_icon_implementations(self) -> List[str]:
         return [implementation for implementation, _ in sorted(

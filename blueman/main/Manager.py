@@ -1,5 +1,6 @@
 import logging
 import signal
+import os
 from gettext import gettext as _
 from typing import Optional, Any, Tuple
 
@@ -7,6 +8,7 @@ from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device
 from blueman.bluez.Manager import Manager
 from blueman.bluez.errors import DBusNoSuchAdapterError
+from blueman.Constants import BIN_DIR
 from blueman.Functions import *
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 from blueman.gui.manager.ManagerToolbar import ManagerToolbar
@@ -264,8 +266,8 @@ class Blueman(Gtk.Application):
         device.pair(error_handler=error_handler)
 
     @staticmethod
-    def adapter_properties() -> None:
-        launch("blueman-adapters", name=_("Adapter Preferences"))
+    def adapter_properties(self) -> None:
+        launch(os.path.join(BIN_DIR, "blueman-adapters"), name=_("Adapter Preferences"))
 
     @staticmethod
     def toggle_trust(device: Device) -> None:
@@ -280,7 +282,8 @@ class Blueman(Gtk.Application):
 
         assert adapter
 
-        command = f"blueman-sendto --source={adapter['Address']} --device={device['Address']}"
+        command = os.path.join(self.settings.bindir, f"blueman-sendto --source={adapter['Address']}"
+                                                     f" --device={device['Address']}")
         launch(command, name=_("File Sender"))
 
     def remove(self, device: Device) -> None:

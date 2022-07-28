@@ -1,5 +1,6 @@
 from gettext import gettext as _
 import logging
+import os
 from typing import Dict, Tuple, TYPE_CHECKING, Any, Optional, Sequence
 
 from blueman.bluez.Adapter import Adapter
@@ -8,7 +9,7 @@ from blueman.bluez.Manager import Manager
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.gui.CommonUi import show_about_dialog
-from blueman.Constants import WEBSITE
+from blueman.Constants import WEBSITE, BIN_DIR
 from blueman.Functions import create_menuitem, launch, adapter_path_to_name
 
 import gi
@@ -46,7 +47,7 @@ class ManagerMenu:
         report_item.show()
         help_menu.append(report_item)
 
-        report_item.connect("activate", lambda x: launch(f"xdg-open {WEBSITE}/issues"))
+        report_item.connect("activate", lambda x: launch(os.path.join(BIN_DIR, f"xdg-open {WEBSITE}/issues")))
 
         sep = Gtk.SeparatorMenuItem()
         sep.show()
@@ -130,7 +131,8 @@ class ManagerMenu:
         item_plugins.connect('activate', self._on_plugin_dialog_activate)
 
         item_services = create_menuitem(_("_Local Services") + "…", "document-properties-symbolic")
-        item_services.connect('activate', lambda *args: launch("blueman-services", name=_("Service Preferences")))
+        item_services.connect('activate', lambda *args: launch(os.path.join(BIN_DIR, "blueman-services"),
+                                                               name=_("Service Preferences")))
         view_menu.append(item_services)
         item_services.show()
 

@@ -10,6 +10,7 @@ from blueman.bluez.obex.AgentManager import AgentManager
 from blueman.bluez.obex.Manager import Manager
 from blueman.bluez.obex.Transfer import Transfer
 from blueman.bluez.obex.Session import Session
+from blueman.Constants import BIN_DIR
 from blueman.Functions import launch
 from blueman.gui.Notification import Notification, _NotificationBubble, _NotificationDialog
 from blueman.main.Applet import BluemanApplet
@@ -271,7 +272,7 @@ class TransferService(AppletPlugin):
             def on_open(_action: str) -> None:
                 self._notification = None
                 logging.info("open")
-                launch("xdg-open", paths=[path], system=True)
+                launch(os.path.expanduser("xdg-open"), paths=[path])
 
             n.add_action("open", name, on_open)
 

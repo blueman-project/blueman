@@ -1,6 +1,8 @@
 from gettext import gettext as _
 from typing import Optional
+import os
 
+from blueman.Constants import BIN_DIR
 from blueman.Functions import launch
 from blueman.main.DBusProxies import ManagerService
 from blueman.plugins.AppletPlugin import AppletPlugin
@@ -79,10 +81,10 @@ class StandardItems(AppletPlugin, PowerStateListener):
         m.startstop()
 
     def on_adapters(self) -> None:
-        launch("blueman-adapters", name=_("Adapter Preferences"))
+        launch(os.path.join(BIN_DIR, "blueman-adapters"), name=_("Adapter Preferences"))
 
     def on_local_services(self) -> None:
-        launch("blueman-services", name=_("Service Preferences"))
+        launch(os.path.join(BIN_DIR, "blueman-services"), name=_("Service Preferences"))
 
     def on_about(self) -> None:
         about = show_about_dialog("Blueman " + _("applet"), run=False)
