@@ -32,7 +32,7 @@ if TYPE_CHECKING:
 
 
 class ManagerDeviceList(DeviceList):
-    def __init__(self, adapter: Optional[str] = None, inst: Optional["Blueman"] = None) -> None:
+    def __init__(self, inst: "Blueman", adapter: Optional[str] = None) -> None:
         cr = Gtk.CellRendererText()
         cr.props.ellipsize = Pango.EllipsizeMode.END
         tabledata: List[ListDataDict] = [
@@ -193,9 +193,6 @@ class ManagerDeviceList(DeviceList):
             return False
 
     def _on_popup_menu(self, _widget: Gtk.Widget) -> bool:
-        if self.Blueman is None:
-            return False
-
         if self.menu is None:
             self.menu = ManagerDeviceMenu(self.Blueman)
 
@@ -223,9 +220,6 @@ class ManagerDeviceList(DeviceList):
         assert childpath is not None
         row = self.get(childpath, "device", "connected")
         if not row:
-            return False
-
-        if self.Blueman is None:
             return False
 
         if self.menu is None:
