@@ -94,12 +94,13 @@ class StatusNotifierItemService(DbusService):
     Category = "Hardware"
     Id = "blueman"
     Title = "blueman"
+    ItemIsMenu = False
 
     def __init__(self, icon_name: str, on_activate_status_icon: Callable[[], None],
                  on_activate_menu_item: "MenuItemActivator") -> None:
         super().__init__(None, "org.kde.StatusNotifierItem", "/org/blueman/sni", Gio.BusType.SESSION,
                          {"Category": "s", "Id": "s", "IconName": "s", "Status": "s", "Title": "s",
-                          "ToolTip": "(sa(iiay)ss)", "Menu": "o"})
+                          "ToolTip": "(sa(iiay)ss)", "Menu": "o", "ItemIsMenu": "b"})
         self.add_method("Activate", ("i", "i"), "", lambda x, y: on_activate_status_icon())
 
         self.menu = MenuService(on_activate_menu_item)
