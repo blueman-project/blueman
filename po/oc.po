@@ -14,16 +14,16 @@ msgstr ""
 "Project-Id-Version: blueman 2.2\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2022-07-05 14:08+0200\n"
-"PO-Revision-Date: 2022-06-20 09:12+0000\n"
+"PO-Revision-Date: 2022-07-23 20:25+0000\n"
 "Last-Translator: Quentin PAGÈS <quentinantonin@free.fr>\n"
-"Language-Team: Occitan <https://hosted.weblate.org/projects/blueman/blueman/"
-"oc/>\n"
+"Language-Team: Occitan <https://hosted.weblate.org/projects/blueman/2-3/oc/"
+">\n"
 "Language: oc\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.13.1-dev\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -134,15 +134,13 @@ msgstr "_Reïnicializar"
 
 #: data/ui/rename-device.ui:40 data/ui/note.ui:26 blueman/main/Sendto.py:235
 #: blueman/gui/DeviceSelectorDialog.py:17
-#, fuzzy
-#| msgid "Cancelling"
 msgid "_Cancel"
-msgstr "Anullacion"
+msgstr "_Anullar"
 
 #: data/ui/rename-device.ui:54 data/ui/note.ui:41
 #: blueman/gui/DeviceSelectorDialog.py:17
 msgid "_OK"
-msgstr ""
+msgstr "_Acceptar"
 
 #: data/ui/services-network.ui:37
 msgid "Network Access Point (NAP)"
@@ -330,8 +328,6 @@ msgid "Adapter"
 msgstr "Adaptador"
 
 #: blueman/main/Manager.py:63
-#, fuzzy
-#| msgid "Bluetooth Device"
 msgid "Bluetooth Devices"
 msgstr "Periferic Bluetooth"
 
@@ -373,7 +369,7 @@ msgstr "Transferiment de fichièr per Bluetooth"
 
 #: blueman/main/Sendto.py:42
 msgid "_Stop"
-msgstr ""
+msgstr "_Atudar"
 
 #: blueman/main/Sendto.py:57 blueman/gui/manager/ManagerProgressbar.py:27
 msgid "Connecting"
@@ -613,20 +609,16 @@ msgid "Uncategorized"
 msgstr "Sens categoria"
 
 #: blueman/gui/manager/ManagerDeviceList.py:544
-#, fuzzy
-#| msgid "Trust"
 msgid "Trusted"
-msgstr "Aprovacion"
+msgstr "Fisable"
 
 #: blueman/gui/manager/ManagerDeviceList.py:546
-#, fuzzy
-#| msgid "Pair"
 msgid "Paired"
-msgstr "Associar"
+msgstr "Associat"
 
 #: blueman/gui/manager/ManagerDeviceList.py:548
 msgid "Blocked"
-msgstr ""
+msgstr "Blocat"
 
 #: blueman/gui/manager/ManagerDeviceList.py:571
 msgid "<b>Connected</b>"
@@ -734,20 +726,16 @@ msgid "Connection Failed: "
 msgstr "La connexion a pas foncionat : "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:287
-#, fuzzy
-#| msgid "_<b>_Connect</b>"
 msgid "<b>_Connect</b>"
-msgstr "_<b>Connexion</b>"
+msgstr "<b>Connectar</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:289
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr "Connècta los perfils d’autoconnexion font A2DP, sortida A2DP e HID"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:293
-#, fuzzy
-#| msgid "_<b>Disconnect</b>"
 msgid "<b>_Disconnect</b>"
-msgstr "_<b>Desconnexion</b>"
+msgstr "<b>Desconnectar</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:294
 msgid "Forcefully disconnect the device"
@@ -783,15 +771,15 @@ msgstr "_Quitar de fisar"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:378
 msgid "_Block"
-msgstr ""
+msgstr "_Blocar"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:383
 msgid "_Unblock"
-msgstr ""
+msgstr "_Desblocar"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:387
 msgid "Block/Unblock this device"
-msgstr ""
+msgstr "Blocar/Desblocar aqueste periferic"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:407
 msgid "R_ename device…"
@@ -957,8 +945,6 @@ msgstr "Sens fial"
 
 #. translators: device class
 #: blueman/DeviceClass.py:52
-#, fuzzy
-#| msgid "Smart phone"
 msgid "Smartphone"
 msgstr "Telefòn intelligent"
 
@@ -970,7 +956,7 @@ msgstr "Modem"
 #. translators: device class
 #: blueman/DeviceClass.py:56
 msgid "ISDN"
-msgstr ""
+msgstr "Numeris"
 
 #. translators: device class
 #: blueman/DeviceClass.py:61
@@ -979,45 +965,33 @@ msgstr "Plenament"
 
 #. translators: device class
 #: blueman/DeviceClass.py:63
-#, fuzzy
-#| msgid "1-17 percent"
 msgid "1–17 percent"
-msgstr "1-17 per cent"
+msgstr "1–17 per cent"
 
 #. translators: device class
 #: blueman/DeviceClass.py:65
-#, fuzzy
-#| msgid "17-33 percent"
 msgid "17–33 percent"
-msgstr "17-33 per cent"
+msgstr "17–33 per cent"
 
 #. translators: device class
 #: blueman/DeviceClass.py:67
-#, fuzzy
-#| msgid "33-50 percent"
 msgid "33–50 percent"
-msgstr "33-50 per cent"
+msgstr "33–50 per cent"
 
 #. translators: device class
 #: blueman/DeviceClass.py:69
-#, fuzzy
-#| msgid "50-67 percent"
 msgid "50–67 percent"
-msgstr "50-67 per cent"
+msgstr "50–67 per cent"
 
 #. translators: device class
 #: blueman/DeviceClass.py:71
-#, fuzzy
-#| msgid "67-83 percent"
 msgid "67–83 percent"
-msgstr "67-83 per cent"
+msgstr "67–83 per cent"
 
 #. translators: device class
 #: blueman/DeviceClass.py:73
-#, fuzzy
-#| msgid "83-99 percent"
 msgid "83–99 percent"
-msgstr "83-99 per cent"
+msgstr "83–99 per cent"
 
 #. translators: device class
 #: blueman/DeviceClass.py:75
@@ -1066,15 +1040,13 @@ msgstr "Descodador numeric per television"
 
 #. translators: device class
 #: blueman/DeviceClass.py:100
-#, fuzzy
-#| msgid "Hifi audio"
 msgid "Hi-Fi audio"
-msgstr "Lector Hifi"
+msgstr "Lector Hi-Fi"
 
 #. translators: device class
 #: blueman/DeviceClass.py:102
 msgid "VCR"
-msgstr ""
+msgstr "Magnetoscòpi"
 
 #. translators: device class
 #: blueman/DeviceClass.py:104
@@ -1411,11 +1383,11 @@ msgstr "Aparelh d’afichatge de localizacion e navigacion"
 
 #: blueman/DeviceClass.py:226
 msgid "Location Pod"
-msgstr ""
+msgstr "Localizador"
 
 #: blueman/DeviceClass.py:227
 msgid "Location and Navigation Pod"
-msgstr ""
+msgstr "Localizador e navegador"
 
 #: blueman/Sdp.py:88
 msgid "SDP"
@@ -1487,7 +1459,7 @@ msgstr ""
 
 #: blueman/Sdp.py:105
 msgid "Hardcopy Notification"
-msgstr ""
+msgstr "Notificacion d’impression"
 
 #: blueman/Sdp.py:106
 msgid "AVCTP"
@@ -1563,7 +1535,7 @@ msgstr "Font àudio"
 
 #: blueman/Sdp.py:126
 msgid "Audio Sink"
-msgstr ""
+msgstr "Receptor àudio"
 
 #: blueman/Sdp.py:127
 msgid "Remote Control Target"
@@ -1623,7 +1595,7 @@ msgstr ""
 
 #: blueman/Sdp.py:141
 msgid "Imaging (BIP)"
-msgstr ""
+msgstr "Captacion d’imatges (BPP)"
 
 #: blueman/Sdp.py:142
 msgid "ImagingResponder (BIP)"
@@ -1631,7 +1603,7 @@ msgstr ""
 
 #: blueman/Sdp.py:143
 msgid "ImagingAutomaticArchive (BIP)"
-msgstr ""
+msgstr "Archiu automatic d’imatge (BIP)"
 
 #: blueman/Sdp.py:144
 msgid "ImagingReferencedObjects (BIP)"
@@ -1675,7 +1647,7 @@ msgstr ""
 
 #: blueman/Sdp.py:155
 msgid "Common ISDN Access (CIP)"
-msgstr ""
+msgstr "Accès comun Numeris (CIP)"
 
 #: blueman/Sdp.py:156
 msgid "VideoConferencingGW (VCP)"
@@ -1707,7 +1679,7 @@ msgstr ""
 
 #: blueman/Sdp.py:163
 msgid "Phonebook Access (PBAP)"
-msgstr ""
+msgstr "Accès a l’agenda (PBAP)"
 
 #: blueman/Sdp.py:165
 msgid "Message Access Server"
@@ -1787,7 +1759,7 @@ msgstr "Font vidèo"
 
 #: blueman/Sdp.py:184
 msgid "Video Sink"
-msgstr ""
+msgstr "Receptor vidèo"
 
 #: blueman/Sdp.py:185
 msgid "Video Distribution"
@@ -2087,7 +2059,7 @@ msgstr "Mostrar las informacions sul periferic"
 
 #: blueman/plugins/manager/Notes.py:51
 msgid "Send _note"
-msgstr ""
+msgstr "Enviar una _nòta"
 
 #: blueman/plugins/manager/Notes.py:52
 msgid "Send a text note"
@@ -2309,7 +2281,7 @@ msgstr "Fichièr %(0)s de %(1)s corrèctament recebut"
 
 #: blueman/plugins/applet/TransferService.py:308
 msgid "Open"
-msgstr ""
+msgstr "Dobrir"
 
 #: blueman/plugins/applet/TransferService.py:312
 msgid "Transfer failed"
@@ -2335,7 +2307,7 @@ msgstr[1] "%(files)d fichièrs recebuts en rèireplan"
 #: blueman/plugins/applet/TransferService.py:339
 #: blueman/plugins/applet/TransferService.py:347
 msgid "Open Location"
-msgstr ""
+msgstr "Dobrir posicion"
 
 #: blueman/plugins/applet/TransferService.py:343
 #, python-format

@@ -33,17 +33,16 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2022-07-05 14:08+0200\n"
-"PO-Revision-Date: 2022-06-15 15:12+0000\n"
+"PO-Revision-Date: 2022-07-30 11:41+0000\n"
 "Last-Translator: Vojtěch Otáhal <vojta.otahal@seznam.cz>\n"
-"Language-Team: Czech <https://hosted.weblate.org/projects/blueman/blueman/cs/"
-">\n"
+"Language-Team: Czech <https://hosted.weblate.org/projects/blueman/2-3/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
 "<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
-"X-Generator: Weblate 4.13-dev\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -62,9 +61,8 @@ msgid "Temporarily visible"
 msgstr "Dočasně viditelné"
 
 #: data/ui/adapters-tab.ui:110
-#, fuzzy
 msgid "<b>Name</b>"
-msgstr "<b>Spárováno</b>"
+msgstr "<b>Název</b>"
 
 #: data/ui/applet-passkey.ui:8
 msgid "Pairing request"
@@ -155,15 +153,13 @@ msgstr "Reset"
 
 #: data/ui/rename-device.ui:40 data/ui/note.ui:26 blueman/main/Sendto.py:235
 #: blueman/gui/DeviceSelectorDialog.py:17
-#, fuzzy
-#| msgid "Cancelling"
 msgid "_Cancel"
-msgstr "Ruší se"
+msgstr "Zrušit"
 
 #: data/ui/rename-device.ui:54 data/ui/note.ui:41
 #: blueman/gui/DeviceSelectorDialog.py:17
 msgid "_OK"
-msgstr ""
+msgstr "_OK"
 
 #: data/ui/services-network.ui:37
 msgid "Network Access Point (NAP)"
@@ -391,7 +387,7 @@ msgstr "Přenos souboru pomocí Bluetooth"
 
 #: blueman/main/Sendto.py:42
 msgid "_Stop"
-msgstr ""
+msgstr "_Zastavit"
 
 #: blueman/main/Sendto.py:57 blueman/gui/manager/ManagerProgressbar.py:27
 msgid "Connecting"
@@ -520,7 +516,7 @@ msgstr "Lokální služby"
 
 #: blueman/main/Services.py:47
 msgid "_Apply"
-msgstr ""
+msgstr "_Použít"
 
 #: blueman/Functions.py:71
 msgid "Bluetooth Turned Off"
@@ -548,19 +544,19 @@ msgstr "Ne"
 
 #: blueman/Functions.py:181
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: blueman/Functions.py:184
 msgid "KB"
-msgstr ""
+msgstr "kB"
 
 #: blueman/Functions.py:187
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
 #: blueman/Functions.py:190
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: blueman/gui/manager/ManagerMenu.py:46
 msgid "_Report a Problem"
@@ -618,12 +614,10 @@ msgid "_Search"
 msgstr "_Hledat"
 
 #: blueman/gui/manager/ManagerMenu.py:156
-#, fuzzy
 msgid "_Preferences"
 msgstr "Předvolby adaptéru"
 
 #: blueman/gui/manager/ManagerMenu.py:165 blueman/plugins/applet/ExitItem.py:12
-#, fuzzy
 msgid "_Exit"
 msgstr "Ukončit"
 
@@ -632,21 +626,16 @@ msgstr "Ukončit"
 #: blueman/gui/manager/ManagerDeviceList.py:355 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
-#, fuzzy
 msgid "Uncategorized"
-msgstr "nekategorizováno"
+msgstr "Nekategorizováno"
 
 #: blueman/gui/manager/ManagerDeviceList.py:544
-#, fuzzy
-#| msgid "Trust"
 msgid "Trusted"
-msgstr "Důvěřovat"
+msgstr "Důvěryhodné"
 
 #: blueman/gui/manager/ManagerDeviceList.py:546
-#, fuzzy
-#| msgid "Pair"
 msgid "Paired"
-msgstr "Pár"
+msgstr "Spárované"
 
 #: blueman/gui/manager/ManagerDeviceList.py:548
 msgid "Blocked"
@@ -696,7 +685,7 @@ msgstr "<b>Kvalita spojení: %(lq)u%%</b>"
 #: blueman/gui/manager/ManagerDeviceList.py:607
 #, python-format
 msgid "Link Quality: %(lq)u%%"
-msgstr ""
+msgstr "Kvalita spojení: %(lq)u%%"
 
 #: blueman/gui/manager/ManagerDeviceList.py:611
 msgid "Low"
@@ -713,12 +702,12 @@ msgstr "Velmi vysoké"
 #: blueman/gui/manager/ManagerDeviceList.py:622
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
-msgstr ""
+msgstr "<b>Úroveň vysílacího výkonu: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:625
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
-msgstr ""
+msgstr "Úroveň vysílacího výkonu: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:131
 msgid "Success!"
@@ -745,21 +734,18 @@ msgid "Input/output error"
 msgstr "Chyba vstupu/výstupu"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:209
-#, fuzzy
 msgid "Device did not respond"
-msgstr "Zobrazit informace o zařízení"
+msgstr "Zařízení neodpovědělo"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:213
-#, fuzzy
 msgid "Resource temporarily unavailable"
-msgstr "Dočasně viditelné"
+msgstr "Prostředek dočasně nedostupný"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:218
 msgid "Connection Failed: "
 msgstr "Spojení se nezdařilo: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:287
-#, fuzzy
 msgid "<b>_Connect</b>"
 msgstr "<b>Připojit k:</b>"
 
@@ -768,8 +754,6 @@ msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr "Připojuje profily automatického připojení A2DP source, A2DP sink a HID"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:293
-#, fuzzy
-#| msgid "_<b>Disconnect</b>"
 msgid "<b>_Disconnect</b>"
 msgstr "_<b>Odpojit</b>"
 
@@ -786,12 +770,10 @@ msgid "<b>Disconnect:</b>"
 msgstr "<b>Odpojit:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:324
-#, fuzzy
 msgid "<b>Auto-connect:</b>"
-msgstr "<b>Odpojit:</b>"
+msgstr "<b>Automaticky připojit:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:343
-#, fuzzy
 msgid "Send a _File…"
 msgstr "Odeslat _soubor…"
 
@@ -816,10 +798,8 @@ msgid "_Unblock"
 msgstr "_Odblokovat"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:387
-#, fuzzy
-#| msgid "Send files to this device"
 msgid "Block/Unblock this device"
-msgstr "Odeslat soubory do tohoto zařízení"
+msgstr "Zablokovat/Odblokovat toto zařízení"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:407
 msgid "R_ename device…"
@@ -926,9 +906,8 @@ msgstr "Telefon"
 
 #. translators: device class
 #: blueman/DeviceClass.py:12
-#, fuzzy
 msgid "Access point"
-msgstr "Přístupový bod sítě"
+msgstr "Přístupový bod"
 
 #. translators: device class
 #: blueman/DeviceClass.py:14
@@ -957,27 +936,23 @@ msgstr "Hračka"
 
 #. translators: device class
 #: blueman/DeviceClass.py:31
-#, fuzzy
 msgid "Desktop"
-msgstr "desktop"
+msgstr "Stolní počítač"
 
 #. translators: device class
 #: blueman/DeviceClass.py:33
-#, fuzzy
 msgid "Server"
-msgstr "server"
+msgstr "Server"
 
 #. translators: device class
 #: blueman/DeviceClass.py:35
-#, fuzzy
 msgid "Laptop"
-msgstr "laptop"
+msgstr "Přenosný počítač"
 
 #. translators: device class
 #: blueman/DeviceClass.py:37
-#, fuzzy
 msgid "Handheld"
-msgstr "kapesní"
+msgstr "Přenosné zařízení"
 
 #. translators: device class
 #: blueman/DeviceClass.py:39
@@ -986,27 +961,23 @@ msgstr "Počítač do dlaně"
 
 #. translators: device class
 #: blueman/DeviceClass.py:48
-#, fuzzy
 msgid "Cellular"
-msgstr "mobilní"
+msgstr "Mobilní"
 
 #. translators: device class
 #: blueman/DeviceClass.py:50
-#, fuzzy
 msgid "Cordless"
-msgstr "bezdrátový"
+msgstr "Bezdrátový"
 
 #. translators: device class
 #: blueman/DeviceClass.py:52
-#, fuzzy
 msgid "Smartphone"
-msgstr "smartphone"
+msgstr "Chytrý telefon"
 
 #. translators: device class
 #: blueman/DeviceClass.py:54
-#, fuzzy
 msgid "Modem"
-msgstr "modem"
+msgstr "Modem"
 
 #. translators: device class
 #: blueman/DeviceClass.py:56
@@ -1050,27 +1021,23 @@ msgstr "83-99 procent"
 
 #. translators: device class
 #: blueman/DeviceClass.py:75
-#, fuzzy
 msgid "Not available"
-msgstr "obexd je nedostupný"
+msgstr "Nedostupný"
 
 #. translators: device class
 #: blueman/DeviceClass.py:82 blueman/Sdp.py:123 blueman/Sdp.py:164
-#, fuzzy
 msgid "Headset"
-msgstr "headset"
+msgstr "Headset"
 
 #. translators: device class
 #: blueman/DeviceClass.py:84 blueman/Sdp.py:145
-#, fuzzy
 msgid "Handsfree"
-msgstr "handsfree"
+msgstr "Handsfree"
 
 #. translators: device class
 #: blueman/DeviceClass.py:88
-#, fuzzy
 msgid "Microphone"
-msgstr "mikrofon"
+msgstr "Mikrofon"
 
 #. translators: device class
 #: blueman/DeviceClass.py:90
@@ -1109,20 +1076,18 @@ msgstr "nahrávač videa"
 
 #. translators: device class
 #: blueman/DeviceClass.py:104
-#, fuzzy
 msgid "Video camera"
-msgstr "Zdroj zvuku"
+msgstr "Video kamera"
 
 #. translators: device class
 #: blueman/DeviceClass.py:106
 msgid "Camcorder"
-msgstr "kamera"
+msgstr "Kamera"
 
 #. translators: device class
 #: blueman/DeviceClass.py:108
-#, fuzzy
 msgid "Video monitor"
-msgstr "Zdroj zvuku"
+msgstr "Video monitor"
 
 #. translators: device class
 #: blueman/DeviceClass.py:110
@@ -1131,9 +1096,8 @@ msgstr "zobrazování videa a hlasitý poslech"
 
 #. translators: device class
 #: blueman/DeviceClass.py:112
-#, fuzzy
 msgid "Video conferencing"
-msgstr "Zdroj zvuku"
+msgstr "Video konference"
 
 #. translators: device class
 #: blueman/DeviceClass.py:116
@@ -1142,15 +1106,13 @@ msgstr "Hraní/hračka"
 
 #. translators: device class
 #: blueman/DeviceClass.py:123 blueman/DeviceClass.py:189
-#, fuzzy
 msgid "Keyboard"
-msgstr "klávesnice"
+msgstr "Klávesnice"
 
 #. translators: device class
 #: blueman/DeviceClass.py:125
-#, fuzzy
 msgid "Pointing"
-msgstr "bodování"
+msgstr "Ukazování"
 
 #. translators: device class
 #: blueman/DeviceClass.py:127
@@ -1228,77 +1190,64 @@ msgid "Game"
 msgstr "Hra"
 
 #: blueman/DeviceClass.py:169
-#, fuzzy
 msgid "Generic Phone"
-msgstr "Připojení"
+msgstr "Všeobecný telefon"
 
 #: blueman/DeviceClass.py:170
-#, fuzzy
 msgid "Generic Computer"
-msgstr "Připojení"
+msgstr "Všeobecný počítač"
 
 #: blueman/DeviceClass.py:171
-#, fuzzy
 msgid "Generic Watch"
-msgstr "Připojení"
+msgstr "Všeobecný hodinky"
 
 #: blueman/DeviceClass.py:172
 msgid "Watch: Sports Watch"
-msgstr "Hodinky: sportovní"
+msgstr "Hodinky: Sportovní"
 
 #: blueman/DeviceClass.py:173
-#, fuzzy
 msgid "Generic Clock"
-msgstr "Připojení"
+msgstr "Všeobecné hodiny"
 
 #: blueman/DeviceClass.py:174
-#, fuzzy
 msgid "Generic Display"
-msgstr "Přenos souboru pomocí Bluetooth"
+msgstr "Všeobecný displej"
 
 #: blueman/DeviceClass.py:175
-#, fuzzy
 msgid "Generic Remote Control"
-msgstr "Připojení"
+msgstr "Všeobecné dálkové ovládání"
 
 #: blueman/DeviceClass.py:176
-#, fuzzy
 msgid "Generic Eye-glasses"
-msgstr "Přenos souboru pomocí Bluetooth"
+msgstr "Všeobecné brýle"
 
 #: blueman/DeviceClass.py:177
-#, fuzzy
 msgid "Generic Tag"
-msgstr "Přenos souboru pomocí Bluetooth"
+msgstr "Obecná značka"
 
 #: blueman/DeviceClass.py:178
-#, fuzzy
 msgid "Generic Keyring"
-msgstr "Síťová skupina"
+msgstr "Všeobecná klíčenka"
 
 #: blueman/DeviceClass.py:179
-#, fuzzy
 msgid "Generic Media Player"
-msgstr "Přenos souboru pomocí Bluetooth"
+msgstr "Všeobecný přehrávač médií"
 
 #: blueman/DeviceClass.py:180
-#, fuzzy
 msgid "Generic Barcode Scanner"
-msgstr "Připojení"
+msgstr "Všeobecná čtečka čárových kódů"
 
 #: blueman/DeviceClass.py:181
-#, fuzzy
 msgid "Generic Thermometer"
-msgstr "Připojení"
+msgstr "Všeobecný teploměr"
 
 #: blueman/DeviceClass.py:182
 msgid "Thermometer: Ear"
 msgstr "Teploměr: ušní"
 
 #: blueman/DeviceClass.py:183
-#, fuzzy
 msgid "Generic Heart rate Sensor"
-msgstr "Přenos souboru pomocí Bluetooth"
+msgstr "Všeobecný senzor tepu"
 
 #: blueman/DeviceClass.py:184
 msgid "Heart Rate Sensor: Heart Rate Belt"
@@ -1318,7 +1267,7 @@ msgstr "Měřič krevního tlaku: zápěstí"
 
 #: blueman/DeviceClass.py:188
 msgid "Human Interface Device (HID)"
-msgstr ""
+msgstr "Zařízení pro lidské rozhraní (HID)"
 
 #: blueman/DeviceClass.py:190
 msgid "Mouse"
@@ -1326,11 +1275,11 @@ msgstr "Myš"
 
 #: blueman/DeviceClass.py:191
 msgid "Joystick"
-msgstr ""
+msgstr "Pákový ovladač"
 
 #: blueman/DeviceClass.py:192
 msgid "Gamepad"
-msgstr "Gamepad"
+msgstr "Herní ovladač"
 
 #: blueman/DeviceClass.py:193
 msgid "Digitizer Tablet"
@@ -1349,9 +1298,8 @@ msgid "Barcode Scanner"
 msgstr "Skener čárových kódů"
 
 #: blueman/DeviceClass.py:197
-#, fuzzy
 msgid "Generic Glucose Meter"
-msgstr "Připojení"
+msgstr "Všeobecný měřič glukózy"
 
 #: blueman/DeviceClass.py:198
 msgid "Generic: Running Walking Sensor"
@@ -1370,9 +1318,8 @@ msgid "Running Walking Sensor: On-Hip"
 msgstr "Senzor chůze/běhu: na boku"
 
 #: blueman/DeviceClass.py:202
-#, fuzzy
 msgid "Generic: Cycling"
-msgstr "Síťová skupina"
+msgstr "Všeobecné: Jízda na kole"
 
 #: blueman/DeviceClass.py:203
 msgid "Cycling: Cycling Computer"
@@ -1470,11 +1417,11 @@ msgstr ""
 
 #: blueman/Sdp.py:88
 msgid "SDP"
-msgstr ""
+msgstr "SDP protokol"
 
 #: blueman/Sdp.py:89
 msgid "UDP"
-msgstr ""
+msgstr "UDP protokol"
 
 #: blueman/Sdp.py:90
 msgid "RFCOMM"
@@ -1482,75 +1429,78 @@ msgstr "Rádiová komunikace"
 
 #: blueman/Sdp.py:91
 msgid "TCP"
-msgstr ""
+msgstr "TCP protokol"
 
 #: blueman/Sdp.py:92
 msgid "TCS-BIN"
-msgstr ""
+msgstr "TCS-BIN"
 
 #: blueman/Sdp.py:93
 msgid "TCS-AT"
-msgstr ""
+msgstr "TCS-AT"
 
 #: blueman/Sdp.py:94
 msgid "ATT"
-msgstr ""
+msgstr "ATT"
 
 #: blueman/Sdp.py:95
 msgid "OBEX"
-msgstr ""
+msgstr "OBEX"
 
 #: blueman/Sdp.py:96
 msgid "IP"
-msgstr ""
+msgstr "IP"
 
 #: blueman/Sdp.py:97
 msgid "FTP"
-msgstr ""
+msgstr "FTP"
 
 #: blueman/Sdp.py:98
 msgid "HTTP"
-msgstr ""
+msgstr "HTTP"
 
 #: blueman/Sdp.py:99
 msgid "WSP"
-msgstr ""
+msgstr "WSP"
 
 #: blueman/Sdp.py:100
 msgid "BNEP"
-msgstr ""
+msgstr "BNEP"
 
 #: blueman/Sdp.py:101
 msgid "UPnP/ESDP"
-msgstr ""
+msgstr "UPnP/ESDP"
 
 #: blueman/Sdp.py:102
 msgid "HIDP"
-msgstr ""
+msgstr "HIDP"
 
 #: blueman/Sdp.py:103
+#, fuzzy
 msgid "Hardcopy Control Channel"
-msgstr ""
+msgstr "Řídicí kanál pevných kopií"
 
 #: blueman/Sdp.py:104
+#, fuzzy
 msgid "Hardcopy Data Channel"
-msgstr ""
+msgstr "Datový kanál pro tištěnou podobu"
 
 #: blueman/Sdp.py:105
+#, fuzzy
 msgid "Hardcopy Notification"
-msgstr ""
+msgstr "Oznámení v tištěné podobě"
 
 #: blueman/Sdp.py:106
 msgid "AVCTP"
-msgstr ""
+msgstr "AVCTP"
 
 #: blueman/Sdp.py:107
 msgid "AVDTP"
-msgstr ""
+msgstr "AVDTP"
 
 #: blueman/Sdp.py:108
 msgid "CMTP"
-msgstr ""
+msgstr "CMTP"
 
 #: blueman/Sdp.py:109
 msgid "UDI_C-Plane"
@@ -1577,9 +1527,8 @@ msgid "Public Browse Group"
 msgstr ""
 
 #: blueman/Sdp.py:116
-#, fuzzy
 msgid "Serial Port"
-msgstr "Sériové porty"
+msgstr "Sériový port"
 
 #: blueman/Sdp.py:117
 msgid "LAN Access Using PPP"
@@ -1640,15 +1589,15 @@ msgstr "Interkom"
 
 #: blueman/Sdp.py:132
 msgid "Fax"
-msgstr ""
+msgstr "Fax"
 
 #: blueman/Sdp.py:133
 msgid "Headset Audio Gateway"
-msgstr ""
+msgstr "Audio brána pro headset"
 
 #: blueman/Sdp.py:134
 msgid "WAP"
-msgstr ""
+msgstr "WAP"
 
 #: blueman/Sdp.py:135
 msgid "WAP Client"
@@ -1656,7 +1605,7 @@ msgstr "WAP klient"
 
 #: blueman/Sdp.py:136
 msgid "PANU"
-msgstr ""
+msgstr "PANU"
 
 #: blueman/Sdp.py:137
 msgid "Network Access Point"
@@ -1668,11 +1617,11 @@ msgstr "Síťová skupina"
 
 #: blueman/Sdp.py:139
 msgid "DirectPrinting (BPP)"
-msgstr ""
+msgstr "Přímý tisk (BPP)"
 
 #: blueman/Sdp.py:140
 msgid "ReferencePrinting (BPP)"
-msgstr ""
+msgstr "Referenční tisk (BPP)"
 
 #: blueman/Sdp.py:141
 msgid "Imaging (BIP)"
@@ -1769,7 +1718,7 @@ msgstr "Server pro přístup ke zprávám"
 
 #: blueman/Sdp.py:166
 msgid "Message Notification Server"
-msgstr ""
+msgstr "Server oznámení zpráv"
 
 #: blueman/Sdp.py:167
 #, fuzzy
@@ -1794,7 +1743,7 @@ msgstr "3D brýle"
 
 #: blueman/Sdp.py:172
 msgid "3D Synchronization (3DSP)"
-msgstr ""
+msgstr "3D Synchronizace (3DSP)"
 
 #: blueman/Sdp.py:173
 msgid "Multi-Profile Specification (MPS) Profile"
@@ -1821,14 +1770,12 @@ msgid "PnP Information"
 msgstr "Informace o PnP"
 
 #: blueman/Sdp.py:179
-#, fuzzy
 msgid "Generic Networking"
-msgstr "Síťová skupina"
+msgstr "Obecné sítě"
 
 #: blueman/Sdp.py:180
-#, fuzzy
 msgid "Generic FileTransfer"
-msgstr "Přenos souboru pomocí Bluetooth"
+msgstr "Obecný přenos souborů"
 
 #: blueman/Sdp.py:181
 msgid "Generic Audio"
@@ -1839,14 +1786,12 @@ msgid "Generic Telephony"
 msgstr "Obecná telefonie"
 
 #: blueman/Sdp.py:183
-#, fuzzy
 msgid "Video Source"
-msgstr "Zdroj zvuku"
+msgstr "Zdroj videa"
 
 #: blueman/Sdp.py:184
-#, fuzzy
 msgid "Video Sink"
-msgstr "Přenášení zvuku"
+msgstr "Video kanál"
 
 #: blueman/Sdp.py:185
 msgid "Video Distribution"

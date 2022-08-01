@@ -4,19 +4,23 @@
 # Translators:
 # Арангел Ангов <ufo@linux.net.mk>
 # exoos <mince.lesovski@gmail.com>, 2014
+# Kristijan Fremen Velkovski <me@krisfremen.com>, 2022.
+# Christopher Schramm <github@cschramm.eu>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2022-07-05 14:08+0200\n"
-"PO-Revision-Date: 2020-04-14 10:14+0000\n"
-"Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
-"Language-Team: Macedonian (http://www.transifex.com/mate/MATE/language/mk/)\n"
+"PO-Revision-Date: 2022-07-30 11:41+0000\n"
+"Last-Translator: Christopher Schramm <github@cschramm.eu>\n"
+"Language-Team: Macedonian <https://hosted.weblate.org/projects/blueman/2-3/"
+"mk/>\n"
 "Language: mk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -35,9 +39,8 @@ msgid "Temporarily visible"
 msgstr "Привремено видливо"
 
 #: data/ui/adapters-tab.ui:110
-#, fuzzy
 msgid "<b>Name</b>"
-msgstr "<b>Пријателско име</b>"
+msgstr "<b>Име</b>"
 
 #: data/ui/applet-passkey.ui:8
 msgid "Pairing request"
@@ -128,10 +131,8 @@ msgstr "_Ресетирај"
 
 #: data/ui/rename-device.ui:40 data/ui/note.ui:26 blueman/main/Sendto.py:235
 #: blueman/gui/DeviceSelectorDialog.py:17
-#, fuzzy
-#| msgid "Cancelling"
 msgid "_Cancel"
-msgstr "Откажување"
+msgstr "_Откажи"
 
 #: data/ui/rename-device.ui:54 data/ui/note.ui:41
 #: blueman/gui/DeviceSelectorDialog.py:17
@@ -311,11 +312,11 @@ msgid "Always"
 msgstr "Секогаш"
 
 #: blueman/main/Adapter.py:157 blueman/main/Sendto.py:189
-#, fuzzy, python-format
+#, python-format
 msgid "%(minutes)d Minute"
 msgid_plural "%(minutes)d Minutes"
-msgstr[0] "%d Минута"
-msgstr[1] "%d Минути"
+msgstr[0] "%(minutes)d Минута"
+msgstr[1] "%(minutes)d Минути"
 
 #: blueman/main/Adapter.py:222
 msgid "Adapter"
@@ -593,30 +594,24 @@ msgstr ""
 #: blueman/gui/manager/ManagerDeviceList.py:355 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
-#, fuzzy
 msgid "Uncategorized"
 msgstr "Некатегоризирано"
 
 #: blueman/gui/manager/ManagerDeviceList.py:544
-#, fuzzy
-#| msgid "Trust"
 msgid "Trusted"
-msgstr "Сигурен"
+msgstr "Доверлив"
 
 #: blueman/gui/manager/ManagerDeviceList.py:546
-#, fuzzy
-#| msgid "Pair"
 msgid "Paired"
-msgstr "Спојување"
+msgstr "Споен"
 
 #: blueman/gui/manager/ManagerDeviceList.py:548
 msgid "Blocked"
 msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceList.py:571
-#, fuzzy
 msgid "<b>Connected</b>"
-msgstr "<b>Поврзи се со:</b>"
+msgstr "<b>Поврзени:</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:586
 msgid "Poor"
@@ -691,9 +686,8 @@ msgid "Failed"
 msgstr "Неуспешно"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:144
-#, fuzzy
 msgid "Connecting…"
-msgstr "Поврзување"
+msgstr "Поврзување…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:180
 msgid "Disconnection Failed: "
@@ -712,28 +706,24 @@ msgid "Device did not respond"
 msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:213
-#, fuzzy
 msgid "Resource temporarily unavailable"
-msgstr "Привремено видливо"
+msgstr "Ресурсот е привремено недостапен"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:218
 msgid "Connection Failed: "
 msgstr "Врската е неуспешна:"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:287
-#, fuzzy
 msgid "<b>_Connect</b>"
-msgstr "<b>Поврзи се со:</b>"
+msgstr "<b>_Поврзи се со:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:289
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:293
-#, fuzzy
-#| msgid "<b>Disconnect:</b>"
 msgid "<b>_Disconnect</b>"
-msgstr "<b>Одврзување:</b>"
+msgstr "<b>_Одврзи:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:294
 msgid "Forcefully disconnect the device"
@@ -748,14 +738,12 @@ msgid "<b>Disconnect:</b>"
 msgstr "<b>Одврзување:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:324
-#, fuzzy
 msgid "<b>Auto-connect:</b>"
-msgstr "<b>Одврзување:</b>"
+msgstr "<b>Автоматско поврзување:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:343
-#, fuzzy
 msgid "Send a _File…"
-msgstr "Испрати _датотека..."
+msgstr "Испрати _фајл…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:356
 msgid "_Pair"
@@ -778,19 +766,16 @@ msgid "_Unblock"
 msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:387
-#, fuzzy
-#| msgid "Send files to this device"
 msgid "Block/Unblock this device"
-msgstr "Испрати датотеки на овој уред"
+msgstr "Блокирај/Одблокирај го овој уред"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:407
 msgid "R_ename device…"
 msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:416
-#, fuzzy
 msgid "_Remove…"
-msgstr "Отстрани"
+msgstr "_Отстрани…"
 
 #: blueman/gui/manager/ManagerProgressbar.py:44
 msgid "Cancel Operation"
@@ -869,9 +854,8 @@ msgid "Adapter selection"
 msgstr "Одбирање на адаптер"
 
 #: blueman/gui/DeviceSelectorWidget.py:45
-#, fuzzy
 msgid "Discovering…"
-msgstr "Одврзување..."
+msgstr "Откривање…"
 
 #. translators: device class
 #: blueman/DeviceClass.py:6
@@ -2367,8 +2351,8 @@ msgstr "Датотеките се примени"
 #, fuzzy, python-format
 msgid "Received %(files)d file in the background"
 msgid_plural "Received %(files)d files in the background"
-msgstr[0] "Датотеката %d е примена во позадина"
-msgstr[1] "Датотеките %d се примени во позадина"
+msgstr[0] "Датотеката %(files)d е примена во позадина"
+msgstr[1] "Датотеките %(files)d се примени во позадина"
 
 #: blueman/plugins/applet/TransferService.py:339
 #: blueman/plugins/applet/TransferService.py:347
@@ -2379,8 +2363,8 @@ msgstr ""
 #, fuzzy, python-format
 msgid "Received %(files)d more file in the background"
 msgid_plural "Received %(files)d more files in the background"
-msgstr[0] "Примена %d повеќе датотека во позадина"
-msgstr[1] "Примени се %d повеќе датотеки во позадина"
+msgstr[0] "Примена %(files)d повеќе датотека во позадина"
+msgstr[1] "Примени се %(files)d повеќе датотеки во позадина"
 
 #: blueman/plugins/applet/KillSwitch.py:37
 msgid ""
@@ -2460,8 +2444,8 @@ msgstr "Блутутот е активен"
 #, fuzzy, python-format
 msgid "<b>%(connections)d Active Connection</b>"
 msgid_plural "<b>%(connections)d Active Connections</b>"
-msgstr[0] "<b>%d Активна врска</b>"
-msgstr[1] "<b>%d Активни врски</b>"
+msgstr[0] "<b>%(connections)d Активна врска</b>"
+msgstr[1] "<b>%(connections)d Активни врски</b>"
 
 #: blueman/plugins/applet/ShowConnected.py:73
 #: blueman/plugins/applet/PowerManager.py:193
@@ -2473,9 +2457,9 @@ msgid "Adds disconnect menu items"
 msgstr ""
 
 #: blueman/plugins/applet/DisconnectItems.py:40
-#, fuzzy, python-format
+#, python-format
 msgid "Disconnect %s"
-msgstr "Одврзување..."
+msgstr ""
 
 #: blueman/plugins/applet/DiscvManager.py:16
 msgid ""

@@ -25,16 +25,16 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2022-07-05 14:08+0200\n"
-"PO-Revision-Date: 2022-02-01 22:27+0000\n"
+"PO-Revision-Date: 2022-07-26 08:44+0000\n"
 "Last-Translator: Kimmo Kujansuu <mrkujansuu@gmail.com>\n"
-"Language-Team: Finnish <https://hosted.weblate.org/projects/blueman/blueman/"
-"fi/>\n"
+"Language-Team: Finnish <https://hosted.weblate.org/projects/blueman/2-3/fi/>"
+"\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.11-dev\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -53,9 +53,8 @@ msgid "Temporarily visible"
 msgstr "Toistaiseksi näkyvissä"
 
 #: data/ui/adapters-tab.ui:110
-#, fuzzy
 msgid "<b>Name</b>"
-msgstr "<b>Paritettu</b>"
+msgstr "<b>Nimi</b>"
 
 #: data/ui/applet-passkey.ui:8
 msgid "Pairing request"
@@ -146,15 +145,13 @@ msgstr "_Alusta"
 
 #: data/ui/rename-device.ui:40 data/ui/note.ui:26 blueman/main/Sendto.py:235
 #: blueman/gui/DeviceSelectorDialog.py:17
-#, fuzzy
-#| msgid "Cancelling"
 msgid "_Cancel"
-msgstr "Perutaan"
+msgstr "_Peruuta"
 
 #: data/ui/rename-device.ui:54 data/ui/note.ui:41
 #: blueman/gui/DeviceSelectorDialog.py:17
 msgid "_OK"
-msgstr ""
+msgstr "_OK"
 
 #: data/ui/services-network.ui:37
 msgid "Network Access Point (NAP)"
@@ -381,7 +378,7 @@ msgstr "Bluetooth-tiedostonsiirto"
 
 #: blueman/main/Sendto.py:42
 msgid "_Stop"
-msgstr ""
+msgstr "_Pysäytä"
 
 #: blueman/main/Sendto.py:57 blueman/gui/manager/ManagerProgressbar.py:27
 msgid "Connecting"
@@ -507,7 +504,7 @@ msgstr "Paikalliset palvelut"
 
 #: blueman/main/Services.py:47
 msgid "_Apply"
-msgstr ""
+msgstr "_Käytä"
 
 #: blueman/Functions.py:71
 msgid "Bluetooth Turned Off"
@@ -535,19 +532,19 @@ msgstr "Ei"
 
 #: blueman/Functions.py:181
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: blueman/Functions.py:184
 msgid "KB"
-msgstr ""
+msgstr "KB"
 
 #: blueman/Functions.py:187
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
 #: blueman/Functions.py:190
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: blueman/gui/manager/ManagerMenu.py:46
 msgid "_Report a Problem"
@@ -621,20 +618,16 @@ msgid "Uncategorized"
 msgstr "Luokittelematta"
 
 #: blueman/gui/manager/ManagerDeviceList.py:544
-#, fuzzy
-#| msgid "Trust"
 msgid "Trusted"
-msgstr "Aseta luottamus"
+msgstr "Luotettu"
 
 #: blueman/gui/manager/ManagerDeviceList.py:546
-#, fuzzy
-#| msgid "Pair"
 msgid "Paired"
-msgstr "Parita"
+msgstr "Paritettu"
 
 #: blueman/gui/manager/ManagerDeviceList.py:548
 msgid "Blocked"
-msgstr ""
+msgstr "Estetty"
 
 #: blueman/gui/manager/ManagerDeviceList.py:571
 msgid "<b>Connected</b>"
@@ -723,7 +716,7 @@ msgstr "Yhteyden katkaiseminen epäonnistui: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:204
 msgid "No audio endpoints registered"
-msgstr "Äänipäätepisteitä ei ole rekisteröity"
+msgstr "Audion päätepisteitä ei ole rekisteröity"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:207
 msgid "Input/output error"
@@ -742,20 +735,16 @@ msgid "Connection Failed: "
 msgstr "Yhteys epäonnistui: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:287
-#, fuzzy
-#| msgid "_<b>_Connect</b>"
 msgid "<b>_Connect</b>"
-msgstr "_<b>_Yhdistä</b>"
+msgstr "<b>_Yhdistä</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:289
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr "Yhdistää automaattisen yhteysprofiilin A2DP-lähde, A2DP-nielu ja HID"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:293
-#, fuzzy
-#| msgid "_<b>Disconnect</b>"
 msgid "<b>_Disconnect</b>"
-msgstr "_<b>Katkaise yhteys</b>"
+msgstr "<b>_Katkaise yhteys</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:294
 msgid "Forcefully disconnect the device"
@@ -791,17 +780,15 @@ msgstr "_Epäluotettava"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:378
 msgid "_Block"
-msgstr ""
+msgstr "_Esto"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:383
 msgid "_Unblock"
-msgstr ""
+msgstr "_Poista esto"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:387
-#, fuzzy
-#| msgid "Send files to this device"
 msgid "Block/Unblock this device"
-msgstr "Lähetä tiedostoja tähän laitteeseen"
+msgstr "Estä laite/poista esto"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:407
 msgid "R_ename device…"
@@ -975,10 +962,8 @@ msgstr "Langaton"
 
 #. translators: device class
 #: blueman/DeviceClass.py:52
-#, fuzzy
-#| msgid "Smart phone"
 msgid "Smartphone"
-msgstr "Älypuhelin"
+msgstr "Puhelin"
 
 #. translators: device class
 #: blueman/DeviceClass.py:54
@@ -988,7 +973,7 @@ msgstr "Modeemi"
 #. translators: device class
 #: blueman/DeviceClass.py:56
 msgid "ISDN"
-msgstr ""
+msgstr "ISDN"
 
 #. translators: device class
 #: blueman/DeviceClass.py:61
@@ -997,43 +982,31 @@ msgstr "Täysi"
 
 #. translators: device class
 #: blueman/DeviceClass.py:63
-#, fuzzy
-#| msgid "1-17 percent"
 msgid "1–17 percent"
 msgstr "1–17 prosenttia"
 
 #. translators: device class
 #: blueman/DeviceClass.py:65
-#, fuzzy
-#| msgid "17-33 percent"
 msgid "17–33 percent"
 msgstr "17–33 prosenttia"
 
 #. translators: device class
 #: blueman/DeviceClass.py:67
-#, fuzzy
-#| msgid "33-50 percent"
 msgid "33–50 percent"
 msgstr "33–50 prosenttia"
 
 #. translators: device class
 #: blueman/DeviceClass.py:69
-#, fuzzy
-#| msgid "50-67 percent"
 msgid "50–67 percent"
 msgstr "50–67 prosenttia"
 
 #. translators: device class
 #: blueman/DeviceClass.py:71
-#, fuzzy
-#| msgid "67-83 percent"
 msgid "67–83 percent"
 msgstr "67–83 prosenttia"
 
 #. translators: device class
 #: blueman/DeviceClass.py:73
-#, fuzzy
-#| msgid "83-99 percent"
 msgid "83–99 percent"
 msgstr "83–99 prosenttia"
 
@@ -1070,7 +1043,7 @@ msgstr "Kuulokkeet"
 #. translators: device class
 #: blueman/DeviceClass.py:94
 msgid "Portable audio"
-msgstr "Kannettava äänisoitin"
+msgstr "Kannettava äänentoisto"
 
 #. translators: device class
 #: blueman/DeviceClass.py:96
@@ -1084,15 +1057,13 @@ msgstr "Digiboksi"
 
 #. translators: device class
 #: blueman/DeviceClass.py:100
-#, fuzzy
-#| msgid "Hifi audio"
 msgid "Hi-Fi audio"
-msgstr "Hifi-ääni"
+msgstr "Hifi audio"
 
 #. translators: device class
 #: blueman/DeviceClass.py:102
 msgid "VCR"
-msgstr ""
+msgstr "VCR"
 
 #. translators: device class
 #: blueman/DeviceClass.py:104
@@ -1371,8 +1342,6 @@ msgid "Fingertip"
 msgstr "Sormenpää"
 
 #: blueman/DeviceClass.py:211
-#, fuzzy
-#| msgid "Wrist Worn"
 msgid "Wrist-Worn"
 msgstr "Ranteessa pidettävä"
 
@@ -1414,7 +1383,7 @@ msgstr "Insuliinikynä"
 
 #: blueman/DeviceClass.py:221
 msgid "Generic Medication Delivery"
-msgstr ""
+msgstr "Yleinen lääkkeiden toimitus"
 
 #. 55 - 80 reserved
 #: blueman/DeviceClass.py:223
@@ -1523,11 +1492,11 @@ msgstr "CMTP"
 
 #: blueman/Sdp.py:109
 msgid "UDI_C-Plane"
-msgstr ""
+msgstr "UDI_C-Plane"
 
 #: blueman/Sdp.py:110 blueman/Sdp.py:111
 msgid "Multi-Channel Adaptation Protocol (MCAP)"
-msgstr ""
+msgstr "Multi-Channel Adaptation Protocol (MCAP)"
 
 #: blueman/Sdp.py:112
 msgid "L2CAP"
@@ -1563,7 +1532,7 @@ msgstr "IrMC-synkronointi"
 
 #: blueman/Sdp.py:120
 msgid "OBEX Object Push"
-msgstr ""
+msgstr "OBEX-objektin ajo"
 
 #: blueman/Sdp.py:121
 msgid "OBEX File Transfer"
@@ -1571,7 +1540,7 @@ msgstr "OBEX-tiedostonsiirto"
 
 #: blueman/Sdp.py:122
 msgid "IrMC Sync Command"
-msgstr ""
+msgstr "IrMC-synkronointi komento"
 
 #: blueman/Sdp.py:124
 msgid "Cordless Telephony"
@@ -1655,7 +1624,7 @@ msgstr "KuvantaminenAutomaattinenArkisto (BIP)"
 
 #: blueman/Sdp.py:144
 msgid "ImagingReferencedObjects (BIP)"
-msgstr ""
+msgstr "KuvantaminenViittauksetObjektit (BIP)"
 
 #: blueman/Sdp.py:146
 msgid "Handsfree Audio Gateway"
@@ -1663,11 +1632,11 @@ msgstr "Handsfree ääniyhdyskäytävä"
 
 #: blueman/Sdp.py:147
 msgid "DirectPrintingReferenceObjectsService (BPP)"
-msgstr ""
+msgstr "SuoraTulostusViiteObjektiPalvelu (BPP)"
 
 #: blueman/Sdp.py:148
 msgid "ReflectedUI (BPP)"
-msgstr ""
+msgstr "Heijastunut käyttöliittymä (BPP)"
 
 #: blueman/Sdp.py:149
 msgid "Basic Printing (BPP)"
@@ -1887,19 +1856,19 @@ msgstr "Verenpaine"
 
 #: blueman/Sdp.py:204
 msgid "Alert Notification Service"
-msgstr ""
+msgstr "Hälytyksen ilmoituspalvelu"
 
 #: blueman/Sdp.py:205
 msgid "Human Interface Device"
-msgstr ""
+msgstr "Ohjauslaite"
 
 #: blueman/Sdp.py:206
 msgid "Scan Parameters"
-msgstr ""
+msgstr "Skannauksen parametrit"
 
 #: blueman/Sdp.py:207
 msgid "Running Speed and Cadence"
-msgstr ""
+msgstr "Ajonaikainen nopeus ja rytmi"
 
 #: blueman/Sdp.py:208
 msgid "Automation IO"
@@ -1907,7 +1876,7 @@ msgstr "Automaatio IO"
 
 #: blueman/Sdp.py:209
 msgid "Cycling Speed and Cadence"
-msgstr ""
+msgstr "Pyöräilyn nopeus ja poljinnopeus"
 
 #: blueman/Sdp.py:210
 msgid "Cycling Power"
@@ -1919,11 +1888,11 @@ msgstr "Sijainti ja navigointi"
 
 #: blueman/Sdp.py:212
 msgid "Environmental Sensing"
-msgstr ""
+msgstr "Ympäristön tunnistus"
 
 #: blueman/Sdp.py:213
 msgid "Body Composition"
-msgstr ""
+msgstr "Kehon koostumus"
 
 #: blueman/Sdp.py:214
 msgid "User Data"
@@ -1931,7 +1900,7 @@ msgstr "Käyttäjätiedot"
 
 #: blueman/Sdp.py:215
 msgid "Weight Scale"
-msgstr ""
+msgstr "Painoasteikko"
 
 #: blueman/Sdp.py:216
 msgid "Bond Management"
@@ -1939,15 +1908,15 @@ msgstr ""
 
 #: blueman/Sdp.py:217
 msgid "Continuous Glucose Monitoring"
-msgstr ""
+msgstr "Jatkuva glukoosin seuranta"
 
 #: blueman/Sdp.py:218
 msgid "Internet Protocol Support"
-msgstr ""
+msgstr "Internet-protokollan tuki"
 
 #: blueman/Sdp.py:219
 msgid "Indoor Positioning"
-msgstr ""
+msgstr "Sisäpaikannus"
 
 #: blueman/Sdp.py:220
 msgid "Pulse Oximeter"
@@ -1959,7 +1928,7 @@ msgstr "HTTP-välityspalvelin"
 
 #: blueman/Sdp.py:222
 msgid "Transport Discovery"
-msgstr ""
+msgstr "Liikenteen hakeminen"
 
 #: blueman/Sdp.py:223
 msgid "Object Transfer"
@@ -1979,11 +1948,11 @@ msgstr "Toissijainen palvelu"
 
 #: blueman/Sdp.py:227
 msgid "Include"
-msgstr ""
+msgstr "Sisältää"
 
 #: blueman/Sdp.py:228
 msgid "Characteristic Declaration"
-msgstr ""
+msgstr "Ominaisuuden ilmoitus"
 
 #: blueman/Sdp.py:229
 msgid "Device Name"
@@ -1995,7 +1964,7 @@ msgstr "Ulkonäkö"
 
 #: blueman/Sdp.py:231
 msgid "Peripheral Privacy Flag"
-msgstr ""
+msgstr "Oheislaitteiden tietosuoja"
 
 #: blueman/Sdp.py:232
 msgid "Reconnection Address"
@@ -2027,15 +1996,15 @@ msgstr "Laiteohjelmiston versiomerkkijono"
 
 #: blueman/Sdp.py:239
 msgid "Hardware Revision String"
-msgstr ""
+msgstr "Laitteen versionumero"
 
 #: blueman/Sdp.py:240
 msgid "Software Revision String"
-msgstr ""
+msgstr "Ohjelman versionumero"
 
 #: blueman/Sdp.py:241
 msgid "Manufacturer Name String"
-msgstr ""
+msgstr "Valmistajan nimi"
 
 #: blueman/Sdp.py:242
 msgid "PnP ID"
@@ -2043,35 +2012,35 @@ msgstr "PnP-tunnus"
 
 #: blueman/Sdp.py:243
 msgid "Characteristic Extended Properties"
-msgstr ""
+msgstr "Laajennetut ominaisuudet"
 
 #: blueman/Sdp.py:244
 msgid "Characteristic User Description"
-msgstr ""
+msgstr "Käyttäjän kuvaus"
 
 #: blueman/Sdp.py:245
 msgid "Client Characteristic Configuration"
-msgstr ""
+msgstr "Asiakkaan asetukset"
 
 #: blueman/Sdp.py:246
 msgid "Server Characteristic Configuration"
-msgstr ""
+msgstr "Palvelimen asetukset"
 
 #: blueman/Sdp.py:247
 msgid "Characteristic Presentation Format"
-msgstr ""
+msgstr "Tyypillinen esitysmuoto"
 
 #: blueman/Sdp.py:248
 msgid "Characteristic Aggregate Format"
-msgstr ""
+msgstr "Tyypillinen yhteenvedon muoto"
 
 #: blueman/Sdp.py:249
 msgid "Valid Range"
-msgstr ""
+msgstr "Kelvollinen alue"
 
 #: blueman/Sdp.py:250
 msgid "External Report Reference"
-msgstr ""
+msgstr "Ulkoisen raportin viite"
 
 #: blueman/Sdp.py:251
 msgid "Report Reference"
@@ -2095,7 +2064,7 @@ msgstr "ei"
 
 #: blueman/plugins/manager/Info.py:60
 msgid "<big>Select row(s) and use <i>Control + C</i> to copy</big>"
-msgstr ""
+msgstr "<big>Valitse rivit ja käytä <i>Control + C</i> kopioi</big>"
 
 #: blueman/plugins/manager/Info.py:120
 msgid "_Info"
@@ -2380,6 +2349,9 @@ msgid ""
 "turning Bluetooth back on from an icon that shows its status; provided it "
 "isn't unplugged by the system, or physically."
 msgstr ""
+"Vaihtaa Bluetooth lopetuskytkimen vastaamaan Bluetoothin virran tilaa. "
+"Sallii Bluetoothin kytkemisen päälle kuvakkeesta, joka näyttää sen tilan; "
+"edellyttäen, että järjestelmä ei ole poistanut sitä tai käyttäjä fyysisesti."
 
 #: blueman/plugins/applet/StandardItems.py:22
 msgid "Adds standard menu items to the status icon menu"
