@@ -23,9 +23,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2022-06-24 12:19+0000\n"
-"PO-Revision-Date: 2022-05-27 18:24+0000\n"
-"Last-Translator: Christopher Schramm <github@cschramm.eu>\n"
+"POT-Creation-Date: 2022-07-31 07:01+0000\n"
+"PO-Revision-Date: 2022-06-30 09:06+0000\n"
+"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/blueman/"
 "blueman/nb_NO/>\n"
 "Language: nb\n"
@@ -33,7 +33,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13-dev\n"
+"X-Generator: Weblate 4.13.1-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -71,68 +71,72 @@ msgstr "Dette burde overskrives"
 msgid "Show input"
 msgstr "Vis inntasting"
 
-#: data/ui/manager-main.ui:54
+#: data/ui/manager-main.ui:27
 msgid "_Adapter"
 msgstr "_Adapter"
 
-#: data/ui/manager-main.ui:62
+#: data/ui/manager-main.ui:35
 msgid "_Device"
 msgstr "_Enhet"
 
-#: data/ui/manager-main.ui:70
+#: data/ui/manager-main.ui:43
 msgid "_View"
 msgstr "_Vis"
 
-#: data/ui/manager-main.ui:78 blueman/gui/manager/ManagerMenu.py:56
+#: data/ui/manager-main.ui:51 blueman/gui/manager/ManagerMenu.py:55
 #: blueman/plugins/applet/StandardItems.py:51
 msgid "_Help"
 msgstr "_Hjelp"
 
-#: data/ui/manager-main.ui:98
+#: data/ui/manager-main.ui:70
 msgid "Search for nearby devices"
 msgstr "Søk etter enheter i nærheten"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:100
+#: data/ui/manager-main.ui:72
 msgid "Search"
 msgstr "Søk"
 
-#: data/ui/manager-main.ui:123 blueman/gui/manager/ManagerDeviceMenu.py:357
+#: data/ui/manager-main.ui:95 blueman/gui/manager/ManagerDeviceMenu.py:354
 msgid "Create pairing with the device"
 msgstr "Opprett en sammenkobling med enheten"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:124
+#: data/ui/manager-main.ui:96
 msgid "Pair"
 msgstr "Koble sammen"
 
-#: data/ui/manager-main.ui:137 blueman/gui/manager/ManagerDeviceMenu.py:375
+#: data/ui/manager-main.ui:109 blueman/gui/manager/ManagerDeviceMenu.py:372
 msgid "Mark/Unmark this device as trusted"
 msgstr "Angi/fjern enhet som tiltrodd"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:138 blueman/gui/manager/ManagerToolbar.py:39
+#: data/ui/manager-main.ui:110 blueman/gui/manager/ManagerToolbar.py:39
 #: blueman/gui/manager/ManagerToolbar.py:99
 msgid "Trust"
 msgstr "Tiltro"
 
-#: data/ui/manager-main.ui:151 blueman/gui/manager/ManagerDeviceMenu.py:420
+#: data/ui/manager-main.ui:123 blueman/gui/manager/ManagerDeviceMenu.py:417
 msgid "Remove this device from the known devices list"
 msgstr "Fjern denne enheten fra listen over kjente enheter"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:152
+#: data/ui/manager-main.ui:124
 msgid "Remove"
 msgstr "Fjern"
 
-#: data/ui/manager-main.ui:174
+#: data/ui/manager-main.ui:146
 msgid "Send file(s) to the device"
 msgstr "Send fil(er) til enheten"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:176
+#: data/ui/manager-main.ui:148
 msgid "Send File"
 msgstr "Send fil"
+
+#: data/ui/manager-main.ui:236
+msgid "More"
+msgstr "Mer"
 
 #: data/ui/rename-device.ui:8
 msgid "Rename device"
@@ -151,7 +155,7 @@ msgstr "Avbryter"
 #: data/ui/rename-device.ui:54 data/ui/note.ui:41
 #: blueman/gui/DeviceSelectorDialog.py:17
 msgid "_OK"
-msgstr ""
+msgstr "_OK"
 
 #: data/ui/services-network.ui:37
 msgid "Network Access Point (NAP)"
@@ -252,12 +256,12 @@ msgstr "<b>Forfatter:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:354
-#: blueman/gui/manager/ManagerDeviceList.py:356 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:355
+#: blueman/gui/manager/ManagerDeviceList.py:357 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:376
-#: blueman/plugins/applet/NetUsage.py:209
 #: blueman/plugins/applet/NetUsage.py:210
+#: blueman/plugins/applet/NetUsage.py:211
 msgid "Unknown"
 msgstr "Ukjent"
 
@@ -285,7 +289,7 @@ msgstr "APN:"
 msgid "Traffic statistics"
 msgstr "Trafikkstatistikk"
 
-#: data/ui/net-usage.ui:33 blueman/gui/GsmSettings.py:38
+#: data/ui/net-usage.ui:33 blueman/gui/GsmSettings.py:39
 msgid "_Close"
 msgstr "_Lukk"
 
@@ -336,19 +340,15 @@ msgstr[1] "%(minutes)d minutter"
 msgid "Adapter"
 msgstr "Adapter"
 
-#: blueman/main/Manager.py:63
-msgid "Bluetooth Devices"
-msgstr "Blåtannsenheter"
-
-#: blueman/main/Manager.py:99 blueman/main/Manager.py:140
+#: blueman/main/Manager.py:94 blueman/main/Manager.py:135
 msgid "Bluetooth needs to be turned on for the device manager to function"
 msgstr "Blåtann må være påskrudd for at enhetshåndteringen skal fungere"
 
-#: blueman/main/Manager.py:119
+#: blueman/main/Manager.py:114
 msgid "Connection to BlueZ failed"
 msgstr "Forbindelse til BlueZ mislyktes"
 
-#: blueman/main/Manager.py:120
+#: blueman/main/Manager.py:115
 #, fuzzy
 msgid ""
 "Bluez daemon is not running, blueman-manager cannot continue.\n"
@@ -359,15 +359,15 @@ msgstr ""
 "Dette betyr kanskje at det ikke fantes noen Blåtannsadaptere eller at "
 "Blåtannsnissen ikke kjørte."
 
-#: blueman/main/Manager.py:208
+#: blueman/main/Manager.py:203
 msgid "Searching"
 msgstr "Søker"
 
-#: blueman/main/Manager.py:231 blueman/plugins/applet/StandardItems.py:84
+#: blueman/main/Manager.py:265 blueman/plugins/applet/StandardItems.py:84
 msgid "Adapter Preferences"
 msgstr "Adapterinnstillinger"
 
-#: blueman/main/Manager.py:247 blueman/gui/manager/ManagerDeviceList.py:169
+#: blueman/main/Manager.py:281 blueman/gui/manager/ManagerDeviceList.py:169
 #: blueman/plugins/applet/StandardItems.py:77
 msgid "File Sender"
 msgstr "Filavsender"
@@ -378,7 +378,7 @@ msgstr "Filoverføring via Blåtann"
 
 #: blueman/main/Sendto.py:42
 msgid "_Stop"
-msgstr ""
+msgstr "_Stopp"
 
 #: blueman/main/Sendto.py:57 blueman/gui/manager/ManagerProgressbar.py:27
 #, fuzzy
@@ -492,11 +492,11 @@ msgid "Always accept"
 msgstr "Godkjenn hver gang"
 
 #: blueman/main/applet/BluezAgent.py:243
-#: blueman/plugins/applet/TransferService.py:130
+#: blueman/plugins/applet/TransferService.py:129
 msgid "Accept"
 msgstr "Godta"
 
-#: blueman/main/PluginManager.py:68
+#: blueman/main/PluginManager.py:67
 #, fuzzy
 msgid ""
 "<b>An error has occured while loading a plugin. Please notify the developers "
@@ -508,316 +508,321 @@ msgstr ""
 "<a href=\"http://github.com/blueman-project/blueman/issues\">nettstedet</a> "
 "vårt."
 
-#: blueman/main/Services.py:33
+#: blueman/main/Services.py:34
 msgid "Local Services"
 msgstr "Lokale tjenester"
 
-#: blueman/main/Services.py:47
+#: blueman/main/Services.py:48
 msgid "_Apply"
-msgstr ""
+msgstr "_Bruk"
 
-#: blueman/Functions.py:71
+#: blueman/Functions.py:70
 #, fuzzy
 msgid "Bluetooth Turned Off"
 msgstr "Blåtann er slått av"
 
-#: blueman/Functions.py:72
+#: blueman/Functions.py:71
 msgid "Exit"
 msgstr "Avslutt"
 
-#: blueman/Functions.py:73
+#: blueman/Functions.py:72
 #, fuzzy
 msgid "Enable Bluetooth"
 msgstr "Aktiver Blåtann"
 
-#: blueman/Functions.py:92
+#: blueman/Functions.py:91
 msgid "Shall bluetooth get enabled automatically?"
 msgstr "Skal Blåtann aktiveres automatisk?"
 
-#: blueman/Functions.py:93
+#: blueman/Functions.py:92
 msgid "Yes"
 msgstr "Ja"
 
-#: blueman/Functions.py:94
+#: blueman/Functions.py:93
 msgid "No"
 msgstr "Nei"
 
-#: blueman/Functions.py:181
+#: blueman/Functions.py:180
 msgid "B"
-msgstr ""
+msgstr "B"
 
-#: blueman/Functions.py:184
+#: blueman/Functions.py:183
+#, fuzzy
 msgid "KB"
-msgstr ""
+msgstr "KB"
 
-#: blueman/Functions.py:187
+#: blueman/Functions.py:186
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
-#: blueman/Functions.py:190
+#: blueman/Functions.py:189
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
-#: blueman/gui/manager/ManagerMenu.py:46
+#: blueman/gui/manager/ManagerMenu.py:45
 msgid "_Report a Problem"
 msgstr "_Rapporter et problem"
 
-#: blueman/gui/manager/ManagerMenu.py:63
+#: blueman/gui/manager/ManagerMenu.py:62
 msgid "Device Manager"
 msgstr "Enhetshåndtering"
 
-#: blueman/gui/manager/ManagerMenu.py:69
+#: blueman/gui/manager/ManagerMenu.py:68
 msgid "Show _Toolbar"
 msgstr "Vis _verktøyslinje"
 
-#: blueman/gui/manager/ManagerMenu.py:74
+#: blueman/gui/manager/ManagerMenu.py:73
 msgid "Show _Statusbar"
 msgstr "Vis _statuslinje"
 
-#: blueman/gui/manager/ManagerMenu.py:79
+#: blueman/gui/manager/ManagerMenu.py:78
 #, fuzzy
 msgid "Hide _unnamed devices"
 msgstr "Gi enheten nytt navn"
 
-#: blueman/gui/manager/ManagerMenu.py:89
+#: blueman/gui/manager/ManagerMenu.py:88
 msgid "S_ort By"
 msgstr "S_orter etter"
 
-#: blueman/gui/manager/ManagerMenu.py:96
+#: blueman/gui/manager/ManagerMenu.py:95
 msgid "_Name"
 msgstr "_Navn"
 
-#: blueman/gui/manager/ManagerMenu.py:101
+#: blueman/gui/manager/ManagerMenu.py:100
 msgid "_Added"
 msgstr "_Lagt til"
 
-#: blueman/gui/manager/ManagerMenu.py:115
+#: blueman/gui/manager/ManagerMenu.py:114
 msgid "_Descending"
 msgstr "_Synkende"
 
-#: blueman/gui/manager/ManagerMenu.py:128
+#: blueman/gui/manager/ManagerMenu.py:127
 #: blueman/plugins/applet/StandardItems.py:54
 msgid "_Plugins"
 msgstr "_Programtillegg"
 
-#: blueman/gui/manager/ManagerMenu.py:133
+#: blueman/gui/manager/ManagerMenu.py:132
 #: blueman/plugins/applet/StandardItems.py:45
 msgid "_Local Services"
 msgstr "_Lokale tjenester"
 
-#: blueman/gui/manager/ManagerMenu.py:134
+#: blueman/gui/manager/ManagerMenu.py:133
 #: blueman/plugins/applet/StandardItems.py:87
 msgid "Service Preferences"
 msgstr "Tjenesteinnstillinger"
 
-#: blueman/gui/manager/ManagerMenu.py:142
+#: blueman/gui/manager/ManagerMenu.py:141
 msgid "_Search"
 msgstr "_Søk"
 
-#: blueman/gui/manager/ManagerMenu.py:156
+#: blueman/gui/manager/ManagerMenu.py:155
 #, fuzzy
 msgid "_Preferences"
 msgstr "Adapterinnstillinger"
 
-#: blueman/gui/manager/ManagerMenu.py:165 blueman/plugins/applet/ExitItem.py:12
+#: blueman/gui/manager/ManagerMenu.py:164 blueman/plugins/applet/ExitItem.py:12
 msgid "_Exit"
 msgstr "_Avslutt"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:325
-#: blueman/gui/manager/ManagerDeviceList.py:354 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:326
+#: blueman/gui/manager/ManagerDeviceList.py:355 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 #, fuzzy
 msgid "Uncategorized"
 msgstr "ukategorisert"
 
-#: blueman/gui/manager/ManagerDeviceList.py:543
+#: blueman/gui/manager/ManagerDeviceList.py:544
 msgid "Trusted"
 msgstr "Tiltrodd"
 
-#: blueman/gui/manager/ManagerDeviceList.py:545
+#: blueman/gui/manager/ManagerDeviceList.py:546
 msgid "Paired"
 msgstr "Sammenkoblet"
 
-#: blueman/gui/manager/ManagerDeviceList.py:547
+#: blueman/gui/manager/ManagerDeviceList.py:548
 msgid "Blocked"
 msgstr "Blokkert"
 
-#: blueman/gui/manager/ManagerDeviceList.py:570
+#: blueman/gui/manager/ManagerDeviceList.py:571
 #, fuzzy
 msgid "<b>Connected</b>"
 msgstr "_<b>Koble til</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:585
+#: blueman/gui/manager/ManagerDeviceList.py:586
 msgid "Poor"
 msgstr "Svak"
 
-#: blueman/gui/manager/ManagerDeviceList.py:587
-#: blueman/gui/manager/ManagerDeviceList.py:612
+#: blueman/gui/manager/ManagerDeviceList.py:588
+#: blueman/gui/manager/ManagerDeviceList.py:613
 msgid "Sub-optimal"
 msgstr "Suboptimal"
 
-#: blueman/gui/manager/ManagerDeviceList.py:589
-#: blueman/gui/manager/ManagerDeviceList.py:614
+#: blueman/gui/manager/ManagerDeviceList.py:590
+#: blueman/gui/manager/ManagerDeviceList.py:615
 msgid "Optimal"
 msgstr "Best mulig"
 
-#: blueman/gui/manager/ManagerDeviceList.py:591
+#: blueman/gui/manager/ManagerDeviceList.py:592
 msgid "Much"
 msgstr "Mye"
 
-#: blueman/gui/manager/ManagerDeviceList.py:593
+#: blueman/gui/manager/ManagerDeviceList.py:594
 msgid "Too much"
 msgstr "For mye"
 
-#: blueman/gui/manager/ManagerDeviceList.py:596
+#: blueman/gui/manager/ManagerDeviceList.py:597
 #, fuzzy, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 msgstr "<b>Mottatakssignalstyrke: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:599
+#: blueman/gui/manager/ManagerDeviceList.py:600
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 msgstr "Mottatakssignalstyrke: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:604
+#: blueman/gui/manager/ManagerDeviceList.py:605
 #, python-format
 msgid "<b>Link Quality: %(lq)u%%</b>"
 msgstr "<b>Lenkekvalitet: %(lq)u%%</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:606
+#: blueman/gui/manager/ManagerDeviceList.py:607
 #, python-format
 msgid "Link Quality: %(lq)u%%"
 msgstr "Lenkekvalitet: %(lq)u%%"
 
-#: blueman/gui/manager/ManagerDeviceList.py:610
+#: blueman/gui/manager/ManagerDeviceList.py:611
 msgid "Low"
 msgstr "Lav"
 
-#: blueman/gui/manager/ManagerDeviceList.py:616
+#: blueman/gui/manager/ManagerDeviceList.py:617
 msgid "High"
 msgstr "Høy"
 
-#: blueman/gui/manager/ManagerDeviceList.py:618
+#: blueman/gui/manager/ManagerDeviceList.py:619
 msgid "Very High"
 msgstr "Veldig høy"
 
-#: blueman/gui/manager/ManagerDeviceList.py:621
+#: blueman/gui/manager/ManagerDeviceList.py:622
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr "<b>Overføringseffektnivå: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:624
+#: blueman/gui/manager/ManagerDeviceList.py:625
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr "Overføringseffektnivå: %(tpl)u <i>(%(tpl_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:131
+#: blueman/gui/manager/ManagerDeviceMenu.py:130
 msgid "Success!"
 msgstr "Suksess!"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:138
+#: blueman/gui/manager/ManagerDeviceMenu.py:135
 msgid "Failed"
 msgstr "Mislyktes"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:144
+#: blueman/gui/manager/ManagerDeviceMenu.py:141
 #, fuzzy
 msgid "Connecting…"
 msgstr "Kobler til"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:180
+#: blueman/gui/manager/ManagerDeviceMenu.py:177
 msgid "Disconnection Failed: "
 msgstr "Frakobling mislyktes: "
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:204
+#: blueman/gui/manager/ManagerDeviceMenu.py:201
+#, fuzzy
 msgid "No audio endpoints registered"
-msgstr ""
+msgstr "Ingen lydendepunkter har blitt registrert"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:207
+#: blueman/gui/manager/ManagerDeviceMenu.py:204
+#, fuzzy
 msgid "Input/output error"
-msgstr ""
+msgstr "Inndata/utdata-feil"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:209
+#: blueman/gui/manager/ManagerDeviceMenu.py:206
 #, fuzzy
 msgid "Device did not respond"
 msgstr "Vis enhetsinfo"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:213
+#: blueman/gui/manager/ManagerDeviceMenu.py:210
 #, fuzzy
 msgid "Resource temporarily unavailable"
 msgstr "Midlertidig synlig"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:218
+#: blueman/gui/manager/ManagerDeviceMenu.py:215
 msgid "Connection Failed: "
 msgstr "Tilkobling mislyktes: "
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:287
+#: blueman/gui/manager/ManagerDeviceMenu.py:284
 #, fuzzy
-msgid "_<b>_Connect</b>"
+msgid "<b>_Connect</b>"
 msgstr "_<b>Koble til</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:289
+#: blueman/gui/manager/ManagerDeviceMenu.py:286
 #, fuzzy
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr "Kobler til auto-tilkoblingsprofilene A2DP-kilde, A2DP-sink og HID"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:293
-msgid "_<b>Disconnect</b>"
+#: blueman/gui/manager/ManagerDeviceMenu.py:290
+#, fuzzy
+#| msgid "_<b>Disconnect</b>"
+msgid "<b>_Disconnect</b>"
 msgstr "_<b>Koble fra</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:294
+#: blueman/gui/manager/ManagerDeviceMenu.py:291
 #, fuzzy
 msgid "Forcefully disconnect the device"
 msgstr "Tvangsfrakoble enheten"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:310
+#: blueman/gui/manager/ManagerDeviceMenu.py:307
 msgid "<b>Connect To:</b>"
 msgstr "<b>Koble til::</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:315
+#: blueman/gui/manager/ManagerDeviceMenu.py:312
 msgid "<b>Disconnect:</b>"
 msgstr "<b>Avbryt:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:324
+#: blueman/gui/manager/ManagerDeviceMenu.py:321
 #, fuzzy
 msgid "<b>Auto-connect:</b>"
 msgstr "<b>Avbryt:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:343
+#: blueman/gui/manager/ManagerDeviceMenu.py:340
 #, fuzzy
 msgid "Send a _File…"
 msgstr "Send en _fil …"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:356
+#: blueman/gui/manager/ManagerDeviceMenu.py:353
 msgid "_Pair"
 msgstr "_Sammenkoble"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:366
+#: blueman/gui/manager/ManagerDeviceMenu.py:363
 msgid "_Trust"
 msgstr "_Tiltro"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:371
+#: blueman/gui/manager/ManagerDeviceMenu.py:368
 msgid "_Untrust"
 msgstr "_Mistro"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:378
+#: blueman/gui/manager/ManagerDeviceMenu.py:375
 msgid "_Block"
 msgstr "_Blokker"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:383
+#: blueman/gui/manager/ManagerDeviceMenu.py:380
 msgid "_Unblock"
 msgstr "_Opphev blokkering"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:387
+#: blueman/gui/manager/ManagerDeviceMenu.py:384
 msgid "Block/Unblock this device"
 msgstr "Blokker/avblokker denne enheten"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:407
+#: blueman/gui/manager/ManagerDeviceMenu.py:404
 msgid "R_ename device…"
 msgstr "Gi enheten _nytt navn …"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:416
+#: blueman/gui/manager/ManagerDeviceMenu.py:413
 msgid "_Remove…"
 msgstr "_Fjern …"
 
@@ -849,15 +854,11 @@ msgstr "Mistro"
 msgid "Select Device"
 msgstr "Velg enhet"
 
-#: blueman/gui/MessageArea.py:38
-msgid "More"
-msgstr "Mer"
-
 #: blueman/gui/CommonUi.py:65
 msgid "Blueman is a GTK+ Bluetooth manager"
 msgstr "Blueman er en GTK+basert Blåtannsbehandler"
 
-#: blueman/gui/GsmSettings.py:24
+#: blueman/gui/GsmSettings.py:25
 msgid "GSM Settings"
 msgstr "GSM-innstillinger"
 
@@ -936,8 +937,9 @@ msgstr "Tilbehør"
 
 #. translators: device class
 #: blueman/DeviceClass.py:18 blueman/DeviceClass.py:276
+#, fuzzy
 msgid "Imaging"
-msgstr ""
+msgstr "Bildeenhet"
 
 #. translators: device class
 #: blueman/DeviceClass.py:20 blueman/DeviceClass.py:41
@@ -1010,8 +1012,9 @@ msgstr "ISDN"
 
 #. translators: device class
 #: blueman/DeviceClass.py:61
+#, fuzzy
 msgid "Fully"
-msgstr ""
+msgstr "Helt"
 
 #. translators: device class
 #: blueman/DeviceClass.py:63
@@ -1118,7 +1121,7 @@ msgstr "Hi-Fi -lyd"
 #. translators: device class
 #: blueman/DeviceClass.py:102
 msgid "VCR"
-msgstr ""
+msgstr "Videobåndsopptaker"
 
 #. translators: device class
 #: blueman/DeviceClass.py:104
@@ -1359,7 +1362,7 @@ msgstr "Spillkontroller"
 
 #: blueman/DeviceClass.py:193
 msgid "Digitizer Tablet"
-msgstr ""
+msgstr "Tegneplate"
 
 #: blueman/DeviceClass.py:194
 msgid "Card Reader"
@@ -1379,20 +1382,23 @@ msgid "Generic Glucose Meter"
 msgstr "Koble til"
 
 #: blueman/DeviceClass.py:198
+#, fuzzy
 msgid "Generic: Running Walking Sensor"
-msgstr ""
+msgstr "Generisk: løp-/gangesensor"
 
 #: blueman/DeviceClass.py:199
+#, fuzzy
 msgid "Running Walking Sensor: In-Shoe"
-msgstr ""
+msgstr "Løp-/gangesensor: I sko"
 
 #: blueman/DeviceClass.py:200
 msgid "Running Walking Sensor: On-Shoe"
-msgstr ""
+msgstr "Løp-/gangesensor: På sko"
 
 #: blueman/DeviceClass.py:201
+#, fuzzy
 msgid "Running Walking Sensor: On-Hip"
-msgstr ""
+msgstr "Løp-/gangesensor: På hofte"
 
 #: blueman/DeviceClass.py:202
 #, fuzzy
@@ -1426,7 +1432,7 @@ msgstr "Syklingshastighet og kadens"
 #. 19 - 48 reserved
 #: blueman/DeviceClass.py:209
 msgid "Generic: Pulse Oximeter"
-msgstr ""
+msgstr "Generisk: Oksygenmetningsmåler"
 
 #: blueman/DeviceClass.py:210
 msgid "Fingertip"
@@ -1444,8 +1450,9 @@ msgid "Generic: Weight Scale"
 msgstr "Vekt"
 
 #: blueman/DeviceClass.py:213
+#, fuzzy
 msgid "Generic Personal Mobility Device"
-msgstr ""
+msgstr "Generisk personlig mobilitetsenhet"
 
 #: blueman/DeviceClass.py:214
 msgid "Powered Wheelchair"
@@ -1466,12 +1473,14 @@ msgid "Generic Insulin Pump"
 msgstr "Generisk lyd"
 
 #: blueman/DeviceClass.py:218
+#, fuzzy
 msgid "Insulin Pump, durable pump"
-msgstr ""
+msgstr "Insulinpumpe, driftssikker pumpe"
 
 #: blueman/DeviceClass.py:219
+#, fuzzy
 msgid "Insulin Pump, patch pump"
-msgstr ""
+msgstr "Insulinpumpe, slangefri pumpe"
 
 #: blueman/DeviceClass.py:220
 #, fuzzy
@@ -1479,8 +1488,9 @@ msgid "Insulin Pen"
 msgstr "Insulinpenn"
 
 #: blueman/DeviceClass.py:221
+#, fuzzy
 msgid "Generic Medication Delivery"
-msgstr ""
+msgstr "Generisk medisinlevering"
 
 #. 55 - 80 reserved
 #: blueman/DeviceClass.py:223
@@ -1488,8 +1498,9 @@ msgid "Generic: Outdoor Sports Activity"
 msgstr "Generisk: Utendørs sportsaktivitet"
 
 #: blueman/DeviceClass.py:224
+#, fuzzy
 msgid "Location Display Device"
-msgstr ""
+msgstr "Enhet til visning av posisjon"
 
 #: blueman/DeviceClass.py:225
 #, fuzzy
@@ -1522,8 +1533,9 @@ msgid "TCP"
 msgstr "TCP"
 
 #: blueman/Sdp.py:92
+#, fuzzy
 msgid "TCS-BIN"
-msgstr ""
+msgstr "Telefon og kabel-erstatningsprotokoll (TCS-BIN)"
 
 #: blueman/Sdp.py:93
 msgid "TCS-AT"
@@ -1554,28 +1566,32 @@ msgid "WSP"
 msgstr ""
 
 #: blueman/Sdp.py:100
+#, fuzzy
 msgid "BNEP"
-msgstr ""
+msgstr "Protokoll for blåtannsnettverksinnkapsling (BNEP)"
 
 #: blueman/Sdp.py:101
 msgid "UPnP/ESDP"
 msgstr ""
 
 #: blueman/Sdp.py:102
+#, fuzzy
 msgid "HIDP"
-msgstr ""
+msgstr "HIDP"
 
 #: blueman/Sdp.py:103
+#, fuzzy
 msgid "Hardcopy Control Channel"
-msgstr ""
+msgstr "Papirkopi-kontrollkanal"
 
 #: blueman/Sdp.py:104
 msgid "Hardcopy Data Channel"
-msgstr ""
+msgstr "Papirkopi-datakanal"
 
 #: blueman/Sdp.py:105
+#, fuzzy
 msgid "Hardcopy Notification"
-msgstr ""
+msgstr "Papirkopi-merknad"
 
 #: blueman/Sdp.py:106
 msgid "AVCTP"
@@ -1595,7 +1611,7 @@ msgstr ""
 
 #: blueman/Sdp.py:110 blueman/Sdp.py:111
 msgid "Multi-Channel Adaptation Protocol (MCAP)"
-msgstr ""
+msgstr "Multikanalstilpasningsprotokoll (MCAP)"
 
 #: blueman/Sdp.py:112
 msgid "L2CAP"
@@ -1704,16 +1720,18 @@ msgid "Group Network"
 msgstr "Gruppenettverk"
 
 #: blueman/Sdp.py:139
+#, fuzzy
 msgid "DirectPrinting (BPP)"
-msgstr ""
+msgstr "Direkteutskrift (BPP)"
 
 #: blueman/Sdp.py:140
 msgid "ReferencePrinting (BPP)"
 msgstr ""
 
 #: blueman/Sdp.py:141
+#, fuzzy
 msgid "Imaging (BIP)"
-msgstr ""
+msgstr "Bildeenhet (BIP)"
 
 #: blueman/Sdp.py:142
 msgid "ImagingResponder (BIP)"
@@ -1741,15 +1759,15 @@ msgstr ""
 
 #: blueman/Sdp.py:149
 msgid "Basic Printing (BPP)"
-msgstr ""
+msgstr "Grunnleggende utskrift (BPP)"
 
 #: blueman/Sdp.py:150
 msgid "Printing Status (BPP)"
-msgstr ""
+msgstr "Utskriftsstatus (BPP)"
 
 #: blueman/Sdp.py:151
 msgid "Human Interface Device Service (HID)"
-msgstr ""
+msgstr "Brukerinngangenhetstjeneste (HID)"
 
 #: blueman/Sdp.py:152
 msgid "HardcopyCableReplacement (HCR)"
@@ -1764,8 +1782,9 @@ msgid "HCR_Scan (HCR)"
 msgstr ""
 
 #: blueman/Sdp.py:155
+#, fuzzy
 msgid "Common ISDN Access (CIP)"
-msgstr ""
+msgstr "Felles ISDN-tilgang (CIP)"
 
 #: blueman/Sdp.py:156
 msgid "VideoConferencingGW (VCP)"
@@ -1781,7 +1800,7 @@ msgstr ""
 
 #: blueman/Sdp.py:159
 msgid "Audio/Video"
-msgstr ""
+msgstr "Lyd/video"
 
 #: blueman/Sdp.py:160
 msgid "SIM Access (SAP)"
@@ -1815,11 +1834,11 @@ msgstr "Nettverkstillgangspunkt (NAP)"
 
 #: blueman/Sdp.py:168
 msgid "GNSS"
-msgstr ""
+msgstr "GNSS"
 
 #: blueman/Sdp.py:169
 msgid "GNSS Server"
-msgstr ""
+msgstr "GNSS-tjener"
 
 #: blueman/Sdp.py:170
 msgid "3D Display"
@@ -1936,8 +1955,9 @@ msgid "Next DST Change Service"
 msgstr ""
 
 #: blueman/Sdp.py:197
+#, fuzzy
 msgid "Glucose"
-msgstr ""
+msgstr "Glukose"
 
 #: blueman/Sdp.py:198
 msgid "Health Thermometer"
@@ -1954,7 +1974,7 @@ msgstr "Puls"
 
 #: blueman/Sdp.py:201
 msgid "Phone Alert Status Service"
-msgstr ""
+msgstr "Telefonvarslingsstatustjeneste"
 
 #: blueman/Sdp.py:202
 #, fuzzy
@@ -1967,19 +1987,19 @@ msgstr "Blodtrykk"
 
 #: blueman/Sdp.py:204
 msgid "Alert Notification Service"
-msgstr ""
+msgstr "Varslingsmerknadstjeneste"
 
 #: blueman/Sdp.py:205
 msgid "Human Interface Device"
-msgstr ""
+msgstr "Brukerinngangsenhet"
 
 #: blueman/Sdp.py:206
 msgid "Scan Parameters"
-msgstr ""
+msgstr "Skanningsparametre"
 
 #: blueman/Sdp.py:207
 msgid "Running Speed and Cadence"
-msgstr ""
+msgstr "Løpshastighet og stegfrekvens"
 
 #: blueman/Sdp.py:208
 msgid "Automation IO"
@@ -2003,7 +2023,7 @@ msgstr "Miljømåling"
 
 #: blueman/Sdp.py:213
 msgid "Body Composition"
-msgstr ""
+msgstr "Kroppssammensetning"
 
 #: blueman/Sdp.py:214
 msgid "User Data"
@@ -2014,8 +2034,9 @@ msgid "Weight Scale"
 msgstr "Vekt"
 
 #: blueman/Sdp.py:216
+#, fuzzy
 msgid "Bond Management"
-msgstr ""
+msgstr "Håndtering av binding"
 
 #: blueman/Sdp.py:217
 msgid "Continuous Glucose Monitoring"
@@ -2027,11 +2048,11 @@ msgstr "Internettprotokollstøtte"
 
 #: blueman/Sdp.py:219
 msgid "Indoor Positioning"
-msgstr ""
+msgstr "Innendørs posisjonering"
 
 #: blueman/Sdp.py:220
 msgid "Pulse Oximeter"
-msgstr ""
+msgstr "Oksygenmetningsmåler"
 
 #: blueman/Sdp.py:221
 msgid "HTTP Proxy"
@@ -2063,7 +2084,7 @@ msgstr "Søk etter enheter i nærheten"
 
 #: blueman/Sdp.py:227
 msgid "Include"
-msgstr ""
+msgstr "Inkluder"
 
 #: blueman/Sdp.py:228
 msgid "Characteristic Declaration"
@@ -2110,47 +2131,54 @@ msgstr "Serienummer-streng"
 
 #: blueman/Sdp.py:238
 msgid "Firmware Revision String"
-msgstr ""
+msgstr "Fastvarerevisjonsstreng"
 
 #: blueman/Sdp.py:239
 msgid "Hardware Revision String"
-msgstr ""
+msgstr "Maskinvarerevisjonsstreng"
 
 #: blueman/Sdp.py:240
 msgid "Software Revision String"
-msgstr ""
+msgstr "Programvarerevisjonsstreng"
 
 #: blueman/Sdp.py:241
+#, fuzzy
 msgid "Manufacturer Name String"
-msgstr ""
+msgstr "Tilvirker-navnestreng"
 
 #: blueman/Sdp.py:242
 msgid "PnP ID"
 msgstr "PnP-ID"
 
 #: blueman/Sdp.py:243
+#, fuzzy
 msgid "Characteristic Extended Properties"
-msgstr ""
+msgstr "Utvidede egenskaper for kjennetegn"
 
 #: blueman/Sdp.py:244
+#, fuzzy
 msgid "Characteristic User Description"
-msgstr ""
+msgstr "Brukerbeskrivese av kjennetegn"
 
 #: blueman/Sdp.py:245
+#, fuzzy
 msgid "Client Characteristic Configuration"
-msgstr ""
+msgstr "Oppsett av klientkjennetegn"
 
 #: blueman/Sdp.py:246
+#, fuzzy
 msgid "Server Characteristic Configuration"
-msgstr ""
+msgstr "Oppsett av tjenerkjennetegn"
 
 #: blueman/Sdp.py:247
+#, fuzzy
 msgid "Characteristic Presentation Format"
-msgstr ""
+msgstr "Kjennetegnspresentasjonsformat"
 
 #: blueman/Sdp.py:248
+#, fuzzy
 msgid "Characteristic Aggregate Format"
-msgstr ""
+msgstr "Kjennetegnssamlingsformat"
 
 #: blueman/Sdp.py:249
 msgid "Valid Range"
@@ -2158,7 +2186,7 @@ msgstr "Gyldig tallfølge"
 
 #: blueman/Sdp.py:250
 msgid "External Report Reference"
-msgstr ""
+msgstr "Ekstern rapportreferanse"
 
 #: blueman/Sdp.py:251
 #, fuzzy
@@ -2183,8 +2211,9 @@ msgid "no"
 msgstr "nei"
 
 #: blueman/plugins/manager/Info.py:60
+#, fuzzy
 msgid "<big>Select row(s) and use <i>Control + C</i> to copy</big>"
-msgstr ""
+msgstr "<big>Velg rader og bruk <i>Ctrl + C</i> for å kopiere</big>"
 
 #: blueman/plugins/manager/Info.py:120
 msgid "_Info"
@@ -2203,16 +2232,16 @@ msgstr "Send _notat"
 msgid "Send a text note"
 msgstr "Send et tekstnotat"
 
-#: blueman/plugins/manager/PulseAudioProfile.py:87
+#: blueman/plugins/manager/PulseAudioProfile.py:86
 #, python-format
 msgid "Failed to change profile to %s"
 msgstr "Kunne ikke endre profil til %s"
 
-#: blueman/plugins/manager/PulseAudioProfile.py:128
+#: blueman/plugins/manager/PulseAudioProfile.py:127
 msgid "Audio Profile"
 msgstr "Lydprofil"
 
-#: blueman/plugins/manager/PulseAudioProfile.py:129
+#: blueman/plugins/manager/PulseAudioProfile.py:128
 msgid "Select audio profile for PulseAudio"
 msgstr "Velg lydprofil for PulseAudio"
 
@@ -2224,11 +2253,14 @@ msgstr "Uspesifisert"
 msgid ""
 "Tries to auto-connect to configurable services on start and every 60 seconds."
 msgstr ""
+"Prøver å koble til oppsettbare tjenester ved oppstart og hvert minutt "
+"automatisk."
 
 #. https://github.com/python/mypy/issues/2608
 #: blueman/plugins/applet/AutoConnect.py:50
+#: blueman/plugins/applet/ConnectionNotifier.py:36
 #: blueman/plugins/applet/RecentConns.py:155
-#: blueman/plugins/applet/PPPSupport.py:75
+#: blueman/plugins/applet/PPPSupport.py:76
 msgid "Connected"
 msgstr "Tilkoblet"
 
@@ -2237,27 +2269,27 @@ msgstr "Tilkoblet"
 msgid "Automatically connected to %(service)s on %(device)s"
 msgstr "Koblet automatisk til %(service)s på %(device)s"
 
-#: blueman/plugins/applet/ConnectionNotifier.py:16
+#: blueman/plugins/applet/ConnectionNotifier.py:15
 msgid "Shows desktop notifications when devices get connected or disconnected."
-msgstr ""
+msgstr "Viser skrivebordsmerknader når enheter kobles til eller fra."
 
-#: blueman/plugins/applet/ConnectionNotifier.py:40
+#: blueman/plugins/applet/ConnectionNotifier.py:48
 #, fuzzy
 msgid "Disconnected"
 msgstr "Kobler fra …"
 
-#: blueman/plugins/applet/NetUsage.py:154
-#: blueman/plugins/applet/NetUsage.py:265
-#: blueman/plugins/applet/NetUsage.py:270
+#: blueman/plugins/applet/NetUsage.py:155
+#: blueman/plugins/applet/NetUsage.py:267
+#: blueman/plugins/applet/NetUsage.py:272
 msgid "Connected:"
 msgstr "Tilkoblet:"
 
-#: blueman/plugins/applet/NetUsage.py:168
-#: blueman/plugins/applet/NetUsage.py:280
+#: blueman/plugins/applet/NetUsage.py:169
+#: blueman/plugins/applet/NetUsage.py:282
 msgid "Not Connected"
 msgstr "Ikke tilkoblet"
 
-#: blueman/plugins/applet/NetUsage.py:174
+#: blueman/plugins/applet/NetUsage.py:175
 msgid ""
 "No usage statistics are available yet. Try establishing a connection first "
 "and then check this page."
@@ -2265,34 +2297,34 @@ msgstr ""
 "Ingen bruksstatistikk tilgjengelig. Prøv først å etablere forbindelse for så "
 "å sjekke denne siden."
 
-#: blueman/plugins/applet/NetUsage.py:202
+#: blueman/plugins/applet/NetUsage.py:203
 msgid "day"
 msgid_plural "days"
 msgstr[0] "dag"
 msgstr[1] "dager"
 
-#: blueman/plugins/applet/NetUsage.py:203
+#: blueman/plugins/applet/NetUsage.py:204
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "time"
 msgstr[1] "timer"
 
-#: blueman/plugins/applet/NetUsage.py:204
+#: blueman/plugins/applet/NetUsage.py:205
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "minutt"
 msgstr[1] "minutter"
 
-#: blueman/plugins/applet/NetUsage.py:206
+#: blueman/plugins/applet/NetUsage.py:207
 #, python-format
 msgid "%d %s %d %s and %d %s"
 msgstr "%d %s %d %s og %d %s"
 
-#: blueman/plugins/applet/NetUsage.py:241
+#: blueman/plugins/applet/NetUsage.py:243
 msgid "Are you sure you want to reset the counter?"
 msgstr "Bekreft nullstilling av telleren."
 
-#: blueman/plugins/applet/NetUsage.py:287
+#: blueman/plugins/applet/NetUsage.py:289
 #, fuzzy
 msgid ""
 "Allows you to monitor your (mobile broadband) network traffic usage. Useful "
@@ -2302,15 +2334,15 @@ msgstr ""
 "abonnement med begrenset databruk. Dette programtillegget sporer hver enhet "
 "separat."
 
-#: blueman/plugins/applet/NetUsage.py:307
+#: blueman/plugins/applet/NetUsage.py:309
 msgid "Network _Usage"
 msgstr "_Nettverksbruk"
 
-#: blueman/plugins/applet/NetUsage.py:308
+#: blueman/plugins/applet/NetUsage.py:310
 msgid "Shows network traffic usage"
 msgstr "Viser nettverksforbruk"
 
-#: blueman/plugins/applet/StatusIcon.py:43
+#: blueman/plugins/applet/StatusIcon.py:41
 #: blueman/plugins/applet/ShowConnected.py:71
 #: blueman/plugins/applet/PowerManager.py:190
 msgid "Bluetooth Enabled"
@@ -2378,37 +2410,37 @@ msgstr ""
 msgid "Provides DBus API for other Blueman components"
 msgstr "Muliggjør DBus API for andre Blueman-komponenter"
 
-#: blueman/plugins/applet/TransferService.py:127
+#: blueman/plugins/applet/TransferService.py:126
 msgid "Incoming file over Bluetooth"
 msgstr "Innkommende fil via Blåtann"
 
-#: blueman/plugins/applet/TransferService.py:128
+#: blueman/plugins/applet/TransferService.py:127
 #, python-format
 msgid "Incoming file %(0)s from %(1)s"
 msgstr "Innkommende fil %(0)s fra %(1)s"
 
-#: blueman/plugins/applet/TransferService.py:130
+#: blueman/plugins/applet/TransferService.py:129
 msgid "Reject"
 msgstr "Avvis"
 
-#: blueman/plugins/applet/TransferService.py:137
+#: blueman/plugins/applet/TransferService.py:136
 msgid "Receiving file"
 msgstr "Mottar fil"
 
-#: blueman/plugins/applet/TransferService.py:138
+#: blueman/plugins/applet/TransferService.py:137
 #, python-format
 msgid "Receiving file %(0)s from %(1)s"
 msgstr "Mottar fil %(0)s fra %(1)s"
 
-#: blueman/plugins/applet/TransferService.py:157
+#: blueman/plugins/applet/TransferService.py:156
 msgid "Provides OBEX file transfer capabilities"
 msgstr "Tilbyr OBEX-filoverføringsfunksjoner"
 
-#: blueman/plugins/applet/TransferService.py:180
+#: blueman/plugins/applet/TransferService.py:179
 msgid "Configured directory for incoming files does not exist"
 msgstr "Oppsatt mappe for innkommende filer finnes ikke"
 
-#: blueman/plugins/applet/TransferService.py:181
+#: blueman/plugins/applet/TransferService.py:180
 #, fuzzy, python-format
 msgid ""
 "Please make sure that directory \"<b>%s</b>\" exists or configure it with "
@@ -2417,46 +2449,46 @@ msgstr ""
 "Forsikre deg om at mappen \"<b>%s</b>\" finnes, eller sett den opp med "
 "blueman-services. Inntil da vil \"%s\" bli brukt."
 
-#: blueman/plugins/applet/TransferService.py:303
+#: blueman/plugins/applet/TransferService.py:302
 msgid "File received"
 msgstr "Fil mottatt"
 
-#: blueman/plugins/applet/TransferService.py:304
+#: blueman/plugins/applet/TransferService.py:303
 #, python-format
 msgid "File %(0)s from %(1)s successfully received"
 msgstr "Fil %(0)s fra %(1)s ble mottatt med hell"
 
-#: blueman/plugins/applet/TransferService.py:308
+#: blueman/plugins/applet/TransferService.py:307
 msgid "Open"
-msgstr ""
+msgstr "Åpne"
 
-#: blueman/plugins/applet/TransferService.py:312
+#: blueman/plugins/applet/TransferService.py:311
 msgid "Transfer failed"
 msgstr "Overføring mislyktes"
 
-#: blueman/plugins/applet/TransferService.py:313
+#: blueman/plugins/applet/TransferService.py:312
 #, python-format
 msgid "Transfer of file %(0)s failed"
 msgstr "Overføring av fila %(0)s mislyktes"
 
-#: blueman/plugins/applet/TransferService.py:333
-#: blueman/plugins/applet/TransferService.py:342
+#: blueman/plugins/applet/TransferService.py:332
+#: blueman/plugins/applet/TransferService.py:341
 msgid "Files received"
 msgstr "Filer mottatt"
 
-#: blueman/plugins/applet/TransferService.py:334
+#: blueman/plugins/applet/TransferService.py:333
 #, python-format
 msgid "Received %(files)d file in the background"
 msgid_plural "Received %(files)d files in the background"
 msgstr[0] "Mottok %(files)d fil i bakgrunnen"
 msgstr[1] "Mottok %(files)d filer i bakgrunnen"
 
-#: blueman/plugins/applet/TransferService.py:339
-#: blueman/plugins/applet/TransferService.py:347
+#: blueman/plugins/applet/TransferService.py:338
+#: blueman/plugins/applet/TransferService.py:346
 msgid "Open Location"
-msgstr ""
+msgstr "Åpne plassering"
 
-#: blueman/plugins/applet/TransferService.py:343
+#: blueman/plugins/applet/TransferService.py:342
 #, python-format
 msgid "Received %(files)d more file in the background"
 msgid_plural "Received %(files)d more files in the background"
@@ -2469,6 +2501,9 @@ msgid ""
 "turning Bluetooth back on from an icon that shows its status; provided it "
 "isn't unplugged by the system, or physically."
 msgstr ""
+"Bytter drapsbryter-status for Blåtann for å samsvare med effektstatus. Lar "
+"Blåtann slå seg på fra et ikon som viser status; forutsatt at den ikke er "
+"utplugget fysisk, eller av systemet."
 
 #: blueman/plugins/applet/StandardItems.py:22
 msgid "Adds standard menu items to the status icon menu"
@@ -2554,7 +2589,7 @@ msgstr "Blåtann avskrudd"
 
 #: blueman/plugins/applet/DisconnectItems.py:14
 msgid "Adds disconnect menu items"
-msgstr ""
+msgstr "Legger til menypunkter for frakobling"
 
 #: blueman/plugins/applet/DisconnectItems.py:40
 #, python-format
@@ -2598,7 +2633,7 @@ msgstr ""
 "Tilbyr meny for panelprogrammet og et API slik at andre programtillegg kan "
 "manipulere det"
 
-#: blueman/plugins/applet/PPPSupport.py:72
+#: blueman/plugins/applet/PPPSupport.py:73
 #, python-format
 msgid ""
 "Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\n"
@@ -2607,7 +2642,7 @@ msgstr ""
 "Tilkoblet <b>DUN</b>-tjenesten på <b>%(0)s.</b>\n"
 "Nettverket er nå tilgjengelig via <b>%(1)s</b>"
 
-#: blueman/plugins/applet/PPPSupport.py:80
+#: blueman/plugins/applet/PPPSupport.py:81
 msgid "Provides basic support for connecting to the internet via DUN profile."
 msgstr ""
 "Tilbyr grunnleggende støtte for forbindelse til Internett via DUN-profil."
@@ -2708,20 +2743,20 @@ msgstr ""
 msgid "Provides a StatusNotifierItem to show a statusicon"
 msgstr "Bruker libappindikator for å vise et statusikon"
 
-#: blueman/plugins/services/Network.py:25
+#: blueman/plugins/services/Network.py:23
 msgid "Network"
 msgstr "Nettverk"
 
-#: blueman/plugins/services/Network.py:97
+#: blueman/plugins/services/Network.py:98
 msgid "Invalid IP address"
 msgstr "Ugyldig IP-adresse"
 
-#: blueman/plugins/services/Network.py:102
+#: blueman/plugins/services/Network.py:103
 #, python-format
 msgid "IP address conflicts with interface %s which has the same address"
 msgstr "IP-adressen er i konflikt med grensesnittet %s som har samme adresse"
 
-#: blueman/plugins/services/Network.py:110
+#: blueman/plugins/services/Network.py:111
 #, fuzzy, python-format
 msgid ""
 "IP address overlaps with subnet of interface %s, which has the following "
@@ -2732,16 +2767,16 @@ msgstr ""
 "følgende oppsett  %s/%s\n"
 "Dette kan forårsake nettverkskrøll"
 
-#: blueman/plugins/services/Network.py:237
-#: blueman/plugins/services/Network.py:246
+#: blueman/plugins/services/Network.py:236
+#: blueman/plugins/services/Network.py:245
 msgid "Not currently supported with this setup"
 msgstr "For øyeblikket ikke støttet med dette oppsettet"
 
-#: blueman/plugins/services/Transfer.py:15
+#: blueman/plugins/services/Transfer.py:14
 msgid "Transfer"
 msgstr "Overfør"
 
-#: blueman/plugins/services/Transfer.py:28
+#: blueman/plugins/services/Transfer.py:27
 #, fuzzy
 msgid "Applet's transfer service plugin is disabled"
 msgstr "Panelprogrammet utvidelsesprogramtillegg for overføring er avskrudd"
@@ -2812,6 +2847,9 @@ msgstr "Sett RfKill-tilstand"
 #, fuzzy
 msgid "Setting RfKill State requires privileges"
 msgstr "Setting av RfKill-tilstand krever rettigheter"
+
+#~ msgid "Bluetooth Devices"
+#~ msgstr "Blåtannsenheter"
 
 #~ msgid "Isdn"
 #~ msgstr "ISDN"
