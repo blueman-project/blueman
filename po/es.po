@@ -19,16 +19,16 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2022-07-05 14:08+0200\n"
-"PO-Revision-Date: 2022-06-27 09:52+0000\n"
+"PO-Revision-Date: 2022-07-21 03:20+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
-"Language-Team: Spanish <https://hosted.weblate.org/projects/blueman/blueman/"
-"es/>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/blueman/2-3/es/"
+">\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13.1-dev\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -193,7 +193,7 @@ msgstr "<b>Configuración de red</b>"
 
 #: data/ui/services-transfer.ui:25
 msgid "<b>File Receiving (Object Push)</b>"
-msgstr "<b>Recepción de archivo (Object Push)</b>"
+msgstr "<b>Recepción de archivos (Object Push)</b>"
 
 #: data/ui/services-transfer.ui:38
 msgid "Incoming Folder:"
@@ -632,12 +632,12 @@ msgstr "<b>Conectado</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:586
 msgid "Poor"
-msgstr "Insuficiente"
+msgstr "Pobre"
 
 #: blueman/gui/manager/ManagerDeviceList.py:588
 #: blueman/gui/manager/ManagerDeviceList.py:613
 msgid "Sub-optimal"
-msgstr "Casi óptima"
+msgstr "Insuficiente"
 
 #: blueman/gui/manager/ManagerDeviceList.py:590
 #: blueman/gui/manager/ManagerDeviceList.py:615
@@ -731,10 +731,8 @@ msgid "Connection Failed: "
 msgstr "Ha fallado la conexión: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:287
-#, fuzzy
-#| msgid "_<b>_Connect</b>"
 msgid "<b>_Connect</b>"
-msgstr "_<b>_Conectar</b>"
+msgstr "<b>_Conectar</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:289
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
@@ -742,10 +740,8 @@ msgstr ""
 "Conecta los perfiles de conexión automática fuente A2DP, receptor A2DP y HID"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:293
-#, fuzzy
-#| msgid "_<b>Disconnect</b>"
 msgid "<b>_Disconnect</b>"
-msgstr "_<b>Desconectar</b>"
+msgstr "<b>_Desconectar</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:294
 msgid "Forcefully disconnect the device"
@@ -1313,7 +1309,7 @@ msgstr "Genérico: ciclismo"
 
 #: blueman/DeviceClass.py:203
 msgid "Cycling: Cycling Computer"
-msgstr "Ciclismo: Computadora"
+msgstr "Ciclismo: ciclocomputador"
 
 #: blueman/DeviceClass.py:204
 msgid "Cycling: Speed Sensor"
@@ -1378,11 +1374,11 @@ msgstr "Bombeo de insulina, Parche"
 
 #: blueman/DeviceClass.py:220
 msgid "Insulin Pen"
-msgstr "Lapiz de insulina"
+msgstr "Inyector de insulina"
 
 #: blueman/DeviceClass.py:221
 msgid "Generic Medication Delivery"
-msgstr "Entrega de medicamentos genérico"
+msgstr "Administración de medicamentos genérica"
 
 #. 55 - 80 reserved
 #: blueman/DeviceClass.py:223
@@ -1491,11 +1487,11 @@ msgstr "CMTP"
 
 #: blueman/Sdp.py:109
 msgid "UDI_C-Plane"
-msgstr "UDI_C-Avion"
+msgstr "Plano UDI_C"
 
 #: blueman/Sdp.py:110 blueman/Sdp.py:111
 msgid "Multi-Channel Adaptation Protocol (MCAP)"
-msgstr "Protocolo de Adaptación en Canales Multiples"
+msgstr "Protocolo de Adaptación Multicanal (MCAP)"
 
 #: blueman/Sdp.py:112
 msgid "L2CAP"
@@ -1531,7 +1527,7 @@ msgstr "Sincronización IrMC"
 
 #: blueman/Sdp.py:120
 msgid "OBEX Object Push"
-msgstr "OBEX Empujar objeto"
+msgstr "Envío de objetos por OBEX"
 
 #: blueman/Sdp.py:121
 msgid "OBEX File Transfer"
@@ -1555,7 +1551,7 @@ msgstr "Receptor de audio"
 
 #: blueman/Sdp.py:127
 msgid "Remote Control Target"
-msgstr "Control Remoto Enfoque"
+msgstr "Objetivo de mando a distancia"
 
 #: blueman/Sdp.py:128
 msgid "Advanced Audio"
@@ -1579,15 +1575,15 @@ msgstr "Fax"
 
 #: blueman/Sdp.py:133
 msgid "Headset Audio Gateway"
-msgstr "Puerta de enlace al Auricular"
+msgstr "Pasarela de audio a diadema"
 
 #: blueman/Sdp.py:134
 msgid "WAP"
-msgstr "Protocolo de aplicaciones inalámbricas"
+msgstr "WAP"
 
 #: blueman/Sdp.py:135
 msgid "WAP Client"
-msgstr "Cliente de protocolo de conexiones inalambricas"
+msgstr "Cliente de WAP"
 
 #: blueman/Sdp.py:136
 msgid "PANU"
@@ -1607,11 +1603,11 @@ msgstr "Impresión directa (BPP)"
 
 #: blueman/Sdp.py:140
 msgid "ReferencePrinting (BPP)"
-msgstr "Referencia de impresión"
+msgstr "Impresión por referencia (BPP)"
 
 #: blueman/Sdp.py:141
 msgid "Imaging (BIP)"
-msgstr "Imagen"
+msgstr "Captación de imágenes (BPP)"
 
 #: blueman/Sdp.py:142
 msgid "ImagingResponder (BIP)"
@@ -1627,7 +1623,7 @@ msgstr "Referencia de objetos en imagen"
 
 #: blueman/Sdp.py:146
 msgid "Handsfree Audio Gateway"
-msgstr "Puerto de audio (Manos libres)"
+msgstr "Pasarela de audio a manos libres"
 
 #: blueman/Sdp.py:147
 msgid "DirectPrintingReferenceObjectsService (BPP)"
@@ -1639,7 +1635,7 @@ msgstr "Reflexion de UI"
 
 #: blueman/Sdp.py:149
 msgid "Basic Printing (BPP)"
-msgstr "Impresión basica"
+msgstr "Impresión básica (BPP)"
 
 #: blueman/Sdp.py:150
 msgid "Printing Status (BPP)"
@@ -1879,7 +1875,7 @@ msgstr "Velocidad y cadencia en ciclismo"
 
 #: blueman/Sdp.py:210
 msgid "Cycling Power"
-msgstr "Energia de Ciclismo"
+msgstr "Energía en ciclismo"
 
 #: blueman/Sdp.py:211
 msgid "Location and Navigation"

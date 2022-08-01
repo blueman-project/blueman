@@ -23,7 +23,7 @@
 # Balázs Meskó <mesko.balazs@fsf.hu>, 2017
 # Falu <info@falu.me>, 2017
 # István Szőllősi <szollosi.istv4n@gmail.com>, 2014,2017
-# KAMI KAMI <kami911@gmail.com>, 2014,2016-2017,2019
+# KAMI KAMI <kami911@gmail.com>, 2014,2016-2017,2019, 2022.
 # Rezső Páder <rezso@rezso.net>, 2014-2015,2017
 # Zoltán Rápolthy <real_zolee@hotmail.com>, 2017
 # Ács Zoltán <acszoltan111@gmail.com>, 2020, 2021, 2022.
@@ -32,16 +32,16 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2022-07-05 14:08+0200\n"
-"PO-Revision-Date: 2022-06-06 16:56+0000\n"
-"Last-Translator: Ács Zoltán <acszoltan111@gmail.com>\n"
-"Language-Team: Hungarian <https://hosted.weblate.org/projects/blueman/"
-"blueman/hu/>\n"
+"PO-Revision-Date: 2022-08-01 06:10+0000\n"
+"Last-Translator: KAMI <kami911@gmail.com>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/blueman/2-3/hu/"
+">\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13-dev\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -152,10 +152,8 @@ msgstr "_Visszaállítás"
 
 #: data/ui/rename-device.ui:40 data/ui/note.ui:26 blueman/main/Sendto.py:235
 #: blueman/gui/DeviceSelectorDialog.py:17
-#, fuzzy
-#| msgid "Cancelling"
 msgid "_Cancel"
-msgstr "Megszakítás"
+msgstr "_Megszakítás"
 
 #: data/ui/rename-device.ui:54 data/ui/note.ui:41
 #: blueman/gui/DeviceSelectorDialog.py:17
@@ -668,12 +666,12 @@ msgstr "Túl sok"
 #: blueman/gui/manager/ManagerDeviceList.py:597
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
-msgstr ""
+msgstr "<b>Jelerősség: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:600
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
-msgstr ""
+msgstr "Jelerősség: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:605
 #, python-format
@@ -700,12 +698,12 @@ msgstr "Nagyon magas"
 #: blueman/gui/manager/ManagerDeviceList.py:622
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
-msgstr ""
+msgstr "<b>Átvitel-teljesítményszint: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:625
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
-msgstr ""
+msgstr "Átvitel-teljesítményszint: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:131
 msgid "Success!"
@@ -744,10 +742,8 @@ msgid "Connection Failed: "
 msgstr "Kapcsolódás sikertelen: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:287
-#, fuzzy
-#| msgid "_<b>_Connect</b>"
 msgid "<b>_Connect</b>"
-msgstr "_<b>_Csatlakozás</b>"
+msgstr "<b>_Csatlakozás</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:289
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
@@ -756,10 +752,8 @@ msgstr ""
 "hangforrást, az A2DP hangfogadót és a HID eszközt."
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:293
-#, fuzzy
-#| msgid "_<b>Disconnect</b>"
 msgid "<b>_Disconnect</b>"
-msgstr "_<b>Leválasztás</b>"
+msgstr "<b>_Leválasztás</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:294
 msgid "Forcefully disconnect the device"
@@ -778,7 +772,6 @@ msgid "<b>Auto-connect:</b>"
 msgstr "<b>Automatikus csatlakozás:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:343
-#, fuzzy
 msgid "Send a _File…"
 msgstr "_Fájl küldése…"
 
@@ -799,7 +792,6 @@ msgid "_Block"
 msgstr "_Blokkolás"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:383
-#, fuzzy
 msgid "_Unblock"
 msgstr "B_lokkolás feloldása"
 
@@ -927,9 +919,8 @@ msgstr "Periféria"
 
 #. translators: device class
 #: blueman/DeviceClass.py:18 blueman/DeviceClass.py:276
-#, fuzzy
 msgid "Imaging"
-msgstr "Képalkotás"
+msgstr "Képalkotó"
 
 #. translators: device class
 #: blueman/DeviceClass.py:20 blueman/DeviceClass.py:41
@@ -964,7 +955,7 @@ msgstr "Kéziszámítógép"
 #. translators: device class
 #: blueman/DeviceClass.py:39
 msgid "Palm"
-msgstr ""
+msgstr "Tenyérgép"
 
 #. translators: device class
 #: blueman/DeviceClass.py:48
@@ -989,7 +980,7 @@ msgstr "Modem"
 #. translators: device class
 #: blueman/DeviceClass.py:56
 msgid "ISDN"
-msgstr ""
+msgstr "ISDN"
 
 #. translators: device class
 #: blueman/DeviceClass.py:61
@@ -1049,7 +1040,7 @@ msgstr "Mikrofon"
 #. translators: device class
 #: blueman/DeviceClass.py:90
 msgid "Loudspeaker"
-msgstr ""
+msgstr "Hangszóró"
 
 #. translators: device class
 #: blueman/DeviceClass.py:92
@@ -1058,30 +1049,28 @@ msgstr "Fejhallgató"
 
 #. translators: device class
 #: blueman/DeviceClass.py:94
-#, fuzzy
 msgid "Portable audio"
-msgstr "Hordozható hang"
+msgstr "Hordozható hangszóró"
 
 #. translators: device class
 #: blueman/DeviceClass.py:96
-#, fuzzy
 msgid "Car audio"
 msgstr "Autós kihangosítás"
 
 #. translators: device class
 #: blueman/DeviceClass.py:98
 msgid "Set-top box"
-msgstr ""
+msgstr "Beltéri egységek"
 
 #. translators: device class
 #: blueman/DeviceClass.py:100
 msgid "Hi-Fi audio"
-msgstr ""
+msgstr "Hi-Fi hangrendszer"
 
 #. translators: device class
 #: blueman/DeviceClass.py:102
 msgid "VCR"
-msgstr ""
+msgstr "Videókazetta-felvevő (VCR)"
 
 #. translators: device class
 #: blueman/DeviceClass.py:104
@@ -1091,7 +1080,7 @@ msgstr "Videókamera"
 #. translators: device class
 #: blueman/DeviceClass.py:106
 msgid "Camcorder"
-msgstr ""
+msgstr "Kézi videókamera"
 
 #. translators: device class
 #: blueman/DeviceClass.py:108
@@ -2066,7 +2055,7 @@ msgstr ""
 
 #: blueman/Sdp.py:249
 msgid "Valid Range"
-msgstr ""
+msgstr "Érvényes tartomány"
 
 #: blueman/Sdp.py:250
 msgid "External Report Reference"
@@ -2078,9 +2067,8 @@ msgid "Report Reference"
 msgstr "Csatoló beállítások"
 
 #: blueman/Sdp.py:378
-#, fuzzy
 msgid "Audio and input profiles"
-msgstr "Automatikusan csatlakozó profilok"
+msgstr "Hang és bemeneti profilok"
 
 #: blueman/Sdp.py:380
 msgid "Proprietary"
@@ -2097,6 +2085,8 @@ msgstr "nem"
 #: blueman/plugins/manager/Info.py:60
 msgid "<big>Select row(s) and use <i>Control + C</i> to copy</big>"
 msgstr ""
+"<big>Válassza ki a sorokat és használja a <i>Control + C</i> "
+"billentyűkombinációt a másoláshoz</big>"
 
 #: blueman/plugins/manager/Info.py:120
 msgid "_Info"
@@ -2135,6 +2125,8 @@ msgstr "Nincs megadva"
 msgid ""
 "Tries to auto-connect to configurable services on start and every 60 seconds."
 msgstr ""
+"Induláskor és 60 másodpercenként csatlakozni próbál a beállítható "
+"szolgáltatásokhoz."
 
 #. https://github.com/python/mypy/issues/2608
 #: blueman/plugins/applet/AutoConnect.py:50
@@ -2148,6 +2140,7 @@ msgstr "Csatlakozva"
 #, python-format
 msgid "Automatically connected to %(service)s on %(device)s"
 msgstr ""
+"Automatikus csatlakozás a(z) %(device)s eszköz %(service)s szolgáltatásához"
 
 #: blueman/plugins/applet/ConnectionNotifier.py:15
 msgid "Shows desktop notifications when devices get connected or disconnected."
@@ -2678,9 +2671,8 @@ msgid "Blueman Applet"
 msgstr "kisalkalmazás"
 
 #: data/blueman.desktop.in:4 data/blueman-manager.desktop.in:4
-#, fuzzy
 msgid "Blueman Bluetooth Manager"
-msgstr "A Blueman egy GTK+ alapú Bluetooth-kezelő"
+msgstr "Blueman Bluetooth-kezelő"
 
 #: data/blueman-manager.desktop.in:3
 msgid "Bluetooth Manager"

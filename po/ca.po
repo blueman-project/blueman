@@ -11,16 +11,16 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2022-07-05 14:08+0200\n"
-"PO-Revision-Date: 2022-06-27 09:52+0000\n"
+"PO-Revision-Date: 2022-07-30 11:41+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
-"Language-Team: Catalan <https://hosted.weblate.org/projects/blueman/blueman/"
-"ca/>\n"
+"Language-Team: Catalan <https://hosted.weblate.org/projects/blueman/2-3/ca/>"
+"\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13.1-dev\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -617,7 +617,7 @@ msgstr "Aparella"
 
 #: blueman/gui/manager/ManagerDeviceList.py:548
 msgid "Blocked"
-msgstr ""
+msgstr "Blocat"
 
 #: blueman/gui/manager/ManagerDeviceList.py:571
 #, fuzzy
@@ -726,9 +726,8 @@ msgid "Connection Failed: "
 msgstr "No s'ha pogut connectar:"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:287
-#, fuzzy
 msgid "<b>_Connect</b>"
-msgstr "<b>Connecta a:</b>"
+msgstr "<b>_Connecta</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:289
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
@@ -737,10 +736,8 @@ msgstr ""
 "A2DP, i HID"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:293
-#, fuzzy
-#| msgid "<b>Disconnect:</b>"
 msgid "<b>_Disconnect</b>"
-msgstr "<b>Desconnecta:</b>"
+msgstr "<b>_Desconnecta</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:294
 msgid "Forcefully disconnect the device"
@@ -864,7 +861,7 @@ msgid ""
 "Proceed?"
 msgstr ""
 "El connector <b>%(0)s</b> entra en conflicte amb <b>%(1)s</b>. El fet de "
-"carregar <b>%(1)s</b> descarregarà <b>\"%(0)s\"</b>.\n"
+"carregar <b>%(1)s</b> descarregarà <b>%(0)s</b>.\n"
 "Voleu procedir?"
 
 #: blueman/gui/DeviceSelectorWidget.py:39
@@ -893,14 +890,13 @@ msgstr "Telèfon"
 
 #. translators: device class
 #: blueman/DeviceClass.py:12
-#, fuzzy
 msgid "Access point"
-msgstr "Punt d'accés de xarxa"
+msgstr "Punt d’accés"
 
 #. translators: device class
 #: blueman/DeviceClass.py:14
 msgid "Audio/video"
-msgstr ""
+msgstr "Àudio/vídeo"
 
 #. translators: device class
 #: blueman/DeviceClass.py:16
@@ -1070,9 +1066,8 @@ msgstr ""
 
 #. translators: device class
 #: blueman/DeviceClass.py:104
-#, fuzzy
 msgid "Video camera"
-msgstr "Origen d'àudio"
+msgstr "Videocàmera"
 
 #. translators: device class
 #: blueman/DeviceClass.py:106
@@ -1092,14 +1087,13 @@ msgstr ""
 
 #. translators: device class
 #: blueman/DeviceClass.py:112
-#, fuzzy
 msgid "Video conferencing"
-msgstr "Origen d'àudio"
+msgstr "Videoconferència"
 
 #. translators: device class
 #: blueman/DeviceClass.py:116
 msgid "Gaming/Toy"
-msgstr ""
+msgstr "Joc/joguina"
 
 #. translators: device class
 #: blueman/DeviceClass.py:123 blueman/DeviceClass.py:189
@@ -1130,7 +1124,7 @@ msgstr "Càmera"
 #. translators: device class
 #: blueman/DeviceClass.py:136
 msgid "Scanner"
-msgstr ""
+msgstr "Escàner"
 
 #. translators: device class
 #: blueman/DeviceClass.py:138
@@ -1145,17 +1139,17 @@ msgstr "Rellotge de polsera"
 #. translators: device class
 #: blueman/DeviceClass.py:145
 msgid "Pager"
-msgstr ""
+msgstr "Cercapersones"
 
 #. translators: device class
 #: blueman/DeviceClass.py:147
 msgid "Jacket"
-msgstr ""
+msgstr "Jaqueta"
 
 #. translators: device class
 #: blueman/DeviceClass.py:149
 msgid "Helmet"
-msgstr ""
+msgstr "Casc"
 
 #. translators: device class
 #: blueman/DeviceClass.py:151
@@ -1400,7 +1394,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:221
 msgid "Generic Medication Delivery"
-msgstr ""
+msgstr "Administració de medicaments genèrica"
 
 #. 55 - 80 reserved
 #: blueman/DeviceClass.py:223
@@ -1513,11 +1507,11 @@ msgstr ""
 
 #: blueman/Sdp.py:110 blueman/Sdp.py:111
 msgid "Multi-Channel Adaptation Protocol (MCAP)"
-msgstr ""
+msgstr "Protocol d’Adaptació Multicanal (MCAP)"
 
 #: blueman/Sdp.py:112
 msgid "L2CAP"
-msgstr ""
+msgstr "L2CAP"
 
 #: blueman/Sdp.py:113
 msgid "ServiceDiscoveryServerServiceClassID"
@@ -1532,9 +1526,8 @@ msgid "Public Browse Group"
 msgstr ""
 
 #: blueman/Sdp.py:116
-#, fuzzy
 msgid "Serial Port"
-msgstr "Ports sèries"
+msgstr "Port en sèrie"
 
 #: blueman/Sdp.py:117
 msgid "LAN Access Using PPP"
@@ -1659,15 +1652,15 @@ msgstr ""
 
 #: blueman/Sdp.py:149
 msgid "Basic Printing (BPP)"
-msgstr ""
+msgstr "Impressió bàsica (BPP)"
 
 #: blueman/Sdp.py:150
 msgid "Printing Status (BPP)"
-msgstr ""
+msgstr "Estat de la impressió (BPP)"
 
 #: blueman/Sdp.py:151
 msgid "Human Interface Device Service (HID)"
-msgstr ""
+msgstr "Servei de dispositius d’interfície humana (HID)"
 
 #: blueman/Sdp.py:152
 msgid "HardcopyCableReplacement (HCR)"
@@ -1927,7 +1920,7 @@ msgstr ""
 
 #: blueman/Sdp.py:215
 msgid "Weight Scale"
-msgstr ""
+msgstr "Bàscula"
 
 #: blueman/Sdp.py:216
 msgid "Bond Management"
