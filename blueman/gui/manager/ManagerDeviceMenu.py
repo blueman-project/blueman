@@ -1,4 +1,3 @@
-import errno
 import logging
 from enum import Enum, auto
 from gettext import gettext as _
@@ -159,7 +158,7 @@ class ManagerDeviceMenu(Gtk.Menu):
 
         def initial_error_handler(obj: AppletService, result: GLib.Error, user_date: None) -> None:
             # There are (Intel) drivers that fail to connect while a discovery is running
-            if self._get_errno(result) == errno.EAGAIN:
+            if self._BLUEZ_ERROR_MAP.get(result.message.split(":", 3)[-1].strip()) == self._BluezError.AGAIN:
                 assert self.Blueman.List.Adapter is not None
                 self.Blueman.List.Adapter.stop_discovery()
                 connect(fail)
@@ -197,45 +196,54 @@ class ManagerDeviceMenu(Gtk.Menu):
                 self.generate()
 
     def _handle_error_message(self, error: GLib.Error) -> None:
-        err = self._get_errno(error)
+        err = self._BLUEZ_ERROR_MAP.get(error.message.split(":", 3)[-1].strip())
 
-        if err == errno.ENOPROTOOPT:
+        if err == self._BluezError.PROFILE_UNAVAILABLE:
             logging.warning("No audio endpoints registered to bluetoothd. "
                             "Pulseaudio Bluetooth module, bluez-alsa, PipeWire or other audio support missing.")
             msg = _("No audio endpoints registered")
-        elif err == errno.EIO:
+        elif err == self._BluezError.CREATE_SOCKET:
             logging.warning("bluetoothd reported input/output error. Check its logs for context.")
             msg = _("Input/output error")
-        elif err == errno.EHOSTDOWN:
+        elif err == self._BluezError.PAGE_TIMEOUT:
             msg = _("Device did not respond")
-        elif err == errno.EAGAIN:
-            logging.warning("bluetoothd reported resource temporarily unavailable. "
+        elif err in (self._BluezError.AGAIN, self._BluezError.UNKNOWN):
+            logging.warning("bluetoothd reported an unknown error. "
                             "Retry or check its logs for context.")
-            msg = _("Resource temporarily unavailable")
+            msg = _("Unknown error")
         else:
             msg = error.message.split(":", 3)[-1].strip()
 
-        if msg != "Cancelled":
+        if err != self._BluezError.CANCELED:
             self.Blueman.infobar_update(_("Connection Failed: ") + msg)
 
-    @staticmethod
-    def _get_errno(error: GLib.Error) -> Optional[int]:
-        msg = error.message.split(":", 3)[-1].strip()
+    class _BluezError(Enum):
+        PAGE_TIMEOUT = auto()
+        PROFILE_UNAVAILABLE = auto()
+        CREATE_SOCKET = auto()
+        CANCELED = auto()
+        UNKNOWN = auto()
+        AGAIN = auto()
 
-        # https://sourceware.org/git/?p=glibc.git;a=blob;f=sysdeps/gnu/errlist.h
-        # https://git.musl-libc.org/cgit/musl/tree/src/errno/__strerror.h
-        # https://git.uclibc.org/uClibc/tree/libc/string/_string_syserrmsgs.c
-        if msg == "Protocol not available":
-            return errno.ENOPROTOOPT
-        if msg in ("Input/output error", "I/O error"):
-            return errno.EIO
-        if msg == "Host is down":
-            # Bluetooth errors 0x04 (Page Timeout) or 0x3c (Advertising Timeout)
-            return errno.EHOSTDOWN
-        if msg == "Resource temporarily unavailable":
-            return errno.EAGAIN
-
-        return None
+    # BlueZ 5.62 introduced machine-readable error strings while earlier versions
+    # used strerror() so that the messages depend on the libc implementation:
+    # https://sourceware.org/git/?p=glibc.git;a=blob;f=sysdeps/gnu/errlist.h
+    # https://git.musl-libc.org/cgit/musl/tree/src/errno/__strerror.h
+    # https://git.uclibc.org/uClibc/tree/libc/string/_string_syserrmsgs.c
+    _BLUEZ_ERROR_MAP = {
+        "Protocol not available": _BluezError.PROFILE_UNAVAILABLE,
+        "br-connection-profile-unavailable": _BluezError.PROFILE_UNAVAILABLE,
+        "Input/output error": _BluezError.CREATE_SOCKET,
+        "I/O error": _BluezError.CREATE_SOCKET,
+        "br-connection-create-socket": _BluezError.CREATE_SOCKET,
+        "le-connection-create-socket": _BluezError.CREATE_SOCKET,
+        "Host is down": _BluezError.PAGE_TIMEOUT,
+        "br-connection-page-timeout": _BluezError.PAGE_TIMEOUT,
+        "Resource temporarily unavailable": _BluezError.AGAIN,
+        "br-connection-unknown": _BluezError.UNKNOWN,
+        "Cancelled": _BluezError.CANCELED,
+        "br-connection-canceled": _BluezError.CANCELED,
+    }
 
     def show_generic_connect_calc(self, device_uuids: Iterable[str]) -> bool:
         # Generic (dis)connect
