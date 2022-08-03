@@ -258,15 +258,16 @@ class ManagerDeviceList(DeviceList):
 
         return icon_info
 
-    def make_device_icon(self, icon_info: Gtk.IconInfo, is_paired: bool = False, is_trusted: bool = False,
-                         is_blocked: bool = False) -> cairo.Surface:
+    def _make_device_icon(self, icon_info: Gtk.IconInfo, is_paired: bool, is_connected: bool, is_trusted: bool,
+                          is_blocked: bool) -> cairo.Surface:
         window = self.get_window()
         scale = self.get_scale_factor()
         target = icon_info.load_surface(window)
         ctx = cairo.Context(target)
 
-        if is_paired:
-            _icon_info = self.get_icon_info("blueman-paired-emblem", 16, False)
+        if is_connected or is_paired:
+            icon = "blueman-connected-emblem" if is_connected else "blueman-paired-emblem"
+            _icon_info = self.get_icon_info(icon, 16, False)
             assert _icon_info is not None
             paired_surface = _icon_info.load_surface(window)
             ctx.set_source_surface(paired_surface, 1 / scale, 1 / scale)
@@ -644,8 +645,9 @@ class ManagerDeviceList(DeviceList):
                        tree_iter: Gtk.TreeIter, data: Optional[str]) -> None:
         tree_iter = model.convert_iter_to_child_iter(tree_iter)
         if data is None:
-            row = self.get(tree_iter, "icon_info", "trusted", "paired", "blocked")
-            surface = self.make_device_icon(row["icon_info"], row["paired"], row["trusted"], row["blocked"])
+            row = self.get(tree_iter, "icon_info", "paired", "connected", "trusted", "blocked")
+            surface = self._make_device_icon(row["icon_info"], row["paired"],
+                                             row["connected"], row["trusted"], row["blocked"])
             cell.set_property("surface", surface)
         else:
             window = self.get_window()
