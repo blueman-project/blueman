@@ -162,12 +162,13 @@ class NMPANConnection(NMConnectionBase):
     @property
     def connection_uuid(self) -> str:
         # PANU connections are automatically created so attempt to find it
-        # It appears the Name property is used not Alias!
-        conn = self.client.get_connection_by_id(f"{self.device['Name']} Network")
         res: str
-        if conn is not None:
-            conn_settings = conn.get_setting_connection()
-            res = conn_settings.get_uuid()
+        for conn in self.client.get_connections():
+            bluetooth_setting = conn.get_setting_bluetooth()
+            if bluetooth_setting is not None and bluetooth_setting.get_bdaddr() == self.bdaddr:
+                conn_settings = conn.get_setting_connection()
+                res = conn_settings.get_uuid()
+                break
         else:
             res = self.Config['nmpanuuid']
         return res
