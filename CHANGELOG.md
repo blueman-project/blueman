@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.3.3
+
+### Bugs fixed
+
+* Issues with NM PANU connections of equally named devices
+
 ## 2.3.2
 
 ### Bugs fixed
