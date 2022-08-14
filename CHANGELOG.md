@@ -9,6 +9,10 @@
 * Store network configuration in GSettings instead of /var/lib/blueman/network.state.
 * Replace custom MessageArea widget with regular Gtk.InfoBar
 
+### Bugs fixed
+
+* Issues with NM PANU connections of equally named devices
+
 ## 2.3.1
 
 ### Bugs fixed
