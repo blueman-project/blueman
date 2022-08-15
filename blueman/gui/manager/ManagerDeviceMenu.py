@@ -1,7 +1,7 @@
 import logging
 from enum import Enum, auto
 from gettext import gettext as _
-from typing import Dict, List, Tuple, Optional, TYPE_CHECKING, Union, Iterable, Callable
+from typing import Dict, List, Tuple, Optional, TYPE_CHECKING, Union, Iterable
 
 from blueman.Functions import create_menuitem, e_
 from blueman.bluez.Network import AnyNetwork
@@ -150,22 +150,9 @@ class ManagerDeviceMenu(Gtk.Menu):
             fail(None, GLib.Error('Applet DBus Service not available'), None)
             return
 
-        def connect(error_handler: Callable[[AppletService, GLib.Error, None], None]) -> None:
-            assert self._appl is not None  # https://github.com/python/mypy/issues/2608
-            self._appl.ConnectService('(os)', device.get_object_path(), uuid,
-                                      result_handler=success, error_handler=error_handler,
-                                      timeout=GLib.MAXINT)
-
-        def initial_error_handler(obj: AppletService, result: GLib.Error, user_date: None) -> None:
-            # There are (Intel) drivers that fail to connect while a discovery is running
-            if self._BLUEZ_ERROR_MAP.get(result.message.split(":", 3)[-1].strip()) == self._BluezError.AGAIN:
-                assert self.Blueman.List.Adapter is not None
-                self.Blueman.List.Adapter.stop_discovery()
-                connect(fail)
-            else:
-                fail(obj, result, user_date)
-
-        connect(initial_error_handler)
+        self._appl.ConnectService('(os)', device.get_object_path(), uuid,
+                                  result_handler=success, error_handler=fail,
+                                  timeout=GLib.MAXINT)
 
         prog.start()
 
@@ -207,7 +194,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             msg = _("Input/output error")
         elif err == self._BluezError.PAGE_TIMEOUT:
             msg = _("Device did not respond")
-        elif err in (self._BluezError.AGAIN, self._BluezError.UNKNOWN):
+        elif err == self._BluezError.UNKNOWN:
             logging.warning("bluetoothd reported an unknown error. "
                             "Retry or check its logs for context.")
             msg = _("Unknown error")
@@ -223,7 +210,6 @@ class ManagerDeviceMenu(Gtk.Menu):
         CREATE_SOCKET = auto()
         CANCELED = auto()
         UNKNOWN = auto()
-        AGAIN = auto()
 
     # BlueZ 5.62 introduced machine-readable error strings while earlier versions
     # used strerror() so that the messages depend on the libc implementation:
@@ -239,7 +225,6 @@ class ManagerDeviceMenu(Gtk.Menu):
         "le-connection-create-socket": _BluezError.CREATE_SOCKET,
         "Host is down": _BluezError.PAGE_TIMEOUT,
         "br-connection-page-timeout": _BluezError.PAGE_TIMEOUT,
-        "Resource temporarily unavailable": _BluezError.AGAIN,
         "br-connection-unknown": _BluezError.UNKNOWN,
         "Cancelled": _BluezError.CANCELED,
         "br-connection-canceled": _BluezError.CANCELED,
