@@ -48,9 +48,6 @@ class ManagerDeviceList(DeviceList):
             {"id": "rssi_pb", "type": GdkPixbuf.Pixbuf, "renderer": Gtk.CellRendererPixbuf(),
              "render_attrs": {}, "view_props": {"spacing": 0},
              "celldata_func": (self._set_cell_data, "rssi")},
-            {"id": "lq_pb", "type": GdkPixbuf.Pixbuf, "renderer": Gtk.CellRendererPixbuf(),
-             "render_attrs": {}, "view_props": {"spacing": 0},
-             "celldata_func": (self._set_cell_data, "lq")},
             {"id": "tpl_pb", "type": GdkPixbuf.Pixbuf, "renderer": Gtk.CellRendererPixbuf(),
              "render_attrs": {}, "view_props": {"spacing": 0},
              "celldata_func": (self._set_cell_data, "tpl")},
@@ -61,7 +58,6 @@ class ManagerDeviceList(DeviceList):
             {"id": "objpush", "type": bool},  # used to set Send File button
             {"id": "battery", "type": float},
             {"id": "rssi", "type": float},
-            {"id": "lq", "type": float},
             {"id": "tpl", "type": float},
             {"id": "icon_info", "type": Gtk.IconInfo},
             {"id": "cell_fader", "type": CellFade},
@@ -474,22 +470,18 @@ class ManagerDeviceList(DeviceList):
         # cinfo init may fail for bluetooth devices version 4 and up
         # FIXME Workaround is horrible and we should show something better
         if cinfo.failed:
-            bars.update({"rssi": 100.0, "tpl": 100.0, "lq": 100.0})
+            bars.update({"rssi": 100.0, "tpl": 100.0})
         else:
             try:
                 bars["rssi"] = max(50 + float(cinfo.get_rssi()) / 127 * 50, 10)
             except ConnInfoReadError:
                 bars["rssi"] = 50
             try:
-                bars["lq"] = max(float(cinfo.get_lq()) / 255 * 100, 10)
-            except ConnInfoReadError:
-                bars["lq"] = 10
-            try:
                 bars["tpl"] = max(50 + float(cinfo.get_tpl()) / 127 * 50, 10)
             except ConnInfoReadError:
                 bars["tpl"] = 50
 
-        if row["battery"] == row["rssi"] == row["tpl"] == row["lq"] == 0:
+        if row["battery"] == row["rssi"] == row["tpl"] == 0:
             self._prepare_fader(row["cell_fader"]).animate(start=0.0, end=1.0, duration=400)
 
         w = 14 * self.get_scale_factor()
@@ -502,12 +494,12 @@ class ManagerDeviceList(DeviceList):
                 self.set(tree_iter, **{name: perc, f"{name}_pb": icon})
 
     def _disable_power_levels(self, tree_iter: Gtk.TreeIter) -> None:
-        row = self.get(tree_iter, "cell_fader", "battery", "rssi", "lq", "tpl")
-        if row["battery"] == row["rssi"] == row["tpl"] == row["lq"] == 0:
+        row = self.get(tree_iter, "cell_fader", "battery", "rssi", "tpl")
+        if row["battery"] == row["rssi"] == row["tpl"] == 0:
             return
 
-        self.set(tree_iter, battery=0, rssi=0, lq=0, tpl=0)
-        self._prepare_fader(row["cell_fader"], lambda: self.set(tree_iter, battery_pb=None, rssi_pb=None, lq_pb=None,
+        self.set(tree_iter, battery=0, rssi=0, tpl=0)
+        self._prepare_fader(row["cell_fader"], lambda: self.set(tree_iter, battery_pb=None, rssi_pb=None,
                                                                 tpl_pb=None)).animate(start=1.0, end=0.0, duration=400)
 
     def _prepare_fader(self, fader: AnimBase, callback: Optional[Callable[[], None]] = None) -> AnimBase:
@@ -559,7 +551,6 @@ class ManagerDeviceList(DeviceList):
 
         elif path[1] == self.columns["battery_pb"] \
                 or path[1] == self.columns["tpl_pb"] \
-                or path[1] == self.columns["lq_pb"] \
                 or path[1] == self.columns["rssi_pb"]:
             tree_iter = self.get_iter(path[0])
             assert tree_iter is not None
@@ -572,7 +563,6 @@ class ManagerDeviceList(DeviceList):
 
             battery = self.get(tree_iter, "battery")["battery"]
             rssi = self.get(tree_iter, "rssi")["rssi"]
-            lq = self.get(tree_iter, "lq")["lq"]
             tpl = self.get(tree_iter, "tpl")["tpl"]
 
             if battery != 0:
@@ -599,12 +589,6 @@ class ManagerDeviceList(DeviceList):
                 else:
                     lines.append(_("Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>") %
                                  {"rssi": rssi, "rssi_state": rssi_state})
-
-            if lq != 0:
-                if path[1] == self.columns["lq_pb"]:
-                    lines.append(_("<b>Link Quality: %(lq)u%%</b>") % {"lq": lq})
-                else:
-                    lines.append(_("Link Quality: %(lq)u%%") % {"lq": lq})
 
             if tpl != 0:
                 if tpl < 30:
