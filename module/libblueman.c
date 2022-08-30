@@ -220,16 +220,6 @@ int connection_get_rssi(struct conn_info_handles *ci, int8_t *ret_rssi)
 
 }
 
-int connection_get_lq(struct conn_info_handles *ci, uint8_t *ret_lq)
-{
-	uint8_t lq;
-	if (hci_read_link_quality(ci->dd, htobs(ci->handle), &lq, 1000) < 0) {
-		return ERR_READ_LQ_FAILED;
-	}
-	*ret_lq = lq;
-	return 1;
-}
-
 int connection_get_tpl(struct conn_info_handles *ci, int8_t *ret_tpl, uint8_t type)
 { 	
 	int8_t level;

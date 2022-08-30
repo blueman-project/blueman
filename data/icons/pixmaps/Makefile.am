@@ -11,16 +11,6 @@ pixmaps_DATA =			\
 	blueman-battery-80.png	\
 	blueman-battery-90.png	\
 	blueman-battery-100.png	\
-	blueman-lq-10.png	\
-	blueman-lq-20.png	\
-	blueman-lq-30.png	\
-	blueman-lq-40.png	\
-	blueman-lq-50.png	\
-	blueman-lq-60.png	\
-	blueman-lq-70.png	\
-	blueman-lq-80.png	\
-	blueman-lq-90.png	\
-	blueman-lq-100.png	\
 	blueman-rssi-10.png	\
 	blueman-rssi-20.png	\
 	blueman-rssi-30.png	\

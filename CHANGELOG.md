@@ -9,6 +9,7 @@
 * Store network configuration in GSettings instead of /var/lib/blueman/network.state.
 * Replace custom MessageArea widget with regular Gtk.InfoBar
 * Drop auto-power feature. BlueZ now has the AutoEnable setting for even better auto-powering.
+* Do not use pointless link quality value
 
 ### Bugs fixed
 

@@ -5,7 +5,6 @@
 #define ERR_GET_CONN_INFO_FAILED -4
 #define ERR_READ_RSSI_FAILED -5
 #define ERR_READ_TPL_FAILED -6
-#define ERR_READ_LQ_FAILED -7
 #define ERR_GET_RFCOMM_LIST_FAILED -8
 #define ERR_SOCKET_FAILED -9
 #define ERR_BIND_FAILED -12
@@ -20,7 +19,6 @@ struct conn_info_handles {
 
 int connection_init(int dev_id, char *addr, struct conn_info_handles *ci);
 int connection_get_rssi(struct conn_info_handles *ci, int8_t *ret_rssi);
-int connection_get_lq(struct conn_info_handles *ci, uint8_t *ret_lq);
 int connection_get_tpl(struct conn_info_handles *ci, int8_t *ret_tpl, uint8_t type);
 int connection_close(struct conn_info_handles *ci);
 int get_rfcomm_channel(uint16_t uuid, char* btd_addr);
