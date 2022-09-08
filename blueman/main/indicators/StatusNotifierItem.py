@@ -42,7 +42,8 @@ class MenuService(DbusService):
     def _get_layout(self, parent_id: int, _recursion_depth: int, _property_names: List[str]
                     ) -> Tuple[int, Tuple[int, Dict[str, GLib.Variant], List[GLib.Variant]]]:
         if parent_id == 0:
-            return self._revision, (0, {}, self._render_menu(self._items, 1, self._render_submenu))
+            return self._revision, (0, {}, self._render_menu(((item["id"], item) for item in self._items),
+                                                             self._render_submenu))
         else:
             item = self._items[parent_id - 1]
             if "submenu" in item and _recursion_depth != 0:
@@ -51,22 +52,22 @@ class MenuService(DbusService):
 
     def _render_submenu(self, item: "MenuItemDict", idx: int) -> List[GLib.Variant]:
         if "submenu" in item:
-            return self._render_menu(item["submenu"], idx * 100 + 1, lambda _item, _isx: [])
+            return self._render_menu(enumerate(item["submenu"], idx * 100 + 1), lambda _item, _isx: [])
         else:
             return []
 
     _T = TypeVar("_T", bound="SubmenuItemDict")
 
-    def _render_menu(self, items: Iterable[_T], start: int, submenu_callback: Callable[[_T, int], List[GLib.Variant]]
+    def _render_menu(self, items: Iterable[Tuple[int, _T]], submenu_callback: Callable[[_T, int], List[GLib.Variant]]
                      ) -> List[GLib.Variant]:
         return [GLib.Variant("(ia{sv}av)", (idx, self._render_item(item), submenu_callback(item, idx)))
-                for idx, item in enumerate(items, start)]
+                for (idx, item) in items]
 
     def _iterate_items(self) -> Iterable[Tuple[int, "SubmenuItemDict"]]:
-        for idx, item in enumerate(self._items, 1):
-            yield idx, item
+        for item in self._items:
+            yield item["id"], item
             if "submenu" in item:
-                yield from enumerate(item["submenu"], idx * 100 + 1)
+                yield from enumerate(item["submenu"], item["id"] * 100 + 1)
 
     def _render_item(self, item: Union["MenuItemDict", "SubmenuItemDict"]) -> Dict[str, GLib.Variant]:
         if "text" in item and "icon_name" in item:
@@ -85,9 +86,9 @@ class MenuService(DbusService):
     def _on_event(self, idx: int, event_id: str, _data: GLib.Variant, _timestamp: int) -> None:
         if event_id == "clicked":
             if idx < 100:
-                self._on_activate(idx - 1)
+                self._on_activate(idx)
             else:
-                self._on_activate(int(idx / 100) - 1, idx % 100 - 1)
+                self._on_activate(int(idx / 100), idx % 100 - 1)
 
 
 class StatusNotifierItemService(DbusService):

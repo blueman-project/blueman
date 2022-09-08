@@ -12,7 +12,7 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.plugins.applet.PowerManager import PowerManager, PowerStateListener
 
 if TYPE_CHECKING:
-    from blueman.plugins.applet.Menu import MenuItemDict
+    from blueman.plugins.applet.Menu import SubmenuItemDict
 
     from typing_extensions import TypedDict
 
@@ -27,7 +27,7 @@ if TYPE_CHECKING:
     class Item(_ItemBase):
         time: float
         device: str
-        mitem: Optional[MenuItemDict]
+        mitem: Optional[SubmenuItemDict]
 
     class StoredIcon(_ItemBase):
         time: str
@@ -58,7 +58,7 @@ class RecentConns(AppletPlugin, PowerStateListener):
     _items = None
 
     def on_load(self) -> None:
-        self.__menuitems: List["MenuItemDict"] = []
+        self.__menuitems: List["SubmenuItemDict"] = []
 
         self._item = self.parent.Plugins.Menu.add(self, 52, text=_("Recent _Connections") + "…",
                                                   icon_name="document-open-recent-symbolic",
@@ -166,8 +166,8 @@ class RecentConns(AppletPlugin, PowerStateListener):
 
         self.parent.Plugins.DBusService.connect_service(item["device"], item["uuid"], reply, err)
 
-    def _build_menu_item(self, item: "Item") -> "MenuItemDict":
-        mitem: "MenuItemDict" = {
+    def _build_menu_item(self, item: "Item") -> "SubmenuItemDict":
+        mitem: "SubmenuItemDict" = {
             "text": _("%(service)s on %(device)s") % {"service": item["name"], "device": item["alias"]},
             "markup": True,
             "icon_name": item["mitem"]["icon_name"] if item["mitem"] is not None else item["icon"],
@@ -181,7 +181,7 @@ class RecentConns(AppletPlugin, PowerStateListener):
 
         return mitem
 
-    def get_menu(self) -> List["MenuItemDict"]:
+    def get_menu(self) -> List["SubmenuItemDict"]:
         return self.__menuitems
 
     def _get_device_path(self, adapter_path: str, address: str) -> Optional[str]:

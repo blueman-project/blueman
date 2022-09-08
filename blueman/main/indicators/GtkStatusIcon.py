@@ -1,4 +1,4 @@
-from typing import Callable, Iterable, TYPE_CHECKING, overload, Any, cast, Mapping, Optional
+from typing import Callable, Iterable, TYPE_CHECKING, overload, cast, Optional, Tuple
 
 import gi
 
@@ -24,18 +24,18 @@ if TYPE_CHECKING:
 
 
 @overload
-def build_menu(items: Iterable["MenuItemDict"], activate: "MenuItemActivator") -> Gtk.Menu:
+def build_menu(items: Iterable[Tuple[int, "MenuItemDict"]], activate: "MenuItemActivator") -> Gtk.Menu:
     ...
 
 
 @overload
-def build_menu(items: Iterable["SubmenuItemDict"], activate: Callable[[int], None]) -> Gtk.Menu:
+def build_menu(items: Iterable[Tuple[int, "SubmenuItemDict"]], activate: Callable[[int], None]) -> Gtk.Menu:
     ...
 
 
-def build_menu(items: Iterable[Mapping[str, Any]], activate: Callable[..., None]) -> Gtk.Menu:
+def build_menu(items: Iterable[Tuple[int, "SubmenuItemDict"]], activate: Callable[..., None]) -> Gtk.Menu:
     menu = Gtk.Menu()
-    for index, item in enumerate(items):
+    for index, item in items:
         if 'text' in item and 'icon_name' in item:
             gtk_item: Gtk.MenuItem = create_menuitem(item['text'], item['icon_name'])
             label = gtk_item.get_child()
@@ -46,8 +46,9 @@ def build_menu(items: Iterable[Mapping[str, Any]], activate: Callable[..., None]
                 label.set_text_with_mnemonic(item['text'])
             gtk_item.connect('activate', cast(Callable[[Gtk.MenuItem], None], lambda _, idx=index: activate(idx)))
             if 'submenu' in item:
-                gtk_item.set_submenu(build_menu(item['submenu'], cast(Callable[[int], None],
-                                                                      lambda subid, idx=index: activate(idx, subid))))
+                gtk_item.set_submenu(
+                    build_menu(enumerate(item['submenu']),  # type: ignore
+                               cast(Callable[[int], None], lambda subid, idx=index: activate(idx, subid))))
             if 'tooltip' in item:
                 gtk_item.props.tooltip_text = item['tooltip']
             gtk_item.props.sensitive = item['sensitive']
@@ -95,4 +96,4 @@ class GtkStatusIcon(IndicatorInterface):
         self.indicator.props.visible = visible
 
     def set_menu(self, menu: Iterable["MenuItemDict"]) -> None:
-        self._menu = build_menu(menu, self._on_activate)
+        self._menu = build_menu(((item["id"], item) for item in menu), self._on_activate)
