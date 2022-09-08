@@ -10,7 +10,7 @@ from blueman.Sdp import (AUDIO_SINK_SVCLASS_ID, AUDIO_SOURCE_SVCLASS_ID,
 if TYPE_CHECKING:
     from blueman.bluez.Device import Device
     from blueman.main.PulseAudioUtils import CardInfo, CardProfileInfo
-    from blueman.plugins.applet.Menu import MenuItem, MenuItemDict
+    from blueman.plugins.applet.Menu import MenuItem, SubmenuItemDict
 
 
 class AudioProfiles(AppletPlugin):
@@ -58,8 +58,8 @@ class AudioProfiles(AppletPlugin):
                 self.on_activate_profile(device, profile)
             return _wrapper
 
-        def _generate_profiles_menu(info: "CardInfo") -> List["MenuItemDict"]:
-            items: List["MenuItemDict"] = []
+        def _generate_profiles_menu(info: "CardInfo") -> List["SubmenuItemDict"]:
+            items: List["SubmenuItemDict"] = []
             if not info:
                 return items
             for profile in info["profiles"]:
