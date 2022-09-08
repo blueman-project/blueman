@@ -2,6 +2,10 @@
 
 ## 2.3.3
 
+### Changes
+
+* Do not re-use dbusmenu item identifiers; avoids issues at least with gnome-shell-extension-appindicator.
+
 ### Bugs fixed
 
 * Issues with NM PANU connections of equally named devices
