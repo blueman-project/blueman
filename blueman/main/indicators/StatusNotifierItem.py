@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from typing import Iterable, TYPE_CHECKING, Callable, List, Tuple, Dict, Union, TypeVar
 
 from gi.repository import Gio, GLib, Pango
@@ -13,7 +14,7 @@ if TYPE_CHECKING:
 class MenuService(DbusService):
     def __init__(self, on_activate_menu_item: "MenuItemActivator") -> None:
         super().__init__(None, "com.canonical.dbusmenu", "/org/blueman/sni/menu", Gio.BusType.SESSION)
-        self._items: List["MenuItemDict"] = []
+        self._items: OrderedDict[int, "MenuItemDict"] = OrderedDict()
         self._revision = 0
         self._revision_advertised = -1
         self._on_activate = on_activate_menu_item
@@ -30,7 +31,7 @@ class MenuService(DbusService):
         GLib.timeout_add(100, self._advertise_revision)
 
     def set_items(self, items: Iterable["MenuItemDict"]) -> None:
-        self._items = list(items)
+        self._items = OrderedDict((item["id"], item) for item in items)
         self._revision += 1
 
     def _advertise_revision(self) -> bool:
@@ -42,10 +43,9 @@ class MenuService(DbusService):
     def _get_layout(self, parent_id: int, _recursion_depth: int, _property_names: List[str]
                     ) -> Tuple[int, Tuple[int, Dict[str, GLib.Variant], List[GLib.Variant]]]:
         if parent_id == 0:
-            return self._revision, (0, {}, self._render_menu(((item["id"], item) for item in self._items),
-                                                             self._render_submenu))
+            return self._revision, (0, {}, self._render_menu(self._items.items(), self._render_submenu))
         else:
-            item = self._items[parent_id - 1]
+            item = self._items[parent_id]
             if "submenu" in item and _recursion_depth != 0:
                 return self._revision, (parent_id, self._render_item(item), self._render_submenu(item, parent_id))
             return self._revision, (parent_id, self._render_item(item), [])
@@ -64,7 +64,7 @@ class MenuService(DbusService):
                 for (idx, item) in items]
 
     def _iterate_items(self) -> Iterable[Tuple[int, "SubmenuItemDict"]]:
-        for item in self._items:
+        for item in self._items.values():
             yield item["id"], item
             if "submenu" in item:
                 yield from enumerate(item["submenu"], item["id"] * 100 + 1)
