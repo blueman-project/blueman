@@ -59,14 +59,14 @@ class MenuItem:
     def visible(self) -> bool:
         return self._visible
 
-    def _iter_base(self) -> Iterator[Tuple[str, Union[int, str, bool]]]:
-        yield "id", self.priority
+    def _iter_base(self) -> Iterator[Tuple[str, Union[str, bool]]]:
         for key in ['text', 'markup', 'icon_name', 'tooltip', 'sensitive']:
             value = getattr(self, '_' + key)
             if value is not None:
                 yield key, value
 
-    def __iter__(self) -> Iterator[Tuple[str, Union[int, str, bool, List[Dict[str, Union[int, str, bool]]]]]]:
+    def __iter__(self) -> Iterator[Tuple[str, Union[int, str, bool, List[Dict[str, Union[str, bool]]]]]]:
+        yield "id", self.priority
         yield from self._iter_base()
         submenu = self.submenu_items
         if submenu:
@@ -107,7 +107,7 @@ class MenuItem:
 
 
 class SubmenuItem(MenuItem):
-    def __iter__(self) -> Iterator[Tuple[str, Union[int, str, bool]]]:
+    def __iter__(self) -> Iterator[Tuple[str, Union[str, bool]]]:
         yield from self._iter_base()
 
 
@@ -150,12 +150,11 @@ class Menu(AppletPlugin):
                                   if self.__menuitems[key].visible)
 
     def _prepare_menu(self, data: Iterable[Mapping[str, Union[int, str, bool,
-                                                              Iterable[Mapping[str, Union[int, str, bool]]]]]]) \
+                                                              Iterable[Mapping[str, Union[str, bool]]]]]]) \
             -> List[Dict[str, GLib.Variant]]:
         return [{k: self._build_variant(v) for k, v in item.items()} for item in data]
 
-    def _build_variant(self, value: Union[int, str, bool,
-                                          Iterable[Mapping[str, Union[int, str, bool]]]]) -> GLib.Variant:
+    def _build_variant(self, value: Union[int, str, bool, Iterable[Mapping[str, Union[str, bool]]]]) -> GLib.Variant:
         if isinstance(value, int):
             return GLib.Variant("i", value)
         if isinstance(value, str):
