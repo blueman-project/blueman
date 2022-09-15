@@ -332,6 +332,7 @@ blueman_exclude_files = ['Constants.py.in'] + blueman_makefiles
 pulseaudio = get_option('pulseaudio')
 if not pulseaudio
     blueman_exclude_files += 'plugins/manager/PulseAudioProfile.py'
+    blueman_exclude_files += 'plugins/applet/PulseAudioProfile.py'
 endif
 
 install_subdir(

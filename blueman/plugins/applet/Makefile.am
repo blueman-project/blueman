@@ -27,6 +27,9 @@ blueman_PYTHON = \
     StatusNotifierItem.py \
     TransferService.py
 
+if HAVE_PULSEAUDIO
+blueman_PYTHON += PulseAudioProfile.py
+endif
 
 CLEANFILES =		\
 	$(BUILT_SOURCES)

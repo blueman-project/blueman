@@ -2,6 +2,10 @@
 
 ## main
 
+### New features
+
+* Audio profile switcher in applet menu (@abhijeetviswa)
+
 ### Changes
 
 * Raise minimum Python version to 3.8
@@ -34,7 +38,6 @@
 
 ### New features
 
-* Audio profile switcher in applet menu (@abhijeetviswa)
 * Symbolic tray icon option (GSettings switch symbolic-status-icons in org.blueman.general)
 
 ### Changes
