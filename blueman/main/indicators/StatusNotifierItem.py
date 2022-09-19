@@ -21,6 +21,7 @@ class MenuService(DbusService):
 
         self.add_method("GetLayout", ("i", "i", "as"), ("u", "(ia{sv}av)"), self._get_layout)
         self.add_method("Event", ("i", "s", "v", "u"), (), self._on_event)
+        self.add_method("AboutToShow", ("i",), ("b",), lambda _: self._revision > self._revision_advertised)
 
         self.add_method("GetGroupProperties", ("ai", "as"), ("a(ia{sv})",),
                         lambda ids, props: [(idx, self._render_item(item)) for idx, item in self._iterate_items()

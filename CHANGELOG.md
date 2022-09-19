@@ -9,6 +9,7 @@
 ### Bugs fixed
 
 * Issues with NM PANU connections of equally named devices
+* Submenus in KDE Plasma tray
 
 ## 2.3.2
 
