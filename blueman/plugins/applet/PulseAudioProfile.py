@@ -77,7 +77,7 @@ class AudioProfiles(AppletPlugin):
             return items
 
         info = self._devices[device['Address']]
-        menu = self._menu.add(self, 42, _("Audio Profiles for %s") % device['Alias'],
+        menu = self._menu.add(self, (42, info["index"]), _("Audio Profiles for %s") % device['Alias'],
                               icon_name="audio-card-symbolic",
                               submenu_function=lambda: _generate_profiles_menu(info))
         self._device_menus[device['Address']] = menu
