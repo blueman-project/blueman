@@ -21,7 +21,7 @@ from blueman.main.Services import BluemanServices
 
 if __name__ == '__main__':
     parser = create_parser()
-    args = parser.parse_args()
+    args, other_ags = parser.parse_known_args()
 
     if args.LEVEL.upper() == "DEBUG":
         log_level = logging.DEBUG
@@ -41,4 +41,4 @@ if __name__ == '__main__':
     setup_icon_path()
     set_proc_title()
     app = BluemanServices()
-    app.run()
+    app.run(other_ags)

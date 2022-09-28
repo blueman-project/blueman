@@ -19,7 +19,7 @@ from blueman.Functions import set_proc_title, create_parser, create_logger
 
 if __name__ == '__main__':
     parser = create_parser()
-    args = parser.parse_args()
+    args, others = parser.parse_known_args()
 
     if args.LEVEL.upper() == "DEBUG":
         log_level = logging.DEBUG
@@ -38,4 +38,4 @@ if __name__ == '__main__':
 
     app = Blueman()
     set_proc_title()
-    app.run()
+    app.run(others)

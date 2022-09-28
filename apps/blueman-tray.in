@@ -18,7 +18,7 @@ from blueman.main.Tray import BluemanTray
 
 if __name__ == '__main__':
     parser = create_parser()
-    args = parser.parse_args()
+    args, other_args = parser.parse_known_args()
 
     if args.LEVEL.upper() == "DEBUG":
         log_level = logging.DEBUG
@@ -37,4 +37,4 @@ if __name__ == '__main__':
 
     set_proc_title()
     app = BluemanTray()
-    app.run()
+    app.run(other_args)

@@ -22,7 +22,7 @@ if __name__ == '__main__':
     parser = parser = create_parser()
     parser.add_argument("--socket-id", dest="socket_id", action="store", type=int, metavar="ID")
     parser.add_argument("adapter", nargs="?", metavar="ADAPTER NAME")
-    args = parser.parse_args()
+    args, other_args = parser.parse_known_args()
 
     if args.LEVEL.upper() == "DEBUG":
         log_level = logging.DEBUG
@@ -42,4 +42,4 @@ if __name__ == '__main__':
     set_proc_title()
 
     app = blueman_adapters = BluemanAdapters(args.adapter, args.socket_id)
-    app.run()
+    app.run(other_args)
