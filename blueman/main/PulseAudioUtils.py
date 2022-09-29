@@ -16,7 +16,7 @@ except OSError:
     raise ImportError("Could not load pulseaudio shared library")
 
 if TYPE_CHECKING:
-    from ctypes import _FuncPointer, _NamedFuncPointer
+    from ctypes import _FuncPointer, _NamedFuncPointer, _Pointer
     from typing_extensions import TypedDict
 
     class CardProfileInfo(TypedDict):
@@ -232,9 +232,9 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
     if TYPE_CHECKING:
         class _ListCallbackInfo(TypedDict):
             cb_info: "_FuncPointer"
-            handler: Callable[[Optional["pointer[PaCardInfo]"], bool], None]
+            handler: Callable[[Optional["_Pointer[PaCardInfo]"], bool], None]
 
-    def __list_callback(self, _context: c_void_p, entry_info: "pointer[PaCardInfo]", eol: c_int,
+    def __list_callback(self, _context: c_void_p, entry_info: "_Pointer[PaCardInfo]", eol: c_int,
                         info: "_ListCallbackInfo") -> None:
         if entry_info:
             info["handler"](entry_info, False)
@@ -244,8 +244,8 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
             pythonapi.Py_DecRef(py_object(info))
 
     def __init_list_callback(self, func: Callable[..., c_void_p], cb_type: Callable[[Callable[[c_void_p,
-                             "pointer[PaCardInfo]", c_int, "_ListCallbackInfo"], None]], "_FuncPointer"],
-                             handler: Callable[[Optional["pointer[PaCardInfo]"], bool], None], *args: Any) -> None:
+                             "_Pointer[PaCardInfo]", c_int, "_ListCallbackInfo"], None]], "_FuncPointer"],
+                             handler: Callable[[Optional["_Pointer[PaCardInfo]"], bool], None], *args: Any) -> None:
         info = {"cb_info": cb_type(self.__list_callback), "handler": handler}
         pythonapi.Py_IncRef(py_object(info))
 
@@ -270,7 +270,7 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
             logging.error(func.__name__)
         pa_operation_unref(op)
 
-    def __card_info(self, card_info: "pointer[PaCardInfo]") -> "CardInfo":
+    def __card_info(self, card_info: "_Pointer[PaCardInfo]") -> "CardInfo":
         return {
             "name": card_info[0].name.decode("UTF-8"),
             "proplist": self.__get_proplist(card_info[0].proplist),
@@ -292,7 +292,7 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
 
         data: Dict[str, "CardInfo"] = {}
 
-        def handler(entry_info: Optional["pointer[PaCardInfo]"], end: bool) -> None:
+        def handler(entry_info: Optional["_Pointer[PaCardInfo]"], end: bool) -> None:
             if end:
                 callback(data)
                 return
@@ -308,7 +308,7 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
     def get_card(self, card: int, callback: Callable[["CardInfo"], None]) -> None:
         self.check_connected()
 
-        def handler(entry_info: Optional["pointer[PaCardInfo]"], end: bool) -> None:
+        def handler(entry_info: Optional["_Pointer[PaCardInfo]"], end: bool) -> None:
             if end:
                 return
 
