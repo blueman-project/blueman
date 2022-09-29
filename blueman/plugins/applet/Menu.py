@@ -155,12 +155,12 @@ class Menu(AppletPlugin):
         return [{k: self._build_variant(v) for k, v in item.items()} for item in data]
 
     def _build_variant(self, value: Union[int, str, bool, Iterable[Mapping[str, Union[str, bool]]]]) -> GLib.Variant:
+        if isinstance(value, bool):
+            return GLib.Variant("b", value)
         if isinstance(value, int):
             return GLib.Variant("i", value)
         if isinstance(value, str):
             return GLib.Variant("s", value)
-        if isinstance(value, bool):
-            return GLib.Variant("b", value)
         return GLib.Variant("aa{sv}", self._prepare_menu(value))
 
     def _activate_menu_item(self, indexes: Sequence[int]) -> None:
