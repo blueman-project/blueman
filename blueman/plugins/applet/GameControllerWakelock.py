@@ -8,9 +8,15 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.plugins.errors import UnsupportedPlatformError
 
 import gi
-gi.require_version('GdkX11', '3.0')
 gi.require_version('Gdk', '3.0')
-from gi.repository import Gdk, GdkX11
+try:
+    gi.require_version('GdkX11', '3.0')
+except ValueError:
+    raise ImportError("Couldn't find required namespace GdkX11")
+
+from gi.repository import Gdk
+from gi.repository import GdkX11
+
 
 if not isinstance(Gdk.Screen.get_default(), GdkX11.X11Screen):
     raise UnsupportedPlatformError('Only X11 platform is supported')
