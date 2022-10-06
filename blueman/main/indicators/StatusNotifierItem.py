@@ -1,9 +1,10 @@
 from collections import OrderedDict
-from typing import Iterable, TYPE_CHECKING, Callable, List, Tuple, Dict, Union, TypeVar
+from typing import Iterable, TYPE_CHECKING, Callable, List, Tuple, Dict, Union, TypeVar, Any
 
 from gi.repository import Gio, GLib, Pango
 
 from blueman.main.DbusService import DbusService
+from blueman.main.Tray import BluemanTray
 from blueman.main.indicators.IndicatorInterface import IndicatorInterface, IndicatorNotAvailable
 
 if TYPE_CHECKING:
@@ -99,14 +100,13 @@ class StatusNotifierItemService(DbusService):
     Title = "blueman"
     ItemIsMenu = False
 
-    def __init__(self, icon_name: str, on_activate_status_icon: Callable[[], None],
-                 on_activate_menu_item: "MenuItemActivator") -> None:
+    def __init__(self, tray: BluemanTray, icon_name: str) -> None:
         super().__init__(None, "org.kde.StatusNotifierItem", "/org/blueman/sni", Gio.BusType.SESSION,
                          {"Category": "s", "Id": "s", "IconName": "s", "Status": "s", "Title": "s",
                           "ToolTip": "(sa(iiay)ss)", "Menu": "o", "ItemIsMenu": "b"})
-        self.add_method("Activate", ("i", "i"), "", lambda x, y: on_activate_status_icon())
+        self.add_method("Activate", ("i", "i"), "", lambda x, y: tray.activate_status_icon())
 
-        self.menu = MenuService(on_activate_menu_item)
+        self.menu = MenuService(tray.activate_menu_item)
 
         self.IconName = icon_name
         self.Status = "Active"
@@ -129,26 +129,34 @@ class StatusNotifierItemService(DbusService):
 class StatusNotifierItem(IndicatorInterface):
     _SNI_BUS_NAME = _SNI_INTERFACE_NAME = "org.kde.StatusNotifierWatcher"
 
-    def __init__(self, icon_name: str, on_activate_menu_item: "MenuItemActivator",
-                 on_activate_status_icon: Callable[[], None]) -> None:
-        self._sni = StatusNotifierItemService(icon_name, on_activate_status_icon, on_activate_menu_item)
+    def __init__(self, tray: BluemanTray, icon_name: str) -> None:
+        self._sni = StatusNotifierItemService(tray, icon_name)
         self._sni.register()
 
         self._bus = Gio.bus_get_sync(Gio.BusType.SESSION)
 
+        watcher_expected: bool
+
+        def on_watcher_appeared(*args: Any) -> None:
+            nonlocal watcher_expected
+
+            if watcher_expected:
+                watcher_expected = False
+            else:
+                tray.activate()
+
         Gio.bus_watch_name(Gio.BusType.SESSION, self._SNI_BUS_NAME, Gio.BusNameWatcherFlags.NONE,
-                           lambda *args: self._register(), None)
+                           on_watcher_appeared, None)
 
         try:
-            self._register()
+            Gio.bus_get_sync(Gio.BusType.SESSION).call_sync(
+                self._SNI_BUS_NAME, "/StatusNotifierWatcher", self._SNI_INTERFACE_NAME,
+                "RegisterStatusNotifierItem", GLib.Variant("(s)", ("/org/blueman/sni",)),
+                None, Gio.DBusCallFlags.NONE, -1)
+            watcher_expected = True
         except GLib.Error:
+            watcher_expected = False
             raise IndicatorNotAvailable
-
-    def _register(self) -> None:
-        Gio.bus_get_sync(Gio.BusType.SESSION).call_sync(
-            self._SNI_BUS_NAME, "/StatusNotifierWatcher", self._SNI_INTERFACE_NAME,
-            "RegisterStatusNotifierItem", GLib.Variant("(s)", ("/org/blueman/sni",)),
-            None, Gio.DBusCallFlags.NONE, -1)
 
     def set_icon(self, icon_name: str) -> None:
         self._sni.IconName = icon_name
