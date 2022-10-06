@@ -42,13 +42,14 @@
 # cth451 <cth451@gmail.com>, 2021.
 # Eric <alchemillatruth@purelymail.com>, 2022.
 # joe <ourmicroid@outlook.com>, 2022.
+# Hugel <qihu@nfschina.com>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2022-07-31 07:01+0000\n"
-"PO-Revision-Date: 2022-07-16 07:32+0000\n"
-"Last-Translator: joe <ourmicroid@outlook.com>\n"
+"POT-Creation-Date: 2022-09-06 19:29+0000\n"
+"PO-Revision-Date: 2022-09-06 18:08+0000\n"
+"Last-Translator: Hugel <qihu@nfschina.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "blueman/blueman/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -56,7 +57,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 4.14.1-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -277,8 +278,8 @@ msgstr "<b>作者：</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:355
-#: blueman/gui/manager/ManagerDeviceList.py:357 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:351
+#: blueman/gui/manager/ManagerDeviceList.py:353 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:210
@@ -385,7 +386,7 @@ msgstr "正在搜索"
 msgid "Adapter Preferences"
 msgstr "适配器首选项"
 
-#: blueman/main/Manager.py:281 blueman/gui/manager/ManagerDeviceList.py:169
+#: blueman/main/Manager.py:281 blueman/gui/manager/ManagerDeviceList.py:165
 #: blueman/plugins/applet/StandardItems.py:77
 msgid "File Sender"
 msgstr "文件发送方"
@@ -532,33 +533,21 @@ msgstr "退出"
 msgid "Enable Bluetooth"
 msgstr "启用蓝牙"
 
-#: blueman/Functions.py:91
-msgid "Shall bluetooth get enabled automatically?"
-msgstr "自动启用蓝牙吗？"
-
-#: blueman/Functions.py:92
-msgid "Yes"
-msgstr "是"
-
-#: blueman/Functions.py:93
-msgid "No"
-msgstr "否"
-
-#: blueman/Functions.py:180
+#: blueman/Functions.py:166
 msgid "B"
 msgstr "字节"
 
-#: blueman/Functions.py:183
+#: blueman/Functions.py:169
 msgid "KB"
-msgstr ""
+msgstr "千字节"
 
-#: blueman/Functions.py:186
+#: blueman/Functions.py:172
 msgid "MB"
-msgstr ""
+msgstr "兆字节"
 
-#: blueman/Functions.py:189
+#: blueman/Functions.py:175
 msgid "GB"
-msgstr ""
+msgstr "吉字节"
 
 #: blueman/gui/manager/ManagerMenu.py:45
 msgid "_Report a Problem"
@@ -624,89 +613,79 @@ msgid "_Exit"
 msgstr "退出 (_E)"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:326
-#: blueman/gui/manager/ManagerDeviceList.py:355 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:322
+#: blueman/gui/manager/ManagerDeviceList.py:351 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 msgid "Uncategorized"
 msgstr "未分类"
 
-#: blueman/gui/manager/ManagerDeviceList.py:544
+#: blueman/gui/manager/ManagerDeviceList.py:536
 msgid "Trusted"
 msgstr "受信任"
 
-#: blueman/gui/manager/ManagerDeviceList.py:546
+#: blueman/gui/manager/ManagerDeviceList.py:538
 msgid "Paired"
 msgstr "已配对"
 
-#: blueman/gui/manager/ManagerDeviceList.py:548
+#: blueman/gui/manager/ManagerDeviceList.py:540
 msgid "Blocked"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:571
+#: blueman/gui/manager/ManagerDeviceList.py:562
 msgid "<b>Connected</b>"
 msgstr "<b>已连接</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:586
+#: blueman/gui/manager/ManagerDeviceList.py:576
 msgid "Poor"
 msgstr "差"
 
-#: blueman/gui/manager/ManagerDeviceList.py:588
-#: blueman/gui/manager/ManagerDeviceList.py:613
+#: blueman/gui/manager/ManagerDeviceList.py:578
+#: blueman/gui/manager/ManagerDeviceList.py:597
 msgid "Sub-optimal"
 msgstr "较佳"
 
-#: blueman/gui/manager/ManagerDeviceList.py:590
-#: blueman/gui/manager/ManagerDeviceList.py:615
+#: blueman/gui/manager/ManagerDeviceList.py:580
+#: blueman/gui/manager/ManagerDeviceList.py:599
 msgid "Optimal"
 msgstr "最佳"
 
-#: blueman/gui/manager/ManagerDeviceList.py:592
+#: blueman/gui/manager/ManagerDeviceList.py:582
 msgid "Much"
 msgstr "很多"
 
-#: blueman/gui/manager/ManagerDeviceList.py:594
+#: blueman/gui/manager/ManagerDeviceList.py:584
 msgid "Too much"
 msgstr "太多"
 
-#: blueman/gui/manager/ManagerDeviceList.py:597
+#: blueman/gui/manager/ManagerDeviceList.py:587
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 msgstr "<b>接收信号强度： %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:600
+#: blueman/gui/manager/ManagerDeviceList.py:590
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 msgstr "接收信号强度： %(rssi)u%% <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:605
-#, python-format
-msgid "<b>Link Quality: %(lq)u%%</b>"
-msgstr "<b>连接质量：%(lq)u%%</b>"
-
-#: blueman/gui/manager/ManagerDeviceList.py:607
-#, python-format
-msgid "Link Quality: %(lq)u%%"
-msgstr "连接质量： %(lq)u%%"
-
-#: blueman/gui/manager/ManagerDeviceList.py:611
+#: blueman/gui/manager/ManagerDeviceList.py:595
 msgid "Low"
 msgstr "低"
 
-#: blueman/gui/manager/ManagerDeviceList.py:617
+#: blueman/gui/manager/ManagerDeviceList.py:601
 msgid "High"
 msgstr "高"
 
-#: blueman/gui/manager/ManagerDeviceList.py:619
+#: blueman/gui/manager/ManagerDeviceList.py:603
 msgid "Very High"
 msgstr "非常高"
 
-#: blueman/gui/manager/ManagerDeviceList.py:622
+#: blueman/gui/manager/ManagerDeviceList.py:606
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr "<b>传输功率： %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:625
+#: blueman/gui/manager/ManagerDeviceList.py:609
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr "传输功率： %(tpl)u%% <i>(%(tpl_state)s)</i>"
@@ -2191,7 +2170,7 @@ msgstr "显示网络流量使用率"
 
 #: blueman/plugins/applet/StatusIcon.py:41
 #: blueman/plugins/applet/ShowConnected.py:71
-#: blueman/plugins/applet/PowerManager.py:190
+#: blueman/plugins/applet/PowerManager.py:172
 msgid "Bluetooth Enabled"
 msgstr "蓝牙已启用"
 
@@ -2415,7 +2394,7 @@ msgid_plural "<b>%(connections)d Active Connections</b>"
 msgstr[0] "<b>%(connections)d 个活跃的连接</b>"
 
 #: blueman/plugins/applet/ShowConnected.py:73
-#: blueman/plugins/applet/PowerManager.py:193
+#: blueman/plugins/applet/PowerManager.py:175
 msgid "Bluetooth Disabled"
 msgstr "蓝牙已停用"
 
@@ -2528,29 +2507,21 @@ msgstr ""
 msgid "Controls Bluetooth adapter power states"
 msgstr "控制蓝牙适配器的电源状态"
 
-#: blueman/plugins/applet/PowerManager.py:44
-msgid "Auto power-on"
-msgstr "自动开启电源"
-
-#: blueman/plugins/applet/PowerManager.py:45
-msgid "Automatically power on adapters"
-msgstr "自动开启适配器电源"
-
-#: blueman/plugins/applet/PowerManager.py:55
-#: blueman/plugins/applet/PowerManager.py:172
+#: blueman/plugins/applet/PowerManager.py:41
+#: blueman/plugins/applet/PowerManager.py:154
 msgid "<b>Turn Bluetooth _Off</b>"
 msgstr "<b>关闭蓝牙 (_O)</b>"
 
-#: blueman/plugins/applet/PowerManager.py:57
-#: blueman/plugins/applet/PowerManager.py:174
+#: blueman/plugins/applet/PowerManager.py:43
+#: blueman/plugins/applet/PowerManager.py:156
 msgid "Turn off all adapters"
 msgstr "关闭所有适配器"
 
-#: blueman/plugins/applet/PowerManager.py:163
+#: blueman/plugins/applet/PowerManager.py:145
 msgid "<b>Turn Bluetooth _On</b>"
 msgstr "<b>开启蓝牙 (_O)</b>"
 
-#: blueman/plugins/applet/PowerManager.py:165
+#: blueman/plugins/applet/PowerManager.py:147
 msgid "Turn on all adapters"
 msgstr "启用全部适配器"
 
@@ -2664,6 +2635,29 @@ msgstr "设置 RfKill 状态"
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr "设置 RfKill 状态需要权限"
+
+#~ msgid "Shall bluetooth get enabled automatically?"
+#~ msgstr "自动启用蓝牙吗？"
+
+#~ msgid "Yes"
+#~ msgstr "是"
+
+#~ msgid "No"
+#~ msgstr "否"
+
+#, python-format
+#~ msgid "<b>Link Quality: %(lq)u%%</b>"
+#~ msgstr "<b>连接质量：%(lq)u%%</b>"
+
+#, python-format
+#~ msgid "Link Quality: %(lq)u%%"
+#~ msgstr "连接质量： %(lq)u%%"
+
+#~ msgid "Auto power-on"
+#~ msgstr "自动开启电源"
+
+#~ msgid "Automatically power on adapters"
+#~ msgstr "自动开启适配器电源"
 
 #~ msgid "Bluetooth Devices"
 #~ msgstr "蓝牙设备"

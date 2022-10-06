@@ -30,13 +30,14 @@
 # Christopher Schramm <github@cschramm.eu>, 2022.
 # Сергей <sw@atrus.ru>, 2022.
 # Сергей <asvmail.as@gmail.com>, 2022.
+# Егор Ермаков <eg.ermakov2016@yandex.ru>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2022-07-31 07:01+0000\n"
-"PO-Revision-Date: 2022-07-04 07:10+0000\n"
-"Last-Translator: Сергей <asvmail.as@gmail.com>\n"
+"POT-Creation-Date: 2022-09-06 19:29+0000\n"
+"PO-Revision-Date: 2022-08-15 16:25+0000\n"
+"Last-Translator: Егор Ермаков <eg.ermakov2016@yandex.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/blueman/blueman/"
 "ru/>\n"
 "Language: ru\n"
@@ -46,7 +47,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
-"X-Generator: Weblate 4.13.1-dev\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -268,8 +269,8 @@ msgstr "<b>Автор:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:355
-#: blueman/gui/manager/ManagerDeviceList.py:357 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:351
+#: blueman/gui/manager/ManagerDeviceList.py:353 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:210
@@ -381,7 +382,7 @@ msgstr "Идёт поиск"
 msgid "Adapter Preferences"
 msgstr "Настройки адаптеров"
 
-#: blueman/main/Manager.py:281 blueman/gui/manager/ManagerDeviceList.py:169
+#: blueman/main/Manager.py:281 blueman/gui/manager/ManagerDeviceList.py:165
 #: blueman/plugins/applet/StandardItems.py:77
 msgid "File Sender"
 msgstr "Отправитель файлов"
@@ -534,31 +535,19 @@ msgstr "Выход"
 msgid "Enable Bluetooth"
 msgstr "Включить Bluetooth"
 
-#: blueman/Functions.py:91
-msgid "Shall bluetooth get enabled automatically?"
-msgstr "Должен ли Bluetooth включаться автоматически?"
-
-#: blueman/Functions.py:92
-msgid "Yes"
-msgstr "Да"
-
-#: blueman/Functions.py:93
-msgid "No"
-msgstr "Нет"
-
-#: blueman/Functions.py:180
+#: blueman/Functions.py:166
 msgid "B"
 msgstr "Б"
 
-#: blueman/Functions.py:183
+#: blueman/Functions.py:169
 msgid "KB"
 msgstr "КБ"
 
-#: blueman/Functions.py:186
+#: blueman/Functions.py:172
 msgid "MB"
 msgstr "МБ"
 
-#: blueman/Functions.py:189
+#: blueman/Functions.py:175
 msgid "GB"
 msgstr "ГБ"
 
@@ -626,89 +615,79 @@ msgid "_Exit"
 msgstr "_Выход"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:326
-#: blueman/gui/manager/ManagerDeviceList.py:355 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:322
+#: blueman/gui/manager/ManagerDeviceList.py:351 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 msgid "Uncategorized"
 msgstr "Не классифицировано"
 
-#: blueman/gui/manager/ManagerDeviceList.py:544
+#: blueman/gui/manager/ManagerDeviceList.py:536
 msgid "Trusted"
 msgstr "Доверенный"
 
-#: blueman/gui/manager/ManagerDeviceList.py:546
+#: blueman/gui/manager/ManagerDeviceList.py:538
 msgid "Paired"
 msgstr "Сопряжённый"
 
-#: blueman/gui/manager/ManagerDeviceList.py:548
+#: blueman/gui/manager/ManagerDeviceList.py:540
 msgid "Blocked"
 msgstr "Заблокированный"
 
-#: blueman/gui/manager/ManagerDeviceList.py:571
+#: blueman/gui/manager/ManagerDeviceList.py:562
 msgid "<b>Connected</b>"
 msgstr "<b>Подключено</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:586
+#: blueman/gui/manager/ManagerDeviceList.py:576
 msgid "Poor"
 msgstr "Слабый"
 
-#: blueman/gui/manager/ManagerDeviceList.py:588
-#: blueman/gui/manager/ManagerDeviceList.py:613
+#: blueman/gui/manager/ManagerDeviceList.py:578
+#: blueman/gui/manager/ManagerDeviceList.py:597
 msgid "Sub-optimal"
 msgstr "Хуже оптимального"
 
-#: blueman/gui/manager/ManagerDeviceList.py:590
-#: blueman/gui/manager/ManagerDeviceList.py:615
+#: blueman/gui/manager/ManagerDeviceList.py:580
+#: blueman/gui/manager/ManagerDeviceList.py:599
 msgid "Optimal"
 msgstr "Оптимальный"
 
-#: blueman/gui/manager/ManagerDeviceList.py:592
+#: blueman/gui/manager/ManagerDeviceList.py:582
 msgid "Much"
 msgstr "Хорошо"
 
-#: blueman/gui/manager/ManagerDeviceList.py:594
+#: blueman/gui/manager/ManagerDeviceList.py:584
 msgid "Too much"
 msgstr "Очень хорошо"
 
-#: blueman/gui/manager/ManagerDeviceList.py:597
+#: blueman/gui/manager/ManagerDeviceList.py:587
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 msgstr "<b>Уровень принятого сигнала: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:600
+#: blueman/gui/manager/ManagerDeviceList.py:590
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 msgstr "Сила принятого сигнала: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:605
-#, python-format
-msgid "<b>Link Quality: %(lq)u%%</b>"
-msgstr "<b>Качество связи: %(lq)u%%</b>"
-
-#: blueman/gui/manager/ManagerDeviceList.py:607
-#, python-format
-msgid "Link Quality: %(lq)u%%"
-msgstr "Качество связи: %(lq)u%%"
-
-#: blueman/gui/manager/ManagerDeviceList.py:611
+#: blueman/gui/manager/ManagerDeviceList.py:595
 msgid "Low"
 msgstr "Низкий"
 
-#: blueman/gui/manager/ManagerDeviceList.py:617
+#: blueman/gui/manager/ManagerDeviceList.py:601
 msgid "High"
 msgstr "Высокий"
 
-#: blueman/gui/manager/ManagerDeviceList.py:619
+#: blueman/gui/manager/ManagerDeviceList.py:603
 msgid "Very High"
 msgstr "Самый высокий"
 
-#: blueman/gui/manager/ManagerDeviceList.py:622
+#: blueman/gui/manager/ManagerDeviceList.py:606
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr "<b>Уровень мощности передачи: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:625
+#: blueman/gui/manager/ManagerDeviceList.py:609
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr "Уровень мощности передачи: %(tpl)u%% <i>(%(tpl_state)s)</i>"
@@ -918,7 +897,7 @@ msgstr "Аудио/видео"
 #. translators: device class
 #: blueman/DeviceClass.py:16
 msgid "Peripheral"
-msgstr "Переферия"
+msgstr "Периферия"
 
 #. translators: device class
 #: blueman/DeviceClass.py:18 blueman/DeviceClass.py:276
@@ -2215,7 +2194,7 @@ msgstr "Показывает статистику использования с�
 
 #: blueman/plugins/applet/StatusIcon.py:41
 #: blueman/plugins/applet/ShowConnected.py:71
-#: blueman/plugins/applet/PowerManager.py:190
+#: blueman/plugins/applet/PowerManager.py:172
 msgid "Bluetooth Enabled"
 msgstr "Bluetooth включен"
 
@@ -2461,7 +2440,7 @@ msgstr[2] "<b>%(connections)d Активных соединений</b>"
 msgstr[3] "<b>%(connections)d Активных соединений</b>"
 
 #: blueman/plugins/applet/ShowConnected.py:73
-#: blueman/plugins/applet/PowerManager.py:193
+#: blueman/plugins/applet/PowerManager.py:175
 msgid "Bluetooth Disabled"
 msgstr "Bluetooth отключен"
 
@@ -2584,29 +2563,21 @@ msgstr ""
 msgid "Controls Bluetooth adapter power states"
 msgstr "Контролировать состояние питания Bluetooth-адаптера"
 
-#: blueman/plugins/applet/PowerManager.py:44
-msgid "Auto power-on"
-msgstr "Автовключение"
-
-#: blueman/plugins/applet/PowerManager.py:45
-msgid "Automatically power on adapters"
-msgstr "Автоматическое включение адаптеров"
-
-#: blueman/plugins/applet/PowerManager.py:55
-#: blueman/plugins/applet/PowerManager.py:172
+#: blueman/plugins/applet/PowerManager.py:41
+#: blueman/plugins/applet/PowerManager.py:154
 msgid "<b>Turn Bluetooth _Off</b>"
 msgstr "<b>_Отключить Bluetooth</b>"
 
-#: blueman/plugins/applet/PowerManager.py:57
-#: blueman/plugins/applet/PowerManager.py:174
+#: blueman/plugins/applet/PowerManager.py:43
+#: blueman/plugins/applet/PowerManager.py:156
 msgid "Turn off all adapters"
 msgstr "Отключить все адаптеры"
 
-#: blueman/plugins/applet/PowerManager.py:163
+#: blueman/plugins/applet/PowerManager.py:145
 msgid "<b>Turn Bluetooth _On</b>"
 msgstr "<b>В_ключить Bluetooth</b>"
 
-#: blueman/plugins/applet/PowerManager.py:165
+#: blueman/plugins/applet/PowerManager.py:147
 msgid "Turn on all adapters"
 msgstr "Включить все адаптеры"
 
@@ -2723,6 +2694,29 @@ msgstr "Установить состояние RfKill"
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr "Установка состояния RfKill требует соответствующих привилегий"
+
+#~ msgid "Shall bluetooth get enabled automatically?"
+#~ msgstr "Должен ли Bluetooth включаться автоматически?"
+
+#~ msgid "Yes"
+#~ msgstr "Да"
+
+#~ msgid "No"
+#~ msgstr "Нет"
+
+#, python-format
+#~ msgid "<b>Link Quality: %(lq)u%%</b>"
+#~ msgstr "<b>Качество связи: %(lq)u%%</b>"
+
+#, python-format
+#~ msgid "Link Quality: %(lq)u%%"
+#~ msgstr "Качество связи: %(lq)u%%"
+
+#~ msgid "Auto power-on"
+#~ msgstr "Автовключение"
+
+#~ msgid "Automatically power on adapters"
+#~ msgstr "Автоматическое включение адаптеров"
 
 #~ msgid "Bluetooth Devices"
 #~ msgstr "Устройства Bluetooth"

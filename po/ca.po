@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2022-07-31 07:01+0000\n"
-"PO-Revision-Date: 2022-07-31 07:00+0000\n"
+"POT-Creation-Date: 2022-09-06 19:29+0000\n"
+"PO-Revision-Date: 2022-08-15 16:25+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/blueman/blueman/"
 "ca/>\n"
@@ -243,8 +243,8 @@ msgstr "<b>Autor:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:355
-#: blueman/gui/manager/ManagerDeviceList.py:357 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:351
+#: blueman/gui/manager/ManagerDeviceList.py:353 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:210
@@ -306,7 +306,7 @@ msgstr "Envia una nota"
 
 #: blueman/main/Adapter.py:59
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
-msgstr "Bluetooth ha d'estar encès perquè funcioni el gestor d'adaptadors"
+msgstr "Cal engegar el Bluetooth perquè funcioni el gestor d’adaptadors"
 
 #: blueman/main/Adapter.py:95 data/blueman-adapters.desktop.in:3
 msgid "Bluetooth Adapters"
@@ -329,7 +329,7 @@ msgstr "Adaptador"
 
 #: blueman/main/Manager.py:94 blueman/main/Manager.py:135
 msgid "Bluetooth needs to be turned on for the device manager to function"
-msgstr "Bluetooth ha d'estar encès perquè funcioni el gestor de dispositius"
+msgstr "Cal engegar el Bluetooth perquè funcioni el gestor de dispositius"
 
 #: blueman/main/Manager.py:114
 msgid "Connection to BlueZ failed"
@@ -353,7 +353,7 @@ msgstr "S’està cercant"
 msgid "Adapter Preferences"
 msgstr "Preferències de l’adaptador"
 
-#: blueman/main/Manager.py:281 blueman/gui/manager/ManagerDeviceList.py:169
+#: blueman/main/Manager.py:281 blueman/gui/manager/ManagerDeviceList.py:165
 #: blueman/plugins/applet/StandardItems.py:77
 msgid "File Sender"
 msgstr "Eina d'enviament de fitxers"
@@ -504,31 +504,19 @@ msgstr "Surt"
 msgid "Enable Bluetooth"
 msgstr "Habilita Bluetooth"
 
-#: blueman/Functions.py:91
-msgid "Shall bluetooth get enabled automatically?"
-msgstr "S'hauria d'habilitar automàticament el Bluetooth?"
-
-#: blueman/Functions.py:92
-msgid "Yes"
-msgstr "Sí"
-
-#: blueman/Functions.py:93
-msgid "No"
-msgstr "No"
-
-#: blueman/Functions.py:180
+#: blueman/Functions.py:166
 msgid "B"
 msgstr "B"
 
-#: blueman/Functions.py:183
+#: blueman/Functions.py:169
 msgid "KB"
 msgstr "kB"
 
-#: blueman/Functions.py:186
+#: blueman/Functions.py:172
 msgid "MB"
 msgstr "MB"
 
-#: blueman/Functions.py:189
+#: blueman/Functions.py:175
 msgid "GB"
 msgstr "GB"
 
@@ -596,94 +584,84 @@ msgid "_Exit"
 msgstr "_Surt"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:326
-#: blueman/gui/manager/ManagerDeviceList.py:355 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:322
+#: blueman/gui/manager/ManagerDeviceList.py:351 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 msgid "Uncategorized"
 msgstr "Sense categoritzar"
 
-#: blueman/gui/manager/ManagerDeviceList.py:544
+#: blueman/gui/manager/ManagerDeviceList.py:536
 #, fuzzy
 #| msgid "Trust"
 msgid "Trusted"
 msgstr "Confia"
 
-#: blueman/gui/manager/ManagerDeviceList.py:546
+#: blueman/gui/manager/ManagerDeviceList.py:538
 #, fuzzy
 #| msgid "Pair"
 msgid "Paired"
 msgstr "Aparella"
 
-#: blueman/gui/manager/ManagerDeviceList.py:548
+#: blueman/gui/manager/ManagerDeviceList.py:540
 msgid "Blocked"
 msgstr "Blocat"
 
-#: blueman/gui/manager/ManagerDeviceList.py:571
+#: blueman/gui/manager/ManagerDeviceList.py:562
 #, fuzzy
 msgid "<b>Connected</b>"
 msgstr "<b>Connecta a:</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:586
+#: blueman/gui/manager/ManagerDeviceList.py:576
 msgid "Poor"
 msgstr "Pobra"
 
-#: blueman/gui/manager/ManagerDeviceList.py:588
-#: blueman/gui/manager/ManagerDeviceList.py:613
+#: blueman/gui/manager/ManagerDeviceList.py:578
+#: blueman/gui/manager/ManagerDeviceList.py:597
 msgid "Sub-optimal"
 msgstr "Per sota d'òptima"
 
-#: blueman/gui/manager/ManagerDeviceList.py:590
-#: blueman/gui/manager/ManagerDeviceList.py:615
+#: blueman/gui/manager/ManagerDeviceList.py:580
+#: blueman/gui/manager/ManagerDeviceList.py:599
 msgid "Optimal"
 msgstr "Òptima"
 
-#: blueman/gui/manager/ManagerDeviceList.py:592
+#: blueman/gui/manager/ManagerDeviceList.py:582
 msgid "Much"
 msgstr "Molta"
 
-#: blueman/gui/manager/ManagerDeviceList.py:594
+#: blueman/gui/manager/ManagerDeviceList.py:584
 msgid "Too much"
 msgstr "Massa"
 
-#: blueman/gui/manager/ManagerDeviceList.py:597
+#: blueman/gui/manager/ManagerDeviceList.py:587
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:600
+#: blueman/gui/manager/ManagerDeviceList.py:590
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:605
-#, python-format
-msgid "<b>Link Quality: %(lq)u%%</b>"
-msgstr "<b>Qualitat de l’enllaç: %(lq)u%%</b>"
-
-#: blueman/gui/manager/ManagerDeviceList.py:607
-#, python-format
-msgid "Link Quality: %(lq)u%%"
-msgstr "Qualitat de l’enllaç: %(lq)u%%"
-
-#: blueman/gui/manager/ManagerDeviceList.py:611
+#: blueman/gui/manager/ManagerDeviceList.py:595
 msgid "Low"
 msgstr "Baixa"
 
-#: blueman/gui/manager/ManagerDeviceList.py:617
+#: blueman/gui/manager/ManagerDeviceList.py:601
 msgid "High"
 msgstr "Alta"
 
-#: blueman/gui/manager/ManagerDeviceList.py:619
+#: blueman/gui/manager/ManagerDeviceList.py:603
 msgid "Very High"
 msgstr "Molt alta"
 
-#: blueman/gui/manager/ManagerDeviceList.py:622
+#: blueman/gui/manager/ManagerDeviceList.py:606
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:625
+#: blueman/gui/manager/ManagerDeviceList.py:609
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr ""
@@ -1150,12 +1128,12 @@ msgstr "Casc"
 #. translators: device class
 #: blueman/DeviceClass.py:151
 msgid "Glasses"
-msgstr ""
+msgstr "Ulleres"
 
 #. translators: device class
 #: blueman/DeviceClass.py:156
 msgid "Robot"
-msgstr ""
+msgstr "Robot"
 
 #. translators: device class
 #: blueman/DeviceClass.py:158
@@ -1584,7 +1562,7 @@ msgstr ""
 
 #: blueman/Sdp.py:132
 msgid "Fax"
-msgstr ""
+msgstr "Fax"
 
 #: blueman/Sdp.py:133
 msgid "Headset Audio Gateway"
@@ -1616,7 +1594,7 @@ msgstr ""
 
 #: blueman/Sdp.py:140
 msgid "ReferencePrinting (BPP)"
-msgstr ""
+msgstr "Impressió per referència (BPP)"
 
 #: blueman/Sdp.py:141
 msgid "Imaging (BIP)"
@@ -1844,7 +1822,7 @@ msgstr ""
 
 #: blueman/Sdp.py:197
 msgid "Glucose"
-msgstr ""
+msgstr "Glucosa"
 
 #: blueman/Sdp.py:198
 msgid "Health Thermometer"
@@ -1876,7 +1854,7 @@ msgstr ""
 
 #: blueman/Sdp.py:205
 msgid "Human Interface Device"
-msgstr ""
+msgstr "Dispositiu d’interfície humana"
 
 #: blueman/Sdp.py:206
 msgid "Scan Parameters"
@@ -1900,7 +1878,7 @@ msgstr ""
 
 #: blueman/Sdp.py:211
 msgid "Location and Navigation"
-msgstr ""
+msgstr "Localització i navegació"
 
 #: blueman/Sdp.py:212
 msgid "Environmental Sensing"
@@ -2212,7 +2190,7 @@ msgstr "Mostra l'ús del trànsit de xarxa"
 
 #: blueman/plugins/applet/StatusIcon.py:41
 #: blueman/plugins/applet/ShowConnected.py:71
-#: blueman/plugins/applet/PowerManager.py:190
+#: blueman/plugins/applet/PowerManager.py:172
 msgid "Bluetooth Enabled"
 msgstr "Bluetooth habilitat"
 
@@ -2451,7 +2429,7 @@ msgstr[0] "<b>%(connections)d connexió activa</b>"
 msgstr[1] "<b>%(connections)d connexions actives</b>"
 
 #: blueman/plugins/applet/ShowConnected.py:73
-#: blueman/plugins/applet/PowerManager.py:193
+#: blueman/plugins/applet/PowerManager.py:175
 msgid "Bluetooth Disabled"
 msgstr "Bluetooth inhabilitat"
 
@@ -2575,29 +2553,21 @@ msgstr ""
 msgid "Controls Bluetooth adapter power states"
 msgstr "Controla els estats d'alimentació de l'adaptador Bluetooth"
 
-#: blueman/plugins/applet/PowerManager.py:44
-msgid "Auto power-on"
-msgstr "Engega automàticament"
-
-#: blueman/plugins/applet/PowerManager.py:45
-msgid "Automatically power on adapters"
-msgstr "Engega automàticament els adaptadors"
-
-#: blueman/plugins/applet/PowerManager.py:55
-#: blueman/plugins/applet/PowerManager.py:172
+#: blueman/plugins/applet/PowerManager.py:41
+#: blueman/plugins/applet/PowerManager.py:154
 msgid "<b>Turn Bluetooth _Off</b>"
 msgstr "<b>Apaga el Bluet_ooth</b>"
 
-#: blueman/plugins/applet/PowerManager.py:57
-#: blueman/plugins/applet/PowerManager.py:174
+#: blueman/plugins/applet/PowerManager.py:43
+#: blueman/plugins/applet/PowerManager.py:156
 msgid "Turn off all adapters"
 msgstr "Apaga tots els adaptadors"
 
-#: blueman/plugins/applet/PowerManager.py:163
+#: blueman/plugins/applet/PowerManager.py:145
 msgid "<b>Turn Bluetooth _On</b>"
 msgstr "<b>Engega el Bluet_ooth</b>"
 
-#: blueman/plugins/applet/PowerManager.py:165
+#: blueman/plugins/applet/PowerManager.py:147
 msgid "Turn on all adapters"
 msgstr "Engega tots els adaptadors"
 
@@ -2718,6 +2688,29 @@ msgstr "Estableix l'estat RfKill"
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr "El fet d'establir l'estat RfKill requereix privilegis"
+
+#~ msgid "Shall bluetooth get enabled automatically?"
+#~ msgstr "S'hauria d'habilitar automàticament el Bluetooth?"
+
+#~ msgid "Yes"
+#~ msgstr "Sí"
+
+#~ msgid "No"
+#~ msgstr "No"
+
+#, python-format
+#~ msgid "<b>Link Quality: %(lq)u%%</b>"
+#~ msgstr "<b>Qualitat de l’enllaç: %(lq)u%%</b>"
+
+#, python-format
+#~ msgid "Link Quality: %(lq)u%%"
+#~ msgstr "Qualitat de l’enllaç: %(lq)u%%"
+
+#~ msgid "Auto power-on"
+#~ msgstr "Engega automàticament"
+
+#~ msgid "Automatically power on adapters"
+#~ msgstr "Engega automàticament els adaptadors"
 
 #~ msgid "Bluetooth Devices"
 #~ msgstr "Dispositius Bluetooth"

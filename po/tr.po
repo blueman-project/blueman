@@ -25,7 +25,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2022-07-31 07:01+0000\n"
+"POT-Creation-Date: 2022-09-06 19:29+0000\n"
 "PO-Revision-Date: 2022-07-04 07:10+0000\n"
 "Last-Translator: Oğuz Ersen <oguz@ersen.moe>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/blueman/blueman/"
@@ -258,8 +258,8 @@ msgstr "<b>Yazar:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:355
-#: blueman/gui/manager/ManagerDeviceList.py:357 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:351
+#: blueman/gui/manager/ManagerDeviceList.py:353 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:210
@@ -369,7 +369,7 @@ msgstr "Aranıyor"
 msgid "Adapter Preferences"
 msgstr "Bağdaştırıcı Tercihleri"
 
-#: blueman/main/Manager.py:281 blueman/gui/manager/ManagerDeviceList.py:169
+#: blueman/main/Manager.py:281 blueman/gui/manager/ManagerDeviceList.py:165
 #: blueman/plugins/applet/StandardItems.py:77
 msgid "File Sender"
 msgstr "Dosya Gönderici"
@@ -520,31 +520,19 @@ msgstr "Çıkış"
 msgid "Enable Bluetooth"
 msgstr "Bluetooth'u Etkinleştir"
 
-#: blueman/Functions.py:91
-msgid "Shall bluetooth get enabled automatically?"
-msgstr "Bluetooth otomatik olarak etkinleştirilecek mi?"
-
-#: blueman/Functions.py:92
-msgid "Yes"
-msgstr "Evet"
-
-#: blueman/Functions.py:93
-msgid "No"
-msgstr "Hayır"
-
-#: blueman/Functions.py:180
+#: blueman/Functions.py:166
 msgid "B"
 msgstr "B"
 
-#: blueman/Functions.py:183
+#: blueman/Functions.py:169
 msgid "KB"
 msgstr "KB"
 
-#: blueman/Functions.py:186
+#: blueman/Functions.py:172
 msgid "MB"
 msgstr "MB"
 
-#: blueman/Functions.py:189
+#: blueman/Functions.py:175
 msgid "GB"
 msgstr "GB"
 
@@ -612,89 +600,79 @@ msgid "_Exit"
 msgstr "_Çıkış"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:326
-#: blueman/gui/manager/ManagerDeviceList.py:355 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:322
+#: blueman/gui/manager/ManagerDeviceList.py:351 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 msgid "Uncategorized"
 msgstr "Sınıflandırılmamış"
 
-#: blueman/gui/manager/ManagerDeviceList.py:544
+#: blueman/gui/manager/ManagerDeviceList.py:536
 msgid "Trusted"
 msgstr "Güvenilir"
 
-#: blueman/gui/manager/ManagerDeviceList.py:546
+#: blueman/gui/manager/ManagerDeviceList.py:538
 msgid "Paired"
 msgstr "Eşleştirildi"
 
-#: blueman/gui/manager/ManagerDeviceList.py:548
+#: blueman/gui/manager/ManagerDeviceList.py:540
 msgid "Blocked"
 msgstr "Engellendi"
 
-#: blueman/gui/manager/ManagerDeviceList.py:571
+#: blueman/gui/manager/ManagerDeviceList.py:562
 msgid "<b>Connected</b>"
 msgstr "<b>Bağlandı</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:586
+#: blueman/gui/manager/ManagerDeviceList.py:576
 msgid "Poor"
 msgstr "Zayıf"
 
-#: blueman/gui/manager/ManagerDeviceList.py:588
-#: blueman/gui/manager/ManagerDeviceList.py:613
+#: blueman/gui/manager/ManagerDeviceList.py:578
+#: blueman/gui/manager/ManagerDeviceList.py:597
 msgid "Sub-optimal"
 msgstr "Optimal altı"
 
-#: blueman/gui/manager/ManagerDeviceList.py:590
-#: blueman/gui/manager/ManagerDeviceList.py:615
+#: blueman/gui/manager/ManagerDeviceList.py:580
+#: blueman/gui/manager/ManagerDeviceList.py:599
 msgid "Optimal"
 msgstr "En Uygun"
 
-#: blueman/gui/manager/ManagerDeviceList.py:592
+#: blueman/gui/manager/ManagerDeviceList.py:582
 msgid "Much"
 msgstr "Daha fazla"
 
-#: blueman/gui/manager/ManagerDeviceList.py:594
+#: blueman/gui/manager/ManagerDeviceList.py:584
 msgid "Too much"
 msgstr "Çok fazla"
 
-#: blueman/gui/manager/ManagerDeviceList.py:597
+#: blueman/gui/manager/ManagerDeviceList.py:587
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 msgstr "<b>Alınan Sinyal Gücü: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:600
+#: blueman/gui/manager/ManagerDeviceList.py:590
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 msgstr "Alınan Sinyal Gücü: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:605
-#, python-format
-msgid "<b>Link Quality: %(lq)u%%</b>"
-msgstr "<b>Bağlantı Kalitesi: %(lq)u%%</b>"
-
-#: blueman/gui/manager/ManagerDeviceList.py:607
-#, python-format
-msgid "Link Quality: %(lq)u%%"
-msgstr "Bağlantı Kalitesi: %(lq)u%%"
-
-#: blueman/gui/manager/ManagerDeviceList.py:611
+#: blueman/gui/manager/ManagerDeviceList.py:595
 msgid "Low"
 msgstr "Düşük"
 
-#: blueman/gui/manager/ManagerDeviceList.py:617
+#: blueman/gui/manager/ManagerDeviceList.py:601
 msgid "High"
 msgstr "Yüksek"
 
-#: blueman/gui/manager/ManagerDeviceList.py:619
+#: blueman/gui/manager/ManagerDeviceList.py:603
 msgid "Very High"
 msgstr "Çok Yüksek"
 
-#: blueman/gui/manager/ManagerDeviceList.py:622
+#: blueman/gui/manager/ManagerDeviceList.py:606
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr "<b>İletim Gücü Seviyesi: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:625
+#: blueman/gui/manager/ManagerDeviceList.py:609
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr "İletim Gücü Seviyesi: %(tpl)u%% <i>(%(tpl_state)s)</i>"
@@ -2191,7 +2169,7 @@ msgstr "Ağ kullanımını görüntüler"
 
 #: blueman/plugins/applet/StatusIcon.py:41
 #: blueman/plugins/applet/ShowConnected.py:71
-#: blueman/plugins/applet/PowerManager.py:190
+#: blueman/plugins/applet/PowerManager.py:172
 msgid "Bluetooth Enabled"
 msgstr "Bluetooth Etkin"
 
@@ -2426,7 +2404,7 @@ msgstr[0] "<b>%(connections)d Faal Bağlantı</b>"
 msgstr[1] "<b>%(connections)d Faal Bağlantı</b>"
 
 #: blueman/plugins/applet/ShowConnected.py:73
-#: blueman/plugins/applet/PowerManager.py:193
+#: blueman/plugins/applet/PowerManager.py:175
 msgid "Bluetooth Disabled"
 msgstr "Bluetooth Devredışı"
 
@@ -2546,29 +2524,21 @@ msgstr ""
 msgid "Controls Bluetooth adapter power states"
 msgstr "Bluetooth bağdaştırıcısı güç durumlarını denetler"
 
-#: blueman/plugins/applet/PowerManager.py:44
-msgid "Auto power-on"
-msgstr "Kendiliğinden çalıştır"
-
-#: blueman/plugins/applet/PowerManager.py:45
-msgid "Automatically power on adapters"
-msgstr "Bağdaştırıcılar bağlandığında kendiliğinden çalıştır"
-
-#: blueman/plugins/applet/PowerManager.py:55
-#: blueman/plugins/applet/PowerManager.py:172
+#: blueman/plugins/applet/PowerManager.py:41
+#: blueman/plugins/applet/PowerManager.py:154
 msgid "<b>Turn Bluetooth _Off</b>"
 msgstr "<b>Bluetooth'u _Kapat</b>"
 
-#: blueman/plugins/applet/PowerManager.py:57
-#: blueman/plugins/applet/PowerManager.py:174
+#: blueman/plugins/applet/PowerManager.py:43
+#: blueman/plugins/applet/PowerManager.py:156
 msgid "Turn off all adapters"
 msgstr "Tüm bağdaştırıcıları kapat"
 
-#: blueman/plugins/applet/PowerManager.py:163
+#: blueman/plugins/applet/PowerManager.py:145
 msgid "<b>Turn Bluetooth _On</b>"
 msgstr "<b>Bluetooth'u _Aç</b>"
 
-#: blueman/plugins/applet/PowerManager.py:165
+#: blueman/plugins/applet/PowerManager.py:147
 msgid "Turn on all adapters"
 msgstr "Tüm bağdaştırıcıları aç"
 
@@ -2685,6 +2655,29 @@ msgstr "RfKill Durumunu Ayarla"
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr "RfKill durumunu ayarlamak yetki gerektirir"
+
+#~ msgid "Shall bluetooth get enabled automatically?"
+#~ msgstr "Bluetooth otomatik olarak etkinleştirilecek mi?"
+
+#~ msgid "Yes"
+#~ msgstr "Evet"
+
+#~ msgid "No"
+#~ msgstr "Hayır"
+
+#, python-format
+#~ msgid "<b>Link Quality: %(lq)u%%</b>"
+#~ msgstr "<b>Bağlantı Kalitesi: %(lq)u%%</b>"
+
+#, python-format
+#~ msgid "Link Quality: %(lq)u%%"
+#~ msgstr "Bağlantı Kalitesi: %(lq)u%%"
+
+#~ msgid "Auto power-on"
+#~ msgstr "Kendiliğinden çalıştır"
+
+#~ msgid "Automatically power on adapters"
+#~ msgstr "Bağdaştırıcılar bağlandığında kendiliğinden çalıştır"
 
 #~ msgid "Bluetooth Devices"
 #~ msgstr "Bluetooth Aygıtları"
