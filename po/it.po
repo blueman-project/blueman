@@ -48,13 +48,14 @@
 # J. Lavoie <j.lavoie@net-c.ca>
 # alogico <claudio.dellicarpini78@gmail.com>, 2021.
 # nortio <savi.napolitano@gmail.com>, 2022.
+# No <icytrucky@posteo.net>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2022-07-31 07:01+0000\n"
-"PO-Revision-Date: 2022-04-23 02:13+0000\n"
-"Last-Translator: nortio <savi.napolitano@gmail.com>\n"
+"POT-Creation-Date: 2022-09-06 19:29+0000\n"
+"PO-Revision-Date: 2022-09-06 18:08+0000\n"
+"Last-Translator: No <icytrucky@posteo.net>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/blueman/blueman/"
 "it/>\n"
 "Language: it\n"
@@ -62,7 +63,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12.1-dev\n"
+"X-Generator: Weblate 4.14.1-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -81,9 +82,8 @@ msgid "Temporarily visible"
 msgstr "Visibile temporaneamente"
 
 #: data/ui/adapters-tab.ui:110
-#, fuzzy
 msgid "<b>Name</b>"
-msgstr "<b>Accoppiato</b>"
+msgstr "<b>Nome</b>"
 
 #: data/ui/applet-passkey.ui:8
 msgid "Pairing request"
@@ -178,15 +178,13 @@ msgstr "_Ripristina"
 
 #: data/ui/rename-device.ui:40 data/ui/note.ui:26 blueman/main/Sendto.py:235
 #: blueman/gui/DeviceSelectorDialog.py:17
-#, fuzzy
-#| msgid "Cancelling"
 msgid "_Cancel"
-msgstr "Annullamento in corso"
+msgstr "_Annulla"
 
 #: data/ui/rename-device.ui:54 data/ui/note.ui:41
 #: blueman/gui/DeviceSelectorDialog.py:17
 msgid "_OK"
-msgstr ""
+msgstr "_OK"
 
 #: data/ui/services-network.ui:37
 msgid "Network Access Point (NAP)"
@@ -286,8 +284,8 @@ msgstr "<b>Autore:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:355
-#: blueman/gui/manager/ManagerDeviceList.py:357 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:351
+#: blueman/gui/manager/ManagerDeviceList.py:353 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:210
@@ -396,7 +394,7 @@ msgstr "Ricerca"
 msgid "Adapter Preferences"
 msgstr "Preferenze Adattatore"
 
-#: blueman/main/Manager.py:281 blueman/gui/manager/ManagerDeviceList.py:169
+#: blueman/main/Manager.py:281 blueman/gui/manager/ManagerDeviceList.py:165
 #: blueman/plugins/applet/StandardItems.py:77
 msgid "File Sender"
 msgstr "Mittente del file"
@@ -407,7 +405,7 @@ msgstr "Trasferimento file bluetooth"
 
 #: blueman/main/Sendto.py:42
 msgid "_Stop"
-msgstr ""
+msgstr "_Ferma"
 
 #: blueman/main/Sendto.py:57 blueman/gui/manager/ManagerProgressbar.py:27
 msgid "Connecting"
@@ -534,7 +532,7 @@ msgstr "Servizi Locali"
 
 #: blueman/main/Services.py:48
 msgid "_Apply"
-msgstr ""
+msgstr "_Applica"
 
 #: blueman/Functions.py:70
 msgid "Bluetooth Turned Off"
@@ -548,33 +546,21 @@ msgstr "Esci"
 msgid "Enable Bluetooth"
 msgstr "Abilita bluetooth"
 
-#: blueman/Functions.py:91
-msgid "Shall bluetooth get enabled automatically?"
-msgstr "Vuoi che il bluetooth venga abilitato automaticamente?"
-
-#: blueman/Functions.py:92
-msgid "Yes"
-msgstr "Sì"
-
-#: blueman/Functions.py:93
-msgid "No"
-msgstr "No"
-
-#: blueman/Functions.py:180
+#: blueman/Functions.py:166
 msgid "B"
-msgstr ""
+msgstr "B"
 
-#: blueman/Functions.py:183
+#: blueman/Functions.py:169
 msgid "KB"
-msgstr ""
+msgstr "KB"
 
-#: blueman/Functions.py:186
+#: blueman/Functions.py:172
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
-#: blueman/Functions.py:189
+#: blueman/Functions.py:175
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: blueman/gui/manager/ManagerMenu.py:45
 msgid "_Report a Problem"
@@ -593,9 +579,8 @@ msgid "Show _Statusbar"
 msgstr "Mostra barra di s_tato"
 
 #: blueman/gui/manager/ManagerMenu.py:78
-#, fuzzy
 msgid "Hide _unnamed devices"
-msgstr "Rinomina dispositivo"
+msgstr "Nascondi dispositivi _senza nome"
 
 #: blueman/gui/manager/ManagerMenu.py:88
 msgid "S_ort By"
@@ -633,107 +618,93 @@ msgid "_Search"
 msgstr "_Cerca"
 
 #: blueman/gui/manager/ManagerMenu.py:155
-#, fuzzy
 msgid "_Preferences"
-msgstr "Preferenze Adattatore"
+msgstr "_Preferenze Adattatore"
 
 #: blueman/gui/manager/ManagerMenu.py:164 blueman/plugins/applet/ExitItem.py:12
 msgid "_Exit"
 msgstr "_Esci"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:326
-#: blueman/gui/manager/ManagerDeviceList.py:355 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:322
+#: blueman/gui/manager/ManagerDeviceList.py:351 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 #, fuzzy
 msgid "Uncategorized"
 msgstr "non categorizzato"
 
-#: blueman/gui/manager/ManagerDeviceList.py:544
-#, fuzzy
-#| msgid "Trust"
+#: blueman/gui/manager/ManagerDeviceList.py:536
 msgid "Trusted"
-msgstr "Autorizza"
+msgstr "Autorizzato"
 
-#: blueman/gui/manager/ManagerDeviceList.py:546
-#, fuzzy
-#| msgid "Pair"
+#: blueman/gui/manager/ManagerDeviceList.py:538
 msgid "Paired"
-msgstr "Associa"
+msgstr "Associato"
 
-#: blueman/gui/manager/ManagerDeviceList.py:548
+#: blueman/gui/manager/ManagerDeviceList.py:540
 msgid "Blocked"
-msgstr ""
+msgstr "Bloccato"
 
-#: blueman/gui/manager/ManagerDeviceList.py:571
-#, fuzzy
+#: blueman/gui/manager/ManagerDeviceList.py:562
 msgid "<b>Connected</b>"
-msgstr "_<b>Connetti</b>"
+msgstr "_<b>Connesso</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:586
+#: blueman/gui/manager/ManagerDeviceList.py:576
 msgid "Poor"
 msgstr "Scarso"
 
-#: blueman/gui/manager/ManagerDeviceList.py:588
-#: blueman/gui/manager/ManagerDeviceList.py:613
+#: blueman/gui/manager/ManagerDeviceList.py:578
+#: blueman/gui/manager/ManagerDeviceList.py:597
 msgid "Sub-optimal"
 msgstr "Sub-ottimale"
 
-#: blueman/gui/manager/ManagerDeviceList.py:590
-#: blueman/gui/manager/ManagerDeviceList.py:615
+#: blueman/gui/manager/ManagerDeviceList.py:580
+#: blueman/gui/manager/ManagerDeviceList.py:599
 msgid "Optimal"
 msgstr "Ottimale"
 
-#: blueman/gui/manager/ManagerDeviceList.py:592
+#: blueman/gui/manager/ManagerDeviceList.py:582
 msgid "Much"
 msgstr "Molto"
 
-#: blueman/gui/manager/ManagerDeviceList.py:594
+#: blueman/gui/manager/ManagerDeviceList.py:584
 msgid "Too much"
 msgstr "Troppo"
 
-#: blueman/gui/manager/ManagerDeviceList.py:597
+#: blueman/gui/manager/ManagerDeviceList.py:587
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 msgstr ""
+"<b>Potenza segnale in ricezione: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:600
+#: blueman/gui/manager/ManagerDeviceList.py:590
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
-msgstr ""
+msgstr "Potenza segnale in ricezione: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:605
-#, python-format
-msgid "<b>Link Quality: %(lq)u%%</b>"
-msgstr ""
-
-#: blueman/gui/manager/ManagerDeviceList.py:607
-#, python-format
-msgid "Link Quality: %(lq)u%%"
-msgstr ""
-
-#: blueman/gui/manager/ManagerDeviceList.py:611
+#: blueman/gui/manager/ManagerDeviceList.py:595
 msgid "Low"
 msgstr "Basso"
 
-#: blueman/gui/manager/ManagerDeviceList.py:617
+#: blueman/gui/manager/ManagerDeviceList.py:601
 msgid "High"
 msgstr "Alto"
 
-#: blueman/gui/manager/ManagerDeviceList.py:619
+#: blueman/gui/manager/ManagerDeviceList.py:603
 msgid "Very High"
 msgstr "Molto Alto"
 
-#: blueman/gui/manager/ManagerDeviceList.py:622
+#: blueman/gui/manager/ManagerDeviceList.py:606
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr ""
+"<b>Livello potenza di trasmissione: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:625
+#: blueman/gui/manager/ManagerDeviceList.py:609
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
-msgstr ""
+msgstr "Livello potenza di trasmissione: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:130
 msgid "Success!"
@@ -744,9 +715,8 @@ msgid "Failed"
 msgstr "Fallito"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:141
-#, fuzzy
 msgid "Connecting…"
-msgstr "Connessione in corso"
+msgstr "Connessione in corso…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:177
 msgid "Disconnection Failed: "
@@ -754,21 +724,19 @@ msgstr "Disconessione fallita: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:201
 msgid "No audio endpoints registered"
-msgstr ""
+msgstr "Nessun endpoint audio registrato"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:204
 msgid "Input/output error"
-msgstr ""
+msgstr "Errore input/output"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:206
-#, fuzzy
 msgid "Device did not respond"
-msgstr "Mostra informazioni sul dispositivo"
+msgstr "Il dispositivo non risponde"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:210
-#, fuzzy
 msgid "Resource temporarily unavailable"
-msgstr "Visibile temporaneamente"
+msgstr "Risorsa temporaneamente non disponibile"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:215
 msgid "Connection Failed: "
@@ -784,10 +752,8 @@ msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr "Auto connette i profili sorgente A2DP, sink A2DP, e HID"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:290
-#, fuzzy
-#| msgid "_<b>Disconnect</b>"
 msgid "<b>_Disconnect</b>"
-msgstr "_<b>Disconnetti</b>"
+msgstr "<b>_Disconnetti</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:291
 msgid "Forcefully disconnect the device"
@@ -802,14 +768,12 @@ msgid "<b>Disconnect:</b>"
 msgstr "<b>Disconnetti:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:321
-#, fuzzy
 msgid "<b>Auto-connect:</b>"
-msgstr "<b>Disconnetti:</b>"
+msgstr "<b>Auto-connetti:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:340
-#, fuzzy
 msgid "Send a _File…"
-msgstr "Invia un _file..."
+msgstr "Invia un _File…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:353
 msgid "_Pair"
@@ -825,17 +789,15 @@ msgstr "_Revoca autorizzazione"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:375
 msgid "_Block"
-msgstr ""
+msgstr "_Blocca"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:380
 msgid "_Unblock"
-msgstr ""
+msgstr "_Sblocca"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:384
-#, fuzzy
-#| msgid "Send files to this device"
 msgid "Block/Unblock this device"
-msgstr "Invia file a questo dispositivo"
+msgstr "Blocca/sblocca questo dispositivo"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:404
 #, fuzzy
@@ -843,9 +805,8 @@ msgid "R_ename device…"
 msgstr "Rinomina dispositivo"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:413
-#, fuzzy
 msgid "_Remove…"
-msgstr "Rimuovi"
+msgstr "_Rimuovi…"
 
 #: blueman/gui/manager/ManagerProgressbar.py:44
 msgid "Cancel Operation"
@@ -920,40 +881,38 @@ msgid "Adapter selection"
 msgstr "Selezione dell'adattatore"
 
 #: blueman/gui/DeviceSelectorWidget.py:45
-#, fuzzy
 msgid "Discovering…"
-msgstr "Visibile… %ss"
+msgstr "Ricerca…"
 
 #. translators: device class
 #: blueman/DeviceClass.py:6
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Miscellanea"
 
 #. translators: device class
 #: blueman/DeviceClass.py:8
 msgid "Computer"
-msgstr ""
+msgstr "Computer"
 
 #. translators: device class
 #: blueman/DeviceClass.py:10
 msgid "Phone"
-msgstr ""
+msgstr "Telefono"
 
 #. translators: device class
 #: blueman/DeviceClass.py:12
-#, fuzzy
 msgid "Access point"
 msgstr "Punto di accesso alla rete"
 
 #. translators: device class
 #: blueman/DeviceClass.py:14
 msgid "Audio/video"
-msgstr ""
+msgstr "Audio/video"
 
 #. translators: device class
 #: blueman/DeviceClass.py:16
 msgid "Peripheral"
-msgstr ""
+msgstr "Periferica"
 
 #. translators: device class
 #: blueman/DeviceClass.py:18 blueman/DeviceClass.py:276
@@ -963,36 +922,32 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:20 blueman/DeviceClass.py:41
 msgid "Wearable"
-msgstr ""
+msgstr "Indossabile"
 
 #. translators: device class
 #: blueman/DeviceClass.py:22
 msgid "Toy"
-msgstr ""
+msgstr "Giocattolo"
 
 #. translators: device class
 #: blueman/DeviceClass.py:31
-#, fuzzy
 msgid "Desktop"
-msgstr "desktop"
+msgstr "Desktop"
 
 #. translators: device class
 #: blueman/DeviceClass.py:33
-#, fuzzy
 msgid "Server"
-msgstr "server"
+msgstr "Server"
 
 #. translators: device class
 #: blueman/DeviceClass.py:35
-#, fuzzy
 msgid "Laptop"
-msgstr "portatile"
+msgstr "Portatile"
 
 #. translators: device class
 #: blueman/DeviceClass.py:37
-#, fuzzy
 msgid "Handheld"
-msgstr "palmare"
+msgstr "Palmare"
 
 #. translators: device class
 #: blueman/DeviceClass.py:39
@@ -1001,295 +956,273 @@ msgstr ""
 
 #. translators: device class
 #: blueman/DeviceClass.py:48
-#, fuzzy
 msgid "Cellular"
-msgstr "cellulare"
+msgstr "Cellulare"
 
 #. translators: device class
 #: blueman/DeviceClass.py:50
-#, fuzzy
 msgid "Cordless"
-msgstr "senza fili"
+msgstr "Senza fili"
 
 #. translators: device class
 #: blueman/DeviceClass.py:52
-#, fuzzy
 msgid "Smartphone"
-msgstr "smartphone"
+msgstr "Smartphone"
 
 #. translators: device class
 #: blueman/DeviceClass.py:54
-#, fuzzy
 msgid "Modem"
-msgstr "modem"
+msgstr "Modem"
 
 #. translators: device class
 #: blueman/DeviceClass.py:56
 msgid "ISDN"
-msgstr ""
+msgstr "ISDN"
 
 #. translators: device class
 #: blueman/DeviceClass.py:61
 msgid "Fully"
-msgstr ""
+msgstr "Completamente"
 
 #. translators: device class
 #: blueman/DeviceClass.py:63
 msgid "1–17 percent"
-msgstr ""
+msgstr "1-17 percento"
 
 #. translators: device class
 #: blueman/DeviceClass.py:65
 msgid "17–33 percent"
-msgstr ""
+msgstr "17-33 percento"
 
 #. translators: device class
 #: blueman/DeviceClass.py:67
 msgid "33–50 percent"
-msgstr ""
+msgstr "33-50 percento"
 
 #. translators: device class
 #: blueman/DeviceClass.py:69
 msgid "50–67 percent"
-msgstr ""
+msgstr "50-67 percento"
 
 #. translators: device class
 #: blueman/DeviceClass.py:71
 msgid "67–83 percent"
-msgstr ""
+msgstr "67-83 percento"
 
 #. translators: device class
 #: blueman/DeviceClass.py:73
 msgid "83–99 percent"
-msgstr ""
+msgstr "83-99 percento"
 
 #. translators: device class
 #: blueman/DeviceClass.py:75
-#, fuzzy
 msgid "Not available"
-msgstr "obexd non disponibile"
+msgstr "Non disponibile"
 
 #. translators: device class
 #: blueman/DeviceClass.py:82 blueman/Sdp.py:123 blueman/Sdp.py:164
-#, fuzzy
 msgid "Headset"
-msgstr "auricolare"
+msgstr "Auricolare"
 
 #. translators: device class
 #: blueman/DeviceClass.py:84 blueman/Sdp.py:145
-#, fuzzy
 msgid "Handsfree"
-msgstr "vivavoce"
+msgstr "Vivavoce"
 
 #. translators: device class
 #: blueman/DeviceClass.py:88
-#, fuzzy
 msgid "Microphone"
-msgstr "microfono"
+msgstr "Microfono"
 
 #. translators: device class
 #: blueman/DeviceClass.py:90
 msgid "Loudspeaker"
-msgstr ""
+msgstr "Altoparlante"
 
 #. translators: device class
 #: blueman/DeviceClass.py:92
 msgid "Headphones"
-msgstr ""
+msgstr "Cuffie"
 
 #. translators: device class
 #: blueman/DeviceClass.py:94
 msgid "Portable audio"
-msgstr ""
+msgstr "Audio portatile"
 
 #. translators: device class
 #: blueman/DeviceClass.py:96
 msgid "Car audio"
-msgstr ""
+msgstr "Audio automobile"
 
 #. translators: device class
 #: blueman/DeviceClass.py:98
 msgid "Set-top box"
-msgstr ""
+msgstr "Decoder"
 
 #. translators: device class
 #: blueman/DeviceClass.py:100
 msgid "Hi-Fi audio"
-msgstr ""
+msgstr "Audio Hi-Fi"
 
 #. translators: device class
 #: blueman/DeviceClass.py:102
 msgid "VCR"
-msgstr ""
+msgstr "Videoregistratore"
 
 #. translators: device class
 #: blueman/DeviceClass.py:104
-#, fuzzy
 msgid "Video camera"
-msgstr "Sorgente audio"
+msgstr "Videocamera"
 
 #. translators: device class
 #: blueman/DeviceClass.py:106
 msgid "Camcorder"
-msgstr ""
+msgstr "Telecamera"
 
 #. translators: device class
 #: blueman/DeviceClass.py:108
-#, fuzzy
 msgid "Video monitor"
-msgstr "Sorgente audio"
+msgstr "Monitor video"
 
 #. translators: device class
 #: blueman/DeviceClass.py:110
 msgid "Video display and loudspeaker"
-msgstr ""
+msgstr "Display video e altoparlante"
 
 #. translators: device class
 #: blueman/DeviceClass.py:112
-#, fuzzy
 msgid "Video conferencing"
-msgstr "Sorgente audio"
+msgstr "Videoconferenza"
 
 #. translators: device class
 #: blueman/DeviceClass.py:116
 msgid "Gaming/Toy"
-msgstr ""
+msgstr "Gaming/Giocattolo"
 
 #. translators: device class
 #: blueman/DeviceClass.py:123 blueman/DeviceClass.py:189
-#, fuzzy
 msgid "Keyboard"
-msgstr "tastiera"
+msgstr "Tastiera"
 
 #. translators: device class
 #: blueman/DeviceClass.py:125
-#, fuzzy
 msgid "Pointing"
-msgstr "puntamento"
+msgstr "Puntamento"
 
 #. translators: device class
 #: blueman/DeviceClass.py:127
 msgid "Combo"
-msgstr ""
+msgstr "Combo"
 
 #. translators: device class
 #: blueman/DeviceClass.py:132
 msgid "Display"
-msgstr ""
+msgstr "Schermo"
 
 #. translators: device class
 #: blueman/DeviceClass.py:134
 msgid "Camera"
-msgstr ""
+msgstr "Fotocamera"
 
 #. translators: device class
 #: blueman/DeviceClass.py:136
 msgid "Scanner"
-msgstr ""
+msgstr "Scanner"
 
 #. translators: device class
 #: blueman/DeviceClass.py:138
 msgid "Printer"
-msgstr ""
+msgstr "Stampante"
 
 #. translators: device class
 #: blueman/DeviceClass.py:143
 msgid "Wrist watch"
-msgstr ""
+msgstr "Orologio da polso"
 
 #. translators: device class
 #: blueman/DeviceClass.py:145
 msgid "Pager"
-msgstr ""
+msgstr "Cercapersone"
 
 #. translators: device class
 #: blueman/DeviceClass.py:147
 msgid "Jacket"
-msgstr ""
+msgstr "Giacchetta"
 
 #. translators: device class
 #: blueman/DeviceClass.py:149
 msgid "Helmet"
-msgstr ""
+msgstr "Casco"
 
 #. translators: device class
 #: blueman/DeviceClass.py:151
 msgid "Glasses"
-msgstr ""
+msgstr "Occhiali"
 
 #. translators: device class
 #: blueman/DeviceClass.py:156
 msgid "Robot"
-msgstr ""
+msgstr "Robot"
 
 #. translators: device class
 #: blueman/DeviceClass.py:158
 msgid "Vehicle"
-msgstr ""
+msgstr "Veicolo"
 
 #. translators: device class
 #: blueman/DeviceClass.py:160
 msgid "Doll"
-msgstr ""
+msgstr "Bambola"
 
 #. translators: device class
 #: blueman/DeviceClass.py:162
 msgid "Controller"
-msgstr ""
+msgstr "Controller"
 
 #. translators: device class
 #: blueman/DeviceClass.py:164
 msgid "Game"
-msgstr ""
+msgstr "Gioco"
 
 #: blueman/DeviceClass.py:169
-#, fuzzy
 msgid "Generic Phone"
-msgstr "Connetti"
+msgstr "Telefono Generico"
 
 #: blueman/DeviceClass.py:170
-#, fuzzy
 msgid "Generic Computer"
-msgstr "Connetti"
+msgstr "Computer Generico"
 
 #: blueman/DeviceClass.py:171
-#, fuzzy
 msgid "Generic Watch"
-msgstr "Connetti"
+msgstr "Orologio da polso generico"
 
 #: blueman/DeviceClass.py:172
 msgid "Watch: Sports Watch"
-msgstr ""
+msgstr "Orologio da polso: sportivo"
 
 #: blueman/DeviceClass.py:173
-#, fuzzy
 msgid "Generic Clock"
-msgstr "Connetti"
+msgstr "Orologio generico"
 
 #: blueman/DeviceClass.py:174
-#, fuzzy
 msgid "Generic Display"
-msgstr "Trasferimento file bluetooth"
+msgstr "Schermo generico"
 
 #: blueman/DeviceClass.py:175
-#, fuzzy
 msgid "Generic Remote Control"
-msgstr "Connetti"
+msgstr "Telecomando Generico"
 
 #: blueman/DeviceClass.py:176
-#, fuzzy
 msgid "Generic Eye-glasses"
-msgstr "Trasferimento file bluetooth"
+msgstr "Occhiali Generici"
 
 #: blueman/DeviceClass.py:177
-#, fuzzy
 msgid "Generic Tag"
-msgstr "Trasferimento file bluetooth"
+msgstr "Tag Generico"
 
 #: blueman/DeviceClass.py:178
-#, fuzzy
 msgid "Generic Keyring"
-msgstr "Gruppo rete"
+msgstr "Portachiavi Generico"
 
 #: blueman/DeviceClass.py:179
 #, fuzzy
@@ -2289,7 +2222,7 @@ msgstr "Visualizza l'utilizzo del traffico di rete"
 
 #: blueman/plugins/applet/StatusIcon.py:41
 #: blueman/plugins/applet/ShowConnected.py:71
-#: blueman/plugins/applet/PowerManager.py:190
+#: blueman/plugins/applet/PowerManager.py:172
 msgid "Bluetooth Enabled"
 msgstr "Bluetooth abilitato"
 
@@ -2524,7 +2457,7 @@ msgstr[0] "<b>%d connessione attiva</b>"
 msgstr[1] "<b>%d connessioni attive</b>"
 
 #: blueman/plugins/applet/ShowConnected.py:73
-#: blueman/plugins/applet/PowerManager.py:193
+#: blueman/plugins/applet/PowerManager.py:175
 msgid "Bluetooth Disabled"
 msgstr "Bluetooth disabilitato"
 
@@ -2647,29 +2580,21 @@ msgstr ""
 msgid "Controls Bluetooth adapter power states"
 msgstr "Gestisce lo stato di alimentazione degli adattatori Bluetooth"
 
-#: blueman/plugins/applet/PowerManager.py:44
-msgid "Auto power-on"
-msgstr "Accensione automatica"
-
-#: blueman/plugins/applet/PowerManager.py:45
-msgid "Automatically power on adapters"
-msgstr "Accendi automaticamente adattatore"
-
-#: blueman/plugins/applet/PowerManager.py:55
-#: blueman/plugins/applet/PowerManager.py:172
+#: blueman/plugins/applet/PowerManager.py:41
+#: blueman/plugins/applet/PowerManager.py:154
 msgid "<b>Turn Bluetooth _Off</b>"
 msgstr "<b>_Disattiva il bluetooth</b>"
 
-#: blueman/plugins/applet/PowerManager.py:57
-#: blueman/plugins/applet/PowerManager.py:174
+#: blueman/plugins/applet/PowerManager.py:43
+#: blueman/plugins/applet/PowerManager.py:156
 msgid "Turn off all adapters"
 msgstr "Spegni tutti gli adattatori"
 
-#: blueman/plugins/applet/PowerManager.py:163
+#: blueman/plugins/applet/PowerManager.py:145
 msgid "<b>Turn Bluetooth _On</b>"
 msgstr "<b>_Attiva il bluetooth</b>"
 
-#: blueman/plugins/applet/PowerManager.py:165
+#: blueman/plugins/applet/PowerManager.py:147
 msgid "Turn on all adapters"
 msgstr "Accendi tutti gli adattatori"
 
@@ -2789,6 +2714,29 @@ msgstr "Imposta lo stato RfKill"
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr "Impostare lo stato RfKill richiede privilegi"
+
+#~ msgid "Shall bluetooth get enabled automatically?"
+#~ msgstr "Vuoi che il bluetooth venga abilitato automaticamente?"
+
+#~ msgid "Yes"
+#~ msgstr "Sì"
+
+#~ msgid "No"
+#~ msgstr "No"
+
+#, python-format
+#~ msgid "<b>Link Quality: %(lq)u%%</b>"
+#~ msgstr "<b>Qualità collegamento: %(lq)u%%</b>"
+
+#, python-format
+#~ msgid "Link Quality: %(lq)u%%"
+#~ msgstr "Qualità collegamento: %(lq)u%%"
+
+#~ msgid "Auto power-on"
+#~ msgstr "Accensione automatica"
+
+#~ msgid "Automatically power on adapters"
+#~ msgstr "Accendi automaticamente adattatore"
 
 #~ msgid "Bluetooth Devices"
 #~ msgstr "Dispositivi Bluetooth"

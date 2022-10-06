@@ -10,12 +10,13 @@
 # Sander Sweers <infirit@gmail.com>, 2020, 2022.
 # simonborgithub <mail@simonbor.nl>
 # Pjotr Vertaalt <pjotrvertaalt@gmail.com>, 2022.
+# A <volluta@protonmail.com>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2022-07-31 07:01+0000\n"
-"PO-Revision-Date: 2022-07-28 16:24+0000\n"
+"POT-Creation-Date: 2022-09-06 19:29+0000\n"
+"PO-Revision-Date: 2022-09-14 17:38+0000\n"
 "Last-Translator: Sander Sweers <infirit@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/blueman/blueman/nl/"
 ">\n"
@@ -24,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 4.14.1-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -247,8 +248,8 @@ msgstr "<b>Auteur:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:355
-#: blueman/gui/manager/ManagerDeviceList.py:357 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:351
+#: blueman/gui/manager/ManagerDeviceList.py:353 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:210
@@ -358,7 +359,7 @@ msgstr "Bezig met zoeken"
 msgid "Adapter Preferences"
 msgstr "Adapter voorkeuren"
 
-#: blueman/main/Manager.py:281 blueman/gui/manager/ManagerDeviceList.py:169
+#: blueman/main/Manager.py:281 blueman/gui/manager/ManagerDeviceList.py:165
 #: blueman/plugins/applet/StandardItems.py:77
 msgid "File Sender"
 msgstr "Bestandverzender"
@@ -509,31 +510,19 @@ msgstr "Afsluiten"
 msgid "Enable Bluetooth"
 msgstr "Bluetooth inschakelen"
 
-#: blueman/Functions.py:91
-msgid "Shall bluetooth get enabled automatically?"
-msgstr "Moet bluetooth automatisch worden ingeschakeld?"
-
-#: blueman/Functions.py:92
-msgid "Yes"
-msgstr "Ja"
-
-#: blueman/Functions.py:93
-msgid "No"
-msgstr "Nee"
-
-#: blueman/Functions.py:180
+#: blueman/Functions.py:166
 msgid "B"
 msgstr "B"
 
-#: blueman/Functions.py:183
+#: blueman/Functions.py:169
 msgid "KB"
 msgstr "KB"
 
-#: blueman/Functions.py:186
+#: blueman/Functions.py:172
 msgid "MB"
 msgstr "MB"
 
-#: blueman/Functions.py:189
+#: blueman/Functions.py:175
 msgid "GB"
 msgstr "GB"
 
@@ -601,89 +590,79 @@ msgid "_Exit"
 msgstr "Afsluiten"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:326
-#: blueman/gui/manager/ManagerDeviceList.py:355 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:322
+#: blueman/gui/manager/ManagerDeviceList.py:351 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 msgid "Uncategorized"
 msgstr "Zonder categorie"
 
-#: blueman/gui/manager/ManagerDeviceList.py:544
+#: blueman/gui/manager/ManagerDeviceList.py:536
 msgid "Trusted"
 msgstr "Vertrouwd"
 
-#: blueman/gui/manager/ManagerDeviceList.py:546
+#: blueman/gui/manager/ManagerDeviceList.py:538
 msgid "Paired"
 msgstr "Gekoppeld"
 
-#: blueman/gui/manager/ManagerDeviceList.py:548
+#: blueman/gui/manager/ManagerDeviceList.py:540
 msgid "Blocked"
 msgstr "Geblokkeerd"
 
-#: blueman/gui/manager/ManagerDeviceList.py:571
+#: blueman/gui/manager/ManagerDeviceList.py:562
 msgid "<b>Connected</b>"
-msgstr "_<b>Verbonden</b>"
+msgstr "<b>Verbonden</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:586
+#: blueman/gui/manager/ManagerDeviceList.py:576
 msgid "Poor"
 msgstr "Matig"
 
-#: blueman/gui/manager/ManagerDeviceList.py:588
-#: blueman/gui/manager/ManagerDeviceList.py:613
+#: blueman/gui/manager/ManagerDeviceList.py:578
+#: blueman/gui/manager/ManagerDeviceList.py:597
 msgid "Sub-optimal"
 msgstr "Sub-optimaal"
 
-#: blueman/gui/manager/ManagerDeviceList.py:590
-#: blueman/gui/manager/ManagerDeviceList.py:615
+#: blueman/gui/manager/ManagerDeviceList.py:580
+#: blueman/gui/manager/ManagerDeviceList.py:599
 msgid "Optimal"
 msgstr "Optimaal"
 
-#: blueman/gui/manager/ManagerDeviceList.py:592
+#: blueman/gui/manager/ManagerDeviceList.py:582
 msgid "Much"
 msgstr "Veel"
 
-#: blueman/gui/manager/ManagerDeviceList.py:594
+#: blueman/gui/manager/ManagerDeviceList.py:584
 msgid "Too much"
 msgstr "Te veel"
 
-#: blueman/gui/manager/ManagerDeviceList.py:597
+#: blueman/gui/manager/ManagerDeviceList.py:587
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 msgstr "<b>Ontvangen signaalsterkte: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:600
+#: blueman/gui/manager/ManagerDeviceList.py:590
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 msgstr "Ontvangen signaalsterkte: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:605
-#, python-format
-msgid "<b>Link Quality: %(lq)u%%</b>"
-msgstr "<b>Koppelingskwaliteit: %(lq)u%%</b>"
-
-#: blueman/gui/manager/ManagerDeviceList.py:607
-#, python-format
-msgid "Link Quality: %(lq)u%%"
-msgstr "Koppelingskwaliteit: %(lq)u%%"
-
-#: blueman/gui/manager/ManagerDeviceList.py:611
+#: blueman/gui/manager/ManagerDeviceList.py:595
 msgid "Low"
 msgstr "Laag"
 
-#: blueman/gui/manager/ManagerDeviceList.py:617
+#: blueman/gui/manager/ManagerDeviceList.py:601
 msgid "High"
 msgstr "Hoog"
 
-#: blueman/gui/manager/ManagerDeviceList.py:619
+#: blueman/gui/manager/ManagerDeviceList.py:603
 msgid "Very High"
 msgstr "Zeer hoog"
 
-#: blueman/gui/manager/ManagerDeviceList.py:622
+#: blueman/gui/manager/ManagerDeviceList.py:606
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr "<b>Sterkte van verzendsignaal: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:625
+#: blueman/gui/manager/ManagerDeviceList.py:609
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr "Sterkte van verzendsignaal: %(tpl)u%% <i>(%(tpl_state)s)</i>"
@@ -1252,7 +1231,7 @@ msgstr "Muis"
 
 #: blueman/DeviceClass.py:191
 msgid "Joystick"
-msgstr ""
+msgstr "Joystick"
 
 #: blueman/DeviceClass.py:192
 msgid "Gamepad"
@@ -1260,7 +1239,7 @@ msgstr "Gamepad"
 
 #: blueman/DeviceClass.py:193
 msgid "Digitizer Tablet"
-msgstr ""
+msgstr "Graphics tablet/ Pen tablet"
 
 #: blueman/DeviceClass.py:194
 msgid "Card Reader"
@@ -1329,7 +1308,7 @@ msgstr "Vingertop"
 
 #: blueman/DeviceClass.py:211
 msgid "Wrist-Worn"
-msgstr ""
+msgstr "Om de pols"
 
 #: blueman/DeviceClass.py:212
 msgid "Generic: Weight Scale"
@@ -1454,15 +1433,15 @@ msgstr "HIDP"
 
 #: blueman/Sdp.py:103
 msgid "Hardcopy Control Channel"
-msgstr ""
+msgstr "Hardcopy Control Channel"
 
 #: blueman/Sdp.py:104
 msgid "Hardcopy Data Channel"
-msgstr ""
+msgstr "Hardcopy Data Channel"
 
 #: blueman/Sdp.py:105
 msgid "Hardcopy Notification"
-msgstr ""
+msgstr "Hardcopy Notificatie"
 
 #: blueman/Sdp.py:106
 msgid "AVCTP"
@@ -1490,11 +1469,11 @@ msgstr "L2CAP"
 
 #: blueman/Sdp.py:113
 msgid "ServiceDiscoveryServerServiceClassID"
-msgstr ""
+msgstr "ServiceDiscoveryServerServiceClassID"
 
 #: blueman/Sdp.py:114
 msgid "BrowseGroupDescriptorServiceClassID"
-msgstr ""
+msgstr "BrowseGroupDescriptorServiceClassID"
 
 #: blueman/Sdp.py:115
 msgid "Public Browse Group"
@@ -1514,11 +1493,11 @@ msgstr "Inbelnetwerk (DUN)"
 
 #: blueman/Sdp.py:119
 msgid "IrMC Sync"
-msgstr ""
+msgstr "IrMC Sync"
 
 #: blueman/Sdp.py:120
 msgid "OBEX Object Push"
-msgstr ""
+msgstr "OBEX Object Push"
 
 #: blueman/Sdp.py:121
 msgid "OBEX File Transfer"
@@ -1602,15 +1581,15 @@ msgstr "Beeldverwerking (BIP)"
 
 #: blueman/Sdp.py:142
 msgid "ImagingResponder (BIP)"
-msgstr ""
+msgstr "ImagingResponder (BIP)"
 
 #: blueman/Sdp.py:143
 msgid "ImagingAutomaticArchive (BIP)"
-msgstr ""
+msgstr "ImagingAutomaticArchive (BIP)"
 
 #: blueman/Sdp.py:144
 msgid "ImagingReferencedObjects (BIP)"
-msgstr ""
+msgstr "ImagingReferencedObjects (BIP)"
 
 #: blueman/Sdp.py:146
 msgid "Handsfree Audio Gateway"
@@ -1618,19 +1597,19 @@ msgstr "Handenvrij audiodoorgang"
 
 #: blueman/Sdp.py:147
 msgid "DirectPrintingReferenceObjectsService (BPP)"
-msgstr ""
+msgstr "DirectPrintingReferenceObjectsService (BPP)"
 
 #: blueman/Sdp.py:148
 msgid "ReflectedUI (BPP)"
-msgstr ""
+msgstr "ReflectedUI (BPP)"
 
 #: blueman/Sdp.py:149
 msgid "Basic Printing (BPP)"
-msgstr ""
+msgstr "Basic Printing (BPP)"
 
 #: blueman/Sdp.py:150
 msgid "Printing Status (BPP)"
-msgstr ""
+msgstr "Printing Status (BPP)"
 
 #: blueman/Sdp.py:151
 msgid "Human Interface Device Service (HID)"
@@ -1638,15 +1617,15 @@ msgstr "Menselijke interface-apparaatdienst (HID)"
 
 #: blueman/Sdp.py:152
 msgid "HardcopyCableReplacement (HCR)"
-msgstr ""
+msgstr "HardcopyCableReplacement (HCR)"
 
 #: blueman/Sdp.py:153
 msgid "HCR_Print (HCR)"
-msgstr ""
+msgstr "HCR_Print (HCR)"
 
 #: blueman/Sdp.py:154
 msgid "HCR_Scan (HCR)"
-msgstr ""
+msgstr "HCR_Scan (HCR)"
 
 #: blueman/Sdp.py:155
 msgid "Common ISDN Access (CIP)"
@@ -1654,15 +1633,15 @@ msgstr "Gemeenschappelijke ISDN-toegang (CIP)"
 
 #: blueman/Sdp.py:156
 msgid "VideoConferencingGW (VCP)"
-msgstr ""
+msgstr "VideoConferencingGW (VCP)"
 
 #: blueman/Sdp.py:157
 msgid "UDI-MT"
-msgstr ""
+msgstr "UDI-MT"
 
 #: blueman/Sdp.py:158
 msgid "UDI-TA"
-msgstr ""
+msgstr "UDI-TA"
 
 #: blueman/Sdp.py:159
 msgid "Audio/Video"
@@ -1778,7 +1757,7 @@ msgstr "HDP-bron"
 
 #: blueman/Sdp.py:188
 msgid "HDP Sink"
-msgstr ""
+msgstr "HDP Sink"
 
 #: blueman/Sdp.py:189
 msgid "Generic Access"
@@ -1806,11 +1785,11 @@ msgstr "Huidige tijddienst"
 
 #: blueman/Sdp.py:195
 msgid "Reference Time Update Service"
-msgstr ""
+msgstr "Reference Time Update Service"
 
 #: blueman/Sdp.py:196
 msgid "Next DST Change Service"
-msgstr ""
+msgstr "Next DST Change Service"
 
 #: blueman/Sdp.py:197
 msgid "Glucose"
@@ -1830,7 +1809,7 @@ msgstr "Hartslag"
 
 #: blueman/Sdp.py:201
 msgid "Phone Alert Status Service"
-msgstr ""
+msgstr "Phone Alert Status Service"
 
 #: blueman/Sdp.py:202
 msgid "Battery Service"
@@ -1842,11 +1821,11 @@ msgstr "Bloeddruk"
 
 #: blueman/Sdp.py:204
 msgid "Alert Notification Service"
-msgstr ""
+msgstr "Service voor notificatiesmeldingen"
 
 #: blueman/Sdp.py:205
 msgid "Human Interface Device"
-msgstr ""
+msgstr "Human Interface Device"
 
 #: blueman/Sdp.py:206
 msgid "Scan Parameters"
@@ -1910,11 +1889,11 @@ msgstr "Zuurstofgehaltemeter"
 
 #: blueman/Sdp.py:221
 msgid "HTTP Proxy"
-msgstr ""
+msgstr "HTTP Proxy"
 
 #: blueman/Sdp.py:222
 msgid "Transport Discovery"
-msgstr ""
+msgstr "Transport Discovery"
 
 #: blueman/Sdp.py:223
 msgid "Object Transfer"
@@ -1938,7 +1917,7 @@ msgstr "Opnemen"
 
 #: blueman/Sdp.py:228
 msgid "Characteristic Declaration"
-msgstr ""
+msgstr "Kenmerkende verklaring"
 
 #: blueman/Sdp.py:229
 msgid "Device Name"
@@ -1950,7 +1929,7 @@ msgstr "Weergave"
 
 #: blueman/Sdp.py:231
 msgid "Peripheral Privacy Flag"
-msgstr ""
+msgstr "Randapparatuur Privacy Flag"
 
 #: blueman/Sdp.py:232
 msgid "Reconnection Address"
@@ -1958,7 +1937,7 @@ msgstr "Heraansluitingsadres"
 
 #: blueman/Sdp.py:233
 msgid "Peripheral Preferred Connection Parameters"
-msgstr ""
+msgstr "Peripheral Preferred Connection Parameters"
 
 #: blueman/Sdp.py:234
 msgid "Service Changed"
@@ -1978,47 +1957,47 @@ msgstr "Serienummerreeks"
 
 #: blueman/Sdp.py:238
 msgid "Firmware Revision String"
-msgstr ""
+msgstr "Firmware Revisie String"
 
 #: blueman/Sdp.py:239
 msgid "Hardware Revision String"
-msgstr ""
+msgstr "Hardware Revisie String"
 
 #: blueman/Sdp.py:240
 msgid "Software Revision String"
-msgstr ""
+msgstr "Software Revisie String"
 
 #: blueman/Sdp.py:241
 msgid "Manufacturer Name String"
-msgstr ""
+msgstr "Fabrikant Name String"
 
 #: blueman/Sdp.py:242
 msgid "PnP ID"
-msgstr ""
+msgstr "PnP ID"
 
 #: blueman/Sdp.py:243
 msgid "Characteristic Extended Properties"
-msgstr ""
+msgstr "Kenmerkende Uitgebreide Eigenschappen"
 
 #: blueman/Sdp.py:244
 msgid "Characteristic User Description"
-msgstr ""
+msgstr "Kenmerkende Beschrijving gebruiker"
 
 #: blueman/Sdp.py:245
 msgid "Client Characteristic Configuration"
-msgstr ""
+msgstr "Client Characteristic Configuration"
 
 #: blueman/Sdp.py:246
 msgid "Server Characteristic Configuration"
-msgstr ""
+msgstr "Server Characteristic Configuration"
 
 #: blueman/Sdp.py:247
 msgid "Characteristic Presentation Format"
-msgstr ""
+msgstr "Kenmerkend presentatieformaat"
 
 #: blueman/Sdp.py:248
 msgid "Characteristic Aggregate Format"
-msgstr ""
+msgstr "Characteristic Aggregate Format"
 
 #: blueman/Sdp.py:249
 msgid "Valid Range"
@@ -2026,7 +2005,7 @@ msgstr "Geldig bereik"
 
 #: blueman/Sdp.py:250
 msgid "External Report Reference"
-msgstr ""
+msgstr "Extern verslag Referentie"
 
 #: blueman/Sdp.py:251
 msgid "Report Reference"
@@ -2180,7 +2159,7 @@ msgstr "Laat netwerkverkeergebruik zien"
 
 #: blueman/plugins/applet/StatusIcon.py:41
 #: blueman/plugins/applet/ShowConnected.py:71
-#: blueman/plugins/applet/PowerManager.py:190
+#: blueman/plugins/applet/PowerManager.py:172
 msgid "Bluetooth Enabled"
 msgstr "Bluetooth ingeschakeld"
 
@@ -2339,6 +2318,10 @@ msgid ""
 "turning Bluetooth back on from an icon that shows its status; provided it "
 "isn't unplugged by the system, or physically."
 msgstr ""
+"Schakelt de status van Bluetooth killswitch om naar de status van Bluetooth "
+"power. Maakt het mogelijk Bluetooth weer in te schakelen vanaf een pictogram "
+"dat de status weergeeft; mits het niet door het systeem is losgekoppeld, of "
+"fysiek."
 
 #: blueman/plugins/applet/StandardItems.py:22
 msgid "Adds standard menu items to the status icon menu"
@@ -2354,7 +2337,7 @@ msgstr "_Apparaten"
 
 #: blueman/plugins/applet/StandardItems.py:41
 msgid "Adap_ters"
-msgstr "Stekkers"
+msgstr "Adapters"
 
 #: blueman/plugins/applet/StandardItems.py:90
 msgid "applet"
@@ -2417,7 +2400,7 @@ msgstr[0] "<b>%(connections)d actieve verbinding</b>"
 msgstr[1] "<b>%(connections)d actieve verbindingen</b>"
 
 #: blueman/plugins/applet/ShowConnected.py:73
-#: blueman/plugins/applet/PowerManager.py:193
+#: blueman/plugins/applet/PowerManager.py:175
 msgid "Bluetooth Disabled"
 msgstr "Bluetooth uitgeschakeld"
 
@@ -2540,29 +2523,21 @@ msgstr ""
 msgid "Controls Bluetooth adapter power states"
 msgstr "Beheert de stroomstatus van de Bluetooth-adapter"
 
-#: blueman/plugins/applet/PowerManager.py:44
-msgid "Auto power-on"
-msgstr "Automatisch inschakelen"
-
-#: blueman/plugins/applet/PowerManager.py:45
-msgid "Automatically power on adapters"
-msgstr "Adapter automatisch inschakelen"
-
-#: blueman/plugins/applet/PowerManager.py:55
-#: blueman/plugins/applet/PowerManager.py:172
+#: blueman/plugins/applet/PowerManager.py:41
+#: blueman/plugins/applet/PowerManager.py:154
 msgid "<b>Turn Bluetooth _Off</b>"
 msgstr "<b>Bluetooth _uitschakelen</b>"
 
-#: blueman/plugins/applet/PowerManager.py:57
-#: blueman/plugins/applet/PowerManager.py:174
+#: blueman/plugins/applet/PowerManager.py:43
+#: blueman/plugins/applet/PowerManager.py:156
 msgid "Turn off all adapters"
 msgstr "Alle adapters uitschakelen"
 
-#: blueman/plugins/applet/PowerManager.py:163
+#: blueman/plugins/applet/PowerManager.py:145
 msgid "<b>Turn Bluetooth _On</b>"
 msgstr "<b>Bluetooth _aan</b>"
 
-#: blueman/plugins/applet/PowerManager.py:165
+#: blueman/plugins/applet/PowerManager.py:147
 msgid "Turn on all adapters"
 msgstr "Alle adapters inschakelen"
 
@@ -2680,6 +2655,29 @@ msgstr "RfKill-status instellen"
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr "U heeft rechten nodig om de status van RfKill in te stellen"
+
+#~ msgid "Shall bluetooth get enabled automatically?"
+#~ msgstr "Moet bluetooth automatisch worden ingeschakeld?"
+
+#~ msgid "Yes"
+#~ msgstr "Ja"
+
+#~ msgid "No"
+#~ msgstr "Nee"
+
+#, python-format
+#~ msgid "<b>Link Quality: %(lq)u%%</b>"
+#~ msgstr "<b>Koppelingskwaliteit: %(lq)u%%</b>"
+
+#, python-format
+#~ msgid "Link Quality: %(lq)u%%"
+#~ msgstr "Koppelingskwaliteit: %(lq)u%%"
+
+#~ msgid "Auto power-on"
+#~ msgstr "Automatisch inschakelen"
+
+#~ msgid "Automatically power on adapters"
+#~ msgstr "Adapter automatisch inschakelen"
 
 #~ msgid "Bluetooth Devices"
 #~ msgstr "Bluetooth-apparaten"
