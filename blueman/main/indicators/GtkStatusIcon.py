@@ -2,6 +2,7 @@ from typing import Callable, Iterable, TYPE_CHECKING, overload, cast, Optional, 
 
 import gi
 
+from blueman.main.Tray import BluemanTray
 from blueman.main.indicators.IndicatorInterface import IndicatorInterface
 
 gi.require_version("Gtk", "3.0")
@@ -14,12 +15,7 @@ if TYPE_CHECKING:
     from blueman.plugins.applet.Menu import MenuItemDict, SubmenuItemDict
 
     class MenuItemActivator(Protocol):
-        @overload
-        def __call__(self, idx: int) -> None:
-            ...
-
-        @overload
-        def __call__(self, idx: int, subid: int) -> None:
+        def __call__(self, *idx: int) -> None:
             ...
 
 
@@ -60,13 +56,12 @@ def build_menu(items: Iterable[Tuple[int, "SubmenuItemDict"]], activate: Callabl
 
 
 class GtkStatusIcon(IndicatorInterface):
-    def __init__(self, icon_name: str, on_activate_menu_item: "MenuItemActivator",
-                 on_activate_status_icon: Callable[[], None]) -> None:
-        self._on_activate = on_activate_menu_item
+    def __init__(self, tray: BluemanTray, icon_name: str) -> None:
+        self._on_activate = tray.activate_menu_item
         self.indicator = Gtk.StatusIcon(icon_name=icon_name)
         self.indicator.set_title('blueman')
         self.indicator.connect('popup-menu', self.on_popup_menu)
-        self.indicator.connect('activate', lambda _status_icon: on_activate_status_icon())
+        self.indicator.connect('activate', lambda _status_icon: tray.activate_status_icon())
         self._tooltip_title = ""
         self._tooltip_text = ""
         self._menu: Optional[Gtk.Menu] = None
