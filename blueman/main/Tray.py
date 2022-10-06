@@ -38,8 +38,7 @@ class BluemanTray(Gio.Application):
         for indicator_name in applet.GetStatusIconImplementations():
             indicator_class = getattr(import_module('blueman.main.indicators.' + indicator_name), indicator_name)
             try:
-                self.indicator = indicator_class(
-                    applet.GetIconName(), self._activate_menu_item, self._activate_status_icon)
+                self.indicator = indicator_class(self, applet.GetIconName())
                 break
             except IndicatorNotAvailable:
                 logging.info(f'Indicator "{indicator_name}" is not available')
@@ -58,10 +57,10 @@ class BluemanTray(Gio.Application):
         logging.debug("Applet shutdown or not available at startup")
         self.quit()
 
-    def _activate_menu_item(self, *indexes: int) -> None:
+    def activate_menu_item(self, *indexes: int) -> None:
         AppletService().ActivateMenuItem('(ai)', indexes)
 
-    def _activate_status_icon(self) -> None:
+    def activate_status_icon(self) -> None:
         AppletService().Activate()
 
     def on_signal(self, _applet: AppletService, _sender_name: str, signal_name: str, args: GLib.Variant) -> None:
