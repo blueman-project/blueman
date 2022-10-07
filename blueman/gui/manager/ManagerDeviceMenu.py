@@ -101,6 +101,8 @@ class ManagerDeviceMenu(Gtk.Menu):
     def set_op(self, device: Device, message: str) -> None:
         ManagerDeviceMenu.__ops__[device.get_object_path()] = message
         for inst in ManagerDeviceMenu.__instances__:
+            if not hasattr(inst, "SelectedDevice"):
+                return
             logging.info(f"op: regenerating instance {inst}")
             if inst.SelectedDevice == self.SelectedDevice and not (inst.is_popup and not inst.props.visible):
                 inst.generate()
@@ -114,6 +116,8 @@ class ManagerDeviceMenu(Gtk.Menu):
     def unset_op(self, device: Device) -> None:
         del ManagerDeviceMenu.__ops__[device.get_object_path()]
         for inst in ManagerDeviceMenu.__instances__:
+            if not hasattr(inst, "SelectedDevice"):
+                return
             logging.info(f"op: regenerating instance {inst}")
             if inst.SelectedDevice == self.SelectedDevice and not (inst.is_popup and not inst.props.visible):
                 inst.generate()
