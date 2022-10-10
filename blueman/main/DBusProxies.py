@@ -1,6 +1,10 @@
+from gettext import gettext as _
+import logging
+
 from gi.repository import Gio, GLib
 
 from blueman.gobject import SingletonGObjectMeta
+from blueman.gui.Notification import Notification
 
 
 class DBusProxyFailed(Exception):
@@ -49,7 +53,21 @@ class ManagerService(ProxyBase):
 
     def _call_action(self, name: str) -> None:
         def call_finish(proxy: "ManagerService", resp: Gio.AsyncResult) -> None:
-            proxy.call_finish(resp)
+            try:
+                proxy.call_finish(resp)
+            except GLib.Error:
+                # This can different errors, depending on the system configuration, typically:
+                # * org.freedesktop.DBus.Error.Spawn.ChildExited if dbus-daemon tries to launch the service itself.
+                # * org.freedesktop.DBus.Error.NoReply if the systemd integration is used.
+                logging.error("Call to %s failed", self.get_name(), exc_info=True)
+                Notification(
+                    _("Failed to reach blueman-manager"),
+                    _("It seems like blueman-manager could no get activated via D-Bus. "
+                      "A typical cause for this is a broken graphical setup in the D-Bus activation environment "
+                      "that can get resolved with a call to dbus-update-activation-environment, "
+                      "typically issued from xinitrc (respectively the Sway config or similar)."),
+                    0,
+                ).show()
 
         param = GLib.Variant('(sava{sv})', (name, [], {}))
         self.call('ActivateAction', param, Gio.DBusCallFlags.NONE, -1, None, call_finish)
