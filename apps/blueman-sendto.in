@@ -8,8 +8,7 @@ import gettext
 
 import gi
 gi.require_version("Gtk", "3.0")
-gi.require_version("Gdk", "3.0")
-from gi.repository import Gtk
+from gi.repository import Gtk, Gio
 
 # support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -28,7 +27,6 @@ from blueman.Functions import (
     create_logger,
     bmexit
 )
-from blueman.main.Config import Config
 from blueman.main.Sendto import Sender
 from blueman.bluez.Manager import Manager
 from blueman.bluez.errors import DBusNoSuchAdapterError
@@ -53,7 +51,7 @@ class SendTo:
         manager = Manager()
         adapter = None
         adapters = manager.get_adapters()
-        last_adapter_name = Config("org.blueman.general")["last-adapter"]
+        last_adapter_name = Gio.Settings(schema_id="org.blueman.general")["last-adapter"]
 
         if len(adapters) == 0:
             logging.error("Error: No Adapters present")
