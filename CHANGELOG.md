@@ -14,13 +14,28 @@
 * Replace custom MessageArea widget with regular Gtk.InfoBar
 * Drop auto-power feature. BlueZ now has the AutoEnable setting for even better auto-powering.
 * Do not use pointless link quality value
-* Do not re-use dbusmenu item identifiers; avoids issues at least with gnome-shell-extension-appindicator.
 * Recent connections in toplevel applet menu
+
+## 2.3.3
+
+### Changes
+
+* Do not re-use dbusmenu item identifiers; avoids issues at least with gnome-shell-extension-appindicator.
 
 ### Bugs fixed
 
 * Issues with NM PANU connections of equally named devices
 * Submenus in KDE Plasma tray
+* Avoid using StatusNotifierItem and GtkStatusIcon icons in parallel
+
+## 2.3.2
+
+### Bugs fixed
+
+* StatusNotifierItem submenus did not work in lxqt-panel (@niknah)
+* StatusNotifierItem vanished on panel restarts
+* StatusNotifierItem compatibility issues with libdbusmenu used at least by xfce4-panel and Waybar
+* StatusNotifierItem showed the menu on left click in xfce4-panel
 
 ## 2.3.1
 
