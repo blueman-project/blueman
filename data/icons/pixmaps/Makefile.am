@@ -1,6 +1,4 @@
-pixmapsdir = $(datadir)/blueman/pixmaps
-
-pixmaps_DATA =			\
+EXTRA_DIST =	\
 	blueman-battery-10.png	\
 	blueman-battery-20.png	\
 	blueman-battery-30.png	\
@@ -31,5 +29,3 @@ pixmaps_DATA =			\
 	blueman-tpl-80.png	\
 	blueman-tpl-90.png	\
 	blueman-tpl-100.png	
-
-EXTRA_DIST = $(pixmaps_DATA)

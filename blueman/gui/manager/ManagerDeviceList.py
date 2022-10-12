@@ -12,7 +12,6 @@ from blueman.gui.DeviceList import DeviceList
 from blueman.DeviceClass import get_minor_class, get_major_class, gatt_appearance_to_name
 from blueman.gui.GenericList import ListDataDict
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
-from blueman.Constants import PIXMAP_PATH
 from blueman.Functions import launch
 from blueman.Sdp import ServiceUUID, OBEX_OBJPUSH_SVCLASS_ID
 from blueman.gui.GtkAnimation import TreeRowFade, CellFade, AnimBase
@@ -484,8 +483,8 @@ class ManagerDeviceList(DeviceList):
 
         for (name, perc) in bars.items():
             if round(row[name], -1) != round(perc, -1):
-                icon_name = f"blueman-{name}-{int(round(perc, -1))}.png"
-                icon = GdkPixbuf.Pixbuf.new_from_file_at_scale(os.path.join(PIXMAP_PATH, icon_name), w, h, True)
+                icon_name = f"/org/blueman/blueman-{name}-{int(round(perc, -1))}.png"
+                icon = GdkPixbuf.Pixbuf.new_from_resource_at_scale(icon_name, w, h, True)
                 self.set(tree_iter, **{name: perc, f"{name}_pb": icon})
 
     def _disable_power_levels(self, tree_iter: Gtk.TreeIter) -> None:

@@ -1,8 +1,7 @@
 from typing import TypeVar, Type
+from pathlib import Path
 
 import gi
-from blueman.Constants import UI_PATH
-
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
@@ -10,7 +9,8 @@ from gi.repository import Gtk
 class Builder(Gtk.Builder):
     def __init__(self, filename: str):
         super().__init__(translation_domain="blueman")
-        self.add_from_file(UI_PATH + "/" + filename)
+        resource_path = Path("/org/blueman/") / filename
+        self.add_from_resource(resource_path.as_posix())
 
     T = TypeVar("T", bound=Gtk.Widget)
 
