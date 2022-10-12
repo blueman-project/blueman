@@ -14,8 +14,7 @@ if TYPE_CHECKING:
 
 
 class AudioProfiles(AppletPlugin):
-    __depends__ = ["StatusIcon", "Menu"]
-    __unloadable__ = False
+    __depends__ = ["Menu"]
     __description__ = _("Adds audio profile selector to the status icon menu")
     __author__ = "Abhijeet Viswa"
 
