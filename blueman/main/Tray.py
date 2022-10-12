@@ -4,13 +4,13 @@ import os
 import signal
 import sys
 from blueman.main.DBusProxies import AppletService
-from gi.repository import Gio, GLib
+from gi.repository import Gio, GLib, Gtk
 
 from blueman.main.indicators.IndicatorInterface import IndicatorNotAvailable
 
 
 class BluemanTray(Gio.Application):
-    def __init__(self) -> None:
+    def __init__(self, resource_file) -> None:
         super().__init__(application_id="org.blueman.Tray", flags=Gio.ApplicationFlags.FLAGS_NONE)
         self._active = False
 
@@ -21,6 +21,10 @@ class BluemanTray(Gio.Application):
         s = GLib.unix_signal_source_new(signal.SIGINT)
         s.set_callback(do_quit)
         s.attach()
+
+        gresource = Gio.Resource.load(resource_file)
+        Gio.Resource._register(gresource)
+        Gtk.IconTheme.get_default().add_resource_path("/org/blueman")
 
     def do_activate(self) -> None:
         if self._active:

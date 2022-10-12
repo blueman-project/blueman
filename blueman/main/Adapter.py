@@ -31,7 +31,7 @@ if TYPE_CHECKING:
 
 
 class BluemanAdapters(Gtk.Application):
-    def __init__(self, selected_hci_dev: Optional[str], socket_id: Optional[int]) -> None:
+    def __init__(self, selected_hci_dev: Optional[str], socket_id: Optional[int], resource_file: str) -> None:
         super().__init__(application_id="org.blueman.Adapters")
 
         def do_quit(_: object) -> bool:
@@ -41,6 +41,10 @@ class BluemanAdapters(Gtk.Application):
         s = GLib.unix_signal_source_new(signal.SIGINT)
         s.set_callback(do_quit)
         s.attach()
+
+        gresource = Gio.Resource.load(resource_file)
+        Gio.Resource._register(gresource)
+        Gtk.IconTheme.get_default().add_resource_path("/org/blueman/")
 
         self.socket_id = socket_id
         self.selected_hci_dev = selected_hci_dev
@@ -52,7 +56,6 @@ class BluemanAdapters(Gtk.Application):
         self.tabs: Dict[str, "Tab"] = {}
         self._adapters: Dict[str, Adapter] = {}
 
-        setup_icon_path()
         Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
         self.manager = Manager()
 

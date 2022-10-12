@@ -87,6 +87,11 @@ if test "$sysconfdir" = "\${prefix}/etc" \
     )
 fi
 
+AC_PATH_PROG([GLIB_COMPILE_RESOURCES], [glib-compile-resources])
+if test x"$GLIB_COMPILE_RESOURCES" = x; then
+	AC_MSG_ERROR(['glib-compile-resources' not found.])
+fi
+
 dnl ----------------------------------
 dnl - Various paths and other defines
 dnl ----------------------------------
