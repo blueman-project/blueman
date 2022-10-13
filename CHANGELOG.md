@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.3.4
+
+### Bugs fixed
+
+* Errors when connected to a device with the DisconnectItems plugin enabled
+
 ## 2.3.3
 
 ### Changes
