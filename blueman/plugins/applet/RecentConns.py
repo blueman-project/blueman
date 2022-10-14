@@ -9,6 +9,7 @@ from blueman.bluez.errors import DBusNoSuchAdapterError
 from blueman.gui.Notification import Notification
 from blueman.Sdp import ServiceUUID
 from blueman.plugins.AppletPlugin import AppletPlugin
+from blueman.plugins.applet.Menu import MenuItem
 from blueman.plugins.applet.PowerManager import PowerManager, PowerStateListener
 
 if TYPE_CHECKING:
@@ -182,7 +183,7 @@ class RecentConns(AppletPlugin, PowerStateListener):
 
     def _rebuild_menu(self) -> None:
         menu: "Menu" = self.parent.Plugins.Menu
-        self._mitems = []
+        self._mitems: List[MenuItem] = []
         menu.unregister(self)
         menu.add(self, 52, text=_("Recent _Connections"), icon_name="document-open-recent-symbolic",
                  sensitive=False, callback=lambda: None)

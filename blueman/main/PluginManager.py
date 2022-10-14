@@ -4,7 +4,7 @@ import logging
 import traceback
 import importlib
 from types import ModuleType
-from typing import Dict, List, Type, TypeVar, Iterable, Optional, Any
+from typing import Dict, List, Type, TypeVar, Iterable, Optional
 
 from gi.repository import GObject, Gio
 
@@ -32,7 +32,7 @@ class PluginManager(GObject.GObject):
         super().__init__()
         self.__deps: Dict[str, List[str]] = {}
         self.__cfls: Dict[str, List[str]] = {}
-        self.__plugins: Dict[str, _T] = {}
+        self._plugins: Dict[str, _T] = {}
         self.__classes: Dict[str, Type[_T]] = {}
         self.__loaded: List[str] = []
         self.parent = parent
@@ -168,14 +168,14 @@ class PluginManager(GObject.GObject):
             raise  # NOTE TO SELF: might cause bugs
 
         else:
-            self.__plugins[cls.__name__] = inst
+            self._plugins[cls.__name__] = inst
 
             self.__loaded.append(cls.__name__)
             self.emit("plugin-loaded", cls.__name__)
 
-    def __getattr__(self, key: str) -> Any:
+    def __getattr__(self, key: str) -> object:
         try:
-            return self.__plugins[key]
+            return self._plugins[key]
         except KeyError:
             return self.__dict__[key]
 
@@ -187,26 +187,26 @@ class PluginManager(GObject.GObject):
             if name in self.__loaded:
                 logging.info(f"Unloading {name}")
                 try:
-                    inst = self.__plugins[name]
+                    inst = self._plugins[name]
                     inst._unload()
                 except NotImplementedError:
                     logging.warning("Plugin cannot be unloaded")
                 else:
                     self.__loaded.remove(name)
-                    del self.__plugins[name]
+                    del self._plugins[name]
                     self.emit("plugin-unloaded", name)
 
         else:
             raise Exception(f"Plugin {name} is not unloadable")
 
     def get_plugins(self) -> Dict[str, _T]:
-        return self.__plugins
+        return self._plugins
 
     _U = TypeVar("_U")
 
     def get_loaded_plugins(self, protocol: Type[_U]) -> Iterable[_U]:
         for name in self.__loaded:
-            plugin = self.__plugins[name]
+            plugin = self._plugins[name]
             if isinstance(plugin, protocol):
                 yield plugin
 
