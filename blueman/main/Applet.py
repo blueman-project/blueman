@@ -1,4 +1,7 @@
-from typing import Any
+from gi.repository import Gio, GLib
+import logging
+import signal
+from typing import Any, cast
 
 from blueman.Functions import *
 from blueman.bluez.Manager import Manager
@@ -8,9 +11,12 @@ import blueman.plugins.applet
 from blueman.main.PluginManager import PersistentPluginManager
 from blueman.main.DbusService import DbusService
 from blueman.plugins.AppletPlugin import AppletPlugin
-from gi.repository import Gio, GLib
-import logging
-import signal
+from blueman.plugins.applet.DBusService import DBusService
+from blueman.plugins.applet.Menu import Menu
+from blueman.plugins.applet.PowerManager import PowerManager
+from blueman.plugins.applet.RecentConns import RecentConns
+from blueman.plugins.applet.StandardItems import StandardItems
+from blueman.plugins.applet.StatusIcon import StatusIcon
 
 
 class BluemanApplet(Gio.Application):
@@ -40,7 +46,7 @@ class BluemanApplet(Gio.Application):
                                    Gio.BusType.SESSION)
         self.DbusSvc.register()
 
-        self.Plugins = PersistentPluginManager(AppletPlugin, blueman.plugins.applet, self)
+        self.Plugins = Plugins(self)
         self.Plugins.load_plugin()
 
         for plugin in self.Plugins.get_loaded_plugins(AppletPlugin):
@@ -100,3 +106,32 @@ class BluemanApplet(Gio.Application):
         logging.info(f"Device removed {path}")
         for plugin in self.Plugins.get_loaded_plugins(AppletPlugin):
             plugin.on_device_removed(path)
+
+
+class Plugins(PersistentPluginManager):
+    def __init__(self, applet: BluemanApplet):
+        super().__init__(AppletPlugin, blueman.plugins.applet, applet)
+
+    @property
+    def DBusService(self) -> DBusService:
+        return cast(DBusService, self._plugins["DBusService"])
+
+    @property
+    def Menu(self) -> Menu:
+        return cast(Menu, self._plugins["Menu"])
+
+    @property
+    def PowerManager(self) -> PowerManager:
+        return cast(PowerManager, self._plugins["PowerManager"])
+
+    @property
+    def RecentConns(self) -> RecentConns:
+        return cast(RecentConns, self._plugins["RecentConns"])
+
+    @property
+    def StandardItems(self) -> StandardItems:
+        return cast(StandardItems, self._plugins["StandardItems"])
+
+    @property
+    def StatusIcon(self) -> StatusIcon:
+        return cast(StatusIcon, self._plugins["StatusIcon"])

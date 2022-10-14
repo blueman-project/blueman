@@ -1,5 +1,5 @@
 from gettext import gettext as _
-from typing import Any, TYPE_CHECKING
+from typing import Any, TYPE_CHECKING, cast, Callable
 
 from blueman.plugins.AppletPlugin import AppletPlugin
 
@@ -39,4 +39,4 @@ class DisconnectItems(AppletPlugin):
             if device["Connected"]:
                 self._menu.add(self, (25, idx), text=_("Disconnect %s") % device["Alias"],
                                icon_name="bluetooth-disconnected-symbolic",
-                               callback=lambda dev=device: dev.disconnect())
+                               callback=cast(Callable[[], None], lambda dev=device: dev.disconnect()))

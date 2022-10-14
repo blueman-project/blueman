@@ -28,7 +28,7 @@ class StatusIcon(AppletPlugin, GObject.GObject):
 
     visible = None
 
-    visibility_timeout = None
+    visibility_timeout: Optional[int] = None
 
     _implementations = None
 
