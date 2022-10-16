@@ -52,6 +52,14 @@ AC_MSG_ERROR([ifconfig or ip not found, install net-tools or iproute2])
 fi
 fi
 
+PKG_CHECK_EXISTS([xdg-desktop-portal], [portal_found=yes], [portal_found=no])
+AC_MSG_CHECKING([for XDG Desktop Portal])
+if test "x$portal_found" = "xno"; then
+    AC_MSG_RESULT([No Portal found some plugins may not work correctly])
+else
+  AC_MSG_RESULT([Portal found])
+fi
+
 PKG_CHECK_MODULES([PYGOBJECT],[pygobject-3.0 >= 3.27.2])
 AC_SUBST([PYGOBJECT_CFLAGS])
 AC_SUBST([PYGOBJECT_LIBS])

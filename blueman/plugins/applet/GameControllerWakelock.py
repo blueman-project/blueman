@@ -1,25 +1,13 @@
 from gettext import gettext as _
 import logging
-from typing import Any
+from typing import Any, Dict
 
 from blueman.bluez.Device import Device
-from blueman.Functions import launch
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.plugins.errors import UnsupportedPlatformError
 
 import gi
-gi.require_version('Gdk', '3.0')
-try:
-    gi.require_version('GdkX11', '3.0')
-except ValueError:
-    raise ImportError("Couldn't find required namespace GdkX11")
-
-from gi.repository import Gdk
-from gi.repository import GdkX11
-
-
-if not isinstance(Gdk.Screen.get_default(), GdkX11.X11Screen):
-    raise UnsupportedPlatformError('Only X11 platform is supported')
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
 
 
 class GameControllerWakelock(AppletPlugin):
@@ -28,51 +16,42 @@ class GameControllerWakelock(AppletPlugin):
     __icon__ = "input-gaming-symbolic"
 
     def on_load(self) -> None:
-        self.wake_lock = 0
-        screen = Gdk.Screen.get_default()
-        assert screen is not None
-        window = screen.get_root_window()
-        assert isinstance(window, GdkX11.X11Window)
-        self.root_window_id = "0x%x" % window.get_xid()
+        self.cookies: Dict[str, int] = {}
 
     def on_unload(self) -> None:
-        if self.wake_lock:
-            self.wake_lock = 1
-            self.xdg_screensaver("resume")
+        for path, cookie in self.cookies.items():
+            self.parent.uninhibit(cookie)
+        self.cookies = {}
+
+    def _is_contoller(self, device: Device) -> bool:
+        klass = device["Class"] & 0x1fff
+        if klass == 0x504 or klass == 0x508:
+            return True
+        return False
+
+    def _add_lock(self, path: str) -> None:
+        if path in self.cookies:
+            logging.warning(f"Cookie already exists for {path}")
+            return
+
+        c = self.parent.inhibit(None, Gtk.ApplicationInhibitFlags.IDLE, "Blueman Gamecontroller Wakelock")
+        if c > 0:
+            self.cookies[path] = c
+            logging.debug(f"Inhibit success {c}")
+        else:
+            logging.warning("Inhibit failed")
+
+    def _remove_lock(self, path: str) -> None:
+        c = self.cookies.pop(path, None)
+        if c is not None:
+            self.parent.uninhibit(c)
+            logging.debug(f"Inhibit removed {c}")
+        else:
+            logging.warning("No cookies found")
 
     def on_device_property_changed(self, path: str, key: str, value: Any) -> None:
-        if key == "Connected":
-            klass = Device(obj_path=path)["Class"] & 0x1fff
-
-            if klass == 0x504 or klass == 0x508:
-                if value:
-                    self.xdg_screensaver("suspend")
-                else:
-                    self.xdg_screensaver("resume")
-
-    def xdg_screensaver(self, action: str) -> None:
-        command = f"xdg-screensaver {action} {self.root_window_id}"
-
-        if action == "resume":
-            if self.wake_lock <= 0:
-                self.wake_lock = 0
-            elif self.wake_lock > 1:
-                self.wake_lock -= 1
+        if key == "Connected" and self._is_contoller(Device(obj_path=path)):
+            if value:
+                self._add_lock(path)
             else:
-                ret = launch(command, sn=False)
-                if ret:
-                    self.wake_lock -= 1
-                else:
-                    logging.error(f"{action} failed")
-
-        elif action == "suspend":
-            if self.wake_lock >= 1:
-                self.wake_lock += 1
-            else:
-                ret = launch(command, sn=False)
-                if ret:
-                    self.wake_lock += 1
-                else:
-                    logging.error(f"{action} failed")
-
-        logging.info(f"Number of locks: {self.wake_lock}")
+                self._remove_lock(path)

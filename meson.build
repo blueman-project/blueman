@@ -63,6 +63,10 @@ do_runtime_checks = get_option('runtime_deps_check')
 
 gtk = dependency('gtk+-3.0', version: '>= 3.10.', required: do_runtime_checks)
 
+# Required for Gtk.Application.inhibit.
+# Still requires a desktop implementation to work properly but we can check for that.
+xdg_portal = dependency('xdg-desktop-portal', required: do_runtime_checks)
+
 # Configure blueman apps
 foreach libexecapp: ['blueman-mechanism', 'blueman-rfcomm-watcher']
     configure_file(
