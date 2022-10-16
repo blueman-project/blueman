@@ -1,25 +1,10 @@
 from gettext import gettext as _
 import logging
-from typing import Any
+from typing import Any, Dict, Optional
 
 from blueman.bluez.Device import Device
-from blueman.Functions import launch
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.plugins.errors import UnsupportedPlatformError
-
-import gi
-gi.require_version('Gdk', '3.0')
-try:
-    gi.require_version('GdkX11', '3.0')
-except ValueError:
-    raise ImportError("Couldn't find required namespace GdkX11")
-
-from gi.repository import Gdk
-from gi.repository import GdkX11
-
-
-if not isinstance(Gdk.Screen.get_default(), GdkX11.X11Screen):
-    raise UnsupportedPlatformError('Only X11 platform is supported')
+from gi.repository import Gio
 
 
 class GameControllerWakelock(AppletPlugin):
@@ -28,17 +13,92 @@ class GameControllerWakelock(AppletPlugin):
     __icon__ = "input-gaming-symbolic"
 
     def on_load(self) -> None:
-        self.wake_lock = 0
-        screen = Gdk.Screen.get_default()
-        assert screen is not None
-        window = screen.get_root_window()
-        assert isinstance(window, GdkX11.X11Window)
-        self.root_window_id = "0x%x" % window.get_xid()
+        self.cookies: Dict[str, int] = {}
+        self._screensaver: Optional[Gio.DBusProxy] = None
+        self._screensaver_found: bool = False
+        self.watch = Gio.bus_watch_name(
+            Gio.BusType.SESSION,
+            "org.freedesktop.ScreenSaver",
+            Gio.BusNameWatcherFlags.NONE,
+            self.on_name_appeared,
+            self.on_name_vanished
+        )
+
+        self.xfce_watch = Gio.bus_watch_name(
+            Gio.BusType.SESSION,
+            "org.xfce.ScreenSaver",
+            Gio.BusNameWatcherFlags.NONE,
+            self.on_name_appeared,
+            self.on_name_vanished
+        )
 
     def on_unload(self) -> None:
-        if self.wake_lock:
-            self.wake_lock = 1
-            self.xdg_screensaver("resume")
+        if self.watch:
+            Gio.bus_unwatch_name(self.watch)
+
+        if self._screensaver is None:
+            return
+
+        for path in self.cookies:
+            self._remove_lock(path)
+
+    def on_name_appeared(self, connection: Gio.DBusConnection, name: str, owner: str) -> None:
+        logging.debug(f"Got name {name} and owner: {owner}")
+        if self._screensaver_found:
+            assert self._screensaver is not None
+            logging.warning(f"Already found ScreenSaver {self._screensaver.get_name()}")
+            return
+
+        if name == "org.freedesktop.ScreenSaver":
+            self._screensaver = Gio.DBusProxy.new_sync(
+                connection,
+                Gio.DBusProxyFlags.NONE,
+                None,
+                "org.freedesktop.ScreenSaver",
+                "/org/freedesktop/ScreenSaver",
+                "org.freedesktop.ScreenSaver",
+                None
+            )
+            self._screensaver_found = True
+
+        elif name == "org.xfce.ScreenSaver":
+            self._screensaver = Gio.DBusProxy.new_sync(
+                connection,
+                Gio.DBusProxyFlags.NONE,
+                None,
+                "org.xfce.ScreenSaver",
+                "/",
+                "org.xfce.ScreenSaver",
+                None
+            )
+            self._screensaver_found = True
+
+    def on_name_vanished(self, _connection: Gio.DBusConnection, name: str) -> None:
+        logging.debug(f"ScreenSaver {name} vanished")
+        self.cookies = {}
+        self.proxy = None
+
+    def _add_lock(self, path: str) -> None:
+        if self._screensaver is None:
+            logging.debug("Can not inhibit, no screensaver found")
+            return
+
+        cookie = self._screensaver.Inhibit("(ss)", "Blueman GamecontrollerWakerlock", "Controller connected")
+        if cookie > 0:
+            logging.debug(f"Adding lock with cookie: {cookie}")
+            self.cookies[path] = cookie
+
+    def _remove_lock(self, path: str) -> None:
+        if self._screensaver is None:
+            return
+
+        cookie = self.cookies.pop(path, None)
+        if cookie is None:
+            logging.warning("No inhibit cookie found")
+            return
+
+        self._screensaver.UnInhibit("(u)", cookie)
+        logging.debug(f"Removing lock for cookie: {cookie}")
 
     def on_device_property_changed(self, path: str, key: str, value: Any) -> None:
         if key == "Connected":
@@ -46,33 +106,6 @@ class GameControllerWakelock(AppletPlugin):
 
             if klass == 0x504 or klass == 0x508:
                 if value:
-                    self.xdg_screensaver("suspend")
+                    self._add_lock(path)
                 else:
-                    self.xdg_screensaver("resume")
-
-    def xdg_screensaver(self, action: str) -> None:
-        command = f"xdg-screensaver {action} {self.root_window_id}"
-
-        if action == "resume":
-            if self.wake_lock <= 0:
-                self.wake_lock = 0
-            elif self.wake_lock > 1:
-                self.wake_lock -= 1
-            else:
-                ret = launch(command, sn=False)
-                if ret:
-                    self.wake_lock -= 1
-                else:
-                    logging.error(f"{action} failed")
-
-        elif action == "suspend":
-            if self.wake_lock >= 1:
-                self.wake_lock += 1
-            else:
-                ret = launch(command, sn=False)
-                if ret:
-                    self.wake_lock += 1
-                else:
-                    logging.error(f"{action} failed")
-
-        logging.info(f"Number of locks: {self.wake_lock}")
+                    self._remove_lock(path)
