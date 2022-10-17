@@ -91,7 +91,7 @@ class DnsMasqHandler:
             assert self.netconf.ip4_address is not None
 
             ipiface = ipaddress.ip_interface('/'.join((self.netconf.ip4_address, '255.255.255.0')))
-            cmd = [get_binary("dnsmasq"), "--port=0", "--pid-file=/var/run/dnsmasq.pan1.pid", "--except-interface=lo",
+            cmd = [get_binary("dnsmasq"), "--pid-file=/var/run/dnsmasq.pan1.pid", "--except-interface=lo",
                    "--interface=pan1", "--bind-interfaces",
                    f"--dhcp-range={ipiface.network[2]},{ipiface.network[-2]},60m",
                    f"--dhcp-option=option:router,{self.netconf.ip4_address}"]
