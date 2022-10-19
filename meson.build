@@ -185,7 +185,7 @@ install_subdir(
 )
 
 
-# Gsettings and pin database
+# Gsettings
 install_data('data/org.blueman.gschema.xml', install_dir: schemadir)
 
 # Merge translation into policy file
