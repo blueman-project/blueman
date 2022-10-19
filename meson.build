@@ -266,6 +266,9 @@ configurable_files = [
     ['data/configs/org.blueman.Applet.service.in',
      'org.blueman.Applet.service',
      join_paths(datadir, 'dbus-1', 'services')],
+    ['data/configs/org.blueman.Manager.service.in',
+     'org.blueman.Manager.service',
+     join_paths(datadir, 'dbus-1', 'services')],
     ['data/configs/org.blueman.Mechanism.service.in',
      'org.blueman.Mechanism.service',
      join_paths(datadir, 'dbus-1', 'system-services')]
@@ -283,6 +286,9 @@ endif
 if systemd_user_path != ''
     configurable_files += [['data/configs/blueman-applet.service.in',
                             'blueman-applet.service',
+                            systemd_user_path],
+                           ['data/configs/blueman-manager.service.in',
+                            'blueman-manager.service',
                             systemd_user_path]]
 endif
 
