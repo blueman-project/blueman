@@ -9,6 +9,7 @@
 * Enable dnsmasq DNS service if possible and add DNS servers otherwise
 * Reconfigure DHCP service on local nameserver changes
 * Support for systemd-resolved for getting nameservers for NAP clients
+* List connected devices in status icon tooltip
 
 ### Changes
 

@@ -1,10 +1,11 @@
 from gettext import gettext as _
 import logging
-from typing import Optional, Any, List
+from typing import Optional, Any, List, Set
 
 from gi.repository import GLib
+
+from blueman.bluez.Device import Device
 from blueman.plugins.AppletPlugin import AppletPlugin
-from gettext import ngettext
 
 from blueman.plugins.applet.StatusIcon import StatusIconProvider
 from blueman.main.PluginManager import PluginManager
@@ -14,11 +15,11 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
     __author__ = "Walmis"
     __depends__ = ["StatusIcon"]
     __icon__ = "bluetooth-symbolic"
-    __description__ = _("Adds an indication on the status icon when Bluetooth is active and shows the number of "
+    __description__ = _("Adds an indication on the status icon when Bluetooth is active and shows the "
                         "connections in the tooltip.")
 
     def on_load(self) -> None:
-        self.num_connections = 0
+        self._connections: Set[str] = set()
         self.active = False
         self.initialized = False
         self._handlers: List[int] = []
@@ -27,14 +28,14 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
 
     def on_unload(self) -> None:
         self.parent.Plugins.StatusIcon.set_tooltip_text(None)
-        self.num_connections = 0
+        self._connections = set()
         self.parent.Plugins.StatusIcon.icon_should_change()
         for handler in self._handlers:
             self.parent.Plugins.disconnect(handler)
         self._handlers = []
 
     def on_status_icon_query_icon(self) -> Optional[str]:
-        if self.num_connections > 0:
+        if self._connections:
             self.active = True
             return "blueman-active"
         else:
@@ -42,14 +43,10 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
             return None
 
     def enumerate_connections(self) -> bool:
-        self.num_connections = 0
-        for device in self.parent.Manager.get_devices():
-            if device["Connected"]:
-                self.num_connections += 1
+        self._connections = {device["Alias"] for device in self.parent.Manager.get_devices() if device["Connected"]}
 
-        logging.info(f"Found {self.num_connections:d} existing connections")
-        if (self.num_connections > 0 and not self.active) or \
-                (self.num_connections == 0 and self.active):
+        logging.info(f"Found {len(self._connections):d} existing connections")
+        if (self._connections and not self.active) or (not self._connections and self.active):
             self.parent.Plugins.StatusIcon.icon_should_change()
 
         self.update_statusicon()
@@ -57,12 +54,9 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
         return False
 
     def update_statusicon(self) -> None:
-        if self.num_connections > 0:
+        if self._connections:
             self.parent.Plugins.StatusIcon.set_tooltip_title(_("Bluetooth Active"))
-            self.parent.Plugins.StatusIcon.set_tooltip_text(
-                ngettext("<b>%(connections)d Active Connection</b>",
-                         "<b>%(connections)d Active Connections</b>",
-                         self.num_connections) % {"connections": self.num_connections})
+            self.parent.Plugins.StatusIcon.set_tooltip_text("\n".join(self._connections))
         else:
             self.parent.Plugins.StatusIcon.set_tooltip_text(None)
             if 'PowerManager' in self.parent.Plugins.get_loaded():
@@ -82,17 +76,19 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
             else:
                 GLib.timeout_add(1000, self.enumerate_connections)
         else:
-            self.num_connections = 0
+            self._connections = set()
             self.update_statusicon()
 
-    def on_device_property_changed(self, _path: str, key: str, value: Any) -> None:
+    def on_device_property_changed(self, path: str, key: str, value: Any) -> None:
         if key == "Connected":
-            if value:
-                self.num_connections += 1
-            else:
-                self.num_connections -= 1
+            name = Device(obj_path=path)["Alias"]
 
-            if (self.num_connections > 0 and not self.active) or (self.num_connections == 0 and self.active):
+            if value:
+                self._connections.add(name)
+            else:
+                self._connections.remove(name)
+
+            if (self._connections and not self.active) or (self._connections and self.active):
                 self.parent.Plugins.StatusIcon.icon_should_change()
 
             self.update_statusicon()
