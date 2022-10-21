@@ -4,7 +4,10 @@ from typing import Optional, Any, List, Set
 
 from gi.repository import GLib
 
+from blueman.bluez.Battery import Battery
 from blueman.bluez.Device import Device
+from blueman.bluez.errors import BluezDBusException
+from blueman.main.BatteryWatcher import BatteryWatcher
 from blueman.plugins.AppletPlugin import AppletPlugin
 
 from blueman.plugins.applet.StatusIcon import StatusIconProvider
@@ -25,6 +28,7 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
         self._handlers: List[int] = []
         self._handlers.append(self.parent.Plugins.connect('plugin-loaded', self._on_plugins_changed))
         self._handlers.append(self.parent.Plugins.connect('plugin-unloaded', self._on_plugins_changed))
+        self._battery_watcher = BatteryWatcher(lambda *args: self.update_statusicon())
 
     def on_unload(self) -> None:
         self.parent.Plugins.StatusIcon.set_tooltip_text(None)
@@ -33,6 +37,7 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
         for handler in self._handlers:
             self.parent.Plugins.disconnect(handler)
         self._handlers = []
+        del self._battery_watcher
 
     def on_status_icon_query_icon(self) -> Optional[str]:
         if self._connections:
@@ -43,7 +48,9 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
             return None
 
     def enumerate_connections(self) -> bool:
-        self._connections = {device["Alias"] for device in self.parent.Manager.get_devices() if device["Connected"]}
+        self._connections = {device.get_object_path()
+                             for device in self.parent.Manager.get_devices()
+                             if device["Connected"]}
 
         logging.info(f"Found {len(self._connections):d} existing connections")
         if (self._connections and not self.active) or (not self._connections and self.active):
@@ -55,8 +62,15 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
 
     def update_statusicon(self) -> None:
         if self._connections:
+            def build_line(obj_path: str) -> str:
+                line: str = Device(obj_path=obj_path)["Alias"]
+                try:
+                    return f"{line} 🔋{Battery(obj_path=obj_path)['Percentage']}%"
+                except BluezDBusException:
+                    return line
+
             self.parent.Plugins.StatusIcon.set_tooltip_title(_("Bluetooth Active"))
-            self.parent.Plugins.StatusIcon.set_tooltip_text("\n".join(self._connections))
+            self.parent.Plugins.StatusIcon.set_tooltip_text("\n".join(map(build_line, self._connections)))
         else:
             self.parent.Plugins.StatusIcon.set_tooltip_text(None)
             if 'PowerManager' in self.parent.Plugins.get_loaded():
@@ -81,12 +95,10 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
 
     def on_device_property_changed(self, path: str, key: str, value: Any) -> None:
         if key == "Connected":
-            name = Device(obj_path=path)["Alias"]
-
             if value:
-                self._connections.add(name)
+                self._connections.add(path)
             else:
-                self._connections.remove(name)
+                self._connections.remove(path)
 
             if (self._connections and not self.active) or (self._connections and self.active):
                 self.parent.Plugins.StatusIcon.icon_should_change()
