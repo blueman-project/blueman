@@ -32,7 +32,7 @@ class ConnectionNotifier(AppletPlugin):
         if key == "Connected":
             if value:
                 self._notifications[path] = notification = Notification(
-                    device["Alias"],
+                    device.display_name,
                     _('Connected'),
                     icon_name=device["Icon"]
                 )
@@ -45,7 +45,7 @@ class ConnectionNotifier(AppletPlugin):
                     return False
                 GLib.timeout_add_seconds(5, disconnect_signal)
             else:
-                Notification(device["Alias"], _('Disconnected'), icon_name=device["Icon"]).show()
+                Notification(device.display_name, _('Disconnected'), icon_name=device["Icon"]).show()
 
     def _on_battery_created(self, _manager: Manager, obj_path: str) -> None:
         battery = Battery(obj_path=obj_path)

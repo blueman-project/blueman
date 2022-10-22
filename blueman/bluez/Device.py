@@ -32,6 +32,11 @@ class Device(Base):
     ) -> None:
         self._call('Disconnect', reply_handler=reply_handler, error_handler=error_handler)
 
+    @property
+    def display_name(self) -> str:
+        alias: str = self["Alias"]
+        return alias.strip()
+
 
 class AnyDevice(AnyBase):
     def __init__(self) -> None:

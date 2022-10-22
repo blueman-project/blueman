@@ -124,7 +124,7 @@ class Sender(Gtk.Dialog):
         self.client.connect('session-failed', self.on_session_failed)
 
         logging.info(f"Sending to {device['Address']}")
-        self.l_dest.props.label = device['Alias']
+        self.l_dest.props.label = device.display_name
 
         # Stop discovery if discovering and let adapter settle for a second
         if self.adapter["Discovering"]:

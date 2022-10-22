@@ -119,7 +119,7 @@ class RecentConns(AppletPlugin, PowerStateListener):
         item = {
             "adapter": adapter["Address"],
             "address": device['Address'],
-            "alias": device['Alias'],
+            "alias": device.display_name,
             "icon": device['Icon'],
             "name": ServiceUUID(uuid).name,
             "uuid": uuid,
