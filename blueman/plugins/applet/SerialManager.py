@@ -62,11 +62,11 @@ class SerialManager(AppletPlugin, RFCOMMConnectedListener):
         if SERIAL_PORT_SVCLASS_ID == service.short_uuid:
             Notification(_("Serial port connected"),
                          _("Serial port service on device <b>%s</b> now will be available via <b>%s</b>") % (
-                         device['Alias'], port),
+                         device.display_name, port),
                          icon_name="blueman-serial").show()
 
             self.call_script(device['Address'],
-                             device['Alias'],
+                             device.display_name,
                              service.name,
                              service.short_uuid,
                              port)

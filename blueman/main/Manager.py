@@ -255,7 +255,7 @@ class Blueman(Gtk.Application):
     def bond(device: Device) -> None:
         def error_handler(e: Exception) -> None:
             logging.exception(e)
-            message = f"Pairing failed for:\n{device['Alias']} ({device['Address']})"
+            message = f"Pairing failed for:\n{device.display_name} ({device['Address']})"
             Notification('Bluetooth', message, icon_name="blueman").show()
 
         device.pair(error_handler=error_handler)

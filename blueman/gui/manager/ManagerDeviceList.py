@@ -351,9 +351,9 @@ class ManagerDeviceList(DeviceList):
             description = get_major_class(device['Class'])
 
         icon_info = self.get_icon_info(device["Icon"], 48, False)
-        caption = self.make_caption(device['Alias'], description, device['Address'])
+        caption = self.make_caption(device.display_name, description, device['Address'])
 
-        self.set(tree_iter, caption=caption, icon_info=icon_info, alias=device['Alias'], objpush=has_objpush)
+        self.set(tree_iter, caption=caption, icon_info=icon_info, alias=device.display_name, objpush=has_objpush)
 
         try:
             self.row_update_event(tree_iter, "Trusted", device['Trusted'])

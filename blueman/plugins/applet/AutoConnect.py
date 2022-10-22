@@ -48,7 +48,7 @@ class AutoConnect(AppletPlugin):
             def reply(dev: Optional[Device] = device, service_name: str = ServiceUUID(uuid).name) -> None:
                 assert isinstance(dev, Device)  # https://github.com/python/mypy/issues/2608
                 Notification(_("Connected"), _("Automatically connected to %(service)s on %(device)s") %
-                             {"service": service_name, "device": dev["Alias"]},
+                             {"service": service_name, "device": dev.display_name},
                              icon_name=dev["Icon"]).show()
 
             def err(_reason: Union[Exception, str]) -> None:

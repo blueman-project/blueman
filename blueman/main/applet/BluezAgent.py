@@ -96,7 +96,7 @@ class BluezAgent(DbusService):
 
     def get_device_string(self, device_path: str) -> str:
         device = Device(obj_path=device_path)
-        return f"<b>{escape(device['Alias'])}</b> ({device['Address']})"
+        return f"<b>{escape(device.display_name)}</b> ({device['Address']})"
 
     @overload
     def ask_passkey(self, dialog_msg: str, is_numeric: "Literal[True]", device_path: str, ok: Callable[[int], None],

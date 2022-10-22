@@ -71,7 +71,8 @@ class Connection:
             plugin.on_ppp_connected(self.service.device, rfcomm_dev, result)
 
         msg = _("Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\n"
-                "Network is now available through <b>%(1)s</b>") % {"0": self.service.device['Alias'], "1": result}
+                "Network is now available through <b>%(1)s</b>") % \
+            {"0": self.service.device.display_name, "1": result}
 
         Notification(_("Connected"), msg, icon_name="network-wireless-symbolic").show()
 

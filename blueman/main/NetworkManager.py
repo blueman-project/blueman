@@ -202,7 +202,7 @@ class NMDUNConnection(NMConnectionBase):
             return
 
         conn = NM.SimpleConnection()
-        conn_id = f"blueman dun for {self.device['Alias']}"
+        conn_id = f"blueman dun for {self.device.display_name}"
         conn_uuid = str(uuid.uuid4())
 
         conn_sett = NM.SettingConnection(type='bluetooth', id=conn_id, uuid=conn_uuid, autoconnect=False)

@@ -151,7 +151,7 @@ class Dialog:
             for m in plugin.monitors:
                 if d == m.device["Address"]:
                     titer = self.liststore.append(
-                        [d, self.get_caption(m.device["Alias"], m.device["Address"]),
+                        [d, self.get_caption(m.device.display_name, m.device["Address"]),
                          _("Connected:") + " " + m.interface, m])
                     if self.cb_device.get_active() == -1:
                         self.cb_device.set_active_iter(titer)
@@ -164,7 +164,7 @@ class Dialog:
                     if device is None:
                         pass
                     else:
-                        name = self.get_caption(device["Alias"], device["Address"])
+                        name = self.get_caption(device.display_name, device["Address"])
 
                 self.liststore.append([d, name, _("Not Connected"), None])
             added = False
@@ -263,12 +263,12 @@ class Dialog:
             (val,) = self.liststore.get(titer, 0)
 
             if val == monitor.device["Address"]:
-                self.liststore.set(titer, 1, self.get_caption(monitor.device["Alias"], monitor.device["Address"]), 2,
-                                   _("Connected:") + " " + monitor.interface, 3, monitor)
+                caption = self.get_caption(monitor.device.display_name, monitor.device["Address"])
+                self.liststore.set(titer, 1, caption, 2, _("Connected:") + " " + monitor.interface, 3, monitor)
                 return
 
         self.liststore.append(
-            [monitor.device["Address"], self.get_caption(monitor.device["Alias"], monitor.device["Address"]),
+            [monitor.device["Address"], self.get_caption(monitor.device.display_name, monitor.device["Address"]),
              _("Connected:") + " " + monitor.interface, monitor]
         )
 
@@ -278,8 +278,8 @@ class Dialog:
             (val,) = self.liststore.get(titer, 0)
 
             if val == monitor.device["Address"]:
-                self.liststore.set(titer, 1, self.get_caption(monitor.device["Alias"], monitor.device["Address"]), 2,
-                                   _("Not Connected"), 3, None)
+                caption = self.get_caption(monitor.device.display_name, monitor.device["Address"])
+                self.liststore.set(titer, 1, caption, 2, _("Not Connected"), 3, None)
                 return
 
 
