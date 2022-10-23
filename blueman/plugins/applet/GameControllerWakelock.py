@@ -1,25 +1,10 @@
 from gettext import gettext as _
 import logging
-from typing import Any
+from typing import Any, Optional
 
 from blueman.bluez.Device import Device
-from blueman.Functions import launch
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.plugins.errors import UnsupportedPlatformError
-
-import gi
-gi.require_version('Gdk', '3.0')
-try:
-    gi.require_version('GdkX11', '3.0')
-except ValueError:
-    raise ImportError("Couldn't find required namespace GdkX11")
-
-from gi.repository import Gdk
-from gi.repository import GdkX11
-
-
-if not isinstance(Gdk.Screen.get_default(), GdkX11.X11Screen):
-    raise UnsupportedPlatformError('Only X11 platform is supported')
+from gi.repository import Gio, GLib
 
 
 class GameControllerWakelock(AppletPlugin):
@@ -28,17 +13,43 @@ class GameControllerWakelock(AppletPlugin):
     __icon__ = "input-gaming-symbolic"
 
     def on_load(self) -> None:
-        self.wake_lock = 0
-        screen = Gdk.Screen.get_default()
-        assert screen is not None
-        window = screen.get_root_window()
-        assert isinstance(window, GdkX11.X11Window)
-        self.root_window_id = "0x%x" % window.get_xid()
+        self.__locks: int = 0
+        self._inhibit_request: Optional[str] = None
+        self._portal_inhibit: Optional[Gio.DBusProxy] = None
+        self.watch = Gio.bus_watch_name(
+            Gio.BusType.SESSION,
+            "org.freedesktop.portal.Desktop",
+            Gio.BusNameWatcherFlags.NONE,
+            self._on_name_appeared,
+            self._on_name_vanished
+        )
 
     def on_unload(self) -> None:
-        if self.wake_lock:
-            self.wake_lock = 1
-            self.xdg_screensaver("resume")
+        self.__cleanup()
+
+    def __cleanup(self) -> None:
+        if self._inhibit_request:
+            self._remove_lock(force=True)
+
+        if self._portal_inhibit is not None:
+            self._portal_inhibit.destroy()
+            self._portal_inhibit = None
+
+    def _on_name_appeared(self, connection: Gio.DBusConnection, name: str, owner: str) -> None:
+        logging.debug(f"Got name {name} and owner: {owner}")
+        self._portal_inhibit = Gio.DBusProxy.new_sync(
+            connection,
+            Gio.DBusProxyFlags.NONE,
+            None,
+            "org.freedesktop.portal.Desktop",
+            "/org/freedesktop/portal/desktop",
+            "org.freedesktop.portal.Inhibit",
+            None
+        )
+
+    def _on_name_vanished(self, _connection: Gio.DBusConnection, name: str) -> None:
+        logging.debug(f"ScreenSaver {name} vanished")
+        self.__cleanup()
 
     def on_device_property_changed(self, path: str, key: str, value: Any) -> None:
         if key == "Connected":
@@ -46,33 +57,47 @@ class GameControllerWakelock(AppletPlugin):
 
             if klass == 0x504 or klass == 0x508:
                 if value:
-                    self.xdg_screensaver("suspend")
+                    self._add_lock()
                 else:
-                    self.xdg_screensaver("resume")
+                    self._remove_lock()
 
-    def xdg_screensaver(self, action: str) -> None:
-        command = f"xdg-screensaver {action} {self.root_window_id}"
+    def _add_lock(self) -> None:
+        if self.__locks > 0:
+            self.__locks += 1
+        else:
+            assert self._portal_inhibit is not None
+            reason = GLib.Variant("s", "Gamecontroller")
+            request_path = self._portal_inhibit.Inhibit("(sua{sv})", "blueman-applet", 8, {"reason": reason})
+            logging.debug(request_path)
+            if request_path:
+                self.__locks += 1
+                self._inhibit_request = request_path
 
-        if action == "resume":
-            if self.wake_lock <= 0:
-                self.wake_lock = 0
-            elif self.wake_lock > 1:
-                self.wake_lock -= 1
-            else:
-                ret = launch(command, sn=False)
-                if ret:
-                    self.wake_lock -= 1
-                else:
-                    logging.error(f"{action} failed")
+        logging.debug(f"Adding lock, total {self.__locks}")
 
-        elif action == "suspend":
-            if self.wake_lock >= 1:
-                self.wake_lock += 1
-            else:
-                ret = launch(command, sn=False)
-                if ret:
-                    self.wake_lock += 1
-                else:
-                    logging.error(f"{action} failed")
+    def _remove_lock(self, force: bool = False) -> None:
+        if self._inhibit_request is None:
+            logging.warning("No inhibit request found")
+            self.__locks = 0
+            return
 
-        logging.info(f"Number of locks: {self.wake_lock}")
+        if self.__locks == 1 or force:
+            proxy = Gio.DBusProxy.new_for_bus_sync(
+                Gio.BusType.SESSION,
+                Gio.DBusProxyFlags.NONE,
+                None,
+                "org.freedesktop.portal.Desktop",
+                self._inhibit_request,
+                "org.freedesktop.portal.Request",
+                None
+            )
+            proxy.Close()
+            proxy.destroy()
+            self.__locks -= 1
+
+            # We should have no locks remaining
+            assert self.__locks == 0
+        else:
+            self.__locks -= 1
+
+        logging.debug(f"Removed lock, total {self.__locks}")
