@@ -266,7 +266,10 @@ class ManagerDeviceMenu(Gtk.Menu):
             path = self.Blueman.List.get_path_at_pos(x, y)
             if path is not None:
                 assert path[0] is not None
-                row = self.Blueman.List.get(path[0], "alias", "paired", "connected", "trusted", "objpush", "device",
+                treepath = self.Blueman.List.filter.convert_path_to_child_path(path[0])
+                if treepath is None:
+                    raise TypeError("Path should never be None")
+                row = self.Blueman.List.get(treepath, "alias", "paired", "connected", "trusted", "objpush", "device",
                                             "blocked")
             else:
                 return
