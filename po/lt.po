@@ -6,7 +6,7 @@
 # brennus <jonas.ska@gmail.com>, 2014-2015
 # Moo, 2015-2019
 # Kornelijus Tvarijanavičius <kornelitvari@protonmail.com>, 2020.
-# Moo <hazap@hotmail.com>, 2020.
+# Moo <hazap@hotmail.com>, 2020, 2022.
 # Džiugas J <dziugas1959@hotmail.com>
 # Andrius Majauskas <komitetas@gmail.com>
 msgid ""
@@ -14,10 +14,10 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2022-07-05 14:08+0200\n"
-"PO-Revision-Date: 2020-11-19 12:48+0000\n"
+"PO-Revision-Date: 2022-09-08 12:17+0000\n"
 "Last-Translator: Moo <hazap@hotmail.com>\n"
-"Language-Team: Lithuanian <https://hosted.weblate.org/projects/blueman/"
-"blueman/lt/>\n"
+"Language-Team: Lithuanian <https://hosted.weblate.org/projects/blueman/2-3/"
+"lt/>\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < "
 "11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? "
 "1 : n % 1 != 0 ? 2: 3);\n"
-"X-Generator: Weblate 4.4-dev\n"
+"X-Generator: Weblate 4.14.1-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -44,9 +44,8 @@ msgid "Temporarily visible"
 msgstr "Laikinai matomas"
 
 #: data/ui/adapters-tab.ui:110
-#, fuzzy
 msgid "<b>Name</b>"
-msgstr "<b>Suporuotas</b>"
+msgstr "<b>Pavadinimas</b>"
 
 #: data/ui/applet-passkey.ui:8
 msgid "Pairing request"
@@ -137,15 +136,13 @@ msgstr "_Atstatyti"
 
 #: data/ui/rename-device.ui:40 data/ui/note.ui:26 blueman/main/Sendto.py:235
 #: blueman/gui/DeviceSelectorDialog.py:17
-#, fuzzy
-#| msgid "Cancelling"
 msgid "_Cancel"
-msgstr "Nutraukiama"
+msgstr "_Atsisakyti"
 
 #: data/ui/rename-device.ui:54 data/ui/note.ui:41
 #: blueman/gui/DeviceSelectorDialog.py:17
 msgid "_OK"
-msgstr ""
+msgstr "_Gerai"
 
 #: data/ui/services-network.ui:37
 msgid "Network Access Point (NAP)"
@@ -373,7 +370,7 @@ msgstr "Bluetooth failų siuntimas"
 
 #: blueman/main/Sendto.py:42
 msgid "_Stop"
-msgstr ""
+msgstr "_Stabdyti"
 
 #: blueman/main/Sendto.py:57 blueman/gui/manager/ManagerProgressbar.py:27
 msgid "Connecting"
@@ -405,10 +402,10 @@ msgstr "Liko:"
 #, python-format
 msgid "%(seconds)d Second"
 msgid_plural "%(seconds)d Seconds"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "%(seconds)d sekundė"
+msgstr[1] "%(seconds)d sekundės"
+msgstr[2] "%(seconds)d sekundžių"
+msgstr[3] "%(seconds)d sekundė"
 
 #: blueman/main/Sendto.py:229
 #, python-format
@@ -502,7 +499,7 @@ msgstr "Paslaugos"
 
 #: blueman/main/Services.py:47
 msgid "_Apply"
-msgstr ""
+msgstr "_Taikyti"
 
 #: blueman/Functions.py:71
 msgid "Bluetooth Turned Off"
@@ -530,19 +527,19 @@ msgstr "Ne"
 
 #: blueman/Functions.py:181
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: blueman/Functions.py:184
 msgid "KB"
-msgstr ""
+msgstr "KB"
 
 #: blueman/Functions.py:187
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
 #: blueman/Functions.py:190
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: blueman/gui/manager/ManagerMenu.py:46
 msgid "_Report a Problem"
@@ -617,20 +614,16 @@ msgid "Uncategorized"
 msgstr "Nežinomas"
 
 #: blueman/gui/manager/ManagerDeviceList.py:544
-#, fuzzy
-#| msgid "Trust"
 msgid "Trusted"
-msgstr "Pasitikėti"
+msgstr "Patikimas"
 
 #: blueman/gui/manager/ManagerDeviceList.py:546
-#, fuzzy
-#| msgid "Pair"
 msgid "Paired"
-msgstr "Poruoti"
+msgstr "Suporuotas"
 
 #: blueman/gui/manager/ManagerDeviceList.py:548
 msgid "Blocked"
-msgstr ""
+msgstr "Užblokuotas"
 
 #: blueman/gui/manager/ManagerDeviceList.py:571
 #, fuzzy
@@ -726,23 +719,20 @@ msgid "Input/output error"
 msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:209
-#, fuzzy
 msgid "Device did not respond"
-msgstr "Rodyti įrenginio informaciją"
+msgstr "Įrenginys neatsakė"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:213
-#, fuzzy
 msgid "Resource temporarily unavailable"
-msgstr "Laikinai matomas"
+msgstr "Išteklius laikinai neprieinamas"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:218
 msgid "Connection Failed: "
 msgstr "Prisijungimas nepavyko: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:287
-#, fuzzy
 msgid "<b>_Connect</b>"
-msgstr "_<b>Prisijungti</b>"
+msgstr "<b>_Prisijungti</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:289
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
@@ -750,10 +740,8 @@ msgstr ""
 "Prijungia automatinio prijungimo profilius A2DP šaltinį, A2DP rinktuvą ir HID"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:293
-#, fuzzy
-#| msgid "_<b>Disconnect</b>"
 msgid "<b>_Disconnect</b>"
-msgstr "_<b>Atsijungti</b>"
+msgstr "<b>_Atsijungti</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:294
 msgid "Forcefully disconnect the device"
@@ -768,9 +756,8 @@ msgid "<b>Disconnect:</b>"
 msgstr "<b>Atsijungti:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:324
-#, fuzzy
 msgid "<b>Auto-connect:</b>"
-msgstr "<b>Atsijungti:</b>"
+msgstr "<b>Automatinis prisijungimas:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:343
 msgid "Send a _File…"
@@ -790,17 +777,15 @@ msgstr "_Nepasitikėti"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:378
 msgid "_Block"
-msgstr ""
+msgstr "Už_blokuoti"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:383
 msgid "_Unblock"
-msgstr ""
+msgstr "_Atblokuoti"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:387
-#, fuzzy
-#| msgid "Send files to this device"
 msgid "Block/Unblock this device"
-msgstr "Siųsti failus šiam įrenginiui"
+msgstr "Užblokuoti/Atblokuoti šį įrenginį"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:407
 msgid "R_ename device…"
@@ -894,7 +879,7 @@ msgstr "Matomas…"
 #. translators: device class
 #: blueman/DeviceClass.py:6
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Įvairūs"
 
 #. translators: device class
 #: blueman/DeviceClass.py:8
@@ -973,8 +958,6 @@ msgstr "Belaidis"
 
 #. translators: device class
 #: blueman/DeviceClass.py:52
-#, fuzzy
-#| msgid "Smart phone"
 msgid "Smartphone"
 msgstr "Išmanusis telefonas"
 

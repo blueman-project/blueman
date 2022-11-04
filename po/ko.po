@@ -11,22 +11,21 @@
 # 박정규(Jung-Kyu Park) <bagjunggyu@gmail.com>, 2015-2017
 # Seong-ho Cho <darkcircle.0426@gmail.com>, 2014,2019
 # Youngbin Han <sukso96100@gmail.com>, 2014
-# 이정희 <daemul72@gmail.com>
+# 이정희 <daemul72@gmail.com>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2022-07-05 14:08+0200\n"
-"PO-Revision-Date: 2020-06-19 18:56+0000\n"
+"PO-Revision-Date: 2022-10-01 12:21+0000\n"
 "Last-Translator: 이정희 <daemul72@gmail.com>\n"
-"Language-Team: Korean <https://hosted.weblate.org/projects/blueman/blueman/"
-"ko/>\n"
+"Language-Team: Korean <https://hosted.weblate.org/projects/blueman/2-3/ko/>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.1.1\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -45,9 +44,8 @@ msgid "Temporarily visible"
 msgstr "잠깐 보임"
 
 #: data/ui/adapters-tab.ui:110
-#, fuzzy
 msgid "<b>Name</b>"
-msgstr "<b>페어링함</b>"
+msgstr "<b>이름</b>"
 
 #: data/ui/applet-passkey.ui:8
 msgid "Pairing request"
@@ -138,15 +136,13 @@ msgstr "리셋(_R)"
 
 #: data/ui/rename-device.ui:40 data/ui/note.ui:26 blueman/main/Sendto.py:235
 #: blueman/gui/DeviceSelectorDialog.py:17
-#, fuzzy
-#| msgid "Cancelling"
 msgid "_Cancel"
-msgstr "취소 중"
+msgstr "취소하기(_C)"
 
 #: data/ui/rename-device.ui:54 data/ui/note.ui:41
 #: blueman/gui/DeviceSelectorDialog.py:17
 msgid "_OK"
-msgstr ""
+msgstr "확인(_O)"
 
 #: data/ui/services-network.ui:37
 msgid "Network Access Point (NAP)"
@@ -320,10 +316,10 @@ msgid "Always"
 msgstr "항상"
 
 #: blueman/main/Adapter.py:157 blueman/main/Sendto.py:189
-#, fuzzy, python-format
+#, python-format
 msgid "%(minutes)d Minute"
 msgid_plural "%(minutes)d Minutes"
-msgstr[0] "%d분"
+msgstr[0] "%(minutes)d분"
 
 #: blueman/main/Adapter.py:222
 msgid "Adapter"
@@ -370,7 +366,7 @@ msgstr "블루투스 파일 전송"
 
 #: blueman/main/Sendto.py:42
 msgid "_Stop"
-msgstr ""
+msgstr "중지하기(_S)"
 
 #: blueman/main/Sendto.py:57 blueman/gui/manager/ManagerProgressbar.py:27
 msgid "Connecting"
@@ -402,7 +398,7 @@ msgstr "총 예상 시간:"
 #, python-format
 msgid "%(seconds)d Second"
 msgid_plural "%(seconds)d Seconds"
-msgstr[0] ""
+msgstr[0] "%(seconds)d초"
 
 #: blueman/main/Sendto.py:229
 #, python-format
@@ -496,7 +492,7 @@ msgstr "로컬 서비스"
 
 #: blueman/main/Services.py:47
 msgid "_Apply"
-msgstr ""
+msgstr "적용하기(_A)"
 
 #: blueman/Functions.py:71
 msgid "Bluetooth Turned Off"
@@ -524,19 +520,19 @@ msgstr "아니요"
 
 #: blueman/Functions.py:181
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: blueman/Functions.py:184
 msgid "KB"
-msgstr ""
+msgstr "KB"
 
 #: blueman/Functions.py:187
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
 #: blueman/Functions.py:190
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: blueman/gui/manager/ManagerMenu.py:46
 msgid "_Report a Problem"
@@ -594,44 +590,36 @@ msgid "_Search"
 msgstr "검색(_S)"
 
 #: blueman/gui/manager/ManagerMenu.py:156
-#, fuzzy
 msgid "_Preferences"
-msgstr "어댑터 기본 설정"
+msgstr "환경설정(_P)"
 
 #: blueman/gui/manager/ManagerMenu.py:165 blueman/plugins/applet/ExitItem.py:12
-#, fuzzy
 msgid "_Exit"
-msgstr "끝내기"
+msgstr "종료(_E)"
 
 #. translators: device class
 #: blueman/gui/manager/ManagerDeviceList.py:326
 #: blueman/gui/manager/ManagerDeviceList.py:355 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
-#, fuzzy
 msgid "Uncategorized"
-msgstr "분류 안함"
+msgstr "미분류"
 
 #: blueman/gui/manager/ManagerDeviceList.py:544
-#, fuzzy
-#| msgid "Trust"
 msgid "Trusted"
-msgstr "신뢰"
+msgstr "신뢰할 수 있음"
 
 #: blueman/gui/manager/ManagerDeviceList.py:546
-#, fuzzy
-#| msgid "Pair"
 msgid "Paired"
-msgstr "페어링"
+msgstr "페어링됨"
 
 #: blueman/gui/manager/ManagerDeviceList.py:548
 msgid "Blocked"
-msgstr ""
+msgstr "차단됨"
 
 #: blueman/gui/manager/ManagerDeviceList.py:571
-#, fuzzy
 msgid "<b>Connected</b>"
-msgstr "<b>연결하기(_C)</b>"
+msgstr "<b> 연결됨</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:586
 msgid "Poor"
@@ -658,22 +646,22 @@ msgstr "매우 많음"
 #: blueman/gui/manager/ManagerDeviceList.py:597
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
-msgstr ""
+msgstr "<b>수신 신호 강도: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:600
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
-msgstr ""
+msgstr "수신 신호 강도: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:605
 #, python-format
 msgid "<b>Link Quality: %(lq)u%%</b>"
-msgstr ""
+msgstr "<b>링크 품질: %(lq)u%%</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:607
 #, python-format
 msgid "Link Quality: %(lq)u%%"
-msgstr ""
+msgstr "링크 품질: %(lq)u%%"
 
 #: blueman/gui/manager/ManagerDeviceList.py:611
 msgid "Low"
@@ -690,12 +678,12 @@ msgstr "매우 높음"
 #: blueman/gui/manager/ManagerDeviceList.py:622
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
-msgstr ""
+msgstr "<b>전송 전력 수준: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:625
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
-msgstr ""
+msgstr "전송 전력 수준: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:131
 msgid "Success!"
@@ -706,9 +694,8 @@ msgid "Failed"
 msgstr "실패"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:144
-#, fuzzy
 msgid "Connecting…"
-msgstr "연결 중"
+msgstr "연결하는 중…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:180
 msgid "Disconnection Failed: "
@@ -716,28 +703,25 @@ msgstr "연결 끊기 실패:"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:204
 msgid "No audio endpoints registered"
-msgstr ""
+msgstr "등록된 오디오 엔드포인트가 없습니다"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:207
 msgid "Input/output error"
-msgstr ""
+msgstr "입력/출력 오류"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:209
-#, fuzzy
 msgid "Device did not respond"
-msgstr "장치 정보 보이기"
+msgstr "장치가 응답하지 않았습니다"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:213
-#, fuzzy
 msgid "Resource temporarily unavailable"
-msgstr "잠깐 보임"
+msgstr "리소스를 일시적으로 사용할 수 없습니다"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:218
 msgid "Connection Failed: "
 msgstr "연결 실패: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:287
-#, fuzzy
 msgid "<b>_Connect</b>"
 msgstr "<b>연결하기(_C)</b>"
 
@@ -746,8 +730,6 @@ msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr "자동 연결 프로파일 A2DP 소스, A2DP 싱크 및 HID에 연결합니다."
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:293
-#, fuzzy
-#| msgid "_<b>Disconnect</b>"
 msgid "<b>_Disconnect</b>"
 msgstr "<b>연결끊기(_D)</b>"
 
@@ -764,14 +746,13 @@ msgid "<b>Disconnect:</b>"
 msgstr "<b>연결 취소:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:324
-#, fuzzy
 msgid "<b>Auto-connect:</b>"
-msgstr "<b>연결 취소:</b>"
+msgstr "<b>자동 연결:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:343
 #, fuzzy
 msgid "Send a _File…"
-msgstr "파일 보내기(_F)..."
+msgstr "파일 보내기(_F)…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:356
 msgid "_Pair"
@@ -787,27 +768,23 @@ msgstr "신뢰하지 않음(_U)"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:378
 msgid "_Block"
-msgstr ""
+msgstr "차단하기(_B)"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:383
 msgid "_Unblock"
-msgstr ""
+msgstr "차단 해제(_U)"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:387
-#, fuzzy
-#| msgid "Send files to this device"
 msgid "Block/Unblock this device"
-msgstr "이 장치에 파일 전송"
+msgstr "이 장치 차단/차단 해제"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:407
-#, fuzzy
 msgid "R_ename device…"
-msgstr "장치 이름 바꾸기"
+msgstr "장치 이름 바꾸기(_E)…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:416
-#, fuzzy
 msgid "_Remove…"
-msgstr "제거"
+msgstr "제거하기(_R)…"
 
 #: blueman/gui/manager/ManagerProgressbar.py:44
 msgid "Cancel Operation"
@@ -886,50 +863,48 @@ msgid "Adapter selection"
 msgstr "어댑터 선택"
 
 #: blueman/gui/DeviceSelectorWidget.py:45
-#, fuzzy
 msgid "Discovering…"
-msgstr "탐색 가능… %ss"
+msgstr "정보를 찾는 중…"
 
 #. translators: device class
 #: blueman/DeviceClass.py:6
 msgid "Miscellaneous"
-msgstr ""
+msgstr "기타"
 
 #. translators: device class
 #: blueman/DeviceClass.py:8
 msgid "Computer"
-msgstr ""
+msgstr "컴퓨터"
 
 #. translators: device class
 #: blueman/DeviceClass.py:10
 msgid "Phone"
-msgstr ""
+msgstr "휴대폰"
 
 #. translators: device class
 #: blueman/DeviceClass.py:12
-#, fuzzy
 msgid "Access point"
-msgstr "네트워크 접근 지역"
+msgstr "액세스 포인트"
 
 #. translators: device class
 #: blueman/DeviceClass.py:14
 msgid "Audio/video"
-msgstr ""
+msgstr "오디오/비디오"
 
 #. translators: device class
 #: blueman/DeviceClass.py:16
 msgid "Peripheral"
-msgstr ""
+msgstr "주변기기"
 
 #. translators: device class
 #: blueman/DeviceClass.py:18 blueman/DeviceClass.py:276
 msgid "Imaging"
-msgstr ""
+msgstr "이미징"
 
 #. translators: device class
 #: blueman/DeviceClass.py:20 blueman/DeviceClass.py:41
 msgid "Wearable"
-msgstr ""
+msgstr "웨어러블"
 
 #. translators: device class
 #: blueman/DeviceClass.py:22
