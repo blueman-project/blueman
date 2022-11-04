@@ -10,12 +10,13 @@
 # Sander Sweers <infirit@gmail.com>, 2020, 2022.
 # simonborgithub <mail@simonbor.nl>
 # Pjotr Vertaalt <pjotrvertaalt@gmail.com>, 2022.
+# A <volluta@protonmail.com>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2022-07-05 14:08+0200\n"
-"PO-Revision-Date: 2022-07-30 11:40+0000\n"
+"PO-Revision-Date: 2022-09-14 17:38+0000\n"
 "Last-Translator: Sander Sweers <infirit@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/blueman/2-3/nl/>\n"
 "Language: nl\n"
@@ -23,7 +24,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 4.14.1-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -621,7 +622,7 @@ msgstr "Geblokkeerd"
 
 #: blueman/gui/manager/ManagerDeviceList.py:571
 msgid "<b>Connected</b>"
-msgstr "_<b>Verbonden</b>"
+msgstr "<b>Verbonden</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:586
 msgid "Poor"
@@ -1255,7 +1256,7 @@ msgstr "Muis"
 
 #: blueman/DeviceClass.py:191
 msgid "Joystick"
-msgstr ""
+msgstr "Joystick"
 
 #: blueman/DeviceClass.py:192
 msgid "Gamepad"
@@ -1263,7 +1264,7 @@ msgstr "Gamepad"
 
 #: blueman/DeviceClass.py:193
 msgid "Digitizer Tablet"
-msgstr ""
+msgstr "Graphics tablet/ Pen tablet"
 
 #: blueman/DeviceClass.py:194
 msgid "Card Reader"
@@ -1332,7 +1333,7 @@ msgstr "Vingertop"
 
 #: blueman/DeviceClass.py:211
 msgid "Wrist-Worn"
-msgstr ""
+msgstr "Om de pols"
 
 #: blueman/DeviceClass.py:212
 msgid "Generic: Weight Scale"
@@ -1457,15 +1458,15 @@ msgstr "HIDP"
 
 #: blueman/Sdp.py:103
 msgid "Hardcopy Control Channel"
-msgstr ""
+msgstr "Hardcopy Control Channel"
 
 #: blueman/Sdp.py:104
 msgid "Hardcopy Data Channel"
-msgstr ""
+msgstr "Hardcopy Data Channel"
 
 #: blueman/Sdp.py:105
 msgid "Hardcopy Notification"
-msgstr ""
+msgstr "Hardcopy Notificatie"
 
 #: blueman/Sdp.py:106
 msgid "AVCTP"
@@ -1493,11 +1494,11 @@ msgstr "L2CAP"
 
 #: blueman/Sdp.py:113
 msgid "ServiceDiscoveryServerServiceClassID"
-msgstr ""
+msgstr "ServiceDiscoveryServerServiceClassID"
 
 #: blueman/Sdp.py:114
 msgid "BrowseGroupDescriptorServiceClassID"
-msgstr ""
+msgstr "BrowseGroupDescriptorServiceClassID"
 
 #: blueman/Sdp.py:115
 msgid "Public Browse Group"
@@ -1517,11 +1518,11 @@ msgstr "Inbelnetwerk (DUN)"
 
 #: blueman/Sdp.py:119
 msgid "IrMC Sync"
-msgstr ""
+msgstr "IrMC Sync"
 
 #: blueman/Sdp.py:120
 msgid "OBEX Object Push"
-msgstr ""
+msgstr "OBEX Object Push"
 
 #: blueman/Sdp.py:121
 msgid "OBEX File Transfer"
@@ -1605,15 +1606,15 @@ msgstr "Beeldverwerking (BIP)"
 
 #: blueman/Sdp.py:142
 msgid "ImagingResponder (BIP)"
-msgstr ""
+msgstr "ImagingResponder (BIP)"
 
 #: blueman/Sdp.py:143
 msgid "ImagingAutomaticArchive (BIP)"
-msgstr ""
+msgstr "ImagingAutomaticArchive (BIP)"
 
 #: blueman/Sdp.py:144
 msgid "ImagingReferencedObjects (BIP)"
-msgstr ""
+msgstr "ImagingReferencedObjects (BIP)"
 
 #: blueman/Sdp.py:146
 msgid "Handsfree Audio Gateway"
@@ -1621,19 +1622,19 @@ msgstr "Handenvrij audiodoorgang"
 
 #: blueman/Sdp.py:147
 msgid "DirectPrintingReferenceObjectsService (BPP)"
-msgstr ""
+msgstr "DirectPrintingReferenceObjectsService (BPP)"
 
 #: blueman/Sdp.py:148
 msgid "ReflectedUI (BPP)"
-msgstr ""
+msgstr "ReflectedUI (BPP)"
 
 #: blueman/Sdp.py:149
 msgid "Basic Printing (BPP)"
-msgstr ""
+msgstr "Basic Printing (BPP)"
 
 #: blueman/Sdp.py:150
 msgid "Printing Status (BPP)"
-msgstr ""
+msgstr "Printing Status (BPP)"
 
 #: blueman/Sdp.py:151
 msgid "Human Interface Device Service (HID)"
@@ -1641,15 +1642,15 @@ msgstr "Menselijke interface-apparaatdienst (HID)"
 
 #: blueman/Sdp.py:152
 msgid "HardcopyCableReplacement (HCR)"
-msgstr ""
+msgstr "HardcopyCableReplacement (HCR)"
 
 #: blueman/Sdp.py:153
 msgid "HCR_Print (HCR)"
-msgstr ""
+msgstr "HCR_Print (HCR)"
 
 #: blueman/Sdp.py:154
 msgid "HCR_Scan (HCR)"
-msgstr ""
+msgstr "HCR_Scan (HCR)"
 
 #: blueman/Sdp.py:155
 msgid "Common ISDN Access (CIP)"
@@ -1657,15 +1658,15 @@ msgstr "Gemeenschappelijke ISDN-toegang (CIP)"
 
 #: blueman/Sdp.py:156
 msgid "VideoConferencingGW (VCP)"
-msgstr ""
+msgstr "VideoConferencingGW (VCP)"
 
 #: blueman/Sdp.py:157
 msgid "UDI-MT"
-msgstr ""
+msgstr "UDI-MT"
 
 #: blueman/Sdp.py:158
 msgid "UDI-TA"
-msgstr ""
+msgstr "UDI-TA"
 
 #: blueman/Sdp.py:159
 msgid "Audio/Video"
@@ -1781,7 +1782,7 @@ msgstr "HDP-bron"
 
 #: blueman/Sdp.py:188
 msgid "HDP Sink"
-msgstr ""
+msgstr "HDP Sink"
 
 #: blueman/Sdp.py:189
 msgid "Generic Access"
@@ -1809,11 +1810,11 @@ msgstr "Huidige tijddienst"
 
 #: blueman/Sdp.py:195
 msgid "Reference Time Update Service"
-msgstr ""
+msgstr "Reference Time Update Service"
 
 #: blueman/Sdp.py:196
 msgid "Next DST Change Service"
-msgstr ""
+msgstr "Next DST Change Service"
 
 #: blueman/Sdp.py:197
 msgid "Glucose"
@@ -1833,7 +1834,7 @@ msgstr "Hartslag"
 
 #: blueman/Sdp.py:201
 msgid "Phone Alert Status Service"
-msgstr ""
+msgstr "Phone Alert Status Service"
 
 #: blueman/Sdp.py:202
 msgid "Battery Service"
@@ -1845,11 +1846,11 @@ msgstr "Bloeddruk"
 
 #: blueman/Sdp.py:204
 msgid "Alert Notification Service"
-msgstr ""
+msgstr "Service voor notificatiesmeldingen"
 
 #: blueman/Sdp.py:205
 msgid "Human Interface Device"
-msgstr ""
+msgstr "Human Interface Device"
 
 #: blueman/Sdp.py:206
 msgid "Scan Parameters"
@@ -1913,11 +1914,11 @@ msgstr "Zuurstofgehaltemeter"
 
 #: blueman/Sdp.py:221
 msgid "HTTP Proxy"
-msgstr ""
+msgstr "HTTP Proxy"
 
 #: blueman/Sdp.py:222
 msgid "Transport Discovery"
-msgstr ""
+msgstr "Transport Discovery"
 
 #: blueman/Sdp.py:223
 msgid "Object Transfer"
@@ -1941,7 +1942,7 @@ msgstr "Opnemen"
 
 #: blueman/Sdp.py:228
 msgid "Characteristic Declaration"
-msgstr ""
+msgstr "Kenmerkende verklaring"
 
 #: blueman/Sdp.py:229
 msgid "Device Name"
@@ -1953,7 +1954,7 @@ msgstr "Weergave"
 
 #: blueman/Sdp.py:231
 msgid "Peripheral Privacy Flag"
-msgstr ""
+msgstr "Randapparatuur Privacy Flag"
 
 #: blueman/Sdp.py:232
 msgid "Reconnection Address"
@@ -1961,7 +1962,7 @@ msgstr "Heraansluitingsadres"
 
 #: blueman/Sdp.py:233
 msgid "Peripheral Preferred Connection Parameters"
-msgstr ""
+msgstr "Peripheral Preferred Connection Parameters"
 
 #: blueman/Sdp.py:234
 msgid "Service Changed"
@@ -1981,47 +1982,47 @@ msgstr "Serienummerreeks"
 
 #: blueman/Sdp.py:238
 msgid "Firmware Revision String"
-msgstr ""
+msgstr "Firmware Revisie String"
 
 #: blueman/Sdp.py:239
 msgid "Hardware Revision String"
-msgstr ""
+msgstr "Hardware Revisie String"
 
 #: blueman/Sdp.py:240
 msgid "Software Revision String"
-msgstr ""
+msgstr "Software Revisie String"
 
 #: blueman/Sdp.py:241
 msgid "Manufacturer Name String"
-msgstr ""
+msgstr "Fabrikant Name String"
 
 #: blueman/Sdp.py:242
 msgid "PnP ID"
-msgstr ""
+msgstr "PnP ID"
 
 #: blueman/Sdp.py:243
 msgid "Characteristic Extended Properties"
-msgstr ""
+msgstr "Kenmerkende Uitgebreide Eigenschappen"
 
 #: blueman/Sdp.py:244
 msgid "Characteristic User Description"
-msgstr ""
+msgstr "Kenmerkende Beschrijving gebruiker"
 
 #: blueman/Sdp.py:245
 msgid "Client Characteristic Configuration"
-msgstr ""
+msgstr "Client Characteristic Configuration"
 
 #: blueman/Sdp.py:246
 msgid "Server Characteristic Configuration"
-msgstr ""
+msgstr "Server Characteristic Configuration"
 
 #: blueman/Sdp.py:247
 msgid "Characteristic Presentation Format"
-msgstr ""
+msgstr "Kenmerkend presentatieformaat"
 
 #: blueman/Sdp.py:248
 msgid "Characteristic Aggregate Format"
-msgstr ""
+msgstr "Characteristic Aggregate Format"
 
 #: blueman/Sdp.py:249
 msgid "Valid Range"
@@ -2029,7 +2030,7 @@ msgstr "Geldig bereik"
 
 #: blueman/Sdp.py:250
 msgid "External Report Reference"
-msgstr ""
+msgstr "Extern verslag Referentie"
 
 #: blueman/Sdp.py:251
 msgid "Report Reference"
@@ -2342,6 +2343,10 @@ msgid ""
 "turning Bluetooth back on from an icon that shows its status; provided it "
 "isn't unplugged by the system, or physically."
 msgstr ""
+"Schakelt de status van Bluetooth killswitch om naar de status van Bluetooth "
+"power. Maakt het mogelijk Bluetooth weer in te schakelen vanaf een pictogram "
+"dat de status weergeeft; mits het niet door het systeem is losgekoppeld, of "
+"fysiek."
 
 #: blueman/plugins/applet/StandardItems.py:22
 msgid "Adds standard menu items to the status icon menu"
@@ -2357,7 +2362,7 @@ msgstr "_Apparaten"
 
 #: blueman/plugins/applet/StandardItems.py:41
 msgid "Adap_ters"
-msgstr "Stekkers"
+msgstr "Adapters"
 
 #: blueman/plugins/applet/StandardItems.py:90
 msgid "applet"

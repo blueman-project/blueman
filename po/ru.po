@@ -30,15 +30,17 @@
 # Christopher Schramm <github@cschramm.eu>, 2022.
 # Сергей <sw@atrus.ru>, 2022.
 # Сергей <asvmail.as@gmail.com>, 2022.
+# Егор Ермаков <eg.ermakov2016@yandex.ru>, 2022.
+# Темак <artemkotlubai@yandex.ru>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2022-07-05 14:08+0200\n"
-"PO-Revision-Date: 2022-07-10 13:20+0000\n"
-"Last-Translator: Сергей <asvmail.as@gmail.com>\n"
-"Language-Team: Russian <https://hosted.weblate.org/projects/blueman/2-3/ru/"
-">\n"
+"PO-Revision-Date: 2022-11-04 16:00+0000\n"
+"Last-Translator: Темак <artemkotlubai@yandex.ru>\n"
+"Language-Team: Russian <https://hosted.weblate.org/projects/blueman/2-3/ru/>"
+"\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -46,7 +48,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
-"X-Generator: Weblate 4.13.1-dev\n"
+"X-Generator: Weblate 4.14.2-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -248,7 +250,7 @@ msgstr "Настройки"
 
 #: data/ui/applet-plugins-widget.ui:73
 msgid "Configure selected plugin's preferences"
-msgstr "Настройка параметров выбранных модулей"
+msgstr "Настроить выбранные модули"
 
 #: data/ui/applet-plugins-widget.ui:115
 msgid "<b>Plugin description:</b>"
@@ -369,9 +371,9 @@ msgid ""
 "This probably means that there were no Bluetooth adapters detected or "
 "Bluetooth daemon was not started."
 msgstr ""
-"Демон Bluez не запущен, blueman-manager не может продолжать работу.\n"
-"Это может означать, что не было обнаружено адаптеров Bluetooth или что демон "
-"Bluetooth не был запущен."
+"Служба Bluez не запущена, blueman-manager не может продолжать работу.\n"
+"Это может означать, что не было обнаружено адаптеров Bluetooth или что "
+"служба Bluetooth не была запущена."
 
 #: blueman/main/Manager.py:208
 msgid "Searching"
@@ -405,8 +407,8 @@ msgstr "obexd недоступен"
 #: blueman/main/Sendto.py:111
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
 msgstr ""
-"Не удалось автоматически запустить службу obex. Убедитесь, что демон obex "
-"запущен"
+"Не удалось автоматически запустить службу obex. Убедитесь, что служба obex "
+"запущена"
 
 #: blueman/main/Sendto.py:142
 msgid "Cancelling"
@@ -457,7 +459,7 @@ msgstr "Аутентификация по Bluetooth"
 
 #: blueman/main/applet/BluezAgent.py:165
 msgid "Enter PIN code for authentication:"
-msgstr "Введите PIN-код для аутентификации:"
+msgstr "Введите ПИН-код для аутентификации:"
 
 #: blueman/main/applet/BluezAgent.py:174
 msgid "Enter passkey for authentication:"
@@ -469,7 +471,7 @@ msgstr "Сопряжение ключа для"
 
 #: blueman/main/applet/BluezAgent.py:196
 msgid "Pairing PIN code for"
-msgstr "Сопряжение PIN кода для"
+msgstr "Сопряжение ПИН-кода для"
 
 #: blueman/main/applet/BluezAgent.py:209
 msgid "Pairing request for:"
@@ -580,11 +582,11 @@ msgstr "Показать _строку состояния"
 
 #: blueman/gui/manager/ManagerMenu.py:79
 msgid "Hide _unnamed devices"
-msgstr "Скрыть _unnamed устройства"
+msgstr "Скрыть _безымянные устройства"
 
 #: blueman/gui/manager/ManagerMenu.py:89
 msgid "S_ort By"
-msgstr "C_ортировать по"
+msgstr "Р_аспределять по"
 
 #: blueman/gui/manager/ManagerMenu.py:96
 msgid "_Name"
@@ -631,7 +633,7 @@ msgstr "_Выход"
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 msgid "Uncategorized"
-msgstr "Не классифицировано"
+msgstr "Не распределено"
 
 #: blueman/gui/manager/ManagerDeviceList.py:544
 msgid "Trusted"
@@ -917,12 +919,12 @@ msgstr "Точка доступа"
 #. translators: device class
 #: blueman/DeviceClass.py:14
 msgid "Audio/video"
-msgstr "Аудио/видео"
+msgstr "Звук/видео"
 
 #. translators: device class
 #: blueman/DeviceClass.py:16
 msgid "Peripheral"
-msgstr "Переферия"
+msgstr "Периферия"
 
 #. translators: device class
 #: blueman/DeviceClass.py:18 blueman/DeviceClass.py:276
@@ -942,7 +944,7 @@ msgstr "Игрушка"
 #. translators: device class
 #: blueman/DeviceClass.py:31
 msgid "Desktop"
-msgstr "Персональный компьютер"
+msgstr "Настольный компьютер"
 
 #. translators: device class
 #: blueman/DeviceClass.py:33
@@ -1062,7 +1064,7 @@ msgstr "Портативное аудиоустройство"
 #. translators: device class
 #: blueman/DeviceClass.py:96
 msgid "Car audio"
-msgstr "Аудиоустройство для автомобиля"
+msgstr "Звуковое устройство для машины"
 
 #. translators: device class
 #: blueman/DeviceClass.py:98
@@ -1072,7 +1074,7 @@ msgstr "Телеприставка"
 #. translators: device class
 #: blueman/DeviceClass.py:100
 msgid "Hi-Fi audio"
-msgstr "Hi-Fi аудиоустройство"
+msgstr "Hi-Fi звуковое устройство"
 
 #. translators: device class
 #: blueman/DeviceClass.py:102
@@ -1127,7 +1129,7 @@ msgstr "Комбо"
 #. translators: device class
 #: blueman/DeviceClass.py:132
 msgid "Display"
-msgstr "Дисплей"
+msgstr "Экран"
 
 #. translators: device class
 #: blueman/DeviceClass.py:134
@@ -1216,7 +1218,7 @@ msgstr "Обычные часы"
 
 #: blueman/DeviceClass.py:174
 msgid "Generic Display"
-msgstr "Обычный дисплей"
+msgstr "Обычный экран"
 
 #: blueman/DeviceClass.py:175
 msgid "Generic Remote Control"
@@ -1228,7 +1230,7 @@ msgstr "Обычные очки"
 
 #: blueman/DeviceClass.py:177
 msgid "Generic Tag"
-msgstr "Обычный тэг"
+msgstr "Обычная метка"
 
 #: blueman/DeviceClass.py:178
 msgid "Generic Keyring"
@@ -1272,7 +1274,7 @@ msgstr "Кровяное давление: Запястье"
 
 #: blueman/DeviceClass.py:188
 msgid "Human Interface Device (HID)"
-msgstr "Устройство человеческого интерфейса (HID)"
+msgstr "Устройства для взаимодействия с человеком (HID)"
 
 #: blueman/DeviceClass.py:190
 msgid "Mouse"
@@ -1526,7 +1528,7 @@ msgstr "BrowseGroupDescriptorServiceClassID"
 
 #: blueman/Sdp.py:115
 msgid "Public Browse Group"
-msgstr "Публичная группа просмотра"
+msgstr "Общедоступная группа просмотра"
 
 #: blueman/Sdp.py:116
 msgid "Serial Port"
@@ -1594,7 +1596,7 @@ msgstr "Факс"
 
 #: blueman/Sdp.py:133
 msgid "Headset Audio Gateway"
-msgstr "Аудио шлюз гарнитуры"
+msgstr "Звуковой шлюз гарнитуры"
 
 #: blueman/Sdp.py:134
 msgid "WAP"
@@ -1642,7 +1644,7 @@ msgstr "ImagingReferencedObjects (BIP)"
 
 #: blueman/Sdp.py:146
 msgid "Handsfree Audio Gateway"
-msgstr "Аудиошлюз громкой связи"
+msgstr "Звуковой шлюз громкой связи"
 
 #: blueman/Sdp.py:147
 msgid "DirectPrintingReferenceObjectsService (BPP)"
@@ -1654,11 +1656,11 @@ msgstr "ReflectedUI (BPP)"
 
 #: blueman/Sdp.py:149
 msgid "Basic Printing (BPP)"
-msgstr "Базовая печать (BPP)"
+msgstr "Основная печать (BPP)"
 
 #: blueman/Sdp.py:150
 msgid "Printing Status (BPP)"
-msgstr "Статус печати (BPP)"
+msgstr "Состояние печати (BPP)"
 
 #: blueman/Sdp.py:151
 msgid "Human Interface Device Service (HID)"
@@ -1694,7 +1696,7 @@ msgstr "UDI-TA"
 
 #: blueman/Sdp.py:159
 msgid "Audio/Video"
-msgstr "Аудио/Видео"
+msgstr "Звук/Видео"
 
 #: blueman/Sdp.py:160
 msgid "SIM Access (SAP)"
@@ -1850,7 +1852,7 @@ msgstr "Термометр здоровья"
 
 #: blueman/Sdp.py:199
 msgid "Device Information"
-msgstr "Информация об устройстве"
+msgstr "Сведения об устройстве"
 
 #: blueman/Sdp.py:200
 msgid "Heart Rate"
@@ -1858,7 +1860,7 @@ msgstr "Частота сердцебиения"
 
 #: blueman/Sdp.py:201
 msgid "Phone Alert Status Service"
-msgstr "Служба Оповещения по телефону"
+msgstr "Служба оповещения по телефону"
 
 #: blueman/Sdp.py:202
 msgid "Battery Service"
@@ -1874,11 +1876,11 @@ msgstr "Служба оповещений"
 
 #: blueman/Sdp.py:205
 msgid "Human Interface Device"
-msgstr "Человеческий интерфейс"
+msgstr "Устройство для взаимодействия с человеком"
 
 #: blueman/Sdp.py:206
 msgid "Scan Parameters"
-msgstr "Параметры сканирования"
+msgstr "Настройки сканирования"
 
 #: blueman/Sdp.py:207
 msgid "Running Speed and Cadence"
@@ -1986,15 +1988,15 @@ msgstr "Адрес повторного подключения"
 
 #: blueman/Sdp.py:233
 msgid "Peripheral Preferred Connection Parameters"
-msgstr "Параметры предпочтительного периферийного подключения"
+msgstr "Настройки предпочтительного периферийного подключения"
 
 #: blueman/Sdp.py:234
 msgid "Service Changed"
-msgstr "Сервис изменен"
+msgstr "Служба изменена"
 
 #: blueman/Sdp.py:235
 msgid "System ID"
-msgstr "Системный ID"
+msgstr "Системный идентификатор"
 
 #: blueman/Sdp.py:236
 msgid "Model Number String"
@@ -2022,7 +2024,7 @@ msgstr "Строка названия производителя"
 
 #: blueman/Sdp.py:242
 msgid "PnP ID"
-msgstr "PnP ID"
+msgstr "PnP идентификатор"
 
 #: blueman/Sdp.py:243
 msgid "Characteristic Extended Properties"
@@ -2245,12 +2247,11 @@ msgstr ""
 #. the maximum number of items RecentConns menu will display
 #: blueman/plugins/applet/RecentConns.py:52
 msgid "Maximum items"
-msgstr "Максимальное число элементов"
+msgstr "Предельное число элементов"
 
 #: blueman/plugins/applet/RecentConns.py:53
 msgid "The maximum number of items recent connections menu will display."
-msgstr ""
-"Максимальное число элементов, отображаемых в меню «Недавние соединения»."
+msgstr "Предельное число элементов, отображаемых в меню «Недавние соединения»."
 
 #: blueman/plugins/applet/RecentConns.py:63
 msgid "Recent _Connections"
@@ -2284,7 +2285,7 @@ msgstr ""
 
 #: blueman/plugins/applet/DBusService.py:47
 msgid "Provides DBus API for other Blueman components"
-msgstr "Предоставляет API DBus для других компонентов Blueman"
+msgstr "Предоставляет набор функций DBus для других компонентов Blueman"
 
 #: blueman/plugins/applet/TransferService.py:127
 msgid "Incoming file over Bluetooth"
@@ -2314,7 +2315,7 @@ msgstr "Обеспечивает обмен файлами по протокол
 
 #: blueman/plugins/applet/TransferService.py:180
 msgid "Configured directory for incoming files does not exist"
-msgstr "Настроенный каталог для входящих файлов не существует"
+msgstr "Настроенная папка для входящих файлов отсутствует"
 
 #: blueman/plugins/applet/TransferService.py:181
 #, python-format
@@ -2322,8 +2323,8 @@ msgid ""
 "Please make sure that directory \"<b>%s</b>\" exists or configure it with "
 "blueman-services. Until then the default \"%s\" will be used"
 msgstr ""
-"Убедитесь, что каталог «<b>%s</b>» существует или настройте его через "
-"blueman-services. До тех пор будет использоваться умолчательный каталог «%s»"
+"Убедитесь, что папка «<b>%s</b>» существует или настройте её через blueman-"
+"services. До тех пор будет использоваться папка по умолчанию «%s»"
 
 #: blueman/plugins/applet/TransferService.py:303
 msgid "File received"
@@ -2493,7 +2494,7 @@ msgstr "Время обнаружения"
 #: blueman/plugins/applet/DiscvManager.py:27
 msgid "Amount of time in seconds discoverable mode will last"
 msgstr ""
-"Период времени, в течение которого адаптер могут обнаружить внешние "
+"Промежуток времени, в течение которого адаптер может обнаружить внешние "
 "устройства"
 
 #: blueman/plugins/applet/DiscvManager.py:35
@@ -2503,7 +2504,7 @@ msgstr "Сделать _видимым"
 
 #: blueman/plugins/applet/DiscvManager.py:36
 msgid "Make the default adapter temporarily visible"
-msgstr "Сделать основной адаптор временно видимым"
+msgstr "Сделать адаптер по умолчанию временно видимым"
 
 #: blueman/plugins/applet/DiscvManager.py:60
 #, python-format
@@ -2514,7 +2515,8 @@ msgstr "Видимый...%ss"
 msgid ""
 "Provides a menu for the applet and an API for other plugins to manipulate it"
 msgstr ""
-"Предоставляет меню для апплета и API для плагинов, позволяющее им управлять"
+"Предоставляет меню для апплета и набора функций для плагинов, позволяющее им "
+"управлять"
 
 #: blueman/plugins/applet/PPPSupport.py:72
 #, python-format
@@ -2529,7 +2531,8 @@ msgstr ""
 #: blueman/plugins/applet/PPPSupport.py:80
 msgid "Provides basic support for connecting to the internet via DUN profile."
 msgstr ""
-"Предоставляет базовую поддержку подключения к интернету через профиль DUN."
+"Предоставляет основную поддержку для подключения к интернету через профиль "
+"DUN."
 
 #: blueman/plugins/applet/SerialManager.py:22
 msgid ""
@@ -2586,7 +2589,7 @@ msgstr ""
 
 #: blueman/plugins/applet/PowerManager.py:31
 msgid "Controls Bluetooth adapter power states"
-msgstr "Контролировать состояние питания Bluetooth-адаптера"
+msgstr "Управляет состоянием питания адаптера Bluetooth"
 
 #: blueman/plugins/applet/PowerManager.py:44
 msgid "Auto power-on"
@@ -2632,7 +2635,7 @@ msgstr "Сеть"
 
 #: blueman/plugins/services/Network.py:97
 msgid "Invalid IP address"
-msgstr "Некорректный IP-адрес"
+msgstr "Недействительный IP-адрес"
 
 #: blueman/plugins/services/Network.py:102
 #, python-format
@@ -2648,12 +2651,12 @@ msgid ""
 msgstr ""
 "IP-адрес пересекается с подсетью интерфейса %s, которая имеет следующую "
 "конфигурацию: %s/%s\n"
-"Это может привести к некорректному поведению сети"
+"Это может привести к неправильному поведению сети"
 
 #: blueman/plugins/services/Network.py:237
 #: blueman/plugins/services/Network.py:246
 msgid "Not currently supported with this setup"
-msgstr "В данный момент не поддерживается"
+msgstr "В настоящее время не поддерживается"
 
 #: blueman/plugins/services/Transfer.py:15
 msgid "Transfer"
@@ -2661,7 +2664,7 @@ msgstr "Передача"
 
 #: blueman/plugins/services/Transfer.py:28
 msgid "Applet's transfer service plugin is disabled"
-msgstr "Плагин сервиса передачи апплета отключен"
+msgstr "Плагин службы передачи данных апплета отключён"
 
 #: blueman/services/DialupNetwork.py:23
 msgid "Dialup Settings"
@@ -2702,7 +2705,7 @@ msgstr "Настроить сеть Bluetooth"
 
 #: data/configs/org.blueman.policy.in:11
 msgid "Configuring networking requires privileges"
-msgstr "Настройка сети требует соответствующих привилегий"
+msgstr "Настройка сети требует соответствующих разрешений"
 
 #: data/configs/org.blueman.policy.in:19
 msgid "Launch DHCP client"
@@ -2710,15 +2713,15 @@ msgstr "Запустить клиент DHCP"
 
 #: data/configs/org.blueman.policy.in:20
 msgid "Launching DHCP client requires privileges"
-msgstr "Запуск клиента DHCP требует соответствующих привилегий"
+msgstr "Запуск клиента DHCP требует соответствующих разрешений"
 
 #: data/configs/org.blueman.policy.in:28
 msgid "Launch PPP daemon"
-msgstr "Запустить демон PPP"
+msgstr "Запустить службу PPP"
 
 #: data/configs/org.blueman.policy.in:29
 msgid "Launching PPP daemon requires privileges"
-msgstr "Запуск демона PPP требует соответствующих привилегий"
+msgstr "Запуск службы PPP требует соответствующих разрешений"
 
 #: data/configs/org.blueman.policy.in:37
 msgid "Set RfKill State"
@@ -2726,7 +2729,7 @@ msgstr "Установить состояние RfKill"
 
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
-msgstr "Установка состояния RfKill требует соответствующих привилегий"
+msgstr "Установка состояния RfKill требует соответствующих разрешений"
 
 #~ msgid ""
 #~ "Shows desktop notifications with battery percentage when devices get "

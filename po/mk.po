@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2022-07-05 14:08+0200\n"
-"PO-Revision-Date: 2022-07-30 11:41+0000\n"
-"Last-Translator: Christopher Schramm <github@cschramm.eu>\n"
+"PO-Revision-Date: 2022-10-24 14:40+0000\n"
+"Last-Translator: Kristijan Fremen Velkovski <me@krisfremen.com>\n"
 "Language-Team: Macedonian <https://hosted.weblate.org/projects/blueman/2-3/"
 "mk/>\n"
 "Language: mk\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 4.14.2-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -52,7 +52,7 @@ msgstr "Барање за спојување за уредот:"
 
 #: data/ui/applet-passkey.ui:120
 msgid "This should be overwritten"
-msgstr ""
+msgstr "Ова треба да биде препишано"
 
 #: data/ui/applet-passkey.ui:140
 msgid "Show input"
@@ -123,7 +123,7 @@ msgstr "Испрати датотека"
 
 #: data/ui/rename-device.ui:8
 msgid "Rename device"
-msgstr ""
+msgstr "Преименувај уред"
 
 #: data/ui/rename-device.ui:26 data/ui/net-usage.ui:243
 msgid "_Reset"
@@ -137,7 +137,7 @@ msgstr "_Откажи"
 #: data/ui/rename-device.ui:54 data/ui/note.ui:41
 #: blueman/gui/DeviceSelectorDialog.py:17
 msgid "_OK"
-msgstr ""
+msgstr "_ОК"
 
 #: data/ui/services-network.ui:37
 msgid "Network Access Point (NAP)"
@@ -165,7 +165,7 @@ msgstr "<b>Нема инсталирано DHCP сервери</b>"
 
 #: data/ui/services-network.ui:199
 msgid "udhcpd"
-msgstr ""
+msgstr "udhcpd"
 
 #: data/ui/services-network.ui:218
 msgid "<b>NAP Settings</b>"
@@ -189,11 +189,11 @@ msgstr "<b>Примање на датотека (Object Push)</b>"
 
 #: data/ui/services-transfer.ui:38
 msgid "Incoming Folder:"
-msgstr ""
+msgstr "Дојдовна Папка:"
 
 #: data/ui/services-transfer.ui:50
 msgid "Select folder for incoming file transfers"
-msgstr ""
+msgstr "Изберете папка за дојдовни фајл преноси"
 
 #: data/ui/services-transfer.ui:59
 msgid "Accept files from trusted devices"
@@ -297,7 +297,7 @@ msgstr "<b>Времетраење на записникот:</b>"
 
 #: data/ui/note.ui:8
 msgid "Send note"
-msgstr ""
+msgstr "Испратете белешка"
 
 #: blueman/main/Adapter.py:59
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
@@ -320,7 +320,7 @@ msgstr[1] "%(minutes)d Минути"
 
 #: blueman/main/Adapter.py:222
 msgid "Adapter"
-msgstr ""
+msgstr "Адаптер"
 
 #: blueman/main/Manager.py:63
 msgid "Bluetooth Devices"
@@ -350,12 +350,12 @@ msgstr "Пребарување"
 
 #: blueman/main/Manager.py:231 blueman/plugins/applet/StandardItems.py:84
 msgid "Adapter Preferences"
-msgstr ""
+msgstr "Подесувања на Адаптер"
 
 #: blueman/main/Manager.py:247 blueman/gui/manager/ManagerDeviceList.py:169
 #: blueman/plugins/applet/StandardItems.py:77
 msgid "File Sender"
-msgstr ""
+msgstr "Испраќач на Фајлови"
 
 #: blueman/main/Sendto.py:33
 msgid "Bluetooth File Transfer"
@@ -363,7 +363,7 @@ msgstr "Пренос на податоци преку блутут"
 
 #: blueman/main/Sendto.py:42
 msgid "_Stop"
-msgstr ""
+msgstr "_Стоп"
 
 #: blueman/main/Sendto.py:57 blueman/gui/manager/ManagerProgressbar.py:27
 msgid "Connecting"
@@ -371,7 +371,7 @@ msgstr "Поврзување"
 
 #: blueman/main/Sendto.py:111
 msgid "obexd not available"
-msgstr ""
+msgstr "obexd е недостапен"
 
 #: blueman/main/Sendto.py:111
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
@@ -393,8 +393,8 @@ msgstr "ETA:"
 #, python-format
 msgid "%(seconds)d Second"
 msgid_plural "%(seconds)d Seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(seconds)d секунда"
+msgstr[1] "%(seconds)d секунди"
 
 #: blueman/main/Sendto.py:229
 #, python-format
@@ -432,11 +432,11 @@ msgstr "Внеси лозинка за проверка:"
 
 #: blueman/main/applet/BluezAgent.py:185
 msgid "Pairing passkey for"
-msgstr ""
+msgstr "Лозинка за спарување на"
 
 #: blueman/main/applet/BluezAgent.py:196
 msgid "Pairing PIN code for"
-msgstr ""
+msgstr "ПИН код за спарување на"
 
 #: blueman/main/applet/BluezAgent.py:209
 msgid "Pairing request for:"
@@ -874,7 +874,6 @@ msgstr ""
 
 #. translators: device class
 #: blueman/DeviceClass.py:12
-#, fuzzy
 msgid "Access point"
 msgstr "Точка за пристап на мрежата"
 
@@ -905,27 +904,23 @@ msgstr ""
 
 #. translators: device class
 #: blueman/DeviceClass.py:31
-#, fuzzy
 msgid "Desktop"
 msgstr "Десктоп компјутер"
 
 #. translators: device class
 #: blueman/DeviceClass.py:33
-#, fuzzy
 msgid "Server"
-msgstr "сервер"
+msgstr "Сервер"
 
 #. translators: device class
 #: blueman/DeviceClass.py:35
-#, fuzzy
 msgid "Laptop"
-msgstr "лаптоп"
+msgstr "Лаптоп"
 
 #. translators: device class
 #: blueman/DeviceClass.py:37
-#, fuzzy
 msgid "Handheld"
-msgstr "Мобилен уред"
+msgstr "Мобилен"
 
 #. translators: device class
 #: blueman/DeviceClass.py:39
@@ -934,27 +929,23 @@ msgstr ""
 
 #. translators: device class
 #: blueman/DeviceClass.py:48
-#, fuzzy
 msgid "Cellular"
-msgstr "мобилен телефон"
+msgstr "Мобилен Телефон"
 
 #. translators: device class
 #: blueman/DeviceClass.py:50
-#, fuzzy
 msgid "Cordless"
-msgstr "безжичен уред"
+msgstr "Безжичен уред"
 
 #. translators: device class
 #: blueman/DeviceClass.py:52
-#, fuzzy
 msgid "Smartphone"
 msgstr "Паметен телефон"
 
 #. translators: device class
 #: blueman/DeviceClass.py:54
-#, fuzzy
 msgid "Modem"
-msgstr "модем"
+msgstr "Модем"
 
 #. translators: device class
 #: blueman/DeviceClass.py:56
@@ -1003,21 +994,18 @@ msgstr ""
 
 #. translators: device class
 #: blueman/DeviceClass.py:82 blueman/Sdp.py:123 blueman/Sdp.py:164
-#, fuzzy
 msgid "Headset"
-msgstr "слушалки"
+msgstr "Слушалки"
 
 #. translators: device class
 #: blueman/DeviceClass.py:84 blueman/Sdp.py:145
-#, fuzzy
 msgid "Handsfree"
-msgstr "интерфон слушалки"
+msgstr "Интерфон"
 
 #. translators: device class
 #: blueman/DeviceClass.py:88
-#, fuzzy
 msgid "Microphone"
-msgstr "микрофон"
+msgstr "Микрофон"
 
 #. translators: device class
 #: blueman/DeviceClass.py:90
@@ -1056,9 +1044,8 @@ msgstr ""
 
 #. translators: device class
 #: blueman/DeviceClass.py:104
-#, fuzzy
 msgid "Video camera"
-msgstr "Аудио извор"
+msgstr "Видео камера"
 
 #. translators: device class
 #: blueman/DeviceClass.py:106
@@ -1067,9 +1054,8 @@ msgstr ""
 
 #. translators: device class
 #: blueman/DeviceClass.py:108
-#, fuzzy
 msgid "Video monitor"
-msgstr "Аудио извор"
+msgstr "Видео монитор"
 
 #. translators: device class
 #: blueman/DeviceClass.py:110
@@ -1078,9 +1064,8 @@ msgstr ""
 
 #. translators: device class
 #: blueman/DeviceClass.py:112
-#, fuzzy
 msgid "Video conferencing"
-msgstr "Аудио извор"
+msgstr "Видео конференција"
 
 #. translators: device class
 #: blueman/DeviceClass.py:116
@@ -1089,15 +1074,13 @@ msgstr ""
 
 #. translators: device class
 #: blueman/DeviceClass.py:123 blueman/DeviceClass.py:189
-#, fuzzy
 msgid "Keyboard"
-msgstr "тастатура"
+msgstr "Тастатура"
 
 #. translators: device class
 #: blueman/DeviceClass.py:125
-#, fuzzy
 msgid "Pointing"
-msgstr "уред за покажување"
+msgstr "Уред за Покажување"
 
 #. translators: device class
 #: blueman/DeviceClass.py:127
@@ -1175,33 +1158,28 @@ msgid "Game"
 msgstr ""
 
 #: blueman/DeviceClass.py:169
-#, fuzzy
 msgid "Generic Phone"
-msgstr "Поврзи се"
+msgstr "Обичен Телефон"
 
 #: blueman/DeviceClass.py:170
-#, fuzzy
 msgid "Generic Computer"
-msgstr "Поврзи се"
+msgstr "Обичен Компјутер"
 
 #: blueman/DeviceClass.py:171
-#, fuzzy
 msgid "Generic Watch"
-msgstr "Поврзи се"
+msgstr "Обичен Саат"
 
 #: blueman/DeviceClass.py:172
 msgid "Watch: Sports Watch"
 msgstr ""
 
 #: blueman/DeviceClass.py:173
-#, fuzzy
 msgid "Generic Clock"
-msgstr "Поврзи се"
+msgstr "Обичен Саат"
 
 #: blueman/DeviceClass.py:174
-#, fuzzy
 msgid "Generic Display"
-msgstr "Пренос на податоци преку блутут"
+msgstr "Обичен Дисплеј"
 
 #: blueman/DeviceClass.py:175
 #, fuzzy
