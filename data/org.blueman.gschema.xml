@@ -44,13 +44,9 @@
       <summary>Sort device list</summary>
       <description>Sort the device list by column, possible values are timestamp and alias</description>
     </key>
-    <key type="s" name="sort-order">
-      <choices>
-        <choice value="ascending"/>
-        <choice value="descending"/>
-      </choices>
-      <default>"ascending"</default>
-      <summary>Sort ascending or descending</summary>
+    <key type="b" name="sort-descending">
+      <default>false</default>
+      <summary>Sort descending</summary>
     </key>
     <key type="b" name="hide-unnamed">
       <summary>Hide devices with no name</summary>

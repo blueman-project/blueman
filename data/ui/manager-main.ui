@@ -2,42 +2,37 @@
 <!-- Generated with glade 3.40.0 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
-  <object class="GtkImage" id="ib_more_icon">
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
-    <property name="icon-name">dialog-information</property>
-  </object>
-  <object class="GtkImage" id="im_exit">
+  <object class="GtkImage" id="i_exit">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="icon-name">application-exit-symbolic</property>
   </object>
-  <object class="GtkImage" id="im_help">
+  <object class="GtkImage" id="i_help">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="icon-name">help-about-symbolic</property>
   </object>
-  <object class="GtkImage" id="im_plugins">
+  <object class="GtkImage" id="i_plugins">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="icon-name">application-x-addon-symbolic</property>
   </object>
-  <object class="GtkImage" id="im_prefs">
+  <object class="GtkImage" id="i_prefs">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="icon-name">document-properties-symbolic</property>
   </object>
-  <object class="GtkImage" id="im_report">
+  <object class="GtkImage" id="i_report">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="icon-name">dialog-warning-symbolic</property>
   </object>
-  <object class="GtkImage" id="im_search">
+  <object class="GtkImage" id="i_search">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="icon-name">edit-find-symbolic</property>
   </object>
-  <object class="GtkImage" id="im_services">
+  <object class="GtkImage" id="i_services">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="icon-name">document-properties-symbolic</property>
@@ -63,54 +58,57 @@
                 <property name="label" translatable="yes">_Adapter</property>
                 <property name="use-underline">True</property>
                 <child type="submenu">
-                  <object class="GtkMenu">
+                  <object class="GtkMenu" id="adapter_menu">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <child>
-                      <object class="GtkImageMenuItem" id="search_item">
+                      <object class="GtkImageMenuItem" id="adapter_search">
                         <property name="label" translatable="yes">_Search</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <property name="action-name">app.search</property>
                         <property name="use-underline">True</property>
-                        <property name="image">im_search</property>
+                        <property name="image">i_search</property>
                         <property name="use-stock">False</property>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkSeparatorMenuItem">
+                      <object class="GtkSeparatorMenuItem" id="adapter_sep1">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkSeparatorMenuItem">
+                      <object class="GtkSeparatorMenuItem" id="adapter_sep2">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkImageMenuItem" id="prefs_item">
+                      <object class="GtkImageMenuItem" id="adapter_prefs">
                         <property name="label" translatable="yes">_Preferences</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <property name="action-name">app.preferences</property>
                         <property name="use-underline">True</property>
-                        <property name="image">im_prefs</property>
+                        <property name="image">i_prefs</property>
                         <property name="use-stock">False</property>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkSeparatorMenuItem">
+                      <object class="GtkSeparatorMenuItem" id="adapter_sep3">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkImageMenuItem" id="exit_item">
+                      <object class="GtkImageMenuItem" id="adapter_exit">
                         <property name="label" translatable="yes">_Exit</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <property name="action-name">app.exit</property>
                         <property name="use-underline">True</property>
-                        <property name="image">im_exit</property>
+                        <property name="image">i_exit</property>
                         <property name="use-stock">False</property>
                       </object>
                     </child>
@@ -138,47 +136,44 @@
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <child>
-                      <object class="GtkCheckMenuItem" id="show_tb_item">
+                      <object class="GtkCheckMenuItem" id="view_toolbar">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <property name="action-name">app.show-toolbar</property>
                         <property name="label" translatable="yes">Show _Toolbar</property>
                         <property name="use-underline">True</property>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkCheckMenuItem" id="show_sb_item">
+                      <object class="GtkCheckMenuItem" id="view_statusbar">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <property name="action-name">app.show-statusbar</property>
                         <property name="label" translatable="yes">Show _Statusbar</property>
                         <property name="use-underline">True</property>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkCheckMenuItem" id="hide_unnamed_item">
+                      <object class="GtkCheckMenuItem" id="view_hideunnamed">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <property name="action-name">app.hide-unnamed</property>
                         <property name="label" translatable="yes">Hide _unnamed devices</property>
                         <property name="use-underline">True</property>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkSeparatorMenuItem">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkMenuItem" id="sort_by_item">
+                      <object class="GtkMenuItem" id="view_sort">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label" translatable="yes">S_ort By</property>
                         <property name="use-underline">True</property>
                         <child type="submenu">
-                          <object class="GtkMenu">
+                          <object class="GtkMenu" id="sort_submenu">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
                             <child>
-                              <object class="GtkRadioMenuItem" id="sort_name_item">
+                              <object class="GtkRadioMenuItem" id="sort_name">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
                                 <property name="label" translatable="yes">_Name</property>
@@ -187,25 +182,26 @@
                               </object>
                             </child>
                             <child>
-                              <object class="GtkRadioMenuItem" id="sort_added_item">
+                              <object class="GtkRadioMenuItem" id="sort_added">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
                                 <property name="label" translatable="yes">_Added</property>
                                 <property name="use-underline">True</property>
                                 <property name="draw-as-radio">True</property>
-                                <property name="group">sort_name_item</property>
+                                <property name="group">sort_name</property>
                               </object>
                             </child>
                             <child>
-                              <object class="GtkSeparatorMenuItem">
+                              <object class="GtkSeparatorMenuItem" id="sort_sep">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
                               </object>
                             </child>
                             <child>
-                              <object class="GtkCheckMenuItem" id="sort_descending_item">
+                              <object class="GtkCheckMenuItem" id="sort_type">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
+                                <property name="action-name">app.sort-descending</property>
                                 <property name="label" translatable="yes">_Descending</property>
                                 <property name="use-underline">True</property>
                               </object>
@@ -215,22 +211,24 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkImageMenuItem" id="plugins_item">
+                      <object class="GtkImageMenuItem" id="view_plugins">
                         <property name="label" translatable="yes">_Plugins</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <property name="action-name">app.plugins</property>
                         <property name="use-underline">True</property>
-                        <property name="image">im_plugins</property>
+                        <property name="image">i_plugins</property>
                         <property name="use-stock">False</property>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkImageMenuItem" id="services_item">
+                      <object class="GtkImageMenuItem" id="view_services">
                         <property name="label" translatable="yes">_Local Services</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <property name="action-name">app.services</property>
                         <property name="use-underline">True</property>
-                        <property name="image">im_services</property>
+                        <property name="image">i_services</property>
                         <property name="use-stock">False</property>
                       </object>
                     </child>
@@ -245,32 +243,34 @@
                 <property name="label" translatable="yes">_Help</property>
                 <property name="use-underline">True</property>
                 <child type="submenu">
-                  <object class="GtkMenu">
+                  <object class="GtkMenu" id="help_submenu">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <child>
-                      <object class="GtkImageMenuItem" id="report">
+                      <object class="GtkImageMenuItem" id="help_report">
                         <property name="label" translatable="yes">_Report a Problem</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <property name="action-name">app.report</property>
                         <property name="use-underline">True</property>
-                        <property name="image">im_report</property>
+                        <property name="image">i_report</property>
                         <property name="use-stock">False</property>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkSeparatorMenuItem" id="sep_help">
+                      <object class="GtkSeparatorMenuItem" id="help_sep">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkImageMenuItem" id="help">
+                      <object class="GtkImageMenuItem" id="help_help">
                         <property name="label" translatable="yes">_Help</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <property name="action-name">app.help</property>
                         <property name="use-underline">True</property>
-                        <property name="image">im_help</property>
+                        <property name="image">i_help</property>
                         <property name="use-stock">False</property>
                       </object>
                     </child>
@@ -582,7 +582,6 @@
                     <property name="label" translatable="yes">More</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <property name="image">ib_more_icon</property>
                     <property name="relief">none</property>
                   </object>
                   <packing>
@@ -646,5 +645,40 @@
         </child>
       </object>
     </child>
+  </object>
+  <object class="GtkImage" id="im_exit">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">application-exit-symbolic</property>
+  </object>
+  <object class="GtkImage" id="im_help">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">help-about-symbolic</property>
+  </object>
+  <object class="GtkImage" id="im_plugins">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">application-x-addon-symbolic</property>
+  </object>
+  <object class="GtkImage" id="im_prefs">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">document-properties-symbolic</property>
+  </object>
+  <object class="GtkImage" id="im_report">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">dialog-warning-symbolic</property>
+  </object>
+  <object class="GtkImage" id="im_search">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">edit-find-symbolic</property>
+  </object>
+  <object class="GtkImage" id="im_services">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">document-properties-symbolic</property>
   </object>
 </interface>
