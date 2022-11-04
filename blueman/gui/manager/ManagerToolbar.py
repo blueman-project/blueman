@@ -25,7 +25,6 @@ class ManagerToolbar:
         self.blueman.List.connect("adapter-property-changed", self.on_adapter_property_changed)
 
         self.b_search = blueman.builder.get_widget("b_search", Gtk.ToolButton)
-        self.b_search.connect("clicked", lambda button: blueman.inquiry())
 
         self.b_bond = blueman.builder.get_widget("b_bond", Gtk.ToolButton)
         self.b_bond.connect("clicked", self.on_action, self.blueman.bond)
