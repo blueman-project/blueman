@@ -1,6 +1,6 @@
 from gettext import gettext as _
 import logging
-from typing import TYPE_CHECKING, Callable, Tuple, Optional
+from typing import TYPE_CHECKING, Tuple, Optional, Any
 
 import gi
 
@@ -10,6 +10,7 @@ from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
+from gi.repository import Gio
 
 if TYPE_CHECKING:
     from blueman.main.Manager import Blueman
@@ -25,13 +26,13 @@ class ManagerToolbar:
         self.blueman.List.connect("adapter-property-changed", self.on_adapter_property_changed)
 
         self.b_search = blueman.builder.get_widget("b_search", Gtk.ToolButton)
-
         self.b_bond = blueman.builder.get_widget("b_bond", Gtk.ToolButton)
-        self.b_bond.connect("clicked", self.on_action, self.blueman.bond)
-
         self.b_trust = blueman.builder.get_widget("b_trust", Gtk.ToolButton)
-        self.b_trust.connect("clicked", self.on_action, self.blueman.toggle_trust)
-        self.b_trust.set_homogeneous(False)
+        self.b_remove = blueman.builder.get_widget("b_remove", Gtk.ToolButton)
+        self.b_send = blueman.builder.get_widget("b_send", Gtk.ToolButton)
+
+        self.blueman.register_action("bond", self._simple_actions)
+        self.blueman.register_action("trust", self._simple_actions)
 
         self.b_trust.props.label = _("Untrust")
         (size, nsize) = Gtk.Widget.get_preferred_size(self.b_trust)
@@ -40,20 +41,23 @@ class ManagerToolbar:
 
         self.b_trust.props.width_request = max(size.width, size2.width)
 
-        self.b_remove = blueman.builder.get_widget("b_remove", Gtk.ToolButton)
-        self.b_remove.connect("clicked", self.on_action, self.blueman.remove)
-
-        self.b_send = blueman.builder.get_widget("b_send", Gtk.ToolButton)
-        self.b_send.props.sensitive = False
-        self.b_send.connect("clicked", self.on_action, self.blueman.send)
-        self.b_send.set_homogeneous(False)
+        self.blueman.register_action("remove", self._simple_actions)
+        self.blueman.register_action("sendfile", self._simple_actions)
 
         self.on_adapter_changed(blueman.List, blueman.List.get_adapter_path())
 
-    def on_action(self, _button: Gtk.ToolButton, func: Callable[[Device], None]) -> None:
+    def _simple_actions(self, action: Gio.Action, _val: Optional[Any]) -> None:
         device = self.blueman.List.get_selected_device()
         if device is not None:
-            func(device)
+            name = action.get_name()
+            if name == "bond":
+                self.blueman.bond(device)
+            elif name == "trust":
+                self.blueman.toggle_trust(device)
+            elif name == "remove":
+                self.blueman.remove(device)
+            elif name == "sendfile":
+                self.blueman.send(device)
 
     def on_adapter_property_changed(self, _lst: ManagerDeviceList, _adapter: Adapter,
                                     key_value: Tuple[str, object]) -> None:

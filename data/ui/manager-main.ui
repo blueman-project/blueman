@@ -320,6 +320,7 @@
                 <property name="sensitive">False</property>
                 <property name="can-focus">False</property>
                 <property name="tooltip-text" translatable="yes">Create pairing with the device</property>
+                <property name="action-name">app.bond</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Pair</property>
                 <property name="icon-name">blueman-pair-symbolic</property>
               </object>
@@ -334,12 +335,13 @@
                 <property name="sensitive">False</property>
                 <property name="can-focus">False</property>
                 <property name="tooltip-text" translatable="yes">Mark/Unmark this device as trusted</property>
+                <property name="action-name">app.trust</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Trust</property>
                 <property name="icon-name">blueman-trust-symbolic</property>
               </object>
               <packing>
                 <property name="expand">False</property>
-                <property name="homogeneous">True</property>
+                <property name="homogeneous">False</property>
               </packing>
             </child>
             <child>
@@ -348,6 +350,7 @@
                 <property name="sensitive">False</property>
                 <property name="can-focus">False</property>
                 <property name="tooltip-text" translatable="yes">Remove this device from the known devices list</property>
+                <property name="action-name">app.remove</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Remove</property>
                 <property name="icon-name">list-remove-symbolic</property>
               </object>
@@ -369,15 +372,17 @@
             <child>
               <object class="GtkToolButton" id="b_send">
                 <property name="visible">True</property>
+                <property name="sensitive">False</property>
                 <property name="can-focus">False</property>
                 <property name="tooltip-text" translatable="yes">Send file(s) to the device</property>
                 <property name="is-important">True</property>
+                <property name="action-name">app.sendfile</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Send File</property>
                 <property name="icon-name">blueman-send-symbolic</property>
               </object>
               <packing>
                 <property name="expand">False</property>
-                <property name="homogeneous">True</property>
+                <property name="homogeneous">False</property>
               </packing>
             </child>
             <style>
