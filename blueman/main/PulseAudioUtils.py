@@ -256,8 +256,7 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
     def simple_callback(self, handler: Callable[[int], None], func: "_NamedFuncPointer", *args: Any) -> None:
 
         def wrapper(_context: c_void_p, res: int, data: "_FuncPointer") -> None:
-            if handler:
-                handler(res)
+            handler(res)
             pythonapi.Py_DecRef(py_object(data))
 
         cb = pa_context_index_cb_t(wrapper)

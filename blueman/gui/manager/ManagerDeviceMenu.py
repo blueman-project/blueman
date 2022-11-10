@@ -46,8 +46,8 @@ class DeviceMenuItem:
 
 
 class MenuItemsProvider:
-    def on_request_menu_items(self, manager_menu: "ManagerDeviceMenu", device: Device) -> List[DeviceMenuItem]:
-        ...
+    def on_request_menu_items(self, _manager_menu: "ManagerDeviceMenu", _device: Device) -> List[DeviceMenuItem]:
+        return []
 
 
 class ManagerDeviceMenu(Gtk.Menu):

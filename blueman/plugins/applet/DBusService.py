@@ -26,19 +26,19 @@ class RFCOMMConnectedListener:
 
 
 class RFCOMMConnectHandler:
-    def rfcomm_connect_handler(self, service: SerialService, reply: Callable[[str], None],
-                               err: Callable[[Union[RFCOMMError, GLib.Error]], None]) -> bool:
-        ...
+    def rfcomm_connect_handler(self, _service: SerialService, _reply: Callable[[str], None],
+                               _err: Callable[[Union[RFCOMMError, GLib.Error]], None]) -> bool:
+        return False
 
 
 class ServiceConnectHandler:
-    def service_connect_handler(self, service: Service, ok: Callable[[], None],
-                                err: Callable[[Union["NMConnectionError", GLib.Error]], None]) -> bool:
-        ...
+    def service_connect_handler(self, _service: Service, _ok: Callable[[], None],
+                                _err: Callable[[Union["NMConnectionError", GLib.Error]], None]) -> bool:
+        return False
 
-    def service_disconnect_handler(self, service: Service, ok: Callable[[], None],
-                                   err: Callable[[Union["NMConnectionError", GLib.Error]], None]) -> bool:
-        ...
+    def service_disconnect_handler(self, _service: Service, _ok: Callable[[], None],
+                                   _err: Callable[[Union["NMConnectionError", GLib.Error]], None]) -> bool:
+        return False
 
 
 class DBusService(AppletPlugin):
