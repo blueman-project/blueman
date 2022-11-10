@@ -56,7 +56,7 @@ class DHCPHandler:
 
     @staticmethod
     def _get_arguments(ip4_address: str) -> List[str]:
-        ...
+        return []
 
     @property
     def _pid_path(self) -> str:

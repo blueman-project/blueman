@@ -59,7 +59,7 @@ class ServicePlugin:
 
     # return true if apply button should be sensitive or false if not. -1 to force disabled
     def on_query_apply_state(self) -> Union[bool, "Literal[-1]"]:
-        pass
+        return False
 
     def on_apply(self) -> None:
         pass

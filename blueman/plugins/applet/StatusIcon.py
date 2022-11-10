@@ -9,17 +9,17 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 
 class StatusIconImplementationProvider:
     def on_query_status_icon_implementation(self) -> Tuple[str, int]:
-        ...
+        return "GtkStatusIcon", 0
 
 
 class StatusIconVisibilityHandler:
     def on_query_force_status_icon_visibility(self) -> bool:
-        ...
+        return False
 
 
 class StatusIconProvider:
     def on_status_icon_query_icon(self) -> Optional[str]:
-        ...
+        return None
 
 
 class StatusIcon(AppletPlugin, GObject.GObject):

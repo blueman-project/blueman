@@ -13,12 +13,12 @@ from blueman.plugins.applet.StatusIcon import StatusIconProvider
 
 class PowerStateListener:
     def on_power_state_changed(self, manager: "PowerManager", state: bool) -> None:
-        ...
+        return
 
 
 class PowerStateHandler:
     def on_power_state_query(self) -> "PowerManager.State":
-        ...
+        return PowerManager.State.ON
 
     def on_power_state_change_requested(self, manager: "PowerManager", state: bool,
                                         cb: Callable[[bool], None]) -> None:
