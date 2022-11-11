@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.3.5
+
+### Bugs fixed
+
+* Right click menu was pointing to the wrong list row
+* Double click to connect
+
+
 ## 2.3.4
 
 ### Bugs fixed
