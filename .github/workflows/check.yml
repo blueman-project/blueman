@@ -26,10 +26,11 @@ jobs:
       fail-fast: false
       matrix:
         python:
-          - 3.8
-          - 3.9
+          - "3.8"
+          - "3.9"
           - "3.10"
-          - 3.11-rc
+          - "3.11"
+          - "3.12-rc"
     runs-on: ubuntu-latest
     container:
       image: python:${{ matrix.python }}
@@ -43,10 +44,11 @@ jobs:
       fail-fast: false
       matrix:
         python:
-          - 3.8
-          - 3.9
+          - "3.8"
+          - "3.9"
           - "3.10"
-          - 3.11-rc
+          - "3.11"
+          - "3.12-rc"
     runs-on: ubuntu-22.04
     container:
       image: python:${{ matrix.python }}
@@ -65,9 +67,11 @@ jobs:
       fail-fast: false
       matrix:
         python:
-          - 3.8
-          - 3.9
+          - "3.8"
+          - "3.9"
           - "3.10"
+          - "3.11"
+          - "3.12-rc"
     runs-on: ubuntu-22.04
     container:
       image: python:${{ matrix.python }}
