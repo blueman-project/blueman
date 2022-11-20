@@ -15,6 +15,7 @@ from gi.repository import GLib
 
 if TYPE_CHECKING:
     from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
+    BaseContext = cairo.Context[cairo.Surface]
 
 
 class AnimBase(GObject.GObject):
@@ -118,7 +119,7 @@ class TreeRowFade(AnimBase):
             self.tw.disconnect(self.sig)
             self.sig = None
 
-    def on_draw(self, widget: Gtk.Widget, cr: cairo.Context) -> bool:
+    def on_draw(self, widget: Gtk.Widget, cr: "BaseContext") -> bool:
         if self.frozen:
             return False
 
@@ -177,7 +178,7 @@ class CellFade(AnimBase):
             self.tw.disconnect(self.sig)
             self.sig = None
 
-    def on_draw(self, _widget: Gtk.Widget, cr: cairo.Context) -> bool:
+    def on_draw(self, _widget: Gtk.Widget, cr: "BaseContext") -> bool:
         if self.frozen:
             return False
 
@@ -238,7 +239,7 @@ class WidgetFade(AnimBase):
 
         self.sig = widget.connect_after("draw", self.on_draw)
 
-    def on_draw(self, _widget: Gtk.Widget, cr: cairo.Context) -> bool:
+    def on_draw(self, _widget: Gtk.Widget, cr: "BaseContext") -> bool:
         if not self.frozen:
             cr.set_source_rgba(self.color.red, self.color.green, self.color.blue, self.color.alpha - self.get_state())
             cr.set_operator(cairo.OPERATOR_OVER)
