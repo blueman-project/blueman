@@ -20,6 +20,20 @@
 * Do not use pointless link quality value
 * Recent connections in toplevel applet menu
 
+## 2.3.5
+
+### Bugs fixed
+
+* Right click menu was pointing to the wrong list row
+* Double click to connect
+
+
+## 2.3.4
+
+### Bugs fixed
+
+* Errors when connected to a device with the DisconnectItems plugin enabled
+
 ## 2.3.3
 
 ### Changes
