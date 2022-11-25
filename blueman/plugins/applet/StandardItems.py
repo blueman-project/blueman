@@ -87,7 +87,7 @@ class StandardItems(AppletPlugin, PowerStateListener):
     def on_about(self) -> None:
         about = show_about_dialog("Blueman " + _("applet"), run=False)
 
-        im = Gtk.Image(icon_name="blueman-plugin", pixel_size=16)
+        im = Gtk.Image(icon_name="application-x-addon-symbolic", pixel_size=16)
         button = Gtk.Button(label=_("Plugins"), visible=True, image=im)
 
         button.connect("clicked", lambda _button: self.on_plugins())
