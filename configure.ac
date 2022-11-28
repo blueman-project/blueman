@@ -58,7 +58,7 @@ AC_SUBST([PYGOBJECT_LIBS])
 
 AC_ARG_VAR([CYTHONEXEC], [Cython compiler])
 if test "x$CYTHONEXEC" = "x"; then
-   AC_PATH_PROG([CYTHONEXEC],[cython])
+   AC_PATH_PROGS([CYTHONEXEC],[cython3 cython])
 fi
 AC_SUBST([CYTHONEXEC])
 AC_MSG_CHECKING([for cython executable])
