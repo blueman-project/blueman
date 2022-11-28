@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman 2.4-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2022-11-27 17:06+0000\n"
+"POT-Creation-Date: 2022-11-28 20:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "<b>Visibility Setting</b>"
 msgstr ""
 
-#: data/ui/adapters-tab.ui:40 blueman/main/Adapter.py:155
+#: data/ui/adapters-tab.ui:40 blueman/main/Adapter.py:158
 msgid "Hidden"
 msgstr ""
 
@@ -237,8 +237,8 @@ msgstr ""
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:161
-#: blueman/gui/manager/ManagerDeviceList.py:346
-#: blueman/gui/manager/ManagerDeviceList.py:348 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:345
+#: blueman/gui/manager/ManagerDeviceList.py:347 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:168
 #: blueman/DeviceClass.py:242 blueman/DeviceClass.py:291 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:210
@@ -298,26 +298,26 @@ msgstr ""
 msgid "Send note"
 msgstr ""
 
-#: blueman/main/Adapter.py:59
+#: blueman/main/Adapter.py:62
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
 msgstr ""
 
-#: blueman/main/Adapter.py:95 data/blueman-adapters.desktop.in:3
+#: blueman/main/Adapter.py:98 data/blueman-adapters.desktop.in:3
 msgid "Bluetooth Adapters"
 msgstr ""
 
-#: blueman/main/Adapter.py:153
+#: blueman/main/Adapter.py:156
 msgid "Always"
 msgstr ""
 
-#: blueman/main/Adapter.py:157 blueman/main/Sendto.py:189
+#: blueman/main/Adapter.py:160 blueman/main/Sendto.py:189
 #, python-format
 msgid "%(minutes)d Minute"
 msgid_plural "%(minutes)d Minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: blueman/main/Adapter.py:222
+#: blueman/main/Adapter.py:225
 msgid "Adapter"
 msgstr ""
 
@@ -334,30 +334,30 @@ msgid ""
 "similar)."
 msgstr ""
 
-#: blueman/main/Manager.py:94 blueman/main/Manager.py:135
+#: blueman/main/Manager.py:98 blueman/main/Manager.py:138
 msgid "Bluetooth needs to be turned on for the device manager to function"
 msgstr ""
 
-#: blueman/main/Manager.py:114
+#: blueman/main/Manager.py:118
 msgid "Connection to BlueZ failed"
 msgstr ""
 
-#: blueman/main/Manager.py:115
+#: blueman/main/Manager.py:119
 msgid ""
 "Bluez daemon is not running, blueman-manager cannot continue.\n"
 "This probably means that there were no Bluetooth adapters detected or "
 "Bluetooth daemon was not started."
 msgstr ""
 
-#: blueman/main/Manager.py:203
+#: blueman/main/Manager.py:206
 msgid "Searching"
 msgstr ""
 
-#: blueman/main/Manager.py:265 blueman/plugins/applet/StandardItems.py:82
+#: blueman/main/Manager.py:268 blueman/plugins/applet/StandardItems.py:82
 msgid "Adapter Preferences"
 msgstr ""
 
-#: blueman/main/Manager.py:281 blueman/gui/manager/ManagerDeviceList.py:165
+#: blueman/main/Manager.py:284 blueman/gui/manager/ManagerDeviceList.py:164
 #: blueman/plugins/applet/StandardItems.py:75
 msgid "File Sender"
 msgstr ""
@@ -483,11 +483,11 @@ msgid ""
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgstr ""
 
-#: blueman/main/Services.py:34
+#: blueman/main/Services.py:38
 msgid "Local Services"
 msgstr ""
 
-#: blueman/main/Services.py:48
+#: blueman/main/Services.py:52
 msgid "_Apply"
 msgstr ""
 
@@ -503,19 +503,19 @@ msgstr ""
 msgid "Enable Bluetooth"
 msgstr ""
 
-#: blueman/Functions.py:166
+#: blueman/Functions.py:161
 msgid "B"
 msgstr ""
 
-#: blueman/Functions.py:169
+#: blueman/Functions.py:164
 msgid "KB"
 msgstr ""
 
-#: blueman/Functions.py:172
+#: blueman/Functions.py:167
 msgid "MB"
 msgstr ""
 
-#: blueman/Functions.py:175
+#: blueman/Functions.py:170
 msgid "GB"
 msgstr ""
 
@@ -583,79 +583,79 @@ msgid "_Exit"
 msgstr ""
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:317
-#: blueman/gui/manager/ManagerDeviceList.py:346 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:316
+#: blueman/gui/manager/ManagerDeviceList.py:345 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 msgid "Uncategorized"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:531
+#: blueman/gui/manager/ManagerDeviceList.py:530
 msgid "Trusted"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:533
+#: blueman/gui/manager/ManagerDeviceList.py:532
 msgid "Paired"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:535
+#: blueman/gui/manager/ManagerDeviceList.py:534
 msgid "Blocked"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:557
+#: blueman/gui/manager/ManagerDeviceList.py:556
 msgid "<b>Connected</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:571
+#: blueman/gui/manager/ManagerDeviceList.py:570
 msgid "Poor"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:573
-#: blueman/gui/manager/ManagerDeviceList.py:592
+#: blueman/gui/manager/ManagerDeviceList.py:572
+#: blueman/gui/manager/ManagerDeviceList.py:591
 msgid "Sub-optimal"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:575
-#: blueman/gui/manager/ManagerDeviceList.py:594
+#: blueman/gui/manager/ManagerDeviceList.py:574
+#: blueman/gui/manager/ManagerDeviceList.py:593
 msgid "Optimal"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:577
+#: blueman/gui/manager/ManagerDeviceList.py:576
 msgid "Much"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:579
+#: blueman/gui/manager/ManagerDeviceList.py:578
 msgid "Too much"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:582
+#: blueman/gui/manager/ManagerDeviceList.py:581
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:585
+#: blueman/gui/manager/ManagerDeviceList.py:584
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:590
+#: blueman/gui/manager/ManagerDeviceList.py:589
 msgid "Low"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:596
+#: blueman/gui/manager/ManagerDeviceList.py:595
 msgid "High"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:598
+#: blueman/gui/manager/ManagerDeviceList.py:597
 msgid "Very High"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:601
+#: blueman/gui/manager/ManagerDeviceList.py:600
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:604
+#: blueman/gui/manager/ManagerDeviceList.py:603
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr ""
