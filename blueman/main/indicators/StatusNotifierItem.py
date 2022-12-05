@@ -1,7 +1,9 @@
 from collections import OrderedDict
 from typing import Iterable, TYPE_CHECKING, Callable, List, Tuple, Dict, Union, TypeVar, Any
 
-from gi.repository import Gio, GLib, Pango
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gio, GLib, Pango, Gtk
 
 from blueman.main.DbusService import DbusService
 from blueman.main.Tray import BluemanTray
@@ -18,6 +20,7 @@ class MenuService(DbusService):
         self._items: OrderedDict[int, "MenuItemDict"] = OrderedDict()
         self._revision = 0
         self._revision_advertised = -1
+        self._scale_factor = 1
         self._on_activate = on_activate_menu_item
 
         self.add_method("GetLayout", ("i", "i", "as"), ("u", "(ia{sv}av)"), self._get_layout)
@@ -35,6 +38,9 @@ class MenuService(DbusService):
     def set_items(self, items: Iterable["MenuItemDict"]) -> None:
         self._items = OrderedDict((item["id"], item) for item in items)
         self._revision += 1
+
+    def set_scale_factor(self, scale: int) -> None:
+        self._scale_factor = scale
 
     def _advertise_revision(self) -> bool:
         if self._revision != self._revision_advertised:
@@ -75,9 +81,16 @@ class MenuService(DbusService):
     def _render_item(self, item: Union["MenuItemDict", "SubmenuItemDict"]) -> Dict[str, GLib.Variant]:
         if "text" in item and "icon_name" in item:
             label = Pango.parse_markup(item["text"], -1, "\0")[2] if item.get("markup", False) else item["text"]
+
+            icontheme = Gtk.IconTheme.get_default()
+            icon_info = icontheme.choose_icon_for_scale([item["icon_name"], "blueman"], self._scale_factor, 16,
+                                                        Gtk.IconLookupFlags.FORCE_SIZE)
+            assert icon_info is not None
+            suc, pngbuf = icon_info.load_icon().save_to_bufferv("png", ["compression"], ["9"])
             props = {
                 "label": GLib.Variant("s", label),
-                "icon-name": GLib.Variant("s", item["icon_name"]),
+                # "icon-name": GLib.Variant("s", item["icon_name"]),
+                "icon-data": GLib.Variant("ay", pngbuf),
                 "enabled": GLib.Variant("b", item["sensitive"]),
             }
             if "submenu" in item:
@@ -102,13 +115,15 @@ class StatusNotifierItemService(DbusService):
 
     def __init__(self, tray: BluemanTray, icon_name: str) -> None:
         super().__init__(None, "org.kde.StatusNotifierItem", "/org/blueman/sni", Gio.BusType.SESSION,
-                         {"Category": "s", "Id": "s", "IconName": "s", "Status": "s", "Title": "s",
+                         {"Category": "s", "Id": "s", "IconPixmap": "a(iiay)", "Status": "s", "Title": "s",
                           "ToolTip": "(sa(iiay)ss)", "Menu": "o", "ItemIsMenu": "b"})
         self.add_method("Activate", ("i", "i"), "", lambda x, y: tray.activate_status_icon())
 
         self.menu = MenuService(tray.activate_menu_item)
 
-        self.IconName = icon_name
+        self._scale_factor: int = 1
+        self.IconPixmap: List[Tuple[int, int, bytes]] = self._make_icon_pixmap(icon_name)
+        # self.IconName = icon_name
         self.Status = "Active"
         self.ToolTip: Tuple[str, List[Tuple[int, int, List[int]]], str, str] = ("", [], "", "")
         self.Menu = "/org/blueman/sni/menu"
@@ -124,6 +139,22 @@ class StatusNotifierItemService(DbusService):
     def unregister(self) -> None:
         super().unregister()
         self.menu.unregister()
+
+    def _make_icon_pixmap(self, icon_name: str) -> List[Tuple[int, int, bytes]]:
+        size = 128
+        icon_theme = Gtk.IconTheme.get_default()
+        icon_info = icon_theme.lookup_icon_for_scale(icon_name, size, self._scale_factor,
+                                                     Gtk.IconLookupFlags.FORCE_SIZE | Gtk.IconLookupFlags.FORCE_SVG)
+        assert icon_info is not None
+        pixbuf = icon_info.load_icon()
+        return [(size, size, pixbuf.get_pixels())]
+
+    def set_icon(self, icon_name: str) -> None:
+        self.IconPixmap = self._make_icon_pixmap(icon_name)
+
+    def set_scale_factor(self, scale: int) -> None:
+        self._scale_factor = scale
+        self.menu.set_scale_factor(scale)
 
 
 class StatusNotifierItem(IndicatorInterface):
@@ -159,7 +190,7 @@ class StatusNotifierItem(IndicatorInterface):
             raise IndicatorNotAvailable
 
     def set_icon(self, icon_name: str) -> None:
-        self._sni.IconName = icon_name
+        self._sni.set_icon(icon_name)
         self._sni.emit_signal("NewIcon")
 
     def set_tooltip_title(self, title: str) -> None:
@@ -176,3 +207,6 @@ class StatusNotifierItem(IndicatorInterface):
 
     def set_menu(self, menu: Iterable["MenuItemDict"]) -> None:
         self._sni.menu.set_items(menu)
+
+    def set_scale_factor(self, scale: int) -> None:
+        self._sni.set_scale_factor(scale)

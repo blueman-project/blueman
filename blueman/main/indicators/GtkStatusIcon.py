@@ -92,3 +92,6 @@ class GtkStatusIcon(IndicatorInterface):
 
     def set_menu(self, menu: Iterable["MenuItemDict"]) -> None:
         self._menu = build_menu(((item["id"], item) for item in menu), self._on_activate)
+
+    def set_scale_factor(self, scale: int) -> None:
+        pass

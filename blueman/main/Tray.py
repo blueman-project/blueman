@@ -4,7 +4,7 @@ import os
 import signal
 import sys
 from blueman.main.DBusProxies import AppletService
-from gi.repository import Gio, GLib, Gtk
+from gi.repository import Gio, GLib, Gtk, Gdk
 
 from blueman.main.indicators.IndicatorInterface import IndicatorNotAvailable
 
@@ -13,6 +13,7 @@ class BluemanTray(Gtk.Application):
     def __init__(self, resource_file: str) -> None:
         super().__init__(application_id="org.blueman.Tray", flags=Gio.ApplicationFlags.FLAGS_NONE)
         self._active = False
+        self._scale_factor: int = 1
 
         def do_quit(_: object) -> bool:
             self.quit()
@@ -33,6 +34,12 @@ class BluemanTray(Gtk.Application):
 
         Gio.bus_watch_name(Gio.BusType.SESSION, 'org.blueman.Applet', Gio.BusNameWatcherFlags.NONE,
                            self._on_name_appeared, self._on_name_vanished)
+
+        display = Gdk.Display.get_default()
+        if display is not None:
+            monitor = display.get_monitor(0)
+            assert monitor is not None
+            self._scale_factor = monitor.get_scale_factor()
         self.hold()
 
     def _on_name_appeared(self, _connection: Gio.DBusConnection, name: str, _owner: str) -> None:
@@ -50,6 +57,7 @@ class BluemanTray(Gtk.Application):
 
         applet.connect('g-signal', self.on_signal)
 
+        self.indicator.set_scale_factor(self._scale_factor)
         self.indicator.set_tooltip_title(applet.GetToolTipTitle())
         self.indicator.set_tooltip_text(applet.GetToolTipText())
         self.indicator.set_visibility(applet.GetVisibility())
