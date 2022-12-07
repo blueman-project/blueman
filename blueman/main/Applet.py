@@ -21,7 +21,7 @@ from blueman.plugins.applet.StandardItems import StandardItems
 from blueman.plugins.applet.StatusIcon import StatusIcon
 
 
-class BluemanApplet(Gio.Application):
+class BluemanApplet(Gtk.Application):
     def __init__(self, resource_file: str) -> None:
         super().__init__(application_id="org.blueman.Applet", flags=Gio.ApplicationFlags.FLAGS_NONE)
         gresource = Gio.Resource.load(resource_file)
