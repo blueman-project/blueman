@@ -10,7 +10,7 @@ from blueman.main.indicators.IndicatorInterface import IndicatorNotAvailable
 
 
 class BluemanTray(Gio.Application):
-    def __init__(self, resource_file: str) -> None:
+    def __init__(self, resource_file) -> None:
         super().__init__(application_id="org.blueman.Tray", flags=Gio.ApplicationFlags.FLAGS_NONE)
         self._active = False
 

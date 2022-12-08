@@ -5087,8 +5087,6 @@ class Resource():
 
     def unref(self) -> None: ...
 
-    def _register(self) -> None: ...
-
 
 class SettingsSchema():
 
