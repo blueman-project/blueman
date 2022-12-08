@@ -87,16 +87,103 @@ foreach binapp: binapps
     )
 endforeach
 
-
-gnome.compile_resources(
-    'blueman',
-    'data/blueman.gresource.xml',
-    source_dir: 'data',
-    install_dir: pkgdatadir,
-    install: true,
-    gresource_bundle: true,
-    build_by_default: true
+# Install all the artwork and icons
+# FIXME use strip_directory when meson 0.45.0 is mainstream
+install_data(
+    'data/icons/pixmaps/blueman-battery-10.png',
+    'data/icons/pixmaps/blueman-battery-20.png',
+    'data/icons/pixmaps/blueman-battery-30.png',
+    'data/icons/pixmaps/blueman-battery-40.png',
+    'data/icons/pixmaps/blueman-battery-50.png',
+    'data/icons/pixmaps/blueman-battery-60.png',
+    'data/icons/pixmaps/blueman-battery-70.png',
+    'data/icons/pixmaps/blueman-battery-80.png',
+    'data/icons/pixmaps/blueman-battery-90.png',
+    'data/icons/pixmaps/blueman-battery-100.png',
+    'data/icons/pixmaps/blueman-rssi-10.png',
+    'data/icons/pixmaps/blueman-rssi-20.png',
+    'data/icons/pixmaps/blueman-rssi-30.png',
+    'data/icons/pixmaps/blueman-rssi-40.png',
+    'data/icons/pixmaps/blueman-rssi-50.png',
+    'data/icons/pixmaps/blueman-rssi-60.png',
+    'data/icons/pixmaps/blueman-rssi-70.png',
+    'data/icons/pixmaps/blueman-rssi-80.png',
+    'data/icons/pixmaps/blueman-rssi-90.png',
+    'data/icons/pixmaps/blueman-rssi-100.png',
+    'data/icons/pixmaps/blueman-tpl-10.png',
+    'data/icons/pixmaps/blueman-tpl-20.png',
+    'data/icons/pixmaps/blueman-tpl-30.png',
+    'data/icons/pixmaps/blueman-tpl-40.png',
+    'data/icons/pixmaps/blueman-tpl-50.png',
+    'data/icons/pixmaps/blueman-tpl-60.png',
+    'data/icons/pixmaps/blueman-tpl-70.png',
+    'data/icons/pixmaps/blueman-tpl-80.png',
+    'data/icons/pixmaps/blueman-tpl-90.png',
+    'data/icons/pixmaps/blueman-tpl-100.png',
+    install_dir: join_paths([datadir, package_name, 'pixmaps'])
 )
+
+icon_makefiles = [
+    'Makefile.am',
+    '128x128/apps/Makefile.am',
+    '128x128/status/Makefile.am',
+    '128x128/Makefile.am',
+    '16x16/actions/Makefile.am',
+    '16x16/apps/Makefile.am',
+    '16x16/devices/Makefile.am',
+    '16x16/status/Makefile.am',
+    '16x16/Makefile.am',
+    '192x192/apps/Makefile.am',
+    '192x192/status/Makefile.am',
+    '192x192/Makefile.am',
+    '22x22/apps/Makefile.am',
+    '22x22/status/Makefile.am',
+    '22x22/Makefile.am',
+    '24x24/actions/Makefile.am',
+    '24x24/apps/Makefile.am',
+    '24x24/status/Makefile.am',
+    '24x24/Makefile.am',
+    '256x256/apps/Makefile.am',
+    '256x256/status/Makefile.am',
+    '256x256/Makefile.am',
+    '32x32/actions/Makefile.am',
+    '32x32/apps/Makefile.am',
+    '32x32/status/Makefile.am',
+    '32x32/Makefile.am',
+    '48x48/actions/Makefile.am',
+    '48x48/apps/Makefile.am',
+    '48x48/status/Makefile.am',
+    '48x48/Makefile.am',
+    '64x64/apps/Makefile.am',
+    '64x64/status/Makefile.am',
+    '64x64/Makefile.am',
+    '72x72/apps/Makefile.am',
+    '72x72/status/Makefile.am',
+    '72x72/Makefile.am',
+    '96x96/apps/Makefile.am',
+    '96x96/status/Makefile.am',
+    '96x96/Makefile.am',
+    'scalable/actions/Makefile.am',
+    'scalable/apps/Makefile.am',
+    'scalable/devices/Makefile.am',
+    'scalable/status/Makefile.am',
+    'scalable/Makefile.am'
+]
+
+install_subdir(
+    'data/icons/hicolor',
+    install_dir: join_paths([datadir, 'icons']),
+    exclude_files: icon_makefiles
+)
+
+
+# GtkBuilder UI files
+install_subdir(
+    'data/ui',
+    install_dir: pkgdatadir,
+    exclude_files: ['Makefile.am']
+)
+
 
 # Gsettings
 install_data('data/org.blueman.gschema.xml', install_dir: schemadir)

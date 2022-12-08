@@ -35,21 +35,26 @@ gsettings_SCHEMAS = org.blueman.gschema.xml
 # include the appropriate makefile rules for schema handling
 @GSETTINGS_RULES@
 
-# Compile the resource file that contains all the UI and icon files
-gresourcedir = $(pkgdatadir)
-gresource_in_files = blueman.gresource.xml
-gresource_DATA = $(gresource_in_files:.gresource.xml=.gresource)
+# GTK icon cache
+gtk_update_icon_cache = gtk-update-icon-cache -f -t $(datadir)/icons/hicolor
 
-$(gresource_DATA): $(gresource_in_files)
-	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) --sourcedir $(srcdir) --target=$@ $<
+install-data-hook: update-icon-cache
+uninstall-hook: update-icon-cache
 
-EXTRA_DIST =	\
-		$(autostart_in_files)	\
+update-icon-cache:
+	if test -z "$(DESTDIR)"; then \
+			echo "Updating Gtk icon cache."; \
+			$(gtk_update_icon_cache); \
+	else \
+			echo "*** Icon cache not updated.  After (un)install, run this:"; \
+			echo "***   $(gtk_update_icon_cache)"; \
+	fi
+
+EXTRA_DIST = 	$(autostart_in_files)	\
 		$(app_in_files)		\
 		$(thunar_in_files)	\
 		$(settings_in_files)	\
-		$(gsettings_SCHEMAS)	\
-		$(gresource_in_files)	\
+		$(gsettings_SCHEMAS)    \
 		meson.build
 
 SUBDIRS = 		\
@@ -65,8 +70,7 @@ CLEANFILES =		\
 	blueman.desktop		\
 	$(BUILT_SOURCES)	\
 	*.gschema.valid	\
-	gschemas.compiled	\
-	$(gresource_DATA)
+	gschemas.compiled
 	
 DISTCLEANFILES = \
 	$(CLEANFILES)

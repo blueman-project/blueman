@@ -37,7 +37,7 @@ import time
 import cairo
 
 from blueman.main.DBusProxies import AppletService, DBusProxyFailed
-from blueman.Constants import BIN_DIR
+from blueman.Constants import BIN_DIR, ICON_PATH
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -47,7 +47,7 @@ from gi.repository import Gdk
 from gi.repository import GdkPixbuf
 from gi.repository import Gio
 
-__all__ = ["check_bluetooth_status", "launch", "adapter_path_to_name", "e_", "bmexit",
+__all__ = ["check_bluetooth_status", "launch", "setup_icon_path", "adapter_path_to_name", "e_", "bmexit",
            "format_bytes", "create_menuitem", "have", "set_proc_title", "create_logger", "create_parser", "open_rfcomm",
            "get_local_interfaces"]
 
@@ -133,6 +133,11 @@ def launch(
         logging.error(f"Command: {cmd} failed")
 
     return launched
+
+
+def setup_icon_path() -> None:
+    ic = Gtk.IconTheme.get_default()
+    ic.prepend_search_path(ICON_PATH)
 
 
 def adapter_path_to_name(path: Optional[str]) -> Optional[str]:

@@ -4,6 +4,7 @@ from typing import Dict, List, Optional, Any, Callable
 
 from blueman.Functions import adapter_path_to_name
 from blueman.gui.GenericList import GenericList, ListDataDict
+from blueman.Constants import ICON_PATH
 from blueman.bluez.Manager import Manager
 from blueman.bluez.Device import Device, AnyDevice
 from blueman.bluez.Adapter import Adapter, AnyAdapter
@@ -84,6 +85,7 @@ class DeviceList(GenericList):
         self._selectionhandler = self.selection.connect('changed', self.on_selection_changed)
 
         self.icon_theme = Gtk.IconTheme.get_default()
+        self.icon_theme.prepend_search_path(ICON_PATH)
         # handle icon theme changes
         self.icon_theme.connect("changed", self.on_icon_theme_changed)
 

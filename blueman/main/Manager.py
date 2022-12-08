@@ -28,7 +28,7 @@ from gi.repository import Gtk, Gio, Gdk, GLib
 
 
 class Blueman(Gtk.Application):
-    def __init__(self, resource_file: str) -> None:
+    def __init__(self) -> None:
         super().__init__(application_id="org.blueman.Manager")
 
         def do_quit(_: object) -> bool:
@@ -38,10 +38,6 @@ class Blueman(Gtk.Application):
         s = GLib.unix_signal_source_new(signal.SIGINT)
         s.set_callback(do_quit)
         s.attach()
-
-        gresource = Gio.Resource.load(resource_file)
-        Gio.Resource._register(gresource)
-        Gtk.IconTheme.get_default().add_resource_path("/org/blueman")
 
     window: Optional[Gtk.ApplicationWindow]
 
@@ -128,6 +124,7 @@ class Blueman(Gtk.Application):
 
             def on_dbus_name_appeared(_connection: Gio.DBusConnection, name: str, owner: str) -> None:
                 logging.info(f"{name} {owner}")
+                setup_icon_path()
 
                 try:
                     self.Applet = AppletService()
