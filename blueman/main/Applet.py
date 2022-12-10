@@ -1,4 +1,7 @@
-from gi.repository import Gio, GLib
+import gi
+gi.require_version("Gtk", "3.0")
+
+from gi.repository import Gio, GLib, Gtk
 import logging
 import signal
 from typing import Any, cast
@@ -19,7 +22,7 @@ from blueman.plugins.applet.StandardItems import StandardItems
 from blueman.plugins.applet.StatusIcon import StatusIcon
 
 
-class BluemanApplet(Gio.Application):
+class BluemanApplet(Gtk.Application):
     def __init__(self) -> None:
         super().__init__(application_id="org.blueman.Applet", flags=Gio.ApplicationFlags.FLAGS_NONE)
         setup_icon_path()
@@ -59,6 +62,10 @@ class BluemanApplet(Gio.Application):
 
         self._any_device = AnyDevice()
         self._any_device.connect_signal('property-changed', self._on_device_property_changed)
+
+    def do_startup(self) -> None:
+        Gtk.Application.do_startup(self)
+        self.set_accels_for_action("win.close", ["<Ctrl>w", "Escape"])
 
     def do_activate(self) -> None:
         if not self._active:

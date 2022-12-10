@@ -10,9 +10,8 @@ from blueman.plugins.BasePlugin import Option
 
 import gi
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
 gi.require_version("Gdk", "3.0")
-from gi.repository import Gdk
+from gi.repository import Gtk, Gdk, Gio
 
 if TYPE_CHECKING:
     from blueman.main.Applet import BluemanApplet
@@ -89,9 +88,10 @@ class SettingsWidget(Gtk.Box):
         raise ValueError()
 
 
-class PluginDialog(Gtk.Window):
+class PluginDialog(Gtk.ApplicationWindow):
     def __init__(self, applet: "BluemanApplet") -> None:
         super().__init__(
+            application=applet,
             title=_("Plugins"),
             icon_name="blueman",
             name="PluginDialog",
@@ -162,6 +162,10 @@ class PluginDialog(Gtk.Window):
         self.connect("delete-event", self._on_close)
 
         self.list.set_cursor(0)
+
+        close_action = Gio.SimpleAction.new("close", None)
+        close_action.connect("activate", lambda x, y: self.close())
+        self.add_action(close_action)
 
     def list_compare_func(self, _treemodel: Gtk.TreeModel, iter1: Gtk.TreeIter, iter2: Gtk.TreeIter, _user_data: object
                           ) -> int:

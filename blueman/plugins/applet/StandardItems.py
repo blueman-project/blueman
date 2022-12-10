@@ -23,7 +23,7 @@ class StandardItems(AppletPlugin, PowerStateListener):
     __author__ = "walmis"
 
     def on_load(self) -> None:
-        self._plugin_window: Optional[Gtk.Window] = None
+        self._plugin_window: Optional[Gtk.ApplicationWindow] = None
 
         self.parent.Plugins.Menu.add(self, 21)
 
