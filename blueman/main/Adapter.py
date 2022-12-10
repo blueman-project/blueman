@@ -78,6 +78,10 @@ class BluemanAdapters(Gtk.Application):
                 logging.error('Error: the selected adapter does not exist')
         self.notebook.show_all()
 
+        close_action = Gio.SimpleAction.new("quit", None)
+        close_action.connect("activate", lambda x, y: self.quit())
+        self.add_action(close_action)
+
     def do_activate(self) -> None:
         def app_release(_plug: Gtk.Plug, _event: Gdk.Event) -> bool:
             self.release()
@@ -98,6 +102,10 @@ class BluemanAdapters(Gtk.Application):
             self.window.set_position(Gtk.WindowPosition.CENTER)
 
         self.window.present_with_time(Gtk.get_current_event_time())
+
+    def do_startup(self) -> None:
+        Gtk.Application.do_startup(self)
+        self.set_accels_for_action("app.quit", ["<Ctrl>w", "<Ctrl>q", "Escape"])
 
     def on_property_changed(self, _adapter: Adapter, name: str, value: Any, path: str) -> None:
         hci_dev = os.path.basename(path)
