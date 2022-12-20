@@ -61,12 +61,12 @@
           </packing>
         </child>
         <child>
-          <!-- n-columns=3 n-rows=5 -->
+          <!-- n-columns=2 n-rows=5 -->
           <object class="GtkGrid" id="grid">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="margin-left">10</property>
-            <property name="margin-right">10</property>
+            <property name="margin-start">5</property>
+            <property name="margin-end">5</property>
             <property name="margin-top">10</property>
             <property name="margin-bottom">10</property>
             <child>
@@ -74,6 +74,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="halign">start</property>
+                <property name="margin-end">10</property>
                 <property name="pixel-size">48</property>
                 <property name="icon-name">dialog-password</property>
                 <property name="icon_size">6</property>
@@ -81,6 +82,7 @@
               <packing>
                 <property name="left-attach">0</property>
                 <property name="top-attach">0</property>
+                <property name="height">5</property>
               </packing>
             </child>
             <child>
@@ -149,18 +151,6 @@
                 <property name="left-attach">1</property>
                 <property name="top-attach">4</property>
               </packing>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
             </child>
           </object>
           <packing>
