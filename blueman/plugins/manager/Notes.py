@@ -36,7 +36,7 @@ def send_note_cb(dialog: Gtk.Dialog, response_id: int, device_address: str, text
     launch(f"blueman-sendto --delete --device={device_address}", paths=[tempfile.name])
 
 
-def send_note(device: Device, parent: Gtk.Window) -> None:
+def send_note(device: Device, parent: Gtk.ApplicationWindow) -> None:
     builder = Builder("note.ui")
     dialog = builder.get_widget("dialog", Gtk.Dialog)
     dialog.set_transient_for(parent)
@@ -50,8 +50,7 @@ class Notes(ManagerPlugin, MenuItemsProvider):
     def on_request_menu_items(self, manager_menu: ManagerDeviceMenu, device: Device) -> List[DeviceMenuItem]:
         item = create_menuitem(_("Send _note"), "dialog-information-symbolic")
         item.props.tooltip_text = _("Send a text note")
-        _window = manager_menu.get_toplevel()
-        assert isinstance(_window, Gtk.Window)
-        window = _window  # https://github.com/python/mypy/issues/2608
+        assert isinstance(manager_menu.Blueman.window, Gtk.ApplicationWindow)
+        window = manager_menu.Blueman.window  # https://github.com/python/mypy/issues/2608
         item.connect('activate', lambda x: send_note(device, window))
         return [DeviceMenuItem(item, DeviceMenuItem.Group.ACTIONS, 500)]
