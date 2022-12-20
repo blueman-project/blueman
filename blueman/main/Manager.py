@@ -1,7 +1,7 @@
 import logging
 import signal
 from gettext import gettext as _
-from typing import Optional, Any, Tuple
+from typing import Optional, Any, Tuple, Callable
 
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device
@@ -179,6 +179,19 @@ class Blueman(Gtk.Application):
         if event.x != x or event.y != y or event.width != width or event.height != height:
             self.Config["window-properties"] = [event.width, event.height, event.x, event.y]
         return False
+
+    def register_settings_action(self, name: str) -> None:
+        action = self.Config.create_action(name)
+        self.add_action(action)
+
+    def register_action(self, name: str, callback: Callable[[Gio.Action, Optional[Any]], None],
+                        vtype: Optional[GLib.VariantType] = None) -> None:
+        if name in self.list_actions():
+            logging.error(f"{name} already exists")
+        else:
+            action = Gio.SimpleAction.new(name, vtype)
+            action.connect("activate", callback)
+            self.add_action(action)
 
     def on_adapter_changed(self, lst: ManagerDeviceList, adapter: str) -> None:
         if adapter is not None:
