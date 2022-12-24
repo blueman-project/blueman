@@ -13,6 +13,7 @@
 ### Changes
 
 * Raise minimum Python version to 3.8
+* Raise minumum Gtk+ version to 3.24
 * Hide recent connections associated with unavailable adapters
 * Store network configuration in GSettings instead of /var/lib/blueman/network.state.
 * Replace custom MessageArea widget with regular Gtk.InfoBar
