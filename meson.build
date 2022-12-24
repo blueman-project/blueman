@@ -61,7 +61,14 @@ systemd = dependency('systemd', required: false)
 # Check for runtime deps and when not found fail based on runtime_deps_check
 do_runtime_checks = get_option('runtime_deps_check')
 
-gtk = dependency('gtk+-3.0', version: '>= 3.10.', required: do_runtime_checks)
+ip = find_program('ip', required: false)
+ifconfig = find_program('ifconfig', required: false)
+if not ip.found() and not ifconfig.found() and do_runtime_checks
+    error('blueman requires ip (recommended) or ifconfig network utilities')
+endif
+
+gtk = dependency('gtk+-3.0', version: '>= 3.24.', required: do_runtime_checks)
+
 
 # Configure blueman apps
 foreach libexecapp: ['blueman-mechanism', 'blueman-rfcomm-watcher']
