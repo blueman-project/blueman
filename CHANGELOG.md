@@ -353,7 +353,7 @@
 * Support legacy devices without a Name property
 * (Covered) Crash in agent's passkey / pin code methods
 * Fix fading in GtkAnimation TreeRow(Color)Fade and CellFade classes.
-* Do not explixitely destoy DeviceSelectorDialog blueman-sendto.
+* Do not explicitly destroy DeviceSelectorDialog blueman-sendto.
 * gui: Call the sub-classed widgets init function instead of GObject's
 * Do not block manager with plugin dialog
 * Exception in Tee class at exit
@@ -405,7 +405,7 @@ See https://github.com/blueman-project/blueman/wiki/PolicyKit
 * SerialManager: Properly check for None
 * NetConf: Treat UnicodeDecodeError as if there was no file
 * Notification: Also check if notification daemon supports body
-* Correct bold tag in portugese translation (thanks @andreyluiz)
+* Correct bold tag in portuguese translation (thanks @andreyluiz)
 * Properly check for None in SerialManager
 * GameControllerWakeLock: Check for Class property first
 * Fix bugs in NetworkService ui

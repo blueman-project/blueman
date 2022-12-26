@@ -2450,7 +2450,7 @@ class ErrorType(Enum, builtins.int):
 
 
 class FileError(Enum, builtins.int):
-    ACCES = ...  # type: FileError
+    ACESS = ...  # type: FileError
     AGAIN = ...  # type: FileError
     BADF = ...  # type: FileError
     EXIST = ...  # type: FileError
@@ -2649,7 +2649,7 @@ class SliceConfig(Enum, builtins.int):
 
 
 class SpawnError(Enum, builtins.int):
-    ACCES = ...  # type: SpawnError
+    ACESS = ...  # type: SpawnError
     CHDIR = ...  # type: SpawnError
     FAILED = ...  # type: SpawnError
     FORK = ...  # type: SpawnError

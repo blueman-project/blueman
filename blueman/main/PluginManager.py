@@ -64,7 +64,7 @@ class PluginManager(GObject.GObject):
                 pass
             except Exception:
                 if user_action:
-                    d = ErrorDialog(_("<b>An error has occured while loading "
+                    d = ErrorDialog(_("<b>An error has occurred while loading "
                                       "a plugin. Please notify the developers "
                                       "with the content of this message to our </b>\n"
                                       "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"),
