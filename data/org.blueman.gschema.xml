@@ -124,7 +124,7 @@
     <key type="i" name="rx">
       <default>0</default>
       <summary>RX</summary>
-      <description>Recieve</description>
+      <description>Receive</description>
     </key>
     <key type="i" name="time">
       <default>0</default>
@@ -186,7 +186,7 @@
     <key type="s" name="script">
     <default>""</default>
     <summary>Script to execute on connection</summary>
-    <description>The following arguments will be passed: "Address, Name, service name, uuid16s, rfcomm node". For example: "AA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0". uuid16s are returned as a comma seperated list. Upon device disconnection the script will be sent a HUP signal"</description>
+    <description>The following arguments will be passed: "Address, Name, service name, uuid16s, rfcomm node". For example: "AA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0". uuid16s are returned as a comma separated list. Upon device disconnection the script will be sent a HUP signal"</description>
   </key>
   </schema>
   <schema id="org.blueman.plugins.discvmanager" path="/org/blueman/plugins/discvmanager/">

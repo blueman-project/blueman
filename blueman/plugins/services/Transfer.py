@@ -49,7 +49,7 @@ class Transfer(ServicePlugin):
                     opp_accept = self._builder.get_widget("opp-accept", Gtk.CheckButton)
                     self._config["opp-accept"] = opp_accept.get_active()
                 else:
-                    raise NotImplementedError("Unknow option: %s" % opt)
+                    raise NotImplementedError("Unknown option: %s" % opt)
 
             self.clear_options()
             logging.info("transfer apply")

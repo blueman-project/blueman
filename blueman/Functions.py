@@ -92,7 +92,7 @@ def launch(
     name: str = "blueman",
     sn: bool = True,
 ) -> bool:
-    """Launch a gui app with starup notification"""
+    """Launch a gui app with startup notification"""
     context = None
     gtktimestamp = Gtk.get_current_event_time()
     if gtktimestamp == 0:

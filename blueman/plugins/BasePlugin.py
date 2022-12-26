@@ -85,7 +85,7 @@ class BasePlugin:
 
     # virtual methods
     def on_load(self) -> None:
-        """Do what is neccessary for the plugin to work like add watches or create ui elements"""
+        """Do what is necessary for the plugin to work like add watches or create ui elements"""
         pass
 
     def on_unload(self) -> None:

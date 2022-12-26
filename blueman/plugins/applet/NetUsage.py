@@ -287,7 +287,7 @@ class NetUsage(AppletPlugin, GObject.GObject, PPPConnectedListener):
     __depends__ = ["Menu"]
     __icon__ = "network-wireless-symbolic"
     __description__ = _("Allows you to monitor your (mobile broadband) network traffic usage. Useful for limited "
-                        "data access plans. This plugin tracks every device seperately.")
+                        "data access plans. This plugin tracks every device separately.")
     __author__ = "Walmis"
     __autoload__ = False
     __gsignals__: GSignals = {

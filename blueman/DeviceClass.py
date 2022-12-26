@@ -301,7 +301,7 @@ def gatt_appearance_to_name(appearance: int) -> str:
         logging.debug(f"Reserved category found: {appearance}")
         return gatt_appearance_categories[0][0]
     elif cat > 81:
-        logging.warning(f"Invalid catagory found: {appearance}")
+        logging.warning(f"Invalid category found: {appearance}")
         return gatt_appearance_categories[0][0]
 
     cat_name, subcats = gatt_appearance_categories[cat]

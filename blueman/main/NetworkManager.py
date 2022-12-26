@@ -93,7 +93,7 @@ class NMConnectionBase:
         def on_connection_deactivate(client: NM.Client, result: Gio.AsyncResult) -> None:
             try:
                 client.deactivate_connection_finish(result)
-                logging.debug(f"Device {self.bdaddr} deactivated sucessfully")
+                logging.debug(f"Device {self.bdaddr} deactivated successfully")
                 self.reply_handler()
                 self.active_connection = None
             except GLib.Error as e:

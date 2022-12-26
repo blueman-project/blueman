@@ -22,7 +22,7 @@ class DhcpClient(GObject.GObject):
         ["udhcpc", "-t", "20", "-x", "hostname", socket.gethostname(), "-n", "-i"]
     ]
 
-    quering: List[str] = []
+    querying: List[str] = []
 
     def __init__(self, interface: str, timeout: int = 30) -> None:
         """The interface name has to be trusted / sanitized!"""
@@ -42,10 +42,10 @@ class DhcpClient(GObject.GObject):
         if not self._command:
             raise Exception("No DHCP client found, please install dhclient, dhcpcd, or udhcpc")
 
-        if self._interface in DhcpClient.quering:
+        if self._interface in DhcpClient.querying:
             raise Exception("DHCP already running on this interface")
         else:
-            DhcpClient.quering.append(self._interface)
+            DhcpClient.querying.append(self._interface)
 
         self._client = subprocess.Popen(self._command)
         GLib.timeout_add(1000, self._check_client)
@@ -68,12 +68,12 @@ class DhcpClient(GObject.GObject):
                 return False
 
             GLib.timeout_add(1000, complete)
-            DhcpClient.quering.remove(self._interface)
+            DhcpClient.querying.remove(self._interface)
             return False
         elif status:
             logging.error(f"dhcp client failed with status code {status}")
             self.emit("error-occurred", status)
-            DhcpClient.quering.remove(self._interface)
+            DhcpClient.querying.remove(self._interface)
             return False
         else:
             return True

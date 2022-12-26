@@ -33,7 +33,7 @@ class SerialManager(AppletPlugin, RFCOMMConnectedListener):
                              "Address, Name, service name, uuid16s, rfcomm node\n"
                              "For example:\n"
                              "AA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0\n"
-                             "uuid16s are returned as a comma seperated list\n\n"
+                             "uuid16s are returned as a comma separated list\n\n"
                              "Upon device disconnection the script will be sent a HUP signal</span>")},
     }
 

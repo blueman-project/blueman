@@ -122,7 +122,7 @@ class ManagerProgressbar(GObject.GObject):
             self._get_window().set_cursor(None)
             self.hbox.remove(self.eventbox)
             self.hbox.remove(self.progressbar)
-            # self.hbox.remove(self.seperator)
+            # self.hbox.remove(self.separator)
             self.finalized = True
 
             if ManagerProgressbar.__instances__[-1] == self:
