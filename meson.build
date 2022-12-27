@@ -67,9 +67,6 @@ if not ip.found() and not ifconfig.found() and do_runtime_checks
     error('blueman requires ip (recommended) or ifconfig network utilities')
 endif
 
-gtk = dependency('gtk+-3.0', version: '>= 3.24.', required: do_runtime_checks)
-
-
 # Configure blueman apps
 foreach libexecapp: ['blueman-mechanism', 'blueman-rfcomm-watcher']
     configure_file(
