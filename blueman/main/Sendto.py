@@ -148,14 +148,15 @@ class Sender(Gtk.Dialog):
 
         self.emit("result", False)
 
+    def _update_pb_text(self, speed: float = 0.0, unit: str = "B", eta: Optional[str] = None) -> None:
+        num = self.num_files - len(self.files) + 1
+        eta = "∞" if eta is None else eta
+        text = "%s %d/%d %.2f (%s/s) %s %s" % (_("Sending File"), num, self.num_files, speed, unit, _("ETA:"), eta)
+        self.pb.set_text(text)
+
     def on_transfer_started(self, _object_push: ObjectPush, transfer_path: str, filename: str) -> None:
         if self.total_transferred == 0:
-            self.pb.props.text = _("Sending File") + (" %(0)s/%(1)s (%(2).2f %(3)s/s) " + _("ETA:") + " %(4)s") % {
-                "1": self.num_files,
-                "0": (self.num_files - len(self.files) + 1),
-                "2": 0.0,
-                "3": "B/s",
-                "4": "∞"}
+            self._update_pb_text(0.0, "B")
 
         self.l_file.props.label = filename
         self._last_bytes = 0
@@ -190,14 +191,9 @@ class Sender(Gtk.Dialog):
                 else:
                     eta = ngettext("%(seconds)d Second", "%(seconds)d Seconds", round(x)) % {"seconds": round(x)}
             except ZeroDivisionError:
-                eta = "∞"
+                eta = None
 
-            self.pb.props.text = _("Sending File") + (" %(0)s/%(1)s (%(2).2f %(3)s/s) " + _("ETA:") + " %(4)s") % {
-                "1": self.num_files,
-                "0": (self.num_files - len(self.files) + 1),
-                "2": size,
-                "3": units,
-                "4": eta}
+            self._update_pb_text(size, units, eta)
             self._last_update = tm
 
         self.pb.props.fraction = float(self.total_transferred) / self.total_bytes
