@@ -47,7 +47,7 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
             if device["Connected"]:
                 self.num_connections += 1
 
-        logging.info("Found %d existing connections" % self.num_connections)
+        logging.info(f"Found {self.num_connections:d} existing connections")
         if (self.num_connections > 0 and not self.active) or \
                 (self.num_connections == 0 and self.active):
             self.parent.Plugins.StatusIcon.icon_should_change()

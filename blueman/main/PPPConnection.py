@@ -167,7 +167,7 @@ class PPPConnection(GObject.GObject):
 
                 self.emit("error-occurred", msg)
 
-            logging.warning("pppd exited with status %d" % status)
+            logging.warning(f"pppd exited with status {status:d}")
             return False
         return True
 

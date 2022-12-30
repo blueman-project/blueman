@@ -75,7 +75,7 @@ class Networking(AppletPlugin):
             self.set_nap(config[key])
 
     def set_nap(self, on: bool) -> None:
-        logging.info("set nap %s" % on)
+        logging.info(f"set nap {on}")
         if self.parent.manager_state:
             adapters = self.parent.Manager.get_adapters()
             for adapter in adapters:

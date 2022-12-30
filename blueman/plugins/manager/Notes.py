@@ -23,12 +23,12 @@ def send_note_cb(dialog: Gtk.Dialog, response_id: int, device_address: str, text
     date = datetime.datetime.now().strftime('%Y%m%dT%H%M00')
     data = ('BEGIN:VNOTE \n'
             'VERSION:1.1 \n'
-            'BODY;CHARSET=UTF-8: %s \n'
-            'DCREATED:%s \n'
-            'LAST-MODIFIED:%s \n'
+            f'BODY;CHARSET=UTF-8: {" ".join(text.splitlines())} \n'
+            f'DCREATED:{date} \n'
+            f'LAST-MODIFIED:{date} \n'
             'CLASS:PUBLIC \n'
             'X-IRMC-LUID:000001000000 \n'
-            'END:VNOTE \n' % (' '.join(text.splitlines()), date, date))
+            'END:VNOTE \n')
 
     tempfile = NamedTemporaryFile(suffix='.vnt', prefix='note', delete=False)
     tempfile.write(data.encode('utf-8'))

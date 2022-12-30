@@ -76,7 +76,7 @@ class Agent(DbusService):
     def _authorize_push(self, transfer_path: str, ok: Callable[[str], None],
                         err: Callable[[ObexErrorRejected], None]) -> None:
         def on_action(action: str) -> None:
-            logging.info("Action %s" % action)
+            logging.info(f"Action {action}")
 
             if action == "accept":
                 assert self._pending_transfer
@@ -203,7 +203,7 @@ class TransferService(AppletPlugin):
         elif not os.path.isdir(config_path):
             path = default_path
             error = True
-            logging.warning('Invalid shared-path %s' % config_path)
+            logging.warning(f"Invalid shared-path {config_path}")
         else:
             path = config_path
 

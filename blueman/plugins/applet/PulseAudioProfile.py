@@ -99,7 +99,7 @@ class AudioProfiles(AppletPlugin):
 
         def on_result(res: int) -> None:
             if not res:
-                logging.error("Failed to change profile to %s" % profile["name"])
+                logging.error(f"Failed to change profile to {profile['name']}")
 
         pa.set_card_profile(c["index"], profile["name"], on_result)
 
