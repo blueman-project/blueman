@@ -246,7 +246,7 @@ class DeviceList(GenericList):
         self.clear()
         self.manager.populate_devices()
 
-    def discover_devices(self, time: float = 10.24,
+    def discover_devices(self, time: float = 60.0,
                          error_handler: Optional[Callable[[BluezDBusException], None]] = None) -> None:
         if not self.discovering:
             self.__discovery_time = 0
