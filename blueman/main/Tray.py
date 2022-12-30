@@ -32,7 +32,7 @@ class BluemanTray(Gio.Application):
         self.hold()
 
     def _on_name_appeared(self, _connection: Gio.DBusConnection, name: str, _owner: str) -> None:
-        logging.debug("Applet started on name %s, showing indicator" % name)
+        logging.debug(f"Applet started on name {name}, showing indicator")
 
         applet = AppletService()
         for indicator_name in applet.GetStatusIconImplementations():

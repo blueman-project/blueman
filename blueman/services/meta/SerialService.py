@@ -88,7 +88,7 @@ class SerialService(Service):
         try:
             port_id = create_rfcomm_device(Adapter(obj_path=self.device["Adapter"])['Address'], self.device["Address"],
                                            channel)
-            filename = '/dev/rfcomm%d' % port_id
+            filename = f"/dev/rfcomm{port_id:d}"
             logging.info('Starting rfcomm watcher as root')
             Mechanism().OpenRFCOMM('(d)', port_id)
             mon = Gio.File.new_for_path(filename).monitor_file(Gio.FileMonitorFlags.NONE)

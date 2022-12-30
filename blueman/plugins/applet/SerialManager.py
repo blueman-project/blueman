@@ -117,9 +117,8 @@ class SerialManager(AppletPlugin, RFCOMMConnectedListener):
                              icon_name="blueman-serial").show()
 
     def on_rfcomm_disconnect(self, port: int) -> None:
-        node = '/dev/rfcomm%i' % port
         for bdaddr, scripts in self.scripts.items():
-            process = scripts.get(node)
+            process = scripts.get(f"/dev/rfcomm{port:i}")
             if process:
                 logging.info(f"Sending HUP to {process.pid}")
                 os.killpg(process.pid, signal.SIGHUP)
@@ -133,7 +132,7 @@ class SerialManager(AppletPlugin, RFCOMMConnectedListener):
         active_ports = [rfcomm['id'] for rfcomm in rfcomm_list() if rfcomm['dst'] == device['Address']]
 
         for port in active_ports:
-            name = "/dev/rfcomm%d" % port
+            name = f"/dev/rfcomm{port:d}"
             try:
                 logging.info(f"Disconnecting {name}")
                 serial_services[0].disconnect(port)

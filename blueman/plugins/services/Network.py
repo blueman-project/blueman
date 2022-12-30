@@ -153,7 +153,7 @@ class Network(ServicePlugin):
             net_ip.props.text = self.Config["ip4-address"]
             nap_enable.props.active = True
         else:
-            net_ip.props.text = "10.%d.%d.1" % (randint(0, 255), randint(0, 255))
+            net_ip.props.text = f"10.{randint(0, 255):d}.{randint(0, 255):d}.1"
 
         if self.Config["dhcp-handler"] is None:
             nap_frame.props.sensitive = False
