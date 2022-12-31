@@ -141,9 +141,12 @@ class ManagerDeviceList(DeviceList):
         return True
 
     def filter_func(self, _model: Gtk.TreeModel, tree_iter: Gtk.TreeIter, _data: Any) -> bool:
-        no_name = self.get(tree_iter, "no_name")["no_name"]
-        if no_name and self.Config["hide-unnamed"]:
-            logging.debug("Hiding unnamed device")
+        row = self.get(tree_iter, "no_name", "device")
+        device = row["device"]
+        klass = get_minor_class(device["Class"]) if device is not None else None
+
+        if row["no_name"] and self.Config["hide-unnamed"] and klass not in (_("Keyboard"), _("Combo")):
+            logging.info("Hiding unnamed device")
             return False
         else:
             return True
