@@ -6,7 +6,7 @@
 * [dbus](http://www.freedesktop.org/wiki/Software/dbus/) (>= 1.9.18)
 * [GdkPixbuf](http://www.gtk.org/) (GI bindings)
 * [GLib 2, Gio 2](http://www.gtk.org/) (>= 2.32) (GI bindings)
-* [GTK+ 3](http://www.gtk.org/) (3.22) (GI bindings)
+* [GTK+ 3](http://www.gtk.org/) (3.24) (GI bindings)
 * [gnome-icon-theme](https://git.gnome.org/browse/adwaita-icon-theme/), [mate-icon-theme](https://github.com/mate-desktop/mate-icon-theme), [adwaita-icon-theme](https://github.com/GNOME/adwaita-icon-theme), [elementary-xfce](https://github.com/shimmerproject/elementary-xfce), or [Papirus](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme)
 * [notification-daemon](https://developer.gnome.org/notification-spec/) that provides dbus name org.freedesktop.Notifications
 * [obexd 5](http://www.bluez.org/)
