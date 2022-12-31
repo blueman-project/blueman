@@ -172,7 +172,8 @@ class DeviceList(GenericList):
     def device_remove_event(self, device: Device) -> None:
         logging.debug(device)
         tree_iter = self.find_device(device)
-        assert tree_iter is not None
+        if tree_iter is None:
+            return
 
         if self.compare(self.selected(), tree_iter):
             self.emit("device-selected", None, None)
