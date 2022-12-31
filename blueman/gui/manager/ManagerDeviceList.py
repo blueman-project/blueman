@@ -303,9 +303,6 @@ class ManagerDeviceList(DeviceList):
         super().device_remove_event(device)
         self.emit("device-selected", None, None)
 
-    def device_add_event(self, device: Device) -> None:
-        self.add_device(device)
-
     @staticmethod
     def make_caption(name: str, klass: str, address: str) -> str:
         return "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" \
