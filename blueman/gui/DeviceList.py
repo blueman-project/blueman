@@ -240,6 +240,9 @@ class DeviceList(GenericList):
         self.set(tree_iter, device=device, dbus_path=object_path, timestamp=float(timestamp), no_name=no_name)
         self.row_setup_event(tree_iter, device)
 
+        if self.get_selected_device() is None:
+            self.selection.select_path(0)
+
     def populate_devices(self) -> None:
         self.clear()
         self.manager.populate_devices()
