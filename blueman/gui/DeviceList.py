@@ -235,13 +235,11 @@ class DeviceList(GenericList):
         logging.info("adding new device")
         tree_iter = self.liststore.append()
 
-        self.set(tree_iter, device=device)
-        self.row_setup_event(tree_iter, device)
-
         object_path = device.get_object_path()
         timestamp = datetime.strftime(datetime.now(), '%Y%m%d%H%M%S%f')
         no_name = "Name" not in device
-        self.set(tree_iter, dbus_path=object_path, timestamp=float(timestamp), no_name=no_name)
+        self.set(tree_iter, device=device, dbus_path=object_path, timestamp=float(timestamp), no_name=no_name)
+        self.row_setup_event(tree_iter, device)
 
     def populate_devices(self) -> None:
         self.clear()
