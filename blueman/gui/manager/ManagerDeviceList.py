@@ -301,7 +301,6 @@ class ManagerDeviceList(DeviceList):
 
     def __fader_finished(self, device: Device) -> None:
         super().device_remove_event(device)
-        self.emit("device-selected", None, None)
 
     @staticmethod
     def make_caption(name: str, klass: str, address: str) -> str:
