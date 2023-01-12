@@ -321,7 +321,7 @@ class NetConf:
 
                 NetConf.default_inst = obj
                 return obj
-        except (OSError, UnicodeDecodeError, UnpicklingError):
+        except (OSError, UnicodeDecodeError, UnpicklingError, EOFError):
             n = cls()
             try:
                 n.store()
