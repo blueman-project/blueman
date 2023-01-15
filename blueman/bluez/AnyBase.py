@@ -31,8 +31,8 @@ class AnyBase(GObject.GObject):
         ) -> None:
             iface_name, changed, invalidated = param.unpack()
             if iface_name == interface_name and this is not None:
-                for name, value in changed.items():
-                    this.emit('property-changed', name, value, object_path)
+                for key in list(changed) + invalidated:
+                    this.emit('property-changed', key, changed.get(key, None), object_path)
 
         weakref.finalize(
             self,
