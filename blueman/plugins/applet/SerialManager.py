@@ -6,7 +6,7 @@ from blueman.gui.Notification import Notification
 from blueman.Sdp import SERIAL_PORT_SVCLASS_ID
 from blueman.plugins.applet.DBusService import RFCOMMConnectedListener
 from blueman.services.Functions import get_services
-from _blueman import rfcomm_list
+from _blueman import rfcomm_list, RFCOMMError
 from subprocess import Popen
 import logging
 import os
@@ -129,7 +129,11 @@ class SerialManager(AppletPlugin, RFCOMMConnectedListener):
         if not serial_services:
             return
 
-        active_ports = [rfcomm['id'] for rfcomm in rfcomm_list() if rfcomm['dst'] == device['Address']]
+        try:
+            active_ports = [rfcomm['id'] for rfcomm in rfcomm_list() if rfcomm['dst'] == device['Address']]
+        except RFCOMMError as e:
+            logging.error(f"rfcomm_list failed with: {e}")
+            return
 
         for port in active_ports:
             name = f"/dev/rfcomm{port:d}"
