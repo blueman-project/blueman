@@ -141,7 +141,7 @@ def rfcomm_list():
 
     res = get_rfcomm_list(&dl)
     if res < 0:
-        raise Exception, ERR[res]
+        raise RFCOMMError(ERR[res])
 
     devs = []
     for 0 <= i < dl.dev_num:
