@@ -27,11 +27,22 @@ class SerialService(Service):
 
     @property
     def connectable(self) -> bool:
+        try:
+            rfcomm_list()
+        except RFCOMMError:
+            return False
+
         return True
 
     @property
     def connected_instances(self) -> List[Instance]:
-        return [Instance(_("Serial Port %s") % "rfcomm%d" % dev["id"], dev["id"]) for dev in rfcomm_list()
+        try:
+            lst = rfcomm_list()
+        except RFCOMMError as e:
+            logging.error(e)
+            return []
+
+        return [Instance(_("Serial Port %s") % "rfcomm%d" % dev["id"], dev["id"]) for dev in lst
                 if dev["dst"] == self.device['Address'] and dev["state"] == "connected"]
 
     def on_file_changed(
