@@ -33,40 +33,13 @@ class ManagerStats:
         self.up_speed = SpeedCalc()
         self.down_speed = SpeedCalc()
 
-        self.im_upload = Gtk.Image(icon_name="blueman-up-inactive", pixel_size=16,
-                                   halign=Gtk.Align.END, valign=Gtk.Align.CENTER,
-                                   tooltip_text=_("Data activity indication"))
-        self.im_download = Gtk.Image(icon_name="blueman-down-inactive", pixel_size=16,
-                                     halign=Gtk.Align.END, valign=Gtk.Align.CENTER,
-                                     tooltip_text=_("Data activity indication"))
-        self.down_rate = Gtk.Label(halign=Gtk.Align.END, valign=Gtk.Align.CENTER,
-                                   tooltip_text=_("Total data received and rate of transmission"))
-        self.down_rate.show()
+        self.im_upload = blueman.builder.get_widget("im_upload", Gtk.Image)
+        self.im_download = blueman.builder.get_widget("im_download", Gtk.Image)
+        self.down_rate = blueman.builder.get_widget("label_down_rate", Gtk.Label)
+        self.up_rate = blueman.builder.get_widget("label_up_rate", Gtk.Label)
 
-        self.up_rate = Gtk.Label(halign=Gtk.Align.END, valign=Gtk.Align.CENTER,
-                                 tooltip_text=_("Total data sent and rate of transmission"))
-        self.up_rate.show()
+        self.hbox = blueman.builder.get_widget("status_activity", Gtk.Box)
 
-        self.uparrow = Gtk.Image(icon_name="go-up-symbolic", pixel_size=16,
-                                 halign=Gtk.Align.END, valign=Gtk.Align.CENTER,
-                                 tooltip_text=_("Total data sent and rate of transmission"))
-        self.downarrow = Gtk.Image(icon_name="go-down-symbolic", pixel_size=16,
-                                   halign=Gtk.Align.END, valign=Gtk.Align.CENTER,
-                                   tooltip_text=_("Total data received and rate of transmission"))
-
-        self.hbox = hbox = blueman.builder.get_widget("status_activity", Gtk.Box)
-
-        hbox.pack_start(self.uparrow, False, False, 0)
-        hbox.pack_start(self.up_rate, False, False, 0)
-
-        hbox.pack_start(self.downarrow, False, False, 0)
-        hbox.pack_start(self.down_rate, False, False, 0)
-
-        hbox.pack_start(Gtk.Separator(orientation=Gtk.Orientation.VERTICAL), False, False, 0)
-
-        hbox.pack_start(self.im_upload, False, False, 0)
-        hbox.pack_start(self.im_download, False, False, 0)
-        hbox.show_all()
         self.on_adapter_changed(blueman.List, blueman.List.get_adapter_path())
 
         self.up_blinker = Animation(self.im_upload, ["blueman-up-inactive", "blueman-up-active"])
