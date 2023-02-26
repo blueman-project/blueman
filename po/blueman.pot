@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman 2.4-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2023-02-16 20:51+0000\n"
+"POT-Creation-Date: 2023-02-26 18:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,70 +54,134 @@ msgstr ""
 msgid "Show input"
 msgstr ""
 
-#: data/ui/manager-main.ui:27
+#: data/ui/manager-main.ui:63
 msgid "_Adapter"
 msgstr ""
 
-#: data/ui/manager-main.ui:35
+#: data/ui/manager-main.ui:71
+msgid "_Search"
+msgstr ""
+
+#: data/ui/manager-main.ui:93
+msgid "_Preferences"
+msgstr ""
+
+#: data/ui/manager-main.ui:109 blueman/plugins/applet/ExitItem.py:12
+msgid "_Exit"
+msgstr ""
+
+#: data/ui/manager-main.ui:126
 msgid "_Device"
 msgstr ""
 
-#: data/ui/manager-main.ui:43
+#: data/ui/manager-main.ui:134
 msgid "_View"
 msgstr ""
 
-#: data/ui/manager-main.ui:51 blueman/gui/manager/ManagerMenu.py:55
+#: data/ui/manager-main.ui:144
+msgid "Show _Toolbar"
+msgstr ""
+
+#: data/ui/manager-main.ui:152
+msgid "Show _Statusbar"
+msgstr ""
+
+#: data/ui/manager-main.ui:160
+msgid "Hide _unnamed devices"
+msgstr ""
+
+#: data/ui/manager-main.ui:174
+msgid "S_ort By"
+msgstr ""
+
+#: data/ui/manager-main.ui:184
+msgid "_Name"
+msgstr ""
+
+#: data/ui/manager-main.ui:193
+msgid "_Added"
+msgstr ""
+
+#: data/ui/manager-main.ui:209
+msgid "_Descending"
+msgstr ""
+
+#: data/ui/manager-main.ui:219 blueman/plugins/applet/StandardItems.py:54
+msgid "_Plugins"
+msgstr ""
+
+#: data/ui/manager-main.ui:229 blueman/plugins/applet/StandardItems.py:45
+msgid "_Local Services"
+msgstr ""
+
+#: data/ui/manager-main.ui:245 data/ui/manager-main.ui:269
 #: blueman/plugins/applet/StandardItems.py:51
 msgid "_Help"
 msgstr ""
 
-#: data/ui/manager-main.ui:70
+#: data/ui/manager-main.ui:253
+msgid "_Report a Problem"
+msgstr ""
+
+#: data/ui/manager-main.ui:296
 msgid "Search for nearby devices"
 msgstr ""
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:72
+#: data/ui/manager-main.ui:298
 msgid "Search"
 msgstr ""
 
-#: data/ui/manager-main.ui:95 blueman/gui/manager/ManagerDeviceMenu.py:350
+#: data/ui/manager-main.ui:321 blueman/gui/manager/ManagerDeviceMenu.py:350
 msgid "Create pairing with the device"
 msgstr ""
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:96
+#: data/ui/manager-main.ui:322
 msgid "Pair"
 msgstr ""
 
-#: data/ui/manager-main.ui:109 blueman/gui/manager/ManagerDeviceMenu.py:368
+#: data/ui/manager-main.ui:335 blueman/gui/manager/ManagerDeviceMenu.py:368
 msgid "Mark/Unmark this device as trusted"
 msgstr ""
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:110 blueman/gui/manager/ManagerToolbar.py:39
+#: data/ui/manager-main.ui:336 blueman/gui/manager/ManagerToolbar.py:39
 #: blueman/gui/manager/ManagerToolbar.py:99
 msgid "Trust"
 msgstr ""
 
-#: data/ui/manager-main.ui:123 blueman/gui/manager/ManagerDeviceMenu.py:413
+#: data/ui/manager-main.ui:349 blueman/gui/manager/ManagerDeviceMenu.py:413
 msgid "Remove this device from the known devices list"
 msgstr ""
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:124
+#: data/ui/manager-main.ui:350
 msgid "Remove"
 msgstr ""
 
-#: data/ui/manager-main.ui:146
+#: data/ui/manager-main.ui:372
 msgid "Send file(s) to the device"
 msgstr ""
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:148
+#: data/ui/manager-main.ui:374
 msgid "Send File"
 msgstr ""
 
-#: data/ui/manager-main.ui:236
+#: data/ui/manager-main.ui:438
+msgid "Total data sent and rate of transmission"
+msgstr ""
+
+#: data/ui/manager-main.ui:480
+msgid "Total data received and rate of transmission"
+msgstr ""
+
+#: data/ui/manager-main.ui:531 data/ui/manager-main.ui:546
+msgid "Data activity indication"
+msgstr ""
+
+#: data/ui/manager-main.ui:582
 msgid "More"
 msgstr ""
 
@@ -515,67 +579,13 @@ msgstr ""
 msgid "GB"
 msgstr ""
 
-#: blueman/gui/manager/ManagerMenu.py:45
-msgid "_Report a Problem"
-msgstr ""
-
-#: blueman/gui/manager/ManagerMenu.py:62
+#: blueman/gui/manager/ManagerMenu.py:47
 msgid "Device Manager"
 msgstr ""
 
-#: blueman/gui/manager/ManagerMenu.py:68
-msgid "Show _Toolbar"
-msgstr ""
-
-#: blueman/gui/manager/ManagerMenu.py:73
-msgid "Show _Statusbar"
-msgstr ""
-
 #: blueman/gui/manager/ManagerMenu.py:78
-msgid "Hide _unnamed devices"
-msgstr ""
-
-#: blueman/gui/manager/ManagerMenu.py:88
-msgid "S_ort By"
-msgstr ""
-
-#: blueman/gui/manager/ManagerMenu.py:95
-msgid "_Name"
-msgstr ""
-
-#: blueman/gui/manager/ManagerMenu.py:100
-msgid "_Added"
-msgstr ""
-
-#: blueman/gui/manager/ManagerMenu.py:114
-msgid "_Descending"
-msgstr ""
-
-#: blueman/gui/manager/ManagerMenu.py:127
-#: blueman/plugins/applet/StandardItems.py:54
-msgid "_Plugins"
-msgstr ""
-
-#: blueman/gui/manager/ManagerMenu.py:132
-#: blueman/plugins/applet/StandardItems.py:45
-msgid "_Local Services"
-msgstr ""
-
-#: blueman/gui/manager/ManagerMenu.py:133
 #: blueman/plugins/applet/StandardItems.py:85
 msgid "Service Preferences"
-msgstr ""
-
-#: blueman/gui/manager/ManagerMenu.py:141
-msgid "_Search"
-msgstr ""
-
-#: blueman/gui/manager/ManagerMenu.py:155
-msgid "_Preferences"
-msgstr ""
-
-#: blueman/gui/manager/ManagerMenu.py:164 blueman/plugins/applet/ExitItem.py:12
-msgid "_Exit"
 msgstr ""
 
 #. translators: device class
@@ -758,21 +768,6 @@ msgstr ""
 
 #: blueman/gui/manager/ManagerProgressbar.py:44
 msgid "Cancel Operation"
-msgstr ""
-
-#: blueman/gui/manager/ManagerStats.py:38
-#: blueman/gui/manager/ManagerStats.py:41
-msgid "Data activity indication"
-msgstr ""
-
-#: blueman/gui/manager/ManagerStats.py:43
-#: blueman/gui/manager/ManagerStats.py:55
-msgid "Total data received and rate of transmission"
-msgstr ""
-
-#: blueman/gui/manager/ManagerStats.py:47
-#: blueman/gui/manager/ManagerStats.py:52
-msgid "Total data sent and rate of transmission"
 msgstr ""
 
 #: blueman/gui/manager/ManagerToolbar.py:37
