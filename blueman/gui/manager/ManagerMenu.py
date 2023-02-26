@@ -9,7 +9,7 @@ from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.gui.CommonUi import show_about_dialog
 from blueman.Constants import WEBSITE
-from blueman.Functions import create_menuitem, launch, adapter_path_to_name
+from blueman.Functions import launch, adapter_path_to_name
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -29,7 +29,6 @@ class ManagerMenu:
         self.adapter_items: Dict[str, Tuple[Gtk.RadioMenuItem, Adapter]] = {}
         self._adapters_group: Sequence[Gtk.RadioMenuItem] = []
         self._insert_adapter_item_pos = 2
-        self.Search = None
 
         self.item_adapter = self.blueman.builder.get_widget("item_adapter", Gtk.MenuItem)
         self.item_device = self.blueman.builder.get_widget("item_device", Gtk.MenuItem)
@@ -37,69 +36,27 @@ class ManagerMenu:
         self.item_view = self.blueman.builder.get_widget("item_view", Gtk.MenuItem)
         self.item_help = self.blueman.builder.get_widget("item_help", Gtk.MenuItem)
 
-        help_menu = Gtk.Menu()
-
-        self.item_help.set_submenu(help_menu)
-        help_menu.show()
-
-        report_item = create_menuitem(_("_Report a Problem"), "dialog-warning-symbolic")
-        report_item.show()
-        help_menu.append(report_item)
-
+        report_item = blueman.builder.get_widget("report", Gtk.ImageMenuItem)
         report_item.connect("activate", lambda x: launch(f"xdg-open {WEBSITE}/issues"))
 
-        sep = Gtk.SeparatorMenuItem()
-        sep.show()
-        help_menu.append(sep)
-
-        help_item = create_menuitem(_("_Help"), "help-about-symbolic")
-        help_item.show()
-        help_menu.append(help_item)
+        help_item = blueman.builder.get_widget("help", Gtk.ImageMenuItem)
         assert self.blueman.window is not None
         widget = self.blueman.window.get_toplevel()
         assert isinstance(widget, Gtk.Window)
         window = widget
         help_item.connect("activate", lambda x: show_about_dialog('Blueman ' + _('Device Manager'), parent=window))
 
-        view_menu = Gtk.Menu()
-        self.item_view.set_submenu(view_menu)
-        view_menu.show()
-
-        item_toolbar = Gtk.CheckMenuItem.new_with_mnemonic(_("Show _Toolbar"))
-        item_toolbar.show()
-        view_menu.append(item_toolbar)
+        item_toolbar = blueman.builder.get_widget("show_tb_item", Gtk.CheckMenuItem)
         self.blueman.Config.bind("show-toolbar", item_toolbar, "active", Gio.SettingsBindFlags.DEFAULT)
 
-        item_statusbar = Gtk.CheckMenuItem.new_with_mnemonic(_("Show _Statusbar"))
-        item_statusbar.show()
-        view_menu.append(item_statusbar)
+        item_statusbar = blueman.builder.get_widget("show_sb_item", Gtk.CheckMenuItem)
         self.blueman.Config.bind("show-statusbar", item_statusbar, "active", Gio.SettingsBindFlags.DEFAULT)
 
-        item_unnamed = Gtk.CheckMenuItem.new_with_mnemonic(_("Hide _unnamed devices"))
-        item_unnamed.show()
-        view_menu.append(item_unnamed)
+        item_unnamed = blueman.builder.get_widget("hide_unnamed_item", Gtk.CheckMenuItem)
         self.blueman.Config.bind("hide-unnamed", item_unnamed, "active", Gio.SettingsBindFlags.DEFAULT)
 
-        item_services: Gtk.MenuItem = Gtk.SeparatorMenuItem()
-        view_menu.append(item_services)
-        item_services.show()
-
-        sorting_group: Sequence[Gtk.RadioMenuItem] = []
-        item_sort = Gtk.MenuItem.new_with_mnemonic(_("S_ort By"))
-        view_menu.append(item_sort)
-        item_sort.show()
-
-        sorting_menu = Gtk.Menu()
-        item_sort.set_submenu(sorting_menu)
-
-        self._sort_alias_item = Gtk.RadioMenuItem.new_with_mnemonic(sorting_group, _("_Name"))
-        self._sort_alias_item.show()
-        sorting_group = self._sort_alias_item.get_group()
-        sorting_menu.append(self._sort_alias_item)
-
-        self._sort_timestamp_item = Gtk.RadioMenuItem.new_with_mnemonic(sorting_group, _("_Added"))
-        self._sort_timestamp_item.show()
-        sorting_menu.append(self._sort_timestamp_item)
+        self._sort_alias_item = blueman.builder.get_widget("sort_name_item", Gtk.CheckMenuItem)
+        self._sort_timestamp_item = blueman.builder.get_widget("sort_added_item", Gtk.CheckMenuItem)
 
         sort_config = self.Config['sort-by']
         if sort_config == "alias":
@@ -107,70 +64,27 @@ class ManagerMenu:
         else:
             self._sort_timestamp_item.props.active = True
 
-        sort_sep = Gtk.SeparatorMenuItem()
-        sort_sep.show()
-        sorting_menu.append(sort_sep)
-
-        self._sort_type_item = Gtk.CheckMenuItem.new_with_mnemonic(_("_Descending"))
-        self._sort_type_item.show()
-        sorting_menu.append(self._sort_type_item)
+        self._sort_type_item = blueman.builder.get_widget("sort_descending_item", Gtk.CheckMenuItem)
 
         if self.Config['sort-order'] == "ascending":
             self._sort_type_item.props.active = False
         else:
             self._sort_type_item.props.active = True
 
-        sep = Gtk.SeparatorMenuItem()
-        sep.show()
-        view_menu.append(sep)
-
-        item_plugins = create_menuitem(_("_Plugins"), 'application-x-addon-symbolic')
-        item_plugins.show()
-        view_menu.append(item_plugins)
+        item_plugins = blueman.builder.get_widget("plugins_item", Gtk.ImageMenuItem)
         item_plugins.connect('activate', self._on_plugin_dialog_activate)
 
-        item_services = create_menuitem(_("_Local Services") + "…", "document-properties-symbolic")
+        item_services = blueman.builder.get_widget("services_item", Gtk.ImageMenuItem)
         item_services.connect('activate', lambda *args: launch("blueman-services", name=_("Service Preferences")))
-        view_menu.append(item_services)
-        item_services.show()
 
-        adapter_menu = Gtk.Menu()
-        self.item_adapter.set_submenu(adapter_menu)
-        self.item_adapter.props.sensitive = False
-
-        search_item = create_menuitem(_("_Search"), "edit-find-symbolic")
+        self.Search = search_item = blueman.builder.get_widget("search_item", Gtk.ImageMenuItem)
         search_item.connect("activate", lambda x: self.blueman.inquiry())
-        search_item.show()
-        adapter_menu.prepend(search_item)
-        self.Search = search_item
 
-        sep = Gtk.SeparatorMenuItem()
-        sep.show()
-        adapter_menu.append(sep)
-
-        sep = Gtk.SeparatorMenuItem()
-        sep.show()
-        adapter_menu.append(sep)
-
-        adapter_settings = create_menuitem(_("_Preferences"), "document-properties-symbolic")
+        adapter_settings = blueman.builder.get_widget("prefs_item", Gtk.ImageMenuItem)
         adapter_settings.connect("activate", lambda x: self.blueman.adapter_properties())
-        adapter_settings.show()
-        adapter_menu.append(adapter_settings)
 
-        sep = Gtk.SeparatorMenuItem()
-        sep.show()
-        adapter_menu.append(sep)
-
-        exit_item = create_menuitem(_("_Exit"), "application-exit-symbolic")
+        exit_item = blueman.builder.get_widget("exit_item", Gtk.ImageMenuItem)
         exit_item.connect("activate", lambda x: self.blueman.quit())
-        exit_item.show()
-        adapter_menu.append(exit_item)
-
-        self.item_adapter.show()
-        self.item_view.show()
-        self.item_help.show()
-        self.item_device.show()
-        self.item_device.props.sensitive = False
 
         self._manager = Manager()
         self._manager.connect_signal("adapter-added", self.on_adapter_added)
