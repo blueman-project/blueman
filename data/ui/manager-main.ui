@@ -178,22 +178,32 @@
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
                             <child>
+                              <object class="GtkRadioMenuItem" id="sort_default_item">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">De_fault</property>
+                                <property name="use-underline">True</property>
+                                <property name="draw-as-radio">True</property>
+                              </object>
+                            </child>
+                            <child>
                               <object class="GtkRadioMenuItem" id="sort_name_item">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="label" translatable="yes">_Name</property>
+                                <property name="label" translatable="yes">Always by _Name</property>
                                 <property name="use-underline">True</property>
                                 <property name="draw-as-radio">True</property>
+                                <property name="group">sort_default_item</property>
                               </object>
                             </child>
                             <child>
                               <object class="GtkRadioMenuItem" id="sort_added_item">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="label" translatable="yes">_Added</property>
+                                <property name="label" translatable="yes">Always by _Added</property>
                                 <property name="use-underline">True</property>
                                 <property name="draw-as-radio">True</property>
-                                <property name="group">sort_name_item</property>
+                                <property name="group">sort_default_item</property>
                               </object>
                             </child>
                             <child>

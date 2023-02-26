@@ -37,12 +37,13 @@
     </key>
     <key type="s" name="sort-by">
       <choices>
+        <choice value="default"/>
         <choice value="timestamp"/>
         <choice value="alias"/>
       </choices>
-      <default>"timestamp"</default>
+      <default>"default"</default>
       <summary>Sort device list</summary>
-      <description>Sort the device list by column, possible values are timestamp and alias</description>
+      <description>Sort the device list by column, possible values are default, timestamp and alias</description>
     </key>
     <key type="s" name="sort-order">
       <choices>

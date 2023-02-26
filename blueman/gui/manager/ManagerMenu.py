@@ -55,13 +55,16 @@ class ManagerMenu:
         item_unnamed = blueman.builder.get_widget("hide_unnamed_item", Gtk.CheckMenuItem)
         self.blueman.Config.bind("hide-unnamed", item_unnamed, "active", Gio.SettingsBindFlags.DEFAULT)
 
+        self._sort_default_item = blueman.builder.get_widget("sort_default_item", Gtk.CheckMenuItem)
         self._sort_alias_item = blueman.builder.get_widget("sort_name_item", Gtk.CheckMenuItem)
         self._sort_timestamp_item = blueman.builder.get_widget("sort_added_item", Gtk.CheckMenuItem)
 
         sort_config = self.Config['sort-by']
-        if sort_config == "alias":
+        if sort_config == "default":
+            self._sort_default_item.props.active = True
+        elif sort_config == "alias":
             self._sort_alias_item.props.active = True
-        else:
+        elif sort_config == "timestamp":
             self._sort_timestamp_item.props.active = True
 
         self._sort_type_item = blueman.builder.get_widget("sort_descending_item", Gtk.CheckMenuItem)
@@ -98,12 +101,15 @@ class ManagerMenu:
         self.device_menu: Optional[ManagerDeviceMenu] = None
 
         self.Config.connect("changed", self._on_settings_changed)
+        self._sort_default_item.connect("activate", self._on_sorting_changed, "default")
         self._sort_alias_item.connect("activate", self._on_sorting_changed, "alias")
         self._sort_timestamp_item.connect("activate", self._on_sorting_changed, "timestamp")
         self._sort_type_item.connect("activate", self._on_sorting_changed, "sort-type")
 
     def _on_sorting_changed(self, btn: Gtk.CheckMenuItem, sort_opt: str) -> None:
-        if sort_opt == 'alias' and btn.props.active:
+        if sort_opt == "default" and btn.props.active:
+            self.Config['sort-by'] = "default"
+        elif sort_opt == 'alias' and btn.props.active:
             self.Config['sort-by'] = "alias"
         elif sort_opt == "timestamp" and btn.props.active:
             self.Config['sort-by'] = "timestamp"
@@ -117,7 +123,10 @@ class ManagerMenu:
     def _on_settings_changed(self, settings: Gio.Settings, key: str) -> None:
         value = settings[key]
         if key == 'sort-by':
-            if value == "alias":
+            if value == "default":
+                if not self._sort_default_item.props.active:
+                    self._sort_default_item.props.active = True
+            elif value == "alias":
                 if not self._sort_alias_item.props.active:
                     self._sort_alias_item.props.active = True
             elif value == "timestamp":

@@ -79,6 +79,7 @@ class ManagerDeviceList(DeviceList):
 
         self.Config = Gio.Settings(schema_id="org.blueman.general")
         self.Config.connect('changed', self._on_settings_changed)
+
         # Set the correct sorting
         self._on_settings_changed(self.Config, "sort-by")
         self._on_settings_changed(self.Config, "sort-type")
@@ -103,19 +104,26 @@ class ManagerDeviceList(DeviceList):
         self.filter.set_visible_func(self.filter_func)
 
     def _on_settings_changed(self, settings: Gio.Settings, key: str) -> None:
-        if key in ('sort-by', 'sort-order'):
-            sort_by = settings['sort-by']
-            sort_order = settings['sort-order']
+        if key in ("sort-by", "sort-order"):
+            sort_by = settings["sort-by"]
 
-            if sort_order == 'ascending':
+            if settings['sort-order'] == 'ascending':
                 sort_type = Gtk.SortType.ASCENDING
             else:
                 sort_type = Gtk.SortType.DESCENDING
 
-            column_id = self.ids.get(sort_by)
-
-            if column_id:
+            if sort_by in ("timestamp", "alias"):
+                column_id = self.ids.get(sort_by)
+                assert column_id is not None
                 self.liststore.set_sort_column_id(column_id, sort_type)
+            elif sort_by == "default":
+                column_id = self.ids.get("paired")
+                assert column_id is not None
+                self.liststore.set_sort_func(column_id, self.sort_func)
+                self.liststore.set_sort_column_id(column_id, sort_type)
+            else:
+                logging.error(f"unknown sorting option {sort_by}")
+                return None
 
     def on_icon_theme_changed(self, _icon_them: Gtk.IconTheme) -> None:
         for row in self.liststore:
@@ -147,6 +155,26 @@ class ManagerDeviceList(DeviceList):
             return False
         else:
             return True
+
+    def sort_func(self, _model: Gtk.TreeModel, rowa_iter: Gtk.TreeIter, rowb_iter: Gtk.TreeIter, _data: Any) -> int:
+        if not self.liststore.iter_is_valid(rowa_iter) or not self.liststore.iter_is_valid(rowb_iter):
+            return 0
+
+        rowa = self.get(rowa_iter, "alias", "connected", "paired")
+        rowb = self.get(rowb_iter, "alias", "connected", "paired")
+
+        if rowa["alias"] is None or rowb["alias"] is None:
+            return 0
+
+        key1 = (rowa["paired"], not rowa["connected"], rowa["alias"])
+        key2 = (rowb["paired"], not rowb["connected"], rowb["alias"])
+
+        if key1 > key2:
+            return 1
+        elif key1 < key2:
+            return -1
+        else:
+            return 0
 
     def drag_recv(self, _widget: Gtk.Widget, context: Gdk.DragContext, x: int, y: int, selection: Gtk.SelectionData,
                   _info: int, time: int) -> None:
