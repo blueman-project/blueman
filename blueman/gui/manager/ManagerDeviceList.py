@@ -518,16 +518,15 @@ class ManagerDeviceList(DeviceList):
             tree_iter = self.get_iter(path[0])
             assert tree_iter is not None
 
-            row = self.get(tree_iter, "trusted", "paired", "blocked")
-            trusted = row["trusted"]
-            paired = row["paired"]
-            blocked = row["blocked"]
+            row = self.get(tree_iter, "connected", "trusted", "paired", "blocked")
             str_list = []
-            if trusted:
+            if row["connected"]:
+                str_list.append(_("Connected"))
+            if row["trusted"]:
                 str_list.append(_("Trusted"))
-            if paired:
+            if row["paired"]:
                 str_list.append(_("Paired"))
-            if blocked:
+            if row["blocked"]:
                 str_list.append(_("Blocked"))
 
             text = ", ".join(str_list)
