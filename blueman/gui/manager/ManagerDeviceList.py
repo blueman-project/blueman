@@ -311,6 +311,13 @@ class ManagerDeviceList(DeviceList):
                % {"0": html.escape(name), "1": klass, "2": address}
 
     @staticmethod
+    def make_display_name(alias: str, klass: int, address: str) -> str:
+        if alias.replace("-", ":") == address:
+            return _("Unnamed device")
+        else:
+            return alias
+
+    @staticmethod
     def get_device_class(device: Device) -> str:
         klass = get_minor_class(device['Class'])
         if klass != _("Uncategorized"):
@@ -350,9 +357,10 @@ class ManagerDeviceList(DeviceList):
             description = get_major_class(device['Class'])
 
         icon_info = self.get_icon_info(device["Icon"], 48, False)
-        caption = self.make_caption(device.display_name, description, device['Address'])
+        display_name = self.make_display_name(device.display_name, device["Class"], device['Address'])
+        caption = self.make_caption(display_name, description, device['Address'])
 
-        self.set(tree_iter, caption=caption, icon_info=icon_info, alias=device.display_name, objpush=has_objpush)
+        self.set(tree_iter, caption=caption, icon_info=icon_info, alias=display_name, objpush=has_objpush)
 
         try:
             self.row_update_event(tree_iter, "Trusted", device['Trusted'])
@@ -431,7 +439,8 @@ class ManagerDeviceList(DeviceList):
         elif key == "Alias":
             device = self.get(tree_iter, "device")["device"]
             c = self.make_caption(value, self.get_device_class(device), device['Address'])
-            self.set(tree_iter, caption=c, alias=value)
+            name = self.make_display_name(device.display_name, device["Class"], device["Address"])
+            self.set(tree_iter, caption=c, alias=name)
 
         elif key == "UUIDs":
             device = self.get(tree_iter, "device")["device"]
