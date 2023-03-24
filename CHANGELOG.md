@@ -20,6 +20,7 @@
 * Drop auto-power feature. BlueZ now has the AutoEnable setting for even better auto-powering.
 * Do not use pointless link quality value
 * Recent connections in toplevel applet menu
+* Never hide keyboard and combos, see #1954 for more info
 
 ## 2.3.5
 
