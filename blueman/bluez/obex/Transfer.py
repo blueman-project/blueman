@@ -2,7 +2,7 @@ import logging
 from typing import List, Optional
 
 from blueman.bluez.obex.Base import Base
-from gi.repository import GObject, GLib
+from gi.repository import GObject, Gio, GLib
 
 from blueman.bluemantyping import GSignals
 
@@ -39,7 +39,9 @@ class Transfer(Base):
         size: Optional[int] = self.get("Size")
         return size
 
-    def do_g_properties_changed(self, changed_properties: GLib.Variant, _invalidated_properties: List[str]) -> None:
+    def _properties_changed(self, _proxy: Gio.DBusProxy, changed_properties: GLib.Variant,
+                            _invalidated_properties: List[str]) -> None:
+        logging.debug(f"{changed_properties}")
         for name, value in changed_properties.unpack().items():
             logging.debug(f"{self.get_object_path()} {name} {value}")
             if name == 'Transferred':
