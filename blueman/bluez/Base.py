@@ -54,14 +54,14 @@ class Base(GObject.Object, metaclass=BaseMeta):
             None
         )
 
-        self.__proxy.connect("g-properties-changed", self.__properties_changed)
+        self.__proxy.connect("g-properties-changed", self._properties_changed)
 
         self.__fallback = {'Icon': 'blueman', 'Class': 0, 'Appearance': 0}
 
         self.__variant_map = {str: 's', int: 'u', bool: 'b'}
 
-    def __properties_changed(self, _proxy: Gio.DBusProxy, changed_properties: GLib.Variant,
-                             invalidated_properties: List[str]) -> None:
+    def _properties_changed(self, _proxy: Gio.DBusProxy, changed_properties: GLib.Variant,
+                            invalidated_properties: List[str]) -> None:
         changed = changed_properties.unpack()
         object_path = self.get_object_path()
         logging.debug(f"{object_path} {changed} {invalidated_properties} {self}")
