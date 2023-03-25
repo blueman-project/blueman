@@ -24,8 +24,8 @@ class ManagerToolbar:
         self.blueman.List.connect("adapter-changed", self.on_adapter_changed)
         self.blueman.List.connect("adapter-property-changed", self.on_adapter_property_changed)
 
-        self.b_search = blueman.builder.get_widget("b_search", Gtk.ToolButton)
-        self.b_search.connect("clicked", lambda button: blueman.inquiry())
+        self.b_search = blueman.builder.get_widget("b_search", Gtk.ToggleToolButton)
+        self.b_search.connect("toggled", self.on_search_toggled)
 
         self.b_bond = blueman.builder.get_widget("b_bond", Gtk.ToolButton)
         self.b_bond.connect("clicked", self.on_action, self.blueman.bond)
@@ -56,14 +56,43 @@ class ManagerToolbar:
         if device is not None:
             func(device)
 
+    def _update_search_toggle(self, button: Gtk.ToggleToolButton, searching: bool) -> None:
+        if searching:
+            icon_name = "process-stop-symbolic"
+            label = _("Searching…")
+            tooltip = _("Click to stop searching")
+        else:
+            icon_name = "edit-find-symbolic"
+            label = _("Search")
+            tooltip = _("Search for nearby devices")
+
+        button.set_active(searching)
+        button.set_icon_name(icon_name)
+        button.set_label(label)
+        button.set_tooltip_text(tooltip)
+
+    def on_search_toggled(self, button: Gtk.ToggleToolButton) -> None:
+        if not self.blueman.List.discovering and button.get_active():
+            self.blueman.inquiry()
+            self._update_search_toggle(button, True)
+        elif self.blueman.List.discovering:
+            self.blueman.List.stop_discovery()
+            self._update_search_toggle(button, False)
+
     def on_adapter_property_changed(self, _lst: ManagerDeviceList, _adapter: Adapter,
                                     key_value: Tuple[str, object]) -> None:
         key, value = key_value
         if key == "Discovering":
-            if value:
-                self.b_search.props.sensitive = False
-            else:
-                self.b_search.props.sensitive = True
+            if value and not self.blueman.List.discovering:
+                # It's not blueman discovering
+                self.b_search.set_sensitive(False)
+            elif not value:
+                self.b_search.set_sensitive(True)
+
+            # Block or we end in an infinite loop
+            self.b_search.handler_block_by_func(self.on_search_toggled)
+            self._update_search_toggle(self.b_search, True if value else False)
+            self.b_search.handler_unblock_by_func(self.on_search_toggled)
 
     def on_adapter_changed(self, _lst: ManagerDeviceList, adapter_path: Optional[str]) -> None:
         logging.debug(f"toolbar adapter {adapter_path}")
