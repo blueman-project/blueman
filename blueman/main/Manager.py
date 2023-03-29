@@ -200,8 +200,7 @@ class Blueman(Gtk.Application):
             else:
                 prog.fraction(frac)
 
-        prog = ManagerProgressbar(self, text=_("Searching"))
-        prog.connect("cancelled", lambda x: self.List.stop_discovery())
+        prog = ManagerProgressbar(self, text=_("Searching"), cancellable=False)
 
         def on_error(e: Exception) -> None:
             prog.finalize()

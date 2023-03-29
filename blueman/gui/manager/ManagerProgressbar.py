@@ -61,7 +61,7 @@ class ManagerProgressbar(GObject.GObject):
 
         self.show()
         if not self.cancellable:
-            self.eventbox.props.sensitive = False
+            self.eventbox.set_visible(False)
 
         self.pulsing = False
         self.finalized = False
