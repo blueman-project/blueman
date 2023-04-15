@@ -7052,6 +7052,7 @@ class Image(Misc):
     def __init__(self,
         *,
         icon_name: typing.Optional[str] = None,
+        icon_size: typing.Optional[int] = 4,
         pixel_size: int = -1,
         # Widget
         halign: Align = Align.FILL,
