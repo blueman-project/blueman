@@ -1,6 +1,6 @@
 from gettext import gettext as _
 import logging
-from typing import TYPE_CHECKING, Callable, Tuple, Optional
+from typing import TYPE_CHECKING, Callable, Tuple, Optional, Union
 
 import gi
 
@@ -57,17 +57,19 @@ class ManagerToolbar:
             func(device)
 
     def _update_search_toggle(self, button: Gtk.ToggleToolButton, searching: bool) -> None:
+        icon_widget: Union[Gtk.Image, Gtk.Spinner]
         if searching:
-            icon_name = "process-stop-symbolic"
-            label = _("Searching…")
+            icon_widget = Gtk.Spinner(visible=True)
+            icon_widget.start()
+            label = _("Searching")
             tooltip = _("Click to stop searching")
         else:
-            icon_name = "edit-find-symbolic"
+            icon_widget = Gtk.Image(icon_name="edit-find-symbolic", icon_size=Gtk.IconSize.LARGE_TOOLBAR, visible=True)
             label = _("Search")
             tooltip = _("Search for nearby devices")
 
         button.set_active(searching)
-        button.set_icon_name(icon_name)
+        button.set_icon_widget(icon_widget)
         button.set_label(label)
         button.set_tooltip_text(tooltip)
 
