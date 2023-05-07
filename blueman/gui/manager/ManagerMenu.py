@@ -187,7 +187,7 @@ class ManagerMenu:
     def _simple_actions(self, action: Gio.Action, _val: Optional[Any]) -> None:
         name = action.get_name()
         if name == "report":
-            launch(f"xdg-open {WEBSITE}/issues")
+            launch(f"xdg-open {WEBSITE}/issues", system=True)
         elif name == "services":
             launch("blueman-services", name=_("Service Preferences"))
         elif name == "search":
