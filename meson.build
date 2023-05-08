@@ -24,6 +24,7 @@ prefix = get_option('prefix')
 datadir = get_option('datadir')
 pkgdatadir = join_paths([datadir, package_name])
 bindir = get_option('bindir')
+dbusdir = join_paths([datadir, 'dbus-1'])
 libexecdir = get_option('libexecdir')
 schemadir = join_paths([datadir, 'glib-2.0', 'schemas'])
 pythondir = pyinstall.get_install_dir()
@@ -259,13 +260,13 @@ configurable_files = [
      join_paths(pythondir, package_name)],
     ['data/configs/org.blueman.Applet.service.in',
      'org.blueman.Applet.service',
-     join_paths(datadir, 'dbus-1', 'services')],
+     join_paths(dbusdir, 'services')],
     ['data/configs/org.blueman.Manager.service.in',
      'org.blueman.Manager.service',
-     join_paths(datadir, 'dbus-1', 'services')],
+     join_paths(dbusdir, 'services')],
     ['data/configs/org.blueman.Mechanism.service.in',
      'org.blueman.Mechanism.service',
-     join_paths(datadir, 'dbus-1', 'system-services')]
+     join_paths(dbusdir, 'system-services')]
 ]
 
 systemd_user_dir = get_option('systemduserunitdir')
@@ -313,7 +314,7 @@ endforeach
 
 install_data(
     'data/configs/org.blueman.Mechanism.conf',
-    install_dir: join_paths(get_option('datadir'), 'dbus-1', 'system.d')
+    install_dir: join_paths(dbusdir, 'system.d')
 )
 
 
