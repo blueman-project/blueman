@@ -27,6 +27,7 @@ bindir = get_option('bindir')
 dbusdir = join_paths([datadir, 'dbus-1'])
 libexecdir = get_option('libexecdir')
 schemadir = join_paths([datadir, 'glib-2.0', 'schemas'])
+polkitdir = join_paths([datadir, 'polkit-1'])
 pythondir = pyinstall.get_install_dir()
 
 if get_option('policykit')
@@ -201,7 +202,7 @@ i18n.merge_file(
     po_dir: 'po',
     data_dirs: 'data/configs',
     install: true,
-    install_dir: join_paths(datadir, 'polkit-1', 'actions'),
+    install_dir: join_paths(polkitdir, 'actions'),
 )
 
 # Merge translations into desktop files
