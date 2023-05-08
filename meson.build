@@ -205,6 +205,9 @@ i18n.merge_file(
     install_dir: join_paths(polkitdir, 'actions'),
 )
 
+# Polkit rules file
+install_data('data/configs/blueman.rules', install_dir: join_paths(polkitdir, 'rules.d'))
+
 # Merge translations into desktop files
 i18n.merge_file(
     input: 'data/blueman.desktop.in',
