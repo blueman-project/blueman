@@ -21,11 +21,11 @@ endif
 
 # Setup all directories we install in
 prefix = get_option('prefix')
-datadir = join_paths([prefix, get_option('datadir')])
-pkgdatadir = join_paths([prefix, get_option('datadir'), package_name])
-bindir = join_paths([prefix, get_option('bindir')])
-libexecdir = join_paths([prefix, get_option('libexecdir')])
-schemadir = join_paths(['share', 'glib-2.0', 'schemas'])
+datadir = get_option('datadir')
+pkgdatadir = join_paths([datadir, package_name])
+bindir = get_option('bindir')
+libexecdir = get_option('libexecdir')
+schemadir = join_paths([datadir, 'glib-2.0', 'schemas'])
 pythondir = pyinstall.get_install_dir()
 
 if get_option('policykit')
@@ -36,14 +36,14 @@ endif
 
 # Setup congfiguration
 conf_data = configuration_data()
-conf_data.set('BINDIR', bindir)
-conf_data.set('LIBEXECDIR', libexecdir)
+conf_data.set('BINDIR', join_paths(prefix, bindir))
+conf_data.set('LIBEXECDIR', join_paths(prefix, libexecdir))
 conf_data.set('VERSION', meson.project_version())
 conf_data.set('PACKAGE', package_name)
 conf_data.set('prefix', prefix)
-conf_data.set('pkgdatadir', pkgdatadir)
+conf_data.set('pkgdatadir', join_paths(prefix, pkgdatadir))
 conf_data.set('LOCALEDIR', join_paths(prefix, get_option('localedir')))
-conf_data.set('icondir', join_paths(datadir, 'icons'))
+conf_data.set('icondir', join_paths(prefix, datadir, 'icons'))
 conf_data.set('dhconfig', get_option('dhcp-config-path'))
 conf_data.set('POLKIT', have_polkit)
 conf_data.set('GETTEXT_PACKAGE', package_name)
