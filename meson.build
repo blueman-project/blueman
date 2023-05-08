@@ -24,11 +24,13 @@ prefix = get_option('prefix')
 datadir = get_option('datadir')
 pkgdatadir = join_paths([datadir, package_name])
 bindir = get_option('bindir')
+libdir = get_option('libdir')
 dbusdir = join_paths([datadir, 'dbus-1'])
 libexecdir = get_option('libexecdir')
 schemadir = join_paths([datadir, 'glib-2.0', 'schemas'])
 polkitdir = join_paths([datadir, 'polkit-1'])
 pythondir = pyinstall.get_install_dir()
+systemd_base_path = join_paths(libdir, 'systemd')
 
 if get_option('policykit')
     have_polkit = 'True'
@@ -57,8 +59,6 @@ pygobject = dependency('pygobject-3.0', required: true)
 bluez = dependency('bluez', version: '>= 5.0', required: true)
 gthread = dependency('gthread-2.0', version: '>= 2.32', required: true)
 
-# Check for systemd to get unit file dirs
-systemd = dependency('systemd', required: false)
 
 # Check for runtime deps and when not found fail based on runtime_deps_check
 do_runtime_checks = get_option('runtime_deps_check')
@@ -206,7 +206,7 @@ i18n.merge_file(
 )
 
 # Polkit rules file
-install_data('data/configs/blueman.rules', install_dir: join_paths(polkitdir, 'rules.d'))
+install_data('data/configs/blueman.rules', install_dir: join_paths(polkitdir, 'rules.d'), install_mode: 'rw-r--r--')
 
 # Merge translations into desktop files
 i18n.merge_file(
@@ -275,36 +275,28 @@ configurable_files = [
 
 systemd_user_dir = get_option('systemduserunitdir')
 if systemd_user_dir != ''
-    systemd_user_path = join_paths(prefix, systemd_user_dir)
-elif systemd.found()
-    systemd_user_path = join_paths(prefix, systemd.get_pkgconfig_variable('systemduserunitdir'))
+    systemd_user_path = systemd_user_dir
 else
-    systemd_user_path = ''
+    systemd_user_path = join_paths(systemd_base_path, 'user')
 endif
 
-if systemd_user_path != ''
-    configurable_files += [['data/configs/blueman-applet.service.in',
-                            'blueman-applet.service',
-                            systemd_user_path],
-                           ['data/configs/blueman-manager.service.in',
-                            'blueman-manager.service',
-                            systemd_user_path]]
-endif
+configurable_files += [['data/configs/blueman-applet.service.in',
+                        'blueman-applet.service',
+                        systemd_user_path],
+                       ['data/configs/blueman-manager.service.in',
+                        'blueman-manager.service',
+                        systemd_user_path]]
 
 systemd_system_dir = get_option('systemdsystemunitdir')
 if systemd_system_dir != ''
-    systemd_system_path = join_paths(prefix, systemd_system_dir)
-elif systemd.found()
-    systemd_system_path = join_paths(prefix, systemd.get_pkgconfig_variable('systemdsystemunitdir'))
+    systemd_system_path = systemd_system_dir
 else
-    systemd_system_path = ''
+    systemd_system_path = join_paths(systemd_base_path, 'system',)
 endif
 
-if systemd_system_path != ''
-    configurable_files += [['data/configs/blueman-mechanism.service.in',
-                            'blueman-mechanism.service',
-                            systemd_system_path]]
-endif
+configurable_files += [['data/configs/blueman-mechanism.service.in',
+                        'blueman-mechanism.service',
+                        systemd_system_path]]
 
 # Generate all configurable files based on conf_data
 foreach conf_file: configurable_files
