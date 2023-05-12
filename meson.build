@@ -2,7 +2,7 @@ project(
     'blueman', 'c',
     version: '2.4-alpha',
     license: 'GPL3',
-    meson_version: '>=0.50.0',
+    meson_version: '>=0.56.0',
     default_options: 'b_lundef=false'
 )
 
@@ -51,7 +51,7 @@ conf_data.set('icondir', join_paths(prefix, datadir, 'icons'))
 conf_data.set('dhconfig', get_option('dhcp-config-path'))
 conf_data.set('POLKIT', have_polkit)
 conf_data.set('GETTEXT_PACKAGE', package_name)
-conf_data.set('PYTHON', pyinstall.path())
+conf_data.set('PYTHON', pyinstall.full_path())
 
 # Check for build dependencies
 pythonlib = pyinstall.dependency()
