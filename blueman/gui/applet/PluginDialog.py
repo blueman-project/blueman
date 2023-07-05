@@ -273,8 +273,10 @@ class PluginDialog(Gtk.ApplicationWindow):
                              desc=desc)
 
     def plugin_state_changed(self, _plugins: PluginManager, name: str, loaded: bool) -> None:
-        row = self.list.get_conditional(name=name)
-        self.list.set(row[0], active=loaded)
+        for row in self.list.liststore:
+            if self.list.get(row.iter, "name")["name"] == name:
+                self.list.set(row.iter, active=loaded)
+                break
 
         cls: Type[AppletPlugin] = self.applet.Plugins.get_classes()[name]
         if not loaded:

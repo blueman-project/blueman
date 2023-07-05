@@ -1,4 +1,4 @@
-from typing import Dict, Optional, TYPE_CHECKING, Iterable, Mapping, Callable, Tuple, Union, Collection, List, Any
+from typing import Dict, Optional, TYPE_CHECKING, Iterable, Mapping, Callable, Tuple, Union, Collection, Any
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -100,22 +100,6 @@ class GenericList(Gtk.TreeView):
     def prepend(self, **columns: object) -> Gtk.TreeIter:
         vals = self._add(**columns)
         return self.liststore.prepend(vals)
-
-    def get_conditional(self, **cols: object) -> List[int]:
-        ret = []
-        matches = 0
-        for i in range(len(self.liststore)):
-            row = self.get(i)
-            for k, v in cols.items():
-                if row[k] == v:
-                    matches += 1
-
-            if matches == len(cols):
-                ret.append(i)
-
-            matches = 0
-
-        return ret
 
     def set(self, iterid: Union[Gtk.TreeIter, int, str], **cols: object) -> None:
         if isinstance(iterid, Gtk.TreeIter):
