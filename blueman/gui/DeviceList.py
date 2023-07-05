@@ -351,7 +351,6 @@ class DeviceList(GenericList):
         self.do_cache(tree_iter, columns)
         return tree_iter
 
-    # FIXME: GenericList.set accepts int and str as iterid, DeviceList does not
-    def set(self, iterid: Gtk.TreeIter, **kwargs: object) -> None:  # type: ignore
-        GenericList.set(self, iterid, **kwargs)
-        self.do_cache(iterid, kwargs)
+    def set(self, tree_iter: Gtk.TreeIter, **kwargs: object) -> None:
+        GenericList.set(self, tree_iter, **kwargs)
+        self.do_cache(tree_iter, kwargs)
