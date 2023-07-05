@@ -112,18 +112,10 @@ class DeviceList(GenericList):
             self.emit("adapter-added", path)
 
         if signal_name == 'device-created':
-            tree_iter = self.find_device_by_path(path)
-            if tree_iter is None:
-                dev = Device(obj_path=path)
-                self.device_add_event(dev)
+            self.device_add_event(path)
 
         if signal_name == 'device-removed':
-            tree_iter = self.find_device_by_path(path)
-            if tree_iter:
-                row = self.get(tree_iter, "device")
-                dev = row["device"]
-
-                self.device_remove_event(dev)
+            self.device_remove_event(path)
 
     def on_selection_changed(self, selection: Gtk.TreeSelection) -> None:
         model, tree_iter = selection.get_selected()
@@ -166,12 +158,12 @@ class DeviceList(GenericList):
         pass
 
     # called when device needs to be added to the list
-    def device_add_event(self, device: Device) -> None:
-        self.add_device(device)
+    def device_add_event(self, object_path: str) -> None:
+        self.add_device(object_path)
 
-    def device_remove_event(self, device: Device) -> None:
-        logging.debug(device)
-        tree_iter = self.find_device(device)
+    def device_remove_event(self, object_path: str) -> None:
+        logging.debug(object_path)
+        tree_iter = self.find_device_by_path(object_path)
         if tree_iter is None:
             return
 
@@ -227,7 +219,8 @@ class DeviceList(GenericList):
         self.emit("discovery-progress", progress)
         return True
 
-    def add_device(self, device: Device) -> None:
+    def add_device(self, object_path: str) -> None:
+        device = Device(obj_path=object_path)
         # device belongs to another adapter
         if not self.Adapter or not device['Adapter'] == self.Adapter.get_object_path():
             return
@@ -235,7 +228,6 @@ class DeviceList(GenericList):
         logging.info("adding new device")
         tree_iter = self.liststore.append()
 
-        object_path = device.get_object_path()
         timestamp = datetime.strftime(datetime.now(), '%Y%m%d%H%M%S%f')
         no_name = "Name" not in device
         self.set(tree_iter, device=device, dbus_path=object_path, timestamp=float(timestamp), no_name=no_name)
@@ -284,28 +276,12 @@ class DeviceList(GenericList):
         if len(self.liststore):
             for i in self.liststore:
                 tree_iter = i.iter
-                device = self.get(tree_iter, "device")["device"]
-                self.device_remove_event(device)
+                dbus_path = self.get(tree_iter, "dbus_path")["dbus_path"]
+                self.device_remove_event(dbus_path)
             self.liststore.clear()
             self.emit("device-selected", None, None)
 
         self.path_to_row = {}
-
-    def find_device(self, device: Device) -> Optional[Gtk.TreeIter]:
-        object_path = device.get_object_path()
-        try:
-            row = self.path_to_row[object_path]
-            if row.valid():
-                path = row.get_path()
-                assert path is not None
-                tree_iter = self.liststore.get_iter(path)
-                return tree_iter
-            else:
-                del self.path_to_row[object_path]
-                return None
-
-        except KeyError:
-            return None
 
     def find_device_by_path(self, path: str) -> Optional[Gtk.TreeIter]:
         try:
