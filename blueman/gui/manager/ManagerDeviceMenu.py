@@ -252,16 +252,21 @@ class ManagerDeviceMenu(Gtk.Menu):
                                         "blocked")
         else:
             (x, y) = self.Blueman.List.get_pointer()
-            path = self.Blueman.List.get_path_at_pos(x, y)
-            if path is not None:
-                assert path[0] is not None
-                treepath = self.Blueman.List.filter.convert_path_to_child_path(path[0])
-                if treepath is None:
-                    raise TypeError("Path should never be None")
-                row = self.Blueman.List.get(treepath, "alias", "paired", "connected", "trusted", "objpush", "device",
-                                            "blocked")
-            else:
+            posdata = self.Blueman.List.get_path_at_pos(x, y)
+            if posdata is None:
                 return
+
+            path = posdata[0]
+            if path is None:
+                raise TypeError("Path should never be None")
+
+            tree_iter = self.Blueman.List.filter.get_iter(path)
+            assert tree_iter is not None
+            child_iter = self.Blueman.List.filter.convert_iter_to_child_iter(tree_iter)
+            assert child_iter is not None
+
+            row = self.Blueman.List.get(child_iter, "alias", "paired", "connected", "trusted", "objpush", "device",
+                                        "blocked")
 
         self.SelectedDevice = row["device"]
 

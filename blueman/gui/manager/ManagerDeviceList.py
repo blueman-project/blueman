@@ -219,9 +219,11 @@ class ManagerDeviceList(DeviceList):
             path = posdata[0]
             assert path is not None
 
-        childpath = self.filter.convert_path_to_child_path(path)
-        assert childpath is not None
-        row = self.get(childpath, "device", "connected")
+        tree_iter = self.filter.get_iter(path)
+        assert tree_iter is not None
+        child_iter = self.filter.convert_iter_to_child_iter(tree_iter)
+        assert child_iter is not None
+        row = self.get(child_iter, "device", "connected")
         if not row:
             return False
 

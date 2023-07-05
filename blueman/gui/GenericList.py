@@ -1,4 +1,4 @@
-from typing import Dict, Optional, TYPE_CHECKING, Iterable, Mapping, Callable, Tuple, Union, Collection, Any
+from typing import Dict, Optional, TYPE_CHECKING, Iterable, Mapping, Callable, Tuple, Collection, Any
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -66,14 +66,7 @@ class GenericList(Gtk.TreeView):
             tree_iter = model.convert_iter_to_child_iter(tree_iter)
         return tree_iter
 
-    def delete(self, iterid: Union[Gtk.TreeIter, Gtk.TreePath, int, str]) -> bool:
-        if isinstance(iterid, Gtk.TreeIter):
-            tree_iter: Optional[Gtk.TreeIter] = iterid
-        else:
-            tree_iter = self.get_iter(iterid)
-
-        if tree_iter is None:
-            return False
+    def delete(self, tree_iter: Gtk.TreeIter) -> bool:
         if self.liststore.iter_is_valid(tree_iter):
             self.liststore.remove(tree_iter)
             return True
@@ -101,38 +94,22 @@ class GenericList(Gtk.TreeView):
         vals = self._add(**columns)
         return self.liststore.prepend(vals)
 
-    def set(self, iterid: Union[Gtk.TreeIter, int, str], **cols: object) -> None:
-        if isinstance(iterid, Gtk.TreeIter):
-            tree_iter: Optional[Gtk.TreeIter] = iterid
-        else:
-            tree_iter = self.get_iter(iterid)
+    def set(self, tree_iter: Gtk.TreeIter, **cols: object) -> None:
+        for k, v in cols.items():
+            self.liststore.set(tree_iter, self.ids[k], v)
 
-        if tree_iter is not None:
-            for k, v in cols.items():
-                self.liststore.set(tree_iter, self.ids[k], v)
-
-    def get(self, iterid: Union[Gtk.TreeIter, Gtk.TreePath, int, str], *items: str) -> Dict[str, Any]:
+    def get(self, tree_iter: Gtk.TreeIter, *items: str) -> Dict[str, Any]:
         ret = {}
-
-        if iterid is not None:
-            if isinstance(iterid, Gtk.TreeIter):
-                tree_iter: Optional[Gtk.TreeIter] = iterid
-            else:
-                tree_iter = self.get_iter(iterid)
-            assert tree_iter is not None
-            if len(items) == 0:
-                for k, v in self.ids.items():
-                    ret[k] = self.liststore.get(tree_iter, v)[0]
-            else:
-                for i in range(len(items)):
-                    if items[i] in self.ids:
-                        ret[items[i]] = self.liststore.get(tree_iter, self.ids[items[i]])[0]
+        if len(items) == 0:
+            for k, v in self.ids.items():
+                ret[k] = self.liststore.get(tree_iter, v)[0]
         else:
-            return {}
-
+            for i in range(len(items)):
+                if items[i] in self.ids:
+                    ret[items[i]] = self.liststore.get(tree_iter, self.ids[items[i]])[0]
         return ret
 
-    def get_iter(self, path: Optional[Union[Gtk.TreePath, int, str]]) -> Optional[Gtk.TreeIter]:
+    def get_iter(self, path: Optional[Gtk.TreePath]) -> Optional[Gtk.TreeIter]:
         if path is None:
             return None
 

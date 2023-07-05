@@ -286,7 +286,10 @@ class PluginDialog(Gtk.ApplicationWindow):
             self.b_prefs.props.sensitive = True
 
     def on_toggled(self, _toggle: Gtk.CellRendererToggle, path: str) -> None:
-        name = self.list.get(path, "name")["name"]
+        tree_path = Gtk.TreePath.new_from_string(path)
+        tree_iter = self.list.get_iter(tree_path)
+        assert tree_iter
+        name = self.list.get(tree_iter, "name")["name"]
 
         deps = self.applet.Plugins.get_dependencies()[name]
         loaded = self.applet.Plugins.get_loaded()
