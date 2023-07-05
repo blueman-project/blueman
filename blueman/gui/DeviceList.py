@@ -242,7 +242,7 @@ class DeviceList(GenericList):
         self.row_setup_event(tree_iter, device)
 
         if self.get_selected_device() is None:
-            self.selection.select_path(0)
+            self.selection.select_path(Gtk.TreePath.new_first())
 
     def populate_devices(self) -> None:
         self.clear()

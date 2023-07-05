@@ -161,7 +161,7 @@ class PluginDialog(Gtk.ApplicationWindow):
         self.sig_b: int = self.applet.Plugins.connect("plugin-unloaded", self.plugin_state_changed, False)
         self.connect("delete-event", self._on_close)
 
-        self.list.set_cursor(0)
+        self.list.set_cursor(Gtk.TreePath.new_first())
 
         close_action = Gio.SimpleAction.new("close", None)
         close_action.connect("activate", lambda x, y: self.close())
