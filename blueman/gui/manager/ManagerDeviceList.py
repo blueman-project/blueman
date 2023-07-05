@@ -294,18 +294,18 @@ class ManagerDeviceList(DeviceList):
 
         return target
 
-    def device_remove_event(self, device: Device) -> None:
-        tree_iter = self.find_device(device)
+    def device_remove_event(self, object_path: str) -> None:
+        tree_iter = self.find_device_by_path(object_path)
         assert tree_iter is not None
 
         iter_set, _child_tree_iter = self.filter.convert_child_iter_to_iter(tree_iter)
         if iter_set:
             row_fader = self.get(tree_iter, "row_fader")["row_fader"]
-            self._prepare_fader(row_fader, lambda: self.__fader_finished(device))
+            self._prepare_fader(row_fader, lambda: self.__fader_finished(object_path))
             row_fader.animate(start=row_fader.get_state(), end=0.0, duration=400)
 
-    def __fader_finished(self, device: Device) -> None:
-        super().device_remove_event(device)
+    def __fader_finished(self, object_path: str) -> None:
+        super().device_remove_event(object_path)
 
     @staticmethod
     def make_caption(name: str, klass: str, address: str) -> str:
