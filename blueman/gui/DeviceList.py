@@ -283,18 +283,18 @@ class DeviceList(GenericList):
 
         self.path_to_row = {}
 
-    def find_device_by_path(self, path: str) -> Optional[Gtk.TreeIter]:
-        try:
-            row = self.path_to_row[path]
-            if row.valid():
-                path_ = row.get_path()
-                assert path_ is not None
-                tree_iter = self.liststore.get_iter(path_)
-                return tree_iter
-            else:
-                del self.path_to_row[path]
-                return None
-        except KeyError:
+    def find_device_by_path(self, object_path: str) -> Optional[Gtk.TreeIter]:
+        row = self.path_to_row.get(object_path, None)
+        if row is None:
+            return row
+
+        if row.valid():
+            tree_path = row.get_path()
+            assert tree_path is not None
+            tree_iter = self.liststore.get_iter(tree_path)
+            return tree_iter
+        else:
+            del self.path_to_row[object_path]
             return None
 
     def do_cache(self, tree_iter: Gtk.TreeIter, kwargs: Dict[str, Any]) -> None:
