@@ -99,15 +99,15 @@ class GenericList(Gtk.TreeView):
             self.liststore.set(tree_iter, self.ids[k], v)
 
     def get(self, tree_iter: Gtk.TreeIter, *items: str) -> Dict[str, Any]:
-        ret = {}
-        if len(items) == 0:
-            for k, v in self.ids.items():
-                ret[k] = self.liststore.get(tree_iter, v)[0]
+        row_data = {}
+        if not items:
+            columns = [(name, self.ids[name]) for name in self.ids]
         else:
-            for i in range(len(items)):
-                if items[i] in self.ids:
-                    ret[items[i]] = self.liststore.get(tree_iter, self.ids[items[i]])[0]
-        return ret
+            columns = [(name, self.ids[name]) for name in items if name in self.ids]
+
+        for name, colid in columns:
+            row_data[name] = self.liststore.get_value(tree_iter, colid)
+        return row_data
 
     def get_iter(self, path: Optional[Gtk.TreePath]) -> Optional[Gtk.TreeIter]:
         if path is None:
