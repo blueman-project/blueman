@@ -342,15 +342,15 @@ class DeviceList(GenericList):
                                                                      self.liststore.get_path(tree_iter))
 
     def append(self, **columns: object) -> Gtk.TreeIter:
-        tree_iter = GenericList.append(self, **columns)
+        tree_iter = super().append(**columns)
         self.do_cache(tree_iter, columns)
         return tree_iter
 
     def prepend(self, **columns: object) -> Gtk.TreeIter:
-        tree_iter = GenericList.prepend(self, **columns)
+        tree_iter = super().prepend(**columns)
         self.do_cache(tree_iter, columns)
         return tree_iter
 
     def set(self, tree_iter: Gtk.TreeIter, **kwargs: object) -> None:
-        GenericList.set(self, tree_iter, **kwargs)
+        super().set(tree_iter, **kwargs)
         self.do_cache(tree_iter, kwargs)
