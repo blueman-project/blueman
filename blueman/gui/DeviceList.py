@@ -227,11 +227,15 @@ class DeviceList(GenericList):
             return
 
         logging.info("adding new device")
-        tree_iter = self.liststore.append()
 
-        timestamp = datetime.strftime(datetime.now(), '%Y%m%d%H%M%S%f')
-        no_name = "Name" not in device
-        self.set(tree_iter, device=device, dbus_path=object_path, timestamp=float(timestamp), no_name=no_name)
+        colls = {
+            "device": device,
+            "dbus_path": object_path,
+            "timestamp": float(datetime.strftime(datetime.now(), '%Y%m%d%H%M%S%f')),
+            "no_name": "Name" not in device
+        }
+
+        tree_iter = self.append(**colls)
         self.row_setup_event(tree_iter, device)
 
         if self.get_selected_device() is None:
