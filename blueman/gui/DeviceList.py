@@ -171,6 +171,7 @@ class DeviceList(GenericList):
             self.emit("device-selected", None, None)
 
         self.delete(tree_iter)
+        del self.path_to_row[object_path]
 
     #########################
 
