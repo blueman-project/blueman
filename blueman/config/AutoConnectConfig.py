@@ -1,3 +1,4 @@
+from typing import Tuple
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
@@ -8,9 +9,7 @@ class AutoConnectConfig(Gio.Settings):
     def __init__(self) -> None:
         super().__init__(schema_id="org.blueman.plugins.autoconnect")
 
-    def bind_to_menuitem(self, item: Gtk.CheckMenuItem, object_path: str, uuid: str) -> None:
-        data = object_path, uuid
-
+    def bind_to_menuitem(self, item: Gtk.CheckMenuItem, data: Tuple[str, str]) -> None:
         def switch(active: bool) -> None:
             services = set(self["services"])
             if active:

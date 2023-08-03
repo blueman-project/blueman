@@ -324,7 +324,7 @@ class ManagerDeviceMenu(Gtk.Menu):
 
             if row["connected"] or generic_autoconnect:
                 item = Gtk.CheckMenuItem(label=generic_service.name)
-                config.bind_to_menuitem(item, object_path, str(generic_service))
+                config.bind_to_menuitem(item, (object_path, str(generic_service)))
                 item.show()
                 self.append(item)
 
