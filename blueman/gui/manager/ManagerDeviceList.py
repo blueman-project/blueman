@@ -242,9 +242,13 @@ class ManagerDeviceList(DeviceList):
 
         return False
 
-    def get_icon_info(self, icon_name: str, size: int = 48) -> Optional[Gtk.IconInfo]:
+    def get_icon_info(self, icon_name: str, size: int = 48) -> Gtk.IconInfo:
         icon_info = self.icon_theme.lookup_icon_for_scale(icon_name, size, self.get_scale_factor(),
                                                           Gtk.IconLookupFlags.FORCE_SIZE)
+        if icon_info is None:
+            icon_info = self.icon_theme.lookup_icon_for_scale("image-missing", size, self.get_scale_factor(),
+                                                              Gtk.IconLookupFlags.FORCE_SIZE)
+        assert icon_info is not None
 
         return icon_info
 
