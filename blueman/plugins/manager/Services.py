@@ -74,7 +74,7 @@ class Services(ManagerPlugin, MenuItemsProvider):
             for service in services:
                 if service.connected_instances or (object_path, service.uuid) in autoconnect_services:
                     item = Gtk.CheckMenuItem(label=service.name)
-                    config.bind_to_menuitem(item, object_path, service.uuid)
+                    config.bind_to_menuitem(item, (object_path, service.uuid))
                     item.show()
                     items.append(DeviceMenuItem(item, DeviceMenuItem.Group.AUTOCONNECT, service.priority))
 
