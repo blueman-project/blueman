@@ -242,10 +242,8 @@ class ManagerDeviceList(DeviceList):
 
         return False
 
-    def get_icon_info(self, icon_name: str, size: int = 48, fallback: bool = True) -> Optional[Gtk.IconInfo]:
-        if icon_name is None and not fallback:
-            return None
-        elif icon_name is None and fallback:
+    def get_icon_info(self, icon_name: str, size: int = 48) -> Optional[Gtk.IconInfo]:
+        if icon_name is None:
             icon_name = "image-missing"
 
         icon_info = self.icon_theme.lookup_icon_for_scale(icon_name, size, self.get_scale_factor(),
@@ -262,14 +260,14 @@ class ManagerDeviceList(DeviceList):
 
         if is_connected or is_paired:
             icon = "blueman-connected-emblem" if is_connected else "blueman-paired-emblem"
-            _icon_info = self.get_icon_info(icon, 16, False)
+            _icon_info = self.get_icon_info(icon, 16)
             assert _icon_info is not None
             paired_surface = _icon_info.load_surface(window)
             ctx.set_source_surface(paired_surface, 1 / scale, 1 / scale)
             ctx.paint_with_alpha(0.8)
 
         if is_trusted:
-            _icon_info = self.get_icon_info("blueman-trusted-emblem", 16, False)
+            _icon_info = self.get_icon_info("blueman-trusted-emblem", 16)
             assert _icon_info is not None
             trusted_surface = _icon_info.load_surface(window)
             assert isinstance(target, cairo.ImageSurface)
@@ -282,7 +280,7 @@ class ManagerDeviceList(DeviceList):
             ctx.paint_with_alpha(0.8)
 
         if is_blocked:
-            _icon_info = self.get_icon_info("blueman-blocked-emblem", 16, False)
+            _icon_info = self.get_icon_info("blueman-blocked-emblem", 16)
             assert _icon_info is not None
             blocked_surface = _icon_info.load_surface(window)
             assert isinstance(target, cairo.ImageSurface)
@@ -358,7 +356,7 @@ class ManagerDeviceList(DeviceList):
         else:
             description = get_major_class(device['Class'])
 
-        icon_info = self.get_icon_info(device["Icon"], 48, False)
+        icon_info = self.get_icon_info(device["Icon"], 48)
         display_name = self.make_display_name(device.display_name, device["Class"], device['Address'])
         caption = self.make_caption(display_name, description, device['Address'])
 
