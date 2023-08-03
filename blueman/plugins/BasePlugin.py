@@ -106,7 +106,7 @@ class BasePlugin:
             raise KeyError("No such option")
         opt = self.__class__.__options__[key]
 
-        if type(value) == opt["type"]:
+        if type(value) is opt["type"]:
             self.__config[key] = value
             self.option_changed(key, value)
         else:
