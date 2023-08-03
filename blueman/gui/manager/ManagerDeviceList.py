@@ -22,6 +22,7 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import GLib
+from gi.repository import GObject
 from gi.repository import Gio
 from gi.repository import Gdk
 from gi.repository import GdkPixbuf
@@ -31,13 +32,21 @@ if TYPE_CHECKING:
     from blueman.main.Manager import Blueman
 
 
+class SurfaceObject(GObject.Object):
+    __gtype_name__ = "SurfaceObject"
+
+    def __init__(self, surface: cairo.ImageSurface) -> None:
+        super().__init__()
+        self.surface = surface
+
+
 class ManagerDeviceList(DeviceList):
     def __init__(self, inst: "Blueman", adapter: Optional[str] = None) -> None:
         cr = Gtk.CellRendererText()
         cr.props.ellipsize = Pango.EllipsizeMode.END
         tabledata: List[ListDataDict] = [
             # device picture
-            {"id": "device_surface", "type": str, "renderer": Gtk.CellRendererPixbuf(),
+            {"id": "device_surface", "type": SurfaceObject, "renderer": Gtk.CellRendererPixbuf(),
              "render_attrs": {}, "celldata_func": (self._set_cell_data, None)},
             # device caption
             {"id": "caption", "type": str, "renderer": cr,
@@ -59,7 +68,6 @@ class ManagerDeviceList(DeviceList):
             {"id": "battery", "type": float},
             {"id": "rssi", "type": float},
             {"id": "tpl", "type": float},
-            {"id": "icon_info", "type": Gtk.IconInfo},
             {"id": "cell_fader", "type": CellFade},
             {"id": "row_fader", "type": TreeRowFade},
             {"id": "initial_anim", "type": bool},
@@ -242,37 +250,31 @@ class ManagerDeviceList(DeviceList):
 
         return False
 
-    def get_icon_info(self, icon_name: str, size: int = 48) -> Gtk.IconInfo:
-        icon_info = self.icon_theme.lookup_icon_for_scale(icon_name, size, self.get_scale_factor(),
-                                                          Gtk.IconLookupFlags.FORCE_SIZE)
-        if icon_info is None:
-            icon_info = self.icon_theme.lookup_icon_for_scale("image-missing", size, self.get_scale_factor(),
-                                                              Gtk.IconLookupFlags.FORCE_SIZE)
-        assert icon_info is not None
-
-        return icon_info
-
-    def _make_device_icon(self, icon_info: Gtk.IconInfo, is_paired: bool, is_connected: bool, is_trusted: bool,
-                          is_blocked: bool) -> cairo.Surface:
+    def _load_surface(self, icon_name: str, size: int) -> cairo.ImageSurface:
         window = self.get_window()
         scale = self.get_scale_factor()
-        target = icon_info.load_surface(window)
+        surface = self.icon_theme.load_surface(icon_name, size, scale, window, Gtk.IconLookupFlags.FORCE_SIZE)
+        if surface is None:
+            surface = self.icon_theme.load_surface("image-missing", size, scale, window, Gtk.IconLookupFlags.FORCE_SIZE)
+        assert surface is not None
+
+        return cast(cairo.ImageSurface, surface)
+
+    def _make_device_icon(self, icon_name: str, is_paired: bool, is_connected: bool, is_trusted: bool,
+                          is_blocked: bool) -> cairo.ImageSurface:
+        scale = self.get_scale_factor()
+        target = self._load_surface(icon_name, 48)
         ctx = cairo.Context(target)
 
         if is_connected or is_paired:
             icon = "blueman-connected-emblem" if is_connected else "blueman-paired-emblem"
-            _icon_info = self.get_icon_info(icon, 16)
-            assert _icon_info is not None
-            paired_surface = _icon_info.load_surface(window)
+            paired_surface = self._load_surface(icon, 16)
             ctx.set_source_surface(paired_surface, 1 / scale, 1 / scale)
             ctx.paint_with_alpha(0.8)
 
         if is_trusted:
-            _icon_info = self.get_icon_info("blueman-trusted-emblem", 16)
-            assert _icon_info is not None
-            trusted_surface = _icon_info.load_surface(window)
+            trusted_surface = self._load_surface("blueman-trusted-emblem", 16)
             assert isinstance(target, cairo.ImageSurface)
-            assert isinstance(trusted_surface, cairo.ImageSurface)
             height = target.get_height()
             mini_height = trusted_surface.get_height()
             y = height / scale - mini_height / scale - 1 / scale
@@ -281,11 +283,8 @@ class ManagerDeviceList(DeviceList):
             ctx.paint_with_alpha(0.8)
 
         if is_blocked:
-            _icon_info = self.get_icon_info("blueman-blocked-emblem", 16)
-            assert _icon_info is not None
-            blocked_surface = _icon_info.load_surface(window)
+            blocked_surface = self._load_surface("blueman-blocked-emblem", 16)
             assert isinstance(target, cairo.ImageSurface)
-            assert isinstance(blocked_surface, cairo.ImageSurface)
             width = target.get_width()
             mini_width = blocked_surface.get_width()
             ctx.set_source_surface(blocked_surface, (width - mini_width - 1) / scale, 1 / scale)
@@ -357,11 +356,13 @@ class ManagerDeviceList(DeviceList):
         else:
             description = get_major_class(device['Class'])
 
-        icon_info = self.get_icon_info(device["Icon"], 48)
+        surface = self._make_device_icon(device["Icon"], device["Paired"], device["Connected"], device["Trusted"],
+                                         device["Blocked"])
+        surface_object = SurfaceObject(surface)
         display_name = self.make_display_name(device.display_name, device["Class"], device['Address'])
         caption = self.make_caption(display_name, description, device['Address'])
 
-        self.set(tree_iter, caption=caption, icon_info=icon_info, alias=display_name, objpush=has_objpush)
+        self.set(tree_iter, caption=caption, alias=display_name, objpush=has_objpush, device_surface=surface_object)
 
         try:
             self.row_update_event(tree_iter, "Trusted", device['Trusted'])
@@ -425,6 +426,13 @@ class ManagerDeviceList(DeviceList):
     def row_update_event(self, tree_iter: Gtk.TreeIter, key: str, value: Any) -> None:
         logging.info(f"{key} {value}")
 
+        device = self.get(tree_iter, "device")["device"]
+
+        if key in ("Blocked", "Connected", "Paired", "Trusted"):
+            surface = self._make_device_icon(device["Icon"], device["Paired"], device["Connected"], device["Trusted"],
+                                             device["Blocked"])
+            self.set(tree_iter, device_surface=SurfaceObject(surface))
+
         if key == "Trusted":
             if value:
                 self.set(tree_iter, trusted=True)
@@ -438,13 +446,11 @@ class ManagerDeviceList(DeviceList):
                 self.set(tree_iter, paired=False)
 
         elif key == "Alias":
-            device = self.get(tree_iter, "device")["device"]
             c = self.make_caption(value, self.get_device_class(device), device['Address'])
             name = self.make_display_name(device.display_name, device["Class"], device["Address"])
             self.set(tree_iter, caption=c, alias=name)
 
         elif key == "UUIDs":
-            device = self.get(tree_iter, "device")["device"]
             has_objpush = self._has_objpush(device)
             self.set(tree_iter, objpush=has_objpush)
 
@@ -452,7 +458,7 @@ class ManagerDeviceList(DeviceList):
             self.set(tree_iter, connected=value)
 
             if value:
-                self._monitor_power_levels(tree_iter, self.get(tree_iter, "device")["device"])
+                self._monitor_power_levels(tree_iter, device)
             else:
                 self._disable_power_levels(tree_iter)
         elif key == "Name":
@@ -631,10 +637,8 @@ class ManagerDeviceList(DeviceList):
                        tree_iter: Gtk.TreeIter, data: Optional[str]) -> None:
         tree_iter = model.convert_iter_to_child_iter(tree_iter)
         if data is None:
-            row = self.get(tree_iter, "icon_info", "paired", "connected", "trusted", "blocked")
-            surface = self._make_device_icon(row["icon_info"], row["paired"],
-                                             row["connected"], row["trusted"], row["blocked"])
-            cell.set_property("surface", surface)
+            row = self.get(tree_iter, "device_surface")
+            cell.set_property("surface", row["device_surface"].surface)
         else:
             window = self.get_window()
             scale = self.get_scale_factor()
