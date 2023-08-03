@@ -183,7 +183,7 @@ class BluezAgent(DbusService):
 
         key = f"{passkey:06}"
         notify_message = _("Pairing passkey for") + f" {self.get_device_string(device)}: " \
-                                                    f"{key[:entered]}<b>{key[entered]}</b>{key[entered+1:]}"
+                                                    f"{key[:entered]}<b>{key[entered]}</b>{key[entered + 1:]}"
         self._close()
         self._notification = Notification("Bluetooth", notify_message, 0, icon_name="blueman")
         self._notification.show()
