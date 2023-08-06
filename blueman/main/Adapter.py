@@ -3,7 +3,7 @@ import os.path
 import logging
 import gettext
 import signal
-from typing import Dict, TYPE_CHECKING, Optional, Any
+from typing import Dict, TypedDict, Optional, Any
 
 from blueman.Functions import *
 from blueman.bluez.Manager import Manager
@@ -18,17 +18,14 @@ from gi.repository import Gtk, Gio, Gdk, GLib
 from gi.repository import Pango
 
 
-if TYPE_CHECKING:
-    from typing_extensions import TypedDict
-
-    class Tab(TypedDict):
-        grid: Gtk.Grid
-        hidden_radio: Gtk.RadioButton
-        always_radio: Gtk.RadioButton
-        temparary_radio: Gtk.RadioButton
-        visible: bool
-        label: Gtk.Label
-        name_entry: Gtk.Entry
+class Tab(TypedDict):
+    grid: Gtk.Grid
+    hidden_radio: Gtk.RadioButton
+    always_radio: Gtk.RadioButton
+    temparary_radio: Gtk.RadioButton
+    visible: bool
+    label: Gtk.Label
+    name_entry: Gtk.Entry
 
 
 class BluemanAdapters(Gtk.Application):
@@ -135,7 +132,7 @@ class BluemanAdapters(Gtk.Application):
         logging.info(name)
         # FIXME: show error dialog and exit
 
-    def build_adapter_tab(self, adapter: Adapter) -> "Tab":
+    def build_adapter_tab(self, adapter: Adapter) -> Tab:
         def on_hidden_toggle(radio: Gtk.RadioButton) -> None:
             if not radio.props.active:
                 return
@@ -206,15 +203,15 @@ class BluemanAdapters(Gtk.Application):
         temporary_radio.connect("toggled", on_temporary_toggle)
         name_entry.connect("changed", on_name_changed)
 
-        return {
-            "grid": builder.get_widget("grid", Gtk.Grid),
-            "hidden_radio": hidden_radio,
-            "always_radio": always_radio,
-            "temparary_radio": temporary_radio,
-            "visible": False,
-            "label": Gtk.Label(),
-            "name_entry": name_entry
-        }
+        return Tab(
+            grid=builder.get_widget("grid", Gtk.Grid),
+            hidden_radio=hidden_radio,
+            always_radio=always_radio,
+            temparary_radio=temporary_radio,
+            visible=False,
+            label=Gtk.Label(),
+            name_entry=name_entry
+        )
 
     def add_to_notebook(self, adapter: Adapter) -> None:
         hci_dev = os.path.basename(adapter.get_object_path())
