@@ -94,21 +94,21 @@ class BluezAgent(DbusService):
 
         return dialog, pin_entry
 
-    def get_device_string(self, device_path: str) -> str:
-        device = Device(obj_path=device_path)
+    def get_device_string(self, object_path: str) -> str:
+        device = Device(obj_path=object_path)
         return f"<b>{escape(device.display_name)}</b> ({device['Address']})"
 
     @overload
-    def ask_passkey(self, dialog_msg: str, is_numeric: "Literal[True]", device_path: str, ok: Callable[[int], None],
+    def ask_passkey(self, dialog_msg: str, is_numeric: "Literal[True]", object_path: str, ok: Callable[[int], None],
                     err: Callable[[Union[BluezErrorCanceled, BluezErrorRejected]], None]) -> None:
         ...
 
     @overload
-    def ask_passkey(self, dialog_msg: str, is_numeric: "Literal[False]", device_path: str, ok: Callable[[str], None],
+    def ask_passkey(self, dialog_msg: str, is_numeric: "Literal[False]", object_path: str, ok: Callable[[str], None],
                     err: Callable[[Union[BluezErrorCanceled, BluezErrorRejected]], None]) -> None:
         ...
 
-    def ask_passkey(self, dialog_msg: str, is_numeric: bool, device_path: str, ok: Callable[[Any], None],
+    def ask_passkey(self, dialog_msg: str, is_numeric: bool, object_path: str, ok: Callable[[Any], None],
                     err: Callable[[Union[BluezErrorCanceled, BluezErrorRejected]], None]) -> None:
         def passkey_dialog_cb(dialog: Gtk.Dialog, response_id: int) -> None:
             if response_id == Gtk.ResponseType.ACCEPT:
@@ -119,7 +119,7 @@ class BluezAgent(DbusService):
             dialog.destroy()
             self.dialog = None
 
-        dev_str = self.get_device_string(device_path)
+        dev_str = self.get_device_string(object_path)
         notify_message = _("Pairing request for %s") % dev_str
 
         if self.dialog:
@@ -159,45 +159,45 @@ class BluezAgent(DbusService):
             self._notification.close()
             self._notification = None
 
-    def _on_request_pin_code(self, device_path: str, ok: Callable[[str], None],
+    def _on_request_pin_code(self, object_path: str, ok: Callable[[str], None],
                              err: Callable[[Union[BluezErrorCanceled, BluezErrorRejected]], None]) -> None:
         logging.info("Agent.RequestPinCode")
         dialog_msg = _("Enter PIN code for authentication:")
 
-        self.ask_passkey(dialog_msg, False, device_path, ok, err)
+        self.ask_passkey(dialog_msg, False, object_path, ok, err)
         if self.dialog:
             self.dialog.present()
 
-    def _on_request_passkey(self, device: str, ok: Callable[[int], None],
+    def _on_request_passkey(self, object_path: str, ok: Callable[[int], None],
                             err: Callable[[Union[BluezErrorCanceled, BluezErrorRejected]], None]) -> None:
         logging.info("Agent.RequestPasskey")
         dialog_msg = _("Enter passkey for authentication:")
-        self.ask_passkey(dialog_msg, True, device, ok, err)
+        self.ask_passkey(dialog_msg, True, object_path, ok, err)
         if self.dialog:
             self.dialog.present()
 
-    def _on_display_passkey(self, device: str, passkey: int, entered: int) -> None:
-        logging.info(f"DisplayPasskey ({device}, {passkey:d} {entered:d})")
-        dev = Device(obj_path=device)
-        self._devhandlerids[device] = dev.connect_signal("property-changed", self._on_device_property_changed)
+    def _on_display_passkey(self, object_path: str, passkey: int, entered: int) -> None:
+        logging.info(f"DisplayPasskey ({object_path}, {passkey:d} {entered:d})")
+        dev = Device(obj_path=object_path)
+        self._devhandlerids[object_path] = dev.connect_signal("property-changed", self._on_device_property_changed)
 
         key = f"{passkey:06}"
-        notify_message = _("Pairing passkey for") + f" {self.get_device_string(device)}: " \
+        notify_message = _("Pairing passkey for") + f" {self.get_device_string(object_path)}: " \
                                                     f"{key[:entered]}<b>{key[entered]}</b>{key[entered + 1:]}"
         self._close()
         self._notification = Notification("Bluetooth", notify_message, 0, icon_name="blueman")
         self._notification.show()
 
-    def _on_display_pin_code(self, device: str, pin_code: str) -> None:
-        logging.info(f'DisplayPinCode ({device}, {pin_code})')
-        dev = Device(obj_path=device)
-        self._devhandlerids[device] = dev.connect_signal("property-changed", self._on_device_property_changed)
+    def _on_display_pin_code(self, object_path: str, pin_code: str) -> None:
+        logging.info(f'DisplayPinCode ({object_path}, {pin_code})')
+        dev = Device(obj_path=object_path)
+        self._devhandlerids[object_path] = dev.connect_signal("property-changed", self._on_device_property_changed)
 
-        notify_message = _("Pairing PIN code for") + f" {self.get_device_string(device)}: {pin_code}"
+        notify_message = _("Pairing PIN code for") + f" {self.get_device_string(object_path)}: {pin_code}"
         self._notification = Notification("Bluetooth", notify_message, 0, icon_name="blueman")
         self._notification.show()
 
-    def _on_request_confirmation(self, device_path: str, passkey: Optional[int], ok: Callable[[], None],
+    def _on_request_confirmation(self, object_path: str, passkey: Optional[int], ok: Callable[[], None],
                                  err: Callable[[BluezErrorCanceled], None]) -> None:
         def on_confirm_action(action: str) -> None:
             if action == "confirm":
@@ -206,7 +206,7 @@ class BluezAgent(DbusService):
                 err(BluezErrorCanceled("User canceled pairing"))
 
         logging.info("Agent.RequestConfirmation")
-        notify_message = _("Pairing request for:") + f"\n{self.get_device_string(device_path)}"
+        notify_message = _("Pairing request for:") + f"\n{self.get_device_string(object_path)}"
 
         if passkey:
             notify_message += "\n" + _("Confirm value for authentication:") + f" <b>{passkey:06}</b>"
@@ -216,17 +216,17 @@ class BluezAgent(DbusService):
                                           icon_name="blueman")
         self._notification.show()
 
-    def _on_request_authorization(self, device: str, ok: Callable[[], None],
+    def _on_request_authorization(self, object_path: str, ok: Callable[[], None],
                                   err: Callable[[BluezErrorCanceled], None]) -> None:
-        self._on_request_confirmation(device, None, ok, err)
+        self._on_request_confirmation(object_path, None, ok, err)
 
-    def _on_authorize_service(self, device: str, uuid: str, ok: Callable[[], None],
+    def _on_authorize_service(self, object_path: str, uuid: str, ok: Callable[[], None],
                               err: Callable[[BluezErrorRejected], None]) -> None:
         def on_auth_action(action: str) -> None:
             logging.info(action)
 
             if action == "always":
-                Device(obj_path=device).set("Trusted", True)
+                Device(obj_path=object_path).set("Trusted", True)
             if action == "always" or action == "accept":
                 ok()
             else:
@@ -235,7 +235,7 @@ class BluezAgent(DbusService):
             self._service_notifications.remove(n)
 
         logging.info("Agent.Authorize")
-        dev_str = self.get_device_string(device)
+        dev_str = self.get_device_string(object_path)
         service = ServiceUUID(uuid).name
         notify_message = \
             _("Authorization request for:") + f"\n{dev_str}\n" + _("Service:") + f" <b>{service}</b>"
