@@ -28,6 +28,7 @@ if TYPE_CHECKING:
         temparary_radio: Gtk.RadioButton
         visible: bool
         label: Gtk.Label
+        name_entry: Gtk.Entry
 
 
 class BluemanAdapters(Gtk.Application):
@@ -113,6 +114,7 @@ class BluemanAdapters(Gtk.Application):
             self.tabs[hci_dev]["hidden_radio"].set_active(True)
         elif name == "Alias":
             self.tabs[hci_dev]["label"].set_text(value)
+            self.tabs[hci_dev]["name_entry"].set_text(value)
 
     def on_adapter_added(self, _manager: Manager, adapter_path: str) -> None:
         hci_dev = os.path.basename(adapter_path)
@@ -210,7 +212,8 @@ class BluemanAdapters(Gtk.Application):
             "always_radio": always_radio,
             "temparary_radio": temporary_radio,
             "visible": False,
-            "label": Gtk.Label()
+            "label": Gtk.Label(),
+            "name_entry": name_entry
         }
 
     def add_to_notebook(self, adapter: Adapter) -> None:
