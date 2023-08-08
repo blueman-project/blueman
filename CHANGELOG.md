@@ -12,6 +12,7 @@
 
 ### Changes
 
+* Allow blueman-applet to be controlled by systemd (systemctl --user). The autostart desktopfile still has priority over this and will have to be removed.
 * Raise minimum Python version to 3.8
 * Raise minumum Gtk+ version to 3.24
 * Hide recent connections associated with unavailable adapters
