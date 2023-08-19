@@ -2,108 +2,66 @@
 <!-- Generated with glade 3.40.0 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
-  <object class="GtkFrame" id="transfer">
+  <!-- n-columns=2 n-rows=3 -->
+  <object class="GtkGrid" id="transfer">
+    <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="hexpand">True</property>
-    <property name="border-width">6</property>
-    <property name="label-xalign">0</property>
-    <property name="shadow-type">none</property>
+    <property name="margin-start">12</property>
+    <property name="margin-top">10</property>
+    <property name="row-spacing">12</property>
+    <property name="column-spacing">6</property>
     <child>
-      <!-- n-columns=2 n-rows=3 -->
-      <object class="GtkGrid" id="incoming_grid">
+      <object class="GtkLabel" id="push_label">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
-        <property name="margin-start">12</property>
-        <property name="margin-top">10</property>
-        <property name="row-spacing">12</property>
-        <property name="column-spacing">6</property>
-        <child>
-          <object class="GtkLabel" id="push_label">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="halign">start</property>
-            <property name="label" translatable="yes">&lt;b&gt;File Receiving (Object Push)&lt;/b&gt;</property>
-            <property name="use-markup">True</property>
-          </object>
-          <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">1</property>
-            <property name="width">2</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel" id="incoming_label">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="label" translatable="yes">Incoming Folder:</property>
-          </object>
-          <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkFileChooserButton" id="shared-path">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="action">select-folder</property>
-            <property name="title" translatable="yes">Select folder for incoming file transfers</property>
-          </object>
-          <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkCheckButton" id="opp-accept">
-            <property name="label" translatable="yes">Accept files from trusted devices</property>
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="receives-default">False</property>
-            <property name="halign">start</property>
-            <property name="margin-start">12</property>
-            <property name="draw-indicator">True</property>
-          </object>
-          <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">2</property>
-            <property name="width">2</property>
-          </packing>
-        </child>
+        <property name="halign">start</property>
+        <property name="label" translatable="yes">&lt;b&gt;File Receiving (Object Push)&lt;/b&gt;</property>
+        <property name="use-markup">True</property>
       </object>
+      <packing>
+        <property name="left-attach">0</property>
+        <property name="top-attach">1</property>
+        <property name="width">2</property>
+      </packing>
     </child>
-    <child type="label">
-      <object class="GtkBox" id="transfer_top">
+    <child>
+      <object class="GtkLabel" id="incoming_label">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
-        <property name="spacing">6</property>
-        <child>
-          <object class="GtkImage" id="transfer_image">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="pixel-size">32</property>
-            <property name="icon-name">folder</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel" id="transfer_label">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="label" translatable="yes">&lt;b&gt;Transfer Settings&lt;/b&gt;</property>
-            <property name="use-markup">True</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">1</property>
-          </packing>
-        </child>
+        <property name="label" translatable="yes">Incoming Folder:</property>
       </object>
+      <packing>
+        <property name="left-attach">0</property>
+        <property name="top-attach">0</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkFileChooserButton" id="shared-path">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="action">select-folder</property>
+        <property name="title" translatable="yes">Select folder for incoming file transfers</property>
+      </object>
+      <packing>
+        <property name="left-attach">1</property>
+        <property name="top-attach">0</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkCheckButton" id="opp-accept">
+        <property name="label" translatable="yes">Accept files from trusted devices</property>
+        <property name="visible">True</property>
+        <property name="can-focus">True</property>
+        <property name="receives-default">False</property>
+        <property name="halign">start</property>
+        <property name="margin-start">12</property>
+        <property name="draw-indicator">True</property>
+      </object>
+      <packing>
+        <property name="left-attach">0</property>
+        <property name="top-attach">2</property>
+        <property name="width">2</property>
+      </packing>
     </child>
   </object>
 </interface>
