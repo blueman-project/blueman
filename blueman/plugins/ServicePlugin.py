@@ -20,19 +20,9 @@ class ServicePlugin:
         ServicePlugin.instances.append(self)
         self._options = []
         self.parent = parent
+        self.widget: Gtk.Grid
 
         self.__is_exposed = False
-        self._is_loaded = False
-
-    def _on_enter(self) -> None:
-        if not self.__is_exposed:
-            self.on_enter()
-            self.__is_exposed = True
-
-    def _on_leave(self) -> None:
-        if self.__is_exposed:
-            self.on_leave()
-            self.__is_exposed = False
 
     # call when option has changed.
     def option_changed_notify(self, option_id: str, state: bool = True) -> None:
@@ -51,7 +41,7 @@ class ServicePlugin:
     def clear_options(self) -> None:
         self._options = []
 
-    def on_load(self, container: Gtk.Box) -> None:
+    def on_load(self) -> None:
         pass
 
     def on_unload(self) -> None:

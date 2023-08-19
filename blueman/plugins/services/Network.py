@@ -22,12 +22,10 @@ if TYPE_CHECKING:
 class Network(ServicePlugin):
     __plugin_info__ = (_("Network"), "network-workgroup")
 
-    def on_load(self, container: Gtk.Box) -> None:
+    def on_load(self) -> None:
 
         self._builder = Builder("services-network.ui")
-        self.widget = self._builder.get_widget("network_frame", Gtk.Widget)
-
-        container.pack_start(self.widget, True, True, 0)
+        self.widget = self._builder.get_widget("network", Gtk.Grid)
 
         self.interfaces: List[Tuple[str, Union[ipaddress.IPv4Interface, ipaddress.IPv6Interface]]] = []
         netifs = get_local_interfaces()
@@ -42,12 +40,6 @@ class Network(ServicePlugin):
             self.ip_check()
         except (ValueError, ipaddress.AddressValueError) as e:
             logging.exception(e)
-
-    def on_enter(self) -> None:
-        self.widget.props.visible = True
-
-    def on_leave(self) -> None:
-        self.widget.props.visible = False
 
     def on_apply(self) -> None:
 

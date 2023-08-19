@@ -13,24 +13,17 @@ from gi.repository import Gtk, Gio
 class Transfer(ServicePlugin):
     __plugin_info__ = (_("Transfer"), "folder")
 
-    def on_load(self, container: Gtk.Box) -> None:
+    def on_load(self) -> None:
 
         self._builder = Builder("services-transfer.ui")
-        self.widget = self._builder.get_widget("transfer", Gtk.Widget)
+        self.widget = self._builder.get_widget("transfer", Gtk.Grid)
 
-        container.pack_start(self.widget, True, True, 0)
         a = AppletService()
         if "TransferService" in a.QueryPlugins():
             self._setup_transfer()
         else:
             self.widget.props.sensitive = False
             self.widget.props.tooltip_text = _("Applet's transfer service plugin is disabled")
-
-    def on_enter(self) -> None:
-        self.widget.props.visible = True
-
-    def on_leave(self) -> None:
-        self.widget.props.visible = False
 
     def on_property_changed(self, config: Gio.Settings, key: str) -> None:
         value = config[key]
