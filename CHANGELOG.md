@@ -21,6 +21,7 @@
 * Do not use pointless link quality value
 * Recent connections in toplevel applet menu
 * Never hide keyboard and combos, see #1954 for more info
+* Do not close blueman-manager from applet
 
 ## 2.3.5
 
