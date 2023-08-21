@@ -10,52 +10,6 @@
     <property name="margin-top">10</property>
     <property name="border-width">6</property>
     <property name="row-spacing">12</property>
-    <property name="column-spacing">12</property>
-    <child>
-      <object class="GtkFrame" id="services_frame">
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="label-xalign">0</property>
-        <property name="shadow-type">none</property>
-        <child>
-          <object class="GtkBox" id="services">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="margin-start">12</property>
-            <property name="margin-top">2</property>
-            <property name="orientation">vertical</property>
-            <child>
-              <object class="GtkCheckButton" id="nap-enable">
-                <property name="label" translatable="yes">Network Access Point (NAP)</property>
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="receives-default">False</property>
-                <property name="halign">start</property>
-                <property name="draw-indicator">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-          </object>
-        </child>
-        <child type="label">
-          <object class="GtkLabel" id="services_label">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="label" translatable="yes">&lt;b&gt;Services&lt;/b&gt;</property>
-            <property name="use-markup">True</property>
-          </object>
-        </child>
-      </object>
-      <packing>
-        <property name="left-attach">0</property>
-        <property name="top-attach">0</property>
-        <property name="width">3</property>
-      </packing>
-    </child>
     <child>
       <object class="GtkFrame" id="nap_frame">
         <property name="visible">True</property>
@@ -67,10 +21,9 @@
           <object class="GtkGrid" id="nap_grid">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="margin-start">12</property>
+            <property name="margin-start">4</property>
             <property name="margin-top">2</property>
             <property name="row-spacing">6</property>
-            <property name="column-spacing">6</property>
             <child>
               <object class="GtkLabel" id="dhcp_server_label">
                 <property name="visible">True</property>
@@ -120,30 +73,6 @@
               <packing>
                 <property name="left-attach">3</property>
                 <property name="top-attach">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel" id="dhcp_ip_label">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="halign">start</property>
-                <property name="label" translatable="yes">IP Address:</property>
-              </object>
-              <packing>
-                <property name="left-attach">0</property>
-                <property name="top-attach">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkEntry" id="net_ip">
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="text">192.168.20.1</property>
-              </object>
-              <packing>
-                <property name="left-attach">1</property>
-                <property name="top-attach">1</property>
-                <property name="width">3</property>
               </packing>
             </child>
             <child>
@@ -201,6 +130,47 @@
                 <property name="top-attach">0</property>
               </packing>
             </child>
+            <child>
+              <object class="GtkBox">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="spacing">6</property>
+                <child>
+                  <object class="GtkLabel" id="dhcp_ip_label">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="label" translatable="yes">IP Address:</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="net_ip">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="halign">start</property>
+                    <property name="has-frame">False</property>
+                    <property name="width-chars">15</property>
+                    <property name="max-width-chars">15</property>
+                    <property name="text">192.168.20.1</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">1</property>
+                <property name="width">4</property>
+              </packing>
+            </child>
           </object>
         </child>
         <child type="label">
@@ -222,13 +192,15 @@
       <object class="GtkFrame" id="pan_frame">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
+        <property name="halign">start</property>
+        <property name="margin-start">5</property>
+        <property name="margin-top">2</property>
         <property name="label-xalign">0</property>
         <property name="shadow-type">none</property>
         <child>
           <object class="GtkBox" id="pan_box">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="margin-start">12</property>
             <property name="margin-top">2</property>
             <property name="orientation">vertical</property>
             <child>
@@ -237,7 +209,6 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">False</property>
-                <property name="halign">start</property>
                 <property name="active">True</property>
                 <property name="draw-indicator">True</property>
               </object>
@@ -253,7 +224,6 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">False</property>
-                <property name="halign">start</property>
                 <property name="draw-indicator">True</property>
                 <property name="group">rb_nm</property>
               </object>
@@ -266,9 +236,10 @@
           </object>
         </child>
         <child type="label">
-          <object class="GtkLabel" id="label15">
+          <object class="GtkLabel" id="pan_label">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
+            <property name="tooltip-text" translatable="yes">Personal Area Network</property>
             <property name="label" translatable="yes">&lt;b&gt;PAN Support&lt;/b&gt;</property>
             <property name="use-markup">True</property>
           </object>
@@ -284,6 +255,8 @@
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="halign">center</property>
+        <property name="margin-start">10</property>
+        <property name="margin-end">10</property>
         <property name="orientation">vertical</property>
       </object>
       <packing>
@@ -295,13 +268,14 @@
       <object class="GtkFrame" id="dun_frame">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
+        <property name="halign">start</property>
+        <property name="margin-top">2</property>
         <property name="label-xalign">0</property>
         <property name="shadow-type">none</property>
         <child>
           <object class="GtkBox" id="dun_box">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="margin-start">12</property>
             <property name="margin-top">2</property>
             <property name="orientation">vertical</property>
             <child>
@@ -310,7 +284,6 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">False</property>
-                <property name="halign">start</property>
                 <property name="active">True</property>
                 <property name="draw-indicator">True</property>
               </object>
@@ -326,7 +299,6 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">False</property>
-                <property name="halign">start</property>
                 <property name="draw-indicator">True</property>
                 <property name="group">rb_dun_nm</property>
               </object>
@@ -342,6 +314,7 @@
           <object class="GtkLabel" id="dun_label">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
+            <property name="tooltip-text" translatable="yes">Dial-up Networking</property>
             <property name="label" translatable="yes">&lt;b&gt;DUN Support&lt;/b&gt;</property>
             <property name="use-markup">True</property>
           </object>
@@ -350,6 +323,37 @@
       <packing>
         <property name="left-attach">2</property>
         <property name="top-attach">2</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkFrame" id="na_frame">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="label-xalign">0</property>
+        <property name="shadow-type">none</property>
+        <child>
+          <object class="GtkCheckButton" id="nap-enable">
+            <property name="label" translatable="yes">Network Access Point (NAP)</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">False</property>
+            <property name="margin-top">2</property>
+            <property name="draw-indicator">True</property>
+          </object>
+        </child>
+        <child type="label">
+          <object class="GtkLabel" id="services_label">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="label" translatable="yes">&lt;b&gt;NAP Support&lt;/b&gt;</property>
+            <property name="use-markup">True</property>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="left-attach">0</property>
+        <property name="top-attach">0</property>
+        <property name="width">3</property>
       </packing>
     </child>
   </object>
