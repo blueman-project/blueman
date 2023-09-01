@@ -103,25 +103,11 @@
             <property name="can-focus">False</property>
             <property name="shadow-type">none</property>
             <child>
-              <!-- n-columns=1 n-rows=8 -->
+              <!-- n-columns=1 n-rows=7 -->
               <object class="GtkGrid" id="content">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="row-spacing">12</property>
-                <child>
-                  <object class="GtkLabel" id="plugin_description_label">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="halign">start</property>
-                    <property name="valign">start</property>
-                    <property name="label" translatable="yes">&lt;b&gt;Plugin description:&lt;/b&gt;</property>
-                    <property name="use-markup">True</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">0</property>
-                  </packing>
-                </child>
                 <child>
                   <object class="GtkLabel" id="description">
                     <property name="width-request">360</property>
@@ -136,7 +122,7 @@
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
-                    <property name="top-attach">1</property>
+                    <property name="top-attach">0</property>
                   </packing>
                 </child>
                 <child>
@@ -151,7 +137,7 @@
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
-                    <property name="top-attach">2</property>
+                    <property name="top-attach">1</property>
                   </packing>
                 </child>
                 <child>
@@ -165,7 +151,7 @@
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
-                    <property name="top-attach">3</property>
+                    <property name="top-attach">2</property>
                   </packing>
                 </child>
                 <child>
@@ -178,7 +164,7 @@
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
-                    <property name="top-attach">4</property>
+                    <property name="top-attach">3</property>
                   </packing>
                 </child>
                 <child>
@@ -187,12 +173,13 @@
                     <property name="can-focus">False</property>
                     <property name="halign">start</property>
                     <property name="valign">start</property>
+                    <property name="label">dependlist</property>
                     <property name="use-markup">True</property>
                     <property name="wrap">True</property>
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
-                    <property name="top-attach">5</property>
+                    <property name="top-attach">4</property>
                   </packing>
                 </child>
                 <child>
@@ -206,7 +193,7 @@
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
-                    <property name="top-attach">6</property>
+                    <property name="top-attach">5</property>
                   </packing>
                 </child>
                 <child>
@@ -215,10 +202,11 @@
                     <property name="can-focus">False</property>
                     <property name="halign">start</property>
                     <property name="valign">start</property>
+                    <property name="label">conflictlist</property>
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
-                    <property name="top-attach">7</property>
+                    <property name="top-attach">6</property>
                   </packing>
                 </child>
               </object>
