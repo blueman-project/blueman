@@ -112,9 +112,7 @@ class PluginDialog(Gtk.ApplicationWindow):
 
         self.icon = builder.get_widget("icon", Gtk.Image)
         self.author_txt = builder.get_widget("author_txt", Gtk.Label)
-        self.depends_hdr = builder.get_widget("depends_hdr", Gtk.Widget)
         self.depends_txt = builder.get_widget("depends_txt", Gtk.Label)
-        self.conflicts_hdr = builder.get_widget("conflicts_hdr", Gtk.Widget)
         self.conflicts_txt = builder.get_widget("conflicts_txt", Gtk.Label)
         self.plugin_name = builder.get_widget("name", Gtk.Label)
 
@@ -205,20 +203,14 @@ class PluginDialog(Gtk.ApplicationWindow):
         self.description.props.label = cls.__description__
 
         if cls.__depends__:
-            self.depends_hdr.props.visible = True
-            self.depends_txt.props.visible = True
             self.depends_txt.props.label = ", ".join(cls.__depends__)
         else:
-            self.depends_hdr.props.visible = False
-            self.depends_txt.props.visible = False
+            self.depends_txt.props.label = _("No dependencies")
 
         if cls.__conflicts__:
-            self.conflicts_hdr.props.visible = True
-            self.conflicts_txt.props.visible = True
             self.conflicts_txt.props.label = ", ".join(cls.__conflicts__)
         else:
-            self.conflicts_hdr.props.visible = False
-            self.conflicts_txt.props.visible = False
+            self.conflicts_txt.props.label = _("No conflicts")
 
         if cls.is_configurable() and name in self.applet.Plugins.get_loaded():
             self.b_prefs.props.sensitive = True
