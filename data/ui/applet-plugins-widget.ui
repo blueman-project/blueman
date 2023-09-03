@@ -19,7 +19,16 @@
         <property name="hscrollbar-policy">never</property>
         <property name="shadow-type">in</property>
         <child>
-          <placeholder/>
+          <object class="GtkViewport">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <child>
+              <object class="GtkListBox" id="plugin_listbox">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+              </object>
+            </child>
+          </object>
         </child>
       </object>
       <packing>

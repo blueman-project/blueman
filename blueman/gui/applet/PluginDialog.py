@@ -1,8 +1,7 @@
 from gettext import gettext as _
 import logging
-from typing import TYPE_CHECKING, List, Type, Dict
+from typing import TYPE_CHECKING, Type, Dict, cast, Optional
 
-from blueman.gui.GenericList import GenericList, ListDataDict
 from blueman.main.Builder import Builder
 from blueman.main.PluginManager import PluginManager
 from blueman.plugins.AppletPlugin import AppletPlugin
@@ -11,10 +10,37 @@ from blueman.plugins.BasePlugin import Option
 import gi
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
-from gi.repository import Gtk, Gdk, Gio
+from gi.repository import Gtk, Gdk, Gio, GLib, GObject
 
 if TYPE_CHECKING:
     from blueman.main.Applet import BluemanApplet
+
+
+class PluginItem(GObject.Object):
+    __gtype_name__ = "PluginItem"
+
+    class _Props:
+        icon_name: str
+        plugin_name: str
+        description: str
+        enabled: bool
+        activatable: bool
+
+    props: _Props
+
+    icon_name = GObject.Property(type=str)
+    plugin_name = GObject.Property(type=str)
+    description = GObject.Property(type=str)
+    enabled = GObject.Property(type=bool, default=False)
+    activatable = GObject.Property(type=bool, default=False)
+
+    def __init__(self, icon_name: str, plugin_name: str, description: str, enabled: bool, activatable: bool):
+        super().__init__()
+        self.props.icon_name = icon_name
+        self.props.plugin_name = plugin_name
+        self.props.description = description
+        self.props.enabled = enabled
+        self.props.activatable = activatable
 
 
 class SettingsWidget(Gtk.Box):
@@ -124,29 +150,13 @@ class PluginDialog(Gtk.ApplicationWindow):
 
         self.add(builder.get_widget("all", Gtk.Container))
 
-        cr = Gtk.CellRendererToggle()
-        cr.connect("toggled", self.on_toggled)
-
-        data: List[ListDataDict] = [
-            {"id": "active", "type": bool, "renderer": cr, "render_attrs": {"active": 0, "activatable": 1,
-                                                                            "visible": 1}},
-            {"id": "activatable", "type": bool},
-            {"id": "icon", "type": str, "renderer": Gtk.CellRendererPixbuf(), "render_attrs": {"icon-name": 2}},
-            # device caption
-            {"id": "desc", "type": str, "renderer": Gtk.CellRendererText(), "render_attrs": {"markup": 3},
-             "view_props": {"expand": True}},
-            {"id": "name", "type": str},
-        ]
-
-        self.list = GenericList(data, headers_visible=False, visible=True)
-        self.list.liststore.set_sort_column_id(3, Gtk.SortType.ASCENDING)
-        self.list.liststore.set_sort_func(3, self.list_compare_func)
-
-        self.list.selection.connect("changed", self.on_selection_changed)
+        self.model = Gio.ListStore.new(PluginItem.__gtype__)
+        self.listbox = builder.get_widget("plugin_listbox", Gtk.ListBox)
+        self.listbox.bind_model(self.model, self._widget_factory)
+        self.listbox.connect("row-selected", self._on_row_selected)
 
         plugin_list = builder.get_widget("plugin_list", Gtk.ScrolledWindow)
         plugin_info = builder.get_widget("main_scrolled_window", Gtk.ScrolledWindow)
-        plugin_list.add(self.list)
 
         # Disable overlay scrolling
         if Gtk.get_minor_version() >= 16:
@@ -159,45 +169,94 @@ class PluginDialog(Gtk.ApplicationWindow):
         self.sig_b: int = self.applet.Plugins.connect("plugin-unloaded", self.plugin_state_changed, False)
         self.connect("delete-event", self._on_close)
 
-        self.list.set_cursor(Gtk.TreePath.new_first())
-
         close_action = Gio.SimpleAction.new("close", None)
         close_action.connect("activate", lambda x, y: self.close())
+
         self.add_action(close_action)
 
-    def list_compare_func(self, _treemodel: Gtk.TreeModel, iter1: Gtk.TreeIter, iter2: Gtk.TreeIter, _user_data: object
-                          ) -> int:
-        a = self.list.get(iter1, "activatable", "name")
-        b = self.list.get(iter2, "activatable", "name")
+    def _add_plugin_action(self, name: str, state: bool, activatable: bool) -> None:
+        logging.debug(f"adding action: {name}")
+        action = Gio.SimpleAction.new_stateful(
+            name, None, GLib.Variant.new_boolean(state)
+        )
+        action.set_property("enabled", activatable)
+        self.add_action(action)
+        action.connect("change-state", self._on_plugin_toggle)
 
-        if (a["activatable"] and b["activatable"]) or (not a["activatable"] and not b["activatable"]):
-            if a["name"] == b["name"]:
-                return 0
-            if a["name"] < b["name"]:
-                return -1
-            else:
-                return 1
+    def _widget_factory(self, item: GObject.Object, _data: Optional[object] = None) -> Gtk.Widget:
+        assert isinstance(item, PluginItem)
+        box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5, visible=True)
 
+        checkbutton = Gtk.CheckButton(visible=True, sensitive=item.props.activatable)
+        box.add(checkbutton)
+        checkbutton.set_action_name(f"win.{item.props.plugin_name}")
+
+        self._add_plugin_action(item.props.plugin_name, item.props.enabled, item.props.activatable)
+        # Set active after adding action
+        checkbutton.set_active(item.props.enabled)
+
+        plugin_im = Gtk.Image(icon_name=item.props.icon_name, visible=True)
+        box.add(plugin_im)
+
+        label = Gtk.Label(label=item.props.description, use_markup=True, visible=True)
+        box.add(label)
+        return box
+
+    def _model_sort_func(self, item1: Optional[object], item2: Optional[object], _data: Optional[object] = None) -> int:
+        assert isinstance(item1, PluginItem)
+        assert isinstance(item2, PluginItem)
+
+        if item1.props.activatable and not item2.props.activatable:
+            return -1
+        elif not item1.props.activatable and item2.props.activatable:
+            return 1
+
+        if item1.props.plugin_name < item2.props.plugin_name:
+            return -1
+        elif item1.props.plugin_name > item2.props.plugin_name:
+            return 1
+
+        return 0
+
+    def _on_plugin_toggle(self, action: Gio.SimpleAction, state: GLib.Variant) -> None:
+        action.set_state(state)
+        plugin_name = action.get_name()
+
+        deps = self.applet.Plugins.get_dependencies()[plugin_name]
+        loaded = self.applet.Plugins.get_loaded()
+        to_unload = [dep for dep in deps if dep in loaded]
+
+        if to_unload:
+            if not self._ask_unload(
+                _("Plugin <b>\"%(0)s\"</b> depends on <b>%(1)s</b>. Unloading <b>%(1)s</b> will also unload <b>"
+                  "\"%(0)s\"</b>.\nProceed?") % {"0": ", ".join(to_unload), "1": plugin_name}
+            ):
+                action.set_state(GLib.Variant.new_boolean(not state))
+                return
         else:
-            if a["activatable"] and not b["activatable"]:
-                return -1
-            elif not a["activatable"] and b["activatable"]:
-                return 1
-            else:
-                return 0
+            conflicts = self.applet.Plugins.get_conflicts()[plugin_name]
+            to_unload = [conf for conf in conflicts if conf in loaded]
 
-    def _on_close(self, _widget: Gtk.Widget, _event: Gdk.Event) -> bool:
-        self.applet.Plugins.disconnect(self.sig_a)
-        self.applet.Plugins.disconnect(self.sig_b)
-        return False
+            if to_unload and not self._ask_unload(
+                _("Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will unload <b>%(0)s</b>."
+                  "\nProceed?") % {"0": ", ".join(to_unload), "1": plugin_name}
+            ):
+                action.set_state(GLib.Variant.new_boolean(not state))
+                return
 
-    def on_selection_changed(self, _selection: Gtk.TreeSelection) -> None:
-        tree_iter = self.list.selected()
-        assert tree_iter is not None
+        for p in to_unload:
+            logging.debug(f"unloading {p}")
+            self.applet.Plugins.set_config(p, False)
 
-        name = self.list.get(tree_iter, "name")["name"]
-        cls: Type[AppletPlugin] = self.applet.Plugins.get_classes()[name]
-        self.plugin_name.props.label = "<b>" + name + "</b>"
+        self.applet.Plugins.set_config(plugin_name, plugin_name not in self.applet.Plugins.get_loaded())
+
+    def _on_row_selected(self, _lb: Gtk.ListBox, lbrow: Gtk.ListBoxRow) -> None:
+        pos = lbrow.get_index()
+        item = self.model.get_item(pos)
+        assert isinstance(item, PluginItem)
+
+        cls: Type[AppletPlugin] = self.applet.Plugins.get_classes()[item.props.plugin_name]
+        self.plugin_name.props.label = "<b>" + item.props.plugin_name + "</b>"
         self.icon.props.icon_name = cls.__icon__
         self.author_txt.props.label = cls.__author__
         self.description.props.label = cls.__description__
@@ -212,18 +271,23 @@ class PluginDialog(Gtk.ApplicationWindow):
         else:
             self.conflicts_txt.props.label = _("No conflicts")
 
-        if cls.is_configurable() and name in self.applet.Plugins.get_loaded():
+        if cls.is_configurable() and item.props.plugin_name in self.applet.Plugins.get_loaded():
             self.b_prefs.props.sensitive = True
         else:
             self.b_prefs.props.sensitive = False
 
         self.update_config_widget(cls)
 
+    def _on_close(self, _widget: Gtk.Widget, _event: Gdk.Event) -> bool:
+        self.applet.Plugins.disconnect(self.sig_a)
+        self.applet.Plugins.disconnect(self.sig_b)
+        return False
+
     def on_prefs_toggled(self, _button: Gtk.ToggleButton) -> None:
-        tree_iter = self.list.selected()
-        assert tree_iter is not None
-        name = self.list.get(tree_iter, "name")["name"]
-        cls: Type[AppletPlugin] = self.applet.Plugins.get_classes()[name]
+        row = self.listbox.get_selected_row()
+        pos = row.get_index()
+        item = cast(PluginItem, self.model.get_item(pos))
+        cls: Type[AppletPlugin] = self.applet.Plugins.get_classes()[item.props.plugin_name]
 
         self.update_config_widget(cls)
 
@@ -261,14 +325,15 @@ class PluginDialog(Gtk.ApplicationWindow):
                 desc = f"<span weight=\"bold\">{name}</span>"
             else:
                 desc = name
-            self.list.append(active=(name in loaded), icon=cls.__icon__, activatable=cls.__unloadable__, name=name,
-                             desc=desc)
+            plugin_item = PluginItem(cls.__icon__, name, desc, name in loaded, activatable=cls.__unloadable__)
+            self.model.insert_sorted(plugin_item, self._model_sort_func)
+        self.listbox.select_row(self.listbox.get_row_at_index(0))
 
     def plugin_state_changed(self, _plugins: PluginManager, name: str, loaded: bool) -> None:
-        for row in self.list.liststore:
-            if self.list.get(row.iter, "name")["name"] == name:
-                self.list.set(row.iter, active=loaded)
-                break
+        logging.debug(f"{name} {loaded}")
+        action = self.lookup_action(name)
+        assert isinstance(action, Gio.SimpleAction)
+        action.set_state(GLib.Variant.new_boolean(loaded))
 
         cls: Type[AppletPlugin] = self.applet.Plugins.get_classes()[name]
         if not loaded:
@@ -276,37 +341,6 @@ class PluginDialog(Gtk.ApplicationWindow):
             self.b_prefs.props.sensitive = False
         elif cls.is_configurable():
             self.b_prefs.props.sensitive = True
-
-    def on_toggled(self, _toggle: Gtk.CellRendererToggle, path: str) -> None:
-        tree_path = Gtk.TreePath.new_from_string(path)
-        tree_iter = self.list.get_iter(tree_path)
-        assert tree_iter
-        name = self.list.get(tree_iter, "name")["name"]
-
-        deps = self.applet.Plugins.get_dependencies()[name]
-        loaded = self.applet.Plugins.get_loaded()
-        to_unload = [dep for dep in deps if dep in loaded]
-
-        if to_unload:
-            if not self._ask_unload(
-                _("Plugin <b>\"%(0)s\"</b> depends on <b>%(1)s</b>. Unloading <b>%(1)s</b> will also unload <b>"
-                  "\"%(0)s\"</b>.\nProceed?") % {"0": ", ".join(to_unload), "1": name}
-            ):
-                return
-        else:
-            conflicts = self.applet.Plugins.get_conflicts()[name]
-            to_unload = [conf for conf in conflicts if conf in loaded]
-
-            if to_unload and not self._ask_unload(
-                _("Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will unload <b>%(0)s</b>."
-                  "\nProceed?") % {"0": ", ".join(to_unload), "1": name}
-            ):
-                return
-
-        for p in to_unload:
-            self.applet.Plugins.set_config(p, False)
-
-        self.applet.Plugins.set_config(name, name not in self.applet.Plugins.get_loaded())
 
     def _ask_unload(self, text: str) -> bool:
         dialog = Gtk.MessageDialog(parent=self, type=Gtk.MessageType.QUESTION, buttons=Gtk.ButtonsType.YES_NO)

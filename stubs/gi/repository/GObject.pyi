@@ -70,6 +70,8 @@ class Object():
     qdata: GLib.Data
     ref_count: builtins.int
 
+    __gtype__: GType
+
     def bind_property(self, source_property: builtins.str, target: Object, target_property: builtins.str, flags: BindingFlags) -> Binding: ...
 
     def bind_property_full(self, source_property: builtins.str, target: Object, target_property: builtins.str, flags: BindingFlags, transform_to: Closure, transform_from: Closure) -> Binding: ...
