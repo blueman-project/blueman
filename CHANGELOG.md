@@ -11,6 +11,7 @@
 * Support for systemd-resolved for getting nameservers for NAP clients
 * List connected devices in status icon tooltip
 * Support for nautilus 43 and later
+* Allow to toggle the Bluetooth status from the manager menu
 
 ### Changes
 

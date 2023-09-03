@@ -7864,6 +7864,11 @@ class ListBoxRow(Bin, Actionable):
 class MenuItem(Bin, Actionable, Activatable):
     bin: Bin
 
+    class _Props(Bin._Props):
+        label: typing.Optional[str]
+
+    props: _Props
+
     def __init__(self,
         *,
         label: str = "",

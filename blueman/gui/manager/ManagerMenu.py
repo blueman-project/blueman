@@ -8,6 +8,7 @@ from blueman.bluez.Manager import Manager
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.gui.CommonUi import show_about_dialog
+from blueman.main.DBusProxies import AppletService
 from blueman.Constants import WEBSITE
 from blueman.Functions import launch, adapter_path_to_name
 
@@ -80,8 +81,17 @@ class ManagerMenu:
         self.Search = search_item = blueman.builder.get_widget("search_item", Gtk.ImageMenuItem)
         search_item.connect("activate", lambda x: self.blueman.inquiry())
 
-        adapter_settings = blueman.builder.get_widget("prefs_item", Gtk.ImageMenuItem)
-        adapter_settings.connect("activate", lambda x: self.blueman.adapter_properties())
+        self._adapter_settings = blueman.builder.get_widget("prefs_item", Gtk.ImageMenuItem)
+        self._adapter_settings.connect("activate", lambda x: self.blueman.adapter_properties())
+
+        self._power_item = blueman.builder.get_widget("power_item", Gtk.ImageMenuItem)
+        self._power_item.connect(
+            "activate",
+            lambda x: self.blueman.Applet.SetBluetoothStatus(
+                '(b)',
+                not self.blueman.Applet.GetBluetoothStatus()
+            )
+        )
 
         exit_item = blueman.builder.get_widget("exit_item", Gtk.ImageMenuItem)
         exit_item.connect("activate", lambda x: self.blueman.quit())
@@ -101,6 +111,16 @@ class ManagerMenu:
         self._sort_alias_item.connect("activate", self._on_sorting_changed, "alias")
         self._sort_timestamp_item.connect("activate", self._on_sorting_changed, "timestamp")
         self._sort_type_item.connect("activate", self._on_sorting_changed, "sort-type")
+
+        self.blueman.Applet.connect('g-signal', self._on_applet_signal)
+        self._applet_plugins_changed()
+
+    def _on_applet_signal(self, _proxy: AppletService, _sender: str, signal_name: str, params: GLib.Variant) -> None:
+        if signal_name == "PluginsChanged":
+            self._applet_plugins_changed()
+
+    def _applet_plugins_changed(self) -> None:
+        self._power_item.set_visible("PowerManager" in self.blueman.Applet.QueryPlugins())
 
     def _on_sorting_changed(self, btn: Gtk.CheckMenuItem, sort_opt: str) -> None:
         if sort_opt == 'alias' and btn.props.active:
@@ -161,6 +181,8 @@ class ManagerMenu:
                     self.Search.props.sensitive = False
                 else:
                     self.Search.props.sensitive = True
+        elif name == "Powered":
+            self._update_power()
 
     def on_adapter_selected(self, menuitem: Gtk.CheckMenuItem, adapter_path: str) -> None:
         if menuitem.props.active:
@@ -191,8 +213,7 @@ class ManagerMenu:
         if adapter_path == self.blueman.List.Adapter.get_object_path():
             item.props.active = True
 
-        if len(self.adapter_items) > 0:
-            self.item_adapter.props.sensitive = True
+        self._update_power()
 
     def on_adapter_removed(self, _manager: Manager, adapter_path: str) -> None:
         item, adapter = self.adapter_items.pop(adapter_path)
@@ -205,8 +226,17 @@ class ManagerMenu:
         menu.remove(item)
         self._insert_adapter_item_pos -= 1
 
-        if len(self.adapter_items) == 0:
-            self.item_adapter.props.sensitive = False
+        self._update_power()
+
+    def _update_power(self) -> None:
+        if any(adapter["Powered"] for (_, adapter) in self.adapter_items.values()):
+            self.Search.props.visible = True
+            self._adapter_settings.props.visible = True
+            self._power_item.props.label = _("Turn Bluetooth _Off")
+        else:
+            self.Search.props.visible = False
+            self._adapter_settings.props.visible = False
+            self._power_item.props.label = _("Turn Bluetooth _On")
 
     def _on_plugin_dialog_activate(self, _item: Gtk.MenuItem) -> None:
         def cb(_proxy: Gio.DBusProxy, _res: Any, _userdata: Any) -> None:
