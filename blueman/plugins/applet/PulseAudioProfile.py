@@ -66,7 +66,7 @@ class AudioProfiles(AppletPlugin):
                 profile_icon = "bluetooth-symbolic"
                 if profile["name"] == info["active_profile"]:
                     profile_name = f"<b>{profile_name}</b>"
-                    profile_icon = "audio-headset-symbolic"
+                    profile_icon = "dialog-ok"
                 items.append({
                     "text": profile_name,
                     "markup": True,
