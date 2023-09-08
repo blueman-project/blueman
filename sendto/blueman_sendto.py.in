@@ -32,7 +32,9 @@ class BluemanSendtoExtension(GObject.GObject, @FILEMANAGER@.MenuProvider):
             if not launched:
                 print("*** Failed to launch program ***")
 
-    def get_file_items(self, window, files):
+    def get_file_items(self, *args):
+        files = args[-1]
+
         if len(files) == 0:
             return
 
@@ -53,5 +55,5 @@ class BluemanSendtoExtension(GObject.GObject, @FILEMANAGER@.MenuProvider):
         return [item]
 
     # stub to avoid potential warning (nautilus throws fit)
-    def get_background_items(self, window, file):
+    def get_background_items(self, *args):
         return []
