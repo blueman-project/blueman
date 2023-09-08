@@ -10,6 +10,7 @@
 * Reconfigure DHCP service on local nameserver changes
 * Support for systemd-resolved for getting nameservers for NAP clients
 * List connected devices in status icon tooltip
+* Support for nautilus 43 and later
 
 ### Changes
 
