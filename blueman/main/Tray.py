@@ -24,8 +24,9 @@ class BluemanTray(Gio.Application):
 
     def do_activate(self) -> None:
         if self._active:
+            GLib.timeout_add_seconds(1, lambda: os.execv(sys.argv[0], sys.argv))
             logging.info("Already running, restarting instance")
-            os.execv(sys.argv[0], sys.argv)
+            return
 
         Gio.bus_watch_name(Gio.BusType.SESSION, 'org.blueman.Applet', Gio.BusNameWatcherFlags.NONE,
                            self._on_name_appeared, self._on_name_vanished)
