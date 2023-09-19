@@ -1,6 +1,7 @@
 import logging
 from enum import Enum, auto
 from gettext import gettext as _
+from operator import attrgetter
 from typing import Dict, List, Tuple, Optional, TYPE_CHECKING, Union, Iterable
 
 from blueman.Functions import create_menuitem, e_
@@ -306,12 +307,12 @@ class ManagerDeviceMenu(Gtk.Menu):
 
         if connect_items:
             self.append(self._create_header(_("<b>Connect To:</b>")))
-            for it in sorted(connect_items, key=lambda i: i.position):
+            for it in sorted(connect_items, key=attrgetter("position")):
                 self.append(it.item)
 
         if disconnect_items:
             self.append(self._create_header(_("<b>Disconnect:</b>")))
-            for it in sorted(disconnect_items, key=lambda i: i.position):
+            for it in sorted(disconnect_items, key=attrgetter("position")):
                 self.append(it.item)
 
         config = AutoConnectConfig()
@@ -328,7 +329,7 @@ class ManagerDeviceMenu(Gtk.Menu):
                 item.show()
                 self.append(item)
 
-            for it in sorted(autoconnect_items, key=lambda i: i.position):
+            for it in sorted(autoconnect_items, key=attrgetter("position")):
                 self.append(it.item)
 
         if show_generic_connect or connect_items or disconnect_items or autoconnect_items:
@@ -336,7 +337,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             item.show()
             self.append(item)
 
-        for it in sorted(action_items, key=lambda i: i.position):
+        for it in sorted(action_items, key=attrgetter("position")):
             self.append(it.item)
 
         send_item = create_menuitem(_("Send a _File…"), "blueman-send-symbolic")
