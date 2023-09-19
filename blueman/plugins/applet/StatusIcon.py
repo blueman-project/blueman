@@ -1,4 +1,5 @@
 from gettext import gettext as _
+from operator import itemgetter
 from typing import Optional, Tuple, List
 
 from gi.repository import GObject, GLib, Gio
@@ -117,7 +118,7 @@ class StatusIcon(AppletPlugin, GObject.GObject):
         return [implementation for implementation, _ in sorted(
             (plugin.on_query_status_icon_implementation()
              for plugin in self.parent.Plugins.get_loaded_plugins(StatusIconImplementationProvider)),
-            key=lambda implementation_priority: implementation_priority[1],
+            key=itemgetter(1),
             reverse=True
         )] + ["GtkStatusIcon"]
 
