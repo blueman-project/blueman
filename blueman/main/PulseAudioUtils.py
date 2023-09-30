@@ -96,32 +96,27 @@ class PANotConnected(Exception):
 
 
 class PaCardProfileInfo(Structure):
-    pass
-
-
-PaCardProfileInfo._fields_ = [
-    ('name', c_char_p),
-    ('description', c_char_p),
-    ('n_sinks', c_uint32),
-    ('n_sources', c_uint32),
-    ('priority', c_uint32),
-]
+    _fields_ = [
+        ('name', c_char_p),
+        ('description', c_char_p),
+        ('n_sinks', c_uint32),
+        ('n_sources', c_uint32),
+        ('priority', c_uint32),
+    ]
 
 
 class PaCardInfo(Structure):
-    pass
+    _fields_ = [
+        ('index', c_uint32),
+        ('name', c_char_p),
+        ('owner_module', c_uint32),
+        ('driver', c_char_p),
+        ('n_profiles', c_uint32),
+        ('profiles', POINTER(PaCardProfileInfo)),
+        ('active_profile', POINTER(PaCardProfileInfo)),
+        ('proplist', c_void_p),
+    ]
 
-
-PaCardInfo._fields_ = [
-    ('index', c_uint32),
-    ('name', c_char_p),
-    ('owner_module', c_uint32),
-    ('driver', c_char_p),
-    ('n_profiles', c_uint32),
-    ('profiles', POINTER(PaCardProfileInfo)),
-    ('active_profile', POINTER(PaCardProfileInfo)),
-    ('proplist', c_void_p),
-]
 
 pa_context_notify_cb_t = CFUNCTYPE(None, c_void_p, py_object)
 
