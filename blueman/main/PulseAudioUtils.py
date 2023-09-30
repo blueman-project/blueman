@@ -72,6 +72,21 @@ class EventType(IntEnum):
     TYPE_MASK = 0x0030
 
 
+# from enum pa_subscription_mask
+class SubscriptionMask(IntEnum):
+    NULL = 0x0000,
+    SINK = 0x0001,
+    SOURCE = 0x0002,
+    INPUT = 0x0004,
+    SOURCE_OUTPUT = 0x0008,
+    MODULE = 0x0010,
+    CLIENT = 0x0020,
+    SAMPLE_CACHE = 0x0040,
+    SERVER = 0x0080,
+    CARD = 0x0200,
+    ALL = 0x02ff
+
+
 class NullError(Exception):
     pass
 
@@ -198,7 +213,7 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
         if state == ContextState.READY:
             self.connected = True
             self.emit("connected")
-            mask = 0x0200 | 0x0010  # from enum pa_subscription_mask
+            mask = SubscriptionMask.CARD | SubscriptionMask.MODULE
 
             self.simple_callback(lambda x: logging.info(x),
                                  pa_context_subscribe,
