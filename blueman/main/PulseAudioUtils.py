@@ -1,4 +1,5 @@
 from ctypes import *
+from enum import IntEnum
 from typing import Dict, TYPE_CHECKING, List, Callable, Mapping, Optional, Any
 
 from gi.repository import GObject
@@ -43,16 +44,18 @@ pa_glib_mainloop_get_api = libpulse_glib.pa_glib_mainloop_get_api
 pa_glib_mainloop_get_api.restype = c_void_p
 pa_glib_mainloop_get_api.argtypes = [c_void_p]
 
-PA_CONTEXT_UNCONNECTED = 0
-PA_CONTEXT_CONNECTING = 1
-PA_CONTEXT_AUTHORIZING = 2
-PA_CONTEXT_SETTING_NAME = 3
-PA_CONTEXT_READY = 4
-PA_CONTEXT_FAILED = 5
-PA_CONTEXT_TERMINATED = 6
+
+class ContextState(IntEnum):
+    UNCONNECTED = 0
+    CONNECTING = 1
+    AUTHORIZING = 2
+    SETTING_NAME = 3
+    READY = 4
+    FAILED = 5
+    TERMINATED = 6
 
 
-class EventType:
+class EventType(IntEnum):
     SINK = 0x0000
     SOURCE = 0x0001
     SINK_INPUT = 0x0002
@@ -104,6 +107,7 @@ PaCardInfo._fields_ = [
     ('active_profile', POINTER(PaCardProfileInfo)),
     ('proplist', c_void_p),
 ]
+
 pa_context_notify_cb_t = CFUNCTYPE(None, c_void_p, py_object)
 
 pa_context_index_cb_t = CFUNCTYPE(None, c_void_p, c_int, py_object)
@@ -191,7 +195,7 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
 
         state = pa_context_get_state(pa_context)
         logging.info(state)
-        if state == PA_CONTEXT_READY:
+        if state == ContextState.READY:
             self.connected = True
             self.emit("connected")
             mask = 0x0200 | 0x0010  # from enum pa_subscription_mask
@@ -204,7 +208,7 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
                 self.emit("disconnected")
                 self.connected = False
 
-        if self.prev_state == PA_CONTEXT_READY and state == PA_CONTEXT_FAILED:
+        if self.prev_state == ContextState.READY and state == ContextState.FAILED:
             logging.info("Pulseaudio probably crashed, restarting in 5s")
             GLib.timeout_add(5000, self.connect_pulseaudio)
 
