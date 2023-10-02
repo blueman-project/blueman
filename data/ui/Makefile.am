@@ -11,6 +11,7 @@ ui_DATA =				\
 	gsm-settings.ui		\
 	net-usage.ui		\
 	note.ui				\
-	rename-device.ui
+	rename-device.ui	\
+	services-window.ui
 
 EXTRA_DIST = $(ui_DATA)
