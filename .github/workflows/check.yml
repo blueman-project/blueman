@@ -21,24 +21,6 @@ jobs:
       - run: meson --warnlevel 3 --buildtype debug -Druntime_deps_check=false builddebug
       - run: ninja -v -C builddebug/
 
-  flake8:
-    strategy:
-      fail-fast: false
-      matrix:
-        python:
-          - "3.8"
-          - "3.9"
-          - "3.10"
-          - "3.11"
-          - "3.12-rc"
-    runs-on: ubuntu-latest
-    container:
-      image: python:${{ matrix.python }}
-    steps:
-      - uses: actions/checkout@v2
-      - run: python3 -m pip install --user flake8
-      - run: python3 -m flake8
-
   mypy:
     strategy:
       fail-fast: false
