@@ -9,6 +9,7 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.plugins.BasePlugin import Option
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
 from gi.repository import Gtk, Gdk, Gio
@@ -19,11 +20,7 @@ if TYPE_CHECKING:
 
 class SettingsWidget(Gtk.Box):
     def __init__(self, inst: AppletPlugin, orientation: Gtk.Orientation = Gtk.Orientation.VERTICAL) -> None:
-        super().__init__(
-            name="SettingsWidget",
-            orientation=orientation,
-            spacing=2
-        )
+        super().__init__(name="SettingsWidget", orientation=orientation, spacing=2)
         self.inst = inst
 
         self.construct_settings()
@@ -32,7 +29,6 @@ class SettingsWidget(Gtk.Box):
     def construct_settings(self) -> None:
         for k, v in self.inst.__class__.__options__.items():
             if len(v) > 2:
-
                 label = Gtk.Label(label=v["name"])
                 label.props.xalign = 0.0
 
@@ -99,7 +95,7 @@ class PluginDialog(Gtk.ApplicationWindow):
             default_width=490,
             default_height=380,
             resizable=False,
-            visible=False
+            visible=False,
         )
 
         self.set_position(Gtk.WindowPosition.CENTER)
@@ -128,13 +124,22 @@ class PluginDialog(Gtk.ApplicationWindow):
         cr.connect("toggled", self.on_toggled)
 
         data: List[ListDataDict] = [
-            {"id": "active", "type": bool, "renderer": cr, "render_attrs": {"active": 0, "activatable": 1,
-                                                                            "visible": 1}},
+            {
+                "id": "active",
+                "type": bool,
+                "renderer": cr,
+                "render_attrs": {"active": 0, "activatable": 1, "visible": 1},
+            },
             {"id": "activatable", "type": bool},
             {"id": "icon", "type": str, "renderer": Gtk.CellRendererPixbuf(), "render_attrs": {"icon-name": 2}},
             # device caption
-            {"id": "desc", "type": str, "renderer": Gtk.CellRendererText(), "render_attrs": {"markup": 3},
-             "view_props": {"expand": True}},
+            {
+                "id": "desc",
+                "type": str,
+                "renderer": Gtk.CellRendererText(),
+                "render_attrs": {"markup": 3},
+                "view_props": {"expand": True},
+            },
             {"id": "name", "type": str},
         ]
 
@@ -165,8 +170,9 @@ class PluginDialog(Gtk.ApplicationWindow):
         close_action.connect("activate", lambda x, y: self.close())
         self.add_action(close_action)
 
-    def list_compare_func(self, _treemodel: Gtk.TreeModel, iter1: Gtk.TreeIter, iter2: Gtk.TreeIter, _user_data: object
-                          ) -> int:
+    def list_compare_func(
+        self, _treemodel: Gtk.TreeModel, iter1: Gtk.TreeIter, iter2: Gtk.TreeIter, _user_data: object
+    ) -> int:
         a = self.list.get(iter1, "activatable", "name")
         b = self.list.get(iter2, "activatable", "name")
 
@@ -258,11 +264,12 @@ class PluginDialog(Gtk.ApplicationWindow):
         loaded = self.applet.Plugins.get_loaded()
         for name, cls in classes.items():
             if cls.is_configurable():
-                desc = f"<span weight=\"bold\">{name}</span>"
+                desc = f'<span weight="bold">{name}</span>'
             else:
                 desc = name
-            self.list.append(active=(name in loaded), icon=cls.__icon__, activatable=cls.__unloadable__, name=name,
-                             desc=desc)
+            self.list.append(
+                active=(name in loaded), icon=cls.__icon__, activatable=cls.__unloadable__, name=name, desc=desc
+            )
 
     def plugin_state_changed(self, _plugins: PluginManager, name: str, loaded: bool) -> None:
         for row in self.list.liststore:
@@ -289,8 +296,11 @@ class PluginDialog(Gtk.ApplicationWindow):
 
         if to_unload:
             if not self._ask_unload(
-                _("Plugin <b>\"%(0)s\"</b> depends on <b>%(1)s</b>. Unloading <b>%(1)s</b> will also unload <b>"
-                  "\"%(0)s\"</b>.\nProceed?") % {"0": ", ".join(to_unload), "1": name}
+                _(
+                    'Plugin <b>"%(0)s"</b> depends on <b>%(1)s</b>. Unloading <b>%(1)s</b> will also unload <b>'
+                    '"%(0)s"</b>.\nProceed?'
+                )
+                % {"0": ", ".join(to_unload), "1": name}
             ):
                 return
         else:
@@ -298,8 +308,11 @@ class PluginDialog(Gtk.ApplicationWindow):
             to_unload = [conf for conf in conflicts if conf in loaded]
 
             if to_unload and not self._ask_unload(
-                _("Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will unload <b>%(0)s</b>."
-                  "\nProceed?") % {"0": ", ".join(to_unload), "1": name}
+                _(
+                    "Plugin <b>%(0)s</b> conflicts with <b>%(1)s</b>. Loading <b>%(1)s</b> will unload <b>%(0)s</b>."
+                    "\nProceed?"
+                )
+                % {"0": ", ".join(to_unload), "1": name}
             ):
                 return
 

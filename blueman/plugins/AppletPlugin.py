@@ -3,6 +3,7 @@ from typing import Tuple, Callable, Set, Any, TYPE_CHECKING
 from blueman.plugins.BasePlugin import BasePlugin
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
@@ -24,8 +25,14 @@ class AppletPlugin(BasePlugin):
         self._dbus_methods: Set[str] = set()
         self._dbus_signals: Set[str] = set()
 
-    def _add_dbus_method(self, name: str, arguments: Tuple[str, ...], return_value: str, method: Callable[..., Any],
-                         is_async: bool = False) -> None:
+    def _add_dbus_method(
+        self,
+        name: str,
+        arguments: Tuple[str, ...],
+        return_value: str,
+        method: Callable[..., Any],
+        is_async: bool = False,
+    ) -> None:
         self._dbus_methods.add(name)
         self._dbus_service.add_method(name, arguments, return_value, method, is_async=is_async)
 

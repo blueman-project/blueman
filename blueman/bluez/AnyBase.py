@@ -7,9 +7,7 @@ from blueman.bluemantyping import GSignals
 
 
 class AnyBase(GObject.GObject):
-    __gsignals__: GSignals = {
-        'property-changed': (GObject.SignalFlags.NO_HOOKS, None, (str, object, str))
-    }
+    __gsignals__: GSignals = {"property-changed": (GObject.SignalFlags.NO_HOOKS, None, (str, object, str))}
 
     connect_signal = GObject.GObject.connect
     disconnect_signal = GObject.GObject.disconnect
@@ -32,7 +30,7 @@ class AnyBase(GObject.GObject):
             iface_name, changed, invalidated = param.unpack()
             if iface_name == interface_name and this is not None:
                 for key in list(changed) + invalidated:
-                    this.emit('property-changed', key, changed.get(key, None), object_path)
+                    this.emit("property-changed", key, changed.get(key, None), object_path)
 
         weakref.finalize(
             self,
@@ -44,6 +42,6 @@ class AnyBase(GObject.GObject):
                 None,
                 None,
                 Gio.DBusSignalFlags.NONE,
-                on_signal
-            )
+                on_signal,
+            ),
         )

@@ -15,13 +15,8 @@ class DialupNetwork(SerialService):
     @property
     def common_actions(self) -> Set[Action]:
         def open_settings() -> None:
-            d = GsmSettings(self.device['Address'])
+            d = GsmSettings(self.device["Address"])
             d.run()
             d.destroy()
 
-        return {Action(
-            _("Dialup Settings"),
-            "preferences-other",
-            {'PPPSupport', 'NMDUNSupport'},
-            open_settings
-        )}
+        return {Action(_("Dialup Settings"), "preferences-other", {"PPPSupport", "NMDUNSupport"}, open_settings)}

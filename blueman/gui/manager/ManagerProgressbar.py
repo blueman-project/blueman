@@ -20,7 +20,7 @@ if TYPE_CHECKING:
 
 class ManagerProgressbar(GObject.GObject):
     __gsignals__: GSignals = {
-        'cancelled': (GObject.SignalFlags.RUN_LAST, None, ()),
+        "cancelled": (GObject.SignalFlags.RUN_LAST, None, ()),
     }
     __instances__: List["ManagerProgressbar"] = []
 

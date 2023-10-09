@@ -18,8 +18,9 @@ class NMPANSupport(AppletPlugin, ServiceConnectHandler):
     __description__ = _("Provides support for Personal Area Networking (PAN) introduced in NetworkManager 0.8")
     __priority__ = 2
 
-    def service_connect_handler(self, service: Service, ok: Callable[[], None],
-                                err: Callable[[Union[NMConnectionError, GLib.Error]], None]) -> bool:
+    def service_connect_handler(
+        self, service: Service, ok: Callable[[], None], err: Callable[[Union[NMConnectionError, GLib.Error]], None]
+    ) -> bool:
         if not isinstance(service, NetworkService):
             return False
 
@@ -28,8 +29,9 @@ class NMPANSupport(AppletPlugin, ServiceConnectHandler):
 
         return True
 
-    def service_disconnect_handler(self, service: Service, ok: Callable[[], None],
-                                   err: Callable[[Union[NMConnectionError, GLib.Error]], None]) -> bool:
+    def service_disconnect_handler(
+        self, service: Service, ok: Callable[[], None], err: Callable[[Union[NMConnectionError, GLib.Error]], None]
+    ) -> bool:
         if not isinstance(service, NetworkService):
             return False
 

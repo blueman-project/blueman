@@ -22,6 +22,7 @@ if TYPE_CHECKING:
     class GSettings(TypedDict):
         schema: str
         path: None
+
 else:
     Option = dict
 
@@ -46,8 +47,7 @@ class BasePlugin:
     def __init__(self, *_args: object) -> None:
         if self.__options__:
             self.__config = Gio.Settings(
-                schema_id=self.__class__.__gsettings__["schema"],
-                path=self.__class__.__gsettings__["path"]
+                schema_id=self.__class__.__gsettings__["schema"], path=self.__class__.__gsettings__["path"]
             )
 
         weakref.finalize(self, self._on_plugin_delete)

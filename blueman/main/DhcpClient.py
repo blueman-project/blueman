@@ -12,14 +12,14 @@ from blueman.bluemantyping import GSignals
 class DhcpClient(GObject.GObject):
     __gsignals__: GSignals = {
         # arg: interface name eg. ppp0
-        'connected': (GObject.SignalFlags.NO_HOOKS, None, (str,)),
-        'error-occurred': (GObject.SignalFlags.NO_HOOKS, None, (int,)),
+        "connected": (GObject.SignalFlags.NO_HOOKS, None, (str,)),
+        "error-occurred": (GObject.SignalFlags.NO_HOOKS, None, (int,)),
     }
 
     COMMANDS = [
         ["dhclient", "-e", "IF_METRIC=100", "-1"],
         ["dhcpcd", "-m", "100"],
-        ["udhcpc", "-t", "20", "-x", "hostname", socket.gethostname(), "-n", "-i"]
+        ["udhcpc", "-t", "20", "-x", "hostname", socket.gethostname(), "-n", "-i"],
     ]
 
     querying: List[str] = []
@@ -61,6 +61,7 @@ class DhcpClient(GObject.GObject):
         netifs = get_local_interfaces()
         status = self._client.poll()
         if status == 0:
+
             def complete() -> bool:
                 ip = netifs[self._interface][0]
                 logging.info(f"bound to {ip}")

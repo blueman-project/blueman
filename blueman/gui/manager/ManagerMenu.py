@@ -13,6 +13,7 @@ from blueman.Constants import WEBSITE
 from blueman.Functions import launch, adapter_path_to_name
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import GLib
@@ -45,7 +46,7 @@ class ManagerMenu:
         widget = self.blueman.window.get_toplevel()
         assert isinstance(widget, Gtk.Window)
         window = widget
-        help_item.connect("activate", lambda x: show_about_dialog('Blueman ' + _('Device Manager'), parent=window))
+        help_item.connect("activate", lambda x: show_about_dialog("Blueman " + _("Device Manager"), parent=window))
 
         item_toolbar = blueman.builder.get_widget("show_tb_item", Gtk.CheckMenuItem)
         self.blueman.Config.bind("show-toolbar", item_toolbar, "active", Gio.SettingsBindFlags.DEFAULT)
@@ -59,7 +60,7 @@ class ManagerMenu:
         self._sort_alias_item = blueman.builder.get_widget("sort_name_item", Gtk.CheckMenuItem)
         self._sort_timestamp_item = blueman.builder.get_widget("sort_added_item", Gtk.CheckMenuItem)
 
-        sort_config = self.Config['sort-by']
+        sort_config = self.Config["sort-by"]
         if sort_config == "alias":
             self._sort_alias_item.props.active = True
         else:
@@ -67,16 +68,16 @@ class ManagerMenu:
 
         self._sort_type_item = blueman.builder.get_widget("sort_descending_item", Gtk.CheckMenuItem)
 
-        if self.Config['sort-order'] == "ascending":
+        if self.Config["sort-order"] == "ascending":
             self._sort_type_item.props.active = False
         else:
             self._sort_type_item.props.active = True
 
         item_plugins = blueman.builder.get_widget("plugins_item", Gtk.ImageMenuItem)
-        item_plugins.connect('activate', self._on_plugin_dialog_activate)
+        item_plugins.connect("activate", self._on_plugin_dialog_activate)
 
         item_services = blueman.builder.get_widget("services_item", Gtk.ImageMenuItem)
-        item_services.connect('activate', lambda *args: launch("blueman-services", name=_("Service Preferences")))
+        item_services.connect("activate", lambda *args: launch("blueman-services", name=_("Service Preferences")))
 
         self.Search = search_item = blueman.builder.get_widget("search_item", Gtk.ImageMenuItem)
         search_item.connect("activate", lambda x: self.blueman.inquiry())
@@ -87,10 +88,7 @@ class ManagerMenu:
         self._power_item = blueman.builder.get_widget("power_item", Gtk.ImageMenuItem)
         self._power_item.connect(
             "activate",
-            lambda x: self.blueman.Applet.SetBluetoothStatus(
-                '(b)',
-                not self.blueman.Applet.GetBluetoothStatus()
-            )
+            lambda x: self.blueman.Applet.SetBluetoothStatus("(b)", not self.blueman.Applet.GetBluetoothStatus()),
         )
 
         exit_item = blueman.builder.get_widget("exit_item", Gtk.ImageMenuItem)
@@ -112,7 +110,7 @@ class ManagerMenu:
         self._sort_timestamp_item.connect("activate", self._on_sorting_changed, "timestamp")
         self._sort_type_item.connect("activate", self._on_sorting_changed, "sort-type")
 
-        self.blueman.Applet.connect('g-signal', self._on_applet_signal)
+        self.blueman.Applet.connect("g-signal", self._on_applet_signal)
         self._applet_plugins_changed()
 
     def _on_applet_signal(self, _proxy: AppletService, _sender: str, signal_name: str, params: GLib.Variant) -> None:
@@ -123,11 +121,11 @@ class ManagerMenu:
         self._power_item.set_visible("PowerManager" in self.blueman.Applet.QueryPlugins())
 
     def _on_sorting_changed(self, btn: Gtk.CheckMenuItem, sort_opt: str) -> None:
-        if sort_opt == 'alias' and btn.props.active:
-            self.Config['sort-by'] = "alias"
+        if sort_opt == "alias" and btn.props.active:
+            self.Config["sort-by"] = "alias"
         elif sort_opt == "timestamp" and btn.props.active:
-            self.Config['sort-by'] = "timestamp"
-        elif sort_opt == 'sort-type':
+            self.Config["sort-by"] = "timestamp"
+        elif sort_opt == "sort-type":
             # FIXME bind widget to gsetting
             if btn.props.active:
                 self.Config["sort-order"] = "descending"
@@ -136,7 +134,7 @@ class ManagerMenu:
 
     def _on_settings_changed(self, settings: Gio.Settings, key: str) -> None:
         value = settings[key]
-        if key == 'sort-by':
+        if key == "sort-by":
             if value == "alias":
                 if not self._sort_alias_item.props.active:
                     self._sort_alias_item.props.active = True
@@ -162,10 +160,12 @@ class ManagerMenu:
                 self.device_menu = ManagerDeviceMenu(self.blueman)
                 self.item_device.set_submenu(self.device_menu)
             else:
+
                 def idle() -> bool:
                     assert self.device_menu is not None  # https://github.com/python/mypy/issues/2608
                     self.device_menu.generate()
                     return False
+
                 GLib.idle_add(idle, priority=GLib.PRIORITY_LOW)
 
         else:
@@ -241,4 +241,5 @@ class ManagerMenu:
     def _on_plugin_dialog_activate(self, _item: Gtk.MenuItem) -> None:
         def cb(_proxy: Gio.DBusProxy, _res: Any, _userdata: Any) -> None:
             pass
+
         self.blueman.Applet.OpenPluginDialog(result_handler=cb)

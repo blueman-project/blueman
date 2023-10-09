@@ -43,22 +43,18 @@ class DNSServerProvider(GObject.GObject):
                 GLib.Variant("(ss)", (cls._RESOLVED_MANAGER_INTERFACE, "DNS")),
                 Gio.DBusCallFlags.NONE,
                 -1,
-                None
+                None,
             ).unpack()[0]
         except GLib.Error:
             return
 
-        for (interface, address_family, address) in data:
+        for interface, address_family, address in data:
             if address_family != socket.AF_INET.value:
                 continue
 
             if interface != 0:
                 object_path = manager_proxy.call_sync(
-                    "GetLink",
-                    GLib.Variant("(i)", (interface,)),
-                    Gio.DBusCallFlags.NONE,
-                    -1,
-                    None
+                    "GetLink", GLib.Variant("(i)", (interface,)), Gio.DBusCallFlags.NONE, -1, None
                 ).unpack()[0]
 
                 if not bus.call_sync(
@@ -70,11 +66,11 @@ class DNSServerProvider(GObject.GObject):
                     None,
                     Gio.DBusCallFlags.NONE,
                     -1,
-                    None
+                    None,
                 ).unpack()[0]:
                     continue
 
-            addr = ip_address('.'.join(str(p) for p in address))
+            addr = ip_address(".".join(str(p) for p in address))
             assert isinstance(addr, IPv4Address)
             yield addr
 
@@ -102,8 +98,14 @@ class DNSServerProvider(GObject.GObject):
         self._bus = Gio.bus_get_sync(Gio.BusType.SYSTEM)
 
         self._bus.signal_subscribe(
-            self._RESOLVED_NAME, "org.freedesktop.DBus.Properties", "PropertiesChanged",
-            "/org/freedesktop/resolve1", None, Gio.DBusSignalFlags.NONE, on_signal)
+            self._RESOLVED_NAME,
+            "org.freedesktop.DBus.Properties",
+            "PropertiesChanged",
+            "/org/freedesktop/resolve1",
+            None,
+            Gio.DBusSignalFlags.NONE,
+            on_signal,
+        )
 
     def _subscribe_resolver(self) -> None:
         self._monitor = Gio.File.new_for_path(self.RESOLVER_PATH).monitor_file(Gio.FileMonitorFlags.NONE)

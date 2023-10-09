@@ -6,6 +6,7 @@ from blueman.plugins.ServicePlugin import ServicePlugin
 from blueman.main.DBusProxies import AppletService
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gio
 
@@ -14,7 +15,6 @@ class Transfer(ServicePlugin):
     __plugin_info__ = (_("Transfer"), "folder")
 
     def on_load(self) -> None:
-
         self._builder = Builder("services-transfer.ui")
         self.widget = self._builder.get_widget("transfer", Gtk.Grid)
 

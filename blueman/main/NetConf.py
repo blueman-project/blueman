@@ -63,9 +63,12 @@ class DHCPHandler:
         return f"/var/run/{self._key}.pan1.pid"
 
     def apply(self, ip4_address: str, ip4_mask: str) -> None:
-        error = self._start(_get_binary(*self._BINARIES), ip4_address, ip4_mask,
-                            [ip4_address if addr.is_loopback else str(addr)
-                             for addr in DNSServerProvider.get_servers()])
+        error = self._start(
+            _get_binary(*self._BINARIES),
+            ip4_address,
+            ip4_mask,
+            [ip4_address if addr.is_loopback else str(addr) for addr in DNSServerProvider.get_servers()],
+        )
         if error is None:
             logging.info(f"{self._key} started correctly")
             with open(self._pid_path) as f:
@@ -92,7 +95,7 @@ class DHCPHandler:
             if pid is not None:
                 running_binary: Optional[str] = next(binary for binary in self._BINARIES if _is_running(binary, pid))
                 if running_binary is not None:
-                    print('Terminating ' + running_binary)
+                    print("Terminating " + running_binary)
                     os.kill(pid, signal.SIGTERM)
             else:
                 running_binary = None
@@ -110,11 +113,16 @@ class DnsMasqHandler(DHCPHandler):
     _BINARIES = ["dnsmasq"]
 
     def _start(self, binary: str, ip4_address: str, ip4_mask: str, dns_servers: List[str]) -> Optional[bytes]:
-        ipiface = ipaddress.ip_interface('/'.join((ip4_address, ip4_mask)))
-        cmd = [binary, f"--pid-file={self._pid_path}", "--except-interface=lo",
-               "--interface=pan1", "--bind-interfaces",
-               f"--dhcp-range={ipiface.network[2]},{ipiface.network[-2]},60m",
-               f"--dhcp-option=option:router,{ip4_address}"]
+        ipiface = ipaddress.ip_interface("/".join((ip4_address, ip4_mask)))
+        cmd = [
+            binary,
+            f"--pid-file={self._pid_path}",
+            "--except-interface=lo",
+            "--interface=pan1",
+            "--bind-interfaces",
+            f"--dhcp-range={ipiface.network[2]},{ipiface.network[-2]},60m",
+            f"--dhcp-option=option:router,{ip4_address}",
+        ]
 
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             if s.connect_ex(("localhost", 53)) == 0:
@@ -128,7 +136,7 @@ class DnsMasqHandler(DHCPHandler):
         return error if error else None
 
 
-DHCPDSUBNET = '''#### BLUEMAN AUTOMAGIC SUBNET ####
+DHCPDSUBNET = """#### BLUEMAN AUTOMAGIC SUBNET ####
 # Everything inside this section is destroyed after config change
 subnet %(ip_mask)s netmask %(netmask)s {
   option domain-name-servers %(dns)s;
@@ -136,7 +144,7 @@ subnet %(ip_mask)s netmask %(netmask)s {
   option routers %(rtr)s;
   range %(start)s %(end)s;
 }
-#### END BLUEMAN AUTOMAGIC SUBNET ####'''
+#### END BLUEMAN AUTOMAGIC SUBNET ####"""
 
 
 class DhcpdHandler(DHCPHandler):
@@ -144,15 +152,15 @@ class DhcpdHandler(DHCPHandler):
 
     @staticmethod
     def _read_dhcp_config() -> Tuple[str, str]:
-        dhcp_config = ''
-        existing_subnet = ''
+        dhcp_config = ""
+        existing_subnet = ""
         start = end = False
 
         with open(DHCP_CONFIG_FILE) as f:
             for line in f:
-                if line == '#### BLUEMAN AUTOMAGIC SUBNET ####\n':
+                if line == "#### BLUEMAN AUTOMAGIC SUBNET ####\n":
                     start = True
-                elif line == '#### END BLUEMAN AUTOMAGIC SUBNET ####\n':
+                elif line == "#### END BLUEMAN AUTOMAGIC SUBNET ####\n":
                     if not start:
                         # Because of bug end string got left upon removal
                         continue
@@ -170,14 +178,16 @@ class DhcpdHandler(DHCPHandler):
 
     @staticmethod
     def _generate_subnet_config(ip4_address: str, ip4_mask: str, dns_servers: List[str]) -> str:
-        ipiface = ipaddress.ip_interface('/'.join((ip4_address, ip4_mask)))
+        ipiface = ipaddress.ip_interface("/".join((ip4_address, ip4_mask)))
 
-        return DHCPDSUBNET % {"ip_mask": ipiface.network.network_address,
-                              "netmask": ipiface.netmask,
-                              "dns": ', '.join(dns_servers),
-                              "rtr": ipiface.ip,
-                              "start": ipiface.network[2],
-                              "end": ipiface.network[-2]}
+        return DHCPDSUBNET % {
+            "ip_mask": ipiface.network.network_address,
+            "netmask": ipiface.netmask,
+            "dns": ", ".join(dns_servers),
+            "rtr": ipiface.ip,
+            "start": ipiface.network[2],
+            "end": ipiface.network[-2],
+        }
 
     def _start(self, binary: str, ip4_address: str, ip4_mask: str, dns_servers: List[str]) -> Optional[bytes]:
         dhcp_config, existing_subnet = self._read_dhcp_config()
@@ -215,14 +225,16 @@ class UdhcpdHandler(DHCPHandler):
     _BINARIES = ["udhcpd"]
 
     def _generate_config(self, ip4_address: str, ip4_mask: str, dns_servers: List[str]) -> str:
-        ipiface = ipaddress.ip_interface('/'.join((ip4_address, ip4_mask)))
+        ipiface = ipaddress.ip_interface("/".join((ip4_address, ip4_mask)))
 
-        return UDHCP_CONF_TEMPLATE % {"ip_mask": ipiface.network.network_address,
-                                      "dns": ', '.join(dns_servers),
-                                      "rtr": ipiface.ip,
-                                      "start": ipiface.network[2],
-                                      "end": ipiface.network[-2],
-                                      "pid_path": self._pid_path}
+        return UDHCP_CONF_TEMPLATE % {
+            "ip_mask": ipiface.network.network_address,
+            "dns": ", ".join(dns_servers),
+            "rtr": ipiface.ip,
+            "start": ipiface.network[2],
+            "end": ipiface.network[-2],
+            "pid_path": self._pid_path,
+        }
 
     def _start(self, binary: str, ip4_address: str, ip4_mask: str, dns_servers: List[str]) -> Optional[bytes]:
         config_file, self._config_path = mkstemp(prefix="udhcpd-")
@@ -278,8 +290,9 @@ class NetConf:
         cls.unlock("iptables")
 
     @classmethod
-    def apply_settings(cls, ip4_address: str, ip4_mask: str, handler: Type["DHCPHandler"],
-                       address_changed: bool) -> None:
+    def apply_settings(
+        cls, ip4_address: str, ip4_mask: str, handler: Type["DHCPHandler"], address_changed: bool
+    ) -> None:
         if not isinstance(cls._dhcp_handler, handler):
             if cls._dhcp_handler is not None:
                 cls._dhcp_handler.clean_up()
@@ -302,16 +315,15 @@ class NetConf:
 
                 ret = call(["ip", "address", "add", "/".join((ip4_address, ip4_mask)), "dev", "pan1"])
                 if ret != 0:
-                    raise NetworkSetupError(f"Failed to add ip address {ip4_address}"
-                                            f"with netmask {ip4_mask}")
-            elif have('ifconfig'):
+                    raise NetworkSetupError(f"Failed to add ip address {ip4_address}" f"with netmask {ip4_mask}")
+            elif have("ifconfig"):
                 ret = call(["ifconfig", "pan1", ip4_address, "netmask", ip4_mask, "up"])
                 if ret != 0:
-                    raise NetworkSetupError(f"Failed to add ip address {ip4_address}"
-                                            f"with netmask {ip4_mask}")
+                    raise NetworkSetupError(f"Failed to add ip address {ip4_address}" f"with netmask {ip4_mask}")
             else:
                 raise NetworkSetupError(
-                    "Neither ifconfig or ip commands are found. Please install net-tools or iproute2")
+                    "Neither ifconfig or ip commands are found. Please install net-tools or iproute2"
+                )
 
             cls.lock("netconfig")
 

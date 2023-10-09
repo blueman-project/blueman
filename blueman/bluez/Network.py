@@ -8,7 +8,7 @@ from blueman.bluez.errors import BluezDBusException
 
 
 class Network(Base):
-    _interface_name = 'org.bluez.Network1'
+    _interface_name = "org.bluez.Network1"
 
     def __init__(self, obj_path: str):
         super().__init__(obj_path=obj_path)
@@ -19,17 +19,17 @@ class Network(Base):
         reply_handler: Optional[Callable[[str], None]] = None,
         error_handler: Optional[Callable[[BluezDBusException], None]] = None,
     ) -> None:
-        param = GLib.Variant('(s)', (uuid,))
-        self._call('Connect', param, reply_handler=reply_handler, error_handler=error_handler)
+        param = GLib.Variant("(s)", (uuid,))
+        self._call("Connect", param, reply_handler=reply_handler, error_handler=error_handler)
 
     def disconnect(  # type: ignore
         self,
         reply_handler: Optional[Callable[[], None]] = None,
         error_handler: Optional[Callable[[BluezDBusException], None]] = None,
     ) -> None:
-        self._call('Disconnect', reply_handler=reply_handler, error_handler=error_handler)
+        self._call("Disconnect", reply_handler=reply_handler, error_handler=error_handler)
 
 
 class AnyNetwork(AnyBase):
     def __init__(self) -> None:
-        super().__init__('org.bluez.Network1')
+        super().__init__("org.bluez.Network1")

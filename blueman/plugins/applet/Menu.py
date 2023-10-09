@@ -1,6 +1,5 @@
 from gettext import gettext as _
-from typing import List, Union, Iterable, Dict, Optional, Callable, \
-    TYPE_CHECKING, Tuple, Iterator, Mapping, Sequence
+from typing import List, Union, Iterable, Dict, Optional, Callable, TYPE_CHECKING, Tuple, Iterator, Mapping, Sequence
 
 from gi.repository import GLib
 
@@ -25,9 +24,20 @@ if TYPE_CHECKING:
 
 
 class MenuItem:
-    def __init__(self, menu_plugin: "Menu", owner: AppletPlugin, priority: Tuple[int, int], text: Optional[str],
-                 markup: bool, icon_name: Optional[str], tooltip: Optional[str], callback: Optional[Callable[[], None]],
-                 submenu_function: Optional[Callable[[], Iterable["SubmenuItemDict"]]], visible: bool, sensitive: bool):
+    def __init__(
+        self,
+        menu_plugin: "Menu",
+        owner: AppletPlugin,
+        priority: Tuple[int, int],
+        text: Optional[str],
+        markup: bool,
+        icon_name: Optional[str],
+        tooltip: Optional[str],
+        callback: Optional[Callable[[], None]],
+        submenu_function: Optional[Callable[[], Iterable["SubmenuItemDict"]]],
+        visible: bool,
+        sensitive: bool,
+    ):
         self._menu_plugin = menu_plugin
         self._owner = owner
         self._priority = priority
@@ -40,8 +50,12 @@ class MenuItem:
         self._visible = visible
         self._sensitive = sensitive
 
-        assert text and icon_name and (callback or submenu_function) or \
-            not any([text, icon_name, tooltip, callback, submenu_function])
+        assert (
+            text
+            and icon_name
+            and (callback or submenu_function)
+            or not any([text, icon_name, tooltip, callback, submenu_function])
+        )
 
     @property
     def owner(self) -> AppletPlugin:
@@ -60,8 +74,8 @@ class MenuItem:
         return self._visible
 
     def _iter_base(self) -> Iterator[Tuple[str, Union[str, bool]]]:
-        for key in ['text', 'markup', 'icon_name', 'tooltip', 'sensitive']:
-            value = getattr(self, '_' + key)
+        for key in ["text", "markup", "icon_name", "tooltip", "sensitive"]:
+            value = getattr(self, "_" + key)
             if value is not None:
                 yield key, value
 
@@ -70,7 +84,7 @@ class MenuItem:
         yield from self._iter_base()
         submenu = self.submenu_items
         if submenu:
-            yield 'submenu', [dict(item) for item in submenu]
+            yield "submenu", [dict(item) for item in submenu]
 
     @property
     def submenu_items(self) -> List["SubmenuItem"]:
@@ -79,10 +93,22 @@ class MenuItem:
         submenu_items = self._submenu_function()
         if not submenu_items:
             return []
-        return [SubmenuItem(self._menu_plugin, self._owner, (0, 0), item.get('text'), item.get('markup', False),
-                            item.get('icon_name'), item.get('tooltip'), item.get('callback'), None, True,
-                            item.get('sensitive', True))
-                for item in submenu_items]
+        return [
+            SubmenuItem(
+                self._menu_plugin,
+                self._owner,
+                (0, 0),
+                item.get("text"),
+                item.get("markup", False),
+                item.get("icon_name"),
+                item.get("tooltip"),
+                item.get("callback"),
+                None,
+                True,
+                item.get("sensitive", True),
+            )
+            for item in submenu_items
+        ]
 
     def set_text(self, text: str, markup: bool = False) -> None:
         self._text = text
@@ -124,17 +150,25 @@ class Menu(AppletPlugin):
         self._add_dbus_method("GetMenu", (), "aa{sv}", self._get_menu)
         self._add_dbus_method("ActivateMenuItem", ("ai",), "", self._activate_menu_item)
 
-    def add(self, owner: AppletPlugin, priority: Union[int, Tuple[int, int]], text: Optional[str] = None,
-            markup: bool = False, icon_name: Optional[str] = None, tooltip: Optional[str] = None,
-            callback: Optional[Callable[[], None]] = None,
-            submenu_function: Optional[Callable[[], Iterable["SubmenuItemDict"]]] = None,
-            visible: bool = True, sensitive: bool = True) -> MenuItem:
-
+    def add(
+        self,
+        owner: AppletPlugin,
+        priority: Union[int, Tuple[int, int]],
+        text: Optional[str] = None,
+        markup: bool = False,
+        icon_name: Optional[str] = None,
+        tooltip: Optional[str] = None,
+        callback: Optional[Callable[[], None]] = None,
+        submenu_function: Optional[Callable[[], Iterable["SubmenuItemDict"]]] = None,
+        visible: bool = True,
+        sensitive: bool = True,
+    ) -> MenuItem:
         if isinstance(priority, int):
             priority = (priority, 0)
 
-        item = MenuItem(self, owner, priority, text, markup, icon_name, tooltip, callback, submenu_function, visible,
-                        sensitive)
+        item = MenuItem(
+            self, owner, priority, text, markup, icon_name, tooltip, callback, submenu_function, visible, sensitive
+        )
         self.__menuitems[item.priority] = item
         self.on_menu_changed()
         return item
@@ -149,13 +183,13 @@ class Menu(AppletPlugin):
         self._emit_dbus_signal("MenuChanged", self._get_menu())
 
     def _get_menu(self) -> List[Dict[str, GLib.Variant]]:
-        return self._prepare_menu(dict(self.__menuitems[key])
-                                  for key in sorted(self.__menuitems.keys())
-                                  if self.__menuitems[key].visible)
+        return self._prepare_menu(
+            dict(self.__menuitems[key]) for key in sorted(self.__menuitems.keys()) if self.__menuitems[key].visible
+        )
 
-    def _prepare_menu(self, data: Iterable[Mapping[str, Union[int, str, bool,
-                                                              Iterable[Mapping[str, Union[str, bool]]]]]]) \
-            -> List[Dict[str, GLib.Variant]]:
+    def _prepare_menu(
+        self, data: Iterable[Mapping[str, Union[int, str, bool, Iterable[Mapping[str, Union[str, bool]]]]]]
+    ) -> List[Dict[str, GLib.Variant]]:
         return [{k: self._build_variant(v) for k, v in item.items()} for item in data]
 
     def _build_variant(self, value: Union[int, str, bool, Iterable[Mapping[str, Union[str, bool]]]]) -> GLib.Variant:

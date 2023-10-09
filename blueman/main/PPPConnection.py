@@ -16,7 +16,7 @@ from blueman.bluemantyping import GSignals
 
 pppd_errors = {
     1: "An immediately fatal error of some kind  occurred, such as an essential system call failing, "
-       "or running out of virtual memory.",
+    "or running out of virtual memory.",
     2: "An  error  was detected in processing the options given, such as two mutually exclusive options being used.",
     3: "Pppd is not setuid-root and the invoking user is not root.",
     4: "The kernel does not support PPP, for example, the  PPP kernel driver is not included or cannot be loaded.",
@@ -26,7 +26,7 @@ pppd_errors = {
     8: "The connect script failed (returned a non-zero exit status).",
     9: "The command specified as the argument to the  pty  option  could not be run.",
     10: "The PPP negotiation failed, that is, it didn't reach the point where at least one network protocol "
-        "(e.g. IP) was running.",
+    "(e.g. IP) was running.",
     11: "The peer system failed (or refused) to authenticate itself.",
     12: "The link was established successfully and terminated because  it was idle.",
     13: "The link was established successfully and terminated because the connect time limit was reached.",
@@ -35,7 +35,7 @@ pppd_errors = {
     16: "The link was terminated by the modem hanging up.",
     17: "The PPP negotiation failed because serial loopback was detected.",
     18: "The init script failed (returned a non-zero exit status).",
-    19: "We failed to authenticate ourselves to the peer."
+    19: "We failed to authenticate ourselves to the peer.",
 }
 
 
@@ -45,8 +45,8 @@ class PPPException(Exception):
 
 class PPPConnection(GObject.GObject):
     __gsignals__: GSignals = {  # arg: interface name eg. ppp0
-        'connected': (GObject.SignalFlags.NO_HOOKS, None, (str,)),
-        'error-occurred': (GObject.SignalFlags.NO_HOOKS, None, (str,))
+        "connected": (GObject.SignalFlags.NO_HOOKS, None, (str,)),
+        "error-occurred": (GObject.SignalFlags.NO_HOOKS, None, (str,)),
     }
 
     def __init__(self, port: str, number: str = "*99#", apn: str = "", user: str = "", pwd: str = "") -> None:
@@ -66,8 +66,8 @@ class PPPConnection(GObject.GObject):
             (
                 f"ATD{self.number}",
                 self.connect_callback,
-                ["CONNECT", "NO CARRIER", "BUSY", "NO ANSWER", "NO DIALTONE", "OK", "ERROR"]
-            )
+                ["CONNECT", "NO CARRIER", "BUSY", "NO ANSWER", "NO DIALTONE", "OK", "ERROR"],
+            ),
         ]
         if self.apn != "":
             self.commands.insert(-1, f'AT+CGDCONT=1,"IP","{self.apn}"')
@@ -79,8 +79,10 @@ class PPPConnection(GObject.GObject):
         if "CONNECT" in response:
             logging.info("Starting pppd")
             self.pppd = subprocess.Popen(
-                ["/usr/sbin/pppd", f"{self.port}", "115200", "defaultroute", "updetach", "usepeerdns"], bufsize=1,
-                stdout=subprocess.PIPE)
+                ["/usr/sbin/pppd", f"{self.port}", "115200", "defaultroute", "updetach", "usepeerdns"],
+                bufsize=1,
+                stdout=subprocess.PIPE,
+            )
             assert self.pppd.stdout is not None
             GLib.io_add_watch(self.pppd.stdout, GLib.IO_IN | GLib.IO_ERR | GLib.IO_HUP, self.on_pppd_stdout)
             GLib.timeout_add(1000, self.check_pppd)
@@ -90,8 +92,9 @@ class PPPConnection(GObject.GObject):
             self.cleanup()
             raise PPPException(f"Bad modem response {response[0]}, expected CONNECT")
 
-    def __cmd_response_cb(self, response: Optional[List[str]], exception: Optional[PPPException],
-                          command_id: int) -> None:
+    def __cmd_response_cb(
+        self, response: Optional[List[str]], exception: Optional[PPPException], command_id: int
+    ) -> None:
         if exception:
             self.emit("error-occurred", str(exception))
         else:
@@ -116,24 +119,30 @@ class PPPConnection(GObject.GObject):
         self.wait_for_reply(start)
 
     def connect_rfcomm(self) -> None:
-
         self.file = open_rfcomm(self.port, os.O_RDWR)
 
         tty.setraw(self.file)
 
         attrs: List[Any] = termios.tcgetattr(self.file)
 
-        attrs[0] &= ~(termios.IGNCR | termios.ICRNL | termios.IUCLC | termios.INPCK | termios.IXON | termios.IXANY |
-                      termios.IGNPAR)
+        attrs[0] &= ~(
+            termios.IGNCR
+            | termios.ICRNL
+            | termios.IUCLC
+            | termios.INPCK
+            | termios.IXON
+            | termios.IXANY
+            | termios.IGNPAR
+        )
         attrs[1] &= ~(termios.OPOST | termios.OLCUC | termios.OCRNL | termios.ONLCR | termios.ONLRET)
-        attrs[3] &= ~(termios.ICANON | getattr(termios, 'XCASE', 4) | termios.ECHO | termios.ECHOE | termios.ECHONL)
+        attrs[3] &= ~(termios.ICANON | getattr(termios, "XCASE", 4) | termios.ECHO | termios.ECHOE | termios.ECHONL)
         attrs[3] &= ~(termios.ECHO | termios.ECHOE)
         attrs[6][termios.VMIN] = 1
         attrs[6][termios.VTIME] = 0
         attrs[6][termios.VEOF] = 1
 
         attrs[2] &= ~(termios.CBAUD | termios.CSIZE | termios.CSTOPB | termios.CLOCAL | termios.PARENB)
-        attrs[2] |= (termios.B9600 | termios.CS8 | termios.CREAD | termios.PARENB)
+        attrs[2] |= termios.B9600 | termios.CS8 | termios.CREAD | termios.PARENB
 
         termios.tcsetattr(self.file, termios.TCSANOW, attrs)
 
@@ -145,8 +154,8 @@ class PPPConnection(GObject.GObject):
         if cond & GLib.IO_ERR or cond & GLib.IO_HUP:
             return False
 
-        line = source.readline().decode('utf-8')
-        m = re.match(r'Using interface (ppp[0-9]*)', line)
+        line = source.readline().decode("utf-8")
+        m = re.match(r"Using interface (ppp[0-9]*)", line)
         if m:
             self.interface = m.groups()[0]
 
@@ -184,7 +193,7 @@ class PPPConnection(GObject.GObject):
             self.cleanup()
             return False
         try:
-            self.buffer += os.read(self.file, 1).decode('utf-8')
+            self.buffer += os.read(self.file, 1).decode("utf-8")
         except OSError as e:
             if e.errno == errno.EAGAIN:
                 logging.error("Got EAGAIN")
@@ -218,6 +227,7 @@ class PPPConnection(GObject.GObject):
         self.buffer = ""
         self.term_found = False
 
-        self.io_watch = GLib.io_add_watch(self.file, GLib.IO_IN | GLib.IO_ERR | GLib.IO_HUP, self.on_data_ready,
-                                          command_id)
+        self.io_watch = GLib.io_add_watch(
+            self.file, GLib.IO_IN | GLib.IO_ERR | GLib.IO_HUP, self.on_data_ready, command_id
+        )
         self.timeout = GLib.timeout_add(15000, on_timeout)

@@ -28,8 +28,13 @@ class BluemanTray(Gio.Application):
             logging.info("Already running, restarting instance")
             return
 
-        Gio.bus_watch_name(Gio.BusType.SESSION, 'org.blueman.Applet', Gio.BusNameWatcherFlags.NONE,
-                           self._on_name_appeared, self._on_name_vanished)
+        Gio.bus_watch_name(
+            Gio.BusType.SESSION,
+            "org.blueman.Applet",
+            Gio.BusNameWatcherFlags.NONE,
+            self._on_name_appeared,
+            self._on_name_vanished,
+        )
         self.hold()
 
     def _on_name_appeared(self, _connection: Gio.DBusConnection, name: str, _owner: str) -> None:
@@ -37,7 +42,7 @@ class BluemanTray(Gio.Application):
 
         applet = AppletService()
         for indicator_name in applet.GetStatusIconImplementations():
-            indicator_class = getattr(import_module('blueman.main.indicators.' + indicator_name), indicator_name)
+            indicator_class = getattr(import_module("blueman.main.indicators." + indicator_name), indicator_name)
             try:
                 self.indicator = indicator_class(self, applet.GetIconName())
                 break
@@ -45,7 +50,7 @@ class BluemanTray(Gio.Application):
                 logging.info(f'Indicator "{indicator_name}" is not available')
         logging.info(f'Using indicator "{self.indicator.__class__.__name__}"')
 
-        applet.connect('g-signal', self.on_signal)
+        applet.connect("g-signal", self.on_signal)
 
         self.indicator.set_tooltip_title(applet.GetToolTipTitle())
         self.indicator.set_tooltip_text(applet.GetToolTipText())
@@ -59,19 +64,19 @@ class BluemanTray(Gio.Application):
         self.quit()
 
     def activate_menu_item(self, *indexes: int) -> None:
-        AppletService().ActivateMenuItem('(ai)', indexes)
+        AppletService().ActivateMenuItem("(ai)", indexes)
 
     def activate_status_icon(self) -> None:
         AppletService().Activate()
 
     def on_signal(self, _applet: AppletService, _sender_name: str, signal_name: str, args: GLib.Variant) -> None:
-        if signal_name == 'IconNameChanged':
+        if signal_name == "IconNameChanged":
             self.indicator.set_icon(*args)
-        elif signal_name == 'ToolTipTitleChanged':
+        elif signal_name == "ToolTipTitleChanged":
             self.indicator.set_tooltip_title(*args)
-        elif signal_name == 'ToolTipTextChanged':
+        elif signal_name == "ToolTipTextChanged":
             self.indicator.set_tooltip_text(*args)
-        elif signal_name == 'VisibilityChanged':
+        elif signal_name == "VisibilityChanged":
             self.indicator.set_visibility(*args)
-        elif signal_name == 'MenuChanged':
+        elif signal_name == "MenuChanged":
             self.indicator.set_menu(*args)

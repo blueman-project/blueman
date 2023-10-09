@@ -6,7 +6,7 @@ import gettext
 
 # support running uninstalled
 _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-if 'BLUEMAN_SOURCE' in os.environ:
+if "BLUEMAN_SOURCE" in os.environ:
     sys.path.insert(0, _dirname)
 
 gettext.textdomain("@GETTEXT_PACKAGE@")
@@ -15,7 +15,7 @@ from blueman.Functions import set_proc_title, create_parser, create_logger
 from blueman.main.Tray import BluemanTray
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = create_parser()
     args = parser.parse_args()
 

@@ -7,6 +7,7 @@ from blueman.bluemantyping import GSignals
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
+
 gi.require_version("Gdk", "3.0")
 from gi.repository import Gdk
 from gi.repository import GObject
@@ -15,12 +16,13 @@ from gi.repository import GLib
 
 if TYPE_CHECKING:
     from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
+
     BaseContext = cairo.Context[cairo.Surface]
 
 
 class AnimBase(GObject.GObject):
     __gsignals__: GSignals = {
-        'animation-finished': (GObject.SignalFlags.RUN_LAST, None, ()),
+        "animation-finished": (GObject.SignalFlags.RUN_LAST, None, ()),
     }
 
     def __init__(self, state: float = 1.0) -> None:
@@ -101,9 +103,9 @@ class AnimBase(GObject.GObject):
 
 
 class TreeRowFade(AnimBase):
-    def __init__(self, tw: "ManagerDeviceList",
-                 path: Gtk.TreePath,
-                 columns: Optional[Collection[Gtk.TreeViewColumn]] = None) -> None:
+    def __init__(
+        self, tw: "ManagerDeviceList", path: Gtk.TreePath, columns: Optional[Collection[Gtk.TreeViewColumn]] = None
+    ) -> None:
         super().__init__(1.0)
         self.tw = tw
         assert self.tw.liststore is not None

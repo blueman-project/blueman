@@ -9,11 +9,11 @@ from blueman.bluemantyping import GSignals
 
 class Client(Base):
     __gsignals__: GSignals = {
-        'session-failed': (GObject.SignalFlags.NO_HOOKS, None, (object,)),
+        "session-failed": (GObject.SignalFlags.NO_HOOKS, None, (object,)),
     }
 
-    _interface_name = 'org.bluez.obex.Client1'
-    _obj_path = '/org/bluez/obex'
+    _interface_name = "org.bluez.obex.Client1"
+    _obj_path = "/org/bluez/obex"
 
     def __init__(self) -> None:
         super().__init__(obj_path=self._obj_path)
@@ -26,10 +26,10 @@ class Client(Base):
             logging.error(f"{dest_addr} {source_addr} {pattern} {error}")
             self.emit("session-failed", error)
 
-        v_source_addr = GLib.Variant('s', source_addr)
-        v_pattern = GLib.Variant('s', pattern)
-        param = GLib.Variant('(sa{sv})', (dest_addr, {"Source": v_source_addr, "Target": v_pattern}))
-        self._call('CreateSession', param, reply_handler=on_session_created, error_handler=on_session_failed)
+        v_source_addr = GLib.Variant("s", source_addr)
+        v_pattern = GLib.Variant("s", pattern)
+        param = GLib.Variant("(sa{sv})", (dest_addr, {"Source": v_source_addr, "Target": v_pattern}))
+        self._call("CreateSession", param, reply_handler=on_session_created, error_handler=on_session_failed)
 
     def remove_session(self, session_path: str) -> None:
         def on_session_removed() -> None:
@@ -38,6 +38,5 @@ class Client(Base):
         def on_session_remove_failed(error: BluezDBusException) -> None:
             logging.error(f"{session_path} {error}")
 
-        param = GLib.Variant('(o)', (session_path,))
-        self._call('RemoveSession', param, reply_handler=on_session_removed,
-                   error_handler=on_session_remove_failed)
+        param = GLib.Variant("(o)", (session_path,))
+        self._call("RemoveSession", param, reply_handler=on_session_removed, error_handler=on_session_remove_failed)

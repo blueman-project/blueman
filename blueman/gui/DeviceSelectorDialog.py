@@ -6,13 +6,19 @@ from blueman.gui.DeviceList import DeviceList
 from blueman.gui.DeviceSelectorWidget import DeviceSelectorWidget
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 
 class DeviceSelectorDialog(Gtk.Dialog):
-    def __init__(self, title: str = _("Select Device"), parent: Optional[Gtk.Container] = None, discover: bool = True,
-                 adapter_name: Optional[str] = None) -> None:
+    def __init__(
+        self,
+        title: str = _("Select Device"),
+        parent: Optional[Gtk.Container] = None,
+        discover: bool = True,
+        adapter_name: Optional[str] = None,
+    ) -> None:
         super().__init__(title=title, name="DeviceSelectorDialog", parent=parent, icon_name="blueman", resizable=False)
         self.add_buttons(_("_Cancel"), Gtk.ResponseType.REJECT, _("_OK"), Gtk.ResponseType.ACCEPT)
 
@@ -38,8 +44,9 @@ class DeviceSelectorDialog(Gtk.Dialog):
         self.selector.destroy()
         super().close()
 
-    def on_row_activated(self, _treeview: Gtk.TreeView, _path: Gtk.TreePath, _view_column: Gtk.TreeViewColumn,
-                         *_args: object) -> None:
+    def on_row_activated(
+        self, _treeview: Gtk.TreeView, _path: Gtk.TreePath, _view_column: Gtk.TreeViewColumn, *_args: object
+    ) -> None:
         self.response(Gtk.ResponseType.ACCEPT)
 
     def on_adapter_changed(self, _devlist: DeviceList, _adapter: str) -> None:

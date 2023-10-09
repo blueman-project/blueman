@@ -22,6 +22,7 @@ import blueman.plugins.manager
 from blueman.plugins.ManagerPlugin import ManagerPlugin
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
 from gi.repository import Gtk, Gio, Gdk, GLib
@@ -91,13 +92,14 @@ class Blueman(Gtk.Application):
                 assert self.window is not None
                 if not status:
                     self.window.hide()
-                    check_bluetooth_status(_("Bluetooth needs to be turned on for the device manager to function"),
-                                           self.quit)
+                    check_bluetooth_status(
+                        _("Bluetooth needs to be turned on for the device manager to function"), self.quit
+                    )
                 else:
                     self.window.show()
 
             def on_applet_signal(_proxy: AppletService, _sender: str, signal_name: str, params: GLib.Variant) -> None:
-                if signal_name == 'BluetoothStatusChanged':
+                if signal_name == "BluetoothStatusChanged":
                     status = params.unpack()
                     bt_status_changed(status)
 
@@ -112,10 +114,13 @@ class Blueman(Gtk.Application):
 
                 d = ErrorDialog(
                     _("Connection to BlueZ failed"),
-                    _("Bluez daemon is not running, blueman-manager cannot continue.\n"
-                      "This probably means that there were no Bluetooth adapters detected "
-                      "or Bluetooth daemon was not started."),
-                    icon_name="blueman")
+                    _(
+                        "Bluez daemon is not running, blueman-manager cannot continue.\n"
+                        "This probably means that there were no Bluetooth adapters detected "
+                        "or Bluetooth daemon was not started."
+                    ),
+                    icon_name="blueman",
+                )
                 d.run()
                 d.destroy()
 
@@ -132,21 +137,22 @@ class Blueman(Gtk.Application):
                     print("Blueman applet needs to be running")
                     bmexit()
 
-                check_bluetooth_status(_("Bluetooth needs to be turned on for the device manager to function"),
-                                       lambda: self.quit())
+                check_bluetooth_status(
+                    _("Bluetooth needs to be turned on for the device manager to function"), lambda: self.quit()
+                )
 
                 manager = Manager()
                 try:
-                    manager.get_adapter(self.Config['last-adapter'])
+                    manager.get_adapter(self.Config["last-adapter"])
                 except DBusNoSuchAdapterError:
-                    logging.error('Default adapter not found, trying first available.')
+                    logging.error("Default adapter not found, trying first available.")
                     try:
                         manager.get_adapter(None)
                     except DBusNoSuchAdapterError:
-                        logging.error('No adapter(s) found, exiting')
+                        logging.error("No adapter(s) found, exiting")
                         bmexit()
 
-                self._applethandlerid = self.Applet.connect('g-signal', on_applet_signal)
+                self._applethandlerid = self.Applet.connect("g-signal", on_applet_signal)
 
                 sw = self.builder.get_widget("scrollview", Gtk.ScrolledWindow)
                 # Disable overlay scrolling
@@ -245,8 +251,13 @@ class Blueman(Gtk.Application):
             info_bar.set_revealed(False)
             GLib.timeout_add(250, hide)  # transition is 250.
         elif response_id == 0:
-            dialog = Gtk.MessageDialog(parent=self.window, type=Gtk.MessageType.INFO, modal=True,
-                                       buttons=Gtk.ButtonsType.CLOSE, text=self._infobar_bt)
+            dialog = Gtk.MessageDialog(
+                parent=self.window,
+                type=Gtk.MessageType.INFO,
+                modal=True,
+                buttons=Gtk.ButtonsType.CLOSE,
+                text=self._infobar_bt,
+            )
             dialog.connect("response", lambda d, _i: d.destroy())
             dialog.connect("close", lambda d: d.destroy())
             dialog.show()
@@ -256,7 +267,7 @@ class Blueman(Gtk.Application):
         def error_handler(e: Exception) -> None:
             logging.exception(e)
             message = f"Pairing failed for:\n{device.display_name} ({device['Address']})"
-            Notification('Bluetooth', message, icon_name="blueman").show()
+            Notification("Bluetooth", message, icon_name="blueman").show()
 
         device.pair(error_handler=error_handler)
 
@@ -266,11 +277,11 @@ class Blueman(Gtk.Application):
 
     @staticmethod
     def toggle_trust(device: Device) -> None:
-        device['Trusted'] = not device['Trusted']
+        device["Trusted"] = not device["Trusted"]
 
     @staticmethod
     def toggle_blocked(device: Device) -> None:
-        device['Blocked'] = not device['Blocked']
+        device["Blocked"] = not device["Blocked"]
 
     def send(self, device: Device) -> None:
         adapter = self.List.Adapter

@@ -20,8 +20,8 @@ RFKILL_OP_CHANGE_ALL = 3
 
 RFKILL_EVENT_SIZE_V1 = 8
 
-if not os.path.exists('/dev/rfkill'):
-    raise ImportError('Hardware kill switch not found')
+if not os.path.exists("/dev/rfkill"):
+    raise ImportError("Hardware kill switch not found")
 
 
 class Switch:
@@ -34,19 +34,16 @@ class Switch:
 
 class KillSwitch(AppletPlugin, PowerStateHandler, StatusIconVisibilityHandler):
     __author__ = "Walmis"
-    __description__ = _("Switches Bluetooth killswitch status to match Bluetooth power state. "
-                        "Allows turning Bluetooth back on from an icon that shows its status; "
-                        "provided it isn't unplugged by the system, or physically.")
+    __description__ = _(
+        "Switches Bluetooth killswitch status to match Bluetooth power state. "
+        "Allows turning Bluetooth back on from an icon that shows its status; "
+        "provided it isn't unplugged by the system, or physically."
+    )
     __depends__ = ["PowerManager"]
     __icon__ = "system-shutdown-symbolic"
 
-    __gsettings__ = {
-        "schema": "org.blueman.plugins.killswitch",
-        "path": None
-    }
-    __options__ = {
-        "checked": {"type": bool, "default": False}
-    }
+    __gsettings__ = {"schema": "org.blueman.plugins.killswitch", "path": None}
+    __options__ = {"checked": {"type": bool, "default": False}}
 
     _switches: Dict[int, Switch] = {}
     _iom = None
@@ -55,12 +52,17 @@ class KillSwitch(AppletPlugin, PowerStateHandler, StatusIconVisibilityHandler):
 
     def on_load(self) -> None:
         self._connman_proxy: Optional[Gio.DBusProxy] = None
-        self._connman_watch_id = Gio.bus_watch_name(Gio.BusType.SYSTEM, "net.connman", Gio.BusNameWatcherFlags.NONE,
-                                                    self._on_connman_appeared, self._on_connman_vanished)
+        self._connman_watch_id = Gio.bus_watch_name(
+            Gio.BusType.SYSTEM,
+            "net.connman",
+            Gio.BusNameWatcherFlags.NONE,
+            self._on_connman_appeared,
+            self._on_connman_vanished,
+        )
 
         channel = GLib.IOChannel.new_file("/dev/rfkill", "r")
         if channel is None:
-            raise ImportError('Could not access RF kill switch')
+            raise ImportError("Could not access RF kill switch")
 
         self._iom = GLib.io_add_watch(channel, GLib.IO_IN | GLib.IO_ERR | GLib.IO_HUP, self.io_event)
 
@@ -76,10 +78,11 @@ class KillSwitch(AppletPlugin, PowerStateHandler, StatusIconVisibilityHandler):
             Gio.BusType.SYSTEM,
             Gio.DBusProxyFlags.DO_NOT_AUTO_START,
             None,
-            'net.connman',
-            '/net/connman/technology/bluetooth',
-            'net.connman.Technology',
-            None)
+            "net.connman",
+            "/net/connman/technology/bluetooth",
+            "net.connman.Technology",
+            None,
+        )
 
     def _on_connman_vanished(self, connection: Gio.DBusConnection, name: str) -> None:
         logging.info(f"{name} vanished")
@@ -117,7 +120,7 @@ class KillSwitch(AppletPlugin, PowerStateHandler, StatusIconVisibilityHandler):
         self._hardblocked = False
         for s in self._switches.values():
             self._hardblocked |= s.hard == 1
-            self._enabled &= (s.soft == 0 and s.hard == 0)
+            self._enabled &= s.soft == 0 and s.hard == 0
 
         logging.info(f"State: {self._enabled}")
 
@@ -146,11 +149,12 @@ class KillSwitch(AppletPlugin, PowerStateHandler, StatusIconVisibilityHandler):
 
         if self._connman_proxy:
             logging.debug(f"Using connman to set state: {state}")
-            self._connman_proxy.SetProperty('(sv)', 'Powered', GLib.Variant.new_boolean(state),
-                                            result_handler=reply, error_handler=error)
+            self._connman_proxy.SetProperty(
+                "(sv)", "Powered", GLib.Variant.new_boolean(state), result_handler=reply, error_handler=error
+            )
         else:
             logging.debug(f"Using mechanism to set state: {state}")
-            Mechanism().SetRfkillState('(b)', state, result_handler=reply, error_handler=error)
+            Mechanism().SetRfkillState("(b)", state, result_handler=reply, error_handler=error)
 
     def on_query_force_status_icon_visibility(self) -> bool:
         # Force status icon to show if Bluetooth is soft-blocked

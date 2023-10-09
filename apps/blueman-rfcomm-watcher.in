@@ -12,12 +12,13 @@ def on_file_changed(monitor, file, other_file, event_type):
     if event_type == Gio.FileMonitorEvent.DELETED:
         loop.quit()
 
+
 parser = argparse.ArgumentParser()
 parser.add_argument("path", action="store")
 args = parser.parse_args()
 
 mon = Gio.File.new_for_path(args.path).monitor_file(Gio.FileMonitorFlags.NONE)
-mon.connect('changed', on_file_changed)
+mon.connect("changed", on_file_changed)
 
 fd = open_rfcomm(args.path, os.O_RDONLY)
 

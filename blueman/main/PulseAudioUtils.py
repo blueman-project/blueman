@@ -36,6 +36,7 @@ if TYPE_CHECKING:
         profiles: List[CardProfileInfo]
         active_profile: str
 
+
 pa_glib_mainloop_new = libpulse_glib.pa_glib_mainloop_new
 pa_glib_mainloop_new.argtypes = [c_void_p]
 pa_glib_mainloop_new.restype = c_void_p
@@ -74,17 +75,17 @@ class EventType(IntEnum):
 
 # from enum pa_subscription_mask
 class SubscriptionMask(IntEnum):
-    NULL = 0x0000,
-    SINK = 0x0001,
-    SOURCE = 0x0002,
-    INPUT = 0x0004,
-    SOURCE_OUTPUT = 0x0008,
-    MODULE = 0x0010,
-    CLIENT = 0x0020,
-    SAMPLE_CACHE = 0x0040,
-    SERVER = 0x0080,
-    CARD = 0x0200,
-    ALL = 0x02ff
+    NULL = (0x0000,)
+    SINK = (0x0001,)
+    SOURCE = (0x0002,)
+    INPUT = (0x0004,)
+    SOURCE_OUTPUT = (0x0008,)
+    MODULE = (0x0010,)
+    CLIENT = (0x0020,)
+    SAMPLE_CACHE = (0x0040,)
+    SERVER = (0x0080,)
+    CARD = (0x0200,)
+    ALL = 0x02FF
 
 
 class NullError(Exception):
@@ -97,24 +98,24 @@ class PANotConnected(Exception):
 
 class PaCardProfileInfo(Structure):
     _fields_ = [
-        ('name', c_char_p),
-        ('description', c_char_p),
-        ('n_sinks', c_uint32),
-        ('n_sources', c_uint32),
-        ('priority', c_uint32),
+        ("name", c_char_p),
+        ("description", c_char_p),
+        ("n_sinks", c_uint32),
+        ("n_sources", c_uint32),
+        ("priority", c_uint32),
     ]
 
 
 class PaCardInfo(Structure):
     _fields_ = [
-        ('index', c_uint32),
-        ('name', c_char_p),
-        ('owner_module', c_uint32),
-        ('driver', c_char_p),
-        ('n_profiles', c_uint32),
-        ('profiles', POINTER(PaCardProfileInfo)),
-        ('active_profile', POINTER(PaCardProfileInfo)),
-        ('proplist', c_void_p),
+        ("index", c_uint32),
+        ("name", c_char_p),
+        ("owner_module", c_uint32),
+        ("driver", c_char_p),
+        ("n_profiles", c_uint32),
+        ("profiles", POINTER(PaCardProfileInfo)),
+        ("active_profile", POINTER(PaCardProfileInfo)),
+        ("proplist", c_void_p),
     ]
 
 
@@ -189,9 +190,9 @@ pa_context_new.argtypes = [c_void_p, c_char_p]
 
 class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
     __gsignals__: GSignals = {
-        'connected': (GObject.SignalFlags.NO_HOOKS, None, ()),
-        'disconnected': (GObject.SignalFlags.NO_HOOKS, None, ()),
-        'event': (GObject.SignalFlags.NO_HOOKS, None, (int, int)),
+        "connected": (GObject.SignalFlags.NO_HOOKS, None, ()),
+        "disconnected": (GObject.SignalFlags.NO_HOOKS, None, ()),
+        "event": (GObject.SignalFlags.NO_HOOKS, None, (int, int)),
     }
 
     def check_connected(self) -> None:
@@ -210,9 +211,7 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
             self.emit("connected")
             mask = SubscriptionMask.CARD | SubscriptionMask.MODULE
 
-            self.simple_callback(lambda x: logging.info(x),
-                                 pa_context_subscribe,
-                                 mask)
+            self.simple_callback(lambda x: logging.info(x), pa_context_subscribe, mask)
         else:
             if self.connected:
                 self.emit("disconnected")
@@ -237,19 +236,21 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
 
         result = {}
         for item in ls:
-            spl = [x.strip(" \"") for x in item.split("=")]
+            spl = [x.strip(' "') for x in item.split("=")]
             if len(spl) == 2:
                 result[spl[0]] = spl[1]
 
         return result
 
     if TYPE_CHECKING:
+
         class _ListCallbackInfo(TypedDict):
             cb_info: "_FuncPointer"
             handler: Callable[[Optional["_Pointer[PaCardInfo]"], bool], None]
 
-    def __list_callback(self, _context: c_void_p, entry_info: "_Pointer[PaCardInfo]", eol: c_int,
-                        info: "_ListCallbackInfo") -> None:
+    def __list_callback(
+        self, _context: c_void_p, entry_info: "_Pointer[PaCardInfo]", eol: c_int, info: "_ListCallbackInfo"
+    ) -> None:
         if entry_info:
             info["handler"](entry_info, False)
 
@@ -257,9 +258,15 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
             info["handler"](None, True)
             pythonapi.Py_DecRef(py_object(info))
 
-    def __init_list_callback(self, func: Callable[..., c_void_p], cb_type: Callable[[Callable[[c_void_p,
-                             "_Pointer[PaCardInfo]", c_int, "_ListCallbackInfo"], None]], "_FuncPointer"],
-                             handler: Callable[[Optional["_Pointer[PaCardInfo]"], bool], None], *args: Any) -> None:
+    def __init_list_callback(
+        self,
+        func: Callable[..., c_void_p],
+        cb_type: Callable[
+            [Callable[[c_void_p, "_Pointer[PaCardInfo]", c_int, "_ListCallbackInfo"], None]], "_FuncPointer"
+        ],
+        handler: Callable[[Optional["_Pointer[PaCardInfo]"], bool], None],
+        *args: Any,
+    ) -> None:
         info = {"cb_info": cb_type(self.__list_callback), "handler": handler}
         pythonapi.Py_IncRef(py_object(info))
 
@@ -268,7 +275,6 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
         pa_operation_unref(op)
 
     def simple_callback(self, handler: Callable[[int], None], func: "_NamedFuncPointer", *args: Any) -> None:
-
         def wrapper(_context: c_void_p, res: int, data: "_FuncPointer") -> None:
             handler(res)
             pythonapi.Py_DecRef(py_object(data))
@@ -290,14 +296,17 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
             "owner_module": card_info[0].owner_module,
             "driver": card_info[0].driver.decode("UTF-8"),
             "index": card_info[0].index,
-            "profiles": [{
-                "name": card_info[0].profiles[i].name.decode("UTF-8"),
-                "description": card_info[0].profiles[i].description.decode("UTF-8"),
-                "n_sinks": card_info[0].profiles[i].n_sinks,
-                "n_sources": card_info[0].profiles[i].n_sources,
-                "priority": card_info[0].profiles[i].priority,
-            } for i in range(0, card_info[0].n_profiles)],
-            "active_profile": card_info[0].active_profile[0].name.decode("UTF-8")
+            "profiles": [
+                {
+                    "name": card_info[0].profiles[i].name.decode("UTF-8"),
+                    "description": card_info[0].profiles[i].description.decode("UTF-8"),
+                    "n_sinks": card_info[0].profiles[i].n_sinks,
+                    "n_sources": card_info[0].profiles[i].n_sources,
+                    "priority": card_info[0].profiles[i].priority,
+                }
+                for i in range(0, card_info[0].n_profiles)
+            ],
+            "active_profile": card_info[0].active_profile[0].name.decode("UTF-8"),
         }
 
     def list_cards(self, callback: Callable[[Mapping[str, "CardInfo"]], None]) -> None:
@@ -315,8 +324,7 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
 
             data[entry["name"]] = entry
 
-        self.__init_list_callback(pa_context_get_card_info_list,
-                                  pa_card_info_cb_t, handler)
+        self.__init_list_callback(pa_context_get_card_info_list, pa_card_info_cb_t, handler)
 
     def get_card(self, card: int, callback: Callable[["CardInfo"], None]) -> None:
         self.check_connected()
@@ -371,9 +379,7 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
             pa_context_set_state_callback(self.pa_context, self.ctx_cb, self.weak)
             pa_context_connect(self.pa_context, None, 0, None)
 
-            pa_context_set_subscribe_callback(self.pa_context,
-                                              self.event_cb,
-                                              None)
+            pa_context_set_subscribe_callback(self.pa_context, self.event_cb, None)
         return False
 
     def _on_delete(self) -> None:

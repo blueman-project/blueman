@@ -17,12 +17,12 @@ OBEX_FILETRANS_SVCLASS_ID = 0x1106
 IRMC_SYNC_CMD_SVCLASS_ID = 0x1107
 HEADSET_SVCLASS_ID = 0x1108
 CORDLESS_TELEPHONY_SVCLASS_ID = 0x1109
-AUDIO_SOURCE_SVCLASS_ID = 0x110a
-AUDIO_SINK_SVCLASS_ID = 0x110b
-AV_REMOTE_TARGET_SVCLASS_ID = 0x110c
-ADVANCED_AUDIO_SVCLASS_ID = 0x110d
-AV_REMOTE_SVCLASS_ID = 0x110e
-AV_REMOTE_CONTROLLER_SVCLASS_ID = 0x110f
+AUDIO_SOURCE_SVCLASS_ID = 0x110A
+AUDIO_SINK_SVCLASS_ID = 0x110B
+AV_REMOTE_TARGET_SVCLASS_ID = 0x110C
+ADVANCED_AUDIO_SVCLASS_ID = 0x110D
+AV_REMOTE_SVCLASS_ID = 0x110E
+AV_REMOTE_CONTROLLER_SVCLASS_ID = 0x110F
 INTERCOM_SVCLASS_ID = 0x1110
 FAX_SVCLASS_ID = 0x1111
 HEADSET_AGW_SVCLASS_ID = 0x1112
@@ -33,12 +33,12 @@ NAP_SVCLASS_ID = 0x1116
 GN_SVCLASS_ID = 0x1117
 DIRECT_PRINTING_SVCLASS_ID = 0x1118
 REFERENCE_PRINTING_SVCLASS_ID = 0x1119
-IMAGING_SVCLASS_ID = 0x111a
-IMAGING_RESPONDER_SVCLASS_ID = 0x111b
-IMAGING_ARCHIVE_SVCLASS_ID = 0x111c
-IMAGING_REFOBJS_SVCLASS_ID = 0x111d
-HANDSFREE_SVCLASS_ID = 0x111e
-HANDSFREE_AGW_SVCLASS_ID = 0x111f
+IMAGING_SVCLASS_ID = 0x111A
+IMAGING_RESPONDER_SVCLASS_ID = 0x111B
+IMAGING_ARCHIVE_SVCLASS_ID = 0x111C
+IMAGING_REFOBJS_SVCLASS_ID = 0x111D
+HANDSFREE_SVCLASS_ID = 0x111E
+HANDSFREE_AGW_SVCLASS_ID = 0x111F
 DIRECT_PRT_REFOBJS_SVCLASS_ID = 0x1120
 REFLECTED_UI_SVCLASS_ID = 0x1121
 BASIC_PRINTING_SVCLASS_ID = 0x1122
@@ -49,12 +49,12 @@ HCR_PRINT_SVCLASS_ID = 0x1126
 HCR_SCAN_SVCLASS_ID = 0x1127
 CIP_SVCLASS_ID = 0x1128
 VIDEO_CONF_GW_SVCLASS_ID = 0x1129
-UDI_MT_SVCLASS_ID = 0x112a
-UDI_TA_SVCLASS_ID = 0x112b
-AV_SVCLASS_ID = 0x112c
-SAP_SVCLASS_ID = 0x112d
-PBAP_PCE_SVCLASS_ID = 0x112e
-PBAP_PSE_SVCLASS_ID = 0x112f
+UDI_MT_SVCLASS_ID = 0x112A
+UDI_TA_SVCLASS_ID = 0x112B
+AV_SVCLASS_ID = 0x112C
+SAP_SVCLASS_ID = 0x112D
+PBAP_PCE_SVCLASS_ID = 0x112E
+PBAP_PSE_SVCLASS_ID = 0x112F
 PBAP_SVCLASS_ID = 0x1130
 MAP_MSE_SVCLASS_ID = 0x1132
 MAP_MCE_SVCLASS_ID = 0x1133
@@ -94,10 +94,10 @@ uuid_names = {
     0x0007: _("ATT"),
     0x0008: _("OBEX"),
     0x0009: _("IP"),
-    0x000a: _("FTP"),
-    0x000c: _("HTTP"),
-    0x000e: _("WSP"),
-    0x000f: _("BNEP"),
+    0x000A: _("FTP"),
+    0x000C: _("HTTP"),
+    0x000E: _("WSP"),
+    0x000F: _("BNEP"),
     0x0010: _("UPnP/ESDP"),
     0x0011: _("HIDP"),
     0x0012: _("Hardcopy Control Channel"),
@@ -105,10 +105,10 @@ uuid_names = {
     0x0016: _("Hardcopy Notification"),
     0x0017: _("AVCTP"),
     0x0019: _("AVDTP"),
-    0x001b: _("CMTP"),
-    0x001d: _("UDI_C-Plane"),
-    0x001e: _("Multi-Channel Adaptation Protocol (MCAP)"),
-    0x001f: _("Multi-Channel Adaptation Protocol (MCAP)"),
+    0x001B: _("CMTP"),
+    0x001D: _("UDI_C-Plane"),
+    0x001E: _("Multi-Channel Adaptation Protocol (MCAP)"),
+    0x001F: _("Multi-Channel Adaptation Protocol (MCAP)"),
     0x0100: _("L2CAP"),
     0x1000: _("ServiceDiscoveryServerServiceClassID"),
     0x1001: _("BrowseGroupDescriptorServiceClassID"),
@@ -122,12 +122,12 @@ uuid_names = {
     0x1107: _("IrMC Sync Command"),
     0x1108: _("Headset"),
     0x1109: _("Cordless Telephony"),
-    0x110a: _("Audio Source"),
-    0x110b: _("Audio Sink"),
-    0x110c: _("Remote Control Target"),
-    0x110d: _("Advanced Audio"),
-    0x110e: _("Remote Control"),
-    0x110f: _("Video Conferencing"),
+    0x110A: _("Audio Source"),
+    0x110B: _("Audio Sink"),
+    0x110C: _("Remote Control Target"),
+    0x110D: _("Advanced Audio"),
+    0x110E: _("Remote Control"),
+    0x110F: _("Video Conferencing"),
     0x1110: _("Intercom"),
     0x1111: _("Fax"),
     0x1112: _("Headset Audio Gateway"),
@@ -138,12 +138,12 @@ uuid_names = {
     0x1117: _("Group Network"),
     0x1118: _("DirectPrinting (BPP)"),
     0x1119: _("ReferencePrinting (BPP)"),
-    0x111a: _("Imaging (BIP)"),
-    0x111b: _("ImagingResponder (BIP)"),
-    0x111c: _("ImagingAutomaticArchive (BIP)"),
-    0x111d: _("ImagingReferencedObjects (BIP)"),
-    0x111e: _("Handsfree"),
-    0x111f: _("Handsfree Audio Gateway"),
+    0x111A: _("Imaging (BIP)"),
+    0x111B: _("ImagingResponder (BIP)"),
+    0x111C: _("ImagingAutomaticArchive (BIP)"),
+    0x111D: _("ImagingReferencedObjects (BIP)"),
+    0x111E: _("Handsfree"),
+    0x111F: _("Handsfree Audio Gateway"),
     0x1120: _("DirectPrintingReferenceObjectsService (BPP)"),
     0x1121: _("ReflectedUI (BPP)"),
     0x1122: _("Basic Printing (BPP)"),
@@ -154,12 +154,12 @@ uuid_names = {
     0x1127: _("HCR_Scan (HCR)"),
     0x1128: _("Common ISDN Access (CIP)"),
     0x1129: _("VideoConferencingGW (VCP)"),
-    0x112a: _("UDI-MT"),
-    0x112b: _("UDI-TA"),
-    0x112c: _("Audio/Video"),
-    0x112d: _("SIM Access (SAP)"),
-    0x112e: _("Phonebook Access (PBAP) - PCE"),
-    0x112f: _("Phonebook Access (PBAP) - PSE"),
+    0x112A: _("UDI-MT"),
+    0x112B: _("UDI-TA"),
+    0x112C: _("Audio/Video"),
+    0x112D: _("SIM Access (SAP)"),
+    0x112E: _("Phonebook Access (PBAP) - PCE"),
+    0x112F: _("Phonebook Access (PBAP) - PSE"),
     0x1130: _("Phonebook Access (PBAP)"),
     0x1131: _("Headset"),
     0x1132: _("Message Access Server"),
@@ -170,11 +170,11 @@ uuid_names = {
     0x1137: _("3D Display"),
     0x1138: _("3D Glasses"),
     0x1139: _("3D Synchronization (3DSP)"),
-    0x113a: _("Multi-Profile Specification (MPS) Profile"),
-    0x113b: _("Multi-Profile Specification (MPS) Service"),
-    0x113c: _("Calendar, Task, and Notes (CTN) Access Service"),
-    0x113d: _("Calendar, Task, and Notes (CTN) Notification Service"),
-    0x113e: _("Calendar, Task, and Notes (CTN) Profile"),
+    0x113A: _("Multi-Profile Specification (MPS) Profile"),
+    0x113B: _("Multi-Profile Specification (MPS) Service"),
+    0x113C: _("Calendar, Task, and Notes (CTN) Access Service"),
+    0x113D: _("Calendar, Task, and Notes (CTN) Notification Service"),
+    0x113E: _("Calendar, Task, and Notes (CTN) Profile"),
     0x1200: _("PnP Information"),
     0x1201: _("Generic Networking"),
     0x1202: _("Generic FileTransfer"),
@@ -261,10 +261,10 @@ SDP_ATTR_LANG_BASE_ATTR_ID_LIST = 0x0006
 SDP_ATTR_SVCINFO_TTL = 0x0007
 SDP_ATTR_SERVICE_AVAILABILITY = 0x0008
 SDP_ATTR_PFILE_DESC_LIST = 0x0009
-SDP_ATTR_DOC_URL = 0x000a
-SDP_ATTR_CLNT_EXEC_URL = 0x000b
-SDP_ATTR_ICON_URL = 0x000c
-SDP_ATTR_ADD_PROTO_DESC_LIST = 0x000d
+SDP_ATTR_DOC_URL = 0x000A
+SDP_ATTR_CLNT_EXEC_URL = 0x000B
+SDP_ATTR_ICON_URL = 0x000C
+SDP_ATTR_ADD_PROTO_DESC_LIST = 0x000D
 
 SDP_ATTR_SUPPORTED_REPOSITORIES = 0x0314
 SDP_ATTR_MAS_INSTANCE_ID = 0x0315
@@ -289,11 +289,11 @@ SDP_ATTR_HID_DESCRIPTOR_LIST = 0x0206
 SDP_ATTR_HID_LANG_ID_BASE_LIST = 0x0207
 SDP_ATTR_HID_SDP_DISABLE = 0x0208
 SDP_ATTR_HID_BATTERY_POWER = 0x0209
-SDP_ATTR_HID_REMOTE_WAKEUP = 0x020a
-SDP_ATTR_HID_PROFILE_VERSION = 0x020b
-SDP_ATTR_HID_SUPERVISION_TIMEOUT = 0x020c
-SDP_ATTR_HID_NORMALLY_CONNECTABLE = 0x020d
-SDP_ATTR_HID_BOOT_DEVICE = 0x020e
+SDP_ATTR_HID_REMOTE_WAKEUP = 0x020A
+SDP_ATTR_HID_PROFILE_VERSION = 0x020B
+SDP_ATTR_HID_SUPERVISION_TIMEOUT = 0x020C
+SDP_ATTR_HID_NORMALLY_CONNECTABLE = 0x020D
+SDP_ATTR_HID_BOOT_DEVICE = 0x020E
 
 SDP_PRIMARY_LANG_BASE = 0x0100
 
@@ -305,10 +305,10 @@ TCS_BIN_UUID = 0x0005
 TCS_AT_UUID = 0x0006
 OBEX_UUID = 0x0008
 IP_UUID = 0x0009
-FTP_UUID = 0x000a
-HTTP_UUID = 0x000c
-WSP_UUID = 0x000e
-BNEP_UUID = 0x000f
+FTP_UUID = 0x000A
+HTTP_UUID = 0x000C
+WSP_UUID = 0x000E
+BNEP_UUID = 0x000F
 UPNP_UUID = 0x0010
 HIDP_UUID = 0x0011
 HCRP_CTRL_UUID = 0x0012
@@ -316,10 +316,10 @@ HCRP_DATA_UUID = 0x0014
 HCRP_NOTE_UUID = 0x0016
 AVCTP_UUID = 0x0017
 AVDTP_UUID = 0x0019
-CMTP_UUID = 0x001b
-UDI_UUID = 0x001d
-MCAP_CTRL_UUID = 0x001e
-MCAP_DATA_UUID = 0x001f
+CMTP_UUID = 0x001B
+UDI_UUID = 0x001D
+MCAP_CTRL_UUID = 0x001E
+MCAP_DATA_UUID = 0x001F
 L2CAP_UUID = 0x0100
 
 # GATT UUIDs section
@@ -375,11 +375,13 @@ class ServiceUUID(UUID):
             except KeyError:
                 return _("Unknown")
         elif self.int == 0:
-            return _('Audio and input profiles')
+            return _("Audio and input profiles")
         else:
-            return _('Proprietary')
+            return _("Proprietary")
 
     @property
     def reserved(self) -> bool:
-        return self.int & UUID('FFFF0000-0000-FFFF-FFFF-FFFFFFFFFFFF').int == \
-            UUID('00000000-0000-1000-8000-00805F9B34FB').int
+        return (
+            self.int & UUID("FFFF0000-0000-FFFF-FFFF-FFFFFFFFFFFF").int
+            == UUID("00000000-0000-1000-8000-00805F9B34FB").int
+        )

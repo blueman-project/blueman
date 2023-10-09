@@ -56,8 +56,9 @@ class ManagerToolbar:
         if device is not None:
             func(device)
 
-    def on_adapter_property_changed(self, _lst: ManagerDeviceList, _adapter: Adapter,
-                                    key_value: Tuple[str, object]) -> None:
+    def on_adapter_property_changed(
+        self, _lst: ManagerDeviceList, _adapter: Adapter, key_value: Tuple[str, object]
+    ) -> None:
         key, value = key_value
         if key == "Discovering":
             if value:
@@ -103,8 +104,9 @@ class ManagerToolbar:
             else:
                 self.b_send.props.sensitive = False
 
-    def on_device_propery_changed(self, dev_list: ManagerDeviceList, device: Device, tree_iter: Gtk.TreeIter,
-                                  key_value: Tuple[str, object]) -> None:
+    def on_device_propery_changed(
+        self, dev_list: ManagerDeviceList, device: Device, tree_iter: Gtk.TreeIter, key_value: Tuple[str, object]
+    ) -> None:
         key, value = key_value
         if dev_list.compare(tree_iter, dev_list.selected()):
             if key == "Trusted" or key == "Paired" or key == "UUIDs":

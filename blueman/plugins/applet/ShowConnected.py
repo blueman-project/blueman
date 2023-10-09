@@ -18,16 +18,17 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
     __author__ = "Walmis"
     __depends__ = ["StatusIcon"]
     __icon__ = "bluetooth-symbolic"
-    __description__ = _("Adds an indication on the status icon when Bluetooth is active and shows the "
-                        "connections in the tooltip.")
+    __description__ = _(
+        "Adds an indication on the status icon when Bluetooth is active and shows the " "connections in the tooltip."
+    )
 
     def on_load(self) -> None:
         self._connections: Set[str] = set()
         self.active = False
         self.initialized = False
         self._handlers: List[int] = []
-        self._handlers.append(self.parent.Plugins.connect('plugin-loaded', self._on_plugins_changed))
-        self._handlers.append(self.parent.Plugins.connect('plugin-unloaded', self._on_plugins_changed))
+        self._handlers.append(self.parent.Plugins.connect("plugin-loaded", self._on_plugins_changed))
+        self._handlers.append(self.parent.Plugins.connect("plugin-unloaded", self._on_plugins_changed))
         self._battery_watcher = BatteryWatcher(lambda *args: self.update_statusicon())
 
     def on_unload(self) -> None:
@@ -48,9 +49,9 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
             return None
 
     def enumerate_connections(self) -> bool:
-        self._connections = {device.get_object_path()
-                             for device in self.parent.Manager.get_devices()
-                             if device["Connected"]}
+        self._connections = {
+            device.get_object_path() for device in self.parent.Manager.get_devices() if device["Connected"]
+        }
 
         logging.info(f"Found {len(self._connections):d} existing connections")
         if (self._connections and not self.active) or (not self._connections and self.active):
@@ -62,6 +63,7 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
 
     def update_statusicon(self) -> None:
         if self._connections:
+
             def build_line(obj_path: str) -> str:
                 line: str = Device(obj_path=obj_path)["Alias"]
                 try:
@@ -73,7 +75,7 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
             self.parent.Plugins.StatusIcon.set_tooltip_text("\n".join(map(build_line, self._connections)))
         else:
             self.parent.Plugins.StatusIcon.set_tooltip_text(None)
-            if 'PowerManager' in self.parent.Plugins.get_loaded():
+            if "PowerManager" in self.parent.Plugins.get_loaded():
                 status = self.parent.Plugins.PowerManager.get_bluetooth_status()
                 if status:
                     self.parent.Plugins.StatusIcon.set_tooltip_title(_("Bluetooth Enabled"))

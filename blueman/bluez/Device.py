@@ -6,7 +6,7 @@ from blueman.bluez.errors import BluezDBusException
 
 
 class Device(Base):
-    _interface_name = 'org.bluez.Device1'
+    _interface_name = "org.bluez.Device1"
 
     def __init__(self, obj_path: str):
         super().__init__(obj_path=obj_path)
@@ -16,21 +16,21 @@ class Device(Base):
         reply_handler: Optional[Callable[[], None]] = None,
         error_handler: Optional[Callable[[BluezDBusException], None]] = None,
     ) -> None:
-        self._call('Pair', reply_handler=reply_handler, error_handler=error_handler)
+        self._call("Pair", reply_handler=reply_handler, error_handler=error_handler)
 
     def connect(  # type: ignore
         self,
         reply_handler: Optional[Callable[[], None]] = None,
         error_handler: Optional[Callable[[BluezDBusException], None]] = None,
     ) -> None:
-        self._call('Connect', reply_handler=reply_handler, error_handler=error_handler)
+        self._call("Connect", reply_handler=reply_handler, error_handler=error_handler)
 
     def disconnect(  # type: ignore
         self,
         reply_handler: Optional[Callable[[], None]] = None,
         error_handler: Optional[Callable[[BluezDBusException], None]] = None,
     ) -> None:
-        self._call('Disconnect', reply_handler=reply_handler, error_handler=error_handler)
+        self._call("Disconnect", reply_handler=reply_handler, error_handler=error_handler)
 
     @property
     def display_name(self) -> str:
@@ -40,4 +40,4 @@ class Device(Base):
 
 class AnyDevice(AnyBase):
     def __init__(self) -> None:
-        super().__init__('org.bluez.Device1')
+        super().__init__("org.bluez.Device1")

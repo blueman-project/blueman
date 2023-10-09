@@ -18,6 +18,7 @@ from blueman.main.SpeedCalc import SpeedCalc
 from blueman.gui.CommonUi import ErrorDialog
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
 from gi.repository import Gdk, Gtk, GObject, GLib, Gio
@@ -25,7 +26,7 @@ from gi.repository import Gdk, Gtk, GObject, GLib, Gio
 
 class Sender(Gtk.Dialog):
     __gsignals__: GSignals = {
-        'result': (GObject.SignalFlags.RUN_FIRST, None, (GObject.TYPE_BOOLEAN,)),
+        "result": (GObject.SignalFlags.RUN_FIRST, None, (GObject.TYPE_BOOLEAN,)),
     }
 
     def __init__(self, device: Device, adapter_path: str, files: Iterable[str]) -> None:
@@ -36,7 +37,7 @@ class Sender(Gtk.Dialog):
             border_width=5,
             default_width=400,
             window_position=Gtk.WindowPosition.CENTER,
-            type_hint=Gdk.WindowTypeHint.DIALOG
+            type_hint=Gdk.WindowTypeHint.DIALOG,
         )
 
         self.b_cancel = self.add_button(_("_Stop"), Gtk.ResponseType.CLOSE)
@@ -101,15 +102,18 @@ class Sender(Gtk.Dialog):
 
         try:
             self.client = Client()
-            self.manager.connect_signal('session-added', self.on_session_added)
-            self.manager.connect_signal('session-removed', self.on_session_removed)
+            self.manager.connect_signal("session-added", self.on_session_added)
+            self.manager.connect_signal("session-removed", self.on_session_removed)
         except GLib.Error as e:
-            if 'StartServiceByName' in e.message:
+            if "StartServiceByName" in e.message:
                 logging.debug(e.message)
                 parent = self.get_toplevel()
                 assert isinstance(parent, Gtk.Container)
-                d = ErrorDialog(_("obexd not available"), _("Failed to autostart obex service. Make sure the obex "
-                                                            "daemon is running"), parent=parent)
+                d = ErrorDialog(
+                    _("obexd not available"),
+                    _("Failed to autostart obex service. Make sure the obex " "daemon is running"),
+                    parent=parent,
+                )
                 d.run()
                 d.destroy()
                 self.emit("result", False)
@@ -121,7 +125,7 @@ class Sender(Gtk.Dialog):
         assert basename is not None
         self.l_file.props.label = basename
 
-        self.client.connect('session-failed', self.on_session_failed)
+        self.client.connect("session-failed", self.on_session_failed)
 
         logging.info(f"Sending to {device['Address']}")
         self.l_dest.props.label = device.display_name
@@ -136,7 +140,7 @@ class Sender(Gtk.Dialog):
         self.show()
 
     def create_session(self) -> None:
-        self.client.create_session(self.device['Address'], self.adapter["Address"])
+        self.client.create_session(self.device["Address"], self.adapter["Address"])
 
     def on_cancel(self, button: Optional[Gtk.Button]) -> None:
         self.pb.props.text = _("Cancelling")
@@ -175,7 +179,7 @@ class Sender(Gtk.Dialog):
         if self._last_bytes == 0:
             self.total_transferred += progress
         else:
-            self.total_transferred += (progress - self._last_bytes)
+            self.total_transferred += progress - self._last_bytes
 
         self._last_bytes = progress
 
@@ -222,8 +226,14 @@ class Sender(Gtk.Dialog):
             self.speed.reset()
             parent = self.get_toplevel()
             assert isinstance(parent, Gtk.Container)
-            d = ErrorDialog(msg, _("Error occurred while sending file %s") % self.files[-1].get_basename(),
-                            modal=True, icon_name="blueman", parent=parent, buttons=Gtk.ButtonsType.NONE)
+            d = ErrorDialog(
+                msg,
+                _("Error occurred while sending file %s") % self.files[-1].get_basename(),
+                modal=True,
+                icon_name="blueman",
+                parent=parent,
+                buttons=Gtk.ButtonsType.NONE,
+            )
 
             if len(self.files) > 1:
                 d.add_button(_("Skip"), Gtk.ResponseType.NO)
@@ -240,7 +250,7 @@ class Sender(Gtk.Dialog):
                 if resp == Gtk.ResponseType.CANCEL:
                     self.on_cancel(None)
                 elif resp == Gtk.ResponseType.NO:
-                    finfo = self.files[-1].query_info('standard::*', Gio.FileQueryInfoFlags.NONE)
+                    finfo = self.files[-1].query_info("standard::*", Gio.FileQueryInfoFlags.NONE)
                     self.total_bytes -= finfo.get_size()
                     self.total_transferred -= self.transferred
                     self.transferred = 0

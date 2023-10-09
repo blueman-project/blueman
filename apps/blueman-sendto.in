@@ -7,13 +7,14 @@ import logging
 import gettext
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gio
 
 # support running uninstalled
-_dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-if 'BLUEMAN_SOURCE' in os.environ:
-    sys.path = [_dirname, os.path.join(_dirname, 'module', '.libs')] + sys.path
+_dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if "BLUEMAN_SOURCE" in os.environ:
+    sys.path = [_dirname, os.path.join(_dirname, "module", ".libs")] + sys.path
     os.environ["GSETTINGS_SCHEMA_DIR"] = os.path.join(_dirname, "data")
 
 _ = gettext.gettext
@@ -25,7 +26,7 @@ from blueman.Functions import (
     set_proc_title,
     create_parser,
     create_logger,
-    bmexit
+    bmexit,
 )
 from blueman.main.Sendto import Sender
 from blueman.bluez.Manager import Manager
@@ -73,9 +74,11 @@ class SendTo:
         self.adapter_path = adapter.get_object_path()
 
         if parsed_args.delete:
+
             def delete_files():
                 for file in self.files:
                     os.unlink(file)
+
             atexit.register(delete_files)
 
         if parsed_args.device is None:
@@ -106,7 +109,9 @@ class SendTo:
 
     @staticmethod
     def select_files():
-        d = Gtk.FileChooserDialog(title=_("Select files to send"), icon_name='blueman-send-symbolic', select_multiple=True)
+        d = Gtk.FileChooserDialog(
+            title=_("Select files to send"), icon_name="blueman-send-symbolic", select_multiple=True
+        )
         d.add_buttons(_("_Cancel"), Gtk.ResponseType.REJECT, _("_OK"), Gtk.ResponseType.ACCEPT)
         resp = d.run()
 
@@ -133,15 +138,27 @@ class SendTo:
             return False
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = create_parser(syslog=True)
-    parser.add_argument("-d", "--device", "--dest", dest="device", action="store",
-                        help=_("Send files to this device"), metavar="ADDRESS")
-    parser.add_argument("-s", "--source", dest="source", action="store",
-                        help=_("Source adapter. Takes address or adapter's name eg. hci0"), metavar="PATTERN")
+    parser.add_argument(
+        "-d",
+        "--device",
+        "--dest",
+        dest="device",
+        action="store",
+        help=_("Send files to this device"),
+        metavar="ADDRESS",
+    )
+    parser.add_argument(
+        "-s",
+        "--source",
+        dest="source",
+        action="store",
+        help=_("Source adapter. Takes address or adapter's name eg. hci0"),
+        metavar="PATTERN",
+    )
     parser.add_argument("-u", "--delete", dest="delete", action="store_true", help=_("Delete files on exit"))
-    parser.add_argument("files", nargs="*", metavar="FILE",
-                        help=_("Files to be send to the bluetooth device"))
+    parser.add_argument("files", nargs="*", metavar="FILE", help=_("Files to be send to the bluetooth device"))
 
     args = parser.parse_args()
 

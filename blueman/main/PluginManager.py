@@ -24,8 +24,8 @@ _T = TypeVar("_T", bound=BasePlugin)
 
 class PluginManager(GObject.GObject):
     __gsignals__: GSignals = {
-        'plugin-loaded': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
-        'plugin-unloaded': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
+        "plugin-loaded": (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
+        "plugin-unloaded": (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
     }
 
     def __init__(self, plugin_class: Type[_T], module_path: ModuleType, parent: object) -> None:
@@ -64,11 +64,15 @@ class PluginManager(GObject.GObject):
                 pass
             except Exception:
                 if user_action:
-                    d = ErrorDialog(_("<b>An error has occurred while loading "
-                                      "a plugin. Please notify the developers "
-                                      "with the content of this message to our </b>\n"
-                                      "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"),
-                                    excp=traceback.format_exc())
+                    d = ErrorDialog(
+                        _(
+                            "<b>An error has occurred while loading "
+                            "a plugin. Please notify the developers "
+                            "with the content of this message to our </b>\n"
+                            '<a href="http://github.com/blueman-project/blueman/issues">website.</a>'
+                        ),
+                        excp=traceback.format_exc(),
+                    )
                     d.run()
                     d.destroy()
                     raise
@@ -119,8 +123,9 @@ class PluginManager(GObject.GObject):
                 if not self.__classes[dep].__unloadable__:
                     cls.__unloadable__ = False
 
-            if (cls.__autoload__ or (cl and cls.__name__ in cl)) and \
-                    not (cls.__unloadable__ and cl and "!" + cls.__name__ in cl):
+            if (cls.__autoload__ or (cl and cls.__name__ in cl)) and not (
+                cls.__unloadable__ and cl and "!" + cls.__name__ in cl
+            ):
                 self.__load_plugin(cls)
 
     def disable_plugin(self, plugin: str) -> bool:
@@ -145,8 +150,11 @@ class PluginManager(GObject.GObject):
 
         for cfl in self.__cfls[cls.__name__]:
             if cfl in self.__classes:
-                if self.__classes[cfl].__priority__ > cls.__priority__ and not self.disable_plugin(cfl) \
-                        and not self.enable_plugin(cls.__name__):
+                if (
+                    self.__classes[cfl].__priority__ > cls.__priority__
+                    and not self.disable_plugin(cfl)
+                    and not self.enable_plugin(cls.__name__)
+                ):
                     logging.warning(f"Not loading {cls.__name__} because its conflict has higher priority")
                     return
 

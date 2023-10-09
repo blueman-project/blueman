@@ -42,8 +42,11 @@ class SerialService(Service):
             logging.error(e)
             return []
 
-        return [Instance(_("Serial Port %s") % "rfcomm%d" % dev["id"], dev["id"]) for dev in lst
-                if dev["dst"] == self.device['Address'] and dev["state"] == "connected"]
+        return [
+            Instance(_("Serial Port %s") % "rfcomm%d" % dev["id"], dev["id"])
+            for dev in lst
+            if dev["dst"] == self.device["Address"] and dev["state"] == "connected"
+        ]
 
     def on_file_changed(
         self,
@@ -51,10 +54,10 @@ class SerialService(Service):
         file: Gio.File,
         _other_file: Gio.File,
         event_type: Gio.FileMonitorEvent,
-        port: int
+        port: int,
     ) -> None:
         if event_type == Gio.FileMonitorEvent.DELETED:
-            logging.info(f'{file.get_path()} got deleted')
+            logging.info(f"{file.get_path()} got deleted")
             if port in self._handlerids:
                 handler_id = self._handlerids.pop(port)
                 monitor.disconnect(handler_id)
@@ -69,9 +72,9 @@ class SerialService(Service):
         if not os.access(path, os.R_OK | os.W_OK):
             return
 
-        logging.info(f'User was granted access to {path}')
-        logging.info('Replacing root watcher')
-        Mechanism().CloseRFCOMM('(d)', port)
+        logging.info(f"User was granted access to {path}")
+        logging.info("Replacing root watcher")
+        Mechanism().CloseRFCOMM("(d)", port)
         subprocess.Popen([RFCOMM_WATCHER_PATH, path])
         if port in self._handlerids:
             handler_id = self._handlerids.pop(port)
@@ -82,12 +85,12 @@ class SerialService(Service):
     def connect(
         self,
         reply_handler: Optional[Callable[[int], None]] = None,
-        error_handler: Optional[Callable[[RFCOMMError], None]] = None
+        error_handler: Optional[Callable[[RFCOMMError], None]] = None,
     ) -> bool:
         # We expect this service to have a reserved UUID
         uuid = self.short_uuid
         assert uuid
-        channel = get_rfcomm_channel(uuid, self.device['Address'])
+        channel = get_rfcomm_channel(uuid, self.device["Address"])
         if channel is None or channel == 0:
             error = RFCOMMError("Failed to get rfcomm channel")
             if error_handler:
@@ -97,13 +100,14 @@ class SerialService(Service):
                 raise error
 
         try:
-            port_id = create_rfcomm_device(Adapter(obj_path=self.device["Adapter"])['Address'], self.device["Address"],
-                                           channel)
+            port_id = create_rfcomm_device(
+                Adapter(obj_path=self.device["Adapter"])["Address"], self.device["Address"], channel
+            )
             filename = f"/dev/rfcomm{port_id:d}"
-            logging.info('Starting rfcomm watcher as root')
-            Mechanism().OpenRFCOMM('(d)', port_id)
+            logging.info("Starting rfcomm watcher as root")
+            Mechanism().OpenRFCOMM("(d)", port_id)
             mon = Gio.File.new_for_path(filename).monitor_file(Gio.FileMonitorFlags.NONE)
-            self._handlerids[port_id] = mon.connect('changed', self.on_file_changed, port_id)
+            self._handlerids[port_id] = mon.connect("changed", self.on_file_changed, port_id)
             self.try_replace_root_watcher(mon, filename, port_id)
 
             if reply_handler:
@@ -119,10 +123,10 @@ class SerialService(Service):
         self,
         port_id: int,
         reply_handler: Optional[Callable[[], None]] = None,
-        error_handler: Optional[Callable[[str], None]] = None
+        error_handler: Optional[Callable[[str], None]] = None,
     ) -> None:
         try:
-            Mechanism().CloseRFCOMM('(d)', port_id)
+            Mechanism().CloseRFCOMM("(d)", port_id)
         except GLib.Error as e:
             if error_handler:
                 error_handler(e.message)

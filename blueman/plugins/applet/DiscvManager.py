@@ -13,28 +13,32 @@ class DiscvManager(AppletPlugin):
     __author__ = "Walmis"
     __icon__ = "edit-find-symbolic"
     __description__ = _(
-        "Provides a menu item for making the default adapter temporarily visible when it is set to hidden by default")
+        "Provides a menu item for making the default adapter temporarily visible when it is set to hidden by default"
+    )
 
-    __gsettings__ = {
-        "schema": "org.blueman.plugins.discvmanager",
-        "path": None
-    }
+    __gsettings__ = {"schema": "org.blueman.plugins.discvmanager", "path": None}
     __options__ = {
         "time": {
             "type": int,
             "default": 60,
             "name": _("Discoverable timeout"),
             "desc": _("Amount of time in seconds discoverable mode will last"),
-            "range": (60, 600)
+            "range": (60, 600),
         }
     }
 
     adapter: Optional[Adapter]
 
     def on_load(self) -> None:
-        self.item = self.parent.Plugins.Menu.add(self, 20, text=_("_Make Discoverable"), icon_name="edit-find-symbolic",
-                                                 tooltip=_("Make the default adapter temporarily visible"),
-                                                 callback=self.on_set_discoverable, visible=False)
+        self.item = self.parent.Plugins.Menu.add(
+            self,
+            20,
+            text=_("_Make Discoverable"),
+            icon_name="edit-find-symbolic",
+            tooltip=_("Make the default adapter temporarily visible"),
+            callback=self.on_set_discoverable,
+            visible=False,
+        )
         self.adapter = None
         self.time_left = -1
 

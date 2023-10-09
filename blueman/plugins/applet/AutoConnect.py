@@ -19,13 +19,8 @@ class AutoConnect(AppletPlugin):
     __author__ = "cschramm"
     __description__ = _("Tries to auto-connect to configurable services on start and every 60 seconds.")
 
-    __gsettings__ = {
-        "schema": "org.blueman.plugins.autoconnect",
-        "path": None
-    }
-    __options__ = {
-        "services": {"type": list, "default": "[]"}
-    }
+    __gsettings__ = {"schema": "org.blueman.plugins.autoconnect", "path": None}
+    __options__ = {"services": {"type": list, "default": "[]"}}
 
     def __init__(self, parent: "BluemanApplet"):
         super().__init__(parent)
@@ -40,16 +35,19 @@ class AutoConnect(AppletPlugin):
             self._run()
 
     def _run(self) -> bool:
-        for address, uuid in self.get_option('services'):
+        for address, uuid in self.get_option("services"):
             device = self.parent.Manager.find_device(address)
             if device is None or device.get("Connected"):
                 continue
 
             def reply(dev: Optional[Device] = device, service_name: str = ServiceUUID(uuid).name) -> None:
                 assert isinstance(dev, Device)  # https://github.com/python/mypy/issues/2608
-                Notification(_("Connected"), _("Automatically connected to %(service)s on %(device)s") %
-                             {"service": service_name, "device": dev.display_name},
-                             icon_name=dev["Icon"]).show()
+                Notification(
+                    _("Connected"),
+                    _("Automatically connected to %(service)s on %(device)s")
+                    % {"service": service_name, "device": dev.display_name},
+                    icon_name=dev["Icon"],
+                ).show()
 
             def err(_reason: Union[Exception, str]) -> None:
                 pass

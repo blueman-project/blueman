@@ -21,7 +21,7 @@ class Timer:
     def tick(self) -> bool:
         if not self.stopped:
             self.time += 1
-            if self.time == (9999 if 'BLUEMAN_SOURCE' in os.environ else 30):
+            if self.time == (9999 if "BLUEMAN_SOURCE" in os.environ else 30):
                 logging.info("Exiting")
                 self._loop.quit()
 
@@ -52,9 +52,10 @@ class MechanismApplication(DbusService):
                     Gio.BusType.SYSTEM,
                     Gio.DBusProxyFlags.NONE,
                     None,
-                    'org.freedesktop.PolicyKit1',
-                    '/org/freedesktop/PolicyKit1/Authority',
-                    'org.freedesktop.PolicyKit1.Authority')
+                    "org.freedesktop.PolicyKit1",
+                    "/org/freedesktop/PolicyKit1/Authority",
+                    "org.freedesktop.PolicyKit1.Authority",
+                )
             except Exception as e:
                 logging.exception(e)
                 self.pk = None
@@ -92,9 +93,10 @@ class MechanismApplication(DbusService):
             if not self.pk:
                 raise DbusError("Blueman was built with PolicyKit-1 support, but it's not available on the system")
 
-        v_subject = GLib.Variant('s', subject)
-        res = self.pk.CheckAuthorization('((sa{sv})sa{ss}us)', ("system-bus-name", {"name": v_subject}),
-                                         action_id, {}, 1, "")
+        v_subject = GLib.Variant("s", subject)
+        res = self.pk.CheckAuthorization(
+            "((sa{sv})sa{ss}us)", ("system-bus-name", {"name": v_subject}), action_id, {}, 1, ""
+        )
 
         logging.debug(str(res))
         (is_authorized, is_challenge, details) = res

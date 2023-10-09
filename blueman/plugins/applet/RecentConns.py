@@ -33,6 +33,7 @@ if TYPE_CHECKING:
     class StoredIcon(_ItemBase):
         time: str
 
+
 REGISTRY_VERSION = 0
 
 
@@ -42,18 +43,17 @@ class RecentConns(AppletPlugin, PowerStateListener):
     __description__ = _("Provides a menu item that contains last used connections for quick access")
     __author__ = "Walmis"
 
-    __gsettings__ = {
-        "schema": "org.blueman.plugins.recentconns",
-        "path": None
-    }
+    __gsettings__ = {"schema": "org.blueman.plugins.recentconns", "path": None}
     __options__ = {
-        "max-items": {"type": int,
-                      "default": 6,
-                      # the maximum number of items RecentConns menu will display
-                      "name": _("Maximum items"),
-                      "desc": _("The maximum number of items recent connections menu will display."),
-                      "range": (6, 20)},
-        "recent-connections": {"type": list, "default": "[]"}
+        "max-items": {
+            "type": int,
+            "default": 6,
+            # the maximum number of items RecentConns menu will display
+            "name": _("Maximum items"),
+            "desc": _("The maximum number of items recent connections menu will display."),
+            "range": (6, 20),
+        },
+        "recent-connections": {"type": list, "default": "[]"},
     }
 
     def on_load(self) -> None:
@@ -68,8 +68,10 @@ class RecentConns(AppletPlugin, PowerStateListener):
         self.parent.Plugins.Menu.unregister(self)
 
     def _rebuild(self) -> None:
-        if 'PowerManager' in self.parent.Plugins.get_loaded() and \
-                not self.parent.Plugins.PowerManager.get_bluetooth_status():
+        if (
+            "PowerManager" in self.parent.Plugins.get_loaded()
+            and not self.parent.Plugins.PowerManager.get_bluetooth_status()
+        ):
             for mitem in self._mitems:
                 mitem.set_sensitive(False)
             return
@@ -84,7 +86,7 @@ class RecentConns(AppletPlugin, PowerStateListener):
         for mitem in self._mitems:
             mitem.set_sensitive(True)
 
-        self.__menuitems = [self._build_menu_item(item) for item in items[:self.get_option("max-items")]]
+        self.__menuitems = [self._build_menu_item(item) for item in items[: self.get_option("max-items")]]
 
         self._rebuild_menu()
 
@@ -111,16 +113,16 @@ class RecentConns(AppletPlugin, PowerStateListener):
         device = Device(obj_path=object_path)
         logging.info(f"{device} {uuid}")
         try:
-            adapter = self.parent.Manager.get_adapter(device['Adapter'])
+            adapter = self.parent.Manager.get_adapter(device["Adapter"])
         except DBusNoSuchAdapterError:
             logging.warning("adapter not found")
             return
 
         item = {
             "adapter": adapter["Address"],
-            "address": device['Address'],
+            "address": device["Address"],
             "alias": device.display_name,
-            "icon": device['Icon'],
+            "icon": device["Icon"],
             "name": ServiceUUID(uuid).name,
             "uuid": uuid,
             "time": str(time.time()),
@@ -129,9 +131,7 @@ class RecentConns(AppletPlugin, PowerStateListener):
         stored_items = self.get_option("recent-connections")
 
         for i in stored_items:
-            if i["adapter"] == item["adapter"] and \
-                    i["address"] == item["address"] and \
-                    i["uuid"] == item["uuid"]:
+            if i["adapter"] == item["adapter"] and i["address"] == item["address"] and i["uuid"] == item["uuid"]:
                 i["time"] = item["time"]
                 i["device"] = object_path
                 break
@@ -152,14 +152,12 @@ class RecentConns(AppletPlugin, PowerStateListener):
 
         def reply() -> None:
             assert item["mitem"] is not None  # https://github.com/python/mypy/issues/2608
-            Notification(_("Connected"), _("Connected to %s") % item["mitem"]["text"],
-                         icon_name=item["icon"]).show()
+            Notification(_("Connected"), _("Connected to %s") % item["mitem"]["text"], icon_name=item["icon"]).show()
             item["mitem"]["sensitive"] = True
             self.parent.Plugins.Menu.on_menu_changed()
 
         def err(reason: Union[Exception, str]) -> None:
-            Notification(_("Failed to connect"), str(reason).split(": ")[-1],
-                         icon_name="dialog-error").show()
+            Notification(_("Failed to connect"), str(reason).split(": ")[-1], icon_name="dialog-error").show()
             assert item["mitem"] is not None  # https://github.com/python/mypy/issues/2608
             item["mitem"]["sensitive"] = True
             self.parent.Plugins.Menu.on_menu_changed()
@@ -173,8 +171,11 @@ class RecentConns(AppletPlugin, PowerStateListener):
             "icon_name": item["mitem"]["icon_name"] if item["mitem"] is not None else item["icon"],
             "sensitive": item["device"] is not None,
             "tooltip": None if item["device"] is None else _("Adapter for this connection is not available"),
-            "callback": (item["mitem"]["callback"] if item["mitem"] is not None
-                         else cast(Callable[[], None], lambda itm=item: self.on_item_activated(itm)))
+            "callback": (
+                item["mitem"]["callback"]
+                if item["mitem"] is not None
+                else cast(Callable[[], None], lambda itm=item: self.on_item_activated(itm))
+            ),
         }
 
         item["mitem"] = mitem
@@ -185,9 +186,15 @@ class RecentConns(AppletPlugin, PowerStateListener):
         menu: "Menu" = self.parent.Plugins.Menu
         self._mitems: List[MenuItem] = []
         menu.unregister(self)
-        menu.add(self, 52, text=_("Recent _Connections"), icon_name="document-open-recent-symbolic",
-                 sensitive=False, callback=lambda: None)
-        for (idx, item) in enumerate(self.__menuitems):
+        menu.add(
+            self,
+            52,
+            text=_("Recent _Connections"),
+            icon_name="document-open-recent-symbolic",
+            sensitive=False,
+            callback=lambda: None,
+        )
+        for idx, item in enumerate(self.__menuitems):
             self._mitems.append(menu.add(self, (53, idx), **item))
         menu.add(self, 59)
 
@@ -202,19 +209,21 @@ class RecentConns(AppletPlugin, PowerStateListener):
 
     def _get_items(self) -> List["Item"]:
         return sorted(
-            ({
-                "adapter": i["adapter"],
-                "address": i["address"],
-                "alias": i["alias"],
-                "icon": i["icon"],
-                "name": i["name"],
-                "uuid": i["uuid"],
-                "time": float(i["time"]),
-                "device": device,
-                "mitem": None
-            }
+            (
+                {
+                    "adapter": i["adapter"],
+                    "address": i["address"],
+                    "alias": i["alias"],
+                    "icon": i["icon"],
+                    "name": i["name"],
+                    "uuid": i["uuid"],
+                    "time": float(i["time"]),
+                    "device": device,
+                    "mitem": None,
+                }
                 for i in self.get_option("recent-connections")
-                if (device := self._get_device_path(i["adapter"], i["address"]))),
+                if (device := self._get_device_path(i["adapter"], i["address"]))
+            ),
             key=itemgetter("time"),
-            reverse=True
+            reverse=True,
         )

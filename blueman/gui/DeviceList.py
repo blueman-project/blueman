@@ -25,24 +25,48 @@ class DeviceList(GenericList):
     __gsignals__: GSignals = {
         # @param: device TreeIter
         # note: None None is given when there ar no more rows, or when selected device is removed
-        'device-selected': (GObject.SignalFlags.RUN_LAST, None, (Device, Gtk.TreeIter,)),
+        "device-selected": (
+            GObject.SignalFlags.RUN_LAST,
+            None,
+            (
+                Device,
+                Gtk.TreeIter,
+            ),
+        ),
         # @param: device, TreeIter, (key, value)
-        'device-property-changed': (GObject.SignalFlags.RUN_LAST, None, (Device, Gtk.TreeIter, object,)),
+        "device-property-changed": (
+            GObject.SignalFlags.RUN_LAST,
+            None,
+            (
+                Device,
+                Gtk.TreeIter,
+                object,
+            ),
+        ),
         # @param: adapter, (key, value)
-        'adapter-property-changed': (GObject.SignalFlags.RUN_LAST, None, (Adapter, object,)),
+        "adapter-property-changed": (
+            GObject.SignalFlags.RUN_LAST,
+            None,
+            (
+                Adapter,
+                object,
+            ),
+        ),
         # @param: progress (0 to 1)
-        'discovery-progress': (GObject.SignalFlags.RUN_LAST, None, (float,)),
-
+        "discovery-progress": (GObject.SignalFlags.RUN_LAST, None, (float,)),
         # @param: new adapter path, None if there are no more adapters
-        'adapter-changed': (GObject.SignalFlags.RUN_LAST, None, (str,)),
-
+        "adapter-changed": (GObject.SignalFlags.RUN_LAST, None, (str,)),
         # @param: adapter path
-        'adapter-added': (GObject.SignalFlags.RUN_LAST, None, (str,)),
-        'adapter-removed': (GObject.SignalFlags.RUN_LAST, None, (str,)),
+        "adapter-added": (GObject.SignalFlags.RUN_LAST, None, (str,)),
+        "adapter-removed": (GObject.SignalFlags.RUN_LAST, None, (str,)),
     }
 
-    def __init__(self, adapter_name: Optional[str] = None, tabledata: Optional[List[ListDataDict]] = None,
-                 headers_visible: bool = True) -> None:
+    def __init__(
+        self,
+        adapter_name: Optional[str] = None,
+        tabledata: Optional[List[ListDataDict]] = None,
+        headers_visible: bool = True,
+    ) -> None:
         if not tabledata:
             tabledata = []
 
@@ -51,14 +75,18 @@ class DeviceList(GenericList):
 
         self.manager = Manager()
         self._managerhandlers: List[int] = []
-        self._managerhandlers.append(self.manager.connect_signal('adapter-removed', self.__on_manager_signal,
-                                                                 'adapter-removed'))
-        self._managerhandlers.append(self.manager.connect_signal('adapter-added', self.__on_manager_signal,
-                                                                 'adapter-added'))
-        self._managerhandlers.append(self.manager.connect_signal('device-created', self.__on_manager_signal,
-                                                                 'device-created'))
-        self._managerhandlers.append(self.manager.connect_signal('device-removed', self.__on_manager_signal,
-                                                                 'device-removed'))
+        self._managerhandlers.append(
+            self.manager.connect_signal("adapter-removed", self.__on_manager_signal, "adapter-removed")
+        )
+        self._managerhandlers.append(
+            self.manager.connect_signal("adapter-added", self.__on_manager_signal, "adapter-added")
+        )
+        self._managerhandlers.append(
+            self.manager.connect_signal("device-created", self.__on_manager_signal, "device-created")
+        )
+        self._managerhandlers.append(
+            self.manager.connect_signal("device-removed", self.__on_manager_signal, "device-removed")
+        )
 
         self.any_device = AnyDevice()
         self._anydevhandler = self.any_device.connect_signal("property-changed", self._on_device_property_changed)
@@ -72,7 +100,7 @@ class DeviceList(GenericList):
             {"id": "device", "type": object},
             {"id": "dbus_path", "type": str},
             {"id": "timestamp", "type": float},
-            {"id": "no_name", "type": bool}
+            {"id": "no_name", "type": bool},
         ]
 
         super().__init__(data, headers_visible=headers_visible)
@@ -82,7 +110,7 @@ class DeviceList(GenericList):
         self._any_adapter = AnyAdapter()
         self._anyadapterhandler = self._any_adapter.connect_signal("property-changed", self._on_property_changed)
 
-        self._selectionhandler = self.selection.connect('changed', self.on_selection_changed)
+        self._selectionhandler = self.selection.connect("changed", self.on_selection_changed)
 
         self.icon_theme = Gtk.IconTheme.get_default()
         self.icon_theme.prepend_search_path(ICON_PATH)
@@ -98,23 +126,23 @@ class DeviceList(GenericList):
         super().destroy()
 
     def __on_manager_signal(self, _manager: Manager, path: str, signal_name: str) -> None:
-        if signal_name == 'adapter-removed':
+        if signal_name == "adapter-removed":
             self.emit("adapter-removed", path)
             if path == self.__adapter_path:
                 self.clear()
                 self.Adapter = None
                 self.set_adapter()
 
-        if signal_name == 'adapter-added':
+        if signal_name == "adapter-added":
             if self.Adapter is None:
                 self.set_adapter(path)
 
             self.emit("adapter-added", path)
 
-        if signal_name == 'device-created':
+        if signal_name == "device-created":
             self.device_add_event(path)
 
-        if signal_name == 'device-removed':
+        if signal_name == "device-removed":
             self.device_remove_event(path)
 
     def on_selection_changed(self, selection: Gtk.TreeSelection) -> None:
@@ -190,7 +218,7 @@ class DeviceList(GenericList):
                 self.Adapter = self.manager.get_adapter(adapter)
                 self.__adapter_path = self.Adapter.get_object_path()
             except DBusNoSuchAdapterError:
-                logging.warning('Failed to set adapter, trying first available.')
+                logging.warning("Failed to set adapter, trying first available.")
                 self.set_adapter(None)
                 return
         else:
@@ -223,7 +251,7 @@ class DeviceList(GenericList):
     def add_device(self, object_path: str) -> None:
         device = Device(obj_path=object_path)
         # device belongs to another adapter
-        if not self.Adapter or not device['Adapter'] == self.Adapter.get_object_path():
+        if not self.Adapter or not device["Adapter"] == self.Adapter.get_object_path():
             return
 
         logging.info("adding new device")
@@ -231,8 +259,8 @@ class DeviceList(GenericList):
         colls = {
             "device": device,
             "dbus_path": object_path,
-            "timestamp": float(datetime.strftime(datetime.now(), '%Y%m%d%H%M%S%f')),
-            "no_name": "Name" not in device
+            "timestamp": float(datetime.strftime(datetime.now(), "%Y%m%d%H%M%S%f")),
+            "no_name": "Name" not in device,
         }
 
         tree_iter = self.append(**colls)
@@ -245,8 +273,9 @@ class DeviceList(GenericList):
         self.clear()
         self.manager.populate_devices()
 
-    def discover_devices(self, time: float = 60.0,
-                         error_handler: Optional[Callable[[BluezDBusException], None]] = None) -> None:
+    def discover_devices(
+        self, time: float = 60.0, error_handler: Optional[Callable[[BluezDBusException], None]] = None
+    ) -> None:
         if not self.discovering:
             self.__discovery_time = 0
             if self.Adapter is not None:
@@ -307,11 +336,11 @@ class DeviceList(GenericList):
 
         if "device" in kwargs:
             if kwargs["device"]:
-                object_path = kwargs['device'].get_object_path()
+                object_path = kwargs["device"].get_object_path()
 
         elif "dbus_path" in kwargs:
             if kwargs["dbus_path"]:
-                object_path = kwargs['dbus_path']
+                object_path = kwargs["dbus_path"]
             else:
                 existing = self.get(tree_iter, "dbus_path")["dbus_path"]
                 if existing is not None:
@@ -319,8 +348,7 @@ class DeviceList(GenericList):
 
         if object_path:
             logging.info(f"Caching new device {object_path}")
-            self.path_to_row[object_path] = Gtk.TreeRowReference.new(self.liststore,
-                                                                     self.liststore.get_path(tree_iter))
+            self.path_to_row[object_path] = Gtk.TreeRowReference.new(self.liststore, self.liststore.get_path(tree_iter))
 
     def append(self, **columns: object) -> Gtk.TreeIter:
         tree_iter = super().append(**columns)

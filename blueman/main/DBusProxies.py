@@ -12,19 +12,21 @@ class DBusProxyFailed(Exception):
 
 
 class ProxyBase(Gio.DBusProxy, metaclass=SingletonGObjectMeta):
-    def __init__(self, name: str, interface_name: str, object_path: str = "/", systembus: bool = False,
-                 flags: Gio.DBusProxyFlags = Gio.DBusProxyFlags.NONE) -> None:
+    def __init__(
+        self,
+        name: str,
+        interface_name: str,
+        object_path: str = "/",
+        systembus: bool = False,
+        flags: Gio.DBusProxyFlags = Gio.DBusProxyFlags.NONE,
+    ) -> None:
         if systembus:
             bustype = Gio.BusType.SYSTEM
         else:
             bustype = Gio.BusType.SESSION
 
         super().__init__(
-            g_name=name,
-            g_interface_name=interface_name,
-            g_object_path=object_path,
-            g_bus_type=bustype,
-            g_flags=flags
+            g_name=name, g_interface_name=interface_name, g_object_path=object_path, g_bus_type=bustype, g_flags=flags
         )
 
         try:
@@ -35,25 +37,33 @@ class ProxyBase(Gio.DBusProxy, metaclass=SingletonGObjectMeta):
 
 class Mechanism(ProxyBase):
     def __init__(self) -> None:
-        super().__init__(name='org.blueman.Mechanism', interface_name='org.blueman.Mechanism',
-                         object_path="/org/blueman/mechanism", systembus=True)
+        super().__init__(
+            name="org.blueman.Mechanism",
+            interface_name="org.blueman.Mechanism",
+            object_path="/org/blueman/mechanism",
+            systembus=True,
+        )
 
 
 class AppletService(ProxyBase):
     def __init__(self) -> None:
-        super().__init__(name='org.blueman.Applet', interface_name='org.blueman.Applet',
-                         object_path="/org/blueman/Applet")
+        super().__init__(
+            name="org.blueman.Applet", interface_name="org.blueman.Applet", object_path="/org/blueman/Applet"
+        )
 
 
 class ManagerService(ProxyBase):
     def __init__(self) -> None:
-        super().__init__(name="org.blueman.Manager", interface_name="org.freedesktop.Application",
-                         object_path="/org/blueman/Manager",
-                         flags=Gio.DBusProxyFlags.DO_NOT_AUTO_START_AT_CONSTRUCTION)
+        super().__init__(
+            name="org.blueman.Manager",
+            interface_name="org.freedesktop.Application",
+            object_path="/org/blueman/Manager",
+            flags=Gio.DBusProxyFlags.DO_NOT_AUTO_START_AT_CONSTRUCTION,
+        )
 
     def activate(self) -> None:
         try:
-            param = GLib.Variant('(a{sv})', ({},))
+            param = GLib.Variant("(a{sv})", ({},))
             self.call_sync("Activate", param, Gio.DBusCallFlags.NONE, -1, None)
         except GLib.Error:
             # This can different errors, depending on the system configuration, typically:
@@ -62,10 +72,12 @@ class ManagerService(ProxyBase):
             logging.error("Call to %s failed", self.get_name(), exc_info=True)
             Notification(
                 _("Failed to reach blueman-manager"),
-                _("It seems like blueman-manager could no get activated via D-Bus. "
-                  "A typical cause for this is a broken graphical setup in the D-Bus activation environment "
-                  "that can get resolved with a call to dbus-update-activation-environment, "
-                  "typically issued from xinitrc (respectively the Sway config or similar)."),
+                _(
+                    "It seems like blueman-manager could no get activated via D-Bus. "
+                    "A typical cause for this is a broken graphical setup in the D-Bus activation environment "
+                    "that can get resolved with a call to dbus-update-activation-environment, "
+                    "typically issued from xinitrc (respectively the Sway config or similar)."
+                ),
                 0,
             ).show()
 
@@ -76,5 +88,5 @@ class ManagerService(ProxyBase):
             except GLib.Error:
                 logging.error("Call to %s failed", self.get_name(), exc_info=True)
 
-        param = GLib.Variant('(sava{sv})', (name, [], {}))
-        self.call('ActivateAction', param, Gio.DBusCallFlags.NONE, -1, None, call_finish)
+        param = GLib.Variant("(sava{sv})", (name, [], {}))
+        self.call("ActivateAction", param, Gio.DBusCallFlags.NONE, -1, None, call_finish)

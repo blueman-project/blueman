@@ -11,6 +11,7 @@ from blueman.bluez.Adapter import Adapter
 from blueman.main.Builder import Builder
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
 gi.require_version("Pango", "1.0")
@@ -58,11 +59,11 @@ class BluemanAdapters(Gtk.Application):
 
         adapters = self.manager.get_adapters()
         if not adapters:
-            logging.error('No adapter(s) found')
+            logging.error("No adapter(s) found")
             bmexit()
 
-        self.manager.connect_signal('adapter-added', self.on_adapter_added)
-        self.manager.connect_signal('adapter-removed', self.on_adapter_removed)
+        self.manager.connect_signal("adapter-added", self.on_adapter_added)
+        self.manager.connect_signal("adapter-removed", self.on_adapter_removed)
         for adapter in adapters:
             path = adapter.get_object_path()
             self.on_adapter_added(self.manager, path)
@@ -73,7 +74,7 @@ class BluemanAdapters(Gtk.Application):
                 hci_dev_num = int(selected_hci_dev[3:])
                 self.notebook.set_current_page(hci_dev_num)
             else:
-                logging.error('Error: the selected adapter does not exist')
+                logging.error("Error: the selected adapter does not exist")
         self.notebook.show_all()
 
         close_action = Gio.SimpleAction.new("quit", None)
@@ -89,13 +90,19 @@ class BluemanAdapters(Gtk.Application):
             self.hold()
             plug = Gtk.Plug.new(self.socket_id)
             plug.show()
-            plug.connect('delete-event', app_release)
+            plug.connect("delete-event", app_release)
             plug.add(self.notebook)
             return
 
         if not self.window:
-            self.window = Gtk.ApplicationWindow(application=self, title=_("Bluetooth Adapters"), border_width=10,
-                                                resizable=False, icon_name="blueman-device", name="BluemanAdapters")
+            self.window = Gtk.ApplicationWindow(
+                application=self,
+                title=_("Bluetooth Adapters"),
+                border_width=10,
+                resizable=False,
+                icon_name="blueman-device",
+                name="BluemanAdapters",
+            )
             self.window.add(self.notebook)
             self.window.set_position(Gtk.WindowPosition.CENTER)
 
@@ -136,27 +143,27 @@ class BluemanAdapters(Gtk.Application):
         def on_hidden_toggle(radio: Gtk.RadioButton) -> None:
             if not radio.props.active:
                 return
-            adapter['DiscoverableTimeout'] = 0
-            adapter['Discoverable'] = False
+            adapter["DiscoverableTimeout"] = 0
+            adapter["Discoverable"] = False
             hscale.set_sensitive(False)
 
         def on_always_toggle(radio: Gtk.RadioButton) -> None:
             if not radio.props.active:
                 return
-            adapter['DiscoverableTimeout'] = 0
-            adapter['Discoverable'] = True
+            adapter["DiscoverableTimeout"] = 0
+            adapter["Discoverable"] = True
             hscale.set_sensitive(False)
 
         def on_temporary_toggle(radio: Gtk.RadioButton) -> None:
             if not radio.props.active:
                 return
-            adapter['Discoverable'] = True
+            adapter["Discoverable"] = True
             hscale.set_sensitive(True)
             hscale.set_value(3)
 
         def on_scale_format_value(_scale: Gtk.Scale, value: float) -> str:
             if value == 0:
-                if adapter['Discoverable']:
+                if adapter["Discoverable"]:
                     return _("Always")
                 else:
                     return _("Hidden")
@@ -166,13 +173,13 @@ class BluemanAdapters(Gtk.Application):
         def on_scale_value_changed(scale: Gtk.Scale) -> None:
             val = scale.get_value()
             logging.info(f"value: {val}")
-            if val == 0 and adapter['Discoverable']:
+            if val == 0 and adapter["Discoverable"]:
                 always_radio.props.active = True
             timeout = int(val * 60)
-            adapter['DiscoverableTimeout'] = timeout
+            adapter["DiscoverableTimeout"] = timeout
 
         def on_name_changed(entry: Gtk.Entry) -> None:
-            adapter['Alias'] = entry.get_text()
+            adapter["Alias"] = entry.get_text()
 
         builder = Builder("adapters-tab.ui")
 
@@ -186,11 +193,11 @@ class BluemanAdapters(Gtk.Application):
         always_radio = builder.get_widget("always", Gtk.RadioButton)
         temporary_radio = builder.get_widget("temporary", Gtk.RadioButton)
 
-        if adapter['Discoverable'] and adapter['DiscoverableTimeout'] > 0:
+        if adapter["Discoverable"] and adapter["DiscoverableTimeout"] > 0:
             temporary_radio.set_active(True)
-            hscale.set_value(adapter['DiscoverableTimeout'])
+            hscale.set_value(adapter["DiscoverableTimeout"])
             hscale.set_sensitive(True)
-        elif adapter['Discoverable'] and adapter['DiscoverableTimeout'] == 0:
+        elif adapter["Discoverable"] and adapter["DiscoverableTimeout"] == 0:
             always_radio.set_active(True)
         else:
             hidden_radio.set_active(True)
@@ -210,7 +217,7 @@ class BluemanAdapters(Gtk.Application):
             temparary_radio=temporary_radio,
             visible=False,
             label=Gtk.Label(),
-            name_entry=name_entry
+            name_entry=name_entry,
         )
 
     def add_to_notebook(self, adapter: Adapter) -> None:
@@ -220,26 +227,26 @@ class BluemanAdapters(Gtk.Application):
         if hci_dev not in self.tabs:
             self.tabs[hci_dev] = self.build_adapter_tab(adapter)
         else:
-            if self.tabs[hci_dev]['visible']:
+            if self.tabs[hci_dev]["visible"]:
                 return
                 # might need to update settings at this point
         ui = self.tabs[hci_dev]
-        ui['visible'] = True
+        ui["visible"] = True
         name = adapter.get_name()
-        if name == '':
-            name = _('Adapter') + ' %d' % (hci_dev_num + 1)
+        if name == "":
+            name = _("Adapter") + " %d" % (hci_dev_num + 1)
         label = Gtk.Label(label=name)
-        ui['label'] = label
+        ui["label"] = label
         label.set_max_width_chars(20)
         label.props.hexpand = True
         label.set_ellipsize(Pango.EllipsizeMode.END)
-        self.notebook.insert_page(ui['grid'], label, hci_dev_num)
+        self.notebook.insert_page(ui["grid"], label, hci_dev_num)
 
     def remove_from_notebook(self, adapter: Adapter) -> None:
         hci_dev = os.path.basename(adapter.get_object_path())
         hci_dev_num = int(hci_dev[3:])
 
-        self.tabs[hci_dev]['visible'] = False
+        self.tabs[hci_dev]["visible"] = False
         self.notebook.remove_page(hci_dev_num)
 
         # leave actual tab contents intact in case adapter becomes present once again

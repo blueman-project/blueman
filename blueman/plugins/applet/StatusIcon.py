@@ -43,8 +43,8 @@ class StatusIcon(AppletPlugin, GObject.GObject):
 
         self.query_visibility(emit=False)
 
-        self.parent.Plugins.connect('plugin-loaded', self._on_plugins_changed)
-        self.parent.Plugins.connect('plugin-unloaded', self._on_plugins_changed)
+        self.parent.Plugins.connect("plugin-loaded", self._on_plugins_changed)
+        self.parent.Plugins.connect("plugin-unloaded", self._on_plugins_changed)
 
         self._add_dbus_method("GetVisibility", (), "b", lambda: self.visible)
         self._add_dbus_signal("VisibilityChanged", "b")
@@ -58,9 +58,10 @@ class StatusIcon(AppletPlugin, GObject.GObject):
         self._add_dbus_method("Activate", (), "", self.parent.Plugins.StandardItems.on_devices)
 
     def query_visibility(self, delay_hiding: bool = False, emit: bool = True) -> None:
-        if self.parent.Manager.get_adapters() or \
-           any(plugin.on_query_force_status_icon_visibility()
-               for plugin in self.parent.Plugins.get_loaded_plugins(StatusIconVisibilityHandler)):
+        if self.parent.Manager.get_adapters() or any(
+            plugin.on_query_force_status_icon_visibility()
+            for plugin in self.parent.Plugins.get_loaded_plugins(StatusIconVisibilityHandler)
+        ):
             self.set_visible(True, emit)
         elif not self.visibility_timeout:
             if delay_hiding:
@@ -104,7 +105,7 @@ class StatusIcon(AppletPlugin, GObject.GObject):
     def on_manager_state_changed(self, state: bool) -> None:
         self.query_visibility()
         if state:
-            launch('blueman-tray', icon_name='blueman', sn=False)
+            launch("blueman-tray", icon_name="blueman", sn=False)
 
     def _on_plugins_changed(self, _plugins: PluginManager, _name: str) -> None:
         implementations = self._get_status_icon_implementations()
@@ -112,15 +113,20 @@ class StatusIcon(AppletPlugin, GObject.GObject):
             self._implementations = implementations
 
         if self.parent.manager_state:
-            launch('blueman-tray', icon_name='blueman', sn=False)
+            launch("blueman-tray", icon_name="blueman", sn=False)
 
     def _get_status_icon_implementations(self) -> List[str]:
-        return [implementation for implementation, _ in sorted(
-            (plugin.on_query_status_icon_implementation()
-             for plugin in self.parent.Plugins.get_loaded_plugins(StatusIconImplementationProvider)),
-            key=itemgetter(1),
-            reverse=True
-        )] + ["GtkStatusIcon"]
+        return [
+            implementation
+            for implementation, _ in sorted(
+                (
+                    plugin.on_query_status_icon_implementation()
+                    for plugin in self.parent.Plugins.get_loaded_plugins(StatusIconImplementationProvider)
+                ),
+                key=itemgetter(1),
+                reverse=True,
+            )
+        ] + ["GtkStatusIcon"]
 
     def _get_icon_name(self) -> str:
         # default icon name

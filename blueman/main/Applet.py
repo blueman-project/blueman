@@ -1,4 +1,5 @@
 import gi
+
 gi.require_version("Gtk", "3.0")
 
 from gi.repository import Gio, GLib, Gtk
@@ -40,13 +41,14 @@ class BluemanApplet(Gtk.Application):
         self._active = False
 
         self.Manager = Manager()
-        self.Manager.connect_signal('adapter-added', self.on_adapter_added)
-        self.Manager.connect_signal('adapter-removed', self.on_adapter_removed)
-        self.Manager.connect_signal('device-created', self.on_device_created)
-        self.Manager.connect_signal('device-removed', self.on_device_removed)
+        self.Manager.connect_signal("adapter-added", self.on_adapter_added)
+        self.Manager.connect_signal("adapter-removed", self.on_adapter_removed)
+        self.Manager.connect_signal("device-created", self.on_device_created)
+        self.Manager.connect_signal("device-removed", self.on_device_removed)
 
-        self.DbusSvc = DbusService("org.blueman.Applet", "org.blueman.Applet", "/org/blueman/Applet",
-                                   Gio.BusType.SESSION)
+        self.DbusSvc = DbusService(
+            "org.blueman.Applet", "org.blueman.Applet", "/org/blueman/Applet", Gio.BusType.SESSION
+        )
         self.DbusSvc.register()
 
         self.Plugins = Plugins(self)
@@ -58,10 +60,10 @@ class BluemanApplet(Gtk.Application):
         self.Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
 
         self._any_adapter = AnyAdapter()
-        self._any_adapter.connect_signal('property-changed', self._on_adapter_property_changed)
+        self._any_adapter.connect_signal("property-changed", self._on_adapter_property_changed)
 
         self._any_device = AnyDevice()
-        self._any_device.connect_signal('property-changed', self._on_device_property_changed)
+        self._any_device.connect_signal("property-changed", self._on_device_property_changed)
 
     def do_startup(self) -> None:
         Gtk.Application.do_startup(self)

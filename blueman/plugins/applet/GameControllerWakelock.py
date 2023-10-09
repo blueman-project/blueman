@@ -8,9 +8,10 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.plugins.errors import UnsupportedPlatformError
 
 import gi
-gi.require_version('Gdk', '3.0')
+
+gi.require_version("Gdk", "3.0")
 try:
-    gi.require_version('GdkX11', '3.0')
+    gi.require_version("GdkX11", "3.0")
 except ValueError:
     raise ImportError("Couldn't find required namespace GdkX11")
 
@@ -19,7 +20,7 @@ from gi.repository import GdkX11
 
 
 if not isinstance(Gdk.Screen.get_default(), GdkX11.X11Screen):
-    raise UnsupportedPlatformError('Only X11 platform is supported')
+    raise UnsupportedPlatformError("Only X11 platform is supported")
 
 
 class GameControllerWakelock(AppletPlugin):
@@ -42,7 +43,7 @@ class GameControllerWakelock(AppletPlugin):
 
     def on_device_property_changed(self, path: str, key: str, value: Any) -> None:
         if key == "Connected":
-            klass = Device(obj_path=path)["Class"] & 0x1fff
+            klass = Device(obj_path=path)["Class"] & 0x1FFF
 
             if klass == 0x504 or klass == 0x508:
                 if value:

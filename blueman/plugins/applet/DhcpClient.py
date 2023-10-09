@@ -19,7 +19,7 @@ class DhcpClient(AppletPlugin):
 
     def on_load(self) -> None:
         self._any_network = AnyNetwork()
-        self._any_network.connect_signal('property-changed', self._on_network_prop_changed)
+        self._any_network.connect_signal("property-changed", self._on_network_prop_changed)
 
         self.querying: List[str] = []
 
@@ -42,23 +42,32 @@ class DhcpClient(AppletPlugin):
             return
 
         if device != "":
+
             def reply(_obj: Mechanism, result: str, _user_data: None) -> None:
                 logging.info(result)
-                Notification(_("Bluetooth Network"),
-                             _("Interface %(0)s bound to IP address %(1)s") % {"0": device, "1": result},
-                             icon_name="network-workgroup").show()
+                Notification(
+                    _("Bluetooth Network"),
+                    _("Interface %(0)s bound to IP address %(1)s") % {"0": device, "1": result},
+                    icon_name="network-workgroup",
+                ).show()
 
                 self.querying.remove(device)
 
             def err(_obj: Mechanism, result: GLib.Error, _user_data: None) -> None:
                 logging.warning(result)
-                Notification(_("Bluetooth Network"), _("Failed to obtain an IP address on %s") % device,
-                             icon_name="network-workgroup").show()
+                Notification(
+                    _("Bluetooth Network"),
+                    _("Failed to obtain an IP address on %s") % device,
+                    icon_name="network-workgroup",
+                ).show()
 
                 self.querying.remove(device)
 
-            Notification(_("Bluetooth Network"), _("Trying to obtain an IP address on %s\nPlease wait…" % device),
-                         icon_name="network-workgroup").show()
+            Notification(
+                _("Bluetooth Network"),
+                _("Trying to obtain an IP address on %s\nPlease wait…" % device),
+                icon_name="network-workgroup",
+            ).show()
 
             m = Mechanism()
-            m.DhcpClient('(s)', object_path, result_handler=reply, error_handler=err, timeout=120 * 1000)
+            m.DhcpClient("(s)", object_path, result_handler=reply, error_handler=err, timeout=120 * 1000)

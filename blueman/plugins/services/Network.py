@@ -12,6 +12,7 @@ from blueman.main.DBusProxies import AppletService
 from blueman.gui.CommonUi import ErrorDialog
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gio, Gtk, GObject
 
@@ -23,7 +24,6 @@ class Network(ServicePlugin):
     __plugin_info__ = (_("Network"), "network-workgroup")
 
     def on_load(self) -> None:
-
         self._builder = Builder("services-network.ui")
         self.widget = self._builder.get_widget("network", Gtk.Grid)
 
@@ -32,7 +32,7 @@ class Network(ServicePlugin):
         for iface in netifs:
             if iface != "lo" and iface != "pan1":
                 logging.info(iface)
-                ipiface = ipaddress.ip_interface('/'.join(cast(Tuple[str, str], netifs[iface])))
+                ipiface = ipaddress.ip_interface("/".join(cast(Tuple[str, str], netifs[iface])))
                 self.interfaces.append((iface, ipiface))
 
         self.setup_network()
@@ -42,14 +42,12 @@ class Network(ServicePlugin):
             logging.exception(e)
 
     def on_apply(self) -> None:
-
         if self.on_query_apply_state():
             logging.info("network apply")
 
             m = Mechanism()
             nap_enable = self._builder.get_widget("nap-enable", Gtk.CheckButton)
             if nap_enable.props.active:
-
                 if self._builder.get_widget("r_dhcpd", Gtk.RadioButton).props.active:
                     stype = "DhcpdHandler"
                 elif self._builder.get_widget("r_dnsmasq", Gtk.RadioButton).props.active:
@@ -61,7 +59,7 @@ class Network(ServicePlugin):
 
                 try:
                     changed = net_ip.props.text != self.Config["ip4-address"]
-                    m.EnableNetwork('(sssb)', net_ip.props.text, "255.255.255.0", stype, changed)
+                    m.EnableNetwork("(sssb)", net_ip.props.text, "255.255.255.0", stype, changed)
 
                     if not self.Config["nap-enable"]:
                         self.Config["nap-enable"] = True
@@ -84,7 +82,7 @@ class Network(ServicePlugin):
     def ip_check(self) -> None:
         entry = self._builder.get_widget("net_ip", Gtk.Entry)
         try:
-            nap_ipiface = ipaddress.ip_interface('/'.join((entry.props.text, '255.255.255.0')))
+            nap_ipiface = ipaddress.ip_interface("/".join((entry.props.text, "255.255.255.0")))
         except (ValueError, ipaddress.AddressValueError):
             entry.props.secondary_icon_name = "dialog-error"
             entry.props.secondary_icon_tooltip_text = _("Invalid IP address")
@@ -101,7 +99,8 @@ class Network(ServicePlugin):
             elif nap_ipiface.network == ipiface.network:
                 tooltip_text = _(
                     "IP address overlaps with subnet of interface %s, which has the following configuration  %s/%s\n"
-                    "This may cause incorrect network behavior" % (iface, ipiface.ip, ipiface.netmask))
+                    "This may cause incorrect network behavior" % (iface, ipiface.ip, ipiface.netmask)
+                )
                 entry.props.secondary_icon_name = "dialog-warning"
                 entry.props.secondary_icon_tooltip_text = tooltip_text
                 return
@@ -203,20 +202,20 @@ class Network(ServicePlugin):
 
         def dun_support_toggled(rb: Gtk.RadioButton, x: str) -> None:
             if rb.props.active and x == "nm":
-                applet.SetPluginConfig('(sb)', "PPPSupport", False)
-                applet.SetPluginConfig('(sb)', "NMDUNSupport", True)
+                applet.SetPluginConfig("(sb)", "PPPSupport", False)
+                applet.SetPluginConfig("(sb)", "NMDUNSupport", True)
             elif rb.props.active and x == "blueman":
-                applet.SetPluginConfig('(sb)', "NMDUNSupport", False)
-                applet.SetPluginConfig('(sb)', "PPPSupport", True)
+                applet.SetPluginConfig("(sb)", "NMDUNSupport", False)
+                applet.SetPluginConfig("(sb)", "PPPSupport", True)
 
         def pan_support_toggled(rb: Gtk.RadioButton, x: str) -> None:
             if rb.props.active and x == "nm":
-                applet.SetPluginConfig('(sb)', "DhcpClient", False)
-                applet.SetPluginConfig('(sb)', "NMPANSupport", True)
+                applet.SetPluginConfig("(sb)", "DhcpClient", False)
+                applet.SetPluginConfig("(sb)", "NMPANSupport", True)
 
             elif rb.props.active and x == "blueman":
-                applet.SetPluginConfig('(sb)', "NMPANSupport", False)
-                applet.SetPluginConfig('(sb)', "DhcpClient", True)
+                applet.SetPluginConfig("(sb)", "NMPANSupport", False)
+                applet.SetPluginConfig("(sb)", "DhcpClient", True)
 
         if "PPPSupport" in active_plugins:
             rb_dun_blueman.props.active = True

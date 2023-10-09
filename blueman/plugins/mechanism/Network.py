@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 DHCPDHANDLERS: Dict[str, Type["DHCPHandler"]] = {
     "DnsMasqHandler": DnsMasqHandler,
     "DhcpdHandler": DhcpdHandler,
-    "UdhcpdHandler": UdhcpdHandler
+    "UdhcpdHandler": UdhcpdHandler,
 }
 
 
@@ -20,8 +20,9 @@ class Network(MechanismPlugin):
         self.parent.add_method("EnableNetwork", ("s", "s", "s", "b"), "", self._enable_network, pass_sender=True)
         self.parent.add_method("DisableNetwork", (), "", self._disable_network, pass_sender=True)
 
-    def _run_dhcp_client(self, object_path: str, caller: str, ok: Callable[[str], None],
-                         err: Callable[[Union[Exception, int]], None]) -> None:
+    def _run_dhcp_client(
+        self, object_path: str, caller: str, ok: Callable[[str], None], err: Callable[[Union[Exception, int]], None]
+    ) -> None:
         self.timer.stop()
 
         self.confirm_authorization(caller, "org.blueman.dhcp.client")
@@ -44,8 +45,9 @@ class Network(MechanismPlugin):
         except Exception as e:
             err(e)
 
-    def _enable_network(self, ip_address: str, netmask: str, dhcp_handler: str, address_changed: bool,
-                        caller: str) -> None:
+    def _enable_network(
+        self, ip_address: str, netmask: str, dhcp_handler: str, address_changed: bool, caller: str
+    ) -> None:
         self.confirm_authorization(caller, "org.blueman.network.setup")
         NetConf.apply_settings(ip_address, netmask, DHCPDHANDLERS[dhcp_handler], address_changed)
 

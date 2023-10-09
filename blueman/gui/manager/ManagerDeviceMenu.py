@@ -18,11 +18,14 @@ from blueman.Sdp import (
     HANDSFREE_AGW_SVCLASS_ID,
     HANDSFREE_SVCLASS_ID,
     HEADSET_SVCLASS_ID,
-    HID_SVCLASS_ID)
+    HID_SVCLASS_ID,
+)
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
+
 gi.require_version("Gdk", "3.0")
 from gi.repository import Gdk
 from gi.repository import GLib
@@ -63,15 +66,16 @@ class ManagerDeviceMenu(Gtk.Menu):
 
         self.is_popup = False
 
-        self._device_property_changed_signal = self.Blueman.List.connect("device-property-changed",
-                                                                         self.on_device_property_changed)
+        self._device_property_changed_signal = self.Blueman.List.connect(
+            "device-property-changed", self.on_device_property_changed
+        )
         ManagerDeviceMenu.__instances__.append(self)
 
         self._any_network = AnyNetwork()
-        self._any_network.connect_signal('property-changed', self._on_service_property_changed)
+        self._any_network.connect_signal("property-changed", self._on_service_property_changed)
 
         self._any_device = AnyDevice()
-        self._any_device.connect_signal('property-changed', self._on_service_property_changed)
+        self._any_device.connect_signal("property-changed", self._on_service_property_changed)
 
         try:
             self._appl: Optional[AppletService] = AppletService()
@@ -117,8 +121,9 @@ class ManagerDeviceMenu(Gtk.Menu):
             if inst.SelectedDevice == self.SelectedDevice and not (inst.is_popup and not inst.props.visible):
                 inst.generate()
 
-    def _on_service_property_changed(self, _service: Union[AnyNetwork, AnyDevice], key: str, _value: object,
-                                     _path: str) -> None:
+    def _on_service_property_changed(
+        self, _service: Union[AnyNetwork, AnyDevice], key: str, _value: object, _path: str
+    ) -> None:
         if key == "Connected":
             self.generate()
 
@@ -144,12 +149,12 @@ class ManagerDeviceMenu(Gtk.Menu):
             prog.connect("cancelled", lambda x: self.disconnect_service(device))
 
         if self._appl is None:
-            fail(None, GLib.Error('Applet DBus Service not available'), None)
+            fail(None, GLib.Error("Applet DBus Service not available"), None)
             return
 
-        self._appl.ConnectService('(os)', device.get_object_path(), uuid,
-                                  result_handler=success, error_handler=fail,
-                                  timeout=GLib.MAXINT)
+        self._appl.ConnectService(
+            "(os)", device.get_object_path(), uuid, result_handler=success, error_handler=fail, timeout=GLib.MAXINT
+        )
 
         prog.start()
 
@@ -165,14 +170,16 @@ class ManagerDeviceMenu(Gtk.Menu):
             self.generate()
 
         if self._appl is None:
-            err(None, GLib.Error('Applet DBus Service not available'), None)
+            err(None, GLib.Error("Applet DBus Service not available"), None)
             return
 
-        self._appl.DisconnectService('(osd)', device.get_object_path(), uuid, port,
-                                     result_handler=ok, error_handler=err, timeout=GLib.MAXINT)
+        self._appl.DisconnectService(
+            "(osd)", device.get_object_path(), uuid, port, result_handler=ok, error_handler=err, timeout=GLib.MAXINT
+        )
 
-    def on_device_property_changed(self, lst: "ManagerDeviceList", _device: Device, tree_iter: Gtk.TreeIter,
-                                   key_value: Tuple[str, object]) -> None:
+    def on_device_property_changed(
+        self, lst: "ManagerDeviceList", _device: Device, tree_iter: Gtk.TreeIter, key_value: Tuple[str, object]
+    ) -> None:
         key, value = key_value
         # print "menu:", key, value
         if lst.compare(tree_iter, lst.selected()):
@@ -183,8 +190,10 @@ class ManagerDeviceMenu(Gtk.Menu):
         err = self._BLUEZ_ERROR_MAP.get(error.message.split(":", 3)[-1].strip())
 
         if err == self._BluezError.PROFILE_UNAVAILABLE:
-            logging.warning("No audio endpoints registered to bluetoothd. "
-                            "Pulseaudio Bluetooth module, bluez-alsa, PipeWire or other audio support missing.")
+            logging.warning(
+                "No audio endpoints registered to bluetoothd. "
+                "Pulseaudio Bluetooth module, bluez-alsa, PipeWire or other audio support missing."
+            )
             msg = _("No audio endpoints registered")
         elif err == self._BluezError.CREATE_SOCKET:
             logging.warning("bluetoothd reported input/output error. Check its logs for context.")
@@ -192,8 +201,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         elif err == self._BluezError.PAGE_TIMEOUT:
             msg = _("Device did not respond")
         elif err == self._BluezError.UNKNOWN:
-            logging.warning("bluetoothd reported an unknown error. "
-                            "Retry or check its logs for context.")
+            logging.warning("bluetoothd reported an unknown error. " "Retry or check its logs for context.")
             msg = _("Unknown error")
         else:
             msg = error.message.split(":", 3)[-1].strip()
@@ -232,12 +240,17 @@ class ManagerDeviceMenu(Gtk.Menu):
         for uuid in device_uuids:
             service_uuid = ServiceUUID(uuid)
             if service_uuid.short_uuid in (
-                    AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID, HANDSFREE_AGW_SVCLASS_ID, HANDSFREE_SVCLASS_ID,
-                    HEADSET_SVCLASS_ID, HID_SVCLASS_ID, 0x1812
+                AUDIO_SOURCE_SVCLASS_ID,
+                AUDIO_SINK_SVCLASS_ID,
+                HANDSFREE_AGW_SVCLASS_ID,
+                HANDSFREE_SVCLASS_ID,
+                HEADSET_SVCLASS_ID,
+                HID_SVCLASS_ID,
+                0x1812,
             ):
                 return True
             elif not service_uuid.reserved:
-                if uuid == '03b80e5a-ede8-4b33-a751-6ce34ec4c700':
+                if uuid == "03b80e5a-ede8-4b33-a751-6ce34ec4c700":
                     return True
         # LE devices do not appear to expose certain properties like uuids until connect to at least once.
         return not device_uuids
@@ -249,8 +262,9 @@ class ManagerDeviceMenu(Gtk.Menu):
             selected = self.Blueman.List.selected()
             if not selected:
                 return
-            row = self.Blueman.List.get(selected, "alias", "paired", "connected", "trusted", "objpush", "device",
-                                        "blocked")
+            row = self.Blueman.List.get(
+                selected, "alias", "paired", "connected", "trusted", "objpush", "device", "blocked"
+            )
         else:
             (x, y) = self.Blueman.List.get_pointer()
             posdata = self.Blueman.List.get_path_at_pos(x, y)
@@ -266,8 +280,9 @@ class ManagerDeviceMenu(Gtk.Menu):
             child_iter = self.Blueman.List.filter.convert_iter_to_child_iter(tree_iter)
             assert child_iter is not None
 
-            row = self.Blueman.List.get(child_iter, "alias", "paired", "connected", "trusted", "objpush", "device",
-                                        "blocked")
+            row = self.Blueman.List.get(
+                child_iter, "alias", "paired", "connected", "trusted", "objpush", "device", "blocked"
+            )
 
         self.SelectedDevice = row["device"]
 
@@ -280,7 +295,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             self.append(item)
             return
 
-        show_generic_connect = self.show_generic_connect_calc(self.SelectedDevice['UUIDs'])
+        show_generic_connect = self.show_generic_connect_calc(self.SelectedDevice["UUIDs"])
 
         if not row["connected"] and show_generic_connect:
             connect_item = create_menuitem(_("<b>_Connect</b>"), "bluetooth-symbolic")
@@ -297,8 +312,11 @@ class ManagerDeviceMenu(Gtk.Menu):
 
         logging.debug(row["alias"])
 
-        items = [item for plugin in self.Blueman.Plugins.get_loaded_plugins(MenuItemsProvider)
-                 for item in plugin.on_request_menu_items(self, self.SelectedDevice)]
+        items = [
+            item
+            for plugin in self.Blueman.Plugins.get_loaded_plugins(MenuItemsProvider)
+            for item in plugin.on_request_menu_items(self, self.SelectedDevice)
+        ]
 
         connect_items = [i for i in items if i.group == DeviceMenuItem.Group.CONNECT]
         disconnect_items = [i for i in items if i.group == DeviceMenuItem.Group.DISCONNECT]
@@ -390,9 +408,9 @@ class ManagerDeviceMenu(Gtk.Menu):
             def on_response(dialog: Gtk.Dialog, response_id: int) -> None:
                 if response_id == Gtk.ResponseType.ACCEPT:
                     assert isinstance(alias_entry, Gtk.Entry)  # https://github.com/python/mypy/issues/2608
-                    device.set('Alias', alias_entry.get_text())
+                    device.set("Alias", alias_entry.get_text())
                 elif response_id == 1:
-                    device.set('Alias', '')
+                    device.set("Alias", "")
                 dialog.destroy()
 
             builder = Builder("rename-device.ui")
@@ -400,12 +418,12 @@ class ManagerDeviceMenu(Gtk.Menu):
             dialog.set_transient_for(self.Blueman.window)
             dialog.props.icon_name = "blueman"
             alias_entry = builder.get_widget("alias_entry", Gtk.Entry)
-            alias_entry.set_text(device['Alias'])
+            alias_entry.set_text(device["Alias"])
             dialog.connect("response", on_response)
             dialog.present()
 
         item = Gtk.MenuItem.new_with_mnemonic(_("R_ename device…"))
-        item.connect('activate', on_rename, self.SelectedDevice)
+        item.connect("activate", on_rename, self.SelectedDevice)
         self.append(item)
         item.show()
 

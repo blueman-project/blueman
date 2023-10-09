@@ -20,8 +20,7 @@ class PowerStateHandler:
     def on_power_state_query(self) -> "PowerManager.State":
         return PowerManager.State.ON
 
-    def on_power_state_change_requested(self, manager: "PowerManager", state: bool,
-                                        cb: Callable[[bool], None]) -> None:
+    def on_power_state_change_requested(self, manager: "PowerManager", state: bool, cb: Callable[[bool], None]) -> None:
         ...
 
 
@@ -38,10 +37,15 @@ class PowerManager(AppletPlugin, StatusIconProvider):
         OFF_FORCED = 0
 
     def on_load(self) -> None:
-        self.item = self.parent.Plugins.Menu.add(self, 1, text=_("<b>Turn Bluetooth _Off</b>"), markup=True,
-                                                 icon_name="bluetooth-disabled-symbolic",
-                                                 tooltip=_("Turn off all adapters"),
-                                                 callback=self.on_bluetooth_toggled)
+        self.item = self.parent.Plugins.Menu.add(
+            self,
+            1,
+            text=_("<b>Turn Bluetooth _Off</b>"),
+            markup=True,
+            icon_name="bluetooth-disabled-symbolic",
+            tooltip=_("Turn off all adapters"),
+            callback=self.on_bluetooth_toggled,
+        )
         self.adapter_state = True
         self.current_state = True
 
@@ -60,6 +64,7 @@ class PowerManager(AppletPlugin, StatusIconProvider):
 
     def on_manager_state_changed(self, state: bool) -> None:
         if state:
+
             def timeout() -> bool:
                 self.request_power_state(self.get_adapter_state())
                 return False
@@ -132,8 +137,7 @@ class PowerManager(AppletPlugin, StatusIconProvider):
 
     # queries other plugins to determine the current power state
     def update_power_state(self) -> None:
-        rets = [plugin.on_power_state_query()
-                for plugin in self.parent.Plugins.get_loaded_plugins(PowerStateHandler)]
+        rets = [plugin.on_power_state_query() for plugin in self.parent.Plugins.get_loaded_plugins(PowerStateHandler)]
 
         off = any(x != self.State.ON for x in rets) or not self.adapter_state
         foff = self.State.OFF_FORCED in rets
@@ -141,7 +145,6 @@ class PowerManager(AppletPlugin, StatusIconProvider):
 
         new_state = True
         if foff or off:
-
             self.item.set_text(_("<b>Turn Bluetooth _On</b>"), markup=True)
             self.item.set_icon_name("bluetooth-symbolic")
             self.item.set_tooltip(_("Turn on all adapters"))
@@ -150,7 +153,6 @@ class PowerManager(AppletPlugin, StatusIconProvider):
             new_state = False
 
         elif on and not self.current_state:
-
             self.item.set_text(_("<b>Turn Bluetooth _Off</b>"), markup=True)
             self.item.set_icon_name("bluetooth-disabled-symbolic")
             self.item.set_tooltip(_("Turn off all adapters"))

@@ -19,7 +19,7 @@ def get_service(device: Device, uuid: str) -> Optional[Service]:
 
 def get_services(device: Device) -> List[Service]:
     try:
-        services = (get_service(device, uuid) for uuid in device['UUIDs'])
+        services = (get_service(device, uuid) for uuid in device["UUIDs"])
         return [service for service in services if service]
     except BluezDBusException as e:
         logging.exception(e)

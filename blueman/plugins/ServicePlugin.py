@@ -2,6 +2,7 @@ from typing import List, Tuple, Union, TYPE_CHECKING
 
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
@@ -26,7 +27,6 @@ class ServicePlugin:
 
     # call when option has changed.
     def option_changed_notify(self, option_id: str, state: bool = True) -> None:
-
         if option_id not in self._options:
             self._options.append(option_id)
         else:

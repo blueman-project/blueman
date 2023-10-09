@@ -34,6 +34,7 @@ if TYPE_CHECKING:
         size: Optional[int]
         name: str
 
+
 NotificationType = Union[_NotificationBubble, _NotificationDialog]
 
 
@@ -46,7 +47,7 @@ class ObexErrorCanceled(DbusError):
 
 
 class Agent(DbusService):
-    __agent_path = '/org/bluez/obex/agent/blueman'
+    __agent_path = "/org/bluez/obex/agent/blueman"
 
     def __init__(self, applet: BluemanApplet):
         super().__init__(None, "org.bluez.obex.Agent1", self.__agent_path, Gio.BusType.SESSION)
@@ -73,26 +74,27 @@ class Agent(DbusService):
     def _release(self) -> None:
         raise Exception(self.__agent_path + " was released unexpectedly")
 
-    def _authorize_push(self, transfer_path: str, ok: Callable[[str], None],
-                        err: Callable[[ObexErrorRejected], None]) -> None:
+    def _authorize_push(
+        self, transfer_path: str, ok: Callable[[str], None], err: Callable[[ObexErrorRejected], None]
+    ) -> None:
         def on_action(action: str) -> None:
             logging.info(f"Action {action}")
 
             if action == "accept":
                 assert self._pending_transfer
-                self.transfers[self._pending_transfer['transfer_path']] = {
-                    'path': self._pending_transfer['root'] + '/' + os.path.basename(self._pending_transfer['filename']),
-                    'size': self._pending_transfer['size'],
-                    'name': self._pending_transfer['name']
+                self.transfers[self._pending_transfer["transfer_path"]] = {
+                    "path": self._pending_transfer["root"] + "/" + os.path.basename(self._pending_transfer["filename"]),
+                    "size": self._pending_transfer["size"],
+                    "name": self._pending_transfer["name"],
                 }
 
-                ok(self.transfers[self._pending_transfer['transfer_path']]['path'])
+                ok(self.transfers[self._pending_transfer["transfer_path"]]["path"])
 
-                self._allowed_devices.append(self._pending_transfer['address'])
+                self._allowed_devices.append(self._pending_transfer["address"])
 
                 def _remove() -> bool:
                     assert self._pending_transfer is not None  # https://github.com/python/mypy/issues/2608
-                    self._allowed_devices.remove(self._pending_transfer['address'])
+                    self._allowed_devices.remove(self._pending_transfer["address"])
                     return False
 
                 GLib.timeout_add(60000, _remove)
@@ -117,28 +119,36 @@ class Agent(DbusService):
             name = address
             trusted = False
 
-        self._pending_transfer = {'transfer_path': transfer_path, 'address': address, 'root': root,
-                                  'filename': filename, 'size': size, 'name': name}
+        self._pending_transfer = {
+            "transfer_path": transfer_path,
+            "address": address,
+            "root": root,
+            "filename": filename,
+            "size": size,
+            "name": name,
+        }
 
         # This device was neither allowed nor is it trusted -> ask for confirmation
-        if address not in self._allowed_devices and not (self._config['opp-accept'] and trusted):
+        if address not in self._allowed_devices and not (self._config["opp-accept"] and trusted):
             self._notification = notification = Notification(
                 _("Incoming file over Bluetooth"),
-                _("Incoming file %(0)s from %(1)s") % {"0": "<b>" + escape(filename) + "</b>",
-                                                       "1": "<b>" + escape(name) + "</b>"},
-                30000, [("accept", _("Accept")), ("reject", _("Reject"))], on_action,
-                icon_name="blueman"
+                _("Incoming file %(0)s from %(1)s")
+                % {"0": "<b>" + escape(filename) + "</b>", "1": "<b>" + escape(name) + "</b>"},
+                30000,
+                [("accept", _("Accept")), ("reject", _("Reject"))],
+                on_action,
+                icon_name="blueman",
             )
             notification.show()
         # Device is trusted or was already allowed, larger file -> display a notification, but auto-accept
         elif size and size > 350000:
             self._notification = notification = Notification(
                 _("Receiving file"),
-                _("Receiving file %(0)s from %(1)s") % {"0": "<b>" + escape(filename) + "</b>",
-                                                        "1": "<b>" + escape(name) + "</b>"},
-                icon_name="blueman"
+                _("Receiving file %(0)s from %(1)s")
+                % {"0": "<b>" + escape(filename) + "</b>", "1": "<b>" + escape(name) + "</b>"},
+                icon_name="blueman",
             )
-            on_action('accept')
+            on_action("accept")
             notification.show()
         # Device is trusted or was already allowed. very small file -> auto-accept and transfer silently
         else:
@@ -168,20 +178,27 @@ class TransferService(AppletPlugin):
     def on_load(self) -> None:
         def on_reset(_action: str) -> None:
             self._notification = None
-            self._config.reset('shared-path')
-            logging.info('Reset share path')
+            self._config.reset("shared-path")
+            logging.info("Reset share path")
 
         self._config = Gio.Settings(schema_id="org.blueman.transfer")
 
         share_path, invalid_share_path = self._make_share_path()
 
         if invalid_share_path:
-            text = _('Configured directory for incoming files does not exist')
-            secondary_text = _('Please make sure that directory "<b>%s</b>" exists or '
-                               'configure it with blueman-services. Until then the default "%s" will be used')
-            self._notification = Notification(text, secondary_text % (self._config["shared-path"], share_path),
-                                              icon_name='blueman', timeout=30000,
-                                              actions=[('reset', 'Reset to default')], actions_cb=on_reset)
+            text = _("Configured directory for incoming files does not exist")
+            secondary_text = _(
+                'Please make sure that directory "<b>%s</b>" exists or '
+                'configure it with blueman-services. Until then the default "%s" will be used'
+            )
+            self._notification = Notification(
+                text,
+                secondary_text % (self._config["shared-path"], share_path),
+                icon_name="blueman",
+                timeout=30000,
+                actions=[("reset", "Reset to default")],
+                actions_cb=on_reset,
+            )
             self._notification.show()
 
         self._watch = Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
@@ -198,7 +215,7 @@ class TransferService(AppletPlugin):
         path = None
         error = False
 
-        if config_path == '':
+        if config_path == "":
             path = default_path
         elif not os.path.isdir(config_path):
             path = default_path
@@ -209,12 +226,12 @@ class TransferService(AppletPlugin):
 
         if not path:
             path = os.path.expanduser("~")
-            logging.warning('Failed to get Download dir from XDG')
+            logging.warning("Failed to get Download dir from XDG")
 
         # We used to always store the full path which caused problems
         if config_path == default_path:
-            logging.info('Reset stored path, identical to default path.')
-            self._config["shared-path"] = ''
+            logging.info("Reset stored path, identical to default path.")
+            self._config["shared-path"] = ""
 
         return path, error
 
@@ -235,7 +252,7 @@ class TransferService(AppletPlugin):
         self._manager = Manager()
         self._handlerids.append(self._manager.connect("transfer-started", self._on_transfer_started))
         self._handlerids.append(self._manager.connect("transfer-completed", self._on_transfer_completed))
-        self._handlerids.append(self._manager.connect('session-removed', self._on_session_removed))
+        self._handlerids.append(self._manager.connect("session-removed", self._on_session_removed))
 
         self._register_agent()
 
@@ -257,7 +274,7 @@ class TransferService(AppletPlugin):
             # This is not an incoming transfer we authorized
             return
 
-        size = self._agent.transfers[transfer_path]['size']
+        size = self._agent.transfers[transfer_path]["size"]
         assert size is not None
         if size > 350000:
             self._normal_transfers += 1
@@ -282,7 +299,7 @@ class TransferService(AppletPlugin):
 
         attributes = self._agent.transfers[transfer_path]
 
-        src = attributes['path']
+        src = attributes["path"]
         dest_dir, ignored = self._make_share_path()
         filename = os.path.basename(src)
 
@@ -299,24 +316,24 @@ class TransferService(AppletPlugin):
             success = False
 
         if success:
-            self._notification = Notification(_("File received"),
-                                              _("File %(0)s from %(1)s successfully received") % {
-                                                  "0": "<b>" + escape(filename) + "</b>",
-                                                  "1": "<b>" + escape(attributes['name']) + "</b>"},
-                                              icon_name="blueman")
+            self._notification = Notification(
+                _("File received"),
+                _("File %(0)s from %(1)s successfully received")
+                % {"0": "<b>" + escape(filename) + "</b>", "1": "<b>" + escape(attributes["name"]) + "</b>"},
+                icon_name="blueman",
+            )
             self._add_open(self._notification, _("Open"), dest)
             self._notification.show()
         elif not success:
             n = Notification(
                 _("Transfer failed"),
-                _("Transfer of file %(0)s failed") % {
-                    "0": "<b>" + escape(filename) + "</b>",
-                    "1": "<b>" + escape(attributes['name']) + "</b>"},
-                icon_name="blueman"
+                _("Transfer of file %(0)s failed")
+                % {"0": "<b>" + escape(filename) + "</b>", "1": "<b>" + escape(attributes["name"]) + "</b>"},
+                icon_name="blueman",
             )
             n.show()
-            assert attributes['size'] is not None
-            if attributes['size'] > 350000:
+            assert attributes["size"] is not None
+            if attributes["size"] > 350000:
                 self._normal_transfers -= 1
             else:
                 self._silent_transfers -= 1
@@ -329,19 +346,29 @@ class TransferService(AppletPlugin):
 
         share_path, ignored = self._make_share_path()
         if self._normal_transfers == 0:
-            self._notification = Notification(_("Files received"),
-                                              ngettext("Received %(files)d file in the background",
-                                                       "Received %(files)d files in the background",
-                                                       self._silent_transfers) % {"files": self._silent_transfers},
-                                              icon_name="blueman")
+            self._notification = Notification(
+                _("Files received"),
+                ngettext(
+                    "Received %(files)d file in the background",
+                    "Received %(files)d files in the background",
+                    self._silent_transfers,
+                )
+                % {"files": self._silent_transfers},
+                icon_name="blueman",
+            )
 
             self._add_open(self._notification, _("Open Location"), share_path)
             self._notification.show()
         else:
-            self._notification = Notification(_("Files received"),
-                                              ngettext("Received %(files)d more file in the background",
-                                                       "Received %(files)d more files in the background",
-                                                       self._silent_transfers) % {"files": self._silent_transfers},
-                                              icon_name="blueman")
+            self._notification = Notification(
+                _("Files received"),
+                ngettext(
+                    "Received %(files)d more file in the background",
+                    "Received %(files)d more files in the background",
+                    self._silent_transfers,
+                )
+                % {"files": self._silent_transfers},
+                icon_name="blueman",
+            )
             self._add_open(self._notification, _("Open Location"), share_path)
             self._notification.show()

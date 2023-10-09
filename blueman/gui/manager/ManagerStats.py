@@ -22,7 +22,6 @@ class ManagerStats:
     hbox: Gtk.Box
 
     def __init__(self, blueman: "Blueman") -> None:
-
         blueman.List.connect("adapter-changed", self.on_adapter_changed)
 
         assert blueman.List.Adapter is not None
@@ -58,7 +57,6 @@ class ManagerStats:
         self.down_speed.reset()
 
     def set_blinker_by_speed(self, blinker: Animation, speed: float) -> None:
-
         if speed > 0 and not blinker.status():
             blinker.start()
 
@@ -107,9 +105,18 @@ class ManagerStats:
         if self.timer:
             GLib.source_remove(self.timer)
 
-    def set_data(self, uploaded: float, u_name: str, downloaded: float, d_name: str, u_speed: float, us_name: str,
-                 d_speed: float, ds_name: str) -> None:
+    def set_data(
+        self,
+        uploaded: float,
+        u_name: str,
+        downloaded: float,
+        d_name: str,
+        u_speed: float,
+        us_name: str,
+        d_speed: float,
+        ds_name: str,
+    ) -> None:
         self.down_rate.set_markup(
-            f'<span size="small">{downloaded:.2f} {d_name} <i>{d_speed:5.2f} {ds_name}/s</i></span>')
-        self.up_rate.set_markup(
-            f'<span size="small">{uploaded:.2f} {u_name} <i>{u_speed:5.2f} {us_name}/s</i></span>')
+            f'<span size="small">{downloaded:.2f} {d_name} <i>{d_speed:5.2f} {ds_name}/s</i></span>'
+        )
+        self.up_rate.set_markup(f'<span size="small">{uploaded:.2f} {u_name} <i>{u_speed:5.2f} {us_name}/s</i></span>')

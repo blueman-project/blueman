@@ -18,8 +18,9 @@ class NMDUNSupport(AppletPlugin, ServiceConnectHandler):
     __description__ = _("Provides support for Dial Up Networking (DUN) with ModemManager and NetworkManager")
     __priority__ = 1
 
-    def service_connect_handler(self, service: Service, ok: Callable[[], None],
-                                err: Callable[[Union[NMConnectionError, GLib.Error]], None]) -> bool:
+    def service_connect_handler(
+        self, service: Service, ok: Callable[[], None], err: Callable[[Union[NMConnectionError, GLib.Error]], None]
+    ) -> bool:
         if DIALUP_NET_SVCLASS_ID != service.short_uuid:
             return False
 
@@ -28,8 +29,9 @@ class NMDUNSupport(AppletPlugin, ServiceConnectHandler):
 
         return True
 
-    def service_disconnect_handler(self, service: Service, ok: Callable[[], None],
-                                   err: Callable[[Union[NMConnectionError, GLib.Error]], None]) -> bool:
+    def service_disconnect_handler(
+        self, service: Service, ok: Callable[[], None], err: Callable[[Union[NMConnectionError, GLib.Error]], None]
+    ) -> bool:
         if DIALUP_NET_SVCLASS_ID != service.short_uuid:
             return False
 

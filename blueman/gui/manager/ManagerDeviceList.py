@@ -19,6 +19,7 @@ from blueman.gui.GtkAnimation import TreeRowFade, CellFade, AnimBase
 from _blueman import ConnInfoReadError, conn_info
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import GLib
@@ -46,20 +47,45 @@ class ManagerDeviceList(DeviceList):
         cr.props.ellipsize = Pango.EllipsizeMode.END
         tabledata: List[ListDataDict] = [
             # device picture
-            {"id": "device_surface", "type": SurfaceObject, "renderer": Gtk.CellRendererPixbuf(),
-             "render_attrs": {}, "celldata_func": (self._set_cell_data, None)},
+            {
+                "id": "device_surface",
+                "type": SurfaceObject,
+                "renderer": Gtk.CellRendererPixbuf(),
+                "render_attrs": {},
+                "celldata_func": (self._set_cell_data, None),
+            },
             # device caption
-            {"id": "caption", "type": str, "renderer": cr,
-             "render_attrs": {"markup": 1}, "view_props": {"expand": True}},
-            {"id": "battery_pb", "type": GdkPixbuf.Pixbuf, "renderer": Gtk.CellRendererPixbuf(),
-             "render_attrs": {}, "view_props": {"spacing": 0},
-             "celldata_func": (self._set_cell_data, "battery")},
-            {"id": "rssi_pb", "type": GdkPixbuf.Pixbuf, "renderer": Gtk.CellRendererPixbuf(),
-             "render_attrs": {}, "view_props": {"spacing": 0},
-             "celldata_func": (self._set_cell_data, "rssi")},
-            {"id": "tpl_pb", "type": GdkPixbuf.Pixbuf, "renderer": Gtk.CellRendererPixbuf(),
-             "render_attrs": {}, "view_props": {"spacing": 0},
-             "celldata_func": (self._set_cell_data, "tpl")},
+            {
+                "id": "caption",
+                "type": str,
+                "renderer": cr,
+                "render_attrs": {"markup": 1},
+                "view_props": {"expand": True},
+            },
+            {
+                "id": "battery_pb",
+                "type": GdkPixbuf.Pixbuf,
+                "renderer": Gtk.CellRendererPixbuf(),
+                "render_attrs": {},
+                "view_props": {"spacing": 0},
+                "celldata_func": (self._set_cell_data, "battery"),
+            },
+            {
+                "id": "rssi_pb",
+                "type": GdkPixbuf.Pixbuf,
+                "renderer": Gtk.CellRendererPixbuf(),
+                "render_attrs": {},
+                "view_props": {"spacing": 0},
+                "celldata_func": (self._set_cell_data, "rssi"),
+            },
+            {
+                "id": "tpl_pb",
+                "type": GdkPixbuf.Pixbuf,
+                "renderer": Gtk.CellRendererPixbuf(),
+                "render_attrs": {},
+                "view_props": {"spacing": 0},
+                "celldata_func": (self._set_cell_data, "tpl"),
+            },
             {"id": "alias", "type": str},  # used for quick access instead of device.GetProperties
             {"id": "connected", "type": bool},  # used for quick access instead of device.GetProperties
             {"id": "paired", "type": bool},  # used for quick access instead of device.GetProperties
@@ -71,7 +97,7 @@ class ManagerDeviceList(DeviceList):
             {"id": "cell_fader", "type": CellFade},
             {"id": "row_fader", "type": TreeRowFade},
             {"id": "initial_anim", "type": bool},
-            {"id": "blocked", "type": bool}
+            {"id": "blocked", "type": bool},
         ]
         super().__init__(adapter, tabledata)
         self.set_name("ManagerDeviceList")
@@ -86,7 +112,7 @@ class ManagerDeviceList(DeviceList):
         self._batteries: Dict[str, Battery] = {}
 
         self.Config = Gio.Settings(schema_id="org.blueman.general")
-        self.Config.connect('changed', self._on_settings_changed)
+        self.Config.connect("changed", self._on_settings_changed)
         # Set the correct sorting
         self._on_settings_changed(self.Config, "sort-by")
         self._on_settings_changed(self.Config, "sort-type")
@@ -111,11 +137,11 @@ class ManagerDeviceList(DeviceList):
         self.filter.set_visible_func(self.filter_func)
 
     def _on_settings_changed(self, settings: Gio.Settings, key: str) -> None:
-        if key in ('sort-by', 'sort-order'):
-            sort_by = settings['sort-by']
-            sort_order = settings['sort-order']
+        if key in ("sort-by", "sort-order"):
+            sort_by = settings["sort-by"]
+            sort_order = settings["sort-order"]
 
-            if sort_order == 'ascending':
+            if sort_order == "ascending":
                 sort_type = Gtk.SortType.ASCENDING
             else:
                 sort_type = Gtk.SortType.DESCENDING
@@ -159,9 +185,16 @@ class ManagerDeviceList(DeviceList):
         else:
             return True
 
-    def drag_recv(self, _widget: Gtk.Widget, context: Gdk.DragContext, x: int, y: int, selection: Gtk.SelectionData,
-                  _info: int, time: int) -> None:
-
+    def drag_recv(
+        self,
+        _widget: Gtk.Widget,
+        context: Gdk.DragContext,
+        x: int,
+        y: int,
+        selection: Gtk.SelectionData,
+        _info: int,
+        time: int,
+    ) -> None:
         uris = list(selection.get_uris())
 
         context.finish(True, False, time)
@@ -239,7 +272,7 @@ class ManagerDeviceList(DeviceList):
             self.menu = ManagerDeviceMenu(self.Blueman)
 
         if event.type == Gdk.EventType._2BUTTON_PRESS and cast(Gdk.EventButton, event).button == 1:
-            if self.menu.show_generic_connect_calc(row["device"]['UUIDs']):
+            if self.menu.show_generic_connect_calc(row["device"]["UUIDs"]):
                 if row["connected"]:
                     self.menu.disconnect_service(row["device"])
                 else:
@@ -260,8 +293,9 @@ class ManagerDeviceList(DeviceList):
 
         return cast(cairo.ImageSurface, surface)
 
-    def _make_device_icon(self, icon_name: str, is_paired: bool, is_connected: bool, is_trusted: bool,
-                          is_blocked: bool) -> cairo.ImageSurface:
+    def _make_device_icon(
+        self, icon_name: str, is_paired: bool, is_connected: bool, is_trusted: bool, is_blocked: bool
+    ) -> cairo.ImageSurface:
         scale = self.get_scale_factor()
         target = self._load_surface(icon_name, 48)
         ctx = cairo.Context(target)
@@ -307,8 +341,11 @@ class ManagerDeviceList(DeviceList):
 
     @staticmethod
     def make_caption(name: str, klass: str, address: str) -> str:
-        return "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" \
-               % {"0": html.escape(name), "1": klass, "2": address}
+        return "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" % {
+            "0": html.escape(name),
+            "1": klass,
+            "2": address,
+        }
 
     @staticmethod
     def make_display_name(alias: str, klass: int, address: str) -> str:
@@ -319,11 +356,11 @@ class ManagerDeviceList(DeviceList):
 
     @staticmethod
     def get_device_class(device: Device) -> str:
-        klass = get_minor_class(device['Class'])
+        klass = get_minor_class(device["Class"])
         if klass != _("Uncategorized"):
             return klass
         else:
-            return get_major_class(device['Class'])
+            return get_major_class(device["Class"])
 
     def row_setup_event(self, tree_iter: Gtk.TreeIter, device: Device) -> None:
         if not self.get(tree_iter, "initial_anim")["initial_anim"]:
@@ -346,7 +383,7 @@ class ManagerDeviceList(DeviceList):
                     self.set(tree_iter, initial_anim=False)
 
         has_objpush = self._has_objpush(device)
-        klass = get_minor_class(device['Class'])
+        klass = get_minor_class(device["Class"])
         # Bluetooth >= 4 devices use Appearance property
         appearance = device["Appearance"]
         if klass != _("Uncategorized") and klass != _("Unknown"):
@@ -354,22 +391,23 @@ class ManagerDeviceList(DeviceList):
         elif klass == _("Unknown") and appearance:
             description = gatt_appearance_to_name(appearance)
         else:
-            description = get_major_class(device['Class'])
+            description = get_major_class(device["Class"])
 
-        surface = self._make_device_icon(device["Icon"], device["Paired"], device["Connected"], device["Trusted"],
-                                         device["Blocked"])
+        surface = self._make_device_icon(
+            device["Icon"], device["Paired"], device["Connected"], device["Trusted"], device["Blocked"]
+        )
         surface_object = SurfaceObject(surface)
-        display_name = self.make_display_name(device.display_name, device["Class"], device['Address'])
-        caption = self.make_caption(display_name, description, device['Address'])
+        display_name = self.make_display_name(device.display_name, device["Class"], device["Address"])
+        caption = self.make_caption(display_name, description, device["Address"])
 
         self.set(tree_iter, caption=caption, alias=display_name, objpush=has_objpush, device_surface=surface_object)
 
         try:
-            self.row_update_event(tree_iter, "Trusted", device['Trusted'])
+            self.row_update_event(tree_iter, "Trusted", device["Trusted"])
         except Exception as e:
             logging.exception(e)
         try:
-            self.row_update_event(tree_iter, "Paired", device['Paired'])
+            self.row_update_event(tree_iter, "Paired", device["Paired"])
         except Exception as e:
             logging.exception(e)
         try:
@@ -429,8 +467,9 @@ class ManagerDeviceList(DeviceList):
         device = self.get(tree_iter, "device")["device"]
 
         if key in ("Blocked", "Connected", "Paired", "Trusted"):
-            surface = self._make_device_icon(device["Icon"], device["Paired"], device["Connected"], device["Trusted"],
-                                             device["Blocked"])
+            surface = self._make_device_icon(
+                device["Icon"], device["Paired"], device["Connected"], device["Trusted"], device["Blocked"]
+            )
             self.set(tree_iter, device_surface=SurfaceObject(surface))
 
         if key == "Trusted":
@@ -446,7 +485,7 @@ class ManagerDeviceList(DeviceList):
                 self.set(tree_iter, paired=False)
 
         elif key == "Alias":
-            c = self.make_caption(value, self.get_device_class(device), device['Address'])
+            c = self.make_caption(value, self.get_device_class(device), device["Address"])
             name = self.make_display_name(device.display_name, device["Class"], device["Address"])
             self.set(tree_iter, caption=c, alias=name)
 
@@ -497,7 +536,7 @@ class ManagerDeviceList(DeviceList):
         w = 14 * self.get_scale_factor()
         h = 48 * self.get_scale_factor()
 
-        for (name, perc) in bars.items():
+        for name, perc in bars.items():
             if round(row[name], -1) != round(perc, -1):
                 icon_name = f"blueman-{name}-{int(round(perc, -1))}.png"
                 icon = GdkPixbuf.Pixbuf.new_from_file_at_scale(os.path.join(PIXMAP_PATH, icon_name), w, h, True)
@@ -509,8 +548,9 @@ class ManagerDeviceList(DeviceList):
             return
 
         self.set(tree_iter, battery=0, rssi=0, tpl=0)
-        self._prepare_fader(row["cell_fader"], lambda: self.set(tree_iter, battery_pb=None, rssi_pb=None,
-                                                                tpl_pb=None)).animate(start=1.0, end=0.0, duration=400)
+        self._prepare_fader(
+            row["cell_fader"], lambda: self.set(tree_iter, battery_pb=None, rssi_pb=None, tpl_pb=None)
+        ).animate(start=1.0, end=0.0, duration=400)
 
     def _prepare_fader(self, fader: AnimBase, callback: Optional[Callable[[], None]] = None) -> AnimBase:
         def on_finished(finished_fader: AnimBase) -> None:
@@ -558,9 +598,11 @@ class ManagerDeviceList(DeviceList):
             self.tooltip_col = path[1]
             return True
 
-        elif path[1] == self.columns["battery_pb"] \
-                or path[1] == self.columns["tpl_pb"] \
-                or path[1] == self.columns["rssi_pb"]:
+        elif (
+            path[1] == self.columns["battery_pb"]
+            or path[1] == self.columns["tpl_pb"]
+            or path[1] == self.columns["rssi_pb"]
+        ):
             tree_iter = self.get_iter(path[0])
             assert tree_iter is not None
 
@@ -593,11 +635,15 @@ class ManagerDeviceList(DeviceList):
                     rssi_state = _("Too much")
 
                 if path[1] == self.columns["rssi_pb"]:
-                    lines.append(_("<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>") %
-                                 {"rssi": rssi, "rssi_state": rssi_state})
+                    lines.append(
+                        _("<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>")
+                        % {"rssi": rssi, "rssi_state": rssi_state}
+                    )
                 else:
-                    lines.append(_("Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>") %
-                                 {"rssi": rssi, "rssi_state": rssi_state})
+                    lines.append(
+                        _("Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>")
+                        % {"rssi": rssi, "rssi_state": rssi_state}
+                    )
 
             if tpl != 0:
                 if tpl < 30:
@@ -612,11 +658,15 @@ class ManagerDeviceList(DeviceList):
                     tpl_state = _("Very High")
 
                 if path[1] == self.columns["tpl_pb"]:
-                    lines.append(_("<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>") %
-                                 {"tpl": tpl, "tpl_state": tpl_state})
+                    lines.append(
+                        _("<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>")
+                        % {"tpl": tpl, "tpl_state": tpl_state}
+                    )
                 else:
-                    lines.append(_("Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>") %
-                                 {"tpl": tpl, "tpl_state": tpl_state})
+                    lines.append(
+                        _("Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>")
+                        % {"tpl": tpl, "tpl_state": tpl_state}
+                    )
 
             tooltip.set_markup("\n".join(lines))
             self.tooltip_row = path[0]
@@ -633,8 +683,14 @@ class ManagerDeviceList(DeviceList):
                 return True
         return False
 
-    def _set_cell_data(self, _col: Gtk.TreeViewColumn, cell: Gtk.CellRenderer, model: Gtk.TreeModelFilter,
-                       tree_iter: Gtk.TreeIter, data: Optional[str]) -> None:
+    def _set_cell_data(
+        self,
+        _col: Gtk.TreeViewColumn,
+        cell: Gtk.CellRenderer,
+        model: Gtk.TreeModelFilter,
+        tree_iter: Gtk.TreeIter,
+        data: Optional[str],
+    ) -> None:
         tree_iter = model.convert_iter_to_child_iter(tree_iter)
         if data is None:
             row = self.get(tree_iter, "device_surface")

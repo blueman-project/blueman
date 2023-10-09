@@ -14,7 +14,7 @@ class Rfcomm(MechanismPlugin):
         subprocess.Popen([RFCOMM_WATCHER_PATH, f"/dev/rfcomm{port_id:d}"])
 
     def _close_rfcomm(self, port_id: int) -> None:
-        out, err = subprocess.Popen(['ps', '-e', 'o', 'pid,args'], stdout=subprocess.PIPE).communicate()
+        out, err = subprocess.Popen(["ps", "-e", "o", "pid,args"], stdout=subprocess.PIPE).communicate()
         for line in out.decode("UTF-8").splitlines():
             pid, cmdline = line.split(maxsplit=1)
             if f"blueman-rfcomm-watcher /dev/rfcomm{port_id:d}" in cmdline:

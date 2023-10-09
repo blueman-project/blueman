@@ -1,6 +1,7 @@
 from typing import Dict, Optional, TYPE_CHECKING, Iterable, Mapping, Callable, Tuple, Collection, Any
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
@@ -16,8 +17,10 @@ if TYPE_CHECKING:
         renderer: Gtk.CellRenderer
         render_attrs: Mapping[str, int]
         view_props: Mapping[str, object]
-        celldata_func: Tuple[Callable[[Gtk.TreeViewColumn, Gtk.CellRenderer, Gtk.TreeModelFilter, Gtk.TreeIter, Any],
-                                      None], Any]
+        celldata_func: Tuple[
+            Callable[[Gtk.TreeViewColumn, Gtk.CellRenderer, Gtk.TreeModelFilter, Gtk.TreeIter, Any], None], Any
+        ]
+
 else:
     ListDataDict = dict
 

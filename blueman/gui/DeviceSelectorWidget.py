@@ -7,25 +7,37 @@ from blueman.bluez.Adapter import Adapter
 from blueman.gui.DeviceSelectorList import DeviceSelectorList
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 
 class DeviceSelectorWidget(Gtk.Box):
-    def __init__(self, adapter_name: Optional[str] = None, orientation: Gtk.Orientation = Gtk.Orientation.VERTICAL,
-                 visible: bool = False) -> None:
-
-        super().__init__(orientation=orientation, spacing=1, vexpand=True,
-                         width_request=360, height_request=340,
-                         name="DeviceSelectorWidget", visible=visible)
+    def __init__(
+        self,
+        adapter_name: Optional[str] = None,
+        orientation: Gtk.Orientation = Gtk.Orientation.VERTICAL,
+        visible: bool = False,
+    ) -> None:
+        super().__init__(
+            orientation=orientation,
+            spacing=1,
+            vexpand=True,
+            width_request=360,
+            height_request=340,
+            name="DeviceSelectorWidget",
+            visible=visible,
+        )
 
         self.List = DeviceSelectorList(adapter_name)
         if self.List.Adapter is not None:
             self.List.populate_devices()
 
-        sw = Gtk.ScrolledWindow(hscrollbar_policy=Gtk.PolicyType.NEVER,
-                                vscrollbar_policy=Gtk.PolicyType.AUTOMATIC,
-                                shadow_type=Gtk.ShadowType.IN)
+        sw = Gtk.ScrolledWindow(
+            hscrollbar_policy=Gtk.PolicyType.NEVER,
+            vscrollbar_policy=Gtk.PolicyType.AUTOMATIC,
+            shadow_type=Gtk.ShadowType.IN,
+        )
         sw.add(self.List)
         self.pack_start(sw, True, True, 0)
 
@@ -38,11 +50,12 @@ class DeviceSelectorWidget(Gtk.Box):
         self.cb_adapters = Gtk.ComboBox(model=model, visible=True)
         self.cb_adapters.set_tooltip_text(_("Adapter selection"))
         self.cb_adapters.pack_start(cell, True)
-        self.cb_adapters.add_attribute(cell, 'text', 0)
+        self.cb_adapters.add_attribute(cell, "text", 0)
 
         spinner_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6, height_request=8)
-        self.spinner = Gtk.Spinner(halign=Gtk.Align.START, hexpand=True, has_tooltip=True,
-                                   tooltip_text=_("Discovering…"), margin=6)
+        self.spinner = Gtk.Spinner(
+            halign=Gtk.Align.START, hexpand=True, has_tooltip=True, tooltip_text=_("Discovering…"), margin=6
+        )
 
         spinner_box.add(self.cb_adapters)
         spinner_box.add(self.spinner)
@@ -62,8 +75,9 @@ class DeviceSelectorWidget(Gtk.Box):
         self.List.destroy()
         logging.debug("Deleting widget")
 
-    def on_adapter_prop_changed(self, _devlist: DeviceSelectorList, adapter: Adapter, key_value: Tuple[str, object]
-                                ) -> None:
+    def on_adapter_prop_changed(
+        self, _devlist: DeviceSelectorList, adapter: Adapter, key_value: Tuple[str, object]
+    ) -> None:
         key, value = key_value
         if key == "Name" or key == "Alias":
             self.update_adapters_list()

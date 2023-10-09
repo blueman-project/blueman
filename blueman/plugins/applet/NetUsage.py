@@ -26,8 +26,8 @@ from gi.repository import Pango
 
 class MonitorBase(GObject.GObject):
     __gsignals__: GSignals = {
-        'disconnected': (GObject.SignalFlags.NO_HOOKS, None, ()),
-        'stats': (GObject.SignalFlags.NO_HOOKS, None, (int, int)),
+        "disconnected": (GObject.SignalFlags.NO_HOOKS, None, ()),
+        "stats": (GObject.SignalFlags.NO_HOOKS, None, (int, int)),
     }
 
     def __init__(self, device: Device, interface: str):
@@ -36,8 +36,9 @@ class MonitorBase(GObject.GObject):
         self.interface = interface
         self.device = device
         self.general_config = Gio.Settings(schema_id="org.blueman.general")
-        self.config = Gio.Settings(schema_id="org.blueman.plugins.netusage",
-                                   path=f"/org/blueman/plugins/netusages/{device['Address']}/")
+        self.config = Gio.Settings(
+            schema_id="org.blueman.plugins.netusage", path=f"/org/blueman/plugins/netusages/{device['Address']}/"
+        )
 
         self.last_tx = 0
         self.last_rx = 0
@@ -139,10 +140,10 @@ class Dialog:
         self.cb_device.connect("changed", self.on_selection_changed)
 
         self.cb_device.pack_start(cr1, True)
-        self.cb_device.add_attribute(cr1, 'markup', 1)
+        self.cb_device.add_attribute(cr1, "markup", 1)
 
         self.cb_device.pack_start(cr2, False)
-        self.cb_device.add_attribute(cr2, 'markup', 2)
+        self.cb_device.add_attribute(cr2, "markup", 2)
 
         general_config = Gio.Settings(schema_id="org.blueman.general")
 
@@ -151,8 +152,13 @@ class Dialog:
             for m in plugin.monitors:
                 if d == m.device["Address"]:
                     titer = self.liststore.append(
-                        [d, self.get_caption(m.device.display_name, m.device["Address"]),
-                         _("Connected:") + " " + m.interface, m])
+                        [
+                            d,
+                            self.get_caption(m.device.display_name, m.device["Address"]),
+                            _("Connected:") + " " + m.interface,
+                            m,
+                        ]
+                    )
                     if self.cb_device.get_active() == -1:
                         self.cb_device.set_active_iter(titer)
                     added = True
@@ -172,10 +178,13 @@ class Dialog:
             if self.cb_device.get_active() == -1:
                 self.cb_device.set_active(0)
         else:
-            msg = _("No usage statistics are available yet. Try establishing a connection first and "
-                    "then check this page.")
-            d = Gtk.MessageDialog(parent=self.dialog, modal=True, type=Gtk.MessageType.INFO,
-                                  buttons=Gtk.ButtonsType.CLOSE, text=msg)
+            msg = _(
+                "No usage statistics are available yet. Try establishing a connection first and "
+                "then check this page."
+            )
+            d = Gtk.MessageDialog(
+                parent=self.dialog, modal=True, type=Gtk.MessageType.INFO, buttons=Gtk.ButtonsType.CLOSE, text=msg
+            )
             d.props.icon_name = "blueman"
             d.run()
             d.destroy()
@@ -205,7 +214,13 @@ class Dialog:
             m = ngettext("minute", "minutes", delta.seconds % 3600 // 60)
 
             self.l_duration.props.label = _("%d %s %d %s and %d %s") % (
-                delta.days, d, delta.seconds // 3600, h, delta.seconds % 3600 // 60, m)
+                delta.days,
+                d,
+                delta.seconds // 3600,
+                h,
+                delta.seconds % 3600 // 60,
+                m,
+            )
         else:
             self.l_started.props.label = _("Unknown")
             self.l_duration.props.label = _("Unknown")
@@ -214,8 +229,9 @@ class Dialog:
         titer = cb.get_active_iter()
         assert titer is not None
         (addr,) = self.liststore.get(titer, 0)
-        self.config = Gio.Settings(schema_id="org.blueman.plugins.netusage",
-                                   path=f"/org/blueman/plugins/netusages/{addr}/")
+        self.config = Gio.Settings(
+            schema_id="org.blueman.plugins.netusage", path=f"/org/blueman/plugins/netusages/{addr}/"
+        )
         self.update_counts(self.config["tx"], self.config["rx"])
         self.update_time()
 
@@ -238,9 +254,13 @@ class Dialog:
         self.update_time()
 
     def on_reset(self, _button: Gtk.Button) -> None:
-        d = Gtk.MessageDialog(parent=self.dialog, modal=True, type=Gtk.MessageType.QUESTION,
-                              buttons=Gtk.ButtonsType.YES_NO,
-                              text=_("Are you sure you want to reset the counter?"))
+        d = Gtk.MessageDialog(
+            parent=self.dialog,
+            modal=True,
+            type=Gtk.MessageType.QUESTION,
+            buttons=Gtk.ButtonsType.YES_NO,
+            text=_("Are you sure you want to reset the counter?"),
+        )
         res = d.run()
         d.destroy()
         if res == Gtk.ResponseType.YES:
@@ -268,8 +288,12 @@ class Dialog:
                 return
 
         self.liststore.append(
-            [monitor.device["Address"], self.get_caption(monitor.device.display_name, monitor.device["Address"]),
-             _("Connected:") + " " + monitor.interface, monitor]
+            [
+                monitor.device["Address"],
+                self.get_caption(monitor.device.display_name, monitor.device["Address"]),
+                _("Connected:") + " " + monitor.interface,
+                monitor,
+            ]
         )
 
     def monitor_removed(self, _parent: "NetUsage", monitor: Monitor) -> None:
@@ -286,15 +310,17 @@ class Dialog:
 class NetUsage(AppletPlugin, GObject.GObject, PPPConnectedListener):
     __depends__ = ["Menu"]
     __icon__ = "network-wireless-symbolic"
-    __description__ = _("Allows you to monitor your (mobile broadband) network traffic usage. Useful for limited "
-                        "data access plans. This plugin tracks every device separately.")
+    __description__ = _(
+        "Allows you to monitor your (mobile broadband) network traffic usage. Useful for limited "
+        "data access plans. This plugin tracks every device separately."
+    )
     __author__ = "Walmis"
     __autoload__ = False
     __gsignals__: GSignals = {
-        'monitor-added': (GObject.SignalFlags.NO_HOOKS, None, (Monitor,)),
-        'monitor-removed': (GObject.SignalFlags.NO_HOOKS, None, (Monitor,)),
+        "monitor-added": (GObject.SignalFlags.NO_HOOKS, None, (Monitor,)),
+        "monitor-removed": (GObject.SignalFlags.NO_HOOKS, None, (Monitor,)),
         # monitor, tx, rx
-        'stats': (GObject.SignalFlags.NO_HOOKS, None, (Monitor, int, int)),
+        "stats": (GObject.SignalFlags.NO_HOOKS, None, (Monitor, int, int)),
     }
 
     _any_network = None
@@ -304,10 +330,16 @@ class NetUsage(AppletPlugin, GObject.GObject, PPPConnectedListener):
         self.monitors: List[Monitor] = []
 
         self._any_network = AnyNetwork()
-        self._any_network.connect_signal('property-changed', self._on_network_property_changed)
+        self._any_network.connect_signal("property-changed", self._on_network_property_changed)
 
-        self.parent.Plugins.Menu.add(self, 84, text=_("Network _Usage"), icon_name="network-wireless-symbolic",
-                                     tooltip=_("Shows network traffic usage"), callback=self.activate_ui)
+        self.parent.Plugins.Menu.add(
+            self,
+            84,
+            text=_("Network _Usage"),
+            icon_name="network-wireless-symbolic",
+            tooltip=_("Shows network traffic usage"),
+            callback=self.activate_ui,
+        )
 
     def _on_network_property_changed(self, _network: AnyNetwork, key: str, value: Any, path: str) -> None:
         if key == "Interface" and value != "":

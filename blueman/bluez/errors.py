@@ -101,33 +101,35 @@ class BluezUnavailableAgentMethodError(BluezDBusException):
     pass
 
 
-__DICT_ERROR__ = {'org.bluez.Error.Failed': DBusFailedError,
-                  'org.bluez.Error.InvalidArguments': DBusInvalidArgumentsError,
-                  'org.bluez.Error.NotAuthorized': DBusNotAuthorizedError,
-                  'org.bluez.Error.OutOfMemory': DBusOutOfMemoryError,
-                  'org.bluez.Error.NoSuchAdapter': DBusNoSuchAdapterError,
-                  'org.bluez.Error.NotReady': DBusNotReadyError,
-                  'org.bluez.Error.NotAvailable': DBusNotAvailableError,
-                  'org.bluez.Error.NotConnected': DBusNotConnectedError,
-                  'org.bluez.serial.Error.ConnectionAttemptFailed': DBusConnectionAttemptFailedError,
-                  'org.bluez.Error.AlreadyExists': DBusAlreadyExistsError,
-                  'org.bluez.Error.DoesNotExist': DBusDoesNotExistError,
-                  'org.bluez.Error.InProgress': DBusInProgressError,
-                  'org.bluez.Error.NoReply': DBusNoReplyError,
-                  'org.bluez.Error.NotSupported': DBusNotSupportedError,
-                  'org.bluez.Error.AuthenticationFailed': DBusAuthenticationFailedError,
-                  'org.bluez.Error.AuthenticationTimeout': DBusAuthenticationTimeoutError,
-                  'org.bluez.Error.AuthenticationRejected': DBusAuthenticationRejectedError,
-                  'org.bluez.Error.AuthenticationCanceled': DBusAuthenticationCanceledError,
-                  'org.bluez.serial.Error.NotSupported': DBusNotSupportedError,
-                  'org.bluez.Error.UnsupportedMajorClass': DBusUnsupportedMajorClassError,
-                  'org.freedesktop.DBus.Error.ServiceUnknown': DBusServiceUnknownError}
+__DICT_ERROR__ = {
+    "org.bluez.Error.Failed": DBusFailedError,
+    "org.bluez.Error.InvalidArguments": DBusInvalidArgumentsError,
+    "org.bluez.Error.NotAuthorized": DBusNotAuthorizedError,
+    "org.bluez.Error.OutOfMemory": DBusOutOfMemoryError,
+    "org.bluez.Error.NoSuchAdapter": DBusNoSuchAdapterError,
+    "org.bluez.Error.NotReady": DBusNotReadyError,
+    "org.bluez.Error.NotAvailable": DBusNotAvailableError,
+    "org.bluez.Error.NotConnected": DBusNotConnectedError,
+    "org.bluez.serial.Error.ConnectionAttemptFailed": DBusConnectionAttemptFailedError,
+    "org.bluez.Error.AlreadyExists": DBusAlreadyExistsError,
+    "org.bluez.Error.DoesNotExist": DBusDoesNotExistError,
+    "org.bluez.Error.InProgress": DBusInProgressError,
+    "org.bluez.Error.NoReply": DBusNoReplyError,
+    "org.bluez.Error.NotSupported": DBusNotSupportedError,
+    "org.bluez.Error.AuthenticationFailed": DBusAuthenticationFailedError,
+    "org.bluez.Error.AuthenticationTimeout": DBusAuthenticationTimeoutError,
+    "org.bluez.Error.AuthenticationRejected": DBusAuthenticationRejectedError,
+    "org.bluez.Error.AuthenticationCanceled": DBusAuthenticationCanceledError,
+    "org.bluez.serial.Error.NotSupported": DBusNotSupportedError,
+    "org.bluez.Error.UnsupportedMajorClass": DBusUnsupportedMajorClassError,
+    "org.freedesktop.DBus.Error.ServiceUnknown": DBusServiceUnknownError,
+}
 
 
 def parse_dbus_error(exception: GLib.Error) -> BluezDBusException:
     global __DICT_ERROR__
 
-    gerror, dbus_error, message = exception.message.split(':', 2)
+    gerror, dbus_error, message = exception.message.split(":", 2)
     try:
         return __DICT_ERROR__[dbus_error](message)
     except KeyError:

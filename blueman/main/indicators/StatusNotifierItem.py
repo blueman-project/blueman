@@ -24,9 +24,12 @@ class MenuService(DbusService):
         self.add_method("Event", ("i", "s", "v", "u"), (), self._on_event)
         self.add_method("AboutToShow", ("i",), ("b",), lambda _: self._revision > self._revision_advertised)
 
-        self.add_method("GetGroupProperties", ("ai", "as"), ("a(ia{sv})",),
-                        lambda ids, props: [(idx, self._render_item(item)) for idx, item in self._iterate_items()
-                                            if idx in ids])
+        self.add_method(
+            "GetGroupProperties",
+            ("ai", "as"),
+            ("a(ia{sv})",),
+            lambda ids, props: [(idx, self._render_item(item)) for idx, item in self._iterate_items() if idx in ids],
+        )
 
         self.add_signal("LayoutUpdated", ("u", "i"))
 
@@ -42,11 +45,15 @@ class MenuService(DbusService):
             self._revision_advertised = self._revision
         return True
 
-    def _get_layout(self, parent_id: int, _recursion_depth: int, _property_names: List[str]
-                    ) -> Tuple[int, Tuple[int, Dict[str, GLib.Variant], List[GLib.Variant]]]:
+    def _get_layout(
+        self, parent_id: int, _recursion_depth: int, _property_names: List[str]
+    ) -> Tuple[int, Tuple[int, Dict[str, GLib.Variant], List[GLib.Variant]]]:
         if parent_id == 0:
-            return self._revision, (0, {}, self._render_menu(((item["id"] << 8, item) for item in self._items.values()),
-                                                             self._render_submenu))
+            return self._revision, (
+                0,
+                {},
+                self._render_menu(((item["id"] << 8, item) for item in self._items.values()), self._render_submenu),
+            )
         else:
             item = self._items[parent_id >> 8]
             if "submenu" in item and _recursion_depth != 0:
@@ -61,10 +68,13 @@ class MenuService(DbusService):
 
     _T = TypeVar("_T", bound="SubmenuItemDict")
 
-    def _render_menu(self, items: Iterable[Tuple[int, _T]], submenu_callback: Callable[[_T, int], List[GLib.Variant]]
-                     ) -> List[GLib.Variant]:
-        return [GLib.Variant("(ia{sv}av)", (idx, self._render_item(item), submenu_callback(item, idx)))
-                for (idx, item) in items]
+    def _render_menu(
+        self, items: Iterable[Tuple[int, _T]], submenu_callback: Callable[[_T, int], List[GLib.Variant]]
+    ) -> List[GLib.Variant]:
+        return [
+            GLib.Variant("(ia{sv}av)", (idx, self._render_item(item), submenu_callback(item, idx)))
+            for (idx, item) in items
+        ]
 
     def _iterate_items(self) -> Iterable[Tuple[int, "SubmenuItemDict"]]:
         for item in self._items.values():
@@ -101,9 +111,22 @@ class StatusNotifierItemService(DbusService):
     ItemIsMenu = False
 
     def __init__(self, tray: BluemanTray, icon_name: str) -> None:
-        super().__init__(None, "org.kde.StatusNotifierItem", "/org/blueman/sni", Gio.BusType.SESSION,
-                         {"Category": "s", "Id": "s", "IconName": "s", "Status": "s", "Title": "s",
-                          "ToolTip": "(sa(iiay)ss)", "Menu": "o", "ItemIsMenu": "b"})
+        super().__init__(
+            None,
+            "org.kde.StatusNotifierItem",
+            "/org/blueman/sni",
+            Gio.BusType.SESSION,
+            {
+                "Category": "s",
+                "Id": "s",
+                "IconName": "s",
+                "Status": "s",
+                "Title": "s",
+                "ToolTip": "(sa(iiay)ss)",
+                "Menu": "o",
+                "ItemIsMenu": "b",
+            },
+        )
         self.add_method("Activate", ("i", "i"), "", lambda x, y: tray.activate_status_icon())
 
         self.menu = MenuService(tray.activate_menu_item)
@@ -145,14 +168,21 @@ class StatusNotifierItem(IndicatorInterface):
             else:
                 tray.activate()
 
-        Gio.bus_watch_name(Gio.BusType.SESSION, self._SNI_BUS_NAME, Gio.BusNameWatcherFlags.NONE,
-                           on_watcher_appeared, None)
+        Gio.bus_watch_name(
+            Gio.BusType.SESSION, self._SNI_BUS_NAME, Gio.BusNameWatcherFlags.NONE, on_watcher_appeared, None
+        )
 
         try:
             Gio.bus_get_sync(Gio.BusType.SESSION).call_sync(
-                self._SNI_BUS_NAME, "/StatusNotifierWatcher", self._SNI_INTERFACE_NAME,
-                "RegisterStatusNotifierItem", GLib.Variant("(s)", ("/org/blueman/sni",)),
-                None, Gio.DBusCallFlags.NONE, -1)
+                self._SNI_BUS_NAME,
+                "/StatusNotifierWatcher",
+                self._SNI_INTERFACE_NAME,
+                "RegisterStatusNotifierItem",
+                GLib.Variant("(s)", ("/org/blueman/sni",)),
+                None,
+                Gio.DBusCallFlags.NONE,
+                -1,
+            )
             watcher_expected = True
         except GLib.Error:
             watcher_expected = False

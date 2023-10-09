@@ -9,6 +9,7 @@ import blueman.plugins.services
 from blueman.plugins.ServicePlugin import ServicePlugin
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from gi.repository import GLib

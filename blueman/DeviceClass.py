@@ -21,7 +21,7 @@ major_cls = (
     # translators: device class
     _("Toy"),
     # translators: device class
-    _("Uncategorized")
+    _("Uncategorized"),
 )
 
 computer_minor_cls = (
@@ -38,7 +38,7 @@ computer_minor_cls = (
     # translators: device class
     _("Palm"),
     # translators: device class
-    _("Wearable")
+    _("Wearable"),
 )
 
 phone_minor_cls = (
@@ -53,7 +53,7 @@ phone_minor_cls = (
     # translators: device class
     _("Modem"),
     # translators: device class
-    _("ISDN")
+    _("ISDN"),
 )
 
 access_point_minor_cls = (
@@ -72,7 +72,7 @@ access_point_minor_cls = (
     # translators: device class
     _("83–99 percent"),
     # translators: device class
-    _("Not available")
+    _("Not available"),
 )
 
 audio_video_minor_cls = (
@@ -113,7 +113,7 @@ audio_video_minor_cls = (
     # translators: device class
     _("Unknown"),
     # translators: device class
-    _("Gaming/Toy")
+    _("Gaming/Toy"),
 )
 
 peripheral_minor_cls = (
@@ -124,7 +124,7 @@ peripheral_minor_cls = (
     # translators: device class
     _("Pointing"),
     # translators: device class
-    _("Combo")
+    _("Combo"),
 )
 
 imaging_minor_cls = (
@@ -135,7 +135,7 @@ imaging_minor_cls = (
     # translators: device class
     _("Scanner"),
     # translators: device class
-    _("Printer")
+    _("Printer"),
 )
 
 wearable_minor_cls = (
@@ -148,7 +148,7 @@ wearable_minor_cls = (
     # translators: device class
     _("Helmet"),
     # translators: device class
-    _("Glasses")
+    _("Glasses"),
 )
 
 toy_minor_cls = (
@@ -161,70 +161,92 @@ toy_minor_cls = (
     # translators: device class
     _("Controller"),
     # translators: device class
-    _("Game")
+    _("Game"),
 )
 
 gatt_appearance_categories = {
-    0: ('Unknown', {0: _("Unknown")}),
-    1: ('Phone', {0: _("Generic Phone")}),
-    2: ('Computer', {0: _("Generic Computer")}),
-    3: ('Watch', {0: _("Generic Watch"),
-                  1: _("Watch: Sports Watch")}),
-    4: ('Clock', {0: _("Generic Clock")}),
-    5: ('Display', {0: _("Generic Display")}),
-    6: ('Remote Control', {0: _("Generic Remote Control")}),
-    7: ('Eye-glasses', {0: _("Generic Eye-glasses")}),
-    8: ('Tag', {0: _("Generic Tag")}),
-    9: ('Keyring', {0: _("Generic Keyring")}),
-    10: ('Media Player', {0: _("Generic Media Player")}),
-    11: ('Barcode Scanner', {0: _("Generic Barcode Scanner")}),
-    12: ('Thermometer', {0: _("Generic Thermometer"),
-                         1: _("Thermometer: Ear")}),
-    13: ('Heart rate Sensor', {0: _("Generic Heart rate Sensor"),
-                               1: _("Heart Rate Sensor: Heart Rate Belt")}),
-    14: ('Blood Pressure', {0: _("Generic Blood Pressure"),
-                            1: _("Blood Pressure: Arm"),
-                            2: _("Blood Pressure: Wrist")}),
-    15: ('Human Interface Device (HID)', {0: _("Human Interface Device (HID)"),
-                                          1: _("Keyboard"),
-                                          2: _("Mouse"),
-                                          3: _("Joystick"),
-                                          4: _("Gamepad"),
-                                          5: _("Digitizer Tablet"),
-                                          6: _("Card Reader"),
-                                          7: _("Digital Pen"),
-                                          8: _("Barcode Scanner")}),
-    16: ('Glucose Meter', {0: _("Generic Glucose Meter")}),
-    17: ('Running Walking Sensor', {0: _("Generic: Running Walking Sensor"),
-                                    1: _("Running Walking Sensor: In-Shoe"),
-                                    2: _("Running Walking Sensor: On-Shoe"),
-                                    3: _("Running Walking Sensor: On-Hip")}),
-    18: ('Cycling', {0: _("Generic: Cycling"),
-                     1: _("Cycling: Cycling Computer"),
-                     2: _("Cycling: Speed Sensor"),
-                     3: _("Cycling: Cadence Sensor"),
-                     4: _("Cycling: Power Sensor"),
-                     5: _("Cycling: Speed and Cadence Sensor")}),
+    0: ("Unknown", {0: _("Unknown")}),
+    1: ("Phone", {0: _("Generic Phone")}),
+    2: ("Computer", {0: _("Generic Computer")}),
+    3: ("Watch", {0: _("Generic Watch"), 1: _("Watch: Sports Watch")}),
+    4: ("Clock", {0: _("Generic Clock")}),
+    5: ("Display", {0: _("Generic Display")}),
+    6: ("Remote Control", {0: _("Generic Remote Control")}),
+    7: ("Eye-glasses", {0: _("Generic Eye-glasses")}),
+    8: ("Tag", {0: _("Generic Tag")}),
+    9: ("Keyring", {0: _("Generic Keyring")}),
+    10: ("Media Player", {0: _("Generic Media Player")}),
+    11: ("Barcode Scanner", {0: _("Generic Barcode Scanner")}),
+    12: ("Thermometer", {0: _("Generic Thermometer"), 1: _("Thermometer: Ear")}),
+    13: ("Heart rate Sensor", {0: _("Generic Heart rate Sensor"), 1: _("Heart Rate Sensor: Heart Rate Belt")}),
+    14: (
+        "Blood Pressure",
+        {0: _("Generic Blood Pressure"), 1: _("Blood Pressure: Arm"), 2: _("Blood Pressure: Wrist")},
+    ),
+    15: (
+        "Human Interface Device (HID)",
+        {
+            0: _("Human Interface Device (HID)"),
+            1: _("Keyboard"),
+            2: _("Mouse"),
+            3: _("Joystick"),
+            4: _("Gamepad"),
+            5: _("Digitizer Tablet"),
+            6: _("Card Reader"),
+            7: _("Digital Pen"),
+            8: _("Barcode Scanner"),
+        },
+    ),
+    16: ("Glucose Meter", {0: _("Generic Glucose Meter")}),
+    17: (
+        "Running Walking Sensor",
+        {
+            0: _("Generic: Running Walking Sensor"),
+            1: _("Running Walking Sensor: In-Shoe"),
+            2: _("Running Walking Sensor: On-Shoe"),
+            3: _("Running Walking Sensor: On-Hip"),
+        },
+    ),
+    18: (
+        "Cycling",
+        {
+            0: _("Generic: Cycling"),
+            1: _("Cycling: Cycling Computer"),
+            2: _("Cycling: Speed Sensor"),
+            3: _("Cycling: Cadence Sensor"),
+            4: _("Cycling: Power Sensor"),
+            5: _("Cycling: Speed and Cadence Sensor"),
+        },
+    ),
     # 19 - 48 reserved
-    49: ('Pulse Oximeter', {0: _("Generic: Pulse Oximeter"),
-                            1: _("Fingertip"),
-                            2: _("Wrist-Worn")}),
-    50: ('Weight Scale', {0: _("Generic: Weight Scale")}),
-    51: ('Personal Mobility Device', {0: _("Generic Personal Mobility Device"),
-                                      1: _("Powered Wheelchair"),
-                                      2: _("Mobility Scooter")}),
-    52: ('Continuous Glucose Monitor', {0: _("Generic Continuous Glucose Monitor")}),
-    53: ('Insulin Pump', {0: _("Generic Insulin Pump"),
-                          1: _("Insulin Pump, durable pump"),
-                          4: _("Insulin Pump, patch pump"),
-                          8: _("Insulin Pen")}),
-    54: ('Medication Delivery', {0: _("Generic Medication Delivery")}),
+    49: ("Pulse Oximeter", {0: _("Generic: Pulse Oximeter"), 1: _("Fingertip"), 2: _("Wrist-Worn")}),
+    50: ("Weight Scale", {0: _("Generic: Weight Scale")}),
+    51: (
+        "Personal Mobility Device",
+        {0: _("Generic Personal Mobility Device"), 1: _("Powered Wheelchair"), 2: _("Mobility Scooter")},
+    ),
+    52: ("Continuous Glucose Monitor", {0: _("Generic Continuous Glucose Monitor")}),
+    53: (
+        "Insulin Pump",
+        {
+            0: _("Generic Insulin Pump"),
+            1: _("Insulin Pump, durable pump"),
+            4: _("Insulin Pump, patch pump"),
+            8: _("Insulin Pen"),
+        },
+    ),
+    54: ("Medication Delivery", {0: _("Generic Medication Delivery")}),
     # 55 - 80 reserved
-    81: ('Outdoor Sports Activity', {0: _("Generic: Outdoor Sports Activity"),
-                                     1: _("Location Display Device"),
-                                     2: _("Location and Navigation Display Device"),
-                                     3: _("Location Pod"),
-                                     4: _("Location and Navigation Pod")})
+    81: (
+        "Outdoor Sports Activity",
+        {
+            0: _("Generic: Outdoor Sports Activity"),
+            1: _("Location Display Device"),
+            2: _("Location and Navigation Display Device"),
+            3: _("Location Pod"),
+            4: _("Location and Navigation Pod"),
+        },
+    ),
 }
 
 
@@ -294,7 +316,7 @@ def get_minor_class(klass: int) -> str:
 # First 10 bits is the category, the following 6 bits sub category
 def gatt_appearance_to_name(appearance: int) -> str:
     cat = appearance >> 0x6
-    subcat = appearance & 0x3f
+    subcat = appearance & 0x3F
 
     if (19 <= cat <= 48) or (55 <= cat <= 80):
         # These ranges are reserved

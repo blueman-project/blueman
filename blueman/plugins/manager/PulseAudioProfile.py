@@ -10,6 +10,7 @@ from blueman.Functions import create_menuitem
 from blueman.Sdp import AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID, ServiceUUID
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
@@ -31,23 +32,21 @@ class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
     def on_pa_ready(self, _utils: PulseAudioUtils) -> None:
         logging.info("connected")
         for dev in self.deferred:
-            self.regenerate_with_device(dev['Address'])
+            self.regenerate_with_device(dev["Address"])
 
         self.deferred = []
 
     # updates all menu instances with the following device address
     def regenerate_with_device(self, device_addr: str) -> None:
         for inst in ManagerDeviceMenu.__instances__:
-            if inst.SelectedDevice['Address'] == device_addr and not inst.is_popup:
+            if inst.SelectedDevice["Address"] == device_addr and not inst.is_popup:
                 inst.generate()
 
     def on_pa_event(self, utils: PulseAudioUtils, event: int, idx: int) -> None:
         logging.debug(f"{event} {idx}")
 
         def get_card_cb(card: "CardInfo") -> None:
-            drivers = ("module-bluetooth-device.c",
-                       "module-bluez4-device.c",
-                       "module-bluez5-device.c")
+            drivers = ("module-bluetooth-device.c", "module-bluez4-device.c", "module-bluez5-device.c")
 
             if card["driver"] in drivers:
                 self.devices[card["proplist"]["device.string"]] = card
@@ -67,8 +66,8 @@ class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
     def query_pa(self, device: Device, item: Gtk.MenuItem) -> None:
         def list_cb(cards: Mapping[str, "CardInfo"]) -> None:
             for c in cards.values():
-                if c["proplist"]["device.string"] == device['Address']:
-                    self.devices[device['Address']] = c
+                if c["proplist"]["device.string"] == device["Address"]:
+                    self.devices[device["Address"]] = c
                     self.generate_menu(device, item)
                     return
 
@@ -79,7 +78,7 @@ class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
         if item.get_active():
             pa = PulseAudioUtils()
 
-            c = self.devices[device['Address']]
+            c = self.devices[device["Address"]]
 
             def on_result(res: int) -> None:
                 if not res:
@@ -88,7 +87,7 @@ class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
             pa.set_card_profile(c["index"], profile, on_result)
 
     def generate_menu(self, device: Device, item: Gtk.MenuItem) -> None:
-        info = self.devices[device['Address']]
+        info = self.devices[device["Address"]]
         group: Sequence[Gtk.RadioMenuItem] = []
 
         sub = Gtk.Menu()
@@ -101,8 +100,7 @@ class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
                 if profile["name"] == info["active_profile"]:
                     i.set_active(True)
 
-                i.connect("toggled", self.on_selection_changed,
-                          device, profile["name"])
+                i.connect("toggled", self.on_selection_changed, device, profile["name"])
 
                 sub.append(i)
                 i.show()
@@ -112,13 +110,12 @@ class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
 
     def on_request_menu_items(self, manager_menu: ManagerDeviceMenu, device: Device) -> List[DeviceMenuItem]:
         audio_source = False
-        for uuid in device['UUIDs']:
+        for uuid in device["UUIDs"]:
             if ServiceUUID(uuid).short_uuid in (AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID):
                 audio_source = True
                 break
 
-        if device['Connected'] and audio_source:
-
+        if device["Connected"] and audio_source:
             pa = PulseAudioUtils()
             if not pa.connected:
                 self.deferred.append(device)
@@ -127,7 +124,7 @@ class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
             item = create_menuitem(_("Audio Profile"), "audio-card-symbolic")
             item.props.tooltip_text = _("Select audio profile for PulseAudio")
 
-            if not device['Address'] in self.devices:
+            if not device["Address"] in self.devices:
                 self.query_pa(device, item)
             else:
                 self.generate_menu(device, item)

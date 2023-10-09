@@ -16,8 +16,9 @@ class Ppp(MechanismPlugin):
         err(message)
         self.timer.resume()
 
-    def _ppp_connect(self, port: int, number: str, apn: str, caller: str,
-                     ok: Callable[[str], None], err: Callable[[str], None]) -> None:
+    def _ppp_connect(
+        self, port: int, number: str, apn: str, caller: str, ok: Callable[[str], None], err: Callable[[str], None]
+    ) -> None:
         self.confirm_authorization(caller, "org.blueman.pppd.pppconnect")
         self.timer.stop()
 

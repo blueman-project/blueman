@@ -62,7 +62,7 @@ class Services(ManagerPlugin, MenuItemsProvider):
                 item = create_menuitem(instance.name, surface=surface)
                 item.connect(
                     "activate",
-                    lambda _item: manager_menu.disconnect_service(service.device, service.uuid, instance.port)
+                    lambda _item: manager_menu.disconnect_service(service.device, service.uuid, instance.port),
                 )
                 items.append(DeviceMenuItem(item, DeviceMenuItem.Group.DISCONNECT, service.priority + 100))
                 item.show()
@@ -78,9 +78,12 @@ class Services(ManagerPlugin, MenuItemsProvider):
                     item.show()
                     items.append(DeviceMenuItem(item, DeviceMenuItem.Group.AUTOCONNECT, service.priority))
 
-        for action, priority in set((action, service.priority)
-                                    for service in services for action in service.common_actions
-                                    if any(plugin in appl.QueryPlugins() for plugin in action.plugins)):
+        for action, priority in set(
+            (action, service.priority)
+            for service in services
+            for action in service.common_actions
+            if any(plugin in appl.QueryPlugins() for plugin in action.plugins)
+        ):
             item = create_menuitem(action.title, action.icon)
             items.append(DeviceMenuItem(item, DeviceMenuItem.Group.ACTIONS, priority + 200))
             item.show()

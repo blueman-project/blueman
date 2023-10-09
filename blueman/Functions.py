@@ -40,6 +40,7 @@ from blueman.main.DBusProxies import AppletService, DBusProxyFailed
 from blueman.Constants import BIN_DIR, ICON_PATH
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
 from gi.repository import Gtk
@@ -47,9 +48,22 @@ from gi.repository import Gdk
 from gi.repository import GdkPixbuf
 from gi.repository import Gio
 
-__all__ = ["check_bluetooth_status", "launch", "setup_icon_path", "adapter_path_to_name", "e_", "bmexit",
-           "format_bytes", "create_menuitem", "have", "set_proc_title", "create_logger", "create_parser", "open_rfcomm",
-           "get_local_interfaces"]
+__all__ = [
+    "check_bluetooth_status",
+    "launch",
+    "setup_icon_path",
+    "adapter_path_to_name",
+    "e_",
+    "bmexit",
+    "format_bytes",
+    "create_menuitem",
+    "have",
+    "set_proc_title",
+    "create_logger",
+    "create_parser",
+    "open_rfcomm",
+    "get_local_interfaces",
+]
 
 
 def check_bluetooth_status(message: str, exitfunc: Callable[[], Any]) -> None:
@@ -66,8 +80,8 @@ def check_bluetooth_status(message: str, exitfunc: Callable[[], Any]) -> None:
 
     if not applet.GetBluetoothStatus():
         d = Gtk.MessageDialog(
-            type=Gtk.MessageType.ERROR, icon_name="blueman",
-            text=_("Bluetooth Turned Off"), secondary_text=message)
+            type=Gtk.MessageType.ERROR, icon_name="blueman", text=_("Bluetooth Turned Off"), secondary_text=message
+        )
         d.add_button(_("Exit"), Gtk.ResponseType.NO)
         d.add_button(_("Enable Bluetooth"), Gtk.ResponseType.YES)
 
@@ -78,9 +92,9 @@ def check_bluetooth_status(message: str, exitfunc: Callable[[], Any]) -> None:
             exitfunc()
             return
 
-    applet.SetBluetoothStatus('(b)', True)
+    applet.SetBluetoothStatus("(b)", True)
     if not applet.GetBluetoothStatus():
-        print('Failed to enable bluetooth')
+        print("Failed to enable bluetooth")
         exitfunc()
 
 
@@ -141,7 +155,7 @@ def setup_icon_path() -> None:
 
 
 def adapter_path_to_name(path: Optional[str]) -> Optional[str]:
-    if path is None or path == '':
+    if path is None or path == "":
         return None
 
     match = re.search(r".*(hci[0-9]*)", path)
@@ -203,7 +217,7 @@ def create_menuitem(
 
 
 def have(t: str) -> Optional[str]:
-    paths = os.environ['PATH'] + ':/sbin:/usr/sbin'
+    paths = os.environ["PATH"] + ":/sbin:/usr/sbin"
     for path in paths.split(os.pathsep):
         exec_path = os.path.join(path, t)
         exists = os.path.exists(exec_path)
@@ -219,7 +233,7 @@ def set_proc_title(name: Optional[str] = None) -> int:
     if not name:
         name = os.path.basename(sys.argv[0])
 
-    libc = cdll.LoadLibrary('libc.so.6')
+    libc = cdll.LoadLibrary("libc.so.6")
     buff = create_string_buffer(len(name) + 1)
     buff.value = name.encode("UTF-8")
     ret: int = libc.prctl(15, byref(buff), 0, 0, 0)
@@ -230,9 +244,9 @@ def set_proc_title(name: Optional[str] = None) -> int:
     return ret
 
 
-logger_format = '%(name)s %(asctime)s %(levelname)-8s %(module)s:%(lineno)s %(funcName)-10s: %(message)s'
-syslog_logger_format = '%(name)s %(levelname)s %(module)s:%(lineno)s %(funcName)s: %(message)s'
-logger_date_fmt = '%H.%M.%S'
+logger_format = "%(name)s %(asctime)s %(levelname)-8s %(module)s:%(lineno)s %(funcName)-10s: %(message)s"
+syslog_logger_format = "%(name)s %(levelname)s %(module)s:%(lineno)s %(funcName)s: %(message)s"
+logger_date_fmt = "%H.%M.%S"
 
 
 def create_logger(
@@ -290,43 +304,43 @@ def open_rfcomm(file: str, mode: int) -> int:
 
 
 def _netmask_for_ifacename(name: str, sock: socket.socket) -> Optional[str]:
-    siocgifnetmask = 0x891b
-    bytebuf = struct.pack('256s', name.encode('utf-8'))
+    siocgifnetmask = 0x891B
+    bytebuf = struct.pack("256s", name.encode("utf-8"))
     try:
         ret = fcntl.ioctl(sock.fileno(), siocgifnetmask, bytebuf)
     except OSError:
-        logging.error('siocgifnetmask failed')
+        logging.error("siocgifnetmask failed")
         return None
 
     return socket.inet_ntoa(ret[20:24])
 
 
 def get_local_interfaces() -> Dict[str, Tuple[str, Optional[str]]]:
-    """ Returns a dictionary of name:ip, mask key value pairs. """
+    """Returns a dictionary of name:ip, mask key value pairs."""
     siocgifconf = 0x8912
-    names = array.array('B', 4096 * b'\0')
+    names = array.array("B", 4096 * b"\0")
     names_address, names_length = names.buffer_info()
-    mutable_byte_buffer = struct.pack('iL', 4096, names_address)
+    mutable_byte_buffer = struct.pack("iL", 4096, names_address)
 
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
             try:
                 mutated_byte_buffer = fcntl.ioctl(sock.fileno(), siocgifconf, mutable_byte_buffer)
             except OSError:
-                logging.error('siocgifconf failed')
+                logging.error("siocgifconf failed")
                 return {}
 
-            max_bytes_out, names_address_out = struct.unpack('iL', mutated_byte_buffer)
+            max_bytes_out, names_address_out = struct.unpack("iL", mutated_byte_buffer)
             namestr = names.tobytes()
 
             ip_dict = {}
             for i in range(0, max_bytes_out, 24 + 2 * sizeof(c_long)):
-                name = namestr[i: i + 16].split(b'\0', 1)[0].decode('utf-8')
-                ipaddr = socket.inet_ntoa(namestr[i + 20: i + 24])
+                name = namestr[i : i + 16].split(b"\0", 1)[0].decode("utf-8")
+                ipaddr = socket.inet_ntoa(namestr[i + 20 : i + 24])
                 mask = _netmask_for_ifacename(name, sock)
                 ip_dict[name] = (ipaddr, mask)
     except OSError:
-        logging.error('Socket creation failed', exc_info=True)
+        logging.error("Socket creation failed", exc_info=True)
         return {}
 
     return ip_dict

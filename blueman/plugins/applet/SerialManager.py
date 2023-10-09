@@ -22,19 +22,21 @@ class SerialManager(AppletPlugin, RFCOMMConnectedListener):
     __description__ = _("Standard SPP profile connection handler, allows executing custom actions")
     __author__ = "walmis"
 
-    __gsettings__ = {
-        "schema": "org.blueman.plugins.serialmanager",
-        "path": None
-    }
+    __gsettings__ = {"schema": "org.blueman.plugins.serialmanager", "path": None}
     __options__ = {
-        "script": {"type": str, "default": "",
-                   "name": _("Script to execute on connection"),
-                   "desc": _("<span size=\"small\">The following arguments will be passed:\n"
-                             "Address, Name, service name, uuid16s, rfcomm node\n"
-                             "For example:\n"
-                             "AA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0\n"
-                             "uuid16s are returned as a comma separated list\n\n"
-                             "Upon device disconnection the script will be sent a HUP signal</span>")},
+        "script": {
+            "type": str,
+            "default": "",
+            "name": _("Script to execute on connection"),
+            "desc": _(
+                '<span size="small">The following arguments will be passed:\n'
+                "Address, Name, service name, uuid16s, rfcomm node\n"
+                "For example:\n"
+                "AA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0\n"
+                "uuid16s are returned as a comma separated list\n\n"
+                "Upon device disconnection the script will be sent a HUP signal</span>"
+            ),
+        },
     }
 
     scripts: Dict[str, Dict[str, "Popen[Any]"]] = {}
@@ -60,16 +62,14 @@ class SerialManager(AppletPlugin, RFCOMMConnectedListener):
     def on_rfcomm_connected(self, service: SerialService, port: str) -> None:
         device = service.device
         if SERIAL_PORT_SVCLASS_ID == service.short_uuid:
-            Notification(_("Serial port connected"),
-                         _("Serial port service on device <b>%s</b> now will be available via <b>%s</b>") % (
-                         device.display_name, port),
-                         icon_name="blueman-serial").show()
+            Notification(
+                _("Serial port connected"),
+                _("Serial port service on device <b>%s</b> now will be available via <b>%s</b>")
+                % (device.display_name, port),
+                icon_name="blueman-serial",
+            ).show()
 
-            self.call_script(device['Address'],
-                             device.display_name,
-                             service.name,
-                             service.short_uuid,
-                             port)
+            self.call_script(device["Address"], device.display_name, service.name, service.short_uuid, port)
 
     def terminate_all_scripts(self, address: str) -> None:
         if address not in self.scripts:
@@ -111,10 +111,11 @@ class SerialManager(AppletPlugin, RFCOMMConnectedListener):
 
             except Exception as e:
                 logging.debug(str(e))
-                Notification(_("Serial port connection script failed"),
-                             _("There was a problem launching script %s\n"
-                               "%s") % (c, str(e)),
-                             icon_name="blueman-serial").show()
+                Notification(
+                    _("Serial port connection script failed"),
+                    _("There was a problem launching script %s\n" "%s") % (c, str(e)),
+                    icon_name="blueman-serial",
+                ).show()
 
     def on_rfcomm_disconnect(self, port: int) -> None:
         for bdaddr, scripts in self.scripts.items():
@@ -130,7 +131,7 @@ class SerialManager(AppletPlugin, RFCOMMConnectedListener):
             return
 
         try:
-            active_ports = [rfcomm['id'] for rfcomm in rfcomm_list() if rfcomm['dst'] == device['Address']]
+            active_ports = [rfcomm["id"] for rfcomm in rfcomm_list() if rfcomm["dst"] == device["Address"]]
         except RFCOMMError as e:
             logging.error(f"rfcomm_list failed with: {e}")
             return
