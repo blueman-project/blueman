@@ -7,7 +7,7 @@ from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device
 from blueman.bluez.Manager import Manager
 from blueman.bluez.errors import DBusNoSuchAdapterError
-from blueman.Functions import *
+from blueman.Functions import setup_icon_path, bmexit, launch, e_
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 from blueman.gui.manager.ManagerToolbar import ManagerToolbar
 from blueman.gui.manager.ManagerMenu import ManagerMenu
@@ -40,6 +40,8 @@ class Blueman(Gtk.Application):
         s.attach()
 
     window: Optional[Gtk.ApplicationWindow]
+
+    __bt_status_dialog: Gtk.MessageDialog
 
     def do_startup(self) -> None:
         def doquit(_a: Gio.SimpleAction, _param: None) -> None:
@@ -82,24 +84,28 @@ class Blueman(Gtk.Application):
 
             self._applethandlerid: Optional[int] = None
 
+            self.__bt_status_dialog = Gtk.MessageDialog(
+                type=Gtk.MessageType.ERROR,
+                icon_name="blueman",
+                text=_("Bluetooth Turned Off"),
+                secondary_text=_("Bluetooth disabled, enable?"),
+                modal=True,
+                visible=False,
+            )
+            self.__bt_status_dialog.add_button(_("Exit"), Gtk.ResponseType.NO)
+            self.__bt_status_dialog.add_button(_("Enable Bluetooth"), Gtk.ResponseType.YES)
+            self.__bt_status_dialog.set_transient_for(self.window)
+            self.__bt_status_dialog.set_position(Gtk.WindowPosition.CENTER_ON_PARENT)
+
             # Add margin for resize grip or it will overlap
             if self.window.get_has_resize_grip():
                 margin_right = statusbar.get_margin_right()
                 statusbar.set_margin_right(margin_right + 10)
 
-            def bt_status_changed(status: bool) -> None:
-                assert self.window is not None
-                if not status:
-                    self.window.hide()
-                    check_bluetooth_status(_("Bluetooth needs to be turned on for the device manager to function"),
-                                           self.quit)
-                else:
-                    self.window.show()
-
             def on_applet_signal(_proxy: AppletService, _sender: str, signal_name: str, params: GLib.Variant) -> None:
                 if signal_name == 'BluetoothStatusChanged':
-                    status = params.unpack()
-                    bt_status_changed(status)
+                    status = params.unpack()[0]
+                    self._show_bluetooth_dialog(not status)
 
             def on_dbus_name_vanished(_connection: Gio.DBusConnection, name: str) -> None:
                 logging.info(name)
@@ -131,9 +137,6 @@ class Blueman(Gtk.Application):
                 except DBusProxyFailed:
                     print("Blueman applet needs to be running")
                     bmexit()
-
-                check_bluetooth_status(_("Bluetooth needs to be turned on for the device manager to function"),
-                                       lambda: self.quit())
 
                 manager = Manager()
                 try:
@@ -170,9 +173,26 @@ class Blueman(Gtk.Application):
                 self.Config.bind("show-toolbar", toolbar, "visible", Gio.SettingsBindFlags.DEFAULT)
                 self.Config.bind("show-statusbar", statusbar, "visible", Gio.SettingsBindFlags.DEFAULT)
 
+                def on_bt_status_dialog_response(_d: Gtk.MessageDialog, resp: Gtk.ResponseType) -> None:
+                    logging.debug(f"{resp}")
+                    if resp == Gtk.ResponseType.YES:
+                        self.Applet.SetBluetoothStatus('(b)', True)
+                    else:
+                        self.quit()
+
+                self.__bt_status_dialog.connect("response", on_bt_status_dialog_response)
+
             Manager.watch_name_owner(on_dbus_name_appeared, on_dbus_name_vanished)
 
         self.window.present_with_time(Gtk.get_current_event_time())
+        self._show_bluetooth_dialog(not AppletService().GetBluetoothStatus())
+
+    def _show_bluetooth_dialog(self, show: bool) -> None:
+        logging.debug(f"{show}")
+        if show:
+            self.__bt_status_dialog.present()
+        else:
+            self.__bt_status_dialog.hide()
 
     def _on_configure(self, _window: Gtk.ApplicationWindow, event: Gdk.EventConfigure) -> bool:
         width, height, x, y = self.Config["window-properties"]
