@@ -1,3 +1,4 @@
+import logging
 from gettext import gettext as _
 from typing import Any, Dict, Union
 
@@ -5,6 +6,7 @@ from blueman.bluez.Device import Device
 from blueman.gui.Notification import Notification, _NotificationBubble, _NotificationDialog
 from blueman.main.BatteryWatcher import BatteryWatcher
 from blueman.plugins.AppletPlugin import AppletPlugin
+from gi.repository import GLib
 
 
 class ConnectionNotifier(AppletPlugin):
@@ -36,5 +38,8 @@ class ConnectionNotifier(AppletPlugin):
     def _on_battery_update(self, path: str, value: int) -> None:
         notification = self._notifications[path]
         if notification:
-            notification.set_message(f"{_('Connected')} {value}%")
-            notification.set_notification_icon("battery")
+            try:
+                notification.set_message(f"{_('Connected')} {value}%")
+                notification.set_notification_icon("battery")
+            except GLib.Error:
+                logging.error("Failed to update notification", exc_info=True)
