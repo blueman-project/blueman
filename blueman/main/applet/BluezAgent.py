@@ -1,14 +1,14 @@
 import logging
+import random
 from gettext import gettext as _
 from html import escape
 from xml.etree import ElementTree
-from typing import Dict, Optional, overload, Callable, Union, TYPE_CHECKING, Tuple, Any, List
+from typing import Dict, Optional, Callable, Union, Any, List
 
 from blueman.bluez.Device import Device
 from blueman.bluez.AgentManager import AgentManager
 from blueman.Sdp import ServiceUUID
 from blueman.gui.Notification import Notification, _NotificationBubble, _NotificationDialog
-from blueman.main.Builder import Builder
 from blueman.main.DbusService import DbusService, DbusError
 
 from gi.repository import Gio
@@ -17,10 +17,6 @@ import gi
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-
-if TYPE_CHECKING:
-    from typing_extensions import Literal
-
 
 class BluezErrorCanceled(DbusError):
     _name = "org.bluez.Error.Canceled"
@@ -62,79 +58,9 @@ class BluezAgent(DbusService):
         self.unregister()
         AgentManager().unregister_agent(self.__agent_path)
 
-    def build_passkey_dialog(self, device_alias: str, dialog_msg: str, is_numeric: bool
-                             ) -> Tuple[Gtk.Dialog, Gtk.Entry]:
-        def on_insert_text(editable: Gtk.Entry, new_text: str, _new_text_length: int, _position: int) -> None:
-            if not new_text.isdigit():
-                editable.stop_emission("insert-text")
-
-        builder = Builder("applet-passkey.ui")
-
-        dialog = builder.get_widget("dialog", Gtk.Dialog)
-
-        dialog.props.icon_name = "blueman"
-        dev_name = builder.get_widget("device_name", Gtk.Label)
-        dev_name.set_markup(device_alias)
-        msg = builder.get_widget("message", Gtk.Label)
-        msg.set_text(dialog_msg)
-        pin_entry = builder.get_widget("pin_entry", Gtk.Entry)
-        show_input = builder.get_widget("show_input_check", Gtk.CheckButton)
-        if is_numeric:
-            pin_entry.set_max_length(6)
-            pin_entry.set_width_chars(6)
-            pin_entry.connect("insert-text", on_insert_text)
-            show_input.hide()
-        else:
-            pin_entry.set_max_length(16)
-            pin_entry.set_width_chars(16)
-            pin_entry.set_visibility(False)
-        show_input.connect("toggled", lambda x: pin_entry.set_visibility(x.props.active))
-        accept_button = builder.get_widget("accept", Gtk.Button)
-        pin_entry.connect("changed", lambda x: accept_button.set_sensitive(x.get_text() != ''))
-
-        return dialog, pin_entry
-
     def get_device_string(self, object_path: str) -> str:
         device = Device(obj_path=object_path)
         return f"<b>{escape(device.display_name)}</b> ({device['Address']})"
-
-    @overload
-    def ask_passkey(self, dialog_msg: str, is_numeric: "Literal[True]", object_path: str, ok: Callable[[int], None],
-                    err: Callable[[Union[BluezErrorCanceled, BluezErrorRejected]], None]) -> None:
-        ...
-
-    @overload
-    def ask_passkey(self, dialog_msg: str, is_numeric: "Literal[False]", object_path: str, ok: Callable[[str], None],
-                    err: Callable[[Union[BluezErrorCanceled, BluezErrorRejected]], None]) -> None:
-        ...
-
-    def ask_passkey(self, dialog_msg: str, is_numeric: bool, object_path: str, ok: Callable[[Any], None],
-                    err: Callable[[Union[BluezErrorCanceled, BluezErrorRejected]], None]) -> None:
-        def passkey_dialog_cb(dialog: Gtk.Dialog, response_id: int) -> None:
-            if response_id == Gtk.ResponseType.ACCEPT:
-                ret = pin_entry.get_text()
-                ok(int(ret) if is_numeric else ret)
-            else:
-                err(BluezErrorRejected("Rejected"))
-            dialog.destroy()
-            self.dialog = None
-
-        dev_str = self.get_device_string(object_path)
-        notify_message = _("Pairing request for %s") % dev_str
-
-        if self.dialog:
-            logging.info("Agent: Another dialog still active, cancelling")
-            err(BluezErrorCanceled("Canceled"))
-
-        self.dialog, pin_entry = self.build_passkey_dialog(dev_str, dialog_msg, is_numeric)
-        if not self.dialog:
-            logging.error("Agent: Failed to build dialog")
-            err(BluezErrorCanceled("Canceled"))
-
-        Notification(_("Bluetooth Authentication"), notify_message, icon_name="blueman").show()
-
-        self.dialog.connect("response", passkey_dialog_cb)
-        self.dialog.present()
 
     # Workaround BlueZ not calling the Cancel method, see #164
     def _on_device_property_changed(self, device: Device, key: str, value: Any, path: str) -> None:
@@ -159,22 +85,21 @@ class BluezAgent(DbusService):
             self._notification.close()
             self._notification = None
 
-    def _on_request_pin_code(self, object_path: str, ok: Callable[[str], None],
-                             err: Callable[[Union[BluezErrorCanceled, BluezErrorRejected]], None]) -> None:
-        logging.info("Agent.RequestPinCode")
-        dialog_msg = _("Enter PIN code for authentication:")
+    def _display_pin_pass(self, object_path: str) -> int:
+        pin = random.randint(10000, 99999)
+        notification_msg = _("Pairing passkey for") + f"{self.get_device_string(object_path)}: {pin}"
+        Notification("Bluetooth", notification_msg, 0, icon_name="blueman").show()
+        return pin
 
-        self.ask_passkey(dialog_msg, False, object_path, ok, err)
-        if self.dialog:
-            self.dialog.present()
+    def _on_request_pin_code(self, object_path: str, ok: Callable[[str], None],
+                             _err: Callable[[Union[BluezErrorCanceled, BluezErrorRejected]], None]) -> None:
+        logging.info("Agent.RequestPinCode")
+        ok(str(self._display_pin_pass(object_path)))
 
     def _on_request_passkey(self, object_path: str, ok: Callable[[int], None],
-                            err: Callable[[Union[BluezErrorCanceled, BluezErrorRejected]], None]) -> None:
+                            _err: Callable[[Union[BluezErrorCanceled, BluezErrorRejected]], None]) -> None:
         logging.info("Agent.RequestPasskey")
-        dialog_msg = _("Enter passkey for authentication:")
-        self.ask_passkey(dialog_msg, True, object_path, ok, err)
-        if self.dialog:
-            self.dialog.present()
+        ok(self._display_pin_pass(object_path))
 
     def _on_display_passkey(self, object_path: str, passkey: int, entered: int) -> None:
         logging.info(f"DisplayPasskey ({object_path}, {passkey:d} {entered:d})")
