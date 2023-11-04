@@ -116,7 +116,12 @@ def show_info(device: Device, parent: Gtk.Window) -> None:
 
 
 class Info(ManagerPlugin, MenuItemsProvider):
-    def on_request_menu_items(self, manager_menu: ManagerDeviceMenu, device: Device) -> List[DeviceMenuItem]:
+    def on_request_menu_items(
+        self,
+        manager_menu: ManagerDeviceMenu,
+        device: Device,
+        _powered: bool,
+    ) -> List[DeviceMenuItem]:
         item = create_menuitem(_("_Info"), "dialog-information-symbolic")
         item.props.tooltip_text = _("Show device information")
         _window = manager_menu.get_toplevel()

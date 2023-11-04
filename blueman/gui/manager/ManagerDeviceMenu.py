@@ -5,6 +5,7 @@ from operator import attrgetter
 from typing import Dict, List, Tuple, Optional, TYPE_CHECKING, Union, Iterable
 
 from blueman.Functions import create_menuitem, e_
+from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Network import AnyNetwork
 from blueman.bluez.Device import AnyDevice, Device
 from blueman.config.AutoConnectConfig import AutoConnectConfig
@@ -46,7 +47,13 @@ class DeviceMenuItem:
 
 
 class MenuItemsProvider:
-    def on_request_menu_items(self, _manager_menu: "ManagerDeviceMenu", _device: Device) -> List[DeviceMenuItem]:
+    def on_request_menu_items(
+        self,
+        _manager_menu:
+        "ManagerDeviceMenu",
+        _device: Device,
+        _powered: bool,
+    ) -> List[DeviceMenuItem]:
         return []
 
 
@@ -282,13 +289,15 @@ class ManagerDeviceMenu(Gtk.Menu):
 
         show_generic_connect = self.show_generic_connect_calc(self.SelectedDevice['UUIDs'])
 
-        if not row["connected"] and show_generic_connect:
+        powered = Adapter(obj_path=self.SelectedDevice["Adapter"])["Powered"]
+
+        if not row["connected"] and show_generic_connect and powered:
             connect_item = create_menuitem(_("<b>_Connect</b>"), "bluetooth-symbolic")
             connect_item.connect("activate", lambda _item: self.connect_service(self.SelectedDevice))
             connect_item.props.tooltip_text = _("Connects auto connect profiles A2DP source, A2DP sink, and HID")
             connect_item.show()
             self.append(connect_item)
-        elif show_generic_connect:
+        elif row["connected"] and show_generic_connect:
             connect_item = create_menuitem(_("<b>_Disconnect</b>"), "bluetooth-disabled-symbolic")
             connect_item.props.tooltip_text = _("Forcefully disconnect the device")
             connect_item.connect("activate", lambda _item: self.disconnect_service(self.SelectedDevice))
@@ -298,7 +307,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         logging.debug(row["alias"])
 
         items = [item for plugin in self.Blueman.Plugins.get_loaded_plugins(MenuItemsProvider)
-                 for item in plugin.on_request_menu_items(self, self.SelectedDevice)]
+                 for item in plugin.on_request_menu_items(self, self.SelectedDevice, powered)]
 
         connect_items = [i for i in items if i.group == DeviceMenuItem.Group.CONNECT]
         disconnect_items = [i for i in items if i.group == DeviceMenuItem.Group.DISCONNECT]
@@ -332,7 +341,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             for it in sorted(autoconnect_items, key=attrgetter("position")):
                 self.append(it.item)
 
-        if show_generic_connect or connect_items or disconnect_items or autoconnect_items:
+        if (powered and show_generic_connect) or connect_items or disconnect_items or autoconnect_items:
             item = Gtk.SeparatorMenuItem()
             item.show()
             self.append(item)
@@ -340,18 +349,19 @@ class ManagerDeviceMenu(Gtk.Menu):
         for it in sorted(action_items, key=attrgetter("position")):
             self.append(it.item)
 
-        send_item = create_menuitem(_("Send a _File…"), "blueman-send-symbolic")
-        send_item.props.sensitive = False
-        self.append(send_item)
-        send_item.show()
+        if powered:
+            send_item = create_menuitem(_("Send a _File…"), "blueman-send-symbolic")
+            send_item.props.sensitive = False
+            self.append(send_item)
+            send_item.show()
 
-        if row["objpush"]:
-            send_item.connect("activate", lambda x: self.Blueman.send(self.SelectedDevice))
-            send_item.props.sensitive = True
+            if row["objpush"]:
+                send_item.connect("activate", lambda x: self.Blueman.send(self.SelectedDevice))
+                send_item.props.sensitive = True
 
-        item = Gtk.SeparatorMenuItem()
-        item.show()
-        self.append(item)
+            item = Gtk.SeparatorMenuItem()
+            item.show()
+            self.append(item)
 
         item = create_menuitem(_("_Pair"), "blueman-pair-symbolic")
         item.props.tooltip_text = _("Create pairing with the device")

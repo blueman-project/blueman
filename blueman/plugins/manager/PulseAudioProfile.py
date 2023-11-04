@@ -110,7 +110,12 @@ class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
             item.set_submenu(sub)
             item.show()
 
-    def on_request_menu_items(self, manager_menu: ManagerDeviceMenu, device: Device) -> List[DeviceMenuItem]:
+    def on_request_menu_items(
+        self,
+        manager_menu: ManagerDeviceMenu,
+        device: Device,
+        _powered: bool,
+    ) -> List[DeviceMenuItem]:
         audio_source = False
         for uuid in device['UUIDs']:
             if ServiceUUID(uuid).short_uuid in (AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID):
