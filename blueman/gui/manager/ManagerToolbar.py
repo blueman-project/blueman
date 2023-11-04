@@ -56,52 +56,39 @@ class ManagerToolbar:
         if device is not None:
             func(device)
 
-    def on_adapter_property_changed(self, _lst: ManagerDeviceList, _adapter: Adapter,
+    def on_adapter_property_changed(self, _lst: ManagerDeviceList, adapter: Adapter,
                                     key_value: Tuple[str, object]) -> None:
         key, value = key_value
-        if key == "Discovering":
-            if value:
-                self.b_search.props.sensitive = False
-            else:
-                self.b_search.props.sensitive = True
+        if key == "Discovering" or key == "Powered":
+            self._update_buttons(adapter)
 
     def on_adapter_changed(self, _lst: ManagerDeviceList, adapter_path: Optional[str]) -> None:
         logging.debug(f"toolbar adapter {adapter_path}")
-        if adapter_path is None:
-            self.b_search.props.sensitive = False
+        self._update_buttons(None if adapter_path is None else Adapter(obj_path=adapter_path))
+
+    def on_device_selected(self, dev_list: ManagerDeviceList, device: Device, _tree_iter: Gtk.TreeIter) -> None:
+        self._update_buttons(Adapter(obj_path=device["Adapter"]))
+
+    def _update_buttons(self, adapter: Optional[Adapter]) -> None:
+        powered = adapter is not None and adapter["Powered"]
+        self.b_search.props.sensitive = powered and not (adapter and adapter["Discovering"])
+
+        tree_iter = self.blueman.List.selected()
+        if tree_iter is None:
+            self.b_bond.props.sensitive = False
+            self.b_trust.props.sensitive = False
+            self.b_remove.props.sensitive = False
             self.b_send.props.sensitive = False
         else:
-            self.b_search.props.sensitive = True
-
-    def on_device_selected(self, dev_list: ManagerDeviceList, device: Device, tree_iter: Gtk.TreeIter) -> None:
-        if device is None or tree_iter is None:
-            self.b_bond.props.sensitive = False
-            self.b_remove.props.sensitive = False
-            self.b_trust.props.sensitive = False
-        else:
-            row = dev_list.get(tree_iter, "paired", "trusted", "objpush")
+            row = self.blueman.List.get(tree_iter, "paired", "trusted", "objpush")
+            self.b_bond.props.sensitive = powered and not row["paired"]
+            self.b_trust.props.sensitive = True
             self.b_remove.props.sensitive = True
-            if row["paired"]:
-                self.b_bond.props.sensitive = False
-            else:
-                self.b_bond.props.sensitive = True
+            self.b_send.props.sensitive = powered and row["objpush"]
 
-            if row["trusted"]:
-                image = Gtk.Image(icon_name="blueman-untrust-symbolic", pixel_size=24, visible=True)
-                self.b_trust.props.icon_widget = image
-                self.b_trust.props.sensitive = True
-                self.b_trust.props.label = _("Untrust")
-
-            else:
-                image = Gtk.Image(icon_name="blueman-trust-symbolic", pixel_size=24, visible=True)
-                self.b_trust.props.icon_widget = image
-                self.b_trust.props.sensitive = True
-                self.b_trust.props.label = _("Trust")
-
-            if row["objpush"]:
-                self.b_send.props.sensitive = True
-            else:
-                self.b_send.props.sensitive = False
+            icon_name = "blueman-untrust-symbolic" if row["trusted"] else "blueman-trust-symbolic"
+            self.b_trust.props.icon_widget = Gtk.Image(icon_name=icon_name, pixel_size=24, visible=True)
+            self.b_trust.props.label = _("Untrust") if row["trusted"] else _("Trust")
 
     def on_device_propery_changed(self, dev_list: ManagerDeviceList, device: Device, tree_iter: Gtk.TreeIter,
                                   key_value: Tuple[str, object]) -> None:
