@@ -47,7 +47,15 @@ def send_note(device: Device, parent: Gtk.ApplicationWindow) -> None:
 
 
 class Notes(ManagerPlugin, MenuItemsProvider):
-    def on_request_menu_items(self, manager_menu: ManagerDeviceMenu, device: Device) -> List[DeviceMenuItem]:
+    def on_request_menu_items(
+        self,
+        manager_menu: ManagerDeviceMenu,
+        device: Device,
+        powered: bool,
+    ) -> List[DeviceMenuItem]:
+        if not powered:
+            return []
+
         item = create_menuitem(_("Send _note"), "dialog-information-symbolic")
         item.props.tooltip_text = _("Send a text note")
         assert isinstance(manager_menu.Blueman.window, Gtk.ApplicationWindow)

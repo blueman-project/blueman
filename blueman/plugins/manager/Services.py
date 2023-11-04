@@ -39,21 +39,27 @@ class Services(ManagerPlugin, MenuItemsProvider):
 
         return target
 
-    def on_request_menu_items(self, manager_menu: ManagerDeviceMenu, device: Device) -> List[DeviceMenuItem]:
+    def on_request_menu_items(
+        self,
+        manager_menu: ManagerDeviceMenu,
+        device: Device,
+        powered: bool,
+    ) -> List[DeviceMenuItem]:
         items: List[DeviceMenuItem] = []
         appl = AppletService()
 
         services = get_services(device)
 
-        connectable_services = [service for service in services if service.connectable]
-        for service in connectable_services:
-            item: Gtk.MenuItem = create_menuitem(service.name, service.icon)
-            if service.description:
-                item.props.tooltip_text = service.description
-            item.connect("activate", lambda _item: manager_menu.connect_service(service.device, service.uuid))
-            items.append(DeviceMenuItem(item, DeviceMenuItem.Group.CONNECT, service.priority))
-            item.props.sensitive = service.available
-            item.show()
+        if powered:
+            connectable_services = [service for service in services if service.connectable]
+            for service in connectable_services:
+                item: Gtk.MenuItem = create_menuitem(service.name, service.icon)
+                if service.description:
+                    item.props.tooltip_text = service.description
+                item.connect("activate", lambda _item: manager_menu.connect_service(service.device, service.uuid))
+                items.append(DeviceMenuItem(item, DeviceMenuItem.Group.CONNECT, service.priority))
+                item.props.sensitive = service.available
+                item.show()
 
         connected_services = [service for service in services if service.connected_instances]
         for service in connected_services:
