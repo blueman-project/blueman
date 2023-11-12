@@ -56,9 +56,12 @@ class DiscvManager(AppletPlugin):
             self.update_menuitems()
 
     def on_update(self) -> bool:
-        self.time_left -= 1
-        self.item.set_text(_("Discoverable… %ss") % self.time_left)
         self.item.set_sensitive(False)
+        if self.time_left >= 1:
+            self.item.set_text(_("Discoverable… %ss") % self.time_left)
+        else:
+            self.item.set_text(_("Discoverable…"))
+        self.time_left -= 1
 
         return True
 
