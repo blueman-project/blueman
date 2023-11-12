@@ -56,6 +56,8 @@ class ManagerMenu:
         item_unnamed = blueman.builder.get_widget("hide_unnamed_item", Gtk.CheckMenuItem)
         self.blueman.Config.bind("hide-unnamed", item_unnamed, "active", Gio.SettingsBindFlags.DEFAULT)
 
+        self.device_menu: Optional[ManagerDeviceMenu] = None
+
         self._sort_alias_item = blueman.builder.get_widget("sort_name_item", Gtk.CheckMenuItem)
         self._sort_timestamp_item = blueman.builder.get_widget("sort_added_item", Gtk.CheckMenuItem)
 
@@ -104,8 +106,6 @@ class ManagerMenu:
 
         for adapter in self._manager.get_adapters():
             self.on_adapter_added(None, adapter.get_object_path())
-
-        self.device_menu: Optional[ManagerDeviceMenu] = None
 
         self.Config.connect("changed", self._on_settings_changed)
         self._sort_alias_item.connect("activate", self._on_sorting_changed, "alias")
@@ -229,6 +229,9 @@ class ManagerMenu:
         self._update_power()
 
     def _update_power(self) -> None:
+        if self.device_menu is not None:
+            self.device_menu.generate()
+
         if any(adapter["Powered"] for (_, adapter) in self.adapter_items.values()):
             self.Search.props.visible = True
             self._adapter_settings.props.visible = True
