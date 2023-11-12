@@ -5,6 +5,7 @@ import logging
 import cairo
 import os
 
+from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Battery import Battery
 from blueman.bluez.Device import Device
 from blueman.bluez.Manager import Manager
@@ -242,7 +243,7 @@ class ManagerDeviceList(DeviceList):
             if self.menu.show_generic_connect_calc(row["device"]['UUIDs']):
                 if row["connected"]:
                     self.menu.disconnect_service(row["device"])
-                else:
+                elif Adapter(obj_path=row["device"]["Adapter"])["Powered"]:
                     self.menu.connect_service(row["device"])
 
         if event.type == Gdk.EventType.BUTTON_PRESS and cast(Gdk.EventButton, event).button == 3:
