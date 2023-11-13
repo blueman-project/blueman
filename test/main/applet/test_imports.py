@@ -6,7 +6,11 @@ from unittest import TestCase, TestSuite
 class TestImports(TestCase):
     def __init__(self, mod_name):
         name = f"test_{mod_name.replace('.', '_')}_import"
-        setattr(self, name, lambda: __import__(mod_name))
+
+        def f():
+            __import__(mod_name)
+
+        setattr(self, name, f)
         super().__init__(name)
 
 
