@@ -6,7 +6,6 @@ from typing import Optional, Any, Tuple
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device
 from blueman.bluez.Manager import Manager
-from blueman.bluez.errors import DBusNoSuchAdapterError
 from blueman.Functions import *
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 from blueman.gui.manager.ManagerToolbar import ManagerToolbar
@@ -80,32 +79,13 @@ class Blueman(Gtk.Application):
             self.Plugins = PluginManager(ManagerPlugin, blueman.plugins.manager, self)
             self.Plugins.load_plugin()
 
-            self._applethandlerid: Optional[int] = None
-
             # Add margin for resize grip or it will overlap
             if self.window.get_has_resize_grip():
                 margin_right = statusbar.get_margin_right()
                 statusbar.set_margin_right(margin_right + 10)
 
-            def bt_status_changed(status: bool) -> None:
-                assert self.window is not None
-                if not status:
-                    self.window.hide()
-                    check_bluetooth_status(_("Bluetooth needs to be turned on for the device manager to function"),
-                                           self.quit)
-                else:
-                    self.window.show()
-
-            def on_applet_signal(_proxy: AppletService, _sender: str, signal_name: str, params: GLib.Variant) -> None:
-                if signal_name == 'BluetoothStatusChanged':
-                    status = params.unpack()
-                    bt_status_changed(status)
-
             def on_dbus_name_vanished(_connection: Gio.DBusConnection, name: str) -> None:
                 logging.info(name)
-                if self._applethandlerid:
-                    self.Applet.disconnect(self._applethandlerid)
-                    self._applethandlerid = None
 
                 if self.window is not None:
                     self.window.hide()
@@ -131,22 +111,6 @@ class Blueman(Gtk.Application):
                 except DBusProxyFailed:
                     print("Blueman applet needs to be running")
                     bmexit()
-
-                check_bluetooth_status(_("Bluetooth needs to be turned on for the device manager to function"),
-                                       lambda: self.quit())
-
-                manager = Manager()
-                try:
-                    manager.get_adapter(self.Config['last-adapter'])
-                except DBusNoSuchAdapterError:
-                    logging.error('Default adapter not found, trying first available.')
-                    try:
-                        manager.get_adapter(None)
-                    except DBusNoSuchAdapterError:
-                        logging.error('No adapter(s) found, exiting')
-                        bmexit()
-
-                self._applethandlerid = self.Applet.connect('g-signal', on_applet_signal)
 
                 sw = self.builder.get_widget("scrollview", Gtk.ScrolledWindow)
                 # Disable overlay scrolling
