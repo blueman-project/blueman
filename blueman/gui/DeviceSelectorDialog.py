@@ -25,7 +25,7 @@ class DeviceSelectorDialog(Gtk.Dialog):
         self.selector = DeviceSelectorWidget(adapter_name=adapter_name, visible=True)
         self.vbox.pack_start(self.selector, True, True, 0)
 
-        self.selection: Optional[Tuple[str, Device]] = None
+        self.selection: Optional[Tuple[str, Optional[Device]]] = None
 
         self.selector.List.connect("device-selected", self.on_device_selected)
         self.selector.List.connect("adapter-changed", self.on_adapter_changed)
@@ -45,6 +45,6 @@ class DeviceSelectorDialog(Gtk.Dialog):
     def on_adapter_changed(self, _devlist: DeviceList, _adapter: str) -> None:
         self.selection = None
 
-    def on_device_selected(self, devlist: DeviceList, device: Device, _tree_iter: Gtk.TreeIter) -> None:
+    def on_device_selected(self, devlist: DeviceList, device: Optional[Device], _tree_iter: Gtk.TreeIter) -> None:
         assert devlist.Adapter is not None
         self.selection = (devlist.Adapter.get_object_path(), device)
