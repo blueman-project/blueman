@@ -154,7 +154,7 @@ class ManagerMenu:
             logging.debug("refilter")
             self.blueman.List.filter.refilter()
 
-    def on_device_selected(self, _lst: ManagerDeviceList, device: Device, tree_iter: Gtk.TreeIter) -> None:
+    def on_device_selected(self, _lst: ManagerDeviceList, device: Optional[Device], tree_iter: Gtk.TreeIter) -> None:
         if tree_iter and device:
             self.item_device.props.sensitive = True
 

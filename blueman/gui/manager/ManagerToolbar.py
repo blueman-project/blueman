@@ -66,8 +66,13 @@ class ManagerToolbar:
         logging.debug(f"toolbar adapter {adapter_path}")
         self._update_buttons(None if adapter_path is None else Adapter(obj_path=adapter_path))
 
-    def on_device_selected(self, dev_list: ManagerDeviceList, device: Device, _tree_iter: Gtk.TreeIter) -> None:
-        self._update_buttons(Adapter(obj_path=device["Adapter"]))
+    def on_device_selected(
+        self,
+        dev_list: ManagerDeviceList,
+        device: Optional[Device],
+        _tree_iter: Gtk.TreeIter,
+    ) -> None:
+        self._update_buttons(None if device is None else Adapter(obj_path=device["Adapter"]))
 
     def _update_buttons(self, adapter: Optional[Adapter]) -> None:
         powered = adapter is not None and adapter["Powered"]
