@@ -110,7 +110,7 @@ class BluemanAdapters(Gtk.Application):
         if name == "Discoverable" and value == 0:
             self.tabs[hci_dev]["hidden_radio"].set_active(True)
         elif name == "Alias":
-            self.tabs[hci_dev]["label"].set_text(value)
+            self.tabs[hci_dev]["label"].set_text(f"{value} ({hci_dev})")
             self.tabs[hci_dev]["name_entry"].set_text(value)
 
     def on_adapter_added(self, _manager: Manager, adapter_path: str) -> None:
@@ -225,7 +225,7 @@ class BluemanAdapters(Gtk.Application):
                 # might need to update settings at this point
         ui = self.tabs[hci_dev]
         ui['visible'] = True
-        name = adapter.get_name()
+        name = f"{adapter.get_name()} ({hci_dev})"
         if name == '':
             name = _('Adapter') + ' %d' % (hci_dev_num + 1)
         label = Gtk.Label(label=name)
