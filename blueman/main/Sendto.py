@@ -13,7 +13,7 @@ from blueman.bluez.obex.ObjectPush import ObjectPush
 from blueman.bluez.obex.Manager import Manager
 from blueman.bluez.obex.Client import Client
 from blueman.bluez.obex.Transfer import Transfer
-from blueman.Functions import format_bytes
+from blueman.Functions import format_bytes, log_system_info
 from blueman.main.SpeedCalc import SpeedCalc
 from blueman.gui.CommonUi import ErrorDialog
 
@@ -38,6 +38,8 @@ class Sender(Gtk.Dialog):
             window_position=Gtk.WindowPosition.CENTER,
             type_hint=Gdk.WindowTypeHint.DIALOG
         )
+
+        log_system_info()
 
         self.b_cancel = self.add_button(_("_Stop"), Gtk.ResponseType.CLOSE)
         self.b_cancel.props.receives_default = True

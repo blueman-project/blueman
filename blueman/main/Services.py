@@ -5,6 +5,7 @@ import signal
 from typing import Optional
 
 from blueman.main.Builder import Builder
+from blueman.Functions import log_system_info
 import blueman.plugins.services
 from blueman.plugins.ServicePlugin import ServicePlugin
 
@@ -25,6 +26,8 @@ class BluemanServices(Gtk.Application):
         def do_quit(_: object) -> bool:
             self.quit()
             return False
+
+        log_system_info()
 
         s = GLib.unix_signal_source_new(signal.SIGINT)
         s.set_callback(do_quit)

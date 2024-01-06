@@ -32,6 +32,8 @@ class BluemanApplet(Gtk.Application):
             self.quit()
             return False
 
+        log_system_info()
+
         s = GLib.unix_signal_source_new(signal.SIGINT)
         s.set_callback(do_quit)
         s.attach()
