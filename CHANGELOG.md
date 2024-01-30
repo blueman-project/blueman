@@ -1,6 +1,6 @@
 # Changelog
 
-## main
+## 2.4
 
 ### New features
 
