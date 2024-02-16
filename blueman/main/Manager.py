@@ -84,6 +84,23 @@ class Blueman(Gtk.Application):
                 margin_right = statusbar.get_margin_right()
                 statusbar.set_margin_right(margin_right + 10)
 
+            def update_bt_status(state: bool) -> None:
+                if state:
+                    icon_name = "bluetooth"
+                    tooltip_text = _("Bluetooth is enabled.")
+                else:
+                    icon_name = "bluetooth-disabled"
+                    tooltip_text = _("Bluetooth is disabled, enable in the Adapter menu.")
+
+                icon = self.builder.get_widget("bt_status_icon", Gtk.Image)
+                icon.set_from_icon_name(icon_name, Gtk.IconSize.MENU)
+                icon.set_tooltip_text(tooltip_text)
+
+            def on_applet_signal(_proxy: AppletService, _sender: str, signal_name: str, params: GLib.Variant) -> None:
+                if signal_name == 'BluetoothStatusChanged':
+                    status = params.unpack()[0]
+                    update_bt_status(status)
+
             def on_dbus_name_vanished(_connection: Gio.DBusConnection, name: str) -> None:
                 logging.info(name)
 
@@ -108,6 +125,7 @@ class Blueman(Gtk.Application):
 
                 try:
                     self.Applet = AppletService()
+                    self.Applet.connect('g-signal', on_applet_signal)
                 except DBusProxyFailed:
                     print("Blueman applet needs to be running")
                     bmexit()
@@ -133,6 +151,8 @@ class Blueman(Gtk.Application):
 
                 self.Config.bind("show-toolbar", toolbar, "visible", Gio.SettingsBindFlags.DEFAULT)
                 self.Config.bind("show-statusbar", statusbar, "visible", Gio.SettingsBindFlags.DEFAULT)
+
+                update_bt_status(self.Applet.GetBluetoothStatus())
 
             Manager.watch_name_owner(on_dbus_name_appeared, on_dbus_name_vanished)
 
