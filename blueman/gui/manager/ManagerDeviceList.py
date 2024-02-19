@@ -97,8 +97,9 @@ class ManagerDeviceList(DeviceList):
         self.tooltip_col: Optional[Gtk.TreeViewColumn] = None
 
         self.connect("popup-menu", self._on_popup_menu)
-        self.connect("button_press_event", self.on_event_clicked)
-        self.connect("button_release_event", self.on_event_clicked)
+        self.connect("button-press-event", self._on_event_clicked)
+        self.connect("button-release-event", self._on_event_clicked)
+        self.connect("key-press-event", self._on_key_pressed)
 
         self.menu: Optional[ManagerDeviceMenu] = None
 
@@ -217,7 +218,7 @@ class ManagerDeviceList(DeviceList):
 
         return True
 
-    def on_event_clicked(self, _widget: Gtk.Widget, event: Gdk.Event) -> bool:
+    def _on_event_clicked(self, _widget: Gtk.Widget, event: Gdk.Event) -> bool:
         if event.type not in (Gdk.EventType._2BUTTON_PRESS, Gdk.EventType.BUTTON_PRESS):
             return False
 
@@ -250,6 +251,21 @@ class ManagerDeviceList(DeviceList):
             self.menu.popup_at_pointer(event)
 
         return False
+
+    def _on_key_pressed(self, _widget: Gtk.Widget, event: Gdk.EventKey) -> bool:
+        if not (event.state & Gdk.ModifierType.CONTROL_MASK and event.keyval == Gdk.KEY_c):
+            return False
+
+        selected = self.selected()
+        if not selected:
+            return False
+
+        row = self.get(selected, "device")
+        if not row:
+            return False
+
+        Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD).set_text(row["device"]["Address"], -1)
+        return True
 
     def _load_surface(self, icon_name: str, size: int) -> cairo.ImageSurface:
         window = self.get_window()
