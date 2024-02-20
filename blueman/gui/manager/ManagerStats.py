@@ -25,8 +25,11 @@ class ManagerStats:
 
         blueman.List.connect("adapter-changed", self.on_adapter_changed)
 
-        assert blueman.List.Adapter is not None
-        self.hci = adapter_path_to_name(blueman.List.Adapter.get_object_path())
+        self.hci = (
+            None
+            if blueman.List.Adapter is None
+            else adapter_path_to_name(blueman.List.Adapter.get_object_path())
+        )
 
         self.time = None
 

@@ -47,7 +47,6 @@ class PowerManager(AppletPlugin, StatusIconProvider):
 
         self.request_in_progress = False
 
-        self._add_dbus_signal("BluetoothStatusChanged", "b")
         self._add_dbus_method("SetBluetoothStatus", ("b",), "", self.request_power_state)
         self._add_dbus_method("GetBluetoothStatus", (), "b", self.get_bluetooth_status)
 
@@ -164,7 +163,6 @@ class PowerManager(AppletPlugin, StatusIconProvider):
             logging.info(f"Signalling {new_state}")
             self.current_state = new_state
 
-            self._emit_dbus_signal("BluetoothStatusChanged", new_state)
             for plugin in self.parent.Plugins.get_loaded_plugins(PowerStateListener):
                 plugin.on_power_state_changed(self, new_state)
 
