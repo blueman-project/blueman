@@ -56,6 +56,10 @@ class Blueman(Gtk.Application):
         self.set_accels_for_action("app.Quit", ["<Ctrl>q", "<Ctrl>w"])
         self.add_action(quit_action)
 
+        bt_status_action = Gio.SimpleAction.new_stateful("bluetooth_status", None, GLib.Variant.new_boolean(False))
+        bt_status_action.connect("change-state", self._on_bt_state_changed)
+        self.add_action(bt_status_action)
+
     def do_activate(self) -> None:
         if not self.window:
             self.window = self.builder.get_widget("manager_window", Gtk.ApplicationWindow)
@@ -84,22 +88,11 @@ class Blueman(Gtk.Application):
                 margin_right = statusbar.get_margin_right()
                 statusbar.set_margin_right(margin_right + 10)
 
-            def update_bt_status(state: bool) -> None:
-                if state:
-                    icon_name = "bluetooth"
-                    tooltip_text = _("Bluetooth is enabled.")
-                else:
-                    icon_name = "bluetooth-disabled"
-                    tooltip_text = _("Bluetooth is disabled, enable in the Adapter menu.")
-
-                icon = self.builder.get_widget("bt_status_icon", Gtk.Image)
-                icon.set_from_icon_name(icon_name, Gtk.IconSize.MENU)
-                icon.set_tooltip_text(tooltip_text)
-
             def on_applet_signal(_proxy: AppletService, _sender: str, signal_name: str, params: GLib.Variant) -> None:
                 if signal_name == 'BluetoothStatusChanged':
                     status = params.unpack()[0]
-                    update_bt_status(status)
+                    action = self.lookup_action("bluetooth_status")
+                    action.change_state(GLib.Variant.new_boolean(status))
 
             def on_dbus_name_vanished(_connection: Gio.DBusConnection, name: str) -> None:
                 logging.info(name)
@@ -152,11 +145,30 @@ class Blueman(Gtk.Application):
                 self.Config.bind("show-toolbar", toolbar, "visible", Gio.SettingsBindFlags.DEFAULT)
                 self.Config.bind("show-statusbar", statusbar, "visible", Gio.SettingsBindFlags.DEFAULT)
 
-                update_bt_status(self.Applet.GetBluetoothStatus())
+                bt_status_action = self.lookup_action("bluetooth_status")
+                bt_status_action.change_state(GLib.Variant.new_boolean(self.Applet.GetBluetoothStatus()))
 
             Manager.watch_name_owner(on_dbus_name_appeared, on_dbus_name_vanished)
 
         self.window.present_with_time(Gtk.get_current_event_time())
+
+    def _on_bt_state_changed(self, action: Gio.SimpleAction, state_variant: GLib.Variant) -> None:
+        action.set_state(state_variant)
+
+        state = state_variant.unpack()
+        self.Applet.SetBluetoothStatus("(b)", state)
+
+        if state:
+            icon_name = "bluetooth"
+            tooltip_text = _("Click to disable.")
+        else:
+            icon_name = "bluetooth-disabled"
+            tooltip_text = _("Click to enable.")
+
+        box = self.builder.get_widget("bt_status_box", Gtk.Box)
+        image = self.builder.get_widget("im_bluetooth_status", Gtk.Image)
+        box.set_tooltip_text(tooltip_text)
+        image.props.icon_name = icon_name
 
     def _on_configure(self, _window: Gtk.ApplicationWindow, event: Gdk.EventConfigure) -> bool:
         width, height, x, y = self.Config["window-properties"]
