@@ -8,7 +8,6 @@ from blueman.bluez.Manager import Manager
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.gui.CommonUi import show_about_dialog
-from blueman.main.DBusProxies import AppletService
 from blueman.Constants import WEBSITE
 from blueman.Functions import launch, adapter_path_to_name
 
@@ -86,15 +85,6 @@ class ManagerMenu:
         self._adapter_settings = blueman.builder.get_widget("prefs_item", Gtk.ImageMenuItem)
         self._adapter_settings.connect("activate", lambda x: self.blueman.adapter_properties())
 
-        self._power_item = blueman.builder.get_widget("power_item", Gtk.ImageMenuItem)
-        self._power_item.connect(
-            "activate",
-            lambda x: self.blueman.Applet.SetBluetoothStatus(
-                '(b)',
-                not self.blueman.Applet.GetBluetoothStatus()
-            )
-        )
-
         exit_item = blueman.builder.get_widget("exit_item", Gtk.ImageMenuItem)
         exit_item.connect("activate", lambda x: self.blueman.quit())
 
@@ -111,16 +101,6 @@ class ManagerMenu:
         self._sort_alias_item.connect("activate", self._on_sorting_changed, "alias")
         self._sort_timestamp_item.connect("activate", self._on_sorting_changed, "timestamp")
         self._sort_type_item.connect("activate", self._on_sorting_changed, "sort-type")
-
-        self.blueman.Applet.connect('g-signal', self._on_applet_signal)
-        self._applet_plugins_changed()
-
-    def _on_applet_signal(self, _proxy: AppletService, _sender: str, signal_name: str, params: GLib.Variant) -> None:
-        if signal_name == "PluginsChanged":
-            self._applet_plugins_changed()
-
-    def _applet_plugins_changed(self) -> None:
-        self._power_item.set_visible("PowerManager" in self.blueman.Applet.QueryPlugins())
 
     def _on_sorting_changed(self, btn: Gtk.CheckMenuItem, sort_opt: str) -> None:
         if sort_opt == 'alias' and btn.props.active:
@@ -235,11 +215,9 @@ class ManagerMenu:
         if any(adapter["Powered"] for (_, adapter) in self.adapter_items.values()):
             self.Search.props.visible = True
             self._adapter_settings.props.visible = True
-            self._power_item.props.label = _("Turn Bluetooth _Off")
         else:
             self.Search.props.visible = False
             self._adapter_settings.props.visible = False
-            self._power_item.props.label = _("Turn Bluetooth _On")
 
     def _on_plugin_dialog_activate(self, _item: Gtk.MenuItem) -> None:
         def cb(_proxy: Gio.DBusProxy, _res: Any, _userdata: Any) -> None:

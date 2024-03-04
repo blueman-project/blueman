@@ -22,11 +22,6 @@
     <property name="can-focus">False</property>
     <property name="icon-name">application-x-addon-symbolic</property>
   </object>
-  <object class="GtkImage" id="im_power">
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
-    <property name="icon-name">bluetooth-disabled-symbolic</property>
-  </object>
   <object class="GtkImage" id="im_prefs">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
@@ -97,22 +92,6 @@
                         <property name="can-focus">False</property>
                         <property name="use-underline">True</property>
                         <property name="image">im_prefs</property>
-                        <property name="use-stock">False</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkSeparatorMenuItem">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkImageMenuItem" id="power_item">
-                        <property name="label" translatable="yes">Turn Bluetooth _On</property>
-                        <property name="visible">False</property>
-                        <property name="can-focus">False</property>
-                        <property name="use-underline">True</property>
-                        <property name="image">im_power</property>
                         <property name="use-stock">False</property>
                       </object>
                     </child>
