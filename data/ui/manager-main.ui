@@ -63,7 +63,6 @@
             <child>
               <object class="GtkMenuItem" id="item_adapter">
                 <property name="visible">True</property>
-                <property name="sensitive">True</property>
                 <property name="can-focus">False</property>
                 <property name="label" translatable="yes">_Adapter</property>
                 <property name="use-underline">True</property>
@@ -74,7 +73,6 @@
                     <child>
                       <object class="GtkImageMenuItem" id="search_item">
                         <property name="label" translatable="yes">_Search</property>
-                        <property name="visible">False</property>
                         <property name="can-focus">False</property>
                         <property name="use-underline">True</property>
                         <property name="image">im_search</property>
@@ -96,7 +94,6 @@
                     <child>
                       <object class="GtkImageMenuItem" id="prefs_item">
                         <property name="label" translatable="yes">_Preferences</property>
-                        <property name="visible">False</property>
                         <property name="can-focus">False</property>
                         <property name="use-underline">True</property>
                         <property name="image">im_prefs</property>
@@ -112,7 +109,6 @@
                     <child>
                       <object class="GtkImageMenuItem" id="power_item">
                         <property name="label" translatable="yes">Turn Bluetooth _On</property>
-                        <property name="visible">False</property>
                         <property name="can-focus">False</property>
                         <property name="use-underline">True</property>
                         <property name="image">im_power</property>
@@ -309,6 +305,8 @@
           <object class="GtkToolbar" id="toolbar">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
+            <property name="toolbar-style">both-horiz</property>
+            <property name="icon_size">2</property>
             <child>
               <object class="GtkToolButton" id="b_search">
                 <property name="visible">True</property>
@@ -340,6 +338,7 @@
                 <property name="sensitive">False</property>
                 <property name="can-focus">False</property>
                 <property name="tooltip-text" translatable="yes">Create pairing with the device</property>
+                <property name="is-important">True</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Pair</property>
                 <property name="icon-name">blueman-pair-symbolic</property>
               </object>
@@ -354,6 +353,7 @@
                 <property name="sensitive">False</property>
                 <property name="can-focus">False</property>
                 <property name="tooltip-text" translatable="yes">Mark/Unmark this device as trusted</property>
+                <property name="is-important">True</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Trust</property>
                 <property name="icon-name">blueman-trust-symbolic</property>
               </object>
@@ -368,6 +368,7 @@
                 <property name="sensitive">False</property>
                 <property name="can-focus">False</property>
                 <property name="tooltip-text" translatable="yes">Remove this device from the known devices list</property>
+                <property name="is-important">True</property>
                 <property name="label" translatable="yes" comments="translators: toolbar item: keep it as short as possible">Remove</property>
                 <property name="icon-name">list-remove-symbolic</property>
               </object>
