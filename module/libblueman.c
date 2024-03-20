@@ -35,8 +35,6 @@
 #include <linux/if_bridge.h>
 
 #include <bluetooth/bluetooth.h>
-#include <bluetooth/hci.h>
-#include <bluetooth/hci_lib.h>
 #include <bluetooth/rfcomm.h>
 #include <bluetooth/sdp.h>
 #include <bluetooth/sdp_lib.h>
@@ -132,109 +130,6 @@ int _destroy_bridge(const char* name) {
 	return 0;
 }
 
-static int find_conn(int s, int dev_id, long arg)
-{
-	struct hci_conn_list_req *cl;
-	struct hci_conn_info *ci;
-	int i;
-	int ret = 0;
-
-	if (!(cl = malloc(10 * sizeof(*ci) + sizeof(*cl))))
-		goto out;
-
-	cl->dev_id = dev_id;
-	cl->conn_num = 10;
-	ci = cl->conn_info;
-
-	if (ioctl(s, HCIGETCONNLIST, (void *) cl))
-		goto out;
-
-	for (i = 0; i < cl->conn_num; i++, ci++)
-		if (!bacmp((bdaddr_t *) arg, &ci->bdaddr)) {
-			ret = 1;
-			goto out;
-		}
-
-out:
-	free(cl);
-	return ret;
-}
-
-
-
-int connection_init(int dev_id, char *addr, struct conn_info_handles *ci)
-{
-	struct hci_conn_info_req *cr = NULL;
-	bdaddr_t bdaddr;
-	
-	int dd;
-	int ret = 1;
-
-	str2ba(addr, &bdaddr);
-
-	if (dev_id < 0) {
-		dev_id = hci_for_each_dev(HCI_UP, find_conn, (long) &bdaddr);
-		if (dev_id < 0) {
-			ret = ERR_NOT_CONNECTED;
-			goto out;
-		}
-	}
-
-	dd = hci_open_dev(dev_id);
-	if (dd < 0) {
-		ret = ERR_HCI_DEV_OPEN_FAILED;
-		goto out;
-	}
-
-	cr = malloc(sizeof(*cr) + sizeof(struct hci_conn_info));
-	if (!cr) {
-		ret = ERR_CANNOT_ALLOCATE;
-		goto out;
-	}
-
-	bacpy(&cr->bdaddr, &bdaddr);
-	cr->type = ACL_LINK;
-	if (ioctl(dd, HCIGETCONNINFO, (unsigned long) cr) < 0) {
-		ret = ERR_GET_CONN_INFO_FAILED;
-		goto out;
-	}
-	
-	ci->dd = dd;
-	ci->handle = cr->conn_info->handle;
-
-out:
-	if (cr)
-		free(cr);
-	
-	return ret;
-}
-
-int connection_get_rssi(struct conn_info_handles *ci, int8_t *ret_rssi)
-{
-	int8_t rssi;
-	if (hci_read_rssi(ci->dd, htobs(ci->handle), &rssi, 1000) < 0) {
-		return ERR_READ_RSSI_FAILED;
-	}
-	*ret_rssi = rssi;
-	return 1;
-
-}
-
-int connection_get_tpl(struct conn_info_handles *ci, int8_t *ret_tpl, uint8_t type)
-{ 	
-	int8_t level;
-	if (hci_read_transmit_power_level(ci->dd, htobs(ci->handle), type, &level, 1000) < 0) {
-		return ERR_READ_TPL_FAILED;
-	}
-	*ret_tpl = level;
-	return 1;
-}
-	
-int connection_close(struct conn_info_handles *ci)
-{
-	hci_close_dev(ci->dd);
-	return 1;
-}
 
 int
 get_rfcomm_channel(uint16_t service_class, char* btd_addr) {
