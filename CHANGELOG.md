@@ -11,7 +11,8 @@
 * Support for systemd-resolved for getting nameservers for NAP clients
 * List connected devices in status icon tooltip
 * Support for nautilus 43 and later
-* Allow to toggle the Bluetooth status from the manager menu
+* Copy bleutooth address to clipboard in devicelist
+* Add battery levels to status icon tooltip
 
 ### Changes
 
@@ -25,6 +26,26 @@
 * Recent connections in toplevel applet menu
 * Never hide keyboard and combos, see #1954 for more info
 * Do not close blueman-manager from applet
+* Add Switch to blueman-manager to set bluetooth on/off
+* Remove broken check for bluetooth status
+* PluginDialog: Replace custom list with Gtk.ListBox
+* Ignore double-click for connect when unpowered
+* Drop homgeneous from statusbar
+* PulseAudioUtils: Use python enums in several places
+* Use operator convenience functions
+* Cleanup PluginDialog UI
+* Show HCI device in blueman-adapers tabs
+* Show different icon for the active audio profile @localevil
+* Make blueman-services a notebook
+* Use the TypedDict as constructor
+
+### Bugs fixes
+
+* Fix device-selected handlers
+* Fix deprecations in tests
+* Fix showing -1 seconds when discovering @kuraga
+* Tray: Let dbus call end and reply to caller
+* Get the image-missing icon if lookup failed to avoid crash
 
 ## 2.3.5
 
