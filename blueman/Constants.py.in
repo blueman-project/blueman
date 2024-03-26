@@ -1,4 +1,4 @@
-__all__ = ["VERSION", "PACKAGE", "WEBSITE", "ICON_PATH", "PIXMAP_PATH", "UI_PATH", "BIN_DIR"]
+__all__ = ["VERSION", "PACKAGE", "WEBSITE", "ICON_PATH", "PIXMAP_PATH", "UI_PATH", "BIN_DIR", "BLUETOOTHD_PATH"]
 
 VERSION = "@VERSION@"
 PACKAGE = "@PACKAGE@"
@@ -8,6 +8,7 @@ BIN_DIR = "@BINDIR@"
 LOCALEDIR = "@LOCALEDIR@"
 ICON_PATH = "@icondir@"
 PIXMAP_PATH = "@pkgdatadir@/pixmaps"
+BLUETOOTHD_PATH = "@bluetoothd_path@"
 UI_PATH = "@pkgdatadir@/ui"
 DHCP_CONFIG_FILE = "@dhconfig@"
 POLKIT = @POLKIT@
