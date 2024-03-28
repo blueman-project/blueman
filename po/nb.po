@@ -12,28 +12,29 @@
 # Valmantas Palikša
 # Øyvind Øritsland
 # Alexander Jansen <bornxlo@gmail.com>, 2017
-# Allan Nordhøy <epost@anotheragency.no>, 2016-2017, 2020, 2021, 2022.
+# Allan Nordhøy <epost@anotheragency.no>, 2016-2017, 2020, 2021, 2022, 2023.
 # b84df44fb72862b85bae7a669218c6c2, 2019
 # Kenneth Jenssen <kennethjenssen@yahoo.com>, 2016
 # Kim Malmo <berencamlost@msn.com>, 2017-2018
 # Kjell Cato Heskjestad <cato@heskjestad.xyz>, 2019
 # 87d96f43665dd9fb55eba4603e184cae, 2019
 # Christopher Schramm <github@cschramm.eu>, 2022.
+# Herman Sildnes <herman.sildnes@gmail.com>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2022-07-05 14:08+0200\n"
-"PO-Revision-Date: 2022-06-30 10:55+0000\n"
+"PO-Revision-Date: 2023-11-03 13:36+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
-"Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
-"blueman/2-3/nb_NO/>\n"
+"Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/blueman/"
+"2-3/nb_NO/>\n"
 "Language: nb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13.1-dev\n"
+"X-Generator: Weblate 5.2-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -616,9 +617,8 @@ msgid "_Search"
 msgstr "_Søk"
 
 #: blueman/gui/manager/ManagerMenu.py:156
-#, fuzzy
 msgid "_Preferences"
-msgstr "Adapterinnstillinger"
+msgstr "_Innstillinger"
 
 #: blueman/gui/manager/ManagerMenu.py:165 blueman/plugins/applet/ExitItem.py:12
 msgid "_Exit"
@@ -860,7 +860,7 @@ msgstr "Mer"
 
 #: blueman/gui/CommonUi.py:65
 msgid "Blueman is a GTK+ Bluetooth manager"
-msgstr "Blueman er en GTK+basert Blåtannsbehandler"
+msgstr "Blueman er en GTK-basert Blåtannsbehandler"
 
 #: blueman/gui/GsmSettings.py:24
 msgid "GSM Settings"
@@ -1551,7 +1551,7 @@ msgstr ""
 
 #: blueman/Sdp.py:95
 msgid "OBEX"
-msgstr ""
+msgstr "OBEX"
 
 #: blueman/Sdp.py:96
 msgid "IP"
@@ -1619,7 +1619,7 @@ msgstr "Multikanalstilpasningsprotokoll (MCAP)"
 
 #: blueman/Sdp.py:112
 msgid "L2CAP"
-msgstr ""
+msgstr "L2CAP"
 
 #: blueman/Sdp.py:113
 msgid "ServiceDiscoveryServerServiceClassID"
@@ -1693,7 +1693,7 @@ msgstr "Videokonferanse"
 
 #: blueman/Sdp.py:131
 msgid "Intercom"
-msgstr ""
+msgstr "Interkom"
 
 #: blueman/Sdp.py:132
 msgid "Fax"
@@ -1858,11 +1858,11 @@ msgstr "3D-synkronisering (3DSP)"
 
 #: blueman/Sdp.py:173
 msgid "Multi-Profile Specification (MPS) Profile"
-msgstr ""
+msgstr "Multi-profilspesifikasjonsprofil (MPS)"
 
 #: blueman/Sdp.py:174
 msgid "Multi-Profile Specification (MPS) Service"
-msgstr ""
+msgstr "Multi-profilspesifikasjonsprofil-tjeneste (MPS)"
 
 #: blueman/Sdp.py:175
 msgid "Calendar, Task, and Notes (CTN) Access Service"
@@ -1870,11 +1870,11 @@ msgstr ""
 
 #: blueman/Sdp.py:176
 msgid "Calendar, Task, and Notes (CTN) Notification Service"
-msgstr ""
+msgstr "Kalender-, gjøremål-, og notat-gjøremålstjeneste (CTN)"
 
 #: blueman/Sdp.py:177
 msgid "Calendar, Task, and Notes (CTN) Profile"
-msgstr ""
+msgstr "Kalender-, gjøremål-, og notat-profil (CTN)"
 
 #: blueman/Sdp.py:178
 msgid "PnP Information"
@@ -1931,7 +1931,7 @@ msgstr "Generisk tilgang"
 
 #: blueman/Sdp.py:190
 msgid "Generic Attribute"
-msgstr ""
+msgstr "Generisk attributt"
 
 #: blueman/Sdp.py:191
 msgid "Immediate Alert"
@@ -2064,7 +2064,7 @@ msgstr "HTTP-mellomtjener"
 
 #: blueman/Sdp.py:222
 msgid "Transport Discovery"
-msgstr ""
+msgstr "Transportoppdagelse"
 
 #: blueman/Sdp.py:223
 #, fuzzy
@@ -2092,7 +2092,7 @@ msgstr "Inkluder"
 
 #: blueman/Sdp.py:228
 msgid "Characteristic Declaration"
-msgstr ""
+msgstr "Karakteristikkerklæring"
 
 #: blueman/Sdp.py:229
 #, fuzzy
@@ -2105,7 +2105,7 @@ msgstr "Utseende"
 
 #: blueman/Sdp.py:231
 msgid "Peripheral Privacy Flag"
-msgstr ""
+msgstr "Personvernsflagg for ekstern enhet"
 
 #: blueman/Sdp.py:232
 #, fuzzy
@@ -2113,8 +2113,9 @@ msgid "Reconnection Address"
 msgstr "Siste _tilkoblinger"
 
 #: blueman/Sdp.py:233
+#, fuzzy
 msgid "Peripheral Preferred Connection Parameters"
-msgstr ""
+msgstr "Tilkoblingsparametre foretrukket av ekstern enhet"
 
 #: blueman/Sdp.py:234
 #, fuzzy

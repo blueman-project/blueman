@@ -17,24 +17,25 @@
 # Микола Ткач <chistomov@gmail.com>, 2014-2019
 # Yuri Chornoivan <yurchor@ukr.net>
 # Artem <artem@molotov.work>, 2022.
+# Pavlo <acid@jack.kiev.ua>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2022-07-05 14:08+0200\n"
-"PO-Revision-Date: 2022-07-30 11:41+0000\n"
-"Last-Translator: Artem <artem@molotov.work>\n"
+"PO-Revision-Date: 2023-06-26 04:39+0000\n"
+"Last-Translator: Pavlo <acid@jack.kiev.ua>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/blueman/2-3/uk/"
 ">\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != "
-"11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
-"100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
-"(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
-"X-Generator: Weblate 4.14-dev\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 "
+"? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > "
+"14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % "
+"100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
+"X-Generator: Weblate 4.18.1\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -236,11 +237,11 @@ msgstr "Налаштування"
 
 #: data/ui/applet-plugins-widget.ui:73
 msgid "Configure selected plugin's preferences"
-msgstr "Налаштувати параметри виділених втулків"
+msgstr "Налаштувати параметри обраного плагіна"
 
 #: data/ui/applet-plugins-widget.ui:115
 msgid "<b>Plugin description:</b>"
-msgstr "<b>Опис втулка:</b>"
+msgstr "<b>Опис плагіна:</b>"
 
 #: data/ui/applet-plugins-widget.ui:130
 msgid "Not specified"
@@ -570,7 +571,7 @@ msgstr "Сховати _unnamed пристрої"
 
 #: blueman/gui/manager/ManagerMenu.py:89
 msgid "S_ort By"
-msgstr "Ґа_тункувати за"
+msgstr "_Сортувати за"
 
 #: blueman/gui/manager/ManagerMenu.py:96
 msgid "_Name"
@@ -587,7 +588,7 @@ msgstr "_Зниження"
 #: blueman/gui/manager/ManagerMenu.py:128
 #: blueman/plugins/applet/StandardItems.py:54
 msgid "_Plugins"
-msgstr "_Втулки"
+msgstr "_Плагіни"
 
 #: blueman/gui/manager/ManagerMenu.py:133
 #: blueman/plugins/applet/StandardItems.py:45
@@ -844,7 +845,7 @@ msgstr "Налаштування GSM"
 #: blueman/gui/applet/PluginDialog.py:95
 #: blueman/plugins/applet/StandardItems.py:93
 msgid "Plugins"
-msgstr "Втулки"
+msgstr "Плагіни"
 
 #: blueman/gui/applet/PluginDialog.py:296
 #: blueman/gui/applet/PluginDialog.py:318
@@ -858,9 +859,9 @@ msgid ""
 "also unload <b>\"%(0)s\"</b>.\n"
 "Proceed?"
 msgstr ""
-"Втулок <b>\"%(0)s\"</b> залежить від <b>%(1)s</b>. Вивантаження <b>%(1)s</b> "
-"призведе також до вивантаження <b>\"%(0)s\"</b>. \n"
-"Вивантажити?"
+"Плагін <b>\"%(0)s\"</b> залежить від <b>%(1)s</b>. Якщо вивантажити "
+"<b>%(1)s</b>, також буде вивантажений <b>\"%(0)s\"</b>.\n"
+"Продовжити?"
 
 #: blueman/gui/applet/PluginDialog.py:320
 #, python-format
@@ -869,9 +870,9 @@ msgid ""
 "unload <b>%(0)s</b>.\n"
 "Proceed?"
 msgstr ""
-"Втулок <b>%(0)s</b> конфліктує з <b>%(1)s</b>. Завантаження <b>%(1)s</b> "
-"призведе до вивантаження <b>%(0)s</b>.\n"
-"Завантажити?"
+"Плагін <b>%(0)s</b> конфліктує з <b>%(1)s</b>. Якщо завантажити <b>%(1)s</"
+"b>, <b>%(0)s</b> буде вивантажено.\n"
+"Продовжити?"
 
 #: blueman/gui/DeviceSelectorWidget.py:39
 msgid "Adapter selection"
@@ -1019,7 +1020,7 @@ msgstr "Недоступно"
 #. translators: device class
 #: blueman/DeviceClass.py:82 blueman/Sdp.py:123 blueman/Sdp.py:164
 msgid "Headset"
-msgstr "Навушники"
+msgstr "Навушники з мікрофоном"
 
 #. translators: device class
 #: blueman/DeviceClass.py:84 blueman/Sdp.py:145
@@ -2498,7 +2499,7 @@ msgstr "Видимий... %ss"
 #: blueman/plugins/applet/Menu.py:113
 msgid ""
 "Provides a menu for the applet and an API for other plugins to manipulate it"
-msgstr "Надає меню для аплету та API маніпулювання ним для инших втулків"
+msgstr "Надає меню для аплету та API маніпулювання ним для інших плагінів"
 
 #: blueman/plugins/applet/PPPSupport.py:72
 #, python-format
@@ -2646,7 +2647,7 @@ msgstr "Передача"
 
 #: blueman/plugins/services/Transfer.py:28
 msgid "Applet's transfer service plugin is disabled"
-msgstr "Програмний втулок передачі файлів вимкнено"
+msgstr "Програмний плагін передачі файлів вимкнено"
 
 #: blueman/services/DialupNetwork.py:23
 msgid "Dialup Settings"
@@ -2659,7 +2660,7 @@ msgstr "Послідовний порт %s"
 
 #: blueman/services/meta/NetworkService.py:51
 msgid "Renew IP Address"
-msgstr "Оновити IP адресу"
+msgstr "Оновити IP-адресу"
 
 #: data/blueman-adapters.desktop.in:4
 msgid "Set Bluetooth Adapter Properties"

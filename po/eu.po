@@ -5,21 +5,22 @@
 # Alexander Gabilondo <alexgabi@disroot.org>, 2019
 # Aritz Jorge Sánchez <aritz.jorge@protonmail.com>, 2015
 # Asier Iturralde Sarasola <asier.iturralde@gmail.com>, 2014,2018
-# Alex Gabilondo <alexgabi@disroot.org>, 2022.
+# Alex Gabilondo <alexgabi@disroot.org>, 2022, 2023.
+# Alexander Gabilondo <alexgabi@openmailbox.org>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2022-07-05 14:08+0200\n"
-"PO-Revision-Date: 2022-11-18 23:50+0000\n"
-"Last-Translator: Alex Gabilondo <alexgabi@disroot.org>\n"
+"PO-Revision-Date: 2023-08-23 15:51+0000\n"
+"Last-Translator: Alexander Gabilondo <alexgabi@openmailbox.org>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/blueman/2-3/eu/>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15-dev\n"
+"X-Generator: Weblate 5.0-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -38,9 +39,8 @@ msgid "Temporarily visible"
 msgstr "Aldi baterako ikusgai"
 
 #: data/ui/adapters-tab.ui:110
-#, fuzzy
 msgid "<b>Name</b>"
-msgstr "<b>Izen erabilerraza</b>"
+msgstr "<b>Izena</b>"
 
 #: data/ui/applet-passkey.ui:8
 msgid "Pairing request"
@@ -60,7 +60,7 @@ msgstr "Erakutsi sarrera"
 
 #: data/ui/manager-main.ui:54
 msgid "_Adapter"
-msgstr "_Moldagailua"
+msgstr "_Egokitzailea"
 
 #: data/ui/manager-main.ui:62
 msgid "_Device"
@@ -101,7 +101,7 @@ msgstr "Markatu/Desmarkatu gailu hau fidagarri gisa"
 #: data/ui/manager-main.ui:138 blueman/gui/manager/ManagerToolbar.py:39
 #: blueman/gui/manager/ManagerToolbar.py:99
 msgid "Trust"
-msgstr "Fidagarritzat jo"
+msgstr "Fidagarria"
 
 #: data/ui/manager-main.ui:151 blueman/gui/manager/ManagerDeviceMenu.py:420
 msgid "Remove this device from the known devices list"
@@ -131,10 +131,8 @@ msgstr "_Berrezarri"
 
 #: data/ui/rename-device.ui:40 data/ui/note.ui:26 blueman/main/Sendto.py:235
 #: blueman/gui/DeviceSelectorDialog.py:17
-#, fuzzy
-#| msgid "Cancelling"
 msgid "_Cancel"
-msgstr "Bertan behera uzten"
+msgstr "_Utzi"
 
 #: data/ui/rename-device.ui:54 data/ui/note.ui:41
 #: blueman/gui/DeviceSelectorDialog.py:17
@@ -309,22 +307,22 @@ msgstr ""
 
 #: blueman/main/Adapter.py:95 data/blueman-adapters.desktop.in:3
 msgid "Bluetooth Adapters"
-msgstr "Bluetooth-egokigailuak"
+msgstr "Bluetooth egokitzaileak"
 
 #: blueman/main/Adapter.py:153
 msgid "Always"
 msgstr "Beti"
 
 #: blueman/main/Adapter.py:157 blueman/main/Sendto.py:189
-#, fuzzy, python-format
+#, python-format
 msgid "%(minutes)d Minute"
 msgid_plural "%(minutes)d Minutes"
-msgstr[0] "minutu %d"
-msgstr[1] "%d minutu"
+msgstr[0] "minutu %(minutes)d"
+msgstr[1] "%(minutes)d minutu"
 
 #: blueman/main/Adapter.py:222
 msgid "Adapter"
-msgstr "Moldagailua"
+msgstr "Egokitzailea"
 
 #: blueman/main/Manager.py:63
 msgid "Bluetooth Devices"
@@ -344,7 +342,7 @@ msgid ""
 "This probably means that there were no Bluetooth adapters detected or "
 "Bluetooth daemon was not started."
 msgstr ""
-"Bluez daemon ez dago martxan, blueman-manager-ek ezin du jarraitu.\n"
+"Blueman-manager-ek ezin du jarraitu Bluez daemon ez dagoelako martxan.\n"
 "Horrek esan nahi du ez dela Bluetooth egokitzailerik detektatu edo Bluetooth "
 "daemon ez dela abiarazi."
 
@@ -354,7 +352,7 @@ msgstr "Bilatzen"
 
 #: blueman/main/Manager.py:231 blueman/plugins/applet/StandardItems.py:84
 msgid "Adapter Preferences"
-msgstr "Moldagailuen hobespenak"
+msgstr "Egokitzailearen hobespenak"
 
 #: blueman/main/Manager.py:247 blueman/gui/manager/ManagerDeviceList.py:169
 #: blueman/plugins/applet/StandardItems.py:77
@@ -399,7 +397,7 @@ msgstr "Aurreikusitako denbora:"
 #, python-format
 msgid "%(seconds)d Second"
 msgid_plural "%(seconds)d Seconds"
-msgstr[0] "%(seconds)d segundo"
+msgstr[0] "segundo %(seconds)d"
 msgstr[1] "%(seconds)d segundo"
 
 #: blueman/main/Sendto.py:229
@@ -438,11 +436,11 @@ msgstr "Sartu gakoa autentifikatzeko:"
 
 #: blueman/main/applet/BluezAgent.py:185
 msgid "Pairing passkey for"
-msgstr "Honentzako gakoa parekatzen:"
+msgstr "Honentzako gakoa parekatzen"
 
 #: blueman/main/applet/BluezAgent.py:196
 msgid "Pairing PIN code for"
-msgstr "Honentzako PIN kodea parekatzen:"
+msgstr "Honentzako PIN kodea parekatzen"
 
 #: blueman/main/applet/BluezAgent.py:209
 msgid "Pairing request for:"
@@ -510,7 +508,7 @@ msgstr "Gaitu Bluetooth"
 
 #: blueman/Functions.py:92
 msgid "Shall bluetooth get enabled automatically?"
-msgstr ""
+msgstr "Automatikoki gaituko al da bluetootha?"
 
 #: blueman/Functions.py:93
 msgid "Yes"
@@ -521,22 +519,18 @@ msgid "No"
 msgstr "Ez"
 
 #: blueman/Functions.py:181
-#, fuzzy
 msgid "B"
 msgstr "B"
 
 #: blueman/Functions.py:184
-#, fuzzy
 msgid "KB"
 msgstr "KB"
 
 #: blueman/Functions.py:187
-#, fuzzy
 msgid "MB"
 msgstr "MB"
 
 #: blueman/Functions.py:190
-#, fuzzy
 msgid "GB"
 msgstr "GB"
 
@@ -557,9 +551,8 @@ msgid "Show _Statusbar"
 msgstr "Erakutsi _egoera-barra"
 
 #: blueman/gui/manager/ManagerMenu.py:79
-#, fuzzy
 msgid "Hide _unnamed devices"
-msgstr "Aldatu izena gailuari"
+msgstr "Ezkutatu _izenik gabeko gailuak"
 
 #: blueman/gui/manager/ManagerMenu.py:89
 msgid "S_ort By"
@@ -597,9 +590,8 @@ msgid "_Search"
 msgstr "_Bilatu"
 
 #: blueman/gui/manager/ManagerMenu.py:156
-#, fuzzy
 msgid "_Preferences"
-msgstr "Moldagailuen hobespenak"
+msgstr "_Hobespenak"
 
 #: blueman/gui/manager/ManagerMenu.py:165 blueman/plugins/applet/ExitItem.py:12
 msgid "_Exit"
@@ -610,30 +602,24 @@ msgstr "_Irten"
 #: blueman/gui/manager/ManagerDeviceList.py:355 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
-#, fuzzy
 msgid "Uncategorized"
-msgstr "kategoriarik gabe"
+msgstr "Kategoriarik gabe"
 
 #: blueman/gui/manager/ManagerDeviceList.py:544
-#, fuzzy
-#| msgid "Trust"
 msgid "Trusted"
-msgstr "Fidagarritzat jo"
+msgstr "Fidagarria"
 
 #: blueman/gui/manager/ManagerDeviceList.py:546
-#, fuzzy
-#| msgid "Pair"
 msgid "Paired"
-msgstr "Parekatu"
+msgstr "Parekatuta"
 
 #: blueman/gui/manager/ManagerDeviceList.py:548
 msgid "Blocked"
 msgstr "Blokeatua"
 
 #: blueman/gui/manager/ManagerDeviceList.py:571
-#, fuzzy
 msgid "<b>Connected</b>"
-msgstr "<b>Konektatu hona:</b>"
+msgstr "<b>Konektatuta</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:586
 msgid "Poor"
@@ -660,7 +646,8 @@ msgstr "Gehiegi"
 #: blueman/gui/manager/ManagerDeviceList.py:597
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
-msgstr "<b>Jasotako seinalearen indarra: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
+msgstr ""
+"<b>Jasotako seinalearen indarra: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:600
 #, python-format
@@ -670,12 +657,12 @@ msgstr "Jasotako seinalearen indarra: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 #: blueman/gui/manager/ManagerDeviceList.py:605
 #, python-format
 msgid "<b>Link Quality: %(lq)u%%</b>"
-msgstr ""
+msgstr "<b>Estekaren kalitatea: %(lq)u%%</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:607
 #, python-format
 msgid "Link Quality: %(lq)u%%"
-msgstr ""
+msgstr "Estekaren kalitatea: %(lq)u%%"
 
 #: blueman/gui/manager/ManagerDeviceList.py:611
 msgid "Low"
@@ -708,9 +695,8 @@ msgid "Failed"
 msgstr "Huts egin du"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:144
-#, fuzzy
 msgid "Connecting…"
-msgstr "Konektatzen"
+msgstr "Konektatzen…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:180
 msgid "Disconnection Failed: "
@@ -725,23 +711,20 @@ msgid "Input/output error"
 msgstr "Sarrera/irteera errorea"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:209
-#, fuzzy
 msgid "Device did not respond"
-msgstr "Erakutsi gailuaren informazioa"
+msgstr "Gailuak ez du erantzun"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:213
-#, fuzzy
 msgid "Resource temporarily unavailable"
-msgstr "Aldi baterako ikusgai"
+msgstr "Baliabidea ez dago aldi baterako erabilgarri"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:218
 msgid "Connection Failed: "
-msgstr "Konexioak huts egin du:"
+msgstr "Konexioak huts egin du: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:287
-#, fuzzy
 msgid "<b>_Connect</b>"
-msgstr "<b>Konektatu hona:</b>"
+msgstr "<b>Konektatu</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:289
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
@@ -750,10 +733,8 @@ msgstr ""
 "konektatzen ditu"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:293
-#, fuzzy
-#| msgid "<b>Disconnect:</b>"
 msgid "<b>_Disconnect</b>"
-msgstr "<b>Deskonektatu:</b>"
+msgstr "<b>_Deskonektatu:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:294
 msgid "Forcefully disconnect the device"
@@ -768,14 +749,12 @@ msgid "<b>Disconnect:</b>"
 msgstr "<b>Deskonektatu:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:324
-#, fuzzy
 msgid "<b>Auto-connect:</b>"
-msgstr "<b>Deskonektatu:</b>"
+msgstr "<b>Konektatu automatikoki:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:343
-#, fuzzy
 msgid "Send a _File…"
-msgstr "Bidali _fitxategi bat..."
+msgstr "Bidali _fitxategi bat…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:356
 msgid "_Pair"
@@ -798,20 +777,16 @@ msgid "_Unblock"
 msgstr "_Desblokeatu"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:387
-#, fuzzy
-#| msgid "Send files to this device"
 msgid "Block/Unblock this device"
-msgstr "Bidali fitxategiak gailu honetara"
+msgstr "Blokeatu/desblokeatu gailua"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:407
-#, fuzzy
 msgid "R_ename device…"
-msgstr "Aldatu izena gailuari"
+msgstr "Aldatu _izena gailuari…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:416
-#, fuzzy
 msgid "_Remove…"
-msgstr "Kendu"
+msgstr "_Kendu…"
 
 #: blueman/gui/manager/ManagerProgressbar.py:44
 msgid "Cancel Operation"
@@ -887,12 +862,11 @@ msgstr ""
 
 #: blueman/gui/DeviceSelectorWidget.py:39
 msgid "Adapter selection"
-msgstr "Moldagailuaren hautapena"
+msgstr "Egokitzailearen hautapena"
 
 #: blueman/gui/DeviceSelectorWidget.py:45
-#, fuzzy
 msgid "Discovering…"
-msgstr "Deskonektatzen..."
+msgstr "Detektatzen…"
 
 #. translators: device class
 #: blueman/DeviceClass.py:6
@@ -911,9 +885,8 @@ msgstr "Telefonoa"
 
 #. translators: device class
 #: blueman/DeviceClass.py:12
-#, fuzzy
 msgid "Access point"
-msgstr "Onartu"
+msgstr "Sarbide puntua"
 
 #. translators: device class
 #: blueman/DeviceClass.py:14
@@ -942,60 +915,51 @@ msgstr "Jostailua"
 
 #. translators: device class
 #: blueman/DeviceClass.py:31
-#, fuzzy
 msgid "Desktop"
-msgstr "mahaigainekoa"
+msgstr "Mahaigainekoa"
 
 #. translators: device class
 #: blueman/DeviceClass.py:33
-#, fuzzy
 msgid "Server"
-msgstr "zerbitzaria"
+msgstr "Zerbitzaria"
 
 #. translators: device class
 #: blueman/DeviceClass.py:35
-#, fuzzy
 msgid "Laptop"
-msgstr "eramangarria"
+msgstr "Eramangarria"
 
 #. translators: device class
 #: blueman/DeviceClass.py:37
-#, fuzzy
 msgid "Handheld"
-msgstr "eskukoa"
+msgstr "Eskuko gailua"
 
 #. translators: device class
 #: blueman/DeviceClass.py:39
 msgid "Palm"
-msgstr ""
+msgstr "Palmondoa"
 
 #. translators: device class
 #: blueman/DeviceClass.py:48
-#, fuzzy
 msgid "Cellular"
-msgstr "zelularra"
+msgstr "Mugikorra"
 
 #. translators: device class
 #: blueman/DeviceClass.py:50
-#, fuzzy
 msgid "Cordless"
-msgstr "haririk gabekoa"
+msgstr "Haririk gabekoa"
 
 #. translators: device class
 #: blueman/DeviceClass.py:52
-#, fuzzy
 msgid "Smartphone"
-msgstr "telefono adimentsua"
+msgstr "Smartphonea"
 
 #. translators: device class
 #: blueman/DeviceClass.py:54
-#, fuzzy
 msgid "Modem"
-msgstr "modema"
+msgstr "Modema"
 
 #. translators: device class
 #: blueman/DeviceClass.py:56
-#, fuzzy
 msgid "ISDN"
 msgstr "ISDN"
 
@@ -1036,9 +1000,8 @@ msgstr "Ehuneko 83–99"
 
 #. translators: device class
 #: blueman/DeviceClass.py:75
-#, fuzzy
 msgid "Not available"
-msgstr "obexd ez dago erabilgarri"
+msgstr "Ez dago eskuragarri"
 
 #. translators: device class
 #: blueman/DeviceClass.py:82 blueman/Sdp.py:123 blueman/Sdp.py:164
@@ -1052,9 +1015,8 @@ msgstr "Esku libreak"
 
 #. translators: device class
 #: blueman/DeviceClass.py:88
-#, fuzzy
 msgid "Microphone"
-msgstr "mikrofonoa"
+msgstr "Mikrofonoa"
 
 #. translators: device class
 #: blueman/DeviceClass.py:90
@@ -1088,7 +1050,6 @@ msgstr "Hi-Fi audioa"
 
 #. translators: device class
 #: blueman/DeviceClass.py:102
-#, fuzzy
 msgid "VCR"
 msgstr "VCR"
 
@@ -1292,7 +1253,6 @@ msgid "Mouse"
 msgstr "Sagua"
 
 #: blueman/DeviceClass.py:191
-#, fuzzy
 msgid "Joystick"
 msgstr "Joystick"
 
@@ -1322,260 +1282,257 @@ msgstr "Glukosa-neurgailu generikoa"
 
 #: blueman/DeviceClass.py:198
 msgid "Generic: Running Walking Sensor"
-msgstr ""
+msgstr "Generikoa: korrika eta oinezko sentsorea"
 
 #: blueman/DeviceClass.py:199
 msgid "Running Walking Sensor: In-Shoe"
-msgstr ""
+msgstr "Korrika eta oinezko sentsorea: oinetakoan"
 
 #: blueman/DeviceClass.py:200
 msgid "Running Walking Sensor: On-Shoe"
-msgstr ""
+msgstr "Korrika eta oinezko sentsorea: oinetakoaren gainean"
 
 #: blueman/DeviceClass.py:201
 msgid "Running Walking Sensor: On-Hip"
-msgstr ""
+msgstr "Korrika eta oinezko sentsorea: aldakan"
 
 #: blueman/DeviceClass.py:202
-#, fuzzy
 msgid "Generic: Cycling"
-msgstr "Konektatu"
+msgstr "Generikoa: Txirrindularitza"
 
 #: blueman/DeviceClass.py:203
 msgid "Cycling: Cycling Computer"
-msgstr ""
+msgstr "Txirrindularitza: bizikleta ordenagailua"
 
 #: blueman/DeviceClass.py:204
 msgid "Cycling: Speed Sensor"
-msgstr ""
+msgstr "Txirrindularitza: abiadura sentsorea"
 
 #: blueman/DeviceClass.py:205
 msgid "Cycling: Cadence Sensor"
-msgstr ""
+msgstr "Txirrindularitza: kadentzia-sentsorea"
 
 #: blueman/DeviceClass.py:206
 msgid "Cycling: Power Sensor"
-msgstr ""
+msgstr "Txirrindularitza: potentzia-sentsorea"
 
 #: blueman/DeviceClass.py:207
 msgid "Cycling: Speed and Cadence Sensor"
-msgstr ""
+msgstr "Txirrindularitza: abiadura eta kadentzia-sentsorea"
 
 #. 19 - 48 reserved
 #: blueman/DeviceClass.py:209
 msgid "Generic: Pulse Oximeter"
-msgstr ""
+msgstr "Generikoa: pulsioximetroa"
 
 #: blueman/DeviceClass.py:210
 msgid "Fingertip"
-msgstr ""
+msgstr "Hatz-mamia"
 
 #: blueman/DeviceClass.py:211
 msgid "Wrist-Worn"
-msgstr ""
+msgstr "Eskumuturrekoa"
 
 #: blueman/DeviceClass.py:212
 msgid "Generic: Weight Scale"
-msgstr ""
+msgstr "Generikoa: baskula"
 
 #: blueman/DeviceClass.py:213
 msgid "Generic Personal Mobility Device"
-msgstr ""
+msgstr "Mugikortasun pertsonaleko gailu generikoa"
 
 #: blueman/DeviceClass.py:214
 msgid "Powered Wheelchair"
-msgstr ""
+msgstr "Gurpil-aulki elektrikoa"
 
 #: blueman/DeviceClass.py:215
 msgid "Mobility Scooter"
-msgstr ""
+msgstr "Mugikortasun Scooter"
 
 #: blueman/DeviceClass.py:216
 msgid "Generic Continuous Glucose Monitor"
-msgstr ""
+msgstr "Glukosa monitore etengabe generikoa"
 
 #: blueman/DeviceClass.py:217
 msgid "Generic Insulin Pump"
-msgstr ""
+msgstr "Intsulina-ponpa generikoa"
 
 #: blueman/DeviceClass.py:218
 msgid "Insulin Pump, durable pump"
-msgstr ""
+msgstr "Intsulina-ponpa, ponpa iraunkorra"
 
 #: blueman/DeviceClass.py:219
 msgid "Insulin Pump, patch pump"
-msgstr ""
+msgstr "Intsulina-ponpa, ponpa-txaplata"
 
 #: blueman/DeviceClass.py:220
 msgid "Insulin Pen"
-msgstr ""
+msgstr "intsulina injektagailua"
 
 #: blueman/DeviceClass.py:221
 msgid "Generic Medication Delivery"
-msgstr ""
+msgstr "Botika generikoak ematea"
 
 #. 55 - 80 reserved
 #: blueman/DeviceClass.py:223
 msgid "Generic: Outdoor Sports Activity"
-msgstr ""
+msgstr "Generikoa: kanpoko kirol jarduera"
 
 #: blueman/DeviceClass.py:224
 msgid "Location Display Device"
-msgstr ""
+msgstr "Kokapena bistaratzeko gailua"
 
 #: blueman/DeviceClass.py:225
 msgid "Location and Navigation Display Device"
-msgstr ""
+msgstr "Kokapena eta nabigazioa bistaratzeko gailua"
 
 #: blueman/DeviceClass.py:226
 msgid "Location Pod"
-msgstr ""
+msgstr "Kokapen-gailua"
 
 #: blueman/DeviceClass.py:227
 msgid "Location and Navigation Pod"
-msgstr ""
+msgstr "Kokapena eta nabigazio-gailua"
 
 #: blueman/Sdp.py:88
 msgid "SDP"
-msgstr ""
+msgstr "SDP"
 
 #: blueman/Sdp.py:89
 msgid "UDP"
-msgstr ""
+msgstr "UDP"
 
 #: blueman/Sdp.py:90
 msgid "RFCOMM"
-msgstr ""
+msgstr "RFCOMM"
 
 #: blueman/Sdp.py:91
 msgid "TCP"
-msgstr ""
+msgstr "TCP"
 
 #: blueman/Sdp.py:92
 msgid "TCS-BIN"
-msgstr ""
+msgstr "TCS-BIN"
 
 #: blueman/Sdp.py:93
 msgid "TCS-AT"
-msgstr ""
+msgstr "TCS-AT"
 
 #: blueman/Sdp.py:94
 msgid "ATT"
-msgstr ""
+msgstr "ATT"
 
 #: blueman/Sdp.py:95
 msgid "OBEX"
-msgstr ""
+msgstr "OBEX"
 
 #: blueman/Sdp.py:96
 msgid "IP"
-msgstr ""
+msgstr "IP"
 
 #: blueman/Sdp.py:97
 msgid "FTP"
-msgstr ""
+msgstr "FTP"
 
 #: blueman/Sdp.py:98
 msgid "HTTP"
-msgstr ""
+msgstr "HTTP"
 
 #: blueman/Sdp.py:99
 msgid "WSP"
-msgstr ""
+msgstr "WSP"
 
 #: blueman/Sdp.py:100
 msgid "BNEP"
-msgstr ""
+msgstr "BNEP"
 
 #: blueman/Sdp.py:101
 msgid "UPnP/ESDP"
-msgstr ""
+msgstr "UPnP/ESDP"
 
 #: blueman/Sdp.py:102
 msgid "HIDP"
-msgstr ""
+msgstr "HIDP"
 
 #: blueman/Sdp.py:103
 msgid "Hardcopy Control Channel"
-msgstr ""
+msgstr "Hardcopy kontrol-kanala"
 
 #: blueman/Sdp.py:104
 msgid "Hardcopy Data Channel"
-msgstr ""
+msgstr "Hardcopy datu-kanala"
 
 #: blueman/Sdp.py:105
 msgid "Hardcopy Notification"
-msgstr ""
+msgstr "Hardcopy jakinarazpena"
 
 #: blueman/Sdp.py:106
 msgid "AVCTP"
-msgstr ""
+msgstr "AVCTP"
 
 #: blueman/Sdp.py:107
 msgid "AVDTP"
-msgstr ""
+msgstr "AVDTP"
 
 #: blueman/Sdp.py:108
 msgid "CMTP"
-msgstr ""
+msgstr "CMTP"
 
 #: blueman/Sdp.py:109
 msgid "UDI_C-Plane"
-msgstr ""
+msgstr "UDI_C-Planoa"
 
 #: blueman/Sdp.py:110 blueman/Sdp.py:111
 msgid "Multi-Channel Adaptation Protocol (MCAP)"
-msgstr ""
+msgstr "Kanal Anitzeko Egokitzapen Protokoloa (MCAP)"
 
 #: blueman/Sdp.py:112
 msgid "L2CAP"
-msgstr ""
+msgstr "L2CAP"
 
 #: blueman/Sdp.py:113
 msgid "ServiceDiscoveryServerServiceClassID"
-msgstr ""
+msgstr "ServiceDiscoveryServerServiceClassID"
 
 #: blueman/Sdp.py:114
 msgid "BrowseGroupDescriptorServiceClassID"
-msgstr ""
+msgstr "BrowseGroupDescriptorServiceClassID"
 
 #: blueman/Sdp.py:115
 msgid "Public Browse Group"
-msgstr ""
+msgstr "Nabigazio talde publikoa"
 
 #: blueman/Sdp.py:116
-#, fuzzy
 msgid "Serial Port"
 msgstr "Serieko atakak"
 
 #: blueman/Sdp.py:117
 msgid "LAN Access Using PPP"
-msgstr ""
+msgstr "LAN sarbidea PPP erabiliz"
 
 #: blueman/Sdp.py:118
 msgid "Dialup Networking (DUN)"
-msgstr ""
+msgstr "Telefono bidezko sareak (DUN)"
 
 #: blueman/Sdp.py:119
 msgid "IrMC Sync"
-msgstr ""
+msgstr "IrMC Sinkronizazioa"
 
 #: blueman/Sdp.py:120
 msgid "OBEX Object Push"
-msgstr ""
+msgstr "OBEX bidezko objektu bidalketa"
 
 #: blueman/Sdp.py:121
-#, fuzzy
 msgid "OBEX File Transfer"
-msgstr "Bluetooth Fitxategi Transferentzia"
+msgstr "OBEX fitxategien transferentzia"
 
 #: blueman/Sdp.py:122
 msgid "IrMC Sync Command"
-msgstr ""
+msgstr "IrMC sinkronizazio agindua"
 
 #: blueman/Sdp.py:124
 msgid "Cordless Telephony"
-msgstr ""
+msgstr "Haririk gabeko telefonia"
 
 #: blueman/Sdp.py:125
 msgid "Audio Source"
@@ -1583,523 +1540,507 @@ msgstr "Audioaren iturburua"
 
 #: blueman/Sdp.py:126
 msgid "Audio Sink"
-msgstr ""
+msgstr "Audio hargailua"
 
 #: blueman/Sdp.py:127
 msgid "Remote Control Target"
-msgstr ""
+msgstr "Urruneko kontrolaren helburua"
 
 #: blueman/Sdp.py:128
 msgid "Advanced Audio"
-msgstr ""
+msgstr "Audio aurreratua"
 
 #: blueman/Sdp.py:129
 msgid "Remote Control"
-msgstr ""
+msgstr "Urruneko kontrola"
 
 #: blueman/Sdp.py:130
 msgid "Video Conferencing"
-msgstr ""
+msgstr "Bideokonferentzia"
 
 #: blueman/Sdp.py:131
 msgid "Intercom"
-msgstr ""
+msgstr "Interkomunikazioa"
 
 #: blueman/Sdp.py:132
 msgid "Fax"
-msgstr ""
+msgstr "Faxa"
 
 #: blueman/Sdp.py:133
 msgid "Headset Audio Gateway"
-msgstr ""
+msgstr "Entzungailuen audio atea"
 
 #: blueman/Sdp.py:134
 msgid "WAP"
-msgstr ""
+msgstr "WAP"
 
 #: blueman/Sdp.py:135
 msgid "WAP Client"
-msgstr ""
+msgstr "WAP bezeroa"
 
 #: blueman/Sdp.py:136
 msgid "PANU"
-msgstr ""
+msgstr "PANU (erabiltzailearen konexioen eremu pertsonala)"
 
 #: blueman/Sdp.py:137
 msgid "Network Access Point"
-msgstr ""
+msgstr "Sareko sarbide puntua"
 
 #: blueman/Sdp.py:138
 msgid "Group Network"
-msgstr ""
+msgstr "Taldeko sarea"
 
 #: blueman/Sdp.py:139
 msgid "DirectPrinting (BPP)"
-msgstr ""
+msgstr "Inprimaketa zuzena (BPP)"
 
 #: blueman/Sdp.py:140
 msgid "ReferencePrinting (BPP)"
-msgstr ""
+msgstr "Erreferentzia bidezko inprimaketa (BPP)"
 
 #: blueman/Sdp.py:141
 msgid "Imaging (BIP)"
-msgstr ""
+msgstr "Irudien atzematea (BPP)"
 
 #: blueman/Sdp.py:142
 msgid "ImagingResponder (BIP)"
-msgstr ""
+msgstr "Irudi-erantzuna (BIP)"
 
 #: blueman/Sdp.py:143
 msgid "ImagingAutomaticArchive (BIP)"
-msgstr ""
+msgstr "Irudien artxibo automatikoa (BIP)"
 
 #: blueman/Sdp.py:144
 msgid "ImagingReferencedObjects (BIP)"
-msgstr ""
+msgstr "Irudiz erreferentziatutako objektuak (BIP)"
 
 #: blueman/Sdp.py:146
 msgid "Handsfree Audio Gateway"
-msgstr ""
+msgstr "Esku libreko audio atea"
 
 #: blueman/Sdp.py:147
 msgid "DirectPrintingReferenceObjectsService (BPP)"
-msgstr ""
+msgstr "Zuzeneko objektuen erreferentziako inprimatzea (BPP)"
 
 #: blueman/Sdp.py:148
 msgid "ReflectedUI (BPP)"
-msgstr ""
+msgstr "Islatutako UI (BPP)"
 
 #: blueman/Sdp.py:149
 msgid "Basic Printing (BPP)"
-msgstr ""
+msgstr "Oinarrizko Inprimaketa (BPP)"
 
 #: blueman/Sdp.py:150
 msgid "Printing Status (BPP)"
-msgstr ""
+msgstr "Inprimatze-egoera (BPP)"
 
 #: blueman/Sdp.py:151
 msgid "Human Interface Device Service (HID)"
-msgstr ""
+msgstr "Giza interfazeko gailu zerbitzua (HID)"
 
 #: blueman/Sdp.py:152
 msgid "HardcopyCableReplacement (HCR)"
-msgstr ""
+msgstr "Hardcopy kablea ordezkatzea (HCR)"
 
 #: blueman/Sdp.py:153
 msgid "HCR_Print (HCR)"
-msgstr ""
+msgstr "HCR_Inprimatu (HCR)"
 
 #: blueman/Sdp.py:154
 msgid "HCR_Scan (HCR)"
-msgstr ""
+msgstr "HCR_eskaneatzea (HCR)"
 
 #: blueman/Sdp.py:155
 msgid "Common ISDN Access (CIP)"
-msgstr ""
+msgstr "ISDN sarbide komuna (CIP)"
 
 #: blueman/Sdp.py:156
 msgid "VideoConferencingGW (VCP)"
-msgstr ""
+msgstr "VideoConferencingGW (VCP)"
 
 #: blueman/Sdp.py:157
 msgid "UDI-MT"
-msgstr ""
+msgstr "UDI-MT"
 
 #: blueman/Sdp.py:158
 msgid "UDI-TA"
-msgstr ""
+msgstr "UDI-TA"
 
 #: blueman/Sdp.py:159
 msgid "Audio/Video"
-msgstr ""
+msgstr "Audio/Bideoa"
 
 #: blueman/Sdp.py:160
 msgid "SIM Access (SAP)"
-msgstr ""
+msgstr "SIM sarbidea (SAP)"
 
 #: blueman/Sdp.py:161
 msgid "Phonebook Access (PBAP) - PCE"
-msgstr ""
+msgstr "Agendarako sarbidea (PBAP) - PCE"
 
 #: blueman/Sdp.py:162
 msgid "Phonebook Access (PBAP) - PSE"
-msgstr ""
+msgstr "Agendarako sarbidea (PBAP) - PSE"
 
 #: blueman/Sdp.py:163
-#, fuzzy
 msgid "Phonebook Access (PBAP)"
-msgstr "Sareko Sarbide Puntua (NAP)"
+msgstr "Telefono-agendarako sarbidea (PBAP)"
 
 #: blueman/Sdp.py:165
 msgid "Message Access Server"
-msgstr ""
+msgstr "Mezuetarako sarbide zerbitzaria"
 
 #: blueman/Sdp.py:166
 msgid "Message Notification Server"
-msgstr ""
+msgstr "Mezuen jakinarazpen zerbitzaria"
 
 #: blueman/Sdp.py:167
-#, fuzzy
 msgid "Message Access Profile (MAP)"
-msgstr "Sareko Sarbide Puntua (NAP)"
+msgstr "Mezuetarako sarbidea profila (MAP)"
 
 #: blueman/Sdp.py:168
 msgid "GNSS"
-msgstr ""
+msgstr "GNSS"
 
 #: blueman/Sdp.py:169
 msgid "GNSS Server"
-msgstr ""
+msgstr "GNSS zerbitzaria"
 
 #: blueman/Sdp.py:170
 msgid "3D Display"
-msgstr ""
+msgstr "3D bistaratzea"
 
 #: blueman/Sdp.py:171
 msgid "3D Glasses"
-msgstr ""
+msgstr "3D betaurrekoak"
 
 #: blueman/Sdp.py:172
 msgid "3D Synchronization (3DSP)"
-msgstr ""
+msgstr "3D sinkronizazioa (3DSP)"
 
 #: blueman/Sdp.py:173
 msgid "Multi-Profile Specification (MPS) Profile"
-msgstr ""
+msgstr "Multi-Profile Specification (MPS) Profila"
 
 #: blueman/Sdp.py:174
 msgid "Multi-Profile Specification (MPS) Service"
-msgstr ""
+msgstr "Multi-Profile Specification (MPS) zerbitzua"
 
 #: blueman/Sdp.py:175
 msgid "Calendar, Task, and Notes (CTN) Access Service"
-msgstr ""
+msgstr "Egutegia, Zeregin eta Oharrak (CTN) sarbide zerbitzua"
 
 #: blueman/Sdp.py:176
 msgid "Calendar, Task, and Notes (CTN) Notification Service"
-msgstr ""
+msgstr "Egutegia, Zeregin eta Oharrak (CTN) jakinarazpen zerbitzua"
 
 #: blueman/Sdp.py:177
 msgid "Calendar, Task, and Notes (CTN) Profile"
-msgstr ""
+msgstr "Egutegia, Zeregin eta Oharrak (CTN) profila"
 
 #: blueman/Sdp.py:178
 msgid "PnP Information"
-msgstr ""
+msgstr "PnP informazioa"
 
 #: blueman/Sdp.py:179
 msgid "Generic Networking"
-msgstr ""
+msgstr "Sare generikoa"
 
 #: blueman/Sdp.py:180
-#, fuzzy
 msgid "Generic FileTransfer"
-msgstr "Bluetooth Fitxategi Transferentzia"
+msgstr "Fitxategien transferentzia orokorra"
 
 #: blueman/Sdp.py:181
 msgid "Generic Audio"
-msgstr ""
+msgstr "Audio generikoa"
 
 #: blueman/Sdp.py:182
 msgid "Generic Telephony"
-msgstr ""
+msgstr "Telefonia generikoa"
 
 #: blueman/Sdp.py:183
-#, fuzzy
 msgid "Video Source"
-msgstr "Audioaren iturburua"
+msgstr "Bideoaren iturburua"
 
 #: blueman/Sdp.py:184
 msgid "Video Sink"
-msgstr ""
+msgstr "Bideo hargailua"
 
 #: blueman/Sdp.py:185
 msgid "Video Distribution"
-msgstr ""
+msgstr "Bideo banaketa"
 
 #: blueman/Sdp.py:186
 msgid "HDP"
-msgstr ""
+msgstr "HDP"
 
 #: blueman/Sdp.py:187
-#, fuzzy
 msgid "HDP Source"
-msgstr "Audioaren iturburua"
+msgstr "HDPren iturburua"
 
 #: blueman/Sdp.py:188
 msgid "HDP Sink"
-msgstr ""
+msgstr "HDP hargailua"
 
 #: blueman/Sdp.py:189
 msgid "Generic Access"
-msgstr ""
+msgstr "Sarbide generikoa"
 
 #: blueman/Sdp.py:190
 msgid "Generic Attribute"
-msgstr ""
+msgstr "Atributu generikoa"
 
 #: blueman/Sdp.py:191
 msgid "Immediate Alert"
-msgstr ""
+msgstr "Berehalako alerta"
 
 #: blueman/Sdp.py:192
 msgid "Link Loss"
-msgstr ""
+msgstr "Loturaren galera"
 
 #: blueman/Sdp.py:193
 msgid "Tx Power"
-msgstr ""
+msgstr "Tx potentzia"
 
 #: blueman/Sdp.py:194
-#, fuzzy
 msgid "Current Time Service"
-msgstr "Aldatu izena gailuari"
+msgstr "Uneko Ordu Zerbitzua"
 
 #: blueman/Sdp.py:195
 msgid "Reference Time Update Service"
-msgstr ""
+msgstr "Erreferentzia denborak eguneratzeko zerbitzua"
 
 #: blueman/Sdp.py:196
 msgid "Next DST Change Service"
-msgstr ""
+msgstr "Hurrengo DST aldaketa zerbitzua"
 
 #: blueman/Sdp.py:197
 msgid "Glucose"
-msgstr ""
+msgstr "Glukosa"
 
 #: blueman/Sdp.py:198
 msgid "Health Thermometer"
-msgstr ""
+msgstr "Osasun Termometroa"
 
 #: blueman/Sdp.py:199
-#, fuzzy
 msgid "Device Information"
-msgstr "Erakutsi gailuaren informazioa"
+msgstr "Gailuaren informazioa"
 
 #: blueman/Sdp.py:200
 msgid "Heart Rate"
-msgstr ""
+msgstr "Bihotz taupadak"
 
 #: blueman/Sdp.py:201
 msgid "Phone Alert Status Service"
-msgstr ""
+msgstr "Telefonoaren alertaren egoera zerbitzua"
 
 #: blueman/Sdp.py:202
-#, fuzzy
 msgid "Battery Service"
-msgstr "Zerbitzu lokalak"
+msgstr "Bateria zerbitzua"
 
 #: blueman/Sdp.py:203
 msgid "Blood Pressure"
-msgstr ""
+msgstr "Odol-presioa"
 
 #: blueman/Sdp.py:204
 msgid "Alert Notification Service"
-msgstr ""
+msgstr "Alertak jakinarazteko zerbitzua"
 
 #: blueman/Sdp.py:205
 msgid "Human Interface Device"
-msgstr ""
+msgstr "Giza interfaze gailua"
 
 #: blueman/Sdp.py:206
 msgid "Scan Parameters"
-msgstr ""
+msgstr "Eskaneatzeko parametroak"
 
 #: blueman/Sdp.py:207
 msgid "Running Speed and Cadence"
-msgstr ""
+msgstr "Korrikako abiadura eta kadentzia"
 
 #: blueman/Sdp.py:208
 msgid "Automation IO"
-msgstr ""
+msgstr "S/I automatizazioa"
 
 #: blueman/Sdp.py:209
 msgid "Cycling Speed and Cadence"
-msgstr ""
+msgstr "Txirringako abiadura eta kadentzia"
 
 #: blueman/Sdp.py:210
 msgid "Cycling Power"
-msgstr ""
+msgstr "Txirringako indarra"
 
 #: blueman/Sdp.py:211
 msgid "Location and Navigation"
-msgstr ""
+msgstr "Kokapena eta nabigazioa"
 
 #: blueman/Sdp.py:212
 msgid "Environmental Sensing"
-msgstr ""
+msgstr "Ingurumenaren sentsorea"
 
 #: blueman/Sdp.py:213
 msgid "Body Composition"
-msgstr ""
+msgstr "Gorputzaren konposizioa"
 
 #: blueman/Sdp.py:214
 msgid "User Data"
-msgstr ""
+msgstr "Erabiltzaileen datuak"
 
 #: blueman/Sdp.py:215
 msgid "Weight Scale"
-msgstr ""
+msgstr "Pisu-eskala"
 
 #: blueman/Sdp.py:216
 msgid "Bond Management"
-msgstr ""
+msgstr "Loturen kudeaketa"
 
 #: blueman/Sdp.py:217
 msgid "Continuous Glucose Monitoring"
-msgstr ""
+msgstr "Glukosaren etengabeko monitorizazioa"
 
 #: blueman/Sdp.py:218
 msgid "Internet Protocol Support"
-msgstr ""
+msgstr "Interneteko Protokoloaren euskarria"
 
 #: blueman/Sdp.py:219
 msgid "Indoor Positioning"
-msgstr ""
+msgstr "Barruko posizionamendua"
 
 #: blueman/Sdp.py:220
 msgid "Pulse Oximeter"
-msgstr ""
+msgstr "Pultsu-oximetroa"
 
 #: blueman/Sdp.py:221
 msgid "HTTP Proxy"
-msgstr ""
+msgstr "HTTP proxy"
 
 #: blueman/Sdp.py:222
 msgid "Transport Discovery"
-msgstr ""
+msgstr "Garraioaren aurkikuntza"
 
 #: blueman/Sdp.py:223
 msgid "Object Transfer"
-msgstr ""
+msgstr "Objektuen transferentzia"
 
 #: blueman/Sdp.py:224
-#, fuzzy
 msgid "AppleAgent"
-msgstr "applet-a"
+msgstr "Apple agentea"
 
 #: blueman/Sdp.py:225
-#, fuzzy
 msgid "Primary Service"
-msgstr "Parekatu gailua"
+msgstr "Zerbitzu nagusia"
 
 #: blueman/Sdp.py:226
-#, fuzzy
 msgid "Secondary Service"
-msgstr "Bilatu hurbil dauden tresnak"
+msgstr "Bigarren mailako zerbitzua"
 
 #: blueman/Sdp.py:227
 msgid "Include"
-msgstr ""
+msgstr "Barne du"
 
 #: blueman/Sdp.py:228
 msgid "Characteristic Declaration"
-msgstr ""
+msgstr "Ezaugarrien adierazpena"
 
 #: blueman/Sdp.py:229
-#, fuzzy
 msgid "Device Name"
-msgstr "Gailu kudeatzailea"
+msgstr "Gailuaren izena"
 
 #: blueman/Sdp.py:230
 msgid "Appearance"
-msgstr ""
+msgstr "Itxura"
 
 #: blueman/Sdp.py:231
 msgid "Peripheral Privacy Flag"
-msgstr ""
+msgstr "Pribatutasun-marka periferikoa"
 
 #: blueman/Sdp.py:232
-#, fuzzy
 msgid "Reconnection Address"
-msgstr "Berritu IP helbidea"
+msgstr "Berriro konektatzeko helbidea"
 
 #: blueman/Sdp.py:233
 msgid "Peripheral Preferred Connection Parameters"
-msgstr ""
+msgstr "Periferikoen hobetsitako konexio-parametroak"
 
 #: blueman/Sdp.py:234
-#, fuzzy
 msgid "Service Changed"
-msgstr "Gailu kudeatzailea"
+msgstr "Zerbitzua aldatu da"
 
 #: blueman/Sdp.py:235
 msgid "System ID"
-msgstr ""
+msgstr "Sistemaren identifikatzailea"
 
 #: blueman/Sdp.py:236
 msgid "Model Number String"
-msgstr ""
+msgstr "Modeloaren zenbaki-katea"
 
 #: blueman/Sdp.py:237
 msgid "Serial Number String"
-msgstr ""
+msgstr "Serie-zenbakiaren katea"
 
 #: blueman/Sdp.py:238
 msgid "Firmware Revision String"
-msgstr ""
+msgstr "Firmwarearen berrikuspen-katea"
 
 #: blueman/Sdp.py:239
 msgid "Hardware Revision String"
-msgstr ""
+msgstr "Hardwarearen berrikuspen-katea"
 
 #: blueman/Sdp.py:240
 msgid "Software Revision String"
-msgstr ""
+msgstr "Softwarearen berrikuspen-katea"
 
 #: blueman/Sdp.py:241
 msgid "Manufacturer Name String"
-msgstr ""
+msgstr "Fabrikatzailearen izen-katea"
 
 #: blueman/Sdp.py:242
 msgid "PnP ID"
-msgstr ""
+msgstr "PnP identifikatzailea"
 
 #: blueman/Sdp.py:243
 msgid "Characteristic Extended Properties"
-msgstr ""
+msgstr "Ezaugarrien hedatutako propietateak"
 
 #: blueman/Sdp.py:244
 msgid "Characteristic User Description"
-msgstr ""
+msgstr "Erabiltzailearen deskribapena"
 
 #: blueman/Sdp.py:245
 msgid "Client Characteristic Configuration"
-msgstr ""
+msgstr "Bezeroaren ezaugarrien konfigurazioa"
 
 #: blueman/Sdp.py:246
 msgid "Server Characteristic Configuration"
-msgstr ""
+msgstr "Zerbitzariaren ezaugarrien konfigurazioa"
 
 #: blueman/Sdp.py:247
 msgid "Characteristic Presentation Format"
-msgstr ""
+msgstr "Aurkezpenaren formatuaren ezaugarria"
 
 #: blueman/Sdp.py:248
 msgid "Characteristic Aggregate Format"
-msgstr ""
+msgstr "Formatu agregatu ezaugarria"
 
 #: blueman/Sdp.py:249
 msgid "Valid Range"
-msgstr ""
+msgstr "Baliozko tartea"
 
 #: blueman/Sdp.py:250
 msgid "External Report Reference"
-msgstr ""
+msgstr "Kanpoko txostenaren erreferentzia"
 
 #: blueman/Sdp.py:251
-#, fuzzy
 msgid "Report Reference"
-msgstr "Moldagailuen hobespenak"
+msgstr "Txostenaren erreferentzia"
 
 #: blueman/Sdp.py:378
-#, fuzzy
 msgid "Audio and input profiles"
-msgstr "Audio profila"
+msgstr "Audio eta sarrerako profila"
 
 #: blueman/Sdp.py:380
 msgid "Proprietary"
-msgstr ""
+msgstr "Jabeduna"
 
 #: blueman/plugins/manager/Info.py:21
 msgid "yes"
@@ -2111,7 +2052,7 @@ msgstr "ez"
 
 #: blueman/plugins/manager/Info.py:60
 msgid "<big>Select row(s) and use <i>Control + C</i> to copy</big>"
-msgstr ""
+msgstr "<big>Hautatu errenkadak eta erabili <i>Kontrol + C</i> kopiatzeko</big>"
 
 #: blueman/plugins/manager/Info.py:120
 msgid "_Info"
@@ -2132,7 +2073,7 @@ msgstr "Bidali testu-ohar bat"
 #: blueman/plugins/manager/PulseAudioProfile.py:87
 #, python-format
 msgid "Failed to change profile to %s"
-msgstr ""
+msgstr "Ezin izan da %sren profila aldatu"
 
 #: blueman/plugins/manager/PulseAudioProfile.py:128
 msgid "Audio Profile"
@@ -2150,6 +2091,8 @@ msgstr "Zehaztu gabea"
 msgid ""
 "Tries to auto-connect to configurable services on start and every 60 seconds."
 msgstr ""
+"Abiatzean eta 60 segundoz behin konfigura daitezkeen zerbitzuetara "
+"automatikoki konektatzen saiatzen da."
 
 #. https://github.com/python/mypy/issues/2608
 #: blueman/plugins/applet/AutoConnect.py:50
@@ -2162,16 +2105,17 @@ msgstr "Konektatuta"
 #: blueman/plugins/applet/AutoConnect.py:50
 #, python-format
 msgid "Automatically connected to %(service)s on %(device)s"
-msgstr ""
+msgstr "Automatikoki konektatuta %(device)s-ko %(service)s-ra"
 
 #: blueman/plugins/applet/ConnectionNotifier.py:15
 msgid "Shows desktop notifications when devices get connected or disconnected."
 msgstr ""
+"Mahaigaineko jakinarazpenak erakusten ditu gailuak konektatu edo "
+"deskonektatzen direnean."
 
 #: blueman/plugins/applet/ConnectionNotifier.py:48
-#, fuzzy
 msgid "Disconnected"
-msgstr "Deskonektatzen..."
+msgstr "Deskonektatuta"
 
 #: blueman/plugins/applet/NetUsage.py:154
 #: blueman/plugins/applet/NetUsage.py:265
@@ -2189,6 +2133,8 @@ msgid ""
 "No usage statistics are available yet. Try establishing a connection first "
 "and then check this page."
 msgstr ""
+"Oraindik ez dago erabilpen estatistikarik. Saiatu lehenik konexioa ezartzen "
+"eta gero egiaztatu orri hau."
 
 #: blueman/plugins/applet/NetUsage.py:202
 msgid "day"
@@ -2215,13 +2161,16 @@ msgstr "%d %s %d %s eta %d %s"
 
 #: blueman/plugins/applet/NetUsage.py:241
 msgid "Are you sure you want to reset the counter?"
-msgstr ""
+msgstr "Ziur kontagailua berrezarri nahi duzula?"
 
 #: blueman/plugins/applet/NetUsage.py:287
 msgid ""
 "Allows you to monitor your (mobile broadband) network traffic usage. Useful "
 "for limited data access plans. This plugin tracks every device seperately."
 msgstr ""
+"Zure sareko (mugikorreko banda zabalaren) trafikoaren erabilera "
+"kontrolatzeko aukera ematen dizu. Datuetarako sarbide mugatuko planetan "
+"erabilgarria. Plugin honek gailu bakoitzaren jarraipena egiten du bereizita."
 
 #: blueman/plugins/applet/NetUsage.py:307
 msgid "Network _Usage"
@@ -2246,24 +2195,27 @@ msgid ""
 "Provides support for Dial Up Networking (DUN) with ModemManager and "
 "NetworkManager"
 msgstr ""
+"ModemManager eta NetworkManager-ekin markazio bidezko konexiorako (DUN) "
+"laguntza eskaintzen du"
 
 #: blueman/plugins/applet/RecentConns.py:41
 msgid ""
 "Provides a menu item that contains last used connections for quick access"
 msgstr ""
+"Erabilitako azken konexioak dituen menu bat eskaintzen du azkar sartzeko"
 
 #. the maximum number of items RecentConns menu will display
 #: blueman/plugins/applet/RecentConns.py:52
 msgid "Maximum items"
-msgstr ""
+msgstr "Gehienezko elementuak"
 
 #: blueman/plugins/applet/RecentConns.py:53
 msgid "The maximum number of items recent connections menu will display."
-msgstr ""
+msgstr "Azken konexioen menuaren gehienezko elementu kopurua bistaratuko da."
 
 #: blueman/plugins/applet/RecentConns.py:63
 msgid "Recent _Connections"
-msgstr ""
+msgstr "Azken _konexioak"
 
 #: blueman/plugins/applet/RecentConns.py:155
 #, python-format
@@ -2277,34 +2229,36 @@ msgstr "Huts egin du konektatzean"
 #: blueman/plugins/applet/RecentConns.py:171
 #, python-format
 msgid "%(service)s on %(device)s"
-msgstr ""
+msgstr "%(device)s-ko %(service)s"
 
 #: blueman/plugins/applet/RecentConns.py:175
 msgid "Adapter for this connection is not available"
-msgstr ""
+msgstr "Konexio honetarako egokitzailea ez dago erabilgarri"
 
 #: blueman/plugins/applet/NMPANSupport.py:18
 msgid ""
 "Provides support for Personal Area Networking (PAN) introduced in "
 "NetworkManager 0.8"
 msgstr ""
+"NetworkManager 0.8-n sartutako Personal Area Networking (PAN)-rako laguntza "
+"eskaintzen du"
 
 #: blueman/plugins/applet/DBusService.py:47
 msgid "Provides DBus API for other Blueman components"
-msgstr ""
+msgstr "DBus APIa eskaintzen du Blueman beste osagai batzuetarako"
 
 #: blueman/plugins/applet/TransferService.py:127
 msgid "Incoming file over Bluetooth"
-msgstr ""
+msgstr "Bluetooth bidez sartzen den artxiboa"
 
 #: blueman/plugins/applet/TransferService.py:128
 #, python-format
 msgid "Incoming file %(0)s from %(1)s"
-msgstr ""
+msgstr "Fitxategia sartzen %(1)s-tik %(0)s"
 
 #: blueman/plugins/applet/TransferService.py:130
 msgid "Reject"
-msgstr ""
+msgstr "Ukatu"
 
 #: blueman/plugins/applet/TransferService.py:137
 msgid "Receiving file"
@@ -2313,15 +2267,15 @@ msgstr "Fitxategia jasotzen"
 #: blueman/plugins/applet/TransferService.py:138
 #, python-format
 msgid "Receiving file %(0)s from %(1)s"
-msgstr ""
+msgstr "%(0)s fitxategia jasotzen %(1)s-tik"
 
 #: blueman/plugins/applet/TransferService.py:157
 msgid "Provides OBEX file transfer capabilities"
-msgstr ""
+msgstr "OBEX fitxategiak transferitzeko gaitasunak eskaintzen ditu"
 
 #: blueman/plugins/applet/TransferService.py:180
 msgid "Configured directory for incoming files does not exist"
-msgstr ""
+msgstr "Sartzen diren fitxategietarako konfiguratutako direktoriorik ez dago"
 
 #: blueman/plugins/applet/TransferService.py:181
 #, python-format
@@ -2329,6 +2283,8 @@ msgid ""
 "Please make sure that directory \"<b>%s</b>\" exists or configure it with "
 "blueman-services. Until then the default \"%s\" will be used"
 msgstr ""
+"Ziurtatu \"<b>%s</b>\" direktorioa badagoela edo konfiguratu blueman-"
+"services-ekin. Ordura arte lehenetsitako \"%s\" karpeta erabiliko da"
 
 #: blueman/plugins/applet/TransferService.py:303
 msgid "File received"
@@ -2337,11 +2293,11 @@ msgstr "Fitxategia jasota"
 #: blueman/plugins/applet/TransferService.py:304
 #, python-format
 msgid "File %(0)s from %(1)s successfully received"
-msgstr ""
+msgstr "%(1)s-tik %(0)s fitxategi behar bezala jaso da"
 
 #: blueman/plugins/applet/TransferService.py:308
 msgid "Open"
-msgstr ""
+msgstr "Ireki"
 
 #: blueman/plugins/applet/TransferService.py:312
 msgid "Transfer failed"
@@ -2355,26 +2311,26 @@ msgstr "%(0)s fitxategiaren transferentziak huts egin du"
 #: blueman/plugins/applet/TransferService.py:333
 #: blueman/plugins/applet/TransferService.py:342
 msgid "Files received"
-msgstr ""
+msgstr "Fitxategiak jaso dira"
 
 #: blueman/plugins/applet/TransferService.py:334
 #, python-format
 msgid "Received %(files)d file in the background"
 msgid_plural "Received %(files)d files in the background"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "fitxategi %(files)d jaso da atzeko planoan"
+msgstr[1] "%(files)d fitxategi jaso dira atzeko planoan"
 
 #: blueman/plugins/applet/TransferService.py:339
 #: blueman/plugins/applet/TransferService.py:347
 msgid "Open Location"
-msgstr ""
+msgstr "Ireki kokapena"
 
 #: blueman/plugins/applet/TransferService.py:343
 #, python-format
 msgid "Received %(files)d more file in the background"
 msgid_plural "Received %(files)d more files in the background"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "fitxategi %(files)d gehiago jaso da atzeko planoan"
+msgstr[1] "%(files)d fitxategi gehiago jaso dira atzeko planoan"
 
 #: blueman/plugins/applet/KillSwitch.py:37
 msgid ""
@@ -2382,10 +2338,13 @@ msgid ""
 "turning Bluetooth back on from an icon that shows its status; provided it "
 "isn't unplugged by the system, or physically."
 msgstr ""
+"Bluetooth itzalgauluaren egoera aldatzen du Bluetooth-en energia-egoerarekin "
+"bat etor dadin. Bluetootha berriro aktibatzeko aukera ematen du bere egoera "
+"erakusten duen ikono batetik; sistemak edo fisikoki deskonektatuta ez badago."
 
 #: blueman/plugins/applet/StandardItems.py:22
 msgid "Adds standard menu items to the status icon menu"
-msgstr ""
+msgstr "Menu-elementu estandarrak gehitzen ditu egoera-ikonoaren menuan"
 
 #: blueman/plugins/applet/StandardItems.py:32
 msgid "Send _Files to Device"
@@ -2406,14 +2365,15 @@ msgstr "applet-a"
 #: blueman/plugins/applet/AuthAgent.py:8
 msgid "Provides passkey, authentication services for BlueZ daemon"
 msgstr ""
+"BlueZ daemon-entzako pasahitza eta autentifikazio zerbitzuak eskaintzen ditu"
 
 #: blueman/plugins/applet/ExitItem.py:7
 msgid "Adds an exit menu item to quit the applet"
-msgstr ""
+msgstr "Irteera menuko elementu bat gehitzen du miniaplikaziotik irteteko"
 
 #: blueman/plugins/applet/DhcpClient.py:14
 msgid "Provides a basic dhcp client for Bluetooth PAN connections."
-msgstr ""
+msgstr "Bluetooth PAN konexioetarako oinarrizko dhcp bezero bat eskaintzen du."
 
 #: blueman/plugins/applet/DhcpClient.py:47
 #: blueman/plugins/applet/DhcpClient.py:55
@@ -2424,12 +2384,12 @@ msgstr "Bluetooth sarea"
 #: blueman/plugins/applet/DhcpClient.py:48
 #, python-format
 msgid "Interface %(0)s bound to IP address %(1)s"
-msgstr ""
+msgstr "%(0)s interfazea %(1)s IP helbidera lotuta"
 
 #: blueman/plugins/applet/DhcpClient.py:55
 #, python-format
 msgid "Failed to obtain an IP address on %s"
-msgstr ""
+msgstr "Ezin izan da lortu IP helbidea %s-n"
 
 #: blueman/plugins/applet/DhcpClient.py:60
 #, python-format
@@ -2437,23 +2397,27 @@ msgid ""
 "Trying to obtain an IP address on %s\n"
 "Please wait…"
 msgstr ""
+"%s-n IP helbide bat lortzen saiatzen\n"
+"Itxaron mesedez…"
 
 #: blueman/plugins/applet/ShowConnected.py:17
 msgid ""
 "Adds an indication on the status icon when Bluetooth is active and shows the "
 "number of connections in the tooltip."
 msgstr ""
+"Bluetooth-a aktibatuta dagoenean egoera-ikonoaren adierazle bat gehitzen du "
+"eta konexio kopurua erakusten du tresna-informazioan."
 
 #: blueman/plugins/applet/ShowConnected.py:61
 msgid "Bluetooth Active"
-msgstr ""
+msgstr "Bluetooth aktiboa"
 
 #: blueman/plugins/applet/ShowConnected.py:63
 #, python-format
 msgid "<b>%(connections)d Active Connection</b>"
 msgid_plural "<b>%(connections)d Active Connections</b>"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "<b>konexio aktibo %(connections)d</b>"
+msgstr[1] "<b>%(connections)d konexio aktibo</b>"
 
 #: blueman/plugins/applet/ShowConnected.py:73
 #: blueman/plugins/applet/PowerManager.py:193
@@ -2462,45 +2426,49 @@ msgstr "Bluetooth desgaituta"
 
 #: blueman/plugins/applet/DisconnectItems.py:14
 msgid "Adds disconnect menu items"
-msgstr ""
+msgstr "Deskonektatzeko menuko elementuak gehitzen ditu"
 
 #: blueman/plugins/applet/DisconnectItems.py:40
-#, fuzzy, python-format
+#, python-format
 msgid "Disconnect %s"
-msgstr "Deskonektatzen..."
+msgstr "Deskonektatu %s"
 
 #: blueman/plugins/applet/DiscvManager.py:16
 msgid ""
 "Provides a menu item for making the default adapter temporarily visible when "
 "it is set to hidden by default"
 msgstr ""
+"Egokitzaile lehenetsia aldi baterako ikusgai jartzeko menu-elementu bat "
+"eskaintzen du, lehenespenez ezkutatuta dagoenean"
 
 #: blueman/plugins/applet/DiscvManager.py:26
 msgid "Discoverable timeout"
-msgstr ""
+msgstr "Aurkitua izateko denbora-muga"
 
 #: blueman/plugins/applet/DiscvManager.py:27
 msgid "Amount of time in seconds discoverable mode will last"
-msgstr ""
+msgstr "Aztertzeko moduak segundotan iraungo duen denbora"
 
 #: blueman/plugins/applet/DiscvManager.py:35
 #: blueman/plugins/applet/DiscvManager.py:123
 msgid "_Make Discoverable"
-msgstr ""
+msgstr "_Egin aurkigarri"
 
 #: blueman/plugins/applet/DiscvManager.py:36
 msgid "Make the default adapter temporarily visible"
-msgstr ""
+msgstr "Egin egokitzaile lehenetsia aldi baterako ikusgai"
 
 #: blueman/plugins/applet/DiscvManager.py:60
 #, python-format
 msgid "Discoverable… %ss"
-msgstr ""
+msgstr "Aurki daiteke... %ss"
 
 #: blueman/plugins/applet/Menu.py:113
 msgid ""
 "Provides a menu for the applet and an API for other plugins to manipulate it"
 msgstr ""
+"Applet-erako menu bat eta beste plugin batzuen API bat eskaintzen ditu hura "
+"manipulatzeko"
 
 #: blueman/plugins/applet/PPPSupport.py:72
 #, python-format
@@ -2508,19 +2476,25 @@ msgid ""
 "Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\n"
 "Network is now available through <b>%(1)s</b>"
 msgstr ""
+"Behar bezala konektatu da <b>DUN</b> zerbitzura <b>%(0)s.</b>\n"
+"Sarea eskuragarri dago orain <b>%(1)s</b> bidez"
 
 #: blueman/plugins/applet/PPPSupport.py:80
 msgid "Provides basic support for connecting to the internet via DUN profile."
 msgstr ""
+"DUN profilaren bidez Internetera konektatzeko oinarrizko laguntza eskaintzen "
+"du."
 
 #: blueman/plugins/applet/SerialManager.py:22
 msgid ""
 "Standard SPP profile connection handler, allows executing custom actions"
 msgstr ""
+"SPP profilaren konexio-kudeatzaile estandarra, ekintza pertsonalizatuak "
+"exekutatzeko aukera ematen du"
 
 #: blueman/plugins/applet/SerialManager.py:31
 msgid "Script to execute on connection"
-msgstr ""
+msgstr "Konektatzean exekutatzeko scripta"
 
 #: blueman/plugins/applet/SerialManager.py:32
 msgid ""
@@ -2532,6 +2506,13 @@ msgid ""
 "\n"
 "Upon device disconnection the script will be sent a HUP signal</span>"
 msgstr ""
+"<span size=\"small\">Argumentu hauek pasatuko dira:\n"
+"Helbidea, Izena, zerbitzuaren izena, uuid16s, rfcomm nodoa\n"
+"Adibidez:\n"
+"AA:BB:CC:DD:EE:FF, Telefonoa, DUN zerbitzua, 0x1103, /dev/rfcomm0\n"
+"uuid16ak komaz bereizitako zerrenda gisa itzultzen dira\n"
+"\n"
+"Gailua deskonektatzean script-ari HUP seinalea</span> bidaliko zaio"
 
 #: blueman/plugins/applet/SerialManager.py:63
 msgid "Serial port connected"
@@ -2542,10 +2523,12 @@ msgstr "Serieko ataka konektatuta"
 msgid ""
 "Serial port service on device <b>%s</b> now will be available via <b>%s</b>"
 msgstr ""
+"<b>%s</b> gailuko serie ataka zerbitzua <b>%s</b> bidez egongo da "
+"erabilgarri orain"
 
 #: blueman/plugins/applet/SerialManager.py:114
 msgid "Serial port connection script failed"
-msgstr ""
+msgstr "Serieko ataken konexioaren script-ak huts egin du"
 
 #: blueman/plugins/applet/SerialManager.py:115
 #, python-format
@@ -2553,46 +2536,50 @@ msgid ""
 "There was a problem launching script %s\n"
 "%s"
 msgstr ""
+"Arazo bat izan da %s scripta abiarazteko\n"
+"%s"
 
 #: blueman/plugins/applet/PowerManager.py:31
 msgid "Controls Bluetooth adapter power states"
-msgstr ""
+msgstr "Bluetooth egokitzailearen energia-egoerak kontrolatzen ditu"
 
 #: blueman/plugins/applet/PowerManager.py:44
 msgid "Auto power-on"
-msgstr ""
+msgstr "Pizte automatikoa"
 
 #: blueman/plugins/applet/PowerManager.py:45
 msgid "Automatically power on adapters"
-msgstr ""
+msgstr "Piztu egokitzaileak automatikoki"
 
 #: blueman/plugins/applet/PowerManager.py:55
 #: blueman/plugins/applet/PowerManager.py:172
 msgid "<b>Turn Bluetooth _Off</b>"
-msgstr ""
+msgstr "<b>Desaktibatu Bluetootha</b>"
 
 #: blueman/plugins/applet/PowerManager.py:57
 #: blueman/plugins/applet/PowerManager.py:174
 msgid "Turn off all adapters"
-msgstr ""
+msgstr "Itzali egokitzaile guztiak"
 
 #: blueman/plugins/applet/PowerManager.py:163
 msgid "<b>Turn Bluetooth _On</b>"
-msgstr ""
+msgstr "<b>Aktibatu Bluetootha</b>"
 
 #: blueman/plugins/applet/PowerManager.py:165
 msgid "Turn on all adapters"
-msgstr ""
+msgstr "Piztu egokitzaile guztiak"
 
 #: blueman/plugins/applet/GameControllerWakelock.py:20
 msgid ""
 "Temporarily suspends the screensaver when a bluetooth game controller is "
 "connected."
 msgstr ""
+"Pantaila-babeslea aldi baterako eteten du bluetooth joko-kontrolagailua "
+"konektatuta dagoenean."
 
 #: blueman/plugins/applet/StatusNotifierItem.py:10
 msgid "Provides a StatusNotifierItem to show a statusicon"
-msgstr ""
+msgstr "StatusNotifierItem bat ematen du egoera-ikonoa erakusteko"
 
 #: blueman/plugins/services/Network.py:25
 msgid "Network"
@@ -2605,7 +2592,7 @@ msgstr "IP helbide baliogabea"
 #: blueman/plugins/services/Network.py:102
 #, python-format
 msgid "IP address conflicts with interface %s which has the same address"
-msgstr ""
+msgstr "IP helbidea gatazkan dago helbide bera duen %s interfazearekin"
 
 #: blueman/plugins/services/Network.py:110
 #, python-format
@@ -2614,23 +2601,26 @@ msgid ""
 "configuration  %s/%s\n"
 "This may cause incorrect network behavior"
 msgstr ""
+"IP helbidea %s interfazearen azpisarearekin gainjartzen da ( %s/%s "
+"konfigurazioa duena).\n"
+"Horrek sareko portaera okerra sor dezake"
 
 #: blueman/plugins/services/Network.py:237
 #: blueman/plugins/services/Network.py:246
 msgid "Not currently supported with this setup"
-msgstr ""
+msgstr "Une honetan ez da onartzen konfigurazio honekin"
 
 #: blueman/plugins/services/Transfer.py:15
 msgid "Transfer"
-msgstr ""
+msgstr "Transferitu"
 
 #: blueman/plugins/services/Transfer.py:28
 msgid "Applet's transfer service plugin is disabled"
-msgstr ""
+msgstr "Applet-en transferentzia-zerbitzuaren plugina desgaituta dago"
 
 #: blueman/services/DialupNetwork.py:23
 msgid "Dialup Settings"
-msgstr ""
+msgstr "Markatze ezarpenak"
 
 #: blueman/services/meta/SerialService.py:34
 #, python-format
@@ -2642,29 +2632,24 @@ msgid "Renew IP Address"
 msgstr "Berritu IP helbidea"
 
 #: data/blueman-adapters.desktop.in:4
-#, fuzzy
 msgid "Set Bluetooth Adapter Properties"
-msgstr "Bluetooth-egokigailuak"
+msgstr "Ezarri Bluetooth egokitzailearen propietateak"
 
 #: data/blueman.desktop.in:3
-#, fuzzy
 msgid "Blueman Applet"
-msgstr "applet-a"
+msgstr "Blueman trepeta"
 
 #: data/blueman.desktop.in:4 data/blueman-manager.desktop.in:4
-#, fuzzy
 msgid "Blueman Bluetooth Manager"
-msgstr "Bluetooth gaituta"
+msgstr "Blueman Bluetooth kudeatzailea"
 
 #: data/blueman-manager.desktop.in:3
-#, fuzzy
 msgid "Bluetooth Manager"
-msgstr "Bluetooth gaituta"
+msgstr "Bluetooth kudeatzailea"
 
 #: data/thunar-sendto-blueman.desktop.in:5
-#, fuzzy
 msgid "Bluetooth Device"
-msgstr "Bluetooth gailuak"
+msgstr "Bluetooth gailua"
 
 #: data/configs/org.blueman.policy.in:10
 msgid "Configure Bluetooth Network"
@@ -2672,7 +2657,7 @@ msgstr "Konfiguratu Bluetooth sarea"
 
 #: data/configs/org.blueman.policy.in:11
 msgid "Configuring networking requires privileges"
-msgstr ""
+msgstr "Sareak konfiguratzeko pribilegioak behar dira"
 
 #: data/configs/org.blueman.policy.in:19
 msgid "Launch DHCP client"
@@ -2680,15 +2665,15 @@ msgstr "Abiarazi DHCP bezeroa"
 
 #: data/configs/org.blueman.policy.in:20
 msgid "Launching DHCP client requires privileges"
-msgstr ""
+msgstr "DHCP bezeroa abiarazteko pribilegioak behar dira"
 
 #: data/configs/org.blueman.policy.in:28
 msgid "Launch PPP daemon"
-msgstr ""
+msgstr "Abiarazi PPP daemon"
 
 #: data/configs/org.blueman.policy.in:29
 msgid "Launching PPP daemon requires privileges"
-msgstr ""
+msgstr "PPP daemon abiarazteko pribilegioak behar dira"
 
 #: data/configs/org.blueman.policy.in:37
 msgid "Set RfKill State"
@@ -2696,7 +2681,7 @@ msgstr "Ezarri RfKill egoera"
 
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
-msgstr ""
+msgstr "RfKill State ezartzeak pribilegioak behar dira"
 
 #~ msgid "<b>Friendly Name</b>"
 #~ msgstr "<b>Izen erabilerraza</b>"
