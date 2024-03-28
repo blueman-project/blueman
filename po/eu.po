@@ -12,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2024-01-07 23:13+0000\n"
-"PO-Revision-Date: 2024-01-29 16:53+0000\n"
-"Last-Translator: Joseba <jansajansa45@gmail.com>\n"
+"POT-Creation-Date: 2024-03-19 21:49+0000\n"
+"PO-Revision-Date: 2024-03-28 18:50+0000\n"
+"Last-Translator: Alexander Gabilondo <alexgabi@openmailbox.org>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/blueman/blueman/"
 "eu/>\n"
 "Language: eu\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.4-dev\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -60,138 +60,134 @@ msgstr "Hau gainidatzi behar litzateke"
 msgid "Show input"
 msgstr "Erakutsi sarrera"
 
-#: data/ui/manager-main.ui:68
+#: data/ui/manager-main.ui:62
 msgid "_Adapter"
 msgstr "_Egokitzailea"
 
-#: data/ui/manager-main.ui:76
+#: data/ui/manager-main.ui:70
 msgid "_Search"
 msgstr "_Bilatu"
 
-#: data/ui/manager-main.ui:98
+#: data/ui/manager-main.ui:91
 msgid "_Preferences"
 msgstr "_Hobespenak"
 
-#: data/ui/manager-main.ui:114 blueman/gui/manager/ManagerMenu.py:242
-msgid "Turn Bluetooth _On"
-msgstr "_Aktibatu Bluetootha"
-
-#: data/ui/manager-main.ui:130 blueman/plugins/applet/ExitItem.py:12
+#: data/ui/manager-main.ui:106 blueman/plugins/applet/ExitItem.py:12
 msgid "_Exit"
 msgstr "_Irten"
 
-#: data/ui/manager-main.ui:147
+#: data/ui/manager-main.ui:123
 msgid "_Device"
 msgstr "_Gailua"
 
-#: data/ui/manager-main.ui:155
+#: data/ui/manager-main.ui:131
 msgid "_View"
 msgstr "_Ikusi"
 
-#: data/ui/manager-main.ui:165
+#: data/ui/manager-main.ui:141
 msgid "Show _Toolbar"
 msgstr "Erakutsi _tresna-barra"
 
-#: data/ui/manager-main.ui:173
+#: data/ui/manager-main.ui:149
 msgid "Show _Statusbar"
 msgstr "Erakutsi _egoera-barra"
 
-#: data/ui/manager-main.ui:181
+#: data/ui/manager-main.ui:157
 msgid "Hide _unnamed devices"
 msgstr "Ezkutatu _izenik gabeko gailuak"
 
-#: data/ui/manager-main.ui:195
+#: data/ui/manager-main.ui:171
 msgid "S_ort By"
 msgstr "_Ordenatu honen arabera"
 
-#: data/ui/manager-main.ui:205
+#: data/ui/manager-main.ui:181
 msgid "_Name"
 msgstr "_Izena"
 
-#: data/ui/manager-main.ui:214
+#: data/ui/manager-main.ui:190
 msgid "_Added"
 msgstr "_Gehitua"
 
-#: data/ui/manager-main.ui:230
+#: data/ui/manager-main.ui:206
 msgid "_Descending"
 msgstr "_Beherantz"
 
-#: data/ui/manager-main.ui:240 blueman/plugins/applet/StandardItems.py:54
+#: data/ui/manager-main.ui:216 blueman/plugins/applet/StandardItems.py:54
 msgid "_Plugins"
 msgstr "_Pluginak"
 
-#: data/ui/manager-main.ui:250 blueman/plugins/applet/StandardItems.py:45
+#: data/ui/manager-main.ui:226 blueman/plugins/applet/StandardItems.py:45
 msgid "_Local Services"
 msgstr "Zerbitzu _lokalak"
 
-#: data/ui/manager-main.ui:266 data/ui/manager-main.ui:290
+#: data/ui/manager-main.ui:242 data/ui/manager-main.ui:266
 #: blueman/plugins/applet/StandardItems.py:51
 msgid "_Help"
 msgstr "_Laguntza"
 
-#: data/ui/manager-main.ui:274
+#: data/ui/manager-main.ui:250
 msgid "_Report a Problem"
 msgstr "_Jakinarazi arazoa"
 
-#: data/ui/manager-main.ui:317
+#: data/ui/manager-main.ui:293
 msgid "Search for nearby devices"
 msgstr "Bilatu hurbil dauden tresnak"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:319
+#: data/ui/manager-main.ui:295
 msgid "Search"
 msgstr "Bilatu"
 
-#: data/ui/manager-main.ui:342 blueman/gui/manager/ManagerDeviceMenu.py:367
+#: data/ui/manager-main.ui:318 blueman/gui/manager/ManagerDeviceMenu.py:367
 msgid "Create pairing with the device"
 msgstr "Sortu parekatzea gailuarekin"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:343
+#: data/ui/manager-main.ui:319
 msgid "Pair"
 msgstr "Parekatu"
 
-#: data/ui/manager-main.ui:356 blueman/gui/manager/ManagerDeviceMenu.py:385
+#: data/ui/manager-main.ui:332 blueman/gui/manager/ManagerDeviceMenu.py:385
 msgid "Mark/Unmark this device as trusted"
 msgstr "Markatu/Desmarkatu gailu hau fidagarri gisa"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:357 blueman/gui/manager/ManagerToolbar.py:39
+#: data/ui/manager-main.ui:333 blueman/gui/manager/ManagerToolbar.py:39
 #: blueman/gui/manager/ManagerToolbar.py:96
 msgid "Trust"
 msgstr "Fidagarria"
 
-#: data/ui/manager-main.ui:370 blueman/gui/manager/ManagerDeviceMenu.py:430
+#: data/ui/manager-main.ui:346 blueman/gui/manager/ManagerDeviceMenu.py:430
 msgid "Remove this device from the known devices list"
 msgstr "Kendu gailu hau gailu ezagunen zerrendatik"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:371
+#: data/ui/manager-main.ui:347
 msgid "Remove"
 msgstr "Kendu"
 
-#: data/ui/manager-main.ui:393
+#: data/ui/manager-main.ui:369
 msgid "Send file(s) to the device"
 msgstr "Bidali fitxategia(k) gailura"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:395
+#: data/ui/manager-main.ui:371
 msgid "Send File"
 msgstr "Bidali fitxategia"
 
-#: data/ui/manager-main.ui:459
+#: data/ui/manager-main.ui:491
 msgid "Total data sent and rate of transmission"
 msgstr "Bidalitako datuak guztira eta transmisio-abiadura"
 
-#: data/ui/manager-main.ui:501
+#: data/ui/manager-main.ui:533
 msgid "Total data received and rate of transmission"
 msgstr "Jasotako datuak guztira eta transmisio-abiadura"
 
-#: data/ui/manager-main.ui:552 data/ui/manager-main.ui:567
+#: data/ui/manager-main.ui:584 data/ui/manager-main.ui:599
 msgid "Data activity indication"
 msgstr "Datuen aktibitate adieraztea"
 
-#: data/ui/manager-main.ui:603
+#: data/ui/manager-main.ui:635
 msgid "More"
 msgstr "Gehiago"
 
@@ -305,8 +301,8 @@ msgstr "<b>Egilea:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:167
-#: blueman/gui/manager/ManagerDeviceList.py:353
-#: blueman/gui/manager/ManagerDeviceList.py:355 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:369
+#: blueman/gui/manager/ManagerDeviceList.py:371 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:484
 #: blueman/DeviceClass.py:533 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:210
@@ -407,15 +403,11 @@ msgstr ""
 "update-activation-environment-era dei batekin konpon daitekeena, normalean "
 "xinitrc-ek (hurrenez hurren Sway konfigurazioa edo antzekoa)."
 
-#: blueman/main/Manager.py:94 blueman/main/Manager.py:135
-msgid "Bluetooth needs to be turned on for the device manager to function"
-msgstr "Bluetootha aktibatu behar da gailu-kudeatzaileak funtziona dezan"
-
-#: blueman/main/Manager.py:114
+#: blueman/main/Manager.py:104
 msgid "Connection to BlueZ failed"
 msgstr "Huts egin du BlueZ-era konektatzeak"
 
-#: blueman/main/Manager.py:115
+#: blueman/main/Manager.py:105
 msgid ""
 "Bluez daemon is not running, blueman-manager cannot continue.\n"
 "This probably means that there were no Bluetooth adapters detected or "
@@ -425,15 +417,23 @@ msgstr ""
 "Horrek esan nahi du ez dela Bluetooth egokitzailerik detektatu edo Bluetooth "
 "daemon ez dela abiarazi."
 
-#: blueman/main/Manager.py:203
+#: blueman/main/Manager.py:163
+msgid "Click to disable."
+msgstr "Egin klik desgaitzeko."
+
+#: blueman/main/Manager.py:166
+msgid "Click to enable."
+msgstr "Egin klik gaitzeko."
+
+#: blueman/main/Manager.py:199
 msgid "Searching"
 msgstr "Bilatzen"
 
-#: blueman/main/Manager.py:265 blueman/plugins/applet/StandardItems.py:82
+#: blueman/main/Manager.py:261 blueman/plugins/applet/StandardItems.py:82
 msgid "Adapter Preferences"
 msgstr "Egokitzailearen hobespenak"
 
-#: blueman/main/Manager.py:281 blueman/gui/manager/ManagerDeviceList.py:177
+#: blueman/main/Manager.py:277 blueman/gui/manager/ManagerDeviceList.py:178
 #: blueman/plugins/applet/StandardItems.py:75
 msgid "File Sender"
 msgstr "Fitxategi bidaltzailea"
@@ -593,44 +593,40 @@ msgstr "MB"
 msgid "GB"
 msgstr "GB"
 
-#: blueman/gui/manager/ManagerMenu.py:48
+#: blueman/gui/manager/ManagerMenu.py:47
 msgid "Device Manager"
 msgstr "Gailu kudeatzailea"
 
-#: blueman/gui/manager/ManagerMenu.py:81
+#: blueman/gui/manager/ManagerMenu.py:80
 #: blueman/plugins/applet/StandardItems.py:85
 msgid "Service Preferences"
 msgstr "Zerbitzuaren hobespenak"
 
-#: blueman/gui/manager/ManagerMenu.py:238
-msgid "Turn Bluetooth _Off"
-msgstr "Desaktibatu Bluetootha"
-
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:157 blueman/DeviceClass.py:123
+#: blueman/gui/manager/ManagerDeviceList.py:158 blueman/DeviceClass.py:123
 #: blueman/DeviceClass.py:205
 msgid "Keyboard"
 msgstr "Teklatua"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:157 blueman/DeviceClass.py:127
+#: blueman/gui/manager/ManagerDeviceList.py:158 blueman/DeviceClass.py:127
 msgid "Combo"
 msgstr "Konbinazioa"
 
-#: blueman/gui/manager/ManagerDeviceList.py:317
+#: blueman/gui/manager/ManagerDeviceList.py:333
 msgid "Unnamed device"
 msgstr "Izenik gabeko gailua"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:324
-#: blueman/gui/manager/ManagerDeviceList.py:353 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:340
+#: blueman/gui/manager/ManagerDeviceList.py:369 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 msgid "Uncategorized"
 msgstr "Kategoriarik gabe"
 
 #. https://github.com/python/mypy/issues/2608
-#: blueman/gui/manager/ManagerDeviceList.py:544
+#: blueman/gui/manager/ManagerDeviceList.py:560
 #: blueman/plugins/applet/AutoConnect.py:50
 #: blueman/plugins/applet/ConnectionNotifier.py:31
 #: blueman/plugins/applet/RecentConns.py:155
@@ -638,73 +634,73 @@ msgstr "Kategoriarik gabe"
 msgid "Connected"
 msgstr "Konektatuta"
 
-#: blueman/gui/manager/ManagerDeviceList.py:546
+#: blueman/gui/manager/ManagerDeviceList.py:562
 msgid "Trusted"
 msgstr "Fidagarria"
 
-#: blueman/gui/manager/ManagerDeviceList.py:548
+#: blueman/gui/manager/ManagerDeviceList.py:564
 msgid "Paired"
 msgstr "Parekatuta"
 
-#: blueman/gui/manager/ManagerDeviceList.py:550
+#: blueman/gui/manager/ManagerDeviceList.py:566
 msgid "Blocked"
 msgstr "Blokeatua"
 
-#: blueman/gui/manager/ManagerDeviceList.py:572
+#: blueman/gui/manager/ManagerDeviceList.py:588
 msgid "<b>Connected</b>"
 msgstr "<b>Konektatuta</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:586
+#: blueman/gui/manager/ManagerDeviceList.py:602
 msgid "Poor"
 msgstr "Ahula"
 
-#: blueman/gui/manager/ManagerDeviceList.py:588
-#: blueman/gui/manager/ManagerDeviceList.py:607
+#: blueman/gui/manager/ManagerDeviceList.py:604
+#: blueman/gui/manager/ManagerDeviceList.py:623
 msgid "Sub-optimal"
 msgstr "Optimoa azpikoa"
 
-#: blueman/gui/manager/ManagerDeviceList.py:590
-#: blueman/gui/manager/ManagerDeviceList.py:609
+#: blueman/gui/manager/ManagerDeviceList.py:606
+#: blueman/gui/manager/ManagerDeviceList.py:625
 msgid "Optimal"
 msgstr "Optimoa"
 
-#: blueman/gui/manager/ManagerDeviceList.py:592
+#: blueman/gui/manager/ManagerDeviceList.py:608
 msgid "Much"
 msgstr "Asko"
 
-#: blueman/gui/manager/ManagerDeviceList.py:594
+#: blueman/gui/manager/ManagerDeviceList.py:610
 msgid "Too much"
 msgstr "Gehiegi"
 
-#: blueman/gui/manager/ManagerDeviceList.py:597
+#: blueman/gui/manager/ManagerDeviceList.py:613
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 msgstr ""
 "<b>Jasotako seinalearen indarra: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:600
+#: blueman/gui/manager/ManagerDeviceList.py:616
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 msgstr "Jasotako seinalearen indarra: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:605
+#: blueman/gui/manager/ManagerDeviceList.py:621
 msgid "Low"
 msgstr "Baxua"
 
-#: blueman/gui/manager/ManagerDeviceList.py:611
+#: blueman/gui/manager/ManagerDeviceList.py:627
 msgid "High"
 msgstr "Altua"
 
-#: blueman/gui/manager/ManagerDeviceList.py:613
+#: blueman/gui/manager/ManagerDeviceList.py:629
 msgid "Very High"
 msgstr "Oso altua"
 
-#: blueman/gui/manager/ManagerDeviceList.py:616
+#: blueman/gui/manager/ManagerDeviceList.py:632
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr "<b>Igorritako potentzia-maila: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:619
+#: blueman/gui/manager/ManagerDeviceList.py:635
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr "Igorritako potentzia maila: %(tpl)u%% <i>(%(tpl_state)s)</i>"
@@ -1186,7 +1182,7 @@ msgstr "Ordenagailu generikoa"
 
 #: blueman/DeviceClass.py:171
 msgid "Desktop Workstation"
-msgstr ""
+msgstr "Mahaigaineko lantokia"
 
 #: blueman/DeviceClass.py:172
 #, fuzzy
@@ -1196,27 +1192,27 @@ msgstr "Ordenagailu generikoa"
 
 #: blueman/DeviceClass.py:174
 msgid "Handheld PC/PDA (clamshell)"
-msgstr ""
+msgstr "Eskuko PC/PDA (tolesgarria)"
 
 #: blueman/DeviceClass.py:175
 msgid "Palm-size PC/PDA"
-msgstr ""
+msgstr "Eskuko PC/PDA"
 
 #: blueman/DeviceClass.py:176
 msgid "Wearable computer (watch size)"
-msgstr ""
+msgstr "Janzteko ordenagailua (erloju tamainakoa)"
 
 #: blueman/DeviceClass.py:177
 msgid "Tablet"
-msgstr ""
+msgstr "Tableta"
 
 #: blueman/DeviceClass.py:178
 msgid "Docking Station"
-msgstr ""
+msgstr "Konexio oinarria"
 
 #: blueman/DeviceClass.py:179
 msgid "All in One"
-msgstr ""
+msgstr "Guztiak batean"
 
 #: blueman/DeviceClass.py:180
 #, fuzzy
@@ -1226,7 +1222,7 @@ msgstr "Zerbitzaria"
 
 #: blueman/DeviceClass.py:181
 msgid "Convertible"
-msgstr ""
+msgstr "Bihurgarria"
 
 #: blueman/DeviceClass.py:182
 #, fuzzy
@@ -1236,11 +1232,11 @@ msgstr "Eramangarria"
 
 #: blueman/DeviceClass.py:183
 msgid "IoT Gateway"
-msgstr ""
+msgstr "IoT atebidea"
 
 #: blueman/DeviceClass.py:184
 msgid "Mini PC"
-msgstr ""
+msgstr "PC txikia"
 
 #: blueman/DeviceClass.py:185
 msgid "Stick PC"
@@ -1368,11 +1364,11 @@ msgstr "Barra-kodeen eskanerra"
 
 #: blueman/DeviceClass.py:213
 msgid "Touchpad"
-msgstr ""
+msgstr "Ukipen-panela"
 
 #: blueman/DeviceClass.py:214
 msgid "Presentation Remote"
-msgstr ""
+msgstr "Urruneko aurkezpena"
 
 #: blueman/DeviceClass.py:215
 msgid "Generic Glucose Meter"
@@ -1445,64 +1441,62 @@ msgid "Generic Control Device"
 msgstr "Mugikortasun pertsonaleko gailu generikoa"
 
 #: blueman/DeviceClass.py:227
+#, fuzzy
 msgid "Switch"
-msgstr ""
+msgstr "Switch"
 
 #: blueman/DeviceClass.py:228
+#, fuzzy
 msgid "Multi-switch"
-msgstr ""
+msgstr "Multi-switch"
 
 #: blueman/DeviceClass.py:229
 msgid "Button"
-msgstr ""
+msgstr "Botoia"
 
 #: blueman/DeviceClass.py:230
 msgid "Slider"
-msgstr ""
+msgstr "Graduatzailea"
 
 #: blueman/DeviceClass.py:231
 msgid "Rotary Switch"
-msgstr ""
+msgstr "Switch birakaria"
 
 #: blueman/DeviceClass.py:232
 msgid "Touch Panel"
-msgstr ""
+msgstr "Ukipen-panela"
 
 #: blueman/DeviceClass.py:233
 msgid "Single Switch"
-msgstr ""
+msgstr "Switch sinplea"
 
 #: blueman/DeviceClass.py:234
 msgid "Double Switch"
-msgstr ""
+msgstr "Switch bikoitza"
 
 #: blueman/DeviceClass.py:235
 msgid "Triple Switch"
-msgstr ""
+msgstr "Switch hirukoitza"
 
 #: blueman/DeviceClass.py:236
-#, fuzzy
-#| msgid "Battery Service"
 msgid "Battery Switch"
-msgstr "Bateria zerbitzua"
+msgstr "Bateriako switch"
 
 #: blueman/DeviceClass.py:237
 msgid "Energy Harvesting Switch"
-msgstr ""
+msgstr "Energia biltzeko switch"
 
 #: blueman/DeviceClass.py:238
 msgid "Push Button"
-msgstr ""
+msgstr "Sakatu botoia"
 
 #: blueman/DeviceClass.py:239
 msgid "Dial"
-msgstr ""
+msgstr "Markagailua"
 
 #: blueman/DeviceClass.py:240
-#, fuzzy
-#| msgid "Generic Networking"
 msgid "Generic Network Device"
-msgstr "Sare generikoa"
+msgstr "Sare generikoko gailua"
 
 #: blueman/DeviceClass.py:241
 #, fuzzy
@@ -1511,138 +1505,124 @@ msgid "Access Point"
 msgstr "Sarbide puntua"
 
 #: blueman/DeviceClass.py:242
-#, fuzzy
-#| msgid "Device"
 msgid "Mesh Device"
-msgstr "Gailua"
+msgstr "Mesh gailua"
 
 #: blueman/DeviceClass.py:243
 msgid "Mesh Network Proxy"
-msgstr ""
+msgstr "Mesh sareko proxya"
 
 #: blueman/DeviceClass.py:244
-#, fuzzy
-#| msgid "Generic Heart rate Sensor"
 msgid "Generic Sensor"
-msgstr "Bihotz-taupadaren sentsore generikoa"
+msgstr "Sentsore generikoa"
 
 #: blueman/DeviceClass.py:245
 msgid "Motion Sensor"
-msgstr ""
+msgstr "Mugimenduko sentsorea"
 
 #: blueman/DeviceClass.py:246
 msgid "Air quality Sensor"
-msgstr ""
+msgstr "Aire kalitatearen sentsorea"
 
 #: blueman/DeviceClass.py:247
-#, fuzzy
-#| msgid "Generic Heart rate Sensor"
 msgid "Temperature Sensor"
-msgstr "Bihotz-taupadaren sentsore generikoa"
+msgstr "Tenperatura sentsorea"
 
 #: blueman/DeviceClass.py:248
 msgid "Humidity Sensor"
-msgstr ""
+msgstr "Hezetasun sentsorea"
 
 #: blueman/DeviceClass.py:249
 msgid "Leak Sensor"
-msgstr ""
+msgstr "Ihesen sentsorea"
 
 #: blueman/DeviceClass.py:250
 msgid "Smoke Sensor"
-msgstr ""
+msgstr "Ke sentsorea"
 
 #: blueman/DeviceClass.py:251
 msgid "Occupancy Sensor"
-msgstr ""
+msgstr "Presentzia sentsorea"
 
 #: blueman/DeviceClass.py:252
 msgid "Contact Sensor"
-msgstr ""
+msgstr "Ukipen sentsorea"
 
 #: blueman/DeviceClass.py:253
 msgid "Carbon Monoxide Sensor"
-msgstr ""
+msgstr "Karbono monoxidoaren sentsorea"
 
 #: blueman/DeviceClass.py:254
 msgid "Carbon Dioxide Sensor"
-msgstr ""
+msgstr "Karbono dioxidoaren sentsorea"
 
 #: blueman/DeviceClass.py:255
 msgid "Ambient Light Sensor"
-msgstr ""
+msgstr "Giro-argiaren sentsorea"
 
 #: blueman/DeviceClass.py:256
 msgid "Energy Sensor"
-msgstr ""
+msgstr "Energia sentsorea"
 
 #: blueman/DeviceClass.py:257
 msgid "Color Light Sensor"
-msgstr ""
+msgstr "Koloreko argiaren sentsorea"
 
 #: blueman/DeviceClass.py:258
 msgid "Rain Sensor"
-msgstr ""
+msgstr "Euri sentsorea"
 
 #: blueman/DeviceClass.py:259
-#, fuzzy
-#| msgid "File Sender"
 msgid "Fire Sensor"
-msgstr "Fitxategi bidaltzailea"
+msgstr "Su-sentsorea"
 
 #: blueman/DeviceClass.py:260
-#, fuzzy
-#| msgid "Cycling: Speed Sensor"
 msgid "Wind Sensor"
-msgstr "Txirrindularitza: abiadura sentsorea"
+msgstr "Haize-sentsorea"
 
 #: blueman/DeviceClass.py:261
 msgid "Proximity Sensor"
-msgstr ""
+msgstr "Hurbiltasun-sentsorea"
 
 #: blueman/DeviceClass.py:262
 msgid "Multi-Sensor"
-msgstr ""
+msgstr "Multi-sentsorea"
 
 #: blueman/DeviceClass.py:263
 msgid "Flush Mounted Sensor"
-msgstr ""
+msgstr "Txertatutako sentsore"
 
 #: blueman/DeviceClass.py:264
-#, fuzzy
-#| msgid "Cycling: Speed Sensor"
 msgid "Ceiling Mounted Sensor"
-msgstr "Txirrindularitza: abiadura sentsorea"
+msgstr "Sabaian muntatutako sentsorea"
 
 #: blueman/DeviceClass.py:265
 msgid "Wall Mounted Sensor"
-msgstr ""
+msgstr "Horman muntatutako sentsorea"
 
 #: blueman/DeviceClass.py:266
 msgid "Multisensor"
-msgstr ""
+msgstr "Multisentsorea"
 
 #: blueman/DeviceClass.py:267
 msgid "Energy Meter"
-msgstr ""
+msgstr "Energia-neurgailua"
 
 #: blueman/DeviceClass.py:268
 msgid "Flame Detector"
-msgstr ""
+msgstr "Su detektagailua"
 
 #: blueman/DeviceClass.py:269
 msgid "Vehicle Tire Pressure Sensor"
-msgstr ""
+msgstr "Ibilgailuen pneumatikoen presioaren sentsorea"
 
 #: blueman/DeviceClass.py:270
-#, fuzzy
-#| msgid "Generic: Weight Scale"
 msgid "Generic Light Fixtures"
-msgstr "Generikoa: baskula"
+msgstr "Argi-instalazio generikoak"
 
 #: blueman/DeviceClass.py:271
 msgid "Wall Light"
-msgstr ""
+msgstr "Hormako argia"
 
 #: blueman/DeviceClass.py:272
 msgid "Ceiling Light"
@@ -3275,7 +3255,7 @@ msgstr "Sareko trafikoaren erabilera erakusten du"
 
 #: blueman/plugins/applet/StatusIcon.py:38
 #: blueman/plugins/applet/ShowConnected.py:79
-#: blueman/plugins/applet/PowerManager.py:173
+#: blueman/plugins/applet/PowerManager.py:171
 msgid "Bluetooth Enabled"
 msgstr "Bluetooth gaituta"
 
@@ -3506,7 +3486,7 @@ msgid "Bluetooth Active"
 msgstr "Bluetooth aktiboa"
 
 #: blueman/plugins/applet/ShowConnected.py:81
-#: blueman/plugins/applet/PowerManager.py:176
+#: blueman/plugins/applet/PowerManager.py:174
 msgid "Bluetooth Disabled"
 msgstr "Bluetooth desgaituta"
 
@@ -3634,20 +3614,20 @@ msgid "Controls Bluetooth adapter power states"
 msgstr "Bluetooth egokitzailearen energia-egoerak kontrolatzen ditu"
 
 #: blueman/plugins/applet/PowerManager.py:41
-#: blueman/plugins/applet/PowerManager.py:154
+#: blueman/plugins/applet/PowerManager.py:153
 msgid "<b>Turn Bluetooth _Off</b>"
 msgstr "<b>Desaktibatu Bluetootha</b>"
 
 #: blueman/plugins/applet/PowerManager.py:43
-#: blueman/plugins/applet/PowerManager.py:156
+#: blueman/plugins/applet/PowerManager.py:155
 msgid "Turn off all adapters"
 msgstr "Itzali egokitzaile guztiak"
 
-#: blueman/plugins/applet/PowerManager.py:145
+#: blueman/plugins/applet/PowerManager.py:144
 msgid "<b>Turn Bluetooth _On</b>"
 msgstr "<b>Aktibatu Bluetootha</b>"
 
-#: blueman/plugins/applet/PowerManager.py:147
+#: blueman/plugins/applet/PowerManager.py:146
 msgid "Turn on all adapters"
 msgstr "Piztu egokitzaile guztiak"
 
@@ -3764,6 +3744,15 @@ msgstr "Ezarri RfKill egoera"
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr "RfKill State ezartzeak pribilegioak behar dira"
+
+#~ msgid "Turn Bluetooth _On"
+#~ msgstr "_Aktibatu Bluetootha"
+
+#~ msgid "Bluetooth needs to be turned on for the device manager to function"
+#~ msgstr "Bluetootha aktibatu behar da gailu-kudeatzaileak funtziona dezan"
+
+#~ msgid "Turn Bluetooth _Off"
+#~ msgstr "Desaktibatu Bluetootha"
 
 #~ msgid "Heart Rate Sensor: Heart Rate Belt"
 #~ msgstr "Bihotz-taupadaren sentsorea: Bihotz-taupadaren gerrikoa"
