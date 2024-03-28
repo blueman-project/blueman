@@ -43,13 +43,15 @@
 # Eric <alchemillatruth@purelymail.com>, 2022.
 # joe <ourmicroid@outlook.com>, 2022.
 # Hugel <qihu@nfschina.com>, 2022.
+# Corpulentj <david.jiang2024@gmail.com>, 2023.
+# Hosted Weblate <mfvotmjhcj@iubridge.com>, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2022-07-05 14:08+0200\n"
-"PO-Revision-Date: 2022-08-25 07:15+0000\n"
-"Last-Translator: Hugel <qihu@nfschina.com>\n"
+"PO-Revision-Date: 2024-02-16 06:02+0000\n"
+"Last-Translator: Hosted Weblate <mfvotmjhcj@iubridge.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "blueman/2-3/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -57,7 +59,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 5.4\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -202,7 +204,7 @@ msgstr "<b>未安装 DHCP 服务器</b>"
 
 #: data/ui/services-network.ui:199
 msgid "udhcpd"
-msgstr "udhcpd"
+msgstr "udhcpd是一个轻量级的DHCP服务器"
 
 #: data/ui/services-network.ui:218
 msgid "<b>NAP Settings</b>"
@@ -551,15 +553,15 @@ msgstr "字节"
 
 #: blueman/Functions.py:184
 msgid "KB"
-msgstr "千字节"
+msgstr "KB"
 
 #: blueman/Functions.py:187
 msgid "MB"
-msgstr "兆字节"
+msgstr "MB"
 
 #: blueman/Functions.py:190
 msgid "GB"
-msgstr "吉字节"
+msgstr "GB"
 
 #: blueman/gui/manager/ManagerMenu.py:46
 msgid "_Report a Problem"
@@ -642,7 +644,7 @@ msgstr "已配对"
 
 #: blueman/gui/manager/ManagerDeviceList.py:548
 msgid "Blocked"
-msgstr ""
+msgstr "已封锁"
 
 #: blueman/gui/manager/ManagerDeviceList.py:571
 msgid "<b>Connected</b>"
@@ -794,11 +796,11 @@ msgstr "取消信任 (_U)"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:378
 msgid "_Block"
-msgstr ""
+msgstr "封锁(_B)"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:383
 msgid "_Unblock"
-msgstr ""
+msgstr "解除封锁(_U)"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:387
 msgid "Block/Unblock this device"
@@ -985,7 +987,7 @@ msgstr "调制解调器"
 #. translators: device class
 #: blueman/DeviceClass.py:56
 msgid "ISDN"
-msgstr ""
+msgstr "综合业务数字网(ISDN)"
 
 #. translators: device class
 #: blueman/DeviceClass.py:61
@@ -1075,7 +1077,7 @@ msgstr "Hifi 音频"
 #. translators: device class
 #: blueman/DeviceClass.py:102
 msgid "VCR"
-msgstr ""
+msgstr "VCR"
 
 #. translators: device class
 #: blueman/DeviceClass.py:104
@@ -1472,7 +1474,7 @@ msgstr "BNEP"
 
 #: blueman/Sdp.py:101
 msgid "UPnP/ESDP"
-msgstr "UPnP/ESDP"
+msgstr "增强服务发现配置文件"
 
 #: blueman/Sdp.py:102
 msgid "HIDP"
@@ -1504,7 +1506,7 @@ msgstr "CMTP"
 
 #: blueman/Sdp.py:109
 msgid "UDI_C-Plane"
-msgstr ""
+msgstr "不受限制的数字信息配置文件"
 
 #: blueman/Sdp.py:110 blueman/Sdp.py:111
 msgid "Multi-Channel Adaptation Protocol (MCAP)"
@@ -1516,11 +1518,11 @@ msgstr "L2CAP"
 
 #: blueman/Sdp.py:113
 msgid "ServiceDiscoveryServerServiceClassID"
-msgstr ""
+msgstr "服务发现"
 
 #: blueman/Sdp.py:114
 msgid "BrowseGroupDescriptorServiceClassID"
-msgstr ""
+msgstr "浏览组描述服务类ID"
 
 #: blueman/Sdp.py:115
 msgid "Public Browse Group"
@@ -1628,31 +1630,31 @@ msgstr "图像 (BIP)"
 
 #: blueman/Sdp.py:142
 msgid "ImagingResponder (BIP)"
-msgstr ""
+msgstr "图像响应器(BIP)"
 
 #: blueman/Sdp.py:143
 msgid "ImagingAutomaticArchive (BIP)"
-msgstr ""
+msgstr "图像自动归档(BIP)"
 
 #: blueman/Sdp.py:144
 msgid "ImagingReferencedObjects (BIP)"
-msgstr ""
+msgstr "图像参考目标"
 
 #: blueman/Sdp.py:146
 msgid "Handsfree Audio Gateway"
-msgstr ""
+msgstr "免提音频网关"
 
 #: blueman/Sdp.py:147
 msgid "DirectPrintingReferenceObjectsService (BPP)"
-msgstr ""
+msgstr "直接打印服务（BPP）"
 
 #: blueman/Sdp.py:148
 msgid "ReflectedUI (BPP)"
-msgstr ""
+msgstr "基本打印配置文件 (BPP)"
 
 #: blueman/Sdp.py:149
 msgid "Basic Printing (BPP)"
-msgstr ""
+msgstr "基本打印(BPP)"
 
 #: blueman/Sdp.py:150
 msgid "Printing Status (BPP)"
@@ -1664,15 +1666,15 @@ msgstr "输入设备服务 (HID)"
 
 #: blueman/Sdp.py:152
 msgid "HardcopyCableReplacement (HCR)"
-msgstr ""
+msgstr "人机输入服务 (HCR)"
 
 #: blueman/Sdp.py:153
 msgid "HCR_Print (HCR)"
-msgstr ""
+msgstr "蓝牙打印 (HCR)"
 
 #: blueman/Sdp.py:154
 msgid "HCR_Scan (HCR)"
-msgstr ""
+msgstr "蓝牙扫描 (HCR)"
 
 #: blueman/Sdp.py:155
 msgid "Common ISDN Access (CIP)"
@@ -1680,15 +1682,15 @@ msgstr "普通 ISDN 接入 (CIP)"
 
 #: blueman/Sdp.py:156
 msgid "VideoConferencingGW (VCP)"
-msgstr ""
+msgstr "视频会议网关(VCP)"
 
 #: blueman/Sdp.py:157
 msgid "UDI-MT"
-msgstr ""
+msgstr "医疗设备的唯一设备标识符"
 
 #: blueman/Sdp.py:158
 msgid "UDI-TA"
-msgstr ""
+msgstr "我的设备唯一标识符"
 
 #: blueman/Sdp.py:159
 msgid "Audio/Video"
@@ -1696,15 +1698,15 @@ msgstr "音频/视频"
 
 #: blueman/Sdp.py:160
 msgid "SIM Access (SAP)"
-msgstr ""
+msgstr "智能卡接口(SAP)"
 
 #: blueman/Sdp.py:161
 msgid "Phonebook Access (PBAP) - PCE"
-msgstr ""
+msgstr "电话簿访问配置文件(PBAP) - PCE"
 
 #: blueman/Sdp.py:162
 msgid "Phonebook Access (PBAP) - PSE"
-msgstr ""
+msgstr "电话簿访问配置文件(PBAP) - PSE"
 
 #: blueman/Sdp.py:163
 msgid "Phonebook Access (PBAP)"
@@ -1712,11 +1714,11 @@ msgstr "电话簿访问 (PBAP)"
 
 #: blueman/Sdp.py:165
 msgid "Message Access Server"
-msgstr ""
+msgstr "信息访问配置文件"
 
 #: blueman/Sdp.py:166
 msgid "Message Notification Server"
-msgstr ""
+msgstr "信息通知配置文件"
 
 #: blueman/Sdp.py:167
 msgid "Message Access Profile (MAP)"
@@ -1724,43 +1726,43 @@ msgstr "消息访问配置 (MAP)"
 
 #: blueman/Sdp.py:168
 msgid "GNSS"
-msgstr ""
+msgstr "全球导航卫星系统"
 
 #: blueman/Sdp.py:169
 msgid "GNSS Server"
-msgstr ""
+msgstr "全球导航卫星系统服务"
 
 #: blueman/Sdp.py:170
 msgid "3D Display"
-msgstr ""
+msgstr "3D 显示"
 
 #: blueman/Sdp.py:171
 msgid "3D Glasses"
-msgstr ""
+msgstr "3D 眼镜"
 
 #: blueman/Sdp.py:172
 msgid "3D Synchronization (3DSP)"
-msgstr ""
+msgstr "3D 同步配置文件(3DSP)"
 
 #: blueman/Sdp.py:173
 msgid "Multi-Profile Specification (MPS) Profile"
-msgstr ""
+msgstr "多配置文件规范(MPS)配置文件"
 
 #: blueman/Sdp.py:174
 msgid "Multi-Profile Specification (MPS) Service"
-msgstr ""
+msgstr "多配置文件规范(MPS)服务"
 
 #: blueman/Sdp.py:175
 msgid "Calendar, Task, and Notes (CTN) Access Service"
-msgstr ""
+msgstr "日历、任务和提醒 (CTN) 访问服务"
 
 #: blueman/Sdp.py:176
 msgid "Calendar, Task, and Notes (CTN) Notification Service"
-msgstr ""
+msgstr "日历、任务和提醒 (CTN) 通知服务"
 
 #: blueman/Sdp.py:177
 msgid "Calendar, Task, and Notes (CTN) Profile"
-msgstr ""
+msgstr "日历、任务和备注(CTN)配置文件"
 
 #: blueman/Sdp.py:178
 msgid "PnP Information"
@@ -1776,11 +1778,11 @@ msgstr "通用文件传输"
 
 #: blueman/Sdp.py:181
 msgid "Generic Audio"
-msgstr ""
+msgstr "通用音频"
 
 #: blueman/Sdp.py:182
 msgid "Generic Telephony"
-msgstr ""
+msgstr "通用电话设备"
 
 #: blueman/Sdp.py:183
 msgid "Video Source"
@@ -1792,7 +1794,7 @@ msgstr "视频输出"
 
 #: blueman/Sdp.py:185
 msgid "Video Distribution"
-msgstr ""
+msgstr "视频分发"
 
 #: blueman/Sdp.py:186
 msgid "HDP"
@@ -1808,19 +1810,19 @@ msgstr "HDP 输出"
 
 #: blueman/Sdp.py:189
 msgid "Generic Access"
-msgstr ""
+msgstr "一般访问权限"
 
 #: blueman/Sdp.py:190
 msgid "Generic Attribute"
-msgstr ""
+msgstr "通用属性"
 
 #: blueman/Sdp.py:191
 msgid "Immediate Alert"
-msgstr ""
+msgstr "即时警报"
 
 #: blueman/Sdp.py:192
 msgid "Link Loss"
-msgstr ""
+msgstr "链路损耗"
 
 #: blueman/Sdp.py:193
 msgid "Tx Power"
@@ -1832,19 +1834,19 @@ msgstr "当前时间服务"
 
 #: blueman/Sdp.py:195
 msgid "Reference Time Update Service"
-msgstr ""
+msgstr "参考时间更新服务"
 
 #: blueman/Sdp.py:196
 msgid "Next DST Change Service"
-msgstr ""
+msgstr "下一个DST更改服务"
 
 #: blueman/Sdp.py:197
 msgid "Glucose"
-msgstr ""
+msgstr "血糖"
 
 #: blueman/Sdp.py:198
 msgid "Health Thermometer"
-msgstr ""
+msgstr "体温计"
 
 #: blueman/Sdp.py:199
 msgid "Device Information"
@@ -1852,11 +1854,11 @@ msgstr "设备信息"
 
 #: blueman/Sdp.py:200
 msgid "Heart Rate"
-msgstr ""
+msgstr "心率"
 
 #: blueman/Sdp.py:201
 msgid "Phone Alert Status Service"
-msgstr ""
+msgstr "电话提醒状态服务"
 
 #: blueman/Sdp.py:202
 msgid "Battery Service"
@@ -1864,47 +1866,47 @@ msgstr "电池服务"
 
 #: blueman/Sdp.py:203
 msgid "Blood Pressure"
-msgstr ""
+msgstr "血压"
 
 #: blueman/Sdp.py:204
 msgid "Alert Notification Service"
-msgstr ""
+msgstr "警报通知服务"
 
 #: blueman/Sdp.py:205
 msgid "Human Interface Device"
-msgstr ""
+msgstr "人机对话接口设备"
 
 #: blueman/Sdp.py:206
 msgid "Scan Parameters"
-msgstr ""
+msgstr "扫描参数"
 
 #: blueman/Sdp.py:207
 msgid "Running Speed and Cadence"
-msgstr ""
+msgstr "跑步速度和韵律"
 
 #: blueman/Sdp.py:208
 msgid "Automation IO"
-msgstr ""
+msgstr "自动化输入输出"
 
 #: blueman/Sdp.py:209
 msgid "Cycling Speed and Cadence"
-msgstr ""
+msgstr "自行车速度和节奏"
 
 #: blueman/Sdp.py:210
 msgid "Cycling Power"
-msgstr ""
+msgstr "骑自行车的力量"
 
 #: blueman/Sdp.py:211
 msgid "Location and Navigation"
-msgstr ""
+msgstr "位置和导航"
 
 #: blueman/Sdp.py:212
 msgid "Environmental Sensing"
-msgstr ""
+msgstr "环境遥感"
 
 #: blueman/Sdp.py:213
 msgid "Body Composition"
-msgstr ""
+msgstr "身体构成"
 
 #: blueman/Sdp.py:214
 msgid "User Data"
@@ -1912,15 +1914,15 @@ msgstr "用户数据"
 
 #: blueman/Sdp.py:215
 msgid "Weight Scale"
-msgstr ""
+msgstr "体重秤"
 
 #: blueman/Sdp.py:216
 msgid "Bond Management"
-msgstr ""
+msgstr "债券管理"
 
 #: blueman/Sdp.py:217
 msgid "Continuous Glucose Monitoring"
-msgstr ""
+msgstr "连续血糖监测"
 
 #: blueman/Sdp.py:218
 msgid "Internet Protocol Support"
@@ -1932,7 +1934,7 @@ msgstr "室内定位"
 
 #: blueman/Sdp.py:220
 msgid "Pulse Oximeter"
-msgstr ""
+msgstr "脉搏血氧计"
 
 #: blueman/Sdp.py:221
 msgid "HTTP Proxy"
@@ -1940,7 +1942,7 @@ msgstr "HTTP 代理"
 
 #: blueman/Sdp.py:222
 msgid "Transport Discovery"
-msgstr ""
+msgstr "传输发现"
 
 #: blueman/Sdp.py:223
 msgid "Object Transfer"
@@ -1948,7 +1950,7 @@ msgstr "对象传输"
 
 #: blueman/Sdp.py:224
 msgid "AppleAgent"
-msgstr "AppleAgent"
+msgstr "苹果代理"
 
 #: blueman/Sdp.py:225
 msgid "Primary Service"
@@ -1960,11 +1962,11 @@ msgstr "次要服务"
 
 #: blueman/Sdp.py:227
 msgid "Include"
-msgstr ""
+msgstr "包含"
 
 #: blueman/Sdp.py:228
 msgid "Characteristic Declaration"
-msgstr ""
+msgstr "特征宣言"
 
 #: blueman/Sdp.py:229
 msgid "Device Name"
@@ -1972,11 +1974,11 @@ msgstr "设备名"
 
 #: blueman/Sdp.py:230
 msgid "Appearance"
-msgstr ""
+msgstr "外观"
 
 #: blueman/Sdp.py:231
 msgid "Peripheral Privacy Flag"
-msgstr ""
+msgstr "外围设备隐私标志"
 
 #: blueman/Sdp.py:232
 msgid "Reconnection Address"
@@ -1984,7 +1986,7 @@ msgstr "重联地址"
 
 #: blueman/Sdp.py:233
 msgid "Peripheral Preferred Connection Parameters"
-msgstr ""
+msgstr "外围设备首选连接参数"
 
 #: blueman/Sdp.py:234
 msgid "Service Changed"
@@ -1992,7 +1994,7 @@ msgstr "服务已更改"
 
 #: blueman/Sdp.py:235
 msgid "System ID"
-msgstr ""
+msgstr "系统ID"
 
 #: blueman/Sdp.py:236
 msgid "Model Number String"
@@ -2020,31 +2022,31 @@ msgstr "制造商"
 
 #: blueman/Sdp.py:242
 msgid "PnP ID"
-msgstr ""
+msgstr "即插即用 ID"
 
 #: blueman/Sdp.py:243
 msgid "Characteristic Extended Properties"
-msgstr ""
+msgstr "特征扩展属性"
 
 #: blueman/Sdp.py:244
 msgid "Characteristic User Description"
-msgstr ""
+msgstr "特征用户描述"
 
 #: blueman/Sdp.py:245
 msgid "Client Characteristic Configuration"
-msgstr ""
+msgstr "客户端特征配置"
 
 #: blueman/Sdp.py:246
 msgid "Server Characteristic Configuration"
-msgstr ""
+msgstr "服务器特征配置"
 
 #: blueman/Sdp.py:247
 msgid "Characteristic Presentation Format"
-msgstr ""
+msgstr "特征说明格式"
 
 #: blueman/Sdp.py:248
 msgid "Characteristic Aggregate Format"
-msgstr ""
+msgstr "特征 汇总格式"
 
 #: blueman/Sdp.py:249
 msgid "Valid Range"
@@ -2052,7 +2054,7 @@ msgstr "有效范围"
 
 #: blueman/Sdp.py:250
 msgid "External Report Reference"
-msgstr ""
+msgstr "外部报告引用"
 
 #: blueman/Sdp.py:251
 msgid "Report Reference"
@@ -2076,7 +2078,7 @@ msgstr "否"
 
 #: blueman/plugins/manager/Info.py:60
 msgid "<big>Select row(s) and use <i>Control + C</i> to copy</big>"
-msgstr ""
+msgstr "<big>选择行(S)并使用<i>Ctrl+C</i>进行复制</big>"
 
 #: blueman/plugins/manager/Info.py:120
 msgid "_Info"
@@ -2114,7 +2116,7 @@ msgstr "未指定"
 #: blueman/plugins/applet/AutoConnect.py:20
 msgid ""
 "Tries to auto-connect to configurable services on start and every 60 seconds."
-msgstr ""
+msgstr "尝试在启动时和每隔60秒自动连接到可配置的服务。"
 
 #. https://github.com/python/mypy/issues/2608
 #: blueman/plugins/applet/AutoConnect.py:50
@@ -2131,7 +2133,7 @@ msgstr "自动将%(device)s连接至%(service)s"
 
 #: blueman/plugins/applet/ConnectionNotifier.py:15
 msgid "Shows desktop notifications when devices get connected or disconnected."
-msgstr ""
+msgstr "在设备连接或断开时显示桌面通知。"
 
 #: blueman/plugins/applet/ConnectionNotifier.py:48
 msgid "Disconnected"
@@ -2306,7 +2308,7 @@ msgstr "来自 %(1)s 的文件 %(0)s 已顺利接收"
 
 #: blueman/plugins/applet/TransferService.py:308
 msgid "Open"
-msgstr ""
+msgstr "打开"
 
 #: blueman/plugins/applet/TransferService.py:312
 msgid "Transfer failed"
@@ -2344,7 +2346,8 @@ msgid ""
 "Switches Bluetooth killswitch status to match Bluetooth power state. Allows "
 "turning Bluetooth back on from an icon that shows its status; provided it "
 "isn't unplugged by the system, or physically."
-msgstr ""
+msgstr "切换蓝牙关闭开关状态以匹配蓝牙电源状态。允许从显示蓝牙状态的图标重新打开蓝牙"
+"；前提是系统或物理上没有拔出蓝牙。"
 
 #: blueman/plugins/applet/StandardItems.py:22
 msgid "Adds standard menu items to the status icon menu"
@@ -2426,7 +2429,7 @@ msgstr "蓝牙已停用"
 
 #: blueman/plugins/applet/DisconnectItems.py:14
 msgid "Adds disconnect menu items"
-msgstr ""
+msgstr "添加断开连接菜单项"
 
 #: blueman/plugins/applet/DisconnectItems.py:40
 #, python-format
