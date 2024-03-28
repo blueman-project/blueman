@@ -39,15 +39,15 @@
 # Wiktor Jezioro <wikjezioro@op.pl>, 2015
 # kakiremora <piotrek.pastuszak2003@gmail.com>
 # Szylu <chipolade@gmail.com>
-# Matthaiks <kitynska@gmail.com>, 2020, 2021, 2022, 2023.
+# Matthaiks <kitynska@gmail.com>, 2020, 2021, 2022, 2023, 2024.
 # knuxify <knuxfanwin8.mail@gmail.com>, 2022.
 # Piotr Strebski <strebski@gmail.com>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2024-01-07 23:13+0000\n"
-"PO-Revision-Date: 2023-11-13 16:38+0000\n"
+"POT-Creation-Date: 2024-03-19 21:49+0000\n"
+"PO-Revision-Date: 2024-03-20 22:05+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/blueman/blueman/"
 "pl/>\n"
@@ -58,7 +58,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && "
 "(n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
 "n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
-"X-Generator: Weblate 5.2-dev\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -96,138 +96,134 @@ msgstr "To powinno być nadpisane"
 msgid "Show input"
 msgstr "Wyświetlanie wprowadzanych danych"
 
-#: data/ui/manager-main.ui:68
+#: data/ui/manager-main.ui:62
 msgid "_Adapter"
 msgstr "_Adapter"
 
-#: data/ui/manager-main.ui:76
+#: data/ui/manager-main.ui:70
 msgid "_Search"
 msgstr "_Szukaj"
 
-#: data/ui/manager-main.ui:98
+#: data/ui/manager-main.ui:91
 msgid "_Preferences"
 msgstr "_Ustawienia"
 
-#: data/ui/manager-main.ui:114 blueman/gui/manager/ManagerMenu.py:242
-msgid "Turn Bluetooth _On"
-msgstr "_Włącz Bluetooth"
-
-#: data/ui/manager-main.ui:130 blueman/plugins/applet/ExitItem.py:12
+#: data/ui/manager-main.ui:106 blueman/plugins/applet/ExitItem.py:12
 msgid "_Exit"
 msgstr "_Wyjdź"
 
-#: data/ui/manager-main.ui:147
+#: data/ui/manager-main.ui:123
 msgid "_Device"
 msgstr "_Urządzenie"
 
-#: data/ui/manager-main.ui:155
+#: data/ui/manager-main.ui:131
 msgid "_View"
 msgstr "_Widok"
 
-#: data/ui/manager-main.ui:165
+#: data/ui/manager-main.ui:141
 msgid "Show _Toolbar"
 msgstr "Wyświetl pasek _narzędziowy"
 
-#: data/ui/manager-main.ui:173
+#: data/ui/manager-main.ui:149
 msgid "Show _Statusbar"
 msgstr "Wyświetl _pasek stanu"
 
-#: data/ui/manager-main.ui:181
+#: data/ui/manager-main.ui:157
 msgid "Hide _unnamed devices"
 msgstr "Ukryj urządzenia _bez nazw"
 
-#: data/ui/manager-main.ui:195
+#: data/ui/manager-main.ui:171
 msgid "S_ort By"
 msgstr "S_ortuj według"
 
-#: data/ui/manager-main.ui:205
+#: data/ui/manager-main.ui:181
 msgid "_Name"
 msgstr "_Nazwy"
 
-#: data/ui/manager-main.ui:214
+#: data/ui/manager-main.ui:190
 msgid "_Added"
 msgstr "_Dodania"
 
-#: data/ui/manager-main.ui:230
+#: data/ui/manager-main.ui:206
 msgid "_Descending"
 msgstr "_Malejąco"
 
-#: data/ui/manager-main.ui:240 blueman/plugins/applet/StandardItems.py:54
+#: data/ui/manager-main.ui:216 blueman/plugins/applet/StandardItems.py:54
 msgid "_Plugins"
 msgstr "_Wtyczki"
 
-#: data/ui/manager-main.ui:250 blueman/plugins/applet/StandardItems.py:45
+#: data/ui/manager-main.ui:226 blueman/plugins/applet/StandardItems.py:45
 msgid "_Local Services"
 msgstr "Usługi lokalne"
 
-#: data/ui/manager-main.ui:266 data/ui/manager-main.ui:290
+#: data/ui/manager-main.ui:242 data/ui/manager-main.ui:266
 #: blueman/plugins/applet/StandardItems.py:51
 msgid "_Help"
 msgstr "_Pomoc"
 
-#: data/ui/manager-main.ui:274
+#: data/ui/manager-main.ui:250
 msgid "_Report a Problem"
 msgstr "_Zgłoś problem"
 
-#: data/ui/manager-main.ui:317
+#: data/ui/manager-main.ui:293
 msgid "Search for nearby devices"
 msgstr "Szukaj urządzeń w pobliżu"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:319
+#: data/ui/manager-main.ui:295
 msgid "Search"
 msgstr "Szukaj"
 
-#: data/ui/manager-main.ui:342 blueman/gui/manager/ManagerDeviceMenu.py:367
+#: data/ui/manager-main.ui:318 blueman/gui/manager/ManagerDeviceMenu.py:367
 msgid "Create pairing with the device"
 msgstr "Paruj z urządzeniem"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:343
+#: data/ui/manager-main.ui:319
 msgid "Pair"
 msgstr "Paruj"
 
-#: data/ui/manager-main.ui:356 blueman/gui/manager/ManagerDeviceMenu.py:385
+#: data/ui/manager-main.ui:332 blueman/gui/manager/ManagerDeviceMenu.py:385
 msgid "Mark/Unmark this device as trusted"
 msgstr "Zaznacz/odznacz urządzenie jako zaufane"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:357 blueman/gui/manager/ManagerToolbar.py:39
+#: data/ui/manager-main.ui:333 blueman/gui/manager/ManagerToolbar.py:39
 #: blueman/gui/manager/ManagerToolbar.py:96
 msgid "Trust"
 msgstr "Zaufaj"
 
-#: data/ui/manager-main.ui:370 blueman/gui/manager/ManagerDeviceMenu.py:430
+#: data/ui/manager-main.ui:346 blueman/gui/manager/ManagerDeviceMenu.py:430
 msgid "Remove this device from the known devices list"
 msgstr "Usuń to urządzenie z listy znanych"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:371
+#: data/ui/manager-main.ui:347
 msgid "Remove"
 msgstr "Usuń"
 
-#: data/ui/manager-main.ui:393
+#: data/ui/manager-main.ui:369
 msgid "Send file(s) to the device"
 msgstr "Wyślij plik(i) do urządzenia"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:395
+#: data/ui/manager-main.ui:371
 msgid "Send File"
 msgstr "Wyślij plik"
 
-#: data/ui/manager-main.ui:459
+#: data/ui/manager-main.ui:491
 msgid "Total data sent and rate of transmission"
 msgstr "Całkowita ilość wysłanych danych oraz szybkość transmisji"
 
-#: data/ui/manager-main.ui:501
+#: data/ui/manager-main.ui:533
 msgid "Total data received and rate of transmission"
 msgstr "Całkowita ilość odebranych danych oraz szybkość trasmisji"
 
-#: data/ui/manager-main.ui:552 data/ui/manager-main.ui:567
+#: data/ui/manager-main.ui:584 data/ui/manager-main.ui:599
 msgid "Data activity indication"
 msgstr "Wskaźnik przesyłania danych"
 
-#: data/ui/manager-main.ui:603
+#: data/ui/manager-main.ui:635
 msgid "More"
 msgstr "Więcej"
 
@@ -340,8 +336,8 @@ msgstr "<b>Autor:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:167
-#: blueman/gui/manager/ManagerDeviceList.py:353
-#: blueman/gui/manager/ManagerDeviceList.py:355 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:369
+#: blueman/gui/manager/ManagerDeviceList.py:371 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:484
 #: blueman/DeviceClass.py:533 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:210
@@ -444,15 +440,11 @@ msgstr ""
 "update-activation-environment, zazwyczaj wychodzącego z xinitrc (odpowiednio "
 "w konfiguracji Sway lub podobnej)."
 
-#: blueman/main/Manager.py:94 blueman/main/Manager.py:135
-msgid "Bluetooth needs to be turned on for the device manager to function"
-msgstr "Bluetooth musi być włączony, aby menedżer urządzeń mógł działać"
-
-#: blueman/main/Manager.py:114
+#: blueman/main/Manager.py:104
 msgid "Connection to BlueZ failed"
 msgstr "Połączenie z BlueZ się nie powiodło"
 
-#: blueman/main/Manager.py:115
+#: blueman/main/Manager.py:105
 msgid ""
 "Bluez daemon is not running, blueman-manager cannot continue.\n"
 "This probably means that there were no Bluetooth adapters detected or "
@@ -462,15 +454,23 @@ msgstr ""
 "To prawdopodobnie znaczy że nie wykryto żadnych adapterów Bluetooth lub "
 "demon Bluetooth nie jest włączony."
 
-#: blueman/main/Manager.py:203
+#: blueman/main/Manager.py:163
+msgid "Click to disable."
+msgstr "Kliknij, aby wyłączyć."
+
+#: blueman/main/Manager.py:166
+msgid "Click to enable."
+msgstr "Kliknij, aby włączyć."
+
+#: blueman/main/Manager.py:199
 msgid "Searching"
 msgstr "Wyszukiwanie"
 
-#: blueman/main/Manager.py:265 blueman/plugins/applet/StandardItems.py:82
+#: blueman/main/Manager.py:261 blueman/plugins/applet/StandardItems.py:82
 msgid "Adapter Preferences"
 msgstr "Ustawienia adaptera"
 
-#: blueman/main/Manager.py:281 blueman/gui/manager/ManagerDeviceList.py:177
+#: blueman/main/Manager.py:277 blueman/gui/manager/ManagerDeviceList.py:178
 #: blueman/plugins/applet/StandardItems.py:75
 msgid "File Sender"
 msgstr "Wysyłanie plików"
@@ -632,44 +632,40 @@ msgstr "MB"
 msgid "GB"
 msgstr "GB"
 
-#: blueman/gui/manager/ManagerMenu.py:48
+#: blueman/gui/manager/ManagerMenu.py:47
 msgid "Device Manager"
 msgstr "Menedżer urządzeń"
 
-#: blueman/gui/manager/ManagerMenu.py:81
+#: blueman/gui/manager/ManagerMenu.py:80
 #: blueman/plugins/applet/StandardItems.py:85
 msgid "Service Preferences"
 msgstr "Preferencje usługi"
 
-#: blueman/gui/manager/ManagerMenu.py:238
-msgid "Turn Bluetooth _Off"
-msgstr "W_yłącz Bluetooth"
-
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:157 blueman/DeviceClass.py:123
+#: blueman/gui/manager/ManagerDeviceList.py:158 blueman/DeviceClass.py:123
 #: blueman/DeviceClass.py:205
 msgid "Keyboard"
 msgstr "Klawiatura"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:157 blueman/DeviceClass.py:127
+#: blueman/gui/manager/ManagerDeviceList.py:158 blueman/DeviceClass.py:127
 msgid "Combo"
 msgstr "Kombo"
 
-#: blueman/gui/manager/ManagerDeviceList.py:317
+#: blueman/gui/manager/ManagerDeviceList.py:333
 msgid "Unnamed device"
 msgstr "Nienazwane urządzenie"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:324
-#: blueman/gui/manager/ManagerDeviceList.py:353 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:340
+#: blueman/gui/manager/ManagerDeviceList.py:369 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 msgid "Uncategorized"
 msgstr "Nieskategoryzowane"
 
 #. https://github.com/python/mypy/issues/2608
-#: blueman/gui/manager/ManagerDeviceList.py:544
+#: blueman/gui/manager/ManagerDeviceList.py:560
 #: blueman/plugins/applet/AutoConnect.py:50
 #: blueman/plugins/applet/ConnectionNotifier.py:31
 #: blueman/plugins/applet/RecentConns.py:155
@@ -677,72 +673,72 @@ msgstr "Nieskategoryzowane"
 msgid "Connected"
 msgstr "Połączono"
 
-#: blueman/gui/manager/ManagerDeviceList.py:546
+#: blueman/gui/manager/ManagerDeviceList.py:562
 msgid "Trusted"
 msgstr "Zaufane"
 
-#: blueman/gui/manager/ManagerDeviceList.py:548
+#: blueman/gui/manager/ManagerDeviceList.py:564
 msgid "Paired"
 msgstr "Sparowane"
 
-#: blueman/gui/manager/ManagerDeviceList.py:550
+#: blueman/gui/manager/ManagerDeviceList.py:566
 msgid "Blocked"
 msgstr "Zablokowane"
 
-#: blueman/gui/manager/ManagerDeviceList.py:572
+#: blueman/gui/manager/ManagerDeviceList.py:588
 msgid "<b>Connected</b>"
 msgstr "<b>Połączone</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:586
+#: blueman/gui/manager/ManagerDeviceList.py:602
 msgid "Poor"
 msgstr "Słabo"
 
-#: blueman/gui/manager/ManagerDeviceList.py:588
-#: blueman/gui/manager/ManagerDeviceList.py:607
+#: blueman/gui/manager/ManagerDeviceList.py:604
+#: blueman/gui/manager/ManagerDeviceList.py:623
 msgid "Sub-optimal"
 msgstr "Niemal optymalnie"
 
-#: blueman/gui/manager/ManagerDeviceList.py:590
-#: blueman/gui/manager/ManagerDeviceList.py:609
+#: blueman/gui/manager/ManagerDeviceList.py:606
+#: blueman/gui/manager/ManagerDeviceList.py:625
 msgid "Optimal"
 msgstr "Optymalnie"
 
-#: blueman/gui/manager/ManagerDeviceList.py:592
+#: blueman/gui/manager/ManagerDeviceList.py:608
 msgid "Much"
 msgstr "Dużo"
 
-#: blueman/gui/manager/ManagerDeviceList.py:594
+#: blueman/gui/manager/ManagerDeviceList.py:610
 msgid "Too much"
 msgstr "Zbyt dużo"
 
-#: blueman/gui/manager/ManagerDeviceList.py:597
+#: blueman/gui/manager/ManagerDeviceList.py:613
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 msgstr "<b>Siła odbieranego sygnału: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:600
+#: blueman/gui/manager/ManagerDeviceList.py:616
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 msgstr "Siła odbieranego sygnału: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:605
+#: blueman/gui/manager/ManagerDeviceList.py:621
 msgid "Low"
 msgstr "Niska"
 
-#: blueman/gui/manager/ManagerDeviceList.py:611
+#: blueman/gui/manager/ManagerDeviceList.py:627
 msgid "High"
 msgstr "Wysoka"
 
-#: blueman/gui/manager/ManagerDeviceList.py:613
+#: blueman/gui/manager/ManagerDeviceList.py:629
 msgid "Very High"
 msgstr "Bardzo wysoka"
 
-#: blueman/gui/manager/ManagerDeviceList.py:616
+#: blueman/gui/manager/ManagerDeviceList.py:632
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr "<b>Poziom mocy nadawania: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:619
+#: blueman/gui/manager/ManagerDeviceList.py:635
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr "Poziom mocy nadawania: %(tpl)u%% <i>(%(tpl_state)s)</i>"
@@ -1207,10 +1203,8 @@ msgid "Game"
 msgstr "Gra"
 
 #: blueman/DeviceClass.py:168
-#, fuzzy
-#| msgid "Generic Phone"
 msgid "Generic Unknown"
-msgstr "Ogólny telefon"
+msgstr "Ogólne nieznane"
 
 #: blueman/DeviceClass.py:169
 msgid "Generic Phone"
@@ -1222,81 +1216,71 @@ msgstr "Ogólny komputer"
 
 #: blueman/DeviceClass.py:171
 msgid "Desktop Workstation"
-msgstr ""
+msgstr "Stacja robocza desktop"
 
 #: blueman/DeviceClass.py:172
-#, fuzzy
-#| msgid "Generic Computer"
 msgid "Server-class Computer"
-msgstr "Ogólny komputer"
+msgstr "Komputer klasy serwerowej"
 
 #: blueman/DeviceClass.py:174
 msgid "Handheld PC/PDA (clamshell)"
-msgstr ""
+msgstr "Przenośny komputer PC/PDA (z klapką)"
 
 #: blueman/DeviceClass.py:175
 msgid "Palm-size PC/PDA"
-msgstr ""
+msgstr "Palm-size PC/PDA"
 
 #: blueman/DeviceClass.py:176
 msgid "Wearable computer (watch size)"
-msgstr ""
+msgstr "Komputer do noszenia (wielkości zegarka)"
 
 #: blueman/DeviceClass.py:177
 msgid "Tablet"
-msgstr ""
+msgstr "Tablet"
 
 #: blueman/DeviceClass.py:178
 msgid "Docking Station"
-msgstr ""
+msgstr "Stacja dokująca"
 
 #: blueman/DeviceClass.py:179
 msgid "All in One"
-msgstr ""
+msgstr "Wszystko w jednym"
 
 #: blueman/DeviceClass.py:180
-#, fuzzy
-#| msgid "Server"
 msgid "Blade Server"
-msgstr "Serwer"
+msgstr "Serwer kasetowy"
 
 #: blueman/DeviceClass.py:181
 msgid "Convertible"
-msgstr ""
+msgstr "Konwertowalne"
 
 #: blueman/DeviceClass.py:182
-#, fuzzy
-#| msgid "Wearable"
 msgid "Detachable"
-msgstr "Zdatne do noszenia"
+msgstr "Odpinane"
 
 #: blueman/DeviceClass.py:183
 msgid "IoT Gateway"
-msgstr ""
+msgstr "Brama IoT"
 
 #: blueman/DeviceClass.py:184
 msgid "Mini PC"
-msgstr ""
+msgstr "Minikomputer"
 
 #: blueman/DeviceClass.py:185
 msgid "Stick PC"
-msgstr ""
+msgstr "Komputer typu stick"
 
 #: blueman/DeviceClass.py:186
 msgid "Generic Watch"
 msgstr "Ogólny zegarek"
 
 #: blueman/DeviceClass.py:187
-#, fuzzy
-#| msgid "Watch: Sports Watch"
 msgid "Sports Watch"
-msgstr "Zegarek: zegarek sportowy"
+msgstr "Zegarek sportowy"
 
 #: blueman/DeviceClass.py:188
-#, fuzzy
-#| msgid "Wrist watch"
 msgid "Smartwatch"
-msgstr "Zegarek na rękę"
+msgstr "Smartwatch"
 
 #: blueman/DeviceClass.py:189
 msgid "Generic Clock"
@@ -1335,44 +1319,32 @@ msgid "Generic Thermometer"
 msgstr "Ogólny termometr"
 
 #: blueman/DeviceClass.py:198
-#, fuzzy
-#| msgid "Health Thermometer"
 msgid "Ear Thermometer"
-msgstr "Termometr lekarski"
+msgstr "Termometr douszny"
 
 #: blueman/DeviceClass.py:199
-#, fuzzy
-#| msgid "Generic Heart rate Sensor"
 msgid "Generic Heart Rate Sensor"
 msgstr "Ogólny czujnik tętna"
 
 #: blueman/DeviceClass.py:200
-#, fuzzy
-#| msgid "Heart Rate"
 msgid "Heart Rate Belt"
-msgstr "Tętno"
+msgstr "Pas do pomiaru tętna"
 
 #: blueman/DeviceClass.py:201
 msgid "Generic Blood Pressure"
 msgstr "Ogólne ciśnienie krwi"
 
 #: blueman/DeviceClass.py:202
-#, fuzzy
-#| msgid "Blood Pressure"
 msgid "Arm Blood Pressure"
-msgstr "Ciśnienie krwi"
+msgstr "Ciśnienie krwi na ramieniu"
 
 #: blueman/DeviceClass.py:203
-#, fuzzy
-#| msgid "Blood Pressure"
 msgid "Wrist Blood Pressure"
-msgstr "Ciśnienie krwi"
+msgstr "Ciśnienie krwi na nadgarstku"
 
 #: blueman/DeviceClass.py:204
-#, fuzzy
-#| msgid "Human Interface Device"
 msgid "Generic Human Interface Device"
-msgstr "Urządzenie interfejsu ludzkiego"
+msgstr "Ogólne urządzenie interfejsu ludzkiego"
 
 #: blueman/DeviceClass.py:206
 msgid "Mouse"
@@ -1404,1059 +1376,927 @@ msgstr "Skaner kodów kreskowych"
 
 #: blueman/DeviceClass.py:213
 msgid "Touchpad"
-msgstr ""
+msgstr "Gładzik"
 
 #: blueman/DeviceClass.py:214
 msgid "Presentation Remote"
-msgstr ""
+msgstr "Pilot do prezentacji"
 
 #: blueman/DeviceClass.py:215
 msgid "Generic Glucose Meter"
 msgstr "Ogólny glukometr"
 
 #: blueman/DeviceClass.py:216
-#, fuzzy
-#| msgid "Generic: Running Walking Sensor"
 msgid "Generic Running Walking Sensor"
-msgstr "Ogólny: czujnik chodu i biegu"
+msgstr "Ogólny czujnik chodu i biegu"
 
 #: blueman/DeviceClass.py:217
-#, fuzzy
-#| msgid "Generic: Running Walking Sensor"
 msgid "In-Shoe Running Walking Sensor"
-msgstr "Ogólny: czujnik chodu i biegu"
+msgstr "Czujnik chodu i biegu w bucie"
 
 #: blueman/DeviceClass.py:218
-#, fuzzy
-#| msgid "Generic: Running Walking Sensor"
 msgid "On-Shoe Running Walking Sensor"
-msgstr "Ogólny: czujnik chodu i biegu"
+msgstr "Czujnik chodu i biegu na bucie"
 
 #: blueman/DeviceClass.py:219
-#, fuzzy
-#| msgid "Generic: Running Walking Sensor"
 msgid "On-Hip Running Walking Sensor"
-msgstr "Ogólny: czujnik chodu i biegu"
+msgstr "Czujnik chodu i biegu na biodrze"
 
 #: blueman/DeviceClass.py:220
-#, fuzzy
-#| msgid "Generic: Cycling"
 msgid "Generic Cycling"
-msgstr "Ogólny: jazda na rowerze"
+msgstr "Ogólna jazda na rowerze"
 
 #: blueman/DeviceClass.py:221
-#, fuzzy
-#| msgid "Cycling: Cycling Computer"
 msgid "Cycling Computer"
-msgstr "Jazda na rowerze: komputer rowerowy"
+msgstr "Komputer rowerowy"
 
 #: blueman/DeviceClass.py:222
-#, fuzzy
-#| msgid "Cycling: Speed Sensor"
 msgid "Speed Sensor"
-msgstr "Jazda na rowerze: czujnik prędkości"
+msgstr "Czujnik prędkości"
 
 #: blueman/DeviceClass.py:223
-#, fuzzy
-#| msgid "Cycling: Cadence Sensor"
 msgid "Cadence Sensor"
-msgstr "Jazda na rowerze: czujnik kadencji"
+msgstr "Czujnik kadencji"
 
 #: blueman/DeviceClass.py:224
-#, fuzzy
-#| msgid "Cycling: Power Sensor"
 msgid "Power Sensor"
-msgstr "Jazda na rowerze: czujnik mocy"
+msgstr "Czujnik mocy"
 
 #: blueman/DeviceClass.py:225
-#, fuzzy
-#| msgid "Cycling: Speed and Cadence Sensor"
 msgid "Speed and Cadence Sensor"
-msgstr "Jazda na rowerze: czujnik prędkości i kadencji"
+msgstr "Czujnik prędkości i kadencji"
 
 #: blueman/DeviceClass.py:226
-#, fuzzy
-#| msgid "Generic Personal Mobility Device"
 msgid "Generic Control Device"
-msgstr "Ogólne osobiste urządzenie mobilne"
+msgstr "Ogólne urządzenie sterujące"
 
 #: blueman/DeviceClass.py:227
 msgid "Switch"
-msgstr ""
+msgstr "Przełącznik"
 
 #: blueman/DeviceClass.py:228
 msgid "Multi-switch"
-msgstr ""
+msgstr "Multiprzełącznik"
 
 #: blueman/DeviceClass.py:229
 msgid "Button"
-msgstr ""
+msgstr "Przycisk"
 
 #: blueman/DeviceClass.py:230
 msgid "Slider"
-msgstr ""
+msgstr "Suwak"
 
 #: blueman/DeviceClass.py:231
 msgid "Rotary Switch"
-msgstr ""
+msgstr "Przełącznik obrotowy"
 
 #: blueman/DeviceClass.py:232
 msgid "Touch Panel"
-msgstr ""
+msgstr "Panel dotykowy"
 
 #: blueman/DeviceClass.py:233
 msgid "Single Switch"
-msgstr ""
+msgstr "Pojedynczy przełącznik"
 
 #: blueman/DeviceClass.py:234
 msgid "Double Switch"
-msgstr ""
+msgstr "Podwójny przełącznik"
 
 #: blueman/DeviceClass.py:235
 msgid "Triple Switch"
-msgstr ""
+msgstr "Potrójny przełącznik"
 
 #: blueman/DeviceClass.py:236
-#, fuzzy
-#| msgid "Battery Service"
 msgid "Battery Switch"
-msgstr "Serwis akumulatorów"
+msgstr "Przełącznik akumulatora"
 
 #: blueman/DeviceClass.py:237
 msgid "Energy Harvesting Switch"
-msgstr ""
+msgstr "Przełącznik pozyskiwania energii"
 
 #: blueman/DeviceClass.py:238
 msgid "Push Button"
-msgstr ""
+msgstr "Przycisk wciskany"
 
 #: blueman/DeviceClass.py:239
 msgid "Dial"
-msgstr ""
+msgstr "Panel kontrolujący"
 
 #: blueman/DeviceClass.py:240
-#, fuzzy
-#| msgid "Generic Networking"
 msgid "Generic Network Device"
-msgstr "Ogólna sieć"
+msgstr "Ogólne urządzenie sieciowe"
 
 #: blueman/DeviceClass.py:241
-#, fuzzy
-#| msgid "Access point"
 msgid "Access Point"
 msgstr "Punkt dostępu"
 
 #: blueman/DeviceClass.py:242
-#, fuzzy
-#| msgid "Device"
 msgid "Mesh Device"
-msgstr "Urządzenie"
+msgstr "Urządzenie sieci mesh"
 
 #: blueman/DeviceClass.py:243
 msgid "Mesh Network Proxy"
-msgstr ""
+msgstr "Proxy sieci mesh"
 
 #: blueman/DeviceClass.py:244
-#, fuzzy
-#| msgid "Generic Heart rate Sensor"
 msgid "Generic Sensor"
-msgstr "Ogólny czujnik tętna"
+msgstr "Ogólny czujnik"
 
 #: blueman/DeviceClass.py:245
 msgid "Motion Sensor"
-msgstr ""
+msgstr "Czujnik ruchu"
 
 #: blueman/DeviceClass.py:246
 msgid "Air quality Sensor"
-msgstr ""
+msgstr "Czujnik jakości powietrza"
 
 #: blueman/DeviceClass.py:247
-#, fuzzy
-#| msgid "Generic Heart rate Sensor"
 msgid "Temperature Sensor"
-msgstr "Ogólny czujnik tętna"
+msgstr "Czujnik temperatury"
 
 #: blueman/DeviceClass.py:248
 msgid "Humidity Sensor"
-msgstr ""
+msgstr "Czujnik wilgotności"
 
 #: blueman/DeviceClass.py:249
 msgid "Leak Sensor"
-msgstr ""
+msgstr "Czujnik wycieku"
 
 #: blueman/DeviceClass.py:250
 msgid "Smoke Sensor"
-msgstr ""
+msgstr "Czujnik dymu"
 
 #: blueman/DeviceClass.py:251
 msgid "Occupancy Sensor"
-msgstr ""
+msgstr "Czujnik obecności"
 
 #: blueman/DeviceClass.py:252
 msgid "Contact Sensor"
-msgstr ""
+msgstr "Czujnik kontaktowy"
 
 #: blueman/DeviceClass.py:253
 msgid "Carbon Monoxide Sensor"
-msgstr ""
+msgstr "Czujnik tlenku węgla"
 
 #: blueman/DeviceClass.py:254
 msgid "Carbon Dioxide Sensor"
-msgstr ""
+msgstr "Czujnik dwutlenku węgla"
 
 #: blueman/DeviceClass.py:255
 msgid "Ambient Light Sensor"
-msgstr ""
+msgstr "Czujnik światła otoczenia"
 
 #: blueman/DeviceClass.py:256
 msgid "Energy Sensor"
-msgstr ""
+msgstr "Czujnik energii"
 
 #: blueman/DeviceClass.py:257
 msgid "Color Light Sensor"
-msgstr ""
+msgstr "Czujnik światła barwnego"
 
 #: blueman/DeviceClass.py:258
 msgid "Rain Sensor"
-msgstr ""
+msgstr "Czujnik deszczu"
 
 #: blueman/DeviceClass.py:259
-#, fuzzy
-#| msgid "File Sender"
 msgid "Fire Sensor"
-msgstr "Wysyłanie plików"
+msgstr "Czujnik ognia"
 
 #: blueman/DeviceClass.py:260
-#, fuzzy
-#| msgid "Cycling: Speed Sensor"
 msgid "Wind Sensor"
-msgstr "Jazda na rowerze: czujnik prędkości"
+msgstr "Czujnik wiatru"
 
 #: blueman/DeviceClass.py:261
 msgid "Proximity Sensor"
-msgstr ""
+msgstr "Czujnik zbliżeniowy"
 
 #: blueman/DeviceClass.py:262
 msgid "Multi-Sensor"
-msgstr ""
+msgstr "Multiczujnik"
 
 #: blueman/DeviceClass.py:263
 msgid "Flush Mounted Sensor"
-msgstr ""
+msgstr "Czujnik montowany podtynkowo"
 
 #: blueman/DeviceClass.py:264
-#, fuzzy
-#| msgid "Cycling: Speed Sensor"
 msgid "Ceiling Mounted Sensor"
-msgstr "Jazda na rowerze: czujnik prędkości"
+msgstr "Czujnik montowany na suficie"
 
 #: blueman/DeviceClass.py:265
 msgid "Wall Mounted Sensor"
-msgstr ""
+msgstr "Czujnik montowany na ścianie"
 
 #: blueman/DeviceClass.py:266
 msgid "Multisensor"
-msgstr ""
+msgstr "Multiczujnik"
 
 #: blueman/DeviceClass.py:267
 msgid "Energy Meter"
-msgstr ""
+msgstr "Licznik energii"
 
 #: blueman/DeviceClass.py:268
 msgid "Flame Detector"
-msgstr ""
+msgstr "Detektor płomieni"
 
 #: blueman/DeviceClass.py:269
 msgid "Vehicle Tire Pressure Sensor"
-msgstr ""
+msgstr "Czujnik ciśnienia w oponach pojazdu"
 
 #: blueman/DeviceClass.py:270
-#, fuzzy
-#| msgid "Generic: Weight Scale"
 msgid "Generic Light Fixtures"
-msgstr "Ogólne: waga"
+msgstr "Ogólne oprawy oświetleniowe"
 
 #: blueman/DeviceClass.py:271
 msgid "Wall Light"
-msgstr ""
+msgstr "Oświetlenie ścienne"
 
 #: blueman/DeviceClass.py:272
 msgid "Ceiling Light"
-msgstr ""
+msgstr "Oświetlenie sufitowe"
 
 #: blueman/DeviceClass.py:273
 msgid "Floor Light"
-msgstr ""
+msgstr "Oświetlenie podłogowe"
 
 #: blueman/DeviceClass.py:274
 msgid "Cabinet Light"
-msgstr ""
+msgstr "Oświetlenie szafki"
 
 #: blueman/DeviceClass.py:275
 msgid "Desk Light"
-msgstr ""
+msgstr "Oświetlenie biurka"
 
 #: blueman/DeviceClass.py:276
 msgid "Troffer Light"
-msgstr ""
+msgstr "Oświetleniowy panel sufitowy"
 
 #: blueman/DeviceClass.py:277
 msgid "Pendant Light"
-msgstr ""
+msgstr "Oświetlenie wiszące"
 
 #: blueman/DeviceClass.py:278
 msgid "In-ground Light"
-msgstr ""
+msgstr "Oświetlenie w ziemi"
 
 #: blueman/DeviceClass.py:279
 msgid "Flood Light"
-msgstr ""
+msgstr "Oświetlenie powodziowe"
 
 #: blueman/DeviceClass.py:280
 msgid "Underwater Light"
-msgstr ""
+msgstr "Oświetlenie podwodne"
 
 #: blueman/DeviceClass.py:281
 msgid "Bollard with Light"
-msgstr ""
+msgstr "Słupek z oświetleniem"
 
 #: blueman/DeviceClass.py:282
 msgid "Pathway Light"
-msgstr ""
+msgstr "Oświetlenie ścieżkowe"
 
 #: blueman/DeviceClass.py:283
 msgid "Garden Light"
-msgstr ""
+msgstr "Oświetlenie ogrodowe"
 
 #: blueman/DeviceClass.py:284
 msgid "Pole-top Light"
-msgstr ""
+msgstr "Latarnia"
 
 #: blueman/DeviceClass.py:285
 msgid "Spotlight"
-msgstr ""
+msgstr "Reflektor"
 
 #: blueman/DeviceClass.py:286
 msgid "Linear Light"
-msgstr ""
+msgstr "Oświetlenie liniowe"
 
 #: blueman/DeviceClass.py:287
 msgid "Street Light"
-msgstr ""
+msgstr "Oświetlenie uliczne"
 
 #: blueman/DeviceClass.py:288
 msgid "Shelves Light"
-msgstr ""
+msgstr "Oświetlenie półkowe"
 
 #: blueman/DeviceClass.py:289
 msgid "Bay Light"
-msgstr ""
+msgstr "Oświetlenie zatokowe"
 
 #: blueman/DeviceClass.py:290
 msgid "Emergency Exit Light"
-msgstr ""
+msgstr "Oświetlenie wyjścia awaryjnego"
 
 #: blueman/DeviceClass.py:291
-#, fuzzy
-#| msgid "Controller"
 msgid "Light Controller"
-msgstr "Kontroler"
+msgstr "Kontroler oświetlenia"
 
 #: blueman/DeviceClass.py:292
 msgid "Light Driver"
-msgstr ""
+msgstr "Sterownik oświetlenia"
 
 #: blueman/DeviceClass.py:293
 msgid "Bulb"
-msgstr ""
+msgstr "Żarówka"
 
 #: blueman/DeviceClass.py:294
 msgid "Low-bay Light"
-msgstr ""
+msgstr "Oświetlenie niskiego składowania"
 
 #: blueman/DeviceClass.py:295
 msgid "High-bay Light"
-msgstr ""
+msgstr "Oświetlenie wysokiego składowania"
 
 #: blueman/DeviceClass.py:296
-#, fuzzy
-#| msgid "Generic Tag"
 msgid "Generic Fan"
-msgstr "Ogólny tag"
+msgstr "Ogólny wentylator"
 
 #: blueman/DeviceClass.py:297
 msgid "Ceiling Fan"
-msgstr ""
+msgstr "Wentylator sufitowy"
 
 #: blueman/DeviceClass.py:298
 msgid "Axial Fan"
-msgstr ""
+msgstr "Wentylator osiowy"
 
 #: blueman/DeviceClass.py:299
 msgid "Exhaust Fan"
-msgstr ""
+msgstr "Wentylator wyciągowy"
 
 #: blueman/DeviceClass.py:300
 msgid "Pedestal Fan"
-msgstr ""
+msgstr "Wentylator stojący"
 
 #: blueman/DeviceClass.py:301
 msgid "Desk Fan"
-msgstr ""
+msgstr "Wentylator biurkowy"
 
 #: blueman/DeviceClass.py:302
 msgid "Wall Fan"
-msgstr ""
+msgstr "Wentylator ścienny"
 
 #: blueman/DeviceClass.py:303
-#, fuzzy
-#| msgid "Generic Clock"
 msgid "Generic HVAC"
-msgstr "Ogólny zegar"
+msgstr "Ogólny HVAC"
 
 #: blueman/DeviceClass.py:304
-#, fuzzy
-#| msgid "Thermometer: Ear"
 msgid "Thermostat"
-msgstr "Termometr: do ucha"
+msgstr "Termostat"
 
 #: blueman/DeviceClass.py:305
 msgid "Humidifier"
-msgstr ""
+msgstr "Nawilżacz"
 
 #: blueman/DeviceClass.py:306
 msgid "De-humidifier"
-msgstr ""
+msgstr "Osuszacz"
 
 #: blueman/DeviceClass.py:307
 msgid "Heater"
-msgstr ""
+msgstr "Podgrzewacz"
 
 #: blueman/DeviceClass.py:308 blueman/DeviceClass.py:318
 msgid "Radiator"
-msgstr ""
+msgstr "Kaloryfer"
 
 #: blueman/DeviceClass.py:309 blueman/DeviceClass.py:319
 msgid "Boiler"
-msgstr ""
+msgstr "Bojler"
 
 #: blueman/DeviceClass.py:310 blueman/DeviceClass.py:320
 msgid "Heat Pump"
-msgstr ""
+msgstr "Pompa ciepła"
 
 #: blueman/DeviceClass.py:311 blueman/DeviceClass.py:321
 msgid "Infrared Heater"
-msgstr ""
+msgstr "Promiennik podczerwieni"
 
 #: blueman/DeviceClass.py:312 blueman/DeviceClass.py:322
 msgid "Radiant Panel Heater"
-msgstr ""
+msgstr "Promiennikowy grzejnik panelowy"
 
 #: blueman/DeviceClass.py:313 blueman/DeviceClass.py:323
 msgid "Fan Heater"
-msgstr ""
+msgstr "Nagrzewnica"
 
 #: blueman/DeviceClass.py:314 blueman/DeviceClass.py:324
 msgid "Air Curtain"
-msgstr ""
+msgstr "Kurtyna powietrzna"
 
 #: blueman/DeviceClass.py:315
-#, fuzzy
-#| msgid "Generic Audio"
 msgid "Generic Air Conditioning"
-msgstr "Ogólne audio"
+msgstr "Ogólna klimatyzacja"
 
 #: blueman/DeviceClass.py:316
-#, fuzzy
-#| msgid "Generic Audio"
 msgid "Generic Humidifier"
-msgstr "Ogólne audio"
+msgstr "Ogólny nawilżacz"
 
 #: blueman/DeviceClass.py:317
-#, fuzzy
-#| msgid "Generic Keyring"
 msgid "Generic Heating"
-msgstr "Ogólny brelok"
+msgstr "Ogólne ogrzewanie"
 
 #: blueman/DeviceClass.py:325
-#, fuzzy
-#| msgid "Generic Access"
 msgid "Generic Access Control"
-msgstr "Ogólny dostęp"
+msgstr "Ogólna kontrola dostępu"
 
 #: blueman/DeviceClass.py:326
-#, fuzzy
-#| msgid "Access point"
 msgid "Access Door"
-msgstr "Punkt dostępu"
+msgstr "Drzwi dostępowe"
 
 #: blueman/DeviceClass.py:327
 msgid "Garage Door"
-msgstr ""
+msgstr "Drzwi garażowe"
 
 #: blueman/DeviceClass.py:328
 msgid "Emergency Exit Door"
-msgstr ""
+msgstr "Drzwi wyjścia awaryjnego"
 
 #: blueman/DeviceClass.py:329
-#, fuzzy
-#| msgid "Access point"
 msgid "Access Lock"
-msgstr "Punkt dostępu"
+msgstr "Kontrola dostępu"
 
 #: blueman/DeviceClass.py:330
 msgid "Elevator"
-msgstr ""
+msgstr "Winda"
 
 #: blueman/DeviceClass.py:331
 msgid "Window"
-msgstr ""
+msgstr "Okno"
 
 #: blueman/DeviceClass.py:332
 msgid "Entrance Gate"
-msgstr ""
+msgstr "Brama wejściowa"
 
 #: blueman/DeviceClass.py:333
 msgid "Door Lock"
-msgstr ""
+msgstr "Zamek od drzwi"
 
 #: blueman/DeviceClass.py:334
-#, fuzzy
-#| msgid "Blocked"
 msgid "Locker"
-msgstr "Zablokowane"
+msgstr "Szafka"
 
 #: blueman/DeviceClass.py:335
-#, fuzzy
-#| msgid "Generic Personal Mobility Device"
 msgid "Generic Motorized Device"
-msgstr "Ogólne osobiste urządzenie mobilne"
+msgstr "Ogólne urządzenie zmotoryzowane"
 
 #: blueman/DeviceClass.py:336
 msgid "Motorized Gate"
-msgstr ""
+msgstr "Brama z napędem"
 
 #: blueman/DeviceClass.py:337
 msgid "Awning"
-msgstr ""
+msgstr "Markiza"
 
 #: blueman/DeviceClass.py:338
 msgid "Blinds or Shades"
-msgstr ""
+msgstr "Żaluzje lub rolety"
 
 #: blueman/DeviceClass.py:339
 msgid "Curtains"
-msgstr ""
+msgstr "Zasłony"
 
 #: blueman/DeviceClass.py:340
 msgid "Screen"
-msgstr ""
+msgstr "Parawan"
 
 #: blueman/DeviceClass.py:341
-#, fuzzy
-#| msgid "Generic Personal Mobility Device"
 msgid "Generic Power Device"
-msgstr "Ogólne osobiste urządzenie mobilne"
+msgstr "Ogólne urządzenie zasilające"
 
 #: blueman/DeviceClass.py:342
 msgid "Power Outlet"
-msgstr ""
+msgstr "Gniazdo zasilania"
 
 #: blueman/DeviceClass.py:343
 msgid "Power Strip"
-msgstr ""
+msgstr "Listwa zasilająca"
 
 #: blueman/DeviceClass.py:344
-#, fuzzy
-#| msgid "Plugins"
 msgid "Plug"
-msgstr "Wtyczki"
+msgstr "Wtyczka"
 
 #: blueman/DeviceClass.py:345
 msgid "Power Supply"
-msgstr ""
+msgstr "Zasilacz"
 
 #: blueman/DeviceClass.py:346
 msgid "LED Driver"
-msgstr ""
+msgstr "Sterownik LED"
 
 #: blueman/DeviceClass.py:347
 msgid "Fluorescent Lamp Gear"
-msgstr ""
+msgstr "Sprzęt do lampy fluorescencyjnej"
 
 #: blueman/DeviceClass.py:348
 msgid "HID Lamp Gear"
-msgstr ""
+msgstr "Sprzęt do lampy HID"
 
 #: blueman/DeviceClass.py:349
 msgid "Charge Case"
-msgstr ""
+msgstr "Obudowa ładująca"
 
 #: blueman/DeviceClass.py:350
 msgid "Power Bank"
-msgstr ""
+msgstr "Bank mocy"
 
 #: blueman/DeviceClass.py:351
-#, fuzzy
-#| msgid "Generic: Weight Scale"
 msgid "Generic Light Source"
-msgstr "Ogólne: waga"
+msgstr "Ogólne źródło oświetlenia"
 
 #: blueman/DeviceClass.py:352
 msgid "Incandescent Light Bulb"
-msgstr ""
+msgstr "Żarówka żarowa"
 
 #: blueman/DeviceClass.py:353
 msgid "LED Lamp"
-msgstr ""
+msgstr "Lampa LED"
 
 #: blueman/DeviceClass.py:354
 msgid "HID Lamp"
-msgstr ""
+msgstr "Lampa HID"
 
 #: blueman/DeviceClass.py:355
 msgid "Fluorescent Lamp"
-msgstr ""
+msgstr "Lampa fluorescencyjna"
 
 #: blueman/DeviceClass.py:356
 msgid "LED Array"
-msgstr ""
+msgstr "Matryca LED"
 
 #: blueman/DeviceClass.py:357
 msgid "Multi-Color LED Array"
-msgstr ""
+msgstr "Wielokolorowa matryca LED"
 
 #: blueman/DeviceClass.py:358
 msgid "Low voltage halogen"
-msgstr ""
+msgstr "Halogen niskonapięciowy"
 
 #: blueman/DeviceClass.py:359
 msgid "Organic light emitting diode (OLED)"
-msgstr ""
+msgstr "Organiczna dioda elektroluminescencyjna (OLED)"
 
 #: blueman/DeviceClass.py:360
-#, fuzzy
-#| msgid "Generic Keyring"
 msgid "Generic Window Covering"
-msgstr "Ogólny brelok"
+msgstr "Ogólne osłony okienne"
 
 #: blueman/DeviceClass.py:361
 msgid "Window Shades"
-msgstr ""
+msgstr "Rolety okienne"
 
 #: blueman/DeviceClass.py:362
 msgid "Window Blinds"
-msgstr ""
+msgstr "Żaluzje okienne"
 
 #: blueman/DeviceClass.py:363
 msgid "Window Awning"
-msgstr ""
+msgstr "Markiza okienna"
 
 #: blueman/DeviceClass.py:364
 msgid "Window Curtain"
-msgstr ""
+msgstr "Zasłona okienna"
 
 #: blueman/DeviceClass.py:365
 msgid "Exterior Shutter"
-msgstr ""
+msgstr "Roleta zewnętrzna"
 
 #: blueman/DeviceClass.py:366
 msgid "Exterior Screen"
-msgstr ""
+msgstr "Parawan zewnętrzny"
 
 #: blueman/DeviceClass.py:367
-#, fuzzy
-#| msgid "Generic Audio"
 msgid "Generic Audio Sink"
-msgstr "Ogólne audio"
+msgstr "Ogólny odpływ audio"
 
 #: blueman/DeviceClass.py:368
 msgid "Standalone Speaker"
-msgstr ""
+msgstr "Samodzielny głośnik"
 
 #: blueman/DeviceClass.py:369
 msgid "Soundbar"
-msgstr ""
+msgstr "Listwa dźwiękowa"
 
 #: blueman/DeviceClass.py:370
 msgid "Bookshelf Speaker"
-msgstr ""
+msgstr "Głośnik półkowy"
 
 #: blueman/DeviceClass.py:371
 msgid "Standmounted Speaker"
-msgstr ""
+msgstr "Głośnik stojakowy"
 
 #: blueman/DeviceClass.py:372
-#, fuzzy
-#| msgid "Smartphone"
 msgid "Speakerphone"
-msgstr "Smartfon"
+msgstr "Zestaw głośnomówiący"
 
 #: blueman/DeviceClass.py:373
-#, fuzzy
-#| msgid "Generic Audio"
 msgid "Generic Audio Source"
-msgstr "Ogólne audio"
+msgstr "Ogólne źródło audio"
 
 #: blueman/DeviceClass.py:375
 msgid "Alarm"
-msgstr ""
+msgstr "Budzik"
 
 #: blueman/DeviceClass.py:376
 msgid "Bell"
-msgstr ""
+msgstr "Dzwonek"
 
 #: blueman/DeviceClass.py:377
 msgid "Horn"
-msgstr ""
+msgstr "Klakson"
 
 #: blueman/DeviceClass.py:378
-#, fuzzy
-#| msgid "Location Display Device"
 msgid "Broadcasting Device"
-msgstr "Urządzenie do wyświetlania lokalizacji"
+msgstr "Urządzenie nadawcze"
 
 #: blueman/DeviceClass.py:379
-#, fuzzy
-#| msgid "Service:"
 msgid "Service Desk"
-msgstr "Usługa:"
+msgstr "Centrum obsługi"
 
 #: blueman/DeviceClass.py:380
 msgid "Kiosk"
-msgstr ""
+msgstr "Kiosk"
 
 #: blueman/DeviceClass.py:381
 msgid "Broadcasting Room"
-msgstr ""
+msgstr "Pokój nadawczy"
 
 #: blueman/DeviceClass.py:382
-#, fuzzy
-#| msgid "Audio Profile"
 msgid "Auditorium"
-msgstr "Profil audio"
+msgstr "Audytorium"
 
 #: blueman/DeviceClass.py:383
-#, fuzzy
-#| msgid "Generic Media Player"
 msgid "Generic Motorized Vehicle"
-msgstr "Ogólny odtwarzacz multimedialny"
+msgstr "Ogólny pojazd silnikowy"
 
 #: blueman/DeviceClass.py:384
-#, fuzzy
-#| msgid "Camera"
 msgid "Car"
-msgstr "Aparat fotograficzny"
+msgstr "Samochód"
 
 #: blueman/DeviceClass.py:385
 msgid "Large Goods Vehicle"
-msgstr ""
+msgstr "Duży pojazd dostawczy"
 
 #: blueman/DeviceClass.py:386
 msgid "2-Wheeled Vehicle"
-msgstr ""
+msgstr "Pojazd dwukołowy"
 
 #: blueman/DeviceClass.py:387
 msgid "Motorbike"
-msgstr ""
+msgstr "Motocykl"
 
 #: blueman/DeviceClass.py:388
-#, fuzzy
-#| msgid "Mobility Scooter"
 msgid "Scooter"
-msgstr "Skuter inwalidzki"
+msgstr "Skuter"
 
 #: blueman/DeviceClass.py:389
 msgid "Moped"
-msgstr ""
+msgstr "Motorower"
 
 #: blueman/DeviceClass.py:390
 msgid "3-Wheeled Vehicle"
-msgstr ""
+msgstr "Pojazd trójkołowy"
 
 #: blueman/DeviceClass.py:391
-#, fuzzy
-#| msgid "Vehicle"
 msgid "Light Vehicle"
-msgstr "Pojazd"
+msgstr "Pojazd lekki"
 
 #: blueman/DeviceClass.py:392
 msgid "Quad Bike"
-msgstr ""
+msgstr "Czterokołowiec"
 
 #: blueman/DeviceClass.py:393
 msgid "Minibus"
-msgstr ""
+msgstr "Minibus"
 
 #: blueman/DeviceClass.py:394
 msgid "Bus"
-msgstr ""
+msgstr "Autobus"
 
 #: blueman/DeviceClass.py:395
 msgid "Trolley"
-msgstr ""
+msgstr "Wózek"
 
 #: blueman/DeviceClass.py:396
 msgid "Agricultural Vehicle"
-msgstr ""
+msgstr "Pojazd rolniczy"
 
 #: blueman/DeviceClass.py:397
 msgid "Camper / Caravan"
-msgstr ""
+msgstr "Kamper / przyczepa kempingowa"
 
 #: blueman/DeviceClass.py:398
 msgid "Recreational Vehicle / Motor Home"
-msgstr ""
+msgstr "Pojazd rekreacyjny / samochód kempingowy"
 
 #: blueman/DeviceClass.py:399
-#, fuzzy
-#| msgid "Generic Display"
 msgid "Generic Domestic Appliance"
-msgstr "Ogólne wyświetlacz"
+msgstr "Ogólne urządzenia gospodarstwa domowego"
 
 #: blueman/DeviceClass.py:400
 msgid "Refrigerator"
-msgstr ""
+msgstr "Lodówka"
 
 #: blueman/DeviceClass.py:401
 msgid "Freezer"
-msgstr ""
+msgstr "Zamrażarka"
 
 #: blueman/DeviceClass.py:402
 msgid "Oven"
-msgstr ""
+msgstr "Piekarnik"
 
 #: blueman/DeviceClass.py:403
-#, fuzzy
-#| msgid "Microphone"
 msgid "Microwave"
-msgstr "Mikrofon"
+msgstr "Kuchenka mikrofalowa"
 
 #: blueman/DeviceClass.py:404
 msgid "Toaster"
-msgstr ""
+msgstr "Opiekacz"
 
 #: blueman/DeviceClass.py:405
 msgid "Washing Machine"
-msgstr ""
+msgstr "Pralka"
 
 #: blueman/DeviceClass.py:406
 msgid "Dryer"
-msgstr ""
+msgstr "Suszarka"
 
 #: blueman/DeviceClass.py:407
 msgid "Coffee maker"
-msgstr ""
+msgstr "Ekspres do kawy"
 
 #: blueman/DeviceClass.py:408
 msgid "Clothes iron"
-msgstr ""
+msgstr "Żelazko"
 
 #: blueman/DeviceClass.py:409
 msgid "Curling iron"
-msgstr ""
+msgstr "Lokówka"
 
 #: blueman/DeviceClass.py:410
 msgid "Hair dryer"
-msgstr ""
+msgstr "Suszarka do włosów"
 
 #: blueman/DeviceClass.py:411
 msgid "Vacuum cleaner"
-msgstr ""
+msgstr "Odkurzacz"
 
 #: blueman/DeviceClass.py:412
 msgid "Robotic vacuum cleaner"
-msgstr ""
+msgstr "Odkurzacz automatyczny"
 
 #: blueman/DeviceClass.py:413
 msgid "Rice cooker"
-msgstr ""
+msgstr "Ryżowar"
 
 #: blueman/DeviceClass.py:414
 msgid "Clothes steamer"
-msgstr ""
+msgstr "Parownica do ubrań"
 
 #: blueman/DeviceClass.py:415
-#, fuzzy
-#| msgid "Generic Personal Mobility Device"
 msgid "Generic Wearable Audio Device"
-msgstr "Ogólne osobiste urządzenie mobilne"
+msgstr "Ogólne przenośne urządzenie audio"
 
 #: blueman/DeviceClass.py:416
 msgid "Earbud"
-msgstr ""
+msgstr "Słuchawka douszna"
 
 #: blueman/DeviceClass.py:419
 msgid "Neck Band"
-msgstr ""
+msgstr "Opaska na szyję"
 
 #: blueman/DeviceClass.py:420
-#, fuzzy
-#| msgid "Generic Audio"
 msgid "Generic Aircraft"
-msgstr "Ogólne audio"
+msgstr "Ogólny samolot"
 
 #: blueman/DeviceClass.py:421
 msgid "Light Aircraft"
-msgstr ""
+msgstr "Samolot lekki"
 
 #: blueman/DeviceClass.py:422
-#, fuzzy
-#| msgid "Microphone"
 msgid "Microlight"
-msgstr "Mikrofon"
+msgstr "Samolot ultralekki"
 
 #: blueman/DeviceClass.py:423
 msgid "Paraglider"
-msgstr ""
+msgstr "Paralotnia"
 
 #: blueman/DeviceClass.py:424
 msgid "Large Passenger Aircraft"
-msgstr ""
+msgstr "Duży samolot pasażerski"
 
 #: blueman/DeviceClass.py:425
-#, fuzzy
-#| msgid "Generic Audio"
 msgid "Generic AV Equipment"
-msgstr "Ogólne audio"
+msgstr "Ogólny sprzęt audiowizualny"
 
 #: blueman/DeviceClass.py:426
 msgid "Amplifier"
-msgstr ""
+msgstr "Wzmacniacz"
 
 #: blueman/DeviceClass.py:427
-#, fuzzy
-#| msgid "Receiving file"
 msgid "Receiver"
-msgstr "Odbieranie pliku"
+msgstr "Odbiornik"
 
 #: blueman/DeviceClass.py:428
 msgid "Radio"
-msgstr ""
+msgstr "Radio"
 
 #: blueman/DeviceClass.py:429
 msgid "Tuner"
-msgstr ""
+msgstr "Tuner"
 
 #: blueman/DeviceClass.py:430
 msgid "Turntable"
-msgstr ""
+msgstr "Gramofon"
 
 #: blueman/DeviceClass.py:431
 msgid "CD Player"
-msgstr ""
+msgstr "Odtwarzacz CD"
 
 #: blueman/DeviceClass.py:432
 msgid "DVD Player"
-msgstr ""
+msgstr "Odtwarzacz DVD"
 
 #: blueman/DeviceClass.py:433
 msgid "Bluray Player"
-msgstr ""
+msgstr "Odtwarzacz Blu-ray"
 
 #: blueman/DeviceClass.py:434
 msgid "Optical Disc Player"
-msgstr ""
+msgstr "Odtwarzacz dysków optycznych"
 
 #: blueman/DeviceClass.py:435
-#, fuzzy
-#| msgid "Set-top box"
 msgid "Set-Top Box"
 msgstr "Dekoder"
 
 #: blueman/DeviceClass.py:436
-#, fuzzy
-#| msgid "Generic Display"
 msgid "Generic Display Equipment"
-msgstr "Ogólne wyświetlacz"
+msgstr "Ogólny sprzęt wyświetlający"
 
 #: blueman/DeviceClass.py:437
 msgid "Television"
-msgstr ""
+msgstr "Telewizor"
 
 #: blueman/DeviceClass.py:438
-#, fuzzy
-#| msgid "Video monitor"
 msgid "Monitor"
-msgstr "Monitor wideo"
+msgstr "Monitor"
 
 #: blueman/DeviceClass.py:439
 msgid "Projector"
-msgstr ""
+msgstr "Projektor"
 
 #: blueman/DeviceClass.py:440
-#, fuzzy
-#| msgid "Generic Keyring"
 msgid "Generic Hearing aid"
-msgstr "Ogólny brelok"
+msgstr "Ogólny aparat słuchowy"
 
 #: blueman/DeviceClass.py:441
 msgid "In-ear hearing aid"
-msgstr ""
+msgstr "Douszny aparat słuchowy"
 
 #: blueman/DeviceClass.py:442
 msgid "Behind-ear hearing aid"
-msgstr ""
+msgstr "Zauszny aparat słuchowy"
 
 #: blueman/DeviceClass.py:443
 msgid "Cochlear Implant"
-msgstr ""
+msgstr "Implant ślimakowy"
 
 #: blueman/DeviceClass.py:444
-#, fuzzy
-#| msgid "Generic Tag"
 msgid "Generic Gaming"
-msgstr "Ogólny tag"
+msgstr "Ogólne gry"
 
 #: blueman/DeviceClass.py:445
 msgid "Home Video Game Console"
-msgstr ""
+msgstr "Domowa konsola do gier wideo"
 
 #: blueman/DeviceClass.py:446
-#, fuzzy
-#| msgid "Portable audio"
 msgid "Portable handheld console"
-msgstr "Przenośny sprzęt audio"
+msgstr "Przenośna konsola"
 
 #: blueman/DeviceClass.py:447
-#, fuzzy
-#| msgid "Generic Tag"
 msgid "Generic Signage"
-msgstr "Ogólny tag"
+msgstr "Ogólne oznakowanie"
 
 #: blueman/DeviceClass.py:448
-#, fuzzy
-#| msgid "Digital Pen"
 msgid "Digital Signage"
-msgstr "Pióro cyfrowe"
+msgstr "Oznakowanie cyfrowe"
 
 #: blueman/DeviceClass.py:449
 msgid "Electronic Label"
-msgstr ""
+msgstr "Etykieta elektroniczna"
 
 #: blueman/DeviceClass.py:450
-#, fuzzy
-#| msgid "Generic: Pulse Oximeter"
 msgid "Generic Pulse Oximeter"
-msgstr "Ogólny: pulsoksymetr"
+msgstr "Ogólny pulsoksymetr"
 
 #: blueman/DeviceClass.py:451
-#, fuzzy
-#| msgid "Generic: Pulse Oximeter"
 msgid "Fingertip Pulse Oximeter"
-msgstr "Ogólny: pulsoksymetr"
+msgstr "Pulsoksymetr na palcu"
 
 #: blueman/DeviceClass.py:452
-#, fuzzy
-#| msgid "Pulse Oximeter"
 msgid "Wrist Worn Pulse Oximeter"
-msgstr "Pulsoksymetr"
+msgstr "Pulsoksymetr noszony na nadgarstku"
 
 #: blueman/DeviceClass.py:453
-#, fuzzy
-#| msgid "Generic: Weight Scale"
 msgid "Generic Weight Scale"
-msgstr "Ogólne: waga"
+msgstr "Ogólna waga"
 
 #: blueman/DeviceClass.py:454
 msgid "Generic Personal Mobility Device"
@@ -2495,32 +2335,24 @@ msgid "Generic Medication Delivery"
 msgstr "Ogólne podawanie leków"
 
 #: blueman/DeviceClass.py:463
-#, fuzzy
-#| msgid "Generic Thermometer"
 msgid "Generic Spirometer"
-msgstr "Ogólny termometr"
+msgstr "Ogólny spirometr"
 
 #: blueman/DeviceClass.py:464
 msgid "Handheld Spirometer"
-msgstr ""
+msgstr "Spirometr ręczny"
 
 #: blueman/DeviceClass.py:465
-#, fuzzy
-#| msgid "Generic: Outdoor Sports Activity"
 msgid "Generic Outdoor Sports Activity"
-msgstr "Ogólne: aktywność sportowa na świeżym powietrzu"
+msgstr "Ogólna aktywność sportowa na świeżym powietrzu"
 
 #: blueman/DeviceClass.py:466
-#, fuzzy
-#| msgid "Location Display Device"
 msgid "Location Display"
-msgstr "Urządzenie do wyświetlania lokalizacji"
+msgstr "Wyświetlacz lokalizacji"
 
 #: blueman/DeviceClass.py:467
-#, fuzzy
-#| msgid "Location and Navigation Display Device"
 msgid "Location and Navigation Display"
-msgstr "Urządzenie do wyświetlania lokalizacji i nawigacji"
+msgstr "Wyświetlacz lokalizacji i nawigacji"
 
 #: blueman/DeviceClass.py:468
 msgid "Location Pod"
@@ -3316,7 +3148,7 @@ msgstr "Pokazuje liczbę przesłanych danych"
 
 #: blueman/plugins/applet/StatusIcon.py:38
 #: blueman/plugins/applet/ShowConnected.py:79
-#: blueman/plugins/applet/PowerManager.py:173
+#: blueman/plugins/applet/PowerManager.py:171
 msgid "Bluetooth Enabled"
 msgstr "Bluetooth włączony"
 
@@ -3549,7 +3381,7 @@ msgid "Bluetooth Active"
 msgstr "Bluetooth jest aktywny"
 
 #: blueman/plugins/applet/ShowConnected.py:81
-#: blueman/plugins/applet/PowerManager.py:176
+#: blueman/plugins/applet/PowerManager.py:174
 msgid "Bluetooth Disabled"
 msgstr "Bluetooth wyłączony"
 
@@ -3674,20 +3506,20 @@ msgid "Controls Bluetooth adapter power states"
 msgstr "Kontroluje stany zasilania adapteru Bluetooth"
 
 #: blueman/plugins/applet/PowerManager.py:41
-#: blueman/plugins/applet/PowerManager.py:154
+#: blueman/plugins/applet/PowerManager.py:153
 msgid "<b>Turn Bluetooth _Off</b>"
 msgstr "<b>W_yłącz Bluetooth</b>"
 
 #: blueman/plugins/applet/PowerManager.py:43
-#: blueman/plugins/applet/PowerManager.py:156
+#: blueman/plugins/applet/PowerManager.py:155
 msgid "Turn off all adapters"
 msgstr "Wyłącz wszystkie adaptery Bluetooth"
 
-#: blueman/plugins/applet/PowerManager.py:145
+#: blueman/plugins/applet/PowerManager.py:144
 msgid "<b>Turn Bluetooth _On</b>"
 msgstr "<b>_Włącz Bluetooth</b>"
 
-#: blueman/plugins/applet/PowerManager.py:147
+#: blueman/plugins/applet/PowerManager.py:146
 msgid "Turn on all adapters"
 msgstr "Włącz wszystkie adaptery"
 
@@ -3804,6 +3636,15 @@ msgstr "Ustaw stan RfKill"
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
 msgstr "Ustawienie stanu RfKill wymaga uprawnień"
+
+#~ msgid "Turn Bluetooth _On"
+#~ msgstr "_Włącz Bluetooth"
+
+#~ msgid "Bluetooth needs to be turned on for the device manager to function"
+#~ msgstr "Bluetooth musi być włączony, aby menedżer urządzeń mógł działać"
+
+#~ msgid "Turn Bluetooth _Off"
+#~ msgstr "W_yłącz Bluetooth"
 
 #~ msgid "Heart Rate Sensor: Heart Rate Belt"
 #~ msgstr "Czujnik tętna: pas do pomiaru tętna"
