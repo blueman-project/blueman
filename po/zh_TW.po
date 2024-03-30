@@ -10,25 +10,28 @@
 # 黃柏諺 <s8321414@gmail.com>, 2014-2015,2017,2019
 # Walter Cheuk <wwycheuk@gmail.com>, 2016-2017
 # marklin0913da248e4cdada422a <marklin0913@protonmail.com>
+# zica <9918800@gmail.com>, 2023.
+# Brian Hsu <brianhsu.hsu@gmail.com>, 2023.
+# Kisaragi Hiu <mail@kisaragi-hiu.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2022-07-05 14:08+0200\n"
-"PO-Revision-Date: 2020-08-26 22:05+0000\n"
-"Last-Translator: marklin0913da248e4cdada422a <marklin0913@protonmail.com>\n"
+"PO-Revision-Date: 2024-03-02 16:17+0000\n"
+"Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
-"blueman/blueman/zh_Hant/>\n"
+"blueman/2-3/zh_Hant/>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.2.1-dev\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
-msgstr "<b>可見設定</b>"
+msgstr "<b>可見性設定</b>"
 
 #: data/ui/adapters-tab.ui:40 blueman/main/Adapter.py:155
 msgid "Hidden"
@@ -36,16 +39,15 @@ msgstr "隱藏"
 
 #: data/ui/adapters-tab.ui:57
 msgid "Always visible"
-msgstr "一直可見"
+msgstr "總是可見"
 
 #: data/ui/adapters-tab.ui:75
 msgid "Temporarily visible"
 msgstr "暫時可見"
 
 #: data/ui/adapters-tab.ui:110
-#, fuzzy
 msgid "<b>Name</b>"
-msgstr "<b>已配對</b>"
+msgstr "<b>名稱</b>"
 
 #: data/ui/applet-passkey.ui:8
 msgid "Pairing request"
@@ -53,7 +55,7 @@ msgstr "配對請求"
 
 #: data/ui/applet-passkey.ui:91
 msgid "Pairing request for device:"
-msgstr "對此裝置請求配對"
+msgstr "裝置配對請求："
 
 #: data/ui/applet-passkey.ui:120
 msgid "This should be overwritten"
@@ -61,19 +63,19 @@ msgstr "這應該被覆寫"
 
 #: data/ui/applet-passkey.ui:140
 msgid "Show input"
-msgstr "顯示輸入裝置"
+msgstr "顯示輸入中的文字"
 
 #: data/ui/manager-main.ui:54
 msgid "_Adapter"
-msgstr "配接器 (_A)"
+msgstr "接收器(_A)"
 
 #: data/ui/manager-main.ui:62
 msgid "_Device"
-msgstr "裝置 (_D)"
+msgstr "裝置(_D)"
 
 #: data/ui/manager-main.ui:70
 msgid "_View"
-msgstr "檢視 (_V)"
+msgstr "檢視(_V)"
 
 #: data/ui/manager-main.ui:78 blueman/gui/manager/ManagerMenu.py:56
 #: blueman/plugins/applet/StandardItems.py:51
@@ -82,7 +84,7 @@ msgstr "說明(_H)"
 
 #: data/ui/manager-main.ui:98
 msgid "Search for nearby devices"
-msgstr "搜附近的裝置"
+msgstr "搜尋附近的裝置"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:100
@@ -100,17 +102,17 @@ msgstr "配對"
 
 #: data/ui/manager-main.ui:137 blueman/gui/manager/ManagerDeviceMenu.py:375
 msgid "Mark/Unmark this device as trusted"
-msgstr "標示此裝置為信任/不信任的"
+msgstr "標示此裝置為信任 / 不信任的"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:138 blueman/gui/manager/ManagerToolbar.py:39
 #: blueman/gui/manager/ManagerToolbar.py:99
 msgid "Trust"
-msgstr "信任的"
+msgstr "信任"
 
 #: data/ui/manager-main.ui:151 blueman/gui/manager/ManagerDeviceMenu.py:420
 msgid "Remove this device from the known devices list"
-msgstr "將此裝置自名單中移除"
+msgstr "將此裝置自已知裝置清單中移除"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:152
@@ -119,7 +121,7 @@ msgstr "移除"
 
 #: data/ui/manager-main.ui:174
 msgid "Send file(s) to the device"
-msgstr "傳送檔案到此裝置"
+msgstr "傳送檔案到裝置"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:176
@@ -136,19 +138,17 @@ msgstr "重設(_R)"
 
 #: data/ui/rename-device.ui:40 data/ui/note.ui:26 blueman/main/Sendto.py:235
 #: blueman/gui/DeviceSelectorDialog.py:17
-#, fuzzy
-#| msgid "Cancelling"
 msgid "_Cancel"
-msgstr "取消中..."
+msgstr "取消(_C)"
 
 #: data/ui/rename-device.ui:54 data/ui/note.ui:41
 #: blueman/gui/DeviceSelectorDialog.py:17
 msgid "_OK"
-msgstr ""
+msgstr "確定(_O)"
 
 #: data/ui/services-network.ui:37
 msgid "Network Access Point (NAP)"
-msgstr "網路接取點 (NAP)"
+msgstr "網路存取點 (NAP)"
 
 #: data/ui/services-network.ui:57
 msgid "<b>Services</b>"
@@ -156,7 +156,7 @@ msgstr "<b>服務</b>"
 
 #: data/ui/services-network.ui:87
 msgid "DHCP server type:"
-msgstr "DHCP 服務類型："
+msgstr "DHCP 伺服器類型："
 
 #: data/ui/services-network.ui:114
 msgid "Recommended"
@@ -168,7 +168,7 @@ msgstr "IP 位址："
 
 #: data/ui/services-network.ui:181
 msgid "<b>No DHCP servers installed</b>"
-msgstr "<b>無安裝 DHCP 服務</b>"
+msgstr "<b>未安裝 DHCP 伺服器</b>"
 
 #: data/ui/services-network.ui:199
 msgid "udhcpd"
@@ -180,11 +180,11 @@ msgstr "<b>NAP 設定</b>"
 
 #: data/ui/services-network.ui:282
 msgid "<b>PAN Support</b>"
-msgstr "<b>支援 PAN</b>"
+msgstr "<b>PAN 支援</b>"
 
 #: data/ui/services-network.ui:357
 msgid "<b>DUN Support</b>"
-msgstr "<b>支援 DUN</b>"
+msgstr "<b>DUN 支援</b>"
 
 #: data/ui/services-network.ui:391
 msgid "<b>Network Settings</b>"
@@ -192,7 +192,7 @@ msgstr "<b>網路設定</b>"
 
 #: data/ui/services-transfer.ui:25
 msgid "<b>File Receiving (Object Push)</b>"
-msgstr "<b>檔案接收 (物件推送)</b>"
+msgstr "<b>檔案接收（物件推送）</b>"
 
 #: data/ui/services-transfer.ui:38
 msgid "Incoming Folder:"
@@ -204,7 +204,7 @@ msgstr "選取要接收檔案傳送的資料夾"
 
 #: data/ui/services-transfer.ui:59
 msgid "Accept files from trusted devices"
-msgstr "接收來自信任裝置的檔案"
+msgstr "接收來自已信任裝置的檔案"
 
 #: data/ui/services-transfer.ui:106
 msgid "<b>Transfer Settings</b>"
@@ -224,19 +224,19 @@ msgstr "<b>檔案：</b>"
 
 #: data/ui/applet-plugins-widget.ui:69
 msgid "Configuration"
-msgstr "設定檔"
+msgstr "組態"
 
 #: data/ui/applet-plugins-widget.ui:73
 msgid "Configure selected plugin's preferences"
-msgstr "調整所選的外掛設定"
+msgstr "調整所選外掛的偏好設定"
 
 #: data/ui/applet-plugins-widget.ui:115
 msgid "<b>Plugin description:</b>"
-msgstr "<b>外掛說明:</b>"
+msgstr "<b>外掛說明：</b>"
 
 #: data/ui/applet-plugins-widget.ui:130
 msgid "Not specified"
-msgstr "沒有指定"
+msgstr "未指定"
 
 #: data/ui/applet-plugins-widget.ui:146
 msgid "<b>Author:</b>"
@@ -251,11 +251,11 @@ msgstr "<b>作者：</b>"
 #: blueman/plugins/applet/NetUsage.py:209
 #: blueman/plugins/applet/NetUsage.py:210
 msgid "Unknown"
-msgstr "未知的"
+msgstr "不明"
 
 #: data/ui/applet-plugins-widget.ui:174
 msgid "<b>Depends on:</b>"
-msgstr "<b>依據:</b>"
+msgstr "<b>相依於：</b>"
 
 #: data/ui/applet-plugins-widget.ui:202
 msgid "<b>Conflicts with:</b>"
@@ -267,15 +267,15 @@ msgstr "<b>GSM 設定</b>"
 
 #: data/ui/gsm-settings.ui:55
 msgid "Number:"
-msgstr "號碼:"
+msgstr "編號："
 
 #: data/ui/gsm-settings.ui:78
 msgid "APN:"
-msgstr "APN:"
+msgstr "APN："
 
 #: data/ui/net-usage.ui:14
 msgid "Traffic statistics"
-msgstr "網路流量狀態"
+msgstr "網路流量統計"
 
 #: data/ui/net-usage.ui:33 blueman/gui/GsmSettings.py:38
 msgid "_Close"
@@ -295,11 +295,11 @@ msgstr "<b>總計：</b>"
 
 #: data/ui/net-usage.ui:196
 msgid "<b>Log started:</b>"
-msgstr "<b>Log 開始：</b>"
+msgstr "<b>日誌開始：</b>"
 
 #: data/ui/net-usage.ui:209
 msgid "<b>Log duration:</b>"
-msgstr "<b>Log 期間：</b>"
+msgstr "<b>日誌期間：</b>"
 
 #: data/ui/note.ui:8
 msgid "Send note"
@@ -307,25 +307,25 @@ msgstr "傳送便條"
 
 #: blueman/main/Adapter.py:59
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
-msgstr "藍牙必須開啟才可以使用"
+msgstr "藍牙必須開啟才能讓配接管理器正常工作"
 
 #: blueman/main/Adapter.py:95 data/blueman-adapters.desktop.in:3
 msgid "Bluetooth Adapters"
-msgstr "藍牙配接器"
+msgstr "藍牙接收器"
 
 #: blueman/main/Adapter.py:153
 msgid "Always"
-msgstr "一直"
+msgstr "總是"
 
 #: blueman/main/Adapter.py:157 blueman/main/Sendto.py:189
-#, fuzzy, python-format
+#, python-format
 msgid "%(minutes)d Minute"
 msgid_plural "%(minutes)d Minutes"
-msgstr[0] "%d 分鐘"
+msgstr[0] "%(minutes)d 分鐘"
 
 #: blueman/main/Adapter.py:222
 msgid "Adapter"
-msgstr "轉接器"
+msgstr "接收器"
 
 #: blueman/main/Manager.py:63
 msgid "Bluetooth Devices"
@@ -333,11 +333,11 @@ msgstr "藍牙裝置"
 
 #: blueman/main/Manager.py:99 blueman/main/Manager.py:140
 msgid "Bluetooth needs to be turned on for the device manager to function"
-msgstr "需要開啟藍牙才可以使用此管理功能"
+msgstr "需要開啟藍牙才能讓裝置管理員正常運作"
 
 #: blueman/main/Manager.py:119
 msgid "Connection to BlueZ failed"
-msgstr "未能連線到 BlueZ"
+msgstr "連線至 BlueZ 失敗"
 
 #: blueman/main/Manager.py:120
 msgid ""
@@ -345,8 +345,8 @@ msgid ""
 "This probably means that there were no Bluetooth adapters detected or "
 "Bluetooth daemon was not started."
 msgstr ""
-"Bluez 無法執行，blueman-manager 不能繼續。\n"
-"這表示目前偵測不到藍牙配接器，或是藍牙沒有啟動。"
+"Bluez 常駐程式不在執行狀態，blueman-manager 無法繼續。\n"
+"這可能是因為沒有偵測到藍牙接收器，或藍牙常駐程式未啟動。"
 
 #: blueman/main/Manager.py:208
 msgid "Searching"
@@ -354,12 +354,12 @@ msgstr "搜尋中"
 
 #: blueman/main/Manager.py:231 blueman/plugins/applet/StandardItems.py:84
 msgid "Adapter Preferences"
-msgstr "配接器偏好設定"
+msgstr "接收器偏好設定"
 
 #: blueman/main/Manager.py:247 blueman/gui/manager/ManagerDeviceList.py:169
 #: blueman/plugins/applet/StandardItems.py:77
 msgid "File Sender"
-msgstr "檔案傳送器"
+msgstr "檔案送發者"
 
 #: blueman/main/Sendto.py:33
 msgid "Bluetooth File Transfer"
@@ -367,11 +367,11 @@ msgstr "藍牙檔案傳送"
 
 #: blueman/main/Sendto.py:42
 msgid "_Stop"
-msgstr ""
+msgstr "停止(_S)"
 
 #: blueman/main/Sendto.py:57 blueman/gui/manager/ManagerProgressbar.py:27
 msgid "Connecting"
-msgstr "連線"
+msgstr "連線中"
 
 #: blueman/main/Sendto.py:111
 msgid "obexd not available"
@@ -379,15 +379,15 @@ msgstr "obexd 無法使用"
 
 #: blueman/main/Sendto.py:111
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
-msgstr "自動啟動 obex 服務失敗。請確定 obex 守護程式正在執行"
+msgstr "自動啟動 obex 服務失敗。請確定 obex 常駐程式正在執行"
 
 #: blueman/main/Sendto.py:142
 msgid "Cancelling"
-msgstr "取消中..."
+msgstr "取消中"
 
 #: blueman/main/Sendto.py:153 blueman/main/Sendto.py:195
 msgid "Sending File"
-msgstr "傳送檔案"
+msgstr "傳送檔案中"
 
 #: blueman/main/Sendto.py:153 blueman/main/Sendto.py:195
 msgid "ETA:"
@@ -397,7 +397,7 @@ msgstr "預計所需時間："
 #, python-format
 msgid "%(seconds)d Second"
 msgid_plural "%(seconds)d Seconds"
-msgstr[0] ""
+msgstr[0] "%(seconds)d 秒"
 
 #: blueman/main/Sendto.py:229
 #, python-format
@@ -419,35 +419,35 @@ msgstr "發生錯誤"
 #: blueman/main/applet/BluezAgent.py:123
 #, python-format
 msgid "Pairing request for %s"
-msgstr "配對需要 %s"
+msgstr "%s 的配對請求"
 
 #: blueman/main/applet/BluezAgent.py:134 blueman/main/applet/BluezAgent.py:246
 msgid "Bluetooth Authentication"
-msgstr "藍牙身分核對"
+msgstr "藍牙認證"
 
 #: blueman/main/applet/BluezAgent.py:165
 msgid "Enter PIN code for authentication:"
-msgstr "輸入 PIN 碼核對身分："
+msgstr "輸入認證 PIN 碼："
 
 #: blueman/main/applet/BluezAgent.py:174
 msgid "Enter passkey for authentication:"
-msgstr "輸入密鑰核對身分："
+msgstr "輸入認證用密碼："
 
 #: blueman/main/applet/BluezAgent.py:185
 msgid "Pairing passkey for"
-msgstr "配對密鑰"
+msgstr "配對密碼"
 
 #: blueman/main/applet/BluezAgent.py:196
 msgid "Pairing PIN code for"
-msgstr "配對的 PIN 代碼"
+msgstr "配對 PIN 碼"
 
 #: blueman/main/applet/BluezAgent.py:209
 msgid "Pairing request for:"
-msgstr "配對需要："
+msgstr "配對請求："
 
 #: blueman/main/applet/BluezAgent.py:212
 msgid "Confirm value for authentication:"
-msgstr "確認數值核對身分："
+msgstr "確認認證數值："
 
 #: blueman/main/applet/BluezAgent.py:213
 msgid "Confirm"
@@ -455,11 +455,11 @@ msgstr "確認"
 
 #: blueman/main/applet/BluezAgent.py:213 blueman/main/applet/BluezAgent.py:244
 msgid "Deny"
-msgstr "取消"
+msgstr "拒絕"
 
 #: blueman/main/applet/BluezAgent.py:241
 msgid "Authorization request for:"
-msgstr "授權需要："
+msgstr "授權要求："
 
 #: blueman/main/applet/BluezAgent.py:241
 msgid "Service:"
@@ -467,7 +467,7 @@ msgstr "服務："
 
 #: blueman/main/applet/BluezAgent.py:242
 msgid "Always accept"
-msgstr "一定接受"
+msgstr "總是接受"
 
 #: blueman/main/applet/BluezAgent.py:243
 #: blueman/plugins/applet/TransferService.py:130
@@ -489,15 +489,15 @@ msgstr "本機服務"
 
 #: blueman/main/Services.py:47
 msgid "_Apply"
-msgstr ""
+msgstr "套用(_A)"
 
 #: blueman/Functions.py:71
 msgid "Bluetooth Turned Off"
-msgstr "關閉藍牙"
+msgstr "藍牙已關閉"
 
 #: blueman/Functions.py:72
 msgid "Exit"
-msgstr "結束"
+msgstr "離開"
 
 #: blueman/Functions.py:73
 msgid "Enable Bluetooth"
@@ -517,19 +517,19 @@ msgstr "否"
 
 #: blueman/Functions.py:181
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: blueman/Functions.py:184
 msgid "KB"
-msgstr ""
+msgstr "KB"
 
 #: blueman/Functions.py:187
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
 #: blueman/Functions.py:190
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: blueman/gui/manager/ManagerMenu.py:46
 msgid "_Report a Problem"
@@ -537,7 +537,7 @@ msgstr "回報問題(_R)"
 
 #: blueman/gui/manager/ManagerMenu.py:63
 msgid "Device Manager"
-msgstr "裝置管理"
+msgstr "裝置管理員"
 
 #: blueman/gui/manager/ManagerMenu.py:69
 msgid "Show _Toolbar"
@@ -548,13 +548,12 @@ msgid "Show _Statusbar"
 msgstr "顯示狀態列(_S)"
 
 #: blueman/gui/manager/ManagerMenu.py:79
-#, fuzzy
 msgid "Hide _unnamed devices"
-msgstr "重新命名裝置"
+msgstr "隱藏未命名裝置(_U)"
 
 #: blueman/gui/manager/ManagerMenu.py:89
 msgid "S_ort By"
-msgstr "排序由(_O)"
+msgstr "排序(_O)"
 
 #: blueman/gui/manager/ManagerMenu.py:96
 msgid "_Name"
@@ -566,17 +565,17 @@ msgstr "已加入(_A)"
 
 #: blueman/gui/manager/ManagerMenu.py:115
 msgid "_Descending"
-msgstr "遞增(_D)"
+msgstr "遞減(_D)"
 
 #: blueman/gui/manager/ManagerMenu.py:128
 #: blueman/plugins/applet/StandardItems.py:54
 msgid "_Plugins"
-msgstr "外掛 (_P)"
+msgstr "外掛(_P)"
 
 #: blueman/gui/manager/ManagerMenu.py:133
 #: blueman/plugins/applet/StandardItems.py:45
 msgid "_Local Services"
-msgstr "本機服務 (_L)"
+msgstr "本機服務(_L)"
 
 #: blueman/gui/manager/ManagerMenu.py:134
 #: blueman/plugins/applet/StandardItems.py:87
@@ -585,47 +584,39 @@ msgstr "服務偏好設定"
 
 #: blueman/gui/manager/ManagerMenu.py:142
 msgid "_Search"
-msgstr "搜尋 (_S)"
+msgstr "搜尋(_S)"
 
 #: blueman/gui/manager/ManagerMenu.py:156
-#, fuzzy
 msgid "_Preferences"
-msgstr "配接器偏好設定"
+msgstr "偏好設定(_P)"
 
 #: blueman/gui/manager/ManagerMenu.py:165 blueman/plugins/applet/ExitItem.py:12
-#, fuzzy
 msgid "_Exit"
-msgstr "結束"
+msgstr "離開(_E)"
 
 #. translators: device class
 #: blueman/gui/manager/ManagerDeviceList.py:326
 #: blueman/gui/manager/ManagerDeviceList.py:355 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
-#, fuzzy
 msgid "Uncategorized"
 msgstr "未分類"
 
 #: blueman/gui/manager/ManagerDeviceList.py:544
-#, fuzzy
-#| msgid "Trust"
 msgid "Trusted"
-msgstr "信任的"
+msgstr "已信任"
 
 #: blueman/gui/manager/ManagerDeviceList.py:546
-#, fuzzy
-#| msgid "Pair"
 msgid "Paired"
-msgstr "配對"
+msgstr "已配對"
 
 #: blueman/gui/manager/ManagerDeviceList.py:548
 msgid "Blocked"
-msgstr ""
+msgstr "已封鎖"
 
 #: blueman/gui/manager/ManagerDeviceList.py:571
-#, fuzzy
 msgid "<b>Connected</b>"
-msgstr "<b>連線到：</b>"
+msgstr "<b>已連線</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:586
 msgid "Poor"
@@ -643,31 +634,31 @@ msgstr "優"
 
 #: blueman/gui/manager/ManagerDeviceList.py:592
 msgid "Much"
-msgstr "佳"
+msgstr "很多"
 
 #: blueman/gui/manager/ManagerDeviceList.py:594
 msgid "Too much"
-msgstr "更佳"
+msgstr "太多"
 
 #: blueman/gui/manager/ManagerDeviceList.py:597
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
-msgstr ""
+msgstr "<b>接收信號強度： %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:600
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
-msgstr ""
+msgstr "接收信號強度： %(rssi)u%% <i>(%(rssi_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:605
 #, python-format
 msgid "<b>Link Quality: %(lq)u%%</b>"
-msgstr ""
+msgstr "<b>連線品質： %(lq)u%%</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:607
 #, python-format
 msgid "Link Quality: %(lq)u%%"
-msgstr ""
+msgstr "連線品質： %(lq)u%%"
 
 #: blueman/gui/manager/ManagerDeviceList.py:611
 msgid "Low"
@@ -684,12 +675,12 @@ msgstr "極高"
 #: blueman/gui/manager/ManagerDeviceList.py:622
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
-msgstr ""
+msgstr "<b>傳輸功率： %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:625
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
-msgstr ""
+msgstr "傳輸功率： %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:131
 msgid "Success!"
@@ -697,57 +688,51 @@ msgstr "成功！"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:138
 msgid "Failed"
-msgstr "錯誤"
+msgstr "失敗"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:144
-#, fuzzy
 msgid "Connecting…"
-msgstr "連線"
+msgstr "連線中…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:180
 msgid "Disconnection Failed: "
-msgstr "斷線失敗："
+msgstr "斷線失敗： "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:204
 msgid "No audio endpoints registered"
-msgstr ""
+msgstr "無已註冊的音訊接收裝置"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:207
 msgid "Input/output error"
-msgstr ""
+msgstr "輸入 / 輸出錯誤"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:209
-#, fuzzy
 msgid "Device did not respond"
-msgstr "顯示裝置資訊"
+msgstr "裝置無回應"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:213
-#, fuzzy
 msgid "Resource temporarily unavailable"
-msgstr "暫時可見"
+msgstr "資源暫時無法使用"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:218
 msgid "Connection Failed: "
-msgstr "連線錯誤： "
+msgstr "連線失敗： "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:287
-#, fuzzy
 msgid "<b>_Connect</b>"
-msgstr "<b>連線到：</b>"
+msgstr "<b>連線(_C)</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:289
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
-msgstr "連線到自動連接設定檔 A2DP 來源、A2DP 接收器與 HID"
+msgstr "連線到具有自動連接設定檔的 A2DP 來源、A2DP 輸出與 HID"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:293
-#, fuzzy
-#| msgid "<b>Disconnect:</b>"
 msgid "<b>_Disconnect</b>"
-msgstr "<b>斷線：</b>"
+msgstr "<b>斷線(_D)</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:294
 msgid "Forcefully disconnect the device"
-msgstr "強制中斷連線"
+msgstr "強制中斷裝置連線"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:310
 msgid "<b>Connect To:</b>"
@@ -758,14 +743,12 @@ msgid "<b>Disconnect:</b>"
 msgstr "<b>斷線：</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:324
-#, fuzzy
 msgid "<b>Auto-connect:</b>"
-msgstr "<b>斷線：</b>"
+msgstr "<b>自動連線：</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:343
-#, fuzzy
 msgid "Send a _File…"
-msgstr "傳送檔案...(_F)"
+msgstr "傳送檔案(_F)…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:356
 msgid "_Pair"
@@ -777,55 +760,51 @@ msgstr "信任(_T)"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:371
 msgid "_Untrust"
-msgstr "不信任(_U)"
+msgstr "取消信任(_U)"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:378
 msgid "_Block"
-msgstr ""
+msgstr "封鎖(_B)"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:383
 msgid "_Unblock"
-msgstr ""
+msgstr "解除封鎖(_U)"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:387
-#, fuzzy
-#| msgid "Send files to this device"
 msgid "Block/Unblock this device"
-msgstr "傳送檔案到此裝置"
+msgstr "封鎖 / 解除封鎖此裝置"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:407
-#, fuzzy
 msgid "R_ename device…"
-msgstr "重新命名裝置"
+msgstr "重新命名裝置(_E)…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:416
-#, fuzzy
 msgid "_Remove…"
-msgstr "移除"
+msgstr "移除(_R)…"
 
 #: blueman/gui/manager/ManagerProgressbar.py:44
 msgid "Cancel Operation"
-msgstr "取消作業"
+msgstr "取消操作"
 
 #: blueman/gui/manager/ManagerStats.py:38
 #: blueman/gui/manager/ManagerStats.py:41
 msgid "Data activity indication"
-msgstr "當前的資料傳送/接收狀況"
+msgstr "當前的資料傳送 / 接收狀況"
 
 #: blueman/gui/manager/ManagerStats.py:43
 #: blueman/gui/manager/ManagerStats.py:55
 msgid "Total data received and rate of transmission"
-msgstr "總資料接收及接收率"
+msgstr "接收的資料總量與傳輸速度"
 
 #: blueman/gui/manager/ManagerStats.py:47
 #: blueman/gui/manager/ManagerStats.py:52
 msgid "Total data sent and rate of transmission"
-msgstr "總資料傳送及傳送率"
+msgstr "送出的資料總料與傳輸速度"
 
 #: blueman/gui/manager/ManagerToolbar.py:37
 #: blueman/gui/manager/ManagerToolbar.py:93
 msgid "Untrust"
-msgstr "不信任"
+msgstr "取消信任"
 
 #: blueman/gui/DeviceSelectorDialog.py:14
 msgid "Select Device"
@@ -851,7 +830,7 @@ msgstr "外掛程式"
 #: blueman/gui/applet/PluginDialog.py:296
 #: blueman/gui/applet/PluginDialog.py:318
 msgid "Dependency issue"
-msgstr "套件訊息"
+msgstr "相依性問題"
 
 #: blueman/gui/applet/PluginDialog.py:298
 #, python-format
@@ -860,8 +839,8 @@ msgid ""
 "also unload <b>\"%(0)s\"</b>.\n"
 "Proceed?"
 msgstr ""
-"套件 <b>\"%(0)s\"</b> 依存於 <b>%(1)s</b>。卸載 <b>%(1)s</b> 也會卸載 <b>"
-"\"%(0)s\"</b>。\n"
+"套件 <b>「%(0)s」</b> 依存於 <b>%(1)s</b>。卸載 <b>%(1)s</b> 也會卸載 "
+"<b>「%(0)s」</b>。\n"
 "是否繼續？"
 
 #: blueman/gui/applet/PluginDialog.py:320
@@ -877,17 +856,16 @@ msgstr ""
 
 #: blueman/gui/DeviceSelectorWidget.py:39
 msgid "Adapter selection"
-msgstr "選取配接器"
+msgstr "選取接收器"
 
 #: blueman/gui/DeviceSelectorWidget.py:45
-#, fuzzy
 msgid "Discovering…"
-msgstr "可探索…… %s秒"
+msgstr "搜尋中……"
 
 #. translators: device class
 #: blueman/DeviceClass.py:6
 msgid "Miscellaneous"
-msgstr ""
+msgstr "其他"
 
 #. translators: device class
 #: blueman/DeviceClass.py:8
@@ -897,33 +875,32 @@ msgstr "電腦"
 #. translators: device class
 #: blueman/DeviceClass.py:10
 msgid "Phone"
-msgstr "手機"
+msgstr "電話"
 
 #. translators: device class
 #: blueman/DeviceClass.py:12
-#, fuzzy
 msgid "Access point"
-msgstr "網路存取點 (NAP)"
+msgstr "網路存取點 (AP)"
 
 #. translators: device class
 #: blueman/DeviceClass.py:14
 msgid "Audio/video"
-msgstr ""
+msgstr "音訊 / 視訊"
 
 #. translators: device class
 #: blueman/DeviceClass.py:16
 msgid "Peripheral"
-msgstr ""
+msgstr "週邊設備"
 
 #. translators: device class
 #: blueman/DeviceClass.py:18 blueman/DeviceClass.py:276
 msgid "Imaging"
-msgstr ""
+msgstr "圖像"
 
 #. translators: device class
 #: blueman/DeviceClass.py:20 blueman/DeviceClass.py:41
 msgid "Wearable"
-msgstr ""
+msgstr "穿戴式裝置"
 
 #. translators: device class
 #: blueman/DeviceClass.py:22
@@ -932,130 +909,106 @@ msgstr "玩具"
 
 #. translators: device class
 #: blueman/DeviceClass.py:31
-#, fuzzy
 msgid "Desktop"
 msgstr "桌上型電腦"
 
 #. translators: device class
 #: blueman/DeviceClass.py:33
-#, fuzzy
 msgid "Server"
 msgstr "伺服器"
 
 #. translators: device class
 #: blueman/DeviceClass.py:35
-#, fuzzy
 msgid "Laptop"
 msgstr "筆記型電腦"
 
 #. translators: device class
 #: blueman/DeviceClass.py:37
-#, fuzzy
 msgid "Handheld"
 msgstr "手持裝置"
 
 #. translators: device class
 #: blueman/DeviceClass.py:39
 msgid "Palm"
-msgstr ""
+msgstr "Palm 裝置"
 
 #. translators: device class
 #: blueman/DeviceClass.py:48
-#, fuzzy
 msgid "Cellular"
-msgstr "行動裝置"
+msgstr "行動電話"
 
 #. translators: device class
 #: blueman/DeviceClass.py:50
-#, fuzzy
 msgid "Cordless"
-msgstr "無線電"
+msgstr "無線裝置"
 
 #. translators: device class
 #: blueman/DeviceClass.py:52
-#, fuzzy
 msgid "Smartphone"
-msgstr "智慧手機"
+msgstr "智慧型手機"
 
 #. translators: device class
 #: blueman/DeviceClass.py:54
-#, fuzzy
 msgid "Modem"
 msgstr "數據機"
 
 #. translators: device class
 #: blueman/DeviceClass.py:56
 msgid "ISDN"
-msgstr ""
+msgstr "ISDN"
 
 #. translators: device class
 #: blueman/DeviceClass.py:61
 msgid "Fully"
-msgstr ""
+msgstr "完全"
 
 #. translators: device class
 #: blueman/DeviceClass.py:63
-#, fuzzy
-#| msgid "1-17 percent"
 msgid "1–17 percent"
-msgstr "百分之 1-17"
+msgstr "1–17%"
 
 #. translators: device class
 #: blueman/DeviceClass.py:65
-#, fuzzy
-#| msgid "17-33 percent"
 msgid "17–33 percent"
-msgstr "百分之 17-33"
+msgstr "17 – 33%"
 
 #. translators: device class
 #: blueman/DeviceClass.py:67
-#, fuzzy
-#| msgid "33-50 percent"
 msgid "33–50 percent"
-msgstr "百分之 33-50"
+msgstr "33 - 50%"
 
 #. translators: device class
 #: blueman/DeviceClass.py:69
-#, fuzzy
-#| msgid "50-67 percent"
 msgid "50–67 percent"
-msgstr "百分之 50-67"
+msgstr "50 – 67%"
 
 #. translators: device class
 #: blueman/DeviceClass.py:71
-#, fuzzy
-#| msgid "67-83 percent"
 msgid "67–83 percent"
-msgstr "百分之67-83"
+msgstr "67 – 83%"
 
 #. translators: device class
 #: blueman/DeviceClass.py:73
-#, fuzzy
-#| msgid "83-99 percent"
 msgid "83–99 percent"
-msgstr "百分之 83-99"
+msgstr "83 - 99%"
 
 #. translators: device class
 #: blueman/DeviceClass.py:75
-#, fuzzy
 msgid "Not available"
-msgstr "obexd 無法使用"
+msgstr "無法使用"
 
 #. translators: device class
 #: blueman/DeviceClass.py:82 blueman/Sdp.py:123 blueman/Sdp.py:164
-#, fuzzy
 msgid "Headset"
-msgstr "耳機"
+msgstr "耳麥"
 
 #. translators: device class
 #: blueman/DeviceClass.py:84 blueman/Sdp.py:145
-#, fuzzy
 msgid "Handsfree"
 msgstr "免持裝置"
 
 #. translators: device class
 #: blueman/DeviceClass.py:88
-#, fuzzy
 msgid "Microphone"
 msgstr "麥克風"
 
@@ -1072,82 +1025,77 @@ msgstr "耳機"
 #. translators: device class
 #: blueman/DeviceClass.py:94
 msgid "Portable audio"
-msgstr ""
+msgstr "可攜式音響"
 
 #. translators: device class
 #: blueman/DeviceClass.py:96
 msgid "Car audio"
-msgstr ""
+msgstr "汽車音響"
 
 #. translators: device class
 #: blueman/DeviceClass.py:98
 msgid "Set-top box"
-msgstr ""
+msgstr "機上盒"
 
 #. translators: device class
 #: blueman/DeviceClass.py:100
 msgid "Hi-Fi audio"
-msgstr ""
+msgstr "Hi-Fi 音響"
 
 #. translators: device class
 #: blueman/DeviceClass.py:102
 msgid "VCR"
-msgstr ""
+msgstr "錄影機"
 
 #. translators: device class
 #: blueman/DeviceClass.py:104
-#, fuzzy
 msgid "Video camera"
-msgstr "音訊來源"
+msgstr "攝影機"
 
 #. translators: device class
 #: blueman/DeviceClass.py:106
 msgid "Camcorder"
-msgstr ""
+msgstr "攝錄影機"
 
 #. translators: device class
 #: blueman/DeviceClass.py:108
-#, fuzzy
 msgid "Video monitor"
-msgstr "音訊來源"
+msgstr "影像監視器"
 
 #. translators: device class
 #: blueman/DeviceClass.py:110
 msgid "Video display and loudspeaker"
-msgstr ""
+msgstr "影像顯示器與揚聲器"
 
 #. translators: device class
 #: blueman/DeviceClass.py:112
-#, fuzzy
 msgid "Video conferencing"
-msgstr "音訊來源"
+msgstr "視訊會議"
 
 #. translators: device class
 #: blueman/DeviceClass.py:116
 msgid "Gaming/Toy"
-msgstr ""
+msgstr "遊戲 / 玩具"
 
 #. translators: device class
 #: blueman/DeviceClass.py:123 blueman/DeviceClass.py:189
-#, fuzzy
 msgid "Keyboard"
 msgstr "鍵盤"
 
 #. translators: device class
 #: blueman/DeviceClass.py:125
-#, fuzzy
 msgid "Pointing"
-msgstr "列表機"
+msgstr "指向裝置"
 
 #. translators: device class
 #: blueman/DeviceClass.py:127
 msgid "Combo"
-msgstr ""
+msgstr "複合式設備"
 
 #. translators: device class
 #: blueman/DeviceClass.py:132
 msgid "Display"
-msgstr ""
+msgstr "顯示器"
 
 #. translators: device class
 #: blueman/DeviceClass.py:134
@@ -1162,22 +1110,22 @@ msgstr "掃描器"
 #. translators: device class
 #: blueman/DeviceClass.py:138
 msgid "Printer"
-msgstr "影印機"
+msgstr "印表機"
 
 #. translators: device class
 #: blueman/DeviceClass.py:143
 msgid "Wrist watch"
-msgstr ""
+msgstr "手錶"
 
 #. translators: device class
 #: blueman/DeviceClass.py:145
 msgid "Pager"
-msgstr ""
+msgstr "呼叫器"
 
 #. translators: device class
 #: blueman/DeviceClass.py:147
 msgid "Jacket"
-msgstr ""
+msgstr "夾克"
 
 #. translators: device class
 #: blueman/DeviceClass.py:149
@@ -1197,12 +1145,12 @@ msgstr "機器人"
 #. translators: device class
 #: blueman/DeviceClass.py:158
 msgid "Vehicle"
-msgstr ""
+msgstr "車輛"
 
 #. translators: device class
 #: blueman/DeviceClass.py:160
 msgid "Doll"
-msgstr "布偶"
+msgstr "玩偶"
 
 #. translators: device class
 #: blueman/DeviceClass.py:162
@@ -1215,117 +1163,104 @@ msgid "Game"
 msgstr "遊戲"
 
 #: blueman/DeviceClass.py:169
-#, fuzzy
 msgid "Generic Phone"
-msgstr "連線"
+msgstr "通用電話"
 
 #: blueman/DeviceClass.py:170
-#, fuzzy
 msgid "Generic Computer"
-msgstr "連線"
+msgstr "通用電腦"
 
 #: blueman/DeviceClass.py:171
-#, fuzzy
 msgid "Generic Watch"
-msgstr "連線"
+msgstr "普通手錶"
 
 #: blueman/DeviceClass.py:172
 msgid "Watch: Sports Watch"
-msgstr ""
+msgstr "手錶：運動手錶"
 
 #: blueman/DeviceClass.py:173
-#, fuzzy
 msgid "Generic Clock"
-msgstr "連線"
+msgstr "通用時鐘"
 
 #: blueman/DeviceClass.py:174
-#, fuzzy
 msgid "Generic Display"
-msgstr "藍牙檔案傳送"
+msgstr "通用顯示器"
 
 #: blueman/DeviceClass.py:175
-#, fuzzy
 msgid "Generic Remote Control"
-msgstr "連線"
+msgstr "通用搖控器"
 
 #: blueman/DeviceClass.py:176
-#, fuzzy
 msgid "Generic Eye-glasses"
-msgstr "藍牙檔案傳送"
+msgstr "通用眼鏡"
 
 #: blueman/DeviceClass.py:177
-#, fuzzy
 msgid "Generic Tag"
-msgstr "藍牙檔案傳送"
+msgstr "通用標籤"
 
 #: blueman/DeviceClass.py:178
-#, fuzzy
 msgid "Generic Keyring"
-msgstr "群組網路 (GN)"
+msgstr "通用鑰匙圈"
 
 #: blueman/DeviceClass.py:179
-#, fuzzy
 msgid "Generic Media Player"
-msgstr "藍牙檔案傳送"
+msgstr "通用媒體播放機"
 
 #: blueman/DeviceClass.py:180
-#, fuzzy
 msgid "Generic Barcode Scanner"
-msgstr "連線"
+msgstr "通用條碼掃描器"
 
 #: blueman/DeviceClass.py:181
-#, fuzzy
 msgid "Generic Thermometer"
-msgstr "連線"
+msgstr "通用溫度計"
 
 #: blueman/DeviceClass.py:182
 msgid "Thermometer: Ear"
-msgstr ""
+msgstr "溫度計：耳溫槍"
 
 #: blueman/DeviceClass.py:183
-#, fuzzy
 msgid "Generic Heart rate Sensor"
-msgstr "藍牙檔案傳送"
+msgstr "通用心率傳感器"
 
 #: blueman/DeviceClass.py:184
 msgid "Heart Rate Sensor: Heart Rate Belt"
-msgstr ""
+msgstr "心率傳感器：心率帶"
 
 #: blueman/DeviceClass.py:185
 msgid "Generic Blood Pressure"
-msgstr ""
+msgstr "通用血壓計"
 
 #: blueman/DeviceClass.py:186
 msgid "Blood Pressure: Arm"
-msgstr ""
+msgstr "血壓計：臂式"
 
 #: blueman/DeviceClass.py:187
 msgid "Blood Pressure: Wrist"
-msgstr ""
+msgstr "血壓計：腕式"
 
 #: blueman/DeviceClass.py:188
 msgid "Human Interface Device (HID)"
-msgstr ""
+msgstr "人機介面裝置 (HID)"
 
 #: blueman/DeviceClass.py:190
 msgid "Mouse"
-msgstr ""
+msgstr "滑鼠"
 
 #: blueman/DeviceClass.py:191
 msgid "Joystick"
-msgstr ""
+msgstr "搖桿"
 
 #: blueman/DeviceClass.py:192
 msgid "Gamepad"
-msgstr ""
+msgstr "遊戲手把"
 
 #: blueman/DeviceClass.py:193
 msgid "Digitizer Tablet"
-msgstr ""
+msgstr "繪圖板"
 
 #: blueman/DeviceClass.py:194
 msgid "Card Reader"
-msgstr ""
+msgstr "讀卡機"
 
 #: blueman/DeviceClass.py:195
 msgid "Digital Pen"
@@ -1333,37 +1268,35 @@ msgstr "數位筆"
 
 #: blueman/DeviceClass.py:196
 msgid "Barcode Scanner"
-msgstr ""
+msgstr "條碼掃描器"
 
 #: blueman/DeviceClass.py:197
-#, fuzzy
 msgid "Generic Glucose Meter"
-msgstr "連線"
+msgstr "通用血糖計"
 
 #: blueman/DeviceClass.py:198
 msgid "Generic: Running Walking Sensor"
-msgstr ""
+msgstr "通用：跑步行走傳感器"
 
 #: blueman/DeviceClass.py:199
 msgid "Running Walking Sensor: In-Shoe"
-msgstr ""
+msgstr "跑步行走傳感器：鞋內式"
 
 #: blueman/DeviceClass.py:200
 msgid "Running Walking Sensor: On-Shoe"
-msgstr ""
+msgstr "跑步行走傳感器：鞋上式"
 
 #: blueman/DeviceClass.py:201
 msgid "Running Walking Sensor: On-Hip"
-msgstr ""
+msgstr "跑步行走傳感器：臀掛式"
 
 #: blueman/DeviceClass.py:202
-#, fuzzy
 msgid "Generic: Cycling"
-msgstr "群組網路 (GN)"
+msgstr "通用：單車"
 
 #: blueman/DeviceClass.py:203
 msgid "Cycling: Cycling Computer"
-msgstr ""
+msgstr "單車：單車電腦"
 
 #: blueman/DeviceClass.py:204
 msgid "Cycling: Speed Sensor"
@@ -1371,20 +1304,20 @@ msgstr "自行車：速度感測器"
 
 #: blueman/DeviceClass.py:205
 msgid "Cycling: Cadence Sensor"
-msgstr ""
+msgstr "單中：踏頻傳感器"
 
 #: blueman/DeviceClass.py:206
 msgid "Cycling: Power Sensor"
-msgstr ""
+msgstr "單車：功率傳感器"
 
 #: blueman/DeviceClass.py:207
 msgid "Cycling: Speed and Cadence Sensor"
-msgstr ""
+msgstr "單車：速度與踏頻傳感器"
 
 #. 19 - 48 reserved
 #: blueman/DeviceClass.py:209
 msgid "Generic: Pulse Oximeter"
-msgstr ""
+msgstr "通用：血氧計"
 
 #: blueman/DeviceClass.py:210
 msgid "Fingertip"
@@ -1392,72 +1325,72 @@ msgstr "指尖"
 
 #: blueman/DeviceClass.py:211
 msgid "Wrist-Worn"
-msgstr ""
+msgstr "腕带式"
 
 #: blueman/DeviceClass.py:212
 msgid "Generic: Weight Scale"
-msgstr ""
+msgstr "通用：體重計"
 
 #: blueman/DeviceClass.py:213
 msgid "Generic Personal Mobility Device"
-msgstr ""
+msgstr "通用個人移動裝置"
 
 #: blueman/DeviceClass.py:214
 msgid "Powered Wheelchair"
-msgstr ""
+msgstr "電動輪椅"
 
 #: blueman/DeviceClass.py:215
 msgid "Mobility Scooter"
-msgstr ""
+msgstr "電動摩托車"
 
 #: blueman/DeviceClass.py:216
 msgid "Generic Continuous Glucose Monitor"
-msgstr ""
+msgstr "通用型連續血糖監視器"
 
 #: blueman/DeviceClass.py:217
 msgid "Generic Insulin Pump"
-msgstr ""
+msgstr "通用胰島素幫浦"
 
 #: blueman/DeviceClass.py:218
 msgid "Insulin Pump, durable pump"
-msgstr ""
+msgstr "耐用型胰島素幫浦"
 
 #: blueman/DeviceClass.py:219
 msgid "Insulin Pump, patch pump"
-msgstr ""
+msgstr "貼片型胰島素幫浦"
 
 #: blueman/DeviceClass.py:220
 msgid "Insulin Pen"
-msgstr ""
+msgstr "胰島素筆"
 
 #: blueman/DeviceClass.py:221
 msgid "Generic Medication Delivery"
-msgstr ""
+msgstr "通用型給藥裝置"
 
 #. 55 - 80 reserved
 #: blueman/DeviceClass.py:223
 msgid "Generic: Outdoor Sports Activity"
-msgstr ""
+msgstr "通用：戶外運動"
 
 #: blueman/DeviceClass.py:224
 msgid "Location Display Device"
-msgstr ""
+msgstr "位置顯示裝置"
 
 #: blueman/DeviceClass.py:225
 msgid "Location and Navigation Display Device"
-msgstr ""
+msgstr "定位與導航顯示裝置"
 
 #: blueman/DeviceClass.py:226
 msgid "Location Pod"
-msgstr ""
+msgstr "定位器"
 
 #: blueman/DeviceClass.py:227
 msgid "Location and Navigation Pod"
-msgstr ""
+msgstr "定位與導航器"
 
 #: blueman/Sdp.py:88
 msgid "SDP"
-msgstr ""
+msgstr "SDP"
 
 #: blueman/Sdp.py:89
 msgid "UDP"
@@ -1465,7 +1398,7 @@ msgstr "UDP"
 
 #: blueman/Sdp.py:90
 msgid "RFCOMM"
-msgstr ""
+msgstr "RFCOMM"
 
 #: blueman/Sdp.py:91
 msgid "TCP"
@@ -1473,19 +1406,19 @@ msgstr "TCP"
 
 #: blueman/Sdp.py:92
 msgid "TCS-BIN"
-msgstr ""
+msgstr "TCS-BIN"
 
 #: blueman/Sdp.py:93
 msgid "TCS-AT"
-msgstr ""
+msgstr "TCS-AT"
 
 #: blueman/Sdp.py:94
 msgid "ATT"
-msgstr ""
+msgstr "ATT"
 
 #: blueman/Sdp.py:95
 msgid "OBEX"
-msgstr ""
+msgstr "OBEX"
 
 #: blueman/Sdp.py:96
 msgid "IP"
@@ -1505,97 +1438,95 @@ msgstr "WSP"
 
 #: blueman/Sdp.py:100
 msgid "BNEP"
-msgstr ""
+msgstr "BNEP"
 
 #: blueman/Sdp.py:101
 msgid "UPnP/ESDP"
-msgstr ""
+msgstr "UPnP/ESDP"
 
 #: blueman/Sdp.py:102
 msgid "HIDP"
-msgstr ""
+msgstr "HIDP"
 
 #: blueman/Sdp.py:103
 msgid "Hardcopy Control Channel"
-msgstr ""
+msgstr "硬拷貝控製通道"
 
 #: blueman/Sdp.py:104
 msgid "Hardcopy Data Channel"
-msgstr ""
+msgstr "硬拷貝資料通道"
 
 #: blueman/Sdp.py:105
 msgid "Hardcopy Notification"
-msgstr ""
+msgstr "硬拷貝通知"
 
 #: blueman/Sdp.py:106
 msgid "AVCTP"
-msgstr ""
+msgstr "AVCTP"
 
 #: blueman/Sdp.py:107
 msgid "AVDTP"
-msgstr ""
+msgstr "AVDTP"
 
 #: blueman/Sdp.py:108
 msgid "CMTP"
-msgstr ""
+msgstr "CMTP"
 
 #: blueman/Sdp.py:109
 msgid "UDI_C-Plane"
-msgstr ""
+msgstr "UDI_C-Plane"
 
 #: blueman/Sdp.py:110 blueman/Sdp.py:111
 msgid "Multi-Channel Adaptation Protocol (MCAP)"
-msgstr ""
+msgstr "多通道配接協定 （MCAP）"
 
 #: blueman/Sdp.py:112
 msgid "L2CAP"
-msgstr ""
+msgstr "L2CAP"
 
 #: blueman/Sdp.py:113
 msgid "ServiceDiscoveryServerServiceClassID"
-msgstr ""
+msgstr "ServiceDiscoveryServerServiceClassID"
 
 #: blueman/Sdp.py:114
 msgid "BrowseGroupDescriptorServiceClassID"
-msgstr ""
+msgstr "BrowseGroupDescriptorServiceClassID"
 
 #: blueman/Sdp.py:115
 msgid "Public Browse Group"
-msgstr ""
+msgstr "公開瀏覽群組"
 
 #: blueman/Sdp.py:116
-#, fuzzy
 msgid "Serial Port"
-msgstr "串列埠通訊"
+msgstr "串列埠"
 
 #: blueman/Sdp.py:117
 msgid "LAN Access Using PPP"
-msgstr ""
+msgstr "透過 PPP 存取區域網路"
 
 #: blueman/Sdp.py:118
 msgid "Dialup Networking (DUN)"
-msgstr "撥號網路 (DUN)"
+msgstr "撥接網路 (DUN)"
 
 #: blueman/Sdp.py:119
 msgid "IrMC Sync"
-msgstr ""
+msgstr "IrMC 同步"
 
 #: blueman/Sdp.py:120
 msgid "OBEX Object Push"
-msgstr ""
+msgstr "OBEX 物件推送"
 
 #: blueman/Sdp.py:121
-#, fuzzy
 msgid "OBEX File Transfer"
-msgstr "藍牙檔案傳送"
+msgstr "OBEX 檔案傳輸"
 
 #: blueman/Sdp.py:122
 msgid "IrMC Sync Command"
-msgstr ""
+msgstr "IrMC 同步指令"
 
 #: blueman/Sdp.py:124
 msgid "Cordless Telephony"
-msgstr ""
+msgstr "無線電話"
 
 #: blueman/Sdp.py:125
 msgid "Audio Source"
@@ -1603,15 +1534,15 @@ msgstr "音訊來源"
 
 #: blueman/Sdp.py:126
 msgid "Audio Sink"
-msgstr "音訊終端"
+msgstr "音訊輸出"
 
 #: blueman/Sdp.py:127
 msgid "Remote Control Target"
-msgstr ""
+msgstr "搖控目標"
 
 #: blueman/Sdp.py:128
 msgid "Advanced Audio"
-msgstr ""
+msgstr "進階音訊"
 
 #: blueman/Sdp.py:129
 msgid "Remote Control"
@@ -1623,7 +1554,7 @@ msgstr "視訊會議"
 
 #: blueman/Sdp.py:131
 msgid "Intercom"
-msgstr ""
+msgstr "對講機"
 
 #: blueman/Sdp.py:132
 msgid "Fax"
@@ -1631,19 +1562,19 @@ msgstr "傳真"
 
 #: blueman/Sdp.py:133
 msgid "Headset Audio Gateway"
-msgstr ""
+msgstr "耳麥音訊閘道"
 
 #: blueman/Sdp.py:134
 msgid "WAP"
-msgstr ""
+msgstr "WAP"
 
 #: blueman/Sdp.py:135
 msgid "WAP Client"
-msgstr ""
+msgstr "WAP 客戶端"
 
 #: blueman/Sdp.py:136
 msgid "PANU"
-msgstr ""
+msgstr "PANU"
 
 #: blueman/Sdp.py:137
 msgid "Network Access Point"
@@ -1651,474 +1582,455 @@ msgstr "網路存取點 (NAP)"
 
 #: blueman/Sdp.py:138
 msgid "Group Network"
-msgstr "群組網路 (GN)"
+msgstr "群組網路"
 
 #: blueman/Sdp.py:139
 msgid "DirectPrinting (BPP)"
-msgstr ""
+msgstr "DirectPrinting (BPP)"
 
 #: blueman/Sdp.py:140
 msgid "ReferencePrinting (BPP)"
-msgstr ""
+msgstr "ReferencePrinting (BPP)"
 
 #: blueman/Sdp.py:141
 msgid "Imaging (BIP)"
-msgstr ""
+msgstr "影像處理 (BIP)"
 
 #: blueman/Sdp.py:142
 msgid "ImagingResponder (BIP)"
-msgstr ""
+msgstr "ImagingResponder (BIP)"
 
 #: blueman/Sdp.py:143
 msgid "ImagingAutomaticArchive (BIP)"
-msgstr ""
+msgstr "ImagingAutomaticArchive (BIP)"
 
 #: blueman/Sdp.py:144
 msgid "ImagingReferencedObjects (BIP)"
-msgstr ""
+msgstr "ImagingReferencedObjects (BIP)"
 
 #: blueman/Sdp.py:146
 msgid "Handsfree Audio Gateway"
-msgstr ""
+msgstr "免持裝置音訊閘道"
 
 #: blueman/Sdp.py:147
 msgid "DirectPrintingReferenceObjectsService (BPP)"
-msgstr ""
+msgstr "DirectPrintingReferenceObjectsService (BPP)"
 
 #: blueman/Sdp.py:148
 msgid "ReflectedUI (BPP)"
-msgstr ""
+msgstr "ReflectedUI (BPP)"
 
 #: blueman/Sdp.py:149
 msgid "Basic Printing (BPP)"
-msgstr ""
+msgstr "基本列印 (BPP)"
 
 #: blueman/Sdp.py:150
 msgid "Printing Status (BPP)"
-msgstr ""
+msgstr "列印狀態 (BPP)"
 
 #: blueman/Sdp.py:151
 msgid "Human Interface Device Service (HID)"
-msgstr ""
+msgstr "人機介面裝置服務 (HID)"
 
 #: blueman/Sdp.py:152
 msgid "HardcopyCableReplacement (HCR)"
-msgstr ""
+msgstr "HardcopyCableReplacement (HCR)"
 
 #: blueman/Sdp.py:153
 msgid "HCR_Print (HCR)"
-msgstr ""
+msgstr "HCR_Print (HCR)"
 
 #: blueman/Sdp.py:154
 msgid "HCR_Scan (HCR)"
-msgstr ""
+msgstr "HCR_Scan (HCR)"
 
 #: blueman/Sdp.py:155
 msgid "Common ISDN Access (CIP)"
-msgstr ""
+msgstr "普通 ISDN 存取 (CIP)"
 
 #: blueman/Sdp.py:156
 msgid "VideoConferencingGW (VCP)"
-msgstr ""
+msgstr "VideoConferencingGW (VCP)"
 
 #: blueman/Sdp.py:157
 msgid "UDI-MT"
-msgstr ""
+msgstr "UDI-MT"
 
 #: blueman/Sdp.py:158
 msgid "UDI-TA"
-msgstr ""
+msgstr "UDI-TA"
 
 #: blueman/Sdp.py:159
 msgid "Audio/Video"
-msgstr ""
+msgstr "聲音 / 影像"
 
 #: blueman/Sdp.py:160
 msgid "SIM Access (SAP)"
-msgstr ""
+msgstr "SIM 存取 (SAP)"
 
 #: blueman/Sdp.py:161
 msgid "Phonebook Access (PBAP) - PCE"
-msgstr ""
+msgstr "電話簿存取 (PBAP) - PCE"
 
 #: blueman/Sdp.py:162
 msgid "Phonebook Access (PBAP) - PSE"
-msgstr ""
+msgstr "電話簿存取 (PBAP) - PSE"
 
 #: blueman/Sdp.py:163
-#, fuzzy
 msgid "Phonebook Access (PBAP)"
-msgstr "網路接取點 (NAP)"
+msgstr "電話簿存取 (PBAP)"
 
 #: blueman/Sdp.py:165
 msgid "Message Access Server"
-msgstr ""
+msgstr "訊息存取伺服器"
 
 #: blueman/Sdp.py:166
 msgid "Message Notification Server"
-msgstr ""
+msgstr "訊息通知伺服器"
 
 #: blueman/Sdp.py:167
-#, fuzzy
 msgid "Message Access Profile (MAP)"
-msgstr "網路接取點 (NAP)"
+msgstr "訊息存取設定 (MAP)"
 
 #: blueman/Sdp.py:168
 msgid "GNSS"
-msgstr ""
+msgstr "GNSS"
 
 #: blueman/Sdp.py:169
 msgid "GNSS Server"
-msgstr ""
+msgstr "GNSS 伺服器"
 
 #: blueman/Sdp.py:170
 msgid "3D Display"
-msgstr ""
+msgstr "3D 顯示器"
 
 #: blueman/Sdp.py:171
 msgid "3D Glasses"
-msgstr ""
+msgstr "3D 眼鏡"
 
 #: blueman/Sdp.py:172
 msgid "3D Synchronization (3DSP)"
-msgstr ""
+msgstr "3D 同步 (3DSP)"
 
 #: blueman/Sdp.py:173
 msgid "Multi-Profile Specification (MPS) Profile"
-msgstr ""
+msgstr "複數設定檔規範 (MPS) 設定檔"
 
 #: blueman/Sdp.py:174
 msgid "Multi-Profile Specification (MPS) Service"
-msgstr ""
+msgstr "複數設定檔規範 (MPS) 服務"
 
 #: blueman/Sdp.py:175
 msgid "Calendar, Task, and Notes (CTN) Access Service"
-msgstr ""
+msgstr "日曆、待辦事項、筆記 (CTN) 存取服務"
 
 #: blueman/Sdp.py:176
 msgid "Calendar, Task, and Notes (CTN) Notification Service"
-msgstr ""
+msgstr "日曆、待辦事項、筆記 (CTN) 通知服務"
 
 #: blueman/Sdp.py:177
 msgid "Calendar, Task, and Notes (CTN) Profile"
-msgstr ""
+msgstr "日曆、待辦事項、筆記 (CTN) 設定檔"
 
 #: blueman/Sdp.py:178
 msgid "PnP Information"
-msgstr ""
+msgstr "隨插即用資訊"
 
 #: blueman/Sdp.py:179
-#, fuzzy
 msgid "Generic Networking"
-msgstr "群組網路 (GN)"
+msgstr "通用網路"
 
 #: blueman/Sdp.py:180
-#, fuzzy
 msgid "Generic FileTransfer"
-msgstr "藍牙檔案傳送"
+msgstr "通用檔案傳輸"
 
 #: blueman/Sdp.py:181
 msgid "Generic Audio"
-msgstr ""
+msgstr "通用音訊"
 
 #: blueman/Sdp.py:182
 msgid "Generic Telephony"
-msgstr ""
+msgstr "通用電話設備"
 
 #: blueman/Sdp.py:183
-#, fuzzy
 msgid "Video Source"
-msgstr "音訊來源"
+msgstr "視訊來源"
 
 #: blueman/Sdp.py:184
-#, fuzzy
 msgid "Video Sink"
-msgstr "音訊終端"
+msgstr "視訊輸出"
 
 #: blueman/Sdp.py:185
 msgid "Video Distribution"
-msgstr ""
+msgstr "視訊發佈"
 
 #: blueman/Sdp.py:186
 msgid "HDP"
-msgstr ""
+msgstr "HDP"
 
 #: blueman/Sdp.py:187
-#, fuzzy
 msgid "HDP Source"
-msgstr "音訊來源"
+msgstr "HDP 來源"
 
 #: blueman/Sdp.py:188
 msgid "HDP Sink"
-msgstr ""
+msgstr "HDP 輸出"
 
 #: blueman/Sdp.py:189
 msgid "Generic Access"
-msgstr ""
+msgstr "通用存取"
 
 #: blueman/Sdp.py:190
 msgid "Generic Attribute"
-msgstr ""
+msgstr "通用屬性"
 
 #: blueman/Sdp.py:191
 msgid "Immediate Alert"
-msgstr ""
+msgstr "即時警示"
 
 #: blueman/Sdp.py:192
 msgid "Link Loss"
-msgstr ""
+msgstr "連線丟失"
 
 #: blueman/Sdp.py:193
 msgid "Tx Power"
-msgstr ""
+msgstr "發送功率"
 
 #: blueman/Sdp.py:194
-#, fuzzy
 msgid "Current Time Service"
-msgstr "重新命名裝置"
+msgstr "當前時間服務"
 
 #: blueman/Sdp.py:195
 msgid "Reference Time Update Service"
-msgstr ""
+msgstr "參考時間更新服務"
 
 #: blueman/Sdp.py:196
 msgid "Next DST Change Service"
-msgstr ""
+msgstr "下一代 DST 交換服務"
 
 #: blueman/Sdp.py:197
 msgid "Glucose"
-msgstr ""
+msgstr "血糖值"
 
 #: blueman/Sdp.py:198
 msgid "Health Thermometer"
-msgstr ""
+msgstr "體溫計"
 
 #: blueman/Sdp.py:199
-#, fuzzy
 msgid "Device Information"
-msgstr "顯示裝置資訊"
+msgstr "裝置資訊"
 
 #: blueman/Sdp.py:200
 msgid "Heart Rate"
-msgstr ""
+msgstr "心率"
 
 #: blueman/Sdp.py:201
 msgid "Phone Alert Status Service"
-msgstr ""
+msgstr "電話警示狀態服務"
 
 #: blueman/Sdp.py:202
-#, fuzzy
 msgid "Battery Service"
-msgstr "本機服務"
+msgstr "電池服務"
 
 #: blueman/Sdp.py:203
 msgid "Blood Pressure"
-msgstr ""
+msgstr "血壓"
 
 #: blueman/Sdp.py:204
 msgid "Alert Notification Service"
-msgstr ""
+msgstr "警示通知服務"
 
 #: blueman/Sdp.py:205
 msgid "Human Interface Device"
-msgstr ""
+msgstr "人機介面裝置"
 
 #: blueman/Sdp.py:206
 msgid "Scan Parameters"
-msgstr ""
+msgstr "掃描參數"
 
 #: blueman/Sdp.py:207
 msgid "Running Speed and Cadence"
-msgstr ""
+msgstr "跑速與節奏"
 
 #: blueman/Sdp.py:208
 msgid "Automation IO"
-msgstr ""
+msgstr "自動化輸入輸出"
 
 #: blueman/Sdp.py:209
 msgid "Cycling Speed and Cadence"
-msgstr ""
+msgstr "單車速度與踏頻"
 
 #: blueman/Sdp.py:210
 msgid "Cycling Power"
-msgstr ""
+msgstr "單車功率"
 
 #: blueman/Sdp.py:211
 msgid "Location and Navigation"
-msgstr ""
+msgstr "定位與導航"
 
 #: blueman/Sdp.py:212
 msgid "Environmental Sensing"
-msgstr ""
+msgstr "環境感測"
 
 #: blueman/Sdp.py:213
 msgid "Body Composition"
-msgstr ""
+msgstr "身體組成"
 
 #: blueman/Sdp.py:214
 msgid "User Data"
-msgstr ""
+msgstr "使用者資料"
 
 #: blueman/Sdp.py:215
 msgid "Weight Scale"
-msgstr ""
+msgstr "體重計"
 
 #: blueman/Sdp.py:216
 msgid "Bond Management"
-msgstr ""
+msgstr "連繫管理"
 
 #: blueman/Sdp.py:217
 msgid "Continuous Glucose Monitoring"
-msgstr ""
+msgstr "連續式血糖監視器"
 
 #: blueman/Sdp.py:218
 msgid "Internet Protocol Support"
-msgstr ""
+msgstr "網際網路通訊協定支援"
 
 #: blueman/Sdp.py:219
 msgid "Indoor Positioning"
-msgstr ""
+msgstr "室內定位"
 
 #: blueman/Sdp.py:220
 msgid "Pulse Oximeter"
-msgstr ""
+msgstr "血氧計"
 
 #: blueman/Sdp.py:221
 msgid "HTTP Proxy"
-msgstr ""
+msgstr "HTTP 代理"
 
 #: blueman/Sdp.py:222
 msgid "Transport Discovery"
-msgstr ""
+msgstr "傳輸發掘"
 
 #: blueman/Sdp.py:223
-#, fuzzy
 msgid "Object Transfer"
-msgstr "傳送"
+msgstr "物件傳輸"
 
 #: blueman/Sdp.py:224
-#, fuzzy
 msgid "AppleAgent"
-msgstr "小程式"
+msgstr "AppleAgent"
 
 #: blueman/Sdp.py:225
-#, fuzzy
 msgid "Primary Service"
-msgstr "配對裝置"
+msgstr "主要服務"
 
 #: blueman/Sdp.py:226
-#, fuzzy
 msgid "Secondary Service"
-msgstr "搜附近的裝置"
+msgstr "次要服務"
 
 #: blueman/Sdp.py:227
 msgid "Include"
-msgstr ""
+msgstr "引用"
 
 #: blueman/Sdp.py:228
 msgid "Characteristic Declaration"
-msgstr ""
+msgstr "特性值宣告"
 
 #: blueman/Sdp.py:229
-#, fuzzy
 msgid "Device Name"
-msgstr "裝置管理"
+msgstr "裝置名稱"
 
 #: blueman/Sdp.py:230
 msgid "Appearance"
-msgstr ""
+msgstr "外觀"
 
 #: blueman/Sdp.py:231
 msgid "Peripheral Privacy Flag"
-msgstr ""
+msgstr "週邊裝置隱私旗標"
 
 #: blueman/Sdp.py:232
-#, fuzzy
 msgid "Reconnection Address"
-msgstr "最近連線(_C)"
+msgstr "重連線地址"
 
 #: blueman/Sdp.py:233
 msgid "Peripheral Preferred Connection Parameters"
-msgstr ""
+msgstr "週邊設備偏好連線參數"
 
 #: blueman/Sdp.py:234
-#, fuzzy
 msgid "Service Changed"
-msgstr "裝置管理"
+msgstr "服務已更改"
 
 #: blueman/Sdp.py:235
 msgid "System ID"
-msgstr ""
+msgstr "系統 ID"
 
 #: blueman/Sdp.py:236
 msgid "Model Number String"
-msgstr ""
+msgstr "型號字串"
 
 #: blueman/Sdp.py:237
 msgid "Serial Number String"
-msgstr ""
+msgstr "序號字串"
 
 #: blueman/Sdp.py:238
 msgid "Firmware Revision String"
-msgstr ""
+msgstr "韌體版本字串"
 
 #: blueman/Sdp.py:239
 msgid "Hardware Revision String"
-msgstr ""
+msgstr "硬體版本字串"
 
 #: blueman/Sdp.py:240
 msgid "Software Revision String"
-msgstr ""
+msgstr "軟體版本字串"
 
 #: blueman/Sdp.py:241
 msgid "Manufacturer Name String"
-msgstr ""
+msgstr "製造商名稱字串"
 
 #: blueman/Sdp.py:242
 msgid "PnP ID"
-msgstr ""
+msgstr "隨插即用 ID"
 
 #: blueman/Sdp.py:243
 msgid "Characteristic Extended Properties"
-msgstr ""
+msgstr "特性擴展屬性"
 
 #: blueman/Sdp.py:244
 msgid "Characteristic User Description"
-msgstr ""
+msgstr "特性使用者描述"
 
 #: blueman/Sdp.py:245
 msgid "Client Characteristic Configuration"
-msgstr ""
+msgstr "客戶端特性組態"
 
 #: blueman/Sdp.py:246
 msgid "Server Characteristic Configuration"
-msgstr ""
+msgstr "伺服器特性組態"
 
 #: blueman/Sdp.py:247
 msgid "Characteristic Presentation Format"
-msgstr ""
+msgstr "特性呈現格式"
 
 #: blueman/Sdp.py:248
 msgid "Characteristic Aggregate Format"
-msgstr ""
+msgstr "特性聚合格式"
 
 #: blueman/Sdp.py:249
 msgid "Valid Range"
-msgstr ""
+msgstr "有效範圍"
 
 #: blueman/Sdp.py:250
 msgid "External Report Reference"
-msgstr ""
+msgstr "外部報告參考"
 
 #: blueman/Sdp.py:251
-#, fuzzy
 msgid "Report Reference"
-msgstr "配接器偏好設定"
+msgstr "報告參考"
 
 #: blueman/Sdp.py:378
-#, fuzzy
 msgid "Audio and input profiles"
-msgstr "自動連線設定檔"
+msgstr "音訊和輸入設定"
 
 #: blueman/Sdp.py:380
 msgid "Proprietary"
@@ -2134,7 +2046,7 @@ msgstr "否"
 
 #: blueman/plugins/manager/Info.py:60
 msgid "<big>Select row(s) and use <i>Control + C</i> to copy</big>"
-msgstr ""
+msgstr "<big>選擇一列或多列，並使用 <i>Control + C</i> 複製</big>"
 
 #: blueman/plugins/manager/Info.py:120
 msgid "_Info"
@@ -2155,15 +2067,15 @@ msgstr "傳送文字便條"
 #: blueman/plugins/manager/PulseAudioProfile.py:87
 #, python-format
 msgid "Failed to change profile to %s"
-msgstr "更換設定檔到 %s 失敗"
+msgstr "更換設定到 %s 失敗"
 
 #: blueman/plugins/manager/PulseAudioProfile.py:128
 msgid "Audio Profile"
-msgstr "音訊設定檔"
+msgstr "音訊設定"
 
 #: blueman/plugins/manager/PulseAudioProfile.py:129
 msgid "Select audio profile for PulseAudio"
-msgstr "為 PulseAudio 選擇音訊設定檔"
+msgstr "為 PulseAudio 選擇音訊設定"
 
 #: blueman/plugins/BasePlugin.py:34 blueman/plugins/BasePlugin.py:35
 msgid "Unspecified"
@@ -2172,7 +2084,7 @@ msgstr "未指定"
 #: blueman/plugins/applet/AutoConnect.py:20
 msgid ""
 "Tries to auto-connect to configurable services on start and every 60 seconds."
-msgstr ""
+msgstr "在啟動時以及每 60 秒嘗試自動連線至可設定的服務。"
 
 #. https://github.com/python/mypy/issues/2608
 #: blueman/plugins/applet/AutoConnect.py:50
@@ -2189,18 +2101,17 @@ msgstr "自動連線至在 %(device)s 上的 %(service)s"
 
 #: blueman/plugins/applet/ConnectionNotifier.py:15
 msgid "Shows desktop notifications when devices get connected or disconnected."
-msgstr ""
+msgstr "當裝置連線或斷線時顯示桌面通知。"
 
 #: blueman/plugins/applet/ConnectionNotifier.py:48
-#, fuzzy
 msgid "Disconnected"
-msgstr "斷線中..."
+msgstr "已斷線"
 
 #: blueman/plugins/applet/NetUsage.py:154
 #: blueman/plugins/applet/NetUsage.py:265
 #: blueman/plugins/applet/NetUsage.py:270
 msgid "Connected:"
-msgstr "連線："
+msgstr "已連線："
 
 #: blueman/plugins/applet/NetUsage.py:168
 #: blueman/plugins/applet/NetUsage.py:280
@@ -2211,7 +2122,7 @@ msgstr "未連線"
 msgid ""
 "No usage statistics are available yet. Try establishing a connection first "
 "and then check this page."
-msgstr "沒有可以使用的狀態。嘗試先建立連線再檢視此頁。"
+msgstr "尚無可使用的統計數據，請先嘗試建立一個連線後再查看此頁面。"
 
 #: blueman/plugins/applet/NetUsage.py:202
 msgid "day"
@@ -2235,7 +2146,7 @@ msgstr "%d %s %d %s , %d %s"
 
 #: blueman/plugins/applet/NetUsage.py:241
 msgid "Are you sure you want to reset the counter?"
-msgstr "確定要重新設定？"
+msgstr "您確定要重置計數器嗎？"
 
 #: blueman/plugins/applet/NetUsage.py:287
 msgid ""
@@ -2250,23 +2161,23 @@ msgstr "網路使用量(_U)"
 
 #: blueman/plugins/applet/NetUsage.py:308
 msgid "Shows network traffic usage"
-msgstr "顯示網路使用狀況"
+msgstr "顯示網路流量使用狀況"
 
 #: blueman/plugins/applet/StatusIcon.py:43
 #: blueman/plugins/applet/ShowConnected.py:71
 #: blueman/plugins/applet/PowerManager.py:190
 msgid "Bluetooth Enabled"
-msgstr "藍牙開啟"
+msgstr "藍牙已開啟"
 
 #: blueman/plugins/applet/Networking.py:17
 msgid "Manages local network services, like NAP bridges"
-msgstr "管理本機網路服務，如同 NAP 橋接。"
+msgstr "管理本機網路服務，例如 NAP 橋接"
 
 #: blueman/plugins/applet/NMDUNSupport.py:18
 msgid ""
 "Provides support for Dial Up Networking (DUN) with ModemManager and "
 "NetworkManager"
-msgstr "在 ModemManager 及 NetworkManager 提供支援撥號網路 (DUN)"
+msgstr "透過 ModemManager 及 NetworkManager 支援撥號網路 (DUN)"
 
 #: blueman/plugins/applet/RecentConns.py:41
 msgid ""
@@ -2280,7 +2191,7 @@ msgstr "最大顯示項目"
 
 #: blueman/plugins/applet/RecentConns.py:53
 msgid "The maximum number of items recent connections menu will display."
-msgstr "最多顯示幾個最近使用連線。"
+msgstr "在選單中最多顯示幾個最近使用過的連線。"
 
 #: blueman/plugins/applet/RecentConns.py:63
 msgid "Recent _Connections"
@@ -2293,22 +2204,22 @@ msgstr "已連線到 %s"
 
 #: blueman/plugins/applet/RecentConns.py:161
 msgid "Failed to connect"
-msgstr "連線錯誤"
+msgstr "連線失敗"
 
 #: blueman/plugins/applet/RecentConns.py:171
 #, python-format
 msgid "%(service)s on %(device)s"
-msgstr "連線到 %(device)s (經由 %(service)s)"
+msgstr "%(device)s 上的 %(service)s"
 
 #: blueman/plugins/applet/RecentConns.py:175
 msgid "Adapter for this connection is not available"
-msgstr "配接器無法取得此連線"
+msgstr "此連線的接收器無法使用"
 
 #: blueman/plugins/applet/NMPANSupport.py:18
 msgid ""
 "Provides support for Personal Area Networking (PAN) introduced in "
 "NetworkManager 0.8"
-msgstr "在 NetworkManager 0.8 中提供支援個人區域網路 (PAN)"
+msgstr "為 NetworkManager 0.8 中引入的個人區域網路 (PAN) 提供支援"
 
 #: blueman/plugins/applet/DBusService.py:47
 msgid "Provides DBus API for other Blueman components"
@@ -2321,7 +2232,7 @@ msgstr "透過藍牙接收檔案"
 #: blueman/plugins/applet/TransferService.py:128
 #, python-format
 msgid "Incoming file %(0)s from %(1)s"
-msgstr "接收檔案 %(0)s 從 %(1)s"
+msgstr "從 %(1)s 接收檔案 %(0)s"
 
 #: blueman/plugins/applet/TransferService.py:130
 msgid "Reject"
@@ -2334,7 +2245,7 @@ msgstr "接收檔案"
 #: blueman/plugins/applet/TransferService.py:138
 #, python-format
 msgid "Receiving file %(0)s from %(1)s"
-msgstr "接收檔案 %(0)s 從 %(1)s"
+msgstr "正在從 %(1)s 接收檔案 %(0)s"
 
 #: blueman/plugins/applet/TransferService.py:157
 msgid "Provides OBEX file transfer capabilities"
@@ -2349,76 +2260,76 @@ msgstr "設定好的接收目錄不存在"
 msgid ""
 "Please make sure that directory \"<b>%s</b>\" exists or configure it with "
 "blueman-services. Until then the default \"%s\" will be used"
-msgstr ""
-"請確保目錄「<b>%s</b>」存在或以 blueman-services 設定。在此之前，將使用預設的"
-"「%s」。"
+msgstr "請確保目錄「<b>%s</b>」存在或以 blueman-services "
+"設定。在此之前，將使用預設的「%s」"
 
 #: blueman/plugins/applet/TransferService.py:303
 msgid "File received"
-msgstr "檔案接收"
+msgstr "檔案已接受"
 
 #: blueman/plugins/applet/TransferService.py:304
 #, python-format
 msgid "File %(0)s from %(1)s successfully received"
-msgstr "來自 %(1)s 的檔案 %(0)s 成功接收"
+msgstr "已成功接收來自 %(1)s 的 %(0)s 檔案"
 
 #: blueman/plugins/applet/TransferService.py:308
 msgid "Open"
-msgstr ""
+msgstr "開啟"
 
 #: blueman/plugins/applet/TransferService.py:312
 msgid "Transfer failed"
-msgstr "未能傳送"
+msgstr "傳送失敗"
 
 #: blueman/plugins/applet/TransferService.py:313
 #, python-format
 msgid "Transfer of file %(0)s failed"
-msgstr "未能傳送 %(0)s 檔案"
+msgstr "傳送 %(0)s 檔案失敗"
 
 #: blueman/plugins/applet/TransferService.py:333
 #: blueman/plugins/applet/TransferService.py:342
 msgid "Files received"
-msgstr "檔案接收"
+msgstr "檔案已接收"
 
 #: blueman/plugins/applet/TransferService.py:334
-#, fuzzy, python-format
+#, python-format
 msgid "Received %(files)d file in the background"
 msgid_plural "Received %(files)d files in the background"
-msgstr[0] "在背景中接收 %d 檔案"
+msgstr[0] "已在後台接收 %(files)d 個檔案"
 
 #: blueman/plugins/applet/TransferService.py:339
 #: blueman/plugins/applet/TransferService.py:347
 msgid "Open Location"
-msgstr ""
+msgstr "開啟位置"
 
 #: blueman/plugins/applet/TransferService.py:343
-#, fuzzy, python-format
+#, python-format
 msgid "Received %(files)d more file in the background"
 msgid_plural "Received %(files)d more files in the background"
-msgstr[0] "在背景中接收 %d 許多檔案"
+msgstr[0] "在後台又接收了另外 %(files)d 個檔案"
 
 #: blueman/plugins/applet/KillSwitch.py:37
 msgid ""
 "Switches Bluetooth killswitch status to match Bluetooth power state. Allows "
 "turning Bluetooth back on from an icon that shows its status; provided it "
 "isn't unplugged by the system, or physically."
-msgstr ""
+msgstr "配合藍牙電源狀態，切換藍牙緊急開關狀態。讓您可以在裝置沒有被系統或物理性拔除"
+"的情況下，可以透過顯示其狀態的圖示，將藍芽重新打開。"
 
 #: blueman/plugins/applet/StandardItems.py:22
 msgid "Adds standard menu items to the status icon menu"
-msgstr "新增標準的清單項目到狀態圖示清單"
+msgstr "在狀態圖示選單中加入標準的選單選項"
 
 #: blueman/plugins/applet/StandardItems.py:32
 msgid "Send _Files to Device"
-msgstr "傳送檔案 (_F)"
+msgstr "傳送檔案到裝置(_F)"
 
 #: blueman/plugins/applet/StandardItems.py:37
 msgid "_Devices"
-msgstr "裝置 (_D)"
+msgstr "裝置(_D)"
 
 #: blueman/plugins/applet/StandardItems.py:41
 msgid "Adap_ters"
-msgstr "配接器 (_T)"
+msgstr "接收器(_T)"
 
 #: blueman/plugins/applet/StandardItems.py:90
 msgid "applet"
@@ -2426,15 +2337,15 @@ msgstr "小程式"
 
 #: blueman/plugins/applet/AuthAgent.py:8
 msgid "Provides passkey, authentication services for BlueZ daemon"
-msgstr "提供密鑰、身分核對服務給 BlueZ"
+msgstr "向 BlueZ 常駐程式提供密碼、認證服務"
 
 #: blueman/plugins/applet/ExitItem.py:7
 msgid "Adds an exit menu item to quit the applet"
-msgstr "新增「結束」選單項目以結束小程式"
+msgstr "新增「離開」選單項目以結束小程式"
 
 #: blueman/plugins/applet/DhcpClient.py:14
 msgid "Provides a basic dhcp client for Bluetooth PAN connections."
-msgstr "提供基本的 DHCP 給藍牙 PAN 連線"
+msgstr "為藍牙 PAN 連線提供基本的 DHCP 客戶端。"
 
 #: blueman/plugins/applet/DhcpClient.py:47
 #: blueman/plugins/applet/DhcpClient.py:55
@@ -2445,12 +2356,12 @@ msgstr "藍牙網路"
 #: blueman/plugins/applet/DhcpClient.py:48
 #, python-format
 msgid "Interface %(0)s bound to IP address %(1)s"
-msgstr "介面 %(0)s 依附到 IP 位址 %(1)s"
+msgstr "介面 %(0)s 已綁定到 IP 位址 %(1)s"
 
 #: blueman/plugins/applet/DhcpClient.py:55
 #, python-format
 msgid "Failed to obtain an IP address on %s"
-msgstr "未能取得 %s 提供的 IP 位址"
+msgstr "無法在 %s 取得 IP 位址"
 
 #: blueman/plugins/applet/DhcpClient.py:60
 #, python-format
@@ -2465,64 +2376,64 @@ msgstr ""
 msgid ""
 "Adds an indication on the status icon when Bluetooth is active and shows the "
 "number of connections in the tooltip."
-msgstr "當藍牙啟用時，在狀態列新增提示，並顯示連線數量。"
+msgstr "當藍牙啟用時，在狀態圖示上加上提示，並在工具提示中顯示連線數量。"
 
 #: blueman/plugins/applet/ShowConnected.py:61
 msgid "Bluetooth Active"
-msgstr "藍牙使用"
+msgstr "藍牙開啟"
 
 #: blueman/plugins/applet/ShowConnected.py:63
-#, fuzzy, python-format
+#, python-format
 msgid "<b>%(connections)d Active Connection</b>"
 msgid_plural "<b>%(connections)d Active Connections</b>"
-msgstr[0] "<b>%d 個運作的連線</b>"
+msgstr[0] "<b>%(connections)d 個運作中的連線</b>"
 
 #: blueman/plugins/applet/ShowConnected.py:73
 #: blueman/plugins/applet/PowerManager.py:193
 msgid "Bluetooth Disabled"
-msgstr "藍牙關閉"
+msgstr "藍牙已關閉"
 
 #: blueman/plugins/applet/DisconnectItems.py:14
 msgid "Adds disconnect menu items"
-msgstr ""
+msgstr "新增斷線選單選項"
 
 #: blueman/plugins/applet/DisconnectItems.py:40
-#, fuzzy, python-format
+#, python-format
 msgid "Disconnect %s"
-msgstr "斷線中..."
+msgstr "斷開與 %s 的連線"
 
 #: blueman/plugins/applet/DiscvManager.py:16
 msgid ""
 "Provides a menu item for making the default adapter temporarily visible when "
 "it is set to hidden by default"
-msgstr "提供一份清單來設定預設的藍牙配接器可見的時間長短，當裝置設定為隱藏時"
+msgstr "提供一個選單選項，來讓預設為隱藏的藍牙接收器暫時可見"
 
 #: blueman/plugins/applet/DiscvManager.py:26
 msgid "Discoverable timeout"
-msgstr "探索時間逾時"
+msgstr "搜尋逾時"
 
 #: blueman/plugins/applet/DiscvManager.py:27
 msgid "Amount of time in seconds discoverable mode will last"
-msgstr "設定藍牙至少探索的時間（秒）"
+msgstr "搜尋模式所維持的時間（秒）"
 
 #: blueman/plugins/applet/DiscvManager.py:35
 #: blueman/plugins/applet/DiscvManager.py:123
 msgid "_Make Discoverable"
-msgstr "可發現 (_M)"
+msgstr "使裝置可被搜尋 (_M)"
 
 #: blueman/plugins/applet/DiscvManager.py:36
 msgid "Make the default adapter temporarily visible"
-msgstr "將預設的配接器設定為暫時可見"
+msgstr "將預設的接收器設定為暫時可見"
 
 #: blueman/plugins/applet/DiscvManager.py:60
 #, python-format
 msgid "Discoverable… %ss"
-msgstr "可探索…… %s秒"
+msgstr "可被搜尋…… %s 秒"
 
 #: blueman/plugins/applet/Menu.py:113
 msgid ""
 "Provides a menu for the applet and an API for other plugins to manipulate it"
-msgstr "提供一份清單給藍牙應用服務或是 API 給其他的外掛程式來連線操作"
+msgstr "為小程式提供選單，並提供 API 給其他的外掛程式來編輯選單"
 
 #: blueman/plugins/applet/PPPSupport.py:72
 #, python-format
@@ -2530,21 +2441,21 @@ msgid ""
 "Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\n"
 "Network is now available through <b>%(1)s</b>"
 msgstr ""
-"成功連線到 <b>DUN</b> 服務於 <b>%(0)s.</b>。\n"
-"網路可以透過 <b>%(1)s</b> 使用。"
+"成功連線到 <b>%(0)s</b> 上的 <b>DUN</b> 服務。\n"
+"現在可以透過 <b>%(1)s</b> 使用網路"
 
 #: blueman/plugins/applet/PPPSupport.py:80
 msgid "Provides basic support for connecting to the internet via DUN profile."
-msgstr "提供基本的撥號網路 (DUN) 支援，令用戶可以連線到網際網路。"
+msgstr "為透過撥號網路 (DUN) 設定檔連線到網際網路提供基本的支援。"
 
 #: blueman/plugins/applet/SerialManager.py:22
 msgid ""
 "Standard SPP profile connection handler, allows executing custom actions"
-msgstr "標準的 SPP 連線，允許使用者自訂連線。"
+msgstr "標準的 SPP 連線處理器，允許使用者執行客製化操作"
 
 #: blueman/plugins/applet/SerialManager.py:31
 msgid "Script to execute on connection"
-msgstr "在連線時執行指令稿"
+msgstr "於連線時執行的指令稿"
 
 #: blueman/plugins/applet/SerialManager.py:32
 msgid ""
@@ -2566,17 +2477,17 @@ msgstr ""
 
 #: blueman/plugins/applet/SerialManager.py:63
 msgid "Serial port connected"
-msgstr "串列埠連線"
+msgstr "串列埠已連線"
 
 #: blueman/plugins/applet/SerialManager.py:64
 #, python-format
 msgid ""
 "Serial port service on device <b>%s</b> now will be available via <b>%s</b>"
-msgstr "串列埠服務在裝置 <b>%s</b> 現在可以透過 <b>%s</b> 使用。"
+msgstr "<b>%s</b> 裝置上的序列埠服務，現在可以透過 <b>%s</b> 使用"
 
 #: blueman/plugins/applet/SerialManager.py:114
 msgid "Serial port connection script failed"
-msgstr "串列埠連線腳本失敗"
+msgstr "串列埠連線指令稿失敗"
 
 #: blueman/plugins/applet/SerialManager.py:115
 #, python-format
@@ -2584,12 +2495,12 @@ msgid ""
 "There was a problem launching script %s\n"
 "%s"
 msgstr ""
-"啟動 \"%s\" 腳本發生錯誤\n"
+"啟動 \"%s\" 指令稿發生錯誤\n"
 "%s"
 
 #: blueman/plugins/applet/PowerManager.py:31
 msgid "Controls Bluetooth adapter power states"
-msgstr "控制藍牙配接器的電源狀態"
+msgstr "控制藍牙接收器的電源狀態"
 
 #: blueman/plugins/applet/PowerManager.py:44
 msgid "Auto power-on"
@@ -2607,7 +2518,7 @@ msgstr "<b>關閉藍牙 (_O)</b>"
 #: blueman/plugins/applet/PowerManager.py:57
 #: blueman/plugins/applet/PowerManager.py:174
 msgid "Turn off all adapters"
-msgstr "開啟所有的裝置連線"
+msgstr "關閉所有接收器"
 
 #: blueman/plugins/applet/PowerManager.py:163
 msgid "<b>Turn Bluetooth _On</b>"
@@ -2615,18 +2526,17 @@ msgstr "<b>開啟藍牙 (_O)</b>"
 
 #: blueman/plugins/applet/PowerManager.py:165
 msgid "Turn on all adapters"
-msgstr "開啟所有的裝置連線"
+msgstr "開啟所有的接收器"
 
 #: blueman/plugins/applet/GameControllerWakelock.py:20
 msgid ""
 "Temporarily suspends the screensaver when a bluetooth game controller is "
 "connected."
-msgstr "當藍牙控制器已連線時，暫時暫停螢幕保護程式。"
+msgstr "當連線到藍牙遊戲手把時，暫時關閉螢幕保護程式。"
 
 #: blueman/plugins/applet/StatusNotifierItem.py:10
-#, fuzzy
 msgid "Provides a StatusNotifierItem to show a statusicon"
-msgstr "使用 libappindicator 顯示狀態圖示"
+msgstr "提供 StatusNotifierItem 以顯示狀態列圖示"
 
 #: blueman/plugins/services/Network.py:25
 msgid "Network"
@@ -2634,12 +2544,12 @@ msgstr "網路"
 
 #: blueman/plugins/services/Network.py:97
 msgid "Invalid IP address"
-msgstr "IP 位址無效"
+msgstr "無效的 IP 位址"
 
 #: blueman/plugins/services/Network.py:102
 #, python-format
 msgid "IP address conflicts with interface %s which has the same address"
-msgstr "與相同位址的 %s 介面有 IP 位址衝突"
+msgstr "與相同 IP 位址的 %s 介面有 IP 位址衝突"
 
 #: blueman/plugins/services/Network.py:110
 #, python-format
@@ -2648,7 +2558,7 @@ msgid ""
 "configuration  %s/%s\n"
 "This may cause incorrect network behavior"
 msgstr ""
-"IP 位置與介面 %s 子網重疊，其有以下設定 %s/%s\n"
+"IP 位置與介面 %s 子網路重疊，其有以下設定 %s/%s\n"
 "這可能會造成不正常的網路行為"
 
 #: blueman/plugins/services/Network.py:237
@@ -2662,7 +2572,7 @@ msgstr "傳送"
 
 #: blueman/plugins/services/Transfer.py:28
 msgid "Applet's transfer service plugin is disabled"
-msgstr "小程式的傳送服務已關閉"
+msgstr "小程式的傳送服務外掛已關閉"
 
 #: blueman/services/DialupNetwork.py:23
 msgid "Dialup Settings"
@@ -2678,27 +2588,22 @@ msgid "Renew IP Address"
 msgstr "更新 IP 位址"
 
 #: data/blueman-adapters.desktop.in:4
-#, fuzzy
 msgid "Set Bluetooth Adapter Properties"
-msgstr "藍牙配接器"
+msgstr "設定藍牙接收器屬性"
 
 #: data/blueman.desktop.in:3
-#, fuzzy
 msgid "Blueman Applet"
-msgstr "小程式"
+msgstr "Blueman 小程式"
 
 #: data/blueman.desktop.in:4 data/blueman-manager.desktop.in:4
-#, fuzzy
 msgid "Blueman Bluetooth Manager"
-msgstr "Blueman 是一個 GTK+ 的藍牙管理軟體"
+msgstr "Blueman 藍牙管理器"
 
 #: data/blueman-manager.desktop.in:3
-#, fuzzy
 msgid "Bluetooth Manager"
-msgstr "藍牙開啟"
+msgstr "藍牙管理器"
 
 #: data/thunar-sendto-blueman.desktop.in:5
-#, fuzzy
 msgid "Bluetooth Device"
 msgstr "藍牙裝置"
 
@@ -2712,19 +2617,19 @@ msgstr "設定網路需要更高的權限"
 
 #: data/configs/org.blueman.policy.in:19
 msgid "Launch DHCP client"
-msgstr "啟動 DHCP"
+msgstr "啟動 DHCP 客戶端"
 
 #: data/configs/org.blueman.policy.in:20
 msgid "Launching DHCP client requires privileges"
-msgstr "啟動 DHCP 需要更高的權限"
+msgstr "啟動 DHCP 客戶端需要更高的權限"
 
 #: data/configs/org.blueman.policy.in:28
 msgid "Launch PPP daemon"
-msgstr "啟動 PPP 守護行程"
+msgstr "啟動 PPP 常駐程式"
 
 #: data/configs/org.blueman.policy.in:29
 msgid "Launching PPP daemon requires privileges"
-msgstr "啟動 PPP 守護行程需要權限"
+msgstr "啟動 PPP 常駐程式需要更高的權限"
 
 #: data/configs/org.blueman.policy.in:37
 msgid "Set RfKill State"
@@ -2732,7 +2637,7 @@ msgstr "設定 RfKill 狀態"
 
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
-msgstr "設定 RfKill 狀態需要權限"
+msgstr "設定 RfKill 狀態需要更高的權限"
 
 #~ msgid "<b>Trusted and Paired</b>"
 #~ msgstr "<b>已信任並已配對</b>"

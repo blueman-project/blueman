@@ -39,32 +39,36 @@
 # negativezero <blackhole89@gmail.com>, 2014
 # Christian Wagner <wagnerschristian@gmail.com>, 2017
 # Christopher Schramm <transifex@cschramm.eu>, 2019
-# Ettore Atalan <atalanttore@googlemail.com>, 2015,2017, 2022.
+# Ettore Atalan <atalanttore@googlemail.com>, 2015,2017, 2022, 2023.
 # otazl <oliver.tazl@gmail.com>, 2014
 # petr <b.fischer025@gmail.com>, 2015
 # bambuhle <politik@philippoi.de>, 2014
 # qazwsxedc <qazwsxedc@gmx.net>, 2014
 # Tim Schulz <timschulz19980312@gmail.com>, 2015
-# Tobias Bannert <tobannert@gmail.com>, 2014-2015,2017
+# Tobias Bannert <tobannert@gmail.com>, 2014-2015,2017, 2023.
 # jugendhacker <jugendhacker@gmail.com>, 2020.
 # Christopher Schramm <github@cschramm.eu>, 2020, 2021, 2022.
 # J. Lavoie <j.lavoie@net-c.ca>
 # Alois Spitzbart <spitz234@hotmail.com>, 2021.
 # Johannes Keyser <johanneskeyser@posteo.de>, 2021.
+# Chris <wolrekids@gmail.com>, 2022.
+# Jörn Weigend <das.jott@gmail.com>, 2023.
+# Georg Schwarz <georg.schwarz@freenet.de>, 2023.
+# David <dawin@users.noreply.hosted.weblate.org>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2022-07-05 14:08+0200\n"
-"PO-Revision-Date: 2022-07-06 19:17+0000\n"
-"Last-Translator: Christopher Schramm <github@cschramm.eu>\n"
+"PO-Revision-Date: 2024-02-07 04:39+0000\n"
+"Last-Translator: David <dawin@users.noreply.hosted.weblate.org>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/blueman/2-3/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13.1-dev\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -847,7 +851,7 @@ msgstr "Gesamte empfangene Daten und Übertragungsrate"
 #: blueman/gui/manager/ManagerStats.py:47
 #: blueman/gui/manager/ManagerStats.py:52
 msgid "Total data sent and rate of transmission"
-msgstr "Gesamte versendete Daten und Übertragungsrate"
+msgstr "Gesamtmenge gesendete Daten und Übertragungsrate"
 
 #: blueman/gui/manager/ManagerToolbar.py:37
 #: blueman/gui/manager/ManagerToolbar.py:93
@@ -919,7 +923,7 @@ msgstr "Sonstige"
 #. translators: device class
 #: blueman/DeviceClass.py:8
 msgid "Computer"
-msgstr "Computer"
+msgstr "Rechner"
 
 #. translators: device class
 #: blueman/DeviceClass.py:10
@@ -1094,7 +1098,7 @@ msgstr "Hi-Fi-Audio"
 #. translators: device class
 #: blueman/DeviceClass.py:102
 msgid "VCR"
-msgstr ""
+msgstr "Videorecorder"
 
 #. translators: device class
 #: blueman/DeviceClass.py:104
@@ -1217,7 +1221,7 @@ msgstr "Typisches Telefon"
 
 #: blueman/DeviceClass.py:170
 msgid "Generic Computer"
-msgstr "Typischer Computer"
+msgstr "Typischer Rechner"
 
 #: blueman/DeviceClass.py:171
 msgid "Generic Watch"
@@ -1431,11 +1435,11 @@ msgstr "Standort- und Navigationsanzeigegerät"
 
 #: blueman/DeviceClass.py:226
 msgid "Location Pod"
-msgstr ""
+msgstr "Ortungsgerät"
 
 #: blueman/DeviceClass.py:227
 msgid "Location and Navigation Pod"
-msgstr ""
+msgstr "Ortungs- und Navigtionsgerät"
 
 #: blueman/Sdp.py:88
 msgid "SDP"
@@ -1535,15 +1539,15 @@ msgstr "L2CAP"
 
 #: blueman/Sdp.py:113
 msgid "ServiceDiscoveryServerServiceClassID"
-msgstr ""
+msgstr "ServiceDiscoveryServerServiceClassID"
 
 #: blueman/Sdp.py:114
 msgid "BrowseGroupDescriptorServiceClassID"
-msgstr ""
+msgstr "BrowseGroupDescriptorServiceClassID"
 
 #: blueman/Sdp.py:115
 msgid "Public Browse Group"
-msgstr ""
+msgstr "Öffentliche Suchgruppe"
 
 #: blueman/Sdp.py:116
 msgid "Serial Port"
@@ -1619,11 +1623,11 @@ msgstr "WAP"
 
 #: blueman/Sdp.py:135
 msgid "WAP Client"
-msgstr ""
+msgstr "WAP Client"
 
 #: blueman/Sdp.py:136
 msgid "PANU"
-msgstr ""
+msgstr "PANU"
 
 #: blueman/Sdp.py:137
 msgid "Network Access Point"
@@ -1639,7 +1643,7 @@ msgstr "Direktes Drucken (BPP)"
 
 #: blueman/Sdp.py:140
 msgid "ReferencePrinting (BPP)"
-msgstr ""
+msgstr "ReferencePrinting (BPP)"
 
 #: blueman/Sdp.py:141
 msgid "Imaging (BIP)"
@@ -1647,31 +1651,31 @@ msgstr "Bildgebung (BIP)"
 
 #: blueman/Sdp.py:142
 msgid "ImagingResponder (BIP)"
-msgstr ""
+msgstr "ImagingResponder (BIP)"
 
 #: blueman/Sdp.py:143
 msgid "ImagingAutomaticArchive (BIP)"
-msgstr ""
+msgstr "ImagingAutomaticArchive (BIP)"
 
 #: blueman/Sdp.py:144
 msgid "ImagingReferencedObjects (BIP)"
-msgstr ""
+msgstr "ImagingReferencedObjects (BIP)"
 
 #: blueman/Sdp.py:146
 msgid "Handsfree Audio Gateway"
-msgstr ""
+msgstr "Freisprech-Audio-Gateway"
 
 #: blueman/Sdp.py:147
 msgid "DirectPrintingReferenceObjectsService (BPP)"
-msgstr ""
+msgstr "DirectPrintingReferenceObjectsService (BPP)"
 
 #: blueman/Sdp.py:148
 msgid "ReflectedUI (BPP)"
-msgstr ""
+msgstr "ReflectedUI (BPP)"
 
 #: blueman/Sdp.py:149
 msgid "Basic Printing (BPP)"
-msgstr ""
+msgstr "Basisfunktion Drucken (BPP)"
 
 #: blueman/Sdp.py:150
 msgid "Printing Status (BPP)"
@@ -1679,35 +1683,35 @@ msgstr "Druckstatus (BPP)"
 
 #: blueman/Sdp.py:151
 msgid "Human Interface Device Service (HID)"
-msgstr ""
+msgstr "Human Interface Device Service (HID)"
 
 #: blueman/Sdp.py:152
 msgid "HardcopyCableReplacement (HCR)"
-msgstr ""
+msgstr "HardcopyCableReplacement (HCR)"
 
 #: blueman/Sdp.py:153
 msgid "HCR_Print (HCR)"
-msgstr ""
+msgstr "HCR_Print (HCR)"
 
 #: blueman/Sdp.py:154
 msgid "HCR_Scan (HCR)"
-msgstr ""
+msgstr "HCR_Scan (HCR)"
 
 #: blueman/Sdp.py:155
 msgid "Common ISDN Access (CIP)"
-msgstr ""
+msgstr "Gewöhnlicher ISDN-Zugang (CIP)"
 
 #: blueman/Sdp.py:156
 msgid "VideoConferencingGW (VCP)"
-msgstr ""
+msgstr "VideoConferencingGW (VCP)"
 
 #: blueman/Sdp.py:157
 msgid "UDI-MT"
-msgstr ""
+msgstr "UDI-MT"
 
 #: blueman/Sdp.py:158
 msgid "UDI-TA"
-msgstr ""
+msgstr "UDI-TA"
 
 #: blueman/Sdp.py:159
 msgid "Audio/Video"
@@ -1743,7 +1747,7 @@ msgstr "Nachrichtenzugriff (MAP)"
 
 #: blueman/Sdp.py:168
 msgid "GNSS"
-msgstr ""
+msgstr "GNSS"
 
 #: blueman/Sdp.py:169
 msgid "GNSS Server"
@@ -1763,11 +1767,11 @@ msgstr "3D-Synchronisierung (3DSP)"
 
 #: blueman/Sdp.py:173
 msgid "Multi-Profile Specification (MPS) Profile"
-msgstr ""
+msgstr "Multiprofil-Spezifikation (MPS) Profil"
 
 #: blueman/Sdp.py:174
 msgid "Multi-Profile Specification (MPS) Service"
-msgstr ""
+msgstr "Multiprofil-Spezifikation (MPS) Dienst"
 
 #: blueman/Sdp.py:175
 msgid "Calendar, Task, and Notes (CTN) Access Service"
@@ -1815,7 +1819,7 @@ msgstr "Videoverteilung"
 
 #: blueman/Sdp.py:186
 msgid "HDP"
-msgstr ""
+msgstr "HDP"
 
 #: blueman/Sdp.py:187
 msgid "HDP Source"
@@ -1823,7 +1827,7 @@ msgstr "Gesundheitsgeräte-Quelle (HDP)"
 
 #: blueman/Sdp.py:188
 msgid "HDP Sink"
-msgstr ""
+msgstr "HDP-Sink"
 
 #: blueman/Sdp.py:189
 msgid "Generic Access"
@@ -1855,7 +1859,7 @@ msgstr "Referenzzeit-Aktualisierungsdienst"
 
 #: blueman/Sdp.py:196
 msgid "Next DST Change Service"
-msgstr ""
+msgstr "Nächster DST-Änderungsdienst"
 
 #: blueman/Sdp.py:197
 msgid "Glucose"
@@ -1891,11 +1895,11 @@ msgstr "Alarm Benachrichtigungsservice"
 
 #: blueman/Sdp.py:205
 msgid "Human Interface Device"
-msgstr ""
+msgstr "Human Interface Device"
 
 #: blueman/Sdp.py:206
 msgid "Scan Parameters"
-msgstr ""
+msgstr "Scan-Parameter"
 
 #: blueman/Sdp.py:207
 msgid "Running Speed and Cadence"
@@ -1903,7 +1907,7 @@ msgstr "Laufgeschwindigkeit und Trittfrequenz"
 
 #: blueman/Sdp.py:208
 msgid "Automation IO"
-msgstr ""
+msgstr "Automation IO"
 
 #: blueman/Sdp.py:209
 msgid "Cycling Speed and Cadence"
@@ -1935,7 +1939,7 @@ msgstr "Gewichtsskala"
 
 #: blueman/Sdp.py:216
 msgid "Bond Management"
-msgstr ""
+msgstr "Verbindungsmanagement"
 
 #: blueman/Sdp.py:217
 msgid "Continuous Glucose Monitoring"
@@ -1959,7 +1963,7 @@ msgstr "HTTP Proxy"
 
 #: blueman/Sdp.py:222
 msgid "Transport Discovery"
-msgstr ""
+msgstr "Transport-Erkennung"
 
 #: blueman/Sdp.py:223
 msgid "Object Transfer"
@@ -1979,11 +1983,11 @@ msgstr "Sekundärer Dienst"
 
 #: blueman/Sdp.py:227
 msgid "Include"
-msgstr ""
+msgstr "Einschließen"
 
 #: blueman/Sdp.py:228
 msgid "Characteristic Declaration"
-msgstr ""
+msgstr "Charakteristische Deklaration"
 
 #: blueman/Sdp.py:229
 msgid "Device Name"
@@ -1995,15 +1999,15 @@ msgstr "Aussehen"
 
 #: blueman/Sdp.py:231
 msgid "Peripheral Privacy Flag"
-msgstr ""
+msgstr "Peripherie-Datenschutz-Flag"
 
 #: blueman/Sdp.py:232
 msgid "Reconnection Address"
-msgstr ""
+msgstr "Wiederverbindungsadresse"
 
 #: blueman/Sdp.py:233
 msgid "Peripheral Preferred Connection Parameters"
-msgstr ""
+msgstr "Peripherell bevorzugte Verbindungsparameter"
 
 #: blueman/Sdp.py:234
 msgid "Service Changed"
@@ -2043,27 +2047,27 @@ msgstr "PnP-Kennung"
 
 #: blueman/Sdp.py:243
 msgid "Characteristic Extended Properties"
-msgstr ""
+msgstr "Charakteristische erweiterte Eigenschaften"
 
 #: blueman/Sdp.py:244
 msgid "Characteristic User Description"
-msgstr ""
+msgstr "Charakteristische Benutzerbeschreibung"
 
 #: blueman/Sdp.py:245
 msgid "Client Characteristic Configuration"
-msgstr ""
+msgstr "Kundencharacteristische Konfiguration"
 
 #: blueman/Sdp.py:246
 msgid "Server Characteristic Configuration"
-msgstr ""
+msgstr "Konfiguration der Servereigenschaften"
 
 #: blueman/Sdp.py:247
 msgid "Characteristic Presentation Format"
-msgstr ""
+msgstr "Präsentationsformat der Eigenschaften"
 
 #: blueman/Sdp.py:248
 msgid "Characteristic Aggregate Format"
-msgstr ""
+msgstr "Charakteristisches Aggregatformat"
 
 #: blueman/Sdp.py:249
 msgid "Valid Range"
@@ -2071,11 +2075,11 @@ msgstr "Bereich zulässiger Werte"
 
 #: blueman/Sdp.py:250
 msgid "External Report Reference"
-msgstr ""
+msgstr "Externer Referenzbericht"
 
 #: blueman/Sdp.py:251
 msgid "Report Reference"
-msgstr ""
+msgstr "Berichtsreferenz"
 
 #: blueman/Sdp.py:378
 msgid "Audio and input profiles"
@@ -2383,6 +2387,10 @@ msgid ""
 "turning Bluetooth back on from an icon that shows its status; provided it "
 "isn't unplugged by the system, or physically."
 msgstr ""
+"Schaltet den Bluetooth-Killswitch-Status so um, dass er dem Bluetooth-"
+"Energiestatus entspricht. Ermöglicht das Wiedereinschalten von Bluetooth "
+"über ein Symbol, das den Status anzeigt, sofern es nicht vom System oder "
+"physisch getrennt ist."
 
 #: blueman/plugins/applet/StandardItems.py:22
 msgid "Adds standard menu items to the status icon menu"
@@ -2485,7 +2493,7 @@ msgstr ""
 
 #: blueman/plugins/applet/DiscvManager.py:26
 msgid "Discoverable timeout"
-msgstr "Feststellbarer Timeout"
+msgstr "Sichtbarkeitsdauer"
 
 #: blueman/plugins/applet/DiscvManager.py:27
 msgid "Amount of time in seconds discoverable mode will last"
@@ -2494,7 +2502,7 @@ msgstr "Zeitspanne (in Sekunden), die der Adapter sichtbar sein wird"
 #: blueman/plugins/applet/DiscvManager.py:35
 #: blueman/plugins/applet/DiscvManager.py:123
 msgid "_Make Discoverable"
-msgstr "_Erkennbar machen"
+msgstr "_Sichtbar machen"
 
 #: blueman/plugins/applet/DiscvManager.py:36
 msgid "Make the default adapter temporarily visible"

@@ -11,22 +11,22 @@
 # veidu https://launchpad.net/~viljarveidenberg
 # Ivar Smolin <okul@linux.ee>, 2014-2015,2018
 # Rivo Zängov <eraser@eraser.ee>, 2018
-# Priit Jõerüüt <hwlate@joeruut.com>, 2021, 2022.
+# Priit Jõerüüt <hwlate@joeruut.com>, 2021, 2022, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2022-07-05 14:08+0200\n"
-"PO-Revision-Date: 2022-06-01 19:53+0000\n"
+"PO-Revision-Date: 2024-02-12 10:42+0000\n"
 "Last-Translator: Priit Jõerüüt <hwlate@joeruut.com>\n"
-"Language-Team: Estonian <https://hosted.weblate.org/projects/blueman/blueman/"
-"et/>\n"
+"Language-Team: Estonian <https://hosted.weblate.org/projects/blueman/2-3/et/>"
+"\n"
 "Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13-dev\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -346,9 +346,9 @@ msgid ""
 "This probably means that there were no Bluetooth adapters detected or "
 "Bluetooth daemon was not started."
 msgstr ""
-"Bluez deemon ei tööta, blueman-manageril pole võimalik jätkata.\n"
+"Bluez taustateenus ei tööta, blueman-manageril pole võimalik jätkata.\n"
 "See tähendab arvatavasti, et ühtegi Bluetooth adapterit pole tuvastatud või "
-"pole Bluetooth deemon käivitatud."
+"pole Bluetooth taustateenus käivitatud."
 
 #: blueman/main/Manager.py:208
 msgid "Searching"
@@ -726,20 +726,18 @@ msgid "Connection Failed: "
 msgstr "Ühendus nurjus: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:287
-#, fuzzy
-#| msgid "_<b>_Connect</b>"
 msgid "<b>_Connect</b>"
-msgstr "_<b>_Ühendu</b>"
+msgstr "<b>_Ühenda</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:289
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr ""
+"Võimaldab kasutada automaatse ühendamise profiile: A2DP saatja, A2DP "
+"vastuvõtja ja HID"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:293
-#, fuzzy
-#| msgid "_<b>Disconnect</b>"
 msgid "<b>_Disconnect</b>"
-msgstr "_<b>Katkesta ühendus</b>"
+msgstr "<b>_Katkesta ühendus</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:294
 msgid "Forcefully disconnect the device"
@@ -1136,7 +1134,7 @@ msgstr "Piipar"
 #. translators: device class
 #: blueman/DeviceClass.py:147
 msgid "Jacket"
-msgstr ""
+msgstr "Jope"
 
 #. translators: device class
 #: blueman/DeviceClass.py:149
@@ -1227,7 +1225,7 @@ msgstr "Üldine termomeeter"
 
 #: blueman/DeviceClass.py:182
 msgid "Thermometer: Ear"
-msgstr ""
+msgstr "Termomeeter: kõrvas"
 
 #: blueman/DeviceClass.py:183
 msgid "Generic Heart rate Sensor"
@@ -1235,19 +1233,19 @@ msgstr "Üldine südame löögisageduse andur"
 
 #: blueman/DeviceClass.py:184
 msgid "Heart Rate Sensor: Heart Rate Belt"
-msgstr ""
+msgstr "Südame löögisageduse andur: pulsivöö"
 
 #: blueman/DeviceClass.py:185
 msgid "Generic Blood Pressure"
-msgstr ""
+msgstr "Üldine vererõhu andur"
 
 #: blueman/DeviceClass.py:186
 msgid "Blood Pressure: Arm"
-msgstr ""
+msgstr "Vererõhu andur: käevarrel"
 
 #: blueman/DeviceClass.py:187
 msgid "Blood Pressure: Wrist"
-msgstr ""
+msgstr "Vererõhu andur: randmel"
 
 #: blueman/DeviceClass.py:188
 msgid "Human Interface Device (HID)"
@@ -1259,15 +1257,15 @@ msgstr "Hiir"
 
 #: blueman/DeviceClass.py:191
 msgid "Joystick"
-msgstr ""
+msgstr "Juhtkang"
 
 #: blueman/DeviceClass.py:192
 msgid "Gamepad"
-msgstr ""
+msgstr "Mängupult"
 
 #: blueman/DeviceClass.py:193
 msgid "Digitizer Tablet"
-msgstr ""
+msgstr "Joonistustahvel"
 
 #: blueman/DeviceClass.py:194
 msgid "Card Reader"
@@ -1287,52 +1285,52 @@ msgstr "Üldine glükoosimõõtja"
 
 #: blueman/DeviceClass.py:198
 msgid "Generic: Running Walking Sensor"
-msgstr ""
+msgstr "Üldine: jooksu- ja kõndimisandur"
 
 #: blueman/DeviceClass.py:199
 msgid "Running Walking Sensor: In-Shoe"
-msgstr ""
+msgstr "Jooksu- ja kõndimisandur: jalanõul"
 
 #: blueman/DeviceClass.py:200
 msgid "Running Walking Sensor: On-Shoe"
-msgstr ""
+msgstr "Jooksu- ja kõndimisandur: jalanõus"
 
 #: blueman/DeviceClass.py:201
 msgid "Running Walking Sensor: On-Hip"
-msgstr ""
+msgstr "Jooksu- ja kõndimisandur: puusal"
 
 #: blueman/DeviceClass.py:202
 msgid "Generic: Cycling"
-msgstr "Üldine: Jalgrattasõit"
+msgstr "Üldine: jalgrattasõit"
 
 #: blueman/DeviceClass.py:203
 msgid "Cycling: Cycling Computer"
-msgstr ""
+msgstr "Jalgrattasõit: pardaarvuti"
 
 #: blueman/DeviceClass.py:204
 msgid "Cycling: Speed Sensor"
-msgstr ""
+msgstr "Jalgrattasõit: kiirusmõõdik"
 
 #: blueman/DeviceClass.py:205
 msgid "Cycling: Cadence Sensor"
-msgstr ""
+msgstr "Jalgrattasõit: väntamissageduse andur"
 
 #: blueman/DeviceClass.py:206
 msgid "Cycling: Power Sensor"
-msgstr ""
+msgstr "Jalgrattasõit: võimsusandur"
 
 #: blueman/DeviceClass.py:207
 msgid "Cycling: Speed and Cadence Sensor"
-msgstr ""
+msgstr "Jalgrattasõit: kiiruse ja väntamissageduse andur"
 
 #. 19 - 48 reserved
 #: blueman/DeviceClass.py:209
 msgid "Generic: Pulse Oximeter"
-msgstr ""
+msgstr "Üldine: Pulssoksümeeter"
 
 #: blueman/DeviceClass.py:210
 msgid "Fingertip"
-msgstr ""
+msgstr "Sõrmeotsapõhine"
 
 #: blueman/DeviceClass.py:211
 msgid "Wrist-Worn"
@@ -1344,27 +1342,27 @@ msgstr "Üldine: kaal"
 
 #: blueman/DeviceClass.py:213
 msgid "Generic Personal Mobility Device"
-msgstr ""
+msgstr "Üldine isikliku liikuvuse seade"
 
 #: blueman/DeviceClass.py:214
 msgid "Powered Wheelchair"
-msgstr ""
+msgstr "Mootoriga ratastool"
 
 #: blueman/DeviceClass.py:215
 msgid "Mobility Scooter"
-msgstr ""
+msgstr "Mobiilne tõukeratas"
 
 #: blueman/DeviceClass.py:216
 msgid "Generic Continuous Glucose Monitor"
-msgstr ""
+msgstr "Üldine pidev glükoosimonitor"
 
 #: blueman/DeviceClass.py:217
 msgid "Generic Insulin Pump"
-msgstr ""
+msgstr "Üldine insuliinipump"
 
 #: blueman/DeviceClass.py:218
 msgid "Insulin Pump, durable pump"
-msgstr ""
+msgstr "Insuliinipump, vastupidav pump"
 
 #: blueman/DeviceClass.py:219
 msgid "Insulin Pump, patch pump"
@@ -1401,63 +1399,63 @@ msgstr ""
 
 #: blueman/Sdp.py:88
 msgid "SDP"
-msgstr ""
+msgstr "SDP"
 
 #: blueman/Sdp.py:89
 msgid "UDP"
-msgstr ""
+msgstr "UDP"
 
 #: blueman/Sdp.py:90
 msgid "RFCOMM"
-msgstr ""
+msgstr "RFCOMM"
 
 #: blueman/Sdp.py:91
 msgid "TCP"
-msgstr ""
+msgstr "TCP"
 
 #: blueman/Sdp.py:92
 msgid "TCS-BIN"
-msgstr ""
+msgstr "TCS-BIN"
 
 #: blueman/Sdp.py:93
 msgid "TCS-AT"
-msgstr ""
+msgstr "TCS-AT"
 
 #: blueman/Sdp.py:94
 msgid "ATT"
-msgstr ""
+msgstr "ATT"
 
 #: blueman/Sdp.py:95
 msgid "OBEX"
-msgstr ""
+msgstr "OBEX"
 
 #: blueman/Sdp.py:96
 msgid "IP"
-msgstr ""
+msgstr "IP"
 
 #: blueman/Sdp.py:97
 msgid "FTP"
-msgstr ""
+msgstr "FTP"
 
 #: blueman/Sdp.py:98
 msgid "HTTP"
-msgstr ""
+msgstr "HTTP"
 
 #: blueman/Sdp.py:99
 msgid "WSP"
-msgstr ""
+msgstr "WSP"
 
 #: blueman/Sdp.py:100
 msgid "BNEP"
-msgstr ""
+msgstr "BNEP"
 
 #: blueman/Sdp.py:101
 msgid "UPnP/ESDP"
-msgstr ""
+msgstr "UPnP/ESDP"
 
 #: blueman/Sdp.py:102
 msgid "HIDP"
-msgstr ""
+msgstr "HIDP"
 
 #: blueman/Sdp.py:103
 msgid "Hardcopy Control Channel"
@@ -1473,19 +1471,19 @@ msgstr ""
 
 #: blueman/Sdp.py:106
 msgid "AVCTP"
-msgstr ""
+msgstr "AVCTP"
 
 #: blueman/Sdp.py:107
 msgid "AVDTP"
-msgstr ""
+msgstr "AVDTP"
 
 #: blueman/Sdp.py:108
 msgid "CMTP"
-msgstr ""
+msgstr "CMTP"
 
 #: blueman/Sdp.py:109
 msgid "UDI_C-Plane"
-msgstr ""
+msgstr "UDI_C-Plane"
 
 #: blueman/Sdp.py:110 blueman/Sdp.py:111
 msgid "Multi-Channel Adaptation Protocol (MCAP)"
@@ -1493,15 +1491,15 @@ msgstr ""
 
 #: blueman/Sdp.py:112
 msgid "L2CAP"
-msgstr ""
+msgstr "L2CAP"
 
 #: blueman/Sdp.py:113
 msgid "ServiceDiscoveryServerServiceClassID"
-msgstr ""
+msgstr "ServiceDiscoveryServerServiceClassID"
 
 #: blueman/Sdp.py:114
 msgid "BrowseGroupDescriptorServiceClassID"
-msgstr ""
+msgstr "BrowseGroupDescriptorServiceClassID"
 
 #: blueman/Sdp.py:115
 msgid "Public Browse Group"
@@ -1513,7 +1511,7 @@ msgstr "Jadaport"
 
 #: blueman/Sdp.py:117
 msgid "LAN Access Using PPP"
-msgstr ""
+msgstr "Kohtvõrgu ühendus PPP abil"
 
 #: blueman/Sdp.py:118
 msgid "Dialup Networking (DUN)"
@@ -1521,7 +1519,7 @@ msgstr "Sissehelistamisega võrk (DUN)"
 
 #: blueman/Sdp.py:119
 msgid "IrMC Sync"
-msgstr ""
+msgstr "IrMC sünkroniseerimine"
 
 #: blueman/Sdp.py:120
 msgid "OBEX Object Push"
@@ -1533,7 +1531,7 @@ msgstr "OBEX'i failiülekanne"
 
 #: blueman/Sdp.py:122
 msgid "IrMC Sync Command"
-msgstr ""
+msgstr "IrMC sünkroniseeriskäsk"
 
 #: blueman/Sdp.py:124
 msgid "Cordless Telephony"
@@ -1545,7 +1543,7 @@ msgstr "Heli vastuvõtmine"
 
 #: blueman/Sdp.py:126
 msgid "Audio Sink"
-msgstr "Heli saatmine"
+msgstr "Heli vastuvõtja"
 
 #: blueman/Sdp.py:127
 msgid "Remote Control Target"
@@ -1565,7 +1563,7 @@ msgstr "Videokonverentsiseade"
 
 #: blueman/Sdp.py:131
 msgid "Intercom"
-msgstr ""
+msgstr "Sisetelefon"
 
 #: blueman/Sdp.py:132
 msgid "Fax"
@@ -1573,11 +1571,11 @@ msgstr "Faks"
 
 #: blueman/Sdp.py:133
 msgid "Headset Audio Gateway"
-msgstr ""
+msgstr "Kõrvaklappide helilüüs"
 
 #: blueman/Sdp.py:134
 msgid "WAP"
-msgstr ""
+msgstr "WAP"
 
 #: blueman/Sdp.py:135
 msgid "WAP Client"
@@ -1585,7 +1583,7 @@ msgstr "WAP klient"
 
 #: blueman/Sdp.py:136
 msgid "PANU"
-msgstr ""
+msgstr "PANU"
 
 #: blueman/Sdp.py:137
 msgid "Network Access Point"
@@ -1597,11 +1595,11 @@ msgstr "Gruppvõrk"
 
 #: blueman/Sdp.py:139
 msgid "DirectPrinting (BPP)"
-msgstr ""
+msgstr "Otseprintimine (BPP)"
 
 #: blueman/Sdp.py:140
 msgid "ReferencePrinting (BPP)"
-msgstr ""
+msgstr "Viite alusel printimine (BPP)"
 
 #: blueman/Sdp.py:141
 msgid "Imaging (BIP)"
@@ -1633,11 +1631,11 @@ msgstr ""
 
 #: blueman/Sdp.py:149
 msgid "Basic Printing (BPP)"
-msgstr ""
+msgstr "Printimise alusteenus (BPP)"
 
 #: blueman/Sdp.py:150
 msgid "Printing Status (BPP)"
-msgstr ""
+msgstr "Printimise olek (BPP)"
 
 #: blueman/Sdp.py:151
 msgid "Human Interface Device Service (HID)"
@@ -1649,43 +1647,43 @@ msgstr ""
 
 #: blueman/Sdp.py:153
 msgid "HCR_Print (HCR)"
-msgstr ""
+msgstr "HCR_Print (HCR)"
 
 #: blueman/Sdp.py:154
 msgid "HCR_Scan (HCR)"
-msgstr ""
+msgstr "HCR_Scan (HCR)"
 
 #: blueman/Sdp.py:155
 msgid "Common ISDN Access (CIP)"
-msgstr ""
+msgstr "Üldine ISDN liidestus (CIP)"
 
 #: blueman/Sdp.py:156
 msgid "VideoConferencingGW (VCP)"
-msgstr ""
+msgstr "Videokonverentsi lüüs (VCP)"
 
 #: blueman/Sdp.py:157
 msgid "UDI-MT"
-msgstr ""
+msgstr "UDI-MT"
 
 #: blueman/Sdp.py:158
 msgid "UDI-TA"
-msgstr ""
+msgstr "UDI-TA"
 
 #: blueman/Sdp.py:159
 msgid "Audio/Video"
-msgstr ""
+msgstr "Audio/Video"
 
 #: blueman/Sdp.py:160
 msgid "SIM Access (SAP)"
-msgstr ""
+msgstr "SIM ligipääs (SAP)"
 
 #: blueman/Sdp.py:161
 msgid "Phonebook Access (PBAP) - PCE"
-msgstr ""
+msgstr "Ligipääs telefoniraamatule (PBAP) - PCE"
 
 #: blueman/Sdp.py:162
 msgid "Phonebook Access (PBAP) - PSE"
-msgstr ""
+msgstr "Ligipääs telefoniraamatule (PBAP) - PSE"
 
 #: blueman/Sdp.py:163
 msgid "Phonebook Access (PBAP)"
@@ -1693,11 +1691,11 @@ msgstr "Ligipääs telefoniraamatu andmetele (PBAP)"
 
 #: blueman/Sdp.py:165
 msgid "Message Access Server"
-msgstr ""
+msgstr "Sõnumite ligipääsuserver"
 
 #: blueman/Sdp.py:166
 msgid "Message Notification Server"
-msgstr ""
+msgstr "Sõnumite teavitusserver"
 
 #: blueman/Sdp.py:167
 msgid "Message Access Profile (MAP)"
@@ -1705,7 +1703,7 @@ msgstr "Sõnumiprofiil (MAP)"
 
 #: blueman/Sdp.py:168
 msgid "GNSS"
-msgstr ""
+msgstr "GNSS"
 
 #: blueman/Sdp.py:169
 msgid "GNSS Server"
@@ -1733,19 +1731,19 @@ msgstr ""
 
 #: blueman/Sdp.py:175
 msgid "Calendar, Task, and Notes (CTN) Access Service"
-msgstr ""
+msgstr "Kalendri, ülesannete ja märkmete ligipääsuteenus (CTN)"
 
 #: blueman/Sdp.py:176
 msgid "Calendar, Task, and Notes (CTN) Notification Service"
-msgstr ""
+msgstr "Kalendri, ülesannete ja märkmete teavitusteenus (CTN)"
 
 #: blueman/Sdp.py:177
 msgid "Calendar, Task, and Notes (CTN) Profile"
-msgstr ""
+msgstr "Kalendri, ülesannete ja märkmete profiil (CTN)"
 
 #: blueman/Sdp.py:178
 msgid "PnP Information"
-msgstr ""
+msgstr "PnP teave"
 
 #: blueman/Sdp.py:179
 msgid "Generic Networking"
@@ -1757,11 +1755,11 @@ msgstr "Üldine failiedastus"
 
 #: blueman/Sdp.py:181
 msgid "Generic Audio"
-msgstr ""
+msgstr "Üldine heliliides"
 
 #: blueman/Sdp.py:182
 msgid "Generic Telephony"
-msgstr ""
+msgstr "Üldine telefoniliides"
 
 #: blueman/Sdp.py:183
 msgid "Video Source"
@@ -1769,15 +1767,15 @@ msgstr "Videoallikas"
 
 #: blueman/Sdp.py:184
 msgid "Video Sink"
-msgstr "Video saatmine"
+msgstr "Video vastuvõtja"
 
 #: blueman/Sdp.py:185
 msgid "Video Distribution"
-msgstr ""
+msgstr "Videolevi teenus"
 
 #: blueman/Sdp.py:186
 msgid "HDP"
-msgstr ""
+msgstr "HDP"
 
 #: blueman/Sdp.py:187
 msgid "HDP Source"
@@ -1785,15 +1783,15 @@ msgstr "HPD allikas"
 
 #: blueman/Sdp.py:188
 msgid "HDP Sink"
-msgstr ""
+msgstr "HDP vastuvõtja"
 
 #: blueman/Sdp.py:189
 msgid "Generic Access"
-msgstr ""
+msgstr "Üldine ligipääsuliides"
 
 #: blueman/Sdp.py:190
 msgid "Generic Attribute"
-msgstr ""
+msgstr "Üldine omadusliides"
 
 #: blueman/Sdp.py:191
 msgid "Immediate Alert"
@@ -1805,7 +1803,7 @@ msgstr ""
 
 #: blueman/Sdp.py:193
 msgid "Tx Power"
-msgstr ""
+msgstr "Tx toiteliides"
 
 #: blueman/Sdp.py:194
 msgid "Current Time Service"
@@ -1821,19 +1819,19 @@ msgstr ""
 
 #: blueman/Sdp.py:197
 msgid "Glucose"
-msgstr ""
+msgstr "Glükoos"
 
 #: blueman/Sdp.py:198
 msgid "Health Thermometer"
-msgstr ""
+msgstr "Tervise termomeeter"
 
 #: blueman/Sdp.py:199
 msgid "Device Information"
-msgstr ""
+msgstr "Seadme teave"
 
 #: blueman/Sdp.py:200
 msgid "Heart Rate"
-msgstr ""
+msgstr "Pulss"
 
 #: blueman/Sdp.py:201
 msgid "Phone Alert Status Service"
@@ -1845,7 +1843,7 @@ msgstr "Akuteenus"
 
 #: blueman/Sdp.py:203
 msgid "Blood Pressure"
-msgstr ""
+msgstr "Vererõhk"
 
 #: blueman/Sdp.py:204
 msgid "Alert Notification Service"
@@ -1857,11 +1855,11 @@ msgstr ""
 
 #: blueman/Sdp.py:206
 msgid "Scan Parameters"
-msgstr ""
+msgstr "Skänneri parameetrid"
 
 #: blueman/Sdp.py:207
 msgid "Running Speed and Cadence"
-msgstr ""
+msgstr "Jooksu kiirus ja rütm"
 
 #: blueman/Sdp.py:208
 msgid "Automation IO"
@@ -1869,11 +1867,11 @@ msgstr ""
 
 #: blueman/Sdp.py:209
 msgid "Cycling Speed and Cadence"
-msgstr ""
+msgstr "Jalgrattasõidu kiirus ja väntamissagedus"
 
 #: blueman/Sdp.py:210
 msgid "Cycling Power"
-msgstr ""
+msgstr "Jalgrattasõidu võimsus"
 
 #: blueman/Sdp.py:211
 msgid "Location and Navigation"
@@ -1889,7 +1887,7 @@ msgstr ""
 
 #: blueman/Sdp.py:214
 msgid "User Data"
-msgstr ""
+msgstr "Kasutajateave"
 
 #: blueman/Sdp.py:215
 msgid "Weight Scale"
@@ -1901,27 +1899,27 @@ msgstr ""
 
 #: blueman/Sdp.py:217
 msgid "Continuous Glucose Monitoring"
-msgstr ""
+msgstr "Järjepidev glükoosiseire"
 
 #: blueman/Sdp.py:218
 msgid "Internet Protocol Support"
-msgstr ""
+msgstr "Internet-protokolli tugi"
 
 #: blueman/Sdp.py:219
 msgid "Indoor Positioning"
-msgstr ""
+msgstr "Asukoha tuvastamine siseruumides"
 
 #: blueman/Sdp.py:220
 msgid "Pulse Oximeter"
-msgstr ""
+msgstr "Pulssoksümeeter"
 
 #: blueman/Sdp.py:221
 msgid "HTTP Proxy"
-msgstr ""
+msgstr "HTTP puhverteenus"
 
 #: blueman/Sdp.py:222
 msgid "Transport Discovery"
-msgstr ""
+msgstr "Ühendatavuse tuvastamine"
 
 #: blueman/Sdp.py:223
 msgid "Object Transfer"
@@ -1941,7 +1939,7 @@ msgstr "Teisene teenus"
 
 #: blueman/Sdp.py:227
 msgid "Include"
-msgstr ""
+msgstr "Sisaldab"
 
 #: blueman/Sdp.py:228
 msgid "Characteristic Declaration"
@@ -1953,7 +1951,7 @@ msgstr "Seadme nimi"
 
 #: blueman/Sdp.py:230
 msgid "Appearance"
-msgstr ""
+msgstr "Välimus"
 
 #: blueman/Sdp.py:231
 msgid "Peripheral Privacy Flag"
@@ -1965,7 +1963,7 @@ msgstr "Viimased aadressid"
 
 #: blueman/Sdp.py:233
 msgid "Peripheral Preferred Connection Parameters"
-msgstr ""
+msgstr "Välisseadme eelistatud ühendusparameetrid"
 
 #: blueman/Sdp.py:234
 msgid "Service Changed"
@@ -1973,51 +1971,51 @@ msgstr "Teenus on muutunud"
 
 #: blueman/Sdp.py:235
 msgid "System ID"
-msgstr ""
+msgstr "Süsteemi tunnus"
 
 #: blueman/Sdp.py:236
 msgid "Model Number String"
-msgstr ""
+msgstr "Mudelisõne"
 
 #: blueman/Sdp.py:237
 msgid "Serial Number String"
-msgstr ""
+msgstr "Seerianumbri sõne"
 
 #: blueman/Sdp.py:238
 msgid "Firmware Revision String"
-msgstr ""
+msgstr "Püsivara versiooni sõne"
 
 #: blueman/Sdp.py:239
 msgid "Hardware Revision String"
-msgstr ""
+msgstr "Raudvara versiooni sõne"
 
 #: blueman/Sdp.py:240
 msgid "Software Revision String"
-msgstr ""
+msgstr "Tarkvaravara versiooni sõne"
 
 #: blueman/Sdp.py:241
 msgid "Manufacturer Name String"
-msgstr ""
+msgstr "Tootja nime sõne"
 
 #: blueman/Sdp.py:242
 msgid "PnP ID"
-msgstr ""
+msgstr "PnP-tunnus"
 
 #: blueman/Sdp.py:243
 msgid "Characteristic Extended Properties"
-msgstr ""
+msgstr "Laiendatud omadused"
 
 #: blueman/Sdp.py:244
 msgid "Characteristic User Description"
-msgstr ""
+msgstr "Kasutaja kirjeldus"
 
 #: blueman/Sdp.py:245
 msgid "Client Characteristic Configuration"
-msgstr ""
+msgstr "Kliendi seadistused"
 
 #: blueman/Sdp.py:246
 msgid "Server Characteristic Configuration"
-msgstr ""
+msgstr "Serveriomaduste seadistamine"
 
 #: blueman/Sdp.py:247
 msgid "Characteristic Presentation Format"
@@ -2029,7 +2027,7 @@ msgstr ""
 
 #: blueman/Sdp.py:249
 msgid "Valid Range"
-msgstr ""
+msgstr "Kehtiv vahemik"
 
 #: blueman/Sdp.py:250
 msgid "External Report Reference"
@@ -2058,14 +2056,16 @@ msgstr "ei"
 #: blueman/plugins/manager/Info.py:60
 msgid "<big>Select row(s) and use <i>Control + C</i> to copy</big>"
 msgstr ""
+"<big>Vali read ja kasuta kopeerimiseks <i>Control + C</i> "
+"klahvikombinatsiooni</big>"
 
 #: blueman/plugins/manager/Info.py:120
 msgid "_Info"
-msgstr ""
+msgstr "_Info"
 
 #: blueman/plugins/manager/Info.py:121
 msgid "Show device information"
-msgstr ""
+msgstr "Näita seadme teavet"
 
 #: blueman/plugins/manager/Notes.py:51
 msgid "Send _note"
@@ -2273,7 +2273,7 @@ msgstr "OBEX failiülekannete tagamine"
 
 #: blueman/plugins/applet/TransferService.py:180
 msgid "Configured directory for incoming files does not exist"
-msgstr ""
+msgstr "Allalaaditavate failide jaoks mõeldud kausta pole olemas"
 
 #: blueman/plugins/applet/TransferService.py:181
 #, python-format
@@ -2281,6 +2281,8 @@ msgid ""
 "Please make sure that directory \"<b>%s</b>\" exists or configure it with "
 "blueman-services. Until then the default \"%s\" will be used"
 msgstr ""
+"Palun kontrolli, et „<b>%s</b>“ kaust on olemas ning kui pole, siis seadista "
+"blueman-teenuste abil. Seni kasutame vaikimisi „%s“ kausta"
 
 #: blueman/plugins/applet/TransferService.py:303
 msgid "File received"
@@ -2357,7 +2359,7 @@ msgstr "rakend"
 
 #: blueman/plugins/applet/AuthAgent.py:8
 msgid "Provides passkey, authentication services for BlueZ daemon"
-msgstr ""
+msgstr "Tagab passkey ja autentimisteenused BlueZ taustateenuse jaoks"
 
 #: blueman/plugins/applet/ExitItem.py:7
 msgid "Adds an exit menu item to quit the applet"
@@ -2496,7 +2498,7 @@ msgstr ""
 "Aadress, Nimi, teenuse nimi, uuid16s, rfcomm sõlm\n"
 "Näiteks:\n"
 "AA:BB:CC:DD:EE:FF, Telefon, DUN service, 0x1103, /dev/rfcomm0\n"
-"uuid16s tagastatakse komadega eraldatud nimekirjana\n"
+"uuid16s kuvatakse komadega eraldatud nimekirjana\n"
 "\n"
 "Seadmega ühenduse katkestamisel saadetakse skriptile HUP-signaal</span>"
 
@@ -2508,7 +2510,7 @@ msgstr "Jadaport ühendatud"
 #, python-format
 msgid ""
 "Serial port service on device <b>%s</b> now will be available via <b>%s</b>"
-msgstr ""
+msgstr "<b>%s</b> seadme jadaport on nüüd saadaval <b>%s</b> kaudu"
 
 #: blueman/plugins/applet/SerialManager.py:114
 msgid "Serial port connection script failed"
@@ -2529,11 +2531,11 @@ msgstr "Bluetooth adapteri toiteolekute juhtimine"
 
 #: blueman/plugins/applet/PowerManager.py:44
 msgid "Auto power-on"
-msgstr ""
+msgstr "Toite automaatne sisselülitamine"
 
 #: blueman/plugins/applet/PowerManager.py:45
 msgid "Automatically power on adapters"
-msgstr ""
+msgstr "Lülita adapteri toide automaatselt sisse"
 
 #: blueman/plugins/applet/PowerManager.py:55
 #: blueman/plugins/applet/PowerManager.py:172

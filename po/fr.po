@@ -51,28 +51,30 @@
 # Johan Cwiklinski <trasher@x-tnd.be>
 # OozeBalk <oozebalk@gmail.com>
 # J. Lavoie <j.lavoie@net-c.ca>
-# Colomban Wendling <hypra@ban.netlib.re>
+# Colomban Wendling <hypra@ban.netlib.re>, 2023.
 # Estébastien Robespi <estebastien@mailbox.org>
 # Julien Humbert <julroy67@gmail.com>
 # Yoan <yoan@konqi.fr>
 # Maxime Leroy <lisacintosh@gmail.com>, 2022.
 # ButterflyOfFire <ButterflyOfFire@protonmail.com>, 2022.
 # Clement Lefebvre <clement.lefebvre@linuxmint.com>, 2022.
+# Sander Sweers <infirit@gmail.com>, 2022.
+# Benjamin Loison <benjamin.loison@orange.fr>, 2023.
+# TKF <clanking.feather@gmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2022-07-05 14:08+0200\n"
-"PO-Revision-Date: 2022-06-06 16:56+0000\n"
-"Last-Translator: Maxime Leroy <lisacintosh@gmail.com>\n"
-"Language-Team: French <https://hosted.weblate.org/projects/blueman/blueman/"
-"fr/>\n"
+"PO-Revision-Date: 2024-01-11 14:06+0000\n"
+"Last-Translator: TKF <clanking.feather@gmail.com>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/blueman/2-3/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.13-dev\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -645,7 +647,7 @@ msgstr "_Rechercher"
 
 #: blueman/gui/manager/ManagerMenu.py:156
 msgid "_Preferences"
-msgstr "Préférences"
+msgstr "_Préférences"
 
 #: blueman/gui/manager/ManagerMenu.py:165 blueman/plugins/applet/ExitItem.py:12
 msgid "_Exit"
@@ -750,7 +752,7 @@ msgstr "Échec"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:144
 msgid "Connecting…"
-msgstr "Connexion en cours …"
+msgstr "Connexion en cours…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:180
 msgid "Disconnection Failed: "
@@ -777,20 +779,16 @@ msgid "Connection Failed: "
 msgstr "La connexion a échoué : "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:287
-#, fuzzy
-#| msgid "_<b>_Connect</b>"
 msgid "<b>_Connect</b>"
-msgstr "_<b>_Connecter</b>"
+msgstr "<b>_Connecter</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:289
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr "Connecte les profils d'autoconnexion source A2DP, sortie A2DP et HID"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:293
-#, fuzzy
-#| msgid "_<b>Disconnect</b>"
 msgid "<b>_Disconnect</b>"
-msgstr "_<b>Déconnecter</b>"
+msgstr "<b>_Déconnecter</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:294
 msgid "Forcefully disconnect the device"
@@ -810,7 +808,7 @@ msgstr "<b>Connexion Auto :</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:343
 msgid "Send a _File…"
-msgstr "Envoyer un _fichier …"
+msgstr "Envoyer un _fichier…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:356
 msgid "_Pair"
@@ -838,11 +836,11 @@ msgstr "Bloquer/débloquer cet appareil"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:407
 msgid "R_ename device…"
-msgstr "Renommer le périphérique …"
+msgstr "R_enommer le périphérique…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:416
 msgid "_Remove…"
-msgstr "Retirer …"
+msgstr "_Retirer…"
 
 #: blueman/gui/manager/ManagerProgressbar.py:44
 msgid "Cancel Operation"
@@ -922,7 +920,7 @@ msgstr "Sélection de l'adaptateur"
 
 #: blueman/gui/DeviceSelectorWidget.py:45
 msgid "Discovering…"
-msgstr "Visible …"
+msgstr "Visible…"
 
 #. translators: device class
 #: blueman/DeviceClass.py:6
@@ -1822,7 +1820,7 @@ msgstr "Source Vidéo"
 
 #: blueman/Sdp.py:184
 msgid "Video Sink"
-msgstr "Synchronie audio"
+msgstr "Synchronie Vidéo"
 
 #: blueman/Sdp.py:185
 msgid "Video Distribution"
@@ -2018,7 +2016,6 @@ msgid "Reconnection Address"
 msgstr "Adresse de Reconnexion"
 
 #: blueman/Sdp.py:233
-#, fuzzy
 msgid "Peripheral Preferred Connection Parameters"
 msgstr "Paramètres des connexions préférées des périphériques"
 
@@ -2078,9 +2075,8 @@ msgid "Server Characteristic Configuration"
 msgstr "Configuration caractéristique du serveur"
 
 #: blueman/Sdp.py:247
-#, fuzzy
 msgid "Characteristic Presentation Format"
-msgstr "Format de la présentation caractéristique"
+msgstr "Format de présentation caractéristique"
 
 #: blueman/Sdp.py:248
 msgid "Characteristic Aggregate Format"
@@ -2239,7 +2235,7 @@ msgstr ""
 
 #: blueman/plugins/applet/NetUsage.py:307
 msgid "Network _Usage"
-msgstr "Utilisation du réseau"
+msgstr "_Utilisation du réseau"
 
 #: blueman/plugins/applet/NetUsage.py:308
 msgid "Shows network traffic usage"
@@ -2528,7 +2524,7 @@ msgstr "Rendre l'adaptateur par défaut temporairement visible"
 #: blueman/plugins/applet/DiscvManager.py:60
 #, python-format
 msgid "Discoverable… %ss"
-msgstr "Visible ... %ss"
+msgstr "Visible… %ss"
 
 #: blueman/plugins/applet/Menu.py:113
 msgid ""
